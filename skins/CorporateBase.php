@@ -22,6 +22,153 @@ class SkinCorporateBase extends SkinTemplate {
 		parent::initPage( $out );
 	}
 	
+	function outputPage( OutputPage $out ) {
+		global $wgTitle, $wgArticle, $wgUser, $wgLang, $wgContLang;
+		global $wgScript, $wgStylePath, $wgContLanguageCode;
+		global $wgMimeType, $wgJsMimeType, $wgOutputEncoding, $wgRequest;
+		global $wgDisableCounters, $wgHideInterlanguageLinks;
+		global $wgMaxCredits, $wgShowCreditsIfMax;
+		global $wgPageShowWatchingUsers;
+		global $wgUseTrackbacks, $wgUseSiteJs;
+		global $wgArticlePath, $wgScriptPath, $wgServer, $wgLang, $wgCanonicalNamespaceNames;
+		global $wgCityId;
+
+		$oldid = $wgRequest->getVal( 'oldid' );
+		$diff = $wgRequest->getVal( 'diff' );
+		$action = $wgRequest->getVal( 'action', 'view' );
+		
+		$this->initPage( $out );
+
+		$this->setMembers();
+		$tpl = $this->setupTemplate( $this->template, 'skins' );
+
+		#if ( $wgUseDatabaseMessages ) { // uncomment this to fall back to GetText
+		$tpl->setTranslator(new MediaWiki_I18N());
+		#}
+		wfProfileOut( __METHOD__."-init" );
+
+		wfProfileIn( __METHOD__."-stuff" );
+		$this->thispage = $this->mTitle->getPrefixedDbKey();
+		$this->thisurl = $this->mTitle->getPrefixedURL();
+		$query = $wgRequest->getValues();
+		unset( $query['title'] );
+		unset( $query['returnto'] );
+		unset( $query['returntoquery'] );
+		
+		$this->thisquery = wfUrlencode( wfArrayToCGI( $query ) );
+		$this->loggedin = $wgUser->isLoggedIn();
+		$this->username = $wgUser->getName();
+		$this->iscontent = ($this->mTitle->getNamespace() != NS_SPECIAL );
+		$this->iseditable = ($this->iscontent and !($action == 'edit' or $action == 'submit'));
+		
+		/* Wikia change begin - @author: Marooned */
+		/* Pass parameters to skin, see: Login friction project */
+		$tpl->set( 'thisurl', $this->thisurl );
+		$tpl->set( 'thisquery', $this->thisquery );
+
+		if ( $wgUser->isLoggedIn() || $this->showIPinHeader() ) {
+			$this->userpageUrlDetails = self::makeUrlDetails( $this->userpage );
+		} else {
+			# This won't be used in the standard skins, but we define it to preserve the interface
+			# To save time, we check for existence
+			$this->userpageUrlDetails = self::makeKnownUrlDetails( $this->userpage );
+		}
+		
+		$this->userjs = $this->userjsprev = false;
+		$this->setupUserCss( $out );
+		$this->setupUserJs( $out->isUserJsAllowed() );
+		$this->titletxt = $this->mTitle->getPrefixedText();
+		wfProfileOut( __METHOD__."-stuff" );
+
+		wfProfileIn( __METHOD__."-stuff2" );
+		$tpl->set( 'title', $out->getPageTitle() );  
+		wfProfileIn( "parsePageTitle" );
+		$tpl->set( 'pagetitle', $out->getHTMLTitle() );
+
+		# quick hack for rt#15730; if you ever feel temptation to add 'elseif' ***CREATE A PROPER HOOK***
+		if (NS_CATEGORY == $this->mTitle->getNamespace()) $tpl->set( 'pagetitle', preg_replace("/^{$this->mTitle->getNsText()}:/", '', $out->getHTMLTitle()));
+
+		wfProfileOut( "parsePageTitle" );
+		$tpl->set( 'displaytitle', $out->mPageLinkTitle );
+		$tpl->set( 'pageclass', $this->getPageClasses( $this->mTitle ) );
+		
+		$tpl->set( 'skinnameclass', ( "skin-" . Sanitizer::escapeClass( $this->getSkinName ( ) ) ) );
+	
+		if ($wgUseTrackbacks && $out->isArticleRelated()) {  
+			$tpl->set( 'trackbackhtml', $wgTitle->trackbackRDF() );
+		} else {
+			$tpl->set( 'trackbackhtml', null );
+		} 
+		
+		$tpl->setRef( 'jsmimetype', $wgJsMimeType );  
+		$tpl->setRef( 'charset', $wgOutputEncoding );  
+		$tpl->set( 'headlinks', $out->getHeadLinks() );  
+		$tpl->set( 'headscripts', $out->getScript() ); 
+		$tpl->set( 'csslinks', $out->buildCssLinks() );  
+		$tpl->setRef( 'wgScript', $wgScript );
+		$tpl->setRef( 'skinname', $this->skinname ); 
+		$tpl->setRef( 'loggedin', $this->loggedin );
+		
+		$tpl->set('notspecialpage', $this->mTitle->getNamespace() != NS_SPECIAL);
+
+		$tpl->setRef( "lang", $wgContLanguageCode ); 
+		$tpl->set( 'dir', $wgContLang->isRTL() ? "rtl" : "ltr" );
+		$tpl->set( 'username', $wgUser->isAnon() ? NULL : $this->username ); 
+		$tpl->set( 'pagecss', $this->setupPageCss() );  
+		$tpl->setRef( 'usercss', $this->usercss);  
+		$tpl->setRef( 'userjs', $this->userjs); 
+		$tpl->setRef( 'userjsprev', $this->userjsprev); 
+		if( $wgUseSiteJs ) {  
+			$jsCache = $this->loggedin ? '&smaxage=0' : '';
+			$skinName = ($this->getSkinName() == 'awesome') ? 'monaco' : $this->getSkinName(); // macbre: temp fix
+			$tpl->set( 'jsvarurl',
+				self::makeUrl('-',
+					"action=raw$jsCache&gen=js&useskin=" .
+						urlencode( $skinName ) ) );
+		} else {
+			$tpl->set('jsvarurl', false);
+		}
+		
+		$printfooter = "<div class=\"printfooter\">\n" . $this->printSource() . "</div>\n";
+		$out->mBodytext .= $printfooter . $this->generateDebugHTML();
+		$tpl->setRef( 'bodytext', $out->mBodytext );
+		
+		$newtalks = $wgUser->getNewMessageLinks();
+		
+		wfProfileIn( __METHOD__."-stuff3" );
+		$tpl->setRef( 'skin', $this );
+			
+		$tpl->set('personal_urls', $this->buildPersonalUrls()); 
+		$content_actions = $this->buildContentActionUrls();
+		$tpl->setRef('content_actions', $content_actions);
+
+		// XXX: attach this from javascript, same with section editing
+		if($this->iseditable &&	$wgUser->getOption("editondblclick"))
+		{
+			$encEditUrl = Xml::escapeJsString( $this->mTitle->getLocalUrl( $this->editUrlOptions() ) );
+			$tpl->set('body_ondblclick', 'document.location = "' . $encEditUrl . '";');
+		} else {
+			$tpl->set('body_ondblclick', false);
+		}
+		$tpl->set( 'body_onload', false );
+
+		// original version by hansm
+		if( !wfRunHooks( 'SkinTemplateOutputPageBeforeExec', array( &$this, &$tpl ) ) ) {
+			wfDebug( __METHOD__ . ": Hook SkinTemplateOutputPageBeforeExec broke outputPage execution!\n" );
+		}
+
+		// allow extensions adding stuff after the page content.
+		// See Skin::afterContentHook() for further documentation.
+		$tpl->set ('dataAfterContent', $this->afterContentHook());
+		// execute template
+		wfProfileIn( __METHOD__."-execute" );
+		$res = $tpl->execute();
+		wfProfileOut( __METHOD__."-execute" );
+		// result may be an error
+		$this->printOrError( $res );
+		wfProfileOut( __METHOD__ );
+	}
+	
 	public function buildPersonalUrls() {
 		global $wgUser, $wgTitle;
 
