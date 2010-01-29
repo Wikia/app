@@ -222,12 +222,15 @@ class WikiFactoryPage extends SpecialPage {
 		 * check maybe something was posted
 		 */
 		if( $wgRequest->wasPosted() ) {
-			switch( $this->mTab ){
+			switch( $this->mTab ) {
 				case "hubs":
 					$info = $this->doUpdateHubs( $wgRequest );
 				break;
 				case "domains":
 					$info = $this->doUpdateDomains( $wgRequest );
+				break;
+				case "tags":
+					$info = $this->doUpdateTags( $wgRequest );
 				break;
 			}
 		}
@@ -322,6 +325,33 @@ class WikiFactoryPage extends SpecialPage {
 			break;
 		}
 		return Wikia::successmsg( $message );
+	}
+
+    /**
+     * doUpdateTags
+     *
+     * @access private
+     * @author eloy@wikia-inc.com
+     *
+     * @return mixed	info when change, null when not changed
+     */
+	private function doUpdateTags( &$request ) {
+
+		$stag = $request->getText( "wpTag", false );
+		$msg  = "";
+
+		if( $stag ) {
+			$Tags = new WikiFactoryTags( $this->mWiki->city_id );
+			$before = $Tags->getTags( true ); // from master
+			$after  = $Tags->addTagsByName( $stag );
+			$diff   = array_diff_assoc( $before, $after );
+			print_pre( $before, $after, $diff );
+			$msg = "New tags added: " . implode( ", ", $diff );
+		}
+		else {
+			$msg = "There's no tags to add";
+		}
+		return Wikia::successbox( $msg );
 	}
 
 	/**

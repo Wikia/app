@@ -87,7 +87,8 @@ class WikiFactoryTags {
 				array( "city_tag", "city_tag_map" ),
 				array( "tag_id", "name" ),
 				array( "tag_id = id", "city_id" => $this->mCityId ),
-				__METHOD__
+				__METHOD__,
+				array( "ORDER BY" => "name" )
 			);
 			while( $row = $dbr->fetchObject( $sth ) ) {
 				$result[ $row->tag_id ] = $row->name;
@@ -118,11 +119,11 @@ class WikiFactoryTags {
 	 *
 	 * @return Array current tags for wiki
 	 */
-	public function setTagsByName( $stag ) {
+	public function addTagsByName( $stag ) {
 
 		wfProfileIn( __METHOD__ );
 
-		$tags = explode( " ", trim( str_lowercase( $stag ) ) );
+		$tags = explode( " ", trim( strtolower( $stag ) ) );
 		$dbw  = WikiFactory::db( DB_MASTER );
 
 		/**
@@ -162,7 +163,7 @@ class WikiFactoryTags {
 		/**
 		 * add tags by id, refresh cache, return defined tags
 		 */
-		return $this->setTagsById( $ids );
+		return $this->addTagsById( $ids );
 	}
 
 	/**
@@ -172,16 +173,18 @@ class WikiFactoryTags {
 	 *
 	 * @return Array current tags for wiki
 	 */
-	public function setTagsById( $ids ) {
+	public function addTagsById( $ids ) {
 
 		/**
 		 * and now map tags in city_tag_map
 		 */
 		wfProfileIn( __METHOD__ );
+
+		$dbw = WikiFactory::db( DB_MASTER );
 		if( is_array( $ids ) ) {
 			foreach( $ids as $id ) {
 				$dbw->replace(
-					"city_tag",
+					"city_tag_map",
 					array( "city_id", "tag_id" ),
 					array( "city_id" => $this->mCityId, "tag_id" => $id ),
 					__METHOD__
@@ -214,7 +217,7 @@ class WikiFactoryTags {
 
 		wfProfileIn( __METHOD__ );
 
-		$tags = explode( " ", trim( str_lowercase( $stag ) ) );
+		$tags = explode( " ", trim( strtolower( $stag ) ) );
 		$dbw  = WikiFactory::db( DB_MASTER );
 
 		$ids = array();
