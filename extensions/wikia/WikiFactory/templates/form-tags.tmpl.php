@@ -19,7 +19,7 @@ function deletechecked() {
 <?php
 	foreach( $tags as $id => $tag ):
 		echo " <strong>{$tag}</strong><sup><a href=\"";
-		echo $title->getFullUrl( array( "tag" => $id, "city" => $wiki->city_id ) );
+		echo $title->getFullUrl( array( "wpTagId" => $id, "wpTagName" => $tag ) );
 		echo "\" class=\"wfTagRemove\" onclick=\"return deletechecked()\" >remove</a></sup> ";
 	endforeach;
 ?>

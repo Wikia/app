@@ -250,10 +250,12 @@ class WikiFactoryTags {
 
 		wfProfileIn( __METHOD__ );
 
+		$dbw  = WikiFactory::db( DB_MASTER );
+
 		if( is_array( $ids ) ) {
 			foreach( $ids as $id ) {
 				$dbw->delete(
-					"city_tag",
+					"city_tag_map",
 					array( "city_id" => $this->mCityId, "tag_id" => $id ),
 					__METHOD__
 				);
