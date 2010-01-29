@@ -532,8 +532,8 @@ class WikiaGlobalStats {
 		wfProfileIn( __METHOD__ );
     	
 		$dbLimit = self::$defaultLimit;
-		$date_diff = date('Y-m-d', time() - $days * 60 * 60);
-		$memkey = wfMemcKey( __METHOD__, $days, $dbLimit, intval($onlyContent) );
+		$date_diff = date('Y-m-d', time() - $days * 60 * 60*24);
+		$memkey = wfMemcKey( __METHOD__, $days, $limit, intval($onlyContent) );
 		$data = $wgMemc->get( $memkey );
 		if ( empty($data) ) {
 			$dbr = wfGetDB( DB_SLAVE, 'blobs', $wgExternalDatawareDB );
@@ -562,7 +562,7 @@ class WikiaGlobalStats {
 				);
 			}
 			$dbr->freeResult( $oRes );
-			$wgMemc->set( $memkey , $data, 60*60 );
+			$wgMemc->set( $memkey , $data, 60*30 );
 		}
 		$limitWikiHubs = self::$limitWikiHubs;
 		if ( $recalculateLimit ){
