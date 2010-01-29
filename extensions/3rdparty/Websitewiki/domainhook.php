@@ -3,6 +3,8 @@
 $wgHooks['ArticleAfterFetchContent'][] = 'fnDomainHook';
 $wgHooks['ParserBeforeTidy'][] = 'wsinfo';
 
+$wgExtensionMessagesFiles['wsinfo'] = dirname( __FILE__ ) . '/domainhook.i18n.php';
+
 define( 'WSINFO_PLACEHOLDER', '__wsinfo_here__' );
 
 function fnDomainHook(&$article, &$text)
@@ -12,34 +14,31 @@ function fnDomainHook(&$article, &$text)
   global $wgTitle;
   global $wgParser;
 
-  if($action === 'edit' || $action === 'history' || $action === 'submit' ||
+  if( 
+      !$wgTitle->exists() ||
       $wgTitle->getNamespace() != NS_MAIN ||
       $wgTitle->isRedirect() ||
       !ereg($exDomainList, $wgTitle->getText() ))
-    return(true);
+    return true;
 
-  $text = WSINFO_PLACEHOLDER . $text;
+  if ( strpos( $text, WSINFO_PLACEHOLDER ) === false ) {
+	$text = WSINFO_PLACEHOLDER . $text;
+  }
 
-  return(true);
+  return true;
 }
-
-//include "ratingdraw.php";
 
 $wswErotik = 0;
 
-function wsinfo($parser, $thetext)
-{
-  global $dbhost;
-  global $dbuser;
-  global $dbpass;
-  global $db;
-  global $wgOut, $wgTitle;
-  global $wswErotik;
+function wsinfo($parser, $thetext) {
+  global $wgOut, $wgTitle, $wswErotik, $wgRTEParserEnabled;
 
   $forsale = "";
 
-  if(strpos($thetext, 'Neue Website anlegen? Dann hier zunächst den Basiseintrag erstellen'))
-    return true;
+  # do not touch placeholder in RTE
+  if ( $wgRTEParserEnabled ) {
+	return true;
+  }
 
   if(strpos($thetext, WSINFO_PLACEHOLDER) === false ) {
 	return true;
@@ -47,10 +46,11 @@ function wsinfo($parser, $thetext)
 	$thetext = str_replace( WSINFO_PLACEHOLDER, '', $thetext );
   }
 
+  wfLoadExtensionMessages( 'wsinfo' );
+
   $title = $wgTitle->getText();
 
   $wswErotik = 0;
-
 
   $hour = date("H");
   $day = 0;
@@ -83,7 +83,7 @@ function wsinfo($parser, $thetext)
   $dom = strtolower($title);
 
   if(ereg("[^-0-9.a-z]", $dom))
-    return "";
+    return true;
 
   if(array_key_exists("Geparkt", $parser->mOutput->mCategories) ||
      array_key_exists("Baustelle", $parser->mOutput->mCategories) ||
@@ -92,8 +92,6 @@ function wsinfo($parser, $thetext)
   {
     $forsale = "<a href=\"http://www.sedo.de/checkdomainoffer.php4?partnerid=13318&domain=$dom\" class=\"external text\" target=\"_new\">Ankauf der domain versuchen</a><br>\n";
   }
-
-
 
   if($wswErotik)
     $issex = "sex";
@@ -126,7 +124,7 @@ function wsinfo($parser, $thetext)
   {
     $result .= "\n<table border=\"1\" cellspacing=\"0\" cellpadding=\"4\" style=\"float:right; margin:0 0 .5em 1em;
      width:260px; background:#fff; border-collapse:collapse; border:1px solid #999;
-     font-size:smaller; line-height:1.5; \" summary=\"Website-Infos f&uuml;r $title\">
+     font-size:smaller; line-height:1.5; \" summary=\"" . wfMsgForContent( 'websiteinfo-title', $title ) . "\">
      <tr><td style=\"text-align:center; background:#c0c0c0;\"><b><a href=\"/Website-Infos\">Website-Infos</a>
      f&uuml;r $title</b></td></tr>
      <tr><td style=\"text-align:center; background:#f0f0f0;\"><img src=\"$img\"
@@ -139,7 +137,7 @@ function wsinfo($parser, $thetext)
   {
     $result .= "\n<table border=\"1\" cellspacing=\"0\" cellpadding=\"4\" style=\"float:right; margin:0 0 .5em 1em;
      width:260px; background:#fff; border-collapse:collapse; border:1px solid #999;
-     font-size:smaller; line-height:1.5; \" summary=\"Website-Infos f&uuml;r $title\">
+     font-size:smaller; line-height:1.5; \" summary=\"" . wfMsgForContent( 'websiteinfo-title', $title ) . "\">
      <tr><td style=\"text-align:center; background:#c0c0c0;\"><b><a href=\"/Website-Infos\">Website-Infos</a>
      f&uuml;r $title</b></td></tr>
      <tr><td style=\"text-align:center; background:#f0f0f0;\"><a href=\"$domlink\"
@@ -206,7 +204,7 @@ EOI;
   {
     $result .= "<tr><td align=\"center\" style=\"background:#ffffff;\">Anzeige<p>
     <a href=\"$erolink\" rel=\"nofollow\" target=\"_new\"><img
-    src=\"http://www.sexnutz.de/images/soft_200x200.jpg\" alt=\"Erotik\" width=\"200\" height=\"200\" border=\"0\">
+    src=\"http://www.sexnutz.de/images/soft_200x200.jpg\" alt=\"" . wfMsgForContent( 'websiteinfo-erotik-alt' ) . "\" width=\"200\" height=\"200\" border=\"0\">
     </td></tr>\n";
   } 
 
