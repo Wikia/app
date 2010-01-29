@@ -1,5 +1,5 @@
 if((typeof wgAdsInterstitialsEnabled != 'undefined') && wgAdsInterstitialsEnabled){
-	const COOKIE_NAME = 'IntPgCounter';
+	var COOKIE_NAME = 'IntPgCounter';
 	var count = $.cookies.get(COOKIE_NAME);
 	count = parseInt((!count)?1:count);
 
