@@ -96,6 +96,28 @@ CreatePage.getTitleFromUrl = function( url ) {
 	return vars['title'].replace(/_/g, ' ');
 };
 
+CreatePage.redLinkClick = function(e, titleText) {
+	title = titleText.split(':');
+	isContentNamespace = false;
+	if( window.ContentNamespacesText && (title.length > 1) ) {
+		for(var i in window.ContentNamespacesText) {
+			if(title[0] == window.ContentNamespacesText[i]) {
+				isContentNamespace = true;
+			}
+		}
+	}
+	else {
+		isContentNamespace = true;
+	}
+
+	if( isContentNamespace ) {
+		CreatePage.openDialog(e, titleText );
+	}
+	else {
+		return false;
+	}
+};
+
 $(function() {
 	if( window.WikiaEnableNewCreatepage ) {
 		if( $( '#dynamic-links-write-article-icon' ).exists() ) {
@@ -112,7 +134,7 @@ $(function() {
 			$('#add_recipe_tab').find('a').click( function(e) { CreatePage.openDialog(e, null); });
 		}
 
-		$(".new").bind('click', function(e) { CreatePage.openDialog(e, CreatePage.getTitleFromUrl(this.href) ); } );
+		$(".new").bind('click', function(e) { CreatePage.redLinkClick(e, CreatePage.getTitleFromUrl(this.href)) } );
 		$(".createboxButton").bind('click', function(e) {
 			var form = $(e.target).parent();
 			var field = form.children('.createboxInput');
