@@ -588,9 +588,13 @@ class WikiaGlobalStats {
 				if ( !isset( $values[$hub] ) ) $values[$hub] = 0;
 				if ( !$noHubDepe ){
 					# limit results
-					$hubLimit = ( isset( $limitWikiHubs[ $hub ] ) ) 
-						? $limitWikiHubs[ $hub ]
-						: $limitWikiHubs[ '_default_' ];
+					if ( isset( $limitWikiHubs[ $hub ] ) ){
+						$hubLimit = $limitWikiHubs[ $hub ];
+						$hubCounter = $hub;
+					} else {
+						$hubLimit = $limitWikiHubs[ '_default_' ];	
+						$hubCounter = '_default_';
+					}
 					if ( $values[$hub] == $hubLimit ) continue;
 				}
 				# add to array
