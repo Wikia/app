@@ -32,9 +32,16 @@ $wgExtensionFunctions[] = 'wfCreatePageInit';
 $wgHooks['MakeGlobalVariablesScript'][] = 'wfCreatePageSetupVars';
 
 function wfCreatePageSetupVars( $vars ) {
-	global $wgWikiaEnableNewCreatepageExt;
+	global $wgWikiaEnableNewCreatepageExt, $wgContentNamespaces, $wgContLang;
+
+	$contentNamespaces = array();
+	foreach($wgContentNamespaces as $contentNs) {
+		$contentNamespaces[] = $wgContLang->getNsText($contentNs);
+	}
 
 	$vars['WikiaEnableNewCreatepage'] = $wgWikiaEnableNewCreatepageExt;
+	$vars['ContentNamespacesText'] = $contentNamespaces;
+
 	return true;
 }
 
