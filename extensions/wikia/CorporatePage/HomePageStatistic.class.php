@@ -33,9 +33,9 @@ class HomePageStatistic
 	public static function getMostEditArticles72(){
 		global $wgUser;
 		if ($wgUser->isAllowed( 'corporatepagemanager' )){
-			$out = WikiaGlobalStats::getPagesEditors(7, 10,true,true);
+			$out = WikiaGlobalStats::getPagesEditors(3, 10,true,true);
 		} else {
-			$out = WikiaGlobalStats::getPagesEditors();
+			$out = WikiaGlobalStats::getPagesEditors(3);
 		}
 		$level = 1;
 		foreach ($out as $key => $value){
