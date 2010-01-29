@@ -430,7 +430,10 @@ YAHOO.util.Event.addListener("wf-clear-cache", "click", $Factory.Variable.clear)
 <?php endif ?>
             </li>
 			<li>
-			 Tags: <?php foreach( $tags as $id => $tag ): echo "<strong>{$tag}</strong> "; endforeach; ?>
+				Tags: <?php foreach( $tags as $id => $tag ): echo "<strong>{$tag}</strong> "; endforeach; ?>
+				<sup>
+					<a href="<?php echo $GLOBALS[ "wgScript" ] ?>?title=Special:WikiFactory/<?php echo $wiki->city_id ?>/tags">edit</a>
+				</sup>
 			</li>
             <li>
 				<a href="#" id="wf-clear-cache"><?php echo wfMsg("wikifactory_removevariable") ?></a>
