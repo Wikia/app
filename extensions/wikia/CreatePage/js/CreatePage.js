@@ -6,7 +6,7 @@ CreatePage.pageLayout = null;
 CreatePage.checkTitle = function( title, enterWasHit ) {
 	$.getJSON(wgScript,
 			{
-				'action':'ajax', 
+				'action':'ajax',
 				'rs':'wfCreatePageAjaxCheckTitle',
 				'title':title
 			},
@@ -56,7 +56,7 @@ CreatePage.submitDialog = function( enterWasHit ) {
 };
 
 CreatePage.displayError = function( errorMsg ) {
-	var box = $( '#CreatePageDialogTitleErrorMsg' );	
+	var box = $( '#CreatePageDialogTitleErrorMsg' );
 	box.html( '<span id="createPageErrorMsg">' + errorMsg + '</span>' );
 	box.removeClass('hiddenStructure');
 };
@@ -105,6 +105,11 @@ $(function() {
 		if( $( '#dynamic-links-write-article-link' ).exists() ) {
 			// open dialog on clicking
 			$( '#dynamic-links-write-article-link' ).click( function(e) { CreatePage.openDialog(e, null); });
+		}
+
+		// macbre: RT #38478
+		if ($('#add_recipe_tab').exists()) {
+			$('#add_recipe_tab').find('a').click( function(e) { CreatePage.openDialog(e, null); });
 		}
 
 		$(".new").bind('click', function(e) { CreatePage.openDialog(e, CreatePage.getTitleFromUrl(this.href) ); } );
