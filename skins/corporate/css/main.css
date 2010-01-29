@@ -825,7 +825,9 @@ footer {
 	.page-activity-level-5 {
 		background-color: #069;
 	}
-
+	.page-activity-level-x {
+		background-color: #E0E0E0;
+	}	
 	/* If we need to hilite a particular entry, the following apply. */
 	#wikia-global-hot-spots .hilite .page-activity-badge {
 		background: url(http://images.wikia.com/common/extensions/wikia/MyHome/images/fire.png) repeat-x;
