@@ -85,7 +85,7 @@ function wfSetupDevBoxPanel() {
 function devBoxPanelAdditionalScripts( &$out, &$sk ){
 	global $wgExtensionsPath,$wgStyleVersion;
 	$out->addStyle( "$wgExtensionsPath/wikia/Development/SpecialDevBoxPanel/DevBoxPanel.css?$wgStyleVersion" );
-	$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/Development/DevBoxPanel.js?$wgStyleVersion'></script>");
+	$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/Development/SpecialDevBoxPanel/DevBoxPanel.js?$wgStyleVersion'></script>");
 	return true;
 }
 
