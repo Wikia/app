@@ -18,7 +18,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  */
 class WikiFactoryPage extends SpecialPage {
 
-	private $mWiki, $mTitle, $mDomain, $mTab, $mVariableName;
+	private $mWiki, $mTitle, $mDomain, $mTab, $mVariableName, $mTags;
 	public $mStatuses = array( "disabled", "enabled", "redirected" );
 
 	/**
@@ -100,6 +100,7 @@ class WikiFactoryPage extends SpecialPage {
 			}
 			else {
 				$this->mWiki = $oWiki;
+				$this->mTags = new WikiFactoryTags( $this->mWiki->city_id );
 				$this->doWikiForm( );
 			}
 		}
@@ -204,7 +205,7 @@ class WikiFactoryPage extends SpecialPage {
 	}
 
 	/**
-	 * doCityForm
+	 * doWikiForm
 	 *
 	 * show wiki data
 	 *
@@ -218,6 +219,8 @@ class WikiFactoryPage extends SpecialPage {
 		global $wgDevelEnvironment;
 
 		$info = null;
+
+
 		/**
 		 * check maybe something was posted
 		 */
@@ -232,6 +235,19 @@ class WikiFactoryPage extends SpecialPage {
 				case "tags":
 					$info = $this->doUpdateTags( $wgRequest );
 				break;
+			}
+		}
+		else {
+			/**
+			 * maybe some other action but with GET not POST
+			 */
+			switch( $this->mTab ) {
+				case "tags":
+					$tag_id  = $wgRequest->getVal( "wpTagId", false );
+					if( $tag_id ) {
+						$info = $this->doUpdateTags( $wgRequest, $tag_id );
+					}
+					break;
 			}
 		}
 
@@ -250,13 +266,12 @@ class WikiFactoryPage extends SpecialPage {
 			$user_name = User::WhoIs($this->mWiki->city_founding_user);
 		}
 
-		$tags = new WikiFactoryTags( $this->mWiki->city_id );
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$vars = array(
 			"tab"         => $this->mTab,
 			"hub"         => WikiFactoryHub::getInstance(),
 			"wiki"        => $this->mWiki,
-			"tags"        => $tags->getTags(),
+			"tags"        => $this->mTags->getTags(),
 			"info"        => $info,
 			"title"       => $this->mTitle,
 			"groups"      => WikiFactory::getGroups(),
@@ -327,30 +342,45 @@ class WikiFactoryPage extends SpecialPage {
 		return Wikia::successmsg( $message );
 	}
 
-    /**
-     * doUpdateTags
-     *
-     * @access private
-     * @author eloy@wikia-inc.com
-     *
-     * @return mixed	info when change, null when not changed
-     */
-	private function doUpdateTags( &$request ) {
+	/**
+	 * doUpdateTags
+	 *
+	 * @access private
+	 * @author eloy@wikia-inc.com
+	 *
+	 * @param WebRequest $request  WebRequest instance
+	 * @param Boolean    $tag_id   set if removing, tag_id of removing tag
+	 *
+	 * @return mixed	info when change, null when not changed
+	 */
+	private function doUpdateTags( &$request, $tag_id = false ) {
 
-		$stag = $request->getText( "wpTag", false );
-		$msg  = "";
+		wfProfileIn( __METHOD__ );
 
-		if( $stag ) {
-			$Tags = new WikiFactoryTags( $this->mWiki->city_id );
-			$before = $Tags->getTags( true ); // from master
-			$after  = $Tags->addTagsByName( $stag );
-			$diff   = array_diff_assoc( $before, $after );
-			print_pre( $before, $after, $diff );
-			$msg = "New tags added: " . implode( ", ", $diff );
+		$msg  = false;
+
+		if( $tag_id ) {
+			$tagName = $request->getText( "wpTagName" );
+			$this->mTags->removeTagsById( array( $tag_id ) );
+			$msg = "Tag {$tagName} removed";
 		}
 		else {
-			$msg = "There's no tags to add";
+			$stag = $request->getText( "wpTag", false );
+
+			if( $stag ) {
+				$Tags = new WikiFactoryTags( $this->mWiki->city_id );
+				$before = $Tags->getTags( true ); // from master
+				$after  = $Tags->addTagsByName( $stag );
+				$diff   = array_diff( $after, $before );
+
+				$msg = "Added new tags:" . implode( ", ", $diff );
+			}
+			else {
+				$msg = "Nothing to add";
+			}
 		}
+		wfProfileOut( __METHOD__ );
+
 		return Wikia::successbox( $msg );
 	}
 
