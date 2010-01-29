@@ -7,7 +7,7 @@
 $wgExtensionCredits['other'][] = array(
 		'name' => 'TitleEdit',
 		'description' => 'Adds top title edit buttons',
-		'version' => '0.5',
+		'version' => '0.7',
 		'author' => array('Bartek Lapinski')
 		);
 
@@ -15,13 +15,15 @@ $wgHooks['MonacoPrintFirstHeading'][] = 'wfTitleEditPrintFirstHeading';
 
 
 function wfTitleEditPrintFirstHeading() {
-	global $wgTitle, $wgUser;
+	global $wgTitle, $wgUser, $wgRequest;
 
 	if ( $wgTitle->isProtected( 'edit' ) ) {
 		return true;
 	}
 
-	// todo click tracking 
+	if( 'edit' == $wgRequest->getVal( 'action', false ) ) {
+		return true;
+	}
 
 	$sk = $wgUser->getSkin();
 	$result = '';
