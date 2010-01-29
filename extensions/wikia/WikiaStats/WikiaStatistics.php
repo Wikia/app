@@ -531,8 +531,9 @@ class WikiaGlobalStats {
     	global $wgExternalDatawareDB, $wgMemc;
 		wfProfileIn( __METHOD__ );
     	
-		$date_diff = date('Y-m-d', time() - $days * 60 * 60 * 24);
-		$memkey = wfMemcKey( __METHOD__, $days, intval($onlyContent) );
+		$dbLimit = self::$defaultLimit;
+		$date_diff = date('Y-m-d', time() - $days * 60 * 60);
+		$memkey = wfMemcKey( __METHOD__, $days, $dbLimit, intval($onlyContent) );
 		$data = $wgMemc->get( $memkey );
 		if ( empty($data) ) {
 			$dbr = wfGetDB( DB_SLAVE, 'blobs', $wgExternalDatawareDB );
@@ -542,7 +543,6 @@ class WikiaGlobalStats {
 				$conditions['pc_is_content'] = 1;
 			}
 			
-			$dbLimit = self::$defaultLimit;
 			$oRes = $dbr->select(
 				array( "page_editors" ),
 				array( "pc_is_content, pc_wikia_id, pc_page_id, count(distinct(pc_user_id)) as all_count" ),
