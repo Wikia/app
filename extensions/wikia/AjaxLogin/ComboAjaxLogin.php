@@ -214,9 +214,6 @@ class AjaxLoginForm extends LoginForm {
 		$template->set( 'realname', $this->mRealName );
 		$template->set( 'domain', $this->mDomain );
 
-		$template->set( 'actioncreate', $titleObj->getLocalUrl( $q ) );
-		$template->set( 'actionlogin', $titleObj->getLocalUrl( $q2 ) );
-
 		$template->set( 'message', $msg );
 		$template->set( 'messagetype', $msgtype );
 		$template->set( 'createemail', $wgEnableEmail && $wgUser->isLoggedIn() );
