@@ -600,7 +600,7 @@ class WikiaGlobalStats {
 				# add to array
 				$result[] = $res;
 				# increase counter
-				$values[$hub]++; $loop++;
+				$values[$hubCounter]++; $loop++;
 			}
 		}
 
