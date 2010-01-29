@@ -15,7 +15,9 @@
 		Id: <strong><?php echo $variable->cv_id ?></strong> <sup><small><a href="http://www.wikia.com/wiki/Special:WhereIsExtension?var=<?php echo $variable->cv_id ?>&val=2">Where is...</a></small></sup>
 	</li>
 	<li>
-		Name: <strong><?php echo $variable->cv_name ?></strong> <sup><small><a href="http://www.mediawiki.org/wiki/Manual:$<?php echo $variable->cv_name ?>" title='link to manual page at mediawiki.org'>manual</a></small></sup>
+		Name: <strong><?php echo $variable->cv_name ?></strong> <sup><small>Manual:
+		&nbsp;<a href="http://www.mediawiki.org/wiki/Manual:$<?php echo $variable->cv_name ?>" title='link to manual page at mediawiki.org'>MediaWiki</a>
+		&nbsp;<a href="http://contractor.wikia-inc.com/wiki/Manual:$<?php echo $variable->cv_name ?>" title='link to manual page at contractor.wikia'>Wikia</a></small></sup>
 	</li>
 	<li>
 		Type: <strong><?php echo $variable->cv_variable_type ?></strong>
