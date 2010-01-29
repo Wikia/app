@@ -35,6 +35,10 @@ function getGlobalUserGroups( &$user, &$aUserGroups ) {
 		return true;
 	}
 
+	// paranoia: remove any global groups present locally
+	// these shouldn't be here anyway!
+	$aUserGroups = array_diff( $aUserGroups, $wgGlobalUserGroups );
+
 	$dbr = wfGetDB( DB_SLAVE, array(), $wgSharedDB );
 
 	// get all user groups for current user from SharedDB
@@ -46,8 +50,8 @@ function getGlobalUserGroups( &$user, &$aUserGroups ) {
 	);
 
 	while( $row = $dbr->fetchObject( $res ) ) {
-		// apply each global group if the user doesn't already have it (could be set locally)
-		if ( in_array( $row->ug_group, $wgGlobalUserGroups ) && !in_array( $row->ug_group, $aUserGroups ) ) {
+		// apply each global group
+		if ( in_array( $row->ug_group, $wgGlobalUserGroups ) ) {
 			$aUserGroups[] = $row->ug_group;
 		}
 	}
