@@ -271,6 +271,7 @@ class GlobalWatchlistBot {
 		if ($oUser->isAnon() || $oUser->getOption('htmlemails')) {
 			$usehtmlemail = true;
 		}
+		$oUserLanguage = $oUser->getOption('language'); //get this once, since its used 10 times in this func
 
 		foreach ( $aDigestsData as $aDigest ) {
 			$wikiname = $aDigest['wikiName'] . ( $aDigest['wikiLangCode'] != 'en' ?  " (" . $aDigest['wikiLangCode'] . ")": "" ) . ':';
@@ -315,7 +316,7 @@ class GlobalWatchlistBot {
 					$tracking_url = $blogComments['blogpage']->getFullURL('s=dg'); // watchlist tracking, rt#33913
 
 					$message = wfMsgReplaceArgs(
-						($countComments != 0) ? $this->getLocalizedMsg('globalwatchlist-blog-page-title-comment', $oUser->getOption('language') ) : "$1",
+						($countComments != 0) ? $this->getLocalizedMsg('globalwatchlist-blog-page-title-comment', $oUserLanguage ) : "$1",
 						array ( 
 							0 => $tracking_url, //send the ugly tracking url to the plain emails
 							1 => $countComments
@@ -326,8 +327,9 @@ class GlobalWatchlistBot {
 					if( $usehtmlemail ) {
 						//for html emails, remake some things
 						$clean_url = $blogComments['blogpage']->getFullURL();
+						$clean_url = str_replace('_', ' ', urldecode($clean_url));
 						$message = wfMsgReplaceArgs(
-							($countComments != 0) ? $this->getLocalizedMsg('globalwatchlist-blog-page-title-comment', $oUser->getOption('language') ) : "$1",
+							($countComments != 0) ? $this->getLocalizedMsg('globalwatchlist-blog-page-title-comment', $oUserLanguage ) : "$1",
 							array ( 
 								0 => "<a href=\"{$tracking_url}\">" . $clean_url . "</a>", //but use the non-tracking one for html display
 								1 => $countComments
@@ -345,27 +347,27 @@ class GlobalWatchlistBot {
 		}
 
 		if ( $isDigestLimited ) {
-			$sDigests .= $this->getLocalizedMsg('globalwatchlist-see-more', $oUser->getOption('language')) . "\n";
+			$sDigests .= $this->getLocalizedMsg('globalwatchlist-see-more', $oUserLanguage) . "\n";
 		}
 
 		$aEmailArgs = array(
 			0 => ucfirst($oUser->getName()),
-			1 => ( $iPagesCount > 0 ) ? $sDigests : $this->getLocalizedMsg('globalwatchlist-no-page-found', $oUser->getOption('language')),
-			2 => ( $iBlogsCount > 0 ) ? $sDigestsBlogs : $this->getLocalizedMsg('globalwatchlist-no-blog-page-found', $oUser->getOption('language')),
+			1 => ( $iPagesCount > 0 ) ? $sDigests : $this->getLocalizedMsg('globalwatchlist-no-page-found', $oUserLanguage),
+			2 => ( $iBlogsCount > 0 ) ? $sDigestsBlogs : $this->getLocalizedMsg('globalwatchlist-no-blog-page-found', $oUserLanguage),
 		);
 
-		$sMessage = $this->getLocalizedMsg( 'globalwatchlist-digest-email-body', $oUser->getOption('language') ) . "\n";
+		$sMessage = $this->getLocalizedMsg( 'globalwatchlist-digest-email-body', $oUserLanguage ) . "\n";
 		$sBody = wfMsgReplaceArgs($sMessage, $aEmailArgs);
 
 		if ($usehtmlemail) {
 			//rebuild the $ args using the HTML text we've built
 			$aEmailArgs = array(
 				0 => ucfirst($oUser->getName()),
-				1 => ( $iPagesCount > 0 ) ? $sDigestsHTML : $this->getLocalizedMsg('globalwatchlist-no-page-found', $oUser->getOption('language')),
-				2 => ( $iBlogsCount > 0 ) ? $sDigestsBlogsHTML : $this->getLocalizedMsg('globalwatchlist-no-blog-page-found', $oUser->getOption('language')),
+				1 => ( $iPagesCount > 0 ) ? $sDigestsHTML : $this->getLocalizedMsg('globalwatchlist-no-page-found', $oUserLanguage),
+				2 => ( $iBlogsCount > 0 ) ? $sDigestsBlogsHTML : $this->getLocalizedMsg('globalwatchlist-no-blog-page-found', $oUserLanguage),
 			);
 
-			$sMessageHTML = $this->getLocalizedMsg( 'globalwatchlist-digest-email-body-HTML', $oUser->getOption('language') );
+			$sMessageHTML = $this->getLocalizedMsg( 'globalwatchlist-digest-email-body-HTML', $oUserLanguage );
 			if(!wfEmptyMsg( 'globalwatchlist-digest-email-body-HTML', $sMessageHTML )) {
 				$sBodyHTML = wfMsgReplaceArgs($sMessageHTML, $aEmailArgs);
 			}
