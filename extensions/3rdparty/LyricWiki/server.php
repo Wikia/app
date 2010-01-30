@@ -423,7 +423,7 @@ function checkSongExists($artist, $song="") {
 
 	$retVal = false;
 	global $SHUT_DOWN_API;
-	if(!$SHUT_DOWN_API){
+	if($SHUT_DOWN_API){
 		// There's really no good way to communicate through this message that the API is disabled.
 		// If there has to be a failure case, it's probably(?) less damaging to have this be false.
 		$retVal = false;
@@ -520,7 +520,7 @@ function searchAlbums($artist, $album, $year){
 	$retVal[] = array('artist' => 'P1Nk F10yd', 'album' => 'D4rk S1d3 0f T3h M00n', 'year' => 2006);
 	
 	GLOBAL $SHUT_DOWN_API;
-	if($SHUT_DOWN_API){
+	if(!$SHUT_DOWN_API){
 		// TODO: IMPLEMENT
 		// TODO: IMPLEMENT
 	}
@@ -1140,7 +1140,7 @@ function getAlbum($artist){ // TODO: IMPLEMENT - UM... THIS DOESN'T LOOK LIKE IT
 	$retVal = array('artist' => 'Staind', 'album' => 'Chapter V', 'year' => 2005, 'amazonLink' => $link, 'songs' => $songs);
 	
 	GLOBAL $SHUT_DOWN_API;
-	if($SHUT_DOWN_API){
+	if(!$SHUT_DOWN_API){
 		// TODO: IMPLEMENT
 		// TODO: IMPLEMENT
 	}
