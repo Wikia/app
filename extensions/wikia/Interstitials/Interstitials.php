@@ -63,6 +63,7 @@ function interstitialHtml(){
 
 		$code = (empty($wgAdsInterstitialsCampaignCode)?wfMsg('interstitial-default-campaign-code'):$wgAdsInterstitialsCampaignCode);
 		$skip = wfMsg('interstitial-skip-ad');
+		// FIXME: If there is any way to do the same styling gracefully without using repeated IDs from the main part of the page, that would be much preferable.
 		$html = <<<CHUNK
 			<div id="interstitial_fg" class="interstitial_fg">
 				<div class='interstitial_fg_top color1'>
