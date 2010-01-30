@@ -1,26 +1,46 @@
-.interstitial_background {
+.interstitial_bg {
 	display: none;
 	position: absolute;
 	top: 0%;
 	left: 0%;
 	width: 100%;
 	height: 100%;
-	background-color: black;
 	z-index:1001;
-	-moz-opacity: 0.8;
-	opacity:.80;
-	filter: alpha(opacity=80);
 }
-.interstitial_foreground {
+.interstitial_fg{
 	display: none;
 	position: absolute;
-	top: 25%;
+	/*top: 25%;*/
 	left: 25%;
-	width: 50%;
-	height: 50%;
-	padding: 16px;
-	border: 16px solid orange;
+	/*width: 50%;*/
+	padding: 2px;
+	border: 1px solid;
 	background-color: white;
 	z-index:1002;
 	overflow: auto;
+	margin-top:29px;
+	-moz-border-radius-bottomleft: 10px;
+	-moz-border-radius-bottomright: 10px;
+}
+.interstitial_bg_top{
+	width: 100%;
+	text-align:left;
+}
+.interstitials_bg_top{
+}
+.interstitial_bg_middle{
+	width: 100%;
+}
+.interstitial_bg_bottom{
+	width: 100%;
+	height:100%;
+}
+.interstitial_fg_top{
+	text-align:right;
+	padding: 5px;
+	padding-left:400px;
+}
+.interstitial_fg_body{
+	padding:10px 50px;
+	text-align:center;
 }

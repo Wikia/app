@@ -64,11 +64,31 @@ function interstitialHtml(){
 		$code = (empty($wgAdsInterstitialsCampaignCode)?wfMsg('interstitial-default-campaign-code'):$wgAdsInterstitialsCampaignCode);
 		$skip = wfMsg('interstitial-skip-ad');
 		$html = <<<CHUNK
-				<div id="interstitial_foreground" class="interstitial_foreground">
-					$code
-					<a href = "javascript:void(0)" onclick = "document.getElementById('interstitial_foreground').style.display='none';document.getElementById('interstitial_background').style.display='none'">$skip</a>
+			<div id="interstitial_fg" class="interstitial_fg">
+				<div class='interstitial_fg_top color1'>
+					<a href = "javascript:void(0)" class='wikia_button' onclick = "document.getElementById('interstitial_fg').style.display='none';document.getElementById('interstitial_bg').style.display='none'"><span>$skip</span></a>
 				</div>
-				<div id="interstitial_background" class="interstitial_background"></div>
+				<div class='interstitial_fg_body'>
+					$code
+				</div>
+			</div>
+			<div id="interstitial_bg" class="interstitial_bg">
+				<div class='interstitial_bg_top color2'>
+					<div id="wikia_header">
+						<div class="monaco_shinkwrap">
+							<div id="wikiaBranding">
+								<div id="wikia_logo">Wikia</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id='background_strip' class='interstitial_bg_middle'>
+					&nbsp;
+				</div>
+				<div class='color2 interstitial_bg_bottom'>
+					&nbsp;
+				</div>
+			</div>
 CHUNK;
 	}
 	return $html;

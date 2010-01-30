@@ -9,12 +9,15 @@ if((typeof wgAdsInterstitialsEnabled != 'undefined') && wgAdsInterstitialsEnable
 	});
 
 	if((wgAdsInterstitialsPagesBeforeFirstAd == count) || ((count > wgAdsInterstitialsPagesBeforeFirstAd) && ((count % wgAdsInterstitialsPagesBetweenAds) == 0))){
+		$('#interstitial_fg').css('border-color', $('#wikia_page').css('border-left-color'));
+		$('#interstitial_fg').css('background-color', $('#wikia_page').css('background-color'));
+
 		var adMillis = 1000 * wgAdsInterstitialsDurationInSeconds;
-		$('#interstitial_foreground').show();
-		$('#interstitial_background').show();
+		$('#interstitial_fg').show();
+		$('#interstitial_bg').show();
 		setTimeout(function(){
-			$('#interstitial_foreground').hide();
-			$('#interstitial_background').hide();
+			$('#interstitial_fg').hide();
+			$('#interstitial_bg').hide();
 		}, adMillis);
 	}
 }
