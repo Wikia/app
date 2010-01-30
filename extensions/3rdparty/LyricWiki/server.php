@@ -8,6 +8,10 @@
 //
 // TODO: For the Kompoz lyrics, make it add special Kompoz data - update: 20080716... what ended up happening with Kompoz?  They still around & using LyricWiki?.
 // TODO: When a user adds a song, make sure it is automatically merged into the artist page (User:Janitor makes this not too big of a deal since he finds orphans and adds them to the artist's Other Songs section).
+//
+// NOTES FOR DEVELOPERS:
+// - When implementing a new method, make sure to check the global $SHUT_DOWN_API.
+// - Before writing anything to the database, remember to check wfReadOnly().
 ////
 
 include_once 'extras.php'; // for lw_simpleQuery to start
@@ -21,6 +25,9 @@ define('TRACK_REQUEST_RUNTIMES', false);
 GLOBAL $REQUEST_TYPE;
 $REQUEST_TYPE = isset($REQUEST_TYPE)?$REQUEST_TYPE:"SOAP";
 
+// This will only show up if SHUT_DOWN_API is set to true (and still, only on methods that have a decent field in which to display it).
+GLOBAL $SHUT_DOWN_API_REASON;
+$SHUT_DOWN_API_REASON = "API is temporarily disabled due to high traffic.  We expect it to be re-enabled on February 1st after some changes are completed.";
 GLOBAL $SHUT_DOWN_API;
 if(empty($SHUT_DOWN_API)){
 	$SHUT_DOWN_API = false;
@@ -55,6 +62,9 @@ if(!$SHUT_DOWN_API){
 	}
 
 	require (dirname(__FILE__) . '/../../../includes/WebStart.php');
+} else if(!function_exists("wfReadOnly")){
+	// Since we skip the MediaWiki stack when the API is disabled, this stub is needed.
+	function wfReadOnly(){return true;}
 }
 
 GLOBAL $wgUser;
@@ -412,10 +422,17 @@ function checkSongExists($artist, $song="") {
 	$id = requestStarted(__METHOD__, "$artist|$song");
 
 	$retVal = false;
-	$title = lw_getTitle($artist,$song);
-	$tempTitle = Title::newFromDBkey($title);
-	if(isset($tempTitle)){
-		$retVal = $tempTitle->exists();
+	global $SHUT_DOWN_API;
+	if(!$SHUT_DOWN_API){
+		// There's really no good way to communicate through this message that the API is disabled.
+		// If there has to be a failure case, it's probably(?) less damaging to have this be false.
+		$retVal = false;
+	} else {
+		$title = lw_getTitle($artist,$song);
+		$tempTitle = Title::newFromDBkey($title);
+		if(isset($tempTitle)){
+			$retVal = $tempTitle->exists();
+		}
 	}
 
 	requestFinished($id);
@@ -443,49 +460,52 @@ function searchArtists($searchString){
 
 	print (!$debug?"":"Starting title: \"$artist\".\n");
 
+	GLOBAL $SHUT_DOWN_API;
+	if(!$SHUT_DOWN_API){
 // TODO: THIS FUNCTION IS USELESS.. HAVE IT FOLLOW REDIRECTS, FIND CLOSE MATCHES, ETC.
 
-	// If the string starts or ends with %'s, trim them off.
-	if(strlen($artist) >= 1){
-		while((strlen($artist >= 1)) && (substr($artist, 0, 1) == "%")){
-			$artist = substr($artist, 1);
-		}
-		while((strlen($artist >= 1)) && (substr($artist, -1) == "%")){
-			$artist = substr($artist, 0, (strlen($artist)-1) );
-		}
-		print (!$debug?"":"After trimming '%'s off: \"$artist\".\n");
+		// If the string starts or ends with %'s, trim them off.
+		if(strlen($artist) >= 1){
+			while((strlen($artist >= 1)) && (substr($artist, 0, 1) == "%")){
+				$artist = substr($artist, 1);
+			}
+			while((strlen($artist >= 1)) && (substr($artist, -1) == "%")){
+				$artist = substr($artist, 0, (strlen($artist)-1) );
+			}
+			print (!$debug?"":"After trimming '%'s off: \"$artist\".\n");
 
-		$db = lw_connect_readOnly();
-		$queryString = "SELECT page_title FROM page WHERE page_namespace=0 AND page_title NOT LIKE '%:%' AND page_title LIKE '$artist' LIMIT $MAX_RESULTS";
-		if($result = mysql_query($queryString, $db)){
-			if(($numRows = mysql_num_rows($result)) && ($numRows > 0)){
-				for($cnt=0; $cnt<$numRows; $cnt++){
-					$retVal[] = mysql_result($result, $cnt, "page_title");
+			$db = lw_connect_readOnly();
+			$queryString = "SELECT page_title FROM page WHERE page_namespace=0 AND page_title NOT LIKE '%:%' AND page_title LIKE '$artist' LIMIT $MAX_RESULTS";
+			if($result = mysql_query($queryString, $db)){
+				if(($numRows = mysql_num_rows($result)) && ($numRows > 0)){
+					for($cnt=0; $cnt<$numRows; $cnt++){
+						$retVal[] = mysql_result($result, $cnt, "page_title");
+					}
+				} else {
+					print (!$debug?"":"No matches for page_title LIKE \"$artist\".\n");
 				}
 			} else {
-				print (!$debug?"":"No matches for page_title LIKE \"$artist\".\n");
+				print (!$debug?"":"Error with query: \"$queryString\"\nmysql_error: ".mysql_error());
 			}
-		} else {
-			print (!$debug?"":"Error with query: \"$queryString\"\nmysql_error: ".mysql_error());
-		}
 
-		// If there were no results at all, look for some with a more liberal query (which takes WAY too long to execute).
-		if(count($retVal) == 0){
-		// TODO: Figure out a better query.  This one takes 15 seconds to run on the live server (400,000+ rows and a bunch of connections at a time: max-connections=100).
-		// NOTE: Now that we have a Lucene Search server, there may be a way to query that for results.
-	//		$db = lw_connect_readOnly();
-	//		$queryString = "SELECT page_title FROM wiki_page WHERE page_namespace=0 AND page_title NOT LIKE '%:%' AND page_title LIKE '%$artist%' LIMIT $MAX_RESULTS";
-	//		if($result = mysql_query($queryString, $db)){
-	//			if(($numRows = mysql_num_rows($result)) && ($numRows > 0)){
-	//				for($cnt=0; $cnt<$numRows; $cnt++){
-	//					$retVal[] = mysql_result($result, $cnt, "page_title");
-	//				}
-	//			} else {
-	//				print (!$debug?"":"No matches for page_title LIKE \"$artist\".\n");
-	//			}
-	//		} else {
-	//			print (!$debug?"":"Error with query: \"$queryString\"\nmysql_error: ".mysql_error());
-	//		}
+			// If there were no results at all, look for some with a more liberal query (which takes WAY too long to execute).
+			if(count($retVal) == 0){
+			// TODO: Figure out a better query.  This one takes 15 seconds to run on the live server (400,000+ rows and a bunch of connections at a time: max-connections=100).
+			// NOTE: Now that we have a Lucene Search server, there may be a way to query that for results.
+		//		$db = lw_connect_readOnly();
+		//		$queryString = "SELECT page_title FROM wiki_page WHERE page_namespace=0 AND page_title NOT LIKE '%:%' AND page_title LIKE '%$artist%' LIMIT $MAX_RESULTS";
+		//		if($result = mysql_query($queryString, $db)){
+		//			if(($numRows = mysql_num_rows($result)) && ($numRows > 0)){
+		//				for($cnt=0; $cnt<$numRows; $cnt++){
+		//					$retVal[] = mysql_result($result, $cnt, "page_title");
+		//				}
+		//			} else {
+		//				print (!$debug?"":"No matches for page_title LIKE \"$artist\".\n");
+		//			}
+		//		} else {
+		//			print (!$debug?"":"Error with query: \"$queryString\"\nmysql_error: ".mysql_error());
+		//		}
+			}
 		}
 	}
 
@@ -493,11 +513,18 @@ function searchArtists($searchString){
 	return $retVal;
 }
 
-function searchAlbums($artist, $album, $year){ // TODO: IMPLEMENT
+function searchAlbums($artist, $album, $year){
 	$id = requestStarted(__METHOD__, "$artist|$album|$year");
 	$retVal = array();
 	$retVal[] = array('artist' => 'Pink Floyd', 'album' => 'Dark Side Of The Moon', 'year' => 1973);
 	$retVal[] = array('artist' => 'P1Nk F10yd', 'album' => 'D4rk S1d3 0f T3h M00n', 'year' => 2006);
+	
+	GLOBAL $SHUT_DOWN_API;
+	if($SHUT_DOWN_API){
+		// TODO: IMPLEMENT
+		// TODO: IMPLEMENT
+	}
+	
 	requestFinished($id);
 	return $retVal;
 }
@@ -505,6 +532,15 @@ function searchAlbums($artist, $album, $year){ // TODO: IMPLEMENT
 function searchSongs($artist, $song){ // TODO: IMPLEMENT
 	$id = requestStarted(__METHOD__, "$artist|$song");
 	$retVal = array('artist' => 'Beethoven', 'song' => 'Moonlight Sonata');
+	
+	GLOBAL $SHUT_DOWN_API;
+	if(!$SHUT_DOWN_API){
+	
+		// TODO: IMPLEMENT
+		// TODO: IMPLEMENT
+	
+	}
+
 	requestFinished($id);
 	return $retVal;
 }
@@ -513,37 +549,49 @@ function searchSongs($artist, $song){ // TODO: IMPLEMENT
 // FETCHING METHODS
 function getSOTD(){
 	$id = requestStarted(__METHOD__, "");
-	$matches = array();
-	$sotdPage = lw_getPage("Template:Song_Of_The_Day");
-	$nominatedBy = $reason = "";
-	if(0 == preg_match("/'''Song:\s*\[\[([^\]]*)\]\]('''|<br.?>)/si", $sotdPage, $matches)){
-		$matches[1] = ''; // TODO: RETURN AN ERROR.
+
+	$retVal = array();
+	GLOBAL $SHUT_DOWN_API;
+	if($SHUT_DOWN_API){
+		global $SHUT_DOWN_API_REASON;
+		$retVal['artist'] = "";
+		$retVal['song'] = "";
+		$retVal['nominatedBy'] = "";
+		$retVal['reason'] = $SHUT_DOWN_API_REASON;
 	} else {
-		$fullTitle = $matches[1];
-	}
-	if(0<preg_match("/'''Nominated By:\s*\[\[(.*?)\]\]/si", $sotdPage, $matches)){
-		$nominatedBy = $matches[1];
-		if($index = strpos($nominatedBy, "|")){
-			$nominatedBy = substr($nominatedBy, 0, $index); // chop off the alias
+		$matches = array();
+		$sotdPage = lw_getPage("Template:Song_Of_The_Day");
+		$nominatedBy = $reason = "";
+		if(0 == preg_match("/'''Song:\s*\[\[([^\]]*)\]\]('''|<br.?>)/si", $sotdPage, $matches)){
+			$matches[1] = ''; // TODO: RETURN AN ERROR.
+		} else {
+			$fullTitle = $matches[1];
 		}
-	}
-	if(0<preg_match("/'''Reason:(''')?\s*(.*?)\s*<!-- SOTD END -->/si", $sotdPage, $matches)){
-		$reason = $matches[2];
+		if(0<preg_match("/'''Nominated By:\s*\[\[(.*?)\]\]/si", $sotdPage, $matches)){
+			$nominatedBy = $matches[1];
+			if($index = strpos($nominatedBy, "|")){
+				$nominatedBy = substr($nominatedBy, 0, $index); // chop off the alias
+			}
+		}
+		if(0<preg_match("/'''Reason:(''')?\s*(.*?)\s*<!-- SOTD END -->/si", $sotdPage, $matches)){
+			$reason = $matches[2];
+		}
+
+		// Have to break up the artist and songname because getSong retuns the result in the same format it is given the data (to make verification easier).
+		if($index = strpos($fullTitle,":")){
+			$artist = substr($fullTitle, 0, $index);
+			$song = substr($fullTitle, $index+1);
+		} else {
+			$artist = $fullTitle; // lw_getTitle can handle this regardless of format (even if it had a colon already).
+			$song = "";
+		}
+		$retVal = getSong($artist, $song);
+		$retVal['artist'] = str_replace("_", " ", $retVal['artist']);
+		$retVal['song'] = str_replace("_", " ", $retVal['song']);
+		$retVal['nominatedBy'] = str_replace("_", " ", $nominatedBy);
+		$retVal['reason'] = $reason;
 	}
 
-	// Have to break up the artist and songname because getSong retuns the result in the same format it is given the data (to make verification easier).
-	if($index = strpos($fullTitle,":")){
-		$artist = substr($fullTitle, 0, $index);
-		$song = substr($fullTitle, $index+1);
-	} else {
-		$artist = $fullTitle; // lw_getTitle can handle this regardless of format (even if it had a colon already).
-		$song = "";
-	}
-	$retVal = getSong($artist, $song);
-	$retVal['artist'] = str_replace("_", " ", $retVal['artist']);
-	$retVal['song'] = str_replace("_", " ", $retVal['song']);
-	$retVal['nominatedBy'] = str_replace("_", " ", $nominatedBy);
-	$retVal['reason'] = $reason;
 	requestFinished($id);
 	return $retVal;
 }
@@ -584,13 +632,14 @@ function getSong($artist, $song="", $doHyphens=true){
 	$DENIED_NOTICE = "Unfortunately, due to licensing restrictions from some of the major music publishers we can no longer return lyrics through the LyricWiki API (where this application gets some or all of its lyrics).\n";
 	$DENIED_NOTICE.= "\nThe lyrics for this song can be found at the following URL:\n";
 	$DENIED_NOTICE_SUFFIX = "\n\n\n(Please note: this is not the fault of the developer who created this application, but is a restriction imposed by the music publishers themselves.)";
-	$TRUNCATION_NOTICE = "Our licenses prevent us from returning the full lyrics to this song via the API.  For full lyrics, please visit: $urlLink";
+	//$TRUNCATION_NOTICE = "Our licenses prevent us from returning the full lyrics to this song via the API.  For full lyrics, please visit: $urlRoot"."$artist:$song";
 	$retVal = array('artist' => $artist, 'song' => $song, 'lyrics' => $defaultLyrics, 'url' => $defaultUrl);
 
 	GLOBAL $SHUT_DOWN_API;
 	if($SHUT_DOWN_API){
 		$retVal = array('artist' => $artist, 'song' => $song, 'lyrics' => $defaultLyrics, 'url' => 'http://lyrics.wikia.com');
-		$retVal['lyrics'] = "API is temporarily disabled.  Please try back shortly."; //"Creating a database backup (this will take a few minutes).";
+		global $SHUT_DOWN_API_REASON;
+		$retVal['lyrics'] = $SHUT_DOWN_API_REASON;
 	} else {
 		// WARNING: This may cause some unexpected results if these artists ever become actual pages.
 		// These are "artists" which are very commonly accuring non-artists.  IE: Baby Einstein is a collection of classical music, Apple Inc. is just apple's (video?) podcasts
@@ -877,7 +926,7 @@ function getArtist($artist){
 
 	requestFinished($id);
 	return $retVal;
-}
+} // end getArtist()
 
 ////
 // Given the wikitext from an artist page, parse out the discographies and return them
@@ -1089,6 +1138,13 @@ function getAlbum($artist){ // TODO: IMPLEMENT - UM... THIS DOESN'T LOOK LIKE IT
 	// TODO: If album page doesn't exist, search the artist page for that album.
 
 	$retVal = array('artist' => 'Staind', 'album' => 'Chapter V', 'year' => 2005, 'amazonLink' => $link, 'songs' => $songs);
+	
+	GLOBAL $SHUT_DOWN_API;
+	if($SHUT_DOWN_API){
+		// TODO: IMPLEMENT
+		// TODO: IMPLEMENT
+	}
+
 	requestFinished($id);
 	return $retVal;
 } // end getAlbum(...)
@@ -1111,24 +1167,27 @@ function getHometown($artist){
 
 	$artist = trim(html_entity_decode($artist));
 	$isUTF = utf8_compliant("$artist");
-	print (!$debug?"":"Formatting \"$artist\"\n");
-	print (!$debug?"":"utf8_compliant: ".utf8_compliant("$artist")."\n");
-	$title = lw_getTitle($artist, "", (!$isUTF)); // if isUTF, skips the utf8 encoding (that is only for the values from the db... from the URL they should be fine already).
-	print (!$debug?"":"utf8_compliant: ".utf8_compliant("$title")." - $title\n");
-	print (!$debug?"":"Looking for \"$title\"\n");
-	$finalName = "";
-	if(lw_pageExists($title)){
-		$page = lw_getPage($title, array(), $finalName, $debug);
+	GLOBAL $SHUT_DOWN_API;
+	if(!$SHUT_DOWN_API){
+		print (!$debug?"":"Formatting \"$artist\"\n");
+		print (!$debug?"":"utf8_compliant: ".utf8_compliant("$artist")."\n");
+		$title = lw_getTitle($artist, "", (!$isUTF)); // if isUTF, skips the utf8 encoding (that is only for the values from the db... from the URL they should be fine already).
+		print (!$debug?"":"utf8_compliant: ".utf8_compliant("$title")." - $title\n");
+		print (!$debug?"":"Looking for \"$title\"\n");
+		$finalName = "";
+		if(lw_pageExists($title)){
+			$page = lw_getPage($title, array(), $finalName, $debug);
 
-		$matches = array();
-		if(0 < preg_match("/\{\{Hometown[\s*\|]+country\s*=\s*([a-z _]*)[\s*\|]+state\s*=\s*([a-z _]*)[\s*\|]+hometown\s*=\s*([a-z _]*)/is", $page, $matches)){
-			$country = $matches[1];
-			$state = $matches[2];
-			$hometown = $matches[3];
-		} else if(0 < preg_match("/\|\s*country\s*=\s*([a-z _]*)[\s*\|]+state\s*=\s*([a-z _]*)[\s*\|]+hometown\s*=\s*([a-z _]*)/is", $page, $matches)){
-			$country = $matches[1];
-			$state = $matches[2];
-			$hometown = $matches[3];
+			$matches = array();
+			if(0 < preg_match("/\{\{Hometown[\s*\|]+country\s*=\s*([a-z _]*)[\s*\|]+state\s*=\s*([a-z _]*)[\s*\|]+hometown\s*=\s*([a-z _]*)/is", $page, $matches)){
+				$country = $matches[1];
+				$state = $matches[2];
+				$hometown = $matches[3];
+			} else if(0 < preg_match("/\|\s*country\s*=\s*([a-z _]*)[\s*\|]+state\s*=\s*([a-z _]*)[\s*\|]+hometown\s*=\s*([a-z _]*)/is", $page, $matches)){
+				$country = $matches[1];
+				$state = $matches[2];
+				$hometown = $matches[3];
+			}
 		}
 	}
 
@@ -1147,197 +1206,205 @@ function postArtist($overwriteIfExists, $artist, $albums){ // TODO: IMPLEMENT
 
 	$retVal = array('artist' => $artist, 'dataUsed' => false,
 					'message' => 'Not implemented yet.  This would give info on whether some of the data, none, or all of it was used');
-	lw_tryLogin();
 
-	$artistName = lw_getTitle($artist);
-	$pageTitle = Title::newFromDBkey(utf8_decode(htmlspecialchars_decode($artistName)));
-	$pageExists = $pageTitle && $pageTitle->exists(); // call here and store the result to check after page is created to determine if it was an overwrite
-	if($pageExists){
+	global $SHUT_DOWN_API;
+	if($SHUT_DOWN_API){
+		global $SHUT_DOWN_API_REASON;
+		$retVal['message'] = $SHUT_DOWN_API_REASON;
+	} else {
+		lw_tryLogin();
 
-		// TODO: REMOVE
-		if(false){
+		$artistName = lw_getTitle($artist);
+		$pageTitle = Title::newFromDBkey(utf8_decode(htmlspecialchars_decode($artistName)));
+		$pageExists = $pageTitle && $pageTitle->exists(); // call here and store the result to check after page is created to determine if it was an overwrite
+		if($pageExists){
 
-		$currData = getArtist($artist);
-		$currAlbums = $currData['albums'];
-		$content = lw_getPage($artistName);
+			// TODO: REMOVE
+			if(false){
 
-		// Find the appropriate place chronologically for the album and insert it.
-		for($cnt=0; $cnt<count($albums); $cnt++){
-			$activeAlbum = $albums[$cnt]; // the album we are going to insert
-			$activeAlbum = $activeAlbum['albums']; // weird side-effect... every album is wrapped in an 'albums' array.
-			if(strtolower($activeAlbum['album'])=="other songs"){
-				$activeAlbum['year'] = 0;
-			}
+			$currData = getArtist($artist);
+			$currAlbums = $currData['albums'];
+			$content = lw_getPage($artistName);
 
-	/*if($artist == "Sahara Hotnights"){
-		print "Active album:\n";
-		print_r($activeAlbum);
-		print "\nAll albums:\n";
-		print_r($albums);
-	}
-	print (($artist!="Sahara Hotnights")?"":"Active album: *".$activeAlbum['album']."*\n");
-*/
-			// Find correct order to insert in.
-			$insertBefore = -1;
-			$doneAdding = false;
-			for($index=0; $index<count($currAlbums); $index++){
-				$comparisonAlbum = $currAlbums[$index];
-				if(($activeAlbum['year'] < $comparisonAlbum['year']) && (strtolower($activeAlbum['album']) != "other songs")){
-					$insertBefore = $index;
-					$index = count($currAlbums); // stop looping
-				} else if($activeAlbum['year'] == $comparisonAlbum['year']){
-					if(strtolower($activeAlbum['album']) == strtolower($comparisonAlbum['album'])){
-						// Album already exists, just merge the track listings.
-						$doneAdding = true; // album already exists, don't add whole album to the code
-						$additionalTracks = array();
-						$tracks = $activeAlbum['songs'];
-						$tracksFound = $comparisonAlbum['songs'];
+			// Find the appropriate place chronologically for the album and insert it.
+			for($cnt=0; $cnt<count($albums); $cnt++){
+				$activeAlbum = $albums[$cnt]; // the album we are going to insert
+				$activeAlbum = $activeAlbum['albums']; // weird side-effect... every album is wrapped in an 'albums' array.
+				if(strtolower($activeAlbum['album'])=="other songs"){
+					$activeAlbum['year'] = 0;
+				}
 
-						foreach($tracks as $currTrack){
-							$found = false;
-							for($trackNum=0; (($trackNum<count($tracksFound)) && (!$found)); $trackNum++){
-								if($currTrack == $tracksFound[$trackNum]){
-									$found = true;
+		/*if($artist == "Sahara Hotnights"){
+			print "Active album:\n";
+			print_r($activeAlbum);
+			print "\nAll albums:\n";
+			print_r($albums);
+		}
+		print (($artist!="Sahara Hotnights")?"":"Active album: *".$activeAlbum['album']."*\n");
+		*/
+				// Find correct order to insert in.
+				$insertBefore = -1;
+				$doneAdding = false;
+				for($index=0; $index<count($currAlbums); $index++){
+					$comparisonAlbum = $currAlbums[$index];
+					if(($activeAlbum['year'] < $comparisonAlbum['year']) && (strtolower($activeAlbum['album']) != "other songs")){
+						$insertBefore = $index;
+						$index = count($currAlbums); // stop looping
+					} else if($activeAlbum['year'] == $comparisonAlbum['year']){
+						if(strtolower($activeAlbum['album']) == strtolower($comparisonAlbum['album'])){
+							// Album already exists, just merge the track listings.
+							$doneAdding = true; // album already exists, don't add whole album to the code
+							$additionalTracks = array();
+							$tracks = $activeAlbum['songs'];
+							$tracksFound = $comparisonAlbum['songs'];
+
+							foreach($tracks as $currTrack){
+								$found = false;
+								for($trackNum=0; (($trackNum<count($tracksFound)) && (!$found)); $trackNum++){
+									if($currTrack == $tracksFound[$trackNum]){
+										$found = true;
+									}
+								}
+								if(!$found){
+									$additionalTracks[] = $currTrack;
 								}
 							}
-							if(!$found){
-								$additionalTracks[] = $currTrack;
+
+							// If there were extra tracks, add them to the end of the track listing
+							if(count($additionalTracks) > 0){
+								$wikiCode = lw_tracksToWiki($artistName, $additionalTracks);
+								$wikiCode = trim($wikiCode);
+								$albumName = $comparisonAlbum['album'];
+								$albumYear = $comparisonAlbum['year'];
+								$albumName = str_replace(" ", "_", $albumName);
+								$albumName = str_replace("_", "[_ ]", $albumName);
+								$artistReg = str_replace(" ", "_", $artistName);
+								$artistReg = str_replace("_", "[_ ]", $artistReg);
+								if(strtolower($activeAlbum['album']) == "other songs"){
+		//print (($artist!="Sahara Hotnights")?"":"Other songs merged\n");
+									$content = preg_replace("/(==\s*\[\[$artistReg:$albumName(\|.*?\]\]|\]\])\s*==\s*.*?)(\n[^#*{])/si", "$1\n$wikiCode$3",$content);
+								} else {
+		//print (($artist!="Sahara Hotnights")?"":"Normal album merged\n");
+									$content = preg_replace("/(==\s*\[\[$artistReg:$albumName"."[_ ]\($albumYear\)(\|.*?\]\]|\]\])\s*==\s*.*?)(\n[^#*{])/si", "$1\n$wikiCode$3",$content);
+								}
 							}
 						}
+					}
+				}
 
-						// If there were extra tracks, add them to the end of the track listing
-						if(count($additionalTracks) > 0){
-							$wikiCode = lw_tracksToWiki($artistName, $additionalTracks);
-							$wikiCode = trim($wikiCode);
-							$albumName = $comparisonAlbum['album'];
-							$albumYear = $comparisonAlbum['year'];
-							$albumName = str_replace(" ", "_", $albumName);
-							$albumName = str_replace("_", "[_ ]", $albumName);
+				// Search for a match in the code of where this album goes.
+				if(!$doneAdding){
+		//print (($artist!="Sahara Hotnights")?"":"Still looking for album\n");
+					if($insertBefore == -1){
+		//print (($artist!="Sahara Hotnights")?"":"Album goes at end\n");
+						// Insert after the last album (if there is an Other Songs album, do it before that but after the last real album).
+						$wikiCode = lw_albumDataToWiki($artist, $activeAlbum);
+						if(count($currAlbums) > 0){
+							$lastAlbum = $currAlbums[count($currAlbums)-1];
+							if((strtolower($lastAlbum['album']) == "other songs") && (count($currAlbums) > 1)){
+								$lastAlbum = $currAlbums[count($currAlbums)-2]; // put new album after last REAL album.
+							}
+							$lastAlbumName = $lastAlbum['album'];
+							$lastAlbumYear = $lastAlbum['year'];
+
+							$wikiCode = trim($wikiCode)."\n"; // only needs one new line-break, not the traditional two
+							$lastAlbumName = str_replace(" ", "_", $lastAlbumName);
+							$lastAlbumName = str_replace("_", "[_ ]", $lastAlbumName);
 							$artistReg = str_replace(" ", "_", $artistName);
 							$artistReg = str_replace("_", "[_ ]", $artistReg);
-							if(strtolower($activeAlbum['album']) == "other songs"){
-	//print (($artist!="Sahara Hotnights")?"":"Other songs merged\n");
-								$content = preg_replace("/(==\s*\[\[$artistReg:$albumName(\|.*?\]\]|\]\])\s*==\s*.*?)(\n[^#*{])/si", "$1\n$wikiCode$3",$content);
-							} else {
-	//print (($artist!="Sahara Hotnights")?"":"Normal album merged\n");
-								$content = preg_replace("/(==\s*\[\[$artistReg:$albumName"."[_ ]\($albumYear\)(\|.*?\]\]|\]\])\s*==\s*.*?)(\n[^#*{])/si", "$1\n$wikiCode$3",$content);
-							}
+							$content = preg_replace("/(==\s*\[\[$artistReg:$lastAlbumName"."[_ ]\($lastAlbumYear\)(\|.*?\]\]|\]\])\s*==\s*.*?\n[^#*{])/si", "$1$wikiCode",$content);
+						} else {
+		//print (($artist!="Sahara Hotnights")?"":"No albums existed\n");
+							$content = $wikiCode.$content; // if there were no albums yet, just throw the new album on the beginning.
 						}
-					}
-				}
-			}
-
-			// Search for a match in the code of where this album goes.
-			if(!$doneAdding){
-	//print (($artist!="Sahara Hotnights")?"":"Still looking for album\n");
-				if($insertBefore == -1){
-	//print (($artist!="Sahara Hotnights")?"":"Album goes at end\n");
-					// Insert after the last album (if there is an Other Songs album, do it before that but after the last real album).
-					$wikiCode = lw_albumDataToWiki($artist, $activeAlbum);
-					if(count($currAlbums) > 0){
-						$lastAlbum = $currAlbums[count($currAlbums)-1];
-						if((strtolower($lastAlbum['album']) == "other songs") && (count($currAlbums) > 1)){
-							$lastAlbum = $currAlbums[count($currAlbums)-2]; // put new album after last REAL album.
-						}
-						$lastAlbumName = $lastAlbum['album'];
-						$lastAlbumYear = $lastAlbum['year'];
-
-						$wikiCode = trim($wikiCode)."\n"; // only needs one new line-break, not the traditional two
-						$lastAlbumName = str_replace(" ", "_", $lastAlbumName);
-						$lastAlbumName = str_replace("_", "[_ ]", $lastAlbumName);
+					} else {
+		//print (($artist!="Sahara Hotnights")?"":"Album goes before $insertBefore\n");
+						$beforeAlbum = $currAlbums[$insertBefore]['album'];
+						$beforeYear = $currAlbums[$insertBefore]['year'];
+						$albumWiki = lw_albumDataToWiki($artist, $activeAlbum);
+						$origContent = $content;
+						$beforeAlbum = str_replace(" ", "_", $beforeAlbum);
+						$beforeAlbum = str_replace("_", "[_ ]", $beforeAlbum);
 						$artistReg = str_replace(" ", "_", $artistName);
 						$artistReg = str_replace("_", "[_ ]", $artistReg);
-						$content = preg_replace("/(==\s*\[\[$artistReg:$lastAlbumName"."[_ ]\($lastAlbumYear\)(\|.*?\]\]|\]\])\s*==\s*.*?\n[^#*{])/si", "$1$wikiCode",$content);
-					} else {
-	//print (($artist!="Sahara Hotnights")?"":"No albums existed\n");
-						$content = $wikiCode.$content; // if there were no albums yet, just throw the new album on the beginning.
-					}
-				} else {
-	//print (($artist!="Sahara Hotnights")?"":"Album goes before $insertBefore\n");
-					$beforeAlbum = $currAlbums[$insertBefore]['album'];
-					$beforeYear = $currAlbums[$insertBefore]['year'];
-					$albumWiki = lw_albumDataToWiki($artist, $activeAlbum);
-					$origContent = $content;
-					$beforeAlbum = str_replace(" ", "_", $beforeAlbum);
-					$beforeAlbum = str_replace("_", "[_ ]", $beforeAlbum);
-					$artistReg = str_replace(" ", "_", $artistName);
-					$artistReg = str_replace("_", "[_ ]", $artistReg);
-					$content = preg_replace("/(==\s*\[\[$artistReg:$beforeAlbum"."[_ ]\($beforeYear\))/si", "$albumWiki$1", $content);
-					if($origContent == $content){
-	//print (($artist!="Sahara Hotnights")?"":"That didn't work... just throwing on top.\n");
-						// Couldn't find place... stuff it at top of the file to minimize damage; a human can sort it out later.
-						$content = $albumWiki.$content;
+						$content = preg_replace("/(==\s*\[\[$artistReg:$beforeAlbum"."[_ ]\($beforeYear\))/si", "$albumWiki$1", $content);
+						if($origContent == $content){
+		//print (($artist!="Sahara Hotnights")?"":"That didn't work... just throwing on top.\n");
+							// Couldn't find place... stuff it at top of the file to minimize damage; a human can sort it out later.
+							$content = $albumWiki.$content;
+						}
 					}
 				}
 			}
-		}
 
 
-	// TODO: OMG REMOVE!
-	/*if($artist == "Sahara Hotnights"){
-		print "Exiting because this is a test.\n";
-		exit;
-	}*/
+		// TODO: OMG REMOVE!
+		/*if($artist == "Sahara Hotnights"){
+			print "Exiting because this is a test.\n";
+			exit;
+		}*/
 
 
-		// Send the updated code here.
-		$content = "[[Category:Review_Me]]\n".$content; // TODO: REMOVE AFTER UBERBOT SUBMISSIONS
-		$summary = "Page ".(($pageExists)?"edited":"created")." using [[LyricWiki:SOAP|LyricWiki's SOAP Webservice]]";
-		$returnStr = lw_createPage($pageTitle, $content, $summary);
-		$retVal['dataUsed'] = true;
-		if(isset($pageTitle) && $pageExists){
-			$retVal['message'] = "Page overwritten. ".($returnStr==""?"":"($returnStr)");
-		} else {
-			$retVal['message'] = "Page created. ".($returnStr==""?"":"($returnStr)");
-		}
-		}
-	} else {
-		// The artist page doesn't exist yet... create it.
-		$content = "";
-		$content.= "[[Category:Review_Me]]\n"; // TODO: REMOVE AFTER UBERBOT SUBMISSIONS
-		$content.= "{{Wikipedia}}\n\n";
-
-		// Build the page-content.
-		foreach($albums as $albumWrapper){
-			$currAlbum = $albumWrapper['albums']; // weird side-effect... every album is wrapped in an 'albums' array.
-			$content .= lw_albumDataToWiki($currAlbum);
-		}
-		$content.= "{{Artist}}\n\n";
-		$fLetter = lw_fLetter($artistName);
-		$content.= "[[Category:Artists $fLetter]]\n";
-
-		$summary = "Page ".(($pageExists)?"edited":"created")." using [[LyricWiki:SOAP|LyricWiki's SOAP Webservice]]";
-		$returnStr = lw_createPage($pageTitle, $content, $summary);
-
-		$retVal['dataUsed'] = true;
-		if(isset($pageTitle) && $pageExists){
-			$retVal['message'] = "Page overwritten. ".($returnStr==""?"":"($returnStr)");
-		} else {
-			$retVal['message'] = "Page created. ".($returnStr==""?"":"($returnStr)");
-		}
-
-		// Also create pages for all of the albums that appeared on this page.
-		$numUsed = $numSkipped = 0;
-		foreach($albums as $albumWrapper){
-			$currAlbum = $albumWrapper['albums'];
-			$albumName = $currAlbum['album'];
-			$year = $currAlbum['year'];
-			$asin = $currAlbum['amazonLink'];
-			$songs = $currAlbum['songs'];
-			$albumResponse = postAlbum($overwriteIfExists, $artistName, $albumName, $year, $asin, $songs);
-			if($albumResponse['dataUsed']){
-				$numUsed++;
+			// Send the updated code here.
+			$content = "[[Category:Review_Me]]\n".$content; // TODO: REMOVE AFTER UBERBOT SUBMISSIONS
+			$summary = "Page ".(($pageExists)?"edited":"created")." using [[LyricWiki:SOAP|LyricWiki's SOAP Webservice]]";
+			$returnStr = lw_createPage($pageTitle, $content, $summary);
+			$retVal['dataUsed'] = true;
+			if(isset($pageTitle) && $pageExists){
+				$retVal['message'] = "Page overwritten. ".($returnStr==""?"":"($returnStr)");
 			} else {
-				$numSkipped++;
+				$retVal['message'] = "Page created. ".($returnStr==""?"":"($returnStr)");
+			}
+			}
+		} else {
+			// The artist page doesn't exist yet... create it.
+			$content = "";
+			$content.= "[[Category:Review_Me]]\n"; // TODO: REMOVE AFTER UBERBOT SUBMISSIONS
+			$content.= "{{Wikipedia}}\n\n";
+
+			// Build the page-content.
+			foreach($albums as $albumWrapper){
+				$currAlbum = $albumWrapper['albums']; // weird side-effect... every album is wrapped in an 'albums' array.
+				$content .= lw_albumDataToWiki($currAlbum);
+			}
+			$content.= "{{Artist}}\n\n";
+			$fLetter = lw_fLetter($artistName);
+			$content.= "[[Category:Artists $fLetter]]\n";
+
+			$summary = "Page ".(($pageExists)?"edited":"created")." using [[LyricWiki:SOAP|LyricWiki's SOAP Webservice]]";
+			$returnStr = lw_createPage($pageTitle, $content, $summary);
+
+			$retVal['dataUsed'] = true;
+			if(isset($pageTitle) && $pageExists){
+				$retVal['message'] = "Page overwritten. ".($returnStr==""?"":"($returnStr)");
+			} else {
+				$retVal['message'] = "Page created. ".($returnStr==""?"":"($returnStr)");
+			}
+
+			// Also create pages for all of the albums that appeared on this page.
+			$numUsed = $numSkipped = 0;
+			foreach($albums as $albumWrapper){
+				$currAlbum = $albumWrapper['albums'];
+				$albumName = $currAlbum['album'];
+				$year = $currAlbum['year'];
+				$asin = $currAlbum['amazonLink'];
+				$songs = $currAlbum['songs'];
+				$albumResponse = postAlbum($overwriteIfExists, $artistName, $albumName, $year, $asin, $songs);
+				if($albumResponse['dataUsed']){
+					$numUsed++;
+				} else {
+					$numSkipped++;
+				}
+			}
+			if(($numUsed>0) || ($numSkipped>0)){
+				$retVal['message'] .= " - album pages: $numUsed made, $numSkipped skipped";
 			}
 		}
-		if(($numUsed>0) || ($numSkipped>0)){
-			$retVal['message'] .= " - album pages: $numUsed made, $numSkipped skipped";
-		}
 	}
+
 	requestFinished($id);
 	return $retVal;
-}
+} // end postArtist()
 
 ////
 //
@@ -1350,75 +1417,83 @@ function postAlbum($overwriteIfExists, $artist, $album, $year, $asin, $songs){
 
 	$retVal = array('artist' => $artist, 'album' => $album, 'year' => $year, 'dataUsed' => false,
 					'message' => 'Default message.  There must have been an error during processing.  Please report this.');
-	lw_tryLogin();
-	$isOther = false;
-	if(strtolower($album) == "other songs"){
-		$isOther = true;
-		$title = lw_fmtArtist($artist).":Other Songs";
+	
+	global $SHUT_DOWN_API;
+	if($SHUT_DOWN_API){
+		global $SHUT_DOWN_API_REASON;
+		$retVal['message'] = $SHUT_DOWN_API_REASON;
 	} else {
-		$title = lw_getTitle($artist,$album);
-		$title.= " ($year)";
-	}
-	$pageTitle = Title::newFromDBkey(utf8_decode(htmlspecialchars_decode($title)));
-	$pageExists = $pageTitle->exists(); // call here and store the result to check after page is created to determine if it was an overwrite
-	if(isset($pageTitle) && $pageExists && (!$overwriteIfExists)){
-		$retVal['dataUsed'] = false;
-		$retVal['message'] = "Album already exists and overwriteIfExists was not set to true.";
-	} else {
-		$content = "";
-		$content.= "[[Category:Review_Me]]\n"; // TODO: REMOVE AFTER UBERBOT SUBMISSIONS
-		$artistName = lw_fmtArtist($artist);
-		$albumName = lw_fmtAlbum($album, $year);
-		$fLetter = lw_fLetter($album);
-
-		// Build the page-content.
-		if($isOther){
-			$content .= "{{OtherSongs|$artist}}\n\n";
+		lw_tryLogin();
+		$isOther = false;
+		if(strtolower($album) == "other songs"){
+			$isOther = true;
+			$title = lw_fmtArtist($artist).":Other Songs";
 		} else {
-			$content .= "{{Album|\n";
-			$content .= "|fLetter     = $fLetter\n";
-			$content .= "|Artist      = $artist\n";
-			$content .= "|Album       = $album\n";
-			$content .= "|Released    = $year\n";
-			$content .= "|Genre       = \n";
-			$content .= "|Cover       = \n";
-			$content .= "|Length      = \n";
-			$content .= "}}\n\n";
+			$title = lw_getTitle($artist,$album);
+			$title.= " ($year)";
 		}
-		foreach($songs as $currSong){
-			// If no artist is specified, default to the artist who makes the album.
-			// This makes most cases easy and allows overriding of artist for compilations, etc.
-			if(false === strpos($currSong, ":")){
-				$currSong = "$artist:$currSong";
-			}
-			$justSong = $currSong;
-			if($index = strrpos($currSong, ":")){
-				$justSong = substr($currSong, $index+1);
-			}
-			$content .= "# '''[[$currSong|$justSong]]'''\n";
-		}
-		$content .= "<div style=\"clear:both;\"></div>\n";
-		if($isOther === false){
-			$content .= "==External Links==\n";
-			if(0<preg_match("/^[0-9A-Z]{10}$/i", $asin)){
-				$content .= "* {{asin|$asin|$album}} on Amazon\n";
+		$pageTitle = Title::newFromDBkey(utf8_decode(htmlspecialchars_decode($title)));
+		$pageExists = $pageTitle->exists(); // call here and store the result to check after page is created to determine if it was an overwrite
+		if(isset($pageTitle) && $pageExists && (!$overwriteIfExists)){
+			$retVal['dataUsed'] = false;
+			$retVal['message'] = "Album already exists and overwriteIfExists was not set to true.";
+		} else {
+			$content = "";
+			$content.= "[[Category:Review_Me]]\n"; // TODO: REMOVE AFTER UBERBOT SUBMISSIONS
+			$artistName = lw_fmtArtist($artist);
+			$albumName = lw_fmtAlbum($album, $year);
+			$fLetter = lw_fLetter($album);
+
+			// Build the page-content.
+			if($isOther){
+				$content .= "{{OtherSongs|$artist}}\n\n";
 			} else {
-				$content .= "*Search for {{Search Amazon||$album}} on Amazon\n";
+				$content .= "{{Album|\n";
+				$content .= "|fLetter     = $fLetter\n";
+				$content .= "|Artist      = $artist\n";
+				$content .= "|Album       = $album\n";
+				$content .= "|Released    = $year\n";
+				$content .= "|Genre       = \n";
+				$content .= "|Cover       = \n";
+				$content .= "|Length      = \n";
+				$content .= "}}\n\n";
+			}
+			foreach($songs as $currSong){
+				// If no artist is specified, default to the artist who makes the album.
+				// This makes most cases easy and allows overriding of artist for compilations, etc.
+				if(false === strpos($currSong, ":")){
+					$currSong = "$artist:$currSong";
+				}
+				$justSong = $currSong;
+				if($index = strrpos($currSong, ":")){
+					$justSong = substr($currSong, $index+1);
+				}
+				$content .= "# '''[[$currSong|$justSong]]'''\n";
+			}
+			$content .= "<div style=\"clear:both;\"></div>\n";
+			if($isOther === false){
+				$content .= "==External Links==\n";
+				if(0<preg_match("/^[0-9A-Z]{10}$/i", $asin)){
+					$content .= "* {{asin|$asin|$album}} on Amazon\n";
+				} else {
+					$content .= "*Search for {{Search Amazon||$album}} on Amazon\n";
+				}
+			}
+			$summary = "Page ".(($pageExists)?"edited":"created")." using [[LyricWiki:SOAP|LyricWiki's SOAP Webservice]]";
+			$returnStr = lw_createPage($pageTitle, $content, $summary);
+
+			$retVal['dataUsed'] = true;
+			if(isset($pageTitle) && $pageExists){
+				$retVal['message'] = "Page overwritten. ".($returnStr==""?"":"($returnStr)");
+			} else {
+				$retVal['message'] = "Page created. ".($returnStr==""?"":"($returnStr)");
 			}
 		}
-		$summary = "Page ".(($pageExists)?"edited":"created")." using [[LyricWiki:SOAP|LyricWiki's SOAP Webservice]]";
-		$returnStr = lw_createPage($pageTitle, $content, $summary);
-
-		$retVal['dataUsed'] = true;
-		if(isset($pageTitle) && $pageExists){
-			$retVal['message'] = "Page overwritten. ".($returnStr==""?"":"($returnStr)");
-		} else {
-			$retVal['message'] = "Page created. ".($returnStr==""?"":"($returnStr)");
-		}
 	}
+
 	requestFinished($id);
 	return $retVal;
-}
+} // end postAlbum()
 
 function postSong_flags($overwriteIfExists, $artist, $song, $lyrics, $onAlbums, $flags=""){return postSong($overwriteIfExists, $artist, $song, $lyrics, $onAlbums, $flags);}
 function postSong($overwriteIfExists, $artist, $song, $lyrics, $onAlbums, $flags=""){
@@ -1429,53 +1504,60 @@ function postSong($overwriteIfExists, $artist, $song, $lyrics, $onAlbums, $flags
 
 	$retVal = array('artist' => $artist, 'song' => $song, 'dataUsed' => false,
 					'message' => 'Default message.  There must have been an error during processing.  Please report this.');
-	lw_tryLogin();
 
-	// Flags is a comma-delimited list of pre-defined strings.
-	$flags = strtoupper(str_replace(" ", "", ",$flags,"));
-	$isSandbox = (false !== strpos($flags, ",LW_SANDBOX,"));
-	$isKompoz = (false !== strpos($flags, ",LW_KOMPOZ,"));
-
-	$title = lw_getTitle($artist,$song);
-	$pageTitle = Title::newFromDBkey(utf8_decode(htmlspecialchars_decode($title)));
-	$pageExists = (is_object($pageTitle) && $pageTitle->exists()); // call here and store the result to check after page is created to determine if it was an overwrite
-	if(isset($pageTitle) && $pageExists && (!$overwriteIfExists)){
-		$retVal['dataUsed'] = false;
-		$retVal['message'] = "Song already exists and overwriteIfExists was not set to true.";
+	global $SHUT_DOWN_API;
+	if($SHUT_DOWN_API){
+		global $SHUT_DOWN_API_REASON;
+		$retVal['message'] = $SHUT_DOWN_API_REASON;
 	} else {
-		$content = '';
-		$content.= "[[Category:Review_Me]]\n"; // TODO: REMOVE AFTER UBERBOT SUBMISSIONS
-		$artistName = lw_fmtArtist($artist);
-		$songName = lw_fmtSong($song);
-		$albumName = '';
-		if(is_array($onAlbums) && (count($onAlbums) > 0)){ // will show up as an empty string if song is not on any albums
-			for($cnt=0; $cnt<count($onAlbums); $cnt++){
-				$currArtist = $onAlbums[$cnt]['artist']; // needed because of compilations
-				$currArtist = ($currArtist==""?$artist:$currArtist); // default to artist of this song.
-				$albumName = $onAlbums[$cnt]['album']." (".$onAlbums[$cnt]['year'].")";
-				$content .= "{{Song|$albumName|$currArtist}}\n";
-			}
-		} else {
-			$content .= "{{Song||".str_replace("_", " ", $artistName)."}}\n";
-		}
-		$content .= "<lyrics>\n$lyrics</lyrics>\n";
-		$fLetter = lw_fLetter($song);
-		$content .= "{{SongFooter\n|artist=$artist\n|song=$song\n|fLetter=".$fLetter."\n}}";
-		$summary = "Page ".(($pageExists)?"edited":"created")." using [[LyricWiki:SOAP|LyricWiki's SOAP Webservice]]";
-		if($isSandbox){
-			$returnStr = "Sandbox used.  Page would have been created otherwise.";
-		} else {
-			$returnStr = lw_createPage($pageTitle, $content, $summary);
-		}
-		if($isKompoz){
-			$returnStr .= " Kompoz flag detected.";
-		}
+		lw_tryLogin();
 
-		$retVal['dataUsed'] = true;
-		if(isset($pageTitle) && $pageExists){
-			$retVal['message'] = "Page overwritten. ".($returnStr==""?"":"($returnStr)");
+		// Flags is a comma-delimited list of pre-defined strings.
+		$flags = strtoupper(str_replace(" ", "", ",$flags,"));
+		$isSandbox = (false !== strpos($flags, ",LW_SANDBOX,"));
+		$isKompoz = (false !== strpos($flags, ",LW_KOMPOZ,"));
+
+		$title = lw_getTitle($artist,$song);
+		$pageTitle = Title::newFromDBkey(utf8_decode(htmlspecialchars_decode($title)));
+		$pageExists = (is_object($pageTitle) && $pageTitle->exists()); // call here and store the result to check after page is created to determine if it was an overwrite
+		if(isset($pageTitle) && $pageExists && (!$overwriteIfExists)){
+			$retVal['dataUsed'] = false;
+			$retVal['message'] = "Song already exists and overwriteIfExists was not set to true.";
 		} else {
-			$retVal['message'] = "Page created. ".($returnStr==""?"":"($returnStr)");
+			$content = '';
+			$content.= "[[Category:Review_Me]]\n"; // TODO: REMOVE AFTER UBERBOT SUBMISSIONS
+			$artistName = lw_fmtArtist($artist);
+			$songName = lw_fmtSong($song);
+			$albumName = '';
+			if(is_array($onAlbums) && (count($onAlbums) > 0)){ // will show up as an empty string if song is not on any albums
+				for($cnt=0; $cnt<count($onAlbums); $cnt++){
+					$currArtist = $onAlbums[$cnt]['artist']; // needed because of compilations
+					$currArtist = ($currArtist==""?$artist:$currArtist); // default to artist of this song.
+					$albumName = $onAlbums[$cnt]['album']." (".$onAlbums[$cnt]['year'].")";
+					$content .= "{{Song|$albumName|$currArtist}}\n";
+				}
+			} else {
+				$content .= "{{Song||".str_replace("_", " ", $artistName)."}}\n";
+			}
+			$content .= "<lyrics>\n$lyrics</lyrics>\n";
+			$fLetter = lw_fLetter($song);
+			$content .= "{{SongFooter\n|artist=$artist\n|song=$song\n|fLetter=".$fLetter."\n}}";
+			$summary = "Page ".(($pageExists)?"edited":"created")." using [[LyricWiki:SOAP|LyricWiki's SOAP Webservice]]";
+			if($isSandbox){
+				$returnStr = "Sandbox used.  Page would have been created otherwise.";
+			} else {
+				$returnStr = lw_createPage($pageTitle, $content, $summary);
+			}
+			if($isKompoz){
+				$returnStr .= " Kompoz flag detected.";
+			}
+
+			$retVal['dataUsed'] = true;
+			if(isset($pageTitle) && $pageExists){
+				$retVal['message'] = "Page overwritten. ".($returnStr==""?"":"($returnStr)");
+			} else {
+				$retVal['message'] = "Page created. ".($returnStr==""?"":"($returnStr)");
+			}
 		}
 	}
 	requestFinished($id);
