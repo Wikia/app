@@ -172,8 +172,8 @@ header a, #CompanyInfo a, footer a {
 	background: url(http://images.wikia.com/common/skins/corporate/images/misc.wikiaglobal.sprite.png) no-repeat -10px -10px;
 	border: 0;
 	font-size: 1.6em;
-	height: 20px;
-	padding: 6px 40px 0 15px;
+	height: 22px;
+	padding: 4px 40px 0 15px;
 	width: 245px;
 }
 #wikia-search.placeholder, .isMainpage #wikia-global-stats p {
@@ -869,6 +869,7 @@ footer {
 }
 .isMainpage #wikia-whats-up h2 {
 	font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+	margin: 0;
 }
 
 /* @end */

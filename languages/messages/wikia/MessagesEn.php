@@ -28,10 +28,10 @@ $messages = array_merge( $messages , array(
 ** http://community.wikia.com/wiki/Forum:Index|Forum|no-icon
 ** http://help.wikia.com|Help|no-icon
 ** http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog|Blog|no-icon',
-'corporatepage-slider' => "*http://percyjackson.wikia.com/|Percy Jackson Wiki|Check out the latest on your boy, Percy Jackson!|File:Homepage.feature.0.jpg|File:Homepage.feature.thumb.0.jpg
-*http://recipes.wikia.com/|Recipes Wiki|Mmmm... delicious cookies!|File:Homepage.feature.1.jpg|File:Homepage.feature.thumb.1.jpg
-*http://godofwar.wikia.com/|God of War Wiki|Serious gaming for the serious gamer! Check it out!|File:Homepage.feature.2.jpg|File:Homepage.feature.thumb.2.jpg
-*http://answers.wikia.com/|Wikianswers|Ask questions and help to craft the best answer at Wikianswers.|File:Homepage.feature.3.jpg|File:Homepage.feature.thumb.3.jpg",
+'corporatepage-slider' => "*http://percyjackson.wikia.com/|Percy Jackson Wiki|Half-god, half-teen... all hero!|File:Homepage.feature.0.jpg|File:Homepage.feature.thumb.0.jpg
+*http://recipes.wikia.com/|Recipes Wiki|Find your favorite recipe! From sweet treats to three course meals, Recipes Wiki has it all.|File:Homepage.feature.1.jpg|File:Homepage.feature.thumb.1.jpg
+*http://godofwar.wikia.com/|God of War Wiki|This is Spaaarta. Blades of Chaos... need we say more?|File:Homepage.feature.2.jpg|File:Homepage.feature.thumb.2.jpg
+*http://answers.wikia.com/|Wikianswers|Show what you know and help answer the world's questions|File:Homepage.feature.3.jpg|File:Homepage.feature.thumb.3.jpg",
 'corporatepage-footer-middlecolumn' => '* http://www.facebook.com/pages/Wikia/5678222299|Become a Facebook fan|File:Icon.footer.facebook.32x32.png|new-window
 * http://twitter.com/wikia|Follow us on Twitter|File:Icon.footer.twitter.32x32.png|new-window
 * http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog|Read our blog|File:Icon.footer.wikia.32x32.png|new-window',
@@ -67,11 +67,11 @@ $messages = array_merge( $messages , array(
 'corporatepage-update-fqr' => 'updated hourly',
 'corporatepage-wikia-hot-spots-desc' => "These are the hottest pages this week, ranked by most editors.",
 'corporatepage-go-to-wiki' => 'Go to $1', 
-'corporatepage-wikia-whats-up' => "<h1>Whats Up?</h1>
-<h2>Catch up with the latest happenings</h2>
-<p>We're running a game to find the missing Spider-man. Please help us track him down at Spiderpedia.</p>
-<p>Did you know that we have a whole wiki about Lady Gaga? Don't miss the Fame Monster article!</p>
-<p>We need hits because we totally oversold FlashForward. Dig the globe!</p>",
+'corporatepage-wikia-whats-up' => "<hgroup><h1>Community Buzz</h1>
+<h2>Check out these buzzworthy Wikia communities</h2></hgroup>
+<p><a href='http://masseffect.wikia.com/wiki/Mass_Effect_2'>Mass Effect 2</a>, one of the most anticipated titles of the year was just released! From <a href='http://masseffect.wikia.com/wiki/Classes'>classes</a> to quests, the Mass Effect Wiki has your guide to the game.</p>
+<p><a href='http://glee.wikia.com'>Glee</a> was picked up for a second season. Check out our <a href='http://glee.wikia.com/wiki/Category:Music'>top songs</a> from last season</p>
+<p><a href='http://recipes.wikia.com'>Recipes Wiki</a> is highlighting the best <a href='http://recipes.wikia.com/wiki/Category:Superbowl_Recipes'>Superbowl favorites</a>. Browse over 100 Superbowl recipes to score the perfect game day party food.</p>",
 'corporatepage-global-nav-headline' => 'Wikia Global Navigation',
 'corporatepage-watchlist' => 'Watchlist', 
 'corporatepage-homepage-feature-headline' => 'Featured at Wikia',
