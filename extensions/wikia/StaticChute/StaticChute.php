@@ -221,7 +221,7 @@ class StaticChute {
 		
 		$this->config['corporate_page_js'] = array(
 			'common/wikibits.js',
-			'common/jquery/jquery-1.4.min.js',
+			'common/jquery/jquery-1.4.1.min.js',
 			'common/jquery/jquery.wikia.js',
 			'common/urchin.js',
 			'corporate/js/main.js',
