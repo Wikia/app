@@ -611,7 +611,7 @@ class EmailNotification {
 			/* WIKIA change, watchlist link tracking, rt#33913 */
 			$difflink = $this->title->getFullUrl( 's=wldiff&diff=0&oldid=' . $this->oldid );
 			$keys['$NEWPAGE'] = wfMsgForContent( 'enotif_lastvisited', $difflink );
-			$keys['$NEWPAGEHTML'] = wfMsgForContent( 'enotif_lastvisited-HTML', '<a href="'. $difflink .'">$PAGETITLE</a>' );
+			$keys['$NEWPAGEHTML'] = wfMsgForContent( 'enotif_lastvisited', '<a href="'. $difflink .'">$PAGETITLE</a>' );
 			$keys['$OLDID']   = $this->oldid;
 			$keys['$CHANGEDORCREATED'] = wfMsgForContent( 'changed' );
 		} else {
