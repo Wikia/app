@@ -611,10 +611,12 @@ class EmailNotification {
 			/* WIKIA change, watchlist link tracking, rt#33913 */
 			$difflink = $this->title->getFullUrl( 's=wldiff&diff=0&oldid=' . $this->oldid );
 			$keys['$NEWPAGE'] = wfMsgForContent( 'enotif_lastvisited', $difflink );
+			$keys['$NEWPAGEHTML'] = wfMsgForContent( 'enotif_lastvisited-HTML', '<a href="'. $difflink .'">$PAGETITLE</a>' );
 			$keys['$OLDID']   = $this->oldid;
 			$keys['$CHANGEDORCREATED'] = wfMsgForContent( 'changed' );
 		} else {
 			$keys['$NEWPAGE'] = wfMsgForContent( 'enotif_newpagetext' );
+			$keys['$NEWPAGEHTML'] = $keys['$NEWPAGE']; //cheat and dupe this for now
 			# clear $OLDID placeholder in the message template
 			$keys['$OLDID']   = '';
 			$keys['$CHANGEDORCREATED'] = wfMsgForContent( 'created' );
