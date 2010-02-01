@@ -11,7 +11,7 @@
 $wgExtensionCredits['other'][] = array(
 	"name" => "BlogArticles",
 	"description" => "Blog Articles",
-	"description-msg" => "blogs-desc",
+	"descriptionmsg" => "blogs-desc",
 	"url" => "http://help.wikia.com/wiki/Help:Blog_article",
 	"svn-date" => '$LastChangedDate$',
 	"svn-revision" => '$LastChangedRevision$',
@@ -91,7 +91,8 @@ $wgHooks['ArticleFromTitle'][] = "BlogArticle::setup";
 /**
  * messages file
  */
-$wgExtensionMessagesFiles["Blogs"] = dirname(__FILE__) . '/Blogs.i18n.php';
+$wgExtensionMessagesFiles['Blogs'] = dirname(__FILE__) . '/Blogs.i18n.php';
+$wgExtensionAliasesFiles['Blogs'] = dirname(__FILE__) . '/Blogs.alias.php';
 
 /**
  * permissions (eventually will be moved to CommonSettings.php)
