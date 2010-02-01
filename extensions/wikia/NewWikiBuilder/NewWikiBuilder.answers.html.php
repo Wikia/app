@@ -1,0 +1,124 @@
+<?php 
+$numSteps = 4;
+require dirname(__FILE__) . '/header.php';
+?>
+<ul>
+
+<script type="text/javascript">
+var wgAdminSkin = '<?php echo $wgAdminSkin?>';
+NWB.changeTheme("Sapphire", false);
+</script>
+
+<!-- ##############  Add a description to main page ############## -->
+<li id="step1" class="step">
+<h1 class="headline"><?php echo wfMsgForContent("anwb-step1-headline")?></h1>
+<div class="wrapper clearfix">
+	<div id="step1_example">
+		<div class="accent note">
+			<?php echo wfMsgForContent("anwb-step1-example")?>
+		</div>
+	</div>
+	<?php echo wfMsgForContent("anwb-step1-text")?>
+	<form id="step1_form" name="step1_form"><!-- Name needed for selenium tests -->
+		<textarea name="tagline" id="desc_textarea"></textarea>
+	</form>
+
+	<script type="text/javascript">
+	// Pull in existing tagline
+	</script>
+</div>
+<div class="nav">
+	<a href="#step2" id="skip_step_1" onclick="WET.byStr('anwb/step1skip');"><?php echo wfMsgForContent("nwb-skip-this-step")?></a> <?php echo wfMsgForContent("nwb-or")?><button onclick="WET.byStr('anwb/step1save');$('#step1_form').submit();"><span><?php echo wfMsgForContent("anwb-save-tagline")?></span></button>
+	<input onclick="$('#step1_form').submit();" type="button" id="hidden_description_submit" style="display:none"><!-- For selenium tests -->
+</div>
+</li>
+
+<!-- ############## Add a logo ############ -->
+<li id="step2" class="step">
+<h1 class="headline"><?php echo wfMsgForContent("nwb-step2-headline")?></h1>
+<div class="wrapper clearfix">
+	<?php echo wfMsgForContent("anwb-step2-text")?>	
+	<!-- Hidden iframe to handle the file upload -->
+	<iframe id="hidden_iframe" src="about:blank" style="display:none" name="hidden_iframe" onLoad="NWB.iframeFormUpload(this)"></iframe>
+
+	<div style="float: left;">
+	<form action="/api.php" method="post" enctype="multipart/form-data" target="hidden_iframe" onSubmit='return NWB.iframeFormInit(this)' id="logo_form">
+		<input type="hidden" name="action" value="uploadlogo">	
+		<input type="hidden" name="format" value="xml">	
+		<input id="logo_article" type="hidden" name="title" value="Wiki.png">	
+		<label><?php echo wfMsgForContent("anwb-choose-logo")?>:</label><input type="file" name="logo_file" id="logo_file" onclick="WET.byStr('anwb/step2browse');"/> <input type="submit" value="<?php echo wfMsgForContent("nwb-preview")?>" onclick="WET.byStr('anwb/step2preview');this.form.title.value='Wiki-Preview.png'"/>
+	</form>
+
+	<div id="logo_preview_wrapper">
+		<label><?php echo wfMsgForContent("anwb-logo-preview")?>:</label>
+		<div id="logo_preview"></div>
+	</div>
+	
+	</div><!--float-->
+	<div class="accent note">
+		<img src="/extensions/wikia/NewWikiBuilder/sample_logo.jpg" id="sample_logo" /><br />
+		<?php echo wfMsgForContent("anwb-step2-example")?>
+	</div>
+</div>
+<div class="nav">
+	<span class="nav_reverse">
+		<button class="secondary" onclick="WET.byStr('anwb/step2back');NWB.gotostep(1);"><span><?php echo wfMsgForContent("nwb-back-to-step-1")?></span></button>
+	</span>
+	<a href="#step3" id="skip_step_2" onclick="WET.byStr('anwb/step2skip');"><?php echo wfMsgForContent("nwb-skip-this-step")?></a> <?php echo wfMsgForContent("nwb-or")?><button onclick="WET.byStr('anwb/step2save');NWB.uploadLogo();"><span><?php echo wfMsgForContent("nwb-save-logo")?></span></button>
+</div>
+</li>
+
+<!-- ############## Create first pages ############## -->
+
+<li id="step3" class="step">
+<h1 class="headline"><?php echo wfMsgForContent("anwb-fp-headline")?></h1>
+<div class="wrapper clearfix">
+	<?php echo wfMsgForContent("anwb-fp-text")?>
+	<form id="step3_form">
+		<input type="hidden" name="category" value="<?php echo htmlspecialchars(wfMsgForContent("nwb-new-pages"))?>">
+		<div id="all_fp" class="bullets">
+			<ul class="fp_block" id="fp_block_1">
+				<!-- Ids aren't necessary for the form, only used for Selenium -->
+				<li><input id="fp_1" class="fp_page" type="text" onfocus="NWB.firstPagesInputs()" /></li>
+				<li><input id="fp_2" class="fp_page" type="text" onfocus="NWB.firstPagesInputs()" /></li>
+				<li><input id="fp_3" class="fp_page" type="text" onfocus="NWB.firstPagesInputs()" /></li>
+				<li><input id="fp_4" class="fp_page" type="text" onfocus="NWB.firstPagesInputs()" /></li>
+				<li><input id="fp_5" class="fp_page" type="text" onfocus="NWB.firstPagesInputs()" /></li>
+			</ul>
+			<!-- Other fp_blocks will be inserted into the dom here with javascript:NWB.firstPagesInputs() -->
+		</div><!-- all_fp -->
+	</form>
+	<div class="accent note">
+		<?php echo wfMsgForContent("anwb-fp-example")?>
+	</div>
+</div>
+<div class="nav">
+	<span class="nav_reverse">
+		<button class="secondary" onclick="WET.byStr('anwb/step3back');NWB.gotostep(2);"><span><?php echo wfMsgForContent("nwb-back-to-step-2")?></span></button>
+	</span>
+	<a href="#step4" id="skip_step_3" onclick="WET.byStr('anwb/step3skip');"><?php echo wfMsgForContent("nwb-skip-this-step")?></a> <?php echo wfMsgForContent("nwb-or")?><button onclick="WET.byStr('anwb/step3save');$('#step3_form').submit();"><span><?php echo wfMsgForContent("nwb-create-pages")?></span></button>
+	<input onclick="$('#step3_form').submit();" type="button" id="hidden_step_3_submit" style="display:none"><!-- For selenium tests -->
+</div>
+</li>
+
+<!-- ############## Dones ############## -->
+
+<li id="step4" class="step">
+<h1 class="headline"><?php echo wfMsgForContent("nwb-thatisall-headline")?></h1>
+<div class="wrapper clearfix">
+	<?php echo wfMsgForContent("anwb-thatisall-text")?>
+	<div id="wiki_army_container">
+		<img src="/extensions/wikia/NewWikiBuilder/wiki_army.gif" id="wiki_army" />
+		<img src="/extensions/wikia/NewWikiBuilder/wiki_army_logo.png" id ="wiki_army_logo" />
+	</div>
+</div>
+<div class="nav">
+	<span class="nav_reverse">
+		<button class="secondary" onclick="WET.byStr('anwb/step4back');NWB.gotostep(3);"><span><?php echo wfMsgForContent("nwb-back-to-step-4")?></span></button>
+	</span>
+	<button onclick="WET.byStr('anwb/step4go');NWB.finalize('<?php echo $wgServer ?>');"><span id="finito"><?php echo wfMsgForContent("nwb-go-to-your-wiki")?></span></button>
+</div>
+</li>
+</ul>
+
+<?php require dirname(__FILE__) . '/footer.php'; ?>
