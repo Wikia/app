@@ -52,7 +52,7 @@ $messages = array_merge( $messages , array(
 * http://es.wikia.com|Espa&ntilde;ol
 * http://pl.wikia.com|Polski
 * http://fr.wikia.com|Français
-* /Hub:Wikia_languages|More...',
+* Languages|More...',
 'corporatepage-create-your-own-wiki' => 'Create your own wiki and find a community of people who all love what you love.', 
 'corporatepage-create-button' => 'Create a wiki',
 'corporatepage-rights' => '&copy; $1 Wikia, Inc. All rights reserved',
