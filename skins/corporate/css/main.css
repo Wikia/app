@@ -555,12 +555,12 @@ footer {
 
 	/* @group -Feature-box specifics. */
 	#HomepageFeature {
-		margin: 0 0 20px;
+		border-bottom: 1px solid #FFF;
 	}
 	#homepage-feature-box {
 		background: #FFF;
 		border: 1px solid #CCC;
-		margin: 0 1px 10px 1px;
+		margin: 0 1px 20px 1px;
 		outline: 1px solid #FFF;
 		padding: 8px;
 	}
@@ -685,17 +685,12 @@ footer {
 .isMainpage #MainContent {
 	padding-bottom: 0;
 }
-.isMainpage #CompanyInfo {
-	border-top: none;
-}
 
 .isMainpage #MainArticle {
 	border-left-width: 0;
 	border-right-width: 0;
-	margin-left: 0;
-	margin-right: 0;
-	outline-left-width: 0;
-	outline-right-width: 0;
+	margin: 0;
+	outline: none;
 	overflow: hidden;
 	padding-bottom: 20px;
 	padding-top: 20px;
@@ -712,10 +707,13 @@ footer {
 	padding-bottom: 20px;
 	text-align: center;
 }
+.isMainpage #wikia-global-stats ul {
+	padding: 0;
+}
 .isMainpage #wikia-global-stats li {
 	color: #000;
 	display: inline;
-	font-size: 1.9em;
+	font-size: 1.7em;
 	padding: 0 10px;
 }
 .isMainpage #wikia-global-stats span {
