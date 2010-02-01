@@ -248,7 +248,9 @@ $messages['en'] = array(
 	"wikiastats_main_namespace" => "content<br/>namespaces",
 	"wikiastats_content" => "content",
 	"wikiastats_other_namespace" => "other<br/>namespaces",
-	"wikiastats_restricted_page" => "Restricted Page.<br />You must be logged in to see Wikia Stats. Please [[Special:Userlogin|log in or create an account]] if you already have one.",
+	"wikiastats_restricted_page" => "Restricted Page.<br />
+You must be logged in to see Wikia Stats.
+Please [[Special:UserLogin|log in or create an account]] if you do not already have one.",
 	"wikiastats_filename_mainstats" => "main_stats_$1",
 	"wikiastats_filename_other1" => "editor_activity_$1",
 	"wikiastats_filename_other2" => "reg_editor_activity_$1",
