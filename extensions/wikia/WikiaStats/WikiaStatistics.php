@@ -532,7 +532,7 @@ class WikiaGlobalStats {
 		wfProfileIn( __METHOD__ );
     	
 		$dbLimit = self::$defaultLimit;
-		$date_diff = date('Y-m-d', time() - $days * 60 * 60*24);
+		$date_diff = date('Y-m-d', time() - $days * 60 * 60 * 24);
 		$memkey = wfMemcKey( __METHOD__, $days, $limit, intval($onlyContent) );
 		$data = $wgMemc->get( $memkey );
 		if ( empty($data) ) {
@@ -781,6 +781,34 @@ class WikiaGlobalStats {
 				$count = $oRow->all_count;
 			}
 			$wgMemc->set( $memkey , $data, 60*60*3 );
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $count;
+	}
+
+	public static function getCountWordsInMonth( $month ) {
+		global $wgExternalStatsDB, $wgMemc;
+		wfProfileIn( __METHOD__ );
+    	
+    	$month = str_replace("-", "", $month);
+		$memkey = wfMemcKey( __METHOD__, $month );
+		$count = $wgMemc->get( $memkey );
+		if ( empty($count) ) {
+			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalStatsDB );
+			
+			$conditions = array( "cw_stats_date" => sprintf("%0d00000000", $month) );
+			
+			$oRow = $dbr->selectRow(
+				array( "city_stats_full" ),
+				array( "sum(cw_db_words) as all_count" ),
+				$conditions,
+				__METHOD__
+			);
+			$count = 0; if ( $oRow ) {
+				$count = $oRow->all_count;
+			}
+			$wgMemc->set( $memkey , $data, 60*60*12 );
 		}
 
 		wfProfileOut( __METHOD__ );
