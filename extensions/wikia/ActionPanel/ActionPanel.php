@@ -4,9 +4,9 @@
  */
 
 $wgExtensionCredits['other'][] = array(
-    'name' => 'ActionPanel',
-    'author' => 'David Pean',
-    'description-msg' => 'actionpanel-desc',
+	'name' => 'ActionPanel',
+	'author' => 'David Pean',
+	'descriptionmsg' => 'actionpanel-desc',
 );
 
 $wgAvailableRights[] = 'actionpanel';
