@@ -1,4 +1,5 @@
 == Changes since 201001.4 ==
+* rt#38262: RTE: giant blocks of complex code being added at page ends (macbre)
 * rt#38595: RTE: "? ;-)" breaks the editor? Confusing bug of the day! (macbre)
 * rt#38478: Recipes: "Add a recipe" button should trigger the new Create Page (macbre)
 * rt#38383: Answers: Fallback for lang variants. (Nef)
