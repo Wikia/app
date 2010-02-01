@@ -166,13 +166,6 @@ class RTEAjax {
 	}
 
 	/**
-	 * Dismiss first run notice
-	 */
-	static public function firstRunNoticeDismiss() {
-		return RTEFirstRunNotice::dismiss();
-	}
-
-	/**
 	 * Get localisation
 	 */
 	static public function i18n() {
