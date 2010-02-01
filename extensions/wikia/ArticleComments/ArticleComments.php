@@ -347,7 +347,7 @@ class ArticleComment {
 	 * @return String -- generated HTML text
 	 */
 	public function render() {
-		global $wgContLang, $wgUser, $wgParser;
+		global $wgLang, $wgContLang, $wgUser, $wgParser;
 		global $wgOut;
 
 		wfProfileIn( __METHOD__ );
@@ -369,7 +369,7 @@ class ArticleComment {
 				'author'    => $this->mUser,
 				'anchor'    => $anchor,
 				'avatar'    => Masthead::newFromUser( $this->mUser )->display( 50, 50 ),
-				'timestamp' => $wgContLang->timeanddate( $this->mFirstRevision->getTimestamp() )
+				'timestamp' => $wgLang->timeanddate( $this->mFirstRevision->getTimestamp() )
 			);
 
 			$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
