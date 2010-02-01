@@ -87,14 +87,14 @@ img.withCaption {
  */
 img.placeholder {
 	background-image: url(../ckeditor/_source/skins/wikia/icons.png);
-	background-position: 0 -1328px;
+	background-position: 0 -1294px;
 	height: 16px !important;
 	margin: 0 3px 3px 3px;
 	width: 16px !important;
 }
 
 img.placeholder-comment {
-	background-position: 0 -1312px;
+	background-position: 0 -1280px;
 }
 
 /* Add Image / Add Video */

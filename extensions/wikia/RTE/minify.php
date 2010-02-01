@@ -18,6 +18,9 @@ function minify($type, $files, $target) {
 	$chute->compress = false;
 	$chute->httpCache = false;
 
+	$revision = SpecialVersion::getSvnRevision(dirname(__FILE__));
+	$date = date('Ymd');
+
 	$header = <<<HEAD
 /*
 Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
@@ -29,9 +32,14 @@ HEAD;
 	// concatenate files
 	$res = '';
 	foreach($files as $file) {
-		// remove BOM UTF-8 marker
-		$res .= str_replace("\xEF\xBB\xBF", '', file_get_contents($file));
+		$res .= file_get_contents($file);
 	}
+
+	// remove BOM UTF-8 marker
+	$res = str_replace("\xEF\xBB\xBF", '', $res);
+
+	// add cache buster to images
+	$res = preg_replace("#\.(png|gif)([\"'\)]+)#s", '.\\1?' . $date . '\\2', $res);
 
 	// minify
 	switch($type) {
@@ -46,14 +54,18 @@ HEAD;
 			// remove lines marked with "@Packager.RemoveLine" comment
 			$res = preg_replace('#^.*@Packager\\.RemoveLine.*$#m', '', $res);
 
+			// preserve /*@cc_on!@*/ comments (used by CKEDITOR.env)
+			$res = str_replace('/*@cc_on!@*/', "\x7F-cc_on-\x7f", $res);
+
 			// minify
 			$res = $chute->minifyJSData($res);
 
-			// add date and revision data
-			$rev = trim( `svn info | tail -n 7 | head -n 1 | awk '{ print $2 }'` );
-			$res = str_replace('%REV%', "r{$rev}", $res);
+			// restore /*@cc_on!@*/ comments (used by CKEDITOR.env)
+			$res = str_replace("\x7F-cc_on-\x7f", '/*@cc_on!@*/', $res);
 
-			$res = str_replace('%VERSION%', date('Ymd'), $res);
+			// add date and revision data
+			$res = str_replace('%REV%', "r{$revision}", $res);
+			$res = str_replace('%VERSION%', $date, $res);
 			break;
 	}
 

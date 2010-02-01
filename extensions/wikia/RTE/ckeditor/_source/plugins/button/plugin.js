@@ -135,13 +135,15 @@ CKEDITOR.ui.button.prototype =
 		if ( this.className )
 			classes += ' ' + this.className;
 
+		// Wikia - start
 		output.push(
-			'<span class="cke_button">',
+			'<span class="cke_button ' + classes + (this.wrapperClassName ? (' ' + this.wrapperClassName) : '') + '">',
 			'<a id="', id, '"' +
 				' class="', classes, '" href="javascript:void(\'', ( this.title || '' ).replace( "'", '' ), '\')"' +
 				' title="', this.title, '"' +
 				' tabindex="-1"' +
 				' hidefocus="true"' );
+		// Wikia - end
 
 		// Some browsers don't cancel key events in the keydown but in the
 		// keypress.

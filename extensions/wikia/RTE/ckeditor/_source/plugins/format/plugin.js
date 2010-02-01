@@ -5,6 +5,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 CKEDITOR.plugins.add( 'format',
 {
+	combo: false,
 	requires : [ 'richcombo', 'styles' ],
 
 	init : function( editor )
@@ -26,6 +27,45 @@ CKEDITOR.plugins.add( 'format',
 		// Wikia - start
 		// list of elements for which format dropdown should be disabled
 		var disabledElements = config.format_disabled.split(';');
+
+		// Normal text doesn't show "Normal" as selected, dropdown says "Format" instead (IE fix)
+		var onSelectionChange = function(ev) {
+
+			var currentTag = this.getValue();
+
+			var elementPath = ev.data.path;
+
+			// Wikia - start
+			// check list of elements for which format dropdown should be disabled
+			var nodeName = elementPath.block ? elementPath.block.getName() : '';
+
+			if (jQuery.inArray(nodeName, disabledElements) > -1) {
+				this.setState(CKEDITOR.TRISTATE_DISABLED);
+				return;
+			}
+			else {
+				this.setState(CKEDITOR.TRISTATE_OFF);
+			}
+			// Wikia - end
+
+			for ( var tag in styles )
+			{
+				if ( styles[ tag ].checkActive( elementPath ) )
+				{
+					if ( tag != currentTag )
+						this.setValue( tag, editor.lang.format[ 'tag_' + tag ] );
+					return;
+				}
+			}
+
+			// If no styles match, just empty it.
+			this.setValue( '' );
+		};
+
+		var self = this;
+		editor.on('selectionChange', function(ev) {
+			onSelectionChange.apply(self.combo, [ev]);
+		});
 		// Wikia - end
 
 		editor.ui.addRichCombo( 'Format',
@@ -68,42 +108,12 @@ CKEDITOR.plugins.add( 'format',
 						editor.fire( 'saveSnapshot' );
 					}, 0 );
 				},
-
 				onRender : function()
 				{
-					editor.on( 'selectionChange', function( ev )
-						{
-							var currentTag = this.getValue();
-
-							var elementPath = ev.data.path;
-
-							// Wikia - start
-							// check list of elements for which format dropdown should be disabled
-							var nodeName = elementPath.block ? elementPath.block.getName() : '';
-
-							if (disabledElements.indexOf(nodeName) > -1) {
-								this.setState(CKEDITOR.TRISTATE_DISABLED);
-								return;
-							}
-							else {
-								this.setState(CKEDITOR.TRISTATE_OFF);
-							}
-							// Wikia - end
-
-							for ( var tag in styles )
-							{
-								if ( styles[ tag ].checkActive( elementPath ) )
-								{
-									if ( tag != currentTag )
-										this.setValue( tag, editor.lang.format[ 'tag_' + tag ] );
-									return;
-								}
-							}
-
-							// If no styles match, just empty it.
-							this.setValue( '' );
-						},
-						this);
+					// Wikia - start
+					// store reference to combo button
+					self.combo = this;
+					// Wikia - end
 				}
 			});
 	}

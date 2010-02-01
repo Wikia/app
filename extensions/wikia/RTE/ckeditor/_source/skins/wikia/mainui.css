@@ -140,3 +140,14 @@ span.cke_skin_wikia
 	position: absolute;
 	top: 0;
 }
+
+/* Chrome fixes */
+/* RT #37587 */
+.cke_skin_wikia .cke_browser_webkit textarea.cke_source {
+	white-space: pre-wrap;
+}
+
+/* resize iframe */
+.cke_skin_wikia .cke_browser_webkit iframe {
+	white-space: normal;
+}
