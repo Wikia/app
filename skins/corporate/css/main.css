@@ -574,7 +574,7 @@ footer {
 		font-size: 2.4em;
 		font-weight: 600;
 		line-height: normal;
-		margin: 15px 0 0;
+		margin-top: 30px;
 	}
 	#homepage-feature-sidebar div h2 {
 		background: none;
@@ -584,13 +584,15 @@ footer {
 		line-height: normal;
 		margin: 0;
 		padding: 0;
+		text-align: left;
 	}
 	#homepage-feature-sidebar h2 {
 		background: url(http://images.wikia.com/common/skins/corporate/images/bg.separators.sprite.png) no-repeat -10px -40px;
 		font-size: 1.8em;
 		line-height: normal;
-		margin: 10px 0 0;
-		padding-top: 10px;
+		margin-top: 30px;
+		padding-top: 30px;
+		text-align: center;
 	}
 	#homepage-feature-sidebar p {
 		font-size: 1.3em;
