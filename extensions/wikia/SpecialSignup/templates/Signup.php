@@ -434,7 +434,6 @@ class SignupTemplate extends QuickTemplate {
 		$('#termsOfUse').bind('click', function(){ WET.byStr('signupActions/signup/termsofuse'); } );
 
 		UserRegistration.toggleError = function(id, show) {
-			console.log("id: " + id + " show: " + show);
 			if (show == 'ok') {
 				$('#' + id + ' img:first').removeClass().addClass('icon-sprite ok');
 			} else if (show == 'clear') {
