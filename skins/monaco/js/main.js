@@ -35,15 +35,19 @@ $(function() {
 			}
 			return false;
 		});
-		
+
 		$("#ca-viewsource, #te-editanon").click(function(e){
 			showComboAjaxForPalceHolder(false, "", function(){
 				AjaxLogin.doSuccess = function() {
-					window.location.href = e.target.href;
+					if( e.target.nodeName == "SPAN" ){
+						window.location.href = $(e.target.parentNode).attr('href');
+					} else {
+						window.location.href = e.target.href;
+					}
 				}
 			});
 			return false;
-		});
+		});		
 	}
 });
 
