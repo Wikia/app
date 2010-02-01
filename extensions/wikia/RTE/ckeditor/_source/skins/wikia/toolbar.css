@@ -412,6 +412,17 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	border-left: 1px solid #FFF;
 }
 
+/* toolbar (and editor wrapper) minimum width (RT #38820)*/
+/*
+#cke_wpTextbox1,
+#cke_toolbar {
+	min-width: 350px;
+}
+
+#bodyContent {
+	min-width: 370px;
+}
+*/
 /* buttons bucket */
 #cke_toolbar .headline {
 	display: block;
