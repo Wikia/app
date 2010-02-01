@@ -86,6 +86,13 @@ $messages['hu'] = array(
 	'force-subject-for-new-section-message' => 'Kérlek adj címet a szakasznak',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'force-subject-for-new-section-message' => 'Per favor entra un titulo pro le section',
+);
+
 /** Japanese (日本語)
  * @author Tommy6
  */
@@ -166,5 +173,12 @@ $messages['ru'] = array(
  */
 $messages['sv'] = array(
 	'force-subject-for-new-section-message' => 'Vänligen skriv en rubrik för avsnittet',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'force-subject-for-new-section-message' => 'Будь ласка, введіть заголовок для розділу',
 );
 

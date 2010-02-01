@@ -6,6 +6,13 @@ $messages['en'] = array(
 	'tog-disablelinksuggest' => 'Do not show link suggest'
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'tog-disablelinksuggest' => 'Moet nie skakel-voorstelle wys nie',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  */
@@ -49,9 +56,23 @@ $messages['hsb'] = array(
 	'tog-disablelinksuggest' => 'Žadyn wotkazowy namjet pokazać',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'tog-disablelinksuggest' => 'Non monstrar suggestiones de ligamines',
+);
+
 /** Japanese (日本語) */
 $messages['ja'] = array(
 	'tog-disablelinksuggest' => '編集時のリンク補完を使わない',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'tog-disablelinksuggest' => 'Déi proposéiert Linken net weisen',
 );
 
 /** Macedonian (Македонски)

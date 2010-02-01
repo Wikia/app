@@ -106,6 +106,22 @@ $messages['hu'] = array(
 	'tagsreportgenerated' => 'Készült: $1',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'tagsreport' => 'Reporto de etiquettas',
+	'tagsreporttitle' => 'Reporto de etiquettas',
+	'tagsreportselecttag' => 'Selige etiquetta:',
+	'tagsreportgo' => 'Monstrar',
+	'tagsreportnotspecify' => 'Tu non ha ancora seligite alcun etiquetta special',
+	'tagsreportnoresults' => 'Nulle resultato trovate',
+	'tagsreportmainnspace' => 'Principal',
+	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|pagina|paginas}})',
+	'tagsreportpagesfound' => '<strong>$1</strong> paginas trovate que contine un etiquetta special (dpl, youtube, etc.)',
+	'tagsreportgenerated' => 'Generate a $1',
+);
+
 /** Japanese (日本語)
  * @author Tommy6
  */

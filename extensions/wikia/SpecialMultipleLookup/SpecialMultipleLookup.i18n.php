@@ -82,6 +82,28 @@ $messages['br'] = array(
 	'multilookuplastedit' => "Kemm diwezhañ ar chomlec'h IP-mañ :",
 );
 
+/** Spanish (Español)
+ * @author Translationista
+ */
+$messages['es'] = array(
+	'multilookup' => 'Búsqueda múltiple',
+	'multilookupstitle' => 'Búsqueda múltiple',
+	'multilookupselectuser' => 'Búsqueda de cuentas de la misma IP en múltiples wikis',
+	'multilookupgo' => 'Ir',
+	'multilookupnotspecify' => 'Aún no has especificado una IP',
+	'multilookupnext' => 'próximo',
+	'multilookupprevious' => 'anterior',
+	'multilookupnbrresult' => 'Número del resultado:',
+	'multilookupinvalidresults' => '¡Resultados inválidos!',
+	'multilookupnoresultfound' => '¡No se ha encontrado resultados!',
+	'multilookupwiki' => 'Wiki',
+	'multilookuplink' => 'Vínculo a contribuciones',
+	'multilookupdetails' => 'Ver detalles',
+	'multilookuplistwikiainfo' => 'Lista de wikis cuyos artículos fueron editados por usuarios de IP: <b>$1</b>',
+	'multilookupinvaliduser' => '<p class="error">IP "<b>$1</b>" no existe. Revisa si hay posible errores ortográficos en la IP dada.</p>',
+	'multilookuplastedit' => 'Última edición desde esta IP:',
+);
+
 /** French (Français)
  * @author IAlex
  */
@@ -134,6 +156,28 @@ $messages['hu'] = array(
 	'multilookupnext' => 'következő',
 	'multilookupprevious' => 'előző',
 	'multilookupwiki' => 'Wiki',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'multilookup' => 'Cerca multiple',
+	'multilookupstitle' => 'Cerca multiple',
+	'multilookupselectuser' => 'Cerca contos usate desde le mesme adresse IP in multiple wikis',
+	'multilookupgo' => 'Ir',
+	'multilookupnotspecify' => 'Tu non ha ancora specificate un adresse IP',
+	'multilookupnext' => 'sequente',
+	'multilookupprevious' => 'precedente',
+	'multilookupnbrresult' => 'Numero de resultatos:',
+	'multilookupinvalidresults' => 'Resultatos invalide!',
+	'multilookupnoresultfound' => 'Nulle resultato trovate!',
+	'multilookupwiki' => 'Wiki',
+	'multilookuplink' => 'Ligamine a contributiones',
+	'multilookupdetails' => 'Vider detalios',
+	'multilookuplistwikiainfo' => 'Lista de wikis ubi articulos ha essite modificate per usatores con le adresse IP: <b>$1</b>',
+	'multilookupinvaliduser' => '<p class="error">Le adresse IP "<b>$1</b>" non existe. Verifica que le adresse IP date non ha errores.</p>',
+	'multilookuplastedit' => 'Ultime modification desde iste adresse IP:',
 );
 
 /** Macedonian (Македонски)
@@ -208,7 +252,11 @@ $messages['pms'] = array(
  * @author Lockal
  */
 $messages['ru'] = array(
+	'multilookupnext' => 'след.',
+	'multilookupprevious' => 'пред.',
+	'multilookupnoresultfound' => 'Ничего не найдено!',
 	'multilookupwiki' => 'Вики',
+	'multilookuplastedit' => 'Последняя правка с этого IP-адреса:',
 );
 
 /** Telugu (తెలుగు)

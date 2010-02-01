@@ -72,9 +72,11 @@ If you're stuck for inspiration, check out the examples below!",
 );
 
 /** Message documentation (Message documentation)
+ * @author McDutchie
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'magcloud-order-your-articles' => ' "Order" as in "sort", or "get printed and delivered"?',
 	'magcloud-design-image-selected' => 'Using Magcloud you can choose one of two or three predefined cover designs - or upload your own image. Parameters:
 * $1 is the name of the image the user has uploaded as cover',
 );
@@ -152,13 +154,18 @@ Klikit war « Mont d'ho kelaouenn » pa vo echuet ganeoc'h.",
 	'magcloud-order-your-articles' => 'Urzhiañ ho pennadoù',
 	'magcloud-design-default-title' => "Va c'helaouenn $1",
 	'magcloud-design-default-subtitle' => 'Istitl',
+	'magcloud-design-review-list' => "Distreiñ d'ar roll adlenn",
 	'magcloud-design-preview' => 'Rakwelet',
 	'magcloud-design-image-selected' => '$1 diuzet',
 	'magcloud-preview-done' => 'Krouet eo bet ho kelaouenn.',
+	'magcloud-preview-save-magazine' => 'Enrollañ ho Kelaouenn',
+	'magcloud-preview-publish' => 'Embann ho Kelaouenn',
+	'magcloud-preview-generating-pdf' => 'Emeur ho krouinn ho Kelaouenn',
 );
 
 /** French (Français)
  * @author IAlex
+ * @author McDutchie
  */
 $messages['fr'] = array(
 	'wikiacollection' => 'Faire un magazine !',
@@ -201,7 +208,7 @@ Si vous êtes en manque d'inspiration, voyez les exemples ci-dessous !",
 	'magcloud-design-image-selected' => '$1 sélectionné',
 	'magcloud-preview-done' => 'Votre magazine a été généré.',
 	'magcloud-preview-back-to-cover' => 'Revenir à la conception de la couverture',
-	'magcloud-preview-save-magazine' => 'Sauvegader votre magazine',
+	'magcloud-preview-save-magazine' => 'Sauvegarder votre magazine',
 	'magcloud-preview-publish' => 'Publier votre magazine',
 	'magcloud-preview-generating-pdf' => 'Création de votre magazine...',
 	'magcloud-publish-status-title' => 'Publication de votre magazine',
@@ -257,7 +264,7 @@ Se está falto de inspiración, olle os exemplos de embaixo!',
 	'magcloud-design-review-list' => 'Voltar á lista de revisión',
 	'magcloud-design-preview' => 'Vista previa',
 	'magcloud-design-license-policy' => 'Cargue soamente unha imaxe da que posúa os dereitos de impresión e que cumpra as políticas deste wiki.',
-	'magcloud-design-image-selected' => '$1 seleccionado',
+	'magcloud-design-image-selected' => '"$1" seleccionado',
 	'magcloud-preview-done' => 'Xerouse a súa revista.',
 	'magcloud-preview-back-to-cover' => 'Voltar ao deseño da cuberta',
 	'magcloud-preview-save-magazine' => 'Gardar a súa revista',
@@ -281,6 +288,65 @@ Se está falto de inspiración, olle os exemplos de embaixo!',
 $messages['hu'] = array(
 	'magcloud-discard-magazine-save' => 'Mentés és kilépés',
 	'magcloud-design-preview' => 'Előnézet',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'wikiacollection' => 'Face un revista!',
+	'magcloud-intro-get-started' => 'Colliger articulos',
+	'magcloud-intro-create-magazine' => 'Crea un revista de articulos in iste wiki!',
+	'magcloud-intro-check-out' => 'Clicca super le revista pro vider un exemplo ex nostre communitate!',
+	'magcloud-intro-hint' => 'Usa le instrumentario in alto del pagina pro seliger le articulos que tu vole compilar in tu revista. Clicca super "Ir a tu revista" quando tu es finite!',
+	'magcloud-intro-view-my-magazines' => 'Vider mi revistas',
+	'magcloud-load-magazine-title' => 'Cargar un revista',
+	'magcloud-load-magazine-load' => 'Cargar iste revista',
+	'magcloud-load-magazine-empty' => 'Tu non ha ancora salveguardate alcun revista. Crea un revista e salveguarda lo pro vider lo in iste lista!',
+	'magcloud-add-article-success' => "'''$1''' ha essite addite a tu revista",
+	'magcloud-add-article-already' => "'''$1''' ha ja essite addite",
+	'magcloud-toolbar-step' => 'Passo $1: $2',
+	'magcloud-toolbar-article-in-collection' => "'''$1''' es ja presente in tu revista",
+	'magcloud-toolbar-article-add' => "Adder '''$1''' a tu revista?",
+	'magcloud-toolbar-add' => 'Adder',
+	'magcloud-toolbar-articles-count' => '<big>$1</big> {{PLURAL:$1|articulo|articulos}}',
+	'magcloud-toolbar-go-to-magazine' => 'Ir a tu revista',
+	'magcloud-discard-magazine-title' => 'Salveguardar tu collection?',
+	'magcloud-discard-magazine-msg' => 'Il ha labor in progresso a un revista non salveguardate. Vole tu salveguardar lo? (Tu debe esser identificate pro salveguardar tu collection.)',
+	'magcloud-discard-magazine-discard' => 'Abandonar e exir',
+	'magcloud-discard-magazine-save' => 'Salveguardar e exir',
+	'magcloud-special-collection-title' => 'Face un revista!',
+	'magcloud-special-collection-empty' => "Tu non ha ancora seligite alcun articulo! Retorna al wiki e selige 'Adder' in le instrumentario in alto pro compilar tu revista.",
+	'magcloud-special-collection-review-list-info' => 'Ben, tu ha seligite $1 {{PLURAL:$1|articulo|articulos}} pro tu revista. Si tu vole adder alteres, simplemente visita lor paginas e preme "Adder" in le instrumentario in alto!',
+	'magcloud-special-collection-review-list-tips' => '<big>Avisos pro crear un revista superbe</big>
+
+# Tenta seliger articulos super un mesme thema, como villanos de comics o gladios unic.
+# Tu revista final debe esser minus longe que 100 paginas, lo que corresponde probabilemente a 8 - 10 articulos, dependente de qual articulos tu adde.
+
+Si te manca le inspiration, examina le exemplos hic infra!',
+	'magcloud-order-your-articles' => 'Ordinar tu articulos',
+	'magcloud-button-design-a-cover' => 'Designar un copertura',
+	'magcloud-design-default-title' => 'Mi revista $1',
+	'magcloud-design-default-subtitle' => 'Subtitulo',
+	'magcloud-design-review-list' => 'Retornar al lista de revision',
+	'magcloud-design-preview' => 'Previsualisation',
+	'magcloud-design-license-policy' => 'Incarga solmente un imagine del qual tu possede le derectos de impression e que adhere al politicas de iste wiki.',
+	'magcloud-design-image-selected' => '$1 seligite',
+	'magcloud-preview-done' => 'Tu revista ha essite generate.',
+	'magcloud-preview-back-to-cover' => 'Retornar al designo del copertura',
+	'magcloud-preview-save-magazine' => 'Salveguardar tu revista',
+	'magcloud-preview-publish' => 'Publicar tu revista',
+	'magcloud-preview-generating-pdf' => 'Creation de tu revista…',
+	'magcloud-publish-status-title' => 'Publication de tu revista',
+	'magcloud-publish-status' => 'Excellente! Nos va mitter tu revista in le tubos de transmission.',
+	'magcloud-publish-error' => 'Un error occurreva durante le invio de tu revista a MagCloud. Nos ha registrate le error pro tentar determinar lo que ha evenite. Per favor reproba lo plus tarde: nos spera que nos habera discoperite le problema. Per favor accepta nostre excusas!',
+	'magcloud-publish-done' => '…e nos ha finite! Redirection verso MagCloud…',
+	'magcloud-publish-ajax-initialize' => 'Apertura de session in MagCloud…',
+	'magcloud-publish-ajax-login' => '…preparation del publication…',
+	'magcloud-publish-ajax-publication' => '…preparation del edition…',
+	'magcloud-publish-ajax-issue' => '…finalisation del incargamento…',
+	'magcloud-publish-ajax-upload' => '…e un poco de rangiamento, como nostre genitores nos lo inseniava…',
+	'magcloud-publish-ajax-processing' => '…ora, ubi se trova le grande button rubie "PUBLICAR"?…',
 );
 
 /** Macedonian (Македонски)
@@ -483,8 +549,24 @@ $messages['roa-tara'] = array(
  * @author Lockal
  */
 $messages['ru'] = array(
+	'magcloud-intro-get-started' => 'Собрать статьи',
+	'magcloud-intro-create-magazine' => 'Создайте журнал из статей этой вики!',
+	'magcloud-intro-hint' => 'Используйте панель инструментов в верхней части страницы, чтобы выбрать статьи, которые вы хотите объединить в журнал. Нажмите кнопку «Перейти в ваш журнал», когда закончите!',
+	'magcloud-intro-view-my-magazines' => 'Посмотреть мои журналы',
+	'magcloud-load-magazine-title' => 'Загрузить журнал',
+	'magcloud-load-magazine-load' => 'Загрузить этот журнал',
+	'magcloud-load-magazine-empty' => 'Вы пока не сохранили ни одного журнала. Создайте и сохраните его, чтобы увидеть в этом списке!',
 	'magcloud-toolbar-step' => 'Шаг $1: $2',
 	'magcloud-toolbar-add' => 'Добавить',
+	'magcloud-toolbar-go-to-magazine' => 'Перейти к вашему журналу',
+	'magcloud-discard-magazine-discard' => 'Отменить и выйти',
+	'magcloud-discard-magazine-save' => 'Сохранить и выйти',
+	'magcloud-special-collection-review-list-info' => 'Замечательно, вы выбрали $1 {{PLURAL:$1|статью|статьи|статей}} для своего журнала. Если вы хотите добавить ещё, просто посетите другие страницы и нажмите «Добавить» на панели вверху!',
+	'magcloud-order-your-articles' => 'Измените порядок ваших статей',
+	'magcloud-button-design-a-cover' => 'Разработать обложку',
 	'magcloud-design-default-subtitle' => 'Подзаголовок',
+	'magcloud-design-review-list' => 'Возврат к обзорному списку',
+	'magcloud-design-preview' => 'Предпросмотр',
+	'magcloud-design-image-selected' => 'Выбрано $1',
 );
 

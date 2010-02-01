@@ -76,6 +76,15 @@ $messages['hu'] = array(
 	'sf-link-tooltip' => 'Szócikk megosztása a barátaiddal',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'sf-link' => 'Condivider iste articulo',
+	'sf-link-popup' => 'Condivider iste articulo',
+	'sf-link-tooltip' => 'Condivider iste articulo con tu amicos',
+);
+
 /** Japanese (日本語) */
 $messages['ja'] = array(
 	'sf-link' => 'この記事を共有',

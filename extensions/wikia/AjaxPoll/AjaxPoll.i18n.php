@@ -113,12 +113,17 @@ $messages['gsw'] = array(
 );
 
 /** Hungarian (Magyar)
+ * @author Dani
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
+	'ajaxpoll-percentVotes' => 'az összes szavazat $1%-a',
 	'ajaxpoll-thankyou' => 'Köszönjük a szavazatodat!',
+	'ajaxpoll-error' => 'Hiba történt a szavazatod feldolgozása közben, kérlek próbáld újra.',
+	'ajaxpoll-summary' => 'A szavazás $2 $1-kor készült, és eddig $3 ember szavazott.',
 	'ajaxpoll-submit' => 'Szavazás!',
-	'ajaxpoll-submitting' => 'Kérlek várj, szavazat elküldése …',
+	'ajaxpoll-closed' => 'A szavazás már lezárult. Nézd meg az eredményeket.',
+	'ajaxpoll-submitting' => 'A szavazat elküldése, kérlek várj…',
 );
 
 /** Japanese (日本語)

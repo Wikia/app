@@ -59,6 +59,14 @@ $messages['hsb'] = array(
 	'templatesused-toggle' => '{{PLURAL:$1|$1 zapisk|$1 zapiskaj|$1 zapiski|$1 zapiskow}} pokazać/schować',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'new-edit-page-preview-notice' => 'Previsualisation: cambios non ancora salveguardate! Rola a basso pro continuar le modification.',
+	'templatesused-toggle' => 'Revelar/celar {{PLURAL:$1|$1 elemento|$1 elementos}}',
+);
+
 /** Japanese (日本語) */
 $messages['ja'] = array(
 	'new-edit-page-preview-notice' => 'プレビュー中 : 編集内容はまだ保存されていません！ スクロールし編集を続けてください。',
@@ -95,6 +103,14 @@ Scroll naar beneden om door te gaan met bewerken.',
 $messages['nn'] = array(
 	'new-edit-page-preview-notice' => 'Førehandsvisingsmodus: ingen endringar er lagra enno. Rull ned for å halda fram med endringa.',
 	'templatesused-toggle' => 'Løyn/syn {{PLURAL:$1|eitt objekt|$1 objekt}}',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'new-edit-page-preview-notice' => 'Forhåndsvisningsmodus: ingen endringer er lagret enda! Rull ned for å fortsette redigeringen.',
+	'templatesused-toggle' => 'Vis/skjul {{PLURAL:$1|ett objekt|$1 objekt}}',
 );
 
 /** Occitan (Occitan)

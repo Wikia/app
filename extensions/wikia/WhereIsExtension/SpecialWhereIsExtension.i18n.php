@@ -64,6 +64,13 @@ $messages['br'] = array(
 	'whereisextension-name-contains' => 'Anv an argemmenn zo ennañ',
 );
 
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'whereisextension-submit' => 'Bilatu',
+);
+
 /** French (Français)
  * @author IAlex
  */
@@ -98,6 +105,19 @@ $messages['hu'] = array(
 	'whereisextension-filter' => 'Szűrő',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'whereisextension' => 'Ubi es le extension',
+	'whereisextension-submit' => 'Cercar',
+	'whereisextension-list' => 'Lista de wikis correspondente al criterios',
+	'whereisextension-isset' => 'es configurate como',
+	'whereisextension-filter' => 'Filtro',
+	'whereisextension-all-groups' => 'Tote le gruppos',
+	'whereisextension-name-contains' => 'nomine de variabile contine',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -124,6 +144,19 @@ $messages['nl'] = array(
 	'whereisextension-name-contains' => 'variabelenaam bevat',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'whereisextension' => 'Hvor er utvidelsen',
+	'whereisextension-submit' => 'Søk',
+	'whereisextension-list' => 'Liste over wikier med matchende kriterier',
+	'whereisextension-isset' => 'er satt til',
+	'whereisextension-filter' => 'Filter',
+	'whereisextension-all-groups' => 'Alle grupper',
+	'whereisextension-name-contains' => 'variabelnavn inneholder',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
@@ -140,6 +173,7 @@ $messages['pms'] = array(
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Daemorris
+ * @author McDutchie
  */
 $messages['pt-br'] = array(
 	'whereisextension' => 'Extensão onde está',
@@ -147,7 +181,7 @@ $messages['pt-br'] = array(
 	'whereisextension-list' => 'Lista de wikis com critério correspondente',
 	'whereisextension-isset' => 'está configurado como',
 	'whereisextension-filter' => 'Filtro',
-	'whereisextension-all-groups' => 'Todos os os grupos',
+	'whereisextension-all-groups' => 'Todos os grupos',
 	'whereisextension-name-contains' => 'nome de variável contêm',
 );
 

@@ -59,7 +59,7 @@ $messages['fr'] = array(
 	'privatedomains_invalidemail' => "<p>Désolé, l'accès à ce wiki est réservé aux membre de $1. Si vos avez une adresse de courriel affiliée avec $1, vous pouvez entrer ou reconfirmer votre adresse de courriel dans sur la page de préférences du compte <a href=/wiki/Special:Preferences>ici</a>. Vous pouvez toujours voir les pages de ce wiki, mais vous ne pouvez pas le modifier.</p>",
 	'privatedomains_affiliatenamelabel' => "<br />Nom de l'organisation :",
 	'privatedomains_emailadminlabel' => "<br />Nom d'utilisateur du contact pour des problèmes d'accès ou requêtes :",
-	'privatedomainsinstructions' => '<br /> <br /> <p>La liste des domaines des adresses de courriel autorisées pour les éditeurs de ce wiki est affichée ci-dessous. Chaque ligne désigne un suffixe d\'adresse de courriel qui donne accès aux éditeurs. La liste doit être formatée avec un suffixe par ligne. Par exemple :</p> <p style="width: 20%; padding:5px; border: 1px solid grey;">cs.stanford.edu<br /> stanfordalumni.org</p> <p>This would allow edits from anyone with the email address whatever@cs.stanford.edu or whatever@stanfordalumni.org</p> <p><b>Entrez la liste des domaines autorisés dans la boîte ci-dessous et cliquez sur « sauvegarder ».</b></p>',
+	'privatedomainsinstructions' => '<br /> <br /> <p>La liste des domaines des adresses de courriel autorisées pour les éditeurs de ce wiki est affichée ci-dessous. Chaque ligne désigne un suffixe d\'adresse de courriel qui donne accès aux éditeurs. La liste doit être formatée avec un suffixe par ligne. Par exemple :</p> <p style="width: 20%; padding:5px; border: 1px solid grey;">cs.stanford.edu<br /> stanfordalumni.org</p> <p>Ceci permettra à toutes les personnes ayant une adresse de courriel se terminant par « @cs.stanford.edu » et  « @stanfordalumni.org » de modifier le wiki.</p> <p><b>Entrez la liste des domaines autorisés dans la boîte ci-dessous et cliquez sur « sauvegarder ».</b></p>',
 );
 
 /** Galician (Galego)
@@ -83,6 +83,20 @@ $messages['hu'] = array(
 	'privatedomains' => 'Privát tartományok kezelése',
 	'privatedomains_affiliatenamelabel' => '<br />Szervezet neve:',
 	'privatedomains_emailadminlabel' => '<br />Kapcsolattartó neve hozzáférési problémák vagy kérdések esetére:',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'privatedomains_nomanageaccess' => "<p>Pardono, tu non ha le derectos necessari pro gerer le dominios private de iste wiki. Solmente le bureaucrates del wiki e le personal ha accesso.</p><p>Si tu non ha aperite un session, tu deberea probabilemente <a href='/wiki/Special:Userlogin'>facer lo</a>.</p>",
+	'privatedomains' => 'Gerer dominios private',
+	'privatedomains_ifemailcontact' => '<p>Si non, contacta [[Special:Emailuser/$1|$1]] si tu ha alcun questiones.</p>',
+	'saveprivatedomains_success' => 'Le alterationes in le dominios private ha essite salveguardate.',
+	'privatedomains_invalidemail' => '<p>Pardono, le accesso a iste wiki es restringite al membros de $1. Si tu ha un adresse de e-mail affiliate con $1, tu pote entrar o reconfirmar tu adresse de e-mail in <a href=/wiki/Special:Preferences>le pagina de preferentias de tu conto</a>. Tu pote vider paginas in iste wiki, ma non modificar los.</p>',
+	'privatedomains_affiliatenamelabel' => '<br />Nomine del organisation:',
+	'privatedomains_emailadminlabel' => '<br />Nomine de usator de contacto pro problemas de accesso o questiones:',
+	'privatedomainsinstructions' => '<br /> <br /> <p>Hic infra se trova le lista de dominios de e-mail permittite pro le contributores de iste wiki. Cata linea designa un suffixo de e-mail que da accesso al modification. Isto debe esser formatate con un suffixo per linea. Per exemplo:</p> <p style="width: 20%; padding:5px; border: 1px solid grey;">cs.stanford.edu<br /> stanfordalumni.org</p>  <p>Isto permitterea le modificationes de omne persona con le adresse de e-mail quecunque@cs.stanford.edu o quecunque@stanfordalumni.org</p> <p><b>Entra le dominios permittite in le quadro de texto sequente, e clicca "salveguardar".</b></p>',
 );
 
 /** Macedonian (Македонски)

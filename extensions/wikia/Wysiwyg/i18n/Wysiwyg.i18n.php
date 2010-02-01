@@ -172,6 +172,27 @@ $messages['de'] = array(
 	'wysiwyg-toolbar-controls' => 'Funktionen',
 );
 
+/** Greek (Ελληνικά)
+ * @author Περίεργος
+ */
+$messages['el'] = array(
+	'wysiwyg-no-js-fallback' => 'Ο εμλπουτισμένος συντάκτης κειμένου δεν λειτουργεί με απενεργοποιημένο Javascript. Παρακαλώ είτε να το ενεργοποιήσετε από τις επιλογές του περιηγητή διαδικτύου σας, ή να επισκεφθείτε το δικό σας [[Ειδικό: Προτιμήσεις]] για να μεταβείτε στον παλιό συντάκτη του MediaWiki.',
+	'wysiwyg-edgecase-info' => 'Ο εμπλουτισμένος συντάκτης κειμένου έχει απενεργοποιηθεί, γιατί το άρθρο περιέχει:',
+	'wysiwyg-edgecase-comment' => 'σχόλια σε HTML',
+	'wysiwyg-edgecase-triplecurls' => 'παράμετροι προτύπου',
+	'wysiwyg-edgecase-template-with-link' => 'ένα πρότυπο με ένα σύνδεσμο ως παράμετρο',
+	'wysiwyg-edgecase-syntax' => 'μη επιτρεπόμενη σύνταξη',
+	'wysiwyg-edgecase-image-with-link' => 'εικόνα με ένα σύνδεσμο στην περιγραφή',
+	'wysiwyg-edgecase-redirect' => 'ανακατεύθυνση',
+	'wysiwyg-tooltip' => "'''Νέο!''' Γραμμή εργαλείων σύνταξης. Δείτε [[Βοήθεια:Νέος συντάκτης|βοήθεια]] για να μάθετε περισσότερα",
+	'enablerichtexteditor' => 'Ενεργοποίηση εμπλουτισμένου συντάκτη κειμένου',
+	'wysiwyg-enablerichtexteditormessage' => 'Ο εμπλουτισμένος συντάκτης κειμένου ενεργοποιήθηκε!',
+	'wysiwyg-toolbar-text-appearance' => 'Εμφάνιση Κειμένου',
+	'wysiwyg-toolbar-lists-and-links' => 'Κατάλογοι και σύνδεσμοι',
+	'wysiwyg-toolbar-insert' => 'Εισαγωγή',
+	'wysiwyg-toolbar-wiki-templates' => 'Πρότυπα Wiki',
+);
+
 /** Spanish (Español)
  * @author Translationista
  */
@@ -197,6 +218,15 @@ $messages['es'] = array(
 	'wysiwyg-toolbar-insert' => 'Insertar',
 	'wysiwyg-toolbar-wiki-templates' => 'Plantillas wiki',
 	'wysiwyg-toolbar-controls' => 'Controles',
+);
+
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'wysiwyg-edgecase-redirect' => 'birzuzendu',
+	'wysiwyg-toolbar-insert' => 'Txertatu',
+	'wysiwyg-toolbar-wiki-templates' => 'Wiki Txantiloiak',
 );
 
 /** Persian (فارسی) */
@@ -269,15 +299,16 @@ $messages['gl'] = array(
 );
 
 /** Hungarian (Magyar)
+ * @author Dani
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
-	'wysiwyg-edgecase-comment' => 'HTML megjegyzések',
+	'wysiwyg-edgecase-comment' => 'HTML-megjegyzések',
 	'wysiwyg-edgecase-triplecurls' => 'sablonparaméterek',
 	'wysiwyg-edgecase-template-with-link' => 'egy sablon hivatkozással paraméterként',
 	'wysiwyg-edgecase-syntax' => 'nem engedélyezett szintaxis',
 	'wysiwyg-edgecase-redirect' => 'átirányítás',
-	'wysiwyg-edgecase-unclosed-tags' => 'lezáratlan HTML tag',
+	'wysiwyg-edgecase-unclosed-tags' => 'lezáratlan HTML-tag',
 	'wysiwyg-toolbar-lists-and-links' => 'Listák és hivatkozások',
 	'wysiwyg-toolbar-insert' => 'Beszúrás',
 	'wysiwyg-toolbar-wiki-templates' => 'Wiki sablonok',
@@ -402,6 +433,13 @@ $messages['no'] = array(
 	'wysiwyg-toolbar-lists-and-links' => 'Lister og lenker',
 	'wysiwyg-toolbar-insert' => 'Sett inn',
 	'wysiwyg-toolbar-wiki-templates' => 'Wiki-maler',
+);
+
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'wysiwyg-toolbar-lists-and-links' => 'Lischte unn Gleecher',
 );
 
 /** Polish (Polski) */
@@ -533,6 +571,13 @@ $messages['te'] = array(
 	'wysiwyg-edgecase-comment' => 'HTML వ్యాఖ్యలు',
 	'wysiwyg-edgecase-redirect' => 'దారిమార్పు',
 	'wysiwyg-toolbar-wiki-templates' => 'వికీ మూసలు',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'wysiwyg-edgecase-unclosed-tags' => 'незакритий HTML-тег',
 );
 
 /** Yiddish (ייִדיש)

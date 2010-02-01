@@ -71,6 +71,15 @@ $messages['hu'] = array(
 	'outbound-screen-login-text' => '<a href="$1">Felhasználói fiók létrehozása</a>, vagy <a href="$2">bejelentkezés a meglevőbe</a>, hogy átugord ezt a lapot a jövőben',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'outbound-screen-text' => 'clicca hic pro quitar wikia.',
+	'outbound-screen-text-with-redirect' => 'clicca hic pro quitar wikia, o attende $1 secundas pro esser redirigite.',
+	'outbound-screen-login-text' => '<a href="$1">Crea un conto</a> o <a href="$2">aperi un session a tu conto existente</a> pro saltar iste pagina in le futuro',
+);
+
 /** Italian (Italiano) */
 $messages['it'] = array(
 	'outbound-screen-text' => 'Stai lasciando Wikia per navigare su un altro sito. Clicca qui per continuare.',
@@ -102,6 +111,15 @@ $messages['nl'] = array(
 	'outbound-screen-text' => 'klik hier om Wikia te verlaten.',
 	'outbound-screen-text-with-redirect' => 'klik hier om Wikia te verlaten of wacht $1 seconden om doorverwezen te worden.',
 	'outbound-screen-login-text' => 'U kunt <a href="$1">een gebruiker aanmaken</a> of <a href="$2">aanmelden met een bestaande gebruiker</a> om deze pagina in de toekomst over te slaan',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'outbound-screen-text' => 'klikk her for å forlate wikia.',
+	'outbound-screen-text-with-redirect' => 'klikk her for å forlate wikia, eller vent $1 sek for å bli omdirigert.',
+	'outbound-screen-login-text' => '<a href="$1">Opprett en konto</a> eller <a href="$2">logg inn på din eksisterende konto</a> for å hoppe over denne siden i fremtiden',
 );
 
 /** Piedmontese (Piemontèis)

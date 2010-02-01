@@ -43,6 +43,10 @@ $messages['af'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
+	'tog-watchlistdigest' => 'Kas din dre bostel un diverañ eus Ma Rollad evezhiañ bep sizhun',
+	'globalwatchlist-see-more' => "Mar plij gwirit ho rolloù evezhiañ lec'hel evit diskouez muioc'h a gemmoù",
+	'globalwatchlist-digest-email-subject' => 'Diverañ ar sizhun',
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 evezhiadenn{{PLURAL:$2||}})',
 	'globalwatchlist-no-page-found' => "N'eo bet kavet pajenn ebet.",
 	'globalwatchlist-no-blog-page-found' => "N'eo bet kavet pajenn blog ebet.",
 );
@@ -66,7 +70,9 @@ Wikia
 * Du kannst deine Einstellungen zur Benachrichtigung über deine Beobachtungsliste hier anpassen: http://www.wikia.com/wiki/Special:Preferences',
 );
 
-/** Spanish (Español) */
+/** Spanish (Español)
+ * @author Translationista
+ */
 $messages['es'] = array(
 	'tog-watchlistdigest' => 'Envíame por correo electrónico un Boletín Semanal de mi lista de Seguimiento',
 	'tog-watchlistdigestclear' => 'Marcar todas las páginas desde mi Boletín Semanal de mi lista de Seguimiento como visitadas',
@@ -74,16 +80,23 @@ $messages['es'] = array(
 	'globalwatchlist-digest-email-subject' => 'Boletín Semanal',
 	'globalwatchlist-digest-email-body' => 'Estimado/a $1,
 
-Esta es una lista de las páginas de tu lista de seguimiento de Wikia que han sido editadas desde tu última visita.
+Este es un listado de las páginas de tu lista de seguimiento de Wikia que han sido editadas desde tu última visita.
 
 $2
 
-Por favor visítalas y edítalas si lo consideras necesario...
+Este es un listado de las páginas de blogs incluídas en tu lista de seguimiento Wikia que han sido editadas o en las que se ha comentado desde la última vez que las visitaste.
+
+$3
+
+Por favor visítalas y edítalas frecuentemente...
 
 Wikia
 
-* Para cambiar tus preferencias para las notificaciones de tu lista de seguimiento, por favor, visita http://www.wikia.com/wiki/Special:Preferences
-* Para marcar todas las páginas como visitadas de este Boletín Semanal ve a la pestaña de "Seguimiento"  en tus Preferencias',
+* Para cambiar tus preferencias de notificaciones de tu lista de seguimiento, por favor, visita http://www.wikia.com/wiki/Special:Preferences
+* Para marcar todas las páginas de este Boletín Semanal como visitadas ve a la pestaña de "Seguimiento"  en tus Preferencias',
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|comentario|comentarios}})',
+	'globalwatchlist-no-page-found' => 'No se encontró ninguna página.',
+	'globalwatchlist-no-blog-page-found' => 'No se encontró ninguna página de blog.',
 );
 
 /** French (Français)
@@ -144,6 +157,36 @@ Wikia
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|comentario|comentarios}})',
 	'globalwatchlist-no-page-found' => 'Non se atopou ningunha páxina.',
 	'globalwatchlist-no-blog-page-found' => 'Non se atopou ningunha páxina de blogue.',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'tog-watchlistdigest' => 'Inviar me per e-mail un digesto septimanal de mi observatorio',
+	'tog-watchlistdigestclear' => 'Marcar tote le paginas del digesto septimanal de mi observatorio como visitate',
+	'globalwatchlist-see-more' => 'Per favor consulta tu observatorios local pro plus modificationes',
+	'globalwatchlist-digest-email-subject' => 'Digesto septimanal',
+	'globalwatchlist-digest-email-body' => 'Car $1,
+
+Isto es un lista de paginas in tu observatorio de Wikia que ha essite modificate post tu ultime visita.
+
+$2
+
+
+Isto es un lista de paginas de blog in tu observatorio de Wikia que ha essite modificate o commentate post tu ultime visita.
+
+$3
+
+Per favor visita e modifica frequentemente...
+
+Wikia
+
+* Pro cambiar tu preferentias pro le notificationes del observatorio, visita http://www.wikia.com/wiki/Special:Preferences
+* Pro marcar tote le paginas de iste digesto septimanal como visitate, vide le option in le scheda "Observatorio" de tu Preferentias',
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|commento|commentos}})',
+	'globalwatchlist-no-page-found' => 'Nulle pagina trovate.',
+	'globalwatchlist-no-blog-page-found' => 'Nulle pagina de blog trovate.',
 );
 
 /** Japanese (日本語)

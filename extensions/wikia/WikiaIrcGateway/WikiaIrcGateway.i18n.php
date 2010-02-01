@@ -36,6 +36,20 @@ $messages['br'] = array(
 	'ircgate-channel' => 'Kanol :',
 );
 
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'ircgate-username' => 'Lankide izena:',
+);
+
+/** Finnish (Suomi)
+ * @author Silvonen
+ */
+$messages['fi'] = array(
+	'ircgate-channel' => 'Kanava:',
+);
+
 /** French (Français)
  * @author Peter17
  */
@@ -68,6 +82,14 @@ $messages['hu'] = array(
 	'ircgate-channel' => 'Csatorna:',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'ircgate-username' => 'Nomine de usator:',
+	'ircgate-channel' => 'Canal:',
+);
+
 /** Japanese (日本語)
  * @author Hosiryuhosi
  */
@@ -90,6 +112,14 @@ $messages['mk'] = array(
 $messages['nl'] = array(
 	'ircgate-username' => 'Gebruikersnaam:',
 	'ircgate-channel' => 'Kanaal:',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'ircgate-username' => 'Brukernavn:',
+	'ircgate-channel' => 'Kanal:',
 );
 
 /** Piedmontese (Piemontèis)

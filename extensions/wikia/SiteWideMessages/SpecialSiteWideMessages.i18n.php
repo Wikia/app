@@ -101,6 +101,13 @@ $messages['qqq'] = array(
  * @author Naudefj
  */
 $messages['af'] = array(
+	'sitewidemessages' => 'Werfwye boodskappe',
+	'swm-page-title-editor' => 'Werfwye boodskappe: Teksverwerker',
+	'swm-page-title-preview' => 'Werfwye boodskappe :: Voorskou',
+	'swm-page-title-send' => 'Werfwye boodskappe :: Stuur',
+	'swm-page-title-sent' => 'Werfwye boodskappe :: Gestuur',
+	'swm-page-title-dismiss' => 'Werfwye boodskappe :: Verlaat',
+	'swm-page-title-list' => 'Werfwye boodskappe :: Lys',
 	'swm-label-preview' => 'Voorskou',
 	'swm-label-edit' => 'Wysig',
 	'swm-label-remove' => 'Verwyder',
@@ -116,7 +123,9 @@ $messages['af'] = array(
 	'swm-label-mode-users-all' => 'Alle gebruikers',
 	'swm-label-mode-users-active' => 'Aktiewe grbruikers',
 	'swm-label-mode-users-group' => 'Gebruikers wat aan die groep behoort',
+	'swm-label-mode-users-group-hint' => "<i>Kies 'n groep uit die lys of voer die naam handmatig in.</i>",
 	'swm-label-mode-users-user' => 'Geselekteerde gebruiker',
+	'swm-label-mode-users-user-hint' => '<i>Hierdie opsie verontagsaam seleksie in die groep "wiki\'s".</i>',
 	'swm-label-content' => 'Inhoud',
 	'swm-label-comment' => 'Opmerking',
 	'swm-label-dismissed' => 'Verdaag',
@@ -282,12 +291,14 @@ Mehr Informationen findest du im Fehler-Log.',
 	'swm-error-empty-group' => 'Gib den Namen der Gruppe ein.',
 );
 
-/** Spanish (Español) */
+/** Spanish (Español)
+ * @author McDutchie
+ */
 $messages['es'] = array(
 	'swm-label-preview' => 'Previsualización',
 	'swm-label-edit' => 'Editar',
 	'swm-label-remove' => 'Quitar',
-	'swm-label-sent' => 'Enviar',
+	'swm-label-sent' => 'Enviado',
 	'swm-label-list' => 'Lista',
 	'swm-label-recipient' => 'Receptor',
 	'swm-label-expiration' => 'Tiempo de expiración',
@@ -310,6 +321,20 @@ $messages['es'] = array(
 	'swm-error-no-such-user' => '¡El usuario especificado no existe!',
 	'swm-error-empty-message' => 'Introduce el contenido del mensaje.',
 	'swm-error-empty-group' => 'Introduce el nombre del grupo.',
+);
+
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'swm-label-language' => 'Hizkuntza',
+	'swm-button-preview' => ' [ Aurrikusi ]',
+	'swm-button-send' => '[ Bidali ]',
+	'swm-button-save' => '[ Gorde ]',
+	'swm-list-table-wiki' => 'Wiki',
+	'swm-list-table-tools' => 'Tresnak',
+	'swm-yes' => 'Bai',
+	'swm-no' => 'Ez',
 );
 
 /** French (Français)
@@ -483,6 +508,74 @@ $messages['hu'] = array(
 	'swm-no' => 'nem',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'sitewidemessages' => 'Messages a transverso le sito',
+	'swm-page-title-editor' => 'Messages a transverso le sito :: Editor',
+	'swm-page-title-preview' => 'Messages a transverso le sito :: Previsualisation',
+	'swm-page-title-send' => 'Messages a transverso le sito :: Inviar',
+	'swm-page-title-sent' => 'Messages a transverso le sito :: Inviate',
+	'swm-page-title-dismiss' => 'Messages a transverso le sito :: Dimitter',
+	'swm-page-title-list' => 'Messages a transverso le sito :: Lista',
+	'swm-label-preview' => 'Previsualisation',
+	'swm-label-edit' => 'Modificar',
+	'swm-label-remove' => 'Remover',
+	'swm-label-sent' => 'Inviate',
+	'swm-label-list' => 'Lista',
+	'swm-label-recipient' => 'Destinatarios',
+	'swm-label-recipient-wikis' => 'Wikis',
+	'swm-label-recipient-users' => 'Usatores',
+	'swm-label-expiration' => 'Tempore de expiration',
+	'swm-label-mode-wikis-all' => 'Tote le wikis',
+	'swm-label-mode-wikis-hub' => 'Hub seligite',
+	'swm-label-mode-wikis-wiki' => 'Wiki seligite',
+	'swm-label-mode-users-all' => 'Tote le usatores',
+	'swm-label-mode-users-active' => 'Usatores active',
+	'swm-label-mode-users-group' => 'Usatores pertinente al gruppo',
+	'swm-label-mode-users-group-hint' => '<i>Selige un gruppo del lista disrolante o scribe le nomine manualmente si non appare in le lista.</i>',
+	'swm-label-mode-users-user' => 'Usator seligite',
+	'swm-label-mode-users-user-hint' => '<i>Iste option ignora le selection in le gruppo "Wikis".</i>',
+	'swm-label-content' => 'Contento',
+	'swm-label-comment' => 'Commento',
+	'swm-label-dismissed' => 'Dimittite',
+	'swm-label-language' => 'Lingua',
+	'swm-button-lang-checkall' => '[ Seliger totes ]',
+	'swm-button-lang-checknone' => '[ Seliger nihil ]',
+	'swm-taskmanager-hint' => '<i>Nota que alcun optiones consume plus tempore e essera mittite in le cauda de TaskManager.</i>',
+	'swm-button-preview' => '[ Previsualisar ]',
+	'swm-button-send' => '[ Inviar ]',
+	'swm-button-save' => '[ Salveguardar ]',
+	'swm-button-new' => '[ Nove ]',
+	'swm-msg-sent-ok' => '<h3>Le message ha essite inviate.</h3>',
+	'swm-msg-sent-err' => '<h3>Le message NON ha essite inviate.</h3>Vide le registro de errores pro plus informationes.</p>',
+	'swm-msg-remove' => 'Es tu secur de voler remover iste message? Isto non pote esser disfacite!',
+	'swm-days' => 'nunquam,hora,horas,die,dies',
+	'swm-expire-info' => 'Iste message expirara le $1.',
+	'swm-link-dismiss' => 'dimitter iste message',
+	'swm-dismiss-content' => '<p>Le message ha essite dimittite.</p><p>%s</p>',
+	'swm-list-no-messages' => 'Nulle message.',
+	'swm-list-table-id' => 'ID',
+	'swm-list-table-sender' => 'Expeditor',
+	'swm-list-table-wiki' => 'Wiki',
+	'swm-list-table-recipient' => 'Destinatario',
+	'swm-list-table-group' => 'Gruppo',
+	'swm-list-table-expire' => 'Expira',
+	'swm-list-table-date' => 'Data de invio',
+	'swm-list-table-removed' => 'Removite',
+	'swm-list-table-content' => 'Contento',
+	'swm-list-table-tools' => 'Instrumentos',
+	'swm-list-table-lang' => 'Linguas',
+	'swm-yes' => 'Si',
+	'swm-no' => 'No',
+	'swm-error-no-such-wiki' => 'Iste wiki non existe!',
+	'swm-error-no-such-user' => 'Le usator specificate non existe.',
+	'swm-error-empty-message' => 'Entra le contento del message.',
+	'swm-error-empty-group' => 'Entra le nomine del gruppo.',
+	'swm-lang-other' => 'tote le linguas restante',
+);
+
 /** Japanese (日本語) */
 $messages['ja'] = array(
 	'sitewidemessages' => 'サイト横断メッセージ',
@@ -596,6 +689,7 @@ $messages['mk'] = array(
 );
 
 /** Dutch (Nederlands)
+ * @author McDutchie
  * @author Siebrand
  */
 $messages['nl'] = array(
@@ -609,7 +703,7 @@ $messages['nl'] = array(
 	'swm-label-preview' => 'Voorvertoning',
 	'swm-label-edit' => 'Bewerken',
 	'swm-label-remove' => 'Verwijderen',
-	'swm-label-sent' => 'Verzenden',
+	'swm-label-sent' => 'Verzonden',
 	'swm-label-list' => 'Lijst',
 	'swm-label-recipient' => 'Ontvangers',
 	'swm-label-recipient-wikis' => "Wiki's",
@@ -790,11 +884,15 @@ $messages['ru'] = array(
 	'swm-label-list' => 'Список',
 	'swm-label-recipient' => 'Получатели',
 	'swm-label-recipient-wikis' => 'Вики',
+	'swm-label-recipient-users' => 'Участники',
+	'swm-label-mode-users-active' => 'Активные участники',
 	'swm-label-content' => 'Содержание',
 	'swm-label-comment' => 'Комментарий',
 	'swm-label-dismissed' => 'Пропущено',
 	'swm-label-language' => 'Язык',
+	'swm-msg-sent-ok' => '<h3>Сообщение отправлено.</h3>',
 	'swm-link-dismiss' => 'пропустить это сообщение',
+	'swm-list-no-messages' => 'Нет сообщений.',
 	'swm-list-table-id' => 'Идентификатор',
 	'swm-list-table-sender' => 'Отправитель',
 	'swm-list-table-wiki' => 'Вики',

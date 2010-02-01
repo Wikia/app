@@ -130,6 +130,32 @@ $messages['hu'] = array(
 	'protectsite-unprotect' => 'Védelem feloldása',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'protectsite' => 'Proteger sito',
+	'protectsite-text-protect' => '<!-- Instructiones/Commentos/Politica pro uso -->',
+	'protectsite-text-unprotect' => '<!-- Instructiones/Commentos quando protegite -->',
+	'protectsite-title' => 'Configuration del protection del sito',
+	'protectsite-allowall' => 'Tote le usatores',
+	'protectsite-allowusersysop' => 'Usatores registrate e administratores',
+	'protectsite-allowsysop' => 'Administratores solmente',
+	'protectsite-createaccount' => 'Permitter le creation de nove contos per',
+	'protectsite-createpage' => 'Permitter le creation de paginas per',
+	'protectsite-edit' => 'Permitter le modification de paginas per',
+	'protectsite-move' => 'Permitter le renomination de paginas per',
+	'protectsite-upload' => 'Permitter le incargamento de files per',
+	'protectsite-timeout' => 'Expiration:',
+	'protectsite-timeout-error' => "'''Expiration invalide.'''",
+	'protectsite-maxtimeout' => 'Maximo:',
+	'protectsite-comment' => 'Commento:',
+	'protectsite-ucomment' => 'Commento de disprotection:',
+	'protectsite-until' => 'Protegite usque a:',
+	'protectsite-protect' => 'Proteger',
+	'protectsite-unprotect' => 'Disproteger',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -241,5 +267,12 @@ $messages['ru'] = array(
 $messages['te'] = array(
 	'protectsite-allowall' => 'అందరు వాడుకరులు',
 	'protectsite-comment' => 'వ్యాఖ్య:',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'protectsite-title' => 'Налаштування захисту сайту',
 );
 

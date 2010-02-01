@@ -44,6 +44,7 @@ $messages['af'] = array(
 	'wikiavideo-links' => 'Skakels',
 	'wikiavideo-placeholder' => 'Plekhouer',
 	'wikiavideo-gallery-template' => "Hierdie videogalery is by 'n sjabloon gevoeg en kan nie in die wys-modus gewysig word nie. Wysig asseblief die sjabloon.",
+	'wikiavideo-not-supported' => 'Hierdie omslag ("skin") ondersteun nie die byvoeging van video\'s na galerye in die wys-modus nie.',
 	'wikiavideo-pixel' => ' piksel',
 	'wikiavideo-deleted-old' => "Die weergawe van '''[$1 $2]''' per $4, $3 is verwyder.",
 	'wikiavideo-intro-old' => "U is besig om die weergawe van '''[$1 $5]''' per [$4 $3, $2] te verwyder.",
@@ -106,8 +107,10 @@ $messages['es'] = array(
  */
 $messages['eu'] = array(
 	'wikiavideo-back' => 'atzera',
+	'wikiavideo-create' => 'Bideoa Gehitu',
 	'wikiavideo-category' => 'Bideoak',
 	'wikiavideo-links' => 'Loturak',
+	'wikiavideo-pixel' => '  pixel',
 );
 
 /** Persian (فارسی) */
@@ -333,12 +336,22 @@ $messages['pt-br'] = array(
 
 /** Russian (Русский)
  * @author Lockal
+ * @author Александр Сигачёв
  */
 $messages['ru'] = array(
+	'wikiavideo-reverted' => 'Видео $1 было успешно возвращено. Вернуться на $2.',
 	'wikiavideo-unreverted' => 'У вас недостаточно прав для отката $1.',
+	'wikiavideo-added' => 'добавил видео $1',
 	'wikiavideo-back' => 'назад',
 	'wikiavideo-create' => 'Добавить видео',
 	'wikiavideo-replace' => 'Заменить видео',
+	'wikiavideo-category' => 'Видео',
 	'wikiavideo-links' => 'Ссылки',
+	'wikiavideo-placeholder' => 'Заполнитель',
+	'wikiavideo-gallery-template' => 'Это видео-галерея находится в шаблоне, и не может быть изменена в режиме просмотра. Пожалуйста, измените соответствующий шаблон.',
+	'wikiavideo-not-supported' => 'Эта тема оформления не поддерживает вставку видео в галерею в режиме просмотра.',
+	'wikiavideo-pixel' => 'пиксел',
+	'wikiavideo-deleted-old' => "Версия '''[$1 $2]''' от $4 $3 была удалена.",
+	'wikiavideo-intro-old' => "Вы удаляете версию '''[$1 $5]''' от [$4 $3, $2].",
 );
 

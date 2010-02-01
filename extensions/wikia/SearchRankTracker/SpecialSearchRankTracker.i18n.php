@@ -73,6 +73,19 @@ $messages['hu'] = array(
 	'searchranktracker-serach-phrase-required' => 'Keresőkifejezés megadása kötelező',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'searchranktracker' => 'Traciator de rango de recerca',
+	'searchranktracker-add-new-entry' => 'Adder un nove entrata',
+	'searchranktracker-edit-entry' => 'Modificar entrata',
+	'searchranktracker-entry-list' => 'Lista de paginas wiki de traciamento',
+	'searchranktracker-page-name-required' => 'Nomine de pagina requirite',
+	'searchranktracker-serach-phrase-required' => 'Texto a cercar requirite',
+	'searchranktracker-empty-list' => 'Actualmente il non ha un phrase de recerca a traciar.',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */

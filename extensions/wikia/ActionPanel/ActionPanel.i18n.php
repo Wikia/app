@@ -50,7 +50,9 @@ $messages['br'] = array(
 	'actionpanel-desc' => 'Ur popup evit rumata, adenvel ha kemmañ pennadoù',
 );
 
-/** German (Deutsch) */
+/** German (Deutsch)
+ * @author MovGP0
+ */
 $messages['de'] = array(
 	'action_panel_edit_title' => 'Antwort',
 	'action_panel_title' => 'Quick Action Panel',
@@ -60,6 +62,7 @@ $messages['de'] = array(
 	'action_panel_save_success' => 'Der Beitrag wurde gespeichert.',
 	'action_panel_rename_success' => 'Die Frage wurde umformuliert.',
 	'action_panel_categorize_success' => 'Kategorien hinzugefügt',
+	'actionpanel-desc' => 'Ein praktisches Popup-Fenster, welches die Kategorisierung, Umbenennung und Bearbeitung von Artikeln ermöglicht.',
 );
 
 /** Finnish (Suomi)
@@ -122,13 +125,19 @@ $messages['gsw'] = array(
 );
 
 /** Hungarian (Magyar)
+ * @author Dani
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
 	'action_panel_edit_title' => 'Válasz',
+	'action_panel_title' => 'Gyorsműveletek',
 	'action_panel_categorize' => 'Kategorizálás',
+	'action_panel_categorize_help' => 'Soronként egy kategória',
 	'action_panel_categories_summary' => 'Kategóriák hozzáadása',
 	'action_panel_save_success' => 'A szócikked elmentve.',
+	'action_panel_rename_success' => 'A szócikk át lett nevezve',
+	'action_panel_categorize_success' => 'A kategóriák hozzá lettek adva.',
+	'actionpanel-desc' => 'Egy hasznos felugró ablak, ami segít a szócikkek kategorizálásában, átnevezésében és szerkesztésében',
 );
 
 /** Macedonian (Македонски)

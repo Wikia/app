@@ -66,6 +66,14 @@ $messages['hu'] = array(
 	'theorytab-parent-title' => 'Szülő szócikk',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'theorytab-title' => 'Theoria',
+	'theorytab-parent-title' => 'Articulo principal',
+);
+
 /** Italian (Italiano) */
 $messages['it'] = array(
 	'theorytab-title' => 'Teorie',

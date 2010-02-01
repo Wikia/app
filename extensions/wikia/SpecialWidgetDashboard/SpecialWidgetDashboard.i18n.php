@@ -43,6 +43,14 @@ $messages['gl'] = array(
 	'widgetdashboard-description' => 'Esta páxina serve como lugar para probar os widgets no traballo. Para ollar unha lista de todos os widgets dispoñibles vaia a [[Special:Widgets]].',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'widgetdashboard-wrong-skin' => '<p>Le tabuliero de widgets functiona melio con un apparentia nove, p.ex. <a href="./Special:WidgetDashboard?useskin=monaco">Monaco</a>.</p><p>Per favor cambia <a href="./Special:Preferences">tu preferentias</a> pro usar iste instrumento.</p>',
+	'widgetdashboard-description' => 'Iste pagina servi de loco pro testar tu widgets in action. Pro vider un lista de tote le widgets disponibile, visita [[Special:Widgets]].',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -84,5 +92,12 @@ $messages['pms'] = array(
 $messages['ru'] = array(
 	'widgetdashboard-wrong-skin' => '<p>Панель виджетов лучше всего работает с новыми темами оформления, например, <a href="./Special:WidgetDashboard?useskin=monaco">Monaco</a>.</p><p>Пожалуйста, сделайти изменения в <a href="./Special:Preferences">ваших настройках</a> для использования этого инструмента.</p>',
 	'widgetdashboard-description' => 'Эта страница служит местом проверки работы ваших виджетов. Чтобы увидеть список всех доступных виджетов перейдите на страницу [[Special:Widgets]].',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'widgetdashboard-wrong-skin' => '<p>Панель віджетів найкраще працює з одною із нових тем оформлення, наприклад, <a href="./Special:WidgetDashboard?useskin=monaco">Монако</a>.</p><p>Будь ласка, змініть <a href="./Special:Preferences">ваші налаштування</a> для використанні цього інструменту.</p>',
 );
 

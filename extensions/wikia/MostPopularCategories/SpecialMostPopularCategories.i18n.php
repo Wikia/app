@@ -76,6 +76,20 @@ $messages['hu'] = array(
 	'mostpopularcategories' => 'Legnépszerűbb kategóriák',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'mostpopularcategories' => 'Categorias le plus popular',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'mostpopularcategories' => 'Beléiwste Kategorien',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */

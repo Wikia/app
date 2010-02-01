@@ -363,6 +363,7 @@ $messages['af'] = array(
 	'wikiastats_active_wikians_subtitle_info' => 'Δ:verandering in posisie oor 30 dae',
 	'wikiastats_pageviews_counting' => 'x%: wysiging in vergelyking met die vorige dag of maand',
 	'wikiastats_pageviews_percent' => 'Persentasie toename of afname vergeleke met vorige maand',
+	'wikiastats_namespace_records' => 'Databasisrekords per naamruimte',
 	'wikiastats_page_edits_count' => '$1 mees gewysigde artikels gevind',
 	'wikiastats_other_nspaces_edits_count' => '$1 mees gewysigde bladsye gevind',
 	'wikiastats_active_wikians_date' => 'Wys veranderinge vir die laaste',
@@ -432,6 +433,12 @@ $messages['af'] = array(
 	'wikiastats_wikiurl' => 'URL:',
 	'wikiastats_wikicreated' => 'Geskep:',
 	'wikiastats_wikilang' => 'Taal:',
+	'wikiastats_mainstats_column_G' => 'Bladsye wat ten minste 1 interne skakel bevat',
+	'wikiastats_mainstats_column_H' => 'Nuwe bladsye per dag in die huidige maand',
+	'wikiastats_mainstats_column_I' => 'Persentasie bladsye met ten minste 0.5 Kb leesbare teks (sien J)',
+	'wikiastats_mainstats_column_J' => 'Wysigings in die afgelope maand (inklusief aansture en anonieme bydraers)',
+	'wikiastats_mainstats_column_K' => 'Gekombineerde grootte van alle bladsye (inklusief aansture)',
+	'wikiastats_mainstats_column_L' => 'Die totale aantal woorde (eksklusief aansture, HTML/wiki-kode en versteekte skakels)',
 	'wikiastats_mainstats_column_M' => 'Totale aantal beelde vertoon',
 	'wikiastats_mainstats_column_N' => 'Totale aantal skakels na ander werwe',
 	'wikiastats_mainstats_column_O' => 'Totale aantal opgelaaide beelde',
@@ -478,6 +485,8 @@ $messages['af'] = array(
 	'wikiastats_trend_where_text' => 'waar:',
 	'wikiastats_trend_all_wikia_text' => "Alle wiki's",
 	'wikiastats_always_selected' => '(altyd gekies)',
+	'wikiastats_creation_wikia_text' => 'Skeppingsgeskiedenis / Mylpale',
+	'wikiastats_creation_panel_header' => 'Die "Skeppingsgeskiedenis"-statistieke word gegenereer',
 	'wikiastats_creation_legend' => 'Gemiddelde toename per maand:',
 	'wikiastats_select_statistics' => 'Kies statistieke',
 	'wikiastats_select_wikia_statistics' => 'Kies statistieke vir $1 Wikia',
@@ -542,6 +551,11 @@ $messages['be-tarask'] = array(
  */
 $messages['bg'] = array(
 	'wikiastats_panel_close_btn' => 'Затваряне',
+	'wikiastats_active_day' => 'ден',
+	'wikiastats_active_month' => 'месец',
+	'wikiastats_active_year' => 'година',
+	'wikiastats_active_months' => 'месеца',
+	'wikiastats_database' => 'База от данни',
 	'wikiastats_wikiname' => 'Име:',
 	'wikiastats_wikicategory' => 'Категория:',
 	'wikiastats_wikiid' => 'Номер:',
@@ -773,6 +787,13 @@ $messages['br'] = array(
 	'wikiastats_pageviews_month' => 'Stadegoù miziek',
 );
 
+/** Greek (Ελληνικά)
+ * @author Περίεργος
+ */
+$messages['el'] = array(
+	'wikiastats' => 'Στατιστικά της Wikia',
+);
+
 /** Spanish (Español)
  * @author Bola
  * @author McDutchie
@@ -869,40 +890,101 @@ $messages['es'] = array(
  * @author An13sa
  */
 $messages['eu'] = array(
+	'wikiastats' => 'Wikia Estatistikak',
+	'wikiastats_wikia' => 'Wikia',
+	'wikiastats_pagetitle' => 'Wikia Estatistikak',
+	'wikiastats_showcharts' => 'Taulak erakutsi',
+	'wikiastats_export_xls' => 'XLSra esportatu',
+	'wikiastats_panel_close_btn' => 'Itxi',
+	'wikiastats_daterange_from' => 'Nork:',
+	'wikiastats_daterange_to' => 'Nori:',
 	'wikiastats_active_day' => 'egun',
 	'wikiastats_active_month' => 'hilabete',
 	'wikiastats_active_year' => 'urte',
+	'wikiastats_active_months' => 'hilabete',
 	'wikiastats_articles_text' => 'Artikuluak',
+	'wikiastats_other' => 'Bestelakoak',
 	'wikiastats_database' => 'Datu-basea',
+	'wikiastats_links' => 'Loturak',
+	'wikiastats_images' => 'Loturak',
+	'wikiastats_distrib_edits' => 'Aldaketak >=',
+	'wikiastats_distrib_edits_total' => 'Aldaketak guztira',
 	'wikiastats_date' => 'Data',
 	'wikiastats_namespace' => 'Izen-tartea',
 	'wikiastats_show' => 'Erakutsi',
 	'wikiastats_hide' => 'Ezkutatu',
 	'wikiastats_wikiname' => 'Izena:',
+	'wikiastats_wikicategory' => 'Kategoria:',
 	'wikiastats_username' => 'Lankide',
 	'wikiastats_usernames' => 'Lankideak',
 	'wikiastats_edits' => 'aldaketa',
 	'wikiastats_bytes' => 'byte',
+	'wikiastats_size' => 'tamaina',
 	'wikiastats_words' => 'hitz',
+	'wikiastats_interwiki' => 'interwiki',
+	'wikiastats_image' => 'irudi',
+	'wikiastats_redirects' => 'birzuzenketa',
+	'wikistats_main_namespace' => 'nagusia',
+	'wikistats_image_namespace' => 'irudi',
+	'wikiastats_visits' => 'bisita',
+	'wikiastats_new_per_day' => 'berri<br />eguneko',
 	'wikiastats_official' => 'ofiziala',
 	'wikiastats_rank' => 'postua',
+	'wikiastats_total' => 'guztira',
+	'wikiastats_new' => 'berria',
+	'wikiastats_more_txt' => 'gehiago',
+	'wikiastats_now' => 'orain',
+	'wikiastats_wikiurl' => 'URL:',
 	'wikiastats_wikicreated' => 'Sortua:',
 	'wikiastats_wikilang' => 'Hizkuntza:',
 	'wikiastats_mainstats_short_column_H' => 'Artikulu berriak eguneko',
+	'wikiastats_mainstats_short_column_K' => 'Datu-basearen tamaina',
 	'wikiastats_mainstats_short_column_L' => 'Hitzak',
 	'wikiastats_mainstats_short_column_M' => 'Irudiak',
 	'wikiastats_mainstats_short_column_N' => 'Kanpo loturak',
 	'wikiastats_mainstats_short_column_O' => 'Igotako irudiak',
+	'wikiastats_website' => 'Webgunea',
 	'wikiastats_tables' => 'Taulak',
+	'wikiastats_charts' => 'Taulak',
+	'wikiastats_comparisons_table_10' => 'Artikulu berriak eguneko',
+	'wikiastats_comparisons_table_12' => 'Aldaketak hilabeteko/eguneko',
+	'wikiastats_comparisons_table_14' => 'Hitz',
+	'wikiastats_comparisons_table_16' => 'Kanpo loturak',
+	'wikiastats_comparisons_table_17' => 'Igotako irudiak',
+	'wikiastats_back_to_mainpage' => 'Estatistiken orri nagusira joan',
 	'wikiastats_back_to_prevpage' => 'Atzera',
+	'wikiastats_trend_formula' => 'Formula',
+	'wikiastats_trend_all_wikia_text' => 'Wiki guztiak',
+	'wikiastats_nbr_kilo' => 'K = x 1000',
+	'wikiastats_nbr_mega' => 'M = K x 1000',
+	'wikiastats_nbr_giga' => 'G = M x 1000',
 );
 
 /** Finnish (Suomi)
  * @author Crt
+ * @author Silvonen
  */
 $messages['fi'] = array(
+	'wikiastats' => 'Wikia-tilastot',
+	'wikiastats_pagetitle' => 'Wikia-tilastot',
 	'wikiastats_showstats_btn' => 'Näytä tilastot',
+	'wikiastats_export_xls' => 'Vie XLS-muotoon',
 	'wikiastats_panel_close_btn' => 'Sulje',
+	'wikiastats_database' => 'Tietokanta',
+	'wikiastats_connection_error' => 'Yhteysvirhe',
+	'wikiastats_namespace' => 'Nimiavaruus',
+	'wikiastats_show' => 'Näytä',
+	'wikiastats_hide' => 'Piilota',
+	'wikiastats_wikiname' => 'Nimi:',
+	'wikiastats_wikicategory' => 'Luokka:',
+	'wikiastats_edits' => 'muokkaukset',
+	'wikiastats_size' => 'koko',
+	'wikiastats_words' => 'sanat',
+	'wikiastats_first_edit' => 'Ensimmäinen muokkaus',
+	'wikiastats_last_edit' => 'Viimeinen muokkaus',
+	'wikiastats_now' => 'nyt',
+	'wikiastats_wikilang' => 'Kieli:',
+	'wikiastats_mainstats_short_column_K' => 'Tietokannan koko',
 	'wikiastats_mainstats_short_column_N' => 'Ulkoiset linkit',
 	'wikiastats_xls_cancel' => 'Peruuta',
 	'wikiastats_other_statistics_legend' => 'Muut tilastot',
@@ -1136,6 +1218,13 @@ de noms',
 	'wikiastats_pageviews_month' => 'Statistiques mensuelles',
 );
 
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'wikiastats_size' => 'tamaño',
+);
+
 /** Hungarian (Magyar)
  * @author Glanthor Reviol
  */
@@ -1276,7 +1365,7 @@ $messages['ia'] = array(
 	'wikiastats_active_wikians_subtitle' => 'solmente le modificationes in spatios de nomines a contento es contate, a parte del columna "Altere"',
 	'wikiastats_anon_wikians_subtitle' => 'solmente le modificationes in spatios de nomines a contento es contate',
 	'wikiastats_active_wikians_subtitle_info' => 'Δ = cambio in rango in 30 dies',
-	'wikiastats_pageviews_subtext' => 'visitas de paginas iste mense (K = x 1000, M = K x 1000, G = M x 1000, T = G x 1000)',
+	'wikiastats_pageviews_subtext' => 'visitas de paginas iste mense (K = × 1000, M = K × 1000, G = M × 1000, T = G × 1000)',
 	'wikiastats_pageviews_counting' => 'x% = cambiamento in comparation con le previe die/mense',
 	'wikiastats_pageviews_percent' => 'Percentage de augmentation o de diminution comparate con le previe mense',
 	'wikiastats_distrib_article_subtext' => 'solmente le modificationes a articulos es contate, non le modificationes a paginas de discussion, etc.',
@@ -1448,6 +1537,21 @@ $messages['ia'] = array(
 	'wikiastats_see_old_statistics_page' => 'Vide le pagina de adjuta de WikiaStats',
 	'wikiastats_show_new_window' => 'monstrar resultato in nove fenestra del navigator',
 	'wikiastats_show_nbr_wikis_check' => 'Numero maxime de wikis a marcar: $1',
+	'wikiastats_lifetime_editors' => 'Total de contributores',
+	'wikiastats_months_edits' => 'Contributores iste mense',
+	'wikiastats_main_namespace' => 'spatios de nomines<br />a contento',
+	'wikiastats_content' => 'contento',
+	'wikiastats_other_namespace' => 'altere spatios<br />de nomines',
+	'wikiastats_restricted_page' => 'Pagina restringite.<br />Tu debe esser identificate pro vider le statisticas de Wikia. Per favor [[Special:Userlogin|aperi un session, o crea un conto]] si tu non ha ja un conto.',
+	'wikiastats_code_version' => 'Version del codice:',
+	'wikiastats_mediawiki_stats' => 'Statisticas de MediaWiki:',
+	'wikiastats_statistics_information' => 'Information super le statisticas',
+	'wikiastats_nbr_kilo' => 'K = × 1000',
+	'wikiastats_nbr_mega' => 'M = K × 1000',
+	'wikiastats_nbr_giga' => 'G = M × 1000',
+	'wikiastats_nbr_format' => 'Formato del numeros:',
+	'wikiastats_pageviews_daily' => 'Statisticas quotidian (mense actual)',
+	'wikiastats_pageviews_month' => 'Statisticas mensual',
 );
 
 /** Japanese (日本語)
@@ -1661,6 +1765,7 @@ $messages['ja'] = array(
 );
 
 /** Luxembourgish (Lëtzebuergesch)
+ * @author McDutchie
  * @author Robby
  */
 $messages['lb'] = array(
@@ -1777,10 +1882,22 @@ $messages['lb'] = array(
 	'wikiastats_mainstats_column_B' => 'Registréiert Editeuren déi am akuelle Mount mindestens 5 Ännerunge gemaach hunn',
 	'wikiastats_mainstats_column_C' => 'Registréiert Benotzer déi am aktuelle Mount mindestens 100 Ännerunge gemaach hun',
 	'wikiastats_mainstats_column_D' => 'Zuel vu registréierten Editeuren (registréiert Benotzer) déi am aktuell Mount mindestens eng Säit am Benotzer-Nummraum geännert hun',
+	'wikiastats_mainstats_column_E' => 'Zuel vu registréierte Benotzer déi am lafende Mount mindestens eng Säit am Bild-Nummraum geännert hunn',
+	'wikiastats_mainstats_column_F' => 'Zuel vu registréierte Benotzer déi mindestens eemol eppes an engem Nummraum geännert hunn',
 	'wikiastats_mainstats_column_G' => 'Artikelen an deene mindestens een interne Link dran ass',
 	'wikiastats_mainstats_column_H' => 'Nei Artikele pro Dag am lafende Mount',
+	'wikiastats_mainstats_column_I' => 'Prozentsaz vun Artikelen mat mindestens 0,5 Kb liesbarem Text (kuckt J)',
+	'wikiastats_mainstats_column_J' => 'Ännerungen am virege Mount (inkl. Viruleedungen, inkl. net registréiert Benotzer)',
+	'wikiastats_mainstats_column_K' => 'Kombinéiert Gréisst vun allen Artikelen (inkl. Viruleedungen)',
+	'wikiastats_mainstats_column_L' => 'Gesamtzuel vun de Wierder (ouni Viruleedungen, HTML/Wiki Code a verstoppte Linken)',
+	'wikiastats_mainstats_column_M' => 'Gesamtzuel vun de gewisene Biller',
 	'wikiastats_mainstats_column_N' => 'Gesamtzuel vu Linken op aner Siten',
 	'wikiastats_mainstats_column_O' => 'Total Zuel vu Biller déi eropgeluede goufen',
+	'wikiastats_mainstats_short_column_A' => 'Eenzeg registréiert Editeuren (Inhalts-Nummraim)',
+	'wikiastats_mainstats_short_column_B' => 'Aktiv registréiert Editeuren',
+	'wikiastats_mainstats_short_column_C' => 'Ganz aktiv registréiert Editeuren',
+	'wikiastats_mainstats_short_column_D' => 'Eenzeg registréiert Editeuren (Benotzer-Nummraum)',
+	'wikiastats_mainstats_short_column_E' => 'Eenzeg registréiert Editeuren (Bild-Nummraum)',
 	'wikiastats_mainstats_short_column_G' => 'Artikelen zielen',
 	'wikiastats_mainstats_short_column_H' => 'Nei Artikele pro Dag',
 	'wikiastats_mainstats_short_column_I' => 'Artikele mat méi wéi 0,5 Kb',
@@ -1794,6 +1911,7 @@ $messages['lb'] = array(
 	'wikiastats_tables' => 'Tabellen',
 	'wikiastats_charts' => 'Graphiken',
 	'wikiastats_comparisons_table_1' => 'Iwwersiicht',
+	'wikiastats_comparisons_table_3' => 'Registréiert Benotzer déi eng Säit am Inhaltsnummraum geännert hun',
 	'wikiastats_comparisons_table_9' => 'Artikelen zielen',
 	'wikiastats_comparisons_table_10' => 'Nei Artikele pro Dag',
 	'wikiastats_comparisons_table_11' => 'Artikele mat méi 0,5 Kb',
@@ -1807,14 +1925,17 @@ $messages['lb'] = array(
 	'wikiastats_back_to_prevpage' => 'Zréck',
 	'wikiastats_trend_value' => 'Wäert',
 	'wikiastats_trend_formula' => 'Formel',
+	'wikiastats_trend_ordered' => 'All Wikien zortéiert no der Zuel vun Artikelen. <br />Sicht en Deel vun deene Statistiken eraus:',
 	'wikiastats_trend_where_text' => 'wou:',
 	'wikiastats_trend_all_wikia_text' => 'All Wikien',
 	'wikiastats_always_selected' => '(ëmmer erausgesicht)',
+	'wikiastats_creation_legend' => 'Duerchschnëttlech Steigerung pro Mount',
 	'wikiastats_select_statistics' => 'Statistiken eraussichen',
 	'wikiastats_full_dump_stats' => 'Ganz',
 	'wikiastats_current_dump_stats' => 'Aktuell',
 	'wikiastats_database_name_stats' => 'Numm vun der Datebank',
 	'wikiastats_dbdumps_stats' => 'Dumpe vun der Datebank',
+	'wikiastats_please_wait' => 'XLS Fichier gëtt generéiert - waard w.e.g. ...',
 	'wikiastats_xls_generate' => 'Generéieren',
 	'wikiastats_xls_cancel' => 'Annulléieren',
 	'wikiastats_select_text' => 'Wikia eraussichen:',
@@ -1832,10 +1953,14 @@ $messages['lb'] = array(
 	'wikiastats_search_text' => 'Sichen:',
 	'wikiastats_sort_list_size' => 'Lëscht no der Gréisst zortéieren',
 	'wikiastats_sort_list_alphabet' => 'Lëscht alphabetesch zortéieren',
+	'wikiastats_see_old_statistics_page' => "Kuckt d'WikiaStats Hëllefssäit",
 	'wikiastats_show_new_window' => "d'Resultater an enger neier  Fënster vum Browser weisen",
+	'wikiastats_lifetime_editors' => 'Total vun den Editeuren',
+	'wikiastats_months_edits' => 'Editeuren dëse Mount',
 	'wikiastats_main_namespace' => 'Inhalt<br />Nummraim',
 	'wikiastats_content' => 'Inhalt',
 	'wikiastats_other_namespace' => 'aner<br />Nummraim',
+	'wikiastats_restricted_page' => 'Säit mat Restriktiounen.<br />Dir musst ageloggt si fir Wikia Stats ze gesinn. W. e. g. [[Special:Userlogin|loggt Iech an oder leet e Benotzerkont un]] je nodeem ob Dir schonn e Benotzerkont hutt oder net.',
 	'wikiastats_code_version' => 'Versioun vum Code:',
 	'wikiastats_mediawiki_stats' => 'MediaWiki Statistiken:',
 	'wikiastats_statistics_information' => 'Statistesch Informatiounen',
@@ -2070,6 +2195,7 @@ $messages['mk'] = array(
 );
 
 /** Dutch (Nederlands)
+ * @author McDutchie
  * @author Siebrand
  */
 $messages['nl'] = array(
@@ -2105,7 +2231,7 @@ $messages['nl'] = array(
 	'wikiastats_active_wikians_subtitle' => 'alleen bewerkingen in inhoudsnaamruimten worden meegeteld, behalve in de kolom "Overige"',
 	'wikiastats_anon_wikians_subtitle' => 'alleen bewerkingen in inhoudsnaamruimten worden meegeteld',
 	'wikiastats_active_wikians_subtitle_info' => 'Δ:positiewijziging in 30 dagen',
-	'wikiastats_pageviews_subtext' => "bekekend pagina's deze maand (K = x 1000, M = K x 1000, G = M x 1000, T = G x 1000)",
+	'wikiastats_pageviews_subtext' => "bekeken pagina's deze maand (K = × 1000, M = K × 1000, G = M × 1000, T = G × 1000)",
 	'wikiastats_pageviews_counting' => 'x%: wijziging in vergelijking met de vorige dag of maand',
 	'wikiastats_pageviews_percent' => 'Pecentage toename of afname vergeleken met vorige maand',
 	'wikiastats_distrib_article_subtext' => "alleen bewerkingen op inhoudelijke pagina's worden meegeteld.
@@ -2288,7 +2414,7 @@ Bezig met aanmaken...',
 	'wikiastats_other_namespace' => 'overige<br />naamruimten',
 	'wikiastats_restricted_page' => 'Beschermde pagina.<br />
 U moet aangemeld zijn om de Wikia-statistieken in te zien.
-[[Special:Userlogin|Registreer een nieuwe gebruiker of meld u aan]] als u al een gebruiker hebt.',
+[[Special:Userlogin|Registreer een nieuwe gebruiker of meld u aan]] als u nog geen gebruiker hebt.',
 	'wikiastats_code_version' => 'Codeversie:',
 	'wikiastats_mediawiki_stats' => 'MediaWiki-statistieken',
 	'wikiastats_statistics_information' => 'Statistische informatie',
@@ -2366,6 +2492,13 @@ $messages['no'] = array(
 	'wikiastats_see_MW_stats' => 'Se MW-statistikk:',
 );
 
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'wikiastats_wikicategory' => 'Abdeeling:',
+);
+
 /** Brazilian Portuguese (Português do Brasil)
  * @author Jesielt
  */
@@ -2412,16 +2545,27 @@ $messages['ru'] = array(
 	'wikiastats_showcharts' => 'Показать графики',
 	'wikiastats_export_xls' => 'Экспортировать в XLS',
 	'wikiastats_panel_close_btn' => 'Закрыть',
-	'wikiastats_daterange_from' => 'От:',
-	'wikiastats_daterange_to' => 'Для:',
+	'wikiastats_daterange_from' => 'Начало:',
+	'wikiastats_daterange_to' => 'Конец:',
+	'wikiastats_nostats_found' => 'Нет статистики для выбранной викии',
+	'wikiaststs_invalid_date' => 'Неверный диапазон дат',
 	'wikiastats_distrib_article' => 'Распределение активности участников',
 	'wikiastats_active_absent_wikians' => 'Падение активности зарегистрированных участников',
 	'wikiastats_anon_wikians' => 'Падение активности анонимных участников',
 	'wikiastats_pageviews' => 'Просмотры страниц по пространству имён в месяц',
-	'wikiastats_wikians' => 'Зарегистрировано участников',
+	'wikiastats_article_size' => 'Статьи, содержащие хотя бы одну внутреннюю ссылку и .. символов читаемого текста, исключая вики- и html-код, скрытые ссылки и пр.;<br />Также не учитываются заголовки (искл. перенаправления)',
+	'wikiastats_article_one_link' => 'Статьи, содержащие хотя бы одну внутреннюю ссылку',
+	'wikiastats_pageviews_subtext' => 'число просмотров страниц в этом месяце (K = x 1000, M = K x 1000, G = M x 1000, T = G x 1000)',
+	'wikiastats_page_edits' => 'Наиболее часто редактировавшиеся статьи (основное пространство имён) (&gt; 25 правок)',
+	'wikiastats_other_nspaces_edits' => 'Наиболее часто редактировавшиеся страницы (другие пространства имён) (&gt; 25 правок)',
+	'wikiastats_wikians' => 'Зарегистрированные участники',
+	'wikiastats_articles' => 'Статьи (искл. перенаправления)',
+	'wikiastats_articles_text' => 'Статьи',
 	'wikiastats_archived' => 'Архивировано',
+	'wikiastats_other' => 'Прочее',
 	'wikiastats_database' => 'База данных',
 	'wikiastats_links' => 'Ссылки',
+	'wikiastats_images' => 'Изображения',
 	'wikiastats_uploaded_images' => 'загружено',
 	'wikiastats_with_links' => 'с ссылками',
 	'wikiastats_distrib_edits' => 'Правок >=',
@@ -2434,6 +2578,7 @@ $messages['ru'] = array(
 	'wikiastats_usernames' => 'Участники',
 	'wikiastats_bytes' => 'байт',
 	'wikiastats_size' => 'размер',
+	'wikiastats_interwiki' => 'интервики',
 	'wikiastats_visits' => 'посещений',
 	'wikiastats_new_per_day' => 'новых<br />в день',
 	'wikiastats_first_edit' => 'Первая правка',
@@ -2443,6 +2588,14 @@ $messages['ru'] = array(
 	'wikiastats_wikicreated' => 'Создано:',
 	'wikiastats_wikilang' => 'Язык:',
 	'wikiastats_mainstats_column_A' => 'Число уникальных зарегистрированных редакторов (зарегистрированных участников), правивших хотя бы в одном пространстве имён статей в этом месяце',
+	'wikiastats_mainstats_column_B' => 'Зарегистрированные участники, правившие хотя бы 5 раз в этом месяце',
+	'wikiastats_mainstats_column_C' => 'Зарегистрированные участники, правившие 100 и более раз в этом месяце',
+	'wikiastats_mainstats_column_D' => 'Число уникальных зарегистрированных редакторов (зарегистрированных участников), правивших хотя бы одну страницу в пространстве имён участников в этом месяце',
+	'wikiastats_mainstats_column_E' => 'Число уникальных зарегистрированных редакторов (зарегистрированных участников), правивших хотя бы одно изображение в пространстве имён изображений в этом месяце',
+	'wikiastats_mainstats_column_F' => 'Общее число зарегистрированных участников, правивших хотя бы в одном пространстве имён',
+	'wikiastats_mainstats_column_G' => 'Статьи, содержащие хотя бы одну внутреннюю ссылку',
+	'wikiastats_mainstats_column_H' => 'Новых статей в день в этом месяце',
+	'wikiastats_mainstats_column_I' => 'Процент статей, содержащих хотя бы 0,5 Кб читаемого текста (см. J)',
 	'wikiastats_mainstats_column_J' => 'Число правок в предыдущем месяце (включая перенаправления, исключая незарегистрированных участников)',
 	'wikiastats_mainstats_column_K' => 'Совместный размер всех статей (включая перенаправления)',
 	'wikiastats_mainstats_column_L' => 'Общее число слов (кроме перенаправлений, html/вики-кода и скрытых ссылок)',
@@ -2472,15 +2625,26 @@ $messages['ru'] = array(
 	'wikiastats_comparisons_table_13' => 'Размер базы данных',
 	'wikiastats_back_to_mainpage' => 'Перейти на главную страницу статистики',
 	'wikiastats_back_to_prevpage' => 'Назад',
+	'wikiastats_trend_value' => 'значение',
+	'wikiastats_trend_formula' => 'Формула',
 	'wikiastats_creation_wikia_text' => 'История создания / Достижения',
+	'wikiastats_creation_legend' => 'Средний рост за месяц:',
+	'wikiastats_database_name_stats' => 'Имя базы данных',
+	'wikiastats_dbdumps_stats' => 'Дампы базы данных',
 	'wikiastats_select_btn' => 'Выбрать',
 	'wikiastats_xml_dump' => 'Дамп XML',
+	'wikiastats_see_MW_stats' => 'См. статистику MediaWiki:',
+	'wikiastats_see_wikia_wide_stats' => 'См. также статистику по всем сайтам Викии:',
+	'wikiastats_generate_XLS_file_title' => 'Генерация XLS-файлов для загрузки',
 	'wikiastats_main_statistics_legend' => 'Основная статистика',
 	'wikiastats_other_statistics_legend' => 'Прочая статистика',
+	'wikiastats_statistics_legend' => 'Описание столбцов',
 	'wikiastats_search_text' => 'Поиск:',
 	'wikiastats_sort_list_size' => 'Сортировать список по размеру',
+	'wikiastats_lifetime_editors' => 'Всего редакторов',
 	'wikiastats_code_version' => 'Версия кода:',
 	'wikiastats_mediawiki_stats' => 'Статистика MediaWiki:',
+	'wikiastats_statistics_information' => 'Статистическая информация',
 	'wikiastats_nbr_format' => 'Формат чисел:',
 	'wikiastats_pageviews_daily' => 'Ежедневная статистика (текущий месяц)',
 	'wikiastats_pageviews_month' => 'Ежемесячная статистика',
@@ -2541,6 +2705,7 @@ $messages['uk'] = array(
 	'wikiastats_active_day' => 'день',
 	'wikiastats_active_month' => 'місяць',
 	'wikiastats_active_year' => 'рік',
+	'wikiastats_active_months' => 'місяця',
 	'wikiastats_articles_text' => 'Статті',
 	'wikiastats_images' => 'Зображення',
 	'wikiastats_distrib_edits_total' => 'Всього редагувань',

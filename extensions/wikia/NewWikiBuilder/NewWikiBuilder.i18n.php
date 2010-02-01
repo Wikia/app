@@ -238,8 +238,11 @@ $messages['de'] = array(
 Ersetzte diesen Text durch deinen Artikel!',
 );
 
-/** Spanish (Español) */
+/** Spanish (Español)
+ * @author Translationista
+ */
 $messages['es'] = array(
+	'newwikibuilder' => 'Nuevo Constructor Wiki',
 	'nwb-choose-a-file' => 'Por favor, elige un archivo',
 	'nwb-error-saving-description' => 'Error guardando la descripción',
 	'nwb-error-saving-theme' => 'Error guardando apariencia',
@@ -291,6 +294,7 @@ El formato wiki permite a cualquiera crear o editar cualquier artículo, así qu
 	'nwb-back-to-step-2' => 'Volver a paso 2',
 	'nwb-back-to-step-3' => 'Volver a paso 3',
 	'nwb-back-to-step-4' => 'Volver a paso 4',
+	'nwb-or' => 'o',
 	'nwb-new-pages-text' => '[[File:Placeholder|thumb|300px]] ¡Reemplaza este texto escribiendo aquí tu artículo!',
 );
 
@@ -362,6 +366,74 @@ $messages['fr'] = array(
 Écrivez la deuxième section de votre article ici. Rappelez-vous d'ajouter des catégories, pour aider les personnes à trouver cet article.",
 );
 
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'newwikibuilder' => 'Construtor dun novo wiki',
+	'nwb-choose-a-file' => 'Por favor, seleccione un ficheiro',
+	'nwb-error-saving-description' => 'Erro ao gardar a descrición',
+	'nwb-error-saving-theme' => 'Erro ao gardar o tema',
+	'nwb-error-saving-articles' => 'Erro ao gardar as páxinas',
+	'nwb-error-saving-logo' => 'Erro ao cargar o logo',
+	'nwb-saving-articles' => 'Gardando as páxinas...',
+	'nwb-finalizing' => 'Finalizando...',
+	'nwb-articles-saved' => 'Gardáronse as páxinas',
+	'nwb-theme-saved' => 'Gardouse a escolla do tema',
+	'nwb-saving-description' => 'Gardando a descrición...',
+	'nwb-description-saved' => 'Gardouse a descrición',
+	'nwb-uploading-logo' => 'Cargando o logo...',
+	'nwb-readonly-try-again' => 'O wiki está arestora en modo de lectura. Por favor, inténteo de novo nuns intres',
+	'nwb-logo-uploaded' => 'Cargouse o logo',
+	'nwb-login-successful' => 'Acceso exitoso',
+	'nwb-logout-successful' => 'Desconexión exitosa',
+	'nwb-login-error' => 'Erro ao iniciar a sesión',
+	'nwb-logging-in' => 'Accedendo ao sistema...',
+	'nwb-api-error' => 'Houbo un problema:',
+	'nwb-no-more-pages' => 'Non se poden crear máis páxinas',
+	'nwb-must-be-logged-in' => 'Debe acceder ao sistema para levar a cabo esta acción',
+	'nwb-skip-this-step' => 'Saltar este paso',
+	'nwb-coming-soon' => 'Proximamente',
+	'nwb-new-pages' => 'Páxinas novas',
+	'nwb-unable-to-edit-description' => 'A descrición non se pode editar co construtor de wikis novos',
+	'nwb-step1-headline' => 'Describa o seu wiki',
+	'nwb-step1-text' => '<p>Comecemos coa configuración de <b>{{SITENAME}}</b>. Pode saltar calquera paso e voltar a el máis adiante.</p><p>Primeiro: escriba unha mensaxe para a páxina de inicio do seu wiki, describindo de que vai tratar {{SITENAME}}.</p>',
+	'nwb-step1-example' => '<b>Exemplo</b><br />O wiki Xabarín é unha enciclopedia sobre todo o relacionado con Miguelanxo Prado, o Xabarín Club e as súas series. O formato wiki permite a todo o mundo crear ou editar calquera artigo, e así podermos traballar todos xuntos para conseguir unha ampla base de datos para os seguidores do porco bravo.',
+	'nwb-step2-headline' => 'Cargar un logo',
+	'nwb-step2-text' => '<p>Seguinte: Escolla un logo para <b>{{SITENAME}}</b>.</p><p>Cargue unha imaxe do seu ordenador que represente o seu wiki.</p><p>Pode saltar este paso se non ten unha foto que queira empregar agora mesmo.</p>',
+	'nwb-step2-example' => 'Este sería un bo logo para un wiki sobre monopatíns.',
+	'nwb-step3-headline' => 'Escolla un tema',
+	'nwb-step3-text' => '<p>Agora seleccione un esquema para <b>{{SITENAME}}</b>.</p><p>Pode trocar isto máis adiante se cambia de idea.</p>',
+	'nwb-step4-headline' => 'Crear páxinas',
+	'nwb-step4-text' => '<p>Sobre que quere escribir?</p><p>Faga unha lista con algunhas das páxinas que queira ter no seu wiki.</p>',
+	'nwb-step4-example' => '<b>Exemplo</b><p>Para un wiki sobre películas de monstros, as súas primeiras páxinas poderían ser: <ul class="bullets"><li>Drácula</li><li>O monstro de Frankenstein</li><li>O lobishome</li><li>A momia</li></ul></p><p>Para un wiki sobre xogos de mesa: <ul class="bullets"><li>Monopoly</li><li>Risk</li><li>Scrabble</li><li>Trivial Pursuit</li></ul></p>',
+	'nwb-step5-headline' => 'E agora?',
+	'nwb-step5-text' => '<p>Xa rematou todos os pasos! <b>{{SITENAME}}</b> está preparado para pórse en marcha.</p><p>Agora é hora de comezar a escribir e engadir algunhas imaxes, para darlles ás persoas algo para ler cando atopen o seu wiki.</p><p>A lista de páxinas que fixo no paso anterior engadiuse a unha caixa denominada "Páxinas novas" na páxina principal. Pode comezar premendo nesas páxinas. Páseo ben!</p>',
+	'nwb-preview' => 'Vista previa',
+	'nwb-logo-preview' => 'Vista previa do logo',
+	'nwb-choose-logo' => 'Escolla o logo',
+	'nwb-save-description' => 'Gardar a descrición',
+	'nwb-save-theme' => 'Gardar o tema',
+	'nwb-create-pages' => 'Crear as páxinas',
+	'nwb-save-logo' => 'Gardar o logo',
+	'nwb-go-to-your-wiki' => 'Ir ao seu wiki',
+	'nwb-back-to-step-1' => 'Voltar ao paso 1',
+	'nwb-back-to-step-2' => 'Voltar ao paso 2',
+	'nwb-back-to-step-3' => 'Voltar ao paso 3',
+	'nwb-back-to-step-4' => 'Voltar ao paso 4',
+	'nwb-or' => 'ou',
+	'nwb-new-pages-text' => '[[File:Placeholder|right|300px]]
+Escriba aquí o primeiro parágrafo do seu artigo.
+
+==Cabeceira de sección==
+
+Escriba aquí a primeira sección do seu artigo. Lembre incluír ligazóns cara a outras páxinas do wiki.
+
+==Cabeceira de sección==
+
+Escriba aquí a segunda sección do seu artigo. Non esqueza engadir unha categoría, para axudar así á xente a atopar o artigo.',
+);
+
 /** Hungarian (Magyar)
  * @author Glanthor Reviol
  */
@@ -394,6 +466,75 @@ $messages['hu'] = array(
 	'nwb-back-to-step-3' => 'Vissza a harmadik lépéshez',
 	'nwb-back-to-step-4' => 'Vissza a negyedik lépéshez',
 	'nwb-or' => 'vagy',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'newwikibuilder' => 'Constructor de nove wikis',
+	'nwb-choose-a-file' => 'Selige un file',
+	'nwb-error-saving-description' => 'Error durante le salveguarda del description',
+	'nwb-error-saving-theme' => 'Error durante le salveguarda del apparentia',
+	'nwb-error-saving-articles' => 'Error durante le salveguarda del paginas',
+	'nwb-error-saving-logo' => 'Error durante le incargamento del logotypo',
+	'nwb-saving-articles' => 'Salveguarda paginas…',
+	'nwb-finalizing' => 'Finalisation…',
+	'nwb-articles-saved' => 'Paginas salveguardate',
+	'nwb-theme-saved' => 'Selection de apparentia salveguardate',
+	'nwb-saving-description' => 'Salveguarda description…',
+	'nwb-description-saved' => 'Description salveguardate',
+	'nwb-uploading-logo' => 'Incarga logotypo…',
+	'nwb-readonly-try-again' => 'Le wiki es actualmente in modo de lectura sol. Per favor reproba lo in alcun momentos.',
+	'nwb-logo-uploaded' => 'Logotypo incargate',
+	'nwb-login-successful' => 'Session aperite con successo',
+	'nwb-logout-successful' => 'Session claudite con successo',
+	'nwb-login-error' => 'Error durante le apertura del session',
+	'nwb-logging-in' => 'Aperi session…',
+	'nwb-api-error' => 'Il habeva un problema:',
+	'nwb-no-more-pages' => 'Non es possibile crear plus paginas',
+	'nwb-must-be-logged-in' => 'Tu debe aperir un session pro facer isto',
+	'nwb-skip-this-step' => 'Saltar iste passo',
+	'nwb-coming-soon' => 'Disponibile tosto',
+	'nwb-new-pages' => 'Nove paginas',
+	'nwb-unable-to-edit-description' => 'Le description non es modificabile con le Constructor de nove wikis',
+	'nwb-step1-headline' => 'Describe tu wiki',
+	'nwb-step1-text' => '<p>Que nos comencia a configurar <b>{{SITENAME}}</b>. Tu pote saltar qualcunque passo e revenir a illo plus tarde.</p>
+<p>Primo: Scribe un message pro le pagina principal de tu wiki que describe le objectivo de {{SITENAME}}.</p>',
+	'nwb-step1-example' => '<b>Exemplo</b><br />Muppet Wiki es un encyclopedia super tote le cosas connexe a Jim Henson, The Muppet Show e Strata Sesamo. Le formato wiki permitte a omnes de crear o modificar omne articulo, de sorta que nos pote laborar totes insimul pro crear un base de datos comprehensive pro le fans del Muppets.',
+	'nwb-step2-headline' => 'Incargar un logotypo',
+	'nwb-step2-text' => '<p>Postea: Selige un logotypo pro <b>{{SITENAME}}</b>.</p><p>Incarga un imagine ex tu computator pro representar tu wiki.</p><p>Tu pote saltar iste passo si tu non ha un imagine que tu vole usar in iste momento.</p>',
+	'nwb-step2-example' => 'Isto esserea un bon logotypo pro un wiki super skateboard.',
+	'nwb-step3-headline' => 'Selige un apparentia',
+	'nwb-step3-text' => '<p>Selige ora un combination de colores pro <b>{{SITENAME}}</b>.</p><p>Tu pote alterar isto plus tarde si tu cambia de idea.</p>',
+	'nwb-step4-headline' => 'Crear paginas',
+	'nwb-step4-text' => '<p>Super que vole tu scriber?</p><p>Face un lista de alcun paginas que tu vole haber in tu wiki.</p>',
+	'nwb-step4-example' => '<b>Exemplo</b><p>Pro un wiki super filmes de monstros, le prime paginas pote esser: <ul class="bullets"><li>Dracula</li><li>Le monstro de Frankenstein</li><li>Le homine lupo</li><li>Le mumia</li></ul></p><p>Pro un wiki super jocos de tabuliero: <ul class="bullets"><li>Monopoly</li><li>Risk</li><li>Scrabble</li><li>Trivial Pursuit</li></ul></p>',
+	'nwb-step5-headline' => 'Que facer ora?',
+	'nwb-step5-text' => '<p>Tote le passos es complete! <b>{{SITENAME}}</b> es preste pro poner se in marcha.</p><p>Ora es le momento de comenciar a scriber e adder alcun imagines, pro dar al gente alique a leger quando illes trova tu wiki.</p><p>Le lista de paginas que tu faceva in le ultime passo ha essite addite a un quadro "Nove paginas" in le pagina principal. Tu pote comenciar con un clic super iste paginas. Bon divertimento!</p>',
+	'nwb-preview' => 'Previsualisation',
+	'nwb-logo-preview' => 'Previsualisation del logotypo',
+	'nwb-choose-logo' => 'Selige logotypo',
+	'nwb-save-description' => 'Salveguardar description',
+	'nwb-save-theme' => 'Salveguardar apparentia',
+	'nwb-create-pages' => 'Crear paginas',
+	'nwb-save-logo' => 'Salveguardar logotypo',
+	'nwb-go-to-your-wiki' => 'Ir a tu wiki',
+	'nwb-back-to-step-1' => 'Retornar al passo 1',
+	'nwb-back-to-step-2' => 'Retornar al passo 2',
+	'nwb-back-to-step-3' => 'Retornar al passo 3',
+	'nwb-back-to-step-4' => 'Retornar al passo 4',
+	'nwb-or' => 'o',
+	'nwb-new-pages-text' => '[[File:Placeholder|right|300px|Spatio reservate]]
+Scribe hic le prime paragrapho de tu articulo.
+
+==Titulo de section==
+
+Scribe hic le prime section de tu articulo. Rememora de includer ligamines a altere paginas in le wiki.
+
+==Titulo de section==
+
+Scribe hic le secunde section de tu articulo. Non oblida de adder un categoria, pro adjutar le gente a trovar le articulo.',
 );
 
 /** Macedonian (Македонски)
@@ -645,9 +786,15 @@ Escreva a segunda seção do seu artigo aqui. Não se esqueça de adicionar uma 
  * @author Lockal
  */
 $messages['ru'] = array(
+	'nwb-error-saving-description' => 'Ошибка при сохранении описания',
+	'nwb-error-saving-theme' => 'Ошибка при сохранении темы',
+	'nwb-error-saving-articles' => 'Ошибка при сохранении страниц',
+	'nwb-saving-articles' => 'Сохранение страниц…',
+	'nwb-finalizing' => 'Завершение…',
 	'nwb-saving-description' => 'Сохранение описания…',
 	'nwb-description-saved' => 'Описание сохранено',
 	'nwb-uploading-logo' => 'Загрузка логотипа…',
+	'nwb-logo-uploaded' => 'Логотип загружен',
 	'nwb-skip-this-step' => 'Пропустить этот шаг',
 	'nwb-new-pages' => 'Новые страницы',
 	'nwb-step1-headline' => 'Опишите вашу вики',
@@ -657,6 +804,7 @@ $messages['ru'] = array(
 	'nwb-step4-text' => '<p>О чём вы хотите написать?</p><p>Создайте список из нескольких страниц, которые бы вы хотели иметь в вашей вики.</p>',
 	'nwb-step5-headline' => 'Что дальше?',
 	'nwb-preview' => 'Предварительный просмотр',
+	'nwb-logo-preview' => 'Предпросмотр логотипа',
 	'nwb-choose-logo' => 'Выбрать логотип',
 	'nwb-save-description' => 'Сохранить описание',
 	'nwb-save-theme' => 'Сохранить тему',
@@ -667,6 +815,14 @@ $messages['ru'] = array(
 	'nwb-back-to-step-3' => 'Возврат к шагу 3',
 	'nwb-back-to-step-4' => 'Возврат к шагу 4',
 	'nwb-or' => 'или',
+	'nwb-new-pages-text' => '[[File:Placeholder|right|300px]]
+Напишите здесь первый параграф статьи.
+
+== Заголовок секции ==
+Напишите здесь первую секцию статьи. Не забудьте включить ссылки на другие страницы в вики.
+
+== Заголовок секции ==
+Напишите здесь вторую секцию статьи. Не забудьте добавить категорию, чтобы помочь людям найти статью.',
 );
 
 /** Telugu (తెలుగు)

@@ -256,6 +256,34 @@ $messages['he'] = array(
 	'welcome-message-log' => 'ברך משתמש חדש',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'welcome-user-page' => "==A proposito de me==
+
+''Isto es tu pagina de ustor. Modifica le pagina pro informar le communitate super te!''
+
+==Mi contributiones==
+
+* [[Special:Contributions/{{PAGENAME}}|Contributions de usator]]
+
+==My favorite pages==
+
+* Adde hic ligamines a tu paginas favorite in le wiki!
+* Pagina favorite no. 2
+* Pagina favorite no. 3",
+	'welcome-message-user' => 'Salute, benvenite a {{SITENAME}}! Gratias pro tu contribution al pagina [[:$1]].
+
+Non hesita de lassar un message in [[$2|mi pagina de discussion]] si io pote adjutar te con alcun cosa! $3',
+	'welcome-message-anon' => "Salute, benvenite a {{SITENAME}}! Gratias pro tu contribution al pagina [[:$1]].
+
+'''[[Special:Userlogin|Per favor aperi un session o crea un conto]]'''. Isto permitte sequer tu contributiones e facilita le communication con le resto del communitate.
+
+Non hesita de lassar un message in [[$2|mi pagina de discussion]] si io pote adjutar te con alcun cosa! $3",
+	'welcome-message-log' => 'dava le benvenita a un nove contributor',
+);
+
 /** Italian (Italiano) */
 $messages['it'] = array(
 	'welcome-user-page' => "==Qualcosa su di me==
@@ -332,6 +360,7 @@ $messages['mk'] = array(
 );
 
 /** Dutch (Nederlands)
+ * @author McDutchie
  * @author Siebrand
  */
 $messages['nl'] = array(
@@ -346,15 +375,15 @@ $messages['nl'] = array(
 * Voeg hier verwijzingen toe van uw favoriete pagina's op deze wiki!
 * Favoriete pagina #2
 * Favoriete pagina #3",
-	'welcome-message-user' => 'Hallo, welkom bij {{SITENAME}}! Bedankt voor je bewerking aan de [[:$1]] pagina.
+	'welcome-message-user' => 'Hallo, welkom bij {{SITENAME}}! Bedankt voor je bewerking van de pagina [[:$1]].
 
-Laat alsjeblieft een bericht achter op [[$2|mijn overleg pagina]] als ik je ergens mee kan helpen! $3',
-	'welcome-message-anon' => "Hallo, welkom bij {{SITENAME}}. Dank u wel voor uw werk aan de pagina [[:$1]].
+Laat gerust een bericht achter op [[$2|mijn overlegpagina]] als ik je ergens mee kan helpen! $3',
+	'welcome-message-anon' => "Hallo, welkom bij {{SITENAME}}! Bedankt voor je werk aan de pagina [[:$1]].
 
-'''[[Special:Userlogin|Maak alstublieft een gebruiker aan of meld u aan]]'''.
-Het is een eenvoudige manier om uw bijdragen te volgen en helpt u bij het onderhouden van contacten met de rest van de gemeenschap.
+'''[[Special:Userlogin|Maak alsjeblieft een gebruiker aan of meld je aan]]'''.
+Het is een eenvoudige manier om je bijdragen te volgen en helpt je bij het onderhouden van contacten met de rest van de gemeenschap.
 
-Laat alstublieft een bericht achter op [[$2|mijn overleg pagina]] als ik u ergens mee kan helpen! $3",
+Laat gerust een bericht achter op [[$2|mijn overlegpagina]] als ik je ergens mee kan helpen! $3",
 	'welcome-message-log' => 'nieuwe gebruiker aan het verwelkomen',
 );
 

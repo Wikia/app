@@ -134,14 +134,22 @@ $messages['be-tarask'] = array(
 $messages['br'] = array(
 	'daemonloader_createtask' => 'Krouiñ un trevell',
 	'daemonloader_listtask' => 'Roll an trevelloù',
+	'daemonloader_daemondesc' => 'Deskrivadur',
 	'daemonloader_paramremove' => 'Dilemel ?',
+	'daemonloader_paramdefvalue' => 'Talvoud dre ziouer',
 	'daemonloader_alldaemons' => 'An holl diaouled',
 	'daemonloader_selectlist' => 'Dibab eus ar roll',
 	'daemonloader_search' => 'Klask :',
+	'daemonloader_string' => 'chadenn',
+	'daemonloader_number' => 'niver',
 	'daemonloader_date_yyyymmdd' => 'deiziad (YYYYMMDD)',
 	'daemonloader_date_yyyymm' => 'miz (YYYYMM)',
 	'daemonloader_date_yyyy' => 'bloavezh (YYYY)',
 	'daemonloader_wikilist' => 'Roll ar wikioù',
+	'daemonloader_gonextstep' => "Mont d'ar bazenn da heul",
+	'daemonloader_startdate' => 'Deiziad kregiñ',
+	'daemonloader_enddate' => 'Deiziad termen',
+	'daemonloader_emails' => "Chomlec'hioù postel",
 	'daemonloader_day' => 'bemdez',
 	'daemonloader_week' => 'bep sizhun',
 	'daemonloader_month' => 'Bep miz',
@@ -149,6 +157,7 @@ $messages['br'] = array(
 	'daemonloader_newtask' => 'Trevell nevez',
 	'daemonloader_createdby' => 'Krouet gant',
 	'daemonloader_created' => 'Krouet',
+	'daemonloader_options' => 'Dibarzhioù',
 	'daemonloader_removejobconfirm' => "Ha sur oc'h ?",
 );
 
@@ -473,10 +482,14 @@ $messages['pms'] = array(
 
 /** Russian (Русский)
  * @author Lockal
+ * @author Александр Сигачёв
  */
 $messages['ru'] = array(
+	'daemonloader' => 'Загрузчик демона',
+	'daemonloader_pagetitle' => 'Загрузчик демона',
 	'daemonloader_createtask' => 'Создать задачу',
 	'daemonloader_listtask' => 'Список задач',
+	'daemonloader_configure' => 'Настроить демон',
 	'daemonloader_daemonname' => 'Имя демона',
 	'daemonloader_scriptname' => 'Имя скрипта',
 	'daemonloader_daemondesc' => 'Описание',
@@ -492,6 +505,8 @@ $messages['ru'] = array(
 	'daemonloader_selectdaemon' => 'Выберите демона для получения информации и нажмите на кнопку для перехода к следующему шагу',
 	'daemonloader_selectlist' => 'Выберите из списка',
 	'daemonloader_search' => 'Поиск:',
+	'daemonloader_daemonchanged' => 'Ваши изменения были сохранены',
+	'daemonloader_daemonnotchanged' => 'Ваши изменения не были сохранены',
 	'daemonloader_string' => 'строка',
 	'daemonloader_number' => 'число',
 	'daemonloader_date_yyyymmdd' => 'дата (ГГГГММДД)',
@@ -499,16 +514,19 @@ $messages['ru'] = array(
 	'daemonloader_date_yyyy' => 'годы (ГГГГ)',
 	'daemonloader_wikilist' => 'Список вики',
 	'daemonloader_gonextstep' => 'Перейти к следующему шагу',
+	'daemonloader_setparams' => 'Установка значений входных параметров демона:',
 	'daemonloader_1step' => 'Первый шаг (выбор демона)',
 	'daemonloader_2step' => 'Второй шаг (настройки демона)',
 	'daemonloader_3step' => 'Третий шаг (настройки задачи)',
 	'daemonloader_steps' => 'Текущий шаг:',
 	'daemonloader_daemoninfo' => 'Описание демона',
+	'daemonloader_configtaskparams' => 'Настройка параметров задачи:',
 	'daemonloader_startdate' => 'Дата начала',
 	'daemonloader_enddate' => 'Дата окончания',
 	'daemonloader_frequency' => 'Частота отчётов',
 	'daemonloader_emails' => 'Email-адреса',
 	'daemonloader_files' => 'XLS-файлы',
+	'daemonloader_period' => 'Периодичность отчётов',
 	'daemonloader_dateformat' => 'Формат даты: ГГГГММДД',
 	'daemonloader_emails_info' => 'Разделённые запятыми адреса эл. почты, на которые будет отправлен результат задачи',
 	'daemonloader_day' => 'каждый день',
@@ -519,6 +537,8 @@ $messages['ru'] = array(
 	'daemonloader_daemonparams' => 'Параметры демона',
 	'daemonloader_createdby' => 'Создатель',
 	'daemonloader_created' => 'Создан',
+	'daemonloader_options' => 'Настройки',
+	'daemonloader_nojobsfound' => 'Задания отсутствуют',
 	'daemonloader_removejobconfirm' => 'Вы уверены?',
 );
 

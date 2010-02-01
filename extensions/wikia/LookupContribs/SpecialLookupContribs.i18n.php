@@ -283,6 +283,52 @@ $messages['hu'] = array(
 	'lookupcontribsrestore' => 'visszaállítás',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'lookupcontribs' => 'Recerca de contributiones',
+	'lookupcontribstitle' => 'Recerca de contributiones',
+	'lookupcontribsrecentcontributions' => 'Contributiones recente de $1',
+	'lookupcontribsfinalcontributions' => 'Contributiones final de $1',
+	'lookupcontribshelp' => 'Iste pagina special pote esser usate pro monstrar le contributiones de un usator in plure Wikias. Pro presentar le lista, entra hic infra un nomine de usator.',
+	'lookupcontribusernotspecify' => 'Tu non ha ancora specificate un usator',
+	'lookupcontribsselectuser' => 'Selige usator:',
+	'lookupcontribsselectfor' => 'Seliger pro:',
+	'lookupcontribsdisplaymode' => 'Modo de presentation:',
+	'lookupcontribsselectmodenormal' => 'contributiones recente de iste usator',
+	'lookupcontribsselectmodefinal' => 'contributiones final de iste usator',
+	'lookupcontribsselectmodeall' => 'tote le contributiones de iste usator',
+	'lookupcontribsfullurls' => 'URLs complete',
+	'lookupcontribslinks' => 'ligamines al contributiones',
+	'lookupcontribsgo' => 'Ir',
+	'lookupcontribsinvaliduser' => '<p class="error">Le usator "<b>$1</b>" non existe. Verifica que le nomine de usator es correcte.</p>',
+	'lookupcontribsinvalidviewmode' => '<p class="error">"<b>$1</b>" non es un modo de presentation valide.</p>',
+	'lookupcontribsinvalidmode' => '<p class="error">"<b>$1</b>" non es un modo valide.</p>',
+	'lookupcontribsselectwikis' => 'Selige wikis:',
+	'lookupcontribslistwikiainfo' => 'Lista de wikis ubi il ha articulos modificate per <b>$1</b>',
+	'lookupcontribsnoresultfound' => 'Nulle resultato trovate!',
+	'lookupcontribsinvalidresults' => 'Resultatos invalide!',
+	'lookupcontribswiki' => 'Wiki',
+	'lookupcontribswikidbname' => 'Nomine del base de datos',
+	'lookupcontribswikiurl' => 'URL',
+	'lookupcontribswikititle' => 'Titulo',
+	'lookupcontribscontribslink' => 'Ligamine al contributiones',
+	'lookupcontribsdetails' => 'Vider detalios pro:',
+	'lookupcontribscontribs' => 'contributiones',
+	'lookupcontribsnbrresult' => 'Numero de resultatos:',
+	'lookupcontribsnext' => 'sequente',
+	'lookupcontribsprevious' => 'precedente',
+	'lookupcontribspageremoved' => 'Removite:',
+	'lookupcontribsrestore' => 'restaurar',
+	'lookupcontribslog' => 'registro',
+	'lookupcontribshist' => 'hist',
+	'lookupcontribsdiff' => 'diff',
+	'right-lookupcontribs' => 'Vider le modificationes global del usator',
+	'lookupcontribsshowpages' => 'Tote le paginas ($1 spatios de nomines)',
+	'lookupcontribscontent' => 'contento',
+);
+
 /** Japanese (日本語) */
 $messages['ja'] = array(
 	'lookupcontribs' => '全体の投稿履歴を見る',
@@ -435,6 +481,17 @@ $messages['pms'] = array(
 $messages['roa-tara'] = array(
 	'lookupcontribsgo' => 'Veje',
 	'lookupcontribspageremoved' => 'Luate:',
+);
+
+/** Russian (Русский)
+ * @author Lockal
+ */
+$messages['ru'] = array(
+	'lookupcontribsnoresultfound' => 'Ничего не найдено!',
+	'lookupcontribswiki' => 'Вики',
+	'lookupcontribswikidbname' => 'Имя БД',
+	'lookupcontribscontribslink' => 'Ссылка на вклад',
+	'lookupcontribscontribs' => 'вклад',
 );
 
 /** Swedish (Svenska)

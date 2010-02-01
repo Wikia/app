@@ -255,14 +255,20 @@ $messages['pt-br'] = array(
 
 /** Russian (Русский)
  * @author Lockal
+ * @author Александр Сигачёв
  */
 $messages['ru'] = array(
 	'dump-database' => 'Дампы базы данных',
 	'dump-database-info' => 'Дампы базы данных могут быть использованы в качестве личной резервной копии (Викия создаёт отдельные резервные копии для всех вики автоматически) или для обслуживающих ботов',
+	'dump-database-curr-pages' => 'Текущие страницы',
+	'dump-database-curr-pages-info' => '(Эта версия, как правило, наиболее удобна для бота)',
+	'dump-database-full-pages' => 'Текущие страницы и история',
 	'dump-database-full-pages-info' => '(Предупреждение: этот файл может быть слишком большим)',
 	'dump-database-request' => 'Запросить обновление',
 	'dump-database-request-info' => '(Дампы обычно генерируются еженедельно)',
 	'dump-database-request-submit' => 'Отправить запрос',
+	'dump-database-request-requested' => 'Запрос на дамп базы данных отправлен',
+	'dump-database-info-more' => 'Пожалуйста, <a href="http://www.wikia.com/wiki/Wikia:Database_download">см. дополнительные сведения</a>',
 );
 
 /** Swedish (Svenska)
@@ -271,5 +277,12 @@ $messages['ru'] = array(
 $messages['sv'] = array(
 	'dump-database-request' => 'Begär en uppdatering',
 	'dump-database-request-submit' => 'Skicka begäran',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'dump-database-curr-pages' => 'Поточні сторінки',
 );
 

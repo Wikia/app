@@ -16,6 +16,8 @@ $messages['en'] = array(
 $messages['af'] = array(
 	'search_wikipedia' => 'Deursoek Wikipedia',
 	'previous' => 'vorige',
+	'research_no_results' => 'Geen bladsye is gevind nie. Soek asseblief weer.',
+	'research_wikipedia_title' => 'Soek jou antwoord op Wikipedia',
 	'research_this' => 'Vors dit na',
 );
 
@@ -33,6 +35,17 @@ $messages['br'] = array(
 /** Buginese (ᨅᨔ ᨕᨘᨁᨗ) */
 $messages['bug'] = array(
 	'previous' => 'Ala na',
+);
+
+/** Greek (Ελληνικά)
+ * @author Περίεργος
+ */
+$messages['el'] = array(
+	'search_wikipedia' => "Ψάξ'τε στη Βικιπαίδεια",
+	'previous' => 'προηγούμενο',
+	'research_no_results' => 'Δεν βρέθηκαν σελίδες. Παρακαλώ ξαναψάξετε.',
+	'research_wikipedia_title' => 'Αναζητείστε την απάντηση στη Βικιπαίδεια',
+	'research_this' => 'Αναζητήστε αυτό',
 );
 
 /** French (Français)

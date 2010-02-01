@@ -48,6 +48,7 @@ N'eo ket bet kavet ar pennad '''$1'''.
 );
 
 /** German (Deutsch)
+ * @author McDutchie
  * @author Tim 'Avatar' Bartel
  */
 $messages['de'] = array(
@@ -59,6 +60,21 @@ Der Artikel '''$1''' konnte nicht gefunden werden.
 * Vielleicht hilft der Artikel [[$2]] weiter.
 * Du kannst das Suchfeld benutzen.
 * Um auf die Hauptseite zu wechseln, klicke den folgenden Link: [{{SERVER}} {{SITENAME}}]",
+);
+
+/** Greek (Ελληνικά)
+ * @author Περίεργος
+ */
+$messages['el'] = array(
+	'our404handler' => 'Σφάλμα 404: Η σελίδα δεν βρέθηκε!',
+	'our404handler-oops' => 'Δεν υπάρχουν οι σελίδες που ψάχνετε. Προχωρείστε, παρακαλώ.',
+	'message404' => "''Λυπούμαστε πραγματικά, αλλά για κάποιο λόγο η σελίδα που ψάχνετε δεν υπάρχει. '''
+
+Δε μπορεί να βρεθεί το άρθρο '''$1'''.
+
+*Μπορείτε να δοκιμάσετε το άρθρο [[$2]]
+*Μπορείτε να χρησιμοποιήσετε το κουτί αναζήτησης στα αριστερά της σελίδας
+*Για την κύρια σελίδα του ιστότοπου, πατήστε στο σύνδεσμο: [{{SERVER}}{{SITENAME}}]",
 );
 
 /** Spanish (Español)
@@ -145,6 +161,22 @@ $messages['hu'] = array(
 	'our404handler' => '404-es hiba: az oldal nincs meg.',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'our404handler' => 'Error 404: Pagina non trovate!',
+	'our404handler-oops' => 'Istes non es le paginas que tu cerca. Circular, per favor.',
+	'message404' => "
+'''Nos es desolate, ma pro alcun ration le pagina que tu ha demandate non existe.'''
+
+Le articulo '''$1''' non poteva esser trovate.
+
+* Tu pote probar le articulo [[$2]]
+* Tu pote usar le quadro de recerca al sinistra del pagina
+* Pro ir al pagina principal del sito, clicca: [{{SERVER}} {{SITENAME}}]",
+);
+
 /** Japanese (日本語)
  * @author Tommy6
  */
@@ -157,6 +189,21 @@ $messages['ja'] = array(
  */
 $messages['ko'] = array(
 	'our404handler' => '404 오류: 페이지를 찾을 수 없습니다.',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'our404handler' => 'Feeler 404: Säit net fonnt!',
+	'our404handler-oops' => "Dëst sinn net d'Säiten no deenen Dir sicht. Gitt w.e.g. weider.",
+	'message404' => "'''Et deet eis wierklech leed, awer déi Säit déi dir ugefrot hutt gëtt et net.'''
+
+Den Artikel '''$1''' konnt net fonnt ginn.
+
+* Dir kënnt et mam Artikel [[$2]] versichen.
+* Dir kënnt d'Sichkëscht lénks op der Säit benotzen.
+* Fir op d'haaptsäit vun dësem Site ze goen, klickt op de Link:  [{{SERVER}} {{SITENAME}}]",
 );
 
 /** Macedonian (Македонски)
@@ -203,6 +250,22 @@ Artikkelen '''$1''' kunne ikkje verta funnen.
 * Du kan prøva artikkelen [[$2]]
 * Du kan nytta søkjeboksen til venstre
 * For å gå til hovudsida på denne nettstaden, trykk på lenkja: [{{SERVER}} {{SITENAME}}]",
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'our404handler' => 'Feil 404: Siden ble ikke funnet!',
+	'our404handler-oops' => 'Dette er ikke sidene du leter etter. Vennligst fortsett.',
+	'message404' => "
+'''Vi er virkelig lei for dette, men av en eller annen grunn finnes ikke siden du har bedt om.'''
+
+Artikkelen '''$1''' ble ikke funnet.
+
+* Du kan prøve artikkel [[$2]]
+* Du kan bruke søkeboksen til venstre
+* For å gå videre til hovedsiden, trykk på lenken: [{{SERVER}} {{SITENAME}}]",
 );
 
 /** Polish (Polski)

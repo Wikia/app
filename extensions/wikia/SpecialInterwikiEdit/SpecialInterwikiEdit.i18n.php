@@ -77,6 +77,18 @@ $messages['hu'] = array(
 	'iwedit-update' => 'Frissítés',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'iwedit-title' => 'Editor interwiki',
+	'iwedit-language-interwikis' => 'interwikis de linguas solmente',
+	'iwedit-all-interwikis' => 'tote le interwikis',
+	'iwedit-update' => 'Actualisar',
+	'iwedit-error' => '<p>Un error ha occurrite.</p>',
+	'iwedit-success' => '<p>Creation de ligamine succedite.</p>',
+);
+
 /** Japanese (日本語)
  * @author Tommy6
  */
