@@ -41,7 +41,7 @@ class HomePageStatistic
 			$factor = $value['count']/$value['number_of_day'];
 			$result += (int) (WikiaGlobalStats::getCountWordsInMonth($key)*$factor);
 		}
-		$result = $wgMemc->set( $key, $result, 60*60);
+		$wgMemc->set( $key, $result, 60*60);
 		return number_format($result);
 	}
 /*	
