@@ -203,7 +203,7 @@ class SkinCorporateBase extends SkinTemplate {
 	}
 	
 	public function prepareData($self,$tpl){
-		global $wgUser,$wgRequest;
+		global $wgUser, $wgRequest, $wgTitle;
 		$tpl->set('footer_middlecolumn', CorporatePageHelper::parseMsgImg('corporatepage-footer-middlecolumn'));
 		$tpl->set('footer_bottom', CorporatePageHelper::parseMsg('corporatepage-footer-bottom'));
 		$tpl->set('footer_rightcolumn', CorporatePageHelper::parseMsg('corporatepage-footer-rightcolumn'));
@@ -217,7 +217,11 @@ class SkinCorporateBase extends SkinTemplate {
 		
 		$StaticChute = new StaticChute('js');
 		$StaticChute->useLocalChuteUrl();		
-		$tpl->set('static_chute_js',$StaticChute->getChuteHtmlForPackage('corporate_page_js'));
+		if( NS_SPECIAL == $wgTitle->getNamespace() ) {
+			$tpl->set('static_chute_js',$StaticChute->getChuteHtmlForPackage('corporate_specialpage_js'));
+		} else {
+			$tpl->set('static_chute_js',$StaticChute->getChuteHtmlForPackage('corporate_page_js'));
+		}
 
 		$StaticChute = new StaticChute('css');
 		$StaticChute->useLocalChuteUrl();
