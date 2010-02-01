@@ -27,6 +27,16 @@ $messages['br'] = array(
 	'wikiasearch-search-wikia' => 'Klask e Wikia',
 );
 
+/** Spanish (Español)
+ * @author Translationista
+ */
+$messages['es'] = array(
+	'wikiasearch-titles-only' => 'Buscar sólo en títulos de páginas',
+	'wikiasearch-system-error-msg' => 'Debido a un error del sistema, su búsqueda no se pudo completar',
+	'wikiasearch-search-this-wiki' => 'Buscar sólo en Wikia Central',
+	'wikiasearch-search-wikia' => 'Buscar en Wikia',
+);
+
 /** French (Français)
  * @author Peter17
  */
@@ -65,6 +75,16 @@ $messages['hu'] = array(
 	'wikiasearch-system-error-msg' => 'A keresés nem teljesíthető rendszerhiba miatt',
 	'wikiasearch-search-this-wiki' => 'Keresés csak a Wikia Centralon',
 	'wikiasearch-search-wikia' => 'Keresés a Wikián',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'wikiasearch-titles-only' => 'Cercar solmente in titulos de paginas',
+	'wikiasearch-system-error-msg' => 'A causa de un error de systema, le recerca non poteva esser completate',
+	'wikiasearch-search-this-wiki' => 'Cercar solmente in Wikia Central',
+	'wikiasearch-search-wikia' => 'Cercar in Wikia',
 );
 
 /** Japanese (日本語)

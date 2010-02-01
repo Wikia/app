@@ -24,6 +24,11 @@ $messages['qqq'] = array(
 	'interwikidispatcher' => 'Special page name as displayed on Special:SpecialPages and page title of special page.',
 );
 
+/** Afrikaans (Afrikaans) */
+$messages['af'] = array(
+	'interwikidispatcher' => 'Interwikiverdeler',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  */
@@ -66,6 +71,16 @@ $messages['hsb'] = array(
 	'interwikidispatcher' => 'InterwikiDispatcher',
 );
 
+/** Interlingua (Interlingua) */
+$messages['ia'] = array(
+	'interwikidispatcher' => 'Repartitor interwiki',
+);
+
+/** Luxembourgish (Lëtzebuergesch) */
+$messages['lb'] = array(
+	'interwikidispatcher' => 'InterwikiDispatcher',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -78,6 +93,7 @@ $messages['mk'] = array(
  */
 $messages['nl'] = array(
 	'interwikidispatcher' => 'Interwikiverdeler',
+	'interwikidispatcher-desc' => 'Lost interwikiverwijzingen op om Apachedoorverwijzingen te verminderen',
 );
 
 /** Occitan (Occitan)

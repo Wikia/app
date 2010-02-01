@@ -72,6 +72,16 @@ Prošu změń [[Special:Preferences#prefsection-1|swoje nastajenja]], zo by tut�
 	'widgets-specialpage-try-dashboard' => 'Tuta strona wobsahuje lisćinu wšěch k dispoziciji stejacych asistentow. Zo by swoje asistenty při dźěle widźał, dźi k [[Special:WidgetDashboard]].',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'widgets-specialpage-info' => 'Le widgets functiona melio con un del nove apparentias, p.ex. [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco].
+
+Per favor cambia [[Special:Preferences#prefsection-1|tu preferentias]] pro usar iste instrumento.',
+	'widgets-specialpage-try-dashboard' => 'Iste pagina contine un lista de tote le widgets disponibile. Pro vider tu widgets in action, visita [[Special:WidgetDashboard]].',
+);
+
 /** Japanese (日本語) */
 $messages['ja'] = array(
 	'widgets-specialpage-info' => 'ウィジェットは、[{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco]スキンで最もよく動くようになっています。
@@ -129,5 +139,14 @@ $messages['ru'] = array(
 
 Пожалуйста, измените [[Special:Preferences#prefsection-1|свои настройки]] для использования этого инструмента.',
 	'widgets-specialpage-try-dashboard' => 'Эта страница содержит список всех доступных виджетов. Чтобы увидеть ваши виджеты в действии, перейдите на [[Special:WidgetDashboard]].',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'widgets-specialpage-info' => 'Віджети найкраще працюють з одною із нових тем оформлення, наприклад, [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco].
+Будь ласка, змініть [[Special:Preferences#prefsection-1|ваші налаштування]], щоб використовувати цей інструмент.',
+	'widgets-specialpage-try-dashboard' => 'Ця сторінка містить список всіх доступних віджетів. Щоб переглянути ваші віджети в дії, перейдіть на [[Special:WidgetDashboard]].',
 );
 

@@ -15,6 +15,13 @@ $messages['en'] = array(
 	'mostvisitedpageslatest' => 'in the last $1 minutes'
 );
 
+/** Message documentation (Message documentation)
+ * @author Siebrand
+ */
+$messages['qqq'] = array(
+	'mostvisitedpageslatest' => 'Needs plural support.',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -32,6 +39,7 @@ $messages['br'] = array(
 	'mostvisitedpages' => 'Pajennoù gwelet ar muiañ',
 	'mostvisitedpagessearchtext' => 'Anv ar pennad :',
 	'mostvisitedpagessearchbtn' => 'klask',
+	'mostvisitedpageslatest' => 'e kerzh ar $1 minutenn ziwezhañ',
 );
 
 /** German (Deutsch) */
@@ -41,20 +49,24 @@ $messages['de'] = array(
 	'mostvisitedpagessearchbtn' => 'Suchen',
 );
 
-/** Spanish (Español) */
+/** Spanish (Español)
+ * @author McDutchie
+ */
 $messages['es'] = array(
 	'mostvisitedpages' => 'Páginas más visitadas',
-	'mostvisitedpagessearchtext' => 'Nombre del artículo o de los artículos:',
+	'mostvisitedpagessearchtext' => 'Nombre del artículo:',
 	'mostvisitedpagessearchbtn' => 'buscar',
 );
 
 /** French (Français)
+ * @author IAlex
  * @author Peter17
  */
 $messages['fr'] = array(
 	'mostvisitedpages' => 'Pages les plus visitées',
 	'mostvisitedpagessearchtext' => "Nom de l'article :",
 	'mostvisitedpagessearchbtn' => 'chercher',
+	'mostvisitedpageslatest' => 'dans les $1 dernières minutes',
 );
 
 /** Galician (Galego)
@@ -84,6 +96,25 @@ $messages['hu'] = array(
 	'mostvisitedpagessearchbtn' => 'keresés',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'mostvisitedpages' => 'Paginas le plus visitate',
+	'mostvisitedpagessearchtext' => 'Nomine del articulo:',
+	'mostvisitedpagessearchbtn' => 'cercar',
+	'mostvisitedpageslatest' => 'in le ultime $1 minutas',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'mostvisitedpages' => 'Am dackste besichte Säiten',
+	'mostvisitedpagessearchtext' => 'Numm vum Artikel:',
+	'mostvisitedpagessearchbtn' => 'sichen',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -91,6 +122,7 @@ $messages['mk'] = array(
 	'mostvisitedpages' => 'Најпосетени страници',
 	'mostvisitedpagessearchtext' => 'Име на статијата:',
 	'mostvisitedpagessearchbtn' => 'пребарај',
+	'mostvisitedpageslatest' => 'во последните $1 минути',
 );
 
 /** Dutch (Nederlands)
@@ -100,6 +132,7 @@ $messages['nl'] = array(
 	'mostvisitedpages' => "Meest bezochte pagina's",
 	'mostvisitedpagessearchtext' => 'Artikelnaam:',
 	'mostvisitedpagessearchbtn' => 'zoeken',
+	'mostvisitedpageslatest' => 'in de laatste $1 minuten',
 );
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)

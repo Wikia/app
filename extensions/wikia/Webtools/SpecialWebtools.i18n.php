@@ -97,7 +97,9 @@ $messages['br'] = array(
 	'serp_position' => "Renk ar ger-alc'hwez",
 );
 
-/** German (Deutsch) */
+/** German (Deutsch)
+ * @author McDutchie
+ */
 $messages['de'] = array(
 	'wt_search_stats' => 'Such Statistik',
 	'wt_click_stats' => 'Klick Statistik',
@@ -105,8 +107,8 @@ $messages['de'] = array(
 	'wt_update' => 'Aktualisierung',
 	'wt_cancel' => 'Abbrechen',
 	'wt_date_range' => 'Zeitraum',
-	'wt_search_src' => 'Suche nach Quelle',
-	'wt_location_src' => 'Suche nach Ort',
+	'wt_search_src' => 'Suchquelle',
+	'wt_location_src' => 'Suchort',
 	'site_url' => 'Seiten Url',
 	'sitemap_type' => 'Sitemap Typ',
 	'last_downloaded' => 'Zuletzt heruntergeladen',
@@ -118,11 +120,13 @@ $messages['de'] = array(
 	'serp_position' => 'Stichwort-Rang',
 );
 
-/** Spanish (Español) */
+/** Spanish (Español)
+ * @author McDutchie
+ */
 $messages['es'] = array(
 	'webtools' => 'Herramientas de la web [BETA]',
-	'wt_search_stats' => 'Búsqueda de Estadísticas',
-	'wt_click_stats' => 'Haz click a las estadísticas',
+	'wt_search_stats' => 'Estadísticas de búsqueda',
+	'wt_click_stats' => 'Estadísticas de clics',
 	'wt_nodata' => 'No hay datos disponibles',
 	'wt_update' => 'Actualizar',
 	'wt_cancel' => 'Cancelar',
@@ -131,7 +135,7 @@ $messages['es'] = array(
 	'wt_location_src' => 'Localización de la búsqueda',
 	'site_url' => 'Dirección del sitio',
 	'sitemap_url' => 'Dirección del mapa del sitio',
-	'sitemap_format' => 'Mapa del sitio',
+	'sitemap_format' => 'Formato del mapa del sitio',
 	'sitemap_type' => 'Tipo de mapa',
 	'last_downloaded' => 'Última vez bajado',
 	'sitemap_status' => 'Estado del mapa',
@@ -140,11 +144,16 @@ $messages['es'] = array(
 
 /** Finnish (Suomi)
  * @author Crt
+ * @author Silvonen
  */
 $messages['fi'] = array(
 	'wt_update' => 'Päivitä',
 	'wt_cancel' => 'Peruuta',
+	'sitemap_url' => 'Sivustokartan URL',
+	'sitemap_format' => 'Sivustokartan muoto',
+	'sitemap_type' => 'Sivustokartan tyyppi',
 	'last_downloaded' => 'Viimeksi ladattu',
+	'sitemap_status' => 'Sivustokartan tila',
 	'serp_weight' => 'prosenttia kaikista%',
 	'serp_position' => 'Avainsanan sijoitus',
 );
@@ -216,6 +225,33 @@ $messages['hu'] = array(
 	'serp_position' => 'Kulcsszó helyezése',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'webtools' => 'Instrumentos web [BETA]',
+	'wt_search_stats' => 'Statisticas de recerca',
+	'wt_click_stats' => 'Statisticas de clics',
+	'wt_nodata' => 'Il non ha datos disponibile',
+	'wt_update' => 'Actualisar',
+	'wt_cancel' => 'Cancellar',
+	'wt_date_range' => 'Intervallo de datas',
+	'wt_search_src' => 'Fonte del recerca',
+	'wt_location_src' => 'Loco del recerca',
+	'site_url' => 'URL del sito',
+	'sitemap_url' => 'URL del mappa del sito',
+	'sitemap_format' => 'Formato del mappa del sito',
+	'sitemap_type' => 'Typo del mappa del sito',
+	'last_downloaded' => 'Ultime discargamento',
+	'sitemap_status' => 'Stato del mappa del sito',
+	'url_count' => 'Numero de URLs',
+	'search_age' => 'Etate del recerca',
+	'search_type' => 'Typo del recerca',
+	'search_keyword' => 'Parola-clave del recerca',
+	'serp_weight' => 'percentage de tote %',
+	'serp_position' => 'Rango del parola-clave',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -244,6 +280,7 @@ $messages['mk'] = array(
 );
 
 /** Dutch (Nederlands)
+ * @author McDutchie
  * @author Siebrand
  */
 $messages['nl'] = array(
@@ -266,7 +303,7 @@ $messages['nl'] = array(
 	'search_age' => 'Zoek leeftijd',
 	'search_type' => 'Zoek type',
 	'search_keyword' => 'Zoek sleutelwoord',
-	'serp_weight' => 'precentage van alle %',
+	'serp_weight' => 'percentage van alle %',
 	'serp_position' => 'Positie sleutelwoord',
 );
 

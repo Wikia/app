@@ -34,6 +34,13 @@ $messages['br'] = array(
 	'wysiwyginterface' => 'Etrefas Wysiwyg',
 );
 
+/** German (Deutsch)
+ * @author MovGP0
+ */
+$messages['de'] = array(
+	'wysiwyginterface' => 'WYSIWYG-Interface',
+);
+
 /** Lower Sorbian (Dolnoserbski)
  * @author Michawiki
  */
@@ -75,10 +82,11 @@ $messages['hsb'] = array(
 );
 
 /** Hungarian (Magyar)
+ * @author Dani
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
-	'wysiwyginterface' => 'WYSIWYG felület',
+	'wysiwyginterface' => 'WYSIWYG-felület',
 );
 
 /** Interlingua (Interlingua)
@@ -86,6 +94,13 @@ $messages['hu'] = array(
  */
 $messages['ia'] = array(
 	'wysiwyginterface' => 'Interfacie WYSIWYG',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'wysiwyginterface' => 'Wysiwyg-Interface',
 );
 
 /** Macedonian (Македонски)

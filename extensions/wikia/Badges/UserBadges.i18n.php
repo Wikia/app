@@ -43,6 +43,7 @@ $messages['en'] = array(
 $messages['af'] = array(
 	'user-badge-invalid-color' => 'Ongeldige heksadesimale waarde ingesleutel',
 	'user-badge-header-body-box' => 'Opskrif en inhoud:',
+	'user-badge-data-color' => 'Datakleur:',
 	'user-badge-edits-txt' => 'Wysigings',
 );
 
@@ -50,7 +51,35 @@ $messages['af'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
+	'user-badge-title' => 'Badj implijer',
+	'user-badge-invalid-color' => 'Fall eo an talvoudenn eksadekvedennel',
+	'user-badge-show-color' => 'Diskouez munudoù al livioù',
+	'user-badge-hide-color' => 'Kuzhat munudoù al livioù',
+	'user-badge-selected-color' => 'Liv diuzet er mare-mañ {rgb}',
+	'user-badge-web-color' => 'Liv web boaz an tostañ : {rgb}. Klikit evit diuzañ !',
+	'user-badge-dialog-title' => 'Mar plij dibabit ul liv',
+	'user-badge-current' => 'Badj red',
+	'user-badge-configure' => 'Kefluniañ ho badj',
+	'user-badge-not-found' => "N'eo bet kavet badj ebet !",
+	'user-badge-use-configurator' => 'Implijit an ostilh kefluniañ evit krouiñ ur badj nevez !',
+	'user-badge-create' => 'Krouiñ ur badj :',
+	'user-badge-overwrite-msg' => 'Frikañ ar badj red',
+	'user-badge-header-body-box' => 'Titl ha korf :',
+	'user-badge-header-text' => 'Liv testenn an titl :',
+	'user-badge-header-bgcolor' => 'Liv drekleur an titl :',
+	'user-badge-body-bgcolor' => "Liv drekleur ar c'horf :",
+	'user-badge-text-align' => 'Steudadur an titl :',
+	'user-badge-logo-opt' => 'Dibarzhioù ar skedenn :',
+	'user-badge-wikia-logo-pos' => "Lec'hiadur logo Wikia :",
+	'user-badge-small-wikia-logo-pos' => "Lec'hiadur logo vihan Wikia :",
+	'user-badge-label-color' => 'Liv an tikedenn (anv implijer, kemmoù) :',
+	'user-badge-small-wikia-logo-color' => 'Liv logo Wikia :',
+	'user-badge-data-color' => 'Liv ar roadennoù :',
 	'user-badge-edits-txt' => 'Kemmoù',
+	'user-bagde-copypaste-ext-code' => "Eilañ ha pegañ (e lec'hiennoù diavaez)",
+	'user-bagde-copypaste-int-code' => 'Eilañ & pegañ (ar Wikia-añ)',
+	'user-bagde-copypaste-int-other-code' => 'Eilañ ha pegañ (en ur Wikia all)',
+	'user-badge-save-info' => "M'ho peus c'hoant enrollañ ar c'hemmoù, kit e traoñ ar bajenn ha klikit war ar bouton \"Enrollañ\".",
 );
 
 /** German (Deutsch) */

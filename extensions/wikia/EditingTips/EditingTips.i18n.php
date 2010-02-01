@@ -11,6 +11,27 @@ $messages['en'] = array(
 	'editingTips' => 'Add your tips [[MediaWiki:EditingTips|here]]',
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'tog-disableeditingtips' => 'Moet nie wysigingswenke wys nie',
+	'editingTips' => 'Voeg jou wenke [[MediaWiki:EditingTips|hier]] by',
+);
+
+/** Breton (Brezhoneg)
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'tog-disableeditingtips' => 'Chom hep diskouez an tunioù evit kemmañ',
+	'tog-widescreeneditingtips' => 'Implijout ur prenestr bras kemmañ',
+	'editingtips_enter_widescreen' => 'Diskouez ar skramm bras',
+	'editingtips_exit_widescreen' => 'Kuitaat ar skramm bras',
+	'editingtips_hide' => 'Kuzhat an tunioù evit kemmañ',
+	'editingtips_show' => 'Diskouez an tunioù evit kemmañ',
+	'editingTips' => 'Ouzhpennit ho tunioù [[MediaWiki:EditingTips|amañ]]',
+);
+
 /** German (Deutsch) */
 $messages['de'] = array(
 	'tog-disableeditingtips' => 'Bearbeitungs-Tipps ausblenden',

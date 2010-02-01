@@ -61,6 +61,13 @@ $messages['ia'] = array(
 	'wikiawidget' => 'WikiaWidget',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'wikiawidget' => 'WikiaWidget',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */

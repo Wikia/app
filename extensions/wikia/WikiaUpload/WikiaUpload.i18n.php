@@ -75,6 +75,13 @@ $messages['ia'] = array(
 	'wikiaupload' => 'IncargaWikia',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'wikiaupload' => 'WikiaUpload',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */

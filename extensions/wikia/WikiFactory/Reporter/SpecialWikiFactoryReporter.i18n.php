@@ -116,3 +116,10 @@ $messages['pt-br'] = array(
 	'wikifactoryreporter' => 'Relator do WikiFactory',
 );
 
+/** Russian (Русский)
+ * @author Александр Сигачёв
+ */
+$messages['ru'] = array(
+	'wikifactoryreporter' => 'Репортёр WikiFactory',
+);
+

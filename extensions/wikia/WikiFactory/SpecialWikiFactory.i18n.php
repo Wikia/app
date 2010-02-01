@@ -344,6 +344,7 @@ $messages['br'] = array(
 	'wikifactory-label-clog' => "Renabl ar c'hemmoù",
 	'wikifactory-label-actions' => 'Oberezhioù',
 	'wikifactory-label-close' => 'Serriñ',
+	'wikifactory-label-tags' => 'Balizennoù',
 	'right-wikifactory' => 'Kemmañ arventennoù diabarzh ar wikioù',
 	'closewiki-check-and-confirm' => 'Gwiriañ ar wikioù ha kadarnait an oberiadur',
 	'closewiki-redirect-to' => 'Adkas da',
@@ -549,6 +550,28 @@ $messages['de'] = array(
 	'awc-metrics-close-checked' => 'Schließen überprüft',
 );
 
+/** Greek (Ελληνικά)
+ * @author Περίεργος
+ */
+$messages['el'] = array(
+	'wf_city_title' => 'Τίτλος',
+	'wf_cc_name' => 'Κατηγορία',
+	'wikifactory-label-variables' => 'Μεταβλητές',
+	'wikifactory-label-close' => 'Κλείσιμο',
+	'closewiki-redirect-to' => 'Ανακατεύθυνση σε',
+	'awc-metrics-one-week' => 'δημιουργήθηκε πριν < 1 εβδομάδα',
+	'awc-metrics-two-weeks' => 'δημιουργήθηκε πριν < 2 εβδομάδες',
+	'awc-metrics-three-weeks' => 'δημιουργήθηκε πριν < 3 βδομάδες',
+	'awc-metrics-one-months' => 'δημιουργήθηκε πριν < 1 μήνα',
+	'awc-metrics-two-months' => 'δημιουργήθηκε πριν < 2 μήνες',
+	'awc-metrics-three-months' => 'δημιουργήθηκε πριν < 3 μήνες',
+	'awc-metrics-half-year' => 'δημιουργήθηκε πριν < 6 μήνες',
+	'awc-metrics-nbr-result' => 'Αποτελέσματα:',
+	'awc-metrics-articles' => 'Άρθρα',
+	'awc-metrics-edits' => 'Επεξεργασίες',
+	'awc-metrics-images' => 'Εικόνες',
+);
+
 /** Spanish (Español)
  * @author Bola
  * @author Translationista
@@ -662,52 +685,75 @@ $messages['es'] = array(
  * @author An13sa
  */
 $messages['eu'] = array(
+	'closewiki' => 'Wikia itxi',
+	'wf_city_url' => 'Helbidea',
 	'wf_city_title' => 'Izenburua',
+	'wf_city_created' => 'Sortua',
+	'wf_city_founding_user' => 'Fundatzailea',
 	'wf_city_public' => 'Egoera',
+	'wf_city_lang' => 'Hizkuntza',
 	'wf_cc_name' => 'Kategoria',
 	'wikifactory-label-variables' => 'Aldagaiak',
 	'wikifactory-label-actions' => 'Ekintzak',
 	'wikifactory-label-close' => 'Itxi',
+	'closewiki-return' => '$1-(e)ra itzuli',
 	'awc-metrics-by-language' => 'hizkuntzaren arabera:',
+	'awc-metrics-category' => 'eta kategoria:',
 	'awc-metrics-all' => 'Wiki guztiak',
 	'awc-metrics-all-languages' => 'hizkuntza guztiak',
+	'awc-metrics-search' => 'Bilaketa aukerak:',
 	'awc-metrics-nbr-result' => 'Emaitzak:',
+	'awc-metrics-articles' => 'Artikuluak',
 	'awc-metrics-edits' => 'Aldaketak',
 	'awc-metrics-db-size' => 'DBren tamaina',
 	'awc-metrics-images' => 'Irudiak',
+	'awc-metrics-close' => 'Itxi',
+	'awc-metrics-closed' => 'itxita',
+	'awc-metrics-removed' => 'ezabatua',
+	'closed-reason' => 'Arrazoia:',
 );
 
 /** Finnish (Suomi)
  * @author Crt
  * @author Ilkea
+ * @author Silvonen
  */
 $messages['fi'] = array(
 	'closewiki' => 'Sulje wiki',
 	'wf_city_url' => 'Osoite',
 	'wf_city_title' => 'Otsikko',
 	'wf_city_created' => 'Luotu',
+	'wf_city_founding_user' => 'Perustaja',
+	'wf_city_founding_email' => 'Perustajan sähköpostiosoite',
 	'wf_city_lang' => 'Kieli',
 	'wf_cc_name' => 'Luokka',
+	'wikifactory_removevariable' => 'Poista wikitiedot välimuistista',
 	'wikifactory-label-clog' => 'Muutosloki',
 	'wikifactory-label-actions' => 'Toiminnot',
 	'wikifactory-label-close' => 'Sulje',
+	'closewiki-message' => 'verkkotunnus $1',
+	'closewiki-nbr-wiki' => '$1 wikiä',
 	'closewiki-dump-url' => 'Tietokantavedos: $1',
 	'closewiki-images-url' => 'Kuva-arkisto: $1',
 	'closewiki-unknown' => 'Tuntematon',
 	'awc-metrics-all' => 'kaikki wikit',
 	'awc-metrics-all-languages' => 'kaikki kielet',
+	'awc-metrics-not-found' => 'Wikejä ei löytynyt',
+	'awc-metrics-nbr-result' => 'Tulokset:',
 	'awc-metrics-db-size' => 'Tietokannan koko',
 	'awc-metrics-images' => 'Kuvat',
 	'awc-metrics-close' => 'Sulje',
 	'awc-metrics-closed' => 'suljettu',
 	'awc-metrics-removed' => 'poistettu',
 	'closed-wiki' => 'Suljettu wiki',
+	'closed-wiki-info' => 'Tämä wiki on suljettu',
 	'closed-wiki-create-wiki' => 'Luo uusi wiki',
 	'closed-create-dump' => 'Luo tietokantavedos',
 	'closed-create-image-archive' => 'Luo kuva-arkisto',
 	'closed-delete-database-images' => 'Poista tietokanta ja kuvat',
 	'closed-delete-images' => 'Poista kuvat',
 	'closed-hide-dumps' => 'Piilota tietokanta ja kuvavedos',
+	'closed-confirm-btn' => 'Vahvista sulkeminen',
 	'closed-reason' => 'Syy:',
 );
 
@@ -737,6 +783,7 @@ $messages['fr'] = array(
 	'wikifactory-label-clog' => 'Journal des modifications',
 	'wikifactory-label-actions' => 'Actions',
 	'wikifactory-label-close' => 'Clôturer',
+	'wikifactory-label-tags' => 'Balises',
 	'right-wikifactory' => 'Changer les paramètres internes des wikis',
 	'closewiki-check-and-confirm' => "Vérifiez les wikis et confirmez l'opération",
 	'closewiki-redirect-to' => 'Rediriger vers',
@@ -931,6 +978,7 @@ $messages['gl'] = array(
 );
 
 /** Hungarian (Magyar)
+ * @author Dani
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
@@ -938,7 +986,9 @@ $messages['hu'] = array(
 	'wf_city_url' => 'Cím',
 	'wf_city_id' => 'azonosító',
 	'wf_city_title' => 'Cím',
-	'wf_city_created' => 'Létrehozva',
+	'wf_city_created' => 'Létrehozás ideje',
+	'wf_city_founding_user' => 'Alapító',
+	'wf_city_founding_email' => 'Alapító e-mail címe',
 	'wf_city_public' => 'Állapot',
 	'wf_city_lang' => 'Nyelv',
 	'wf_cc_name' => 'Kategória',
@@ -996,6 +1046,7 @@ $messages['ia'] = array(
 	'wikifactory-label-clog' => 'Lista de modificationes',
 	'wikifactory-label-actions' => 'Actiones',
 	'wikifactory-label-close' => 'Clauder',
+	'wikifactory-label-tags' => 'Etiquettas',
 	'right-wikifactory' => 'Cambiar le configuration interne del wikis',
 	'closewiki-check-and-confirm' => 'Verificar wikis e confirmar operation',
 	'closewiki-redirect-to' => 'Rediriger verso',
@@ -1147,6 +1198,7 @@ $messages['mk'] = array(
 	'wikifactory-label-clog' => 'Дневник на промени',
 	'wikifactory-label-actions' => 'Дејства',
 	'wikifactory-label-close' => 'Затвори',
+	'wikifactory-label-tags' => 'Ознаки',
 	'right-wikifactory' => 'Променете ги внатрешните нагодувања на викијата',
 	'closewiki-check-and-confirm' => 'Проверете ги викијата и потврдете ја операцијата',
 	'closewiki-redirect-to' => 'Пренасочи кон',
@@ -1257,6 +1309,7 @@ $messages['nl'] = array(
 	'wikifactory-label-clog' => 'Logboek',
 	'wikifactory-label-actions' => 'Handelingen',
 	'wikifactory-label-close' => 'Sluiten',
+	'wikifactory-label-tags' => 'Labels',
 	'right-wikifactory' => 'Interne instellingen van de wiki wijzigen',
 	'closewiki-check-and-confirm' => "Wiki's controleren en juiste werking bevestigen",
 	'closewiki-redirect-to' => 'Doorverwijzen naar',
@@ -1433,6 +1486,128 @@ $messages['no'] = array(
 	'closed-reason' => 'Årsak:',
 );
 
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'wf_city_url' => 'Adress',
+	'wf_cc_name' => 'Abdeeling',
+	'closed-reason' => 'Grund:',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'wikifactorypagetitle' => 'Configurador ëd Fatorìa ëd Wiki',
+	'wikifactory' => 'Configurador ëd Fatorìa ëd Wiki',
+	'closewiki' => 'Sara Wiki',
+	'wf_city_url' => 'Adrëssa',
+	'wf_city_id' => 'id',
+	'wf_city_title' => 'Tìtol',
+	'wf_city_created' => 'Creà',
+	'wf_city_founding_user' => 'Fondator',
+	'wf_city_founding_email' => 'Adrëssa ëd pòsta eletrònica dël fondator',
+	'wf_city_public' => 'Stat',
+	'wf_city_lang' => 'Lenga',
+	'wf_cc_name' => 'Categorìa',
+	'wikifactory_removevariable' => 'Gava ij dat dla wiki da la memòria local',
+	'wikifactory_removeconfirm' => 'Dat dla wiki gavà da la memòria local!',
+	'wikifactory-label-variables' => 'Variàbij',
+	'wikifactory-label-hubs' => 'Pòrt',
+	'wikifactory-label-domains' => 'Domini',
+	'wikifactory-label-return' => 'Torné andré a la lista',
+	'wikifactory-label-clog' => 'Registr dij cangiament',
+	'wikifactory-label-actions' => 'Assion',
+	'wikifactory-label-close' => 'Sara',
+	'right-wikifactory' => 'Cangia ampostassion anterne për wiki',
+	'closewiki-check-and-confirm' => 'Contròla wiki e conferma operassion',
+	'closewiki-redirect-to' => 'Ridiression-a a',
+	'closewiki-message' => 'nòm domini $1',
+	'closewiki-confirm-button' => "Conferma '$1' ëd $2",
+	'closewiki-nbr-wiki' => '$1 Wiki',
+	'closewiki-wiki-closed' => "'''$1''' a l'é stàita sarà ($2)",
+	'closewiki-wiki-closed_removed' => "'''$1''' adess a l'é sarà e pianificà për la scancelassion ($2)",
+	'closewiki-wiki-closed_redirect' => "'''$1''' a l'é stàita sarà ($2) e adess a manda a: $3",
+	'closewiki-dump-url' => 'Dump ëd la base ëd dàit: $1',
+	'closewiki-images-url' => 'Archivi ëd figure: $1',
+	'closewiki-unknown' => 'Pa conossù',
+	'closewiki-return' => 'André a $1',
+	'awc-metrics-wikis' => 'Visualisa Wiki',
+	'awc-metrics-select' => 'Mostré le Wiki',
+	'awc-metrics-by-language' => 'për lenga:',
+	'awc-metrics-category' => 'e categorìa:',
+	'awc-metrics-all' => 'tute le Wiki',
+	'awc-metrics-all-languages' => 'tute le lenghe',
+	'awc-metrics-search' => "Opsion d'arserca:",
+	'awc-metrics-one-week' => 'creà < 1 sman-a fa',
+	'awc-metrics-two-weeks' => 'creà < 2 sman-e fa',
+	'awc-metrics-three-weeks' => 'creà < 3 sman-e fa',
+	'awc-metrics-one-months' => 'creà < 1 mèis fa',
+	'awc-metrics-two-months' => 'creà < 2 mèis fa',
+	'awc-metrics-three-months' => 'creà < 3 mèis fa',
+	'awc-metrics-half-year' => 'creà < 6 mèis fa',
+	'awc-metrics-wikis-found' => 'Trovà $1 Wiki',
+	'awc-metrics-by-email' => " o (pòsta eletrònica dl'utent):",
+	'awc-metrics-by-user' => 'trovà da (nòm utent):',
+	'awc-metrics-by-dbname' => 'anté che ël nòm ëd la base ëd dàit a conten:',
+	'awc-metrics-by-title' => ' e ij tìtoj a parto da:',
+	'awc-metrics-by-domains' => ' e ij domini a conten-o:',
+	'awc-metrics-not-found' => 'Pa gnun-e Wiki trovà',
+	'awc-metrics-nbr-result' => 'Arzultà:',
+	'awc-metrics-created-between' => 'creà an tra $1 (AAAA/MM/DD) e $2 (AAAA/MM/DD)',
+	'awc-metrics-wikians' => 'Utent ëd la wiki<br />(>10 modìfiche)',
+	'awc-metrics-articles' => 'Artìcoj',
+	'awc-metrics-articles-per-day' => 'Artìcoj<br />(media për di)',
+	'awc-metrics-revisions-per-page' => 'Revisions<br />(media për pàgina)',
+	'awc-metrics-article-avg-size' => 'Dimension<br />
+media art.',
+	'awc-metrics-edits' => 'Modìfiche',
+	'awc-metrics-db-size' => 'Dimension dla BD',
+	'awc-metrics-images' => 'Figure',
+	'awc-metrics-all-users' => 'Utent<br />
+reg.',
+	'awc-metrics-all-users-edit-main-ns' => 'Utent reg.<br />(NS_MAIN)',
+	'awc-metrics-pageviews' => 'Visualisassion<br />
+pàgine',
+	'awc-metrics-statistics' => 'Statìstiche (media për tùit ij mèis)',
+	'awc-metrics-close' => 'Sara',
+	'awc-metrics-active' => 'ativ',
+	'awc-metrics-closed' => 'sarà',
+	'awc-metrics-redirected' => 'sarà e ridiressionà',
+	'awc-metrics-removed' => 'gavà',
+	'awc-metrics-hubs' => 'Wiki neuve (al mèis)',
+	'awc-metrics-news-day' => 'Wiki (al di)',
+	'awc-metrics-sum-month' => 'Conteur (për mèis)',
+	'awc-metrics-sum-day' => 'Conteur (për di)',
+	'awc-metrics-fewer-than' => "ch'a l'ha men ëd $1 artìcoj,",
+	'awc-metrics-edits-label' => '$1 modìfiche an $2,',
+	'awc-metrics-this-month' => 'sto mèis-sì',
+	'awc-metrics-last-month' => "j'ùltim $1 mèis",
+	'awc-metrics-pageviews-label' => "e $1 visualisassion ëd pàgine ant j'ùltim $2 di",
+	'awc-metrics-close-listed' => 'Sara tute le listà',
+	'awc-metrics-close-checked' => 'Sara le marcà',
+	'awc-metrics-exact-match' => 'pròpi istess',
+	'closed-wiki' => 'Wiki sarà',
+	'closed-wiki-info' => "Sta wiki-sì a l'é stàita sarà",
+	'disabled-wiki-info' => "Sta wiki-sì a l'é stàita disabilità",
+	'closed-wiki-dump-exists' => "Për piasì sgnaca [$1 ambelessì] s'it veule artrové tò contnù",
+	'closed-wiki-dump-noexists' => "Sta wiki-sì a l'é stàita sarà. Dump dël contnù a sarà disponìbil an 24 ore. Për piasì, ch'a torna a controlé.",
+	'closed-wiki-create-wiki' => 'Crea na neuva wiki',
+	'closed-wiki-policy' => 'Lese ij deuit për Saré na Wikia',
+	'closed-create-dump' => 'Creé un dump dla base ëd dàit',
+	'closed-create-image-archive' => "Crea n'archivi ëd figure",
+	'closed-delete-database-images' => 'Scancelé la base ëd dàit e le figure',
+	'closed-delete-images' => 'Scancelé le figure',
+	'closed-free-url' => "Liberé l'adrëssa dl'aragnà për un neuv fondator",
+	'closed-hide-dumps' => 'Stërmé Dump dla base ëd dàit e dle Figure',
+	'closed-redirect-url' => "Ridiressioné l'adrëssa dl'aragnà",
+	'closed-confirm-btn' => 'Conferma e sara',
+	'closed-redirect-alert' => "Për piasì, ch'a buta na neuva adrëssa d'aragnà ëd ridiression!",
+	'closed-reason' => 'Rason:',
+);
+
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
@@ -1511,6 +1686,7 @@ $messages['ru'] = array(
 	'wikifactory-label-actions' => 'Действия',
 	'wikifactory-label-close' => 'Закрыть',
 	'closewiki-redirect-to' => 'Перенаправление на',
+	'closewiki-message' => 'доменное имя $1',
 	'closewiki-wiki-closed' => "'''$1''' закрыта ($2)",
 	'closewiki-dump-url' => 'Дамп базы данных: $1',
 	'closewiki-images-url' => 'Архив изображений: $1',
@@ -1520,6 +1696,7 @@ $messages['ru'] = array(
 	'awc-metrics-category' => 'и категории:',
 	'awc-metrics-all' => 'все вики',
 	'awc-metrics-all-languages' => 'все языки',
+	'awc-metrics-search' => 'Настройки поиска:',
 	'awc-metrics-one-week' => 'создано < 1 недели назад',
 	'awc-metrics-two-weeks' => 'создано < 2 недель назад',
 	'awc-metrics-three-weeks' => 'создано < 3 недель назад',
@@ -1588,6 +1765,7 @@ $messages['uk'] = array(
 	'wf_city_public' => 'Статус',
 	'wf_city_lang' => 'Мова',
 	'wf_cc_name' => 'Категорія',
+	'wikifactory-label-variables' => 'Змінні',
 	'wikifactory-label-domains' => 'Домени',
 	'wikifactory-label-actions' => 'Дії',
 	'closewiki-message' => "доменне ім'я $1",
@@ -1597,7 +1775,9 @@ $messages['uk'] = array(
 	'awc-metrics-nbr-result' => 'Результати:',
 	'awc-metrics-articles' => 'Статті',
 	'awc-metrics-edits' => 'Редагування',
+	'awc-metrics-this-month' => 'цього місяця',
 	'awc-metrics-last-month' => 'останні $1 місяці',
 	'closed-wiki-create-wiki' => 'Створити нову вікі',
 	'closed-reason' => 'Причина:',
 );
+

@@ -74,6 +74,15 @@ $messages['hu'] = array(
 	'taskmanager_tasklist' => 'Vissza a feladatlistához',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'taskmanager' => 'Monstrar e gerer processos de fundo',
+	'taskmanager_title' => 'Monstrar e gerer processos de fundo',
+	'taskmanager_tasklist' => 'Retornar al lista de processos',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */

@@ -75,6 +75,14 @@ $messages['eu'] = array(
 	'wva-add' => 'Gehitu',
 );
 
+/** Finnish (Suomi)
+ * @author Silvonen
+ */
+$messages['fi'] = array(
+	'wva-success' => 'Videosivun $1 lisääminen onnistui.',
+	'wva-success-replaced' => 'Videosivun $1 korvaaminen onnistui.',
+);
+
 /** French (Français) */
 $messages['fr'] = array(
 	'wva-success' => 'La page de la vidéo $1 a été ajoutée avec succès.',

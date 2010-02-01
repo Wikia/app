@@ -38,6 +38,13 @@ $messages['de'] = array(
 	'mostpopulararticles' => 'Häufig geänderte Artikel',
 );
 
+/** Greek (Ελληνικά)
+ * @author Περίεργος
+ */
+$messages['el'] = array(
+	'mostpopulararticles' => 'Τα πιο δημοφιλή άρθρα (από τη βάση δεδομένων)',
+);
+
 /** Spanish (Español) */
 $messages['es'] = array(
 	'mostpopulararticles' => 'Páginas más populares',
@@ -69,6 +76,13 @@ $messages['hsb'] = array(
  */
 $messages['hu'] = array(
 	'mostpopulararticles' => 'Legnépszerűbb szócikkek (adatbázisból)',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'mostpopulararticles' => 'Articulos le plus popular (ex le base de datos)',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

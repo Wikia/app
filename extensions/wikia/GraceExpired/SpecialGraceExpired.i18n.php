@@ -55,6 +55,17 @@ $messages['gl'] = array(
 A actividade nas páxinas de avaliación '''non''' se ten en conta aquí.",
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'graceexpired' => 'Probation expirate',
+	'graceexpired-row' => '$1 (in $2, ultime modification le $3)',
+	'graceexpired-header' => "Iste pagina lista tote le versiones que es [[:Category:Abandoned|abandonate]], [[:Category:Trash_builds|rejectate]], [[:Category:Build stubs|peciettas]] o [[:Category:Trial Builds|tests]], e non ha essite modificate durante al minus duo septimanas.
+
+Isto ''non'' prende in conto le activitate del evalutation de paginas.",
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */

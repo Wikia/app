@@ -91,6 +91,16 @@ $messages['hu'] = array(
 	'imgplc-notinhistory' => 'Nem adhatsz hozzá képet történet módban.',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'imgplc-create' => 'Adder imagine',
+	'imgplc-placeholder' => 'Spatio reservate',
+	'imgplc-image' => 'Imagine',
+	'imgplc-notinhistory' => 'Non es possibile adder imagines in modo de historia.',
+);
+
 /** Japanese (日本語)
  * @author Tommy6
  */

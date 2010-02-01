@@ -77,6 +77,13 @@ $messages['hu'] = array(
 	'staffpowers-ipblock-aborted' => 'Nem lehet blokkolni a Wikia személyzetét. Kérlek használd a [[Special:Contact]] oldalt a személyzettel kapcsolatos problémák jelentéséhez.',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'staffpowers-ipblock-aborted' => 'Non es possibile blocar le personal de Wikia. Per favor usa [[Special:Contact]] pro reportar questiones o problemas con nostre personal.',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

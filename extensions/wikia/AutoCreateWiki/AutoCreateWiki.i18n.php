@@ -162,7 +162,7 @@ This is a brand-new project, so please write to us if you have any questions!
  */
 $messages['qqq'] = array(
 	'autocreatewiki-create-account' => '{{Identical|Create an account}}',
-	'autocreatewiki-success-has-been-created' => 'Looks like this is prefixed by a site name or something. Needs to be included as a variable.',
+	'autocreatewiki-success-has-been-created' => 'Used as a subtitle to complete the page title, which displays the domain name of the created wiki.',
 );
 
 /** Afrikaans (Afrikaans)
@@ -217,6 +217,7 @@ $messages['bg'] = array(
 	'autocreatewiki' => 'Създаване на ново уики',
 	'createwikipagetitle' => 'Заявка за ново уики',
 	'createwiki' => 'Създаване на уики',
+	'autocreatewiki-language-all' => 'Всички езици',
 	'autocreatewiki-birthdate' => 'Дата на раждане:',
 	'autocreatewiki-done' => 'готово',
 	'autocreatewiki-error' => 'грешка',
@@ -254,8 +255,10 @@ $messages['br'] = array(
 	'autocreatewiki-create-account' => 'Krouiñ ur gont',
 	'autocreatewiki-done' => 'graet',
 	'autocreatewiki-error' => 'fazi',
+	'autocreatewiki-language-top-list' => 'de,en,es,he,fr,it,ja,no,pl,pt,pt-br,zh',
 	'autocreatewiki-haveaccount-question' => 'Hag ur gont Wikia ho peus dija ?',
 	'autocreatewiki-success-title' => 'Krouet eo bet ho wiki !',
+	'autocreatewiki-success-has-been-created' => 'a zo bet krouet !',
 	'autocreatewiki-success-get-started' => 'Kregiñ',
 	'autocreatewiki-info-domain' => "Ar gwellañ zo implijout ur ger a vo, evit doare, ur ger-alc'hwez evit klask diwar-benn ho tanvez.",
 	'autocreatewiki-info-topic' => 'Ouzhpennañ un deskrivadur evel « Brezel ar Stered » pe « Abadenn skinwel ».',
@@ -285,6 +288,7 @@ $messages['br'] = array(
 	'autocreatewiki-empty-category' => 'Mar plij dibabit ur rummad.',
 	'autocreatewiki-empty-wikiname' => "Goullo ne c'hall ket bezañ anv ar wiki.",
 	'autocreatewiki-empty-username' => "Goullo ne c'hall ket bezañ an anv implijer.",
+	'autocreatewiki-empty-password' => "Ne c'hell ket bezañ goullo ar ger tremen",
 	'autocreatewiki-category-other' => 'All',
 	'autocreatewiki-set-username' => 'Termenit an anv implijer da gentañ.',
 	'autocreatewiki-invalid-category' => 'Talvoud direizh evit ar rummad. Dibabit un talvoud er roll, mar plij.',
@@ -334,6 +338,7 @@ Skipailh Kumuniezh Wikia
 
 <http://www.wikia.com/wiki/User:$4>",
 	'newwikis' => 'Wikioù nevez',
+	'newwikisstart' => 'Diskouez ar Wikioù adal :',
 );
 
 /** German (Deutsch) */
@@ -451,6 +456,44 @@ Genug der Begrüßung - jetzt kannst du mit dem Bearbeiten starten! :-)
 Wir freuen uns darauf dieses Projekt gedeihen zu sehen!
 
 Viel Erfolg, [[User:Avatar|Tim 'avatar' Bartel]] <staff /></div>",
+);
+
+/** Greek (Ελληνικά)
+ * @author Περίεργος
+ */
+$messages['el'] = array(
+	'autocreatewiki' => 'Δημιουργήστε έναν νέο ιστότοπο τύπου Wiki',
+	'autocreatewiki-desc' => 'Δημιουργήστε έναν ιστότοπο τύπου wiki στο WikiFactory από αιτήματα χρηστών',
+	'createwikipagetitle' => 'Δημιουργήστε έναν καινούργιο ιστότοπο τύπου Wiki',
+	'createwiki' => 'Δημιουργήστε έναν ιστότοπο τύπου Wiki',
+	'autocreatewiki-chooseone' => 'Διαλέξτε ένα',
+	'autocreatewiki-required' => '$ 1 = απαιτείται',
+	'autocreatewiki-web-address' => 'Ηλεκτρονική διεύθυνση:',
+	'autocreatewiki-category-select' => 'Επιλέξτε ένα',
+	'autocreatewiki-language-top' => 'Οι $1 πιο δημοφιλείς γλώσσες',
+	'autocreatewiki-language-all' => 'Όλες οι γλώσσες',
+	'autocreatewiki-birthdate' => 'Ημερομηνία γέννησης:',
+	'autocreatewiki-remember' => 'Να με θυμάσαι',
+	'autocreatewiki-create-account' => 'Δημιουργία λογαριασμού',
+	'autocreatewiki-done' => 'έγινε',
+	'autocreatewiki-error' => 'σφάλμα',
+	'autocreatewiki-haveaccount-question' => 'Έχετε ήδη ένα λογαριασμό Wikia;',
+	'autocreatewiki-success-title' => 'Το wiki σας έχει δημιουργηθεί!',
+	'autocreatewiki-success-subtitle' => 'Μπορείτε τώρα να ξεκινήσετε να δουλεύετε το wiki σας επισκέπτοντας:',
+	'autocreatewiki-success-has-been-created' => 'έχει δημιουργηθεί!',
+	'autocreatewiki-success-get-started' => 'Ξεκινήστε',
+	'autocreatewiki-info-domain' => 'Καλύτερα να χρησιμοποιήσετε μια λέξη-κλειδί αναζήτησης του θέματός σας.',
+	'autocreatewiki-info-topic' => 'Βάλε τε μια σύντομη περιγραφή όπως "Διαδίκτυο" ή "Λογοτεχνεία".',
+	'autocreatewiki-info-category' => 'Αυτό θα βοηθήσει τους επισκέπτες βρουν το wiki σας.',
+	'autocreatewiki-info-language' => 'Αυτή θα είναι η προεπιλεγμένη γλώσσα για τους επισκέπτες του wiki σας.',
+	'autocreatewiki-info-email-address' => 'Το ηλεκτρονικό σας ταχυδρομείο δεν φαίνεται σε κανέναν στο Wikia.',
+	'autocreatewiki-info-realname' => 'Αν το δώσετε, αυτό θα χρησιμοποιηθεί για να σας αποδωθεί η δουλειά σας.',
+	'autocreatewiki-info-birthdate' => 'Η Wikia απαιτεί από όλους τους χρήστες να δώσουν την πραγματική ημερομηνία γέννησής τους ως μέτρο ασφάλειας και ως μέσο διατήρησης της ακεραιότητας του ιστότοπου ενόσω συμμορφώνεται με κανονισμούς των Ηνωμένων Πολιτειών Αμερικής.',
+	'autocreatewiki-info-blurry-word' => 'Για αποφυγή αυτόματης δημιουργίας λογαριασμού, παρακαλώ πληκτρολογίστε τη θολή λέξη που βλέπετε στο πεδίο.',
+	'autocreatewiki-name-too-short' => 'Αυτό το όνομα είναι πολύ μικρό, παρακαλώ διαλέξτε ένα όνομα με τουλάχιστον τρεις χαρακτήρες.',
+	'autocreatewiki-invalid-username' => 'Αυτό το όνομα χρήστη δεν είναι έγκυρο.',
+	'autocreatewiki-busy-username' => 'Αυτό το όνομα χρήστη υπάρχει ήδη.',
+	'autocreatewiki-welcometalk-log' => 'Χαιρετιστήριο Μήνυμα',
 );
 
 /** Spanish (Español)
@@ -804,19 +847,88 @@ Ceci est un tout nouveau projet, veuillez nous écrire si avec une quelconque qu
 <p>-- Team de la communauté Wikia</p>',
 );
 
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'autocreatewiki' => 'Crear un novo wiki',
+	'autocreatewiki-desc' => 'Crea un wiki en WikiFactory mediante a solicitude dun usuario',
+	'createwikipagetitle' => 'Crear un novo wiki',
+	'createwiki' => 'Crear un novo wiki',
+	'autocreatewiki-chooseone' => 'Escolla un',
+	'autocreatewiki-required' => '$1 = obrigatorio',
+	'autocreatewiki-web-address' => 'Enderezo web:',
+	'autocreatewiki-category-select' => 'Seleccione un',
+	'autocreatewiki-language-top' => 'As $1 linguas máis empregadas',
+	'autocreatewiki-language-all' => 'Todas as linguas',
+	'autocreatewiki-birthdate' => 'Data de nacemento:',
+	'autocreatewiki-blurry-word' => 'Palabra borrosa:',
+	'autocreatewiki-remember' => 'Lembrádeme',
+	'autocreatewiki-create-account' => 'Crear unha conta',
+	'autocreatewiki-done' => 'feito',
+	'autocreatewiki-error' => 'erro',
+	'autocreatewiki-language-top-list' => 'de,en,es,he,fr,it,ja,no,pl,pt,pt-br,zh',
+	'autocreatewiki-haveaccount-question' => 'Xa ten unha conta Wikia?',
+	'autocreatewiki-success-title' => 'Creouse o seu wiki!',
+	'autocreatewiki-success-subtitle' => 'Xa pode comezar a traballar no seu wiki, visite:',
+	'autocreatewiki-success-has-been-created' => 'foi creado correctamente!',
+	'autocreatewiki-success-get-started' => 'Introdución',
+	'autocreatewiki-info-domain' => 'O mellor é usar como palabra clave unha que describa claramente o seu tema.',
+	'autocreatewiki-info-topic' => 'Engada unha breve descrición, como "Star Wars" ou "series de televisión".',
+	'autocreatewiki-info-category' => 'Isto axudará a que os visitantes atopen o seu wiki.',
+	'autocreatewiki-info-language' => 'Esta será a lingua por defecto para os visitantes do seu wiki.',
+	'autocreatewiki-info-email-address' => 'Non se mostrará a ninguén en Wikia o seu enderezo de correo electrónico.',
+	'autocreatewiki-info-realname' => 'Se escolle dalo utilizarase para atribuírlle o seu traballo.',
+	'autocreatewiki-info-birthdate' => 'Wikia necesita que todos os usuarios acheguen a súa data de nacemento real como precaución de seguridade e como medio para preservar a integridade do sitio, respectando as normativas nacionais.',
+	'autocreatewiki-info-blurry-word' => 'Para axudarnos á protección contra a creación de contas automáticas, escriba a palabra borrosa que vexa neste campo.',
+	'autocreatewiki-info-terms-agree' => 'Ao crear un wiki e unha conta de usuario, vostede acepta os <a href="http://www.wikia.com/wiki/Terms_of_use">termos de uso de Wikia</a>',
+	'autocreatewiki-info-staff-username' => '<b>Persoal só:</b> o usuario especificado será considerado o fundador.',
+	'autocreatewiki-limit-day' => 'Wikia superou o número máximo de novos wikis para hoxe ($1).',
+	'autocreatewiki-limit-creation' => 'Superou o número máximo de novos wikis en 24 horas ($1).',
+	'autocreatewiki-empty-field' => 'Por favor, encha este campo.',
+	'autocreatewiki-bad-name' => 'O nome non pode conter caracteres especiais (como $ ou @) e debe ser unha soa palabra en minúsculas e sen espazos.',
+	'autocreatewiki-invalid-wikiname' => 'O nome non pode conter caracteres especiais (como $ ou @) e non pode estar baleiro',
+	'autocreatewiki-invalid-username' => 'Este nome de usuario non é válido.',
+	'autocreatewiki-congratulation' => 'Parabéns!',
+	'autocreatewiki-welcometalk-log' => 'Mensaxe de benvida',
+	'autocreatewiki-regex-error-comment' => 'empregado no wiki $1 (texto completo: $2)',
+	'autocreatewiki-protect-reason' => 'Parte da interface oficial',
+	'autocreatewiki-welcomesubject' => '$1 foi creado!',
+	'newwikis' => 'Novos wikis',
+	'newwikisstart' => 'Mostrar os wikis que comecen por:',
+);
+
 /** Hungarian (Magyar)
+ * @author Dani
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
-	'autocreatewiki' => 'Új Wiki létrehozása',
-	'createwikipagetitle' => 'Új Wiki létrehozása',
-	'createwiki' => 'Új Wiki létrehozása',
+	'autocreatewiki' => 'Új wiki létrehozása',
+	'autocreatewiki-desc' => 'Új wiki létrehozása a Wikigyárban a felhasználói kérések alapján',
+	'createwikipagetitle' => 'Új wiki létrehozása',
+	'createwiki' => 'Új wiki létrehozása',
+	'autocreatewiki-chooseone' => 'Válassz egyet',
 	'autocreatewiki-required' => '$1 = kötelező',
+	'autocreatewiki-web-address' => 'Webcím:',
+	'autocreatewiki-category-select' => 'Válassz egyet',
 	'autocreatewiki-language-all' => 'Összes nyelv',
 	'autocreatewiki-birthdate' => 'Születési dátum:',
+	'autocreatewiki-blurry-word' => 'Elmosott szó:',
+	'autocreatewiki-remember' => 'Emlékezzen rám',
+	'autocreatewiki-create-account' => 'Fiók létrehozása',
 	'autocreatewiki-done' => 'Kész.',
 	'autocreatewiki-error' => 'hiba',
-	'autocreatewiki-success-get-started' => 'Kezdő lépések',
+	'autocreatewiki-language-top-list' => 'de,en,es,he,fr,hu,it,ja,no,pl,pt,pt-br,zh',
+	'autocreatewiki-haveaccount-question' => 'Már van Wikia-fiókod?',
+	'autocreatewiki-success-title' => 'A wiki elkészült!',
+	'autocreatewiki-success-subtitle' => 'Elkezdhetsz dolgozni a wikin a következő címre való látogatás után:',
+	'autocreatewiki-success-has-been-created' => 'elkészült!',
+	'autocreatewiki-success-get-started' => 'Első lépések',
+	'autocreatewiki-info-topic' => 'Adj meg egy rövid leírást, például „Star Wars” vagy „TV-műsorok”.',
+	'autocreatewiki-info-category' => 'Ez segít a látogatóknak a wikid megtalálásában.',
+	'autocreatewiki-info-language' => 'Ez lesz a wikid alapértelmezett nyelve a látogatóid számára.',
+	'autocreatewiki-info-email-address' => 'Az e-mail címedet sosem mutatjuk meg senkinek a Wikián.',
+	'autocreatewiki-info-realname' => 'Ha megadod, ezen a néven leszel jelölve szerzőként a munkáidnál.',
 	'autocreatewiki-category-other' => 'Egyéb',
 );
 
@@ -1578,13 +1690,46 @@ $messages['roa-tara'] = array(
  * @author Lockal
  */
 $messages['ru'] = array(
+	'autocreatewiki' => 'Создать новую вики',
+	'createwikipagetitle' => 'Создание новой вики',
+	'createwiki' => 'Создание новой вики',
 	'autocreatewiki-required' => '$1 = обязательно',
 	'autocreatewiki-web-address' => 'Веб-адрес:',
+	'autocreatewiki-category-select' => 'Выберите',
 	'autocreatewiki-language-all' => 'Все языки',
 	'autocreatewiki-birthdate' => 'Дата рождения:',
+	'autocreatewiki-blurry-word' => 'Размытое слово:',
 	'autocreatewiki-remember' => 'Запомнить меня',
 	'autocreatewiki-language-top-list' => 'de,en,es,he,fr,it,ja,no,pl,pt,pt-br,zh',
+	'autocreatewiki-info-topic' => 'Добавьте краткое описание, например, «Звёздные войны» или «ТВ-шоу».',
+	'autocreatewiki-info-email-address' => 'Адрес вашей электронной почты никому не показывается в Викии.',
+	'autocreatewiki-invalid-username' => 'Недопустимое имя участника.',
+	'autocreatewiki-busy-username' => 'Это имя участника уже занято.',
+	'autocreatewiki-empty-username' => 'Имя участника не может быть пустым.',
+	'autocreatewiki-empty-password' => 'Пароль не может быть пустым.',
+	'autocreatewiki-empty-retype-password' => 'Повтор пароля не может быть пустым.',
+	'autocreatewiki-invalid-birthday' => 'Неверная дата рождения',
+	'autocreatewiki-limit-birthday' => 'Невозможно создать регистрацию.',
+	'autocreatewiki-stepdefault' => 'Процесс запущен, пожалуйста, подождите …',
+	'autocreatewiki-step1' => 'Создание директории изображений …',
+	'autocreatewiki-step2' => 'Создание базы данных …',
+	'autocreatewiki-step3' => 'Установка информации по умолчанию в базе данных …',
+	'autocreatewiki-step4' => 'Копирование изображений по умолчанию и логотипа …',
+	'autocreatewiki-step5' => 'Установка стандартных переменных в базе данных …',
+	'autocreatewiki-step6' => 'Установка стандартных таблиц в базе данных …',
+	'autocreatewiki-step7' => 'Установка начального языка …',
+	'autocreatewiki-step8' => 'Настройка групп участников и категорий …',
+	'autocreatewiki-step9' => 'Установка переменных для новой вики …',
+	'autocreatewiki-step10' => 'Настройка страниц на центральной вики …',
+	'autocreatewiki-step11' => 'Отправка сообщения на электронную почту участника …',
+	'autocreatewiki-redirect' => 'Перенаправление в новую вики: $1 …',
+	'autocreatewiki-congratulation' => 'Поздравляем!',
+	'autocreatewiki-welcometalk-log' => 'Сообщение приветствия',
+	'autocreatewiki-regex-error-comment' => 'использовано в вики $1 (полный текст: $2)',
 	'autocreatewiki-step2-error' => 'База данных существует!',
+	'autocreatewiki-protect-reason' => 'Часть официального интерфейса',
+	'newwikis' => 'Новые вики',
+	'newwikisstart' => 'Показать вики, начиная с:',
 );
 
 /** Telugu (తెలుగు)
@@ -1598,6 +1743,7 @@ $messages['te'] = array(
 );
 
 /** Ukrainian (Українська)
+ * @author NickK
  * @author Prima klasy4na
  */
 $messages['uk'] = array(
@@ -1608,7 +1754,7 @@ $messages['uk'] = array(
 	'autocreatewiki-web-address' => 'Веб-адреса:',
 	'autocreatewiki-create-account' => 'Створити обліковий запис',
 	'autocreatewiki-error' => 'помилка',
-	'autocreatewiki-protect-reason' => 'Частина офіціального інтерфейсу',
+	'autocreatewiki-protect-reason' => 'Частина офіційного інтерфейсу',
 );
 
 /** Chinese (中文) */

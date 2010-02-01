@@ -72,9 +72,17 @@ $messages['be-tarask'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
+	'categoryselect-visual-view' => 'Sell dre gwelet',
+	'categoryselect-infobox-caption' => 'Dibarzhioù ar rummad',
+	'categoryselect-infobox-category' => 'Roit anv ar rummad :',
 	'categoryselect-addcategory-button' => 'Ouzhpennañ rummadoù',
+	'categoryselect-suggest-hint' => 'Pouezit war "Enter" evit echuiñ',
+	'categoryselect-edit-summary' => 'Ouzhpennañ ur rummad',
 	'categoryselect-button-save' => 'Enrollañ',
 	'categoryselect-button-cancel' => 'Nullañ',
+	'categoryselect-error-not-exist' => "N'eus ket eus ar pennad [id=$1].",
+	'categoryselect-error-user-rights' => 'Fazi en aotreoù implijerien.',
+	'categoryselect-error-db-locked' => 'Stanket eo ar bank roadennoù',
 );
 
 /** German (Deutsch) */
@@ -341,6 +349,19 @@ $messages['ru'] = array(
 $messages['te'] = array(
 	'categoryselect-button-save' => 'భద్రపరచు',
 	'categoryselect-button-cancel' => 'రద్దుచేయి',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'categoryselect-infobox-category' => 'Вкажіть назву категорії:',
+	'categoryselect-addcategory-button' => 'Додати категорію',
+	'categoryselect-button-save' => 'Зберегти',
+	'categoryselect-button-cancel' => 'Скасувати',
+	'categoryselect-error-not-exist' => 'Статті [id=$1] не існує.',
+	'categoryselect-error-user-rights' => 'Помилка прав користувача.',
+	'categoryselect-desc' => 'Забезпечує інтерфейс для управління категоріями у статті без редагування всієї статті.',
 );
 
 /** Chinese (中文) */

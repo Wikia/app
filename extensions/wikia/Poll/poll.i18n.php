@@ -50,6 +50,21 @@ $messages['de'] = array(
 	'pollSubmitting' => 'Bitte warten, deine Stimme wird gezählt.',
 );
 
+/** Greek (Ελληνικά)
+ * @author Περίεργος
+ */
+$messages['el'] = array(
+	'pollVoteUpdate' => 'Η ψήφος σας έχει ενημερωθεί.',
+	'pollVoteAdd' => 'Η ψήφος σας προστέθηκε.',
+	'pollVoteError' => 'Παρουσιάστηκε πρόβλημα κατά την επεξεργασία της ψήφους σας, παρακαλώ ξαναπροσπαθήστε.',
+	'pollPercentVotes' => '$1% επί των συνολικών ψήφων',
+	'pollYourVote' => 'Έχετε ήδη ψηφίσει το $1 στο $2, μπορείτε να αλλάξετε τη ψήφο σας πατώντας μια απάντηση παρακάτω.',
+	'pollNoVote' => 'Παρακαλώ ψηφίστε παρακάτω.',
+	'pollInfo' => 'Υπάρχουν $1 ψήφοι από τότε που δημιουργήθηκε η ψηφοφορία στις $2.',
+	'pollSubmitting' => 'Παρακαλώ περιμένετε,η ψήφο σας υποβάλλεται.',
+);
+
+/** Spanish (Español) */
 $messages['es'] = array(
 	'pollVoteUpdate' => 'Tu voto ha sido actualizado.',
 	'pollVoteAdd' => 'Tu voto ha sido añadido.',
@@ -99,6 +114,21 @@ $messages['hu'] = array(
 	'pollSubmitting' => 'Kérlek várj a szavazatod elküldésére.',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'pollVoteUpdate' => 'Tu voto ha essite actualisate.',
+	'pollVoteAdd' => 'Tu voto ha essite addite.',
+	'pollVoteError' => 'Un problema occurreva durante le tractamento de tu voto. Per favor reproba.',
+	'pollPercentVotes' => '$1% de tote le votos',
+	'pollYourVote' => 'Tu ha ja votate pro "$1" in $2. Tu pote cambiar tu voto per cliccar super un responsa hic infra.',
+	'pollNoVote' => 'Per favor vota hic infra.',
+	'pollInfo' => 'Il habeva $1 votos post le creation del sondage le $2.',
+	'pollSubmitting' => 'Un momento, tu voto es submittite.',
+);
+
+/** Japanese (日本語) */
 $messages['ja'] = array(
 	'pollVoteUpdate' => '投票を更新しました。',
 	'pollVoteAdd' => '投票が追加されました。',
@@ -139,6 +169,20 @@ U kunt uw stem wijzigen door hieronder op een antwoord te klikken.',
 	'pollInfo' => 'Er zijn $1 stemmen uitgebracht sinds de peiling op $2 is aangemaakt.',
 	'pollSubmitting' => 'Even geduld alstublieft.
 Uw stem wordt opgeslagen...',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'pollVoteUpdate' => 'Din stemme har blitt oppdatert.',
+	'pollVoteAdd' => 'Din stemme har blitt lagt til.',
+	'pollVoteError' => 'Det oppstod et problem med behandlingen av din stemme, vennligst prøv igjen.',
+	'pollPercentVotes' => '$1% av alle stemmer',
+	'pollYourVote' => 'Du har allerede stemt på «$1» den $2, du kan endre din stemme ved å klikke på et svar nedenfor.',
+	'pollNoVote' => 'Vennligst stem nedenfor.',
+	'pollInfo' => 'Det var $1 stemmer siden spørreundersøkelsen ble opprettet den $2.',
+	'pollSubmitting' => 'Vennligst vent, sender inn stemmen din.',
 );
 
 /** Polish (Polski) */
@@ -197,6 +241,7 @@ $messages['ru'] = array(
 	'pollSubmitting' => 'Пожалуйста, подождите, ваш голос обрабатывается.',
 );
 
+/** Chinese (中文) */
 $messages['zh'] = array(
 	'pollVoteUpdate' => '你的投票已更新',
 	'pollVoteAdd' => '您的投票已計入',

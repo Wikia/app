@@ -62,6 +62,7 @@ $messages['af'] = array(
 	'editaccount-frame-usage' => 'Let op',
 	'editaccount-label-select' => "Kies 'n gebruiker",
 	'editaccount-submit-account' => 'Bestuur gebruiker',
+	'editaccount-frame-close' => 'Deaktiveer gebruiker: $1',
 	'editaccount-label-email' => 'Stel nuwe e-posadres',
 	'editaccount-label-pass' => 'Stel nuwe wagwoord',
 	'editaccount-label-realname' => 'Stel nuwe regte naam',
@@ -69,6 +70,7 @@ $messages['af'] = array(
 	'editaccount-submit-pass' => 'Stoor wagwoord',
 	'editaccount-submit-realname' => 'Stoor regte naam',
 	'editaccount-submit-close' => 'Sluit rekening',
+	'editaccount-status' => 'Statusboodskap',
 	'editaccount-invalid-email' => '"$1" is nie \'n geldige e-posadres nie!',
 );
 
@@ -101,8 +103,16 @@ $messages['br'] = array(
 	'editaccount-submit-close' => 'Serriñ ar gont',
 	'editaccount-status' => 'Kemenadenn statud',
 	'editaccount-success-email' => 'Kemmet eo bet ar postel evit ar gont $1 da $2.',
+	'editaccount-success-pass' => 'Kemmet eo bet ger tremen ar gont $1.',
+	'editaccount-success-realname' => 'Kemmet eo bet anv gwir ar gont $1.',
+	'editaccount-success-close' => 'Diweredekaet eo bet ar gont $1.',
+	'editaccount-invalid-email' => 'N\'eo ket "$1" ur chomlec\'h postel reizh !',
 	'editaccount-nouser' => 'N\'eus ket eus ar gont "$1" !',
 	'editaccount-log' => 'Marilh ar gontoù implijer',
+	'editaccount-log-entry-email' => "en deus kemmet chmolec'h postel an implijer $2",
+	'editaccount-log-entry-pass' => 'en deus kemmet ger tremen ar gont $2',
+	'editaccount-log-entry-realname' => 'en deus kemmet anv gwir ar gont $2',
+	'editaccount-log-entry-close' => 'en deus diweredekaet ar gont $2',
 );
 
 /** German (Deutsch) */

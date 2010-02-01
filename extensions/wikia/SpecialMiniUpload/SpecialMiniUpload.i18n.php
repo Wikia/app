@@ -94,6 +94,22 @@ $messages['hu'] = array(
 	'thumbnailsize' => 'Bélyegkép mérete',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'widgetdashboard' => 'Tabuliero de widgets',
+	'mu_size_your_image' => 'Dimensiona tu imagine',
+	'almosttheretext' => 'Usa le controlo glissante pro seliger un dimension de miniatura, entra un legenda e clicca Inserer.',
+	'insertfullsize' => 'Inserer le imagine original con grandor complete',
+	'insertthumbnail' => 'Inserer miniatura',
+	'thumbnailsize' => 'Dimension del miniatura',
+	'captionoptional' => 'Legenda (optional):',
+	'insertimage' => 'Inserer imagine',
+	'leftalign-tooltip' => 'Alinear a sinistra',
+	'rightalign-tooltip' => 'Alinear a dextra',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -159,5 +175,12 @@ $messages['ru'] = array(
 	'insertimage' => 'Вставить изображение',
 	'leftalign-tooltip' => 'По левому краю',
 	'rightalign-tooltip' => 'По правому краю',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'widgetdashboard' => 'Панель віджетів',
 );
 

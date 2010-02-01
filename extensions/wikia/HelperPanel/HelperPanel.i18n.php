@@ -51,6 +51,14 @@ $messages['hsb'] = array(
 	'helperPanel_widgets' => 'Moje asistenty',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'helperPanel_help' => 'Widget de adjuta',
+	'helperPanel_widgets' => 'Mi widgets',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -60,10 +68,11 @@ $messages['mk'] = array(
 );
 
 /** Dutch (Nederlands)
+ * @author McDutchie
  * @author Siebrand
  */
 $messages['nl'] = array(
-	'helperPanel_help' => 'Hulp bij widgets',
+	'helperPanel_help' => 'Hulpwidget',
 	'helperPanel_widgets' => 'Mijn widgets',
 );
 

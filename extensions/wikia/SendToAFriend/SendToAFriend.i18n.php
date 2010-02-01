@@ -491,6 +491,70 @@ $messages['hu'] = array(
 	'stf_select_friends' => 'Barátok kijelölése:',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'invitespecialpage' => 'Invita amicos a participar in Wikia',
+	'stf_button' => 'Inviar iste articulo a un amico',
+	'stf_after_reg' => 'Invita un amico a participar in Wikia! [[Special:InviteSpecialPage|Clicca hic]].',
+	'stf_subject' => '$2 te ha inviate un articulo de $1!',
+	'stf_confirm' => 'Message inviate! Invitar altere personas?',
+	'stf_error' => 'Error de inviar e-mail.',
+	'stf_error_name' => 'Tu non ha specificate tu nomine.',
+	'stf_error_from' => 'Tu non ha specificate tu adresse de e-mail.',
+	'stf_error_to' => 'Tu non ha specificate le adresse de e-mail de tu amico.',
+	'stf_frm1' => 'Tu adresse de e-mail:',
+	'stf_frm2' => 'Adresses de e-mail (Plus de un? Separa los con commas)',
+	'stf_msg_label' => 'Message a inviar',
+	'stf_name_label' => 'Tu nomine',
+	'stf_email_label' => 'Tu e-mail',
+	'stf_frm3_send' => 'Salute!
+
+$1 pensava que te placerea iste pagina de Wikia!
+
+$2
+
+Veni leger lo!',
+	'stf_frm3_invite' => 'Salute!
+
+Io justo me univa a iste wiki a Wikia... $1
+
+Veni vider lo!',
+	'stf_frm4_send' => 'Inviar',
+	'stf_frm4_cancel' => 'Cancellar',
+	'stf_frm4_invite' => 'Inviar invitation!',
+	'stf_multiemail' => 'Inviar a plus de un destinatario?',
+	'stf_frm5' => '(le URL de iste sito essera adjungite a tu message)',
+	'stf_frm6' => 'Clauder iste fenestra',
+	'stf_throttle' => 'Pro motivos de securitate, tu pote solmente inviar $1 invitationes per die.',
+	'stf_abuse' => 'Iste e-mail ha essite inviate per $1 via Wikia.
+Si tu pensa que isto ha essite inviate in error, per favor face nos lo saper a support@wikia.com.',
+	'stf_ctx_invite' => 'Plus de un? Separa con commas - usque a $1!',
+	'stf_ctx_check' => 'Verificar contactos',
+	'stf_ctx_empty' => 'Tu non ha contactos in iste conto.',
+	'stf_ctx_invalid' => 'Le nomine de usator o le contrasigno que tu entrava es invalide. Per favor reproba.',
+	'stf_sending' => 'Un momento…',
+	'stf_email_sent' => 'Inviar confirmation',
+	'stf_back_to_article' => 'Retornar al articulo',
+	'stf_most_emailed' => 'Le articulos le plus inviate hodie in $1:',
+	'stf_most_popular' => 'Le articulos le plus popular in $1:',
+	'stf_choose_from_existing' => 'Selige de tu contactos existente:',
+	'stf_add_emails' => 'Adder adresses de e-mail:',
+	'stf_your_email' => 'Tu servicio de e-mail',
+	'stf_your_login' => 'Tu nomine de usator',
+	'stf_your_password' => 'Tu contrasigno',
+	'stf_your_name' => 'Tu nomine',
+	'stf_your_address' => 'Tu adresse de e-mail',
+	'stf_your_friends' => 'Le adresses de e-mail|de tu amicos',
+	'stf_we_dont_keep' => 'Nos non retene iste adresse de e-mail e contrasigno',
+	'stf_need_approval' => 'Nulle e-mail es inviate sin tu approbation',
+	'stf_message' => 'Message',
+	'stf_instructions' => '1. Selige amicos.|2. Clicca super "$1"',
+	'stf_select_all' => 'Seliger totes',
+	'stf_select_friends' => 'Selige amicos:',
+);
+
 /** Japanese (日本語)
  * @author Tommy6
  */
@@ -623,6 +687,8 @@ $2
  */
 $messages['nl'] = array(
 	'invitespecialpage' => 'Vrienden uitnodigen naar Wikia te komen',
+	'sendtoafriend-desc' => '[[Special:InviteSpecialPage|Vrienden uitnodigen om bij Wikia te komen]]',
+	'sendtoafriend-button-desc' => 'Geeft een knop "Deze pagina naar een vriend versturen" weer in pagina\'s',
 	'stf_button' => 'Deze pagina naar een vriend versturen',
 	'stf_after_reg' => '[[Special:InviteSpecialPage|Nodig een vriend uit bij Wikia!]]',
 	'stf_subject' => '$2 heeft u een pagina van $1 gestuurd!',
@@ -655,7 +721,7 @@ Ik nodig u van harte uit ook te komen kijken!',
 	'stf_multiemail' => 'Naar meer dan 1 ontvanger verzenden?',
 	'stf_frm5' => 'De URL van deze website wordt toegevoegd aan uw bericht.',
 	'stf_frm6' => 'Venster sluiten',
-	'stf_throttle' => 'Om beveiligingsreden kunt u maar $1 uitnodigingen per dag verzenden.',
+	'stf_throttle' => 'Om beveiligingsreden kunt u maar $1 {{PLURAL:$1|uitnodiging|uitnodigingen}} per dag verzenden.',
 	'stf_abuse' => 'Deze e-mail is verzonden door $1 via Wikia.
 Als u vindt dat deze onterecht is verzonden, laat ons dat dan weten via support@wikia.com.',
 	'stf_ctx_invite' => "Meer dan één?
@@ -862,6 +928,7 @@ Se você acha que essa mensagem foi enviada errada, por favor, nos avise pelo em
  * @author Lockal
  */
 $messages['ru'] = array(
+	'invitespecialpage' => 'Пригласите друзей присоединиться к Викии',
 	'stf_error_name' => 'Вы не указали своё имя.',
 	'stf_error_from' => 'Вы не указали свой email-адрес.',
 	'stf_error_to' => 'Вы не указали email-адрес вашего друга.',
@@ -871,6 +938,8 @@ $messages['ru'] = array(
 	'stf_frm4_send' => 'Отправить',
 	'stf_frm4_cancel' => 'Отменить',
 	'stf_frm4_invite' => 'Отправить приглашение!',
+	'stf_frm6' => 'Закрыть это окно',
+	'stf_sending' => 'Пожалуйста, подождите…',
 	'stf_email_sent' => 'Отправить подтверждение',
 	'stf_back_to_article' => 'Возврат к статье',
 	'stf_message' => 'Сообщение',
