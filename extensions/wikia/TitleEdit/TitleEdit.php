@@ -31,7 +31,7 @@ function wfTitleEditPrintFirstHeading() {
 	$result = '';
 
 	if (is_object($wgUser) && $wgUser->isLoggedIn()) {
-		$link = $sk->link( $wgTitle, wfMsg('titleedit'), // todo is it truly only 'edit' message?
+		$link = $sk->link( $wgTitle, wfMsg('titleedit'),
 			array( 'onclick' => 'WET.byStr("articleAction/topedit")'),
 			array( 'action' => 'edit'),
 			array( 'noclasses', 'known' )
@@ -40,7 +40,7 @@ function wfTitleEditPrintFirstHeading() {
 		$result = "<span class=\"editsection-upper\">$result</span>";
 	} else { // anon
 		if ( empty($wgDisableAnonymousEditig)) {
-			$link = "<a class=\"wikia_button\" onclick=\"WET.byStr('articleAction/topedit')\" href=\"" . $wgTitle->getEditUrl() . "\"><span>" . wfMsg( 'titleedit' ) . "</span></a>";
+			$link = "<a id=\"te-editanon\" class=\"wikia_button\" onclick=\"WET.byStr('articleAction/topedit')\" href=\"" . $wgTitle->getEditUrl() . "\"><span>" . wfMsg( 'titleedit' ) . "</span></a>";
 			$result = "<span class=\"editsection-upper\">$link</span>";
 		}
 	}
