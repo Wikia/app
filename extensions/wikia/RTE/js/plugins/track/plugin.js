@@ -29,6 +29,72 @@ CKEDITOR.plugins.add('rte-track',
 		$('#wpSave').click(function() {
 			self.trackBrowser('save');
 		});
+
+		// toolbar tracking
+
+		// tracking for CK toolbar buttons
+		editor.on('buttonClick', function(ev) {
+			var buttonClicked = ev.data.button;
+			//RTE.log(buttonClicked);
+
+			RTE.track('toolbar', buttonClicked.command);
+		});
+
+		// tracking for CK toolbar rich combos (dropdowns)
+		editor.on('panelShow', function(ev) {
+			var me = ev.data.me;
+			//RTE.log(me);
+
+			var id = me.className.split('_').pop();
+
+			// track combo panel open
+			RTE.track('toolbar', id + 'Menu', 'open');
+		});
+		editor.on('panelClick', function(ev) {
+			var me = ev.data.me;
+			var value = ev.data.value;
+			//RTE.log([me, value]);
+
+			var id = me.className.split('_').pop();
+
+			// for templates dropdown
+			if (id == 'template') {
+				if (value == '--other--') {
+					value = 'other';
+				}
+				else {
+					var panelItems = me._.items;
+					var idx = 0;
+
+					// iterate thru panel items and find index chosen template
+					for (tpl in panelItems) {
+						idx++;
+						if (tpl == value) {
+							value = idx;
+							break;
+						}
+					}
+				}
+			}
+
+			// track combo panel open
+			RTE.track('toolbar', id + 'Menu', value);
+		});
+
+		// tracking for MW toolbar buttons
+		editor.on('instanceReady', function() {
+			$('#mw-toolbar').bind('click', function(ev) {
+				var target = $(ev.target).filter('img');
+				//RTE.log(target);
+
+				if (!target.exists()) {
+					return;
+				}
+
+				var id = target.attr('id').split('-').pop();
+				RTE.track('source', id);
+			});
+		});
 	},
 
 	trackApplyStyle: function(ev) {
@@ -107,8 +173,9 @@ CKEDITOR.plugins.add('rte-track',
 
 		if (name == 'gecko') {
 			// small version fix for Gecko browsers
-			// 10900 => 1.9.0
-			var version = Math.round(env.version / 10000) + '.' + (env.version / 100 % 100) + '.' + (env.version % 100);
+			// 10900 => 1.9.0 (3.0.x line)
+			// 10902 => 1.9.2 (3.6.x line)
+			var version = parseInt(env.version / 10000) + '.' + parseInt(env.version / 100 % 100) + '.' + (env.version % 100);
 		}
 		else {
 			var version = env.version;

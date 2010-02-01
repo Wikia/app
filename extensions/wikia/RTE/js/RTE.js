@@ -13,7 +13,7 @@ window.RTE = {
 		'format_tags': 'p;h2;h3;h4;h5;pre',
 		'height': 400,
 		'language': window.wgUserLanguage,
-		'removePlugins': 'about,elementspath,filebrowser,flash,forms,horizontalrule,image,justify,link,maximize,newpage,pagebreak,save,scayt,wsc',
+		'removePlugins': 'about,elementspath,filebrowser,flash,forms,horizontalrule,image,justify,link,maximize,newpage,pagebreak,save,scayt,smiley,wsc,toolbar',
 		'resize_enabled': false,
 		'skin': 'wikia',
 		'startupFocus': true,
@@ -55,7 +55,8 @@ window.RTE = {
 		'toolbar',
 		'tools',
 		'track',
-		'widescreen'
+		'widescreen',
+		'toolbar'
 	],
 
 	// use firebug / opera console to log events / dump objects
@@ -113,11 +114,8 @@ window.RTE = {
 		RTE.repositionRTEStuff();
 		$(window).bind('resize', RTE.repositionRTEStuff);
 
-		// make textarea wysiwygable
-		CKEDITOR.replace('wpTextbox1', RTE.config);
-
-		// set editor instance
-		RTE.instance = CKEDITOR.instances.wpTextbox1;
+		// make textarea wysiwygable and store editor instance object
+		RTE.instance = CKEDITOR.replace('wpTextbox1', RTE.config);
 
 		// load CSS files
 		RTE.loadCss();
@@ -365,18 +363,34 @@ CKEDITOR.config.baseColor = '#000';
 // Wikia toolbar
 CKEDITOR.config.toolbar_Wikia =
 [
-	['Bold','Italic','Underline','Strike', 'Format'],
-	['Outdent','Indent'],
-	['JustifyLeft','JustifyCenter','JustifyRight'],
-	['BulletedList','NumberedList'],
-	['Link','Unlink'],
-	['Image','Video'],
-	['Table'],
-	['Signature'],
-	['Template'],
-	['Undo','Redo'],
-	['Widescreen'],
-	['Source']
+	{
+		msg: 'textAppearance',
+		groups: [
+			['Format'],
+			['Bold','Italic','Underline','Strike'],
+			['BulletedList','NumberedList'],
+			['Link','Unlink'],
+			['Outdent','Indent'],
+			['JustifyLeft','JustifyCenter','JustifyRight']
+		]
+	},
+	{
+		msg: 'insert',
+		groups: [
+			['Image', 'Video'],
+			['Table'],
+			['Template'],
+			['Signature']
+		]
+	},
+	{
+		msg: 'controls',
+		groups: [
+			['Undo','Redo'],
+			['Widescreen'],
+			['Source']
+		]
+	}
 ];
 
 //
@@ -453,6 +467,30 @@ CKEDITOR.editor.prototype.forceSetMode = function(mode, data) {
 	// set correct body class
 	$('body').removeClass('rte_wysiwyg rte_source').addClass('rte_' + mode);
 }
+
+// modify parent node of button
+CKEDITOR.dom.element.prototype.setState = function( state ) {
+	var node = this.getParent();
+
+	switch ( state )
+	{
+		case CKEDITOR.TRISTATE_ON :
+			node.addClass( 'cke_on' );
+			node.removeClass( 'cke_off' );
+			node.removeClass( 'cke_disabled' );
+			break;
+		case CKEDITOR.TRISTATE_DISABLED :
+			node.addClass( 'cke_disabled' );
+			node.removeClass( 'cke_off' );
+			node.removeClass( 'cke_on' );
+			break;
+		default :
+			node.addClass( 'cke_off' );
+			node.removeClass( 'cke_on' );
+			node.removeClass( 'cke_disabled' );
+			break;
+	}
+};
 
 //
 // extend jQuery

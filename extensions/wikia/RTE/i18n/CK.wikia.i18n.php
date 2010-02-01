@@ -9,6 +9,9 @@
 
 $messages = array();
 $messages['en'] = array(
+	'rte-ck-bucket-textAppearance' => 'Text appearance',
+	'rte-ck-bucket-insert' => 'Insert',
+	'rte-ck-bucket-controls' => 'Controls',
 	'rte-ck-commentEditor-title' => 'Comment editor',
 	'rte-ck-errorPopupTitle' => 'Error!',
 	'rte-ck-hoverPreview-codedElement-intro' => 'Please switch to source mode to edit!',
@@ -43,6 +46,7 @@ $messages['en'] = array(
 	'rte-ck-modeSwitch-toSource' => 'Switch to source mode',
 	'rte-ck-modeSwitch-toWysiwyg' => 'Switch to wysiwyg mode',
 	'rte-ck-signature-add' => 'Add your signature',
+	'rte-ck-signature-label' => 'Signature',
 	'rte-ck-table-alignNotSet' => 'Not set',
 	'rte-ck-table-invalidCols' => 'The number of columns must be a number greater than 0.',
 	'rte-ck-table-invalidRows' => 'The number of rows must be a number greater than 0.',

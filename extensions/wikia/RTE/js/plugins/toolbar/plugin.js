@@ -1,9 +1,106 @@
 CKEDITOR.plugins.add('rte-toolbar',
 {
 	editorContainer: false,
+	updateToolbarLock: false,
 
 	init: function(editor) {
 		var self = this;
+
+		editor.on( 'themeSpace', function( event ) {
+			if ( event.data.space == 'top')
+			{
+				var config = editor.config['toolbar_' + editor.config.toolbar];
+				var messages = RTE.instance.lang.bucket;
+
+				var output = [ '<table id="cke_toolbar"><tr>' ];
+
+				for(var b = 0; b < config.length; b++)
+				{
+					var bucket = config[b];
+					output.push( '<td><span class="headline color1">' + messages[bucket.msg] + '</span>' );
+					output.push( '<div class="bucket_buttons color1"><div class="color1">' );
+					for(var g = 0; g < bucket.groups.length; g++)
+					{
+						output.push( '<span class="cke_buttons_group">' );
+
+						var items = bucket.groups[g];
+						var itemsCount = items.length;
+
+						for(var i = 0; i < itemsCount; i++) {
+							var itemName = items[i];
+							var item = editor.ui.create(itemName);
+							if(item)
+							{
+								// add extra CSS classes for button wrapping <span>
+								item.wrapperClassName = '';
+
+								// first / last item
+								if (i == 0) {
+									item.wrapperClassName += 'cke_button_first ';
+								}
+
+								if (i == itemsCount - 1) {
+									item.wrapperClassName += 'cke_button_last ';
+								}
+
+								// state classes: cke_on/cke_off/cke_disabled
+								var itemObj = item.render(editor, output);
+							}
+						}
+
+						output.push( '</span>' );
+					}
+					output.push( '</div></div><span class="tagline color1"></span></td>' );
+				}
+
+				output.push( '</tr></table>' );
+
+				// add placeholder for source mode toolbar
+				output.push('<div id="mw-toolbar"></div>');
+
+				// add toolbar covering div - will be used during loading state
+				output.push('<div id="cke_toolbar_cover" class="color1" />');
+
+				event.data.html += output.join( '' );
+			}
+		});
+
+		editor.on('instanceReady', function() {
+			var toolbar = $('#cke_toolbar');
+
+			// setup toolbar
+			RTE.tools.getThemeColors();
+
+			toolbar.find('.color1').css({
+				backgroundColor: RTE.config.baseBackgroundColor,
+				color: RTE.config.baseColor
+			});
+
+			// mark row wrapping toolbar
+			toolbar.parent().parent().attr('id', 'cke_toolbar_row');
+
+			// do calculation on each window resize / widescreen mode toggle
+			$(window).resize(function() {
+				self.updateToolbar.apply(self);
+			});
+			editor.on('widescreen', function () {
+				self.updateToolbar.apply(self);
+			});
+
+			// and on init
+			self.updateToolbar();
+
+			// setup bucket show/hide animation
+			toolbar.find('td').hover(function() {
+				self.showBucket.apply(this);
+			}, function() {
+				self.hideBucket.apply(this);
+
+				setTimeout(function() {
+					self.updateToolbar.apply(self);
+				}, 10);
+			});
+		});
 
 		editor.on('instanceReady', function() {
 			// try to set toolbar colors (fix for preview in Chrome)
@@ -16,18 +113,11 @@ CKEDITOR.plugins.add('rte-toolbar',
 				color: RTE.config.baseColor
 			});
 
-			// find source button and mark it with ID
-			var toolbar = toolbarWrapper.children('div').eq(0);
-			var sourceButton = toolbar.find('.cke_button_source').parent().parent().parent();
 
-			sourceButton.attr('id', 'cke_source_button');
-
-			// show toolbar - CK is fully loaded now
-			toolbar.css('visibility', 'visible');
+			var toolbar = $('#cke_toolbar');
 
 			// render new MW toolbar inside CK
-			var MWtoolbar = $('<div id="mw-toolbar">');
-			toolbar.append(MWtoolbar);
+			var MWtoolbar = $('#mw-toolbar');
 
 			// add buttons
 			for (var i = 0; i < mwEditButtons.length; i++) {
@@ -41,76 +131,11 @@ CKEDITOR.plugins.add('rte-toolbar',
 			// toolbar is ready!
 			editor.fire('toolbarReady', toolbar);
 
-			// add toolbar covering div - will be used during loading state
-			toolbar.append('<div id="toolbarCover" class="color1" />');
-
 			// remove MW toolbar (rendered by MW core)
 			$('#toolbar').remove();
 
 			// reference to editor container (wrapping element for iframe / textarea)
 			self.editorContainer = $(RTE.instance.container.$).find('.cke_contents');
-
-			// tracking for CK toolbar buttons
-			editor.on('buttonClick', function(ev) {
-				var buttonClicked = ev.data.button;
-				//RTE.log(buttonClicked);
-
-				RTE.track('toolbar', buttonClicked.command);
-			});
-
-			// tracking for CK toolbar rich combos (dropdowns)
-			editor.on('panelShow', function(ev) {
-				var me = ev.data.me;
-				//RTE.log(me);
-
-				var id = me.className.split('_').pop();
-
-				// track combo panel open
-				RTE.track('toolbar', id + 'Menu', 'open');
-			});
-			editor.on('panelClick', function(ev) {
-				var me = ev.data.me;
-				var value = ev.data.value;
-				//RTE.log([me, value]);
-
-				var id = me.className.split('_').pop();
-
-				// for templates dropdown
-				if (id == 'template') {
-					if (value == '--other--') {
-						value = 'other';
-					}
-					else {
-						var panelItems = me._.items;
-						var idx = 0;
-
-						// iterate thru panel items and find index chosen template
-						for (tpl in panelItems) {
-							idx++;
-							if (tpl == value) {
-								value = idx;
-								break;
-							}
-						}
-					}
-				}
-
-				// track combo panel open
-				RTE.track('toolbar', id + 'Menu', value);
-			});
-
-			// tracking for MW toolbar buttons
-			MWtoolbar.bind('click', function(ev) {
-				var target = $(ev.target).filter('img');
-				//RTE.log(target);
-
-				if (!target.exists()) {
-					return;
-				}
-
-				var id = target.attr('id').split('-').pop();
-				RTE.track('source', id);
-			});
 		});
 
 		// override insertTags function, so it works in CK source mode
@@ -186,5 +211,129 @@ CKEDITOR.plugins.add('rte-toolbar',
 				}
 			}
 		};
+	},
+
+	updateToolbar: function() {
+		var self = this;
+		var lockTimeout = 250;
+
+		// check lock
+		if (this.updateToolbarLock) {
+			// try to run it later
+			setTimeout(function() {
+				self.updateToolbar.apply(self);
+			}, lockTimeout + 50);
+			return;
+		}
+
+		this.updateToolbarLock = true;
+
+		//check each bucket for hidden buttons
+		var anyhidden = false;
+		$('#cke_toolbar').find('td').each(function() {
+			var hidden = 0;
+			var cell = $(this);
+
+			 // check if we need to run this check at all
+			var bucket = cell.children('.bucket_buttons').children('div');
+
+			if (parseInt(bucket.height()) > 60) {
+				var groups = bucket.children('.cke_buttons_group');
+
+				//where is the first row of buttons?
+				var baseline = Math.floor(bucket.offset().top);
+
+				// starting from the last buttons group
+				// loop until first shown group is found
+				groups.reverse().each(function() {
+					// this group is visible - break the loop
+					var nodeTop = Math.floor($(this).offset().top);
+					if(nodeTop < baseline + 30) {
+						return false;
+					}
+
+					hidden += $(this).children().length;
+					anyhidden = true;
+				});
+			}
+
+			//are there any hidden buttons?
+			if (hidden > 0) {
+				cell.find(".tagline").html(hidden + ' ' + RTE.messages.more);
+				cell.addClass('more');
+			} else {
+				cell.find(".tagline").html("");
+				cell.removeClass('more');
+			}
+		});
+		if (anyhidden) {
+			$('#cke_toolbar').addClass('more');
+		} else {
+			$('#cke_toolbar').removeClass('more');
+		}
+
+		// resize #toolbarWrapper and store height of each bucket (when expanded)
+		var wrapperHeight = 200;
+
+		$('#cke_toolbar').find('td').each(function() {
+			var cell = $(this);
+
+			// calculate height of each bucket (when collapsed)
+			var bucketHeight = 0;
+			cell.children().each(function() {
+				bucketHeight += $(this).height();
+			});
+
+			// choose the smallest one
+			wrapperHeight = Math.min(wrapperHeight, bucketHeight);
+
+			// store height of expanded bucket
+			var bucket = cell.children('.bucket_buttons');
+			bucket.attr('_height_expanded', bucket.children('div').height());
+		});
+
+		// set height of table row with toolbar
+		if (CKEDITOR.env.ie) {
+			// set height of <tr>
+			var toolbarWrapper = $('#cke_top_wpTextbox1').parent();
+		}
+		else {
+			// set height of <td>
+			var toolbarWrapper = $('#cke_top_wpTextbox1');
+		}
+
+		toolbarWrapper.height(wrapperHeight);
+
+		// toolbar height might have changed - reposition #RTEStuff
+		RTE.repositionRTEStuff();
+
+		// resize toolbar cover
+		$('#cke_toolbar_cover').height(wrapperHeight);
+
+		// remove lock after 500 ms, so next updateToolbar() can be executed
+		setTimeout(function() {
+			self.updateToolbarLock = false;
+		}, lockTimeout);
+	},
+
+	showBucket: function() {
+		var wrapper = $(this).find('.bucket_buttons');
+		var buttons = wrapper.children('div');
+
+		buttons.css('height', 'auto');
+
+		// mark expanded bucket (<td>)
+		wrapper.parent().addClass('bucket_expanded');
+	},
+
+	hideBucket: function() {
+		var wrapper = $(this).find('.bucket_buttons');
+		var buttons = wrapper.children('div');
+
+		// unmark expanded bucket (<td>)
+		wrapper.parent().removeClass('bucket_expanded');
+
+		// cleanup
+		buttons.css('height', 'auto');
 	}
 });

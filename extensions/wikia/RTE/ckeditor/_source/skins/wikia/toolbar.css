@@ -128,17 +128,18 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 .cke_skin_wikia .cke_button a.cke_off
 {
 	border-radius: 3px;
+	background-color: transparent;
+	cursor: default;
+	display: inline-block;
+	height: 20px;
 	outline: none;
 	padding: 2px 4px;
-	height: 18px;
-	display: inline-block;
-	cursor: default;
 }
 
 .cke_skin_wikia .cke_button a,
 .cke_skin_wikia .cke_button a.cke_off
 {
-	filter: alpha(opacity=70); /* IE */
+/*	filter: alpha(opacity=70); /* IE */
 	opacity: 0.70; /* Safari, Opera and Mozilla */
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
@@ -148,14 +149,13 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 .cke_skin_wikia .cke_hc .cke_button a.cke_off
 {
 	opacity: 1.0;
-	filter: alpha(opacity=100);
+/*	filter: alpha(opacity=100);*/
 	border: 1px solid white;
 }
 
 .cke_skin_wikia .cke_button a.cke_on
 {
-	background-color: #a3d7ff;
-	filter: alpha(opacity=100); /* IE */
+/*	filter: alpha(opacity=100); /* IE */
 	opacity: 1; /* Safari, Opera and Mozilla */
 	padding: 2px 4px;
 }
@@ -164,13 +164,6 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 {
 	padding: 0 2px !important;
 	border-width: 3px;
-}
-
-.cke_skin_wikia .cke_button a.cke_disabled,
-.cke_skin_wikia .cke_browser_ie a:hover.cke_button .cke_disabled
-{
-	filter: alpha(opacity=30); /* IE */
-	opacity: 0.3; /* Safari, Opera and Mozilla */
 }
 
 .cke_skin_wikia .cke_hc .cke_button a.cke_disabled,
@@ -187,7 +180,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 .cke_skin_wikia .cke_button a:focus.cke_off,
 .cke_skin_wikia .cke_button a:active.cke_off	/* IE */
 {
-	filter: alpha(opacity=100); /* IE */
+/*	filter: alpha(opacity=100); /* IE */
 	opacity: 1; /* Safari, Opera and Mozilla */
 	padding: 2px 4px;
 }
@@ -196,14 +189,14 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 .cke_skin_wikia .cke_button a:focus.cke_on,
 .cke_skin_wikia .cke_button a:active.cke_on	/* IE */
 {
-	background-color: #86caff;
+	/*background-color: #86caff;*/
 }
 
 .cke_skin_wikia .cke_button a:hover.cke_off,
 .cke_skin_wikia .cke_button a:focus.cke_off,
 .cke_skin_wikia .cke_button a:active.cke_off	/* IE */
 {
-	background-color: #dff1ff;
+	/*background-color: #dff1ff;*/
 }
 
 .cke_skin_wikia .cke_hc .cke_button a:hover.cke_on,
@@ -212,17 +205,17 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 .cke_skin_wikia .cke_hc .cke_button a:hover.cke_off,
 .cke_skin_wikia .cke_hc .cke_button a:focus.cke_off,
 .cke_skin_wikia .cke_hc .cke_button a:active.cke_off	/* IE */
-{
+{/*
 	padding: 0 2px !important;
 	border-width: 3px;
-}
+*/}
 
 .cke_skin_wikia .cke_button .cke_icon
 {
 	background-image: url(icons.png);
 	background-position: 100px;
 	background-repeat: no-repeat;
-	margin-top: 1px;
+	margin-top: 2px;
 	width: 16px;
 	height: 16px;
 	display: inline-block;
@@ -395,3 +388,282 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	height: 37px !important;
 }
 /* END IE8 strict button valign correction */
+
+
+/* Wikia modifications */
+#cke_top_wpTextbox1 {
+	height: 51px;
+	position: relative;
+}
+
+#cke_toolbar {
+	border-collapse: collapse;
+	position: absolute;
+	width: 100%;
+}
+
+#cke_toolbar td {
+	padding: 0;
+	text-align: center;
+	vertical-align: top;
+}
+
+#cke_toolbar td + td { /* Add borders only to tds that follow tds */
+	border-left: 1px solid #FFF;
+}
+
+/* buttons bucket */
+#cke_toolbar .headline {
+	display: block;
+	font-size: 12px;
+	padding: 0;
+}
+
+#cke_toolbar .bucket_buttons {
+	height: auto !important;
+	max-height: 56px;
+	overflow: hidden;
+}
+
+#cke_toolbar .bucket_buttons * {
+	white-space: normal;
+}
+
+/* "x more..." */
+#cke_toolbar .tagline {
+	display: block;
+	font-size: 11px;
+	min-height: 2px;
+}
+
+#cke_toolbar.more .tagline {
+	height: 20px;
+	text-transform: lowercase;
+}
+
+/* expanded bucket */
+#cke_toolbar .bucket_expanded .bucket_buttons {
+	max-height: 200px;
+}
+
+#cke_toolbar .bucket_expanded .tagline {
+	/* hide tagline when bucket is expanded */
+	display: none;
+}
+
+/* button groups */
+#cke_toolbar .cke_buttons_group,
+#cke_toolbar .cke_button {
+	display: inline-block; /* doesn't work in IE7 */
+	height: 24px;
+	vertical-align: top; /* Opera fix */
+}
+
+#cke_toolbar .cke_buttons_group {
+	border: 1px solid #000;
+	margin: 1px 3px 1px 2px;
+	white-space: nowrap;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+/* button */
+#cke_toolbar .cke_button {
+	background: #fff url(images/sprites.png);
+	background-position: 0 -2000px;
+	color: #333;
+}
+
+.cke_skin_wikia .cke_button .cke_label {
+	font-size: 10px;
+	padding-top: 1px;
+	vertical-align: baseline;
+	white-space: nowrap !important;
+}
+
+/* drop-down menu */
+#cke_toolbar .cke_buttons_group .cke_rcombo {
+	display: inline-block;
+	height: 24px;
+}
+
+#cke_toolbar .cke_buttons_group .cke_rcombo a {
+	background: #fff url(images/sprites.png);
+	background-position: 0 -2000px;
+	color: #333;
+}
+
+.cke_skin_wikia .cke_rcombo .cke_text {
+	color: #333;
+	font-size: 11px;
+	font-weight: bold;
+	padding: 0 2px;
+}
+.cke_skin_wikia .cke_buttons_group .cke_rcombo a,
+.cke_skin_wikia .cke_buttons_group .cke_rcombo a:active,
+.cke_skin_wikia .cke_buttons_group .cke_rcombo a:hover {
+	border: none;
+	height: 20px;
+	margin: 0;
+}
+
+.cke_skin_wikia .cke_buttons_group .cke_rcombo .cke_text {
+	color: #333;
+	font-weight: normal;
+	height: auto;
+	line-height: auto;
+	margin: -1px 0 0;
+	text-align: left;
+	white-space: nowrap !important;
+	width: 66px;
+}
+
+.cke_skin_wikia .cke_buttons_group .cke_rcombo .cke_openbutton {
+	background-position: 0 -67px;
+	height: 16px;
+	margin: 2px;
+	width: 15px;
+}
+
+/* button groups */
+#cke_toolbar .cke_button + .cke_button { /* Add borders only to buttons that follow buttons */
+	border-left: 1px dotted #A2A2A2;
+}
+
+#cke_toolbar .cke_button_first {
+	-moz-border-radius-topleft: 4px;
+	-moz-border-radius-bottomleft: 4px;
+	-webkit-border-top-left-radius: 4px;
+	-webkit-border-bottom-left-radius: 4px;
+}
+#cke_toolbar .cke_button_last {
+	-moz-border-radius-topright: 4px;
+	-moz-border-radius-bottomright: 4px;
+	-webkit-border-top-right-radius: 4px;
+	-webkit-border-bottom-right-radius: 4px;
+}
+
+.bucket_controls { /* All controls are always visible */
+	white-space: nowrap;
+}
+
+/* Toolbar item states */
+#cke_toolbar .cke_button:hover,
+#cke_toolbar .cke_buttons_group .cke_rcombo a:hover {
+	background-position: 0 -2029px;
+}
+
+#cke_toolbar .cke_button.cke_disabled:hover {
+	background-position: 0 -2000px;
+}
+
+#cke_toolbar .cke_button.cke_on,
+#cke_toolbar .cke_rcombo.cke_on a,
+#cke_toolbar .cke_rcombo.cke_on:hover a{
+	background-position: 0 -2024px;
+}
+
+#cke_toolbar span.cke_disabled .cke_icon,
+#cke_toolbar span.cke_disabled .cke_label {
+	filter: alpha(opacity=50); /* IE */
+	opacity: 0.5;
+}
+
+/* Show label for "Signature" button */
+.cke_skin_wikia .RTESignatureButton .cke_label {
+	display: inline;
+}
+
+/* IE7 */
+.cke_skin_wikia .cke_browser_ie7 .cke_buttons_group .cke_rcombo .cke_text {
+	position: relative;
+	top: -4px;
+}
+
+.cke_skin_wikia .cke_browser_ie7 #cke_toolbar .tagline {
+	height: 2px;
+	line-height: 13px !important;
+}
+.cke_skin_wikia .cke_browser_ie7 #cke_toolbar.more .tagline {
+	height: auto;
+}
+
+.cke_skin_wikia .cke_browser_ie7 #cke_toolbar .more.bucket_expanded .tagline {
+	display: block;
+	height: 0px;
+}
+
+/* IE7 - fix disappearing toolbar bug */
+.cke_skin_wikia .cke_browser_ie7 .cke_editor {
+	position: relative;
+}
+
+.cke_skin_wikia .cke_browser_ie7 #cke_toolbar {
+	left: 0;
+	top: 0;
+}
+
+/* Opera */
+.cke_skin_wikia .cke_browser_opera #cke_toolbar .more.bucket_expanded .tagline {
+	display: block;
+	height: 0px;
+}
+
+/* Source mode */
+.rte_source #cke_top_wpTextbox1 {
+	height: 45px !important;
+}
+
+.rte_source #cke_toolbar {
+	visibility: hidden;
+}
+
+.rte_source span.cke_button_source {
+	border: solid 1px #000;
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	visibility: visible;
+	z-index: 50;
+}
+
+/* MW toolbar */
+#editform #mw-toolbar {
+	display: block !important;
+	left: 12px;
+	position: absolute;
+	top: 12px;
+	visibility: hidden;
+}
+
+.rte_source #editform #mw-toolbar {
+	visibility: visible;
+}
+
+/* hide toolbars during mode switches */
+#cke_toolbar_cover {
+	display: none;
+	left: 0;
+	opacity: 0.25;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	z-index: 2000;
+}
+
+.rte_source #cke_toolbar_cover {
+	height: 45px !important;
+}
+
+/* remove white borders between buckets in source mode */
+.rte_source .cke_browser_ie7 #cke_toolbar td {
+	border: none;
+}
+
+.rte_source .cke_browser_ie #cke_toolbar_row {
+	height: 45px !important;
+}
+
+.RTEloading #cke_toolbar_cover {
+	display: block;
+}

@@ -676,6 +676,7 @@ HTML
 
 		$ret = array(
 			'ellipsis' => wfMsg('ellipsis'),
+			'more' => wfMsg('moredotdotdot'),
 			'template' => $wgLang->getNsText(NS_TEMPLATE), # localised template namespace name (RT #3808)
 
 			// RT #36073

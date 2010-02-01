@@ -59,11 +59,15 @@ class RTEReverseParser {
 				// replace HTML entities markers with entities (\x7f-ENTITY-lt-\x7f -> &lt;)
 				$out = preg_replace('%\x7f-ENTITY-(#?[\w\d]+)-\x7f%', '&\1;', $out);
 
+				//RTE::hex(__METHOD__, $html); RTE::hex(__METHOD__, $out);  // debug
+
 				// fix &nbsp; entity added by MW parser (&gt; : &#58;)
 				// don't break UTF characters (à - \xC3\xA0 / 誠 - \xE8\xAA / ム - \xE3\x83)
 				$out = preg_replace('%([^\xC0-\xFF][\x00-\xAF])\xA0%', '\1 ', $out);
+				// RT #38595
+				$out = preg_replace('%(\x20[\x00-\xAF])\xA0%', '\1 ', $out);
 
-				//RTE::hex(__METHOD__, $html); RTE::hex(__METHOD__, $out); // debug
+				//RTE::hex(__METHOD__, $out); // debug
 
 				// fix &nbsp; entity when switching from wysiwyg (<p>a[spacex3]b</p>)
 				$out = str_replace("\x20\xA0", '  ', $out);
@@ -292,6 +296,11 @@ class RTEReverseParser {
 			// images
 			case 'img':
 				$out = $this->handleImage($node, $textContent);
+				break;
+
+			// try to fix RT #38262
+			case 'script':
+				$out = '';
 				break;
 
 			// rest of tags
