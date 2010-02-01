@@ -18,7 +18,8 @@ class CorporatePageHelper{
 					'corporatepage-footer-rightcolumn',
 					'corporatepage-footer-bottom',
 					'corporatepage-footer-leftcolumn',
-					'corporatepage-sidebar');
+					'corporatepage-sidebar',
+					'corporatepage-wikia-whats-up' );
 			
 		$title = strtolower($title)."/";
 		$titleArray = explode("/", $title); 
