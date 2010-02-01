@@ -21,10 +21,12 @@ class NewWikiBuilder extends UnlistedSpecialPage {
 		// Set up the messages variable for other languages
 		// Don't bother with user language here and just go with content language
 		$this->lang = $wgLanguageCode;
-		foreach($NWBmessages["en"] as $name => $value) {
+		if (isset($NWBmessages["en"])){ 
+	 	  foreach($NWBmessages["en"] as $name => $value) {
 			// wfMsgForContent is used here to take into account the messaging.wikia layer
 			$NWBmessages[$this->lang][$name] = wfMsgForContent($name);
-		}
+		  }
+	        }
 
 		$this->setHeaders();
  
@@ -33,7 +35,14 @@ class NewWikiBuilder extends UnlistedSpecialPage {
 	
 		// Put the html in a separate file 
 		ob_start();
-		include dirname(__FILE__) . '/NewWikiBuilder.html.php';
+		switch (@$_GET['nwbType']){
+		  case 'answers':  
+		     include dirname(__FILE__) . '/NewWikiBuilder.answers.html.php';
+		     break;
+                  default: 
+		     include dirname(__FILE__) . '/NewWikiBuilder.html.php';
+		}
+		
  
 		// Output
 		$wgOut->addHTML( ob_get_clean() );
