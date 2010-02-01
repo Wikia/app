@@ -117,9 +117,9 @@ class CorporateHomeTemplate extends CorporateBaseTemplate {
 					<section id="wikia-global-stats">
 						<h1 id="wikia-wide-stats-headline"><?php print wfMsg('corporatepage-wikia-wide-stats-headline'); ?></h1>
 						<ul>
-							<li id="wikia-global-stats-0"><span><?php echo HomePageStatistic::getPagesAddedInLastHour() ?></span><?php print wfMsg('corporatepage-pages-added'); ?></li>
-							<li id="wikia-global-stats-1"><span><?php echo HomePageStatistic::getEditsThisDay(); ?></span><?php print wfMsg('corporatepage-edits-made'); ?></li>
-							<li id="wikia-global-stats-2"><span><?php echo HomePageStatistic::getWordsAddedLastWeek(); ?></span><?php print wfMsg('corporatepage-words-added'); ?></li>
+							<li id="wikia-global-stats-0"><span><?php echo HomePageStatistic::getPagesAddedInLastHour() ?></span> <?php print wfMsg('corporatepage-pages-added'); ?></li>
+							<li id="wikia-global-stats-1"><span><?php echo HomePageStatistic::getEditsThisDay(); ?></span> <?php print wfMsg('corporatepage-edits-made'); ?></li>
+							<li id="wikia-global-stats-2"><span><?php echo HomePageStatistic::getWordsAddedLastWeek(); ?></span> <?php print wfMsg('corporatepage-words-added'); ?></li>
 						</ul>
 						<p><?php echo wfMsg('corporatepage-update-fqr'); ?></p>
 					</section><!-- END #wikia-global-stats -->
