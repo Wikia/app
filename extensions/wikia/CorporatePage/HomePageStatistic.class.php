@@ -11,6 +11,7 @@ class HomePageStatistic
 	}
 	
 	public static function getWordsAddedLastWeek(){
+		global $wgMemc;
 		$key = wfMemcKey( "hp_stats", "words_added_week" );
 		$result = $wgMemc->get( $key, null);
 
