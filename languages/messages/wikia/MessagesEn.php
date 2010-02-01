@@ -31,7 +31,7 @@ $messages = array_merge( $messages , array(
 'corporatepage-slider' => "*http://percyjackson.wikia.com/|Percy Jackson Wiki|Half-god, half-teen... all hero!|File:Homepage.feature.0.jpg|File:Homepage.feature.thumb.0.jpg
 *http://recipes.wikia.com/|Recipes Wiki|Find your favorite recipe! From sweet treats to three course meals, Recipes Wiki has it all.|File:Homepage.feature.1.jpg|File:Homepage.feature.thumb.1.jpg
 *http://godofwar.wikia.com/|God of War Wiki|This is Spaaarta. Blades of Chaos... need we say more?|File:Homepage.feature.2.jpg|File:Homepage.feature.thumb.2.jpg
-*http://answers.wikia.com/|Wikianswers|Show what you know and help answer the world's questions|File:Homepage.feature.3.jpg|File:Homepage.feature.thumb.3.jpg",
+*http://answers.wikia.com/wiki/Who_is_the_world%27s_richest_woman|Wikianswers|Show what you know and help answer the world's questions|File:Homepage.feature.3.jpg|File:Homepage.feature.thumb.3.jpg",
 'corporatepage-footer-middlecolumn' => '* http://www.facebook.com/pages/Wikia/5678222299|Become a Facebook fan|File:Icon.footer.facebook.32x32.png|new-window
 * http://twitter.com/wikia|Follow us on Twitter|File:Icon.footer.twitter.32x32.png|new-window
 * http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog|Read our blog|File:Icon.footer.wikia.32x32.png',
@@ -76,9 +76,8 @@ $messages = array_merge( $messages , array(
 'corporatepage-watchlist' => 'Watchlist', 
 'corporatepage-homepage-feature-headline' => 'Featured at Wikia',
 'corporatepage-homepageintro' => '<div><h1>Welcome to Wikia</h1>
-<h2>Find and collaborate with people who love what you love.</h2></div>
-<h2>Get involved today!</h2>
-<p>Create your own wiki and find a community of people who all love what you love.</p>',
+<h2>Collaborate with people who love what you love.</h2></div>
+<h2>Get started today!</h2>',
 'corporatepage-search-title' => 'Enter search terms to search for wikis.',
 'corporatepage-featured-wikis-headline' => 'Featured Wikis',
 'corporatepage-wikia-overview-headline' => 'Wikia Overview',
@@ -86,7 +85,7 @@ $messages = array_merge( $messages , array(
 'corporatepage-company-info-headline' => 'Company Information',
 'corporatepage-pages-added' => 'pages created the last hour',
 'corporatepage-edits-made' => 'edits made today',
-'corporatepage-words-added' => 'words added in the the last weekn',
+'corporatepage-words-added' => 'words added in the last week',
 # Default for monaco skin
 'monaco_skins' => 'Monaco',
 'monaco-sapphire' => 'Sapphire',
