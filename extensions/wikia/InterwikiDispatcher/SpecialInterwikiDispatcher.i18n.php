@@ -13,14 +13,15 @@
 $messages = array();
 
 $messages['en'] = array(
-	'interwikidispatcher'	=> 'InterwikiDispatcher',	//the name displayed on Special:SpecialPages
+	'interwikidispatcher' => 'Interwiki dispatcher', //the name displayed on Special:SpecialPages
+	'interwikidispatcher-desc' => 'Solves interwiki links to reduce Apache redirects',
 );
 
 /** Message documentation (Message documentation)
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'interwikidispatcher' => 'Special page name as displayed on Special:SpecialPages and page title of special page. Should be "Interwiki dispatcher"',
+	'interwikidispatcher' => 'Special page name as displayed on Special:SpecialPages and page title of special page.',
 );
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
