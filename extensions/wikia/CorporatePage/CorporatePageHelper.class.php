@@ -9,13 +9,25 @@ class CorporatePageHelper{
 	/*
 	* Author: Tomek Odrobny
 	* Hook for clear parsed message cache
-	*
+	*/
 	 	static function clearMessageCache($title, $text){
-		global $CorporatePageMessageList,$wgMemc;
-		$title = strtolower($title);
-		if (in_array($title,$CorporatePageMessageList)){
-			$wgMemc->delete(wfMemcKey( "hp_msg_parser", $title ));
-			$pageList = $wgMemc->get(wfMemcKey( "hp_page_list"),null);
+		global $wgMemc,$wgLang;
+		$CorporatePageMessageList = 
+			array(	'corporatepage-footer-middlecolumn',
+					'corporatepage-footer-bottom',
+					'corporatepage-footer-rightcolumn',
+					'corporatepage-footer-bottom',
+					'corporatepage-footer-leftcolumn',
+					'corporatepage-sidebar');
+			
+		$title = strtolower($title)."/";
+		$titleArray = explode("/", $title); 
+		if (in_array($titleArray[0],$CorporatePageMessageList)){
+			if (empty($titleArray[1])){
+				$titleArray[1] = $wgLang->getCode();
+			}
+			$wgMemc->delete( wfMemcKey( "hp_msg_parser",  $titleArray[0], $titleArray[1] ) );
+			/*$pageList = $wgMemc->get(wfMemcKey( "hp_page_list"),null);
 			if ($pageList != null){
 				$pageList = array_keys($pageList);
 				foreach ($pageList as $value){
@@ -23,11 +35,10 @@ class CorporatePageHelper{
 					$cachedTitle->purgeSquid();
 				}
 				$pageList = $wgMemc->delete(wfMemcKey( "hp_page_list"));
-			}
+			}*/
 		}
 		return true;
 	}
-	*/
 
 	static function jsVars($vars){
 		global $wgUser;
