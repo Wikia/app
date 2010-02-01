@@ -178,7 +178,7 @@ class InviteSpecialPage extends SpecialPage {
 				$wgMemc->set( $key, 1, 86400 );
 			}
 			if ( $value > $wgNotificationThrottle ) {
-				$error = wfMsg( 'stf_throttle', $wgNotificationThrottle );
+				$error = wfMsgExt( 'stf_throttle', 'parsemag', $wgNotificationThrottle );
 				wfProfileOut( __METHOD__ );
 				if ( $isEncoded ) {
 					echo "<hr /><br /><div><b>$error</b><br /><br /></div>";
@@ -341,10 +341,10 @@ class InviteSpecialPage extends SpecialPage {
 		$your_name      = wfMsg( 'stf_your_name' );
 		$your_address   = wfMsg( 'stf_your_address' );
 		$your_friends   = wfMsg( 'stf_your_friends' );
-		$we_dont_keep   = wfMsg( 'stf_we_dont_keep' );
+		$we_dont_keep   = wfMsg( 'word-separator' ) . wfMsg( 'stf_we_dont_keep' );
 		$need_approval  = wfMsg( 'stf_need_approval' );
 		$check_contacts = wfMsg( 'stf_ctx_check' );
-		$more_than_one  = wfMsg( 'stf_ctx_invite', $wgNotificationEmails );
+		$more_than_one  = wfMsgExt( 'stf_ctx_invite', 'parsemag', $wgNotificationEmails );
 
 		// check, if user has supplied an usable account in his profile
 		$yahoo_checked = $myspace_checked = "";

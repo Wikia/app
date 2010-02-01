@@ -58,17 +58,20 @@ $wgGroupPermissions['*']['notification'] = true;
 $wgGroupPermissions['user']['notification'] = true;
 
 $wgExtensionMessagesFiles['SendToAFriend'] = dirname(__FILE__) . '/SendToAFriend.i18n.php';
+$wgExtensionAliasesFiles['SendToAFriend'] = dirname(__FILE__) . '/SendToAFriend.alias.php';
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Invite a friend',
-	'description' => 'displays "invite a friend" form',
-	'author' => 'Tomasz Klim'
+	'description' => 'Displays "invite a friend" form',
+	'author' => 'Tomasz Klim',
+	'descriptionmsg' => 'sendtoafriend-desc',
 );
 $wgHooks['AddNewAccount2'][] = 'wfInviteAfterReg';
 #$wgHooks['MonoBookTemplateToolboxEnd'][] = 'wfSendAjaxForm_echo';
 $wgExtensionCredits['other'][] = array(
 	'name' => 'Send to a friend',
-	'description' => 'displays "send to a friend" button in the article',
-	'author' => 'Tomasz Klim'
+	'description' => 'Displays "send to a friend" button in the article',
+	'author' => 'Tomasz Klim',
+	'descriptionmsg' => 'sendtoafriend-button-desc',
 );
 
 //Register special page
