@@ -5,7 +5,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 if(!window.CKEDITOR)
 {window.CKEDITOR=(function()
-{var CKEDITOR={timestamp:'A06B',version:'20100201',revision:'r17899',_:{},status:'unloaded',basePath:(function()
+{var CKEDITOR={timestamp:'A06B',version:'20100201',revision:'r17909',_:{},status:'unloaded',basePath:(function()
 {var path=window.CKEDITOR_BASEPATH||'';if(!path)
 {var scripts=document.getElementsByTagName('script');for(var i=0;i<scripts.length;i++)
 {var match=scripts[i].src.match(/(^|.*[\\\/])ckeditor(?:_basic)?(?:_source)?.js(?:\?.*)?$/i);if(match)
@@ -3075,7 +3075,7 @@ iframe.remove();if(fieldset)
 fieldset.remove();frameLoaded=0;iframe=CKEDITOR.dom.element.createFromHtml('<iframe'+' style="width:100%;height:100%"'+' frameBorder="0"'+
 (isCustomDomain?' src="javascript:void((function(){'+'document.open();'+'document.domain=\''+document.domain+'\';'+'document.close();'+'})())"':'')+' tabIndex="-1"'+' allowTransparency="true"'+'></iframe>');iframe.on('load',function(e)
 {e.removeListener();var doc=iframe.getFrameDocument().$;doc.open();if(isCustomDomain)
-doc.domain=document.domain;doc.write(data);doc.close();});var accTitle=editor.lang.editorTitle.replace('%1',editor.name);if(CKEDITOR.env.gecko)
+doc.domain=document.domain;doc.write(data);doc.close();});var accTitle='';if(CKEDITOR.env.gecko)
 {mainElement.setAttributes({role:'region',title:accTitle});iframe.setAttributes({role:'region',title:' '});}
 else if(CKEDITOR.env.webkit)
 {iframe.setAttribute('title',accTitle);iframe.setAttribute('name',accTitle);}
