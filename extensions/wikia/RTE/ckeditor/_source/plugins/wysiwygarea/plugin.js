@@ -294,7 +294,10 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 						} );
 
-						var accTitle = editor.lang.editorTitle.replace( '%1', editor.name );
+						// Wikia - start
+						// RT #38596
+						var accTitle = '';
+						// Wikia - end
 
 						if ( CKEDITOR.env.gecko )
 						{
