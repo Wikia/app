@@ -39,7 +39,7 @@ CreatePage.openDialog = function(e, titleText) {
 						CreatePageEnabled = false;
 						CreatePage.track( 'open' );
 						if(titleText != null) {
-							$('#wpCreatePageDialogTitle').val( titleText );
+							$('#wpCreatePageDialogTitle').val( decodeURIComponent( titleText ) );
 						}
 						$('#wpCreatePageDialogTitle').focus();
 					},
