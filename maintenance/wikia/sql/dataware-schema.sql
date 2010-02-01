@@ -622,3 +622,35 @@ SET character_set_client = @saved_cs_client;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2009-11-25 11:46:49
+
+CREATE TABLE `page_editors` (
+  `pc_wikia_id` int(10) unsigned NOT NULL,
+  `pc_page_id` int(10) unsigned NOT NULL,
+  `pc_page_ns` int(6) unsigned NOT NULL,
+  `pc_is_content` int(1) unsigned NOT NULL,
+  `pc_date` date NOT NULL,
+  `pc_user_id` int(10) unsigned NOT NULL,
+  `pc_all_count` int(10) unsigned NOT NULL,
+  PRIMARY KEY  (`pc_wikia_id`,`pc_page_id`,`pc_page_ns`,`pc_date`,`pc_user_id`),
+  KEY `pc_count_users` (`pc_is_content`,`pc_wikia_id`,`pc_page_id`,`pc_user_id`),
+  KEY `pc_count_date` (`pc_is_content`,`pc_wikia_id`,`pc_page_id`,`pc_user_id`,`pc_all_count`),
+  KEY `pc_count` (`pc_wikia_id`,`pc_page_id`,`pc_user_id`,`pc_all_count`),
+  KEY `pc_date` (`pc_date`,`pc_user_id`,`pc_all_count`),
+  KEY `pc_wikia_date` (`pc_wikia_id`,`pc_date`,`pc_user_id`,`pc_all_count`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `page_edits` (
+  `pe_wikia_id` int(10) unsigned NOT NULL,
+  `pe_page_id` int(10) unsigned NOT NULL,
+  `pe_page_ns` int(6) unsigned NOT NULL,
+  `pe_is_content` int(1) unsigned NOT NULL,
+  `pe_date` date NOT NULL,
+  `pe_anon_count` int(10) unsigned NOT NULL,
+  `pe_all_count` int(10) unsigned NOT NULL,
+  PRIMARY KEY  (`pe_wikia_id`,`pe_page_id`,`pe_page_ns`,`pe_date`),
+  KEY `pe_count_date` (`pe_is_content`,`pe_wikia_id`,`pe_page_id`,`pe_all_count`,`pe_anon_count`),
+  KEY `pe_count` (`pe_wikia_id`,`pe_page_id`,`pe_all_count`,`pe_anon_count`),
+  KEY `pe_date` (`pe_date`,`pe_all_count`,`pe_anon_count`),
+  KEY `pe_wikia_date` (`pe_wikia_id`,`pe_date`,`pe_all_count`),
+  KEY `pe_wikia_anon_date` (`pe_wikia_id`,`pe_date`,`pe_anon_count`)
+) ENGINE=InnoDB;
