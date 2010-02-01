@@ -21,7 +21,7 @@ class HomePageStatistic
 		
 		$months = array(); 
 		$thisMonth =  date('Y-m',strtotime($i.'-1 day'));
-		for ($i = -1; $i >= -7; $i-- ){
+		for ($i = -1; $i >= -6; $i-- ){
 			$time = strtotime($i.' day');
 			$month = date('Y-m', $time);
 			$months[$month]['count'] ++;
@@ -32,13 +32,16 @@ class HomePageStatistic
 					$months[$month]['number_of_day'] = date('t', $time);	
 				}
 			}
+			if ( $i == -1 ){
+				$months[$month]['count'] += date('G')/24;
+			}
 		}
-		
 		$result = 0;
 		foreach ( $months as $key => $value ){
 			$factor = $value['count']/$value['number_of_day'];
 			$result += (int) (WikiaGlobalStats::getCountWordsInMonth($key)*$factor);
 		}
+		$result = $wgMemc->set( $key, $result, 60*60);
 		return number_format($result);
 	}
 /*	
