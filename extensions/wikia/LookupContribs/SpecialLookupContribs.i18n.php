@@ -12,7 +12,8 @@ $messages['en'] = array(
 	'lookupcontribstitle' => 'Lookup Contribs',
 	'lookupcontribsrecentcontributions' => 'Recent contributions for $1',
 	'lookupcontribsfinalcontributions' => 'Final contributions for $1',
-	'lookupcontribshelp' => 'This special page can be used to display user\'s contributions on multiple wikias. For displaying the list, give username below.',
+	'lookupcontribshelp' => 'This special page can be used to display user\'s contributions on multiple Wikias.
+For displaying the list, give username below.',
 	'lookupcontribusernotspecify' => 'You haven\'t specified a user yet',
 	'lookupcontribsselectuser' => 'Select user:',
 	'lookupcontribsselectfor' => 'Select for:',
@@ -20,10 +21,11 @@ $messages['en'] = array(
 	'lookupcontribsselectmodenormal' => 'recent contributions for that user',
 	'lookupcontribsselectmodefinal' => 'final contributions for that user',
 	'lookupcontribsselectmodeall' => 'all contributions for that user',
-	'lookupcontribsfullurls' => 'full urls',
+	'lookupcontribsfullurls' => 'full URLs',
 	'lookupcontribslinks' => 'contribs links',
 	'lookupcontribsgo' => 'Go',
-	'lookupcontribsinvaliduser' => '<p class="error">User "<b>$1</b>" does not exist. Check given username for possible typos.</p>',
+	'lookupcontribsinvaliduser' => '<p class="error">User "<b>$1</b>" does not exist.
+Check given username for possible typos.</p>',
 	'lookupcontribsinvalidviewmode' => '<p class="error">"<b>$1</b>" is not a valid view mode.</p>',
 	'lookupcontribsinvalidmode' => '<p class="error">"<b>$1</b>" is not a valid mode.</p>',
 	'lookupcontribsselectwikis' => 'Select wikis:',
@@ -32,7 +34,7 @@ $messages['en'] = array(
 	'lookupcontribsinvalidresults' => 'Invalid results!',
 	'lookupcontribswiki' => 'Wiki',
 	'lookupcontribswikidbname' => 'DB name',
-	'lookupcontribswikiurl' => 'Url',
+	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Title',
 	'lookupcontribscontribslink' => 'Contribs link',
 	'lookupcontribsdetails' => 'See details for:',
@@ -56,8 +58,6 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'lookupcontribshelp' => 'Wikia should be with capital W',
-	'lookupcontribsfullurls' => 'Capitalise URL',
 	'lookupcontribsshowpages' => 'If $1 is a number, this should support plural.',
 );
 
