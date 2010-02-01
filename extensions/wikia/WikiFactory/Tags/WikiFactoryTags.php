@@ -8,26 +8,28 @@
  * @licence GNU General Public Licence 2.0 or later
  */
 
-# use tables
-#
-#CREATE TABLE `city_tag` (
-#  `id` int(8) unsigned NOT NULL AUTO_INCREMENT,
-#  `name` varchar(255) DEFAULT NULL,
-#  PRIMARY KEY (`id`),
-#  UNIQUE KEY `city_tag_name_uniq` (`name`)
-#) ENGINE=InnoDB DEFAULT;
-#
-#
-#CREATE TABLE `city_tag_map` (
-#  `city_id` int(9) NOT NULL,
-#  `tag_id` int(8) unsigned NOT NULL,
-#  PRIMARY KEY (`city_id`,`tag_id`),
-#  KEY `tag_id` (`tag_id`),
-#  CONSTRAINT FOREIGN KEY (`city_id`) REFERENCES `city_list` (`city_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-#  CONSTRAINT FOREIGN KEY (`tag_id`) REFERENCES `city_tag` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-#) ENGINE=InnoDB
-#
-# http://www.pui.ch/phred/archives/2005/04/tags-database-schemas.html
+// use tables
+//
+//	CREATE TABLE `city_tag` (
+//	  `id` int(8) unsigned NOT NULL AUTO_INCREMENT,
+//	  `name` varchar(255) DEFAULT NULL,
+//	  PRIMARY KEY (`id`),
+//	  UNIQUE KEY `city_tag_name_uniq` (`name`)
+//	) ENGINE=InnoDB;
+//
+//	CREATE TABLE `city_tag_map` (
+//	  `city_id` int(9) NOT NULL,
+//	  `tag_id` int(8) unsigned NOT NULL,
+//	  PRIMARY KEY (`city_id`,`tag_id`),
+//	  KEY `tag_id` (`tag_id`),
+//	  CONSTRAINT FOREIGN KEY (`city_id`) REFERENCES `city_list` (`city_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+//	  CONSTRAINT FOREIGN KEY (`tag_id`) REFERENCES `city_tag` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+//	) ENGINE=InnoDB;
+//
+// http://www.pui.ch/phred/archives/2005/04/tags-database-schemas.html
+
+global $wgAjaxExportList;
+$wgAjaxExportList[] = "WikiFactoryTags::axQuery";
 
 class WikiFactoryTags {
 
@@ -268,5 +270,40 @@ class WikiFactoryTags {
 		 * refresh cache, return defined tags
 		 */
 		return $this->getTags( true );
+	}
+
+	/**
+	 * used in autocompleting form
+	 *
+	 * @access public
+	 * @static
+	 *
+	 * @return String json-ized answer
+	 */
+	static public function axQuery() {
+		global $wgRequest;
+		$query = $wgRequest->getVal( "query", false );
+
+		$return = array(
+				"query"       => $query,
+				"suggestions" => array(),
+				"data"        => array()
+		);
+
+		if( $query ) {
+			$query = strtolower( $query );
+			$dbr = WikiFactory::db( DB_SLAVE );
+			$sth = $dbr->select(
+				array( "city_tag" ),
+				array( "id", "name" ),
+				array( "name like '%{$query}%'" ),
+				__METHOD__
+			);
+			while( $row = $dbr->fetchObject( $sth ) ) {
+				$return[ "suggestions" ][] = $row->name;
+			}
+		}
+
+		return Wikia::json_encode( $return );
 	}
 }
