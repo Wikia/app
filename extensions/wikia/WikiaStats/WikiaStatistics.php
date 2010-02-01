@@ -788,6 +788,7 @@ class WikiaGlobalStats {
 	}
 
 	public static function getCountWordsInMonth( $month ) {
+		return 100;
 		global $wgExternalStatsDB, $wgMemc;
 		wfProfileIn( __METHOD__ );
     	
