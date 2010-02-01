@@ -157,7 +157,7 @@ function wfCreatePageAjaxCheckTitle() {
 function wfCreatePageLoadPreformattedContent( $editpage ) {
 	global $wgRequest;
 	if ($wgRequest->getCheck('useFormat')) {
-		$editpage->textbox1 = wfMsgForContent( 'newpagelayout' );
+		$editpage->textbox1 = wfMsgForContent( 'createpage-newpagelayout' );
 	}
 	return true ;
 }
