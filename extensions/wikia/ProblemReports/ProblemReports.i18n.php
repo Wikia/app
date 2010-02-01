@@ -16,20 +16,22 @@ $messages = array();
 $messages['en'] = array(
 	'problemreports' => 'Problem reports list',
 	'reportproblem' => 'Report a problem',
-		
+
 	'prlogtext' => 'Problem reports',
 	'prlogheader' => 'List of reported problems and changes of their status',
 	'prlog_reportedentry' => 'reported a problem on $1 ($2)',
 	'prlog_changedentry' => 'marked problem $1 as "$2"',
 	'prlog_typeentry'    => 'changed problem $1 type to "$2"',
 	'prlog_removedentry' => 'removed problem $1',
-	'prlog_emailedentry' => 'sent email message to $2 ($3)',
+	'prlog_emailedentry' => 'sent e-mail message to $2 ($3)',
 
-	'pr_introductory_text' => 'Most pages on this wiki are editable, and you are welcome to edit the page and correct mistakes yourself! If you need help doing that, see [[help:editing|how to edit]] and [[help:revert|how to revert vandalism]].
+	'pr_introductory_text' => 'Most pages on this wiki are editable, and you are welcome to edit the page and correct mistakes yourself!
+If you need help doing that, see [[help:editing|how to edit]] and [[help:revert|how to revert vandalism]].
 
 To contact staff or to report copyright problems, please see [[w:contact us|Wikia\'s "contact us" page]].
 
-Software bugs can be reported on the forums. Reports made here will be [[Special:ProblemReports|displayed on the wiki]].',
+Software bugs can be reported on the forums.
+Reports made here will be [[Special:ProblemReports|displayed on the wiki]].',
 
 	'pr_what_problem' => 'Subject',
 	'pr_what_problem_spam' => 'there is a spam link here',
@@ -45,23 +47,26 @@ Software bugs can be reported on the forums. Reports made here will be [[Special
 	'pr_what_problem_incorrect_content_short' => 'content',
 	'pr_what_problem_software_bug_short' => 'bug',
 	'pr_what_problem_other_short' => 'other',
-		
+
 	'pr_what_problem_change' => 'Change problem type',
 
 	'pr_describe_problem' => 'Message',
 	'pr_what_page' => 'Title of the page',
 	'pr_email_visible_only_to_staff' => 'visible only to staff',
-	'pr_thank_you' => "Thank you for reporting a problem!\n\n[[Special:ProblemReports/$1|You can watch progress of fixing it]].",
+	'pr_thank_you' => "Thank you for reporting a problem!
+
+[[Special:ProblemReports/$1|You can watch progress of fixing it]].",
 	'pr_thank_you_error' => 'Error occured when sending problem report, please try later...',
-	'pr_spam_found' => 'Spam has been found in your report summary. Please change summary content',
+	'pr_spam_found' => 'Spam has been found in your report summary.
+Please change summary content',
 	'pr_empty_summary' => 'Please provide short problem description',
-	'pr_empty_email' => 'Please provide your email address',
-		
-	'pr_mailer_notice'  => 'The email address you entered in your user preferences will apper as the "From" address of the mail, so the recipient will be able to reply.',
+	'pr_empty_email' => 'Please provide your e-mail address',
+
+	'pr_mailer_notice'  => 'The e-mail address you entered in your user preferences will appear as the "From" address of the mail, so the recipient will be able to reply.',
 	'pr_mailer_subject' => 'Reported problem on',
-	'pr_mailer_tmp_info' => 'You can edit templated responses [[MediaWiki:ProblemReportsResponses|here]]',
+	'pr_mailer_tmp_info' => 'You can [[MediaWiki:ProblemReportsResponses|edit templated responses]]',
 	'pr_mailer_to_default' => 'Wikia User',
-	'pr_mailer_go_to_wiki' => 'To send email please go to [$1 wiki problem was reported from]',
+	'pr_mailer_go_to_wiki' => 'To send e-mail please go to [$1 wiki problem was reported from]',
 
 	'pr_total_number'       => 'Total number of reports',
 	'pr_view_archive'       => 'View archived problems',
@@ -71,7 +76,7 @@ Software bugs can be reported on the forums. Reports made here will be [[Special
 	'pr_reports_from'       => 'Reports only from',
 	'pr_no_reports' => 'No reports matching your criteria',
 
-	'pr_sysops_notice' => 'If you want to change status of problem reports from your wiki, please go <a href="$1">here</a>...',
+	'pr_sysops_notice' => 'You can <a href="$1">change status of problem reports</a> from your wiki...',
 
 	'pr_table_problem_id'   => 'Problem ID',
 	'pr_table_wiki_name'    => 'Wiki name',
@@ -92,14 +97,15 @@ Software bugs can be reported on the forums. Reports made here will be [[Special
 
 	'pr_status_undo' => 'Undo report status change',
 	'pr_status_ask'  => 'Change report status?',
-		
+
 	'pr_remove_ask'  => 'Permanently remove report?',
 
 	'pr_status_wait' => 'wait...',
 
 	'pr_read_only' => 'New reports cannot be filled right now, please try again later.',
 
-	'pr_msg_exceeded' => 'The maximum number of characters in the Message field is 512. Please rewrite your message.',
+	'pr_msg_exceeded' => 'The maximum number of characters in the message field is 512.
+Please rewrite your message.',
 	'pr_msg_exchead' => 'Message is too long',
 
 	'right-problemreports_action' => 'Change state and type of ProblemReports',
@@ -905,7 +911,7 @@ Hier gemelde problemen zijn [[Special:ProblemReports|zichtbaar op de wiki]].',
 	'pr_describe_problem' => 'Bericht',
 	'pr_what_page' => 'Titel van de pagina',
 	'pr_email_visible_only_to_staff' => 'alleen zichtbaar voor staff',
-	'pr_thank_you' => 'Bedankt voor het melden van een probleem! 
+	'pr_thank_you' => 'Bedankt voor het melden van een probleem!
 
 [[Special:ProblemReports/$1|Je kan de status van het oplossen ervan volgen.]]',
 	'pr_thank_you_error' => 'Er is een fout opgetreden bij het versturen van het probleem, probeer het a.u.b. later nog een keer...',
