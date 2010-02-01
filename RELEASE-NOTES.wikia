@@ -1,5 +1,5 @@
 == Changes since 201002.1 ==
-* 
+* rt#38798: Fix mail sender in social invite tool (uberfuzzy)
 
 == Changes since 201001.4 ==
 * rt#38262: RTE: giant blocks of complex code being added at page ends (macbre)
