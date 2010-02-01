@@ -228,6 +228,18 @@ class StaticChute {
 			'monaco/js/tracker.js',
 			'corporate/js/tracker.js',
 		);
+
+		$this->config['corporate_specialpage_js'] = array(
+			'common/wikibits.js',
+			'common/jquery/jquery-1.4.1.min.js',
+			'common/jquery/jquery.wikia.js',
+			'common/urchin.js',
+			'corporate/js/main.js',
+			'monaco/js/tracker.js',
+			'corporate/js/tracker.js',
+			'common/yui_2.5.2/utilities/utilities.js',
+			'common/yui_extra/tools-min.js',
+		);
 		
 		$this->config['corporate_page_css'] = array(		
 			'common/yui300css-reset-min.css',
