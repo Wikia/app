@@ -6,7 +6,7 @@ class HomePageStatisticCollector
 	 * hook for count numbers of words added in last hour
 	 */
 	public static function articleCountWordDiff(&$article,&$user,&$newText){
-		if (self::checkNamespace($article)){
+		if (self::chackNamespace($article)){
 			return true;
 		}
 
@@ -40,14 +40,14 @@ class HomePageStatisticCollector
 	 * Author: Tomek Odrobny
 	 * hook for numbers of new pages made in this month
 	 */
-	public static function articleCountPagesAddedMonth(&$article,&$user,&$newText){
-		if (self::checkNamespace($article)){
+	public static function articleCountPagesAddedInLastHour(&$article,&$user,&$newText){
+		if (self::chackNamespace($article)){
 			return true;
 		}
 
 		$aID = $article->getTitle()->getArticleID();
 		if (!$aID){
-			self::updatePagesAddedMonth(1);
+			self::updatePagesAddedInLastHour(1);
 		}
 		return true;
 	}
@@ -58,7 +58,7 @@ class HomePageStatisticCollector
 	 */
 
 	public static function articleCountUpdateEditsMadeWeek(&$article,&$user,&$newText){
-		if (self::checkNamespace($article)){
+		if (self::chackNamespace($article)){
 			return true;
 		}
 
@@ -71,9 +71,9 @@ class HomePageStatisticCollector
 
 	/*
 	 * Author: Tomek Odrobny
-	 * check namespace
+	 * chack namespace
 	 */
-	private static function checkNamespace(&$article){
+	private static function chackNamespace(&$article){
 		global $wgContentNamespaces;
 		return !in_array($article->getTitle()->getNamespace(),$wgContentNamespaces);
 	}
@@ -81,10 +81,12 @@ class HomePageStatisticCollector
 	 * Author: Tomek Odrobny
 	 * count and read numbers of new pages made in this month
 	 */
-	public static function updatePagesAddedMonth( $value = 0 ){
-		$key = wfMemcKey( "hp_stats", "stat_hp_added_month" ); 
-		$month = date("n");
-		return self::periodHolder( $value ,$month ,$key);
+	public static function updatePagesAddedInLastHour( $value = 0 ){
+		$timeSample = 60;
+		$fifoLength = 60*60; // one hour
+		$key = wfSharedMemcKey( "hp_stats", "fifo_pages_added" );
+		$out = self::fifoLine($value,$timeSample,$fifoLength,$key);
+		return $out;
 	}
 	/*
 	 * Author: Tomek Odrobny

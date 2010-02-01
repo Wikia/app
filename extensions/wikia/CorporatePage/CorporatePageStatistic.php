@@ -16,4 +16,4 @@ $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['HomePageStatisticCollector'] = $dir . 'HomePageStatisticCollector.class.php';
 $wgAutoloadClasses['HomePageMemAdapter']  = $dir . 'HomePageMemAdapter.class.php';
 $wgAutoloadClasses['HomePageStatistic']  = $dir . 'HomePageStatistic.class.php';
-$wgHooks['ArticleSave'][] = 'HomePageStatisticCollector::articleCountWordDiff';
+$wgHooks['ArticleSave'][] = 'HomePageStatisticCollector::articleCountPagesAddedInLastHour';

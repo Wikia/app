@@ -6,10 +6,41 @@
  */
 class HomePageStatistic
 {
-	public static function getWordsInLastHour(){
-		return number_format(HomePageStatisticCollector::updateWordsInLastHour());
+	public static function getPagesAddedInLastHour(){
+		return number_format(HomePageStatisticCollector::updatePagesAddedInLastHour());
 	}
 	
+	public static function getWordsAddedLastWeek(){
+		$key = wfMemcKey( "hp_stats", "words_added_week" );
+		$result = $wgMemc->get( $key, null);
+
+		if ($result != null){
+			return number_format($result);
+		}
+		
+		$months = array(); 
+		$thisMonth =  date('Y-m',strtotime($i.'-1 day'));
+		for ($i = -1; $i >= -7; $i-- ){
+			$time = strtotime($i.' day');
+			$month = date('Y-m', $time);
+			$months[$month]['count'] ++;
+			if (empty($months[$month]['number_of_day'])){
+				if ( $thisMonth == $month ){
+					$months[$month]['number_of_day'] = date('j', $time);	
+				} else {
+					$months[$month]['number_of_day'] = date('t', $time);	
+				}
+			}
+		}
+		
+		$result = 0;
+		foreach ( $months as $key => $value ){
+			$factor = $value['count']/$value['number_of_day'];
+			$result += (int) (WikiaGlobalStats::getCountWordsInMonth($key)*$factor);
+		}
+		return number_format($result);
+	}
+/*	
 	public static function getAddedThisMonth(){
 		global $wgMemc;
 		$key = wfMemcKey( "hp_stats", "added_month" );
@@ -25,9 +56,9 @@ class HomePageStatistic
 		$wgMemc->set( $key, $result, 60*60);
 		return number_format($result);	
 	}
-
-	public static function getEditsThisWeek(){
-		return number_format(WikiaGlobalStats::getCountEditedPages(60*60));
+*/
+	public static function getEditsThisDay(){
+		return number_format(WikiaGlobalStats::getCountEditedPages(1));
 	}
 	
 	public static function getMostEditArticles72(){
