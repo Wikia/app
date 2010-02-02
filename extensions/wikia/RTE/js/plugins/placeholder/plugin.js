@@ -213,6 +213,9 @@ CKEDITOR.plugins.add('rte-placeholder',
 				if (data.type == 'double-brackets') {
 					placeholder.data('info', info);
 				}
+
+				// try to remove scrollbars (RT #34048)
+				self.expandPlaceholder(placeholder);
 			};
 
 			// get info from backend (only for templates and magic words)
@@ -247,6 +250,7 @@ CKEDITOR.plugins.add('rte-placeholder',
 		});
 
 		// hover preview popup delay: 150ms (cursor should be kept over an placeholder for 150ms for preview to show up)
+		var self = this;
 		placeholder.data('showTimeout', setTimeout(function() {
 			// trigger custom event only when preview is about to be shown (used for tracking)
 			var visible = preview.css('display') == 'block';
@@ -256,6 +260,9 @@ CKEDITOR.plugins.add('rte-placeholder',
 
 			// show preview pop-up
 			preview.fadeIn();
+
+			// try to remove scrollbars (RT #34048)
+			self.expandPlaceholder(placeholder);
 		}, 150));
 
 		// clear timeout used to hide preview with small delay
@@ -369,5 +376,59 @@ CKEDITOR.plugins.add('rte-placeholder',
 		}
 
 		return type;
+	},
+
+	// expand placeholder preview (RT #34048)
+	expandPlaceholder: function(placeholder) {
+		var preview = this.getPreview(placeholder);
+
+		// detect if scrollbar is shown
+		var previewArea = preview.find('.RTEPlaceholderPreviewCode');
+
+		if (previewArea.exists()) {
+			var domNode = previewArea[0];
+			var scrollBarIsShown = (domNode.scrollHeight > domNode.clientHeight) || (domNode.scrollWidth > domNode.clientWidth);
+
+			if (scrollBarIsShown) {
+				//RTE.log('expanding hover preview...');
+
+				// initial values (remove scrollbar completely)
+				var height = domNode.scrollHeight;
+				var width = domNode.scrollWidth;
+
+				//RTE.log([width, height]);
+
+				// (x,y) of bottom right corner of preview
+				var x = parseInt(preview.offset().left) + width + 16;
+				var y = parseInt(preview.offset().top) + height + 100;
+
+				//RTE.log([x, y]);
+
+				// calculate editarea size
+				var editarea = $('#cke_contents_wpTextbox1');
+				var maxX = parseInt(editarea.offset().left) + editarea.width();
+				var maxY = parseInt(editarea.offset().top) + editarea.height();
+
+				//RTE.log([maxX, maxY]);
+
+				// limit preview expansion by edges of editarea
+				if (maxX < x) {
+					width -= (x - maxX);
+				}
+
+				if (maxY < y) {
+					height -= (y - maxY);
+				}
+
+				//RTE.log([width, height]);
+
+				// now let's use it (minimum size is 350x60)
+				width = Math.max(width, 350);
+				height = Math.max(height, 60);
+
+				preview.children('.RTEPlaceholderPreviewInner').width(width);
+				previewArea.height(height);
+			}
+		}
 	}
 });
