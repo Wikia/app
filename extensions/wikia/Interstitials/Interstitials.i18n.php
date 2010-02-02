@@ -13,7 +13,7 @@ $messages['en'] = array(
 	// An extremely friendly message is probably much better than a blank interstitial.  At least we get to tell them
 	// how we feel for X seconds.
 	"interstitial-default-campaign-code"                         => "Wikia Loves You!",
-	"interstitial-skip-ad"                                       => "Skip Ad &rarr;",
+	"interstitial-skip-ad"                                       => "Skip this ad",
 
 );
 
