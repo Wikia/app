@@ -11,6 +11,6 @@ $wgExtensionCredits['other'][] = array(
                 'author' => array('Bartek Lapinski')
                 );
 
-//$wgExtensionMessagesFiles['MakeRecipe'] = dirname(__FILE__) . '/MakeRecipe.i18n.php';
+$wgExtensionMessagesFiles['MakeRecipe'] = dirname(__FILE__) . '/MakeRecipe.i18n.php';
 
 
