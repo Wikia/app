@@ -102,7 +102,7 @@ class WikiaEditStatistics {
 				# update edits count
 				$data = array( 
 					'pe_all_count' 	=> intval($oRow->pe_all_count + $inc),
-					'pe_is_content' => $this->mIsContent
+					'pe_is_content' => intval($this->mIsContent)
 				);
 				if ( empty($this->mUserId) ) {
 					$data['pe_anon_count'] = intval($oRow->pe_anon_count + $inc);
@@ -112,7 +112,7 @@ class WikiaEditStatistics {
 			else {
 				# insert edits count
 				$conditions['pe_all_count'] = $inc;
-				$conditions['pe_is_content'] = $this->mIsContent;
+				$conditions['pe_is_content'] = intval($this->mIsContent);
 				if ( empty($this->mUserId) ) {
 					$conditions['pe_anon_count'] = $inc;
 				};
@@ -139,14 +139,14 @@ class WikiaEditStatistics {
 				# update edits count
 				$data = array( 
 					'pc_all_count' 	=> intval($oRow->pc_all_count + $inc),
-					'pc_is_content' => $this->mIsContent
+					'pc_is_content' => intval($this->mIsContent)
 				);
 				$dbw->update( 'page_editors', $data, $conditions, __METHOD__ );
 			} 
 			else {
 				# insert edits count
 				$conditions['pc_all_count'] = $inc;
-				$conditions['pc_is_content'] = $this->mIsContent;
+				$conditions['pc_is_content'] = intval($this->mIsContent);
 				$dbw->insert( 'page_editors', $conditions, __METHOD__ );
 			}
 		}
