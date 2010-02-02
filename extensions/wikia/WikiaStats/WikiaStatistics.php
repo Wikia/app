@@ -115,7 +115,9 @@ class WikiaEditStatistics {
 				$conditions['pe_is_content'] = intval($this->mIsContent);
 				if ( empty($this->mUserId) ) {
 					$conditions['pe_anon_count'] = $inc;
-				};
+				} else {
+					$conditions['pe_anon_count'] = 0;
+				}
 				$dbw->insert( 'page_edits', $conditions, __METHOD__ );
 			}
 			
