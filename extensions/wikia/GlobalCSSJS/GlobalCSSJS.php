@@ -29,9 +29,9 @@ function wfGlobalWikiaCSS( &$out ) {
 	$out = "";
 
 	if (!$wgUser->isAnon())
-		$out .= '@import "http://www.wikia.com/index.php?title=User:'. str_replace(" ", "_", $wgUser->mName) .'/global.css&action=raw&ctype=text/css&smaxage=0";';
+		$out .= '@import "http://community.wikia.com/index.php?title=User:'. str_replace(" ", "_", $wgUser->mName) .'/global.css&action=raw&ctype=text/css&smaxage=0";';
 
-	//$out .= '@import "http://www.wikia.com/index.php?title=MediaWiki:Global.css&action=raw&ctype=text/css&smaxage=18000";';
+	//$out .= '@import "http://community.wikia.com/index.php?title=MediaWiki:Global.css&action=raw&ctype=text/css&smaxage=18000";';
 
 	return true;
 }
@@ -45,9 +45,9 @@ function wfGlobalWikiaJS( &$out ) {
 	global $wgJsMimeType, $wgUser;
 
 	if (!$wgUser->isAnon())
-		$out->addScript('<script language="javascript" type="'. $wgJsMimeType .'" src="http://www.wikia.com/index.php?title=User:'. str_replace(" ", "_", $wgUser->mName) .'/global.js&amp;action=raw&amp;ctype='. $wgJsMimeType .'&amp;dontcountme=s"></script>');
+		$out->addScript('<script language="javascript" type="'. $wgJsMimeType .'" src="http://community.wikia.com/index.php?title=User:'. str_replace(" ", "_", $wgUser->mName) .'/global.js&amp;action=raw&amp;ctype='. $wgJsMimeType .'"></script>');
 
-	//$out->addScript('<script language="javascript" type="'. $wgJsMimeType .'" src="http://www.wikia.com/index.php?title=MediaWiki:Global.js&amp;action=raw&amp;ctype='. $wgJsMimeType .'&amp;dontcountme=s"></script>');
+	//$out->addScript('<script language="javascript" type="'. $wgJsMimeType .'" src="http://community.wikia.com/index.php?title=MediaWiki:Global.js&amp;action=raw&amp;ctype='. $wgJsMimeType .'&amp;dontcountme=s"></script>');
 
 	return true;
 }
