@@ -14,7 +14,7 @@ $messages = array_merge( $messages , array(
 ** http://fallout.wikia.com|Fallout Wiki
 ** http://callofduty.wikia.com|Call of Duty Wiki
 ** http://dragonage.wikia.com|Dragon Age Wiki
-* http://lifestyle.wikia.com|Lifestyle
+* http://community.wikia.com/wiki/Hub:Lifestyle|Lifestyle
 ** http://recipes.wikia.com|Recipes Wiki
 ** http://genealogy.wikia.com|Genealogy Wiki
 ** http://diy.wikia.com|Do it Yourself Wiki
