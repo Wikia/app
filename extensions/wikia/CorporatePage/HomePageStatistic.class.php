@@ -73,13 +73,15 @@ class HomePageStatistic
 			$out = WikiaGlobalStats::getPagesEditors(3);
 		}
 		$level = 1;
+		$outLevel = 1;
 		foreach ($out as $key => $value){
-			$out[$key]['level'] = $level;
+			$out[$key]['level'] = $outLevel;
 			$out[$key]['real_pagename'] = $out[$key]['page_name'];
 			$out[$key]['page_name'] = str_replace('_' ,' ' , $out[$key]['page_name']);
+			$level ++;
 			if ( empty($out[$key]['out_of_limit'] )){
 				if ($out[$key]['count'] != $out[$key+1]['count']){
-					$level ++;
+					$outLevel = $level;
 				}				
 			} else {
 				$out[$key]['level'] = 'x';
