@@ -204,6 +204,25 @@ class CorporatePageHelper{
 	/*
 	 * ArticleFromTitle
 	 *
+	 * force page reload 
+	 *
+	 * @author Tomek
+	 */	
+	
+	public static function forcePageReload($modifiedTimes){
+		global $wgTitle; 
+		$mainPage =  Title::newMainPage();
+		
+		if ($mainPage->getText() == $wgTitle->getText()){
+			$modifiedTimes['page'] = wfTimestamp( TS_MW );	
+		}
+		
+		return true;	
+	}
+
+	/*
+	 * ArticleFromTitle
+	 *
 	 * hook handler for redirecting pages from old central to new community wiki
 	 *
 	 * @author Marooned
