@@ -80,8 +80,9 @@ div.formhighlight {
 	color: #333;
 }
 .toolbar {
-	margin: 5px 0;
-	padding: 10px 15px;
+	border-top-style: solid;
+	border-top-width: 1px;
+	padding: 5px;
 }
 
 .legend {
