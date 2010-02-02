@@ -1,4 +1,5 @@
 == Changes since 201002.1 ==
+* rt#37708: RTEE: hover actions do not work for pasted items (macbre)
 * rt#38829: RTE: don't show editor on mobile browsers (macbre)
 * rt#38798: Fix mail sender in social invite tool (uberfuzzy)
 
