@@ -576,7 +576,8 @@ class WikiaGlobalStats {
 			}
 		}
 		$result = $values = array();
-		$loop = 0;
+		$servers = array();
+		$loop = 0; 
 		if ( !empty( $data ) ) {
 			foreach ( $data as $row ) {
 				if ( $loop >= $limit ) break;
@@ -584,7 +585,8 @@ class WikiaGlobalStats {
 				$res = self::allowResultsForEditedArticles( $row );
 				if ( $res === false ) continue;
 				
-				list( $wikiaTitle, $db, $hub, $wikia_ul, $page_url, $count ) = array_values($res);
+				list( $wikiaTitle, $db, $hub, $wikia_url, $page_url, $count ) = array_values($res);
+				if ( !empty($servers[$wikia_url]) ) continue;
 				
 				if ( !$noHubDepe ){
 					# limit results
@@ -600,6 +602,7 @@ class WikiaGlobalStats {
 				}
 				# increase counter
 				$values[$hubCounter]++; $loop++;
+				$servers[$wikia_url] = 1;
 				
 				# add to array
 				if ($values[$hubCounter] > self::$limitWikiHubs[$hubCounter]){
@@ -608,6 +611,7 @@ class WikiaGlobalStats {
 				$result[] = $res;
 			}
 		}
+		unset($servers);
 
 		wfProfileOut( __METHOD__ );
 		return $result;
