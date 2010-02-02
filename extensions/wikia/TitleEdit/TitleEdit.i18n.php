@@ -7,7 +7,7 @@ $messages['en'] = array(
 );
 
 $messages['pl'] = array(
-	'titeedit' => 'edytuj',
+	'titleedit' => 'edytuj',
 );
 
 $messages['qqq'] = array(
