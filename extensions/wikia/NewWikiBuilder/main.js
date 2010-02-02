@@ -79,7 +79,7 @@ NWB.changeTheme = function (theme, changeData){
 				Mediawiki.waitingDone();
 				var cresult = Mediawiki.checkResult(result);
 				if (cresult !== true) {
-					NWB.apiFailedr(NWB.msg("nwb-error-saving-theme") + cresult, true);
+					NWB.apiFailed(NWB.msg("nwb-error-saving-theme") + cresult, true);
 				} else if (result.settings == "success") {
 					Mediawiki.updateStatus(NWB.msg("nwb-theme-saved"), false, NWB.statusTimeout);
 				} else {
