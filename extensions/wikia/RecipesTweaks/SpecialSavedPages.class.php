@@ -23,7 +23,7 @@ class SpecialSavedPages extends SpecialPage {
 		// get user ID
 		if ($subpage != '') {
 			$user = User::newFromName($subpage);
-			$userId = $user->getId();
+			$userId = !empty($user) ? $user->getId() : 0;
 		}
 		else {
 			if($wgUser->isAnon()) {
