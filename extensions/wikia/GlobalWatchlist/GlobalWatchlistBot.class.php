@@ -295,7 +295,8 @@ class GlobalWatchlistBot {
 
 					//html email
 					if( $usehtmlemail ) {
-						$pagename = str_replace('_', ' ', $aPageData['title']->getArticleName());
+						$pagename = $aPageData['title']->getArticleName();
+						$pagename = str_replace('_', ' ', rawurldecode($pagename));
 						$sDigestsHTML .= '<li><a href="' . $url . '">' . $pagename . "</a></li>\n";
 					}
 
@@ -327,7 +328,7 @@ class GlobalWatchlistBot {
 					if( $usehtmlemail ) {
 						//for html emails, remake some things
 						$clean_url = $blogComments['blogpage']->getFullURL();
-						$clean_url = str_replace('_', ' ', urldecode($clean_url));
+						$clean_url = str_replace('_', ' ', rawurldecode($clean_url));
 						$message = wfMsgReplaceArgs(
 							($countComments != 0) ? $this->getLocalizedMsg('globalwatchlist-blog-page-title-comment', $oUserLanguage ) : "$1",
 							array ( 
