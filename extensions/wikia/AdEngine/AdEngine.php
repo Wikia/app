@@ -366,7 +366,7 @@ class AdEngine {
 			$h = 600;
 		}
 
-		return '<div id="' . htmlspecialchars($slotname) . '">' . 
+		return '<div id="' . htmlspecialchars($slotname) . '" class="noprint">' . 
 			'<iframe width="' . intval($w) . '" height="' . intval($h) . '" ' . 
 			'id="' . htmlspecialchars($slotname) . '_iframe" ' .
                 	'noresize="true" scrolling="no" frameborder="0" marginheight="0" ' . 
