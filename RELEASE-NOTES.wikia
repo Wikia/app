@@ -1,5 +1,6 @@
 == Changes since 201002.1 ==
-* rt#37708: RTEE: hover actions do not work for pasted items (macbre)
+* rt#37696: RTE: "Escape" key should close modal dialogs as if close button clicked (macbre)
+* rt#37708: RTE: hover actions do not work for pasted items (macbre)
 * rt#38829: RTE: don't show editor on mobile browsers (macbre)
 * rt#38798: Fix mail sender in social invite tool (uberfuzzy)
 
