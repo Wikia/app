@@ -587,7 +587,7 @@ class WikiaGlobalStats {
 				$res = self::allowResultsForEditedArticles( $row );
 				if ( $res === false ) continue;
 				
-				list( $wikiaTitle, $db, $hub, $wikia_url, $page_url, $count ) = array_values($res);
+				list( $wikiaTitle, $db, $hub, $page_name, $wikia_url, $page_url, $count ) = array_values($res);
 				if ( !empty($servers[$wikia_url]) ) continue;
 				
 				if ( !$noHubDepe ){
