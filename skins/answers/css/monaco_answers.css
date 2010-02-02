@@ -5,7 +5,24 @@
 
 
 
-/* Fixed width */
+/* === TEMPORARY === */
+
+/* kill ads */
+/*.google-ad-unit { display:none; } */
+/* #questionTopAd { display:none; } */
+
+
+/* make the avatars smaller */
+.userInfoBadge img {
+	height: 35px;
+	width: 35px;
+}
+
+#question_attribution h3, #answer_attribution h3 {
+	display: none;
+}
+
+/* === MESSING WITH MONACO === */
 
 .monaco_shrinkwrap {
    left: 50% !important;
@@ -13,7 +30,34 @@
    width: 1010px !important;
 }
 
-/* Basics */
+#background_strip { border-bottom: none; }
+
+#link_box_dynamic img {
+       background:transparent url(http://images1.wikia.nocookie.net/test123/images/d/d7/Sprite.png?20091113)
+}
+
+.activityfeed img.sprite {
+       background:transparent url(http://images1.wikia.nocookie.net/test123/images/d/d7/Sprite.png?20091113)
+}
+
+#search_button {
+       background:transparent url(http://images3.wikia.nocookie.net/test123/images/9/95/Search.png?201001.1)
+}
+
+/* This only appears for registered users */
+#page_bar {
+       background-image: none;
+       font-size: 9pt;
+       color: #555;
+       font-family:"Helvetica Neue",Helvetica,Arial,default;
+       margin: 0px;
+       background-color:#F8F8F8;
+}
+
+
+
+
+/* === THESE AFFECT THE WHOLE PAGE === */
 
 #wikia_page {
 border-color:#EEEEEE;
@@ -23,25 +67,22 @@ border-color:#EEEEEE;
        margin-top:4px;
 }
 
+#article { padding:0 10px 10px; }
+
 body {
-       color: #444;
+       color: #514833;
        font-size:80%;
+       font-family:"Helvetica Neue",Helvetica,Arial,default;
 }
 
 a:link {color: #369; text-decoration: none; }
 a:active {color: #369; text-decoration: none; }
 a:visited {color: #369; text-decoration: none; }
 a:hover {color: #369; text-decoration: underline; }
-
+/* Important to override the inline styles */
 a.new {color:#BA5500 !important;}
 
-#wikiaBranding a {color:#888;}
-#userData a {color:#888;}
-#wikia_corporate_footer a {color:#888;}
-
-#wikia_corporate_footer {
-       color:#888;
-}
+/* Default monaco style names for anything I've missed */
 
 .color1 {
    background-color: #FFF;
@@ -63,124 +104,32 @@ a.new {color:#BA5500 !important;}
 }
 
 .neutral {
-		background-color: #555; /*a color that offsets slightly from the main article background color*/
+		background-color: none; /*a color that offsets slightly from the main article background color*/
 		border-color: #FFF; /*a border color that looks good*/
 		color: #000000; /*text color that looks appropriate on the background-color*/
 }
 
-.widget {
-	border: none;
-	background-color: #f5f5f5;
-	color: #666;
-}
-
-#article {
-	padding:0 10px 10px;
-}
-
-/* Social Profile page tweaks */
-
-#profile-toggle-button { display:none; }
-
-.user-section-heading {
-	margin-top: 35px;
-	border: none;
-}
-
-.user-section-title {
-	font-weight:bold;
-	letter-spacing:-0.8px;
-}
 
 
-/* Other tweaks */
-
-#background_strip { border-bottom: none; }
-#wikia_header { border-bottom: none; }
-
-#wikiaBranding { padding-top:22px; }
 
 
-/* Style the "ask" button at the top */
-#ask_button {
-    color: #333;
-    background: #eee;
-    font-weight: bold;
-    font-size: 111%;
-    border: 1px solid #ddd;
-}
-
-#ask_button:hover {
-  color: #FFF;
-  background: #333;
-}
+/* === THESE ARE ELEMENTS TO BE HIDDEN === */
 
 body.page-Wikianswers h1.firstHeading, body.page-Wikianswers #contentSub { display:none; }
-
-/* tweaks to the category field */
-
-#catlinks {
-	border:medium none;
-	width:478px;
-	margin-top: 0px;
-}
-
-#mw-normal-catlinks {
-    padding-bottom:3px;
-    color: #ccc;
-}
-
-#csAddCategorySwitch a {
-    font-weight: bold !important;
-    color: #555 !important;
-}
-
-#search_field { border:1px solid #eee; }
-
-#request_wiki {
-       text-decoration:none;
-       margin-left: 5px;
-       font-size: 10pt !important;
-       color: #ddd;
-}
-
-#page_bar {
-       background-image: none;
-       font-size: 9pt;
-       color: #555;
-       font-family:"Helvetica Neue",Helvetica,Arial,default;
-}
-
-#siteSub {
-       font-size:10pt;
-       font-weight:normal;
-       color:#AAAAAA;
-       display:block;
-       font-style:normal;
-       letter-spacing:-0.3px;
-       padding-top:8px;
-       text-align:right;
-}
-
+#header_mytalk { display:none; }
 #page_tabs { display: none; }
-
-#link_box_dynamic img {
-       background:transparent url(http://images1.wikia.nocookie.net/test123/images/d/d7/Sprite.png?20091113)
-}
-
-.activityfeed img.sprite {
-       background:transparent url(http://images1.wikia.nocookie.net/test123/images/d/d7/Sprite.png?20091113)
-}
-
-#search_button {
-       background:transparent url(http://images3.wikia.nocookie.net/test123/images/9/95/Search.png?201001.1)
-}
-
 #link_box_table { display: none; }
 #navigation { display: none; }
 #headerButtonHub { display: none; }
 #navigation .Monaco-sidebar_edit { display: none; }
 body.mainpage .firstHeading { display:none; }
+.usermessage { display:none; }
+
+
+
+
+
+/* === THESE AFFECT SPECIFIC ELEMENTS in order from top to bottom === */
 
 /* Change the background image of the logo */
 #wikia_logo {
@@ -190,28 +139,51 @@ body.mainpage .firstHeading { display:none; }
         width: 198px;
 }
 
-#siteSub {
-	display: block; /* monaco css hides this */
+/* The header row: Username, My Home, My Talk and so on */
+#wikiaBranding a { color:#888; }
+#userData a { color:#888; }
+#wikia_corporate_footer { color:#888; }
+#wikia_corporate_footer a { color:#888; }
+#wikia_header { border-bottom: none; }
+#wikiaBranding { padding-top:22px; }
+
+/* Create a wiki link */
+#request_wiki {
+       text-decoration:none;
+       margin-left: 5px;
+       font-size: 10pt !important;
+       color: #ddd;
 }
 
-/* Answers specific layout for question pages */
-/* Search field */
+/* tagline */
+#siteSub {
+       font-size:10pt;
+       font-weight:normal;
+       color:#AAAAAA;
+       display:block;
+       font-style:normal;
+       letter-spacing:-0.3px;
+       padding-top:8px;
+}
 
+/* ask box */
 #answers_ask input.header_field {
 	font-size:16pt;
-	width:665px;
-	border:1px solid #AACCFF;
+	width:384px;
+	border:1px solid #A5BF5E;
 }
 
 #answers_ask {
-	background:#F8F8F8 none repeat scroll 0 0;
-	border:1px solid #EEEEEE;
+	background:#CEE296 none repeat scroll 0 0;
+	border-top: 3px solid #699000;
 	font-size:16pt;
 	padding:15px;
+	width:458px;
+	margin-bottom:30px;
 }
 
 #answers_ask_heading {
-	color:#2277CC;
+	color:#699000;
 	font-size:13pt;
 	font-weight:bold;
 	letter-spacing:-0.5px;
@@ -219,41 +191,64 @@ body.mainpage .firstHeading { display:none; }
 }
 
 #ask_wrapper {
-	padding-left:10px;
+/*	padding-left:10px; */
 }
 
-/* Special article layout */
-#answers_article {
-	line-height: normal; /* set to 1.5 in monaco article. Why? */
 
+/* Style the "ask" button at the top */
+#ask_button {
+    color: #fff;
+    background: #008900;
+    font-weight: bold;
+    font-size: 111%;
+    border:1px solid;
 }
 
-#question_heading {
-        font-size: 15pt;
-        color:#676767;
-		font-weight:bold;
-		letter-spacing:-0.8px;
+#ask_button:hover {
+  color: #008900;
+  background: #fff;
 }
 
-#answer_heading {
-        font-size: 15pt;
-        color:firebrick;
-		font-weight:bold;
-		letter-spacing:-0.8px;
+
+/* Category field */
+
+#catlinks {
+	border:medium none;
+	width:478px;
+	margin-top: 0px;
+	background-color: #ECEDF7;
+	padding:0 5px 10px;
+	margin-bottom:30px;
 }
 
-#question_level {
-	clear: both;
+#mw-normal-catlinks {
+    padding-bottom:3px;
+    color: #ccc;
 }
 
-#answer_level {
-	clear: left;
+#mw-normal-catlinks span a:link {
+    background: #fff;
+    padding: 2px;
 }
 
-#related_level {
-	clear: left;
+#mw-normal-catlinks span a:visited {
+    background: #fff;
+    padding: 2px;
 }
 
+#mw-normal-catlinks span a:hover {
+    background: #A1A4F7;
+    padding: 2px;
+    text-decoration:none;
+    color: #fff;
+}
+
+#csAddCategorySwitch a {
+/*    font-weight: bold !important; */
+    color: #555 !important;
+}
+
+/* article setup */
 .answers-article-left {
 	float: left;
 	width: 468px;
@@ -277,20 +272,58 @@ body.mainpage .firstHeading { display:none; }
 	padding-bottom:0px;
 }
 
+#answers_article {
+/* set to 1.5 in monaco article. Why? */
+/*	line-height: normal; */
+}
+
+/* Right not, this only affects the answer article */
+#p {
+	font-size: 125%;
+}
+
+#question_heading {
+        font-size: 170%;
+		font-weight:bold;
+		letter-spacing:-0.8px;
+		line-height:1.4em;
+		color: #000;
+}
+
+#question_level {
+	clear: both;
+}
+
+#answer_level {
+	clear: left;
+}
+
+#related_level {
+	clear: left;
+}
+
+#answer_heading {
+        font-size: 15pt;
+        color:firebrick;
+		font-weight:bold;
+		letter-spacing:-0.8px;
+}
+
 #question_box {
-	margin-bottom: 25px;
 	padding: 10px;
-	background-color: #f8f8f8;
-	border-top: 1px solid #ddd;
-	border-bottom: 1px solid #ddd;
+	background-color: #ECEDF7;
+	border-top: 3px solid #A1A4F7;
 }
 
 #answer_box {
 	margin-bottom: 25px;
 	padding: 10px;
-	background-color: #f8f8f8;
-	border-top: 1px solid #ddd;
-	border-bottom: 1px solid #ddd;
+	background-color: #ECEDF7;
+/*	border-top: 3px solid #A1A4F7; */
+}
+
+#answer_content {
+    font-size:120%;
 }
 
 #article_save_button {
@@ -312,6 +345,7 @@ body.mainpage .firstHeading { display:none; }
 }
 
 #answer_edit_link a:link, #question_edit_link a:link { color:#bbb; }
+#answer_edit_link a:visited, #question_edit_link a:visited { color:#bbb; }
 #answer_edit_link a:hover, #question_edit_link a:hover {color: #369; text-decoration: none; }
 
 .answer-input {
@@ -323,14 +357,38 @@ body.mainpage .firstHeading { display:none; }
 }
 
 #answers_category_select {
-	margin-bottom: 20px;
+/*	margin-bottom: 20px; */
 }
 
+#related_questions ul {
+	margin: 0px;
+}
+
+#questionBar {
+	width: 493px;
+}
+#questionBarList {
+	float: right;
+	list-style-image: none;
+}
+#questionBarList li {
+	background-color: #DDD;
+	float: left;
+	white-space: nowrap;
+	margin:5px;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	list-style-image:none;
+	list-style-type:none;
+}
+
+/* Related questions */
 #related_questions {
 	padding: 10px;
 	background-color: #f8f8f8;
-	border-top: 1px solid #ddd;
-	border-bottom: 1px solid #ddd;
+	border-top: 3px solid #ddd;
 }
 
 #related_questions h2 {
@@ -342,35 +400,77 @@ body.mainpage .firstHeading { display:none; }
 	padding: 0px;
 }
 
-#related_questions ul {
-	margin: 0px;
+
+
+
+/* === LEFT NAV === */
+
+#search_box {
+	background-image: none;
+	background:#CEE296 none repeat scroll 0 0;
+	border:1px solid #A5BF5E;
 }
 
-/* Misc */
-.adunit {
-	border: 1px dashed black;
-	font-size:30pt;
-	text-align: center;
+#search_field { border:1px solid #A5BF5E; }
+
+.widget {
+	border: none;
+	background-color: none;
 }
 
-/** User edit points **/
+.WidgetCommunity .toolbar {
+	background-color: #fff;
+}
+
+.widget dt {
+       font-family:"Helvetica Neue",Helvetica,Arial,default;
+}
+
+.neutral {
+	background-color: fff;
+}
+
+.WidgetCommunity .widgetfeed li {
+    margin-bottom:12px;
+    font-size: 90%;
+    color: #aaa;
+}
+
+.activity-ns-0 a:link { color:#888; }
+.activity-ns-0 a:visited { color:#888; }
+.activity-ns-0 a:hover { color:#369; text-decoration:none }
+
+.activity-ns-0 a{
+    font-size: 90%;
+}
+
+
+/* === ATTRIBUTION === */
+
+#question_attribution, #answer_attribution {
+	text-align:right;
+}
+
+#question_attribution h3, #answer_attribution h3 {
+	font-weight: normal;
+}
+
 .answer-title {
 	padding: 0px; /* Override the padding of 0.5em on monaco css */
 }
 
 .contributors, ul.contributors, ol.contributors {
-	margin: 5px 5px 5px 0px;
+	margin: 0px;
 }
 
 .contributors li, ul.contributors li,
 ol.contributors li {
-	float: left;
-	margin: 5px;
+	float: right;
+/*	margin: 5px; */
 }
 
-
 .userInfoBadgeAvatarWrapper{
-	float:left;
+	float:right;
 	height:100%;
 	padding: 2px !important;
 	margin-right: 5px !important;
@@ -379,32 +479,37 @@ ol.contributors li {
 .userInfoBadge img{
 	border: solid 1px #aaa;
 	width:100%;
-	width:50px;
+/*	width:50px; */
 }
 
 .userInfo {
 	display:inline;
-	margin-top: 8px !important;
+/*	margin-top: 8px !important; */
 	padding: 0 10px 0 0 !important;
 	height:100%;
 	margin-left: 62px;
 	width:auto;
 }
+
 .userInfoNoAvatar {
 	margin-top:0px !important;
 	display:inline;
 }
+
 ul.userInfoNoAvatar, ul.userInfoNoAvatar div.userPoints,
 ol.userInfoNoAvatar, ol.userInfoNoAvatar div.userPoints {
 	font-size:0.92em !important;
 }
+
 .userInfoNoAvatar, .userInfoNoAvatar * {
 	color:#888;
 	font-weight:normal !important;
 }
+
 li .userInfoNoAvatar:hover a{
 	color:#00c !important;
 }
+
 /* Filter IE < 7; XML namespace isn't updated when user's lang pref changes */
 *:lang(en) .userInfo {
 	float: left;
@@ -469,9 +574,31 @@ div.userInfoNoAvatar .userPoints {
 	padding-left: 10px;
 }
 
+
+
+
+/* === SOCIAL PROFILE PAGE === */
+
+#profile-toggle-button { display:none; }
+
+.user-section-heading {
+	margin-top: 35px;
+	border: none;
+}
+
+.user-section-title {
+	font-weight:bold;
+	letter-spacing:-0.8px;
+}
+
+
+
+
+/* === ADS === */
+
 /* Google js ads */
 .google-ad-unit {
-	clear:both;
+/*	clear:both; */
 	margin-top:10px;
 	position:relative;
 }
@@ -513,22 +640,8 @@ div.userInfoNoAvatar .userPoints {
 	font-style:normal;
 }
 
-#questionBar {
-	width: 493px;
-}
-#questionBarList {
-	float: right;
-	list-style-image: none;
-}
-#questionBarList li {
-	background-color: #DDD;
-	float: left;
-	white-space: nowrap;
-	margin:5px;
-	padding-left: 5px;
-	padding-right: 5px;
-	padding-top: 2px;
-	padding-bottom: 2px;
-	list-style-image:none;
-	list-style-type:none;
+.adunit {
+	border: 1px dashed black;
+	font-size:30pt;
+	text-align: center;
 }
