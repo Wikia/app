@@ -401,8 +401,12 @@ div.templateEditorDialog .cke_browser_ie .cke_dialog_body {
 	text-align: left;
 }
 
-.templateEditorDialog .cke_dialog_footer .cke_dialog_ui_hbox_last {
+.templateEditorDialog .cke_dialog_footer .cke_dialog_ui_hbox_child {
 	text-align: right;
+}
+
+.templateEditorDialog .cke_dialog_footer .cke_dialog_ui_hbox_last {
+	display: none; /* hide fake "Cancel" button */
 }
 
 /* fix alignment of "Preview" button */

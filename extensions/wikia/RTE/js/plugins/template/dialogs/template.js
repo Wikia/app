@@ -27,7 +27,9 @@ CKEDITOR.dialog.add('rte-template', function(editor)
 					RTE.templateEditor.selectStep(1);
 				}
 			},
-			CKEDITOR.dialog.okButton
+			CKEDITOR.dialog.okButton,
+			// "fake" Cancel button to let the user close this dialog by pressing ESC (RT #37696)
+			CKEDITOR.dialog.cancelButton
 		],
 		contents: [
 			{
