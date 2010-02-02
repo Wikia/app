@@ -443,6 +443,7 @@ class CorporateBaseTemplate extends QuickTemplate {
 			</div><!-- END .shrinkwrap -->
 
 		</footer>
+		<div id="positioned_elements" class="reset"></div>
 <?php
 	} // END: function GlobalFooter
 } // end of class

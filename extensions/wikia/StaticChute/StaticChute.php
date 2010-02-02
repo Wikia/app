@@ -245,6 +245,7 @@ class StaticChute {
 			'common/yui300css-reset-min.css',
 			'common/wikia-ui.css',	
 			'common/shared.css',
+			'corporate/css/modal.css',
 			'corporate/css/main.css',
 		);
 	}
