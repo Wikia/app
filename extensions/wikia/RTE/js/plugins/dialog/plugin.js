@@ -52,14 +52,14 @@ CKEDITOR.plugins.add('rte-dialog',
 							// ESC, ENTER
 							var preventKeyBubblingKeys = { 27 :1, 13 :1 };
 							if (e.data.getKeystroke() in preventKeyBubblingKeys) {
-								e.data.stopPropagation();
-
 								// check if suggestion is shown
 								var suggestBox = self._.suggestContainer;
 
 								if (suggestBox.css('visibility') != 'hidden') {
 									// set the flag
 									self._.dontHide = true;
+
+									e.data.stopPropagation();
 
 									// hide suggest box
 									suggestBox.css('visibility', 'hidden');
@@ -68,7 +68,7 @@ CKEDITOR.plugins.add('rte-dialog',
 						});
 					};
 
-					this.on('ok', function(ev) {
+					var eventCallback = function(ev) {
 						// prevent dialog hiding
 						if (this._.dontHide) {
 							RTE.log('dialog hide prevented');
@@ -77,8 +77,10 @@ CKEDITOR.plugins.add('rte-dialog',
 							// unset this flag
 							this._.dontHide = false;
 						}
-					});
+					};
 
+					this.on('ok', eventCallback);
+					this.on('cancel', eventCallback);
 					// fix - end
 				}
 				else {
