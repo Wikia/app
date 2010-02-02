@@ -56,13 +56,6 @@ $messages['br'] = array(
 	'createpage-dialog-title' => 'Krouiñ ur Pennad Nevez',
 );
 
-/** German (Deutsch) */
-$messages['de'] = array(
-	'createpage-sp-title' => 'Neue Seite anlegen',
-	'createpage_title' => 'Neue Seite anlegen',
-	'createpage_title_caption' => 'Seitentitel:',
-);
-
 /** Greek (Ελληνικά)
  * @author Περίεργος
  */
@@ -301,3 +294,34 @@ $messages['zh-tw'] = array(
 	'createpage_enter_text' => '輸入文字',
 );
 
+
+$messages['no'] = array(
+	'createpage-sp-title' => 'Skriv en ny artikkel',
+	'createpage_title' => 'Skriv en ny artikkel',
+	'createpage_title_caption' => 'Tittel:',
+	'createpage_enter_text' => 'Tekst:',
+	'createpage_empty_title_error' => 'Tittel påkrevd',
+	'createpage_empty_article_body_error' => 'Artikkeltekst påkrevd',
+	'createpage_invalid_title_error' => 'Ugyldig tittel',
+	'createpage_article_already_exists' => 'En artikkel med det navnet eksisterer allerede, vennligst velg et annet navn',
+	'createpage_spam' => 'Beklager, endringen din kunne ikke lagres',
+	'createpage_cant_edit' => 'Kunne ikke utføre endringen',
+);
+
+
+$messages['de'] = array(
+	'createpage_title' => 'Neue Seite anlegen',
+	'createpage_title_caption' => 'Seitentitel:',
+	'createpage-dialog-title' => 'Erstelle einen neuen Artikel',
+	'createpage-dialog-message1' => 'Du erstellst einen neuen Artikel!',
+	'createpage-dialog-message2' => 'Wie soll der Artikel heißen?',
+	'createpage-dialog-choose' => 'Wähle ein Seitenlayout aus:',
+	'createpage-dialog-format' => 'Vorformatiert',
+	'createpage-dialog-blank' => 'Leere Seite',
+	'createpage-error-empty-title' => 'Bitte gib einen Titel für den Artikel an',
+	'createpage-error-invalid-title' => 'Ungültiger Titel. Bitte wähle einen gültigen Titel.',
+	'createpage-error-article-exists' => 'Ein Artikel mit dem selben Titel existiert bereits. Gehe zu <a href="$1">$2</a> oder wähle einen anderen Titel',
+	'createpage-error-article-spam' => 'Der Titel wurde vom Spamfilter blockiert, bitte wähle einen anderen.',
+	'createpage-error-article-blocked' => 'Du kannst im Moment keinen Artikel erstellen.',
+	'tog-createpagedefaultblank' => 'Wähle „Leere Seite“ als Standard bei Erstellung neuer Seiten',
+);
