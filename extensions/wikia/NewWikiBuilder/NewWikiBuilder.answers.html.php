@@ -19,17 +19,45 @@ NWB.changeTheme("Sapphire", false);
 		</div>
 	</div>
 	<?php echo wfMsgForContent("anwb-step1-text")?>
-	<form id="step1_form" name="step1_form"><!-- Name needed for selenium tests -->
-		<textarea name="tagline" id="desc_textarea"></textarea>
+	<form id="step1_form" name="step1_form" onsubmit=""><!-- Name needed for selenium tests -->
+		<textarea name="tagline" id="tagline_textarea"></textarea>
 	</form>
 
 	<script type="text/javascript">
 	// Pull in existing tagline
+        Mediawiki.apiCall({action: "query", meta: "allmessages", ammessages: "tagline"}, 
+		function (result){
+			$("#tagline_textarea").val(result.query.allmessages[0]['*']);
+		}
+	);
+
+	function saveTagline(){
+           Mediawiki.waiting();
+	   Mediawiki.editArticle({
+                  "title": "MediaWiki:Tagline",
+                  "section": 0,
+                  "text": $("#tagline_textarea").val()},
+                  function(result){
+                          var cresult = Mediawiki.checkResult(result);
+                          if (cresult !== true) {
+                                if (result.error.code == "readonly"){
+                                        NWB.updateStatus(NWB.msg("nwb-readonly-try-again"), true);
+                                } else {
+                                        NWB.apiFailed(null, result.error.info, null);
+                                }
+                          } else {
+                                NWB.updateStatus(NWB.msg("nwb-description-saved"), false, NWB.statusTimeout);
+                                NWB.gotostep(2);
+                          }
+                  },
+                  NWB.apiFailed);
+	}
+	Mediawiki.waitingDone();
 	</script>
 </div>
 <div class="nav">
-	<a href="#step2" id="skip_step_1" onclick="WET.byStr('anwb/step1skip');"><?php echo wfMsgForContent("nwb-skip-this-step")?></a> <?php echo wfMsgForContent("nwb-or")?><button onclick="WET.byStr('anwb/step1save');$('#step1_form').submit();"><span><?php echo wfMsgForContent("anwb-save-tagline")?></span></button>
-	<input onclick="$('#step1_form').submit();" type="button" id="hidden_description_submit" style="display:none"><!-- For selenium tests -->
+	<a href="#step2" id="skip_step_1" onclick="WET.byStr('anwb/step1skip');"><?php echo wfMsgForContent("nwb-skip-this-step")?></a> <?php echo wfMsgForContent("nwb-or")?><button onclick="WET.byStr('anwb/step1save');saveTagline();"><span><?php echo wfMsgForContent("anwb-save-tagline")?></span></button>
+	<input onclick="$('#step1_form').submit();" type="button" id="hidden_tagline_submit" style="display:none"><!-- For selenium tests -->
 </div>
 </li>
 
