@@ -7,7 +7,7 @@
 
 <div class="awc-title"><?=wfMsg('autocreatewiki-success-title')?></div>
 <br />
-<div style="font-style: normal;" class="clearfix" id="nwb_link">
+<div style="font-style: normal;" id="nwb_link">
 
         <div style="text-align: center;">
                 <a href="<?=$domain?>wiki/Special:NewWikiBuilder" class="wikia_button" onclick="WET.byStr('nwb/getstarted')"><span><?=wfMsg('autocreatewiki-success-get-started')?></span></a>

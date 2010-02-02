@@ -85,7 +85,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Colors. */
 .neutral {
 	background-color: #F5F5F5;
-	border: 1px solid #CCC;
+	border-color: #CCC;
 	color: #333;
 }
 .accent {
@@ -422,6 +422,12 @@ header a, #CompanyInfo a, footer a {
 	position: relative;
 	top: 100px;
 	text-align: center;
+}
+#MainArticle .wikia_button span {
+	font-size: 9pt;
+}
+#MainArticle .note {
+	font-size: 9pt;
 }
 
 /* @end */

@@ -106,7 +106,7 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 <?php if ( $wgUser->isAllowed( 'createwikimakefounder' ) ) : ?>
 	<div class="formblock">
 		<ul>
-			<li class="label"><label><?=wfMsg('yourname')?>:</label></li>
+			<li class="label"><label><?=wfMsg('yourname')?></label></li>
 			<li class="data1">
 				<input type="text" maxlength="245" autocomplete="off" name="wiki-staff-username" id="wiki-staff-username" value="<?=@$params['wiki-staff-username']?>" style="width:145px" /> <span class="error-status" id="wiki-staff-username-error-status">&nbsp;</span>
 				<div class="error" style="display: none;" id="wiki-staff-username-error"></div>
@@ -218,7 +218,7 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 		</ul>
 	</div>
 <?php endif ?>
-	<div class="toolbar color1 clearfix">
+	<div class="toolbar neutral">
 		<input type="submit" value="<?php echo wfMsg( "autocreatewiki") ?>" name="wiki-submit" id="wiki-submit" />
 		<input type="reset" value="<?php echo wfMsg( "cancel" ) ?>" name="wiki-cancel" id="wiki-cancel" />
 	</div>
