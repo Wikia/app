@@ -6,6 +6,8 @@
  * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia.com> for Wikia Inc.
  * @copyright (C) 2010, Wikia Inc.
  * @licence GNU General Public Licence 2.0 or later
+ *
+ * @see http://www.pui.ch/phred/archives/2005/04/tags-database-schemas.html
  */
 
 // use tables
@@ -26,7 +28,7 @@
 //	  CONSTRAINT FOREIGN KEY (`tag_id`) REFERENCES `city_tag` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 //	) ENGINE=InnoDB;
 //
-// http://www.pui.ch/phred/archives/2005/04/tags-database-schemas.html
+//
 
 global $wgAjaxExportList;
 $wgAjaxExportList[] = "WikiFactoryTags::axQuery";
