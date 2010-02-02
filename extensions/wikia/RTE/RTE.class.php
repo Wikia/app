@@ -829,6 +829,11 @@ HTML
 			$fVersion = (float)substr($sAgent, strpos($sAgent, 'Opera/') + 6, 4) ;
 			$ret = ($fVersion >= 9.5) ;
 		}
+		else if ( strpos($sAgent, 'Mobile') !== false && strpos($sAgent, 'Safari') !== false )
+		{
+			// disable for mobile devices from Apple (RT #38829)
+			$ret = false;
+		}
 		else if ( preg_match( "|AppleWebKit/(\d+)|i", $sAgent, $matches ) )
 		{
 			$iVersion = $matches[1] ;
