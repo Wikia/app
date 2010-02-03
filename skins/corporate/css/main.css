@@ -88,6 +88,10 @@ h1, h2, h3, h4, h5, h6 {
 	border-color: #CCC;
 	color: #333;
 }
+.color1 {
+	background-color: #002f55;
+	color: #FFF;
+}
 .accent {
 	background-color: #dae2fd;
 	border: 1px solid #8d9da7;
@@ -935,6 +939,20 @@ footer {
 }
 #MainArticle .mw-search-results a {
 	font-size: 16px;
+}
+
+/* @end */
+
+/* @group Modal windows */
+.modalWrapper p, .modalWrapper div {
+	font-size: 1.3em;
+	line-height: normal;
+}
+.modalWrapper .modalTitle {
+	font-size: 1.5em;
+}
+.modalWrapper p *, .modalWrapper div * {
+	font-size: 1em;
 }
 
 /* @end */
