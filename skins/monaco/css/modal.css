@@ -172,24 +172,6 @@ h1.modalTitle div {
 	margin-right:10px;
 }
 
-#userloginInnerErrorBox,#wpError {
-	margin-left: 10px;
-}
-
-#userloginInnerErrorBox strong{
-	font-weight: bold;
-}
-
-#userloginInnerErrorBox ul {
-	margin:0.3em 0 0 1.5em;
-}
-
-#userloginInnerErrorBox li {
-	line-height:1.5em;
-	list-style-image:url(http://images.wikia.com/common/skins/monobook/bullet.gif);
-	list-style-type:square;
-}
-
 .wpAjaxRegisterTable .sprite,#userloginErrorBox .sprite,#userloginErrorBox2 .sprite,#userloginErrorBox3 .sprite
 {
 	clip:rect(0px, 624px, 16px, 608px);

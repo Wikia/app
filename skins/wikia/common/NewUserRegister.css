@@ -220,3 +220,25 @@ div#userlogin .inputError {
 	line-height: normal;
 }
 /* @end */
+
+/* @group Error box on Special:Signup */
+#userloginInnerErrorBox,#wpError {
+	margin-left: 10px;
+}
+
+#userloginInnerErrorBox strong{
+	font-weight: bold;
+}
+
+#userloginInnerErrorBox ul {
+	margin: 0.3em 0 0 1.5em;
+	padding: 0;
+}
+
+#userloginInnerErrorBox li {
+	line-height: 1.5em;
+	list-style-image: url(http://images.wikia.com/common/skins/monobook/bullet.gif);
+	list-style-type: square;
+	margin: 0 0 0.1em;
+}
+/* @end */
