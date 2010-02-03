@@ -1457,14 +1457,6 @@ if (!empty($wgEnableAdInvisibleHomeTop) && ArticleAdLogic::isMainPage()){
 	echo '<script type="text/javascript" src="/extensions/wikia/AdEngine/AdEngine.js"></script>' . "\n";
 	echo AdEngine::getInstance()->getAd('INVISIBLE_TOP');
 }
-
-// Also for ad-ops, this is the HTML code for the interstitial overlay (whether
-// it actually shows up is determined by javascript).
-global $wgAdsInterstitialsEnabled;
-if($wgAdsInterstitialsEnabled){
-	echo interstitialHtml();
-}
-
 ?>
 <?php
 	// add hidden login-box, so firefox can fill it using stored login/password
