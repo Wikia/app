@@ -1191,7 +1191,7 @@ class AutoCreateWikiPage extends SpecialPage {
 				global $wgExternalSharedDB;
 				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 				$dbw->update(
-					'user',
+					'`user`',
 					array( 'user_birthdate' => date('Y-m-d', $userBirthDay) ),
 					array( 'user_id' => $user_id ),
 					__METHOD__
