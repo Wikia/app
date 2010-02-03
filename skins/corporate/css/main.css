@@ -941,6 +941,10 @@ footer {
 	font-size: 16px;
 }
 
+#termsOfUse p{
+	font-size: 100% !important
+}
+
 /* @end */
 
 /* @group Modal windows */
