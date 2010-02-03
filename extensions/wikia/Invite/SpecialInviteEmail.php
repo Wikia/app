@@ -150,7 +150,7 @@ class InviteEmail extends UnlistedSpecialPage {
 				break;
 			default:
 				$this->track = 3;
-				$register =  Title::makeTitle( NS_SPECIAL  , "UserRegister"  );
+				$register =  Title::makeTitle( NS_SPECIAL  , "Signup"  );
 				$user_title = Title::makeTitle( NS_USER , $wgUser->getName()  );
 				$email["subject"] = wfMsgExt( 'invite_subject', "parsemag", 
 							$user_label
@@ -160,7 +160,7 @@ class InviteEmail extends UnlistedSpecialPage {
 							$user_label,
 							$user_label,
 							$title->getFullURL(),
-							$register->getFullURL("from=1&referral=" . urlencode($user_title->getDBKey()))  
+							$register->getFullURL())  
 							);
 				break;
 		}
@@ -207,7 +207,7 @@ class InviteEmail extends UnlistedSpecialPage {
 			<div class=\"invite-email-content\">
 				<p class=\"invite-email-title\">" . wfMsgForContent( 'invite_customize_email' ) . "</p>
 				<p class=\"email-field\">" . wfMsgForContent( 'invite_customize_subject' ) . "</p>
-				<p class=\"email-field\"><input type=\"text\" name=\"subject\" id=\"subject\" value=\"{$email["subject"]}\"></p>
+				<p class=\"email-field\"><input type=\"text\" name=\"subject\" id=\"subject\" value=\"{$email["subject"]}\" size=\"40\"></p>
 				<p class=\"email-field\">" . wfMsgForContent( 'invite_customize_body' ) . "</p>
 				<p class=\"email-field\"><textarea name=\"body\" id=\"body\" rows=\"15\" cols=\"45\" wrap=\"hard\">{$email["body"]}</textarea></p>
 				<div class=\"email-buttons\"><input type=\"button\" class=\"site-button\" onclick=\"document.email.submit()\" value=\"" . wfMsgForContent( 'invite_customize_send' ) . "\"></div>
