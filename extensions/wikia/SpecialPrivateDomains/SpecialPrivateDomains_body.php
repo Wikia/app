@@ -80,7 +80,7 @@ class PrivateDomains extends SpecialPage {
 		$userGroups = $wgUser->getGroups();
 		if ( !in_array('staff', $userGroups ) && !in_array('bureaucrat', $userGroups) ) {
 
-			$wgOut->addHTML(wfMsg('privatedomains_ifemailcontact'));
+			$wgOut->addHTML( "<p>" . wfMsg('privatedomains_ifemailcontact' ) . "</p>" );
 
 			$privatedomains_emailadmin = PrivateDomains::getParam("privatedomains_emailadmin");
 
@@ -95,8 +95,8 @@ class PrivateDomains extends SpecialPage {
 			$wgOut->addHTML('<div class="errorbox" style="width:92%;"><h2>' . $msg . '</h2></div><br><br><br>');
 		}
 
-		$wgOut->addHTML("<form name=\"privatedomains\" id=\"privatedomains\" method=\"post\" action=\"{$action}\"><label for=\"affiliateName\">" . wfMsg('privatedomains_affiliatenamelabel') .  "</label>" . wfMsg( 'word-separator' ) . "<input type='text' name=\"affiliateName\"  width=30 value=\"" . $this->getParam('privatedomains_affiliatename') ."\"><label for=\"optionalEmail\">" . wfMsg('privatedomains_emailadminlabel') . "</label>" . wfMsg( 'word-separator' ) . "<input type='text' name=\"optionalPrivateDomainsEmail\" value=\"" . $this->getParam('privatedomains_emailadmin') . "\">");
-		$wgOut->addHTML(wfMsg('privatedomainsinstructions'));
+		$wgOut->addHTML("<form name=\"privatedomains\" id=\"privatedomains\" method=\"post\" action=\"{$action}\"><label for=\"affiliateName\"><br />" . wfMsg('privatedomains_affiliatenamelabel') .  "</label>" . wfMsg( 'word-separator' ) . "<input type='text' name=\"affiliateName\"  width=30 value=\"" . $this->getParam('privatedomains_affiliatename') ."\"><label for=\"optionalEmail\"><br />" . wfMsg('privatedomains_emailadminlabel') . "</label>" . wfMsg( 'word-separator' ) . "<input type='text' name=\"optionalPrivateDomainsEmail\" value=\"" . $this->getParam('privatedomains_emailadmin') . "\">");
+		$wgOut->addHTML("<br /><br /><p>" . wfMsg( 'privatedomainsinstructions' ) . </p> );
 		$wgOut->addHTML("<textarea name='listdata' rows=10 cols=40>" . $this->getParam('privatedomains_domains') . "</textarea>");
 		$wgOut->addHTML("<br><input type='submit' name=\"saveList\" value=\"" . wfMsgHtml('saveprefs') . "\" />");
 		$wgOut->addHTML("</form>");
