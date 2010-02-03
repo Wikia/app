@@ -286,7 +286,7 @@ class AutoCreateWikiLocalJob extends Job {
 			$wgUser->addToDatabase();
 		}
 		if(	empty($wgWikiaKeyPages ) ) {
-			$wgWikiaKeyPages = array ( 'Image:Wiki.png', 'Image:Wiki_wide.png', 'Image:Favicon.ico' );
+			$wgWikiaKeyPages = array ( 'File:Wiki.png', 'File:Favicon.ico' );
 		}
 
 		/**
