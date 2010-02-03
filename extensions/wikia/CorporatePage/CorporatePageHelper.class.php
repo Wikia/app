@@ -260,8 +260,10 @@ class CorporatePageHelper{
 
 			case NS_PROJECT:
 			case NS_PROJECT_TALK:
-				//"Project" namespace hardcoded because MW will rename it to name of redirecting page - not the destination wiki
-				$redirect = 'http://community.wikia.com/wiki/Project:' . $title->getPartialURL();
+				if (!$title->exists()) {
+					//"Project" namespace hardcoded because MW will rename it to name of redirecting page - not the destination wiki
+					$redirect = 'http://community.wikia.com/wiki/Project:' . $title->getPartialURL();
+				}
 				break;
 
 			case NS_CATEGORY:
