@@ -36,7 +36,7 @@ $(function() {
 			return false;
 		});
 
-		$("#ca-viewsource, #te-editanon").click(function(e){
+		 $("#ca-viewsource").add("#te-editanon").add("#mr-submit").click(function(e){
 			showComboAjaxForPalceHolder(false, "", function(){
 				AjaxLogin.doSuccess = function() {
 					if( e.target.nodeName == "SPAN" ){
