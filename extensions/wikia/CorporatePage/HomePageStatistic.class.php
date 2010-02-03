@@ -77,7 +77,7 @@ class HomePageStatistic
 		foreach ($out as $key => $value){
 			$out[$key]['level'] = $outLevel;
 			$out[$key]['real_pagename'] = $out[$key]['page_name'];
-			$out[$key]['page_name'] = str_replace('_' ,' ' , $out[$key]['page_name']);
+			$out[$key]['page_name'] = urldecode( str_replace('_' ,' ' , $out[$key]['page_name']) );
 			if ( empty($out[$key]['out_of_limit'] )){
 				$level ++;
 				if ($out[$key]['count'] != $out[$key+1]['count']){
@@ -96,4 +96,3 @@ class HomePageStatistic
 		return null;
 	} */
 }
-?>
