@@ -21,7 +21,7 @@ class SolrSearch extends SearchEngine implements SearchErrorReporting {
 			return wfMsg( 'wikiasearch-system-error-msg' );
 		}
 	}
-	
+
 	public function getErrorTracker()
 	{
 		$code = '<script type="text/javascript">
@@ -91,14 +91,14 @@ class SolrSearch extends SearchEngine implements SearchErrorReporting {
 			return null;
 		}
 	}
-	
+
 	public static function addPagerParams( $ops ) {
 		global $wgRequest;
 		$titlesOnly = $wgRequest->getCheck('titlesOnly');
 		if ($titlesOnly) {
 			$ops['titlesOnly'] = 1;
 		}
-		return true; 
+		return true;
 	}
 
 	public static function renderExtraRefinements( $refinements ) {
@@ -114,6 +114,7 @@ class SolrSearchSet extends SearchResultSet {
 
 	private $mCanonicals = array();
 	private $crossWikiaSearch = false;
+	private $suggestions = null;
 
 	/**
 	 * any query string transformation before sending to backend should be placed here
@@ -167,7 +168,9 @@ class SolrSearchSet extends SearchResultSet {
 			'f.html.hl.alternateField' => 'html',
 			'f.html.hl.maxAlternateFieldLength' => 300,
 			'indent' => 1,
-			'fq' => ''
+			'fq' => '',
+			'spellcheck' => 'true',
+			'spellcheck.collate' => 'true'
 		);
 
 		if( $crossWikiaSearch ) {
@@ -208,14 +211,16 @@ class SolrSearchSet extends SearchResultSet {
 		//echo "<pre>";
 		//print_r($response->response);
 		//print_r($response->highlighting);
+		//print_r($response->spellcheck);
 		//exit;
 
 		$resultDocs = $response->response->docs;
 		$resultSnippets = is_object($response->highlighting) ? get_object_vars($response->highlighting) : array();
+		$resultSuggestions = is_object($response->spellcheck) ? $response->spellcheck->suggestions : null;
 		$resultCount = count($resultDocs);
 		$totalHits = $response->response->numFound;
 
-		$resultSet = new SolrSearchSet( $query, $resultDocs, $resultSnippets, $resultCount, $totalHits, $crossWikiaSearch );
+		$resultSet = new SolrSearchSet( $query, $resultDocs, $resultSnippets, $resultSuggestions, $resultCount, $totalHits, $crossWikiaSearch );
 
 		wfProfileOut( $fname );
 		return $resultSet;
@@ -225,13 +230,15 @@ class SolrSearchSet extends SearchResultSet {
 	 * Private constructor. Use SolrSearchSet::newFromQuery().
 	 *
 	 * @param string $query
-	 * @param array $lines
+	 * @param array $results
+	 * @param array $snippets
+	 * @param object $suggestions
 	 * @param int $resultCount
 	 * @param int $totalHits
-	 * @param string $suggestion
+	 * @param bool $crossWikiaSearch
 	 * @access private
 	 */
-	private function __construct( $query, $results, $snippets, $resultCount, $totalHits = null, $crossWikiaSearch = false) {
+	private function __construct( $query, $results, $snippets, $suggestions, $resultCount, $totalHits = null, $crossWikiaSearch = false) {
 		$this->mQuery             = $query;
 		$this->mTotalHits         = $totalHits;
 		if(is_array($results)) {
@@ -241,6 +248,7 @@ class SolrSearchSet extends SearchResultSet {
 			$this->mResults          = array();
 		}
 		$this->mSnippets          = $snippets;
+		$this->suggestions        = $suggestions;
 		$this->mResultCount       = $resultCount;
 		$this->mPos               = 0;
 		$this->crossWikiaSearch   = $crossWikiaSearch;
@@ -291,6 +299,18 @@ class SolrSearchSet extends SearchResultSet {
 
 	function hasResults() {
 		return count( $this->mResults ) > 0;
+	}
+
+	function hasSuggestion() {
+		return empty($this->suggestions->collation) ? false : true;
+	}
+
+	function getSuggestionQuery() {
+		return $this->suggestions->collation;
+	}
+
+	function getSuggestionSnippet() {
+		return $this->suggestions->collation;
 	}
 
 	function numRows() {
