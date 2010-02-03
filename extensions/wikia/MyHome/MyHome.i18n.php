@@ -6,12 +6,15 @@ $messages['en'] = array(
 	'myhome' => 'My Home',
 	'myhome-activity-more' => 'see more recent activity',
 	'myhome-activity-feed' => 'Activity feed',
-	'myhome-activity-feed-empty' => "This wiki is waiting for you to get involved. Click on '''[[Special:CreatePage|New page]]''' to start writing!",
+	'myhome-activity-feed-empty' => "This wiki is waiting for you to get involved.
+Click on '''[[Special:CreatePage|New page]]''' to start writing!",
 	'myhome-watchlist-feed' => 'Watchlist',
-	'myhome-watchlist-feed-empty' => 'You can add pages to your watchlist by clicking the "Watch" link in the bar at the top of the page. You can use your watchlist to keep track of the latest changes to pages that you care about.',
+	'myhome-watchlist-feed-empty' => 'You can add pages to your watchlist by clicking the "Watch" link in the bar at the top of the page.
+You can use your watchlist to keep track of the latest changes to pages that you care about.',
 	'myhome-user-contributions-feed' => 'Contributions',
 	'myhome-hot-spots-feed' => 'Hot Spots',
-	'myhome-hot-spots-feed-empty' => "This wiki is waiting for you to get involved. Click on '''[[Special:CreatePage|New page]]''' to start writing!",
+	'myhome-hot-spots-feed-empty' => "This wiki is waiting for you to get involved.
+Click on '''[[Special:CreatePage|New page]]''' to start writing!",
 	'myhome-hot-spots-newest' => 'New pages on the wiki',
 	'myhome-hot-spots-brandnew' => 'This is a brand-new wiki. Click on [[Special:CreatePage|New page]] to start writing!',
 	'tog-myhomedisableredirect' => 'Disable my redirect to My Home',
@@ -50,12 +53,16 @@ $messages['en'] = array(
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Added video|Added videos}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Added category|Added categories}}',
 
-	'myhome-user-contributions-empty' => 'You can get involved on this wiki by clicking "edit this page" on any article page, and adding what you know. Everybody can make changes, add information or correct a mistake. The wiki is built by the community, and once you click the edit button, you\'re part of the community. Try it out!',
+	'myhome-user-contributions-empty' => 'You can get involved on this wiki by clicking "edit this page" on any article page, and adding what you know.
+Everybody can make changes, add information or correct a mistake.
+The wiki is built by the community, and once you click the edit button, you\'re part of the community.
+Try it out!',
 
 	'myhome-hot-spots-number-of-editors' => 'editors',
 
-	'myhome-log-in' => "<center>The My Home feature is only available if you're logged in.<br><br><big>'''[{{fullurl:Special:Signup|$1}} Please log in to see this page!]'''</big></center>",
-	'myhome-switch-to-monaco' => "The My Home feature is only available if you're using the Monaco skin. If you'd like to see My Home, please visit '''[[Special:Preferences|your Preferences]]''' to change your skin.",
+	'myhome-log-in' => "<center>The My Home feature is only available if you're logged in.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Please log in to see this page!]'''</big></center>",
+	'myhome-switch-to-monaco' => "The My Home feature is only available if you're using the Monaco skin.
+If you'd like to see My Home, please visit '''[[Special:Preferences|your Preferences]]''' to change your skin.",
 
 	'myhome-namespace-blog' => 'Blog',
 
@@ -65,7 +72,8 @@ $messages['en'] = array(
 
 This page helps you stay up to date with what's happening on the wiki.
 
-If you're the founder or an admin on this wiki, you can change this message to talk to the community about important things happening on the site. For example, you could:
+If you're the founder or an admin on this wiki, you can change this message to talk to the community about important things happening on the site.
+For example, you could:
 
 * Organize a project to build up an area of the wiki
 
@@ -355,7 +363,7 @@ $messages['es'] = array(
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Categoría añadida|Categorías añadidas}}',
 	'myhome-user-contributions-empty' => 'Puedes participar en este wiki haciendo clic en el botón "Editar" de cualquier artículo, y añadiendo lo que sepas acerca del mismo. Todos podemos hacer cambios, añadir información o corregir un error. El wiki se construye gracias a la comunidad, y una vez hagas clic en el botón de editar, serás parte de la comunidad. ¡Anímate a intentarlo!',
 	'myhome-hot-spots-number-of-editors' => 'editores',
-	'myhome-log-in' => "<center>La página de inicio solo está disponible si estás idenfiticado<br><br><big>'''<span class=\"plainlinks\">[{{fullurl:Special:UserLogin|\$1}} Por favor, ¡identifícate para ver esta página!]</span>'''</big></center>",
+	'myhome-log-in' => "<center>La página de inicio solo está disponible si estás idenfiticado<br /><br /><big>'''<span class=\"plainlinks\">[{{fullurl:Special:UserLogin|\$1}} Por favor, ¡identifícate para ver esta página!]</span>'''</big></center>",
 	'myhome-switch-to-monaco' => "\"Mi página de inicio\" solo está disponible si usas la apariencia Monaco. Si quieres ver \"Mi página de inicio\", por favor, entra en tus '''[[Special:Preferences|tus preferencias]]''' para cambiar la apariencia.",
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'Rincón de la comunidad',
@@ -670,7 +678,7 @@ $messages['it'] = array(
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Categoria aggiunta|Categorie aggiunte}}',
 	'myhome-user-contributions-empty' => 'Puoi iniziare a collaborare in questo wiki selezionando "modifica questa pagina" presente su ogni articolo, e aggiungi ciò che conosci. Chiunque può effettuare modifiche, aggiungere informazioni o correggere un errore. Il wiki è costruito dalla comunità, e una volta cliccato sul pulsante modifica, diventerai parte della comunità. Provaci!',
 	'myhome-hot-spots-number-of-editors' => 'editori',
-	'myhome-log-in' => "<center>Il servizio My Home è disponibile solo se effettui il log in. <br><br><big>'''<span class=\"plainlinks\">[{{fullurl:Special:UserLogin|\$1}} Accedi per vedere la pagina!]</span>'''</big></center>",
+	'myhome-log-in' => "<center>Il servizio My Home è disponibile solo se effettui il log in. <br /><br /><big>'''<span class=\"plainlinks\">[{{fullurl:Special:UserLogin|\$1}} Accedi per vedere la pagina!]</span>'''</big></center>",
 	'myhome-switch-to-monaco' => "Il servizio My Home è disponibile solo se stai usando lo skin Monaco. Se vuoi visualizzare My Home, modifica le '''[[Special:Preferences|tue Preferenze]]''' per cambiare l'aspetto grafico.",
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => "L'angolo della comunità",
@@ -1161,7 +1169,7 @@ $messages['sv'] = array(
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Lagt till kategori|Lagt till kategorier}}',
 	'myhome-user-contributions-empty' => 'Du kan engagera dig på denna wiki genom att klicka på "Redigera denna sida" på en artikel på sidan, och lägga till vad du vet. Alla kan göra ändringar, lägga till information eller rätta till ett misstag. Wiki är byggd av community, och när du klickar på knappen Redigera, är du en del av community. Prova det!',
 	'myhome-hot-spots-number-of-editors' => 'redigerare',
-	'myhome-log-in' => "<center>My Home funktionen är bara tillgänglig om du är inloggad.<br><br><big>'''<span class=\"plainlinks\">[{{fullurl:Special:UserLogin|\$1}} Vänligen logga in för att se denna sida!]</span>'''</big></center>",
+	'myhome-log-in' => "<center>My Home funktionen är bara tillgänglig om du är inloggad.<br /><br /><big>'''<span class=\"plainlinks\">[{{fullurl:Special:UserLogin|\$1}} Vänligen logga in för att se denna sida!]</span>'''</big></center>",
 	'myhome-switch-to-monaco' => "My Home funktionen är bara tillgänglig om du använder Monaco utseenden. Om du vill se My Home, går du till '''[[Special:Preferences|dina Inställningar]]''' för att ändra din utseende.",
 	'myhome-namespace-blog' => 'Blogg',
 	'myhome-community-corner-header' => 'Community Hörn',
