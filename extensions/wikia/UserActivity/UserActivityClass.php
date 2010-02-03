@@ -565,6 +565,7 @@ class UserActivity {
 										$page_title2 = Title::newFromText( $page_name2 );
 									}
 
+									if (is_object($page_title2)) {
 
 									if( $pages ) $pages .= ", ";
 									$pages .= " <a href=\"{$page_title2->escapeFullURL()}\" rel=\"nofollow\">{$page_name2}</a>";
@@ -574,6 +575,8 @@ class UserActivity {
 									$pages_count++;
 
 									$this->displayed[ $type ][ $page_name2 ] = 1;
+
+									}
 
 								}
 							}
