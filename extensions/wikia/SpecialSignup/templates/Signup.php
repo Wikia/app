@@ -263,14 +263,11 @@ class SignupTemplate extends QuickTemplate {
 
 		<tr>
 			<td class="mw-submit">
-				<div class="modalToolbar">
 					<a id="wpCreateaccountX" class="wikia_button" href="#" onclick="UserRegistration.submitForm();" ><span><?= wfMsg("createaccount") ?></span></a>
 				<?php if( $this->data['createemail'] ) { ?>
 					<a id="wpCreateaccountX" class="wikia_button" href="#" onclick="$('#wpCreateaccountXSteer').value = false; $('#wpCreateaccountYSteer').value = true; UserRegistration.submitForm();" ><span><?= wfMsg("createaccountmail") ?></span></a>
-				</div>					
 					<input type="hidden" id="wpCreateaccountYSteer" name="wpCreateaccountMail" value="false" >							
 				<?php } else { ?>
-				</div>
 					<input type="hidden" id="wpCreateaccountXSteer" name="wpCreateaccount" value="true" >
 				<?php } ?>
 			</td>
@@ -612,9 +609,7 @@ class SignupTemplate extends QuickTemplate {
 	</div>
 	<input type="submit" value="Login" style="position: absolute; left: -10000px; width: 0" />
 	</form>
-        <div class="modalToolbar">
                 <a id="wpLoginattempt" class="wikia_button rightSideElem" href="#" onclick="AjaxLogin2.action='login'; AjaxLogin2.form.submit();" ><span><?= wfMsg("login") ?></span></a>
-        </div>
 	<div id="loginIntro" class="accent rightSideElem">
 		<div class="announcementHeader dark_text_2">
 			<?php $this->msg( 'registerintro-title' ) ?>
