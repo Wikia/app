@@ -32,19 +32,11 @@ Please leave a message on [[$2|my talk page]] if I can help with anything! $3",
 	"welcome-message-log" => "welcoming new contributor",
 );
 
-/** Afrikaans (Afrikaans)
- * @author Naudefj
- */
-$messages['af'] = array(
-	'welcome-user' => '@latest',
-);
-
 /** Breton (Brezhoneg)
  * @author Gwenn-Ael
  * @author Y-M D
  */
 $messages['br'] = array(
-	'welcome-user' => '@latest',
 	'welcome-user-page' => "==Diwar ma fenn ==
 
 'War ho pajenn implijer emaoc'h. Kemmit, mar plij, ho pajenn evit en em ginnig d'ar gumuniezh !''
@@ -66,7 +58,6 @@ Gallout a rit lezel ur gemennadenn war ma fajenn V [[$2|discussion]] ma c'hallan
 
 /** German (Deutsch) */
 $messages['de'] = array(
-	'welcome-user' => '@latest',
 	'welcome-user-page' => "== Über mich ==
 
 ''Das ist deine Benutzerseite. Hier kannst du den anderen ein paar Informationen über dich verraten!''
@@ -97,7 +88,6 @@ PS: Du kannst auch gerne anonym editieren, allerdings wird dann deine IP-Adresse
 
 /** Spanish (Español) */
 $messages['es'] = array(
-	'welcome-user' => '@latest',
 	'welcome-user-page' => "==Sobre mi==
 
 ''Esta es tu página de usuario. ¡Edítala para hablar sobre ti a la comunidad!''
@@ -124,7 +114,6 @@ Por favor, si tienes alguna duda, no seas tímido, deja un mensaje en [[$2|mi di
 
 /** Persian (فارسی) */
 $messages['fa'] = array(
-	'welcome-user' => '@latest',
 	'welcome-user-page' => "[[File:Placeholder|thumb|300px]]
 ==دربارۀ من==
 ''
@@ -151,7 +140,6 @@ $messages['fa'] = array(
  * @author Crt
  */
 $messages['fi'] = array(
-	'welcome-user' => '@latest',
 	'welcome-user-page' => "==Tietoa minusta==
 
 ''Tämä on käyttäjäsivusi. Muokkaa tätä sivua ja kerro yhteisölle itsestäsi!''
@@ -180,7 +168,6 @@ Jos vain jotenkin voin auttaa, niin laita viesti [[$2|keskustelusivulleni]]! $3"
  * @author Peter17
  */
 $messages['fr'] = array(
-	'welcome-user' => '@latest',
 	'welcome-user-page' => 'Cette page est votre page personnelle. Vous pouvez y ajouter des informations vous concernant !
 
 ==Mes contributions==
@@ -207,7 +194,6 @@ N'hésitez pas à laisser un message sur [[$2|ma page de discussion]] si je peux
  * @author Toliño
  */
 $messages['gl'] = array(
-	'welcome-user' => '@latest',
 	'welcome-user-page' => "==Sobre min==
 
 ''Esta é a súa páxina de usuario. Edita esta páxina para contarlles aos demais o que queiras acerca de ti!''
@@ -234,7 +220,6 @@ Por favor, deixe unha mensaxe [[\$2|na miña páxina de conversa]] se quere que 
 
 /** Hebrew (עברית) */
 $messages['he'] = array(
-	'welcome-user' => '@latest',
 	'welcome-user-page' => "==עליי==
 ''זה דף המשתמש שלך. כדאי לערוך דף זה כדי שמשתמשים אחרים יוכלו לדעת עליך יותר!''
 
@@ -314,7 +299,6 @@ Lascia un messaggio sulla [[$2|pagina delle mie discussioni]], se posso esserti 
 
 /** Japanese (日本語) */
 $messages['ja'] = array(
-	'welcome-user' => '@latest',
 	'welcome-user-page' => "== 自己紹介 ==
 '''ここは、「{{PAGENAME}}」さんの利用者ページです。'''
 
@@ -334,7 +318,6 @@ $messages['ja'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'welcome-user' => '@latest',
 	'welcome-user-page' => "==За мене==
 
 ''Ова е вашата корисничка страница. Уредете ја со тоа што ќе напишете некои нешта за себе, за да ве запознае заедницата!''
@@ -364,7 +347,6 @@ $messages['mk'] = array(
  * @author Siebrand
  */
 $messages['nl'] = array(
-	'welcome-user' => '@latest',
 	'welcome-user-page' => "==Over mij==
 ''Dit is uw gebruikerspagina. Bewerk deze pagina alstublieft en vertel de gemeenschap iets over uzelf''
 
@@ -415,7 +397,6 @@ Zostaw wiadomość na [[$2|mojej stronie dyskusji]], gdyby potrzebna była Ci ja
  * @author Dragonòt
  */
 $messages['pms'] = array(
-	'welcome-user' => '@ùltim',
 	'welcome-user-page' => "==A propòsit ëd mi==
 
 ''Sta sì a l'é soa pàgina utent. Për piasì ch'a modìfica sta pàgina-sì për parlé ëd chiel a la comunità!''
@@ -445,7 +426,6 @@ Për piasì ch'a lassa un mëssagi su [[$2|mia pàgina ëd discussion]] s'i peus
  * @author Jesielt
  */
 $messages['pt-br'] = array(
-	'welcome-user' => '@últimos',
 	'welcome-user-page' => "==Sobre mim==
 
 ''Essa é sua página de usuário. Por favor, edite esta página e conte a comunidade algo sobre você!''
@@ -475,7 +455,6 @@ Por favor deixe uma mensagem na minha [[$2|página de discussão]] se eu puder a
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
-	'welcome-user' => '@latest',
 	'welcome-user-page' => "== Обо мне ==
 
 ''Это ваша страница участника. Пожалуйста, отредактируйте эту страницу, расскажите о себе!''

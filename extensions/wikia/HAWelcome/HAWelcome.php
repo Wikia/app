@@ -224,7 +224,7 @@ class HAWelcomeJob extends Job {
 		 */
 		if( ! $this->mSysop ) {
 
-			$sysop = trim( wfMsg( "welcome-user" ) );
+			$sysop = trim( wfMsgForContent( "welcome-user" ) );
 			if( !in_array( $sysop, array( "@disabled", "-" ) ) ) {
 
 				if( in_array( $sysop, array( "@latest", "@sysop" ) ) ) {
