@@ -388,6 +388,11 @@ class RTEParser extends Parser {
 		// wrap HTML entities inside span "placeholders" (&amp; &#58; &#x5f;)
 		$html = preg_replace("%\x7f-ENTITY-(#?[\w\d]+)-\x7f%", '<span _rte_entity="\1">&\1;</span>', $html);
 
+		// remove EMPTY_LINES_BEFORE comments which are before closing tags - refs RT#38889
+		// <!-- RTE_EMPTY_LINES_BEFORE_1 --></td></tr></table>  <= remove this one
+		// <!-- RTE_EMPTY_LINES_BEFORE_1 --><p>
+		$html = preg_replace('%<!-- RTE_EMPTY_LINES_BEFORE_(\d+) -->(</[^>]+></)%s', '\2', $html);
+
 		// move empty lines counter data from comment to next opening tag attribute (thx to Marooned)
 		$html = preg_replace('%<!-- RTE_EMPTY_LINES_BEFORE_(\d+) -->(?!<!)(.*?)(<[^/][^>]*)>%s', '\2\3 _rte_empty_lines_before="\1">', $html);
 
