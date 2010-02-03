@@ -103,7 +103,7 @@ $messages['en'] = array(
 
 The Wikia you requested is now available at <$1> We hope to see you editing there soon!
 
-We've added some Information and Tips on your User Talk Page (<$5> to help you get started.
+We've added some Information and Tips on your User Talk Page (<$5>) to help you get started.
 
 If you have any problems, you can ask for community help on the wiki at <http://www.wikia.com/wiki/Forum:Help_desk>, or via email to community@wikia.com. You can also visit our live #wikia IRC chat channel <http://irc.wikia.com>.
 
