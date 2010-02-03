@@ -852,6 +852,12 @@ class RTEReverseParser {
 					$out = "\n{$out}";
 				}
 
+				// this list is indented list (RT #38268)
+				// <dl><dd>foo<ul><li>bar...
+				if ( self::isChildOf($node, array('dd', 'dt')) && !self::isFirstChild($node) && !self::isListNode($node->previousSibling) ) {
+					$out = "\n{$out}";
+				}
+
 				// mixed nested lists
 				// *** foo
 				// **# bar
