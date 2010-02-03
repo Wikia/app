@@ -30,7 +30,6 @@ class WikiaApiQueryPageinfo extends ApiQueryInfo {
 				case "revcount" : $this->getRevCount($result); break;
 				case "created"	: $this->getCreateDate($result); break;
 				case "redirect"	: $this->getRedirectName($result); break;
-				case "url"	: $this->getPageUrl($result); break;
 			}
 		}
 		parent :: execute(); 
@@ -123,17 +122,6 @@ class WikiaApiQueryPageinfo extends ApiQueryInfo {
 						$result->addValue(array("query", "pages", $page_id), "redirectto", Title::makeName($oRedirTitle->getNamespace(), $oRedirTitle->getDBkey()) );
 					}
 				} 
-			}
-		}
-	}
-	
-	private function getPageUrl(&$result) {
-		global $wgContLang;
-		$res = &$result->getData();
-		$db = $this->getDB();
-		if ( isset($res['query']) && isset($res['query']['pages']) ) {
-			foreach ($this->getPageSet()->getGoodTitles() as $page_id => $oTitle) {
-				$result->addValue(array("query", "pages", $page_id), "url", $oTitle->getFullURL());
 			}
 		}
 	}
