@@ -1,4 +1,5 @@
 == Changes since 201002.1 ==
+* rt#38929: Fixed fatal call to escapeFullURL in UserActivityClass. (Nef)
 * rt#38889: RTE: recipes.wikia "Add a Recipe" box disappears using RTE (both modes) (macbre)
 * rt#38268: RTE messes up indented list after indented line (macbre)
 * SpecialContact: rewrite (uberfuzzy)
