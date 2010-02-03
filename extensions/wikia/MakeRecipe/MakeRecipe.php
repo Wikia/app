@@ -7,7 +7,7 @@
 $wgExtensionCredits['parserhook'][] = array(
                 'name' => 'MakeRecipe',
                 'description' => 'Adds contest button',
-                'version' => '0.3',
+                'version' => '1,0',
                 'author' => array('Bartek Lapinski')
                 );
 
@@ -30,6 +30,7 @@ function wfMakeRecipeButton( $input, $argv, &$parser ) {
 	$onclick = ''; // todo track or not to track? not until feedback
 	$output = Xml::openElement( 'a', array(
 						'class' => 'wikia_button',
+						'id'	=> 'mr-submit',
 						'href' => $link,
 						'onclick' => $onclick
 						 ) )
@@ -40,5 +41,4 @@ function wfMakeRecipeButton( $input, $argv, &$parser ) {
 
 	return $parser->replaceVariables( $output );	
 }
-
 
