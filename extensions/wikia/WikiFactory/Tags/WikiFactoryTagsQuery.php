@@ -67,6 +67,23 @@ class WikiFactoryTagsQuery {
 			}
 		}
 		elseif( is_array( $this->mTags ) ) {
+			/**
+			 * get maps for required tags, when one of tag is not found result
+			 * is empty (because it's boolean AND condition)
+			 */
+			$ids = array();
+			foreach( $this->mTags as $tag ) {
+				if( isset( $this->mCachedTags[ $tag ] ) ) {
+					$ids[] = $this->mCachedTags[ $tag ];
+				}
+				else {
+					/**
+					 * missing tag, ignore or empty result? -- so far ignore
+					 */
+				}
+			}
+
+#			$sth = $dbr-
 
 		}
 

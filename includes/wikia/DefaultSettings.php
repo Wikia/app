@@ -82,6 +82,7 @@ $wgAutoloadClasses[ "ApiImageThumb"                ] = "{$IP}/extensions/wikia/O
 $wgAutoloadClasses[ "WikiaApiReportEmail"          ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiReportEmail.php";
 $wgAutoloadClasses[ "WikiaApiCreatorReminderEmail" ] = "{$IP}/extensions/wikia/AutoCreateWiki/WikiaApiCreatorReminderEmail.php";
 $wgAutoloadClasses[ "TokyoTyrantSession"           ] = "{$IP}/includes/wikia/TokyoTyrantSessions.php";
+$wgAutoloadClasses[ "WikiFactoryTags"              ] = "{$IP}/extensions/wikia/WikiFactory/Tags/WikiFactoryTags.php";
 
 /**
  * registered API methods
