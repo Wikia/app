@@ -5,23 +5,23 @@
  * @author Bartek Lapinski <bartek@wikia-inc.com>
  */
 $wgExtensionCredits['parserhook'][] = array(
-                'name' => 'MakeRecipe',
+                'name' => 'QuickCreate',
                 'description' => 'Adds contest button',
                 'version' => '1,0',
                 'author' => array('Bartek Lapinski')
                 );
 
-$wgExtensionMessagesFiles['MakeRecipe'] = dirname(__FILE__) . '/MakeRecipe.i18n.php';
+$wgExtensionMessagesFiles['QuickCreate'] = dirname(__FILE__) . '/QuickCreate.i18n.php';
 
-$wgHooks['ParserFirstCallInit'][] = 'wfMakeRecipe';
+$wgHooks['ParserFirstCallInit'][] = 'wfQuickCreate';
 
-function wfMakeRecipe( &$parser ) {
-        $parser->setHook( 'makerecipe', 'wfMakeRecipeButton' );
+function wfQuickCreate( &$parser ) {
+        $parser->setHook( 'quickcreate', 'wfQuickCreateButton' );
         return true;
 }
 
-function wfMakeRecipeButton( $input, $argv, &$parser ) {
-        wfLoadExtensionMessages( 'MakeRecipe' );
+function wfQuickCreateButton( $input, $argv, &$parser ) {
+        wfLoadExtensionMessages( 'QuickCreate' );
         global $wgRequest, $wgScript;
 
 
