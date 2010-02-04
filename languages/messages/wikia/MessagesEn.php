@@ -83,7 +83,7 @@ $messages = array_merge( $messages , array(
 'corporatepage-wikia-overview-headline' => 'Wikia Overview',
 'corporatepage-wikia-wide-stats-headline' => 'Wikia Wide Statistics',
 'corporatepage-company-info-headline' => 'Company Information',
-'corporatepage-pages-added' => 'pages created the last hour',
+'corporatepage-pages-added' => 'pages created in the last hour',
 'corporatepage-edits-made' => 'edits made today',
 'corporatepage-words-added' => 'words added in the last week',
 # Default for monaco skin
