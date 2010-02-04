@@ -136,80 +136,6 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	padding: 2px 4px;
 }
 
-.cke_skin_wikia .cke_button a,
-.cke_skin_wikia .cke_button a.cke_off
-{
-/*	filter: alpha(opacity=70); /* IE */
-	opacity: 0.70; /* Safari, Opera and Mozilla */
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-}
-
-.cke_skin_wikia .cke_hc .cke_button a,
-.cke_skin_wikia .cke_hc .cke_button a.cke_off
-{
-	opacity: 1.0;
-/*	filter: alpha(opacity=100);*/
-	border: 1px solid white;
-}
-
-.cke_skin_wikia .cke_button a.cke_on
-{
-/*	filter: alpha(opacity=100); /* IE */
-	opacity: 1; /* Safari, Opera and Mozilla */
-	padding: 2px 4px;
-}
-
-.cke_skin_wikia .cke_hc .cke_button a.cke_on
-{
-	padding: 0 2px !important;
-	border-width: 3px;
-}
-
-.cke_skin_wikia .cke_hc .cke_button a.cke_disabled,
-.cke_skin_wikia .cke_browser_ie.cke_hc a:hover.cke_button .cke_disabled
-{
-	filter: alpha(opacity=60);
-	opacity: 0.6;
-}
-
-.cke_skin_wikia .cke_button a:hover.cke_on,
-.cke_skin_wikia .cke_button a:focus.cke_on,
-.cke_skin_wikia .cke_button a:active.cke_on,	/* IE */
-.cke_skin_wikia .cke_button a:hover.cke_off,
-.cke_skin_wikia .cke_button a:focus.cke_off,
-.cke_skin_wikia .cke_button a:active.cke_off	/* IE */
-{
-/*	filter: alpha(opacity=100); /* IE */
-	opacity: 1; /* Safari, Opera and Mozilla */
-	padding: 2px 4px;
-}
-
-.cke_skin_wikia .cke_button a:hover.cke_on,
-.cke_skin_wikia .cke_button a:focus.cke_on,
-.cke_skin_wikia .cke_button a:active.cke_on	/* IE */
-{
-	/*background-color: #86caff;*/
-}
-
-.cke_skin_wikia .cke_button a:hover.cke_off,
-.cke_skin_wikia .cke_button a:focus.cke_off,
-.cke_skin_wikia .cke_button a:active.cke_off	/* IE */
-{
-	/*background-color: #dff1ff;*/
-}
-
-.cke_skin_wikia .cke_hc .cke_button a:hover.cke_on,
-.cke_skin_wikia .cke_hc .cke_button a:focus.cke_on,
-.cke_skin_wikia .cke_hc .cke_button a:active.cke_on,	/* IE */
-.cke_skin_wikia .cke_hc .cke_button a:hover.cke_off,
-.cke_skin_wikia .cke_hc .cke_button a:focus.cke_off,
-.cke_skin_wikia .cke_hc .cke_button a:active.cke_off	/* IE */
-{/*
-	padding: 0 2px !important;
-	border-width: 3px;
-*/}
-
 .cke_skin_wikia .cke_button .cke_icon
 {
 	background-image: url(icons.png);
@@ -564,7 +490,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	background-position: 0 -2029px;
 }
 
-#cke_toolbar .cke_button.cke_disabled:hover {
+#cke_toolbar .cke_button.cke_disabled:hover,
+#cke_toolbar .cke_buttons_group .cke_rcombo.cke_disabled a:hover {
 	background-position: 0 -2000px;
 }
 
@@ -575,7 +502,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 }
 
 #cke_toolbar span.cke_disabled .cke_icon,
-#cke_toolbar span.cke_disabled .cke_label {
+#cke_toolbar span.cke_disabled .cke_label,
+#cke_toolbar span.cke_disabled .cke_rcombo .cke_text,
+#cke_toolbar span.cke_disabled .cke_openbutton {
 	filter: alpha(opacity=50); /* IE */
 	opacity: 0.5;
 }
