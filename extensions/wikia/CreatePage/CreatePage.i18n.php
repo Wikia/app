@@ -32,7 +32,16 @@ You can go to <a href="$1">$2</a>, or rename your page',
 Please use a different title.',
 	'createpage-error-article-blocked' => 'Sorry, you are unable to create that article at this time.',
 	'tog-createpagedefaultblank' => 'Use blank page as default for creating a new page',
-	'createpage-newpagelayout' => '',
+	'newpagelayout' => '[[File:Placeholder|right|300px]]
+Write the first paragraph of your article here.
+
+==Section heading==
+
+Write the first section of your article here. 
+
+==Section heading==
+
+Write the second section of your article here.',
 );
 
 /** Afrikaans (Afrikaans)
