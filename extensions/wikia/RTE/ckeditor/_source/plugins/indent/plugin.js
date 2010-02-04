@@ -23,12 +23,21 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			editor = evt.editor;
 
 		// Wikia - start
-		// disable indent buttons when inside a heading
 		var path = evt.data.path;
 		var nodeName = path.block ? path.block.getName() : '';
 
+		// disable indent buttons when inside a heading
 		if ( (/h\d/).test(nodeName) ) {
 			return setState.call(this, editor, CKEDITOR.TRISTATE_DISABLED);
+		}
+
+		// disable indent button for centre / right aligned paragraphs
+		if (nodeName == 'p') {
+			var align = path.block.getStyle('text-align');
+
+			if ( (align == 'center') || (align == 'right') ) {
+				return setState.call(this, editor, CKEDITOR.TRISTATE_DISABLED);
+			}
 		}
 		// Wikia - end
 

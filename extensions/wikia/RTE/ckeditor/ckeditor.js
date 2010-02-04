@@ -5,7 +5,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 if(!window.CKEDITOR)
 {window.CKEDITOR=(function()
-{var CKEDITOR={timestamp:'A06B',version:'20100204',revision:'r18036',_:{},status:'unloaded',basePath:(function()
+{var CKEDITOR={timestamp:'A06B',version:'20100204',revision:'r18058',_:{},status:'unloaded',basePath:(function()
 {var path=window.CKEDITOR_BASEPATH||'';if(!path)
 {var scripts=document.getElementsByTagName('script');for(var i=0;i<scripts.length;i++)
 {var match=scripts[i].src.match(/(^|.*[\\\/])ckeditor(?:_basic)?(?:_source)?.js(?:\?.*)?$/i);if(match)
@@ -2151,6 +2151,7 @@ CKEDITOR.plugins.add('htmldataprocessor',{requires:['htmlwriter'],init:function(
 {editor.getCommand(this.name).setState(state);}
 function onSelectionChange(evt)
 {var elements=evt.data.path.elements,listNode,listItem,editor=evt.editor;var path=evt.data.path;var nodeName=path.block?path.block.getName():'';if((/h\d/).test(nodeName)){return setState.call(this,editor,CKEDITOR.TRISTATE_DISABLED);}
+if(nodeName=='p'){var align=path.block.getStyle('text-align');if((align=='center')||(align=='right')){return setState.call(this,editor,CKEDITOR.TRISTATE_DISABLED);}}
 for(var i=0;i<elements.length;i++)
 {if(elements[i].getName()=='li')
 {listItem=elements[i];continue;}
