@@ -90,7 +90,7 @@ class LocalMaintenanceTask extends BatchTask {
 				$this->mWikiData = $this->mParams[ "data" ];
 				$this->mFounder = User::newFromId( $this->mWikiData[ "founder"] );
 				$this->mFounder->load();
-				$this->setCentralPages();
+				// $this->setCentralPages(); per rt#39023
 			}
 
 			/**
