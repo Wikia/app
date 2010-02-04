@@ -87,22 +87,29 @@ class NewWikisPage extends AlphabeticPager {
 	private $firstChar;
 	private $lang;
 
+	/**
+	 * constructor
+	 *
+	 * @access public
+	 */
 	function __construct( $par = null ) {
 		global $wgRequest;
-		#---
 		$parms = explode( '/', ($par = ( $par !== null ) ? $par : '' ) );
-		#---
 		if ( isset($parms[0]) && !empty($parms[0]) ) {
 			$this->firstChar = $parms[0];
 		}
 		if ( isset($parms[1]) && !empty($parms[1]) ) {
 			$this->lang = $parms[1];
 		}
-		#---
 		$this->lang = ( $this->lang != '' ) ? $this->lang : $wgRequest->getVal( 'language' );
 		$this->firstChar = ( $this->firstChar != '' ) ? $this->firstChar : $wgRequest->getText( 'start' );
 
 		parent::__construct();
+
+		/**
+		 * overwrite database handler
+		 */
+		$this->mDb = WikiFactory::db( DB_SLAVE );
 	}
 
 
@@ -115,7 +122,6 @@ class NewWikisPage extends AlphabeticPager {
 	}
 
 	function getQueryInfo() {
-		$dbr = WikiFactory::db( DB_SLAVE );
 		$conds = array();
 		// Don't show hidden names
 		$conds[] = 'city_public = 1';
