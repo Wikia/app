@@ -55,7 +55,7 @@
 #page_controls a:hover {
 	text-decoration: underline;
 }
-#control_edit div {
+#control_edit div, #control_form_edit div {
 	clip: rect(0px 16px 16px 0px);
 	left: 0px;
 }
