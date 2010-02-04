@@ -214,7 +214,7 @@ class RecentChange
 		}
 		if(!empty($eventType)) {
 			global $wgMemc;
-			$key = $eventType.date('Ymd_Hi00');
+			$key = $eventType.gmdate('Ymd_Hi00');
 			$ret = $wgMemc->incr($key);
 			if(empty($ret)) {
 				$wgMemc->set($key, 1, 60*5);
