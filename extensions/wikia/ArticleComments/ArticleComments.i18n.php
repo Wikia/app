@@ -36,15 +36,14 @@ Dear $WATCHINGUSERNAME,
 <br /><br />
 $PAGEEDITOR made a comment on "$PAGETITLE".
 <br /><br />
-To see the comment thread, follow the link below: <a href="$PAGETITLE_URL">$PAGETITLE_URL</a> 
+To see the comment thread, follow this link: <a href="$PAGETITLE_URL">$PAGETITLE</a> 
 <br /><br />
 Please visit and edit often...
 <br /><br />
 {{SITENAME}}
 <br /><hr />
 <ul>
-<li>Have you checked out our hubs? <a href="http://www.wikia.com/wiki/Category:Hubs">Visit Here!</a></li>
-<li>Want to control which emails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}">{{fullurl:{{ns:special}}:Preferences}}<a>.</li>
+<li>Want to control which emails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}">{{ns:special}}:Preferences<a>.</li>
 </ul>
 </p>',
 );
