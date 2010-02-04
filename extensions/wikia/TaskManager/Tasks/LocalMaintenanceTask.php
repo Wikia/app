@@ -77,7 +77,7 @@ class LocalMaintenanceTask extends BatchTask {
 				$retval = wfShellExec( $cmd, $status );
 				$this->addLog( $retval );
 
-				$this->addLog( "Set edit lock" );
+				$this->addLog( "Remove edit lock" );
 				$oVariable = WikiFactory::getVarByName( 'wgReadOnly', $city_id );
 				if ( isset($oVariable->cv_variable_id) ) {
 					WikiFactory::removeVarById($oVariable->cv_variable_id, $city_id);
@@ -89,7 +89,6 @@ class LocalMaintenanceTask extends BatchTask {
 			/**
 			 * once again clear cache at the very end
 			 */
-			$this->addLog( "Remove edit lock" );
 			$wgMemc = wfGetMainCache();
 			$wgMemc->delete( WikiFactory::getVarsKey( $city_id ) );
 		}
