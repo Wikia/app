@@ -85,13 +85,13 @@ Please select proper from dropdown list.",
 	"autocreatewiki-step6" => "Setting default tables in database ...",
 	"autocreatewiki-step7" => "Setting language starter ...",
 	"autocreatewiki-step8" => "Setting user groups and categories ...",
-	"autocreatewiki-step9" => "Setting variables for new Wiki ...",
-	"autocreatewiki-step10" => "Setting pages on central Wiki ...",
+	"autocreatewiki-step9" => "Setting variables for new wiki ...",
+	"autocreatewiki-step10" => "Setting pages on central wiki ...",
 	"autocreatewiki-step11" => "Sending email to user ...",
-	"autocreatewiki-redirect" => "Redirecting to new Wiki: $1 ...",
+	"autocreatewiki-redirect" => "Redirecting to new wiki: $1 ...",
 	"autocreatewiki-congratulation" => "Congratulations!",
 	"autocreatewiki-welcometalk-log" => "Welcome Message",
-	"autocreatewiki-regex-error-comment" => "used in Wiki $1 (whole text: $2)",
+	"autocreatewiki-regex-error-comment" => "used in wiki $1 (whole text: $2)",
 // processing errors
 	"autocreatewiki-step2-error" => "Database exists!",
 	"autocreatewiki-step3-error" => "Cannot set default information in database!",
@@ -134,7 +134,7 @@ If you've got questions, you can e-mail us through our [[Special:Contact|contact
 -- [[User:$2|$3]] <staff /></div>",
 // new wikis - special page
 	"newwikis" => "New wikis",
-	"newwikisstart" => "Display Wikis starting at:",
+	"newwikisstart" => "Display wikis starting at:",
 
 // retention emails
 	"autocreatewiki-reminder-subject" => "{{SITENAME}}",
