@@ -547,8 +547,6 @@ class BlogArticle extends Article {
 			}
 		}
 
-
-		Wikia::log( __METHOD__, "save", "id: {$pageId}, props: " . print_r( $keep, 1) );
 		if( $pageId ) {
 			$LinksUpdate->mProperties += $keep;
 		}
