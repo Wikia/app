@@ -1151,10 +1151,8 @@ class RTEReverseParser {
 					case 's':
 					case 'strike':
 						// if next element is text node, don't add line break (refs RT #34043)
-						if ( self::nextSiblingIsTextNode($node) ) {
-							// ...
-						}
-						else {
+						// if next element is <br />, don't add line break (refs RT #38257)
+						if ( !self::nextSiblingIsTextNode($node) && !self::nextSiblingIs($node, 'br') ) {
 							$out = "{$out}\n";
 						}
 						break;
