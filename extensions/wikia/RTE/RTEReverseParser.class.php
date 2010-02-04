@@ -207,7 +207,8 @@ class RTEReverseParser {
 			return $out;
 		}
 		// handle nodes with wasHTML
-		else if ($node->hasAttribute('_rte_washtml')) {
+		// (always handle paragraphs as wikitext)
+		else if ($node->hasAttribute('_rte_washtml') && ($node->nodeName != 'p')) {
 			$out = $this->handleHtml($node, $textContent);
 		}
 		// handle nodes wrapping HTML entities
@@ -518,9 +519,11 @@ class RTEReverseParser {
 		}
 
 		// handle paragraphs alignment and indentation
-		if ($node->hasAttribute('style')) {
+		// (ignore when paragraph is empty)
+		if ($node->hasAttribute('style') && (trim($textContent) != '')) {
 			// parse "text-align" style attribute
 			$align = self::getCssProperty($node, 'text-align');
+
 			if (!empty($align)) {
 				// wrap text content inside HTML
 				$textContent = "<p style=\"text-align:{$align}\">{$textContent}</p>";
