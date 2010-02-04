@@ -55,7 +55,7 @@ class NewWikisSpecialPage extends SpecialPage {
 
 		$res = $wgMemc->get( wfSharedMemcKey( "{$format}-city-list" ) );
 		$filename = "{$format}_city_list.{$format}";
-		
+
 		$wgOut->disable();
 		if( $format === "xml" ) {
 				header( "Content-type: application/xml; charset=UTF-8" );
@@ -115,7 +115,7 @@ class NewWikisPage extends AlphabeticPager {
 	}
 
 	function getQueryInfo() {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = WikiFactory::db( DB_SLAVE );
 		$conds = array();
 		// Don't show hidden names
 		$conds[] = 'city_public = 1';
@@ -208,5 +208,4 @@ class NewWikisPage extends AlphabeticPager {
 		asort($this->mLanguages);
 		return count($this->mLanguages);
 	}
-
 }
