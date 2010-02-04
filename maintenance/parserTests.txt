@@ -3572,7 +3572,7 @@ Some text
 </ul>
 </li>
 </ul>
-</td></tr></table><script type="text/javascript"> if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } </script>
+</td></tr></table><script type="text/javascript">wgAfterContentAndJS.push(function() { if (window.showTocToggle) {  window.tocShowText = "show";  window.tocHideText = "hide";  showTocToggle();}});</script>
 <a name="Headline_1" id="Headline_1"></a><h2><span class="editsection">[<a href="/index.php?title=Parser_test&amp;action=edit&amp;section=1" title="Edit section: Headline 1">edit</a>]</span> <span class="mw-headline"> Headline 1 </span></h2>
 <a name="Subheadline_1" id="Subheadline_1"></a><h3><span class="editsection">[<a href="/index.php?title=Parser_test&amp;action=edit&amp;section=2" title="Edit section: Subheadline 1">edit</a>]</span> <span class="mw-headline"> Subheadline 1 </span></h3>
 <a name="Skipping_a_level" id="Skipping_a_level"></a><h5><span class="editsection">[<a href="/index.php?title=Parser_test&amp;action=edit&amp;section=3" title="Edit section: Skipping a level">edit</a>]</span> <span class="mw-headline"> Skipping a level </span></h5>
@@ -3627,7 +3627,7 @@ Handling of sections up to level 6 and beyond
 </ul>
 </li>
 </ul>
-</td></tr></table><script type="text/javascript"> if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } </script>
+</td></tr></table><script type="text/javascript">wgAfterContentAndJS.push(function() { if (window.showTocToggle) {  window.tocShowText = "show";  window.tocHideText = "hide";  showTocToggle();}});</script>
 <a name="Level_1_Heading" id="Level_1_Heading"></a><h1><span class="editsection">[<a href="/index.php?title=Parser_test&amp;action=edit&amp;section=1" title="Edit section: Level 1 Heading">edit</a>]</span> <span class="mw-headline"> Level 1 Heading</span></h1>
 <a name="Level_2_Heading" id="Level_2_Heading"></a><h2><span class="editsection">[<a href="/index.php?title=Parser_test&amp;action=edit&amp;section=2" title="Edit section: Level 2 Heading">edit</a>]</span> <span class="mw-headline"> Level 2 Heading</span></h2>
 <a name="Level_3_Heading" id="Level_3_Heading"></a><h3><span class="editsection">[<a href="/index.php?title=Parser_test&amp;action=edit&amp;section=3" title="Edit section: Level 3 Heading">edit</a>]</span> <span class="mw-headline"> Level 3 Heading</span></h3>
@@ -3669,7 +3669,7 @@ TOC regression (bug 9764)
 </ul>
 </li>
 </ul>
-</td></tr></table><script type="text/javascript"> if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } </script>
+</td></tr></table><script type="text/javascript">wgAfterContentAndJS.push(function() { if (window.showTocToggle) {  window.tocShowText = "show";  window.tocHideText = "hide";  showTocToggle();}});</script>
 <a name="title_1" id="title_1"></a><h2><span class="editsection">[<a href="/index.php?title=Parser_test&amp;action=edit&amp;section=1" title="Edit section: title 1">edit</a>]</span> <span class="mw-headline"> title 1 </span></h2>
 <a name="title_1.1" id="title_1.1"></a><h3><span class="editsection">[<a href="/index.php?title=Parser_test&amp;action=edit&amp;section=2" title="Edit section: title 1.1">edit</a>]</span> <span class="mw-headline"> title 1.1 </span></h3>
 <a name="title_1.1.1" id="title_1.1.1"></a><h4><span class="editsection">[<a href="/index.php?title=Parser_test&amp;action=edit&amp;section=3" title="Edit section: title 1.1.1">edit</a>]</span> <span class="mw-headline"> title 1.1.1 </span></h4>
@@ -3705,7 +3705,7 @@ wgMaxTocLevel=3
 </ul>
 </li>
 </ul>
-</td></tr></table><script type="text/javascript"> if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } </script>
+</td></tr></table><script type="text/javascript">wgAfterContentAndJS.push(function() { if (window.showTocToggle) {  window.tocShowText = "show";  window.tocHideText = "hide";  showTocToggle();}});</script>
 <a name="title_1" id="title_1"></a><h2><span class="editsection">[<a href="/index.php?title=Parser_test&amp;action=edit&amp;section=1" title="Edit section: title 1">edit</a>]</span> <span class="mw-headline"> title 1 </span></h2>
 <a name="title_1.1" id="title_1.1"></a><h3><span class="editsection">[<a href="/index.php?title=Parser_test&amp;action=edit&amp;section=2" title="Edit section: title 1.1">edit</a>]</span> <span class="mw-headline"> title 1.1 </span></h3>
 <a name="title_1.1.1" id="title_1.1.1"></a><h4><span class="editsection">[<a href="/index.php?title=Parser_test&amp;action=edit&amp;section=3" title="Edit section: title 1.1.1">edit</a>]</span> <span class="mw-headline"> title 1.1.1 </span></h4>
@@ -3797,7 +3797,7 @@ __TOC__
 </li>
 <li class="toclevel-1"><a href="#title_2"><span class="tocnumber">2</span> <span class="toctext">title 2</span></a></li>
 </ul>
-</td></tr></table><script type="text/javascript"> if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } </script>
+</td></tr></table><script type="text/javascript">wgAfterContentAndJS.push(function() { if (window.showTocToggle) {  window.tocShowText = "show";  window.tocHideText = "hide";  showTocToggle();}});</script>
 <a name="title_1" id="title_1"></a><h2><span class="editsection">[<a href="/index.php?title=Parser_test&amp;action=edit&amp;section=1" title="Edit section: title 1">edit</a>]</span> <span class="mw-headline"> title 1 </span></h2>
 <a name="title_1.1" id="title_1.1"></a><h3><span class="editsection">[<a href="/index.php?title=Parser_test&amp;action=edit&amp;section=2" title="Edit section: title 1.1">edit</a>]</span> <span class="mw-headline"> title 1.1 </span></h3>
 <a name="title_2" id="title_2"></a><h2><span class="editsection">[<a href="/index.php?title=Parser_test&amp;action=edit&amp;section=3" title="Edit section: title 2">edit</a>]</span> <span class="mw-headline"> title 2 </span></h2>
@@ -4981,7 +4981,7 @@ http://<table id="toc" class="toc" summary="Contents"><tr><td><div id="toctitle"
 <ul>
 <li class="toclevel-1"><a href="#onmouseover.3D"><span class="tocnumber">1</span> <span class="toctext">onmouseover=</span></a></li>
 </ul>
-</td></tr></table><script type="text/javascript"> if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } </script>
+</td></tr></table><script type="text/javascript">wgAfterContentAndJS.push(function() { if (window.showTocToggle) {  window.tocShowText = "show";  window.tocHideText = "hide";  showTocToggle();}});</script>
 
 !! end
 
@@ -6610,7 +6610,7 @@ Out-of-order TOC heading levels
 </ul>
 </li>
 </ul>
-</td></tr></table><script type="text/javascript"> if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } </script>
+</td></tr></table><script type="text/javascript">wgAfterContentAndJS.push(function() { if (window.showTocToggle) {  window.tocShowText = "show";  window.tocHideText = "hide";  showTocToggle();}});</script>
 <a name="2" id="2"></a><h2><span class="editsection">[<a href="/index.php?title=Parser_test&amp;action=edit&amp;section=1" title="Edit section: 2">edit</a>]</span> <span class="mw-headline">2</span></h2>
 <a name="6" id="6"></a><h6><span class="editsection">[<a href="/index.php?title=Parser_test&amp;action=edit&amp;section=2" title="Edit section: 6">edit</a>]</span> <span class="mw-headline">6</span></h6>
 <a name="3" id="3"></a><h3><span class="editsection">[<a href="/index.php?title=Parser_test&amp;action=edit&amp;section=3" title="Edit section: 3">edit</a>]</span> <span class="mw-headline">3</span></h3>
