@@ -129,7 +129,7 @@ class NewWikisPage extends AlphabeticPager {
 			$conds[] = "upper(city_title) like upper('{$this->firstChar}%')";
 		}
 		if( $this->lang != "" ) {
-			$conds[] = 'city_lang = ' . $dbr->addQuotes( $this->lang );
+			$conds[] = 'city_lang = ' . $this->mDb->addQuotes( $this->lang );
 		}
 
 		$query = array(
