@@ -75,7 +75,7 @@ function wfCreatePageLoadPreformattedContent( $editpage ) {
 	}
 
 	if ($wgRequest->getCheck('useFormat')) {
-		$editpage->textbox1 = wfMsgForContent( 'createpage-newpagelayout' );
+		$editpage->textbox1 = wfMsgForContent( 'newpagelayout' );
 	}
 	return true ;
 }
