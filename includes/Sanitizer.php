@@ -494,14 +494,7 @@ class Sanitizer {
 						}
 						// RTE - end
 
-						global $wgWysiwygParserEnabled;
-						//Wysiwyg: add wasHtml attribute to HTML written by user in the article so the reverseParser knows which tags convert to wikitext and which don't
-						if(!empty($wgWysiwygParserEnabled)) {
-							$wasHtml = !$slash && strpos($newparams, ' refid="') === false ? ' wasHtml="1"' : '';
-						} else {
-							$wasHtml = '';
-						}
-						$text .= "<$slash$t$wasHtml$newparams$close>$rest";
+						$text .= "<$slash$t$newparams$close>$rest";
 						continue;
 					}
 				}
@@ -509,10 +502,6 @@ class Sanitizer {
 			}
 			# Close off any remaining tags
 			while ( is_array( $tagstack ) && ($t = array_pop( $tagstack )) ) {
-				// RT #19013
-				global $wgWysiwygSanitizerApplied;
-				$wgWysiwygSanitizerApplied = true;
-
 				$text .= "</$t>\n";
 				if ( $t == 'table' ) { $tagstack = array_pop( $tablestack ); }
 			}
@@ -538,14 +527,7 @@ class Sanitizer {
 					}
 					// RTE - end
 
-					global $wgWysiwygParserEnabled;
-					//Wysiwyg: add wasHtml attribute to HTML written by user in the article so the reverseParser knows which tags convert to wikitext and which don't
-					if(!empty($wgWysiwygParserEnabled)) {
-						$wasHtml = !$slash ? ' wasHtml=1' : '';
-					} else {
-						$wasHtml = '';
-					}
-					$text .= "<$slash$t$wasHtml$newparams$brace$rest";
+					$text .= "<$slash$t$newparams$brace$rest";
 				} else {
 					$text .= '&lt;' . str_replace( '>', '&gt;', $x);
 				}
@@ -737,8 +719,6 @@ class Sanitizer {
 	 * @return string
 	 */
 	static function fixTagAttributes( $text, $element ) {
-		global $wgWysiwygParserEnabled;
-
 		if( trim( $text ) == '' ) {
 			return '';
 		}
@@ -753,22 +733,12 @@ class Sanitizer {
 
 			$attribs[] = "$encAttribute=\"$encValue\"";
 
-			// Wysiwyg: store inline CSS style in _wysiwyg_style attribute, so FCK won't brake it
-			if ( !empty($wgWysiwygParserEnabled) && ($encAttribute == 'style') ) {
-				$attribs[] = "_wysiwyg_style=\"$encValue\"";
-			}
-
 			// RTE - begin
 			global $wgRTEParserEnabled;
 			if(!empty($wgRTEParserEnabled) && $encAttribute == 'style') {
 				$attribs[] = "_rte_style=\"$encValue\"";
 			}
 			// RTE - end
-		}
-
-		// Wysiwyg: store original list of <table> attributes (RT #23998)
-		if ( !empty($wgWysiwygParserEnabled) && ($element == 'table') ) {
-			$attribs[] = '_wysiwyg_attribs="'. self::encodeAttribute(Xml::expandAttributes($stripped)) . '"';
 		}
 
 		// RTE - begin

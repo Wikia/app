@@ -661,7 +661,6 @@ class MagicWordArray {
 	 * Removes the matched items from the input string (passed by reference)
 	 */
 	public function matchAndRemove( &$text ) {
-		global $wgWysiwygParserEnabled;
 		$found = array();
 		$regexes = $this->getRegex();
 		foreach ( $regexes as $regex ) {
@@ -672,18 +671,9 @@ class MagicWordArray {
 			foreach ( $matches as $m ) {
 				list( $name, $param ) = $this->parseMatch( $m );
 				$found[$name] = $param;
-
-				//Wysiwyg: mark element and add metadata to wysiwyg array
-				if ($wgWysiwygParserEnabled) {
-					$tmp = '__'.strtoupper($name).'__';
-					$FCKtmp = Wysiwyg_SetRefId('double underscore', array('text' => &$tmp), false);
-					$text = preg_replace( "/{$tmp}/iuS", $FCKtmp, $text );
-				}
 			}
-			if (!$wgWysiwygParserEnabled) {
-				//original code
-				$text = preg_replace( $regex, '', $text );
-			}
+			//original code
+			$text = preg_replace( $regex, '', $text );
 		}
 		return $found;
 	}
