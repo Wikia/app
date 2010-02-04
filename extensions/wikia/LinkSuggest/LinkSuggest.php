@@ -83,7 +83,7 @@ function getLinkSuggestImage() {
 }
 
 function getLinkSuggest() {
-	global $wgRequest, $wgContLang, $wgCityId;
+	global $wgRequest, $wgContLang, $wgCityId, $wgExternalDatawareDB;
 
 	// trim passed query and replace spaces by underscores
 	// - this is how MediaWiki store article titles in database
@@ -122,7 +122,7 @@ function getLinkSuggest() {
 	$namespacePrefix = (!empty($namespaceName)) ? $namespaceName . ':' : '';
 
 	$query = addslashes(mb_strtolower($query));
-	$db = wfGetDB(DB_SLAVE, 'search');
+	$db = wfGetDB(DB_SLAVE, 'search' );
 
 	$res = $db->select(
 		array( "querycache" ),
@@ -140,7 +140,7 @@ function getLinkSuggest() {
 	}
 	$db->freeResult( $res );
 
-	$dbs = wfGetDBExt( DB_SLAVE );
+	$dbs = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
 	$res = $dbs->select(
 		array( "pages" ),
 		array( "page_title" ),
@@ -152,7 +152,7 @@ function getLinkSuggest() {
 		),
 		__METHOD__,
 		array(
-			"ORDER BY" => "page_title_lower ASC", 
+			"ORDER BY" => "page_title_lower ASC",
 			"LIMIT" => (15 - count($results))
 		)
 	);
