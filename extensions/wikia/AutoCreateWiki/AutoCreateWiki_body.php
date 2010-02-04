@@ -340,7 +340,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		 *
 		 * set $activeCluster to false if you want to create wikis on first
 		 * cluster
-	     */
+		 */
 		$dbname = ( self::ACTIVE_CLUSTER ) ? "wikicities_" . self::ACTIVE_CLUSTER : "wikicities";
 
 		/*
@@ -756,19 +756,19 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->awcDomain = preg_replace("/^(\-)+/", "", $this->awcDomain);
 
 		$this->mWikiData[ "hub" ]		= $this->awcCategory;
-        $this->mWikiData[ "name" ]      = strtolower( trim( $this->awcDomain ) );
-        $this->mWikiData[ "title" ]     = $fixedTitle . " Wiki";
-        $this->mWikiData[ "language" ]  = $this->awcLanguage;
-        $this->mWikiData[ "subdomain" ] = $this->mWikiData[ "name"];
-        $this->mWikiData[ "redirect" ]  = $this->mWikiData[ "name"];
+		$this->mWikiData[ "name" ]      = strtolower( trim( $this->awcDomain ) );
+		$this->mWikiData[ "title" ]     = $fixedTitle . " Wiki";
+		$this->mWikiData[ "language" ]  = $this->awcLanguage;
+		$this->mWikiData[ "subdomain" ] = $this->mWikiData[ "name"];
+		$this->mWikiData[ "redirect" ]  = $this->mWikiData[ "name"];
 		$this->mWikiData[ "dbname" ]    = substr( str_replace( "-", "", $this->mWikiData[ "name"] ), 0, 50 ); #(64 - lang - rand(1, 99)
 		$this->mWikiData[ "path" ]      = "/usr/wikia/docroot/wiki.factory";
-        $this->mWikiData[ "testWiki" ]  = false;
+		$this->mWikiData[ "testWiki" ]  = false;
 
 		$this->mWikiData[ "images_url" ]  	= $this->prepareDirValue();
-        $this->mWikiData[ "images_dir" ]  	= sprintf("%s/%s", strtolower( substr( $this->mWikiData[ "name"], 0, 1 ) ), $this->mWikiData[ "images_url" ]);
+		$this->mWikiData[ "images_dir" ]  	= sprintf("%s/%s", strtolower( substr( $this->mWikiData[ "name"], 0, 1 ) ), $this->mWikiData[ "images_url" ]);
 
-        if ( isset( $this->mWikiData[ "language" ] ) && $this->mWikiData[ "language" ] !== "en" ) {
+		if ( isset( $this->mWikiData[ "language" ] ) && $this->mWikiData[ "language" ] !== "en" ) {
 			$this->mWikiData[ "subdomain" ]   = strtolower( $this->mWikiData[ "language"] ) . "." . $this->mWikiData[ "name"];
 			$this->mWikiData[ "redirect" ]    = strtolower( $this->mWikiData[ "language" ] ) . "." . ucfirst( $this->mWikiData[ "name"] );
 			$this->mWikiData[ "dbname" ]      = strtolower( str_replace( "-", "", $this->mWikiData[ "language" ] ). $this->mWikiData[ "dbname"] );
@@ -1281,31 +1281,31 @@ class AutoCreateWikiPage extends SpecialPage {
 	 * @param  string $type
 	 */
 	public function addCustomSettings( $match, $settings, $type = 'unknown' ) {
-        global $wgUser;
+		global $wgUser;
 		wfProfileIn( __METHOD__ );
 
-        if( !empty( $match ) && isset( $settings[ $match ] ) && is_array( $settings[ $match ] ) ) {
-            $this->log("Found '$match' in $type settings array.");
+		if( !empty( $match ) && isset( $settings[ $match ] ) && is_array( $settings[ $match ] ) ) {
+			$this->log("Found '$match' in $type settings array.");
 
-            /**
+			/**
 			 * switching user for correct logging
 			 */
-            $oldUser = $wgUser;
-            $wgUser = User::newFromName( 'CreateWiki script' );
+			$oldUser = $wgUser;
+			$wgUser = User::newFromName( 'CreateWiki script' );
 
-            foreach( $settings[$match] as $key => $value ) {
-                $success = WikiFactory::setVarById( $key, $this->mWikiId, $value );
-                if( $success ) {
-                    $this->log("Successfully added setting for {$this->mWikiId}: {$key} = {$value}");
-                } else {
-                    $this->log("Failed to add setting for {$this->mWikiId}: {$key} = {$value}");
-                }
-            }
+			foreach( $settings[$match] as $key => $value ) {
+				$success = WikiFactory::setVarById( $key, $this->mWikiId, $value );
+				if( $success ) {
+					$this->log("Successfully added setting for {$this->mWikiId}: {$key} = {$value}");
+				} else {
+					$this->log("Failed to add setting for {$this->mWikiId}: {$key} = {$value}");
+				}
+			}
 			$wgUser = $oldUser;
 
 			$this->log("Finished adding $type settings.");
-        } else {
-            $this->log("'$match' not found in $type settings array. Skipping this step.");
+		} else {
+			$this->log("'$match' not found in $type settings array. Skipping this step.");
 		}
 
 		wfProfileOut( __METHOD__ );
