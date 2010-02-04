@@ -109,7 +109,6 @@ class CorporatePageHelper{
 				}
 					
 				if (strlen($matches[1]) == 1){
-					Wikia::log(__FUNCTION__, __LINE__, $title . ' // ' . $matches[2]);
 					$matches[2] = trim($matches[2]);
 					if (preg_match('/^(?:' . wfUrlProtocols() . ')/', $matches[2])) {
 						$href = $matches[2];
