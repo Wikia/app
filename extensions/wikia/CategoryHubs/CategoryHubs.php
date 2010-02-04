@@ -333,7 +333,7 @@ function categoryHubTitleBar(&$catView, &$r){
 			$r .= "<div class='cathub-progbar-answered' style='width:$PROG_BAR_WIDTH' title=''>".wfMsgExt('cathub-progbar-all-done', array())."</div>\n";
 		} else {
 			// some unanswered questions
-			$r .= "<div class='cathub-progbar-answered' style='width:$PROG_BAR_WIDTH' title=''>".wfMsgExt('cathub-progbar-allmost-done', array(), $countUnAnswered)."</div>\n";
+			$r .= "<div class='cathub-progbar-answered' style='width:$PROG_BAR_WIDTH' title=''>".wfMsgExt('cathub-progbar-allmost-done', 'parsemag', $countUnAnswered)."</div>\n";
 		}
 	} else {
 		// TODO: EXTRACT THIS TO A FUNCTION WHICH WILL MAKE A BANDWIDTH-EFFICIENT PROGRESS BAR FOR ANY USE (IF POSSIBLE TO DO CLEANLY... MIGHT HAVE TO REQUIRE IT TO BE ANSWERS-SPECIFIC).
@@ -434,7 +434,7 @@ function categoryHubTopContributors(&$catView, &$r){
 
 	// Recent Top Contributors
 	$r .= "<div id='topContribsRecent'>\n";
-	$r .= "<h3>".wfMsgExt('cathub-top-contribs-recent', array(), CATHUB_RECENT_CONTRIBS_LOOKBACK_DAYS)."</h3>";
+	$r .= "<h3>".wfMsgExt('cathub-top-contribs-recent', 'parsemag', CATHUB_RECENT_CONTRIBS_LOOKBACK_DAYS)."</h3>";
 	$r .= categoryHubContributorsToHtml($categoryEdits->getXDayContribs(CATHUB_RECENT_CONTRIBS_LOOKBACK_DAYS, $show_staff, $NUM_CONTRIBS_PER_SECTION));
 	$r .= "</div>\n";
 
