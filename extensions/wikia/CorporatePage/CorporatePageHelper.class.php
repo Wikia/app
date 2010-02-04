@@ -88,7 +88,7 @@ class CorporatePageHelper{
 	 */
 	
 	static public function parseMsg($msg,$favicon = false){
-		global $wgMemc,$wgLang;
+		global $wgMemc, $wgLang, $wgArticlePath;
 		$mcKey = wfMemcKey( "hp_msg_parser", $msg, $wgLang->getCode() );
 		$out = $wgMemc->get( $mcKey, null);
 		if ( $out != null ){
@@ -109,7 +109,14 @@ class CorporatePageHelper{
 				}
 					
 				if (strlen($matches[1]) == 1){
-					$out[] = array("title" => $title, 'href' => trim($matches[2]),'sub' => array());
+					Wikia::log(__FUNCTION__, __LINE__, $title . ' // ' . $matches[2]);
+					$matches[2] = trim($matches[2]);
+					if (preg_match('/^(?:' . wfUrlProtocols() . ')/', $matches[2])) {
+						$href = $matches[2];
+					} else {
+						$href = str_replace('$1', $matches[2], $wgArticlePath);
+					}
+					$out[] = array("title" => $title, 'href' => $href, 'sub' => array());
 				}
 			
 				if (strlen($matches[1]) == 2){

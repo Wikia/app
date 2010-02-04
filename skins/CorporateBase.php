@@ -23,15 +23,10 @@ class SkinCorporateBase extends SkinTemplate {
 	}
 	
 	function outputPage( OutputPage $out ) {
-		global $wgTitle, $wgArticle, $wgUser, $wgLang, $wgContLang;
-		global $wgScript, $wgStylePath, $wgContLanguageCode;
-		global $wgMimeType, $wgJsMimeType, $wgOutputEncoding, $wgRequest;
-		global $wgDisableCounters, $wgHideInterlanguageLinks;
-		global $wgMaxCredits, $wgShowCreditsIfMax;
-		global $wgPageShowWatchingUsers;
+		global $wgTitle, $wgUser, $wgContLang;
+		global $wgScript, $wgContLanguageCode;
+		global $wgJsMimeType, $wgOutputEncoding, $wgRequest;
 		global $wgUseTrackbacks, $wgUseSiteJs;
-		global $wgArticlePath, $wgScriptPath, $wgServer, $wgLang, $wgCanonicalNamespaceNames;
-		global $wgCityId;
 
 		$oldid = $wgRequest->getVal( 'oldid' );
 		$diff = $wgRequest->getVal( 'diff' );

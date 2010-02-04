@@ -35,9 +35,9 @@ $messages = array_merge( $messages , array(
 'corporatepage-footer-middlecolumn' => '* http://www.facebook.com/pages/Wikia/5678222299|Become a Facebook fan|File:Icon.footer.facebook.32x32.png|new-window
 * http://twitter.com/wikia|Follow us on Twitter|File:Icon.footer.twitter.32x32.png|new-window
 * http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog|Read our blog|File:Icon.footer.wikia.32x32.png',
-'corporatepage-footer-rightcolumn'  => '* /wiki/About_Us|About Wikia
+'corporatepage-footer-rightcolumn'  => '* About_Us|About Wikia
 * Hiring|Jobs
-* /Special:Contact|Contact
+* Special:Contact|Contact
 * Advertising_on_Wikia|Advertising
 * Press|Press
 * http://community.wikia.com/wiki/Help:Contents|Help',
