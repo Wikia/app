@@ -29,7 +29,30 @@ extAddSpecialPage(dirname(__FILE__) . '/SpecialCreatePage.php', 'CreatePage', 'C
  * setup functions
  */
 $wgExtensionFunctions[] = 'wfCreatePageInit';
-$wgHooks['MakeGlobalVariablesScript'][] = 'wfCreatePageSetupVars';
+
+// initialize create page extension
+function wfCreatePageInit() {
+	global $wgUser, $wgHooks, $wgAjaxExportList, $wgOut, $wgScriptPath, $wgStyleVersion, $wgExtensionsPath, $wgWikiaEnableNewCreatepageExt;
+
+	// load messages from file
+	wfLoadExtensionMessages('CreatePage');
+
+	if(empty($wgWikiaEnableNewCreatepageExt)) {
+		// disable all new features and preserve old Special:CreatePage behavior
+		return true;
+	}
+
+	/**
+	 * hooks
+	 */
+	$wgHooks['MakeGlobalVariablesScript'][] = 'wfCreatePageSetupVars';
+	$wgHooks['EditPage::showEditForm:initial'][] = 'wfCreatePageLoadPreformattedContent';
+	$wgHooks['UserToggles'][] = 'wfCreatePageToggleUserPreference';
+	$wgHooks['getEditingPreferencesTab'][] = 'wfCreatePageToggleUserPreference';
+
+	$wgAjaxExportList[] = 'wfCreatePageAjaxGetDialog';
+	$wgAjaxExportList[] = 'wfCreatePageAjaxCheckTitle';
+}
 
 function wfCreatePageSetupVars( $vars ) {
 	global $wgWikiaEnableNewCreatepageExt, $wgContentNamespaces, $wgContLang;
@@ -45,34 +68,24 @@ function wfCreatePageSetupVars( $vars ) {
 	return true;
 }
 
-// initialize create page extension
-function wfCreatePageInit() {
-	global $wgUser, $wgHooks, $wgAjaxExportList, $wgOut, $wgScriptPath, $wgStyleVersion, $wgExtensionsPath, $wgWikiaEnableNewCreatepageExt;
-
-	// load messages from file
-	wfLoadExtensionMessages('CreatePage');
-
-	if(empty($wgWikiaEnableNewCreatepageExt)) {
-		// disable all new features and preserve old Special:CreatePage behavior
-		return true;
-	}
-
+function wfCreatePageLoadPreformattedContent( $editpage ) {
+	global $wgRequest, $wgUser;
 	if(get_class($wgUser->getSkin()) != 'SkinMonaco') {
 		return true;
 	}
 
-	/**
-	 * hooks
-	 */
-	$wgHooks['EditPage::showEditForm:initial'][] = 'wfCreatePageLoadPreformattedContent';
-	$wgHooks['UserToggles'][] = 'wfCreatePageToggleUserPreference';
-	$wgHooks['getEditingPreferencesTab'][] = 'wfCreatePageToggleUserPreference';
-
-	$wgAjaxExportList[] = 'wfCreatePageAjaxGetDialog';
-	$wgAjaxExportList[] = 'wfCreatePageAjaxCheckTitle';
+	if ($wgRequest->getCheck('useFormat')) {
+		$editpage->textbox1 = wfMsgForContent( 'createpage-newpagelayout' );
+	}
+	return true ;
 }
 
 function wfCreatePageToggleUserPreference($toggles, $default_array = false) {
+	global $wgUser;
+	if(get_class($wgUser->getSkin()) != 'SkinMonaco') {
+		return true;
+	}
+
 	if(is_array($default_array)) {
 		$default_array[] = 'createpagedefaultblank';
 	}
@@ -152,14 +165,6 @@ function wfCreatePageAjaxCheckTitle() {
 	$response->setContentType('text/plain; charset=utf-8');
 
 	return $response;
-}
-
-function wfCreatePageLoadPreformattedContent( $editpage ) {
-	global $wgRequest;
-	if ($wgRequest->getCheck('useFormat')) {
-		$editpage->textbox1 = wfMsgForContent( 'createpage-newpagelayout' );
-	}
-	return true ;
 }
 
 include( dirname( __FILE__ ) . "/SpecialEditPage.php");
