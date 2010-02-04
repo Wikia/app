@@ -15,7 +15,6 @@
 /**
  * Generic Task, will run maintenance task for specified city_id
  */
-
 class LocalMaintenanceTask extends BatchTask {
 
 	private $mParams, $mWikiId, $mUseTemplate;
@@ -57,8 +56,6 @@ class LocalMaintenanceTask extends BatchTask {
 		$command = $this->mParams[ "command" ];
 		$type    = $this->mParams[ "type" ];
 
-		# wfWaitForSlaves( 2 );
-
 		if( $city_id && $command ) {
 			$this->mWikiId = $city_id;
 			/**
@@ -87,10 +84,6 @@ class LocalMaintenanceTask extends BatchTask {
 					WikiFactory::clearCache( $city_id );
 				}
 
-				$this->mWikiData = $this->mParams[ "data" ];
-				$this->mFounder = User::newFromId( $this->mWikiData[ "founder"] );
-				$this->mFounder->load();
-				// $this->setCentralPages(); per rt#39023
 			}
 
 			/**
@@ -161,216 +154,6 @@ class LocalMaintenanceTask extends BatchTask {
 	 * @return true
 	 */
 	public function submitForm() {
-		return true;
-	}
-
-	/**
-	 * set central pages, used in AutoCreateWiki task
-	 *
-	 */
-	private function setCentralPages() {
-		global $wgCityId, $wgUser;
-
-		/**
-		 * do it only when run on central wikia
-		*/
-		if ( $wgCityId != 177 ) {
-			$this->log( "Not run on central wikia. Cannot set wiki description page" );
-			return false;
-		}
-
-
-		$oldUser = $wgUser;
-		/**
-		 * set user for all maintenance work on central
-		 */
-		$wgUser = User::newFromName( 'CreateWiki script' );
-		$this->log( "Creating and modifing pages on Central Wikia (as user: " . $wgUser->getName() . ")..." );
-
-		/**
-		 * title of page, skip last "Wiki" part
-		 */
-		$centralTitleName = preg_replace( "/(\s+wiki)$/i", "", $this->mWikiData[ "title" ] );
-
-		#--- title for this page
-		$centralTitle = Title::newFromText( $centralTitleName, NS_MAIN );
-		$oHubs = WikiFactoryHub::getInstance();
-		$aCategories = $oHubs->getCategories();
-
-		if ( $centralTitle instanceof Title ) {
-			/**
-			 *  and article for for this title
-			 */
-			$this->log( sprintf("Have title object for page: %s", $centralTitle->getFullUrl( ) ) );
-		    $oCentralArticle = new Article( $centralTitle, 0);
-
-		    /**
-			 * set category name
-			 */
-	    	$sCategory = $this->mWikiData[ "hub" ];
-			if(!empty( $aCategories ) && isset( $aCategories[ $this->mWikiData[ "hub" ] ] ) ) {
-		    	$sCategory = $aCategories[ $this->mWikiData[ "hub" ] ];
-			}
-
-			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/LocalMaintenanceTask/" );
-			$oTmpl->set_vars( array(
-				"data"          => $this->mWikiData,
-				"wikid"         => $this->mWikiId,
-				"founder"       => $this->mFounder,
-				"timestamp"     => $sTimeStamp = gmdate("j F, Y"),
-				"category"		=> $sCategory
-			));
-
-			if( !$oCentralArticle->exists() ){
-				/**
-				 * create article
-				 */
-				$this->log( sprintf("Creating new article: %s", $centralTitle->getFullUrl( ) ) );
-				$sPage = $oTmpl->execute("central");
-				$oCentralArticle->doEdit( $sPage, "created by autocreate Wiki process", EDIT_FORCE_BOT );
-				$this->log( sprintf("Article %s added.", $centralTitle->getFullUrl()) );
-			}
-			else {
-				$update = true;
-
-				/**
-				 * check if article is a redirect and if so, switch to it's target
-				 */
-				if ( $oCentralArticle->isRedirect() ) {
-					$this->log( sprintf("Article %s exists and is a redirect.", $centralTitle->getFullUrl()) );
-					$centralTitle = $oCentralArticle->getRedirectTarget();
-					if ( $centralTitle !== null && $centralTitle->exists() ) {
-						if ( $centralTitle->getNamespace() == NS_MAIN ) {
-							$oCentralArticle = new Article( $centralTitle, 0 );
-							$this->log( sprintf("Following redirect to article %s.", $centralTitle->getFullUrl()) );
-						} else {
-							$this->log( 'Redirected to a page outside NS_MAIN. Aborting update.' );
-							$update = false; # don't update page but do the other stuff
-						}
-					} else {
-						# should never happen, but...
-						$this->log( "ERROR: Failed to process the redirect correctly." );
-						return false;
-					}
-				}
-
-				/**
-				 * abort update if target article is the main page
-				 */
-				if ( Title::newMainPage()->getPrefixedText() == $centralTitle->getPrefixedText() ) {
-					$update = false;
-				}
-
-				/**
-				 * update article
-				 */
-				if ( $update ) {
-				$this->log( sprintf("Updating existing article: %s", $centralTitle->getFullUrl()) );
-				$sContent = $oCentralArticle->getContent();
-				$wikiUrl = "http://". $this->mWikiData["subdomain"] .".wikia.com";
-				$pos = strpos($sContent, $wikiUrl);
-				if ($pos === false) {
-					$sContent .= $oTmpl->execute("central");
-					$oCentralArticle->doEdit( $sContent, "modified by autocreate Wiki process", EDIT_FORCE_BOT );
-					$this->log( sprintf("Article %s already exists... content added", $centralTitle->getFullUrl()) );
-				} else {
-					$this->log( sprintf("Article %s already exists and content was added some times ago", $centralTitle->getFullUrl()) );
-				}
-				}
-			}
-		}
-		else {
-			$this->log( "ERROR: Unable to create title object for page on Central Wikia: " . $centralTitleName );
-			return false;
-		}
-
-		/**
-		 * add to Template:List_of_Wikia_New
-		 */
-		if ( $this->mUseTemplate ) {
-			$oCentralListTitle = Title::newFromText( "Template:List_of_Wikia_New", NS_MAIN );
-			if ( $oCentralListTitle instanceof Title ) {
-				$oCentralListArticle = new Article( $oCentralListTitle, 0);
-				if ( $oCentralListArticle->exists() ) {
-					$sContent =  $oCentralListArticle->getContent();
-					$sContent .= "{{subst:nw|" . $this->mWikiData['subdomain'] . "|";
-					$sContent .= $centralTitleName . "|" . $this->mWikiData['language'] . "}}";
-
-					$oCentralListArticle->doEdit( $sContent, "modified by autocreate Wiki process", EDIT_FORCE_BOT);
-					$this->log( sprintf("Article %s modified.", $oCentralListTitle->getFullUrl()) );
-				}
-				else {
-					$this->log( sprintf("Article %s not exists.", $oCentralListTitle->getFullUrl()) );
-				}
-
-				/**
-				 * add to New_wikis_this_week/Draft
-				 */
-				$oCentralListTitle = Title::newFromText( "New_wikis_this_week/Draft", NS_MAIN );
-				$oCentralListArticle = new Article( $oCentralListTitle, 0);
-
-				if ( $oCentralListArticle->exists() ) {
-					$sReplace =  "{{nwtw|" . $this->mWikiData['language']  . "|" ;
-					$sReplace .= $aCategories[ $this->mWikiData[ "hub" ] ] . "|" ;
-					$sReplace .= $centralTitleName . "|http://" . $this->mWikiData['subdomain'] . ".wikia.com}}\n|}";
-
-					$sContent = str_replace("|}", $sReplace, $oCentralListArticle->getContent());
-
-					$oCentralListArticle->doEdit( $sContent, "modified by autocreate Wiki process", EDIT_FORCE_BOT);
-					$this->log( sprintf("Article %s modified.", $oCentralListTitle->getFullUrl()) );
-				}
-				else {
-					$this->log( sprintf("Article %s not exists.", $oCentralListTitle->getFullUrl()) );
-				}
-			}
-			else {
-				$this->log( "ERROR: Unable to create title object for page: " . $sCentralListTitle);
-				return false;
-			}
-		}
-
-		if( strcmp( strtolower( $this->mWikiData['redirect'] ), strtolower( $centralTitleName ) ) != 0 ) {
-			#--- add redirect(s) on central
-			$oCentralRedirectTitle = Title::newFromText( $this->mWikiData['redirect'], NS_MAIN );
-			if ( $oCentralRedirectTitle instanceof Title ) {
-				$oCentralRedirectArticle = new Article( $oCentralRedirectTitle, 0);
-				if ( !$oCentralRedirectArticle->exists() ) {
-					$sContent = "#Redirect [[" . $centralTitleName . "]]";
-					$oCentralRedirectArticle->doEdit( $sContent, "modified by autocreate Wiki process", EDIT_FORCE_BOT);
-					$this->log( sprintf("Article %s added (redirect to: " . $centralTitleName . ").", $oCentralRedirectTitle->getFullUrl()) );
-				}
-				else {
-					$this->log( sprintf("Article %s already exists.", $oCentralRedirectTitle->getFullUrl()) );
-				}
-
-				if( ( $this->mWikiData['language'] == 'en' ) && ( !preg_match('/^en\./i', $this->mWikiData['subdomain']) ) ) {
-					/**
-					 * extra redirect page: en.<subdomain>
-					 */
-					$enTitle = 'en.' . $this->mWikiData['subdomain'];
-					$enRedirectTitle = Title::newFromText( $enTitle, NS_MAIN );
-					$enRedirectArticle = new Article( $enRedirectTitle, 0);
-					if ( ! $enRedirectArticle->exists() ) {
-						$enRedirectArticle->doEdit( "#Redirect [[" . $centralTitleName . "]]", "modified by autocreate Wiki process", EDIT_FORCE_BOT);
-						$this->log( sprintf("Article %s added (extra redirect to: " . $centralTitleName . ").", $enRedirectTitle->getFullUrl()) );
-					}
-					else {
-						$this->log( sprintf("Article %s already exists.", $enRedirectTitle->getFullUrl()) );
-					}
-				}
-			}
-			else {
-				$this->log( "ERROR: Unable to create title object for redirect page: " . $this->mWikiData['redirect'] );
-				return false;
-			}
-		}
-
-		/**
-		 * revert back to original User object, just in case
-		 */
-		$wgUser = $oldUser;
-
-		$this->log( "Creating and modifing pages on Central Wikia finished." );
 		return true;
 	}
 }
