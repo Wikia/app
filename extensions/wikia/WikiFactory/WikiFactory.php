@@ -1868,7 +1868,8 @@ class WikiFactory {
 	 * @static
 	 *
 	 * @param integer	$dbname		name of DB to check
-	 * @todo when second cluster will come this function has to changed
+	 * @deprecated
+	 * @todo remove it, moved as private method in AWC
 	 *
 	 * @return string: fixed name of DB
 	 */
@@ -2111,7 +2112,7 @@ class WikiFactory {
 		wfProfileOut( __METHOD__ );
 		return isset( $oRow->cv_city_id ) ? $oRow->cv_city_id : null;
 	}
-	
+
 	/**
 	 * Introduces a new variable to be managed by WikiFactory.
 	 *
@@ -2166,7 +2167,7 @@ class WikiFactory {
 		wfProfileOut( __METHOD__ );
 		return $bStatus;
 	} // end createVariable()
-	
+
 	/**
 	 * Modifies the properties of a variable managed by WikiFactory.  This does
 	 * not change the VALUE of that variable on wikis.
