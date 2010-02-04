@@ -4,20 +4,21 @@
  *
  * @author Bartek Lapinski <bartek@wikia-inc.com>
  */
+
 $wgExtensionCredits['other'][] = array(
-		'name' => 'TitleEdit',
-		'description' => 'Adds top title edit buttons',
-		'version' => '1.0',
-		'author' => array('Bartek Lapinski')
-		);
+	'name' => 'TitleEdit',
+	'description' => 'Adds top title edit buttons',
+	'descriptionmsg' => 'titleedit-desc',
+	'version' => '1.0',
+	'author' => array('Bartek Lapinski')
+);
 
 $wgExtensionMessagesFiles['TitleEdit'] = dirname(__FILE__) . '/TitleEdit.i18n.php';
 $wgHooks['MonacoPrintFirstHeading'][] = 'wfTitleEditPrintFirstHeading';
 
-
 function wfTitleEditPrintFirstHeading() {
 	global $wgTitle, $wgUser, $wgRequest;
-	
+
 	if ( $wgTitle->isProtected( 'edit' ) ) {
 		return true;
 	}
@@ -48,5 +49,3 @@ function wfTitleEditPrintFirstHeading() {
 	echo $result;
 	return true;
 }
-
-
