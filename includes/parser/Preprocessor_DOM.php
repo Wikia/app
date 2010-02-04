@@ -70,13 +70,10 @@ class Preprocessor_DOM implements Preprocessor {
 		$xml = false;
 		$cacheable = strlen( $text ) > $wgPreprocessorCacheThreshold;
 
-		/* Wikia change begin - @author: Macbre */
-		/* Wysiwyg: disable XML caching when running Wysiwyg or parsing templates preview or for CategorySelect (RT#22059, RT#22526) */
-		global $wgWysiwygParserEnabled, $wgWysiwygTemplatesParserEnabled, $wgCategorySelectEnabled;
-		if(!empty($wgWysiwygParserEnabled) || !empty($wgWysiwygTemplatesParserEnabled) || !empty($wgCategorySelectEnabled)) {
+		global $wgCategorySelectEnabled;
+		if(!empty($wgCategorySelectEnabled)) {
 			$cacheable = false;
 		}
-		/* Wikia change end */
 
 		// RTE - begin
 		// TODO: document
@@ -88,7 +85,7 @@ class Preprocessor_DOM implements Preprocessor {
 
 		if ( $cacheable ) {
 			wfProfileIn( __METHOD__.'-cacheable' );
-			global $wgWysiwygParserEnabled, $wgWysiwygParserTildeEnabled, $wgCategorySelectEnabled;
+			global $wgCategorySelectEnabled;
 
 			$cacheKey = wfMemcKey( 'preprocess-xml', md5($text), $flags );
 			$cacheValue = $wgMemc->get( $cacheKey );
@@ -137,7 +134,7 @@ class Preprocessor_DOM implements Preprocessor {
 	}
 
 	function preprocessToXml( $text, $flags = 0 ) {
-		global $wgWysiwygParserEnabled, $wgWysiwygParserTildeEnabled, $wgCategorySelectEnabled;
+		global $wgCategorySelectEnabled;
 		wfProfileIn( __METHOD__ );
 		$rules = array(
 			'{' => array(
@@ -156,16 +153,6 @@ class Preprocessor_DOM implements Preprocessor {
 				'max' => 2,
 			)
 		);
-
-		//Wysiwyg: add rules to handle external links
-		if(!empty($wgWysiwygParserEnabled)) {
-			$rules['['] = array(
-				'end' => ']',
-				'names' => array( 1=> 'external', 2 => null ),
-				'min' => 1,
-				'max' => 2,
-			);
-		}
 
 		$forInclusion = $flags & Parser::PTD_FOR_INCLUSION;
 
@@ -202,15 +189,6 @@ class Preprocessor_DOM implements Preprocessor {
 			$rules['{']['names'] = array(3 => 'tplarg');
 		}
 		// RTE - end
-
-		//Wysiwyg: handle 'noinclude', 'includeonly', 'onlyinclude' as normal parser hooks
-		if (!empty($wgWysiwygParserEnabled) || !empty($wgWysiwygParserTildeEnabled)) {
-			$ignoredTags = $ignoredElements = array();
-			global $wgParser;
-			$wgParser->setHook('noinclude', 'WysiwygParserHookCallback');
-			$wgParser->setHook('includeonly', 'WysiwygParserHookCallback');
-			$wgParser->setHook('onlyinclude', 'WysiwygParserHookCallback');
-		}
 
 		//CategorySelect
 		if (!empty($wgCategorySelectEnabled)) {
@@ -584,7 +562,7 @@ class Preprocessor_DOM implements Preprocessor {
 				}
 
 				# Wysiwyg
-				if($flags == 0 && ($wgWysiwygParserEnabled || $wgCategorySelectEnabled) && $count == 2 && $curChar == "{") {
+				if($flags == 0 && ($wgCategorySelectEnabled) && $count == 2 && $curChar == "{") {
 					$openAt[] = $i;
 				}
 
@@ -636,17 +614,6 @@ class Preprocessor_DOM implements Preprocessor {
 					// No element, just literal text
 					$element = $piece->breakSyntax( $matchingCount ) . str_repeat( $rule['end'], $matchingCount );
 
-					//Wysiwyg: add proper marker to internal or external link
-					if(!empty($wgWysiwygParserEnabled)) {
-						global $wgWikitext;
-						$wgWikitext[] = $element;
-						if($name === null) {
-							$element = sprintf("[[\x7d-%04d", count($wgWikitext)-1).substr($element,2);
-						} else if($name === 'external') {
-							$element .= "\x7e-start-".(count($wgWikitext)-1)."-stop";
-						}
-					}
-
 					if(!empty($wgRTEParserEnabled)) {
 						if($name === null) {
 							$dataIdx = RTEData::put('wikitext', $element);
@@ -689,7 +656,7 @@ class Preprocessor_DOM implements Preprocessor {
 					$element .= "<title>$title</title>";
 
 					//Wysiwyg + CategorySelect: add original wikitext for template call to XML
-					if($flags == 0 && ($wgWysiwygParserEnabled || $wgCategorySelectEnabled) && $count == 2 && $curChar == '}') {
+					if($flags == 0 && ($wgCategorySelectEnabled) && $count == 2 && $curChar == '}') {
 						$closeAt[] = $i;
 						if(count($closeAt) == count($openAt)) {
 							$openIdx = $openAt[0];
@@ -1012,7 +979,6 @@ class PPFrame_DOM implements PPFrame {
 	}
 
 	function expand( $root, $flags = 0 ) {
-		global $wgWysiwygParserEnabled, $wgWysiwygPreProcesssorInsideTemplate;
 		static $expansionDepth = 0;
 		if ( is_string( $root ) ) {
 			return $root;
@@ -1087,8 +1053,6 @@ class PPFrame_DOM implements PPFrame {
 				if ( $contextNode->nodeType == XML_TEXT_NODE ) {
 					$out .= $contextNode->nodeValue;
 				} elseif ( $contextNode->nodeName == 'template' ) {
-					# macbre: RT #19218
-					$wgWysiwygPreProcesssorInsideTemplate = true;
 
 					# Double-brace expansion
 					$xpath = new DOMXPath( $contextNode->ownerDocument );
@@ -1119,24 +1083,11 @@ class PPFrame_DOM implements PPFrame {
 							if ( isset( $ret['object'] ) ) {
 								$newIterator = $ret['object'];
 							} else {
-								//Wysiwyg: mark template call and add metadata to wysiwyg array
-								if($wgWysiwygParserEnabled && ($originalCall = $xpath->query( 'originalCall', $contextNode )->item( 0 ))) {
-									$textContent = htmlspecialchars_decode($originalCall->textContent);
-									$out .= Wysiwyg_WrapTemplate($textContent, $ret['text'], $lineStart);
-									if(strpos($textContent, "\x7f-comment-") !== false || strpos($textContent, "<!--") !== false) {
-										global $wgWysiwygCommentEdgeCase;
-										$wgWysiwygCommentEdgeCase = true;
-									}
-								} else {
-									$out .= $ret['text'];
-								}
+								$out .= $ret['text'];
 							}
 						}
 					}
 					// RTE - end
-
-					# macbre: RT #19218
-					$wgWysiwygPreProcesssorInsideTemplate = false;
 
 				} elseif ( $contextNode->nodeName == 'tplarg' ) {
 					# Triple-brace expansion
@@ -1164,31 +1115,6 @@ class PPFrame_DOM implements PPFrame {
 						|| ( $this->parser->ot['pre'] && $this->parser->mOptions->getRemoveComments() )
 						|| ( $flags & self::STRIP_COMMENTS ) )
 					{
-						if(!empty($wgWysiwygParserEnabled )) {
-							if(strlen($out) === 0 || substr($out, -1) == "\n") {
-
-								if(substr($contextNode->textContent, -1) == "\n") {
-									$add = "\n";
-									$text = substr($contextNode->textContent, 0, -1);
-								} else {
-									$add = "";
-									$text = $contextNode->textContent;
-								}
-
-								$refId = Wysiwyg_SetRefId('comment', array('text' => $text), false, true);
-								$out .= "\x7f-comment-{$refId}-\x7f{$add}";
-							} else {
-								# macbre: RT #19218
-								if (empty($wgWysiwygPreProcesssorInsideTemplate)) {
-									global $wgWysiwygCommentEdgeCase;
-									$wgWysiwygCommentEdgeCase = true;
-								}
-								$out .= '';
-							}
-						} else {
-							$out .= '';
-						}
-
 						// RTE - begin
 						global $wgRTEParserEnabled;
 						if(!empty($wgRTEParserEnabled)) {
