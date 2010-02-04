@@ -6,7 +6,7 @@
  */
 $wgExtensionCredits['parserhook'][] = array(
                 'name' => 'QuickCreate',
-                'description' => 'Adds contest button',
+                'description' => 'Adds a create new page button with ability to log in for anons',
                 'version' => '1,0',
                 'author' => array('Bartek Lapinski')
                 );
@@ -35,7 +35,7 @@ function wfQuickCreateButton( $input, $argv, &$parser ) {
 						'onclick' => $onclick
 						 ) )
 		.Xml::openElement( 'span' )
-		.wfMsg( 'makerecipe' )	
+		.wfMsg( 'quickcreate' )	
 		.Xml::closeElement( 'span' )
 		.Xml::closeElement( 'a' );
 
