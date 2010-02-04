@@ -849,7 +849,12 @@ class Article {
 			// This is an internally redirected page view.
 			// We'll need a backlink to the source page for navigation.
 			if( wfRunHooks( 'ArticleViewRedirect', array( &$this ) ) ) {
-				$redir = $sk->makeKnownLinkObj( $this->mRedirectedFrom, '', 'redirect=no', '', '', 'rel="nofollow"' );
+				global $wgWikiaUseNoFollow;
+				if( !empty( $wgWikiaUseNoFollow ) ) {
+					$redir = $sk->makeKnownLinkObj( $this->mRedirectedFrom, '', 'redirect=no', '', '', 'rel="nofollow"' );
+				} else {
+					$redir = $sk->makeKnownLinkObj( $this->mRedirectedFrom, '', 'redirect=no', '' );
+				}
 				$s = wfMsgExt( 'redirectedfrom', array( 'parseinline', 'replaceafter' ), $redir );
 				$wgOut->setSubtitle( $s );
 

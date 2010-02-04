@@ -1922,8 +1922,11 @@ function wfGetCachedNotice( $name ) {
 		}
 	}
 
-	// not very subtle but tidy(?) gonna sort out multiple nofollows later on
-	$notice = preg_replace('/<a /', '<a rel="nofollow" ', $notice);
+	global $wgWikiaUseNoFollow;
+	if( !empty( $wgWikiaUseNoFollow ) ) {
+		// not very subtle but tidy(?) gonna sort out multiple nofollows later on
+		$notice = preg_replace('/<a /', '<a rel="nofollow" ', $notice);
+	}
 
 	wfProfileOut( $fname );
 	return $notice;

@@ -820,8 +820,13 @@ END;
 			$t = $embed . implode ( "{$pop} {$sep} {$embed}" , $allCats['normal'] ) . $pop;
 
 			$msg = wfMsgExt( 'pagecategories', array( 'parsemag', 'escapenoentities' ), count( $allCats['normal'] ) );
+			$attribs = array();
+			global $wgWikiaUseNoFollow;
+			if( !empty( $wgWikiaUseNoFollow ) ) {
+				$attribs['rel'] = 'nofollow';
+			}
 			$s .= '<div id="mw-normal-catlinks">' .
-				$this->link( Title::newFromText( wfMsgForContent('pagecategorieslink') ), $msg, array('rel' => 'nofollow') )
+				$this->link( Title::newFromText( wfMsgForContent('pagecategorieslink') ), $msg, $attribs )
 				. $colon . $t . '</div>';
 		}
 
@@ -1419,7 +1424,12 @@ END;
 		if( $wgRightsPage ) {
 			$link = $this->makeKnownLink( $wgRightsPage, $wgRightsText );
 		} elseif( $wgRightsUrl ) {
-			$link = $this->makeExternalLink( $wgRightsUrl, $wgRightsText, true, '', array('rel' => 'nofollow') );
+			global $wgWikiaUseNoFollow;
+			if( !empty( $wgWikiaUseNoFollow ) ) {
+				$link = $this->makeExternalLink( $wgRightsUrl, $wgRightsText, true, '', array('rel' => 'nofollow') );
+			} else {
+				$link = $this->makeExternalLink( $wgRightsUrl, $wgRightsText );
+			}
 		} elseif( $wgRightsText ) {
 			$link = $wgRightsText;
 		} else {

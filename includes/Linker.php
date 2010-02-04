@@ -547,7 +547,11 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 		}
 		$nt = $this->normaliseSpecialPage( $title );
 
-		$attribs = array('rel' => 'nofollow');
+		$attribs = array();
+		global $wgWikiaUseNoFollow;
+		if( !empty( $wgWikiaUseNoFollow ) ) {
+			$attribs['rel'] = 'nofollow';
+		}
 		global $wgWysiwygParserEnabled; //Wysiwyg: get refId from wikitext and add it to the HTML
 		if (!empty($wgWysiwygParserEnabled)) {
 			$attribs['refid'] = Wysiwyg_GetRefId($text, true);
@@ -1047,7 +1051,11 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 					$q .= '&' . $query;
 				list( $inside, $trail ) = self::splitTrail( $trail );
 				$style = $this->getInternalLinkAttributesObj( $title, $text, 'new' );
-				$nofollow = ' rel="nofollow"';
+				$nofollow = '';
+				global $wgWikiaUseNoFollow;
+				if( !empty( $wgWikiaUseNoFollow ) ) {
+					$nofollow = ' rel="nofollow"';
+				}
 				wfProfileOut( __METHOD__ );
 				return '<a href="' . $upload->escapeLocalUrl( $q ) . '"'
 					. $style . $refId . $nofollow . '>' . $prefix . $text . $inside . '</a>' . $trail;
@@ -1097,7 +1105,10 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 				$upload = SpecialPage::getTitleFor( 'Upload' );
 				$url = $upload->getLocalUrl( 'wpDestFile=' . urlencode( $title->getDBkey() ) );
 				$class = 'new';
-				$nofollow = ' rel="nofollow"';
+				global $wgWikiaUseNoFollow;
+				if( !empty( $wgWikiaUseNoFollow ) ) {
+					$nofollow = ' rel="nofollow"';
+				}
 			}
 			$alt = htmlspecialchars( $title->getText() );
 			if( $text == '' ) {
@@ -1533,7 +1544,12 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 	 * parameter level defines if we are on an indentation level
 	 */
 	function tocLine( $anchor, $tocline, $tocnumber, $level ) {
-		return "\n<li class=\"toclevel-$level\"><a rel=\"nofollow\" href=\"#" .
+		$nofollow = '';
+		global $wgWikiaUseNoFollow;
+		if( !empty( $wgWikiaUseNoFollow ) ) {
+			$nofollow = ' rel="nofollow"';
+		}
+		return "\n<li class=\"toclevel-$level\"><a{$nofollow} href=\"#" .
 			$anchor . '"><span class="tocnumber">' .
 			$tocnumber . '</span> <span class="toctext">' .
 			$tocline . '</span></a>';
@@ -1610,10 +1626,14 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 	 * @return         string HTML to use for edit link
 	 */
 	public function doEditSectionLink( Title $nt, $section, $tooltip = null ) {
-		/* Wikia change begin - @author: uknkown */
-		/* Ad rel="nofollow" attribute to edit section links */
-		$attribs = array('rel' => 'nofollow');
-		/* Wikia change end */
+		$attribs = array();
+		global $wgWikiaUseNoFollow;
+		if( !empty( $wgWikiaUseNoFollow ) ) {
+			/* Wikia change begin - @author: uknkown */
+			/* Ad rel="nofollow" attribute to edit section links */
+			$attribs['rel'] = 'nofollow';
+			/* Wikia change end */
+		}
 		if( !is_null( $tooltip ) ) {
 			$attribs['title'] = wfMsg( 'editsectionhint', $tooltip );
 		}
@@ -1665,7 +1685,12 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 	 * @return string HTML headline
 	 */
 	public function makeHeadline( $level, $attribs, $anchor, $text, $link, $legacyAnchor = false ) {
-		$ret = "<a rel=\"nofollow\" name=\"$anchor\" id=\"$anchor\"></a>"
+		$nofollow = '';
+		global $wgWikiaUseNoFollow;
+		if( !empty( $wgWikiaUseNoFollow ) ) {
+			$nofollow = ' rel="nofollow"';
+		}
+		$ret = "<a{$nofollow} name=\"$anchor\" id=\"$anchor\"></a>"
 			. "<h$level$attribs"
 			. $link
 			. " <span class=\"mw-headline\">$text</span>"
