@@ -83,7 +83,6 @@ class LocalMaintenanceTask extends BatchTask {
 					WikiFactory::removeVarById($oVariable->cv_variable_id, $city_id);
 					WikiFactory::clearCache( $city_id );
 				}
-
 			}
 
 			/**
