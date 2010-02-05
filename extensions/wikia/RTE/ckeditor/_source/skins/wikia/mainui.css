@@ -10,27 +10,10 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 }
 
 /* Main editor only settings. */
-span.cke_skin_wikia
-{
-	/*-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	border-radius: 5px;
-	border: 1px solid #D3D3D3;
-	padding: 5px;*/
-}
-
 .cke_skin_wikia .cke_wrapper
 {
-	/*-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	border-radius: 5px;
-	background-color: #d3d3d3;
-	background-image: url(images/sprites.png);
-	background-repeat: repeat-x;
-	background-position: 0 -1950px;*/
 	display: block;
-
-	/*background-color: Red;*/
+	position: relative; /* RT #39114 */
 }
 
 .cke_skin_wikia .cke_browser_ie6 .cke_wrapper,
@@ -41,9 +24,6 @@ span.cke_skin_wikia
 
 .cke_skin_wikia .cke_editor
 {
-/*
-	border: solid 1px #dcdcdc;
-*/
 	border-collapse: separate;
 	display: inline-table;
 	width: 100%;
