@@ -287,26 +287,83 @@ CKEDITOR.plugins.add('rte-media',
 		RTE.getEditor().unbind('dropped.media').bind('dropped.media', function(ev, extra) {
                         var target = $(ev.target);
 
-			// only keep media
-			target = target.filter('img.image,image.video');
-			self.setupMedia(target);
-/*
+			// handle images and videos only
+			if (!target.hasClass('image') && !target.hasClass('video')) {
+				return;
+			}
+
 			// check coordinates and try to re-align an image
-			RTE.log(extra);
+			RTE.log('dropped event fired');RTE.log(target); RTE.log(extra);
 
 			// calculate relative positon
 			var editorX = parseInt(extra.pageX - $('#editform').offset().left);
 			var editorWidth = parseInt($('#editform').width());
 
 			// choose new image alignment
-			var align = (editorX < (editorWidth >> 1)) ? 'left':  'right';
-			RTE.log('RTE: new image align: ' + align);
+			var data = target.getData();
+			var newAlign = false;
 
-			// TODO: update image rte-data and wikitext
+			var oldAlign = data.params.align;
+			if (!oldAlign) {
+				// get default alignment if none is specified in wikitext
+				oldAlign = (target.hasClass('thumb') || target.hasClass('frame')) ? 'right' : 'left';
+			}
+
+			switch(oldAlign) {
+				case 'left':
+					// switch to right if x > 66% of width
+					if (editorX > parseInt(editorWidth * 0.66)) {
+						newAlign = 'right';
+					}
+					break;
+
+				case 'right':
+					// switch to left if x < 33% of width
+					if (editorX < parseInt(editorWidth * 0.33)) {
+						newAlign = 'left';
+					}
+					break;
+			}
+
+			RTE.log('media alignment: ' + oldAlign + ' -> ' + newAlign);
+
+			if (!newAlign) {
+				return;
+			}
+
+			// update image rte-data and wikitext
+			var wikitext = data.wikitext;
+			var re = new RegExp('\\|' + oldAlign + '(\\||])');
+
+			if (re.test(wikitext)) {
+				// switch alignment which is already in wikitext
+				// example: [[File:Spiderpig.jpg|thumb|left|left something]]
+				wikitext = wikitext.replace(re, "|" + newAlign + "$1");
+			}
+			else {
+				// there's no alignment in wikitext - add left/right after the first pipe
+				// example: [[File:Spiderpig.jpg|thumb|foo]] or [[File:Spiderpig.png]]
+				wikitext = wikitext.replace(/(\||\])/, '|' + newAlign + '$1');
+			}
+
+			RTE.log('new wikitext: ' + wikitext);
+
+			// update meta data
+			data.params.align = newAlign;
+			data.wikitext = wikitext;
+
+			target.setData(data);
 
 			// re-align image in editor
-			target.removeClass('alignLeft alignRight').addClass(align == 'left' ? 'alignLeft' : 'alignRight');
-*/
+			target.removeClass('alignLeft alignRight').addClass(newAlign == 'left' ? 'alignLeft' : 'alignRight');
+
+			// tracking
+			RTE.track(
+				target.hasClass('image') ? 'image' : 'video',
+				'event',
+				'switchSide',
+				(newAlign == 'right') ? 'l2r' : 'r2l'
+			);
 		});
 
 		// update position of image caption ("..." icon)
