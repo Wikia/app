@@ -36,13 +36,14 @@ $(function() {
 			return false;
 		});
 
-		 $("#ca-viewsource").add("#te-editanon").add("#mr-submit").click(function(e){
+		 $("#ca-viewsource").add("#te-editanon").add(".wikiaComboAjaxLogin").click(function(e){
 			showComboAjaxForPalceHolder(false, "", function(){
 				AjaxLogin.doSuccess = function() {
-					if( e.target.nodeName == "SPAN" ){
-						window.location.href = $(e.target.parentNode).attr('href');
+					var target = $(e.target);
+					if( target.is('a') ){
+						window.location.href = target.attr('href');
 					} else {
-						window.location.href = e.target.href;
+						window.location.href = target.parent().attr('href');
 					}
 				}
 			});
