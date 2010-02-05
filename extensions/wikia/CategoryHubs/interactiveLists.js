@@ -2,6 +2,9 @@
 var success_close_speed = 3000;
 
 $(document).ready(function(){
+	if (typeof $().tabs != 'function') {
+		return;
+	}
 	$("#tabs").tabs(); // active jQuery UI tab widget for answered/unanswered
 	
 	// Select the appropriate tab (for instance for using pagination on the non-default tab).
