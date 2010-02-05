@@ -141,6 +141,10 @@ class WikiaCentralAuthHooks {
 		$oCUser = new WikiaCentralAuthUser( $sName );
 		$localId = User::idFromName( $sName );
 		
+		if ( empty($localId) ) {
+			$localId = $oCUser->idFromName();
+		}
+		
 		if ( !$oCUser->isAttached() && $localId ) {
 			wfDebug( __METHOD__ .": exists, and not attached \n" );
 			wfProfileOut( __METHOD__ );

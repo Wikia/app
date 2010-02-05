@@ -494,7 +494,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 			'user_editcount' => 0,
 		);
 
-		$ok = $dbw->insert ( '`user`', $fields, __METHOD__, 'IGNORE' );
+		$ok = $dbw->insert ( '`user`', $fields, __METHOD__, array('IGNORE') );
 
 		if( $ok ) {
 			wfDebug( __METHOD__ . ": registered global account '$this->mName' \n" );
@@ -1191,6 +1191,19 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 			$from = '';
 		}
 		return $passwordCorrect;
+	}
+
+	/*
+	 * check local user name from DB_MASTER 
+	 */
+	function idFromName() {
+		$dbr = self::getLocalDB();
+		$s = $dbr->selectRow( 'user', array( 'user_id' ), array( 'user_name' => $this->mName ), __METHOD__ );
+		if ( $s === false ) {
+			return 0;
+		} else {
+			return $s->user_id;
+		}
 	}
 
 }
