@@ -136,12 +136,15 @@ class HomePageStatisticCollector
 	 * Author: Tomek Odrobny
 	 * memory fifo line, tomek
 	 */
-	private static function fifoLine($value,$timeSample,$fifoLength,$key){
-		$time = time();
+	public static function fifoLine($value,$timeSample,$fifoLength,$key,$time = null){
+		if ( $time == null ){
+			$time = time();
+		}
+		
 		$data = HomePageMemAdapter::getMemValue($key,null);
 
 		if($data == null){
-			$data['timestamp'] = array(time());
+			$data['timestamp'] = array($time);
 			$data['fifo'] = array($value);
 			HomePageMemAdapter::setMemValue($key,$data);
 			return $value;
