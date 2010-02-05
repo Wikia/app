@@ -153,7 +153,7 @@ class ThumbnailImage extends MediaTransformOutput {
 		$alt = empty( $options['alt'] ) ? '' : $options['alt'];
 		# Note: if title is empty and alt is not, make the title empty, don't
 		# use alt; only use alt if title is not set
-		$title = !isset( $options['title'] ) ? $alt : $options['title'];		
+		$title = !isset( $options['title'] ) ? $alt : $options['title'];
 		$query = empty($options['desc-query'])  ? '' : $options['desc-query'];
 
 		if ( !empty( $options['custom-url-link'] ) ) {
@@ -182,13 +182,7 @@ class ThumbnailImage extends MediaTransformOutput {
 		if ( !empty( $options['img-class'] ) ) {
 			$attribs['class'] = $options['img-class'];
 		}
-		if ( isset( $options['refid'] ) ) {
-			if (is_array($linkAttribs)) {
-				$linkAttribs['refid'] = $options['refid'];
-			} else {
-				$linkAttribs = array('refid' => $options['refid']);
-			}
-		}
+
 		return $this->linkWrap( $linkAttribs, Xml::element( 'img', $attribs ) );
 	}
 
@@ -216,11 +210,7 @@ class MediaTransformError extends MediaTransformOutput {
 	}
 
 	function toHtml( $options = array() ) {
-		$refId = '';
-		if (isset($options['refid'])) {
-			$refId = " refid=\"{$options['refid']}\"";
-		}
-		return "<table$refId class=\"MediaTransformError\" style=\"" .
+		return "<table class=\"MediaTransformError\" style=\"" .
 			"width: {$this->width}px; height: {$this->height}px;\"><tr><td>" .
 			$this->htmlMsg .
 			"</td></tr></table>";

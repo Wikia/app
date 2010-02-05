@@ -1214,7 +1214,7 @@ class Sanitizer {
 			# 7.5.4
 			'div'        => $block,
 			'center'     => $common, # deprecated
-			'span'       => array_merge( $block, array( 'refid' ) ),	//$block, # ??
+			'span'       => $block,	//$block, # ??
 
 			# 7.5.5
 			'h1'         => $block,
