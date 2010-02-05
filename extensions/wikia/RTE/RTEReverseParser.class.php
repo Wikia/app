@@ -61,16 +61,14 @@ class RTEReverseParser {
 
 				//RTE::hex(__METHOD__, $html); RTE::hex(__METHOD__, $out);  // debug
 
-				// fix &nbsp; entity added by MW parser (&gt; : &#58;)
+				// fix nbsp to be a valid UTF character
 				// don't break UTF characters (à - \xC3\xA0 / 誠 - \xE8\xAA / ム - \xE3\x83)
-				$out = preg_replace('%([^\xC0-\xFF][\x00-\xAF])\xA0%', '\1 ', $out);
-				// RT #38595
-				$out = preg_replace('%(\x20[\x00-\xAF])\xA0%', '\1 ', $out);
+				$out = preg_replace('%(?<=[\x00-\x7F]|^|[\xA0])\xA0%', "\xC2\xA0", $out);
+
+				// replace nonbreakable space with space
+				$out = str_replace("\xC2\xA0", ' ', $out);
 
 				//RTE::hex(__METHOD__, $out); // debug
-
-				// fix &nbsp; entity when switching from wysiwyg (<p>a[spacex3]b</p>)
-				$out = str_replace("\x20\xA0", '  ', $out);
 
 				// trim trailing whitespaces
 				$out = rtrim($out, "\n ");
