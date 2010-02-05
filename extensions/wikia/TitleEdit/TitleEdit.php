@@ -40,7 +40,7 @@ function wfTitleEditPrintFirstHeading() {
 		$result = wfMsgHtml( 'editsection-brackets', $link );
 		$result = "<span class=\"editsection-upper\">$result</span>";
 	} else { // anon
-		if ( empty($wgDisableAnonymousEditig)) {
+		if ( empty($wgDisableAnonymousEditing)) {
 			$link = "<a id=\"te-editanon\" class=\"wikia_button\" onclick=\"WET.byStr('articleAction/topedit')\" href=\"" . $wgTitle->getEditUrl() . "\"><span>" . wfMsg( 'titleedit' ) . "</span></a>";
 			$result = "<span class=\"editsection-upper\">$link</span>";
 		}
