@@ -36,7 +36,7 @@ $(function() {
 			return false;
 		});
 
-		 $("#ca-viewsource").add("#te-editanon").add(".wikiaComboAjaxLogin").click(function(e){
+		 $("#ca-viewsource").add("#te-editanon").click(function(e){
 			showComboAjaxForPalceHolder(false, "", function(){
 				AjaxLogin.doSuccess = function() {
 					var target = $(e.target);
@@ -49,6 +49,19 @@ $(function() {
 			});
 			return false;
 		});		
+
+		 $(".wikiaComboAjaxLogin").click(function(e){
+			showComboAjaxForPalceHolder(false, "", function(){
+				AjaxLogin.doSuccess = function() {
+					CreatePage.openDialog(e, null);		
+				}
+			});
+			return false;
+		});		
+
+
+
+
 	}
 });
 
