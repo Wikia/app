@@ -1,4 +1,5 @@
 == Changes since 201002.1 ==
+* rt#38752: User without editinterface allowed to modify Mediawiki page through imageplaceholder. (Nef)
 * rt#36065: RTE: add ability to switch image sides (macbre)
 * rt#37830: Monaco sidebar search autocomplete not urlencoding ? chars correctly (Maroned)
 * rt#39027: Footer links don't go to the right places on sub-pages (Maroned)
