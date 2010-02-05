@@ -43,10 +43,10 @@ class WikiaMiniUpload {
 		// if the page is protected
 		( $title->isProtected() ) ? $script_a['user_protected'] = true : $script_a['user_protected'] = false;
 
-		( $wgUser->isLoggedIn() && !$wgUser->isAllowed( 'edit' ) ) ? $script_a['user_disallowed'] = true : $script_a['user_disallowed'] = false;
+		( $wgUser->isLoggedIn() && !$title->userCan( 'edit' ) ) ? $script_a['user_disallowed'] = true : $script_a['user_disallowed'] = false;
 
 		// for disabled anonymous editing
-		( !$wgUser->isLoggedIn() && !$wgUser->isAllowed( 'edit' ) ) ? $script_a['wmu_init_login'] = true : $script_a['wmu_init_login'] = false;
+		( !$wgUser->isLoggedIn() && !$title->userCan( 'edit' ) ) ? $script_a['wmu_init_login'] = true : $script_a['wmu_init_login'] = false;
 
                 $out = '<div class="reset" id="ImageUpload">';
                 $out .= '<div id="ImageUploadBorder"></div>';
