@@ -25,7 +25,6 @@ CKEDITOR.plugins.add('rte-dragdrop',
 				RTE.instance.execCommand('undo');
 			}
 
-/*
 			// get coordinates from "dragdrop" event and send it with "dropped" event
 			// @see http://www.quirksmode.org/js/events_properties.html#position
 			var extra = {
@@ -34,8 +33,7 @@ CKEDITOR.plugins.add('rte-dragdrop',
 			};
 
 			// trigger custom event handler
-			droppedElement.trigger('dropped');
-*/
+			droppedElement.trigger('dropped', [extra]);
 
 		}, this.timeout);
 	},
@@ -105,8 +103,9 @@ CKEDITOR.plugins.add('rte-dragdrop',
 				});
 
 			// for IE
-			//
-			RTE.getEditor()[0].ondrop = self.onDrop;
+			if (CKEDITOR.env.ie) {
+				RTE.getEditor().bind('drop',self.onDrop);
+			}
 		});
 	}
 });
