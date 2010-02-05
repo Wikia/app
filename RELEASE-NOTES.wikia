@@ -1,5 +1,7 @@
 == Changes since 201002.1 ==
-* rt#38755: RTE inserting strange UTF8 char into pages (macbre / marooned)
+* rt#37830: Monaco sidebar search autocomplete not urlencoding ? chars correctly (Maroned)
+* rt#39027: Footer links don't go to the right places on sub-pages (Maroned)
+* rt#38755: RTE inserting strange UTF8 char into pages (macbre / Marooned)
 * rt#39003: Adding new accounts from AWC seems to be broken (eloy)
 * rt#39023: Make Special:CreateWiki stop creating pages on community.wikia.com (eloy)
 * rt#38996: RTE: toolbar buttons should not change opacity on rollover (macbre)
