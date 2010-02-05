@@ -69,10 +69,7 @@ function wfCreatePageSetupVars( $vars ) {
 }
 
 function wfCreatePageLoadPreformattedContent( $editpage ) {
-	global $wgRequest, $wgUser;
-	if(get_class($wgUser->getSkin()) != 'SkinMonaco') {
-		return true;
-	}
+	global $wgRequest;
 
 	if ($wgRequest->getCheck('useFormat')) {
 		$editpage->textbox1 = wfMsgForContent( 'newpagelayout' );
@@ -81,11 +78,6 @@ function wfCreatePageLoadPreformattedContent( $editpage ) {
 }
 
 function wfCreatePageToggleUserPreference($toggles, $default_array = false) {
-	global $wgUser;
-	if(get_class($wgUser->getSkin()) != 'SkinMonaco') {
-		return true;
-	}
-
 	if(is_array($default_array)) {
 		$default_array[] = 'createpagedefaultblank';
 	}
