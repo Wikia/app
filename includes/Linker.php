@@ -96,7 +96,6 @@ class Linker {
 	 * Common code for getLinkAttributesX functions
 	 */
 	private function getLinkAttributesInternal( $title, $class, $classDefault = false ) {
-		global $wgWysiwygParserEnabled;
 		$title = htmlspecialchars( $title );
 		if( $class === '' and $classDefault !== false ) {
 			# FIXME: Parameter defaults the hard way!  We should just have
@@ -109,10 +108,7 @@ class Linker {
 		if( $class !== '' ) {
 			$r .= " class=\"$class\"";
 		}
-		//Wysiwyg: don't add title when parsing in wysiwyg mode
-		if (empty($wgWysiwygParserEnabled)) {
-			$r .= " title=\"$title\"";
-		}
+		$r .= " title=\"$title\"";
 		return $r;
 	}
 
@@ -446,14 +442,7 @@ class Linker {
 			$text = $this->linkText( $nt );
 		}
 
-		/* Wikia change begin - @author: Marooned, Inez */
-		/* Wysiwyg: get refId from passed text */
 		$attribs = array();
-		global $wgWysiwygParserEnabled;
-		if(!empty($wgWysiwygParserEnabled) && $nt->isExternal()) {
-			$attribs['refid'] = Wysiwyg_GetRefId($text, true);
-		}
-		/* Wikia change end */
 
 		/* Wikia change begin - @author: unknown, Inez */
 		if( $nt && $nt->isExternal()) {
@@ -508,14 +497,6 @@ class Linker {
 		$query = wfCgiToArray( $query );
 		list( $inside, $trail ) = Linker::splitTrail( $trail );
 
-		/* Wikia change begin - @author: Marooned, Inez */
-		/* Wysiwyg: get refId from passed wikitext */
-		global $wgWysiwygParserEnabled;
-		if(!empty($wgWysiwygParserEnabled)) {
-			$attribs['refid'] = Wysiwyg_GetRefId($text, true);
-		}
-		/* Wikia change end */
-
 		$ret = $this->link( $title, "$prefix$text$inside", $attribs, $query,
 			array( 'known', 'noclasses' ) ) . $trail;
 
@@ -551,10 +532,6 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 		global $wgWikiaUseNoFollow;
 		if( !empty( $wgWikiaUseNoFollow ) ) {
 			$attribs['rel'] = 'nofollow';
-		}
-		global $wgWysiwygParserEnabled; //Wysiwyg: get refId from wikitext and add it to the HTML
-		if (!empty($wgWysiwygParserEnabled)) {
-			$attribs['refid'] = Wysiwyg_GetRefId($text, true);
 		}
 
 		$ret = $this->link( $title, "$prefix$text$inside", $attribs,
@@ -664,11 +641,6 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 
 	/** @todo document */
 	function makeExternalImage( $url, $alt = '' ) {
-		global $wgWysiwygParserEnabled;
-		//Wysiwyg: get refId from wikitext
-		if (!empty($wgWysiwygParserEnabled)) {
-			$refId = Wysiwyg_GetRefId($url, true);
-		}
 		if ( '' == $alt ) {
 			$alt = $this->fnamePart( $url );
 		}
@@ -681,10 +653,6 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 		$params = array(
 			'src' => $url,
 			'alt' => $alt );
-		//Wysiwyg: pass refId to image params - it will be used to build HTML
-		if ($wgWysiwygParserEnabled) {
-			$params['refid'] = $refId;
-		}
 		return Xml::element( 'img', $params);
 	}
 
@@ -766,11 +734,7 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 			return $res;
 		}
 
-		global $wgContLang, $wgUser, $wgThumbLimits, $wgThumbUpright, $wgWysiwygParserEnabled, $wgWysiwygMetaData;
-		//Wysiwyg: add proper URL to file to metadata array when file exists
-		if (!empty($wgWysiwygParserEnabled) && isset($frameParams['refid']) && $file) {
-			$wgWysiwygMetaData[$frameParams['refid']]['url'] = $file->getFullUrl();
-		}
+		global $wgContLang, $wgUser, $wgThumbLimits, $wgThumbUpright;
 		if ( $file && !$file->allowInlineDisplay() ) {
 			wfDebug( __METHOD__.': '.$title->getPrefixedDBkey()." does not allow inline display\n" );
 			return $this->link( $title );
@@ -793,13 +757,6 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 			$prefix  = '<div class="center">';
 			$postfix = '</div>';
 			$fp['align']   = 'none';
-
-			// Wysiwyg: RT #17722
-			if (!empty($wgWysiwygParserEnabled) && isset($fp['refid'])) {
-				$prefix = "<div class=\"center\" refid=\"{$fp['refid']}\">";
-				unset($fp['refid']);
-			}
-
 		}
 		if ( $file && !isset( $hp['width'] ) ) {
 			$hp['width'] = $file->getWidth( $page );
@@ -856,17 +813,8 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 			$thumb = false;
 		}
 
-		$refId = '';
 		if ( !$thumb ) {
 			$txt = '';
-			//Wysiwyg: add refId to proper place according to align element (thanks to that refId will be added to the parent HTML element of image snippet)
-			if (!empty($wgWysiwygParserEnabled) && isset($fp['refid'])) {
-				if ($fp['align'] == '') {
-					$txt = "\x1{$fp['refid']}\x1";
-				} else {
-					$refId = " refid=\"{$fp['refid']}\"";
-				}
-			}
 			$s = $this->makeBrokenImageLinkObj( $title, $txt, '', '', '', $time==true );
 		} else {
 			$params = array(
@@ -885,21 +833,10 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 				$params['desc-query'] = $query;
 			}
 
-			/* Wikia change begin - @author: Marooned, Inez */
-			/* Wysiwyg: add refId to proper place according to align element - thanks to that refId will be added to the parent HTML element of image snippet */
-			if(!empty($wgWysiwygParserEnabled) && isset($fp['refid'])) {
-				if($fp['align'] == '') {
-					$params['refid'] = $fp['refid'];
-				} else {
-					$refId = " refid=\"{$fp['refid']}\"";
-				}
-			}
-			/* Wikia change end */
-
 			$s = $thumb->toHtml( $params );
 		}
 		if ( '' != $fp['align'] ) {
-			$s = "<div$refId class=\"float{$fp['align']}\">{$s}</div>";
+			$s = "<div class=\"float{$fp['align']}\">{$s}</div>";
 		}
 		return str_replace("\n", ' ', $prefix.$s.$postfix);
 	}
@@ -921,7 +858,7 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 	}
 
 	function makeThumbLink2( Title $title, $file, $frameParams = array(), $handlerParams = array(), $time = false, $query = "" ) {
-		global $wgStylePath, $wgContLang, $wgWysiwygParserEnabled;
+		global $wgStylePath, $wgContLang;
 		$exists = $file && $file->exists();
 
 		# Shortcuts
@@ -985,12 +922,7 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 
 		$more = htmlspecialchars( wfMsg( 'thumbnail-more' ) );
 
-		$refId = '';
-		//Wysiwyg: add refId to HTML is it was passed as an image parameter
-		if (!empty($wgWysiwygParserEnabled) && isset($fp['refid'])) {
-			$refId = " refid=\"{$fp['refid']}\"";
-		}
-		$s = "<div$refId class=\"thumb t{$fp['align']}\"><div class=\"thumbinner\" style=\"width:{$outerWidth}px;\">";
+		$s = "<div class=\"thumb t{$fp['align']}\"><div class=\"thumbinner\" style=\"width:{$outerWidth}px;\">";
 		if( !$exists ) {
 			$s .= $this->makeBrokenImageLinkObj( $title, '', '', '', '', $time==true );
 			$zoomicon = '';
@@ -1029,16 +961,11 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 	 * @return string
 	 */
 	public function makeBrokenImageLinkObj( $title, $text = '', $query = '', $trail = '', $prefix = '', $time = false ) {
-		global $wgEnableUploads, $wgWysiwygParserEnabled;
+		global $wgEnableUploads;
 		if( $title instanceof Title ) {
 			wfProfileIn( __METHOD__ );
 			$currentExists = $time ? ( wfFindFile( $title ) != false ) : false;
 			if( $wgEnableUploads && !$currentExists ) {
-				$refId = '';
-				//Wysiwyg: get refId from wikitext
-				if (!empty($wgWysiwygParserEnabled)) {
-					$refId = Wysiwyg_GetRefId($text);
-				}
 				$upload = SpecialPage::getTitleFor( 'Upload' );
 				if( $text == '' )
 					$text = htmlspecialchars( $title->getPrefixedText() );
@@ -1058,7 +985,7 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 				}
 				wfProfileOut( __METHOD__ );
 				return '<a href="' . $upload->escapeLocalUrl( $q ) . '"'
-					. $style . $refId . $nofollow . '>' . $prefix . $text . $inside . '</a>' . $trail;
+					. $style . $nofollow . '>' . $prefix . $text . $inside . '</a>' . $trail;
 			} else {
 				wfProfileOut( __METHOD__ );
 				return $this->makeKnownLinkObj( $title, $text, $query, $trail, $prefix );
@@ -1086,12 +1013,6 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 	 * @todo Handle invalid or missing images better.
 	 */
 	function makeMediaLinkObj( $title, $text = '', $time = false ) {
-		global $wgWysiwygParserEnabled;
-		$refId = '';
-		//Wysiwyg: get refId from wikitext
-		if (!empty($wgWysiwygParserEnabled)) {
-			$refId = Wysiwyg_GetRefId($text);
-		}
 		if( is_null( $title ) ) {
 			### HOTFIX. Instead of breaking, return empty string.
 			return $text;
@@ -1115,7 +1036,7 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 				$text = $alt;
 			}
 			$u = htmlspecialchars( $url );
-			return "<a href=\"{$u}\" class=\"$class\" title=\"{$alt}\"{$refId}{$nofollow}>{$text}</a>";
+			return "<a href=\"{$u}\" class=\"$class\" title=\"{$alt}\"{$nofollow}>{$text}</a>";
 		}
 	}
 
@@ -1161,14 +1082,6 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 		if ( $attribs ) {
 			$attribsText .= Xml::expandAttributes( $attribs );
 		}
-
-		/* Wikia change begin - @author: Marooned, Inez Korczyński */
-		/* Wysiwyg: get refId from wikitext and add it to HTML */
-		global $wgWysiwygParserEnabled;
-		if(!empty($wgWysiwygParserEnabled)) {
-			$attribsText .= Wysiwyg_GetRefId($text);
-		}
-		/* Wikia change end */
 
 		return '<a href="'.$url.'"'.$attribsText.'>'.$text.'</a>';
 	}

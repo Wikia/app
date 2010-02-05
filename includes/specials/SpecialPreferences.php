@@ -40,7 +40,7 @@ class PreferencesForm {
 		global $wgContLang, $wgUser, $wgAllowRealName;
 
 		/* Wikia change begin - @author: unknown, Marooned */
-		global $wgInPageEnabled, $wgWysiwygEnabled, $wgForceSkin;
+		global $wgInPageEnabled, $wgForceSkin;
 		/* Wikia change end */
 
 		$this->mQuickbar = $request->getVal( 'wpQuickbar' );
@@ -95,7 +95,7 @@ class PreferencesForm {
 		$this->mGender = $request->getVal( 'wpGender' );
 
 		/* Wikia change begin - @author: unknown */
-		if(isset($wgInPageEnabled) && $wgInPageEnabled && $wgWysiwygEnabled && isset($wgWysiwygEnabled)) {
+		if(isset($wgInPageEnabled) && $wgInPageEnabled) {
 			$this->mVisualEditor = $request->getVal('wpVisualEditor');
 		}
 		/* Wikia change end */
@@ -257,7 +257,6 @@ class PreferencesForm {
 		global $wgEnableUserEmail, $wgEnableEmail;
 		global $wgEmailAuthentication, $wgRCMaxAge;
 		global $wgAuth, $wgEmailConfirmToEdit;
-		global $wgWysiwygEnabled;
 
 		/* Wikia change begin - @author: Inez */
 		/* Skin chooser related */
@@ -322,11 +321,6 @@ class PreferencesForm {
 		$wgUser->setOption( 'thumbsize', $this->mThumbSize );
 		$wgUser->setOption( 'underline', $this->validateInt($this->mUnderline, 0, 2) );
 		$wgUser->setOption( 'watchlistdays', $this->validateFloat( $this->mWatchlistDays, 0, 7 ) );
-		/* Wikia change begin - @author: unknown */
-		if(isset($wgWysiwygEnabled) && $wgWysiwygEnabled) {
-			$wgUser->setOption('visualeditormode', $this->mVisualEditor);
-		}
-		/* Wikia change end */
 		$wgUser->setOption( 'disablesuggest', $this->mDisableMWSuggest );
 		$wgUser->setOption( 'gender', $this->validateGender( $this->mGender ) );
 
@@ -616,7 +610,7 @@ class PreferencesForm {
 		global $wgContLanguageCode, $wgDefaultSkin, $wgCookieExpiration;
 		global $wgEmailConfirmToEdit, $wgEnableMWSuggest, $wgLocalTZoffset;
 		/* Wikia change begin - @author: unknown */
-		global $wgDefaultTheme, $wgDisableInternalSearch, $wgStylePath, $wgSkinTheme, $wgVisitorSkin, $wgVisitorTheme, $wgWysiwygEnabled;
+		global $wgDefaultTheme, $wgDisableInternalSearch, $wgStylePath, $wgSkinTheme, $wgVisitorSkin, $wgVisitorTheme;
 		/* Wikia change end */
 
 		$wgOut->setPageTitle( wfMsg( 'preferences' ) );
