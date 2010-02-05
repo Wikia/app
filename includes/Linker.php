@@ -1027,6 +1027,7 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 				$url = $upload->getLocalUrl( 'wpDestFile=' . urlencode( $title->getDBkey() ) );
 				$class = 'new';
 				global $wgWikiaUseNoFollow;
+				$nofollow = '';
 				if( !empty( $wgWikiaUseNoFollow ) ) {
 					$nofollow = ' rel="nofollow"';
 				}
