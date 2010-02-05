@@ -19,7 +19,8 @@ class CorporatePageHelper{
 					'corporatepage-footer-bottom',
 					'corporatepage-footer-leftcolumn',
 					'corporatepage-sidebar',
-					'corporatepage-wikia-whats-up' );
+					'corporatepage-wikia-whats-up',
+					'corporatepage-test-msg' );
 			
 		$title = strtolower($title);
 		if (in_array($title,$CorporatePageMessageList)){
@@ -83,7 +84,7 @@ class CorporatePageHelper{
 	 * @author Tomek
 	 */
 	
-	static public function parseMsg($msg,$favicon = false){
+	static public function parseMsg($msg,$isFavicon = false){
 		global $wgMemc, $wgArticlePath;
 		$mcKey = wfMemcKey( "hp_msg_parser", $msg );
 		$out = $wgMemc->get( $mcKey, null);
@@ -116,7 +117,7 @@ class CorporatePageHelper{
 			
 				if (strlen($matches[1]) == 2){
 					if (count($out) > 0){
-						if ($favicon){
+						if ($isFavicon){
 							$id = (int) WikiFactory::UrlToID(trim($matches[2]));
 							$favicon = "";
 							if ($id > 0){
