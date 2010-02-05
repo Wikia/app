@@ -24,9 +24,14 @@ function getSuggestedArticleURL( $text )
  * @Return String
  */
 function cxValidateUserName () {
-	global $IP, $wgDBname, $wgExternalSharedDB, $wgRequest;
+	global $IP, $wgDBname, $wgExternalSharedDB, $wgRequest, $wgWikiaMaxNameChars;
 	wfProfileIn(__METHOD__);
 
+	if( empty($wgWikiaMaxNameChars) ) {
+		//emergency fallback
+		global $wgMaxNameChars;
+		$wgWikiaMaxNameChars = $wgMaxNameChars;
+	}
 //	require_once ($IP . '/includes/User.php');
 
 	$uName = $wgRequest->getVal('uName');
@@ -35,6 +40,9 @@ function cxValidateUserName () {
 	$nt = Title::newFromText( $uName );
 	if( is_null( $nt ) ) {
 		# Illegal name
+		$result = 'INVALID';
+	} elseif ( mb_strlen($uName) > $wgWikiaMaxNameChars ) {
+		# Too long (for wikia)
 		$result = 'INVALID';
 	} else {
 		$uName = $nt->getText();
