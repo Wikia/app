@@ -33,7 +33,7 @@ function wfLoadLookupContribsLink( $id, $nt, &$links ) {
 	if( $id != 0 && $wgUser->isAllowed( 'lookupcontribs' ) ) {
 		wfLoadExtensionMessages( 'SpecialLookupContribs' );
 		$attribs = array(
-			'href' => 'http://www.wikia.com/wiki/Special:LookupContribs?target=' . urlencode( $nt->getText() ),
+			'href' => 'http://community.wikia.com/wiki/Special:LookupContribs?target=' . urlencode( $nt->getText() ),
 			'title' => wfMsg('right-lookupcontribs')
 		);
 		$links[] = Xml::openElement( 'a', $attribs ) . wfMsg( 'lookupcontribs' ) . Xml::closeElement( 'a' );
