@@ -31,7 +31,7 @@
 	}
 ?>
 				<li id="add_recipe_tab" class="recipe_tab">
-					<span class="recipe_tab_wrapper">
+					<span class="recipe_tab_wrapper wikiaComboAjaxLogin">
 						<a href="<?= htmlspecialchars($newRecipeAction) ?>"><img src="<?= htmlspecialchars($blank) ?>" class="sprite" alt="."/></a>
 						<a href="<?= htmlspecialchars($newRecipeAction) ?>"><?= wfMsg('recipes-add-new-recipe') ?></a>
 					</span>
