@@ -292,9 +292,6 @@ CKEDITOR.plugins.add('rte-media',
 				return;
 			}
 
-			// check coordinates and try to re-align an image
-			RTE.log('dropped event fired');RTE.log(target); RTE.log(extra);
-
 			// calculate relative positon
 			var editorX = parseInt(extra.pageX - $('#editform').offset().left);
 			var editorWidth = parseInt($('#editform').width());
@@ -325,11 +322,11 @@ CKEDITOR.plugins.add('rte-media',
 					break;
 			}
 
-			RTE.log('media alignment: ' + oldAlign + ' -> ' + newAlign);
-
 			if (!newAlign) {
 				return;
 			}
+
+			RTE.log('media alignment: ' + oldAlign + ' -> ' + newAlign);
 
 			// update image rte-data and wikitext
 			var wikitext = data.wikitext;
@@ -359,7 +356,7 @@ CKEDITOR.plugins.add('rte-media',
 
 			// tracking
 			RTE.track(
-				target.hasClass('image') ? 'image' : 'video',
+				target.attr('type'),
 				'event',
 				'switchSide',
 				(newAlign == 'right') ? 'l2r' : 'r2l'
