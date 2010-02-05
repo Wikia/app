@@ -160,7 +160,7 @@ class InviteEmail extends UnlistedSpecialPage {
 							$user_label,
 							$user_label,
 							$title->getFullURL(),
-							$register->getFullURL())  
+							$register->getFullURL()
 							);
 				break;
 		}
