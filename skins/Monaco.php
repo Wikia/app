@@ -1509,9 +1509,12 @@ if(isset($categorylist['nodes']) && count($categorylist['nodes']) > 0 ) {
 }
 			wfRunHooks('MonacoAdLink');
 
-			if ($wgUser->isLoggedIn()) {
-				echo '<a rel="nofollow" href="http://www.wikia.com/wiki/Special:CreateWiki" id="request_wiki" class="loggedin">'. wfMsg('createwikipagetitle') .'</a>';
+			echo '<ul id="requestWikiData"><li>';
+			echo '<a rel="nofollow" href="http://www.wikia.com/wiki/Special:CreateWiki" id="request_wiki" class="wikia_button"><span>'. wfMsg('createwikipagetitle') .'</span></a>';
+			if (!$wgUser->isLoggedIn()) {
+				echo '<span id="request_wiki_ad">' . wfMsgExt('monaco-request-wiki-ad-text', array( "parseinline" )) . '</span>';
 			}
+			echo '</li></ul>';
 ?>
 			</div>
 			<ul id="userData">
@@ -1548,11 +1551,8 @@ if( $custom_user_data ) {
 	<?php
 	} else {
 ?>
-				<li>
-					<a rel="nofollow" href="http://www.wikia.com/wiki/Special:CreateWiki" id="request_wiki"><?=wfMsg('createwikipagetitle')?></a>
-				</li>
 				<li id="userLogin">
-					<a rel="nofollow" class="wikia_button ajaxLogin" id="login" href="<?= htmlspecialchars($this->data['userlinks']['login']['href']) ?>"><span><?= htmlspecialchars($this->data['userlinks']['login']['text']) ?></span></a>
+					<a rel="nofollow" class="ajaxLogin" id="login" href="<?= htmlspecialchars($this->data['userlinks']['login']['href']) ?>"><?= htmlspecialchars($this->data['userlinks']['login']['text']) ?></a>
 				</li>
 				<li>
 					<a rel="nofollow" class="wikia_button" id="register" href="<?= htmlspecialchars($this->data['userlinks']['register']['href']) ?>"><span><?= htmlspecialchars($this->data['userlinks']['register']['text']) ?></span></a>
@@ -2012,7 +2012,7 @@ if ( $wgRequest->getVal('action') != 'edit' ) {
 	}
 	//all other namespaces
 	elseif ( $showDynamicLinks ) {
-	
+
 		global $wgMonacoDynamicCreateOverride;
 		if( !empty($wgMonacoDynamicCreateOverride) )
 		{

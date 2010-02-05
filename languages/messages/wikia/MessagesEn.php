@@ -53,7 +53,7 @@ $messages = array_merge( $messages , array(
 * http://pl.wikia.com|Polski
 * http://fr.wikia.com|Français
 * Languages|More...',
-'corporatepage-create-your-own-wiki' => 'Create your own wiki and find a community of people who all love what you love.', 
+'corporatepage-create-your-own-wiki' => 'Create your own wiki and find a community of people who all love what you love.',
 'corporatepage-create-button' => 'Create a wiki',
 'corporatepage-rights' => '&copy; $1 Wikia, Inc. All rights reserved',
 'corporatepage-more-link' => 'More Links',
@@ -66,14 +66,14 @@ $messages = array_merge( $messages , array(
 'corporatepage-wikia-hot-spots' => "Wikia Hot Spots",
 'corporatepage-update-fqr' => 'updated hourly',
 'corporatepage-wikia-hot-spots-desc' => "These are the hottest pages this week, ranked by most editors.",
-'corporatepage-go-to-wiki' => 'Go to $1', 
+'corporatepage-go-to-wiki' => 'Go to $1',
 'corporatepage-wikia-whats-up' => "<hgroup><h1>Community Buzz</h1>
 <h2>Check out these buzzworthy Wikia communities</h2></hgroup>
 <p><a href='http://masseffect.wikia.com/wiki/Mass_Effect_2'>Mass Effect 2</a>, one of the most anticipated titles of the year was just released! From <a href='http://masseffect.wikia.com/wiki/Classes'>classes</a> to quests, the Mass Effect Wiki has your guide to the game.</p>
 <p><a href='http://glee.wikia.com'>Glee</a> was picked up for a second season. Check out our <a href='http://glee.wikia.com/wiki/Category:Music'>top songs</a> from last season</p>
 <p><a href='http://recipes.wikia.com'>Recipes Wiki</a> is highlighting the best <a href='http://recipes.wikia.com/wiki/Category:Superbowl_Recipes'>Superbowl favorites</a>. Browse over 100 Superbowl recipes to score the perfect game day party food.</p>",
 'corporatepage-global-nav-headline' => 'Wikia Global Navigation',
-'corporatepage-watchlist' => 'Watchlist', 
+'corporatepage-watchlist' => 'Watchlist',
 'corporatepage-homepage-feature-headline' => 'Featured at Wikia',
 'corporatepage-homepageintro' => '<div><h1>Welcome to Wikia</h1>
 <h2>Collaborate with people who love what you love.</h2></div>
@@ -104,6 +104,7 @@ $messages = array_merge( $messages , array(
 'monaco-latest' => 'Latest Activity',
 'monaco-latest-item' => '$1 by $2',
 'monaco-whos-online' => 'Who\'s Online',
+'monaco-request-wiki-ad-text' => '',
 'seemoredotdotdot' => 'See more...',
 
 'monaco-category-list' => '*w:Category:Hubs|more wikis

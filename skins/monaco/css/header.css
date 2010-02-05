@@ -251,15 +251,34 @@ a.greyButton big {
 	font-size: 0.9em;
 }
 #request_wiki {
-	text-decoration: underline;
+	/*text-decoration: underline;*/
 }
 #request_wiki.loggedin {
+	font-size: 9pt;
+	left: 221px;
+	line-height: 32px;
+}
+
+#request_wiki_ad {
+	margin-left: 10px;
+}
+
+#requestWikiData {
 	font-size: 9pt;
 	left: 221px;
 	line-height: 32px;
 	position: absolute;
 	top: 0;
 	white-space: nowrap;
+}
+#requestWikiData li {
+	float: left;
+	font-size: 9pt;
+	line-height: 32px;
+	margin-right: 8px;
+}
+#requestWikiData .wikia_button {
+	line-height: 21px;
 }
 
 /*** WIDGET COCKPIT ***/
