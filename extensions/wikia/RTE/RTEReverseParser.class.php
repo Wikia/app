@@ -61,12 +61,9 @@ class RTEReverseParser {
 
 				//RTE::hex(__METHOD__, $html); RTE::hex(__METHOD__, $out);  // debug
 
-				// fix nbsp to be a valid UTF character
+				// fix nbsp to be a valid UTF space
 				// don't break UTF characters (à - \xC3\xA0 / 誠 - \xE8\xAA / ム - \xE3\x83)
-				$out = preg_replace('%(?<=[\x00-\x7F]|^|[\xA0])\xA0%', "\xC2\xA0", $out);
-
-				// replace nonbreakable space with space
-				$out = str_replace("\xC2\xA0", ' ', $out);
+				$out = preg_replace('%(?<=[\x00-\x7F]|^|\xA0|\xC2)\xA0%', ' ', $out);
 
 				//RTE::hex(__METHOD__, $out); // debug
 
