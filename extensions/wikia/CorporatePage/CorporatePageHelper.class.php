@@ -11,7 +11,7 @@ class CorporatePageHelper{
 	* Hook for clear parsed message cache
 	*/
 	 	static function clearMessageCache($title, $text){
-		global $wgMemc,$wgLang;
+		global $wgMemc;
 		$CorporatePageMessageList = 
 			array(	'corporatepage-footer-middlecolumn',
 					'corporatepage-footer-bottom',
@@ -21,13 +21,9 @@ class CorporatePageHelper{
 					'corporatepage-sidebar',
 					'corporatepage-wikia-whats-up' );
 			
-		$title = strtolower($title)."/";
-		$titleArray = explode("/", $title); 
-		if (in_array($titleArray[0],$CorporatePageMessageList)){
-			if (empty($titleArray[1])){
-				$titleArray[1] = $wgLang->getCode();
-			}
-			$wgMemc->delete( wfMemcKey( "hp_msg_parser",  $titleArray[0], $titleArray[1] ) );
+		$title = strtolower($title);
+		if (in_array($title,$CorporatePageMessageList)){
+			$wgMemc->delete( wfMemcKey( "hp_msg_parser",  $title ) );
 			/*$pageList = $wgMemc->get(wfMemcKey( "hp_page_list"),null);
 			if ($pageList != null){
 				$pageList = array_keys($pageList);
@@ -88,13 +84,13 @@ class CorporatePageHelper{
 	 */
 	
 	static public function parseMsg($msg,$favicon = false){
-		global $wgMemc, $wgLang, $wgArticlePath;
-		$mcKey = wfMemcKey( "hp_msg_parser", $msg, $wgLang->getCode() );
+		global $wgMemc, $wgArticlePath;
+		$mcKey = wfMemcKey( "hp_msg_parser", $msg );
 		$out = $wgMemc->get( $mcKey, null);
 		if ( $out != null ){
 			return $out;
 		}
-		$message = wfMsg($msg);
+		$message = wfMsgForContent($msg);
 		$lines = explode("\n",$message);
 		$out = array();
 		foreach($lines as $v){
@@ -148,13 +144,13 @@ class CorporatePageHelper{
 	 */
 	
 	static public function parseMsgImg($msg,$descThumb = false){
-		global $wgMemc,$wgLang;
-		$mcKey = wfMemcKey( "hp_msg_parser", $msg, $wgLang->getCode());
+		global $wgMemc;
+		$mcKey = wfMemcKey( "hp_msg_parser", $msg );
 		$out = $wgMemc->get( $mcKey, null);
 		if ( $out != null ){
 		//	return $out;
 		}
-		$message = wfMsg($msg);
+		$message = wfMsgForContent($msg);
 		$lines = explode("\n",$message);
 		$out = array();
 		foreach($lines as $v){
