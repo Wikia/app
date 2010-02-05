@@ -1,6 +1,8 @@
 == Changes since 201002.1 ==
 * rt#39003: Adding new accounts from AWC seems to be broken (eloy)
 * rt#39023: Make Special:CreateWiki stop creating pages on community.wikia.com (eloy)
+* rt#38996: RTE: toolbar buttons should not change opacity on rollover (macbre)
+* rt#38257: RTE: in a table a br following a link gets linebroken (macbre)
 * rt#38929: Fixed fatal call to escapeFullURL in UserActivityClass. (Nef)
 * rt#38889: RTE: recipes.wikia "Add a Recipe" box disappears using RTE (both modes) (macbre)
 * rt#38268: RTE messes up indented list after indented line (macbre)
