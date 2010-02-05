@@ -213,7 +213,7 @@ function wfLoadMultiLookupLink( $id, $nt, &$links ) {
 	if( $id == 0 && $wgUser->isAllowed( 'multilookup' ) ) {
 		wfLoadExtensionMessages( 'MultiLookup' );
 		$attribs = array(
-			'href' => 'http://www.wikia.com/wiki/Special:MultiLookup?target=' . urlencode( $nt->getText() ),
+			'href' => 'http://community.wikia.com/wiki/Special:MultiLookup?target=' . urlencode( $nt->getText() ),
 			'title' => wfMsg('multilookupselectuser')
 		);
 		$links[] = Xml::openElement( 'a', $attribs ) . wfMsg( 'multilookup' ) . Xml::closeElement( 'a' );
