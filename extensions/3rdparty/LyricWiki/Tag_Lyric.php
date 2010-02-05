@@ -130,13 +130,18 @@ function renderLyricTag($input, $argv, $parser)
 		$ringtoneLink.= "</div>";
 		$wgFirstLyricTag = false;
 	}
+	
+	$transform = $parser->parse($transform, $parser->mTitle, $parser->mOptions, false, false)->getText();
+	
+	# Make sure ampersands aren't over-encoded by the UTF conversion - rt#35365
+	$transform = str_replace("&amp;", "&", $transform);
 
 	#parse embedded wikitext
 	$retVal = "";
 	$retVal.= gracenote_getNoscriptTag();
 	$retVal.= "<div class='lyricbox'>";
 	$retVal.= ($isInstrumental?"":$ringtoneLink); // if this is an instrumental, just a ringtone link on the bottom is plenty.
-	$retVal.= gracenote_obfuscateText($parser->parse($transform, $parser->mTitle, $parser->mOptions, false, false)->getText());
+	$retVal.= gracenote_obfuscateText($transform);
 	$retVal.= $ringtoneLink;
 	$retVal.= "</div>";
 
