@@ -363,3 +363,10 @@ $wgSpecialPagesRequiredLogin = array('Resetpass', 'MyHome', 'Preferences', 'Watc
 $wgArticleCommentsMaxPerPage = 5;
 
 $wgMaxThumbnailArea = 0.9e7;
+
+/*
+ * @name $wgWikiaMaxNameChars
+ * soft enforced limit of length for new username
+ * @see rt#39263
+ */
+$wgWikiaMaxNameChars = 50;
