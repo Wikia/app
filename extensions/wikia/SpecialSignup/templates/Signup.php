@@ -39,6 +39,10 @@ class SignupTemplate extends QuickTemplate {
 <table id="userloginSpecial" width="100%">
 <tr>
 <td width="55%" style="border-right: 1px solid #AAA; vertical-align: top;">
+<?php
+global $wgUser;
+if( $wgUser->isAllowed('createaccount') ) {
+?>
 <div class="loginHeader dark_text_1"><?php $this->msg('create-account-new') ?></div>
 <div id="userloginErrorBox">
 		<?php if( ($this->data['messagetype'] == 'error') && ($this->data['actiontype'] == 'signup') ) {
@@ -550,6 +554,10 @@ class SignupTemplate extends QuickTemplate {
 <?php if( @$this->haveData( 'uselang' ) ) { ?><input type="hidden" name="uselang" value="<?php $this->text( 'uselang' ); ?>" /><?php } ?>
 </form>
 </div>
+<?php } else {
+	//display message about not being able to create an account?
+} // end createaccount test
+?>
 </td>
 <td width="45%" style="vertical-align: top;">
 	<div class="loginHeader rightSideElem dark_text_1"><?php $this->msg('log-in-new') ?></div>
