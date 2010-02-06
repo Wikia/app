@@ -179,7 +179,7 @@ REPLACE INTO interwiki (iw_prefix, iw_url, iw_local, iw_trans) VALUES
 ("wiki","http://c2.com/cgi/wiki?$1",0,0),
 ("wikicities","http://www.wikia.com/wiki/$1",1,1),
 ("wikibooks","http://en.wikibooks.org/wiki/$1",0,0),
-("wikia","http://www.wikia.com/wiki/$1",1,1),
+("wikia","http://community.wikia.com/wiki/$1",1,1),
 ("wikif1","http://www.wikif1.org/$1",0,0),
 ("wikinfo","http://www.wikinfo.org/wiki.php?title=$1",0,0),
 ("wikimedia","http://wikimediafoundation.org/wiki/$1",0,0),
@@ -569,7 +569,7 @@ REPLACE INTO interwiki (iw_prefix, iw_url, iw_local, iw_trans) VALUES
 ("desencyclopedie","http://desencyclopedie.wikia.com/wiki/$1",1,1),
 ("désencyclopédie","http://desencyclopedie.wikia.com/wiki/$1",1,1),
 ("detroit","http://detroit.wikia.com/wiki/$1",1,1),
-("w","http://www.wikia.com/wiki/$1",1,1),
+("w","http://community.wikia.com/wiki/$1",1,1),
 ("moztwwiki","http://wiki.moztw.org/index.php/$1",0,0),
 ("furry","http://furry.wikia.com/wiki/$1",1,1),
 ("owiki","http://owiki.de/index.php?title=$1",0,0),
@@ -587,4 +587,5 @@ REPLACE INTO interwiki (iw_prefix, iw_url, iw_local, iw_trans) VALUES
 ("investwiki","http://investwiki.ru/wiki/index.php?title=$1",0,0),
 ("olpc","http://wiki.laptop.org/go/$1",0,0),
 ("wowwiki","http://www.wowwiki.com/$1",0,0),
-("wikimoon","http://wikimoon.org/index.php?title=$1",0,0);
+("wikimoon","http://wikimoon.org/index.php?title=$1",0,0),
+("homepage","http://www.wikia.com/$1",1,0);
