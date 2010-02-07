@@ -15,6 +15,18 @@ class ProtectsiteForm extends HTMLForm
   function ProtectsiteForm (&$request)
   {
     global $wgOut, $wgMessageCache, $wgMemc;
+	
+	# Show a message if the database is in read-only mode
+	if ( wfReadOnly() ) {
+		$wgOut->readOnlyPage();
+		return;
+	}
+
+	# If user is blocked, s/he doesn't need to access this page
+	if ( $wgUser->isBlocked() ) {
+		$wgOut->blockedPage();
+		return;
+	}
 
     $titleObj = Title::makeTitle( NS_SPECIAL, 'Protectsite' );
     $this->action = $titleObj->escapeLocalURL();
