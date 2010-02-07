@@ -1,4 +1,5 @@
 == Changes since 201002.1 ==
+* rt#39434: ArticleComments: block message was double parsed (uberfuzzy)
 * rt#39429: add blocked user check to ProtectSite (uberfuzzy)
 * rt#39269: Signup: dont show account create form when cant create (uberfuzzy)
 * rt#39263: add username length limiter (uberfuzzy)
