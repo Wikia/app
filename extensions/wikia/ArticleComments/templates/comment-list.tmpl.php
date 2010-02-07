@@ -100,7 +100,7 @@
 			if ( $isBlocked ) {
 	?>
 	<div class="article-comm-input reset clearfix">
-		<div id="article-comm-bottom-info"><p><?=wfMsg('article-comments-comment-cannot-add')?></p><br/><p><?=$output->parse($reason)?></p></div>
+		<div id="article-comm-bottom-info"><p><?=wfMsg('article-comments-comment-cannot-add')?></p><br/><p><?=$reason?></p></div>
 	</div>
 
 	<?php } else { ?>
