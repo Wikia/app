@@ -14,7 +14,7 @@ class ProtectsiteForm extends HTMLForm
 
   function ProtectsiteForm (&$request)
   {
-    global $wgOut, $wgMessageCache, $wgMemc;
+    global $wgOut, $wgMessageCache, $wgMemc, $wgUser;
 	
 	# Show a message if the database is in read-only mode
 	if ( wfReadOnly() ) {
