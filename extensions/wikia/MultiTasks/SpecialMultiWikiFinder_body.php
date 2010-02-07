@@ -10,7 +10,7 @@ class MultiwikifinderSpecialPage extends SpecialPage {
 	}
 
 	function execute($page = null, $limit = "", $offset = "", $show = true) {
-		global $wgRequest, $wgUser;
+		global $wgRequest, $wgUser, $wgOut;
 
 		if( $wgUser->isBlocked() ) {
 			$wgOut->blockedPage();
