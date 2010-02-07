@@ -1,4 +1,5 @@
 == Changes since 201002.1 ==
+* rt#39444: ProblemReports: add blocked admin checks (uberfuzzy)
 * rt#39439: MultiWikiFinder: fix fatal from missing global (uberfuzzy)
 * rt#39434: ArticleComments: block message was double parsed (uberfuzzy)
 * rt#39429: add blocked user check to ProtectSite (uberfuzzy)
