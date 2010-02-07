@@ -565,7 +565,8 @@ class SpecialProblemReports extends SpecialPage
 				
 				'logs'			=> $logs,
 
-				'is_readonly'		=> wfReadOnly()
+				'is_readonly'		=> wfReadOnly(),
+				'is_blocked'	=>	$wgUser->isBlocked()
 			));
 			
 		    $wgOut->addHTML($tpl->execute('reports_list'));
