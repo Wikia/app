@@ -35,11 +35,9 @@ class NewWikiBuilder extends UnlistedSpecialPage {
 	
 		// Put the html in a separate file 
 		ob_start();
-		switch (@$_GET['nwbType']){
-		  case 'answers':  
+		if ($wgRequest->getVal('nwbType') == 'answers' || !empty($GLOBALS['wgEnableAnswers'])){
 		     include dirname(__FILE__) . '/NewWikiBuilder.answers.html.php';
-		     break;
-                  default: 
+		} else {
 		     include dirname(__FILE__) . '/NewWikiBuilder.html.php';
 		}
 		
