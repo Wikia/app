@@ -37,5 +37,10 @@ class wAvatar{
 		global $wgUploadPath;
 		return "<img src=\"{$wgUploadPath}/avatars/{$this->getAvatarImage()}\" alt=\"avatar\" border=\"0\" />";
 	}
+	
+	/* Alias for compatibility with Wikia stuff */
+	function getImageTag(){
+		return $this->getAvatarURL();
+	}
 }
 ?>
