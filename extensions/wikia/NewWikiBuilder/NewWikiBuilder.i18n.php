@@ -1,10 +1,6 @@
 <?php
 global $wgSitename;
 
-// Note that this variable is referenced in the NewWikiBuilder.html.php file
-global $NWBmessages;
-$NWBmessages = $messages;
-
 $messages = array();
 
 $messages['en'] = array( 
@@ -899,3 +895,6 @@ $messages['uk'] = array(
 	'nwb-or' => 'або',
 );
 
+// Note that this variable is referenced in the NewWikiBuilder.html.php file
+global $NWBmessages;
+$NWBmessages = $messages; 
