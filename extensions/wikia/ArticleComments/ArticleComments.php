@@ -368,7 +368,7 @@ class ArticleComment {
 				'title'     => $this->mTitle,
 				'author'    => $this->mUser,
 				'anchor'    => $anchor,
-				'avatar'    => Masthead::newFromUser( $this->mUser )->display( 50, 50 ),
+				'avatar'    => $this->getAvatarImg($this->mUser),
 				'timestamp' => $wgLang->timeanddate( $this->mFirstRevision->getTimestamp() )
 			);
 
@@ -388,6 +388,16 @@ class ArticleComment {
 		wfProfileOut( __METHOD__ );
 
 		return $text;
+	}
+
+	function getAvatarImg($user){
+		if (class_exists('Masthead')){
+			return Masthead::newFromUser( $user )->display( 50, 50 );
+		} else {
+			// Answers
+			$avatar = new wAvatar($wgUser, "ml");
+			return $avatar->getAvatarURL();
+		}
 	}
 
 	/**
@@ -1158,7 +1168,14 @@ class ArticleCommentList {
 		/**
 		 * $pages is array of comment articles
 		 */
-		$avatar    = Masthead::newFromUser( $wgUser );
+		if (class_exists('Masthead')){
+			$avatar = Masthead::newFromUser( $wgUser );
+		} else {
+			// Answers
+			$avatar = new wAvatar($wgUser, "ml");
+		}
+
+
 		$isSysop   = ( in_array('sysop', $wgUser->getGroups()) || in_array('staff', $wgUser->getGroups() ) );
 		$canEdit   = $wgUser->isAllowed( 'edit' );
 		$isBlocked = $wgUser->isBlocked();
