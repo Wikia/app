@@ -203,7 +203,7 @@ class RTEReverseParser {
 		}
 		// handle nodes with wasHTML
 		// (always handle paragraphs as wikitext)
-		else if ($node->hasAttribute('_rte_washtml') && ($node->nodeName != 'p')) {
+		else if (self::wasHtml($node) && ($node->nodeName != 'p')) {
 			$out = $this->handleHtml($node, $textContent);
 		}
 		// handle nodes wrapping HTML entities
@@ -331,7 +331,7 @@ class RTEReverseParser {
 
 		// add line break
 		if ($node->hasAttribute('_rte_line_start')) {
-			$parentWasHtml = !empty($node->parentNode) && ($node->parentNode->hasAttribute('_rte_washtml'));
+			$parentWasHtml = !empty($node->parentNode) && self::wasHtml($node->parentNode);
 
 			if ($parentWasHtml) {
 				// nested HTML
@@ -966,7 +966,7 @@ class RTEReverseParser {
 	 * Handles lists opening
 	 */
 	private function handleListOpen($node) {
-		if ($node->hasAttribute('_rte_washtml')) {
+		if (self::wasHtml($node)) {
 			return;
 		}
 
@@ -997,7 +997,7 @@ class RTEReverseParser {
 	 * Handles lists closing
 	 */
 	private function handleListClose($node) {
-		if ($node->hasAttribute('_rte_washtml')) {
+		if (self::wasHtml($node)) {
 			return;
 		}
 
