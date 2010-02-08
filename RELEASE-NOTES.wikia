@@ -1,4 +1,5 @@
 == Changes since 201002.2 ==
+* rt#37702: RTE: HTML lists wrapped in div tags gain line spaces on swicthes (macbre)
 * rt#37691: "Save page" has extra space on left side in IE7 (and both sides in IE8) (macbre)
 
 == Changes since 201002.1 ==
