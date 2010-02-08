@@ -2208,15 +2208,14 @@ if ($wgOut->isArticle() && ArticleAdLogic::isContentPage()){
 
 
 echo '</div>';
-// Disabled comscore #21030
-// echo AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
-// Quant serve moved *after* the ads because it depends on Athena/Provider values.
 
+// Quant serve moved *after* the ads because it depends on Athena/Provider values.
 // macbre: RT #25697 - hide Quantcast Tags on edit pages
 if ( in_array($wgRequest->getVal('action'), array('edit', 'submit')) ) {
-	echo '<!-- QuantServe is hidden on edit page -->';
+	echo '<!-- QuantServe and comscore hidden on edit page -->';
 }
 else {
+	echo AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
 	echo AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
 }
 
