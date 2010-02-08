@@ -29,6 +29,7 @@ CREATE TABLE /*$wgDBprefix*/user_relationship_request (
   `ur_type` int(2) default NULL,
   `ur_message` varchar(255) default NULL,
   `ur_date` datetime default NULL,
+  `ur_trust_type` tinyint(4) default '0',
   PRIMARY KEY  (`ur_id`),
   KEY `ur_user_id_from` (`ur_user_id_from`),
   KEY `ur_user_id_to` (`ur_user_id_to`)
