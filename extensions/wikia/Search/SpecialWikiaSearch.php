@@ -134,7 +134,7 @@ STOP;
 		$out.= $searchField;
 		$out.= ' <a id="powersearchButton" class="wikia_button"><span>' . wfMsg( 'searchbutton' ) . '</span></a>';
 		$out.= $searchButton;
-		$out.= "<p style=\"clear: left;\">" . Xml::checkLabel( wfMsg( 'wikiasearch-search-this-wiki', array( $wgSitename ) ), 'thisWikiOnly', 'thisWikiOnly', $this->searchLocalWikiOnly ) . "</p>";
+		$out.= "<p style=\"clear: left;\" id=\"searchthiswikilabel\">" . Xml::checkLabel( wfMsg( 'wikiasearch-search-this-wiki', array( $wgSitename ) ), 'thisWikiOnly', 'thisWikiOnly', $this->searchLocalWikiOnly ) . "</p>";
 		$out.= Xml::openElement( 'div', array( 'id' => 'powersearch-advanced', 'style' => ( $this->searchLocalWikiOnly ? 'display: block;' : 'display: none;' ) ) );
 		$out.= Xml::fieldset( wfMsg( 'powersearch-legend' ),
 				"<p>" . wfMsgExt( 'powersearch-ns', array( 'parseinline' ) ) . "</p>" .
@@ -272,7 +272,20 @@ STOP;
 			return;
 		}
 
-		$wgOut->addHTML( $this->shortDialog( $term ) );
+		//count number of results
+		$num = ( $titleMatches ? $titleMatches->numRows() : 0 ) + ( $textMatches ? $textMatches->numRows() : 0);
+		$totalNum = 0;
+		if($titleMatches && !is_null($titleMatches->getTotalHits())) {
+			$totalNum += $titleMatches->getTotalHits();
+		}
+		if($textMatches && !is_null($textMatches->getTotalHits())) {
+			$totalNum += $textMatches->getTotalHits();
+		}
+
+		//show top search form
+		if( $num > 0 ) {
+			$wgOut->addHTML( $this->shortDialog( $term ) );
+		}
 
 		// Sometimes the search engine knows there are too many hits
 		if ($titleMatches instanceof SearchResultTooMany) {
@@ -284,15 +297,7 @@ STOP;
 		}
 
 		// show number of results
-		$num = ( $titleMatches ? $titleMatches->numRows() : 0 )
-			+ ( $textMatches ? $textMatches->numRows() : 0);
-		$totalNum = 0;
-		if($titleMatches && !is_null($titleMatches->getTotalHits()))
-			$totalNum += $titleMatches->getTotalHits();
-		if($textMatches && !is_null($textMatches->getTotalHits()))
-			$totalNum += $textMatches->getTotalHits();
-
-			if ( $num > 0 ) {
+		if ( $num > 0 ) {
 			if ( $totalNum > 0 ){
 				$top = wfMsgExt('showingresultstotal', array( 'parseinline' ),
 					$this->offset+1, $this->offset+$num, $totalNum, $num );
