@@ -6,7 +6,7 @@ class RTEParser extends Parser {
 	private $emptyLinesBefore = 0;
 
 	// used in tweaked doBlockLevels()
-	private $lastLine = null;
+	private $lastLineWasEmpty = null;
 
 	// image params grabed in ParserMakeImageParams hook to be used in makeImage
 	private static $imageParams = null;
@@ -24,7 +24,7 @@ class RTEParser extends Parser {
 		RTE::log(__METHOD__, $oLine);
 
 		// check if previous line was empty
-		if ( ($this->lastLine !== null) && ($this->lastLine == '') ) {
+		if ( ($this->lastLineWasEmpty === true) ) {
 			// increase empty lines counter
 			$this->emptyLinesBefore++;
 		}
@@ -53,8 +53,8 @@ class RTEParser extends Parser {
 			$this->emptyLinesBefore = 0;
 		}
 
-		// store current line as previous for next check
-		$this->lastLine = $oLine;
+		// store this for next call of doBlockLevelsLineStart(0
+		$this->lastLineWasEmpty = ($oLine == '');
 	}
 
 	/**
