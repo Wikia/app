@@ -46,6 +46,17 @@
 	}
 </style>
 
+<!--[if IE]>
+<style type="text/css">
+	/* RT #37691 */
+	#wpSave {
+		min-width: auto;
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+</style>
+<![endif]-->
+
 <script type="text/javascript">
 	$(function() {
 		$('#wpDiff').css('color', $('#wpEdithelp').css('color') );
