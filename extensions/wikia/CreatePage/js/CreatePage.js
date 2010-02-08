@@ -18,7 +18,7 @@ CreatePage.checkTitle = function( title, enterWasHit ) {
 					else {
 						CreatePage.track('create/' + ( CreatePage.pageLayout == 'format' ? 'standardlayout' : 'blankpage'));
 					}
-					location.href = wgScript + '?title=' + title + '&action=edit' + ( CreatePage.pageLayout == 'format' ? '&useFormat=1' : '');
+					location.href = wgScript + '?title=' + title + '&action=edit' + ( CreatePage.pageLayout == 'format' ? '&preload=Mediawiki:newpagelayout' : '');
 				}
 				else {
 					CreatePage.displayError(response.msg);
@@ -138,7 +138,13 @@ $(function() {
 		$(".createboxButton").bind('click', function(e) {
 			var form = $(e.target).parent();
 			var field = form.children('.createboxInput');
-			CreatePage.openDialog(e, field.val());
-			});
+			var preloadField = form.children("input[name='preload']");
+			if((typeof preloadField.val() == undefined) || (preloadField.val() == '')) {
+				CreatePage.openDialog(e, field.val());
+			}
+			else {
+				return true;
+			}
+		});
 	}
 });

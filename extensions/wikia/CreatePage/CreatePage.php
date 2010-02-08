@@ -46,7 +46,6 @@ function wfCreatePageInit() {
 	 * hooks
 	 */
 	$wgHooks['MakeGlobalVariablesScript'][] = 'wfCreatePageSetupVars';
-	$wgHooks['EditPage::showEditForm:initial'][] = 'wfCreatePageLoadPreformattedContent';
 	$wgHooks['UserToggles'][] = 'wfCreatePageToggleUserPreference';
 	$wgHooks['getEditingPreferencesTab'][] = 'wfCreatePageToggleUserPreference';
 
@@ -66,15 +65,6 @@ function wfCreatePageSetupVars( $vars ) {
 	$vars['ContentNamespacesText'] = $contentNamespaces;
 
 	return true;
-}
-
-function wfCreatePageLoadPreformattedContent( $editpage ) {
-	global $wgRequest;
-
-	if ($wgRequest->getCheck('useFormat')) {
-		$editpage->textbox1 = wfMsgForContent( 'newpagelayout' );
-	}
-	return true ;
 }
 
 function wfCreatePageToggleUserPreference($toggles, $default_array = false) {
