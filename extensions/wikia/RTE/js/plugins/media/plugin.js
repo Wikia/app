@@ -17,7 +17,7 @@ CKEDITOR.plugins.add('rte-media',
 				self.overlays.html('');
 			}
 
-			// get all media (images / videos)
+			// get all media (images / videos) - don't include placeholders
 			var media = RTE.tools.getMedia();
 
 			// regenerate media menu
@@ -246,7 +246,7 @@ CKEDITOR.plugins.add('rte-media',
 		}, 100));
 	},
 
-	// setup both images and videos
+	// setup both images and videos (including placeholders)
 	setupMedia: function(media) {
 		var self = this;
 
@@ -288,7 +288,7 @@ CKEDITOR.plugins.add('rte-media',
                         var target = $(ev.target);
 
 			// handle images and videos only
-			if (!target.hasClass('image') && !target.hasClass('video')) {
+			if (!target.hasClass('image') && !target.hasClass('video') && !target.hasClass('media-placeholder')) {
 				return;
 			}
 
@@ -304,6 +304,11 @@ CKEDITOR.plugins.add('rte-media',
 			if (!oldAlign) {
 				// get default alignment if none is specified in wikitext
 				oldAlign = (target.hasClass('thumb') || target.hasClass('frame')) ? 'right' : 'left';
+
+				// small fix for media placeholders
+				if (target.hasClass('alignNone')) {
+					oldAlign = 'left';
+				}
 			}
 
 			switch(oldAlign) {
@@ -323,6 +328,7 @@ CKEDITOR.plugins.add('rte-media',
 			}
 
 			if (!newAlign) {
+				RTE.log('media alignment detected: ' + oldAlign + ' (no change)');
 				return;
 			}
 
@@ -352,11 +358,21 @@ CKEDITOR.plugins.add('rte-media',
 			target.setData(data);
 
 			// re-align image in editor
-			target.removeClass('alignLeft alignRight').addClass(newAlign == 'left' ? 'alignLeft' : 'alignRight');
+			target.removeClass('alignNone alignLeft alignRight').addClass(newAlign == 'left' ? 'alignLeft' : 'alignRight');
 
 			// tracking
+			var type = target.attr('type');
+
+			if (type == 'image-placeholder') {
+				type = 'imagePlaceholder';
+			}
+
+			if (type == 'video-placeholder') {
+				type = 'videoPlaceholder';
+			}
+
 			RTE.track(
-				target.attr('type'),
+				type,
 				'event',
 				'switchSide',
 				(newAlign == 'right') ? 'l2r' : 'r2l'
