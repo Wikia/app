@@ -1,5 +1,5 @@
 == Changes since 201002.2 ==
-* 
+* rt#37691: "Save page" has extra space on left side in IE7 (and both sides in IE8) (macbre)
 
 == Changes since 201002.1 ==
 * rt#39444: ProblemReports: add blocked admin checks (uberfuzzy)
