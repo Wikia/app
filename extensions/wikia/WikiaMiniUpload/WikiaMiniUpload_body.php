@@ -99,37 +99,66 @@ class WikiaMiniUpload {
 		return $tmpl->execute("results_recently");
 	}
 
-	function query() {
-		global $wgRequest, $IP;
+     function query() {
+        global $wgRequest, $IP, $wgCityId;
 
-		$query = $wgRequest->getText('query');
-		$page = $wgRequest->getVal('page');
-		$sourceId = $wgRequest->getVal('sourceId');
+        $query = $wgRequest->getText('query');
+        $page = $wgRequest->getVal('page');
+        $sourceId = $wgRequest->getVal('sourceId');
 
-		if($sourceId == 1) {
-			require_once($IP.'/extensions/3rdparty/ImportFreeImages/phpFlickr-2.2.0/phpFlickr.php');
-			$flickrAPI = new phpFlickr('bac0bd138f5d0819982149f67c0ca734');
-			$flickrResult = $flickrAPI->photos_search(array('tags' => $query, 'tag_mode' => 'all', 'page' => $page, 'per_page' => 8, 'license' => '4,5', 'sort' => 'interestingness-desc'));
-			$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
-			$tmpl->set_vars(array('results' => $flickrResult, 'query' => addslashes($query)));
-			return $tmpl->execute('results_flickr');
-		} else if($sourceId == 0) {
-			$db =& wfGetDB(DB_SLAVE);
-			$res = $db->query("SELECT count(*) as count FROM `page` WHERE lower(page_title) LIKE '%".strtolower($db->escapeLike($query))."%' AND page_namespace = 6 ORDER BY page_title ASC LIMIT 8");
-			$row = $db->fetchRow($res);
-			$results = array();
-			$results['total'] = $row['count'];
-			$results['pages'] = ceil($row['count']/8);
-			$results['page'] = $page;
-			$res = $db->query("SELECT page_title FROM `page` WHERE lower(page_title) LIKE '%".strtolower($db->escapeLike($query))."%' AND page_namespace = 6 ORDER BY page_title ASC LIMIT 8 OFFSET ".($page*8-8));
-			while($row = $db->fetchObject($res)) {
-				$results['images'][] = array('title' => $row->page_title);
-			}
-			$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
-			$tmpl->set_vars(array('results' => $results, 'query' => addslashes($query)));
-			return $tmpl->execute('results_thiswiki');
-		}
-	}
+        if($sourceId == 1) {
+            require_once($IP.'/extensions/3rdparty/ImportFreeImages/phpFlickr-2.2.0/phpFlickr.php');
+            $flickrAPI = new phpFlickr('bac0bd138f5d0819982149f67c0ca734');
+            $flickrResult = $flickrAPI->photos_search(array('tags' => $query, 'tag_mode' => 'all', 'page' => $page, 'per_page' => 8, 'license' => '4,5', 'sort' => 'interestingness-desc'));
+            $tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
+            $tmpl->set_vars(array('results' => $flickrResult, 'query' => addslashes($query)));
+            return $tmpl->execute('results_flickr');
+        } else if($sourceId == 0) {
+            $dbr = wfGetDBExt( DB_SLAVE );            
+            $query = mb_strtolower($dbr->escapeLike($query));
+            $res = $dbr->select(
+                    array( 'pages' ),
+                    array( 'count(page_id) as count ' ),
+                    array(
+                           'page_wikia_id' => $wgCityId,
+                           "page_title_lower like '%".$query."%' " ,
+                           'page_namespace' => 6, 
+                           'page_status' => 0 ),
+                    __METHOD__ ,
+                   array (
+                         "LIMIT" => 8 )
+            );
+                                     
+            $row = $dbr->fetchRow($res);
+   
+            $results = array();
+            $results['total'] = $row['count'];
+            $results['pages'] = ceil($row['count']/8);
+            $results['page'] = $page;
+
+            $res = $dbr->select(
+                    array( 'pages' ),
+                    array( ' page_title ' ),
+                    array(
+                           'page_wikia_id' => $wgCityId,
+                           "page_title_lower like '%".$query."%' " ,
+                           'page_namespace' => 6, 
+                           'page_status' => 0 ),
+                    __METHOD__ ,
+                   array (
+                         "LIMIT" => 8,
+                         "OFFSET" => ($page*8-8) )
+            );
+                          
+            while($row = $dbr->fetchObject($res)) {
+                $results['images'][] = array('title' => $row->page_title);
+            }
+            $tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
+            $tmpl->set_vars(array('results' => $results, 'query' => addslashes($query)));
+            return $tmpl->execute('results_thiswiki');
+        }
+    }
+
 
 	function tempFileName( $user ) {
 		return 'Temp_file_'. $user->getID(). '_' . time();
