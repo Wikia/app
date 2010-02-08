@@ -22,6 +22,13 @@ $messages['en'] = array(
 	'iwedit-success' 		=> '<p>Link creation succesfull.</p>',
 );
 
+/** Message documentation (Message documentation)
+ * @author Translationista
+ */
+$messages['qqq'] = array(
+	'iwedit-success' => 'There is an extra "l" at the end of "successful". Needs correction in EN.',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -44,6 +51,28 @@ $messages['br'] = array(
 	'iwedit-update' => 'Hizivaat',
 	'iwedit-error' => "<p>ur fazi zo c'hoarvezet</p>",
 	'iwedit-success' => '<p>Liamm krouet gant berzh.</p>',
+);
+
+/** Spanish (Español)
+ * @author Translationista
+ */
+$messages['es'] = array(
+	'iwedit-title' => 'Editor de Interwiki',
+	'iwedit-language-interwikis' => 'sólo interwikis de idioma',
+	'iwedit-all-interwikis' => 'todos los interwikis',
+	'iwedit-update' => 'Actualizar',
+	'iwedit-error' => '<p>Se produjo un error.</p>',
+	'iwedit-success' => '<p>El vínculo se creado correctamente.</p>',
+);
+
+/** Finnish (Suomi)
+ * @author Centerlink
+ */
+$messages['fi'] = array(
+	'iwedit-title' => 'Interwiki-editori',
+	'iwedit-update' => 'Päivitä',
+	'iwedit-error' => '<p>Tapahtui virhe.</p>',
+	'iwedit-success' => '<p>Linkin luominen onnistui.</p>',
 );
 
 /** French (Français)

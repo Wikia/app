@@ -122,6 +122,14 @@ $messages['no'] = array(
 	'ircgate-channel' => 'Kanal:',
 );
 
+/** Occitan (Occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'ircgate-username' => "Nom de l'utilizaire :",
+	'ircgate-channel' => 'Canal :',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Dragonòt
  */

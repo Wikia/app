@@ -51,11 +51,24 @@ $messages['de'] = array(
 
 /** Spanish (Español)
  * @author McDutchie
+ * @author Translationista
  */
 $messages['es'] = array(
 	'mostvisitedpages' => 'Páginas más visitadas',
 	'mostvisitedpagessearchtext' => 'Nombre del artículo:',
 	'mostvisitedpagessearchbtn' => 'buscar',
+	'mostvisitedpageslatest' => 'En los últimos $1 minutos',
+);
+
+/** Finnish (Suomi)
+ * @author Centerlink
+ * @author Crt
+ */
+$messages['fi'] = array(
+	'mostvisitedpages' => 'Vierailluimmat sivut',
+	'mostvisitedpagessearchtext' => 'Artikkelin nimi:',
+	'mostvisitedpagessearchbtn' => 'haku',
+	'mostvisitedpageslatest' => 'viimeisessä $1 minuutissa',
 );
 
 /** French (Français)
@@ -161,6 +174,7 @@ $messages['pt-br'] = array(
 	'mostvisitedpages' => 'Páginas mais visitadas',
 	'mostvisitedpagessearchtext' => 'Nome do artigo:',
 	'mostvisitedpagessearchbtn' => 'pesquisa',
+	'mostvisitedpageslatest' => 'nos últimos $1 minutos',
 );
 
 /** Russian (Русский)
@@ -178,5 +192,7 @@ $messages['ru'] = array(
 $messages['uk'] = array(
 	'mostvisitedpages' => 'Сторінки, які найчастіше переглядають',
 	'mostvisitedpagessearchtext' => 'Назва статті:',
+	'mostvisitedpagessearchbtn' => 'пошук',
+	'mostvisitedpageslatest' => 'за останні $1 {{PLURAL:$1|хвилини|хвилин}}',
 );
 

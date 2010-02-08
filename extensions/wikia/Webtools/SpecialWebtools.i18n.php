@@ -252,6 +252,17 @@ $messages['ia'] = array(
 	'serp_position' => 'Rango del parola-clave',
 );
 
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'wt_cancel' => 'Emekwàlà',
+	'sitemap_url' => 'Url otú uzọr ama',
+	'url_count' => 'Onuogụgụ Url',
+	'search_age' => 'Chöwá Afọ olé',
+	'search_type' => 'Chöwa ọtụ',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -305,6 +316,20 @@ $messages['nl'] = array(
 	'search_keyword' => 'Zoek sleutelwoord',
 	'serp_weight' => 'percentage van alle %',
 	'serp_position' => 'Positie sleutelwoord',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'webtools' => 'Webtools [BETA]',
+	'wt_search_stats' => 'Søkestatistikk',
+	'wt_click_stats' => 'Klikkestatistikk',
+	'wt_nodata' => 'Ingen tilgjengelige data',
+	'wt_update' => 'Oppdater',
+	'wt_cancel' => 'Avbryt',
+	'wt_search_src' => 'Søkekilde',
+	'last_downloaded' => 'Sist lastet ned',
 );
 
 /** Piedmontese (Piemontèis)

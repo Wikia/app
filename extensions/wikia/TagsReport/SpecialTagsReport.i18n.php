@@ -53,8 +53,12 @@ $messages['br'] = array(
 	'tagsreportgenerated' => "Krouet d'an $1",
 );
 
-/** Spanish (Español) */
+/** Spanish (Español)
+ * @author Translationista
+ */
 $messages['es'] = array(
+	'tagsreport' => 'Informe de etiquetas',
+	'tagsreporttitle' => 'Informe de etiquetas',
 	'tagsreportselecttag' => 'Seleccionar etiqueta:',
 	'tagsreportgo' => 'Mostrar',
 	'tagsreportnotspecify' => 'No has seleccionado ninguna etiqueta especial aún',
@@ -62,6 +66,17 @@ $messages['es'] = array(
 	'tagsreportmainnspace' => 'Principal',
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|página|páginas}})',
 	'tagsreportpagesfound' => '<strong>$1</strong> páginas encontradas, que contengan alguna etiqueta especial (dpl, youtube, etc.)',
+	'tagsreportgenerated' => 'Generado en $1',
+);
+
+/** Finnish (Suomi)
+ * @author Centerlink
+ * @author Crt
+ */
+$messages['fi'] = array(
+	'tagsreportgo' => 'Näytä',
+	'tagsreportnotspecify' => 'Et ole vielä valinnut mitään erityismerkintää',
+	'tagsreportnoresults' => 'Tuloksia ei löytynyt',
 );
 
 /** French (Français)
@@ -170,6 +185,17 @@ $messages['nl'] = array(
 	'tagsreportgenerated' => 'Aangemaakt op $1',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'tagsreportgo' => 'Vis',
+	'tagsreportnoresults' => 'Ingen resultat funnet',
+	'tagsreportmainnspace' => 'Hoved',
+	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|side|sider}})',
+	'tagsreportgenerated' => 'Generert den $1',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
@@ -214,6 +240,7 @@ $messages['uk'] = array(
 	'tagsreportgo' => 'Показати',
 	'tagsreportnotspecify' => 'Ви ще не обрали жодного спеціального тега',
 	'tagsreportnoresults' => 'Нічого не знайдено',
+	'tagsreportmainnspace' => 'Основний',
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|сторінка|сторінки|сторінок}})',
 	'tagsreportpagesfound' => 'Знайдено <strong>$1</strong> {{PLURAL:$1|сторінку|сторінки|сторінок}}, що містять спеціальні теги (dpl, youtube, і т.д.)',
 	'tagsreportgenerated' => 'Створено $1',

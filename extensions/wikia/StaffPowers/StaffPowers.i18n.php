@@ -84,6 +84,13 @@ $messages['ia'] = array(
 	'staffpowers-ipblock-aborted' => 'Non es possibile blocar le personal de Wikia. Per favor usa [[Special:Contact]] pro reportar questiones o problemas con nostre personal.',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Kenrick95
+ */
+$messages['id'] = array(
+	'staffpowers-ipblock-aborted' => 'Pemblokiran staf Wikia adalah tidak mungkin. Tolong gunakan [[Special:Contact]] untuk melaporkan isu atau masalah apapun dengan staf kami.',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

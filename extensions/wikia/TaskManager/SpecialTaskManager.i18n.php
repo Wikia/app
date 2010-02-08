@@ -38,6 +38,24 @@ $messages['de'] = array(
 	'taskmanager_tasklist' => 'Zurück zur Aufgaben-Liste',
 );
 
+/** Spanish (Español)
+ * @author Translationista
+ */
+$messages['es'] = array(
+	'taskmanager' => 'Muestra y administra tareas en segundo plano',
+	'taskmanager_title' => 'Muestra y administra tareas en segundo plano',
+	'taskmanager_tasklist' => 'Volver al listado de tareas',
+);
+
+/** Finnish (Suomi)
+ * @author Centerlink
+ */
+$messages['fi'] = array(
+	'taskmanager' => 'Näytä ja hallinnoi taustatehtäviä',
+	'taskmanager_title' => 'Näytä ja hallinnoi taustatehtäviä',
+	'taskmanager_tasklist' => 'Palaa tehtäväluetteloon',
+);
+
 /** French (Français)
  * @author Peter17
  */
@@ -99,6 +117,15 @@ $messages['nl'] = array(
 	'taskmanager' => 'Achtergrondtaken weergeven en beheren',
 	'taskmanager_title' => 'Achtergrondtaken weergeven en beheren',
 	'taskmanager_tasklist' => 'Terugkeren naar de takenlijst',
+);
+
+/** Occitan (Occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'taskmanager' => 'Afichar e gerir los prètzfaches de rèire plan',
+	'taskmanager_title' => 'Afichar e gerir los prètzfaches de rèire plan',
+	'taskmanager_tasklist' => 'Tornar a la lista dels prètzfaches',
 );
 
 /** Polish (Polski) */

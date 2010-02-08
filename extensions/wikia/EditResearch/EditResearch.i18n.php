@@ -48,6 +48,28 @@ $messages['el'] = array(
 	'research_this' => 'Αναζητήστε αυτό',
 );
 
+/** Spanish (Español)
+ * @author Translationista
+ */
+$messages['es'] = array(
+	'search_wikipedia' => 'Buscar en Wikipedia',
+	'previous' => 'anterior',
+	'research_no_results' => 'No se encontró ninguna página. Por favor, realiza otra búsqueda.',
+	'research_wikipedia_title' => 'Investiga tu respuesta en Wikipedia',
+	'research_this' => 'Investigar esto',
+);
+
+/** Finnish (Suomi)
+ * @author Centerlink
+ * @author Crt
+ */
+$messages['fi'] = array(
+	'search_wikipedia' => 'Etsi Wikipediasta',
+	'previous' => 'edellinen',
+	'research_no_results' => 'Sivuja ei löytynyt. Etsi uudelleen.',
+	'research_this' => 'Tutki tätä',
+);
+
 /** French (Français)
  * @author IAlex
  */
@@ -75,6 +97,17 @@ $messages['gl'] = array(
  */
 $messages['hu'] = array(
 	'previous' => 'előző',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'search_wikipedia' => 'Cercar in Wikipedia',
+	'previous' => 'precedente',
+	'research_no_results' => 'Nulle pagina trovate. Face un altere cerca.',
+	'research_wikipedia_title' => 'Recerca tu responsa in Wikipedia',
+	'research_this' => 'Recercar isto',
 );
 
 /** Japanese (日本語)
@@ -108,6 +141,15 @@ $messages['nl'] = array(
 	'research_no_results' => "Er zijn geen pagina's gevonden. Voer nog een zoekopdracht uit.",
 	'research_wikipedia_title' => 'Uw antwoord op Wikipedia zoeken',
 	'research_this' => 'Opzoeken',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'search_wikipedia' => 'Søk i Wikipedia',
+	'previous' => 'forrige',
+	'research_no_results' => 'Ingen sider funnet. Vennligst søk på nytt.',
 );
 
 /** Piedmontese (Piemontèis)

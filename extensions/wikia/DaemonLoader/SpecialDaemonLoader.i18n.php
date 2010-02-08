@@ -128,18 +128,33 @@ $messages['be-tarask'] = array(
 	'daemonloader_daemondesc' => 'Апісаньне',
 );
 
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'daemonloader_daemondesc' => 'Описание',
+	'daemonloader_paramdefvalue' => 'Стойност по подразбиране',
+	'daemonloader_options' => 'Настройки',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
 $messages['br'] = array(
 	'daemonloader_createtask' => 'Krouiñ un trevell',
 	'daemonloader_listtask' => 'Roll an trevelloù',
+	'daemonloader_scriptname' => 'Anv ar skript',
 	'daemonloader_daemondesc' => 'Deskrivadur',
+	'daemonloader_inputparams' => 'Arventennoù ar moned',
+	'daemonloader_paramname' => 'Anv an arventenn',
+	'daemonloader_paramtype' => 'Seurt an arventenn',
 	'daemonloader_paramremove' => 'Dilemel ?',
 	'daemonloader_paramdefvalue' => 'Talvoud dre ziouer',
 	'daemonloader_alldaemons' => 'An holl diaouled',
 	'daemonloader_selectlist' => 'Dibab eus ar roll',
 	'daemonloader_search' => 'Klask :',
+	'daemonloader_daemonchanged' => 'Enrollet eo bet ho kemmoù',
+	'daemonloader_daemonnotchanged' => "N'eo ket bet enrollet ho kemmoù",
 	'daemonloader_string' => 'chadenn',
 	'daemonloader_number' => 'niver',
 	'daemonloader_date_yyyymmdd' => 'deiziad (YYYYMMDD)',
@@ -147,9 +162,16 @@ $messages['br'] = array(
 	'daemonloader_date_yyyy' => 'bloavezh (YYYY)',
 	'daemonloader_wikilist' => 'Roll ar wikioù',
 	'daemonloader_gonextstep' => "Mont d'ar bazenn da heul",
+	'daemonloader_3step' => 'Trede tennad (dibarzhioù an trevell)',
+	'daemonloader_steps' => 'Ho tennad a-vremañ',
+	'daemonloader_configtaskparams' => 'Kefluniañ arventennoù an trevell :',
 	'daemonloader_startdate' => 'Deiziad kregiñ',
 	'daemonloader_enddate' => 'Deiziad termen',
+	'daemonloader_frequency' => 'Talm an danevelloù',
 	'daemonloader_emails' => "Chomlec'hioù postel",
+	'daemonloader_files' => 'restroù XLS',
+	'daemonloader_period' => 'Prantad an danevelloù',
+	'daemonloader_dateformat' => 'Furmad an deiziad : YYYYMMDD',
 	'daemonloader_day' => 'bemdez',
 	'daemonloader_week' => 'bep sizhun',
 	'daemonloader_month' => 'Bep miz',
@@ -158,7 +180,70 @@ $messages['br'] = array(
 	'daemonloader_createdby' => 'Krouet gant',
 	'daemonloader_created' => 'Krouet',
 	'daemonloader_options' => 'Dibarzhioù',
+	'daemonloader_nojobsfound' => "N'eo bet kavet trevell ebet",
 	'daemonloader_removejobconfirm' => "Ha sur oc'h ?",
+);
+
+/** Finnish (Suomi)
+ * @author Centerlink
+ * @author Crt
+ */
+$messages['fi'] = array(
+	'daemonloader' => 'Taustaprosessilataaja',
+	'daemonloader_pagetitle' => 'Taustaprosessilataaja',
+	'daemonloader_createtask' => 'Luo tehtävä',
+	'daemonloader_listtask' => 'Luettelo tehtävistä',
+	'daemonloader_configure' => 'Muokkaa taustaprosessia',
+	'daemonloader_daemonname' => 'Taustaprosessinimi',
+	'daemonloader_scriptname' => 'Skriptinimi',
+	'daemonloader_daemondesc' => 'Kuvaus',
+	'daemonloader_inputparams' => 'Syöteparametrit',
+	'daemonloader_paramname' => 'Parametrinimi',
+	'daemonloader_paramdesc' => 'Parametrikuvaus',
+	'daemonloader_paramtype' => 'Parametrityyppi',
+	'daemonloader_paramremove' => 'Poistetaan?',
+	'daemonloader_removedaemon' => 'Poista taustaprosessi',
+	'daemonloader_paramdefvalue' => 'Oletusarvo',
+	'daemonloader_alldaemons' => 'Kaikki taustaprosessit',
+	'daemonloader_loaddaemon' => 'Valitse muokattava taustaprosessi tai luo uusi alla:',
+	'daemonloader_selectdaemon' => 'Valitse taustaprosessi, josta haluat saada tietoja ja napsauta painiketta siirtyäksesi seuraavaan vaiheeseen',
+	'daemonloader_selectlist' => 'Valitse luettelosta',
+	'daemonloader_search' => 'Haku:',
+	'daemonloader_daemonchanged' => 'Tekemäsi muutokset on tallennettu',
+	'daemonloader_daemonnotchanged' => 'Muutoksiasi ei ole tallennettu',
+	'daemonloader_string' => 'merkkijono',
+	'daemonloader_number' => 'numero',
+	'daemonloader_date_yyyymmdd' => 'päivämäärä (VVVVKKPP)',
+	'daemonloader_date_yyyymm' => 'kuukausia (VVVVKK)',
+	'daemonloader_date_yyyy' => 'vuosia (VVVV)',
+	'daemonloader_wikilist' => 'Wikiluettelo',
+	'daemonloader_gonextstep' => 'Siirry seuraavaan vaiheeseen',
+	'daemonloader_setparams' => 'Aseta arvot syötetaustaprosessin parametreille:',
+	'daemonloader_1step' => 'Ensimmäinen vaihe (valitse taustaprosessi)',
+	'daemonloader_2step' => 'Toinen vaihe (taustaprosessivalitsimet)',
+	'daemonloader_3step' => 'Kolmas vaihe (tehtävävalitsimet)',
+	'daemonloader_steps' => 'Nykyinen vaihe:',
+	'daemonloader_daemoninfo' => 'Taustaprosessikuvaus',
+	'daemonloader_configtaskparams' => 'Muokkaa tehtäväparametrejä:',
+	'daemonloader_startdate' => 'Alkamispäivä',
+	'daemonloader_enddate' => 'Lopetuspäivä',
+	'daemonloader_frequency' => 'Ilmoitusten taajuus',
+	'daemonloader_emails' => 'Sähköpostiosoitteet',
+	'daemonloader_files' => 'XLS-tiedostot',
+	'daemonloader_period' => 'Ilmoitusten jakso',
+	'daemonloader_dateformat' => 'Päivämäärän muoto: VVVVKKPP',
+	'daemonloader_emails_info' => 'Pilkulla eroteltu luettelo sähköpostiosoitteista, joihin tehtävän tulos lähetetään',
+	'daemonloader_day' => 'päivittäin',
+	'daemonloader_week' => 'viikottain',
+	'daemonloader_month' => 'kuukausittain',
+	'daemonloader_taskid' => 'Tunnus',
+	'daemonloader_newtask' => 'Uusi tehtävä',
+	'daemonloader_daemonparams' => 'Taustaprosessiparametrit',
+	'daemonloader_createdby' => 'Luotu:',
+	'daemonloader_created' => 'Luotu',
+	'daemonloader_options' => 'Valinnat',
+	'daemonloader_nojobsfound' => 'Töitä ei löytynyt',
+	'daemonloader_removejobconfirm' => 'Oletko varma?',
 );
 
 /** French (Français)
@@ -296,6 +381,67 @@ $messages['hu'] = array(
 	'daemonloader_options' => 'Beállítások',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'daemonloader' => 'Cargator de servicios',
+	'daemonloader_pagetitle' => 'Cargator de servicios',
+	'daemonloader_createtask' => 'Crear carga',
+	'daemonloader_listtask' => 'Lista de cargas',
+	'daemonloader_configure' => 'Configurar servicio',
+	'daemonloader_daemonname' => 'Nomine del servicio',
+	'daemonloader_scriptname' => 'Nomine del script',
+	'daemonloader_daemondesc' => 'Description',
+	'daemonloader_inputparams' => 'Parametros de entrata',
+	'daemonloader_paramname' => 'Nomine del parametro',
+	'daemonloader_paramdesc' => 'Description del parametro',
+	'daemonloader_paramtype' => 'Typo del parametro',
+	'daemonloader_paramremove' => 'Remover?',
+	'daemonloader_removedaemon' => 'Remover servicio',
+	'daemonloader_paramdefvalue' => 'Valor predefinite',
+	'daemonloader_alldaemons' => 'Tote le servicio',
+	'daemonloader_loaddaemon' => 'Selige un servicio a modificar o crea un nove servicio hic infra:',
+	'daemonloader_selectdaemon' => 'Selige un servicio pro le qual obtener informationes e clicca super le button pro continuar',
+	'daemonloader_selectlist' => 'Selige ex lista',
+	'daemonloader_search' => 'Cerca:',
+	'daemonloader_daemonchanged' => 'Tu modificationes ha essite salveguardate',
+	'daemonloader_daemonnotchanged' => 'Tu modificationes non ha essite salveguardate',
+	'daemonloader_string' => 'catena',
+	'daemonloader_number' => 'numero',
+	'daemonloader_date_yyyymmdd' => 'data (AAAAMMDD)',
+	'daemonloader_date_yyyymm' => 'menses (AAAAMM)',
+	'daemonloader_date_yyyy' => 'annos (AAAA)',
+	'daemonloader_wikilist' => 'Lista de wikis',
+	'daemonloader_gonextstep' => 'Continuar',
+	'daemonloader_setparams' => 'Definir valores pro parametros de entrata del servicio:',
+	'daemonloader_1step' => 'Prime passo (seliger servicio)',
+	'daemonloader_2step' => 'Secunde passo (optiones del servicio)',
+	'daemonloader_3step' => 'Tertie passo (optiones del carga)',
+	'daemonloader_steps' => 'Tu es ora al passo:',
+	'daemonloader_daemoninfo' => 'Description del servicio',
+	'daemonloader_configtaskparams' => 'Configura parametros de carga:',
+	'daemonloader_startdate' => 'Data de initio',
+	'daemonloader_enddate' => 'Data de fin',
+	'daemonloader_frequency' => 'Frequentia de reportos',
+	'daemonloader_emails' => 'Adresses de e-mail',
+	'daemonloader_files' => 'Files XLS',
+	'daemonloader_period' => 'Periodo de reportos',
+	'daemonloader_dateformat' => 'Formata de data: AAAAMMDD',
+	'daemonloader_emails_info' => 'Lista de adresses de e-mail separate per commas, al quales le resultato del carga essera inviate',
+	'daemonloader_day' => 'cata die',
+	'daemonloader_week' => 'cata septimana',
+	'daemonloader_month' => 'cata mense',
+	'daemonloader_taskid' => 'ID',
+	'daemonloader_newtask' => 'Nove carga',
+	'daemonloader_daemonparams' => 'Parametros del servicio',
+	'daemonloader_createdby' => 'Create per',
+	'daemonloader_created' => 'Create',
+	'daemonloader_options' => 'Optiones',
+	'daemonloader_nojobsfound' => 'Nulle carga trovate',
+	'daemonloader_removejobconfirm' => 'Es tu secur?',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -416,6 +562,32 @@ $messages['nl'] = array(
 	'daemonloader_options' => 'Instellingen',
 	'daemonloader_nojobsfound' => 'Er zijn geen taken gevonden',
 	'daemonloader_removejobconfirm' => 'Weet u het zeker?',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['no'] = array(
+	'daemonloader_steps' => 'Ditt nåværende trinn:',
+	'daemonloader_configtaskparams' => 'Konfigurer oppgaveparametre:',
+	'daemonloader_startdate' => 'Startdato',
+	'daemonloader_enddate' => 'Sluttdato',
+	'daemonloader_emails' => 'E-postadresser',
+	'daemonloader_files' => 'XLS-filer',
+	'daemonloader_period' => 'Rapportperiode',
+	'daemonloader_dateformat' => 'Datoformat: ÅÅÅÅMMDD',
+	'daemonloader_emails_info' => 'Kommaseparert liste over e-postadresser hvor resultatet av oppgaven vil bli sendt',
+	'daemonloader_day' => 'hver dag',
+	'daemonloader_week' => 'hver uke',
+	'daemonloader_month' => 'hver måned',
+	'daemonloader_taskid' => 'Id',
+	'daemonloader_newtask' => 'Ny oppgave',
+	'daemonloader_daemonparams' => 'Daemon parametre',
+	'daemonloader_createdby' => 'Opprettet av',
+	'daemonloader_created' => 'Opprettet',
+	'daemonloader_options' => 'Alternativer',
+	'daemonloader_nojobsfound' => 'Ingen jobber funnet',
+	'daemonloader_removejobconfirm' => 'Er du sikker?',
 );
 
 /** Piedmontese (Piemontèis)

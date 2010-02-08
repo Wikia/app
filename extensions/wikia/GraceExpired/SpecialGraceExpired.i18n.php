@@ -88,6 +88,24 @@ $messages['nl'] = array(
 Er wordt ''geen rekening gehouden'' met beoordelingen van pagina's.",
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'graceexpired-row' => '$1 (i $2, sist endret $3)',
+);
+
+/** Occitan (Occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'graceexpired' => 'La gràcia a expirat',
+	'graceexpired-row' => '$1 (dins $2, darrièra modificacion lo $3)',
+	'graceexpired-header' => "Aquesta pagina fa la lista de totes los ensages que son estats [[:Category:Abandoned|abandonats]], [[:Category:Trash_builds|getats]], designats coma [[:Category:Build stubs|esbòsses]] o coma [[:Category:Trial Builds|ensages]], e son pas pus estats modificats dempuèi al mens doas setmanas.
+
+Aquesta pagina prend ''pas'' en compte l'activitat sus las paginas d'avaloracion.",
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt

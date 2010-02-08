@@ -92,6 +92,19 @@ $messages['gl'] = array(
 	'editingTips' => 'Engada os seus consellos [[MediaWiki:EditingTips|aquí]]',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'tog-disableeditingtips' => 'Non monstrar consilios de modification',
+	'tog-widescreeneditingtips' => 'Modification in schermo large',
+	'editingtips_enter_widescreen' => 'Entrar in schermo large',
+	'editingtips_exit_widescreen' => 'Exir del schermo large',
+	'editingtips_hide' => 'Celar consilios de modification',
+	'editingtips_show' => 'Monstrar consilios de modification',
+	'editingTips' => 'Adde tu avisos [[MediaWiki:EditingTips|hic]]',
+);
+
 /** Japanese (日本語)
  * @author Tommy6
  */
@@ -250,6 +263,16 @@ $messages['nn'] = array(
 	'editingtips_hide' => 'Løyn endringstips',
 	'editingtips_show' => 'Syn endringstips',
 	'editingTips' => 'Legg til tipsa dine [[MediaWiki:EditingTips|her]]',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'tog-disableeditingtips' => 'Ikke vis redigeringstips',
+	'editingtips_hide' => 'Skjul redigeringstips',
+	'editingtips_show' => 'Vis redigeringstips',
+	'editingTips' => 'Legg til dine tips [[MediaWiki:EditingTips|her]]',
 );
 
 /** Piedmontese (Piemontèis)

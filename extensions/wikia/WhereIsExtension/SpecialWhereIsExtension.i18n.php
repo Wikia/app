@@ -71,6 +71,20 @@ $messages['eu'] = array(
 	'whereisextension-submit' => 'Bilatu',
 );
 
+/** Finnish (Suomi)
+ * @author Centerlink
+ * @author Crt
+ */
+$messages['fi'] = array(
+	'whereisextension' => 'Missä on laajennus',
+	'whereisextension-submit' => 'Haku',
+	'whereisextension-list' => 'Luettelo wikisivuista täsmäävillä kriteereillä',
+	'whereisextension-isset' => 'asetetaan',
+	'whereisextension-filter' => 'Suodatin',
+	'whereisextension-all-groups' => 'Kaikki ryhmät',
+	'whereisextension-name-contains' => 'muuttujanimi sisältää',
+);
+
 /** French (Français)
  * @author IAlex
  */

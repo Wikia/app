@@ -122,6 +122,15 @@ $messages['no'] = array(
 	'outbound-screen-login-text' => '<a href="$1">Opprett en konto</a> eller <a href="$2">logg inn på din eksisterende konto</a> for å hoppe over denne siden i fremtiden',
 );
 
+/** Occitan (Occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'outbound-screen-text' => 'Sètz a mand de quitar Wikia. Clicatz aicí per contunhar.',
+	'outbound-screen-text-with-redirect' => 'Sètz a mand de quitar Wikia. Clicatz aicí per contunhar, o esperatz $1 segondas per èsser redirigit.',
+	'outbound-screen-login-text' => '<a href="$1">Creatz un compte</a> o <a href="$2">identificatz-vos sus vòstre compte existent</a> per evitar aquesta pagina a l\'avenidor',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
@@ -148,5 +157,14 @@ $messages['ru'] = array(
 	'outbound-screen-text' => 'нажмите здесь, чтобы покунуть Wikia',
 	'outbound-screen-text-with-redirect' => 'нажмите здесь, чтобы покинуть Wikia, или подождите $1 с до перенаправления',
 	'outbound-screen-login-text' => '<a href="$1">Создайте учётную запись</a> или <a href="$2">представьтесь системе под существующей учётной записью</a>, чтобы эта страница не больше показывалась',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'outbound-screen-text' => 'натисніть тут, щоб залишити Wikia.',
+	'outbound-screen-text-with-redirect' => 'натисніть тут, щоб залишити Wikia або зачекайте $1 секунд до перенаправлення.',
+	'outbound-screen-login-text' => '<a href="$1">Створіть обліковий запис</a> або <a href="$2">увійдіть в існуючий обліковий запис</a>, щоб уникнути цієї сторінки в подальшому',
 );
 

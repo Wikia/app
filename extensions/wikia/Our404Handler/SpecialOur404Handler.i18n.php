@@ -177,6 +177,14 @@ Le articulo '''$1''' non poteva esser trovate.
 * Pro ir al pagina principal del sito, clicca: [{{SERVER}} {{SITENAME}}]",
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Kenrick95
+ */
+$messages['id'] = array(
+	'our404handler' => 'Kesalahan 404: Halaman tidak ditemukan!',
+	'our404handler-oops' => 'Ini bukan halaman yang Anda cari. Mohon pergi.',
+);
+
 /** Japanese (日本語)
  * @author Tommy6
  */
@@ -266,6 +274,21 @@ Artikkelen '''$1''' ble ikke funnet.
 * Du kan prøve artikkel [[$2]]
 * Du kan bruke søkeboksen til venstre
 * For å gå videre til hovedsiden, trykk på lenken: [{{SERVER}} {{SITENAME}}]",
+);
+
+/** Occitan (Occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'our404handler' => 'Error 404 : Pagina pas trobada !',
+	'our404handler-oops' => 'Aquò, son pas las paginas que cercatz. Circulatz, sioplèt.',
+	'message404' => "'''O planhèm, mas per una rason o una autra la pagina demandada existís pas.'''
+
+Article '''$1''' introbable.
+
+* Poiriatz ensajar l'article [[$2]]
+* Podètz utilizar la bóstia de recèrca que se tròba del costat esquèrrade la pagina
+* Per aténher la pagina d'acuèlh, clicatz aqueste ligam : [{{SERVER}} {{SITENAME}}]",
 );
 
 /** Polish (Polski)

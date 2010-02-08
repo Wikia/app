@@ -211,6 +211,7 @@ $messages['br'] = array(
 	'swm-label-language' => 'Yezh',
 	'swm-button-lang-checkall' => '[Dibab pep tra]',
 	'swm-button-lang-checknone' => '[Diziuzañ pep tra]',
+	'swm-taskmanager-hint' => "<i>Notennit ez eo koustusoc'h dibarzhioù 'zo a-fed amzer, ha rollet e vint e TaskManager.</i>",
 	'swm-button-preview' => '[ Rakwelet ]',
 	'swm-button-send' => '[ Kas ]',
 	'swm-button-save' => '[ Enrollañ ]',
@@ -850,8 +851,9 @@ $messages['pms'] = array(
  * @author Jesielt
  */
 $messages['pt-br'] = array(
-	'swm-button-preview' => '[ Previsualize ]',
-	'swm-button-send' => '[ Envie ]',
+	'swm-button-preview' => '[ Previsualizar ]',
+	'swm-button-send' => '[ Enviar ]',
+	'swm-button-save' => '[ Salvar ]',
 	'swm-button-new' => '[ Novo ]',
 	'swm-msg-sent-ok' => '<h3>A mensagem foi enviada.</h3>',
 	'swm-msg-sent-err' => '<h3>A mensagem NÃO foi enviada.</h3>Veja o log de erros para mais informações.',

@@ -70,7 +70,7 @@ $messages['qqq'] = array(
 $messages['af'] = array(
 	'invitespecialpage' => 'Nooi vriende om by Wikia aan te sluit',
 	'stf_button' => "Stuur hierdie artikel aan 'n vriend",
-	'stf_after_reg' => "Nooi 'n vriend om by Wikia aan te sluit! [[Special:InviteSpecialPage|Kliek hier]].",
+	'stf_after_reg' => "[[Special:InviteSpecialPage|Nooi 'n vriend om by Wikia aan te sluit!]]",
 	'stf_subject' => "$2 het aan u 'n bladsy van $1 gestuurd!",
 	'stf_confirm' => 'Die boodskap is gestuur!
 Wil u nog meer vriende uitnooi?',
@@ -101,7 +101,7 @@ Ek nooi u hartlik uit om te kom kyk!',
 	'stf_multiemail' => 'Stuur na meer as een ontvanger?',
 	'stf_frm5' => 'Die URL van hierdie webwerf word by u boodskap gevoeg.',
 	'stf_frm6' => 'Sluit venster',
-	'stf_throttle' => 'Vir sekuriteitsredes kan u slegs $1 uitnodigings per dag stuur.',
+	'stf_throttle' => 'Vir sekuriteitsredes kan u slegs $1 {{PLURAL:$1|uitnodiging|uitnodigings}} per dag stuur.',
 	'stf_abuse' => 'Hierdie e-pos is gestuur deur $1 via Wikia.
 As u dink dat dit foutiewelik aan u gestuur is, laat ons asseblief weet by  support@wikia.com.',
 	'stf_ctx_invite' => 'Meer as een?
@@ -144,8 +144,10 @@ $messages['be-tarask'] = array(
  */
 $messages['br'] = array(
 	'invitespecialpage' => "Pediñ mignoned d'en em gavout gant Wikia",
+	'sendtoafriend-desc' => '[[Special:InviteSpecialPage|Pediñ mignoned evit dont war Wikia]]',
+	'sendtoafriend-button-desc' => 'Diskouez ar bouton "Kas d\'ur mignon" er pajennoù',
 	'stf_button' => "Kas ar pennad-mañ d'ur mignon",
-	'stf_after_reg' => "Pedit ur mignon d'en em gavout gant Wikia ! [[Special:InviteSpecialPage|Klikit amañ]].",
+	'stf_after_reg' => "[[Special:InviteSpecialPage|Pedit ur mignon d'en em gavout gant Wikia !]]",
 	'stf_subject' => "$2 en deus kaset ur pennad deoc'h eus $1!",
 	'stf_confirm' => 'Kemmennadenn kaset ! Pediñ tud all ?',
 	'stf_error' => "Fazi pa'z eo bet kaset ar postel",
@@ -175,10 +177,10 @@ Deus da deuler ur sell!",
 	'stf_multiemail' => 'Kas da veur a zen ?',
 	'stf_frm5' => "(URL al lech'ienn a vo ouzhpennet d'ho kemmennadenn)",
 	'stf_frm6' => 'Serriñ ar prenestr-mañ',
-	'stf_throttle' => "Evit abegoù surentez, e c'hallit kas $1 pedadenn an deiz hepken.",
+	'stf_throttle' => "Evit abegoù surentez, e c'hallit kas $1 pedadenn{{PLURAL:$1||}} an deiz hepken.",
 	'stf_abuse' => "Kaset eo bet ar postel-mmañ gant $1 dre Wikia.
 Ma soñj deoc'h ez eo dre fazi, roit dimp da c'houzout, mar plij, war support@wikia.com.",
-	'stf_ctx_invite' => "Meur a chomlec'h ? Dispartiit anezho gant skejoù - betek $1 !",
+	'stf_ctx_invite' => "Muioc'h evit unan ? Dispartiit anezho gant skejoù - betek $1 !",
 	'stf_ctx_check' => 'Gwiriañ an darempredoù',
 	'stf_ctx_empty' => "N'ho peus darempred ebet war ar gont-mañ.",
 	'stf_ctx_invalid' => 'direizh eo an niverenn-anaout pe ar ger-tremen ho peus bizskrivet. Klaskit en-dro, mar plij',
@@ -207,7 +209,7 @@ Ma soñj deoc'h ez eo dre fazi, roit dimp da c'houzout, mar plij, war support@wi
 $messages['de'] = array(
 	'invitespecialpage' => 'Lade Freunde zu Wikia ein',
 	'stf_button' => 'Artikel an einen Freund versenden',
-	'stf_after_reg' => 'Lade einen Freund zu Wikia ein! [[Special:InviteSpecialPage|Klick]].',
+	'stf_after_reg' => '[[Special:InviteSpecialPage|Lade einen Freund zu Wikia ein!]].',
 	'stf_subject' => '$2 hat dir einen Artikel von $1 geschickt!',
 	'stf_confirm' => 'Nachricht versandt! Weitere Freunde einladen?',
 	'stf_error' => 'Fehler beim Mailversand.',
@@ -235,7 +237,7 @@ Schau doch mal vorbei!",
 	'stf_multiemail' => 'An mehr als einen Empfänger verschicken?',
 	'stf_frm5' => '(Die URL dieser Seite wird an deine Nachricht angehängt.)',
 	'stf_frm6' => 'Fenster schließen',
-	'stf_throttle' => 'Aus Sicherheitsgründen kannst du nur $1 Einladungen pro Tag verschicken.',
+	'stf_throttle' => 'Aus Sicherheitsgründen kannst du nur {{PLURAL:$1|1 Einladung|$1 Einladungen}} pro Tag verschicken.',
 	'stf_abuse' => 'Diese E-Mail wurde über Wikia verschickt.
 Wenn du glaubst, dass dieses Angebot missbraucht wird, teile uns dies bitte unter support@wikia.com mit!',
 	'stf_ctx_invite' => 'Mehrere Adressen? Mit Komma getrennt - bis zu $1!',
@@ -263,11 +265,14 @@ Wenn du glaubst, dass dieses Angebot missbraucht wird, teile uns dies bitte unte
 	'stf_select_friends' => 'Freunde auswählen:',
 );
 
-/** Spanish (Español) */
+/** Spanish (Español)
+ * @author Translationista
+ */
 $messages['es'] = array(
 	'invitespecialpage' => 'Invita a tus amigos a participar en Wikia',
+	'sendtoafriend-button-desc' => 'Muestra un botón de "Enviar a una amistad" en las páginas',
 	'stf_button' => 'Envía este artículo a un amigo',
-	'stf_after_reg' => '¡Invita a un amigo a unirse a Wikia! [[Special:InviteSpecialPage|Haz clic aquí]].',
+	'stf_after_reg' => '[[Special:InviteSpecialPage|¡Invita a una amistad a unirse a Wikia!]]',
 	'stf_subject' => '$2 te ha enviado un artículo desde $1!',
 	'stf_confirm' => '¡Mensaje enviado! ¿Deseas invitar a alguien más?',
 	'stf_error' => 'Error enviando el correo electrónico',
@@ -297,10 +302,10 @@ Acabo de unirme a este wiki de Wikia...  $1
 	'stf_multiemail' => '¿Enviar a más de un receptor?',
 	'stf_frm5' => '(la dirección de este sitio será incluida al final de tu mensaje)',
 	'stf_frm6' => 'Cerrar esta ventana',
-	'stf_throttle' => 'Por razones de seguridad, sólo puedes enviar $1 invitaciones por día.',
+	'stf_throttle' => 'Por razones de seguridad, sólo puedes enviar {{PLURAL:$1|invitación|invitaciones}} por día.',
 	'stf_abuse' => 'Este email fue enviado por $1 via Wikia.
 Si piensas que fue enviado por error, por favor háznoslo saber a support@wikia.com',
-	'stf_ctx_invite' => '¿Más de una? Sepáralas con comas, ¡puedes ingresar hasta $1 !',
+	'stf_ctx_invite' => '¿Más de una? Sepáralas con comas, ¡puedes ingresar hasta $1!',
 	'stf_ctx_check' => 'Comprobar contactos',
 	'stf_ctx_empty' => 'No tienes contactos en esta cuenta.',
 	'stf_ctx_invalid' => 'El nombre de usuario o la contraseña que escribiste no son válidos. Por favor inténtalo nuevamente.',
@@ -344,8 +349,10 @@ $messages['fi'] = array(
  */
 $messages['fr'] = array(
 	'invitespecialpage' => 'Inviter des amis à rejoindre Wikia',
+	'sendtoafriend-desc' => '[[Special:InviteSpecialPage|Inviter des amis à rejoindre Wikia]]',
+	'sendtoafriend-button-desc' => 'Afficher le bouton « Envoyer à un ami » dans les pages',
 	'stf_button' => 'Envoyer cet article à un ami',
-	'stf_after_reg' => 'Invitez un ami à rejoindre Wikia ! [[Special:InviteSpecialPage|Cliquez ici]].',
+	'stf_after_reg' => '[[Special:InviteSpecialPage|Invitez un ami à rejoindre Wikia !]]',
 	'stf_subject' => '$2 vous a envoyé un article depuis $1 !',
 	'stf_confirm' => "Message envoyé ! Inviter d'autres personnes ?",
 	'stf_error' => "Erreur lors de l'envoi du courriel.",
@@ -375,10 +382,10 @@ Viens jeter un œil !',
 	'stf_multiemail' => "Envoyer à plus d'une personne ?",
 	'stf_frm5' => "(l'URL de ce site sera ajoutée à votre message)",
 	'stf_frm6' => 'Fermer cette fenêtre',
-	'stf_throttle' => 'Pour des raisons de sécurité, vous pouvez uniquement envoyer $1 invitations par jour.',
+	'stf_throttle' => 'Pour des raisons de sécurité, vous pouvez uniquement envoyer $1 {{PLURAL:$1|invitation|invitations}} par jour.',
 	'stf_abuse' => "Ce courrier électronique a été envoyé par $1 depuis Wikia.
 Si vous pensez qu'il s'agit d'une erreur, merci de nous le faire savoir à support@wikia.com.",
-	'stf_ctx_invite' => "Plus d'une adresse? Séparez les avec des virgules - jusqu'à $1 !",
+	'stf_ctx_invite' => "Plus d'une adresse? Séparez-les avec des virgules - jusqu'à $1 !",
 	'stf_ctx_check' => 'Vérification des contacts',
 	'stf_ctx_empty' => "Vous n'avez aucun contact sur ce compte.",
 	'stf_ctx_invalid' => "L'identifiant ou le mot de passe que vous avez tapé est invalide. Veuillez ré-essayer.",
@@ -408,8 +415,10 @@ Si vous pensez qu'il s'agit d'une erreur, merci de nous le faire savoir à suppo
  */
 $messages['gl'] = array(
 	'invitespecialpage' => 'Convidar aos amigos a unirse a Wikia',
+	'sendtoafriend-desc' => '[[Special:InviteSpecialPage|Convide amigos a unirse a Wikia!]]',
+	'sendtoafriend-button-desc' => 'Mostra un botón "Enviar a un amigo" nas páxinas',
 	'stf_button' => 'Enviar este artigo a un amigo',
-	'stf_after_reg' => 'Convide a un amigo a unirse a Wikia! [[Special:InviteSpecialPage|Prema aquí]].',
+	'stf_after_reg' => '[[Special:InviteSpecialPage|Convide a un amigo a unirse a Wikia!]]',
 	'stf_subject' => '$2 envioulle un artigo de $1!',
 	'stf_confirm' => 'Mensaxe enviada! Quere convidar a outras persoas?',
 	'stf_error' => 'Erro ao enviar o correo electrónico.',
@@ -439,7 +448,7 @@ Ven velo!',
 	'stf_multiemail' => 'Quérea enviar a máis dun destinatario?',
 	'stf_frm5' => '(o URL deste sitio engadirase á súa mensaxe)',
 	'stf_frm6' => 'Pechar esta ventá',
-	'stf_throttle' => 'Por razóns de seguridade, só pode enviar $1 convites ao día.',
+	'stf_throttle' => 'Por razóns de seguridade, só pode enviar $1 {{PLURAL:$1|convite|convites}} ao día.',
 	'stf_abuse' => 'Este correo electrónico foi enviado por $1 a través de Wikia.
 Se pensa que lle chegou por erro, por favor, fáganolo saber en support@wikia.com.',
 	'stf_ctx_invite' => 'Hai máis dun? Sepáreos con comas; ata $1!',
@@ -496,8 +505,10 @@ $messages['hu'] = array(
  */
 $messages['ia'] = array(
 	'invitespecialpage' => 'Invita amicos a participar in Wikia',
+	'sendtoafriend-desc' => '[[Special:InviteSpecialPage|Invita amicos a participar in Wikia]]',
+	'sendtoafriend-button-desc' => 'Monstra un button "Inviar a un amico" in paginas',
 	'stf_button' => 'Inviar iste articulo a un amico',
-	'stf_after_reg' => 'Invita un amico a participar in Wikia! [[Special:InviteSpecialPage|Clicca hic]].',
+	'stf_after_reg' => '[[Special:InviteSpecialPage|Invita un amico a participar in Wikia!]]',
 	'stf_subject' => '$2 te ha inviate un articulo de $1!',
 	'stf_confirm' => 'Message inviate! Invitar altere personas?',
 	'stf_error' => 'Error de inviar e-mail.',
@@ -527,7 +538,7 @@ Veni vider lo!',
 	'stf_multiemail' => 'Inviar a plus de un destinatario?',
 	'stf_frm5' => '(le URL de iste sito essera adjungite a tu message)',
 	'stf_frm6' => 'Clauder iste fenestra',
-	'stf_throttle' => 'Pro motivos de securitate, tu pote solmente inviar $1 invitationes per die.',
+	'stf_throttle' => 'Pro motivos de securitate, tu pote solmente inviar $1 {{PLURAL:$1|invitation|invitationes}} per die.',
 	'stf_abuse' => 'Iste e-mail ha essite inviate per $1 via Wikia.
 Si tu pensa que isto ha essite inviate in error, per favor face nos lo saper a support@wikia.com.',
 	'stf_ctx_invite' => 'Plus de un? Separa con commas - usque a $1!',
@@ -623,8 +634,10 @@ $2
  */
 $messages['mk'] = array(
 	'invitespecialpage' => 'Поканете пријатели да се зачленат на Викија',
+	'sendtoafriend-desc' => '[[Special:InviteSpecialPage|Поканете пријатели да се зачленат на Викија]]',
+	'sendtoafriend-button-desc' => 'Прикажува копче „Испрати на пријател“ во страниците',
 	'stf_button' => 'Испрати ја статијава на пријател',
-	'stf_after_reg' => 'Поканете пријател да се зачлени на Викија! [[Special:InviteSpecialPage|Кликнете тука]].',
+	'stf_after_reg' => '[[Special:InviteSpecialPage|Поканете пријател да се зачлени на Викија!]]',
 	'stf_subject' => '$2 ви испрати статија од $1!',
 	'stf_confirm' => 'Пораката е испратена! Сакате да поканите уште?',
 	'stf_error' => 'Грешка при испраќање на е-поштата',
@@ -654,7 +667,7 @@ $2
 	'stf_multiemail' => 'Да испратам на повеќе од еден примач?',
 	'stf_frm5' => '(URL-адресата на оваа веб-страница ќе биде приложена кон вашата порака)',
 	'stf_frm6' => 'Затвори го прозорецов',
-	'stf_throttle' => 'Од безбедносни причини можете да испратите највеќе до $1 покани дневно.',
+	'stf_throttle' => 'Од безбедносни причини можете да испратите највеќе до $1 {{PLURAL:$1|покана|покани}} дневно.',
 	'stf_abuse' => 'Ова писмо го испрати $1 преку Викија.
 Ако сметате дека е испратено по грешка, известете нè на support@wikia.com.',
 	'stf_ctx_invite' => 'Повеќе од една? Одделете ги со запирки - дозволено е највеќе до $1!',
@@ -819,8 +832,10 @@ Jeśli uważasz, że nie powinien on do Ciebie trafić, daj nam znać na support
  */
 $messages['pms'] = array(
 	'invitespecialpage' => "Anvité d'amis a intré an Wikia",
+	'sendtoafriend-desc' => "[[Special:InviteSpecialPage|Anvité dj'amis a iscrivse a Wikia]]",
+	'sendtoafriend-button-desc' => 'Mostré un boton "Spediss a n\'amis" ant je pàgine',
 	'stf_button' => "Mandé st'artìcol-sì a n'amis",
-	'stf_after_reg' => "Anvita n'amis a intré an Wikia! [[Special:InviteSpecialPage|Sgnaca sì]].",
+	'stf_after_reg' => "[[Special:InviteSpecialPage|Anvita n'amis a intré an Wikia!]]",
 	'stf_subject' => "$2 a l'ha mandate n'artìcol da $1!",
 	'stf_confirm' => "Mëssagi mandà! Anvité d'àutri?",
 	'stf_error' => 'Eror an mandand ël mëssagi.',
@@ -850,7 +865,7 @@ Ven a vëdd-la!',
 	'stf_multiemail' => "Mandé a pi d'un destinatari?",
 	'stf_frm5' => "(l'adrëssa dë sto sit-sì a sarà gionzùa a sò messagi)",
 	'stf_frm6' => 'Saré sta fnestra-sì',
-	'stf_throttle' => 'Për rason ëd sicurëssa, it peule mach mandé $1 anvit për di.',
+	'stf_throttle' => 'Për rason ëd sicurëssa, it peule mach mandé $1 {{PLURAL:$1|anvit|anvit}} për di.',
 	'stf_abuse' => "Cost mëssagi a l'é stàit mandà da $1 via Wikia.
 S'a pensa ch'a sia stàit mandà për eror, për piasì ch'an lo fasa savèj a support@wikia.com.",
 	'stf_ctx_invite' => "Pi d'un? Ch'a-j separa con ëd vìrgole - fin-a a $1!",
@@ -883,8 +898,9 @@ S'a pensa ch'a sia stàit mandà për eror, për piasì ch'an lo fasa savèj a s
  */
 $messages['pt-br'] = array(
 	'invitespecialpage' => 'Convide amigos para se juntar ao Wikia',
+	'sendtoafriend-desc' => '[[Special:InviteSpecialPage|Convide amigos para se juntar ao Wikia]]',
 	'stf_button' => 'Envie este artigo para um amigo',
-	'stf_after_reg' => 'Convide um amigo para se juntar ao Wikia!  [[Special:InviteSpecialPage|Clique aqui]].',
+	'stf_after_reg' => '[[Special:InviteSpecialPage|Convide um amigo para se juntar ao Wikia!]]',
 	'stf_subject' => '$2 lhe enviou um artigo de $1!',
 	'stf_confirm' => 'Sua mensagem foi enviada! Deseja convidar mais alguém?',
 	'stf_error' => 'Ocorreu um no envio do e-mail.',
@@ -914,7 +930,7 @@ Dê uma olhada!',
 	'stf_multiemail' => 'Enviar para mais de uma pessoa?',
 	'stf_frm5' => '(o endereço desse site irá ser colocado na sua mensagem)',
 	'stf_frm6' => 'Feche essa janela',
-	'stf_throttle' => 'Por motivos de segurança, você só pode enviar $1 convites por dia.',
+	'stf_throttle' => 'Por motivos de segurança, você só pode enviar $1 {{PLURAL:$1|convite|convites}} por dia.',
 	'stf_abuse' => 'Este email foi enviado por $1 via Wikia.
 Se você acha que essa mensagem foi enviada errada, por favor, nos avise pelo email support@wikia.com .',
 	'stf_ctx_empty' => 'Você não tem contatos nessa conta.',
@@ -929,6 +945,8 @@ Se você acha que essa mensagem foi enviada errada, por favor, nos avise pelo em
  */
 $messages['ru'] = array(
 	'invitespecialpage' => 'Пригласите друзей присоединиться к Викии',
+	'stf_button' => 'Отправить эту статью другу',
+	'stf_confirm' => 'Сообщение отправлено! Пригласить других друзей?',
 	'stf_error_name' => 'Вы не указали своё имя.',
 	'stf_error_from' => 'Вы не указали свой email-адрес.',
 	'stf_error_to' => 'Вы не указали email-адрес вашего друга.',

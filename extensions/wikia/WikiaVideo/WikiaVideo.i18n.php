@@ -50,6 +50,13 @@ $messages['af'] = array(
 	'wikiavideo-intro-old' => "U is besig om die weergawe van '''[$1 $5]''' per [$4 $3, $2] te verwyder.",
 );
 
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'wikiavideo-create' => 'Добавяне на видео',
+);
+
 /** Breton (Brezhoneg)
  * @author Gwenn-Ael
  * @author Y-M D
@@ -121,6 +128,7 @@ $messages['fa'] = array(
 );
 
 /** Finnish (Suomi)
+ * @author Centerlink
  * @author Crt
  */
 $messages['fi'] = array(
@@ -130,6 +138,7 @@ $messages['fi'] = array(
 	'wikiavideo-replace' => 'Korvaa video',
 	'wikiavideo-category' => 'Videot',
 	'wikiavideo-links' => 'Linkit',
+	'wikiavideo-pixel' => ' kuvapiste',
 );
 
 /** French (Français)
@@ -269,12 +278,17 @@ $messages['nl'] = array(
  * @author Nghtwlkr
  */
 $messages['no'] = array(
+	'wikiavideo-reverted' => 'Videoen $1 ble tilbakestilt. Gå tilbake til $2.',
+	'wikiavideo-unreverted' => 'Du har ikke tillatelse til å tilbakestille $1.',
 	'wikiavideo-added' => 'la til video $1',
 	'wikiavideo-back' => 'tilbake',
 	'wikiavideo-create' => 'Legg til video',
 	'wikiavideo-replace' => 'Erstatt video',
 	'wikiavideo-category' => 'Videoer',
 	'wikiavideo-links' => 'Lenker',
+	'wikiavideo-pixel' => '  piksel',
+	'wikiavideo-deleted-old' => "Versjonen av '''[$1 $2]''' fra $4, $3 har blitt slettet.",
+	'wikiavideo-intro-old' => "Du sletter versjonen av '''[$1 $5]''' fra [$4 $3, $2].",
 );
 
 /** Polish (Polski) */

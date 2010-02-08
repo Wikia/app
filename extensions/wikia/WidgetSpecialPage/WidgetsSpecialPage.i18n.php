@@ -42,6 +42,13 @@ $messages['fa'] = array(
 لطفا [[Special:Preferences#prefsection-1|ترجیحات]] خود را تغییر دهید تا از این ابزار استفاده کنید.',
 );
 
+/** Finnish (Suomi)
+ * @author Centerlink
+ */
+$messages['fi'] = array(
+	'widgets-specialpage-try-dashboard' => 'Tämä sivu sisältää luettelon kaikista saatavilla olevista käyttöliittymäelementeistä. Käyttöliittymäelementit näkyvät työssä kojelaudassa [[Special:WidgetDashboard]].',
+);
+
 /** French (Français)
  * @author IAlex
  */
@@ -108,6 +115,16 @@ $messages['nl'] = array(
 Wijzig alstublieft uw [[Special:Preferences#prefsection-1|voorkeuren]] om dit hulpmiddel te gebruiken.',
 	'widgets-specialpage-try-dashboard' => 'Deze pagina bevat een lijst met alle beschikbare widgets.
 [[Special:WidgetDashboard|U kunt ook bekijken hoe uw widgets werken]].',
+);
+
+/** Occitan (Occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'widgets-specialpage-info' => 'Los widgets foncionan melhor amb un abilhatge modèrne, coma [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Mónegue].
+
+Modificatz [[Special:Preferences#prefsection-1| vòstras preferéncias]] per utilizar aqueste esplech.',
+	'widgets-specialpage-try-dashboard' => 'Aquesta pagina fa la lista de totes los widgets disponibles. Per veire los widgets en accion anatz sus [[Special:WidgetDashboard]].',
 );
 
 /** Piedmontese (Piemontèis)

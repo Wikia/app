@@ -90,6 +90,7 @@ Probeer asseblief weer.",
  * @author Y-M D
  */
 $messages['br'] = array(
+	'textregex-page-title' => 'Roll an eztaoladennoù strobus',
 	'textregex-error-unblocking' => "Ur fazi 'zo bet e-pad an distankañ ($1). Klaskit adarre.",
 	'textregex-currently-blocked' => "'''Frazennoù stanket evit bremañ :'''",
 	'textregex_nocurrently-blocked' => "N'eo bet kavet frazenn stanket ebet",
@@ -102,6 +103,7 @@ $messages['br'] = array(
 	'textregex-block-message' => "Ouzhpennet eo bet ar frazenn '''$1''' d'ar frazennoù ne vez ket c'hoant outo.",
 	'textregex-regex-block' => 'Frazenn da stankañ :',
 	'textregex-submit-regex' => 'Ouzhpennañ ur frazenn',
+	'textregex-empty-regex' => 'Reiñ un eztaoladenn da stankañ.',
 	'textregex-already-added' => 'Ouzhpennet eo bet "$1" dija',
 	'textregex-nodata-found' => "N'eus ket bet kavet roadennoù",
 	'textregex-stats-record' => "ar ger''$1'' a oa bet implijet gant $2 war $3 (''displegadenn: $4'')",
@@ -112,6 +114,18 @@ $messages['br'] = array(
 	'textregex-invalid-regexid' => 'Frazenn fall.',
 	'textregex-phrase-statistics' => "Stadegoù evit ar frazenn '''$1''' (niver a enrolladennoù : $2)",
 	'textregex-return-mainpage' => "[{{SERVIJER}}$1 distreiñ d'ar roll.]",
+);
+
+/** Finnish (Suomi)
+ * @author Centerlink
+ */
+$messages['fi'] = array(
+	'textregex-page-title' => 'Luettelo ei-toivotuista lausekkeista',
+	'textregex-submit-regex' => 'Lisää fraasi',
+	'textregex-select-default' => '-- valitse --',
+	'textregex-create-subpage' => 'tai luo uusi luettelo:',
+	'textregex-select-regexlist' => 'siirry luetteloon',
+	'textregex-invalid-regexid' => 'Virheellinen fraasi.',
 );
 
 /** French (Français)
@@ -296,6 +310,33 @@ Probeer het opnieuw.',
 	'textregex-invalid-regexid' => 'Ongeldig herkenningsteken of ongeldige reguliere expressie.',
 	'textregex-phrase-statistics' => "Statistieken voor het tekstdeel '''$1''' (aantal records: $2)",
 	'textregex-return-mainpage' => '[{{SERVER}}$1 terug naar de lijst]',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'textregex' => 'Regulære uttrykk for tekst',
+	'textregex-desc' => '[[Special:textregex/XXXX|Filtrer]] ut uønskede fraser fra redigerte sider basert på regulære uttrykk',
+	'textregex-page-title' => 'Liste over uønskede uttrykk',
+	'textregex_nocurrently-blocked' => 'Ingen blokkerte fraser funnet',
+	'textregex-addedby-user' => 'lagt til av $1, $2',
+	'textregex-remove-url' => '[{{SERVER}}$1&id=$2 fjern]',
+	'textregex-stats-url' => '[{{SERVER}}$1&id=$2 statistikk]',
+	'textregex-unblock-message' => "Frasen '''$1''' har blitt fjernet fra uønskede uttrykk.",
+	'textregex-block-message' => "Frasen '''$1''' har blitt lagt til uønskede uttrykk.",
+	'textregex-regex-block' => 'Frase som skal blokkeres:',
+	'textregex-submit-regex' => 'Legg til frase',
+	'textregex-invalid-regex' => 'Ugyldig regulært uttrykk.',
+	'textregex-already-added' => '«$1» er allerede lagt til',
+	'textregex-nodata-found' => 'Ingen data funnet',
+	'textregex-stats-record' => "ordet ''$1'' ble brukt av $2, $3 (''kommentar: $4'')",
+	'textregex-select-subpage' => 'Velg en liste med fraser:',
+	'textregex-select-default' => '-- velg --',
+	'textregex-create-subpage' => 'eller opprett en ny liste:',
+	'textregex-select-regexlist' => 'gå til listen',
+	'textregex-invalid-regexid' => 'Ugyldig frase.',
+	'textregex-return-mainpage' => '[{{SERVER}}$1 gå tilbake til listen]',
 );
 
 /** Piedmontese (Piemontèis)

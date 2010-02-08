@@ -40,6 +40,13 @@ $messages['es'] = array(
 	'wikiaupload' => 'WikiaSubida:',
 );
 
+/** Finnish (Suomi)
+ * @author Crt
+ */
+$messages['fi'] = array(
+	'wikiaupload' => 'Kopioi Wikiaan',
+);
+
 /** French (Français)
  * @author IAlex
  */

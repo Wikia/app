@@ -44,8 +44,11 @@ $messages['de'] = array(
 	'ajaxpoll-submitting' => 'Bitte warte kurz, deine Stimme wird verarbeitet.',
 );
 
-/** Spanish (Español) */
+/** Spanish (Español)
+ * @author Bola
+ */
 $messages['es'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp; de todos los votos',
 	'ajaxpoll-thankyou' => '¡Gracias por tu voto!',
 	'ajaxpoll-error' => 'Hubo un problema al procesar tu voto, por favor, inténtalo de nuevo.',
 	'ajaxpoll-summary' => 'La encuesta fue creada el $1 $2, y hasta ahora $3 personas votaron.',
@@ -124,6 +127,19 @@ $messages['hu'] = array(
 	'ajaxpoll-submit' => 'Szavazás!',
 	'ajaxpoll-closed' => 'A szavazás már lezárult. Nézd meg az eredményeket.',
 	'ajaxpoll-submitting' => 'A szavazat elküldése, kérlek várj…',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp;de tote le votos',
+	'ajaxpoll-thankyou' => 'Gratias pro tu voto!',
+	'ajaxpoll-error' => 'Il habeva un problema con le tractamento de tu voto. Per favor reproba.',
+	'ajaxpoll-summary' => 'Le sondage ha essite create le $1 a $2, e usque ora $3 personas ha votate.',
+	'ajaxpoll-submit' => 'Vota!',
+	'ajaxpoll-closed' => 'Le sondage ha essite claudite. Bon divertimento con le resultatos.',
+	'ajaxpoll-submitting' => 'Un momento, submission de tu voto…',
 );
 
 /** Japanese (日本語)
@@ -229,6 +245,10 @@ $messages['pt-br'] = array(
 	'ajaxpoll-percentVotes' => '$1%&nbsp;de todos os votos',
 	'ajaxpoll-thankyou' => 'Obrigado pelo seu voto!',
 	'ajaxpoll-error' => 'Ocorreu um problema ao processar o seu voto, por favor, tente novamente.',
+	'ajaxpoll-summary' => 'A votação foi criada às $1 de $2 e, até agora, $3 pessoas votaram.',
+	'ajaxpoll-submit' => 'Vote!',
+	'ajaxpoll-closed' => 'Essa votação está encerrada. Confira os resultados.',
+	'ajaxpoll-submitting' => 'Por favor, aguarde. Estamos enviando o seu voto...',
 );
 
 /** Russian (Русский)

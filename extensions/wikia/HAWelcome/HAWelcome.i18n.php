@@ -357,16 +357,44 @@ $messages['nl'] = array(
 * Voeg hier verwijzingen toe van uw favoriete pagina's op deze wiki!
 * Favoriete pagina #2
 * Favoriete pagina #3",
-	'welcome-message-user' => 'Hallo, welkom bij {{SITENAME}}! Bedankt voor je bewerking van de pagina [[:$1]].
+	'welcome-message-user' => 'Hallo, welkom bij {{SITENAME}}! Bedankt voor uw bewerking van de pagina [[:$1]].
 
-Laat gerust een bericht achter op [[$2|mijn overlegpagina]] als ik je ergens mee kan helpen! $3',
-	'welcome-message-anon' => "Hallo, welkom bij {{SITENAME}}! Bedankt voor je werk aan de pagina [[:$1]].
+Laat gerust een bericht achter op [[$2|mijn overlegpagina]] als ik u ergens mee kan helpen! $3',
+	'welcome-message-anon' => "Hallo, welkom bij {{SITENAME}}. Dank u wel voor uw werk aan de pagina [[:$1]].
 
-'''[[Special:Userlogin|Maak alsjeblieft een gebruiker aan of meld je aan]]'''.
-Het is een eenvoudige manier om je bijdragen te volgen en helpt je bij het onderhouden van contacten met de rest van de gemeenschap.
+'''[[Special:Userlogin|Maak alstublieft een gebruiker aan of meld u aan]]'''.
+Het is een eenvoudige manier om uw bijdragen te volgen en helpt u bij het onderhouden van contacten met de rest van de gemeenschap.
 
-Laat gerust een bericht achter op [[$2|mijn overlegpagina]] als ik je ergens mee kan helpen! $3",
+Laat alstublieft een bericht achter op [[$2|mijn overleg pagina]] als ik u ergens mee kan helpen! $3",
 	'welcome-message-log' => 'nieuwe gebruiker aan het verwelkomen',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'welcome-user-page' => "==Om meg==
+
+''Dette er brukersiden din. Vennligst rediger denne siden for å fortelle fellesskapet om deg selv!''
+
+==Mine bidrag==
+
+* [[Special:Contributions/{{PAGENAME}}|Brukerbidrag]]
+
+==Mine favorittsider==
+
+* Legg til lenker til dine favorittsider på denne wikien her!
+* Favorittside #2
+* Favorittside #3",
+	'welcome-message-user' => 'Hei, velkommen til {{SITENAME}}! Takk for bidraget til siden [[:$1]].
+
+Vennligst legg igjen en melding på [[$2|diskusjonssiden min]] om du trenger hjelp til noe! $3',
+	'welcome-message-anon' => "Hei, velkommen til {{SITENAME}}! Takk for ditt bidrag til siden [[:$1]].
+
+'''[[Special:Userlogin|Vennligst logg inn og opprett et brukernavn]]'''. Det er en enkel måte å holde oversikt over dine bidrag og hjelper deg med å kommunisere med resten av fellesskapet.
+
+Vennligst legg igjen en melding på [[$2|diskusjonssiden min]] om du trenger hjelp til noe! $3",
+	'welcome-message-log' => 'ønsk ny bidragsyter velkommen',
 );
 
 /** Polish (Polski) */

@@ -36,7 +36,15 @@ Wikia maak outomaties rugsteunkopieë van alle wiki's.",
 	'dump-database-request-info' => '(Dumps word gewoonlik weekliks gegenereer)',
 	'dump-database-request-submit' => 'Stuur versoek',
 	'dump-database-request-requested' => "U versoek vir 'n databasisdump is ingedien",
-	'dump-database-info-more' => '<a href="http://community.wikia.com/wiki/Help:Database_download">Meer inligting</a>.',
+	'dump-database-info-more' => '<a href="http://www.wikia.com/wiki/Wikia:Database_download">Meer inligting</a>.',
+);
+
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'dump-database' => 'Дъмпове на базата данни',
+	'dump-database-curr-pages' => 'Текущи страници',
 );
 
 /** Breton (Brezhoneg)
@@ -52,7 +60,7 @@ $messages['br'] = array(
 	'dump-database-request-info' => '(Graet e vez an tumpoù dre sizhun dre vras)',
 	'dump-database-request-submit' => 'Kas ar reked',
 	'dump-database-request-requested' => 'Kaset eo bet ar reked evit tumpañ an diaz roadennoù',
-	'dump-database-info-more' => 'Mar plij lennit <a href="http://community.wikia.com/wiki/Help:Database_download">amañ</a> evit muioc\'h a ditouroù',
+	'dump-database-info-more' => 'Mar plij lennit <a href="http://www.wikia.com/wiki/Wikia:Database_download">amañ</a> evit muioc\'h a ditouroù',
 );
 
 /** Bosnian (Bosanski)
@@ -77,7 +85,7 @@ $messages['de'] = array(
 	'dump-database-request-info' => '(Dumps werden normalerweise wöchentlich generiert)',
 	'dump-database-request-submit' => 'Anfrage absenden',
 	'dump-database-request-requested' => 'Anfrage nach versendet.',
-	'dump-database-info-more' => 'Bitte siehe <a href="http://community.wikia.com/wiki/Help:Database_download">hier</a> für weitere Infos.',
+	'dump-database-info-more' => 'Bitte siehe <a href="http://www.wikia.com/wiki/Wikia:Database_download">hier</a> für weitere Infos.',
 );
 
 /** Spanish (Español)
@@ -95,7 +103,7 @@ $messages['es'] = array(
 	'dump-database-request-info' => '(Las descargas normalmente se generan semanalmente)',
 	'dump-database-request-submit' => 'Enviar solicitud',
 	'dump-database-request-requested' => 'Solicitud para envío de descarga de base de datos',
-	'dump-database-info-more' => 'Por favor, <a href="http://community.wikia.com/wiki/Help:Database_download">ver esto</a> para más información',
+	'dump-database-info-more' => 'Por favor, <a href="http://www.wikia.com/wiki/Wikia:Database_download">ver esto</a> para más información',
 );
 
 /** Finnish (Suomi)
@@ -111,7 +119,7 @@ $messages['fi'] = array(
 	'dump-database-request' => 'Pyydä päivitystä',
 	'dump-database-request-info' => '(Vedokset luodaan yleensä viikoittain)',
 	'dump-database-request-submit' => 'Lähetä pyyntö',
-	'dump-database-info-more' => '<a href="http://community.wikia.com/wiki/Help:Database_download">Katso lisätietoja</a>',
+	'dump-database-info-more' => '<a href="http://www.wikia.com/wiki/Wikia:Database_download">Katso lisätietoja</a>',
 );
 
 /** French (Français)
@@ -129,7 +137,7 @@ $messages['fr'] = array(
 	'dump-database-request-info' => '(Les dumps sont généralement effectués chaque semaine)',
 	'dump-database-request-submit' => 'Envoyer la requête',
 	'dump-database-request-requested' => 'Requête pour un dump de la base de donnée envoyée',
-	'dump-database-info-more' => 'Voyez <a href="http://community.wikia.com/wiki/Help:Database_download">ceci</a> pour plus d\'informations',
+	'dump-database-info-more' => 'Voyez <a href="http://www.wikia.com/wiki/Wikia:Database_download">ceci</a> pour plus d\'informations',
 );
 
 /** Galician (Galego)
@@ -146,7 +154,7 @@ $messages['gl'] = array(
 	'dump-database-request-info' => '(As copias xéranse frecuentemente cada semana)',
 	'dump-database-request-submit' => 'Enviar a solicitude',
 	'dump-database-request-requested' => 'Enviouse a solicitude da copia da base de datos',
-	'dump-database-info-more' => 'Por favor, <a href="http://community.wikia.com/wiki/Help:Database_download">lea isto</a> para obter máis información',
+	'dump-database-info-more' => 'Por favor, <a href="http://www.wikia.com/wiki/Wikia:Database_download">lea isto</a> para obter máis información',
 );
 
 /** Hungarian (Magyar)
@@ -173,14 +181,25 @@ $messages['ia'] = array(
 	'dump-database-request-info' => '(Le copias es normalmente generate cata septimana)',
 	'dump-database-request-submit' => 'Inviar requesta',
 	'dump-database-request-requested' => 'Requesta de un copia del base de datos inviate',
-	'dump-database-info-more' => 'Vide <a href="http://community.wikia.com/wiki/Help:Database_download">ulterior informationes</a>',
+	'dump-database-info-more' => 'Vide <a href="http://www.wikia.com/wiki/Wikia:Database_download">ulterior informationes</a>',
 );
 
 /** Japanese (日本語)
  * @author Hosiryuhosi
+ * @author Tommy6
  */
 $messages['ja'] = array(
-	'dump-database' => 'データベース ダンプ',
+	'dump-database' => 'データベースダンプ',
+	'dump-database-info' => 'データベースダンプは、個人的なバックアップ（ウィキアでは全てのウィキのバックアップを自動的に取っています）やメンテナンスボット用として利用できます。',
+	'dump-database-curr-pages' => '最新のページ',
+	'dump-database-curr-pages-info' => '（ボットで利用する場合には通常最も適したものとなります）',
+	'dump-database-full-pages' => '最新ページとその履歴',
+	'dump-database-full-pages-info' => '（警告: このファイルは非常に大きなサイズになることがあります）',
+	'dump-database-request' => '更新をリクエスト',
+	'dump-database-request-info' => '（ダンプは通常1週間ごとに生成されます）',
+	'dump-database-request-submit' => 'リクエストを送信',
+	'dump-database-request-requested' => 'データベースダンプのリクエストを送信しました',
+	'dump-database-info-more' => '詳しくは<a href="http://ja.wikia.com/wiki/Wikia:%E3%83%87%E3%83%BC%E3%82%BF%E3%83%99%E3%83%BC%E3%82%B9%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89">Wikia:データベースダウンロード</a>をご覧ください。',
 );
 
 /** Macedonian (Македонски)
@@ -197,7 +216,7 @@ $messages['mk'] = array(
 	'dump-database-request-info' => '(Складираните резервни записи обично се создаваат еднаш неделно)',
 	'dump-database-request-submit' => 'Испрати барање',
 	'dump-database-request-requested' => 'Барањето за складиран резервен запис на базата е испратено',
-	'dump-database-info-more' => '<a href="http://community.wikia.com/wiki/Help:Database_download">Погледајте тука</a> за повеќе информации',
+	'dump-database-info-more' => '<a href="http://www.wikia.com/wiki/Wikia:Database_download">Погледајте тука</a> за повеќе информации',
 );
 
 /** Dutch (Nederlands)
@@ -215,7 +234,16 @@ Wikia maakt automatisch back-ups van alle wiki's.",
 	'dump-database-request-info' => 'Dumps worden meestal wekelijks aangemaakt.',
 	'dump-database-request-submit' => 'Verzoek versturen',
 	'dump-database-request-requested' => 'Het verzoek voor de databasedump is ingediend.',
-	'dump-database-info-more' => '<a href="http://community.wikia.com/wiki/Help:Database_download">Meer informatie</a>.',
+	'dump-database-info-more' => '<a href="http://www.wikia.com/wiki/Wikia:Database_download">Meer informatie</a>.',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'dump-database-full-pages-info' => '(Advarsel: Denne filen kan være veldig stor)',
+	'dump-database-request-submit' => 'Send forespørsel',
+	'dump-database-info-more' => 'Vennligst <a href="http://community.wikia.com/wiki/Help:Database_download">se</a> for mer info',
 );
 
 /** Piedmontese (Piemontèis)
@@ -233,7 +261,7 @@ $messages['pms'] = array(
 	'dump-database-request-info' => '(Ij dump a son normalment generà setimanalment)',
 	'dump-database-request-submit' => 'Manda arcesta',
 	'dump-database-request-requested' => 'Arcesta për dump dla base ëd dàit mandà',
-	'dump-database-info-more' => 'Për piasì <a href="http://community.wikia.com/wiki/Help:Database_download">varda</a> për savèjne ëd pi',
+	'dump-database-info-more' => 'Për piasì <a href="http://www.wikia.com/wiki/Wikia:Database_download">varda</a> për savèjne ëd pi',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -250,7 +278,7 @@ $messages['pt-br'] = array(
 	'dump-database-request-info' => '(Descarregamentos geralmente são gerados semanalmente)',
 	'dump-database-request-submit' => 'Enviar pedido',
 	'dump-database-request-requested' => 'Pedido para descarregamento do banco de dados enviado',
-	'dump-database-info-more' => 'Por favor <a href="http://community.wikia.com/wiki/Help:Database_download">veja isto</a> para mais informações',
+	'dump-database-info-more' => 'Por favor <a href="http://www.wikia.com/wiki/Wikia:Database_download">veja isto</a> para mais informações',
 );
 
 /** Russian (Русский)
@@ -268,7 +296,7 @@ $messages['ru'] = array(
 	'dump-database-request-info' => '(Дампы обычно генерируются еженедельно)',
 	'dump-database-request-submit' => 'Отправить запрос',
 	'dump-database-request-requested' => 'Запрос на дамп базы данных отправлен',
-	'dump-database-info-more' => 'Пожалуйста, <a href="http://community.wikia.com/wiki/Help:Database_download">см. дополнительные сведения</a>',
+	'dump-database-info-more' => 'Пожалуйста, <a href="http://www.wikia.com/wiki/Wikia:Database_download">см. дополнительные сведения</a>',
 );
 
 /** Swedish (Svenska)
