@@ -20,6 +20,7 @@ $messages['en'] = array(
 	'article-comments-login' => "<a href=\"$1\">Log in</a> to comment",
 	'article-comments-zero-comments' => 'No comments yet!',
 	'article-comments-toc-item' => 'Comments',
+	'article-comments-comment-cannot-add' => 'You cannot add a comment to the article.',
 	'enotif_subject_article_comment' => '$PAGEEDITOR has commented on "$PAGETITLE" on {{SITENAME}}',
 	'enotif_body_article_comment' => 'Dear $WATCHINGUSERNAME,
 
