@@ -1,6 +1,28 @@
 /* Answers specific CSS goes here, overriding monaco css, and adding any additional */
 
 
+/* TESTING tabs */
+
+#search_field {
+	position: relative;
+}
+
+#search_box {
+	display: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -37,7 +59,13 @@
 }
 
 .activityfeed img.sprite {
-       background:transparent url(http://images1.wikia.nocookie.net/test123/images/d/d7/Sprite.png?20091113)
+	display: none;
+/*	background:transparent url(http://images1.wikia.nocookie.net/test123/images/d/d7/Sprite.png?20091113)
+*/
+}
+
+#sidebar_1 {
+	text-align: right;
 }
 
 #search_button {
@@ -169,7 +197,7 @@ body.mainpage .firstHeading { display:none; }
 /* ask box */
 #answers_ask input.header_field {
 	font-size:16pt;
-	width:384px;
+	width:382px;
 	border:1px solid #A5BF5E;
 }
 
@@ -342,6 +370,7 @@ body.mainpage .firstHeading { display:none; }
 
 #answer_edit_link, #question_edit_link {
 	float: right;
+	font-size: 90%;
 }
 
 #answer_edit_link a:link, #question_edit_link a:link { color:#bbb; }
