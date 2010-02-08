@@ -699,6 +699,16 @@ $messages['ia'] = array(
 	'multiwikirecords' => '$1 wikis trovate',
 );
 
+/** Japanese (日本語)
+ * @author Tommy6
+ */
+$messages['ja'] = array(
+	'multiwikifinder' => '複数ウィキでのタイトルの検索',
+	'multiwikifindpagenames' => 'ページ名を検索',
+	'multiwikienterpagename' => 'ページ名を入力:',
+	'multiwikirecords' => '$1 のウィキが見つかりました',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -1047,6 +1057,28 @@ $messages['pms'] = array(
 	'multiwikirecords' => 'trovà $1 wiki',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Jesielt
+ */
+$messages['pt-br'] = array(
+	'multidelete_brazilian_portuguese_wikis' => 'todas as wikis em português do Brasil',
+	'multidelete_hebrew_wikis' => 'todas as wikis em hebraico',
+	'multidelete_chinese_wikis' => 'todas as wikis em chinês',
+	'multidelete_polish_wikis' => 'todas as wikis em polonês',
+	'multidelete_czech_wikis' => 'todas as wikis em checo',
+	'multidelete_portuguese_wikis' => 'todas as wikis em português europeu',
+	'multidelete_dutch_wikis' => 'todas as wikis em holandês/neerlandês',
+	'multidelete_italian_wikis' => 'todas as wikis em italiano',
+	'multidelete_russian_wikis' => 'todas as wikis em russo',
+	'multidelete_english_wikis' => 'todas as wikis em inglês',
+	'multidelete_japanese_wikis' => 'todas as wikis em japonês',
+	'multidelete_finnish_wikis' => 'todas as wikis em finlandês',
+	'multidelete_spanish_wikis' => 'todas as wikis em espanhol',
+	'multidelete_french_wikis' => 'todas as wikis em francês',
+	'multidelete_swedish_wikis' => 'todas as wikis em sueco',
+	'multidelete_german_wikis' => 'todas as wikis em alemão',
+);
+
 /** Tarandíne (Tarandíne)
  * @author Joetaras
  */
@@ -1060,10 +1092,14 @@ $messages['roa-tara'] = array(
 $messages['ru'] = array(
 	'multiwikiedit_caption' => 'Список страниц',
 	'multiwikiedit_minoredit_caption' => 'Малая правка',
+	'multiwikiedit_autosummary_caption' => 'Включить автоматическое описание изменений',
+	'multiwikiedit_summary_text' => 'Поле описания изменений',
 	'multiwikiedit_edit_options' => 'Настройки редактирования',
 	'multidelete_button' => 'УДАЛИТЬ',
 	'multidelete_caption' => 'Список страниц',
 	'multidelete_reason' => 'Причина удаления',
+	'multidelete_select_all' => 'Выбрать все',
+	'multidelete_page' => 'Страницы для удаления',
 	'multidelete_this_wiki' => 'эта вики',
 	'multidelete_all_wikis' => 'все вики',
 	'multidelete_selected_wikis' => 'выбранные вики',

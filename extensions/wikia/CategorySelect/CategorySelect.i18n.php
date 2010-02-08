@@ -68,21 +68,33 @@ $messages['be-tarask'] = array(
 	'categoryselect-button-cancel' => 'Адмяніць',
 );
 
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'categoryselect-button-save' => 'Съхраняване',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
 $messages['br'] = array(
+	'categoryselect-code-view' => "Gwelet ar c'hod",
 	'categoryselect-visual-view' => 'Sell dre gwelet',
 	'categoryselect-infobox-caption' => 'Dibarzhioù ar rummad',
 	'categoryselect-infobox-category' => 'Roit anv ar rummad :',
+	'categoryselect-infobox-sortkey' => 'Lakaat ar pennad-mañ er rummad "$1" dindan an anv da-heul :',
 	'categoryselect-addcategory-button' => 'Ouzhpennañ rummadoù',
 	'categoryselect-suggest-hint' => 'Pouezit war "Enter" evit echuiñ',
+	'categoryselect-tooltip' => "'''Nevez!''' Barenn ostilhoù evit diuzañ rummadoù. Amprouit anezhi pe lennit [[Help:CategorySelect|ar sikour]] evit gouzout hiroc'h",
 	'categoryselect-edit-summary' => 'Ouzhpennañ ur rummad',
+	'categoryselect-empty-name' => 'Reiñ a ra anv ar rummad (al lodenn skrivet a-raok |)',
 	'categoryselect-button-save' => 'Enrollañ',
 	'categoryselect-button-cancel' => 'Nullañ',
 	'categoryselect-error-not-exist' => "N'eus ket eus ar pennad [id=$1].",
 	'categoryselect-error-user-rights' => 'Fazi en aotreoù implijerien.',
 	'categoryselect-error-db-locked' => 'Stanket eo ar bank roadennoù',
+	'tog-disablecategoryselect' => 'Diweredekaat balizadur ar rummadoù',
 );
 
 /** German (Deutsch) */
@@ -209,6 +221,30 @@ $messages['hu'] = array(
 	'categoryselect-button-cancel' => 'Mégse',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'categoryselect-code-view' => 'Vista de codice',
+	'categoryselect-visual-view' => 'Vista graphic',
+	'categoryselect-infobox-caption' => 'Optiones de categoria',
+	'categoryselect-infobox-category' => 'Entra le nomine del categoria:',
+	'categoryselect-infobox-sortkey' => 'Alphabetisar iste articulo in le categoria "$1" sub le nomine:',
+	'categoryselect-addcategory-button' => 'Adder categoria',
+	'categoryselect-suggest-hint' => 'Preme Enter pro finir',
+	'categoryselect-tooltip' => "'''Nove!''' Instrumentario pro seliger categorias. Proba lo o vide [[Help:CategorySelect|le adjuta]] pro leger plus",
+	'categoryselect-unhandled-syntax' => 'Syntaxe incognite detegite - impossibile retornar al vista graphic.',
+	'categoryselect-edit-summary' => 'Addition de categorias…',
+	'categoryselect-empty-name' => 'Entra le nomine del categoria (le parte ante "|")',
+	'categoryselect-button-save' => 'Salveguardar',
+	'categoryselect-button-cancel' => 'Cancellar',
+	'categoryselect-error-not-exist' => 'Le articulo [id=$1] non existe.',
+	'categoryselect-error-user-rights' => 'Error de derectos de usator.',
+	'categoryselect-error-db-locked' => 'Le base de datos es blocate.',
+	'categoryselect-desc' => 'Provide un interfacie pro gerer le categorias in un articulo sin modificar tote le articulo.',
+	'tog-disablecategoryselect' => 'Disactivar selection de categorias',
+);
+
 /** Japanese (日本語)
  * @author Tommy6
  */
@@ -258,6 +294,7 @@ $messages['mk'] = array(
 );
 
 /** Dutch (Nederlands)
+ * @author McDutchie
  * @author Siebrand
  */
 $messages['nl'] = array(
@@ -265,7 +302,7 @@ $messages['nl'] = array(
 	'categoryselect-visual-view' => 'Visuele weergave',
 	'categoryselect-infobox-caption' => 'Categoriemogelijkheden',
 	'categoryselect-infobox-category' => 'Geef de naam van een categorie op:',
-	'categoryselect-infobox-sortkey' => 'Rngschik deze pagina in de categoriepagina "$1" onder:',
+	'categoryselect-infobox-sortkey' => 'Rangschik deze pagina in de categoriepagina "$1" onder:',
 	'categoryselect-addcategory-button' => 'Categorie toevoegen',
 	'categoryselect-suggest-hint' => 'Druk "Enter" als u klaar bent',
 	'categoryselect-tooltip' => "'''Nieuw!''' Werkbalk voor categorielabels.
@@ -312,10 +349,24 @@ $messages['pms'] = array(
  * @author Jesielt
  */
 $messages['pt-br'] = array(
+	'categoryselect-code-view' => 'Ver em modo de código',
+	'categoryselect-visual-view' => 'Ver botões',
+	'categoryselect-infobox-caption' => 'Opções de categoria',
+	'categoryselect-infobox-category' => 'Dê o nome da categoria:',
+	'categoryselect-infobox-sortkey' => 'Classifique este artigo na categoria "$1" com o nome de:',
 	'categoryselect-addcategory-button' => 'Adicione uma categoria',
 	'categoryselect-suggest-hint' => 'Pressione "Enter" depois de digitar',
+	'categoryselect-tooltip' => "'''Novidade!''' Barra de ferramentas para a aplicação de categorias. Experimente ou veja a [[Help:CategorySelect|página de ajuda]] para aprender mais",
+	'categoryselect-unhandled-syntax' => 'Sintaxe não manipulada detectada - impossível voltar ao modo visual.',
+	'categoryselect-edit-summary' => 'Adicionando categorias',
+	'categoryselect-empty-name' => 'Coloque o nome da categoria (parte anterior a I)',
 	'categoryselect-button-save' => 'Salvar',
 	'categoryselect-button-cancel' => 'Cancelar',
+	'categoryselect-error-not-exist' => 'O artigo [id=$1] não existe.',
+	'categoryselect-error-user-rights' => 'Erro nos direitos de usuário.',
+	'categoryselect-error-db-locked' => 'O banco de dados está bloqueado.',
+	'categoryselect-desc' => 'Disponibiliza uma interface para a administração de categorias em um artigo sem necessitar editar o artigo todo.',
+	'tog-disablecategoryselect' => 'Desabilitar os botões de aplicação de categoria',
 );
 
 /** Russian (Русский)
@@ -355,8 +406,13 @@ $messages['te'] = array(
  * @author Prima klasy4na
  */
 $messages['uk'] = array(
+	'categoryselect-code-view' => 'Перегляд коду',
+	'categoryselect-infobox-caption' => 'Параметри категорії',
 	'categoryselect-infobox-category' => 'Вкажіть назву категорії:',
 	'categoryselect-addcategory-button' => 'Додати категорію',
+	'categoryselect-suggest-hint' => 'Натисніть Enter, коли закінчите',
+	'categoryselect-edit-summary' => 'Додавання категорій',
+	'categoryselect-empty-name' => 'Введіть назву категорії (частину до |)',
 	'categoryselect-button-save' => 'Зберегти',
 	'categoryselect-button-cancel' => 'Скасувати',
 	'categoryselect-error-not-exist' => 'Статті [id=$1] не існує.',

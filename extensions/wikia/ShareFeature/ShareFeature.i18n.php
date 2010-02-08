@@ -119,6 +119,15 @@ $messages['nn'] = array(
 	'sf-link-tooltip' => 'Del denne artikkelen med venene dine',
 );
 
+/** Occitan (Occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'sf-link' => 'Partejar aqueste article',
+	'sf-link-popup' => 'Partejar aqueste article',
+	'sf-link-tooltip' => 'Partejar aqueste article amb tos amics',
+);
+
 /** Polish (Polski) */
 $messages['pl'] = array(
 	'sf-link' => 'Podziel się tym artykułem',
@@ -133,6 +142,15 @@ $messages['pms'] = array(
 	'sf-link' => "Condivide st'artìcol-sì",
 	'sf-link-popup' => "Condivide st'artìcol-sì",
 	'sf-link-tooltip' => "Condivide st'artìcol-sì con ij sò amis",
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Jesielt
+ */
+$messages['pt-br'] = array(
+	'sf-link' => 'Compartilhe este artigo',
+	'sf-link-popup' => 'Compartilhe este artigo',
+	'sf-link-tooltip' => 'Compartilhe este artigo com seus amigos',
 );
 
 /** Russian (Русский)

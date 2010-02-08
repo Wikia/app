@@ -37,6 +37,14 @@ $messages['es'] = array(
 	'theorytab-parent-title' => 'Articulo Principal',
 );
 
+/** Finnish (Suomi)
+ * @author Centerlink
+ */
+$messages['fi'] = array(
+	'theorytab-title' => 'Teoria',
+	'theorytab-parent-title' => 'Ylimmän tason artikkeli',
+);
+
 /** French (Français) */
 $messages['fr'] = array(
 	'theorytab-title' => 'Theories',

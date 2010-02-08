@@ -24,7 +24,9 @@ $messages['qqq'] = array(
 	'interwikidispatcher' => 'Special page name as displayed on Special:SpecialPages and page title of special page.',
 );
 
-/** Afrikaans (Afrikaans) */
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
 $messages['af'] = array(
 	'interwikidispatcher' => 'Interwikiverdeler',
 );
@@ -40,21 +42,25 @@ $messages['be-tarask'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
-	'interwikidispatcher' => 'InterwikiDispatcher',
+	'interwikidispatcher' => 'Interwiki dispatcher',
+	'interwikidispatcher-desc' => 'Diskoulmañ a ra al liammoù etrewiki evit reduiñ an adkasoù Apache',
 );
 
 /** Spanish (Español)
  * @author Translationista
  */
 $messages['es'] = array(
-	'interwikidispatcher' => 'DespachadorInterwiki',
+	'interwikidispatcher' => 'Despachador Interwiki',
+	'interwikidispatcher-desc' => 'Resuelve los vínculos interwiki para reducir las redirecciones Apache',
 );
 
 /** French (Français)
  * @author IAlex
+ * @author Peter17
  */
 $messages['fr'] = array(
 	'interwikidispatcher' => 'Répartisseur interwiki',
+	'interwikidispatcher-desc' => 'Résout les liens interwiki pour réduire les redirections Apache',
 );
 
 /** Galician (Galego)
@@ -62,6 +68,7 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'interwikidispatcher' => 'Repartidor interwiki',
+	'interwikidispatcher-desc' => 'Soluciona as ligazóns interwiki para reducir as redireccións Apache',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -71,14 +78,20 @@ $messages['hsb'] = array(
 	'interwikidispatcher' => 'InterwikiDispatcher',
 );
 
-/** Interlingua (Interlingua) */
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
 $messages['ia'] = array(
 	'interwikidispatcher' => 'Repartitor interwiki',
+	'interwikidispatcher-desc' => 'Resolve ligamines interwiki pro reducer redirectiones de Apache',
 );
 
-/** Luxembourgish (Lëtzebuergesch) */
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
 $messages['lb'] = array(
-	'interwikidispatcher' => 'InterwikiDispatcher',
+	'interwikidispatcher' => 'Interwiki Dispatcher',
+	'interwikidispatcher-desc' => 'Léist interwiki-Linke fir Apache-Viruleedungen ze reduzéieren',
 );
 
 /** Macedonian (Македонски)
@@ -86,6 +99,7 @@ $messages['lb'] = array(
  */
 $messages['mk'] = array(
 	'interwikidispatcher' => 'Испраќач на интервикија',
+	'interwikidispatcher-desc' => 'Решава интервики-врски за да ги намали пренасочувањата на Apache',
 );
 
 /** Dutch (Nederlands)
@@ -96,25 +110,35 @@ $messages['nl'] = array(
 	'interwikidispatcher-desc' => 'Lost interwikiverwijzingen op om Apachedoorverwijzingen te verminderen',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'interwikidispatcher-desc' => 'Løser interwikilenker for å redusere Apache-omdirigeringer',
+);
+
 /** Occitan (Occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
 	'interwikidispatcher' => 'Repartidor interwiki',
+	'interwikidispatcher-desc' => 'Resòlv los ligams interwiki per redusir las redireccions Apache',
 );
 
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  */
 $messages['pms'] = array(
-	'interwikidispatcher' => 'Ripartagiator antërwiki',
+	'interwikidispatcher' => 'Partagiador antërwiki',
+	'interwikidispatcher-desc' => "A arzòlv j'anliure antërwiki për arduve le ridiression d'Apache",
 );
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Daemorris
+ * @author Jesielt
  */
 $messages['pt-br'] = array(
-	'interwikidispatcher' => 'DespachadorInterwiki',
+	'interwikidispatcher' => 'Despachador Interwiki',
 );
 
 /** Russian (Русский)
@@ -122,5 +146,6 @@ $messages['pt-br'] = array(
  */
 $messages['ru'] = array(
 	'interwikidispatcher' => 'Интервики-диспетчер',
+	'interwikidispatcher-desc' => 'Разрешает интервики ссылки для сокращения перенаправлений Apache',
 );
 

@@ -36,6 +36,14 @@ $messages['br'] = array(
 	'searchranktracker-serach-phrase-required' => 'Klask ar frazennoù goulennet',
 );
 
+/** Spanish (Español)
+ * @author Translationista
+ */
+$messages['es'] = array(
+	'searchranktracker' => ' Rastreador de clasificación de búsquedas',
+	'searchranktracker-add-new-entry' => 'Agregar una nueva entrada',
+);
+
 /** French (Français)
  * @author IAlex
  * @author Peter17

@@ -34,6 +34,14 @@ $messages['af'] = array(
 	'action_panel_categorize_success' => 'U kategorieë is bygevoeg.',
 );
 
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'action_panel_categories_summary' => 'Добавяне на категории',
+	'action_panel_categorize_success' => 'Вашите категории бяха добавени.',
+);
+
 /** Breton (Brezhoneg)
  * @author Gwenn-Ael
  * @author Y-M D
@@ -51,10 +59,11 @@ $messages['br'] = array(
 );
 
 /** German (Deutsch)
+ * @author McDutchie
  * @author MovGP0
  */
 $messages['de'] = array(
-	'action_panel_edit_title' => 'Antwort',
+	'action_panel_edit_title' => 'Antworten',
 	'action_panel_title' => 'Quick Action Panel',
 	'action_panel_categorize' => 'Kategorie',
 	'action_panel_categorize_help' => 'Eine Kategorie pro Zeile',
@@ -63,6 +72,21 @@ $messages['de'] = array(
 	'action_panel_rename_success' => 'Die Frage wurde umformuliert.',
 	'action_panel_categorize_success' => 'Kategorien hinzugefügt',
 	'actionpanel-desc' => 'Ein praktisches Popup-Fenster, welches die Kategorisierung, Umbenennung und Bearbeitung von Artikeln ermöglicht.',
+);
+
+/** Spanish (Español)
+ * @author Bola
+ */
+$messages['es'] = array(
+	'action_panel_edit_title' => 'Responder',
+	'action_panel_title' => 'Panel de Acción Rápida',
+	'action_panel_categorize' => 'Categorizar',
+	'action_panel_categorize_help' => 'Una categoría por línea',
+	'action_panel_categories_summary' => 'Agregar Categorías',
+	'action_panel_save_success' => 'Tu artículo ha sido guardado.',
+	'action_panel_rename_success' => 'Tu artículo ha sido renombrado.',
+	'action_panel_categorize_success' => 'Tus categorías han sido agregadas.',
+	'actionpanel-desc' => 'Una ventana emergente que te permite categorizar, renombrar y editar páginas.',
 );
 
 /** Finnish (Suomi)
@@ -81,9 +105,10 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author Jean-Frédéric
+ * @author McDutchie
  */
 $messages['fr'] = array(
-	'action_panel_edit_title' => 'Réponse',
+	'action_panel_edit_title' => 'Répondre',
 	'action_panel_title' => 'Panneau d’action rapide',
 	'action_panel_categorize' => 'Catégoriser',
 	'action_panel_categorize_help' => 'Une catégorie par ligne',
@@ -138,6 +163,21 @@ $messages['hu'] = array(
 	'action_panel_rename_success' => 'A szócikk át lett nevezve',
 	'action_panel_categorize_success' => 'A kategóriák hozzá lettek adva.',
 	'actionpanel-desc' => 'Egy hasznos felugró ablak, ami segít a szócikkek kategorizálásában, átnevezésében és szerkesztésében',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'action_panel_edit_title' => 'Responder',
+	'action_panel_title' => 'Pannello de action rapide',
+	'action_panel_categorize' => 'Categorisar',
+	'action_panel_categorize_help' => 'Un categoria per linea',
+	'action_panel_categories_summary' => 'Adder categorias',
+	'action_panel_save_success' => 'Le articulo ha essite salveguardate.',
+	'action_panel_rename_success' => 'Le articulo ha essite renominate.',
+	'action_panel_categorize_success' => 'Le categorias ha essite addite.',
+	'actionpanel-desc' => 'Un fenestra pop-up practic que permitte categorisar, renominar e modificar paginas',
 );
 
 /** Macedonian (Македонски)
@@ -221,10 +261,15 @@ $messages['pt'] = array(
  * @author Jesielt
  */
 $messages['pt-br'] = array(
+	'action_panel_edit_title' => 'Responder',
+	'action_panel_title' => 'Painel de Operações',
+	'action_panel_categorize' => 'Categorizar',
 	'action_panel_categorize_help' => 'Uma categoria por linha',
 	'action_panel_categories_summary' => 'Adicione uma categoria',
 	'action_panel_save_success' => 'O seu artigo foi salvo.',
 	'action_panel_rename_success' => 'O seu artigo foi renomeado.',
+	'action_panel_categorize_success' => 'As categorias foram adicionadas',
+	'actionpanel-desc' => 'um painel flutuante que permite categorizar, editar e alterar o nome de artigos',
 );
 
 /** Russian (Русский)

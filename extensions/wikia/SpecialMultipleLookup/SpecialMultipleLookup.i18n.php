@@ -104,6 +104,23 @@ $messages['es'] = array(
 	'multilookuplastedit' => 'Última edición desde esta IP:',
 );
 
+/** Finnish (Suomi)
+ * @author Centerlink
+ * @author Crt
+ */
+$messages['fi'] = array(
+	'multilookupgo' => 'Siirry',
+	'multilookupnotspecify' => 'Et määrittänyt IP-osoitetta vielä',
+	'multilookupnext' => 'seuraava',
+	'multilookupprevious' => 'edellinen',
+	'multilookupnbrresult' => 'Tulosten lukumäärä:',
+	'multilookupinvalidresults' => 'Virheelliset tulokset!',
+	'multilookupnoresultfound' => 'Tulosta ei löytynyt!',
+	'multilookupwiki' => 'Wiki',
+	'multilookupdetails' => 'Lisätietoja',
+	'multilookuplastedit' => 'Viimeisin muokkaus tästä IP-osoitteesta:',
+);
+
 /** French (Français)
  * @author IAlex
  */
@@ -225,6 +242,19 @@ Controleer het opgegeven IP-adres; mogelijk hebt u een invoerfout gemaakt.</p>',
 	'multilookuplastedit' => 'Laatste bewerking van dit IP-adres:',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'multilookupnext' => 'neste',
+	'multilookupprevious' => 'forrige',
+	'multilookupnbrresult' => 'Antall resultat:',
+	'multilookupinvalidresults' => 'Ugyldige resultat!',
+	'multilookupnoresultfound' => 'Ingen resultat funnet!',
+	'multilookupwiki' => 'Wiki',
+	'multilookupdetails' => 'Se detaljer',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
@@ -250,12 +280,24 @@ $messages['pms'] = array(
 
 /** Russian (Русский)
  * @author Lockal
+ * @author Александр Сигачёв
  */
 $messages['ru'] = array(
+	'multilookup' => 'Множественный поиск',
+	'multilookupstitle' => 'Множественный поиск',
+	'multilookupselectuser' => 'Поиск учётных записей, относящихся к одному IP, сразу в нескольких вики.',
+	'multilookupgo' => 'Перейти',
+	'multilookupnotspecify' => 'Вы пока не указали IP-адрес',
 	'multilookupnext' => 'след.',
 	'multilookupprevious' => 'пред.',
+	'multilookupnbrresult' => 'Количество результатов:',
+	'multilookupinvalidresults' => 'Ошибка в результатах!',
 	'multilookupnoresultfound' => 'Ничего не найдено!',
 	'multilookupwiki' => 'Вики',
+	'multilookuplink' => 'Ссылки на вклад',
+	'multilookupdetails' => 'См. подробнее',
+	'multilookuplistwikiainfo' => 'Список вики, статьи которых были отредактированы участниками с IP: <b>$1</b>',
+	'multilookupinvaliduser' => '<p class="error">IP «<b>$1</b>» не существует. Проверьте указанный IP на возможные опечатки.</p>',
 	'multilookuplastedit' => 'Последняя правка с этого IP-адреса:',
 );
 

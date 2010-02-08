@@ -50,6 +50,13 @@ $messages['es'] = array(
 	'mostpopulararticles' => 'Páginas más populares',
 );
 
+/** Finnish (Suomi)
+ * @author Centerlink
+ */
+$messages['fi'] = array(
+	'mostpopulararticles' => 'Suosituimmat artikkelit (tietokannasta)',
+);
+
 /** French (Français)
  * @author Peter17
  */
@@ -83,6 +90,13 @@ $messages['hu'] = array(
  */
 $messages['ia'] = array(
 	'mostpopulararticles' => 'Articulos le plus popular (ex le base de datos)',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Kenrick95
+ */
+$messages['id'] = array(
+	'mostpopulararticles' => 'Artikel paling populer (dari basis data)',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

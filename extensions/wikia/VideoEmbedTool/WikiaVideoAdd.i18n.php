@@ -76,11 +76,20 @@ $messages['eu'] = array(
 );
 
 /** Finnish (Suomi)
+ * @author Centerlink
+ * @author Crt
  * @author Silvonen
  */
 $messages['fi'] = array(
 	'wva-success' => 'Videosivun $1 lisääminen onnistui.',
 	'wva-success-replaced' => 'Videosivun $1 korvaaminen onnistui.',
+	'wva-failure' => 'Toimita kelvolliset parametrit.',
+	'wva-name' => 'Kirjoita nimi:',
+	'wva-url' => 'Anna verkko-osoite:',
+	'wva-add' => 'Lisää',
+	'wva-title' => 'Lisää nopeasti video verkko-osoitteesta',
+	'wva-notlogged' => 'Sinun täytyy kirjautua sisään tai rekisteröityä, jotta voit lisätä videoita.',
+	'wva-notallowed' => 'Et voi lisätä videoita tälle wikisivulle.',
 );
 
 /** French (Français) */

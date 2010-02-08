@@ -37,3 +37,267 @@ $messages['en'] = array(
 	'cathub-prev'                           => '&larr; Previous',
 	'cathub-next'                           => 'Next &rarr;',
 );
+
+/** Breton (Brezhoneg)
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'cathub-progbar-mouseover-answered' => '$1% respontet',
+	'cathub-progbar-mouseover-not-answered' => "$1% direspontet evit c'hoazh",
+	'cathub-progbar-label-answered' => 'Respontet',
+	'cathub-progbar-label-unanswered' => 'Direspontet',
+	'cathub-progbar-none-done' => "N'eus goulenn ebet bet respontet outo evit poent",
+	'cathub-progbar-all-done' => "Ur respont a zo d'an holl goulennoù !",
+	'cathub-progbar-allmost-done' => '$1 goulenn{{PLURAL:$1||}} direspontet a chom !',
+	'cathub-no-unanswered-questions' => "N'eus goulenn hep respont ebet da welet er mare-mañ.",
+	'cathub-no-answered-questions' => "N'eus goulenn bet respontet outo ebet da welet er mare-mañ.",
+	'cathub-top-contributors' => 'Ar re a gemer perzh ar muiañ er rummad-mañ',
+	'cathub-top-contribs-all-time' => 'A holl viskoaz',
+	'cathub-top-contribs-recent' => 'E-pad ar $1 devezh{{PLURAL:$1||}} ziwezhañ',
+	'cathub-question-asked-ago' => 'goulennet $1 $2',
+	'cathub-question-answered-ago' => 'en deus respontet $1 $2',
+	'cathub-question-asked-by' => 'gant $1',
+	'cathub-anon-username' => 'un implijer fri-furch',
+	'cathub-answer-heading' => 'Respont',
+	'cathub-button-answer' => 'Respont',
+	'cathub-button-improve-answer' => 'Gwelaat ar respont',
+	'cathub-button-rephrase' => 'adfrazenniñ',
+	'cathub-edit-success' => 'Enrollet eo bet ho respont',
+	'cathub-prev' => '&larr; A-raok',
+	'cathub-next' => 'Da-heul &rarr;',
+);
+
+/** Finnish (Suomi)
+ * @author Centerlink
+ * @author Crt
+ */
+$messages['fi'] = array(
+	'cathub-progbar-mouseover-answered' => '$1 % vastattu',
+	'cathub-progbar-mouseover-not-answered' => '$1 % ei ole vielä vastattu',
+	'cathub-progbar-label-answered' => 'Vastattu',
+	'cathub-progbar-label-unanswered' => 'Vastaamaton',
+	'cathub-progbar-none-done' => 'Kysymyksiin ei ole vielä vastattu',
+	'cathub-progbar-all-done' => 'Kaikkiin kysymyksiin on vastattu.',
+	'cathub-progbar-allmost-done' => '$1 {{PLURAL:$1|vastaamaton kysymys|vastaamatonta kysymystä}} jäljellä.',
+	'cathub-no-unanswered-questions' => 'Tällä hetkellä ei ole yhtään vastaamatonta kysymystä nähtävänä.',
+	'cathub-no-answered-questions' => 'Tällä hetkellä ei ole yhtään vastattua kysymystä nähtävänä.',
+	'cathub-top-contributors' => 'Ahkerimmat muokkaajat tässä luokassa',
+	'cathub-answer-heading' => 'Vastaus',
+	'cathub-button-answer' => 'Vastaus',
+	'cathub-button-improve-answer' => 'Paranna vastausta',
+	'cathub-edit-success' => 'Vastauksesi on tallennettu',
+	'cathub-prev' => '&larr; Edellinen',
+	'cathub-next' => 'Seuraava &rarr;',
+);
+
+/** French (Français)
+ * @author IAlex
+ */
+$messages['fr'] = array(
+	'cathub-desc' => "Extension pour utiliser les pages de catégories en tant que centre d'activité. Conçu pour [http://answers.wikia.com answers.wikia.com]",
+	'cathub-progbar-mouseover-answered' => '$1 % répondu',
+	'cathub-progbar-mouseover-not-answered' => '$1 % sans réponse',
+	'cathub-progbar-label-answered' => 'Répondu',
+	'cathub-progbar-label-unanswered' => 'Sans réponse',
+	'cathub-progbar-none-done' => "Aucune question n'a encore de réponse",
+	'cathub-progbar-all-done' => 'Toutes les questions ont un réponse !',
+	'cathub-progbar-allmost-done' => 'Il reste $1 {{PLURAL:$1|question|questions}} sans réponse !',
+	'cathub-no-unanswered-questions' => "Il n'y a pas de questions sans réponse à voir en ce moment.",
+	'cathub-no-answered-questions' => "Il n'y a pas de questions répondues à voir en ce moment.",
+	'cathub-top-contributors' => 'Meilleurs contributeurs à cette catégorie',
+	'cathub-top-contribs-all-time' => 'De tous les temps',
+	'cathub-top-contribs-recent' => 'Dans {{PLURAL:$1|le dernier jour|les $1 derniers jours}}',
+	'cathub-question-asked-ago' => 'a demandé $1 $2',
+	'cathub-question-answered-ago' => 'a répondu $1 $2',
+	'cathub-question-asked-by' => 'par $1',
+	'cathub-anon-username' => 'un utilisateur curieux',
+	'cathub-answer-heading' => 'Réponse',
+	'cathub-button-answer' => 'Répondre',
+	'cathub-button-improve-answer' => 'Améliorer la réponse',
+	'cathub-button-rephrase' => 'reformuler',
+	'cathub-edit-success' => 'Votre réponse a été sauvegardée',
+	'cathub-prev' => '&larr; Précédent',
+	'cathub-next' => 'Suivant &rarr;',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'cathub-desc' => 'Extension pro transformar paginas de categoria in un vista del categoria como centro de activitate. Designate pro [http://answers.wikia.com answers.wikia.com].',
+	'cathub-progbar-mouseover-answered' => '$1% respondite',
+	'cathub-progbar-mouseover-not-answered' => '$1% non ancora respondite',
+	'cathub-progbar-label-answered' => 'Respondite',
+	'cathub-progbar-label-unanswered' => 'Non respondite',
+	'cathub-progbar-none-done' => 'Nulle question ancora respondite',
+	'cathub-progbar-all-done' => 'Tote le questiones respondite!',
+	'cathub-progbar-allmost-done' => 'Il resta $1 {{PLURAL:$1|question|questiones}} a responder!',
+	'cathub-no-unanswered-questions' => 'Il non ha questiones non respondite a vider in iste momento.',
+	'cathub-no-answered-questions' => 'Il non ha questiones respondite a vider in iste momento.',
+	'cathub-top-contributors' => 'Principal contributores a iste categoria',
+	'cathub-top-contribs-all-time' => 'De tote le tempores',
+	'cathub-top-contribs-recent' => 'In le ultime $1 {{PLURAL:$1|die|dies}}',
+	'cathub-question-asked-ago' => 'demandava $1 $2',
+	'cathub-question-answered-ago' => 'respondeva $1 $2',
+	'cathub-question-asked-by' => 'per $1',
+	'cathub-anon-username' => 'un usator curiose',
+	'cathub-answer-heading' => 'Responsa',
+	'cathub-button-answer' => 'Responder',
+	'cathub-button-improve-answer' => 'Meliorar responsa',
+	'cathub-button-rephrase' => 'reformular',
+	'cathub-edit-success' => 'Tu responsa ha essite salveguardate',
+	'cathub-prev' => '&larr; Precedente',
+	'cathub-next' => 'Sequente &rarr;',
+);
+
+/** Japanese (日本語)
+ * @author Tommy6
+ */
+$messages['ja'] = array(
+	'cathub-desc' => 'http://answers.wikia.com/ の編集者や閲覧者のためにデザインされた、カテゴリページを活動のハブとするための拡張機能。',
+	'cathub-progbar-mouseover-answered' => '$1%が回答済み',
+	'cathub-progbar-mouseover-not-answered' => '$1%が回答待ち',
+	'cathub-progbar-label-answered' => '回答済み',
+	'cathub-progbar-label-unanswered' => '回答待ち',
+	'cathub-progbar-none-done' => '回答済みの質問はまだ一つもありません',
+	'cathub-progbar-all-done' => '全ての質問が回答済みです！',
+	'cathub-progbar-allmost-done' => '回答待ちの質問は残り$1件です！',
+	'cathub-no-unanswered-questions' => '回答待ちの質問は一つもありません。',
+	'cathub-no-answered-questions' => '回答済みの質問は一つもありません。',
+	'cathub-top-contributors' => 'このカテゴリのベスト回答者',
+	'cathub-top-contribs-all-time' => '全期間',
+	'cathub-top-contribs-recent' => '最近$1日間',
+	'cathub-question-asked-ago' => '$1に質問 - $2',
+	'cathub-question-answered-ago' => '$1に回答 - $2',
+	'cathub-question-asked-by' => 'by $1',
+	'cathub-anon-username' => '匿名ユーザー',
+	'cathub-answer-heading' => '回答',
+	'cathub-button-answer' => '回答する',
+	'cathub-button-improve-answer' => '回答を更新する',
+	'cathub-button-rephrase' => '言い回しを変える',
+	'cathub-edit-success' => '回答が保存されました',
+	'cathub-prev' => '&larr; 前',
+	'cathub-next' => '次 &rarr;',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'cathub-desc' => 'Додаток со кој категориските страници се прикажуваат како средишта на активност. Изготвено за [http://answers.wikia.com answers.wikia.com]',
+	'cathub-progbar-mouseover-answered' => '$1% одговорени',
+	'cathub-progbar-mouseover-not-answered' => '$1% сè уште неодговорени',
+	'cathub-progbar-label-answered' => 'Одговорени',
+	'cathub-progbar-label-unanswered' => 'Неодговорени',
+	'cathub-progbar-none-done' => 'Сè уште нема одговори на прашањата',
+	'cathub-progbar-all-done' => 'Сите прашања се одговорени!',
+	'cathub-progbar-allmost-done' => 'Има уште $1 {{PLURAL:$1|неодговорено прашање|неодговорени прашања}}!',
+	'cathub-no-unanswered-questions' => 'Моментално нема неодговорени прашања.',
+	'cathub-no-answered-questions' => 'Моментално нема одговорени прашања.',
+	'cathub-top-contributors' => 'Најкотирани учесници во оваа категорија',
+	'cathub-top-contribs-all-time' => 'На сите времиња',
+	'cathub-top-contribs-recent' => '{{PLURAL:$1|Во последниот $1 ден|Во последните $1 дена}}',
+	'cathub-question-asked-ago' => 'прашано $1 $2',
+	'cathub-question-answered-ago' => 'одговорено $1 $2',
+	'cathub-question-asked-by' => 'од $1',
+	'cathub-anon-username' => 'љубопитен корисник',
+	'cathub-answer-heading' => 'Одговор',
+	'cathub-button-answer' => 'Одговори',
+	'cathub-button-improve-answer' => 'Дај подобар одговор',
+	'cathub-button-rephrase' => 'искажи поинаку',
+	'cathub-edit-success' => 'Вашиот одговор е зачуван',
+	'cathub-prev' => '&larr; Претходно',
+	'cathub-next' => 'Следно &rarr;',
+);
+
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'cathub-desc' => "Uitbreiding die categoriepagina's omvormt tot activiteitenpagina.
+Ontworpen voor [http://answers.wikia.com answers.wikia.com]",
+	'cathub-progbar-mouseover-answered' => '$1% beantwoord.',
+	'cathub-progbar-mouseover-not-answered' => '$1% nog niet beantwoord.',
+	'cathub-progbar-label-answered' => 'Beantwoord',
+	'cathub-progbar-label-unanswered' => 'Onbeantwoord',
+	'cathub-progbar-none-done' => 'Nog geen vragen beantwoord.',
+	'cathub-progbar-all-done' => 'Alle vragen beantwoord!',
+	'cathub-progbar-allmost-done' => '$1 onbeantwoorde {{PLURAL:$1|vraag|vragen}} over!',
+	'cathub-no-unanswered-questions' => 'Er zijn op dit moment geen onbeantwoorde vragen.',
+	'cathub-no-answered-questions' => 'Er zijn op dit moment geen beantwoorde vragen.',
+	'cathub-top-contributors' => 'Gebruikers met de meeste bijdragen aan deze categorie',
+	'cathub-top-contribs-all-time' => 'Aller tijden',
+	'cathub-top-contribs-recent' => 'In de {{PLURAL:$1|afgelopen dag|afgelopen $1 dagen}}',
+	'cathub-question-asked-ago' => 'gevraagd $1 $2',
+	'cathub-question-answered-ago' => 'beantwoord $1 $2',
+	'cathub-question-asked-by' => 'door $1',
+	'cathub-anon-username' => 'een nieuwsgierige gebruiker',
+	'cathub-answer-heading' => 'Antwoord',
+	'cathub-button-answer' => 'Antwoorden',
+	'cathub-button-improve-answer' => 'Antwoord verbeteren',
+	'cathub-button-rephrase' => 'herformuleren',
+	'cathub-edit-success' => 'Uw antwoord is opgeslagen',
+	'cathub-prev' => '← Vorige',
+	'cathub-next' => 'Volgende →',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'cathub-desc' => "Estension për rapresenté pàgine ëd categorìa ant na vista ëd categorìa com n'ansema d'atività. Progetà për [http://answers.wikia.com answers.wikia.com]",
+	'cathub-progbar-mouseover-answered' => '$1% arspondù',
+	'cathub-progbar-mouseover-not-answered' => '$1% pa ancó arspondù',
+	'cathub-progbar-label-answered' => 'Arspondù',
+	'cathub-progbar-label-unanswered' => 'Pa arspondù',
+	'cathub-progbar-none-done' => 'Pa gnun-e custion arspondùe ancó',
+	'cathub-progbar-all-done' => 'Tute custion arspondùe!',
+	'cathub-progbar-allmost-done' => 'Ancó $1 {{PLURAL:$1|custion|custion}} pa arspondùe!',
+	'cathub-no-unanswered-questions' => 'A-i é gnun-e custion pa arspondùe da vardé adess.',
+	'cathub-no-answered-questions' => 'A-i é pa gnun-e custion arspondùe da vardé adess.',
+	'cathub-top-contributors' => 'Contribudor pì àut a sta categorìa-sì',
+	'cathub-top-contribs-all-time' => 'Ëd tùit ij temp',
+	'cathub-top-contribs-recent' => "Ant j'ùltim $1 {{PLURAL:$1|di|di}}",
+	'cathub-question-asked-ago' => 'ciamà $1 $2',
+	'cathub-question-answered-ago' => 'arspondù $1 $2',
+	'cathub-question-asked-by' => 'da $1',
+	'cathub-anon-username' => "n'utent curios",
+	'cathub-answer-heading' => 'Arspòsta',
+	'cathub-button-answer' => 'Arspòsta',
+	'cathub-button-improve-answer' => 'Mejora arspòsta',
+	'cathub-button-rephrase' => 'refrasa',
+	'cathub-edit-success' => "Toa arspòsta a l'é stàita salvà",
+	'cathub-prev' => '&larr; Prima',
+	'cathub-next' => "&rarr; D'apress",
+);
+
+/** Russian (Русский)
+ * @author Александр Сигачёв
+ */
+$messages['ru'] = array(
+	'cathub-desc' => 'Расширение для включения на страниц категорий представления, показывающего центры деятельности. Разработан для [http://answers.wikia.com answers.wikia.com]',
+	'cathub-progbar-mouseover-answered' => '$1% получили ответы',
+	'cathub-progbar-mouseover-not-answered' => '$1% ещё не получили ответов',
+	'cathub-progbar-label-answered' => 'С ответами',
+	'cathub-progbar-label-unanswered' => 'Без ответов',
+	'cathub-progbar-none-done' => 'Пока на вопросы нет ответов',
+	'cathub-progbar-all-done' => 'На все вопросы даны ответы!',
+	'cathub-progbar-allmost-done' => '$1 {{PLURAL:$1|вопрос|вопроса|вопросов}} остаются без ответа!',
+	'cathub-no-unanswered-questions' => 'Сейчас нет вопросов без ответов.',
+	'cathub-no-answered-questions' => 'Пока ещё нет вопросов, имеющих ответы.',
+	'cathub-top-contributors' => 'Основные участники этой категории',
+	'cathub-top-contribs-all-time' => 'Всех времён',
+	'cathub-top-contribs-recent' => 'За {{PLURAL:$1|последний $1 день|последние $1 дня|последние $1 дней}}',
+	'cathub-question-asked-ago' => 'вопрос задан $1 $2',
+	'cathub-question-answered-ago' => 'ответ получен $1 $2',
+	'cathub-question-asked-by' => 'участником $1',
+	'cathub-anon-username' => 'любопытным пользователем',
+	'cathub-answer-heading' => 'Ответ',
+	'cathub-button-answer' => 'Ответить',
+	'cathub-button-improve-answer' => 'Улучшить ответ',
+	'cathub-button-rephrase' => 'перефразировать',
+	'cathub-edit-success' => 'Ваш ответ сохранён',
+	'cathub-prev' => '← Предыдущая',
+	'cathub-next' => 'Следующая →',
+);
+

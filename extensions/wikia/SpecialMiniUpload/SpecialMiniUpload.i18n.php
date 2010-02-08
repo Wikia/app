@@ -55,6 +55,21 @@ $messages['br'] = array(
 	'rightalign-tooltip' => 'Steudañ a-zehoù',
 );
 
+/** Finnish (Suomi)
+ * @author Centerlink
+ */
+$messages['fi'] = array(
+	'mu_size_your_image' => 'Skaalaa kuvasi',
+	'almosttheretext' => 'Käytä liukukytkintä pienoiskuvan koon valitsemiseen, kirjoita otsikko ja napsauta Insert-painiketta',
+	'insertfullsize' => 'Lisää alkuperäinen kuva täydessä koossa',
+	'insertthumbnail' => 'Lisää pienoiskuva',
+	'thumbnailsize' => 'Pienoiskuvakoko',
+	'captionoptional' => 'Otsikko (valinnainen):',
+	'insertimage' => 'Lisää kuva',
+	'leftalign-tooltip' => 'Vasemmalle tasattu',
+	'rightalign-tooltip' => 'Oikealle tasattu',
+);
+
 /** French (Français)
  * @author IAlex
  */

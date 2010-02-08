@@ -568,5 +568,6 @@ $messages['ru'] = array(
 	'magcloud-design-review-list' => 'Возврат к обзорному списку',
 	'magcloud-design-preview' => 'Предпросмотр',
 	'magcloud-design-image-selected' => 'Выбрано $1',
+	'magcloud-preview-save-magazine' => 'Сохранить ваш журнал',
 );
 

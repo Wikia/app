@@ -72,6 +72,13 @@ $messages['gl'] = array(
 	'force-subject-for-new-section-message' => 'Por favor, dea un título para a sección',
 );
 
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'force-subject-for-new-section-message' => 'Bitte gib e Iberschrift yy fir dr Abschnitt',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */

@@ -37,6 +37,16 @@ $messages['es'] = array(
 	'wikiasearch-search-wikia' => 'Buscar en Wikia',
 );
 
+/** Finnish (Suomi)
+ * @author Crt
+ */
+$messages['fi'] = array(
+	'wikiasearch-titles-only' => 'Etsi vain sivujen otsikoista',
+	'wikiasearch-system-error-msg' => 'Hakua ei voitu suorittaa loppuun järjestelmävirheen takia',
+	'wikiasearch-search-this-wiki' => 'Etsi vain Wikia Centralista',
+	'wikiasearch-search-wikia' => 'Etsi Wikiasta',
+);
+
 /** French (Français)
  * @author Peter17
  */
@@ -85,6 +95,15 @@ $messages['ia'] = array(
 	'wikiasearch-system-error-msg' => 'A causa de un error de systema, le recerca non poteva esser completate',
 	'wikiasearch-search-this-wiki' => 'Cercar solmente in Wikia Central',
 	'wikiasearch-search-wikia' => 'Cercar in Wikia',
+);
+
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'wikiasearch-titles-only' => 'Chöwá na ime ishi ihü nani',
+	'wikiasearch-search-this-wiki' => 'Chöwá na nánì Mpkurụ Wikia',
+	'wikiasearch-search-wikia' => 'Chöwá na imé Wikia',
 );
 
 /** Japanese (日本語)

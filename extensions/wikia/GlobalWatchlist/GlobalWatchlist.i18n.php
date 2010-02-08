@@ -44,6 +44,7 @@ $messages['af'] = array(
  */
 $messages['br'] = array(
 	'tog-watchlistdigest' => 'Kas din dre bostel un diverañ eus Ma Rollad evezhiañ bep sizhun',
+	'tog-watchlistdigestclear' => 'Merkañ evel lennet holl pajennoù ma rollad evezhiañ sizhuniek',
 	'globalwatchlist-see-more' => "Mar plij gwirit ho rolloù evezhiañ lec'hel evit diskouez muioc'h a gemmoù",
 	'globalwatchlist-digest-email-subject' => 'Diverañ ar sizhun',
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 evezhiadenn{{PLURAL:$2||}})',
@@ -97,6 +98,37 @@ Wikia
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|comentario|comentarios}})',
 	'globalwatchlist-no-page-found' => 'No se encontró ninguna página.',
 	'globalwatchlist-no-blog-page-found' => 'No se encontró ninguna página de blog.',
+);
+
+/** Finnish (Suomi)
+ * @author Centerlink
+ * @author Crt
+ */
+$messages['fi'] = array(
+	'tog-watchlistdigest' => 'Lähetä minulle viikottainen tarkkailulistatiivistelmä sähköpostitse',
+	'tog-watchlistdigestclear' => 'Merkitse kaikki sivut viikottaiselta tarkkailulistatiivistelmästä vierailluiksi',
+	'globalwatchlist-see-more' => 'Tarkista lisämuutokset paikallisilta tarkkailulistoilta',
+	'globalwatchlist-digest-email-subject' => 'Viikottainen tiivistelmä',
+	'globalwatchlist-digest-email-body' => 'Hei $1.
+
+Tämä on Wikia-tarkkailulista sivuista, joita on muokattu sen jälkeen kun vierailit niille viimeksi.
+
+$2
+
+
+Tämä on Wikia-tarkkailulista blogisivuista, joita on muokattu tai kommentoitu sen jälkeen kun vierailit niillä viimeksi.
+
+$3
+
+Vieraile ja muokkaa usein...
+
+Wikia
+
+* tarkkailulistailmoitusten asetuksiesi muuttamiseksi käy osoitteessa http://www.wikia.com/wiki/Special:Preferences
+* Tämän viikon tiivistelmän kaikkien sivujen merkitsemiseksi vierailluksi katso valitsinta Asetukset-sivusi "Tarkkailulista"-välilehdessä',
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|kommentti|kommenttia}})',
+	'globalwatchlist-no-page-found' => 'Sivua ei löytynyt.',
+	'globalwatchlist-no-blog-page-found' => 'Blogisivua ei löytynyt.',
 );
 
 /** French (Français)
@@ -275,6 +307,15 @@ Groet, Wikia
 	'globalwatchlist-no-blog-page-found' => 'Geen blogpagina aangetroffen.',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|kommentar|kommentarer}})',
+	'globalwatchlist-no-page-found' => 'Ingen side funnet.',
+	'globalwatchlist-no-blog-page-found' => 'Ingen bloggside funnet.',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
@@ -310,6 +351,10 @@ Wikia
  * @author Jesielt
  */
 $messages['pt-br'] = array(
+	'tog-watchlistdigest' => 'Envie-me por email um resumo semanal das atividades nas minhas páginas vigiadas',
+	'tog-watchlistdigestclear' => 'Mascar todas as páginas do resumo semanal como visitadas',
+	'globalwatchlist-see-more' => 'Por favor, cheque sua página de artigos vigiados para mais mudanças',
+	'globalwatchlist-digest-email-subject' => 'Resumo semanal',
 	'globalwatchlist-digest-email-body' => 'Caro(a) $1,
 
 Essa é uma lista de páginas na lista de vigiados do Wikia que foram editados desde sua última visita.
@@ -327,6 +372,9 @@ Wikia
 
 * Para mudar suas preferências de notificações da lista de vigiados, por favor, visite http://www.wikia.com/wiki/Special:Preferences
 * Para marcar todas as páginas deste boletim semanal como visitadas, veja as opções na aba "lista de vigiados" da sua página de preferências',
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|comentário|comentários}})',
+	'globalwatchlist-no-page-found' => 'Nenhuma página encontrada.',
+	'globalwatchlist-no-blog-page-found' => 'Nenhuma página de blog encontrada.',
 );
 
 /** Russian (Русский)

@@ -200,6 +200,41 @@ $messages['hu'] = array(
 	'user-badge-edits-txt' => 'Szerkesztések',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'user-badge-title' => 'Insignia de usator',
+	'user-badge-invalid-color' => 'Valor hexadecimal invalide entrate',
+	'user-badge-show-color' => 'Revelar detalios de color',
+	'user-badge-hide-color' => 'Celar detalios de color',
+	'user-badge-selected-color' => 'Color actualmente seligite {rgb}',
+	'user-badge-web-color' => 'Le color secur pro web le plus proxime: {rgb}. Clicca pro seliger!',
+	'user-badge-dialog-title' => 'Per favor selige un color',
+	'user-badge-current' => 'Insignia actual',
+	'user-badge-configure' => 'Configurar tu insignia',
+	'user-badge-not-found' => 'Nulle insignia trovate!',
+	'user-badge-use-configurator' => 'Usa le configurator pro crear un nove insignia!',
+	'user-badge-create' => 'Crear insignia:',
+	'user-badge-overwrite-msg' => 'Superscriber insignia existente',
+	'user-badge-header-body-box' => 'Capite e corpore:',
+	'user-badge-header-text' => 'Color de texto de capite:',
+	'user-badge-header-bgcolor' => 'Color de fundo de capite:',
+	'user-badge-body-bgcolor' => 'Color de fundo de corpore:',
+	'user-badge-text-align' => 'Alineamento del texto de capite:',
+	'user-badge-logo-opt' => 'Optiones de imagine:',
+	'user-badge-wikia-logo-pos' => 'Position del logotypo de Wikia:',
+	'user-badge-small-wikia-logo-pos' => 'Position del micre logotypo de Wikia:',
+	'user-badge-label-color' => 'Color del etiquetta (nomine de usator, modificationes):',
+	'user-badge-small-wikia-logo-color' => 'Color del logotypo de Wikia:',
+	'user-badge-data-color' => 'Color de datos:',
+	'user-badge-edits-txt' => 'Modificationes',
+	'user-bagde-copypaste-ext-code' => 'Copiar & collar (sitos externe)',
+	'user-bagde-copypaste-int-code' => 'Copiar & collar (iste Wikia)',
+	'user-bagde-copypaste-int-other-code' => 'Copiar & collar (altere Wikia)',
+	'user-badge-save-info' => 'Si tu vole salveguardar le cambiamentos, rola al fin del pagina e preme le button "Salveguardar"',
+);
+
 /** Japanese (日本語) */
 $messages['ja'] = array(
 	'user-badge-title' => '利用者バッジ',
@@ -307,6 +342,17 @@ Klik om te selecteren!',
 	'user-badge-save-info' => 'Scroll naar beneden en klik op "Opslaan" om uw wijzigingen op te slaan',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'user-badge-small-wikia-logo-color' => 'Wikia-logofarge:',
+	'user-badge-data-color' => 'Datafarge:',
+	'user-bagde-copypaste-ext-code' => 'Kopier og lim inn (eksterne nettsteder)',
+	'user-bagde-copypaste-int-code' => 'Kopier og lim inn (denne Wikiaen)',
+	'user-bagde-copypaste-int-other-code' => 'Kopier og lim inn (andre Wikiaer)',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
@@ -355,9 +401,37 @@ $messages['pt-br'] = array(
 
 /** Russian (Русский)
  * @author Lockal
+ * @author Александр Сигачёв
  */
 $messages['ru'] = array(
+	'user-badge-title' => 'Карточка участника',
+	'user-badge-invalid-color' => 'Введено недопустимое шестнадцатеричное значение',
+	'user-badge-show-color' => 'Показать сведения о цвете',
+	'user-badge-hide-color' => 'Скрыть сведения о цвете',
+	'user-badge-selected-color' => 'Выбранный сейчас цвет {rgb}',
+	'user-badge-web-color' => 'Ближайшие WebSafe-цвет: {rgb}. Нажмите для выбора!',
+	'user-badge-dialog-title' => 'Пожалуйста, выберите цвет',
+	'user-badge-current' => 'Текущая карточка',
+	'user-badge-configure' => 'Настроить свою карточку',
+	'user-badge-not-found' => 'Не найдено карточки!',
+	'user-badge-use-configurator' => 'Используйте настройку для создания новой карточки!',
+	'user-badge-create' => 'Создание карточки:',
+	'user-badge-overwrite-msg' => 'Перезаписать существующую карточку',
+	'user-badge-header-body-box' => 'Заголовок и тело:',
+	'user-badge-header-text' => 'Цвет текста заголовка:',
+	'user-badge-header-bgcolor' => 'Цвет фона заголовка:',
+	'user-badge-body-bgcolor' => 'Цвет фона тела:',
+	'user-badge-text-align' => 'Выравнивание текста заголовка:',
+	'user-badge-logo-opt' => 'Настройки изображения:',
 	'user-badge-wikia-logo-pos' => 'Позиция логотипа Викии:',
 	'user-badge-small-wikia-logo-pos' => 'Позиция маленького логотипа Викии:',
+	'user-badge-label-color' => 'Цвет метки (имя участника, правки):',
+	'user-badge-small-wikia-logo-color' => 'Цвет логотипа Викии:',
+	'user-badge-data-color' => 'Цвет данных:',
+	'user-badge-edits-txt' => 'Правки',
+	'user-bagde-copypaste-ext-code' => 'Копирование и вставка (внешние сайты)',
+	'user-bagde-copypaste-int-code' => 'Копирование и вставка (эта Wikia)',
+	'user-bagde-copypaste-int-other-code' => 'Копирование и вставка (другая Wikia)',
+	'user-badge-save-info' => 'Если вы хотите сохранить изменения, перейдите в конец страницы и нажмите кнопку «Сохранить».',
 );
 

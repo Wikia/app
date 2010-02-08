@@ -33,6 +33,13 @@ $messages['br'] = array(
 	'wikiawidget' => 'Widget wikia',
 );
 
+/** Finnish (Suomi)
+ * @author Centerlink
+ */
+$messages['fi'] = array(
+	'wikiawidget' => 'Wikia-käyttöliittymäelementti',
+);
+
 /** French (Français)
  * @author IAlex
  */

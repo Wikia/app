@@ -150,6 +150,14 @@ $messages['ru'] = array(
 	'templatesused-toggle' => 'Показать/скрыть $1 {{PLURAL:$1|запись|записи|записей}}',
 );
 
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'new-edit-page-preview-notice' => 'Режим попереднього перегляду: зміни ще не збережено! Прокрутіть униз для продовження редагування.',
+	'templatesused-toggle' => 'Показати/приховати {{PLURAL:$1|$1 запис|$1 записи}}',
+);
+
 /** Chinese (中文) */
 $messages['zh'] = array(
 	'new-edit-page-preview-notice' => '預覽模式: 更變尚未儲存! 向下繼續編輯.',

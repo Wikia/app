@@ -55,6 +55,9 @@ $messages['br'] = array(
 	'cntool-label-content' => 'Kemmañ danvez ar pennad amañ da-heul :',
 	'cntool-label-preview' => 'Rakwelet :',
 	'cntool-label-caveat' => 'Kemenn',
+	'cntool-caveat' => "Arabat eo implijout an astenn-mañ en un doare nann-prederiet.
+
+Dalc'hit soñj n'eo ket dalc'het en ur roll an disoc'hoù ha n'int ket aes da derriñ hep sikour ar skipailh teknikel er mare-mañ (emeur o kemm an dra-se).",
 );
 
 /** Finnish (Suomi)
@@ -108,6 +111,24 @@ $messages['hu'] = array(
 	'cntool-button-preview' => 'Előnézet',
 	'cntool-button-save' => 'Mentés',
 	'cntool-label-preview' => 'Előnézet:',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'cntool-page-title-editor' => 'Instrumento de concursos :: Editor',
+	'cntool-page-title-preview' => 'Instrumento de concursos :: Previsualisation',
+	'cntool-page-title-select' => 'Instrumento de concursos',
+	'cntool-label-select' => 'Entra un titulo de pagina valide',
+	'cntool-button-preview' => 'Previsualisar',
+	'cntool-button-save' => 'Salveguardar',
+	'cntool-label-content' => 'Modifica le contento del articulo hic infra:',
+	'cntool-label-preview' => 'Previsualisation:',
+	'cntool-label-caveat' => 'Advertimento',
+	'cntool-caveat' => 'Iste extension non debe esser usate inconsideratemente.
+
+Guarda in consideration que le resultatos non es registrate in alcun loco e non pote esser facilemente revertite sin adjuta del equipa technic. (On labora al solution de iste problema.)',
 );
 
 /** Macedonian (Македонски)
@@ -189,10 +210,13 @@ Lembre-se de que os resultados não são registrados em nenhum lugar, e não sã
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
+	'cntool-page-title-editor' => 'Инструмент конкурса :: Редактор',
 	'cntool-page-title-preview' => 'ContestTool :: Предпросмотр',
+	'cntool-page-title-select' => 'Инструмент конкурса',
 	'cntool-label-select' => 'Ведите правильное название страницы',
 	'cntool-button-preview' => 'Предварительный просмотр',
 	'cntool-button-save' => 'Сохранить',
+	'cntool-label-content' => 'Измените содержание статьи ниже:',
 	'cntool-label-preview' => 'Предварительный просмотр:',
 	'cntool-label-caveat' => 'Предостережение',
 	'cntool-caveat' => 'Это расширение не должно использоваться легкомысленно.

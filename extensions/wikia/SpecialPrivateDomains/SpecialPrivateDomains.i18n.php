@@ -41,6 +41,17 @@ $messages['br'] = array(
 	'privatedomainsinstructions' => 'Diskwelet eo roll domanioù ar chomlec\'hioù postel zo aotreet evit embannerien ar wiki-mañ. Pep linenn a ziskouez ur rakverk postel a ro tro d\'an embannerien da vont warno. Furmadet e tle ar roll  bezañ gant ur rakverk dre linenn. Da skouer,  :</p><p style="width: 20%; padding:5px; border: 1px solid grey;">cs.stanford.edu<br /> stanfordalumni.org</p><p>p>This would allow edits from anyone with the email address whatever@cs.stanford.edu or whatever@stanfordalumni.org</p><p><b>Ebarzhit roll an domanioù aotreet er voest amañ amañ dindan ha klikit war « saveteiñ».</b>',
 );
 
+/** Finnish (Suomi)
+ * @author Centerlink
+ */
+$messages['fi'] = array(
+	'privatedomains' => 'Hallinnoi yksityisiä verkkoalueita',
+	'privatedomains_ifemailcontact' => 'Muussa tapauksessa, ota yhteys [[Special:Emailuser/$1|$1]], jos sinulla on kysyttävää.',
+	'saveprivatedomains_success' => 'Yksityisen verkkoalueen muutokset on tallennettu.',
+	'privatedomains_affiliatenamelabel' => 'Organisaation nimi:',
+	'privatedomains_emailadminlabel' => 'Yhteystietokäyttäjänimi pääsypulmissa tai kyselyissä:',
+);
+
 /** French (Français)
  * @author IAlex
  */
@@ -63,7 +74,7 @@ $messages['gl'] = array(
 	'privatedomains' => 'Xestionar os dominios privados',
 	'privatedomains_ifemailcontact' => 'Se non, póñase en contacto con [[Special:Emailuser/$1|$1]] se ten algunha dúbida.',
 	'saveprivatedomains_success' => 'Gardáronse os cambios feitos nos dominios privados.',
-	'privatedomains_invalidemail' => 'Sentímolo, o acceso a este wiki está restrinxido aos membros de $1. Se ten un enderezo de correo electrónico afiliado con $1, pode entrar ou confirmar o seu enderezo de correo electrónico na páxina de preferencias da súa conta <a href=/wiki/Special:Preferences>aquí</a>. Aínda pode ver páxinas neste wiki, pero non será capaz de editalas.',
+	'privatedomains_invalidemail' => 'Sentímolo, o acceso a este wiki está restrinxido aos membros de $1. Se ten un enderezo de correo electrónico afiliado con $1, pode entrar ou volver confirmar o seu enderezo de correo electrónico na páxina de preferencias da súa conta <a href=/wiki/Special:Preferences>aquí</a>. Aínda pode ver páxinas neste wiki, pero non será capaz de editalas.',
 	'privatedomains_affiliatenamelabel' => 'Nome da organización:',
 	'privatedomains_emailadminlabel' => 'Nome de usuario de contacto para os problemas de acceso ou dúbidas:',
 	'privatedomainsinstructions' => 'A continuación está a lista de dominios de correo electrónico autorizados para os editores deste wiki. Cada liña designa un sufixo que dá acceso á edición. A lista debe estar ordenada de xeito que haxa un sufixo por liña. Por exemplo:</p><p style="width: 20%; padding:5px; border: 1px solid grey;">cs.stanford.edu<br /> stanfordalumni.org</p><p>Isto permitirá as edicións daqueles usuarios que teñan un enderezo de correo electrónico o_que_sexa@cs.stanford.edu ou o_que_sexa@stanfordalumni.org</p><p><b>Insira os dominios autorizados no cadro de texto de embaixo e prema en "Gardar".</b>',
@@ -128,6 +139,13 @@ Bijvoorbeeld:</p>
 <p style="width: 20%; padding:5px; border: 1px solid grey;">cs.stanford.edu<br />stanfordalumni.org</p>
 <p>Met deze instellingen zouden gebruikers met het e-mailadres pietje.precies@cs.stanford.edu en jantje.beton@stanfordalumni.org bijvoorbeeld pagina\'s mogen bewerken.</p>
 <p><b>Voer de toegelaten domeinen in het onderstaande invoervenster in en klik op "Opslaan".</b>',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'privatedomains_affiliatenamelabel' => 'Navn på organisasjon:',
 );
 
 /** Piedmontese (Piemontèis)

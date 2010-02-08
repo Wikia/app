@@ -69,6 +69,27 @@ $messages['br'] = array(
 	'protectsite-unprotect' => 'Diwareziñ',
 );
 
+/** Finnish (Suomi)
+ * @author Centerlink
+ * @author Crt
+ */
+$messages['fi'] = array(
+	'protectsite-title' => 'Sivuston suojausasetukset',
+	'protectsite-allowall' => 'Kaikki käyttäjät',
+	'protectsite-createaccount' => 'Salli uusien tilien luonti:',
+	'protectsite-createpage' => 'Salli sivujen luonti:',
+	'protectsite-edit' => 'Salli sivujen muokkaus:',
+	'protectsite-move' => 'Salli sivujen siirto:',
+	'protectsite-upload' => 'Salli tiedoston lähettäminen palvelimelle:',
+	'protectsite-timeout-error' => "'''Virheellinen aikakatkaisu.'''",
+	'protectsite-maxtimeout' => 'Enintään:',
+	'protectsite-comment' => 'Kommentti:',
+	'protectsite-ucomment' => 'Suojauksen poistokommentti:',
+	'protectsite-until' => 'Suojattu, kunnes:',
+	'protectsite-protect' => 'Suojaa',
+	'protectsite-unprotect' => 'Poista suojaus',
+);
+
 /** French (Français)
  * @author IAlex
  */
@@ -206,6 +227,32 @@ $messages['nl'] = array(
 	'protectsite-until' => 'Beveiligen tot:',
 	'protectsite-protect' => 'Beveiligen',
 	'protectsite-unprotect' => 'Beveiliging opheffen',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'protectsite' => 'Beskytt side',
+	'protectsite-text-protect' => '<!-- Instruksjoner/kommentarer/fremgangsmåte for bruk -->',
+	'protectsite-text-unprotect' => '<!-- Instruksjoner/kommentarer når beskyttet -->',
+	'protectsite-title' => 'Innstillinger for sidebeskyttelse',
+	'protectsite-allowall' => 'Alle brukere',
+	'protectsite-allowusersysop' => 'Registrerte brukere og systemoperatører',
+	'protectsite-allowsysop' => 'Kun systemoperatører',
+	'protectsite-createaccount' => 'Tillat opprettelse av nye kontoer av',
+	'protectsite-createpage' => 'Tillat opprettelse av sider av',
+	'protectsite-edit' => 'Tillat redigering av sider av',
+	'protectsite-move' => 'Tillat flytting av sider av',
+	'protectsite-upload' => 'Tillat filopplasting av',
+	'protectsite-timeout' => 'Tidsavbrudd:',
+	'protectsite-timeout-error' => "'''Ugyldig tidsavbrudd.'''",
+	'protectsite-maxtimeout' => 'Maksimum:',
+	'protectsite-comment' => 'Kommentar:',
+	'protectsite-ucomment' => 'Opphev beskyttelse av kommentar:',
+	'protectsite-until' => 'Beskyttet til:',
+	'protectsite-protect' => 'Beskytt',
+	'protectsite-unprotect' => 'Opphev beskyttelse',
 );
 
 /** Piedmontese (Piemontèis)

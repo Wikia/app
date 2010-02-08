@@ -166,6 +166,16 @@ $messages['no'] = array(
 	'imgplc-notinhistory' => 'Du kan ikke legge til bilder i historikkmodus',
 );
 
+/** Occitan (Occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'imgplc-create' => 'Apondre un imatge',
+	'imgplc-placeholder' => 'Posicionador',
+	'imgplc-image' => 'Imatge',
+	'imgplc-notinhistory' => "Podètz pas apondre cap d'imatge en mòde istoric.",
+);
+
 /** Polish (Polski) */
 $messages['pl'] = array(
 	'imgplc-create' => 'Dodaj obrazek',

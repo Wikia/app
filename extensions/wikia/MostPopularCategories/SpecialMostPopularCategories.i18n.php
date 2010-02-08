@@ -48,6 +48,13 @@ $messages['fa'] = array(
 	'mostpopularcategories' => 'رده‌های محبوب',
 );
 
+/** Finnish (Suomi)
+ * @author Centerlink
+ */
+$messages['fi'] = array(
+	'mostpopularcategories' => 'Suosituimmat luokat',
+);
+
 /** French (Français)
  * @author Peter17
  */

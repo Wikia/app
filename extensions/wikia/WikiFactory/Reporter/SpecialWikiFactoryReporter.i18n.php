@@ -46,6 +46,13 @@ $messages['es'] = array(
 	'wikifactoryreporter' => 'Informe de WikiFactory',
 );
 
+/** Finnish (Suomi)
+ * @author Centerlink
+ */
+$messages['fi'] = array(
+	'wikifactoryreporter' => 'WikiFactory-ilmoittaja',
+);
+
 /** French (Français)
  * @author IAlex
  */
