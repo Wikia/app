@@ -1891,7 +1891,7 @@ class Parser
 				}
 			}
 			// RTE - end
-			
+
 			# NS_MEDIA is a pseudo-namespace for linking directly to a file
 			# FIXME: Should do batch file existence checks, see comment below
 			if( $ns == NS_MEDIA ) {
@@ -2277,6 +2277,12 @@ class Parser
 				$closematch = preg_match(
 					'/(?:<\\/table|<\\/blockquote|<\\/h1|<\\/h2|<\\/h3|<\\/h4|<\\/h5|<\\/h6|'.
 					'<td|<th|<\\/?div|<hr|<\\/pre|<\\/p|'.$this->mUniqPrefix.'-pre|<\\/li|<\\/ul|<\\/ol|<\\/?center)/iS', $t );
+
+				// RTE - begin - @author: Macbre
+				// TODO: document
+				$this->doOpenCloseMatch($t, $openmatch, $closematch);
+				// RTE - end
+
 				if ( $openmatch or $closematch ) {
 					$paragraphStack = false;
 					# TODO bug 5718: paragraph closed
@@ -2371,6 +2377,7 @@ class Parser
 	// Add methods placeholders for RTE
 	function doBlockLevelsLineStart(&$oLine, &$output) {}
 	function doBlockLevelsLineEnd(&$oLine, &$output) {}
+	function doOpenCloseMatch($t, $openmatch, $closematch) {}
 	// RTE - end
 
 	/**
