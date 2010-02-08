@@ -10,6 +10,7 @@ CREATE TABLE /*$wgDBprefix*/user_relationship (
   `r_user_name_relation` varchar(255) NOT NULL default '',
   `r_type` int(2) default NULL,
   `r_date` datetime default NULL,
+  `r_trust_type` tinyint(4) default '0',
   PRIMARY KEY  (`r_id`),
   KEY `r_user_id` (`r_user_id`),
   KEY `r_user_id_relation` (`r_user_id_relation`)
