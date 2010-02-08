@@ -173,9 +173,8 @@ include_once( "$IP/extensions/wikia/WidgetSpecialPage/WidgetsSpecialPage.php" );
 
 /**
  * onedot is switched off for while
- *
- * include_once( "$IP/extensions/wikia/MostVisitedPages/SpecialMostVisitedPages.php" );
  */
+include_once( "$IP/extensions/wikia/MostVisitedPages/SpecialMostVisitedPages.php" );
 
 /**
  * @name $wgSkipSkins
