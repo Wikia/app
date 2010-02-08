@@ -177,9 +177,18 @@ function WikiaVideo_renderVideoGallery($input, $args, $parser) {
 		$out .= '<table class="gallery wikiaPlaceholder" cellspacing="0" cellpadding="0"><tr>';
 
 		for($i = 0; $i < count($videos); $i++) {
-			$video = new VideoPage($videos[$i][0]);
-			$video->load();
-			$out .= '<td><div class="gallerybox" style="width: 335px;"><div class="thumb" style="padding: 13px 0; width: 330px;"><div style="margin-left: auto; margin-right: auto; width: 300px;">'.$video->getEmbedCode().'</div></div><div class="gallerytext">'.(!empty($videos[$i][1]) ? $videos[$i][1] : '').'</div></div></td>';
+			$videoID = $videos[$i][0]->getArticleID();
+			
+			if ($videoID > 0){
+				$video = new VideoPage($videos[$i][0]);
+				$video->load();			
+				$html = $video->getEmbedCode().'</div></div><div class="gallerytext">'.(!empty($videos[$i][1]) ? $videos[$i][1] : '');				
+			} else {
+				$sk = $wgUser->getSkin();
+				$html = $sk->makeColouredLinkObj(Title::newFromText('WikiaVideoAdd', NS_SPECIAL), 'new', $videos[$i][0]->getPrefixedText(), 'name=' . $videos[$i][0]->getDBKey());;
+				$style = "height: 250px;";
+			}
+			$out .= '<td><div class="gallerybox" style="width: 335px;"> <div class="thumb" style="padding: 13px 0pt; width: 330px;'.$style.'">'.$html.'</div></div></td>';
 
 			if($i%2 == 1) {
 				$out .= '</tr><tr>';
@@ -241,7 +250,6 @@ function WikiaVideo_renderVideoGallery($input, $args, $parser) {
 
 function WikiaVideo_makeVideo( $title, $options, $sk, $wikitext = '', $plc_template = false ) {
 	global $wgWysiwygParserEnabled, $wgRTEParserEnabled, $wgRequest;
-
 	wfProfileIn('WikiaVideo_makeVideo');
 
 	// placeholder? treat differently
