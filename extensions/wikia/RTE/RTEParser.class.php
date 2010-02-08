@@ -53,7 +53,7 @@ class RTEParser extends Parser {
 			$this->emptyLinesBefore = 0;
 		}
 
-		// store this for next call of doBlockLevelsLineStart(0
+		// store this for next call of doBlockLevelsLineStart()
 		$this->lastLineWasEmpty = ($oLine == '');
 	}
 
