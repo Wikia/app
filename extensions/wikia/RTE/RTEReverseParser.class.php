@@ -366,8 +366,29 @@ class RTEReverseParser {
 		}
 
 		// fix for first paragraph / pre / table / .. inside <div>
-		if ( ($node->nodeName == 'div') && (self::firstChildIs($node, array('p', 'pre', 'table', 'ul', 'ol', 'dl'))) ) {
-			$beforeText = "\n";
+		if ($node->nodeName == 'div') {
+			// ignore nodes rendered from HTML (with "_rte_washtml" attribute)
+			if (self::firstChildIs($node, array('pre', 'table', 'ul', 'ol', 'dl')) && !self::wasHtml($node->firstChild)) {
+				$beforeText = "\n";
+			}
+
+			else if (self::firstChildIs($node, array('p'))) {
+				$para = $node->firstChild;
+
+				// fix for non-empty paragraphs (<div>\n123\n</div>)
+				if ($para->textContent != '&nbsp;') {
+					$beforeText = "\n";
+				}
+
+				// next node is text node (<div>\n\nfoo</div>)
+				if (self::nextSiblingIsTextNode($para)) {
+					$beforeText = "\n";
+				}
+				// next node is not a "wasHtml" node  (<div>\n\n\n preformatted text</div>)
+				else if (!empty($para->nextSibling) && !self::wasHtml($para->nextSibling)) {
+					$beforeText = "\n";
+				}
+			}
 		}
 
 		// generate HTML
@@ -1339,6 +1360,13 @@ class RTEReverseParser {
 	 */
 	private static function isPlaceholder($node) {
 		return $node->hasAttribute('_rte_placeholder');
+	}
+
+	/**
+	 * Check if given node was rendered from HTML node
+	 */
+	private static function wasHtml($node) {
+		return $node->hasAttribute('_rte_washtml');
 	}
 
 	/**

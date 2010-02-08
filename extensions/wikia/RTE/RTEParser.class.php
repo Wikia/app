@@ -7,6 +7,8 @@ class RTEParser extends Parser {
 
 	// used in tweaked doBlockLevels()
 	private $lastLineWasEmpty = null;
+	private $lastOutput = null;
+	private $inDiv = null;
 
 	// image params grabed in ParserMakeImageParams hook to be used in makeImage
 	private static $imageParams = null;
@@ -24,7 +26,7 @@ class RTEParser extends Parser {
 		RTE::log(__METHOD__, $oLine);
 
 		// check if previous line was empty
-		if ( ($this->lastLineWasEmpty === true) ) {
+		if ($this->lastLineWasEmpty) {
 			// increase empty lines counter
 			$this->emptyLinesBefore++;
 		}
@@ -40,21 +42,48 @@ class RTEParser extends Parser {
 
 		// mark wasHTML elements starting the line of wikitext
 		$oLine = preg_replace('/^<([^>]+_rte_washtml="true")/', '<$1 _rte_line_start="true"', $oLine);
+
+		// store parser output before this line of wikitext is parsed
+		$this->lastOutput = $output;
 	}
 
 	/**
 	 * Reset empty lines counter and store current line as previous one for next step of foreach
 	 */
 	function doBlockLevelsLineEnd(&$oLine, &$output) {
-		// reset empty lines counte
+		// reset empty lines counter
 		if ( (rtrim($oLine) != '') && ($this->emptyLinesBefore > 0) ) {
 			//RTE::log(__METHOD__, "resetting empty lines counter ({$this->emptyLinesBefore})");
 
 			$this->emptyLinesBefore = 0;
 		}
 
+		// RT #37702: parser has added an empty paragraph for empty line of wikitext
+		// when parsing wikitext inside <div></div> section
+		if ($this->inDiv && $this->lastLineWasEmpty && ($output != $this->lastOutput) && $this->emptyLinesBefore > 0) {
+			//RTE::log(__METHOD__, 'parser has added an empty paragraph inside <div></div>');
+
+			// two lines will be added when reverse parsing <p>
+			$this->emptyLinesBefore -= 2;
+		}
+
 		// store this for next call of doBlockLevelsLineStart()
 		$this->lastLineWasEmpty = ($oLine == '');
+	}
+
+	/**
+	 * Handle wikitext inside <div></div> sections
+	 */
+	function doOpenCloseMatch($t, $openmatch, $closematch) {
+		if ($closematch) {
+			if (preg_match('/<div/iS', $t)) {
+				$this->inDiv = true;
+			}
+
+			if (preg_match('/<\/div/iS', $t)) {
+				$this->inDiv = false;
+			}
+		}
 	}
 
 	/**
