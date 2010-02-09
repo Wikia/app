@@ -2185,10 +2185,11 @@ class Parser
 	}
 	/**#@-*/
 
-	/* Wikia change begin - @author: Macbre */
+	# RTE (Rich Text Editor) - begin
+	# @author: Macbre
 	var $mCurrentPrefix = '';
 	var $mLastCommonPrefix = false;
-	/* Wikia change end */
+	# RTE - end
 
 	/**
 	 * Make lists from lines starting with ':', '*', '#', etc. (DBL)
@@ -2244,9 +2245,10 @@ class Parser
 				$t = $oLine;
 			}
 
-			/* Wikia change begin - @author: Macbre */
+			# RTE (Rich Text Editor) - begin
+			# @author: Macbre
 			$this->mCurrentPrefix = $prefix;
-			/* Wikia change end */
+			# RTE - end
 
 			# List generation
 			if( $prefixLength && $lastPrefix === $prefix2 ) {
