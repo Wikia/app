@@ -1569,7 +1569,10 @@ class Parser
 	 * @private
 	 */
 	function replaceInternalLinks2( &$s ) {
-		global $wgContLang, $wgEnableVideoToolExt, $wgEnableNYCSocialTools, $wgEnableVideoNY, $wgRTEParserEnabled;
+		global $wgContLang, $wgEnableVideoToolExt, $wgEnableNYCSocialTools, $wgEnableVideoNY;
+		# RTE (Rich Text Editor) - begin
+		global $wgRTEParserEnabled;
+		# RTE - end
 
 		wfProfileIn( __METHOD__ );
 
