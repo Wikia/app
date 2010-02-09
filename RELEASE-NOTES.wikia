@@ -1,4 +1,5 @@
 == Changes since 201002.2 ==
+* rt#39240: update 3rd party loops extension (uberfuzzy)
 * rt#39996: red links point to wrong place on websites.wikia.com (Nef)
 * rt#40013: RTE: extreme extra whitespace added when editing shorthand table with empty cell (macbre)
 * rt#38516: RTE: Opera inserts extra line at the start of an article (macbre)
