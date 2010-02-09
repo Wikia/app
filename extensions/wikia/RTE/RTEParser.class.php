@@ -415,7 +415,7 @@ class RTEParser extends Parser {
 		//RTE::log(__METHOD__ . '::beforeReplace', $html);
 
 		// wrap HTML entities inside span "placeholders" (&amp; &#58; &#x5f;)
-		$html = self::wrapEntities($text);
+		$html = self::wrapEntities($html);
 
 		// remove EMPTY_LINES_BEFORE comments which are before closing tags - refs RT#38889
 		// <!-- RTE_EMPTY_LINES_BEFORE_1 --></td></tr></table>  <= remove this one
