@@ -133,7 +133,7 @@ class CorporatePageHelper{
 			$out[0]['isfirst'] = true;
 			$out[count($out)-1]['islast'] = true;
 		}
-		$wgMemc->set( $mcKey ,$out,60*60);
+		$wgMemc->set( $mcKey, $out, 60*60*12);
 		return $out;
 	}
 	
@@ -181,7 +181,7 @@ class CorporatePageHelper{
 				}
 			}
 		}
-		$wgMemc->set( $mcKey, $out,60*60);
+		$wgMemc->set( $mcKey, $out, 60*60*12);
 		return $out;
 	}
 
