@@ -1631,7 +1631,6 @@ class Parser
 
 		# Loop for each link
 		for ( ; $line !== false && $line !== null ; $a->next(), $line = $a->current() ) {
-		/* Wikia change end */
 			# Check for excessive memory usage
 			if ( $holders->isBig() ) {
 				# Too big
