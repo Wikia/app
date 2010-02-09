@@ -1858,6 +1858,7 @@ class Parser
 						# RTE - end
 
 						# cater for new placeholder-in-template namespace -  Bartek
+						# TODO: Get the hell out with this code from here this can be done in hook handler fired in makeImage funciont - Inez
 						if( "Template Placeholder" != $nt->getText() ) {
 							$s .= $prefix . $this->armorLinks( $this->makeImage( $nt, $text, $holders ) ) . $trail;
 						} else {
