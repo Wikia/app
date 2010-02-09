@@ -1,4 +1,6 @@
 <?php
+ini_set('display_errors', true);
+error_reporting(E_ALL);
 
 /**
  * @author Krzysztof Krzyżaniak <eloy@wikia.inc>
@@ -395,7 +397,7 @@ class ArticleComment {
 			return Masthead::newFromUser( $user )->display( 50, 50 );
 		} else {
 			// Answers
-			$avatar = new wAvatar($wgUser, "ml");
+			$avatar = new wAvatar($user->getId(), "ml");
 			return $avatar->getAvatarURL();
 		}
 	}
@@ -1172,7 +1174,7 @@ class ArticleCommentList {
 			$avatar = Masthead::newFromUser( $wgUser );
 		} else {
 			// Answers
-			$avatar = new wAvatar($wgUser, "ml");
+			$avatar = new wAvatar($wgUser->getId(), "ml");
 		}
 
 
