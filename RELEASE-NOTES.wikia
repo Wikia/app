@@ -1,4 +1,6 @@
 == Changes since 201002.2 ==
+* rt#40013: RTE: extreme extra whitespace added when editing shorthand table with empty cell (macbre)
+* rt#38516: RTE: Opera inserts extra line at the start of an article (macbre)
 * rt#38844: RTE: issues with HTML entities in links (macbre)
 * rt#39432: Mising message in article comments fixed. (Nef)
 * rt#37702: RTE: HTML lists wrapped in div tags gain line spaces on swicthes (macbre)
