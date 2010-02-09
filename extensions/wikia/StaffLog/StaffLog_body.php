@@ -106,7 +106,7 @@ class StaffLoggerPager extends ReverseChronologicalPager {
 	function formatRow($result) {
 		global $wgLang;
 		$linker = $this->getSkin();
-		$time = $wgLang->timeanddate( wfTimestamp(TS_MW, $row->slog_timestamp), true );
+       	$time = $wgLang->timeanddate( wfTimestamp(TS_MW, $result->slog_timestamp), true );
 		/* switch for different type of log message */ 
 		switch ($result->slog_type)
 		{
