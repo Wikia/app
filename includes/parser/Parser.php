@@ -881,23 +881,26 @@ class Parser
 				}
 			} else {
 
-				// RTE - begin
-				// TODO: document
+				# RTE (Rich Text Editor) - begin
+				# @author: Inez Korczyński
 				if(!empty($wgRTEParserEnabled)) {
 					if(empty($td_history[0]) || $last_tag == 'caption') {
 						if(strpos($outLine, "\x7f-comment-") !== false) {
-							// TODO: I don't really know if this one happens, worth logging and checking
 							RTE::$edgeCases[] = 'COMPLEX.06';
 						}
 					}
 				}
-				// RTE - end
+				# RTE - end
 
 			}
 
+			# RTE (Rich Text Editor) - begin
+			# @author: Inez Korczyński
 			if(!empty($RTEcomment)) {
+				# Throw an edgecase if $RTEcomment did not get flushed (nulled) yet
 				RTE::$edgeCases[] = 'COMPLEX.10';
 			}
+			# RTE - end
 
 			$out .= $outLine . "\n";
 		}
