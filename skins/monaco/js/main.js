@@ -36,7 +36,7 @@ $(function() {
 			return false;
 		});
 
-		 $("#ca-viewsource").add("#te-editanon").click(function(e){
+		 $("#ca-viewsource,.editsection").add("#te-editanon").click(function(e){
 			showComboAjaxForPalceHolder(false, "", function(){
 				AjaxLogin.doSuccess = function() {
 					var target = $(e.target);
