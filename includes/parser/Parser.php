@@ -1366,14 +1366,14 @@ class Parser
 			# Set linktype for CSS - if URL==text, link is essentially free
 			$linktype = ($text === $url) ? 'free' : 'text';
 
-			// RTE - begin
-			// TODO: document
+			# RTE (Rich Text Editor) - begin
+			# @author: Inez Korczyński
 			global $wgRTEParserEnabled;
 			if(!empty($wgRTEParserEnabled)) {
 				$RTE_wikitextIdx = RTEMarker::getDataIdx(RTEMarker::EXTERNAL_WIKITEXT, $trail);
 				$wasblank = $text == '';
 			}
-			// RTE - end
+			# RTE - end
 
 			# No link text, e.g. [http://domain.tld/some.link]
 			if ( $text == '' ) {
@@ -1402,8 +1402,8 @@ class Parser
 			# Funny characters like &ouml; aren't valid in URLs anyway
 			# This was changed in August 2004
 
-			// RTE - begin
-			// TODO: document
+			# RTE (Rich Text Editor) - begin
+			# @author: Inez Korczyński
 			if(!empty($wgRTEParserEnabled)) {
 				$text = RTEMarker::generate(RTEMarker::EXTERNAL_DATA, RTEData::put('data', array(
 					'type' => 'external',
@@ -1413,7 +1413,7 @@ class Parser
 					'linktype' => $linktype,
 					'wasblank' => $wasblank))).$text;
 			}
-			// RTE - end
+			# RTE - end
 
 			$s .= $sk->makeExternalLink( $url, $text, false, $linktype,
 				$this->getExternalLinkAttribs( $url ) ) . $dtrail . $trail;
@@ -1643,12 +1643,12 @@ class Parser
 				$holders->clear();
 			}
 
-			// RTE - begin
-			// TODO: document
+			# RTE (Rich Text Editor) - begin
+			# @author: Inez Korczyński
 			if(!empty($wgRTEParserEnabled)) {
 				$RTE_wikitextIdx = RTEMarker::getDataIdx(RTEMarker::INTERNAL_WIKITEXT, $line);
  			}
-			// RTE - end
+			# RTE - end
 
 			if ( $useLinkPrefixExtension ) {
 				wfProfileIn( __METHOD__.'-prefixhandling' );
