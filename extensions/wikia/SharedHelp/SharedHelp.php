@@ -261,11 +261,9 @@ function SharedHelpHook(&$out, &$text) {
                 }
                 $wgMemc->set($sharedRedirectsArticlesKey, $articleLink, 60*60*12); 
             }
-                                              
-			$info = '<div class="sharedHelpInfo plainlinks" style="text-align: right; font-size: smaller;padding: 5px">' . wfMsgExt('shared_help_info', 'parseinline', $sharedServer . $sharedArticlePathClean . $articleLink ) . '</div>';
 
 			// "this text is stored..."
-			$info = '<div class="sharedHelpInfo plainlinks" style="text-align: right; font-size: smaller;padding: 5px">' . wfMsgExt('shared_help_info', 'parseinline', $sharedServer . $sharedArticlePathClean . Namespace::getCanonicalName(NS_HELP_TALK) . ':' . $wgTitle->getDBkey()) . '</div>';
+            $info = '<div class="sharedHelpInfo plainlinks" style="text-align: right; font-size: smaller;padding: 5px">' . wfMsgExt('shared_help_info', 'parseinline', $sharedServer . $sharedArticlePathClean . $articleLink ) . '</div>';
 
 			if(strpos($text, '"noarticletext"') > 0) {
 				$text = '<div style="border: solid 1px; padding: 10px; margin: 5px" class="sharedHelp">' . $info . $content . '<div style="clear:both"></div></div>';
