@@ -774,14 +774,15 @@ class Parser
 				// Whats after the tag is now only attributes
 				$attributes = $this->mStripState->unstripBoth( $line );
 
-				// RTE - begin
-				// TODO: document
+				# RTE (Rich Text Editor) - begin
+				# @author: Inez Korczyński
 				if(!empty($wgRTEParserEnabled)) {
+					# Throw an RTE edgacase if there is RTR marker (\x7f) in row attributes
 					if(strpos($attributes, "\x7f") !== false) {
 						RTE::$edgeCases[] = 'COMPLEX.05';
 					}
 				}
-				// RTE - end
+				# RTE - end
 
 				$attributes = Sanitizer::fixTagAttributes ( $attributes , 'tr' );
 				array_pop ( $tr_attributes );
