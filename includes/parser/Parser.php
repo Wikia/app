@@ -1804,8 +1804,9 @@ class Parser
 				}
 				wfProfileOut( __METHOD__."-interwiki" );
 
-				/* Wikia change begin - @author: Inez, Macbre */
+				/* Wikia change begin */
 				/* Support for [[Video:...]] */
+				/* TODO: Get the hell out with this code from here */
 				if( $ns == NS_VIDEO ) {
 					if(!empty($wgEnableVideoToolExt) && (empty($wgEnableNYCSocialTools) || empty($wgEnableVideoNY))) {
 						wfProfileIn(__METHOD__ . "-video");
@@ -1815,8 +1816,7 @@ class Parser
 						$vid_tag = $wgContLang->getFormattedNsText( NS_VIDEO ) . ":Template_Placeholder";
 						( 0 === strpos( $text, $vid_tag ) ) ? $in_template = true : $in_template = false;
 
-						// RTE - begin
-						// TODO: document
+						# RTE (Rich Text Editor) - begin
 						global $wgRTEParserEnabled;
 						if (!empty($wgRTEParserEnabled)) {
 							$wikitext = RTEData::get('wikitext', $RTE_wikitextIdx);
@@ -1824,7 +1824,7 @@ class Parser
 						} else {
 							$videoOut = WikiaVideo_makeVideo($nt, $text, $sk, '', $in_template);
 						}
-						// RTE - end
+						# RTE - end
 
 						$s .= $prefix . $this->armorLinks($videoOut).$trail;
 						$this->mOutput->addImage(':'.$nt->getDBkey());
@@ -1832,7 +1832,6 @@ class Parser
 						continue;
 					}
 				}
-
 				/* Wikia change end */
 
 				if ( $ns == NS_FILE ) {
