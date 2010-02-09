@@ -645,6 +645,7 @@ class WikiaGlobalStats {
 	 * 	- check article doesn't exist in excludeWikiArticles list (textRegex)
 	 */ 
 	private static function allowResultsForEditedArticles ( $row ) {
+		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 		$result = array();
 
