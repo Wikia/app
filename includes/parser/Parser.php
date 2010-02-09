@@ -2220,10 +2220,10 @@ class Parser
 				continue;
 			}
 
-			// RTE - begin - @author: Macbre
-			// TODO: document
+			# RTE (Rich Text Editor) - begin
+			# @author: Macbre
 			$this->doBlockLevelsLineStart($oLine, $output);
-			// RTE - end
+			# RTE - end
 
 			$lastPrefixLength = strlen( $lastPrefix );
 			$preCloseMatch = preg_match('/<\\/pre/i', $oLine );
@@ -2306,10 +2306,10 @@ class Parser
 					'/(?:<\\/table|<\\/blockquote|<\\/h1|<\\/h2|<\\/h3|<\\/h4|<\\/h5|<\\/h6|'.
 					'<td|<th|<\\/?div|<hr|<\\/pre|<\\/p|'.$this->mUniqPrefix.'-pre|<\\/li|<\\/ul|<\\/ol|<\\/?center)/iS', $t );
 
-				// RTE - begin - @author: Macbre
-				// TODO: document
+				# RTE (Rich Text Editor) - begin
+				# @author: Macbre
 				$this->doOpenCloseMatch($t, $openmatch, $closematch);
-				// RTE - end
+				# RTE - end
 
 				if ( $openmatch or $closematch ) {
 					$paragraphStack = false;
@@ -2358,8 +2358,8 @@ class Parser
 								$output .= $this->closeParagraph().'<p>';
 								$this->mLastSection = 'p';
 							} else {
-								// RTE - begin - @author: Macbre
-								// TODO: document
+								# RTE (Rich Text Editor) - begin
+								# @author: Macbre
 								global $wgRTEParserEnabled;
 								if (!empty($wgRTEParserEnabled)) {
 									// count trailing spaces
@@ -2367,7 +2367,7 @@ class Parser
 									$spaces = strspn($text, ' ');
 									$output .= RTEReverseParser::buildComment('LINE_BREAK', array('spaces' => $spaces));
 								}
-								// RTE - end
+								# RTE - end
 							}
 						}
 					}
@@ -2382,10 +2382,10 @@ class Parser
 				$output .= $t."\n";
 			}
 
-			// RTE - begin - @author: Macbre
-			// TODO: document
+			# RTE (Rich Text Editor) - begin
+			# @author: Macbre
 			$this->doBlockLevelsLineEnd($oLine, $output);
-			// RTE - end
+			# RTE - end
 
 		}
 		while ( $prefixLength ) {
@@ -2401,12 +2401,13 @@ class Parser
 		return $output;
 	}
 
-	// RTE - begin - @author: Macbre
-	// Add methods placeholders for RTE
+	# RTE (Rich Text Editor) - begin
+	# @author: Macbre
+	# Add methods placeholders for RTE
 	function doBlockLevelsLineStart(&$oLine, &$output) {}
 	function doBlockLevelsLineEnd(&$oLine, &$output) {}
 	function doOpenCloseMatch($t, $openmatch, $closematch) {}
-	// RTE - end
+	# RTE - end
 
 	/**
 	 * Split up a string on ':', ignoring any occurences inside tags
@@ -3289,13 +3290,14 @@ class Parser
 			$titleText = $title->getPrefixedDBkey();
 		}
 
-		// RTE - begin
-		// TODO: document
+		# RTE (Rich Text Editor) - begin
+		# @author: Inez Korczyński
+		# Used for extracting list of available parameters in given article for transclusion
 		global $wgRTETemplateParams;
 		if (empty($wgRTETemplateParams) && isset( $this->mTplDomCache[$titleText] ) ) {
 			return array( $this->mTplDomCache[$titleText], $title );
 		}
-		// RTE - end
+		# RTE - end
 
 		// Cache miss, go to the database
 		list( $text, $title ) = $this->fetchTemplateAndTitle( $title );
@@ -3499,8 +3501,8 @@ class Parser
 		$attrText = !isset( $params['attr'] ) ? null : $frame->expand( $params['attr'] );
 		$content = !isset( $params['inner'] ) ? null : $frame->expand( $params['inner'] );
 
-		// RTE - begin
-		// TODO: document
+		# RTE (Rich Text Editor) - begin
+		# @author: Inez Korczyński
 		global $wgRTEParserEnabled;
 		if(!empty($wgRTEParserEnabled)) {
 			$wikitextIdx = RTEMarker::getDataIdx(RTEMarker::EXT_WIKITEXT, $content);
@@ -3509,7 +3511,7 @@ class Parser
 				return RTEMarker::generate(RTEMarker::PLACEHOLDER, $dataIdx);
 			}
 		}
-		// RTE - end
+		# RTE - end
 
 		$marker = "{$this->mUniqPrefix}-$name-" . sprintf('%08X', $this->mMarkerIndex++) . self::MARKER_SUFFIX;
 
