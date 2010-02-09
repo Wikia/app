@@ -468,9 +468,10 @@ class WikiaGlobalStats {
 		wfProfileIn( __METHOD__ );
     	
 		$date_diff = date('Y-m-d', time() - $days * 60 * 60 * 24);
-		$memkey = wfMemcKey( __METHOD__, $days, intval($onlyContent) );
-		$data = $wgMemc->get( $memkey );
-		if ( empty($data) ) {
+		$memkey = wfMemcKey( __METHOD__, intval($days), intval($onlyContent), intval($limit) );
+		$result = $wgMemc->get( $memkey );
+		if ( empty($result) ) {
+			$data = array();
 			$dbr = wfGetDB( DB_SLAVE, 'blobs', $wgExternalDatawareDB );
 			
 			$conditions = array("pe_date >= '$date_diff'");
@@ -489,7 +490,8 @@ class WikiaGlobalStats {
 					'LIMIT'		=> self::$defaultLimit
 				)
 			);
-			$data = array(); while ( $oRow = $dbr->fetchObject( $oRes ) ) {
+			
+			while ( $oRow = $dbr->fetchObject( $oRes ) ) {
 				$data[] = array(
 					'wikia'		=> $oRow->pe_wikia_id,
 					'page'		=> $oRow->pe_page_id,
@@ -497,32 +499,31 @@ class WikiaGlobalStats {
 				);
 			}
 			$dbr->freeResult( $oRes );
-			$wgMemc->set( $memkey , $data, 60*60 );
-		}
-
-		$result = $values = array();
-		$loop = 0;
-		if ( !empty( $data ) ) {
-			foreach ( $data as $row ) {
-				if ( $loop >= $limit ) break;
-				# check results
-				$res = self::allowResultsForEditedArticles( $row );
-				if ( $res === false ) continue;
-				
-				list( $wikiaTitle, $db, $hub, $wikia_ul, $page_url, $count ) = array_values($res);
-				if ( !isset( $values[$hub] ) ) $values[$hub] = 0;
-				
-				# limit results
-				$hubLimit = ( isset( self::$limitWikiHubs[ $hub ] ) ) 
-					? self::$limitWikiHubs[ $hub ]
-					: self::$limitWikiHubs[ '_default_' ];
-				if ( $values[$hub] == $hubLimit ) continue;
-				
-				# add to array
-				$result[] = $res;
-				# increase counter
-				$values[$hub]++; $loop++;
+			$result = $values = array();
+			$loop = 0;
+			if ( !empty( $data ) ) {
+				foreach ( $data as $row ) {
+					if ( $loop >= $limit ) break;
+					# check results
+					$res = self::allowResultsForEditedArticles( $row );
+					if ( $res === false ) continue;
+					
+					list( $wikiaTitle, $db, $hub, $wikia_ul, $page_url, $count ) = array_values($res);
+					if ( !isset( $values[$hub] ) ) $values[$hub] = 0;
+					
+					# limit results
+					$hubLimit = ( isset( self::$limitWikiHubs[ $hub ] ) ) 
+						? self::$limitWikiHubs[ $hub ]
+						: self::$limitWikiHubs[ '_default_' ];
+					if ( $values[$hub] == $hubLimit ) continue;
+					
+					# add to array
+					$result[] = $res;
+					# increase counter
+					$values[$hub]++; $loop++;
+				}
 			}
+			$wgMemc->set( $memkey, $result, 60*60 );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -535,9 +536,10 @@ class WikiaGlobalStats {
     	
 		$dbLimit = self::$defaultLimit;
 		$date_diff = date('Y-m-d', time() - $days * 60 * 60 * 24);
-		$memkey = wfMemcKey( __METHOD__, $days, $limit, intval($onlyContent) );
-		$data = $wgMemc->get( $memkey );
-		if ( empty($data) ) {
+		$memkey = wfMemcKey( __METHOD__, $days, $limit, intval($onlyContent), intval($recalculateLimit), intval($noHubDepe) );
+		$result = $wgMemc->get( $memkey );
+		if ( empty($result) ) {
+			$data = array();
 			$dbr = wfGetDB( DB_SLAVE, 'blobs', $wgExternalDatawareDB );
 			
 			$conditions = array("pc_date >= '$date_diff'");
@@ -556,7 +558,7 @@ class WikiaGlobalStats {
 					'LIMIT'		=> $dbLimit
 				)
 			);
-			$data = array(); while ( $oRow = $dbr->fetchObject( $oRes ) ) {
+			while ( $oRow = $dbr->fetchObject( $oRes ) ) {
 				$data[] = array(
 					'wikia'		=> $oRow->pc_wikia_id,
 					'page'		=> $oRow->pc_page_id,
@@ -564,56 +566,60 @@ class WikiaGlobalStats {
 				);
 			}
 			$dbr->freeResult( $oRes );
-			$wgMemc->set( $memkey , $data, 60*30 );
-		}
-		$limitWikiHubs = self::$limitWikiHubs;
-		if ( $recalculateLimit ){
-			$factor = $limit/5;
-			foreach( $limitWikiHubs as $key => $value ){
-				$limitWikiHubs[$key] = ceil($value*$factor);
-			}
-			$delta = $limit - array_sum($limitWikiHubs);
-			if ( $delta > 0){
-			$limitWikiHubs['_default_'] += $delta;
-			}
-		}
-		$result = $values = array();
-		$servers = array();
-		$loop = 0; 
-		if ( !empty( $data ) ) {
-			foreach ( $data as $row ) {
-				if ( $loop >= $limit ) break;
-				# check results
-				$res = self::allowResultsForEditedArticles( $row );
-				if ( $res === false ) continue;
-				
-				list( $wikiaTitle, $db, $hub, $page_name, $wikia_url, $page_url, $count ) = array_values($res);
-				if ( !empty($servers[$wikia_url]) ) continue;
-				
-				if ( !$noHubDepe ){
-					# limit results
-					if ( isset( $limitWikiHubs[ $hub ] ) ){
-						$hubLimit = $limitWikiHubs[ $hub ];
-						$hubCounter = $hub;
-					} else {
-						$hubLimit = $limitWikiHubs[ '_default_' ];	
-						$hubCounter = '_default_';
+
+			$result = $values = array();
+			$servers = array();
+			$loop = 0; 
+			if ( !empty( $data ) ) {
+				# recalculate limit 
+				$limitWikiHubs = self::$limitWikiHubs;
+				if ( $recalculateLimit ){
+					$factor = $limit/5;
+					foreach( $limitWikiHubs as $key => $value ){
+						$limitWikiHubs[$key] = ceil($value*$factor);
 					}
-					if ( !isset( $values[$hubCounter] ) ) $values[$hubCounter] = 0;
-					if ( $values[$hubCounter] == $hubLimit ) continue;
+					$delta = $limit - array_sum($limitWikiHubs);
+					if ( $delta > 0){
+						$limitWikiHubs['_default_'] += $delta;
+					}
 				}
-				# increase counter
-				$values[$hubCounter]++; $loop++;
-				$servers[$wikia_url] = 1;
-				
-				# add to array
-				if ($values[$hubCounter] > self::$limitWikiHubs[$hubCounter]){
-					$res['out_of_limit'] = 1;			
+				foreach ( $data as $row ) {
+					if ( $loop >= $limit ) break;
+					# check results
+					if ( !empty( $servers[ $row['wikia'] ] ) ) continue;
+					# check additional conditions
+					$res = self::allowResultsForEditedArticles( $row );
+					if ( $res === false ) continue;
+					
+					list( $wikiaTitle, $db, $hub, $page_name, $wikia_url, $page_url, $count ) = array_values($res);
+					
+					if ( !$noHubDepe ) {
+						# limit results
+						if ( isset( $limitWikiHubs[ $hub ] ) ) {
+							$hubLimit = $limitWikiHubs[ $hub ];
+							$hubCounter = $hub;
+						} else {
+							$hubLimit = $limitWikiHubs[ '_default_' ];	
+							$hubCounter = '_default_';
+						}
+						if ( !isset( $values[$hubCounter] ) ) $values[$hubCounter] = 0;
+						if ( $values[$hubCounter] == $hubLimit ) continue;
+					}
+					# increase counter
+					$values[$hubCounter]++; $loop++;
+					$servers[$row['wikia']] = 1;
+					
+					# add to array
+					if ($values[$hubCounter] > self::$limitWikiHubs[$hubCounter]){
+						$res['out_of_limit'] = 1;			
+					}
+					$result[] = $res;
 				}
-				$result[] = $res;
 			}
+			unset($data);
+			unset($servers);
+			$wgMemc->set( $memkey , $result, 60*30 );
 		}
-		unset($servers);
 
 		wfProfileOut( __METHOD__ );
 		return $result;
@@ -628,109 +634,140 @@ class WikiaGlobalStats {
 		return $res;
 	}
 	
+	/*
+	 * allowResultsForEditedArticles
+	 * 
+	 * check: 
+	 * 	- Wikia is enabled 
+	 * 	- check city_lang doesn't exist in allowedLanguages array
+	 * 	- check name of Wikia doesn't exist in excludeNames array
+	 * 	- check domain doesn't exist in excludeWikiDomainsKey list (textRegex)
+	 * 	- check article doesn't exist in excludeWikiArticles list (textRegex)
+	 */ 
 	private static function allowResultsForEditedArticles ( $row ) {
 		wfProfileIn( __METHOD__ );
 		$result = array();
-		
-		$oWikia = WikiFactory::getWikiByID($row['wikia']);
-		/*
-		 * check city list
-		 */
-		if ( !$oWikia ) {
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
 
-		if ( !in_array( $oWikia->city_lang, self::$allowedLanguages ) ) {
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
+		$memkey = wfMemcKey( __METHOD__, 'wikia', intval($row['wikia']) );
+		$oWikia = $wgMemc->get( $memkey );
 		
-		/*
-		 * check sitename
-		 */
-		$siteName = WikiFactory::getVarByName('wgSitename', $row['wikia']);
-		if ( !$siteName ) {
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
-		
-		/*
-		 * check wikiname
-		 */
-		$wikiName = unserialize($siteName->cv_value);
-		if ( !$wikiName ) {
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
-		
-		foreach( self::$excludeNames as $search ) {
-			$pos = stripos( $wikiName, $search );
-			if ( $pos !== false ) {
-				wfProfileOut( __METHOD__ );
-				return false;
+		if ( !isset($oWikia) ) {
+			$allowed = true;
+			/*
+			 * check city list
+			 */
+			$oWikia = WikiFactory::getWikiByID($row['wikia']);
+			if ( !$oWikia ) $allowed = false;
+			
+			/*
+			 * check city lang
+			 */ 
+			if ( $allowed && !in_array( $oWikia->city_lang, self::$allowedLanguages ) ) $allowed = false;
+			
+			/*
+			 * check sitename
+			 */
+			if ( $allowed ) {
+				$siteName = WikiFactory::getVarByName('wgSitename', $row['wikia']);
+				if ( !$siteName ) $allowed = false;
 			}
-		}
-
-		/*
-		 * check Title && Wiki domain
-		 */
-		$oGTitle = GlobalTitle::newFromId( $row['page'], $row['wikia'], $oWikia->city_dbname );
-		if ( !is_object($oGTitle) ) {
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
-
-		$wikiaUrl = $oGTitle->getServer();
-		$pageUrl = $oGTitle->getFullURL();
-		$articleName = $oGTitle->getArticleName();
-
-		$oRegexCore = new TextRegexCore( self::$excludeWikiDomainsKey, 0 );
-		if ( is_object( $oRegexCore ) ) {
-			$allowed = $oRegexCore->isAllowedText( $wikiaUrl, "", false );
-			if ( !$allowed ) {
-				wfProfileOut( __METHOD__ );
-				return false;
+			
+			/*
+			 * check wikiname
+			 */
+			if ( $allowed ) {
+				$wikiName = unserialize($siteName->cv_value);
+				if ( !$wikiName ) {
+					$allowed = false;
+				} else {
+					foreach( self::$excludeNames as $search ) {
+						$pos = stripos( $wikiName, $search );
+						if ( $pos !== false ) {
+							$allowed = false;
+						}
+					}
+				}
 			}
+			
+			if ( !$allowed ) $oWikia = 'ERROR';
+			# set in memc
+			$wgMemc->set( $memkey, $oWikia, 60*60 );
 		}
 		
-		/*
-		 * check hub name
-		 */
-		$hubName = WikiFactoryHub::getInstance()->getCategoryName($row['wikia']);
-		if ( in_array($hubName, self::$excludeWikiHubs) ) {
+		if ( $oWikia == 'ERROR' ) {
 			wfProfileOut( __METHOD__ );
 			return false;
-		}
+		} 
 
-		/*
-		 * check article name 
-		 */
-		$oRegexArticles = new TextRegexCore( self::$excludeWikiArticles, 0 );
-		if ( is_object( $oRegexArticles ) ) {
-			$filterText = sprintf("%s:%s", $oWikia->city_dbname, $articleName);
-			$allowed = $oRegexArticles->isAllowedText( $filterText , "", false );
-			if ( !$allowed ) {
-				wfProfileOut( __METHOD__ );
-				return false;
+		/* check article */
+		$memkey = wfMemcKey( __METHOD__, 'article', intval($row['wikia']), intval($row['page']), $oWikia->city_dbname );
+		$result = $wgMemc->get( $memkey );
+	
+		if ( !isset($result) ) {
+			$allowedPage = true;
+			/*
+			 * check Title && Wiki domain
+			 */
+			$oGTitle = GlobalTitle::newFromId( $row['page'], $row['wikia'], $oWikia->city_dbname );
+			if ( !is_object($oGTitle) ) $allowedPage = false;
+
+			if ( $allowedPage ) { 
+				$wikiaUrl = $oGTitle->getServer();
+				$pageUrl = $oGTitle->getFullURL();
+				$articleName = $oGTitle->getArticleName();
+
+				$oRegexCore = new TextRegexCore( self::$excludeWikiDomainsKey, 0 );
+				if ( is_object( $oRegexCore ) ) {
+					$allowed = $oRegexCore->isAllowedText( $wikiaUrl, "", false );
+					if ( !$allowed ) $allowedPage = false;
+				}
 			}
-		}
+			
+			/*
+			 * check hub name
+			 */
+			if ( $allowedPage ) {
+				$hubName = WikiFactoryHub::getInstance()->getCategoryName($row['wikia']);
+				if ( in_array($hubName, self::$excludeWikiHubs) ) $allowedPage = false;
+			}
 
-		/*
-		 * ok
-		 */
-		$result = array( 
-			'wikia'		=> $wikiName,
-			'db'		=> $oWikia->city_dbname,
-			'hub' 		=> $hubName,
-			'page_name'	=> $articleName,
-			'wikia_url'	=> $wikiaUrl,
-			'page_url'	=> $pageUrl,
-			'count'		=> $row['count']
-		);
+			/*
+			 * check article name 
+			 */
+			if ( $allowedPage ) {
+				$oRegexArticles = new TextRegexCore( self::$excludeWikiArticles, 0 );
+				if ( is_object( $oRegexArticles ) ) {
+					$filterText = sprintf("%s:%s", $oWikia->city_dbname, $articleName);
+					$allowed = $oRegexArticles->isAllowedText( $filterText , "", false );
+					if ( !$allowed ) $allowedPage = false;
+				}
+			}
+
+			if ( !$allowedPage ) {
+				$result = 'ERROR';
+			} else {
+				/*
+				 * ok
+				 */
+				$result = array( 
+					'wikia'		=> $wikiName,
+					'db'		=> $oWikia->city_dbname,
+					'hub' 		=> $hubName,
+					'page_name'	=> $articleName,
+					'wikia_url'	=> $wikiaUrl,
+					'page_url'	=> $pageUrl,
+					'count'		=> $row['count']
+				);
+			}
+			# set in memc
+			$wgMemc->set( $memkey, $result, 60*60 );
+		}
+		
+		if ( $result == 'ERROR' ) {
+			$result = false;
+		} 
 		
 		wfProfileOut( __METHOD__ );
-		
 		return $result;
 	}
 
