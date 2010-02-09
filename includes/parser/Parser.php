@@ -1097,10 +1097,11 @@ class Parser
 		$text = $this->maybeMakeExternalImage( $url );
 		if ( $text === false ) {
 
-			// RTE - begin
-			// TODO: document
-			global $wgRTEParserEnabled;
+			# RTE (Rich Text Editor) - begin
+			# @author: Inez Korczyński
 			$description =  $wgContLang->markNoConversion($url);
+
+			global $wgRTEParserEnabled;
 			if(!empty($wgRTEParserEnabled))  {
 				$description = RTEMarker::generate(RTEMarker::EXTERNAL_DATA, RTEData::put('data', array(
 					'type' => 'external-raw',
@@ -1109,9 +1110,8 @@ class Parser
 			}
 
 			# Not an image, make a link
-			$text = $sk->makeExternalLink( $url, $description, true, 'free',
-				$this->getExternalLinkAttribs( $url ) );
-			// RTE - end
+			$text = $sk->makeExternalLink( $url, $description, true, 'free', $this->getExternalLinkAttribs( $url ) );
+			# RTE - end
 
 			# Register it in the output object...
 			# Replace unnecessary URL escape codes with their equivalent characters
