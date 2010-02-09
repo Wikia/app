@@ -29,6 +29,11 @@ $wgMergeStyleVersionCSS = '16743';
  */
 $wgCityId = null;
 
+/**
+ * production wikis use tokyotyrant for sessions
+ */
+$wgSessionsInTokyoTyrant = false;
+
 
 /**
  * includes common for all wikis
