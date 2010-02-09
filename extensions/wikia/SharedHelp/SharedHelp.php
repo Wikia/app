@@ -245,6 +245,24 @@ function SharedHelpHook(&$out, &$text) {
 					$content
 				);
 			}
+                
+            /* Tomasz Odrobny #36016 */
+            $sharedRedirectsArticlesKey = wfSharedMemcKey('sharedRedirectsArticles', $wgHelpWikiId, MWNamespace::getCanonicalName( $wgTitle->getNamespace() ), $wgTitle->getDBkey());
+            $articleLink = $wgMemc->get($sharedRedirectsArticlesKey, null);
+            
+            if ( $articleLink == null ){
+                $articleLink =  Namespace::getCanonicalName(NS_HELP_TALK) . ':' . $wgTitle->getDBkey();    
+                $apiUrl = $sharedServer."/api.php?action=query&redirects&format=json&titles=".$articleLink;
+                $file = @file_get_contents($apiUrl, FALSE );
+                $json = new Services_JSON();      
+                $APIOut = $json->decode($file);
+                if (isset($APIOut->query) && isset($APIOut->query->redirects) && (count($APIOut->query->redirects) > 0) ){      
+                    $articleLink =  str_replace(" ", "_", $APIOut->query->redirects[0]->to);
+                }
+                $wgMemc->set($sharedRedirectsArticlesKey, $articleLink, 60*60*12); 
+            }
+                                              
+			$info = '<div class="sharedHelpInfo plainlinks" style="text-align: right; font-size: smaller;padding: 5px">' . wfMsgExt('shared_help_info', 'parseinline', $sharedServer . $sharedArticlePathClean . $articleLink ) . '</div>';
 
 			// "this text is stored..."
 			$info = '<div class="sharedHelpInfo plainlinks" style="text-align: right; font-size: smaller;padding: 5px">' . wfMsgExt('shared_help_info', 'parseinline', $sharedServer . $sharedArticlePathClean . Namespace::getCanonicalName(NS_HELP_TALK) . ':' . $wgTitle->getDBkey()) . '</div>';
