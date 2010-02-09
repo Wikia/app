@@ -305,6 +305,7 @@ class Apache_Solr_Service
 			curl_setopt($curl, CURLOPT_PROXY, $wgSolrProxy);
 			curl_setopt($curl, CURLOPT_HEADER, true);
 			curl_setopt($curl, CURLOPT_URL, $url);
+			curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 5);
 			if(!($curlResponse = curl_exec($curl))) {
 				throw new Exception("Curl ERROR: " . curl_error($curl));
 			}
