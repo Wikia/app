@@ -3092,12 +3092,10 @@ class Parser
 						throw new MWException( "Tag hook for $function is not callable\n" );
 					}
 					$result = call_user_func_array( $callback, $allArgs );
-
 					# RTE (Rich Text Editor) - begin
 					# @author: Inez Korczyński
 					if(!empty($wgRDBEnabled)) $wgRDBData['type'] = 'pfunc';
 					# RTE - end
-
 					$found = true;
 					$noparse = true;
 					$preprocessFlags = 0;
