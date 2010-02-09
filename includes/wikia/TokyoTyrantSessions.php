@@ -27,6 +27,9 @@ class TokyoTyrantSession {
 	const KEY_COLUMN	= 'key';
 	const NBR_CONN		= 20;
 
+
+	private $mDebug     = true;
+
 	var $servers = null;
 	var $active = 0;
 
@@ -83,8 +86,8 @@ class TokyoTyrantSession {
 			return $conn;
 		}
 
-		if ( strpos($key, ' ') ) {
-			error_log( __METHOD__ . ": found a space character in the key '".$key."'. Fixing it" );
+		if( strpos($key, ' ') ) {
+			Wikia::log( __METHOD__, "info", "found a space character in the key '".$key."'. Fixing it", $this->mDebug );
 			$key = str_replace( ' ', '_', $key );
 		}
 
@@ -100,10 +103,11 @@ class TokyoTyrantSession {
 					if ( $TT ) {
 						$sock = $TT->socket();
 						self::$sess_conn[$sock] = array($this->host, $this->port, $this->cid);
+						Wikia::log( __METHOD__, "info", "Connected to TTserver ({$this->host}, {$this->port}, {$this->cid})", $this->mDebug );
 						return $TT;
 					}
 				} catch (Tyrant_Exception $e) {
-					error_log( __METHOD__ .  ": cannot connect to TTserver ({$this->host}, {$this->port}, {$this->cid}) - " . $e->getMessage() );
+					Wikia::log( __METHOD__, "info", "cannot connect to TTserver ({$this->host}, {$this->port}, {$this->cid}) - " . $e->getMessage(), $this->mDebug );
 				}
 			}
 			$hv = $this->hashfunc( $hv . $realkey );
@@ -180,11 +184,13 @@ class TokyoTyrantSession {
 	}
 }
 
-#session_set_save_handler(
-#	array('TokyoTyrantSession','__open'),
-#	array('TokyoTyrantSession','__close'),
-#	array('TokyoTyrantSession','__read'),
-#	array('TokyoTyrantSession','__write'),
-#	array('TokyoTyrantSession','__destroy'),
-#	array('TokyoTyrantSession','__gc')
-#);
+if( !$wgSessionsInMemcached && $wgSessionsInTokyoTyrant ) {
+	session_set_save_handler(
+		array('TokyoTyrantSession','__open'),
+		array('TokyoTyrantSession','__close'),
+		array('TokyoTyrantSession','__read'),
+		array('TokyoTyrantSession','__write'),
+		array('TokyoTyrantSession','__destroy'),
+		array('TokyoTyrantSession','__gc')
+	);
+}
