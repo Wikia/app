@@ -485,14 +485,14 @@ class Sanitizer {
 						$rest = str_replace( '>', '&gt;', $rest );
 						$close = ( $brace == '/>' && !$slash ) ? ' /' : '';
 
-						// RTE - begin
-						// TODO: document
+						# RTE (Rich Text Editor) - begin
+						# @author: Inez Korczyński
 						if(!empty($wgRTEParserEnabled)) {
 							if(!$slash && strpos($newparams, '_rte_data') === false) {
 								$newparams = ' _rte_washtml="true"' . $newparams;
 							}
 						}
-						// RTE - end
+						# RTE - end
 
 						$text .= "<$slash$t$newparams$close>$rest";
 						continue;
@@ -518,14 +518,14 @@ class Sanitizer {
 					$newparams = Sanitizer::fixTagAttributes( $params, $t );
 					$rest = str_replace( '>', '&gt;', $rest );
 
-					// RTE - begin
-					// TODO: document
+					# RTE (Rich Text Editor) - begin
+					# @author: Inez Korczyński
 					if(!empty($wgRTEParserEnabled)) {
 						if(!$slash) {
 							$newparams = ' _rte_washtml="true"' . $newparams;
 						}
 					}
-					// RTE - end
+					# RTE - end
 
 					$text .= "<$slash$t$newparams$brace$rest";
 				} else {
@@ -733,15 +733,17 @@ class Sanitizer {
 
 			$attribs[] = "$encAttribute=\"$encValue\"";
 
-			// RTE - begin
+			# RTE (Rich Text Editor) - begin
+			# @author: Inez Korczyński
 			global $wgRTEParserEnabled;
 			if(!empty($wgRTEParserEnabled) && $encAttribute == 'style') {
 				$attribs[] = "_rte_style=\"$encValue\"";
 			}
-			// RTE - end
+			# RTE - end
 		}
 
-		// RTE - begin
+		# RTE (Rich Text Editor) - begin
+		# @author: Inez Korczyński
 		global $wgRTEParserEnabled;
 		if(!empty($wgRTEParserEnabled)) {
 			if(strpos($text, "\x7f") !== false) {
@@ -749,7 +751,7 @@ class Sanitizer {
 			}
 			$attribs[] = RTEReverseParser::encodeAttributesStr($text);
 		}
-		// RTE - end
+		# RTE - end
 
 		return count( $attribs ) ? ' ' . implode( ' ', $attribs ) : '';
 	}
