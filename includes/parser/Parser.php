@@ -720,14 +720,16 @@ class Parser
 
 				$attributes = $this->mStripState->unstripBoth( $matches[2] );
 
-				// RTE - begin
-				// TODO: document
+				# RTE (Rich Text Editor) - begin
+				# @author: Inez Korczyński
 				if(!empty($wgRTEParserEnabled)) {
+					# Throw an RTE edgacase if there is RTR marker (\x7f) in table attributes
+					# Example: {| {{some template call}}
 					if(strpos($attributes, "\x7f") !== false) {
 						RTE::$edgeCases[] = 'COMPLEX.04';
 					}
 				}
-				// RTE - end
+				# RTE - end
 
 				$attributes = Sanitizer::fixTagAttributes ( $attributes , 'table' );
 
