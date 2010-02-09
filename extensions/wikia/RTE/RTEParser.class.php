@@ -456,6 +456,31 @@ class RTEParser extends Parser {
 		return $output;
 	}
 
+	/**
+	 * Special handling of entities when doing internal links parsing (RT #38844)
+	 */
+	public function replaceInternalLinks2(&$s) {
+		wfProfileIn(__METHOD__);
+
+		// use MW parser to parse internal links
+		$holders = parent::replaceInternalLinks2($s);
+
+		//RTE::log(__METHOD__.'::after', $s); RTE::log(__METHOD__.'::holders', $holders->internals);
+
+		// add now let's mark entities in captions of internal links
+		if (!empty($holders->internals)) {
+			foreach ($holders->internals as &$entries) {
+				foreach ($entries as &$entry) {
+					$entry['text'] = self::markEntities($entry['text']);
+				}
+			}
+		}
+
+		wfProfileOut(__METHOD__);
+
+		return $holders;
+	}
+
 	public function makeKnownLinkHolder( $nt, $text = '', $query = '', $trail = '', $prefix = '' ) {
 		$dataIdx = RTEMarker::getDataIdx(RTEMarker::INTERNAL_DATA, $text);
 		$ret = parent::makeKnownLinkHolder($nt, $text, $query, $trail, $prefix);
@@ -508,10 +533,27 @@ class RTEParser extends Parser {
 	/**
 	 * Mark HTML entities using \x7f "magic" character
 	 */
-	private static function markEntities($text) {
+	public static function markEntities($text) {
 		wfProfileIn(__METHOD__);
 
 		$res = preg_replace('%&(#?[\w\d]+);%s', "\x7f-ENTITY-\\1-\x7f", $text);
+
+		wfProfileOut(__METHOD__);
+
+		return $res;
+	}
+
+	/**
+	 * Unmark HTML entities marked using \x7f "magic" character (and decode not marked HTML entities if requested)
+	 */
+	public static function unmarkEntities($text, $decode = false) {
+		wfProfileIn(__METHOD__);
+
+		if ($decode) {
+			$text = htmlspecialchars_decode($text);
+		}
+
+		$res = preg_replace("%\x7f-ENTITY-(#?[\w\d]+)-\x7f%", '&\1;', $text);
 
 		wfProfileOut(__METHOD__);
 

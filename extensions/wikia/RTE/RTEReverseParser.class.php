@@ -637,6 +637,9 @@ class RTEReverseParser {
 		// generate wikitext
 		$out = '';
 
+		// unmark HTML entities and decode not marked HTML entities (RT #38844)
+		$textContentOriginal = RTEParser::unmarkEntities($textContent, true);
+
 		switch($data['type']) {
 			case 'internal':
 				// following wikitext optimization will be performed:
@@ -655,7 +658,7 @@ class RTEReverseParser {
 				// [[<current_page_name>/foo|/foo]] -> [[/foo]]
 				global $wgTitle;
 				$pageName = $wgTitle->getPrefixedText();
-				if ($data['link'] == $pageName . $textContent) {
+				if ($data['link'] == $pageName . $textContentOriginal) {
 					$data['link'] = $textContent;
 				}
 
@@ -665,9 +668,9 @@ class RTEReverseParser {
 				$trail = false;
 
 				// [[foo|foos]] -> [[foo]]s
-				if ( (strlen($textContent) > strlen($data['link'])) ) {
-					if (substr($textContent, 0, strlen($data['link'])) == $data['link']) {
-						$possibleTrail = substr($textContent, strlen($data['link']));
+				if ( (strlen($textContentOriginal) > strlen($data['link'])) ) {
+					if (substr($textContentOriginal, 0, strlen($data['link'])) == $data['link']) {
+						$possibleTrail = substr($textContentOriginal, strlen($data['link']));
 
 						// check against trail valid characters regexp
 						if (preg_match(self::getTrailRegex(), $possibleTrail)) {
@@ -677,13 +680,15 @@ class RTEReverseParser {
 				}
 
 				// link description after pipe
-				// htmlspecialchars() used because of RT #35999
-				if ( ($trail === false) && (htmlspecialchars($data['link']) != $textContent) ) {
+				if ( ($trail === false) && ($data['link'] != $textContentOriginal) ) {
 					$out .= "|{$textContent}";
 				}
 
 				// close link wikitext + trail
 				$out .= "]]{$trail}";
+
+				// protect HTML entities (RT #38844)
+				$out = RTEParser::markEntities($out);
 				break;
 
 			case 'external':

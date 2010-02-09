@@ -41,6 +41,11 @@ class RTEData {
 		if (isset($data['type'])) {
 			if(isset($data['wikitextIdx'])) {
 				$data['wikitext'] = RTEData::get('wikitext', $data['wikitextIdx']);
+
+				// macbre: correctly handle and unmark entities inside links wikitext (RT #38844)
+				$data['wikitext'] = htmlspecialchars_decode($data['wikitext']);
+				$data['wikitext'] = RTEParser::unmarkEntities($data['wikitext']);
+
 				unset($data['wikitextIdx']);
 
 				if(strpos($data['wikitext'], '_rte_wikitextidx') !== false) {
