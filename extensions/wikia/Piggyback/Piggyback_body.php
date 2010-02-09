@@ -29,7 +29,9 @@ class Piggyback extends SpecialPage {
 		$LoginForm = new PBLoginForm( $wgRequest );
 		if( $this->mAction == 'submitlogin' && $wgRequest->wasPosted() ) {
 			$LoginForm->validPiggyback();
-		}
+		} else {
+            $LoginForm->setDefaultTargetValue($wgRequest->getVal('target'));    
+        }
 
 		$LoginForm->render();
 	}
@@ -131,6 +133,10 @@ class PBLoginForm extends LoginForm {
 		
 		$this->processLogin();
 	}
+    
+    function setDefaultTargetValue($value){
+        $this->plugin->set( 'otherName', $value );
+    }
 
 	function render() {
 		global $wgOut, $wgExtensionsPath;
