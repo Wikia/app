@@ -594,7 +594,7 @@ class RTEParser extends Parser {
 
 		$res = preg_replace("%\x7f-ENTITY-(#?[\w\d]+)-\x7f%", '<span _rte_entity="\1">&\1;</span>', $text);
 
-		wfProfileIn(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $res;
 	}
 }
