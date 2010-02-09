@@ -1849,13 +1849,13 @@ class Parser
 						$holders->merge( $this->replaceInternalLinks2( $text ) );
 						# cloak any absolute URLs inside the image markup, so replaceExternalLinks() won't touch them
 
-						// RTE - begin
-						// TODO: document
+						# RTE (Rich Text Editor) - begin
+						# @author: Inez Korczyński
 						global $wgRTEParserEnabled;
 						if (!empty($wgRTEParserEnabled)) {
 							$text = RTEMarker::generate(RTEMarker::IMAGE_DATA, $RTE_wikitextIdx).$text;
 						}
-						// RTE - end
+						# RTE - end
 
 						# cater for new placeholder-in-template namespace -  Bartek
 						if( "Template Placeholder" != $nt->getText() ) {
