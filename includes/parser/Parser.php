@@ -1874,8 +1874,9 @@ class Parser
 				if ( $ns == NS_CATEGORY ) {
 					wfProfileIn( __METHOD__."-category" );
 
-					// RTE - begin
-					// TODO: document
+					# RTE (Rich Text Editor) - begin
+					# @author: Inez Korczyński
+					# Category handling
 					if(!empty($wgRTEParserEnabled)) {
 						$dataIdx = RTEData::put('placeholder', array('type' => 'category', 'wikitextIdx' => $RTE_wikitextIdx));
 						$s .= $prefix . RTEMarker::generate(RTEMarker::PLACEHOLDER, $dataIdx) . $trail;
@@ -1899,7 +1900,7 @@ class Parser
 
 						$s .= trim($prefix . $trail, "\n") == '' ? '': $prefix . $trail;
 					}
-					// RTE - end
+					# RTE - end
 
 					wfProfileOut( __METHOD__."-category" );
 					continue;
