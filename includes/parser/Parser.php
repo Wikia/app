@@ -1629,11 +1629,8 @@ class Parser
 		$useSubpages = $this->areSubpagesAllowed();
 		wfProfileOut( __METHOD__.'-setup' );
 
-		/* Wikia change begin - @author: Marooned, Inez */
-		/* previousLine variable is required later in category handling for wysiwyg*/
-		$previousLine = false;
 		# Loop for each link
-		for ( ; $line !== false && $line !== null ; $previousLine = $a->current(), $a->next(), $line = $a->current() ) {
+		for ( ; $line !== false && $line !== null ; $a->next(), $line = $a->current() ) {
 		/* Wikia change end */
 			# Check for excessive memory usage
 			if ( $holders->isBig() ) {
