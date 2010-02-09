@@ -12,7 +12,7 @@ ini_set( "include_path", dirname(__FILE__)."/.." );
 require_once( "commandLine.inc" );
 
 
-$dbr = wfGetDB( DB_SLAVE );
+$dbr = WikiFactory::db( DB_SLAVE );
 echo "<?php\n\n";
 
 $oRes = $dbr->select(
