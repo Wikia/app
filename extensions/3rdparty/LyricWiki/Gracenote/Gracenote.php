@@ -69,8 +69,9 @@ function gracenote_obfuscateText($text){
 		$lyrics .= $LINE_BREAK;
 	}
 
-	# for fr.lyrics	
+	# Prevent over-encoding of special HTML-encoded characters.
 	$lyrics = str_replace( "&#38;&#110;&#98;&#115;&#112;&#59;", "&nbsp;", $lyrics );
+	$lyrics = str_replace( "&#38;&#97;&#109;&#112;&#59;", "&amp;", $lyrics); // rt#35365
 
 	return substr($lyrics, 0, strlen($lyrics) - strlen($LINE_BREAK));
 } // end gracenote_obfuscateText()
