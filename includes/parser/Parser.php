@@ -2985,23 +2985,24 @@ class Parser
 		$args = (null == $piece['parts']) ? array() : $piece['parts'];
 		wfProfileOut( __METHOD__.'-setup' );
 
-		// RDB - begin
-		// TODO: document
+		# RTE (Rich Text Editor) - begin
+		# @author: Inez Korczyński
 		if(!empty($wgRDBEnabled)) {
 			if(!empty($wgRDBData)) {
 				$wgRDBEnabled = false;
 			}
 		}
-		// RDB - end
+		# RTE - end
 
 		# SUBST
 		wfProfileIn( __METHOD__.'-modifiers' );
 		if ( !$found ) {
 			$mwSubst = MagicWord::get( 'subst' );
 			if ( $mwSubst->matchStartAndRemove( $part1 ) xor $this->ot['wiki'] ) {
-				// RDB - begin
+				# RTE (Rich Text Editor) - begin
+				# @author: Inez Korczyński
 				if(!empty($wgRDBEnabled)) $wgRDBData['type'] = 'subst';
-				// RDB - end
+				# RTE - end
 				# One of two possibilities is true:
 				# 1) Found SUBST but not in the PST phase
 				# 2) Didn't find SUBST and in the PST phase
@@ -3016,9 +3017,10 @@ class Parser
 		if ( !$found && $args->getLength() == 0 ) {
 			$id = $this->mVariables->matchStartToEnd( $part1 );
 			if ( $id !== false ) {
-				// RDB - begin
+				# RTE (Rich Text Editor) - begin
+				# @author: Inez Korczyński
 				if(!empty($wgRDBEnabled)) $wgRDBData['type'] = 'variable';
-				// RDB - end
+				# RTE - end
 				$text = $this->getVariableValue( $id );
 				if (MagicWord::getCacheTTL($id)>-1)
 					$this->mOutput->mContainsOldMagic = true;
@@ -3090,9 +3092,12 @@ class Parser
 						throw new MWException( "Tag hook for $function is not callable\n" );
 					}
 					$result = call_user_func_array( $callback, $allArgs );
-					// RDB - begin
+
+					# RTE (Rich Text Editor) - begin
+					# @author: Inez Korczyński
 					if(!empty($wgRDBEnabled)) $wgRDBData['type'] = 'pfunc';
-					// RDB - end
+					# RTE - end
+
 					$found = true;
 					$noparse = true;
 					$preprocessFlags = 0;
@@ -3139,9 +3144,10 @@ class Parser
 				$limit = $this->mOptions->getMaxTemplateDepth();
 				if ( $frame->depth >= $limit ) {
 					$found = true;
-					// RDB - begin
+					# RTE (Rich Text Editor) - begin
+					# @author: Inez Korczyński
 					if(!empty($wgRDBEnabled)) $wgRDBData['type'] = 'error';
-					// RDB - end
+					# RTE - end
 					$text = '<span class="error">' . wfMsgForContent( 'parser-template-recursion-depth-warning', $limit ) . '</span>';
 				}
 			}
@@ -3188,19 +3194,21 @@ class Parser
 				$found = true;
 			}
 
-			// RDB - begin
+			# RTE (Rich Text Editor) - begin
+			# @author: Inez Korczyński
 			if(!empty($wgRDBEnabled)) {
 				$wgRDBData['type'] = 'tpl';
 				$wgRDBData['title'] = &$title;
 				$wgRDBData['args'] = &$args;
 			}
-			// RDB - end
+			# RTE - end
 			# Do infinite loop check
 			# This has to be done after redirect resolution to avoid infinite loops via redirects
 			if ( !$frame->loopCheck( $title ) ) {
-				// RDB - begin
+				# RTE (Rich Text Editor) - begin
+				# @author: Inez Korczyński
 				if(!empty($wgRDBEnabled)) $wgRDBData['type'] = 'error';
-				// RDB - end
+				# RTE - end
 				$found = true;
 				$text = '<span class="error">' . wfMsgForContent( 'parser-template-loop-warning', $titleText ) . '</span>';
 				wfDebug( __METHOD__.": template loop broken at '$titleText'\n" );
