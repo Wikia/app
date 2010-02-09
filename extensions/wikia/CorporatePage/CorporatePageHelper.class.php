@@ -149,7 +149,7 @@ class CorporatePageHelper{
 		$mcKey = wfMemcKey( "hp_msg_parser", $msg );
 		$out = $wgMemc->get( $mcKey, null);
 		if ( $out != null ){
-		//	return $out;
+			return $out;
 		}
 		$message = wfMsgForContent($msg);
 		$lines = explode("\n",$message);
