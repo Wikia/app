@@ -132,9 +132,6 @@ function renderLyricTag($input, $argv, $parser)
 	}
 	
 	$transform = $parser->parse($transform, $parser->mTitle, $parser->mOptions, false, false)->getText();
-	
-	# Make sure ampersands aren't over-encoded by the UTF conversion - rt#35365
-	$transform = str_replace("&amp;", "&", $transform);
 
 	#parse embedded wikitext
 	$retVal = "";
