@@ -386,8 +386,8 @@ class RTEParser extends Parser {
 			$this->emptyLinesBefore = $emptyLinesAtStart * -1;
 		}
 
-		// protect HTML entities from wikitext inside \x7f "placeholders" (&amp; &#58; &#x5f;)
-		$text = preg_replace('%&(#?[\w\d]+);%s', "\x7f-ENTITY-\\1-\x7f", $text);
+		// mark HTML entities from wikitext (&amp; &#58; &#x5f;)
+		$text = self::markEntities($text);
 
 		// set flag indicating parsing for CK
 		global $wgRTEParserEnabled;
@@ -415,7 +415,7 @@ class RTEParser extends Parser {
 		//RTE::log(__METHOD__ . '::beforeReplace', $html);
 
 		// wrap HTML entities inside span "placeholders" (&amp; &#58; &#x5f;)
-		$html = preg_replace("%\x7f-ENTITY-(#?[\w\d]+)-\x7f%", '<span _rte_entity="\1">&\1;</span>', $html);
+		$html = self::wrapEntities($text);
 
 		// remove EMPTY_LINES_BEFORE comments which are before closing tags - refs RT#38889
 		// <!-- RTE_EMPTY_LINES_BEFORE_1 --></td></tr></table>  <= remove this one
@@ -503,5 +503,31 @@ class RTEParser extends Parser {
 		$ret = "<{$matches[1]}{$matches[2]} _rte_spaces_before=\"{$spacesBefore}\">";
 
 		return $ret;
+	}
+
+	/**
+	 * Mark HTML entities using \x7f "magic" character
+	 */
+	private static function markEntities($text) {
+		wfProfileIn(__METHOD__);
+
+		$res = preg_replace('%&(#?[\w\d]+);%s', "\x7f-ENTITY-\\1-\x7f", $text);
+
+		wfProfileOut(__METHOD__);
+
+		return $res;
+	}
+
+	/**
+	 * Wrap marked HTML entities inside <span> placeholders
+	 */
+	private static function wrapEntities($text) {
+		wfProfileIn(__METHOD__);
+
+		$res = preg_replace("%\x7f-ENTITY-(#?[\w\d]+)-\x7f%", '<span _rte_entity="\1">&\1;</span>', $text);
+
+		wfProfileIn(__METHOD__);
+
+		return $res;
 	}
 }
