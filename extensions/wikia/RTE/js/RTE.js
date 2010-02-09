@@ -221,6 +221,18 @@ window.RTE = {
 
 		// set ID, so CSS rules from MW can be applied
 		body.attr('id', RTE.instance.config.bodyId);
+
+		// RT #38516: remove first <BR> tag (fix strange Opera bug)
+		setTimeout(function() {
+			if (CKEDITOR.env.opera) {
+				var firstChild = RTE.getEditor().children().eq(0);
+
+				// first child is <br> without any attributes
+				if (firstChild.is('br')) {
+					firstChild.remove();
+				}
+			}
+		}, 750);
 	},
 
 	// reposition of #RTEStuff div when Widescreen button is pressed
