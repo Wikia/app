@@ -75,13 +75,14 @@ class Preprocessor_DOM implements Preprocessor {
 			$cacheable = false;
 		}
 
-		// RTE - begin
-		// TODO: document
+		# RTE (Rich Text Editor) - begin
+		# @author: Inez Korczyński
+		# Disable preprocessor cache for RTE mode
 		global $wgRTETemplateParams;
 		if(!empty($wgRTETemplateParams) || !empty($wgRTEParserEnabled)) {
 			$cacheable = false;
 		}
-		// RTE - end
+		# RTE - end
 
 		if ( $cacheable ) {
 			wfProfileIn( __METHOD__.'-cacheable' );
@@ -171,8 +172,8 @@ class Preprocessor_DOM implements Preprocessor {
 			$xmlishElements[] = 'includeonly';
 		}
 
-		// RTE - begin
-		// TODO: document
+		# RTE (Rich Text Editor) - begin
+		# @author: Inez Korczyński
 		global $wgRTEParserEnabled, $wgRTETemplateParams;
 		if(!empty($wgRTEParserEnabled)) {
 			$rules['['] = array(
@@ -188,7 +189,7 @@ class Preprocessor_DOM implements Preprocessor {
 			$rules['{']['min'] = 3;
 			$rules['{']['names'] = array(3 => 'tplarg');
 		}
-		// RTE - end
+		# RTE - end
 
 		//CategorySelect
 		if (!empty($wgCategorySelectEnabled)) {
@@ -217,12 +218,12 @@ class Preprocessor_DOM implements Preprocessor {
 		$noMoreGT = false;         # True if there are no more greater-than (>) signs right of $i
 		$findOnlyinclude = $enableOnlyinclude; # True to ignore all input up to the next <onlyinclude>
 		$fakeLineStart = true;     # Do a line-start run without outputting an LF character
-		$openAt = $closeAt = array(); # Wysiwyg && CategorySelect
+		$openAt = $closeAt = array(); # CategorySelect
 
-		// RTE - begin
-		// TODO: document
+		# RTE (Rich Text Editor) - begin
+		# @author: Inez Korczyński
 		$openAt = $closeAt = array();
-		// RTE - end
+		# RTE - end
 
 		while ( true ) {
 			//$this->memCheck();
@@ -439,13 +440,13 @@ class Preprocessor_DOM implements Preprocessor {
 					// this is necessary for precise reconstruction during pre-save transform.
 					'<attr>' . htmlspecialchars( $attr ) . '</attr>';
 
-				// RTE - begin
-				// TODO: document
+				# RTE (Rich Text Editor) - begin
+				# @author: Inez Korczyński
 				if(!empty($wgRTEParserEnabled)) {
 					$accum .= '<inner>' . RTEMarker::generate(RTEMarker::EXT_WIKITEXT, RTEData::put('wikitext', substr( $text, $tagStartPos, $i - $tagStartPos ))) . '</inner>';
 					$inner = null;
 				}
-				// RTE - end
+				# RTE - end
 
 				if ( $inner !== null ) {
 					$accum .= '<inner>' . htmlspecialchars( $inner ) . '</inner>';
@@ -567,13 +568,12 @@ class Preprocessor_DOM implements Preprocessor {
 				}
 
 				$i += $count;
-
-				// RTE - begin
-				// TODO: document
+				# RTE (Rich Text Editor) - begin
+				# @author: Inez Korczyński
 				if(!empty($wgRTEParserEnabled) && $RTE_flags === 0 && $count == 2 && $curChar == "{") {
 					$openAt[] = $i;
 				}
-				// RTE - end
+				# RTE - end
 			}
 
 			elseif ( $found == 'close' ) {
@@ -608,8 +608,8 @@ class Preprocessor_DOM implements Preprocessor {
 					continue;
 				}
 				$name = $rule['names'][$matchingCount];
-				// RTE - begin
-				// TODO: document
+				# RTE (Rich Text Editor) - begin
+				# @author: Inez Korczyński
 				if ( $name === null || $name == 'external' || (!empty($wgRTEParserEnabled) && $name == 'external')) {
 					// No element, just literal text
 					$element = $piece->breakSyntax( $matchingCount ) . str_repeat( $rule['end'], $matchingCount );
@@ -623,7 +623,7 @@ class Preprocessor_DOM implements Preprocessor {
 							$element .= RTEMarker::generate(RTEMarker::EXTERNAL_WIKITEXT, $dataIdx);
 						}
 					}
-				// RTE - end
+				# RTE - end
 				} else {
 					# Create XML element
 					# Note: $parts is already XML, does not need to be encoded further
@@ -639,8 +639,8 @@ class Preprocessor_DOM implements Preprocessor {
 						$attr = '';
 					}
 
-					// RTE - begin
-					// TODO: document
+					# RTE (Rich Text Editor) - begin
+					# @author: Inez Korczyński
 					if(!empty($wgRTEParserEnabled) && $RTE_flags === 0 && $count == 2 && $curChar == '}') {
 						$closeAt[] = $i;
 						if(count($closeAt) == count($openAt)) {
@@ -650,7 +650,7 @@ class Preprocessor_DOM implements Preprocessor {
 							$attr .= ' _rte_wikitextidx="'.RTEData::put('wikitext', substr($text, $openIdx-2, $closeIdx-$openIdx+4)).'"';
 						}
 					}
-					// RTE - end
+					# RTE - end
 
 					$element = "<$name$attr>";
 					$element .= "<title>$title</title>";
@@ -1060,8 +1060,8 @@ class PPFrame_DOM implements PPFrame {
 					$title = $titles->item( 0 );
 					$parts = $xpath->query( 'part', $contextNode );
 
-					// RTE - begin
-					// TODO: document
+					# RTE (Rich Text Editor) - begin
+					# @author: Inez Korczyński
 					global $wgRTEParserEnabled;
 					if(!empty($wgRTEParserEnabled)) {
 						$dataIdx = RTEData::put('placeholder', array(
@@ -1087,7 +1087,7 @@ class PPFrame_DOM implements PPFrame {
 							}
 						}
 					}
-					// RTE - end
+					# RTE - end
 
 				} elseif ( $contextNode->nodeName == 'tplarg' ) {
 					# Triple-brace expansion
@@ -1115,7 +1115,8 @@ class PPFrame_DOM implements PPFrame {
 						|| ( $this->parser->ot['pre'] && $this->parser->mOptions->getRemoveComments() )
 						|| ( $flags & self::STRIP_COMMENTS ) )
 					{
-						// RTE - begin
+						# RTE (Rich Text Editor) - begin
+						# @author: Inez Korczyński
 						global $wgRTEParserEnabled;
 						if(!empty($wgRTEParserEnabled)) {
 							if(strlen($out) === 0 || substr($out, -1) == "\n") {
@@ -1137,7 +1138,7 @@ class PPFrame_DOM implements PPFrame {
 						} else {
 							$out .= '';
 						}
-						// RTE - end
+						# RTE - end
 
 					}
 					# Add a strip marker in PST mode so that pstPass2() can run some old-fashioned regexes on the result
