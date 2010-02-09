@@ -1795,7 +1795,11 @@ class Parser
 
 				# Interwikis
 				wfProfileIn( __METHOD__."-interwiki" );
+				# RTE (Rich Text Editor) - begin
+				# @author: Inez Korczyński
+				# No interwiki handling in RTE mode
 				if( empty($wgRTEParserEnabled) && $iw && $this->mOptions->getInterwikiMagic() && $nottalk && $wgContLang->getLanguageName( $iw ) ) {
+				# RTE - end
 					$this->mOutput->addLanguageLink( $nt->getFullText() );
 					$s = rtrim($s . $prefix);
 					$s .= trim($trail, "\n") == '' ? '': $prefix . $trail;
