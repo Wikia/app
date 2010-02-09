@@ -1941,8 +1941,8 @@ class Parser
 
 			wfProfileIn( __METHOD__."-always_known" );
 
-			// RTE - begin
-			// TODO: document
+			# RTE (Rich Text Editor) - begin
+			# @author: Inez Korczyński
 			if(!empty($wgRTEParserEnabled)) {
 				$text = RTEMarker::generate(RTEMarker::INTERNAL_DATA, RTEData::put('data', array(
 					'type' => 'internal',
@@ -1953,7 +1953,7 @@ class Parser
 					'wasblank' => $wasblank,
 					'noforce' => $noforce))).$text;
 			}
-			// RTE - end
+			# RTE - end
 
 			# Some titles, such as valid special pages or files in foreign repos, should
 			# be shown as bluelinks even though they're not included in the page table
