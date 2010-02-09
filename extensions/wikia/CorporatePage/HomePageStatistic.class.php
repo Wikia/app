@@ -7,11 +7,15 @@
 class HomePageStatistic
 {
 	public static function getPagesAddedInLastHour(){
-		return number_format(HomePageStatisticCollector::updatePagesAddedInLastHour());
+		wfProfileIn( __METHOD__ );
+        $out = number_format(HomePageStatisticCollector::updatePagesAddedInLastHour());;
+        wfProfileOut( __METHOD__ );          
+        return $out;
 	}
 	
 	public static function getWordsAddedLastWeek(){
 		global $wgMemc;
+        wfProfileIn( __METHOD__ );          
 		$key = wfMemcKey( "hp_stats", "words_added_week" );
 		$result = $wgMemc->get( $key, null);
 
@@ -42,6 +46,7 @@ class HomePageStatistic
 			$result += (int) (WikiaGlobalStats::getCountWordsInMonth($key)*$factor);
 		}
 		$wgMemc->set( $key, $result, 60*60);
+        wfProfileOut( __METHOD__ );          
 		return number_format($result);
 	}
 /*	
@@ -62,11 +67,15 @@ class HomePageStatistic
 	}
 */
 	public static function getEditsThisDay(){
-		return number_format(WikiaGlobalStats::getCountEditedPages(1));
+        wfProfileIn( __METHOD__ );
+        $out = number_format(WikiaGlobalStats::getCountEditedPages(1));
+        wfProfileOut( __METHOD__ );          
+        return $out;
 	}
 	
 	public static function getMostEditArticles72(){
-		global $wgUser;
+		global $wgUser;  
+        wfProfileIn( __METHOD__ );          
 		if ($wgUser->isAllowed( 'corporatepagemanager' )){
 			$out = WikiaGlobalStats::getPagesEditors(3, 10,true,true);
 		} else {
@@ -86,7 +95,8 @@ class HomePageStatistic
 			} else {
 				$out[$key]['level'] = 'x';
 			}
-		}
+		}         
+        wfProfileOut( __METHOD__ );          
 		return $out;      			
 	}
 	
