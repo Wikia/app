@@ -735,8 +735,10 @@ class Parser
 
 				$outLine = str_repeat( '<dl><dd>' , $indent_level ) . "<table{$attributes}>";
 
+				# RTE (Rich Text Editor) - begin
 				$outLine = $RTEcomment.$outLine;
 				$RTEcomment = null;
+				# RTE - end
 
 				array_push ( $td_history , false );
 				array_push ( $last_tag_history , '' );
