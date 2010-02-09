@@ -1545,10 +1545,20 @@ class RTEReverseParser {
 	 * Number of spaces is based on _rte_spaces_after and _rte_spaces_before attributes
 	 */
 	private static function addSpaces($node, $textContent) {
-		$spacesAfter = intval($node->getAttribute('_rte_spaces_after'));
-		$spacesBefore = intval($node->getAttribute('_rte_spaces_before'));
+		$textContent =  trim($textContent, ' ');
 
-		$out = str_repeat(' ', $spacesBefore) . trim($textContent, ' ') . str_repeat(' ', $spacesAfter);
+		// RT #40013
+		if ( ($textContent != '') && ($textContent != '&nbsp;') ) {
+			$spacesAfter = intval($node->getAttribute('_rte_spaces_after'));
+			$spacesBefore = intval($node->getAttribute('_rte_spaces_before'));
+		}
+		else {
+			$textContent = '';
+			$spacesAfter = intval($node->getAttribute('_rte_spaces_after'));
+			$spacesBefore = 0;
+		}
+
+		$out = str_repeat(' ', $spacesBefore) . $textContent . str_repeat(' ', $spacesAfter);
 
 		return $out;
 	}
