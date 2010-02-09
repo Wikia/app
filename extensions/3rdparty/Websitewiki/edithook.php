@@ -17,7 +17,7 @@ function fnwswEditHook($ea) {
 
     if($ea->mArticle->mTitle->mNamespace == NS_MAIN && eregi($exDomainList, $newpage)) {
 
-	$wgOut->redirect( Title::newFromText( 'NeueWebsite', NS_SPECIAL )->getFullURL( "param=$newpage" ), 307 );
+	$wgOut->redirect( Title::newFromText( 'NewWebsite', NS_SPECIAL )->getFullURL( "param=$newpage" ), 307 );
 
 	return false;
     } else {
