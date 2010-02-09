@@ -1909,15 +1909,16 @@ class Parser
 
 			# Self-link checking
 
-			// RTE - begin
-			// TODO: document
+			# RTE (Rich Text Editor) - begin
+			# @author: Inez Korczyński
+			# No special handling for self-linking in RTE mode
 			if(empty($wgRTEParserEnabled) && $nt->getFragment() === '' && $ns != NS_SPECIAL ) {
 				if( in_array( $nt->getPrefixedText(), $selflink, true ) ) {
 					$s .= $prefix . $sk->makeSelfLinkObj( $nt, $text, '', $trail );
 					continue;
 				}
 			}
-			// RTE - end
+			# RTE - end
 
 			# NS_MEDIA is a pseudo-namespace for linking directly to a file
 			# FIXME: Should do batch file existence checks, see comment below
