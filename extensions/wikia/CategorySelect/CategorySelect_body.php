@@ -33,6 +33,7 @@ class CategorySelect {
 			return $wgCategorySelectMetaData;
 		}
 
+		wfProfileIn( __METHOD__ );
 		global $wgParser, $wgTitle, $wgContLang, $wgCategorySelectEnabled;
 		//enable changes in Preprocessor and Parser
 		$wgCategorySelectEnabled = true;
@@ -64,6 +65,7 @@ class CategorySelect {
 		$modifiedWikitext = $wgParser->mStripState->unstripBoth($modifiedWikitext);
 
 		$wgCategorySelectMetaData = array('wikitext' => rtrim($modifiedWikitext), 'categories' => $categories);
+		wfProfileOut( __METHOD__ );
 		return $wgCategorySelectMetaData;
 	}
 
