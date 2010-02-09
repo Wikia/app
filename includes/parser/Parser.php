@@ -1646,6 +1646,16 @@ class Parser
 			# @author: Inez Korczyński
 			if(!empty($wgRTEParserEnabled)) {
 				$RTE_wikitextIdx = RTEMarker::getDataIdx(RTEMarker::INTERNAL_WIKITEXT, $line);
+
+				// decode entities inside links wikimarkup (RT #38844)
+				if ($pos = strpos($line, ']]')) {
+					// unmark entities inside link
+					$link = substr($line, 0, $pos);
+					$link = RTEParser::unmarkEntities($link);
+
+					// leave the rest of the line untouched
+					$line = $link . substr($line, $pos);
+				}
  			}
 			# RTE - end
 
