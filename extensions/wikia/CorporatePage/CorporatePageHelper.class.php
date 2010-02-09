@@ -91,6 +91,7 @@ class CorporatePageHelper{
 		if ( $out != null ){
 			return $out;
 		}
+        wfProfileIn( __METHOD__ );     
 		$message = wfMsgForContent($msg);
 		$lines = explode("\n",$message);
 		$out = array();
@@ -134,6 +135,7 @@ class CorporatePageHelper{
 			$out[count($out)-1]['islast'] = true;
 		}
 		$wgMemc->set( $mcKey, $out, 60*60*12);
+        wfProfileOut( __METHOD__ );     
 		return $out;
 	}
 	
@@ -151,6 +153,7 @@ class CorporatePageHelper{
 		if ( $out != null ){
 			return $out;
 		}
+        wfProfileIn( __METHOD__ );        
 		$message = wfMsgForContent($msg);
 		$lines = explode("\n",$message);
 		$out = array();
@@ -182,6 +185,7 @@ class CorporatePageHelper{
 			}
 		}
 		$wgMemc->set( $mcKey, $out, 60*60*12);
+        wfProfileOut( __METHOD__ );         
 		return $out;
 	}
 
