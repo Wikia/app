@@ -665,7 +665,11 @@ class Parser
 	 */
 	function doTableStuff ( $text ) {
 		wfProfileIn( __METHOD__ );
+
+		# RTE (Rich Text Editor) - begin
+		# Used to determine whether the Parser running in RTE mode or not
 		global $wgRTEParserEnabled;
+		# RTE - end
 
 		$lines = StringUtils::explode( "\n", $text );
 		$out = '';
@@ -679,17 +683,28 @@ class Parser
 		foreach ( $lines as $outLine ) {
 			$line = trim( $outLine );
 
-			// RTE - begin
-			// TODO: document
+			# RTE (Rich Text Editor) - begin
+			# @author: Inez Korczyński
+
+			# Initialize this variable regardless of the RTE mode being on/off,
+			# then it can be used in next batch of code without checking RTE mode.
 			$RTEcomment = null;
+
 			if(!empty($wgRTEParserEnabled)) {
-				$data = RTEData::get('placeholder', RTEMarker::getDataIdx(RTEMarker::PLACEHOLDER, $line, false));
-				if($data && $data['type'] == 'comment'){
-					$RTEcomment = substr($line, 0, 9);
-					$line = substr($line, 9);
+
+				# Check if there is a wikitext comment placholder at the beginning of given line,
+				# then cut it off - to have proper MediaWiki table processing - and store in variable for later recovery
+				$RTEdataIdx = RTEMarker::getDataIdx(RTEMarker::PLACEHOLDER, $line, false);
+				if($RTEdataIdx != null) {
+					$RTEdata = RTEData::get('placeholder', $RTEdataIdx);
+					if($RTEdata && $RTEdata['type'] == 'comment'){
+						$RTEcomment = substr($line, 0, 9);
+						$line = substr($line, 9);
+					}
 				}
+
 			}
-			// RTE - end
+			# RTE - end
 
 			if( $line == '' ) { // empty line, go to next line
 				$out .= $outLine."\n";
