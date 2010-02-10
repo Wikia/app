@@ -2522,7 +2522,8 @@ class Title {
 
 		$urls = array(
 			$this->getInternalURL(),
-			$this->getInternalURL( 'action=history' )
+			$this->getInternalURL( 'action=history' ),
+			$this->getInternalURL( 'useskin=wikiaphone' ),
 		);
 
 		// purge variant urls as well
