@@ -14,7 +14,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 class NewWikisSpecialPage extends SpecialPage {
 
 	function __construct() {
-		wfLoadExtensionMessages( "AutoCreateWiki" );
+		wfLoadExtensionMessages( "Newwikis" );
 		parent::__construct( 'Newwikis' );
 	}
 
