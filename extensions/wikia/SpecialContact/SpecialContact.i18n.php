@@ -37,7 +37,7 @@ or you can post on <a href="http://community.wikia.com/wiki/Forum:Index">Wikia C
 		/* email */
 		'contactmailsub' => 'Wikia Contact Mail',
 		'contactccdisabled' => 'DISABLED: Please validate your email address to use this function',
-		'contactccheader' => 'This is your copy of the message you send to Wikia Support',
+		'contactccheader' => 'This is your copy of the message you sent to Wikia Support',
 
 		/* after */
 		'contactsubmitcomplete' => 'Thank you for contacting Wikia.',
