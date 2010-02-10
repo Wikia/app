@@ -58,7 +58,7 @@ if( $wgUser->isAllowed('createaccount') ) {
 		</span>
 </div>
 <div id="userlogin<?php if ($this->data['ajax']) { ?>Ajax<?php } ?>">
-<form name="userlogin2" id="userlogin2" method="post" action="<?php $this->text('actioncreate') ?>" onsubmit="return UserRegistration.checkForm()">
+<form name="userlogin2" id="userlogin2" method="post" action="<?php $this->text('actioncreate') ?>" ">
 <?php		if( $this->data['message'] && $this->data['ajax'] ) { ?>
 	<div class="<?php $this->text('messagetype') ?>box" style="margin:0px">
 		<?php if ( $this->data['messagetype'] == 'error' ) { ?>
@@ -267,7 +267,7 @@ if( $wgUser->isAllowed('createaccount') ) {
 
 		<tr>
 			<td class="mw-submit">
-					<a id="wpCreateaccountX" class="wikia_button" href="#" onclick="UserRegistration.submitForm();" ><span><?= wfMsg("createaccount") ?></span></a>
+				<input onclick="UserRegistration.submitForm(); return false;" id="wpCreateaccountX" type="submit" value="<?= wfMsg("createaccount") ?>" />
 				<?php if( $this->data['createemail'] ) { ?>
 					<a id="wpCreateaccountX" class="wikia_button" href="#" onclick="$('#wpCreateaccountXSteer').value = false; $('#wpCreateaccountYSteer').value = true; UserRegistration.submitForm();" ><span><?= wfMsg("createaccountmail") ?></span></a>
 					<input type="hidden" id="wpCreateaccountYSteer" name="wpCreateaccountMail" value="false" >							
@@ -282,8 +282,6 @@ if( $wgUser->isAllowed('createaccount') ) {
 		var AjaxLogin2 = {};
 
 		AjaxLogin2.formSubmitHandler = function(ev) {
-			WET.byStr('loginActions2/' + AjaxLogin2.action);
-
 			AjaxLogin2.form.log('AjaxLogin2: selected action = '+ AjaxLogin2.action);
 
 			// tracking
@@ -615,9 +613,9 @@ if( $wgUser->isAllowed('createaccount') ) {
 	<div id="ControlBox" style="display:none"></div>
 	<label for="wpRemember2Ajax" class="plain"><?= wfMsg('remembermypassword') ?></label>
 	</div>
-	<input type="submit" value="Login" style="position: absolute; left: -10000px; width: 0" />
+	<input onclick="AjaxLogin2.action='login';" id="wpLoginattempt" type="submit" value="<?= wfMsg("login") ?>" />
 	</form>
-                <a id="wpLoginattempt" class="wikia_button rightSideElem" href="#" onclick="AjaxLogin2.action='login'; AjaxLogin2.form.submit();" ><span><?= wfMsg("login") ?></span></a>
+	
 	<div id="loginIntro" class="accent rightSideElem">
 		<div class="announcementHeader dark_text_2">
 			<?php $this->msg( 'registerintro-title' ) ?>

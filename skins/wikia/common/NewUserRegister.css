@@ -94,7 +94,7 @@ form#userajaxloginform2 .plain {
 
 #termsOfUse {
 	margin-left: 24px;
-	font-size:1em;
+	font-size: 100% !important;
 }
 
 #userlogin .loginText, #userlogin .loginPassword,
@@ -241,4 +241,33 @@ div#userlogin .inputError {
 	list-style-type: square;
 	margin: 0 0 0.1em;
 }
+
+
+
+ /* Base Styles */ 
+input[type="submit"] {
+  background-color: #093;
+  background-image: -moz-linear-gradient(top, #093 20%, #006722 70%);
+  background-image: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#093), to(#006722));
+  border: 1px solid #beddbe;
+  color: #FFF;
+  cursor: pointer;
+  display: inline-block;
+  font: bold 12px/17px "Lucida Grande", sans-serif;
+  height: 17px;
+  margin: 0;
+  padding: 0 7px;
+  text-decoration: none;
+  white-space: nowrap;
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
+  -moz-box-shadow: 0 0 0 1px #2c802c;
+  -webkit-box-shadow: 0 1px 0 #2c802c, 0 -1px 0 #2c802c, 1px 0 0 #2c802c, -1px 0 0 #2c802c;
+}
+
+/* Border-box model: Inputs and buttons count border as part of height. Increase height. */
+input[type="submit"] {
+  height: 19px;
+}
+
 /* @end */
