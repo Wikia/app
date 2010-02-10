@@ -28,7 +28,7 @@ class TokyoTyrantSession {
 	const NBR_CONN		= 20;
 
 
-	private $mDebug     = true;
+	private $mDebug = false;
 
 	var $servers = null;
 	var $active = 0;
