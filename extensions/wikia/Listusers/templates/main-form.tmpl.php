@@ -211,13 +211,13 @@ function wkLUshowDetails(limit, offset, ord, desc)
 				oneRow += "<th><a id=\"TablePager_groups\" style=\"cursor:pointer;" + ((order == 'groups') ? "color:#006400;" : "") + "\">" + _th + " <?=wfMsg('listusers-groups')?></a></th>";
 				_th = (order == 'revcnt') ? ((desc == -1) ? "&darr;" : "&uarr;") : "";
 				oneRow += "<th><a id=\"TablePager_revcnt\" style=\"cursor:pointer;" + ((order == 'revcnt') ? "color:#006400;" : "") + "\">" + _th + " <?=wfMsg('listusersrev-cnt')?></a></th>";
-				if (wgUserName) {
+				//if (wgUserName) {
 					_th = (order == 'loggedin') ? ((desc == -1) ? "&darr;" : "&uarr;") : "";
 					oneRow += "<th><a id=\"TablePager_loggedin\" style=\"cursor:pointer;" + ((order == 'loggedin') ? "color:#006400;" : "") + "\">" + _th + " <?=wfMsg('listusers-loggedin')?></a></th>";
 					_th = (order == 'dtedit') ? ((desc == -1) ? "&darr;" : "&uarr;") : "";
 					oneRow += "<th><a id=\"TablePager_dtedit\" style=\"cursor:pointer;" + ((order == 'dtedit') ? "color:#006400;" : "") + "\">" + _th + " <?=wfMsg('listusers-edited')?></a></th>";
 					oneRow += "</tr>";
-				}
+				//}
 				_tmp += oneRow;
  				loop = limit * offset;
  				if (resData['data']) {
@@ -228,7 +228,7 @@ function wkLUshowDetails(limit, offset, ord, desc)
 						oneRow += "<td " + blocked + " ><span style=\"font-size:90%;font-weight:bold;\">" +resData['data'][i]['user_link']+ "</span> <span style=\"font-size:77%; padding-left:8px;\">" + resData['data'][i]['links'] + "</span></td>";
 						oneRow += "<td " + blocked + " >" +resData['data'][i]['groups']+ "</td>";
 						oneRow += "<td " + blocked + " >" +resData['data'][i]['rev_cnt']+ "</td>";
-						if (wgUserName) {
+						//if (wgUserName) {
 							oneRow += "<td " + blocked + " >" + ((resData['data'][i]['last_login']) ? resData['data'][i]['last_login'] : "-") + "</td>";
 							oneRow += "<td " + blocked + " >" ;
 							if (resData['data'][i]['last_edit_ts']) {
@@ -238,7 +238,7 @@ function wkLUshowDetails(limit, offset, ord, desc)
 								oneRow += " - ";
 							}
 							oneRow += "</td>";	
-						}
+						//}
 						oneRow += "</tr>";
 						_tmp += oneRow;
 					}

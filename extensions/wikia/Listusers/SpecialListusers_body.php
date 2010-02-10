@@ -190,8 +190,7 @@ class Listusers extends SpecialPage {
 
 		$aUsers = array('cnt' => 0, 'data' => array());
 		$data = array('cnt' => 0, 'rows' => array());
-		$anon = $wgUser->isAnon();
-		$subMemkey = md5('G'.$groups.'T'.$text.'C'.$contrib.'O'.$offset.'L'.$limit.'O'.$orderby.'A'.$anon);
+		$subMemkey = md5('G'.$groups.'T'.$text.'C'.$contrib.'O'.$offset.'L'.$limit.'O'.$orderby);
 		$memkey = wfForeignMemcKey( $wgCityId, null, "Listusers", $subMemkey );
 		$cached = $wgMemc->get($memkey);
 		if (!is_array ($cached)) { 
@@ -229,23 +228,14 @@ class Listusers extends SpecialPage {
 
 				$aTables = array('city_local_users');
 				$aWhat = array ( "lu_user_id", "lu_user_name", "lu_numgroups", "lu_allgroups", "lu_rev_cnt", "lu_blocked" );
-				if ( $wgUser->isAnon() ) {
-					$aWhat[] = "0 as ts";
-					$aWhat[] = "0 as max_rev";
-					$aWhat[] = "0 as ts_edit";
-				} else  {
-#					$aTables = array ( 
-#						'city_local_users left join user_login_history_summary on (lu_user_id = user_id)' 
-#					);
-					$aTables = array ( 
-						'city_local_users 
-						left join user_summary s1 on (lu_user_id = s1.user_id) and (s1.city_id = 0)
-						left join user_summary s2 on (lu_user_id = s2.user_id) and (s2.city_id = '.$wgCityId.')'
-					);
-					$aWhat[] = "ifnull(unix_timestamp(s1.last_logged_in), 0) as ts";
-					$aWhat[] = "ifnull(s2.rev_last, 0) as max_rev";
-					$aWhat[] = "ifnull(unix_timestamp(s2.ts_edit_last), 0) as ts_edit";
-				}
+				$aTables = array ( 
+					'city_local_users 
+					left join user_summary s1 on (lu_user_id = s1.user_id) and (s1.city_id = 0)
+					left join user_summary s2 on (lu_user_id = s2.user_id) and (s2.city_id = '.$wgCityId.')'
+				);
+				$aWhat[] = "ifnull(unix_timestamp(s1.last_logged_in), 0) as ts";
+				$aWhat[] = "ifnull(s2.rev_last, 0) as max_rev";
+				$aWhat[] = "ifnull(unix_timestamp(s2.ts_edit_last), 0) as ts_edit";
 				$res = $dbs->select(
 					$aTables,
 					$aWhat,
@@ -319,18 +309,16 @@ class Listusers extends SpecialPage {
 				);
 				
 				# last revision and date of last edit
-				if ( $wgUser->isLoggedIn() ) {
-					$aUsers['data'][$oRow->lu_user_id]['last_edit_ts'] = 
-						(!empty($oRow->ts_edit)) ? $wgLang->timeanddate( $oRow->ts_edit, true ) : "";
-						
-					if ( !empty($oRow->max_rev) ) { 
-						$oRevision = Revision::newFromId($oRow->max_rev);
-						if ( !is_null($oRevision) ) {
-							$oTitle = $oRevision->getTitle();
-							if ( !is_null($oTitle) ) {
-								$aUsers['data'][$oRow->lu_user_id]['last_edit_page'] = $oTitle->getLocalUrl();
-								$aUsers['data'][$oRow->lu_user_id]['last_edit_diff'] = $oTitle->getLocalUrl('diff=prev&oldid=' . $oRow->max_rev);
-							}
+				$aUsers['data'][$oRow->lu_user_id]['last_edit_ts'] = 
+					(!empty($oRow->ts_edit)) ? $wgLang->timeanddate( $oRow->ts_edit, true ) : "";
+					
+				if ( !empty($oRow->max_rev) ) { 
+					$oRevision = Revision::newFromId($oRow->max_rev);
+					if ( !is_null($oRevision) ) {
+						$oTitle = $oRevision->getTitle();
+						if ( !is_null($oTitle) ) {
+							$aUsers['data'][$oRow->lu_user_id]['last_edit_page'] = $oTitle->getLocalUrl();
+							$aUsers['data'][$oRow->lu_user_id]['last_edit_diff'] = $oTitle->getLocalUrl('diff=prev&oldid=' . $oRow->max_rev);
 						}
 					}
 				}
