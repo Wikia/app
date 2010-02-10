@@ -211,7 +211,7 @@ class UserrightsPage extends SpecialPage {
 		$log = new LogPage( 'rights' );
 
 		$log->addEntry( 'rights',
-			$user->getTalkPage(),
+			$user->getUserPage(),
 			$wgRequest->getText( 'user-reason' ),
 			array(
 				$this->makeGroupNameListForLog( $oldGroups ),

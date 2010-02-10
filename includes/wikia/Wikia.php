@@ -14,6 +14,7 @@
 $wgHooks['SpecialRecentChangesLinks'][] = "Wikia::addRecentChangesLinks";
 $wgHooks['SpecialRecentChangesQuery'][] = "Wikia::makeRecentChangesQuery";
 $wgHooks['SpecialPage_initList'][] = "Wikia::disableSpecialPage";
+$wgHooks['UserRights'][] = "Wikia::notifyUserOnRightsChange";
 
 /**
  * This class have only static methods so they can be used anywhere
@@ -674,6 +675,26 @@ class Wikia {
 		if ( isset($wgDisableSpecialStatistics) && ($wgDisableSpecialStatistics === true) ) {
 			unset($list['Statistics']);
 		}
+		return true;
+	}
+	
+	/**
+	 * notify user on user right change
+	 *
+	 * @author      Piotr Molski <moli@wikia-inc.com>
+	 * @version     1.0.0
+	 * @param       User    $user object
+	 * @param       Array   $addgroup - selected groups for user
+	 * @param       Array   $removegroup - disabled groups for user
+	 */
+	static public function notifyUserOnRightsChange ( &$user, $addgroup, $removegroup ) {
+		global $wgUsersNotifiedOnAllChanges;
+		
+		$userName = $user->getName();
+		if ( !in_array( $userName, $wgUsersNotifiedOnAllChanges) ) {
+			$wgUsersNotifiedOnAllChanges[] = $userName;
+		}
+		
 		return true;
 	}
 
