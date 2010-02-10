@@ -21,8 +21,10 @@ class LookupContribsCore {
 
     public function __construct($username) {
         $this->mUsername = $username;
-		$this->oUser = User::newFromName($this->mUsername);        
-		$this->mUserId = $this->oUser->getId();
+		$this->oUser = User::newFromName($this->mUsername);
+		if ( $this->oUser instanceof User ) {
+			$this->mUserId = $this->oUser->getId();
+		}
 		wfLoadExtensionMessages("SpecialLookupContribs");
     }
 
