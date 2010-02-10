@@ -13,6 +13,7 @@
  */
 $wgHooks['SpecialRecentChangesLinks'][] = "Wikia::addRecentChangesLinks";
 $wgHooks['SpecialRecentChangesQuery'][] = "Wikia::makeRecentChangesQuery";
+$wgHooks['SpecialPage_initList'][] = "Wikia::disableSpecialPage";
 
 /**
  * This class have only static methods so they can be used anywhere
@@ -659,5 +660,21 @@ class Wikia {
 		} 
 		return true;
 	}
-	
+
+	/**
+	 * disable special pages from the list of specialpages
+	 *
+	 * @author      Piotr Molski <moli@wikia-inc.com>
+	 * @version     1.0.0
+	 * @param       Array    $join_conds - joins in SQL query
+	 */
+	static public function disableSpecialPage ( &$list ) {
+		global $wgDisableSpecialStatistics;
+		
+		if ( isset($wgDisableSpecialStatistics) && ($wgDisableSpecialStatistics === true) ) {
+			unset($list['Statistics']);
+		}
+		return true;
+	}
+
 }

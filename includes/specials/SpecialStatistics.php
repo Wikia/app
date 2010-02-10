@@ -25,13 +25,7 @@ class SpecialStatistics extends SpecialPage {
 	public function execute( $par ) {
 		global $wgOut, $wgRequest, $wgMessageCache;
 		global $wgDisableCounters, $wgMiserMode, $wgTitle;
-		global $wgDisableSpecialStatistics;
 		$wgMessageCache->loadAllMessages();
-
-		if ( isset($wgDisableSpecialStatistics) && ($wgDisableSpecialStatistics === true) ) {
-			$wgOut->showErrorPage( 'nosuchspecialpage', 'nospecialpagetext' );
-			return;
-		}
 
 		$this->setHeaders();
 
