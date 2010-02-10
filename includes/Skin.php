@@ -517,7 +517,8 @@ class Skin extends Linker {
 		$s .= "\tvar stylepath = '" . Xml::escapeJsString( $wgStylePath ) . "';\n";
 		$s .= "}";
 		$s .= "\n\n/* MediaWiki:Common.js */\n";
-		$commonJs = wfMsgForContent('common.js');
+        $s .= "try{";
+        $commonJs = wfMsgForContent('common.js');
 		if ( !wfEmptyMsg ( 'common.js', $commonJs ) ) {
 			$s .= $commonJs;
 		}
@@ -530,6 +531,7 @@ class Skin extends Linker {
 		if ( !wfEmptyMsg( $msgKey, $userJS ) ) {
 			$s .= $userJS;
 		}
+        $s .=  " } catch(err) { } ";
 
 		wfProfileOut( __METHOD__ );
 		return $s;
