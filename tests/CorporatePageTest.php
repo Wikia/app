@@ -1,13 +1,13 @@
 <?php
 
 class CorporatePageTest extends PHPUnit_Framework_TestCase {
-	var $reverseParser;
 
 	function setUp(){
 		global $IP;
 		require_once("$IP/extensions/wikia/CorporatePage/HomePageMemAdapter.class.php");
 		require_once("$IP/extensions/wikia/CorporatePage/HomePageStatisticCollector.class.php");
 		require_once("$IP/extensions/wikia/CorporatePage/CorporatePageHelper.class.php");	
+		$this->markTestSkipped();
 	}
 
 	function testFifoLineAndMemcClear() {
