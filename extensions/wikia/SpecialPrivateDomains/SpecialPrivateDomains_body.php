@@ -96,7 +96,7 @@ class PrivateDomains extends SpecialPage {
 		}
 
 		$wgOut->addHTML("<form name=\"privatedomains\" id=\"privatedomains\" method=\"post\" action=\"{$action}\"><label for=\"affiliateName\"><br />" . wfMsg('privatedomains_affiliatenamelabel') .  "</label>" . wfMsg( 'word-separator' ) . "<input type='text' name=\"affiliateName\"  width=30 value=\"" . $this->getParam('privatedomains_affiliatename') ."\"><label for=\"optionalEmail\"><br />" . wfMsg('privatedomains_emailadminlabel') . "</label>" . wfMsg( 'word-separator' ) . "<input type='text' name=\"optionalPrivateDomainsEmail\" value=\"" . $this->getParam('privatedomains_emailadmin') . "\">");
-		$wgOut->addHTML("<br /><br /><p>" . wfMsg( 'privatedomainsinstructions' ) . </p> );
+		$wgOut->addHTML("<br /><br /><p>" . wfMsg( 'privatedomainsinstructions' ) . "</p>" );
 		$wgOut->addHTML("<textarea name='listdata' rows=10 cols=40>" . $this->getParam('privatedomains_domains') . "</textarea>");
 		$wgOut->addHTML("<br><input type='submit' name=\"saveList\" value=\"" . wfMsgHtml('saveprefs') . "\" />");
 		$wgOut->addHTML("</form>");
