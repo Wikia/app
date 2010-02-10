@@ -57,8 +57,8 @@ $link = $titleObj->getLocalUrl('type=signup');
 			<input type="submit" value="Login" style="position: absolute; left: -10000px; width: 0" />
 		</form>
 		<div class="modalToolbar neutral">
-			<a id="wpLoginattempt" class="wikia_button" href="#" onclick="AjaxLogin.action='login'; AjaxLogin.form.submit(); return false;" ><span><?= wfMsg("login") ?></span></a>
-			<a id="wpLoginattempt" class="wikia_button secondary" href="#" onclick="AjaxLogin.close(); return false;" ><span><?= wfMsg("Cancel") ?></span></a>
+			<a id="wpLoginCombo" class="wikia_button" href="#" onclick="AjaxLogin.action='login'; AjaxLogin.form.submit(); return false;" ><span><?= wfMsg("login") ?></span></a>
+			<a id="wpLoginCancel" class="wikia_button secondary" href="#" onclick="AjaxLogin.close(); return false;" ><span><?= wfMsg("Cancel") ?></span></a>
 		</div>
 	</div>
 	<div id="AjaxLoginRegisterForm" style="display:none" title="<?= wfMsg('login') ?>">
