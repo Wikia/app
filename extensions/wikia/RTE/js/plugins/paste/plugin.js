@@ -13,22 +13,17 @@ CKEDITOR.plugins.add('rte-paste',
 	init: function(editor) {
 		var self = this;
 
-		editor.on('instanceReady', function() {
-			// @see clipboard CK core plugin
-			var body = this.document.getBody();
+		editor.on('beforePaste', function(ev) {
+			// only care when in wysiwyg mode
+			if (editor.mode != 'wysiwyg') {
+				return;
+			}
 
-			body.on('beforepaste', function(ev) {
-				// only care when in wysiwyg mode
-				if (editor.mode != 'wysiwyg') {
-					return;
-				}
+			// store HTML before paste
+			self.htmlBeforePaste = self.getHtml();
 
-				// store HTML before paste
-				self.htmlBeforePaste = self.getHtml();
-
-				// handle pasted HTML (mainly for tracking stuff)
-				setTimeout(function() {self.handlePaste.call(self)}, 250);
-			});
+			// handle pasted HTML
+			setTimeout(function() {self.handlePaste.call(self)}, 250);
 		});
 	},
 
@@ -38,9 +33,6 @@ CKEDITOR.plugins.add('rte-paste',
 
 		// get HTML after paste
 		var newHTML = this.getHtml();
-
-		// regenerate pasted placeholder / image
-		RTE.instance.fire('wysiwygModeReady');
 
 		// we have HTML before and after the paste -> generate 'diff'
 		var diff = this.diff(this.htmlBeforePaste, newHTML);
