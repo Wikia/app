@@ -108,7 +108,8 @@ class objRend {
 	// receive raw text in, serialize to hash-encoded temp file, funnel to bash
 	// and receive tag anew.
 	function strRend($strTex, $arr) {
-		global $arrErr, $strErr, $strRendPath, $wgScriptPath; // global err, path def's
+		global $arrErr, $strErr, $strRendPath, $wgScriptPath,
+			$wgWikiTexDirectory, $wgWikiTexPath; // global err, path def's
 
 		settype($obj,	    'object'); // file resource
 		settype($arrBash,	'array'); // standard out parameters
@@ -127,8 +128,8 @@ class objRend {
 
 		$strTemplate= "$strRendPath/wikitex.%s.inc*";
 		$strErrClass= 'error';
-		$strDir   = '/images/w/wikitex/images/';
-		$strURI   = 'http://images.wikia.com/wikitex/images/';
+		$strDir   = $wgWikiTexDirectory;
+		$strURI   = $wgWikiTexPath;
 		$strBash  = "$strRendPath/wikitex.sh %s %s %s %s %s";	// usage: wikitex FILE MODULE OUTPATH DIRSUFFIX DIRTMP
 		$strRend  = '%%%s%%';
 
