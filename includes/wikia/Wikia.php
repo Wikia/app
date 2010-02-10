@@ -666,7 +666,7 @@ class Wikia {
 	 *
 	 * @author      Piotr Molski <moli@wikia-inc.com>
 	 * @version     1.0.0
-	 * @param       Array    $join_conds - joins in SQL query
+	 * @param       Array    $list - list of specialpages 
 	 */
 	static public function disableSpecialPage ( &$list ) {
 		global $wgDisableSpecialStatistics;
