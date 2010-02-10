@@ -184,7 +184,7 @@ class TokyoTyrantSession {
 	}
 }
 
-if( !$wgSessionsInMemcached && $wgSessionsInTokyoTyrant ) {
+if( empty( $wgSessionsInMemcached ) && !empty( $wgSessionsInTokyoTyrant ) ) {
 	session_set_save_handler(
 		array('TokyoTyrantSession','__open'),
 		array('TokyoTyrantSession','__close'),
