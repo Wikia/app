@@ -425,6 +425,7 @@
 'ethereal burden'=>45,
 'fevered dreams'=>55,
 'fragility'=>19,
+'fragility (pvp)'=>90019,
 'frustration'=>1341,
 'illusion of haste'=>37,
 'illusion of pain'=>879,
