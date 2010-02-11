@@ -1,4 +1,6 @@
 == Changes since 201002.2 ==
+* rt#37709: RTE: allow images to be dragged above/below the viewable area (macbre)
+* rt#37703: RTE: link creation places cursor at start of link (macbre)
 * rt#38980: RTE: only first set of spaces are removed for paste events (macbre)
 * rt#40169: staff check for HAWelcome (uberfuzzy)
 * rt#40135: special:specialpages at central gives internal error (Nef)
