@@ -41,7 +41,7 @@ function checkFlag(id) {
 			<li><input type="checkbox" name="close_flags[]" id="flag_<?=WikiFactory::FLAG_HIDE_DB_IMAGES?>" value="<?=WikiFactory::FLAG_HIDE_DB_IMAGES?>"> <?=wfMsg('closed-hide-dumps')?></li>
 			<li>
 				<input type="checkbox" name="close_flags[]" id="flag_<?=WikiFactory::FLAG_REDIRECT?>" value="<?=WikiFactory::FLAG_REDIRECT?>"> <?=wfMsg('closed-redirect-url')?>
-				<input type="text" name="redirect_url" id="redirect_url" value="">
+				<input type="text" name="redirect_url" id="redirect_url" value=""> <i>ex: foo.wikia.com</i>
 			</li>
 		</ul>
 		<ul style="list-style:none;padding:1px 10px;">
