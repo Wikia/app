@@ -62,7 +62,7 @@ class StaticChute {
 			'common/contributed.js',
 			'../extensions/wikia/ShareFeature/js/ShareFeature.js',
 			'../extensions/wikia/CreatePage/js/CreatePage.js',
-			'../extensions/wikia/Interstitials/Interstitials.js',
+			'../extensions/wikia/Interstitial/Interstitial.js',
 		);
 		$this->config['monaco_anon_article_js'] = array_merge($this->config['monaco_anon_article_js'], $widgetsAssets['js']);
 
