@@ -30,7 +30,7 @@ if ( !CKEDITOR.env )
 			 * if ( CKEDITOR.env.ie )
 			 *     alert( "I'm on IE!" );
 			 */
-			ie		: /*@cc_on!@*/false,
+			ie	: (!+"\v1"), // @see http://webreflection.blogspot.com/2009/01/32-bytes-to-know-if-your-browser-is-ie.html
 
 			/**
 			 * Indicates that CKEditor is running on Opera.
@@ -58,7 +58,7 @@ if ( !CKEDITOR.env )
 			 * if ( CKEDITOR.env.air )
 			 *     alert( "I'm on AIR!" );
 			 */
-			air		: ( agent.indexOf( ' adobeair/' ) > -1 ),
+			air	: ( agent.indexOf( ' adobeair/' ) > -1 ),
 
 			/**
 			 * Indicates that CKEditor is running on Macintosh.

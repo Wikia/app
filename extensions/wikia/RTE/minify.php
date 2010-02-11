@@ -54,14 +54,8 @@ HEAD;
 			// remove lines marked with "@Packager.RemoveLine" comment
 			$res = preg_replace('#^.*@Packager\\.RemoveLine.*$#m', '', $res);
 
-			// preserve /*@cc_on!@*/ comments (used by CKEDITOR.env)
-			$res = str_replace('/*@cc_on!@*/', "\x7F-cc_on-\x7f", $res);
-
 			// minify
 			$res = $chute->minifyJSData($res);
-
-			// restore /*@cc_on!@*/ comments (used by CKEDITOR.env)
-			$res = str_replace("\x7F-cc_on-\x7f", '/*@cc_on!@*/', $res);
 
 			// add date and revision data
 			$res = str_replace('%REV%', "r{$revision}", $res);
