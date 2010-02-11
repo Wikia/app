@@ -463,13 +463,13 @@ class WikiaGlobalStats {
 	private static $limitWikiHubs 			= array( 'Gaming' => 2, 'Entertainment' => 2, '_default_' => 1 );
 	private static $defaultLimit 			= 200;
 
-	public static function getEditedArticles( $days = 7, $limit = 5, $onlyContent = true ) {
+	public static function getEditedArticles( $days = 7, $limit = 5, $onlyContent = true, $from_db = false ) {
     	global $wgExternalDatawareDB, $wgMemc;
 		wfProfileIn( __METHOD__ );
     	
 		$date_diff = date('Y-m-d', time() - $days * 60 * 60 * 24);
-		$memkey = wfMemcKey( __METHOD__, intval($days), intval($onlyContent), intval($limit) );
-		$result = $wgMemc->get( $memkey );
+		$memkey = wfMemcKey( "WS:getEditedArticles", intval($days), intval($onlyContent), intval($limit) );
+		$result = ( $from_db === true ) ? "" : $wgMemc->get( $memkey );
 		if ( empty($result) ) {
 			$data = array();
 			$dbr = wfGetDB( DB_SLAVE, 'blobs', $wgExternalDatawareDB );
@@ -523,21 +523,21 @@ class WikiaGlobalStats {
 					$values[$hub]++; $loop++;
 				}
 			}
-			$wgMemc->set( $memkey, $result, 60*60 );
+			$wgMemc->set( $memkey, $result );
 		}
 
 		wfProfileOut( __METHOD__ );
 		return $result;
 	}
 
-	public static function getPagesEditors( $days = 7, $limit = 5, $onlyContent = true, $recalculateLimit = false, $noHubDepe = false ) {
+	public static function getPagesEditors( $days = 7, $limit = 5, $onlyContent = true, $recalculateLimit = false, $noHubDepe = false, $from_db = false ) {
     	global $wgExternalDatawareDB, $wgMemc;
 		wfProfileIn( __METHOD__ );
     	
 		$dbLimit = self::$defaultLimit;
 		$date_diff = date('Y-m-d', time() - $days * 60 * 60 * 24);
-		$memkey = wfMemcKey( __METHOD__, $days, $limit, intval($onlyContent), intval($recalculateLimit), intval($noHubDepe) );
-		$result = $wgMemc->get( $memkey );
+		$memkey = wfMemcKey( "WS:getPagesEditors", $days, $limit, intval($onlyContent), intval($recalculateLimit), intval($noHubDepe) );
+		$result = ( $from_db === true ) ? "" : $wgMemc->get( $memkey );
 		if ( empty($result) ) {
 			$data = array();
 			$dbr = wfGetDB( DB_SLAVE, 'blobs', $wgExternalDatawareDB );
@@ -618,7 +618,7 @@ class WikiaGlobalStats {
 			}
 			unset($data);
 			unset($servers);
-			$wgMemc->set( $memkey , $result, 60*30 );
+			$wgMemc->set( $memkey, $result );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -776,27 +776,36 @@ class WikiaGlobalStats {
     	global $wgExternalDatawareDB, $wgMemc;
 		wfProfileIn( __METHOD__ );
     	
-		$date_diff = date('Y-m-d', time() - $days * 60 * 60 * 24);
 		$memkey = wfMemcKey( __METHOD__, $days, intval($onlyContent) );
 		$count = $wgMemc->get( $memkey );
 		if ( empty($count) ) {
+			$count = 0;
 			$dbr = wfGetDB( DB_SLAVE, 'blobs', $wgExternalDatawareDB );
-			
-			$conditions = array("pe_date >= '$date_diff'");
-			if ( $onlyContent === true ) {
-				$conditions['pe_is_content'] = 1;
+
+			$dates = array();
+			for ( $i = 1; $i <= $days; $i++ ) {
+				$dates[] = date('Y-m-d', time() - $i * 60 * 60 * 24);
 			}
+			$conditions = array();
+			if ( count($dates) == 1 ) {
+				$conditions = array('pe_date' => $dates[0] );
+			} else {
+				$conditions = array( "pe_date IN (".$dbr->makeList($dates).") " );
+			}
+			$field = ( $onlyContent === true ) ? 'pe_content_edits' : 'pe_edits';
 			
-			$oRow = $dbr->selectRow(
-				array( "page_edits" ),
-				array( "sum(pe_all_count) as all_count" ),
-				$conditions,
+			$oRes = $dbr->select(
+				array( "page_edits_month" ),
+				array( "$field as value" ),
+				$conditions, 
 				__METHOD__
 			);
-			$count = 0; if ( $oRow ) {
-				$count = $oRow->all_count;
+			while ( $oRow = $dbr->fetchObject( $oRes ) ) {
+				$count += intval($oRow->value);
 			}
-			$wgMemc->set( $memkey , $data, 60*30 );
+			$dbr->freeResult( $oRes );
+
+			$wgMemc->set( $memkey , $count, 60*30 );
 		}
 
 		wfProfileOut( __METHOD__ );

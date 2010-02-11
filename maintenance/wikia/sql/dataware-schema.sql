@@ -654,3 +654,18 @@ CREATE TABLE `page_edits` (
   KEY `pe_wikia_date` (`pe_wikia_id`,`pe_date`,`pe_all_count`),
   KEY `pe_wikia_anon_date` (`pe_wikia_id`,`pe_date`,`pe_anon_count`)
 ) ENGINE=InnoDB;
+
+CREATE TABLE `page_edits_month` (
+  `pe_date` date NOT NULL,
+  `pe_edits` int(10) unsigned NOT NULL default 0,
+  `pe_content_edits` int(10) unsigned NOT NULL default 0,
+  `pe_editors` int(10) unsigned NOT NULL default 0,
+  `pe_content_editors` int(10) unsigned NOT NULL default 0,
+  `pe_anon_editors` int(10) unsigned NOT NULL default 0,
+  `pe_anon_content_editors` int(10) unsigned NOT NULL default 0,
+  PRIMARY KEY  (`pe_date`),
+  KEY `pe_editors_date` (`pe_date`,`pe_editors`,`pe_anon_editors`),
+  KEY `pe_content_editors_date` (`pe_date`,`pe_content_editors`,`pe_anon_content_editors`),
+  KEY `pe_edits_date` (`pe_date`,`pe_edits`),
+  KEY `pe_content_edits_date` (`pe_date`,`pe_content_edits`)
+) ENGINE=InnoDB;
