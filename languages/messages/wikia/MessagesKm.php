@@ -1,6 +1,7 @@
 <?php
 
 $messages = array_merge( $messages, array(
+ 'titleedit'              => 'កែប្រែ',
 'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 'addnewtalksection-link' => 'បន្ថែមមួយវិចារទៅការពិភាក្សានេះ។',
 ) );

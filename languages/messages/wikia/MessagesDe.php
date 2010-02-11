@@ -1,6 +1,7 @@
 <?php
 
 $messages = array_merge( $messages, array(
+ 'titleedit'              => 'Bearbeiten',
 #Overrides for MediaWiki defaults
 'recentchangestext' => "<div style='border:solid 3px #e9e9e9; margin-bottom:0.3em;'>
 <div style='padding-left:0.5em; padding-right:0.5em;'>

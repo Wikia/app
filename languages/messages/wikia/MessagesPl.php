@@ -1,5 +1,6 @@
 <?php
 $messages = array_merge( $messages, array(
+ 'titleedit'              => 'Edytuj',
 
 #Wikia Widgets
 'wg_lastwikis' => 'Ostatnio Odwiedzone',

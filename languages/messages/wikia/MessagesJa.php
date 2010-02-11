@@ -1,6 +1,7 @@
 <?php
 #Related to visitor skins: Slate.php and Smoke.php
 $messages = array_merge( $messages , array(
+ 'titleedit'              => '編集',
 'contris' => '投稿記録',
 'wikicitieshome' => 'メインページ',
 'wikicitieshome-url' => 'http://ja.wikia.com/',
