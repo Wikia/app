@@ -5,7 +5,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 if(!window.CKEDITOR)
 {window.CKEDITOR=(function()
-{var CKEDITOR={timestamp:'A06B',version:'20100211',revision:'r18343',_:{},status:'unloaded',basePath:(function()
+{var CKEDITOR={timestamp:'A06B',version:'20100211',revision:'r18344',_:{},status:'unloaded',basePath:(function()
 {var path=window.CKEDITOR_BASEPATH||'';if(!path)
 {var scripts=document.getElementsByTagName('script');for(var i=0;i<scripts.length;i++)
 {var match=scripts[i].src.match(/(^|.*[\\\/])ckeditor(?:_basic)?(?:_source)?.js(?:\?.*)?$/i);if(match)
@@ -77,7 +77,7 @@ return new CKEDITOR.editor(config,element,CKEDITOR.ELEMENT_MODE_APPENDTO);};CKED
 {return CKEDITOR.event.prototype.fireOnce.call(this,eventName,data,this);}};CKEDITOR.event.implementOn(CKEDITOR.editor.prototype,true);}
 if(!CKEDITOR.env)
 {CKEDITOR.env=(function()
-{var agent=navigator.userAgent.toLowerCase();var opera=window.opera;var env={ie:/*@cc_on!@*/false,opera:(!!opera&&opera.version),webkit:(agent.indexOf(' applewebkit/')>-1),air:(agent.indexOf(' adobeair/')>-1),mac:(agent.indexOf('macintosh')>-1),quirks:(document.compatMode=='BackCompat'),isCustomDomain:function()
+{var agent=navigator.userAgent.toLowerCase();var opera=window.opera;var env={ie:(!+"\v1"),opera:(!!opera&&opera.version),webkit:(agent.indexOf(' applewebkit/')>-1),air:(agent.indexOf(' adobeair/')>-1),mac:(agent.indexOf('macintosh')>-1),quirks:(document.compatMode=='BackCompat'),isCustomDomain:function()
 {return this.ie&&document.domain!=window.location.hostname;}};env.gecko=(navigator.product=='Gecko'&&!env.webkit&&!env.opera);var version=0;if(env.ie)
 {version=parseFloat(agent.match(/msie (\d+)/)[1]);env.ie8=!!document.documentMode;env.ie8Compat=document.documentMode==8;env.ie7Compat=((version==7&&!document.documentMode)||document.documentMode==7);env.ie6Compat=(version<7||env.quirks);}
 if(env.gecko)
