@@ -933,7 +933,7 @@ class Masthead {
 					'avatarActions' => $avatarActions,
 					'anonymousUser' => $isDestinationUserAnon ? $userspace : '',
 				));
-				echo $tmpl->execute('UserMasthead');
+				echo $tmpl->render('UserMasthead');
 
 				global $wgMastheadVisible, $wgSupressPageTitle, $wgSupressSiteNotice;
 				//hide #page_tabs

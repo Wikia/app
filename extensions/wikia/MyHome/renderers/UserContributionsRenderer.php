@@ -12,7 +12,7 @@ class UserContributionsRenderer extends FeedRenderer {
 		$this->template->set('data', $data);
 
 		// render feed
-		$content = $this->template->execute('user.contributions');
+		$content = $this->template->render('user.contributions');
 
 		// add header and wrap
 		if (!empty($wrap)) {
