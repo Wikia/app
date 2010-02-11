@@ -32,7 +32,7 @@ use Wikia::DB;
 =default values
 =cut
 my $email_title = "Share feature";
-my $XLS_FILE = "/images/reports/share_feature/share_feature_" . substr (&ParseDate("today"), 0, 8) . ".xls";
+my $XLS_FILE = "/images/r/reports/share_feature/share_feature_" . substr (&ParseDate("today"), 0, 8) . ".xls";
 
 =help function
 =cut
@@ -125,7 +125,7 @@ my $res = ();
 =XLS - default settings ========================
 =init XLS spreadsheet
 =cut
-my $dir = "/images/reports/share_feature/";
+my $dir = "/images/r/reports/share_feature/";
 mkdir($dir) if (!(-e $dir)) ;
 unlink ($XLS_FILE);
 
