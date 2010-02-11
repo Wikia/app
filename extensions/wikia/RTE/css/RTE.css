@@ -185,6 +185,10 @@
 	_height: 75px; /* for IE */
 }
 
+.RTEPlaceholderPreviewExpanded {
+	max-height: 10000px !important;
+}
+
 .RTEPlaceholderPreviewCode * {
 	float: none !important; /* RT #37692 */
 	cursor: default !important;

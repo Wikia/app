@@ -428,6 +428,11 @@ CKEDITOR.plugins.add('rte-placeholder',
 
 				preview.children('.RTEPlaceholderPreviewInner').width(width);
 				previewArea.height(height);
+
+				previewArea.addClass('RTEPlaceholderPreviewExpanded');
+			}
+			else {
+				previewArea.removeClass('RTEPlaceholderPreviewExpanded');
 			}
 		}
 	}
