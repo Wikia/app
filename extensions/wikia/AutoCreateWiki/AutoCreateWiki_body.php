@@ -119,7 +119,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->mTitle   = Title::makeTitle( NS_SPECIAL, "CreateWiki" );
 		$this->mLang    = $wgRequest->getVal( "uselang", $wgUser->getOption( 'language' ) );
 		$this->mAction  = $wgRequest->getVal( "action", false );
-		$this->mType    = $wgRequest->getVal( "wiki-type", false );
+		$this->mType    = $wgRequest->getVal( "type", false );
 		$this->mSubpage = $subpage;
 		$this->mPosted  = $wgRequest->wasPosted();
 		$this->mPostedErrors = array();
@@ -869,19 +869,20 @@ class AutoCreateWikiPage extends SpecialPage {
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array(
-			"wgUser" => $wgUser,
+			"subDomain"        => $this->mDefSubdomain,
+			"wgUser"           => $wgUser,
 			"wgExtensionsPath" => $wgExtensionsPath,
-			"wgStyleVersion" => $wgStyleVersion,
-			"aLanguages" => $aLanguages,
-			"aTopLanguages" => $aTopLanguages,
-			"aCategories" => $aCategories,
-			"wgScriptPath" => $wgScriptPath,
-			"mTitle" => $this->mTitle,
-			"mLanguage" => $this->mLang,
-			"mPostedErrors" => $this->mPostedErrors,
-			"wgStylePath" => $wgStylePath,
-			"captchaForm" => $f->getForm(),
-			"params" => $params
+			"wgStyleVersion"   => $wgStyleVersion,
+			"aLanguages"       => $aLanguages,
+			"aTopLanguages"    => $aTopLanguages,
+			"aCategories"      => $aCategories,
+			"wgScriptPath"     => $wgScriptPath,
+			"mTitle"           => $this->mTitle,
+			"mLanguage"        => $this->mLang,
+			"mPostedErrors"    => $this->mPostedErrors,
+			"wgStylePath"      => $wgStylePath,
+			"captchaForm"      => $f->getForm(),
+			"params"           => $params
 		));
 
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
