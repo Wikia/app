@@ -6,9 +6,13 @@
  * @author Sean Colombo (forgive me)
  */
 
-$wgExtensionMessagesFiles['Interstitials'] = dirname(__FILE__) . '/Interstitials.i18n.php';
 $wgHooks['BeforePageDisplay'][] = 'installInterstitials';
 $wgHooks['MakeGlobalVariablesScript'][] = 'interstitialsJsGlobalVariables';
+
+define('INTERSTITIALS_SP', 'Interstitials'); // name of the Special Page and associated resources
+$wgExtensionMessagesFiles[INTERSTITIALS_SP] = dirname(__FILE__) . '/Interstitials.i18n.php';
+$wgSpecialPages[INTERSTITIALS_SP] = INTERSTITIALS_SP;
+$wgAutoloadClasses['Interstitials'] = dirname( __FILE__ ) . '/SpecialInterstitials_body.php';
 
 define('INTERSTITIAL_DEFAULT_PAGES_BEFORE_FIRST_AD', 5);
 define('INTERSTITIAL_DEFAULT_PAGES_BETWEEN_ADS', 8);
@@ -22,6 +26,7 @@ function interstitialsJsGlobalVariables(&$vars){
 	global $wgCookieDomain, $wgCookiePath;
 	global $wgAdsInterstitialsEnabled, $wgAdsInterstitialsPagesBeforeFirstAd, $wgAdsInterstitialsPagesBetweenAds;
 	global $wgAdsInterstitialsDurationInSeconds;
+	global $wgAdsInterstitialsCampaignCode;
 
 	$vars['wgCookieDomain'] = $wgCookieDomain;
 	$vars['wgCookiePath'] = $wgCookiePath;
@@ -29,7 +34,16 @@ function interstitialsJsGlobalVariables(&$vars){
 	$vars['wgAdsInterstitialsEnabled'] = $wgAdsInterstitialsEnabled;
 	$vars['wgAdsInterstitialsPagesBeforeFirstAd'] = (empty($wgAdsInterstitialsPagesBeforeFirstAd)?INTERSTITIAL_DEFAULT_PAGES_BEFORE_FIRST_AD:$wgAdsInterstitialsPagesBeforeFirstAd);
 	$vars['wgAdsInterstitialsPagesBetweenAds'] = (empty($wgAdsInterstitialsPagesBetweenAds)?INTERSTITIAL_DEFAULT_PAGES_BETWEEN_ADS:$wgAdsInterstitialsPagesBetweenAds);
-	$vars['wgAdsInterstitialsDurationInSeconds'] = (empty($wgAdsInterstitialsDurationInSeconds)?INTERSTITIAL_DEFAULT_DURATION_IN_SECONDS:$wgAdsInterstitialsDurationInSeconds);
+// TODO: FIXME: CLEAN UP THIS WHOLE METHOD TO ONLY OUTPUT THE VARS THAT WILL BE NEEDED WITH THE NEW METHODOLOGY.
+//	$vars['wgAdsInterstitialsDurationInSeconds'] = (empty($wgAdsInterstitialsDurationInSeconds)?INTERSTITIAL_DEFAULT_DURATION_IN_SECONDS:$wgAdsInterstitialsDurationInSeconds);
+	$vars['wgMsgInterstitialSkipAd'] = wfMsg('interstitial-skip-ad');
+
+	$code = (empty($wgAdsInterstitialsCampaignCode)?wfMsg('interstitial-default-campaign-code'):$wgAdsInterstitialsCampaignCode);
+	$vars['wgAdsInterstitialsCampaignCode'] = $code;
+
+	global $wgScriptPath;
+	$special = SpecialPage::getTitleFor( INTERSTITIALS_SP );
+	$vars['wgInterstitialPath'] = $special->getFullUrl("u=");
 	return true;
 } // end interstitialsJsGlobalVariables()
 
@@ -53,6 +67,8 @@ function installInterstitials( &$out, &$sk ){
  * Returns a string containing the HTML for the interstitial div. It will
  * be display:none by default and should be shown any time that wgAdsInterstitialsEnabled
  * is set to true.  Whether or not the interstitial shows up will be controlled by javascript.
+ *
+ * TODO: MOVE THIS TO A TEMPLATE FOR SpecialInterstitials_body TO CALL!
  */
 function interstitialHtml(){
 	global $wgAdsInterstitialsEnabled;
