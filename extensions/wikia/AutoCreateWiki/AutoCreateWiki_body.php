@@ -137,20 +137,6 @@ class AutoCreateWikiPage extends SpecialPage {
 				$this->mDefSubdomain = self::DEFAULT_DOMAIN;
 		}
 
-		/**
-		 * for tests we are changing some values for devel environment
-		 */
-		if( $wgDevelEnvironment ) {
-			global $wgDevelDomains;
-			$this->mDefSubdomain = array_shift( $wgDevelDomains );
-			switch( $this->mType ) {
-				case "answers":
-					$this->mDefSubdomain = "answers." . $this->mDefSubdomain;
-					break;
-			}
-		}
-
-
 		$this->mUserLanguage = $wgUser->getOption( 'language', $wgContLanguageCode );
 		$this->mNbrCreated = $this->countCreatedWikis();
 
@@ -203,7 +189,7 @@ class AutoCreateWikiPage extends SpecialPage {
 						$wgOut->blockedPage();
 						return;
 					}
-					if ( isset( $_SESSION['mAllowToCreate'] ) /*&& ( $_SESSION['mAllowToCreate'] >= wfTimestamp() ) */ ) {
+					if( isset( $_SESSION['mAllowToCreate'] ) ) {
 						/**
 						 * Limit of user creation
 						 */
@@ -215,7 +201,7 @@ class AutoCreateWikiPage extends SpecialPage {
 							));
 							return;
 						} else {
-							if ( $this->setVarsFromSession() > 0 ) {
+							if( $this->setVarsFromSession( ) > 0 ) {
 								$this->processCreatePage();
 							}
 						}
@@ -281,8 +267,10 @@ class AutoCreateWikiPage extends SpecialPage {
 									);
 									#wfTimestamp() + self::SESSION_TIME;
 									$_SESSION['mAllowToCreate'] = md5(implode("_", $aToken) . "_" . $user_id);
-									$query = ( $this->mLang != 'en' ) ? '?uselang=' . $this->mLang : '';
-									$wgOut->redirect($this->mTitle->getLocalURL() . '/Wiki_create' . $query);
+									$query = array();
+									if ( $this->mLang != 'en' ) $query[ "uselang" ] = $this->mLang;
+									if ( !empty(  $this->mType ) ) $query[ "type" ] = $this->mType;
+									$wgOut->redirect( $this->mTitle->getLocalURL() . '/Wiki_create?' . wfArrayToCGI( $query ) );
 								}
 							} else {
 								#--- some errors
@@ -308,13 +296,14 @@ class AutoCreateWikiPage extends SpecialPage {
 	 *
 	 */
 	private function createWiki() {
-		global $wgOut, $wgUser, $IP, $wgDBname;
+		global $wgOut, $wgUser, $IP, $wgDBname, $wgDevelDomains;
 		global $wgSharedDB, $wgExternalSharedDB, $wgDBcluster, $wgDevelEnvironment;
 		global $wgDBserver, $wgDBuser,	$wgDBpassword, $wgWikiaLocalSettingsPath;
 		global $wgHubCreationVariables, $wgLangCreationVariables, $wgUniversalCreationVariables;
 
 		wfProfileIn( __METHOD__ );
 
+		Wikia::log( __METHOD__, "type", "type={$this->mType}" );
 		/**
 		 * don't allow to create the same Wiki after page refresh
 		 */
@@ -428,27 +417,16 @@ class AutoCreateWikiPage extends SpecialPage {
 
 		$this->log( "Creating row in city_list table, city_id = {$this->mWikiId}" );
 
-		/*
-		 * add domains to the city_domains table, it always will be DEFAULT_DOMAIN
-		 * becaue WikiFactoryLoader changes it by itself for devel environments
-		 */
-		if( !empty( $wgDevelEnvironment ) ) {
-			$domain = str_replace( $this->mDefSubdomain, self::DEFAULT_DOMAIN, $this->mWikiData[ "domain" ] );
-		}
-		else {
-			$domain = $this->mWikiData[ "domain" ];
-		}
-
 		$res = $dbw->insert(
 			"city_domains",
 			array(
 				array(
 					'city_id'     => $this->mWikiId,
-					'city_domain' => $domain
+					'city_domain' => $this->mWikiData[ "domain" ]
 				),
 				array(
 					'city_id'     => $this->mWikiId,
-					'city_domain' => sprintf( "www.%s", $domain )
+					'city_domain' => sprintf( "www.%s", $this->mWikiData[ "domain" ] )
 				)
 			),
 			__METHOD__
@@ -678,8 +656,6 @@ class AutoCreateWikiPage extends SpecialPage {
 		$output = wfShellExec( $cmd );
 		$this->log( $output );
 
-
-
 		/**
 		 * show congratulation message
 		 */
@@ -865,11 +841,11 @@ class AutoCreateWikiPage extends SpecialPage {
 			$params['wiki-domain'] = $wgRequest->getVal( 'wiki-domain', false );
 			$params['wiki-category'] = $wgRequest->getVal( 'wiki-category', false );
 			$params['wiki-language'] = $wgRequest->getVal( 'wiki-language', false );
+			$params['wiki-type'] = $wgRequest->getVal( 'wiki-type', false );
 		}
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array(
-			"createType"       => $this->mType,
 			"subDomain"        => $this->mDefSubdomain,
 			"wgUser"           => $wgUser,
 			"wgExtensionsPath" => $wgExtensionsPath,
@@ -879,6 +855,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			"aCategories"      => $aCategories,
 			"wgScriptPath"     => $wgScriptPath,
 			"mTitle"           => $this->mTitle,
+			"mType"            => $this->mType,
 			"mLanguage"        => $this->mLang,
 			"mPostedErrors"    => $this->mPostedErrors,
 			"wgStylePath"      => $wgStylePath,
@@ -888,7 +865,8 @@ class AutoCreateWikiPage extends SpecialPage {
 
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
-		$wgOut->addHtml($oTmpl->execute("create-wiki-form"));
+		$wgOut->addHtml( $oTmpl->render("create-wiki-form") );
+
 		wfProfileOut( __METHOD__ );
 		return;
 	}
@@ -916,23 +894,30 @@ class AutoCreateWikiPage extends SpecialPage {
 		$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgStylePath}/common/form.css?{$wgStyleVersion}\" />" );
 		$wgOut->addScript( "<script type=\"text/javascript\" src=\"{$wgStylePath}/common/form.js?{$wgStyleVersion}\"></script>" );
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+
+		$query = array();
+		if ( $this->mLang != 'en' ) $query[ "uselang" ] = $this->mLang;
+		if ( !empty(  $this->mType ) ) $query[ "type" ] = $this->mType;
+
 		$oTmpl->set_vars( array(
+			"mQuery"           => wfArrayToCGI( $query ),
+			"mType"            => $this->mType,
+			"mTitle"           => $this->mTitle,
+			"mLanguage"        => $this->mLang,
+			"awcName"          => $this->awcName,
+			"awcDomain"        => $this->awcDomain,
+			"awcCategory"      => $this->awcCategory,
+			"awcLanguage"      => $this->awcLanguage,
+			"domain"           => $this->mDefSubdomain,
+			"subdomain"        => ( $this->awcLanguage === 'en' ) ? strtolower( trim( $this->awcDomain ) ) : $this->awcLanguage . "." . strtolower( trim( $this->awcDomain ) ),
+			"ajaxToken"        => md5($this->mTitle . "_" . $this->awcName . "_" . $this->awcDomain . "_" . $this->awcCategory . "_" . $this->awcLanguage ),
 			"wgExtensionsPath" => $wgExtensionsPath,
-			"wgStyleVersion" => $wgStyleVersion,
-			"mTitle" => $this->mTitle,
-			"mLanguage" => $this->mLang,
-			"awcName" => $this->awcName,
-			"awcDomain" => $this->awcDomain,
-			"awcCategory" => $this->awcCategory,
-			"awcLanguage" => $this->awcLanguage,
-			"subdomain" => ( $this->awcLanguage === 'en' ) ? strtolower( trim( $this->awcDomain ) ) : $this->awcLanguage . "." . strtolower( trim( $this->awcDomain ) ),
-			"domain" => $this->mDefSubdomain,
-			"ajaxToken" => md5($this->mTitle . "_" . $this->awcName . "_" . $this->awcDomain . "_" . $this->awcCategory . "_" . $this->awcLanguage),
+			"wgStyleVersion"   => $wgStyleVersion,
 		));
 
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
-		$wgOut->addHtml($oTmpl->execute("process-create-form"));
+		$wgOut->addHtml( $oTmpl->render( "process-create-form" ) );
 
 		wfProfileOut( __METHOD__ );
 
@@ -951,7 +936,7 @@ class AutoCreateWikiPage extends SpecialPage {
 				$k = trim($key);
 				if ( strpos($key, "wiki-") !== false ) {
 					$key = str_replace("wiki-", "", $key);
-					if ( $toSession === true ) {
+					if( $toSession === true ) {
 						$key = str_replace("-", "_", "awc".ucfirst($key));
 						$_SESSION[$key] = strip_tags($value);
 					} else {
@@ -1013,7 +998,7 @@ class AutoCreateWikiPage extends SpecialPage {
 	private function setVarsFromSession() {
 		wfProfileIn( __METHOD__ );
 		$res = 0;
-		foreach ($_SESSION as $key => $value) {
+		foreach( $_SESSION as $key => $value) {
 			if ( preg_match('/^awc/', $key) !== false ) {
 				$this->$key = $value;
 				$res++;
@@ -1546,10 +1531,10 @@ class AutoCreateWikiPage extends SpecialPage {
 
 		wfProfileIn( __METHOD__ );
 
-
 		$dbwf = WikiFactory::db( DB_SLAVE );
 		$dbr  = wfGetDB( DB_MASTER );
 
+		Wikia::log( __METHOD__, "info", "dbname=$dbname, type={$this->mType}" );
 		/**
 		 * for other types add type name in database
 		 */
@@ -1564,7 +1549,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$suffix = "";
 		while( $exists == 1 ) {
 			$dbname = sprintf("%s%s", $dbname, $suffix);
-			Wikia::log( __METHOD__, "", "Checking if database {$dbname} already exists in city_list" );
+			Wikia::log( __METHOD__, "info", "Checking if database {$dbname} already exists in city_list" );
 			$Row = $dbwf->selectRow(
 				array( "city_list" ),
 				array( "count(*) as count" ),
