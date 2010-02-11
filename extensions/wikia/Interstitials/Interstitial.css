@@ -1,0 +1,29 @@
+#wikia_page{
+	position: absolute;
+	top: 37px;
+	left: 50%;
+	width: 800px;
+	margin: 0 0 0 -400px;
+	padding-top: 0px;
+	background-color: white;
+	z-index:1002;
+	overflow: auto;
+	height:auto;
+	-moz-border-radius-bottomleft: 10px;
+	-moz-border-radius-bottomright: 10px;
+}
+#wikia_header{
+	height:31px;
+}
+#page_bar{
+	text-align:right;
+	padding: 5px 6px 6px;
+}
+#page_bar *{
+	float:none;
+}
+.interstitial_fg_body{
+	padding:10px 50px;
+	text-align:center;
+	display:block;
+}

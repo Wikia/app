@@ -42,31 +42,24 @@
 		</div>
 	*/
 ?>
-		<div id="interstitial_fg" class="interstitial_fg">
-			<div class='interstitial_fg_top color1'>
+		<div id="wikia_header">
+			<div class="monaco_shinkwrap">
+				<div id="wikiaBranding">
+					<div id="wikia_logo">Wikia</div>
+				</div>
+			</div>
+		</div>
+		<div id='background_strip'>
+			&nbsp;
+		</div>
+		<div id="wikia_page">
+			<div class='interstitial_fg_top color1' id="page_bar">
 				<a href = "<?php print $url; ?>" class='wikia_button'><span><?php
 					print $skip
 				?></span></a>
 			</div>
 			<div class='interstitial_fg_body'>
 				<?php print $code ?>
-			</div>
-		</div>
-		<div id="interstitial_bg" class="interstitial_bg">
-			<div class='interstitial_bg_top color2'>
-				<div id="wikia_header">
-					<div class="monaco_shinkwrap">
-						<div id="wikiaBranding">
-							<div id="wikia_logo">Wikia</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div id='background_strip' class='interstitial_bg_middle'>
-				&nbsp;
-			</div>
-			<div class='color2 interstitial_bg_bottom'>
-				&nbsp;
 			</div>
 		</div>
 	</body>

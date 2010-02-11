@@ -4,8 +4,11 @@
  * @author Sean Colombo
  *
  * Special page which shows an actual interstital before sending the user on their way.
+ *
+ * TODO: What if the user has hit the page-before-interstitial limit, then opens a bunch of pages in tabs.  The Interstitial page itself should check that it
+ * has been hit on the correct page view number before displaying so that it only displays on the 1/y of those pages.
  */
-class Interstitials extends UnlistedSpecialPage {
+class Interstitial extends UnlistedSpecialPage {
 
 	/**
 	 * Constructor
@@ -24,7 +27,7 @@ class Interstitials extends UnlistedSpecialPage {
 
 		if(($wgAdsInterstitialsEnabled) && (!$wgUser->isLoggedIn())){
 			global $wgAdsInterstitialsCampaignCode, $wgExtensionsPath, $wgStyleVersion;
-			wfLoadExtensionMessages('Interstitials');
+			wfLoadExtensionMessages(INTERSTITIALS_SP);
 
 			$redirectDelay = (empty($wgAdsInterstitialsDurationInSeconds)?INTERSTITIAL_DEFAULT_DURATION_IN_SECONDS:$wgAdsInterstitialsDurationInSeconds);
 			$code = (empty($wgAdsInterstitialsCampaignCode)?wfMsg('interstitial-default-campaign-code'):$wgAdsInterstitialsCampaignCode);
@@ -35,6 +38,13 @@ class Interstitials extends UnlistedSpecialPage {
 
 			$skin = $wgUser->getSkin();
 			$skinName = get_class($skin);
+
+			//load this for all skins, even non-monaco.
+			//exit page depends on having a .color1 and .color2 defined.
+			//needs to be before call to setupUserCss so that other css can override
+			$wgOut->addStyle('monaco/css/root.css');
+
+			// add MW CSS
 			$skin->setupUserCss($wgOut);
 
 			// this may not be set yet
@@ -49,7 +59,7 @@ class Interstitials extends UnlistedSpecialPage {
 				if( !wfRunHooks( 'SkinTemplateOutputPageBeforeExec', array( &$skin, &$tpl ) ) ) {
 					wfDebug( __METHOD__ . ": Hook SkinTemplateOutputPageBeforeExec broke outputPage execution!\n" );
 				}
-				
+
 				global $wgAllInOne;
 				$wgAllInOne = true;
 				$StaticChute = new StaticChute('css');
@@ -74,10 +84,13 @@ class Interstitials extends UnlistedSpecialPage {
 							break;
 					}
 				}
-				$wgOut->addStyle( "$wgExtensionsPath/wikia/Interstitials/Interstitials.css?$wgStyleVersion" );
-				$css = $wgOut->buildCssLinks();
+				$wgOut->addStyle( "$wgExtensionsPath/wikia/Interstitial/Interstitial.css?$wgStyleVersion" );
+				
+				$css = $StaticChute->getChuteHtmlForPackage('monaco_css');
+				$css .= $wgOut->buildCssLinks();
 
-				$css.= $StaticChute->getChuteHtmlForPackage('monaco_css');
+				
+				
 
 
 	// TODO: REMOVE THIS!!! JUST FOR TESTING
@@ -102,6 +115,10 @@ class Interstitials extends UnlistedSpecialPage {
 			} else {
 				return $this->redirectTo($url);
 			}
+		} else if(trim($url) == ""){
+
+			// TODO: Nowhere to go.  Display an appropriate explanation (either wgAdsInterstitialsEnabled is false or the user is logged in).
+
 		} else {
 			// Since interstitials aren't enabled or the user is logged in, just redirect to the destination URL immediately.
 			return $this->redirectTo($url);
