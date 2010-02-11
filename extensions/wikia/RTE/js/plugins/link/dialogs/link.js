@@ -95,9 +95,22 @@ CKEDITOR.dialog.add( 'link', function( editor )
 		var node = RTE.getEditor().find('a[_rte_new_link]');
 		node.removeAttr('_rte_new_link');
 
-		// return CKEDITOR DOM element
-		var element = new CKEDITOR.dom.element(node[0]);
-		return element;
+		// return CKEDITOR DOM element for just created link
+		var link = new CKEDITOR.dom.element(node[0]);
+
+		// create selection after link (RT #37703)
+		if (CKEDITOR.env.gecko || CKEDITOR.env.webkit) {
+			var dirty = new CKEDITOR.dom.text(' ', editor.document);
+			dirty.insertAfter(link);
+			selection.selectElement(dirty);
+
+			if (CKEDITOR.env.gecko) {
+				// In Webkit we have to keep this text node (cursor is lost on removal of selected node)
+				dirty.remove();
+			}
+		}
+
+		return link;
 	};
 
 	var lang = editor.lang.link;
