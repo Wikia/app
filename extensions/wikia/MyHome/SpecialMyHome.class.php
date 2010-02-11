@@ -96,7 +96,7 @@ JS
 
 		$communityCornerTemplate = new EasyTemplate(dirname(__FILE__).'/templates');
 		$communityCornerTemplate->set_vars(array('isAdmin' => $isAdmin));
-		$communityCornerHTML = $communityCornerTemplate->execute('communityCorner');
+		$communityCornerHTML = $communityCornerTemplate->render('communityCorner');
 
                 // hook to enable adding something extra on the top of the MyHome sidebar
 		
@@ -119,7 +119,7 @@ JS
 			'communityCornerHTML' => $communityCornerHTML,
 		));
 
-		$wgOut->addHTML($template->execute('myhome'));
+		$wgOut->addHTML($template->render('myhome'));
 		wfProfileOut(__METHOD__);
 	}
 }

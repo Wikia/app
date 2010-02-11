@@ -40,7 +40,7 @@ class FeedRenderer {
 			'showMore' => $showMore,
 			'type' => $this->type,
 		));
-		return $this->template->execute('feed.wrapper');
+		return $this->template->render('feed.wrapper');
 	}
 
 	public function render($data, $wrap = true, $parameters = array()) {
@@ -68,7 +68,7 @@ class FeedRenderer {
 		$this->template->set('tagid', $tagid);
 
 		// render feed
-		$content = $this->template->execute($template);
+		$content = $this->template->render($template);
 
 		// add header and wrap
 		if (!empty($wrap)) {

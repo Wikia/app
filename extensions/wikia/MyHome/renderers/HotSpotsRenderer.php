@@ -10,7 +10,7 @@ class HotSpotsRenderer extends FeedRenderer {
 		wfProfileIn(__METHOD__);
 
 		$this->template->set('data', $data);
-		$content = $this->template->execute('hot.spots');
+		$content = $this->template->render('hot.spots');
 		$content = $this->wrap($content, false);
 
 		wfProfileOut(__METHOD__);
