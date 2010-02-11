@@ -729,6 +729,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->awcDomain = preg_replace( "/(\-)+$/", "", $this->awcDomain );
 		$this->awcDomain = preg_replace( "/^(\-)+/", "", $this->awcDomain );
 
+		$this->mWikiData[ "type"       ] = $this->mType;
 		$this->mWikiData[ "hub"        ] = $this->awcCategory;
 		$this->mWikiData[ "name"       ] = strtolower( trim( $this->awcDomain ) );
 		$this->mWikiData[ "title"      ] = $fixedTitle . " Wiki";
