@@ -449,12 +449,14 @@ class HAWelcomeJob extends Job {
 		$this->mSysop = $this->getLastSysop();
 		$tmpUser = $wgUser;
 		$wgUser = $this->mSysop;
+		$staffTag = ( in_array('staff', $this->mSysop->getEffectiveGroups()) )?'<staff /> ':'';
 		$SysopName = wfEscapeWikiText( $this->mSysop->getName() );
 		$signature = sprintf(
-			"-- [[%s:%s|%s]] ([[%s:%s|%s]]) %s",
+			"-- [[%s:%s|%s]]%s ([[%s:%s|%s]]) %s",
 			$wgContLang->getNsText(NS_USER),
 			$SysopName,
 			$SysopName,
+			$staffTag,
 			$wgContLang->getNsText(NS_USER_TALK),
 			$SysopName,
 			wfMsg( "talkpagelinktext" ),
