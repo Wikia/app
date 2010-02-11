@@ -7,7 +7,8 @@
 var divErrors = new Array();
 var isAutoCreateWiki = true;
 var formViewAction = "<?=$mTitle->getLocalURL(( $mLanguage != 'en' ) ? 'action=view&uselang=' . $mLanguage : 'action=reload')?>";
-var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
+var msgError = "<?php echo addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
+var createType = "<?php echo $createType ?>";
 /*]]>*/
 </script>
 <form class="highlightform" id="highlightform" method="post" action="<?=$mTitle->escapeLocalURL(( $mLanguage != 'en' ) ? 'uselang=' . $mLanguage : '')?>">

@@ -1,9 +1,9 @@
 YAHOO.namespace("ACWikiRequest");
 var wgAjaxPath = wgScriptPath + wgScript;
 YE.preventDefault('highlightform');
-function canAcceptForm() { 
+function canAcceptForm() {
 	var cnt = 0;
-	for (i in divErrors) { cnt++; }	
+	for (i in divErrors) { cnt++; }
 	if (cnt == 0) {
 		YD.get( "wiki-submit" ).disabled = false;
 	} else {
@@ -13,13 +13,13 @@ function canAcceptForm() {
 
 function allowAction(e) {
 	var keycode = e.keycode||e.which||0;
-	return ( 
+	return (
 		(keycode) == 16 || //shift
 		(keycode) == 9  || //tab
-		(keycode) == 13 || // enter 
+		(keycode) == 13 || // enter
 		(keycode) == 18 || // alt
-		(keycode) == 17 || // ctrl  
-		(keycode) == 20 // caps  
+		(keycode) == 17 || // ctrl
+		(keycode) == 20 // caps
 	);
 }
 
@@ -44,14 +44,14 @@ function isTextCorrect(field) {
 		}
 	}
 	if (errors > 0) {
-		YD.setStyle(field + '-error', 'display', 'block'); 
+		YD.setStyle(field + '-error', 'display', 'block');
 		YD.get(field + '-error').innerHTML = msgError;
-		YD.get(field + "-error-status").innerHTML = "";	
+		YD.get(field + "-error-status").innerHTML = "";
 		divErrors["'" + field + "-error'"] = field;
 	} else {
 		//---
-		YD.get(field + "-error-status").innerHTML = "<img src='" + stylepath + "/wikia/img/ok.png' />";	
-		YD.setStyle(field + '-error', 'display', 'none'); 
+		YD.get(field + "-error-status").innerHTML = "<img src='" + stylepath + "/wikia/img/ok.png' />";
+		YD.setStyle(field + '-error', 'display', 'none');
 		YD.get(field + '-error').innerHTML = "";
 		if ( divErrors["'" + field + "-error'"] ) {
 			delete divErrors["'" + field + "-error'"];
@@ -64,7 +64,7 @@ function isTextCorrect(field) {
 
 function realoadAutoCreateForm(){
 	$("#wiki-submit").attr("disabled",true);
-	$("#wiki-cancel").attr("disabled",true);		
+	$("#wiki-cancel").attr("disabled",true);
 	$("#highlightform").attr("action",formViewAction);
 	$("#highlightform").submit();
 }
@@ -93,12 +93,12 @@ YAHOO.ACWikiRequest.NameCallback = {
 			canAcceptForm();
 			if ( msg ) {
 				div.innerHTML = msg;
-				YAHOO.util.Dom.setStyle(div, 'display', 'block'); 
+				YAHOO.util.Dom.setStyle(div, 'display', 'block');
 			} else {
-				YAHOO.util.Dom.setStyle(div, 'display', 'none'); 
+				YAHOO.util.Dom.setStyle(div, 'display', 'none');
 			}
 		} else {
-			YAHOO.util.Dom.setStyle(div, 'display', 'none'); 
+			YAHOO.util.Dom.setStyle(div, 'display', 'none');
 		}
     },
     failure: function( oResponse ) {
@@ -117,7 +117,7 @@ YAHOO.ACWikiRequest.checkDomain = function(e) {
     name = name.toLowerCase();
     YD.get("wiki-domain").value = name;
 
-    YC.asyncRequest( "GET", wgAjaxPath + "?action=ajax&rs=axACWRequestCheckName&name=" + encodeURIComponent(name) + "&lang=" + encodeURIComponent(lang), YAHOO.ACWikiRequest.NameCallback);
+    YC.asyncRequest( "GET", wgAjaxPath + "?action=ajax&rs=axACWRequestCheckName&name=" + encodeURIComponent(name) + "&lang=" + encodeURIComponent(lang) + "&type=" + encodeURIComponent(createType), YAHOO.ACWikiRequest.NameCallback);
 }
 
 YAHOO.ACWikiRequest.checkWikiName = function(e) {
@@ -140,7 +140,7 @@ YAHOO.ACWikiRequest.wikiLanguageChange = function(e) {
 		value = "http://";
 	}
 	prefixDiv.innerHTML = value;
-	YAHOO.ACWikiRequest.checkDomain(e);	
+	YAHOO.ACWikiRequest.checkDomain(e);
 }
 
 YAHOO.ACWikiRequest.wikiBirthdayCheck = function(e) {
@@ -159,8 +159,8 @@ YAHOO.ACWikiRequest.wikiBirthdayCheck = function(e) {
 
 YAHOO.ACWikiRequest.wikiDomainKeyUp = function(e) {
 	var id = this.id;
-	var func = function() { 
-		if (id) { 
+	var func = function() {
+		if (id) {
 			if ( !allowAction(e) ) {
 				YE.preventDefault(id);
 				if (id == 'wiki-name') {
@@ -218,9 +218,9 @@ YAHOO.ACWikiRequest.checkAccount = function(e, fid) {
 
 YAHOO.ACWikiRequest.wikiAccountKeyUp = function(e) {
 	var id = this.id;
-	var func = function() { 
+	var func = function() {
 		var field = document.getElementById(id);
-		if (id) { 
+		if (id) {
 			if ( !allowAction(e) ) {
 				YE.preventDefault(id);
 				YAHOO.ACWikiRequest.checkAccount(e, id);
@@ -235,13 +235,13 @@ YAHOO.ACWikiRequest.wikiAccountKeyUp = function(e) {
 
 YAHOO.ACWikiRequest.resetForm = function(e) {
 	var cnt = 0;
-	for (i in divErrors) { 
+	for (i in divErrors) {
 		var div = i.replace(/\'/g, "");
-		YD.setStyle(div, 'display', 'none'); 
+		YD.setStyle(div, 'display', 'none');
 		YD.get(div + "-status").innerHTML = "";
-	}	
+	}
 	divErrors = new Array();
-	
+
 	var oF = document.forms['highlightform'];
 	var oElm = oF.getElementsByTagName('SPAN');
 	var els = oElm.length;
@@ -253,7 +253,7 @@ YAHOO.ACWikiRequest.resetForm = function(e) {
 			}
 		}
 	}
-	
+
 	YD.get( "wiki-submit" ).disabled = false;
 	return true;
 }
