@@ -619,7 +619,6 @@ function axWFactoryRemoveVariable( ) {
  */
 function axAWCMetrics() {
 	global $wgUser, $wgRequest;
-	wfLoadExtensionMessages( "AutoCreateWiki" );
 
 	if ( wfReadOnly() ) {
 		return;
@@ -668,7 +667,6 @@ function axAWCMetrics() {
  */
 function axAWCMetricsCategory() {
 	global $wgUser, $wgRequest;
-	wfLoadExtensionMessages( "AutoCreateWiki" );
 
 	if ( wfReadOnly() ) {
 		return;
@@ -714,7 +712,6 @@ function axAWCMetricsCategory() {
  */
 function axAWCMetricsAllWikis() {
 	global $wgUser, $wgRequest;
-	wfLoadExtensionMessages( "AutoCreateWiki" );
 
 	if ( wfReadOnly() ) {
 		return;
