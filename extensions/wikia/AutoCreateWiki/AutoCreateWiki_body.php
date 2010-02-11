@@ -29,34 +29,35 @@ class AutoCreateWikiPage extends SpecialPage {
 		$mMYSQLdump,
 		$mMYSQLbin,
 		$mPHPbin,
-		$mStarters,
 		$mLanguageStarters,
 		$mCurrTime,
 		$mPosted,
 		$mPostedErrors,
 		$mErrors,
 		$mUserLanguage,
-		$mDefaultUser;
+		$mDefaultUser,
+		$mType;            // type of form: answers, recipes; default not set
 
 	/**
 	 * test database, CAUTION! content will be destroyed during tests
 	 */
-	const TESTDB = "testdb";
-	const STARTER_GAME = 2; /** gaming **/
-	const STARTER_ENTE = 3; /** enter. **/
-	const STARTER_SPRT = 15; /** sport **/
-	const LOG = "autocreatewiki";
-	const IMGROOT = "/images/";
-	const IMAGEURL = "http://images.wikia.com/";
-	const CREATEWIKI_LOGO = "/images/c/central/images/2/22/Wiki_Logo_Template.png";
-	const CREATEWIKI_ICON = "/images/c/central/images/6/64/Favicon.ico";
-	const SESSION_TIME = 60;
-	const DAILY_LIMIT = 1000;
-	const DAILY_USER_LIMIT = 2;
-	const DEFAULT_STAFF = "Angela";
-	const DEFAULT_USER = 'Default';
-	const CACHE_LOGIN_KEY = 'awc_beforelog';
-	const ACTIVE_CLUSTER = "c2";
+	const TESTDB            = "testdb";
+	const STARTER_GAME      = 2; /** gaming **/
+	const STARTER_ENTE      = 3; /** enter. **/
+	const STARTER_SPRT      = 15; /** sport **/
+	const LOG               = "autocreatewiki";
+	const IMGROOT           = "/images/";
+	const IMAGEURL          = "http://images.wikia.com/";
+	const CREATEWIKI_LOGO   = "/images/c/central/images/2/22/Wiki_Logo_Template.png";
+	const CREATEWIKI_ICON   = "/images/c/central/images/6/64/Favicon.ico";
+	const SESSION_TIME      = 60;
+	const DAILY_LIMIT       = 1000;
+	const DAILY_USER_LIMIT  = 2;
+	const DEFAULT_STAFF     = "Angela";
+	const DEFAULT_USER      = 'Default';
+	const DEFAULT_DOMAIN    = "wikia.com";
+	const CACHE_LOGIN_KEY   = 'awc_beforelog';
+	const ACTIVE_CLUSTER    = "c2";
 
 	/**
 	 * constructor
@@ -68,14 +69,6 @@ class AutoCreateWikiPage extends SpecialPage {
 		 * initialize some data
 		 */
 		$this->mWikiData = array();
-
-		/**
-		 * hub starters (empty now)
-		 *
-		 * @see rt#20345
-		 */
-		$this->mStarters = array(
-		);
 
 		/**
 		 * language starters
@@ -112,22 +105,6 @@ class AutoCreateWikiPage extends SpecialPage {
 		wfLoadExtensionMessages( "AutoCreateWiki" );
 
 		$this->setHeaders();
-		$this->mTitle = Title::makeTitle( NS_SPECIAL, "CreateWiki" );
-		$this->mLang = $wgRequest->getVal( 'uselang', $wgUser->getOption( 'language' ) );
-		$this->mAction = $wgRequest->getVal( "action", false );
-		$this->mSubpage = $subpage;
-		$this->mPosted = $wgRequest->wasPosted();
-		$this->mPostedErrors = array();
-		$this->mErrors = 0;
-		$this->mDefSubdomain = "wikia.com";
-
-#		if( $wgDevelEnvironment ) {
-#			global $wgDevelDomains;
-#			$this->mDefSubdomain = array_shift( $wgDevelDomains );
-#		}
-#		else {
-#			$this->mDefSubdomain = "wikia.com";
-#		}
 
 		if ( wfReadOnly() ) {
 			$wgOut->readOnlyPage();
@@ -138,6 +115,41 @@ class AutoCreateWikiPage extends SpecialPage {
 			$wgOut->blockedPage();
 			return;
 		}
+
+		$this->mTitle   = Title::makeTitle( NS_SPECIAL, "CreateWiki" );
+		$this->mLang    = $wgRequest->getVal( "uselang", $wgUser->getOption( 'language' ) );
+		$this->mAction  = $wgRequest->getVal( "action", false );
+		$this->mType    = $wgRequest->getVal( "wiki-type", false );
+		$this->mSubpage = $subpage;
+		$this->mPosted  = $wgRequest->wasPosted();
+		$this->mPostedErrors = array();
+		$this->mErrors  = 0;
+
+		/**
+		 * other AWC version changes, so far answers only
+		 */
+		switch( $this->mType ) {
+			case "answers":
+				$this->mDefSubdomain = "answers.wikia.com";
+				break;
+
+			default:
+				$this->mDefSubdomain = self::DEFAULT_DOMAIN;
+		}
+
+		/**
+		 * for tests we are changing some values for devel environment
+		 */
+		if( $wgDevelEnvironment ) {
+			global $wgDevelDomains;
+			$this->mDefSubdomain = array_shift( $wgDevelDomains );
+			switch( $this->mType ) {
+				case "answers":
+					$this->mDefSubdomain = "answers." . $this->mDefSubdomain;
+					break;
+			}
+		}
+
 
 		$this->mUserLanguage = $wgUser->getOption( 'language', $wgContLanguageCode );
 		$this->mNbrCreated = $this->countCreatedWikis();
@@ -296,12 +308,11 @@ class AutoCreateWikiPage extends SpecialPage {
 	 *
 	 */
 	private function createWiki() {
-		global $wgDebugLogGroups, $wgOut, $wgUser, $IP, $wgDBname;
-		global $wgSharedDB, $wgExternalSharedDB, $wgDBcluster;
+		global $wgOut, $wgUser, $IP, $wgDBname;
+		global $wgSharedDB, $wgExternalSharedDB, $wgDBcluster, $wgDevelEnvironment;
 		global $wgDBserver, $wgDBuser,	$wgDBpassword, $wgWikiaLocalSettingsPath;
 		global $wgHubCreationVariables, $wgLangCreationVariables, $wgUniversalCreationVariables;
 
-		# $wgDebugLogGroups[ self::LOG ] = "/tmp/autocreatewiki.log";
 		wfProfileIn( __METHOD__ );
 
 		/**
@@ -355,9 +366,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			$oRow = $dbw_local->selectRow(
 				"INFORMATION_SCHEMA.SCHEMATA",
 				array( "count(*) as cnt" ),
-				array(
-					'SCHEMA_NAME' => $this->mWikiData[ "dbname"]
-				),
+				array( 'SCHEMA_NAME' => $this->mWikiData[ "dbname"]),
 				__METHOD__
 			);
 
@@ -371,7 +380,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		}
 
 		$this->setInfoLog( $msgType, wfMsg('autocreatewiki-step2') );
-		if ($msgType == 'ERROR') {
+		if( $msgType == 'ERROR' ) {
 			return;
 		}
 
@@ -420,31 +429,39 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->log( "Creating row in city_list table, city_id = {$this->mWikiId}" );
 
 		/*
-		 * add domains to the city_domains table
+		 * add domains to the city_domains table, it always will be DEFAULT_DOMAIN
+		 * becaue WikiFactoryLoader changes it by itself for devel environments
 		 */
+		if( !empty( $wgDevelEnvironment ) ) {
+			$domain = str_replace( $this->mDefSubdomain, self::DEFAULT_DOMAIN, $this->mWikiData[ "domain" ] );
+		}
+		else {
+			$domain = $this->mWikiData[ "domain" ];
+		}
 
-		$bIns = $dbw->insert(
+		$res = $dbw->insert(
 			"city_domains",
 			array(
 				array(
-					'city_id'     =>  $this->mWikiId,
-					'city_domain' => $this->mWikiData[ "domain" ]
+					'city_id'     => $this->mWikiId,
+					'city_domain' => $domain
 				),
 				array(
-					'city_id'     =>  $this->mWikiId,
-					'city_domain' => sprintf( "www.%s", $this->mWikiData[ "domain" ] )
+					'city_id'     => $this->mWikiId,
+					'city_domain' => sprintf( "www.%s", $domain )
 				)
 			),
 			__METHOD__
 		);
-		if ( empty($bIns) ) {
+
+		if ( empty( $res ) ) {
 			$this->setInfoLog( 'ERROR', wfMsg('autocreatewiki-step3') );
 			$this->log( "Cannot set data in city_domains table" );
 			$wgOut->addHTML(wfMsg('autocreatewiki-step3-error'));
 			return;
 		}
-		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step3') );
 
+		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step3') );
 		$this->log( "Populating city_domains" );
 
 		/**
@@ -493,6 +510,18 @@ class AutoCreateWikiPage extends SpecialPage {
 			"{$IP}/extensions/CheckUser/cu_changes.sql",
 			"{$IP}/extensions/CheckUser/cu_log.sql",
 		);
+
+		switch( $this->mType ) {
+			case "answers":
+				$sqlfiles[] = "{$IP}/extensions/SocialProfile/SystemGifts/systemgifts.sql";
+				$sqlfiles[] = "{$IP}/extensions/SocialProfile/UserGifts/usergifts.sql";
+				$sqlfiles[] = "{$IP}/extensions/SocialProfile/UserProfile/user_profile.sql";
+				$sqlfiles[] = "{$IP}/extensions/SocialProfile/UserBoard/user_board.sql";
+				$sqlfiles[] = "{$IP}/extensions/SocialProfile/UserRelationship/user_relationship.sql";
+				$sqlfiles[] = "{$IP}/extensions/SocialProfile/UserStats/user_stats.sql";
+				$sqlfiles[] = "{$IP}/extensions/wikia/WikiaStats/categorystats.sql";
+				break;
+		}
 
 		foreach ($sqlfiles as $file) {
 			$error = $dbw_local->sourceFile( $file );
@@ -614,38 +643,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		 * destroy connection to newly created database
 		 */
 		$dbw_local->commit();
-
 		$wgSharedDB = $tmpSharedDB;
-
-		/**
-		 * use starter when wikia in proper hub
-		 */
-		if( isset( $this->mStarters[ $this->mWikiData[ "hub" ] ] )
-			&& $this->mStarters[ $this->mWikiData[ "hub" ] ]
-			&& $this->mWikiData[ "language" ] === "en" ) {
-
-			$wikiMover = WikiMover::newFromIDs(
-				$this->mStarters[ $this->mWikiData[ "hub" ] ], /** source **/
-				$this->mWikiId /** target **/
-			);
-			$wikiMover->setOverwrite( true );
-			$wikiMover->mMoveUserGroups = false;
-			$wikiMover->load();
-			$wikiMover->setRunJobs( false );
-			$wikiMover->setTargetUploadDirectory( $this->mWikiData[ "images_dir" ] );
-			$wikiMover->setRevisionUser(User::newFromName(self::DEFAULT_USER));
-			$wikiMover->move();
-
-			$this->addCustomSettings( $this->mWikiData[ "hub" ], $wgHubCreationVariables, 'hub' );
-		}
-		else {
-			$this->log(
-				sprintf( "There's not starters for category %d and language %s",
-					$this->mWikiData[ 'hub' ],
-					$this->mWikiData[ "language" ]
-				)
-			);
-		}
 
 		/**
 		 * set hub/category
@@ -748,45 +746,46 @@ class AutoCreateWikiPage extends SpecialPage {
 			$this->mFounder = User::newFromName($this->awcStaff_username);
 		}
 
-		$fixedTitle = trim($this->awcName);
-		$fixedTitle = preg_replace("/\s+/", " ", $fixedTitle);
-		$fixedTitle = preg_replace("/ (w|W)iki$/", "", $fixedTitle);
-		$fixedTitle = $wgContLang->ucfirst($fixedTitle);
-		$this->awcDomain = preg_replace("/(\-)+$/", "", $this->awcDomain);
-		$this->awcDomain = preg_replace("/^(\-)+/", "", $this->awcDomain);
+		$fixedTitle = trim( $this->awcName );
+		$fixedTitle = preg_replace("/\s+/", " ", $fixedTitle );
+		$fixedTitle = preg_replace("/ (w|W)iki$/", "", $fixedTitle );
+		$fixedTitle = $wgContLang->ucfirst( $fixedTitle );
+		$this->awcDomain = preg_replace( "/(\-)+$/", "", $this->awcDomain );
+		$this->awcDomain = preg_replace( "/^(\-)+/", "", $this->awcDomain );
 
-		$this->mWikiData[ "hub" ]		= $this->awcCategory;
-		$this->mWikiData[ "name" ]      = strtolower( trim( $this->awcDomain ) );
-		$this->mWikiData[ "title" ]     = $fixedTitle . " Wiki";
-		$this->mWikiData[ "language" ]  = $this->awcLanguage;
-		$this->mWikiData[ "subdomain" ] = $this->mWikiData[ "name"];
-		$this->mWikiData[ "redirect" ]  = $this->mWikiData[ "name"];
-		$this->mWikiData[ "dbname" ]    = substr( str_replace( "-", "", $this->mWikiData[ "name"] ), 0, 50 ); #(64 - lang - rand(1, 99)
-		$this->mWikiData[ "path" ]      = "/usr/wikia/docroot/wiki.factory";
-		$this->mWikiData[ "testWiki" ]  = false;
+		$this->mWikiData[ "hub"        ] = $this->awcCategory;
+		$this->mWikiData[ "name"       ] = strtolower( trim( $this->awcDomain ) );
+		$this->mWikiData[ "title"      ] = $fixedTitle . " Wiki";
+		$this->mWikiData[ "language"   ] = $this->awcLanguage;
+		$this->mWikiData[ "subdomain"  ] = $this->mWikiData[ "name"];
+		$this->mWikiData[ "redirect"   ] = $this->mWikiData[ "name"];
 
-		$this->mWikiData[ "images_url" ]  	= $this->prepareDirValue();
-		$this->mWikiData[ "images_dir" ]  	= sprintf("%s/%s", strtolower( substr( $this->mWikiData[ "name"], 0, 1 ) ), $this->mWikiData[ "images_url" ]);
+		$this->mWikiData[ "path"       ] = "/usr/wikia/docroot/wiki.factory";
+		$this->mWikiData[ "testWiki"   ] = false;
+
+		$this->mWikiData[ "images_url" ] = $this->prepareDirValue();
+		$this->mWikiData[ "images_dir" ] = sprintf("%s/%s", strtolower( substr( $this->mWikiData[ "name"], 0, 1 ) ), $this->mWikiData[ "images_url" ]);
 
 		if ( isset( $this->mWikiData[ "language" ] ) && $this->mWikiData[ "language" ] !== "en" ) {
-			$this->mWikiData[ "subdomain" ]   = strtolower( $this->mWikiData[ "language"] ) . "." . $this->mWikiData[ "name"];
-			$this->mWikiData[ "redirect" ]    = strtolower( $this->mWikiData[ "language" ] ) . "." . ucfirst( $this->mWikiData[ "name"] );
-			$this->mWikiData[ "dbname" ]      = strtolower( str_replace( "-", "", $this->mWikiData[ "language" ] ). $this->mWikiData[ "dbname"] );
+			$this->mWikiData[ "subdomain"  ]  = strtolower( $this->mWikiData[ "language"] ) . "." . $this->mWikiData[ "name"];
+			$this->mWikiData[ "redirect"   ]  = strtolower( $this->mWikiData[ "language" ] ) . "." . ucfirst( $this->mWikiData[ "name"] );
+			$this->mWikiData[ "dbname"     ]  = strtolower( str_replace( "-", "", $this->mWikiData[ "language" ] ). $this->mWikiData[ "dbname"] );
 			$this->mWikiData[ "images_url" ] .= "/" . strtolower( $this->mWikiData[ "language" ] );
 			$this->mWikiData[ "images_dir" ] .= "/" . strtolower( $this->mWikiData[ "language" ] );
 		}
 
-		$this->mWikiData[ "images_dir" ]    = self::IMGROOT . $this->mWikiData[ "images_dir"] . "/images";
-		$this->mWikiData[ "images_url" ]    = self::IMAGEURL . $this->mWikiData[ "images_url"] . "/images";
-		$this->mWikiData[ "images_logo" ] 	= sprintf("%s/%s", $this->mWikiData[ "images_dir" ], "b/bc" );
-		$this->mWikiData[ "images_icon" ] 	= sprintf("%s/%s", $this->mWikiData[ "images_dir" ], "6/64" );
+		$this->mWikiData[ "images_dir"    ] = self::IMGROOT . $this->mWikiData[ "images_dir"] . "/images";
+		$this->mWikiData[ "images_url"    ] = self::IMAGEURL . $this->mWikiData[ "images_url"] . "/images";
+		$this->mWikiData[ "images_logo"   ]	= sprintf("%s/%s", $this->mWikiData[ "images_dir" ], "b/bc" );
+		$this->mWikiData[ "images_icon"   ]	= sprintf("%s/%s", $this->mWikiData[ "images_dir" ], "6/64" );
 
-		$this->mWikiData[ "domain" ] = sprintf("%s.%s", $this->mWikiData[ "subdomain" ], $this->mDefSubdomain);
-		$this->mWikiData[ "url" ] = sprintf( "http://%s.%s/", $this->mWikiData[ "subdomain" ], $this->mDefSubdomain );
-		$this->mWikiData[ "dbname" ] = WikiFactory::prepareDBName($this->mWikiData[ "dbname" ]);
-		$this->mWikiData[ "founder" ] = $this->mFounder->getId();
-		$this->mWikiData[ "founder-name" ] = $this->mFounder->getName();
+		$this->mWikiData[ "domain"        ] = sprintf("%s.%s", $this->mWikiData[ "subdomain" ], $this->mDefSubdomain);
+		$this->mWikiData[ "url"           ] = sprintf( "http://%s.%s/", $this->mWikiData[ "subdomain" ], $this->mDefSubdomain );
+		$this->mWikiData[ "dbname"        ] = $this->prepareDBName( substr( str_replace( "-", "", $this->mWikiData[ "name"] ), 0, 50 ) );
+		$this->mWikiData[ "founder"       ] = $this->mFounder->getId();
+		$this->mWikiData[ "founder-name"  ] = $this->mFounder->getName();
 		$this->mWikiData[ "founder-email" ] = $this->mFounder->getEmail();
+		$this->mWikiData[ "type"          ] = $this->mType;
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -851,18 +850,14 @@ class AutoCreateWikiPage extends SpecialPage {
 			$key = wfMemcKey( self::CACHE_LOGIN_KEY, $wgDBname, $ip );
 			$params = $wgMemc->get($key);
 		}
-		#--
 		$f = new FancyCaptcha();
-		#--
 		$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgStylePath}/common/form.css?{$wgStyleVersion}\" />" );
-
-		// RT #19245
-		$wgOut->addScript( "<!--[if IE 7]><link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgStylePath}/common/form.ie7.css?{$wgStyleVersion}\" /><![endif]-->" );
-
+		$wgOut->addScript( "<!--[if IE 7]><link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgStylePath}/common/form.ie7.css?{$wgStyleVersion}\" /><![endif]-->" ); // RT #19245
 		$wgOut->addScript( "<script type=\"text/javascript\" src=\"{$wgStylePath}/common/form.js?{$wgStyleVersion}\"></script>" );
-		/* run template */
 
-
+		/**
+		 * run template
+		 */
 		$this->mAction = $wgRequest->getVal( "action", false );
 
 		if( $this->mAction == "reload" ){
@@ -889,7 +884,6 @@ class AutoCreateWikiPage extends SpecialPage {
 			"params" => $params
 		));
 
-		#---
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
 		$wgOut->addHtml($oTmpl->execute("create-wiki-form"));
@@ -907,14 +901,16 @@ class AutoCreateWikiPage extends SpecialPage {
 	public function processCreatePage() {
 		global $wgOut, $wgUser, $wgExtensionsPath, $wgStyleVersion, $wgScriptPath, $wgStylePath;
 		global $wgCaptchaTriggers, $wgRequest;
+
 		wfProfileIn( __METHOD__ );
-		#-
-		$aLanguages = wfGetFixedLanguageNames();
-		#-
-		$hubs = WikiFactoryHub::getInstance();
+
+		$aLanguages  = wfGetFixedLanguageNames();
+		$hubs        = WikiFactoryHub::getInstance();
 		$aCategories = $hubs->getCategories();
-		#--
-		/* run template */
+
+		/**
+		 * run template
+		 */
 		$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgStylePath}/common/form.css?{$wgStyleVersion}\" />" );
 		$wgOut->addScript( "<script type=\"text/javascript\" src=\"{$wgStylePath}/common/form.js?{$wgStyleVersion}\"></script>" );
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
@@ -932,11 +928,12 @@ class AutoCreateWikiPage extends SpecialPage {
 			"ajaxToken" => md5($this->mTitle . "_" . $this->awcName . "_" . $this->awcDomain . "_" . $this->awcCategory . "_" . $this->awcLanguage),
 		));
 
-		#---
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
 		$wgOut->addHtml($oTmpl->execute("process-create-form"));
+
 		wfProfileOut( __METHOD__ );
+
 		return;
 	}
 
@@ -966,8 +963,11 @@ class AutoCreateWikiPage extends SpecialPage {
 		wfProfileOut( __METHOD__ );
 	}
 
-	/*
+	/**
+	 * update session keys from request data
 	 *
+	 * @access private
+	 * @author Piotr Molski <moli@wikia-inc.com>
 	 */
 	private function fixSessionKeys() {
 		global $wgRequest;
@@ -1464,6 +1464,29 @@ class AutoCreateWikiPage extends SpecialPage {
 			wfGetLBFactory()->sectionsByDB[ $this->mWikiData[ "dbname" ] ] = self::ACTIVE_CLUSTER;
 		}
 
+		switch( $this->mType ) {
+			case "answers":
+				$WFSettingsVars[ "wgRateLimits" ] = array (
+					'move' => array (
+						'ip'     => array ( 0 => 1, 1 => 300 ),
+						'newbie' => array ( 0 => 6, 1 => 300 ),
+						'user'   => array ( 0 => 15,1 => 300 ),
+					)
+				);
+				$WFSettingsVars[ "wgGroupPermissionsLocal"           ] = '*|move|1,*|createaccount|1,user|createaccount|0,sysop|createaccount|0';
+				$WFSettingsVars[ "wgDefaultTheme"                    ] = 'sapphire';
+				$WFSettingsVars[ "wgEnableAnswers"                   ] = true;
+				$WFSettingsVars[ "wgEnableCategoryBlueLinks"         ] = true;
+				$WFSettingsVars[ "wgAnswersEnableSocial"             ] = true;
+				$WFSettingsVars[ "AutoFriendOnRegisterUsername"      ] = "Jimbo Wales";
+				$WFSettingsVars[ "wgEnableRandomUsersWithAvatarsExt" ] = true;
+				$WFSettingsVars[ "wgEnableRandomInCategoryExt"       ] = true;
+				$WFSettingsVars[ "wgEnableMagicAnswer"               ] = false;
+				$WFSettingsVars[ "wgUseNewAnswersSkin"               ] = true;
+				$WFSettingsVars[ "wgAdslot_LEFT_NAV_205x400"         ] = null;
+				break;
+		}
+
 		$oRes = $dbw->select(
 			"city_variables_pool",
 			array( "cv_id, cv_name" ),
@@ -1501,5 +1524,70 @@ class AutoCreateWikiPage extends SpecialPage {
 				);
 			}
 		}
+	}
+
+	/**
+	 * prepareDBName
+	 *
+	 * check if database name is used, if it's used prepare another one
+	 *
+	 * @author Piotr Molski <moli@wikia-inc.com>
+	 * @access private
+	 *
+	 * @param string	$dbname		name of DB to check
+	 *
+	 * @todo when second cluster will come this function has to changed
+	 *
+	 * @return string: fixed name of DB
+	 */
+	private function prepareDBName( $dbname ) {
+
+		wfProfileIn( __METHOD__ );
+
+
+		$dbwf = WikiFactory::db( DB_SLAVE );
+		$dbr  = wfGetDB( DB_MASTER );
+
+		/**
+		 * for other types add type name in database
+		 */
+		if( $this->mType ) {
+			$dbname = $dbname . $this->mType;
+		}
+
+		/**
+		 * check city_list
+		 */
+		$exists = 1;
+		$suffix = "";
+		while( $exists == 1 ) {
+			$dbname = sprintf("%s%s", $dbname, $suffix);
+			Wikia::log( __METHOD__, "", "Checking if database {$dbname} already exists in city_list" );
+			$Row = $dbwf->selectRow(
+				array( "city_list" ),
+				array( "count(*) as count" ),
+				array( "city_dbname" => $dbname ),
+				__METHOD__
+			);
+			$exists = 0;
+			if( $Row->count > 0 ) {
+				Wikia::log( __METHOD__, "", "Database {$dbname} exists in city_list!" );
+				$exists = 1;
+			}
+			else {
+				Wikia::log( __METHOD__, "", "Checking if database {$dbname} already exists in database" );
+				$oRes = $dbr->query( sprintf( "show databases like '%s'", $dbname) );
+				if ( $dbr->numRows( $oRes ) > 0 ) {
+					Wikia::log( __METHOD__, "", "Database {$dbname} exists in database!" );
+					$exists = 1;
+				}
+			}
+			# add suffix
+			if( $exists == 1 ) {
+				$suffix = rand(1,999);
+			}
+		}
+		wfProfileOut( __METHOD__ );
+		return $dbname;
 	}
 }
