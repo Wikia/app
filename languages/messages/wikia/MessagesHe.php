@@ -1,6 +1,7 @@
 <?php
 #Related to visitor skins: Slate.php and Smoke.php
 $messages = array_merge( $messages, array(
+ 'titleedit'              => 'עריכה',
 'login_greeting' => "[[User:$1|$1]] ,Wikiaברוך הבא ל",
 'create_an_account' => "ליצור חשבון",
 'login_as_another' => "להיכנס כמשתמש אחר",

@@ -4,6 +4,7 @@ if( !is_array( $messages ) ) $messages = array();
 
 #Related to visitor skins: Slate.php and Smoke.php
 $messages = array_merge( $messages, array(
+ 
 'login_greeting' => "Velkommen til Wikia, [[User:$1|$1]]!",
 'create_an_account' => "Opret ny konto",
 'login_as_another' => "Log på som anden bruger",
