@@ -32,7 +32,7 @@ use Wikia::LB;
 =cut
 my $email_title = "Image, video and blog report";
 my $DEF_MONTH = "1";
-my $XLS_FILE = "/images/reports/video_blog_usage/video_blog_usage_" . substr (&ParseDate("today"), 0, 8) . ".xls";
+my $XLS_FILE = "/images/r/reports/video_blog_usage/video_blog_usage_" . substr (&ParseDate("today"), 0, 8) . ".xls";
 
 =list of namespaces 
 =cut
@@ -312,7 +312,7 @@ if (! scalar keys %$DATA) {
 =XLS - default settings ========================
 =init XLS spreadsheet
 =cut
-my $dir = "/images/reports/video_blog_usage/";
+my $dir = "/images/r/reports/video_blog_usage/";
 mkdir($dir) if (!(-e $dir)) ;
 unlink ($XLS_FILE);
 my $workbook = Spreadsheet::WriteExcel::Big->new($XLS_FILE);

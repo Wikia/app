@@ -32,7 +32,7 @@ use Wikia::LB;
 my $email_title = "Top editors";
 my $DEF_LIMIT = 1000;
 my $DEF_MONTHS = 12;
-my $XLS_FILE = "/images/reports/top_editors/top_editors_" . substr (&ParseDate("today"), 0, 8) . ".xls";
+my $XLS_FILE = "/images/r/reports/top_editors/top_editors_" . substr (&ParseDate("today"), 0, 8) . ".xls";
 
 =list of namespaces 
 =cut
@@ -339,7 +339,7 @@ if (! scalar keys %USERS) {
 =XLS - default settings ========================
 =init XLS spreadsheet
 =cut
-my $dir = "/images/reports/top_editors/";
+my $dir = "/images/r/reports/top_editors/";
 mkdir($dir) if (!(-e $dir)) ;
 unlink ($XLS_FILE);
 
