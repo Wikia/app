@@ -31,7 +31,7 @@ function wfEditStats($options = array()) {
 	$dbr = wfGetDB( DB_SLAVE, 'blobs', $wgExternalDatawareDB );
 
 	###################
-	wfOut( "Counting total edits..." );
+	wfOut( "\nCounting total edits..." );
 	$conditions = array( "pe_date" => $options['date'] );
 	
 	$oRow = $dbr->selectRow(
@@ -43,7 +43,7 @@ function wfEditStats($options = array()) {
 	if ( $oRow ) $count_edits = intval($oRow->all_count);
 	
 	###################
-	wfOut( "Counting total content namespaces edits..." );
+	wfOut( "\nCounting total content namespaces edits..." );
 	$conditions['pe_is_content'] = 1;
 	$oRow = $dbr->selectRow(
 		array( "page_edits" ),
@@ -54,7 +54,7 @@ function wfEditStats($options = array()) {
 	if ( $oRow ) $count_content_edits = intval($oRow->all_count);
 
 	###################
-	wfOut( "Counting total editors..." );
+	wfOut( "\nCounting total editors..." );
 	$conditions = array( "pc_date" => $options['date'] );
 	$oRow = $dbr->selectRow(
 		array( "page_editors" ),
@@ -65,7 +65,7 @@ function wfEditStats($options = array()) {
 	if ( $oRow ) $count_editors = intval($oRow->all_count);
 
 	###################
-	wfOut( "Counting total content editors..." );
+	wfOut( "\nCounting total content editors..." );
 	$conditions['pc_is_content'] = 1;
 	$oRow = $dbr->selectRow(
 		array( "page_editors" ),
@@ -76,7 +76,7 @@ function wfEditStats($options = array()) {
 	if ( $oRow ) $count_content_editors = intval($oRow->all_count);
 
 	###################
-	wfOut( "Counting total anons..." );
+	wfOut( "\nCounting total anons..." );
 	$conditions = array( 
 		"pc_date" => $options['date'],
 		"pc_user_id" => 0
@@ -90,7 +90,7 @@ function wfEditStats($options = array()) {
 	if ( $oRow ) $count_anons = intval($oRow->all_count);
 
 	###################
-	wfOut( "Counting total content editors..." );
+	wfOut( "\nCounting total content editors..." );
 	$conditions['pc_is_content'] = 1;
 	$oRow = $dbr->selectRow(
 		array( "page_editors" ),
