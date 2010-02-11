@@ -28,7 +28,7 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 		<ul>
 			<li class="label"><label class="required" id="wiki-domain-label"><?=wfMsg('autocreatewiki-web-address')?></label></li>
 			<li class="data1">
-				<span id="prefixedAddress">http://</span><input type="text" maxlength="245" autocomplete="off" name="wiki-domain" id="wiki-domain" value="<?=@$params['wiki-domain']?>" style="width:145px" />.wikia.com <span class="error-status" id="wiki-domain-error-status">&nbsp;</span>
+				<span id="prefixedAddress">http://</span><input type="text" maxlength="245" autocomplete="off" name="wiki-domain" id="wiki-domain" value="<?=@$params['wiki-domain']?>" style="width:145px" />.<?php echo $subDomain ?> <span class="error-status" id="wiki-domain-error-status">&nbsp;</span>
 				<div class="error" style="display: none;" id="wiki-domain-error"></div>
 			</li>
 			<li class="data2"><span class="note"><?=wfMsg('autocreatewiki-info-domain')?></span></li>
