@@ -1,4 +1,5 @@
 == Changes since 201002.2 ==
+* rt#38980: RTE: only first set of spaces are removed for paste events (macbre)
 * rt#40169: staff check for HAWelcome (uberfuzzy)
 * rt#40135: special:specialpages at central gives internal error (Nef)
 * rt#40086: purge mobile skin pages (Emil)
