@@ -501,7 +501,8 @@ class RTEReverseParser {
 		}
 
 		// remove spaces from the beginning of paragraph (people use spaces to centre text)
-		if (self::isChildOf($node, 'p') && self::isFirstChild($node)) {
+		// add from text nodes following <br /> (RT #38980)
+		if (self::isChildOf($node, 'p') && (self::isFirstChild($node) || self::previousSiblingIs($node, 'br'))) {
 			// grab &nbsp; and "soft" spaces
 			preg_match('%^(&nbsp;)+[ ]?%', $out, $matches);
 
