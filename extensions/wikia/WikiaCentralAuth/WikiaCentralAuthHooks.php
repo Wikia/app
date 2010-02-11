@@ -11,6 +11,11 @@ class WikiaCentralAuthHooks {
 	 * on local account creation
 	 */
 	static function onAddNewAccount( User $oUser, $addByEmail = false ) {
+        if ( wfReadOnly() ) {
+			wfDebug( __METHOD__ . ": Cannot load from session - DB is running with the --read-only option " );
+            return true;
+        }
+		
 		wfProfileIn( __METHOD__ );
 		if ( $addByEmail === false) {
 			$oCUser = WikiaCentralAuthUser::getInstance( $oUser );
@@ -94,6 +99,11 @@ class WikiaCentralAuthHooks {
 
 	static function onUserLoadFromSession( User $oUser, &$result ) {
 		global $wgCookiePrefix;
+
+        if ( wfReadOnly() ) {
+			wfDebug( __METHOD__ . ": Cannot load from session - DB is running with the --read-only option " );
+            return true;
+        }
 		
 		wfProfileIn( __METHOD__ );
 		
@@ -166,6 +176,12 @@ class WikiaCentralAuthHooks {
 
 	static function onUserLogout( User &$oUser ) {
 		global $wgWikiaCentralAuthCookies;
+		
+        if ( wfReadOnly() ) {
+			wfDebug( __METHOD__ . ": DB is running with the --read-only option " );
+            return true;
+        }
+		
 		wfProfileIn( __METHOD__ );
 		if( !$wgWikiaCentralAuthCookies ) {
 			// Use local sessions only.
@@ -206,6 +222,10 @@ class WikiaCentralAuthHooks {
 	 */
 	static function initSession( User $oUser, $token ) {
 		global $wgAuth;
+        if ( wfReadOnly() ) {
+			wfDebug( __METHOD__ . ": DB is running with the --read-only option " );
+            return true;
+        }
 		wfProfileIn( __METHOD__ );
 		$userName = $oUser->getName();
 		wfSetupSession();
@@ -227,6 +247,12 @@ class WikiaCentralAuthHooks {
 	 */
 	static function attemptAddUser( User $oUser, $userName ) {
 		global $wgAuth, $wgWikiaCentralAuthCreateOnView;
+
+        if ( wfReadOnly() ) {
+			wfDebug( __METHOD__ . ": DB is running with the --read-only option " );
+            return false;
+        }
+		
 		wfProfileIn( __METHOD__ );
 		// Denied by configuration?
 		if ( !$wgAuth->autoCreate() ) {
@@ -391,6 +417,13 @@ class WikiaCentralAuthHooks {
 
 	static function onGetUserPermissionsErrorsExpensive( $title, User $oUser, $action, &$result ) {
 		wfProfileIn( __METHOD__ );
+
+        if ( wfReadOnly() ) {
+			wfDebug( __METHOD__ . ": DB is running with the --read-only option " );
+			wfProfileOut( __METHOD__ );
+            return false;
+        }
+		
 		if( $action == 'read' || $oUser->isAnon() ) {
 			wfProfileOut( __METHOD__ );
 			return true;
@@ -411,6 +444,12 @@ class WikiaCentralAuthHooks {
 	
 	static function onUserLoadFromSessionInfo( &$oUser, $from ) {
 		wfDebug( __METHOD__ . " load from session data for user: {$oUser->getName()} \n");
+
+        if ( wfReadOnly() ) {
+			wfDebug( __METHOD__ . ": DB is running with the --read-only option " );
+            return false;
+        }
+
 		wfProfileIn( __METHOD__ );
 		$oCUser = WikiaCentralAuthUser::getInstance( $oUser );
 		if ( !($oCUser->exists() && $oCUser->isAttached()) ) {
@@ -466,6 +505,12 @@ class WikiaCentralAuthHooks {
 	
 	
 	static function onUserLoadFromDatabase ( User &$oUser, &$oRow ) {
+
+        if ( wfReadOnly() ) {
+			wfDebug( __METHOD__ . ": DB is running with the --read-only option " );
+            return true;
+        }
+		
 		if ( !$oUser instanceof User ) {
 			return true;
 		}

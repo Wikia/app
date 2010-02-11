@@ -45,6 +45,12 @@ class WikiaCentralAuthPlugin extends AuthPlugin {
 	 */
 	function authenticate( $username, $password ) {
 		global $wgWikiaCentralAuthAutoMigrate;
+
+        if ( wfReadOnly() ) {
+			wfDebug( __METHOD__ . ": DB is running with the --read-only option " );
+            return false;
+        }
+		
 		wfProfileIn( __METHOD__ );
 		$oCUser = new WikiaCentralAuthUser( $username );
 		if( !$oCUser->exists() ) {
@@ -96,6 +102,11 @@ class WikiaCentralAuthPlugin extends AuthPlugin {
 	 * @public
 	 */
 	function updateUser( User &$oUser ) {
+        if ( wfReadOnly() ) {
+			wfDebug( __METHOD__ . ": DB is running with the --read-only option " );
+            return false;
+        }
+		
 		wfProfileIn( __METHOD__ );
 		$oCUser = $this->getUserInstance( $oUser );
 		wfDebug( __METHOD__ . ": update local user information from central auth : '{$oUser->getName()}' \n" );
@@ -140,6 +151,10 @@ class WikiaCentralAuthPlugin extends AuthPlugin {
 	 */
 	function setPassword( User &$oUser, $password ) {
 		// Fixme: password changes should happen through central interface.
+        if ( wfReadOnly() ) {
+			wfDebug( __METHOD__ . ": DB is running with the --read-only option " );
+            return false;
+        }
 		wfProfileIn( __METHOD__ );
 		$oCUser = $this->getUserInstance( $oUser );
 		wfDebug( __METHOD__ . ": set password for user : '{$oUser->getName()}' \n" );
@@ -194,6 +209,10 @@ class WikiaCentralAuthPlugin extends AuthPlugin {
 	 */
 	function addUser( User $oUser, $password, $email='', $realname='' ) {
 		global $wgWikiaCentralAuthAutoNew;
+        if ( wfReadOnly() ) {
+			wfDebug( __METHOD__ . ": DB is running with the --read-only option " );
+            return false;
+        }
 		wfProfileIn( __METHOD__ );
 		if( $wgWikiaCentralAuthAutoNew ) {
 			$oCUser = $this->getUserInstance( $oUser );
@@ -235,6 +254,10 @@ class WikiaCentralAuthPlugin extends AuthPlugin {
 	 * @public
 	 */
 	function initUser( User &$oUser, $autocreate=false ) {
+        if ( wfReadOnly() ) {
+			wfDebug( __METHOD__ . ": DB is running with the --read-only option " );
+            return false;
+        }
 		wfProfileIn( __METHOD__ );
 		#if( $autocreate ) {
 			$oCUser = $this->getUserInstance( $oUser );
@@ -245,5 +268,6 @@ class WikiaCentralAuthPlugin extends AuthPlugin {
 			}
 		#}
 		wfProfileOut( __METHOD__ );
+		return true;
 	}
 }
