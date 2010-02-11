@@ -114,16 +114,6 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 			<li class="data2"><span class="note"><?=wfMsg('autocreatewiki-info-staff-username')?></span></li>
 		</ul>
 	</div>
-	<div class="formblock">
-		<ul>
-			<li class="label"><label>create as answers (test, ignore it)</label></li>
-			<li class="data1">
-				<input type="checkbox" autocomplete="off" name="wiki-type" id="wiki-type" value="<?=@$params['wiki-type']?>" style="width:145px" /> <span class="error-status" id="wiki-type-error-status">&nbsp;</span>
-				<div class="error" style="display: none;" id="wiki-type-error"></div>
-			</li>
-			<li class="data2"><span class="note">do additional stuffs needed by answer</span></li>
-		</ul>
-	</div>
 <!-- end of staff section --->
 <?php endif ?>
 <?php if ($wgUser->isAnon()) : ?>
