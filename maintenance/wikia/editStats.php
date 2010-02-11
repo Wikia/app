@@ -3,7 +3,11 @@
 require_once( dirname(__FILE__).'/../commandLine.inc' );
 echo( "Refresh Wikia Edits Statistics\n\n" );
 
-if ( isset( $options['help'] ) || empty($options['date']) ) {
+if ( empty($options['date']) ) {
+	$options['date'] = date('Y-m-d');	
+}
+
+if ( isset( $options['help'] ) ) {
 	showHelp();
 	exit();
 }
