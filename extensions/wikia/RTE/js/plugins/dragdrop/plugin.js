@@ -32,8 +32,10 @@ CKEDITOR.plugins.add('rte-dragdrop',
 				pageY: (ev.pageY ? ev.pageY : ev.clientY)
 			};
 
-			// trigger custom event handler
-			droppedElement.trigger('dropped', [extra]);
+			// trigger custom event handler (IE freezes here)
+			if (!CKEDITOR.env.ie) {
+				droppedElement.trigger('dropped', [extra]);
+			}
 
 		}, this.timeout);
 	},
@@ -49,6 +51,29 @@ CKEDITOR.plugins.add('rte-dragdrop',
 
 		// trigger custom event
 		target.trigger('dragged');
+	},
+
+	onDuringDragDrop: function(ev) {
+		var scrollStep = 15;
+		var scrollSpace = 50;
+
+		var editorHeight = parseInt($('#cke_contents_wpTextbox1').height());
+		var editorWindow = RTE.instance.window.$;
+
+		// get position of vertical scroll
+		var scrollY = (CKEDITOR.env.ie ? editorWindow.document.body.parentNode.scrollTop : editorWindow.scrollY);
+
+		// get mouse cursor position (relative to the editor window)
+		var cursorY = (ev.pageY ? ev.pageY : ev.clientY) - scrollY; // RTE.log(cursorY);
+
+		// mouse is above the editor
+		if (cursorY < scrollSpace) {
+			editorWindow.scrollBy(0, -scrollStep);
+		}
+		// mouse is below the editor
+		else if (cursorY >= editorHeight - scrollSpace) {
+			editorWindow.scrollBy(0, scrollStep);
+		}
 	},
 
 	init: function(editor) {
@@ -100,11 +125,15 @@ CKEDITOR.plugins.add('rte-dragdrop',
 							RTE.tools.removeResizeBox();
 						}
 					}
-				});
+				}).
+
+				// handle editor scrolling during drag&drop (RT #37709)
+				bind('dragover.dnd', self.onDuringDragDrop);
 
 			// for IE
 			if (CKEDITOR.env.ie) {
 				RTE.getEditor().bind('drop',self.onDrop);
+				RTE.getEditor().bind('dragover', self.onDuringDragDrop);
 			}
 		});
 	}
