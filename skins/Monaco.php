@@ -1832,48 +1832,7 @@ if ($custom_article_footer !== '') {
 							</ul>
 <?php
 			if(empty($wgEnableRecipesTweaksExt)) {
-?>
-							<div class="clearfix" id="star-rating-row">
-								<strong><?= wfMsgHtml('rate_it') ?></strong>
-<?php
-			$FauxRequest = new FauxRequest(array( "action" => "query", "list" => "wkvoteart", "wkpage" => $this->data['articleid'], "wkuservote" => true ));
-			$oApi = new ApiMain($FauxRequest);
-			try { $oApi->execute(); } catch (Exception $e) {};
-			$aResult =& $oApi->GetResultData();
-
-			if( !empty( $aResult['query']['wkvoteart'] ) ) {
-				if(!empty($aResult['query']['wkvoteart'][$this->data['articleid']]['uservote'])) {
-					$voted = true;
-				} else {
-					$voted = false;
-				}
-				if (!empty($aResult['query']['wkvoteart'][$this->data['articleid']]['votesavg'])) {
-					$rating = $aResult['query']['wkvoteart'][$this->data['articleid']]['votesavg'];
-				} else {
-					$rating = 0;
-				}
-			} else {
-				$voted = false;
-				$rating = 0;
-			}
-
-			$hidden_star = $voted ? ' style="display: none;"' : '';
-			$rating = round($rating * 2)/2;
-			$ratingPx = round($rating * 17);
-?>
-								<div id="star-rating-wrapper">
-									<ul id="star-rating" class="star-rating">
-										<li style="width: <?= $ratingPx ?>px;" id="current-rating" class="current-rating"><span><?= $rating ?>/5</span></li>
-										<li><a rel="nofollow" class="one-star" id="star1" title="1/5"<?=$hidden_star?>><span>1</span></a></li>
-										<li><a rel="nofollow" class="two-stars" id="star2" title="2/5"<?=$hidden_star?>><span>2</span></a></li>
-										<li><a rel="nofollow" class="three-stars" id="star3" title="3/5"<?=$hidden_star?>><span>3</span></a></li>
-										<li><a rel="nofollow" class="four-stars" id="star4" title="4/5"<?=$hidden_star?>><span>4</span></a></li>
-										<li><a rel="nofollow" class="five-stars" id="star5" title="5/5"<?=$hidden_star?>><span>5</span></a></li>
-									</ul>
-									<span style="<?= ($voted ? '' : 'display: none;') ?>" id="unrateLink"><a rel="nofollow" id="unrate" href="#"><?= wfMsg( 'unrate_it' ) ?></a></span>
-								</div>
-							</div>
-<?php
+				$this->printStarRating();
 			}
 ?>
 <?php
@@ -2437,5 +2396,51 @@ wfProfileOut( __METHOD__ . '-body');
 		if($this->data['catlinks']) {
 			$this->html('catlinks');
 		}
+	}
+
+
+	function printStarRating(){
+		?>
+		<div class="clearfix" id="star-rating-row">
+		  <strong><?= wfMsgHtml('rate_it') ?></strong>
+		  <?php
+			$FauxRequest = new FauxRequest(array( "action" => "query", "list" => "wkvoteart", "wkpage" => $this->data['articleid'], "wkuservote" => true ));
+			$oApi = new ApiMain($FauxRequest);
+			try { $oApi->execute(); } catch (Exception $e) {};
+			$aResult =& $oApi->GetResultData();
+
+			if( !empty( $aResult['query']['wkvoteart'] ) ) {
+				if(!empty($aResult['query']['wkvoteart'][$this->data['articleid']]['uservote'])) {
+					$voted = true;
+				} else {
+					$voted = false;
+				}
+				if (!empty($aResult['query']['wkvoteart'][$this->data['articleid']]['votesavg'])) {
+					$rating = $aResult['query']['wkvoteart'][$this->data['articleid']]['votesavg'];
+				} else {
+					$rating = 0;
+				}
+			} else {
+				$voted = false;
+				$rating = 0;
+			}
+
+			$hidden_star = $voted ? ' style="display: none;"' : '';
+			$rating = round($rating * 2)/2;
+			$ratingPx = round($rating * 17);
+		  ?>
+		  <div id="star-rating-wrapper">
+		    <ul id="star-rating" class="star-rating">
+			<li style="width: <?= $ratingPx ?>px;" id="current-rating" class="current-rating"><span><?= $rating ?>/5</span></li>
+			<li><a rel="nofollow" class="one-star" id="star1" title="1/5"<?=$hidden_star?>><span>1</span></a></li>
+			<li><a rel="nofollow" class="two-stars" id="star2" title="2/5"<?=$hidden_star?>><span>2</span></a></li>
+			<li><a rel="nofollow" class="three-stars" id="star3" title="3/5"<?=$hidden_star?>><span>3</span></a></li>
+			<li><a rel="nofollow" class="four-stars" id="star4" title="4/5"<?=$hidden_star?>><span>4</span></a></li>
+			<li><a rel="nofollow" class="five-stars" id="star5" title="5/5"<?=$hidden_star?>><span>5</span></a></li>
+		    </ul>
+		    <span style="<?= ($voted ? '' : 'display: none;') ?>" id="unrateLink"><a rel="nofollow" id="unrate" href="#"><?= wfMsg( 'unrate_it' ) ?></a></span>
+		  </div>
+		</div>
+		<?php
 	}
 }
