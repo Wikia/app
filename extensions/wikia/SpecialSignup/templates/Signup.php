@@ -36,6 +36,10 @@ class SignupTemplate extends QuickTemplate {
 	<div class="visualClear"></div>
 <?php } ?>
 <br/>
+<script type="text/javascript">
+    // Ajax Login functionality, added here
+    var AjaxLogin2 = {};
+</script>        
 <table id="userloginSpecial" width="100%">
 <tr>
 <td width="55%" style="border-right: 1px solid #AAA; vertical-align: top;">
@@ -279,7 +283,6 @@ if( $wgUser->isAllowed('createaccount') ) {
 	</table>
 	<script type="text/javascript">
 		// Ajax Login functionality, added here
-		var AjaxLogin2 = {};
 
 		AjaxLogin2.formSubmitHandler = function(ev) {
 			AjaxLogin2.form.log('AjaxLogin2: selected action = '+ AjaxLogin2.action);
