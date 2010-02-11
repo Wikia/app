@@ -33,13 +33,14 @@ function axACWRequestCheckName() {
 	global $wgRequest, $wgDBname, $wgContLang, $wgOut;
 	wfLoadExtensionMessages( "AutoCreateWiki" );
 
-	$sName = $wgRequest->getVal('name');
-	$sLang = $wgRequest->getVal('lang');
+	$sName = $wgRequest->getVal( "name" );
+	$sLang = $wgRequest->getVal( "lang" );
+	$type  = $wgRequest->getVal( "type" );
 
 	$isError = false;
-	$sResponse = AutoCreateWiki::checkDomainIsCorrect($sName, $sLang);
+	$sResponse = AutoCreateWiki::checkDomainIsCorrect($sName, $sLang, $type );
 	if ( empty($sResponse) ) {
-		$aDomains = AutoCreateWiki::getDomainsLikeOrExact($sName, $sLang);
+		$aDomains = AutoCreateWiki::getDomainsLikeOrExact($sName, $sLang, $type );
 		if ( !empty($aDomains) && is_array($aDomains) ) {
 			$sResponse = wfMsg('autocreatewiki-similar-wikis');
 			$sLike = $sExact = "";

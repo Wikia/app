@@ -187,7 +187,7 @@ class Wikia {
 		}
 
 		$parts = explode(".", trim($name));
-
+		Wikia::log( __METHOD__, "info", "$name $language $type" );
 		if( is_array( $parts ) ) {
 			if( count( $parts ) <= 2 ) {
 				switch( $type ) {
