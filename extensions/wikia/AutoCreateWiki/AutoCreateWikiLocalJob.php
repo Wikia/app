@@ -85,13 +85,21 @@ class AutoCreateWikiLocalJob extends Job {
 		 * is too early for that. This is fallback function
 		 */
 		$this->moveMainPage();
-
 		$this->changeStarterContributions();
 		$this->setWelcomeTalkPage();
 		$this->sendWelcomeMail();
 		$this->populateCheckUserTables();
 		$this->protectKeyPages();
 		$this->queueReminderMail();
+
+		/**
+		 * different things for different types
+		 */
+		switch( $this->mParams[ "type" ] ) {
+			case "answers":
+				$this->copyDefaultAvatars();
+				break;
+		}
 
 		wfProfileOut( __METHOD__ );
 
@@ -445,5 +453,26 @@ class AutoCreateWikiLocalJob extends Job {
 			),
 			CURLOPT_PROXY => "127.0.0.1:6081"
 		));
+	}
+
+	/**
+	 * some wikis have social tools enabled, they demand default avatars
+	 *
+	 * @access private
+	 */
+	private function copyDefaultAvatars() {
+		global $wgUploadDirectory;
+
+		wfProfileIn( __METHOD__ );
+
+		/**
+		 * avatars folder
+		 */
+		$target = "{$wgUploadDirectory}/avatars";
+		wfMkdirParents( $target );
+		if( is_dir( $target ) ) {
+			copy( "/images/a/answers/images/avatars/default*", $target );
+			Wikia::log( __METHOD__, "info", "copy default avatars to {$target}" );
+		}
 	}
 }

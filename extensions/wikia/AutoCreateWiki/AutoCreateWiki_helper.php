@@ -463,7 +463,7 @@ class AutoCreateWiki {
 		wfProfileOut(__METHOD__);
 		return $allowed;
 	}
-	
+
 	/**
 	 * check name of Wiki is one of NS name
 	 */
@@ -477,13 +477,13 @@ class AutoCreateWiki {
 			if ( preg_match('/^((' . implode(")|(", array_values($cNamespaces)) . '))(\s*)\:/i', $sText) ) {
 				$res = true;
 			}
-		} 
-		
+		}
+
 		if ( !empty($lNamespaces) && ($res == false) ) {
 			if ( preg_match('/^((' . implode(")|(", array_values($lNamespaces)) . '))(\s*)\:/i', $sText) ) {
 				$res = true;
 			}
-		} 
+		}
 
 		if ( !empty($lang) && !in_array($lang, array($wgContLang->getCode(), $wgLang->getCode())) && ($res == false) ) {
 			$wikiLang = Language::factory($lang);
@@ -492,7 +492,7 @@ class AutoCreateWiki {
 				$res = true;
 			}
 		}
-		
+
 		return $res;
 	}
 

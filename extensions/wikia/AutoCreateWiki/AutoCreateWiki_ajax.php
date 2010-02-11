@@ -18,26 +18,21 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 function axACWRequestCheckWikiName() {
 	global $wgRequest, $wgDBname, $wgContLang, $wgLang, $wgOut;
 	wfLoadExtensionMessages( "AutoCreateWiki" );
-	
+
 	$sName = $wgRequest->getVal('name');
 	$sLang = $wgRequest->getVal('lang');
 	$sResponse = AutoCreateWiki::checkWikiNameIsCorrect($sName, $sLang);
 
 	$isError = ( !empty($sResponse) ) ? true : false;
 	$aResponse = array( 'div-body' => $sResponse, 'div-name' => 'wiki-name-error', 'div-error' => $isError );
-	
-	if (!function_exists('json_encode'))  {
-		$oJson = new Services_JSON();
-		return $oJson->encode($aResponse);
-	} else {
-		return json_encode($aResponse);
-	}
+
+	return Wikia::json_encode( $aResponse );
 }
 
 function axACWRequestCheckName() {
 	global $wgRequest, $wgDBname, $wgContLang, $wgOut;
 	wfLoadExtensionMessages( "AutoCreateWiki" );
-	
+
 	$sName = $wgRequest->getVal('name');
 	$sLang = $wgRequest->getVal('lang');
 
@@ -66,7 +61,7 @@ function axACWRequestCheckName() {
 					$sResponse .= "<ul id='wiki-result-list-like'>{$sLike}</ul>";
 				}
 			}
-			
+
 			if ( !isset($aDomains['exact']) && !isset($aDomains['like']) && isset($aDomains['closed']) ) {
 				$sResponse = wfMsg('autocreatewiki-violate-policy');
 				$isError = true;
@@ -75,15 +70,10 @@ function axACWRequestCheckName() {
 	} else {
 		$isError = true;
 	}
-	
+
 	$aResponse = array( 'div-body' => $sResponse, 'div-name' => 'wiki-domain-error', 'div-error' => $isError );
-	
-	if (!function_exists('json_encode'))  {
-		$oJson = new Services_JSON();
-		return $oJson->encode($aResponse);
-	} else {
-		return json_encode($aResponse);
-	}
+
+	return Wikia::json_encode( $aResponse );
 }
 
 function axACWRequestCheckAccount() {
@@ -94,7 +84,7 @@ function axACWRequestCheckAccount() {
 	$sLang = $wgRequest->getVal('lang');
 	$sValue = $wgRequest->getVal('value');
 	$sPass = $wgRequest->getVal('pass');
-	
+
 	$isError = false;
 	$sResponse = "";
 	$errDiv = 'wiki-username-error' ;
@@ -118,15 +108,11 @@ function axACWRequestCheckAccount() {
 		}
 	}
 	$errDiv = "wiki-{$sName}-error";
-	
+
 	$isError = (!empty($sResponse)) ? true : false;
 	$aResponse = array( 'div-body' => $sResponse, 'div-name' => $errDiv, 'div-error' => $isError );
-	if (!function_exists('json_encode'))  {
-		$oJson = new Services_JSON();
-		return $oJson->encode($aResponse);
-	} else {
-		return json_encode($aResponse);
-	}
+
+	return Wikia::json_encode( $aResponse );
 }
 
 function axACWRequestCheckBirthday() {
@@ -136,7 +122,7 @@ function axACWRequestCheckBirthday() {
 	$sYear = $wgRequest->getVal('year');
 	$sMonth = $wgRequest->getVal('month');
 	$sDay = $wgRequest->getVal('day');
-	
+
 	$errDiv = "wiki-birthday-error";
 	$sResponse = AutoCreateWiki::checkBirthdayIsCorrect($sYear, $sMonth, $sDay);
 
@@ -153,15 +139,15 @@ function axACWRequestCheckBirthday() {
 function axACWRequestCheckLog() {
 	global $wgUser;
 	wfLoadExtensionMessages( "AutoCreateWiki" );
-	
+
 	$sInfo = "";
 	if ( !empty($_SESSION) && isset($_SESSION['awcName']) ) {
 		$sInfo = AutoCreateWiki::logMemcKey (
-			"get", 
+			"get",
 			array(
-				'awcName' => $_SESSION['awcName'], 
-				'awcDomain' => $_SESSION['awcDomain'], 
-				'awcCategory' => $_SESSION['awcCategory'], 
+				'awcName'     => $_SESSION['awcName'],
+				'awcDomain'   => $_SESSION['awcDomain'],
+				'awcCategory' => $_SESSION['awcCategory'],
 				'awcLanguage' => $_SESSION['awcLanguage']
 			)
 		);
@@ -173,10 +159,5 @@ function axACWRequestCheckLog() {
 		$aResponse = array( 'type' => '', 'info' => wfMsg('autocreatewiki-stepdefault') );
 	}
 
-	if (!function_exists('json_encode'))  {
-		$oJson = new Services_JSON();
-		return $oJson->encode($aResponse);
-	} else {
-		return json_encode($aResponse);
-	}
+	return Wikia::json_encode( $aResponse );
 }
