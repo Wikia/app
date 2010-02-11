@@ -988,7 +988,9 @@ class BlogComment {
 			}
 
 			$keys['$DBPAGETITLE'] = $Title->getText();
-			$keys['$CHANGEDORCREATED'] = wfMsgForContent( 'blog-added' );
+			$keys['$CHANGEDORCREATED'] = ( isset($keys['$OLDID']) && !empty($keys['$OLDID']) 
+				? wfMsgForContent( 'blog-edited' ) 
+				: wfMsgForContent( 'blog-added' );
 			list ( $keys['$AUTHOR'], $keys['$BLOGTITLE'] ) = explode( "/", $keys['$DBPAGETITLE'], 2 );
 		}
 		return true;
