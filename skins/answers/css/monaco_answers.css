@@ -1,43 +1,15 @@
 /* Answers specific CSS goes here, overriding monaco css, and adding any additional */
 
-
-/* TESTING tabs */
-
-#search_field {
-	position: relative;
-}
-
-#search_box {
-	display: none;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* === TEMPORARY === */
 
 /* kill ads */
 /*.google-ad-unit { display:none; } */
 /* #questionTopAd { display:none; } */
 
-
 /* make the avatars smaller */
 .userInfoBadge img {
-	height: 35px;
-	width: 35px;
+	height: 35px !important;
+	width: 35px !important;
 }
 
 #question_attribution h3, #answer_attribution h3 {
@@ -152,7 +124,7 @@ body.page-Wikianswers h1.firstHeading, body.page-Wikianswers #contentSub { displ
 #navigation .Monaco-sidebar_edit { display: none; }
 body.mainpage .firstHeading { display:none; }
 .usermessage { display:none; }
-
+#search_box { display: none;}
 
 
 
@@ -195,13 +167,13 @@ body.mainpage .firstHeading { display:none; }
 }
 
 /* ask box */
-#answers_ask input.header_field {
+#answers_ask input.header_field, #tabAsk input.header_field {
 	font-size:16pt;
-	width:382px;
+	width:380px;
 	border:1px solid #A5BF5E;
 }
 
-#answers_ask {
+#answers_ask, #tabAsk, #tabSearch {
 	background:#CEE296 none repeat scroll 0 0;
 	border-top: 3px solid #699000;
 	font-size:16pt;
@@ -224,7 +196,9 @@ body.mainpage .firstHeading { display:none; }
 
 
 /* Style the "ask" button at the top */
-#ask_button {
+#ask_button,
+#ask_button_intab,
+#search_button_intab {
     color: #fff;
     background: #008900;
     font-weight: bold;
@@ -232,7 +206,7 @@ body.mainpage .firstHeading { display:none; }
     border:1px solid;
 }
 
-#ask_button:hover {
+#ask_button:hover, #ask_button_intab:hover {
   color: #008900;
   background: #fff;
 }
@@ -412,6 +386,92 @@ body.mainpage .firstHeading { display:none; }
 	list-style-image:none;
 	list-style-type:none;
 }
+
+
+
+
+/* SEARCH & ASK TABS */
+
+#search_field { position: relative;}
+
+#answers_article .ui-tabs-nav {
+	background-color:#fff;
+	background-image:none;
+}
+
+#answers_article .ui-widget {
+	font-family:"Helvetica Neue",Helvetica,Arial,default;
+	font-size: 100%;
+}
+
+#answers_article .ui-tabs,
+#answers_article .ui-tabs-nav,
+#answers_article li.ui-tabs-selected {
+	padding-bottom:0px;
+}
+
+#answers_article .ui-tabs-selected {
+	background-color: #cee296;
+}
+
+#answers_article .ui-tabs,
+#answers_article .ui-tabs-nav li {
+	margin:0 0.2em 0 0;
+}
+
+#answers_article .ui-state-active,
+#answers_article .ui-state-active {
+	background: none;
+	border-left:none;
+	border-right:none;
+	border-bottom:none;
+}
+
+#answers_article .ui-tabs-nav,
+#answers_article .ui-tabs {
+	padding: 0px;
+}
+
+
+#answers_article .ui-corner-bottom,
+#answers_article .ui-corner-all,
+#answers_article .ui-corner-top {
+	-moz-border-radius: 0px;
+}
+
+#answers_article .ui-tabs {
+}
+
+#answers_article .ui-widget-content {
+	background-image: none;
+	border: none;
+}
+
+#answers_article .ui-widget-header {
+	border: none;
+}
+
+#answers_article .ui-state-active {
+	border-top: 3px solid #699000 !important;
+	background-color: #cee296 !important;
+}
+
+#answers_article .ui-state-hover {
+	border-left: none;
+	border-right: none;
+	border-top: 3px solid #cee296 !important;
+}
+
+#answers_article .ui-state-default {
+	border: none;
+	background: none;
+	background-color: #e2eec0;
+	border-top: 3px solid #e2eec0;
+}
+
+
+
+
 
 /* Related questions */
 #related_questions {
@@ -674,3 +734,5 @@ div.userInfoNoAvatar .userPoints {
 	font-size:30pt;
 	text-align: center;
 }
+
+
