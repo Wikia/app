@@ -20,6 +20,8 @@ function showHelp() {
 	echo( "Usage: php initStats.php \n\n" );
 }
 
+require_once( dirname(__FILE__).'/../../extensions/wikia/TextRegex/TextRegex.php' );
+
 function wfEditStats($options = array()) {
 	global $wgExternalDatawareDB, $wgMemc, $wgDBname;
 
@@ -122,7 +124,7 @@ function wfEditStats($options = array()) {
 	for ( $i = 1; $i <= 7; $i++ ) {
 		wfOut( "\nTop 10 most edited pages (per editors) in last $i days  ... " );
 		WikiaGlobalStats::getPagesEditors($i, 10, true, true, false, true);
-		wfOut( "\nTop 5 most edited pages in last $i days ... " );
+		wfOut( "\nTop 5 most edited pages (per editors) in last $i days ... " );
 		WikiaGlobalStats::getPagesEditors($i, 5, true, true, false, true);
 	}
 
@@ -133,8 +135,8 @@ function wfEditStats($options = array()) {
 		WikiaGlobalStats::getEditedArticles($i, 5, true, true);
 	}
 
-	wfOut( "done.\n" );
+	wfOut( "\ndone.\n" );
 }
 
-wfOut( "Finished.\n" );
+wfOut( "\nFinished.\n" );
 
