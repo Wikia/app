@@ -12,15 +12,20 @@ wfLoadExtensionMessages('WikiFactoryReporter');
 
 class WikiFactoryReporter extends SpecialPage
 {
-	function __construct() { parent::__construct('WikiFactoryReporter'); }
+	function __construct() { parent::__construct('WikiFactoryReporter', 'wikifactory'); }
 
 	function execute($params)
 	{
-		global $wgOut;
+		global $wgOut, $wgUser;
 
 		$wgOut->setPageTitle('WikiFactory Reporter: wgFileExtensions');
 		$wgOut->setRobotpolicy('noindex,nofollow');
 		$wgOut->setArticleRelated(false);
+
+		if( !$wgUser->isAllowed('wikifactory') ) {
+			$this->displayRestrictionError();
+			return;
+		}
 
 		$wgOut->addHTML('<h2>Global Settings</h2>');
 		$wgOut->addHTML($this->getGlobalSettings());
