@@ -496,3 +496,8 @@ div.linkEditorDialog .cke_browser_ie8 .cke_dialog_title {
 	top: 6px;
 	width: 16px;
 }
+
+/* min width of editor (RT #38820) */
+#wikia_page {
+	min-width: 350px;
+}
