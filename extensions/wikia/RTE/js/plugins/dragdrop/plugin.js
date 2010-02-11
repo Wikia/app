@@ -64,7 +64,7 @@ CKEDITOR.plugins.add('rte-dragdrop',
 		var scrollY = (CKEDITOR.env.ie ? editorWindow.document.body.parentNode.scrollTop : editorWindow.scrollY);
 
 		// get mouse cursor position (relative to the editor window)
-		var cursorY = (ev.pageY ? ev.pageY : ev.clientY) - scrollY; // RTE.log(cursorY);
+		var cursorY = (ev.pageY ? ev.pageY : ev.clientY) - scrollY;
 
 		// mouse is above the editor
 		if (cursorY < scrollSpace) {
@@ -132,8 +132,9 @@ CKEDITOR.plugins.add('rte-dragdrop',
 
 			// for IE
 			if (CKEDITOR.env.ie) {
-				RTE.getEditor().bind('drop',self.onDrop);
-				RTE.getEditor().bind('dragover', self.onDuringDragDrop);
+				RTE.getEditor().
+					bind('drop',self.onDrop).
+					bind('dragover', self.onDuringDragDrop);
 			}
 		});
 	}
