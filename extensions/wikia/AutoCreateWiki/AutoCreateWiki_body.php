@@ -869,6 +869,7 @@ class AutoCreateWikiPage extends SpecialPage {
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array(
+			"createType"       => $this->mType,
 			"subDomain"        => $this->mDefSubdomain,
 			"wgUser"           => $wgUser,
 			"wgExtensionsPath" => $wgExtensionsPath,
