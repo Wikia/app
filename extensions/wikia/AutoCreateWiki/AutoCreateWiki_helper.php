@@ -27,14 +27,16 @@ class AutoCreateWiki {
 	 *
 	 * @param string $name: domain name
 	 * @param string $language default null - choosen language
+	 * @param mixed  $type type of domain, default false = wikia.com
 	 *
 	 * @return integer - 0 or 1
 	 */
-	public static function domainExists( $name, $language = null  ) {
+	public static function domainExists( $name, $language = null, $type = false ) {
 		global $wgExternalSharedDB;
-		$sDomain = Wikia::fixDomainName($name, $language);
 
-		Wikia::log( __METHOD__, "domain", $sDomain );
+		$sDomain = Wikia::fixDomainName( $name, $language, $type );
+		Wikia::log( __METHOD__, "domain", "{$sDomain} name={$name}, language={$language}, type={$type}" );
+
 
 		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 		$oRow = $dbr->selectRow(
@@ -64,14 +66,15 @@ class AutoCreateWiki {
 	 * check if name is similar or the same, using sql like queries
 	 *
 	 * @access public
-	 * @author Krzysztof Krzyżaniak <eloy@wikia.com>
+	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
 	 *
 	 * @param string $name: name to check
 	 * @param string $language default null - choosen language
+	 * @param mixed  $type type of domain, default false = wikia.com
 	 *
 	 * @return array with matches
 	 */
-	function getDomainsLikeOrExact( $name, $language = null ) {
+	function getDomainsLikeOrExact( $name, $language = null, $type = false ) {
 		global $wgExternalSharedDB;
 		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
@@ -93,19 +96,19 @@ class AutoCreateWiki {
 			if ( is_array( $names ) ) {
 				foreach( $names as $n ) {
 					if ( !preg_match("/^[\w\.]+$/",$n) ) continue;
-					$sDomain = Wikia::fixDomainName($n, $language);
+					$sDomain = Wikia::fixDomainName( $n, $language, $type );
 					$tmp_array['exact'][] = "city_domain = '{$sDomain}'";
 					$n = strtr($n, '0123456789', '%%%%%%%%%%%');
 					$tmp_array['similar'][] = "city_domain like '%{$n}%' or city_domain sounds like '{$n}.wikia.com'";
 				}
-				if ( sizeof( $tmp_array ) ) {
+				if( sizeof( $tmp_array ) ) {
 					$condition = implode(" or ", $tmp_array['exact']);
 					$conditionSimilar = implode(" or ", $tmp_array['similar']);
 				} else {
 					$skip = true;
 				}
 			} else {
-				$sDomain = Wikia::fixDomainName($name, $language);
+				$sDomain = Wikia::fixDomainName($name, $language, $type );
 				$condition = "city_domain = '{$sDomain}'";
 				$conditionSimilar = "city_domain like '%{$name}%'";
 			}
@@ -202,7 +205,7 @@ class AutoCreateWiki {
 		return $sResponse;
 	}
 
-	public static function checkDomainIsCorrect($sName, $sLang) {
+	public static function checkDomainIsCorrect($sName, $sLang, $type = false ) {
 		global $wgUser;
 
 		wfProfileIn(__METHOD__);
@@ -227,7 +230,7 @@ class AutoCreateWiki {
 			#-- invalid name (bad words)
 			$sResponse = wfMsg('autocreatewiki-violate-policy');
 		} else {
-			$iExists = AutoCreateWiki::domainExists($sName, $sLang);
+			$iExists = AutoCreateWiki::domainExists( $sName, $sLang, $type );
 			if (!empty($iExists)) {
 				#--- domain exists
 				$sResponse = wfMsg('autocreatewiki-name-taken', ( !is_null($sLang) && ($sLang != 'en') ) ? sprintf("%s.%s", $sLang, $sName) : $sName );

@@ -154,7 +154,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->mUserLanguage = $wgUser->getOption( 'language', $wgContLanguageCode );
 		$this->mNbrCreated = $this->countCreatedWikis();
 
-		if ( !$wgUser->isAllowed( 'createwikilimitsexempt' ) && ($this->mNbrCreated >= self::DAILY_LIMIT) ) {
+		if( !$wgUser->isAllowed( 'createwikilimitsexempt' ) && ($this->mNbrCreated >= self::DAILY_LIMIT) ) {
 			$wgOut->addHTML(
 				wfMsgExt( "autocreatewiki-limit-day",
 					array( "language" => $this->mUserLanguage ), array( $this->mNbrCreated )
@@ -1032,14 +1032,14 @@ class AutoCreateWikiPage extends SpecialPage {
 		wfProfileIn( __METHOD__ );
 
 		#-- check Wiki's name
-		$sResponse = AutoCreateWiki::checkWikiNameIsCorrect($this->mName, $this->mLanguage);
+		$sResponse = AutoCreateWiki::checkWikiNameIsCorrect($this->mName, $this->mLanguage, $this->mType );
 		if ( !empty($sResponse) ) {
 			$this->makeError( "wiki-name", $sResponse );
 			$res = false;
 		}
 
 		#-- check Wiki's domain
-		$sResponse = AutoCreateWiki::checkDomainIsCorrect($this->mDomain, $this->mLanguage);
+		$sResponse = AutoCreateWiki::checkDomainIsCorrect($this->mDomain, $this->mLanguage, $this->mType );
 		if ( !empty($sResponse) ) {
 			$this->makeError( "wiki-domain", $sResponse );
 			$res = false;
