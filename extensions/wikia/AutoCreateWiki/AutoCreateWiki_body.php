@@ -497,7 +497,7 @@ class AutoCreateWikiPage extends SpecialPage {
 				$sqlfiles[] = "{$IP}/extensions/SocialProfile/UserBoard/user_board.sql";
 				$sqlfiles[] = "{$IP}/extensions/SocialProfile/UserRelationship/user_relationship.sql";
 				$sqlfiles[] = "{$IP}/extensions/SocialProfile/UserStats/user_stats.sql";
-				$sqlfiles[] = "{$IP}/extensions/wikia/WikiaStats/categorystats.sql";
+				$sqlfiles[] = "{$IP}/maintenance/answers-additional-tables.sql";
 				break;
 		}
 
