@@ -167,34 +167,41 @@ class Wikia {
      *
      * @access public
      * @static
-     * @author eloy@wikia
+     * @author eloy@wikia-inc.com
      *
      * @param string $name Domain Name
-     * @param string $language default null - choosen language
+     * @param string $language default false - choosen language
+     * @param mixed  $type type of domain, default false = wikia.com
      *
      * @return string fixed domain name
      */
-    static public function fixDomainName( $name, $language = null )
-    {
-        if (empty( $name )) {
-            return $name;
-        }
+	static public function fixDomainName( $name, $language = false, $type = false ) {
+		if (empty( $name )) {
+			return $name;
+		}
 
-        $name = strtolower($name);
+		$name = strtolower( $name );
 
-        if ( !is_null($language) && $language != "en" ) {
-            $name = $language.".".$name;
-        }
+		if( $language && $language != "en" ) {
+			$name = $language.".".$name;
+		}
 
-        $aParts = explode(".", trim($name));
+		$parts = explode(".", trim($name));
 
-        if (is_array( $aParts )) {
-            if (count( $aParts ) <= 2) {
-                $name = $name.".wikia.com";
-            }
-        }
-        return $name;
-    }
+		if( is_array( $parts ) ) {
+			if( count( $parts ) <= 2 ) {
+				switch( $type ) {
+					case "answers":
+						$name = $name.".answers.wikia.com";
+						break;
+
+					default:
+						$name = $name.".wikia.com";
+				}
+			}
+		}
+		return $name;
+	}
 
 
     /**
@@ -411,7 +418,7 @@ class Wikia {
 		wfProfileIn( __METHOD__ );
 
 		$staffSigs = wfMsgExt('staffsigs', array('language'=>'en')); // fzy, rt#32053
-		
+
 		$staffUser = false;
 		if( !empty( $staffSigs ) ) {
 			$lines = explode("\n", $staffSigs);
@@ -435,7 +442,7 @@ class Wikia {
 			if( !empty( $data[$langCode] ) ) {
 				//pick one
 				$key = array_rand($data[$langCode]);
-				
+
 				//use it
 				$staffUser = User::newFromName( $data[$langCode][$key] );
 				$staffUser->load();
@@ -611,20 +618,20 @@ class Wikia {
 		}
 		return $str;
 	}
-	
+
 	/**
 	 * parse additional option links in RC
 	 *
 	 * @author      Piotr Molski <moli@wikia-inc.com>
 	 * @version     1.0.0
-	 * @param       RC		 RC - RC object	
+	 * @param       RC		 RC - RC object
 	 * @param       Array    links
 	 * @param       Array    options - default options
 	 * @param       Array    nondefaults - request options
 	 */
 	static public function addRecentChangesLinks( $RC, &$links, &$defaults, &$nondefaults ) {
 		global $wgRequest;
-		
+
 		$showhide = array( wfMsg( 'show' ), wfMsg( 'hide' ) );
 		if ( !is_array($links) ) {
 			$links = array();
@@ -635,14 +642,14 @@ class Wikia {
 		$nondefaults['hidelogs'] = $wgRequest->getVal( 'hidelogs', 0 );
 
 		$options = $nondefaults + $defaults;
-	
+
 		$hidelogslink = $RC->makeOptionsLink( $showhide[1-$options['hidelogs']],
 			array( 'hidelogs' => 1-$options['hidelogs'] ), $nondefaults);
 		$links[] = wfMsgHtml( 'rcshowhidelogs', $hidelogslink );
 
 		return true;
 	}
-	
+
 	/**
 	 * make query with additional options
 	 *
@@ -655,10 +662,10 @@ class Wikia {
 	 */
 	static public function makeRecentChangesQuery ( &$conds, &$tables, &$join_conds, $opts ) {
 		global $wgRequest;
-		
+
 		if ( $wgRequest->getVal( 'hidelogs', 0 ) > 0 ) {
 			$conds[] = 'rc_logid = 0';
-		} 
+		}
 		return true;
 	}
 
@@ -667,17 +674,17 @@ class Wikia {
 	 *
 	 * @author      Piotr Molski <moli@wikia-inc.com>
 	 * @version     1.0.0
-	 * @param       Array    $list - list of specialpages 
+	 * @param       Array    $list - list of specialpages
 	 */
 	static public function disableSpecialPage ( &$list ) {
 		global $wgDisableSpecialStatistics;
-		
+
 		if ( isset($wgDisableSpecialStatistics) && ($wgDisableSpecialStatistics === true) ) {
 			unset($list['Statistics']);
 		}
 		return true;
 	}
-	
+
 	/**
 	 * notify user on user right change
 	 *
@@ -689,12 +696,12 @@ class Wikia {
 	 */
 	static public function notifyUserOnRightsChange ( &$user, $addgroup, $removegroup ) {
 		global $wgUsersNotifiedOnAllChanges;
-		
+
 		$userName = $user->getName();
 		if ( !in_array( $userName, $wgUsersNotifiedOnAllChanges) ) {
 			$wgUsersNotifiedOnAllChanges[] = $userName;
 		}
-		
+
 		return true;
 	}
 
