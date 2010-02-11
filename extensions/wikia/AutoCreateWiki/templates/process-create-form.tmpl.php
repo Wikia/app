@@ -19,7 +19,7 @@ var YT = YAHOO.Tools;
 YE.onDOMReady(function () {
 	var loop = 0;
 	var ifr = YD.get('awc-process');
-	var titleUrl = '<?=$mTitle->getLocalURL()."/Processing" . (( $mLanguage != "en" ) ? "?uselang=" . $mLanguage : "") ?>'; 
+	var titleUrl = '<?php echo $mTitle->getLocalURL()."/Processing?" . $mQuery ?>';
 	var wgAjaxPath = wgScriptPath + wgScript;
 	var redirServer = '<?=$subdomain?>';
 	var waitMsg = '<?=wfMsg('autocreatewiki-stepdefault')?>';
@@ -51,7 +51,7 @@ YE.onDOMReady(function () {
 					if (data['type'] == 'END') isEnd++;
 					loop++;
 				}
-				
+
 				if (isEnd > 0) {
 					if (typeof TieDivLibrary != "undefined" ) {
 						TieDivLibrary.calculate();
@@ -63,7 +63,7 @@ YE.onDOMReady(function () {
 					} else {
 						setLog(loop, errorMsg, 'ERROR');
 					}
-				} 
+				}
 			},
 			failure: function( oResponse ) {
 				var res = oResponse.responseText;
@@ -71,11 +71,11 @@ YE.onDOMReady(function () {
 			},
 			timeout: 20000
 		}
-				
+
 		var url = wgAjaxPath + "?action=ajax&rs=axACWRequestCheckLog&token=<?=$ajaxToken?>";
 		YC.asyncRequest( "GET", url, __callback);
 	}
-	
+
 	checkProcess();
 });
 /*]]>*/

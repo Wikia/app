@@ -8,10 +8,19 @@ var divErrors = new Array();
 var isAutoCreateWiki = true;
 var formViewAction = "<?=$mTitle->getLocalURL(( $mLanguage != 'en' ) ? 'action=view&uselang=' . $mLanguage : 'action=reload')?>";
 var msgError = "<?php echo addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
-var createType = "<?php echo $createType ?>";
+var createType = "<?php echo $mType ?>";
 /*]]>*/
 </script>
-<form class="highlightform" id="highlightform" method="post" action="<?=$mTitle->escapeLocalURL(( $mLanguage != 'en' ) ? 'uselang=' . $mLanguage : '')?>">
+<?php
+$cgiParams = array();
+if( $mLanguage != 'en' ) {
+	$cgiArgs[ "uselang" ] = $mLanguage;
+}
+if( !empty( $mType ) ) {
+	$cgiArgs[ "type" ] = $mType;
+}
+?>
+<form class="highlightform" id="highlightform" method="post" action="<?php echo $mTitle->escapeLocalURL( $cgiArgs ) ?>">
 <div id="monobook_font">
 	<div class="legend"><?=wfMsg("autocreatewiki-required", "<img src='{$wgStylePath}/common/required.png?{$wgStyleVersion}' />")?></div>
 	<div id="moving" class="formhighlight"></div>
@@ -220,6 +229,7 @@ var createType = "<?php echo $createType ?>";
 	</div>
 <?php endif ?>
 	<div class="toolbar neutral">
+		<input type="hidden" value="<?php echo $mType ?>" name="wiki-type" id="wiki-type" />
 		<input type="submit" value="<?php echo wfMsg( "autocreatewiki") ?>" name="wiki-submit" id="wiki-submit" />
 		<input type="reset" value="<?php echo wfMsg( "cancel" ) ?>" name="wiki-cancel" id="wiki-cancel" />
 	</div>
