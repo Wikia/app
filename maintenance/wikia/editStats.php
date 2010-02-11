@@ -12,6 +12,7 @@ if ( isset( $options['help'] ) ) {
 	exit();
 }
 
+require_once( dirname(__FILE__).'/../../extensions/wikia/TextRegex/TextRegex.php' );
 wfEditStats($options);
 
 function showHelp() {
@@ -19,8 +20,6 @@ function showHelp() {
 	echo( " --date : generate stats for YYYY-MM-DD day\n" );
 	echo( "Usage: php initStats.php \n\n" );
 }
-
-require_once( dirname(__FILE__).'/../../extensions/wikia/TextRegex/TextRegex.php' );
 
 function wfEditStats($options = array()) {
 	global $wgExternalDatawareDB, $wgMemc, $wgDBname;
