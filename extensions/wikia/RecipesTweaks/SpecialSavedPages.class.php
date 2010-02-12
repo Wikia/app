@@ -49,7 +49,7 @@ class SpecialSavedPages extends SpecialPage {
 				$out .= '<img class="recipes_saved_pages_delete" width="16" height="16" src="'.$wgStylePath.'/monobook/blank.gif" />';
 			}
 
-			$out .= '<cite>by <a href="'.$item['userUrl'].'">'.$item['userTitle'].'</a></cite></li>';
+			$out .= '<cite>' . wfMsg('recipes-savedpages-by') . ' <a href="'.$item['userUrl'].'">'.$item['userTitle'].'</a></cite></li>';
 		}
 
 		if($out == '') {
