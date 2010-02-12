@@ -531,7 +531,7 @@ class Skin extends Linker {
 		if ( !wfEmptyMsg( $msgKey, $userJS ) ) {
 			$s .= $userJS;
 		}
-        $s .=  " } catch(err) { } ";
+        $s .=  " } catch(err) { window._customJSerror = err; } ";
 
 		wfProfileOut( __METHOD__ );
 		return $s;
