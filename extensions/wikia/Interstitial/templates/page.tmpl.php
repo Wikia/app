@@ -42,7 +42,7 @@
 		</div>
 	*/
 ?>
-		<div id="wikia_header">
+		<div id="wikia_header" class="color2">
 			<div class="monaco_shinkwrap">
 				<div id="wikiaBranding">
 					<div id="wikia_logo">Wikia</div>
