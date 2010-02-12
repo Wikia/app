@@ -163,6 +163,8 @@ class RTEParser extends Parser {
 			$sk = $this->mOptions->getSkin();
 
 			$ret = $sk->makeBrokenImageLinkObj($title, '', '', '', '', false, $wikitextIdx);
+
+			wfProfileOut(__METHOD__);
 			return $ret;
 		}
 
@@ -275,7 +277,6 @@ class RTEParser extends Parser {
 			$ret = RTEMarker::generate(RTEMarker::PLACEHOLDER, RTEData::put('placeholder', $data));
 
 			wfProfileOut(__METHOD__);
-
 			return $ret;
 		}
 
@@ -342,6 +343,7 @@ class RTEParser extends Parser {
 		// run only when parsing for RTE
 		global $wgRTEParserEnabled;
 		if (empty($wgRTEParserEnabled)) {
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 
