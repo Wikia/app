@@ -366,7 +366,7 @@ class RTEParser extends Parser {
 
 		// MW parser has rendered an external whitelisted image
 		if ($text !== false) {
-			RTE::log(__METHOD__, $url);
+			//RTE::log(__METHOD__, $url);
 
 			// mark rendered image with RTE marker
 			$data = array(
