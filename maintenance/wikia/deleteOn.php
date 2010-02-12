@@ -77,8 +77,12 @@ $dbw = wfGetDB( DB_MASTER );
 		} 
 	}
 	if ( $removed == 0 ) {
+		$page_id = $page->getArticleID();
 		$art = new Article( $page );
 		$success = $art->doDeleteArticle( $reason );
+		if ( $success ) {
+			wfRunHooks('ArticleDeleteComplete', array(&$art, &$wgUser, $reason, $page_id));
+		}
 	}
 	$dbw->immediateCommit();
 
