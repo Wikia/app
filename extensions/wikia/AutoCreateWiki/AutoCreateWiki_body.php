@@ -794,7 +794,14 @@ class AutoCreateWikiPage extends SpecialPage {
 				: "";
 
 		while ( $isExist == false ) {
-			$dirName = self::IMGROOT . $prefix . "/" . $dir_base . $suffix . $dir_lang . "/images";
+			switch( $this->mType ) {
+				case "answers":
+					$dirName = self::IMGROOT . $prefix . "/" . $dir_base . $suffix . $dir_lang . "/answers/images";
+					break;
+				default:
+					$dirName = self::IMGROOT . $prefix . "/" . $dir_base . $suffix . $dir_lang . "/images";
+			}
+
 			#---
 			if ( file_exists( $dirName ) ) {
 				$suffix = rand(1, 9999);
