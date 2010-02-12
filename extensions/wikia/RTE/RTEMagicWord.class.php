@@ -114,6 +114,7 @@ class RTEMagicWord {
 		}
 
 		wfProfileOut(__METHOD__);
+
 		return $ret;
 	}
 }

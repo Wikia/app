@@ -24,6 +24,8 @@ class RTELinker extends Linker {
 	* @return string HTML headline
 	*/
 	public function makeHeadline( $level, $attribs, $anchor, $text, $link, $legacyAnchor = false ) {
+		wfProfileIn(__METHOD__);
+
 		RTE::log(__METHOD__, $text);
 
 		// count spaces before and after header content
@@ -43,6 +45,9 @@ class RTELinker extends Linker {
 			. $link
 			. $text
 			. "</h$level>";
+
+		wfProfileOut(__METHOD__);
+
 		return $ret;
 	}
 

@@ -79,6 +79,7 @@ class RTEReverseParser {
 		}
 
 		wfProfileOut(__METHOD__);
+
 		return $out;
 	}
 
@@ -129,11 +130,15 @@ class RTEReverseParser {
 	 * Handle XML/HTML parsing error errors
 	 */
 	private function handleParseErrors($method) {
+		wfProfileIn(__METHOD__);
+
 		foreach (libxml_get_errors() as $err) {
 			RTE::log("{$method} - XML parsing error '". trim($err->message) ."' (line {$err->line}, col {$err->column})");
 		}
 
-		 libxml_clear_errors();
+		libxml_clear_errors();
+
+		wfProfileOut(__METHOD__);
 	}
 
 	/**
@@ -141,6 +146,7 @@ class RTEReverseParser {
 	 */
 	private function parseNode($node, $level = 0) {
 		wfProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__ . "::{$node->nodeName}");
 
 		RTE::log('node ' . str_repeat('.', $level) . $node->nodeName);
 
@@ -186,7 +192,9 @@ class RTEReverseParser {
 			}
 		}
 
+		wfProfileOut(__METHOD__ . "::{$node->nodeName}");
 		wfProfileOut(__METHOD__);
+
 		return $out;
 	}
 
@@ -194,11 +202,15 @@ class RTEReverseParser {
 	 * Handles HTML tags
 	 */
 	private function handleTag($node, $textContent) {
+		wfProfileIn(__METHOD__);
+
 		$out = '';
 
 		// handle placeholders
 		if ($node->hasAttribute('_rte_placeholder')) {
 			$out = $this->handlePlaceholder($node, $textContent);
+
+			wfProfileOut(__METHOD__);
 			return $out;
 		}
 		// handle nodes with wasHTML
@@ -310,15 +322,21 @@ class RTEReverseParser {
 			$out = "\n{$out}";
 		}
 
+		wfProfileOut(__METHOD__);
+
 		return $out;
 	}
 
 	/**
-	 * Handle RTE placeholders
+	 * Handle RTE placeholders (templates, magic words, media placeholders)
 	 */
 	private function handlePlaceholder($node, $textContent) {
+		wfProfileIn(__METHOD__);
+
 		// get meta data
 		$data = self::getRTEData($node);
+
+		wfProfileOut(__METHOD__);
 
 		return $data['wikitext'];
 	}
@@ -327,6 +345,8 @@ class RTEReverseParser {
 	 * Handle HTML nodes
 	 */
 	private function handleHtml($node, $textContent) {
+		wfProfileIn(__METHOD__);
+
 		$prefix = $suffix = $beforeText = $beforeClose = '';
 
 		// add line break
@@ -406,6 +426,8 @@ class RTEReverseParser {
 			$out = "{$prefix}<{$node->nodeName}{$attr}>{$beforeText}{$textContent}{$beforeClose}</{$node->nodeName}>{$suffix}";
 		}
 
+		wfProfileOut(__METHOD__);
+
 		return $out;
 	}
 
@@ -413,6 +435,8 @@ class RTEReverseParser {
 	 * Handle HTML entities
 	 */
 	private function handleEntity($node, $textContent) {
+		wfProfileIn(__METHOD__);
+
 		$entity = $node->getAttribute('_rte_entity');
 
 		// convert text content back to HTML entity
@@ -441,6 +465,8 @@ class RTEReverseParser {
 			$out = $textContent;
 		}
 
+		wfProfileOut(__METHOD__);
+
 		return $out;
 	}
 
@@ -448,7 +474,11 @@ class RTEReverseParser {
 	 * Returns marker for given entity
 	 */
 	private static function getEntityMarker($entity) {
+		wfProfileIn(__METHOD__);
+
 		$out = "\x7f-ENTITY-{$entity}-\x7f";
+
+		wfProfileOut(__METHOD__);
 
 		return $out;
 	}
@@ -457,6 +487,8 @@ class RTEReverseParser {
 	 * Handles comments
 	 */
 	private function handleComment($node) {
+		wfProfileIn(__METHOD__);
+
 		$out = '';
 
 		// (try to) parse special comments
@@ -480,6 +512,8 @@ class RTEReverseParser {
 			$out = "{$spaces}\n";
 		}
 
+		wfProfileOut(__METHOD__);
+
 		return $out;
 	}
 
@@ -487,6 +521,8 @@ class RTEReverseParser {
 	 * Handles text nodes
 	 */
 	private function handleText($node, $textContent) {
+		wfProfileIn(__METHOD__);
+
 		$out = $textContent;
 
 		// remove trailing space from text node which is followed by <!-- RTE_LINE_BREAK --> comment
@@ -516,6 +552,8 @@ class RTEReverseParser {
 
 		$out = $this->fixForTableCell($node, $out);
 
+		wfProfileOut(__METHOD__);
+
 		return $out;
 	}
 
@@ -523,6 +561,8 @@ class RTEReverseParser {
 	 * Handle paragraphs
 	 */
 	private function handleParagraph($node, $textContent) {
+		wfProfileIn(__METHOD__);
+
 		// handle empty paragraphs (<p>&nbsp;</p>)
 		// empty paragraphs added in CK / already existing in wikitext
 		// RT #37897
@@ -574,6 +614,9 @@ class RTEReverseParser {
 		}
 
 		$out = $this->fixForTableCell($node, $out);
+
+		wfProfileOut(__METHOD__);
+
 		return $out;
 	}
 
@@ -581,6 +624,8 @@ class RTEReverseParser {
 	 * Handle <br /> tags
 	 */
 	private function handleLineBreaks($node) {
+		wfProfileIn(__METHOD__);
+
 		$out = "\n";
 
 		// handle <br /> added by Shift+Enter
@@ -606,6 +651,8 @@ class RTEReverseParser {
 			$out = '';
 		}
 
+		wfProfileOut(__METHOD__);
+
 		return $out;
 	}
 
@@ -613,7 +660,11 @@ class RTEReverseParser {
 	 * Handle <hr /> tags
 	 */
 	private function handleHorizontalLines() {
+		wfProfileIn(__METHOD__);
+
 		$out = "----\n";
+
+		wfProfileOut(__METHOD__);
 
 		return $out;
 	}
@@ -624,6 +675,8 @@ class RTEReverseParser {
 	 * @see http://www.mediawiki.org/wiki/Help:Links
 	 */
 	private function handleLink($node, $textContent) {
+		wfProfileIn(__METHOD__);
+
 		// get RTE data
 		$data = self::getRTEData($node);
 
@@ -759,6 +812,8 @@ class RTEReverseParser {
 		// RT #34043
 		$out = self::fixForTableCell($node, $out);
 
+		wfProfileOut(__METHOD__);
+
 		return $out;
 	}
 
@@ -768,6 +823,8 @@ class RTEReverseParser {
 	 * This is "reverse" implementation of code from Parser handling bolds and italics
 	 */
 	private function handleFormatting($node, $textContent) {
+		wfProfileIn(__METHOD__);
+
 		switch($node->nodeName) {
 			case 'u':
 			case 'strike':
@@ -841,6 +898,8 @@ class RTEReverseParser {
 			$out = self::fixForTableCell($node, $out);
 		}
 
+		wfProfileOut(__METHOD__);
+
 		return $out;
 	}
 
@@ -848,6 +907,8 @@ class RTEReverseParser {
 	 * Handle preformatted text
 	 */
 	private function handlePre($node, $textContent) {
+		wfProfileIn(__METHOD__);
+
 		$textContent = rtrim($textContent);
 
 		// add spaces after every line break
@@ -857,6 +918,8 @@ class RTEReverseParser {
 
 		$out = $this->fixForTableCell($node, $out);
 
+		wfProfileOut(__METHOD__);
+
 		return $out;
 	}
 
@@ -864,6 +927,8 @@ class RTEReverseParser {
 	 * Handle list item
 	 */
 	private function handleListItem($node, $textContent) {
+		wfProfileIn(__METHOD__);
+
 		$out = '';
 
 		switch($node->nodeName) {
@@ -965,6 +1030,8 @@ class RTEReverseParser {
 				break;
 		}
 
+		wfProfileOut(__METHOD__);
+
 		return $out;
 	}
 
@@ -972,6 +1039,8 @@ class RTEReverseParser {
 	 * Handles lists opening
 	 */
 	private function handleListOpen($node) {
+		wfProfileIn(__METHOD__);
+
 		if (self::wasHtml($node)) {
 			return;
 		}
@@ -997,12 +1066,16 @@ class RTEReverseParser {
 		$this->listBullets .= $bullet;
 
 		//RTE::log("list level #{$this->listLevel}: {$this->listBullets}");
+
+		wfProfileOut(__METHOD__);
 	}
 
 	/**
 	 * Handles lists closing
 	 */
 	private function handleListClose($node) {
+		wfProfileIn(__METHOD__);
+
 		if (self::wasHtml($node)) {
 			return;
 		}
@@ -1010,12 +1083,16 @@ class RTEReverseParser {
 		// update lists stack ("pop")
 		$this->listLevel--;
 		$this->listBullets = substr($this->listBullets, 0, -1);
+
+		wfProfileOut(__METHOD__);
 	}
 
 	/**
 	 * Handle header
 	 */
 	private function handleHeader($node, $textContent) {
+		wfProfileIn(__METHOD__);
+
 		$level = str_repeat('=', intval($node->nodeName{1}));
 
 		$textContent = self::addSpaces($node, $textContent);
@@ -1029,6 +1106,8 @@ class RTEReverseParser {
 			$out = "\n{$out}";
 		}
 
+		wfProfileOut(__METHOD__);
+
 		return $out;
 	}
 
@@ -1036,6 +1115,8 @@ class RTEReverseParser {
 	 * Handle row/cell/table
 	 */
 	private function handleTable($node, $textContent) {
+		wfProfileIn(__METHOD__);
+
 		$out = '';
 
 		// get node attributes
@@ -1135,6 +1216,8 @@ class RTEReverseParser {
 				break;
 		}
 
+		wfProfileOut(__METHOD__);
+
 		return $out;
 	}
 
@@ -1144,11 +1227,15 @@ class RTEReverseParser {
 	 * @see http://www.mediawiki.org/wiki/Images
 	 */
 	private function handleImage($node, $textContent) {
+		wfProfileIn(__METHOD__);
+
 		// get RTE data
 		$data =self::getRTEData($node);
 
 		// TODO: try to generate wikitext based on data
 		$out = $data['wikitext'];
+
+		wfProfileOut(__METHOD__);
 
 		return $out;
 	}
@@ -1157,9 +1244,11 @@ class RTEReverseParser {
 	 * Adds extra line break before/after given element which is the first child of table cell (td/th)
 	 */
 	private function fixForTableCell($node, $out) {
+		wfProfileIn(__METHOD__);
 
 		// just fix elements which are children of <td> or <th>
 		if ( !self::isChildOf($node, 'td') && !self::isChildOf($node, 'th') ) {
+			wfProfileOut(__METHOD__);
 			return $out;
 		}
 
@@ -1201,6 +1290,8 @@ class RTEReverseParser {
 			$out = "\n{$out}";
 		}
 
+		wfProfileOut(__METHOD__);
+
 		return $out;
 	}
 
@@ -1208,13 +1299,17 @@ class RTEReverseParser {
 	 * Adds extra line break before given element not being first child of div
 	 */
 	private function fixForDiv($node, $out) {
+		wfProfileIn(__METHOD__);
+
 		// add \n before when inside div
 		if (self::isChildOf($node, 'div') && !self::isFirstChild($node)) {
 			// only add \n if node before given one is plain text node
-			if ($node->previousSibling->nodeType == XML_TEXT_NODE) {
+			if (self::previousSiblingIsTextNode($node)) {
 				$out = "\n{$out}";
 			}
 		}
+
+		wfProfileOut(__METHOD__);
 
 		return $out;
 	}
@@ -1390,6 +1485,8 @@ class RTEReverseParser {
                         return '';
                 }
 
+		wfProfileIn(__METHOD__);
+
                 // replace style attribute with _rte_style
                 if ($node->hasAttribute('_rte_style')) {
                         $node->setAttribute('style', $node->getAttribute('_rte_style'));
@@ -1414,6 +1511,9 @@ class RTEReverseParser {
                                 $attrStr .= ' ' . $attrName . '="' . $attrNode->nodeValue  . '"';
                         }
                 }
+
+		wfProfileOut(__METHOD__);
+
                 return $attrStr;
         }
 
@@ -1421,6 +1521,8 @@ class RTEReverseParser {
 	 * Get value of given CSS property
 	 */
 	private static function getCssProperty($node, $property) {
+		wfProfileIn(__METHOD__);
+
 		if ($node->hasAttribute('style')) {
 			$style = $node->getAttribute('style');
 
@@ -1431,9 +1533,13 @@ class RTEReverseParser {
 				$value = trim($matches[1]);
 				RTE::log(__METHOD__, "{$property}: {$value}");
 
+				wfProfileOut(__METHOD__);
+
 				return $value;
 			}
 		}
+
+		wfProfileOut(__METHOD__);
 
 		return false;
 	}
@@ -1442,12 +1548,16 @@ class RTEReverseParser {
 	 * Generate _rte_attribs attribute storing original list of HTML node attributes
 	 */
 	public static function encodeAttributesStr($attribs) {
+		wfProfileIn(__METHOD__);
+
 		$encoded = Sanitizer::encodeAttribute($attribs);
 
 		// encode &quot; entity (fix for IE)
 		$encoded = str_replace('&quot;', "\x7f", $encoded);
 
 		$ret = "_rte_attribs=\"{$encoded}\"";
+
+		wfProfileOut(__METHOD__);
 
 		return $ret;
 	}
@@ -1456,6 +1566,8 @@ class RTEReverseParser {
 	 * Decode and return data stored in _rte_data attribute
 	 */
 	private static function getRTEData($node) {
+		wfProfileIn(__METHOD__);
+
 		$value = $node->getAttribute('_rte_data');
 
 		if (!empty($value)) {
@@ -1468,9 +1580,13 @@ class RTEReverseParser {
 
 			if (!empty($data)) {
 				RTE::log(__METHOD__, $data);
+
+				wfProfileOut(__METHOD__);
 				return $data;
 			}
 		}
+
+		wfProfileOut(__METHOD__);
 
 		return null;
 	}
@@ -1479,7 +1595,11 @@ class RTEReverseParser {
 	 * Encode data to be stored in _rte_data attribute
 	 */
 	public static function encodeRTEData($data) {
+		wfProfileIn(__METHOD__);
+
 		$encoded = rawurlencode(Wikia::json_encode($data));
+
+		wfProfileOut(__METHOD__);
 
 		return $encoded;
 	}
@@ -1488,8 +1608,12 @@ class RTEReverseParser {
 	 * Build RTE special comment with extra data in it
 	 */
 	public static function buildComment($type, $data = null) {
+		wfProfileIn(__METHOD__);
+
 		$data['type'] = $type;
 		$data = Wikia::json_encode($data);
+
+		wfProfileOut(__METHOD__);
 
 		return "<!-- RTE::{$data} -->";
 	}
@@ -1498,6 +1622,8 @@ class RTEReverseParser {
 	 * Parse special comment and returns its name and data
 	 */
 	private static function parseComment($node) {
+		wfProfileIn(__METHOD__);
+
 		$fields = explode('::', trim($node->data, ' '));
 
 		// validate comment
@@ -1506,6 +1632,8 @@ class RTEReverseParser {
 		}
 
 		$data = json_decode($fields[1], true);
+
+		wfProfileOut(__METHOD__);
 
 		return array(
 			'type' => $data['type'],
@@ -1546,6 +1674,8 @@ class RTEReverseParser {
 	 * Number of spaces is based on _rte_spaces_after and _rte_spaces_before attributes
 	 */
 	private static function addSpaces($node, $textContent) {
+		wfProfileIn(__METHOD__);
+
 		$textContent =  trim($textContent, ' ');
 
 		// RT #40013
@@ -1560,6 +1690,8 @@ class RTEReverseParser {
 		}
 
 		$out = str_repeat(' ', $spacesBefore) . $textContent . str_repeat(' ', $spacesAfter);
+
+		wfProfileOut(__METHOD__);
 
 		return $out;
 	}

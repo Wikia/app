@@ -8,6 +8,8 @@ class RTELang {
 	 * Add given mesage to array to be returned by getMessages()
 	 */
 	static private function addMessage($key, $value) {
+		wfProfileIn(__METHOD__);
+
 		$tree = explode('-', $key);
 		$deep = count($tree);
 
@@ -24,6 +26,8 @@ class RTELang {
 				self::$messages[ $tree[0] ][ $tree[1] ][ $tree[2] ] = $value;
 				break;
 		}
+
+		wfProfileOut(__METHOD__);
 	}
 
 	/**

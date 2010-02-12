@@ -28,6 +28,9 @@ class RTE {
 	 */
 	public static function reverse($form,  $out = null) {
 		global $wgRequest, $wgHooks, $wgRC2UDPEnabled;
+
+		wfProfileIn(__METHOD__);
+
 		if($wgRequest->wasPosted()) {
 			if($wgRequest->getVal('RTEMode') == 'wysiwyg') {
 				RTE::log('performing reverse parsing back to wikitext');
@@ -42,11 +45,17 @@ class RTE {
 				}
 			}
 		}
+
+		wfProfileOut(__METHOD__);
+
 		return true;
 	}
 
 	public static function notifySave(&$article, &$user, &$text, &$summary, &$minoredit, &$watchthis, &$sectionanchor, &$flags, $revision) {
 		global $wgTitle;
+
+		wfProfileIn(__METHOD__);
+
 		if(is_object($revision) && is_object($wgTitle)) {
 			global $wgSitename;
 
@@ -62,6 +71,9 @@ class RTE {
 			curl_exec($ch);
 			curl_close($ch);
 		}
+
+		wfProfileOut(__METHOD__);
+
 		return true;
 	}
 
@@ -106,6 +118,8 @@ class RTE {
 	public static function init(&$form) {
 		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgRequest;
 
+		wfProfileIn(__METHOD__);
+
 		RTE::log('init');
 
 		// save reference to Title object of currently edited page
@@ -120,6 +134,7 @@ class RTE {
 		// should CK editor be disabled?
 		if (self::$useWysiwyg === false) {
 			RTE::log('fallback to MW editor');
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 
@@ -159,6 +174,8 @@ class RTE {
 		global $wgWysiwygEdit;
 		$wgWysiwygEdit = true;
 
+		wfProfileOut(__METHOD__);
+
 		return true;
 	}
 
@@ -166,6 +183,8 @@ class RTE {
 	 * Parse wikitext of edited article, so CK can be provided with HTML
 	 */
 	public static function init2(&$form, &$out) {
+		wfProfileIn(__METHOD__);
+
 		// add hidden edit form field
 		$out->addHTML( "\n" . Xml::element('input', array('type' => 'hidden', 'value' => '', 'name' => 'RTEMode', 'id' => 'RTEMode')) );
 
@@ -194,6 +213,8 @@ class RTE {
 
 		// allow other extensions to add extra HTML to edit form
 		wfRunHooks('RTEAddToEditForm', array(&$form, &$out));
+
+		wfProfileOut(__METHOD__);
 
 		return true;
 	}
@@ -224,6 +245,8 @@ class RTE {
 	 */
 	public static function makeGlobalVariablesScript(&$vars) {
 		global $wgLegalTitleChars, $wgServer, $wgScriptPath;
+
+		wfProfileIn(__METHOD__);
 
 		// CK instance id
 		$vars['RTEInstanceId'] = self::getInstanceId();
@@ -266,6 +289,8 @@ class RTE {
 		global $wgCookieDomain, $wgCookiePath;
 		$vars['RTECookieDomain'] = $wgCookieDomain;
 		$vars['RTECookiePath'] = $wgCookiePath;
+
+		wfProfileOut(__METHOD__);
 
 		return true;
 	}
@@ -359,13 +384,6 @@ HTML
 				self::disableEditor();
 			}
 		}
-		/*
-		$editableNamespaces = self::getEditableNamespaces();
-		if(!in_array(self::$title->getNamespace(), $editableNamespaces)) {
-			RTE::log('this page is not in editable namespace');
-			self::disableEditor();
-		}
-		*/
 
 		// RT #10170: do not initialize for user JS/CSS subpages
 		if (self::$title->isCssJsSubpage()) {
@@ -459,6 +477,8 @@ HTML
 	public static function WikitextToHtml($wikitext) {
 		global $wgTitle, $wgParser;
 
+		wfProfileIn(__METHOD__);
+
 		$options = new ParserOptions();
 		// don't show [edit] link for sections
 		$options->setEditSection(false);
@@ -474,6 +494,8 @@ HTML
 
 		$html = RTE::$parser->parse($wikitext, $wgTitle, $options)->getText();
 
+		wfProfileOut(__METHOD__);
+
 		return $html;
 	}
 
@@ -481,8 +503,13 @@ HTML
 	 * Parse given HTML from CK back to wikitext
 	 */
 	public static function HtmlToWikitext($html) {
+		wfProfileIn(__METHOD__);
+
 		$RTEReverseParser = new RTEReverseParser();
 		$wikitext = $RTEReverseParser->parse($html);
+
+		wfProfileOut(__METHOD__);
+
 		return $wikitext;
 	}
 
@@ -523,6 +550,8 @@ HTML
 	 * Return unique editor instance ID
 	 */
 	public static function getInstanceId() {
+		wfProfileIn(__METHOD__);
+
 		if (self::$instanceId === null) {
 			global $wgCityId;
 
@@ -530,11 +559,15 @@ HTML
 			self::$instanceId = "{$wgCityId}-{$id}";
 		}
 
+		wfProfileOut(__METHOD__);
+
 		return self::$instanceId;
 	}
 
 	public static function getTemplateParams($titleObj, $parser) {
 		global $wgRTETemplateParams;
+
+		wfProfileIn(__METHOD__);
 
 		$wgRTETemplateParams = true;
 
@@ -550,7 +583,11 @@ HTML
 
 		$wgRTETemplateParams = false;
 
-		return array_values(array_unique($params));
+		$ret = array_values(array_unique($params));
+
+		wfProfileOut(__METHOD__);
+
+		return $ret;
 	}
 
 	/*
@@ -689,37 +726,6 @@ HTML
 		wfProfileOut(__METHOD__);
 
 		return $ret;
-	}
-
-	/**
-	 * Get list of namespaces on which CK can be shown
-	 */
-	static private function getEditableNamespaces() {
-		wfProfileIn(__METHOD__);
-
-		// RT #22486: editable namespaces per wiki
-		global $wgWysiwygEnabledNamespaces, $wgContentNamespaces;
-
-		if ( !empty($wgWysiwygEnabledNamespaces) && is_array($wgWysiwygEnabledNamespaces) ) {
-			// use per-wiki list of namespaces
-			$editableNamespaces = $wgWysiwygEnabledNamespaces;
-		}
-		else {
-			// default list of editable namespace
-			$editableNamespaces = array_merge( $wgContentNamespaces, array(NS_IMAGE, NS_USER, NS_CATEGORY) );
-
-			if( defined( 'NS_VIDEO' ) ) {
-				$editableNamespaces[] = NS_VIDEO;
-			}
-
-			if( defined( 'NS_BLOG_ARTICLE' ) ) {
-				$editableNamespaces[] = NS_BLOG_ARTICLE;
-			}
-		}
-
-		wfProfileOut(__METHOD__);
-
-		return $editableNamespaces;
 	}
 
 	/**
