@@ -53,6 +53,11 @@ abstract class SpecialEditPage extends SpecialPage {
 
 			RTE::log(__METHOD__ . '::wikitext', $this->mEditPage->textbox1);
 		}
+
+		// fix for RT #38845 - allow for preloading text content
+		if(!$wgRequest->wasPosted()) {
+			wfRunHooks('EditFormPreloadText', array( &$this->mEditPage->textbox1, &$this->mEditPage->mTitle ));
+		}
 	}
 
 	protected function renderForm() {
