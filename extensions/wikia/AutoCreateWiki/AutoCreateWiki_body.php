@@ -685,15 +685,25 @@ class AutoCreateWikiPage extends SpecialPage {
 		/**
 		 * show template with url to new created Wiki
 		 */
+		if( !empty( $wgDevelEnvironment ) ) {
+			$domain = array_shift( $wgDevelDomains );
+			$domain = str_replace( self::DEFAULT_DOMAIN, $domain, $this->mWikiData[ "url" ] );
+		}
+		else {
+			$domain = $this->mWikiData[ "url" ];
+		}
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-		$oTmpl->set_vars( array( "domain" => $this->mWikiData[ "url" ] ) );
+		$oTmpl->set_vars( array(
+			"domain" => $domain,
+			"type"   => $this->mType
+		) );
 
 		// New Wiki Builder isn't supported by all languages yet
 		$NewWikiBuilderLanguages = array('en', 'de', 'es', 'nl');
-		if (in_array($this->mWikiData[ "language" ], $NewWikiBuilderLanguages)){
-			$sFinishText = $oTmpl->execute("finish");
+		if( in_array($this->mWikiData[ "language" ], $NewWikiBuilderLanguages ) ){
+			$sFinishText = $oTmpl->render("finish");
 		} else {
-			$sFinishText = $oTmpl->execute("finish_old");
+			$sFinishText = $oTmpl->render("finish_old");
 		}
 		$this->log( "return " . $this->mWikiData[ "url" ] );
 		$this->setInfoLog('END', $sFinishText);
@@ -706,6 +716,9 @@ class AutoCreateWikiPage extends SpecialPage {
 	 * prepare default values
 	 *
 	 * @access private
+	 *
+	 * @author Piotr Molski
+	 * @author Krzysztof Krzyżaniak (eloy)
 	 *
 	 * @param
 	 */
@@ -802,7 +815,6 @@ class AutoCreateWikiPage extends SpecialPage {
 					$dirName = self::IMGROOT . $prefix . "/" . $dir_base . $suffix . $dir_lang . "/images";
 			}
 
-			#---
 			if ( file_exists( $dirName ) ) {
 				$suffix = rand(1, 9999);
 			}
