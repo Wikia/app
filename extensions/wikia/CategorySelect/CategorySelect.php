@@ -200,7 +200,7 @@ function CategorySelectAjaxParseCategories($wikitext) {
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function CategorySelectAjaxSaveCategories($articleId, $categories) {
-	global $wgUser;
+	global $wgUser, $wgRequest;
 
 	if (wfReadOnly()) {
 		wfLoadExtensionMessages('CategorySelect');
@@ -222,23 +222,33 @@ function CategorySelectAjaxSaveCategories($articleId, $categories) {
 			if($title->userCan('edit') && !$wgUser->isBlocked()) {
 				global $wgOut;
 
+				$result = null;
 				$article = new Article($title);
 				$article_text = $article->fetchContent();
 				$article_text .= $categories;
-				$edit_summary = wfMsgForContent('categoryselect-edit-summary');
-				$flags = EDIT_UPDATE;
-				if ($wgUser->isAllowed('bot')) {
-					$flags |= EDIT_FORCE_BOT;
+				
+				$editPage = new EditPage( $article );
+				$editPage->edittime = $article->getTimestamp();
+				$editPage->textbox1 = $article_text;
+				$editPage->summary = wfMsgForContent('categoryselect-edit-summary');
+				$bot = $wgUser->isAllowed('bot');
+				$retval = $editPage->internalAttemptSave( $result, $bot );
+				Wikia::log( __METHOD__, "editpage", "Returned value {$retval}" );
+				if ( $retval == EditPage::AS_SUCCESS_UPDATE || $retval == EditPage::AS_SUCCESS_NEW_ARTICLE ) {
+					$title->invalidateCache();
+					Article::onArticleEdit($title);
+
+					//return HTML with new categories
+					$wgOut->tryParserCache($article, $wgUser);
+					$sk = $wgUser->getSkin();
+					$cats = $sk->getCategoryLinks();
+					$result['info'] = 'ok';
+					$result['html'] = $cats;
+				} elseif ( $retval == EditPage::AS_SPAM_ERROR ) {
+					$result['error'] = wfMsg('spamprotectiontext');
+				} else {
+					$result['error'] = wfMsg('categoryselect-edit-abort');	
 				}
-				$article->doEdit($article_text, $edit_summary, $flags);
-
-				//return HTML with new categories
-				$wgOut->tryParserCache($article, $wgUser);
-				$sk = $wgUser->getSkin();
-				$cats = $sk->getCategoryLinks();
-
-				$result['info'] = 'ok';
-				$result['html'] = $cats;
 			} else {
 				$result['error'] = wfMsg('categoryselect-error-user-rights');
 			}

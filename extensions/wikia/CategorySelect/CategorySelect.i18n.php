@@ -37,6 +37,7 @@ $messages['en'] = array(
 	'categoryselect-error-user-rights' => 'User rights error.',
 	'categoryselect-error-db-locked' => 'Database is locked.',
 	'categoryselect-desc' => 'Provides an interface for managing categories in article without editing whole article.',
+	'categoryselect-edit-abort' => 'The modification you tried to make was aborted by an extension hook',
 	'tog-disablecategoryselect' => 'Disable Category Tagging'
 );
 
