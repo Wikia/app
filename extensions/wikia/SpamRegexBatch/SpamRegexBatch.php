@@ -236,7 +236,7 @@ class SpamRegexBatch {
 			wfProfileOut( $fname );
 			return array();
 		}
-		
+
 		// This used to be cached per-site, but that could be bad on a shared
 		// server where not all wikis have the same configuration.
 		$key = "$wgDBname:spam_".$this->list."_regexes:v2";
@@ -331,6 +331,8 @@ class SpamRegexBatch {
 	 * @param string $article
 	 */
 	function getArticleText( $db, $article ) {
+		wfProfileIn( __METHOD__ );
+
 		wfDebugLog( 'SpamRegexBatch', "Fetching local spam ".$this->list." from '$article' on '$db'...\n" );
 
 		$title =  Title::newFromText( $article );
