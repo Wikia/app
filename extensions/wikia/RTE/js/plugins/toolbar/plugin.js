@@ -272,7 +272,7 @@ CKEDITOR.plugins.add('rte-toolbar',
 			$('#cke_toolbar').removeClass('more');
 		}
 
-		// resize #toolbarWrapper and store height of each bucket (when expanded)
+		// resize #toolbarWrapper
 		var wrapperHeight = 200;
 
 		$('#cke_toolbar').find('td').each(function() {
@@ -286,10 +286,6 @@ CKEDITOR.plugins.add('rte-toolbar',
 
 			// choose the smallest one
 			wrapperHeight = Math.min(wrapperHeight, bucketHeight);
-
-			// store height of expanded bucket
-			var bucket = cell.children('.bucket_buttons');
-			bucket.attr('_height_expanded', bucket.children('div').height());
 		});
 
 		// set height of table row with toolbar
