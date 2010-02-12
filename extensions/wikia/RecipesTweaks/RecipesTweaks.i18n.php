@@ -13,7 +13,7 @@ $messages['en'] = array(
 	'recipes-rating' => 'This Recipe\'s Rating:',
 	'recipes-search-label' => 'Search for a recipe',
 	'recipes-savedpages-empty' => 'You have no items in your saved pages collection',
-	'recipes-savedpages-by' => 'by',
+	'recipes-savedpages-by' => 'by $1',
 	'recipes-history' => 'See changes to this recipe',
 
 );

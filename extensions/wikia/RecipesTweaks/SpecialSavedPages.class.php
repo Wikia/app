@@ -49,7 +49,8 @@ class SpecialSavedPages extends SpecialPage {
 				$out .= '<img class="recipes_saved_pages_delete" width="16" height="16" src="'.$wgStylePath.'/monobook/blank.gif" />';
 			}
 
-			$out .= '<cite>' . wfMsg('recipes-savedpages-by') . ' <a href="'.$item['userUrl'].'">'.$item['userTitle'].'</a></cite></li>';
+			$userLink = Xml::element('a', array('href' => $item['userUrl']), $item['userTitle']);
+			$out .= '<cite>' . wfMsg('recipes-savedpages-by', array( $userLink ) ) . '</cite></li>';
 		}
 
 		if($out == '') {
