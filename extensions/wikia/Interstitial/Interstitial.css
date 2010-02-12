@@ -1,6 +1,9 @@
+#wikia_header{
+	height:35px;
+}
 #wikia_page{
 	position: absolute;
-	top: 37px;
+	top: 41px;
 	left: 50%;
 	width: 800px;
 	margin: 0 0 0 -400px;
@@ -11,9 +14,6 @@
 	height:auto;
 	-moz-border-radius-bottomleft: 10px;
 	-moz-border-radius-bottomright: 10px;
-}
-#wikia_header{
-	height:31px;
 }
 #page_bar{
 	text-align:right;

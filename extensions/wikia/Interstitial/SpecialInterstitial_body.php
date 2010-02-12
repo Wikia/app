@@ -38,6 +38,11 @@ class Interstitial extends UnlistedSpecialPage {
 
 			$skin = $wgUser->getSkin();
 			$skinName = get_class($skin);
+			
+			// this may not be set yet (and needs to be before setupUserCss in order for the right CSS file to be included)
+			if ($skin->getSkinName() == '') {
+				$skin->skinname = substr($skinName, 4);
+			}
 
 			//load this for all skins, even non-monaco.
 			//exit page depends on having a .color1 and .color2 defined.
@@ -47,21 +52,9 @@ class Interstitial extends UnlistedSpecialPage {
 			// add MW CSS
 			$skin->setupUserCss($wgOut);
 
-			// this may not be set yet
-			if ($skin->getSkinName() == '') {
-				$skin->skinname = substr($skinName, 4);
-			}
 			if ($skinName == 'SkinMonaco') {
 				$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
-				// Run this so that the correct CSS files can be set up (we need StaticChute).
-				$tpl = $skin->setupTemplate( 'MonacoTemplate', 'skins' );
-				if( !wfRunHooks( 'SkinTemplateOutputPageBeforeExec', array( &$skin, &$tpl ) ) ) {
-					wfDebug( __METHOD__ . ": Hook SkinTemplateOutputPageBeforeExec broke outputPage execution!\n" );
-				}
-
-				global $wgAllInOne;
-				$wgAllInOne = true;
 				$StaticChute = new StaticChute('css');
 				$StaticChute->useLocalChuteUrl();
 
@@ -86,11 +79,8 @@ class Interstitial extends UnlistedSpecialPage {
 				}
 				$wgOut->addStyle( "$wgExtensionsPath/wikia/Interstitial/Interstitial.css?$wgStyleVersion" );
 				
-				$css = $StaticChute->getChuteHtmlForPackage('monaco_css');
+				$css = $StaticChute->getChuteHtmlForPackage('monaco_css') . "\n\t\t";
 				$css .= $wgOut->buildCssLinks();
-
-				
-				
 
 
 	// TODO: REMOVE THIS!!! JUST FOR TESTING
