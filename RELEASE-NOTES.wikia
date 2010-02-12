@@ -1,4 +1,5 @@
 == Changes since 201002.2 ==
+* rt#40132: RTE: intitialise toolbar at the correct height (macbre)
 * rt#40060: WikiFactory metrics broken from ajax error. (Nef)
 * rt#38820: RTE: add a minimum width to the editor (macbre)
 * rt#37709: RTE: allow images to be dragged above/below the viewable area (macbre)
