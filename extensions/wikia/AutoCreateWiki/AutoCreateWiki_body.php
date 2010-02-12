@@ -751,6 +751,13 @@ class AutoCreateWikiPage extends SpecialPage {
 			$this->mWikiData[ "images_dir" ] .= "/" . strtolower( $this->mWikiData[ "language" ] );
 		}
 
+		switch( $this->mType ) {
+			case "answers":
+				$this->mWikiData[ "images_url" ] .= "/" . $this->mType;
+				$this->mWikiData[ "images_dir" ] .= "/" . $this->mType;
+				break;
+		}
+
 		$this->mWikiData[ "images_dir"    ] = self::IMGROOT . $this->mWikiData[ "images_dir"] . "/images";
 		$this->mWikiData[ "images_url"    ] = self::IMAGEURL . $this->mWikiData[ "images_url"] . "/images";
 		$this->mWikiData[ "images_logo"   ]	= sprintf("%s/%s", $this->mWikiData[ "images_dir" ], "b/bc" );
