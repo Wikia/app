@@ -63,3 +63,20 @@ var initTracker = function()
 		 WET.byStr('nav-bar/' + parent + '/menu' + targetId[4]);
 	 });
 }
+
+
+jQuery.tracker.track = function(fakeurl) {     
+    fakeurlArray = fakeurl.split('/');
+    if(typeof urchinTracker != 'undefined') {
+        _uacct = "UA-2871474-1";
+        var username = wgUserName == null ? 'anon' : 'user';
+        var fake = '/1_home/' + username + '/' + fakeurl;
+        $().log('tracker: ' + fake);
+        urchinTracker(fake);
+        if(wgPrivateTracker) {
+            fake = '/1_home/' + wgDB + '/' + username + '/' + fakeurl;
+            $().log('tracker: ' + fake);
+            urchinTracker(fake);
+        }
+    }
+};
