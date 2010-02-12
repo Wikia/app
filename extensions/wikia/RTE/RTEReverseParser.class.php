@@ -203,6 +203,7 @@ class RTEReverseParser {
 	 */
 	private function handleTag($node, $textContent) {
 		wfProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__ . "::{$node->nodeName}");
 
 		$out = '';
 
@@ -210,6 +211,7 @@ class RTEReverseParser {
 		if ($node->hasAttribute('_rte_placeholder')) {
 			$out = $this->handlePlaceholder($node, $textContent);
 
+			wfProfileOut(__METHOD__ . "::{$node->nodeName}");
 			wfProfileOut(__METHOD__);
 			return $out;
 		}
@@ -322,6 +324,7 @@ class RTEReverseParser {
 			$out = "\n{$out}";
 		}
 
+		wfProfileOut(__METHOD__ . "::{$node->nodeName}");
 		wfProfileOut(__METHOD__);
 
 		return $out;
