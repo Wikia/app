@@ -62,6 +62,11 @@ CKEDITOR.plugins.add('rte-toolbar',
 				output.push('<div id="cke_toolbar_cover" class="color1" />');
 
 				event.data.html += output.join( '' );
+
+				// try to resize toolbar a bit earlier (RT #40132)
+				setTimeout(function() {
+					self.updateToolbar.apply(self);
+				}, 50);
 			}
 		});
 
