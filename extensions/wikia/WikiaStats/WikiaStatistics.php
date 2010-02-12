@@ -641,6 +641,7 @@ class WikiaGlobalStats {
 	 * 	- Wikia is enabled 
 	 * 	- check city_lang doesn't exist in allowedLanguages array
 	 * 	- check name of Wikia doesn't exist in excludeNames array
+	 * 	- check name of Wikia doesn't exist in excludeNames array
 	 * 	- check domain doesn't exist in excludeWikiDomainsKey list (textRegex)
 	 * 	- check article doesn't exist in excludeWikiArticles list (textRegex)
 	 */ 
@@ -649,7 +650,7 @@ class WikiaGlobalStats {
 		wfProfileIn( __METHOD__ );
 		$result = array();
 
-		$memkey = wfMemcKey( __METHOD__, 'wikia', intval($row['wikia']) );
+		$memkey = wfMemcKey( __METHOD__, 'oWikia', intval($row['wikia']) );
 		$oWikia = $wgMemc->get( $memkey );
 		
 		if ( !isset($oWikia) ) {
@@ -677,12 +678,12 @@ class WikiaGlobalStats {
 			 * check wikiname
 			 */
 			if ( $allowed ) {
-				$wikiName = unserialize($siteName->cv_value);
-				if ( !$wikiName ) {
+				$oWikia->city_sitename = unserialize($siteName->cv_value);
+				if ( !$oWikia->city_sitename ) {
 					$allowed = false;
 				} else {
 					foreach( self::$excludeNames as $search ) {
-						$pos = stripos( $wikiName, $search );
+						$pos = stripos( $oWikia->city_sitename, $search );
 						if ( $pos !== false ) {
 							$allowed = false;
 						}
@@ -751,7 +752,7 @@ class WikiaGlobalStats {
 				 * ok
 				 */
 				$result = array( 
-					'wikia'		=> $wikiName,
+					'wikia'		=> $oWikia->city_sitename,
 					'db'		=> $oWikia->city_dbname,
 					'hub' 		=> $hubName,
 					'page_name'	=> $articleName,
