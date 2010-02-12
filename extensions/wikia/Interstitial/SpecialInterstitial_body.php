@@ -82,10 +82,6 @@ class Interstitial extends UnlistedSpecialPage {
 				$css = $StaticChute->getChuteHtmlForPackage('monaco_css') . "\n\t\t";
 				$css .= $wgOut->buildCssLinks();
 
-
-	// TODO: REMOVE THIS!!! JUST FOR TESTING
-	$redirectDelay = 120;
-
 				$oTmpl->set_vars(
 						array(
 							'url' => $url,
@@ -106,9 +102,8 @@ class Interstitial extends UnlistedSpecialPage {
 				return $this->redirectTo($url);
 			}
 		} else if(trim($url) == ""){
-
-			// TODO: Nowhere to go.  Display an appropriate explanation (either wgAdsInterstitialsEnabled is false or the user is logged in).
-
+			// Nowhere to go.  Display an appropriate explanation (either wgAdsInterstitialsEnabled is false or the user is logged in).
+			$wgOut->addWikiText( wfMsg('interstitial-already-logged-in-no-link') );
 		} else {
 			// Since interstitials aren't enabled or the user is logged in, just redirect to the destination URL immediately.
 			return $this->redirectTo($url);
