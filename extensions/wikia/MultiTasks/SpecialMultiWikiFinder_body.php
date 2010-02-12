@@ -207,6 +207,12 @@ class MultiwikifinderPage {
 							$skip++; continue;
 						}
 					}
+					# check Wiki
+					if ( !empty($city_id) ) {
+						$oWikia = WikiFactory::getWikiByID($city_id) ;
+						if ( empty($oWikia) || empty($oWikia->city_public) ) continue; 
+					}
+					
 					if (empty($this->mShow)) {
 						$res = "";
 						$this->data[$city_id] = array('city_id' => $city_id, 'page_id' => $page_id, 'url' => $page_url);
