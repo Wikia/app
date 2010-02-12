@@ -310,7 +310,7 @@ function WikiaGetSkin ($user) {
 	}
 	if(!empty($wgForceSkin)) {
 		$wgForceSkin = $wgRequest->getVal('useskin', $wgForceSkin);
-        $elems = preg_split('/-/', $wgForceSkin);
+		$elems = preg_split('/-/', $wgForceSkin);
 		$userSkin = ( array_key_exists(0, $elems) ) ? $elems[0] : null;
 		$userTheme = ( array_key_exists(1, $elems) ) ? $elems[1] : null;
         
@@ -383,9 +383,9 @@ function WikiaGetSkin ($user) {
 	wfProfileOut(__METHOD__.'::GetSkinLogic');
 
     $useskin = $wgRequest->getVal('useskin', $userSkin);
-    $elems = preg_split('/-/', $wgForceSkin);
+    $elems = preg_split('/-/', $useskin);
     $userSkin = ( array_key_exists(0, $elems) ) ? $elems[0] : null;
-    $userTheme = ( array_key_exists(1, $elems) ) ? $elems[1] : null;                                                         
+    $userTheme = ( array_key_exists(1, $elems) ) ? $elems[1] : $userTheme;                                                         
 	$userTheme = $wgRequest->getVal('usetheme', $userTheme);
 
 	if(empty($userTheme) && strpos($userSkin, 'quartz-') === 0) {
