@@ -145,8 +145,11 @@ class SkinCorporateBase extends SkinTemplate {
 		} else {
 			$tpl->set('body_ondblclick', false);
 		}
-		$tpl->set( 'body_onload', false );
 
+		$tpl->set( 'body_onload', false );
+			
+		$tpl->set( 'reporttime', wfReportTime() );
+		
 		// original version by hansm
 		if( !wfRunHooks( 'SkinTemplateOutputPageBeforeExec', array( &$this, &$tpl ) ) ) {
 			wfDebug( __METHOD__ . ": Hook SkinTemplateOutputPageBeforeExec broke outputPage execution!\n" );
@@ -294,6 +297,8 @@ class CorporateBaseTemplate extends QuickTemplate {
 		global $wgStylePath, $wgLangToCentralMap, $wgContLang;
 		$central_url = !empty($wgLangToCentralMap[$wgContLang->getCode()]) ? $wgLangToCentralMap[$wgContLang->getCode()] : 'http://www.wikia.com/';
 ?>
+		<?php echo $this->data['reporttime']; ?> 
+		
 		<header id="GlobalHeader">
 			<!-- DEV NOTE: This is the white gradient strip at the top. -->
 			<div class="shrinkwrap">
@@ -322,6 +327,7 @@ class CorporateBaseTemplate extends QuickTemplate {
 				</div><!-- END #wikia-tools -->
 			</div><!-- END .shrinkwrap -->
 		</header>
+		
 <?php
 	}
 
