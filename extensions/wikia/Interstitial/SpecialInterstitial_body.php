@@ -4,9 +4,6 @@
  * @author Sean Colombo
  *
  * Special page which shows an actual interstital before sending the user on their way.
- *
- * TODO: What if the user has hit the page-before-interstitial limit, then opens a bunch of pages in tabs.  The Interstitial page itself should check that it
- * has been hit on the correct page view number before displaying so that it only displays on the 1/y of those pages.
  */
 class Interstitial extends UnlistedSpecialPage {
 
@@ -65,7 +62,7 @@ class Interstitial extends UnlistedSpecialPage {
 			}
 		}
 		$wgOut->addStyle( "$wgExtensionsPath/wikia/Interstitial/Interstitial.css?$wgStyleVersion" );
-		
+
 		$css = $StaticChute->getChuteHtmlForPackage('monaco_css') . "\n\t\t";
 		$css .= $wgOut->buildCssLinks();
 
@@ -77,11 +74,19 @@ class Interstitial extends UnlistedSpecialPage {
 		global $wgAdsInterstitialsEnabled;
 		global $wgUser;
 
-		$url = $wgRequest->getVal( 'u' );
-
+		$url = trim($wgRequest->getVal( 'u' ));
+		
 		if(($wgAdsInterstitialsEnabled) && (!$wgUser->isLoggedIn())){
 			global $wgAdsInterstitialsCampaignCode, $wgExtensionsPath;
 			wfLoadExtensionMessages(INTERSTITIALS_SP);
+
+			// TODO: If the user shouldn't be seeing an interstitial on this pv, then assume that we are only here because of the user opening many tabs and just redirect to destination right away.
+			global $wgAdsInterstitialsPagesBeforeFirstAd;
+			global $wgAdsInterstitialsPagesBetweenAds;
+			$pageCounter = (isset($_COOKIE['IntPgCounter'])?$_COOKIE['IntPgCounter']:"");
+			//if(($pageCounter != "") && ($url != "")){
+//			if(($wgAdsInterstitialsPagesBeforeFirstAd == $pageCounter) || (($pageCounter > $wgAdsInterstitialsPagesBeforeFirstAd) && (($pageCounter % ($wgAdsInterstitialsPagesBetweenAds+1)) == 0))){
+//			}
 
 			$redirectDelay = (empty($wgAdsInterstitialsDurationInSeconds)?INTERSTITIAL_DEFAULT_DURATION_IN_SECONDS:$wgAdsInterstitialsDurationInSeconds);
 			$adCode = (empty($wgAdsInterstitialsCampaignCode)?wfMsg('interstitial-default-campaign-code'):$wgAdsInterstitialsCampaignCode);
@@ -115,7 +120,7 @@ class Interstitial extends UnlistedSpecialPage {
 			} else {
 				return $this->redirectTo($url);
 			}
-		} else if(trim($url) == ""){
+		} else if($url == ""){
 			// Nowhere to go.  Display an appropriate explanation (either wgAdsInterstitialsEnabled is false or the user is logged in).
 			if($wgUser->isLoggedIn()){
 				$wgOut->addWikiText( wfMsg('interstitial-already-logged-in-no-link') . wfMsg('interstitial-link-away') );

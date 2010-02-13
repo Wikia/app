@@ -34,12 +34,6 @@ function interstitialsJsGlobalVariables(&$vars){
 	$vars['wgAdsInterstitialsEnabled'] = $wgAdsInterstitialsEnabled;
 	$vars['wgAdsInterstitialsPagesBeforeFirstAd'] = (empty($wgAdsInterstitialsPagesBeforeFirstAd)?INTERSTITIAL_DEFAULT_PAGES_BEFORE_FIRST_AD:$wgAdsInterstitialsPagesBeforeFirstAd);
 	$vars['wgAdsInterstitialsPagesBetweenAds'] = (empty($wgAdsInterstitialsPagesBetweenAds)?INTERSTITIAL_DEFAULT_PAGES_BETWEEN_ADS:$wgAdsInterstitialsPagesBetweenAds);
-// TODO: FIXME: CLEAN UP THIS WHOLE METHOD TO ONLY OUTPUT THE VARS THAT WILL BE NEEDED WITH THE NEW METHODOLOGY.
-//	$vars['wgAdsInterstitialsDurationInSeconds'] = (empty($wgAdsInterstitialsDurationInSeconds)?INTERSTITIAL_DEFAULT_DURATION_IN_SECONDS:$wgAdsInterstitialsDurationInSeconds);
-	$vars['wgMsgInterstitialSkipAd'] = wfMsg('interstitial-skip-ad');
-
-	$code = (empty($wgAdsInterstitialsCampaignCode)?wfMsg('interstitial-default-campaign-code'):$wgAdsInterstitialsCampaignCode);
-	$vars['wgAdsInterstitialsCampaignCode'] = $code;
 
 	global $wgScriptPath;
 	$special = SpecialPage::getTitleFor( INTERSTITIALS_SP );
