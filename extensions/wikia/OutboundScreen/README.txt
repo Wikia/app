@@ -1,1 +1,1 @@
-OutboundScreen is now in the Interstitials directory.
+OutboundScreen is now in the /extensions/wikia/Interstitial directory.
