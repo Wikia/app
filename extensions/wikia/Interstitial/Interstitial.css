@@ -1,3 +1,13 @@
+body {
+	margin: 0;
+	padding: 0;
+}
+#userData{
+	line-height:32px;
+}
+#userData a{
+	text-decoration: underline;
+}
 #wikia_header{
 	height:35px;
 }
@@ -21,6 +31,10 @@
 }
 #page_bar *{
 	float:none;
+}
+#page_bar .left{
+	float:left;
+	line-height:21px;
 }
 .interstitial_fg_body{
 	padding:10px 50px;

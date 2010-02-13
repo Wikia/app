@@ -14,6 +14,10 @@ $wgAutoloadClasses['Outbound'] = dirname( __FILE__ ) . '/SpecialOutboundScreen_b
 $wgSpecialPages['Outbound'] = 'Outbound';
 $wgExtensionMessagesFiles['Outbound'] = dirname(__FILE__) . '/OutboundScreen.i18n.php';
 
+// For shared page code (such as Interstitial::getCss() and definition of INTERSTITIALS_SP).
+include_once dirname(__FILE__) . '/Interstitial.php';
+include_once dirname(__FILE__) . '/SpecialInterstitial_body.php';
+
 $wgOutboundScreenConfig = array(
 	'redirectDelay' => !empty($wgOutboundScreenRedirectDelay) ? intval($wgOutboundScreenRedirectDelay) : 10,
 	'anonsOnly' => true,
@@ -79,6 +83,7 @@ function efOutboundScreen ( $url, $text, $link, $attribs, $linktype, $linker ) {
 				return false;
 			}
 		}
+	} else {
 	}
 
 	return true;

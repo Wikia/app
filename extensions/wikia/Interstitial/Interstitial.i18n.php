@@ -15,7 +15,9 @@ $messages['en'] = array(
 	"interstitial-default-campaign-code"                         => "Wikia Loves You!",
 	"interstitial-skip-ad"                                       => "Skip this ad",
 
-	"interstitial-already-logged-in-no-link"                     => "You are already logged in and there is no destination set.  There is nothing to see here!<br/><br/>Would you like to go to the [[Main Page]] or perhaps a [[Special:Random|random page]]?",
+	"interstitial-already-logged-in-no-link"                     => "You are already logged in and there is no destination set.",
+	"interstitial-disabled-no-link"                              => "There is no destination set and interstitials are not enabled on this wiki.",
+	"interstitial-link-away"                                     => "There is nothing to see here!<br/><br/>Would you like to go to the [[Main Page]] or perhaps a [[Special:Random|random page]]?",
 );
 
 ?>

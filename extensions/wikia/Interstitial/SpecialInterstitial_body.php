@@ -17,6 +17,60 @@ class Interstitial extends UnlistedSpecialPage {
 		parent::__construct( INTERSTITIALS_SP /*class*/ );
 		wfLoadExtensionMessages( INTERSTITIALS_SP ); // Load internationalization messages
 	}
+	
+	/**
+	 * Returns the HTML for importing the CSS needed to make interstitials/exitstitials look right.
+	 * The results of this function should be displayed inside of the <head> tag.
+	 */
+	static public function getCss(){
+		global $wgUser, $wgOut, $wgExtensionsPath, $wgStyleVersion;
+		$css = "";
+
+		$skin = $wgUser->getSkin();
+		$skinName = get_class($skin);
+		
+		// this may not be set yet (and needs to be before setupUserCss in order for the right CSS file to be included)
+		if ($skin->getSkinName() == '') {
+			$skin->skinname = substr($skinName, 4);
+		}
+
+		//load this for all skins, even non-monaco.
+		//exit page depends on having a .color1 and .color2 defined.
+		//needs to be before call to setupUserCss so that other css can override
+		$wgOut->addStyle('monaco/css/root.css');
+
+		// add MW CSS
+		$skin->setupUserCss($wgOut);
+
+		$StaticChute = new StaticChute('css');
+		$StaticChute->useLocalChuteUrl();
+
+		// Monaco themes
+		if ($skinName == 'SkinMonaco' && !empty($skin->themename)) {
+			switch($skin->themename) {
+				case 'custom':
+					//custom skin is included via setupUserCss
+					//which is ontop of root base, included above that
+					break;
+
+				case 'sapphire':
+					//is just root on its own, included above
+					break;
+
+				default:
+					//themes layer ontop of root
+					$wgOut->addStyle('monaco/' . $skin->themename . '/css/main.css');
+					$StaticChute->setTheme($skin->themename);
+					break;
+			}
+		}
+		$wgOut->addStyle( "$wgExtensionsPath/wikia/Interstitial/Interstitial.css?$wgStyleVersion" );
+		
+		$css = $StaticChute->getChuteHtmlForPackage('monaco_css') . "\n\t\t";
+		$css .= $wgOut->buildCssLinks();
+
+		return $css;
+	}
 
 	function execute(){
 		global $wgRequest, $wgOut;
@@ -26,12 +80,11 @@ class Interstitial extends UnlistedSpecialPage {
 		$url = $wgRequest->getVal( 'u' );
 
 		if(($wgAdsInterstitialsEnabled) && (!$wgUser->isLoggedIn())){
-			global $wgAdsInterstitialsCampaignCode, $wgExtensionsPath, $wgStyleVersion;
+			global $wgAdsInterstitialsCampaignCode, $wgExtensionsPath;
 			wfLoadExtensionMessages(INTERSTITIALS_SP);
 
 			$redirectDelay = (empty($wgAdsInterstitialsDurationInSeconds)?INTERSTITIAL_DEFAULT_DURATION_IN_SECONDS:$wgAdsInterstitialsDurationInSeconds);
-			$code = (empty($wgAdsInterstitialsCampaignCode)?wfMsg('interstitial-default-campaign-code'):$wgAdsInterstitialsCampaignCode);
-			$skip = wfMsg('interstitial-skip-ad');
+			$adCode = (empty($wgAdsInterstitialsCampaignCode)?wfMsg('interstitial-default-campaign-code'):$wgAdsInterstitialsCampaignCode);
 
 			// Set up the CSS
 			$wgOut->setArticleBodyOnly(true);
@@ -44,55 +97,16 @@ class Interstitial extends UnlistedSpecialPage {
 				$skin->skinname = substr($skinName, 4);
 			}
 
-			//load this for all skins, even non-monaco.
-			//exit page depends on having a .color1 and .color2 defined.
-			//needs to be before call to setupUserCss so that other css can override
-			$wgOut->addStyle('monaco/css/root.css');
-
-			// add MW CSS
-			$skin->setupUserCss($wgOut);
-
 			if ($skinName == 'SkinMonaco') {
 				$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-
-				$StaticChute = new StaticChute('css');
-				$StaticChute->useLocalChuteUrl();
-
-				// Monaco themes
-				if ($skinName == 'SkinMonaco' && !empty($skin->themename)) {
-					switch($skin->themename) {
-						case 'custom':
-							//custom skin is included via setupUserCss
-							//which is ontop of root base, included above that
-							break;
-
-						case 'sapphire':
-							//is just root on its own, included above
-							break;
-
-						default:
-							//themes layer ontop of root
-							$wgOut->addStyle('monaco/' . $skin->themename . '/css/main.css');
-							$StaticChute->setTheme($skin->themename);
-							break;
-					}
-				}
-				$wgOut->addStyle( "$wgExtensionsPath/wikia/Interstitial/Interstitial.css?$wgStyleVersion" );
-				
-				$css = $StaticChute->getChuteHtmlForPackage('monaco_css') . "\n\t\t";
-				$css .= $wgOut->buildCssLinks();
 
 				$oTmpl->set_vars(
 						array(
 							'url' => $url,
-							'code' => $code,
-							'skip' => $skip,
-							'css' => $css,
+							'css' => Interstitial::getCss(),
+							'skip' => wfMsg('interstitial-skip-ad'),
+							'adCode' => $adCode,
 							'redirectDelay' => $redirectDelay,
-				//			'athenaInitStuff' => $athenaInitStuff,
-				//			'imagesPath' => $wgExtensionsPath . '/wikia/OutboundScreen/images',
-				//			'userloginTitle' => Title::newFromText( 'Special:Userlogin' ),
-				//			'adLayout' => $oTmpl->execute($adTemplate)
 						)
 				);
 
@@ -103,7 +117,11 @@ class Interstitial extends UnlistedSpecialPage {
 			}
 		} else if(trim($url) == ""){
 			// Nowhere to go.  Display an appropriate explanation (either wgAdsInterstitialsEnabled is false or the user is logged in).
-			$wgOut->addWikiText( wfMsg('interstitial-already-logged-in-no-link') );
+			if($wgUser->isLoggedIn()){
+				$wgOut->addWikiText( wfMsg('interstitial-already-logged-in-no-link') . wfMsg('interstitial-link-away') );
+			} else {
+				$wgOut->addWikiText( wfMsg('interstitial-disabled-no-link') . wfMsg('interstitial-link-away') );
+			}
 		} else {
 			// Since interstitials aren't enabled or the user is logged in, just redirect to the destination URL immediately.
 			return $this->redirectTo($url);
