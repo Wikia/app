@@ -1510,7 +1510,7 @@ if(isset($categorylist['nodes']) && count($categorylist['nodes']) > 0 ) {
 			wfRunHooks('MonacoAdLink');
 
 			echo '<ul id="requestWikiData"><li>';
-			echo '<a rel="nofollow" href="http://www.wikia.com/wiki/Special:CreateWiki" id="request_wiki" class="wikia_button"><span>'. wfMsg('createwikipagetitle') .'</span></a>';
+			echo '<a rel="nofollow" href="http://www.wikia.com/Special:CreateWiki" id="request_wiki" class="wikia_button"><span>'. wfMsg('createwikipagetitle') .'</span></a>';
 			if (!$wgUser->isLoggedIn()) {
 				echo '<span id="request_wiki_ad">' . wfMsgExt('monaco-request-wiki-ad-text', array( "parseinline" )) . '</span>';
 			}
