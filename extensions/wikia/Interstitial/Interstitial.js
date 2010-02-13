@@ -3,9 +3,8 @@ console.log("Int: The Interstitials Code is loded.");
 	var COOKIE_NAME = 'IntPgCounter';
 	var count = $.cookies.get(COOKIE_NAME);
 	count = parseInt((!count)?1:count);
-
+	
 console.log("Int: count: " + count);
-	// TODO: Don't increment this when we're on the actual interstitial page.
 	count += 1;
 console.log("Int: next: " + count);
 	$.cookies.set(COOKIE_NAME, count, {
@@ -29,7 +28,7 @@ console.log("Int: Decided NOT to display interstitial on next page.");
         }
 console.log("Int: Settings...");
 console.log("Int: wgAdsInterstitialsPagesBeforeFirstAd: " + wgAdsInterstitialsPagesBeforeFirstAd);
-console.log("Int: wgAdsInterstitialsPagesBetweenAds:    " + wgAdsInterstitialsPagesBetweenAds); 
+console.log("Int: wgAdsInterstitialsPagesBetweenAds:    " + wgAdsInterstitialsPagesBetweenAds);
 console.log("Int: wgAdsInterstitialsDurationInSeconds: " + wgAdsInterstitialsDurationInSeconds);
 
 }
