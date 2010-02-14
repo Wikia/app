@@ -3,8 +3,11 @@
 $messages = array();
 
 $messages['en'] = array(
-	'outbound-screen-login-text' => '<a href="$1">Create an account</a> or <a href="$2">log in to your existing account</a> to skip this page in the future',
-	'outbound-screen-already-logged-in-no-link' => 'There is no destination set.  There is nothing to see here!<br/><br/>Would you like to go to the [[Main Page]] or perhaps a [[Special:Random|random page]]?',
+	'outbound-screen-login-text' => '[[Special:UserLogin/signup|Create a new account]] or [[Special:UserLogin|log in to your existing account]] to skip this page in the future.',
+	'outbound-screen-already-logged-in-no-link' => 'There is no destination set.
+There is nothing to see here!
+
+Would you like to go to the [[{{MediaWiki:Mainpage}}|Main page]] or perhaps a [[Special:Random|random page]]?',
 	'outbound-screen-you-are-leaving' => 'You are now leaving Wikia.',
 );
 
