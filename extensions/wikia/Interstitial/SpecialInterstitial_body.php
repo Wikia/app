@@ -80,13 +80,24 @@ class Interstitial extends UnlistedSpecialPage {
 			global $wgAdsInterstitialsCampaignCode, $wgExtensionsPath;
 			wfLoadExtensionMessages(INTERSTITIALS_SP);
 
-			// TODO: If the user shouldn't be seeing an interstitial on this pv, then assume that we are only here because of the user opening many tabs and just redirect to destination right away.
+			$COOKIE_KEY = "IntPgCounter";
+			$pageCounter = (isset($_COOKIE[$COOKIE_KEY])?$_COOKIE[$COOKIE_KEY]:0);
+
+			// By incrementing the count even for interstitials, we can know when to avoid repeated interstitials for tabbed-browsing.
+			// In the calculations for when to display the interstitial, however, this is not considered a "page" (we add 1 to wgAdsInterstitialsPagesBetweenAds to accomplish this).
+			global $wgCookiePath, $wgCookieDomain;
+			setcookie($COOKIE_KEY, $pageCounter + 1, 0, $wgCookiePath, $wgCookieDomain);
+
+			// If the user shouldn't be seeing an interstitial on this pv, then assume that we are only here because of the user opening many tabs and just redirect to destination right away.
 			global $wgAdsInterstitialsPagesBeforeFirstAd;
 			global $wgAdsInterstitialsPagesBetweenAds;
-			$pageCounter = (isset($_COOKIE['IntPgCounter'])?$_COOKIE['IntPgCounter']:"");
-			//if(($pageCounter != "") && ($url != "")){
-//			if(($wgAdsInterstitialsPagesBeforeFirstAd == $pageCounter) || (($pageCounter > $wgAdsInterstitialsPagesBeforeFirstAd) && (($pageCounter % ($wgAdsInterstitialsPagesBetweenAds+1)) == 0))){
-//			}
+			if(($url != "") &&
+				(!(	($wgAdsInterstitialsPagesBeforeFirstAd == $pageCounter - 1) ||
+					(($pageCounter > $wgAdsInterstitialsPagesBeforeFirstAd) && ((($pageCounter - $wgAdsInterstitialsPagesBeforeFirstAd) % ($wgAdsInterstitialsPagesBetweenAds+1)) == 0)))
+				)
+			){
+				return $this->redirectTo($url);
+			}
 
 			$redirectDelay = (empty($wgAdsInterstitialsDurationInSeconds)?INTERSTITIAL_DEFAULT_DURATION_IN_SECONDS:$wgAdsInterstitialsDurationInSeconds);
 			$adCode = (empty($wgAdsInterstitialsCampaignCode)?wfMsg('interstitial-default-campaign-code'):$wgAdsInterstitialsCampaignCode);
