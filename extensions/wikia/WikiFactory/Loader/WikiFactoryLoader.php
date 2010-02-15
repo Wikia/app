@@ -87,11 +87,11 @@ class WikiFactoryLoader {
 			$this->mServerName = strtolower( $_SERVER['SERVER_NAME'] );
 			$this->mCityID = false;
 		}
-		elseif( !empty($_ENV['SERVER_ID']) ) {
+		elseif( getenv( "SERVER_ID" ) ) {
 			/**
 			 * interactive/cmdline
 			 */
-			$this->mCityID = $_ENV['SERVER_ID'];
+			$this->mCityID = getenv( "SERVER_ID" );
 			$this->mServerName = false;
 			$this->mCommandLine = true;
 		}
@@ -224,7 +224,7 @@ class WikiFactoryLoader {
 		wfProfileIn(__METHOD__);
 		global $wgCityId, $wgDevelEnvironment, $wgWikiaAdvertiserCategory,
 			$wgDBservers, $wgLBFactoryConf, $wgDBserver;
-			
+
 		/**
 		 * Hook to allow extensions to alter the initialization.  For example,
 		 * setting the mCityID then returning true will override which wiki
