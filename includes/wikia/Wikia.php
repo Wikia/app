@@ -705,4 +705,25 @@ class Wikia {
 		return true;
 	}
 
+	/**
+	 * find array val for lang key - with variant fallback, eg. zh-tw -> zh
+	 *
+	 * @author      Nef
+	 * @param       Array   $map - lang=>value map
+	 * @param       String  $lang - lang code, eg. zh or zh-tw
+	 * @param       Mixed   $default - if no value found
+	 */
+	static public function langToSomethingMap($map, $lang, $default = null) {
+
+		if (!empty($map[$lang])) {
+			$val = $map[$lang];
+		} elseif (!empty($map[preg_replace("/-.*$/", "", $lang)])) {
+			$val = $map[preg_replace("/-.*$/", "", $lang)];
+		} else {
+			$val = $default;
+		}
+
+		return $val;
+	}
+
 }

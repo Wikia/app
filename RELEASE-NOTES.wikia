@@ -1,5 +1,5 @@
 == Changes since 201002.3 ==
-* 
+* rt#40315: Fallback logo home link for zh- variants. (Nef) 
 
 == Changes since 201002.2 ==
 * rt#40132: RTE: intitialise toolbar at the correct height (macbre)
