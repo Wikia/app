@@ -91,9 +91,10 @@ class Interstitial extends UnlistedSpecialPage {
 			// If the user shouldn't be seeing an interstitial on this pv, then assume that we are only here because of the user opening many tabs and just redirect to destination right away.
 			global $wgAdsInterstitialsPagesBeforeFirstAd;
 			global $wgAdsInterstitialsPagesBetweenAds;
+			$numToSkip = 2; // skip the interstitial and the page it was blocking as candidates
 			if(($url != "") &&
 				(!(	($wgAdsInterstitialsPagesBeforeFirstAd == $pageCounter - 1) ||
-					(($pageCounter > $wgAdsInterstitialsPagesBeforeFirstAd) && ((($pageCounter - $wgAdsInterstitialsPagesBeforeFirstAd) % ($wgAdsInterstitialsPagesBetweenAds+1)) == 0)))
+					(($pageCounter > $wgAdsInterstitialsPagesBeforeFirstAd) && ((($pageCounter - $wgAdsInterstitialsPagesBeforeFirstAd -1) % ($wgAdsInterstitialsPagesBetweenAds+$numToSkip)) == 0)))
 				)
 			){
 				return $this->redirectTo($url);

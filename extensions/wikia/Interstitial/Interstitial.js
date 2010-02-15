@@ -13,7 +13,8 @@ console.log("Int: next: " + count);
 	});
 console.log("Int: now set to: " + $.cookies.get(COOKIE_NAME) + " (should be same as 'next')");
 
-	if((wgAdsInterstitialsPagesBeforeFirstAd == count - 1) || ((count > wgAdsInterstitialsPagesBeforeFirstAd) && (((count - wgAdsInterstitialsPagesBeforeFirstAd) % (wgAdsInterstitialsPagesBetweenAds+1)) == 0))){
+	var numToSkip = 2; // skip the interstitial and the page it was blocking as candidates
+	if((wgAdsInterstitialsPagesBeforeFirstAd == count - 1) || ((count > wgAdsInterstitialsPagesBeforeFirstAd) && (((count - wgAdsInterstitialsPagesBeforeFirstAd -1) % (wgAdsInterstitialsPagesBetweenAds + numToSkip)) == 0))){
 console.log("Int: Decided to display interstitial on next page.");
 
 			// If it's about to be time for an interstitial, re-write all INTERNAL links to go through the Interstitial.
