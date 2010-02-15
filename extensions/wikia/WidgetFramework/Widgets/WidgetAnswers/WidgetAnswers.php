@@ -96,13 +96,7 @@ EOD;
 #	if($wgUser->getOption('language') != 'en') { // waiting for international logic phase Future (v 2.0)
 #		$domain = $wgUser->getOption('language');
 #	} else {
-		if ( !empty( $wgAnswersURLs[$wgLanguageCode] ) ) {
-			$domain = $wgAnswersURLs[$wgLanguageCode];
-		} elseif ( !empty( $wgAnswersURLs[preg_replace("/-.*$/", "", $wgLanguageCode)] ) ) {
-			$domain = $wgAnswersURLs[preg_replace("/-.*$/", "", $wgLanguageCode)];
-		} else {
-			$domain = $wgLanguageCode . '.answers.wikia.com';
-		}
+		$domain = Wikia::langToSomethingMap($wgAnswersURLs, $wgLanguageCode, "{$wgLanguageCode}.answers.wikia.com");
 #	}
 	global $wgWidgetAnswersForceDomain;
 	if (!empty($wgWidgetAnswersForceDomain)) $domain = $wgWidgetAnswersForceDomain;

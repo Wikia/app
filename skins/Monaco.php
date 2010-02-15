@@ -1491,7 +1491,7 @@ wfProfileIn( __METHOD__ . '-header'); ?>
 			<div id="wikiaBranding">
 <?php
 global $wgLangToCentralMap, $wgContLang;
-$central_url = !empty($wgLangToCentralMap[$wgContLang->getCode()]) ? $wgLangToCentralMap[$wgContLang->getCode()] : 'http://www.wikia.com/';
+$central_url = Wikia::langToSomethingMap($wgLangToCentralMap, $wgContLang->getCode(), "http://www.wikia.com/Wikia");
 ?>
 				<div id="wikia_logo"><a rel="nofollow" href="<?= $central_url ?>">Wikia</a></div>
 
