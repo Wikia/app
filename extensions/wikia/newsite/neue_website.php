@@ -327,15 +327,18 @@ function get_content($host)
       return $str;
   }
 
-  function webclean($str, $cset)
-  {
-    if(strcasecmp($cset, "utf-8") || has_iso_umlauts($str))
-      $str = utf8_encode($str);
-    $str = eregi_replace("<[^>]*>|[]\001-\037{}\\[]", " ", $str);
-    $str = ereg_replace("[ ]+", " ", $str);
-    $str = html_entity_decode($str, ENT_QUOTES, "utf-8");
-    $str = htmlspecialchars($str, ENT_QUOTES, "utf-8");
-    return $str;
+  function webclean($str, $cset) {
+	  $cset = strtoupper( $cset );
+
+	  if ( $cset != "UTF-8" ) {
+		  $str = mb_convert_encoding( $str, "UTF-8", $cset );	
+	  }
+
+	  $str = eregi_replace("<[^>]*>|[]\001-\037{}\\[]", " ", $str);
+	  $str = ereg_replace("[ ]+", " ", $str);
+	  $str = html_entity_decode($str, ENT_QUOTES, "utf-8");
+	  $str = htmlspecialchars($str, ENT_QUOTES, "utf-8");
+	  return $str;
   }
 
   function wikilink($str, $lower=true)
