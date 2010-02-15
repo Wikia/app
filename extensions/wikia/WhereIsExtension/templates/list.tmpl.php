@@ -69,8 +69,8 @@ select {
 		<h3 id="headerWikis"><?= wfMsg('whereisextension-list') ?> (<?= count($formData['wikis']) ?>)</h3>
 		<ul>
 		<?php
-		$front = "&nbsp;<a href=\"http://www.wikia.com/wiki/Special:WikiFactory/";
-		$back = "/variables/" . $formData['vars'][ $formData['selectedVar'] ] . "\">[WF]</a>";
+		$front = "&nbsp;<a href=\"http://community.wikia.com/wiki/Special:WikiFactory/";
+		$back = "/variables/" . $formData['vars'][ $formData['selectedVar'] ] . "\">[edit]</a>";
 		foreach($formData['wikis'] as $wikiID => $wikiInfo) {
 			$editURL = $front . $wikiID . $back;
 			?>
