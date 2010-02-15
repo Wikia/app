@@ -20,7 +20,7 @@ console.log("Int: Decided to display interstitial on next page.");
 			$('a[href]').each(function(index, elem){
 				if($(elem).attr('hostname') == location.hostname){
 					var link = wgInterstitialPath + encodeURIComponent($(elem).attr('href'));
-console.log("LINK: " + link);
+//console.log("LINK: " + link);
 					$(elem).attr('href', link);
 				}
 			});
