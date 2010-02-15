@@ -1,4 +1,5 @@
 == Changes since 201002.3 ==
+* rt#36195: Automate table setup for wgEnableNewsiteExt. (Nef)
 * rt#40315: Fallback logo home link for zh- variants. (Nef) 
 
 == Changes since 201002.2 ==
