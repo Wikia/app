@@ -20,15 +20,20 @@ function GetComboAjaxLogin() {
 	if ($wgRequest->getCheck( 'wpCreateaccount' )) {
 		return "error";
 	}
-
-	$form =new AjaxLoginForm($wgRequest,'signup');
-	$form->execute();
-
-	$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
-	$response = new AjaxResponse();
-
-	$tmpl->set("registerAjax",$form->ajaxRender());
-	$response->addText( $tmpl->execute('ComboAjaxLogin') );
+    
+    $tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
+    $response = new AjaxResponse();
+        
+    if (!wfReadOnly()){
+	    $form =new AjaxLoginForm($wgRequest,'signup');
+	    $form->execute();
+        $tmpl->set("isReadOnly", 0);
+	    $tmpl->set("registerAjax", $form->ajaxRender());           
+    } else {
+        $tmpl->set("isReadOnly", 1);                 
+    }
+    
+    $response->addText( $tmpl->execute('ComboAjaxLogin') );
 	return $response;
 }
 
@@ -53,9 +58,8 @@ function comboAjaxLoginVars($vars) {
 	if ($wgWikiaEnableConfirmEditExt){
 		wfLoadExtensionMessages('ConfirmEdit');
 	}
-	if ( !wfReadOnly() ) {
-		$vars['wgComboAjaxLogin'] = true;
-	}
+	
+	$vars['wgComboAjaxLogin'] = true;
 	$vars['prefs_help_birthmesg'] = wfMsg('prefs-help-birthmesg');
 	$vars['prefs_help_birthinfo'] = wfMsg('prefs-help-birthinfo');
 	$vars['prefs_help_mailmesg'] = wfMsg('prefs-help-mailmesg');
