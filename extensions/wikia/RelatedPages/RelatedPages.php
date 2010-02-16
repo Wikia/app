@@ -26,7 +26,7 @@ function RelatedPages_Display( &$template, &$templateEngine ) {
 	global $wgUser;
 
 	if(!$wgUser->isAllowed('wikifactory')) {
-		return true;
+		//return true;
 	}
 
 	$skin = $wgUser->getSkin();
@@ -83,8 +83,8 @@ function RelatedPages_Display( &$template, &$templateEngine ) {
 		}
 
 		if(count($out) > 0) {
-			$templateEngine->data['bodytext'] .= '<style>.RelatedPages li { font-weight: bold; float: left; background: transparent url("http://images.wikia.com/common/skins/monobook/bullet.gif") no-repeat 0px 1px; padding-left: 21px; margin-right: 16px; }</style>';
-			$templateEngine->data['bodytext'] .= '<div class="widget" style="margin-top: 10px; clear: both;"><div class="accent" style="padding: 6px; font-weight: bold;">Check out these related pages:</div><div style="padding: 10px;"><ul class="reset clearfix RelatedPages" style="margin: 0">';
+			$templateEngine->data['bodytext'] .= '<style>.RelatedPages li { font-weight: bold; float: left; background: transparent url("http://images.wikia.com/common/skins/monobook/bullet.gif") no-repeat 0px 50%; padding-left: 21px; margin-right: 16px; }</style>';
+			$templateEngine->data['bodytext'] .= '<div style="clear:both;"></div><div class="widget" style="margin-top: 10px;"><div class="accent" style="padding: 6px; font-weight: bold;">Check out these related pages:</div><div style="padding: 10px;"><ul class="reset clearfix RelatedPages" style="margin: 0">';
 			for($i = 0; $i < count($out); $i++) {
 				$title = Title::newFromId($out[$i]);
 				if($title->exists()) {
