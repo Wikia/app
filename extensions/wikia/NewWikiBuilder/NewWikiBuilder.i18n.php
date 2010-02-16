@@ -68,17 +68,6 @@ Write the first section of your article here. Remember to include links to other
 Write the second section of your article here. Don't forget to add a category, to help people find the article.",
 );
 
-/** Message documentation (Message documentation)
- * @author IAlex
- * @author Siebrand
- */
-$messages['qqq'] = array(
-	'nwb-step1-text' => 'Contains hard coded <nowiki>$wgSitename</nowiki>. That\'s gotta go. Use <nowiki>{{SITENAME}}</nowiki>?',
-	'nwb-step2-text' => 'Must NOT USE $wgSitename. Use {{SITENAME}}!',
-	'nwb-step3-text' => 'Use {{SITENAME}} instead of $wgSitename.',
-	'nwb-step5-text' => 'Use <nowiki>{{SITENAME}}</nowiki>, not $wgSitename!',
-);
-
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -210,18 +199,14 @@ $messages['de'] = array(
 	'nwb-new-pages' => 'Neue Seiten',
 	'nwb-unable-to-edit-description' => 'Die Beschreibung kann mit dem New Wiki Builder nicht bearbeitet werden',
 	'nwb-step1-headline' => 'Beschreibe dein Wiki',
-	'nwb-step1-text' => '<p>Los gehts mit der Einrichtung des <b>{{SITENAME}}s</b>. Du kannst jeden Schritt überspringen und ihn später durchführen.</p><p>Als erstes: Schreibe einen kurzen Text für die Hauptseite deines Wikis, die beschreibt, worum es im {{SITENAME}} geht.</p>',
 	'nwb-step1-example' => '<b>Beispiel</b><br />Das Muppet-Wiki ist eine Enzyklopädie über alles was mit Jim Henson, der Muppetshow und der Sesamstraße zu tun hat. Jeder kann Artikel erstellen und bearbeiten, so dass wir zusammen an einer umfangreichen Datenbank für alle Muppet-Fans arbeiten können.',
 	'nwb-step2-headline' => 'Logo hochladen',
-	'nwb-step2-text' => '<p>Weiter: Wähle ein Logo für das <b>{{SITENAME}}</b>.</p><p>Lade ein Bild von deinem Computer hoch, das dein Wiki repräsentiert.</p><p>Du kannst diesen Schritt überspringen, wenn du momentan kein passendes Bild zur Verfügung hast.</p>',
 	'nwb-step2-example' => 'Das hier wäre ein gutes Logo für ein Skateboard-Wiki.',
 	'nwb-step3-headline' => 'Wähle ein Farbschema',
-	'nwb-step3-text' => '<p>Wähle nun ein Farbschema für das <b>{{SITENAME}}</b>.</p><p>Du kannst das Farbschema später ändern, falls du deine Meinung änderst.</p>',
 	'nwb-step4-headline' => 'Erstelle Seiten',
 	'nwb-step4-text' => '<p>Worüber möchtest du schreiben?</p><p>Erstelle eine Liste einiger Seiten, die du in deinem Wiki haben möchtest.</p>',
 	'nwb-step4-example' => '<b>Beispiel</b><p>In einem Monsterfilm-Wiki könnten deine ersten Seiten so aussehen: <ul class="bullets"><li>Drakula</li><li>Frankensteins Monster</li><li>Die Mumie</li><li>Tarantula</li></ul></p><p>Bei einem Wiki über Brettspiele: <ul class="bullets"><li>Monopoly</li><li>Risiko</li><li>Scrabble</li><li>Trivial Pursuit</li></ul></p>',
 	'nwb-step5-headline' => 'Wie gehts weiter?',
-	'nwb-step5-text' => '<p>Das waren alle Schritte! Das <b>{{SITENAME}}</b> ist fertig für den Start.</p><p>Jetzt ist es Zeit mit dem Schreiben anzufangen und einige Bilder hinzuzufügen, damit Besucher deines Wikis auch ein paar Inhalte vorfinden.</p><p>Die Liste der Seiten, die du im letzten Schritt erstellt hast, sind zu der "Neue Seiten"-Box auf der Hauptseite hinzugefügt worden. Du kannst mit einem Klick auf diese Seiten anfangen. Viel Spaß!</p>',
 	'nwb-preview' => 'Vorschau',
 	'nwb-logo-preview' => 'Vorschau des Logos',
 	'nwb-choose-logo' => 'Logo auswählen',
@@ -270,19 +255,15 @@ $messages['es'] = array(
 	'nwb-new-pages' => 'Páginas nuevas',
 	'nwb-unable-to-edit-description' => 'La descripción no es editable con el New Wiki Builder',
 	'nwb-step1-headline' => 'Describe tu wiki',
-	'nwb-step1-text' => '<p>Comencemos a configurar <b>{{SITENAME}}</b>. Puedes saltarte cualquier paso y volver atrás más tarde.</p><p>Primero: Escribe un mensaje para la portada de tu wiki que describa el tema de {{SITENAME}}.</p>',
 	'nwb-step1-example' => '<b>Ejemplo</b><br />Muppet Wiki es una enciclopedia sobre cualquier cosa relacionada con Jim Henson, Los Muppets/Los Teleñecos y Plaza Sésamo/Barrio Sésamo.
 El formato wiki permite a cualquiera crear o editar cualquier artículo, así que todos nosotros podemos trabajar juntos para crear una base de datos comprensible para los Muppets/Teleñecos.',
 	'nwb-step2-headline' => 'Subir un logo',
-	'nwb-step2-text' => '<p>Siguiente: Elige un logo para <b>{{SITENAME}}</b>.</p><p>Sube una imagen desde tu computadora que represente tu wiki.</p><p>Puedes saltarte este paso si no tienes imágenes adecuadas para usar de logo ahora.</p>',
 	'nwb-step2-example' => 'Este debería ser un buen logo para un wiki de patinaje.',
 	'nwb-step3-headline' => 'Escoge un aspecto',
-	'nwb-step3-text' => '<p>Ahora elige una combinación de colores para <b>{{SITENAME}}</b>.</p><p>Puedes cambiarlo más tarde si tienes otra cosa en mente.</p>',
 	'nwb-step4-headline' => 'Crear páginas',
 	'nwb-step4-text' => '<p>¿Sobre qué quieres escribir?</p><p>Haz una lista de algunas páginas que quieras que tenga tu wiki.</p>',
 	'nwb-step4-example' => '<b>Ejemplo</b><p>Para un wiki sobre una película de monstruos, tus primeras páginas deben ser: <ul class="bullets"><li>Drácula</li><li>Monstruo de Frankenstein</li><li>El hombrelobo</li><li>La momia</li></ul></p><p>Para un wiki de juegos de mesa: <ul class="bullets"><li>Monopoly</li><li>Risk</li><li>Scrabble</li><li>Trivial Pursuit</li></ul></p>',
 	'nwb-step5-headline' => '¿Qué es lo próximo?',
-	'nwb-step5-text' => '<p>¡Ya están todos los pasos! <b>{{SITENAME}}</b> está listo para ponerse en marcha.</p><p>Ahora es el momento de empezar a escribir y añadir algunas imágenes, darle a la gente algo para leer cuando ellos encuentren tu wiki.</p><p>La lista de páginas que tu hiciste en el paso anterior ha sido incluida en la caja de "Páginas nuevas" en la portada. Puedes comenzar haciendo clic en esas páginas. ¡Diviértete!</p>',
 	'nwb-preview' => 'Previsualizar',
 	'nwb-logo-preview' => 'Previsualización del logo',
 	'nwb-choose-logo' => 'Elige un logo',
@@ -330,18 +311,14 @@ $messages['fr'] = array(
 	'nwb-new-pages' => 'Nouvelles pages',
 	'nwb-unable-to-edit-description' => "La description n'est pas modifiable avec le constructeur de nouveaux wikis",
 	'nwb-step1-headline' => 'Décrivez votre wiki',
-	'nwb-step1-text' => "<p>Commençons à configurer <b>{{SITENAME}}</b>. Vous pouvez sauter n'importe quelle étape et revenir plus tard.</p><p>Premièrement : écrivez un message pour la page d'accueil de votre wiki qui décrit le but de {{SITENAME}}.</p>",
 	'nwb-step1-example' => '<b>Exemple</b><br />Muppet Wiki est une encyclopédie à propos de tout sur Jim Henson, The Muppet Show et Sesame Street. Le format wiki permet à tout le monde de créer ou modifier tous les articles, comme cela nous pouvons travailler ensemble une base de données pour les fans des Muppets.',
 	'nwb-step2-headline' => 'Importer un logo',
-	'nwb-step2-text' => "<p>Ensuite : Choisissez un logo pour <b>{{SITENAME}}</b>.</p>Importez une image depuis votre ordinateur qui représente votre wiki.</p><p>Vous pouvez sauter cette étape si vous n'avez pas d'image disponible actuellement.</p>",
 	'nwb-step2-example' => 'Ceci serait un bon exemple pour un wiki sur le skateboard.',
 	'nwb-step3-headline' => 'Choisissez un thème',
-	'nwb-step3-text' => "<p>Choisissez maintenant un type de couleurs pour <b>{{SITENAME}}</b>.</p><p>Vous pourrez le modifier plus tard si vous changez d'avis.</p>",
 	'nwb-step4-headline' => 'Créer des pages',
 	'nwb-step4-text' => '<p>À propos de quoi voudriez-vous écrire ?</p><p>Faites une liste des quelques de vous voudriez avoir sur votre wiki.</p>',
 	'nwb-step4-example' => '<b>Exemple</b><p>Pour un wiki sur les monstres de film, vos premières page serait : <ul class="bullets"><li>Dracula</li><li>Monstre de Frankenstein</li><li>Le loup garoup</li><li>La momie</li></ul></p><p>Pour un wiki sur les jeux de plateau : <ul class="bullets"><li>Monopoly</li><li>Risk</li><li>Scrabble</li><li>Trivial Pursuit</li></ul></p>',
 	'nwb-step5-headline' => 'Ensuite ?',
-	'nwb-step5-text' => "<p>Vous avez effectué toutes les étapes ! <b>{{SITENAME}}</b> est prêt à démarrer.</p><p>Il est maintenant temps d'écrire et d'ajouter quelques images, pour donner quelque chose à lire aux lecteurs quand ils trouvent votre wiki.</p><p>La liste des pages créées dans la dernière étape a été ajoutée à la boîte « Nouvelles pages » de la page d'accueil. Vous pouvez commencer en cliquant sur ces pages. Ayez du plaisir !</p>",
 	'nwb-preview' => 'Prévisualisation',
 	'nwb-logo-preview' => 'Prévisualisation du logo',
 	'nwb-choose-logo' => 'Choisissez le logo',
@@ -398,18 +375,14 @@ $messages['gl'] = array(
 	'nwb-new-pages' => 'Páxinas novas',
 	'nwb-unable-to-edit-description' => 'A descrición non se pode editar co construtor de wikis novos',
 	'nwb-step1-headline' => 'Describa o seu wiki',
-	'nwb-step1-text' => '<p>Comecemos coa configuración de <b>{{SITENAME}}</b>. Pode saltar calquera paso e voltar a el máis adiante.</p><p>Primeiro: escriba unha mensaxe para a páxina de inicio do seu wiki, describindo de que vai tratar {{SITENAME}}.</p>',
 	'nwb-step1-example' => '<b>Exemplo</b><br />O wiki Xabarín é unha enciclopedia sobre todo o relacionado con Miguelanxo Prado, o Xabarín Club e as súas series. O formato wiki permite a todo o mundo crear ou editar calquera artigo, e así podermos traballar todos xuntos para conseguir unha ampla base de datos para os seguidores do porco bravo.',
 	'nwb-step2-headline' => 'Cargar un logo',
-	'nwb-step2-text' => '<p>Seguinte: Escolla un logo para <b>{{SITENAME}}</b>.</p><p>Cargue unha imaxe do seu ordenador que represente o seu wiki.</p><p>Pode saltar este paso se non ten unha foto que queira empregar agora mesmo.</p>',
 	'nwb-step2-example' => 'Este sería un bo logo para un wiki sobre monopatíns.',
 	'nwb-step3-headline' => 'Escolla un tema',
-	'nwb-step3-text' => '<p>Agora seleccione un esquema para <b>{{SITENAME}}</b>.</p><p>Pode trocar isto máis adiante se cambia de idea.</p>',
 	'nwb-step4-headline' => 'Crear páxinas',
 	'nwb-step4-text' => '<p>Sobre que quere escribir?</p><p>Faga unha lista con algunhas das páxinas que queira ter no seu wiki.</p>',
 	'nwb-step4-example' => '<b>Exemplo</b><p>Para un wiki sobre películas de monstros, as súas primeiras páxinas poderían ser: <ul class="bullets"><li>Drácula</li><li>O monstro de Frankenstein</li><li>O lobishome</li><li>A momia</li></ul></p><p>Para un wiki sobre xogos de mesa: <ul class="bullets"><li>Monopoly</li><li>Risk</li><li>Scrabble</li><li>Trivial Pursuit</li></ul></p>',
 	'nwb-step5-headline' => 'E agora?',
-	'nwb-step5-text' => '<p>Xa rematou todos os pasos! <b>{{SITENAME}}</b> está preparado para pórse en marcha.</p><p>Agora é hora de comezar a escribir e engadir algunhas imaxes, para darlles ás persoas algo para ler cando atopen o seu wiki.</p><p>A lista de páxinas que fixo no paso anterior engadiuse a unha caixa denominada "Páxinas novas" na páxina principal. Pode comezar premendo nesas páxinas. Páseo ben!</p>',
 	'nwb-preview' => 'Vista previa',
 	'nwb-logo-preview' => 'Vista previa do logo',
 	'nwb-choose-logo' => 'Escolla o logo',
@@ -500,19 +473,14 @@ $messages['ia'] = array(
 	'nwb-new-pages' => 'Nove paginas',
 	'nwb-unable-to-edit-description' => 'Le description non es modificabile con le Constructor de nove wikis',
 	'nwb-step1-headline' => 'Describe tu wiki',
-	'nwb-step1-text' => '<p>Que nos comencia a configurar <b>{{SITENAME}}</b>. Tu pote saltar qualcunque passo e revenir a illo plus tarde.</p>
-<p>Primo: Scribe un message pro le pagina principal de tu wiki que describe le objectivo de {{SITENAME}}.</p>',
 	'nwb-step1-example' => '<b>Exemplo</b><br />Muppet Wiki es un encyclopedia super tote le cosas connexe a Jim Henson, The Muppet Show e Strata Sesamo. Le formato wiki permitte a omnes de crear o modificar omne articulo, de sorta que nos pote laborar totes insimul pro crear un base de datos comprehensive pro le fans del Muppets.',
 	'nwb-step2-headline' => 'Incargar un logotypo',
-	'nwb-step2-text' => '<p>Postea: Selige un logotypo pro <b>{{SITENAME}}</b>.</p><p>Incarga un imagine ex tu computator pro representar tu wiki.</p><p>Tu pote saltar iste passo si tu non ha un imagine que tu vole usar in iste momento.</p>',
 	'nwb-step2-example' => 'Isto esserea un bon logotypo pro un wiki super skateboard.',
 	'nwb-step3-headline' => 'Selige un apparentia',
-	'nwb-step3-text' => '<p>Selige ora un combination de colores pro <b>{{SITENAME}}</b>.</p><p>Tu pote alterar isto plus tarde si tu cambia de idea.</p>',
 	'nwb-step4-headline' => 'Crear paginas',
 	'nwb-step4-text' => '<p>Super que vole tu scriber?</p><p>Face un lista de alcun paginas que tu vole haber in tu wiki.</p>',
 	'nwb-step4-example' => '<b>Exemplo</b><p>Pro un wiki super filmes de monstros, le prime paginas pote esser: <ul class="bullets"><li>Dracula</li><li>Le monstro de Frankenstein</li><li>Le homine lupo</li><li>Le mumia</li></ul></p><p>Pro un wiki super jocos de tabuliero: <ul class="bullets"><li>Monopoly</li><li>Risk</li><li>Scrabble</li><li>Trivial Pursuit</li></ul></p>',
 	'nwb-step5-headline' => 'Que facer ora?',
-	'nwb-step5-text' => '<p>Tote le passos es complete! <b>{{SITENAME}}</b> es preste pro poner se in marcha.</p><p>Ora es le momento de comenciar a scriber e adder alcun imagines, pro dar al gente alique a leger quando illes trova tu wiki.</p><p>Le lista de paginas que tu faceva in le ultime passo ha essite addite a un quadro "Nove paginas" in le pagina principal. Tu pote comenciar con un clic super iste paginas. Bon divertimento!</p>',
 	'nwb-preview' => 'Previsualisation',
 	'nwb-logo-preview' => 'Previsualisation del logotypo',
 	'nwb-choose-logo' => 'Selige logotypo',
@@ -638,18 +606,10 @@ Probeer het over een aantal minuten opnieuw.',
 	'nwb-new-pages' => "Nieuwe pagina's",
 	'nwb-unable-to-edit-description' => 'De beschrijving is niet te bewerken met de Nieuwe Wikibouwer',
 	'nwb-step1-headline' => 'Beschrijf uw wiki',
-	'nwb-step1-text' => '<p>Laten we beginnen met het opzetten van <b>{{SITENAME}}</b>.
-U kunt iedere stap overslaan en daar later terugkomen.</p>
-<p>Schrijf als eerste een tekst voor de hoofdpagina van uw wiki waarin u beschrijft waar {{SITENAME}} over gaat.</p>',
 	'nwb-step1-example' => "<b>Voorbeeld</b><br />Muppetwiki is een encyclopedie over alles dat met Jim Henson, De Muppetshow en Sesamstraat te maken heeft. Door een wiki te gebruiken kan iedereen alle pagina's bewerken en pagina's aanmaken. Daardoor kunnen we allemaal samenwerken en een complete beschijving maken voor alle fans van de Muppets.",
 	'nwb-step2-headline' => 'Een logo uploaden',
-	'nwb-step2-text' => '<p>Kies een logo voor <b>{{SITENAME}}</b>.</p>
-<p>Upload een afbeelding van uw computer die uw wiki omvat.</p>
-<p>U kunt deze stap overslaan als u nu nog geen juiste afbeelding hebt.</p>',
 	'nwb-step2-example' => 'Dit zou een goed logo zijn voor een wiki over skateboarden.',
 	'nwb-step3-headline' => 'Kies een vormgeving',
-	'nwb-step3-text' => '<p>Kies een kleurschema voor <b>{{SITENAME}}</b>.</p>
-<p>Als u later van gedachten verandert, kunt u het kleurschema aanpassen.</p>',
 	'nwb-step4-headline' => "Pagina's aanmaken",
 	'nwb-step4-text' => "<p>Waar wilt u over schrijven?</p>
 <p>Maak een lijst van een aantal pagina's die u in uw wiki terug zou willen zien.</p>",
@@ -668,12 +628,6 @@ U kunt iedere stap overslaan en daar later terugkomen.</p>
 <li>Trivial Pursuit</li></ul>
 </p>',
 	'nwb-step5-headline' => 'Wat nu?',
-	'nwb-step5-text' => "<p>Dat zijn alle stappen!
-<b>{{SITENAME}}</b> is er klaar voor.</p>
-<p>Dan is nu te tijd gekomen om te gaan schrijven en afbeeldingen toe te voegen, zodat bezoekers iets te lezen hebben als ze bij uw wiki aankomen.</p>
-<p>De lijst met pagina's die u hebt gemaakt in de laatste stap is toegevoegd aan het venster \"Nieuwe pagina's\" op de hoofdpagina.
-U kunt beginnen door te klikken op die pagina's
-Veel plezier!</p>",
 	'nwb-preview' => 'Voorvertoning',
 	'nwb-logo-preview' => 'Voorvertoning logo',
 	'nwb-choose-logo' => 'Kies een logo',
@@ -797,18 +751,14 @@ $messages['pt-br'] = array(
 	'nwb-coming-soon' => 'Disponível em breve',
 	'nwb-new-pages' => 'Páginas novas',
 	'nwb-step1-headline' => 'Descreva sua wiki',
-	'nwb-step1-text' => '<p>Vamos começar a configurar o <b>{{SITENAME}}</b>. Você pode pular qualquer passo e voltar nele mais tarde.</p><p>Primeiro: Escreva uma mensagem para a página inicial da sua wiki que descreva sobre o que se trata o {{SITENAME}}.</p>',
 	'nwb-step1-example' => '<b>Exemplo</b><br />Muppet Wiki é uma enciclopédia sobre qualquer coisa relacionada a Jim Henson, Os Muppets e Vila Sésamo. O formato Wiki permite que qualquer um crie e edite um artigo, então nós todos podemos trabalhar juntos para criar uma base de dados abrangente para os fãs dos Muppets.',
 	'nwb-step2-headline' => 'Carregue um logotipo',
-	'nwb-step2-text' => '<p>Próximo: Escolha um logo para p <b>{{SITENAME}}</b>.</p><p>Carregue uma imagem do seu computador para representar a sua wiki.</p><p>Você pode pular esse passo se você ainda não tiver uma imagem que queira usar no momento.</p>',
 	'nwb-step2-example' => 'Este seria um bom logo para uma wiki sobre skateboarding.',
 	'nwb-step3-headline' => 'Escolha um tema',
-	'nwb-step3-text' => '<p>Agora escolha um esquema de cores para o <b>{{SITENAME}}</b>.</p><p>Você poderá mudar isso depois caso mude de ideia.</p>',
 	'nwb-step4-headline' => 'Criar páginas',
 	'nwb-step4-text' => '<p>Sobre o que você quer escrever?</p><p>Faça uma lista de algumas páginas que você queria ter na sua wiki.</p>',
 	'nwb-step4-example' => '<b>Exemplo</b><p>Para uma wiki de filmes de monstros, suas primeiras páginas poderia ser: <ul class="bullets"><li>Drácula</li><li>Frankenstein</li><li>Lobisomen</li><li>Múmia</li></ul></p><p>Para uma wiki de jogos de mesa: <ul class="bullets"><li>Monopoly</li><li>Risk</li><li>Scrabble</li><li>Trivial Pursuit</li></ul></p>',
 	'nwb-step5-headline' => 'Que é o próximo?',
-	'nwb-step5-text' => '<p>Esses foram todos os passos! O <b>{{SITENAME}}</b> está pronto para ser iniciado.</p><p>Agora é a hora de começar a escrever e adicionar algumas imagens, colocar alguma coisa para as pessoas lerem quando elas encontrarem a sua wiki.</p><p>A lista de páginas criadas por você no passo anterior foi adicionada à caixa de "Páginas novas" na página principal. Você pode começar clicando nessas páginas. Divirta-se!</p>',
 	'nwb-preview' => 'Previsualizar',
 	'nwb-logo-preview' => 'Previsualizar o logo',
 	'nwb-choose-logo' => 'Escolher um logo',
@@ -890,7 +840,6 @@ $messages['te'] = array(
  * @author Prima klasy4na
  */
 $messages['uk'] = array(
-	'nwb-step3-text' => '<p>Тепер оберіть варіант оформлення для <b>{{SITENAME}}</b>.</p><p>Ви можете змінити його пізніше, якщо ваша думка зміниться.</p>',
 	'nwb-back-to-step-1' => 'Повернутись до кроку 1',
 	'nwb-or' => 'або',
 );
