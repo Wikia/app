@@ -48,11 +48,11 @@ function RelatedPages_Display( &$template, &$templateEngine ) {
 		if($categories) {
 			sort($categories);
 
-			$cacheKey = wfMemcKey(__CLASS__, join('-', $categories));
+			$cacheKey = wfMemcKey(__CLASS__, join(':', $categories));
 
-			$content = $wgMemc->get($cacheKey);
+			$out = $wgMemc->get($cacheKey);
 
-			if(empty($content)) {
+			if(!is_array($out)) {
 				$dbr = wfGetDB(DB_SLAVE);
 				$out = array();
 				$results = array();
@@ -64,51 +64,47 @@ function RelatedPages_Display( &$template, &$templateEngine ) {
 				}
 				$res1 = $dbr->query($query1);
 				while($row1 = $dbr->fetchObject($res1)) {
-					if($row1->cl_from != $wgArticle->getID()) {
-						$results[$row1->cl_from] = $row1->count;
-					}
+					$results[$row1->cl_from] = $row1->count;
 				}
 				if(count($categories) > 1) {
 					arsort($results);
 					uasort($results, 'RelatedPages_Compare');
-					$out = array_slice(array_keys($results), 0, 5);
+					$out = array_slice(array_keys($results), 0, 6);
 				} else {
-					$out = array_rand($results, 5);
+					$out = array_rand($results, 6);
 				}
-				if(count($categories) > 1 && count($out) < 5) {
+				if(count($categories) > 1 && count($out) < 6) {
 					$results = array();
 					$query2 = 'SELECT /* RelatedPages Query 2 */ cl_from FROM categorylinks USE KEY(cl_from) WHERE cl_to IN ("'.join('","', $categories).'") GROUP BY 1 LIMIT 100';
 					$res2 = $dbr->query($query2);
 					while($row2 = $dbr->fetchObject($res2)) {
-						if($row2->cl_from != $wgArticle->getID()) {
-							if(!in_array($row2->cl_from, $out)) {
-								$results[] = $row2->cl_from;
-							}
+						if(!in_array($row2->cl_from, $out)) {
+							$results[] = $row2->cl_from;
 						}
 					}
 					if(!empty($results)) {
-						$out = array_merge($out, array_rand(array_flip($results), 5 - count($out)));
+						$out = array_merge($out, array_rand(array_flip($results), 6 - count($out)));
 					}
 				}
-				if(count($out) > 0) {
-					$content = '<style>.RelatedPages li { font-weight: bold; float: left; background: transparent url("http://images.wikia.com/common/skins/common/bullet.gif") no-repeat 0px 50%; padding-left: 21px; margin-right: 16px; }</style>';
-					$content .= '<div style="clear:both;"></div><div id="RelatedPages" class="widget" style="margin-top: 10px;"><div class="accent" style="padding: 6px; font-weight: bold;">Check out these related pages:</div><div style="padding: 10px;"><ul class="reset clearfix RelatedPages" style="margin: 0">';
-					$i = 0;
-					foreach($out as $item) {
+
+				$wgMemc->set($cacheKey, $out, 60 * 60 * 6);
+			}
+
+			if(count($out) > 0) {
+				$templateEngine->data['bodytext'] .= '<style>.RelatedPages li { font-weight: bold; float: left; background: transparent url("http://images.wikia.com/common/skins/common/bullet.gif") no-repeat 0px 50%; padding-left: 21px; margin-right: 16px; }</style>';
+				$templateEngine->data['bodytext'] .= '<div style="clear:both;"></div><div id="RelatedPages" class="widget" style="margin-top: 10px;"><div class="accent" style="padding: 6px; font-weight: bold;">Check out these related pages:</div><div style="padding: 10px;"><ul class="reset clearfix RelatedPages" style="margin: 0">';
+				$i = 0;
+				foreach($out as $item) {
+					if($item != $wgArticle->getID()) {
 						$title = Title::newFromId($item);
 						if(!empty($title) && $title->exists()) {
-							$content .= '<li'.($i == 0 ? ' style="background: none; padding-left: 0;"' : '').'><a href="'.htmlspecialchars($title->getFullUrl()).'">'.htmlspecialchars($title->getPrefixedText()).'</a></li>';
+							$templateEngine->data['bodytext'] .= '<li'.($i == 0 ? ' style="background: none; padding-left: 0;"' : '').'><a href="'.htmlspecialchars($title->getFullUrl()).'">'.htmlspecialchars($title->getPrefixedText()).'</a></li>';
 							$i++;
 						}
 					}
-					$content .= '</ul></div></div>';
-				} else {
-					$content = '<!-- no related pages -->';
 				}
-
-				$wgMemc->set($cacheKey, $content, 60 * 60 * 6);
+				$templateEngine->data['bodytext'] .= '</ul></div></div>';
 			}
-			$templateEngine->data['bodytext'] .= $content;
 		}
 	}
 
