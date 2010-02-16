@@ -61,9 +61,6 @@ $wgAutoloadClasses["GlobalTitle"]  =  $GLOBALS["IP"]."/includes/wikia/GlobalTitl
 $wgAutoloadClasses["WikiFactory"] = $GLOBALS["IP"]."/extensions/wikia/WikiFactory/WikiFactory.php";
 $wgAutoloadClasses["WikiMover"] = $GLOBALS["IP"]."/extensions/wikia/WikiFactory/Mover/WikiMover.php";
 $wgAutoloadClasses["WikiFactoryHub"] = $GLOBALS["IP"]."/extensions/wikia/WikiFactory/Hubs/WikiFactoryHub.php";
-$wgAutoloadClasses["WikiFactoryOnVarChange"] = $GLOBALS["IP"]."/extensions/wikia/WikiFactory/WikiFactoryOnVarChange.php";
-
-$wgHooks["WikiFactoryChanged"][] = "WikiFactoryOnVarChange::dispatch";
 
 /**
  * API classes
