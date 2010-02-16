@@ -60,10 +60,10 @@ function RelatedPages_Display( &$template, &$templateEngine ) {
 
 		$res1 = $dbr->query($query1);
 		while($row1 = $dbr->fetchObject($res1)) {
-			$results[$row1->cl_from] = $row1->count;
+			if($row1->cl_from != $wgArticle->getID()) {
+				$results[$row1->cl_from] = $row1->count;
+			}
 		}
-
-		unset($results[$wgArticle->getID()]);
 
 		if(count($categories) > 1) {
 			arsort($results);
@@ -78,12 +78,13 @@ function RelatedPages_Display( &$template, &$templateEngine ) {
 			$query2 = 'SELECT /* RelatedPages Query 2 */ cl_from FROM categorylinks USE KEY(cl_from) WHERE cl_to IN ("'.join('","', $categories).'") GROUP BY 1 HAVING COUNT(cl_to) = 1 LIMIT 100';
 			$res2 = $dbr->query($query2);
 			while($row2 = $dbr->fetchObject($res2)) {
-				if(!in_array($row2->cl_from, $out)) {
-					$results[] = $row2->cl_from;
+				if($row2->cl_from != $wgArticle->getID()) {
+					if(!in_array($row2->cl_from, $out)) {
+						$results[] = $row2->cl_from;
+					}
 				}
 			}
 			if(!empty($results)) {
-				unset($results[$wgArticle->getID()]);
 				$out = array_merge($out, array_rand($results, 5 - count($out)));
 			}
 		}
