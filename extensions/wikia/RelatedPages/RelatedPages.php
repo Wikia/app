@@ -95,7 +95,7 @@ function RelatedPages_Display( &$template, &$templateEngine ) {
 				$templateEngine->data['bodytext'] .= '<div style="clear:both;"></div><div id="RelatedPages" class="widget" style="margin-top: 10px;"><div class="accent" style="padding: 6px; font-weight: bold;">Check out these related pages:</div><div style="padding: 10px;"><ul class="reset clearfix RelatedPages" style="margin: 0">';
 				$i = 0;
 				foreach($out as $item) {
-					if($item != $wgArticle->getID()) {
+					if($item != $wgArticle->getID() && $i < 5) {
 						$title = Title::newFromId($item);
 						if(!empty($title) && $title->exists()) {
 							$templateEngine->data['bodytext'] .= '<li'.($i == 0 ? ' style="background: none; padding-left: 0;"' : '').'><a href="'.htmlspecialchars($title->getFullUrl()).'">'.htmlspecialchars($title->getPrefixedText()).'</a></li>';
