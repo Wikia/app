@@ -123,8 +123,10 @@ function wfEditStats($options = array()) {
 	for ( $i = 1; $i <= 7; $i++ ) {
 		wfOut( "\nTop 10 most edited pages (per editors) in last $i days  ... " );
 		WikiaGlobalStats::getPagesEditors($i, 10, true, true, false, true);
+		WikiaGlobalStats::getPagesEditors($i, 10, true, false, false, true);
 		wfOut( "\nTop 5 most edited pages (per editors) in last $i days ... " );
 		WikiaGlobalStats::getPagesEditors($i, 5, true, true, false, true);
+		WikiaGlobalStats::getPagesEditors($i, 5, true, false, false, true);
 	}
 
 	for ( $i = 1; $i <= 7; $i++ ) {
