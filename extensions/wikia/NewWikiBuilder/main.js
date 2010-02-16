@@ -200,6 +200,13 @@ NWB.handleFirstPages = function (event){
 			}
 		);
 
+		// if no titles were specified, just skip to the next step
+		if ( pages.length == 0 ) {
+			Mediawiki.statusBar.release();
+			NWB.gotostep(5);
+			return;
+		}
+
 		// Reverse the order of the pages, so that the first one is created last,
 		// so that when they show up on home page, they are in correct order
 		pages.reverse();
