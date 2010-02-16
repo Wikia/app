@@ -23,10 +23,18 @@ function RelatedPages_Compare($a, $b) {
 }
 
 function RelatedPages_Display( &$template, &$templateEngine ) {
-	global $wgUser;
+	global $wgUser, $wgArticle, $wgTitle, $wgRequest;
 
 	if(!$wgUser->isAllowed('wikifactory')) {
-		//return true;
+		return true;
+	}
+
+	if($wgRequest->getVal('action') == 'submit') {
+		return true;
+	}
+
+	if(empty($wgTitle) || $wgTitle->getNamespace() != NS_MAIN) {
+		return true;
 	}
 
 	$skin = $wgUser->getSkin();
@@ -35,8 +43,6 @@ function RelatedPages_Display( &$template, &$templateEngine ) {
 	}
 
 	if($templateEngine->data['catlinks']) {
-		global $wgArticle;
-
 		$categories = Wikia::getVar('InCategories');
 
 		$dbr = wfGetDB(DB_SLAVE);
@@ -87,7 +93,7 @@ function RelatedPages_Display( &$template, &$templateEngine ) {
 			$templateEngine->data['bodytext'] .= '<div style="clear:both;"></div><div class="widget" style="margin-top: 10px;"><div class="accent" style="padding: 6px; font-weight: bold;">Check out these related pages:</div><div style="padding: 10px;"><ul class="reset clearfix RelatedPages" style="margin: 0">';
 			for($i = 0; $i < count($out); $i++) {
 				$title = Title::newFromId($out[$i]);
-				if($title->exists()) {
+				if(!empty($title) && $title->exists()) {
 					$templateEngine->data['bodytext'] .= '<li'.($i == 0 ? ' style="background: none; padding-left: 0;"' : '').'><a href="'.htmlspecialchars($title->getFullUrl()).'">'.htmlspecialchars($title->getPrefixedText()).'</a></li>';
 				}
 			}
