@@ -588,7 +588,7 @@ class WikiaGlobalStats {
 					# check results
 					if ( !empty( $servers[ $row['wikia'] ] ) ) continue;
 					# check additional conditions
-					$res = self::allowResultsForEditedArticles( $row );
+					$res = self::allowResultsForEditedArticles( $row, $from_db );
 					if ( $res === false ) continue;
 					
 					list( $wikiaTitle, $db, $hub, $page_name, $wikia_url, $page_url, $count ) = array_values($res);
@@ -645,7 +645,7 @@ class WikiaGlobalStats {
 	 * 	- check domain doesn't exist in excludeWikiDomainsKey list (textRegex)
 	 * 	- check article doesn't exist in excludeWikiArticles list (textRegex)
 	 */ 
-	private static function allowResultsForEditedArticles ( $row ) {
+	private static function allowResultsForEditedArticles ( $row, $from_db = false ) {
 		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 		$result = array();
@@ -703,7 +703,7 @@ class WikiaGlobalStats {
 
 		/* check article */
 		$memkey = wfMemcKey( __METHOD__, 'article', intval($row['wikia']), intval($row['page']), $oWikia->city_dbname );
-		$result = $wgMemc->get( $memkey );
+		$result = ( $from_db === true ) ? null : $wgMemc->get( $memkey );
 	
 		if ( !isset($result) ) {
 			$allowedPage = true;
@@ -762,7 +762,7 @@ class WikiaGlobalStats {
 				);
 			}
 			# set in memc
-			$wgMemc->set( $memkey, $result, 60*60 );
+			$wgMemc->set( $memkey, $result, 60*30 );
 		}
 		
 		if ( $result == 'ERROR' ) {
