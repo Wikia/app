@@ -1497,7 +1497,7 @@ class AutoCreateWikiPage extends SpecialPage {
 				$WFSettingsVars[ "wgEnableRandomInCategoryExt"       ] = true;
 				$WFSettingsVars[ "wgEnableMagicAnswer"               ] = false;
 				$WFSettingsVars[ "wgUseNewAnswersSkin"               ] = true;
-				$WFSettingsVars[ "wgAdslot_LEFT_NAV_205x400"         ] = null;
+				$WFSettingsVars[ "wgAdslot_LEFT_NAV_205x400"         ] = "Null";
 				break;
 		}
 
