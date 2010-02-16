@@ -77,8 +77,7 @@ class Outbound extends UnlistedSpecialPage {
 			$athenaInitStuff .= AdEngine::getInstance()->providerValuesAsJavascript($wgCityId);
 
 			$adCode = $oTmpl->execute($adTemplate);
-			$userLoginTitle = Title::newFromText( 'Special:Userlogin' );
-			$loginMsg = wfMsgForContent('outbound-screen-login-text', array( $userLoginTitle->getFullUrl('type=signup'), $userLoginTitle->getFullUrl() ) );
+			$loginMsg = wfMsgExt('outbound-screen-login-text', array('parseinline', 'content'));
 			$pageBarMsg = wfMsg('outbound-screen-you-are-leaving');
 			$oTmpl->set_vars(
 					array(
