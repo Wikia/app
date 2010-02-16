@@ -24,6 +24,11 @@ var initTracker = function() {
 		$.tracker.byStr('RequestWiki/initiate_click');
 	});
 
+	// Related pages
+	$('#RelatedPages').click(function(e) {
+		if(e.target.nodeName == 'A') { $.tracker.byStr('articleAction/relatedPage'); }
+	});
+
 	// Edit links for sections
 	// TODO: WTF is this variable?
 	var WysyWigDone = false;
