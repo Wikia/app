@@ -520,12 +520,12 @@ function wfGetCurrentUrl() {
 	/**
 	 * sometimes $uri contain whole url, not only last part
 	 */
-    if( !preg_match( '!^https?://!', $uri ) ) {
-        $uri = isset( $_SERVER[ "SERVER_NAME" ] )
+	if( !preg_match( '!^https?://!', $uri ) ) {
+		$uri = isset( $_SERVER[ "SERVER_NAME" ] )
 			? "http://" . $_SERVER[ "SERVER_NAME" ] . $uri
 			: "http://localhost" . $uri;
-    }
-    $arr = parse_url( $uri );
+	}
+	$arr = parse_url( $uri );
 
 	/**
 	 * host
@@ -906,4 +906,3 @@ function wfTimeFormatAgoOnlyRecent($stamp){
 	wfProfileOut(__METHOD__);
 	return $res;
 } // end wfTimeFormatAgoOnlyRecent()
-
