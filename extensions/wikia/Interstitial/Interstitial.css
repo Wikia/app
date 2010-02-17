@@ -13,7 +13,7 @@ body {
 }
 #wikia_page{
 	position: absolute;
-	top: 41px;
+	top: 41px !important; /* some skins override this */
 	left: 50%;
 	width: 800px;
 	margin: 0 0 0 -400px;
