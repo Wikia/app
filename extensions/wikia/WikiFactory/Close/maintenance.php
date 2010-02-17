@@ -47,7 +47,7 @@ class CloseWikiMaintenance {
 	 * @access public
 	 */
 	public function execute() {
-		global $wgUploadDirectory, $wgDBname;
+		global $wgUploadDirectory, $wgDBname, $wgSolrIndexer;
 
 		$first     = isset( $this->mOptions[ "first" ] ) ? true : false;
 		$condition = array( "ORDER BY" => "city_id" );
