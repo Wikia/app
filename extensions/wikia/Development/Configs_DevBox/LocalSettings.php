@@ -1,6 +1,7 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
+$wgShowExceptionDetails = true;
 
 $IP = '/usr/wikia/source/wiki';
 $wgWikiaLocalSettingsPath  = __FILE__;
@@ -44,6 +45,5 @@ $wgExtensionsPath = "/extensions";
 #
 require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../CommonExtensions.php' );
 
-// DevBoxes can't currently survive without this... TODO: Make them handle pretty-urls
-$wgArticlePath = "/index.php?title=$1";
+$wgArticlePath = "/wiki/$1";
 $wgCookieDomain = ".dev.wikia-inc.com";
