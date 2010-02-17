@@ -1,7 +1,7 @@
 var initTracker = function()
 {
 	String.prototype.replaceForTrac = function(){
-		return this.replace(/ /g, "_").replace(/\./g, "");
+		return this.replace(/ /g, "_").replace(/\./g, "").replace(/Q&amp;A/, "answers");
 	}
 
 	var addTrack = function(name,url){
