@@ -59,7 +59,7 @@ array (
 'recharge'=>8,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'Vampiric Swarm flies out slowly and steals up to 15..60 Health from up to three foes in the area.',
+'desc'=>'Vampiric Swarm steals up to 15..60 Health from up to three foes in the area. ',
 'name_id'=>'vampiric swarm',
 ),
 156=>
@@ -500,7 +500,7 @@ array (
 'recharge'=>8,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'For the next 3...20...24 seconds, target foe attacks 50% slower, and that foe suffers -0...2...3 Health degeneration.',
+'desc'=>'For the next 3..24 seconds, target foe attacks 50% slower, and that foe suffers -0..3 Health degeneration.',
 'name_id'=>'faintheartedness',
 ),
 151=>
@@ -563,7 +563,7 @@ array (
 'recharge'=>10,
 'pve_only'=>0,
 'elite'=>1,
-'desc'=>'For 6...25...30 seconds, target foe and all nearby foes suffer -0...2...3 Health degeneration, and gain 20% less benefit from healing.',
+'desc'=>'For 6..30 seconds, target foe and all nearby foes suffer -0..3 Health degeneration, and gain 20% less benefit from healing.',
 'name_id'=>'lingering curse',
 ),
 140=>
@@ -668,7 +668,7 @@ array (
 'recharge'=>15,
 'pve_only'=>0,
 'elite'=>1,
-'desc'=>'Target foe loses 1..3..3 enchantments. If an enchantment was lost in this way, that foe and all adjacent foes lose 10..82..100 Health.',
+'desc'=>'Target foe loses 1..3 enchantments. If an enchantment was lost in this way, that foe and all adjacent foes lose 10..100 Health.',
 'name_id'=>'pain of disenchantment',
 ),
 99=>
@@ -773,7 +773,7 @@ array (
 'recharge'=>12,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'All adjacent foes are Poisoned for 5..15 seconds.',
+'desc'=>'You and all adjacent foes are Poisoned for 5..15 seconds.',
 'name_id'=>'poisoned heart',
 ),
 103=>
@@ -1046,7 +1046,7 @@ array (
 'recharge'=>10,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'For 6..30 seconds, target foe and all nearby foes suffer -0...2...3 Health degeneration.',
+'desc'=>'For 6..30 seconds, target foe and all nearby foes suffer -0..3 Health degeneration.',
 'name_id'=>'suffering',
 ),
 1358=>
@@ -2222,7 +2222,7 @@ array (
 'recharge'=>20,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'For 10...34...40 seconds, you have +2 to your Death Magic and Soul Reaping attributes and sacrifice 5...3...3% of your maximum Health when you cast a spell.',
+'desc'=>'For 10..40 seconds, you have +2 to your Death Magic and Soul Reaping attributes and sacrifice 5..3% of your maximum Health when you cast a spell.',
 'name_id'=>'masochism',
 ),
 92139=>
@@ -2243,7 +2243,7 @@ array (
 'recharge'=>20,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'For 30 seconds, you gain 1...3...4 Energy whenever you sacrifice Health.',
+'desc'=>'For 30 seconds, you gain 1..4 Energy whenever you sacrifice Health.',
 'name_id'=>'masochism (pvp)',
 ),
 808=>
@@ -2411,7 +2411,7 @@ array (
 'recharge'=>4,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'For 5...13...15 seconds, the next time target other ally would be knocked down, all nearby foes take 15...63...75 damage instead.',
+'desc'=>'For 5..15 seconds, the next time target other ally would be knocked down, all nearby foes take 15..75 damage instead.',
 'name_id'=>'brace yourself',
 ),
 91572=>
@@ -2432,7 +2432,7 @@ array (
 'recharge'=>12,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'For 5...11...13 seconds, the next time target other ally would be knocked down, 1 nearby foe takes 15...53...63 damage instead.',
+'desc'=>'For 5..13 seconds, the next time target other ally would be knocked down, 1 nearby foe takes 15..63 damage instead.',
 'name_id'=>'brace yourself (pvp)',
 ),
 1780=>
@@ -2453,7 +2453,7 @@ array (
 'recharge'=>20,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'For 20 seconds, the next 1...4...5 Touch Skills used against allies within earshot fail.',
+'desc'=>'For 20 seconds, the next 1..5 Touch Skills used against allies within earshot fail.',
 'name_id'=>'cant touch this',
 ),
 91780=>
@@ -2474,7 +2474,7 @@ array (
 'recharge'=>20,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'For 20 seconds, the next 1...4...5 Touch Skills used against you fail.',
+'desc'=>'For 20 seconds, the next 1..5 Touch Skills used against you fail.',
 'name_id'=>'cant touch this (pvp)',
 ),
 1595=>
@@ -2537,7 +2537,7 @@ array (
 'recharge'=>15,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'For 5...17...20 seconds, the next time target ally attacks, that ally deals +5...41...50 damage and inflicts a Deep Wound for 5...17...20 seconds.',
+'desc'=>'For 5..20 seconds, the next time target ally attacks, that ally deals +5..50 damage and inflicts a Deep Wound for 5..20 seconds.',
 'name_id'=>'find their weakness',
 ),
 91781=>
@@ -2558,7 +2558,7 @@ array (
 'recharge'=>15,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'For 5...17...20 seconds, the next time target ally criticals, that ally also inflicts a Deep Wound for 5...17...20 seconds.',
+'desc'=>'For 5...20 seconds, the next time target ally criticals, that ally also inflicts a Deep Wound for 5..20 seconds.',
 'name_id'=>'find their weakness (pvp)',
 ),
 1558=>
@@ -2621,7 +2621,7 @@ array (
 'recharge'=>10,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'You gain 15...75...90 Health. For 1...8...10 seconds, other allies\' spells targeting you cast 50% faster.',
+'desc'=>'You gain 15..90 Health. For 1..10 seconds, other allies\' spells targeting you cast 50% faster.',
 'name_id'=>'help me',
 ),
 91594=>
@@ -2642,7 +2642,7 @@ array (
 'recharge'=>15,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'You gain 5...41...50 health. For 1...8...10 seconds, other allies\' Spells targeting you cast 50% faster.',
+'desc'=>'You gain 5..50 health. For 1..10 seconds, other allies\' Spells targeting you cast 50% faster.',
 'name_id'=>'help me (pvp)',
 ),
 1596=>
@@ -2726,7 +2726,7 @@ array (
 'recharge'=>15,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'All allies within earshot and below 75% Health gain 1...8...10 Energy.',
+'desc'=>'All allies within earshot and below 75% Health gain 1..10 Energy.',
 'name_id'=>'never give up',
 ),
 91593=>
@@ -2747,7 +2747,7 @@ array (
 'recharge'=>20,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'All allies within earshot and below 75% Health gain 1...8...10 Energy.',
+'desc'=>'All allies within earshot and below 75% Health gain 1..10 Energy.',
 'name_id'=>'never give up (pvp)',
 ),
 1598=>
@@ -2768,7 +2768,7 @@ array (
 'recharge'=>15,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'For 15 seconds, all party members within earshot and below 75% Health gain +1...4...5 Health regeneration.',
+'desc'=>'For 15 seconds, all party members within earshot and below 75% Health gain +1..5 Health regeneration.',
 'name_id'=>'never surrender',
 ),
 91598=>
@@ -2789,7 +2789,7 @@ array (
 'recharge'=>20,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'For 10 seconds, all party members within earshot and below 75% Health gain +1...4...5 Health regeneration.',
+'desc'=>'For 10 seconds, all party members within earshot and below 75% Health gain +1..5 Health regeneration.',
 'name_id'=>'never surrender (pvp)',
 ),
 1589=>
@@ -2831,7 +2831,7 @@ array (
 'recharge'=>30,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'For 5..20 seconds, all party members within earshot receive +24 armor when not moving.',
+'desc'=>'For 5..20 seconds, all party members within earshot receive +24 armor when not moving. This effect ends on an ally affected by this shout when that ally attacks.',
 'name_id'=>'stand your ground (pvp)',
 ),
 1592=>
@@ -2852,7 +2852,7 @@ array (
 'recharge'=>30,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'All party members in earshot are resurrected with 25...45...50% Health and 5...17...20% Energy.',
+'desc'=>'All party members in earshot are resurrected with 25..50% Health and 5..20% Energy.',
 'name_id'=>'we shall return',
 ),
 91592=>
@@ -2873,7 +2873,7 @@ array (
 'recharge'=>15,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'For 10 seconds, whenever party members within earshot use a resurrection Skill, their fallen allies return with 10...62...75% more Health and 5...41...50% more Energy.',
+'desc'=>'For 10 seconds, whenever party members within earshot use a resurrection Skill, their fallen allies return with 10..75% more Health and 5..50% more Energy.',
 'name_id'=>'we shall return (pvp)',
 ),
 2018=>
@@ -2890,7 +2890,7 @@ array (
 'adrenaline'=>0,
 'eregen'=>0,
 'sacrifice'=>0,
-'casting'=>2,
+'casting'=>1,
 'recharge'=>15,
 'pve_only'=>0,
 'elite'=>0,
@@ -2911,7 +2911,7 @@ array (
 'adrenaline'=>0,
 'eregen'=>0,
 'sacrifice'=>0,
-'casting'=>1,
+'casting'=>2,
 'recharge'=>15,
 'pve_only'=>0,
 'elite'=>0,
@@ -2938,6 +2938,27 @@ array (
 'elite'=>0,
 'desc'=>'For 10 seconds, the next attack Skill used by each ally within earshot deals +10..25 damage against foes with more than 50% Health.',
 'name_id'=>'anthem of envy',
+),
+91559=>
+array (
+'name'=>'Anthem of Envy (PvP)',
+'chapter'=>3,
+'profession'=>'Paragon',
+'prof'=>'P',
+'attribute'=>'Command',
+'attr'=>'comma',
+'type'=>'Chant',
+'ty'=>'ch',
+'energy'=>0,
+'adrenaline'=>6,
+'eregen'=>0,
+'sacrifice'=>0,
+'casting'=>1,
+'recharge'=>6,
+'pve_only'=>0,
+'elite'=>0,
+'desc'=>'For 10 seconds, the next attack Skill used by each ally within earshot deals +10..20 damage against foes with more than 50% Health.',
+'name_id'=>'anthem of envy (pvp)',
 ),
 1568=>
 array (
@@ -2999,7 +3020,7 @@ array (
 'recharge'=>8,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'For 20 seconds, target non-Spirit ally has a 5...17...20% chance to block incoming attacks. This Echo is reapplied every time a Chant or Shout ends on that ally.',
+'desc'=>'For 20 seconds, target non-Spirit ally has a 5..20% chance to block incoming attacks. This Echo is reapplied every time a Chant or Shout ends on that ally.',
 'name_id'=>'bladeturn refrain',
 ),
 91580=>
@@ -3020,7 +3041,7 @@ array (
 'recharge'=>8,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'For 20 seconds, target non-Spirit ally has +10...34...40 armor against slashing damage. This Echo is reapplied every time a Chant or Shout ends on that ally.',
+'desc'=>'For 20 seconds, target non-Spirit ally has +10..40 armor against slashing damage. This Echo is reapplied every time a Chant or Shout ends on that ally.',
 'name_id'=>'bladeturn refrain (pvp)',
 ),
 1554=>
@@ -3314,7 +3335,7 @@ array (
 'recharge'=>8,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'For 10..35 seconds, whenever a Chant or Shout ends on target non-Spirit ally, all foes adjacent to that ally are set on Fire for 1..3 seconds.',
+'desc'=>'For 10..35 seconds, whenever a Chant or Shout ends on target non-Spirit ally, all foes adjacent to that ally are set on Fire for 1..7 seconds.',
 'name_id'=>'blazing finale',
 ),
 91575=>
@@ -3335,7 +3356,7 @@ array (
 'recharge'=>8,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'For 10..35 seconds, whenever a Chant or Shout ends on target non-Spirit ally, all foes adjacent to that ally are set on Fire for 1..7 seconds.',
+'desc'=>'For 10..35 seconds, whenever a Chant or Shout ends on target non-Spirit ally, all foes adjacent to that ally are set on Fire for 1..3 seconds.',
 'name_id'=>'blazing finale (pvp)',
 ),
 1576=>
@@ -3587,7 +3608,7 @@ array (
 'recharge'=>5,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'Resurrect target party member with 5...13...15% Health and 1...3...4% Energy for each party member within earshot.',
+'desc'=>'Resurrect target party member with 5..15% Health and 1..4% Energy for each party member within earshot.',
 'name_id'=>'signet of return',
 ),
 91778=>
@@ -3608,7 +3629,7 @@ array (
 'recharge'=>20,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'Resurrect target party member with 5...13...15% Health and 1...3...4% Energy for each party member within earshot.',
+'desc'=>'Resurrect target party member with 5..15% Health and 1..4% Energy for each party member within earshot.',
 'name_id'=>'signet of return (pvp)',
 ),
 1773=>
@@ -3629,7 +3650,7 @@ array (
 'recharge'=>5,
 'pve_only'=>0,
 'elite'=>1,
-'desc'=>'For 10..35 seconds, if you are under the effect of a chant or a shout, you attack 33% faster and gain 33% more adrenaline.',
+'desc'=>'For 10..35 seconds, if you are under the effect of a chant or a shout, you attack 33% faster and gain 33% more adrenaline.You have Cracked Armor for 10 seconds if a chant or shout ends on you. ',
 'name_id'=>'soldiers fury',
 ),
 2210=>
@@ -3989,6 +4010,27 @@ array (
 'desc'=>'For 15 seconds, target non-Spirit ally has +2..3 Health regeneration. This Echo is reapplied every time a Chant or Shout ends on that ally.',
 'name_id'=>'mending refrain',
 ),
+91578=>
+array (
+'name'=>'Mending Refrain (PvP)',
+'chapter'=>3,
+'profession'=>'Paragon',
+'prof'=>'P',
+'attribute'=>'Motivation',
+'attr'=>'mot',
+'type'=>'Echo',
+'ty'=>'ec',
+'energy'=>10,
+'adrenaline'=>0,
+'eregen'=>0,
+'sacrifice'=>0,
+'casting'=>1,
+'recharge'=>8,
+'pve_only'=>0,
+'elite'=>0,
+'desc'=>'For 15 seconds, For 15 seconds, you have +2..3 Health regeneration. This Echo is reapplied every time a Chant or Shout ends on you.',
+'name_id'=>'mending refrain (pvp)',
+),
 1579=>
 array (
 'name'=>'Purifying Finale',
@@ -4154,7 +4196,7 @@ array (
 'recharge'=>0,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'If this attack hits, your target begins Bleeding for 5...17...20 seconds.',
+'desc'=>'If this attack hits, your target begins Bleeding for 5..20 seconds.',
 'name_id'=>'barbed spear',
 ),
 1546=>
@@ -4952,7 +4994,7 @@ array (
 'recharge'=>5,
 'pve_only'=>0,
 'elite'=>1,
-'desc'=>'Your animal companion attempts an Enraged Lunge that applies a Deep Wound to target foe for 5...17...20 seconds and deals +10...42...50 damage.',
+'desc'=>'Your animal companion attempts an Enraged Lunge that applies a Deep Wound to target foe for 5..20 seconds and deals +10..50 damage.',
 'name_id'=>'enraged lunge',
 ),
 91202=>
@@ -4973,7 +5015,7 @@ array (
 'recharge'=>5,
 'pve_only'=>0,
 'elite'=>1,
-'desc'=>'Your animal companion attempts an Enraged Lunge that deals +3...19...23 damage (maximum bonus 80) for each recharging Beast Mastery skill.',
+'desc'=>'Your animal companion attempts an Enraged Lunge that deals +3..23 damage (maximum bonus 80) for each recharging Beast Mastery skill.',
 'name_id'=>'enraged lunge (pvp)',
 ),
 2142=>
@@ -5162,7 +5204,7 @@ array (
 'recharge'=>5,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'Your animal companion attempts a Melandru\'s Assault that deals +5...17...20 damage to all nearby foes.',
+'desc'=>'Your animal companion attempts a Melandru\'s Assault that deals +5..20 damage to all nearby foes.',
 'name_id'=>'melandrus assault',
 ),
 90441=>
@@ -5183,7 +5225,7 @@ array (
 'recharge'=>5,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'Your animal companion attempts a Melandru\'s Assault that deals +5...17...20 damage. If that attack strikes a foe with an enchantment, that foe and all adjacent foes take +5...29...35 additional damage.',
+'desc'=>'Your animal companion attempts a Melandru\'s Assault that deals +5..20 damage. If that attack strikes a foe with an enchantment, that foe and all adjacent foes take +5..35 additional damage.',
 'name_id'=>'melandrus assault (pvp)',
 ),
 447=>
@@ -5288,7 +5330,7 @@ array (
 'recharge'=>30,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'For 5...17...20 seconds, your animal companion attacks 25% faster and heals you for 1...25...31 Health with each successful attack.',
+'desc'=>'For 5..20 seconds, your animal companion attacks 25% faster and heals you for 1..31 Health with each successful attack.',
 'name_id'=>'predatory bond',
 ),
 91194=>
@@ -5309,7 +5351,7 @@ array (
 'recharge'=>30,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'For 5...17...20 seconds, attacks by your animal companion heal you for 1...25...31 Health.',
+'desc'=>'For 5..20 seconds, attacks by your animal companion heal you for 1..31 Health.',
 'name_id'=>'predatory bond (pvp)',
 ),
 470=>
@@ -5456,7 +5498,7 @@ array (
 'recharge'=>10,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'Your animal companion attempts a Scavenger Strike that deals +10...22...25 damage. If the attack strikes a foe who is suffering a condition, you gain 3...13...15 Energy.',
+'desc'=>'Your animal companion attempts a Scavenger Strike that deals +10..25 damage. If the attack strikes a foe who is suffering a condition, you gain 3..15 Energy.',
 'name_id'=>'scavenger strike',
 ),
 1468=>
@@ -5477,7 +5519,7 @@ array (
 'recharge'=>10,
 'pve_only'=>0,
 'elite'=>1,
-'desc'=>'Your animal companion instantly moves to your target and causes Bleeding for 5...13...15 seconds with its next attack. The next time you hit with an attack, target foe is Crippled for 5...13...15 seconds.', 
+'desc'=>'Your animal companion instantly moves to your target and causes Bleeding for 5..15 seconds with its next attack. The next time you hit with an attack, target foe is Crippled for 5..15 seconds.', 
 'name_id'=>'strike as one',
 ),
 468=>
@@ -5687,7 +5729,7 @@ array (
 'recharge'=>12,
 'pve_only'=>0,
 'elite'=>1,
-'desc'=>'For 1...7...8 seconds, you move 33% faster and have a 75% chance to block attacks. Escape ends if you make a melee attack.',
+'desc'=>'For 1..8 seconds, you move 33% faster and have a 75% chance to block attacks. Escape ends if you make a melee attack.',
 'name_id'=>'escape (pvp)',
 ),
 2145=>
@@ -5750,7 +5792,7 @@ array (
 'recharge'=>20,
 'pve_only'=>0,
 'elite'=>1,
-'desc'=>'For 1...16...20 seconds, you attack 15% faster and your Marksmanship attribute is increased by 1.',
+'desc'=>'For 1..20 seconds, you attack 15% faster and your Marksmanship attribute is increased by 1.',
 'name_id'=>'experts dexterity (pvp)',
 ),
 1199=>
@@ -5773,6 +5815,27 @@ array (
 'elite'=>1,
 'desc'=>'For 10..35 seconds, your arrows strike for +5..20 damage if they hit and cause Bleeding for 10..20 seconds if they are Blocked.',
 'name_id'=>'glass arrows',
+),
+91199=>
+array (
+'name'=>'Glass Arrows (PvP)',
+'chapter'=>2,
+'profession'=>'Ranger',
+'prof'=>'R',
+'attribute'=>'Expertise',
+'attr'=>'exp',
+'type'=>'Preparation',
+'ty'=>'pr',
+'energy'=>5,
+'adrenaline'=>0,
+'eregen'=>0,
+'sacrifice'=>0,
+'casting'=>2,
+'recharge'=>12,
+'pve_only'=>0,
+'elite'=>1,
+'desc'=>'For 10..35 seconds, your arrows strike for +5..12 damage if they hit and cause Bleeding for 10..20 seconds if they are Blocked.',
+'name_id'=>'glass arrows (pvp)',
 ),
 1730=>
 array (
@@ -5815,6 +5878,27 @@ array (
 'elite'=>0,
 'desc'=>'For 5..11 seconds, you have a 75% chance to block melee and projectile attacks, and you attack 33% faster.',
 'name_id'=>'lightning reflexes',
+),
+90453=>
+array (
+'name'=>'Lightning Reflexes (PvP)',
+'chapter'=>0,
+'profession'=>'Ranger',
+'prof'=>'R',
+'attribute'=>'Expertise',
+'attr'=>'exp',
+'type'=>'Stance',
+'ty'=>'st',
+'energy'=>10,
+'adrenaline'=>0,
+'eregen'=>0,
+'sacrifice'=>0,
+'casting'=>0,
+'recharge'=>45,
+'pve_only'=>0,
+'elite'=>0,
+'desc'=>'For 5..11 seconds, you have a 75% chance to block melee and projectile attacks, and you attack 33% faster.',
+'name_id'=>'lightning reflexes (pvp)',
 ),
 430=>
 array (
@@ -6191,7 +6275,7 @@ array (
 'recharge'=>2,
 'pve_only'=>0,
 'elite'=>1,
-'desc'=>'If Crippling Shot hits, your target becomes Crippled for 1..8 seconds. This attack cannot be blocked.',
+'desc'=>'This arrow moves twice as fast. If Crippling Shot hits, your target becomes Crippled for 1..8 seconds. This attack cannot be blocked.',
 'name_id'=>'crippling shot',
 ),
 1469=>
@@ -6380,7 +6464,7 @@ array (
 'recharge'=>10,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'If this attack hits, your target bleeds for 3...21...25 seconds.',
+'desc'=>'If this attack hits, your target bleeds for 3..25 seconds.',
 'name_id'=>'hunters shot',
 ),
 1720=>
@@ -6404,6 +6488,27 @@ array (
 'desc'=>'If this attack hits, you strike for +5..20 damage. If you land a critical hit, you deal an additional +5..25 damage.',
 'name_id'=>'keen arrow',
 ),
+91720=>
+array (
+'name'=>'Keen Arrow (PvP)',
+'chapter'=>3,
+'profession'=>'Ranger',
+'prof'=>'R',
+'attribute'=>'Marksmanship',
+'attr'=>'mar',
+'type'=>'Bow Attack',
+'ty'=>'bo',
+'energy'=>5,
+'adrenaline'=>0,
+'eregen'=>0,
+'sacrifice'=>0,
+'casting'=>0,
+'recharge'=>12,
+'pve_only'=>0,
+'elite'=>0,
+'desc'=>'If this attack hits, you strike for +1..5 damage. If you land a critical hit, you deal an additional +5..30 damage.',
+'name_id'=>'keen arrow (pvp)',
+),
 908=>
 array (
 'name'=>'Marauder\'s Shot',
@@ -6422,7 +6527,7 @@ array (
 'recharge'=>6,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'If Marauder\'s Shot hits, you strike for +10..35 damage and all your non-attack skills are disabled for 5 seconds.',
+'desc'=>'If Marauder\'s Shot hits, you strike for +10..35 damage and all your non-attack skills are disabled for 10 seconds.',
 'name_id'=>'marauders shot',
 ),
 853=>
@@ -6460,11 +6565,11 @@ array (
 'adrenaline'=>0,
 'eregen'=>0,
 'sacrifice'=>0,
-'casting'=>1,
+'casting'=>0.75,
 'recharge'=>4,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'Needling Shot strikes for only 10..30 damage and moves faster than normal. If Needling Shot strikes a foe below 50% Health, Needling Shot recharges instantly.',
+'desc'=>'Needling Shot strikes for only 10..30 damage and moves faster than normal. If Needling Shot strikes a foe below 50% Health, Needling Shot recharges instantly. Your other attack skills are disabled for 2 seconds.',
 'name_id'=>'needling shot',
 ),
 398=>
@@ -6481,11 +6586,11 @@ array (
 'adrenaline'=>0,
 'eregen'=>0,
 'sacrifice'=>0,
-'casting'=>1,
+'casting'=>0.75,
 'recharge'=>4,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'If Penetrating Attack hits, you strike for +5...21...25 damage and this attack has 10% armor penetration.',
+'desc'=>'If Penetrating Attack hits, you strike for +5..25 damage and this attack has 10% armor penetration.',
 'name_id'=>'penetrating attack',
 ),
 90398=>
@@ -6506,7 +6611,7 @@ array (
 'recharge'=>4,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'If Penetrating Attack hits, you strike for +3...9...10 damage and this attack has 10% armor penetration.',
+'desc'=>'If Penetrating Attack hits, you strike for +3..10 damage and this attack has 10% armor penetration.',
 'name_id'=>'penetrating attack (pvp)',
 ),
 392=>
@@ -6544,11 +6649,11 @@ array (
 'adrenaline'=>0,
 'eregen'=>0,
 'sacrifice'=>0,
-'casting'=>1,
-'recharge'=>6,
+'casting'=>0,
+'recharge'=>3,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'If Power Shot hits, you strike for +5..20 damage.',
+'desc'=>'If Power Shot hits, target foe takes 25..50 damage.',
 'name_id'=>'power shot',
 ),
 400=>
@@ -6569,7 +6674,7 @@ array (
 'recharge'=>6,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'If Precision Shot hits, you strike for +10..25 damage. Precision Shot cannot be blocked. This action is easily interrupted.',
+'desc'=>'If Precision Shot hits, you strike for +3..10 damage. Precision Shot cannot be blocked. This action is easily interrupted.',
 'name_id'=>'precision shot',
 ),
 1465=>
@@ -6653,7 +6758,7 @@ array (
 'recharge'=>12,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'For 24 seconds, your arrows move twice as fast and deal 3...9...10 extra damage.',
+'desc'=>'For 24 seconds, your arrows move twice as fast and deal 3.10 extra damage.',
 'name_id'=>'read the wind',
 ),
 90432=>
@@ -6776,10 +6881,10 @@ array (
 'eregen'=>0,
 'sacrifice'=>0,
 'casting'=>0,
-'recharge'=>8,
+'recharge'=>15,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'If this attack hits, target foe takes +5...17...20 damage. If that foe is not using a Skill, Sloth Hunter\'s Shot does an additional +5...21...25 damage.',
+'desc'=>'If this attack hits, target foe takes +5..20 damage. If that foe is not using a Skill, Sloth Hunter\'s Shot does an additional +5..15 damage.',
 'name_id'=>'sloth hunters shot (pvp)',
 ),
 852=>
@@ -6817,7 +6922,7 @@ array (
 'adrenaline'=>0,
 'eregen'=>0,
 'sacrifice'=>0,
-'casting'=>1,
+'casting'=>0.75,
 'recharge'=>3,
 'pve_only'=>0,
 'elite'=>0,
@@ -6842,7 +6947,7 @@ array (
 'recharge'=>4,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'If Sundering Attack hits, you strike for +3...9...10 damage and this attack has 10% armor penetration.',
+'desc'=>'If Sundering Attack hits, you strike for +3..10 damage and this attack has 10% armor penetration.',
 'name_id'=>'sundering attack (pvp)',
 ),
 2144=>
@@ -6884,7 +6989,7 @@ array (
 'recharge'=>20,
 'pve_only'=>1,
 'elite'=>0,
-'desc'=>'For 18...25 seconds, you and your pet attack 25% faster and have 1...3 Health regeneration.',
+'desc'=>'For 18..25 seconds, you and your pet attack 25% faster and have 1..3 Health regeneration.',
 'name_id'=>'never rampage alone',
 ),
 435=>
@@ -7871,7 +7976,7 @@ array (
 'recharge'=>30,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'Create a level 1..12 Spirit. This Spirit causes 3..10 Health loss each second to foes within earshot. This Spirit loses 3..10 Health for each foe hurt in this way. This Spirit dies after 30..90 seconds.',
+'desc'=>'Create a level 1..8 Spirit. This Spirit causes 3..10 Health loss each second to foes within earshot. This Spirit loses 3..10 Health for each foe hurt in this way. This Spirit dies after 30..90 seconds.',
 'name_id'=>'agony (pvp)',
 ),
 2205=>
@@ -7913,7 +8018,7 @@ array (
 'recharge'=>8,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'For 1 second, nothing happens. When this skill ends, all foes adjacent to target ally are struck for 5...89...110 lightning damage.',
+'desc'=>'For 1 second, nothing happens. When this skill ends, all foes adjacent to target ally are struck for 5..110 lightning damage.',
 'name_id'=>'ancestors rage',
 ),
 91246=>
@@ -8081,7 +8186,7 @@ array (
 'recharge'=>15,
 'pve_only'=>1,
 'elite'=>0,
-'desc'=>'Create a level 1..10 Spirit that dies after 30 seconds. When this Spirit dies, all foes in the area take 1..14 damage for each second the Spirit was alive.',
+'desc'=>'Create a level 1..14 Spirit that dies after 30 seconds. When this Spirit dies, all foes in the area take 1..14 damage for each second the Spirit was alive.',
 'name_id'=>'destruction',
 ),
 90920=>
@@ -8501,7 +8606,7 @@ array (
 'recharge'=>8,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'For 20 seconds, target ally has a Splinter Weapon. Target ally\'s next 1...4...5 attacks deal 5...25...30 damage to up to 3 adjacent foes.',
+'desc'=>'For 20 seconds, target ally has a Splinter Weapon. Target ally\'s next 1..5 attacks deal 5..30 damage to up to 3 adjacent foes.',
 'name_id'=>'splinter weapon (pvp)',
 ),
 794=>
@@ -8648,7 +8753,7 @@ array (
 'recharge'=>45,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'Create a level 1..11 Spirit. This Spirit\'s attacks deal 5..20 damage and deal double damage to Hexed foes. This Spirit dies after 15..45 seconds.',
+'desc'=>'Create a level 1..7 Spirit. This Spirit\'s attacks deal 5..20 damage and deal double damage to Hexed foes. This Spirit dies after 15..45 seconds.',
 'name_id'=>'anguish (pvp)',
 ),
 1223=>
@@ -8690,7 +8795,7 @@ array (
 'recharge'=>20,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'For 10...30...35 seconds, your spirits within earshot take 50% less damage and are immune to critical attacks.',
+'desc'=>'For 10..35 seconds, your spirits within earshot take 50% less damage and are immune to critical attacks.',
 'name_id'=>'armor of unfeeling',
 ),
 91232=>
@@ -8711,7 +8816,7 @@ array (
 'recharge'=>20,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'For 10...30...35 seconds, you have 10 base damage reduction while casting Binding Rituals.',
+'desc'=>'For 10..35 seconds, you have 10 base damage reduction while casting Binding Rituals.',
 'name_id'=>'armor of unfeeling (pvp)',
 ),
 1236=>
@@ -8833,6 +8938,27 @@ array (
 'adrenaline'=>0,
 'eregen'=>0,
 'sacrifice'=>0,
+'casting'=>0.75,
+'recharge'=>45,
+'pve_only'=>0,
+'elite'=>0,
+'desc'=>'Create a level 1..14 Spirit. All non-Spirit allies within its range have a 75% chance to block incoming attacks. Every time an attack is blocked in this way, this Spirit takes 60 damage. This Spirit dies after 30..60 seconds.',
+'name_id'=>'displacement',
+),
+91249=>
+array (
+'name'=>'Displacement',
+'chapter'=>2,
+'profession'=>'Ritualist',
+'prof'=>'Rt',
+'attribute'=>'Communing',
+'attr'=>'com',
+'type'=>'Binding Ritual',
+'ty'=>'bi',
+'energy'=>15,
+'adrenaline'=>0,
+'eregen'=>0,
+'sacrifice'=>0,
 'casting'=>3,
 'recharge'=>45,
 'pve_only'=>0,
@@ -8879,7 +9005,7 @@ array (
 'recharge'=>45,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'Create a level 1..8 Spirit. This Spirit deals 5..20 damage and anyone struck by its attack is interrupted. This Spirit dies after 10..25 seconds.',
+'desc'=>'Create a level 1..12 Spirit. This Spirit deals 5..20 damage and anyone struck by its attack is interrupted. This Spirit dies after 10..25 seconds.',
 'name_id'=>'dissonance (pvp)',
 ),
 1235=>
@@ -9029,7 +9155,7 @@ array (
 'desc'=>'Create a level 1..12 Spirit. This Spirit\'s attacks deal 5..30 damage. This Spirit dies after 30..150 seconds.',
 'name_id'=>'pain',
 ),
-91247=>
+1247=>
 array (
 'name'=>'Pain (PvP)',
 'chapter'=>2,
@@ -9047,7 +9173,7 @@ array (
 'recharge'=>30,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'Create a level 1...7...8 Spirit. This Spirit\'s attacks deal 5...25...30 damage. This Spirit dies after 30...126...150 seconds.',
+'desc'=>'Create a level 1..8 Spirit. This Spirit\'s attacks deal 5..30 damage. This Spirit dies after 30..150 seconds.',
 'name_id'=>'pain (pvp)',
 ),
 963=>
@@ -9236,7 +9362,7 @@ array (
 'recharge'=>15,
 'pve_only'=>0,
 'elite'=>1,
-'desc'=>'Target allied Summoned creature\'s attacks deal 5...29...35 more damage. After 10 seconds, that creature is destroyed.',
+'desc'=>'Target allied Summoned creature\'s attacks deal 5..35 more damage. After 10 seconds, that creature is destroyed.',
 'name_id'=>'signet of ghostly might (pvp)',
 ),
 1266=>
@@ -9320,7 +9446,7 @@ array (
 'recharge'=>45,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'Create a level 1..12 Spirit. Whenever a non-Spirit ally in its range takes damage, that damage is reduced by 15 and the Spirit takes 15 damage. This Spirit dies after 30..60 seconds.',
+'desc'=>'Create a level 1..12 Spirit. Whenever a non-Spirit ally in its range takes damage or life steal, it is reduced by 15 and the Spirit takes 15 damage. This Spirit dies after 30..60 seconds.',
 'name_id'=>'union',
 ),
 90911=>
@@ -9341,7 +9467,7 @@ array (
 'recharge'=>45,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'Create a level 1..8 Spirit. Whenever a non-Spirit ally in its range takes damage, that damage is reduced by 15 and the Spirit takes 15 damage. This Spirit dies after 30..60 seconds.',
+'desc'=>'Create a level 1..8 Spirit. Whenever a non-Spirit ally in its range takes damage or life steal, it is reduced by 15 and the Spirit takes 15 damage. This Spirit dies after 30..60 seconds.',
 'name_id'=>'union (pvp)',
 ),
 1267=>
@@ -9446,7 +9572,7 @@ array (
 'recharge'=>3,
 'pve_only'=>0,
 'elite'=>1,
-'desc'=>'For 8 seconds, the next time target ally takes damage from a foe that damage is limited to 5% of that ally\'s max Health and that ally steals up to 20...68...80 Health from that foe.',
+'desc'=>'For 8 seconds, the next time target ally takes damage from a foe that damage is limited to 5% of that ally\'s max Health and that ally steals up to 20..80 Health from that foe.',
 'name_id'=>'xinraes weapon',
 ),
 2100=>
@@ -9741,7 +9867,7 @@ array (
 'recharge'=>25,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'Hold Kaolai\'s ashes for up to 15...51...60 seconds. While you hold his ashes, you gain 10 armor. When you drop his ashes, all party members are healed for 10...70...85 Health',
+'desc'=>'Hold Kaolai\'s ashes for up to 15..60 seconds. While you hold his ashes, you gain 10 armor. When you drop his ashes, all party members are healed for 10..85 Health',
 'name_id'=>'protective was kaolai',
 ),
 2072=>
@@ -9826,7 +9952,7 @@ array (
 'recharge'=>45,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'Create a level 1..10 Spirit. Non-Spirit allies within its range gain +1..3 Health regeneration. This Spirit dies after 15..45 seconds.',
+'desc'=>'Create a level 1..14 Spirit. Non-Spirit allies within its range gain +1..3 Health regeneration. This Spirit dies after 15..45 seconds.',
 'name_id'=>'recuperation',
 ),
 90981=>
@@ -9847,7 +9973,7 @@ array (
 'recharge'=>45,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'Create a level 1..10 Spirit. Non-Spirit allies within its range gain +1..3 Health regeneration. This Spirit dies after 15..45 seconds.',
+'desc'=>'Create a level 1..10 Spirit. Non-Spirit allies within its range gain +1..3 Health regeneration while under 75% Health. This Spirit dies after 15..45 seconds.',
 'name_id'=>'recuperation (pvp)',
 ),
 2204=>
@@ -9889,7 +10015,7 @@ array (
 'recharge'=>30,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'Create a level 1..20 Spirit. This Spirit heals all party members within earshot for 3..10 Health each second. This Spirit loses 3..10 Health for each party member healed in this way. This Spirit dies after 30..90 seconds.',
+'desc'=>'Create a level 1..16 Spirit. This Spirit heals all party members within earshot for 3..10 Health each second. This Spirit loses 3..10 Health for each party member healed in this way. This Spirit dies after 30..90 seconds.',
 'name_id'=>'rejuvenation (pvp)',
 ),
 1221=>
@@ -10099,7 +10225,7 @@ array (
 'recharge'=>3,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'For 8 seconds, the next time target ally takes damage from a foe, that ally steals up to 15..60 Health from that foe.',
+'desc'=>'For 8 seconds, the next time target ally takes damage or life steal from a foe, that ally steals up to 15..60 Health from that foe.',
 'name_id'=>'vengeful weapon',
 ),
 1731=>
@@ -10141,7 +10267,7 @@ array (
 'recharge'=>3,
 'pve_only'=>0,
 'elite'=>1,
-'desc'=>'For 8 seconds, the next time target ally takes damage from a foe, that ally steals up to 15..75 Health from that foe and loses 1 Condition.',
+'desc'=>'For 8 seconds, the next time target ally takes damage or life steal from a foe, that ally steals up to 15..75 Health from that foe and loses 1 Condition.',
 'name_id'=>'weapon of remedy',
 ),
 983=>
@@ -10162,7 +10288,7 @@ array (
 'recharge'=>20,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'For 3...7...8 seconds, target ally has a Weapon of Shadow. Whenever that ally is struck by an attack, that ally\'s attacker becomes Blinded for 5 seconds.',
+'desc'=>'For 3..8 seconds, target ally has a Weapon of Shadow. Whenever that ally is struck by an attack, that ally\'s attacker becomes Blinded for 5 seconds.',
 'name_id'=>'weapon of shadow',
 ),
 793=>
@@ -10180,10 +10306,10 @@ array (
 'eregen'=>0,
 'sacrifice'=>0,
 'casting'=>1,
-'recharge'=>8,
+'recharge'=>5,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'For 3..8 seconds, target ally has a Weapon of Warding, granting that ally +2..4 Health regeneration and a 50% chance to block. Weapon of Warding ends if that ally attacks.',
+'desc'=>'For 3..8 seconds, target ally has a Weapon of Warding, granting that ally +2..4 Health regeneration and a 50% chance to block.',
 'name_id'=>'weapon of warding',
 ),
 90793=>
@@ -10351,7 +10477,7 @@ array (
 'recharge'=>30,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'Create a level 1..10 Spirit. All allies within its range holding an item gain 15..45 maximum Health and 10 maximum Energy. This Spirit dies after 15..60 seconds.',
+'desc'=>'Create a level 1..14 Spirit. All allies within its range holding an item gain 15..45 maximum Health and 10 maximum Energy. This Spirit dies after 15..60 seconds.',
 'name_id'=>'empowerment (pvp)',
 ),
 2016=>
@@ -10519,7 +10645,7 @@ array (
 'recharge'=>30,
 'pve_only'=>0,
 'elite'=>1,
-'desc'=>'For 30 seconds, your Rituals recharge 15...51...60% faster.',
+'desc'=>'For 30 seconds, your Rituals recharge 15..60% faster.',
 'name_id'=>'ritual lord (pvp)',
 ),
 917=>
@@ -10813,7 +10939,7 @@ array (
 'recharge'=>12,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'Resurrect target party member with your current Health and 15...83...100% Energy. The next time that ally dies within 120 seconds, so do you.',
+'desc'=>'Resurrect target party member with your current Health and 15..100% Energy. The next time that ally dies within 120 seconds, so do you.',
 'name_id'=>'death pact signet (pvp)',
 ),
 1224=>
@@ -12031,7 +12157,7 @@ array (
 'recharge'=>20,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'Interrupt target foe\'s action. If that action was an attack, all of that foe\'s attack Skills are disabled for 0..2..3 seconds.',
+'desc'=>'Interrupt target foe\'s action. If that action was an attack, all of that foe\'s attack Skills are disabled for 0..3 seconds.',
 'name_id'=>'disarm',
 ),
 361=>
@@ -12504,8 +12630,8 @@ array (
 'prof'=>'W',
 'attribute'=>'Strength',
 'attr'=>'str',
-'type'=>'Stance',
-'ty'=>'st',
+'type'=>'Skill',
+'ty'=>'sk',
 'energy'=>5,
 'adrenaline'=>0,
 'eregen'=>0,
@@ -12535,7 +12661,7 @@ array (
 'recharge'=>30,
 'pve_only'=>0,
 'elite'=>1,
-'desc'=>'For 5...29...35 seconds, you gain 3 Energy each time you hit with a melee attack. Warrior\'s Endurance cannot raise your Energy above 10...22...25.',
+'desc'=>'For 5..35 seconds, you gain 3 Energy each time you hit with a melee attack. Warrior\'s Endurance cannot raise your Energy above 10..25.',
 'name_id'=>'warriors endurance (pvp)',
 ),
 2107=>
@@ -12714,8 +12840,8 @@ array (
 'prof'=>'W',
 'attribute'=>'Swordsmanship',
 'attr'=>'swo',
-'type'=>'Sword Attack',
-'ty'=>'sw',
+'type'=>'Skill',
+'ty'=>'sk',
 'energy'=>5,
 'adrenaline'=>0,
 'eregen'=>0,
@@ -12976,7 +13102,7 @@ array (
 'recharge'=>20,
 'pve_only'=>0,
 'elite'=>1,
-'desc'=>'For 5...11...13 seconds, all allies within earshot move 33% faster.',
+'desc'=>'For 5..13 seconds, all allies within earshot move 33% faster.',
 'name_id'=>'charge',
 ),
 366=>
@@ -14593,7 +14719,7 @@ array (
 'recharge'=>15,
 'pve_only'=>1,
 'elite'=>0,
-'desc'=>'For 14...20 seconds, target foe and all adjacent foes move and attack 23...40% slower.',
+'desc'=>'For 14..20 seconds, target foe and all adjacent foes move and attack 23..40% slower.',
 'name_id'=>'tryptophan signet',
 ),
 2421=>
@@ -14724,7 +14850,7 @@ array (
 ),
 2355=>
 array (
-'name'=>'"I Am The Strongest!"',
+'name'=>'"I Am the Strongest!"',
 'chapter'=>4,
 'profession'=>'No Profession',
 'prof'=>'?',
@@ -15222,7 +15348,7 @@ array (
 'recharge'=>30,
 'pve_only'=>1,
 'elite'=>0,
-'desc'=>'You are Blinded for 5 seconds. For 10 seconds, you gain +7..9..10 Health regeneration and +40 armor.',
+'desc'=>'You are Blinded for 5 seconds. For 10 seconds, you gain +7..10 Health regeneration and +40 armor.',
 'name_id'=>'shadow sanctuary (luxon)',
 ),
 1955=>
