@@ -457,7 +457,7 @@ class WikiFactoryLoader {
 					$database = strtolower( $this->mCityDB );
 					$redirect = sprintf(
 						"http://%s/wiki/Special:CloseWiki/information/%s",
-						($wgDevelEnvironment) ? "www.awc.wikia-inc.com" : "www.wikia.com",
+						($wgDevelEnvironment) ? "www.awc.wikia-inc.com" : "community.wikia.com",
 						$database
 					);
 				}
