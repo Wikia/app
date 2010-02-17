@@ -11,7 +11,10 @@ class SolrSearch extends SearchEngine implements SearchErrorReporting {
 
 	public function __construct() {
 		global $wgRequest, $wgEnableCrossWikiaSearch;
-		$this->crossWikiSearch = $wgRequest->getCheck('thisWikiOnly') ? false : $wgEnableCrossWikiaSearch;
+
+		$thisWikiOnly = $wgRequest->getVal('thisWikiOnly');
+		$this->crossWikiSearch = empty($thisWikiOnly) ? $wgEnableCrossWikiaSearch : false;
+
 		wfLoadExtensionMessages( 'WikiaSearch' );
 	}
 
