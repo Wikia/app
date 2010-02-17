@@ -9,7 +9,7 @@ $messages['en'] = array(
         'newsite-error-invalid' => 'A page about $1 cannot be created.',
         'newsite-error-notfound' => 'Website $1 was not found.',
         'newsite-error-exists' => 'A page about <a href="$2">$1</a> already exists.',
-        'newsite-error-nocontact' => 'Could not reach website $1.',
+        'newsite-error-nocontact' => 'Could not reach website $1. Please try again later.',
         'newsite-error-nowikitext' => 'Could not fetch content for website $1.',
         'newsite-edit-comment' => 'new website',
         'newsite-article-created' => 'A page about $1 has been created.',
