@@ -304,7 +304,7 @@ class Title {
 	public static function newFromRedirect( $text ) {
 		return self::newFromRedirectInternal( $text );
 	}
-	
+
 	/**
 	 * Extract a redirect destination from a string and return the
 	 * Title, or null if the text doesn't contain a valid redirect
@@ -318,7 +318,7 @@ class Title {
 		$titles = self::newFromRedirectArray( $text );
 		return $titles ? array_pop( $titles ) : null;
 	}
-	
+
 	/**
 	 * Extract a redirect destination from a string and return an
 	 * array of Titles, or null if the text doesn't contain a valid redirect
@@ -357,7 +357,7 @@ class Title {
 		}
 		return $titles;
 	}
-	
+
 	/**
 	 * Really extract the redirect destination
 	 * Do not call this function directly, use one of the newFromRedirect* functions above
@@ -408,7 +408,7 @@ class Title {
 
 		$s = $dbr->selectRow( 'page',
 			array( 'page_namespace','page_title' ),
-			array( 'page_id' => $id ), 
+			array( 'page_id' => $id ),
 			__METHOD__ );
 		if ( $s === false ) { return NULL; }
 
@@ -475,7 +475,7 @@ class Title {
 	/**
 	 * Returns the URL associated with an interwiki prefix
 	 * @param $key \type{\string} the interwiki prefix (e.g. "MeatBall")
-	 * @return \type{\string} the associated URL, containing "$1", 
+	 * @return \type{\string} the associated URL, containing "$1",
 	 * 	which should be replaced by an article title
 	 * @static (arguably)
 	 * @deprecated See Interwiki class
@@ -508,7 +508,7 @@ class Title {
 	public function isTrans() {
 		if ($this->mInterwiki == '')
 			return false;
-		
+
 		return Interwiki::fetch( $this->mInterwiki )->isTranscludable();
 	}
 
@@ -1131,15 +1131,15 @@ class Title {
 
 			$intended = $user->mBlock->mAddress;
 
-			$errors[] = array( ($block->mAuto ? 'autoblockedtext' : 'blockedtext'), $link, $reason, $ip, $name, 
+			$errors[] = array( ($block->mAuto ? 'autoblockedtext' : 'blockedtext'), $link, $reason, $ip, $name,
 				$blockid, $blockExpiry, $intended, $blockTimestamp );
 		}
-		
+
 		// Remove the errors being ignored.
-		
+
 		foreach( $errors as $index => $error ) {
 			$error_key = is_array($error) ? $error[0] : $error;
-			
+
 			if (in_array( $error_key, $ignoreErrors )) {
 				unset($errors[$index]);
 			}
@@ -1172,12 +1172,12 @@ class Title {
 				// Show user page-specific message only if the user can move other pages
 				$errors[] = array( 'cant-move-user-page' );
 			}
-			
+
 			// Check if user is allowed to move files if it's a file
 			if( $this->getNamespace() == NS_FILE && !$user->isAllowed( 'movefile' ) ) {
 				$errors[] = array( 'movenotallowedfile' );
 			}
-			
+
 			/* Wikia change begin - @author: uberfuzzy */
 			// Check if uploading disabled or not enabled (wikia #36880)
 			global $wgDisableUploads, $wgEnableUploads;
@@ -1185,7 +1185,7 @@ class Title {
 				$errors[] = array( 'movenotallowedfile' );
 			}
 			/* Wikia change end */
-			
+
 			if( !$user->isAllowed( 'move' ) ) {
 				// User can't move anything
 				$errors[] = $user->isAnon() ? array ( 'movenologintext' ) : array ('movenotallowed');
@@ -1267,7 +1267,7 @@ class Title {
 			wfProfileOut( __METHOD__ );
 			return $errors;
 		}
-		
+
 		# Only 'createaccount' and 'execute' can be performed on
 		# special pages, which don't actually exist in the DB.
 		$specialOKActions = array( 'createaccount', 'execute' );
@@ -1318,7 +1318,7 @@ class Title {
 			wfProfileOut( __METHOD__ );
 			return $errors;
 		}
-		
+
 		if( $doExpensiveQueries && !$this->isCssJsSubpage() ) {
 			# We /could/ use the protection level on the source page, but it's fairly ugly
 			#  as we have to establish a precedence hierarchy for pages included by multiple
@@ -1437,7 +1437,7 @@ class Title {
 		else {
 			$expiry_description .= ' (' . wfMsgForContent( 'protect-expiry-indefinite' ).')';
 		}
-	
+
 		# Update protection table
 		if ($create_perm != '' ) {
 			$dbw->replace( 'protected_titles', array(array('pt_namespace', 'pt_title')),
@@ -1470,7 +1470,7 @@ class Title {
 		$dbw = wfGetDB( DB_MASTER );
 
 		$dbw->delete( 'protected_titles',
-			array( 'pt_namespace' => $this->getNamespace(), 'pt_title' => $this->getDBkey() ), 
+			array( 'pt_namespace' => $this->getNamespace(), 'pt_title' => $this->getDBkey() ),
 			__METHOD__ );
 	}
 
@@ -1629,7 +1629,7 @@ class Title {
 			return $this->mHasSubpages = (bool)$subpages->count();
 		return $this->mHasSubpages = false;
 	}
-	
+
 	/**
 	 * Get all subpages of this page.
 	 * @param $limit Maximum number of subpages to fetch; -1 for no limit
@@ -1736,7 +1736,7 @@ class Title {
 	 * Cascading protection: Get the source of any cascading restrictions on this page.
 	 *
 	 * @param $get_pages \type{\bool} Whether or not to retrieve the actual pages that the restrictions have come from.
-	 * @return \type{\arrayof{mixed title array, restriction array}} Array of the Title objects of the pages from 
+	 * @return \type{\arrayof{mixed title array, restriction array}} Array of the Title objects of the pages from
 	 *         which cascading restrictions have come, false for none, or true if such restrictions exist, but $get_pages was not set.
 	 *         The restriction array is an array of each type, each of which contains an array of unique groups.
 	 */
@@ -1849,7 +1849,7 @@ class Title {
 		# Backwards-compatibility: also load the restrictions from the page record (old format).
 
 		if ( $oldFashionedRestrictions === NULL ) {
-			$oldFashionedRestrictions = $dbr->selectField( 'page', 'page_restrictions', 
+			$oldFashionedRestrictions = $dbr->selectField( 'page', 'page_restrictions',
 				array( 'page_id' => $this->getArticleId() ), __METHOD__ );
 		}
 
@@ -1946,6 +1946,9 @@ class Title {
 	 * Purge expired restrictions from the page_restrictions table
 	 */
 	static function purgeExpiredRestrictions() {
+		if( wfReadOnly() ) {
+			return;
+		}
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->delete( 'page_restrictions',
 			array( 'pr_expiry < ' . $dbw->addQuotes( $dbw->timestamp() ) ),
@@ -1973,7 +1976,7 @@ class Title {
 
 	/**
 	 * Get the expiry time for the restriction against a given action
-	 * @return 14-char timestamp, or 'infinity' if the page is protected forever 
+	 * @return 14-char timestamp, or 'infinity' if the page is protected forever
 	 * or not protected at all, or false if the action is not recognised.
 	 */
 	public function getRestrictionExpiry( $action ) {
@@ -1992,7 +1995,7 @@ class Title {
 			$n = 0;
 		} else {
 			$dbr = wfGetDB( DB_SLAVE );
-			$n = $dbr->selectField( 'archive', 'COUNT(*)', 
+			$n = $dbr->selectField( 'archive', 'COUNT(*)',
 				array( 'ar_namespace' => $this->getNamespace(), 'ar_title' => $this->getDBkey() ),
 				__METHOD__
 			);
@@ -2005,7 +2008,7 @@ class Title {
 		}
 		return (int)$n;
 	}
-	
+
 	/**
 	 * Is there a version of this page in the deletion archive?
 	 * @return bool
@@ -2135,8 +2138,8 @@ class Title {
 		}
 		$dbw = wfGetDB( DB_MASTER );
 		$success = $dbw->update( 'page',
-			array( 'page_touched' => $dbw->timestamp() ), 
-			$this->pageCond(), 
+			array( 'page_touched' => $dbw->timestamp() ),
+			$this->pageCond(),
 			__METHOD__
 		);
 		HTMLFileCache::clearFileCache( $this );
@@ -2384,7 +2387,7 @@ class Title {
 
 	/**
 	 * Set the fragment for this title. Removes the first character from the
-	 * specified fragment before setting, so it assumes you're passing it with 
+	 * specified fragment before setting, so it assumes you're passing it with
 	 * an initial "#".
 	 *
 	 * Deprecated for public use, use Title::makeTitle() with fragment parameter.
@@ -2496,8 +2499,8 @@ class Title {
 			),
 			__METHOD__, array(),
 			array(
-				'page' => array( 
-					'LEFT JOIN', 
+				'page' => array(
+					'LEFT JOIN',
 					array( 'pl_namespace=page_namespace', 'pl_title=page_title' )
 				)
 			)
@@ -2547,7 +2550,7 @@ class Title {
 				'maxage' => $wgSquidMaxage,
 			);
 			if( $this->getText() == 'Common.css' ) {
-				$urls[] = $this->getInternalURL( $query ); 
+				$urls[] = $this->getInternalURL( $query );
 			} else {
 				foreach( Skin::getSkinNames() as $skinkey => $skinname ) {
 					if( $this->getText() == ucfirst($skinkey).'.css' ) {
@@ -2606,7 +2609,7 @@ class Title {
 	public function isValidMoveOperation( &$nt, $auth = true, $reason = '' ) {
 		global $wgUser;
 
-		$errors = array();	
+		$errors = array();
 		if( !$nt ) {
 			// Normally we'd add this to $errors, but we'll get
 			// lots of syntax errors if $nt is not an object
@@ -2666,7 +2669,7 @@ class Title {
 			// This is kind of lame, won't display nice
 			$errors[] = array('spamprotectiontext');
 		}
-		
+
 		$err = null;
 		if( !wfRunHooks( 'AbortMove', array( $this, $nt, $wgUser, &$err, $reason ) ) ) {
 			$errors[] = array('hookaborted', $err);
@@ -2747,7 +2750,7 @@ class Title {
 		if( $protected ) {
 			# Protect the redirect title as the title used to be...
 			$dbw->insertSelect( 'page_restrictions', 'page_restrictions',
-				array( 
+				array(
 					'pr_page'    => $redirid,
 					'pr_type'    => 'pr_type',
 					'pr_level'   => 'pr_level',
@@ -2870,7 +2873,7 @@ class Title {
 		# Save a null revision in the page's history notifying of the move
 		$nullRevision = Revision::newNullRevision( $dbw, $oldid, $comment, true );
 		$nullRevId = $nullRevision->insertOn( $dbw );
-		
+
 		$article = new Article( $this );
 		wfRunHooks( 'NewRevisionFromEditComplete', array($article, $nullRevision, $latest, $wgUser) );
 
@@ -2899,7 +2902,7 @@ class Title {
 				'text'    => $redirectText ) );
 			$redirectRevision->insertOn( $dbw );
 			$redirectArticle->updateRevisionOn( $dbw, $redirectRevision, 0 );
-			
+
 			wfRunHooks( 'NewRevisionFromEditComplete', array($redirectArticle, $redirectRevision, false, $wgUser) );
 
 			# Now, we record the link from the redirect to the new title.
@@ -2939,7 +2942,7 @@ class Title {
 			$u = new SquidUpdate( $urls );
 			$u->doUpdate();
 		}
-		
+
 	}
 
 	/**
@@ -2962,14 +2965,14 @@ class Title {
 		$newid = $nt->getArticleID();
 		$oldid = $this->getArticleID();
 		$latest = $this->getLatestRevId();
-		
+
 		$dbw = wfGetDB( DB_MASTER );
 		$now = $dbw->timestamp();
 
 		# Save a null revision in the page's history notifying of the move
 		$nullRevision = Revision::newNullRevision( $dbw, $oldid, $comment, true );
 		$nullRevId = $nullRevision->insertOn( $dbw );
-		
+
 		$article = new Article( $this );
 		wfRunHooks( 'NewRevisionFromEditComplete', array($article, $nullRevision, $latest, $wgUser) );
 
@@ -2998,7 +3001,7 @@ class Title {
 				'text'    => $redirectText ) );
 			$redirectRevision->insertOn( $dbw );
 			$redirectArticle->updateRevisionOn( $dbw, $redirectRevision, 0 );
-			
+
 			wfRunHooks( 'NewRevisionFromEditComplete', array($redirectArticle, $redirectRevision, false, $wgUser) );
 
 			# Record the just-created redirect's linking to the page
@@ -3036,9 +3039,9 @@ class Title {
 		# Purge old title from squid
 		# The new title, and links to the new title, are purged in Article::onArticleCreate()
 		$this->purgeSquid();
-		
+
 	}
-	
+
 	/**
 	 * Move this page's subpages to be subpages of $nt
 	 * @param $nt Title Move target
@@ -3099,7 +3102,7 @@ class Title {
 		}
 		return $retval;
 	}
-	
+
 	/**
 	 * Checks if this page is just a one-rev redirect.
 	 * Adds lock, so don't use just for light purposes.
@@ -3129,7 +3132,7 @@ class Title {
 				'page_title' => $this->getDBkey(),
 				'page_id=rev_page',
 				'page_latest != rev_id'
-			), 
+			),
 			__METHOD__,
 			array( 'FOR UPDATE' )
 		);
@@ -3303,7 +3306,7 @@ class Title {
 			array( 'ORDER BY' => 'rev_id' )
 		);
 	}
-	
+
 	/**
 	 * Get the first revision of the page
 	 *
@@ -3325,7 +3328,7 @@ class Title {
 			return new Revision( $row );
 		}
 	}
-	
+
 	/**
 	 * Check if this is a new page
 	 *
@@ -3473,7 +3476,7 @@ class Title {
 	public function isKnown() {
 		return $this->exists() || $this->isAlwaysKnown();
 	}
-	
+
 	/**
 	* Is this in a namespace that allows actual pages?
 	*
@@ -3665,21 +3668,21 @@ class Title {
 	/**
 	 * Get all extant redirects to this Title
 	 *
-	 * @param $ns \twotypes{\int,\null} Single namespace to consider; 
+	 * @param $ns \twotypes{\int,\null} Single namespace to consider;
 	 *            NULL to consider all namespaces
 	 * @return \type{\arrayof{Title}} Redirects to this title
 	 */
 	public function getRedirectsHere( $ns = null ) {
 		$redirs = array();
-		
-		$dbr = wfGetDB( DB_SLAVE );	
+
+		$dbr = wfGetDB( DB_SLAVE );
 		$where = array(
 			'rd_namespace' => $this->getNamespace(),
 			'rd_title' => $this->getDBkey(),
 			'rd_from = page_id'
 		);
 		if ( !is_null($ns) ) $where['page_namespace'] = $ns;
-		
+
 		$res = $dbr->select(
 			array( 'redirect', 'page' ),
 			array( 'page_namespace', 'page_title' ),
@@ -3693,7 +3696,7 @@ class Title {
 		}
 		return $redirs;
 	}
-	
+
 	/**
 	 * Check if this Title is a valid redirect target
 	 *
@@ -3701,18 +3704,18 @@ class Title {
 	 */
 	public function isValidRedirectTarget() {
 		global $wgInvalidRedirectTargets;
-		
+
 		// invalid redirect targets are stored in a global array, but explicity disallow Userlogout here
 		if( $this->isSpecial( 'Userlogout' ) ) {
 			return false;
 		}
-		
+
 		foreach( $wgInvalidRedirectTargets as $target ) {
 			if( $this->isSpecial( $target ) ) {
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
 
