@@ -343,7 +343,6 @@ class CorporateBaseTemplate extends QuickTemplate {
 							<ul class="nav-sub-level">
 								<?php foreach ($value['sub'] as $key2 => $value2): ?>
 									<li<?php print ($key2 == 0) ? ' class="first"':'';?> <?php print ($key2 == (count($value['sub'])-1)) ? ' class="last"':'';?> >
-										<?php if (!empty($value2['favicon'])) { ?><img <?php echo ($value2['param'] == "no-icon" ? 'style="display: none"':''); ?> src="<?php print $value2['favicon'] ?>" alt=""><?php } ?>
 										<a id="nav_sub_link_<?php print $key + 1 ?>_<?php print $key2 + 1 ?>" class="nav-sub-link" href="<?php print $value2['href'] ?>">
 											<?php print $value2['title'] ?>
 										</a> 
