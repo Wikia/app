@@ -1,4 +1,5 @@
 <?php
+
 $wgExtensionFunctions[] = 'RelatedPages_Setup';
 
 function RelatedPages_Setup() {
@@ -7,11 +8,15 @@ function RelatedPages_Setup() {
 }
 
 function RelatedPages_GetInCategories($a, $categories, $b) {
-	if(count($categories) > 0) {
-		global $wgHooks;
-		$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'RelatedPages_Display';
-		Wikia::setVar('InCategories', array_keys($categories));
+	global $wgTitle, $wgContentNamespaces, $wgHooks;
+
+	if(!empty($wgTitle) && in_array($wgTitle->getNamespace(), $wgContentNamespaces)) {
+		if(count($categories) > 0) {
+			$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'RelatedPages_Display';
+			Wikia::setVar('InCategories', array_keys($categories));
+		}
 	}
+
 	return true;
 }
 
@@ -22,21 +27,12 @@ function RelatedPages_Compare($a, $b) {
 	return ($a > $b) ? -1 : 1;
 }
 
-function RelatedPages_Display( &$template, &$templateEngine ) {
-	global $wgUser, $wgArticle, $wgTitle, $wgRequest, $wgMemc;
-
-	if(!$wgUser->isAllowed('wikifactory')) {
-		return true;
-	}
+function RelatedPages_Display(&$template, &$templateEngine) {
+	global $wgUser, $wgRequest, $wgMemc, $wgContentNamespaces, $wgArticle;
 
 	if($wgRequest->getVal('action') == 'submit') {
 		return true;
 	}
-
-	if(empty($wgTitle) || $wgTitle->getNamespace() != NS_MAIN) {
-		return true;
-	}
-
 	$skin = $wgUser->getSkin();
 	if($skin && isset($skin->skinname) && $skin->skinname != 'monaco') {
 		return true;
@@ -48,15 +44,27 @@ function RelatedPages_Display( &$template, &$templateEngine ) {
 		if($categories) {
 			sort($categories);
 
-			$cacheKey = wfMemcKey(__CLASS__, join(':', $categories));
+			$cacheKey = wfMemcKey(__CLASS__, join(':', $categories), 1);
 
 			$out = $wgMemc->get($cacheKey);
 
 			if(!is_array($out)) {
-				$dbr = wfGetDB(DB_SLAVE);
+				if(count($wgContentNamespaces) > 0) {
+					$joinSql = ' JOIN page ON page_id = cl_from AND page_namespace';
+					if(count($wgContentNamespaces) == 1) {
+						$joinSql .= ' = ' . array_shift($wgContentNamespaces) . ' ';
+					} else {
+						$joinSql .= ' IN ('.join(',', $wgContentNamespaces).') ';
+					}
+				} else {
+					$joinSql = '';
+				}
+
+				$dbr = wfGetDB(DB_SLAVE, 'stats');
 				$out = array();
 				$results = array();
-				$query1 = 'SELECT /* RelatedPages Query 1 */ cl_from, COUNT(cl_to) AS count FROM categorylinks USE KEY(cl_from) WHERE cl_to IN ("'.join('","', $categories).'") GROUP BY 1';
+				$query1 = 'SELECT /* RelatedPages Query 1 */ cl_from, COUNT(cl_to) AS count FROM categorylinks USE KEY(cl_from)'.$joinSql.' WHERE cl_to IN ("'.join('","', $categories).'") GROUP BY 1';
+
 				if(count($categories) > 1) {
 					$query1 .= ' HAVING COUNT(cl_to) > 1';
 				} else {
@@ -69,13 +77,13 @@ function RelatedPages_Display( &$template, &$templateEngine ) {
 				if(count($categories) > 1) {
 					arsort($results);
 					uasort($results, 'RelatedPages_Compare');
-					$out = array_slice(array_keys($results), 0, 6);
+					$out = array_slice(array_keys($results), 0, 5);
 				} else {
-					$out = array_rand($results, 6);
+					$out = array_rand($results, 5);
 				}
-				if(count($categories) > 1 && count($out) < 6) {
+				if(count($categories) > 1 && count($out) < 5) {
 					$results = array();
-					$query2 = 'SELECT /* RelatedPages Query 2 */ cl_from FROM categorylinks USE KEY(cl_from) WHERE cl_to IN ("'.join('","', $categories).'") GROUP BY 1 LIMIT 100';
+					$query2 = 'SELECT /* RelatedPages Query 2 */ cl_from FROM categorylinks USE KEY(cl_from)'.$joinSql.' WHERE cl_to IN ("'.join('","', $categories).'") GROUP BY 1 LIMIT 100';
 					$res2 = $dbr->query($query2);
 					while($row2 = $dbr->fetchObject($res2)) {
 						if(!in_array($row2->cl_from, $out)) {
@@ -83,7 +91,7 @@ function RelatedPages_Display( &$template, &$templateEngine ) {
 						}
 					}
 					if(!empty($results)) {
-						$out = array_merge($out, array_rand(array_flip($results), 6 - count($out)));
+						$out = array_merge($out, array_rand(array_flip($results), 5 - count($out)));
 					}
 				}
 
@@ -91,22 +99,32 @@ function RelatedPages_Display( &$template, &$templateEngine ) {
 			}
 
 			if(count($out) > 0) {
-				$templateEngine->data['bodytext'] .= '<style>.RelatedPages li { font-weight: bold; float: left; background: transparent url("http://images.wikia.com/common/skins/common/bullet.gif") no-repeat 0px 50%; padding-left: 21px; margin-right: 16px; }</style>';
-				$templateEngine->data['bodytext'] .= '<div style="clear:both;"></div><div id="RelatedPages" class="widget" style="margin-top: 10px;"><div class="accent" style="padding: 6px; font-weight: bold;">Check out these related pages:</div><div style="padding: 10px;"><ul class="reset clearfix RelatedPages" style="margin: 0">';
+				$templateEngine->data['bodytext'] .= '<div style="clear:both;"></div><div id="RelatedPages" class="widget" style="margin-top: 10px;"><div class="accent" style="padding: 6px; font-weight: bold;">Check out these related pages:</div><div style="padding: 10px; text-align: center; line-height: 1.5em;">';
+
+				unset($out[array_search($wgArticle->getID(), $out)]);
+
 				$i = 0;
 				foreach($out as $item) {
-					if($item != $wgArticle->getID() && $i < 5) {
-						$title = Title::newFromId($item);
-						if(!empty($title) && $title->exists()) {
-							$templateEngine->data['bodytext'] .= '<li'.($i == 0 ? ' style="background: none; padding-left: 0;"' : '').'><a href="'.htmlspecialchars($title->getFullUrl()).'">'.htmlspecialchars($title->getPrefixedText()).'</a></li>';
-							$i++;
+					$title = Title::newFromId($item);
+					if(!empty($title) && $title->exists() && $i < 4) {
+
+						$templateEngine->data['bodytext'] .= '<a href="'.htmlspecialchars($title->getFullUrl()).'">'.htmlspecialchars($title->getPrefixedText()).'</a>';
+
+						if($i % 2 == 0) {
+							$templateEngine->data['bodytext'] .= '<img src="http://images.wikia.com/common/skins/common/bullet.gif" style="margin: 0 15px"/>';
 						}
+						if($i % 2 == 1 && $i < 3) {
+							$templateEngine->data['bodytext'] .= '<br />';
+						}
+
+						$i++;
 					}
 				}
-				$templateEngine->data['bodytext'] .= '</ul></div></div>';
+
+				$templateEngine->data['bodytext'] .= '</div></div>';
 			}
 		}
-	}
 
+	}
 	return true;
 }
