@@ -1,4 +1,5 @@
 == Changes since 201002.3 ==
+* rt#40649: Click-tracking on new Home Page. (Nef)
 * rt#38362: Closewiki needs to delete search index (eloy)
 * rt#36195: Automate table setup for wgEnableNewsiteExt. (Nef)
 * rt#40315: Fallback logo home link for zh- variants. (Nef) 
