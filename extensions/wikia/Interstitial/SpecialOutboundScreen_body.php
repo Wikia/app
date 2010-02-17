@@ -41,6 +41,15 @@ class Outbound extends UnlistedSpecialPage {
 			// render template
 			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
+			// Need to have the skinname correct before calling Athena.
+			$skin = $wgUser->getSkin();
+			$skinName = get_class($skin);
+
+			// this may not be set yet (and needs to be before setupUserCss in order for the right CSS$
+			if ($skin->getSkinName() == '') {
+				$skin->skinname = substr($skinName, 4);
+			}
+
 			$adSlots = array(
 			'INVISIBLE' => AdEngine::getInstance()->getAd('EXIT_STITIAL_INVISIBLE'),
 			'BOXAD_1' => AdEngine::getInstance()->getAd('EXIT_STITIAL_BOXAD_1'),
