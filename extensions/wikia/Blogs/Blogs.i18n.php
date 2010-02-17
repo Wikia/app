@@ -238,6 +238,7 @@ $messages['br'] = array(
 	'blog-header' => 'Pennadoù ar blog eus ar rummad "$1"',
 	'blog-emptyparam' => "Ne c'hell ket bezañ goullo anv an arventenn",
 	'blog-defaulttitle' => 'Blogoù',
+	'blog-continuereading' => "Kenderc'hel da lenn &raquo;",
 	'blog-olderposts' => "Pennadoù ar c'hoshañ",
 	'blog-nbrcomments' => '{{PLURAL:$1|Un evezhiadenn|$1 evezhiadenn}}',
 	'blog-nopostfound' => "N'eo bet kavet pennad ebet.",
@@ -248,6 +249,7 @@ $messages['br'] = array(
 	'blog-zero-comments' => 'Evezhiadenn ebet evit poent !',
 	'blog-comments' => 'Evezhiadennoù',
 	'blog-rc-comments' => 'Evezhiadennoù ar blog',
+	'blog-comments-new' => 'Evezhiadenn nevez er blog',
 	'blog-comments-save' => 'Enrollañ an evezhiadenn war ar blog',
 	'blog-comments-label' => 'Aotreañ an evezhiadennoù',
 	'blog-voting-label' => 'Aotreañ ar priziañ',
@@ -260,6 +262,8 @@ $messages['br'] = array(
 	'blog-comment-unhide' => 'diskouez',
 	'blog-comment-history' => 'istor',
 	'blog-comment-edit' => 'kemmañ',
+	'blog-comment-error' => "N'eus ket bet gellet enrollañ an evezhiadenn",
+	'blog-comment-cannot-add' => "Ne c'helloc'h ket ouzhpennañ un evezhiadenn d'ar blog",
 	'blog-avatar-talk' => 'kaozeadenn',
 	'blog-avatar-contrib' => 'Degasadennoù',
 	'blog-avatar-preferences-title' => 'Avatar',
@@ -267,10 +271,13 @@ $messages['br'] = array(
 	'blog-create-label' => 'Krouiñ ur pennad blog',
 	'blog-create-next-label' => 'Krouiñ ur pennad blog nevez',
 	'blog-refresh-label' => 'Freskaat',
+	'blog-widgets-label' => 'Taolenn-sur ar widgetoù',
+	'blog-listing-created' => 'Pajenn rollañ ar blogoù krouet',
 	'blog-userblog' => 'Blog $1',
 	'blog-fromsitename' => 'Diwar $1',
 	'blogs-reportproblem' => 'Menegiñ ur gudenn',
 	'blogs-comment-hidden' => 'Evezhiadenn kuzhet.',
+	'blogs-undeleted-comment' => 'Evezhiadenn ar pennad blog $1 adsavet',
 	'blog-desc' => 'Pennadoù ar blog',
 );
 
@@ -534,6 +541,7 @@ $messages['fa'] = array(
 );
 
 /** Finnish (Suomi)
+ * @author Centerlink
  * @author Crt
  */
 $messages['fi'] = array(
@@ -546,7 +554,7 @@ $messages['fi'] = array(
 	'create-blog-post-category-log' => 'Tehty luokaksi blogiartikkeleille',
 	'create-blog-post-recent-listing' => 'Tuoreimmat artikkelit',
 	'create-blog-post-recent-listing-title' => 'Tuoreimmat artikkelit',
-	'create-blog-post-recent-listing-log' => 'Created article for recent blog posts',
+	'create-blog-post-recent-listing-log' => 'Luotu artikkeli viimeisimmistä blogi-lähetyksistä',
 	'create-blog-post-title' => 'Luo uusi blogiartikkeli',
 	'create-blog-form-title' => 'Mikä on blogiartikkeli?',
 	'create-blog-form-post-text' => 'Blogiteksti',
@@ -602,11 +610,15 @@ Luo blogilistalle sivuja luokkiin, kuten "Barrack Obama", "Fan Fiction" tai voit
 	'blog-writeone' => 'Kirjoita yksi!',
 	'blog-empty-user-blog' => 'Tämä käyttäjä ei ole kirjoittanut yhtäään blogiartikkelia!',
 	'blog-last-edited' => '<strong>Viimeksi muokannut:</strong> $1',
+	'blog-added' => 'lisätty',
+	'blog-edited' => 'muokattu',
 	'blog-page' => 'Blogi',
 	'blog-zero-comments' => 'Ei kommentteja vielä!',
 	'blog-comment-post' => 'Lähetä kommentti',
 	'blog-comments' => 'Kommentit',
+	'blog-rc-comments' => 'Blogin kommentit',
 	'blog-comments-new' => 'Blogin uudet kommentit',
+	'blog-comments-save' => 'Tallenna komentti blogissa',
 	'blog-comments-label' => 'Kommentointi',
 	'blog-voting-label' => 'Arvostelu',
 	'blog-comments-info' => 'Tämä laatikko käyttää wikitext-tyylin syöttöä',
@@ -634,6 +646,7 @@ Luo blogilistalle sivuja luokkiin, kuten "Barrack Obama", "Fan Fiction" tai voit
 	'blog-refresh-label' => 'Päivitä',
 	'blog-widgets-label' => 'Vimpaimien hallinta',
 	'blog-listing-zero-other' => 'Tämä käyttäjä ei ole vielä kirjoittanut yhtään blogimerkintää!',
+	'blog-listing-created' => 'Blogi-luettelointisivu luotu',
 	'blog-userblog' => 'Käyttäjän $1 blogi',
 	'blog-fromsitename' => 'Tuotu $1',
 	'blogs-reportproblem' => 'Raportoi ongelmasta',
@@ -642,6 +655,9 @@ Luo blogilistalle sivuja luokkiin, kuten "Barrack Obama", "Fan Fiction" tai voit
 	'right-blog-comments-delete' => 'Oikeus poistaa kommentteja blogiartikkeleista',
 	'right-blog-articles-edit' => 'Oikeus muokata blogiartikkeleita',
 	'blogs-undeleted-comment' => 'Kommenttia ei poistettu blogisivulta $1',
+	'blogs-recent-url-text' => 'Uusimmat blogimerkinnät',
+	'blog-desc' => 'Blogi-artikkelit',
+	'blog-movepage-badtitle' => 'Virheellinen blogi-postitusotsikko',
 );
 
 /** French (Français)
@@ -713,6 +729,7 @@ Créez des pages de listage de blogs pour des catégories comme « Barrack Obama
 	'blog-empty-user-blog' => "Cet utilisateur n'a pas encore publié d'article de blog !",
 	'blog-last-edited' => '<strong>Dernière modification :</strong> $1',
 	'blog-added' => 'ajouté',
+	'blog-edited' => 'modifié',
 	'blog-page' => 'Blog',
 	'blog-zero-comments' => 'Encore aucun commentaire.',
 	'blog-comment-post' => 'Ajouter un commentaire',
@@ -758,6 +775,21 @@ Créez des pages de listage de blogs pour des catégories comme « Barrack Obama
 	'blogs-recent-url-text' => 'Posts de blog récents',
 	'blog-desc' => 'Articles de blog',
 	'blog-movepage-badtitle' => 'Titre du post du blog invalide.',
+);
+
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'create-blog-listing-preview' => 'Vista previa',
+	'create-blog-listing-matches-calculate' => 'Calcular',
+	'create-blog-listing-matches-recalculate' => 'Recalcular',
+	'create-blog-listing-sortby' => 'Ordenar por',
+	'create-blog-listing-sortby-date' => 'Máis recentes',
+	'create-blog-listing-sortby-author' => 'Autor',
+	'blog-defaulttitle' => 'Blogues',
+	'blog-page' => 'Blogue',
+	'blog-comment-delete' => 'borrar',
 );
 
 /** Hungarian (Magyar)
@@ -843,6 +875,7 @@ Tu pote crear listas de blogs pro categorias como "Barack Obama", "libros", o me
 	'blog-empty-user-blog' => 'Iste usator non ha ancora scribite alcun articulo de blog!',
 	'blog-last-edited' => '<strong>Ultime modification:</strong> $1',
 	'blog-added' => 'addite',
+	'blog-edited' => 'modificate',
 	'blog-page' => 'Blog',
 	'blog-zero-comments' => 'Ancora nulle commento!',
 	'blog-comment-post' => 'Adjunger commento',
@@ -1122,6 +1155,7 @@ $messages['mk'] = array(
 	'blog-empty-user-blog' => 'Овој корисник досега нема напишано ниеден блог-запис!',
 	'blog-last-edited' => '<strong>Последно уредено:</strong> $1',
 	'blog-added' => 'додадено',
+	'blog-edited' => 'уредено',
 	'blog-page' => 'Блог',
 	'blog-zero-comments' => 'Сè уште нема коментари!',
 	'blog-comment-post' => 'Објави коментар',
@@ -1239,6 +1273,7 @@ Gebruik alstublieft een van de beschikbare parameters: <code>$2</code>.',
 	'blog-empty-user-blog' => 'Deze gebruiker heeft nog geen blogberichten geschreven.',
 	'blog-last-edited' => '<strong>Laatste bewerking:<strong> $1',
 	'blog-added' => 'toegevoegd',
+	'blog-edited' => 'bewerkt',
 	'blog-page' => 'Blog',
 	'blog-zero-comments' => 'Nog geen opmerkingen.',
 	'blog-comment-post' => 'Opmerking plaatsen',
@@ -1581,6 +1616,7 @@ Crie uma lista de blogs para categorias como "Barrack Obama", "Humor" ou, até m
 
 /** Russian (Русский)
  * @author Lockal
+ * @author Александр Сигачёв
  */
 $messages['ru'] = array(
 	'createblogpage' => 'Создание блога',
@@ -1588,15 +1624,21 @@ $messages['ru'] = array(
 	'create-blog-spam' => 'Похоже на спам',
 	'create-blog-cant-edit' => 'Не удалось выполнить правку',
 	'create-blog-post-category' => 'Записи в блоге',
+	'create-blog-post-category-body' => 'Это автоматически созданный список заметок из блогов',
 	'create-blog-post-recent-listing' => 'Последние записи',
 	'create-blog-post-recent-listing-title' => 'Последние записи',
 	'create-blog-post-title' => 'Создание новой записи в блоге',
+	'create-blog-form-title' => 'Что такое блог?',
 	'create-blog-form-post-text' => 'Текст блога',
 	'create-blog-form-info' => 'Записи в блоге — отличный способ поделиться новостями, мнениями и творческой частью с сообществом.',
 	'create-blog-form-post-title' => 'Заголовок записи блога',
 	'create-blog-empty-title-error' => 'Заголовок обязателен',
 	'create-blog-empty-post-error' => 'Пустое тело записи',
 	'create-blog-invalid-title-error' => 'Неверный заголовок',
+	'create-listing-confirm-info' => 'Скопируйте и вставьте следующий код:',
+	'create-blog-no-login' => 'Без авторизации',
+	'create-blog-login-required' => 'Вы должны [{{fullurl:Special:Signup|$1}} представиться], чтобы иметь возможность создавать записи в блоге.',
+	'create-blog-categories-title' => 'Добавить эту запись в следующие категории (выберите)',
 	'create-blog-categories-textinput' => 'Добавить новую категорию',
 	'create-blog-categories-submit' => 'Отправить',
 	'create-blog-save' => 'Сохранить страницу',
@@ -1616,6 +1658,7 @@ $messages['ru'] = array(
 	'create-blog-listing-sortby-author' => 'автору',
 	'create-blog-listing-output-as-box' => 'Генерировать код для копирования и вставки',
 	'create-blog-listing-output-as-page' => 'Создать список на новой странице',
+	'blog-header' => 'Статьи блога в категории «$1»',
 	'blog-subheader' => 'В этой категории {{PLURAL:$1|$1 запись|$1 записи|$1 записей}}.',
 	'blog-emptyparam' => 'Название параметра не может быть пустым',
 	'blog-defaulttitle' => 'Блоги',

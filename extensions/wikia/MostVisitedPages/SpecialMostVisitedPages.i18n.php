@@ -89,6 +89,7 @@ $messages['gl'] = array(
 	'mostvisitedpages' => 'Páxinas máis visitadas',
 	'mostvisitedpagessearchtext' => 'Nome do artigo:',
 	'mostvisitedpagessearchbtn' => 'procurar',
+	'mostvisitedpageslatest' => 'nos últimos $1 minutos',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -155,6 +156,26 @@ $messages['nn'] = array(
 	'mostvisitedpages' => 'Mest vitja sider',
 	'mostvisitedpagessearchtext' => 'Artikkelnamn:',
 	'mostvisitedpagessearchbtn' => 'søk',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'mostvisitedpages' => 'Mest besøkte sider',
+	'mostvisitedpagessearchtext' => 'Artikkelens navn:',
+	'mostvisitedpagessearchbtn' => 'søk',
+	'mostvisitedpageslatest' => 'i de siste $1 minuttene',
+);
+
+/** Occitan (Occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'mostvisitedpages' => 'Paginas mai consultadas',
+	'mostvisitedpagessearchtext' => "Nom de l'article :",
+	'mostvisitedpagessearchbtn' => 'Recercar',
+	'mostvisitedpageslatest' => 'dins las $1 darrièras minutas',
 );
 
 /** Piedmontese (Piemontèis)

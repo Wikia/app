@@ -30,6 +30,14 @@ $messages['af'] = array(
 	'pollNoVote' => 'Stem asseblief hier onder.',
 );
 
+/** Arabic (العربية)
+ * @author OsamaK
+ */
+$messages['ar'] = array(
+	'pollVoteUpdate' => 'تم تحديث صوتك.',
+	'pollSubmitting' => 'من فضلك انتظر، يرسل صوتك.',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */

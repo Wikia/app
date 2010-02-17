@@ -329,9 +329,28 @@ $messages['ia'] = array(
 	'lookupcontribscontent' => 'contento',
 );
 
-/** Japanese (日本語) */
+/** Japanese (日本語)
+ * @author Tommy6
+ */
 $messages['ja'] = array(
-	'lookupcontribs' => '全体の投稿履歴を見る',
+	'lookupcontribs' => '全体の投稿記録を見る',
+	'lookupcontribstitle' => '全体の投稿履歴を見る',
+	'lookupcontribshelp' => 'このページでは、複数のウィキにおけるユーザーの投稿記録が閲覧できます。下にユーザー名を入力してください。',
+	'lookupcontribusernotspecify' => 'ユーザーが指定されていません',
+	'lookupcontribsselectuser' => 'ユーザー名を入力:',
+	'lookupcontribsselectmodenormal' => '最近の投稿記録',
+	'lookupcontribsselectmodefinal' => '最終投稿記録',
+	'lookupcontribsselectmodeall' => '全投稿記録',
+	'lookupcontribsgo' => '表示',
+	'lookupcontribslistwikiainfo' => '<b>$1</b> が記事の編集を行ったことのあるウィキ',
+	'lookupcontribsnoresultfound' => '見つかりませんでした',
+	'lookupcontribsdetails' => '詳細を見る:',
+	'lookupcontribscontribs' => '投稿記録',
+	'lookupcontribsnbrresult' => '表示件数:',
+	'lookupcontribsnext' => '次',
+	'lookupcontribsprevious' => '前',
+	'lookupcontribshist' => '履歴',
+	'lookupcontribsdiff' => '差分',
 );
 
 /** Macedonian (Македонски)
@@ -428,6 +447,33 @@ Controleer of u een tikfout hebt gemaakt in de gebruikersnaam.</p>',
 	'lookupcontribscontent' => 'inhoud',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'lookupcontribsselectwikis' => 'Velg wikier:',
+	'lookupcontribslistwikiainfo' => 'Liste over wikier der artikler ble redigert av <b>$1</b>',
+	'lookupcontribsnoresultfound' => 'Ingen resultat funnet!',
+	'lookupcontribsinvalidresults' => 'Ugyldige resultat!',
+	'lookupcontribswiki' => 'Wiki',
+	'lookupcontribswikidbname' => 'DB-navn',
+	'lookupcontribswikiurl' => 'URL',
+	'lookupcontribswikititle' => 'Tittel',
+	'lookupcontribscontribslink' => 'Bidragslenke',
+	'lookupcontribsdetails' => 'Se detaljer for:',
+	'lookupcontribscontribs' => 'bidrag',
+	'lookupcontribsnbrresult' => 'Antall resultat:',
+	'lookupcontribsnext' => 'neste',
+	'lookupcontribsprevious' => 'forrige',
+	'lookupcontribspageremoved' => 'Fjernet:',
+	'lookupcontribsrestore' => 'gjenopprett',
+	'lookupcontribslog' => 'logg',
+	'lookupcontribshist' => 'historikk',
+	'lookupcontribsdiff' => 'forskjell',
+	'lookupcontribsshowpages' => 'Alle sider ($1 navnerom)',
+	'lookupcontribscontent' => 'innhold',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
@@ -475,6 +521,18 @@ $messages['pms'] = array(
 	'lookupcontribscontent' => 'contnù',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Luckas Blade
+ */
+$messages['pt-br'] = array(
+	'lookupcontribusernotspecify' => 'Você ainda não especificou um usuário',
+	'lookupcontribsselectuser' => 'Selecionar usuário:',
+	'lookupcontribsselectwikis' => 'Selecionar wikis:',
+	'lookupcontribsnoresultfound' => 'Nenhum resultado encontrado!',
+	'lookupcontribswiki' => 'Wiki',
+	'lookupcontribscontribs' => 'contribuições',
+);
+
 /** Tarandíne (Tarandíne)
  * @author Joetaras
  */
@@ -487,6 +545,7 @@ $messages['roa-tara'] = array(
  * @author Lockal
  */
 $messages['ru'] = array(
+	'lookupcontribsselectuser' => 'Выберите участника:',
 	'lookupcontribsnoresultfound' => 'Ничего не найдено!',
 	'lookupcontribswiki' => 'Вики',
 	'lookupcontribswikidbname' => 'Имя БД',

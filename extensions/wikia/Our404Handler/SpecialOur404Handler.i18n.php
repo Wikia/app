@@ -139,6 +139,21 @@ Non se puido atopar o artigo \"'''\$1'''\".
 * Para ir á páxina principal deste sitio web, prema na ligazón: [{{SERVER}} {{SITENAME}}]",
 );
 
+/** Hebrew (עברית)
+ * @author 0ftal
+ */
+$messages['he'] = array(
+	'our404handler' => 'שגיאה 404: דף לא נמצא!',
+	'our404handler-oops' => 'אלא לא הדפים שאתה מחפש.',
+	'message404' => "'''אנחנו נורא מצטערים, אבל משום מה הדף שביקשת לא קיים.'''
+
+מאמר '''$1''' לא נמצא.
+
+* אתה יכול לנסות את המאמר [[$2]]
+* אתה יכול להשתמש בתיבת החיפוש בצד ימין של העמוד
+* נסה את העמוד הראשי של הוויקי הזאת, לחץ על הקישור: [{{SERVER}} {{SITENAME}}]",
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */

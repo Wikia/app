@@ -119,7 +119,9 @@ $messages['de'] = array(
 	'tog-disablecategoryselect' => 'Vereinfachtes Kategorisieren ausschalten',
 );
 
-/** Spanish (Español) */
+/** Spanish (Español)
+ * @author Translationista
+ */
 $messages['es'] = array(
 	'categoryselect-code-view' => 'Vista de código',
 	'categoryselect-visual-view' => 'Vista visual',
@@ -134,6 +136,10 @@ $messages['es'] = array(
 	'categoryselect-empty-name' => 'Pon el nombre de la categoría (parte antes de |)',
 	'categoryselect-button-save' => 'Guardar',
 	'categoryselect-button-cancel' => 'Cancelar',
+	'categoryselect-error-not-exist' => 'El artículo [id=$1] no existe.',
+	'categoryselect-error-user-rights' => 'Error de derechos de usuario.',
+	'categoryselect-error-db-locked' => 'La base de datos está bloqueada.',
+	'categoryselect-desc' => 'Proporciona una interfaz para gestionar las categorías de los artículos sin editar todo el artículo.',
 	'tog-disablecategoryselect' => 'Desactivar el Etiquetador de Categorías (Category Tagging)',
 );
 
@@ -167,6 +173,7 @@ $messages['fi'] = array(
 );
 
 /** French (Français)
+ * @author IAlex
  * @author Peter17
  */
 $messages['fr'] = array(
@@ -187,6 +194,7 @@ $messages['fr'] = array(
 	'categoryselect-error-user-rights' => "Erreur de droits d'utilisateurs.",
 	'categoryselect-error-db-locked' => 'La base de données est verrouillée.',
 	'categoryselect-desc' => "Fournit une interface permettant de gérer les catégories d'un article sans avoir à éditer tout l'article.",
+	'categoryselect-edit-abort' => "La modification que vous avez essayé de faire a été arrêtée par un crochet d'une extension",
 	'tog-disablecategoryselect' => 'Désactiver le balisage des catégories',
 );
 
@@ -211,6 +219,7 @@ $messages['gl'] = array(
 	'categoryselect-error-user-rights' => 'Erro de dereitos de usuario.',
 	'categoryselect-error-db-locked' => 'A base de datos está bloqueada.',
 	'categoryselect-desc' => 'Proporciona unha interface para xestionar as categorías dos artigos sen editar todo o artigo.',
+	'categoryselect-edit-abort' => 'O hook da extensión abortou a modificación que intentou realizar',
 	'tog-disablecategoryselect' => 'Desactivar a etiquetaxe de categorías',
 );
 
@@ -243,6 +252,7 @@ $messages['ia'] = array(
 	'categoryselect-error-user-rights' => 'Error de derectos de usator.',
 	'categoryselect-error-db-locked' => 'Le base de datos es blocate.',
 	'categoryselect-desc' => 'Provide un interfacie pro gerer le categorias in un articulo sin modificar tote le articulo.',
+	'categoryselect-edit-abort' => 'Le modification que tu tentava facer ha essite abortate per un extension.',
 	'tog-disablecategoryselect' => 'Disactivar selection de categorias',
 );
 
@@ -291,6 +301,7 @@ $messages['mk'] = array(
 	'categoryselect-error-user-rights' => 'Грешка со корисничките права.',
 	'categoryselect-error-db-locked' => 'Базата на податоци е заклучена.',
 	'categoryselect-desc' => 'Дава интерфејс за раководење со категориите во една статија без да треба да се уредува целата статија.',
+	'categoryselect-edit-abort' => 'Измените кои се обидовте да ги направите се откажани од кука на проширување',
 	'tog-disablecategoryselect' => 'Оневозможи означување на категории',
 );
 
@@ -318,6 +329,7 @@ Terugschakelen naar visuele weergave is niet mogelijk.',
 	'categoryselect-error-user-rights' => 'Fout in de gebruikersrechten.',
 	'categoryselect-error-db-locked' => 'De database zit op slot.',
 	'categoryselect-desc' => 'Biedt een interface voor het beheren van categorieën in een pagina zonder de hele pagina te bewerken.',
+	'categoryselect-edit-abort' => 'De wijziging die u probeerde te maken is afgebroken door een uitbreidingshook',
 	'tog-disablecategoryselect' => 'Categorielabels uitschakelen',
 );
 
@@ -410,6 +422,7 @@ $messages['uk'] = array(
 	'categoryselect-code-view' => 'Перегляд коду',
 	'categoryselect-infobox-caption' => 'Параметри категорії',
 	'categoryselect-infobox-category' => 'Вкажіть назву категорії:',
+	'categoryselect-infobox-sortkey' => 'Включити ключ сортування цієї статті в категорії "$1" за наступною назвою/параметром:',
 	'categoryselect-addcategory-button' => 'Додати категорію',
 	'categoryselect-suggest-hint' => 'Натисніть Enter, коли закінчите',
 	'categoryselect-edit-summary' => 'Додавання категорій',

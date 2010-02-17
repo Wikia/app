@@ -122,6 +122,7 @@ $messages['de'] = array(
 
 /** Spanish (Español)
  * @author McDutchie
+ * @author Translationista
  */
 $messages['es'] = array(
 	'webtools' => 'Herramientas de la web [BETA]',
@@ -140,20 +141,38 @@ $messages['es'] = array(
 	'last_downloaded' => 'Última vez bajado',
 	'sitemap_status' => 'Estado del mapa',
 	'url_count' => 'Recuento de vínculos',
+	'search_age' => 'Buscar Edad',
+	'search_type' => 'Buscar tipo',
+	'search_keyword' => 'Buscar palabra clave',
+	'serp_weight' => 'porcentaje de todo&',
+	'serp_position' => 'Clasificación de palabras clave',
 );
 
 /** Finnish (Suomi)
+ * @author Centerlink
  * @author Crt
  * @author Silvonen
  */
 $messages['fi'] = array(
+	'webtools' => 'Web-työkalut [BETA]',
+	'wt_search_stats' => 'Hakutilastot',
+	'wt_click_stats' => 'Napsautustilastot',
+	'wt_nodata' => 'Ei tietoja',
 	'wt_update' => 'Päivitä',
 	'wt_cancel' => 'Peruuta',
+	'wt_date_range' => 'Aikaväli',
+	'wt_search_src' => 'Hakulähde',
+	'wt_location_src' => 'Hakusijainti',
+	'site_url' => 'Sivuston verkko-osoite',
 	'sitemap_url' => 'Sivustokartan URL',
 	'sitemap_format' => 'Sivustokartan muoto',
 	'sitemap_type' => 'Sivustokartan tyyppi',
 	'last_downloaded' => 'Viimeksi ladattu',
 	'sitemap_status' => 'Sivustokartan tila',
+	'url_count' => 'Verkko-osoitteiden lukumäärä',
+	'search_age' => 'Hakuikä',
+	'search_type' => 'Hakutyyppi',
+	'search_keyword' => 'Haun avainsana',
 	'serp_weight' => 'prosenttia kaikista%',
 	'serp_position' => 'Avainsanan sijoitus',
 );
@@ -330,6 +349,7 @@ $messages['no'] = array(
 	'wt_cancel' => 'Avbryt',
 	'wt_search_src' => 'Søkekilde',
 	'last_downloaded' => 'Sist lastet ned',
+	'serp_weight' => 'prosent av alle%',
 );
 
 /** Piedmontese (Piemontèis)
@@ -360,6 +380,14 @@ $messages['pms'] = array(
 	'serp_position' => 'Livel dla paròla ciav',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Luckas Blade
+ */
+$messages['pt-br'] = array(
+	'wt_update' => 'Atualizar',
+	'wt_cancel' => 'Cancelar',
+);
+
 /** Russian (Русский)
  * @author Lockal
  * @author Александр Сигачёв
@@ -386,5 +414,13 @@ $messages['ru'] = array(
 	'search_keyword' => 'Ключевое слово поиска',
 	'serp_weight' => 'процент от всего',
 	'serp_position' => 'Рейтинг ключевых слов',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'wt_update' => 'తాజాకరించు',
+	'wt_cancel' => 'రద్దుచేయి',
 );
 

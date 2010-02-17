@@ -743,8 +743,8 @@ $messages['ja'] = array(
 
 ''[[Special:Log/upload|アップロード記録]]や[[Special:ImageList|アップロードされたファイルのリスト]]もご覧ください。''",
 	'vet-show-message' => 'メッセージを表示',
-	'vet-hide-message' => 'メッセージを隠す',
-	'vet-hide-license-msg' => 'ライセンステキストを隠す',
+	'vet-hide-message' => 'メッセージを非表示',
+	'vet-hide-license-msg' => 'ライセンステキストを非表示',
 	'vet-show-license-msg' => 'ライセンステキストを表示',
 	'vet-max-thumb' => 'サムネイルのサイズはオリジナルのサイズより大きくできません。オリジナルのサイズに戻します。',
 	'vet-notallowed' => 'このウィキでは動画を挿入できません',
@@ -933,18 +933,26 @@ Wellicht moet u de videopagina opschonen om de wijzigingen te zien.',
  * @author Nghtwlkr
  */
 $messages['no'] = array(
+	'vet-upload' => 'Full URL',
+	'vet-notlogged' => 'Logg inn eller registrer deg for å sette inn videoer',
 	'vet-find' => 'Finn en video',
 	'vet-thiswiki' => 'Denne Wikien',
 	'vet-flickr' => 'Flickr',
+	'vet-upload-btn' => 'Kjør',
 	'vet-find-btn' => 'Søk',
 	'vet-conflict-inf' => '<h1>Oops, en video med det navnet finnes allerede.</h1>Hva vil du gjøre med <b>$1</b>?',
 	'vet-rename' => 'Gi video nytt navn',
 	'vet-existing' => 'Bruk eksisterende video',
 	'vet-insert' => 'Sett inn',
+	'vet-details-inf' => '<h1>Fildetaljer</h1>Angi et navn for denne videoen. Gi den noe beskrivende.',
 	'vet-name' => 'Navn',
 	'vet-license' => 'Lisens',
+	'vet-details-inf2' => '<h1>Videovisningsvalg</h1>',
 	'vet-size' => 'Størrelse',
+	'vet-fullsize' => 'Full størrelse ($1x$2px)',
 	'vet-width' => 'Bredde',
+	'vet-optional' => '  (Valgfri)',
+	'vet-insert2' => 'Sett inn video',
 	'vet-update' => 'Oppdater video',
 	'vet-video-replace-link' => 'For å bytte ut denne videoen, vennligst gå til [[:$1]]',
 	'vet-prev' => 'Forrige 8',
@@ -1079,6 +1087,22 @@ $messages['pms'] = array(
 	'vet-right' => 'Drit',
 	'vet-gallery' => 'Galarìa',
 	'vet-protected' => "Ës filmà-sì a l'é protegiù",
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Luckas Blade
+ */
+$messages['pt-br'] = array(
+	'vet-flickr' => 'Flickr',
+	'vet-rename' => 'Renomear vídeo',
+	'vet-insert' => 'Inserir',
+	'vet-name' => 'Nome',
+	'vet-license' => 'Licença',
+	'vet-size' => 'Tamanho',
+	'vet-width' => 'Largura',
+	'vet-show-message' => 'mostrar mensagem',
+	'vet-title' => 'Adicionar um vídeo ao seu artigo',
+	'vet-add-button' => 'Adicionar vídeo',
 );
 
 /** Russian (Русский)

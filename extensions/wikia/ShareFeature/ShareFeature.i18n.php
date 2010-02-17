@@ -40,6 +40,15 @@ $messages['es'] = array(
 	'sf-link-tooltip' => 'Compartir este artículo con tus amigos',
 );
 
+/** Finnish (Suomi)
+ * @author Centerlink
+ */
+$messages['fi'] = array(
+	'sf-link' => 'Jaa tämä artikkeli',
+	'sf-link-popup' => 'Jaa tämä artikkeli',
+	'sf-link-tooltip' => 'Jaa tämä artikkeli ystäviesi kanssa',
+);
+
 /** French (Français)
  * @author Peter17
  */
@@ -119,6 +128,15 @@ $messages['nn'] = array(
 	'sf-link-tooltip' => 'Del denne artikkelen med venene dine',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'sf-link' => 'Del denne artikkelen',
+	'sf-link-popup' => 'Del denne artikkelen',
+	'sf-link-tooltip' => 'Del denne artikkelen med vennene dine',
+);
+
 /** Occitan (Occitan)
  * @author Cedric31
  */
@@ -160,5 +178,14 @@ $messages['ru'] = array(
 	'sf-link' => 'Поделиться ссылкой на статью',
 	'sf-link-popup' => 'Поделиться ссылкой на статью',
 	'sf-link-tooltip' => 'Поделиться ссылкой на статью с друзьями',
+);
+
+/** Turkish (Türkçe)
+ * @author Joseph
+ */
+$messages['tr'] = array(
+	'sf-link' => 'Bu maddeyi paylaş',
+	'sf-link-popup' => 'Bu maddeyi paylaş',
+	'sf-link-tooltip' => 'Bu maddeyi arkadaşlarınızla paylaşın',
 );
 

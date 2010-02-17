@@ -28,12 +28,16 @@ $messages['af'] = array(
 
 /** Breton (Brezhoneg)
  * @author Gwenn-Ael
+ * @author Y-M D
  */
 $messages['br'] = array(
+	'searchranktracker' => "Hemolc'her renk ar c'hlaskoù",
 	'searchranktracker-add-new-entry' => 'Ouzhpennañ un enmont',
 	'searchranktracker-edit-entry' => 'Kemmañ un enmont',
+	'searchranktracker-entry-list' => "Roll ar pajennoù hemolc'hañ ar wiki",
 	'searchranktracker-page-name-required' => 'Anv ar bajenn ret',
 	'searchranktracker-serach-phrase-required' => 'Klask ar frazennoù goulennet',
+	'searchranktracker-empty-list' => "N'eus frazenn klask ebet da hemolc'hañ er mare-mañ.",
 );
 
 /** Spanish (Español)
@@ -42,6 +46,11 @@ $messages['br'] = array(
 $messages['es'] = array(
 	'searchranktracker' => ' Rastreador de clasificación de búsquedas',
 	'searchranktracker-add-new-entry' => 'Agregar una nueva entrada',
+	'searchranktracker-edit-entry' => 'Editar entrada',
+	'searchranktracker-entry-list' => 'Listado de páginas de seguimiento wiki',
+	'searchranktracker-page-name-required' => 'Se requiere un nombre de página',
+	'searchranktracker-serach-phrase-required' => 'Se requiere una frase de búsqueda',
+	'searchranktracker-empty-list' => 'Actualmente hay frases de búsqueda a seguir.',
 );
 
 /** French (Français)

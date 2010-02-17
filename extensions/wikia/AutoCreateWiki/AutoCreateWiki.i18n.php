@@ -504,6 +504,7 @@ $messages['el'] = array(
 /** Spanish (Español)
  * @author Bola
  * @author Peter17
+ * @author Translationista
  */
 $messages['es'] = array(
 	'autocreatewiki' => 'Crear nuevo Wiki',
@@ -607,26 +608,20 @@ $3
 Equipo Comunitario de Wikia
 
 <http://www.wikia.com/wiki/User:$4>',
-	'autocreatewiki-welcometalk' => "== ¡Bienvenido! ==
-<div style=\"font-size:120%; line-height:1.2em;\">Hola \$1. ¡Estamos muy felices de tener a '''\$4''' como parte de la comunidad de Wikia! Además de darte las gracias por unirte a Wikia.
+	'autocreatewiki-welcometalk' => "== ¡Bienvenidos! ==
+<div style=\"font-size:120%; line-height:1.2em;\">Hola \$1 -- nos encanta que '''\$4''' sea parte de la comunidad Wikia!
 
-Ahora tienes una web entera para poner información, imágenes y vídeos sobre tu tema favorito. Pero por ahora, las páginas están en blanco hasta que comiences... ¿asustado? No tienes por qué asustarte, aquí tienes algunos consejos que te ayudarán a comenzar bien en el wiki:
+Ahora tienes un sitio web entero que completar con informaciónm fotos y videos relacionados con tu tema favorito, pero de momento, sólo encontrarás páginas en blanco mirándote fijamente. Tenebroso ¿no? En adelante descubrirás algunas formas de comenzar.
 
-*'''Habla sobre tu tema''' en la portada. Es una gran oportunidad de explicar a los lectores sobre qué tema trata tu wiki. ¡Escribe tanto como tú quieras! Tu descripción puede contener enlaces a todas las páginas importantes de tu wiki incluyendo enlaces internos (<nowiki>[[de esta forma]]</nowiki>).
+* '''Escribe tu tema''' en la página principal. Esta es tu oportunidad para explicar a tus lectores de qué se trata el asunto. Escribe tanto como quieras. Tu descripción puede contener vínculos a todas las páginas importantes de tu sitio.
 
-*'''Comienza con algunas páginas nuevas''' -- aunque solo tengan una o dos frases, pero es una buena forma de comenzar. ¡No te permitas tener páginas en blanco! Un wiki te permite añadir y cambiar cosas en los artículos incluso después de haberlos creado. Puedes añadir imágenes y vídeos, busca un artículo y hazlo más interesante con imágenes y vídeos.
+* '''Haz nuevas páginas''' -- Para empezar, una o dos oraciones son más que suficientes. ¡No permitas que la página en blanco se quede mirándote! Una wiki consiste en añadir y cambiar cosas con el tiempo. También puedes subir fotos y videos para completar la página y hacerla más interesante.
 
-*'''Crea tu [[User:\$1|página de usuario]]''': éste es el mejor lugar para presentarte y que los demás puedan conocerte (¡y además practicar la edición wiki!)
+¡No te detengas! A las personas les gusta visitar wikis que tengan mucho contenido para leer y mirar. Así que sigue añadiendo cosas para atraer a leectores y editores. Hay mucho por hacer, pero no te amilanes. Hoy es apenas tu primer día y tienes mucho tiempo por delante. Cada wiki empieza de la misma manera: un poquito cada vez, comenzando por las primeras páginas hasta que se convierte en un grandísimo y movidísimo sitio.
 
-*'''Añade un logo''': aprende a [[w:c:ayuda:Help:Logo|crear un logo]] y luego <span class=\"plainlinks\">[[Especial:SubirArchivo/Wiki.png|haz clic aquí]]</span> para añadirlo al wiki.
+Si tienes algunas dudas, envíanos un correo electrónico a través de nuestro [[Special:Contact|formulario de contacto]]. ¡Que te diviertas!
 
-Una vez que hayas realizado estas tareas, habrás creado lo que servirá de gran punto de inicio: tu wiki luce más amigable y está listo para recibir visitantes. Ahora puedes invitar a algunos amigos para que te ayuden a crear las próximas veinte páginas y a expandir las que ya has creado.
-
-¡Sigue así! Mientras más páginas crees y enlaces a otras, más rápido lograrás que quienes busquen por \"\$4\" encuentren tu proyecto en los motores de búsqueda, lean tu contenido y se unan a la edición de artículos.
-
-Si tienes más preguntas, hemos creado un completo conjunto de [[Ayuda:Contenidos|páginas de ayuda]] para que consultes. También puedes enviarnos un correo electrónico a través de nuestro [[Especial:Contact|formulario de contacto]]. No olvides revisar otros wikis de [[w:c:es:Wikia|Wikia]] para que veas más ideas de diseño, organización de páginas y muchos otros detalles. ¡Disfrútalo!
-
-Los mejores deseos, [[User:\$2|\$3]] <staff /></div>",
+-- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Nuevos wikis',
 	'newwikisstart' => 'Mostrar wikis comenzando por:',
 	'autocreatewiki-reminder-body' => '
@@ -717,6 +712,7 @@ $3
 );
 
 /** Finnish (Suomi)
+ * @author Centerlink
  * @author Crt
  */
 $messages['fi'] = array(
@@ -726,16 +722,28 @@ $messages['fi'] = array(
 	'autocreatewiki-chooseone' => 'Valitse yksi',
 	'autocreatewiki-required' => '$1 = vaadittu',
 	'autocreatewiki-language-all' => 'Kaikki kielet',
+	'autocreatewiki-birthdate' => 'Syntymäaika:',
 	'autocreatewiki-remember' => 'Muista minut',
 	'autocreatewiki-create-account' => 'Luo tunnus',
+	'autocreatewiki-done' => 'tehty',
 	'autocreatewiki-error' => 'virhe',
+	'autocreatewiki-haveaccount-question' => 'Onko sinulla jo Wikia-tili?',
+	'autocreatewiki-busy-username' => 'Tämä käyttäjätunnus on jo varattu.',
+	'autocreatewiki-empty-category' => 'Valitse yksi luokista.',
+	'autocreatewiki-empty-wikiname' => 'Wiki-nimi ei voi olla tyhjä.',
+	'autocreatewiki-empty-username' => 'Käyttäjätunnus voi olla tyhjä.',
+	'autocreatewiki-empty-password' => 'Salasana ei voi olla tyhjä.',
 	'autocreatewiki-category-other' => 'Muu',
+	'autocreatewiki-set-username' => 'Aseta käyttäjätunnus ensin.',
+	'autocreatewiki-invalid-birthday' => 'Virheellinen syntymäaika',
 	'autocreatewiki-step1' => 'Luodaan kuvahakemisto...',
 	'autocreatewiki-step2' => 'Luodaan tietokanta...',
 	'autocreatewiki-step3' => 'Asetetaan oletustiedot tietokantaan...',
 	'autocreatewiki-step4' => 'Kopioidaan oletuskuvat ja logo...',
 	'autocreatewiki-redirect' => 'Ohjataan uuteen wikiin: $1...',
 	'autocreatewiki-welcometalk-log' => 'Tervetuloviesti',
+	'autocreatewiki-step2-error' => 'Tietokanta on olemassa!',
+	'autocreatewiki-protect-reason' => 'Osa virallista käyttöliittymää',
 	'autocreatewiki-welcomesubject' => '$1 on luotu.',
 	'newwikis' => 'Uudet wikit',
 );
@@ -966,6 +974,37 @@ $messages['gl'] = array(
 	'autocreatewiki-step7-error' => 'Non se pode copiar o iniciador da base de datos para esta lingua!',
 	'autocreatewiki-protect-reason' => 'Parte da interface oficial',
 	'autocreatewiki-welcomesubject' => '$1 foi creado!',
+	'autocreatewiki-welcomebody' => 'Ola $2,
+
+O wiki que solicitou xa está dispoñible en <$1>. Agardamos velo editando por alí axiña!
+
+Vimos de engadir información e consellos na súa páxina de conversa de usuario (<$5>) para axudalo a dar os primeiros pasos.
+
+Se ten algún problema, pode pedir axuda da comunidade no wiki en <http://www.wikia.com/wiki/Forum:Help_desk> ou mediante correos electrónicos no enderezo community@wikia.com. Tamén pode visitar a nosa canle de conversa IRC #wikia en <http://irc.wikia.com>.
+
+Se ten calquera dúbida ou problema, pode poñerse en contacto comigo directamente por correo electrónico ou na miña páxina de conversa.
+
+Boa sorte co proxecto!
+
+$3
+
+O equipo comunitario de Wikia
+
+<http://www.wikia.com/wiki/User:$4>',
+	'autocreatewiki-welcometalk' => "== Benvido! ==
+<div style=\"font-size:120%; line-height:1.2em;\">Ola \$1; estamos encantados de que '''\$4''' sexa parte da comunidade de Wikia!
+
+Agora ten un sitio web enteiro para encher con información, fotos e vídeos sobre o seu tema preferido. Pero arestora, só hai páxinas en branco agardando por vostede... Asustado, non? Aquí hai algúns xeitos de comezar.
+
+*'''Faga unha introdución ao seu tema''' na páxina principal. Esta é a súa oportunidade para explicarlles aos seus lectores sobre que trata o sitio. Escriba tanto como queira! A súa descrición pode conter ligazóns cara a todas as páxinas máis importantes.
+
+*'''Comece algunhas páxinas novas''' aínda que sexa cunha ou dúas frases. Non deixe que a páxina en branco lle desanime! Un wiki constrúese aos poucos coas cousas que se van engadindo ou cambiando. Tamén pode incluír fotos e vídeos para encher a páxina e facela máis interesante.
+
+Continúe a traballar! Á xente gústalle visitar os wikis cando hai moitas cousas que ler e mirar, así que siga engadindo cousas e atraerá a lectores e editores. Hai moito que facer, pero non se preocupe: hoxe é o seu primeiro día e ten tempo dabondo. Todos os wikis comezan da mesma maneira: un pouco de cada vez coas primeiras páxinas ata que medran e son un sitio web enorme.
+
+Se ten algunha dúbida ou pregunta, pódenos enviar un correo electrónico a través do noso [[Special:Contact|formulario de contacto]]. Páseo ben!
+
+-- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Novos wikis',
 	'newwikisstart' => 'Mostrar os wikis que comecen por:',
 	'autocreatewiki-reminder-body' => '
@@ -985,6 +1024,41 @@ Este é un proxecto completamente novo, así que escríbanos se ten algunha dúb
 
 
 <p>-- O equipo comunitario de Wikia</p>',
+);
+
+/** Hebrew (עברית)
+ * @author 0ftal
+ */
+$messages['he'] = array(
+	'autocreatewiki' => 'צור אתר וויקי חדש',
+	'autocreatewiki-desc' => 'צור אתר ווקי במפעל הווקי עם הגדרות משתמש',
+	'createwikipagetitle' => 'צור אתר וויקי חדש',
+	'createwiki' => 'צור אתר וויקי חדש',
+	'autocreatewiki-chooseone' => 'בחר אחד',
+	'autocreatewiki-required' => '1$ = חובה',
+	'autocreatewiki-web-address' => 'כתובת האינטרנט:',
+	'autocreatewiki-category-select' => 'בחר אחד',
+	'autocreatewiki-language-top' => '$1 השפות המובילות',
+	'autocreatewiki-language-all' => 'כל השפות',
+	'autocreatewiki-birthdate' => 'תאריך לידה:',
+	'autocreatewiki-blurry-word' => 'מילה מטושטשת:',
+	'autocreatewiki-remember' => 'זכור אותי',
+	'autocreatewiki-create-account' => 'יצירת חשבון',
+	'autocreatewiki-done' => 'הושלם',
+	'autocreatewiki-error' => 'שגיאה',
+	'autocreatewiki-haveaccount-question' => 'האם יש לך כבר חשבון בוויקיה?',
+	'autocreatewiki-success-title' => 'אתר הוויקי שלך נוצר!',
+	'autocreatewiki-success-subtitle' => 'אתה יכול להתחיל לעבוד על אתר הוויקי שלך בכתובת:',
+	'autocreatewiki-success-has-been-created' => 'נוצר!',
+	'autocreatewiki-success-get-started' => 'צעדים ראשונים',
+	'autocreatewiki-info-domain' => 'כדאי להשתמש במילה שהיא מילת מפתח לחיפוש הנושא שלך.',
+	'autocreatewiki-info-topic' => 'הוסף תיאור קצר כגון "מלחמת הכוכבים" או "תוכניות טלוויזיה".',
+	'autocreatewiki-info-category' => 'זה יעזור למבקרים למצוא את הוויקי שלך.',
+	'autocreatewiki-info-language' => 'זו תהיה שפת ברירת המחדל עבור המבקרים בוויקי שלך.',
+	'autocreatewiki-info-email-address' => 'כתובת הדוא"ל שלך נשמרת בסודיות ואף אחד לא יכול לראותה.',
+	'autocreatewiki-info-realname' => 'את תבחרו לציין אותו, הוא ישמש לייחוס עבודתכם אליכם.',
+	'newwikis' => 'אתרי וויקי חדשים',
+	'newwikisstart' => 'הצג אתרי וויקי המתחילים ב:',
 );
 
 /** Hungarian (Magyar)
@@ -1274,12 +1348,14 @@ $messages['ja'] = array(
 	'autocreatewiki-step10' => 'セントラルウィキアにページを設置しています...',
 	'autocreatewiki-step11' => '利用者にメールを送信しています...',
 	'autocreatewiki-redirect' => '新しいウィキに転送しています: $1 ...',
+	'autocreatewiki-congratulation' => 'Congratulations!',
 	'autocreatewiki-welcometalk-log' => '自動メッセージ',
 	'autocreatewiki-regex-error-comment' => 'ウィキ $1 で使用されています（全文: $2）',
 	'autocreatewiki-step2-error' => 'データベースは既に存在します！',
 	'autocreatewiki-step3-error' => 'データベースに初期情報を設定できません！',
 	'autocreatewiki-step6-error' => 'データベースに初期テーブルを設定できません！',
 	'autocreatewiki-step7-error' => 'スターターのデータベースをコピーできません！',
+	'autocreatewiki-protect-reason' => '公式インターフェースの一部です',
 	'autocreatewiki-welcomesubject' => '$1 が作成されました！',
 	'autocreatewiki-welcomebody' => '$2 さん、
 
@@ -1294,13 +1370,13 @@ $3
 <http://www.wikia.com/wiki/User:$4>',
 	'autocreatewiki-welcometalk' => '$1さん、$4の申請ありがとうございます。
 
-ウィキを開始するというのはとても大変ですが、もし、何か困ったことがあったら、是非とも[[w:Community Team|ウィキアのコミュニティチーム]]([[w:c:ja:利用者‐会話:Yukichi|日本人スタッフ]])までどうぞ。利用者向けガイドもいくつかこのウィキにありますので、是非とも御覧ください。サイトデザインやコンテンツの作り方に迷ったら、[[w:c:ja:プロジェクトポータル|ウィキアの他のプロジェクト]]をチェックして見てください。ウィキア全体がその良い参考例になるはずです。
+ウィキを開始するというのはとても大変ですが、もし、何か困ったことがあったら、是非とも[[w:Community Team|ウィキアのコミュニティチーム]]までどうぞ。利用者向けガイドもいくつかこのウィキにありますので、是非とも御覧ください。サイトデザインやコンテンツの作り方に迷ったら、[[w:c:ja:プロジェクトポータル|ウィキアの他のプロジェクト]]をチェックして見てください。ウィキア全体がその良い参考例になるはずです。
 * まずは、良いウィキを作るために[[w:c:ja:Help:ウィキの開始|ウィキを開始するにあたってのアドバイス]]を御覧ください。
 * また、それらをまとめた[[w:c:ja:Help:良いウィキを作るコツ|ウィキを作るコツ]]も御覧になってください。
 * ウィキ自体が初めてなら、[[w:c:ja:Help:FAQ|FAQ]]もあります。
 ウィキア自体のヘルプを[[w:c:ja:Help:トップページ|日本語でまとめています]]ので、詳細な情報はこちらを御覧ください。相談ごとは、[[Special:Contact|連絡用ページ]]からどうぞ。IRCチャンネルの #wikia-ja で、他の利用者とコンタクトすることもできます。是非とも御利用ください。
 
-それでは、今後とも、よろしくお願いします。[[User:$2|$3]]',
+それでは、今後とも、よろしくお願いします。--[[User:$2|$3]] <staff />',
 	'newwikis' => '新しいウィキ',
 	'newwikisstart' => '次の文字列から始まるウィキを表示:',
 	'autocreatewiki-reminder-body' => '$1 さん、
@@ -2016,8 +2092,10 @@ $messages['ru'] = array(
 	'autocreatewiki-done' => 'выполнено',
 	'autocreatewiki-error' => 'ошибка',
 	'autocreatewiki-language-top-list' => 'de,en,es,he,fr,it,ja,no,pl,pt,pt-br,zh',
+	'autocreatewiki-success-get-started' => 'Начало работы',
 	'autocreatewiki-info-topic' => 'Добавьте краткое описание, например, «Звёздные войны» или «ТВ-шоу».',
 	'autocreatewiki-info-email-address' => 'Адрес вашей электронной почты никому не показывается в Викии.',
+	'autocreatewiki-empty-field' => 'Пожалуйста, заполните это поле.',
 	'autocreatewiki-invalid-username' => 'Недопустимое имя участника.',
 	'autocreatewiki-busy-username' => 'Это имя участника уже занято.',
 	'autocreatewiki-empty-username' => 'Имя участника не может быть пустым.',

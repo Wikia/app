@@ -140,3 +140,11 @@ $messages['sv'] = array(
 	'theorytab-parent-title' => 'Överordnad artikel',
 );
 
+/** Turkish (Türkçe)
+ * @author Joseph
+ */
+$messages['tr'] = array(
+	'theorytab-title' => 'Teori',
+	'theorytab-parent-title' => 'Ana madde',
+);
+

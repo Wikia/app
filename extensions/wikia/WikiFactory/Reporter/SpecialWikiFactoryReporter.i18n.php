@@ -18,6 +18,13 @@ $messages['af'] = array(
 	'wikifactoryreporter' => 'Wikifactory rapportering',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'wikifactoryreporter' => 'Справаздачы WikiFactory',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
@@ -30,6 +37,13 @@ $messages['br'] = array(
  */
 $messages['bs'] = array(
 	'wikifactoryreporter' => 'WikiFactory Reporter',
+);
+
+/** Czech (Česky)
+ * @author Mr. Richard Bolla
+ */
+$messages['cs'] = array(
+	'wikifactoryreporter' => 'WikiFactory hlásič',
 );
 
 /** German (Deutsch)
@@ -81,6 +95,13 @@ $messages['ia'] = array(
 	'wikifactoryreporter' => 'Reportator WikiFactory',
 );
 
+/** Japanese (日本語)
+ * @author 青子守歌
+ */
+$messages['ja'] = array(
+	'wikifactoryreporter' => 'ウィキファクトリー・レポーター',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -100,6 +121,13 @@ $messages['mk'] = array(
  */
 $messages['nl'] = array(
 	'wikifactoryreporter' => 'Wikifactory rapportage',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'wikifactoryreporter' => 'WikiFactory Reporter',
 );
 
 /** Occitan (Occitan)

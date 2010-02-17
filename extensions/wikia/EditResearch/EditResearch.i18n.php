@@ -152,6 +152,17 @@ $messages['no'] = array(
 	'research_no_results' => 'Ingen sider funnet. Vennligst søk på nytt.',
 );
 
+/** Occitan (Occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'search_wikipedia' => 'Cercar dins Wikipèdia',
+	'previous' => 'Precedent',
+	'research_no_results' => 'Cap de pagina pas trobada. Cercatz tornarmai.',
+	'research_wikipedia_title' => 'Recercatz vòstra responsa sus Wikipèdia',
+	'research_this' => 'Recercar aquò',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt

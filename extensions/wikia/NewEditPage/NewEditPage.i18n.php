@@ -67,9 +67,12 @@ $messages['ia'] = array(
 	'templatesused-toggle' => 'Revelar/celar {{PLURAL:$1|$1 elemento|$1 elementos}}',
 );
 
-/** Japanese (日本語) */
+/** Japanese (日本語)
+ * @author Tommy6
+ */
 $messages['ja'] = array(
 	'new-edit-page-preview-notice' => 'プレビュー中 : 編集内容はまだ保存されていません！ スクロールし編集を続けてください。',
+	'templatesused-toggle' => '$1 件を 表示/非表示',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -151,11 +154,12 @@ $messages['ru'] = array(
 );
 
 /** Ukrainian (Українська)
+ * @author NickK
  * @author Prima klasy4na
  */
 $messages['uk'] = array(
 	'new-edit-page-preview-notice' => 'Режим попереднього перегляду: зміни ще не збережено! Прокрутіть униз для продовження редагування.',
-	'templatesused-toggle' => 'Показати/приховати {{PLURAL:$1|$1 запис|$1 записи}}',
+	'templatesused-toggle' => 'Показати/приховати $1 {{PLURAL:$1|запис|записи|записів}}',
 );
 
 /** Chinese (中文) */

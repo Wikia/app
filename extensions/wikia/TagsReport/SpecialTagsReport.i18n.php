@@ -213,6 +213,14 @@ $messages['pms'] = array(
 	'tagsreportgenerated' => 'Generà dzora a $1',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Luckas Blade
+ */
+$messages['pt-br'] = array(
+	'tagsreportnoresults' => 'Nenhum resultado encontrado',
+	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|página|páginas}})',
+);
+
 /** Russian (Русский)
  * @author Lockal
  * @author Александр Сигачёв

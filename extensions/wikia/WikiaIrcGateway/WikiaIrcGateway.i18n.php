@@ -36,6 +36,22 @@ $messages['br'] = array(
 	'ircgate-channel' => 'Kanol :',
 );
 
+/** Czech (Česky)
+ * @author Mr. Richard Bolla
+ */
+$messages['cs'] = array(
+	'ircgate-username' => 'Uživatelské jméno:',
+	'ircgate-channel' => 'Kanál:',
+);
+
+/** Spanish (Español)
+ * @author VegaDark
+ */
+$messages['es'] = array(
+	'ircgate-username' => 'Nombre de usuario:',
+	'ircgate-channel' => 'Canal:',
+);
+
 /** Basque (Euskara)
  * @author An13sa
  */
@@ -152,6 +168,21 @@ $messages['pt-br'] = array(
 $messages['ru'] = array(
 	'ircgate-username' => 'Имя пользователя:',
 	'ircgate-channel' => 'Канал:',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'ircgate-username' => 'వాడుకరిపేరు:',
+);
+
+/** Turkish (Türkçe)
+ * @author Joseph
+ */
+$messages['tr'] = array(
+	'ircgate-username' => 'Kullanıcı adı:',
+	'ircgate-channel' => 'Kanal:',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

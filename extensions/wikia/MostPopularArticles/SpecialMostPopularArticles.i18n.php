@@ -148,6 +148,13 @@ $messages['pms'] = array(
 	'mostpopulararticles' => 'Artìcoj pi popolar (da la base ëd dàit)',
 );
 
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'mostpopulararticles' => 'Páginas mais populares (da base de dados)',
+);
+
 /** Brazilian Portuguese (Português do Brasil)
  * @author Daemorris
  */

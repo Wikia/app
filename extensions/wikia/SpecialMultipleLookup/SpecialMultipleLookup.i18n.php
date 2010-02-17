@@ -197,6 +197,24 @@ $messages['ia'] = array(
 	'multilookuplastedit' => 'Ultime modification desde iste adresse IP:',
 );
 
+/** Japanese (日本語)
+ * @author Tommy6
+ */
+$messages['ja'] = array(
+	'multilookup' => 'IPアドレスの全体の投稿記録を見る',
+	'multilookupstitle' => 'IPアドレスの全体の投稿記録を見る',
+	'multilookupselectuser' => '同じIPアドレスのアカウントをウィキ全体で検索する:',
+	'multilookupgo' => '表示',
+	'multilookupnotspecify' => 'IPアドレスが指定されていません',
+	'multilookupnext' => '次',
+	'multilookupprevious' => '前',
+	'multilookupnbrresult' => '表示件数:',
+	'multilookupnoresultfound' => '1件も見つかりませんでした',
+	'multilookupdetails' => '詳細を見る',
+	'multilookuplistwikiainfo' => 'IPアドレスが <b>$1</b> のユーザーが記事の編集を行ったことのあるウィキ',
+	'multilookuplastedit' => 'このIPアドレスからの最後の編集:',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -276,6 +294,18 @@ $messages['pms'] = array(
 	'multilookuplistwikiainfo' => "Lista ëd wiki anté che dj'artìcoj a j'ero stàit modificà da utent con IP :<b>$1</b>",
 	'multilookupinvaliduser' => '<p class="error">IP "<b>$1</b>" a esist pa. Ch\'a contròla l\'IP dàit për possìbij eror ëd batidura.</p>',
 	'multilookuplastedit' => 'Ultima modìfica da sto IP-sì:',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Luckas Blade
+ */
+$messages['pt-br'] = array(
+	'multilookupgo' => 'Ir',
+	'multilookupinvalidresults' => 'Resultados inválidos!',
+	'multilookupnoresultfound' => 'Nenhum resultado encontrado!',
+	'multilookupwiki' => 'Wiki',
+	'multilookupdetails' => 'Ver detalhes',
+	'multilookuplastedit' => 'Última edição deste IP:',
 );
 
 /** Russian (Русский)

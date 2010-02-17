@@ -51,6 +51,16 @@ $messages['fa'] = array(
 	'imgplc-image' => 'تصویر',
 );
 
+/** Finnish (Suomi)
+ * @author Centerlink
+ */
+$messages['fi'] = array(
+	'imgplc-create' => 'Lisää kuva',
+	'imgplc-placeholder' => 'Paikanvaraajaan',
+	'imgplc-image' => 'Kuva',
+	'imgplc-notinhistory' => 'Et voi lisätä kuvaa historiatilassa.',
+);
+
 /** French (Français)
  * @author Peter17
  */
@@ -69,6 +79,16 @@ $messages['gl'] = array(
 	'imgplc-placeholder' => 'Marcador de posición',
 	'imgplc-image' => 'Imaxe',
 	'imgplc-notinhistory' => 'Non podes engadir imaxes no modo de historial.',
+);
+
+/** Hebrew (עברית)
+ * @author 0ftal
+ */
+$messages['he'] = array(
+	'imgplc-create' => 'הוסף תמונה',
+	'imgplc-placeholder' => 'מקוםלתמונה',
+	'imgplc-image' => 'תמונה',
+	'imgplc-notinhistory' => 'לא ניתן להוסיף תמונה במצב היסטוריה.',
 );
 
 /** Upper Sorbian (Hornjoserbsce)

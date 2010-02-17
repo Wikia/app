@@ -171,6 +171,16 @@ U kan nie hier beelde byvoeg nie.',
 	'wmu-no-rights' => 'U mag nie beelde by hierdie bladsy byvoeg nie',
 );
 
+/** Arabic (العربية)
+ * @author OsamaK
+ */
+$messages['ar'] = array(
+	'wmu-flickr' => 'فلكر',
+	'wmu-name' => 'الاسم',
+	'wmu-license' => 'الرخصة',
+	'wmu-create' => 'أضف صورة',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  */
@@ -258,6 +268,20 @@ Gwelit ivez [[Special:Log/upload|lroll an enporzhiadurioù]] ha[[Special:ImageLi
 	'wmu-no-preview' => "Ne c'hallit ket ouzhpennañ skeudennoù eus ar pennad er mod rakwelet",
 	'wmu-no-protect' => "Gwarezet eo ar bajenn-mañ, n'oc'h ket aoteet da ouzhpennañ skeudennoù dezhi",
 	'wmu-no-rights' => "N'och ket aotreet da ouzhpennañ skeudennoù d'ar bajenn-mañ",
+);
+
+/** Czech (Česky)
+ * @author Mr. Richard Bolla
+ */
+$messages['cs'] = array(
+	'wmu-upload' => 'Nahrát soubor',
+	'wmu-notlogged' => 'Abyste mohli nahrávat soubory ze svého počítače, musíte se přihlásit nebo zaregistrovat',
+	'wmu-find' => 'Najít',
+	'wmu-thiswiki' => 'Tato wiki',
+	'wmu-flickr' => 'Flickr',
+	'wmu-upload-btn' => 'Nahrát soubor',
+	'wmu-find-btn' => 'Najít',
+	'wmu-flickr-inf' => 'Hledat fotografie z Flickru s vhodnou licencí a importovat je na vaší wiki.',
 );
 
 /** German (Deutsch) */
@@ -682,12 +706,15 @@ $messages['ia'] = array(
 	'wmu-no-rights' => 'Tu non ha le permission de adder imagines a iste pagina',
 );
 
-/** Japanese (日本語) */
+/** Japanese (日本語)
+ * @author Tommy6
+ */
 $messages['ja'] = array(
 	'wmu-upload' => 'アップロード',
 	'wmu-notlogged' => '画像をアップロードするには、アカウントを取得してログインしてください。',
 	'wmu-find' => '画像を探す',
 	'wmu-thiswiki' => 'ウィキにある画像',
+	'wmu-flickr' => 'Flickr',
 	'wmu-upload-btn' => 'アップロード',
 	'wmu-find-btn' => '探す',
 	'wmu-flickr-inf' => '写真サイトFlickrにあるフリーライセンスの画像を検索して、ウィキにインポートします。',
@@ -709,6 +736,7 @@ $messages['ja'] = array(
 	'wmu-width' => '幅',
 	'wmu-layout' => 'レイアウト',
 	'wmu-caption' => '説明文',
+	'wmu-link' => 'リンク',
 	'wmu-optional' => '(オプション)',
 	'wmu-insert2' => '追加する',
 	'wmu-prev' => '前の8件',
@@ -719,18 +747,40 @@ $messages['ja'] = array(
 	'wmu-thiswiki2' => '$1件の画像',
 	'wmu-success' => '<h1>成功しました</h1>
 記事に画像を挿入しました。',
+	'wmu-success-placeholder' => '<h1>成功しました</h1>',
 	'wmu-return' => '編集画面に戻る',
 	'wmu-back' => '戻る',
 	'wmu-close' => '閉じる',
 	'wmu-warn1' => '検索する語を入力してください',
 	'wmu-warn2' => 'アップロードする画像を選択してください',
+	'wmu-warn3' => 'ファイル名を指定してください',
 	'wmu-imagelink' => '<b>新機能</b>画像の追加機能が新しくなりました',
 	'wmu-imagebutton' => '画像の追加',
+	'wmu-create' => '画像を追加',
 	'wmu-license-cc' => 'CC-by-sa 3.0を適用する',
+	'wmu-bad-extension' => 'アップロードしようとしたファイルのタイプが不適切です。選択し直してください。',
+	'wmu-filetype-missing' => 'ファイルに拡張子がありません',
+	'wmu-filetype-incorrect' => 'ファイルの拡張子が不適切です',
 	'wmu-uploadtext' => '<b>このフォームでは、簡単に画像をアップロード・記事への挿入ができます。</b><br /><i>[[Special:Log/upload|アップロードログ]]や[[Special:ImageList|アップロードされているファイルの一覧]]もご覧ください。</i>',
 	'wmu-show-message' => 'メッセージを表示',
-	'wmu-hide-message' => 'メッセージを隠す',
-	'wmu-hide-license-msg' => 'ライセンステキストを隠す',
+	'wmu-hide-message' => 'メッセージを非表示',
+	'wmu-hide-license-msg' => 'ライセンステキストを非表示',
+	'wmu-show-license-msg' => 'ライセンステキストを表示',
+	'wmu-max-thumb' => 'サムネイルのサイズはオリジナルのサイズより大きくできません。オリジナルのサイズに戻します。',
+	'wmu-notallowed' => 'このウィキでは画像をアップロードできません',
+	'wmu-readonly' => '画像をアップロードできません。このウィキは読み取り専用状態になっています。',
+	'wmu-placeholder' => 'プレースホルダ',
+	'wmu-gallery' => 'ギャラリー',
+	'wmu-columns' => '$1 カラム',
+	'wmu-column' => 'カラム',
+	'wmu-added-from-plc' => 'プレースホルダ経由でファイルを追加',
+	'wmu-uploaddisabled' => 'このウィキではファイルのアップロードが無効になっています',
+	'wmu-gallery-success' => '画像をギャラリーに追加しました。画像をさらに追加するかギャラリーを挿入するには以下をクリック。',
+	'wmu-gallery-btn1' => '画像をもう一つ追加',
+	'wmu-gallery-btn2' => '記事にギャラリーを挿入',
+	'wmu-no-preview' => 'プレビューモードでは記事に画像を追加できません',
+	'wmu-no-protect' => 'このページは保護されており画像を追加できません',
+	'wmu-no-rights' => 'このページに画像を追加する権限がありません',
 );
 
 /** Korean (한국어) */
@@ -908,6 +958,7 @@ $messages['no'] = array(
 	'wmu-flickr' => 'Flickr',
 	'wmu-upload-btn' => 'Last opp',
 	'wmu-find-btn' => 'Finn',
+	'wmu-conflict-inf' => '<h1>Ojsann, en fil med det navnet finnes allerede.</h1>Hva vil du gjøre med <b>$1</b>?',
 	'wmu-rename' => 'Gi bildet ditt nytt navn',
 	'wmu-existing' => 'Bruke eksisterende bilde',
 	'wmu-insert' => 'Sett inn',
@@ -943,6 +994,7 @@ $messages['no'] = array(
 	'wmu-hide-license-msg' => 'skjul lisenstekst',
 	'wmu-show-license-msg' => 'vis lisenstekst',
 	'wmu-notallowed' => 'Du kan ikke laste opp bilder på denne wikien',
+	'wmu-placeholder' => 'Plassholder',
 	'wmu-gallery' => 'Galleri',
 	'wmu-columns' => '$1 {{PLURAL:$1|kolonne|kolonner}}',
 	'wmu-column' => 'Kolonner',
@@ -1042,6 +1094,40 @@ $messages['pms'] = array(
 	'wmu-no-rights' => "A l'ha pa 'l përmess ëd gionté dle figure a sta pàgina-sì",
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Luckas Blade
+ */
+$messages['pt-br'] = array(
+	'wmu-upload' => 'Carregar',
+	'wmu-flickr' => 'Flickr',
+	'wmu-upload-btn' => 'Carregar',
+	'wmu-existing' => 'Usar imagem existente',
+	'wmu-insert' => 'Inserir',
+	'wmu-name' => 'Nome',
+	'wmu-license' => 'Licença',
+	'wmu-size' => 'Tamanho',
+	'wmu-width' => 'Largura',
+	'wmu-insert2' => 'Inserir arquivo',
+	'wmu-insert3' => 'Inserir esta imagem',
+	'wmu-recent-inf' => 'Imagens recentemente carregadas',
+	'wmu-back' => 'voltar',
+	'wmu-close' => 'fechar',
+	'wmu-warn3' => 'Você precisa especificar o nome do arquivo antes!',
+	'wmu-imagebutton' => 'Adicionar imagens',
+	'wmu-create' => 'Adicionar imagem',
+	'wmu-filetype-missing' => 'Este carregamento está sem uma extensão de arquivo',
+	'wmu-filetype-incorrect' => 'Este carregamento tem uma extensão de arquivo incorreta',
+	'wmu-show-message' => 'mostrar mensagem',
+	'wmu-hide-message' => 'ocultar mensagem',
+	'wmu-gallery' => 'Galeria',
+	'wmu-columns' => '$1 {{PLURAL:$1|coluna|colunas}}',
+	'wmu-column' => 'Colunas',
+	'wmu-gallery-btn1' => 'Adicionar outra imagem',
+	'wmu-gallery-btn2' => 'Inserir galeria no artigo',
+	'wmu-no-protect' => 'Esta página está protegida, você não pode adicionar imagens a ela',
+	'wmu-no-rights' => 'Você não está autorizado a adicionar imagens nesta página',
+);
+
 /** Russian (Русский)
  * @author Lockal
  */
@@ -1127,6 +1213,7 @@ $messages['sv'] = array(
  */
 $messages['te'] = array(
 	'wmu-name' => 'పేరు',
+	'wmu-size' => 'పరిమాణం',
 	'wmu-width' => 'వెడల్పు',
 	'wmu-optional' => '  (ఐచ్చికం)',
 	'wmu-back' => 'వెనక్కి',

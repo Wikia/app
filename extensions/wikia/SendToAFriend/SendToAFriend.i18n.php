@@ -270,6 +270,7 @@ Wenn du glaubst, dass dieses Angebot missbraucht wird, teile uns dies bitte unte
  */
 $messages['es'] = array(
 	'invitespecialpage' => 'Invita a tus amigos a participar en Wikia',
+	'sendtoafriend-desc' => '[[Special:InviteSpecialPage|Invita a tus amistades a unirse a Wikia]]',
 	'sendtoafriend-button-desc' => 'Muestra un botón de "Enviar a una amistad" en las páginas',
 	'stf_button' => 'Envía este artículo a un amigo',
 	'stf_after_reg' => '[[Special:InviteSpecialPage|¡Invita a una amistad a unirse a Wikia!]]',
@@ -336,11 +337,21 @@ $messages['fa'] = array(
 );
 
 /** Finnish (Suomi)
+ * @author Centerlink
  * @author Crt
  */
 $messages['fi'] = array(
 	'invitespecialpage' => 'Kutsu ystävä Wikiaan',
+	'stf_msg_label' => 'Lähetettävä viesti',
+	'stf_name_label' => 'Nimesi',
+	'stf_email_label' => 'Sähköpostiosoitteesi',
 	'stf_frm4_cancel' => 'Peruuta',
+	'stf_frm6' => 'Sulje tämä ikkuna',
+	'stf_email_sent' => 'Lähetä vahvistus',
+	'stf_your_name' => 'Nimesi',
+	'stf_your_address' => 'Sähköpostiosoitteeseesi',
+	'stf_message' => 'Viesti',
+	'stf_select_all' => 'Valitse kaikki',
 );
 
 /** French (Français)
@@ -764,6 +775,40 @@ Probeer het nog eens.',
 	'stf_select_friends' => 'Selecteer vrienden:',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['no'] = array(
+	'stf_name_label' => 'Ditt navn',
+	'stf_email_label' => 'Din e-postadresse',
+	'stf_frm3_send' => 'Hei!
+
+$1 tenkte du ville like denne siden fra Wikia!
+
+$2
+
+Kom og sjekk den ut!',
+	'stf_frm3_invite' => 'Hei!
+
+Jeg har nettopp blitt med på denne Wikiaen... $1
+
+Kom og sjekk den ut!',
+	'stf_frm4_send' => 'Send',
+	'stf_frm4_cancel' => 'Avbryt',
+	'stf_frm4_invite' => 'Send invitasjon!',
+	'stf_multiemail' => 'Send til mer enn en mottager?',
+	'stf_frm6' => 'Lukk dette vinduet',
+	'stf_throttle' => 'Av sikkerhetsmessige årsaker kan du bare sende $1 {{PLURAL:$1|invitasjon|invitasjoner]] per dag.',
+	'stf_abuse' => 'Denne e-posten ble sendt av $1 via Wikia.
+Hvis du tror den ble sendt ved en feil, vennligst si ifra til support@wikia.com.',
+	'stf_ctx_invite' => 'Mer enn en? Separer med kommaer - opp til $1!',
+	'stf_ctx_check' => 'Sjekk kontakter',
+	'stf_ctx_empty' => 'Du har ingen kontakter på denne kontoen.',
+	'stf_sending' => 'Vennligst vent...',
+	'stf_email_sent' => 'Send bekreftelse',
+	'stf_back_to_article' => 'Tilbake til artikkel',
+);
+
 /** Polish (Polski) */
 $messages['pl'] = array(
 	'invitespecialpage' => 'Zaproś znajomych do Wikii!',
@@ -895,6 +940,7 @@ S'a pensa ch'a sia stàit mandà për eror, për piasì ch'an lo fasa savèj a s
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Jesielt
+ * @author Luckas Blade
  */
 $messages['pt-br'] = array(
 	'invitespecialpage' => 'Convide amigos para se juntar ao Wikia',
@@ -938,29 +984,75 @@ Se você acha que essa mensagem foi enviada errada, por favor, nos avise pelo em
 	'stf_sending' => 'Por favor, aguarde...',
 	'stf_email_sent' => 'Enviar confirmação',
 	'stf_back_to_article' => 'Volte ao artigo',
+	'stf_your_password' => 'Sua senha',
+	'stf_your_name' => 'Seu nome',
 );
 
 /** Russian (Русский)
  * @author Lockal
+ * @author Александр Сигачёв
  */
 $messages['ru'] = array(
 	'invitespecialpage' => 'Пригласите друзей присоединиться к Викии',
+	'sendtoafriend-desc' => '[[Special:InviteSpecialPage|Пригласите друзей присоединиться к Wikia]]',
+	'sendtoafriend-button-desc' => 'Отображение на страницах кнопки «Отправить другу»',
 	'stf_button' => 'Отправить эту статью другу',
+	'stf_after_reg' => '[[Special:InviteSpecialPage|Пригласить друга присоединиться к Wikia!]]',
+	'stf_subject' => '$2 отправил вам статью из $1!',
 	'stf_confirm' => 'Сообщение отправлено! Пригласить других друзей?',
+	'stf_error' => 'Ошибка при отправке письма.',
 	'stf_error_name' => 'Вы не указали своё имя.',
-	'stf_error_from' => 'Вы не указали свой email-адрес.',
-	'stf_error_to' => 'Вы не указали email-адрес вашего друга.',
+	'stf_error_from' => 'Вы не указали свой адрес электронной почты.',
+	'stf_error_to' => 'Вы не указали адрес электронной почты вашего друга.',
+	'stf_frm1' => 'Ваш адрес электронной почты:',
+	'stf_frm2' => 'Адреса электронной почты (Более одного? Разделяйте запятыми)',
 	'stf_msg_label' => 'Сообщение для отправки',
 	'stf_name_label' => 'Ваше имя',
 	'stf_email_label' => 'Ваш адрес эл. почты',
+	'stf_frm3_send' => 'Привет!
+
+$1 считает, что вам понравится эта страница из проекта Wikia!
+
+$2
+
+Заходите посмотреть!',
+	'stf_frm3_invite' => 'Привет!
+
+Я только что зарегистрировался в этой вики на Wikia… $1
+
+Заходи посмотреть!',
 	'stf_frm4_send' => 'Отправить',
 	'stf_frm4_cancel' => 'Отменить',
 	'stf_frm4_invite' => 'Отправить приглашение!',
+	'stf_multiemail' => 'Отправить более чем одному адресату?',
+	'stf_frm5' => '(адрес этого сайта будет добавлен к вашему сообщению)',
 	'stf_frm6' => 'Закрыть это окно',
+	'stf_throttle' => 'По соображениям безопасности, вы можете отправить не более $1 {{PLURAL:$1|приглашения|приглашений|приглашений}} в день.',
+	'stf_abuse' => 'Это письмо было отправлено пользователем $1 из Wikia.
+Если вы считаете, что оно было отправлено по ошибке, пожалуйста, дайте нам знать по адресу support@wikia.com.',
+	'stf_ctx_invite' => 'Больше чем один? Разделяйте запятыми — всего до $1!',
+	'stf_ctx_check' => 'Просмотреть контакты',
+	'stf_ctx_empty' => 'В этой учётной записи у вас нет контактов.',
+	'stf_ctx_invalid' => 'Указан неправильный логин или пароль. Пожалуйста, попробуйте ещё раз.',
 	'stf_sending' => 'Пожалуйста, подождите…',
 	'stf_email_sent' => 'Отправить подтверждение',
-	'stf_back_to_article' => 'Возврат к статье',
+	'stf_back_to_article' => 'Вернуться к статье',
+	'stf_most_emailed' => 'Наиболее часто отправляемые статьи на $1 сегодня:',
+	'stf_most_popular' => 'Самые популярные статьи на $1:',
+	'stf_choose_from_existing' => 'Выберите один из существующих контактов:',
+	'stf_add_emails' => 'Добавление электронных адресов:',
+	'stf_your_email' => 'Ваша почтовая служба',
+	'stf_your_login' => 'Ваш логин',
+	'stf_your_password' => 'Ваш пароль',
+	'stf_your_name' => 'Ваше имя',
+	'stf_your_address' => 'Ваш адрес электронной почты',
+	'stf_your_friends' => 'Адреса|ваших друзей',
+	'stf_we_dont_keep' => 'Мы не сохраняем эти адрес электронной почты и пароль',
+	'stf_need_approval' => 'Без вашего согласия письма отправляться не будут',
 	'stf_message' => 'Сообщение',
+	'stf_instructions' => '1. Выберите друзей.|2. Нажмите «$1»',
+	'stf_select_all' => 'Выбрать всех',
+	'stf_select_friends' => 'Выбрать друзей:',
 );
 
 /** Telugu (తెలుగు)

@@ -33,6 +33,20 @@ $messages['br'] = array(
 	'wikiawidget' => 'Widget wikia',
 );
 
+/** Czech (Česky)
+ * @author Mr. Richard Bolla
+ */
+$messages['cs'] = array(
+	'wikiawidget' => 'Wikia udělátko',
+);
+
+/** Spanish (Español)
+ * @author Translationista
+ */
+$messages['es'] = array(
+	'wikiawidget' => 'WikiaWidget',
+);
+
 /** Finnish (Suomi)
  * @author Centerlink
  */
@@ -66,6 +80,13 @@ $messages['hsb'] = array(
  */
 $messages['ia'] = array(
 	'wikiawidget' => 'WikiaWidget',
+);
+
+/** Japanese (日本語)
+ * @author 青子守歌
+ */
+$messages['ja'] = array(
+	'wikiawidget' => 'ウィキアウィジット',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

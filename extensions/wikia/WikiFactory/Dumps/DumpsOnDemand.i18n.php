@@ -39,6 +39,20 @@ Wikia maak outomaties rugsteunkopieë van alle wiki's.",
 	'dump-database-info-more' => '<a href="http://www.wikia.com/wiki/Wikia:Database_download">Meer inligting</a>.',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'dump-database' => 'Копіі базы зьвестак',
+	'dump-database-curr-pages-info' => '(Гэтая вэрсія, звычайна, лепшая для выкарыстаньня робатамі)',
+	'dump-database-full-pages' => 'Цяперашнія старонкі і гісторыя',
+	'dump-database-full-pages-info' => '(Папярэджаньне: гэты файл можа быць занадта вялікім)',
+	'dump-database-request' => 'Запытаць абнаўленьне',
+	'dump-database-request-submit' => 'Даслаць запыт',
+	'dump-database-info-more' => 'Калі ласка, глядзіце дадатковую інфармацыю <a href="http://community.wikia.com/wiki/Help:Database_download">тут</a>',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
@@ -70,6 +84,23 @@ $messages['bs'] = array(
 	'dump-database-curr-pages' => 'Trenutne stranice',
 	'dump-database-request' => 'Zahtjevaj ažuriranje',
 	'dump-database-request-submit' => 'Pošalji zahtjev',
+);
+
+/** Czech (Česky)
+ * @author Mr. Richard Bolla
+ */
+$messages['cs'] = array(
+	'dump-database' => 'Výstupy databáze',
+	'dump-database-info' => 'Výstupy z databáze mohou být využity pro osobní zálohování (Wikia automaticky produkuje odděléné zálohy všech wiki) nebo pro obsluhu botů',
+	'dump-database-curr-pages' => 'Aktuální stránky',
+	'dump-database-curr-pages-info' => '(Tato verze je obvykle nejlepší pro použití bota)',
+	'dump-database-full-pages' => 'Aktuální stránky a historie',
+	'dump-database-full-pages-info' => '(Upozornění: tento soubor může být velmi velký)',
+	'dump-database-request' => 'Vyžadována aktualizace',
+	'dump-database-request-info' => '(Výstupy jsou obvykle generovány každý týden)',
+	'dump-database-request-submit' => 'Odeslat požadavek',
+	'dump-database-request-requested' => 'Žádost o výstup z databáze odeslána',
+	'dump-database-info-more' => 'Prosím vizte <a href="http://community.wikia.com/wiki/Help:Database_download">zde</a> pro více informací',
 );
 
 /** German (Deutsch)
@@ -107,6 +138,7 @@ $messages['es'] = array(
 );
 
 /** Finnish (Suomi)
+ * @author Centerlink
  * @author Crt
  */
 $messages['fi'] = array(
@@ -119,6 +151,7 @@ $messages['fi'] = array(
 	'dump-database-request' => 'Pyydä päivitystä',
 	'dump-database-request-info' => '(Vedokset luodaan yleensä viikoittain)',
 	'dump-database-request-submit' => 'Lähetä pyyntö',
+	'dump-database-request-requested' => 'Pyyntö tietokantavedoksesta lähetetty',
 	'dump-database-info-more' => '<a href="http://www.wikia.com/wiki/Wikia:Database_download">Katso lisätietoja</a>',
 );
 
@@ -155,6 +188,14 @@ $messages['gl'] = array(
 	'dump-database-request-submit' => 'Enviar a solicitude',
 	'dump-database-request-requested' => 'Enviouse a solicitude da copia da base de datos',
 	'dump-database-info-more' => 'Por favor, <a href="http://www.wikia.com/wiki/Wikia:Database_download">lea isto</a> para obter máis información',
+);
+
+/** Hebrew (עברית)
+ * @author 0ftal
+ */
+$messages['he'] = array(
+	'dump-database' => 'גיבויי מסד הנתונים',
+	'dump-database-info' => 'מגבה מסד נתונים יכול לשמש כגיבוי אישי (ויקיה מייצרת גיבויים נפרדים של כל הויקי באופן אוטומטי) או עבור רובוטי התחזוקה',
 );
 
 /** Hungarian (Magyar)
