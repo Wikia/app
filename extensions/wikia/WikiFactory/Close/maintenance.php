@@ -246,6 +246,16 @@ class CloseWikiMaintenance {
 					Wikia::log( __CLASS__, "info", "{$row->city_dbname} dropped from cluster {$cluster}" );
 
 					/**
+					 * update search index
+					 */
+					$cmd = sprintf(
+						"curl %s -H \"Content-Type: text/xml\" --data-binary '<delete><query>wid:%d</query></delete>'",
+						$wgSolrIndexer, $row->city_id
+					);
+					wfShellExec( $cmd, $retval );
+					Wikia::log( __CLASS__, "info", "search index removed from {$wgSolrIndexer}" );
+
+					/**
 					 * there is nothing to set because row in city_list doesn't
 					 * exists
 					 */
