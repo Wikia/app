@@ -105,7 +105,10 @@ class MostvisitedpagesPage extends QueryPage {
 		if ( !empty($this->mArticle) ) {
 			$where .= " and lower(page_title) like lower('%".htmlspecialchars($this->mArticle)."%') ";
 		}
-		if ( !empty($this->mArticleId) && ($this->mArticleId != 'latest') ) { 
+		if ( !empty($this->mArticleId) && ( $this->mArticleId == 'latest' ) ) {
+			$where .= " and prev_diff > 0 ";
+		}
+		if ( !empty($this->mArticleId) && ( $this->mArticleId != 'latest' ) ) { 
 			$where .= " and page_id = '".$this->mArticleId."' ";
 		}
 		$sql = "SELECT 'Mostpopularpages' as type, page_namespace as namespace, page_title as title, " . $this->order_column . " as value FROM $page, $page_visited where $where";
