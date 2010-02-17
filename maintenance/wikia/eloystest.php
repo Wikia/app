@@ -79,9 +79,14 @@ function testWF() {
 	print( WikiFactory::UrlToId( 'http://memory-alpha.org/it/' ) ) . "\n";
 }
 
+function curlSolrUpdate() {
+	// curl http://10.6.30.17:8983/solr/update  -H "Content-Type: text/xml" --data-binary '<delete><query>wid:12345</query></delete>'
+	
+}
+
 #
 # main
 #
 #testDelayedEmails();
 #testStomp();
-testWF();
+#testWF();
