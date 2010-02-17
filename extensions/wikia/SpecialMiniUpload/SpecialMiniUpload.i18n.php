@@ -55,6 +55,13 @@ $messages['br'] = array(
 	'rightalign-tooltip' => 'Steudañ a-zehoù',
 );
 
+/** Spanish (Español)
+ * @author Manuelt15
+ */
+$messages['es'] = array(
+	'insertimage' => 'Insertar Imagen',
+);
+
 /** Finnish (Suomi)
  * @author Centerlink
  */
@@ -173,6 +180,13 @@ $messages['pms'] = array(
 	'insertimage' => 'Anserì la Plancia',
 	'leftalign-tooltip' => 'Alinia a snista',
 	'rightalign-tooltip' => 'Alinia a drita',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Luckas Blade
+ */
+$messages['pt-br'] = array(
+	'insertimage' => 'Inserir imagem',
 );
 
 /** Russian (Русский)

@@ -27,6 +27,14 @@ $messages['br'] = array(
 	'helperPanel_widgets' => 'Va widgetoù',
 );
 
+/** Spanish (Español)
+ * @author Translationista
+ */
+$messages['es'] = array(
+	'helperPanel_help' => 'Widget de ayuda',
+	'helperPanel_widgets' => 'Mis widgets',
+);
+
 /** French (Français)
  * @author IAlex
  */
@@ -107,5 +115,13 @@ $messages['pt-br'] = array(
 $messages['ru'] = array(
 	'helperPanel_help' => 'Справочный виджет',
 	'helperPanel_widgets' => 'Мои виджеты',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'helperPanel_help' => 'Віджет довідки',
+	'helperPanel_widgets' => 'Мої віджети',
 );
 

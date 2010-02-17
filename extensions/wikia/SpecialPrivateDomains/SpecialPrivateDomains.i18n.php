@@ -18,6 +18,13 @@ $messages['en'] = array(
 	'privatedomainsinstructions' => "Below is the list of email domains allowed for editors of this wiki. Each line designates an email suffix that is given access for editing. This should be formatted with one suffix per line. For example:</p><p style=\"width: 20%; padding:5px; border: 1px solid grey;\">cs.stanford.edu<br /> stanfordalumni.org</p><p>This would allow edits from anyone with the email address whatever@cs.stanford.edu or whatever@stanfordalumni.org</p><p><b>Enter the allowed domains in the text box below, and click \"save\".</b>"
 );
 
+/** Message documentation (Message documentation)
+ * @author Siebrand
+ */
+$messages['qqq'] = array(
+	'privatedomains_affiliatenamelabel' => 'Leading newline does not make sense. Consider hardcoding it.',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */

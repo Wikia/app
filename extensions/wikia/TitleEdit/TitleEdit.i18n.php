@@ -20,12 +20,27 @@ $messages['qqq'] = array(
 	'titleedit' => 'This is shown next to the H1 element (article title) and opens the edit form (full article edit) when clicked',
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'titleedit' => 'wysig',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
 $messages['br'] = array(
 	'titleedit-desc' => 'Ouzhpennañ ur bouton kemmañ an titloù e penn uhelañ ar pajennoù',
 	'titleedit' => 'kemmañ',
+);
+
+/** Spanish (Español)
+ * @author Translationista
+ */
+$messages['es'] = array(
+	'titleedit-desc' => 'Añade el botón Editar título al inicio de las páginas',
+	'titleedit' => 'editar',
 );
 
 /** Finnish (Suomi)
@@ -86,6 +101,14 @@ $messages['nl'] = array(
 	'titleedit' => 'hernoemen',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'titleedit-desc' => 'Legger til en tittelredigeringsknapp på toppen av sider',
+	'titleedit' => 'rediger',
+);
+
 /** Occitan (Occitan)
  * @author Cedric31
  */
@@ -100,11 +123,21 @@ $messages['pl'] = array(
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
-	'titleedit-desc' => 'A gionta ël boton ëd modìfica tìtol a la sima dle pàgine',
+	'titleedit-desc' => 'A gionta ël boton ëd modìfica dël tìtol an cò dle pàgine',
 	'titleedit' => 'modìfica',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Jesielt
+ * @author Luckas Blade
+ */
+$messages['pt-br'] = array(
+	'titleedit-desc' => 'Adiciona o botão "editar título" no topo das páginas',
+	'titleedit' => 'editar',
 );
 
 /** Russian (Русский)
@@ -113,6 +146,14 @@ $messages['pms'] = array(
 $messages['ru'] = array(
 	'titleedit-desc' => 'Добавляет кнопку изменения названия в верхнюю часть страницы',
 	'titleedit' => 'править',
+);
+
+/** Turkish (Türkçe)
+ * @author Joseph
+ */
+$messages['tr'] = array(
+	'titleedit-desc' => 'Sayfaların en üstüne başlık değiştir düğmesini ekler',
+	'titleedit' => 'değiştir',
 );
 
 /** Ukrainian (Українська)

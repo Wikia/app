@@ -19,6 +19,13 @@ $messages['af'] = array(
 	'wikiaupload' => 'Wikia-oplaai',
 );
 
+/** Arabic (العربية)
+ * @author OsamaK
+ */
+$messages['ar'] = array(
+	'wikiaupload' => 'رفع ويكيا',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  */
@@ -31,6 +38,13 @@ $messages['be-tarask'] = array(
  */
 $messages['br'] = array(
 	'wikiaupload' => 'Enporzhiañ Wikia',
+);
+
+/** Czech (Česky)
+ * @author Mr. Richard Bolla
+ */
+$messages['cs'] = array(
+	'wikiaupload' => 'Wikia načtení',
 );
 
 /** Spanish (Español)
@@ -59,6 +73,13 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'wikiaupload' => 'Cargar en Wikia',
+);
+
+/** Hebrew (עברית)
+ * @author 0ftal
+ */
+$messages['he'] = array(
+	'wikiaupload' => 'העלאה לוויקיה',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -136,5 +157,12 @@ $messages['pms'] = array(
  */
 $messages['ru'] = array(
 	'wikiaupload' => 'WikiaЗагрузка',
+);
+
+/** Turkish (Türkçe)
+ * @author Joseph
+ */
+$messages['tr'] = array(
+	'wikiaupload' => 'WikiaYükleme',
 );
 

@@ -15,33 +15,42 @@ Would you like to go to the [[{{MediaWiki:Mainpage}}|Main page]] or perhaps a [[
  * @author Y-M D
  */
 $messages['br'] = array(
-	'outbound-screen-login-text' => '< href="$1">Krouiñ ur gont</a> pe <a href="$2">kevreit gant ho kont</a> evit tremen e biou d\'ar bajenn-mañ en dazont',
-);
+	'outbound-screen-login-text' => "[[Special:UserLogin/signup|Krouit ur gont]] pe [[Special:UserLogin|kevreit gant ho kont]] evit tremen e biou d'ar bajenn-mañ en dazont",
+	'outbound-screen-already-logged-in-no-link' => "N'ez eus pal ebet.
+N'eus netra da welet amañ !
 
-/** German (Deutsch) */
-$messages['de'] = array(
+Ha fellout a rafe deoc'h mont da welet ar [[{{MediaWiki:Mainpage}}|bajenn degemer]] pe marteze ur [[Special:Random|bajenn dre zegouezh]] ?",
+	'outbound-screen-you-are-leaving' => "Emaoc'h o kuitaat Wikia.",
 );
 
 /** Spanish (Español) */
 $messages['es'] = array(
-);
-
-/** Persian (فارسی) */
-$messages['fa'] = array(
+	'outbound-screen-login-text' => '<a href="$1">Crea una cuenta</a> o <a href="$2">si ya la tienes, accede a ella</a> para evitar esta página en el futuro',
 );
 
 /** French (Français)
+ * @author IAlex
  * @author Peter17
  */
 $messages['fr'] = array(
-	'outbound-screen-login-text' => '<a href="$1">Créez un compte</a> ou <a href="$2">identifiez-vous sur votre compte existant</a> pour éviter cette page à l\'avenir',
+	'outbound-screen-login-text' => "[[Special:UserLogin/signup|Créez un compte]] ou [[Special:UserLogin|identifiez-vous sur votre compte existant]] pour éviter cette page à l'avenir",
+	'outbound-screen-already-logged-in-no-link' => "Il n'ya pas de cible.
+Il n'y a rien à voir ici !
+
+Voudriez-vous aller à la [[{{MediaWiki:Mainpage}}|page d'accueil]] ou peut-être [[Special:Random|une page au hasard]] ?",
+	'outbound-screen-you-are-leaving' => 'Vous quittez maintenant Wikia.',
 );
 
 /** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(
-	'outbound-screen-login-text' => '<a href="$1">Cree unha conta</a> ou <a href="$2">acceda á súa conta existente</a> para saltar esta páxina no futuro',
+	'outbound-screen-login-text' => '[[Special:UserLogin/signup|Cree unha nova conta]] ou [[Special:UserLogin|acceda á súa conta existente]] para saltar esta páxina no futuro.',
+	'outbound-screen-already-logged-in-no-link' => 'Non hai definido ningún destino.
+Non hai nada que ver aquí!
+
+Desexa ir á [[{{MediaWiki:Mainpage}}|páxina principal]] ou quizais a unha [[Special:Random|páxina ao chou]]?',
+	'outbound-screen-you-are-leaving' => 'Nestes intres está a saír de Wikia.',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -62,11 +71,12 @@ $messages['hu'] = array(
  * @author McDutchie
  */
 $messages['ia'] = array(
-	'outbound-screen-login-text' => '<a href="$1">Crea un conto</a> o <a href="$2">aperi un session a tu conto existente</a> pro saltar iste pagina in le futuro',
-);
+	'outbound-screen-login-text' => '[[Special:UserLogin/signup|Crea un nove conto]] o [[Special:UserLogin|aperi un session a tu conto existente]] pro saltar iste pagina in le futuro.',
+	'outbound-screen-already-logged-in-no-link' => 'Nulle destination ha essite definite.
+Il ha nihil a vider hic!
 
-/** Italian (Italiano) */
-$messages['it'] = array(
+Vole tu ir al [[{{MediaWiki:Mainpage}}|pagina principal]] o forsan a un [[Special:Random|pagina aleatori]]?',
+	'outbound-screen-you-are-leaving' => 'Tu quita ora Wikia.',
 );
 
 /** Japanese (日本語)
@@ -80,14 +90,24 @@ $messages['ja'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'outbound-screen-login-text' => '<a href="$1">Создајте сметка</a> или <a href="$2">најавете се со постоечка сметка</a> за во иднина да не се појавува оваа страница',
+	'outbound-screen-login-text' => '[[Special:UserLogin/signup|Создајте нова сметка]] или [[Special:UserLogin|најавете се со постечка сметка]] за повеќе да не се прикажува оваа страница.',
+	'outbound-screen-already-logged-in-no-link' => 'Сè уште нема дестинација.
+Тука нема што да се види!
+
+Дали би сакале да појдете на [[{{MediaWiki:Mainpage}}|Главната страница]] или пак можеби на некоја [[Special:Random|случајна страница]]?',
+	'outbound-screen-you-are-leaving' => 'Сега ја напуштате Викија.',
 );
 
 /** Dutch (Nederlands)
  * @author Siebrand
  */
 $messages['nl'] = array(
-	'outbound-screen-login-text' => 'U kunt <a href="$1">een gebruiker aanmaken</a> of <a href="$2">aanmelden met een bestaande gebruiker</a> om deze pagina in de toekomst over te slaan',
+	'outbound-screen-login-text' => 'U kunt [[Special:UserLogin/signup|een gebruiker aanmaken]] of [[Special:UserLogin|aanmelden met een bestaande gebruiker]] om deze pagina in de toekomst over te slaan.',
+	'outbound-screen-already-logged-in-no-link' => 'Er is geen bestemming ingesteld.
+Er is hier niets te zien.
+
+Wilt u naar de [[{{MediaWiki:Mainpage}}|hoofdpagina]] gaan, of wellicht naar een [[Special:Random|Willekeurige pagina]]?',
+	'outbound-screen-you-are-leaving' => 'U verlaat nu Wikia.',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -109,7 +129,12 @@ $messages['oc'] = array(
  * @author Dragonòt
  */
 $messages['pms'] = array(
-	'outbound-screen-login-text' => '<a href="$1">Crea un cont</a> o <a href="$2">intra an tò cont esistent</a> për sauté sta pàgina-sì ant l\'avnì',
+	'outbound-screen-login-text' => "[[Special:UserLogin/signup|Crea un cont neuv]] o [[Special:UserLogin|intra an tò cont esistent]] për sauté sta pàgina-sì ant l'avnì.",
+	'outbound-screen-already-logged-in-no-link' => 'A-i é gnun-e destinassion ampostà.
+A-i é pa gnente da vardé ambelessì!
+
+Veul-lo andé a la [[{{MediaWiki:Mainpage}}|Pàgina prinsipal]] o miraco a na [[Special:Random|pàgina a asar]]?',
+	'outbound-screen-you-are-leaving' => "A l'é an camin ch'a chita Wikia.",
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -123,12 +148,18 @@ $messages['pt-br'] = array(
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
-	'outbound-screen-login-text' => '<a href="$1">Создайте учётную запись</a> или <a href="$2">представьтесь системе под существующей учётной записью</a>, чтобы эта страница не больше показывалась',
+	'outbound-screen-login-text' => '[[Special:UserLogin/signup|Создайте учётную запись]] или [[Special:UserLogin|представьтесь системе под существующей учётной записью]], чтобы эта страница не больше показывалась.',
+	'outbound-screen-already-logged-in-no-link' => 'Точка назначения не установлена.
+Здесь нечего смотреть!
+
+Желаете ли вы перейти на [[{{MediaWiki:Mainpage}}|главную страницу]] или, может быть, [[Special:Random|случайную страницу]]?',
+	'outbound-screen-you-are-leaving' => 'Вы покидаете Wikia.',
 );
 
 /** Ukrainian (Українська)
  * @author Prima klasy4na
  */
 $messages['uk'] = array(
-	'outbound-screen-login-text' => '<a href="$1">Створіть обліковий запис</a> або <a href="$2">увійдіть в існуючий обліковий запис</a>, щоб уникнути цієї сторінки в подальшому',
+	'outbound-screen-login-text' => '[[Special:UserLogin/signup|Створіть новий обліковий запис]] або [[Special:UserLogin|увійдіть в існуючий обліковий запис]], щоб пропустити цю сторінку в подальшому.',
 );
+

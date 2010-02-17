@@ -136,6 +136,16 @@ $messages['nl'] = array(
 	'wikiasearch-search-wikia' => 'Wikia doorzoeken',
 );
 
+/** Occitan (Occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'wikiasearch-titles-only' => 'Cercar pas que dins los títols de las paginas',
+	'wikiasearch-system-error-msg' => "A causa d'una error del sistèma, avèm pas pogut acomplir vòstra recèrca",
+	'wikiasearch-search-this-wiki' => 'Cercar pas que dins Wikia Central',
+	'wikiasearch-search-wikia' => 'Cercar dins Wikia',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt

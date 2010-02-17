@@ -141,16 +141,24 @@ $messages['bg'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
+	'daemonloader' => 'Karger diaoul',
+	'daemonloader_pagetitle' => 'Karger diaoul',
 	'daemonloader_createtask' => 'Krouiñ un trevell',
 	'daemonloader_listtask' => 'Roll an trevelloù',
+	'daemonloader_configure' => 'Kefluniañ an diaoul',
+	'daemonloader_daemonname' => 'Anv an diaoul',
 	'daemonloader_scriptname' => 'Anv ar skript',
 	'daemonloader_daemondesc' => 'Deskrivadur',
 	'daemonloader_inputparams' => 'Arventennoù ar moned',
 	'daemonloader_paramname' => 'Anv an arventenn',
+	'daemonloader_paramdesc' => 'Deskrivadur an arventenn',
 	'daemonloader_paramtype' => 'Seurt an arventenn',
 	'daemonloader_paramremove' => 'Dilemel ?',
+	'daemonloader_removedaemon' => 'Dilemel an diaoul',
 	'daemonloader_paramdefvalue' => 'Talvoud dre ziouer',
 	'daemonloader_alldaemons' => 'An holl diaouled',
+	'daemonloader_loaddaemon' => 'Dibabit un diaoul da gemmañ pe krouit unan amañ a-is :',
+	'daemonloader_selectdaemon' => "Dibabit un diaoul evit kaout titouroù ha klikit war ar bouton evit mont d'an tennad da-heul",
 	'daemonloader_selectlist' => 'Dibab eus ar roll',
 	'daemonloader_search' => 'Klask :',
 	'daemonloader_daemonchanged' => 'Enrollet eo bet ho kemmoù',
@@ -162,8 +170,12 @@ $messages['br'] = array(
 	'daemonloader_date_yyyy' => 'bloavezh (YYYY)',
 	'daemonloader_wikilist' => 'Roll ar wikioù',
 	'daemonloader_gonextstep' => "Mont d'ar bazenn da heul",
+	'daemonloader_setparams' => 'Termeniñ talvoudennoù arventennoù moned an diaoul :',
+	'daemonloader_1step' => 'Tennad kentañ (dibab an diaoul)',
+	'daemonloader_2step' => 'Eil tennad (dibarzhioù an diaoul)',
 	'daemonloader_3step' => 'Trede tennad (dibarzhioù an trevell)',
 	'daemonloader_steps' => 'Ho tennad a-vremañ',
+	'daemonloader_daemoninfo' => 'Deskrivadur an diaoul',
 	'daemonloader_configtaskparams' => 'Kefluniañ arventennoù an trevell :',
 	'daemonloader_startdate' => 'Deiziad kregiñ',
 	'daemonloader_enddate' => 'Deiziad termen',
@@ -172,11 +184,13 @@ $messages['br'] = array(
 	'daemonloader_files' => 'restroù XLS',
 	'daemonloader_period' => 'Prantad an danevelloù',
 	'daemonloader_dateformat' => 'Furmad an deiziad : YYYYMMDD',
+	'daemonloader_emails_info' => "Roll ar chomlec'hioù postel dispartiet gant virgulennoù, evit pere e vo kaset disoc'hoù an trevell",
 	'daemonloader_day' => 'bemdez',
 	'daemonloader_week' => 'bep sizhun',
 	'daemonloader_month' => 'Bep miz',
 	'daemonloader_taskid' => 'Id',
 	'daemonloader_newtask' => 'Trevell nevez',
+	'daemonloader_daemonparams' => 'Arventennoù an diaoul',
 	'daemonloader_createdby' => 'Krouet gant',
 	'daemonloader_created' => 'Krouet',
 	'daemonloader_options' => 'Dibarzhioù',
@@ -650,6 +664,18 @@ $messages['pms'] = array(
 	'daemonloader_options' => 'Opsion',
 	'daemonloader_nojobsfound' => 'Pa gnun travaj trovà',
 	'daemonloader_removejobconfirm' => 'É-lo sigur?',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Luckas Blade
+ */
+$messages['pt-br'] = array(
+	'daemonloader_daemondesc' => 'Descrição',
+	'daemonloader_paramremove' => 'Remover?',
+	'daemonloader_paramdefvalue' => 'Valor padrão',
+	'daemonloader_week' => 'toda semana',
+	'daemonloader_month' => 'todo mês',
+	'daemonloader_options' => 'Opções',
 );
 
 /** Russian (Русский)

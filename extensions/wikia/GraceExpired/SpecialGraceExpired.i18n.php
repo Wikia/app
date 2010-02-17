@@ -30,6 +30,18 @@ $messages['af'] = array(
 $messages['br'] = array(
 	'graceexpired' => 'Echu eo gant ar gras',
 	'graceexpired-row' => "$1 (e $2, kemm ziwezhañ d'an $3)",
+	'graceexpired-header' => "Rollet e vez er pajenn-mañ an holl taolioù-esae hag a zo bet [[:Category:Abandoned|dilezet]], [[:Category:Trash_builds|stlapet]], termenet evel [[:Category:Build stubs|divraz]] pe evel [[:Category:Trial Builds|taolioù-esae]], ha n'int ket bet kemmet abaoe div sizhun d'an nebeutañ.
+
+Ne vez ''ket'' kemeret e kont an oberezhioù war ar pajennoù priziañ gant ar pajenn-mañ.",
+);
+
+/** Spanish (Español)
+ * @author Translationista
+ */
+$messages['es'] = array(
+	'graceexpired' => 'Período de gracia finalizado',
+	'graceexpired-row' => '$1 (en $2, última modificación el $3)',
+	'graceexpired-header' => "Esta página lista todas las versiones que o bien están [[:Category:Abandoned|abandonadas]], bien en la [[:Category:Trash_builds|basura]], son [[:Category:Build stubs|borradores]] o bien están en [[:Category:Trial Builds|pruebas]], y que no han sido editadas en, al menos, dos semanas. La actividad en las páginas de calificación '''no''' se tiene en cuenta aquí.",
 );
 
 /** French (Français)

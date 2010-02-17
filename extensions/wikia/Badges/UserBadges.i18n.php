@@ -118,6 +118,16 @@ $messages['de'] = array(
 	'user-badge-save-info' => 'Wenn du die Änderungen speichern möchtest, scrolle bitte zum Ende der Seite und klicke auf "Speichern".',
 );
 
+/** Finnish (Suomi)
+ * @author Centerlink
+ */
+$messages['fi'] = array(
+	'user-badge-invalid-color' => 'Kirjoitettu virheellinen heksadesimaaliarvo',
+	'user-badge-show-color' => 'Näytä väriyksityiskohdat',
+	'user-badge-hide-color' => 'Piilota väriyksityiskohdat',
+	'user-badge-logo-opt' => 'Kuva-asetukset:',
+);
+
 /** French (Français)
  * @author Peter17
  */

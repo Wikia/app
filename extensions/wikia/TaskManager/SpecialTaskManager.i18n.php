@@ -119,6 +119,15 @@ $messages['nl'] = array(
 	'taskmanager_tasklist' => 'Terugkeren naar de takenlijst',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'taskmanager' => 'Vis og administrer bakgrunnsoppgaver',
+	'taskmanager_title' => 'Vis og administrer bakgrunnsoppgaver',
+	'taskmanager_tasklist' => 'Gå tilbake til oppgaveliste',
+);
+
 /** Occitan (Occitan)
  * @author Cedric31
  */

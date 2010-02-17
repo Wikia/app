@@ -151,16 +151,28 @@ Klikit war « Mont d'ho kelaouenn » pa vo echuet ganeoc'h.",
 	'magcloud-discard-magazine-discard' => 'Disteuler ha mont er-maez',
 	'magcloud-discard-magazine-save' => 'Enrollañ ha kuitaat',
 	'magcloud-special-collection-title' => 'Sevel ur gelaouenn !',
+	'magcloud-special-collection-review-list-info' => 'Mat, dibabet ho peus $1 pennad{{PLURAL:$1||}} evit ho kelaouenn. M\'ho peus c\'hoant ouzhpenn re all, merdeit er wiki ha klikit war ar bouton "Ouzhpennañ" er boest ostilhoù amañ a-us !',
 	'magcloud-order-your-articles' => 'Urzhiañ ho pennadoù',
+	'magcloud-button-design-a-cover' => 'Krouiñ ur golo',
 	'magcloud-design-default-title' => "Va c'helaouenn $1",
 	'magcloud-design-default-subtitle' => 'Istitl',
 	'magcloud-design-review-list' => "Distreiñ d'ar roll adlenn",
 	'magcloud-design-preview' => 'Rakwelet',
 	'magcloud-design-image-selected' => '$1 diuzet',
 	'magcloud-preview-done' => 'Krouet eo bet ho kelaouenn.',
+	'magcloud-preview-back-to-cover' => 'Distreiñ da grouidigezh ar golo',
 	'magcloud-preview-save-magazine' => 'Enrollañ ho Kelaouenn',
 	'magcloud-preview-publish' => 'Embann ho Kelaouenn',
 	'magcloud-preview-generating-pdf' => 'Emeur ho krouinn ho Kelaouenn',
+	'magcloud-publish-status-title' => "Oc'h embann ho kelaouenn",
+	'magcloud-publish-status' => 'Mat ! Emaomp o vont da dreuskas ho kelaouenn.',
+	'magcloud-publish-done' => '...graet eo ! Adkas davet MagCloud...',
+	'magcloud-publish-ajax-initialize' => "O kevreañ da MagCloud emaoc'h...",
+	'magcloud-publish-ajax-login' => '...emeur bremañ o prientiñ an embann...',
+	'magcloud-publish-ajax-publication' => '...o prientiñ ar reked...',
+	'magcloud-publish-ajax-issue' => "...oc'h echuiñ ar pellgargañ...",
+	'magcloud-publish-ajax-upload' => "...hag un tamm kempenn, evel m'o deus lavaret deoc'h ho kerent...",
+	'magcloud-publish-ajax-processing' => "...bremañ pelec'h emañ ar bouton bras ruz EMBANN...",
 );
 
 /** French (Français)
@@ -478,6 +490,17 @@ Onze excuses!',
 	'magcloud-publish-ajax-processing' => 'Bezig met het zoeken naar de rode knop met "Publiceren"...',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'magcloud-add-article-already' => "'''$1''' allerede lagt til",
+	'magcloud-toolbar-step' => 'Steg $1: $2',
+	'magcloud-toolbar-add' => 'Legg til',
+	'magcloud-toolbar-articles-count' => '<big>$1</big> {{PLURAL:$1|artikkel|artikler}}',
+	'magcloud-discard-magazine-save' => 'Lagre og avslutt',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
@@ -538,6 +561,14 @@ S'a sërca d'ispirassion, ch'a daga n'ociada a l'esempi sì-sota!",
 	'magcloud-publish-ajax-processing' => "...adess andoa a l'é ël gross boton ross PÙBLICA...",
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Luckas Blade
+ */
+$messages['pt-br'] = array(
+	'magcloud-toolbar-add' => 'Adicionar',
+	'magcloud-discard-magazine-save' => 'Salvar e sair',
+);
+
 /** Tarandíne (Tarandíne)
  * @author Joetaras
  */
@@ -564,6 +595,7 @@ $messages['ru'] = array(
 	'magcloud-special-collection-review-list-info' => 'Замечательно, вы выбрали $1 {{PLURAL:$1|статью|статьи|статей}} для своего журнала. Если вы хотите добавить ещё, просто посетите другие страницы и нажмите «Добавить» на панели вверху!',
 	'magcloud-order-your-articles' => 'Измените порядок ваших статей',
 	'magcloud-button-design-a-cover' => 'Разработать обложку',
+	'magcloud-design-default-title' => 'Мой журнал $1',
 	'magcloud-design-default-subtitle' => 'Подзаголовок',
 	'magcloud-design-review-list' => 'Возврат к обзорному списку',
 	'magcloud-design-preview' => 'Предпросмотр',

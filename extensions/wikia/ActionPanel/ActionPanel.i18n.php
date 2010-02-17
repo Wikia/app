@@ -149,6 +149,21 @@ $messages['gsw'] = array(
 	'actionpanel-desc' => 'E handlig Popup, wu s Dir megli macht Artikel z kategorisiere, umznänne un z bearbeite1',
 );
 
+/** Hebrew (עברית)
+ * @author 0ftal
+ */
+$messages['he'] = array(
+	'action_panel_edit_title' => 'תשובה',
+	'action_panel_title' => 'לוח פעולות מהירות',
+	'action_panel_categorize' => 'לחלק לקטגוריות',
+	'action_panel_categorize_help' => 'קטגוריה אחת בכל שורה',
+	'action_panel_categories_summary' => 'הוספת קטגוריות',
+	'action_panel_save_success' => 'המאמר שלך נשמר.',
+	'action_panel_rename_success' => 'שם המאמר שלך שונה.',
+	'action_panel_categorize_success' => 'הקטגוריות שלך נוספו.',
+	'actionpanel-desc' => 'חלון פופ-אפ שימושי שמאפשר לך לחלק לקטגוריות, לשנות שמות דפים ועריכתם.',
+);
+
 /** Hungarian (Magyar)
  * @author Dani
  * @author Glanthor Reviol

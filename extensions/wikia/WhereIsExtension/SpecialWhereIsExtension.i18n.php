@@ -50,6 +50,13 @@ $messages['af'] = array(
 	'whereisextension-name-contains' => 'veranderlike-naam bevat',
 );
 
+/** Arabic (العربية)
+ * @author OsamaK
+ */
+$messages['ar'] = array(
+	'whereisextension-filter' => 'مُرشِّح',
+);
+
 /** Breton (Brezhoneg)
  * @author Gwenn-Ael
  * @author Y-M D
@@ -211,5 +218,13 @@ $messages['ru'] = array(
 	'whereisextension-filter' => 'Фильтр',
 	'whereisextension-all-groups' => 'Все группы',
 	'whereisextension-name-contains' => 'имя переменной содержит',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'whereisextension-submit' => 'వెతుకు',
+	'whereisextension-all-groups' => 'అన్ని గుంపులు',
 );
 

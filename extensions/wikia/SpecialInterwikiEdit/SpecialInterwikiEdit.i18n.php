@@ -154,6 +154,18 @@ $messages['nl'] = array(
 	'iwedit-success' => '<p>De verwijzing is aangemaakt.</p>',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'iwedit-title' => 'Interwiki Editor',
+	'iwedit-language-interwikis' => 'kun språkinterwikier',
+	'iwedit-all-interwikis' => 'alle interwikier',
+	'iwedit-update' => 'Oppdater',
+	'iwedit-error' => '<p>En feil oppsto.</p>',
+	'iwedit-success' => '<p>Opprettet lenke.</p>',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
@@ -165,6 +177,15 @@ $messages['pms'] = array(
 	'iwedit-update' => 'Modìfica',
 	'iwedit-error' => "<p>A l'é capitaje n'eror.</p>",
 	'iwedit-success' => '<p>Creassion dël colegament andàit bin.</p>',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Luckas Blade
+ */
+$messages['pt-br'] = array(
+	'iwedit-all-interwikis' => 'todos os interwikis',
+	'iwedit-update' => 'Atualizar',
+	'iwedit-error' => '<p>Ocorreu um erro.</p>',
 );
 
 /** Russian (Русский)

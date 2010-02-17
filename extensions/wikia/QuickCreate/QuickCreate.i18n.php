@@ -15,6 +15,13 @@ $messages['en'] = array(
 	'quickcreate' => 'submit your recipe',
 );
 
+/** Arabic (العربية)
+ * @author OsamaK
+ */
+$messages['ar'] = array(
+	'quickcreate' => 'أرسل وصفتك',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
@@ -89,11 +96,12 @@ $messages['oc'] = array(
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
-	'quickcreate-desc' => "A gionta un boton për creé neuva pàgina con possibilità d'intré ant ël sistem për utent anònim",
-	'quickcreate' => 'spediss toa partessipassion',
+	'quickcreate-desc' => "A gionta un boton për creé dle pàgina neuve con la possibilità d'intré ant ël sistema për j'utent anònim",
+	'quickcreate' => "ch'a manda soa arseta",
 );
 
 /** Russian (Русский)

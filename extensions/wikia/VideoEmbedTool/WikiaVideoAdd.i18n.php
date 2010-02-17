@@ -45,6 +45,21 @@ $messages['br'] = array(
 	'wva-notallowed' => "Ne c'hallit ket ensoc'hañ videoioù war ar wiki-mañ",
 );
 
+/** Czech (Česky)
+ * @author Mr. Richard Bolla
+ */
+$messages['cs'] = array(
+	'wva-success' => 'Stránka videa $1 byla úspěšně přidána.',
+	'wva-success-replaced' => 'Stránka videa $1 byla úspěšně nahrazena.',
+	'wva-failure' => 'Uveďte prosím platné parametry.',
+	'wva-name' => 'Zadejte název:',
+	'wva-url' => 'Zadejte URL:',
+	'wva-add' => 'Přidat',
+	'wva-title' => 'Přidat rychle video z URL',
+	'wva-notlogged' => 'Pro vkládání videí se musíte přihlásit nebo zaregistrovat.',
+	'wva-notallowed' => 'Na této wiki nemůžete vkládat videa.',
+);
+
 /** German (Deutsch) */
 $messages['de'] = array(
 	'wva-success' => 'Videoseite für $1 wurde erfolgreich erstellt.',
@@ -118,6 +133,15 @@ $messages['gl'] = array(
 	'wva-title' => 'Engadir un vídeo de xeito rápido desde un URL',
 	'wva-notlogged' => 'Debe acceder ao sistema ou rexistrarse para inserir vídeos.',
 	'wva-notallowed' => 'Non pode inserir vídeos neste wiki.',
+);
+
+/** Hebrew (עברית)
+ * @author 0ftal
+ */
+$messages['he'] = array(
+	'wva-add' => 'הוספה',
+	'wva-title' => 'הוספה מהירה של סרטון מכתובת',
+	'wva-notlogged' => 'אתה צריך להתחבר או להירשם בכדי להוסיף סרטונים.',
 );
 
 /** Hungarian (Magyar)

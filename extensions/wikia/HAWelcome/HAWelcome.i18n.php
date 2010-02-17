@@ -53,6 +53,11 @@ $messages['br'] = array(
 	'welcome-message-user' => "Demat, Degemer mat war {{SITENAME}} ! Trugarez da vezañ kemmet [[:$1]].
 
 Gallout a rit lezel ur gemennadenn war ma fajenn V [[$2|discussion]] ma c'hallan sikour ac'hanoc'h d'ober tra pe dra $3",
+	'welcome-message-anon' => "Demat, degemer mat war {{SITENAME}}. Trugarez evit ho tegasadennoù er pajenn [[:$1]].
+
+'''[[Special:Userlogin|Mar plij kevreit pe krouit ur gont]]'''. Un doare aes eo evit derc'hel ur roud eus ho tegasadennoù hag aesaat a ra ar c'hehentiñ gant peurest ar gumuniezh.
+
+Arabat kaout aon kas din ur gemenadenn war [[$2|ma fajenn kaozeadenn]] ma c'hellan sikour ac'hanoc'h evit tra pe dra ! $3",
 	'welcome-message-log' => 'Degemer un implijer nevez',
 );
 
@@ -397,6 +402,32 @@ Vennligst legg igjen en melding på [[$2|diskusjonssiden min]] om du trenger hje
 	'welcome-message-log' => 'ønsk ny bidragsyter velkommen',
 );
 
+/** Occitan (Occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'welcome-user-page' => "Aquesta pagina es vòstra pagina personala. I podètz apondre d'entresenhas que vos concernisson !
+
+==Mas contribucions==
+
+* [[Special:Contributions/{{PAGENAME}}|Mas contribucions]]
+
+==Mas paginas preferidas==
+
+* Podètz plaçar aicí de ligams cap a vòstras paginas preferidas del wiki !
+* Ligam cap a la pagina #2
+* Ligam cap a la pagina #3",
+	'welcome-message-user' => "Bonjorn, benvenguda sus {{SITENAME}} ! Mercés d'aver modificada la pagina [[:$1]].
+
+Podètz daissar un messatge sus ma pagina de [[$2|discussion]] se vos pòdi ajudar per qué que siá ! $3",
+	'welcome-message-anon' => "Bonjorn, benvenguda sus {{SITENAME}}. Mercés per vòstra contribucion a la pagina [[:$1]].
+
+'''Mercés de vos [[Special:Userlogin|connectar o de crear un compte]]'''. Es un mejan simple de gardar una traça de vòstras contribucions e aquò facilita la comunicacion amb la rèsta de la comunautat.
+
+Trantalhetz pas a daissar un messatge sus [[$2|ma pagina de discussion]] se vos pòdi ajudar per qué que siá ! $3",
+	'welcome-message-log' => 'Aculhir un novèl utilizaire',
+);
+
 /** Polish (Polski) */
 $messages['pl'] = array(
 	'welcome-user-page' => "== O mnie ==
@@ -533,5 +564,14 @@ Hej, välkommen till {{SITENAME}}. Tack för din ändring till [[:$1]] sidan.
 
 Lämna ett meddelande på [[$2|min diskussionssida]] om jag kan hjälpa till med något! $3",
 	'welcome-message-log' => 'välkomna nya bidragsgivare',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'welcome-message-user' => 'Привіт, ласкаво просимо до {{SITENAME}}! Дякуємо за редагування сторінки [[:$1]].
+
+Будь-ласка, залиште повідомлення на [[$2|моїй сторінці обговорення]], якщо я можу чим-небудь допомогти! $3',
 );
 

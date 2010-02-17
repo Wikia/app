@@ -95,10 +95,11 @@ $messages['ru'] = array(
 );
 
 /** Ukrainian (Українська)
+ * @author NickK
  * @author Prima klasy4na
  */
 $messages['uk'] = array(
-	'widgetdashboard-wrong-skin' => '<p>Панель віджетів найкраще працює з одною із нових тем оформлення, наприклад, <a href="./Special:WidgetDashboard?useskin=monaco">Монако</a>.</p><p>Будь ласка, змініть <a href="./Special:Preferences">ваші налаштування</a> для використанні цього інструменту.</p>',
-	'widgetdashboard-description' => 'Ця сторінка слугує місцем для перевірки ваших віджетів в роботі. Щоб побачити список всіх доступних віджетів перейдіть до [[Special:Widgets]].',
+	'widgetdashboard-wrong-skin' => '<p>Панель віджетів найкраще працює з однією із нових тем оформлення, наприклад, <a href="./Special:WidgetDashboard?useskin=monaco">Монако</a>.</p><p>Будь ласка, змініть <a href="./Special:Preferences">ваші налаштування</a> для використанні цього інструменту.</p>',
+	'widgetdashboard-description' => 'Ця сторінка служить для перевірки ваших віджетів в роботі. Щоб побачити список всіх доступних віджетів перейдіть до [[Special:Widgets]].',
 );
 

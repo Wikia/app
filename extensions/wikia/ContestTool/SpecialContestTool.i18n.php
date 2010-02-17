@@ -60,6 +60,15 @@ $messages['br'] = array(
 Dalc'hit soñj n'eo ket dalc'het en ur roll an disoc'hoù ha n'int ket aes da derriñ hep sikour ar skipailh teknikel er mare-mañ (emeur o kemm an dra-se).",
 );
 
+/** Spanish (Español)
+ * @author Manuelt15
+ */
+$messages['es'] = array(
+	'cntool-button-preview' => 'Previsualizar',
+	'cntool-button-save' => 'Guardar',
+	'cntool-label-preview' => 'Previsualización:',
+);
+
 /** Finnish (Suomi)
  * @author Crt
  */
@@ -166,6 +175,17 @@ $messages['nl'] = array(
 
 Bedenk u dat de resultaten nergens in logboeken worden opgeslagen en niet eenvoudig terug te draaien zijn zonder technische assistentie.
 Er wordt gewerkt aan het oplossen van deze tekortkoming.',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'cntool-label-select' => 'Skriv inn en gyldig sidetittel',
+	'cntool-button-preview' => 'Forhåndsvis',
+	'cntool-button-save' => 'Lagre',
+	'cntool-label-content' => 'Endre artikkelinnhold nedenfor:',
+	'cntool-label-preview' => 'Forhåndsvisning:',
 );
 
 /** Piedmontese (Piemontèis)

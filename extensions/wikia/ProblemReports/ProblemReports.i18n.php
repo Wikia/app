@@ -177,6 +177,13 @@ $messages['af'] = array(
 	'pr_msg_exchead' => 'Boodskap is te lank',
 );
 
+/** Arabic (العربية)
+ * @author OsamaK
+ */
+$messages['ar'] = array(
+	'pr_status_wait' => 'انتظر...',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  */
@@ -193,6 +200,7 @@ $messages['br'] = array(
 	'problemreports' => 'Roll danevelloù kudennoù',
 	'reportproblem' => 'Menegiñ ur gudennoù',
 	'prlogtext' => 'Danevelloù kudennoù',
+	'prlogheader' => "Roll ar c'hudennoù danevellet ha kemmoù ho statud",
 	'prlog_reportedentry' => 'en deus meneget ur gudenn war $1 ($2)',
 	'prlog_changedentry' => 'en deus merket ar gudenn  $1 evel "$2"',
 	'prlog_typeentry' => 'en deus kemmet seurt ar gudenn $1 da "$2"',
@@ -218,20 +226,29 @@ $messages['br'] = array(
 	'pr_thank_you' => "Trugarez evit bezañ meneget ar gudenn !
 
 [[Special:ProblemReports/$1|Tu 'zo deoc'h heuliañ emdroadur an diskoulmadenn]].",
+	'pr_thank_you_error' => "Ur fazi a zo bet pa 'veze kaset danevell ar gudenn, mar plij adklaskit diwezhatoc'h...",
+	'pr_spam_found' => 'Stroboù a zo bet kavet e diverradenn ho tanevell.
+Mar plij kemmit danvez an diverradenn.',
 	'pr_empty_summary' => 'Mar plij deskrivit buan ha buan ar gudenn',
 	'pr_empty_email' => "Mar plij roit ho chomlec'h postel",
+	'pr_mailer_notice' => 'Ar chomlec\'h postel o peus lakaet en ho penndibaboù implijer a vo lakaet e zonenn "Eus" ar postel, ar pezh a servijo d\'ar reseverien da respont dit.',
 	'pr_mailer_subject' => 'Danevell diwar-benn',
 	'pr_mailer_tmp_info' => "Posubl eo deoc'h kemmañ ho patromoù er respont [[MediaWiki:ProblemReportsResponses|amañ]].",
 	'pr_mailer_to_default' => 'Implijer Wikia',
 	'pr_mailer_go_to_wiki' => "Evit kas ur postel mar plij kit er [$1 ar wiki e lec'h ma 'z eus bet kaoz eus ar gudenn]",
 	'pr_total_number' => 'Niver hollek a danevelloù',
+	'pr_view_archive' => 'Gwelet an danevelloù diskouezet',
 	'pr_view_all' => 'Diskouez an holl danevelloù',
+	'pr_view_staff' => 'Diskouez an danevelloù evit pere ez eus ezhomm sikour ar staff',
 	'pr_raports_from_this_wikia' => 'Gwelet danevelloù ar Wikia-mañ hepken',
 	'pr_reports_from' => 'An danevelloù abaoe',
+	'pr_no_reports' => "N'eus danevell ebet o klotañ gant ho tezverkoù",
+	'pr_sysops_notice' => 'Ma fell deoc\'h kemmañ statud danevell ar gudenn adalek ho wiki, kit <a href="$1">amañ</a>...',
 	'pr_table_problem_id' => 'ID ar gudenn',
 	'pr_table_wiki_name' => 'Anv ar wiki',
 	'pr_table_problem_type' => 'Seurt ar gudenn',
 	'pr_table_page_link' => 'Pajenn',
+	'pr_table_date_submitted' => 'Deiziad kas',
 	'pr_table_reporter_name' => 'Anv an daneveller',
 	'pr_table_description' => 'Diskrivadur',
 	'pr_table_comments' => 'Evezhiadennoù',
@@ -240,11 +257,18 @@ $messages['br'] = array(
 	'pr_status_0' => "o c'hortoz",
 	'pr_status_1' => 'diskoulet',
 	'pr_status_2' => 'serret',
+	'pr_status_3' => "ezhomm 'zo sikour ar staff",
 	'pr_status_10' => 'dilemel an danevell',
+	'pr_status_undo' => 'Dizober kemm ar statud',
 	'pr_status_ask' => 'Kemmañ statud an danevell ?',
 	'pr_remove_ask' => 'Dilemel da viken an danevell ?',
 	'pr_status_wait' => 'gortozit...',
+	'pr_read_only' => "Ne c'heller ket ouzhpennañ danevelloù nevez er mare-mañ, mar plij adklaskit diwezhatoc'h.",
+	'pr_msg_exceeded' => "D'ar muiañ e c'heller lakaat 512 arouezenn er zonenn-se.
+Mar plij adskrivit ho kemenadenn.",
 	'pr_msg_exchead' => 'Re hir eo ar gemenadenn',
+	'right-problemreports_action' => 'Kemmañ statud ha seurt an DanevelloùKudennoù',
+	'right-problemreports_global' => 'Kemmañ statud ha seurt an DanevelloùKudennoù dre wikioù',
 );
 
 /** German (Deutsch) */
@@ -365,6 +389,7 @@ Los reportes que se hagan acá [[Special:ProblemReports|se mostrarán en el wiki
 	'pr_mailer_subject' => 'Problema reportado en',
 	'pr_mailer_tmp_info' => 'Puedes  [[MediaWiki:ProblemReportsResponses|editar respuestas convertidas en plantilla]]',
 	'pr_mailer_to_default' => 'Usuario Wikia',
+	'pr_mailer_go_to_wiki' => 'Para enviar un correo electrónico, por favor dirígete a [$ problema wiki ha sido reportado desde]',
 	'pr_total_number' => 'Número total de informes',
 	'pr_view_archive' => 'Ver problemas archivados',
 	'pr_view_all' => 'Mostrar todos los informes',
@@ -975,9 +1000,38 @@ Kort uw bericht alstublieft in.',
 	'right-problemreports_global' => "Status en type van probeemrapporten in alle wiki's wijzigen",
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
 $messages['no'] = array(
 	'problemreports' => 'Problemrapportsliste',
+	'pr_what_problem_vandalised' => 'denne siden har blitt vandalisert',
+	'pr_what_problem_incorrect_content' => 'dette innholdet er ukorrekt',
+	'pr_what_problem_software_bug' => 'det er en feil i wiki-programvaren',
+	'pr_what_problem_other' => 'andre',
+	'pr_what_problem_select' => 'Vennligst velg problemtype',
+	'pr_what_problem_unselect' => 'alle',
+	'pr_what_problem_spam_short' => 'spam',
+	'pr_what_problem_vandalised_short' => 'vandal',
+	'pr_what_problem_incorrect_content_short' => 'innhold',
+	'pr_what_problem_software_bug_short' => 'feil',
+	'pr_what_problem_other_short' => 'andre',
+	'pr_what_problem_change' => 'Endre problemtype',
+	'pr_describe_problem' => 'Melding',
+	'pr_what_page' => 'Tittel på siden',
+	'pr_mailer_to_default' => 'Wikiabruker',
+	'pr_table_wiki_name' => 'Wikinavn',
+	'pr_table_problem_type' => 'Problemtype',
+	'pr_table_page_link' => 'Side',
+	'pr_table_date_submitted' => 'Dato innsendt',
+	'pr_table_description' => 'Beskrivelse',
+	'pr_table_comments' => 'Kommentarer',
+	'pr_table_status' => 'Status',
+	'pr_status_0' => 'venter',
+	'pr_status_1' => 'fikset',
+	'pr_status_2' => 'lukket',
+	'pr_status_wait' => 'vent ...',
+	'pr_msg_exchead' => 'Meldingen er for lang',
 );
 
 /** Polish (Polski) */
@@ -1140,10 +1194,17 @@ Ij difet dël programa a peulo esse arportà an sle piasse ëd discussion. Ij ra
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Jesielt
+ * @author Luckas Blade
  */
 $messages['pt-br'] = array(
 	'problemreports' => 'Lista de problemas reportados',
 	'reportproblem' => 'Reporte um problema',
+	'prlogtext' => 'Problemas reportados',
+	'prlogheader' => 'Lista de problemas reportados e mudanças em seus estados',
+	'prlog_reportedentry' => 'reportado um problema em $1 ($2)',
+	'prlog_changedentry' => 'problema $1 marcado como "$2"',
+	'prlog_removedentry' => 'removido problema $1',
+	'prlog_emailedentry' => 'mensagem de email enviada a $2 ($3)',
 	'pr_introductory_text' => 'A maioria das páginas nessa wiki são editáveis e você é bem-vindo para editá-las e corrigir erros você mesmo! Se você está procurando por ajuda, veja [[help:editing|como editar]] e [[help:revert|como reverter vandalismos]].
 
 Para contatar o pessoal para reportar violações de direitos autorais, por favor, veja a página [[w:contact us|"fale conosco" do Wikia]].
@@ -1157,8 +1218,10 @@ Bugs do software podem ser reportados nos fóruns. As reportagens feitas aqui se
 	'pr_what_problem_other' => 'outro',
 	'pr_what_problem_select' => 'Por favor selecione um tipo de problema',
 	'pr_what_problem_unselect' => 'tudo',
+	'pr_what_problem_spam_short' => 'spam',
 	'pr_what_problem_vandalised_short' => 'vândalo',
 	'pr_what_problem_incorrect_content_short' => 'conteúdo',
+	'pr_what_problem_software_bug_short' => 'bug',
 	'pr_what_problem_other_short' => 'outro',
 	'pr_what_problem_change' => 'Mudar o tipo de problema',
 	'pr_describe_problem' => 'Mensagem',
@@ -1168,6 +1231,46 @@ Bugs do software podem ser reportados nos fóruns. As reportagens feitas aqui se
 
 [[Special:ProblemReports/$1|Você pode vigiar o progresso da correção dele aqui]].',
 	'pr_thank_you_error' => 'Ocorreu um erro enquanto estava sendo enviado a reportagem de problema, por favor, tente novamente mais tarde...',
+	'pr_spam_found' => 'Um spam foi encontrado no sumário do seu relatório.
+Por favor, mude o conteúdo do sumário.',
+	'pr_empty_summary' => 'Por favor, faça uma pequena descrição do problema',
+	'pr_empty_email' => 'Por favor, coloque o seu endereço de email',
+	'pr_mailer_notice' => 'O endereço de email que você colocou nas suas preferências irá aparecer na mensagem como o "remetente", assim o destinatário poderá te responder diretamente.',
+	'pr_mailer_subject' => 'Problema reportado em',
+	'pr_mailer_tmp_info' => 'Você pode [[MediaWiki:ProblemReportsResponses|editar a predefinição de respostas]]',
+	'pr_mailer_to_default' => 'Usuário Wikia',
+	'pr_mailer_go_to_wiki' => 'Para enviar um email, por favor, vá a [$1 problema da wiki foi reportado de]',
+	'pr_total_number' => 'Número total de reportagens',
+	'pr_view_archive' => 'Ver problemas arquivados',
+	'pr_view_all' => 'Mostrar todas as reportagens',
+	'pr_view_staff' => 'Mostrar reportagens que precisam da ajuda da equipe de ajuda (staff)',
+	'pr_raports_from_this_wikia' => 'Ver reportagens somente desta wiki',
+	'pr_reports_from' => 'Apenas reportagens de',
+	'pr_no_reports' => 'Não há reportagens com esse critério',
+	'pr_sysops_notice' => 'Você pode <a href="$1">mudar o status das reportagens de problemas</a> da sua wiki...',
+	'pr_table_problem_id' => 'ID do problema',
+	'pr_table_wiki_name' => 'Nome da Wiki',
+	'pr_table_problem_type' => 'Tipo de problema',
+	'pr_table_page_link' => 'Página',
+	'pr_table_date_submitted' => 'Data de Envio',
+	'pr_table_reporter_name' => 'Nome do reportante',
+	'pr_table_description' => 'Descrição',
+	'pr_table_comments' => 'Comentários',
+	'pr_table_status' => 'Estado',
+	'pr_table_actions' => 'Ações',
+	'pr_status_0' => 'pendente',
+	'pr_status_1' => 'resolvido',
+	'pr_status_2' => 'fechado',
+	'pr_status_3' => 'precisa da ajuda da equipe de apoio (staff)',
+	'pr_status_10' => 'remover reportagem',
+	'pr_status_undo' => 'Desfazer mudança no estado do relatório',
+	'pr_status_ask' => 'Mudar estado da reportagem?',
+	'pr_remove_ask' => 'Remover a reportagem permanentemente?',
+	'pr_status_wait' => 'aguarde...',
+	'pr_read_only' => 'Novas reportagens não podem ser feitas agora, por favor, tente novamente mais tarde.',
+	'pr_msg_exceeded' => 'O número máximo de caracteres da mesnagem é te 512. 
+Por favor, reescreva a sua mensagem.',
+	'pr_msg_exchead' => 'A mensagem está muito grande.',
 );
 
 /** Russian (Русский)
@@ -1178,6 +1281,9 @@ $messages['ru'] = array(
 	'reportproblem' => 'Сообщить о проблеме',
 	'prlogtext' => 'Сообщения о проблемах',
 	'prlogheader' => 'Список сообщений о проблемах и изменений их статуса',
+	'prlog_reportedentry' => 'сообщил о проблеме в $1 ($2)',
+	'prlog_changedentry' => 'установил отметку «$2» для проблемы $1',
+	'prlog_removedentry' => 'удалил проблему $1',
 	'pr_introductory_text' => 'Большинство страниц в этой вики доступны для редактирования, что позволяет изменить их и исправить ошибки самостоятельно. Если вам нужна помощь в этом, см. [[help:editing|справку по редактированию]] и [[help:revert|по откату вандализма]].
 
 Для связи с сотрудниками или сообщений о проблемах с авторским правом, пожалуйста, используйте [[w:contact us|страницу обратной связи Викия]].
@@ -1192,6 +1298,9 @@ $messages['ru'] = array(
 	'pr_describe_problem' => 'Сообщение',
 	'pr_what_page' => 'Название страницы',
 	'pr_email_visible_only_to_staff' => 'отображается только для сотрудников',
+	'pr_thank_you' => 'Благодарим вас за сообщение о проблеме!
+
+[[Special:ProblemReports/$1|Вы можете следить за её решением]].',
 	'pr_mailer_to_default' => 'Участник Викии',
 	'pr_total_number' => 'Общее число сообщений',
 	'pr_view_archive' => 'Просмотр архива проблем',
@@ -1270,6 +1379,7 @@ $messages['sv'] = array(
 );
 
 /** Ukrainian (Українська)
+ * @author NickK
  * @author Prima klasy4na
  */
 $messages['uk'] = array(
@@ -1290,7 +1400,7 @@ $messages['uk'] = array(
 	'pr_table_page_link' => 'Сторінка',
 	'pr_table_description' => 'Опис',
 	'pr_table_actions' => 'Дії',
-	'pr_msg_exceeded' => 'Максимальна кількість символів у полі "Повідомлення" 512. Будь ласка, перепишіть своє повідомлення.',
+	'pr_msg_exceeded' => 'Максимальна кількість символів у полі «Повідомлення» — 512. Будь ласка, перепишіть своє повідомлення.',
 	'pr_msg_exchead' => 'Повідомлення занадто довге',
 );
 

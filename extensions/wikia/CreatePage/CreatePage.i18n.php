@@ -75,6 +75,14 @@ U kan na "<a href="$1">$2</a>" gaan of u bladsy \'n ander naam gee',
 Gebruik asseblief 'n ander naam.",
 	'createpage-error-article-blocked' => 'Jammer, maar u kan nie die bladsye op die oomblik skep nie.',
 	'tog-createpagedefaultblank' => "Gebruik 'n leë bladsy as standaard vir die skep van nuwe bladsye",
+	'newpagelayout' => '[[File:Placeholder|right|300px]]
+Skryf die eerste paragraaf van u artikel hier.
+
+==Opskrif==
+Skryf die eerste afdeling van u bladsy hier.
+
+==Opskrif==
+Skryf die tweede afdeling van u bladsy hier.',
 );
 
 /** Breton (Brezhoneg)
@@ -159,6 +167,49 @@ $messages['es'] = array(
 	'createpage-error-empty-title' => 'Por favor, escribe un título para tu artículo',
 );
 
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'createpage-sp-title' => 'Artikulu berri bat sortu',
+	'createpage_title' => 'Artikulu berri bat sortu',
+	'createpage_title_caption' => 'Izenburua:',
+	'createpage_enter_text' => 'Testua:',
+	'createpage_empty_title_error' => 'Izenburua beharrezkoa',
+	'createpage_empty_article_body_error' => 'Artikuluaren testua beharrezkoa',
+	'createpage_invalid_title_error' => 'Balio gabeko izenburua',
+	'createpage_article_already_exists' => 'Izen hori duen artikulua badago.
+Mesedez beste izen bat aukeratu.',
+	'createpage_spam' => 'Barkatu, zure aldaketa ezin izan da gorde',
+	'createpage_cant_edit' => 'Aldaketa ezin izan da burutu',
+	'createpage-dialog-title' => 'Artikulu Berria Sortu',
+	'createpage-dialog-message1' => 'Aupa! Orrialde berria sortzen ari zara!',
+	'createpage-dialog-message2' => 'Nola deitu nahi diozu?',
+	'createpage-dialog-choose' => 'Aukeratu orrialderako diseinua:',
+	'createpage-dialog-format' => 'Disenu estandarra',
+	'createpage-dialog-blank' => 'Orrialde txuria',
+	'createpage-error-empty-title' => 'Msedez idatzi zure artikuluarentzako izenburua',
+	'createpage-error-invalid-title' => 'Barkatu, izenburu hori okerra da.
+Mesedez erabiki izenburu desberdina.',
+	'createpage-error-article-exists' => 'Izenburu berdina duen artikulua bat badago.
+An article with that title already exists.
+<a href="$1">$2</a>-(e)ra joan zaitezke, edo zure orrialde berrizendatu',
+	'createpage-error-article-spam' => 'Barkatu, artikuluaren izenburua gure spam-iragazkiak baztertu du.
+Mesedez erabili izenburu ezberdin bat.',
+	'createpage-error-article-blocked' => 'Barkatu, ezin duzu une honetan artikulu hori sortu.',
+	'tog-createpagedefaultblank' => 'Erabili orrialde txuria lehenetsiz orrialde berri bat sortzean',
+	'newpagelayout' => '[[File:Placeholder|right|300px]]
+Hemen zure artikuluaren lehen parrafoa idatz ezazu.
+
+==Atal goiburua==
+
+Hemen zure artikuluaren lehen atala idatz ezazu.  
+
+==Atal goiburua==
+
+Hemen zure artikuluaren bigarren atala idatz ezazu.',
+);
+
 /** Persian (فارسی) */
 $messages['fa'] = array(
 	'createpage-sp-title' => 'ایجاد مقاله جدید',
@@ -211,6 +262,16 @@ $messages['fr'] = array(
 	'createpage-error-article-spam' => 'Désolé, le titre de la page a été rejeté par notre filtre anti-spam. Veuillez utiliser un nom différent.',
 	'createpage-error-article-blocked' => 'Désolé, vous ne pouvez créer cet article en ce moment.',
 	'tog-createpagedefaultblank' => 'Utiliser une page vierge par défaut pour créer une nouvelle page',
+	'newpagelayout' => '[[File:Placeholder|right|300px]]
+Écrivez le premier paragraphe de votre article ici.
+
+== Titre de section ==
+
+Écrivez la première section de votre article ici.
+
+== Titre de section ==
+
+Écrivez la deuxième section de votre article ici.',
 );
 
 /** Galician (Galego)
@@ -253,6 +314,48 @@ Escriba aquí a primeira sección do seu artigo.
 ==Cabeceira de sección==
 
 Escriba aquí a segunda sección do seu artigo.',
+);
+
+/** Hebrew (עברית)
+ * @author 0ftal
+ */
+$messages['he'] = array(
+	'createpage-sp-title' => 'כתוב מאמר חדש',
+	'createpage_title' => 'כתוב מאמר חדש',
+	'createpage_title_caption' => 'כותרת:',
+	'createpage_enter_text' => 'טקסט:',
+	'createpage_empty_title_error' => 'דרושה כותרת',
+	'createpage_empty_article_body_error' => 'דרוש טקסט במאמר',
+	'createpage_invalid_title_error' => 'כותרת לא תקינה',
+	'createpage_article_already_exists' => 'מאמר עם שם זה כבר קיים. 
+אנא בחר שם אחר.',
+	'createpage_spam' => 'מצטערים, לא היה ניתן לשמור את העריכה שלך',
+	'createpage_cant_edit' => 'אין אפשרות לבצע עריכה',
+	'createpage-dialog-title' => 'כתוב מאמר חדש',
+	'createpage-dialog-message1' => 'הידד, אתה יוצר דף חדש!',
+	'createpage-dialog-message2' => 'איך ברצונך לקרוא לו?',
+	'createpage-dialog-choose' => 'בחר את פריסת הדף:',
+	'createpage-dialog-format' => 'פריסה רגילה',
+	'createpage-dialog-blank' => 'דף ריק',
+	'createpage-error-empty-title' => 'אנא כתוב כותרת למאמר שלך',
+	'createpage-error-invalid-title' => 'מצטערים, כותרת המאמר לא תקינה.
+אנא השתמש בכותרת שונה.',
+	'createpage-error-article-exists' => 'מאמר בשם זה כבר קיים.
+אתה יכול ללכת ל <a href="$1">$2</a>, או לשנות את שם המאמר',
+	'createpage-error-article-spam' => 'מצטערים, כותרת המאמר נדחתה על ידי המסנן שלנו. 
+אנא השתמש בכותרת שונה.',
+	'createpage-error-article-blocked' => 'מצטערים, אינך יכול ליצור את המאמר הזה כרגע.',
+	'tog-createpagedefaultblank' => 'השתמש בדף ריק ליצירת מאמרים כברירת מחדל',
+	'newpagelayout' => '[[File:Placeholder|right|300px]]
+כתוב את הפסקה הראשונה במאמר שלך כאן.
+
+==כותרת קטע==
+
+כתוב את הקטע הראשון במאמר שלך כאן.
+
+==כותרת קטע==
+
+כתוב את הקטע השני במאמר שלך כאן.',
 );
 
 /** Interlingua (Interlingua)
@@ -344,13 +447,18 @@ $messages['lb'] = array(
 	'createpage_empty_title_error' => 'Titel obligatoresch',
 	'createpage_empty_article_body_error' => 'Text vum Artikel obligatoresch',
 	'createpage_invalid_title_error' => 'Net valabelen Titel',
+	'createpage_article_already_exists' => 'Et gëtt schonn en Artikel mat deem Numm.
+Sicht Iech w.e.g. en aneren Numm.',
 	'createpage_spam' => 'pardon, Är Ännerung konnt net gespäichert ginn',
 	'createpage_cant_edit' => "D'Ännerung konnt net gemaach ginn",
 	'createpage-dialog-title' => 'En neien Artikel uleeën',
+	'createpage-dialog-message1' => 'Super, Dir sidd am gaang eng nei Säit unzeleeën!',
+	'createpage-dialog-format' => 'Standard-Layout',
 	'createpage-dialog-blank' => 'Eidel Säit',
 	'createpage-error-empty-title' => 'Schreiwt w.e.g. en Titel an Ären Artikel',
 	'createpage-error-article-exists' => 'Et gëtt schonn en Artikel mat deem Titel.
 Dir kënnt op <a href="$1">$2</a> goen oder Är Säit ëmbenennen',
+	'tog-createpagedefaultblank' => 'Benotzt eng eidel Säit als Standard fir eng nei Säit unzeleeën',
 );
 
 /** Macedonian (Македонски)
@@ -379,6 +487,16 @@ $messages['mk'] = array(
 	'createpage-error-article-spam' => 'За жал насловот на статијата беше одбиен од филтерот за спам. Дајте друг наслов.',
 	'createpage-error-article-blocked' => 'Жалиме, но во моментов не можете да создадете нова страница.',
 	'tog-createpagedefaultblank' => 'Користи празна страница за создавање нова по основно',
+	'newpagelayout' => '[[File:Placeholder|right|300px]]
+Тука напишете го првиот параграф на статијата.
+
+==Наслов на заглавие==
+
+Тука напишете го првото заглавие од статијата.  
+
+==Наслов на заглавие==
+
+Тука напишете го второто заглавие од статијата.',
 );
 
 /** Dutch (Nederlands)
@@ -423,7 +541,9 @@ Schrijf hier de eerste paragraaf van uw pagina.
 Schrijf hier de tweede paragraaf van uw pagina.',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
 $messages['no'] = array(
 	'createpage-sp-title' => 'Skriv en ny artikkel',
 	'createpage_title' => 'Skriv en ny artikkel',
@@ -435,6 +555,20 @@ $messages['no'] = array(
 	'createpage_article_already_exists' => 'En artikkel med det navnet eksisterer allerede, vennligst velg et annet navn',
 	'createpage_spam' => 'Beklager, endringen din kunne ikke lagres',
 	'createpage_cant_edit' => 'Kunne ikke utføre endringen',
+	'createpage-dialog-title' => 'Opprett en ny artikkel',
+	'createpage-dialog-message1' => 'Hurra, du oppretter en ny side!',
+	'createpage-dialog-message2' => 'Hva vil du kalle den?',
+	'createpage-dialog-choose' => 'Velg en sideutforming:',
+	'createpage-dialog-blank' => 'Blank side',
+	'createpage-error-empty-title' => 'Vennligst skriv en tittel på artikkelen din',
+	'createpage-error-invalid-title' => 'Beklager, artikkeltittelen var ugyldig.
+Vennligst bruk en annen tittel.',
+	'createpage-error-article-exists' => 'En artikkel med det navnet finnes allerede.
+Du kan gå til <a href="$1">$2</a> eller gi siden din et nytt navn',
+	'createpage-error-article-spam' => 'Beklager, artikkeltittelen ble avvist av spamfilteret vårt.
+Vennligst bruk en annen tittel.',
+	'createpage-error-article-blocked' => 'Beklager, du kan ikke opprettet artikler akkurat nå.',
+	'tog-createpagedefaultblank' => 'Bruk en blank side som standard for å opprette en ny side',
 );
 
 /** Polish (Polski) */
@@ -474,6 +608,19 @@ A peul andé a <a href="$1">$2</a>, o deje n\'àutr nòm a soa pàgina.',
 Për piasì, ch'a deuvra un tìtol diferent.",
 	'createpage-error-article-blocked' => 'Darmagi, a peul pa creé col artìcol adess.',
 	'tog-createpagedefaultblank' => "Ch'a deuvra na pàgina polida për creé na neuva pàgina.",
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'createpage-sp-title' => 'يوه نوې ليکنه ليکل',
+	'createpage_title' => 'يوه نوې ليکنه ليکل',
+	'createpage_title_caption' => 'سرليک:',
+	'createpage_enter_text' => 'متن:',
+	'createpage_invalid_title_error' => 'ناسم سرليک',
+	'createpage-dialog-title' => 'يوه نوې ليکنه ليکل',
+	'createpage-dialog-blank' => 'تش مخ',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -548,6 +695,16 @@ $messages['ru'] = array(
 Пожалуйста, используйте другое название.',
 	'createpage-error-article-blocked' => 'К сожалению, вы не можете создать эту статью в настоящее время.',
 	'tog-createpagedefaultblank' => 'Использовать пустую страницу по умолчанию при создании новой страницы',
+	'newpagelayout' => '[[File:Placeholder|right|300px]]
+Напишите здесь первый параграф вашей статьи.
+
+==Заголовок секции==
+
+Напишите здесь первую секцию вашей статьи.
+
+==Заголовок секции==
+
+Напишите здесь вторую секцию вашей статьи.',
 );
 
 /** Swedish (Svenska)
@@ -564,6 +721,9 @@ $messages['sv'] = array(
 $messages['te'] = array(
 	'createpage_title_caption' => 'శీర్షిక:',
 	'createpage_enter_text' => 'పాఠ్యం:',
+	'createpage_empty_title_error' => 'శీర్షిక తప్పనిసరి',
+	'createpage_empty_article_body_error' => 'వ్యాసపు పాఠ్యం తప్పనిసరి',
+	'createpage_invalid_title_error' => 'తప్పుడు శీర్షిక',
 	'createpage-dialog-blank' => 'ఖాళీ పేజీ',
 );
 
@@ -578,6 +738,8 @@ $messages['uk'] = array(
 	'createpage_empty_title_error' => 'Необхідно вказати назву',
 	'createpage_empty_article_body_error' => 'Необхідно ввести текст статті',
 	'createpage_invalid_title_error' => 'Неприпустима назва',
+	'createpage_article_already_exists' => 'Стаття з такою назвою вже існує.
+Будь ласка, оберіть іншу назву.',
 	'createpage-dialog-title' => 'Створити нову статтю',
 	'createpage-dialog-blank' => 'Порожня сторінка',
 );

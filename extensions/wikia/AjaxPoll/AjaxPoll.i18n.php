@@ -115,6 +115,19 @@ $messages['gsw'] = array(
 	'ajaxpoll-submitting' => 'Bitte warte e Wyyli. Am Ibermittle vu Dyyre Stimm ...',
 );
 
+/** Hebrew (עברית)
+ * @author 0ftal
+ */
+$messages['he'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp;מכלל הקולות',
+	'ajaxpoll-thankyou' => 'תודה על ההצבעה שלך!',
+	'ajaxpoll-error' => 'הייתה בעיה בעיבוד ההצבעה שלך, אנא נסה שוב.',
+	'ajaxpoll-summary' => 'הסקר נוצר ב$1 ב $2, ועד עתה $3 אנשים הצביעו.',
+	'ajaxpoll-submit' => 'הצבע!',
+	'ajaxpoll-closed' => 'הסקר סגור כרגע. אתה יכול לצפות בתוצאות.',
+	'ajaxpoll-submitting' => 'אנא המתן, טוען את ההצבעה שלך...',
+);
+
 /** Hungarian (Magyar)
  * @author Dani
  * @author Glanthor Reviol

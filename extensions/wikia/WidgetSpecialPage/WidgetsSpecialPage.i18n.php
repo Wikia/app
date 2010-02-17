@@ -19,6 +19,16 @@ Kemmit [[Special:Preferences#prefsection-1|ho tibaboù]] mar plij, evit implijou
 	'widgets-specialpage-try-dashboard' => "Ar bajenn-mañ zo enni roll an holl widgetoù a c'haller kaout. Evit gwelet ar widgetoù zo o vont en-dro, kit war [[Special:WidgetDashboard]].",
 );
 
+/** Czech (Česky)
+ * @author Mr. Richard Bolla
+ */
+$messages['cs'] = array(
+	'widgets-specialpage-info' => 'Widgets pracují nejlépe s jedním z nových skinů, např. [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco].
+
+Abyste mohli používat tento nástroj, změňte si, prosím, své [[Special:Preferences#prefsection-1|nastavení]].',
+	'widgets-specialpage-try-dashboard' => 'Tato stránka obsahuje seznam všech dostupných udělátek. Chcete-li vidět svá udělátka pracovat, přejděte na [[Special:WidgetDashboard]].',
+);
+
 /** German (Deutsch) */
 $messages['de'] = array(
 	'widgets-specialpage-info' => 'Widgets sind dafür ausgelegt um im Standard-Skin (Monaco) benutzt zu werden.
@@ -89,11 +99,14 @@ Per favor cambia [[Special:Preferences#prefsection-1|tu preferentias]] pro usar 
 	'widgets-specialpage-try-dashboard' => 'Iste pagina contine un lista de tote le widgets disponibile. Pro vider tu widgets in action, visita [[Special:WidgetDashboard]].',
 );
 
-/** Japanese (日本語) */
+/** Japanese (日本語)
+ * @author 青子守歌
+ */
 $messages['ja'] = array(
 	'widgets-specialpage-info' => 'ウィジェットは、[{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco]スキンで最もよく動くようになっています。
 
 この機能を最大限に利用したいのであれば、[[Special:Preferences#prefsection-1|オプション]]でMonacoスキンに変更してください。',
+	'widgets-specialpage-try-dashboard' => 'このページは、利用可能なウィジットの一覧が含まれています。あなたの現在動作中のウィジットについては[[Special:WidgetDashboard]]をご覧下さい。',
 );
 
 /** Macedonian (Македонски)
@@ -159,10 +172,11 @@ $messages['ru'] = array(
 );
 
 /** Ukrainian (Українська)
+ * @author NickK
  * @author Prima klasy4na
  */
 $messages['uk'] = array(
-	'widgets-specialpage-info' => 'Віджети найкраще працюють з одною із нових тем оформлення, наприклад, [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco].
+	'widgets-specialpage-info' => 'Віджети найкраще працюють з однією із нових тем оформлення, наприклад, [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco].
 Будь ласка, змініть [[Special:Preferences#prefsection-1|ваші налаштування]], щоб використовувати цей інструмент.',
 	'widgets-specialpage-try-dashboard' => 'Ця сторінка містить список всіх доступних віджетів. Щоб переглянути ваші віджети в дії, перейдіть на [[Special:WidgetDashboard]].',
 );

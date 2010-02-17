@@ -282,6 +282,18 @@ $messages['pms'] = array(
 	'protectsite-unprotect' => 'Dësprotege',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Luckas Blade
+ */
+$messages['pt-br'] = array(
+	'protectsite-allowall' => 'Todos os usuários',
+	'protectsite-allowusersysop' => 'Usuários registrados e administradores',
+	'protectsite-allowsysop' => 'Somente administradores',
+	'protectsite-maxtimeout' => 'Máximo:',
+	'protectsite-protect' => 'Proteger',
+	'protectsite-unprotect' => 'Desproteger',
+);
+
 /** Russian (Русский)
  * @author Lockal
  */

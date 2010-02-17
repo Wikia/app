@@ -338,6 +338,66 @@ $messages['eu'] = array(
 	'swm-no' => 'Ez',
 );
 
+/** Finnish (Suomi)
+ * @author Centerlink
+ */
+$messages['fi'] = array(
+	'swm-label-preview' => 'Esikatselu',
+	'swm-label-edit' => 'Muokkaa',
+	'swm-label-remove' => 'Poista',
+	'swm-label-sent' => 'Lähetetty',
+	'swm-label-list' => 'Luettelo',
+	'swm-label-recipient' => 'Vastaanottajat',
+	'swm-label-recipient-wikis' => 'Wikit',
+	'swm-label-recipient-users' => 'Käyttäjät',
+	'swm-label-expiration' => 'Vanhenemisaika',
+	'swm-label-mode-wikis-all' => 'Kaikki wikit',
+	'swm-label-mode-wikis-wiki' => 'Valittu wiki',
+	'swm-label-mode-users-all' => 'Kaikki käyttäjät',
+	'swm-label-mode-users-active' => 'Aktiiviset käyttäjät',
+	'swm-label-mode-users-group' => 'Ryhmään kuuluvat käyttäjät',
+	'swm-label-mode-users-group-hint' => '<i>Valitse ryhmä pudotusvalikosta tai kirjoita nimi käsin korvaamaan pudotusvalikon valinta.</i>',
+	'swm-label-mode-users-user' => 'Valittu käyttäjä',
+	'swm-label-mode-users-user-hint' => '<i>Tämä valitsin ohittaa valinnan ryhmässä "Wikit".</i>',
+	'swm-label-content' => 'Sisältö',
+	'swm-label-comment' => 'Kommentti',
+	'swm-label-dismissed' => 'Hylätty',
+	'swm-label-language' => 'Kieli',
+	'swm-button-lang-checkall' => '[ Tarkista kaikki ]',
+	'swm-button-lang-checknone' => '[ Älä tarkista mitään ]',
+	'swm-taskmanager-hint' => '<i>Huomaa, että jotkin valitsimet kuluttavat enemmän aikaa ja ovat Tehtävähallinnan jonossa.</i>',
+	'swm-button-preview' => '[ Esikatselu ]',
+	'swm-button-send' => '[ Lähetä ]',
+	'swm-button-save' => '[ Tallenna ]',
+	'swm-button-new' => '[ Uusi ]',
+	'swm-msg-sent-ok' => '<h3>Viesti on lähetetty.</h3>',
+	'swm-msg-sent-err' => '<h3>Viestiä EI ole lähetetty.</h3>Katso lisätietoja virhelokista.',
+	'swm-msg-remove' => 'Oletko varma että haluat poistaa tämän viestin? Poistoa ei voi perua!',
+	'swm-days' => 'ei koskaan, tunti, tuntia, päivä, päiviä',
+	'swm-expire-info' => 'Tämä viesti vanhenee $1',
+	'swm-link-dismiss' => 'hylkää tämä viesti',
+	'swm-dismiss-content' => '<p>Viesti hylättiin.</p><p>% s</p>',
+	'swm-list-no-messages' => 'Ei viestejä.',
+	'swm-list-table-id' => 'Tunnus',
+	'swm-list-table-sender' => 'Lähettäjä',
+	'swm-list-table-wiki' => 'Wiki',
+	'swm-list-table-recipient' => 'Vastaanottaja',
+	'swm-list-table-group' => 'Ryhmä',
+	'swm-list-table-expire' => 'Päättyä',
+	'swm-list-table-date' => 'Lähetyspäivämäärä',
+	'swm-list-table-removed' => 'Poistettu',
+	'swm-list-table-content' => 'Sisältö',
+	'swm-list-table-tools' => 'Työkalut',
+	'swm-list-table-lang' => 'Kielet',
+	'swm-yes' => 'Kyllä',
+	'swm-no' => 'Ei',
+	'swm-error-no-such-wiki' => 'Ei ole tällaista wikiä!',
+	'swm-error-no-such-user' => 'Määriteltyä käyttäjää ei ole olemassa.',
+	'swm-error-empty-message' => 'Kirjoita viestin sisältö.',
+	'swm-error-empty-group' => 'Kirjoita ryhmän nimi.',
+	'swm-lang-other' => 'kaikki jäljellä olevat kielet',
+);
+
 /** French (Français)
  * @author IAlex
  */
@@ -849,8 +909,16 @@ $messages['pms'] = array(
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Jesielt
+ * @author Luckas Blade
  */
 $messages['pt-br'] = array(
+	'swm-label-preview' => 'Prever',
+	'swm-label-edit' => 'Editar',
+	'swm-label-remove' => 'Remover',
+	'swm-label-recipient-users' => 'Usuários',
+	'swm-label-mode-users-active' => 'Usuários ativos',
+	'swm-label-mode-users-group' => 'Usuários pertencentes ao grupo',
+	'swm-label-language' => 'Língua',
 	'swm-button-preview' => '[ Previsualizar ]',
 	'swm-button-send' => '[ Enviar ]',
 	'swm-button-save' => '[ Salvar ]',
@@ -887,12 +955,15 @@ $messages['ru'] = array(
 	'swm-label-recipient' => 'Получатели',
 	'swm-label-recipient-wikis' => 'Вики',
 	'swm-label-recipient-users' => 'Участники',
+	'swm-label-mode-users-all' => 'Все участники',
 	'swm-label-mode-users-active' => 'Активные участники',
+	'swm-label-mode-users-group' => 'Участники, принадлежащие к группе',
 	'swm-label-content' => 'Содержание',
 	'swm-label-comment' => 'Комментарий',
 	'swm-label-dismissed' => 'Пропущено',
 	'swm-label-language' => 'Язык',
 	'swm-msg-sent-ok' => '<h3>Сообщение отправлено.</h3>',
+	'swm-msg-remove' => 'Вы действительно хотите удалить это сообщение? Это действие не может быть отменено!',
 	'swm-link-dismiss' => 'пропустить это сообщение',
 	'swm-list-no-messages' => 'Нет сообщений.',
 	'swm-list-table-id' => 'Идентификатор',
@@ -900,6 +971,7 @@ $messages['ru'] = array(
 	'swm-list-table-wiki' => 'Вики',
 	'swm-list-table-recipient' => 'Получатель',
 	'swm-list-table-group' => 'Группа',
+	'swm-list-table-expire' => 'Истекает',
 	'swm-list-table-removed' => 'Удалено',
 	'swm-list-table-content' => 'Содержание',
 	'swm-list-table-tools' => 'Инструменты',

@@ -90,6 +90,8 @@ Probeer asseblief weer.",
  * @author Y-M D
  */
 $messages['br'] = array(
+	'textregex' => 'Regex testenn',
+	'textregex-desc' => "[[Special:textregex/XXXX|Sil]] ar frazennoù dic'hoantaus er pajennoù, diazezet war eztaoladennoù poellel",
 	'textregex-page-title' => 'Roll an eztaoladennoù strobus',
 	'textregex-error-unblocking' => "Ur fazi 'zo bet e-pad an distankañ ($1). Klaskit adarre.",
 	'textregex-currently-blocked' => "'''Frazennoù stanket evit bremañ :'''",
@@ -104,6 +106,7 @@ $messages['br'] = array(
 	'textregex-regex-block' => 'Frazenn da stankañ :',
 	'textregex-submit-regex' => 'Ouzhpennañ ur frazenn',
 	'textregex-empty-regex' => 'Reiñ un eztaoladenn da stankañ.',
+	'textregex-invalid-regex' => "N'eo ket mat ar regex.",
 	'textregex-already-added' => 'Ouzhpennet eo bet "$1" dija',
 	'textregex-nodata-found' => "N'eus ket bet kavet roadennoù",
 	'textregex-stats-record' => "ar ger''$1'' a oa bet implijet gant $2 war $3 (''displegadenn: $4'')",
@@ -319,6 +322,7 @@ $messages['no'] = array(
 	'textregex' => 'Regulære uttrykk for tekst',
 	'textregex-desc' => '[[Special:textregex/XXXX|Filtrer]] ut uønskede fraser fra redigerte sider basert på regulære uttrykk',
 	'textregex-page-title' => 'Liste over uønskede uttrykk',
+	'textregex-currently-blocked' => "'''Nåværende blokkerte fraser:'''",
 	'textregex_nocurrently-blocked' => 'Ingen blokkerte fraser funnet',
 	'textregex-addedby-user' => 'lagt til av $1, $2',
 	'textregex-remove-url' => '[{{SERVER}}$1&id=$2 fjern]',
@@ -371,6 +375,41 @@ $messages['pms'] = array(
 	'textregex-invalid-regexid' => "Identificator d'espression regolar pa bon.",
 	'textregex-phrase-statistics' => "Statìstiche për la fras '''$1''' (nùmer d'argistrassion: $2)",
 	'textregex-return-mainpage' => '[{{SERVER}}$1 artorna a la lista]',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Jesielt
+ * @author Luckas Blade
+ */
+$messages['pt-br'] = array(
+	'textregex' => 'Texto regex (expressões regulares)',
+	'textregex-desc' => '[[Special:textregex/XXXX|Filtrar]] frases indesejadas em páginas editadas, baseado em expressões regulares',
+	'textregex-page-title' => 'Lista de expressões indesejadas',
+	'textregex-error-unblocking' => 'Erro ao desbloquear ($1).
+Tente novamente.',
+	'textregex-currently-blocked' => "'''Frases atualmente bloqueadas:'''",
+	'textregex_nocurrently-blocked' => 'Nenhuma frase bloqueada encontrada',
+	'textregex-addedby-user' => 'adicionado por $1 em $2',
+	'textregex-remove-url' => '[{{SERVER}}$1&id=$2 remover]',
+	'textregex-stats-url' => '[{{SERVER}}$1&id=$2 estatísticas]',
+	'textregex-unblock-succ' => 'Desbloqueio efetuado',
+	'textregex-block-succ' => 'Bloqueio efetuado',
+	'textregex-unblock-message' => "A frase '''$1''' foi removida da list ade expressões indesejadas.",
+	'textregex-block-message' => "A frase '''$1''' foi adicionada à lista de expressões indesejadas.",
+	'textregex-regex-block' => 'Frase a bloquear:',
+	'textregex-submit-regex' => 'Adicionar frase',
+	'textregex-empty-regex' => 'Forneça uma frase a bloquear.',
+	'textregex-invalid-regex' => 'Regex (expressão regular) inválida.',
+	'textregex-already-added' => '"$1" já está bloqueado',
+	'textregex-nodata-found' => 'Nenhum dado encontrado',
+	'textregex-stats-record' => "A palavra ''$1'' foi usada por $2 em $3 (''comentário: $4'')",
+	'textregex-select-subpage' => 'Selecione uma da lista de frases:',
+	'textregex-select-default' => '-- selecionar --',
+	'textregex-create-subpage' => 'ou crie uma nova lista:',
+	'textregex-select-regexlist' => 'ir para a lista',
+	'textregex-invalid-regexid' => 'Frase inválida.',
+	'textregex-phrase-statistics' => "Estatísticas para a frase \"'''\$1'''\" (número de gravações: \$2)",
+	'textregex-return-mainpage' => '[{{SERVER}}$1 retornar à lista]',
 );
 
 /** Russian (Русский)

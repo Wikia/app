@@ -50,6 +50,13 @@ $messages['af'] = array(
 	'wikiavideo-intro-old' => "U is besig om die weergawe van '''[$1 $5]''' per [$4 $3, $2] te verwyder.",
 );
 
+/** Arabic (العربية)
+ * @author OsamaK
+ */
+$messages['ar'] = array(
+	'wikiavideo-create' => 'أضف فيديو',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
@@ -76,6 +83,26 @@ $messages['br'] = array(
 	'wikiavideo-pixel' => ' piksel',
 	'wikiavideo-deleted-old' => "Dilamet eo bet an doare '''[$1 $2]''' eus $4, $3",
 	'wikiavideo-intro-old' => "!Emaoc'h o tilemel an doare '''[$1 $5]''' eus ($4 $3, $2).",
+);
+
+/** Czech (Česky)
+ * @author Mr. Richard Bolla
+ */
+$messages['cs'] = array(
+	'wikiavideo-reverted' => 'Video $1 bylo úspěšně vráceno zpět. Zpět na $2.',
+	'wikiavideo-unreverted' => 'Nemáte oprávnění $1 vrátit zpět.',
+	'wikiavideo-added' => 'přidáno video $1',
+	'wikiavideo-back' => 'zpět',
+	'wikiavideo-create' => 'Přidat video',
+	'wikiavideo-replace' => 'Vyměnit video',
+	'wikiavideo-category' => 'Videa',
+	'wikiavideo-links' => 'Odkazy',
+	'wikiavideo-placeholder' => 'Výplň',
+	'wikiavideo-gallery-template' => 'Toto video se nachází v šabloně a nemůžete ho upravovat z prohlížecího módu. Editujte prosím příslušnou šablonu.',
+	'wikiavideo-not-supported' => 'Toto nastavení nepodporuje vkládání videí do galerií z prohlížecího módu.',
+	'wikiavideo-pixel' => 'pixel',
+	'wikiavideo-deleted-old' => "Verze $3, $4 souboru '''[$1 $2]''' byla vymazána.",
+	'wikiavideo-intro-old' => "Chystáte se smazat verzi [$4 $3, $2] souboru '''[$1 $5]'''.",
 );
 
 /** German (Deutsch) */
@@ -286,6 +313,8 @@ $messages['no'] = array(
 	'wikiavideo-replace' => 'Erstatt video',
 	'wikiavideo-category' => 'Videoer',
 	'wikiavideo-links' => 'Lenker',
+	'wikiavideo-placeholder' => 'Plassholder',
+	'wikiavideo-gallery-template' => 'Dette videogalleriet er innenfor en mal og er kan ikke redigeres fra visningsmodusen. Vennligst rediger den gjeldende malen.',
 	'wikiavideo-pixel' => '  piksel',
 	'wikiavideo-deleted-old' => "Versjonen av '''[$1 $2]''' fra $4, $3 har blitt slettet.",
 	'wikiavideo-intro-old' => "Du sletter versjonen av '''[$1 $5]''' fra [$4 $3, $2].",
@@ -367,5 +396,12 @@ $messages['ru'] = array(
 	'wikiavideo-pixel' => 'пиксел',
 	'wikiavideo-deleted-old' => "Версия '''[$1 $2]''' от $4 $3 была удалена.",
 	'wikiavideo-intro-old' => "Вы удаляете версию '''[$1 $5]''' от [$4 $3, $2].",
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'wikiavideo-back' => 'వెనక్కి',
 );
 
