@@ -22,7 +22,7 @@ function fnDomainHook(&$article, &$text)
     return true;
 
   if ( strpos( $text, WSINFO_PLACEHOLDER ) === false ) {
-	$text = WSINFO_PLACEHOLDER . $text;
+	$text = WSINFO_PLACEHOLDER . "\n" . $text;
   }
 
   return true;
