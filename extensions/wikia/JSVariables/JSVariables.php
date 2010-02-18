@@ -8,7 +8,7 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'wfMakeGlobalVariablesScript';
 function wfMakeGlobalVariablesScript($vars) {
 	wfProfileIn(__METHOD__);
 
-	global $wgMemc, $wgCurse, $wgCityId, $wgEnableAjaxLogin, $wgUser, $wgDBname, $wgPrivateTracker, $wgWikiaAdvertiserCategory, $wgExtensionsPath, $wgTitle, $wgArticle, $wgStyleVersion, $wgSitename;
+	global $wgMemc, $wgCurse, $wgCityId, $wgEnableAjaxLogin, $wgUser, $wgDBname, $wgPrivateTracker, $wgWikiaAdvertiserCategory, $wgExtensionsPath, $wgTitle, $wgArticle, $wgStyleVersion, $wgSitename, $wgWikiFactoryTags;
 
 	$cats = wfGetBreadCrumb();
 	$idx = count($cats)-2;
@@ -69,6 +69,8 @@ function wfMakeGlobalVariablesScript($vars) {
 		$vars['wgRevisionId'] = !empty($wgArticle->mRevision) ? $wgArticle->mRevision->getId() : intval($wgArticle->mLatest);
 	}
 
+	$vars['wgWikiFactoryTags'] = $wgWikiFactoryTags;
+	
 	wfProfileOut(__METHOD__);
 
 	return true;
