@@ -1,7 +1,6 @@
 <?php
 #Related to visitor skins: Slate.php and Smoke.php
 $messages = array_merge( $messages, array(
- 'titleedit'              => 'değiştir',
 'login_greeting' => "Wikia sitesine hoşgeldiniz, [[User:$1|$1]]!",
 'create_an_account' => "Hesap oluşturun",
 'login_as_another' => "Başka bir adla giriş yapın",
