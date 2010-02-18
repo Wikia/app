@@ -202,6 +202,7 @@ NWB.handleFirstPages = function (event){
 
 		// if no titles were specified, just skip to the next step
 		if ( pages.length == 0 ) {
+			event.preventDefault();
 			Mediawiki.statusBar.release();
 			NWB.gotostep(5);
 			return;
