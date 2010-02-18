@@ -1,7 +1,6 @@
 <?php
 #Related to visitor skins: Slate.php and Smoke.php
 $messages = array_merge( $messages, array(
- 'titleedit'              => 'Sửa đổi',
 'create_an_account' => "Mở tài khoản",
 'this_wiki' => "wiki này",
 'home' => "trang chính",

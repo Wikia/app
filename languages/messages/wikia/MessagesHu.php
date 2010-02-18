@@ -1,6 +1,5 @@
 <?php
 $messages = array_merge( $messages, array(
- 'titleedit'              => 'Szerkesztés',
 
 // Widgets 
 'widget-title-activetalkpages' => 'Aktív vitalapok',
