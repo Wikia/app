@@ -80,8 +80,10 @@ function testWF() {
 }
 
 function curlSolrUpdate() {
-	// curl http://10.6.30.17:8983/solr/update  -H "Content-Type: text/xml" --data-binary '<delete><query>wid:12345</query></delete>'
-	
+	print Http::post("http://10.6.30.17:8983/solr/update", 'default', array (
+		CURLOPT_HTTPHEADER => array ( "Content-Type: text/xml" ),
+		CURLOPT_POSTFIELDS => "<delete><query>wid:89714</query></delete>"
+	) );
 }
 
 #
@@ -90,3 +92,4 @@ function curlSolrUpdate() {
 #testDelayedEmails();
 #testStomp();
 #testWF();
+curlSolrUpdate();
