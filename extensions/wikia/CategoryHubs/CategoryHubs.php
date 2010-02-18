@@ -341,8 +341,8 @@ function categoryHubTitleBar(&$catView, &$r){
 		$uPercent = (100 - $percentAnswered);
 		$aWidth = round(($PROG_BAR_WIDTH * $aPercent) / 100);
 		$uWidth = $PROG_BAR_WIDTH - $aWidth;
-		$aTitle = wfMsgExt('cathub-progbar-mouseover-answered', array(), $aPercent);
-		$uTitle = wfMsgExt('cathub-progbar-mouseover-not-answered', array(), $uPercent);
+		$aTitle = wfMsgExt('cathub-progbar-mouseover-answered', array(), $aPercent, $countAnswered);
+		$uTitle = wfMsgExt('cathub-progbar-mouseover-not-answered', array(), $uPercent, $countUnAnswered);
 
 		// Heuristic to figure out which side to put the text on (prefering to put it on the left whenever possible since it is more intuitive
 		// to see the percent done rather than not done).  Since users have various font-sizes, this is meant to give a sizable leeway.

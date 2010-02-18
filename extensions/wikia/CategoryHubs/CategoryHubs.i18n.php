@@ -10,8 +10,8 @@ $messages = array();
 
 $messages['en'] = array(
 	'cathub-desc' => 'Extension for turning category pages into a view of the category as a hub of activity. Designed for [http://answers.wikia.com answers.wikia.com]',
-	'cathub-progbar-mouseover-answered'     => '$1% answered',
-	'cathub-progbar-mouseover-not-answered' => '$1% not answered yet',
+	'cathub-progbar-mouseover-answered'     => '$1% answered ($2 answers)',
+	'cathub-progbar-mouseover-not-answered' => '$1% not answered yet ($2 questions)',
 	'cathub-progbar-label-answered'         => 'Answered',
 	'cathub-progbar-label-unanswered'       => 'Unanswered',
 	'cathub-progbar-none-done'              => 'No questions answered yet',
