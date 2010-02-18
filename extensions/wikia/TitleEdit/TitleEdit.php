@@ -42,10 +42,10 @@ function wfTitleEditPrintFirstHeading() {
 	} else { // anon
 		global $wgDisableAnonymousEditig;
 		if ( empty($wgDisableAnonymousEditig)) {
-			$link = "<a id=\"te-editanon-noprompt\" class=\"wikia_button\" onclick=\"WET.byStr('articleAction/topedit')\" href=\"" . $wgTitle->getEditUrl() . "\"><span>" . wfMsg( 'titleedit' ) . "</span></a>";
+			$link = "<a id=\"te-editanon-noprompt\" class=\"wikia_button\" rel=\"nofollow\" onclick=\"WET.byStr('articleAction/topedit')\" href=\"" . $wgTitle->getEditUrl() . "\"><span>" . wfMsg( 'titleedit' ) . "</span></a>";
 			$result = "<span class=\"editsection-upper\">$link</span>";
 		} else {
-			$link = "<a id=\"te-editanon\" class=\"wikia_button\" onclick=\"WET.byStr('articleAction/topedit')\" href=\"" . $wgTitle->getEditUrl() . "\"><span>" . wfMsg( 'titleedit' ) . "</span></a>";
+			$link = "<a id=\"te-editanon\" class=\"wikia_button\" rel=\"nofollow\" onclick=\"WET.byStr('articleAction/topedit')\" href=\"" . $wgTitle->getEditUrl() . "\"><span>" . wfMsg( 'titleedit' ) . "</span></a>";
 			$result = "<span class=\"editsection-upper\">$link</span>";
 		}
 	}
