@@ -41,7 +41,7 @@ $wgSessionsInTokyoTyrant = false;
 require_once ( $IP."/includes/wikia/Defines.php" );
 require_once ( $IP."/includes/wikia/GlobalFunctions.php" );
 require_once ( $IP."/includes/wikia/Wikia.php" );
-require_once ( $IP."/extensions/wikia/JSVariables/JSVariables.php" );
+
 global $wgDBname;
 if($wgDBname != 'uncyclo') {
 	include_once( "$IP/extensions/wikia/SkinChooser/SkinChooser.php" );
@@ -236,9 +236,6 @@ $wgSkipOldSkins = array(
 		'simple',
 		'standard',
 );
-
-$wgDefaultSkin = 'monaco';
-$wgUseMonaco2 = true;
 
 /**
  * @name wgReleaseNumber
