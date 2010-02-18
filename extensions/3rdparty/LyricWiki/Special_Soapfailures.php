@@ -14,9 +14,9 @@
 //	request_artist VARCHAR(255) NOT NULL,
 //	request_song VARCHAR(255) NOT NULL,
 //	numRequests INT(11) DEFAULT 1,
+//	lookedFor BLOB, # all of the titles (in order, \n-delimited) which the API actually checked for.
 //	PRIMARY KEY (request_artist, request_song)
 //);
-//
 ////
 
 if(!defined('MEDIAWIKI')) die();
@@ -32,7 +32,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'SOAP Failures',
 	'author' => '[http://www.lyricwiki.org/User:Sean_Colombo Sean Colombo]',
 	'description' => 'SOAP Failures Log special page',
-	'version' => '0.1',
+	'version' => '1.1',
 );
 
 function wfSetupSoapFailures(){
@@ -45,6 +45,8 @@ function wfSetupSoapFailures(){
 function wfSoapFailures(){
 	global $wgOut;
 	global $wgRequest, $wgUser;
+	
+	$MAX_RESULTS = 100;
 
 	$wgOut->setPageTitle("SOAP Page Failures");
 	
@@ -134,17 +136,19 @@ function wfSoapFailures(){
 
 			print "This page is cached every 2 hours - \n";
 			print "last cached: <strong>".date('m/d/Y \a\t g:ia')."</strong>\n";
-			$queryString = "SELECT * FROM lw_soap_failures ORDER BY numRequests DESC LIMIT 50";
+			$queryString = "SELECT * FROM lw_soap_failures ORDER BY numRequests DESC LIMIT $MAX_RESULTS";
 			$totFailures = 0;
 			if($result = mysql_query($queryString,$db)){
 				if(($numRows = mysql_num_rows($result)) && ($numRows > 0)){
-					print "<table>\n";
-					print "<tr><th nowrap='nowrap'>Requests</th><th>Artist</th><th>Song</th></tr>\n";
+					print "<table class='soapfailures'>\n";
+					print "<tr><th nowrap='nowrap'>Requests</th><th>Artist</th><th>Song</th><th>Titles looked for</th></tr>\n";
 					$REQUEST_URI = $_SERVER['REQUEST_URI'];
 					for($cnt=0; $cnt<$numRows; $cnt++){
 						$artist = mysql_result($result, $cnt, "request_artist");
 						$song = mysql_result($result, $cnt, "request_song");
 						$numRequests = mysql_result($result, $cnt, "numRequests");
+						$lookedFor = mysql_result($result, $cnt, "lookedFor");
+						$lookedFor = formatLookedFor($lookedFor);
 						$totFailures += $numRequests;
 						print utf8_encode("<tr".((($cnt%2)!=0)?" class='odd'":"")."><td>$numRequests</td><td>[[$artist]]</td><td>[[$artist:$song|$song]]");
 						$delim = "&amp;";
@@ -160,10 +164,11 @@ function wfSoapFailures(){
 							}
 						}
 						print "	- (report as [{{SERVER}}$prefix$REQUEST_URI$delim"."artist=".urlencode($artist)."&amp;song=".urlencode($song)." fixed])";
-						print "</td></tr>";
+						print "</td>";
+						print "<td>$lookedFor</td></tr>";
 					}
 					print "</table>\n";
-					print "<br/>Total of <strong>$totFailures</strong> requests in the top 50.  This number will increase slightly over time, but we should fight to keep it as low as possible!";
+					print "<br/>Total of <strong>$totFailures</strong> requests in the top $MAX_RESULTS.  This number will increase slightly over time, but we should fight to keep it as low as possible!";
 				} else {
 					print "<em>No results found.</em>\n";
 				}
@@ -175,9 +180,32 @@ function wfSoapFailures(){
 			$wgMemc->set($cacheKey, $content, strtotime("+2 hour"));
 		}
 		$msg = ($msg==""?"":"<pre>$msg</pre>");
-		$wgOut->addHTML("<style>table{border-collapse:collapse;}tr.odd{background-color:#eef}</style>\n");
+		$wgOut->addHTML("<style type='text/css'>
+			table.soapfailures{
+				border-collapse:collapse;
+			}
+			.soapfailures tr.odd{background-color:#eef}
+			.soapfailures td, .soapfailures th{
+				border:1px solid;
+				cell-padding:0px;
+				cell-spacing:0px;
+				vertical-align:top;
+				padding:5px;
+			}</style>\n");
 		$wgOut->addWikiText("$msg$content");
 	}
 }
+
+/**
+ * Given the string of lookedFor titles, formats them into wikitext with one title (as a link) per line.
+ */
+function formatLookedFor($lookedFor){
+	$titles = array_unique(explode("\n", $lookedFor));
+	$lookedFor = "";
+	foreach($titles as $pageTitle){
+		$lookedFor .= "[[$pageTitle]]<br/>";
+	}
+	return $lookedFor;
+} // end formatLookedFor()
 
 ?>

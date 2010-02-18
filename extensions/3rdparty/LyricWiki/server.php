@@ -606,6 +606,7 @@ function getSong($artist, $song="", $doHyphens=true){
 	$song = rawurldecode($song);
 	$origArtist = $artist; // for logging the failed requests, record the original name before we start messing with it
 	$origSong = $song;
+	$lookedFor = ""; // which titles we looked for.  Used in SOAP failures
 
 	// Trick to show debug output.  Just add the debugSuffix to the end of the song name, and debug output will be displayed.
 	if((strlen($song) >= strlen($debugSuffix)) && (substr($song, (0-strlen($debugSuffix))) == $debugSuffix)){
@@ -739,6 +740,7 @@ function getSong($artist, $song="", $doHyphens=true){
 			print (!$debug?"":"Looking for \"$title\"\n");
 			// If the song was not found... use some tricks to try to find it. - SWC 20061209
 			if(!lw_pageExists($title)){
+				$lookedFor .= "$title\n";
 				print (!$debug?"":"Not found...\n");
 
 				// If the artist has a redirect on their own page, that generally means that all songs belong to that finalized name...
@@ -755,6 +757,7 @@ function getSong($artist, $song="", $doHyphens=true){
 
 				// If the song was still not found... chop off any trailing parentheses and try again. - SWC 20070101
 				if(!lw_pageExists($title)){
+					$lookedFor .= "$title\n";
 					print (!$debug?"":"$title not found.\n");
 					$finalSong = preg_replace("/\s*\(.*$/", "", $song);
 					if($song != $finalSong){
@@ -765,6 +768,7 @@ function getSong($artist, $song="", $doHyphens=true){
 					print (!$debug?"":"$title found.\n");
 				}
 			}
+			$lookedFor .= "$title\n";
 			if(lw_pageExists($title)){
 				$finalName = "";
 				$content = lw_getPage($title, array(), $finalName, $debug);
@@ -812,13 +816,11 @@ function getSong($artist, $song="", $doHyphens=true){
 				// a song was looked for so that we can find the most desired lyrics and fill them in.
 				$origArtistSql = str_replace("'", "\'", $origArtist);
 				$origSongSql = str_replace("'", "\'", $origSong);
+				$lookedForSql = str_replace("'", "\'", trim($lookedFor)); // \n-delimited list of titles looked for by the API which weren't found.
 
-				/**
-				 * rt#27684 eloy
-				 */
-				if( !wfReadOnly() ) {
+				if( !wfReadOnly() ) { // rt#27684 eloy
 					$db = lw_connect();
-					$queryString = "INSERT INTO lw_soap_failures (request_artist,request_song) VALUES ('$origArtistSql', '$origSongSql') ON DUPLICATE KEY UPDATE numRequests=numRequests+1";
+					$queryString = "INSERT INTO lw_soap_failures (request_artist,request_song, lookedFor) VALUES ('$origArtistSql', '$origSongSql', '$lookedForSql') ON DUPLICATE KEY UPDATE numRequests=numRequests+1";
 					mysql_query($queryString, $db);
 				}
 				$resultFound = false;
