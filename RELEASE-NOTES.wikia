@@ -1,8 +1,9 @@
 == Changes since 201002.3 ==
+* rt#40094: Tweaked websitewiki infobox to not break headings (TOR)
 * rt#40649: Click-tracking on new Home Page. (Nef)
 * rt#38362: Closewiki needs to delete search index (eloy)
 * rt#36195: Automate table setup for wgEnableNewsiteExt. (Nef)
-* rt#40315: Fallback logo home link for zh- variants. (Nef) 
+* rt#40315: Fallback logo home link for zh- variants. (Nef)
 
 == Changes since 201002.2 ==
 * rt#40132: RTE: intitialise toolbar at the correct height (macbre)
