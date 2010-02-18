@@ -172,10 +172,6 @@ function createAnswerForm(button){
 		$(button).parents('li').find('.cathub-actual-answer-wrapper').remove();
 		$(button).show();
 	});
-
-		// TODO: Handle replace with the correct button as deterimined by whether it was initially answered (which is calculated above)
-
-
 }
 
 function createRephraseForm(button){
