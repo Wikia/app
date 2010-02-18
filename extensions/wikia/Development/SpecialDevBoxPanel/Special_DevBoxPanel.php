@@ -30,6 +30,10 @@ if(!defined('MEDIAWIKI')) die();
 // Credentials for the editable (not public) devbox database.
 require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../DevBoxDatabase.php' );
 
+// From now on it is assumed that if you're using the DevBoxPanel, you only want to write when you
+// are using a locally overridden database.
+$wgReadOnly = true;
+
 // TODO: DETERMINE THE CORRECT PERMISSIONS... IS THERE A "DEVELOPERS" GROUP THAT WE ALL ACTUALLY BELONG TO?  WILL WE BE ON ALL WIKIS?
 // Permissions
 $wgAvailableRights[] = 'devboxpanel';
