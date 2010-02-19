@@ -47,23 +47,33 @@ if( !empty( $mType ) ) {
 	<div class="formblock">
 		<ul>
 			<li class="label"><label class="required" id="wiki-category-label"><?=wfMsg('nstab-category')?>:</label></li>
-			<li class="data1"><select name="wiki-category" id="wiki-category"><option value=""><?=wfMsg('autocreatewiki-category-select')?></option>
-<?php if (!empty($aCategories) && is_array($aCategories)) :  ?>
+			<li class="data1"><select name="wiki-category" id="wiki-category">
+<?php
+if (!empty($aCategories) && is_array($aCategories) && ( $mType != "answers" ) ):
+?>
+				<option value=""><?=wfMsg('autocreatewiki-category-select')?></option>
 <?php
 	foreach ($aCategories as $iCat => $sCatName) :
-	if (in_array($sCatName, array('Wikia', 'Wikianswers'))) continue;
-	$selected = "";
-	if ( isset($params['wiki-category']) && ($params['wiki-category'] == $iCat) ) {
-		$selected = " selected='selected'";
-	}
-?>
+		if( in_array( $sCatName, array( 'Wikia', 'Wikianswers' ) ) )
+			continue;
 
-				<option value="<?=$iCat?>" <?=$selected?>><?=$sCatName?></option>
+		$selected = "";
+		if ( isset($params['wiki-category']) && ($params['wiki-category'] == $iCat) ):
+			$selected = " selected=\"selected\"";
+		endif;
+?>
+				<option value="<?php echo $iCat ?>" <?php echo $selected?>><?php echo $sCatName?></option>
 <?php
 	endforeach
 ?>
 				<option value="9"><?=wfMsg('autocreatewiki-category-other')?></option>
-<?php endif ?>
+<?php
+elseif( $mType == "answers" ):
+?>
+				<option value="20" selected="selected">Wikianswers</option>
+<?php
+endif
+?>
 				</select>
 				<div class="error" style="display: none;" id="wiki-category-error"></div>
 			</li>
