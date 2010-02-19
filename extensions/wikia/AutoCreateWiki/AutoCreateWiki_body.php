@@ -544,10 +544,10 @@ class AutoCreateWikiPage extends SpecialPage {
 			$cmd = sprintf(
 				"%s -h%s -u%s -p%s %s categorylinks externallinks image imagelinks langlinks page pagelinks revision templatelinks text | %s -h%s -u%s -p%s %s",
 				$this->mMYSQLdump,
-				$starter[ "host"     ],
-				$starter[ "user"     ],
-				$starter[ "password" ],
-				$starter[ "dbname"   ],
+				$starter[ "host"      ],
+				$starter[ "user"      ],
+				$starter[ "password"  ],
+				$starter[ "dbStarter" ],
 				$this->mMYSQLbin,
 				$dbw_local->getLBInfo( 'host' ),
 				$wgDBuser,
@@ -1652,6 +1652,8 @@ class AutoCreateWikiPage extends SpecialPage {
 			/**
 			 * get UploadDirectory
 			 */
+			$this->log( print_r( $result, 1 ) );
+			$result[ "dbStarter" ] = $dbStarter;
 			$result[ "uploadDir" ] = WikiFactory::getVarValueByName( "wgUploadDirectory", WikiFactory::DBtoID( $dbStarter ) );
 			$this->log( "starter $dbStarter exists" );
 		}
