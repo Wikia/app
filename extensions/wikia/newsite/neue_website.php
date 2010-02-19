@@ -331,7 +331,7 @@ function get_content($host)
 	  $cset = strtoupper( $cset );
 
 	  if ( $cset != "UTF-8" ) {
-		  $str = mb_convert_encoding( $str, "UTF-8", $cset );	
+		  $str = @mb_convert_encoding( $str, "UTF-8", $cset );	
 	  }
 
 	  $str = eregi_replace("<[^>]*>|[]\001-\037{}\\[]", " ", $str);
