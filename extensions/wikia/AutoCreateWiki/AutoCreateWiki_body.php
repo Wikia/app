@@ -1652,7 +1652,6 @@ class AutoCreateWikiPage extends SpecialPage {
 			/**
 			 * get UploadDirectory
 			 */
-			$this->log( print_r( $result, 1 ) );
 			$result[ "dbStarter" ] = $dbStarter;
 			$result[ "uploadDir" ] = WikiFactory::getVarValueByName( "wgUploadDirectory", WikiFactory::DBtoID( $dbStarter ) );
 			$this->log( "starter $dbStarter exists" );
