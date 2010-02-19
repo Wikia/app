@@ -472,7 +472,7 @@ class SolrResult extends SearchResult {
 
 	public static function showHit($result, $link, $redirect, $section, $extract, $data) {
 		// adding class to result link
-		$link = preg_replace('/(title)/i', 'class="mw-search-result-title" $1', $link);
+		$link = preg_replace('/( title=\")/i', ' class="mw-search-result-title"$1', $link);
 
 		if($result->isCrossWikiaResult()) {
 			$data = "<a href=\"" . $result->getUrl() . "\" title=\"" . $result->getUrl() . "\" style=\"text-decoration: none; font-size: small\"><span class=\"dark_text_2\">" . strtr( $result->mUrl, array( 'http://' => '' ) ) . "</span></a>";
@@ -495,7 +495,7 @@ class SolrResultTitle extends Title {
 	public function __construct($ns, $title, $url) {
 		$this->mInterwiki = '';
 		$this->mFragment = '';
-		$this->mNamespace = 0; //$ns = intval( $ns );
+		$this->mNamespace = intval( $ns );
 		$this->mDbkeyform = str_replace( ' ', '_', $title );
 		$this->mArticleID = 0; //( $ns >= 0 ) ? -1 : 0;
 		$this->mUrlform = wfUrlencode( $this->mDbkeyform );
