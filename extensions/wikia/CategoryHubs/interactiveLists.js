@@ -157,6 +157,11 @@ function createAnswerForm(button){
 									answerCode = "<div class='cathub-actual-answer'>" + answerCode + "</div>\n";
 									$(button).parents("li").append(answerCode);
 									$(button).find('big').html(wgCatHubImproveAnswerButtonMsg);
+									
+									// To make the progress more visible, make the div bg green and purge the memcache for percent and for the lists.
+									$.get(wgPurgeCategoryHubsCacheUrl, function(){
+										$(button).parents("li").css('background-color', '#efe');
+									});
 								}
 							});
 						});

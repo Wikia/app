@@ -103,6 +103,9 @@ function categoryHubJsGlobalVariables(&$vars){
 
 	global $wgStylePath;
 	$vars['wgAjaxImageSrc'] = $wgStylePath."/common/images/ajax.gif";
+
+	global $wgTitle;
+	$vars['wgPurgeCategoryHubsCacheUrl'] = $wgTitle->getFullURL('action=purge&exitwithoutcontent=1');
 	return true;
 } // end categoryHubJsGlobalVariables()
 
@@ -276,6 +279,25 @@ function categoryHubDoCategoryQuery(&$flexibleCategoryViewer){
 function categoryHubCategoryTop(&$catView, &$r){
 	global $wgCatHub_useDefaultView;
 	if(!$wgCatHub_useDefaultView){
+
+		// Special-case.  If this is a purge, clear memecached.
+		// If this was a special ajax purge-only request then just exit after the purge.
+		global $wgRequest;
+		if($wgRequest->getVal('action') == "purge"){
+			$categoryEdits = CategoryEdits::newFromId($catView->getCat()->getId());
+
+			$answeredCategory = CategoryHub::getAnsweredCategory();
+			$unAnsweredCategory = CategoryHub::getUnAnsweredCategory();
+			$categoryEdits->purgePercentInCats($answeredCategory, $unAnsweredCategory);
+			$categoryEdits->purgePagesInCat($answeredCategory);
+			$categoryEdits->purgePagesInCat($unAnsweredCategory);
+
+			if($wgRequest->getVal('exitwithoutcontent') == "1"){
+				print "1"; // to indicate success in an easier-to-debug manner than just headers
+				exit;
+			}
+		}
+
 		$countQuestions = categoryHubTitleBar($catView, $r);
 		if ( $countQuestions > 0 ) {
 			categoryHubTopContributors($catView, $r);
