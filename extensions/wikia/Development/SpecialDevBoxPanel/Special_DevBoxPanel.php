@@ -25,7 +25,7 @@
  *       NOTE: THIS IS STARTED and is in /wikia-conf/devbox/updateDevBox.sh  IT's PROBABLY A BIT EARLY TO RELEASE IT TO THE WILD THOUGH (need to handle LocalSettings.php).
  */
 
-if(!defined('MEDIAWIKI')) die();
+if(!defined('MEDIAWIKI')) die("Not a valid entry point.");
 
 // Credentials for the editable (not public) devbox database.
 require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../DevBoxDatabase.php' );
