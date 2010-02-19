@@ -17,7 +17,7 @@ $wgExtensionMessagesFiles['TitleEdit'] = dirname(__FILE__) . '/TitleEdit.i18n.ph
 $wgHooks['MonacoPrintFirstHeading'][] = 'wfTitleEditPrintFirstHeading';
 
 function wfTitleEditPrintFirstHeading() {
-	global $wgTitle, $wgUser, $wgRequest;
+	global $wgTitle, $wgUser, $wgRequest, $wgArticle;
 
 	if ( $wgTitle->isProtected( 'edit' ) ) {
 		return true;
@@ -31,24 +31,45 @@ function wfTitleEditPrintFirstHeading() {
 	$sk = $wgUser->getSkin();
 	$result = '';
 
+	// build the query string for the correct revision
+	$query = array( 'action' => 'edit' );
+	if ( $wgArticle->getOldid() !== 0 ) {
+		$query['oldid'] = $wgArticle->getOldid();
+	}
+
+
+	$attributes = array(
+		'onclick' => 'WET.byStr("articleAction/topedit")',
+		'rel' => 'nofollow',
+	);
+
 	if (is_object($wgUser) && $wgUser->isLoggedIn()) {
 		$link = $sk->link( $wgTitle, wfMsg('titleedit'),
-			array( 'onclick' => 'WET.byStr("articleAction/topedit")'),
-			array( 'action' => 'edit'),
+			$attributes,
+			$query,
 			array( 'noclasses', 'known' )
 			);
-		$result = wfMsgHtml( 'editsection-brackets', $link );
-		$result = "<span class=\"editsection-upper\">$result</span>";
+		$link = wfMsgHtml( 'editsection-brackets', $link );
 	} else { // anon
 		global $wgDisableAnonymousEditig;
+
+		// prompt to login or not?
 		if ( empty($wgDisableAnonymousEditig)) {
-			$link = "<a id=\"te-editanon-noprompt\" class=\"wikia_button\" rel=\"nofollow\" onclick=\"WET.byStr('articleAction/topedit')\" href=\"" . $wgTitle->getEditUrl() . "\"><span>" . wfMsg( 'titleedit' ) . "</span></a>";
-			$result = "<span class=\"editsection-upper\">$link</span>";
+			$attributes['id'] = 'te-editsection-noprompt';
 		} else {
-			$link = "<a id=\"te-editanon\" class=\"wikia_button\" rel=\"nofollow\" onclick=\"WET.byStr('articleAction/topedit')\" href=\"" . $wgTitle->getEditUrl() . "\"><span>" . wfMsg( 'titleedit' ) . "</span></a>";
-			$result = "<span class=\"editsection-upper\">$link</span>";
+			$attributes['id'] = 'te-editanon';
 		}
+
+		$attributes['class'] = 'wikia_button';
+
+		$link = $sk->link(
+			$wgTitle, "<span>" . wfMsg( 'titleedit' ) . "</span>",
+			$attributes,
+			$query
+		);
 	}
+
+	$result = "<span class=\"editsection-upper\">$link</span>";
 
 	echo $result;
 	return true;
