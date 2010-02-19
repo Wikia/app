@@ -53,13 +53,12 @@ class WikiFactoryTags {
 	 *
 	 * @return string  key used for caching
 	 */
-	private function cacheKey() {
+	private function cacheKey( ) {
 		return sprintf( "wikifactory:tags:v1:%d", $this->mCityId );
 	}
 
-
 	/**
-	 * getTags -- get all tags defined from database
+	 * getTags -- get all tags defined from database mapped to current wiki
 	 *
 	 * @access public
 	 */
@@ -110,6 +109,58 @@ class WikiFactoryTags {
 	}
 
 	/**
+	 * getTags -- get all tags defined from database mapped to current wiki
+	 *
+	 * @access public
+	 */
+	public function getAllTags( $skipcache = false ) {
+
+		global $wgMemc;
+
+		wfProfileIn( __METHOD__ );
+
+		$result = array();
+		$result[ "byid"   ] = array();
+		$result[ "byname" ] = array();
+
+		/**
+		 * try cache first
+		 */
+		if( !$skipcache ) {
+			/**
+			 * check if cache has any values stored
+			 */
+			$result = $wgMemc->get( $this->cacheKey() );
+			$usedb  = is_array( $result ) ? false : true;
+		}
+		else {
+			$usedb = true;
+		}
+
+		if( $usedb ) {
+			$dbr = WikiFactory::db( DB_SLAVE );
+			$sth = $dbr->select(
+				array( "city_tag"  ),
+				array( "id", "name" ),
+				__METHOD__
+			);
+			while( $row = $dbr->fetchObject( $sth ) ) {
+				$result[ "byid"   ][ $row->id   ] = $row->name;
+				$result[ "byname" ][ $row->name ] = $row->id;
+			}
+
+			/**
+			 * set in cache for future use
+			 */
+			$wgMemc->set( $this->cacheKey(), $result, 60*60*24 );
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $result;
+	}
+
+	/**
 	 * use provided string to add new tags into database. Tags will be:
 	 *
 	 * 1) splitted by space
@@ -124,6 +175,10 @@ class WikiFactoryTags {
 	 * @return Array current tags for wiki
 	 */
 	public function addTagsByName( $stag ) {
+
+		if( !$this->mCityId ) {
+			return false;
+		}
 
 		wfProfileIn( __METHOD__ );
 
@@ -179,6 +234,10 @@ class WikiFactoryTags {
 	 */
 	public function addTagsById( $ids ) {
 
+		if( !$this->mCityId ) {
+			return false;
+		}
+
 		/**
 		 * and now map tags in city_tag_map
 		 */
@@ -219,6 +278,10 @@ class WikiFactoryTags {
 	 */
 	public function removeTagsByName( $stag ) {
 
+		if( !$this->mCityId ) {
+			return false;
+		}
+
 		wfProfileIn( __METHOD__ );
 
 		$tags = explode( " ", trim( strtolower( $stag ) ) );
@@ -252,6 +315,10 @@ class WikiFactoryTags {
 	 */
 	public function removeTagsById( $ids ) {
 
+		if( !$this->mCityId ) {
+			return false;
+		}
+
 		wfProfileIn( __METHOD__ );
 
 		$dbw  = WikiFactory::db( DB_MASTER );
@@ -272,6 +339,35 @@ class WikiFactoryTags {
 		 * refresh cache, return defined tags
 		 */
 		return $this->getTags( true );
+	}
+
+
+	/**
+	 * get tag name by using its id
+	 *
+	 * @access public
+	 * @static
+	 *
+	 * @return Integer tag id or false
+	 */
+	static public function idFromName( $id ) {
+		$tags = new WikiFactoryTags( 0 );
+		$tags = $tags->getAllTags();
+		return isset( $tags["byid"][ $name ] ) ? $tags["byid"][ $id ] : false;
+	}
+
+	/**
+	 * get tag id by using its name
+	 *
+	 * @access public
+	 * @static
+	 *
+	 * @return string tag name or false
+	 */
+	static public function nameFromId( $name ) {
+		$tags = new WikiFactoryTags( 0 );
+		$tags = $tags->getAllTags();
+		return isset( $tags["byname"][ $name ] ) ? $tags["byname"][ $name ] : false;
 	}
 
 	/**
