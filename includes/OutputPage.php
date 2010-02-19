@@ -952,19 +952,22 @@ class OutputPage {
 
 		if ( $wgUseAjax ) {
 			// macbre@wikia: ajax.js and ajaxwatch.js files are part of allinone.js for Monaco skin - don't add them twice
-			if ( !in_array(get_class($sk), array('SkinMonaco', 'SkinAwesome')) ) {
+			if ( !in_array(get_class($sk), array('SkinMonaco', 'SkinAwesome', 'SkinCorporate', 'SkinCorporateHome', 'SkinCorporateHubs')) ) {
 				$this->addScriptFile( 'ajax.js' );
 			}
 			
 			wfRunHooks( 'AjaxAddScript', array( &$this ) );
 
-			if ( !in_array(get_class($sk), array('SkinMonaco', 'SkinAwesome')) ) {
+			if ( !in_array(get_class($sk), array('SkinMonaco', 'SkinAwesome', 'SkinCorporate', 'SkinCorporateHome', 'SkinCorporateHubs')) ) {
 				if( $wgAjaxWatch && $wgUser->isLoggedIn() ) {
 					$this->addScriptFile( 'ajaxwatch.js' );
 				}
 			}
-			if ( $wgEnableMWSuggest && !$wgUser->getOption( 'disablesuggest', false ) ){
-				$this->addScriptFile( 'mwsuggest.js' );
+			
+			if ( !in_array(get_class($sk), array( 'SkinCorporate', 'SkinCorporateHome', 'SkinCorporateHubs')) ) {	
+				if ( $wgEnableMWSuggest && !$wgUser->getOption( 'disablesuggest', false ) ){
+					$this->addScriptFile( 'mwsuggest.js' );
+				}
 			}
 		}
 		
