@@ -21,7 +21,7 @@ function testStomp() {
 		$stomp->send( $q, "test", array(
 			'exchange' => 'amq.topic', 
 			'bytes_message' => 1, 
-			'routing_key' => "wikia.article.#"
+			'routing_key' => $q
 		)); 
 		echo "sent \n";
 		$stomp->disconnect();
