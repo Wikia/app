@@ -98,8 +98,8 @@ class AutoCreateWiki {
 					if ( !preg_match("/^[\w\.]+$/",$n) ) continue;
 					$sDomain = Wikia::fixDomainName( $n, $language, $type );
 					$tmp_array['exact'][] = "city_domain = '{$sDomain}'";
-					$n = strtr($n, '0123456789', '%%%%%%%%%%%');
-					$tmp_array['similar'][] = "city_domain like '%{$n}%' or city_domain sounds like '{$n}.wikia.com'";
+					$n = strtr($n, '0123456789-', '%%%%%%%%%%%%');
+					$tmp_array['similar'][] = "city_domain like '%{$n}%'";
 				}
 				if( sizeof( $tmp_array ) ) {
 					$condition = implode(" or ", $tmp_array['exact']);
