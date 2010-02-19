@@ -137,7 +137,7 @@ class UserMailer {
 					array('exchange' => 'amq.topic', 'bytes_message' => 1)
 				);
 			}
-			catch( Stomp_Exception $e ) {
+			catch( StompException $e ) {
 				Wikia::log( __METHOD__, 'stomp_exception', $e->getMessage() );
 			}
 			wfProfileOut(__METHOD__ . '-stomp');
@@ -312,7 +312,7 @@ class UserMailer {
 					array('exchange' => 'amq.topic', 'bytes_message' => 1)
 				);
 			}
-			catch( Stomp_Exception $e ) {
+			catch( StompException $e ) {
 				Wikia::log( __METHOD__, 'stomp_exception', $e->getMessage() );
 			}
 			wfProfileOut(__METHOD__ . '-stomp');
