@@ -222,6 +222,7 @@ class StaticChute {
 			'common/commonPrint.css',
 		);
 		
+		
 		$this->config['corporate_page_js'] = array(
 			'common/wikibits.js',
 			'common/jquery/jquery-1.4.1.min.js',
@@ -230,6 +231,9 @@ class StaticChute {
 			'corporate/js/main.js',
             'common/jquery/jquery.wikia.tracker.js',
 			'corporate/js/tracker.js',
+			'common/ajax.js',
+			'common/ajaxwatch.js',
+			'common/mwsuggest.js',
 		);
 
 		$this->config['corporate_specialpage_js'] = array(
@@ -242,6 +246,9 @@ class StaticChute {
 			'corporate/js/tracker.js',
 			'common/yui_2.5.2/utilities/utilities.js',
 			'common/yui_extra/tools-min.js',
+			'common/ajax.js',
+			'common/ajaxwatch.js',
+			'common/mwsuggest.js',
 		);
 		
 		$this->config['corporate_page_css'] = array(		

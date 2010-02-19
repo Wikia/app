@@ -232,6 +232,10 @@ class SkinCorporateBase extends SkinTemplate {
 		$tpl->set('search_value', ( !empty( $searchValue ) ) ? $searchValue : wfMsg('corporatepage-find-a-wiki'));
 		return true;
 	}
+	
+	public function setupSkinUserCss() {
+		
+	}
 }
 
 require_once dirname(__FILE__) . "/../extensions/wikia/AnalyticsEngine/AnalyticsEngine.php";
