@@ -293,7 +293,7 @@ class SquidUpdate {
 				);
 			}
 		}
-		catch( Stomp_Exception $e ) {
+		catch( StompException $e ) {
 			Wikia::log( __METHOD__, 'stomp_exception', $e->getMessage() );
 		}
 		wfProfileOut( $fname );
