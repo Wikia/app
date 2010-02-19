@@ -178,11 +178,12 @@ function WikiaVideo_renderVideoGallery($input, $args, $parser) {
 
 		for($i = 0; $i < count($videos); $i++) {
 			$videoID = $videos[$i][0]->getArticleID();
-			
+			$style = '';
+
 			if ($videoID > 0){
 				$video = new VideoPage($videos[$i][0]);
-				$video->load();			
-				$html = $video->getEmbedCode().'</div></div><div class="gallerytext">'.(!empty($videos[$i][1]) ? $videos[$i][1] : '');				
+				$video->load();
+				$html = $video->getEmbedCode().'</div></div><div class="gallerytext">'.(!empty($videos[$i][1]) ? $videos[$i][1] : '');
 			} else {
 				$sk = $wgUser->getSkin();
 				$html = $sk->makeColouredLinkObj(Title::newFromText('WikiaVideoAdd', NS_SPECIAL), 'new', $videos[$i][0]->getPrefixedText(), 'name=' . $videos[$i][0]->getDBKey());;
