@@ -392,7 +392,7 @@ class CategoryEdits {
 		}
 		
 		if ( is_object( $CatIn ) && !empty( $this->mCatPageCount ) ) {
-			$memkey = wfMemcKey( 'percent', $this->mCatId, $CatIn->getID() );
+			$memkey = getPercentMemcKey($CatIn);
 			$data = $wgMemc->get( $memkey );
 			
 			if ( empty($data) ) {
@@ -428,6 +428,34 @@ class CategoryEdits {
 
 		wfProfileOut( __METHOD__ );
 		return $this->mPercent;
+	}
+	
+	/**
+	 * Return the memcache key for the caching of the percentage-complete
+	 * of the given category.
+	 */
+	function getPercentMemcKey($CatIn){
+		return wfMemcKey( 'percent', $this->mCatId, $CatIn->getID() );
+	}
+
+	/**
+	 * Purge the memcache storage of the percentage-complete for the category
+	 * whose name or id is provided in $incat.
+	 *
+	 * This allows the GUI to keep the percentage-bar fresh when it is known
+	 * that there has been a change.
+	 */
+	function purgePercentInCat($incat){
+		global $wgMemc;
+		if ( is_int($incat) ) {
+			# integer
+			$CatIn = Category::newFromID($incat);
+		} else {
+			# integer
+			$CatIn = Category::newFromName($incat);
+		}
+		$memkey = $this->getPercentMemcKey($CatIn);
+		$wgMemc->delete($memkey);
 	}
 
 	/**
@@ -467,8 +495,8 @@ class CategoryEdits {
 			wfProfileOut( __METHOD__ );
 			return $return;
 		}
-		
-		$memkey = wfMemcKey( 'percentcats', $this->mCatId, $CatFirst->getId(), $CatSec->getId() );
+
+		$memkey = $this->getPercentInCatsMemcKey($CatFirst, $CatSec);
 		$return = $wgMemc->get( $memkey );
 			
 		if ( empty($return) ) {
@@ -539,13 +567,62 @@ class CategoryEdits {
 		wfProfileOut( __METHOD__ );
 		return $return;
 	}
+
+	/**
+	 * Returns the memcache key for the cache for getPercentInCats (intersection of one category into
+	 * each of two other categories).
+	 */
+	function getPercentInCatsMemcKey($CatFirst, $CatSec){
+		return wfMemcKey( 'percentcats', $this->mCatId, $CatFirst->getId(), $CatSec->getId() );
+	} // end getPercentInCatsMemcKey()
+
+	/**
+	 * Purges the memcached value for intersection of this category with each of two others.
+	 * That cached value is used in getPercentInCats().
+	 *
+	 * @access public
+	 *
+	 * @param Integer $cat1 - first category (id/name)
+	 * @param Integer $cat2 - second category (id/name)
+	 */
+	public function purgePercentInCats($cat1, $cat2){
+		wfProfileIn( __METHOD__ );
+
+		if ( is_int($cat1) ) { # id(?)
+			$CatFirst = Category::newFromID($cat1);
+		} else { # name
+			$CatFirst = Category::newFromName($cat1);
+		}
+		
+		if ( !is_object( $CatFirst ) ) {
+			wfProfileOut( __METHOD__ );
+			return;
+		}
+		
+		if ( is_int($cat2) ) { # id(?)
+			$CatSec = Category::newFromID($cat2);
+		} else { # name
+			$CatSec = Category::newFromName($cat2);
+		}
+
+		if ( !is_object( $CatSec ) ) {
+			wfProfileOut( __METHOD__ );
+			return;
+		}
+
+		global $wgMemc;
+		$memkey = $this->getPercentInCatsMemcKey($CatFirst, $CatSec);
+		$wgMemc->delete($memkey);
+
+		wfProfileOut( __METHOD__ );
+	} // end purgePercentInCats()
 	
 	/**
 	 * getPages
 	 * 
 	 * @access public
 	 *
-	 * @param Integer $incat - percent of pages in $incat category
+	 * @param Integer $incat - pages in $incat category
 	 * @param Array $namespaces - IDs of NS (all namespace if empty)
 	 * @param Integer $limit - the maximum number of desired results to return... the real maximum will
 	 *                         be one higher.  This allows the caller to tell if they need a "Next" link.
@@ -567,7 +644,7 @@ class CategoryEdits {
 			$dbr = wfGetDB( DB_SLAVE );
 			
 			$nsPaces = (!empty($namespaces)) ? $dbr->makeList( $namespaces ) : "";
-			$memkey = wfMemcKey( 'cepages', $this->mCatId, $CatIn->getID(), md5($nsPaces) );
+			$memkey = $this->getPagesMemcKey($CatIn, $namespaces); // intentionally raw namespaces here, not nsPaces
 			$pages = $wgMemc->get( $memkey );
 			
 			$conditional = array(
@@ -628,7 +705,51 @@ class CategoryEdits {
 		wfProfileOut( __METHOD__ );
 		return $result;
 	}
-	
+
+	/**
+	 * Returns the memcache key for the collection of pages in the given category.
+	 *
+	 * @param Category $CatIn - Category whose pages this is for
+	 * @param Array $namespaces - IDs of NS (all namespace if empty)
+	 */
+	function getPagesMemcKey($CatIn, $namespaces = array()){
+		wfProfileIn( __METHOD__ );
+		$retVal = "";
+
+		if ( is_object( $CatIn ) && !empty( $this->mCatPageCount ) ) {
+			if(!empty($namespaces)){
+				$dbr = wfGetDB( DB_SLAVE );
+				$nsPaces = $dbr->makeList( $namespaces );
+			} else {
+				$nsPaces = "";
+			}
+
+			$retVal = wfMemcKey( 'cepages', $this->mCatId, $CatIn->getID(), md5($nsPaces) );
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $retVal;
+	} // end getPagesMemcKey()
+
+	/**
+	 * Purges the memcached value of pages in the incat category.
+	 *
+	 * @access public
+	 *
+	 * @param Integer $incat - pages in $incat category (may be id or name).
+	 */
+	public function purgePagesInCat($incat){
+		if ( is_int($incat) ) {
+			$CatIn = Category::newFromID($incat);
+		} else {
+			$CatIn = Category::newFromName($incat);
+		}
+		$memkey = $this->getPagesMemcKey($CatIn);
+
+		global $wgMemc;
+		$wgMemc->delete($memkey);
+	} // end purgePagesInCat()
+
 	/**
 	 * getContribs - list of contributors to category
 	 * 
