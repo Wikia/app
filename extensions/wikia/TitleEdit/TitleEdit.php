@@ -33,7 +33,7 @@ function wfTitleEditPrintFirstHeading() {
 
 	// build the query string for the correct revision
 	$query = array( 'action' => 'edit' );
-	if ( $wgArticle->getOldid() !== 0 ) {
+	if ( is_object( $wgArticle ) && $wgArticle->getOldID() !== 0 ) {
 		$query['oldid'] = $wgArticle->getOldid();
 	}
 
