@@ -471,8 +471,11 @@ class AutoCreateWikiLocalJob extends Job {
 		$target = "{$wgUploadDirectory}/avatars";
 		wfMkdirParents( $target );
 		if( is_dir( $target ) ) {
-			copy( "/images/a/answers/images/avatars/default*", $target );
+			wfShellExec("/bin/cp -af /images/a/answers/images/avatars/default* {$target}/");
 			Wikia::log( __METHOD__, "info", "copy default avatars to {$target}" );
+		}
+		else {
+			Wikia::log( __METHOD__, "error", "Cannot create {$target} folder" );
 		}
 	}
 }
