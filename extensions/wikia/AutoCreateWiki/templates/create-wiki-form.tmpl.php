@@ -12,7 +12,7 @@ var createType = "<?php echo $mType ?>";
 /*]]>*/
 </script>
 <?php
-$cgiParams = array();
+$cgiArgs = array();
 if( $mLanguage != 'en' ) {
 	$cgiArgs[ "uselang" ] = $mLanguage;
 }

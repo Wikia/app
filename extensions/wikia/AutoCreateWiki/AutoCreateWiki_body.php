@@ -36,7 +36,8 @@ class AutoCreateWikiPage extends SpecialPage {
 		$mErrors,
 		$mUserLanguage,
 		$mDefaultUser,
-		$mType;            // type of form: answers, recipes; default not set
+		$mType,            // type of form: answers, recipes; default not set
+		$mStarters;
 
 	/**
 	 * test database, CAUTION! content will be destroyed during tests
@@ -74,6 +75,25 @@ class AutoCreateWikiPage extends SpecialPage {
 		 * language starters
 		 */
 		$this->mLanguageStarters = array("en", "ja", "de", "fr", "nl", "es", "pl");
+
+		/**
+		 * starters map
+		 */
+		$this->mStarters = array(
+			"*" => array(
+				"*"  => "aastarter",
+				"en" => "starter",
+				"ja" => "jastarter",
+				"de" => "destarter",
+				"fr" => "frstarter",
+				"nl" => "nlstarter",
+				"es" => "esstarter",
+				"pl" => "plstarter"
+			),
+			"answers" => array(
+				"en" => "starteranswers"
+			)
+		);
 
 		/**
 		 * set paths for external tools
@@ -515,34 +535,19 @@ class AutoCreateWikiPage extends SpecialPage {
 		/**
 		 * import language starter
 		 */
-		if ( in_array( $this->mWikiData[ "language" ], $this->mLanguageStarters ) ) {
-			$prefix    = ( $this->mWikiData[ "language" ] === "en") ? "" : $this->mWikiData[ "language" ];
-			$starterDB = $prefix. "starter";
-		} else {
-			$prefix    = "aa";
-			$starterDB = AWC_GENERIC_STARTER;
-		}
-
-		/**
-		 * first check whether database starter exists
-		 */
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB ); # central
-		$sql = sprintf( "SHOW DATABASES LIKE '%s';", $starterDB );
-
-		/**
-		 * @fixme we should not assume that dbw in this place is to first
-		 * cluster
-		 */
-		$Res = $dbr->query( $sql, __METHOD__ );
-		$numRows = $Res->numRows();
-		if ( !empty( $numRows ) ) {
+		$starter = $this->getStarter();
+		if( $starter !== false ) {
+			/**
+			 * @fixme we should not assume that dbw in this place is to first
+			 * cluster
+			 */
 			$cmd = sprintf(
 				"%s -h%s -u%s -p%s %s categorylinks externallinks image imagelinks langlinks page pagelinks revision templatelinks text | %s -h%s -u%s -p%s %s",
 				$this->mMYSQLdump,
-				$dbr->getLBInfo( 'host' ),
-				$wgDBuser,
-				$wgDBpassword,
-				$starterDB,
+				$starter[ "host"     ],
+				$starter[ "user"     ],
+				$starter[ "password" ],
+				$starter[ "dbname"   ],
 				$this->mMYSQLbin,
 				$dbw_local->getLBInfo( 'host' ),
 				$wgDBuser,
@@ -562,7 +567,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			 * @todo move copying images from local database changes section
 			 * use wikifactory variable to determine proper path to images
 			 */
-			$startupImages = sprintf( "%s/s/starter/%s/images", self::IMGROOT, $prefix );
+			$startupImages = $starter[ "uploadDir" ];
 
 			if (file_exists( $startupImages ) && is_dir( $startupImages ) ) {
 				wfShellExec("/bin/cp -af {$startupImages}/* {$this->mWikiData[ "images_dir" ]}/");
@@ -581,10 +586,6 @@ class AutoCreateWikiPage extends SpecialPage {
 			$this->log( "Copying starter database" );
 			$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step7') );
 		}
-		else {
-			$this->log( "No starter database for this language, {$starterDB}" );
-		}
-
 		/**
 		 * making the wiki founder a sysop/bureaucrat
 		 */
@@ -1606,5 +1607,62 @@ class AutoCreateWikiPage extends SpecialPage {
 		}
 		wfProfileOut( __METHOD__ );
 		return $dbname;
+	}
+
+	/**
+	 * get starter data for current parameters
+	 *
+	 * @access private
+	 * @author Krzysztof Krzyżaniak (eloy)
+	 *
+	 * @return mixed -- array if there's starter, false otherwise
+	 */
+	private function getStarter() {
+
+		wfProfileIn( __METHOD__ );
+		$result = false;
+
+		/**
+		 * determine database name, set default match
+		 */
+		$dbStarter = $this->mStarters[ "*" ][ "*" ];
+		switch( $this->mType ) {
+			case "answers":
+				if( isset( $this->mStarters[ "answers" ][ $this->mWikiData[ "language" ] ] ) ) {
+					$dbStarter = $this->mStarters[ "answers" ][ $this->mWikiData[ "language" ] ];
+				}
+				break;
+
+			default:
+				if( isset( $this->mStarters[ "*" ][ $this->mWikiData[ "language" ] ] ) ) {
+					$dbStarter = $this->mStarters[ "*" ][ $this->mWikiData[ "language" ] ];
+				}
+		}
+
+		/**
+		 * determine if exists
+		 */
+		try {
+			$dbr = wfGetDB( DB_SLAVE, array(), $dbStarter );
+			/**
+			 * read info about connection
+			 */
+			$result = $dbr->getLBInfo();
+
+			/**
+			 * get UploadDirectory
+			 */
+			$result[ "uploadDir" ] = WikiFactory::getVarValueByName( "wgUploadDirectory", WikiFactory::DBtoID( $dbStarter ) );
+			$this->log( "starter $dbStarter exists" );
+		}
+		catch( DBConnectionError $e ) {
+			/**
+			 * well, it means that starter doesn't exists
+			 */
+			$this->log( "starter $dbStarter does not exists" );
+		}
+		wfProfileOut( __METHOD__ );
+
+		return $result;
 	}
 }
