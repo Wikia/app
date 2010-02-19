@@ -69,8 +69,9 @@ function wfMakeGlobalVariablesScript($vars) {
 		$vars['wgRevisionId'] = !empty($wgArticle->mRevision) ? $wgArticle->mRevision->getId() : intval($wgArticle->mLatest);
 	}
 
-	$vars['wgWikiFactoryTags'] = $wgWikiFactoryTags;
-	
+	$vars['wgWikiFactoryTagIds'] = array_keys( $wgWikiFactoryTags );
+	$vars['wgWikiFactoryTagNames'] = array_values( $wgWikiFactoryTags );
+
 	wfProfileOut(__METHOD__);
 
 	return true;
