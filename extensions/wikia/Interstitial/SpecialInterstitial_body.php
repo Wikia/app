@@ -113,10 +113,16 @@ class Interstitial extends UnlistedSpecialPage {
 			if ($skin->getSkinName() == '') {
 				$skin->skinname = substr($skinName, 4);
 			}
-
+			
 			if ($skinName == 'SkinMonaco') {
 				$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
+				// Create the JS-includes for the tracking code and jQuery - will just use StaticChute because it should be in user's cache by now.
+				$StaticChute = new StaticChute('js');
+				$StaticChute->useLocalChuteUrl();
+				$package = 'monaco_anon_article_js';
+				$jsIncludes = $StaticChute->getChuteHtmlForPackage($package);
+				$jsGlobals = Skin::makeGlobalVariablesScript( array('skinname' => $skinName) );
 				$oTmpl->set_vars(
 						array(
 							'url' => $url,
@@ -124,6 +130,9 @@ class Interstitial extends UnlistedSpecialPage {
 							'skip' => wfMsg('interstitial-skip-ad'),
 							'adCode' => $adCode,
 							'redirectDelay' => $redirectDelay,
+							'jsIncludes' => $jsIncludes,
+							'pageType' => 'interstitial',
+							'jsGlobals' => $jsGlobals,
 						)
 				);
 

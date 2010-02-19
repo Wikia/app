@@ -4,9 +4,12 @@
 		<title></title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<?php print $css ?>
-
+		<?php print $jsGlobals; ?>
 		<script type="text/javascript">/*<![CDATA[*/
 			function doRedirect() {
+				if((typeof WET != "undefined") && pageType){
+					WET.byStr(pageType + "/waitedThroughAd");
+				}
 				window.location = <?php print Xml::encodeJSvar( htmlspecialchars_decode( $url ) ); ?>;
 			}
 		/*]]>*/</script>
@@ -27,7 +30,7 @@
 		<div id="wikia_page">
 			<div class='interstitial_fg_top color1' id="page_bar">
 				<?php print (empty($pageBarMsg)?"":"<div class='left'>$pageBarMsg</div>"); ?>
-				<a href = "<?php print $url; ?>" class='wikia_button'><span><?php
+				<a href = "<?php print $url; ?>" class='wikia_button' id='skip_ad'><span><?php
 					print $skip
 				?></span></a>
 			</div>
@@ -35,5 +38,24 @@
 				<?php print $adCode ?>
 			</div>
 		</div>
+		<!-- Begin Analytics -->
+		<?php echo AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW); ?>
+		<!-- End Analytics -->
+		<?php print "$jsIncludes\n"; ?>
+		<script type='text/javascript'>
+			var pageType = '<?php print $pageType; ?>';
+			$(document).ready(function(){
+				WET.byStr(pageType + "/init");
+				$('#skip_ad').click(function(){WET.byStr(pageType + "/skipAd");});
+				$('#userData a').each(function(index){
+					if(index == 0){
+						$(this).click(function(){WET.byStr(pageType + "/signUp");});
+					} else if(index == 1){
+						$(this).click(function(){WET.byStr(pageType + "/logIn");});
+					}
+				});
+			});
+		</script>
+		<?php print AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW); ?>
 	</body>
 </html>

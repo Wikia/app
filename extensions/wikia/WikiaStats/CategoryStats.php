@@ -392,7 +392,7 @@ class CategoryEdits {
 		}
 		
 		if ( is_object( $CatIn ) && !empty( $this->mCatPageCount ) ) {
-			$memkey = getPercentMemcKey($CatIn);
+			$memkey = $this->getPercentMemcKey($CatIn);
 			$data = $wgMemc->get( $memkey );
 			
 			if ( empty($data) ) {
