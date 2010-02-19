@@ -20,11 +20,151 @@ $messages['qqq'] = array(
 	'titleedit' => 'This is shown next to the H1 element (article title) and opens the edit form (full article edit) when clicked',
 );
 
+/** Niuean (ko e vagahau Niuē) */
+$messages['niu'] = array(
+	'titleedit' => 'Fakahakohako',
+);
+
+/** Achinese (Acèh) */
+$messages['ace'] = array(
+	'titleedit' => 'Andam',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
 $messages['af'] = array(
 	'titleedit' => 'wysig',
+);
+
+/** Gheg Albanian (Gegë) */
+$messages['aln'] = array(
+	'titleedit' => 'Redaktoni',
+);
+
+/** Amharic (አማርኛ) */
+$messages['am'] = array(
+	'titleedit' => 'አርም',
+);
+
+/** Aragonese (Aragonés) */
+$messages['an'] = array(
+	'titleedit' => 'Editar',
+);
+
+/** Old English (Anglo-Saxon) */
+$messages['ang'] = array(
+	'titleedit' => 'Ādihtan',
+);
+
+/** Arabic (العربية) */
+$messages['ar'] = array(
+	'titleedit' => 'عدل',
+);
+
+/** Aramaic (ܐܪܡܝܐ) */
+$messages['arc'] = array(
+	'titleedit' => 'ܫܚܠܦ',
+);
+
+/** Araucanian (Mapudungun) */
+$messages['arn'] = array(
+	'titleedit' => 'Wirin',
+);
+
+/** Egyptian Spoken Arabic (مصرى) */
+$messages['arz'] = array(
+	'titleedit' => 'تعديل',
+);
+
+/** Assamese (অসমীয়া) */
+$messages['as'] = array(
+	'titleedit' => 'সম্পাদন',
+);
+
+/** Asturian (Asturianu) */
+$messages['ast'] = array(
+	'titleedit' => 'Editar',
+);
+
+/** Avaric (Авар) */
+$messages['av'] = array(
+	'titleedit' => 'Хисизабе',
+);
+
+/** Kotava (Kotava) */
+$messages['avk'] = array(
+	'titleedit' => 'Betara',
+);
+
+/** Aymara (Aymar aru) */
+$messages['ay'] = array(
+	'titleedit' => 'Turkaña',
+);
+
+/** Azerbaijani (Azərbaycan) */
+$messages['az'] = array(
+	'titleedit' => 'Redaktə',
+);
+
+/** Bashkir (Башҡорт) */
+$messages['ba'] = array(
+	'titleedit' => 'Үҙгәртергә',
+);
+
+/** Bavarian (Boarisch) */
+$messages['bar'] = array(
+	'titleedit' => 'werkln',
+);
+
+/** Southern Balochi (بلوچی مکرانی) */
+$messages['bcc'] = array(
+	'titleedit' => 'اصلاح',
+);
+
+/** Bikol Central (Bikol Central) */
+$messages['bcl'] = array(
+	'titleedit' => 'Liwatón',
+);
+
+/** Belarusian (Беларуская) */
+$messages['be'] = array(
+	'titleedit' => 'Правіць',
+);
+
+/** Bulgarian (Български) */
+$messages['bg'] = array(
+	'titleedit' => 'Редактиране',
+);
+
+/** Bislama (Bislama) */
+$messages['bi'] = array(
+	'titleedit' => 'Jenisim hem',
+);
+
+/** Bambara (Bamanankan) */
+$messages['bm'] = array(
+	'titleedit' => 'yɛlɛma',
+);
+
+/** Bengali (বাংলা) */
+$messages['bn'] = array(
+	'titleedit' => 'সম্পাদনা করুন',
+);
+
+/** Tibetan (བོད་ཡིག) */
+$messages['bo'] = array(
+	'titleedit' => 'རྩོམ་སྒྲིག',
+);
+
+/** Bishnupria Manipuri (ইমার ঠার/বিষ্ণুপ্রিয়া মণিপুরী) */
+$messages['bpy'] = array(
+	'titleedit' => 'পতানি',
+);
+
+/** Bakhtiari (بختياري) */
+$messages['bqi'] = array(
+	'titleedit' => 'اصلاح',
 );
 
 /** Breton (Brezhoneg)
@@ -35,12 +175,152 @@ $messages['br'] = array(
 	'titleedit' => 'kemmañ',
 );
 
+/** Bosnian (Bosanski) */
+$messages['bs'] = array(
+	'titleedit' => 'Uredi',
+);
+
+/** Buginese (ᨅᨔ ᨕᨘᨁᨗ) */
+$messages['bug'] = array(
+	'titleedit' => 'Padécéŋ',
+);
+
+/** Catalan (Català) */
+$messages['ca'] = array(
+	'titleedit' => 'Edita',
+);
+
+/** Min Dong Chinese (Mìng-dĕ̤ng-ngṳ̄) */
+$messages['cdo'] = array(
+	'titleedit' => 'Siŭ-gāi',
+);
+
+/** Chechen (Нохчийн) */
+$messages['ce'] = array(
+	'titleedit' => 'Xийца',
+);
+
+/** Cebuano (Cebuano) */
+$messages['ceb'] = array(
+	'titleedit' => 'Usba',
+);
+
+/** Chamorro (Chamoru) */
+$messages['ch'] = array(
+	'titleedit' => 'Tulaika',
+);
+
+/** Corsican (Corsu) */
+$messages['co'] = array(
+	'titleedit' => 'Mudificà',
+);
+
+/** Czech (Česky) */
+$messages['cs'] = array(
+	'titleedit' => 'Editovat',
+);
+
+/** Kashubian (Kaszëbsczi) */
+$messages['csb'] = array(
+	'titleedit' => 'Edicëjô',
+);
+
+/** Church Slavic (Словѣ́ньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ) */
+$messages['cu'] = array(
+	'titleedit' => 'испра́ви',
+);
+
+/** Chuvash (Чӑвашла) */
+$messages['cv'] = array(
+	'titleedit' => 'Тӳрлетӳ',
+);
+
+/** Welsh (Cymraeg) */
+$messages['cy'] = array(
+	'titleedit' => 'Golygu',
+);
+
+/** Danish (Dansk) */
+$messages['da'] = array(
+	'titleedit' => 'Redigér',
+);
+
+/** German (Deutsch) */
+$messages['de'] = array(
+	'titleedit' => 'Bearbeiten',
+);
+
+/** Zazaki (Zazaki) */
+$messages['diq'] = array(
+	'titleedit' => 'Bıvurne',
+);
+
+/** Lower Sorbian (Dolnoserbski) */
+$messages['dsb'] = array(
+	'titleedit' => 'wobźěłaś',
+);
+
+/** Divehi (ދިވެހިބަސް) */
+$messages['dv'] = array(
+	'titleedit' => 'އުނިއިތުރު ގެންނަވާ',
+);
+
+/** Dzongkha (ཇོང་ཁ) */
+$messages['dz'] = array(
+	'titleedit' => 'ཞུན་དག།',
+);
+
+/** Ewe (Eʋegbe) */
+$messages['ee'] = array(
+	'titleedit' => 'Trɔ asi le eŋu',
+);
+
+/** Greek (Ελληνικά) */
+$messages['el'] = array(
+	'titleedit' => 'Επεξεργασία',
+);
+
+/** Emiliano-Romagnolo (Emiliàn e rumagnòl) */
+$messages['eml'] = array(
+	'titleedit' => 'Mudifichèr',
+);
+
+/** Esperanto (Esperanto) */
+$messages['eo'] = array(
+	'titleedit' => 'Redakti',
+);
+
 /** Spanish (Español)
  * @author Translationista
  */
 $messages['es'] = array(
 	'titleedit-desc' => 'Añade el botón Editar título al inicio de las páginas',
 	'titleedit' => 'editar',
+);
+
+/** Estonian (Eesti) */
+$messages['et'] = array(
+	'titleedit' => 'redigeeri',
+);
+
+/** Basque (Euskara) */
+$messages['eu'] = array(
+	'titleedit' => 'Aldatu',
+);
+
+/** Extremaduran (Estremeñu) */
+$messages['ext'] = array(
+	'titleedit' => 'Eital',
+);
+
+/** Persian (فارسی) */
+$messages['fa'] = array(
+	'titleedit' => 'ويرايش',
+);
+
+/** Fulah (Fulfulde) */
+$messages['ff'] = array(
+	'titleedit' => 'Wallifaade',
 );
 
 /** Finnish (Suomi)
@@ -52,6 +332,16 @@ $messages['fi'] = array(
 	'titleedit' => 'muokkaa',
 );
 
+/** Fijian (Na Vosa Vakaviti) */
+$messages['fj'] = array(
+	'titleedit' => 'Veisautaki',
+);
+
+/** Faroese (Føroyskt) */
+$messages['fo'] = array(
+	'titleedit' => 'Rætta',
+);
+
 /** French (Français)
  * @author Cywil
  * @author IAlex
@@ -59,6 +349,46 @@ $messages['fi'] = array(
 $messages['fr'] = array(
 	'titleedit-desc' => 'Ajoute un bouton de modification de titre en haut des pages',
 	'titleedit' => 'modifier',
+);
+
+/** Cajun French (Français cadien) */
+$messages['frc'] = array(
+	'titleedit' => 'Changer',
+);
+
+/** Franco-Provençal (Arpetan) */
+$messages['frp'] = array(
+	'titleedit' => 'Changiér',
+);
+
+/** Friulian (Furlan) */
+$messages['fur'] = array(
+	'titleedit' => 'Cambie',
+);
+
+/** Western Frisian (Frysk) */
+$messages['fy'] = array(
+	'titleedit' => 'Wizigje',
+);
+
+/** Irish (Gaeilge) */
+$messages['ga'] = array(
+	'titleedit' => 'Athraigh an lch seo',
+);
+
+/** Gagauz (Gagauz) */
+$messages['gag'] = array(
+	'titleedit' => 'Diiştir',
+);
+
+/** Gan (贛語) */
+$messages['gan'] = array(
+	'titleedit' => '編寫',
+);
+
+/** Scottish Gaelic (Gàidhlig) */
+$messages['gd'] = array(
+	'titleedit' => 'Deasaich',
 );
 
 /** Galician (Galego)
@@ -69,12 +399,132 @@ $messages['gl'] = array(
 	'titleedit' => 'editar',
 );
 
+/** Gilaki (گیلکی) */
+$messages['glk'] = array(
+	'titleedit' => 'دچین واچین',
+);
+
+/** Guarani (Avañe'ẽ) */
+$messages['gn'] = array(
+	'titleedit' => 'Jehaijey',
+);
+
+/** Gothic (Gothic) */
+$messages['got'] = array(
+	'titleedit' => 'Máidjan',
+);
+
+/** Ancient Greek (Ἀρχαία ἑλληνικὴ) */
+$messages['grc'] = array(
+	'titleedit' => 'Μεταγράφειν',
+);
+
+/** Swiss German (Alemannisch) */
+$messages['gsw'] = array(
+	'titleedit' => 'Ändere',
+);
+
+/** Gujarati (ગુજરાતી) */
+$messages['gu'] = array(
+	'titleedit' => 'ફેરફાર કરો',
+);
+
+/** Manx (Gaelg) */
+$messages['gv'] = array(
+	'titleedit' => 'Reaghey',
+);
+
+/** Hakka (Hak-kâ-fa) */
+$messages['hak'] = array(
+	'titleedit' => 'Phiên-chho',
+);
+
+/** Hawaiian (Hawai`i) */
+$messages['haw'] = array(
+	'titleedit' => 'E ho‘opololei',
+);
+
+/** Hebrew (עברית) */
+$messages['he'] = array(
+	'titleedit' => 'עריכה',
+);
+
+/** Hindi (हिन्दी) */
+$messages['hi'] = array(
+	'titleedit' => 'बदलें',
+);
+
+/** Hiligaynon (Ilonggo) */
+$messages['hil'] = array(
+	'titleedit' => 'Ilisan',
+);
+
+/** Croatian (Hrvatski) */
+$messages['hr'] = array(
+	'titleedit' => 'Uredi',
+);
+
+/** Upper Sorbian (Hornjoserbsce) */
+$messages['hsb'] = array(
+	'titleedit' => 'wobdźěłać',
+);
+
+/** Haitian (Kreyòl ayisyen) */
+$messages['ht'] = array(
+	'titleedit' => 'Modifye',
+);
+
+/** Hungarian (Magyar) */
+$messages['hu'] = array(
+	'titleedit' => 'Szerkesztés',
+);
+
+/** Armenian (Հայերեն) */
+$messages['hy'] = array(
+	'titleedit' => 'Խմբագրել',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
 	'titleedit-desc' => 'Adde un button pro modificar le titulo in alto del paginas',
 	'titleedit' => 'modificar',
+);
+
+/** Indonesian (Bahasa Indonesia) */
+$messages['id'] = array(
+	'titleedit' => 'Sunting',
+);
+
+/** Interlingue (Interlingue) */
+$messages['ie'] = array(
+	'titleedit' => 'Modificar',
+);
+
+/** Iloko (Ilokano) */
+$messages['ilo'] = array(
+	'titleedit' => 'baliwan',
+);
+
+/** Ingush (ГІалгІай Ğalğaj) */
+$messages['inh'] = array(
+	'titleedit' => 'Хувца',
+);
+
+/** Ido (Ido) */
+$messages['io'] = array(
+	'titleedit' => 'Redaktar',
+);
+
+/** Icelandic (Íslenska) */
+$messages['is'] = array(
+	'titleedit' => 'Breyta',
+);
+
+/** Italian (Italiano) */
+$messages['it'] = array(
+	'titleedit' => 'Modifica',
 );
 
 /** Japanese (日本語)
@@ -85,12 +535,287 @@ $messages['ja'] = array(
 	'titleedit' => '編集',
 );
 
+/** Lojban (Lojban) */
+$messages['jbo'] = array(
+	'titleedit' => 'stika',
+);
+
+/** Jutish (Jysk) */
+$messages['jut'] = array(
+	'titleedit' => 'Redigær',
+);
+
+/** Javanese (Basa Jawa) */
+$messages['jv'] = array(
+	'titleedit' => 'Sunting',
+);
+
+/** Georgian (ქართული) */
+$messages['ka'] = array(
+	'titleedit' => 'რედაქტირება',
+);
+
+/** Kara-Kalpak (Qaraqalpaqsha) */
+$messages['kaa'] = array(
+	'titleedit' => "O'zgertiw",
+);
+
+/** Kabyle (Taqbaylit) */
+$messages['kab'] = array(
+	'titleedit' => 'Beddel',
+);
+
+/** Kongo (Kongo) */
+$messages['kg'] = array(
+	'titleedit' => 'Sonika',
+);
+
+/** Kalaallisut (Kalaallisut) */
+$messages['kl'] = array(
+	'titleedit' => 'Aaqqissuutiguk',
+);
+
+/** Khmer (ភាសាខ្មែរ) */
+$messages['km'] = array(
+	'titleedit' => 'កែប្រែ',
+);
+
+/** Kannada (ಕನ್ನಡ) */
+$messages['kn'] = array(
+	'titleedit' => 'ಸಂಪಾದಿಸಿ (edit this page)',
+);
+
+/** Korean (한국어) */
+$messages['ko'] = array(
+	'titleedit' => '편집',
+);
+
+/** Krio (Krio) */
+$messages['kri'] = array(
+	'titleedit' => 'Chenj',
+);
+
+/** Kinaray-a (Kinaray-a) */
+$messages['krj'] = array(
+	'titleedit' => 'Iislan',
+);
+
+/** Ripoarisch (Ripoarisch) */
+$messages['ksh'] = array(
+	'titleedit' => 'Ändere',
+);
+
+/** Komi (Коми) */
+$messages['kv'] = array(
+	'titleedit' => 'Веськӧдны',
+);
+
+/** Cornish (Kernewek) */
+$messages['kw'] = array(
+	'titleedit' => 'Chanjya',
+);
+
+/** Kirghiz (Кыргызча) */
+$messages['ky'] = array(
+	'titleedit' => 'Оңдоо',
+);
+
+/** Latin (Latina) */
+$messages['la'] = array(
+	'titleedit' => 'Recensere',
+);
+
+/** Ladino (Ladino) */
+$messages['lad'] = array(
+	'titleedit' => 'Editar',
+);
+
+/** Luxembourgish (Lëtzebuergesch) */
+$messages['lb'] = array(
+	'titleedit' => 'Änneren',
+);
+
+/** Лакку (Лакку) */
+$messages['lbe'] = array(
+	'titleedit' => 'Дакьин дуван',
+);
+
+/** Lezghian (Лезги) */
+$messages['lez'] = array(
+	'titleedit' => 'Дегишарун',
+);
+
+/** Lingua Franca Nova (Lingua Franca Nova) */
+$messages['lfn'] = array(
+	'titleedit' => 'Cambia',
+);
+
+/** Ganda (Luganda) */
+$messages['lg'] = array(
+	'titleedit' => 'Kyusa',
+);
+
+/** Limburgish (Limburgs) */
+$messages['li'] = array(
+	'titleedit' => 'Bewirk',
+);
+
+/** Líguru (Líguru) */
+$messages['lij'] = array(
+	'titleedit' => 'Cangia',
+);
+
+/** Lumbaart (Lumbaart) */
+$messages['lmo'] = array(
+	'titleedit' => 'Mudifica',
+);
+
+/** Lingala (Lingála) */
+$messages['ln'] = array(
+	'titleedit' => 'Kobimisela',
+);
+
+/** Lao (ລາວ) */
+$messages['lo'] = array(
+	'titleedit' => 'ດັດແກ້',
+);
+
+/** Lozi (Silozi) */
+$messages['loz'] = array(
+	'titleedit' => "Hloli ye ng'i",
+);
+
+/** Lithuanian (Lietuvių) */
+$messages['lt'] = array(
+	'titleedit' => 'Redaguoti',
+);
+
+/** Latvian (Latviešu) */
+$messages['lv'] = array(
+	'titleedit' => 'Izmainīt šo lapu',
+);
+
+/** Literary Chinese (文言) */
+$messages['lzh'] = array(
+	'titleedit' => '纂',
+);
+
+/** Maithili (मैथिली) */
+$messages['mai'] = array(
+	'titleedit' => 'संपादन',
+);
+
+/** Moksha (Мокшень) */
+$messages['mdf'] = array(
+	'titleedit' => 'Петнеме',
+);
+
+/** Malagasy (Malagasy) */
+$messages['mg'] = array(
+	'titleedit' => 'Ovao',
+);
+
+/** Eastern Mari (Олык Марий) */
+$messages['mhr'] = array(
+	'titleedit' => 'Тӧрлаташ',
+);
+
+/** Maori (Māori) */
+$messages['mi'] = array(
+	'titleedit' => 'Whakatika',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
 	'titleedit-desc' => 'Додава копче за уредување на врвот од страниците',
 	'titleedit' => 'уреди',
+);
+
+/** Malayalam (മലയാളം) */
+$messages['ml'] = array(
+	'titleedit' => 'മാറ്റിയെഴുതുക',
+);
+
+/** Mongolian (Монгол) */
+$messages['mn'] = array(
+	'titleedit' => 'Засварлах',
+);
+
+/** Moldavian (Молдовеняскэ) */
+$messages['mo'] = array(
+	'titleedit' => 'Editează - Едитязэ',
+);
+
+/** Marathi (मराठी) */
+$messages['mr'] = array(
+	'titleedit' => 'संपादन',
+);
+
+/** Malay (Bahasa Melayu) */
+$messages['ms'] = array(
+	'titleedit' => 'Sunting',
+);
+
+/** Maltese (Malti) */
+$messages['mt'] = array(
+	'titleedit' => 'Editja',
+);
+
+/** Mirandese (Mirandés) */
+$messages['mwl'] = array(
+	'titleedit' => 'Eiditar',
+);
+
+/** Burmese (မြန်မာဘာသာ) */
+$messages['my'] = array(
+	'titleedit' => 'ပြင်​ဆင်​ရန်​',
+);
+
+/** Erzya (Эрзянь) */
+$messages['myv'] = array(
+	'titleedit' => 'Витнеме-петнеме',
+);
+
+/** Mazanderani (مازِرونی) */
+$messages['mzn'] = array(
+	'titleedit' => 'دَچیه‌ن',
+);
+
+/** Nauru (Dorerin Naoero) */
+$messages['na'] = array(
+	'titleedit' => 'Kiwiwid',
+);
+
+/** Nahuatl (Nāhuatl) */
+$messages['nah'] = array(
+	'titleedit' => 'Ticpatlāz',
+);
+
+/** Min Nan Chinese (Bân-lâm-gú) */
+$messages['nan'] = array(
+	'titleedit' => 'Siu-kái',
+);
+
+/** Neapolitan (Nnapulitano) */
+$messages['nap'] = array(
+	'titleedit' => 'Càgna',
+);
+
+/** Low German (Plattdüütsch) */
+$messages['nds'] = array(
+	'titleedit' => 'Ännern',
+);
+
+/** Nepali (नेपाली) */
+$messages['ne'] = array(
+	'titleedit' => 'परिवर्तन',
+);
+
+/** Newari (नेपाल भाषा) */
+$messages['new'] = array(
+	'titleedit' => 'सम्पादन',
 );
 
 /** Dutch (Nederlands)
@@ -101,6 +826,11 @@ $messages['nl'] = array(
 	'titleedit' => 'hernoemen',
 );
 
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬) */
+$messages['nn'] = array(
+	'titleedit' => 'Endre',
+);
+
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Nghtwlkr
  */
@@ -109,12 +839,72 @@ $messages['no'] = array(
 	'titleedit' => 'rediger',
 );
 
+/** Novial (Novial) */
+$messages['nov'] = array(
+	'titleedit' => 'Immodifika',
+);
+
+/** Northern Sotho (Sesotho sa Leboa) */
+$messages['nso'] = array(
+	'titleedit' => 'Fetola',
+);
+
+/** Navajo (Diné bizaad) */
+$messages['nv'] = array(
+	'titleedit' => 'Łahgo áshłééh',
+);
+
 /** Occitan (Occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
 	'titleedit-desc' => 'Apond un boton de modificacion de títol en naut de las paginas',
 	'titleedit' => 'modificar',
+);
+
+/** Ossetic (Иронау) */
+$messages['os'] = array(
+	'titleedit' => 'Баив æй',
+);
+
+/** Punjabi (ਪੰਜਾਬੀ) */
+$messages['pa'] = array(
+	'titleedit' => 'ਬਦਲੋ',
+);
+
+/** Pangasinan (Pangasinan) */
+$messages['pag'] = array(
+	'titleedit' => 'Baloen o dagdagan',
+);
+
+/** Pampanga (Kapampangan) */
+$messages['pam'] = array(
+	'titleedit' => 'Alilan',
+);
+
+/** Papiamento (Papiamentu) */
+$messages['pap'] = array(
+	'titleedit' => 'Editá',
+);
+
+/** Deitsch (Deitsch) */
+$messages['pdc'] = array(
+	'titleedit' => 'ennere / tscheensche',
+);
+
+/** Plautdietsch (Plautdietsch) */
+$messages['pdt'] = array(
+	'titleedit' => 'Endre',
+);
+
+/** Pfälzisch (Pfälzisch) */
+$messages['pfl'] = array(
+	'titleedit' => 'Bearwaide',
+);
+
+/** Norfuk / Pitkern (Norfuk / Pitkern) */
+$messages['pih'] = array(
+	'titleedit' => 'Edet',
 );
 
 /** Polish (Polski) */
@@ -131,6 +921,26 @@ $messages['pms'] = array(
 	'titleedit' => 'modìfica',
 );
 
+/** Western Punjabi (پنجابی) */
+$messages['pnb'] = array(
+	'titleedit' => 'لکھو',
+);
+
+/** Pontic (Ποντιακά) */
+$messages['pnt'] = array(
+	'titleedit' => 'Άλλαξον',
+);
+
+/** Pashto (پښتو) */
+$messages['ps'] = array(
+	'titleedit' => 'سمون',
+);
+
+/** Portuguese (Português) */
+$messages['pt'] = array(
+	'titleedit' => 'Editar',
+);
+
 /** Brazilian Portuguese (Português do Brasil)
  * @author Jesielt
  * @author Luckas Blade
@@ -138,6 +948,31 @@ $messages['pms'] = array(
 $messages['pt-br'] = array(
 	'titleedit-desc' => 'Adiciona o botão "editar título" no topo das páginas',
 	'titleedit' => 'editar',
+);
+
+/** Quechua (Runa Simi) */
+$messages['qu'] = array(
+	'titleedit' => 'qillqay',
+);
+
+/** Tarifit (Tarifit) */
+$messages['rif'] = array(
+	'titleedit' => 'Ẓṛeg',
+);
+
+/** Rhaeto-Romance (Rumantsch) */
+$messages['rm'] = array(
+	'titleedit' => 'Editar',
+);
+
+/** Romani (Romani) */
+$messages['rmy'] = array(
+	'titleedit' => 'Editisar i patrin',
+);
+
+/** Romanian (Română) */
+$messages['ro'] = array(
+	'titleedit' => 'Modifică',
 );
 
 /** Russian (Русский)
@@ -148,12 +983,222 @@ $messages['ru'] = array(
 	'titleedit' => 'править',
 );
 
+/** Sanskrit (संस्कृत) */
+$messages['sa'] = array(
+	'titleedit' => 'सम्पादन',
+);
+
+/** Yakut (Саха тыла) */
+$messages['sah'] = array(
+	'titleedit' => 'Уларыт',
+);
+
+/** Sardinian (Sardu) */
+$messages['sc'] = array(
+	'titleedit' => 'Acontza',
+);
+
+/** Sicilian (Sicilianu) */
+$messages['scn'] = array(
+	'titleedit' => 'cancia',
+);
+
+/** Scots (Scots) */
+$messages['sco'] = array(
+	'titleedit' => 'Edit',
+);
+
+/** Sindhi (سنڌي) */
+$messages['sd'] = array(
+	'titleedit' => 'سنواريو',
+);
+
+/** Sassaresu (Sassaresu) */
+$messages['sdc'] = array(
+	'titleedit' => 'Mudifigga',
+);
+
+/** Northern Sami (Sámegiella) */
+$messages['se'] = array(
+	'titleedit' => 'Rievdat',
+);
+
+/** Cmique Itom (Cmique Itom) */
+$messages['sei'] = array(
+	'titleedit' => 'Ticpatlöx',
+);
+
+/** Sango (Sängö) */
+$messages['sg'] = array(
+	'titleedit' => 'Fa na mbi',
+);
+
+/** Serbo-Croatian (Srpskohrvatski / Српскохрватски) */
+$messages['sh'] = array(
+	'titleedit' => 'Uredi',
+);
+
+/** Tachelhit (Tašlḥiyt) */
+$messages['shi'] = array(
+	'titleedit' => 'bddl',
+);
+
+/** Sinhala (සිංහල) */
+$messages['si'] = array(
+	'titleedit' => 'සංස්කරණය කරන්න',
+);
+
+/** Slovak (Slovenčina) */
+$messages['sk'] = array(
+	'titleedit' => 'upraviť',
+);
+
+/** Slovenian (Slovenščina) */
+$messages['sl'] = array(
+	'titleedit' => 'Uredite stran',
+);
+
+/** Samoan (Gagana Samoa) */
+$messages['sm'] = array(
+	'titleedit' => 'Teuteu',
+);
+
+/** Southern Sami (Åarjelsaemien) */
+$messages['sma'] = array(
+	'titleedit' => 'Sjiehtedh',
+);
+
+/** Shona (chiShona) */
+$messages['sn'] = array(
+	'titleedit' => 'Chinja',
+);
+
+/** Somali (Soomaaliga) */
+$messages['so'] = array(
+	'titleedit' => 'Wax ka bedel',
+);
+
+/** Albanian (Shqip) */
+$messages['sq'] = array(
+	'titleedit' => 'Redaktoni',
+);
+
+/** Sranan Tongo (Sranantongo) */
+$messages['srn'] = array(
+	'titleedit' => 'Kenki',
+);
+
+/** Swati (SiSwati) */
+$messages['ss'] = array(
+	'titleedit' => 'kúhlela',
+);
+
+/** Seeltersk (Seeltersk) */
+$messages['stq'] = array(
+	'titleedit' => 'Siede beoarbaidje',
+);
+
+/** Sundanese (Basa Sunda) */
+$messages['su'] = array(
+	'titleedit' => 'Édit',
+);
+
+/** Swedish (Svenska) */
+$messages['sv'] = array(
+	'titleedit' => 'Redigera',
+);
+
+/** Swahili (Kiswahili) */
+$messages['sw'] = array(
+	'titleedit' => 'Hariri',
+);
+
+/** Silesian (Ślůnski) */
+$messages['szl'] = array(
+	'titleedit' => 'sprowjej',
+);
+
+/** Tamil (தமிழ்) */
+$messages['ta'] = array(
+	'titleedit' => 'தொகு',
+);
+
+/** Tulu (ತುಳು) */
+$messages['tcy'] = array(
+	'titleedit' => 'ಸಂಪಾದನೆ ಮಲ್ಪುಲೆ(Edit this page)',
+);
+
+/** Telugu (తెలుగు) */
+$messages['te'] = array(
+	'titleedit' => 'మార్చు',
+);
+
+/** Tetum (Tetun) */
+$messages['tet'] = array(
+	'titleedit' => 'Edita',
+);
+
+/** Thai (ไทย) */
+$messages['th'] = array(
+	'titleedit' => 'แก้ไข',
+);
+
+/** Turkmen (Türkmençe) */
+$messages['tk'] = array(
+	'titleedit' => 'Redaktirle',
+);
+
+/** Tagalog (Tagalog) */
+$messages['tl'] = array(
+	'titleedit' => 'Baguhin',
+);
+
+/** Tswana (Setswana) */
+$messages['tn'] = array(
+	'titleedit' => 'Baakanya',
+);
+
+/** Tonga (lea faka-Tonga) */
+$messages['to'] = array(
+	'titleedit' => 'Fatu',
+);
+
+/** Toki Pona (Toki Pona) */
+$messages['tokipona'] = array(
+	'titleedit' => 'o ante',
+);
+
+/** Tok Pisin (Tok Pisin) */
+$messages['tpi'] = array(
+	'titleedit' => 'Senisim',
+);
+
 /** Turkish (Türkçe)
  * @author Joseph
  */
 $messages['tr'] = array(
 	'titleedit-desc' => 'Sayfaların en üstüne başlık değiştir düğmesini ekler',
 	'titleedit' => 'değiştir',
+);
+
+/** Tsonga (Xitsonga) */
+$messages['ts'] = array(
+	'titleedit' => 'Lulamisa',
+);
+
+/** Tahitian (Reo Mā`ohi) */
+$messages['ty'] = array(
+	'titleedit' => 'Fa’ahuru ’ē',
+);
+
+/** Tuvinian (Тыва дыл) */
+$messages['tyv'] = array(
+	'titleedit' => 'Өскертир',
+);
+
+/** Udmurt (Удмурт) */
+$messages['udm'] = array(
+	'titleedit' => 'тупатыны',
 );
 
 /** Ukrainian (Українська)
@@ -164,284 +1209,108 @@ $messages['uk'] = array(
 	'titleedit' => 'редагувати',
 );
 
-$messages['ace'] = array('titleedit'             => 'Andam');
-//$messages['af'] = array('titleedit'              => 'Wysig');
-$messages['aln'] = array('titleedit'              => 'Redaktoni');
-$messages['am'] = array('titleedit'              => 'አርም');
-$messages['ang'] = array('titleedit'              => 'Ādihtan');
-$messages['an'] = array('titleedit'              => 'Editar');
-$messages['arc'] = array('titleedit'              => 'ܫܚܠܦ');
-$messages['arn'] = array('titleedit'             => 'Wirin');
-$messages['ar'] = array('titleedit'              => 'عدل');
-$messages['arz'] = array('titleedit'              => 'تعديل');
-$messages['as'] = array('titleedit'              => 'সম্পাদন');
-$messages['ast'] = array('titleedit'              => 'Editar');
-$messages['avk'] = array('titleedit'              => 'Betara');
-$messages['av'] = array('titleedit'           => 'Хисизабе');
-$messages['ay'] = array('titleedit'              => 'Turkaña');
-$messages['az'] = array('titleedit'              => 'Redaktə');
-$messages['ba'] = array('titleedit'             => 'Үҙгәртергә');
-$messages['bar'] = array('titleedit'              => 'werkln');
-$messages['bat_smg'] = array('titleedit'              => 'Taisītė');
-$messages['bcc'] = array('titleedit'              => 'اصلاح');
-$messages['bcl'] = array('titleedit'              => 'Liwatón');
-$messages['be'] = array('titleedit'              => 'Правіць');
-$messages['be_tarask'] = array('titleedit'              => 'Рэдагаваць');
-$messages['bg'] = array('titleedit'              => 'Редактиране');
-$messages['bi'] = array('titleedit'             => 'Jenisim hem');
-$messages['bm'] = array('titleedit'           => 'yɛlɛma');
-$messages['bn'] = array('titleedit'              => 'সম্পাদনা করুন');
-$messages['bo'] = array('titleedit'             => 'རྩོམ་སྒྲིག');
-$messages['bpy'] = array('titleedit'              => 'পতানি');
-$messages['bqi'] = array('titleedit'             => 'اصلاح');
-//$messages['br'] = array('titleedit'              => 'Kemmañ');
-$messages['bs'] = array('titleedit'              => 'Uredi');
-$messages['bug'] = array('titleedit'             => 'Padécéŋ');
-$messages['ca'] = array('titleedit'              => 'Edita');
-$messages['cbk_zam'] = array('titleedit'           => 'revisa');
-$messages['cdo'] = array('titleedit'             => 'Siŭ-gāi');
-$messages['ceb'] = array('titleedit'              => 'Usba');
-$messages['ce'] = array('titleedit'              => 'Xийца');
-$messages['ch'] = array('titleedit'              => 'Tulaika');
-$messages['co'] = array('titleedit'             => 'Mudificà');
-$messages['crh_cyrl'] = array('titleedit'              => 'Денъиштир');
-$messages['crh_latn'] = array('titleedit'              => 'Deñiştir');
-$messages['csb'] = array('titleedit'              => 'Edicëjô');
-$messages['cs'] = array('titleedit'              => 'Editovat');
-$messages['cu'] = array('titleedit'             => 'испра́ви');
-$messages['cv'] = array('titleedit'              => 'Тӳрлетӳ');
-$messages['cy'] = array('titleedit'              => 'Golygu');
-$messages['da'] = array('titleedit'              => 'Redigér');
-$messages['de'] = array('titleedit'              => 'Bearbeiten');
-$messages['de_weigsbrag'] = array('titleedit'              => 'Bearbeid');
-$messages['diq'] = array('titleedit'              => 'Bıvurne');
-$messages['dsb'] = array('titleedit'              => 'wobźěłaś');
-$messages['dv'] = array('titleedit'              => 'އުނިއިތުރު ގެންނަވާ');
-$messages['dz'] = array('titleedit'             => 'ཞུན་དག།');
-$messages['ee'] = array('titleedit'             => 'Trɔ asi le eŋu');
-$messages['el'] = array('titleedit'              => 'Επεξεργασία');
-$messages['eml'] = array('titleedit'             => 'Mudifichèr');
-//$messages['en'] = array('titleedit'              => 'Edit');
-$messages['eo'] = array('titleedit'              => 'Redakti');
-//$messages['es'] = array('titleedit'              => 'Editar');
-$messages['et'] = array('titleedit'              => 'redigeeri');
-$messages['eu'] = array('titleedit'              => 'Aldatu');
-$messages['ext'] = array('titleedit'              => 'Eital');
-$messages['fa'] = array('titleedit'              => 'ويرايش');
-$messages['ff'] = array('titleedit'             => 'Wallifaade');
-//$messages['fi'] = array('titleedit'              => 'Muokkaa');
-$messages['fj'] = array('titleedit'             => 'Veisautaki');
-$messages['fo'] = array('titleedit'              => 'Rætta');
-$messages['frc'] = array('titleedit'              => 'Changer');
-//$messages['fr'] = array('titleedit'              => 'Modifier');
-$messages['frp'] = array('titleedit'              => 'Changiér');
-$messages['fur'] = array('titleedit'              => 'Cambie');
-$messages['fy'] = array('titleedit'              => 'Wizigje');
-$messages['gag'] = array('titleedit'              => 'Diiştir');
-$messages['gan_hans'] = array('titleedit'              => '编写');
-$messages['gan_hant'] = array('titleedit'              => '編寫');
-$messages['gan'] = array('titleedit'              => '編寫');
-$messages['ga'] = array('titleedit'              => 'Athraigh an lch seo');
-$messages['gd'] = array('titleedit'              => 'Deasaich');
-$messages['glk'] = array('titleedit'             => 'دچین واچین');
-//$messages['gl'] = array('titleedit'              => 'Editar');
-$messages['gn'] = array('titleedit'             => 'Jehaijey');
-$messages['got'] = array('titleedit'              => 'Máidjan');
-$messages['grc'] = array('titleedit'              => 'Μεταγράφειν');
-$messages['gsw'] = array('titleedit'              => 'Ändere');
-$messages['gu'] = array('titleedit'              => 'ફેરફાર કરો');
-$messages['gv'] = array('titleedit'              => 'Reaghey');
-$messages['hak'] = array('titleedit'              => 'Phiên-chho');
-$messages['haw'] = array('titleedit'             => 'E ho‘opololei');
-$messages['he'] = array('titleedit'              => 'עריכה');
-$messages['hif_latn'] = array('titleedit'              => 'Badlo');
-$messages['hil'] = array('titleedit'             => 'Ilisan');
-$messages['hi'] = array('titleedit'              => 'बदलें');
-$messages['hr'] = array('titleedit'              => 'Uredi');
-$messages['hsb'] = array('titleedit'              => 'wobdźěłać');
-$messages['ht'] = array('titleedit'              => 'Modifye');
-$messages['hu'] = array('titleedit'              => 'Szerkesztés');
-$messages['hy'] = array('titleedit'              => 'Խմբագրել');
-//$messages['ia'] = array('titleedit'              => 'Modificar');
-$messages['id'] = array('titleedit'              => 'Sunting');
-$messages['ie'] = array('titleedit'             => 'Modificar');
-$messages['ike_cans'] = array('titleedit'              => 'ᓱᖁᓯᖅᐹ');
-$messages['ike_latn'] = array('titleedit'              => 'Suqusiqpaa');
-$messages['ilo'] = array('titleedit'              => 'baliwan');
-$messages['inh'] = array('titleedit'              => 'Хувца');
-$messages['io'] = array('titleedit'              => 'Redaktar');
-$messages['is'] = array('titleedit'              => 'Breyta');
-$messages['it'] = array('titleedit'              => 'Modifica');
-//$messages['ja'] = array('titleedit'              => '編集');
-$messages['jbo'] = array('titleedit'             => 'stika');
-$messages['jut'] = array('titleedit'              => 'Redigær');
-$messages['jv'] = array('titleedit'              => 'Sunting');
-$messages['kaa'] = array('titleedit'              => "O'zgertiw");
-$messages['kab'] = array('titleedit'              => 'Beddel');
-$messages['ka'] = array('titleedit'              => 'რედაქტირება');
-$messages['kg'] = array('titleedit'             => 'Sonika');
-$messages['kk_arab'] = array('titleedit'              => 'وڭدەۋ');
-$messages['kk_cyrl'] = array('titleedit'              => 'Өңдеу');
-$messages['kk_latn'] = array('titleedit'              => 'Öñdew');
-$messages['kl'] = array('titleedit'             => 'Aaqqissuutiguk');
-$messages['km'] = array('titleedit'              => 'កែប្រែ');
-$messages['kn'] = array('titleedit'              => 'ಸಂಪಾದಿಸಿ (edit this page)');
-$messages['ko'] = array('titleedit'              => '편집');
-$messages['kri'] = array('titleedit'             => 'Chenj');
-$messages['krj'] = array('titleedit'              => 'Iislan');
-$messages['ksh'] = array('titleedit'              => 'Ändere');
-$messages['ku_arab'] = array('titleedit'              => 'دەستكاری');
-$messages['ku_latn'] = array('titleedit'              => 'Biguherîne');
-$messages['kv'] = array('titleedit'             => 'Веськӧдны');
-$messages['kw'] = array('titleedit'             => 'Chanjya');
-$messages['ky'] = array('titleedit'             => 'Оңдоо');
-$messages['lad'] = array('titleedit'             => 'Editar');
-$messages['la'] = array('titleedit'              => 'Recensere');
-$messages['lbe'] = array('titleedit'             => 'Дакьин дуван');
-$messages['lb'] = array('titleedit'              => 'Änneren');
-$messages['lez'] = array('titleedit'             => 'Дегишарун');
-$messages['lfn'] = array('titleedit'              => 'Cambia');
-$messages['lg'] = array('titleedit'             => 'Kyusa');
-$messages['lij'] = array('titleedit'              => 'Cangia');
-$messages['li'] = array('titleedit'              => 'Bewirk');
-$messages['lmo'] = array('titleedit'             => 'Mudifica');
-$messages['ln'] = array('titleedit'             => 'Kobimisela');
-$messages['lo'] = array('titleedit'             => 'ດັດແກ້');
-$messages['loz'] = array('titleedit'              => "Hloli ye ng'i");
-$messages['lt'] = array('titleedit'              => 'Redaguoti');
-$messages['lv'] = array('titleedit'              => 'Izmainīt šo lapu');
-$messages['lzh'] = array('titleedit'              => '纂');
-$messages['mai'] = array('titleedit'             => 'संपादन');
-$messages['map_bms'] = array('titleedit'             => 'Sunting');
-$messages['mdf'] = array('titleedit'              => 'Петнеме');
-$messages['mg'] = array('titleedit'              => 'Ovao');
-$messages['mhr'] = array('titleedit'             => 'Тӧрлаташ');
-$messages['mi'] = array('titleedit'             => 'Whakatika');
-//$messages['mk'] = array('titleedit'              => 'Уреди');
-$messages['ml'] = array('titleedit'              => 'മാറ്റിയെഴുതുക');
-$messages['mn'] = array('titleedit'              => 'Засварлах');
-$messages['mo'] = array('titleedit'             => 'Editează - Едитязэ');
-$messages['mr'] = array('titleedit'              => 'संपादन');
-$messages['ms'] = array('titleedit'              => 'Sunting');
-$messages['mt'] = array('titleedit'              => 'Editja');
-$messages['mwl'] = array('titleedit'              => 'Eiditar');
-$messages['my'] = array('titleedit'             => 'ပြင်​ဆင်​ရန်​');
-$messages['myv'] = array('titleedit'              => 'Витнеме-петнеме');
-$messages['mzn'] = array('titleedit'             => 'دَچیه‌ن');
-$messages['nah'] = array('titleedit'              => 'Ticpatlāz');
-$messages['nan'] = array('titleedit'              => 'Siu-kái');
-$messages['na'] = array('titleedit'           => 'Kiwiwid');
-$messages['nap'] = array('titleedit'              => 'Càgna');
-$messages['nds_nl'] = array('titleedit'              => 'Bewarken');
-$messages['nds'] = array('titleedit'              => 'Ännern');
-$messages['ne'] = array('titleedit'             => 'परिवर्तन');
-$messages['new'] = array('titleedit'             => 'सम्पादन');
-$messages['niu'] = array('titleedit'             => 'Fakahakohako');
-//$messages['nl'] = array('titleedit'              => 'Bewerken');
-$messages['nn'] = array('titleedit'              => 'Endre');
-//$messages['no'] = array('titleedit'              => 'Rediger');
-$messages['nov'] = array('titleedit'             => 'Immodifika');
-$messages['nso'] = array('titleedit'              => 'Fetola');
-$messages['nv'] = array('titleedit' => 'Łahgo áshłééh');
-//$messages['oc'] = array('titleedit'              => 'Modificar');
-$messages['os'] = array('titleedit'              => 'Баив æй');
-$messages['pag'] = array('titleedit'              => 'Baloen o dagdagan');
-$messages['pam'] = array('titleedit'              => 'Alilan');
-$messages['pa'] = array('titleedit'              => 'ਬਦਲੋ');
-$messages['pap'] = array('titleedit'              => 'Editá');
-$messages['pdc'] = array('titleedit'           => 'ennere / tscheensche');
-$messages['pdt'] = array('titleedit'             => 'Endre');
-$messages['pfl'] = array('titleedit'             => 'Bearwaide');
-$messages['pih'] = array('titleedit'          => 'Edet');
-//$messages['pl'] = array('titleedit'              => 'Edytuj');
-//$messages['pms'] = array('titleedit'              => 'Modìfica');
-$messages['pnb'] = array('titleedit'              => 'لکھو');
-$messages['pnt'] = array('titleedit'              => 'Άλλαξον');
-$messages['ps'] = array('titleedit'              => 'سمون');
-$messages['pt_br'] = array('titleedit'              => 'Editar');
-$messages['pt'] = array('titleedit'              => 'Editar');
-$messages['qu'] = array('titleedit'              => 'qillqay');
-$messages['rif'] = array('titleedit'             => 'Ẓṛeg');
-$messages['rm'] = array('titleedit'              => 'Editar');
-$messages['rmy'] = array('titleedit'             => 'Editisar i patrin');
-$messages['roa_rup'] = array('titleedit'             => 'Alãxiri');
-$messages['roa_tara'] = array('titleedit'              => 'Cange');
-$messages['ro'] = array('titleedit'              => 'Modifică');
-//$messages['ru'] = array('titleedit'              => 'Править');
-$messages['ruq_cyrl'] = array('titleedit'             => 'Едита');
-$messages['ruq_latn'] = array('titleedit'             => 'Edita');
-$messages['sah'] = array('titleedit'              => 'Уларыт');
-$messages['sa'] = array('titleedit'             => 'सम्पादन');
-$messages['scn'] = array('titleedit'              => 'cancia');
-$messages['sco'] = array('titleedit'              => 'Edit');
-$messages['sc'] = array('titleedit'              => 'Acontza');
-$messages['sdc'] = array('titleedit'              => 'Mudifigga');
-$messages['sd'] = array('titleedit'              => 'سنواريو');
-$messages['sei'] = array('titleedit'              => 'Ticpatlöx');
-$messages['se'] = array('titleedit'              => 'Rievdat');
-$messages['sg'] = array('titleedit'           => 'Fa na mbi');
-$messages['shi'] = array('titleedit'             => 'bddl');
-$messages['sh'] = array('titleedit'             => 'Uredi');
-$messages['si'] = array('titleedit'              => 'සංස්කරණය කරන්න');
-$messages['sk'] = array('titleedit'              => 'upraviť');
-$messages['sl'] = array('titleedit'              => 'Uredite stran');
-$messages['sma'] = array('titleedit'             => 'Sjiehtedh');
-$messages['sm'] = array('titleedit'             => 'Teuteu');
-$messages['sn'] = array('titleedit'             => 'Chinja');
-$messages['so'] = array('titleedit'              => 'Wax ka bedel');
-$messages['sq'] = array('titleedit'              => 'Redaktoni');
-$messages['sr_ec'] = array('titleedit'              => 'Уреди');
-$messages['sr_el'] = array('titleedit'              => 'Uredi');
-$messages['srn'] = array('titleedit'              => 'Kenki');
-$messages['ss'] = array('titleedit'             => 'kúhlela');
-$messages['stq'] = array('titleedit'              => 'Siede beoarbaidje');
-$messages['su'] = array('titleedit'              => 'Édit');
-$messages['sv'] = array('titleedit'              => 'Redigera');
-$messages['sw'] = array('titleedit'              => 'Hariri');
-$messages['szl'] = array('titleedit'              => 'sprowjej');
-$messages['ta'] = array('titleedit'              => 'தொகு');
-$messages['tcy'] = array('titleedit'              => 'ಸಂಪಾದನೆ ಮಲ್ಪುಲೆ(Edit this page)');
-$messages['te'] = array('titleedit'              => 'మార్చు');
-$messages['tet'] = array('titleedit'              => 'Edita');
-$messages['tg_cyrl'] = array('titleedit'              => 'Вироиш');
-$messages['th'] = array('titleedit'              => 'แก้ไข');
-$messages['tk'] = array('titleedit'              => 'Redaktirle');
-$messages['tl'] = array('titleedit'              => 'Baguhin');
-$messages['tn'] = array('titleedit'             => 'Baakanya');
-$messages['tokipona'] = array('titleedit'              => 'o ante');
-$messages['to'] = array('titleedit'              => 'Fatu');
-$messages['tpi'] = array('titleedit'             => 'Senisim');
-//$messages['tr'] = array('titleedit'              => 'değiştir');
-$messages['ts'] = array('titleedit'             => 'Lulamisa');
-$messages['tt_cyrl'] = array('titleedit'              => 'Үзгәртү');
-$messages['tt_latn'] = array('titleedit'              => 'Üzgärtü');
-$messages['ty'] = array('titleedit'             => 'Fa’ahuru ’ē');
-$messages['tyv'] = array('titleedit'              => 'Өскертир');
-$messages['udm'] = array('titleedit'             => 'тупатыны');
-$messages['ug_latn'] = array('titleedit'             => 'Uzgartish');
-//$messages['uk'] = array('titleedit'              => 'Редагувати');
-$messages['ur'] = array('titleedit'              => 'ترمیم');
-$messages['uz'] = array('titleedit'             => 'Tahrirlash');
-$messages['val'] = array('titleedit'              => 'Edita');
-$messages['vec'] = array('titleedit'              => 'Modìfega');
-$messages['vep'] = array('titleedit'              => 'Redaktiruida');
-$messages['vi'] = array('titleedit'              => 'Sửa đổi');
-$messages['vls'] = array('titleedit'          => "Bewerk'n");
-$messages['vo'] = array('titleedit'              => 'Redakön');
-$messages['vro'] = array('titleedit'              => 'Toimõndaq');
-$messages['wa'] = array('titleedit'              => 'Candjî');
-$messages['war'] = array('titleedit'              => 'Igliwat');
-$messages['wo'] = array('titleedit'              => 'Soppi');
-$messages['wuu'] = array('titleedit'              => '编辑');
-$messages['xal'] = array('titleedit'             => 'Чиклх');
-$messages['xh'] = array('titleedit'             => 'Tshintsha');
-$messages['xmf'] = array('titleedit'             => 'რედაქტირაფა');
-$messages['yi'] = array('titleedit'              => 'ענדערן');
-$messages['yo'] = array('titleedit'              => 'Àtúnṣe');
-$messages['yue'] = array('titleedit'              => '編輯');
-$messages['za'] = array('titleedit'             => 'gaij');
-$messages['zea'] = array('titleedit'              => 'Bewerken');
-$messages['zh_hans'] = array('titleedit'              => '编辑');
-$messages['zh_hant'] = array('titleedit'              => '編輯');
-$messages['zh_tw'] = array('titleedit'              => '編輯');
-$messages['zu'] = array('titleedit'             => 'Hlela');
+/** Urdu (اردو) */
+$messages['ur'] = array(
+	'titleedit' => 'ترمیم',
+);
+
+/** Uzbek (O'zbek) */
+$messages['uz'] = array(
+	'titleedit' => 'Tahrirlash',
+);
+
+/** Vèneto (Vèneto) */
+$messages['vec'] = array(
+	'titleedit' => 'Modìfega',
+);
+
+/** Veps (Vepsan kel') */
+$messages['vep'] = array(
+	'titleedit' => 'Redaktiruida',
+);
+
+/** Vietnamese (Tiếng Việt) */
+$messages['vi'] = array(
+	'titleedit' => 'Sửa đổi',
+);
+
+/** West-Vlams (West-Vlams) */
+$messages['vls'] = array(
+	'titleedit' => "Bewerk'n",
+);
+
+/** Volapük (Volapük) */
+$messages['vo'] = array(
+	'titleedit' => 'Redakön',
+);
+
+/** Võro (Võro) */
+$messages['vro'] = array(
+	'titleedit' => 'Toimõndaq',
+);
+
+/** Walloon (Walon) */
+$messages['wa'] = array(
+	'titleedit' => 'Candjî',
+);
+
+/** Waray (Winaray) */
+$messages['war'] = array(
+	'titleedit' => 'Igliwat',
+);
+
+/** Wolof (Wolof) */
+$messages['wo'] = array(
+	'titleedit' => 'Soppi',
+);
+
+/** Wu (吴语) */
+$messages['wuu'] = array(
+	'titleedit' => '编辑',
+);
+
+/** Kalmyk (Хальмг) */
+$messages['xal'] = array(
+	'titleedit' => 'Чиклх',
+);
+
+/** Xhosa (isiXhosa) */
+$messages['xh'] = array(
+	'titleedit' => 'Tshintsha',
+);
+
+/** Mingrelian (მარგალური) */
+$messages['xmf'] = array(
+	'titleedit' => 'რედაქტირაფა',
+);
+
+/** Yiddish (ייִדיש) */
+$messages['yi'] = array(
+	'titleedit' => 'ענדערן',
+);
+
+/** Yoruba (Yorùbá) */
+$messages['yo'] = array(
+	'titleedit' => 'Àtúnṣe',
+);
+
+/** Yue (粵語) */
+$messages['yue'] = array(
+	'titleedit' => '編輯',
+);
+
+/** Zhuang (Vahcuengh) */
+$messages['za'] = array(
+	'titleedit' => 'gaij',
+);
+
+/** Zeeuws (Zeêuws) */
+$messages['zea'] = array(
+	'titleedit' => 'Bewerken',
+);
+
+/** Zulu (isiZulu) */
+$messages['zu'] = array(
+	'titleedit' => 'Hlela',
+);
+
