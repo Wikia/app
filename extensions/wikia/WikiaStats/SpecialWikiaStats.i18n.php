@@ -317,7 +317,6 @@ $messages['qqq'] = array(
 	'wikiastats_unregister' => 'Abbreviation for "Unregistered users" (anonymous)',
 	'wikiastats_days_ago' => ' Number of days should be a parameters in the message; also add PLURAL support',
 	'wikiastats_wikilang' => '{{Identical|Language}}',
-	'wikiastats_trend_ordered' => 'Typo: wiki -> wikis',
 	'wikiastats_xls_cancel' => '{{Identical|Cancel}}',
 	'wikiastats_date_of_generate' => 'If $1 is a time stamp, split date and time',
 	'wikiastats_show_nbr_wikis_check' => 'Should support plural for $1',
