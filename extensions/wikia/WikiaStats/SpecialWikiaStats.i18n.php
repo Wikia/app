@@ -201,7 +201,7 @@ $messages['en'] = array(
 	"wikiastats_trend_growth_info" => "Growth = average monthly growth over shown months",
 	"wikiastats_trend_value" => "value",
 	"wikiastats_trend_formula" => "Formula",
-	"wikiastats_trend_ordered" => "All wiki are ordered by numbers of articles. <br /> Select part of those stats:",
+	"wikiastats_trend_ordered" => "All wikis are ordered by numbers of articles.<br />Select part of those stats:",
 	"wikiastats_trend_where_text" => "where:",
 	"wikiastats_trend_all_wikia_text" => "All wikis",
 	"wikiastats_always_selected" => "(always selected)",
