@@ -208,10 +208,9 @@ button.secondary span {
 
 /*** Step 4: Create Pages ***/
 #all_fp {
-	float: left;
 }
 .bullets li {
-	list-style: disc;
+	list-style: none;
 	margin-left: 15px;
 }
 #all_fp li {
