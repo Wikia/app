@@ -257,8 +257,8 @@ body.mainpage .firstHeading { display:none; }
 }
 
 .answers-article-right {
-	margin-left: 498px;
-/*	width: 300px; */
+	/* I can't explain why this is the number. But it works */
+	margin-left: 255px;
 }
 
 .answers-tips, .category-tips {
@@ -290,18 +290,6 @@ body.mainpage .firstHeading { display:none; }
 		letter-spacing:-0.8px;
 		line-height:1.4em;
 		color: #000;
-}
-
-#question_level {
-	clear: both;
-}
-
-#answer_level {
-	clear: left;
-}
-
-#related_level {
-	clear: left;
 }
 
 #answer_heading {
