@@ -2,7 +2,7 @@
 <!-- ANON WIKIANS TABLE -->
 <div id="ws-wikians-absent-table-stats">
 <div id="ws-wikians-title">
-	<?= wfMsg('wikiastats_anon_wikians_count', count($anonData)); ?>
+	<?= wfMsgExt( 'wikiastats_anon_wikians_count', 'parsemag', count( $anonData ) ); ?>
 </div>
 <?php
 if (!empty($anonData))
