@@ -2,7 +2,7 @@
 <!-- PAGE EDITED COUNTS TABLE -->
 <div id="ws-page-edits-table-stats">
 <div id="ws-page-edits-subtitle">
-	<?= wfMsg('wikiastats_page_edits_count', count($statsCount)); ?>
+	<?= wfMsgExt( 'wikiastats_page_edits_count', 'parsemag', count( $statsCount ) ); ?>
 </div>
 <br />
 <?php

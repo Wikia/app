@@ -650,7 +650,7 @@ class WikiaStatsXLS {
 		$this->setXLSFileBegin();
 		$this->writeXLSLabel(1,0,ucfirst($dbname). " - " .str_replace("&gt;", ">", wfMsg('wikiastats_page_edits')) );
 		$this->mergeXLSColsRows(1, 0, 1, 6);
-		$this->writeXLSLabel(3,0,wfMsg('wikiastats_page_edits_count', count($statsCount)));
+		$this->writeXLSLabel( 3, 0, wfMsgExt( 'wikiastats_page_edits_count', 'parsemag', count( $statsCount ) ) );
 		$this->mergeXLSColsRows(3, 0, 3, 6);
 
 		/*
@@ -844,7 +844,7 @@ class WikiaStatsXLS {
 		$this->setXLSFileBegin();
 		$this->writeXLSLabel(1,0,ucfirst($dbname). " - " .str_replace("&gt;", ">", wfMsg('wikiastats_other_nspaces_edits')) );
 		$this->mergeXLSColsRows(1, 0, 1, 6);
-		$this->writeXLSLabel(3,0,wfMsg('wikiastats_other_nspaces_edits_count', count($statsCount)));
+		$this->writeXLSLabel(3,0,wfMsgExt('wikiastats_other_nspaces_edits_count', 'parsemag', count($statsCount)));
 		$this->mergeXLSColsRows(3, 0, 3, 6);
 
 		/*
