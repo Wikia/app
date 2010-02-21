@@ -451,7 +451,7 @@ class WikiaStatsXLS {
 		$this->setXLSFileBegin();
 		$this->writeXLSLabel(1,0,ucfirst($dbname). " - " .wfMsg('wikiastats_anon_wikians'));
 		$this->mergeXLSColsRows(1, 0, 1, 7);
-		$this->writeXLSLabel(3,0,ucfirst($dbname). " - " .wfMsg('wikiastats_anon_wikians_count', count($anonData)));
+		$this->writeXLSLabel( 3, 0, ucfirst( $dbname ) . " - " . wfMsgExt( 'wikiastats_anon_wikians_count', 'parsemag', count( $anonData ) ) );
 		$this->mergeXLSColsRows(3, 0, 3, 7);
 
 		$row = 5;
