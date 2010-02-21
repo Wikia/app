@@ -2,7 +2,7 @@
 
 $messages = array();
 $messages['en'] = array(
-	'wikiawidget' => 'WikiaWidget',
+	'wikiawidget' => 'Wikia widgets',
 );
 
 /** Message documentation (Message documentation)
