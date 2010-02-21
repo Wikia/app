@@ -393,7 +393,7 @@ class WikiaStatsXLS {
 			/*
 			 * header
 			 */
-			$this->writeXLSLabel($row,0,wfMsg('wikiastats_recently_absent_wikians', count($absent)));
+			$this->writeXLSLabel( $row, 0, wfMsgExt('wikiastats_recently_absent_wikians', 'parsemag', count( $absent ) ) );
 			$this->mergeXLSColsRows($row, 0, $row, 6);
 			$row = $row + 2;
 			// first row of table
