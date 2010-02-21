@@ -6,7 +6,7 @@ if (!empty($wkAbsent))
 {
 ?>	
 <div id="ws-wikians-title">
-	<?= wfMsg('wikiastats_recently_absent_wikians', count($wkAbsent)); ?>
+	<?= wfMsgExt( 'wikiastats_recently_absent_wikians', 'parsemag', count( $wkAbsent ) ); ?>
 </div>
 <table cellspacing="0" cellpadding="0" border="1" id="table_absent_wikians_stats" style="width:auto; font-family: arial,sans-serif,helvetica; font-size:9pt;background-color:#ffffdd;">
 <tr bgcolor="#ffdead">

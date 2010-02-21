@@ -7,7 +7,7 @@ if (!empty($wkActive))
 ?>	
 <br />
 <div id="ws-wikians-title">
-	<?= wfMsg('wikiastats_recently_active_wikians', count($wkActive)); ?>
+	<?= wfMsgExt( 'wikiastats_recently_active_wikians', 'parsemag', count( $wkActive ) ); ?>
 	<br />
 	<span class="small"><?= wfMsg('wikiastats_active_wikians_subtitle_info') ?></span>
 </div>
