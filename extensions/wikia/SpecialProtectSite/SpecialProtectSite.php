@@ -22,7 +22,7 @@ $dir = dirname(__FILE__);
 $wgAvailableRights[] = 'protectsite';
 
 /* Set the group access permissions */
-$wgGroupPermissions['bureaucrat']['protectsite'] = true;
+#$wgGroupPermissions['sysop']['protectsite'] = true; //is conditionally set outside of extension
 
 /* Add this Special page to the Special page listing array */
 $wgSpecialPages['Protectsite'] = array( 'SpecialPage', 'Protectsite', 'protectsite', true, false, "$dir/SpecialProtectSite_body.php" );
