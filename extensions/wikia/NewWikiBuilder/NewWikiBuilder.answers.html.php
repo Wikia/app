@@ -19,6 +19,8 @@ NWB.changeTheme("Sapphire", false);
 		</div>
 	</div>
 	<?php echo wfMsgForContent("anwb-step1-text")?>
+	<br />
+	<br />
 	<form id="step1_form" name="step1_form" onsubmit=""><!-- Name needed for selenium tests -->
 		<textarea name="tagline" id="tagline_textarea"></textarea>
 	</form>
@@ -69,20 +71,19 @@ NWB.changeTheme("Sapphire", false);
 	<!-- Hidden iframe to handle the file upload -->
 	<iframe id="hidden_iframe" src="about:blank" style="display:none" name="hidden_iframe" onLoad="NWB.iframeFormUpload(this)"></iframe>
 
-	<div style="float: left;">
+	<div>
 	<form action="/api.php" method="post" enctype="multipart/form-data" target="hidden_iframe" onSubmit='return NWB.iframeFormInit(this)' id="logo_form">
 		<input type="hidden" name="action" value="uploadlogo">	
 		<input type="hidden" name="format" value="xml">	
 		<input id="logo_article" type="hidden" name="title" value="Wiki.png">	
-		<label><?php echo wfMsgForContent("anwb-choose-logo")?>:</label><input type="file" name="logo_file" id="logo_file" onclick="WET.byStr('anwb/step2browse');"/> <input type="submit" value="<?php echo wfMsgForContent("nwb-preview")?>" onclick="WET.byStr('anwb/step2preview');this.form.title.value='Wiki-Preview.png'"/>
+		<label><?php echo wfMsgForContent("anwb-choose-logo")?></label><input type="file" name="logo_file" id="logo_file" onclick="WET.byStr('anwb/step2browse');"/> <input type="submit" value="<?php echo wfMsgForContent("nwb-preview")?>" onclick="WET.byStr('anwb/step2preview');this.form.title.value='Wiki-Preview.png'"/>
 	</form>
-
 	<div id="logo_preview_wrapper">
 		<label><?php echo wfMsgForContent("anwb-logo-preview")?>:</label>
 		<div id="logo_preview"></div>
 	</div>
 	
-	</div><!--float-->
+	</div>
 	<div class="accent note">
 		<img src="/extensions/wikia/NewWikiBuilder/sample_logo.jpg" id="sample_logo" /><br />
 		<?php echo wfMsgForContent("anwb-step2-example")?>
@@ -101,10 +102,19 @@ NWB.changeTheme("Sapphire", false);
 <li id="step3" class="step">
 <h1 class="headline"><?php echo wfMsgForContent("anwb-fp-headline")?></h1>
 <div class="wrapper clearfix">
+  <div class="accent note">
 	<?php echo wfMsgForContent("anwb-fp-text")?>
-	<form id="step3_form">
-		<input type="hidden" name="category" value="<?php echo htmlspecialchars(wfMsgForContent("nwb-new-pages"))?>">
+	<?php /* Yes, I tried to do this with CSS/divs/float. Gave up after 30 minutes. If you know how to get it to
+		work and still display properly after more than 5 pages are added dynamically, go for it (and tell me how 
+		you did it. :) 
+		-Nick */
+	?>
+	<table> 
+	  <tr valign="top">
+	     <td>
 		<div id="all_fp" class="bullets">
+		<form id="step3_form">
+		<input type="hidden" name="category" value="<?php echo htmlspecialchars(wfMsgForContent("nwb-new-pages"))?>">
 			<ul class="fp_block" id="fp_block_1">
 				<!-- Ids aren't necessary for the form, only used for Selenium -->
 				<li><input id="fp_1" class="fp_page" type="text" onfocus="NWB.firstPagesInputs()" /></li>
@@ -114,11 +124,13 @@ NWB.changeTheme("Sapphire", false);
 				<li><input id="fp_5" class="fp_page" type="text" onfocus="NWB.firstPagesInputs()" /></li>
 			</ul>
 			<!-- Other fp_blocks will be inserted into the dom here with javascript:NWB.firstPagesInputs() -->
-		</div><!-- all_fp -->
-	</form>
-	<div class="accent note">
-		<?php echo wfMsgForContent("anwb-fp-example")?>
-	</div>
+		</form>
+	    </td><!-- all_fp -->
+	    <td style="padding-left: 10px"><?php echo wfMsgForContent("anwb-fp-example")?></td>
+	  </tr>
+	</table>
+	
+   </div>
 </div>
 <div class="nav">
 	<span class="nav_reverse">
