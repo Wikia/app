@@ -2,7 +2,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'wikiaupload' => 'WikiaUpload',
+	'wikiaupload' => 'Wikia upload',
 );
 
 /** Message documentation (Message documentation)
