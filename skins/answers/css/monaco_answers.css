@@ -336,6 +336,10 @@ body.mainpage .firstHeading { display:none; }
 	border-top: 3px solid #A1A4F7;
 }
 
+#category_level {
+	margin-bottom: 10px;
+}
+
 #answer_box {
 	margin-bottom: 25px;
 	padding: 10px;
@@ -374,7 +378,7 @@ body.mainpage .firstHeading { display:none; }
 	height:100px;
 	margin-bottom:10px;
 	margin-top:10px;
-	width:460px;
+	width:99%;
 	border: 1px solid #f88;
 }
 
