@@ -18,7 +18,7 @@ if($results['page'] < $results['pages']) {
 }
 ?>
 </div>
-<?= wfMsg('wmu-thiswiki2', $results['total']) ?>
+<?= wfMsgExt( 'wmu-thiswiki2', 'parsemag', $results['total'] ) ?>
 </div>
 
 <table cellspacing="0" id="ImageUploadFindTable">
