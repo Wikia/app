@@ -1,5 +1,5 @@
 == Changes since 201002.4 ==
-* 
+* rt#40916: Turn on Top content widget for anon users on 5 wikis. (Nef)
 
 == Changes since 201002.3 ==
 * rt#40094: Tweaked websitewiki infobox to not break headings (TOR)

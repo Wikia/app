@@ -119,6 +119,11 @@ class WidgetFramework {
 					$this->config[1] = $config1;
 				}
 
+				// RT #40916
+				if (in_array($wgCityId, array(5687 /* twilightsaga */, 26337 /* glee */, 1573 /* theoffice */, 9863 /* trueblood */, 835 /* southpark */))) {
+					$this->config[1][] = array('type' => 'WidgetTopContent', 'id' => 144);
+				}
+
 			} else if($this->skinname == "quartz") {
 				$this->config = array(
 					1 => array(
