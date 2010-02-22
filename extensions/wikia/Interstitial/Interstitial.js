@@ -13,7 +13,7 @@ if((typeof wgAdsInterstitialsEnabled != 'undefined') && wgAdsInterstitialsEnable
 	if((wgAdsInterstitialsPagesBeforeFirstAd == count - 1) || ((count > wgAdsInterstitialsPagesBeforeFirstAd) && (((count - wgAdsInterstitialsPagesBeforeFirstAd -1) % (wgAdsInterstitialsPagesBetweenAds + numToSkip)) == 0))){
 		// If it's about to be time for an interstitial, re-write all INTERNAL links to go through the Interstitial.
 		$('a[href]').each(function(index, elem){
-			if($(elem).attr('hostname') == location.hostname){
+			if(($(elem).attr('hostname') == location.hostname) && ($(elem).attr('href').indexOf('Special:Outbound') < 0)){
 				var link = wgInterstitialPath + encodeURIComponent($(elem).attr('href'));
 				$(elem).attr('href', link);
 			}
