@@ -62,7 +62,7 @@ if( $wgUser->isAllowed('createaccount') ) {
 		</span>
 </div>
 <div id="userlogin<?php if ($this->data['ajax']) { ?>Ajax<?php } ?>">
-<form name="userlogin2" id="userlogin2" method="post" action="<?php $this->text('actioncreate') ?>" ">
+<form name="userlogin2" id="userlogin2" method="post" action="<?php $this->text('actioncreate') ?>">
 <?php		if( $this->data['message'] && $this->data['ajax'] ) { ?>
 	<div class="<?php $this->text('messagetype') ?>box" style="margin:0px">
 		<?php if ( $this->data['messagetype'] == 'error' ) { ?>
@@ -274,9 +274,9 @@ if( $wgUser->isAllowed('createaccount') ) {
 				<input onclick="UserRegistration.submitForm(); return false;" id="wpCreateaccountX" type="submit" value="<?= wfMsg("createaccount") ?>" />
 				<?php if( $this->data['createemail'] ) { ?>
 					<a id="wpCreateaccountX" class="wikia_button" href="#" onclick="$('#wpCreateaccountXSteer').value = false; $('#wpCreateaccountYSteer').value = true; UserRegistration.submitForm();" ><span><?= wfMsg("createaccountmail") ?></span></a>
-					<input type="hidden" id="wpCreateaccountYSteer" name="wpCreateaccountMail" value="false" >							
+					<input type="hidden" id="wpCreateaccountYSteer" name="wpCreateaccountMail" value="false" />							
 				<?php } else { ?>
-					<input type="hidden" id="wpCreateaccountXSteer" name="wpCreateaccount" value="true" >
+					<input type="hidden" id="wpCreateaccountXSteer" name="wpCreateaccount" value="true" />
 				<?php } ?>
 			</td>
 		</tr>
