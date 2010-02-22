@@ -323,6 +323,14 @@ $wgDumpsDisabledWikis = array();
  */
 $wgEnableUploadInfoExt = false;
 
+
+/**
+ * @name wgWikiFactoryTags
+ * 
+ * tags defined in current wiki
+ */ 
+$wgWikiFactoryTags = array();
+
 /**
  * external databases
  */
