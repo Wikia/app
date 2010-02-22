@@ -137,13 +137,18 @@ $(function() {
 		$(".new").bind('click', function(e) { CreatePage.redLinkClick(e, CreatePage.getTitleFromUrl(this.href)) } );
 		$(".createboxButton").bind('click', function(e) {
 			var form = $(e.target).parent();
-			var field = form.children('.createboxInput');
-			var preloadField = form.children("input[name='preload']");
-			if((typeof preloadField.val() == undefined) || (preloadField.val() == '')) {
-				CreatePage.openDialog(e, field.val());
-			}
-			else {
-				return true;
+
+			// make sure we're inside createbox and not inputbox (RT #40959)
+			if(form.attr('class') == 'createboxForm') {
+				var field = form.children('.createboxInput');
+				var preloadField = form.children("input[name='preload']");
+
+				if((typeof preloadField.val() == undefined) || (preloadField.val() == '')) {
+					CreatePage.openDialog(e, field.val());
+				}
+				else {
+					return true;
+				}
 			}
 		});
 	}
