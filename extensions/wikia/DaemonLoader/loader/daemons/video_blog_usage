@@ -95,6 +95,10 @@ my $oConf = new Wikia::Config( {logfile => "/tmp/video_blog_usage.log"} );
 my $lb = Wikia::LB->new( {yml => $YML } );
 my $db_ext = new Wikia::DB( {"dbh" => $lb->getConnection( Wikia::LB::DB_SLAVE, undef, Wikia::LB::DATAWARESHARED )} );
 
+=db stats connection
+=cut
+my $dbs_ext = new Wikia::DB( {"dbh" => $lb->getConnection( Wikia::LB::DB_SLAVE, undef, Wikia::LB::STATS )} );
+
 =wikia utils 
 =cut
 my $oUtils = new Wikia::Utils();
@@ -205,10 +209,10 @@ foreach my $num (sort ( map { sprintf("%012u",$_) } (keys %$databases) )) {
 		}
 
 		#- 
-		# from dbstats - nbr of pageviews (PER WIKI)
+		# from stats - nbr of pageviews (PER WIKI)
 		#-
 		$select = "pv_namespace as nspace, sum(pv_views) as views_count";
-		$from = "`dbstats`.`city_page_views`";
+		$from = "`stats`.`city_page_views`";
 		@where = (
 			"pv_namespace in (" . join(",", map { $db_ext->quote($_) } @nspaces) . ")",
 			"date_format(pv_use_date, '%Y%m') = ".$db_ext->quote($date),
@@ -216,7 +220,7 @@ foreach my $num (sort ( map { sprintf("%012u",$_) } (keys %$databases) )) {
 		);
 		@options = ("group by pv_namespace");
 		
-		$sth = $db_ext->select_many($select, $from, \@where, \@options);
+		$sth = $dbs_ext->select_many($select, $from, \@where, \@options);
 		if ($sth) {
 			while(my $values = $sth->fetchrow_hashref()) {
 				$DATA->{$date}->{$w}->{$values->{nspace}}->{views_count} = $values->{views_count};
@@ -265,10 +269,10 @@ foreach my $num (sort ( map { sprintf("%012u",$_) } (keys %$databases) )) {
 		}
 
 		#- 
-		# from dbstats - nbr of pageviews (PER WIKI)
+		# from stats - nbr of pageviews (PER WIKI)
 		#-
 		$select = "pv_namespace as nspace, sum(pv_views) as views_count";
-		$from = "`dbstats`.`city_page_views`";
+		$from = "`stats`.`city_page_views`";
 		@where = (
 			"pv_namespace > 0",
 			"pv_namespace in (" . join(",", map { $db_ext->quote($_) } @nspacesAll) . ")",
@@ -277,7 +281,7 @@ foreach my $num (sort ( map { sprintf("%012u",$_) } (keys %$databases) )) {
 		);
 		@options = ("group by pv_namespace");
 		
-		$sth = $db_ext->select_many($select, $from, \@where, \@options);
+		$sth = $dbs_ext->select_many($select, $from, \@where, \@options);
 		if ($sth) {
 			while(my $values = $sth->fetchrow_hashref()) {
 				$DATAALL->{$date}->{$values->{nspace}}->{views_count} = 0 unless($DATAALL->{$date}->{$values->{nspace}}->{views_count});
@@ -428,6 +432,7 @@ foreach (@dates) {
 =cut
 $workbook->close();
 $dbh_ext->disconnect() if ($dbh_ext);
+$dbs_ext->disconnect() if ($dbs_ext);
 
 =finish
 =cut

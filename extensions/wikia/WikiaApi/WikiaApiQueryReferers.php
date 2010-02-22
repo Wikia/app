@@ -23,8 +23,8 @@ class WikiaApiQueryReferers extends WikiaApiQuery {
 	}
 
 	protected function getDB() {
-		global $wgExternalStatsDB;
-		return wfGetDB(DB_SLAVE, array(), $wgExternalStatsDB);
+		global $wgStatsDB;
+		return wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 	}
 
 	private function getWikiReferers () {

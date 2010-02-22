@@ -329,6 +329,7 @@ $wgEnableUploadInfoExt = false;
 $wgExternalDatawareDB = 'dataware';
 $wgExternalArchiveDB = 'archive';
 $wgExternalStatsDB = 'dbstats';
+$wgStatsDB = 'stats';
 $wgExternalWikiaStatsDB = 'wikiastats';
 
 $wgAutoloadClasses['LBFactory_Wikia'] = "$IP/includes/wikia/LBFactory_Wikia.php";
