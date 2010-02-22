@@ -2311,7 +2311,7 @@ wfProfileOut( __METHOD__ . '-body');
 				// This is only shown when there is copyright data available. It is not shown on special pages for example.
 				if ( 'GFDL' == $val['text'] ) {
 					if (!empty($this->data['copyright'])) {
-						$wikiafooterlinksA[] = $this->data['copyright'];
+						$wikiafooterlinksA[] = str_replace("<a href", "<a rel=\"nofollow\" href", $this->data['copyright']);
 					}
 				} else {
 					$wikiafooterlinksA[] = '<a rel="nofollow" href="'.htmlspecialchars($val['href']).'">'.$val['text'].'</a>';
