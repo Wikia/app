@@ -17,9 +17,9 @@ if( !defined( 'MEDIAWIKI' ) ) {
 /**
  * Use revision number
  */
-$wgStyleVersion         = '18616';
-$wgMergeStyleVersionJS  = '18616';
-$wgMergeStyleVersionCSS = '18616';
+$wgStyleVersion         = '18791';
+$wgMergeStyleVersionJS  = '18791';
+$wgMergeStyleVersionCSS = '18791';
 
 /**
  * @name $wgCityId
@@ -326,9 +326,9 @@ $wgEnableUploadInfoExt = false;
 
 /**
  * @name wgWikiFactoryTags
- * 
+ *
  * tags defined in current wiki
- */ 
+ */
 $wgWikiFactoryTags = array();
 
 /**
