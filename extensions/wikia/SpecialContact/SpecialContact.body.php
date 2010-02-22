@@ -55,10 +55,16 @@ class ContactForm extends SpecialPage {
 		$wgOut->addHTML(wfMsg( 'contactsubmitcomplete' ));
 		$wgOut->addHTML('<br/>' . wfMsgExt( 'returnto', 'parse', "[[" . $mp->getText() . "]]" ));
 
+		$uid = $wgUser->getID();
+		if( !empty($uid) ) {
+			$uid = 'UID: ' . $uid . '; ';
+		} else {
+			$uid = '';
+		}
 		$m = "$this->mRealName";
 		$m .= " ({$this->mEmail}) {$this->mWhichWiki}/wiki/User:" . str_replace(" ", "_", $this->mName) . " contacted Wikia about ";
 		$m .= "$this->mProblem.\n";
-		$m .= "User browser data: {$this->mBrowser}; wkID: {$wgCityId}; IP: " . wfGetIP() . "\n\n";
+		$m .= "User browser data: {$this->mBrowser}; wkID: {$wgCityId}; {$uid}IP: " . wfGetIP() . "\n\n";
 		$m .= "$this->mProblemDesc\n";
 		
 		if($this->mCCme) {
