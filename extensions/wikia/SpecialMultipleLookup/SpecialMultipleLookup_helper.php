@@ -37,12 +37,12 @@ class MultipleLookupCore {
 	}
 
 	function checkUserActivity($username) {
-		global $wgMemc, $wgExternalSharedDB, $wgExternalStatsDB;
+		global $wgMemc, $wgExternalSharedDB, $wgStatsDB;
 		$userActivity = "";
 		$memkey = wfForeignMemcKey( $wgExternalSharedDB, null, "MultiLookup", "UserActivity", $username );
 		$cached = $wgMemc->get($memkey);
 		if (!is_array ($cached) || MULTILOOKUP_NO_CACHE) {
-			$dbs = wfGetDB(DB_SLAVE, array(), $wgExternalStatsDB);
+			$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 			if (!is_null($dbs)) {
 				
 				$oRow = $dbs->selectRow(

@@ -110,13 +110,13 @@ class TagsReportPage extends SpecialPage {
 	}
 
 	private function getTagsList() {
-		global $wgMemc, $wgSharedDB, $wgExternalStatsDB;
+		global $wgMemc, $wgSharedDB, $wgStatsDB;
 		global $wgCityId;
 		$tagsList = array();
 		$memkey = wfForeignMemcKey( $wgSharedDB, null, "TagsReport", $wgCityId );
 		$cached = $wgMemc->get($memkey);
 		if (!is_array ($cached)) {
-			$dbs = wfGetDB(DB_SLAVE, array(), $wgExternalStatsDB);
+			$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 			if (!is_null($dbs)) {
 				$query = "select ct_kind, count(*) as cnt from city_used_tags where ct_kind is not null and ct_wikia_id = {$wgCityId} group by ct_kind order by ct_kind";
 				$res = $dbs->query ($query);
@@ -134,13 +134,13 @@ class TagsReportPage extends SpecialPage {
 	}
 
 	private function getTagsInfo() {
-		global $wgMemc, $wgSharedDB, $wgExternalStatsDB;
+		global $wgMemc, $wgSharedDB, $wgStatsDB;
 		global $wgCityId;
 		$tagsArticles = array();
 		$memkey = wfForeignMemcKey( $wgSharedDB, null, "TagsReport", $this->mTag, $wgCityId );
 		$cached = $wgMemc->get($memkey);
 		if (!is_array ($cached)) {
-			$dbs = wfGetDB(DB_SLAVE, array(), $wgExternalStatsDB);
+			$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 			if (!is_null($dbs)) {
 				$query = "select ct_namespace, ct_page_id from city_used_tags where ct_kind = " .$dbs->addQuotes( $this->mTag ). " and ct_wikia_id = {$wgCityId} order by ct_namespace";
 				$res = $dbs->query ($query);
@@ -158,9 +158,9 @@ class TagsReportPage extends SpecialPage {
 	}
 
 	private function getGenDate() {
-		global $wgLang, $wgExternalStatsDB, $wgCityId;
+		global $wgLang, $wgStatsDB, $wgCityId;
 		$tagsArticles = array();
-		$dbs = wfGetDB(DB_SLAVE, array(), $wgExternalStatsDB);
+		$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 		$s = $dbs->selectRow( 
 			'city_used_tags',
 			array( 'max(ct_timestamp) as ts' ),

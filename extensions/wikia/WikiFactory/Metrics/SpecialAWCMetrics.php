@@ -197,7 +197,7 @@ class WikiMetrics {
 	 *
 	 */
 	public function getMainStatsRecords() {
-		global $wgExternalStatsDB;
+		global $wgExternalStatsDB, $wgStatsDB;
 		
 		$res = array();
 		wfProfileIn( __METHOD__ );
@@ -264,16 +264,17 @@ class WikiMetrics {
 			$dbs->freeResult( $oRes );
 			
 			#--- page views 
+			$db = wfGetDB(DB_SLAVE, array(), $wgExternalStatsDB);
 			$table = "city_page_views";
 			$where = array( 'pv_city_id in (' . $wikiList . ')' );
-			$oRes = $dbs->select( 
+			$oRes = $db->select( 
 				$table, 
 				array( 'pv_city_id, sum(pv_views) as cnt' ),
 				$where,
 				__METHOD__,
 				array( 'GROUP BY' => 'pv_city_id' )
 			);
-			while ( $oRow = $dbs->fetchObject( $oRes ) ) {
+			while ( $oRow = $db->fetchObject( $oRes ) ) {
 				#---
 				$page_views = array_reduce (
 					array (" ", " K", " M", " G"), create_function (
@@ -283,7 +284,7 @@ class WikiMetrics {
 				$AWCCities[ $oRow->pv_city_id ][ "pageviews" ] = $oRow->cnt;
 				$AWCCities[ $oRow->pv_city_id ][ "pageviews_txt" ] = $page_views;
 			}
-			$dbs->freeResult( $oRes );
+			$db->freeResult( $oRes );
 			
 			#--- order data
 			if ( !in_array( $this->mSort, array_keys($this->mSortList)) && !in_array( $this->mSort, array_values($this->mSortList)) ) {
@@ -665,7 +666,7 @@ class WikiMetrics {
 	 * @return array
 	 */
 	private function getWikisByNbrPageviews() {
-		global $wgExternalStatsDB, $wgMemc;
+		global $wgExternalStatsDB, $wgMemc, $wgStatsDB;
 		
 		$pageViews = $this->axNbrPageviews;
 		$pageViewsDays = $this->axNbrPageviewsDays;
@@ -683,7 +684,7 @@ class WikiMetrics {
 		$memkey = __METHOD__ . "v:" . $pageViews . "vd:" . $pageViewsDays . "vc:" . md5($cityList);
 		$cities = $wgMemc->get( $memkey );
 		if ( empty($cities) ) {
-			$dbs = wfGetDB(DB_SLAVE, array(), $wgExternalStatsDB);
+			$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 			$oRes = $dbs->select( 
 				"city_page_views", 
 				array( 'pv_city_id', 'sum(pv_views) as cnt' ),
