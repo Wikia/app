@@ -1,36 +1,7 @@
 /* Answers specific CSS goes here, overriding monaco css, and adding any additional */
 
-.dark_text_1 {
-	color:firebrick;
-	font-size:15pt;
-	font-weight:bold;
-	letter-spacing:-0.8px;
-}
 
 
-#article-comments-wrapper {
-	margin: 0px 10px 0px;
-	background-color:#ECEDF7;
-	border-top:3px solid #A1A4F7;
-	padding:10px;
-	width:468px;
-	margin-top:20px;
-}
-
-#article-comments-wrapper h2 {
-	border: none;
-	margin: 0px;
-}
-
-.neutral {
-	background-color: #ecedf7;
-	padding-bottom: 10px;
-}
-
-div.article-comm-input-text textarea {
-	width:362px;
-	border:1px solid #A1A4F7;
-}
 
 
 /* === TEMPORARY === */
@@ -63,19 +34,13 @@ div.article-comm-input-text textarea {
        background:transparent url(http://images1.wikia.nocookie.net/test123/images/d/d7/Sprite.png?20091113)
 }
 
+
 .activityfeed img.sprite {
 	display: none;
 /*	background:transparent url(http://images1.wikia.nocookie.net/test123/images/d/d7/Sprite.png?20091113)
 */
 }
 
-#sidebar_1 {
-	text-align: right;
-}
-
-#search_button {
-       background:transparent url(http://images3.wikia.nocookie.net/test123/images/9/95/Search.png?201001.1)
-}
 
 /* This only appears for registered users */
 #page_bar {
@@ -93,11 +58,10 @@ div.article-comm-input-text textarea {
 /* === THESE AFFECT THE WHOLE PAGE === */
 
 #wikia_page {
-border-color:#EEEEEE;
-       border-style:solid none none;
-       border-width:8px medium medium;
-       font-family:"Helvetica Neue",Helvetica,Arial,default;
-       margin-top:4px;
+	border:none;
+	-moz-border-radius:10px 10px 10px 10px;
+	font-family:"Helvetica Neue",Helvetica,Arial,default;
+	margin-top:4px;
 }
 
 #article { padding:0 10px 10px; }
@@ -118,7 +82,7 @@ a.new {color:#BA5500 !important;}
 /* Default monaco style names for anything I've missed */
 
 .color1 {
-   background-color: #FFF;
+   background-color: #EAF1FB;
    color:            #666;
 }
  
@@ -127,11 +91,11 @@ a.new {color:#BA5500 !important;}
 }
  
 .color2 {
-   background-color: White;
+   background-color: #EAF1FB;
 }
  
 .accent {
-		background-color: #FFF; /*a tint of .color1*/
+		background-color: #EAF1FB; /*a tint of .color1*/
 		border-color: #FFF; /*same as .color1's background*/
 		color: #666; /*text color that looks appropriate on the background-color*/
 }
@@ -142,7 +106,9 @@ a.new {color:#BA5500 !important;}
 		color: #000000; /*text color that looks appropriate on the background-color*/
 }
 
-
+#background_strip {
+	background-color: #EAF1FB;
+}
 
 
 
@@ -204,33 +170,35 @@ body.mainpage .firstHeading { display:none; }
 #tabAsk input.header_field,
 #tabSearch input.header_field {
 	font-size:16pt;
-	width:85%;
-	border:1px solid #A5BF5E;
+	width:380px;
+	border:3px solid #E0EAF8;
 	font-family:"Helvetica Neue",Helvetica,Arial,default;
 }
 
 #answers_ask, #tabAsk, #tabSearch {
-	background:#CEE296 none repeat scroll 0 0;
-	border-top: 3px solid #699000;
 	font-size:16pt;
-	padding:15px;
 	margin-bottom:30px;
 }
 
 #answers_ask_heading {
-	color:#699000;
+	color:#7BA7E1;
 	font-size:13pt;
 	font-weight:bold;
 	letter-spacing:-0.5px;
 	margin-bottom:10px;
 }
 
+#ask_wrapper {
+/*	padding-left:10px; */
+}
+
+
 /* Style the "ask" button at the top */
 #ask_button,
 #ask_button_intab,
 #search_button_intab {
     color: #fff;
-    background: #008900;
+    background: #2966B8;
     font-weight: bold;
     font-size: 111%;
     border:1px solid;
@@ -238,7 +206,7 @@ body.mainpage .firstHeading { display:none; }
 }
 
 #ask_button:hover, #ask_button_intab:hover {
-  color: #008900;
+  color: #2966B8;
   background: #fff;
 }
 
@@ -246,11 +214,16 @@ body.mainpage .firstHeading { display:none; }
 /* Category field */
 
 #catlinks {
-	border:medium none;
+	border-left:2px solid #E0EAF8;
+	border-right:2px solid #E0EAF8;
+	border-bottom:2px solid #E0EAF8;
+	border-top:none;
+	-moz-border-radius:0px 0px 10px 10px;
+	width:478px;
 	margin-top: 0px;
-	background-color: #ECEDF7;
 	padding:0 5px 10px;
 	margin-bottom:30px;
+	background-color: #fff;
 }
 
 #mw-normal-catlinks {
@@ -283,21 +256,18 @@ body.mainpage .firstHeading { display:none; }
 /* article setup */
 .answers-article-left {
 	float: left;
-	width: 470px;
+	width: 468px;
 }
 
 .answers-article-right {
-	float: left;
-	padding-left:10px;
-	width:285px;
+	margin-left: 500px;
 }
 
 .answers-tips, .category-tips {
 	background-color: #ffe;
 	margin-top:10px;
 	padding:10px;
-	border-top:1px solid #fec;
-	border-bottom: 1px solid #fec;
+	-moz-border-radius:10px 10px 10px 10px;
 }
 
 .answers-tips h3 {
@@ -318,7 +288,7 @@ body.mainpage .firstHeading { display:none; }
 #question_heading {
         font-size: 170%;
 		font-weight:bold;
-		letter-spacing:-0.8px;
+		letter-spacing:-1px;
 		line-height:1.4em;
 		color: #000;
 }
@@ -327,13 +297,15 @@ body.mainpage .firstHeading { display:none; }
         font-size: 15pt;
         color:firebrick;
 		font-weight:bold;
-		letter-spacing:-0.8px;
+		letter-spacing:-1px;
 }
 
 #question_box {
 	padding: 10px;
-	background-color: #ECEDF7;
-	border-top: 3px solid #A1A4F7;
+	border-top:2px solid #E0EAF8;
+	border-left:2px solid #E0EAF8;
+	border-right:2px solid #E0EAF8;
+	-moz-border-radius:10px 10px 0px 0px;
 }
 
 #category_level {
@@ -341,10 +313,10 @@ body.mainpage .firstHeading { display:none; }
 }
 
 #answer_box {
-	margin-bottom: 25px;
-	padding: 10px;
-	background-color: #ECEDF7;
+	padding: 12px;
+	background-color: #E0EAF8;
 /*	border-top: 3px solid #A1A4F7; */
+	-moz-border-radius:10px 10px 10px 10px;
 }
 
 #answer_content {
@@ -352,17 +324,18 @@ body.mainpage .firstHeading { display:none; }
 }
 
 #article_save_button {
+    background: #2966B8;
 	color: #fff;
-	background: #e42;
-	border: 1px solid #ddd;
+	border: 1px solid;
 	font-size: 120%;
 	padding: 4px 8px;
 	margin-right: 3px;
+    font-family:"Helvetica Neue",Helvetica,Arial,default;
 }
 
 #article_save_button:hover {
-  color: #333;
-  background: #fdd;
+  color: #2966B8;
+  background: #fff;
 }
 
 #answer_edit_link, #question_edit_link {
@@ -379,7 +352,7 @@ body.mainpage .firstHeading { display:none; }
 	margin-bottom:10px;
 	margin-top:10px;
 	width:99%;
-	border: 1px solid #f88;
+	border: 1px solid #ddd;
 }
 
 #answers_category_select {
@@ -513,8 +486,40 @@ body.mainpage .firstHeading { display:none; }
 	font-size: 15pt;
 	color:#676767;
 	font-weight:bold;
-	letter-spacing:-0.8px;
+	letter-spacing:-1px;
 	padding: 0px;
+}
+
+
+
+/* === ARTICLE COMMENTS === */
+
+.dark_text_1 {
+	color:firebrick;
+	font-size:15pt;
+	font-weight:bold;
+	letter-spacing:-1px;
+}
+
+#article-comments-wrapper {
+	padding:10px;
+	width:468px;
+	margin-top: 10px;
+}
+
+#article-comments-wrapper h2 {
+	border: none;
+	margin: 0px;
+}
+
+.neutral {
+	background-color: #fff;
+	padding-bottom: 10px;
+}
+
+div.article-comm-input-text textarea {
+	width:362px;
+	border:2px solid #E0EAF8;
 }
 
 
@@ -530,17 +535,42 @@ body.mainpage .firstHeading { display:none; }
 
 #search_field { border:1px solid #A5BF5E; }
 
+/* realign text in the widget */
+
+.WidgetCommunity li strong {
+	text-align: left;
+}
+
+/* No real idea why this needs to be 1px, but WTH */
+.WidgetCommunity .widgetfeed {
+	margin-left: 1px;
+}
+
+#sidebar_1 {
+	text-align: right;
+}
+
+#search_button {
+       background:transparent url(http://images3.wikia.nocookie.net/test123/images/9/95/Search.png?201001.1)
+}
+
 .widget {
 	border: none;
-	background-color: none;
+	background-color: #EAF1FB;
 }
 
 .WidgetCommunity .toolbar {
-	background-color: #fff;
+	background-color: #EAF1FB;
+	display:none;
+}
+
+.WidgetCommunity .community_header {
+	border: none;
 }
 
 .widget dt {
        font-family:"Helvetica Neue",Helvetica,Arial,default;
+       text-align: left;
 }
 
 .neutral {
@@ -705,7 +735,7 @@ div.userInfoNoAvatar .userPoints {
 
 .user-section-title {
 	font-weight:bold;
-	letter-spacing:-0.8px;
+	letter-spacing:-1px;
 }
 
 
@@ -715,6 +745,9 @@ div.userInfoNoAvatar .userPoints {
 
 /* Google js ads */
 .google-ad-unit {
+/*	clear:both; */
+	margin-top:10px;
+	position:relative;
 }
 .google-ad-unit small a { /* Ads By Google link */
 	font-size:11px;
