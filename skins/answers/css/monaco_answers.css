@@ -48,8 +48,9 @@
        font-size: 9pt;
        color: #555;
        font-family:"Helvetica Neue",Helvetica,Arial,default;
-       margin: 0px;
-       background-color:#F8F8F8;
+       margin: 0px 0px 0px 8px;
+       background-color:#E0EAF8;
+       -moz-border-radius:10px 10px 10px 10px;
 }
 
 
@@ -328,7 +329,7 @@ body.mainpage .firstHeading { display:none; }
 	color: #fff;
 	border: 1px solid;
 	font-size: 120%;
-	padding: 4px 8px;
+	padding: 2px 5px;
 	margin-right: 3px;
     font-family:"Helvetica Neue",Helvetica,Arial,default;
 }
