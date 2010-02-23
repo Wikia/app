@@ -66,8 +66,6 @@ function Achievements_ArticleSaveComplete(&$article, &$user, $text, $summary, &$
     }
   }
 
-  $achievementCountersToIncrease[ACHIEVEMENT_EDIT_ARTICLE] = 1;
-
   // if there are any achievement counters to increase then let's do that and if needed add badges
 
   if(count($achievementCountersToIncrease) > 0) {
