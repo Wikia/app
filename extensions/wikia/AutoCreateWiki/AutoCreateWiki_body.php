@@ -760,7 +760,6 @@ class AutoCreateWikiPage extends SpecialPage {
 		if ( isset( $this->mWikiData[ "language" ] ) && $this->mWikiData[ "language" ] !== "en" ) {
 			$this->mWikiData[ "subdomain"  ]  = strtolower( $this->mWikiData[ "language"] ) . "." . $this->mWikiData[ "name"];
 			$this->mWikiData[ "redirect"   ]  = strtolower( $this->mWikiData[ "language" ] ) . "." . ucfirst( $this->mWikiData[ "name"] );
-			$this->mWikiData[ "dbname"     ]  = strtolower( str_replace( "-", "", $this->mWikiData[ "language" ] ). $this->mWikiData[ "dbname"] );
 			$this->mWikiData[ "images_url" ] .= "/" . strtolower( $this->mWikiData[ "language" ] );
 			$this->mWikiData[ "images_dir" ] .= "/" . strtolower( $this->mWikiData[ "language" ] );
 		}
@@ -772,14 +771,14 @@ class AutoCreateWikiPage extends SpecialPage {
 				break;
 		}
 
-		$this->mWikiData[ "images_dir"    ] = self::IMGROOT . $this->mWikiData[ "images_dir"] . "/images";
-		$this->mWikiData[ "images_url"    ] = self::IMAGEURL . $this->mWikiData[ "images_url"] . "/images";
+		$this->mWikiData[ "images_dir"    ] = self::IMGROOT  . $this->mWikiData[ "images_dir" ] . "/images";
+		$this->mWikiData[ "images_url"    ] = self::IMAGEURL . $this->mWikiData[ "images_url" ] . "/images";
 		$this->mWikiData[ "images_logo"   ]	= sprintf("%s/%s", $this->mWikiData[ "images_dir" ], "b/bc" );
 		$this->mWikiData[ "images_icon"   ]	= sprintf("%s/%s", $this->mWikiData[ "images_dir" ], "6/64" );
 
 		$this->mWikiData[ "domain"        ] = sprintf("%s.%s", $this->mWikiData[ "subdomain" ], $this->mDefSubdomain);
 		$this->mWikiData[ "url"           ] = sprintf( "http://%s.%s/", $this->mWikiData[ "subdomain" ], $this->mDefSubdomain );
-		$this->mWikiData[ "dbname"        ] = $this->prepareDBName( substr( str_replace( "-", "", $this->mWikiData[ "name"] ), 0, 50 ) );
+		$this->mWikiData[ "dbname"        ] = $this->prepareDBName( $this->mWikiData[ "name"], $this->awcLanguage );
 		$this->mWikiData[ "founder"       ] = $this->mFounder->getId();
 		$this->mWikiData[ "founder-name"  ] = $this->mFounder->getName();
 		$this->mWikiData[ "founder-email" ] = $this->mFounder->getEmail();
@@ -1552,26 +1551,33 @@ class AutoCreateWikiPage extends SpecialPage {
 	 * @author Piotr Molski <moli@wikia-inc.com>
 	 * @access private
 	 *
-	 * @param string	$dbname		name of DB to check
+	 * @param string	$dbname -- name of DB to check
+	 * @param string	$lang   -- language for wiki
 	 *
 	 * @todo when second cluster will come this function has to changed
 	 *
 	 * @return string: fixed name of DB
 	 */
-	private function prepareDBName( $dbname ) {
+	private function prepareDBName( $dbname, $lang ) {
 
 		wfProfileIn( __METHOD__ );
 
 		$dbwf = WikiFactory::db( DB_SLAVE );
 		$dbr  = wfGetDB( DB_MASTER );
 
-		Wikia::log( __METHOD__, "info", "dbname=$dbname, type={$this->mType}" );
+		Wikia::log( __METHOD__, "info", "dbname=$dbname, language={$lang} type={$this->mType}" );
 		/**
 		 * for other types add type name in database
 		 */
 		if( $this->mType ) {
 			$dbname = $dbname . $this->mType;
 		}
+
+		if( $lang !== "en" ) {
+			$dbname = $lang . $dbname;
+		}
+
+		$dbname = substr( str_replace( "-", "", $dbname ), 0 , 50 );
 
 		/**
 		 * check city_list
