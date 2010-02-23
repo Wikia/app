@@ -48,9 +48,10 @@
        font-size: 9pt;
        color: #555;
        font-family:"Helvetica Neue",Helvetica,Arial,default;
-       margin: 0px 0px 0px 8px;
-       background-color:#E0EAF8;
+       margin: 8px 8px 0px 8px;
+       background-color:#EAF1FB;
        -moz-border-radius:10px 10px 10px 10px;
+       display: inline-block;
 }
 
 
@@ -171,7 +172,7 @@ body.mainpage .firstHeading { display:none; }
 #tabAsk input.header_field,
 #tabSearch input.header_field {
 	font-size:16pt;
-	width:380px;
+	width:620px;
 	border:3px solid #E0EAF8;
 	font-family:"Helvetica Neue",Helvetica,Arial,default;
 }
@@ -220,7 +221,6 @@ body.mainpage .firstHeading { display:none; }
 	border-bottom:2px solid #E0EAF8;
 	border-top:none;
 	-moz-border-radius:0px 0px 10px 10px;
-	width:478px;
 	margin-top: 0px;
 	padding:0 5px 10px;
 	margin-bottom:30px;
@@ -318,6 +318,7 @@ body.mainpage .firstHeading { display:none; }
 	background-color: #E0EAF8;
 /*	border-top: 3px solid #A1A4F7; */
 	-moz-border-radius:10px 10px 10px 10px;
+	margin-bottom: 20px;
 }
 
 #answer_content {
@@ -478,8 +479,7 @@ body.mainpage .firstHeading { display:none; }
 /* Related questions */
 #related_questions {
 	padding: 10px;
-	background-color: #f8f8f8;
-	border-top: 3px solid #ddd;
+	-moz-border-radius: 10px 10px 10px 10px;
 }
 
 #related_questions h2 {
