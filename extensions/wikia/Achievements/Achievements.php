@@ -2,6 +2,7 @@
 define('ACHIEVEMENT_EDIT_ARTICLE', 1);
 define('ACHIEVEMENT_NEW_ARTICLE', 2);
 define('ACHIEVEMENT_IMAGE_ADDED_TO_ARTICLE', 3);
+define('ACHIEVEMENT_VIDEO_ADDED_TO_ARTICLE', 4);
 
 $wgExtensionFunctions[] = 'Achievements_Setup';
 
@@ -33,6 +34,8 @@ function Achievements_ArticleSaveComplete(&$article, &$user, $text, $summary, &$
 
 	$achievementCountersToIncrease = array();
 
+	// new article && edit article
+
 	if($status instanceof Status) {
 		if($status->ok == true && count($status->errors) == 0) {
 			if($status->value['new'] == true) {
@@ -40,6 +43,24 @@ function Achievements_ArticleSaveComplete(&$article, &$user, $text, $summary, &$
 			} else {
 				$achievementCountersToIncrease[ACHIEVEMENT_EDIT_ARTICLE] = 1;
 			}
+		}
+	}
+
+	// images inserts && video inserts
+
+	$mediaInserts = Wikia::getVar('imageInserts');
+	if(!empty($mediaInserts) && is_array($mediaInserts)) {
+		foreach($mediaInserts as $insert) {
+			if($insert['il_to']{0} == ':') {
+				$type = ACHIEVEMENT_VIDEO_ADDED_TO_ARTICLE;
+			} else {
+				$type = ACHIEVEMENT_IMAGE_ADDED_TO_ARTICLE;
+			}
+
+			if(!isset($achievementCountersToIncrease[$type])) {
+				$achievementCountersToIncrease[$type] = 0;
+			}
+			$achievementCountersToIncrease[$type]++;
 		}
 	}
 
