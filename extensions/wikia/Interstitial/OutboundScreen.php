@@ -1,18 +1,30 @@
 <?php
 /**
  * OutboundScreen - redirects external links to special page
+ * 
+ * Do not be alarmed if this file is included even on
+ * wikis where the extension is disabled.
+ * In order for cached pages (with their links rewritten to go through
+ * Special:Outbound) to work even after disabling this extension,
+ * the special page will always be present even if the link-rewriting
+ * is disabled.
  *
  * @author Łukasz Garczewski (TOR) <tor@wikia-inc.com>
  * @author Adrian 'ADi' Wieczorek <adi(at)wikia.com>
+ * @author Sean Colombo <sean@wikia-inc.com>
  *
  * @package MediaWiki
  * @subpackage SpecialPage
  */
 
-$wgHooks['LinkerMakeExternalLink'][] = 'efOutboundScreen';
 $wgAutoloadClasses['Outbound'] = dirname( __FILE__ ) . '/SpecialOutboundScreen_body.php';
 $wgSpecialPages['Outbound'] = 'Outbound';
 $wgExtensionMessagesFiles['Outbound'] = dirname(__FILE__) . '/OutboundScreen.i18n.php';
+
+// Extension will always be present. Only rewrite links when enabled.
+if (!empty($wgEnableOutboundScreenExt)) {
+	$wgHooks['LinkerMakeExternalLink'][] = 'efOutboundScreen';
+}
 
 // For shared page code (such as Interstitial::getCss() and definition of INTERSTITIALS_SP).
 include_once dirname(__FILE__) . '/Interstitial.php';
@@ -24,6 +36,9 @@ $wgOutboundScreenConfig = array(
 	'adLayoutMode' => !empty($wgOutboundScreenAdLayout) ? $wgOutboundScreenAdLayout : 'classic'
 );
 
+/**
+ * This function makes all of the outbound links in the page re-written to go through Special:Outbound.
+ */
 function efOutboundScreen ( $url, $text, $link, $attribs, $linktype, $linker ) {
 	global $wgCityId, $wgUser, $wgOutboundScreenConfig;
 	static $whiteList;
@@ -83,7 +98,6 @@ function efOutboundScreen ( $url, $text, $link, $attribs, $linktype, $linker ) {
 				return false;
 			}
 		}
-	} else {
 	}
 
 	return true;
