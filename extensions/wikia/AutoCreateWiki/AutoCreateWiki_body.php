@@ -525,6 +525,9 @@ class AutoCreateWikiPage extends SpecialPage {
 			"{$IP}/extensions/CheckUser/cu_log.sql",
 		);
 
+		/**
+		 * additional tables per type
+		 */
 		switch( $this->mType ) {
 			case "answers":
 				$sqlfiles[] = "{$IP}/extensions/SocialProfile/SystemGifts/systemgifts.sql";
