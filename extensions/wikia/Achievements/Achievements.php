@@ -34,33 +34,33 @@ function Achievements_ArticleSaveComplete(&$article, &$user, $text, $summary, &$
 
 	$achievementCountersToIncrease = array();
 
-	// new article && edit article
-
 	if($status instanceof Status) {
 		if($status->ok == true && count($status->errors) == 0) {
+
+			// new article && edit article
 			if($status->value['new'] == true) {
 				$achievementCountersToIncrease[ACHIEVEMENT_NEW_ARTICLE] = 1;
 			} else {
 				$achievementCountersToIncrease[ACHIEVEMENT_EDIT_ARTICLE] = 1;
 			}
-		}
-	}
 
-	// images inserts && video inserts
+			// images inserts && video inserts
+			$mediaInserts = Wikia::getVar('imageInserts');
+			if(!empty($mediaInserts) && is_array($mediaInserts)) {
+				foreach($mediaInserts as $insert) {
+					if($insert['il_to']{0} == ':') {
+						$type = ACHIEVEMENT_VIDEO_ADDED_TO_ARTICLE;
+					} else {
+						$type = ACHIEVEMENT_IMAGE_ADDED_TO_ARTICLE;
+					}
 
-	$mediaInserts = Wikia::getVar('imageInserts');
-	if(!empty($mediaInserts) && is_array($mediaInserts)) {
-		foreach($mediaInserts as $insert) {
-			if($insert['il_to']{0} == ':') {
-				$type = ACHIEVEMENT_VIDEO_ADDED_TO_ARTICLE;
-			} else {
-				$type = ACHIEVEMENT_IMAGE_ADDED_TO_ARTICLE;
+					if(!isset($achievementCountersToIncrease[$type])) {
+						$achievementCountersToIncrease[$type] = 0;
+					}
+					$achievementCountersToIncrease[$type]++;
+				}
 			}
 
-			if(!isset($achievementCountersToIncrease[$type])) {
-				$achievementCountersToIncrease[$type] = 0;
-			}
-			$achievementCountersToIncrease[$type]++;
 		}
 	}
 
@@ -81,6 +81,9 @@ function Achievements_ArticleSaveComplete(&$article, &$user, $text, $summary, &$
 		Achievements_AddBadgesIfNeeded($user->getId(), $newCounters);
 
 	}
+
+	print_pre($newCounters);
+	exit();
 
 	return true;
 }
