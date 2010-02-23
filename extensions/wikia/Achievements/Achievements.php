@@ -3,6 +3,7 @@ define('ACHIEVEMENT_EDIT_ARTICLE', 1);
 define('ACHIEVEMENT_NEW_ARTICLE', 2);
 define('ACHIEVEMENT_IMAGE_ADDED_TO_ARTICLE', 3);
 define('ACHIEVEMENT_VIDEO_ADDED_TO_ARTICLE', 4);
+define('ACHIEVEMENT_CATEGORY_ADDED_TO_ARTICLE', 5);
 
 $wgExtensionFunctions[] = 'Achievements_Setup';
 
@@ -15,10 +16,11 @@ function Achievements_Setup() {
 
 	$achievementTypeLevels = array();
 
-	$achievementTypeLevels[ACHIEVEMENT_EDIT_ARTICLE] =				array(1, 5, 10, 25, 50, 100, 200, 300);
-	$achievementTypeLevels[ACHIEVEMENT_NEW_ARTICLE] =				array(1, 5, 10, 20, 30, 40);
-	$achievementTypeLevels[ACHIEVEMENT_IMAGE_ADDED_TO_ARTICLE] =	array(1, 5, 10, 20, 30, 40);
-	$achievementTypeLevels[ACHIEVEMENT_VIDEO_ADDED_TO_ARTICLE] =	array(1, 5, 10, 20, 30, 40);
+	$achievementTypeLevels[ACHIEVEMENT_EDIT_ARTICLE] =				array(1, 5, 10, 25, 50, 100, 200);
+	$achievementTypeLevels[ACHIEVEMENT_NEW_ARTICLE] =				array(1, 5, 10, 20, 40);
+	$achievementTypeLevels[ACHIEVEMENT_IMAGE_ADDED_TO_ARTICLE] =	array(1, 5, 10, 20, 40);
+	$achievementTypeLevels[ACHIEVEMENT_VIDEO_ADDED_TO_ARTICLE] =	array(1, 5, 10, 20, 40);
+	$achievementTypeLevels[ACHIEVEMENT_CATEGORY_ADDED_TO_ARTICLE] =	array(1, 5, 10, 20, 40);
 }
 
 /**
