@@ -29,7 +29,6 @@ class AutoCreateWikiPage extends SpecialPage {
 		$mMYSQLdump,
 		$mMYSQLbin,
 		$mPHPbin,
-		$mLanguageStarters,
 		$mCurrTime,
 		$mPosted,
 		$mPostedErrors,
@@ -72,12 +71,10 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->mWikiData = array();
 
 		/**
-		 * language starters
-		 */
-		$this->mLanguageStarters = array("en", "ja", "de", "fr", "nl", "es", "pl");
-
-		/**
-		 * starters map
+		 * starters map:
+		 * "*" is default
+		 * "answers" when $mType = "answers"
+		 *
 		 */
 		$this->mStarters = array(
 			"*" => array(
