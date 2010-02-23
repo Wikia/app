@@ -172,7 +172,7 @@ class AdEngine {
 
 	function getProviderid($provider){
 		foreach($this->providers as $id => $p) {
-			if ($provider == $p ){
+			if (strtolower($provider) == strtolower($p) ){
 				return $id;
 			}
 		}
@@ -300,15 +300,15 @@ class AdEngine {
 
 
 	public function getProviderFromId ($provider_id) {
-		switch ($this->providers[$provider_id]){
-			case 'DART': return AdProviderDART::getInstance();
-			case 'OpenX': return AdProviderOpenX::getInstance();
-			case 'Google': return AdProviderGoogle::getInstance();
-			case 'GAM': return AdProviderGAM::getInstance();
-			case 'PubMatic': return AdProviderPubMatic::getInstance();
-			case 'Athena': return AdProviderAthena::getInstance();
-			case 'ContextWeb': return AdProviderContextWeb::getInstance();
-			case 'DARTMobile': return AdProviderDARTMobile::getInstance();
+		switch (strtolower($this->providers[$provider_id])){
+			case 'dart': return AdProviderDART::getInstance();
+			case 'openx': return AdProviderOpenX::getInstance();
+			case 'google': return AdProviderGoogle::getInstance();
+			case 'gam': return AdProviderGAM::getInstance();
+			case 'pubmatic': return AdProviderPubMatic::getInstance();
+			case 'athena': return AdProviderAthena::getInstance();
+			case 'contextweb': return AdProviderContextWeb::getInstance();
+			case 'dartmobile': return AdProviderDARTMobile::getInstance();
 			default: return new AdProviderNull('Unrecognized provider id', true);
 		}
 	}
