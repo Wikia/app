@@ -91,7 +91,8 @@ class AutoCreateWikiPage extends SpecialPage {
 				"pl" => "plstarter"
 			),
 			"answers" => array(
-				"en" => "starteranswers"
+				"en" => "starteranswers",
+				"*"  => "aastarteranswers"
 			)
 		);
 
@@ -1634,6 +1635,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$dbStarter = $this->mStarters[ "*" ][ "*" ];
 		switch( $this->mType ) {
 			case "answers":
+				$dbStarter = $this->mStarters[ "answers" ][ "*" ];
 				if( isset( $this->mStarters[ "answers" ][ $this->mWikiData[ "language" ] ] ) ) {
 					$dbStarter = $this->mStarters[ "answers" ][ $this->mWikiData[ "language" ] ];
 				}
