@@ -45,7 +45,7 @@ class BrowseDataPage extends QueryPage {
 		$this->remaining_filters = $remaining_filters;
 		$this->browse_data_title = Title::newFromText('BrowseData', NS_SPECIAL);
 
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, 'smw' );
 		$categorylinks = $dbr->tableName( 'categorylinks' );
 		$page = $dbr->tableName( 'page' );
 		$cat_ns = NS_CATEGORY;
@@ -99,7 +99,7 @@ class BrowseDataPage extends QueryPage {
 	function createTempTable($category, $subcategory, $subcategories, $applied_filters) {
 		global $smwgDefaultStore;
 
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, 'smw' );
 		$sql =<<<END
 	CREATE TEMPORARY TABLE semantic_drilldown_values (
 		id INT NOT NULL,
@@ -146,7 +146,7 @@ END;
 	}
 
 	function getSQLFromClauseForCategory_orig($subcategory, $child_subcategories) {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, 'smw' );
 		$categorylinks = $dbr->tableName( 'categorylinks' );
 		$subcategory = str_replace("'", "\'", $subcategory);
 		$sql = "FROM semantic_drilldown_values sdv
@@ -162,7 +162,7 @@ END;
 	}
 
 	function getSQLFromClauseForCategory_2($subcategory, $child_subcategories) {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, 'smw' );
 		$smw_insts = $dbr->tableName( 'smw_inst2' );
 		$smw_ids = $dbr->tableName( 'smw_ids' );
 		$ns_cat = NS_CATEGORY;
@@ -196,7 +196,7 @@ END;
 	}
 
 	function getSQLFromClause_orig($category, $subcategory, $subcategories, $applied_filters) {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, 'smw' );
 		$page = $dbr->tableName( 'page' );
 		$smw_relations = $dbr->tableName( 'smw_relations' );
 		$smw_attributes = $dbr->tableName( 'smw_attributes' );
@@ -274,7 +274,7 @@ END;
 	}
 
 	function getSQLFromClause_2($category, $subcategory, $subcategories, $applied_filters) {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, 'smw' );
 		$smw_ids = $dbr->tableName( 'smw_ids' );
 		$smw_insts = $dbr->tableName( 'smw_inst2' );
 		$smw_rels = $dbr->tableName( 'smw_rels2' );
@@ -368,7 +368,7 @@ END;
 	 * set of filters and either a new subcategory or a new filter.
 	 */
 	function getNumResults($subcategory, $subcategories, $new_filter = null) {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, 'smw' );
 		$sql = "SELECT COUNT(*) ";
 		if ($new_filter)
 			$sql .= $this->getSQLFromClauseForField($new_filter);
@@ -975,12 +975,12 @@ END;
 	 */
 	protected function outputResults( $out, $skin, $dbr, $res, $num, $offset ) {
 		global $wgContLang, $sdgNumResultsColumns;
-	
+
 		if( $num > 0 ) {
 			$html = array();
 			if( !$this->listoutput )
 				$html[] = $this->openList( $offset );
-			
+
 			$prev_first_char = "";
 			// default to 3 columns, like with categories
 			if ($sdgNumResultsColumns == null)
@@ -1013,7 +1013,7 @@ END;
 				if (($i + 1) % $rows_per_column == 0 || ($i + 1) == $num)
 					$html[] = "				</ul>\n			</div> <!-- end column -->";
 			}
-			
+
 			# Flush the final result
 			if( $this->tryLastResult() ) {
 				$row = null;
