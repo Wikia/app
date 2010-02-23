@@ -12,6 +12,7 @@ INSERT INTO ad_provider VALUES (4, 'GAM');
 INSERT INTO ad_provider VALUES (5, 'PubMatic');
 INSERT INTO ad_provider VALUES (6, 'Athena');
 INSERT INTO ad_provider VALUES (7, 'ContextWeb');
+INSERT INTO ad_provider VALUES (8, 'DARTMobile');
 
 
 -- Slots

@@ -29,6 +29,7 @@ class SkinWikiaphone extends SkinTemplate {
 		parent::setupSkinUserCss( $out );
 		// Append to the default screen common & print styles...
 		$out->addStyle( 'wikiaphone/main.css', 'screen,handheld' );
+		// Nick wonders why we have IE 5 style sheets for a mobile skin?
 		$out->addStyle( 'wikiaphone/IE50Fixes.css', 'screen,handheld', 'lt IE 5.5000' );
 		$out->addStyle( 'wikiaphone/IE55Fixes.css', 'screen,handheld', 'IE 5.5000' );
 		$out->addStyle( 'wikiaphone/IE60Fixes.css', 'screen,handheld', 'IE 6' );
@@ -39,6 +40,10 @@ class SkinWikiaphone extends SkinTemplate {
 		$out->addScript(AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId)));
 		$out->addScript(AnalyticsEngine::track('GA_Urchin', 'pagetime', array('lean_monaco')));
 		$out->addScriptFile( '../wikiaphone/main.js' );
+	}
+
+	function printTopHtml() {
+	        echo AdEngine::getInstance()->getAd('MOBILE_TOP_LEADERBOARD');
 	}
 }
 
