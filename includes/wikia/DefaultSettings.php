@@ -389,3 +389,10 @@ $wgWikiaMaxNameChars = 50;
  */
 $wgWikiTexDirectory = "/images/w/wikitex/images/";
 $wgWikiTexPath      = "http://images.wikia.com/wikitex/images/";
+
+/**
+ * @name $IPA
+ *
+ * path for answers repo
+ */
+$IPA = "/usr/wikia/source/answers";

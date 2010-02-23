@@ -23,7 +23,7 @@ require dirname(__FILE__) . '/Monaco.php';
 /* HACK: temporary include of "new" skin for answers that it is based on Monaco */
 global $wgUseNewAnswersSkin;
 if (!empty($wgUseNewAnswersSkin)){
-	require "/usr/wikia/source/answers/AnswersNewSkin.php";
+	require "$IPA/AnswersNewSkin.php";
 	return;
 }
 
