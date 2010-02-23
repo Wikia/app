@@ -113,6 +113,11 @@ function Achievements_Display(&$template, &$templateEngine) {
 EOT;
 	}
 
+	$dbr = wfGetDB(DB_MASTER);
+	$noofbadges = $dbr->selectField('achievements_badges', 'count(*) as cnt', array('user_id' => $user->getID()), 'Achievements_Display');
+	$username = $user->getName();
+
+
 	$achievementsDisplay = <<<EOT
 <style>
 #achievements-info {
@@ -145,7 +150,7 @@ EOT;
 </style>
 
 <div id="achievements" class="clearfix">
-	<div id="achievements-info"><span style="font-size: 15pt; font-weight: bold; margin-right: 3px;">Danny</span> has earned <br/> <span style="font-size: 45pt; font-weight: bold; color: green;">10</span> badges</div>
+	<div id="achievements-info"><span style="font-size: 15pt; font-weight: bold; margin-right: 3px;">{$username}</span> has earned <br/> <span style="font-size: 45pt; font-weight: bold; color: green;">{$noofbadges}</span> badges</div>
 	<div id="achievements-badges">$badgesDisplay</div>
 </div>
 EOT;
@@ -184,7 +189,8 @@ function Achievements_GetUserTopBadges($userId) {
 	$res = $dbr->select('achievements_badges',
 						array('achievement_type_id', 'MAX(level) as level'),
 			            array('user_id' => $userId),
-			            'Achievements_Display');
+			            'Achievements_Display',
+			            array('GROUP BY' => 'achievement_type_id'));
 
 	while($row = $dbr->fetchObject($res)) {
 		$userBadges[$row->achievement_type_id] = $row->level;
