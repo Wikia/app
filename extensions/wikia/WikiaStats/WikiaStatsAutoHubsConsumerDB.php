@@ -17,7 +17,7 @@ class WikiaStatsAutoHubsConsumerDB {
 	 * constructor
 	 */
 	function __construct($db = DB_MASTER  ) {
-		global $wgExternalStatsDB;
+		global $wgStatsDB;
 		$this->dbs = wfGetDB( $db, array(), $wgStatsDB );
 	}
 
