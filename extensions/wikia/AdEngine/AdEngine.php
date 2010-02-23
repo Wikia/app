@@ -30,6 +30,7 @@ class AdEngine {
 		'5' => 'PubMatic',
 		'6' => 'Athena',
 		'7' => 'ContextWeb',
+		'8' => 'DARTMobile',
 		'-1' => 'Null'
 	);
 
@@ -307,6 +308,7 @@ class AdEngine {
 			case 'PubMatic': return AdProviderPubMatic::getInstance();
 			case 'Athena': return AdProviderAthena::getInstance();
 			case 'ContextWeb': return AdProviderContextWeb::getInstance();
+			case 'DARTMobile': return AdProviderDARTMobile::getInstance();
 			default: return new AdProviderNull('Unrecognized provider id', true);
 		}
 	}
