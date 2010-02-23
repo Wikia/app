@@ -18,7 +18,7 @@ class WikiaStatsAutoHubsConsumerDB {
 	 */
 	function __construct($db = DB_MASTER  ) {
 		global $wgExternalStatsDB;
-		$this->dbs = wfGetDB( $db );//, array(), $wgExternalStatsDB );
+		$this->dbs = wfGetDB( $db, array(), $wgStatsDB );
 	}
 
 	 /**
@@ -101,9 +101,7 @@ class WikiaStatsAutoHubsConsumerDB {
 									values  ( " . implode(",",$inster_array) . ") 		
 					ON DUPLICATE KEY UPDATE `tu_count` = `tu_count` + 1 ;";
 		
-		if( $user_id != 0 ) {
-			$this->dbs->query($sql);	
-		}
+		$this->dbs->query($sql);
 		
 		$inster_array = array(
   					'ta_city_id' => (int) $city_id,
@@ -371,7 +369,7 @@ class WikiaStatsAutoHubsConsumerDB {
 	 *
 	 */	
 		
-	public function addExludeBlog($tag_id, $city_id, $page_id) {
+	public function addExludeBlog($tag_id, $city_id, $page_id, $lang) {
 		if ($this->addExlude($tag_id, $city_id, $page_id, 0, 'blog')) {
 			$this->loadArticleBlogLimits('blog',true);
 			$this->rebuildMemc($tag_id, $lang, 'blog', true);
