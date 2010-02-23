@@ -30,7 +30,7 @@ class Outbound extends UnlistedSpecialPage {
 		if(trim($url) == ""){
 			// Nowhere to go.  Display an appropriate explanation (nowhere to go).
 			$wgOut->addWikiText( wfMsg('outbound-screen-already-logged-in-no-link') );
-		} else if(($wgOutboundScreenConfig['anonsOnly'] == true) && $loggedIn) {
+		} else if((($wgOutboundScreenConfig['anonsOnly'] == true) && $loggedIn) || empty($wgEnableOutboundScreenExt)){
 			$wgOut->redirect( htmlspecialchars_decode( $url ) );
 			return true;
 		} else {
