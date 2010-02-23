@@ -350,10 +350,10 @@ class WikiFactoryTags {
 	 *
 	 * @return Integer tag id or false
 	 */
-	static public function idFromName( $id ) {
+	static public function nameFromId( $id ) {
 		$tags = new WikiFactoryTags( 0 );
 		$tags = $tags->getAllTags();
-		return isset( $tags["byid"][ $name ] ) ? $tags["byid"][ $id ] : false;
+		return isset( $tags["byid"][ $id ] ) ? $tags["byid"][ $id ] : false;
 	}
 
 	/**
@@ -364,7 +364,7 @@ class WikiFactoryTags {
 	 *
 	 * @return string tag name or false
 	 */
-	static public function nameFromId( $name ) {
+	static public function idFromName( $name ) {
 		$tags = new WikiFactoryTags( 0 );
 		$tags = $tags->getAllTags();
 		return isset( $tags["byname"][ $name ] ) ? $tags["byname"][ $name ] : false;
