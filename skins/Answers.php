@@ -20,7 +20,10 @@ if( !defined( 'MEDIAWIKI' ) )
 
 require dirname(__FILE__) . '/Monaco.php';
 
-/* HACK: temporary include of "new" skin for answers that it is based on Monaco */
+/**
+ * HACK: temporary include of "new" skin for answers that it is based on Monaco
+ * @see $IP/includes/wikia/DefaultSettings.php for $IPA
+ */
 global $wgUseNewAnswersSkin, $IPA;
 if (!empty($wgUseNewAnswersSkin)){
 	require "$IPA/AnswersNewSkin.php";
