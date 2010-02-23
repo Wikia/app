@@ -34,11 +34,14 @@
        background:transparent url(http://images1.wikia.nocookie.net/test123/images/d/d7/Sprite.png?20091113)
 }
 
-
 .activityfeed img.sprite {
 	display: none;
 /*	background:transparent url(http://images1.wikia.nocookie.net/test123/images/d/d7/Sprite.png?20091113)
 */
+}
+
+#contentSub {
+	margin:0 0 -3px;
 }
 
 
@@ -48,9 +51,10 @@
        font-size: 9pt;
        color: #555;
        font-family:"Helvetica Neue",Helvetica,Arial,default;
-       margin: 8px 8px 0px 8px;
+       margin: 8px 8px 5px 8px;
        background-color:#EAF1FB;
        -moz-border-radius:10px 10px 10px 10px;
+       -webkit-border-radius:10px 10px 10px 10px;       
        display: inline-block;
 }
 
@@ -62,6 +66,7 @@
 #wikia_page {
 	border:none;
 	-moz-border-radius:10px 10px 10px 10px;
+	-webkit-border-radius:10px 10px 10px 10px;
 	font-family:"Helvetica Neue",Helvetica,Arial,default;
 	margin-top:4px;
 }
@@ -146,7 +151,7 @@ body.mainpage .firstHeading { display:none; }
 #wikia_corporate_footer { color:#888; }
 #wikia_corporate_footer a { color:#888; }
 #wikia_header { border-bottom: none; }
-#wikiaBranding { padding-top:22px; }
+#wikiaBranding { padding-top:4px; }
 
 /* Create a wiki link */
 #request_wiki {
@@ -165,6 +170,7 @@ body.mainpage .firstHeading { display:none; }
        font-style:normal;
        letter-spacing:-0.3px;
        padding-top:8px;
+       display:none;
 }
 
 /* ask box */
@@ -175,6 +181,8 @@ body.mainpage .firstHeading { display:none; }
 	width:620px;
 	border:3px solid #E0EAF8;
 	font-family:"Helvetica Neue",Helvetica,Arial,default;
+	-moz-border-radius:10px 10px 10px 10px;
+	-webkit-border-radius:10px 10px 10px 10px;
 }
 
 #answers_ask, #tabAsk, #tabSearch {
@@ -184,10 +192,10 @@ body.mainpage .firstHeading { display:none; }
 
 #answers_ask_heading {
 	color:#7BA7E1;
-	font-size:13pt;
-	font-weight:bold;
-	letter-spacing:-0.5px;
-	margin-bottom:10px;
+	font-size:11pt;
+	margin-bottom:2px;
+	padding-left:2px;
+	font-style: italic;
 }
 
 #ask_wrapper {
@@ -221,6 +229,7 @@ body.mainpage .firstHeading { display:none; }
 	border-bottom:2px solid #E0EAF8;
 	border-top:none;
 	-moz-border-radius:0px 0px 10px 10px;
+	-webkit-border-radius:0px 0px 10px 10px;
 	margin-top: 0px;
 	padding:0 5px 10px;
 	margin-bottom:30px;
@@ -230,29 +239,45 @@ body.mainpage .firstHeading { display:none; }
 #mw-normal-catlinks {
     padding-bottom:3px;
     color: #ccc;
+    padding-left:7px;
 }
 
 #mw-normal-catlinks span a:link {
-    background: #fff;
+    background: #EAF1FB;
     padding: 2px;
 }
 
 #mw-normal-catlinks span a:visited {
-    background: #fff;
+    background: #EAF1FB;
     padding: 2px;
 }
 
 #mw-normal-catlinks span a:hover {
-    background: #A1A4F7;
-    padding: 2px;
+    background: #6094DB;
+    padding: 0px;
     text-decoration:none;
     color: #fff;
+    padding: 2px;
 }
 
+/* using !important because of the inline styling */
 #csAddCategorySwitch a {
 /*    font-weight: bold !important; */
-    color: #555 !important;
+    color: #fff !important;
+    background: #BAD0EF !important;
+    -moz-border-radius: 3px 3px 3px 3px;
+    -webkit-border-radius: 3px 3px 3px 3px;
 }
+
+#csAddCategorySwitch {
+    background: #BAD0EF !important;
+    border: none !important;
+    -moz-border-radius: 3px 3px 3px 3px;
+    -webkit-border-radius: 3px 3px 3px 3px;
+    line-height:16px !important;
+    padding:0 0 0 4px !important;
+}
+
 
 /* article setup */
 .answers-article-left {
@@ -269,6 +294,7 @@ body.mainpage .firstHeading { display:none; }
 	margin-top:10px;
 	padding:10px;
 	-moz-border-radius:10px 10px 10px 10px;
+	-webkit-border-radius:10px 10px 10px 10px;
 }
 
 .answers-tips h3 {
@@ -307,6 +333,7 @@ body.mainpage .firstHeading { display:none; }
 	border-left:2px solid #E0EAF8;
 	border-right:2px solid #E0EAF8;
 	-moz-border-radius:10px 10px 0px 0px;
+	-webkit-border-radius:10px 10px 0px 0px;
 }
 
 #category_level {
@@ -318,6 +345,7 @@ body.mainpage .firstHeading { display:none; }
 	background-color: #E0EAF8;
 /*	border-top: 3px solid #A1A4F7; */
 	-moz-border-radius:10px 10px 10px 10px;
+	-webkit-border-radius:10px 10px 10px 10px;
 	margin-bottom: 20px;
 }
 
@@ -342,7 +370,6 @@ body.mainpage .firstHeading { display:none; }
 
 #answer_edit_link, #question_edit_link {
 	float: right;
-	font-size: 90%;
 }
 
 #answer_edit_link a:link, #question_edit_link a:link { color:#bbb; }
@@ -435,6 +462,7 @@ body.mainpage .firstHeading { display:none; }
 #answers_article .ui-corner-all,
 #answers_article .ui-corner-top {
 	-moz-border-radius: 0px;
+	-webkit-border-radius: 0px;
 }
 
 #answers_article .ui-tabs {
@@ -480,6 +508,7 @@ body.mainpage .firstHeading { display:none; }
 #related_questions {
 	padding: 10px;
 	-moz-border-radius: 10px 10px 10px 10px;
+	-webkit-border-radius:10px 10px 10px 10px;
 }
 
 #related_questions h2 {
@@ -496,10 +525,8 @@ body.mainpage .firstHeading { display:none; }
 /* === ARTICLE COMMENTS === */
 
 .dark_text_1 {
-	color:firebrick;
 	font-size:15pt;
 	font-weight:bold;
-	letter-spacing:-1px;
 }
 
 #article-comments-wrapper {
@@ -540,11 +567,13 @@ div.article-comm-input-text textarea {
 
 .WidgetCommunity li strong {
 	text-align: left;
+	font-size: 9pt;
 }
 
 /* No real idea why this needs to be 1px, but WTH */
 .WidgetCommunity .widgetfeed {
 	margin-left: 1px;
+	margin-right: 10px;
 }
 
 #sidebar_1 {
@@ -567,11 +596,14 @@ div.article-comm-input-text textarea {
 
 .WidgetCommunity .community_header {
 	border: none;
+	text-align: left;
+	padding:0 0 20px;
 }
 
 .widget dt {
        font-family:"Helvetica Neue",Helvetica,Arial,default;
        text-align: left;
+       display: none;
 }
 
 .neutral {
@@ -580,18 +612,13 @@ div.article-comm-input-text textarea {
 
 .WidgetCommunity .widgetfeed li {
     margin-bottom:12px;
-    font-size: 90%;
+    font-size: 8pt;
     color: #aaa;
 }
 
 .activity-ns-0 a:link { color:#888; }
 .activity-ns-0 a:visited { color:#888; }
 .activity-ns-0 a:hover { color:#369; text-decoration:none }
-
-.activity-ns-0 a{
-    font-size: 90%;
-}
-
 
 /* === ATTRIBUTION === */
 
@@ -749,6 +776,7 @@ div.userInfoNoAvatar .userPoints {
 /*	clear:both; */
 	margin-top:10px;
 	position:relative;
+	padding:8px;
 }
 .google-ad-unit small a { /* Ads By Google link */
 	font-size:11px;
@@ -794,4 +822,9 @@ div.userInfoNoAvatar .userPoints {
 	text-align: center;
 }
 
+/* === EDITING SCREEN === */
 
+#editingTips {
+	-moz-border-radius: 10px 10px 10px 10px;
+	-webkit-border-radius: 10px 10px 10px 10px;
+}
