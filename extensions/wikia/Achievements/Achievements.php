@@ -5,23 +5,192 @@ define('ACHIEVEMENT_IMAGE_ADDED_TO_ARTICLE', 3);
 define('ACHIEVEMENT_VIDEO_ADDED_TO_ARTICLE', 4);
 define('ACHIEVEMENT_CATEGORY_ADDED_TO_ARTICLE', 5);
 
+define('ACHIEVEMENT_EDIT_MY_USERPAGE', 6);
+define('ACHIEVEMENT_EDIT_SOMEONE_USERPAGE', 7);
+define('ACHIEVEMENT_EDIT_FOR_5_DAYS', 8);
+define('ACHIEVEMENT_EDIT_10_ARTICLES', 9);
+
+// i18n
+$wgExtensionMessagesFiles['Achievements'] = dirname(__FILE__) . '/' . 'Achievements.i18n.php';
+
 $wgExtensionFunctions[] = 'Achievements_Setup';
 
 /**
  * @author: Inez Korczyński
  */
 function Achievements_Setup() {
-  global $wgHooks, $achievementTypeLevels;
+  global $wgHooks, $achievementTypes;
   $wgHooks['ArticleSaveComplete'][] = 'Achievements_ArticleSaveComplete';
+  $wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'Achievements_Display';
 
-  $achievementTypeLevels = array();
+  $achievementTypes = array();
 
   // be very careful with this array editing
-  $achievementTypeLevels[ACHIEVEMENT_EDIT_ARTICLE] =				array(1, 5, 10, 25, 50, 100, 200);
-  $achievementTypeLevels[ACHIEVEMENT_NEW_ARTICLE] =					array(1, 5, 10, 20, 40);
-  $achievementTypeLevels[ACHIEVEMENT_IMAGE_ADDED_TO_ARTICLE] =		array(1, 5, 10, 20, 40);
-  $achievementTypeLevels[ACHIEVEMENT_VIDEO_ADDED_TO_ARTICLE] =		array(1, 5, 10, 20, 40);
-  $achievementTypeLevels[ACHIEVEMENT_CATEGORY_ADDED_TO_ARTICLE] =	array(1, 5, 10, 20, 40);
+  $achievementTypes[ACHIEVEMENT_EDIT_ARTICLE] = array(
+  	'name' => 'edits',
+  	'type' => 'repeat',
+  	'levels' => array(1, 5, 10, 25, 50, 100, 200)
+  );
+  $achievementTypes[ACHIEVEMENT_IMAGE_ADDED_TO_ARTICLE] = array(
+  	'name' => 'pictures',
+  	'type' => 'repeat',
+  	'levels' => array(1, 5, 10, 20, 40)
+  );
+  $achievementTypes[ACHIEVEMENT_NEW_ARTICLE] = array(
+  	'name' => 'newpage',
+  	'type' => 'repeat',
+  	'levels' => array(1, 5, 10, 20, 40)
+  );
+  $achievementTypes[ACHIEVEMENT_CATEGORY_ADDED_TO_ARTICLE] = array(
+  	'name' => 'category',
+  	'type' => 'repeat',
+  	'levels' => array(1, 5, 10, 20, 40)
+  );
+  $achievementTypes[ACHIEVEMENT_VIDEO_ADDED_TO_ARTICLE] = array(
+  	'name' => 'videos',
+  	'type' => 'repeat',
+  	'levels' => array(1, 5, 10, 20, 40)
+  );
+
+  $achievementTypes[ACHIEVEMENT_EDIT_MY_USERPAGE] = array('name' => 'userpage', 'type' => 'onetime');
+  $achievementTypes[ACHIEVEMENT_EDIT_SOMEONE_USERPAGE] = array('name' => 'makingfriends', 'type' => 'onetime');
+  $achievementTypes[ACHIEVEMENT_EDIT_10_ARTICLES] = array('name' => 'busyday', 'type' => 'onetime');
+  $achievementTypes[ACHIEVEMENT_EDIT_FOR_5_DAYS] = array('name' => 'keytothewiki', 'type' => 'onetime');
+}
+
+/**
+ * @author: Inez Korczyński
+ */
+function Achievements_Display(&$template, &$templateEngine) {
+	global $wgTitle, $achievementTypes, $wgExtensionsPath;
+
+	wfLoadExtensionMessages('Achievements');
+
+	if(empty($wgTitle) || $wgTitle->getNamespace() != NS_USER) {
+		return true;
+	}
+
+	$user = User::newFromName($wgTitle->getText());
+
+	if(empty($user) || !$user->isLoggedIn()) {
+		return true;
+	}
+
+	$userBadges = Achievements_GetUserTopBadges($user->getID());
+	$userCounters = Achievements_GetUserCounters($user->getID());
+
+	$badgesDisplay = '';
+
+	foreach($achievementTypes as $achievementTypeId => $achievement) {
+		$text = '<big><b>'.wfMsg('achievement-'.$achievement['name'].'-name').'</b></big>';
+
+		if(!isset($userBadges[$achievementTypeId])) {
+			$src = $wgExtensionsPath . '/wikia/Achievements/Images/'.$achievement['name'].'/'.$achievement['name'].'-bw.jpg';
+			$text .= wfMsg('achievement-'.$achievement['name'].'-info');
+		} else {
+			$src = $wgExtensionsPath . '/wikia/Achievements/Images/'.$achievement['name'].'/'.$achievement['name'].($userBadges[$achievementTypeId] > 4 ? 'x' : $userBadges[$achievementTypeId] + 1).'.jpg';
+			$text .= '<strong>' . wfMsg('achievement-level', $userBadges[$achievementTypeId] + 1) . '</strong>';
+			$text .= wfMsg('achievement-'.$achievement['name'].'-summary', $userCounters[$achievementTypeId]);
+
+			if(isset($achievement['levels'][$userBadges[$achievementTypeId] + 1])) {
+				$next = $achievement['levels'][$userBadges[$achievementTypeId] + 1];
+			} else {
+				$valuesNo = count($achievement['levels']);
+				$maxValue = $achievement['levels'][$valuesNo-1];
+				$secondMaxValue = $achievement['levels'][$valuesNo-2];
+				$diff = $maxValue - $secondMaxValue;
+				$next = $diff * ($userBadges[$achievementTypeId] + 2);
+			}
+
+			$text .= '<em>'.wfMsg('achievement-'.$achievement['name'].'-next', $next).'</em>';
+		}
+
+		$badgesDisplay .= <<<EOT
+		<div>
+			<img width="150" height="150" src="{$src}">
+			<span>{$text}</span>
+		</div>
+EOT;
+	}
+
+	$achievementsDisplay = <<<EOT
+<style>
+#achievements-info {
+	float: right;
+	width: 200px;
+	line-height: 3.5em;
+	text-align: center;
+	padding-top: 7px;
+}
+#achievements-badges {
+	margin-right: 210px;
+}
+#achievements-badges div {
+	display: inline-block;
+	width: 170px;
+	text-align: center;
+	vertical-align: top;
+	margin-right: 20px;
+}
+#achievements-badges span {
+	display: block;
+	margin-top: 10px;
+	margin-bottom: 25px;
+}
+#achievements-badges big,
+#achievements-badges strong,
+#achievements-badges em {
+	display: block;
+}
+</style>
+
+<div id="achievements" class="clearfix">
+	<div id="achievements-info"><span style="font-size: 15pt; font-weight: bold; margin-right: 3px;">Danny</span> has earned <br/> <span style="font-size: 45pt; font-weight: bold; color: green;">10</span> badges</div>
+	<div id="achievements-badges">$badgesDisplay</div>
+</div>
+EOT;
+
+	$templateEngine->data['bodytext'] = $achievementsDisplay . $templateEngine->data['bodytext'];
+
+	return true;
+}
+
+/**
+ * @author: Inez Korczyński
+ */
+function Achievements_GetUserCounters($userId) {
+	$userCounters = array();
+	$dbr = wfGetDB(DB_MASTER);
+
+	$res = $dbr->select('achievements_counters',
+						array('achievement_type_id', 'counter'),
+			            array('user_id' => $userId),
+			            'Achievements_GetUserCounters');
+
+	while($row = $dbr->fetchObject($res)) {
+		$userCounters[$row->achievement_type_id] = $row->counter;
+	}
+
+	return $userCounters;
+}
+
+/**
+ * @author: Inez Korczyński
+ */
+function Achievements_GetUserTopBadges($userId) {
+	$userBadges = array();
+	$dbr = wfGetDB(DB_MASTER);
+
+	$res = $dbr->select('achievements_badges',
+						array('achievement_type_id', 'MAX(level) as level'),
+			            array('user_id' => $userId),
+			            'Achievements_Display');
+
+	while($row = $dbr->fetchObject($res)) {
+		$userBadges[$row->achievement_type_id] = $row->level;
+	}
+
+	return $userBadges;
 }
 
 /**
@@ -91,17 +260,17 @@ function Achievements_ArticleSaveComplete(&$article, &$user, $text, $summary, &$
  * @author: Inez Korczyński
  */
 function Achievements_AddBadgesIfNeeded($userId, $counters /* achievementTypeId => counter */) {
-  global $achievementTypeLevels;
+  global $achievementTypes;
 
   $rows = array();
 
   foreach($counters as $achievementTypeId => $counter) {
-    $level = array_search($counter, $achievementTypeLevels[$achievementTypeId]);
+    $level = array_search($counter, $achievementTypes[$achievementTypeId]['levels']);
 
-    if(!$level) {
-      $valuesNo = count($achievementTypeLevels[$achievementTypeId]);
-      $maxValue = $achievementTypeLevels[$achievementTypeId][$valuesNo-1];
-      $secondMaxValue = $achievementTypeLevels[$achievementTypeId][$valuesNo-2];
+    if($level === false) {
+      $valuesNo = count($achievementTypes[$achievementTypeId]['levels']);
+      $maxValue = $achievementTypes[$achievementTypeId]['levels'][$valuesNo-1];
+      $secondMaxValue = $achievementTypes[$achievementTypeId]['levels'][$valuesNo-2];
       if($counter > $maxValue) {
         $diff = $maxValue - $secondMaxValue;
         if($counter % $diff == 0) {
@@ -110,15 +279,15 @@ function Achievements_AddBadgesIfNeeded($userId, $counters /* achievementTypeId 
       }
     }
 
-    if($level) {
+    if($level !== false) {
 	    $rows[] = array('user_id' => $userId,
-	            'achievement_type_id' => $achievementTypeId,
-	            'level' => $level);
+			            'achievement_type_id' => $achievementTypeId,
+			            'level' => $level);
     }
   }
 
   $dbw = wfGetDB(DB_MASTER);
-  $dbw->insert('achievements_badges', $rows, 'Achievements_AddBadgesIfNeeded');
+  $o = $dbw->insert('achievements_badges', $rows, 'Achievements_AddBadgesIfNeeded');
 }
 
 /**
@@ -130,10 +299,10 @@ function Achievements_GetCurrentCounters($userId, $achievementTypeIds) {
   // this query is intentionally perform at master database because it uses SELECT .. FOR UPDATE,
   // which sets the locks on selected rows for later update
   $res = $dbw->select('achievements_counters',
-            array('achievement_type_id', 'counter'),
-            array('user_id' => $userId, 'achievement_type_id IN ('.join(',', $achievementTypeIds).')'),
-            'Achievements_GetCounters',
-            array('FOR UPDATE'));
+			            array('achievement_type_id', 'counter'),
+			            array('user_id' => $userId, 'achievement_type_id IN ('.join(',', $achievementTypeIds).')'),
+			            'Achievements_GetCounters',
+			            array('FOR UPDATE'));
 
   $counters = array_fill_keys($achievementTypeIds, 0);
 
@@ -154,8 +323,8 @@ function Achievements_UpdateCounters($userId, $newCounters /* achievementTypeId 
   // prepare query data for sql replace statement
   foreach($newCounters as $achievementTypeId => $counter) {
     $rows[] = array('user_id' => $userId,
-            'achievement_type_id' => $achievementTypeId,
-            'counter' => $counter);
+		            'achievement_type_id' => $achievementTypeId,
+		            'counter' => $counter);
   }
 
   $dbw = wfGetDB(DB_MASTER);
