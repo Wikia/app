@@ -142,6 +142,7 @@ class WikiFactoryTags {
 			$sth = $dbr->select(
 				array( "city_tag"  ),
 				array( "id", "name" ),
+				false,
 				__METHOD__
 			);
 			while( $row = $dbr->fetchObject( $sth ) ) {
