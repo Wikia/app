@@ -11,7 +11,8 @@ $messages = array();
 $messages['en'] = array(
 	"autocreatewiki" => "Create a new wiki",
 	"autocreatewiki-desc" => "Create wiki in WikiFactory by user requests",
-	"createwikipagetitle" => "Create a new wiki",
+	"autocreatewiki-page-title-default" => "Create a new wiki",
+	"autocreatewiki-page-title-answers" => "Create a new Q&A site",
 	"createwiki"=> "Create a new wiki",
 	"autocreatewiki-chooseone" => "Choose one",
 	"autocreatewiki-required" => "$1 = required",
@@ -63,7 +64,7 @@ $messages['en'] = array(
 	"autocreatewiki-empty-username" => "Username cannot be empty.",
 	"autocreatewiki-empty-password" => "Password cannot be empty.",
 	"autocreatewiki-empty-retype-password" => "Retype password cannot be empty.",
-	"autocreatewiki-category-other" => "Other",	
+	"autocreatewiki-category-other" => "Other",
 	"autocreatewiki-set-username" => "Set username first.",
 	"autocreatewiki-invalid-category" => "Invalid value of category.
 Please select proper from dropdown list.",
@@ -172,7 +173,7 @@ $messages['qqq'] = array(
  */
 $messages['af'] = array(
 	'autocreatewiki' => "Skep 'n nuwe Wiki",
-	'createwikipagetitle' => "Skep 'n nuwe Wiki",
+	'autocreatewiki-page-title-default' => "Skep 'n nuwe Wiki",
 	'createwiki' => "Skep 'n nuwe Wiki",
 	'autocreatewiki-chooseone' => 'Kies een',
 	'autocreatewiki-required' => '$1 = word vereis',
@@ -217,7 +218,7 @@ $messages['af'] = array(
  */
 $messages['bg'] = array(
 	'autocreatewiki' => 'Създаване на ново уики',
-	'createwikipagetitle' => 'Заявка за ново уики',
+	'autocreatewiki-page-title-default' => 'Заявка за ново уики',
 	'createwiki' => 'Създаване на уики',
 	'autocreatewiki-web-address' => 'Уеб адрес:',
 	'autocreatewiki-language-all' => 'Всички езици',
@@ -245,7 +246,7 @@ $messages['bg'] = array(
 $messages['br'] = array(
 	'autocreatewiki' => 'Krouiñ ur Wiki nevez.',
 	'autocreatewiki-desc' => 'Krouiñ ur wiki er WikiFactory dre rekedoù implijerien',
-	'createwikipagetitle' => 'Krouiñ ur wiki nevez',
+	'autocreatewiki-page-title-default' => 'Krouiñ ur wiki nevez',
 	'createwiki' => 'Krouiñ ur Wiki nevez',
 	'autocreatewiki-chooseone' => 'Dibab unan',
 	'autocreatewiki-required' => '$1 = dre ret',
@@ -349,7 +350,7 @@ Skipailh Kumuniezh Wikia
 /** German (Deutsch) */
 $messages['de'] = array(
 	'autocreatewiki' => 'Erstelle ein neues Wiki',
-	'createwikipagetitle' => 'Erstelle ein neues Wiki',
+	'autocreatewiki-page-title-default' => 'Erstelle ein neues Wiki',
 	'createwiki' => 'Neues Wiki erstellen',
 	'autocreatewiki-chooseone' => 'Bitte wählen',
 	'autocreatewiki-required' => '$1 = notwendige Angabe',
@@ -469,7 +470,7 @@ Viel Erfolg, [[User:Avatar|Tim 'avatar' Bartel]] <staff /></div>",
 $messages['el'] = array(
 	'autocreatewiki' => 'Δημιουργήστε έναν νέο ιστότοπο τύπου Wiki',
 	'autocreatewiki-desc' => 'Δημιουργήστε έναν ιστότοπο τύπου wiki στο WikiFactory από αιτήματα χρηστών',
-	'createwikipagetitle' => 'Δημιουργήστε έναν καινούργιο ιστότοπο τύπου Wiki',
+	'autocreatewiki-page-title-default' => 'Δημιουργήστε έναν καινούργιο ιστότοπο τύπου Wiki',
 	'createwiki' => 'Δημιουργήστε έναν ιστότοπο τύπου Wiki',
 	'autocreatewiki-chooseone' => 'Διαλέξτε ένα',
 	'autocreatewiki-required' => '$ 1 = απαιτείται',
@@ -509,7 +510,7 @@ $messages['el'] = array(
 $messages['es'] = array(
 	'autocreatewiki' => 'Crear nuevo Wiki',
 	'autocreatewiki-desc' => 'Crear un wiki en WikiFactory a petición de un usuario',
-	'createwikipagetitle' => 'Crear un nuevo wiki',
+	'autocreatewiki-page-title-default' => 'Crear un nuevo wiki',
 	'createwiki' => 'Solicita un nuevo wiki',
 	'autocreatewiki-chooseone' => 'Elije una',
 	'autocreatewiki-required' => '$1 = requerido',
@@ -644,7 +645,7 @@ Esto es un nuevo proyecto de wiki, así que por favor, ¡escríbenos si tienes c
 /** Persian (فارسی) */
 $messages['fa'] = array(
 	'autocreatewiki' => 'ایجاد ویکی جدید',
-	'createwikipagetitle' => 'ایجاد ویکی جدید',
+	'autocreatewiki-page-title-default' => 'ایجاد ویکی جدید',
 	'createwiki' => 'ایجاد ویکی جدید',
 	'autocreatewiki-chooseone' => 'یکی را انتخاب کنید',
 	'autocreatewiki-web-address' => 'نشانی اینترنتی:',
@@ -717,7 +718,7 @@ $3
  */
 $messages['fi'] = array(
 	'autocreatewiki' => 'Luo uusi wiki',
-	'createwikipagetitle' => 'Luo uusi wiki',
+	'autocreatewiki-page-title-default' => 'Luo uusi wiki',
 	'createwiki' => 'Luo uusi wiki',
 	'autocreatewiki-chooseone' => 'Valitse yksi',
 	'autocreatewiki-required' => '$1 = vaadittu',
@@ -756,7 +757,7 @@ $messages['fi'] = array(
 $messages['fr'] = array(
 	'autocreatewiki' => 'Créer un nouveau Wiki',
 	'autocreatewiki-desc' => 'Crée un wiki dans WikiFactory par des requêtes des utilisateurs',
-	'createwikipagetitle' => 'Créer un wiki',
+	'autocreatewiki-page-title-default' => 'Créer un wiki',
 	'createwiki' => 'Créer un wiki',
 	'autocreatewiki-chooseone' => 'Choisissez-un un',
 	'autocreatewiki-required' => '$1 = obligatoire',
@@ -861,7 +862,7 @@ Maintenant vous avez un site web qu'il faudra remplir avec des informations, des
 
 Et ensuite continuez ! Les gens aiment aller sur des wikis où il y a beaucoup de choses à lire, donc continuez à ajouter du contenu pour attirer les lecteurs et les éditeurs. Il y a beaucoup à faire mais ne vos en faîtes pas -- aujourd'hui est le premier jour, et vous avez beaucoup de temps. Tous les wikis ont bien commencé un jour -- juste un peu de temps pour débuter quelques pages, jusqu'à ce qu'il devienne un grand site
 
-Si vous avez des questions, vous pouvez nous écrire par cette page [[Special:Contact]]. Nous vous souhaitons bien du plaisir ! 
+Si vous avez des questions, vous pouvez nous écrire par cette page [[Special:Contact]]. Nous vous souhaitons bien du plaisir !
 
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Nouveaux wikis',
@@ -892,7 +893,7 @@ Ceci est un tout nouveau projet, veuillez nous écrire si avec une quelconque qu
 $messages['gl'] = array(
 	'autocreatewiki' => 'Crear un novo wiki',
 	'autocreatewiki-desc' => 'Crea un wiki en WikiFactory mediante a solicitude dun usuario',
-	'createwikipagetitle' => 'Crear un novo wiki',
+	'autocreatewiki-page-title-default' => 'Crear un novo wiki',
 	'createwiki' => 'Crear un novo wiki',
 	'autocreatewiki-chooseone' => 'Escolla un',
 	'autocreatewiki-required' => '$1 = obrigatorio',
@@ -1032,7 +1033,7 @@ Este é un proxecto completamente novo, así que escríbanos se ten algunha dúb
 $messages['he'] = array(
 	'autocreatewiki' => 'צור אתר וויקי חדש',
 	'autocreatewiki-desc' => 'צור אתר ווקי במפעל הווקי עם הגדרות משתמש',
-	'createwikipagetitle' => 'צור אתר וויקי חדש',
+	'autocreatewiki-page-title-default' => 'צור אתר וויקי חדש',
 	'createwiki' => 'צור אתר וויקי חדש',
 	'autocreatewiki-chooseone' => 'בחר אחד',
 	'autocreatewiki-required' => '1$ = חובה',
@@ -1068,7 +1069,7 @@ $messages['he'] = array(
 $messages['hu'] = array(
 	'autocreatewiki' => 'Új wiki létrehozása',
 	'autocreatewiki-desc' => 'Új wiki létrehozása a Wikigyárban a felhasználói kérések alapján',
-	'createwikipagetitle' => 'Új wiki létrehozása',
+	'autocreatewiki-page-title-default' => 'Új wiki létrehozása',
 	'createwiki' => 'Új wiki létrehozása',
 	'autocreatewiki-chooseone' => 'Válassz egyet',
 	'autocreatewiki-required' => '$1 = kötelező',
@@ -1101,7 +1102,7 @@ $messages['hu'] = array(
 $messages['ia'] = array(
 	'autocreatewiki' => 'Crear un nove wiki',
 	'autocreatewiki-desc' => 'Crear wiki in WikiFactory per requestas de usatores',
-	'createwikipagetitle' => 'Crear un nove wiki',
+	'autocreatewiki-page-title-default' => 'Crear un nove wiki',
 	'createwiki' => 'Crear un nove wiki',
 	'autocreatewiki-chooseone' => 'Selige un',
 	'autocreatewiki-required' => '$1 = requirite',
@@ -1236,7 +1237,7 @@ Isto es un projecto totalmente nove, dunque per favor scribe nos si tu ha alcun 
 /** Italian (Italiano) */
 $messages['it'] = array(
 	'autocreatewiki' => 'Crea un nuova wiki',
-	'createwikipagetitle' => 'Crea un nuova wiki',
+	'autocreatewiki-page-title-default' => 'Crea un nuova wiki',
 	'autocreatewiki-protect-reason' => "parte dell'interfaccia ufficiale",
 	'autocreatewiki-welcomebody' => 'Ciao $2,
 
@@ -1276,7 +1277,7 @@ Buona fortuna, [[User:\$2|\$3]] <staff />",
 $messages['ja'] = array(
 	'autocreatewiki' => '新しいWikiを作成する',
 	'autocreatewiki-desc' => '利用者からのリクエストによりWikiFactoryでウィキを作成する',
-	'createwikipagetitle' => '新しいウィキのお申し込みはこちら!',
+	'autocreatewiki-page-title-default' => '新しいウィキのお申し込みはこちら!',
 	'createwiki' => '新しいウィキのお申し込みはこちら!',
 	'autocreatewiki-chooseone' => '一つを選ぶ',
 	'autocreatewiki-required' => '$1 = 必須',
@@ -1398,7 +1399,7 @@ $3
 $messages['mk'] = array(
 	'autocreatewiki' => 'Создај ново вики',
 	'autocreatewiki-desc' => 'Создавање на вики во ВикиФабрика по барања на корисници',
-	'createwikipagetitle' => 'Создај ново вики',
+	'autocreatewiki-page-title-default' => 'Создај ново вики',
 	'createwiki' => 'Создај ново вики',
 	'autocreatewiki-chooseone' => 'Изберете',
 	'autocreatewiki-required' => '$1 = задолжително',
@@ -1538,7 +1539,7 @@ $3
 $messages['nl'] = array(
 	'autocreatewiki' => 'Begin een nieuwe wiki',
 	'autocreatewiki-desc' => 'Wiki aanmaken in WikiFactory door gebruikersverzoeken',
-	'createwikipagetitle' => 'Nieuwe wiki aanmaken',
+	'autocreatewiki-page-title-default' => 'Nieuwe wiki aanmaken',
 	'createwiki' => 'Nieuwe wiki aanmaken',
 	'autocreatewiki-chooseone' => 'Kies er een',
 	'autocreatewiki-required' => '$1 = vereist',
@@ -1682,7 +1683,7 @@ Dit is een volledig nieuw project, dus laat het ons weten als u met vragen zit.
 $messages['no'] = array(
 	'autocreatewiki' => 'Opprett en ny Wiki',
 	'autocreatewiki-desc' => 'Opprett wiki i WikiFactory etter forespørsel fra bruker',
-	'createwikipagetitle' => 'Opprett en ny Wiki',
+	'autocreatewiki-page-title-default' => 'Opprett en ny Wiki',
 	'createwiki' => 'Opprett en ny Wiki',
 	'autocreatewiki-chooseone' => 'Velg en',
 	'autocreatewiki-required' => '$1 = påkrevd',
@@ -1761,16 +1762,16 @@ $3
 Wikia Community Team
 
 <http://www.wikia.com/wiki/User:$4>',
-	'autocreatewiki-welcometalk' => "== Velkommen! == 
-<div style=\"font-size:120%; line-height:1.2em;\">Hei \$1 -- vi er glade over å ha '''\$4''' som en del av Wikia Fellesskapet! 
+	'autocreatewiki-welcometalk' => "== Velkommen! ==
+<div style=\"font-size:120%; line-height:1.2em;\">Hei \$1 -- vi er glade over å ha '''\$4''' som en del av Wikia Fellesskapet!
 
 Nå har du en hel nettside å fylle opp med informasjon, bilder og video om yndlingstemaet ditt. Men akkurat nå er det bare tomme sider som stirrer på deg... Skremmende, eller hva? Her er noen måter å komme i gang på.
 
 * '''Introduser temaet ditt''' på forsiden. Dette er din mulighet til å forklare leserne mer om hva temaet handler om. Skriv så mye du vil! Beskrivelsen din kan lenke til alle slags viktige artikler på siden din.
 
-* '''Opprett noen nye sider''' -- bare en setning eller to er flott i begynnelsen. Ikke la de tomme sidene stirre deg i senk! En wiki handler om å legge til og endre ting som det faller seg. Du kan også legge til bilder og video for å fylle siden og gjøre den mer interessant. 
+* '''Opprett noen nye sider''' -- bare en setning eller to er flott i begynnelsen. Ikke la de tomme sidene stirre deg i senk! En wiki handler om å legge til og endre ting som det faller seg. Du kan også legge til bilder og video for å fylle siden og gjøre den mer interessant.
 
-Så er det bare å fortsette! Folk liker å besøke wikier med en masse å lese og se på, så fortsett å legge til ting, og du vil tiltrekke nye lesere og bidragsytere. Det er en masse å gjøre, men slapp av -- i dag er den første dagen, og du har masser av tid. Hver eneste wiki starter på samme måte -- litt om gangen, fra de første få sidene, til en stor og travel side. 
+Så er det bare å fortsette! Folk liker å besøke wikier med en masse å lese og se på, så fortsett å legge til ting, og du vil tiltrekke nye lesere og bidragsytere. Det er en masse å gjøre, men slapp av -- i dag er den første dagen, og du har masser av tid. Hver eneste wiki starter på samme måte -- litt om gangen, fra de første få sidene, til en stor og travel side.
 
 Hvis du har spørsmål, kan du sende oss en e-post gjennom vårt [[Special:Contact|kontaktskjema]]. Ha det gøy!
 
@@ -1778,19 +1779,19 @@ Hvis du har spørsmål, kan du sende oss en e-post gjennom vårt [[Special:Conta
 	'newwikis' => 'Nye wikier',
 	'newwikisstart' => 'Vis wikier fra og med:',
 	'autocreatewiki-reminder-body' => '
-Kjære $1: 
+Kjære $1:
 
-Gratulerer med oppstart av din nye wiki, {{SITENAME}}! Du kan komme tilbake og legge til mer på wikien ved å besøke $2. 
+Gratulerer med oppstart av din nye wiki, {{SITENAME}}! Du kan komme tilbake og legge til mer på wikien ved å besøke $2.
 
-Dette er et helt nytt prosjekt, så vennligst skriv til oss om du har noen spørsmål! 
+Dette er et helt nytt prosjekt, så vennligst skriv til oss om du har noen spørsmål!
 
 
 -- Wikia Community Teamet',
 	'autocreatewiki-reminder-body-HTML' => '
-<p>Kjære $1:</p> 
+<p>Kjære $1:</p>
 
-<p>Gratulerer med oppstart av din nye wiki, {{SITENAME}}! Du kan komme tilbake og legge til mer på wikien ved å besøke 
-<a href="$2">$2</a>.</p> 
+<p>Gratulerer med oppstart av din nye wiki, {{SITENAME}}! Du kan komme tilbake og legge til mer på wikien ved å besøke
+<a href="$2">$2</a>.</p>
 
 <p>Dette er et helt nytt prosjekt, så vennligst skriv til oss om du har spørsmål!</p>
 
@@ -1799,7 +1800,7 @@ Dette er et helt nytt prosjekt, så vennligst skriv til oss om du har noen spør
 
 /** Polish (Polski) */
 $messages['pl'] = array(
-	'createwikipagetitle' => 'Utwórz nową Wikię',
+	'autocreatewiki-page-title-default' => 'Utwórz nową Wikię',
 	'createwiki' => 'Utwórz nową Wikię',
 	'autocreatewiki-welcomebody' => 'Witaj, $2!
 
@@ -1819,7 +1820,7 @@ $3 Wikia Community Team <http://www.wikia.com/wiki/User:$4>',
 $messages['pms'] = array(
 	'autocreatewiki' => 'Crea na neuva Wiki',
 	'autocreatewiki-desc' => 'Crea wiki an WikiFactory për arcesta utent',
-	'createwikipagetitle' => 'Crea na neuva Wiki',
+	'autocreatewiki-page-title-default' => 'Crea na neuva Wiki',
 	'createwiki' => 'Crea na neuva Wiki',
 	'autocreatewiki-chooseone' => 'Sern-ne un-a',
 	'autocreatewiki-required' => '$1 = ciamà',
@@ -1943,7 +1944,7 @@ Cost-sì a l'é un proget neuv, antlora për piasì ch'a na scriva s'a l'ha qual
 -- L'Echip dla Comunità Wikia",
 	'autocreatewiki-reminder-body-HTML' => '<p>Car $1:</p>
 
-<p>Congratulassion për la partensa ëd soa neuva wiki, {{SITENAME}}! A peul torné andré e gionté ròbe a soa wiki an visitand 
+<p>Congratulassion për la partensa ëd soa neuva wiki, {{SITENAME}}! A peul torné andré e gionté ròbe a soa wiki an visitand
 <a href="$2">$2</a>.</p>
 
 <p>Cost-sì a l\'é un proget neuv, antlora për piasì ch\'a na scriva s\'a l\'ha qualsëssìa chestion!</p>
@@ -1957,7 +1958,7 @@ Cost-sì a l'é un proget neuv, antlora për piasì ch'a na scriva s'a l'ha qual
 $messages['pt-br'] = array(
 	'autocreatewiki' => 'Crie uma nova Wiki',
 	'autocreatewiki-desc' => 'Crie uma wiki no WikiFactory a partir de pedidos de usuários',
-	'createwikipagetitle' => 'Crie uma nova Wiki',
+	'autocreatewiki-page-title-default' => 'Crie uma nova Wiki',
 	'createwiki' => 'Crie uma nova Wiki',
 	'autocreatewiki-chooseone' => 'Escolha uma',
 	'autocreatewiki-required' => '$1 = campos obrigatórios',
@@ -2078,7 +2079,7 @@ $messages['roa-tara'] = array(
  */
 $messages['ru'] = array(
 	'autocreatewiki' => 'Создать новую вики',
-	'createwikipagetitle' => 'Создание новой вики',
+	'autocreatewiki-page-title-default' => 'Создание новой вики',
 	'createwiki' => 'Создание новой вики',
 	'autocreatewiki-chooseone' => 'Выберите из списка',
 	'autocreatewiki-required' => '$1 = обязательно',
@@ -2144,7 +2145,7 @@ $messages['te'] = array(
  */
 $messages['uk'] = array(
 	'autocreatewiki' => 'Створити нову Вікі',
-	'createwikipagetitle' => 'Створити нову Вікі',
+	'autocreatewiki-page-title-default' => 'Створити нову Вікі',
 	'createwiki' => 'Створити нову Вікі',
 	'autocreatewiki-chooseone' => 'Виберіть зі списку',
 	'autocreatewiki-required' => "$1 = обов'язково",
@@ -2158,7 +2159,7 @@ $messages['uk'] = array(
 
 /** Chinese (中文) */
 $messages['zh'] = array(
-	'createwikipagetitle' => '申请wiki',
+	'autocreatewiki-page-title-default' => '申请wiki',
 	'createwiki' => '申請Wiki',
 	'autocreatewiki-info-language' => '的預設語文',
 	'autocreatewiki-welcomesubject' => '$1 已建立!',
@@ -2175,37 +2176,36 @@ Wikia 社群團隊',
 
 /** Chinese (China) (‪中文(中国大陆)‬) */
 $messages['zh-cn'] = array(
-	'createwikipagetitle' => '申请wiki',
+	'autocreatewiki-page-title-default' => '申请wiki',
 	'createwiki' => '申请wiki',
 );
 
 /** Simplified Chinese (‪中文(简体)‬) */
 $messages['zh-hans'] = array(
-	'createwikipagetitle' => '申请wiki',
+	'autocreatewiki-page-title-default' => '申请wiki',
 	'createwiki' => '申请wiki',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬) */
 $messages['zh-hant'] = array(
-	'createwikipagetitle' => '申請wiki',
+	'autocreatewiki-page-title-default' => '申請wiki',
 	'createwiki' => '申請wiki',
 );
 
 /** Chinese (Hong Kong) (‪中文(香港)‬) */
 $messages['zh-hk'] = array(
-	'createwikipagetitle' => '申請wiki',
+	'autocreatewiki-page-title-default' => '申請wiki',
 	'createwiki' => '申請wiki',
 );
 
 /** Chinese (Singapore) (‪中文(新加坡)‬) */
 $messages['zh-sg'] = array(
-	'createwikipagetitle' => '申请wiki',
+	'autocreatewiki-page-title-default' => '申请wiki',
 	'createwiki' => '申请wiki',
 );
 
 /** Chinese (Taiwan) (‪中文(台灣)‬) */
 $messages['zh-tw'] = array(
-	'createwikipagetitle' => '申請wiki',
+	'autocreatewiki-page-title-default' => '申請wiki',
 	'createwiki' => '申請wiki',
 );
-

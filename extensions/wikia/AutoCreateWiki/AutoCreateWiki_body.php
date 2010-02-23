@@ -74,7 +74,6 @@ class AutoCreateWikiPage extends SpecialPage {
 		 * starters map:
 		 * "*" is default
 		 * "answers" when $mType = "answers"
-		 *
 		 */
 		$this->mStarters = array(
 			"*" => array(
@@ -109,6 +108,24 @@ class AutoCreateWikiPage extends SpecialPage {
 			? "/usr/bin/mysql" : "/opt/wikia/bin/mysql";
 	}
 
+
+	/**
+	 * set title of page, override default method in parent class
+	 * @access public
+	 *
+	 * @author Krzysztof Krzyżaniak (eloy)
+	 */
+	public function getDescription() {
+		switch( $this->mType ) {
+			case "answers":
+				$key = "autocreatewiki-page-title-answers";
+				break;
+			default:
+				$key = "autocreatewiki-page-title-default";
+		}
+		return wfMsg( $key );
+	}
+
 	/**
 	 * Main entry point
 	 *
@@ -122,6 +139,15 @@ class AutoCreateWikiPage extends SpecialPage {
 
 		wfLoadExtensionMessages( "AutoCreateWiki" );
 
+		$this->mTitle        = Title::makeTitle( NS_SPECIAL, "CreateWiki" );
+		$this->mLang         = $wgRequest->getVal( "uselang", $wgUser->getOption( 'language' ) );
+		$this->mAction       = $wgRequest->getVal( "action", false );
+		$this->mType         = $wgRequest->getVal( "type", false );
+		$this->mSubpage      = $subpage;
+		$this->mPosted       = $wgRequest->wasPosted();
+		$this->mPostedErrors = array();
+		$this->mErrors       = 0;
+
 		$this->setHeaders();
 
 		if ( wfReadOnly() ) {
@@ -134,14 +160,6 @@ class AutoCreateWikiPage extends SpecialPage {
 			return;
 		}
 
-		$this->mTitle   = Title::makeTitle( NS_SPECIAL, "CreateWiki" );
-		$this->mLang    = $wgRequest->getVal( "uselang", $wgUser->getOption( 'language' ) );
-		$this->mAction  = $wgRequest->getVal( "action", false );
-		$this->mType    = $wgRequest->getVal( "type", false );
-		$this->mSubpage = $subpage;
-		$this->mPosted  = $wgRequest->wasPosted();
-		$this->mPostedErrors = array();
-		$this->mErrors  = 0;
 
 		/**
 		 * other AWC version changes, so far answers only
