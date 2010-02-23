@@ -93,20 +93,20 @@ $wgAutoloadClasses[ "WikiFactoryTags"              ] = "{$IP}/extensions/wikia/W
  * registered API methods
  */
 global $wgAPIListModules;
-$wgAPIListModules["wkconfgroups"] = "WikiaApiQueryConfGroups";
-$wgAPIListModules["wkdomains"] = "WikiaApiQueryDomains";
-$wgAPIListModules["wkpoppages"] = "WikiaApiQueryPopularPages";
-$wgAPIListModules["wkvoteart"] = "WikiaApiQueryVoteArticle";
-$wgAPIListModules["wkaccessart"] = "WikiaApiQueryMostAccessPages";
-$wgAPIListModules["wkeditpage"] = "WikiaApiQueryLastEditPages";
-$wgAPIListModules["wkedituser"] = "WikiaApiQueryTopEditUsers";
-$wgAPIListModules["wkmostvisit"] = "WikiaApiQueryMostVisitedPages";
-$wgAPIListModules["wkreferer"] = "WikiaApiQueryReferers";
+$wgAPIListModules[ "wkconfgroups" ] = "WikiaApiQueryConfGroups";
+$wgAPIListModules[ "wkdomains"    ] = "WikiaApiQueryDomains";
+$wgAPIListModules[ "wkpoppages"   ] = "WikiaApiQueryPopularPages";
+$wgAPIListModules[ "wkvoteart"    ] = "WikiaApiQueryVoteArticle";
+$wgAPIListModules[ "wkaccessart"  ] = "WikiaApiQueryMostAccessPages";
+$wgAPIListModules[ "wkeditpage"   ] = "WikiaApiQueryLastEditPages";
+$wgAPIListModules[ "wkedituser"   ] = "WikiaApiQueryTopEditUsers";
+$wgAPIListModules[ "wkmostvisit"  ] = "WikiaApiQueryMostVisitedPages";
+$wgAPIListModules[ "wkreferer"    ] = "WikiaApiQueryReferers";
 
 /**
  * registered API methods
  */
-$wgAPIMetaModules["siteinfo"] = "WikiaApiQuerySiteInfo";
+$wgAPIMetaModules[ "siteinfo"     ] = "WikiaApiQuerySiteInfo";
 
 /**
  * registered Ajax methods
@@ -117,7 +117,7 @@ global $wgAjaxExportList;
  * registered Ajax methods
  */
 global $wgAPIPropModules;
-$wgAPIPropModules["info"] = "WikiaApiQueryPageinfo";
+$wgAPIPropModules[ "info"         ] = "WikiaApiQueryPageinfo";
 
 /**
  * registered Format names
