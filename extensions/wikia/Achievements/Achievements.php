@@ -85,10 +85,10 @@ function Achievements_Display(&$template, &$templateEngine) {
 		$text = '<big><b>'.wfMsg('achievement-'.$achievement['name'].'-name').'</b></big>';
 
 		if(!isset($userBadges[$achievementTypeId])) {
-			$src = $wgExtensionsPath . '/wikia/Achievements/Images/'.$achievement['name'].'/'.$achievement['name'].'-bw.jpg';
+			$src = $wgExtensionsPath . '/wikia/Achievements/images/'.$achievement['name'].'/'.$achievement['name'].'-bw.jpg';
 			$text .= wfMsg('achievement-'.$achievement['name'].'-info');
 		} else {
-			$src = $wgExtensionsPath . '/wikia/Achievements/Images/'.$achievement['name'].'/'.$achievement['name'].($userBadges[$achievementTypeId] > 4 ? 'x' : $userBadges[$achievementTypeId] + 1).'.jpg';
+			$src = $wgExtensionsPath . '/wikia/Achievements/images/'.$achievement['name'].'/'.$achievement['name'].($userBadges[$achievementTypeId] > 4 ? 'x' : $userBadges[$achievementTypeId] + 1).'.jpg';
 			$text .= '<strong>' . wfMsg('achievement-level', $userBadges[$achievementTypeId] + 1) . '</strong>';
 			$text .= wfMsg('achievement-'.$achievement['name'].'-summary', $userCounters[$achievementTypeId]);
 
