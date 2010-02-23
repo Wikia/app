@@ -15,9 +15,10 @@ function Achievements_Setup() {
 
 	$achievementTypeLevels = array();
 
-	$achievementTypeLevels[ACHIEVEMENT_EDIT_ARTICLE] = array(1, 5, 10, 25, 50, 100, 200, 300);
-	$achievementTypeLevels[ACHIEVEMENT_NEW_ARTICLE] = array(1, 5, 10, 20, 30, 40);
-	$achievementTypeLevels[ACHIEVEMENT_IMAGE_ADDED_TO_ARTICLE] = array(1, 5, 10, 20, 30, 40);
+	$achievementTypeLevels[ACHIEVEMENT_EDIT_ARTICLE] =				array(1, 5, 10, 25, 50, 100, 200, 300);
+	$achievementTypeLevels[ACHIEVEMENT_NEW_ARTICLE] =				array(1, 5, 10, 20, 30, 40);
+	$achievementTypeLevels[ACHIEVEMENT_IMAGE_ADDED_TO_ARTICLE] =	array(1, 5, 10, 20, 30, 40);
+	$achievementTypeLevels[ACHIEVEMENT_VIDEO_ADDED_TO_ARTICLE] =	array(1, 5, 10, 20, 30, 40);
 }
 
 /**
