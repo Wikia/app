@@ -40,13 +40,13 @@
 <br/><br/><hr/><br/>
 <span style="font-size: 12pt; font-weight: bold;"><?=$user->getName()?> is the</span>
 <br/>
-<span style="font-size: 45pt; font-weight: bold; color: purple;"><?=$allWiki?></span>
+<span style="font-size: 45pt; font-weight: bold; color: purple;">#<?=$allWiki?></span>
 <br/>
 <span style="font-size: 12pt; font-weight: bold;">all-time wiki member</span>
 <br/>
 <span style="font-size: 12pt; font-weight: bold;">and</span>
 <br/>
-<span style="font-size: 45pt; font-weight: bold; color: purple; display: block; margin-top: 15px; margin-bottom: 5px"><?=$thisWeek?></span>
+<span style="font-size: 45pt; font-weight: bold; color: purple; display: block; margin-top: 15px; margin-bottom: 5px">#<?=$thisWeek?></span>
 <span style="font-size: 12pt; font-weight: bold;">for this week</span>
 <?php
 	}
