@@ -158,7 +158,33 @@ EOT;
 </style>
 
 <div id="achievements" class="clearfix">
-	<div id="achievements-info"><span style="font-size: 15pt; font-weight: bold; margin-right: 3px;">{$username}</span> has earned <br/> <span style="font-size: 45pt; font-weight: bold; color: green;">{$noofbadges}</span> badges</div>
+	<div id="achievements-info">
+		<span style="font-size: 15pt; font-weight: bold; margin-right: 3px;">{$username}</span> has earned <br/> <span style="font-size: 45pt; font-weight: bold; color: green;">{$noofbadges}</span> badges
+		<br/><br/>
+
+		<span style="font-size: 12pt; font-weight: bold;">Inez is the</span>
+
+		<br/>
+
+		<span style="font-size: 45pt; font-weight: bold; color: purple;">#3</span>
+
+		<br/>
+
+		<span style="font-size: 12pt; font-weight: bold;">all-time wiki member</span>
+
+		<br/>
+
+		<span style="font-size: 12pt; font-weight: bold;">and</span>
+
+		<br/>
+
+		<span style="font-size: 45pt; font-weight: bold; color: purple; display: block; margin-top: 15px; margin-bottom: 5px">#4</span>
+
+		<span style="font-size: 12pt; font-weight: bold;">for this week</span>
+
+		<br/><br/>
+		<a href="">123</a>
+	</div>
 	<div id="achievements-badges">$badgesDisplay</div>
 </div>
 EOT;
@@ -247,7 +273,7 @@ function Achievements_ArticleSaveComplete(&$article, &$user, $text, $summary, &$
 
 		if(!isset($userBadges[ACHIEVEMENT_EDIT_10_ARTICLES])) {
 			$dbr = wfGetDB(DB_SLAVE);
-			$res = $dbr->query('SELECT count(distinct(rc_cur_id)) as cnt FROM (SELECT rc_cur_id FROM recentchanges WHERE rc_user_text = '.$dbr->addQuotes($user->getName()).' AND rc_timestamp >= date_sub(now(), interval 24 hour) AND rc_namespace IN ('.join(',', $wgContentNamespaces).') LIMIT 10) AS c;');
+			$res = $dbr->query('SELECT count(distinct(rc_cur_id)) as cnt FROM (SELECT rc_cur_id FROM recentchanges WHERE rc_user_text = '.$dbr->addQuotes($user->getName()).' AND rc_timestamp >= date_sub(now(), interval 24 hour) AND rc_namespace IN ('.join(',', $wgContentNamespaces).') LIMIT 10) as c');
 			if($res->fetchObject()->cnt == 10) {
 				$achievementCountersToIncrease[ACHIEVEMENT_EDIT_10_ARTICLES] = 1;
 			}
