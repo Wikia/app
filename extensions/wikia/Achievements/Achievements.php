@@ -83,8 +83,22 @@ function Achievements_Display(&$template, &$templateEngine) {
 	$userBadges = Achievements_GetUserTopBadges($user->getID());
 	$userCounters = Achievements_GetUserCounters($user->getID());
 
+	$dbr = wfGetDB(DB_SLAVE);
+
+	$dbr->query('set @rank = 1');
+	$res = $dbr->query('select c from (select @rank+1 as c, user_id, count(user_id) as rank from achievements_badges group by user_id order by rank) as c where user_id = '.$user->getID());
+	$allWiki = $res->fetchObject()->c;
+
+	$dbr->query('set @rank = 1');
+	$res = $dbr->query('select c from (select @rank+1 as c, user_id, count(user_id) as rank from achievements_badges where data >= date_sub(now(), interval 7 day) group by user_id order by rank) as c where user_id = '.$user->getID());
+	$thisWeek = $res->fetchObject()->c;
+
 	$badgesTemplate = new EasyTemplate(dirname(__FILE__).'/templates');
-	$badgesTemplate->set_vars(array('userBadges' => $userBadges, 'userCounters' => $userCounters, 'user' => $user));
+	$badgesTemplate->set_vars(array('userBadges' => $userBadges,
+									'userCounters' => $userCounters,
+									'user' => $user,
+									'allWiki' => $allWiki,
+									'thisWeek' => $thisWeek));
 	$badgesHTML = $badgesTemplate->render('badges');
 
 	$templateEngine->data['bodytext'] = $badgesHTML . $templateEngine->data['bodytext'];
@@ -97,7 +111,7 @@ function Achievements_Display(&$template, &$templateEngine) {
  */
 function Achievements_GetUserCounters($userId) {
 	$userCounters = array();
-	$dbr = wfGetDB(DB_MASTER);
+	$dbr = wfGetDB(DB_SLAVE);
 
 	$res = $dbr->select('achievements_counters',
 						array('achievement_type_id', 'counter'),
