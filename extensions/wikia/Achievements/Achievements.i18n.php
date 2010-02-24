@@ -1,15 +1,21 @@
 <?php
 $messages = array();
 $messages['en'] = array(
-	'achievement-edits-info' => 'Edit a page on the wiki',
-	'achievement-pictures-info' => 'Add a picture to a page',
-	'achievement-newpage-info' => 'Start a new page',
-	'achievement-category-info' => 'Add a category to a page',
-	'achievement-videos-info' => 'Add a video to a page',
+
+	/* INFO */
+
+	'achievement-edits-info' => 'Edit an article on the wiki',
+	'achievement-pictures-info' => 'Add a picture to an article',
+	'achievement-newpage-info' => 'Start a new article',
+	'achievement-category-info' => 'Add a category to an article',
+	'achievement-videos-info' => 'Add a video to an article',
+
 	'achievement-userpage-info' => 'Edited own user page',
 	'achievement-makingfriends-info' => 'Edited someone else\'s talk page',
 	'achievement-busyday-info' => 'Edit 10 different articles in one day',
 	'achievement-keytothewiki-info' => 'Edit the wiki every day for 5 days',
+
+	/* NAME */
 
 	'achievement-edits-name' => 'Editor',
 	'achievement-pictures-name' => 'Photographer',
@@ -21,11 +27,15 @@ $messages['en'] = array(
 	'achievement-busyday-name' => 'Busy Day',
 	'achievement-keytothewiki-name' => 'Key to the Wiki',
 
-	'achievement-edits-summary' => 'Made $1 edits',
-	'achievement-pictures-summary' => 'Added $1 pictures',
-	'achievement-newpage-summary' => 'Started $1 new pages',
-	'achievement-category-summary' => 'Added $1 categories',
-	'achievement-videos-summary' => 'Added $1 videos',
+	/* SUMMARY */
+
+	'achievement-edits-summary' => 'Made {{PLURAL:$1|one edit|$1 edits}}',
+	'achievement-pictures-summary' => 'Added {{PLURAL:$1|one picture|$1 pictures}}',
+	'achievement-newpage-summary' => 'Started {{PLURAL:$1|one new article|$1 new articles}}',
+	'achievement-category-summary' => 'Added {{PLURAL:$1|one category|$1 categories}}',
+	'achievement-videos-summary' => 'Added {{PLURAL:$1|one video|$1 videos}}',
+
+	/* NEXT */
 
 	'achievement-edits-next' => 'Next level: $1 edits',
 	'achievement-pictures-next' => 'Next level: $1 pictures',
