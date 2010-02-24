@@ -86,11 +86,11 @@ function Achievements_Display(&$template, &$templateEngine) {
 	$dbr = wfGetDB(DB_SLAVE);
 
 	$dbr->query('set @rank = 1');
-	$res = $dbr->query('select c from (select @rank+1 as c, user_id, count(user_id) as rank from achievements_badges group by user_id order by rank) as c where user_id = '.$user->getID());
+	$res = $dbr->query('select c from (select @rank:=@rank+1 as c, user_id, count(user_id) as rank from achievements_badges group by user_id order by rank) as c where user_id = '.$user->getID());
 	$allWiki = $res->fetchObject()->c;
 
 	$dbr->query('set @rank = 1');
-	$res = $dbr->query('select c from (select @rank+1 as c, user_id, count(user_id) as rank from achievements_badges where data >= date_sub(now(), interval 7 day) group by user_id order by rank) as c where user_id = '.$user->getID());
+	$res = $dbr->query('select c from (select @rank:=@rank+1 as c, user_id, count(user_id) as rank from achievements_badges where data >= date_sub(now(), interval 7 day) group by user_id order by rank) as c where user_id = '.$user->getID());
 	$thisWeek = $res->fetchObject()->c;
 
 	$badgesTemplate = new EasyTemplate(dirname(__FILE__).'/templates');
