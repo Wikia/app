@@ -11,7 +11,7 @@ class SpecialLeaderboard extends SpecialPage {
 		global $wgOut, $wgUser, $wgTitle;
 		$this->setHeaders();
 
-		$dbr = wfGetDB(DB_SLAVE);
+		$dbr = wfGetDB(DB_MASTER);
 
 		$allTime = array();
 		$res = $dbr->query('select user_id, count(*) as cnt from achievements_badges group by user_id order by cnt DESC');
