@@ -226,12 +226,7 @@ function Achievements_ArticleSaveComplete(&$article, &$user, $text, $summary, &$
 		// adding category to an article
 		$categoryInserts = Wikia::getVar('categoryInserts');
 		if(!empty($categoryInserts) && is_array($categoryInserts)) {
-			foreach($categoryInserts as $insert) {
-				if(!isset($achievementCountersToIncrease[ACHIEVEMENT_CATEGORY_ADDED_TO_ARTICLE])) {
-					$achievementCountersToIncrease[ACHIEVEMENT_CATEGORY_ADDED_TO_ARTICLE] = 0;
-				}
-				$achievementCountersToIncrease[ACHIEVEMENT_CATEGORY_ADDED_TO_ARTICLE]++;
-			}
+			$achievementCountersToIncrease[ACHIEVEMENT_CATEGORY_ADDED_TO_ARTICLE] = count($categoryInserts);
 		}
 
 	}
