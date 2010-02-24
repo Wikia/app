@@ -203,7 +203,10 @@ function formatLookedFor($lookedFor){
 	$titles = array_unique(explode("\n", $lookedFor));
 	$lookedFor = "";
 	foreach($titles as $pageTitle){
-		$lookedFor .= "[[$pageTitle]]<br/>";
+		if(trim($pageTitle) != ""){
+			$pageTitle = str_replace("_", " ", $pageTitle);
+			$lookedFor .= "[[$pageTitle]]<br/>";
+		}
 	}
 	return $lookedFor;
 } // end formatLookedFor()
