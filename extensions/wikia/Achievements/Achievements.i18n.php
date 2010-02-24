@@ -10,8 +10,8 @@ $messages['en'] = array(
 	'achievement-category-info' => 'Add a category to an article',
 	'achievement-videos-info' => 'Add a video to an article',
 
-	'achievement-userpage-info' => 'Edited own user page',
-	'achievement-makingfriends-info' => 'Edited someone else\'s talk page',
+	'achievement-userpage-info' => 'Edit your own user page',
+	'achievement-makingfriends-info' => 'Edit someone else\'s talk page',
 	'achievement-busyday-info' => 'Edit 10 different articles in one day',
 	'achievement-keytothewiki-info' => 'Edit the wiki every day for 5 days',
 
@@ -22,6 +22,7 @@ $messages['en'] = array(
 	'achievement-newpage-name' => 'Creator',
 	'achievement-category-name' => 'Organizer',
 	'achievement-videos-name' => 'Filmmaker',
+
 	'achievement-userpage-name' => 'Nice to Meet You',
 	'achievement-makingfriends-name' => 'Making Friends',
 	'achievement-busyday-name' => 'Busy Day',
@@ -34,6 +35,11 @@ $messages['en'] = array(
 	'achievement-newpage-summary' => 'Started {{PLURAL:$1|one new article|$1 new articles}}',
 	'achievement-category-summary' => 'Added {{PLURAL:$1|one category|$1 categories}}',
 	'achievement-videos-summary' => 'Added {{PLURAL:$1|one video|$1 videos}}',
+
+	'achievement-userpage-summary' => 'Edited your own user page',
+	'achievement-makingfriends-summary' => 'Edited someone else\'s talk page',
+	'achievement-busyday-summary' => 'Edited 10 different articles in one day',
+	'achievement-keytothewiki-summary' => 'Edited the wiki every day for 5 days',
 
 	/* NEXT */
 
