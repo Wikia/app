@@ -1,4 +1,4 @@
-<!-- s:<?= __FILE__ ?> -->
+<!-- s:<?php print __FILE__ ?> -->
 <style type="text/css">
 #PaneList #headerWikis {
 	margin-top: 20px;
@@ -20,7 +20,7 @@ select {
 </div>
 
 <div id="PaneList">
-	<form method="get" action="<?= $formData['actionURL'] ?>">
+	<form method="get" action="<?php print $formData['actionURL'] ?>">
 		<div style="float: left; margin-right: 6px">
 			<select size="10" style="width: 22em;" id="variableSelect" name="var">
 			<?php
@@ -33,7 +33,7 @@ select {
 			?>
 			</select>
 		</div>
-		<?= wfMsg('whereisextension-isset') ?>
+		<?php print wfMsg('whereisextension-isset') ?>
 		<select name="val">
 			<?php
 			foreach($formData['vals'] as $valId => $valName) {
@@ -42,31 +42,31 @@ select {
 			}
 			?>
 		</select>
-		<input type="submit" value="<?= wfMsg('whereisextension-submit') ?>"/>
+		<input type="submit" value="<?php print wfMsg('whereisextension-submit') ?>"/>
 	</form>
 
 	<br/>
-	<?= wfMsg('whereisextension-filter') ?>
+	<?php print wfMsg('whereisextension-filter') ?>
 	<br/>
 	<select id="groupSelect" name="group">
 		<option value="0" selected="selected">
-			<?= wfMsg('whereisextension-all-groups') ?>
+			<?php print wfMsg('whereisextension-all-groups') ?>
 		</option>
 		<? foreach ($formData['groups'] as $key => $value) {
 			$selected = $key == $formData['selectedGroup'] ? ' selected="selected"' : '';
 		?>
-		<option value="<?= $key ?>"<?= $selected ?>><?= $value ?></option>
+		<option value="<?php print $key ?>"<?php print $selected ?>><?php print $value ?></option>
 		<? } ?>
 	</select>
 	<br/>
-	<label for="withString"><?= wfMsg('whereisextension-name-contains') ?></label>
+	<label for="withString"><?php print wfMsg('whereisextension-name-contains') ?></label>
 	<br/>
 	<input type="text" name="withString" id="withString" size="18" />
 
 	<?php
 	if (!empty($formData['wikis']) && count($formData['wikis'])) {
 		?>
-		<h3 id="headerWikis"><?= wfMsg('whereisextension-list') ?> (<?= count($formData['wikis']) ?>)</h3>
+		<h3 id="headerWikis"><?php print wfMsg('whereisextension-list') ?> (<?php print count($formData['wikis']) ?>)</h3>
 		<ul>
 		<?php
 		$front = '&nbsp;<a href="' . Title::makeTitle( NS_SPECIAL, 'WikiFactory' )->getFullUrl() . '/';
@@ -74,7 +74,7 @@ select {
 		foreach($formData['wikis'] as $wikiID => $wikiInfo) {
 			$editURL = $front . $wikiID . $back;
 			?>
-			<li><a href="<?= htmlspecialchars($wikiInfo['u']) ?>"><?= $wikiInfo['t'] ?></a><?= $editURL ?></li>
+			<li><a href="<?php print htmlspecialchars($wikiInfo['u']) ?>"><?php print $wikiInfo['t'] ?></a><?php print $editURL ?></li>
 			<?php
 		}
 		?>
@@ -85,7 +85,7 @@ select {
 </div>
 
 <script type="text/javascript">
-	var ajaxpath = "<?= $GLOBALS['wgScriptPath'].'/index.php'; ?>";
+	var ajaxpath = "<?php print $GLOBALS['wgScriptPath'].'/index.php'; ?>";
 	var DOM = YAHOO.util.Dom;
 
 	busy = function(state) {
@@ -127,4 +127,4 @@ select {
 	YAHOO.util.Event.addListener('withString', 'keypress', filter);
 	YAHOO.util.Event.addListener('groupSelect', 'change', filter);
 </script>
-<!-- e:<?= __FILE__ ?> -->
+<!-- e:<?php print __FILE__ ?> -->

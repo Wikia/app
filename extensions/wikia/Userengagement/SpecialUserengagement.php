@@ -1,8 +1,9 @@
 <?php
 /**
- * A Special Page extension that displays Wiki Google Webtools stats.
+ * A Special Page extension that appears to have been intended to show what User Engagement actions are currently running on all
+ * wikis, but seems not to have been completed.
  *
- * This page can be accessed from Special:Webtools
+ * This page can be accessed from Special:Userengagement
  *
  * @addtogroup Extensions
  *

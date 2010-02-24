@@ -44,7 +44,7 @@ class FancyCaptcha extends SimpleCaptcha {
 	function getForm($template = 'default') {
 		$info = $this->pickImage();
 		if( !$info ) {
-			die( "out of captcha images; this shouldn't happen" );
+			die( "out of captcha images; this shouldn't happen.  Please make sure wgCaptchaDirectory and wgCaptchaDirectoryLevels are configured correctly." );
 		}
 
 		// Generate a random key for use of this captcha image in this session.

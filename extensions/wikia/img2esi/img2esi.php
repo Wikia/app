@@ -4,6 +4,8 @@
  * @subpackage img2esi
  * @author Andrew Yasinsky <andrewy@wikia.com> for Wikia.com
  * @version: $Id$
+ *
+ * @deprecated - This file was used for experimentation but isn't in use (isn't included anywhere).
  */
 
 $wgExtensionCredits['parserhook'][] = array(
