@@ -79,7 +79,7 @@ function RelatedPages_Display(&$template, &$templateEngine) {
 					uasort($results, 'RelatedPages_Compare');
 					$out = array_slice(array_keys($results), 0, 5);
 				} else {
-					$out = array_rand($results, 5);
+					$out = array_rand($results, min(count($results), 5));
 				}
 				if(count($categories) > 1 && count($out) < 5) {
 					$results = array();
