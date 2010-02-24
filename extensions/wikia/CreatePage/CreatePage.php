@@ -25,6 +25,8 @@ $wgExtensionMessagesFiles['CreatePage'] = dirname(__FILE__) . '/CreatePage.i18n.
  */
 extAddSpecialPage(dirname(__FILE__) . '/SpecialCreatePage.php', 'CreatePage', 'CreatePage');
 
+$wgSpecialPageGroups['CreatePage'] = 'pagetools';
+
 /**
  * setup functions
  */
