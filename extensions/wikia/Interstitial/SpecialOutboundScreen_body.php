@@ -21,7 +21,7 @@ class Outbound extends UnlistedSpecialPage {
 	}
 
 	function execute() {
-		global $wgOut, $wgUser, $wgRequest, $wgExtensionsPath, $wgOutboundScreenConfig, $wgCityId;
+		global $wgOut, $wgUser, $wgRequest, $wgExtensionsPath, $wgOutboundScreenConfig, $wgCityId, $wgEnableOutboundScreenExt;
 
 		$url = $wgRequest->getText( 'u' );
 		$noAutoRedirect = ( $wgRequest->getText( 'noredirect' ) == 1 ) ? true : false;
