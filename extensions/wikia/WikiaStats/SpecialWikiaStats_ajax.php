@@ -16,7 +16,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 function axWStatisticsGenerate($city_id, $year_from, $month_from, $year_to, $month_to, $charts = 0)
 {
-    global $wgRequest, $wgUser, $wgMessageCache, $wgWikiaStatsMessages;
+    global $wgRequest, $wgUser, $wgWikiaStatsMessages;
     global $wgCityId, $wgDBname;
 
 	if (empty($wgUser)) {
@@ -51,7 +51,7 @@ function axWStatisticsGenerate($city_id, $year_from, $month_from, $year_to, $mon
 
 function axWStatisticsDistribEditsGenerate($city_id)
 {
-    global $wgRequest, $wgUser, $wgMessageCache, $wgWikiaStatsMessages;
+    global $wgRequest, $wgUser, $wgWikiaStatsMessages;
     global $wgCityId, $wgDBname;
     
 	if (empty($wgUser)) {
@@ -81,7 +81,7 @@ function axWStatisticsDistribEditsGenerate($city_id)
 
 function axWStatisticsWikiansRank($city_id, $month = 1)
 {
-    global $wgRequest, $wgUser, $wgMessageCache, $wgWikiaStatsMessages;
+    global $wgRequest, $wgUser, $wgWikiaStatsMessages;
     global $wgCityId, $wgDBname;
     
 	if (empty($wgUser)) {
@@ -111,7 +111,7 @@ function axWStatisticsWikiansRank($city_id, $month = 1)
 
 function axWStatisticsAnonUsers($city_id)
 {
-    global $wgRequest, $wgUser, $wgMessageCache, $wgWikiaStatsMessages;
+    global $wgRequest, $wgUser, $wgWikiaStatsMessages;
     global $wgCityId, $wgDBname;
     
 	if (empty($wgUser)) {
@@ -141,7 +141,7 @@ function axWStatisticsAnonUsers($city_id)
 
 function axWStatisticsArticleSize ($city_id, $sizeList = "")
 {
-    global $wgRequest, $wgUser, $wgMessageCache, $wgWikiaStatsMessages;
+    global $wgRequest, $wgUser, $wgWikiaStatsMessages;
     global $wgCityId, $wgDBname;
     
 	if (empty($wgUser)) {
@@ -172,7 +172,7 @@ function axWStatisticsArticleSize ($city_id, $sizeList = "")
 
 function axWStatisticsNamespaceCount($city_id)
 {
-    global $wgRequest, $wgUser, $wgMessageCache, $wgWikiaStatsMessages;
+    global $wgRequest, $wgUser, $wgWikiaStatsMessages;
     global $wgCityId, $wgDBname;
     
 	if (empty($wgUser)) {
@@ -202,7 +202,7 @@ function axWStatisticsNamespaceCount($city_id)
 
 function axWStatisticsPageEdits($city_id)
 {
-    global $wgRequest, $wgUser, $wgMessageCache, $wgWikiaStatsMessages;
+    global $wgRequest, $wgUser, $wgWikiaStatsMessages;
     global $wgCityId, $wgDBname;
     
 	if (empty($wgUser)) {
@@ -232,7 +232,7 @@ function axWStatisticsPageEdits($city_id)
 
 function axWStatisticsOtherNpacesPageEdits($city_id)
 {
-    global $wgRequest, $wgUser, $wgMessageCache, $wgWikiaStatsMessages;
+    global $wgRequest, $wgUser, $wgWikiaStatsMessages;
     global $wgCityId, $wgDBname;
     
 	if (empty($wgUser)) {
@@ -263,7 +263,7 @@ function axWStatisticsOtherNpacesPageEdits($city_id)
 
 function axWStatisticsPageEditsDetails($city_id, $page_id)
 {
-    global $wgRequest, $wgUser, $wgMessageCache, $wgWikiaStatsMessages;
+    global $wgRequest, $wgUser, $wgWikiaStatsMessages;
     global $wgCityId, $wgDBname;
     
 	if (empty($wgUser)) {
@@ -296,7 +296,7 @@ function axWStatisticsPageEditsDetails($city_id, $page_id)
  */
 function axWStatisticsXLS($city_id, $param, $others = "", $date_from = "", $date_to = "")
 {
-    global $wgRequest, $wgUser, $wgMessageCache, $wgWikiaStatsMessages;
+    global $wgRequest, $wgUser, $wgWikiaStatsMessages;
     global $wgCityId, $wgDBname;
 
 	error_log ("axWStatisticsXLS($city_id, $param, $others, $date_from, $date_to)");
@@ -413,7 +413,7 @@ function axWStatisticsXLS($city_id, $param, $others = "", $date_from = "", $date
 
 /* get list of wikia */
 function axWStatisticsWikiaList() {
-    global $wgRequest, $wgUser, $wgMessageCache, $wgWikiaStatsMessages, $wgMemc;
+    global $wgRequest, $wgUser, $wgWikiaStatsMessages, $wgMemc;
 
 	if ( $wgUser->isBlocked() ) {
 		return;
@@ -472,7 +472,7 @@ function axWStatisticsWikiaList() {
 
 /* get list of wikia */
 function axWStatisticsWikiaListJson($limit=25, $offset=0) {
-    global $wgRequest, $wgUser, $wgMessageCache, $wgWikiaStatsMessages, $wgMemc;
+    global $wgRequest, $wgUser, $wgWikiaStatsMessages, $wgMemc;
 
 	if ( $wgUser->isBlocked() ) {
 		return;
@@ -536,7 +536,7 @@ function axWStatisticsWikiaListJson($limit=25, $offset=0) {
 
 /* get list of wikia */
 function axWStatisticsWikiaInfo($city) {
-    global $wgRequest, $wgUser, $wgMessageCache, $wgWikiaStatsMessages, $wgMemc, $wgContLang;
+    global $wgRequest, $wgUser, $wgWikiaStatsMessages, $wgMemc, $wgContLang;
     global $wgCityId, $wgDBname, $wgLang;
 
 	if ( $wgUser->isBlocked() ) {
@@ -584,7 +584,7 @@ function axWStatisticsWikiaInfo($city) {
 }
 
 function axWStatisticsSearchWikis($search_text) {
-    global $wgRequest, $wgUser, $wgMessageCache, $wgWikiaStatsMessages, $wgContLang;
+    global $wgRequest, $wgUser, $wgWikiaStatsMessages, $wgContLang;
 
 	if ( $wgUser->isBlocked() ) {
 		return;
@@ -604,7 +604,7 @@ function axWStatisticsSearchWikis($search_text) {
 
 function axWStatisticsPageViews($city_id)
 {
-    global $wgRequest, $wgUser, $wgMessageCache, $wgWikiaStatsMessages;
+    global $wgRequest, $wgUser, $wgWikiaStatsMessages;
     global $wgCityId, $wgDBname;
     
 	if (empty($wgUser)) { 
