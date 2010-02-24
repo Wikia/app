@@ -391,4 +391,5 @@ function Achievements_UpdateCounters($userId, $newCounters /* achievementTypeId 
 
 	$dbw = wfGetDB(DB_MASTER);
 	$dbw->replace('achievements_counters', null, $rows, 'Achievements_UpdateCounters');
+	$dbw->commit();
 }
