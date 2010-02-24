@@ -1509,12 +1509,8 @@ if(isset($categorylist['nodes']) && count($categorylist['nodes']) > 0 ) {
 }
 			wfRunHooks('MonacoAdLink');
 
-			echo '<ul id="requestWikiData"><li>';
-			echo '<a rel="nofollow" href="http://www.wikia.com/Special:CreateWiki" id="request_wiki" class="wikia_button"><span>'. wfMsg('createwikipagetitle') .'</span></a>';
-			if (!$wgUser->isLoggedIn()) {
-				echo '<span id="request_wiki_ad">' . wfMsgExt('monaco-request-wiki-ad-text', array( "parseinline" )) . '</span>';
-			}
-			echo '</li></ul>';
+			$this->printRequestWikiLink();
+
 ?>
 			</div>
 			<ul id="userData">
@@ -2443,4 +2439,16 @@ wfProfileOut( __METHOD__ . '-body');
 		</div>
 		<?php
 	}
+
+	/* Often times the request wiki is overridden by sub skins of monaco */
+	function printRequestWikiLink(){
+		global $wgUser;
+		echo '<ul id="requestWikiData"><li>';
+			echo '<a rel="nofollow" href="http://www.wikia.com/Special:CreateWiki" id="request_wiki" class="wikia_button"><span>'. wfMsg('createwikipagetitle') .'</span></a>';
+			if (!$wgUser->isLoggedIn()) {
+				echo '<span id="request_wiki_ad">' . wfMsgExt('monaco-request-wiki-ad-text', array( "parseinline" )) . '</span>';
+			}
+		echo '</li></ul>';
+	}
+
 }
