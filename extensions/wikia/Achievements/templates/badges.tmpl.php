@@ -36,17 +36,17 @@
 		echo wfMsg('achievement-no-badges', $user->getName());
 	} else {
 ?>
-<span style="font-size: 15pt; font-weight: bold; margin-right: 3px;"><?=$user->getName()?></span> has earned <br/> <span style="font-size: 45pt; font-weight: bold; color: green;"><?=$numberOfBadges?></span> badges
+<span style="font-size: 15pt; font-weight: bold; margin-right: 3px;"><?=$user->getName()?></span> has earned <br/><span style="font-size: 45pt; font-weight: bold; color: green;"><?=$numberOfBadges?></span> badges
 <br/><br/><hr/><br/>
 <span style="font-size: 12pt; font-weight: bold;"><?=$user->getName()?> is the</span>
 <br/>
-<span style="font-size: 45pt; font-weight: bold; color: purple;">#3</span>
+<span style="font-size: 45pt; font-weight: bold; color: purple;"><?=$allWiki?></span>
 <br/>
 <span style="font-size: 12pt; font-weight: bold;">all-time wiki member</span>
 <br/>
 <span style="font-size: 12pt; font-weight: bold;">and</span>
 <br/>
-<span style="font-size: 45pt; font-weight: bold; color: purple; display: block; margin-top: 15px; margin-bottom: 5px">#4</span>
+<span style="font-size: 45pt; font-weight: bold; color: purple; display: block; margin-top: 15px; margin-bottom: 5px"><?=$thisWeek?></span>
 <span style="font-size: 12pt; font-weight: bold;">for this week</span>
 <?php
 	}
@@ -55,34 +55,6 @@
 	<hr/>
 	<br/>
 	<a rel="nofollow" class="wikia_button" href="#"><span>Leaderboard</span></a>
-		<!--
-		<span style="font-size: 15pt; font-weight: bold; margin-right: 3px;">{$username}</span> has earned <br/> <span style="font-size: 45pt; font-weight: bold; color: green;">{$noofbadges}</span> badges
-		<br/><br/>
-
-		<span style="font-size: 12pt; font-weight: bold;">Inez is the</span>
-
-		<br/>
-
-		<span style="font-size: 45pt; font-weight: bold; color: purple;">#3</span>
-
-		<br/>
-
-		<span style="font-size: 12pt; font-weight: bold;">all-time wiki member</span>
-
-		<br/>
-
-		<span style="font-size: 12pt; font-weight: bold;">and</span>
-
-		<br/>
-
-		<span style="font-size: 45pt; font-weight: bold; color: purple; display: block; margin-top: 15px; margin-bottom: 5px">#4</span>
-
-		<span style="font-size: 12pt; font-weight: bold;">for this week</span>
-
-		<br/><br/>
-
-		<a rel="nofollow" class="wikia_button" href="#"><span>Leaderboard</span></a>
-		-->
 	</div>
 	<div id="achievements-badges">
 <?php
