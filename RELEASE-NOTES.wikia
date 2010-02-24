@@ -1,4 +1,5 @@
 == Changes since 201002.4 ==
+* StaffSigs: add multiuser/random selection to override (uberfuzzy)
 * rt#40913:	Nofollow on CC-BY-SA link. (Nef)
 * rt#40916: Turn on Top content widget for anon users on 5 wikis. (Nef)
 

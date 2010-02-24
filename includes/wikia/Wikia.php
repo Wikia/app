@@ -455,9 +455,9 @@ class Wikia {
 		if( ! $staffUser ) {
 			$fallbackname = "Angela"; //still hardcoded
 
-			if( !empty($data['?']) ) {
+			if( !empty($data['?']) && is_array($data['?']) ) {
 				//but overrideable
-				$fallbackname = $data['?'][0];
+				$fallbackname = $data['?'][ array_rand($data['?']) ];
 			}
 
 			$staffUser = User::newFromName( $fallbackname );
