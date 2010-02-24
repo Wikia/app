@@ -84,7 +84,7 @@ function Achievements_Display(&$template, &$templateEngine) {
 	$userCounters = Achievements_GetUserCounters($user->getID());
 
 	$badgesTemplate = new EasyTemplate(dirname(__FILE__).'/templates');
-	$badgesTemplate->set_vars(array('userBadges' => $userBadges, 'userCounters' => $userCounters));
+	$badgesTemplate->set_vars(array('userBadges' => $userBadges, 'userCounters' => $userCounters, 'user' => $user));
 	$badgesHTML = $badgesTemplate->render('badges');
 
 	$templateEngine->data['bodytext'] = $badgesHTML . $templateEngine->data['bodytext'];

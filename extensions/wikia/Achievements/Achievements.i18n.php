@@ -51,4 +51,5 @@ $messages['en'] = array(
 
 	'achievement-level' => 'Level $1',
 
+	'achievement-no-badges' => '<strong>$1</strong><br/>hasn\'t earned<br/>any badges yet!',
 );
