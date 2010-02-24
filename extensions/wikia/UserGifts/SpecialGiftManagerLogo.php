@@ -96,7 +96,7 @@ class GiftManagerLogo extends UnlistedSpecialPage
 	{
 		global $wgUser, $wgOut;
 		global $wgEnableUploads, $wgUploadDirectory;
-		global $wgGiftImagePath, $wgMessageCache, $wgGiftImageUploadPath, $wgUploadPath;
+		global $wgGiftImagePath, $wgGiftImageUploadPath, $wgUploadPath;
 		
 		#---
 		if (empty($wgGiftImageUploadPath)) {
@@ -152,7 +152,7 @@ class GiftManagerLogo extends UnlistedSpecialPage
 	 */
 	function processUpload() {
 		global $wgUser, $wgOut, $wgLang, $wgContLang;
-		global $wgUseCopyrightUpload, $wgCheckCopyrightUpload, $wgMessageCache;
+		global $wgUseCopyrightUpload, $wgCheckCopyrightUpload;
 		global $wgGiftImagePath, $wgGiftImageUploadPath, $wgUploadPath, $wgUploadDirectory;
 
 		/**
@@ -467,7 +467,7 @@ class GiftManagerLogo extends UnlistedSpecialPage
 	 */
 	function uploadError( $error ) 
 	{
-		global $wgOut, $wgMessageCache;
+		global $wgOut;
 		$sub = wfMsg( 'uploadwarning' );
 		$wgOut->addHTML( "<h2>{$sub}</h2>\n" );
 		$wgOut->addHTML( "<h4 class='error'>{$error}</h4>\n" );
@@ -485,7 +485,7 @@ class GiftManagerLogo extends UnlistedSpecialPage
 	function uploadWarning( $warning ) 
 	{
 		global $wgOut, $wgUser, $wgLang, $wgUploadDirectory, $wgRequest;
-		global $wgUseCopyrightUpload, $wgMessageCache;
+		global $wgUseCopyrightUpload;
 
 		$this->mSessionKey = $this->stashSession();
 		if( !$this->mSessionKey ) {
@@ -542,7 +542,7 @@ class GiftManagerLogo extends UnlistedSpecialPage
 	function mainUploadForm( $msg='' ) 
 	{
 		global $wgOut, $wgUser, $wgLang, $wgUploadDirectory, $wgRequest;
-		global $wgUseCopyrightUpload, $wgMessageCache;
+		global $wgUseCopyrightUpload;
 		
 		$cols = intval($wgUser->getOption( 'cols' ));
 		$ew = $wgUser->getOption( 'editwidth' );
@@ -674,8 +674,6 @@ class GiftManagerLogo extends UnlistedSpecialPage
 	 * @return mixed true of the file is verified, a WikiError object otherwise.
 	 */
 	function verify( $tmpfile, $extension ) {
-		global $wgMessageCache;
-		
 		#magically determine mime type
 		$magic=& wfGetMimeMagic();
 		$mime= $magic->guessMimeType($tmpfile,false);
@@ -936,7 +934,7 @@ class GiftManagerLogo extends UnlistedSpecialPage
 }
 
  SpecialPage::addPage( new GiftManagerLogo );
- global $wgMessageCache,$wgOut;
+ //global $wgMessageCache,$wgOut;
  //$wgMessageCache->addMessage( 'avatarupload', 'just a test extension' );
 }
 
