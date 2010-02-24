@@ -47,7 +47,7 @@ function Achievements_Setup() {
 	$achievementTypes[ACHIEVEMENT_CATEGORY_ADDED_TO_ARTICLE] = array(
 		'name' => 'category',
 		'type' => 'repeat',
-		'levels' => array(1, 5, 10, 20, 40)
+		'levels' => array(1,2,4)
 	);
 	$achievementTypes[ACHIEVEMENT_VIDEO_ADDED_TO_ARTICLE] = array(
 		'name' => 'videos',
