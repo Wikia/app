@@ -123,10 +123,8 @@ function Achievements_Display(&$template, &$templateEngine) {
 EOT;
 	}
 
-	$dbr = wfGetDB(DB_SLAVE);
-	$noofbadges = $dbr->selectField('achievements_badges', 'count(*) as cnt', array('user_id' => $user->getID()), 'Achievements_Display');
+	$noofbadges = array_sum($userBadges);
 	$username = $user->getName();
-
 
 	$achievementsDisplay = <<<EOT
 <style>
