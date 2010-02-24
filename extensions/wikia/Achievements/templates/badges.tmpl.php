@@ -54,7 +54,7 @@
 	<br/><br/>
 	<hr/>
 	<br/>
-	<a rel="nofollow" class="wikia_button" href="#"><span>Leaderboard</span></a>
+	<a rel="nofollow" class="wikia_button" href="<?= Skin::makeSpecialUrl('Leaderboard') ?>"><span>Leaderboard</span></a>
 	</div>
 	<div id="achievements-badges">
 <?php

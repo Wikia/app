@@ -14,6 +14,10 @@ $wgExtensionMessagesFiles['Achievements'] = dirname(__FILE__) . '/' . 'Achieveme
 
 $wgExtensionFunctions[] = 'Achievements_Setup';
 
+$wgAutoloadClasses['SpecialLeaderboard'] = dirname(__FILE__) . '/' . 'SpecialLeaderboard.php';
+
+$wgSpecialPages['Leaderboard'] = 'SpecialLeaderboard';
+
 /**
  * @author: Inez Korczyński
  */
