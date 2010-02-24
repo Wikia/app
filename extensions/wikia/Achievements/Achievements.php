@@ -291,6 +291,7 @@ function Achievements_AddBadgesIfNeeded($userId, $counters /* achievementTypeId 
 
 	$dbw = wfGetDB(DB_MASTER);
 	$o = $dbw->insert('achievements_badges', $rows, 'Achievements_AddBadgesIfNeeded');
+	$dbw->commit();
 }
 
 /**
