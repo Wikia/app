@@ -260,9 +260,34 @@ function Achievements_ArticleSaveComplete(&$article, &$user, $text, $summary, &$
 function Achievements_AddBadgesIfNeeded($userId, $counters /* achievementTypeId => counter */) {
 	global $achievementTypes;
 
+	$userBadges = Achievements_GetUserTopBadges($userId);
+
 	$rows = array();
 
+	print_pre($counters);
+
 	foreach($counters as $achievementTypeId => $counter) {
+
+		$level = -1;
+
+		for($l = 0; $l < count($achievementTypes[$achievementTypeId]['levels']); $l++) {
+			if($counter >= $achievementTypes[$achievementTypeId]['levels'][$l]) {
+				$level++;
+			}
+		}
+
+		if(!isset($userBadges[$achievementTypeId])) {
+			$userBadges[$achievementTypeId] = -1;
+		}
+
+		if($level > $userBadges[$achievementTypeId]) {
+			for($i = $userBadges[$achievementTypeId] + 1; $i <= $level; $i++) {
+				$rows[] = array('user_id' => $userId,
+								'achievement_type_id' => $achievementTypeId,
+								'level' => $i);
+			}
+		}
+		/*
 		$level = array_search($counter, $achievementTypes[$achievementTypeId]['levels']);
 
 		if($level === false) {
@@ -282,10 +307,11 @@ function Achievements_AddBadgesIfNeeded($userId, $counters /* achievementTypeId 
 							'achievement_type_id' => $achievementTypeId,
 							'level' => $level);
 		}
+		*/
 	}
 
 	$dbw = wfGetDB(DB_MASTER);
-	$o = $dbw->insert('achievements_badges', $rows, 'Achievements_AddBadgesIfNeeded');
+	$dbw->insert('achievements_badges', $rows, 'Achievements_AddBadgesIfNeeded');
 	$dbw->commit();
 }
 
