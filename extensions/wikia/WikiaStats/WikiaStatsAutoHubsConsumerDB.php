@@ -116,7 +116,7 @@ class WikiaStatsAutoHubsConsumerDB {
 					'ta_count' => 1
 		);
 		
-		$sql = "insert into tags_top_article  ( " . implode(",",array_keys ($inster_array)) . ") 
+		$sql = "insert into tags_top_articles  ( " . implode(",",array_keys ($inster_array)) . ") 
 									values  ( " . implode(",",$inster_array) . ") 		
 					ON DUPLICATE KEY UPDATE `ta_count` = `ta_count` + 1 ;";
 		
@@ -144,7 +144,7 @@ class WikiaStatsAutoHubsConsumerDB {
 
 		$table_to_clear = array(
 			'tags_top_users' => array('col' => 'tu_date', 'exp' => 7),
-			'tags_top_article' => array('col' => 'ta_date', 'exp' => 3),
+			'tags_top_articles' => array('col' => 'ta_date', 'exp' => 3),
 			'tags_top_blogs' => array('col' => 'tb_date', 'exp' => 3)
 		); 
 
@@ -229,7 +229,7 @@ class WikiaStatsAutoHubsConsumerDB {
 		$tag_id = (int) $tag_id;
 		$conditions = array( "ta_tag_id = $tag_id and ta_city_lang = '$lang'" );
 		$res = $this->dbs->select(
-				array( 'tags_top_article' ),
+				array( 'tags_top_articles' ),
 				array( 'ta_city_id as city_id, 
 						ta_page_id as page_id, 
 						ta_tag_id as tag_id, 
@@ -256,12 +256,79 @@ class WikiaStatsAutoHubsConsumerDB {
 	}
 	
 	/**
-	 * get top users 
+	 * get top wikis
 	 *
 	 * @author Tomasz Odrobny 
 	 * @access public
 	 *
 	 */
+	
+	public function getTopWikis($tag_id, $lang, $limit, $show_hide = false, $force_reload = false) {
+		global $wgMemc;
+		
+		wfProfileIn( __METHOD__ );
+		$mcKey = wfSharedMemcKey( "auto_hubs", "wikis", $tag_id, $lang, $limit, $per_wiki );
+		if( !$force_reload ) {
+			$out = $wgMemc->get($mcKey,null);
+			if( !empty($out) ) {
+				return $out;
+			}
+		}
+
+		$tag_id = (int) $tag_id;
+		$conditions = array( "tags_pv = $tag_id and ta_city_lang = '$lang'" );
+		$res = $this->dbs->select(
+				array( 'tags_pv as tags_pv ' ),
+				array( 'tag_id as tag_id,
+						city_id as city_id,
+						sum(pviews) as count ' ),
+				$conditions,
+				__METHOD__,
+				array(
+					'GROUP BY' 	=> ' tag_id,city_id ',
+					'ORDER BY' 	=> 'count desc',
+					'LIMIT'		=> 40
+				)
+		);		
+
+		$limits = $this->loadHideLimits("city");	
+		$limits_array = array();
+		
+		foreach ($limits as $value) {
+			$limits_array[] = $value['city_id'];
+		}
+		
+		$pre_out = 1;
+		$count = 0;
+		$city_array = array();
+		
+		foreach ( $res as $value ) {
+			if( !in_array($value['city_id'],$limits_array) ) { 
+				$city_array[$value['city_id']] = array('count' => $value['count']); 
+				$count ++;
+				if ( $count == $limit ) {
+					break;
+				}
+			}
+		} 
+
+		$dbw = WikiFactory::db( DB_MASTER );
+		$dbw->begin();
+
+		$oRow = $dbw->selectRow(
+			array( "city_sitename" ),
+			array( "city_id "),
+			"city_id in city_id in (".$city_array.")",
+			__METHOD__
+		);
+
+
+		$out = array("value" => $out, "age" => time());
+		$wgMemc->set($mcKey, $out,60*60 );
+
+		wfProfileOut( __METHOD__ );
+		return $out;
+	}
 	
 	public function getTopUsers($tag_id, $lang, $limit = 5, $force_reload = false) {
 		global $wgMemc;
@@ -354,7 +421,7 @@ class WikiaStatsAutoHubsConsumerDB {
 		
 	public function addExludeArticle($tag_id, $city_id, $page_id, $lang) {
 		if ($this->addExlude($tag_id, $city_id, $page_id, 0, 'article')) {
-			$this->loadArticleBlogLimits('article',true);
+			$this->loadHideLimits('article',true);
 			$this->rebuildMemc($tag_id, $lang, 'article', true);
 			return true;
 		} 
@@ -371,7 +438,7 @@ class WikiaStatsAutoHubsConsumerDB {
 		
 	public function addExludeBlog($tag_id, $city_id, $page_id, $lang) {
 		if ($this->addExlude($tag_id, $city_id, $page_id, 0, 'blog')) {
-			$this->loadArticleBlogLimits('blog',true);
+			$this->loadHideLimits('blog',true);
 			$this->rebuildMemc($tag_id, $lang, 'blog', true);
 			return true;
 		} 
@@ -485,7 +552,7 @@ class WikiaStatsAutoHubsConsumerDB {
 	
 	private function filterArticlesBlog($row, $tag_id, $type) {
 		if( empty($this->article_limits) ) {
-			$this->article_limits = $this->loadArticleBlogLimits($type);	
+			$this->article_limits = $this->loadHideLimits($type);	
 		}
 
 		if (empty($this->article_limits[$tag_id])) {
@@ -501,7 +568,7 @@ class WikiaStatsAutoHubsConsumerDB {
 		return true;
 	}
 	
-	private function loadArticleBlogLimits($type = 'blog', $force_reload = false) {
+	private function loadHideLimits($type = 'blog', $force_reload = false) {
 		global $wgMemc;
 		$mcKey = wfSharedMemcKey( "auto_hubs", "limites_pages", $type);
 		if(!$force_reload) {	
