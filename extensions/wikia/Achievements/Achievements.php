@@ -268,46 +268,41 @@ function Achievements_AddBadgesIfNeeded($userId, $counters /* achievementTypeId 
 
 	foreach($counters as $achievementTypeId => $counter) {
 
-		$level = -1;
-
-		for($l = 0; $l < count($achievementTypes[$achievementTypeId]['levels']); $l++) {
-			if($counter >= $achievementTypes[$achievementTypeId]['levels'][$l]) {
-				$level++;
-			}
-		}
-
-		if(!isset($userBadges[$achievementTypeId])) {
-			$userBadges[$achievementTypeId] = -1;
-		}
-
-		if($level > $userBadges[$achievementTypeId]) {
-			for($i = $userBadges[$achievementTypeId] + 1; $i <= $level; $i++) {
-				$rows[] = array('user_id' => $userId,
-								'achievement_type_id' => $achievementTypeId,
-								'level' => $i);
-			}
-		}
-		/*
-		$level = array_search($counter, $achievementTypes[$achievementTypeId]['levels']);
-
-		if($level === false) {
+		if($achievementTypes[$achievementTypeId]['type'] == 'repeat') {
 			$valuesNo = count($achievementTypes[$achievementTypeId]['levels']);
 			$maxValue = $achievementTypes[$achievementTypeId]['levels'][$valuesNo-1];
-			$secondMaxValue = $achievementTypes[$achievementTypeId]['levels'][$valuesNo-2];
+
 			if($counter > $maxValue) {
+				$secondMaxValue = $achievementTypes[$achievementTypeId]['levels'][$valuesNo-2];
 				$diff = $maxValue - $secondMaxValue;
 				if($counter % $diff == 0) {
 					$level = ($counter - $maxValue) /  $diff + $valuesNo - 1;
 				}
+			} else {
+				$level = -1;
+				for($l = 0; $l < count($achievementTypes[$achievementTypeId]['levels']); $l++) {
+					if($counter >= $achievementTypes[$achievementTypeId]['levels'][$l]) {
+						$level++;
+					}
+				}
 			}
-		}
 
-		if($level !== false) {
+			if(!isset($userBadges[$achievementTypeId])) {
+				$userBadges[$achievementTypeId] = -1;
+			}
+
+			if($level > $userBadges[$achievementTypeId]) {
+				for($i = $userBadges[$achievementTypeId] + 1; $i <= $level; $i++) {
+					$rows[] = array('user_id' => $userId,
+									'achievement_type_id' => $achievementTypeId,
+									'level' => $i);
+				}
+			}
+		} else {
 			$rows[] = array('user_id' => $userId,
 							'achievement_type_id' => $achievementTypeId,
-							'level' => $level);
+							'level' => 0);
 		}
-		*/
 	}
 
 	$dbw = wfGetDB(DB_MASTER);
