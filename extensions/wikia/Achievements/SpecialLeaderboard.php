@@ -14,14 +14,14 @@ class SpecialLeaderboard extends SpecialPage {
 		$dbr = wfGetDB(DB_SLAVE);
 
 		$allTime = array();
-		$res = $dbr->query('select user_id, count(user_id) as cnt from achievements_badges group by user_id order by cnt');
+		$res = $dbr->query('select user_id, count(user_id) as cnt from achievements_badges group by user_id order by cnt DESC');
 		while($row = $dbr->fetchObject($res)) {
 			$user = User::newFromId($row->user_id);
 			$allTime[] = array('username' => $user->getName(), 'numberOfBadges' => $row->cnt, 'url' => $user->getUserPage()->getLocalURL());
 		}
 
 		$thisWeek = array();
-		$res = $dbr->query('select user_id, count(user_id) as cnt from achievements_badges where data >= date_sub(now(), interval 7 day) group by user_id order by cnt');
+		$res = $dbr->query('select user_id, count(user_id) as cnt from achievements_badges where data >= date_sub(now(), interval 7 day) group by user_id order by cnt DESC');
 		while($row = $dbr->fetchObject($res)) {
 			$user = User::newFromId($row->user_id);
 			$thisWeek[] = array('username' => $user->getName(), 'numberOfBadges' => $row->cnt, 'url' => $user->getUserPage()->getLocalURL());
