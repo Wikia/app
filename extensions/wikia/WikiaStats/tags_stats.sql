@@ -1,5 +1,5 @@
 
-CREATE TABLE `tags_top_article` (
+CREATE TABLE `tags_top_articles` (
   `ta_city_id` INT(10) UNSIGNED NOT NULL,
   `ta_tag_id` INT(10) UNSIGNED NOT NULL,
   `ta_page_id` INT(10) UNSIGNED NOT NULL,
