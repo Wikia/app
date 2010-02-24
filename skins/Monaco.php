@@ -2450,7 +2450,7 @@ wfProfileOut( __METHOD__ . '-body');
 	function printWikiaLogo() {
 		global $wgLangToCentralMap, $wgContLang;
 		$central_url = Wikia::langToSomethingMap($wgLangToCentralMap, $wgContLang->getCode(), "http://www.wikia.com/Wikia");
-		echo '<div id="wikia_logo"><a rel="nofollow" href="' . $central_url . '">W1kia</a></div>';
+		echo '<div id="wikia_logo"><a rel="nofollow" href="' . $central_url . '">Wikia</a></div>';
 	}
 
 }
