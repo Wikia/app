@@ -243,8 +243,12 @@ NWB.handleFirstPagesCallback = function (result){
 		for (var page in result.createmultiplepages.success){
 			count++;
 		}
-		Mediawiki.updateStatus(count + " " + NWB.msg("nwb-articles-saved"), false, NWB.statusTimeout);
-		NWB.gotostep(5);
+		if (NWB.type == "answers") {
+			NWB.gotostep(4);
+		} else {
+			Mediawiki.updateStatus(count + " " + NWB.msg("nwb-articles-saved"), false, NWB.statusTimeout);
+			NWB.gotostep(5);
+		}
 	}
 };
 
