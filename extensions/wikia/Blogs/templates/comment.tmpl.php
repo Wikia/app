@@ -10,7 +10,7 @@
 	<div class="comment">
 		<div class="details">
 			<strong><?php echo $comment["sig"] ?></strong>
-			<span class="timestamp"><?php echo isset( $comment["anchor"][2] ) ? '<a href="#' . $comment["anchor"][2] . '">' . $comment["timestamp"] . "</a>": $comment["timestamp"] ?>"</span>
+			<span class="timestamp"><?php echo isset( $comment["anchor"][2] ) ? '<a href="#' . $comment["anchor"][2] . '">' . $comment["timestamp"] . '</a>': $comment["timestamp"] ?></span>
 		<?php if( $canDelete ): ?>
 			<a href="<?php echo $comment[ "title" ]->getLocalUrl( "redirect=no&action=delete" ) ?>"><?=wfMsg('blog-comment-delete')?></a>
 		<?php endif; ?>
