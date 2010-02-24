@@ -1489,13 +1489,8 @@ wfProfileIn( __METHOD__ . '-header'); ?>
 		<div id="wikia_header" class="reset color2">
 			<div class="monaco_shrinkwrap">
 			<div id="wikiaBranding">
-<?php
-global $wgLangToCentralMap, $wgContLang;
-$central_url = Wikia::langToSomethingMap($wgLangToCentralMap, $wgContLang->getCode(), "http://www.wikia.com/Wikia");
-?>
-				<div id="wikia_logo"><a rel="nofollow" href="<?= $central_url ?>">Wikia</a></div>
-
-<?php
+			<?php $this->printWikiaLogo()?>
+		<?php
 $categorylist = $this->data['data']['categorylist'];
 if(isset($categorylist['nodes']) && count($categorylist['nodes']) > 0 ) {
 ?>
@@ -2449,6 +2444,13 @@ wfProfileOut( __METHOD__ . '-body');
 				echo '<span id="request_wiki_ad">' . wfMsgExt('monaco-request-wiki-ad-text', array( "parseinline" )) . '</span>';
 			}
 		echo '</li></ul>';
+	}
+
+	/* Allow logo to be different */
+	function printWikiaLogo() {
+		global $wgLangToCentralMap, $wgContLang;
+		$central_url = Wikia::langToSomethingMap($wgLangToCentralMap, $wgContLang->getCode(), "http://www.wikia.com/Wikia");
+		echo '<div id="wikia_logo"><a rel="nofollow" href="' . $central_url . '">W1kia</a></div>';
 	}
 
 }
