@@ -24,3 +24,4 @@ $wgAvailableRights[] = 'lookupcontribs';
 $wgGroupPermissions['staff']['lookupcontribs'] = true;
 
 extAddSpecialPage( dirname(__FILE__) . '/SpecialLookupContribs_body.php', 'LookupContribs', 'LookupContribsPage' );
+$wgSpecialPageGroups['LookupContribs'] = 'users';
