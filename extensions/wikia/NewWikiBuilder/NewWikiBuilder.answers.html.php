@@ -6,6 +6,11 @@ require dirname(__FILE__) . '/header.php';
 
 <script type="text/javascript">
 NWB.type = "answers";
+var wgAdminSkin = '<?php echo $wgAdminSkin?>';
+NWB.changeTheme("Sapphire", false);
+</script>
+
+
 </script>
 
 <!-- ##############  Add a description to main page ############## -->
