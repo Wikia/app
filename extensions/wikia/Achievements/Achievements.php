@@ -264,10 +264,7 @@ function Achievements_AddBadgesIfNeeded($userId, $counters /* achievementTypeId 
 
 	$rows = array();
 
-	print_pre($counters);
-
 	foreach($counters as $achievementTypeId => $counter) {
-
 		if($achievementTypes[$achievementTypeId]['type'] == 'repeat') {
 			$valuesNo = count($achievementTypes[$achievementTypeId]['levels']);
 			$maxValue = $achievementTypes[$achievementTypeId]['levels'][$valuesNo-1];
