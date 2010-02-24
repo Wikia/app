@@ -30,7 +30,7 @@ $messages['en'] = array(
 
 	/* SUMMARY */
 
-	'achievement-edits-summary' => 'Made {{PLURAL:$1|one edit|$1 edits}}',
+	'achievement-edits-summary' => 'Made {{PLURAL:$1|one article edit|$1 article edits}}',
 	'achievement-pictures-summary' => 'Added {{PLURAL:$1|one picture|$1 pictures}}',
 	'achievement-newpage-summary' => 'Started {{PLURAL:$1|one new article|$1 new articles}}',
 	'achievement-category-summary' => 'Added {{PLURAL:$1|one category|$1 categories}}',
