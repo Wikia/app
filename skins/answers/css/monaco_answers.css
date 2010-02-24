@@ -384,8 +384,13 @@ body.mainpage .firstHeading { display:none; }
 	border: 1px solid #ddd;
 }
 
-#answers_category_select {
-/*	margin-bottom: 20px; */
+/* this is the "enter when done" box */
+#csHintContainer  {
+	background:none repeat scroll 0 0 #E0EAF8;
+	border:none;
+	color:#000000;
+	-moz-border-radius: 3px 3px 3px 3px;
+	-webkit-border-radius: 3px 3px 3px 3px;
 }
 
 #related_questions ul {
