@@ -19,7 +19,7 @@ class GiftManagerLogo extends UnlistedSpecialPage {
 
   function execute(){
 	  global $wgRequest, $IP;
-	 $this->gift_id = 		$wgRequest->getVal("gift_id");
+	  $this->gift_id = $wgRequest->getVal("gift_id");
 	  $this->initLogo($wgRequest);
 	  $this->executeLogo();
 
