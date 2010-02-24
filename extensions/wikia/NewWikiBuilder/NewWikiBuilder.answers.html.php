@@ -5,8 +5,7 @@ require dirname(__FILE__) . '/header.php';
 <ul>
 
 <script type="text/javascript">
-var wgAdminSkin = '<?php echo $wgAdminSkin?>';
-NWB.changeTheme("Sapphire", false);
+NWB.type = "answers";
 </script>
 
 <!-- ##############  Add a description to main page ############## -->
@@ -113,7 +112,7 @@ NWB.changeTheme("Sapphire", false);
 	  <tr valign="top">
 	     <td>
 		<div id="all_fp" class="bullets">
-		<form id="step3_form">
+		<form id="first_pages_form">
 		<input type="hidden" name="category" value="<?php echo htmlspecialchars(wfMsgForContent("nwb-new-pages"))?>">
 			<ul class="fp_block" id="fp_block_1">
 				<!-- Ids aren't necessary for the form, only used for Selenium -->
@@ -136,8 +135,8 @@ NWB.changeTheme("Sapphire", false);
 	<span class="nav_reverse">
 		<button class="secondary" onclick="WET.byStr('anwb/step3back');NWB.gotostep(2);"><span><?php echo wfMsgForContent("nwb-back-to-step-2")?></span></button>
 	</span>
-	<a href="#step4" id="skip_step_3" onclick="WET.byStr('anwb/step3skip');"><?php echo wfMsgForContent("nwb-skip-this-step")?></a> <?php echo wfMsgForContent("nwb-or")?><button onclick="WET.byStr('anwb/step3save');$('#step3_form').submit();"><span><?php echo wfMsgForContent("nwb-create-pages")?></span></button>
-	<input onclick="$('#step3_form').submit();" type="button" id="hidden_step_3_submit" style="display:none"><!-- For selenium tests -->
+	<a href="#step4" id="skip_step_3" onclick="WET.byStr('anwb/step3skip');"><?php echo wfMsgForContent("nwb-skip-this-step")?></a> <?php echo wfMsgForContent("nwb-or")?><button onclick="WET.byStr('anwb/step3save');$('#first_pages_form').submit();"><span><?php echo wfMsgForContent("nwb-create-pages")?></span></button>
+	<input onclick="$('#first_pages_form').submit();" type="button" id="hidden_step_3_submit" style="display:none"><!-- For selenium tests -->
 </div>
 </li>
 

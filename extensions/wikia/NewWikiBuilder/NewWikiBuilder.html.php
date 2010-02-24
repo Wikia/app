@@ -123,7 +123,7 @@ for (var i = 0; i < themes.length; i++){
 <h1 class="headline"><?php echo wfMsgForContent("nwb-step4-headline")?></h1>
 <div class="wrapper clearfix">
 	<?php echo wfMsgForContent("nwb-step4-text")?>
-	<form id="step4_form">
+	<form id="first_pages_form">
 		<input type="hidden" name="category" value="<?php echo htmlspecialchars(wfMsgForContent("nwb-new-pages"))?>">
 		<div id="all_fp" class="bullets">
 			<ul class="fp_block" id="fp_block_1">
@@ -145,8 +145,8 @@ for (var i = 0; i < themes.length; i++){
 	<span class="nav_reverse">
 		<button class="secondary" onclick="WET.byStr('nwb/step4back');NWB.gotostep(3);"><span><?php echo wfMsgForContent("nwb-back-to-step-3")?></span></button>
 	</span>
-	<a href="#step5" id="skip_step_4" onclick="WET.byStr('nwb/step4skip');"><?php echo wfMsgForContent("nwb-skip-this-step")?></a> <?php echo wfMsgForContent("nwb-or")?><button onclick="WET.byStr('nwb/step4save');$('#step4_form').submit();"><span><?php echo wfMsgForContent("nwb-create-pages")?></span></button>
-	<input onclick="$('#step4_form').submit();" type="button" id="hidden_step_4_submit" style="display:none"><!-- For selenium tests -->
+	<a href="#step5" id="skip_step_4" onclick="WET.byStr('nwb/step4skip');"><?php echo wfMsgForContent("nwb-skip-this-step")?></a> <?php echo wfMsgForContent("nwb-or")?><button onclick="WET.byStr('nwb/step4save');$('#first_pages_form').submit();"><span><?php echo wfMsgForContent("nwb-create-pages")?></span></button>
+	<input onclick="$('#first_pages_form').submit();" type="button" id="hidden_step_4_submit" style="display:none"><!-- For selenium tests -->
 </div>
 </li>
 
