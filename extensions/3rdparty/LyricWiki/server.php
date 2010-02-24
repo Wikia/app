@@ -820,6 +820,12 @@ function getSong($artist, $song="", $doHyphens=true){
 
 				if( !wfReadOnly() ) { // rt#27684 eloy
 					$db = lw_connect();
+					if(!utf8_compliant("$origArtistSql")){
+						$origArtistSql = utf8_encode($origArtistSql);
+					}
+					if(!utf8_compliant("$origSongSql")){
+						$origSongSql = utf8_encode($origSongSql);
+					}
 					$queryString = "INSERT INTO lw_soap_failures (request_artist,request_song, lookedFor) VALUES ('$origArtistSql', '$origSongSql', '$lookedForSql') ON DUPLICATE KEY UPDATE numRequests=numRequests+1";
 					mysql_query($queryString, $db);
 				}
