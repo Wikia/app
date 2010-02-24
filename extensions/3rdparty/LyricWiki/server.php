@@ -645,7 +645,7 @@ function getSong($artist, $song="", $doHyphens=true){
 		// WARNING: This may cause some unexpected results if these artists ever become actual pages.
 		// These are "artists" which are very commonly accuring non-artists.  IE: Baby Einstein is a collection of classical music, Apple Inc. is just apple's (video?) podcasts
 		$nonArtists = array(
-			"Baby Einstein", "Apple Inc.", "Soundtrack", "Various", "Various Artists"
+			"Baby Einstein", "Apple Inc.", "Soundtrack", "Various", "Various Artists", "The Howard Stern Show"
 		);
 
 		// The vast majority of failures come from players passing clearly-invalid requests - skip those.
@@ -751,6 +751,7 @@ function getSong($artist, $song="", $doHyphens=true){
 				print (!$debug?"":"found:\n$page");
 				if($finalName != $artistTitle){
 					print (!$debug?"":"Artist redirect found to \"$finalName\". Applying to song \"$song\".\n");
+					// TODO: FIXME: Would passing in the third parameter (applyEncoding=false) remove the need for utf8_decode?
 					$title = utf8_decode(lw_getTitle($finalName, $song)); // decode is used to prevent double-encode calls that would otherwise happen.  I'm skeptical as to whether this would always work (assuming the special char was in the original title instead of the redirected artist as tested).
 					print (!$debug?"":"Title \"$title\"\n");
 				}
@@ -820,12 +821,15 @@ function getSong($artist, $song="", $doHyphens=true){
 
 				if( !wfReadOnly() ) { // rt#27684 eloy
 					$db = lw_connect();
+					
+					// This section doesn't appear to do anything at the moment.  The artist and title still have bad-encoding even though lookedFor is encoded properly (lookedFor is a blob - does that matter?).
 					if(!utf8_compliant("$origArtistSql")){
 						$origArtistSql = utf8_encode($origArtistSql);
 					}
 					if(!utf8_compliant("$origSongSql")){
 						$origSongSql = utf8_encode($origSongSql);
 					}
+
 					$queryString = "INSERT INTO lw_soap_failures (request_artist,request_song, lookedFor) VALUES ('$origArtistSql', '$origSongSql', '$lookedForSql') ON DUPLICATE KEY UPDATE numRequests=numRequests+1";
 					mysql_query($queryString, $db);
 				}
