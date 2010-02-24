@@ -15,7 +15,7 @@ $(function() {
 	NWB.checkStep(firstStep);
 
 	$("#step1_form").submit(NWB.handleDescriptionForm);
-	$("#step4_form").submit(NWB.handleFirstPages);
+	$("#first_pages_form").submit(NWB.handleFirstPages);
 });
 
 var NWB = {
@@ -106,7 +106,7 @@ NWB.finalize = function (redir){
 	/* Issue a purge request */
         Mediawiki.updateStatus(NWB.msg("nwb-finalizing"));
 	Mediawiki.waiting();
-        var mainPageEnd = Mediawiki.followRedirect(wgMainpage, false); // Should be cached.
+        var mainPageEnd = Mediawiki.followRedirect(window.wgMainpage, false); // Should be cached.
         var result = Mediawiki.apiCall({
 		"action" : "purge",
 		"titles" : mainPageEnd});
@@ -155,7 +155,7 @@ NWB.handleDescriptionForm = function (event){
              // Save the article
              Mediawiki.updateStatus(NWB.msg("nwb-saving-description"));
 	     Mediawiki.waiting();
-	     var mainPageEnd = Mediawiki.followRedirect(wgMainpage, false); // Should be cached.
+	     var mainPageEnd = Mediawiki.followRedirect(window.wgMainpage, false); // Should be cached.
 	     Mediawiki.waiting();
              Mediawiki.editArticle({
                   "title": mainPageEnd,
@@ -213,10 +213,17 @@ NWB.handleFirstPages = function (event){
 		pages.reverse();
 
 		Mediawiki.waiting();
+		var pagetext;
+		if (NWB.type == "answers") {
+			// No initial page text for answers
+			pagetext = "";
+		} else {
+                        pagetext = NWB.msg("nwb-new-pages-text");
+		}
                 Mediawiki.apiCall({
                         "action" : "createmultiplepages",
 			"pagelist" : pages.join("|"),
-                        "pagetext" : NWB.msg("nwb-new-pages-text")
+                        "pagetext" : pagetext
                         }, NWB.handleFirstPagesCallback, NWB.apiFailed, "POST");
         } catch (e) {
                   Mediawiki.updateStatus(NWB.msg("nwb-error-saving-articles"));
