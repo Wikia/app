@@ -123,7 +123,7 @@ function Achievements_Display(&$template, &$templateEngine) {
 EOT;
 	}
 
-	$noofbadges = array_sum($userBadges);
+	$noofbadges = array_sum($userBadges) + count($userBadges);
 	$username = $user->getName();
 
 	$achievementsDisplay = <<<EOT
