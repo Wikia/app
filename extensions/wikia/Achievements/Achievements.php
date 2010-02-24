@@ -87,7 +87,7 @@ function Achievements_Display(&$template, &$templateEngine) {
 	$userBadges = Achievements_GetUserTopBadges($user->getID());
 	$userCounters = Achievements_GetUserCounters($user->getID());
 
-	$dbr = wfGetDB(DB_SLAVE);
+	$dbr = wfGetDB(DB_MASTER);
 
 	$dbr->query('set @rank = 0');
 	$res = $dbr->query('select c from (select @rank:=@rank+1 as c, user_id, count(user_id) as rank from achievements_badges group by user_id order by rank DESC) as c where user_id = '.$user->getID());
@@ -115,7 +115,7 @@ function Achievements_Display(&$template, &$templateEngine) {
  */
 function Achievements_GetUserCounters($userId) {
 	$userCounters = array();
-	$dbr = wfGetDB(DB_SLAVE);
+	$dbr = wfGetDB(DB_MASTER);
 
 	$res = $dbr->select('achievements_counters',
 						array('achievement_type_id', 'counter'),
@@ -188,7 +188,7 @@ function Achievements_ArticleSaveComplete(&$article, &$user, $text, $summary, &$
 	if(in_array($title->getNamespace(), $wgContentNamespaces)) {
 
 		if(!isset($userBadges[ACHIEVEMENT_EDIT_10_ARTICLES])) {
-			$dbr = wfGetDB(DB_SLAVE);
+			$dbr = wfGetDB(DB_MASTER);
 			$res = $dbr->query('SELECT count(DISTINCT(rc_cur_id)) as cnt FROM (SELECT rc_cur_id FROM recentchanges WHERE rc_type = 0 AND rc_user_text =  '.$dbr->addQuotes($user->getName()).' AND rc_timestamp >= date_sub(now(), interval 24 hour) AND rc_namespace IN ('.join(',', $wgContentNamespaces).')) AS c');
 			if($res->fetchObject()->cnt >= 9) {
 				$achievementCountersToIncrease[ACHIEVEMENT_EDIT_10_ARTICLES] = 1;
