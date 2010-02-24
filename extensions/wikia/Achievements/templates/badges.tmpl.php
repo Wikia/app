@@ -81,7 +81,7 @@ foreach($achievementTypes as $achievementTypeId => $achievement) {
 				$maxValue = $achievement['levels'][$valuesNo-1];
 				$secondMaxValue = $achievement['levels'][$valuesNo-2];
 				$diff = $maxValue - $secondMaxValue;
-				$next = $diff * ($userBadges[$achievementTypeId] + 2);
+				$next = $diff * ($userBadges[$achievementTypeId] + 1);
 			}
 			$text .= '<em>'.wfMsg('achievement-'.$achievement['name'].'-next', $next).'</em>';
 		}
