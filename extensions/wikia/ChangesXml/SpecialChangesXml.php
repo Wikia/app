@@ -2,7 +2,7 @@
 /**
  * This extension will keep trak of all changes over N characters in MAIN_NS
  * This data creates changes.xml file
- * Author Andrew Yasinky andrewy at wikia.com
+ * @author Andrew Yasinky andrewy at wikia.com
  * enbaling parameter $wgEnableSpecialChangesXmlToFeedUrl is url of where to put data
  */
 

@@ -1,7 +1,7 @@
 <?php
 /**
  * This extension will funnel all content pages and their derivatives that requested via index.php back into /wiki/Page_Name.
- * Author Andrew Yasinky andrewy at wikia.com
+ * @author Andrew Yasinky andrewy at wikia.com
  */
 
 if (!defined('MEDIAWIKI')) {
