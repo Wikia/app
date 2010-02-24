@@ -249,7 +249,7 @@ function Achievements_ArticleSaveComplete(&$article, &$user, $text, $summary, &$
 
 		if(!isset($userBadges[ACHIEVEMENT_EDIT_10_ARTICLES])) {
 			$dbr = wfGetDB(DB_SLAVE);
-			$res = $dbr->query('SELECT count(*) as cnt FROM (SELECT rc_user FROM recentchanges WHERE rc_user_text = '.$dbr->addQuotes($user->getName()).' AND rc_timestamp >= date_sub(now(), interval 24 hour) AND rc_namespace IN ('.join(',', $wgContentNamespaces).') LIMIT 10) AS c;');
+			$res = $dbr->query('SELECT count(distinct(rc_cur_id)) as cnt FROM (SELECT rc_cur_id FROM recentchanges WHERE rc_user_text = '.$dbr->addQuotes($user->getName()).' AND rc_timestamp >= date_sub(now(), interval 24 hour) AND rc_namespace IN ('.join(',', $wgContentNamespaces).') LIMIT 10) AS c;');
 			if($res->fetchObject()->cnt == 10) {
 				$achievementCountersToIncrease[ACHIEVEMENT_EDIT_10_ARTICLES] = 1;
 			}
