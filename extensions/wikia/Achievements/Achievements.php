@@ -61,9 +61,11 @@ function Achievements_Setup() {
  * @author: Inez Korczyński
  */
 function Achievements_Display(&$template, &$templateEngine) {
-	global $wgTitle, $achievementTypes, $wgExtensionsPath;
+	global $wgTitle, $achievementTypes, $wgExtensionsPath, $wgRequest;
 
-	wfLoadExtensionMessages('Achievements');
+	if($wgRequest->getVal('action', 'view') != 'view') {
+		return true;
+	}
 
 	if(empty($wgTitle) || $wgTitle->getNamespace() != NS_USER) {
 		return true;
@@ -75,121 +77,17 @@ function Achievements_Display(&$template, &$templateEngine) {
 		return true;
 	}
 
+
+	wfLoadExtensionMessages('Achievements');
+
 	$userBadges = Achievements_GetUserTopBadges($user->getID());
 	$userCounters = Achievements_GetUserCounters($user->getID());
 
-	$badgesDisplay = '';
+	$badgesTemplate = new EasyTemplate(dirname(__FILE__).'/templates');
+	$badgesTemplate->set_vars(array('userBadges' => $userBadges, 'userCounters' => $userCounters));
+	$badgesHTML = $badgesTemplate->render('badges');
 
-	foreach($achievementTypes as $achievementTypeId => $achievement) {
-		$text = '<big><b>'.wfMsg('achievement-'.$achievement['name'].'-name').'</b></big>';
-
-		if(!isset($userBadges[$achievementTypeId])) {
-			$src = $wgExtensionsPath . '/wikia/Achievements/images/'.$achievement['name'].'/'.$achievement['name'].'-bw.jpg';
-			$text .= wfMsg('achievement-'.$achievement['name'].'-info');
-		} else {
-
-			if($achievementTypes[$achievementTypeId]['type'] == 'repeat') {
-
-				$src = $wgExtensionsPath . '/wikia/Achievements/images/'.$achievement['name'].'/'.$achievement['name'].($userBadges[$achievementTypeId] > 4 ? 'x' : $userBadges[$achievementTypeId] + 1).'.jpg';
-
-				$text .= '<strong>' . wfMsg('achievement-level', $userBadges[$achievementTypeId] + 1) . '</strong>';
-				$text .= wfMsg('achievement-'.$achievement['name'].'-summary', $userCounters[$achievementTypeId]);
-
-				if(isset($achievement['levels'][$userBadges[$achievementTypeId] + 1])) {
-					$next = $achievement['levels'][$userBadges[$achievementTypeId] + 1];
-				} else {
-					$valuesNo = count($achievement['levels']);
-					$maxValue = $achievement['levels'][$valuesNo-1];
-					$secondMaxValue = $achievement['levels'][$valuesNo-2];
-					$diff = $maxValue - $secondMaxValue;
-					$next = $diff * ($userBadges[$achievementTypeId] + 2);
-				}
-
-				$text .= '<em>'.wfMsg('achievement-'.$achievement['name'].'-next', $next).'</em>';
-
-			} else {
-
-				$src = $wgExtensionsPath . '/wikia/Achievements/images/'.$achievement['name'].'/'.$achievement['name'].'.jpg';
-				$text .= wfMsg('achievement-'.$achievement['name'].'-summary');
-
-			}
-		}
-
-		$badgesDisplay .= <<<EOT
-		<div>
-			<img width="150" height="150" src="{$src}">
-			<span>{$text}</span>
-		</div>
-EOT;
-	}
-
-	$noofbadges = array_sum($userBadges) + count($userBadges);
-	$username = $user->getName();
-
-	$achievementsDisplay = <<<EOT
-<style>
-#achievements-info {
-	float: right;
-	width: 200px;
-	line-height: 3.5em;
-	text-align: center;
-	padding-top: 7px;
-}
-#achievements-badges {
-	margin-right: 210px;
-}
-#achievements-badges div {
-	display: inline-block;
-	width: 170px;
-	text-align: center;
-	vertical-align: top;
-	margin-right: 20px;
-}
-#achievements-badges span {
-	display: block;
-	margin-top: 10px;
-	margin-bottom: 25px;
-}
-#achievements-badges big,
-#achievements-badges strong,
-#achievements-badges em {
-	display: block;
-}
-</style>
-
-<div id="achievements" class="clearfix">
-	<div id="achievements-info">
-		<span style="font-size: 15pt; font-weight: bold; margin-right: 3px;">{$username}</span> has earned <br/> <span style="font-size: 45pt; font-weight: bold; color: green;">{$noofbadges}</span> badges
-		<br/><br/>
-
-		<span style="font-size: 12pt; font-weight: bold;">Inez is the</span>
-
-		<br/>
-
-		<span style="font-size: 45pt; font-weight: bold; color: purple;">#3</span>
-
-		<br/>
-
-		<span style="font-size: 12pt; font-weight: bold;">all-time wiki member</span>
-
-		<br/>
-
-		<span style="font-size: 12pt; font-weight: bold;">and</span>
-
-		<br/>
-
-		<span style="font-size: 45pt; font-weight: bold; color: purple; display: block; margin-top: 15px; margin-bottom: 5px">#4</span>
-
-		<span style="font-size: 12pt; font-weight: bold;">for this week</span>
-
-		<br/><br/>
-		<a href="">123</a>
-	</div>
-	<div id="achievements-badges">$badgesDisplay</div>
-</div>
-EOT;
-
-	$templateEngine->data['bodytext'] = $achievementsDisplay . $templateEngine->data['bodytext'];
+	$templateEngine->data['bodytext'] = $badgesHTML . $templateEngine->data['bodytext'];
 
 	return true;
 }
@@ -274,7 +172,7 @@ function Achievements_ArticleSaveComplete(&$article, &$user, $text, $summary, &$
 		if(!isset($userBadges[ACHIEVEMENT_EDIT_10_ARTICLES])) {
 			$dbr = wfGetDB(DB_SLAVE);
 			$res = $dbr->query('SELECT count(DISTINCT(rc_cur_id)) as cnt FROM (SELECT rc_cur_id FROM recentchanges WHERE rc_type = 0 AND rc_user_text =  '.$dbr->addQuotes($user->getName()).' AND rc_timestamp >= date_sub(now(), interval 24 hour) AND rc_namespace IN ('.join(',', $wgContentNamespaces).')) AS c');
-			if($res->fetchObject()->cnt >= 10) {
+			if($res->fetchObject()->cnt >= 9) {
 				$achievementCountersToIncrease[ACHIEVEMENT_EDIT_10_ARTICLES] = 1;
 			}
 		}
