@@ -307,6 +307,13 @@ function Achievements_ArticleSaveComplete(&$article, &$user, $text, $summary, &$
 
 		Achievements_UpdateCounters($user->getId(), $newCounters);
 		Achievements_AddBadgesIfNeeded($user->getId(), $newCounters);
+
+		// invalidate cache
+		$userpageTitle = Title::newFromText($user->getName(), NS_USER);
+		if($userpageTitle instanceof Title) {
+			$userpageTitle->invalidateCache();
+		}
+
 	}
 
 	return true;
