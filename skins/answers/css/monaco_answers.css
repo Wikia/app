@@ -342,8 +342,8 @@ body.mainpage .firstHeading { display:none; }
 
 #answer_box {
 	padding: 12px;
+	padding-bottom: 35px; /* overcome float:right" in save button */
 	background-color: #E0EAF8;
-/*	border-top: 3px solid #A1A4F7; */
 	-moz-border-radius:10px 10px 10px 10px;
 	-webkit-border-radius:10px 10px 10px 10px;
 	margin-bottom: 20px;
