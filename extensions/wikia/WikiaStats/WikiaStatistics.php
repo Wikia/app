@@ -246,6 +246,7 @@ class WikiaEditStatistics {
 	 */
 	static public function saveComplete(&$Article, &$User /* other params */) {
 		wfProfileIn( __METHOD__ );
+		error_log("save \n");
 		if ( ( $Article instanceof Article ) && ( $User instanceof User ) ) {
 			$Title = $Article->mTitle;
 			$oEdits = new WikiaEditStatistics($Title, $User);
@@ -366,7 +367,7 @@ class WikiaHubStats {
 	 * @param Array $data - list of Top Wikis (by PV) in hub
 	 */
 	public function getTopPVWikis( $limit = 20 ) {
-		global $wgMemc, $wgExternalStatsDB;
+		global $wgMemc, $wgStatsDB;
 		wfProfileIn( __METHOD__ );
 		
 		$data = array();
@@ -377,7 +378,7 @@ class WikiaHubStats {
 			$data = $wgMemc->get( $memkey );
 			
 			if ( empty($data) ) {
-				$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalStatsDB );
+				$dbr = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
 				$oRes = $dbr->select(
 					array( 'city_page_views' ),
 					array( 'pv_city_id, sum(pv_views) as views' ),
@@ -677,6 +678,7 @@ class WikiaGlobalStats {
 			/*
 			 * check wikiname
 			 */
+			$oWikia->city_sitename = "";
 			if ( $allowed ) {
 				$oWikia->city_sitename = unserialize($siteName->cv_value);
 				if ( !$oWikia->city_sitename ) {
@@ -785,7 +787,7 @@ class WikiaGlobalStats {
 
 			$dates = array();
 			for ( $i = 1; $i <= $days; $i++ ) {
-				$dates[] = date('Y-m-d', time() - $i * 60 * 60 * 24);
+				$dates[] = date( 'Y-m-d', time() - ( ($i-1) * 60 * 60 * 24 ) );
 			}
 			$conditions = array();
 			if ( count($dates) == 1 ) {
