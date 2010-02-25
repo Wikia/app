@@ -593,12 +593,13 @@ class EmailNotification {
 		# named variables when composing your notification emails while
 		# simply editing the Meta pages
 
-		$subject = wfMsgForContent( 'enotif_subject_' . strtolower($this->action) );
-		if(wfEmptyMsg( 'enotif_subject_' . strtolower($this->action), $subject )) {
+		$action = strtolower($this->action);
+		$subject = wfMsgForContent( 'enotif_subject_' . $action );
+		if(wfEmptyMsg( 'enotif_subject_' . $action, $subject )) {
 			$subject = wfMsgForContent( 'enotif_subject' );
 		}
 
-		$msgKey = 'enotif_body' . ($this->action == '' ? '' : ('_' . strtolower($this->action)));
+		$msgKey = 'enotif_body' . ($action == '' ? '' : ('_' . $action));
 
 		global $wgLanguageCode;
 		list($body, $bodyHTML) = wfMsgHTMLwithLanguageAndAlternative($msgKey, 'enotif_body', $wgLanguageCode);
@@ -611,12 +612,19 @@ class EmailNotification {
 			/* WIKIA change, watchlist link tracking, rt#33913 */
 			$difflink = $this->title->getFullUrl( 's=wldiff&diff=0&oldid=' . $this->oldid );
 			$keys['$NEWPAGE'] = wfMsgForContent( 'enotif_lastvisited', $difflink );
-			$keys['$NEWPAGEHTML'] = wfMsgForContent( 'enotif_lastvisited', '<a href="'. $difflink .'">$PAGETITLE</a>' );
+			$keys['$NEWPAGEHTML'] = wfMsgForContent( 'enotif_lastvisited-HTML', $difflink );
 			$keys['$OLDID']   = $this->oldid;
 			$keys['$CHANGEDORCREATED'] = wfMsgForContent( 'changed' );
 		} else {
-			$keys['$NEWPAGE'] = wfMsgForContent( 'enotif_newpagetext' );
-			$keys['$NEWPAGEHTML'] = $keys['$NEWPAGE']; //cheat and dupe this for now
+			if( $action == '') {
+				//no oldid + empty action = create edit, ok to use newpagetext
+				$keys['$NEWPAGE'] = wfMsgForContent( 'enotif_newpagetext' );
+				$keys['$NEWPAGEHTML'] = $keys['$NEWPAGE']; //cheat and dupe this for now
+			} else {
+				//no oldid + action = event, dont show anything, confuses users
+				$keys['$NEWPAGE'] = '';
+				$keys['$NEWPAGEHTML'] = '';
+			}
 			# clear $OLDID placeholder in the message template
 			$keys['$OLDID']   = '';
 			$keys['$CHANGEDORCREATED'] = wfMsgForContent( 'created' );
