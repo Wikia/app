@@ -36,30 +36,30 @@ class WikiaStatsStompProducer {
 	 *
 	 * @author Bartek Lapinski
 	 */
-	function __construct( $cityId, $FactoryTags, $pageId = null, $Title = null, $User = null, $Timestamp = null ) {
+	function __construct( $cityId, $factoryTags, $pageId = null, $title = null, $user = null, $timestamp = null ) {
 		global $wgLanguageCode, $wgEnableBlogArticles, $wgDBname, $wgSitename, $wgServer;
 
 		$this->mCityId = $cityId;
-		$this->mCityTag = serialize( $FactoryTags );
+		$this->mCityTag = serialize( $factoryTags );
 		$this->mCityLang = $wgLanguageCode;
 
 		if( empty( $pageId ) ) {
-			if( !empty( $Title ) ) {
+			if( !empty( $title ) ) {
 				// check if it is a blog comment, if so, then load all the data from "parent" blog article
-				if( NS_BLOG_ARTICLE_TALK == $Title->getNamespace() ) {
-					$comment = BlogComment::newFromId( $Title->getArticleId() );						
-					$Title = $comment->getBlogTitle();					
+				if( NS_BLOG_ARTICLE_TALK == $title->getNamespace() ) {
+					$comment = BlogComment::newFromId( $title->getArticleId() );						
+					$title = $comment->getBlogTitle();					
 				}
-				$this->mPageId = $Title->getArticleId();				
+				$this->mPageId = $title->getArticleId();				
 			} else {
 				$this->mPageId = $pageId;
-				$Title = Title::newFromID( $pageId );
+				$title = Title::newFromID( $pageId );
 			}
 		}
-		if( !empty( $User ) ) {
-			$this->mEditorId = $User->getId();
-			$this->mUsername = $User->getName();
-			$groups = $User->getGroups();			
+		if( !empty( $user ) ) {
+			$this->mEditorId = $user->getId();
+			$this->mUsername = $user->getName();
+			$groups = $user->getGroups();			
 			$this->mUserGroups = implode(";", $groups) ;			
 		} 
 
@@ -68,17 +68,17 @@ class WikiaStatsStompProducer {
 		} else {
 			$this->mEventTimestamp = $Timestamp;
 		}		
-		if( !empty( $Title ) ) {
-			$this->mPageName = $Title->getDBkey();
-			$this->mPageURL = $Title->getFullURL();
-			$this->mPageNs = $Title->getNamespace();
+		if( !empty( $title ) ) {
+			$this->mPageName = $title->getDBkey();
+			$this->mPageURL = $title->getFullURL();
+			$this->mPageNs = $title->getNamespace();
 			$this->mIsContentNs =
-				( $Title->isContentPage() ) &&
+				( $title->isContentPage() ) &&
 				(
 				 ($wgEnableBlogArticles) &&
 				 (!in_array($this->mPageNs, array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK, NS_BLOG_LISTING, NS_BLOG_LISTING_TALK)))
 				);
-			$this->mRevId = $Title->getLatestRevID();
+			$this->mRevId = $title->getLatestRevID();
 		}
 
 		$this->mDBname = $wgDBname;
@@ -150,16 +150,24 @@ class WikiaStatsStompProducer {
 	 * @author Bartek Lapinski 
 	 * @return true
 	 */
-	static public function saveComplete(&$Article, &$User ) {
+	static public function saveComplete(&$article, &$user ) {
 		global $wgCityId, $wgWikiFactoryTags;
 		wfProfileIn( __METHOD__ );
 		if( empty( $wgWikiFactoryTags ) ) {
                 	wfProfileOut( __METHOD__ );
 			return true;			
 		}
-		if ( ( $Article instanceof Article ) && ( $User instanceof User ) ) {
-			$Title = $Article->mTitle;
-			$oEdits = new WikiaStatsStompProducer( $wgCityId, $wgWikiFactoryTags, null, $Title, $User );
+
+		$title = $article->mTitle; 
+
+		if( ( !class_exists( 'BlogComment' ) && ( NS_BLOG_ARTICLE_TALK == $title->getNamespace() ) ) ) {
+			// NY blogs, not Eloy's - cut them down, they would break the code...
+                	wfProfileOut( __METHOD__ );
+			return true;			
+		}		
+
+		if ( ( $article instanceof Article ) && ( $user instanceof User ) ) {
+			$oEdits = new WikiaStatsStompProducer( $wgCityId, $wgWikiFactoryTags, null, $title, $user );
 			$oEdits->storeData( 'edit' );
 		}
 		
@@ -181,12 +189,12 @@ class WikiaStatsStompProducer {
 	 * @author Bartek Lapinski
 	 * @return true
 	 */
-        static public function deleteComplete( &$Article, &$User, $reason, $articleId ) {
+        static public function deleteComplete( &$article, &$user, $reason, $articleId ) {
 		global $wgCityId;
                 wfProfileIn( __METHOD__ );
-		if ( ( $Article instanceof Article ) && ( $User instanceof User ) ) {
-			$Title = $Article->mTitle;
-			$oEdits = new WikiaStatsStompProducer( $wgCityId, $articleId, $Title, $User );
+		if ( ( $article instanceof Article ) && ( $user instanceof User ) ) {
+			$title = $article->mTitle;
+			$oEdits = new WikiaStatsStompProducer( $wgCityId, $articleId, $title, $user );
 			$oEdits->storeData( 'delete' );
 		}
 
@@ -207,11 +215,11 @@ class WikiaStatsStompProducer {
 	 * @author Bartek Lapinski
 	 * @return true
 	 */
-	static public function undeleteComplete( &$Title, $User, $reason ) {
+	static public function undeleteComplete( &$title, $user, $reason ) {
 		global $wgCityId;
                 wfProfileIn( __METHOD__ );
-		if ( ( $Title instanceof Title ) && ( $User instanceof User ) ) {
-			$oEdits = new WikiaStatsStompProducer( $wgCityId, null, $Title, $User );
+		if ( ( $title instanceof Title ) && ( $user instanceof User ) ) {
+			$oEdits = new WikiaStatsStompProducer( $wgCityId, null, $title, $user );
 			$oEdits->storeData( 'undelete' );
 		}
 
