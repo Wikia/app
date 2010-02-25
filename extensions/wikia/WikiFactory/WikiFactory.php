@@ -802,7 +802,8 @@ class WikiFactory {
 				? $variables[ $cv_name ]
 				: false;
 		}
-		else {
+
+		if( !$value ) {
 			$variable = self::loadVariableFromDB( false, $cv_name, $city_id, $master );
 			$value = isset( $variable->cv_value )
 				? self::substVariables( unserialize( $variable->cv_value ), $city_id )
@@ -810,6 +811,7 @@ class WikiFactory {
 		}
 
 		wfProfileOut( __METHOD__ );
+		
 		return $value;
 	}
 
