@@ -1,4 +1,5 @@
 == Changes since 201002.4 ==
+* rt#41402: scorecard image url has multiple unencoded ampersands, causing many html validation errors. (Nef)
 * rt#41403: scorecard javascript missing required type attribute. (Nef)
 * StaffSigs: add multiuser/random selection to override (uberfuzzy)
 * rt#40913:	Nofollow on CC-BY-SA link. (Nef)

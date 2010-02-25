@@ -27,7 +27,7 @@ COMSCORE.beacon({
 });
 </script>
 <noscript>
-<img src="http://b.scorecardresearch.com/p?c1=2&c2=6177433&c3=&c4=&c5=&c6=&c15=&cj=1" />
+<img src="http://b.scorecardresearch.com/p?c1=2&amp;c2=6177433&amp;c3=&amp;c4=&amp;c5=&amp;c6=&amp;c15=&amp;cj=1" />
 </noscript>
 <!-- End comScore Tag -->';
 			break;
