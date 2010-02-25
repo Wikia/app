@@ -260,22 +260,33 @@ body.mainpage .firstHeading { display:none; }
     padding: 2px;
 }
 
+
+
 /* using !important because of the inline styling */
-#csAddCategorySwitch a {
+#csAddCategorySwitch a, #CSitemOuterAddCategory {
 /*    font-weight: bold !important; */
     color: #fff !important;
-    background: #BAD0EF !important;
+    background: #8EB4E6 !important;
     -moz-border-radius: 3px 3px 3px 3px;
     -webkit-border-radius: 3px 3px 3px 3px;
 }
 
-#csAddCategorySwitch {
-    background: #BAD0EF !important;
+#csAddCategorySwitch, #csAddCategoryButton {
+    background: #8EB4E6 !important;
     border: none !important;
     -moz-border-radius: 3px 3px 3px 3px;
     -webkit-border-radius: 3px 3px 3px 3px;
     line-height:16px !important;
     padding:0 0 0 4px !important;
+}
+
+/* this is the "enter when done" box */
+#csHintContainer  {
+	background:none repeat scroll 0 0 #8EB4E6 !important;
+	border:none !important;
+	-moz-border-radius: 3px 3px 3px 3px;
+	-webkit-border-radius: 3px 3px 3px 3px;
+	color: #fff !important;
 }
 
 
@@ -384,14 +395,6 @@ body.mainpage .firstHeading { display:none; }
 	border: 1px solid #ddd;
 }
 
-/* this is the "enter when done" box */
-#csHintContainer  {
-	background:none repeat scroll 0 0 #E0EAF8;
-	border:none;
-	color:#000000;
-	-moz-border-radius: 3px 3px 3px 3px;
-	-webkit-border-radius: 3px 3px 3px 3px;
-}
 
 #related_questions ul {
 	margin: 0px;
