@@ -777,7 +777,7 @@ class WikiFactory {
 	 * - all internal variables will be replace by their values
 	 *
 	 * @access public
-	 * @author eloy@wikia-inc.com
+	 * @author Krzysztof Krzyżaniak (eloy)
 	 * @static
 	 *
 	 * @param string	$cv_name	variable name in city_variables_pool
@@ -787,10 +787,30 @@ class WikiFactory {
 	 * @return mixed value for variable or null otherwise
 	 */
 	static public function getVarValueByName( $cv_name, $city_id, $master = false ) {
-		$variable = self::loadVariableFromDB( false, $cv_name, $city_id, $master );
-		return isset( $variable->cv_value )
-			? self::substVariables( unserialize( $variable->cv_value ), $city_id )
-			: false;
+		global $wgMemc;
+
+		wfProfileIn( __METHOD__ );
+
+		$value = false;
+		/**
+		 * first read WF Cache for city_id -- maybe value is already stored
+		 * in memcached?
+		 */
+		if( !$master ) {
+			$variables = $wgMemc->get( self::getVarsKey( $city_id ) );
+			$value = isset( $variables[ $cv_name ] )
+				? $variables[ $cv_name ]
+				: false;
+		}
+		else {
+			$variable = self::loadVariableFromDB( false, $cv_name, $city_id, $master );
+			$value = isset( $variable->cv_value )
+				? self::substVariables( unserialize( $variable->cv_value ), $city_id )
+				: false;
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $value;
 	}
 
 	/**
