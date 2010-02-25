@@ -227,6 +227,8 @@ function CategorySelectAjaxSaveCategories($articleId, $categories) {
 				$article_text = $article->fetchContent();
 				$article_text .= $categories;
 				
+				$dbw = wfGetDB( DB_MASTER );
+				$dbw->begin();
 				$editPage = new EditPage( $article );
 				$editPage->edittime = $article->getTimestamp();
 				$editPage->textbox1 = $article_text;
@@ -235,6 +237,7 @@ function CategorySelectAjaxSaveCategories($articleId, $categories) {
 				$retval = $editPage->internalAttemptSave( $result, $bot );
 				Wikia::log( __METHOD__, "editpage", "Returned value {$retval}" );
 				if ( $retval == EditPage::AS_SUCCESS_UPDATE || $retval == EditPage::AS_SUCCESS_NEW_ARTICLE ) {
+					$dbw->commit();
 					$title->invalidateCache();
 					Article::onArticleEdit($title);
 
@@ -245,8 +248,10 @@ function CategorySelectAjaxSaveCategories($articleId, $categories) {
 					$result['info'] = 'ok';
 					$result['html'] = $cats;
 				} elseif ( $retval == EditPage::AS_SPAM_ERROR ) {
+					$dbw->rollback();
 					$result['error'] = wfMsg('spamprotectiontext');
 				} else {
+					$dbw->rollback();
 					$result['error'] = wfMsg('categoryselect-edit-abort');	
 				}
 			} else {
