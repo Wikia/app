@@ -331,7 +331,7 @@ function get_content($host)
 	  $cset = strtoupper( $cset );
 
 	  if ( $cset != "UTF-8" ) {
-		  $str = @mb_convert_encoding( $str, "UTF-8", $cset );	
+		  $str = @iconv( $cset, "UTF-8//IGNORE", $str );	
 	  }
 
 	  $str = eregi_replace("<[^>]*>|[]\001-\037{}\\[]", " ", $str);
@@ -614,7 +614,7 @@ function get_wikitext($dbw, $site, $domsite)
     if(!$redir)
       $redir = $metaredir;
 
-    if(!strcasecmp($redir, $site))
+    if(stripos($redir, $site) === 0)
       $redir = "";
 
     if($redir)
@@ -641,18 +641,18 @@ function get_wikitext($dbw, $site, $domsite)
 
 
     // OUTPUT
+    $wtitle = webclean($title, $charset);
 
-    if($title)
-    {
-      $wtitle = webclean($title, $charset);
+    if($title && !empty( $wtitle )) {
       if(strstr($wtitle, "ist zu verkaufen"))
 	$wtitle = ereg_replace("ist zu verkaufen",
 	    "[http://www.sedo.de/checkdomainoffer.php4?partnerid=13318&amp;domain=$site ist zu verkaufen]", $wtitle);
       $output .= "'''" . $wtitle . "'''\n\n";
     }
 
-    if($description && strcmp($description, $title))
-      $output .= wfMsgForContent( 'newsite-output-description' ) . "\n" . webclean($description, $charset) . "\n\n";
+    $wdescription = webclean($description, $charset);
+    if( !empty( $wdescription ) && strcmp($description, $title) )
+      $output .= wfMsgForContent( 'newsite-output-description' ) . "\n" . $wdescription . "\n\n";
 
     if($weberror || $baustelle || $empty || $redir || $parking || $verkauf)
     {
@@ -722,17 +722,18 @@ function get_wikitext($dbw, $site, $domsite)
 //	echo "kommas $kommas spaces $spaces\n";
 
       $wkeywords = webclean($keywords, $charset);
-      $output .= wfMsgForContent( 'newsite-output-keywords', $newpage ) . "\n<keywords>";
-      $ktok = strtok($wkeywords, $tokki);
+      if ( !empty( $wkeywords ) ) {
+	      $output .= wfMsgForContent( 'newsite-output-keywords', $newpage ) . "\n<keywords>";
+	      $ktok = strtok($wkeywords, $tokki);
 
-      while ($ktok !== false) 
-      {
-	 $output .= trim($ktok);
-	 $ktok = strtok($tokki);
-	 if($ktok !== false)
-	   $output .= ", ";
+	      while ($ktok !== false) {
+		      $output .= trim($ktok);
+		      $ktok = strtok($tokki);
+		      if($ktok !== false)
+			      $output .= ", ";
+	      }
+	      $output .= "</keywords>\n";
       }
-      $output .= "</keywords>\n";
     }
 
     if(count($related) > 0)
