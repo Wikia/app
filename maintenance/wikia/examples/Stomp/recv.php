@@ -34,7 +34,7 @@ function receiveStomp() {
 				//echo "Failed to receive a message\n";
 			}
 		}
-		catch( Stomp_Exception $e ) {
+		catch( StompException $e ) {
 			echo __METHOD__ . 'stomp_exception, ' . $e->getMessage() ;
 		}
 	}

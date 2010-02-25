@@ -383,7 +383,7 @@ class Wikia {
 	 * @param Boolean $timestamp -- write timestamp before line default false
 	 *
 	 */
-	static public function log( $method, $sub = false, $message = false, $always = false, $timestamp = false ) {
+	static public function log( $method, $sub = false, $message = '', $always = false, $timestamp = false ) {
 	  global $wgDevelEnvironment, $wgErrorLog, $wgDBname, $wgCityId, $wgCommandLineMode;
 
 		$method = $sub ? $method . "-" . $sub : $method;
