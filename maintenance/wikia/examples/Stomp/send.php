@@ -26,7 +26,7 @@ function testStomp() {
 		echo "sent \n";
 		$stomp->disconnect();
 	}
-	catch( Stomp_Exception $e ) {
+	catch( StompException $e ) {
 		echo __METHOD__ . 'stomp_exception, ' . $e->getMessage() ;
 	}
 }
