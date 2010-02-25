@@ -4,6 +4,8 @@
  * @author Sean Colombo
  *
  * Special page which shows an actual interstital before sending the user on their way.
+ *
+ * TODO: Now that we're using Athena ad-code to the EXIT-STITIAL, these two classes might be able to be combined even more.
  */
 class Interstitial extends UnlistedSpecialPage {
 
@@ -72,12 +74,12 @@ class Interstitial extends UnlistedSpecialPage {
 	function execute(){
 		global $wgRequest, $wgOut;
 		global $wgAdsInterstitialsEnabled;
-		global $wgUser;
+		global $wgUser, $wgCityId;
 
 		$url = trim($wgRequest->getVal( 'u' ));
 		
 		if(($wgAdsInterstitialsEnabled) && (!$wgUser->isLoggedIn())){
-			global $wgAdsInterstitialsCampaignCode, $wgExtensionsPath;
+			global $wgExtensionsPath;
 			wfLoadExtensionMessages(INTERSTITIALS_SP);
 
 			$COOKIE_KEY = "IntPgCounter";
@@ -101,7 +103,6 @@ class Interstitial extends UnlistedSpecialPage {
 			}
 
 			$redirectDelay = (empty($wgAdsInterstitialsDurationInSeconds)?INTERSTITIAL_DEFAULT_DURATION_IN_SECONDS:$wgAdsInterstitialsDurationInSeconds);
-			$adCode = (empty($wgAdsInterstitialsCampaignCode)?wfMsg('interstitial-default-campaign-code'):$wgAdsInterstitialsCampaignCode);
 
 			// Set up the CSS
 			$wgOut->setArticleBodyOnly(true);
@@ -117,23 +118,42 @@ class Interstitial extends UnlistedSpecialPage {
 			if ($skinName == 'SkinMonaco') {
 				$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
+				$adSlots = array(
+					'INVISIBLE' => '&nbsp;',
+					'BOXAD_1' => AdEngine::getInstance()->getAd('SPECIAL_INTERSTITIAL_BOXAD_1'),
+					'BOXAD_2' => '&nbsp;'
+				);
+
+				$oTmpl->set_vars(
+					array(
+							'adSlots' => $adSlots
+					)
+				);
+
+				$adTemplate = 'adLayoutClassic';
+
+				$athenaInitStuff = AdProviderAthena::getInstance()->getSetupHtml();
+				$athenaInitStuff .= AdEngine::getInstance()->providerValuesAsJavascript($wgCityId);
+
 				// Create the JS-includes for the tracking code and jQuery - will just use StaticChute because it should be in user's cache by now.
+				$adCode = $oTmpl->execute($adTemplate);
 				$StaticChute = new StaticChute('js');
 				$StaticChute->useLocalChuteUrl();
 				$package = 'monaco_anon_article_js';
 				$jsIncludes = $StaticChute->getChuteHtmlForPackage($package);
 				$jsGlobals = Skin::makeGlobalVariablesScript( array('skinname' => $skinName) );
 				$oTmpl->set_vars(
-						array(
-							'url' => $url,
-							'css' => Interstitial::getCss(),
-							'skip' => wfMsg('interstitial-skip-ad'),
-							'adCode' => $adCode,
-							'redirectDelay' => $redirectDelay,
-							'jsIncludes' => $jsIncludes,
-							'pageType' => 'interstitial',
-							'jsGlobals' => $jsGlobals,
-						)
+					array(
+						'adCode' => $adCode,
+						'athenaInitStuff' => $athenaInitStuff,
+						'css' => Interstitial::getCss(),
+						'jsGlobals' => $jsGlobals,
+						'jsIncludes' => $jsIncludes,
+						'pageType' => 'interstitial',
+						'redirectDelay' => $redirectDelay,
+						'skip' => wfMsg('interstitial-skip-ad'),
+						'url' => $url,
+					)
 				);
 
 				$wgOut->clearHTML();

@@ -100,19 +100,19 @@ class Outbound extends UnlistedSpecialPage {
 			$pageBarMsg = wfMsg('outbound-screen-you-are-leaving');
 			$jsGlobals = Skin::makeGlobalVariablesScript( array('skinname' => $skinName) );
 			$oTmpl->set_vars(
-					array(
-						'url' => $url,
-						'css' => Interstitial::getCss(),
-						'skip' => wfMsg('interstitial-skip-ad'),
-						'adCode' => $adCode,
-						'loginMsg' => $loginMsg,
-						'pageBarMsg' => $pageBarMsg,
-						'athenaInitStuff' => $athenaInitStuff,
-						'redirectDelay' => ( $noAutoRedirect ? 0 : $this->redirectDelay ),
-						'jsIncludes' => $jsIncludes,
-						'pageType' => 'exitPage',
-						'jsGlobals' => $jsGlobals,
-					)
+				array(
+					'adCode' => $adCode,
+					'athenaInitStuff' => $athenaInitStuff,
+					'css' => Interstitial::getCss(),
+					'loginMsg' => $loginMsg,
+					'jsGlobals' => $jsGlobals,
+					'jsIncludes' => $jsIncludes,
+					'pageBarMsg' => $pageBarMsg,
+					'pageType' => 'exitPage',
+					'redirectDelay' => ( $noAutoRedirect ? 0 : $this->redirectDelay ),
+					'skip' => wfMsg('interstitial-skip-ad'),
+					'url' => $url,
+				)
 			);
 
 			// just output content of template

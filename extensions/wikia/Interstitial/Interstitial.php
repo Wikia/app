@@ -24,8 +24,6 @@ define('INTERSTITIAL_DEFAULT_DURATION_IN_SECONDS', 10);
 function interstitialsJsGlobalVariables(&$vars){
 	global $wgCookieDomain, $wgCookiePath;
 	global $wgAdsInterstitialsEnabled, $wgAdsInterstitialsPagesBeforeFirstAd, $wgAdsInterstitialsPagesBetweenAds;
-	global $wgAdsInterstitialsDurationInSeconds;
-	global $wgAdsInterstitialsCampaignCode;
 
 	wfLoadExtensionMessages(INTERSTITIALS_SP);
 

@@ -253,6 +253,7 @@ EOT;
 		  case 'EXIT_STITIAL_INVISIBLE': return "loc=exit;";
 		  case 'EXIT_STITIAL_BOXAD_1': return "loc=exit;";
 		  case 'EXIT_STITIAL_BOXAD_2': return "loc=exit;";
+		  case 'SPECIAL_INTERSTITIAL': return "loc=top;";
 		  default: return "";
 		}
 	}
