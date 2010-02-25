@@ -91,7 +91,11 @@ function RelatedPages_Display(&$template, &$templateEngine) {
 						}
 					}
 					if(!empty($results)) {
-						$out = array_merge($out, array_rand(array_flip($results), 5 - count($out)));
+						$randOut = array_rand(array_flip($results), 5 - count($out));
+						if(!is_array($randOut)){ // array_rand will return a single element instead of an array of size 1
+							$randOut = array($randOut);
+						}
+						$out = array_merge($out, $randOut);
 					}
 				}
 
