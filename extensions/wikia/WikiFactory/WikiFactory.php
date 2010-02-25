@@ -798,8 +798,8 @@ class WikiFactory {
 		 */
 		if( !$master ) {
 			$variables = $wgMemc->get( self::getVarsKey( $city_id ) );
-			$value = isset( $variables[ $cv_name ] )
-				? $variables[ $cv_name ]
+			$value = isset( $variables[ "data" ][ $cv_name ] )
+				? self::substVariables( $variables[ "data" ][ $cv_name ] )
 				: false;
 		}
 
@@ -811,7 +811,7 @@ class WikiFactory {
 		}
 
 		wfProfileOut( __METHOD__ );
-		
+
 		return $value;
 	}
 
