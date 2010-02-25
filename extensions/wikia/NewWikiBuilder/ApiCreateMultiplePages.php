@@ -41,6 +41,9 @@ class ApiCreateMultiplePages extends ApiBase {
 	private function createPage($title, $category = null, $text = null){
 		global $wgUser, $wgContLang;
 
+		// Remove trailing question marks
+		$title = preg_replace('/\?+$/', '', $title);
+	
 		$titleObj = Title::newFromText($title);
 		if(!$titleObj) {
 			// Invalid title
