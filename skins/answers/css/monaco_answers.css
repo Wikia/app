@@ -116,10 +116,11 @@ body.page-Wikianswers h1.firstHeading, body.page-Wikianswers #contentSub { displ
 #headerButtonHub { display: none; }
 #navigation .Monaco-sidebar_edit { display: none; }
 body.mainpage .firstHeading { display:none; }
-.usermessage { display:none; }
+.usermessage { display: none; }
 #search_box { display: none;}
-
-
+#control_edit { display: none; }
+#control_watch { display: none; }
+#control_sharefeature { display: none; }
 
 
 /* === THESE AFFECT SPECIFIC ELEMENTS in order from top to bottom === */
