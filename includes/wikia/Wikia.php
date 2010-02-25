@@ -376,13 +376,14 @@ class Wikia {
 	 * @example Wikia::log( __METHOD__, "1", "checking" );
 	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
 	 *
-	 * @param String $method  -- use __METHOD__
-	 * @param String $sub     -- if more in one method default false
-	 * @param String $message -- additional message default false
-	 * @param Boolean $always -- skip checking of $wgErrorLog and write log (or not)
+	 * @param String $method     -- use __METHOD__
+	 * @param String $sub        -- if more in one method default false
+	 * @param String $message    -- additional message default false
+	 * @param Boolean $always    -- skip checking of $wgErrorLog and write log (or not)
+	 * @param Boolean $timestamp -- write timestamp before line default false
 	 *
 	 */
-	static public function log( $method, $sub = false, $message = false, $always = false ) {
+	static public function log( $method, $sub = false, $message = false, $always = false, $timestamp = false ) {
 	  global $wgDevelEnvironment, $wgErrorLog, $wgDBname, $wgCityId, $wgCommandLineMode;
 
 		$method = $sub ? $method . "-" . $sub : $method;
@@ -393,7 +394,11 @@ class Wikia {
 		 * commandline = echo
 		 */
 		if( $wgCommandLineMode ) {
-			printf( "%s %s:%s/%d: %s\n", wfTimestamp( TS_DB, time() ), $method, $wgDBname, $wgCityId, $message );
+			$line = sprintf( "%s:%s/%d: %s\n", $method, $wgDBname, $wgCityId, $message );
+			if( $timestamp ) {
+				$line = wfTimestamp( TS_DB, time() ) . " " . $line;
+			}
+			echo $line;
 		}
 		/**
 		 * and use wfDebug as well
