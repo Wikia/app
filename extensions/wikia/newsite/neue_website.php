@@ -614,7 +614,7 @@ function get_wikitext($dbw, $site, $domsite)
     if(!$redir)
       $redir = $metaredir;
 
-    if(stripos($redir, $site) === 0)
+    if(!strcasecmp($redir, $site))
       $redir = "";
 
     if($redir)
