@@ -56,6 +56,12 @@ class ProfilerSimpleStomp extends ProfilerSimple {
 						'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] :
 						$_SERVER['REQUEST_URI'],
 			     );
+
+		global $wgDBcluster;
+		if( isset( $wgDBcluster ) ) {
+			$body['cluster'] = $wgDBcluster;
+		}
+
 		foreach( $this->mCollated as $k=>$v ) {
 			if( $k=='-total' || !$this->mFiltered || in_array( $k, $this->mProfiledMethods ) ) {
 				$body['profiles'][$k] = $v;
