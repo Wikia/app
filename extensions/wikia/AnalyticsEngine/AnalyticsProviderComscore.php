@@ -12,10 +12,10 @@ class AnalyticsProviderComscore implements iAnalyticsProvider {
 		switch ($event){
 		  case AnalyticsEngine::EVENT_PAGEVIEW : return '
 <!-- Begin comScore Tag -->
-<script>
+<script type="text/javascript">
 document.write(unescape("%3Cscript src=\'" + (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js\' %3E%3C/script%3E"));
 </script>
-<script>
+<script type="text/javascript">
 COMSCORE.beacon({
   c1:2,
   c2:6177433,
