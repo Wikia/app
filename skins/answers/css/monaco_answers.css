@@ -41,9 +41,7 @@
        color: #555;
        font-family:"Helvetica Neue",Helvetica,Arial,default;
        margin: 8px 8px 5px 8px;
-       background-color:#EAF1FB;
-       -moz-border-radius:10px 10px 10px 10px;
-       -webkit-border-radius:10px 10px 10px 10px;       
+       background-color:#fff;
        display: inline-block;
 }
 
@@ -227,7 +225,7 @@ body.mainpage .firstHeading { display:none; }
 
 #mw-normal-catlinks {
     padding-bottom:3px;
-    color: #ccc;
+    color: #fff;
     padding-left:7px;
 }
 
