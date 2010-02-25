@@ -1,16 +1,5 @@
 /* Answers specific CSS goes here, overriding monaco css, and adding any additional */
 
-
-
-
-
-/* === TEMPORARY === */
-
-/* kill ads */
-/*.google-ad-unit { display:none; } */
-/* #questionTopAd { display:none; } */
-
-/* make the avatars smaller */
 .userInfoBadge img {
 	height: 35px !important;
 	width: 35px !important;
@@ -835,4 +824,9 @@ div.userInfoNoAvatar .userPoints {
 #editingTips {
 	-moz-border-radius: 10px 10px 10px 10px;
 	-webkit-border-radius: 10px 10px 10px 10px;
+}
+
+
+#star-rating-row {
+	padding-top: 3px;
 }
