@@ -1,4 +1,6 @@
 == Changes since 201002.4 ==
+* rt#41434: Wikianswers CreateWiki - wrong starter used (eloy)
+* rt#40441: AWC founder email not going out anymore (Paweł)
 * rt#41402: scorecard image url has multiple unencoded ampersands, causing many html validation errors. (Nef)
 * rt#41403: scorecard javascript missing required type attribute. (Nef)
 * StaffSigs: add multiuser/random selection to override (uberfuzzy)
