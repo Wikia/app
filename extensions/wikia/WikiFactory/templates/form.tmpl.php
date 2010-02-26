@@ -475,10 +475,14 @@ YAHOO.util.Event.addListener("wf-clear-cache", "click", $Factory.Variable.clear)
 			<li>
 				&nbsp;
 			</li>
+			<li <?php echo ( $tab === "ezsharedupload" ) ? 'class="active"' : 'class="inactive"' ?> >
+				<?php echo WikiFactoryPage::showTab( "ezsharedupload", $tab, $wiki->city_id ); ?>
+			</li>
+				&nbsp;
+			<li>
 			<li <?php echo ( $tab === "close" ) ? 'class="active"' : 'class="inactive"' ?> >
 				<?php echo WikiFactoryPage::showTab( "close", $tab, $wiki->city_id ); ?>
 			</li>
-			<li>
 				&nbsp;
 			</li>
 			<li class="inactive">
@@ -507,6 +511,10 @@ YAHOO.util.Event.addListener("wf-clear-cache", "click", $Factory.Variable.clear)
 
 		case "tags":
 			include_once( "form-tags.tmpl.php" );
+		break;
+
+		case "ezsharedupload":
+			include_once( "form-shared-upload.tmpl.php" );
 		break;
 
 		case "close":

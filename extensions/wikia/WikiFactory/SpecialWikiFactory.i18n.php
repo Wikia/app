@@ -30,6 +30,7 @@ $messages['en'] = array(
 	"wikifactory-label-actions" => "Actions",
 	"wikifactory-label-close" => "Close",
 	"wikifactory-label-tags" => "Tags",
+	"wikifactory-label-ezsharedupload" => "EZSharedUpload",
 	"right-wikifactory" => "Change internal settings for wikis",
 	"closewiki-check-and-confirm" => "Check wikis and confirm operation",
 	"closewiki-redirect-to" => "Redirect to",

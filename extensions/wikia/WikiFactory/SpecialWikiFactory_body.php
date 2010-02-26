@@ -235,6 +235,11 @@ class WikiFactoryPage extends SpecialPage {
 				case "tags":
 					$info = $this->doUpdateTags( $wgRequest );
 				break;
+				case "ezsharedupload":
+					if($wgRequest->getVal('ezsuSave') != null) {
+						$info = $this->doSharedUploadEnable( $wgRequest );
+					}
+				break;
 			}
 		}
 		else {
@@ -292,6 +297,40 @@ class WikiFactoryPage extends SpecialPage {
 				"nav"       => $pager->getNavigationBar()
 			);
 		}
+		if( $this->mTab == "ezsharedupload" ) {
+			global $wgServer;
+			$vars[ "EZSharedUpload" ] = array(
+				"active" => WikiFactory::getVarValueByName( "wgUseSharedUploads", $this->mWiki->city_id ),
+				"varTitle" => Title::makeTitle( NS_SPECIAL, 'WikiFactory' )->getFullUrl() . ( "/" . $this->mWiki->city_id . "/variables/" ),
+				"info" => ( isset($info) ? $info : "" ),
+				"local"  => array(
+					"wgServer" => $this->mWiki->city_url,
+					"wgSharedUploadDBname" => WikiFactory::getVarValueByName( "wgSharedUploadDBname", $this->mWiki->city_id ),
+					"wgSharedUploadDirectory" => WikiFactory::getVarValueByName( "wgSharedUploadDirectory", $this->mWiki->city_id ),
+					"wgSharedUploadPath" => WikiFactory::getVarValueByName( "wgSharedUploadPath", $this->mWiki->city_id ),
+					"wgRepositoryBaseUrl" => WikiFactory::getVarValueByName( "wgRepositoryBaseUrl", $this->mWiki->city_id )
+				),
+				"remote" => array(
+					"wikiId" => 0,
+					"wgServer" => "",
+					"wgDBname" => "",
+					"wgUploadDirectory" => "",
+					"wgUploadPath" => "",
+					"baseUrl" => ""
+				)
+			);
+			if( $wgRequest->wasPosted() && $wgRequest->getVal( "ezsuWikiId" ) ) {
+				$ezsuRemoteWikiId = $wgRequest->getVal( "ezsuWikiId" );
+				$vars[ "EZSharedUpload" ][ "remote" ] = array(
+					"wikiId" => $ezsuRemoteWikiId,
+					"wgServer" => WikiFactory::getVarValueByName( "wgServer", $ezsuRemoteWikiId ),
+					"wgDBname" => WikiFactory::getVarValueByName( "wgDBname", $ezsuRemoteWikiId ),
+					"wgUploadDirectory" => WikiFactory::getVarValueByName( "wgUploadDirectory", $ezsuRemoteWikiId ),
+					"wgUploadPath" => WikiFactory::getVarValueByName( "wgUploadPath", $ezsuRemoteWikiId ),
+					"baseUrl" => WikiFactory::getVarValueByName( "wgServer", $ezsuRemoteWikiId ) . '/' . WikiFactory::getVarValueByName( "wgScriptPath", $ezsuRemoteWikiId ) . "File:"
+				);
+			}
+		}
 		$oTmpl->set_vars( $vars );
 		$wgOut->addHTML( $oTmpl->render("form") );
 	}
@@ -315,6 +354,37 @@ class WikiFactoryPage extends SpecialPage {
 		}
 		else {
 			return Wikia::errormsg( "Hub was not changed.");
+		}
+	}
+
+	/**
+	 * enable shared uploads on wiki
+	 *
+	 * @access private
+	 * @param WebRequest $request
+	 * @return string
+	 */
+	private function doSharedUploadEnable( &$request ) {
+		$remoteWikiId = $request->getVal('ezsuWikiId');
+		if(!empty($remoteWikiId)) {
+			$remoteWikiData = array(
+				"wgDBname" => WikiFactory::getVarValueByName( "wgDBname", $remoteWikiId ),
+				"wgUploadDirectory" => WikiFactory::getVarValueByName( "wgUploadDirectory", $remoteWikiId ),
+				"wgUploadPath" => WikiFactory::getVarValueByName( "wgUploadPath", $remoteWikiId ),
+				"baseUrl" => WikiFactory::getVarValueByName( "wgServer", $remoteWikiId ) . '/' . WikiFactory::getVarValueByName( "wgScriptPath", $remoteWikiId ) . "File:"
+			);
+
+			// set variables
+			WikiFactory::setVarByName( "wgSharedUploadDBname", $this->mWiki->city_id, $remoteWikiData['wgDBname'] );
+			WikiFactory::setVarByName( "wgSharedUploadDirectory", $this->mWiki->city_id, $remoteWikiData['wgUploadDirectory'] );
+			WikiFactory::setVarByName( "wgSharedUploadPath", $this->mWiki->city_id, $remoteWikiData['wgUploadPath'] );
+			WikiFactory::setVarByName( "wgRepositoryBaseUrl", $this->mWiki->city_id, $remoteWikiData['baseUrl'] );
+			WikiFactory::setVarByName( "wgUseSharedUploads", $this->mWiki->city_id, true );
+
+			return "<span style=\"color: green; font-weight: bold;\">Saved and enabled! :)</span>";
+		}
+		else {
+			return "<span style=\"color: red; font-weight: bold;\">Invalid data :(</span>";
 		}
 	}
 
