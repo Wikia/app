@@ -394,7 +394,9 @@ class AutoCreateWikiLocalJob extends Job {
 
 		if ( !empty($sTo) ) {
 			$status = $oReceiver->sendMail( $sSubject, $sBody, $sFrom, null, 'AutoCreateWiki', $sBodyHTML );
-			Wikia::log( __METHOD__, "mail", "Mail to founder {$sTo} sent." );
+			if( $status ) {
+				Wikia::log( __METHOD__, "mail", "Mail to founder {$sTo} sent." );
+			}
 		} else {
 			Wikia::log( __METHOD__, "mail", "Founder email is not set. Welcome email is not sent" );
 		}
