@@ -784,6 +784,9 @@ function wfMsgHTMLwithLanguage($key, $lang, $options = array(), $params = array(
  * @return array
  */
 function wfMsgHTMLwithLanguageAndAlternative($key, $keyAlternative, $lang, $options = array(), $params = array(), $wantHTML = true) {
+	// inserted here for external i18n add-on, adjust params if needed
+	wfRunHooks( 'MsgHTMLwithLanguageAndAlternativeBefore' );
+
 	list ($msgPlainMain, $msgRichMain, $msgPlainMainFallback, $msgRichMainFallback) = wfMsgHTMLwithLanguage($key, $lang, $options, $params, $wantHTML);
 	list ($msgPlainAlter, $msgRichAlter, $msgPlainAlterFallback, $msgRichAlterFallback) = wfMsgHTMLwithLanguage($keyAlternative, $lang, $options, $params, $wantHTML);
 	$msgPlain = $msgPlainMainFallback > $msgPlainAlterFallback || wfEmptyMsg($key, $msgPlainMain) ? $msgPlainAlter : $msgPlainMain;
