@@ -39,7 +39,11 @@
 			</div>
 		</div>
 		<!-- Begin Analytics -->
-		<?php echo AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW); ?>
+		<?php
+		global $IP;
+		include_once("$IP/extensions/wikia/AnalyticsEngine/AnalyticsEngine.php");
+		echo AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
+		?>
 		<!-- End Analytics -->
 		<?php print "$jsIncludes\n"; ?>
 		<script type='text/javascript'>
