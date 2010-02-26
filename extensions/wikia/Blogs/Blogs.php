@@ -86,6 +86,12 @@ if (in_array($wgLanguageCode, array("de", "ru"))) {
  * setup function
  */
 $wgAutoloadClasses[ "BlogArticle" ] = dirname(__FILE__) . '/BlogArticle.php';
+$wgAutoloadClasses[ "WikiaApiBlogs" ] = dirname(__FILE__) . "/api/WikiaApiBlogs.php";
+
+global $wgAPIModules;
+$wgAPIModules[ "blogs" ] = "WikiaApiBlogs";
+
+
 $wgHooks['ArticleFromTitle'][] = "BlogArticle::setup";
 
 /**
