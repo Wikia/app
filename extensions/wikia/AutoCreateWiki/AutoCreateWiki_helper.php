@@ -99,7 +99,9 @@ class AutoCreateWiki {
 					$sDomain = Wikia::fixDomainName( $n, $language, $type );
 					$tmp_array['exact'][] = "city_domain = '{$sDomain}'";
 					$n = strtr($n, '0123456789-', '%%%%%%%%%%%%');
-					$tmp_array['similar'][] = "city_domain like '%{$n}%'";
+					$tmp_array['similar'][] = ( empty( $type ) )
+						? "city_domain like '%{$n}%'"
+						: "city_domain like '%{$n}.{$type}%'";
 				}
 				if( sizeof( $tmp_array ) ) {
 					$condition = implode(" or ", $tmp_array['exact']);
@@ -110,7 +112,9 @@ class AutoCreateWiki {
 			} else {
 				$sDomain = Wikia::fixDomainName($name, $language, $type );
 				$condition = "city_domain = '{$sDomain}'";
-				$conditionSimilar = "city_domain like '%{$name}%'";
+				$conditionSimilar = ( empty( $type ) )
+					? "city_domain like '%{$name}%'"
+					: "city_domain like '%{$name}.{$type}%'";
 			}
 
 			$conditionLanguage = "";
@@ -168,7 +172,8 @@ class AutoCreateWiki {
 							&& $unique[ strtolower($oRow->city_domain) ] == 1 )
 							continue;
 						$domains["like"][] = $oRow;
-					} else {
+					}
+					else {
 						$domains["closed"][] = $oRow;
 					}
 				}
