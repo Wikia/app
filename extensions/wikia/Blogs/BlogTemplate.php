@@ -190,6 +190,17 @@ class BlogTemplateClass {
 		'style' => array (
 			'type' 		=> 'string',
 			'default' 	=> 'float:right;clear:left;',
+		),
+		
+		/*
+		 * Get Blog info
+		 *
+		 * type: 	number,
+		 * default: ""
+		 */
+		'pages' => array(
+			'type' 		=> 'number',
+			'pattern' 	=> '/^\d*$/'
 		)
 	);
 
@@ -878,6 +889,7 @@ class BlogTemplateClass {
 		self::$dbr = null;
 		/* default settings for query */
 		self::__setDefault();
+		$showOnlyPage = 0;
 		try {
 			/* database connect */
 			self::$dbr = wfGetDB( DB_SLAVE, 'dpl' );
@@ -914,6 +926,11 @@ class BlogTemplateClass {
 							} else {
 								self::$aWhere[] = "page_id = 0";
 							}
+						}
+						break;
+					case 'pages'		:
+						if ( !empty($aParamValues) ) {
+							$showOnlyPage = $aParamValues ;
 						}
 						break;
 					case 'author'		:
@@ -968,7 +985,12 @@ class BlogTemplateClass {
 						break;
 				}
 			}
-
+			
+			/* */
+			if ( !empty($showOnlyPage) ) {
+				self::$aWhere = array("page_id in (" . self::$dbr->makeList($showOnlyPage) . ")");
+			}
+			
 			/* parse parameters */
 			foreach ($aParams as $sParamName => $sParamValue) {
 				/* ignore empty lines */
