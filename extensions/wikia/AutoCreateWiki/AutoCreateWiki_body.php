@@ -1621,7 +1621,7 @@ class AutoCreateWikiPage extends SpecialPage {
 				Wikia::log( __METHOD__, "", "Checking if database {$dbname} already exists in database" );
 				$oRes = $dbr->query( sprintf( "show databases like '%s'", $dbname) );
 				if ( $dbr->numRows( $oRes ) > 0 ) {
-					Wikia::log( __METHOD__, "", "Database {$dbname} exists in database!" );
+					Wikia::log( __METHOD__, "", "Database {$dbname} exists on cluster!" );
 					$exists = 1;
 				}
 			}

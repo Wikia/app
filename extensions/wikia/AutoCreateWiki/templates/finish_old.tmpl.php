@@ -5,7 +5,11 @@
 .awc-subtitle {font-size:1.1em;font-style:normal;color:#000;}
 </style>
 
-<div class="awc-title"><?=wfMsg('autocreatewiki-success-title')?></div>
+<?php
+if( empty( $type ) ) $type = "default";
+?>
+
+<div class="awc-title"><?=wfMsg('autocreatewiki-success-title-' . $type )?></div>
 <br />
 <div class="awc-subtitle"><?=wfMsg('autocreatewiki-success-subtitle')?></div>
 <div class="awc-domain"><a href="<?=$domain?>"><?=$domain?></a></div>

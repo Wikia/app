@@ -16,8 +16,10 @@ $cgiArgs = array();
 if( $mLanguage != 'en' ) {
 	$cgiArgs[ "uselang" ] = $mLanguage;
 }
+$type = "default";
 if( !empty( $mType ) ) {
 	$cgiArgs[ "type" ] = $mType;
+	$type = $mType;
 }
 ?>
 <form class="highlightform" id="highlightform" method="post" action="<?php echo $mTitle->escapeLocalURL( $cgiArgs ) ?>">
@@ -28,7 +30,7 @@ if( !empty( $mType ) ) {
 		<ul>
 			<li class="label"><label class="required" id="wiki-name-label"><?=wfMsg('allmessagesname')?>:</label></li>
 			<li class="data1">
-				<input type="text" autocomplete="off" name="wiki-name" id="wiki-name" value="<?=@$params['wiki-name']?>"/> Wiki <span class="error-status" id="wiki-name-error-status">&nbsp;</span>
+				<input type="text" autocomplete="off" name="wiki-name" id="wiki-name" value="<?=@$params['wiki-name']?>"/> <?php if( empty( $mType) ) echo Wiki ?><span class="error-status" id="wiki-name-error-status">&nbsp;</span>
 				<div class="error" style="display: none;" id="wiki-name-error">
 			</li>
 			<li class="data2"><span class="note"><?=wfMsg('autocreatewiki-info-topic')?></span></li>
@@ -77,7 +79,7 @@ endif
 				</select>
 				<div class="error" style="display: none;" id="wiki-category-error"></div>
 			</li>
-			<li class="data2"><span class="note"><?=wfMsg('autocreatewiki-info-category')?></span></li>
+			<li class="data2"><span class="note"><?php echo wfMsg('autocreatewiki-info-category-' . $type )?></span></li>
 		</ul>
 	</div>
 	<div class="formblock">
@@ -240,7 +242,7 @@ endif
 <?php endif ?>
 	<div class="toolbar neutral">
 		<input type="hidden" value="<?php echo $mType ?>" name="wiki-type" id="wiki-type" />
-		<input type="submit" value="<?php echo wfMsg( "autocreatewiki") ?>" name="wiki-submit" id="wiki-submit" />
+		<input type="submit" value="<?php echo wfMsg( "autocreatewiki-page-title-" . $type ) ?>" name="wiki-submit" id="wiki-submit" />
 		<input type="reset" value="<?php echo wfMsg( "cancel" ) ?>" name="wiki-cancel" id="wiki-cancel" />
 	</div>
 </div>
