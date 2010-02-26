@@ -836,4 +836,6 @@ div.userInfoNoAvatar .userPoints {
 
 #star-rating-row {
 	padding-top: 3px;
+	color:#888888;
+	font-size:90%;
 }
