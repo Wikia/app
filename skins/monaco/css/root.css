@@ -353,3 +353,11 @@ margin-bottom:10px;
 #HOME_TOP_RIGHT_BOXAD_load, #TOP_RIGHT_BOXAD_load {
 	width: 300px;
 }
+/* @group Ad hacks */
+img[src$="noad.gif"] {
+	display: none;
+}
+body > table {
+	margin: 0 auto;
+}
+/* @end */
