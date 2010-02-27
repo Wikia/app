@@ -143,7 +143,11 @@ class EditAccount extends SpecialPage {
 				$log = new LogPage( 'editaccnt' );
 				$log->addEntry( 'mailchange', $wgTitle, '', array( $this->mUser->getUserPage() ) );
 
-				$this->mStatusMsg = wfMsg( 'editaccount-success-email', $this->mUser->mName, $email );
+				if( $email == '' ) {
+					$this->mStatusMsg = wfMsg( 'editaccount-success-email-blank', $this->mUser->mName );
+				} else {
+					$this->mStatusMsg = wfMsg( 'editaccount-success-email', $this->mUser->mName, $email );
+				}
 				return true;
 			} else {
 				$this->mStatusMsg = wfMsg( 'editaccount-error-email', $this->mUser->mName );
