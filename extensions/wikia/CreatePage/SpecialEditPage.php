@@ -39,7 +39,7 @@ abstract class SpecialEditPage extends SpecialPage {
 	}
 
 	protected function createEditPage($sPostBody) {
-		$oArticle = new Article( Title::makeTitle( NS_MAIN, 'New or Updated Page' ) );
+		$oArticle = new Article( Title::makeTitle( NS_MAIN, '' ) );
 
 		$this->mEditPage = new EditPage($oArticle);
 		$this->mEditPage->textbox1 = $sPostBody;
