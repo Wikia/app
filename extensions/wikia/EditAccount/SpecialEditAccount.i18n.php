@@ -32,6 +32,7 @@ $messages['en'] = array(
 	'editaccount-warning-close' => '<b>Caution!</b> You are about to permanently disable the account of user <b>$1</b>. This cannot be reverted. Are you sure that is what you want to do?',
 	'editaccount-status' => 'Status message',
 	'editaccount-success-email' => 'Successfully changed e-mail for account $1 to $2.',
+	'editaccount-success-email-blank' => 'Successfully removed e-mail for account $1.',
 	'editaccount-success-pass' => 'Successfully changed password for account $1.',
 	'editaccount-success-realname' => 'Successfully changed real name for account $1.',
 	'editaccount-success-close' => 'Successfully disabled account $1.',
