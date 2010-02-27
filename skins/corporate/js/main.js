@@ -1,10 +1,14 @@
 $(function() {
 	wikiaSearch_setup();
-	homepageFeature_setup(blockArticle);
 	$('.staff-hide-link').click(blockArticle);
+	$('#MainContent').find('.toggleFeed').click(autoHubToggle);
 	makeWikiaButtons();
 });
 
+$(window).load(function() {
+	setTimeout(sliderImages_load, 300);
+	spotlightSlider_setup(blockArticle);
+});
 
 function makeWikiaButtons() {
 	//There is no way to provide CSS class for links created in MediaWiki. This function adds appropriate classes and markup to buttons.
@@ -35,54 +39,83 @@ function blockArticle(e){
 	}
 }
 
-function homepageFeature_setup() {
-	//timer for automatic homepage spotlight slideshow
-	var homepageFeature_timer;
+function autoHubToggle(e) {
+	e.preventDefault();
+	var me = $(this);
+	var feed = me.parent().attr("id");
+	// todo this is probably only temporary location
+	var tag = $('#TagDB').attr('value');
+
+	$.getJSON(wgScript,
+		{
+			'action':'ajax',
+			'rs':'AutoHubsPagesHelper::setHubsFeedsVariable',
+			'feed':feed,
+			'tag':tag,
+		},
+		function(response) {
+			if( response.result == 'ok' ) {
+				if( response.disabled ) {
+					me.parent().addClass( "disabledFeed" );
+				} else {
+					me.parent().removeClass( "disabledFeed" );
+				}
+			}
+			else {
+				// todo display error message? Christian will decide
+			}
+		}
+	);
+}
+
+function spotlightSlider_setup() {
+	//timer for automatic spotlight slideshow
+	var spotlightSlider_timer;
 
 	//random integer, 0-3
-	var random = Math.floor(Math.random() * 4);
+	var random = 0; //Math.floor(Math.random() * 4);
 
 	//move spotlights
-	$(".homepage-spotlight").each(function() {
-		$(this).css("left", parseInt($(this).css("left")) - (700 * random));
+	$(".spotlight-slider").each(function() {
+		$(this).css("left", parseInt($(this).css("left")) - (620 * random));
 	});
 
 	//select nav
-	$("#homepage-feature-spotlight-" + random).find(".nav").addClass("selected");
+	$("#spotlight-slider-" + random).find(".nav").addClass("selected");
 
 	//show description
-	$("#homepage-feature-spotlight-" + random).find(".description").show();
+	$("#spotlight-slider-" + random).find(".description").show();
 
 	//bind events
-	$("#homepage-feature-spotlight .nav").click(function() {
-		if($("#homepage-feature-spotlight .homepage-spotlight").queue().length == 0) {
-			clearInterval(homepageFeature_timer);
-			homepageFeature_scroll($(this));
+	$("#spotlight-slider .nav").click(function() {
+		if($("#spotlight-slider .spotlight-slider").queue().length == 0) {
+			clearInterval(spotlightSlider_timer);
+			spotlightSlider_scroll($(this));
 		}
 	});
-	homepageFeature_timer = setInterval(homepageFeature_slideshow, 7000);
+	spotlightSlider_timer = setInterval(spotlightSlider_slideshow, 7000);
 }
 
-function homepageFeature_slideshow() {
-	var current = $("#homepage-feature-spotlight .selected").parent().prevAll().length;
-	var next = (current == $("#homepage-feature-spotlight .nav").length - 1) ? 0 : current + 1;
-	homepageFeature_scroll($("#homepage-feature-spotlight-" + next).find(".nav"));
+function spotlightSlider_slideshow() {
+	var current = $("#spotlight-slider .selected").parent().prevAll().length;
+	var next = (current == $("#spotlight-slider .nav").length - 1) ? 0 : current + 1;
+	spotlightSlider_scroll($("#spotlight-slider-" + next).find(".nav"));
 }
 
-function homepageFeature_scroll(nav) {
+function spotlightSlider_scroll(nav) {
 	//setup variables
 	var thumb_index = nav.parent().prevAll().length;
-	var scroll_by = parseInt(nav.parent().find(".homepage-spotlight").css("left"));
+	var scroll_by = parseInt(nav.parent().find(".spotlight-slider").css("left"));
 	//set "selected" class
-	$("#homepage-feature-spotlight .nav").removeClass("selected");
+	$("#spotlight-slider .nav").removeClass("selected");
 	nav.addClass("selected");
 	//hide description
-	$("#homepage-feature-spotlight .description").clearQueue().hide();
+	$("#spotlight-slider .description").clearQueue().hide();
 	//scroll
-	$("#homepage-feature-spotlight .homepage-spotlight").animate({
+	$("#spotlight-slider .spotlight-slider").animate({
 		left: "-=" + scroll_by
 	}, function() {
-		$("#homepage-feature-spotlight-" + thumb_index).find(".description").fadeIn();
+		$("#spotlight-slider-" + thumb_index).find(".description").fadeIn();
 	});
 }
 
@@ -97,4 +130,13 @@ function wikiaSearch_setup() {
 			$(this).attr("value", placeholder).addClass("placeholder");
 		}
 	}).blur();
+}
+
+function sliderImages_load() {
+  var imgTag_pt1 = '<img width="620" height="250" src="';
+  var imgTag_pt2 = '" class="spotlight-slider">';
+  
+  $('li#spotlight-slider-1 > a').html(imgTag_pt1 + feature_image_1 + imgTag_pt2);
+  $('li#spotlight-slider-2 > a').html(imgTag_pt1 + feature_image_2 + imgTag_pt2);
+  $('li#spotlight-slider-3 > a').html(imgTag_pt1 + feature_image_3 + imgTag_pt2);
 }

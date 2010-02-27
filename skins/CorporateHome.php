@@ -86,13 +86,23 @@ class CorporateHomeTemplate extends CorporateBaseTemplate {
 								<a href="<?php echo $this->data['personal_urls']['createwiki']['href']; ?>" class="wikia_button"><span><?php echo $this->data['personal_urls']['createwiki']['text']; ?></span></a>
 							</div>
 						</section>
-						<section id="homepage-feature-spotlight">
+
+<script>
+var christianrules = "totally true";
+</script>
+						<section id="spotlight-slider">
 						<h1 id="featured-wikis-headline"><?php print wfMsg('corporatepage-featured-wikis-headline'); ?></h1>
 						<ul>
-							<?php foreach($this->data['slider'] as $key => $value): ?>
-							<li id="homepage-feature-spotlight-<?php echo $key; ?>">
+							<?php 
+										$wiki_featured_images = array();
+										foreach($this->data['slider'] as $key => $value): 
+							?>
+							<li id="spotlight-slider-<?php echo $key; ?>">
 								<a href="<?php echo $value['href'] ?>">
-								<img width="700" height="310" src="<?php echo $value['imagename'] ?>" class="homepage-spotlight"></a>
+								<?php if ($key == 0) { ?>
+									<img width="620" height="250" src="<?php echo $value['imagename'] ?>" class="spotlight-slider">
+								<?php } ?>
+								</a>
 								<div class="description">
 									<h2><?php echo $value['title'] ?></h2>
 									<p><?php echo $value['desc'] ?></p>
@@ -104,12 +114,23 @@ class CorporateHomeTemplate extends CorporateBaseTemplate {
 									<img width="50" height="25" alt="" src="<?php echo $value['imagethumb'] ?>">
 								</p>
 							</li>
-							<?php endforeach;?>
+							<?php array_push($wiki_featured_images, $value['imagename']);
+										endforeach;?>
 						</ul>
 						</section>
 					</div>
 				</div>
 			</section>
+			
+			<script>
+			<?php 
+				$i = 0;
+				foreach ($wiki_featured_images as $image) {
+					echo 'var feature_image_'.$i.' = "'.$image.'";';
+					$i++;
+				}
+			?>
+			</script>
 
 			<section id="MainArticle">
 				<div class="shrinkwrap">
@@ -171,7 +192,6 @@ class CorporateHomeTemplate extends CorporateBaseTemplate {
 
 		<?php print $this->htmlCompanyInfo();?>
 		<?php print $this->htmlGlobalFooter();?>
-
 	</body>
 </html>
 
