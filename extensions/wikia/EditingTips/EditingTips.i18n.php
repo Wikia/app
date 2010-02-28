@@ -314,6 +314,13 @@ $messages['ru'] = array(
 	'editingTips' => 'Добавьте свои советы [[MediaWiki:EditingTips|здесь]]',
 );
 
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'tog-disableeditingtips' => 'Не показуј савете за уређивање',
+);
+
 /** Chinese (中文) */
 $messages['zh'] = array(
 	'editingtips_enter_widescreen' => '放大編輯',

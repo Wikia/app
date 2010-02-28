@@ -78,6 +78,14 @@ $messages['hsb'] = array(
 	'interwikidispatcher' => 'InterwikiDispatcher',
 );
 
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'interwikidispatcher' => 'Wikiközi diszpécser',
+	'interwikidispatcher-desc' => 'Feloldja a wikiközi hivatkozásokat, hogy csökkentse az Apache átirányítások számát',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */

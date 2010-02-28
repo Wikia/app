@@ -139,7 +139,9 @@ $messages['br'] = array(
 	'lookupcontribscontent' => 'danvez',
 );
 
-/** Spanish (Español) */
+/** Spanish (Español)
+ * @author Peter17
+ */
 $messages['es'] = array(
 	'lookupcontribs' => 'Búsqueda de Contribuciones',
 	'lookupcontribstitle' => 'Búsqueda de Contribuciones',
@@ -150,6 +152,7 @@ $messages['es'] = array(
 	'lookupcontribsselectuser' => 'Seleccionar usuario:',
 	'lookupcontribsselectmodenormal' => 'contribuciones recientes para este usuario',
 	'lookupcontribsselectmodefinal' => 'contribuciones finales para este usuario',
+	'lookupcontribsselectmodeall' => 'todas las contribuciones para este usuario',
 	'lookupcontribsfullurls' => 'enlaces completos',
 	'lookupcontribslinks' => 'vínculos a contribuciones',
 	'lookupcontribsgo' => 'Mostrar',
@@ -160,6 +163,8 @@ $messages['es'] = array(
 	'lookupcontribslistwikiainfo' => 'Lista de wikis donde hay artículos editados por <b>$1</b>',
 	'lookupcontribsnoresultfound' => '¡No se encontraron resultados!',
 	'lookupcontribsinvalidresults' => '¡Resultados inválidos!',
+	'lookupcontribswiki' => 'Wiki',
+	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Título',
 	'lookupcontribscontribslink' => 'Enlace a sus contribuciones',
 	'lookupcontribsdetails' => 'Ver detalles para:',
@@ -167,13 +172,28 @@ $messages['es'] = array(
 	'lookupcontribsnbrresult' => 'Número de resultados:',
 	'lookupcontribsnext' => 'siguiente',
 	'lookupcontribsprevious' => 'Anterior',
+	'lookupcontribspageremoved' => 'Quitado:',
+	'lookupcontribsrestore' => 'restaurar',
+	'lookupcontribslog' => 'log',
+	'lookupcontribshist' => 'hist',
+	'lookupcontribsdiff' => 'dif',
+	'lookupcontribscontent' => 'contenido',
 );
 
 /** Finnish (Suomi)
+ * @author Centerlink
  * @author Crt
  */
 $messages['fi'] = array(
+	'lookupcontribsselectuser' => 'Valitse käyttäjä:',
+	'lookupcontribsdisplaymode' => 'Näyttötila:',
+	'lookupcontribsfullurls' => 'täydelliset verkko-osoitteet',
 	'lookupcontribsgo' => 'Siirry',
+	'lookupcontribsnoresultfound' => 'Tulosta ei löytynyt!',
+	'lookupcontribswikiurl' => 'Verkko-osoite',
+	'lookupcontribsnext' => 'seuraava',
+	'lookupcontribsprevious' => 'edellinen',
+	'lookupcontribscontent' => 'sisältö',
 );
 
 /** French (Français)
@@ -448,9 +468,12 @@ Controleer of u een tikfout hebt gemaakt in de gebruikersnaam.</p>',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
  * @author Nghtwlkr
  */
 $messages['no'] = array(
+	'lookupcontribsselectuser' => 'Velg bruker:',
+	'lookupcontribsgo' => 'Gå',
 	'lookupcontribsselectwikis' => 'Velg wikier:',
 	'lookupcontribslistwikiainfo' => 'Liste over wikier der artikler ble redigert av <b>$1</b>',
 	'lookupcontribsnoresultfound' => 'Ingen resultat funnet!',
@@ -521,6 +544,20 @@ $messages['pms'] = array(
 	'lookupcontribscontent' => 'contnù',
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'lookupcontribsgo' => 'ورځه',
+	'lookupcontribswiki' => 'ويکي',
+	'lookupcontribswikititle' => 'سرليک',
+	'lookupcontribsnext' => 'راتلونکی',
+	'lookupcontribsprevious' => 'پخوانی',
+	'lookupcontribslog' => 'يادښتونه',
+	'lookupcontribshist' => 'پېښليک',
+	'lookupcontribsdiff' => 'توپير',
+);
+
 /** Brazilian Portuguese (Português do Brasil)
  * @author Luckas Blade
  */
@@ -546,11 +583,26 @@ $messages['roa-tara'] = array(
  */
 $messages['ru'] = array(
 	'lookupcontribsselectuser' => 'Выберите участника:',
+	'lookupcontribsfullurls' => 'полные URL-адреса',
 	'lookupcontribsnoresultfound' => 'Ничего не найдено!',
 	'lookupcontribswiki' => 'Вики',
 	'lookupcontribswikidbname' => 'Имя БД',
 	'lookupcontribscontribslink' => 'Ссылка на вклад',
 	'lookupcontribscontribs' => 'вклад',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'lookupcontribsselectuser' => 'Одабери корисника',
+	'lookupcontribsnoresultfound' => 'Нема резултата претраге',
+	'lookupcontribsinvalidresults' => 'Неправилан резултат',
+	'lookupcontribswikititle' => 'Наслов',
+	'lookupcontribscontribs' => 'прилози',
+	'lookupcontribsnext' => 'следеће',
+	'lookupcontribsprevious' => 'Претходна',
+	'lookupcontribscontent' => 'садржај',
 );
 
 /** Swedish (Svenska)

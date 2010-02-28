@@ -777,8 +777,23 @@ Probeer het nog eens.',
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
+ * @author Nghtwlkr
  */
 $messages['no'] = array(
+	'invitespecialpage' => 'Inviter venner til å bli med i Wikia',
+	'sendtoafriend-desc' => '[[Special:InviteSpecialPage|Inviter venner til å bli med i Wikia]]',
+	'sendtoafriend-button-desc' => 'Viser en «Send til en venn»-knapp på sidene',
+	'stf_button' => 'Send denne artikkelen til en venn',
+	'stf_after_reg' => '[[Special:InviteSpecialPage|Inviter en venn til å bli med i Wikia!]]',
+	'stf_subject' => '$2 har sendt deg en artikkel fra $1!',
+	'stf_confirm' => 'Melding sendt! Inviter andre?',
+	'stf_error' => 'Feil ved sending av e-post.',
+	'stf_error_name' => 'Du oppga ikke navnet ditt.',
+	'stf_error_from' => 'Du oppga ikke e-postadressen din.',
+	'stf_error_to' => 'Du oppga ikke din venns e-postadresse.',
+	'stf_frm1' => 'Din e-postadresse:',
+	'stf_frm2' => 'E-postadresser (Mer enn én? Skill med komma)',
+	'stf_msg_label' => 'Melding som skal sendes',
 	'stf_name_label' => 'Ditt navn',
 	'stf_email_label' => 'Din e-postadresse',
 	'stf_frm3_send' => 'Hei!
@@ -797,16 +812,34 @@ Kom og sjekk den ut!',
 	'stf_frm4_cancel' => 'Avbryt',
 	'stf_frm4_invite' => 'Send invitasjon!',
 	'stf_multiemail' => 'Send til mer enn en mottager?',
+	'stf_frm5' => '(adressen til denne siden vil bli lagt ved meldingen din)',
 	'stf_frm6' => 'Lukk dette vinduet',
-	'stf_throttle' => 'Av sikkerhetsmessige årsaker kan du bare sende $1 {{PLURAL:$1|invitasjon|invitasjoner]] per dag.',
+	'stf_throttle' => 'Av sikkerhetsmessige årsaker kan du bare sende {{PLURAL:$1|én invitasjon|$1 invitasjoner}} per dag.',
 	'stf_abuse' => 'Denne e-posten ble sendt av $1 via Wikia.
 Hvis du tror den ble sendt ved en feil, vennligst si ifra til support@wikia.com.',
 	'stf_ctx_invite' => 'Mer enn en? Separer med kommaer - opp til $1!',
 	'stf_ctx_check' => 'Sjekk kontakter',
 	'stf_ctx_empty' => 'Du har ingen kontakter på denne kontoen.',
+	'stf_ctx_invalid' => 'Logg inn eller passordet du skrev er ugyldig. Vennligst forsøk igjen.',
 	'stf_sending' => 'Vennligst vent...',
 	'stf_email_sent' => 'Send bekreftelse',
 	'stf_back_to_article' => 'Tilbake til artikkel',
+	'stf_most_emailed' => 'Mest sendte artikler på $1 idag:',
+	'stf_most_popular' => 'Mest populære artikler på $1:',
+	'stf_choose_from_existing' => 'Velg fra dine eksisterende kontakter:',
+	'stf_add_emails' => 'Legg til e-postadresser:',
+	'stf_your_email' => 'Din e-posttjeneste',
+	'stf_your_login' => 'Ditt logginnavn',
+	'stf_your_password' => 'Ditt passord',
+	'stf_your_name' => 'Ditt navn',
+	'stf_your_address' => 'Din e-postadresse',
+	'stf_your_friends' => 'Dine venners|e-postadresser',
+	'stf_we_dont_keep' => 'Vi beholder ikke denne e-postadressen/dette passordet',
+	'stf_need_approval' => 'Ingen e-poster blir sendt uten din godkjennelse',
+	'stf_message' => 'Melding',
+	'stf_instructions' => '|. Velg venner.|2. Klikk på «$1»',
+	'stf_select_all' => 'Velg alle',
+	'stf_select_friends' => 'Velg Venner:',
 );
 
 /** Polish (Polski) */
@@ -938,6 +971,17 @@ S'a pensa ch'a sia stàit mandà për eror, për piasì ch'an lo fasa savèj a s
 	'stf_select_friends' => 'Selession-a Amis:',
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'stf_name_label' => 'ستاسې نوم',
+	'stf_email_label' => 'ستاسې برېښليک',
+	'stf_frm4_send' => 'لېږل',
+	'stf_your_name' => 'ستاسې نوم',
+	'stf_message' => 'پيغام',
+);
+
 /** Brazilian Portuguese (Português do Brasil)
  * @author Jesielt
  * @author Luckas Blade
@@ -1053,6 +1097,35 @@ $2
 	'stf_instructions' => '1. Выберите друзей.|2. Нажмите «$1»',
 	'stf_select_all' => 'Выбрать всех',
 	'stf_select_friends' => 'Выбрать друзей:',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'invitespecialpage' => 'пОзови своје пријатеље да се придруже Викији',
+	'stf_button' => 'Пошаљи овај чланак пријатељу',
+	'stf_subject' => '$2 вам је послао чланак од $1!',
+	'stf_confirm' => 'Порука послана! Позивате друге!',
+	'stf_error' => 'Грешка при слању е-поште',
+	'stf_error_name' => 'Нисте назначили своје име',
+	'stf_error_from' => 'Нисте дали своју адресу е-поште',
+	'stf_error_to' => 'Нисте означили адресу е-поште вашег пријатеља',
+	'stf_frm1' => 'Ваша адреса е-поште',
+	'stf_msg_label' => 'Порука коју треба послати',
+	'stf_name_label' => 'Ваше име',
+	'stf_email_label' => 'Ваш мејл',
+	'stf_frm4_send' => 'Пошаљи',
+	'stf_frm4_cancel' => 'Одустани',
+	'stf_frm4_invite' => 'ПОшаљи позив!',
+	'stf_sending' => 'Молим сачекајте ...',
+	'stf_email_sent' => 'Пошаљи потврду',
+	'stf_most_popular' => 'Најпопуларнији чланци на $1:',
+	'stf_your_login' => 'Ваше корисничко име (логин)',
+	'stf_your_password' => 'Ваша лозинка',
+	'stf_your_name' => 'Ваше име',
+	'stf_your_address' => 'Адреса е-поште',
+	'stf_message' => 'Порука',
 );
 
 /** Telugu (తెలుగు)

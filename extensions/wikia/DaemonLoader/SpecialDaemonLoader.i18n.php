@@ -582,6 +582,8 @@ $messages['nl'] = array(
  * @author Audun
  */
 $messages['no'] = array(
+	'daemonloader_search' => 'Søk:',
+	'daemonloader_number' => 'nummer',
 	'daemonloader_steps' => 'Ditt nåværende trinn:',
 	'daemonloader_configtaskparams' => 'Konfigurer oppgaveparametre:',
 	'daemonloader_startdate' => 'Startdato',
@@ -666,6 +668,17 @@ $messages['pms'] = array(
 	'daemonloader_removejobconfirm' => 'É-lo sigur?',
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'daemonloader_search' => 'پلټنه:',
+	'daemonloader_startdate' => 'د پيل نېټه',
+	'daemonloader_enddate' => 'د پای نېټه',
+	'daemonloader_created' => 'جوړ شو',
+	'daemonloader_options' => 'خوښنې',
+);
+
 /** Brazilian Portuguese (Português do Brasil)
  * @author Luckas Blade
  */
@@ -738,6 +751,24 @@ $messages['ru'] = array(
 	'daemonloader_options' => 'Настройки',
 	'daemonloader_nojobsfound' => 'Задания отсутствуют',
 	'daemonloader_removejobconfirm' => 'Вы уверены?',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'daemonloader_paramremove' => 'Уклони',
+	'daemonloader_date_yyyymmdd' => 'датум (YYYYMMDD)',
+	'daemonloader_date_yyyymm' => ' месеци  (YYYYMM)',
+	'daemonloader_date_yyyy' => ' године (YYYY)',
+	'daemonloader_gonextstep' => 'Иди на следећи корак',
+	'daemonloader_startdate' => 'Почетни датум',
+	'daemonloader_enddate' => 'Завршни датум',
+	'daemonloader_dateformat' => ' Формат за датум: YYYYMMDD',
+	'daemonloader_day' => ' сваки дан',
+	'daemonloader_week' => ' сваке седмице',
+	'daemonloader_month' => ' сваки месец',
+	'daemonloader_removejobconfirm' => 'Да ли сте сигурни?',
 );
 
 /** Telugu (తెలుగు)

@@ -120,6 +120,16 @@ $messages['ia'] = array(
 	'mostvisitedpageslatest' => 'in le ultime $1 minutas',
 );
 
+/** Japanese (日本語)
+ * @author Tommy6
+ */
+$messages['ja'] = array(
+	'mostvisitedpages' => '閲覧数の多いページ',
+	'mostvisitedpagessearchtext' => '記事名:',
+	'mostvisitedpagessearchbtn' => '検索',
+	'mostvisitedpageslatest' => '直近$1分間',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -187,6 +197,14 @@ $messages['pms'] = array(
 	'mostvisitedpagessearchbtn' => 'serca',
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'mostvisitedpagessearchtext' => 'د ليکنې نوم:',
+	'mostvisitedpagessearchbtn' => 'پلټل',
+);
+
 /** Brazilian Portuguese (Português do Brasil)
  * @author Daemorris
  * @author Jesielt
@@ -205,6 +223,15 @@ $messages['ru'] = array(
 	'mostvisitedpages' => 'Наиболее часто посещаемые страницы',
 	'mostvisitedpagessearchtext' => 'Название статьи:',
 	'mostvisitedpagessearchbtn' => 'найти',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'mostvisitedpages' => 'Најпосећеније стране',
+	'mostvisitedpagessearchbtn' => 'претрага',
+	'mostvisitedpageslatest' => 'последњих $1 минута',
 );
 
 /** Ukrainian (Українська)

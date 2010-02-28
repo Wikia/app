@@ -445,3 +445,14 @@ $messages['ru'] = array(
 	'textregex-return-mainpage' => '[{{SERVER}}$1 Возврат к списку]',
 );
 
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'textregex-page-title' => 'листа непожељних израза',
+	'textregex-currently-blocked' => "'''тренутно блокиране фразе:'''",
+	'textregex-unblock-succ' => 'Деблокирање успешно',
+	'textregex-block-succ' => 'Блокирање је успело',
+	'textregex-submit-regex' => 'Додај фразу',
+);
+

@@ -343,7 +343,9 @@ $messages['el'] = array(
 	'tooltip-pt-myhome' => 'Πήγαινε στην αρχική μου σελίδα',
 );
 
-/** Spanish (Español) */
+/** Spanish (Español)
+ * @author Peter17
+ */
 $messages['es'] = array(
 	'myhome' => 'Mi página de inicio',
 	'myhome-activity-more' => 'ver más actividad reciente',
@@ -357,6 +359,9 @@ $messages['es'] = array(
 	'myhome-hot-spots-newest' => 'Páginas nuevas en el wiki',
 	'myhome-hot-spots-brandnew' => 'Este es un wiki nuevo. ¡Haz clic en [[Special:CreatePage|Nueva página]] para comenzar a escribir!',
 	'tog-myhomedisableredirect' => 'Desactivar la redirección a Inicio',
+	'myhome-feed-newpage' => 'nueva página',
+	'myhome-feed-edit' => 'modificar',
+	'myhome-feed-delete' => 'borrado',
 	'myhome-feed-created-by' => 'creado por $1',
 	'myhome-feed-added-by' => 'añadido por $1',
 	'myhome-feed-edited-by' => 'editado por $1',
@@ -370,6 +375,7 @@ $messages['es'] = array(
 	'myhome-feed-section-edit-details' => 'Sección editada',
 	'myhome-feed-new-blog-post-details' => 'Nuevo blog',
 	'myhome-feed-new-blog-comment-details' => 'Comentario',
+	'myhome-feed-new-article-comment-details' => 'Comentario',
 	'myhome-feed-move-details' => 'Renombrado',
 	'myhome-feed-redirect-details' => 'Redirección',
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Imagen añadida|Imágenes añadidas}}',
@@ -409,8 +415,8 @@ Si eres el fundador o un administrador de este wiki, puedes cambiar este mensaje
 $messages['fi'] = array(
 	'myhome-feed-newpage' => 'uusi sivu',
 	'myhome-feed-edit' => 'muokkaa',
-	'myhome-feed-move' => 'Sivu siirretty',
-	'myhome-feed-blogcomment' => 'blogi-kommentti',
+	'myhome-feed-move' => 'sivu siirretty',
+	'myhome-feed-blogcomment' => 'blogikommentti',
 	'myhome-feed-delete' => 'poistettu',
 	'myhome-feed-image' => 'kuva lisätty',
 	'myhome-feed-video' => 'video lisätty',
@@ -420,7 +426,7 @@ $messages['fi'] = array(
 	'myhome-feed-new-article-comment-details' => 'Kommentti',
 	'myhome-feed-redirect-details' => 'Ohjaus',
 	'myhome-namespace-blog' => 'Blogi',
-	'myhome-community-corner-edit' => 'Muokkaa viestiä',
+	'myhome-community-corner-edit' => 'muokkaa viestiä',
 );
 
 /** French (Français)
@@ -1030,6 +1036,7 @@ Als u de oprichter of een beheerder van deze wiki bent, kunt u dit bericht gebru
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
  * @author Nghtwlkr
  */
 $messages['no'] = array(
@@ -1069,6 +1076,8 @@ Du kan bruke overvåkningslisten for å holde styr på siste endringer på sider
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|La til kategori|La til kategorier}}',
 	'myhome-hot-spots-number-of-editors' => 'bidragsytere',
 	'myhome-namespace-blog' => 'Blogg',
+	'myhome-default-view-checkbox' => 'Gjør $1 til mitt standardutseende',
+	'myhome-default-view-success' => 'Greit, dette er standarden din nå',
 );
 
 /** Polish (Polski) */
@@ -1190,6 +1199,7 @@ $messages['ps'] = array(
 	'myhome-feed-edit' => 'سمول',
 	'myhome-feed-delete' => 'ړنګ شو',
 	'myhome-feed-new-page-details' => 'نوی مخ',
+	'myhome-feed-summary-details' => 'لنډيز',
 	'myhome-feed-new-blog-post-details' => 'نوی بلاګ',
 );
 
@@ -1350,6 +1360,24 @@ $messages['ru'] = array(
 	'myhome-default-view-checkbox' => 'Просматривать «$1» по умолчанию',
 	'myhome-default-view-success' => 'Теперь это представление данных установлено по умолчанию',
 	'tooltip-pt-myhome' => 'Перейти в личный кабинет',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'myhome-feed-newpage' => 'Нова страница',
+	'myhome-feed-edit' => 'Уреди',
+	'myhome-feed-move' => 'Премештање стране',
+	'myhome-feed-talkpage' => 'Страна за разговор',
+	'myhome-feed-image' => 'Додавање слике',
+	'myhome-feed-diff-alt' => 'Покажи промене на овој страници',
+	'myhome-feed-new-page-details' => 'Нова страница',
+	'myhome-feed-summary-details' => 'Опис',
+	'myhome-feed-move-details' => 'Преименуј',
+	'myhome-feed-redirect-details' => 'Премести',
+	'myhome-namespace-blog' => 'Блог',
+	'myhome-default-view-checkbox' => 'Учини да $1 буде мој стандардан приказ',
 );
 
 /** Swedish (Svenska)

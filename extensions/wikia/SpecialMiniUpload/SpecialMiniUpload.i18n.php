@@ -57,8 +57,11 @@ $messages['br'] = array(
 
 /** Spanish (Español)
  * @author Manuelt15
+ * @author Peter17
  */
 $messages['es'] = array(
+	'thumbnailsize' => 'Tamaño de la miniatura',
+	'captionoptional' => 'Título (opcional):',
 	'insertimage' => 'Insertar Imagen',
 );
 
@@ -97,7 +100,7 @@ $messages['fr'] = array(
  * @author Toliño
  */
 $messages['gl'] = array(
-	'widgetdashboard' => 'Widget Dashboard',
+	'widgetdashboard' => 'Taboleiro dos widgets',
 	'mu_size_your_image' => 'Tamaño da súa imaxe',
 	'almosttheretext' => 'Use o control deslizante para seleccionar un tamaño de miniatura, introduza un pé de foto e prema en "Inserir"',
 	'insertfullsize' => 'Inserir a imaxe co tamaño completo orixinal',
@@ -165,6 +168,16 @@ Geef daarna een bijschrift op en klik "Invoegen".',
 	'rightalign-tooltip' => 'Rechts uitlijnen',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'captionoptional' => 'Bildetekst (valgfritt):',
+	'insertimage' => 'Sett inn bilde',
+	'leftalign-tooltip' => 'Venstrejuster',
+	'rightalign-tooltip' => 'Høyrejuster',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
@@ -204,6 +217,13 @@ $messages['ru'] = array(
 	'insertimage' => 'Вставить изображение',
 	'leftalign-tooltip' => 'По левому краю',
 	'rightalign-tooltip' => 'По правому краю',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'mu_size_your_image' => 'Одредите величину ваше слике',
 );
 
 /** Ukrainian (Українська)

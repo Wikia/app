@@ -257,6 +257,13 @@ $messages['pms'] = array(
 	'actionpanel-desc' => "un quàder pràtich ch'as duverta e che a përmët ëd categorisé, arnominé e modifiché j'artìcoj",
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'action_panel_edit_title' => 'ځواب',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  */

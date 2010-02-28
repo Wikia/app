@@ -333,6 +333,23 @@ Terugschakelen naar visuele weergave is niet mogelijk.',
 	'tog-disablecategoryselect' => 'Categorielabels uitschakelen',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'categoryselect-infobox-caption' => 'Kategorivalg',
+	'categoryselect-infobox-category' => 'Oppgi navnet på kategorien:',
+	'categoryselect-infobox-sortkey' => 'Alfabetiser denne artikkelen under kategorisiden «$1» under navnet:',
+	'categoryselect-addcategory-button' => 'Legg til kategori',
+	'categoryselect-suggest-hint' => 'Trykk Enter når du er ferdig',
+	'categoryselect-edit-summary' => 'Legg til kategorier',
+	'categoryselect-empty-name' => 'Oppgi kategorinavn (del før |)',
+	'categoryselect-button-save' => 'Lagre',
+	'categoryselect-button-cancel' => 'Avbryt',
+	'categoryselect-error-not-exist' => 'Artikkel [id=$1] finnes ikke.',
+	'categoryselect-error-db-locked' => 'Database er låst.',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
@@ -356,6 +373,14 @@ $messages['pms'] = array(
 	'categoryselect-error-db-locked' => "La base ëd dàit a l'é blocà.",
 	'categoryselect-desc' => "A dà n'antërfacia për gestì categorìe ant j'artìcoj sensa modifiché tut l'artìcol.",
 	'tog-disablecategoryselect' => 'Disabìlita etichëtté categorìe',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'categoryselect-addcategory-button' => 'وېشنيزه ورګډول',
+	'categoryselect-button-save' => 'خوندي کول',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -405,6 +430,23 @@ $messages['ru'] = array(
 	'categoryselect-error-db-locked' => 'База данных заблокирована.',
 	'categoryselect-desc' => 'Предоставляет интерфейс для управления категориями в статье без редактирования всей статьи.',
 	'tog-disablecategoryselect' => 'Отключить Category Taging',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'categoryselect-code-view' => 'Кодни преглед',
+	'categoryselect-visual-view' => 'Визуални преглед',
+	'categoryselect-infobox-category' => 'Дајте име категорији:',
+	'categoryselect-addcategory-button' => 'Додај категорију',
+	'categoryselect-suggest-hint' => 'Стисните ЕНТЕР када завршите.',
+	'categoryselect-edit-summary' => 'Додавање категорија',
+	'categoryselect-button-save' => 'Сачувај',
+	'categoryselect-button-cancel' => 'Одустани',
+	'categoryselect-error-not-exist' => 'Чланак [id=$1] не постоји.',
+	'categoryselect-error-user-rights' => 'Грешка у корисничким правима',
+	'categoryselect-error-db-locked' => 'База података је закључана',
 );
 
 /** Telugu (తెలుగు)

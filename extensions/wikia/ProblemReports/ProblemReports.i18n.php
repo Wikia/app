@@ -345,6 +345,7 @@ Berichte, die über dieses Formular abgeschickt werden, sind für jeden [[Specia
 );
 
 /** Spanish (Español)
+ * @author Locos epraix
  * @author Translationista
  */
 $messages['es'] = array(
@@ -389,7 +390,7 @@ Los reportes que se hagan acá [[Special:ProblemReports|se mostrarán en el wiki
 	'pr_mailer_subject' => 'Problema reportado en',
 	'pr_mailer_tmp_info' => 'Puedes  [[MediaWiki:ProblemReportsResponses|editar respuestas convertidas en plantilla]]',
 	'pr_mailer_to_default' => 'Usuario Wikia',
-	'pr_mailer_go_to_wiki' => 'Para enviar un correo electrónico, por favor dirígete a [$ problema wiki ha sido reportado desde]',
+	'pr_mailer_go_to_wiki' => 'Para enviar un correo electrónico, por favor dirígete a [$1 problema de wiki fue reportado desde]',
 	'pr_total_number' => 'Número total de informes',
 	'pr_view_archive' => 'Ver problemas archivados',
 	'pr_view_all' => 'Mostrar todos los informes',
@@ -1001,10 +1002,13 @@ Kort uw bericht alstublieft in.',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
  * @author Nghtwlkr
  */
 $messages['no'] = array(
 	'problemreports' => 'Problemrapportsliste',
+	'prlog_removedentry' => 'fjernet problem $1',
+	'pr_what_problem' => 'Emne',
 	'pr_what_problem_vandalised' => 'denne siden har blitt vandalisert',
 	'pr_what_problem_incorrect_content' => 'dette innholdet er ukorrekt',
 	'pr_what_problem_software_bug' => 'det er en feil i wiki-programvaren',
@@ -1027,6 +1031,7 @@ $messages['no'] = array(
 	'pr_table_description' => 'Beskrivelse',
 	'pr_table_comments' => 'Kommentarer',
 	'pr_table_status' => 'Status',
+	'pr_table_actions' => 'Handlinger',
 	'pr_status_0' => 'venter',
 	'pr_status_1' => 'fikset',
 	'pr_status_2' => 'lukket',
@@ -1192,6 +1197,19 @@ Ij difet dël programa a peulo esse arportà an sle piasse ëd discussion. Ij ra
 	'right-problemreports_global' => 'Cangé statù e sòrt ëd Rapòrt ëd Problema a travers dle wiki',
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'pr_what_problem' => 'سکالو',
+	'pr_what_problem_unselect' => 'ټول',
+	'pr_describe_problem' => 'پيغام',
+	'pr_table_page_link' => 'مخ',
+	'pr_table_description' => 'څرګندونه',
+	'pr_table_status' => 'دريځ',
+	'pr_status_2' => 'تړل شوی',
+);
+
 /** Brazilian Portuguese (Português do Brasil)
  * @author Jesielt
  * @author Luckas Blade
@@ -1301,6 +1319,8 @@ $messages['ru'] = array(
 	'pr_thank_you' => 'Благодарим вас за сообщение о проблеме!
 
 [[Special:ProblemReports/$1|Вы можете следить за её решением]].',
+	'pr_empty_summary' => 'Пожалуйста, предоставьте краткое описание проблемы',
+	'pr_empty_email' => 'Пожалуйста, укажите адрес вашей электронной почты',
 	'pr_mailer_to_default' => 'Участник Викии',
 	'pr_total_number' => 'Общее число сообщений',
 	'pr_view_archive' => 'Просмотр архива проблем',
@@ -1324,8 +1344,46 @@ $messages['ru'] = array(
 	'pr_status_3' => 'необходима помощь сотрудников',
 	'pr_status_10' => 'удалить сообщение',
 	'pr_status_ask' => 'Изменить статус сообщения?',
+	'pr_remove_ask' => 'Удалить отчёт навсегда?',
 	'pr_status_wait' => 'подождите…',
 	'pr_msg_exchead' => 'Слишком длинное сообщение',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'pr_what_problem' => 'Тема',
+	'pr_what_problem_spam' => 'Постоји један спам линк',
+	'pr_what_problem_vandalised' => 'Страница је вандализована',
+	'pr_what_problem_incorrect_content' => 'Садржај није тачан',
+	'pr_what_problem_software_bug' => 'Постоји буг у вики софтверу',
+	'pr_what_problem_other' => 'остало',
+	'pr_what_problem_spam_short' => 'спам',
+	'pr_what_problem_vandalised_short' => 'вандал',
+	'pr_what_problem_incorrect_content_short' => 'садржај',
+	'pr_what_problem_software_bug_short' => 'буг (софтверска грешка)',
+	'pr_what_problem_other_short' => 'остало',
+	'pr_describe_problem' => 'Порука',
+	'pr_what_page' => 'Наслов стране',
+	'pr_email_visible_only_to_staff' => 'Видљиво само за особље',
+	'pr_mailer_to_default' => 'Викија корисник',
+	'pr_total_number' => 'Укупни број извештаја',
+	'pr_view_archive' => 'Погледај архивиране проблеме',
+	'pr_view_all' => 'Покажи све извештаје',
+	'pr_raports_from_this_wikia' => 'Покажи извештаје само са ове Викије',
+	'pr_table_date_submitted' => 'Датум слања',
+	'pr_table_description' => 'Опис',
+	'pr_table_comments' => 'коментари',
+	'pr_table_status' => 'Статус',
+	'pr_table_actions' => 'Акције',
+	'pr_status_0' => 'На чекању',
+	'pr_status_1' => 'Отклоњен проблем',
+	'pr_status_2' => 'Затворено',
+	'pr_status_3' => 'Потребна помоћ особља',
+	'pr_status_10' => 'Уклоњен извештај',
+	'pr_status_wait' => 'причекајте...',
+	'pr_msg_exchead' => 'Порука је предугачка',
 );
 
 /** Swedish (Svenska)

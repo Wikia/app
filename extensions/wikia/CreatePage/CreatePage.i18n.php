@@ -85,6 +85,13 @@ Skryf die eerste afdeling van u bladsy hier.
 Skryf die tweede afdeling van u bladsy hier.',
 );
 
+/** Bashkir (Башҡорт)
+ * @author Рустам Нурыев
+ */
+$messages['ba'] = array(
+	'createpage_enter_text' => 'Текст:',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
@@ -115,6 +122,16 @@ Tu \'zo deoc\'h mont da <a href="$1">$2,</a> pe adenvel ho pajenn',
 Mar plij implijit un titl disheñvel.",
 	'createpage-error-article-blocked' => "Digarezit, ne c'helloc'h ket krouiñ ar pennad-se er mare-mañ.",
 	'tog-createpagedefaultblank' => "Implijout ur bajenn c'houllo dre ziouer evit krouiñ ur bajenn nevez",
+	'newpagelayout' => '[[File:Placeholder|right|300px]]
+Skrivit amañ rannbennad kentañ ho pennad.
+
+== Titl ar rannskrid ==
+
+Skrivit amañ rannskrid kentañ ho pennad.
+
+== Titl ar rannskrid ==
+
+Skrivit amañ eil rannskrid ho pennad.',
 );
 
 /** German (Deutsch) */
@@ -453,6 +470,8 @@ Sicht Iech w.e.g. en aneren Numm.',
 	'createpage_cant_edit' => "D'Ännerung konnt net gemaach ginn",
 	'createpage-dialog-title' => 'En neien Artikel uleeën',
 	'createpage-dialog-message1' => 'Super, Dir sidd am gaang eng nei Säit unzeleeën!',
+	'createpage-dialog-message2' => 'Wéi wëllt Dir en nennen?',
+	'createpage-dialog-choose' => 'Sicht e Layout vun der Säit aus:',
 	'createpage-dialog-format' => 'Standard-Layout',
 	'createpage-dialog-blank' => 'Eidel Säit',
 	'createpage-error-empty-title' => 'Schreiwt w.e.g. en Titel an Ären Artikel',
@@ -705,6 +724,32 @@ $messages['ru'] = array(
 ==Заголовок секции==
 
 Напишите здесь вторую секцию вашей статьи.',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'createpage-sp-title' => 'Започни нови чланак',
+	'createpage_title' => 'Започни нови чланак',
+	'createpage_title_caption' => 'Наслов:',
+	'createpage_enter_text' => 'Текст:',
+	'createpage_empty_title_error' => ' Потребан је наслов',
+	'createpage_empty_article_body_error' => 'Потребан је текст чланка',
+	'createpage_invalid_title_error' => 'Погрешан наслов',
+	'createpage_article_already_exists' => 'Постоји чланак са тим насловом.
+Молимо Вас да одаберете друго име.',
+	'createpage_spam' => 'Извините, али не може се сачувати ваша измена',
+	'createpage_cant_edit' => 'Не може се извести измена',
+	'createpage-dialog-message1' => 'Ура, ви пишете нову страницу!',
+	'createpage-dialog-choose' => 'Одаберите изглед странице:',
+	'createpage-dialog-format' => 'Стандардан изглед',
+	'createpage-dialog-blank' => 'празна страна',
+	'createpage-error-empty-title' => 'Молимо Вас да напишете наслов за ваш чланак',
+	'createpage-error-invalid-title' => 'Извините, али наслов вашег чланка није добар
+Молимо Вас да користите други наслов',
+	'createpage-error-article-exists' => 'Већ постоји чланак са тим именом.
+Можете да одете на <a href="$1">$2</a> или можете да преименујете страницу',
 );
 
 /** Swedish (Svenska)

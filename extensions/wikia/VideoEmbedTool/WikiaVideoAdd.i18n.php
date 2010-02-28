@@ -266,6 +266,16 @@ $messages['pms'] = array(
 	'wva-notallowed' => 'It peule pa anserì video su sta wiki-sì.',
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'wva-success' => 'د $1 ويډيو مخ په برياليتوب سره ورګډ شو.',
+	'wva-name' => 'نوم يې وليکۍ:',
+	'wva-url' => 'URL يې وليکۍ:',
+	'wva-add' => 'ورګډول',
+);
+
 /** Brazilian Portuguese (Português do Brasil)
  * @author Daemorris
  */
@@ -295,6 +305,15 @@ $messages['ru'] = array(
 	'wva-title' => 'Быстрое добавление видео по URL',
 	'wva-notlogged' => 'Чтобы добавить видео вам необходимо представиться системе или зарегистрироваться.',
 	'wva-notallowed' => 'Вы не можете вставлять видео в этой вики.',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'wva-name' => 'Унеси име',
+	'wva-url' => 'Унеси УРЛ',
+	'wva-add' => 'Додај',
 );
 
 /** Telugu (తెలుగు)

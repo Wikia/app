@@ -88,6 +88,13 @@ $messages['hsb'] = array(
 	'wikifactoryreporter' => 'WikiFactory Reporter',
 );
 
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'wikifactoryreporter' => 'Wikigyár tudósító',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -149,6 +156,13 @@ $messages['pms'] = array(
  */
 $messages['pt-br'] = array(
 	'wikifactoryreporter' => 'Relator do WikiFactory',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'wikifactoryreporter' => 'Uicchi Fabbriche Reporter',
 );
 
 /** Russian (Русский)

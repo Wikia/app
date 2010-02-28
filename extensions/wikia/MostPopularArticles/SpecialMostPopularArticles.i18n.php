@@ -99,6 +99,13 @@ $messages['id'] = array(
 	'mostpopulararticles' => 'Artikel paling populer (dari basis data)',
 );
 
+/** Japanese (日本語)
+ * @author Tommy6
+ */
+$messages['ja'] = array(
+	'mostpopulararticles' => '人気のあるページ（データベースより）',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -174,6 +181,13 @@ $messages['roa-tara'] = array(
  */
 $messages['ru'] = array(
 	'mostpopulararticles' => 'Самые популярные статьи (из базы данных)',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'mostpopulararticles' => 'Најпопуларнији чланци  (према бази података)',
 );
 
 /** Swedish (Svenska)

@@ -184,3 +184,10 @@ $messages['ru'] = array(
 	'privatedomainsinstructions' => 'Ниже приведён список почтовых доменов, допустимых для редакторов этой вики. Каждая строка обозначает суффикс адреса электронной почты, позволяющего производить правки. На каждой строке должно быть не более одного суффикса. Например: </p> <p style="width: 20%; padding:5px; border: 1px solid grey;">cs.stanford.edu<br /> stanfordalumni.org</p> <p>Подобная настройка позволит править статьи участникам, обладающим электронными адресами  whatever@cs.stanford.edu и whatever@stanfordalumni.org</p> <p><b>Введите разрешённые домены в представленное ниже текстовое поле и нажмите «Сохранить».</b>',
 );
 
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'privatedomains_affiliatenamelabel' => 'Име организације:',
+);
+

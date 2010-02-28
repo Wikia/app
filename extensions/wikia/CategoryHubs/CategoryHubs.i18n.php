@@ -38,12 +38,43 @@ $messages['en'] = array(
 	'cathub-next'                           => 'Next &rarr;',
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'cathub-desc' => 'Uitbreiding om kategoriebladsye na aktiwiteitsbladsye te omskep.
+Ontwerp vir [http://answers.wikia.com answers.wikia.com]',
+	'cathub-progbar-mouseover-answered' => '$1% beantwoord ($2 antwoorde)',
+	'cathub-progbar-mouseover-not-answered' => '$1% nog nie beantwoord nie ($2 vrae)',
+	'cathub-progbar-label-answered' => 'Beantwoord',
+	'cathub-progbar-label-unanswered' => 'Onbeantwoord',
+	'cathub-progbar-none-done' => 'Nog niks vrae is beantwoord nie.',
+	'cathub-progbar-all-done' => 'Alle vrae is beantwoord!',
+	'cathub-progbar-allmost-done' => '$1 onbeantwoorde {{PLURAL:$1|vraag|vrae}} oor!',
+	'cathub-no-unanswered-questions' => 'Daar is op die oomblik geen onbeantwoorde vrae om na te kyk nie.',
+	'cathub-no-answered-questions' => 'Daar is op die oomblik geen beantwoorde vrae om na te kyk nie.',
+	'cathub-top-contributors' => 'Gebruikers met die meeste bydraes aan hierdie kategorie',
+	'cathub-top-contribs-all-time' => 'Alle tye',
+	'cathub-top-contribs-recent' => 'In die {{PLURAL:$1|afgelope dag|afgelope $1 dae}}',
+	'cathub-question-asked-ago' => 'gevra $1 $2',
+	'cathub-question-answered-ago' => 'beantwoord $1 $2',
+	'cathub-question-asked-by' => 'deur $1',
+	'cathub-anon-username' => "'n nuuskierige gebruiker",
+	'cathub-answer-heading' => 'Antwoord',
+	'cathub-button-answer' => 'Antwoorde',
+	'cathub-button-improve-answer' => 'Verbeter antwoord',
+	'cathub-button-rephrase' => 'herformuleer',
+	'cathub-edit-success' => 'U antwoord is gestoor',
+	'cathub-prev' => '← Vorige',
+	'cathub-next' => 'Volgende →',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
 $messages['br'] = array(
-	'cathub-progbar-mouseover-answered' => '$1% respontet',
-	'cathub-progbar-mouseover-not-answered' => "$1% direspontet evit c'hoazh",
+	'cathub-progbar-mouseover-answered' => '$1% respontet ($2 respont)',
+	'cathub-progbar-mouseover-not-answered' => "$1% direspontet evit c'hoazh ($2 goulenn)",
 	'cathub-progbar-label-answered' => 'Respontet',
 	'cathub-progbar-label-unanswered' => 'Direspontet',
 	'cathub-progbar-none-done' => "N'eus goulenn ebet bet respontet outo evit poent",
@@ -92,11 +123,12 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author IAlex
+ * @author Jean-Frédéric
  */
 $messages['fr'] = array(
 	'cathub-desc' => "Extension pour utiliser les pages de catégories en tant que centre d'activité. Conçu pour [http://answers.wikia.com answers.wikia.com]",
-	'cathub-progbar-mouseover-answered' => '$1 % répondu',
-	'cathub-progbar-mouseover-not-answered' => '$1 % sans réponse',
+	'cathub-progbar-mouseover-answered' => '$1% répondu ($2 réponses)',
+	'cathub-progbar-mouseover-not-answered' => '$1% sans réponse ($2 questions)',
 	'cathub-progbar-label-answered' => 'Répondu',
 	'cathub-progbar-label-unanswered' => 'Sans réponse',
 	'cathub-progbar-none-done' => "Aucune question n'a encore de réponse",
@@ -125,8 +157,8 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'cathub-desc' => 'Extensión para transformar as páxinas de categoría nunha vista da categoría como un centro de actividades. Deseñado para [http://answers.wikia.com answers.wikia.com]',
-	'cathub-progbar-mouseover-answered' => '$1% está respondida',
-	'cathub-progbar-mouseover-not-answered' => '$1% aínda non está respondida',
+	'cathub-progbar-mouseover-answered' => '$1% está respondida ($2 respostas)',
+	'cathub-progbar-mouseover-not-answered' => '$1% aínda non está respondida  ($2 preguntas)',
 	'cathub-progbar-label-answered' => 'Respondidas',
 	'cathub-progbar-label-unanswered' => 'Sen responder',
 	'cathub-progbar-none-done' => 'Ningunha pregunta recibiu resposta aínda',
@@ -155,8 +187,8 @@ $messages['gl'] = array(
  */
 $messages['ia'] = array(
 	'cathub-desc' => 'Extension pro transformar paginas de categoria in un vista del categoria como centro de activitate. Designate pro [http://answers.wikia.com answers.wikia.com].',
-	'cathub-progbar-mouseover-answered' => '$1% respondite',
-	'cathub-progbar-mouseover-not-answered' => '$1% non ancora respondite',
+	'cathub-progbar-mouseover-answered' => '$1% respondite ($2 responsas)',
+	'cathub-progbar-mouseover-not-answered' => '$1% non ancora respondite ($2 questiones)',
 	'cathub-progbar-label-answered' => 'Respondite',
 	'cathub-progbar-label-unanswered' => 'Non respondite',
 	'cathub-progbar-none-done' => 'Nulle question ancora respondite',
@@ -215,8 +247,8 @@ $messages['ja'] = array(
  */
 $messages['mk'] = array(
 	'cathub-desc' => 'Додаток со кој категориските страници се прикажуваат како средишта на активност. Изготвено за [http://answers.wikia.com answers.wikia.com]',
-	'cathub-progbar-mouseover-answered' => '$1% одговорени',
-	'cathub-progbar-mouseover-not-answered' => '$1% сè уште неодговорени',
+	'cathub-progbar-mouseover-answered' => '$1% се одговорени ($2 одговори)',
+	'cathub-progbar-mouseover-not-answered' => '$1% сè уште се неодговорени ($2 прашања)',
 	'cathub-progbar-label-answered' => 'Одговорени',
 	'cathub-progbar-label-unanswered' => 'Неодговорени',
 	'cathub-progbar-none-done' => 'Сè уште нема одговори на прашањата',
@@ -246,8 +278,8 @@ $messages['mk'] = array(
 $messages['nl'] = array(
 	'cathub-desc' => "Uitbreiding die categoriepagina's omvormt tot activiteitenpagina.
 Ontworpen voor [http://answers.wikia.com answers.wikia.com]",
-	'cathub-progbar-mouseover-answered' => '$1% beantwoord.',
-	'cathub-progbar-mouseover-not-answered' => '$1% nog niet beantwoord.',
+	'cathub-progbar-mouseover-answered' => '$1% beantwoord ($2 antwoorden)',
+	'cathub-progbar-mouseover-not-answered' => '$1% nog niet beantwoord ($2 vragen)',
 	'cathub-progbar-label-answered' => 'Beantwoord',
 	'cathub-progbar-label-unanswered' => 'Onbeantwoord',
 	'cathub-progbar-none-done' => 'Nog geen vragen beantwoord.',
@@ -272,12 +304,13 @@ Ontworpen voor [http://answers.wikia.com answers.wikia.com]",
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
  * @author Nghtwlkr
  */
 $messages['no'] = array(
 	'cathub-desc' => 'Utvidelse for å gjøre om kategorisider til en visning av kategorien som et knutepunkt for aktivitet. Laget for [http://answers.wikia.com answers.wikia.com]',
-	'cathub-progbar-mouseover-answered' => '$1% besvart',
-	'cathub-progbar-mouseover-not-answered' => '$1% ikke besvart ennå',
+	'cathub-progbar-mouseover-answered' => '$1% besvart ($2 svar)',
+	'cathub-progbar-mouseover-not-answered' => '$1% ikke besvart ennå ($2 spørsmål)',
 	'cathub-progbar-label-answered' => 'Besvart',
 	'cathub-progbar-label-unanswered' => 'Ubesvart',
 	'cathub-progbar-none-done' => 'Ingen spørsmål besvart ennå',
@@ -332,13 +365,22 @@ $messages['pms'] = array(
 	'cathub-next' => '&rarr; dapress',
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'cathub-answer-heading' => 'ځواب',
+	'cathub-button-answer' => 'ځواب',
+);
+
 /** Russian (Русский)
+ * @author DCamer
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
 	'cathub-desc' => 'Расширение для включения на страниц категорий представления, показывающего центры деятельности. Разработан для [http://answers.wikia.com answers.wikia.com]',
-	'cathub-progbar-mouseover-answered' => '$1% получили ответы',
-	'cathub-progbar-mouseover-not-answered' => '$1% ещё не получили ответов',
+	'cathub-progbar-mouseover-answered' => '$1% получил $2 ответа(ов)',
+	'cathub-progbar-mouseover-not-answered' => '$1% ещё не получил ответов ($2 вопроса(ов))',
 	'cathub-progbar-label-answered' => 'С ответами',
 	'cathub-progbar-label-unanswered' => 'Без ответов',
 	'cathub-progbar-none-done' => 'Пока на вопросы нет ответов',
@@ -360,5 +402,14 @@ $messages['ru'] = array(
 	'cathub-edit-success' => 'Ваш ответ сохранён',
 	'cathub-prev' => '← Предыдущая',
 	'cathub-next' => 'Следующая →',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'cathub-answer-heading' => 'Одговор',
+	'cathub-button-answer' => 'Одговор',
+	'cathub-button-improve-answer' => 'Неправилан одговор',
 );
 

@@ -200,3 +200,10 @@ $messages['ru'] = array(
 	'iwedit-success' => '<p>Ссылка успешно создана.</p>',
 );
 
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'iwedit-error' => '<p>Догодила се грешка.</p>',
+);
+

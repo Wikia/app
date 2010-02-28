@@ -227,7 +227,6 @@ $messages['bg'] = array(
 	'autocreatewiki-birthdate' => 'Дата на раждане:',
 	'autocreatewiki-done' => 'готово',
 	'autocreatewiki-error' => 'грешка',
-	'autocreatewiki-info-category' => 'Това ще помогне на посетителите да открият вашето уики.',
 	'autocreatewiki-bad-name' => 'Името не може да съдържа специални символи (като $ или @) и е необходимо да е една дума, изписана с малки букви и без интервали.',
 	'autocreatewiki-violate-policy' => 'Името на уикито съдържа дума, която нарушава политиката ни за наименуване',
 	'autocreatewiki-name-taken' => 'Уики с такова име вече съществува. Каним ви да се присъедините към нас в <a href="http://$1.wikia.com">http://$1.wikia.com</a>',
@@ -270,7 +269,6 @@ $messages['br'] = array(
 	'autocreatewiki-success-get-started' => 'Kregiñ',
 	'autocreatewiki-info-domain' => "Ar gwellañ zo implijout ur ger a vo, evit doare, ur ger-alc'hwez evit klask diwar-benn ho tanvez.",
 	'autocreatewiki-info-topic' => 'Ouzhpennañ un deskrivadur evel « Brezel ar Stered » pe « Abadenn skinwel ».',
-	'autocreatewiki-info-category' => 'Sikour a raio an dra-mañ ar weladennerien da gavout ho wiki.',
 	'autocreatewiki-info-language' => "An dra-se a c'hall bezañ ar yezh dre ziouer evit an dud a zeu da welet ho wiki.",
 	'autocreatewiki-info-email-address' => "Morse ne vez diskouezet ho chomlec'h da zen ebet war wiki.",
 	'autocreatewiki-info-realname' => "Ma tibabit reiñ ho kwir anv e vo implijet evit reiñ ho labour deoc'h.",
@@ -372,7 +370,6 @@ $messages['de'] = array(
 	'autocreatewiki-success-get-started' => 'Auf gehts!',
 	'autocreatewiki-info-domain' => 'Verwende am besten ein Wort, das vermutlich als Suchbegriff für dieses Thema verwendet wird.',
 	'autocreatewiki-info-topic' => 'Wähle am besten einen kurzen, beschreibenden Namen (z.B. „Star Wars“ oder „Fernsehserien“).',
-	'autocreatewiki-info-category' => 'Besucher können so dein Wiki einfacher finden.',
 	'autocreatewiki-info-language' => 'Dies wird die Standard-Sprache für Besucher deines Wikis.',
 	'autocreatewiki-info-email-address' => 'Deine E-Mail-Adresse wird niemandem angezeigt.',
 	'autocreatewiki-info-realname' => 'Deine Arbeit wird deinem Namen zugeordnet, wenn du ihn angibst.',
@@ -492,7 +489,6 @@ $messages['el'] = array(
 	'autocreatewiki-success-get-started' => 'Ξεκινήστε',
 	'autocreatewiki-info-domain' => 'Καλύτερα να χρησιμοποιήσετε μια λέξη-κλειδί αναζήτησης του θέματός σας.',
 	'autocreatewiki-info-topic' => 'Βάλε τε μια σύντομη περιγραφή όπως "Διαδίκτυο" ή "Λογοτεχνεία".',
-	'autocreatewiki-info-category' => 'Αυτό θα βοηθήσει τους επισκέπτες βρουν το wiki σας.',
 	'autocreatewiki-info-language' => 'Αυτή θα είναι η προεπιλεγμένη γλώσσα για τους επισκέπτες του wiki σας.',
 	'autocreatewiki-info-email-address' => 'Το ηλεκτρονικό σας ταχυδρομείο δεν φαίνεται σε κανέναν στο Wikia.',
 	'autocreatewiki-info-realname' => 'Αν το δώσετε, αυτό θα χρησιμοποιηθεί για να σας αποδωθεί η δουλειά σας.',
@@ -534,7 +530,6 @@ $messages['es'] = array(
 	'autocreatewiki-success-get-started' => 'Comenzar',
 	'autocreatewiki-info-domain' => 'Lo mejor es usar las palabras que tengan más posibilidades de ser buscada sobre el tema de tu wiki. Por ejemplo si el tema es una serie de televisión, las palabras serían el nombre de la serie.',
 	'autocreatewiki-info-topic' => 'Añade una descripción corta como por ejemplo "Star Wars" o "Series de TV".',
-	'autocreatewiki-info-category' => 'Esto ayudará a los visitantes a encontrar tu wiki.',
 	'autocreatewiki-info-language' => 'Este será el idioma por defecto para los visitantes de tu wiki.',
 	'autocreatewiki-info-email-address' => 'Tu dirección de email no se mostrará a nadie en Wikia.',
 	'autocreatewiki-info-realname' => 'Si optas por proporcionarlo, se usará para dar atribución a tu trabajo.',
@@ -661,7 +656,6 @@ $messages['fa'] = array(
 	'autocreatewiki-success-title-default' => 'ویکی شما ایجاد شد!',
 	'autocreatewiki-success-subtitle' => 'با مراجعه به نشانی روبرو شما می‌توانید کار بر روی ویکی خود را آغاز کنید:',
 	'autocreatewiki-info-domain' => 'بهتر است از کلمه‌ای استفاده کنید که درصد جستجو شدن آن در موضوع ویکی شما زیاد باشد.',
-	'autocreatewiki-info-category' => 'این به کاربران کمک می‌کند که ویکی شما را بیابند.',
 	'autocreatewiki-info-language' => 'این زبان پیش‌فرض ویکی شما خواهد بود.',
 	'autocreatewiki-info-email-address' => 'آدرس پست الکترونیکی شما به کاربران ویکیا نمایش داده نخواهد شد.',
 	'autocreatewiki-info-birthdate' => 'تمام کاربران ویکیا مستلزم هستند که تاریخ تولد اصلی خود را برای احتیاط و حفظ منافع وب‌گاه در برابر دولت ارائه کنند.',
@@ -724,6 +718,7 @@ $messages['fi'] = array(
 	'createwiki' => 'Luo uusi wiki',
 	'autocreatewiki-chooseone' => 'Valitse yksi',
 	'autocreatewiki-required' => '$1 = vaadittu',
+	'autocreatewiki-category-select' => 'Valitse yksi',
 	'autocreatewiki-language-all' => 'Kaikki kielet',
 	'autocreatewiki-birthdate' => 'Syntymäaika:',
 	'autocreatewiki-remember' => 'Muista minut',
@@ -733,8 +728,8 @@ $messages['fi'] = array(
 	'autocreatewiki-haveaccount-question' => 'Onko sinulla jo Wikia-tili?',
 	'autocreatewiki-busy-username' => 'Tämä käyttäjätunnus on jo varattu.',
 	'autocreatewiki-empty-category' => 'Valitse yksi luokista.',
-	'autocreatewiki-empty-wikiname' => 'Wiki-nimi ei voi olla tyhjä.',
-	'autocreatewiki-empty-username' => 'Käyttäjätunnus voi olla tyhjä.',
+	'autocreatewiki-empty-wikiname' => 'Wikinimi ei voi olla tyhjä.',
+	'autocreatewiki-empty-username' => 'Käyttäjätunnus ei voi olla tyhjä.',
 	'autocreatewiki-empty-password' => 'Salasana ei voi olla tyhjä.',
 	'autocreatewiki-category-other' => 'Muu',
 	'autocreatewiki-set-username' => 'Aseta käyttäjätunnus ensin.',
@@ -760,6 +755,7 @@ $messages['fr'] = array(
 	'autocreatewiki' => 'Créer un nouveau Wiki',
 	'autocreatewiki-desc' => 'Crée un wiki dans WikiFactory par des requêtes des utilisateurs',
 	'autocreatewiki-page-title-default' => 'Créer un wiki',
+	'autocreatewiki-page-title-answers' => 'Créer un nouveau site de réponses',
 	'createwiki' => 'Créer un wiki',
 	'autocreatewiki-chooseone' => 'Choisissez-un un',
 	'autocreatewiki-required' => '$1 = obligatoire',
@@ -776,12 +772,14 @@ $messages['fr'] = array(
 	'autocreatewiki-language-top-list' => 'de,en,es,he,fr,it,ja,no,pl,pt,pt-br,zh',
 	'autocreatewiki-haveaccount-question' => 'Avez-vous déjà un compte Wikia ?',
 	'autocreatewiki-success-title-default' => 'Votre wiki a bien été créé !',
+	'autocreatewiki-success-title-answers' => 'Votre site de réponses a été créé.',
 	'autocreatewiki-success-subtitle' => 'Vous pouvez commencer à travailler sur votre wiki en visitant :',
 	'autocreatewiki-success-has-been-created' => 'a bien été créé !',
 	'autocreatewiki-success-get-started' => 'Démarrer',
 	'autocreatewiki-info-domain' => "Le mieux est d'utiliser un mot qui sera vraisemblablement un mot clé de recherche pour votre sujet.",
 	'autocreatewiki-info-topic' => 'Ajoutez une courte description comme « Star Wars » ou « Émission TV ».',
-	'autocreatewiki-info-category' => 'Ceci aidera les visiteurs à trouver votre wiki.',
+	'autocreatewiki-info-category-default' => 'Ceci aidera les visiteurs à trouver votre wiki.',
+	'autocreatewiki-info-category-answers' => 'Ceci aidera les visiteurs à trouver votre site de réponses.',
 	'autocreatewiki-info-language' => 'Langue du wiki',
 	'autocreatewiki-info-email-address' => "Votre adresse de courriel n'est jamais montrée à personne sur Wikia.",
 	'autocreatewiki-info-realname' => 'Si vous choisissez de le donner, il sera utilisé pour vous attribuer votre travail.',
@@ -864,7 +862,7 @@ Maintenant vous avez un site web qu'il faudra remplir avec des informations, des
 
 Et ensuite continuez ! Les gens aiment aller sur des wikis où il y a beaucoup de choses à lire, donc continuez à ajouter du contenu pour attirer les lecteurs et les éditeurs. Il y a beaucoup à faire mais ne vos en faîtes pas -- aujourd'hui est le premier jour, et vous avez beaucoup de temps. Tous les wikis ont bien commencé un jour -- juste un peu de temps pour débuter quelques pages, jusqu'à ce qu'il devienne un grand site
 
-Si vous avez des questions, vous pouvez nous écrire par cette page [[Special:Contact]]. Nous vous souhaitons bien du plaisir !
+Si vous avez des questions, vous pouvez nous écrire par cette page [[Special:Contact]]. Nous vous souhaitons bien du plaisir ! 
 
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Nouveaux wikis',
@@ -896,6 +894,7 @@ $messages['gl'] = array(
 	'autocreatewiki' => 'Crear un novo wiki',
 	'autocreatewiki-desc' => 'Crea un wiki en WikiFactory mediante a solicitude dun usuario',
 	'autocreatewiki-page-title-default' => 'Crear un novo wiki',
+	'autocreatewiki-page-title-answers' => 'Crear un novo sitio de respostas',
 	'createwiki' => 'Crear un novo wiki',
 	'autocreatewiki-chooseone' => 'Escolla un',
 	'autocreatewiki-required' => '$1 = obrigatorio',
@@ -912,12 +911,14 @@ $messages['gl'] = array(
 	'autocreatewiki-language-top-list' => 'de,en,es,he,fr,it,ja,no,pl,pt,pt-br,zh',
 	'autocreatewiki-haveaccount-question' => 'Xa ten unha conta Wikia?',
 	'autocreatewiki-success-title-default' => 'Creouse o seu wiki!',
+	'autocreatewiki-success-title-answers' => 'Creouse o seu sitio de respostas!',
 	'autocreatewiki-success-subtitle' => 'Xa pode comezar a traballar no seu wiki, visite:',
 	'autocreatewiki-success-has-been-created' => 'foi creado correctamente!',
 	'autocreatewiki-success-get-started' => 'Introdución',
 	'autocreatewiki-info-domain' => 'O mellor é usar como palabra clave unha que describa claramente o seu tema.',
 	'autocreatewiki-info-topic' => 'Engada unha breve descrición, como "Star Wars" ou "series de televisión".',
-	'autocreatewiki-info-category' => 'Isto axudará a que os visitantes atopen o seu wiki.',
+	'autocreatewiki-info-category-default' => 'Isto axudará aos visitantes a atopar o seu wiki.',
+	'autocreatewiki-info-category-answers' => 'Isto axudará aos visitantes a atopar o seu sitio de respostas.',
 	'autocreatewiki-info-language' => 'Esta será a lingua por defecto para os visitantes do seu wiki.',
 	'autocreatewiki-info-email-address' => 'Non se mostrará a ninguén en Wikia o seu enderezo de correo electrónico.',
 	'autocreatewiki-info-realname' => 'Se escolle dalo utilizarase para atribuírlle o seu traballo.',
@@ -1056,7 +1057,6 @@ $messages['he'] = array(
 	'autocreatewiki-success-get-started' => 'צעדים ראשונים',
 	'autocreatewiki-info-domain' => 'כדאי להשתמש במילה שהיא מילת מפתח לחיפוש הנושא שלך.',
 	'autocreatewiki-info-topic' => 'הוסף תיאור קצר כגון "מלחמת הכוכבים" או "תוכניות טלוויזיה".',
-	'autocreatewiki-info-category' => 'זה יעזור למבקרים למצוא את הוויקי שלך.',
 	'autocreatewiki-info-language' => 'זו תהיה שפת ברירת המחדל עבור המבקרים בוויקי שלך.',
 	'autocreatewiki-info-email-address' => 'כתובת הדוא"ל שלך נשמרת בסודיות ואף אחד לא יכול לראותה.',
 	'autocreatewiki-info-realname' => 'את תבחרו לציין אותו, הוא ישמש לייחוס עבודתכם אליכם.',
@@ -1091,7 +1091,6 @@ $messages['hu'] = array(
 	'autocreatewiki-success-has-been-created' => 'elkészült!',
 	'autocreatewiki-success-get-started' => 'Első lépések',
 	'autocreatewiki-info-topic' => 'Adj meg egy rövid leírást, például „Star Wars” vagy „TV-műsorok”.',
-	'autocreatewiki-info-category' => 'Ez segít a látogatóknak a wikid megtalálásában.',
 	'autocreatewiki-info-language' => 'Ez lesz a wikid alapértelmezett nyelve a látogatóid számára.',
 	'autocreatewiki-info-email-address' => 'Az e-mail címedet sosem mutatjuk meg senkinek a Wikián.',
 	'autocreatewiki-info-realname' => 'Ha megadod, ezen a néven leszel jelölve szerzőként a munkáidnál.',
@@ -1105,6 +1104,7 @@ $messages['ia'] = array(
 	'autocreatewiki' => 'Crear un nove wiki',
 	'autocreatewiki-desc' => 'Crear wiki in WikiFactory per requestas de usatores',
 	'autocreatewiki-page-title-default' => 'Crear un nove wiki',
+	'autocreatewiki-page-title-answers' => 'Crear un nove sito de responsas',
 	'createwiki' => 'Crear un nove wiki',
 	'autocreatewiki-chooseone' => 'Selige un',
 	'autocreatewiki-required' => '$1 = requirite',
@@ -1120,12 +1120,14 @@ $messages['ia'] = array(
 	'autocreatewiki-error' => 'error',
 	'autocreatewiki-haveaccount-question' => 'Ha tu ja un conto Wiki?',
 	'autocreatewiki-success-title-default' => 'Tu wiki ha essite create!',
+	'autocreatewiki-success-title-answers' => 'Tu sito de responsas ha essite create!',
 	'autocreatewiki-success-subtitle' => 'Tu pote ora comenciar a laborar a tu wiki per visitar:',
 	'autocreatewiki-success-has-been-created' => 'ha essite create!',
 	'autocreatewiki-success-get-started' => 'Comenciar',
 	'autocreatewiki-info-domain' => 'Es recommendate usar un parola susceptibile de esser cercate pro tu topico.',
 	'autocreatewiki-info-topic' => 'Adde un breve description como "Star Wars" o "Series de TV".',
-	'autocreatewiki-info-category' => 'Isto adjutara le visitatores a trovar tu wiki.',
+	'autocreatewiki-info-category-default' => 'Isto adjutara le visitatores a trovar tu wiki.',
+	'autocreatewiki-info-category-answers' => 'Isto adjutara le visitatores a trovar tu sito de responsas.',
 	'autocreatewiki-info-language' => 'Iste essera le lingua predefinite pro le visitatores de tu wiki.',
 	'autocreatewiki-info-email-address' => 'Tu adresse de e-mail nunquam es monstrate a alcuno in Wikia.',
 	'autocreatewiki-info-realname' => 'Si tu opta pro dar lo, illo essera usate pro dar te attribution pro tu contributiones.',
@@ -1300,7 +1302,6 @@ $messages['ja'] = array(
 	'autocreatewiki-success-get-started' => 'さあ始めましょう',
 	'autocreatewiki-info-domain' => 'ウィキが扱う内容を表し、検索キーワードとなるようなものがよいでしょう。',
 	'autocreatewiki-info-topic' => '"Star Wars"や"テレビ番組"など、ウィキの主題を簡単に示すような名称にしましょう。',
-	'autocreatewiki-info-category' => 'ウィキアの訪問者があなたの作るウィキをみつけやすいようにします。',
 	'autocreatewiki-info-language' => 'ここで指定した言語が、ウィキの訪問者に対して標準で表示される言語になります。',
 	'autocreatewiki-info-email-address' => 'あなたのメールアドレスがウィキア上で誰かに直接知らされることはありません。',
 	'autocreatewiki-info-realname' => '本名を入力すると、ページ・クレジットに利用者名（アカウント名）の代わりに本名が表示されます。',
@@ -1402,6 +1403,7 @@ $messages['mk'] = array(
 	'autocreatewiki' => 'Создај ново вики',
 	'autocreatewiki-desc' => 'Создавање на вики во ВикиФабрика по барања на корисници',
 	'autocreatewiki-page-title-default' => 'Создај ново вики',
+	'autocreatewiki-page-title-answers' => 'Создај нова страница за одговори',
 	'createwiki' => 'Создај ново вики',
 	'autocreatewiki-chooseone' => 'Изберете',
 	'autocreatewiki-required' => '$1 = задолжително',
@@ -1418,12 +1420,14 @@ $messages['mk'] = array(
 	'autocreatewiki-language-top-list' => 'de,en,es,he,fr,it,ja,no,pl,pt,pt-br,zh',
 	'autocreatewiki-haveaccount-question' => 'Дали веќе имате сметка на Викија?',
 	'autocreatewiki-success-title-default' => 'Вашето вики е создадено!',
+	'autocreatewiki-success-title-answers' => 'Вашата страница за одговори е создадена!',
 	'autocreatewiki-success-subtitle' => 'Сега можете да почнете да работите на вашето вики со посетување на:',
 	'autocreatewiki-success-has-been-created' => 'е создадено!',
 	'autocreatewiki-success-get-started' => 'Започнете',
 	'autocreatewiki-info-domain' => 'Најдобро е да се користи збор што веројатно би бил клучен збор за пребарување на вашата тема.',
 	'autocreatewiki-info-topic' => 'Додајте краток опис, од типот „Војна на ѕвездите“, или „ТВ емисии“.',
-	'autocreatewiki-info-category' => 'Ова ќе им помогне на посетителите да го пронајдат вашето вики.',
+	'autocreatewiki-info-category-default' => 'Ова ќе им помогне на посетителите да го  најдат вашето вики.',
+	'autocreatewiki-info-category-answers' => 'Ова ќе им помогне на посетителите да ја најдат вашата страница за одговори.',
 	'autocreatewiki-info-language' => 'Ова ќе биде автоматски-зададениот јазик за посетителите на вашето вики.',
 	'autocreatewiki-info-email-address' => 'Вашата е-поштенска адреса никогаш не се покажува никому на Викија.',
 	'autocreatewiki-info-realname' => 'Доколку изберете да го наведете вашето име, истото ќе се користи за оддавање на заслуги за вашата работа.',
@@ -1542,6 +1546,7 @@ $messages['nl'] = array(
 	'autocreatewiki' => 'Begin een nieuwe wiki',
 	'autocreatewiki-desc' => 'Wiki aanmaken in WikiFactory door gebruikersverzoeken',
 	'autocreatewiki-page-title-default' => 'Nieuwe wiki aanmaken',
+	'autocreatewiki-page-title-answers' => 'Nieuwe Antwoordensite aanmaken',
 	'createwiki' => 'Nieuwe wiki aanmaken',
 	'autocreatewiki-chooseone' => 'Kies er een',
 	'autocreatewiki-required' => '$1 = vereist',
@@ -1558,12 +1563,14 @@ $messages['nl'] = array(
 	'autocreatewiki-language-top-list' => 'de,en,es,he,fr,it,ja,nl,no,pl,pt,pt-br,zh',
 	'autocreatewiki-haveaccount-question' => 'Hebt u al een Wikia-gebruiker?',
 	'autocreatewiki-success-title-default' => 'U wiki is aangemaakt!',
+	'autocreatewiki-success-title-answers' => 'Uw Antwoordensite is aangemaakt!',
 	'autocreatewiki-success-subtitle' => 'U kunt nu gaan werken aan uw wiki door deze pagina te bezoeken:',
 	'autocreatewiki-success-has-been-created' => 'is aangemaakt!',
 	'autocreatewiki-success-get-started' => 'Beginnen',
 	'autocreatewiki-info-domain' => 'Het is het beste om een woord te kiezen dat vaak gebruikt wordt om uw onderwerp te vinden.',
 	'autocreatewiki-info-topic' => 'Voeg een korte beschrijving toe, zoals "Star Wars" of "TV programma".',
-	'autocreatewiki-info-category' => 'Dit helpt bezoekers uw wiki te vinden.',
+	'autocreatewiki-info-category-default' => 'Hierdoor kunnen bezoekers uw wiki vinden.',
+	'autocreatewiki-info-category-answers' => 'Hierdoor kunnen bezoekers uw Antwoordensite vinden.',
 	'autocreatewiki-info-language' => 'Dit wordt de standaardtaal voor bezoekers van uw wiki.',
 	'autocreatewiki-info-email-address' => 'Uw e-mailadres wordt nooit bekend gemaakt aan welk persoon dan ook op Wikia.',
 	'autocreatewiki-info-realname' => 'Geef uw naam op zodat deze gebruikt kan worden om u erkenning te geven voor uw werk.',
@@ -1706,7 +1713,6 @@ $messages['no'] = array(
 	'autocreatewiki-success-has-been-created' => 'har blitt opprettet!',
 	'autocreatewiki-success-get-started' => 'Sett igang',
 	'autocreatewiki-info-topic' => 'Legg til en kort beskrivelse som «Star Wars» eller «TV-program».',
-	'autocreatewiki-info-category' => 'Dette vil hjelpe besøkende å finne din wiki.',
 	'autocreatewiki-info-language' => 'Dette blir standardspråket for besøkende til din wiki.',
 	'autocreatewiki-info-email-address' => 'Din e-postadresse vil aldri bli vist til noen på Wikia.',
 	'autocreatewiki-info-blurry-word' => 'For å beskytte mot automatisk opprettede kontoer vennligst skriv inn det forvrengte ordet som du ser i dette feltet.',
@@ -1725,6 +1731,9 @@ $messages['no'] = array(
 	'autocreatewiki-empty-password' => 'Passord kan ikke være tomt.',
 	'autocreatewiki-empty-retype-password' => 'Gjenta passord kan ikke være tomt.',
 	'autocreatewiki-category-other' => 'Andre',
+	'autocreatewiki-set-username' => 'Angi brukernavn først.',
+	'autocreatewiki-invalid-category' => 'Ugyldig kategoriverdi.
+Vennligst velg en riktig fra rullegardinlisten.',
 	'autocreatewiki-invalid-birthday' => 'Ugyldig fødselsdato',
 	'autocreatewiki-step1' => 'Oppretter bildemappe ...',
 	'autocreatewiki-step2' => 'Oppretter database ...',
@@ -1764,16 +1773,16 @@ $3
 Wikia Community Team
 
 <http://www.wikia.com/wiki/User:$4>',
-	'autocreatewiki-welcometalk' => "== Velkommen! ==
-<div style=\"font-size:120%; line-height:1.2em;\">Hei \$1 -- vi er glade over å ha '''\$4''' som en del av Wikia Fellesskapet!
+	'autocreatewiki-welcometalk' => "== Velkommen! == 
+<div style=\"font-size:120%; line-height:1.2em;\">Hei \$1 -- vi er glade over å ha '''\$4''' som en del av Wikia Fellesskapet! 
 
 Nå har du en hel nettside å fylle opp med informasjon, bilder og video om yndlingstemaet ditt. Men akkurat nå er det bare tomme sider som stirrer på deg... Skremmende, eller hva? Her er noen måter å komme i gang på.
 
 * '''Introduser temaet ditt''' på forsiden. Dette er din mulighet til å forklare leserne mer om hva temaet handler om. Skriv så mye du vil! Beskrivelsen din kan lenke til alle slags viktige artikler på siden din.
 
-* '''Opprett noen nye sider''' -- bare en setning eller to er flott i begynnelsen. Ikke la de tomme sidene stirre deg i senk! En wiki handler om å legge til og endre ting som det faller seg. Du kan også legge til bilder og video for å fylle siden og gjøre den mer interessant.
+* '''Opprett noen nye sider''' -- bare en setning eller to er flott i begynnelsen. Ikke la de tomme sidene stirre deg i senk! En wiki handler om å legge til og endre ting som det faller seg. Du kan også legge til bilder og video for å fylle siden og gjøre den mer interessant. 
 
-Så er det bare å fortsette! Folk liker å besøke wikier med en masse å lese og se på, så fortsett å legge til ting, og du vil tiltrekke nye lesere og bidragsytere. Det er en masse å gjøre, men slapp av -- i dag er den første dagen, og du har masser av tid. Hver eneste wiki starter på samme måte -- litt om gangen, fra de første få sidene, til en stor og travel side.
+Så er det bare å fortsette! Folk liker å besøke wikier med en masse å lese og se på, så fortsett å legge til ting, og du vil tiltrekke nye lesere og bidragsytere. Det er en masse å gjøre, men slapp av -- i dag er den første dagen, og du har masser av tid. Hver eneste wiki starter på samme måte -- litt om gangen, fra de første få sidene, til en stor og travel side. 
 
 Hvis du har spørsmål, kan du sende oss en e-post gjennom vårt [[Special:Contact|kontaktskjema]]. Ha det gøy!
 
@@ -1781,19 +1790,19 @@ Hvis du har spørsmål, kan du sende oss en e-post gjennom vårt [[Special:Conta
 	'newwikis' => 'Nye wikier',
 	'newwikisstart' => 'Vis wikier fra og med:',
 	'autocreatewiki-reminder-body' => '
-Kjære $1:
+Kjære $1: 
 
-Gratulerer med oppstart av din nye wiki, {{SITENAME}}! Du kan komme tilbake og legge til mer på wikien ved å besøke $2.
+Gratulerer med oppstart av din nye wiki, {{SITENAME}}! Du kan komme tilbake og legge til mer på wikien ved å besøke $2. 
 
-Dette er et helt nytt prosjekt, så vennligst skriv til oss om du har noen spørsmål!
+Dette er et helt nytt prosjekt, så vennligst skriv til oss om du har noen spørsmål! 
 
 
 -- Wikia Community Teamet',
 	'autocreatewiki-reminder-body-HTML' => '
-<p>Kjære $1:</p>
+<p>Kjære $1:</p> 
 
-<p>Gratulerer med oppstart av din nye wiki, {{SITENAME}}! Du kan komme tilbake og legge til mer på wikien ved å besøke
-<a href="$2">$2</a>.</p>
+<p>Gratulerer med oppstart av din nye wiki, {{SITENAME}}! Du kan komme tilbake og legge til mer på wikien ved å besøke 
+<a href="$2">$2</a>.</p> 
 
 <p>Dette er et helt nytt prosjekt, så vennligst skriv til oss om du har spørsmål!</p>
 
@@ -1823,6 +1832,7 @@ $messages['pms'] = array(
 	'autocreatewiki' => 'Crea na neuva Wiki',
 	'autocreatewiki-desc' => 'Crea wiki an WikiFactory për arcesta utent',
 	'autocreatewiki-page-title-default' => 'Crea na neuva Wiki',
+	'autocreatewiki-page-title-answers' => "Crea un sit neuv d'Arspòste",
 	'createwiki' => 'Crea na neuva Wiki',
 	'autocreatewiki-chooseone' => 'Sern-ne un-a',
 	'autocreatewiki-required' => '$1 = ciamà',
@@ -1839,12 +1849,14 @@ $messages['pms'] = array(
 	'autocreatewiki-language-top-list' => 'de,en,es,he,fr,it,ja,no,pl,pt,pt-br,zh',
 	'autocreatewiki-haveaccount-question' => 'Ha-lo già un cont Wikia?',
 	'autocreatewiki-success-title-default' => "Toa wiki a l'é stàita creà!",
+	'autocreatewiki-success-title-answers' => "Tò sit d'arspòste a l'é stàit creà!",
 	'autocreatewiki-success-subtitle' => 'It peule adess ancaminé a travajé dzora a toa wiki an visitand:',
 	'autocreatewiki-success-has-been-created' => "a l'é stàita creà!",
 	'autocreatewiki-success-get-started' => 'Ancamin-a',
 	'autocreatewiki-info-domain' => "A l'é mej dovré na paròla ch'a peussa esse na ciav d'arserca për tò argoment.",
 	'autocreatewiki-info-topic' => 'Gionté na descrission curta com "Guère Stelar" o "Spetàcol dla television".',
-	'autocreatewiki-info-category' => 'Sòn a giutërà ij visitador a trové soa wiki.',
+	'autocreatewiki-info-category-default' => 'Sòn a giuterà ij visitador a trové soa wiki.',
+	'autocreatewiki-info-category-answers' => "Sòn a giutërà ij visitador a trové sò sit d'arspòste.",
 	'autocreatewiki-info-language' => 'Costa a sarà la lenga dë stàndard për ij visitador ëd soa wiki.',
 	'autocreatewiki-info-email-address' => "Soa adrëssa ëd pòsta eletrònica a l'é mai mostrà a gnun su Wikia.",
 	'autocreatewiki-info-realname' => "S'a sern ëd delo, a sarà dovrà për atribuije sò travaj.",
@@ -1946,12 +1958,22 @@ Cost-sì a l'é un proget neuv, antlora për piasì ch'a na scriva s'a l'ha qual
 -- L'Echip dla Comunità Wikia",
 	'autocreatewiki-reminder-body-HTML' => '<p>Car $1:</p>
 
-<p>Congratulassion për la partensa ëd soa neuva wiki, {{SITENAME}}! A peul torné andré e gionté ròbe a soa wiki an visitand
+<p>Congratulassion për la partensa ëd soa neuva wiki, {{SITENAME}}! A peul torné andré e gionté ròbe a soa wiki an visitand 
 <a href="$2">$2</a>.</p>
 
 <p>Cost-sì a l\'é un proget neuv, antlora për piasì ch\'a na scriva s\'a l\'ha qualsëssìa chestion!</p>
 
 <p>-- L\'Echip dla Comunità Wikia</p>',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'autocreatewiki-language-all' => 'ټولې ژبې',
+	'autocreatewiki-birthdate' => 'د زېږون نېټه:',
+	'autocreatewiki-create-account' => 'يو کارن-حساب جوړول',
+	'autocreatewiki-error' => 'تېروتنه',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -1981,7 +2003,6 @@ $messages['pt-br'] = array(
 	'autocreatewiki-success-get-started' => 'Comece',
 	'autocreatewiki-info-domain' => 'É melhor usar uma palavra com a qual as pessoas irão encontrar seu tópico através de buscas.',
 	'autocreatewiki-info-topic' => 'Coloque uma descrição curta como "Star Wars" ou "Programas de TV".',
-	'autocreatewiki-info-category' => 'Isso irá ajudar os visitantes a encontrar a sua wiki.',
 	'autocreatewiki-info-language' => 'Esse irá ser o idioma padrão para os visitantes da sua wiki.',
 	'autocreatewiki-info-email-address' => 'Seu e-mail nunca é mostrado para ninguém no Wikia.',
 	'autocreatewiki-info-realname' => 'Se você optar por preencher este valor, ele vai ser usado para lhe dar uma atribuição pelo seu trabalho.',
@@ -2077,10 +2098,13 @@ $messages['roa-tara'] = array(
 );
 
 /** Russian (Русский)
+ * @author DCamer
  * @author Lockal
+ * @author Александр Сигачёв
  */
 $messages['ru'] = array(
 	'autocreatewiki' => 'Создать новую вики',
+	'autocreatewiki-desc' => 'Создание вики на ВикиФабрике по запросам участников',
 	'autocreatewiki-page-title-default' => 'Создание новой вики',
 	'createwiki' => 'Создание новой вики',
 	'autocreatewiki-chooseone' => 'Выберите из списка',
@@ -2092,11 +2116,14 @@ $messages['ru'] = array(
 	'autocreatewiki-birthdate' => 'Дата рождения:',
 	'autocreatewiki-blurry-word' => 'Размытое слово:',
 	'autocreatewiki-remember' => 'Запомнить меня',
+	'autocreatewiki-create-account' => 'Создание учётной записи',
 	'autocreatewiki-done' => 'выполнено',
 	'autocreatewiki-error' => 'ошибка',
 	'autocreatewiki-language-top-list' => 'de,en,es,he,fr,it,ja,no,pl,pt,pt-br,zh',
+	'autocreatewiki-haveaccount-question' => 'У вас уже есть учётная записи в Викиа?',
 	'autocreatewiki-success-get-started' => 'Начало работы',
 	'autocreatewiki-info-topic' => 'Добавьте краткое описание, например, «Звёздные войны» или «ТВ-шоу».',
+	'autocreatewiki-info-language' => 'Язык по умолчанию для посетителей вашей вики.',
 	'autocreatewiki-info-email-address' => 'Адрес вашей электронной почты никому не показывается в Викии.',
 	'autocreatewiki-empty-field' => 'Пожалуйста, заполните это поле.',
 	'autocreatewiki-invalid-username' => 'Недопустимое имя участника.',
@@ -2127,8 +2154,60 @@ $messages['ru'] = array(
 	'autocreatewiki-regex-error-comment' => 'использовано в вики $1 (полный текст: $2)',
 	'autocreatewiki-step2-error' => 'База данных существует!',
 	'autocreatewiki-protect-reason' => 'Часть официального интерфейса',
+	'autocreatewiki-welcomesubject' => 'Создание $1 прошло успешно!',
+	'autocreatewiki-welcometalk' => "== Добро пожаловать! ==
+<div style=\"font-size:120%; line-height:1.2em;\">Здравствуйте, \$1 — мы рады, что '''\$4''' — часть сообщества Wikia!
+
+Теперь у вас есть целый сайт для добавления информации, фотографий и видео на свою любимую тему. Но сейчас на вас смотрят пустые страницы… Страшно, да? Вот некоторые способы, чтобы начать работу.
+
+* '''Представьте свою тему''' на первой странице. Это ваша возможность объяснить вашим читателям, о чём ваша тема. Пишите сколько хотите! Ваше описание может связать все важные страницы на вашем сайте.
+
+* '''Дайте начало новым страницам''' — только одно или два предложения чтобы начать. Не делайте пустых страниц! Смысл вики в добавлении и изменении статей по мере вашего продвижения вперёд. Вы также можете добавить фотографии и видео, чтобы заполнить страницу и сделать её более интересной.
+
+А потом просто идите! Люди любят посещать вики с большим количеством материала для чтения и просмотра, поэтому продолжайте добавлять материал, и вы будете привлекать читателей и редакторов.  Предстоит много чего сделать, но не волнуйтесь — сегодня первый день, а у вас много времени. Любая вики начинается точно так же — понемногу за раз, начиная с первых нескольких страниц, пока она не превращается в огромный, оживлённый сайт.
+
+Если у вас есть вопросы, вы можете написать нам через [[Special:Contact|контактную форму]]. Удачи!
+
+— [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Новые вики',
 	'newwikisstart' => 'Показать вики, начиная с:',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'autocreatewiki' => 'Направите нову вики',
+	'createwiki' => 'Направите нову вики',
+	'autocreatewiki-category-select' => 'Одабери једну',
+	'autocreatewiki-language-all' => ' Сви језици',
+	'autocreatewiki-birthdate' => ' Датум рођења:',
+	'autocreatewiki-remember' => 'Запамти ме',
+	'autocreatewiki-done' => ' учињено',
+	'autocreatewiki-error' => ' грешка',
+	'autocreatewiki-haveaccount-question' => 'Имате ли већ Викија налог?',
+	'autocreatewiki-success-title-default' => ' Ваша викија је управо створена!',
+	'autocreatewiki-success-has-been-created' => ' је направљена!',
+	'autocreatewiki-success-get-started' => ' Започети',
+	'autocreatewiki-info-category-default' => 'Ово ће помоћи да посетиоци нађу вашу викију.',
+	'autocreatewiki-info-language' => 'Ово ће бити стандардни радни језик за посетиоце ваше викије.',
+	'autocreatewiki-info-email-address' => 'Ваша адреса е-поште се никад ником не приказује на Викији.',
+	'autocreatewiki-info-terms-agree' => 'Стварањем викије и налога ви прихватате <a href="http://www.wikia.com/wiki/Terms_of_use">Wikia\'s Terms of Use</a>',
+	'autocreatewiki-empty-field' => 'Молимо Вас да унесете ово поље.',
+	'autocreatewiki-invalid-username' => 'Ваше корисничко име не важи',
+	'autocreatewiki-empty-category' => 'Одаберите једну од категорија',
+	'autocreatewiki-empty-wikiname' => 'Име викије не може да буде празно',
+	'autocreatewiki-empty-username' => 'Име корисника не може да буде празно.',
+	'autocreatewiki-empty-password' => 'Лозинка не сме бити празна',
+	'autocreatewiki-empty-retype-password' => 'Поново укуцајте лозинку, јер не може да буде празна.',
+	'autocreatewiki-invalid-birthday' => 'Неважећи датум рођења',
+	'autocreatewiki-step0' => 'Почетак процеса .....',
+	'autocreatewiki-stepdefault' => 'Процес у току, молимо да сачекате .....',
+	'autocreatewiki-errordefault' => 'Процес није завршен ...',
+	'autocreatewiki-step11' => 'Слање мејла кориснику ...',
+	'autocreatewiki-congratulation' => 'Честитамо!',
+	'autocreatewiki-welcometalk-log' => ' Порука добродошлице',
+	'autocreatewiki-step2-error' => 'Постоји база података!',
 );
 
 /** Telugu (తెలుగు)
@@ -2211,3 +2290,4 @@ $messages['zh-tw'] = array(
 	'autocreatewiki-page-title-default' => '申請wiki',
 	'createwiki' => '申請wiki',
 );
+

@@ -261,16 +261,20 @@ Controleer het opgegeven IP-adres; mogelijk hebt u een invoerfout gemaakt.</p>',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
  * @author Nghtwlkr
  */
 $messages['no'] = array(
+	'multilookupgo' => 'Gå',
 	'multilookupnext' => 'neste',
 	'multilookupprevious' => 'forrige',
 	'multilookupnbrresult' => 'Antall resultat:',
 	'multilookupinvalidresults' => 'Ugyldige resultat!',
 	'multilookupnoresultfound' => 'Ingen resultat funnet!',
 	'multilookupwiki' => 'Wiki',
+	'multilookuplink' => 'Bidragslenke',
 	'multilookupdetails' => 'Se detaljer',
+	'multilookuplastedit' => 'Sist redigert fra denne IP-en:',
 );
 
 /** Piedmontese (Piemontèis)
@@ -294,6 +298,16 @@ $messages['pms'] = array(
 	'multilookuplistwikiainfo' => "Lista ëd wiki anté che dj'artìcoj a j'ero stàit modificà da utent con IP :<b>$1</b>",
 	'multilookupinvaliduser' => '<p class="error">IP "<b>$1</b>" a esist pa. Ch\'a contròla l\'IP dàit për possìbij eror ëd batidura.</p>',
 	'multilookuplastedit' => 'Ultima modìfica da sto IP-sì:',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'multilookupgo' => 'ورځه',
+	'multilookupnext' => 'راتلونکی',
+	'multilookupprevious' => 'پخوانی',
+	'multilookupwiki' => 'ويکي',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -329,6 +343,13 @@ $messages['ru'] = array(
 	'multilookuplistwikiainfo' => 'Список вики, статьи которых были отредактированы участниками с IP: <b>$1</b>',
 	'multilookupinvaliduser' => '<p class="error">IP «<b>$1</b>» не существует. Проверьте указанный IP на возможные опечатки.</p>',
 	'multilookuplastedit' => 'Последняя правка с этого IP-адреса:',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'multilookupwiki' => 'Вики',
 );
 
 /** Telugu (తెలుగు)

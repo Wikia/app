@@ -175,6 +175,24 @@ Klikit war « Mont d'ho kelaouenn » pa vo echuet ganeoc'h.",
 	'magcloud-publish-ajax-processing' => "...bremañ pelec'h emañ ar bouton bras ruz EMBANN...",
 );
 
+/** Finnish (Suomi)
+ * @author Centerlink
+ * @author Crt
+ */
+$messages['fi'] = array(
+	'magcloud-intro-get-started' => 'Kerää artikkelit',
+	'magcloud-add-article-already' => "'''$1''' on jo lisätty",
+	'magcloud-toolbar-step' => 'Vaihe $1: $2',
+	'magcloud-toolbar-article-in-collection' => "'''$1''' on jo lehdessäsi",
+	'magcloud-toolbar-add' => 'Lisää',
+	'magcloud-discard-magazine-save' => 'Tallenna ja poistu',
+	'magcloud-button-design-a-cover' => 'Suunnittele kansi',
+	'magcloud-design-default-subtitle' => 'Alaotsikko',
+	'magcloud-design-review-list' => 'Palaa katselmusluetteloon',
+	'magcloud-design-preview' => 'Esikatselu',
+	'magcloud-design-image-selected' => '$1 valittu',
+);
+
 /** French (Français)
  * @author IAlex
  * @author McDutchie
@@ -361,6 +379,64 @@ Si te manca le inspiration, examina le exemplos hic infra!',
 	'magcloud-publish-ajax-processing' => '…ora, ubi se trova le grande button rubie "PUBLICAR"?…',
 );
 
+/** Japanese (日本語)
+ * @author Tommy6
+ */
+$messages['ja'] = array(
+	'wikiacollection' => 'マガジンを作成',
+	'magcloud-intro-get-started' => '記事を集める',
+	'magcloud-intro-create-magazine' => 'このウィキの記事からマガジンを作成',
+	'magcloud-intro-check-out' => 'コミュニティによって作成済みのマガジンをチェックしてみてください:',
+	'magcloud-intro-hint' => '上のツールバーでマガジンに収録したい記事を選択し、選び終わったら"マガジンを作成"ボタンをクリックしてください。',
+	'magcloud-intro-view-my-magazines' => '自分のマガジンを閲覧',
+	'magcloud-load-magazine-title' => 'マガジンの読み込み',
+	'magcloud-load-magazine-load' => 'このマガジンを読み込む',
+	'magcloud-load-magazine-empty' => 'マガジンが一つも保存されていません。マガジンを作成し保存してみてください。',
+	'magcloud-add-article-success' => "'''$1''' がマガジンに追加されました",
+	'magcloud-add-article-already' => "'''$1''' は既に追加されています",
+	'magcloud-toolbar-step' => 'ステップ $1: $2',
+	'magcloud-toolbar-article-in-collection' => "'''$1''' は既に追加されています",
+	'magcloud-toolbar-article-add' => "'''$1''' をマガジンに追加しますか？",
+	'magcloud-toolbar-add' => '追加',
+	'magcloud-toolbar-articles-count' => '<big>$1</big> 記事',
+	'magcloud-toolbar-go-to-magazine' => 'マガジンを作成',
+	'magcloud-discard-magazine-title' => 'コレクションを保存しますか？',
+	'magcloud-discard-magazine-msg' => '保存されていないマガジンについて作業しています。保存しますか？（コレクションを保存するにはログインする必要があります。）',
+	'magcloud-discard-magazine-discard' => '保存しないで終了',
+	'magcloud-discard-magazine-save' => '保存して終了',
+	'magcloud-special-collection-title' => 'マガジンを作成',
+	'magcloud-special-collection-empty' => '記事が1件も選択されていません。ウィキに戻り、ツールバーの"追加"ボタンをクリックして記事を集めてください。',
+	'magcloud-special-collection-review-list-info' => '$1 の記事が選択されました。さらに記事を追加したいのであれば、追加したいページを表示し上にあるツールバーの"追加"ボタンをクリックしてください。',
+	'magcloud-special-collection-review-list-tips' => "<big>よいマガジンを作成するために</big>
+# ある一つのテーマを決め、それに沿った記事を選択するようにしてください。
+# 完成したマガジンが100ページ以下に収まるように、追加する記事によりますがだいたい8から10記事を選択するようにしてください。
+
+<!--If you're stuck for inspiration, check out the examples below!-->",
+	'magcloud-order-your-articles' => '記事の整理',
+	'magcloud-button-design-a-cover' => '表紙をデザイン',
+	'magcloud-design-default-title' => '$1 Magazine',
+	'magcloud-design-default-subtitle' => 'サブタイトル',
+	'magcloud-design-review-list' => 'レビューリストに戻る',
+	'magcloud-design-preview' => 'プレビュー',
+	'magcloud-design-license-policy' => 'マガジンの素材として利用する権利をあなたが持ち、かつこのウィキの方針に適合する画像のみをアップロードしてください。',
+	'magcloud-design-image-selected' => '$1 が選択されています',
+	'magcloud-preview-done' => 'マガジンが作成されました。',
+	'magcloud-preview-back-to-cover' => '表紙のデザインに戻る',
+	'magcloud-preview-save-magazine' => 'マガジンを保存',
+	'magcloud-preview-publish' => 'マガジンを発行',
+	'magcloud-preview-generating-pdf' => 'マガジンを作成しています...',
+	'magcloud-publish-status-title' => 'マガジンの発行',
+	'magcloud-publish-status' => 'マガジンを転送します。',
+	'magcloud-publish-error' => 'MagCloud へのマガジンの送信中にエラーが発生しました。',
+	'magcloud-publish-done' => '...完了しました！ MagCloud にリダイレクトします...',
+	'magcloud-publish-ajax-initialize' => 'MagCloud にログインしています...',
+	'magcloud-publish-ajax-login' => '...発行の準備をしています...',
+	'magcloud-publish-ajax-publication' => '...マガジンを準備しています...',
+	'magcloud-publish-ajax-issue' => '...アップロードが終了しました...',
+	'magcloud-publish-ajax-upload' => '...後処理をしています...',
+	'magcloud-publish-ajax-processing' => '...大きな赤い"発行"ボタンを探しています...',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -494,11 +570,54 @@ Onze excuses!',
  * @author Nghtwlkr
  */
 $messages['no'] = array(
+	'wikiacollection' => 'Lag et magasin!',
+	'magcloud-intro-get-started' => 'Samle artikler',
+	'magcloud-intro-create-magazine' => 'Opprett et magasin med artikler fra denne wikien!',
+	'magcloud-intro-check-out' => 'Klikk på magasinet for å se på et eksempel fra felleskapet vårt!',
+	'magcloud-intro-hint' => 'Bare bruk verktøylinjen øverst på siden for å velge artikler du vil ha med i magasinet ditt. Klikk på «Gå til ditt magasin» når du er ferdig!',
+	'magcloud-intro-view-my-magazines' => 'Se mine magasin',
+	'magcloud-load-magazine-title' => 'Last et magasin',
+	'magcloud-load-magazine-load' => 'Last dette magasinet',
+	'magcloud-load-magazine-empty' => 'Du har ikke lagret noen magasin ennå. Prøv å opprette et og lagre det for å se det i denne listen!',
+	'magcloud-add-article-success' => "'''$1''' har blitt lagt til magasinet ditt",
 	'magcloud-add-article-already' => "'''$1''' allerede lagt til",
 	'magcloud-toolbar-step' => 'Steg $1: $2',
+	'magcloud-toolbar-article-in-collection' => "'''$1''' er allerede i magasinet ditt",
+	'magcloud-toolbar-article-add' => "Legge '''$1''' til magasinet ditt?",
 	'magcloud-toolbar-add' => 'Legg til',
 	'magcloud-toolbar-articles-count' => '<big>$1</big> {{PLURAL:$1|artikkel|artikler}}',
+	'magcloud-toolbar-go-to-magazine' => 'Gå til ditt magasin',
+	'magcloud-discard-magazine-title' => 'Lagre samlingen din?',
+	'magcloud-discard-magazine-msg' => 'Du jobber på et ulagret magasin. Vil du lagre det? (Du må være logget inn for å lagre samlingen din.)',
+	'magcloud-discard-magazine-discard' => 'Kast og avslutt',
 	'magcloud-discard-magazine-save' => 'Lagre og avslutt',
+	'magcloud-special-collection-title' => 'Lag et magasin!',
+	'magcloud-special-collection-empty' => "Du har ikke valgt noen artikler ennå! Gå tilbake til wikien og velg 'Legg til' i verktøylinjen ovenfor for å lage magasinet ditt.",
+	'magcloud-special-collection-review-list-info' => 'Flott, du har valgt {{PLURAL:$1|én artikkel|$1 artikler}} til magasinet ditt. Om du vil legge til flere, bare gå til flere sider og klikk «Legg til» i verktøylinken ovenfor!',
+	'magcloud-special-collection-review-list-tips' => '<big>Tips for å opprette et bra magasin</big>
+
+# Prøv å velge artikler som følger et tema, som for eksempel tegneseriekjeltringer eller unike sverd.
+# Det ferdige magasinet ditt må være mindre enn 100 sider, noe som trolig er omtrent 8 - 10 artikler, avhengig av hvilke artikler du legger til.
+
+Dersom du er tom for inspirasjon, ta en titt på eksemplene under!',
+	'magcloud-order-your-articles' => 'Ordne artiklene dine',
+	'magcloud-button-design-a-cover' => 'Lag en forside',
+	'magcloud-design-default-title' => 'Mitt $1-magasin',
+	'magcloud-design-default-subtitle' => 'Undertittel',
+	'magcloud-design-preview' => 'Forhåndsvis',
+	'magcloud-design-image-selected' => '$1 valgt',
+	'magcloud-preview-done' => 'Magasinet ditt har blitt generert.',
+	'magcloud-preview-save-magazine' => 'Lagre magasinet ditt',
+	'magcloud-preview-publish' => 'Publiser magasinet ditt',
+	'magcloud-preview-generating-pdf' => 'Oppretter magasinet ditt...',
+	'magcloud-publish-status-title' => 'Publiserer magasinet ditt',
+	'magcloud-publish-done' => '...og vi er ferdige! Omdirigerer til MagCloud...',
+	'magcloud-publish-ajax-initialize' => 'Vi logger inn på MagCloud...',
+	'magcloud-publish-ajax-login' => '...setter opp publikasjonen...',
+	'magcloud-publish-ajax-publication' => '...setter opp utgaven...',
+	'magcloud-publish-ajax-issue' => '...bare ferdiggjør opplastingen...',
+	'magcloud-publish-ajax-upload' => '...og rydder opp slik foreldrene våre sa vi skulle gjøre...',
+	'magcloud-publish-ajax-processing' => '...hvor er den store røde PUBLISER-knappen...',
 );
 
 /** Piedmontese (Piemontèis)
@@ -561,6 +680,14 @@ S'a sërca d'ispirassion, ch'a daga n'ociada a l'esempi sì-sota!",
 	'magcloud-publish-ajax-processing' => "...adess andoa a l'é ël gross boton ross PÙBLICA...",
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'magcloud-toolbar-add' => 'ورګډول',
+	'magcloud-design-preview' => 'مخليدنه',
+);
+
 /** Brazilian Portuguese (Português do Brasil)
  * @author Luckas Blade
  */
@@ -587,6 +714,7 @@ $messages['ru'] = array(
 	'magcloud-load-magazine-title' => 'Загрузить журнал',
 	'magcloud-load-magazine-load' => 'Загрузить этот журнал',
 	'magcloud-load-magazine-empty' => 'Вы пока не сохранили ни одного журнала. Создайте и сохраните его, чтобы увидеть в этом списке!',
+	'magcloud-add-article-already' => "Страница '''$1''' уже добавлена",
 	'magcloud-toolbar-step' => 'Шаг $1: $2',
 	'magcloud-toolbar-add' => 'Добавить',
 	'magcloud-toolbar-go-to-magazine' => 'Перейти к вашему журналу',
@@ -601,5 +729,15 @@ $messages['ru'] = array(
 	'magcloud-design-preview' => 'Предпросмотр',
 	'magcloud-design-image-selected' => 'Выбрано $1',
 	'magcloud-preview-save-magazine' => 'Сохранить ваш журнал',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'magcloud-toolbar-add' => 'Додај',
+	'magcloud-discard-magazine-save' => 'Сачувај и изађи',
+	'magcloud-order-your-articles' => 'Поредај ваше чланке',
+	'magcloud-design-preview' => 'Претпреглед',
 );
 

@@ -69,6 +69,16 @@ $messages['br'] = array(
 	'protectsite-unprotect' => 'Diwareziñ',
 );
 
+/** Spanish (Español)
+ * @author Peter17
+ */
+$messages['es'] = array(
+	'protectsite' => 'Proteger el sitio',
+	'protectsite-comment' => 'Comentario:',
+	'protectsite-protect' => 'Proteger',
+	'protectsite-unprotect' => 'Desproteger',
+);
+
 /** Finnish (Suomi)
  * @author Centerlink
  * @author Crt
@@ -282,6 +292,14 @@ $messages['pms'] = array(
 	'protectsite-unprotect' => 'Dësprotege',
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'protectsite-protect' => 'ژغورل',
+	'protectsite-unprotect' => 'نه ژغورل',
+);
+
 /** Brazilian Portuguese (Português do Brasil)
  * @author Luckas Blade
  */
@@ -318,6 +336,21 @@ $messages['ru'] = array(
 	'protectsite-until' => 'Защищено до:',
 	'protectsite-protect' => 'Защитить',
 	'protectsite-unprotect' => 'Снять защиту',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'protectsite-allowall' => 'Сви корисници',
+	'protectsite-allowusersysop' => 'Регистровани корисници и Администратори',
+	'protectsite-allowsysop' => 'Само администратори',
+	'protectsite-createpage' => 'Дозволи стварање страна од',
+	'protectsite-maxtimeout' => 'Максимум:',
+	'protectsite-comment' => 'Коментар:',
+	'protectsite-until' => 'Заштићена јединица',
+	'protectsite-protect' => 'Заштити',
+	'protectsite-unprotect' => 'Скини заштиту',
 );
 
 /** Telugu (తెలుగు)
