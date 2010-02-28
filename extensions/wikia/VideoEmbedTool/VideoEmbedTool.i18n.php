@@ -324,12 +324,14 @@ $messages['de'] = array(
 
 /** Spanish (Español)
  * @author McDutchie
+ * @author Peter17
  */
 $messages['es'] = array(
 	'vet-upload' => 'URL completa',
 	'vet-notlogged' => 'Identifícate o regístrate para insertar vídeos en este wiki',
 	'vet-find' => 'Buscar un vídeo',
 	'vet-thiswiki' => 'Este wiki',
+	'vet-flickr' => 'Flickr',
 	'vet-upload-btn' => 'Insertar',
 	'vet-find-btn' => 'Búsqueda',
 	'vet-flickr-inf' => 'Busca fotos con la licencia libre apropiada desde Flickr e impórtalas después a tu wiki.',
@@ -355,7 +357,7 @@ $messages['es'] = array(
 	'vet-insert3' => 'Insertar este vídeo',
 	'vet-recent-inf' => 'Vídeos Recientemente Insertados',
 	'vet-thiswiki2' => 'Vídeos de este Wiki ($1 resultados)',
-	'vet-success' => '<h1>Satisfactorio</h1>El siguiente wikitexto fue introducido con éxito en tu artículo:',
+	'vet-success' => '<h1>Éxito</h1>',
 	'vet-return' => 'Volver a la edición del artículo',
 	'vet-back' => 'volver',
 	'vet-close' => 'cerrar',
@@ -381,6 +383,9 @@ $messages['es'] = array(
 	'vet-main-info' => '<i>Pon la URL completa del vídeo contenido en uno de los sitios soportados que se muestran debajo.</i>',
 	'vet-page-success' => 'La página del vídeo fue actualizada satisfactoriamente. Debes recargar la página del vídeo para ver los cambios.',
 	'vet-no-preview' => 'No puedes añadir un vídeo a un artículo desde el modo de previsualización',
+	'vet-left' => 'Izquierda',
+	'vet-right' => 'Derecha',
+	'vet-gallery' => 'Galería',
 );
 
 /** Basque (Euskara)
@@ -964,17 +969,26 @@ $messages['no'] = array(
 	'vet-warn3' => 'Vennligst oppgi navnet på videoen du ønsker å legge til',
 	'vet-imagelink' => '<b>Ny!</b> Sett inn videoer',
 	'vet-imagebutton' => 'Sett inn videoer',
+	'vet-license-cc' => 'Lisensiert under Creative Commons Navngivelse-Del på samme vilkår 3.0',
+	'vet-name-incorrect' => 'Dette videonavnet inneholder ugyldige tegn',
+	'vet-uploadtext' => "'''Dette skjemaet gjør at du raskt kan laste opp og vise filer i artikler.'''
+
+''Se også [[Special:Log/upload|opplastingsloggen]] og en [[Special:ImageList|liste over alle opplastede filer]].''",
 	'vet-show-message' => 'vis melding',
 	'vet-hide-message' => 'skjul melding',
 	'vet-hide-license-msg' => 'skjul lisenstekst',
 	'vet-show-license-msg' => 'vis lisenstekst',
+	'vet-notallowed' => 'Du kan ikke sette inn videoer på denne wikien',
 	'vet-title' => 'Legg en video til artikkelen din',
+	'vet-supported' => 'Støttede videosteder:',
+	'vet-preview' => '<i>Denne forhåndsvisningen er ikke i riktig skala</i>',
 	'vet-bad-url' => 'Den oppgitte URL-en er ugyldig',
 	'vet-non-existing' => 'Den oppgitte videoen finnes ikke',
 	'vet-add-button' => 'Legg til video',
 	'vet-added-from-gallery' => 'video lagt til fra videogalleri',
 	'vet-see-all' => 'se alle',
 	'vet-gallery-create-success' => 'Et videogalleri ble lagt til denne artikkelen',
+	'vet-gallery-add-success' => 'Videoen har blitt lagt til videogalleriet til denne artikkelen',
 	'vet-left' => 'Venstre',
 	'vet-right' => 'Høyre',
 	'vet-gallery' => 'Galleri',
@@ -1089,6 +1103,14 @@ $messages['pms'] = array(
 	'vet-protected' => "Ës filmà-sì a l'é protegiù",
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'vet-name' => 'نوم',
+	'vet-close' => 'تړل',
+);
+
 /** Brazilian Portuguese (Português do Brasil)
  * @author Luckas Blade
  */
@@ -1155,6 +1177,19 @@ $messages['ru'] = array(
 	'vet-right' => 'Справа',
 	'vet-gallery' => 'Галерея',
 	'vet-protected' => 'Это видео защищено',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'vet-thumbnail' => 'Умањени приказ',
+	'vet-fullsize' => 'Пуни приказ ($1x$2px)',
+	'vet-caption' => 'Назив',
+	'vet-success' => '<h1>Успех</h1>',
+	'vet-show-message' => 'Полажи поруку',
+	'vet-hide-message' => 'Сакриј поруке',
+	'vet-see-all' => 'види све',
 );
 
 /** Telugu (తెలుగు)

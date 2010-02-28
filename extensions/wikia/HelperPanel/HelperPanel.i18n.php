@@ -117,6 +117,14 @@ $messages['ru'] = array(
 	'helperPanel_widgets' => 'Мои виджеты',
 );
 
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'helperPanel_help' => 'Помоћна алатка',
+	'helperPanel_widgets' => 'Моје алатке',
+);
+
 /** Ukrainian (Українська)
  * @author Prima klasy4na
  */

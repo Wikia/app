@@ -408,3 +408,10 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => 'Не найдено страниц блогов.',
 );
 
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'globalwatchlist-no-page-found' => 'Није нађена страница',
+);
+

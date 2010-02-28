@@ -207,6 +207,15 @@ $messages['pms'] = array(
 Ch'a ten-a da ment che j'arzultà a son pa argistrà daspërtut e a son pa reversìbij an pressa a sto pont-sì sensa agiut dl'echip técnica (sòn a l'é an camin ch'as modìfica).",
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'cntool-button-preview' => 'مخليدنه',
+	'cntool-button-save' => 'خوندي کول',
+	'cntool-label-preview' => 'مخليدنه:',
+);
+
 /** Brazilian Portuguese (Português do Brasil)
  * @author Daemorris
  */
@@ -242,6 +251,16 @@ $messages['ru'] = array(
 	'cntool-caveat' => 'Это расширение не должно использоваться легкомысленно.
 
 Имейте в виду, что результаты не записываются в журнал и не могут быть в настоящее время легко отменены без обращения к технической службе (будем над этим работать).',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'cntool-button-preview' => 'Предпреглед',
+	'cntool-button-save' => 'Сачувај',
+	'cntool-label-content' => 'Измени садржину доњег садржаја:',
+	'cntool-label-preview' => 'Претпреглед',
 );
 
 /** Telugu (తెలుగు)

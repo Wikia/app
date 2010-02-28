@@ -238,6 +238,13 @@ $messages['pms'] = array(
 	'ajaxpoll-submitting' => "Për piasì ch'a speta, sò vot a l'é anviarasse...",
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'ajaxpoll-submit' => 'رايه ورکول!',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  */
@@ -276,5 +283,12 @@ $messages['ru'] = array(
 	'ajaxpoll-submit' => 'Проголосовать!',
 	'ajaxpoll-closed' => 'Опрос закрыт. Наслаждайтесь результатами.',
 	'ajaxpoll-submitting' => 'Пожалуйста, подождите, передаётся информация о вашем голосе…',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'ajaxpoll-submit' => 'Гласај!',
 );
 

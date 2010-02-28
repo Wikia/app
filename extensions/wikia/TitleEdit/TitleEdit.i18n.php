@@ -147,8 +147,11 @@ $messages['bm'] = array(
 	'titleedit' => 'yɛlɛma',
 );
 
-/** Bengali (বাংলা) */
+/** Bengali (বাংলা)
+ * @author Bellayet
+ */
 $messages['bn'] = array(
+	'titleedit-desc' => 'পাতার শীর্ষে শিরনাম সম্পাদনা বোতাম যোগ করে',
 	'titleedit' => 'সম্পাদনা করুন',
 );
 
@@ -235,8 +238,11 @@ $messages['cv'] = array(
 	'titleedit' => 'Тӳрлетӳ',
 );
 
-/** Welsh (Cymraeg) */
+/** Welsh (Cymraeg)
+ * @author Lloffiwr
+ */
 $messages['cy'] = array(
+	'titleedit-desc' => "Yn ychwanegu botwm ar frig y tudalennau, ar gyfer golygu'r teitl",
 	'titleedit' => 'Golygu',
 );
 
@@ -474,8 +480,11 @@ $messages['ht'] = array(
 	'titleedit' => 'Modifye',
 );
 
-/** Hungarian (Magyar) */
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
 $messages['hu'] = array(
+	'titleedit-desc' => 'Cím szerkesztése gombot helyez a lapok tetejére',
 	'titleedit' => 'Szerkesztés',
 );
 
@@ -620,9 +629,11 @@ $messages['ky'] = array(
 	'titleedit' => 'Оңдоо',
 );
 
-/** Latin (Latina) */
+/** Latin (Latina)
+ * @author UV
+ */
 $messages['la'] = array(
-	'titleedit' => 'Recensere',
+	'titleedit' => 'recensere',
 );
 
 /** Ladino (Ladino) */
@@ -630,8 +641,11 @@ $messages['lad'] = array(
 	'titleedit' => 'Editar',
 );
 
-/** Luxembourgish (Lëtzebuergesch) */
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
 $messages['lb'] = array(
+	'titleedit-desc' => "Setzt e Knäppche fir d'Ännere vum Titel uewen op d'Säiten derbäi",
 	'titleedit' => 'Änneren',
 );
 
@@ -1081,6 +1095,13 @@ $messages['so'] = array(
 /** Albanian (Shqip) */
 $messages['sq'] = array(
 	'titleedit' => 'Redaktoni',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'titleedit' => 'уреди',
 );
 
 /** Sranan Tongo (Sranantongo) */

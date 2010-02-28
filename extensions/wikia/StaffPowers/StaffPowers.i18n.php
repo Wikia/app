@@ -134,6 +134,13 @@ $messages['pms'] = array(
 	'staffpowers-ipblock-aborted' => "A l'é pa possìbil bloché l'echip ëd Wikia. Për piasì ch'a deuvra [[Special:Contact]] për signalé tut problema con nòsta echip.",
 );
 
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'staffpowers-ipblock-aborted' => "'U blocche d'u staff de Wikia non g'è possibbele. Pe piacere ause [[Special:Contact]] pe segnalà ogne probbleme cu 'u nostre staff.",
+);
+
 /** Russian (Русский)
  * @author Александр Сигачёв
  */

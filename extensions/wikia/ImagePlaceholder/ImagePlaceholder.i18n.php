@@ -53,10 +53,11 @@ $messages['fa'] = array(
 
 /** Finnish (Suomi)
  * @author Centerlink
+ * @author Crt
  */
 $messages['fi'] = array(
 	'imgplc-create' => 'Lisää kuva',
-	'imgplc-placeholder' => 'Paikanvaraajaan',
+	'imgplc-placeholder' => 'Paikanvaraaja',
 	'imgplc-image' => 'Kuva',
 	'imgplc-notinhistory' => 'Et voi lisätä kuvaa historiatilassa.',
 );
@@ -214,6 +215,14 @@ $messages['pms'] = array(
 	'imgplc-notinhistory' => 'A peul pa gionté na figura an modalità stòria.',
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'imgplc-create' => 'انځور ورګډول',
+	'imgplc-image' => 'انځور',
+);
+
 /** Brazilian Portuguese (Português do Brasil)
  * @author Daemorris
  */
@@ -232,6 +241,14 @@ $messages['ru'] = array(
 	'imgplc-placeholder' => 'Заполнитель',
 	'imgplc-image' => 'Изображение',
 	'imgplc-notinhistory' => 'Вы не можете добавить изображение в режиме истории.',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'imgplc-create' => 'Додај слику',
+	'imgplc-image' => 'Слика',
 );
 
 /** Swedish (Svenska) */

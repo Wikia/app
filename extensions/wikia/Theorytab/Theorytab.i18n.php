@@ -71,7 +71,8 @@ $messages['hsb'] = array(
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
-	'theorytab-parent-title' => 'Szülő szócikk',
+	'theorytab-title' => 'Elmélet',
+	'theorytab-parent-title' => 'Fő szócikk',
 );
 
 /** Interlingua (Interlingua)
@@ -102,6 +103,15 @@ $messages['nl'] = array(
 	'theorytab-parent-title' => 'Hoofd Artikel',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'theorytab-title' => 'Teori',
+	'theorytab-parent-title' => 'Overordnet artikkel',
+);
+
 /** Occitan (Occitan)
  * @author Cedric31
  */
@@ -130,6 +140,13 @@ $messages['pt-br'] = array(
 $messages['ru'] = array(
 	'theorytab-title' => 'Теория',
 	'theorytab-parent-title' => 'Родительская статья',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'theorytab-title' => 'теорија',
 );
 
 /** Swedish (Svenska)

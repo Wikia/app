@@ -175,6 +175,13 @@ $messages['pms'] = array(
 	'research_this' => 'Sërché sòn',
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'previous' => 'پخوانی',
+);
+
 /** Russian (Русский)
  * @author Lockal
  * @author Александр Сигачёв
@@ -185,5 +192,13 @@ $messages['ru'] = array(
 	'research_no_results' => 'Не найдено страниц. Пожалуйста, повторите поиск.',
 	'research_wikipedia_title' => 'Исследовать ваш ответ в Википедии',
 	'research_this' => 'Исследовать',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'search_wikipedia' => 'Претражи Википедију',
+	'previous' => 'Претходно',
 );
 

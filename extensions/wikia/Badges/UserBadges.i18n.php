@@ -356,6 +356,11 @@ Klik om te selecteren!',
  * @author Nghtwlkr
  */
 $messages['no'] = array(
+	'user-badge-show-color' => 'Vis fargedetaljer',
+	'user-badge-hide-color' => 'Skjul fargedetaljer',
+	'user-badge-selected-color' => 'Gjeldende valgte farge {rgb}',
+	'user-badge-web-color' => 'Nærmeste nettsikre farge: {rgb}. Klikk for å velge!',
+	'user-badge-dialog-title' => 'Vennligst velg en farge',
 	'user-badge-small-wikia-logo-color' => 'Wikia-logofarge:',
 	'user-badge-data-color' => 'Datafarge:',
 	'user-bagde-copypaste-ext-code' => 'Kopier og lim inn (eksterne nettsteder)',
@@ -443,5 +448,12 @@ $messages['ru'] = array(
 	'user-bagde-copypaste-int-code' => 'Копирование и вставка (эта Wikia)',
 	'user-bagde-copypaste-int-other-code' => 'Копирование и вставка (другая Wikia)',
 	'user-badge-save-info' => 'Если вы хотите сохранить изменения, перейдите в конец страницы и нажмите кнопку «Сохранить».',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'user-badge-edits-txt' => 'Измене',
 );
 

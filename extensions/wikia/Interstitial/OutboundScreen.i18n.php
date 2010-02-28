@@ -111,10 +111,11 @@ Wilt u naar de [[{{MediaWiki:Mainpage}}|hoofdpagina]] gaan, of wellicht naar een
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
  * @author Nghtwlkr
  */
 $messages['no'] = array(
-	'outbound-screen-login-text' => '<a href="$1">Opprett en konto</a> eller <a href="$2">logg inn på din eksisterende konto</a> for å hoppe over denne siden i fremtiden',
+	'outbound-screen-login-text' => '[[Special:UserLogin/signup|Opprett en ny brukerkonto]] eller [[Special:UserLogin|logg inn til din eksisterende brukerkonto]] for å hoppe over denne siden i fremtiden.',
 );
 
 /** Occitan (Occitan)
@@ -154,6 +155,13 @@ $messages['ru'] = array(
 
 Желаете ли вы перейти на [[{{MediaWiki:Mainpage}}|главную страницу]] или, может быть, [[Special:Random|случайную страницу]]?',
 	'outbound-screen-you-are-leaving' => 'Вы покидаете Wikia.',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'outbound-screen-you-are-leaving' => 'Ви сада напуштате викију',
 );
 
 /** Ukrainian (Українська)

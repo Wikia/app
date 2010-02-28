@@ -294,6 +294,7 @@ Mehr Informationen findest du im Fehler-Log.',
 
 /** Spanish (Español)
  * @author McDutchie
+ * @author Peter17
  */
 $messages['es'] = array(
 	'swm-label-preview' => 'Previsualización',
@@ -302,9 +303,16 @@ $messages['es'] = array(
 	'swm-label-sent' => 'Enviado',
 	'swm-label-list' => 'Lista',
 	'swm-label-recipient' => 'Receptor',
+	'swm-label-recipient-wikis' => 'Wikis',
+	'swm-label-recipient-users' => 'Usuarios',
 	'swm-label-expiration' => 'Tiempo de expiración',
+	'swm-label-mode-wikis-all' => 'Todos los wikis',
+	'swm-label-mode-users-all' => 'Todos los usuarios',
+	'swm-label-mode-users-active' => 'Usuarios activos',
 	'swm-label-content' => 'Contenido',
+	'swm-label-comment' => 'Comentario',
 	'swm-label-dismissed' => 'Descartado',
+	'swm-label-language' => 'Idioma',
 	'swm-button-preview' => '[ Previsualizar ]',
 	'swm-button-send' => '[ Enviar ]',
 	'swm-button-save' => '[ Guardar ]',
@@ -313,12 +321,18 @@ $messages['es'] = array(
 	'swm-expire-info' => 'Este mensaje expirará en $1.',
 	'swm-link-dismiss' => 'descartar este mensaje',
 	'swm-dismiss-content' => '<p>El mensaje fue descartado.</p><p>%s</p>',
+	'swm-list-table-id' => 'ID',
 	'swm-list-table-sender' => 'Remitente',
+	'swm-list-table-wiki' => 'Wiki',
 	'swm-list-table-recipient' => 'Destinatario',
 	'swm-list-table-group' => 'Grupo',
 	'swm-list-table-expire' => 'Expira',
 	'swm-list-table-date' => 'Fecha de envío',
 	'swm-list-table-removed' => 'Quitado',
+	'swm-list-table-tools' => 'Herramientas',
+	'swm-list-table-lang' => 'Idiomas',
+	'swm-yes' => 'Sí',
+	'swm-no' => 'No',
 	'swm-error-no-such-user' => '¡El usuario especificado no existe!',
 	'swm-error-empty-message' => 'Introduce el contenido del mensaje.',
 	'swm-error-empty-group' => 'Introduce el nombre del grupo.',
@@ -340,6 +354,7 @@ $messages['eu'] = array(
 
 /** Finnish (Suomi)
  * @author Centerlink
+ * @author Crt
  */
 $messages['fi'] = array(
 	'swm-label-preview' => 'Esikatselu',
@@ -365,25 +380,25 @@ $messages['fi'] = array(
 	'swm-label-language' => 'Kieli',
 	'swm-button-lang-checkall' => '[ Tarkista kaikki ]',
 	'swm-button-lang-checknone' => '[ Älä tarkista mitään ]',
-	'swm-taskmanager-hint' => '<i>Huomaa, että jotkin valitsimet kuluttavat enemmän aikaa ja ovat Tehtävähallinnan jonossa.</i>',
+	'swm-taskmanager-hint' => '<i>Huomaa, että jotkut valinnat kuluttavat enemmän aikaa ja ovat tehtävähallinnan jonossa.</i>',
 	'swm-button-preview' => '[ Esikatselu ]',
 	'swm-button-send' => '[ Lähetä ]',
 	'swm-button-save' => '[ Tallenna ]',
 	'swm-button-new' => '[ Uusi ]',
 	'swm-msg-sent-ok' => '<h3>Viesti on lähetetty.</h3>',
 	'swm-msg-sent-err' => '<h3>Viestiä EI ole lähetetty.</h3>Katso lisätietoja virhelokista.',
-	'swm-msg-remove' => 'Oletko varma että haluat poistaa tämän viestin? Poistoa ei voi perua!',
-	'swm-days' => 'ei koskaan, tunti, tuntia, päivä, päiviä',
+	'swm-msg-remove' => 'Oletko varma että haluat poistaa tämän viestin? Poistoa ei voi perua.',
+	'swm-days' => 'ei koskaan,tunti,tuntia,päivä,päivää',
 	'swm-expire-info' => 'Tämä viesti vanhenee $1',
 	'swm-link-dismiss' => 'hylkää tämä viesti',
-	'swm-dismiss-content' => '<p>Viesti hylättiin.</p><p>% s</p>',
+	'swm-dismiss-content' => '<p>Viesti hylättiin.</p><p>%s</p>',
 	'swm-list-no-messages' => 'Ei viestejä.',
-	'swm-list-table-id' => 'Tunnus',
+	'swm-list-table-id' => 'Tunniste',
 	'swm-list-table-sender' => 'Lähettäjä',
 	'swm-list-table-wiki' => 'Wiki',
 	'swm-list-table-recipient' => 'Vastaanottaja',
 	'swm-list-table-group' => 'Ryhmä',
-	'swm-list-table-expire' => 'Päättyä',
+	'swm-list-table-expire' => 'Vanhenee',
 	'swm-list-table-date' => 'Lähetyspäivämäärä',
 	'swm-list-table-removed' => 'Poistettu',
 	'swm-list-table-content' => 'Sisältö',
@@ -391,8 +406,8 @@ $messages['fi'] = array(
 	'swm-list-table-lang' => 'Kielet',
 	'swm-yes' => 'Kyllä',
 	'swm-no' => 'Ei',
-	'swm-error-no-such-wiki' => 'Ei ole tällaista wikiä!',
-	'swm-error-no-such-user' => 'Määriteltyä käyttäjää ei ole olemassa.',
+	'swm-error-no-such-wiki' => 'Kyseistä wikiä ei ole.',
+	'swm-error-no-such-user' => 'Määritettyä käyttäjää ei ole.',
 	'swm-error-empty-message' => 'Kirjoita viestin sisältö.',
 	'swm-error-empty-group' => 'Kirjoita ryhmän nimi.',
 	'swm-lang-other' => 'kaikki jäljellä olevat kielet',
@@ -821,6 +836,7 @@ Dit kan niet ongedaan gemaakt worden.',
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
+ * @author Nghtwlkr
  */
 $messages['no'] = array(
 	'swm-label-preview' => 'Forhåndsvisning',
@@ -828,14 +844,53 @@ $messages['no'] = array(
 	'swm-label-remove' => 'Fjern',
 	'swm-label-sent' => 'Sendt',
 	'swm-label-list' => 'Liste',
+	'swm-label-recipient' => 'Mottakere',
 	'swm-label-recipient-wikis' => 'Wikier',
 	'swm-label-recipient-users' => 'Brukere',
+	'swm-label-expiration' => 'Utløpstid',
 	'swm-label-mode-wikis-all' => 'Alle wikier',
 	'swm-label-mode-wikis-hub' => 'Valgt hub',
 	'swm-label-mode-wikis-wiki' => 'Valgte wikier',
 	'swm-label-mode-users-all' => 'Alle brukere',
 	'swm-label-mode-users-active' => 'Aktive brukere',
 	'swm-label-mode-users-group' => 'Brukere som hører til gruppen',
+	'swm-label-mode-users-user' => 'Valgt bruker',
+	'swm-label-content' => 'Innhold',
+	'swm-label-comment' => 'Kommentar',
+	'swm-label-dismissed' => 'Avvist',
+	'swm-label-language' => 'Språk',
+	'swm-button-lang-checkall' => '[ Merk alle ]',
+	'swm-button-lang-checknone' => '[ Merk ingen ]',
+	'swm-button-preview' => '[ Forhåndsvis ]',
+	'swm-button-send' => '[ Send ]',
+	'swm-button-save' => '[ Lagre ]',
+	'swm-button-new' => '[ Ny ]',
+	'swm-msg-sent-ok' => '<h3>Meldingen ble sendt.</h3>',
+	'swm-msg-sent-err' => '<h3>Meldingen ble IKKE sendt.</h3>Se feilloggen for mer informasjon.',
+	'swm-msg-remove' => 'Er du sikker på at du vil fjerne denne meldingen? Dette kan ikke gjøres om!',
+	'swm-days' => 'aldri,time,timer,dag,dager',
+	'swm-expire-info' => 'Denne meldingen løper ut $1.',
+	'swm-link-dismiss' => 'avvis denne meldingen',
+	'swm-dismiss-content' => '<p>Meldingen ble avvist.</p><p>%s</p>',
+	'swm-list-no-messages' => 'Ingen meldinger.',
+	'swm-list-table-id' => 'ID',
+	'swm-list-table-sender' => 'Avsender',
+	'swm-list-table-wiki' => 'Wiki',
+	'swm-list-table-recipient' => 'Mottaker',
+	'swm-list-table-group' => 'Gruppe',
+	'swm-list-table-expire' => 'Utløper',
+	'swm-list-table-date' => 'Avsenderdato',
+	'swm-list-table-removed' => 'Fjernet',
+	'swm-list-table-content' => 'Innhold',
+	'swm-list-table-tools' => 'Verktøy',
+	'swm-list-table-lang' => 'Språk',
+	'swm-yes' => 'Ja',
+	'swm-no' => 'Nei',
+	'swm-error-no-such-wiki' => 'Det finnes ingen slik wiki!',
+	'swm-error-no-such-user' => 'Angitt bruker finnes ikke.',
+	'swm-error-empty-message' => 'Skriv inn innholdet i meldingen.',
+	'swm-error-empty-group' => 'Skriv inn navnet på gruppen.',
+	'swm-lang-other' => 'alle gjenværende språk',
 );
 
 /** Piedmontese (Piemontèis)
@@ -907,6 +962,25 @@ $messages['pms'] = array(
 	'swm-lang-other' => "tute j'àutre lenghe",
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'swm-label-preview' => 'مخليدنه',
+	'swm-label-edit' => 'سمول',
+	'swm-label-list' => 'لړليک',
+	'swm-label-recipient-wikis' => 'ويکي ګانې',
+	'swm-label-recipient-users' => 'کارنان',
+	'swm-label-mode-wikis-all' => 'ټولې ويکي ګانې',
+	'swm-label-language' => 'ژبه',
+	'swm-list-table-wiki' => 'ويکي',
+	'swm-list-table-group' => 'ډله',
+	'swm-list-table-tools' => 'اوزارونه',
+	'swm-list-table-lang' => 'ژبې',
+	'swm-yes' => 'هو',
+	'swm-no' => 'نه',
+);
+
 /** Brazilian Portuguese (Português do Brasil)
  * @author Jesielt
  * @author Luckas Blade
@@ -955,6 +1029,8 @@ $messages['ru'] = array(
 	'swm-label-recipient' => 'Получатели',
 	'swm-label-recipient-wikis' => 'Вики',
 	'swm-label-recipient-users' => 'Участники',
+	'swm-label-expiration' => 'Время истечения',
+	'swm-label-mode-wikis-all' => 'Все вики',
 	'swm-label-mode-users-all' => 'Все участники',
 	'swm-label-mode-users-active' => 'Активные участники',
 	'swm-label-mode-users-group' => 'Участники, принадлежащие к группе',
@@ -962,6 +1038,8 @@ $messages['ru'] = array(
 	'swm-label-comment' => 'Комментарий',
 	'swm-label-dismissed' => 'Пропущено',
 	'swm-label-language' => 'Язык',
+	'swm-button-lang-checkall' => '[ Отметить все ]',
+	'swm-button-lang-checknone' => '[ Снять отметки ]',
 	'swm-msg-sent-ok' => '<h3>Сообщение отправлено.</h3>',
 	'swm-msg-remove' => 'Вы действительно хотите удалить это сообщение? Это действие не может быть отменено!',
 	'swm-link-dismiss' => 'пропустить это сообщение',
@@ -978,6 +1056,43 @@ $messages['ru'] = array(
 	'swm-list-table-lang' => 'Языки',
 	'swm-yes' => 'Да',
 	'swm-no' => 'Нет',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'swm-label-preview' => 'Претпреглед',
+	'swm-label-edit' => 'Уреди',
+	'swm-label-remove' => 'Уклони',
+	'swm-label-sent' => 'Пошаљи',
+	'swm-label-recipient-users' => 'Корисници',
+	'swm-label-expiration' => 'Време истека',
+	'swm-label-mode-wikis-all' => 'Све Вики',
+	'swm-label-mode-wikis-wiki' => 'Одабрана викија',
+	'swm-label-mode-users-all' => 'Сви корисници',
+	'swm-label-mode-users-active' => 'Активни корисници',
+	'swm-label-mode-users-group' => 'Корисници, који припадфају групи',
+	'swm-label-mode-users-user' => 'Одабрани корисник',
+	'swm-label-content' => 'Садржај',
+	'swm-label-comment' => 'Коментар',
+	'swm-label-language' => 'Језик',
+	'swm-button-lang-checkall' => '[ Провери све ]',
+	'swm-button-preview' => '[ Предпреглед ]',
+	'swm-button-send' => 'Пошаљи',
+	'swm-button-save' => 'Сачувај',
+	'swm-msg-sent-ok' => '<h3>Порука је послана.</h3>',
+	'swm-msg-sent-err' => '<h3>Порука НИЈЕ послана.</h3>Погледајте лог са грешкама.',
+	'swm-msg-remove' => 'Сигурни сте да желите да уклоните ту поруку! Порука се после не може вратити!',
+	'swm-days' => 'никад, сат, сати,дан, дани',
+	'swm-list-table-group' => 'Група',
+	'swm-list-table-expire' => 'Истиче',
+	'swm-list-table-date' => 'Датум слања',
+	'swm-list-table-removed' => 'Уклоњено',
+	'swm-list-table-lang' => 'Језици',
+	'swm-error-no-such-wiki' => 'Нема такве вики!',
+	'swm-error-no-such-user' => 'Тражени корисник не постоји.',
+	'swm-error-empty-message' => 'Унесите садржај поруке',
 );
 
 /** Telugu (తెలుగు)

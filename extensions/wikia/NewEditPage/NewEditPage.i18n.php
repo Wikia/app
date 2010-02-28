@@ -35,6 +35,14 @@ $messages['es'] = array(
 	'templatesused-toggle' => 'Mostrar/ocultar{{PLURAL:$1|$1 objeto|$1 objetos}}',
 );
 
+/** Finnish (Suomi)
+ * @author Crt
+ */
+$messages['fi'] = array(
+	'new-edit-page-preview-notice' => 'Esikatselutila: Muutoksia ei ole vielä tallennettu. Vieritä alaspäin jatkaaksesi muokkaamista.',
+	'templatesused-toggle' => 'Näytä tai piilota {{PLURAL:$1|$1 kohde|$1 kohdetta}}',
+);
+
 /** French (Français)
  * @author Peter17
  */
@@ -57,6 +65,13 @@ $messages['gl'] = array(
 $messages['hsb'] = array(
 	'new-edit-page-preview-notice' => 'Přehlad: žane změny składowane! Kul dele, zo by z wobdźěłanjom pokročował.',
 	'templatesused-toggle' => '{{PLURAL:$1|$1 zapisk|$1 zapiskaj|$1 zapiski|$1 zapiskow}} pokazać/schować',
+);
+
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'templatesused-toggle' => '$1 tétel megjelenítése/elrejtése',
 );
 
 /** Interlingua (Interlingua)

@@ -122,10 +122,10 @@ Kies hoe hierdie lêer in u artikel moet lyk.',
 	'wmu-insert2' => 'Voeg lêer by',
 	'wmu-prev' => 'Vorige 8',
 	'wmu-next' => 'Volgende 8',
-	'wmu-flickr2' => 'Flickr-beelde ($1 resultate)',
+	'wmu-flickr2' => 'Flickr-beelde ($1 {{PLURAL:$1|resultaat|resultate}})',
 	'wmu-insert3' => 'Voeg hierdie beeld in',
 	'wmu-recent-inf' => 'Onlangs opgelaaide beelde',
-	'wmu-thiswiki2' => 'Beelde uit hierdie wiki ($1 resultate)',
+	'wmu-thiswiki2' => 'Beelde uit hierdie wiki ({{PLURAL:$1|resultaat|$1 resultate}})',
 	'wmu-success' => '<h1>Geslaag</h1>U beeld is bygevoeg.',
 	'wmu-success-placeholder' => '<h1>Geslaag</h1>',
 	'wmu-return' => 'Terug na wysiging',
@@ -225,10 +225,10 @@ $messages['br'] = array(
 	'wmu-insert2' => "Ensoc'hañ restr",
 	'wmu-prev' => 'an 8 a-raok',
 	'wmu-next' => "an 8 war-lec'h",
-	'wmu-flickr2' => "Skeudennoù Flickr ($1 disoc'h)",
+	'wmu-flickr2' => "Skeudennoù Flickr ($1 disoc'h{{PLURAL:}})",
 	'wmu-insert3' => "Ensoc'hañ ar skeudenn-mañ",
 	'wmu-recent-inf' => 'Skeudennoù enporzhiet nevez zo',
-	'wmu-thiswiki2' => "Skeudennoù eus ar Wiki-mañ ($1 disoc'h)",
+	'wmu-thiswiki2' => "Skeudennoù ar Wiki-mañ ($1 disoc'h{{PLURAL:}})",
 	'wmu-success' => "<h1>Berzh</h1>Ensoc'het eo bet ho skeudenn.",
 	'wmu-success-placeholder' => '<h1>Berzh</h1>',
 	'wmu-return' => "Distreiñ d'ar c'hemm",
@@ -280,6 +280,60 @@ $messages['cs'] = array(
 	'wmu-upload-btn' => 'Nahrát soubor',
 	'wmu-find-btn' => 'Najít',
 	'wmu-flickr-inf' => 'Hledat fotografie z Flickru s vhodnou licencí a importovat je na vaší wiki.',
+);
+
+/** Welsh (Cymraeg)
+ * @author Lloffiwr
+ */
+$messages['cy'] = array(
+	'wmu-upload' => 'Uwchlwytho',
+	'wmu-notlogged' => "Mewngofnodwch neu cofrestrwch er mwyn uwchlwytho lluniau o'ch cyfrifiadur",
+	'wmu-thiswiki' => 'Y wici hwn',
+	'wmu-flickr' => 'Flickr',
+	'wmu-upload-btn' => 'Uwchlwyther',
+	'wmu-find-btn' => 'Chwilier',
+	'wmu-flickr-inf' => "Chwiliwch drwy'r lluniau rhydd ar Flickr sydd â thrwydded addas arnynt, a'u huwchlwytho i'ch wici.",
+	'wmu-conflict-inf' => "<h1>Wps, mae ffeil a'r enw hwn arni eisoes ar gael.</h1>Beth ydych am ei wneud gyda <b>$1</b>?",
+	'wmu-rename' => 'Ail-enwi eich delwedd',
+	'wmu-existing' => "Defnyddio'r ddelwedd sydd ar gael eisoes",
+	'wmu-overwrite' => "Disodli'r ddelwedd bresennol gyda'ch un chi",
+	'wmu-details-inf' => "<h1>Manylion y ffeil</h1>Rhowch enw i'r ffeil. Rhowch enw disgrifiadol iddi.",
+	'wmu-name' => 'Enw',
+	'wmu-license' => 'Trwydded',
+	'wmu-details-inf2' => '<h1>Dewisiadau ar gyfer yr erthygl</h1>Dewiswch olwg y ffeil ar eich tudalen.',
+	'wmu-size' => 'Maint',
+	'wmu-thumbnail' => 'Mân-lun',
+	'wmu-fullsize' => 'Maint llawn ($1x$2px)',
+	'wmu-width' => 'Lled',
+	'wmu-layout' => 'Gosodiad',
+	'wmu-caption' => 'Pennawd',
+	'wmu-link' => 'Cyswllt',
+	'wmu-optional' => '   (Dewisol)',
+	'wmu-prev' => 'Yr 8 cynt',
+	'wmu-next' => 'Yr 8 nesaf',
+	'wmu-flickr2' => 'Delweddau Flickr ($1 {{PLURAL:$1|canlyniad|canlyniad|ganlyniad|chanlyniad|chanlyniad|o ganlyniadau}})',
+	'wmu-insert3' => 'Mewnosoder y ddelwedd hon',
+	'wmu-recent-inf' => 'Delweddau a uwchlwythwyd yn ddiweddar',
+	'wmu-thiswiki2' => "Delweddau'r wici hwn ($1 {{PLURAL:$1|canlyniad|canlyniad|ganlyniad|chanlyniad|chanlyniad|o ganlyniadau}})",
+	'wmu-success' => '<h1>Llwyddiant</h1>Cafodd eich delwedd ei mewnosod.',
+	'wmu-success-placeholder' => '<h1>Llwyddiant</h1>',
+	'wmu-return' => "Dychweler i'r Golygu",
+	'wmu-back' => 'yn ôl',
+	'wmu-close' => 'cau',
+	'wmu-warn1' => 'Mae angen ysgrifennu chwiliad yn gyntaf!',
+	'wmu-warn2' => 'Mae angen dewis ffeil yn gyntaf!',
+	'wmu-warn3' => "Mae angen enwi'r ffeil yn gyntaf!",
+	'wmu-imagebutton' => 'Ychwaneger y delweddau',
+	'wmu-show-message' => 'dangos y neges',
+	'wmu-hide-message' => "cuddio'r neges",
+	'wmu-hide-license-msg' => 'cuddio testun y drwydded',
+	'wmu-show-license-msg' => 'dangos testun y drwydded',
+	'wmu-placeholder' => 'Dalfan',
+	'wmu-gallery' => 'Oriel',
+	'wmu-columns' => '$1 {{PLURAL:$1|colofn|golofn|golofn|colofn|cholofn|o golofnau}}',
+	'wmu-column' => 'Colofnau',
+	'wmu-gallery-btn1' => 'Ychwanegu Delwedd Arall',
+	'wmu-gallery-btn2' => 'Mewnosod yr oriel ar y dudalen',
 );
 
 /** German (Deutsch) */
@@ -341,12 +395,14 @@ $messages['de'] = array(
 
 /** Spanish (Español)
  * @author McDutchie
+ * @author Peter17
  */
 $messages['es'] = array(
 	'wmu-upload' => 'Subir',
 	'wmu-notlogged' => 'Identifícate o regístrate para subir imágenes desde tu ordenador',
 	'wmu-find' => 'Encontrar',
 	'wmu-thiswiki' => 'Este Wiki',
+	'wmu-flickr' => 'Flickr',
 	'wmu-upload-btn' => 'Subir',
 	'wmu-find-btn' => 'Encontrar',
 	'wmu-flickr-inf' => 'Busca fotos de licencia libre en Flickr para importarlas después a tu wiki.',
@@ -365,6 +421,7 @@ $messages['es'] = array(
 	'wmu-width' => 'Anchura',
 	'wmu-layout' => 'Mostrar',
 	'wmu-caption' => 'Pie de foto',
+	'wmu-link' => 'Enlace',
 	'wmu-optional' => '(Opcional)',
 	'wmu-insert2' => 'Insertar Archivo',
 	'wmu-prev' => '8 anteriores',
@@ -374,6 +431,7 @@ $messages['es'] = array(
 	'wmu-recent-inf' => 'Imágenes Recientemente Subidas',
 	'wmu-thiswiki2' => 'Imágenes en este Wiki (($1 resultados)',
 	'wmu-success' => '<h1>Hecho</h1>El siguiente wikitexto fue satisfactoriamente incluido en tu artículo:',
+	'wmu-success-placeholder' => '<h1>Éxito</h1>',
 	'wmu-return' => 'Volver a editar',
 	'wmu-back' => 'Volver',
 	'wmu-close' => 'Cerrar',
@@ -381,6 +439,7 @@ $messages['es'] = array(
 	'wmu-warn2' => '¡Necesitas seleccionar un archivo primero!',
 	'wmu-imagelink' => '<b>¡Nuevo!</b> Añade imágenes',
 	'wmu-imagebutton' => 'Añade imágenes',
+	'wmu-create' => 'Agregar imagen',
 	'wmu-license-cc' => 'Licenciada como Creative Commons Attribution-Share Alike 3.0',
 	'wmu-bad-extension' => 'Intestaste subir un tipo de archivo no permitido. Por favor inténtalo de nuevo.',
 	'wmu-filetype-incorrect' => 'Este archivo que quieres subir tiene una extensión incorrecta',
@@ -393,6 +452,7 @@ $messages['es'] = array(
 	'wmu-show-license-msg' => 'mostrar el texto de la licencia',
 	'wmu-max-thumb' => 'tamaño máximo de la miniatura superado, revertiendo al tamaño original',
 	'wmu-notallowed' => 'No puedes subir imágenes al wiki',
+	'wmu-gallery' => 'Galería',
 	'wmu-added-from-plc' => 'Archivo añadido mediante posicionador de imagen',
 );
 
@@ -447,6 +507,7 @@ $messages['fi'] = array(
 /** French (Français)
  * @author IAlex
  * @author McDutchie
+ * @author Peter17
  */
 $messages['fr'] = array(
 	'wmu-upload' => 'Importer',
@@ -477,10 +538,10 @@ $messages['fr'] = array(
 	'wmu-insert2' => 'Insérer le fichier',
 	'wmu-prev' => '8 précédentes',
 	'wmu-next' => '8 suivantes',
-	'wmu-flickr2' => 'Images de Flickr ($1 résultats)',
+	'wmu-flickr2' => 'Images de Flickr ($1 {{PLURAL:$1|résultat|résultats}})',
 	'wmu-insert3' => 'Insérer cette image',
 	'wmu-recent-inf' => 'Images importée récemment',
-	'wmu-thiswiki2' => 'Images de ce wiki ($1 résultats)',
+	'wmu-thiswiki2' => 'Images de ce wiki ($1 {{PLURAL:$1|résultat|résultats}})',
 	'wmu-success' => '<h1>Succès</h1>Votre image a été insérée.',
 	'wmu-success-placeholder' => '<h1>Succès</h1>',
 	'wmu-return' => 'Revenir à la modification',
@@ -552,10 +613,10 @@ $messages['gl'] = array(
 	'wmu-insert2' => 'Inserir o ficheiro',
 	'wmu-prev' => '8 anteriores',
 	'wmu-next' => '8 seguintes',
-	'wmu-flickr2' => 'Imaxes de Flickr ($1 resultados)',
+	'wmu-flickr2' => 'Imaxes de Flickr ($1 {{PLURAL:$1|resultado|resultados}})',
 	'wmu-insert3' => 'Inserir esta imaxe',
 	'wmu-recent-inf' => 'Imaxes cargadas recentemente',
-	'wmu-thiswiki2' => 'Imaxes deste wiki ($1 resultados)',
+	'wmu-thiswiki2' => 'Imaxes deste wiki ($1 {{PLURAL:$1|resultado|resultados}})',
 	'wmu-success' => '<h1>Feito</h1>Engadiuse a súa imaxe.',
 	'wmu-success-placeholder' => '<h1>Feito</h1>',
 	'wmu-return' => 'Voltar ao modo de edición',
@@ -661,10 +722,10 @@ $messages['ia'] = array(
 	'wmu-insert2' => 'Inserer file',
 	'wmu-prev' => '8 precedentes',
 	'wmu-next' => '8 sequentes',
-	'wmu-flickr2' => 'Imagines de Flickr ($1 resultatos)',
+	'wmu-flickr2' => 'Imagines de Flickr ($1 {{PLURAL:$1|resultato|resultatos}})',
 	'wmu-insert3' => 'Inserer iste imagine',
 	'wmu-recent-inf' => 'Imagines recentemente incargate',
-	'wmu-thiswiki2' => 'Imagines in iste wiki ($1 resultatos)',
+	'wmu-thiswiki2' => 'Imagines in iste wiki ($1 {{PLURAL:$1|resultato|resultatos}})',
 	'wmu-success' => '<h1>Successo</h1>Le imagine ha essite inserite.',
 	'wmu-success-placeholder' => '<h1>Successo</h1>',
 	'wmu-return' => 'Retornar al modification',
@@ -818,10 +879,10 @@ $messages['mk'] = array(
 	'wmu-insert2' => 'Вметни податотека',
 	'wmu-prev' => 'Претходни 8',
 	'wmu-next' => 'Следни 8',
-	'wmu-flickr2' => 'Слики од Flickr ({{PLURAL:$1|$1 резултат|$1 резултати}})',
+	'wmu-flickr2' => 'Слики од Flickr ($1 {{PLURAL:$1|резултат|резултати}})',
 	'wmu-insert3' => 'Вметни ја сликава',
 	'wmu-recent-inf' => 'Неодамна подигнати слики',
-	'wmu-thiswiki2' => 'Слики на ова вики ({{PLURAL:$1|$1 резултат|$1 резултати}})',
+	'wmu-thiswiki2' => 'Слики на ова вики ($1 {{PLURAL:$1|резултат|резултати}})',
 	'wmu-success' => '<h1>Успешно извршено</h1>Вашата слика е вметната.',
 	'wmu-success-placeholder' => '<h1>Успешно извршено</h1>',
 	'wmu-return' => 'Назад на уредувањето',
@@ -899,10 +960,10 @@ $messages['nl'] = array(
 	'wmu-insert2' => 'Bestand toevoegen',
 	'wmu-prev' => 'Vorige 8',
 	'wmu-next' => 'Volgende 8',
-	'wmu-flickr2' => 'Flickr-afbeeldingen ($1 resultaten)',
+	'wmu-flickr2' => 'Flickr-afbeeldingen ($1 {{PLURAL:$1|resultaat|resultaten}})',
 	'wmu-insert3' => 'Deze afbeelding invoegen',
 	'wmu-recent-inf' => 'Recent toegevoegde afbeeldingen',
-	'wmu-thiswiki2' => 'Afbeeldingen uit deze wiki ($1 resultaten)',
+	'wmu-thiswiki2' => 'Afbeeldingen uit deze wiki ($1 {{PLURAL:$1|resultaat|resultaten}})',
 	'wmu-success' => '<h1>Geslaagd</h1>Uw afbeelding is ingevoegd.',
 	'wmu-success-placeholder' => '<h1>Geslaagd</h1>',
 	'wmu-return' => 'Terug naar bewerken',
@@ -973,7 +1034,7 @@ $messages['no'] = array(
 	'wmu-insert2' => 'Sett inn fil',
 	'wmu-prev' => 'Forrige 8',
 	'wmu-next' => 'Neste 8',
-	'wmu-flickr2' => 'Flickr-bilder ($1 resultat)',
+	'wmu-flickr2' => 'Flickr-bilder ({{PLURAL:$1|Ett resultat|$1 resultat}})',
 	'wmu-insert3' => 'Sett inn dette bildet',
 	'wmu-recent-inf' => 'Nylig opplastede bilder',
 	'wmu-success' => '<h1>Suksess</h1>Bildet ditt ble satt inn.',
@@ -1049,10 +1110,10 @@ $messages['pms'] = array(
 	'wmu-insert2' => "Anserì l'archivi",
 	'wmu-prev' => '8 prima',
 	'wmu-next' => '8 dapress',
-	'wmu-flickr2' => 'Figure Flickr ($1 arzultà)',
+	'wmu-flickr2' => 'Figure Flickr ($1 {{PLURAL:$1|arzultà|arzultà}})',
 	'wmu-insert3' => 'Anserì costa figura-sì',
 	'wmu-recent-inf' => 'Figure Carià ëd recent',
-	'wmu-thiswiki2' => 'Figure dë sta Wiki-sì ($1 arzultà)',
+	'wmu-thiswiki2' => 'Figure dë sta Wiki-sì ($1 {{PLURAL:$1|arzultà|arzultà}})',
 	'wmu-success' => "<h1>Fàit</h1>Soa figura a l'é stàita anserìa.",
 	'wmu-success-placeholder' => '<h1>Fàit</h1>',
 	'wmu-return' => 'Torna a Modifiché',
@@ -1092,6 +1153,15 @@ $messages['pms'] = array(
 	'wmu-no-rights' => "A l'ha pa 'l përmess ëd gionté dle figure a sta pàgina-sì",
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'wmu-name' => 'نوم',
+	'wmu-thumbnail' => 'بټنوک',
+	'wmu-close' => 'تړل',
+);
+
 /** Brazilian Portuguese (Português do Brasil)
  * @author Luckas Blade
  */
@@ -1128,6 +1198,7 @@ $messages['pt-br'] = array(
 
 /** Russian (Русский)
  * @author Lockal
+ * @author Александр Сигачёв
  */
 $messages['ru'] = array(
 	'wmu-upload' => 'Загрузить',
@@ -1158,10 +1229,10 @@ $messages['ru'] = array(
 	'wmu-insert2' => 'Вставить файл',
 	'wmu-prev' => 'Предыдущие 8',
 	'wmu-next' => 'Следующие 8',
-	'wmu-flickr2' => 'Изображения Flickr ($1 результ.)',
+	'wmu-flickr2' => 'Изображения Flickr ($1 {{PLURAL:$1|находка|находки|находок}})',
 	'wmu-insert3' => 'Вставить это изображение',
 	'wmu-recent-inf' => 'Недавно загруженные изображения',
-	'wmu-thiswiki2' => 'Изображения этой вики ($1 результ.)',
+	'wmu-thiswiki2' => 'Изображения из этой вики ($1 {{PLURAL:$1|находка|находки|находок}})',
 	'wmu-success' => '<h1>Завершено успешно</h1> Ваше изображение добавлено.',
 	'wmu-success-placeholder' => '<h1>Завершено успешно</h1>',
 	'wmu-return' => 'Возврат к редактированию',
@@ -1199,6 +1270,53 @@ $messages['ru'] = array(
 	'wmu-no-preview' => 'Вы не можете добавить изображение из статьи в режиме предварительного просмотра',
 	'wmu-no-protect' => 'Эта страница защищена, вы не можете добавить в неё изображение',
 	'wmu-no-rights' => 'Вы не можете добавлять изображения на эту страницу',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'wmu-upload' => 'Пошаљи фајл',
+	'wmu-notlogged' => 'Улогуј се или се регистрирај да би послао слике са свог компјутора',
+	'wmu-find' => 'Пронађи',
+	'wmu-thiswiki' => 'Ова вики',
+	'wmu-upload-btn' => 'Пошаљи фајл',
+	'wmu-find-btn' => 'Пронађи',
+	'wmu-flickr-inf' => 'Користите прописно лиценциране слике са Фликр и онда их убаците на вашу вики',
+	'wmu-conflict-inf' => '<h1>Упс, већ постоји фајл са тим именом.</h1>Шта желите да учините <b>$1</b>?',
+	'wmu-rename' => 'Преименујте вашу слику',
+	'wmu-existing' => 'Користите већ постојећу слику',
+	'wmu-overwrite' => 'Замените постојећу слику са вашом',
+	'wmu-insert' => 'Убаци',
+	'wmu-details-inf' => '<h1>Опис фајла</h1>Означите име свог фајла. Нека буде нешто што добро описује.',
+	'wmu-name' => 'Име',
+	'wmu-license' => 'Лиценца',
+	'wmu-details-inf2' => '<h1>Опције</h1>Одаберите како желите да ваш фајл изгледа на страници.',
+	'wmu-size' => 'Величина',
+	'wmu-thumbnail' => 'Умањени приказ',
+	'wmu-fullsize' => 'Пуна величина ($1x$2px)',
+	'wmu-width' => 'Ширина',
+	'wmu-caption' => 'Назив',
+	'wmu-link' => 'Веза',
+	'wmu-optional' => '(необавезно)',
+	'wmu-insert2' => 'Убаци фајл',
+	'wmu-prev' => 'Претходних 8',
+	'wmu-next' => 'Следећијх 8',
+	'wmu-insert3' => 'Убаци слику',
+	'wmu-recent-inf' => 'Последње снимљене слике',
+	'wmu-success' => '<h1>Успех</h1>Ваша слика је додана.',
+	'wmu-success-placeholder' => '<h1>Успех</h1>',
+	'wmu-back' => 'назад',
+	'wmu-close' => 'затвори',
+	'wmu-imagebutton' => 'Додај слике',
+	'wmu-create' => 'Додај слику',
+	'wmu-show-message' => 'Покажи поруку',
+	'wmu-hide-message' => 'сакриј поруку',
+	'wmu-hide-license-msg' => 'сакриј текст лиценце',
+	'wmu-show-license-msg' => 'оикажи текст лиценце',
+	'wmu-gallery' => 'Галерија',
+	'wmu-column' => 'Колоне',
+	'wmu-gallery-btn1' => 'додај другу слику',
 );
 
 /** Swedish (Svenska) */

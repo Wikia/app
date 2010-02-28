@@ -84,6 +84,20 @@ $messages['es'] = array(
 	'pollSubmitting' => 'Por favor espera, estamos comprobando tu voto, ten paciencia.',
 );
 
+/** Finnish (Suomi)
+ * @author Centerlink
+ * @author Crt
+ */
+$messages['fi'] = array(
+	'pollVoteUpdate' => 'Äänesi on päivitetty.',
+	'pollVoteAdd' => 'Äänesi on lisätty.',
+	'pollVoteError' => 'Äänesi käsittelyssä oli ongelmia. Yritä uudelleen.',
+	'pollPercentVotes' => '$1 prosenttia kaikista äänistä',
+	'pollNoVote' => 'Äänestä alla.',
+	'pollInfo' => 'Äänestyksen luomisen $2 jälkeen on annettu $1 ääntä.',
+	'pollSubmitting' => 'Odota, ääntäsi lähetetään.',
+);
+
 /** French (Français)
  * @author Peter17
  */

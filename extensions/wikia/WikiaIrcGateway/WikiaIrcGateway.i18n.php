@@ -44,6 +44,14 @@ $messages['cs'] = array(
 	'ircgate-channel' => 'Kanál:',
 );
 
+/** Welsh (Cymraeg)
+ * @author Lloffiwr
+ */
+$messages['cy'] = array(
+	'ircgate-username' => 'Enw defnyddiwr:',
+	'ircgate-channel' => 'Sianel:',
+);
+
 /** Spanish (Español)
  * @author VegaDark
  */
@@ -168,6 +176,14 @@ $messages['pt-br'] = array(
 $messages['ru'] = array(
 	'ircgate-username' => 'Имя пользователя:',
 	'ircgate-channel' => 'Канал:',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'ircgate-username' => 'Корисничко име:',
+	'ircgate-channel' => 'Канал',
 );
 
 /** Telugu (తెలుగు)

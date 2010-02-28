@@ -37,6 +37,13 @@ $messages['es'] = array(
 	'tog-disablelinksuggest' => 'No mostrar sugerencias de vínculos',
 );
 
+/** Finnish (Suomi)
+ * @author Centerlink
+ */
+$messages['fi'] = array(
+	'tog-disablelinksuggest' => 'Älä näytä linkkiehdotusta',
+);
+
 /** French (Français) */
 $messages['fr'] = array(
 	'tog-disablelinksuggest' => 'Ne pas montrer les liens suggérés',
@@ -54,6 +61,13 @@ $messages['gl'] = array(
  */
 $messages['hsb'] = array(
 	'tog-disablelinksuggest' => 'Žadyn wotkazowy namjet pokazać',
+);
+
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'tog-disablelinksuggest' => 'Ne jelenítse meg a hivatkozás-javaslatot',
 );
 
 /** Interlingua (Interlingua)

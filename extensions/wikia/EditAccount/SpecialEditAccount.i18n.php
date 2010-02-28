@@ -73,6 +73,7 @@ $messages['af'] = array(
 	'editaccount-submit-close' => 'Sluit rekening',
 	'editaccount-status' => 'Statusboodskap',
 	'editaccount-invalid-email' => '"$1" is nie \'n geldige e-posadres nie!',
+	'editaccount-nouser' => 'Die gebruiker "$1" bestaan nie.',
 );
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
@@ -302,6 +303,7 @@ $messages['ia'] = array(
 	'editaccount-warning-close' => '<b>Attention!</b> Tu es super le puncto de disactivar permanentemente le conto del usator <b>$1</b>. Isto es irreversibile. Es tu secur de voler facer isto?',
 	'editaccount-status' => 'Message de stato',
 	'editaccount-success-email' => 'E-mail del conto $1 cambiate a $2 con successo.',
+	'editaccount-success-email-blank' => 'Le e-mail del conto $1 ha essite removite.',
 	'editaccount-success-pass' => 'Contrasigno del conto $1 cambiate con successo.',
 	'editaccount-success-realname' => 'Nomine real del conto $1 cambiate con successo.',
 	'editaccount-success-close' => 'Conto $1 disactivate con successo.',
@@ -394,6 +396,7 @@ Dit kan niet ongedaan gemaakt worden.
 Weet u zeker dat u dit wilt doen?',
 	'editaccount-status' => 'Statusbericht',
 	'editaccount-success-email' => 'Het e-mailadres voor gebruiker $1 is gewijzigd naar $2.',
+	'editaccount-success-email-blank' => 'Het e-mailadres voor $1 is verwijderd.',
 	'editaccount-success-pass' => 'Het wachtwoord voor gebruiker $1 is gewijzigd.',
 	'editaccount-success-realname' => 'De echte naam voor gebruiker $1 is gewijzigd.',
 	'editaccount-success-close' => 'De gebruiker $1 is uitgeschakeld.',
@@ -585,5 +588,30 @@ $messages['ru'] = array(
 	'editaccount-log-entry-close' => 'отключил учётную запись $2',
 	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Эта учётная запись была отключена.</div>',
 	'right-editaccount' => 'Редактировать настройки других участников',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'editaccount' => 'Измена налога',
+	'editaccount-frame-manage' => 'Уреди налог',
+	'editaccount-label-email' => 'Постави нову адресу електронске поште (мејл)',
+	'editaccount-label-pass' => 'Постави нову лозинку',
+	'editaccount-label-realname' => 'Унеси ново право име',
+	'editaccount-submit-email' => 'Сачувај е-пошту',
+	'editaccount-submit-pass' => 'Сачувај лозинку',
+	'editaccount-submit-realname' => 'Сачувај право име',
+	'editaccount-submit-close' => 'Затвори налог',
+	'editaccount-success-email' => 'Успешно променио е-пошту од налога $1 на $2.',
+	'editaccount-success-pass' => 'Успешно променио лозинку за налог  $1.',
+	'editaccount-success-realname' => 'успешно променио право име за налог  $1.',
+	'editaccount-success-close' => 'Успешно затворио налог  $1.',
+	'editaccount-invalid-email' => '"$1" је неважећа адреса електронске поште',
+	'editaccount-nouser' => 'Не постоји налог "$1" !',
+	'editaccount-log-entry-email' => ' промењена адреса е-поште за корисника $2',
+	'editaccount-log-entry-pass' => ' промењена лозинка за корисника $2',
+	'editaccount-log-entry-realname' => ' промењено право име за корисника $2',
+	'editaccount-log-entry-close' => ' угашен налог $2',
 );
 

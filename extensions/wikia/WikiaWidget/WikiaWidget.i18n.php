@@ -9,7 +9,7 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'wikiawidget' => 'Special page name as displayed on Special:SpecialPages and page title of special page.  Should be "Wikia widgets"',
+	'wikiawidget' => 'Special page name as displayed on Special:SpecialPages and page title of special page.',
 );
 
 /** Afrikaans (Afrikaans)
@@ -28,23 +28,25 @@ $messages['be-tarask'] = array(
 
 /** Breton (Brezhoneg)
  * @author Gwenn-Ael
+ * @author Y-M D
  */
 $messages['br'] = array(
-	'wikiawidget' => 'Widget wikia',
+	'wikiawidget' => 'Widgetoù wikia',
 );
 
 /** Czech (Česky)
  * @author Mr. Richard Bolla
  */
 $messages['cs'] = array(
-	'wikiawidget' => 'Wikia udělátko',
+	'wikiawidget' => 'Wikia widgety',
 );
 
 /** Spanish (Español)
+ * @author Peter17
  * @author Translationista
  */
 $messages['es'] = array(
-	'wikiawidget' => 'WikiaWidget',
+	'wikiawidget' => 'Wikia widgets',
 );
 
 /** Finnish (Suomi)
@@ -56,9 +58,10 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author IAlex
+ * @author Peter17
  */
 $messages['fr'] = array(
-	'wikiawidget' => 'Widget wikia',
+	'wikiawidget' => 'Widgets Wikia',
 );
 
 /** Galician (Galego)
@@ -75,11 +78,18 @@ $messages['hsb'] = array(
 	'wikiawidget' => 'Wikia_Asistenty',
 );
 
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'wikiawidget' => 'Wikia widgetek',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
-	'wikiawidget' => 'WikiaWidget',
+	'wikiawidget' => 'Widgets de Wikia',
 );
 
 /** Japanese (日本語)
@@ -93,14 +103,14 @@ $messages['ja'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
-	'wikiawidget' => 'WikiaWidget',
+	'wikiawidget' => 'Wikia Widgeten',
 );
 
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'wikiawidget' => 'Интерфејс-елементи за Викија',
+	'wikiawidget' => 'Интерфејс-елементи на Викија',
 );
 
 /** Dutch (Nederlands)
@@ -121,14 +131,14 @@ $messages['no'] = array(
  * @author Cedric31
  */
 $messages['oc'] = array(
-	'wikiawidget' => 'Widget wikia',
+	'wikiawidget' => 'Widgets wikia',
 );
 
 /** Piedmontese (Piemontèis)
  * @author Dragonòt
  */
 $messages['pms'] = array(
-	'wikiawidget' => 'WikiaWidget',
+	'wikiawidget' => 'Widget ëd Wikia',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -138,10 +148,22 @@ $messages['pt-br'] = array(
 	'wikiawidget' => 'WikiaWidget',
 );
 
+/** Tarandíne (Tarandíne) */
+$messages['roa-tara'] = array(
+	'wikiawidget' => 'Wikia Widget',
+);
+
 /** Russian (Русский)
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
-	'wikiawidget' => 'ВиджетWikia',
+	'wikiawidget' => 'Виджеты Wikia',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'wikiawidget' => 'Викија алатке',
 );
 

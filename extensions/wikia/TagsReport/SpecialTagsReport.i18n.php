@@ -213,6 +213,13 @@ $messages['pms'] = array(
 	'tagsreportgenerated' => 'Generà dzora a $1',
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'tagsreportgo' => 'ښکاره کول',
+);
+
 /** Brazilian Portuguese (Português do Brasil)
  * @author Luckas Blade
  */
@@ -236,6 +243,13 @@ $messages['ru'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|страница|страницы|страниц}})',
 	'tagsreportpagesfound' => 'Найдено <strong>$1</strong> страниц, содержащих указанную метку (dpl, youtube, и т. д.)',
 	'tagsreportgenerated' => 'Создано $1',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'tagsreportnoresults' => 'Нема резултата претраге',
 );
 
 /** Ukrainian (Українська)

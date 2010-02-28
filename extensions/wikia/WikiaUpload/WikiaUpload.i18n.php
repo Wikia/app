@@ -9,7 +9,7 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'wikiaupload' => 'Special page name as displayed on Special:SpecialPages and page title of special page.  Should be "Wikia upload"',
+	'wikiaupload' => 'Special page name as displayed on Special:SpecialPages and page title of special page.',
 );
 
 /** Afrikaans (Afrikaans)
@@ -34,10 +34,11 @@ $messages['be-tarask'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Gwenn-Ael
  */
 $messages['br'] = array(
-	'wikiaupload' => 'Enporzhiañ Wikia',
+	'wikiaupload' => 'Enporzhiadenn Wikia',
 );
 
 /** Czech (Česky)
@@ -63,9 +64,10 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author IAlex
+ * @author Peter17
  */
 $messages['fr'] = array(
-	'wikiaupload' => 'Import wikia',
+	'wikiaupload' => 'Import Wikia',
 );
 
 /** Galician (Galego)
@@ -100,14 +102,14 @@ $messages['hu'] = array(
  * @author McDutchie
  */
 $messages['ia'] = array(
-	'wikiaupload' => 'IncargaWikia',
+	'wikiaupload' => 'Incargamento in Wikia',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
 $messages['lb'] = array(
-	'wikiaupload' => 'WikiaUpload',
+	'wikiaupload' => 'Wikia eroplueden',
 );
 
 /** Macedonian (Македонски)
@@ -152,11 +154,16 @@ $messages['pms'] = array(
 	'wikiaupload' => 'Carié Wikia',
 );
 
+/** Tarandíne (Tarandíne) */
+$messages['roa-tara'] = array(
+	'wikiaupload' => 'Wikia Upload',
+);
+
 /** Russian (Русский)
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
-	'wikiaupload' => 'WikiaЗагрузка',
+	'wikiaupload' => 'Загрузки Wikia',
 );
 
 /** Turkish (Türkçe)

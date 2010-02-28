@@ -34,7 +34,7 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'whereisextension-filter' => 'Noun or verb?',
+	'whereisextension-filter' => 'Used as some kind of fieldset description.',
 );
 
 /** Afrikaans (Afrikaans)
@@ -69,6 +69,15 @@ $messages['br'] = array(
 	'whereisextension-filter' => 'Sil',
 	'whereisextension-all-groups' => 'An holl strolladoù',
 	'whereisextension-name-contains' => 'Anv an argemmenn zo ennañ',
+);
+
+/** Spanish (Español)
+ * @author Peter17
+ */
+$messages['es'] = array(
+	'whereisextension-submit' => 'Buscar',
+	'whereisextension-filter' => 'Filtro',
+	'whereisextension-all-groups' => 'Todos los grupos',
 );
 
 /** Basque (Euskara)

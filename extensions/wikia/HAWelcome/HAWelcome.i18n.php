@@ -538,6 +538,13 @@ $messages['ru'] = array(
 	'welcome-message-log' => 'приветствие нового автора',
 );
 
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'welcome-message-log' => 'Поздрав за новог корисника',
+);
+
 /** Swedish (Svenska) */
 $messages['sv'] = array(
 	'welcome-user-page' => "==Om mig==

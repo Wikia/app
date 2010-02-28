@@ -90,6 +90,13 @@ $messages['ia'] = array(
 	'mostpopularcategories' => 'Categorias le plus popular',
 );
 
+/** Japanese (日本語)
+ * @author Tommy6
+ */
+$messages['ja'] = array(
+	'mostpopularcategories' => '人気のあるカテゴリ',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -158,6 +165,13 @@ $messages['roa-tara'] = array(
  */
 $messages['ru'] = array(
 	'mostpopularcategories' => 'Самые популярные категории',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'mostpopularcategories' => 'Најпопуларније категорије',
 );
 
 /** Swedish (Svenska)
