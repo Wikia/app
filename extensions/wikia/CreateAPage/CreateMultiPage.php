@@ -54,7 +54,7 @@ class CreateMultiPage
 	}
 
 	static public function getToolArray () {
-                global $wgStylePath, $wgContLang, $wgJsMimeType, $wgMessageCache;
+                global $wgStylePath, $wgContLang, $wgJsMimeType;
                 $toolarray = array(
                         array(  'image' => 'button_bold.png',
                                 'id'    => 'mw-editbutton-bold',
@@ -152,7 +152,7 @@ class CreateMultiPage
 
 	//modified a bit standard editToolbar function from EditPage class
 	static public function getMultiEditToolbar ($toolbar_id) {
-                global $wgStylePath, $wgContLang, $wgJsMimeType, $wgMessageCache;
+                global $wgStylePath, $wgContLang, $wgJsMimeType;
 
  		$toolarray = CreateMultiPage::getToolArray () ;       	
 		//multiple toolbars...

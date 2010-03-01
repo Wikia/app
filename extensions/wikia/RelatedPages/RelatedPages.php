@@ -80,6 +80,9 @@ function RelatedPages_Display(&$template, &$templateEngine) {
 					$out = array_slice(array_keys($results), 0, 5);
 				} else {
 					$out = array_rand($results, min(count($results), 5));
+					if(!is_array($out)){
+						$out = array($out);
+					}
 				}
 				if(count($categories) > 1 && count($out) < 5) {
 					$results = array();
@@ -91,7 +94,7 @@ function RelatedPages_Display(&$template, &$templateEngine) {
 						}
 					}
 					if(!empty($results)) {
-						$randOut = array_rand(array_flip($results), 5 - count($out));
+						$randOut = array_rand(array_flip($results), min(count($results), 5 - count($out)));
 						if(!is_array($randOut)){ // array_rand will return a single element instead of an array of size 1
 							$randOut = array($randOut);
 						}
