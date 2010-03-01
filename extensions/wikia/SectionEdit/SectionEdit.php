@@ -15,7 +15,7 @@ $wgExtensionCredits['other'][] = array(
 $wgHooks['SpecialFooterAfterWikia'][] = 'SectionEditJS';
 
 function SectionEditJS() {
-	global $wgUser, $wgTitle, $wgDisableAnonymousEditig, $wgJsMimeType;
+	global $wgUser, $wgTitle, $wgJsMimeType;
 
 	// add JS only for anons
 	if (is_object($wgUser) && $wgUser->isLoggedIn()) {
@@ -28,7 +28,7 @@ function SectionEditJS() {
 	}
 
 	// RT #10623: add green buttons also when anon editing is disabled
-	if ( !empty($wgDisableAnonymousEditig)) {
+	if (is_object($wgUser) && (!$wgUser->isLoggedIn()) && (!$wgUser->canEdit()) {
 		$editMsg = Xml::escapeJsString(wfMsg('editsection'));
 		$editUrl = Xml::escapeJsString($wgTitle->getEditUrl());
 
