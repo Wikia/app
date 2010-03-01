@@ -76,7 +76,7 @@ class HTMLCacheUpdate
 		global $wgUseFileCache, $wgUseSquid;
 
 		$titleArray = $this->mCache->getLinks( $this->mTable, $startId, $endId );
-		if ( $titleArray->count() == 0 ) {
+		if ( $titleArray->count() == 0 || wfReadOnly() ) {
 			return;
 		}
 
