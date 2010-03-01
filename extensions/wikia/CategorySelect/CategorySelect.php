@@ -44,7 +44,7 @@ $wgAjaxExportList[] = 'CategorySelectGetCategories';
 function CategorySelectInit($forceInit = false) {
 	global $wgRequest, $wgUser;
 
-	if( (!$forceInit) && (!$wgUser->canEdit()) ){
+	if( (!$forceInit) && (!$wgUser->isAllowed('edit')) ){
 		return true;
 	}
 

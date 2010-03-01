@@ -52,7 +52,7 @@ function wfTitleEditPrintFirstHeading() {
 		$link = wfMsgHtml( 'editsection-brackets', $link );
 	} else { // anon
 		// prompt to login or not?
-		if(is_object($wgUser) && $wgUser->canEdit()){
+		if(is_object($wgUser) && $wgUser->isAllowed('edit')){
 			$attributes['id'] = 'te-editsection-noprompt';
 		} else {
 			$attributes['id'] = 'te-editanon';
