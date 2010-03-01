@@ -13,17 +13,17 @@ class GiftManagerLogo extends UnlistedSpecialPage {
 	var $fileExtensions;
 	var $gift_id;
 
-  function GiftManagerLogo(){
-    parent::__construct("GiftManagerLogo");
-  }
+	function GiftManagerLogo(){
+		parent::__construct("GiftManagerLogo");
+	}
 
-  function execute(){
-	  global $wgRequest, $IP;
-	  $this->gift_id = $wgRequest->getVal("gift_id");
-	  $this->initLogo($wgRequest);
-	  $this->executeLogo();
+	function execute(){
+		global $wgRequest, $IP;
+		$this->gift_id = $wgRequest->getVal("gift_id");
+		$this->initLogo($wgRequest);
+		$this->executeLogo();
 
-  }
+	}
 
 	function canUserManage(){
 		global $wgUser, $wgMaxCustomUserGiftCount;
@@ -33,7 +33,7 @@ class GiftManagerLogo extends UnlistedSpecialPage {
 		}
 
 		$gift = Gifts::getGift($this->gift_id);
-		if( $wgUser->getID()==$gift["creator_user_id"] ||  in_array('giftadmin', $wgUser->getGroups() ) ){
+		if( $wgUser->getID()==$gift["creator_user_id"] || in_array('giftadmin', $wgUser->getGroups() ) ){
 			return true;
 		}
 
@@ -42,8 +42,8 @@ class GiftManagerLogo extends UnlistedSpecialPage {
 
 	}
 
-  function initLogo(&$request){
-	   $this->fileExtensions = array(   'gif',  'jpg', 'jepg', 'png' );
+	function initLogo(&$request){
+		 $this->fileExtensions = array( 'gif', 'jpg', 'jepg', 'png' );
 
 		if( !$request->wasPosted() ) {
 			# GET requests just give the main form; no data except wpDestfile.
@@ -85,7 +85,7 @@ class GiftManagerLogo extends UnlistedSpecialPage {
 			$this->mSessionKey     = false;
 			$this->mStashed        = false;
 		}
-  }
+	}
 
 
 	/**
@@ -314,7 +314,7 @@ class GiftManagerLogo extends UnlistedSpecialPage {
 			 if(is_file($this->avatarUploadDirectory . "/" . $this->gift_id . "_s.png") ) unlink($this->avatarUploadDirectory . "/" . $this->gift_id . "_s.png");
 			 if(is_file($this->avatarUploadDirectory . "/" . $this->gift_id . "_m.png") ) unlink($this->avatarUploadDirectory . "/" . $this->gift_id . "_m.png");
 			 if(is_file($this->avatarUploadDirectory . "/" . $this->gift_id . "_l.png") ) unlink($this->avatarUploadDirectory . "/" . $this->gift_id . "_l.png");
-			  if(is_file($this->avatarUploadDirectory . "/" . $this->gift_id . "_l.png") ) unlink($this->avatarUploadDirectory . "/" . $this->gift_id . "_ml.png");
+				if(is_file($this->avatarUploadDirectory . "/" . $this->gift_id . "_l.png") ) unlink($this->avatarUploadDirectory . "/" . $this->gift_id . "_ml.png");
 		}
 
 		if($type > 0 ){

@@ -678,7 +678,7 @@ class ArrayExtension {
 }
  
 function wfSetupArrayExtension() {
-    global $wgParser, $wgMessageCache, $wgArrayExtension, $wgMessageCache, $wgHooks;
+    global $wgParser, $wgArrayExtension, $wgHooks;
  
     $wgArrayExtension = new ArrayExtension;
  
