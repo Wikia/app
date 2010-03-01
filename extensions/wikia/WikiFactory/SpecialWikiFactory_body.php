@@ -308,8 +308,9 @@ class WikiFactoryPage extends SpecialPage {
 					"wgSharedUploadDBname" => WikiFactory::getVarValueByName( "wgSharedUploadDBname", $this->mWiki->city_id ),
 					"wgSharedUploadDirectory" => WikiFactory::getVarValueByName( "wgSharedUploadDirectory", $this->mWiki->city_id ),
 					"wgSharedUploadPath" => WikiFactory::getVarValueByName( "wgSharedUploadPath", $this->mWiki->city_id ),
-					"wgRepositoryBaseUrl" => WikiFactory::getVarValueByName( "wgRepositoryBaseUrl", $this->mWiki->city_id )
-				),
+					"wgRepositoryBaseUrl" => WikiFactory::getVarValueByName( "wgRepositoryBaseUrl", $this->mWiki->city_id ),
+					"wgFetchCommonsDescriptions" => WikiFactory::getVarValueByName( "wgFetchCommonsDescriptions", $this->mWiki->city_id )
+			),
 				"remote" => array(
 					"wikiId" => 0,
 					"wgServer" => "",
@@ -327,7 +328,7 @@ class WikiFactoryPage extends SpecialPage {
 					"wgDBname" => WikiFactory::getVarValueByName( "wgDBname", $ezsuRemoteWikiId ),
 					"wgUploadDirectory" => WikiFactory::getVarValueByName( "wgUploadDirectory", $ezsuRemoteWikiId ),
 					"wgUploadPath" => WikiFactory::getVarValueByName( "wgUploadPath", $ezsuRemoteWikiId ),
-					"baseUrl" => WikiFactory::getVarValueByName( "wgServer", $ezsuRemoteWikiId ) . '/' . WikiFactory::getVarValueByName( "wgScriptPath", $ezsuRemoteWikiId ) . "File:"
+					"baseUrl" => WikiFactory::getVarValueByName( "wgServer", $ezsuRemoteWikiId ) . WikiFactory::getVarValueByName( "wgScriptPath", $ezsuRemoteWikiId ) . str_replace( '$1', 'File:', WikiFactory::getVarValueByName( "wgArticlePath", $ezsuRemoteWikiId ) )
 				);
 			}
 		}
@@ -371,7 +372,7 @@ class WikiFactoryPage extends SpecialPage {
 				"wgDBname" => WikiFactory::getVarValueByName( "wgDBname", $remoteWikiId ),
 				"wgUploadDirectory" => WikiFactory::getVarValueByName( "wgUploadDirectory", $remoteWikiId ),
 				"wgUploadPath" => WikiFactory::getVarValueByName( "wgUploadPath", $remoteWikiId ),
-				"baseUrl" => WikiFactory::getVarValueByName( "wgServer", $remoteWikiId ) . '/' . WikiFactory::getVarValueByName( "wgScriptPath", $remoteWikiId ) . "File:"
+				"baseUrl" => WikiFactory::getVarValueByName( "wgServer", $remoteWikiId ) . WikiFactory::getVarValueByName( "wgScriptPath", $remoteWikiId ) . str_replace( '$1', 'File:', WikiFactory::getVarValueByName( "wgArticlePath", $remoteWikiId ) )
 			);
 
 			// set variables
@@ -380,6 +381,7 @@ class WikiFactoryPage extends SpecialPage {
 			WikiFactory::setVarByName( "wgSharedUploadPath", $this->mWiki->city_id, $remoteWikiData['wgUploadPath'] );
 			WikiFactory::setVarByName( "wgRepositoryBaseUrl", $this->mWiki->city_id, $remoteWikiData['baseUrl'] );
 			WikiFactory::setVarByName( "wgUseSharedUploads", $this->mWiki->city_id, true );
+			WikiFactory::setVarByName( "wgFetchCommonsDescriptions", $this->mWiki->city_id, true );
 
 			return "<span style=\"color: green; font-weight: bold;\">Saved and enabled! :)</span>";
 		}

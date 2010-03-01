@@ -95,6 +95,12 @@ table.ezsuTable td {
 			<td align="right"><strong>Base URL:</strong></td>
 			<td>&nbsp;<?php echo $EZSharedUpload['remote']['baseUrl']; ?></td>
 		</tr>
+		<tr>
+			<td align="right"><a href="<?php echo $EZSharedUpload['varTitle'] . "wgFetchCommonsDescriptions"; ?>"><strong>wgFetchCommonsDescriptions:</strong></a></td>
+			<td>&nbsp;<?php echo ($EZSharedUpload['local']['wgFetchCommonsDescriptions']) ? "<span style=\"color: green; font-weight: bold;\">yes</span>" : "<span style=\"color: red; font-weight: bold;\">no</span>"; ?></td>
+			<td align="right"></td>
+			<td></td>
+		</tr>
 		<?php if(!empty($EZSharedUpload['remote']['wikiId'])): ?>
 			<tr class="ezsuBottomRow">
 				<td colspan="4">
