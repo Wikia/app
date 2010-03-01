@@ -1,0 +1,12 @@
+== About ==
+
+Validator is an extension that makes parameter validation functionality available
+to other extensions. This enables other extensions to validate parameters, set them
+to their defaults, and generate error messages, while only defining the parameters
+and their criteria.
+
+Notes on installing Validator are found in the file INSTALL.
+
+== Contributors ==
+
+http://www.mediawiki.org/wiki/Extension:Validator#Contributing_to_the_project
