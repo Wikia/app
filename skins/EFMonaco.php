@@ -1487,7 +1487,6 @@ $this->printCustomHeader();
 
 wfProfileIn( __METHOD__ . '-header'); ?>
 		<div id="wikia_header" class="reset color2">
-		XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 			<div class="monaco_shrinkwrap">
 			<div id="wikiaBranding">
 			<?php $this->printWikiaLogo()?>
