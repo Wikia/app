@@ -46,7 +46,7 @@ foreach( $wgSpecialPageCacheUpdates as $special => $call ) {
 	}
 	printf( "completed in %.2fs\n", $seconds );
 	# Wait for the slave to catch up
-	wfWaitForSlaves( 5 );
+	wfWaitForSlaves( 15 );
 }
 
 foreach( $wgQueryPages as $page ) {
@@ -111,7 +111,7 @@ foreach( $wgQueryPages as $page ) {
 			$dbw->immediateCommit();
 		}
 		# Wait for the slave to catch up
-		wfWaitForSlaves( 5 );
+		wfWaitForSlaves( 15 );
 		} else {
 			print "cheap, skipped\n";
 		}
