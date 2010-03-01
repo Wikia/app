@@ -1,4 +1,5 @@
 == Changes since 201002.4 ==
+* rt#38968: Only allow dump requests after a week (eloy)
 * rt#41434: Wikianswers CreateWiki - wrong starter used (eloy)
 * rt#40441: AWC founder email not going out anymore (Paweł)
 * rt#41402: scorecard image url has multiple unencoded ampersands, causing many html validation errors. (Nef)
