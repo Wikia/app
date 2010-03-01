@@ -47,7 +47,7 @@ class DumpsOnDemand {
 		 * get last dump request timestamp
 		 */
 		$wiki = WikiFactory::getWikiByID( $wgCityId );
-		if( wfTimestampNow() - $wiki->city_lastdump_timestamp  > 7*24*60*6 ) {
+		if( wfTimestampNow() - $wiki->city_lastdump_timestamp  > 7*24*60*60 ) {
 			$tmpl->set( "available", true );
 		}
 		else {
