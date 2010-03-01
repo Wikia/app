@@ -26,15 +26,13 @@ abstract class SpecialEditPage extends SpecialPage {
 	}
 
 	public function execute() {
-		global $wgRequest, $wgDisableAnonymousEditig, $wgUser;
+		global $wgRequest, $wgUser;
 		// force CategorySelect initialisation if available
 		if(function_exists('CategorySelectInit') && function_exists('CategorySelectInitializeHooks') && ($wgUser->getOption('disablecategoryselect', false) == false)) {
 			$this->mCategorySelectEnabled = true;
-			$tmp = $wgDisableAnonymousEditig;
-			$wgDisableAnonymousEditig = false; // set to false for forcing init
-			CategorySelectInit();
+			$FORCE_INIT = true;
+			CategorySelectInit($FORCE_INIT);
 			CategorySelectInitializeHooks(null, null, $this->mTitle, null, null);
-			$wgDisableAnonymousEditig = $tmp;
 		}
 	}
 
