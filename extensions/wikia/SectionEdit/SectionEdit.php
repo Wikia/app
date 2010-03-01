@@ -28,7 +28,7 @@ function SectionEditJS() {
 	}
 
 	// RT #10623: add green buttons also when anon editing is disabled
-	if (is_object($wgUser) && (!$wgUser->isLoggedIn()) && (!$wgUser->canEdit()) {
+	if (is_object($wgUser) && (!$wgUser->isLoggedIn()) && (!$wgUser->canEdit())) {
 		$editMsg = Xml::escapeJsString(wfMsg('editsection'));
 		$editUrl = Xml::escapeJsString($wgTitle->getEditUrl());
 
