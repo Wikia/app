@@ -222,7 +222,8 @@ $wgSkipSkins = array(
 		'lostbook',
 		'quartz',
 		'monaco_old',
-		'wikiaphone'
+		'wikiaphone',
+		'efmonaco',
 );
 /**
  * @name wgSkipOldSkins
