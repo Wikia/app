@@ -183,7 +183,7 @@ class StaticChute {
         	'common/shared.css',
 			'efmonaco/css/monobook_modified.css',
 			'efmonaco/css/reset_modified.css',
-			'efcommon/wikia-ui.css',
+			'efcommon/efwikia-ui.css',
 			'efmonaco/css/root.css',
 			'efmonaco/css/header.css',
 			'efmonaco/css/article.css',
