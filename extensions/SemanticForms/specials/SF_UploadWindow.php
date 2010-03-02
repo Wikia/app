@@ -20,7 +20,7 @@ class SFUploadWindow extends UnlistedSpecialPage {
 	 * Constructor
 	 */
 	function SFUploadWindow() {
-		SpecialPage::SpecialPage('UploadWindow');
+		SpecialPage::SpecialPage('UploadWindow', 'upload', false);
 		wfLoadExtensionMessages('SemanticForms');
 	}
 
