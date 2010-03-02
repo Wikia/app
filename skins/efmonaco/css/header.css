@@ -115,9 +115,7 @@ a.greyButton big {
 	float: none;
 	display: inline;
 }
-#userData a, #wikiaBranding a {
-	color: #000;
-}
+
 #header_username a {
 	color: #36C;
 	font-weight: bold;
@@ -276,9 +274,6 @@ a.greyButton big {
 	font-size: 9pt;
 	line-height: 32px;
 	margin-right: 8px;
-}
-#requestWikiData .wikia_button {
-	line-height: 21px;
 }
 
 /*** WIDGET COCKPIT ***/
