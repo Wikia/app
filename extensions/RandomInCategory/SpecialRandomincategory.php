@@ -28,3 +28,5 @@ $wgExtensionAliasesFiles['RandomInCategory'] = $dir . 'SpecialRandomincategory.a
 
 $wgSpecialPages['Randomincategory'] = 'RandomPageInCategory';
 $wgAutoloadClasses['RandomPageInCategory'] = $dir . 'SpecialRandomincategory.body.php';
+
+$wgSpecialPageGroups['RandomPageInCategory'] = 'redirects';
