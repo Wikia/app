@@ -1,0 +1,31 @@
+#navigation {
+	display: block;
+}
+#navigation .widget {
+	border: 0;
+	margin-left: 10px;
+	position: static;
+}
+#navigation .widget ul li a {
+	font-size: 10pt;
+	font-weight: normal;
+}
+
+#wmuLinkDiv {
+	display: none;
+}
+
+#link_box_table .disabled * {
+	filter:alpha(opacity=100) !important;
+	opacity: 1 !important;
+	cursor: pointer !important;
+}
+
+/* RT #22760 */
+.templatesUsedToggle {
+	display: none;
+}
+
+.templatesUsed ul {
+	display: block !important;
+}

@@ -1,0 +1,19 @@
+a.bigButton small {
+	position: static;
+	width: 10px;
+	background-position: top right !important;
+}
+#userData .wikia_button {
+	margin-top: 5px;
+}
+
+/* rt #12748 */
+#wpTextbox1 {
+	width: 500px;
+	min-width: 100%;
+	max-width: 100%;
+}
+
+.activityfeed img.sprite {
+	top: 3px;
+}

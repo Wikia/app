@@ -1,0 +1,43 @@
+/*** MAIN COLORS ***/
+.color1, .color1 a, .yui-panel .hd {
+	background-color: #ff0000;
+}
+.color2 {
+	background-color: #F2F2F2;
+}
+
+/*** WIDGETS ***/
+#search_field {
+	border-color: #501313;
+}
+#search_button {
+	background-image: url(http://images.wikia.com/common/skins/monaco/ruby/images/search.png);
+}
+* html #search_button {
+	background-image: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/ruby/images/search.png', sizingMethod='crop');
+}
+
+/*** HEADER AND FOOTER ***/
+#header_username a {
+	color: #8b2222;
+}
+#wikia_logo {
+	background-image: url(http://images.wikia.com/common/skins/monaco/ruby/images/wikia_logo.png);
+}
+* html #wikia_logo {
+	background-image: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/ruby/images/wikia_logo.png', sizingMethod='crop');
+}
+.headerMenuButton dt, .headerMenuButton dd {
+	background-image: url(http://images.wikia.com/common/skins/monaco/ruby/images/header_button.png);
+}
+* html .headerMenuButton dt, * html .headerMenuButton dd {
+	background-image: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/ruby/images/header_button.png', sizingMethod='crop');
+}
+
+.editsectionbutton {
+	background-color: #FFC;
+	color: #FFC;
+}
