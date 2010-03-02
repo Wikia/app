@@ -71,7 +71,7 @@ class StaticChute {
 
 		// JS served for anon on article view
 		$this->config['efmonaco_anon_article_js'] = array(
-			'common/jquery/jquery-1.3.2.js',
+			'common/jquery/jquery-1.4.2.min.js',
 			'common/jquery/jquery.json-1.3.js',
 			'common/jquery/jquery.cookies.2.1.0.js',
 			'common/jquery/jquery.wikia.js',
@@ -111,7 +111,7 @@ class StaticChute {
 			'common/yui_extra/tools-min.js',
 			'common/yui_extra/carousel-min.js',
 
-			'common/jquery/jquery-1.3.2.js',
+			'common/jquery/jquery-1.4.2.min.js',
 			'common/jquery/jquery.json-1.3.js',
 			'common/jquery/jquery.cookies.2.1.0.js',
 			'common/jquery/jquery.wikia.js',
@@ -150,7 +150,7 @@ class StaticChute {
 			'common/yui_2.5.2/slider/slider.js',
 			'common/yui_extra/tools-min.js',
 
-			'common/jquery/jquery-1.3.2.js',
+			'common/jquery/jquery-1.4.2.min.js',
 			'common/jquery/jquery.json-1.3.js',
 			'common/jquery/jquery.cookies.2.1.0.js',
 			'common/jquery/jquery.wikia.js',
