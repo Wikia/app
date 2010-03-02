@@ -36,7 +36,7 @@
 		<?php endif; ?>
 		<input id="hiddenCreatePageDialogButton" type="submit" style="display: none;" name="hiddenCreatePageDialogButton" value="<?= wfMsg("createpage-dialog-title") ?>" />
 		<div id="CreatePageDialogButton" class="modalToolbar neutral">
-			<a id="wpCreatePageDialogButton" class="wikia_button" href="#" onclick="CreatePage.submitDialog(false);" ><span><?= wfMsg("createpage-dialog-title") ?></span></a>
+			<input type="submit" id="wpCreatePageDialogButton" onclick="CreatePage.submitDialog(false);" value="<?= wfMsg("createpage-dialog-title") ?>" />
 		</div>
 	</form>
 </div>
