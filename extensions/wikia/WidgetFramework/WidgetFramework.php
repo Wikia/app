@@ -119,8 +119,8 @@ class WidgetFramework {
 					$this->config[1] = $config1;
 				}
 
-				// RT #40916
-				if (in_array($wgCityId, array(5687 /* twilightsaga */, 26337 /* glee */, 1573 /* theoffice */, 9863 /* trueblood */, 835 /* southpark */))) {
+				// RT #40916 #41794 FIXME make a hook from this+above
+				if (in_array($wgCityId, array(5687 /* twilightsaga */, 26337 /* glee */, 1573 /* theoffice */, 9863 /* trueblood */, 835 /* southpark */, 3313 /* olympians */, 277 /* powerrangers */))) {
 					$this->config[1][] = array('type' => 'WidgetTopContent', 'id' => 144);
 				}
 
