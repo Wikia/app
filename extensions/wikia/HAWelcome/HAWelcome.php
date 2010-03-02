@@ -138,7 +138,13 @@ class HAWelcomeJob extends Job {
 					if( ! $talkArticle->exists() ) {
 						if( $this->mAnon ) {
 							if( $this->isEnabled( "message-anon" ) ) {
-								$welcomeMsg = wfMsgExt( "welcome-message-anon", "parsemag",
+								if( in_array('staff', $this->mSysop->getEffectiveGroups()) ) {
+									$key = "welcome-message-anon-staff";
+								}
+								else {
+									$key = "welcome-message-anon";
+								}
+								$welcomeMsg = wfMsgExt( $key, "parsemag",
 								array(
 									$this->getPrefixedText(),
 									$sysopPage->getPrefixedText(),
@@ -174,7 +180,13 @@ class HAWelcomeJob extends Job {
 							}
 
 							if( $this->isEnabled( "message-user" ) ) {
-								$welcomeMsg = wfMsgExt( "welcome-message-user", "parsemag",
+								if( in_array('staff', $this->mSysop->getEffectiveGroups()) ) {
+									$key = "welcome-message-user-staff";
+								}
+								else {
+									$key = "welcome-message-user";
+								}
+								$welcomeMsg = wfMsgExt( $key, "parsemag",
 								array(
 									$this->getPrefixedText(),
 									$sysopPage->getPrefixedText(),
