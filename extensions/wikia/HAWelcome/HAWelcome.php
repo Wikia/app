@@ -21,7 +21,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'HAWelcome',
-	'version' => '0.5',
+	'version' => '0.6',
 	'author' => array('Krzysztof Krzyżaniak', '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]'),
 	'description' => 'Highly Automated Welcome Tool',
 );
