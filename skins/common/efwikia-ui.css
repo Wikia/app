@@ -1,0 +1,165 @@
+/**
+ * Wikia User Interface shared style sheet.
+ *
+ * This file defines Wikia "standard" implementations of user interface components.
+ * See https://contractor.wikia-inc.com/wiki/Wikia_Standards for more info.
+ *
+ * NOTE: It is currently ONLY used by the new Wikia Global homepage skin. Our
+ * intent is to carefully artichect a Wikia-wide "look and feel" that utilizes
+ * reusable components. Please keep this stylesheet as generic as possible.
+ *
+ * @author Christian Williams <christian@wikia-inc.com>
+ * @author Meitar Moscovitz <meitar@wikia-inc.com>
+ */
+
+/* @group Accessibility. */
+
+#AccessSkipLink {
+	position: absolute;
+	text-indent: -9999px;
+}
+
+/* @end */
+
+/* @group Buttons. */
+
+    a.wikia_button, 
+    span.wikia_button a, 
+    input[type="submit"], 
+    input[type="reset"], 
+    input[type="button"], 
+    button {
+      background-color: #093;
+      background-image: -moz-linear-gradient(top, #093 20%, #006722 70%);
+      background-image: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#093), to(#006722));
+      border: 1px solid #beddbe;
+      color: #FFF;
+      cursor: pointer;
+      display: inline-block;
+      font: bold 12px/17px "Lucida Grande", sans-serif;
+      height: 17px;
+      margin: 0;
+      padding: 0 7px;
+      text-decoration: none;
+      white-space: nowrap;
+      -moz-border-radius: 7px;
+      -webkit-border-radius: 7px;
+      -moz-box-shadow: 0 0 0 1px #2c802c;
+      -webkit-box-shadow: 0 1px 0 #2c802c, 0 -1px 0 #2c802c, 1px 0 0 #2c802c, -1px 0 0 #2c802c;
+    }
+  
+    /* Secondary Buttons */
+    a.wikia_button.secondary, 
+    span.wikia_button.secondary a, 
+    input[type="submit"].secondary, 
+    input[type="reset"].secondary, 
+    input[type="button"].secondary, 
+    button.secondary {
+      background-color: #CCC;
+      background-image: -moz-linear-gradient(top, #CCC 20%, #AAA 70%);
+      background-image: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#CCC), to(#AAA));
+      border-color: #E2E2E2;
+      color: #333;
+      -moz-box-shadow: 0 0 0 1px #999;
+      -webkit-box-shadow: 0 1px 0 #999, 0 -1px 0 #999, 1px 0 0 #999, -1px 0 0 #999;
+    }
+    
+    /* Big Buttons*/
+    a.wikia_button.big, 
+    span.wikia_button.big a,
+    input[type="submit"].big,
+    input[type="reset"].big, 
+    input[type="button"].big, 
+    button.big {
+      height: 30px;
+      font-size: 15px;
+      line-height: 30px;
+      padding: 0 15px;
+    }
+
+    /* Border-box model: Inputs and buttons count border as part of height. Increase height. */
+    input[type="submit"], 
+    input[type="reset"], 
+    input[type="button"], 
+    button {
+      height: 19px;
+    }
+    input[type="submit"].big, 
+    input[type="reset"].big, 
+    input[type="button"].big, 
+    button.big {
+      height: 32px;
+    }
+  
+    /* Fix Mozilla Button Sizing */
+    input[type="submit"]::-moz-focus-inner,
+    input[type="reset"]::-moz-focus-inner,
+    input[type="button"]::-moz-focus-inner,
+    button::-moz-focus-inner {
+      padding: 0;
+      border: 0;
+    }
+
+    /* Hover and Active states */
+    a.wikia_button:hover, 
+    span.wikia_button a:hover, 
+    input[type="submit"]:hover, 
+    input[type="reset"]:hover,
+    input[type="button"]:hover, 
+    button:hover {
+      text-shadow: #000 0 1px 1px;
+    } 
+    a.wikia_button.secondary:hover, 
+    span.wikia_button.secondary a:hover, 
+    input[type="submit"].secondary:hover, 
+    input[type="reset"].secondary:hover,
+    input[type="button"].secondary:hover, 
+    button.secondary:hover {
+      text-shadow: #FFF 0 1px 1px;
+    } 
+
+    a.wikia_button:active, 
+    span.wikia_button a:active, 
+    input[type="submit"]:active, 
+    input[type="reset"]:active,
+    input[type="button"]:active, 
+    button:active {
+      background-image: -moz-linear-gradient(top, #006722 20%, #093 70%);
+      background-image: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#006722), to(#093));
+    } 
+    a.wikia_button.secondary:active, 
+    span.wikia_button.secondary a:active, 
+    input[type="submit"].secondary:active, 
+    input[type="reset"].secondary:active,
+    input[type="button"].secondary:active, 
+    button.secondary:active {
+      background-image: -moz-linear-gradient(top, #AAA 20%, #CCC 70%);
+      background-image: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#AAA), to(#CCC));
+    } 
+
+/* @end */
+
+/* @group Icon sprites. */
+
+.icon-sprite {
+	background: transparent url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20100128);
+	height: 16px;
+	position: relative;
+	top: -2px;
+	vertical-align: middle;
+	width: 16px;
+}
+.icon-sprite.progress {
+	background: transparent url(http://images.wikia.com/common/skins/common/images/ajax.gif);
+}
+.icon-sprite.alert {
+	background-position: -608px;
+}
+.icon-sprite.ok {
+	background-position: -592px;
+}
+.icon-sprite.watch {
+	background-position: -32px;
+}
+
+/* @end */
