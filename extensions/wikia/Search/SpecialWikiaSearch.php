@@ -52,7 +52,6 @@ class SpecialWikiaSearch extends SpecialSearchOld {
 		$out  = Xml::openElement( 'form', array( 'id' => 'search', 'method' => 'get', 'action' => $wgScript ));
 		$searchTitle = SpecialPage::getTitleFor( 'Search' );
 		$out .= Xml::input( 'search', 50, $term, array( 'type' => 'text', 'id' => 'searchText', 'class' => 'wikia_search_field' ) );
-		$out .= ' <a id="searchButton" class="wikia_button"><span>' . wfMsg( 'searchbutton' ) . '</span></a>';
 
 		foreach( SearchEngine::searchableNamespaces() as $ns => $name ) {
 			if( in_array( $ns, $this->namespaces ) ) {
@@ -61,14 +60,13 @@ class SpecialWikiaSearch extends SpecialSearchOld {
 		}
 		$out .= Xml::hidden( 'title', $searchTitle->getPrefixedText() );
 		$out .= Xml::hidden( 'fulltext', 'Search' );
-		$out .= Xml::submitButton( wfMsg( 'searchbutton' ), array( 'style' => 'display: none;', 'name' => 'fulltext', 'id' => 'hiddenSearchButton' ) );
+		$out .= Xml::submitButton( wfMsg( 'searchbutton' ), array( 'name' => 'fulltext', 'id' => 'searchButton' ) );
 		$out .= Xml::closeElement( 'form' );
 
 		$out .= <<<STOP
 <script type="text/javascript">
 //<![CDATA[
 $("#searchButton").click(function() { WET.byStr('centralSearch/searchBtn/click/phrase/' + $("#searchText").val()); $("#search").submit(); } );
-$("#hiddenSearchButton").click(function() { WET.byStr('centralSearch/searchBtn/click/phrase/' + $("#searchText").val()); });
 //]]>
 </script>
 STOP;
@@ -121,7 +119,7 @@ STOP;
 		$redirect = Xml::check( 'redirs', $this->searchRedirects, array( 'value' => '1', 'id' => 'redirs' ) );
 		$redirectLabel = Xml::label( wfMsg( 'powersearch-redir' ), 'redirs' );
 		$searchField = Xml::input( 'search', 50, $term, array( 'type' => 'text', 'id' => 'powerSearchText', 'class' => 'wikia_search_field' ) );
-		$searchButton = Xml::submitButton( wfMsg( 'searchbutton' ), array( 'name' => 'fulltext', 'style' => 'display: none;', 'id' => 'hiddenPowerSearchButton' ) ) . "\n";
+		$searchButton = Xml::submitButton( wfMsg( 'searchbutton' ), array( 'name' => 'fulltext', 'id' => 'powerSearchButton' ) ) . "\n";
 		$searchTitle = SpecialPage::getTitleFor( 'Search' );
 		$searchHiddens = Xml::hidden( 'title', $searchTitle->getPrefixedText() ) . "\n";
 		$searchHiddens .= Xml::hidden( 'fulltext', 'Advanced search' ) . "\n";
@@ -132,7 +130,6 @@ STOP;
 		$out = Xml::openElement( 'form', array( 'id' => 'powersearch', 'method' => 'get', 'action' => $wgScript ) );
 		$out.= $searchHiddens;
 		$out.= $searchField;
-		$out.= ' <a id="powersearchButton" class="wikia_button"><span>' . wfMsg( 'searchbutton' ) . '</span></a>';
 		$out.= $searchButton;
 		$out.= "<p style=\"clear: left;\" id=\"searchthiswikilabel\">" . Xml::checkLabel( wfMsg( 'wikiasearch-search-this-wiki', array( $wgSitename ) ), 'thisWikiOnly', 'thisWikiOnly', $this->searchLocalWikiOnly ) . "</p>";
 		$out.= Xml::openElement( 'div', array( 'id' => 'powersearch-advanced', 'style' => ( $this->searchLocalWikiOnly ? 'display: block;' : 'display: none;' ) ) );
@@ -149,7 +146,6 @@ STOP;
 //<![CDATA[
 $("#thisWikiOnly").click(function() { if(this.checked) { $("#powersearch-advanced").show(); } else { $("#powersearch-advanced").hide(); } } );
 $("#powersearchButton").click(function() { WET.byStr('centralSearch/powerSearchBtn/click/phrase/' + $("#powerSearchText").val()); $("#powersearch").submit() } );
-$("#hiddenPowerSearchButton").click(function() { WET.byStr('centralSearch/powerSearchBtn/click/phrase/' + $("#powerSearchText").val()); });
 $("#thisWikiOnly").click(function() { WET.byStr('centralSearch/checkbox/searchLocally/state/' + $("#thisWikiOnly").is(":checked")); } );
 //]]>
 </script>
