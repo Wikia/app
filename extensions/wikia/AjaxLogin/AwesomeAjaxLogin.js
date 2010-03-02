@@ -20,7 +20,7 @@ var AjaxLogin = {
 
 		// add submit event handler for login form
 		this.form.bind('submit', this.formSubmitHandler);
-		$('#wpLoginattempt').click( this.clickLogIn );
+		$('#wpLoginattemptAjax').click( this.clickLogIn );
 
 		$().log('AjaxLogin: init()');
 
