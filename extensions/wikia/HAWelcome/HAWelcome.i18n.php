@@ -30,6 +30,24 @@ Please leave a message on [[$2|my talk page]] if I can help with anything! $3",
 
 Please leave a message on [[$2|my talk page]] if I can help with anything! $3",
 	"welcome-message-log" => "welcoming new contributor",
+	"welcome-message-user-staff" => "
+==Welcome==
+
+Hi, welcome to {{SITENAME}}! Thanks for your edit to the [[:$1]] page.
+
+If you need help, and there are no local admins here, you may want to
+visit the [[wikia:Forum:Community Central Forum|forums on the Community
+Central Wiki]] $3",
+	"welcome-message-anon-staff" => "
+==Welcome==
+
+Hi, welcome to {{SITENAME}}. Thanks for your edit to the [[:$1]] page.
+
+'''[[Special:Userlogin|Please sign in and create a user name]]'''. It's an easy way to keep track of your contributions and helps you communicate with the rest of the community.
+
+If you need help, and there are no local admins here, you may want to visit the [[wikia: Forum:Community Central Forum|forums on the Community Central Wiki]] $3
+"
+
 );
 
 /** Breton (Brezhoneg)
@@ -109,7 +127,7 @@ $messages['es'] = array(
 	'welcome-message-user' => '¡Hola, bienvenido(a) a {{SITENAME}}! Muchas gracias por tu edición en [[:$1]].
 
 Por favor, si tienes alguna duda, no seas tímido, deja un mensaje en [[$2|mi discusión]] para ver si puedo ayudarte con cualquier cosa. $3',
-	'welcome-message-anon' => "¡Hola, bienvenido(a) a {{SITENAME}}! Muchas gracias por tu edición en [[:$1]]. 
+	'welcome-message-anon' => "¡Hola, bienvenido(a) a {{SITENAME}}! Muchas gracias por tu edición en [[:$1]].
 
 ¿Por qué no '''[[Special:Userlogin|te creas una cuenta y te identificas?]]'''. De esta forma será mucho más fácil saber qué páginas has editado y se te atribuirá tu trabajo en el wiki, además te será de ayuda a la hora de comunicarte con el resto de la comunidad.
 
@@ -581,4 +599,3 @@ $messages['uk'] = array(
 
 Будь-ласка, залиште повідомлення на [[$2|моїй сторінці обговорення]], якщо я можу чим-небудь допомогти! $3',
 );
-
