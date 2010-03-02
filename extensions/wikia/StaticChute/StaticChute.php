@@ -37,6 +37,205 @@ class StaticChute {
 		$widgetsAssets = $this->getWidgetsAssets();
 
 		$this->config = array();
+		// YUI package
+		$this->config['yui'] = array(
+			'common/yui_2.5.2/utilities/utilities.js',
+			'common/yui_2.5.2/cookie/cookie-beta.js',
+			'common/yui_2.5.2/container/container.js',
+			'common/yui_2.5.2/autocomplete/autocomplete.js',
+			'common/yui_2.5.2/animation/animation-min.js',
+			'common/yui_2.5.2/logger/logger.js',
+			'common/yui_2.5.2/menu/menu.js',
+			'common/yui_2.5.2/tabview/tabview.js',
+			'common/yui_2.5.2/slider/slider.js',
+			'common/yui_extra/tools-min.js',
+			'common/yui_extra/carousel-min.js',
+		);
+
+		// jQuery package (for home skin)
+		$this->config['jquery'] = array(
+			'common/jquery/jquery-1.3.2.js',
+			'common/jquery/jquery.json-1.3.js',
+			'common/jquery/jquery.cookies.2.1.0.js',
+			'common/jquery/jquery.wikia.js',
+		);
+
+
+		$this->generateConfigSkinMonobook();
+		$this->generateConfigSkinMonaco($widgetsAssets);
+		$this->generateConfigSkinFKMonaco($widgetsAssets);
+		$this->generateConfigSkinCorporate();
+	}
+	/* build st for monaco skin */
+	private function generateConfigSkinFKMonaco($widgetsAssets){
+
+		// JS served for anon on article view
+		$this->config['efmonaco_anon_article_js'] = array(
+			'common/jquery/jquery-1.3.2.js',
+			'common/jquery/jquery.json-1.3.js',
+			'common/jquery/jquery.cookies.2.1.0.js',
+			'common/jquery/jquery.wikia.js',
+			'common/jquery/jquery.timeago.js',
+
+			'common/ajax.js',
+			'common/urchin.js',
+			'common/wikibits.js',
+			'efmonaco/js/main.js',       
+            'common/jquery/jquery.wikia.tracker.js',
+			'efmonaco/js/tracker.js',
+			'efmonaco/js/SearchAutoComplete.js',
+			'common/widgets/js/widgetsConfig.js',
+			'efmonaco/js/widgetsFramework.js',
+			'../extensions/wikia/ProblemReports/js/ProblemReports-loader.js',
+			'../extensions/wikia/AdEngine/AdEngine.js',
+			'../extensions/wikia/Userengagement/Userengagement.js',
+			'../extensions/wikia/TieDivLibrary/TieDivLibrary.js',
+			'common/contributed.js',
+			'../extensions/wikia/ShareFeature/js/ShareFeature.js',
+			'../extensions/wikia/CreatePage/js/CreatePage.js',
+			'../extensions/wikia/Interstitial/Interstitial.js',
+		);
+		$this->config['efmonaco_anon_article_js'] = array_merge($this->config['efmonaco_anon_article_js'], $widgetsAssets['js']);
+
+		// JS served for logged-in
+		$this->config['efmonaco_loggedin_js'] = array(
+			'common/yui_2.5.2/utilities/utilities.js',
+			'common/yui_2.5.2/cookie/cookie-beta.js',
+			'common/yui_2.5.2/container/container.js',
+			'common/yui_2.5.2/autocomplete/autocomplete.js',
+			'common/yui_2.5.2/animation/animation-min.js',
+			'common/yui_2.5.2/logger/logger.js',
+			'common/yui_2.5.2/menu/menu.js',
+			'common/yui_2.5.2/tabview/tabview.js',
+			'common/yui_2.5.2/slider/slider.js',
+			'common/yui_extra/tools-min.js',
+			'common/yui_extra/carousel-min.js',
+
+			'common/jquery/jquery-1.3.2.js',
+			'common/jquery/jquery.json-1.3.js',
+			'common/jquery/jquery.cookies.2.1.0.js',
+			'common/jquery/jquery.wikia.js',
+			'common/jquery/jquery-ui-1.7.1.custom.js',
+			'common/jquery/jquery.timeago.js',
+
+			'common/ajax.js',
+			'common/urchin.js',
+			'common/wikibits.js',
+			'common/ajaxwatch.js',
+			'efmonaco/js/main.js',
+            'common/jquery/jquery.wikia.tracker.js',
+			'efmonaco/js/tracker.js',
+			'efmonaco/js/SearchAutoComplete.js',
+			'common/widgets/js/widgetsConfig.js',
+			'efmonaco/js/widgetsFramework.js',
+			'../extensions/wikia/ProblemReports/js/ProblemReports-loader.js',
+			'../extensions/wikia/AdEngine/AdEngine.js',
+			'../extensions/wikia/TieDivLibrary/TieDivLibrary.js',
+			'common/contributed.js',
+			'../extensions/wikia/ShareFeature/js/ShareFeature.js',
+			'../extensions/wikia/CreatePage/js/CreatePage.js',
+		);
+		$this->config['efmonaco_loggedin_js'] = array_merge($this->config['efmonaco_loggedin_js'], $widgetsAssets['js']);
+
+		// JS served for anon for everything that's not an article view
+		$this->config['efmonaco_anon_everything_else_js'] = array(
+			'common/yui_2.5.2/utilities/utilities.js',
+			'common/yui_2.5.2/cookie/cookie-beta.js',
+			'common/yui_2.5.2/container/container.js',
+			'common/yui_2.5.2/autocomplete/autocomplete.js',
+			'common/yui_2.5.2/animation/animation-min.js',
+			'common/yui_2.5.2/logger/logger.js',
+			'common/yui_2.5.2/menu/menu.js',
+			'common/yui_2.5.2/tabview/tabview.js',
+			'common/yui_2.5.2/slider/slider.js',
+			'common/yui_extra/tools-min.js',
+
+			'common/jquery/jquery-1.3.2.js',
+			'common/jquery/jquery.json-1.3.js',
+			'common/jquery/jquery.cookies.2.1.0.js',
+			'common/jquery/jquery.wikia.js',
+			'common/jquery/jquery.timeago.js',
+
+			'common/ajax.js',
+			'common/urchin.js',
+			'common/wikibits.js',
+			'efmonaco/js/main.js',
+            'common/jquery/jquery.wikia.tracker.js',
+			'efmonaco/js/tracker.js',
+			'efmonaco/js/SearchAutoComplete.js',
+			'common/widgets/js/widgetsConfig.js',
+			'efmonaco/js/widgetsFramework.js',
+			'../extensions/wikia/ProblemReports/js/ProblemReports-loader.js',
+			'../extensions/wikia/AdEngine/AdEngine.js',
+			'../extensions/wikia/Userengagement/Userengagement.js',
+			'../extensions/wikia/TieDivLibrary/TieDivLibrary.js',
+			'common/contributed.js',
+			'../extensions/wikia/ShareFeature/js/ShareFeature.js',
+			'../extensions/wikia/CreatePage/js/CreatePage.js',
+			'../extensions/wikia/Interstitial/Interstitial.js',
+		);
+		$this->config['efmonaco_anon_everything_else_js'] = array_merge($this->config['efmonaco_anon_everything_else_js'], $widgetsAssets['js']);
+
+		// CSS
+		$this->config['efmonaco_css'] = array(
+			'common/yui_2.5.2/container/assets/container.css',
+			'common/yui_2.5.2/tabview/assets/tabview.css',
+        	'common/shared.css',
+			'efmonaco/css/monobook_modified.css',
+			'efmonaco/css/reset_modified.css',
+			'efcommon/wikia-ui.css',
+			'efmonaco/css/root.css',
+			'efmonaco/css/header.css',
+			'efmonaco/css/article.css',
+			'efmonaco/css/widgets.css',
+			'efmonaco/css/modal.css',
+			'efmonaco/css/footer.css',
+			'efmonaco/css/star_rating.css',
+			'efmonaco/css/ny.css',
+			'../extensions/wikia/Blogs/css/Blogs.css',
+			'../extensions/wikia/Masthead/css/Masthead.css',
+			'../extensions/wikia/ShareFeature/css/ShareFeature.css',
+			'../extensions/wikia/CreatePage/css/CreatePage.css',
+		);
+		$this->config['efmonaco_css'] = array_merge($this->config['efmonaco_css'], $widgetsAssets['css']);
+
+		// printable CSS
+		$this->config['efmonaco_css_print'] = array(
+			'efmonaco/css/print.css',
+			'common/commonPrint.css',
+		);
+	}
+	
+	
+	private function generateConfigSkinMonobook() {
+		// JS for monobook (both anons/logged-in)
+		$this->config['monobook_js'] = array(
+			'common/yui_2.5.2/utilities/utilities.js',
+			'common/yui_2.5.2/cookie/cookie-beta.js',
+			'common/yui_2.5.2/container/container.js',
+			'common/yui_2.5.2/autocomplete/autocomplete.js',
+			'common/yui_2.5.2/logger/logger.js',
+			'common/yui_2.5.2/menu/menu.js',
+			'common/yui_2.5.2/tabview/tabview.js',
+			'common/yui_extra/tools-min.js',
+
+			'common/jquery/jquery-1.3.2.js',
+			'common/jquery/jquery.json-1.3.js',
+			'common/jquery/jquery.cookies.2.1.0.js',
+			'common/jquery/jquery.wikia.js',
+
+			'common/urchin.js',
+			'common/wikibits.js',
+			'monobook/main.js',
+			'monobook/tracker.js',
+			'common/tracker.js',
+			'../extensions/wikia/ProblemReports/js/ProblemReports-loader.js',
+			'common/contributed.js',
+		);
+	}
+	
+	/* build st for monaco skin */
+	private function generateConfigSkinMonaco($widgetsAssets){
 
 		// JS served for anon on article view
 		$this->config['monaco_anon_article_js'] = array(
@@ -145,54 +344,6 @@ class StaticChute {
 		);
 		$this->config['monaco_anon_everything_else_js'] = array_merge($this->config['monaco_anon_everything_else_js'], $widgetsAssets['js']);
 
-		// YUI package
-		$this->config['yui'] = array(
-			'common/yui_2.5.2/utilities/utilities.js',
-			'common/yui_2.5.2/cookie/cookie-beta.js',
-			'common/yui_2.5.2/container/container.js',
-			'common/yui_2.5.2/autocomplete/autocomplete.js',
-			'common/yui_2.5.2/animation/animation-min.js',
-			'common/yui_2.5.2/logger/logger.js',
-			'common/yui_2.5.2/menu/menu.js',
-			'common/yui_2.5.2/tabview/tabview.js',
-			'common/yui_2.5.2/slider/slider.js',
-			'common/yui_extra/tools-min.js',
-			'common/yui_extra/carousel-min.js',
-		);
-
-		// jQuery package (for home skin)
-		$this->config['jquery'] = array(
-			'common/jquery/jquery-1.3.2.js',
-			'common/jquery/jquery.json-1.3.js',
-			'common/jquery/jquery.cookies.2.1.0.js',
-			'common/jquery/jquery.wikia.js',
-		);
-
-		// JS for monobook (both anons/logged-in)
-		$this->config['monobook_js'] = array(
-			'common/yui_2.5.2/utilities/utilities.js',
-			'common/yui_2.5.2/cookie/cookie-beta.js',
-			'common/yui_2.5.2/container/container.js',
-			'common/yui_2.5.2/autocomplete/autocomplete.js',
-			'common/yui_2.5.2/logger/logger.js',
-			'common/yui_2.5.2/menu/menu.js',
-			'common/yui_2.5.2/tabview/tabview.js',
-			'common/yui_extra/tools-min.js',
-
-			'common/jquery/jquery-1.3.2.js',
-			'common/jquery/jquery.json-1.3.js',
-			'common/jquery/jquery.cookies.2.1.0.js',
-			'common/jquery/jquery.wikia.js',
-
-			'common/urchin.js',
-			'common/wikibits.js',
-			'monobook/main.js',
-			'monobook/tracker.js',
-			'common/tracker.js',
-			'../extensions/wikia/ProblemReports/js/ProblemReports-loader.js',
-			'common/contributed.js',
-		);
-
 		// CSS
 		$this->config['monaco_css'] = array(
 			'common/yui_2.5.2/container/assets/container.css',
@@ -221,8 +372,11 @@ class StaticChute {
 			'monaco/css/print.css',
 			'common/commonPrint.css',
 		);
-		
-		
+	}
+	
+	/* build st for corporate page */
+	private function generateConfigSkinCorporate(){
+		//JS
 		$this->config['corporate_page_js'] = array(
 			'common/wikibits.js',
 			'common/jquery/jquery-1.4.1.min.js',
@@ -235,7 +389,7 @@ class StaticChute {
 			'common/ajaxwatch.js',
 			'common/mwsuggest.js',
 		);
-
+		
 		$this->config['corporate_specialpage_js'] = array(
 			'common/wikibits.js',
 			'common/jquery/jquery-1.4.1.min.js',
@@ -250,7 +404,7 @@ class StaticChute {
 			'common/ajaxwatch.js',
 			'common/mwsuggest.js',
 		);
-		
+		//CSS
 		$this->config['corporate_page_css'] = array(		
 			'common/yui300css-reset-min.css',
 			'common/wikia-ui.css',	
@@ -258,9 +412,9 @@ class StaticChute {
 			'corporate/css/modal.css',
 			'corporate/css/main.css',
 		);
-	}
-
-
+	
+	}	
+	
 	/* message function that will print the message appropriately based on the format */
 	public function comment ($msg){
 		switch ($this->fileType){
