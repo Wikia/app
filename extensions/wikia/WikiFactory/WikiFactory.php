@@ -799,7 +799,7 @@ class WikiFactory {
 		if( !$master ) {
 			$variables = $wgMemc->get( self::getVarsKey( $city_id ) );
 			$value = isset( $variables[ "data" ][ $cv_name ] )
-				? self::substVariables( $variables[ "data" ][ $cv_name ] )
+				? self::substVariables( $variables[ "data" ][ $cv_name ], $city_id )
 				: false;
 			Wikia::log( __METHOD__, "reading value from cache for {$cv_name} {$city_id}" );
 		}
