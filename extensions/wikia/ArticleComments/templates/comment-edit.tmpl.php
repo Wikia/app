@@ -8,7 +8,7 @@ if ( $canEdit ) {
 		<div class="article-comm-input-text" style="margin-left: 5px">
 			<textarea name="wpArticleComment" id="article-comm-textfield-<?=$title->getArticleId()?>"><?=$comment?></textarea><br />
 <? if (!$isReadOnly) { ?>
-			<a href="<?php echo $title->getFullURL() ?>" name="wpArticleSubmit" id="article-comm-submit-<?=$title->getArticleId()?>" class="wikia_button"><span><? echo wfMsg('article-comments-post') ?></span></a>
+			<input type="submit" name="wpArticleSubmit" id="article-comm-submit-<?=$title->getArticleId()?>" value="<? echo wfMsg('article-comments-post') ?>" />
 <? } ?>
 		</div>
 	</form>
