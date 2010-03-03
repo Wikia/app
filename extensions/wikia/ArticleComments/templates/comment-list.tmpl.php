@@ -32,7 +32,7 @@
 			<!-- submit -->
 			<? if (!$isReadOnly) { ?>
 			<script type="text/javascript">
-			document.write("<a href=\"<?php echo $title->getFullURL() ?>\" name=\"wpArticleSubmit\" id=\"article-comm-submit-top\" class=\"wikia_button\"><span><? echo wfMsg('article-comments-post') ?></span></a>");
+			document.write("<input type=\"submit\" name=\"wpArticleSubmit\" id=\"article-comm-submit-top\" value=\"<? echo wfMsg('article-comments-post') ?>\" />");
 			</script>
 			<noscript>
 			<input type="submit" name="wpArticleSubmit" id="article-comm-submit-top" value="<? echo wfMsg('article-comments-post') ?>" />
@@ -45,7 +45,7 @@
 			<div id="article-comments-login">
 				<?php echo wfMsg('article-comments-login', SpecialPage::getTitleFor('UserLogin')->getLocalUrl() ); ?>
 			</div>
-			<?php 
+			<?php
 			}
 		}
 
@@ -86,7 +86,7 @@
 			<!-- submit -->
 			<? if (!$isReadOnly) { ?>
 			<script type="text/javascript">
-			document.write("<a href=\"<?php echo $title->getFullURL() ?>\" name=\"wpArticleSubmit\" id=\"article-comm-submit-bottom\" class=\"wikia_button\"><span><? echo wfMsg('article-comments-post') ?></span></a>");
+			document.write("<input type=\"submit\" name=\"wpArticleSubmit\" id=\"article-comm-submit-bottom\" value=\"<? echo wfMsg('article-comments-post') ?>\" />");
 			</script>
 			<noscript>
 			<input type="submit" name="wpArticleSubmit" id="article-comm-submit-bottom" value="<? echo wfMsg('article-comments-post') ?>" />
@@ -107,7 +107,7 @@
 			<div id="article-comments-login">
 				<?php echo wfMsg('article-comments-login', SpecialPage::getTitleFor('UserLogin')->getLocalUrl() ); ?>
 			</div>
-			<?php 
+			<?php
 			}
 		}
 	?>
