@@ -38,6 +38,7 @@ function ActivityFeedTag_render($content, $attributes, &$parser) {
 	$timestamp = wfTimestampNow();
 
 	wfProfileOut(__METHOD__);
-	return "<div$style>$feedHTML</div><script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/MyHome/ActivityFeedTag.js?{$wgStyleVersion}\"></script><script type=\"text/javascript\">wgAfterContentAndJS.push(function() {ActivityFeedTag.initActivityTag('$tagid', '$jsParams', '$timestamp');});</script><style type=\"text/css\">@import url({$wgExtensionsPath}/wikia/MyHome/EFActivityFeedTag.css?{$wgStyleVersion});</style>";
+	$monacoVersion = (empty($wgEFMonaco)) ? '' : 'EF';
+	return "<div$style>$feedHTML</div><script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/MyHome/ActivityFeedTag.js?{$wgStyleVersion}\"></script><script type=\"text/javascript\">wgAfterContentAndJS.push(function() {ActivityFeedTag.initActivityTag('$tagid', '$jsParams', '$timestamp');});</script><style type=\"text/css\">@import url({$wgExtensionsPath}/wikia/MyHome/". $monacoVersion ."ActivityFeedTag.css?{$wgStyleVersion});</style>";
 }
 
