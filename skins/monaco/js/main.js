@@ -36,7 +36,14 @@ $(function() {
 			return false;
 		});
 
-		 $("#ca-viewsource").add("#te-editanon").click(function(e){
+		editpromptable = $("#ca-viewsource").add("#te-editanon");
+
+		// add .editsection on wikis with anon editing disabled
+		if ( wgDisableAnonymousEditig ) {
+			editpromptable = editpromptable.add(".editsection");
+		}
+
+		editpromptable.click(function(e){
 			showComboAjaxForPalceHolder(false, "", function(){
 				AjaxLogin.doSuccess = function() {
 					var target = $(e.target);
