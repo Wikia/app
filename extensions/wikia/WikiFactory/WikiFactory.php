@@ -801,7 +801,6 @@ class WikiFactory {
 			$value = isset( $variables[ "data" ][ $cv_name ] )
 				? self::substVariables( $variables[ "data" ][ $cv_name ], $city_id )
 				: false;
-			Wikia::log( __METHOD__, "reading value from cache for {$cv_name} {$city_id}" );
 		}
 
 		if( !$value ) {
@@ -809,7 +808,6 @@ class WikiFactory {
 			$value = isset( $variable->cv_value )
 				? self::substVariables( unserialize( $variable->cv_value ), $city_id )
 				: false;
-			Wikia::log( __METHOD__, "reading value from db for {$cv_name} {$city_id}" );
 		}
 
 		wfProfileOut( __METHOD__ );
