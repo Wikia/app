@@ -98,7 +98,7 @@ $months = '<select name="awc-nbr-edits-days" id="awc-nbr-edits-days">';
 $months .= '<option value="1">'.wfMsg('awc-metrics-this-month').'</option>';
 for ($i = 2; $i <= 12; $i++ ) {
 	$selected = $obj->setDefaultOption($params, 'etime', '', $i); 
-	$months .= '<option '.$selected.' value="'.$i.'">'.wfMsg('awc-metrics-last-month', $i).'</option>';
+	$months .= '<option '.$selected.' value="'.$i.'">'.wfMsgExt('awc-metrics-last-month', 'parsemag', $i).'</option>';
 }
 $months .= '</select>';
 
@@ -110,9 +110,9 @@ foreach ( array(30, 60, 90, 120, 180, 365) as $id ) {
 $days .= '</select>';
 ?>			
 			<tr><td valign="middle" class="awc-metrics-row">
-				<span style="vertical-align:middle"><?=wfMsg('awc-metrics-fewer-than', '<input name="awc-nbr-articles" id="awc-nbr-articles" size="2" value="'.@$params['articles'].'" />')?></span>
-				<span style="vertical-align:middle"><?=wfMsg('awc-metrics-edits-label', '<input name="awc-nbr-edits" id="awc-nbr-edits" size="2" value="'.@$params['edits'].'" />', $months)?></span>
-				<span style="vertical-align:middle"><?=wfMsg('awc-metrics-pageviews-label', '<input name="awc-nbr-pageviews" id="awc-nbr-pageviews" size="2" value="'.@$params['pageviews'].'" />', $days)?></span>
+				<span style="vertical-align:middle"><?=wfMsgExt('awc-metrics-fewer-than', 'parsemag', '<input name="awc-nbr-articles" id="awc-nbr-articles" size="2" value="'.@$params['articles'].'" />')?></span>
+				<span style="vertical-align:middle"><?=wfMsgExt('awc-metrics-edits-label', 'parsemag', '<input name="awc-nbr-edits" id="awc-nbr-edits" size="2" value="'.@$params['edits'].'" />', $months)?></span>
+				<span style="vertical-align:middle"><?=wfMsgExt('awc-metrics-pageviews-label', 'parsemag', '<input name="awc-nbr-pageviews" id="awc-nbr-pageviews" size="2" value="'.@$params['pageviews'].'" />', $days)?></span>
 			</td></tr>
 		</table>
 		<table width="100%" style="text-align:left;">
