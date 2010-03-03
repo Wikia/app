@@ -3,16 +3,16 @@
 	<p><?= wfMsg('magcloud-discard-magazine-msg') ?></p>
 
 	<div id="MagCloudDiscardMagazineButtons" class="MagCloudPopupButtons">
-		<a class="wikia_button secondary" id="MagCloudDiscardMagazineCancel">
-			<span><?= wfMsg('cancel') ?></span>
+		<a class="wikia-button secondary" id="MagCloudDiscardMagazineCancel">
+			<?= wfMsg('cancel') ?>
 		</a>
 
-		<a class="wikia_button" id="MagCloudDiscardMagazineSave">
-			<span><?= wfMsg('magcloud-discard-magazine-save') ?></span>
+		<a class="wikia-button" id="MagCloudDiscardMagazineSave">
+			<?= wfMsg('magcloud-discard-magazine-save') ?>
 		</a>
 
-		<a class="wikia_button secondary" id="MagCloudDiscardMagazineDiscard">
-			<span><?= wfMsg('magcloud-discard-magazine-discard') ?></span>
+		<a class="wikia-button secondary" id="MagCloudDiscardMagazineDiscard">
+			<?= wfMsg('magcloud-discard-magazine-discard') ?>
 		</a>
 	</div>
 </div>

@@ -234,7 +234,7 @@ MagCloud.saveCollection = function() {
 	MagCloud.ajax('saveCollection', {}, function(data) {
 		// show success msg and show "Ok" button which will close the toolbar and end the MagCloud "session"
 		$('#MagCloudDiscardMagazine').find('p').html(data.msg);
-		$('#MagCloudDiscardMagazineButtons').html('<a class="wikia_button"><span>' + data.ok + '</span></a>');
+		$('#MagCloudDiscardMagazineButtons').html('<a class="wikia-button">' + data.ok + '</a>');
 
 		$('#MagCloudDiscardMagazineButtons').find('a').click(function() {
 			MagCloud.track('/discardMagazine/save-ok');

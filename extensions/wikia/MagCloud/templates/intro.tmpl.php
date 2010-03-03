@@ -14,18 +14,18 @@
 	</div>
 
 	<div id="MagCloudIntroPopupButtons" class="MagCloudPopupButtons">
-		<a class="wikia_button" id="MagCloudIntroPopupOk">
-			<span><?= wfMsg('magcloud-intro-get-started') ?></span>
+		<a class="wikia-button" id="MagCloudIntroPopupOk">
+			<?= wfMsg('magcloud-intro-get-started') ?>
 		</a>
 <?php if (!$isAnon): ?>
-		<a class="wikia_button secondary" id="MagCloudIntroPopupLoad">
-			<span><?= wfMsg('magcloud-intro-view-my-magazines') ?></span>
+		<a class="wikia-button secondary" id="MagCloudIntroPopupLoad">
+			<?= wfMsg('magcloud-intro-view-my-magazines') ?>
 		</a>
 <?php
 	endif;
 ?>
-		<a class="wikia_button secondary" id="MagCloudIntroPopupCancel">
-			<span><?= wfMsg('cancel') ?></span>
+		<a class="wikia-button secondary" id="MagCloudIntroPopupCancel">
+			<?= wfMsg('cancel') ?>
 		</a>
 	</div>
 </div>
