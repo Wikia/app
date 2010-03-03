@@ -49,10 +49,23 @@
 	background-image:url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20100128);
 	clip:rect(0px, 16px, 16px, 0px);
 	height:16px;
-	margin-left: -20px;
+	margin-left: -18px;
 	position:absolute;
 	width:576px;
 }
+
+/* ============== */
+/* === MYHOME === */
+/* ============== */
+
+#wikisticky_browser { display:none;}
+.wikisticky_special_link { display:none;}
+
+
+
+/* ================================== */
+/* === THE QUESTION / ANSWER PAGE === */
+/* ================================== */
 
 
 
@@ -256,8 +269,6 @@ body.mainpage .firstHeading { display:none; }
     padding: 2px;
 }
 
-
-
 /* using !important because of the inline styling */
 #csAddCategorySwitch a, #CSitemOuterAddCategory {
 /*    font-weight: bold !important; */
@@ -379,9 +390,17 @@ body.mainpage .firstHeading { display:none; }
 	float: right;
 }
 
-#answer_edit_link a:link, #question_edit_link a:link { color:#bbb; }
-#answer_edit_link a:visited, #question_edit_link a:visited { color:#bbb; }
-#answer_edit_link a:hover, #question_edit_link a:hover {color: #369; text-decoration: none; }
+#answer_edit_link a:link,
+#question_edit_link a:link,
+#answer_edit_link a:visited,
+#question_edit_link a:visited {
+	color:#333;
+}
+
+#answer_edit_link a:hover,
+#question_edit_link a:hover {
+	color:#333;
+}
 
 .answer-input {
 	height:100px;
@@ -572,6 +591,7 @@ div.article-comm-input-text textarea {
 .WidgetCommunity li strong {
 	text-align: left;
 	font-size: 9pt;
+	font-weight:normal;
 }
 
 /* No real idea why this needs to be 1px, but WTH */
@@ -620,9 +640,8 @@ div.article-comm-input-text textarea {
     color: #aaa;
 }
 
-.activity-ns-0 a:link { color:#888; }
-.activity-ns-0 a:visited { color:#888; }
-.activity-ns-0 a:hover { color:#369; text-decoration:none }
+.activityfeed a:link { color:#369; }
+.activityfeed a:visited { color:#369; }
 
 /* === ATTRIBUTION === */
 
@@ -745,31 +764,54 @@ div.userInfoNoAvatar .userPoints {
 	margin-left: 5px !important;
 }
 
-/** User profile edit points **/
-.profile-title-points {
-	font-size: 0.8em;
-	font-weight: normal;
-	letter-spacing: -1px;
-	padding-left: 10px;
-}
-
-
 
 
 /* === SOCIAL PROFILE PAGE === */
 
 #profile-toggle-button { display:none; }
 
+#profile-top {
+	margin:0 0 0 !important;
+	padding:0 0 20px !important;
+}	
+
 .user-section-heading {
 	margin-top: 35px;
-	border: none;
+	border: none !important;
 }
 
 .user-section-title {
-	font-weight:bold;
-	letter-spacing:-1px;
+	letter-spacing:0px !important;
+	color:#555;
+	font-size:132% !important; 
+	padding:20px 10px 5px 0 !important;
+	font-weight: bold;
 }
 
+#profile-title-container  {
+	padding:14px 0 6px 6px !important;
+}
+
+/** edit points **/
+.profile-title-points {
+	font-size: 0.8em;
+	font-weight: normal;
+	padding-left: 10px;
+	color:#888;
+}
+
+.profile-actions { color:#fff; }
+
+.action-right a:link, .action-right a:visited {
+	background: #6094DB;
+	text-decoration:none;
+	color: #fff;
+	padding: 2px;
+}
+
+.action-right {
+	padding:22px 0 0 0 !important;
+}
 
 
 
@@ -782,11 +824,13 @@ div.userInfoNoAvatar .userPoints {
 	position:relative;
 	padding:8px;
 }
+
 .google-ad-unit small a { /* Ads By Google link */
 	font-size:11px;
 	text-decoration:none;
 	color:#999999;
 }
+
 .google-ad-unit p {
 	font-size:13px;
 	font-size-adjust:none;
@@ -801,9 +845,11 @@ div.userInfoNoAvatar .userPoints {
 	color:#333333 !important;
 	text-decoration:none;
 }
+
 .google-ad-unit a:hover {
 	text-decoration: underline; 
 }
+
 .google-ad-unit a strong {
 	color:#336699;
 	font-size:15px;
@@ -832,7 +878,6 @@ div.userInfoNoAvatar .userPoints {
 	-moz-border-radius: 10px 10px 10px 10px;
 	-webkit-border-radius: 10px 10px 10px 10px;
 }
-
 
 #star-rating-row {
 	padding-top: 3px;
