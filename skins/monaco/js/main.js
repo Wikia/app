@@ -40,7 +40,7 @@ $(function() {
 		editpromptable = $("#ca-viewsource").add("#te-editanon");
 
 		// add .editsection on wikis with anon editing disabled
-		if ( wgDisableAnonymousEditig ) {
+		if ( (typeof wgDisableAnonymousEditig !== 'undefined') && (wgDisableAnonymousEditig) ) {
 			editpromptable = editpromptable.add(".editsection");
 		}
 
