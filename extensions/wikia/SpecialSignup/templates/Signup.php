@@ -273,7 +273,7 @@ if( $wgUser->isAllowed('createaccount') ) {
 			<td class="mw-submit">
 				<input onclick="UserRegistration.submitForm(); return false;" id="wpCreateaccountX" type="submit" value="<?= wfMsg("createaccount") ?>" />
 				<?php if( $this->data['createemail'] ) { ?>
-					<a id="wpCreateaccountX" class="wikia_button" href="#" onclick="$('#wpCreateaccountXSteer').value = false; $('#wpCreateaccountYSteer').value = true; UserRegistration.submitForm();" ><span><?= wfMsg("createaccountmail") ?></span></a>
+					<input id="wpCreateaccountX" value="<?= wfMsg("createaccountmail") ?>" onclick="$('#wpCreateaccountXSteer').value = false; $('#wpCreateaccountYSteer').value = true; UserRegistration.submitForm();" />
 					<input type="hidden" id="wpCreateaccountYSteer" name="wpCreateaccountMail" value="false" />							
 				<?php } else { ?>
 					<input type="hidden" id="wpCreateaccountXSteer" name="wpCreateaccount" value="true" />
