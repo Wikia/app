@@ -47,8 +47,8 @@ function extractSortkey(text) {
 }
 
 function deleteCategory(e) {
-	var catId = e.parentNode.parentNode.getAttribute('catId');
-	e.parentNode.parentNode.parentNode.removeChild(e.parentNode.parentNode);
+	var catId = e.parentNode.getAttribute('catId');
+	e.parentNode.parentNode.removeChild(e.parentNode);
 	delete categories[catId];
 }
 
@@ -95,7 +95,7 @@ function modifyCategoryDialog(data, handler) {
 }
 
 function modifyCategory(e) {
-	var catId = e.parentNode.parentNode.getAttribute('catId');
+	var catId = e.parentNode.getAttribute('catId');
 	defaultSortkey = categories[catId].sortkey != '' ? categories[catId].sortkey : (csDefaultSort != '' ? csDefaultSort : wgTitle);
 
 	modifyCategoryDialog({
@@ -136,11 +136,11 @@ function modifyCategory(e) {
 			categories[catId].sortkey = sortkey;
 		}
 		if (categories[catId].sortkey == '') {
-			oldClassName = 'CScontrolSorted';
-			newClassName = 'CScontrolSort';
+			oldClassName = 'sorted';
+			newClassName = 'sort';
 		} else {
-			oldClassName = 'CScontrolSort';
-			newClassName = 'CScontrolSorted';
+			oldClassName = 'sort';
+			newClassName = 'sorted';
 		}
 		Dom.replaceClass(e, oldClassName , newClassName);
 	});
@@ -165,17 +165,14 @@ function addAddCategoryButton() {
 		elementA.onfocus = 'this.blur()';
 		elementA.onclick = function(e) {replaceAddToInput(this); return false;};
 
-		elementSpanOuter = document.createElement('span');
-		elementSpanOuter.className = 'CSitemOuterAddCategory';
-		elementA.appendChild(elementSpanOuter);
+		elementImg = document.createElement('img');
+		elementImg.src = stylepath + '/common/blank.gif';
+		elementImg.className = 'sprite-small add';
+		elementImg.onclick = function(e) {replaceAddToInput(this); return false;};
+		elementA.appendChild(elementImg);
 
 		elementText = document.createTextNode(csAddCategoryButtonText);
-		elementSpanOuter.appendChild(elementText);
-
-		elementSpan = document.createElement('span');
-		elementSpan.className = 'CScontrol CScontrolAdd';
-		elementSpan.onclick = function(e) {replaceAddToInput(this); return false;};
-		elementSpanOuter.appendChild(elementSpan);
+		elementA.appendChild(elementText);
 
 		$G('csItemsContainer').appendChild(elementA);
 	}
@@ -218,22 +215,20 @@ function addCategory(category, params, index) {
 	elementA.onfocus = 'this.blur()';
 	elementA.setAttribute('catId', index);
 
-	elementSpanOuter = document.createElement('span');
-	elementSpanOuter.className = 'CSitemOuter';
-	elementA.appendChild(elementSpanOuter);
-
 	elementText = document.createTextNode(category);
-	elementSpanOuter.appendChild(elementText);
+	elementA.appendChild(elementText);
 
-	elementSpan = document.createElement('span');
-	elementSpan.className = 'CScontrol CScontrolRemove';
-	elementSpan.onclick = function(e) {WET.byStr('articleAction/deleteCategory'); deleteCategory(this); return false;};
-	elementSpanOuter.appendChild(elementSpan);
+	elementImg = document.createElement('img');
+	elementImg.src = stylepath + '/common/blank.gif';
+	elementImg.className = 'sprite-small ' + (params['sortkey'] == '' ? 'sort' : 'sorted');
+	elementImg.onclick = function(e) {WET.byStr('articleAction/sortCategory'); modifyCategory(this); return false;};
+	elementA.appendChild(elementImg);
 
-	elementSpan = document.createElement('span');
-	elementSpan.className = 'CScontrol ' + (params['sortkey'] == '' ? 'CScontrolSort' : 'CScontrolSorted');
-	elementSpan.onclick = function(e) {WET.byStr('articleAction/sortCategory'); modifyCategory(this); return false;};
-	elementSpanOuter.appendChild(elementSpan);
+	elementImg = document.createElement('img');
+	elementImg.src = stylepath + '/common/blank.gif';
+	elementImg.className = 'sprite-small close';
+	elementImg.onclick = function(e) {WET.byStr('articleAction/deleteCategory'); deleteCategory(this); return false;};
+	elementA.appendChild(elementImg);
 
 	$G('csItemsContainer').insertBefore(elementA, $G('csCategoryInput'));
 	if ($G('csCategoryInput').style.display != 'none') {
