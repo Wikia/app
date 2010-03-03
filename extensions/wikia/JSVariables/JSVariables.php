@@ -79,6 +79,8 @@ function wfMakeGlobalVariablesScript($vars) {
 	// is anon editing disabled?
 	if ( $wgDisableAnonymousEditig || $wgGroupPermissions['user']['edit'] === false ) {
 		$vars['wgDisableAnonymousEditig'] = true;
+	} else {
+		$vars['wgDisableAnonymousEditig'] = false;
 	}
 
 	wfProfileOut(__METHOD__);
