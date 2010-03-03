@@ -95,54 +95,6 @@ body.masthead-special #page_bar {
 	top: 4px;
 }
 
-/* page-specific head links */
-.nav_links_head {
-	margin: 0;
-	padding: 0;
-}
-
-.nav_links_head li {
-	line-height: 1.5em;
-	padding: 2px 0;
-	position: relative;
-	font-size: 8pt;
-	float: left;
-	margin-right: 2px;
-	overflow: hidden !important; /* Opera fix */
-}
-
-.nav_links_head li div {
-	display: inline;
-	position: relative;
-	margin-left: 14px;
-}
-
-.nav_links_head img.sprite {
-	background: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20100128);
-	height: 16px;
-	margin-right: 16px;
-	position: absolute;
-	width: 464px;
-}
-
-/* fix for IE6 */
-* html .nav_links_head img.sprite {
-	background-image: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/sprite.png?20100128', sizingMethod='crop');
-}
-
-#mt_emailuser_icon,
-#mt_emailuser_img {
-	clip: rect(0px 464px 16px 448px);
-	left: -448px;
-}
-
-#mt_blockip_icon,
-#mt_blockip_img {
-	clip: rect(0px 96px 16px 80px);
-	left: -80px;
-}
-
 avatarOverlayRight {
 	right:5px;
 	top:5px;
