@@ -227,7 +227,7 @@ function WikiaVideo_renderVideoGallery($input, $args, $parser) {
 					$out .= Xml::openElement('a', array(
 						'id' => "WikiaVideoGalleryPlaceholder{$args['id']}x{$i}",
 						'class' => 'wikia_button',
-						'style' => "top: 110px",
+						'style' => "top: 110px;position:relative;",
 						'href' => '#',
 						'onclick' => $onclick,
 					));
@@ -352,7 +352,7 @@ function WikiaVideo_makeVideo( $title, $options, $sk, $wikitext = '', $plc_templ
 			$html .= Xml::openElement('a', array(
 				'id' => "WikiaVideoPlaceholderInner{$wgWikiaVideoPlaceholderId}",
 				'class' => 'wikia_button',
-				'style' => "top: {$tmarg}px",
+				'style' => "top: {$tmarg}px;position:relative;",
 				'href' => '#',
 				'onclick' => !empty($onclick) ? $onclick : '',
 			));
