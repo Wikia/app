@@ -15,7 +15,7 @@ if( isset( $emptyMessage ) ) {
 <?php
 		if (isset($row['url'])) {
 ?>
-			<strong><a href="<?php print htmlspecialchars( $row['url'] ) ?>"><?php print $title; ?></a></strong>
+			<strong><a href="<?php print htmlspecialchars( $row['url'] ) ?>"><?php print $title; ?></a></strong><br />
 <?php
 		} else {
 ?>

@@ -640,6 +640,7 @@ class StaticChute {
 	}
 
 	private function getWidgetsAssets() {
+		global $wgEFMonaco;
 		$js = $css = array();
 		$dir = dirname(__FILE__) . '/../WidgetFramework/Widgets/';
 		if(is_dir($dir)) {
@@ -649,7 +650,9 @@ class StaticChute {
 						if(file_exists($dir.$file.'/'.$file.'.js')) {
 							$js[] = '../extensions/wikia/WidgetFramework/Widgets/'.$file.'/'.$file.'.js';
 						}
-						if(file_exists($dir.$file.'/'.$file.'.css')) {
+						if(!empty($wgEFMonaco) && file_exists($dir.$file.'/EF'.$file.'.css')) {
+							$css[] = '../extensions/wikia/WidgetFramework/Widgets/'.$file.'/EF'.$file.'.css';
+						} else if(file_exists($dir.$file.'/'.$file.'.css')) {
 							$css[] = '../extensions/wikia/WidgetFramework/Widgets/'.$file.'/'.$file.'.css';
 						}
 					}

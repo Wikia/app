@@ -18,7 +18,7 @@ class SpecialMyHome extends SpecialPage {
 		}
 
 		// not available for skins different then monaco
-		if(get_class($wgUser->getSkin()) != 'SkinMonaco' && get_class($wgUser->getSkin()) != 'SkinAnswers'){
+		if(get_class($wgUser->getSkin()) != 'SkinMonaco' && get_class($wgUser->getSkin()) != 'SkinAnswers' && get_class($wgUser->getSkin()) != 'SkinEFMonaco'){
 			$wgOut->addWikiMsg( 'myhome-switch-to-monaco' );
 			return;
 		}
@@ -41,8 +41,9 @@ JS
 		}
 
 		// load dependencies (CSS and JS)
-		global $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType;
-		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/MyHome/MyHome.css?{$wgStyleVersion}");
+		global $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType, $wgEFMonaco;
+		(empty($wgEFMonaco)) ? $wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/MyHome/MyHome.css?{$wgStyleVersion}") : $wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/MyHome/EFMyHome.css?{$wgStyleVersion}");
+
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/MyHome/MyHome.js?{$wgStyleVersion}\"></script>\n");
 
 		######

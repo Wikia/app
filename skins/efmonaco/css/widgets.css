@@ -273,37 +273,13 @@ body.widgetsAddingBlocked .add {
 #link_box_table a {
 	background: transparent;
 }
-#link_box_dynamic img {
-	background: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20100128) no-repeat;
-	height: 16px;
-	position: absolute;
-	width: 464px;
-}
 #link_box_dynamic .link_box_dynamic_item:first-line {
 	line-height: 16px;
 }
 #link_box_dynamic .link_box_dynamic_item {
 	padding: 3px 0;
 	position: relative;
-	margin-left: 20px !important;
 }
-#dynamic-links-write-article-img {
-	clip: rect(0px 16px 16px 0px);
-	left: -20px;
-}
-#dynamic-links-add-image-img {
-	clip: rect(0px 432px 16px 416px);
-	left: -436px;
-}
-#dynamic-links-write-blog-img {
-	clip: rect(0px 400px 16px 384px);
-	left: -404px;
-}
-#dynamic-links-blog-listing-img {
-	clip: rect(0px 448px 16px 432px);
-	left: -452px;
-}
-*
 
 
 .yuimenuitemmore a,

@@ -26,28 +26,21 @@
 	top: 0;
 }
 
-#page_bar * {
-	float: left;
-}
 #page_bar u {
 	float: none;
 }
 #page_controls li {
+	float: left;
 	margin-right: 12px;
 	line-height: 32px;
-	padding-left: 18px;
 	position: relative;
 }
-#page_controls div {
-	background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20100128);
-	clip: rect(0px 0px 0px 0px);
-	height: 16px;
-	margin: 8px 2px 0 0;
-	position: absolute;
-	width: 576px;
+#page_controls img {
+	top: -1px;
 }
 #page_controls a {
 	background: transparent;
+	margin-left: 2px;
 	position: relative;
 	text-decoration: none;
 	z-index: 2;
@@ -126,6 +119,7 @@
 	background-color: #EEE;
 	color: #000;
 	cursor: pointer;
+	float: left;
 	padding: 0 8px;
 	height: 27px;
 	line-height: 27px;
@@ -199,15 +193,11 @@
 #articleFooter ul.actions li div {
 	display: inline;
 	position: relative;
-	margin-left: 20px;
 }
-#articleFooter img.sprite {
-	background: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20100128);
-	height: 16px;
-	margin-right: 16px;
-	position: absolute;
-	width: 576px;
-}
+
+
+/*
+ * TODO: Delete this stuff
 #fe_edit_icon,
 #fe_edit_img {
 	clip: rect(0px 16px 16px 0px);
@@ -274,6 +264,7 @@
         clip: rect(0px 352px 16px 336px);
         left: -336px
 }
+*/
 
 #fe_history {
 	float: left;
