@@ -168,22 +168,27 @@
 }
 
 .sprite.edit { background-position: 0 -66px; }
+.sprite.new { background-position: -16px -66px; }
+.sprite.photo { background-position: -32px -66px; }
+.sprite.video { background-position: -48px -66px; }
+.sprite.close { background-position: -64px -66px; }
+
 .sprite.history { background-position: 0 -82px; }
-.sprite.delete { background-position: -48px -98px; }
+.sprite.pagelink { background-position: -16px -82px; }
 .sprite.move { background-position: -32px -82px; }
 .sprite.protect { background-position: -48px -82px; }
+.sprite.viewsource { background-position: -64px -82px; }
+
+.sprite.delete { background-position: -48px -98px; }
 .sprite.watch { background-position: -32px -130px; }
 .sprite.unwatch { background-position: -48px -130px; }
 .sprite.recent { background-position: -16px -130px; }
-.sprite.pagelink { background-position: -16px -82px; }
 .sprite.random { background-position: -64px -98px; }
 .sprite.error { background-position: -16px -98px; }
 .sprite.share { background-position: 0 -130px; }
-.sprite.photo { background-position: -32px -66px; }
 .sprite.blog { background-position: -32px -114px; }
 .sprite.bloglist { background-position: -16px -114px; }
 .sprite.talk { background-position: -64px -114px; }
-.sprite.new { background-position: -16px -66px; }
 
 .sprite-small.settings { background-position:  0 -54px; }
 .sprite-small.sorted { background-position:  -12px -54px; }
