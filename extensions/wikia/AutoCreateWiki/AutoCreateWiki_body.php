@@ -90,6 +90,8 @@ class AutoCreateWikiPage extends SpecialPage {
 				"en" => "starteranswers",
 				"*"  => "genericanswers353",
 				"de" => "deuanswers",
+				"es" => "esstarteranswers",
+				"fr" => "frstarteranswers",
 			)
 		);
 
