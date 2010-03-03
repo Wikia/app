@@ -1546,7 +1546,7 @@ if( $custom_user_data ) {
 					<a rel="nofollow" class="ajaxLogin" id="login" href="<?= htmlspecialchars($this->data['userlinks']['login']['href']) ?>"><?= htmlspecialchars($this->data['userlinks']['login']['text']) ?></a>
 				</li>
 				<li>
-					<a rel="nofollow" class="wikia_button" id="register" href="<?= htmlspecialchars($this->data['userlinks']['register']['href']) ?>"><span><?= htmlspecialchars($this->data['userlinks']['register']['text']) ?></span></a>
+					<a rel="nofollow" class="wikia-button" id="register" href="<?= htmlspecialchars($this->data['userlinks']['register']['href']) ?>"><?= htmlspecialchars($this->data['userlinks']['register']['text']) ?></a>
 				</li>
 <?php
 	}
@@ -2443,7 +2443,7 @@ wfProfileOut( __METHOD__ . '-body');
 	function printRequestWikiLink(){
 		global $wgUser;
 		echo '<ul id="requestWikiData"><li>';
-			echo '<a rel="nofollow" href="http://www.wikia.com/Special:CreateWiki" id="request_wiki" class="wikia_button"><span>'. wfMsg('createwikipagetitle') .'</span></a>';
+			echo '<a rel="nofollow" href="http://www.wikia.com/Special:CreateWiki" id="request_wiki" class="wikia-button">'. wfMsg('createwikipagetitle') .'</a>';
 			if (!$wgUser->isLoggedIn()) {
 				echo '<span id="request_wiki_ad">' . wfMsgExt('monaco-request-wiki-ad-text', array( "parseinline" )) . '</span>';
 			}
