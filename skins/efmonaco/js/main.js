@@ -23,9 +23,10 @@ $(function() {
 	$(document).ajaxSend(startAjax).ajaxComplete(stopAjax);
 	setupVoting();
 	
-	if(!((typeof wgIsLogin == 'undefined') || (wgIsLogin) || (typeof wgComboAjaxLogin == 'undefined') || (!wgComboAjaxLogin) )) {	
-		$(".wikiaPlaceholder .wikia_button").removeAttr("onclick");
-		$(".wikiaPlaceholder .wikia_button").click(function(e){
+	if(!((typeof wgIsLogin == 'undefined') || (wgIsLogin) || (typeof wgComboAjaxLogin == 'undefined') || (!wgComboAjaxLogin) )) {
+
+		$(".wikiaPlaceholder .wikia-button").removeAttr("onclick");
+		$(".wikiaPlaceholder .wikia-button").click(function(e){
 			if( e.target.nodeName == "SPAN" ){
 				showComboAjaxForPalceHolder($(e.target.parentNode).attr('id'),true);
 			}
