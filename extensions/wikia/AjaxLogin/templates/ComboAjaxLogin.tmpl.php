@@ -27,37 +27,39 @@ $link = $titleObj->getLocalUrl('type=signup');
         </tbody>
         </table>
     </div>
-        <form action="" method="post" style="margin: 10px;" name="userajaxloginform">
-            <div id="wpError"></div>
-            <label for="wpName1" style="display: block; font-weight: bold;"><?= wfMsg("yourname") ?></label> 
-            <table>
-            <tr style="width:350px" >
-                <td id="ajaxlogin_username_cell">
-                    
-                </td>
-                <td><a id="wpAjaxRegister" href="<?= htmlspecialchars($link) ?>" style="font-size: 9pt;display:none;"><?= wfMsg('nologinlink') ?></a></td>
-            </tr>
-            </table>
-            <label for="wpPassword1" style="display: block; font-weight: bold; margin-top: 8px"><?= wfMsg("yourpassword") ?></label>
-            <table>
-            <tr>
-                <td id="ajaxlogin_password_cell">
-                    
-                </td>
-            <?php if( $wgEnableEmail && $wgAuth->allowPasswordChange() ) { ?>
-                <td><a id="wpMailmypassword" href="#" style="font-size: 9pt;" onclick="AjaxLogin.action='password'; AjaxLogin.form.submit();"><?= wfMsg('mailmypassword') ?></a></td>
-                </td>
-            <?php } ?>
-            </tr>
-            </table>
-            <div style="margin: 15px 0;">
-                <label for="wpRemember1" style="padding-left: 5px"><?= wfMsg('remembermypassword') ?></label>
-            </div>
+        <form action="" method="post" name="userajaxloginform">
+            <div style="margin: 10px;" >
+	            <div id="wpError"></div>
+	            <label for="wpName1" style="display: block; font-weight: bold;"><?= wfMsg("yourname") ?></label> 
+	            <table>
+	            <tr style="width:350px" >
+	                <td id="ajaxlogin_username_cell">
+	                    
+	                </td>
+	                <td><a id="wpAjaxRegister" href="<?= htmlspecialchars($link) ?>" style="font-size: 9pt;display:none;"><?= wfMsg('nologinlink') ?></a></td>
+	            </tr>
+	            </table>
+	            <label for="wpPassword1" style="display: block; font-weight: bold; margin-top: 8px"><?= wfMsg("yourpassword") ?></label>
+	            <table>
+	            <tr>
+	                <td id="ajaxlogin_password_cell">
+	                    
+	                </td>
+	            <?php if( $wgEnableEmail && $wgAuth->allowPasswordChange() ) { ?>
+	                <td><a id="wpMailmypassword" href="#" style="font-size: 9pt;" onclick="AjaxLogin.action='password'; AjaxLogin.form.submit();"><?= wfMsg('mailmypassword') ?></a></td>
+	                </td>
+	            <?php } ?>
+	            </tr>
+	            </table>
+	            <div style="margin: 15px 0;">
+	                <label for="wpRemember1" style="padding-left: 5px"><?= wfMsg('remembermypassword') ?></label>
+	            </div>
+	      	</div>
+	        <div class="modalToolbar neutral">
+	        	<input type="submit" id="wpLoginCombo" value="<?= wfMsg("login") ?>" onclick="AjaxLogin.action='login'; AjaxLogin.form.submit(); return false;" />
+	        	<input type="submit" id="wpLoginCancel" class="secondary" value="<?= wfMsg("Cancel") ?> "onclick="AjaxLogin.close(); return false;" />
+	        </div>
         </form>
-        <div class="modalToolbar neutral">
-        	<input type="submit" id="wpLoginCombo" value="<?= wfMsg("login") ?>" onclick="AjaxLogin.action='login'; AjaxLogin.form.submit(); return false;" />
-        	<input type="submit" id="wpLoginCancel" class="secondary" value="<?= wfMsg("Cancel") ?> "onclick="AjaxLogin.close(); return false;" />
-        </div>
     </div>
     <div id="AjaxLoginRegisterForm" style="display:none" title="<?= wfMsg('login') ?>">
         <?php if (!$isReadOnly){ echo $registerAjax; } ?>
