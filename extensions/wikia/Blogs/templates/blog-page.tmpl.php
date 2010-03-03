@@ -52,5 +52,4 @@ foreach ($aRows as $pageId => $aRow) {
 ?>
 </div>
 </div>
-TESTTESTTEST
 <!-- e:<?= __FILE__ ?> -->
