@@ -29,13 +29,13 @@ function wfCustomUserData( $skin, &$tpl, &$custom_user_data ) {
 		</li>";
 	} else {
 		$custom_user_data .= "<li id=\"userLogin\">
-			<a class=\"wikia_button\" href=\"".$login->escapeFullURL()."\">
-				<span>".wfMsg('log_in')."</span>
+			<a class=\"wikia-button\" href=\"".$login->escapeFullURL()."\">
+				".wfMsg('log_in')."
 			</a>
 		</li>
 		<li>
-			<a class=\"wikia_button\" href=\"".$register->escapeFullURL()."\">
-				<span>".wfMsg('create_an_account')."</span>
+			<a class=\"wikia-button\" href=\"".$register->escapeFullURL()."\">
+				".wfMsg('create_an_account')."
 			</a>
 			
 		</li>";
