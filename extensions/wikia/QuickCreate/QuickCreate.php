@@ -30,14 +30,12 @@ function wfQuickCreateButton( $input, $argv, &$parser ) {
 	$link = $title->getFullUrl();
 	$onclick = "WET.byStr('newrecipes/contestsubmission')";
 	$output = Xml::openElement( 'a', array(
-			'class' => 'wikia_button wikiaComboAjaxLogin',
+			'class' => 'wikia-button wikiaComboAjaxLogin',
 			'id'	=> 'mr-submit',
 			'href' => $link,
 			'onclick' => $onclick
 		) )
-		.Xml::openElement( 'span' )
-		.wfMsg( 'quickcreate' )	
-		.Xml::closeElement( 'span' )
+		.wfMsg( 'quickcreate' )
 		.Xml::closeElement( 'a' );
 
 	return $parser->replaceVariables( $output );
