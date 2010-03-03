@@ -8,7 +8,9 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'wfMakeGlobalVariablesScript';
 function wfMakeGlobalVariablesScript($vars) {
 	wfProfileIn(__METHOD__);
 
-	global $wgMemc, $wgCurse, $wgCityId, $wgEnableAjaxLogin, $wgUser, $wgDBname, $wgPrivateTracker, $wgWikiaAdvertiserCategory, $wgExtensionsPath, $wgTitle, $wgArticle, $wgStyleVersion, $wgSitename, $wgWikiFactoryTags;
+	global $wgMemc, $wgCurse, $wgCityId, $wgEnableAjaxLogin, $wgUser, $wgDBname, $wgPrivateTracker;
+	global $wgWikiaAdvertiserCategory, $wgExtensionsPath, $wgTitle, $wgArticle, $wgStyleVersion, $wgSitename;
+	global $wgWikiFactoryTags, $wgDisableAnonymousEditig, $wgGroupPermissions;
 
 	$cats = wfGetBreadCrumb();
 	$idx = count($cats)-2;
@@ -72,6 +74,11 @@ function wfMakeGlobalVariablesScript($vars) {
 	if(isset($wgWikiFactoryTags) && is_array($wgWikiFactoryTags)) {
 		$vars['wgWikiFactoryTagIds'] = array_keys( $wgWikiFactoryTags );
 		$vars['wgWikiFactoryTagNames'] = array_values( $wgWikiFactoryTags );
+	}
+
+	// is anon editing disabled?
+	if ( $wgDisableAnonymousEditig || $wgGroupPermissions['user']['edit'] === false ) {
+		$vars['wgDisableAnonymousEditig'] = true;
 	}
 
 	wfProfileOut(__METHOD__);
