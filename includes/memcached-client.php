@@ -441,7 +441,7 @@ class memcached
 
       if ($this->_debug)
          foreach ($val as $k => $v)
-            $this->_debugprint(sprintf("MemCache: sock %s got %s\n", serialize($sock), $k));
+            $this->_debugprint(sprintf("MemCache: sock %s host %s got %s\n", serialize($sock), $this->_memc_host, $k));
 
       wfProfileOut( $fname );
       return isset($val[$key]) ? $val[$key] : null;

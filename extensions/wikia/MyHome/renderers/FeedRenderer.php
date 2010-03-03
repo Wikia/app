@@ -444,16 +444,12 @@ class FeedRenderer {
 	 * @return string HTML for an appropriate sprite, based on $row.
 	 */
 	public static function getSprite ( $row, $src = '' ) {
-		global $wgEFMonaco;
 		$r = '';
-		$r .= (empty($wgEFMonaco)) ? Xml::openElement( 'div', array( 'class' => 'SpriteWrapper' ) ) : '';
 		$r .= '<img'.
 			' class="' . FeedRenderer::getIconType( $row ) . ' sprite"'.
 			' src="'. $src .'"'.
 			' '. FeedRenderer::getIconAltText( $row ).
 			' width="16" height="16" />';
-		$r .= (empty($wgEFMonaco)) ? Xml::closeElement( 'div' ) : '';
-
 		return $r;
 	}
 
