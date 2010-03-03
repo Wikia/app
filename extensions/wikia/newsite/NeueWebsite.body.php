@@ -40,8 +40,7 @@ class NeueWebsite extends SpecialPage
     }
 
     // $output = "Schnapp. ++$param++ ++$par++\n\n";
-//    $output = neue_website($param);
-//	insert task here
+    $output = neue_website($param);
 
 	# FIXME: Twitter extension dependancy
     if(strpos($output, "wurde angelegt."))
