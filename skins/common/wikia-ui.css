@@ -23,190 +23,161 @@
 
 /* @group Buttons. */
 
-/*** Main button styles ***/
-.wikia_button {
-	background: transparent url(http://images.wikia.com/common/skins/monaco/images/wikia_button_sprite.png) no-repeat -360px -62px; 
-	cursor: pointer; 
-	display: inline-block; 
-	position: relative; 
-	padding: 0 0 0 10px;
-	text-decoration: none;
-}
+    a.wikia-button, 
+    span.wikia-button a, 
+    input[type="submit"], 
+    input[type="reset"], 
+    input[type="button"], 
+    button {
+      background-color: #093;
+      background-image: -moz-linear-gradient(top, #093 20%, #006722 70%);
+      background-image: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#093), to(#006722));
+      border: 1px solid #beddbe;
+      color: #FFF;
+      cursor: pointer;
+      display: inline-block;
+      font: bold 12px/17px "Lucida Grande", sans-serif;
+      height: 17px;
+      margin: 0;
+      padding: 0 7px;
+      text-decoration: none;
+      white-space: nowrap;
+      -moz-border-radius: 7px;
+      -webkit-border-radius: 7px;
+      -moz-box-shadow: 0 0 0 1px #2c802c;
+      -webkit-box-shadow: 0 1px 0 #2c802c, 0 -1px 0 #2c802c, 1px 0 0 #2c802c, -1px 0 0 #2c802c;
+    }
+  
+    /* Secondary Buttons */
+    a.wikia-button.secondary, 
+    span.wikia-button.secondary a, 
+    input[type="submit"].secondary, 
+    input[type="reset"].secondary, 
+    input[type="button"].secondary, 
+    button.secondary {
+      background-color: #CCC;
+      background-image: -moz-linear-gradient(top, #CCC 20%, #AAA 70%);
+      background-image: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#CCC), to(#AAA));
+      border-color: #E2E2E2;
+      color: #333;
+      -moz-box-shadow: 0 0 0 1px #999;
+      -webkit-box-shadow: 0 1px 0 #999, 0 -1px 0 #999, 1px 0 0 #999, -1px 0 0 #999;
+    }
+    
+    /* Big Buttons*/
+    a.wikia-button.big, 
+    span.wikia-button.big a,
+    input[type="submit"].big,
+    input[type="reset"].big, 
+    input[type="button"].big, 
+    button.big {
+      height: 30px;
+      font-size: 15px;
+      line-height: 30px;
+      padding: 0 15px;
+    }
 
-.wikia_button:hover {
-	text-decoration: none;
-}	
+    /* Border-box model: Inputs and buttons count border as part of height. Increase height. */
+    input[type="submit"], 
+    input[type="reset"], 
+    input[type="button"], 
+    button {
+      height: 19px;
+    }
+    input[type="submit"].big, 
+    input[type="reset"].big, 
+    input[type="button"].big, 
+    button.big {
+      height: 32px;
+    }
+  
+    /* Fix Mozilla Button Sizing */
+    input[type="submit"]::-moz-focus-inner,
+    input[type="reset"]::-moz-focus-inner,
+    input[type="button"]::-moz-focus-inner,
+    button::-moz-focus-inner {
+      padding: 0;
+      border: 0;
+    }
 
-.wikia_button span {
-	background: transparent url(http://images.wikia.com/common/skins/monaco/images/wikia_button_sprite.png) no-repeat right top;
-	color: #FFF;
-	display: inline-block;
-	font-family: "Lucida Grande", sans-serif;
-	font-size: 9pt;
-	font-weight: bold;
-	height: 21px;
-	line-height: 21px;
-	padding: 0 10px 0 0px;
-	position: relative;
-	white-space: nowrap;
-}
+    /* Hover and Active states */
+    a.wikia-button:hover, 
+    span.wikia-button a:hover, 
+    input[type="submit"]:hover, 
+    input[type="reset"]:hover,
+    input[type="button"]:hover, 
+    button:hover {
+      text-shadow: #000 0 1px 1px;
+    } 
+    a.wikia-button.secondary:hover, 
+    span.wikia-button.secondary a:hover, 
+    input[type="submit"].secondary:hover, 
+    input[type="reset"].secondary:hover,
+    input[type="button"].secondary:hover, 
+    button.secondary:hover {
+      text-shadow: #FFF 0 1px 1px;
+    } 
 
-strong .wikia_button { 
-	background: transparent url(http://images.wikia.com/common/skins/monaco/images/wikia_big_button_sprite.png) no-repeat -420px -94px; 
-	padding: 0 0 0 30px;
-}
-
-strong .wikia_button span { 
-	background: transparent url(http://images.wikia.com/common/skins/monaco/images/wikia_big_button_sprite.png) no-repeat right top; 
-	font-size: 12pt; 
-	line-height: 37px; 
-	height: 37px; 
-	padding: 0 20px 0 8px; 
-}
-
-/*** Specific button styles ***/
-/* Small button */
-a.forward {
-	background-position: right -62px;
-	padding: 0 15px 0 0;
-}
-a.forward span {
-	background-position: top left;
-	padding: 0 0 0 10px;
-}
-a.back {
-	background-position: -360px -124px;
-	padding: 0 0 0 15px;
-}
-a.back span {
-	background-position: right top;
-	padding: 0 10px 0 0;
-}
-a.secondary {
-	background-position: right -93px;
-	padding: 0 10px 0 0;
-}
-a.secondary span {
-	background-position: left -31px;
-	color: #000;
-	padding: 0 0 0 10px;
-}
-a.secondary_back {
-	background-position: -360px -93px;
-	padding: 0 0 0 15px;
-}
-a.secondary_back span {
-	background-position: right -31px;
-	color: #000;
-	padding: 0 10px 0 0;
-}
-/* Big button */
-.wikia_button img { 
-	background: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20100128); 
-	border: 0;
-	height: 16px; 
-	margin-left: -6px; 
-	position: absolute; 
-	top: 10px; 
-	width: 576px;
-}
-a.forward img, a.secondary img {
-	margin-left: 24px;
-}
-strong a.forward {
-	background-position: right -94px;
-	padding: 0 25px 0 0;
-}
-strong .forward span {
-	background-position: top left;
-	padding: 0 0 0 40px;
-}
-strong a.back {
-	background-position: -420px -188px;
-	padding: 0 0 0 25px;
-}
-strong .back span {
-	background-position: right top;
-	padding: 0 20px 0 0;
-}
-strong a.secondary {
-	background-position: right -141px;
-	padding: 0 20px 0 0;
-}
-strong .secondary span {
-	background-position: left -47px;
-	color: #000;
-	padding: 0 0 0 40px;
-}
-strong a.secondary_back {
-	background-position: -420px -141px;
-	padding: 0 0 0 25px;
-}
-strong .secondary_back span {
-	background-position: right -47px;
-	color: #000;
-	padding: 0 20px 0 0;
-}
-
-/*** Big button images ***/
-.button_save {
-	clip: rect(0px 272px 16px 256px);
-	left: -272px;
-}
-.button_cancel {
-	clip: rect(0px 320px 16px 304px);
-	left: -320px;
-}
-
-a.big_button {
-	display: block;
-	float: left;
-	height: 28px;
-	overflow: hidden;
-	padding-right: 10px;
-	position: relative;
-	text-decoration: none;
-}
-a.big_button:hover {
-	text-decoration: none;
-}
-a.big_button * {
-	cursor: pointer;
-	float: left;
-	font-family: "Lucida Grande", arial, sans-serif;
-	font-size: 9pt;
-	font-weight: bold;
-	height: 28px;
-	line-height: 28px;
-}
-a.big_button big, a.big_button small {
-	background: url(http://images.wikia.com/common/skins/home/images/big_button.png) no-repeat;
-}
-a.big_button big {
-	color: #EEE;
-	padding-left: 10px;
-}
-a.big_button small {
-	clip: rect(0px 300px 28px 290px);
-	position: absolute;
-	right: 0;
-	width: 300px;
-}
+    a.wikia-button:active, 
+    span.wikia-button a:active, 
+    input[type="submit"]:active, 
+    input[type="reset"]:active,
+    input[type="button"]:active, 
+    button:active {
+      background-image: -moz-linear-gradient(top, #006722 20%, #093 70%);
+      background-image: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#006722), to(#093));
+    } 
+    a.wikia-button.secondary:active, 
+    span.wikia-button.secondary a:active, 
+    input[type="submit"].secondary:active, 
+    input[type="reset"].secondary:active,
+    input[type="button"].secondary:active, 
+    button.secondary:active {
+      background-image: -moz-linear-gradient(top, #AAA 20%, #CCC 70%);
+      background-image: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#AAA), to(#CCC));
+    } 
 
 /* @end */
 
-/* @group Icon sprites. */
+/* @group Sprite */
 
-.icon-sprite {
-	background: transparent url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20100128);
+/* These styles use the Monaco sprite image. This is not ideal because Wikia UI should not be skin-specific. The Monaco sprite contains just a couple images that are Monaco-specific. It is more efficient for most wikis to bundle the icons and these Monaco-specific images together. */
+
+/*** 16x16 Icons ***/
+.sprite {
+	background-image: url(/skins/efmonaco/images/sprite.png);
 	height: 16px;
+	width: 16px;
+}
+
+/* Best alignment for inline display beside text. If undesired, override with more specific selector, for example: #myfeature .sprite */
+.sprite {
 	position: relative;
 	top: -2px;
 	vertical-align: middle;
-	width: 16px;
 }
+
+.sprite.edit { background-position: 0 -66px; }
+.sprite.history { background-position: 0 -82px; }
+.sprite.delete { background-position: -48px -98px; }
+.sprite.move { background-position: -32px -82px; }
+.sprite.protect { background-position: -48px -82px; }
+.sprite.watch { background-position: -32px -130px; }
+.sprite.unwatch { background-position: -48px -130px; }
+.sprite.recent { background-position: -16px -130px; }
+.sprite.pagelink { background-position: -16px -82px; }
+.sprite.random { background-position: -64px -98px; }
+.sprite.error { background-position: -16px -98px; }
+.sprite.share { background-position: 0 -130px; }
+.sprite.photo { background-position: -32px -66px; }
+.sprite.blog { background-position: -32px -114px; }
+.sprite.bloglist { background-position: -16px -114px; }
+.sprite.talk { background-position: -64px -114px; }
+.sprite.new { background-position: -16px -66px; }
+
+/* TODO: Fix AutoCreateWiki
 .icon-sprite.progress {
-	background: transparent url(http://images.wikia.com/common/skins/common/images/ajax.gif);
+	background-image: url(http://images.wikia.com/common/skins/common/images/ajax.gif);
 }
 .icon-sprite.alert {
 	background-position: -608px;
@@ -217,5 +188,6 @@ a.big_button small {
 .icon-sprite.watch {
 	background-position: -32px;
 }
+*/
 
 /* @end */
