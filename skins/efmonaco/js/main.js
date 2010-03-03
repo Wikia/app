@@ -409,6 +409,7 @@ function setupVoting() {
 
 	// callback for vote and unrate
 	var callback = function(data) {
+		console.log(data);
 		$('#star-rating').removeClass('star-rating-progress');
 
 		// show current rating

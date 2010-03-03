@@ -153,7 +153,7 @@ class ActivityFeedHelper {
 		wfProfileIn(__METHOD__);
 		$key = wfMemcKey('community_widget', $parameters['uselang']);
 		$feedHTML = $wgMemc->get($key);
-		if (empty($feedHTML)) {
+		if (!empty($feedHTML)) {
 			$feedHTML = ActivityFeedHelper::getList($parameters);
 			$wgMemc->set($key, $feedHTML, $userLangEqContent ? 60*60*24 : 60*5);
 		}

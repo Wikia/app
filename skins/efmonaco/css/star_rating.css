@@ -1,21 +1,21 @@
 .star-rating,
-.star-rating li a:hover,
-.star-rating li.current-rating
+.star-rating a:hover,
+.star-rating .current-rating
 {
-	background:transparent url('http://images.wikia.com/common/skins/monaco/images/star-rating.png') repeat-x scroll left top;
+	background:transparent url('/skins/efmonaco/images/sprite.png') repeat-x top left;
 }
 
-ul.star-rating
+.star-rating
 {
 	float: left;
-    height:17px;
+    height:18px;
     list-style-image:none;
     list-style-position:outside;
     list-style-type:none;
     margin:0px;
     padding:0px;
     position:relative;
-    width:85px;
+    width:100px;
     overflow: hidden;
 }
 
@@ -26,51 +26,49 @@ ul.star-rating
     padding:0px;
 }
 
-.star-rating li a
+.star-rating a
 {
     display:block;
-    height:17px;
+    height:18px;
     overflow:hidden;
     padding:0px;
     position:absolute;
     text-decoration:none;
     text-indent:-9000px;
-    width:17px;
+    width:20px;
     z-index:20;
     top: 0px; /* opera fix */
     cursor: pointer;
 }
-.star-rating li a:hover,
-* html .star-rating li a.hover
+.star-rating a:hover
 {
-	/* hovered stars background - white */
-	background-position: left bottom;
+	background-position: 0 -36px;
 	border:medium none;
 	left:0px;
 	z-index:2;
 	cursor: pointer;
 }
 
-.star-rating a.one-star { left: 0px; }
-.star-rating a.one-star:hover { width: 17px; }
+.star-rating .one-star { left: 0px; }
+.star-rating .one-star:hover { width: 20px; }
 
-.star-rating a.two-stars { left: 17px; }
-.star-rating a.two-stars:hover { width: 34px; }
+.star-rating .two-stars { left: 20px; }
+.star-rating .two-stars:hover { width: 40px; }
 
-.star-rating a.three-stars { left: 34px; }
-.star-rating a.three-stars:hover { width: 51px; }
+.star-rating .three-stars { left: 40px; }
+.star-rating .three-stars:hover { width: 60px; }
 
-.star-rating a.four-stars { left: 51px; }
-.star-rating a.four-stars:hover { width: 68px; }
+.star-rating .four-stars { left: 60px; }
+.star-rating .four-stars:hover { width: 80px; }
 
-.star-rating a.five-stars { left: 68px; }
-.star-rating a.five-stars:hover { width: 85px; }
+.star-rating .five-stars { left: 80px; }
+.star-rating .five-stars:hover { width: 100px; }
 
-.star-rating li.current-rating
+.star-rating .current-rating
 {
 	/* currently voted stars background - yellow */
-	background-position: left center;
-	height:17px;
+	background-position: 0 -18px;
+	height:18px;
 	position:absolute;
 	text-indent:-9000px;
 	z-index:1;
@@ -78,22 +76,13 @@ ul.star-rating
 #unrateLink {
 	display: block;
 	float: left;
-	height: 17px;
-	line-height: 17px;
+	height: 18px;
+	line-height: 18px;
 	margin-left: 10px;
 	position: relative;
 	top: 2px;
 }
 #unrateLink a:hover { text-decoration:underline; }
-
-/* IE fixes */
-* html .star-rating,
-* html .star-rating li a:hover,
-* html .star-rating li a.hover,
-* html .star-rating li.current-rating
-{
-	background-image: url('http://images.wikia.com/common/skins/monaco/images/star-rating.white.png');
-}
 
 /* macbre: progress wheel stuff */
 .star-rating-progress {

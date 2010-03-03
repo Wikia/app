@@ -35,6 +35,7 @@ class WidgetFramework {
 
 		switch (get_class($wgUser->getSkin())) {
 			case "SkinMonaco":
+			case "SkinEFMonaco":
 				$this->skinname = 'monaco';
 				break;
 			case "SkinAnswers":

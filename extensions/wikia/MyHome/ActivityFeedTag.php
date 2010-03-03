@@ -16,7 +16,7 @@ function ActivityFeedTag_setup(&$parser) {
 }
 
 function ActivityFeedTag_render($content, $attributes, &$parser) {
-	global $wgOut, $wgStyleVersion, $wgExtensionsPath;
+	global $wgOut, $wgStyleVersion, $wgExtensionsPath, $wgEFMonaco;
 
 	if (!class_exists('ActivityFeedHelper')) {
 		return '';
@@ -38,6 +38,6 @@ function ActivityFeedTag_render($content, $attributes, &$parser) {
 	$timestamp = wfTimestampNow();
 
 	wfProfileOut(__METHOD__);
-	return "<div$style>$feedHTML</div><script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/MyHome/ActivityFeedTag.js?{$wgStyleVersion}\"></script><script type=\"text/javascript\">wgAfterContentAndJS.push(function() {ActivityFeedTag.initActivityTag('$tagid', '$jsParams', '$timestamp');});</script><style type=\"text/css\">@import url({$wgExtensionsPath}/wikia/MyHome/ActivityFeedTag.css?{$wgStyleVersion});</style>";
+	return "<div$style>$feedHTML</div><script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/MyHome/ActivityFeedTag.js?{$wgStyleVersion}\"></script><script type=\"text/javascript\">wgAfterContentAndJS.push(function() {ActivityFeedTag.initActivityTag('$tagid', '$jsParams', '$timestamp');});</script><style type=\"text/css\">@import url({$wgExtensionsPath}/wikia/MyHome/EFActivityFeedTag.css?{$wgStyleVersion});</style>";
 }
 
