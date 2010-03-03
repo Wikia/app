@@ -23,8 +23,8 @@
 
 /* @group Buttons. */
 
-    a.wikia_button, 
-    span.wikia_button a, 
+    a.wikia-button, 
+    span.wikia-button a, 
     input[type="submit"], 
     input[type="reset"], 
     input[type="button"], 
@@ -49,8 +49,8 @@
     }
   
     /* Secondary Buttons */
-    a.wikia_button.secondary, 
-    span.wikia_button.secondary a, 
+    a.wikia-button.secondary, 
+    span.wikia-button.secondary a, 
     input[type="submit"].secondary, 
     input[type="reset"].secondary, 
     input[type="button"].secondary, 
@@ -65,8 +65,8 @@
     }
     
     /* Big Buttons*/
-    a.wikia_button.big, 
-    span.wikia_button.big a,
+    a.wikia-button.big, 
+    span.wikia-button.big a,
     input[type="submit"].big,
     input[type="reset"].big, 
     input[type="button"].big, 
@@ -101,16 +101,16 @@
     }
 
     /* Hover and Active states */
-    a.wikia_button:hover, 
-    span.wikia_button a:hover, 
+    a.wikia-button:hover, 
+    span.wikia-button a:hover, 
     input[type="submit"]:hover, 
     input[type="reset"]:hover,
     input[type="button"]:hover, 
     button:hover {
       text-shadow: #000 0 1px 1px;
     } 
-    a.wikia_button.secondary:hover, 
-    span.wikia_button.secondary a:hover, 
+    a.wikia-button.secondary:hover, 
+    span.wikia-button.secondary a:hover, 
     input[type="submit"].secondary:hover, 
     input[type="reset"].secondary:hover,
     input[type="button"].secondary:hover, 
@@ -118,8 +118,8 @@
       text-shadow: #FFF 0 1px 1px;
     } 
 
-    a.wikia_button:active, 
-    span.wikia_button a:active, 
+    a.wikia-button:active, 
+    span.wikia-button a:active, 
     input[type="submit"]:active, 
     input[type="reset"]:active,
     input[type="button"]:active, 
@@ -127,8 +127,8 @@
       background-image: -moz-linear-gradient(top, #006722 20%, #093 70%);
       background-image: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#006722), to(#093));
     } 
-    a.wikia_button.secondary:active, 
-    span.wikia_button.secondary a:active, 
+    a.wikia-button.secondary:active, 
+    span.wikia-button.secondary a:active, 
     input[type="submit"].secondary:active, 
     input[type="reset"].secondary:active,
     input[type="button"].secondary:active, 
