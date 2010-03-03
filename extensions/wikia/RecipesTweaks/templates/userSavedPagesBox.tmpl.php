@@ -23,7 +23,7 @@
 	}
 ?>
 			<div class="toolbar neutral color1">
-				<a class="wikia_button forward" href="<?= htmlspecialchars($moreLink) ?>"><span><?= wfMsg('recipes-more') ?></span></a>
+				<a class="wikia-button forward" href="<?= htmlspecialchars($moreLink) ?>"><?= wfMsg('recipes-more') ?></a>
 			</div>
 		</dd>
 	</dl>
