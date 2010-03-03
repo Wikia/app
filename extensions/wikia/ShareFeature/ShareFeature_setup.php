@@ -137,6 +137,7 @@ function wfShareFeatureSkinTemplateContentActions( &$content_actions ) {
 		$content_actions['share_feature'] = array(
 				'class' => 'disabled',
 				'text' => wfMsg('sf-link'),
+				'icon' => 'share',
 				'href' => '#' ,
 				);
 	}
