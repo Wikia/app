@@ -54,10 +54,21 @@
 	font-size: 11px;
 	line-height: 16px;
 	margin: 0 5px 3px 0;
-	white-space: nowrap;
+	padding: 0 5px;
 	position: relative;
+	white-space: nowrap;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
+}
+
+.CSitem .sprite-small {
+	cursor: pointer;
+}
+.CSitem .sprite-small.sort, .CSitem .sprite-small.sorted {
+	margin-left: 5px;
+}
+.CSitem .sprite-small.add {
+	margin-right: 3px;
 }
 
 .CSaddCategory {
