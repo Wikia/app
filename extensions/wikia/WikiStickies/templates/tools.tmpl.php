@@ -41,7 +41,7 @@
         </div>
 
 	<div id="wikistickies_save_all_upper">
-		<a id="WikistickiesToolsSubmitUpper" class="wikia_button" href="#" onclick="WIKIA.WikiStickies.track( '/admin/save' ); NWB.changeTheme($('input[name=theme]:checked').val(), true); NWB.uploadLogo();" ><span><?= wfMsg("wikistickies-save-changes") ?></span></a>
+		<input id="WikistickiesToolsSubmitUpper" onclick="WIKIA.WikiStickies.track( '/admin/save' ); NWB.changeTheme($('input[name=theme]:checked').val(), true); NWB.uploadLogo();" value="<?= wfMsg("wikistickies-save-changes") ?>" />
 	</div>
 
         </div><!--float-->
@@ -87,7 +87,7 @@ for (var i = 0; i < themes.length; i++){
 }
 </script>
 	<div id="wikistickies_save_all">
-		<a id="WikistickiesToolsSubmit" class="wikia_button" href="#" onclick="WIKIA.WikiStickies.track( '/admin/save' ); NWB.changeTheme($('input[name=theme]:checked').val(), true); NWB.uploadLogo();" ><span><?= wfMsg("wikistickies-save-changes") ?></span></a>
+		<input id="WikistickiesToolsSubmit" onclick="WIKIA.WikiStickies.track( '/admin/save' ); NWB.changeTheme($('input[name=theme]:checked').val(), true); NWB.uploadLogo();" value="<?= wfMsg("wikistickies-save-changes") ?>" />
 	</div>
 
 </div>
