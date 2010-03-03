@@ -263,7 +263,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 	$out .= Xml::openElement('a', array(
 		'id' => "WikiaImagePlaceholderInner{$wgWikiaImagePlaceholderId}",
 		'class' => 'wikia_button',
-		'style' => "top: {$tmarg}px",
+		'style' => "top: {$tmarg}px;position:relative;",
 		'href' => '#',
 		'onclick' => !empty($onclick) ? $onclick : '',
 	));
