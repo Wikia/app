@@ -238,9 +238,3 @@ td.activityfeed-details-label {
 #myhome-community-corner {
 	clear: right;
 }
-
-/* IE6 fixes */
-* html .myhome-feed .sprite {
-	background-image: none !important;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/sprite.png?20100128', sizingMethod='crop');
-}
