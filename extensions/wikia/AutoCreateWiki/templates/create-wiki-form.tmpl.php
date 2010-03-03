@@ -250,9 +250,9 @@ endif
 <iframe id="awc-process-login" height="1" width="1" style="visibility: hidden;"></iframe>
 <script type="text/javascript">
 /*<![CDATA[*/
-var YC = YAHOO.util.Connect;
-var YD = YAHOO.util.Dom;
-var YE = YAHOO.util.Event;
+YC = YAHOO.util.Connect;
+YD = YAHOO.util.Dom;
+YE = YAHOO.util.Event;
 <?php if ( !empty($mPostedErrors) && is_array($mPostedErrors) ) : ?>
 <?php 	foreach ( $mPostedErrors as $field => $value ) : ?>
 <?php 		if ( !empty($value) ) : ?>
@@ -280,8 +280,6 @@ if ( YD.get('<?=$field?>') ) {
 <script type="text/javascript">
 /*<![CDATA[*/
 YE.onDOMReady(function () {
-	console.log('ssss');
-	console.log(YD.get('userloginRound'));
 	if (YD.get('userloginRound')) {
 		__showLoginPanel = function(e) {
 			var ifr = YD.get('awc-process-login');
