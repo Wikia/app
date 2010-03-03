@@ -19,7 +19,7 @@ else {
 <br />
 <div style="font-style: normal;" id="nwb_link">
         <div style="text-align: center;">
-                <a href="<?php echo "{$domain}wiki/Special:NewWikiBuilder{$nwbType}" ?>" class="wikia_button" onclick="WET.byStr('nwb/getstarted')"><span><?=wfMsg('autocreatewiki-success-get-started')?></span></a>
+                <a href="<?php echo "{$domain}wiki/Special:NewWikiBuilder{$nwbType}" ?>" class="wikia-button" onclick="WET.byStr('nwb/getstarted')"><?=wfMsg('autocreatewiki-success-get-started')?></a>
         </div>
 </div>
 

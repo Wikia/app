@@ -146,7 +146,7 @@ endif
 		<ul>
 		<li class="infoline"><?=wfMsg('autocreatewiki-haveaccount-question')?></li>
 		<li class="data1">
-			<a id="AWClogin" class="wikia_button ajaxLogin" style="z-index: 10;" href="/index.php?title=Special:Signup&returnto=Special:CreateWiki" rel="nofollow"><span><?=wfMsg('login')?></span></a>
+			<a id="AWClogin" class="wikia-button ajaxLogin" style="z-index: 10;" href="/index.php?title=Special:Signup&returnto=Special:CreateWiki" rel="nofollow"><?=wfMsg('login')?></a>
 		</li>
 		<li class="legend"><?=wfMsg("autocreatewiki-required", "<img src='{$wgExtensionsPath}/wikia/AutoCreateWiki/images/required.png?{$wgStyleVersion}' />")?></li>
 		</ul>
@@ -280,6 +280,8 @@ if ( YD.get('<?=$field?>') ) {
 <script type="text/javascript">
 /*<![CDATA[*/
 YE.onDOMReady(function () {
+	console.log('ssss');
+	console.log(YD.get('userloginRound'));
 	if (YD.get('userloginRound')) {
 		__showLoginPanel = function(e) {
 			var ifr = YD.get('awc-process-login');
