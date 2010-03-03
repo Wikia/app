@@ -32,7 +32,7 @@ if( count( $comments ) > 10 && isset( $props[ "commenting" ] ) && $props[ "comme
 		<textarea name="wpBlogComment" id="blog-comm-top"></textarea><br />
 		<!-- submit -->
 		<script type="text/javascript">
-		document.write("<a href=\"<?php echo $title->getFullURL() ?>\" name=\"wpBlogSubmit\" id=\"blog-comm-submit-top\" class=\"wikia_button\"><span><? echo wfMsg("blog-comment-post") ?></span></a>");
+		document.write("<input type=\"submit\" value=\"<? echo wfMsg("blog-comment-post") ?>\" name=\"wpBlogSubmit\" id=\"blog-comm-submit-top\" />");
 		</script>
 		<noscript>
 		<input type="submit" name="wpBlogSubmit" id="blog-comm-submit-top" value="<? echo wfMsg("blog-comment-post") ?>" />
@@ -81,7 +81,7 @@ endif;
 		<textarea name="wpBlogComment" id="blog-comm-bottom"></textarea><br />
 		<!-- submit -->
 		<script type="text/javascript">
-		document.write("<a href=\"<?php echo $title->getFullURL() ?>\" name=\"wpBlogSubmit\" id=\"blog-comm-submit-bottom\" class=\"wikia_button\"><span><? echo wfMsg("blog-comment-post") ?></span></a>");
+		document.write("<input type=\"submit\" value=\"<? echo wfMsg("blog-comment-post") ?>\" name=\"wpBlogSubmit\" id=\"blog-comm-submit-bottom\" />");
 		</script>
 		<noscript>
 		<input type="submit" name="wpBlogSubmit" id="blog-comm-submit-bottom" value="<? echo wfMsg("blog-comment-post") ?>" />
@@ -93,17 +93,17 @@ endif;
 <?php
 		else:
 			if ( $isBlocked ) :
-?>			
+?>
 <div class="blog-comm-input reset clearfix">
 	<div id="blog-comm-bottom-info"><p><?=wfMsg("blog-comment-cannot-add")?></p><br/><p><?=$reason?></p></div>
-</div>	
-<?php	
+</div>
+<?php
 			elseif ( $isReadOnly ) :
-?>			
+?>
 <div class="blog-comm-input reset clearfix">
 	<div id="blog-comm-bottom-info"><p><?=wfMsg("blog-comment-cannot-add")?></p></div>
-</div>	
-<?php	
+</div>
+<?php
 			else :
 				echo wfMsg("blog-comments-login", SpecialPage::getTitleFor("UserLogin")->getLocalUrl() );
 			endif;
