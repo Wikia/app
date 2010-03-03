@@ -8,11 +8,8 @@ $link = $titleObj->getLocalUrl('type=signup');
     <div style="margin-left:10px;margin-top:10px;margin-bottom:10px;"><?= wfMsg('comboajaxlogin-actionmsg') ?></div>
     <? if (!$isReadOnly ) { ?> 
         <div id="AjaxLoginButtons" title="<?= wfMsg('login') ?>">
-                <a id="wpGoLogina" style="padding-right:5px;" class="wikia_button ajaxregister_button" href="" onclick="AjaxLogin.showLogin(this); return false;" >
-                    <span><?= wfMsg("login") ?></span>
-                </a><a id="wpGoRegister" class="wikia_button ajaxregister_button" href="" onclick="AjaxLogin.showRegister(this); return false;" >
-                    <span><?= wfMsg("nologinlink") ?></span>
-                </a>
+        	<input type="submit" id="wpGoLogin" value="<?= wfMsg("login") ?>" onclick="AjaxLogin.showLogin(this); return false;" />
+        	<input type="submit" id="wpGoRegister" value="<?= wfMsg("nologinlink") ?>" onclick="AjaxLogin.showRegister(this); return false;" />
         </div>                                                                          
     <? } else {}?>
     <div id="AjaxLoginLoginForm" <? echo ($isReadOnly ? '':'style="display:none"'); ?> title="<?= wfMsg('login') ?>">    
@@ -56,11 +53,10 @@ $link = $titleObj->getLocalUrl('type=signup');
             <div style="margin: 15px 0;">
                 <label for="wpRemember1" style="padding-left: 5px"><?= wfMsg('remembermypassword') ?></label>
             </div>
-            <input type="submit" value="Login" style="position: absolute; left: -10000px; width: 0" />
         </form>
         <div class="modalToolbar neutral">
-            <a id="wpLoginCombo" class="wikia_button" href="#" onclick="AjaxLogin.action='login'; AjaxLogin.form.submit(); return false;" ><span><?= wfMsg("login") ?></span></a>
-            <a id="wpLoginCancel" class="wikia_button secondary" href="#" onclick="AjaxLogin.close(); return false;" ><span><?= wfMsg("Cancel") ?></span></a>
+        	<input type="submit" id="wpLoginCombo" value="<?= wfMsg("login") ?>" onclick="AjaxLogin.action='login'; AjaxLogin.form.submit(); return false;" />
+        	<input type="submit" id="wpLoginCancel" class="secondary" value="<?= wfMsg("Cancel") ?> "onclick="AjaxLogin.close(); return false;" />
         </div>
     </div>
     <div id="AjaxLoginRegisterForm" style="display:none" title="<?= wfMsg('login') ?>">

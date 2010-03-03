@@ -246,12 +246,12 @@ class UserAjaxCreateTemplate extends QuickTemplate {
 
 <?php if($this->data['createemail']) { ?>
 	<a id="wpCreateaccountX" class="wikia_button" href="#" onclick="$('#wpCreateaccountXSteer').value = false; $('#wpCreateaccountYSteer').value = true; UserRegistration.submitForm();" ><span><?= wfMsg("createaccountmail") ?></span></a>		
-	<input type="hidden" id="wpCreateaccountYSteer" name="wpCreateaccountMail" value="false" >							
+							
 <?php } else { ?>
 	<input type="hidden" id="wpCreateaccountXSteer" name="wpCreateaccount" value="true" >
 <?php } ?>
 
-</form>
+
 </div>
 </td>
 </tr>
@@ -260,13 +260,13 @@ class UserAjaxCreateTemplate extends QuickTemplate {
 <div id="signupend" style="clear: both;height: 12px;"><?php $this->msgWiki( 'signupend' ); ?></div>
 
 <div class="modalToolbar neutral">
-	<a id="wpCreateaccountX" class="wikia_button" href="#" onclick="UserRegistration.submitForm2(); return false;" ><span><?= wfMsg("createaccount") ?></span></a>
+	<input type="submit" id="wpCreateaccountXSteer" name="wpCreateaccountMail" onclick="UserRegistration.submitForm2(); return false;" value="<?= wfMsg("createaccount") ?>" />	
 <?php if($this->data['createemail']) { ?>
-	<a id="wpCreateaccountX" class="wikia_button" href="#" onclick="$('#wpCreateaccountXSteer').value = false; $('#wpCreateaccountYSteer').value = true; UserRegistration.submitForm2(); return false;" ><span><?= wfMsg("createaccountmail") ?></span></a>									
+	<input type="submit" id="wpCreateaccountX" href="#" onclick="$('#wpCreateaccountXSteer').value = false; $('#wpCreateaccountYSteer').value = true; UserRegistration.submitForm2(); return false;" value="<?php wfMsg("createaccountmail") ?>" />									
 <?php }  ?>
-	<a id="wpLoginattempt" class="wikia_button secondary" href="#" onclick="AjaxLogin.close();" ><span><?= wfMsg("Cancel") ?></span></a>
+	<input type="submit" id="wpCreateaccountClose" class="secondary" onclick="AjaxLogin.close();" return false;" value="<?= wfMsg("Cancel") ?>" />
 </div>
-
+</form>
 <?php
 	}
 
