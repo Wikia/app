@@ -31,14 +31,14 @@
 <?php
 	if (!$isAnon):
 ?>
-	<a id="MagCloudOpenLoadMagazineDialog" class="wikia_button secondary" style="float: left">
-		<span><?= wfMsg('magcloud-load-magazine-title'); ?></span>
+	<a id="MagCloudOpenLoadMagazineDialog" class="wikia-button secondary" style="float: left">
+		<?= wfMsg('magcloud-load-magazine-title'); ?>
 	</a>
 <?php
 	endif;
 ?>
-	<a id="MagCloudGoToMagazine" class="wikia_button forward" href="<?= htmlspecialchars($title->getLocalUrl() . '/Design_Cover') ?>" style="float: right">
-		<span><?= wfMsg('magcloud-button-design-a-cover'); ?></span>
+	<a id="MagCloudGoToMagazine" class="wikia-button forward" href="<?= htmlspecialchars($title->getLocalUrl() . '/Design_Cover') ?>" style="float: right">
+		<?= wfMsg('magcloud-button-design-a-cover'); ?>
 	</a>
 </div>
 

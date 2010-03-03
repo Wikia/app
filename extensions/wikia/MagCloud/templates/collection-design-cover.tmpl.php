@@ -72,9 +72,7 @@ foreach($themes as $theme => $colors) {
 		<td>
 			<label for="MagCloudCoverEditorImageSmall">Insert an image</label>
 
-			<a id="MagCloudCoverEditorImageUpload" class="wikia_button">
-				<span><?= wfMsg('wmu-upload-btn') ?></span>
-			</a>
+			<a id="MagCloudCoverEditorImageUpload" class="wikia-button"><?= wfMsg('wmu-upload-btn') ?></a>
 
 			<span id="MagCloudCoverEditorImageInfo"><?= ($image != '' ? wfMsg('magcloud-design-image-selected', $image) : '') ?></span>
 
@@ -108,11 +106,11 @@ foreach($themes as $theme => $colors) {
 </div>
 
 <div id="SpecialMagCloudButtons" class="clearfix" style="margin-top: 30px; width: 680px">
-	<a id="MagCloudBackToReview" class="wikia_button secondary_back" href="<?= htmlspecialchars($title->getLocalUrl()) ?>" style="float: left">
-		<span><?= wfMsg('magcloud-design-review-list'); ?></span>
+	<a id="MagCloudBackToReview" class="wikia-button secondary_back" href="<?= htmlspecialchars($title->getLocalUrl()) ?>" style="float: left">
+		<?= wfMsg('magcloud-design-review-list'); ?>
 	</a>
-	<a id="MagCloudForwardToPreview" class="wikia_button forward" href="<?= htmlspecialchars($title->getLocalUrl() . '/Preview') ?>" style="float: right">
-		<span><?= wfMsg('magcloud-design-preview'); ?></span>
+	<a id="MagCloudForwardToPreview" class="wikia-button" href="<?= htmlspecialchars($title->getLocalUrl() . '/Preview') ?>" style="float: right">
+		<?= wfMsg('magcloud-design-preview'); ?>
 	</a>
 </div>
 

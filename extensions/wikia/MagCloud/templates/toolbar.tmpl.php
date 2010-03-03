@@ -27,8 +27,8 @@
 				// show "add article" button
 ?>
 	<span id="MagCloudToolbarArticle" class="MagCloudItem"><?= wfMsgExt('magcloud-toolbar-article-add', array('parseinline'), htmlspecialchars($title)) ?></span>
-	<a id="MagCloudToolbarAdd" class="wikia_button" onclick="MagCloud.addArticle()">
-		<span><?= wfMsg('magcloud-toolbar-add') ?></span>
+	<a id="MagCloudToolbarAdd" class="wikia-button" onclick="MagCloud.addArticle()">
+		<?= wfMsg('magcloud-toolbar-add') ?>
 	</a>
 <?php
 			}
@@ -44,8 +44,8 @@
 		<span class="MagCloudItem">
 			<?= wfMsgExt('magcloud-toolbar-articles-count', array('parsemag'), $count) ?>
 		</span>
-		<a id="MagCloudToolbarGoToMagazine" class="wikia_button" href="<?=$magazineUrl;?>" onclick="MagCloud.track('/goToMagazine')">
-			<span><?= wfMsg('magcloud-toolbar-go-to-magazine') ?></span>
+		<a id="MagCloudToolbarGoToMagazine" class="wikia-button" href="<?=$magazineUrl;?>" onclick="MagCloud.track('/goToMagazine')">
+			<?= wfMsg('magcloud-toolbar-go-to-magazine') ?>
 		</a>
 	</div>
 <?php

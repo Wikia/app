@@ -21,16 +21,16 @@
 </div>
 
 <div id="SpecialMagCloudButtons" style="margin-left: auto; margin-right: auto; text-align: center; width: 550px">
-	<a id="MagCloudBackToDesign" class="wikia_button secondary_back" href="<?= htmlspecialchars($title->getLocalUrl() . '/Design_Cover') ?>" style="float: left">
-		<span><?= wfMsg('magcloud-preview-back-to-cover') ?></span>
+	<a id="MagCloudBackToDesign" class="wikia-button secondary_back" href="<?= htmlspecialchars($title->getLocalUrl() . '/Design_Cover') ?>" style="float: left">
+		<?= wfMsg('magcloud-preview-back-to-cover') ?>
 	</a>
 
-	<a id="MagCloudForwardToPublish" class="wikia_button forward" href="https://magcloud.com/apps/authorizeask/<?= $publicApiKey ?>?ud=<?= $server ?>" style="float: right; visibility: hidden">
-		<span><?= wfMsg('magcloud-preview-publish') ?> &raquo;</span>
+	<a id="MagCloudForwardToPublish" class="wikia-button forward" href="https://magcloud.com/apps/authorizeask/<?= $publicApiKey ?>?ud=<?= $server ?>" style="float: right; visibility: hidden">
+		<?= wfMsg('magcloud-preview-publish') ?> &raquo;
 	</a>
 
-	<a id="MagCloudSaveMagazine" class="wikia_button secondary">
-		<span><?= wfMsg('magcloud-preview-save-magazine') ?></span>
+	<a id="MagCloudSaveMagazine" class="wikia-button secondary">
+		<?= wfMsg('magcloud-preview-save-magazine') ?>
 	</a>
 </div>
 <script type="text/javascript">/*<![CDATA[*/
@@ -49,7 +49,7 @@
 	});
 	$('#MagCloudSaveMagazine').click(function() {
 		MagCloud.track('/preview/savemagazine');
-		
+
 		SpecialMagCloud.saveCollection();
 	});
 
