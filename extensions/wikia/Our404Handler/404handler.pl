@@ -167,11 +167,12 @@ my @done = ();
 # configurable via environmet variables
 #
 my $maxrequests = $ENV{ "REQUESTS" } || 1000;
-my $basepath    = $ENV{ "IMGPATH" }  || "/images";
+my $basepath    = $ENV{ "IMGPATH"  } || "/images";
 my $clients     = $ENV{ "CHILDREN" } || 4;
-my $listen      = $ENV{ "SOCKET" }   || "0.0.0.0:39393";
-my $debug       = $ENV{ "DEBUG" }    || 1;
-my $test        = $ENV{ "TEST" }     || 0;
+my $listen      = $ENV{ "SOCKET"   } || "0.0.0.0:39393";
+my $debug       = $ENV{ "DEBUG"    } || 1;
+my $test        = $ENV{ "TEST"     } || 0;
+my $pidfile     = $ENV{ "PIDFILE"  } || "/var/run/404handler.pid";
 
 #
 # fastcgi request
@@ -183,6 +184,10 @@ unless( $test ) {
 	$socket     = FCGI::OpenSocket( $listen, 100 ) or die "failed to open FastCGI socket; $!";
 	$request    = FCGI::Request( \*STDIN, \*STDOUT, \*STDOUT, \%env, $socket, ( &FCGI::FAIL_ACCEPT_ON_INTR ) );
 	$manager    = FCGI::ProcManager->new({ n_processes => $clients });
+
+	$manager->pm_write_pid_file( $pidfile );
+	$manager->pm_manage();
+
 }
 else {
 	$request    = FCGI::Request();
@@ -198,7 +203,6 @@ my $transformed = 0;
 my $mimetype    = "text/plain";
 my $imgtype     = undef;
 
-$manager->pm_manage() unless $test;
 while( $request->Accept() >= 0 || $test ) {
 	$manager->pm_pre_dispatch() unless $test;
 
@@ -426,6 +430,8 @@ while( $request->Accept() >= 0 || $test ) {
 	$transformed = 0;
 	$manager->pm_post_dispatch() unless $test;
 }
+
+$manager->pm_remove_pid_file() unless $test;
 
 #
 # if test display results
