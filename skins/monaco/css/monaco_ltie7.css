@@ -1,41 +1,5 @@
-#wikia_logo {
-	background-image: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/wikia_logo.png', sizingMethod='crop');
-}
-#wikia_logo.entertainment span {
-	background-image: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/hub_entertainment.png', sizingMethod='crop');
-}
-.headerMenuButton dt, .headerMenuButton dd {
-	background-image: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/header_button.png', sizingMethod='crop');
-}
-a.bigButton big, a.bigButton small {
-	background-image: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/big_button.png?1', sizingMethod='crop');
-}
-a.greyButton big, a.greyButton small {
-	background-image: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/releases_MagCloud/skins/monaco/images/grey_button.png?1', sizingMethod='crop');
-}
-#page_controls div {
-	background: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/sprite.png?20100128', sizingMethod='crop');
-}
-#search_button {
-	background: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/search.png', sizingMethod='crop');
-}
 .shadow, #page_bar, #search_box {
 	background-image: none !important;
-}
-.widget .close span, .widget .edit span, .widget .hide span, #widget_cockpit_close {
-	background-image: none !important;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/sprite.png?20100128', sizingMethod='crop');
-}
-.staffSig {
-	background-image: none !important;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/wikia/images/e/e9/WikiaStaff.png', sizingMethod='scale');
 }
 /* macbre: RT #3884 */
 #bodyContent h1,
@@ -49,16 +13,6 @@ a.greyButton big, a.greyButton small {
 
 #wikia_header .headerMenuButton {
 	float: left;
-}
-
-/* footer actions */
-#articleFooter img.sprite,
-/* share icons */
-#share dd a,
-/* dynamic links in monaco toolbox */
-#link_box_dynamic img.sprite {
-	background-image: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/sprite.png?20100128', sizingMethod='crop');
 }
 
 /* RTL fixes */
