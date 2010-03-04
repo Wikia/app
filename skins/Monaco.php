@@ -579,6 +579,7 @@ EOS;
 
 		// render CSS to be included at the bottom
 		$tmpOut->styles = $printStyles;
+		$tpl->set('csslinksbottom-urls', $printStyles);
 		$tpl->set('csslinksbottom', $tmpOut->buildCssLinks());
 
 		wfProfileOut(__METHOD__ . '::printCSS');
@@ -2174,20 +2175,69 @@ wfProfileOut( __METHOD__ . '-body');
 ?>
 		<div id="positioned_elements" class="reset"></div>
 <?php
-	// RT #18411
-	$this->html('mergedCSSprint');
-?>
-
-<?php
-	// RT #25638
-	echo "\n\t\t";
-	$this->html('csslinksbottom');
+	$this->delayedPrintCSSdownload();
 ?>
 
 	</body>
 </html>
 <?php
 		wfProfileOut( __METHOD__ );
+	}
+
+	//@author Marooned
+	function delayedPrintCSSdownload() {
+		global $wgRequest;
+
+		//regular download
+		if ($wgRequest->getVal('printable')) {
+			// RT #18411
+			$this->html('mergedCSSprint');
+			// RT #25638
+			echo "\n\t\t";
+			$this->html('csslinksbottom');
+		} else {
+			$cssMediaWiki = $this->data['csslinksbottom-urls'];
+			$cssStaticChute = $this->data['mergedCSSprint'];
+
+			$cssReferences = array_keys($cssMediaWiki);
+
+			// detect whether to use merged JS/CSS files
+			global $wgAllInOne;
+			if(empty($wgAllInOne)) {
+				$wgAllInOne = false;
+			}
+			$allinone = $wgRequest->getBool('allinone', $wgAllInOne);
+
+			if(!$allinone) {
+				preg_match_all("/url\(([^?]+)/", $cssStaticChute, $matches);
+				foreach($matches[1] as $match) {
+					$cssReferences[] = $match;
+				}
+			} else {
+				preg_match("/href=\"([^\"]+)/", $cssStaticChute, $matches);
+				$cssReferences[] = $matches[1];
+			}
+			$cssReferences = Wikia::json_encode($cssReferences);
+
+			echo <<<EOF
+			<script type="text/javascript">
+			var cssReferences = $cssReferences;
+			function loadStylesheet(href) {
+				$().log('loading CSS: ' + href);
+				var link = document.createElement('link');
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.media = 'print';
+				link.href = href;
+				document.getElementsByTagName('head')[0].appendChild(link);
+			}
+
+			for(id in cssReferences) {
+				setTimeout('loadStylesheet("' + cssReferences[id] + '")', 100);
+			}
+			</script>
+EOF;
+		}
 	}
 
 	// curse like cobranding
