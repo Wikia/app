@@ -235,11 +235,11 @@ h1.modalTitle div {
 	border:1px solid #AAAAAA;
 	-moz-box-shadow:none;
 	color: black;
+	background-image: none;
+	-webkit-box-shadow: none;
 }
 
 #AjaxLoginButtons .ajaxregister-enable{
 	background-color:#D6E0F5;
 	border:1px solid #3366CC;
-	-moz-box-shadow:none;
-	color: black;
 }
