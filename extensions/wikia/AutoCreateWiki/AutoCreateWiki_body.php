@@ -89,7 +89,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			),
 			"answers" => array(
 				"en" => "starteranswers",
-				"*"  => "genericanswers353",
+				"*"  => "genericstarteranswers",
 				"de" => "deuanswers",
 				"es" => "esstarteranswers",
 				"fr" => "frstarteranswers",
