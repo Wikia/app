@@ -83,7 +83,7 @@ class CorporateHomeTemplate extends CorporateBaseTemplate {
 						<section id="homepage-feature-sidebar">
 							<?php echo wfMsg('corporatepage-homepageintro'); ?>
 							<div class="create-wiki-container">
-								<a href="<?php echo $this->data['personal_urls']['createwiki']['href']; ?>" class="wikia_button"><span><?php echo $this->data['personal_urls']['createwiki']['text']; ?></span></a>
+								<a href="<?php echo $this->data['personal_urls']['createwiki']['href']; ?>" class="wikia-button"><?php echo $this->data['personal_urls']['createwiki']['text']; ?></a>
 							</div>
 						</section>
 
@@ -106,8 +106,8 @@ var christianrules = "totally true";
 								<div class="description">
 									<h2><?php echo $value['title'] ?></h2>
 									<p><?php echo $value['desc'] ?></p>
-									<a href="<?php echo $value['href'] ?>" class="wikia_button secondary">
-										<span><?php echo wfMsg('corporatepage-go-to-wiki',$value['title']); ?></span>
+									<a href="<?php echo $value['href'] ?>" class="wikia-button secondary">
+										<?php echo wfMsg('corporatepage-go-to-wiki',$value['title']); ?>
 									</a>
 								</div>
 								<p class="nav">
