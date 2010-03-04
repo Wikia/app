@@ -65,36 +65,12 @@ body.widgetsAddingBlocked .add {
 	padding: 2px;
 	text-align: center;
 }
-.widget .widgetToolbox .toolboxItem {
-	float: right;
-	height: 12px;
-	margin: 3px 0 0 4px;
-	position: relative;
-}
-.widget .widgetToolbox .toolboxItem span {
-	background: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20100128);
+.widget .widgetToolbox img {
 	cursor: pointer;
-	display: block;
-	height: 12px;
-	position: absolute;
-	width: 656px;
+	float: right;
+	margin: 3px 0 0 4px;
 }
-.widget .widgetToolbox .close {
-	width: 10px;
-}
-.widget .widgetToolbox .close span {
-	clip: rect(0px 652px 12px 640px);
-	left: -640px;
-	margin-top: -2px;
-}
-.widget .widgetToolbox .edit {
-	width: 11px;
-}
-.widget .widgetToolbox .edit span {
-	clip: rect(0px 636px 12px 624px);
-	left: -624px;
-	margin-top: -2px;
-}
+
 .widget dd {
 	font-size: 9pt;
 	padding: 7px;
