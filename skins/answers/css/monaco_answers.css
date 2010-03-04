@@ -150,6 +150,8 @@ body.mainpage .firstHeading { display:none; }
 #wikia_logo {
         /* background: url(http://images.wikia.com/common/skins/monaco/images/wikia_logo.png) no-repeat; */
         background: url(http://images.wikia.com/common/trunk/skins/answers/images/wikianswers_logo_transparent.png) no-repeat;
+}
+#wikia_logo, #wikia_logo a {
         height: 25px;
         width: 198px;
 }
