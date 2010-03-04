@@ -228,3 +228,18 @@ h1.modalTitle div {
 {
 	width: 150px;
 }
+
+
+#AjaxLoginButtons input{
+	background-color:#EEEEEE;
+	border:1px solid #AAAAAA;
+	-moz-box-shadow:none;
+	color: black;
+}
+
+#AjaxLoginButtons .ajaxregister-enable{
+	background-color:#D6E0F5;
+	border:1px solid #3366CC;
+	-moz-box-shadow:none;
+	color: black;
+}
