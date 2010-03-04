@@ -21,7 +21,7 @@ SpecialMagCloud.setupArticlesList = function(list) {
 	list = $(list);
 
 	// setup remove icons
-	list.find('.MagCloudArticlesListRemove').each(function(i) {
+	list.find('.sprite.delete').each(function(i) {
 		var node = $(this);
 
 		// assign IDs for each row
