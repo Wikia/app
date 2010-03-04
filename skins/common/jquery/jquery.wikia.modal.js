@@ -35,7 +35,7 @@ $.fn.extend({
 	}
 
    	wrapper
-   		.prepend('<h1 class="modalTitle color1"><div style="background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20100128);"></div>' + this.attr('title') + '</h1>')
+   		.prepend('<h1 class="modalTitle color1"><img src="' + stylepath + '/common/blank.gif" class="sprite close" />' + this.attr('title') + '</h1>')
    		.width(settings.width)
    		.css({
    			marginLeft: -wrapper.outerWidth() / 2,
@@ -56,7 +56,7 @@ $.fn.extend({
 	// macbre: function called when modal is closed
 	var onClose = (typeof options.onClose == 'function') ? options.onClose : false;
 
-	$("h1.modalTitle div").bind("click", function() {
+	$("h1.modalTitle .close").bind("click", function() {
 		if (onClose) {
 			onClose();
 		}
