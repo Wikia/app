@@ -227,8 +227,8 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 				showRegister: function() {
 					AjaxLogin.isShow = true;
 					$('#AjaxLoginBox').css({'height' : ''});
-					$('#wpGoRegister').addClass('ajaxregister_button_enable');
-					$('#wpGoLogina').removeClass('ajaxregister_button_enable');
+					$('#wpGoRegister').addClass('ajaxregister-enable');
+					$('#wpGoLogin').removeClass('ajaxregister-enable');
 					$('#AjaxLoginLoginForm').hide();
 			        $("#AjaxLoginBoxWrapper").animate({
 			        	'width': "700px",
@@ -243,8 +243,8 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 				showLogin : function() {
 					AjaxLogin.isShow = true;
 					$('#AjaxLoginBox').css({'height' : ''});
-					$('#wpGoLogina').addClass('ajaxregister_button_enable');
-					$('#wpGoRegister').removeClass('ajaxregister_button_enable');
+					$('#wpGoLogin').addClass('ajaxregister-enable');
+					$('#wpGoRegister').removeClass('ajaxregister-enable');
 					$('#AjaxLoginRegisterForm').hide();
 					$("#AjaxLoginBoxWrapper").animate({
 				          'width': "320px",
