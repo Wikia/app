@@ -168,7 +168,7 @@ my @done = ();
 #
 my $maxrequests = $ENV{ "REQUESTS" } || 1000;
 my $basepath    = $ENV{ "IMGPATH" }  || "/images";
-my $clients     = $ENV{ "CHILDREN" } || 10;
+my $clients     = $ENV{ "CHILDREN" } || 4;
 my $listen      = $ENV{ "SOCKET" }   || "0.0.0.0:39393";
 my $debug       = $ENV{ "DEBUG" }    || 1;
 my $test        = $ENV{ "TEST" }     || 0;
