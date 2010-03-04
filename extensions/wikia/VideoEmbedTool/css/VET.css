@@ -111,16 +111,13 @@
 #VideoEmbedClose a {
 	color: #FFF;
 }
-
-#VideoEmbedClose div {
-	background: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20100128);
-	clip: rect(0px 320px 16px 304px);
-	height: 16px;
-	left: -304px;
+#VideoEmbedClose img {
 	position: absolute;
-	width: 320px;
 	cursor: pointer;
+	left: 1px;
+	top: 1px;
 }
+
 * html #VideoEmbedClose div {
 	background: none;
 	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/sprite.png?20100128', sizingMethod='crop');
