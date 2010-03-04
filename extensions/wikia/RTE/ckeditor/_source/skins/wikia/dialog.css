@@ -218,11 +218,21 @@ body .cke_dialog
 }
 
 /* button */
-.cke_dialog .wikia_button,
-.cke_dialog .wikia_button span {
+.cke_dialog .wikia-button 
+{
 	cursor: pointer !important;
+	height:17px  !important;
+	font-family:"Lucida Grande",sans-serif  !important;
+	font-size:12px  !important;
+	border:1px solid #BEDDBE  !important;
+	color:#FFFFFF  !important;
+	cursor:pointer  !important;
 }
 
+.cke_dialog .secondary {
+	border-color:#E2E2E2 !important;
+	color:#333333 !important;
+}
 .cke_skin_wikia .cke_browser_iequirks a.cke_dialog_ui_button
 {
 	padding: 0;
