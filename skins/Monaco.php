@@ -1900,7 +1900,7 @@ if ( $wgRequest->getVal('action') != 'edit' ) {
 					<form action="<?php $this->text('searchaction') ?>" id="searchform">
 						<input id="search_field" name="search" type="text" value="<?= htmlspecialchars($searchLabel) ?>" maxlength="200" onfocus="sf_focus(event);" alt="<?= htmlspecialchars($searchLabel) ?>" autocomplete="off"<?= $skin->tooltipAndAccesskey('search'); ?> />
 						<input type="hidden" name="go" value="1" />
-						<input type="submit" id="search_button" value="" title="<?= wfMsgHtml('searchbutton') ?>" />
+						<input type="image" src="<?= $wgStylePath ?>/common/blank.gif" id="search-button" class="sprite search" />
 					</form>
 				</div>
 <?php

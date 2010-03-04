@@ -167,6 +167,12 @@
 	top: -1px;
 }
 
+.sprite-small.settings { background-position:  0 -54px; }
+.sprite-small.sorted { background-position:  -12px -54px; }
+.sprite-small.sort { background-position:  -24px -54px; }
+.sprite-small.add { background-position:  -36px -54px; }
+.sprite-small.close { background-position:  -48px -54px; }
+
 .sprite.edit { background-position: 0 -66px; }
 .sprite.new { background-position: -16px -66px; }
 .sprite.photo { background-position: -32px -66px; }
@@ -193,12 +199,7 @@
 .sprite.recent { background-position: -16px -130px; }
 .sprite.watch { background-position: -32px -130px; }
 .sprite.unwatch { background-position: -48px -130px; }
-
-.sprite-small.settings { background-position:  0 -54px; }
-.sprite-small.sorted { background-position:  -12px -54px; }
-.sprite-small.sort { background-position:  -24px -54px; }
-.sprite-small.add { background-position:  -36px -54px; }
-.sprite-small.close { background-position:  -48px -54px; }
+.sprite.search { background-position: -64px -130px; }
 
 
 /* TODO: Fix AutoCreateWiki
