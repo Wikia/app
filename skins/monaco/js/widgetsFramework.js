@@ -271,7 +271,7 @@ var WidgetFramework = {
 
 						thumb_el.className = 'widget_thumb draggable clearfix ' + i +'Thumb';
 						if(skin == 'monaco' || skin == 'awesome') {
-							thumb_el.innerHTML = '<div class="icon"></div><h1>' + title + '<div class="add" rel="' + i + '"></div></h1><br />' + desc;
+							thumb_el.innerHTML = '<div class="icon"></div><h1>' + title + '<img src="' + stylepath + '/common/blank.gif" class="sprite add" rel="' + i + '" /></h1><br />' + desc;
 						} else if(skin == 'quartz') {
 							thumb_el.innerHTML = title;
 							thumb_el.title = desc;
