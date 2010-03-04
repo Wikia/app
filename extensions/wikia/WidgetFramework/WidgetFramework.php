@@ -227,7 +227,7 @@ class WidgetFramework {
 	}
 
 	protected function wrap($widget, $widgetOut, $skin = null) {
-		global $wgWidgets, $wgUser, $wgLang;
+		global $wgWidgets, $wgUser, $wgLang, $wgStylePath;
 
 		if(is_array($widgetOut)) {
 			if(!empty($widgetOut['nowrap'])) {
@@ -289,8 +289,8 @@ class WidgetFramework {
 		}
 
 		if($this->skinname == 'monaco') {
-			$closeButton = ($closeable) ? "<span id=\"{$widget['id']}_close\" class=\"close toolboxItem\"><span></span></span>" : '';
-			$editButton  = ($editable) ? "<span id=\"{$widget['id']}_edit\" class=\"edit toolboxItem\"><span></span></span>" : '';
+			$closeButton = ($closeable) ? "<img src=\"$wgStylePath/common/blank.gif\" id=\"{$widget['id']}_close\" class=\"sprite-small close\" />" : '';
+			$editButton  = ($editable) ? "<img src=\"$wgStylePath/common/blank.gif\" id=\"{$widget['id']}_edit\" class=\"sprite-small settings\" />" : '';
 			$editForm  = ($editable) ? "<dd style=\"display: none;\" class=\"shadow widget_contents\" id=\"{$widget['id']}_editform\"></dd>" : '';
 			return "<dl class=\"widget {$widget['type']}\" id=\"{$widget['id']}\"><dt class=\"color1 widget_title\" id=\"{$widget['id']}_header\"><span class=\"widgetToolbox\">{$closeButton}{$editButton}</span>{$title}</dt><dd class=\"shadow widget_contents\" id=\"{$widget['id']}_content\">{$body}</dd>{$editForm}</dl>";
 		} else if($this->skinname == 'quartz') {

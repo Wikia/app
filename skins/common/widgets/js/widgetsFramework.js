@@ -204,6 +204,7 @@ function reorder(widget) {
 }
 
 YAHOO.wikia.ddObject = function(id) {
+	console.log("ddObject something");
 	this.isThumb = Dom.hasClass(id, 'widget_thumb');
 
 	YAHOO.wikia.ddObject.superclass.constructor.call(this, id, null, null);
