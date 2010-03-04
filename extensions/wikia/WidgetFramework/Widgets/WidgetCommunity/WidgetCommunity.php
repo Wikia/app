@@ -41,16 +41,16 @@ function WidgetCommunity($id, $params) {
 		if (!empty($wgEnableMyHomeExt)) {
 			$footerButton['text'] = wfMsg('widget-community-more');
 			$footerButton['href'] = Skin::makeSpecialUrl('MyHome');
-			$footerButton['class'] = 'wikia_button forward';
+			$footerButton['class'] = 'wikia-button forward';
 		} else {
 			$footerButton['text'] = wfMsg('recentchanges');
 			$footerButton['href'] = Skin::makeSpecialUrl('RecentChanges');
-			$footerButton['class'] = 'wikia_button forward';
+			$footerButton['class'] = 'wikia-button forward';
 		}
 	} else {
 		$footerButton['text'] = wfMsg('nologinlink');
 		$footerButton['href'] = htmlspecialchars(Skin::makeSpecialUrl( 'Signup', 'returnto=' . $wgTitle->getPrefixedURL() ));
-		$footerButton['class'] = 'wikia_button';
+		$footerButton['class'] = 'wikia-button';
 	}
 
 	$maxElements = 5;

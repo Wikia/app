@@ -5,7 +5,7 @@
 	<?= $feedHTML ?>
 </div>
 <div class="toolbar neutral">
-	<a id="community-widget-action-button" href="<?= $footerButton['href'] ?>" class="<?= $footerButton['class'] ?>" rel="nofollow"><span><?= $footerButton['text'] ?></span></a>
+	<a id="community-widget-action-button" href="<?= $footerButton['href'] ?>" class="<?= $footerButton['class'] ?>" rel="nofollow"><?= $footerButton['text'] ?></a>
 </div>
 <script type="text/javascript">
 var timestamp_<?= $tagid ?> = '<?= $timestamp ?>';
