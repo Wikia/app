@@ -158,35 +158,32 @@ body.widgetsAddingBlocked .add {
 	background-image: url(http://images.wikia.com/common/skins/monaco/images/reflected_shadow.png);
 	background-position: top left;
 	background-repeat: repeat-x;
-	height: 32px;
 	position: relative;
 }
 #search_field {
+      	background-image: -moz-linear-gradient(top, #BFBFBF 0%, #FFF 40%);
+      	background-image: -webkit-gradient(linear, 0% 0%, 0% 40%, from(#BFBFBF), to(#FFF));
 	border: 1px solid #039;
-	font-size: 9pt;
-	left: 5px;
-	height: 14px;
-	margin: 0;
-	padding: 2px;
-	position: absolute;
-	top: 6px;
-	width: 85%;
 	color: gray;
+	font-size: 9pt;
+	height: 22px;
+	margin: 4px;
+	padding: 0 23px 0 3px;
+	width: 164px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
 }
 #search_field.field_active {
 	color: #000;
 }
-#search_button {
-	background: url(http://images.wikia.com/common/skins/monaco/images/search.png);
-	clip: rect(0px 20px 22px 0px);
-	cursor: pointer;
-	height: 44px;
-	/*left: 176px;*/
-	left: 87%;
+#search-button {
+	border-left: 1px solid #CCC;
+	height: 16px;
+	margin: 0;
 	position: absolute;
-	top: 2px;
-	width: 20px;
-	border: none;
+	right: 8px;
+	top: 8px;
+	width: 16px;
 }
 
 #navigation * {
@@ -354,7 +351,7 @@ body.widgetsAddingBlocked .add {
 	max-height: 350px;
 	overflow: hidden;
 	text-align: left;
-	width: 174px !important;
+	width: 170px !important;
 	/* IE6 specific: */
 	_margin: 0;
 }
