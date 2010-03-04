@@ -483,18 +483,18 @@ CKEDITOR.plugins.add( 'dialogui' );
 					elementDefinition['class'] = elementDefinition['class']
 						.replace(/cke_dialog_ui_button_cancel/, 'secondary')
 						.replace(/cke_dialog_ui_button_(\w+)/, '')
-						+ ' wikia_button';
+						+ ' wikia-button';
 				}
 
 				if (typeof elementDefinition['className'] != 'undefined') {
-					elementDefinition['className'] += ' wikia_button';
+					elementDefinition['className'] += ' wikia-button';
 
 					if (typeof elementDefinition['buttonType'] != 'undefined') {
 						elementDefinition['className'] += ' ' + elementDefinition['buttonType'];
 					}
 				}
 				else {
-					elementDefinition['className'] = 'wikia_button';
+					elementDefinition['className'] = 'wikia-button';
 				}
 
 				var outerDefinition = CKEDITOR.tools.extend( {}, elementDefinition );
@@ -514,10 +514,7 @@ CKEDITOR.plugins.add( 'dialogui' );
 						hidefocus : 'true',
 						'class' : elementDefinition['class']
 					},
-					// wikia: don't add any CSS class
-					'<span>' +
-						CKEDITOR.tools.htmlEncode( elementDefinition.label ) +
-					'</span>' );
+					CKEDITOR.tools.htmlEncode( elementDefinition.label )  );
 			},
 
 			/**

@@ -55,8 +55,8 @@ window.RTE.tools = {
 	"confirm": function(title, question, callback) {
 		var html = '<p>' + question + '</p>' +
 			'<div class="RTEConfirmButtons neutral">' +
-				'<a id="RTEConfirmCancel" class="wikia_button secondary"><span>' + RTE.instance.lang.common.cancel + '</span></a>' +
-				'<a id="RTEConfirmOk" class="wikia_button"><span>' + RTE.instance.lang.common.ok + '</span></a>' +
+				'<a id="RTEConfirmCancel" class="wikia-button secondary"><span>' + RTE.instance.lang.common.cancel + '</span></a>' +
+				'<a id="RTEConfirmOk" class="wikia-button"><span>' + RTE.instance.lang.common.ok + '</span></a>' +
 			'</div>';
 
 		$.showModal(title, html, {
