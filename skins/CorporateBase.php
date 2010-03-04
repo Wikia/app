@@ -425,8 +425,8 @@ class CorporateBaseTemplate extends QuickTemplate {
 			<div class="shrinkwrap">
 				<p id="wikia-create-wiki">
 					<?php print wfMsg('corporatepage-create-your-own-wiki') ?>
-					<a href="<?php echo $this->data['personal_urls']['createwiki']['href']; ?>" class="wikia_button secondary">
-						<span><?php echo $this->data['personal_urls']['createwiki']['text']; ?></span>
+					<a href="<?php echo $this->data['personal_urls']['createwiki']['href']; ?>" class="wikia-button secondary">
+						<?php echo $this->data['personal_urls']['createwiki']['text']; ?>
 					</a>
 				</p>
 

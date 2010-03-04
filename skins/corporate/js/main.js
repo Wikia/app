@@ -12,7 +12,7 @@ $(window).load(function() {
 
 function makeWikiaButtons() {
 	//There is no way to provide CSS class for links created in MediaWiki. This function adds appropriate classes and markup to buttons.
-	$(".MainArticle-sidebar .create-wiki-container a").wrapInner("<span>").addClass("wikia_button").addClass("primary");
+	$(".MainArticle-sidebar .create-wiki-container a").addClass("wikia-button").addClass("primary");
 }
 
 //Ajax block article
