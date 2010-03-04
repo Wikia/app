@@ -60,9 +60,11 @@ class ContactForm extends SpecialPage {
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
 
-		$mp = Title::newMainPage();
 		$wgOut->addHTML(wfMsg( 'contactsubmitcomplete' ));
-		$wgOut->addHTML('<br/>' . wfMsgExt( 'returnto', 'parse', "[[" . $mp->getText() . "]]" ));
+
+		$mp = Title::newMainPage();
+		$link = Xml::element('a', array('href'=>$mp->getLocalURL()), $mp->getPrefixedText());
+		$wgOut->addHTML('<br/>' . wfMsg( 'returnto', $link ) );
 
 		//build common top of both emails
 		$m_shared = '';
