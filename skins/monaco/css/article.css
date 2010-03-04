@@ -281,69 +281,6 @@
 	float: left;
 	clear: none !important;
 }
-#share {
-	float: left;
-	position: relative;
-}
-#share dl {
-	position: absolute;
-}
-#share dt {
-	background: url(http://images.wikia.com/common/skins/quartz/images/share_hover_bg.png);
-	color: #FFF;
-	display: none;
-	font-size: 8.5pt;
-	font-weight: bold;
-	height: 21px;
-	left: -32px;
-	line-height: 19px;
-	position: absolute;
-	text-align: center;
-	top: -19px;
-	width: 80px;
-	z-index: 10;
-}
-#share dl:hover dt {
-	display: block;
-}
-#share dd {
-	height: 16px;
-	overflow: hidden;
-	position: relative;
-	width: 16px;
-}
-#share dd a {
-	background: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20100128);
-	display: block;
-	height: 16px;
-	position: absolute;
-	width: 576px;
-}
-#shareDelicious dd a {
-	clip: rect(0px 176px 16px 160px);
-	left: -160px;
-}
-#shareStumble {
-	left: 20px;
-}
-#shareStumble dd a {
-	clip: rect(0px 208px 16px 192px);
-	left: -192px;
-}
-#shareDigg {
-	left: 40px;
-}
-#shareDigg dd a {
-	clip: rect(0px 192px 16px 176px);
-	left: -176px;
-}
-#shareFacebook {
-	left: 60px;
-}
-#shareFacebook dd a {
-	clip: rect(0px 352px 16px 336px);
-	left: -336px;
-}
 #articleFooter .col2 strong {
 	display: block;
 }
