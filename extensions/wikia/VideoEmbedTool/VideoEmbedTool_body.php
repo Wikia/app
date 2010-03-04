@@ -30,8 +30,8 @@ class VideoEmbedTool {
 		$out = '<div class="reset" id="VideoEmbed">';
                 $out .= '<div id="VideoEmbedBorder"></div>';
                 $out .= '<div id="VideoEmbedProgress1" class="VideoEmbedProgress"></div>';
-                $out .= '<div id="VideoEmbedBack"><div></div><a href="#">' . wfMsg( 'vet-back' ) . '</a></div>';
-		$out .= '<img src="'.$wgStylePath.'/common/blank.gif" id="fe_vetclose_img" class="sprite share" alt="'.wfMsg('vet-close').'" />';
+		$out .= '<img src="'.$wgStylePath.'/common/blank.gif" id="fe_vetback_img" class="sprite back" alt="'.wfMsg('vet-back').'" />';
+		$out .= '<img src="'.$wgStylePath.'/common/blank.gif" id="fe_vetclose_img" class="sprite close" alt="'.wfMsg('vet-close').'" />';
                 $out .= '<div id="VideoEmbedBody">';
                 $out .= '<div id="VideoEmbedError"></div>';
                 $out .= '<div id="VideoEmbedMain">' . $this->loadMain() . '</div>';

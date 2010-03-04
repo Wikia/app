@@ -98,10 +98,12 @@
 	width: 320px;
 	cursor: pointer;
 }
-* html #VideoEmbedBack div {
-	background: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/sprite.png?20100128', sizingMethod='crop');
+
+#VideoEmbedBack img  {
+	position: absolute;
+	cursor: pointer;
 }
+
 #VideoEmbedClose {
 	right: 30px;
 	padding-left: 18px;
@@ -118,10 +120,6 @@
 	top: 1px;
 }
 
-* html #VideoEmbedClose div {
-	background: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/sprite.png?20100128', sizingMethod='crop');
-}
 .VideoEmbedProgress {
 	background: url(../../../../skins/common/images/ajax.gif) no-repeat;
 	height: 16px;
