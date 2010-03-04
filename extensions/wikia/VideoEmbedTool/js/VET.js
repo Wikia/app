@@ -467,8 +467,8 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 		html += '<div class="reset" id="VideoEmbed">';
 		html += '	<div id="VideoEmbedBorder"></div>';
 		html += '	<div id="VideoEmbedProgress1" class="VideoEmbedProgress"></div>';
-		html += '	<div id="VideoEmbedBack"><div></div><a href="#">' + vet_back + '</a></div>';
-		html += '	<div id="VideoEmbedClose"><img src="' + stylepath + '/common/blank.gif" id="fe_vetclose_img" class="sprite close" alt="' + vet_close + '" /><a href="#">' + vet_close + '</a></div>';
+		html += '	<div id="VideoEmbedBack"><img src="' + stylepath + '/common/blank.gif" id="fe_vetback_img" class="sprite back" alt="' + vet_back + '" /><a href="#">' + vet_back + '</a></div>';
+		hlose + '</a>_vetclose_img" class="sprite close" alt="' + vet_close + '" /><a href="#">' + vet_close + '</a></div>';
 		html += '	<div id="VideoEmbedBody">';
 		html += '		<div id="VideoEmbedError"></div>';
 		html += '		<div id="VideoEmbedMain"></div>';
@@ -488,7 +488,7 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 
 		VET_panel = new YAHOO.widget.Panel('VET_div', {
 			modal: true,
-			constraintoviewport: true,
+			<a href="#">' + vet_close + '</a>constraintoviewport: true,
 			draggable: false,
 			close: false,
 			fixedcenter: true,
