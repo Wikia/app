@@ -101,19 +101,27 @@
     }
 
     /* IE Styles */
-    *+html a.wikia-button,
-    *+html span.wikia-button a, 
-    *+html input[type="submit"], 
-    *+html input[type="reset"], 
-    *+html input[type="button"], 
-    *+html button {
-      outline: 8px solid #2c802c;
+    a.wikia-button,
+    span.wikia-button a, 
+    input[type="submit"], 
+    input[type="reset"], 
+    input[type="button"], 
+    button {
+      filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr="#FF009933", EndColorStr="#FF006722");
+      outline: 1px solid #2c802c\9;
       overflow: visible;
       width: auto;
-      filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr="#FF009933", EndColorStr="#FF006722");
     }
-
-
+    
+    a.wikia_button.secondary,
+    span.wikia_button.secondary a, 
+    input[type="submit"].secondary, 
+    input[type="reset"].secondary, 
+    input[type="button"].secondary, 
+    button.secondary {
+      filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr="#FFCCCCCC", EndColorStr="#FFAAAAAA");
+      outline: 1px solid #999\9;
+    }
 
     /* Hover and Active states */
     a.wikia-button:hover, 
