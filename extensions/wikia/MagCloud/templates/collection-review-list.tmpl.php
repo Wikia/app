@@ -16,11 +16,12 @@
 	<h3><?= wfMsg( 'magcloud-order-your-articles'); ?></h3>
 	<div id="MagCloudArticlesList">
 	<ul class="reset">
-<?php foreach($collection->getArticles() as $index => $article): ?>
+<?php 	global $wgStylePath;
+	foreach($collection->getArticles() as $index => $article): ?>
 		<li>
 			<span class="MagCloudArticlesListGrab">&nbsp;</span>
 			<a href="<?= htmlspecialchars($article['url']) ?>" class="MagCloudArticlesListLink" title="<?= htmlspecialchars($article['title']) ?>"><?= htmlspecialchars( MagCloud::getAbbreviatedTitle($article['title']) ) ?></a>
-			<span class="MagCloudArticlesListRemove">&nbsp;</span>
+			<img src="<?= $wgStylePath ?>/common/blank.gif" id="fe_sharefeature_img" class="sprite delete" alt="<?= wfMsg('delete') ?>" />
 		</li>
 <?php endforeach; ?>
 	</ul>
