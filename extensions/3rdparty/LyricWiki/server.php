@@ -626,6 +626,10 @@ function getSong($artist, $song="", $doHyphens=true){
 	$song = trim(html_entity_decode($song));
 	$artist = preg_replace("/(\s)+/", "\\1", $artist); // removes multiple spaces in a row
 	$song = preg_replace("/(\s)+/", "\\1", $song);
+	if($artist == "-"){ // surprisingly common.  If this is the artist, the whole artist and song tend to be in the song.
+		$artist = "";
+		$song = str_replace(" - ", ":", $song);
+	}
 	$defaultLyrics = "Not found";
 	$defaultUrl = "http://lyrics.wikia.com";
 	$urlRoot = "http://lyrics.wikia.com/"; // may differ from default URL, should contain a slash after it.
