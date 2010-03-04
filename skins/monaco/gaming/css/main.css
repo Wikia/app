@@ -63,10 +63,6 @@
 #search_button {
 	background-image: url(http://images.wikia.com/common/skins/monaco/gaming/images/search.png);
 }
-* html #search_button {
-	background-image: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/gaming/images/search.png', sizingMethod='crop');
-}
 #search_box {
 	background-image: none;
 }
@@ -91,17 +87,8 @@
 #wikia_logo {
 	background-image: url(http://images.wikia.com/common/skins/monaco/gaming/images/wikia_logo.png);
 }
-* html #wikia_logo {
-	background-image: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/gaming/images/wikia_logo.png', sizingMethod='crop');
-}
-.headerMenuButton dt, .headerMenuButton dd {
-	background-image: url(http://images.wikia.com/common/skins/monaco/gaming/images/header_button.png);
-	color: #333;
-}
-* html .headerMenuButton dt, * html .headerMenuButton dd {
-	background-image: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/gaming/images/header_button.png', sizingMethod='crop');
+.header-button img {
+	background-position: -72px -58px;
 }
 
 /*** PAGE ***/
@@ -205,14 +192,6 @@ td.diff-deletedline {
 td.diff-addedline {
     background-color: #2e594d;
 	color: #000;
-}
-
-/* IE fixes for star rating */
-* html .star-rating,
-* html .star-rating li a.hover,
-* html .star-rating li.current-rating
-{
-	background-image: url('http://images.wikia.com/common/skins/monaco/images/star-rating.black.png');
 }
 
 .mw-plusminus-pos { color: #00FF00 !important; }
