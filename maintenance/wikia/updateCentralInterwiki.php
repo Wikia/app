@@ -11,7 +11,7 @@ $oldCwd = getcwd();
 
 $optionsWithArgs = array( "o" );
 
-include_once( "../commandLine.inc" );
+include_once( dirname(__FILE__) . "/../commandLine.inc" );
 include_once( "updateCentralInterwiki.inc" );
 
 if ( isset( $options['help'] ) || isset( $options['h']) ) {
