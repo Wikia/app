@@ -89,15 +89,6 @@
 #VideoEmbedBack a {
 	color: #FFF;
 }
-#VideoEmbedBack div {
-	background: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20100128);
-	clip: rect(0px 304px 16px 288px);
-	height: 16px;
-	left: -288px;
-	position: absolute;
-	width: 320px;
-	cursor: pointer;
-}
 
 #VideoEmbedBack img  {
 	position: absolute;
