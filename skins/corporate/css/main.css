@@ -102,7 +102,7 @@ h1, h2, h3, h4, h5, h6 {
 .dark_text_2 {
 	color: #1F7A1F;
 }
-#MainArticle, #wikia-create-wiki .wikia_button span, header {
+#MainArticle, #wikia-create-wiki .wikia-button span, header {
 	color: #333;
 }
 #CompanyInfo h1, #wikia-create-wiki {
@@ -426,7 +426,7 @@ header a, #CompanyInfo a, footer a {
 	top: 100px;
 	text-align: center;
 }
-#MainArticle .wikia_button span {
+#MainArticle .wikia-button span {
 	font-size: 9pt;
 }
 #MainArticle .note {

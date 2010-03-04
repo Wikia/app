@@ -27,17 +27,17 @@ var initTracker = function()
 	 addTrack('#wikia-create-account-link', 'sign-up');
 	 addTrack('.wikia-page-link','main_page/hotspots/article');
 	 addTrack('.wikia-wiki-link','main_page/hotspots/wiki_name');
-	 addTrack('.create-wiki-container .wikia_button','main_page/create_a_wiki');
+	 addTrack('.create-wiki-container .wikia-button','main_page/create_a_wiki');
 	 addTrack('#homepage-feature-spotlight .nav','main_page/slider/thumb');
-	 addTrack('.create-wiki-container .wikia_button','main_page/create_a_wiki');
-	 addTrack('#wikia-create-wiki .wikia_button','bottom/create_a_wiki')
+	 addTrack('.create-wiki-container .wikia-button','main_page/create_a_wiki');
+	 addTrack('#wikia-create-wiki .wikia-button','bottom/create_a_wiki')
 	 
 	 addFooterTrack('wikia-international', 'left_column');
 	 addFooterTrack('wikia-in-the-know', 'middle_column');
 	 addFooterTrack('wikia-more-links', 'right_column');
 	 addFooterTrack('SupplementalNav', 'bottom');
 	 
-	 $('.homepage-spotlight,#homepage-feature-spotlight .wikia_button').click(function(e){
+	 $('.homepage-spotlight,#homepage-feature-spotlight .wikia-button').click(function(e){
 		 switch(e.target.nodeName){
 		 	case 'SPAN': element = e.target.parentNode.parentNode.parentNode ; break;
 		 	case 'A': element = e.target.parentNode.parentNode; break;
