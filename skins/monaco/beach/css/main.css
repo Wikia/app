@@ -45,10 +45,6 @@
 #search_button {
 	background-image: url(http://images.wikia.com/common/skins/monaco/beach/images/search.png);
 }
-* html #search_button {
-	background-image: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/beach/images/search.png', sizingMethod='crop');
-}
 #link_box {
 	background-color: #b0d9f3;
 	border: 1px solid #CCC;
@@ -80,20 +76,10 @@
 #wikia_logo {
 	background-image: url(http://images.wikia.com/common/skins/monaco/beach/images/wikia_logo.png);
 }
-* html #wikia_logo {
-	background-image: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/beach/images/wikia_logo.png', sizingMethod='crop');
-}
-.headerMenuButton dt, .headerMenuButton dd {
-	background-image: url(http://images.wikia.com/common/skins/monaco/beach/images/header_button.png);
-	color: #333;
-}
-* html .headerMenuButton dt, * html .headerMenuButton dd {
-	background-image: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/beach/images/header_button.png', sizingMethod='crop');
-}
-
 .editsectionbutton {
 	background-color: #FFC;
 	color: #FFC;
+}
+.header-button img {
+	background-position: -72px -58px;
 }

@@ -21,18 +21,13 @@
 }
 
 
-#page_bar, * html #page_bar {
+#page_bar {
 	background-image: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='', sizingMethod='crop');
 }
 
 /*** WIDGETS ***/
 #search_button {
 	background-image: url(http://images.wikia.com/common/skins/monaco/smoke/images/search.png);
-}
-* html #search_button {
-	background-image: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/smoke/images/search.png', sizingMethod='crop');
 }
 #search_box {
 	background-image: none;
@@ -48,20 +43,10 @@
 #wikia_logo {
 	background-image: url(http://images.wikia.com/common/skins/monaco/smoke/images/wikia_logo.png);
 }
-* html #wikia_logo {
-	background-image: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/smoke/images/wikia_logo.png', sizingMethod='crop');
-}
-.headerMenuButton dt, .headerMenuButton dd {
-	background-image: url(http://images.wikia.com/common/skins/monaco/smoke/images/header_button.png);
-	color: #333;
-}
-* html .headerMenuButton dt, * html .headerMenuButton dd {
-	background-image: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/smoke/images/header_button.png', sizingMethod='crop');
-}
-
 .editsectionbutton {
 	background-color: #FFC;
 	color: #FFC;
+}
+.header-button img {
+	background-position: -72px -58px;
 }

@@ -1494,11 +1494,7 @@ wfProfileIn( __METHOD__ . '-header'); ?>
 $categorylist = $this->data['data']['categorylist'];
 if(isset($categorylist['nodes']) && count($categorylist['nodes']) > 0 ) {
 ?>
-				<div style="position: absolute; left: 50%;">
-				<dl id="headerButtonHub" class="headerMenuButton">
-					<dt><?= isset($categorylist['cat']['text']) ? $categorylist['cat']['text'] : '' ?></dt><dd>&nbsp;</dd>
-				</dl>
-				</div>
+				<button id="headerButtonHub" class="header-button color1"><?= isset($categorylist['cat']['text']) ? $categorylist['cat']['text'] : '' ?><img src="<?= $wgStylePath ?>/common/blank.gif" /></button>
 
 <?php
 }
@@ -1519,7 +1515,7 @@ if( !wfRunHooks( 'CustomUserData', array( &$this, &$tpl, &$custom_user_data ) ) 
 if( $custom_user_data ) {
 	echo $custom_user_data;
 } else {
-	global $wgUser;
+	global $wgUser, $wgStylePath;
 	if ($wgUser->isLoggedIn()) {
 	?>
 				<li id="header_username"><a href="<?= htmlspecialchars($this->data['userlinks']['userpage']['href']) ?>"<?= $skin->tooltipAndAccesskey('pt-userpage') ?>><?= htmlspecialchars($this->data['userlinks']['userpage']['text']) ?></a></li>
@@ -1533,10 +1529,7 @@ if( $custom_user_data ) {
 				<li id="header_mytalk"><a href="<?= htmlspecialchars($this->data['userlinks']['mytalk']['href']) ?>"<?= $skin->tooltipAndAccesskey('pt-mytalk') ?>><?= htmlspecialchars($this->data['userlinks']['mytalk']['text']) ?></a></li>
 				<li id="header_watchlist"><a href="<?= htmlspecialchars($this->data['userlinks']['watchlist']['href']) ?>"<?= $skin->tooltipAndAccesskey('pt-watchlist') ?>><?= htmlspecialchars($this->data['userlinks']['watchlist']['text']) ?></a></li>
 				<li>
-					<dl id="headerButtonUser" class="headerMenuButton">
-						<dt><?= trim(wfMsg('moredotdotdot'), ' .') ?></dt>
-						<dd>&nbsp;</dd>
-					</dl>
+					<button id="headerButtonUser" class="header-button color1"><?= trim(wfMsg('moredotdotdot'), ' .') ?><img src="<?= $wgStylePath ?>/common/blank.gif" /></button>
 				</li>
 				<li><a rel="nofollow" href="<?= htmlspecialchars($this->data['userlinks']['logout']['href']) ?>"<?= $skin->tooltipAndAccesskey('pt-logout') ?>><?= htmlspecialchars($this->data['userlinks']['logout']['text']) ?></a></li>
 	<?php
@@ -1723,7 +1716,7 @@ if ($custom_article_footer !== '') {
 								<li id="fe_recent"><a rel="nofollow" id="fe_recent_icon" href="' . htmlspecialchars($nav_urls['recentchangeslinked']['href']) . '"><img src="' . $wgStylePath . '/common/blank.gif" id="fe_recent_img" class="sprite recent" alt="' . wfMsg('recentchangeslinked') . '" /></a> <div><a id="fe_recent_link" rel="nofollow" href="' . htmlspecialchars($nav_urls['recentchangeslinked']['href']) . '">' . wfMsg('recentchangeslinked') . '</a></div></li>') : '') .
 
 								((!empty($wgEnableShareFeatureExt) && !empty($wgEnableRecipesTweaksExt)) ?
-								('<li><img src="'.$wgStylePath.'/common/blank.gif" id="fe_sharefeature_img" class="sprite" alt="'.wfMsg('sf-link').'" /> <div><a style="cursor:pointer" id="fe_sharefeature_link">'.wfMsg('sf-link').'</a></div></li>') : '').
+								('<li><img src="'.$wgStylePath.'/common/blank.gif" id="fe_sharefeature_img" class="sprite share" alt="'.wfMsg('sf-link').'" /> <div><a style="cursor:pointer" id="fe_sharefeature_link">'.wfMsg('sf-link').'</a></div></li>') : '').
 
 								'</ul>';
 
@@ -1758,7 +1751,7 @@ if ($custom_article_footer !== '') {
 		} elseif ($namespaceType == 'blog') {
 			$href = htmlspecialchars(Title::makeTitle(NS_SPECIAL, 'CreateBlogPage')->getLocalURL());
 ?>
-								<li><a rel="nofollow" id="fe_createblog_icon" href="<?= $href ?>"><img src="<?= $wgStylePath ?>/common/blank.gif" id="fe_createblog_img" class="sprite" alt="<?= wfMsg('blog-create-next-label') ?>" /></a> <div><a id="fe_createblog_link" rel="nofollow" href="<?= $href ?>"><?= wfMsg('blog-create-next-label') ?></a></div></li>
+								<li><a rel="nofollow" id="fe_createblog_icon" href="<?= $href ?>"><img src="<?= $wgStylePath ?>/common/blank.gif" id="fe_createblog_img" class="sprite edit" alt="<?= wfMsg('blog-create-next-label') ?>" /></a> <div><a id="fe_createblog_link" rel="nofollow" href="<?= $href ?>"><?= wfMsg('blog-create-next-label') ?></a></div></li>
 <?php
 		} else if(empty($wgEnableRecipesTweaksExt)) {
 ?>
@@ -1776,7 +1769,7 @@ if ($custom_article_footer !== '') {
 				$userPageLink = $userPageTitle->getLocalUrl();
 				$userPageExists = $userPageTitle->exists();
 ?>
-								<li><?= $userPageExists ? '<a id="fe_user_icon" rel="nofollow" href="'.$userPageLink.'">' : '' ?><img src="<?= $wgStylePath ?>/common/blank.gif" id="fe_user_img" class="sprite" alt="<?= wfMsg('userpage') ?>" /><?= $userPageExists ? '</a>' : '' ?> <div><?= wfMsg('footer_5', '<a id="fe_user_link" rel="nofollow" '.($userPageExists ? '' : ' class="new" ').'href="'.$userPageLink.'">'.$userText.'</a>', $lastUpdate) ?></div></li>
+								<li><?= $userPageExists ? '<a id="fe_user_icon" rel="nofollow" href="'.$userPageLink.'">' : '' ?><img src="<?= $wgStylePath ?>/common/blank.gif" id="fe_user_img" class="sprite user" alt="<?= wfMsg('userpage') ?>" /><?= $userPageExists ? '</a>' : '' ?> <div><?= wfMsg('footer_5', '<a id="fe_user_link" rel="nofollow" '.($userPageExists ? '' : ' class="new" ').'href="'.$userPageLink.'">'.$userText.'</a>', $lastUpdate) ?></div></li>
 <?php
 			}
 		}
@@ -1805,12 +1798,13 @@ if ($custom_article_footer !== '') {
 
 			if(!empty($nav_urls['whatlinkshere']) && !empty($wgEnableRecipesTweaksExt)) {
 ?>
-								<li id="fe_whatlinkshere"><a rel="nofollow" id="fe_whatlinkshere_icon" href="<?= htmlspecialchars($nav_urls['whatlinkshere']['href']) ?>"><img src="<?= $wgStylePath ?>/common/blank.gif" id="fe_whatlinkshere_img" class="sprite" alt="<?= wfMsg('whatlinkshere') ?>" /></a> <div><a id="fe_whatlinkshere_link" rel="nofollow" href="<?= htmlspecialchars($nav_urls['whatlinkshere']['href']) ?>"><?= wfMsg('whatlinkshere') ?></a></div></li>
+								<li id="fe_whatlinkshere"><a rel="nofollow" id="fe_whatlinkshere_icon" href="<?= htmlspecialchars($nav_urls['whatlinkshere']['href']) ?>"><img src="<?= $wgStylePath ?>/common/blank.gif" id="fe_whatlinkshere_img" class="sprite pagelink" alt="<?= wfMsg('whatlinkshere') ?>" /></a> <div><a id="fe_whatlinkshere_link" rel="nofollow" href="<?= htmlspecialchars($nav_urls['whatlinkshere']['href']) ?>"><?= wfMsg('whatlinkshere') ?></a></div></li>
 <?php
 			}
 
 
 			if(!empty($wgNotificationEnableSend)) {
+			/* TODO: Is this used? */
 ?>
 								<li><img src="<?= $wgStylePath ?>/common/blank.gif" id="fe_email_img" class="sprite" alt="email" /> <div><a href="#" id="shareEmail_a"><?= wfMsg('footer_7') ?></a></div></li>
 <?php
