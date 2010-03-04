@@ -140,8 +140,6 @@ sub videoThumbnail {
 #
 # do not make zombies
 #
-use POSIX ":sys_wait_h";
-$SIG{CHLD} = sub { while( waitpid( -1, WNOHANG ) >0 ) { print STDERR "waiting for child to finish\n" } };
 
 my @tests = qw(
 	/a/answers/images/thumb/8/84/Play_fight_of_polar_bears_edit_1.avi.OGG/mid-Play_fight_of_polar_bears_edit_1.avi.OGG.jpg
