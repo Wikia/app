@@ -14,6 +14,13 @@ require_once("$IP/extensions/wikia/WikiaSearch/WikiaSearchTemplates.php");
 require_once("$IP/extensions/wikia/WikiaSearch/WikiaSearchEngine.php");
 include_once("$IP/includes/SpecialPage.php");
 
+$wgExtensionMessagesFiles['WikiaSearch'] = dirname(__FILE__).'/WikiaSearch.i18n.php';
+$wgExtensionFunctions[] = 'wfWikiaSearch';
+
+function wfWikiaSearch() {
+	SpecialPage::addPage(new WikiaSearch);
+}
+
 class WikiaSearch extends SpecialPage {
 
 	var $advanced = false; /* use advanced search form? */
@@ -41,7 +48,7 @@ class WikiaSearch extends SpecialPage {
 	var $rows;
 
 	function WikiaSearch() {
-		global $wgRequest, $wgMessageCache;
+		global $wgRequest;
 		$search = $wgRequest->getText( 'search');
 		if( $wgRequest->getVal( 'go' ) || $wgRequest->getVal( 'go_x') || $wgRequest->getVal('go_y') )
 		{
@@ -49,18 +56,7 @@ class WikiaSearch extends SpecialPage {
 		}
 
 		SpecialPage::SpecialPage("Search");
-		$wgMessageCache->addMessage('thiswiki', 'This wiki');
-		$wgMessageCache->addMessage('allwikis', 'All Wikia');
-		$wgMessageCache->addMessage('wikipedia', 'Wikipedia');
-		$wgMessageCache->addMessage('theweb', 'The Web');
-		$wgMessageCache->addMessage('resultsof', 'Results $1 - $2 of $3');
-		$wgMessageCache->addMessage('searcherror', '<br />Sorry! An error occured during your search. Please check your query.');
-		$wgMessageCache->addMessage('length', 'length: $1');
-		$wgMessageCache->addMessage('searchbutton', 'Search');
-		$wgMessageCache->addMessage('noresults', "No page with that title exists.  You can:
-		
-		* '''[[Special:CreatePage|create this page]]'''
-		* See all pages within this wiki that [[Special:Whatlinkshere/$1|link to this page]].");
+		wfLoadExtensionMessages('WikiaSearch');
 	}
 
 	function goResult( $search ) {
@@ -378,9 +374,4 @@ class WikiaSearch extends SpecialPage {
 	}
 }
 
-$wgExtensionFunctions[] = 'wfWikiaSearch';
-
-function wfWikiaSearch() {
-	SpecialPage::addPage(new WikiaSearch);
-}
 ?>
