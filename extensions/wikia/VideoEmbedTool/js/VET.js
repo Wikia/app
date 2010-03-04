@@ -488,7 +488,7 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 
 		VET_panel = new YAHOO.widget.Panel('VET_div', {
 			modal: true,
-			<a href="#">' + vet_close + '</a>constraintoviewport: true,
+			constraintoviewport: true,
 			draggable: false,
 			close: false,
 			fixedcenter: true,
