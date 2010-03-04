@@ -245,7 +245,7 @@ class UserAjaxCreateTemplate extends QuickTemplate {
 <?php if( @$this->haveData( 'uselang' ) ) { ?><input type="hidden" name="uselang" value="<?php $this->text( 'uselang' ); ?>" /><?php } ?>
 
 <?php if($this->data['createemail']) { ?>
-	<a id="wpCreateaccountX" class="wikia_button" href="#" onclick="$('#wpCreateaccountXSteer').value = false; $('#wpCreateaccountYSteer').value = true; UserRegistration.submitForm();" ><span><?= wfMsg("createaccountmail") ?></span></a>		
+	<a id="wpCreateaccountX" class="wikia-button" href="#" onclick="$('#wpCreateaccountXSteer').value = false; $('#wpCreateaccountYSteer').value = true; UserRegistration.submitForm();" ><?= wfMsg("createaccountmail") ?></a>		
 							
 <?php } else { ?>
 	<input type="hidden" id="wpCreateaccountXSteer" name="wpCreateaccount" value="true" >
