@@ -103,7 +103,7 @@
 
   function refresh() {
     var data = prepareData(this);
-    if (!isNaN(data.datetime)) {
+    if (data && !isNaN(data.datetime)) {
       $(this).text(inWords(data.datetime));
     }
     return this;
