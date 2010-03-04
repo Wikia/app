@@ -58,10 +58,10 @@ function wfTitleEditPrintFirstHeading() {
 			$attributes['id'] = 'te-editanon';
 		}
 
-		$attributes['class'] = 'wikia_button';
+		$attributes['class'] = 'wikia-button';
 
 		$link = $sk->link(
-			$wgTitle, "<span>" . wfMsg( 'titleedit' ) . "</span>",
+			$wgTitle, wfMsg( 'titleedit' ),
 			$attributes,
 			$query
 		);
