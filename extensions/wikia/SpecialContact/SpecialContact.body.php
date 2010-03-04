@@ -180,7 +180,7 @@ class ContactForm extends SpecialPage {
 		}
 
 		// add intro text
-		$wgOut->addHTML( wfMsgExt( 'contactintro', array('parse', 'content' )) );
+		$wgOut->addHTML( wfMsgExt( 'contactintro', array('parse')) );
 		
 		$ti = 1;
 		//setup form and javascript
