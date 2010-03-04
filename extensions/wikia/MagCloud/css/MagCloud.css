@@ -1,6 +1,6 @@
 /* toolbar */
 #MagCloudToolbar {
-	background: #eee url('http://images.wikia.com/common/releases_MagCloud/extensions/wikia/MagCloud/images/MagCloudToolbarBg.png') repeat-x 50%;
+	background: #eee url('http://images.wikia.com/common/extensions/wikia/MagCloud/images/MagCloudToolbarBg.png') repeat-x 50%;
 	border: solid 2px #C73024;
 	color: #000;
 	height: 34px;
@@ -10,7 +10,7 @@
 }
 
 #MagCloudToolbarLogo {
-	background: #d00d0e url('http://images.wikia.com/common/releases_MagCloud/extensions/wikia/MagCloud/images/MagCloudToolbarLogo.png') no-repeat 50% 50%;
+	background: #d00d0e url('http://images.wikia.com/common/extensions/wikia/MagCloud/images/MagCloudToolbarLogo.png') no-repeat 50% 50%;
 	display: block;
 	float: left;
 	height: 34px;
@@ -31,7 +31,7 @@
 
 /* steps */
 #MagCloudToolbar span.MagCloudToolbarArrow {
-	background: transparent url('http://images.wikia.com/common/releases_MagCloud/extensions/wikia/MagCloud/images/MagCloudToolbarArrow.png') no-repeat 0 50%;
+	background: transparent url('http://images.wikia.com/common/extensions/wikia/MagCloud/images/MagCloudToolbarArrow.png') no-repeat 0 50%;
 	height: 36px;
 	margin: -1px 10px;
 	padding: 0;
@@ -44,7 +44,7 @@
 
 /* articles count / go to your magazine */
 #MagCloudToolbarArticlesCount {
-	background: #d00d0e url('http://images.wikia.com/common/releases_MagCloud/extensions/wikia/MagCloud/images/MagCloudToolbarArticlesCountBg.png') no-repeat 0 50%;
+	background: #d00d0e url('http://images.wikia.com/common/extensions/wikia/MagCloud/images/MagCloudToolbarArticlesCountBg.png') no-repeat 0 50%;
 	font-size: 1em;
 	height: 34px;
 	padding-left: 15px;
@@ -88,7 +88,7 @@
 }
 
 #MagCloudToolbarClose a {
-	background: #b3b3b3 url('http://images.wikia.com/common/releases_MagCloud/extensions/wikia/MagCloud/images/MagCloudToolbarClose.png') no-repeat 50% 50%;
+	background: #b3b3b3 url('http://images.wikia.com/common/extensions/wikia/MagCloud/images/MagCloudToolbarClose.png') no-repeat 50% 50%;
 	cursor: pointer;
 	height: 18px;
 	left: 4px;
@@ -191,7 +191,7 @@
 }
 
 .MagCloudDialog h1.modalTitle div {
-	background-image: url('http://images.wikia.com/common/releases_MagCloud/extensions/wikia/MagCloud/images/MagCloudToolbarClose.png') !important;
+	background-image: url('http://images.wikia.com/common/extensions/wikia/MagCloud/images/MagCloudToolbarClose.png') !important;
 	background-position: 0 0;
 	height: 18px;
 	width: 18px;
