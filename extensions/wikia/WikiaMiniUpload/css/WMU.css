@@ -35,6 +35,28 @@
 	font-size: 12pt;
 	font-weight: bold;
 }
+
+#ImageUploadBack img  {
+        position: absolute;
+        cursor: pointer;
+        top: -1px;
+        left: -2px;
+}
+
+#ImageUploadClose {
+        right: 30px;
+        padding-left: 18px;
+        position: absolute;
+        top: 5px;
+}
+
+#ImageUploadClose img {
+        position: absolute;
+        cursor: pointer;
+        left: 1px;
+        top: 1px;
+}
+
 #ImageUploadBack {
 	left: 10px;
 	padding-left: 18px;
@@ -45,19 +67,6 @@
 #ImageUploadBack a {
 	color: #FFF;
 }
-#ImageUploadBack div {
-	background: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20100128);
-	clip: rect(0px 304px 16px 288px);
-	height: 16px;
-	left: -288px;
-	position: absolute;
-	width: 320px;
-	cursor: pointer;
-}
-* html #ImageUploadBack div {
-	background: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/sprite.png?20100128', sizingMethod='crop');
-}
 #ImageUploadClose {
 	right: 30px;
 	padding-left: 18px;
@@ -67,19 +76,7 @@
 #ImageUploadClose a {
 	color: #FFF;
 }
-#ImageUploadClose div {
-	background: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20100128);
-	clip: rect(0px 320px 16px 304px);
-	height: 16px;
-	left: -304px;
-	position: absolute;
-	width: 320px;
-	cursor: pointer;
-}
-* html #ImageUploadClose div {
-	background: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/sprite.png?20100128', sizingMethod='crop');
-}
+
 .ImageUploadProgress {
 	background: url(/skins/common/images/ajax.gif) no-repeat;
 	height: 16px;
