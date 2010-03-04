@@ -31,7 +31,27 @@ chdir( $oldCwd );
 $verbose = (bool) (isset( $options['verbose'] ) || isset( $options['v'] ));
 $force = (bool) (isset( $options ['force'] ) || isset( $options ['f'] ));
 
-$sql = getRebuildInterwikiSQL();
+if ($verbose) echo "--force is " . ( $force ? "true" : "false" ) . "\n";
+
+$key = "ciw_timestamp";
+$ciw_timestamp = $wgMemc->get($key);
+if ($force || empty($ciw_timestamp)) {
+	$dbr = wfGetDB( DB_SLAVE, array(), 'wikicities');
+	$ciw_timestamp = $dbr->selectField('page', 'page_latest', "page_title = 'Interwiki_map' && page_namespace = 0");
+	$wgMemc->set($key, $ciw_timestamp, 3600);
+	if ($verbose) echo "ciw_timestamp not from cache\n";
+}
+if ($verbose) echo "ciw_timestamp: {$ciw_timestamp}\n";
+
+$key = "ciw_sql";
+list($ciw_sql_timestamp, $sql) = $wgMemc->get($key);
+if ($force || empty($ciw_sql_timestamp) || empty($sql) || $ciw_sql_timestamp < $ciw_timestamp) {
+	$ciw_sql_timestamp = $ciw_timestamp;
+	$sql = getRebuildInterwikiSQL();
+	$wgMemc->set($key, array($ciw_sql_timestamp, $sql));
+	if ($verbose) echo "ciw_sql not from cache\n";
+}
+if ($verbose) echo "ciw_sql_timestamp: {$ciw_sql_timestamp}\n";
 
 if ( isset( $options['o'] ) ) {
 	# Output to file specified with -o
@@ -44,12 +64,13 @@ if ( isset( $options['o'] ) ) {
 } else {
 	# Update interwiki tables in all wikias
 
-	$dbr = wfGetDB( DB_SLAVE, array(), 'wikicities');
-	$lastmod = $dbr->selectField('page', 'page_latest', "page_title = 'Interwiki_map' && page_namespace = 0");
-
 	# Check if update is needed
 	$lastupdate = $wgLastInterwikiUpdate;
+	if ($verbose) echo "lastupdate: {$lastupdate}\n";
+	$lastmod = $ciw_timestamp;
+	if ($verbose) echo "lastmod: {$lastmod}\n";
 	if ( $lastupdate !== $lastmod || $force ) {
+		if ($verbose) echo "lastupdate != lastmod (or forced update)\n";
 			wfWaitForSlaves( 100 );
 			$dbw = wfGetDB( DB_MASTER );
 			if ( $dbw != false ) {
