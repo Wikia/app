@@ -169,7 +169,7 @@ my @done = ();
 my $maxrequests = $ENV{ "REQUESTS" } || 1000;
 my $basepath    = $ENV{ "IMGPATH" }  || "/images";
 my $clients     = $ENV{ "CHILDREN" } || 10;
-my $listen      = $ENV{ "SOCKET" }   || "127.0.0.1:39393";
+my $listen      = $ENV{ "SOCKET" }   || "0.0.0.0:39393";
 my $debug       = $ENV{ "DEBUG" }    || 1;
 my $test        = $ENV{ "TEST" }     || 0;
 

@@ -71,7 +71,8 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->mWikiData = array();
 
 		/**
-		 * starters map:
+		 * starters map: langcode => database name
+		 *
 		 * "*" is default
 		 * "answers" when $mType = "answers"
 		 */
