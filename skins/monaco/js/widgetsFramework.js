@@ -214,7 +214,7 @@ var WidgetFramework = {
 
 		if(WidgetFramework.carouselLoaded == false) {
 			// RT #16828
-			$('#wikia_header').before('<div id="cockpit" class="color1"><div id="cockpit_wrapper"><ul id="widget_cockpit_list"></ul></div><div id="cockpit_close" class="color1"></div></div>');
+			$('#wikia_header').before('<div id="cockpit" class="color1"><div id="cockpit_wrapper"><ul id="widget_cockpit_list"></ul></div><img src="' + stylepath + '/common/blank.gif" id="cockpit_close" class="sprite close" /></div>');
 
 			var carousel = $('#widget_cockpit_list').hide();
 
