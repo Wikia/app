@@ -323,20 +323,11 @@ a.greyButton big {
 	float: left;
 	font-size: 10pt;
 	font-weight: bold;
-	padding-right: 18px;
 	position: relative;
 }
-#widget_cockpit_list li h1 div.add {
-	background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20100128);
-	clip: rect(0px 272px 16px 256px);
+#widget_cockpit_list h1 img {
 	cursor: pointer;
-	display: block;
-	height: 16px;
-	position: absolute;
-	right: -48px;
-	top: 0;
-	width: 320px;
-	z-index: 100;
+	margin-left: 3px;
 }
 .WidgetNeedHelpThumb div {
 	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_needshelp.png);

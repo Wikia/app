@@ -185,10 +185,11 @@
 .sprite.protect { background-position: -48px -82px; }
 .sprite.viewsource { background-position: -64px -82px; }
 
-.sprite.delete { background-position: -48px -98px; }
-
-.sprite.random { background-position: -64px -98px; }
+.sprite.ok { background-position: 0 -98px; }
 .sprite.error { background-position: -16px -98px; }
+.sprite.add { background-position: -32px -98px; }
+.sprite.delete { background-position: -48px -98px; }
+.sprite.random { background-position: -64px -98px; }
 
 .sprite.user { background-position: 0 -114px; }
 .sprite.bloglist { background-position: -16px -114px; }
