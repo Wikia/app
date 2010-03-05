@@ -162,35 +162,6 @@ div#userlogin .mw-input span {
 	top: -1px;
 }
 
-div#userlogin .mw-input-ok img.sprite {
-	background: transparent url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20100128) no-repeat 0 0;
-	clip: rect(0px 608px 16px 592px);
-	height: 16px;
-	left: -592px;
-	position: absolute;
-	top: 0;
-	width: 624px;
-}
-
-div#userlogin .mw-input-error img.sprite,
-div#userloginErrorBox img.sprite,
-div#userloginErrorBox2 img.sprite,
-form#ajaxloginform2 img.sprite {
-	background: transparent url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20100128) no-repeat 0 0;
-	clip: rect(0px 624px 16px 608px);
-	height: 16px;
-	left: -608px;
-	position: absolute;
-	top: 0;
-	width: 624px;
-}
-
-div#userlogin .mw-progress img.sprite {
-	background: transparent url('http://images.wikia.com/common/skins/common/images/ajax.gif?20091110') no-repeat 100% 1px;
-	height: 16px;
-	width: 16px;
-}
-
 div#userlogin .inputError {
 	display: none;
 	margin-left: 24px;
@@ -222,10 +193,6 @@ div#userlogin .inputError {
 /* @end */
 
 /* @group Error box on Special:Signup */
-#userloginInnerErrorBox,#wpError {
-	margin-left: 10px;
-}
-
 #userloginInnerErrorBox strong{
 	font-weight: bold;
 }

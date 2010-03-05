@@ -234,20 +234,6 @@
 
 .sprite.back { background-position: -16px -146px; }
 
-
-/* TODO: Fix AutoCreateWiki
-.icon-sprite.progress {
-	background-image: url(http://images.wikia.com/common/skins/common/images/ajax.gif);
-}
-.icon-sprite.alert {
-	background-position: -608px;
-}
-.icon-sprite.ok {
-	background-position: -592px;
-}
-.icon-sprite.watch {
-	background-position: -32px;
-}
-*/
+.sprite.progress { background-image: url(http://images.wikia.com/common/skins/common/images/ajax.gif); }
 
 /* @end */
