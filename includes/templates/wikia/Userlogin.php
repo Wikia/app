@@ -605,13 +605,13 @@ class UsercreateTemplate extends QuickTemplate {
 
 		UserRegistration.toggleError = function(id, show) {
 			if (show == 'ok') {
-				$('#' + id).addClass('mw-input-ok').removeClass('mw-input-error mw-progress');
+				$('#' + id + ' img:first').removeClass().addClass('sprite ok');
 			} else if (show == 'clear') {
-				$('#' + id).removeClass('mw-input-ok mw-input-error mw-progress');
+				$('#' + id + ' img:first').removeClass();
 			} else if (show == 'progress') {
-				$('#' + id).addClass('mw-progress').removeClass('mw-input-ok mw-input-error');
+				$('#' + id + ' img:first').removeClass().addClass('sprite progress');
 			} else {
-				$('#' + id).addClass('mw-input-error').removeClass('mw-input-ok mw-progress');
+				$('#' + id + ' img:first').removeClass().addClass('sprite error');
 			}
 		}
 
