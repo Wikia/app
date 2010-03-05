@@ -11,6 +11,8 @@
 // pointing to those redirects.
 //
 // The structure of this special page was just copied from our Soapfailures extension.
+//
+// TODO: Internationalize better.  There are still many hardcoded strings at this point.
 ////
 
 if(!defined('MEDIAWIKI')) die();
@@ -26,25 +28,27 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Links To Redirects',
 	'author' => '[http://www.lyricwiki.org/User:Sean_Colombo Sean Colombo]',
 	'description' => 'Special page showing all links which point to redirects',
-	'version' => '0.1',
+	'version' => '0.1.1',
 );
+$wgExtensionMessagesFiles['LinksToRedirects'] = dirname(__FILE__).'/Special_LinksToRedirects.i18n.php';
 
 function wfSetupLinksToRedirects(){
-	global $IP, $wgMessageCache;
+	global $IP;
 	require_once($IP . '/includes/SpecialPage.php');
 	SpecialPage::addPage(new SpecialPage('Linkstoredirects', 'linkstoredirects', true, 'wfLinksToRedirects', false));
-	$wgMessageCache->addMessage('linkstoredirects', 'Links To Redirects');
 }
 
 function wfLinksToRedirects(){
 	global $wgOut;
 	global $wgRequest, $wgUser;
 	
+	wfLoadExtensionMessages('LinksToRedirects');
+
 	GLOBAL $wgMemc;
 	$TABLE_PREFIX = "";
 	$CACHE_KEY = "LW_LINKS_TO_REDIRECTS";
 
-	$wgOut->setPageTitle("Links To Redirects");
+	$wgOut->setPageTitle(wfMsg('linkstoredirects'));
 
 /*
 	// This processes any requested for removal of an item from the list.

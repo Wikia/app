@@ -29,13 +29,4 @@ $wgAutoloadClasses['ArtistRedirects'] = $dir . 'Special_ArtistRedirects.body.php
 $wgExtensionMessagesFiles['ArtistRedirects'] = $dir . 'Special_ArtistRedirects.i18n.php';
 $wgSpecialPages['ArtistRedirects'] = 'ArtistRedirects'; # Let MediaWiki know about your new special page.
 
-// Initial setup.
-//function wfSetupArtistRedirects(){
-//	global $IP, $wgMessageCache;
-//	require_once($IP . '/includes/SpecialPage.php');
-//	//SpecialPage::addPage(new SpecialPage('Artistredirects', 'artistredirects', true, 'wfArtistRedirects', false));
-//	SpecialPage::addPage(new SpecialPage('Artistredirects', 'artistredirects', true, 'wfArtistRedirects', false));
-//	$wgMessageCache->addMessage('artistredirects', 'Artist Redirects');
-//}
-
 ?>

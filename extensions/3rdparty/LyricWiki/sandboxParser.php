@@ -15,23 +15,11 @@ Developed for use by LryicWiki.org (http://www.lyricwiki.org/)
 Version 0.1.0	2008-03
 * Initial coding - teknomunk
 
-***********************************************************************************/
+Version 0.1.1	2010-03-05
+* Removed backward compatibility for less than 1.11 that was being run on every
+  page since those would now be ancient (unsupported) versions.
 
-// add this system call for MediaWiki Versions less than 1.11.1
-if ( version_compare( $wgVersion, "1.11.1", '<' ) )
-{
-	function wfLoadExtensionMessages( $extension )
-	{
-		global $wgMessageCache,$wgExtensionMessagesFiles;
-		
-		// Adapted from MediaWiki 1.11.1
-		require( $wgExtensionMessagesFiles[$extension] );
-		foreach( $messages as $lang => $msgs )
-		{
-			$wgMessageCache->addMessages( $msgs, $lang );
-		};
-	};
-};
+***********************************************************************************/
 
 function sandboxParse($wikiText)
 {

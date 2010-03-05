@@ -54,11 +54,10 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 function wfSetupBatchMove() {
-	global $IP, $wgMessageCache;
+	global $IP;
 
 	require_once($IP . '/includes/SpecialPage.php');
 	SpecialPage::addPage(new SpecialPage('Batchmove', 'batchmove', true, 'wfBatchMove', false));
-	$wgMessageCache->addMessage('batchmove', 'Batch Move Pages');
 }
 
 function doBatchMove( $from, $to, $reason, $fake=false )
