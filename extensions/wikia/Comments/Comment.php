@@ -2,35 +2,26 @@
 $wgComments = true;
 $wgCommentsLog = false;
 $wgExtensionFunctions[] = "wfComments";
-$wgExtensionFunctions[] = 'wfCommentsReadLang';
-
-$wgCommentlogMessages = array();
-
-$wgCommentlogMessages['en'] = array(
-	'commentslogpage'           => 'Comments log',
-	'commentslogpagetext'       => 'This is a log of comments',
-	'commentslogentry'          => '', # For compatibility, don't translate this
-	'commentslog-create-entry'  => 'New comment',
- 
-	'comments-create-text'   => "[[$1]] - $2", # Don't translate this
-);
+$wgExtensionMessagesFiles['Comment'] = dirname(__FILE__).'/Comment.i18n.php';
+$wgExtensionMessagesFiles['CommentLog'] = dirname(__FILE__).'/CommentLog.i18n.php';
 
 function wfComments() {
     global $wgParser, $wgOut, $wgCommentsLog;
-    
+
+	wfLoadExtensionMessages('Comment');
+
     if( $wgCommentsLog ){
-	# Add a new log type	 
-	global $wgLogTypes, $wgLogNames, $wgLogHeaders, $wgLogActions, $wgMessageCache, $wgCommentlogMessages;
-	
-	foreach( $wgCommentlogMessages as $key => $value ) {
-		$wgMessageCache->addMessages( $wgCommentlogMessages[$key], $key );
-	}
-	
-	$wgLogTypes[]                      = 'comments';
-	$wgLogNames['comments']            = 'commentslogpage';
-	$wgLogHeaders['comments']          = 'commentslogpagetext';
-	$wgLogActions['comments/comments'] = 'commentslogentry';
+		# Add a new log type	 
+		global $wgLogTypes, $wgLogNames, $wgLogHeaders, $wgLogActions;
+
+		wfLoadExtensionMessages('CommentLog');
+
+		$wgLogTypes[]                      = 'comments';
+		$wgLogNames['comments']            = 'commentslogpage';
+		$wgLogHeaders['comments']          = 'commentslogpagetext';
+		$wgLogActions['comments/comments'] = 'commentslogentry';
     }
+
     $wgParser->setHook( "comments", "DisplayComments" );
 }
 
@@ -84,12 +75,4 @@ function DisplayComments( $input , $args, &$parser ){
 	return $output; 
 }
 
-//read in localisation messages
-function wfCommentsReadLang(){
-	global $wgMessageCache, $IP, $wgCommentsDirectory;
-	require_once ( "$wgCommentsDirectory/Comments.i18n.php" );
-	foreach( efWikiaComments() as $lang => $messages ){
-		$wgMessageCache->addMessages( $messages, $lang );
-	}
-}
 ?>

@@ -18,6 +18,7 @@ $wgBlogPageDisplay['new_articles'] = true;
 
 
 $wgHooks['ArticleFromTitle'][] = 'wfBlogFromTitle';
+$wgExtensionMessagesFiles['Blog'] = dirname(__FILE__).'/Blog.i18n.php';
 
 //ArticleFromTitle
 //Calls BlogPage instead of standard article
@@ -40,31 +41,16 @@ function wfBlogFromTitle( &$title, &$article ){
 		$wgOut->enableClientCache(false);
 		$wgParser->disableCache();
 		
-		require_once ( "Blog.i18n.php" );
-		foreach( efWikiaBlog() as $lang => $messages ){
-			$wgMessageCache->addMessages( $messages, $lang );
-		}
-		
+		wfLoadExtensionMessages('Blog');
+
 		require_once( "BlogPage.php" );
 		$wgOut->addScript("<link rel='stylesheet' type='text/css' href=\"/extensions/wikia/BlogPage/BlogPage.css?{$wgStyleVersion}\"/>\n");
 		
 		$article = new BlogPage($wgTitle);
-		
 	}
 
 	return true;
 }
-/*
-$wgExtensionFunctions[] = 'wfBlogReadLang';
-//read in localisation messages
-function wfBlogReadLang(){
-	global $wgMessageCache, $IP;
-	require_once ( "$IP/extensions/wikia/BlogPage/Blog.i18n.php" );
-	foreach( efWikiaBlog() as $lang => $messages ){
-		$wgMessageCache->addMessages( $messages, $lang );
-	}
-}
-*/
 
 $wgExtensionFunctions[] = "wfFixRHTML";
 

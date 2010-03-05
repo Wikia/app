@@ -1,9 +1,8 @@
 <?php
-function efWikiaInviteContacts() {
 
-	return array(
-	
-	'en' => array(
+$messages = array();
+
+$messages['en'] = array(
 	'invite_subject' => '$1 wants you to join {{SITENAME}}! ',
 	'invite_body' => 'Hi!
 
@@ -46,9 +45,6 @@ The Wikia Team',
 	'invite_customize_send' => 'Send Email',
 	'contact_importer_waiting_message' => 'We are loading your contacts . . . Think of it as the seventh inning stretch.',
 	'contact_importer_invite_message' => 'Invite your friends.  They will thank you.  The more friends you invite, the less bored you will be.',	
-	),
-	);
-
-}
+);
 
 ?>
