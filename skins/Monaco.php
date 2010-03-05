@@ -2222,12 +2222,12 @@ wfProfileOut( __METHOD__ . '-body');
 				}
 			} else {
 				preg_match("/href=\"([^\"]+)/", $cssStaticChute, $matches);
-				$cssReferences[] = $matches[1];
+				$cssReferences[] = str_replace('&amp;', '&', $matches[1]);
 			}
 			$cssReferences = Wikia::json_encode($cssReferences);
 
 			echo <<<EOF
-			<script type="text/javascript">
+			<script type="text/javascript">/*<![CDATA[*/
 			var cssReferences = $cssReferences;
 			function loadStylesheet(href) {
 				$().log('loading CSS: ' + href);
@@ -2242,7 +2242,7 @@ wfProfileOut( __METHOD__ . '-body');
 			for(id in cssReferences) {
 				setTimeout('loadStylesheet("' + cssReferences[id] + '")', 100);
 			}
-			</script>
+			/*]]>*/</script>
 EOF;
 		}
 	}
