@@ -14,13 +14,11 @@ h1.modalTitle {
 	padding: 5px;
 	position: relative;
 }
-h1.modalTitle div {
-	background-position: -304px 0;
+h1.modalTitle img {
 	cursor: pointer;
-	height: 16px;
 	position: absolute;
 	right: 5px;
-	width: 16px;
+	top: auto;
 }
 .modalInside {
 	padding: 5px !important;
@@ -131,31 +129,6 @@ h1.modalTitle div {
 	padding-top: 15px;
 }
 
-/*** Switch button for combo ajax login ***/
-
-.ajaxregister_button {
-	background: transparent url(http://images.wikia.com/common/skins/monaco/images/ajaxreg_button_sprite.png?2) no-repeat scroll -367px -86px;
-	color: black;
-
-}
-	
-.ajaxregister_button span {
-	background: transparent url(http://images.wikia.com/common/skins/monaco/images/ajaxreg_button_sprite.png?2) no-repeat scroll -269px -31px;
-	color: black;
-	width: 120px;
-}
-
-.ajaxregister_button_enable {
-	background: transparent url(http://images.wikia.com/common/skins/monaco/images/ajaxreg_button_sprite.png?2) no-repeat -367px -55px; 
-	color: black; 
-}
-	 
-.ajaxregister_button_enable span {
-	background: transparent url(http://images.wikia.com/common/skins/monaco/images/ajaxreg_button_sprite.png?2) no-repeat right top;
-	color: black;
-}
- 
-
 #AjaxLoginButtons
 {
 	height:20px;
@@ -188,31 +161,6 @@ h1.modalTitle div {
 	line-height:1.5em;
 	list-style-image:url(http://images.wikia.com/common/skins/monobook/bullet.gif);
 	list-style-type:square;
-}
-
-.wpAjaxRegisterTable .sprite,#userloginErrorBox .sprite,#userloginErrorBox2 .sprite,#userloginErrorBox3 .sprite
-{
-	clip:rect(0px, 624px, 16px, 608px);
-	height:16px;
-	left:0;
-	position:relative;
-	top:0;
-	width:16px;
-}
-
-.wpAjaxRegisterTable .mw-input-error .sprite,#userloginErrorBox .sprite,#userloginErrorBox2 .sprite,#userloginErrorBox3 .sprite
-{
-	background:transparent url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20100128) no-repeat scroll  -608px 0 ;
-}
-
-.wpAjaxRegisterTable .mw-progress .sprite
-{
-	background:transparent url('http://images.wikia.com/common/skins/common/images/ajax.gif?20091110') no-repeat 100% 1px;
-}
-
-.wpAjaxRegisterTable .mw-input-ok .sprite
-{ 
-	background:transparent url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20100128) no-repeat scroll  -592px 0;
 }
 
 .wpAjaxLoginInput .pseudolabel
