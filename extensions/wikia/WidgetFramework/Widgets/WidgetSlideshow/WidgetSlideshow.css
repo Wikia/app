@@ -69,22 +69,3 @@
 	display: none;
 }
 
-* html .WidgetSlideshowControlPrev {
-	background: none;
-        filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/common/widgets/icons/widget_slideshow_prev.png', sizingMethod='crop');
-}
-
-* html .WidgetSlideshowControlNext {
-	background: none;
-        filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/common/widgets/icons/widget_slideshow_next.png', sizingMethod='crop');
-}
-
-* html .WidgetSlideshowControlPause {
-	background: none;
-        filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/common/widgets/icons/widget_slideshow_pause.png', sizingMethod='crop');
-}
-
-* html .WidgetSlideshowControlPlay {
-	background: none;
-        filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/common/widgets/icons/widget_slideshow_play.png', sizingMethod='crop');
-}
