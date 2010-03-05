@@ -207,6 +207,9 @@ h1.modalTitle img {
 	background-image: none;
 	-webkit-box-shadow: none;
 }
+#AjaxLoginButtons input:hover {
+	text-shadow: none;
+}
 
 #AjaxLoginButtons .ajaxregister-enable{
 	background-color:#D6E0F5;
