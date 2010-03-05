@@ -126,7 +126,7 @@ class StaticChute {
 
 		// JS served for logged-in
 		$this->config['monaco_loggedin_js'] = array(
-			'common/yui_2.5.2/utilities/utilities.js',
+/*			'common/yui_2.5.2/utilities/utilities.js',
 			'common/yui_2.5.2/cookie/cookie-beta.js',
 			'common/yui_2.5.2/container/container.js',
 			'common/yui_2.5.2/autocomplete/autocomplete.js',
@@ -136,7 +136,7 @@ class StaticChute {
 			'common/yui_2.5.2/tabview/tabview.js',
 			'common/yui_2.5.2/slider/slider.js',
 			'common/yui_extra/tools-min.js',
-			'common/yui_extra/carousel-min.js',
+			'common/yui_extra/carousel-min.js', */
 
 			'common/jquery/jquery-1.4.2.min.js',
 			'common/jquery/jquery.json-1.3.js',
@@ -166,7 +166,7 @@ class StaticChute {
 
 		// JS served for anon for everything that's not an article view
 		$this->config['monaco_anon_everything_else_js'] = array(
-			'common/yui_2.5.2/utilities/utilities.js',
+	/*		'common/yui_2.5.2/utilities/utilities.js',
 			'common/yui_2.5.2/cookie/cookie-beta.js',
 			'common/yui_2.5.2/container/container.js',
 			'common/yui_2.5.2/autocomplete/autocomplete.js',
@@ -175,7 +175,7 @@ class StaticChute {
 			'common/yui_2.5.2/menu/menu.js',
 			'common/yui_2.5.2/tabview/tabview.js',
 			'common/yui_2.5.2/slider/slider.js',
-			'common/yui_extra/tools-min.js',
+			'common/yui_extra/tools-min.js', */
 
 			'common/jquery/jquery-1.4.2.min.js',
 			'common/jquery/jquery.json-1.3.js',
@@ -205,9 +205,11 @@ class StaticChute {
 
 		// CSS
 		$this->config['monaco_css'] = array(
-			'common/yui_2.5.2/container/assets/container.css',
+
+		/*'common/yui_2.5.2/container/assets/container.css',
 			'common/yui_2.5.2/tabview/assets/tabview.css',
-        		'common/shared.css',
+		*/
+        	'common/shared.css',
 			'monaco/css/monobook_modified.css',
 			'monaco/css/reset_modified.css',
 			'common/wikia-ui.css',
