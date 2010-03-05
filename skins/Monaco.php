@@ -554,6 +554,11 @@ EOS;
 			}
 		}
 
+		// load WikiaScriptLoader
+		// TODO: probably move to different place
+		global $wgStylePath, $wgStyleVersion;
+		$tpl->set('WikiaScriptLoader', "<script src=\"{$wgStylePath}/monaco/js/WikiaScriptLoader.js?{$wgStyleVersion}\" type=\"text/javascript\"></script>");
+
 		$tpl->set('mergedJS', "\n\t\t" . $StaticChute->getChuteHtmlForPackage($package) . "\n");
 
 		// macbre: move media="print" CSS to bottom (RT #25638)
@@ -1403,6 +1408,7 @@ class MonacoTemplate extends QuickTemplate {
 	}
 
 	if($wgRequest->getVal('action') != '' || $namespace == NS_SPECIAL) {
+		$this->html('WikiaScriptLoader');
 		$this->html('mergedJS');
 		foreach($this->data['references']['js'] as $script) {
 			if (!empty($script['url'])) {
@@ -1854,6 +1860,7 @@ if (43339 == $wgCityId) echo AnalyticsEngine::track("GA_Urchin", "lyrics");
 		<noscript><link rel="stylesheet" type="text/css" href="<?= $wgStylePath ?>/monaco/css/noscript.css?<?= $wgStyleVersion ?>" /></noscript>
 <?php
 	if(!($wgRequest->getVal('action') != '' || $namespace == NS_SPECIAL)) {
+		$this->html('WikiaScriptLoader');
 		$this->html('mergedJS');
 		foreach($this->data['references']['js'] as $script) {
 ?>
