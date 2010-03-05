@@ -1,9 +1,8 @@
 <?php
-function efWikiaComments() {
 
-	return array(
-	
-	'en' => array(
+$messages = array();
+
+$messages['en'] = array(
 	'comment_comment' => 'Comment',	
 	'comments_db_locked' => '<h3>Adding Comments</h3>The database is currently locked for routine database maintenance, after which it will be back to normal. Please check back later!',
 	'comment_voted_label' => 'Voted',
@@ -36,8 +35,6 @@ function efWikiaComments() {
 	'comment_ignore_unblock'=>'Unblock',
 	'comment_ignore_cancel'=>'Cancel',
 	'comment_ignore_title'=>'Comment Ignore List',
-	),
-	); 
-}
+); 
 
 ?>

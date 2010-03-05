@@ -1,6 +1,7 @@
 <?php
 $wgExtensionFunctions[] = 'wfSpecialCommentIgnoreList';
 $wgSpecialPageGroups['CommentIgnoreList'] = 'users';
+$wgExtensionMessagesFiles['Comment'] = dirname(__FILE__).'/Comment.i18n.php';
 
 function wfSpecialCommentIgnoreList(){
 	global $wgUser,$IP;
@@ -23,10 +24,7 @@ function wfSpecialCommentIgnoreList(){
 			require_once ("$IP/extensions/wikia/UserStats/UserStatsClass.php");
 			
 			//language messages
-			require_once ( "$IP/extensions/wikia/Comments/Comments.i18n.php" );
-			foreach( efWikiaComments() as $lang => $messages ){
-				$wgMessageCache->addMessages( $messages, $lang );
-			}
+			wfLoadExtensionMessages('Comment');
 			
 			$c = new Comment(0);
 		

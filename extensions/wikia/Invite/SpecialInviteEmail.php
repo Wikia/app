@@ -1,18 +1,7 @@
 <?php
 
 $wgExtensionFunctions[] = 'wfSpecialInviteEmail';
-$wgExtensionFunctions[] = 'wfInviteContactsReadLang';
-
-	//read in localisation messages
-function wfInviteContactsReadLang(){
-	//global $wgMessageCache, $IP, $wgPickGameDirectory;
-	global $wgMessageCache, $IP;
-	$wgInviteContactsDirectory = "{$IP}/extensions/wikia/Invite";
-	require_once ( "$wgInviteContactsDirectory/SpecialInviteContacts.i18n.php" );
-	foreach( efWikiaInviteContacts() as $lang => $messages ){
-		$wgMessageCache->addMessages( $messages, $lang );
-	}
-}
+$wgExtensionMessagesFiles['SpecialInviteContacts'] = dirname(__FILE__).'/SpecialInviteContacts.i18n.php';
 
 function wfSpecialInviteEmail(){
 	global $IP;
@@ -21,6 +10,7 @@ function wfSpecialInviteEmail(){
 		require_once( "$IP/extensions/wikia/UserStats/UserStatsClass.php" );
  	}
 
+	wfLoadMessages('SpecialInviteContacts');
 
 class InviteEmail extends UnlistedSpecialPage {
 
