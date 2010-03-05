@@ -107,6 +107,8 @@ EOD;
 		$no_questions .= wfMsgForContent( 'answers_widget_no_questions_askabout' );
 	}
 
+	$no_questions = Xml::encodeJsVar($no_questions);
+
 	global $wgWidgetAnswersForceCategoryForAsk;
 	if (!empty($wgWidgetAnswersForceCategoryForAsk)) {
 		$category = $wgWidgetAnswersForceCategoryForAsk;
@@ -126,7 +128,7 @@ var node = jQuery('#{$id}_content').children('div:last');
 if(WidgetAnswers_html == '') {
 	jQuery.getScript(WidgetAnswers_url, function() {
 		if(WidgetAnswers_html != '') node.append('<ul>' + WidgetAnswers_html + '</ul>');
-		else node.html('{$no_questions}');
+		else node.html({$no_questions});
 	});
 } else node.append('<ul>' + WidgetAnswers_html + '</ul>');
 /*]]>*/</script>
