@@ -92,8 +92,11 @@ var WidgetFramework = {
 			return;
 		}
 
-		if (this.className == 'add') {
-			type = $(this).attr('rel');
+		var target = $(this);
+		var type = '';
+
+		if (target.hasClass('add')) {
+			type = target.attr('rel');
 		}
 		else {
 			return;

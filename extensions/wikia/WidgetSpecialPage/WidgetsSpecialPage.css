@@ -37,17 +37,11 @@
 	width: 50px;
 }
 
-#widgetsSpecialPageList div.add
-{
-	background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20100128);
-	clip: rect(0px 272px 16px 256px);
-	cursor: pointer;
-	display: block;
-	height: 16px;
+#widgetsSpecialPageList .sprite {
 	position: absolute;
-	right: -55px;
+	right: -5px;
 	top: 42px;
-	width: 320px;
+	cursor: pointer;
 	z-index: 20;
 }
 
