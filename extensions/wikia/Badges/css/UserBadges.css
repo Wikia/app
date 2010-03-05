@@ -125,12 +125,6 @@ body {
 	cursor:pointer;
 }
 
-/* IE6 fix */
-* html .yui-picker-bg {
-	background-image: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/skins/common/yui_2.5.2/colorpicker/assets/picker_mask.png', sizingMethod='scale');
-}
-
 * html .yui-picker-controls ul {
 	width: 60px;
 }
