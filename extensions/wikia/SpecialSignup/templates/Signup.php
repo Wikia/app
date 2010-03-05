@@ -56,7 +56,7 @@ if( $wgUser->isAllowed('createaccount') ) {
 				}				
 			</style>');
 		} ?>
-		<img alt="status" class="icon-sprite alert" src="<?= $wgStylePath ?>/monobook/blank.gif"/>
+		<img alt="status" class="sprite error" src="<?= $wgStylePath ?>/monobook/blank.gif"/>
 		<span id="userloginInnerErrorBox">
 			<?php $this->html('message'); ?>
 		</span>
@@ -437,13 +437,13 @@ if( $wgUser->isAllowed('createaccount') ) {
 
 		UserRegistration.toggleError = function(id, show) {
 			if (show == 'ok') {
-				$('#' + id + ' img:first').removeClass().addClass('icon-sprite ok');
+				$('#' + id + ' img:first').removeClass().addClass('sprite ok');
 			} else if (show == 'clear') {
 				$('#' + id + ' img:first').removeClass();
 			} else if (show == 'progress') {
-				$('#' + id + ' img:first').removeClass().addClass('icon-sprite progress');
+				$('#' + id + ' img:first').removeClass().addClass('sprite progress');
 			} else {
-				$('#' + id + ' img:first').removeClass().addClass('icon-sprite alert');
+				$('#' + id + ' img:first').removeClass().addClass('sprite error');
 			}
 		}
 
@@ -582,7 +582,7 @@ if( $wgUser->isAllowed('createaccount') ) {
 				}				
 			</style>');
 		} ?>
-		<img alt="status" class="icon-sprite alert" src="<?= $wgStylePath ?>/monobook/blank.gif"/>
+		<img alt="status" class="sprite error" src="<?= $wgStylePath ?>/monobook/blank.gif"/>
 		<span id="userloginInnerErrorBox2">
 			<? $this->html('message'); ?>
 		</span>

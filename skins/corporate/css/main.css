@@ -894,35 +894,6 @@ footer {
 
 /* @end */
 
-/* TODO: move this to proper place */
-#article-links {
-	list-style-type: none;
-	padding: 0;
-}
-#article-links div {
-	background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20100128);
-	clip: rect(0px 0px 0px 0px);
-	height: 16px;
-	margin: 8px 2px 0 0;
-	position: absolute;
-	width: 576px;
-}
-#article-links li {
-	margin-right: 12px;
-	line-height: 32px;
-	padding-left: 18px;
-	position: relative;
-}
-#article-links #control-watch div {
-	clip: rect(0px 48px 16px 32px);
-	left: -32px;
-}
-/* TODO: this is unused - unless different way of building watch link will be used */
-#article-links #control-unwatch div {
-	clip: rect(0px 240px 16px 224px);
-	left: -224px;
-}
-
 /* @group Extension exceptions. */
 
 #contactform td {
