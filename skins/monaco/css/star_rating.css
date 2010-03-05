@@ -2,7 +2,7 @@
 .star-rating a:hover,
 .star-rating .current-rating
 {
-	background:transparent url('/skins/monaco/images/sprite.png') repeat-x top left;
+	background:transparent url('/skins/monaco/images/sprite.png') repeat-x 0 -20px;
 }
 
 .star-rating
@@ -42,7 +42,7 @@
 }
 .star-rating a:hover
 {
-	background-position: 0 -36px;
+	background-position: 0 -56px;
 	border:medium none;
 	left:0px;
 	z-index:2;
@@ -67,7 +67,7 @@
 .star-rating .current-rating
 {
 	/* currently voted stars background - yellow */
-	background-position: 0 -18px;
+	background-position: 0 -38px;
 	height:18px;
 	position:absolute;
 	text-indent:-9000px;
