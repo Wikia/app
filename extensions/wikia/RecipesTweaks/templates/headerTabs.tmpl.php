@@ -32,7 +32,7 @@
 ?>
 				<li id="add_recipe_tab" class="recipe_tab">
 					<span class="recipe_tab_wrapper">
-						<a href="<?= htmlspecialchars($newRecipeAction) ?>"><img src="<?= htmlspecialchars($blank) ?>" class="sprite" alt="."/></a>
+						<a href="<?= htmlspecialchars($newRecipeAction) ?>"><img src="<?= htmlspecialchars($blank) ?>" class="sprite add" alt="."/></a>
 						<a href="<?= htmlspecialchars($newRecipeAction) ?>"><?= wfMsg('recipes-add-new-recipe') ?></a>
 					</span>
 				</li>
