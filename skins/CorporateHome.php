@@ -83,7 +83,7 @@ class CorporateHomeTemplate extends CorporateBaseTemplate {
 						<section id="homepage-feature-sidebar">
 							<?php echo wfMsg('corporatepage-homepageintro'); ?>
 							<div class="create-wiki-container">
-								<a href="<?php echo $this->data['personal_urls']['createwiki']['href']; ?>" class="wikia-button"><?php echo $this->data['personal_urls']['createwiki']['text']; ?></a>
+								<a href="<?php echo $this->data['personal_urls']['createwiki']['href']; ?>" class="wikia-button big"><?php echo $this->data['personal_urls']['createwiki']['text']; ?></a>
 							</div>
 						</section>
 
