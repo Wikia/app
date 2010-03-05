@@ -2178,13 +2178,13 @@ else {
 }
 
 $this->html('bottomscripts'); /* JS call to runBodyOnloadHook */
-$this->html('reporttime');
 wfRunHooks('SpecialFooter');
-wfProfileOut( __METHOD__ . '-body');
 ?>
 		<div id="positioned_elements" class="reset"></div>
 <?php
-	$this->delayedPrintCSSdownload();
+$this->delayedPrintCSSdownload();
+$this->html('reporttime');
+wfProfileOut( __METHOD__ . '-body');
 ?>
 
 	</body>
@@ -2229,22 +2229,22 @@ wfProfileOut( __METHOD__ . '-body');
 			$cssReferences = Wikia::json_encode($cssReferences);
 
 			echo <<<EOF
-			<script type="text/javascript">/*<![CDATA[*/
-			var cssReferences = $cssReferences;
-			function loadStylesheet(href) {
-				$().log('loading CSS: ' + href);
-				var link = document.createElement('link');
-				link.rel = 'stylesheet';
-				link.type = 'text/css';
-				link.media = 'print';
-				link.href = href;
-				document.getElementsByTagName('head')[0].appendChild(link);
-			}
+		<script type="text/javascript">/*<![CDATA[*/
+		var cssReferences = $cssReferences;
+		function loadStylesheet(href) {
+			$().log('loading CSS: ' + href);
+			var link = document.createElement('link');
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.media = 'print';
+			link.href = href;
+			document.getElementsByTagName('head')[0].appendChild(link);
+		}
 
-			for(id in cssReferences) {
-				setTimeout('loadStylesheet("' + cssReferences[id] + '")', 100);
-			}
-			/*]]>*/</script>
+		for(id in cssReferences) {
+			setTimeout('loadStylesheet("' + cssReferences[id] + '")', 100);
+		}
+		/*]]>*/</script>
 EOF;
 		}
 	}
