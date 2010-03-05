@@ -212,44 +212,11 @@
     float: left;
 }
 
-/* Button styling research: http://www.filamentgroup.com/lab/update_styling_the_button_element_with_css_sliding_doors_now_with_image_spr/ */
-button {
-    background: transparent url(/extensions/wikia/NewWikiBuilder/button_sprite.png) no-repeat right -57px;
-    position: relative;
-    border: 0;
-    padding: 0 15px 0 0;
-    cursor: pointer;
-    overflow: visible; /* removes extra side padding in IE */
-    margin-left: 5px;
-}
-button::-moz-focus-inner {
-    border: none;  /* overrides extra padding in Firefox */
-}
-button span {
-    background: transparent url(/extensions/wikia/NewWikiBuilder/button_sprite.png) no-repeat left top;
-    color: #FFF;
-    font-family: "Arial Narrow", sans-serif;
-    font-size: 14pt;
-    line-height: 36px;
-    height: 37px;
-    padding-left: 40px;
-    position: relative;
-    display: block;
-    white-space: nowrap;
-}
 @media screen and (-webkit-min-device-pixel-ratio:0) {
     /* Safari and Google Chrome only - fix margins */
     button span {
         margin-top: -1px;
     }
-}
-
-button.secondary {
-    background-position: right -171px;
-}
-button.secondary span {
-    background-position: 0px -114px;
-    color: #000;
 }
 
 .note {
