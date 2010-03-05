@@ -134,6 +134,10 @@ WikiaScriptLoader.prototype = {
 
 				// debug
 				self.log('"' + url + '" executed in ' + (self.getTime() - evalStart)  + ' ms');
+
+				if (typeof onloadCallback == 'function') {
+					onloadCallback();
+				}
 			}
 		};
 
