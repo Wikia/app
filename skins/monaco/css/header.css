@@ -32,7 +32,7 @@
 	-webkit-box-shadow: none;
 }
 .header-button img {
-	background: url(/skins/monaco/images/sprite.png) -72px -54px;
+	background: url(../images/sprite.png) -72px -54px;
 	height: 4px;
 	margin-left: 3px;
 	width: 7px;
