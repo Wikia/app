@@ -557,8 +557,13 @@ function getMenu() {
 	if($id) {
 		$menuArray = $wgMemc->get($id);
 		if(!empty($menuArray['magicWords'])) {
-			$content .= "document.write('<scr'+'ipt type=\"text/javascript\" src=\"$wgScript?action=ajax&rs=getMenu&v=".$wgRequest->getVal('v')."&words=".urlencode(join(',', $menuArray['magicWords']))."\"></scr'+'ipt>');";
+			$JSurl = Xml::encodeJsVar($wgScript . '?action=ajax&rs=getMenu&v=' . $wgRequest->getVal('v') .
+				'&words=' . urlencode(implode(',', $menuArray['magicWords'])));
+
+			$content .= "wsl.loadScriptAjax({$JSurl}, function() {\n";
 			unset($menuArray['magicWords']);
+
+			$usingCallback = true;
 		}
 
 		// fallback (RT #20893)
@@ -566,8 +571,13 @@ function getMenu() {
 			$menuArray = array('mainMenu' => array());
 		}
 
-		$content .= 'var menuArray = '.Wikia::json_encode($menuArray).';$("#navigation_widget").mouseover(menuInit);$(function() { menuInit(); });';
+		$content .= 'window.menuArray = '.Wikia::json_encode($menuArray).';$("#navigation_widget").mouseover(menuInit);$(function() { menuInit(); });';
 		$duration = 60 * 60 * 24 * 7; // one week
+
+		// close JS code
+		if(!empty($usingCallback)) {
+			$content .= "\n});";
+		}
 	}
 
 	$words = urldecode($wgRequest->getVal('words'));

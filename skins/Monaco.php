@@ -144,7 +144,9 @@ class MonacoSidebar {
 
 			$wgMemc->set($menuHash, $nodes, 60 * 60 * 24 * 3); // three days
 
-			$menu .= '<script type="text/javascript" src="'.$wgScript.'?action=ajax&amp;v='.self::version.'&amp;rs=getMenu&amp;id='.$menuHash.'"></script>';
+			// use AJAX request method to fetch JS code asynchronously
+			$menuJSurl = Xml::encodeJsVar("{$wgScript}?action=ajax&v=" . self::version. "&rs=getMenu&id={$menuHash}");
+			$menu .= "<script type=\"text/javascript\">/*<![CDATA[*/wsl.loadScriptAjax({$menuJSurl});/*]]>*/</script>";
 
 			return $menu;
 		}
