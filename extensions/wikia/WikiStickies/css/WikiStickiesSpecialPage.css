@@ -34,10 +34,6 @@
     margin: 0 0 6px 0;
 }
 
-.wikistickiesfeed h2 {
-    padding: 0 0 0 20px;
-}
-
 #wikistickies-admintools .bigger {
 	font-size: 155%;
 	font-weight: none;
@@ -67,6 +63,12 @@
 .wikistickiesfeed .submerged {
     display: none;
     margin-top: 0;
+}
+
+#bodyContent .sprite {
+	margin-right: 5px;
+	float: left;
+	top: 9px;
 }
 
 .wikistickiesfeed .MoreLink {
@@ -99,7 +101,7 @@
 }
 
 #bodyContent h2 {
-	display: inline;
+	margin-bottom:0.6em;
 }
 
 #wikistickies-admintools h3 {
