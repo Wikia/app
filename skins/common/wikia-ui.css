@@ -24,7 +24,9 @@
 /* @group Buttons. */
 
     a.wikia-button, 
-    span.wikia-button a, 
+    a:visited.wikia-button,
+    span.wikia-button a,
+    span.wikia-button a:visited,
     input[type="submit"], 
     input[type="reset"], 
     input[type="button"], 
@@ -50,7 +52,9 @@
   
     /* Secondary Buttons */
     a.wikia-button.secondary, 
+    a:visited.wikia-button.secondary,
     span.wikia-button.secondary a, 
+    span.wikia-button.secondary a:visited,
     input[type="submit"].secondary, 
     input[type="reset"].secondary, 
     input[type="button"].secondary, 
