@@ -54,6 +54,7 @@ class RecipesTweaks {
 	 * Add article action bar
 	 */
 	public static function renderArticleActionBar(&$skin, &$tpl) {
+		global $wgStylePath;
 		wfProfileIn(__METHOD__);
 
 		if (!self::isHeaderStripeShown()) {
@@ -104,6 +105,7 @@ class RecipesTweaks {
 		$template->set_vars(array(
 			'actionBar' => $actionBar,
 			'skin' => $skin,
+			'wgStylePath' => $wgStylePath
 		));
 
 		$html = $template->render('actionBar');

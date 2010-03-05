@@ -46,7 +46,7 @@ class SpecialSavedPages extends SpecialPage {
 			$out .= '<li><a href="'.$item['url'].'" class="recipes_saved_pages_title">'.$item['title'].'</a>';
 
 			if (!empty($showDelete)) {
-				$out .= '<img class="recipes_saved_pages_delete" width="16" height="16" src="'.$wgStylePath.'/monobook/blank.gif" />';
+				$out .= '<img class="sprite delete recipes_saved_pages_delete" src="'.$wgStylePath.'/common/blank.gif" />';
 			}
 
 			$userLink = Xml::element('a', array('href' => $item['userUrl']), $item['userTitle']);
