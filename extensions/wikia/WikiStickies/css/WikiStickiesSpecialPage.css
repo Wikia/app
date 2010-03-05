@@ -43,25 +43,6 @@
 	font-weight: none;
 }
 
-.wikistickiesfeed .sprite {
-    background: url(//images.wikia.com/common/skins/monaco/images/sprite.png?20100128);
-    height: 16px;
-    position: absolute;
-    width: 560px;
-}
-
-#wikistickies-withoutimages .sprite {
-    clip: rect(0px 432px 16px 416px);
-    left: -406px;
-}
-#wikistickies-newpages .sprite {
-    clip: rect(0px 16px 16px 0px);
-}
-#wikistickies-wantedpages .sprite {
-    clip: rect(0px 528px 16px 512px);
-    left: -502px;
-}
-
 #contentSub {
 	margin:0 0 2.4em 1em;
 }
@@ -115,6 +96,10 @@
 
 #wikistickies-admintools h2 {
 	margin-top: 0;
+}
+
+#bodyContent h2 {
+	display: inline;
 }
 
 #wikistickies-admintools h3 {

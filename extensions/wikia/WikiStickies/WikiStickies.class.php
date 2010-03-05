@@ -174,8 +174,17 @@ class WikiStickies {
 		}
 
 		$html = Xml::openElement( 'div', array( 'id' => $type, 'class' => 'wikistickiesfeed' ) );
+
+		// for EFMonaco - Bartek; differentiate between sprites
+		$sprite_type = '';
+		if( 'wikistickies-withoutimages' == $type) {
+			$sprite_type = 'photo';
+		} else if ( 'wikistickies-newpages' == $type ) {
+			$sprite_type = 'edit';
+		}
+
 		if( '' != $header ) {
-			$html .= '<img alt="" class="sprite" src="/skins/monobook/blank.gif" />'.
+			$html .= '<img alt="" class="sprite ' . $sprite_type . '" src="/skins/monobook/blank.gif" />'.
 			Xml::openElement( 'h2' ).
 						$header.
 			Xml::closeElement( 'h2' );
