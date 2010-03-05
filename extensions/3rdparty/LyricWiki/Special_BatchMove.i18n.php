@@ -2,6 +2,7 @@
 
 $messages = Array();
 $messages["en"] = Array(
+	"batchmove" => "Batch Move Pages",
 	"batchmove-header"=>"Move from [[$1]]:* to [[$2]]:*",
 	"batchmove-success"=>"Moved '''[[$1]]''' to '''[[$2]]'''",
 	"batchmove-failed"=>"Failed to move [[$1]] to [[$2]], This page most likely needs to be merged manually",

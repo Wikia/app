@@ -1,7 +1,7 @@
 <?php
 ////
 // Author: Sean Colombo
-// Date: 20061231
+// Date: 20061231 - 20100305
 //
 // This special page just shows which songs have the most failed requests from
 // the LyricWiki SOAP.
@@ -17,6 +17,8 @@
 //	lookedFor BLOB, # all of the titles (in order, \n-delimited) which the API actually checked for.
 //	PRIMARY KEY (request_artist, request_song)
 //);
+//
+// TODO: Make better use of Internationalization.  There are a bunch of hardcoded strings still.
 ////
 
 if(!defined('MEDIAWIKI')) die();
@@ -32,23 +34,25 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'SOAP Failures',
 	'author' => '[http://www.lyricwiki.org/User:Sean_Colombo Sean Colombo]',
 	'description' => 'SOAP Failures Log special page',
-	'version' => '1.1',
+	'version' => '1.2',
 );
+$wgExtensionMessagesFiles['SpecialSoapFailures'] = dirname(__FILE__).'/Special_LinksToRedirects.i18n.php';
 
 function wfSetupSoapFailures(){
-	global $IP, $wgMessageCache;
+	global $IP;
 	require_once($IP . '/includes/SpecialPage.php');
 	SpecialPage::addPage(new SpecialPage('Soapfailures', 'soapfailures', true, 'wfSoapFailures', false));
-	$wgMessageCache->addMessage('soapfailures', 'SOAP Page Failures');
 }
 
 function wfSoapFailures(){
 	global $wgOut;
 	global $wgRequest, $wgUser;
 	
+	wfLoadExtensionMessages('SpecialSoapFailures');
+	
 	$MAX_RESULTS = 100;
 
-	$wgOut->setPageTitle("SOAP Page Failures");
+	$wgOut->setPageTitle(wfMsg('soapfailures'));
 	
 	// This processes any requested for removal of an item from the list.
 	if(isset($_GET['artist']) && isset($_GET['song'])){
@@ -56,7 +60,7 @@ function wfSoapFailures(){
 		$song = $_GET['song'];
 		$songResult = array();
 		$failedLyrics = "Not found";
-		
+
 		/*
 		GLOBAL $IP;
 		define('LYRICWIKI_SOAP_FUNCS_ONLY', true); // so that we can use the SOAP functions but not actually instantiate a SOAP server & process a request.
