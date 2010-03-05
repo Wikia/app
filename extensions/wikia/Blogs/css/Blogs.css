@@ -343,7 +343,3 @@ float:left;
 margin-left:65px;
 }
 
-#control_listing-create-blog-post-tab div,#control_listing-create-tab div {
-clip:rect(0px,16px,16px,0px);
-left:0;
-}
