@@ -46,7 +46,8 @@ class MultipleLookupPage extends SpecialPage {
 		$wgOut->setPageTitle( wfMsg('multilookupstitle') );
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
-		$this->mUsername = trim($wgRequest->getVal ('target'));
+		$this->mUsername = $wgRequest->getVal ('target');
+		#if($this->mUsername !== null) { $this->mUsername = trim($this->mUsername); }
 
 		/**
 		 * show form
@@ -58,22 +59,22 @@ class MultipleLookupPage extends SpecialPage {
 	/* draws the form itself  */
 	function showForm ($error = "") {
 		global $wgOut;
-        wfProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		$action = $this->mTitle->escapeLocalURL("");
 
-        $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-        $oTmpl->set_vars( array(
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl->set_vars( array(
 			"error"		=> $error,
-            "action"	=> $action,
-            "username"  => $this->mUsername,
-        ));
-        $wgOut->addHTML( $oTmpl->execute("main-form") );
-        wfProfileOut( __METHOD__ );
+			"action"	=> $action,
+			"username"  => $this->mUsername,
+		));
+		$wgOut->addHTML( $oTmpl->execute("main-form") );
+		wfProfileOut( __METHOD__ );
 	}
 	
 	function showUserList() {
 		global $wgOut, $wgRequest ;
-        wfProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		/* no list when no user */
 		if (empty($this->mUsername)) {
@@ -121,19 +122,19 @@ class MultipleLookupPage extends SpecialPage {
 			//sort(&$userActivityWikiaList);
 		}
 				
-        $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-        $oTmpl->set_vars( array(
-            "action"		=> $action,
-            "username"  	=> $this->mUsername,
-            "userActivity" 	=> $userActivityWikiaList,
-        ));
-        $wgOut->addHTML( $oTmpl->execute("user-activity") );
-        wfProfileOut( __METHOD__ );
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl->set_vars( array(
+			"action"		=> $action,
+			"username"  	=> $this->mUsername,
+			"userActivity" 	=> $userActivityWikiaList,
+		));
+		$wgOut->addHTML( $oTmpl->execute("user-activity") );
+		wfProfileOut( __METHOD__ );
 	}
 	
 	function getResults() {
 		global $wgOut, $wgRequest ;
-        wfProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		/* no list when no user */
 		if (empty($this->mUsername)) {
@@ -149,7 +150,7 @@ class MultipleLookupPage extends SpecialPage {
 		}
 
 		/* before, we need that numResults */
-        wfProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 	
 }
