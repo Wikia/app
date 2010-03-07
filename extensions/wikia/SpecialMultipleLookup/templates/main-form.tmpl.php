@@ -1,12 +1,12 @@
 <!-- s:<?= __FILE__ ?> -->
-<!-- DISTRIBUTION TABLE -->
+<!-- MAIN-FORM -->
 <p class='error'><?=$error?></p>
 <form method="get" action="<?=$action?>">
 <?=wfMsg('multilookupselectuser')?> <input name="target" value="<?=htmlspecialchars($username)?>"/>&#160;&#160;
 <input type="submit" value="<?=wfMsg('multilookupgo')?>">
 </form>
-<? if ( $username == "" ) { ?>
+<? if ( $username !== null ) { ?>
 <br/><?=wfMsg('multilookupnotspecify')?>
 <? } ?>
-<!-- END OF DISTRIBUTION TABLE -->
+<!-- END OF MAIN-FORM -->
 <!-- e:<?= __FILE__ ?> -->
