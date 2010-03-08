@@ -759,7 +759,7 @@ class ExtDynamicPageList2
         $wgParser->setFunctionHook( 'dpl', array( __CLASS__, 'dplParserFunction' ) );
 		
 		// Error and warning codes.
-		require_once( dirname(__FILE__).'DynamicPageList2.codes.php' );
+		require_once( dirname(__FILE__).'/DynamicPageList2.codes.php' );
 
         // Internationalization messages
 		wfLoadExtensionMessages('DynamicPageList2');
