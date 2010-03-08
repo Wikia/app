@@ -8,7 +8,7 @@ class FeedRenderer {
 	const FEED_TALK_ICON = 'talk';
 	const FEED_PHOTO_ICON = 'photo';
 	const FEED_FILM_ICON = 'video';
-	const FEED_COMMENT_ICON = 'comment';
+	const FEED_COMMENT_ICON = 'talk';
 	const FEED_MOVE_ICON = 'move';
 	const FEED_DELETE_ICON = 'delete';
 
