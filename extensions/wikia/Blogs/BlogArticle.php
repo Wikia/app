@@ -453,6 +453,7 @@ class BlogArticle extends Article {
 					$row["listing-refresh-tab"] = array(
 						"class" => "",
 						"text" => wfMsg("blog-refresh-label"),
+						"icon" => "refresh",
 						"href" => $wgTitle->getLocalUrl( "action=purge" )
 					);
 					$tabs += $row;
