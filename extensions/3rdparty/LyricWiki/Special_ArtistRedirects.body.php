@@ -10,8 +10,8 @@ include_once 'extras.php';
 class ArtistRedirects extends SpecialPage
 {
 	function ArtistRedirects(){
-		SpecialPage::SpecialPage("ArtistRedirects");
 		wfLoadExtensionMessages('ArtistRedirects');
+		SpecialPage::SpecialPage("ArtistRedirects");
 	}
 
 	function execute($par){
