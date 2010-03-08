@@ -40,6 +40,7 @@ $wgExtensionMessagesFiles['SpecialSoapFailures'] = dirname(__FILE__).'/Special_L
 
 function wfSetupSoapFailures(){
 	global $IP;
+	wfLoadExtensionMessages('SpecialSoapFailures');
 	require_once($IP . '/includes/SpecialPage.php');
 	SpecialPage::addPage(new SpecialPage('Soapfailures', 'soapfailures', true, 'wfSoapFailures', false));
 }
@@ -47,8 +48,6 @@ function wfSetupSoapFailures(){
 function wfSoapFailures(){
 	global $wgOut;
 	global $wgRequest, $wgUser;
-	
-	wfLoadExtensionMessages('SpecialSoapFailures');
 	
 	$MAX_RESULTS = 100;
 
