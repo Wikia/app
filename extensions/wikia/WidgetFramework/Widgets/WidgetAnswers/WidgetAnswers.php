@@ -46,7 +46,7 @@ function WidgetAnswers($id, $params) {
 
 	// This HTML for the Ask a Question is used for both logged in and logged out users
 	// but in different place - top or the bottom of the widget
-	$ask_a_question = htmlspecialchars(wfMsgForContent("ask_a_question"));
+	$ask_a_question = htmlspecialchars(wfMsgForContent("ask_a_question-widget"));
 	$askform = <<<EOD
 <form method="get" action="" onsubmit="return false" name="ask_form" class="ask_form">
 	<input type="text" value="$ask_a_question" class="answers_ask_field"/>
