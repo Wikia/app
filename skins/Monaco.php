@@ -1374,6 +1374,7 @@ class MonacoTemplate extends QuickTemplate {
 	function execute() {
 		wfProfileIn( __METHOD__ );
 		global $wgArticle, $wgUser, $wgLogo, $wgStylePath, $wgStyleVersion, $wgRequest, $wgTitle, $wgSitename, $wgEnableFAST_HOME2, $wgExtensionsPath, $wgAllInOne, $wgContentNamespaces, $wgEnableRecipesTweaksExt;
+		
 		$skin = $wgUser->getSkin();
 		$namespace = $wgTitle->getNamespace();
 
@@ -1455,8 +1456,17 @@ wfProfileIn( __METHOD__ . '-body'); ?>
 ?>
 	<body<?php if($this->data['body_onload'    ]) { ?> onload="<?php     $this->text('body_onload')     ?>"<?php } ?>
  class="mediawiki <?php $this->text('dir') ?> <?php $this->text('pageclass') ?><?php if(!empty($this->data['printable']) ) { ?> printable<?php } ?><?php if (!$wgUser->isLoggedIn()) { ?> loggedout<?php } ?> color2 wikiaSkinMonaco<?=$isMainpage?> <?= $body_css_action ?>" id="body">
-	<img src="http://www.google-analytics.com/__utm.gif?utmwv=1.3&amp;utmdt=test.wikia.com&amp;utmp=/tewst&amp;utmac=UA-288915-14" alt="" style="display: none" />
-<?php
+	<?php
+	// Hardcoded Google Analytics tag... commented out because it isn't working yet.
+	// Allow URL override.
+	//global $wgNoExternals, $wgRequest;
+	//$noExt = $wgRequest->getVal('noexternals');
+	//if(!empty($noExt)){
+	//	$wgNoExternals = true;
+	//}
+	//if(empty($wgNoExternals)){
+		// <img src="http://www.google-analytics.com/__utm.gif?utmwv=1.3&amp;utmdt=test.wikia.com&amp;utmp=/tewst&amp;utmac=UA-288915-14" alt="" style="display: none" />
+	//}
 
 // Sometimes we need an ad delivered at the very top of the page (like for a skin)
 // This sucks to have a blocking call at the top of the page, but they promised

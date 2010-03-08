@@ -28,7 +28,10 @@ function wfMakeGlobalVariablesScript($vars) {
 	$vars['wgEnableAjaxLogin'] = (is_array($wgEnableAjaxLogin)) ? in_array($vars['skin'], $wgEnableAjaxLogin) : false;
 	$vars['wgReturnTo'] = isset($_REQUEST['returnto']) ? $_REQUEST['returnto'] : '';
 	$vars['wgDB'] = $wgDBname;
+	
+	// NOTE: This doesn't appear to be used in the code anywhere. If that's true, we can probably remove it.  It is set by the AdEngine though, so perhaps Athena uses it?
 	$vars['wgPrivateTracker'] = !empty($wgPrivateTracker) ? $wgPrivateTracker : false;
+
 	if($vars['wgIsArticle'] == false && $vars['wgEnableAjaxLogin']) {
 		$vars['ajaxLogin1'] = wfMsg('ajaxLogin1');
 		$vars['ajaxLogin2'] = wfMsg('ajaxLogin2');

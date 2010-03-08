@@ -64,6 +64,15 @@ class AdEngine {
 		foreach($this->providers as $p) {
 			$wgAutoloadClasses['AdProvider' . $p]=dirname(__FILE__) . '/AdProvider'.$p.'.php';
 		}
+
+		global $wgRequest,$wgNoExternals,$wgShowAds;
+		$noExt = $wgRequest->getVal('noexternals');
+		if(!empty($noExt)){
+			$wgNoExternals = true;
+		}
+		if(!empty($wgNoExternals)){
+			$wgShowAds = false;
+		}
 	}
 
 	public static function getInstance($slots = null) {
@@ -243,7 +252,7 @@ class AdEngine {
 
 	// Logic for hiding/displaying ads should be here, not in the skin.
 	private function getAdProvider($slotname) {
-		global $wgShowAds, $wgUser, $wgLanguageCode;
+		global $wgShowAds, $wgUser, $wgLanguageCode, $wgNoExternals;
 
 
 		/* Note: Don't throw an exception on error. Fail gracefully for ads,
@@ -254,7 +263,10 @@ class AdEngine {
 		 */
 
 		// First handle error conditions
-		if (empty($this->slots[$slotname])) {
+		if (!empty($wgNoExternals)){
+			return new AdProviderNull('Externals (including ads) are not allowed right now.');
+		
+		} else if (empty($this->slots[$slotname])) {
 			return new AdProviderNull('Unrecognized slot', false);
 
 		} else if ($this->slots[$slotname]['enabled'] == 'No'){
@@ -264,7 +276,6 @@ class AdEngine {
 		} else if ( AdEngine::getInstance()->getAdType($slotname) == 'spotlight' ){
 			// ... and we always use Google Ad Manager
 			return AdProviderGAM::getInstance();
-
 
 		// Now some toggles based on preferences and logged in/out
 		} else if (! ArticleAdLogic::isMandatoryAd($slotname) &&
