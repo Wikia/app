@@ -301,7 +301,7 @@ class RTEParser extends Parser {
 		wfProfileIn(__METHOD__);
 
 		$attribs = array(
-			'src' => 'http://images.wikia.com/common/skins/monobook/blank.gif?1',
+			'src' => 'http://images.wikia.com/common/skins/common/blank.gif?1',
 			'class' => "media-placeholder {$data['type']} thumb",
 			'type' => $data['type'],
 			'height' => intval($data['params']['height']),

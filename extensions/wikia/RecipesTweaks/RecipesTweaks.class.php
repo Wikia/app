@@ -132,7 +132,7 @@ class RecipesTweaks {
 		// render tabs
 		$template = new EasyTemplate(dirname(__FILE__) . '/templates');
 		$template->set_vars(array(
-			'blank' => "{$wgStylePath}/monobook/blank.gif",
+			'blank' => "{$wgStylePath}/common/blank.gif",
 			'newRecipeAction' => Skin::makeSpecialUrl('CreatePage'),
 			'searchAction' =>  $skin->data['searchaction'],
 			'skin' => $wgUser->getSkin(),

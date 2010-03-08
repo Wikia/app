@@ -24,7 +24,7 @@ class FeedRenderer {
 
 		$this->template->set_vars(array(
 			'assets' => array(
-				'blank' => $wgStylePath . '/monobook/blank.gif',
+				'blank' => $wgStylePath . '/common/blank.gif',
 			),
 			'type' => $this->type,
 		));
