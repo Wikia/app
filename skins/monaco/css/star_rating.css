@@ -2,7 +2,7 @@
 .star-rating a:hover,
 .star-rating .current-rating
 {
-	background:transparent url('/skins/monaco/images/sprite.png') repeat-x 0 -20px;
+	background:transparent url('/skins/monaco/images/monaco-sprite.png') repeat-x 0 -20px;
 }
 
 .star-rating
