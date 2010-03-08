@@ -241,6 +241,8 @@
  *			Template matching in include improved. "abc" must not match "abc def" but did so previously.
  * @version 1.6.3
  *			Changed section matching to allow wildcards.
+ * @version 1.6.4
+ *			Made internationalization messages use wfLoadExtensionMessages instead of adding messages to the message cache on every pageload. - Sean Colombo
  *
  *		! when making changes here you must update the VERSION constant at the beginning of class ExtSynamicPageList2 !
  */
@@ -256,6 +258,8 @@ $wgExtensionFunctions[]        = array( 'ExtDynamicPageList2', 'setup' );
 // changed back to global function due to trouble with older MW installations, g.s.
 //$wgHooks['LanguageGetMagic'][] = 'ExtDynamicPageList2::languageGetMagic';
 $wgHooks['LanguageGetMagic'][] = 'ExtDynamicPageList2__languageGetMagic';
+$wgExtensionMessagesFiles['DynamicPageList2'] = dirname(__FILE__).'/DynamicPageList2.i18n.php';
+
 
 $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'DynamicPageList2',
@@ -280,7 +284,7 @@ function ExtDynamicPageList2__endEliminate( &$parser, $text )			 	{
 
 class ExtDynamicPageList2
 {
-    const VERSION = '1.6.3';               // current version
+    const VERSION = '1.6.4';               // current version
 
     /**
      * Extension options
@@ -753,14 +757,12 @@ class ExtDynamicPageList2
         $wgParser->setFunctionHook( 'dplchapter', array( __CLASS__, 'dplChapterParserFunction' ) );
         //------------------------------ variant as a parser #function
         $wgParser->setFunctionHook( 'dpl', array( __CLASS__, 'dplParserFunction' ) );
+		
+		// Error and warning codes.
+		require_once( dirname(__FILE__).'DynamicPageList2.codes.php' );
 
-        // Internationalization file
-        require_once( 'DynamicPageList2.i18n.php' );
-
-        foreach( DPL2_i18n::getMessages() as $sLang => $aMsgs )
-        {
-            $wgMessageCache->addMessages( $aMsgs, $sLang );
-        }
+        // Internationalization messages
+		wfLoadExtensionMessages('DynamicPageList2');
 
         /**
          *  Define codes and map debug message to min debug level above which message can be displayed
