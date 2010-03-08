@@ -559,7 +559,7 @@ EOS;
 		// load WikiaScriptLoader
 		// this is minified version of /skins/monaco/js/WikiaScriptLoader.js using Google Closure
 		global $wgStylePath, $wgStyleVersion;
-		$tpl->set('WikiaScriptLoader', '<script type="text/javascript">/*<![CDATA[*/var WikiaScriptLoader=function(){var a=navigator.userAgent.toLowerCase();this.useDOMInjection=a.indexOf("opera")!=-1||a.indexOf("firefox")!=-1||a.indexOf("chrome/4")!=-1;this.isIE=a.indexOf("opera")==-1&&a.indexOf("msie")!=-1;this.headNode=document.getElementsByTagName("HEAD")[0]}; WikiaScriptLoader.prototype={loadScript:function(a,c){this.useDOMInjection?this.loadScriptDOMInjection(a,c):this.loadScriptDocumentWrite(a,c)},loadScriptDOMInjection:function(a,c){var b=document.createElement("script");b.type="text/javascript";b.src=a;var d=function(){b.onloadDone=true;typeof c=="function"&&c()};b.onloadDone=false;b.onload=d;b.onreadystatechange=function(){b.readyState=="loaded"&&!b.onloadDone&&d()};this.headNode.appendChild(b)},loadScriptDocumentWrite:function(a,c){document.write(\'<script src="\'+ a+\'" type="text/javascript"><\/script>\');a=function(){typeof c=="function"&&c()};typeof c=="function"&&this.addHandler(window,"load",a)},loadScriptAjax:function(a,c){var b=this,d=this.getXHRObject();d.onreadystatechange=function(){if(d.readyState==4){var e=d.responseText;if(b.isIE)eval(e);else{var f=document.createElement("script");f.type="text/javascript";f.text=e;b.headNode.appendChild(f)}typeof c=="function"&&c()}};d.open("GET",a,true);d.send("")},addHandler:function(a,c,b){if(window.addEventListener)window.addEventListener(c, b,false);else window.attachEvent&&window.attachEvent("on"+c,b)},getXHRObject:function(){var a=false;try{a=new XMLHttpRequest}catch(c){for(var b=["Msxml2.XMLHTTP.6.0","Msxml2.XMLHTTP.3.0","Msxml2.XMLHTTP","Microsoft.XMLHTTP"],d=b.length,e=0;e<d;e++){try{a=new ActiveXObject(b[e])}catch(f){continue}break}}return a}};window.wsl=new WikiaScriptLoader;/*]]>*/</script>');
+		$tpl->set('WikiaScriptLoader', '<script type="text/javascript">/*<![CDATA[*/var WikiaScriptLoader=function(){var b=navigator.userAgent.toLowerCase();this.useDOMInjection=b.indexOf("opera")!=-1||b.indexOf("firefox")!=-1;this.isIE=b.indexOf("opera")==-1&&b.indexOf("msie")!=-1;this.headNode=document.getElementsByTagName("HEAD")[0]}; WikiaScriptLoader.prototype={loadScript:function(b,c){this.useDOMInjection?this.loadScriptDOMInjection(b,c):this.loadScriptDocumentWrite(b,c)},loadScriptDOMInjection:function(b,c){var a=document.createElement("script");a.type="text/javascript";a.src=b;var d=function(){a.onloadDone=true;typeof c=="function"&&c()};a.onloadDone=false;a.onload=d;a.onreadystatechange=function(){a.readyState=="loaded"&&!a.onloadDone&&d()};this.headNode.appendChild(a)},loadScriptDocumentWrite:function(b,c){document.write(\'<script src="\'+ b+\'" type="text/javascript"><\/script>\');b=function(){typeof c=="function"&&c()};typeof c=="function"&&this.addHandler(window,"load",b)},loadScriptAjax:function(b,c){var a=this,d=this.getXHRObject();d.onreadystatechange=function(){if(d.readyState==4){var e=d.responseText;if(a.isIE)eval(e);else{var f=document.createElement("script");f.type="text/javascript";f.text=e;a.headNode.appendChild(f)}typeof c=="function"&&c()}};d.open("GET",b,true);d.send("")},loadCSS:function(b,c){var a=document.createElement("link"); a.rel="stylesheet";a.type="text/css";a.media=c||"";a.href=b;this.headNode.appendChild(a)},addHandler:function(b,c,a){if(window.addEventListener)window.addEventListener(c,a,false);else window.attachEvent&&window.attachEvent("on"+c,a)},getXHRObject:function(){var b=false;try{b=new XMLHttpRequest}catch(c){for(var a=["Msxml2.XMLHTTP.6.0","Msxml2.XMLHTTP.3.0","Msxml2.XMLHTTP","Microsoft.XMLHTTP"],d=a.length,e=0;e<d;e++){try{b=new ActiveXObject(a[e])}catch(f){continue}break}}return b}};window.wsl=new WikiaScriptLoader;/*]]>*/</script>');
 
 		$tpl->set('mergedJS', "\n\t\t" . $StaticChute->getChuteHtmlForPackage($package) . "\n");
 
@@ -2233,20 +2233,11 @@ wfProfileOut( __METHOD__ . '-body');
 
 			echo <<<EOF
 		<script type="text/javascript">/*<![CDATA[*/
-		var cssReferences = $cssReferences;
-		function loadStylesheet(href) {
-			$().log('loading CSS: ' + href);
-			var link = document.createElement('link');
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
-			link.media = 'print';
-			link.href = href;
-			document.getElementsByTagName('head')[0].appendChild(link);
-		}
-
-		for(id in cssReferences) {
-			setTimeout('loadStylesheet("' + cssReferences[id] + '")', 100);
-		}
+			(function() {
+				var cssReferences = $cssReferences;
+				for(var i=0; i<cssReferences.length; i++)
+					setTimeout("wsl.loadCSS.call(wsl, '" + cssReferences[i] + "', 'print')", 100);
+			})();
 		/*]]>*/</script>
 EOF;
 		}
