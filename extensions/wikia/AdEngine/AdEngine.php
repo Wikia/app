@@ -66,10 +66,7 @@ class AdEngine {
 		}
 
 		global $wgRequest,$wgNoExternals,$wgShowAds;
-		$noExt = $wgRequest->getVal('noexternals');
-		if(!empty($noExt)){
-			$wgNoExternals = true;
-		}
+		$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
 		if(!empty($wgNoExternals)){
 			$wgShowAds = false;
 		}
