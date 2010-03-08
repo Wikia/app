@@ -557,11 +557,40 @@ EOS;
 		}
 
 		// load WikiaScriptLoader
-		// this is minified version of /skins/monaco/js/WikiaScriptLoader.js using Google Closure
+		// macbre: this is minified version of /skins/monaco/js/WikiaScriptLoader.js using Google Closure
 		global $wgStylePath, $wgStyleVersion;
-		$tpl->set('WikiaScriptLoader', '<script type="text/javascript">/*<![CDATA[*/var WikiaScriptLoader=function(){var b=navigator.userAgent.toLowerCase();this.useDOMInjection=b.indexOf("opera")!=-1||b.indexOf("firefox")!=-1;this.isIE=b.indexOf("opera")==-1&&b.indexOf("msie")!=-1;this.headNode=document.getElementsByTagName("HEAD")[0]}; WikiaScriptLoader.prototype={loadScript:function(b,c){this.useDOMInjection?this.loadScriptDOMInjection(b,c):this.loadScriptDocumentWrite(b,c)},loadScriptDOMInjection:function(b,c){var a=document.createElement("script");a.type="text/javascript";a.src=b;var d=function(){a.onloadDone=true;typeof c=="function"&&c()};a.onloadDone=false;a.onload=d;a.onreadystatechange=function(){a.readyState=="loaded"&&!a.onloadDone&&d()};this.headNode.appendChild(a)},loadScriptDocumentWrite:function(b,c){document.write(\'<script src="\'+ b+\'" type="text/javascript"><\/script>\');b=function(){typeof c=="function"&&c()};typeof c=="function"&&this.addHandler(window,"load",b)},loadScriptAjax:function(b,c){var a=this,d=this.getXHRObject();d.onreadystatechange=function(){if(d.readyState==4){var e=d.responseText;if(a.isIE)eval(e);else{var f=document.createElement("script");f.type="text/javascript";f.text=e;a.headNode.appendChild(f)}typeof c=="function"&&c()}};d.open("GET",b,true);d.send("")},loadCSS:function(b,c){var a=document.createElement("link"); a.rel="stylesheet";a.type="text/css";a.media=c||"";a.href=b;this.headNode.appendChild(a)},addHandler:function(b,c,a){if(window.addEventListener)window.addEventListener(c,a,false);else window.attachEvent&&window.attachEvent("on"+c,a)},getXHRObject:function(){var b=false;try{b=new XMLHttpRequest}catch(c){for(var a=["Msxml2.XMLHTTP.6.0","Msxml2.XMLHTTP.3.0","Msxml2.XMLHTTP","Microsoft.XMLHTTP"],d=a.length,e=0;e<d;e++){try{b=new ActiveXObject(a[e])}catch(f){continue}break}}return b}};window.wsl=new WikiaScriptLoader;/*]]>*/</script>');
+		$tpl->set('WikiaScriptLoader', "\t\t" . '<script type="text/javascript">/*<![CDATA[*/var WikiaScriptLoader=function(){var b=navigator.userAgent.toLowerCase();this.useDOMInjection=b.indexOf("opera")!=-1||b.indexOf("firefox")!=-1;this.isIE=b.indexOf("opera")==-1&&b.indexOf("msie")!=-1;this.headNode=document.getElementsByTagName("HEAD")[0]}; WikiaScriptLoader.prototype={loadScript:function(b,c){this.useDOMInjection?this.loadScriptDOMInjection(b,c):this.loadScriptDocumentWrite(b,c)},loadScriptDOMInjection:function(b,c){var a=document.createElement("script");a.type="text/javascript";a.src=b;var d=function(){a.onloadDone=true;typeof c=="function"&&c()};a.onloadDone=false;a.onload=d;a.onreadystatechange=function(){a.readyState=="loaded"&&!a.onloadDone&&d()};this.headNode.appendChild(a)},loadScriptDocumentWrite:function(b,c){document.write(\'<script src="\'+ b+\'" type="text/javascript"><\/script>\');b=function(){typeof c=="function"&&c()};typeof c=="function"&&this.addHandler(window,"load",b)},loadScriptAjax:function(b,c){var a=this,d=this.getXHRObject();d.onreadystatechange=function(){if(d.readyState==4){var e=d.responseText;if(a.isIE)eval(e);else{var f=document.createElement("script");f.type="text/javascript";f.text=e;a.headNode.appendChild(f)}typeof c=="function"&&c()}};d.open("GET",b,true);d.send("")},loadCSS:function(b,c){var a=document.createElement("link"); a.rel="stylesheet";a.type="text/css";a.media=c||"";a.href=b;this.headNode.appendChild(a)},addHandler:function(b,c,a){if(window.addEventListener)window.addEventListener(c,a,false);else window.attachEvent&&window.attachEvent("on"+c,a)},getXHRObject:function(){var b=false;try{b=new XMLHttpRequest}catch(c){for(var a=["Msxml2.XMLHTTP.6.0","Msxml2.XMLHTTP.3.0","Msxml2.XMLHTTP","Microsoft.XMLHTTP"],d=a.length,e=0;e<d;e++){try{b=new ActiveXObject(a[e])}catch(f){continue}break}}return b}};window.wsl=new WikiaScriptLoader;/*]]>*/</script>');
 
-		$tpl->set('mergedJS', "\n\t\t" . $StaticChute->getChuteHtmlForPackage($package) . "\n");
+
+		// use WikiaScriptLoader to load StaticChute in parallel with other scripts added by wgOut->addScript
+		global $wgAllInOne;
+		wfProfileIn(__METHOD__ . '::JSloader');
+
+		$jsHtml = $StaticChute->getChuteHtmlForPackage($package);
+		$allinone = $wgRequest->getBool('allinone', $wgAllInOne);
+		$jsLoader = "\n\t\t<script type=\"text/javascript\">/*<![CDATA[*/";
+
+		// get URL of StaticChute package (or a list of separated files) and use WSL to load it
+		preg_match_all("/src=\"([^\"]+)/", $jsHtml, $matches, PREG_SET_ORDER);
+
+		foreach($matches as $script) {
+			$url = Xml::encodeJSvar(str_replace('&amp;', '&', $script[1]));
+			$jsLoader .= "wsl.loadScript({$url});";
+		}
+
+		// scripts from $wgOut
+		foreach($tpl->data['references']['js'] as $script) {
+			if (!empty($script['url'])) {
+				$url = Xml::encodeJSvar($script['url']);
+				$jsLoader .= "wsl.loadScript({$url});";
+			}
+		}
+
+		$jsLoader .= "/*]]>*/</script>\n";
+
+		$tpl->set('JSloader', $jsLoader);
+
+		wfProfileOut(__METHOD__ . '::staticChuteJS');
 
 		// macbre: move media="print" CSS to bottom (RT #25638)
 		global $wgOut;
@@ -1415,14 +1444,9 @@ class MonacoTemplate extends QuickTemplate {
 
 	if($wgRequest->getVal('action') != '' || $namespace == NS_SPECIAL) {
 		$this->html('WikiaScriptLoader');
-		$this->html('mergedJS');
+		$this->html('JSloader');
 		foreach($this->data['references']['js'] as $script) {
-			if (!empty($script['url'])) {
-?>
-		<script type="<?= $script['mime'] ?>" src="<?= htmlspecialchars($script['url']) ?>"></script>
-<?php
-			}
-			else if (!empty($script['content'])) {
+			if (!empty($script['content'])) {
 ?>
 		<script type="<?= $script['mime'] ?>"><?= $script['content'] ?></script>
 <?php
@@ -1876,12 +1900,7 @@ if (43339 == $wgCityId) echo AnalyticsEngine::track("GA_Urchin", "lyrics");
 <?php
 	if(!($wgRequest->getVal('action') != '' || $namespace == NS_SPECIAL)) {
 		$this->html('WikiaScriptLoader');
-		$this->html('mergedJS');
-		foreach($this->data['references']['js'] as $script) {
-?>
-		<script type="<?= $script['mime'] ?>" src="<?= htmlspecialchars($script['url']) ?>"></script>
-<?php
-		}
+		$this->html('JSloader');
 		$this->html('headscripts');
 	}
 	echo '<script type="text/javascript">/*<![CDATA[*/for(var i=0;i<wgAfterContentAndJS.length;i++){wgAfterContentAndJS[i]();}/*]]>*/</script>' . "\n";
@@ -2243,7 +2262,7 @@ wfProfileOut( __METHOD__ . '-body');
 
 			echo <<<EOF
 		<script type="text/javascript">/*<![CDATA[*/
-			(function() {
+			(function(){
 				var cssReferences = $cssReferences;
 				for(var i=0; i<cssReferences.length; i++)
 					setTimeout("wsl.loadCSS.call(wsl, '" + cssReferences[i] + "', 'print')", 100);
