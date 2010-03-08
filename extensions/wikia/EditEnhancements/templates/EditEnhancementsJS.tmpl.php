@@ -77,6 +77,10 @@ EditEnhancementsLoad = function() {
 	var interval = setInterval("EditEnhancementsLoop()", 500);
 }
 
-YAHOO.util.Event.on(window, 'load', EditEnhancementsLoad);
-YAHOO.util.Event.on(window, 'resize', EditEnhancements);
+$(window).bind( 'load', $.loadYUI( EditEnhancementsLoad ) );
+//$(window).bind( 'resize', EditEnhancements );
+
+//YAHOO.util.Event.on(window, 'load', EditEnhancementsLoad);
+//YAHOO.util.Event.on(window, 'resize', EditEnhancements);
+
 </script>
