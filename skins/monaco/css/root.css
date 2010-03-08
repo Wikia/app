@@ -32,15 +32,6 @@ body {
 	color: #000;
 }
 
-.shadow {
-	background-image: url(http://images.wikia.com/common/skins/monaco/images/shadow.png);
-	background-position: bottom left;
-	background-repeat: repeat-x;
-}
-
-.shadow {
-	background-image: none;
-}
 .mask {
 	background: #000;
 	opacity: .6;
