@@ -72,6 +72,8 @@
  *			Template matching in include improved. "abc" must not match "abc def" but did so previously.
  * @version 1.6.3
  *			Changed section matching to allow wildcards.
+ * @version 1.6.4
+ *			Made internationalization messages use wfLoadExtensionMessages instead of adding messages to the message cache on every pageload.
  */
 
 class DPL2Include
