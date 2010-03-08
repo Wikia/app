@@ -58,7 +58,10 @@ class WikiaAssets {
 
 		if($isAllInOne) {
 
+			global $wgStyleVersion;
+
 			$commonPart = "http://images.wikia.com/__varnish_combined/themename=$themename&rtl=".$isRTL;
+			$commonPart .= "&cb=$wgStyleVersion";
 			$out = '<!--[if lt IE 7]<link rel="stylesheet" type="text/css" href="'.$commonPart.'&browser=IElt7" /><![endif]-->';
 			$out .= '<!--[if IE 7]><link rel="stylesheet" type="text/css" href="'.$commonPart.'&browser=IEeq7" /><![endif]-->';
 			$out .= '<!--[if IE 8]><link rel="stylesheet" type="text/css" href="'.$commonPart.'&browser=IEeq8" /><![endif]-->';
