@@ -371,7 +371,7 @@ class SolrResult extends SearchResult {
 		$this->mDebug = "<br>views:" . $document->views . " revcount:" . $document->revcount . " backlinks:" . $document->backlinks . " articles:" . $document->wikiarticles . " pages:" . $document->wikipages . " ativeusers:" . $document->activeusers;
 		$this->mWikiTitle = $document->wikititle;
 
-		$url = utf8_decode( htmlspecialchars_decode( $document->url ) );
+		$url = $document->url; //utf8_decode( htmlspecialchars_decode( $document->url ) );
 		$title = htmlspecialchars_decode( $document->title );
 		if(isset($document->canonical) && !empty($document->canonical)) {
 			$canonical = htmlspecialchars_decode($document->canonical);
@@ -388,7 +388,7 @@ class SolrResult extends SearchResult {
 		$this->mCreated = isset($document->created) ? $document->created : 0;
 		$this->mIndexed = isset($document->indexed) ? $document->indexed : 0;
 		$this->mHighlightText = null;
-		$this->mUrl = $url;
+		$this->mUrl = $this->mTitle->getLinkUrl();
 	}
 
 	protected function initText() {
@@ -467,7 +467,7 @@ class SolrResult extends SearchResult {
 	}
 
 	public function getWikiTitle() {
-		return strtr( $this->mWikiTitle, array( '$1 - ' => '' ) );
+		return strtr( $this->mWikiTitle, array( '$1 - ' => '', '$1' => '' ) );
 	}
 
 	public static function showHit($result, $link, $redirect, $section, $extract, $data) {
@@ -475,7 +475,7 @@ class SolrResult extends SearchResult {
 		$link = preg_replace('/( title=\")/i', ' class="mw-search-result-title"$1', $link);
 
 		if($result->isCrossWikiaResult()) {
-			$data = "<a href=\"" . $result->getUrl() . "\" title=\"" . $result->getUrl() . "\" style=\"text-decoration: none; font-size: small\"><span class=\"dark_text_2\">" . strtr( $result->mUrl, array( 'http://' => '' ) ) . "</span></a>";
+			$data = "<a href=\"" . $result->getUrl() . "\" title=\"" . $result->getUrl() . "\" style=\"text-decoration: none; font-size: small\"><span class=\"dark_text_2\">" . strtr( urldecode( $result->getUrl() ), array( 'http://' => '' ) ) . "</span></a>";
 			//$data .= $result->getDebug();
 		}
 		else {
@@ -505,12 +505,12 @@ class SolrResultTitle extends Title {
 	}
 
 	public function getLinkUrl( $query = array(), $variant = false ) {
-		return wfUrlencodeExt($this->mUrl);
+		return $this->mUrl;
 	}
 
 	private function sanitizeUrl($url) {
 		// RT #25474
 		$url = str_replace( '?', '%3F', $url );
-		return $url;
+		return wfUrlEncodeExt( $url );
 	}
 }
