@@ -184,7 +184,7 @@ class WikiStickies {
 		}
 
 		if( '' != $header ) {
-			$html .= '<img alt="" class="sprite ' . $sprite_type . '" src="/skins/monobook/blank.gif" />'.
+			$html .= '<img alt="" class="sprite ' . $sprite_type . '" src="/skins/common/blank.gif" />'.
 			Xml::openElement( 'h2' ).
 						$header.
 			Xml::closeElement( 'h2' );

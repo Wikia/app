@@ -136,7 +136,7 @@ CKEDITOR.plugins.add('rte-placeholder',
 				var tools = '',
 					showEdit = true;
 
-				var spriteImg = '<img class="sprite" src="http://images.wikia.com/common/skins/monobook/blank.gif?1" />';
+				var spriteImg = '<img class="sprite" src="http://images.wikia.com/common/skins/common/blank.gif?1" />';
 
 				if (showEdit) {
 					tools += '<a class="RTEPlaceholderPreviewToolsEdit' +
