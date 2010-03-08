@@ -1,10 +1,9 @@
 // @see http://www.stevesouders.com/blog/2009/04/27/loading-scripts-without-blocking/
 var WikiaScriptLoader = function() {
-	// detect Firefox / Opera / Chrome4 and use script DOM node injection for them
+	// detect Firefox / Opera and use script DOM node injection for them
 	var userAgent = navigator.userAgent.toLowerCase();
 	this.useDOMInjection = (userAgent.indexOf('opera') != -1) ||
-		(userAgent.indexOf('firefox') != -1) ||
-		(userAgent.indexOf('chrome/4') != -1);
+		(userAgent.indexOf('firefox') != -1);
 
 	// detect IE
 	this.isIE = (userAgent.indexOf('opera') == -1) && (userAgent.indexOf('msie') != -1);
@@ -99,6 +98,16 @@ WikiaScriptLoader.prototype = {
 
 		xhr.open("GET", url, true);
 		xhr.send('');
+	},
+
+	// load CSS
+	loadCSS: function(url, media) {
+		var link = document.createElement('link');
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.media = (media || '');
+		link.href = url;
+		this.headNode.appendChild(link);
 	},
 
 	// add event handler
