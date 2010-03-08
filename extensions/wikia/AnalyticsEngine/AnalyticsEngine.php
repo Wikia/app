@@ -22,10 +22,7 @@ class AnalyticsEngine {
 	static public function track($provider, $event, $eventDetails=array()){
 		global $wgDevelEnvironment;
 		global $wgNoExternals, $wgRequest;
-		$noExt = $wgRequest->getVal('noexternals');
-		if(!empty($noExt)){
-			$wgNoExternals = true;
-		}
+		$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
 
 		if ( !empty($wgDevelEnvironment) ) {
 			return '<!-- DevelEnvironment -->';

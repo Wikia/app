@@ -397,3 +397,11 @@ $wgWikiTexPath      = "http://images.wikia.com/wikitex/images/";
  * path for answers repo
  */
 $IPA = "/usr/wikia/source/answers";
+
+/**
+ * If this is set to true, then no externals (ads, spotlights, beacons such as google analytics and quantcast)
+ * will be used.  This is used to help us get a good baseline for testing performance of in-house stuff only.
+ *
+ * To change this value, add noexternals=1 to the URL.
+ */
+$wgNoExternals = false;
