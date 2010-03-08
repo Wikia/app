@@ -9,6 +9,9 @@
 * Fixed message-caching in Comments (sean)
 * Fixed message-caching in Invite (sean)
 * Deleted SpecialRefreshSpecial which is older version/duplicate of /extensions/RefreshSpecial (sean)
+* Added "noexternals" URL param which will prevent inclusion of ads/analytics/spotlights/etc. used for benchmarking (sean)
+* Removed urchin.js from StaticChute since we include it from Google Analytics anyway (sean)
+* Refactored DPL2 to use more efficient i18n functions. Note: not committed back to MW yet! (sean)
 
 == Changes since 201002.4 ==
 * rt#38968: Only allow dump requests after a week (eloy)
