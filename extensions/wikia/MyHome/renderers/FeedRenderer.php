@@ -24,7 +24,7 @@ class FeedRenderer {
 
 		$this->template->set_vars(array(
 			'assets' => array(
-				'blank' => $wgStylePath . '/common/blank.gif',
+				'blank' => 'http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1',
 			),
 			'type' => $this->type,
 		));

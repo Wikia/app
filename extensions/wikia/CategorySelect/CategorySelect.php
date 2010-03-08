@@ -435,7 +435,7 @@ function CategorySelectGetCategoryLinksEnd(&$categoryLinks) {
 	$action = $wgRequest->getVal('action', 'view');
 	//for redirected page this hook is ran twice - check for button existence and don't add second one (fixes rt#12223)
 	if (($action == 'view' || $action == 'purge') && strpos($categoryLinks, '<div id="csAddCategorySwitch"') === false) {
-		$categoryLinks .= ' <div id="csAddCategorySwitch" class="noprint" style="background:#DDD;position:relative;float:left;border: 1px solid #BBB;-moz-border-radius:3px;-webkit-border-radius:3px;padding:0 5px;line-height: 16px;"><img src="'. $wgStylePath .'/common/blank.gif" class="sprite-small add" /><a href="#" onfocus="this.blur();" style="color:#000;font-size:0.85em;text-decoration:none;display:inline-block;" rel="nofollow">' . wfMsg('categoryselect-addcategory-button') . '</a></div>';
+		$categoryLinks .= ' <div id="csAddCategorySwitch" class="noprint" style="background:#DDD;position:relative;float:left;border: 1px solid #BBB;-moz-border-radius:3px;-webkit-border-radius:3px;padding:0 5px;line-height: 16px;"><img src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1" class="sprite-small add" /><a href="#" onfocus="this.blur();" style="color:#000;font-size:0.85em;text-decoration:none;display:inline-block;" rel="nofollow">' . wfMsg('categoryselect-addcategory-button') . '</a></div>';
 		$wgOut->addInlineScript(<<<JS
 /* CategorySelect */
 wgAfterContentAndJS.push(function() {

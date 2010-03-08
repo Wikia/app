@@ -166,7 +166,7 @@ function addAddCategoryButton() {
 		elementA.onclick = function(e) {replaceAddToInput(this); return false;};
 
 		elementImg = document.createElement('img');
-		elementImg.src = stylepath + '/common/blank.gif';
+		elementImg.src = 'http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1';
 		elementImg.className = 'sprite-small add';
 		elementImg.onclick = function(e) {replaceAddToInput(this); return false;};
 		elementA.appendChild(elementImg);
@@ -219,13 +219,13 @@ function addCategory(category, params, index) {
 	elementA.appendChild(elementText);
 
 	elementImg = document.createElement('img');
-	elementImg.src = stylepath + '/common/blank.gif';
+	elementImg.src = 'http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1';
 	elementImg.className = 'sprite-small ' + (params['sortkey'] == '' ? 'sort' : 'sorted');
 	elementImg.onclick = function(e) {WET.byStr('articleAction/sortCategory'); modifyCategory(this); return false;};
 	elementA.appendChild(elementImg);
 
 	elementImg = document.createElement('img');
-	elementImg.src = stylepath + '/common/blank.gif';
+	elementImg.src = 'http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1';
 	elementImg.className = 'sprite-small close';
 	elementImg.onclick = function(e) {WET.byStr('articleAction/deleteCategory'); deleteCategory(this); return false;};
 	elementA.appendChild(elementImg);

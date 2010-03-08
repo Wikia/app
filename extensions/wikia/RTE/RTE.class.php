@@ -105,7 +105,7 @@ class RTE {
 			'_rte_dataidx' => sprintf('%04d', $dataIdx),
 			'_rte_placeholder' => true,
 			'class' => "placeholder placeholder-{$data['type']}",
-			'src' => 'http://images.wikia.com/common/skins/common/blank.gif?1',
+			'src' => 'http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1',
 			'type' => $data['type'],
 		));
 	}

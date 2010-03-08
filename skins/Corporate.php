@@ -64,7 +64,7 @@ class CorporateTemplate extends CorporateBaseTemplate {
 
 					<?php if (!$wgUser->isAnon() && $wgOut->isArticleRelated()) { ?>
 						<p>
-							<img src="<?= $wgStylePath ?>/common/blank.gif" class="sprite watch"> <?= $this->skin->watchThisPage(); ?>
+							<img src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1" class="sprite watch"> <?= $this->skin->watchThisPage(); ?>
 						</p>
 					<?php } ?>
 				</div>

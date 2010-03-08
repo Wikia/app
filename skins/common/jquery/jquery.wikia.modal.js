@@ -35,7 +35,7 @@ $.fn.extend({
 	}
 
    	wrapper
-   		.prepend('<h1 class="modalTitle color1"><img src="' + stylepath + '/common/blank.gif" class="sprite close" />' + this.attr('title') + '</h1>')
+   		.prepend('<h1 class="modalTitle color1"><img src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1" class="sprite close" />' + this.attr('title') + '</h1>')
    		.width(settings.width)
    		.css({
    			marginLeft: -wrapper.outerWidth() / 2,
