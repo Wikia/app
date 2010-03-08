@@ -19,35 +19,29 @@ $wgExtensionCredits['other'][] = array(
 // www.wikia.com/index.php is hardcoded since we cannot read the LocalSettings of our Central Wikia
 
 function wfGlobalWikiaCSS( &$out ) {
-	global $wgDisableGlobalCSS;
+	global $wgDisableGlobalCSS, $wgUser;
 	if( !empty( $wgDisableGlobalCSS ) ) {
 		return true;
 	}
 
-	global $wgUser;
-
-	$out = "";
-
-	if (!$wgUser->isAnon())
-		$out .= '@import "http://community.wikia.com/index.php?title=User:'. str_replace(" ", "_", $wgUser->mName) .'/global.css&action=raw&ctype=text/css&smaxage=0";';
-
-	//$out .= '@import "http://community.wikia.com/index.php?title=MediaWiki:Global.css&action=raw&ctype=text/css&smaxage=18000";';
+	if (!$wgUser->isAnon()) {
+		$userName = str_replace(' ', '_', $wgUser->getName());
+		$out .= "@import \"http://community.wikia.com/index.php?title=User:{$userName}/global.css&action=raw&ctype=text/css&smaxage=0\";";
+	}
 
 	return true;
 }
 
 function wfGlobalWikiaJS( &$out ) {
-	global $wgDisableGlobalJS;
+	global $wgDisableGlobalJS, $wgJsMimeType, $wgUser;
 	if( !empty( $wgDisableGlobalJS ) ) {
 		return true;
 	}
 
-	global $wgJsMimeType, $wgUser;
-
-	if (!$wgUser->isAnon())
-		$out->addScript('<script language="javascript" type="'. $wgJsMimeType .'" src="http://community.wikia.com/index.php?title=User:'. str_replace(" ", "_", $wgUser->mName) .'/global.js&amp;action=raw&amp;ctype='. $wgJsMimeType .'"></script>');
-
-	//$out->addScript('<script language="javascript" type="'. $wgJsMimeType .'" src="http://community.wikia.com/index.php?title=MediaWiki:Global.js&amp;action=raw&amp;ctype='. $wgJsMimeType .'&amp;dontcountme=s"></script>');
+	if (!$wgUser->isAnon()) {
+		$userName = str_replace(' ', '_', $wgUser->getName());
+		$out->addScript("<script type=\"{$wgJsMimeType}\" src=\"http://community.wikia.com/index.php?title=User:{$userName}/global.js&amp;action=raw&amp;ctype={$wgJsMimeType}\"></script>");
+	}
 
 	return true;
 }
