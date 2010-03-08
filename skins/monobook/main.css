@@ -468,7 +468,9 @@ div.magnify {
 div.magnify a, div.magnify img {
 	display: block;
 	border: none !important;
-	background: none !important;
+}
+.sprite.magnify-clip {
+	background: url(http://images.wikia.com/common/skins/common/images/magnify-clip.png) 0 2px no-repeat;
 }
 div.tright, iframe.tright {
 	clear: right;
