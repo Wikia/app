@@ -15,7 +15,7 @@
  *			moved error codes to a separate file from internationalization - Sean Colombo
 */
 
-require_once( dirname(__FILE__).'DynamicPageList2.codes.php' );
+require_once( dirname(__FILE__).'/DynamicPageList2.codes.php' );
 
 $messages = array();
 
