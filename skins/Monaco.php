@@ -578,7 +578,7 @@ EOS;
 			$jsLoader .= "wsl.loadScript({$url});";
 		}
 
-		// scripts from $wgOut
+		// scripts from getReferencesLinks() method
 		foreach($tpl->data['references']['js'] as $script) {
 			if (!empty($script['url'])) {
 				$url = Xml::encodeJSvar($script['url']);
@@ -586,11 +586,25 @@ EOS;
 			}
 		}
 
+		// scripts from $wgOut->mScripts
+		// <script type="text/javascript" src="URL"></script>
+		// load them using WSL and remove from $wgOut->mScripts
+		global $wgJsMimeType;
+
+		$headScripts = $tpl->data['headscripts'];
+		preg_match_all("#<script type=\"{$wgJsMimeType}\" src=\"([^\"]+)\"></script>#", $headScripts, $matches, PREG_SET_ORDER);
+		foreach($matches as $script) {
+			$url = Xml::encodeJSvar(str_replace('&amp;', '&', $script[1]));
+			$jsLoader .= "wsl.loadScript({$url});";
+
+			$headScripts = str_replace($script[0], '', $headScripts);
+		}
 		$jsLoader .= "/*]]>*/</script>\n";
 
+		$tpl->data['headscripts'] = $headScripts;
 		$tpl->set('JSloader', $jsLoader);
 
-		wfProfileOut(__METHOD__ . '::staticChuteJS');
+		wfProfileOut(__METHOD__ . '::JSloader');
 
 		// macbre: move media="print" CSS to bottom (RT #25638)
 		global $wgOut;
