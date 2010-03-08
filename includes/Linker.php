@@ -939,10 +939,13 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 			if ( isset( $fp['framed'] ) ) {
 				$zoomicon="";
 			} else {
+				/* Wikia change begin - @author: christian */
+				/* Change img src from magnify-clip.png to blank.gif. Image is set via CSS Background */
 				$zoomicon =  '<div class="magnify">'.
 					'<a href="'.$url.'" class="internal" title="'.$more.'">'.
-					'<img src="'.$wgStylePath.'/common/images/magnify-clip.png" ' .
-					'width="15" height="11" alt="" /></a></div>';
+					'<img src="'.$wgStylePath.'/common/images/blank.gif" class="sprite magnify-clip" ' .
+					'width="16" height="16" alt="" /></a></div>';
+				/* Wikia change end */
 			}
 		}
 		$s .= '  <div class="thumbcaption">'.$zoomicon.$fp['caption']."</div></div></div>";
