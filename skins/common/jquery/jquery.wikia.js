@@ -84,7 +84,7 @@ jQuery.postJSON = function(u, d, callback) {
 $.loadYUI = function(callback) {
 	if (typeof YAHOO == 'undefined') {
 		$().log('YUI: loading on-demand');
-		$.getScript(wgYUIPackageURL, callback);
+		wsl.loadScript(wgYUIPackageURL, callback);
 	}
 	else {
 		$().log('YUI: already loaded');
