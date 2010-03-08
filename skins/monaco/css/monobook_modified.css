@@ -421,7 +421,7 @@ div.magnify {
 div.magnify a, div.magnify img {
 	display: block;
 	border: none !important;
-	background: none !important;
+	/*background: none !important;CHRISTIAN*/
 }
 div.tright {
 	clear: right;

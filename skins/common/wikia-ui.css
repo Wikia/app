@@ -233,7 +233,7 @@
 .sprite.search { background-position: -64px -150px; }
 
 .sprite.back { background-position: -16px -166px; }
-.sprite.magnify { background-position: -36px -166px; }
+.sprite.magnify-clip { background-position: -32px -166px; }
 
 .sprite.progress { background-image: url(http://images.wikia.com/common/skins/common/images/ajax.gif); }
 
