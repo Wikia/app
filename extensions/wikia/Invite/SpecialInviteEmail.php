@@ -10,7 +10,7 @@ function wfSpecialInviteEmail(){
 		require_once( "$IP/extensions/wikia/UserStats/UserStatsClass.php" );
  	}
 
-	wfLoadMessages('SpecialInviteContacts');
+	wfLoadExtensionMessages('SpecialInviteContacts');
 
 class InviteEmail extends UnlistedSpecialPage {
 
