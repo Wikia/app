@@ -395,5 +395,5 @@ span.searchmatch {
 }
 
 #bodyContent a.external, #bodyContent a[href^="gopher://"] {
-	background: url(/skins/monaco/images/sprite.png) top right no-repeat;
+	background: url(/skins/monaco/images/monaco-sprite.png) top right no-repeat;
 }
