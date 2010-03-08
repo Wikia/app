@@ -1,4 +1,4 @@
-var AccordionMenu =(function()
+var AccordionMenu = function()
 {
 	var YUD = YAHOO.util.Dom;
 	var YUE = YAHOO.util.Event;
@@ -408,5 +408,6 @@ var AccordionMenu =(function()
  
  return oApi;
  
-})();
+};
 
+$.loadYUI( function() { AccordionMenu = AccordionMenu(); } );
