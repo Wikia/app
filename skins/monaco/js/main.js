@@ -22,7 +22,7 @@ $(function() {
 	$('.ajaxLogin').click(openLogin);
 	$(document).ajaxSend(startAjax).ajaxComplete(stopAjax);
 	setupVoting();
-	
+
 	if(!((typeof wgIsLogin == 'undefined') || (wgIsLogin) || (typeof wgComboAjaxLogin == 'undefined') || (!wgComboAjaxLogin) )) {
 
 		$(".wikiaPlaceholder .wikia-button").removeAttr("onclick");
@@ -37,7 +37,7 @@ $(function() {
 			return false;
 		});
 
-		editpromptable = $("#ca-viewsource").add("#te-editanon");
+		var editpromptable = $("#ca-viewsource").add("#te-editanon");
 
 		// add .editsection on wikis with anon editing disabled
 		if ( (typeof wgDisableAnonymousEditig !== 'undefined') && (wgDisableAnonymousEditig) ) {
@@ -56,21 +56,21 @@ $(function() {
 				}
 			});
 			return false;
-		});		
+		});
 
 		 $(".wikiaComboAjaxLogin").click(function(e){
 			showComboAjaxForPalceHolder(false, "", function(){
 				AjaxLogin.doSuccess = function() {
-					CreatePage.openDialog(e, null);		
+					CreatePage.openDialog(e, null);
 				}
 			});
 			return false;
-		});		
-
-
-
-
+		});
 	}
+
+	// macbre: log page load time
+	var loadTime = (new Date()).getTime() - wgNow.getTime();
+	$().log('page loaded in ' + loadTime + ' ms', 'Monaco');
 });
 
 //Ajax Wait Indicator
