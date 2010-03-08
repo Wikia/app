@@ -30,7 +30,10 @@ class WikiaAssets {
 
 		$references = array();
 
-		$references[] = array('url' => $matches[1]);
+		$url = $matches[1];
+		$url = str_replace('http://www.wikia.com/', '', $url);
+		$url .= '&amp;server=ap8';
+		$references[] = array('url' => $url);
 
 		if($browser == 'IElt7') {
 			$references[] = array('url' => $wgStylePath.'/monaco/css/monaco_ltie7.css');
