@@ -20,12 +20,21 @@ class AnalyticsEngine {
 	private $providers = array('GAT', 'GA_Urchin', 'QuantServe', 'MessageQueue');
 
 	static public function track($provider, $event, $eventDetails=array()){
-		global $wgDevelEnvironment; 
-		
+		global $wgDevelEnvironment;
+		global $wgNoExternals, $wgRequest;
+		$noExt = $wgRequest->getVal('noexternals');
+		if(!empty($noExt)){
+			$wgNoExternals = true;
+		}
+
 		if ( !empty($wgDevelEnvironment) ) {
 			return '<!-- DevelEnvironment -->';
 		}
 		
+		if ( !empty($wgNoExternals) ) {
+			return '<!-- AnalyticsEngine::track - externals disabled -->';
+		}
+
 		switch ($provider){
 	//	  case 'GAT': $AP = new AnalyticsProviderGAT(); break;
 		  case 'GA_Urchin': $AP = new AnalyticsProviderGA_Urchin(); break;
