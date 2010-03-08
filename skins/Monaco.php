@@ -1074,9 +1074,9 @@ EOS;
 		$tpl->set('mergedCSS', "\n\t\t" . $StaticChute->getChuteHtmlForPackage('monaco_css') . "\n" );
 		$tpl->set('mergedCSSprint', "\n\t\t" . $StaticChute->getChuteHtmlForPackage('monaco_css_print') );
 
-		$css[] = array('url' => $wgStylePath.'/monaco/css/monaco_ltie7.css?'.$wgStyleVersion, 'cond' => 'if lt IE 7');
-		$css[] = array('url' => $wgStylePath.'/monaco/css/monaco_ie7.css?'.$wgStyleVersion, 'cond' => 'if IE 7');
-		$css[] = array('url' => $wgStylePath.'/monaco/css/monaco_ie8.css?'.$wgStyleVersion, 'cond' => 'if IE 8');
+		//$css[] = array('url' => $wgStylePath.'/monaco/css/monaco_ltie7.css?'.$wgStyleVersion, 'cond' => 'if lt IE 7');
+		//$css[] = array('url' => $wgStylePath.'/monaco/css/monaco_ie7.css?'.$wgStyleVersion, 'cond' => 'if IE 7');
+		//$css[] = array('url' => $wgStylePath.'/monaco/css/monaco_ie8.css?'.$wgStyleVersion, 'cond' => 'if IE 8');
 
 		// RTL support
 		if ($wgContLang->isRTL()) {
@@ -1402,8 +1402,8 @@ class MonacoTemplate extends QuickTemplate {
 
 	function execute() {
 		wfProfileIn( __METHOD__ );
-		global $wgArticle, $wgUser, $wgLogo, $wgStylePath, $wgStyleVersion, $wgRequest, $wgTitle, $wgSitename, $wgEnableFAST_HOME2, $wgExtensionsPath, $wgAllInOne, $wgContentNamespaces, $wgEnableRecipesTweaksExt;
-		
+		global $wgContLang, $wgAllInOne, $wgArticle, $wgUser, $wgLogo, $wgStylePath, $wgStyleVersion, $wgRequest, $wgTitle, $wgSitename, $wgEnableFAST_HOME2, $wgExtensionsPath, $wgAllInOne, $wgContentNamespaces, $wgEnableRecipesTweaksExt;
+
 		$skin = $wgUser->getSkin();
 		$namespace = $wgTitle->getNamespace();
 
@@ -1420,8 +1420,14 @@ class MonacoTemplate extends QuickTemplate {
 
 		<title><?php $this->text('pagetitle') ?></title>
 		<?php print Skin::makeGlobalVariablesScript( $this->data ); ?>
+
 <?php
-	$this->html('mergedCSS');
+	$allinone = $wgRequest->getBool('allinone', $wgAllInOne);
+	echo WikiaAssets::GetCoreCSS($skin->themename, $wgContLang->isRTL(), $allinone); // StaticChute + browser specific
+?>
+
+<?php
+	//$this->html('mergedCSS');
 
 	foreach($this->data['references']['cssstyle'] as $cssstyle) {
 ?>

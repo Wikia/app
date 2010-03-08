@@ -8,6 +8,105 @@
  * @version: $Id: Classes.php 6127 2007-10-11 11:10:32Z eloy $
  */
 
+$wgAjaxExportList[] = 'WikiaAssets::combined';
+
+class WikiaAssets {
+
+	public static function combined() {
+		global $wgRequest, $wgStylePath;
+
+		$themename = $wgRequest->getVal('themename');
+		$browser = $wgRequest->getVal('browser');
+
+		$wgRequest->setVal('allinone', true);
+
+		$staticChute = new StaticChute('css');
+		$staticChute->useLocalChuteUrl();
+		if($themename != 'custom' && $themename != 'sapphire') {
+			$staticChute->setTheme($themename);
+		}
+
+		preg_match("/href=\"([^\"]+)/", $staticChute->getChuteHtmlForPackage('monaco_css'), $matches);
+
+		$references = array();
+
+		$references[] = array('url' => $matches[1]);
+
+		if($browser == 'IElt7') {
+			$references[] = array('url' => $wgStylePath.'/monaco/css/monaco_ltie7.css');
+		}else if($browser == 'IEeq7') {
+			$references[] = array('url' => $wgStylePath.'/monaco/css/monaco_ie7.css');
+		}else if($browser == 'IEeq8') {
+			$references[] = array('url' => $wgStylePath.'/monaco/css/monaco_ie8.css');
+		}
+
+		$out = '';
+
+		foreach($references as $reference) {
+			$out .= '<!--# include virtual="'.$reference['url'].'" -->';
+		}
+
+		header('Content-type: text/css');
+		echo $out;
+		exit();
+	}
+
+	public static function GetCoreCSS($themename, $isRTL, $isAllInOne) {
+
+		if($isAllInOne) {
+
+			$commonPart = "http://images.wikia.com/__varnish_combined/themename=$themename&rtl=".$isRTL;
+			$out = '<!--[if lt IE 7]<link rel="stylesheet" type="text/css" href="'.$commonPart.'&browser=IElt7" /><![endif]-->';
+			$out .= '<!--[if IE 7]><link rel="stylesheet" type="text/css" href="'.$commonPart.'&browser=IEeq7" /><![endif]-->';
+			$out .= '<!--[if IE 8]><link rel="stylesheet" type="text/css" href="'.$commonPart.'&browser=IEeq8" /><![endif]-->';
+			$out .= '<!--[if !IE]>--><link rel="stylesheet" type="text/css" href="'.$commonPart.'&browser=notIE" /><!--<![endif]-->';
+
+			return $out;
+
+		} else {
+
+			global $wgRequest, $wgStylePath;
+
+			$wgRequest->setVal('allinone', false);
+
+			$staticChute = new StaticChute('css');
+			$staticChute->useLocalChuteUrl();
+			if($themename != 'custom' && $themename != 'sapphire') {
+				$staticChute->setTheme($themename);
+			}
+
+			$references = array();
+
+			preg_match_all("/url\(([^?]+)/", $staticChute->getChuteHtmlForPackage('monaco_css'), $matches);
+			foreach($matches[1] as $match) {
+				$references[] = array('url' => $match);
+			}
+
+			$references[] = array('url' => $wgStylePath.'/monaco/css/monaco_ltie7.css', 'cond' => 'if lt IE 7');
+			$references[] = array('url' => $wgStylePath.'/monaco/css/monaco_ie7.css', 'cond' => 'if IE 7');
+			$references[] = array('url' => $wgStylePath.'/monaco/css/monaco_ie8.css', 'cond' => 'if IE 8');
+
+			$out = '<style type="text/css">';
+
+			foreach($references as $reference) {
+				if(isset($reference['cond'])) {
+					$out .='<!--['.$reference['cond'].']';
+				}
+				$out .= '@import url('.$reference['url'].');';
+				if(isset($reference['cond'])) {
+					$out .='<![endif]-->';
+				}
+			}
+
+			$out .= '</style>';
+
+			return $out;
+		}
+
+	}
+
+}
+
 /*
  * hooks
  */
