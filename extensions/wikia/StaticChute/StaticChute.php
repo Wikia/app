@@ -83,7 +83,6 @@ class StaticChute {
 			'common/jquery/jquery.cookies.2.1.0.js',
 			'common/jquery/jquery.wikia.js',
 
-			'common/urchin.js',
 			'common/wikibits.js',
 			'monobook/main.js',
 			'monobook/tracker.js',
@@ -105,7 +104,6 @@ class StaticChute {
 			'common/jquery/jquery.timeago.js',
 
 			'common/ajax.js',
-			'common/urchin.js',
 			'common/wikibits.js',
 			'monaco/js/main.js',       
             'common/jquery/jquery.wikia.tracker.js',
@@ -146,7 +144,6 @@ class StaticChute {
 			'common/jquery/jquery.timeago.js',
 
 			'common/ajax.js',
-			'common/urchin.js',
 			'common/wikibits.js',
 			'common/ajaxwatch.js',
 			'monaco/js/main.js',
@@ -184,7 +181,6 @@ class StaticChute {
 			'common/jquery/jquery.timeago.js',
 
 			'common/ajax.js',
-			'common/urchin.js',
 			'common/wikibits.js',
 			'monaco/js/main.js',
             'common/jquery/jquery.wikia.tracker.js',
@@ -242,7 +238,6 @@ class StaticChute {
 			'common/wikibits.js',
 			'common/jquery/jquery-1.4.1.min.js',
 			'common/jquery/jquery.wikia.js',
-			'common/urchin.js',
 			'corporate/js/main.js',
             'common/jquery/jquery.wikia.tracker.js',
 			'corporate/js/tracker.js',
@@ -255,7 +250,6 @@ class StaticChute {
 			'common/wikibits.js',
 			'common/jquery/jquery-1.4.1.min.js',
 			'common/jquery/jquery.wikia.js',
-			'common/urchin.js',
 			'corporate/js/main.js',
 			'common/jquery/jquery.wikia.tracker.js',
 			'corporate/js/tracker.js',
