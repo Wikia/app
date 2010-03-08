@@ -21,7 +21,7 @@
 		<li>
 			<span class="MagCloudArticlesListGrab">&nbsp;</span>
 			<a href="<?= htmlspecialchars($article['url']) ?>" class="MagCloudArticlesListLink" title="<?= htmlspecialchars($article['title']) ?>"><?= htmlspecialchars( MagCloud::getAbbreviatedTitle($article['title']) ) ?></a>
-			<img src="<?= $wgStylePath ?>/common/blank.gif" id="fe_sharefeature_img" class="sprite delete" alt="<?= wfMsg('delete') ?>" />
+			<img src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1" id="fe_sharefeature_img" class="sprite delete" alt="<?= wfMsg('delete') ?>" />
 		</li>
 <?php endforeach; ?>
 	</ul>

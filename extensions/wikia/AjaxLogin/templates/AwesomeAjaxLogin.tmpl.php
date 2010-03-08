@@ -9,7 +9,7 @@ $link = $titleObj->getLocalUrl('type=signup');
 		<tbody>
 		<tr>
 			<td style="vertical-align: top;">
-					<span style="position: relative; top: -1px;"><img src="<?= $wgStylePath ?>/common/blank.gif" alt="status"/></span>
+					<span style="position: relative; top: -1px;"><img src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1" alt="status"/></span>
 			</td>
 			<td>
 				<div id="wpError"></div>

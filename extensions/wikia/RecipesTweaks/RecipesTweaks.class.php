@@ -124,7 +124,7 @@ class RecipesTweaks {
 	public static function renderArticleHeaderTabs($skin) {
 		wfProfileIn(__METHOD__);
 
-		global $wgTitle, $wgStylePath, $wgUser, $wgRequest;
+		global $wgTitle, $wgUser, $wgRequest;
 
 		// i18n
 		wfLoadExtensionMessages('RecipesTweaks');
@@ -132,7 +132,7 @@ class RecipesTweaks {
 		// render tabs
 		$template = new EasyTemplate(dirname(__FILE__) . '/templates');
 		$template->set_vars(array(
-			'blank' => "{$wgStylePath}/common/blank.gif",
+			'blank' => "http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1",
 			'newRecipeAction' => Skin::makeSpecialUrl('CreatePage'),
 			'searchAction' =>  $skin->data['searchaction'],
 			'skin' => $wgUser->getSkin(),

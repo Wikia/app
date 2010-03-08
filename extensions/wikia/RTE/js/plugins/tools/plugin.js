@@ -85,7 +85,7 @@ window.RTE.tools = {
 
 		// CSS classes and attributes
 		placeholder.addClass('placeholder placeholder-' + type);
-		placeholder.attr('src', 'http://images.wikia.com/common/skins/common/blank.gif?1').attr('type', type).attr('_rte_placeholder', 1).attr('_rte_instance', RTE.instanceId);
+		placeholder.attr('src', 'http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1').attr('type', type).attr('_rte_placeholder', 1).attr('_rte_instance', RTE.instanceId);
 
 		// set meta data
 		data = (typeof data == 'object') ? data : {};

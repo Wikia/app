@@ -217,7 +217,7 @@ var WidgetFramework = {
 
 		if(WidgetFramework.carouselLoaded == false) {
 			// RT #16828
-			$('#wikia_header').before('<div id="cockpit" class="color1"><div id="cockpit_wrapper"><ul id="widget_cockpit_list"></ul></div><img src="' + stylepath + '/common/blank.gif" id="cockpit_close" class="sprite close" /></div>');
+			$('#wikia_header').before('<div id="cockpit" class="color1"><div id="cockpit_wrapper"><ul id="widget_cockpit_list"></ul></div><img src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1" id="cockpit_close" class="sprite close" /></div>');
 
 			var carousel = $('#widget_cockpit_list').hide();
 
@@ -274,7 +274,7 @@ var WidgetFramework = {
 
 						thumb_el.className = 'widget_thumb draggable clearfix ' + i +'Thumb';
 						if(skin == 'monaco' || skin == 'awesome') {
-							thumb_el.innerHTML = '<div class="icon"></div><h1>' + title + '<img src="' + stylepath + '/common/blank.gif" class="sprite add" rel="' + i + '" /></h1><br />' + desc;
+							thumb_el.innerHTML = '<div class="icon"></div><h1>' + title + '<img src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1" class="sprite add" rel="' + i + '" /></h1><br />' + desc;
 						} else if(skin == 'quartz') {
 							thumb_el.innerHTML = title;
 							thumb_el.title = desc;

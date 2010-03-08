@@ -763,7 +763,7 @@ function categoryHubGetAttributionByArticle($qArticle, $answered=false){
 		$userPageLink = $userPageTitle->getLocalUrl();
 		$userPageExists = $userPageTitle->exists();
 		$userLinkText = $userPageExists ? '<a class="fe_user_icon" rel="nofollow" href="'.$userPageLink.'">' : '';
-		$userLinkText .= "<img src='$wgStylePath/common/blank.gif' class='fe_user_img sprite' alt='".wfMsg('userpage')."' />";
+		$userLinkText .= "<img src='http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1' class='fe_user_img sprite' alt='".wfMsg('userpage')."' />";
 		$userLinkText .= $userPageExists ? '</a>' : '';
 		$userLinkText .= '<a rel="nofollow" class="fe_user_link'.($userPageExists ? '' : ' new').'" href="'.$userPageLink.'">'.$userText.'</a>';
 		$userLink = wfMsgExt('cathub-question-asked-by', array(), $userLinkText);

@@ -88,11 +88,10 @@ function AddNewTalkSectionAddFooter(&$skin, &$tpl, &$custom_article_footer) {
 	}
 
 	if (in_array($action, array('view', 'purge'))) {
-		global $wgStylePath;
 		$text = wfMsg('addnewtalksection-link');
 		$url = $wgTitle->getLocalURL('action=edit&section=new');
 
-		$custom_article_footer = '<li id="fe_newsection"><a rel="nofollow" id="fe_newsection_icon" href="' . $url . '"><img src="' . $wgStylePath . '/common/blank.gif" id="fe_newsection_img" class="sprite" alt="' . $text . '" /></a> <div><a id="fe_newsection_link" rel="nofollow" href="' . $url . '">' . $text . '</a></div></li>';
+		$custom_article_footer = '<li id="fe_newsection"><a rel="nofollow" id="fe_newsection_icon" href="' . $url . '"><img src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1" id="fe_newsection_img" class="sprite" alt="' . $text . '" /></a> <div><a id="fe_newsection_link" rel="nofollow" href="' . $url . '">' . $text . '</a></div></li>';
 	}
 	return true;
 }
