@@ -1,4 +1,5 @@
-	var submitted = 0;
+$.loadYUI( function() {
+	commentSubmitted = 0;
 	function XMLHttp(){
 		if (window.XMLHttpRequest){ //Moz
 			var xt = new XMLHttpRequest();
@@ -55,7 +56,7 @@
 		var callback = {
 			success: function(oResponse) {
 					$("allcomments").innerHTML = oResponse.responseText
-					submitted = 0
+					commentSubmitted = 0
 					if(end)window.location.hash = "end";
 			}
 		};
@@ -70,8 +71,8 @@
 	}
 	
 	function submit_comment(){
-		if(submitted==0){
-			submitted = 1;
+		if(commentSubmitted==0){
+			commentSubmitted = 1;
 			sXMLHTTP = XMLHttp();
 			sXMLHTTP.onreadystatechange=function(){
 			if(sXMLHTTP.readyState==4){
@@ -166,4 +167,4 @@
 		$("Step" + (Stp-Drt)).style.visibility="hidden"
 		$("Step" + (Stp-Drt)).style.display="none";
 	}
-
+});
