@@ -77,7 +77,7 @@ EditEnhancementsLoad = function() {
 	var interval = setInterval("EditEnhancementsLoop()", 500);
 }
 
-$(window).bind( 'load', $.loadYUI( EditEnhancementsLoad ) );
+$(window).bind( 'load', function() {$.loadYUI(window.EditEnhancementsLoad)} );
 $(window).bind( 'resize', EditEnhancements );
 
 </script>
