@@ -83,10 +83,34 @@ jQuery.postJSON = function(u, d, callback) {
 // load YUI if not yet loaded
 $.loadYUI = function(callback) {
 	if (typeof YAHOO == 'undefined') {
+		if ( (typeof isYUIloading != 'undefined') && isYUIloading ) {
+			$().log('YUI: is loading add call back to line');
+			loadYUICallBackFIFO.push(callback);
+			return true;
+		}
+		
+		isYUIloading = true;
+		loadYUICallBackFIFO = new Array(); 
+		loadYUICallBackFIFO.push(callback)
+		
 		$().log('YUI: loading on-demand');
-		wsl.loadScript(wgYUIPackageURL, callback);
-	}
-	else {
+		
+		var YUIloadingCallBack = function(){
+			console.log( loadYUICallBackFIFO );
+			for (var i = 0; i < loadYUICallBackFIFO.length; i++ ){
+				console.log(loadYUICallBackFIFO[i]);
+				loadYUICallBackFIFO[i]();
+			}
+			loadYUICallBackFIFO = null;
+		};
+		$().log('YUI: rq start ');
+		
+		if (typeof wsl  == 'undefined') {
+			wsl.loadScript(wgYUIPackageURL, YUIloadingCallBack);
+		} else {
+			wsl.loadScript(wgYUIPackageURL, YUIloadingCallBack);
+		}
+	} else {
 		$().log('YUI: already loaded');
 		callback();
 	}
