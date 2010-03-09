@@ -146,7 +146,7 @@ CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/reader_feedback (
   rfb_user integer unsigned NOT NULL,
   rfb_ip varchar(255) NOT NULL default '',
   rfb_timestamp char(14) NOT NULL default '',
-  --Vote info
+  -- Vote info
   rfb_ratings mediumblob NOT NULL,
   -- No double voting!
   PRIMARY KEY (rfb_rev_id,rfb_user,rfb_ip)

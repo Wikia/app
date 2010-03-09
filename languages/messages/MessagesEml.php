@@ -60,15 +60,17 @@ $messages = array(
 'nstab-template' => 'Modèl',
 
 # Login and logout pages
-'logouttext'           => "'''Adèsa s'et discunnês.'''<br />
-Putiv cuntinuèr ad usèr {{SITENAME}} anonimamèint, o putiv cunnètterv dòp cun al stèss nàmm o cun un èter. Nutêv ca alcuni pàgini i putrèbber cuntinuèr a cràdder ca vueter a-sîv discunnès, finchè non purghê la cache dal vòster browser.",
+'logouttext'           => "'''Adèsa s'et discunnês.'''
+
+Putiv cuntinuèr ad usèr {{SITENAME}} anonimamèint, o putiv cunnètterv dòp cun al stèss nàmm o cun un èter.
+Nutêv ca alcuni pàgini i putrèbber cuntinuèr a cràdder ca vueter a-sîv discunnès, finchè non purghê la cache dal vòster browser.",
 'userlogin'            => 'Entrèr / Argistrères',
 'logout'               => 'va fôra',
 'userlogout'           => 'Va fôra',
 'userexists'           => "Al nòmm ch'èt scélt l'è stê bèle usê: càten un èter, per piasêr.",
 'yourrealname'         => 'Al tô vér nàmm:',
 'yourlanguage'         => 'Léngua:',
-'loginsuccess'         => "'''Adèsa sèt cunês in d'la Wikipedia {{SITENAME}} cun al nàmm d'utèint \"\$1\".'''",
+'loginsuccess'         => "'''Adèsa sèt cunês in {{SITENAME}} cun al nàmm d'utèint \"\$1\".'''",
 'wrongpassword'        => "La password ch'et méss l'è sbajèda. Pròva ancàrra.",
 'blocked-mailpassword' => "Al tô indirézz IP l'an pôl più feèr di cambiamèint, e l'en brisa abilitê par user la funziòun ed recópper ed password par evitèr di abûs.",
 'accountcreated'       => 'Et criê un nôv account',

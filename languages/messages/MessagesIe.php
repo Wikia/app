@@ -157,8 +157,9 @@ $messages = array(
 
 # Login and logout pages
 'logouttitle'                => 'Fine de session',
-'logouttext'                 => 'Vu ha terminat vor session.
-Vu posse continuar usar {{SITENAME}} anonimimen, o vu posse aperter un session denov quam li sam usator o quam un diferent usator.',
+'logouttext'                 => "'''Vu ha terminat vor session.'''
+
+Vu posse continuar usar {{SITENAME}} anonimimen, o vu posse aperter un session denov quam li sam usator o quam un diferent usator.",
 'loginpagetitle'             => 'Registrar se/Intrar',
 'yourname'                   => 'Vor nómine usatori:',
 'yourpassword'               => 'Vor passa-parol:',
@@ -209,7 +210,7 @@ Vu posse continuar usar {{SITENAME}} anonimimen, o vu posse aperter un session d
 'lineno' => 'Linea $1:',
 
 # Search results
-'viewprevnext'   => 'Vider ($1) ($2) ($3)',
+'viewprevnext'   => 'Vider ($1 {{int:pipe-separator}} $2) ($3)',
 'searchhelp-url' => 'Help:Auxilie',
 
 # Preferences page

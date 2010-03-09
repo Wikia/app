@@ -22,8 +22,10 @@
  * @author Laaknor
  * @author Najami
  * @author Nghtwlkr
- * @author Piivaat
+ * @author Nsaa
+ * @author Qaqqalik
  * @author Samuelsen
+ * @author Simny
  * @author Stigmj
  * @author Teak
  * @author לערי ריינהארט
@@ -457,8 +459,17 @@ Det kan også være en bug i {{SITENAME}}.',
 # General errors
 'error'                => 'Feil',
 'databaseerror'        => 'databasefeil',
-'dberrortext'          => 'Det skjedde en syntaksfeil i databasen. Den sist forsøkte forespørselen var: <blockquote><tt>$1</tt></blockquote> fra funksjonen «<tt>$2</tt>». MySQL returnerte feilen «<tt>$3: $4</tt>».',
-'dberrortextcl'        => 'Det skjedde en syntaksfeil i databasen. Den sist forsøkte forespørselen var: «$1» fra funksjonen «$2». MySQL returnerte feilen «$3: $4».',
+'dberrortext'          => 'Det har oppstått en syntaksfeil i en databaseforespørsel.
+Dette kan tyde på en feil i programvaren.
+Forrige databaseforespørsel var:
+<blockquote><tt>$1</tt></blockquote>
+fra funksjonen «<tt>$2</tt>».
+Databasen returnerte feilen «<tt>$3: $4</tt>».',
+'dberrortextcl'        => 'Det oppsto en syntaksfeil i en databaseforespørsel.
+Forrige databaseforespørsel var:
+«$1»
+fra funksjonen «$2».
+Databasen returnerte feilen «$3: $4».',
 'noconnect'            => 'Beklager! Wikien har tekniske problemer, og kan ikke kontakte databasetjeneren.
 <br />$1',
 'nodb'                 => 'Klarte ikke å velge databasen $1',
@@ -543,10 +554,10 @@ Ikke glem å endre [[Special:Preferences|innstillingene]] dine.',
 'logout'                     => 'Logg ut',
 'userlogout'                 => 'Logg ut',
 'notloggedin'                => 'Ikke logget inn',
-'nologin'                    => 'Er du ikke registrert? $1.',
+'nologin'                    => "Er du ikke registrert? '''$1'''.",
 'nologinlink'                => 'Registrer deg',
 'createaccount'              => 'Opprett ny konto',
-'gotaccount'                 => 'Har du allerede et brukernavn? $1.',
+'gotaccount'                 => "Har du allerede et brukernavn? '''$1'''.",
 'gotaccountlink'             => 'Logg inn',
 'createaccountmail'          => 'per e-post',
 'badretype'                  => 'Passordene samsvarte ikke.',
@@ -716,8 +727,9 @@ Vennligst ta med all denne informasjonen ved henvendelser.",
 'whitelistedittext'                => 'Du må $1 for å redigere artikler.',
 'confirmedittitle'                 => 'E-postbekreftelse nødvendig før du kan redigere',
 'confirmedittext'                  => 'Du må bekrefte e-postadressen din før du kan redigere sider. Vennligst oppgi og bekreft e-postadressen din via [[Special:Preferences|innstillingene dine]].',
-'nosuchsectiontitle'               => 'Ingen slik seksjon',
-'nosuchsectiontext'                => 'Du prøvde å redigere en seksjon som ikke eksisterer. Siden det ikke finnes noen seksjon «$1», er det ikke mulig å lagre endringen din.',
+'nosuchsectiontitle'               => 'Finner ikke avsnittet',
+'nosuchsectiontext'                => 'Du prøvde å redigere et avsnitt som ikke eksisterer.
+Det kan ha blitt flyttet eller slettet mens du så på siden.',
 'loginreqtitle'                    => 'Innlogging kreves',
 'loginreqlink'                     => 'logg inn',
 'loginreqpagetext'                 => 'Du må $1 for å se andre sider.',
@@ -733,7 +745,7 @@ Vi er derfor nødt til å bruke den numeriske IP-adressen til å identifisere ha
 En IP-adresse kan være delt mellom flere brukere.
 Hvis du er en uregistrert bruker og synes at du har fått irrelevante kommentarer på en slik side, [[Special:UserLogin/signup|opprett en konto]] eller [[Special:UserLogin|logg inn]] så vi unngår fremtidige forvekslinger med andre uregistrerte brukere.''",
 'noarticletext'                    => 'Det er ikke noe tekst på denne siden.
-Du kan [[Special:Search/{{PAGENAME}}|søke etter siden]] i andre sider, <span class="plainlinks">[{{fullurl:Special:Log|page={{urlencode:{{FULLPAGENAME}}}}}} søke i relaterte logger] eller [{{fullurl:{{FULLPAGENAME}}|action=edit}} opprette siden]</span>.',
+Du kan [[Special:Search/{{PAGENAME}}|søke etter siden]] i andre sider, <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} søke i relaterte logger] eller [{{fullurl:{{FULLPAGENAME}}|action=edit}} opprette siden]</span>.',
 'userpage-userdoesnotexist'        => 'Brukerkontoen «$1» er ikke registrert. Sjekk om du ønsker å opprette/redigere denne siden.',
 'clearyourcache'                   => "'''Merk:''' Etter lagring vil det kanskje være nødvendig at nettleseren sletter mellomlageret sitt for at endringene skal tre i kraft. '''Mozilla og Firefox:''' trykk ''Ctrl-Shift-R'', '''Internet Explorer:''' ''Ctrl-F5'', '''Safari:''' ''Cmd-Shift-R'' i engelskspråklig versjon, ''Cmd-Alt-E'' i norskspråklig versjon, '''Konqueror og Opera:''' ''F5''.",
 'usercssjsyoucanpreview'           => "'''Tips:''' Bruk «Forhåndsvisning»-knappen for å teste din nye CSS/JS før du lagrer.",
@@ -847,7 +859,8 @@ Grunnen som ble oppgitt av $3 er ''$2''",
 'last'                   => 'forrige',
 'page_first'             => 'første',
 'page_last'              => 'siste',
-'histlegend'             => "Forklaring: (nå) = forskjell fra nåværende versjon, (forrige) = forskjell fra forrige versjon, '''m''' = mindre endring.",
+'histlegend'             => "Merk de revisjonen du ønsker å sammenligne og trykk [Enter] eller knappen nederst på siden.<br />
+Forklaring: '''({{int:cur}})''' = forskjell fra nåværende revisjon, '''({{int:last}})''' = forskjell fra foregånde revisjon, '''{{int:minoreditletter}}''' = mindre redigering.",
 'history-fieldset-title' => 'Søk i historikken',
 'deletedrev'             => '[slettet]',
 'histfirst'              => 'Første',
@@ -902,11 +915,11 @@ Vennligst bekreft at du vil gjøre dette, og at du skjønner følgene, og at du 
 'revdelete-suppress'             => 'Fjern informasjon også fra administratorer',
 'revdelete-hide-image'           => 'Skjul filinnhold',
 'revdelete-unsuppress'           => 'Fjern betingelser på gjenopprettede revisjoner',
-'revdelete-log'                  => 'Kommentar:',
+'revdelete-log'                  => 'Slettingsgrunn:',
 'revdelete-submit'               => 'Utfør for valgte revisjoner',
 'revdelete-logentry'             => 'endre revisjonssynlighet for [[$1]]',
 'logdelete-logentry'             => 'endre hendelsessynlighet for [[$1]]',
-'revdelete-success'              => "'''Revisjonssynlighet satt.'''",
+'revdelete-success'              => "'''Versjonssynlighet vellykket oppdatert.'''",
 'logdelete-success'              => "'''Hendelsessynlighet satt.'''",
 'revdel-restore'                 => 'Ender synlighet',
 'pagehist'                       => 'Sidehistorikk',
@@ -1036,7 +1049,7 @@ Forsikre deg om at denne endringen vil opprettholde historisk sidekontinuitet.',
 'prevn-title'                      => 'Forrige $1 {{PLURAL:$1|resultat|resultater}}',
 'nextn-title'                      => 'Neste $1 {{PLURAL:$1|resultat|resultater}}',
 'shown-title'                      => 'Vis $1 {{PLURAL:$1|resultat|resultater}} per side',
-'viewprevnext'                     => 'Vis ($1) ($2) ($3).',
+'viewprevnext'                     => 'Vis ($1 {{int:pipe-separator}} $2) ($3).',
 'searchmenu-legend'                => 'Søkeinnstillinger',
 'searchmenu-exists'                => "* Siden '''[[$1]]'''",
 'searchmenu-new'                   => "'''Opprett siden ''[[:$1]]'' på denne wikien.'''",
@@ -1178,7 +1191,7 @@ se math/README for oppsett.',
 * En avkrysset boks betyr at brukeren er medlem av gruppen.
 * En uavkrysset boks betyr at brukeren ikke er medlem av gruppen.
 * En * betyr at du ikke kan fjerne gruppemedlemskapet når du har lagt det til, eller vice versa.',
-'userrights-reason'              => 'Endringsgrunn:',
+'userrights-reason'              => 'Årsak:',
 'userrights-no-interwiki'        => 'Du har ikke tillatelse til å endre brukerrettigheter på andre wikier.',
 'userrights-nodatabase'          => 'Databasen $1 finnes ikke, eller er ikke lokal.',
 'userrights-nologin'             => 'Du må [[Special:UserLogin|logge inn]] med en administratorkonto for å endre brukerrettigheter.',
@@ -1396,14 +1409,18 @@ Se [[Special:NewFiles|galleriet over nye filer]] for en mer visuell visning',
 'large-file'                  => 'Det er anbefalt at filen ikke er større enn $1; denne filen er $2.',
 'largefileserver'             => 'Denne fila er større enn det tjeneren er satt opp til å tillate.',
 'emptyfile'                   => 'Fila du lastet opp ser ut til å være tom. Dette kan komme av en skrivefeil i filnavnet. Sjekk om du virkelig vil laste opp denne fila.',
-'fileexists'                  => "Ei fil med dette navnet finnes allerede. Sjekk '''<tt>$1</tt>''' hvis du ikke er sikker på at du vil forandre den.",
-'filepageexists'              => "Beskrivelsessiden for denne filen finnes allerede på '''<tt>$1</tt>''', men ingen filer med dette navnet finnes. Sammendragen du skriver iknn vil ikke vises på beskrivelsessiden. For at det skal dukke opp der må du skrive det inn manuelt etter å ha lastet opp filen.",
-'fileexists-extension'        => "En fil med et lignende navn finnes:<br />
-Navnet på din fil: '''<tt>$1</tt>'''<br />
-Navn på eksisterende fil: '''<tt>$2</tt>'''<br />
-Den eneste forskjellen ligger i store/små bokstaver i filendelsen. Vennligst sjekk filene for likheter.",
+'fileexists'                  => "Ei fil med dette navnet finnes allerede.
+Sjekk '''<tt>[[:$1]]</tt>''' hvis du ikke er sikker på at du vil forandre den.
+[[$1|thumb]]",
+'filepageexists'              => "Beskrivelsessiden for denne filen finnes allerede på '''<tt>[[:$1]]</tt>''', men ingen filer med dette navnet finnes. Sammendraget du skruver inn vil ikke vises på beskrivelsessiden. For at det skal dukke opp der må du skrive det inn manuelt etter å da lastet opp filen.
+[[$1|thumb]]",
+'fileexists-extension'        => "En fil med et lignende navn finnes: [[$2|thumb]]
+* Navnet på din fil: '''<tt>[[:$1]]</tt>'''
+* Navn på eksisterende fil: '''<tt>[[:$2]]</tt>'''
+Velg et annet filnavn.",
 'fileexists-thumb'            => "<center>'''Eksisterende fil'''</center>",
-'fileexists-thumbnail-yes'    => "Filen ser ut til å være et bilde av redusert størrelse. Vennligst sjekk filen '''<tt>$1</tt>'''.<br />
+'fileexists-thumbnail-yes'    => "Filen ser ut til å være et bilde av redusert størrelse. [[$1|thumb]]
+Vennligst sjekk filen '''<tt>[[:$1]]</tt>'''.
 Om filen du sjekket er det samme bildet, men i opprinnelig størrelse, er det ikke nødvendig å laste opp en ekstra fil.",
 'file-thumbnail-no'           => "Filnavnet begynner med '''<tt>$1</tt>'''.
 Det virker som om det er et bilde av redusert størrelse ''(miniatyrbilde)''.
@@ -1498,7 +1515,7 @@ Om problemet fortsetter, kontakt en [[Special:ListUsers/sysop|administrator]].',
 'filehist-filesize'         => 'Filstørrelse',
 'filehist-comment'          => 'Kommentar',
 'imagelinks'                => 'Fillenker',
-'linkstoimage'              => 'Følgende {{PLURAL:$1|side|$1 sider}} har lenker til denne fila:',
+'linkstoimage'              => 'Følgende {{PLURAL:$1|side|$1 sider}} har lenker til denne filen:',
 'linkstoimage-more'         => 'Mer enn $1 {{PLURAL:$1|side|sider}} lenker til denne fila.
 Følgende liste viser {{PLURAL:$1|den første siden|de $1 første sidene}}.
 En [[Special:WhatLinksHere/$2|fullstendig liste]] er tilgjengelig.',
@@ -1512,7 +1529,7 @@ En [[Special:WhatLinksHere/$2|fullstendig liste]] er tilgjengelig.',
 'shareduploadwiki-linktext' => 'filbeskrivelsesside',
 'noimage'                   => 'Ingen fil ved dette navnet finnes, men du kan $1.',
 'noimage-linktext'          => 'laste opp ett',
-'uploadnewversion-linktext' => 'Last opp en ny versjon av denne fila',
+'uploadnewversion-linktext' => 'Last opp en ny versjon av denne filen',
 'shared-repo-from'          => 'fra $1', # $1 is the repository name
 'shared-repo'               => 'et delt fillager', # used when shared-repo-NAME does not exist
 
@@ -1596,7 +1613,9 @@ De burde i stedet lenke til en passende innholdsside.<br />
 En side anses om en pekerside om den inneholder en mal som det lenkes til fra [[MediaWiki:Disambiguationspage]]",
 
 'doubleredirects'            => 'Doble omdirigeringer',
-'doubleredirectstext'        => "'''NB:''' Denne listen kan inneholde gale resultater. Det er som regel fordi siden inneholder ekstra tekst under den første <tt>#redirect</tt>.<br />Hver linje inneholder lenker til den første og den andre omdirigeringen, og den første linjen fra den andre omdirigeringsteksten. Det gir som regel den «riktige» målartikkelen, som den første omdirigeringen skulle ha pekt på.",
+'doubleredirectstext'        => 'Denne siden lister opp de sidene som er omdirigeringer til andre omdirigeringssider.
+Hver rad inneholder lenker til første og andre omdirigering, samt målet for den andre omdirigeringen, som vanligvis er den «virkelige» målsiden som den første omdirigeringen burde peke til.
+<s>Gjennomstrøkne</s> sider har blitt fikset.',
 'double-redirect-fixed-move' => '[[$1]] har blitt flyttet, og er nå en omdirigering til [[$2]]',
 'double-redirect-fixer'      => 'Omdirigeringsfikser',
 
@@ -1663,7 +1682,8 @@ En side anses om en pekerside om den inneholder en mal som det lenkes til fra [[
 'ancientpages'            => 'Eldste sider',
 'move'                    => 'Flytt',
 'movethispage'            => 'Flytt denne siden',
-'unusedimagestext'        => 'Merk at andre sider kanskje lenker til en fil med en direkte lenke, så filen listes her selv om den faktisk er i bruk.',
+'unusedimagestext'        => 'Følgende filer eksisterer men er ikke innlagt på noen sider.
+Merk at andre sider kanskje lenker til en fil med en direkte lenke, så filen listes her selv om den faktisk er i bruk.',
 'unusedcategoriestext'    => 'Følgende kategorier finnes, men det er ingen sider i dem.',
 'notargettitle'           => 'Intet mål',
 'notargettext'            => 'Du oppga ikke en målside eller bruker å utføre denne funksjonen på.',
@@ -1684,7 +1704,7 @@ En side anses om en pekerside om den inneholder en mal som det lenkes til fra [[
 'specialloguserlabel'  => 'Bruker:',
 'speciallogtitlelabel' => 'Tittel:',
 'log'                  => 'Logger',
-'all-logs-page'        => 'Alle logger',
+'all-logs-page'        => 'Alle offentlige logger',
 'alllogstext'          => 'Kombinert visning av alle loggene på {{SITENAME}}.
 Du kan minske antallet resultater ved å velge loggtype, brukernavn eller den siden som er påvirket (husk å skille mellom store og små bokstaver).',
 'logempty'             => 'Ingen elementer i loggen.',
@@ -1903,7 +1923,7 @@ Den siste redigeringen ble foretatt av [[User:$3|$3]] ([[User talk:$3|diskusjon]
 'protect-title'               => 'Låser «$1»',
 'prot_1movedto2'              => '[[$1]] flyttet til [[$2]]',
 'protect-legend'              => 'Bekreft låsing',
-'protectcomment'              => 'Kommentar:',
+'protectcomment'              => 'Årsak:',
 'protectexpiry'               => 'Utgår:',
 'protect_expiry_invalid'      => 'Utgangstiden er ugyldig.',
 'protect_expiry_old'          => 'Utgangstiden har allerede vært.',
@@ -2491,8 +2511,9 @@ $1',
 'visual-comparison' => 'Visuell sammenligning',
 
 # Media information
-'mediawarning'         => "'''Advarsel''': Denne fila kan inneholde farlig kode; ved å åpne den kan systemet ditt kompromitteres.<hr />",
-'imagemaxsize'         => "Bildestørrelsesgrense:<br />''(for filbeskrivelsessider)''",
+'mediawarning'         => "'''Advarsel''': Denne fila kan inneholde farlig kode.
+Ved å åpne den kan systemet ditt kompromitteres.<hr />",
+'imagemaxsize'         => 'Begrens bilder på filbeskrivelsessider til:',
 'thumbsize'            => 'Miniatyrbildestørrelse:',
 'widthheightpage'      => '$1×$2, {{PLURAL:$3|én side|$3 sider}}',
 'file-info'            => '(filstørrelse: $1, MIME-type: $2)',
@@ -2802,7 +2823,7 @@ Rotert 90° mot klokka og vridd vertikalt', # 0th row: left; 0th column: top
 'exif-gpsdirection-m' => 'Magnetisk retning',
 
 # External editor support
-'edit-externally'      => 'Rediger denne fila med et eksternt program',
+'edit-externally'      => 'Rediger denne filen med et eksternt program',
 'edit-externally-help' => '(Se [http://www.mediawiki.org/wiki/Manual:External_editors oppsettsinstruksjonene] for mer informasjon)',
 
 # 'all' in various places, this might be different for inflected languages
@@ -3034,7 +3055,7 @@ Skriv inn filnavn uten «{{ns:file}}:»-prefikset.',
 'tag-filter-submit'       => 'Filtrer',
 'tags-title'              => 'Tagger',
 'tags-intro'              => 'Denne siden lister opp taggene programvaren kan merke endrineg med, og hva de betyr.',
-'tags-tag'                => 'Internt taggnavn',
+'tags-tag'                => 'Taggnavn',
 'tags-display-header'     => 'Utseende på endringslister',
 'tags-description-header' => 'Fullstendig betydning',
 'tags-hitcount-header'    => 'Taggede endringer',

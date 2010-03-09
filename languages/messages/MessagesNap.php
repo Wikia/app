@@ -215,7 +215,8 @@ $messages = array(
 'badtitle'        => "'O nnomme nun è jùsto",
 
 # Login and logout pages
-'logouttext'                 => "'''Site asciùte.'''<br />
+'logouttext'                 => "'''Site asciùte.'''
+
 Putite cuntinuà a ausà {{SITENAME}} comme n'utente senza nomme, o si nò putite trasì n'ata vota, cu 'o stesso nomme o cu n'ato nomme.",
 'welcomecreation'            => "== Bemmenuto, $1! ==
 
@@ -227,10 +228,10 @@ Putite cuntinuà a ausà {{SITENAME}} comme n'utente senza nomme, o si nò putit
 'logout'                     => 'Jèsce',
 'userlogout'                 => 'Jèsce',
 'notloggedin'                => 'Acciesso nun affettuato',
-'nologin'                    => "Nun haje ancora n'acciesso? $1.",
+'nologin'                    => "Nun haje ancora n'acciesso? '''$1'''.",
 'nologinlink'                => 'Crialo mmo',
 'createaccount'              => 'Cria nu cunto nuovo',
-'gotaccount'                 => 'Tiene già nu cunto? $1.',
+'gotaccount'                 => "Tiene già nu cunto? '''$1'''.",
 'gotaccountlink'             => 'Tràse',
 'username'                   => 'Nomme utente',
 'yourlanguage'               => 'Lengua:',

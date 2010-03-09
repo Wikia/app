@@ -164,7 +164,9 @@ $messages = array(
 
 # Login and logout pages
 'logouttitle'                => 'San avri akana',
-'logouttext'                 => 'Akana san avryal i {{SITENAME}}. Shai te labyares {{SITENAME}} sar ekh bijanglo jeno vai shai te prinjares tut palem sar o jeno le kadale navesa vai le aver navesa.',
+'logouttext'                 => "'''Akana san avryal i {{SITENAME}}.'''
+
+Shai te labyares {{SITENAME}} sar ekh bijanglo jeno vai shai te prinjares tut palem sar o jeno le kadale navesa vai le aver navesa.",
 'welcomecreation'            => '== Mishto avilyan, $1! ==
 
 Akana si tuke ekh akont. Te na bistares te paruves, kana trebul tuke, tire kamimata kai {{SITENAME}}.',
@@ -180,7 +182,7 @@ Akana si tuke ekh akont. Te na bistares te paruves, kana trebul tuke, tire kamim
 'userlogout'                 => 'De avri',
 'nologinlink'                => 'Ker ek akount',
 'createaccount'              => 'Ker ek nevo akount',
-'gotaccount'                 => 'Si tuke akana ekh akonto? $1.',
+'gotaccount'                 => "Si tuke akana ekh akonto? '''$1'''.",
 'gotaccountlink'             => 'De andre',
 'createaccountmail'          => 'palal o e-mail',
 'badretype'                  => 'Le nakhavipnaske lava so lekhavdyan nai myazutne.',
@@ -263,7 +265,7 @@ Kana avilyan kathe doshatar, ja palpale.',
 # Search results
 'prevn'             => 'mai neve $1',
 'nextn'             => 'mai purane $1',
-'viewprevnext'      => 'Dikh ($1) ($2) ($3).',
+'viewprevnext'      => 'Dikh ($1 {{int:pipe-separator}} $2) ($3).',
 'searchhelp-url'    => 'Help:Zhutipen',
 'showingresults'    => 'Tele si <b>$1</b> rezultaturya shirdindoi le ginestar <b>$2</b>.',
 'showingresultsnum' => 'Tele si <b>$3</b> rezultaturya shirdindoi le ginestar <b>$2</b>.',

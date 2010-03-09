@@ -15,6 +15,15 @@ CREATE INDEX fp_reviewed_page ON flaggedpages (fp_reviewed,fp_page_id);
 CREATE INDEX fp_quality_page ON flaggedpages (fp_quality,fp_page_id);
 CREATE INDEX fp_pending_since ON flaggedpages (fp_pending_since);
 
+CREATE TABLE flaggedpage_pending (
+  fpp_page_id INTEGER UNSIGNED NOT NULL,
+  fpp_quality INTEGER NOT NULL,
+  fpp_rev_id  INTEGER UNSIGNED NOT NULL,
+  fpp_pending_since TIMESTAMPTZ NULL,
+  PRIMARY KEY (fpp_page_id,fpp_quality)
+);
+CREATE INDEX fpp_quality_pending ON flaggedpage_pending (fpp_quality,fpp_pending_since);
+
 CREATE TABLE flaggedrevs (
   fr_page_id       INTEGER    NOT NULL DEFAULT 0,
   fr_rev_id        INTEGER    NOT NULL DEFAULT 0,

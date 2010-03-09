@@ -1823,8 +1823,8 @@ function do_postgres_updates() {
 			'ctype' => 'U',
 			'mw_version' => $wgVersion,
 			'pg_version' => $version,
-			'sql_version' => '$LastChangedRevision: 51640 $',
-			'sql_date' => '$LastChangedDate: 2009-06-09 12:58:05 +0000 (Tue, 09 Jun 2009) $',
+			'sql_version' => '$LastChangedRevision: 60080 $',
+			'sql_date' => '$LastChangedDate: 2009-12-15 17:24:12 +0000 (Tue, 15 Dec 2009) $',
 		) );
 	return;
 }

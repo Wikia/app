@@ -423,7 +423,7 @@ $messages = array(
 'nosuchaction'      => "Bunday ha'reket joq",
 'nosuchactiontext'  => "Bul URLda ko'rsetilgen ha'reketti wiki tanıy almadı",
 'nosuchspecialpage' => 'Bunday arnawlı bet joq',
-'nospecialpagetext' => "<big>'''Siz sorag'an bunday arnawlı bet joq.'''</big>
+'nospecialpagetext' => "<strong>Siz sorag'an bunday arnawlı bet joq.</strong>
 
 Arnawlı betlerdin' dizimin [[Special:SpecialPages|{{int:specialpages}}]] betinen tabıwın'ızg'a boladı.",
 
@@ -502,8 +502,11 @@ Keltirilgen sebep: ''$2''.",
 
 # Login and logout pages
 'logouttitle'                => "Shıg'ıw",
-'logouttext'                 => "'''Siz endi sayttan shıqtın'ız.'''<br />
-Siz {{SITENAME}} saytınan anonim halda paydalanıwın'ız mu'mkin. Yamasa siz ja'ne ha'zirgi yaki basqa paydalanıwshı atı menen [[Special:UserLogin|qaytadan sistemag'a kiriwin'izge]] boladı. Sonı este saqlan', ayrım betler sizin' brauzerin'izdin' keshi tazalanbag'anlıg'ı sebebli sistemada kirgenin'izdey ko'riniste dawam ettire beriwi mu'mkin.",
+'logouttext'                 => "'''Siz endi sayttan shıqtın'ız.'''
+
+Siz {{SITENAME}} saytınan anonim halda paydalanıwın'ız mu'mkin.
+Yamasa siz ja'ne ha'zirgi yaki basqa paydalanıwshı atı menen [[Special:UserLogin|qaytadan sistemag'a kiriwin'izge]] boladı.
+Sonı este saqlan', ayrım betler sizin' brauzerin'izdin' keshi tazalanbag'anlıg'ı sebebli sistemada kirgenin'izdey ko'riniste dawam ettire beriwi mu'mkin.",
 'welcomecreation'            => "== Xosh keldin'iz, $1! ==
 
 Akkauntın'ız jaratıldı. 
@@ -521,10 +524,10 @@ Akkauntın'ız jaratıldı.
 'logout'                     => "Shıg'ıw",
 'userlogout'                 => "Shıg'ıw",
 'notloggedin'                => 'Kirilmegen',
-'nologin'                    => "Akkauntın'ız joqpa? $1.",
+'nologin'                    => "Akkauntın'ız joqpa? '''$1'''.",
 'nologinlink'                => "Akkaunt jaratın'",
 'createaccount'              => 'Akkaunt jarat',
-'gotaccount'                 => "Akkauntın'ız barma? $1.",
+'gotaccount'                 => "Akkauntın'ız barma? '''$1'''.",
 'gotaccountlink'             => 'Kir',
 'createaccountmail'          => 'e-mail arqalı',
 'badretype'                  => 'Siz kiritken parol tuwra kelmedi.',
@@ -681,8 +684,7 @@ to'mende ko'rsetilgen:",
 'confirmedittext'                  => "Betlerge o'zgeris kiritiwin'iz ushın aldın E-pochta adresin'izdi tastıyıqlawın'ız kerek.
 E-pochta adresin'izdi [[Special:Preferences|paydalanıwshı sazlawları bo'limi]] arqalı ko'rsetin' ha'm jaramlılıg'ın tekserin'.",
 'nosuchsectiontitle'               => "Bunday bo'lim joq",
-'nosuchsectiontext'                => "Ele jaratılmag'an bo'limdi o'zgerpekshisiz.
-$1 bo'limi joq bolg'anlıg'ı sebepli sizin' o'zgertiwin'izdi saqlawg'a orın joq.",
+'nosuchsectiontext'                => "Ele jaratılmag'an bo'limdi o'zgerpekshisiz.",
 'loginreqtitle'                    => "Sistemag'a kiriw kerek",
 'loginreqlink'                     => 'kiriw',
 'loginreqpagetext'                 => "Basqa betlerdi ko'riw ushın sizge $1 kerek.",
@@ -694,7 +696,7 @@ Betti jaratıw ushın to'mendegi aynada tekstin'izdi kiritin' (qosımsha mag'lı
 Eger bul jerge aljasıp o'tken bolsan'ız, brauzerin'izdin' «Arqag'a» knopkasın basın'.",
 'noarticletext'                    => "Ha'zirgi waqıtta bul bette hesh qanday mag'lıwmat joq. 
 Basqa betlerden usı bet atamasın [[Special:Search/{{PAGENAME}}|izlep ko'riwin'izge]],
-<span class=\"plainlinks\">[{{fullurl:Special:Log|page={{urlencode:{{FULLPAGENAME}}}}}} tiyisli jurnallardı izlewin'izge],
+<span class=\"plainlinks\">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} tiyisli jurnallardı izlewin'izge],
 yamasa usı betti [{{fullurl:{{FULLPAGENAME}}|action=edit}} jaratıwin'ızga'] boladi.",
 'userpage-userdoesnotexist'        => "\"\$1\" paydalanıwshı akkauntı registratsiya qılınbag'an. Bul betti jaratqın'ız yamasa o'zgertkin'iz kelse tekserip ko'rin'.",
 'updated'                          => "(Jan'alang'an)",
@@ -914,7 +916,7 @@ Sha'rtli belgiler: (ha'z.) = ha'zirgi nusqasi menen parqı,
 'notextmatches'                    => 'Hesh qanday bet teksti tuwra kelmedi',
 'prevn'                            => "aldıng'ı $1",
 'nextn'                            => 'keyingi $1',
-'viewprevnext'                     => "Ko'riw: ($1) ($2) ($3)",
+'viewprevnext'                     => "Ko'riw: ($1 {{int:pipe-separator}} $2) ($3)",
 'searchmenu-legend'                => 'İzlew sazlawları',
 'searchmenu-exists'                => "'''Bul wikide \"[[:\$1]]\" atamalı bet bar'''",
 'searchmenu-new'                   => "'''Bul wikide \"[[:\$1]]\" betin jaratıw!'''",
@@ -1498,7 +1500,7 @@ Ja'nede [[Special:WantedCategories|kerekli kategoriyalardı]] qarap ko'rin'.",
 Usı ha'm og'an baylanıslı bolg'an sa'wbet betlerinde bolatug'ın keleshektegi o'zgerisler usı dizimde ko'rsetiledi ha'mde betti tabıwdı an'satlastırıw ushın [[Special:RecentChanges|taza o'zgerisler diziminde]] '''juwan ha'ripte''' ko'rsetiledi.
 Eger siz bul betti baqlaw dizimin'izden o'shirmekshi bolsan'ız bettin' joqarg'ı on' jag'ındag'ı \"Baqlamaw\" jazıwın basın'.",
 'removedwatch'      => "Baqlaw diziminen o'shirildi",
-'removedwatchtext'  => '"[[:$1]]" beti baqlaw dizimin\'izden o\'shirildi.',
+'removedwatchtext'  => '"[[:$1]]" beti [[Special:Watchlist|sizin\' baqlaw dizimin\'izden]] o\'shirildi.',
 'watch'             => 'Baqlaw',
 'watchthispage'     => 'Bul betti baqlaw',
 'unwatch'           => 'Baqlamaw',
@@ -1563,7 +1565,7 @@ Aqırg'ı o'shirilgenlerdin' dizimin ko'riw ushin \$2 ni qaran'",
 'modifiedarticleprotection'   => '"[[$1]]" betinin\' qorg\'aw da\'rejesi ozgertildi',
 'unprotectedarticle'          => '"[[$1]]" qorg\'almag\'an',
 'protect-legend'              => "Qorg'awdı tastıyıqlaw",
-'protectcomment'              => 'Kommentariy:',
+'protectcomment'              => 'Sebep:',
 'protectexpiry'               => "Ku'shin joytıw waqtı:",
 'protect_expiry_invalid'      => "Nadurıs ku'shin joytıw waqtı.",
 'protect_expiry_old'          => "Kushin joytıw waqtı o'tip ketken.",
@@ -1586,7 +1588,7 @@ Aqırg'ı o'shirilgenlerdin' dizimin ko'riw ushin \$2 ni qaran'",
 'protect-otherreason'         => 'Basqa/qosımsha sebep:',
 'protect-otherreason-op'      => 'basqa/qosımsha sebep',
 'protect-edit-reasonlist'     => "Qorg'aw sebeplerin o'zgertiw",
-'protect-expiry-options'      => "1 saat:1 hours,1 ku'n:1 day,1 ha'pte:1 week,2 ha'pte:2 weeks,1 ay:1 month,3 ay:3 months,6 ay:6 months,1 jıl:1 year,ma'ngi:infinite", # display1:time1,display2:time2,...
+'protect-expiry-options'      => "1 saat:1 hour,1 ku'n:1 day,1 ha'pte:1 week,2 ha'pte:2 weeks,1 ay:1 month,3 ay:3 months,6 ay:6 months,1 jıl:1 year,ma'ngi:infinite", # display1:time1,display2:time2,...
 'restriction-type'            => 'Ruxsatnama:',
 'restriction-level'           => "Sheklew da'rejesi:",
 'minimum-size'                => "En' az o'lshemi",
