@@ -305,7 +305,21 @@ wfProfileIn( $fname.'-extensions' );
 # of the extension file. This allows the extension to perform
 # any necessary initialisation in the fully initialised environment
 foreach ( $wgExtensionFunctions as $func ) {
-	$profName = $fname.'-extensions-'.strval( $func );
+	$funcStr = "?";
+	if(is_array($func)){
+		if(isset($func[0])){
+			if(is_object($func[0])){
+				$funcStr = $func[0]."->".(isset($func[1])?$func[1]:"");
+			} else {
+				$funcStr = $func[0]."::".(isset($func[1])?$func[1]:"");
+			}
+		} else {
+			$funcStr = strval($func);
+		}
+	} else {
+		$funcStr = strval( $func );
+	}
+	$profName = $fname.'-extensions-'.$funcStr;
 	wfProfileIn( $profName );
 	call_user_func( $func );
 	wfProfileOut( $profName );
