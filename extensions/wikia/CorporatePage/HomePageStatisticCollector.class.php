@@ -40,13 +40,14 @@ class HomePageStatisticCollector
 	 * Author: Tomek Odrobny
 	 * hook for numbers of new pages made in this month
 	 */
-	public static function articleCountPagesAddedInLastHour(&$article,&$user,&$newText){
+	 
+	public static function articleCountPagesAddedInLastHour(&$article, &$user, $text, $summary,$flag, $fake1, $fake2, &$flags, $revision, &$status, $baseRevId){
+
 		if (self::chackNamespace($article)){
 			return true;
 		}
-
-		$aID = $article->getTitle()->getArticleID();
-		if (!$aID){
+    
+		if ($status['value']['new'] == 1){
 			self::updatePagesAddedInLastHour(1);
 		}
 		return true;
