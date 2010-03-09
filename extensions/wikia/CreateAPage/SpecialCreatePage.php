@@ -203,10 +203,14 @@ class CreatePageCreateplateForm {
 	function showForm ( $err, $content_prev = false, $formCallback = null ) {
 		global $wgOut, $wgUser, $wgRequest ;
 
-		$StaticChute = new StaticChute('js');
-		$StaticChute->useLocalChuteUrl();
-		$YUIPath = $StaticChute->getChuteUrlForPackage('yui');
-		$wgOut->addHTML( '<script type="text/javascript" src="' . $YUIPath . '"></script>' );
+		$StaticChuteJs = new StaticChute('js');
+		$StaticChuteJs->useLocalChuteUrl();
+
+		$StaticChuteCss = new StaticChute('css');
+		$StaticChuteCss->useLocalChuteUrl();
+
+		$wgOut->addHTML( $StaticChuteJs->getChuteHtmlForPackage( 'yui' ) );
+		$wgOut->addHTML( $StaticChuteCss->getChuteHtmlForPackage( 'yui_css' ) );
 
 		if ($wgRequest->getCheck ('wpPreview')) {
 			$wgOut->setPageTitle (wfMsg('preview')) ;
