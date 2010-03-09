@@ -8,6 +8,7 @@
  * @author Arastein
  * @author Asoxor
  * @author Cyrus abdi
+ * @author Marmzok
  */
 
 $fallback = 'ku-latn';
@@ -191,7 +192,7 @@ $messages = array(
 'unprotectthispage' => 'ئه‌م په‌ڕه‌یه‌ مه‌پارێزه‌',
 'newpage'           => 'په‌ڕه‌یه‌كی نوێ',
 'talkpage'          => 'گفتوگۆ له‌سه‌ر ئه‌م په‌ڕه‌یه بكه‌',
-'talkpagelinktext'  => 'وتە',
+'talkpagelinktext'  => 'لێدوان',
 'specialpage'       => 'په‌ڕه‌ی تایبه‌ت',
 'personaltools'     => 'ئامڕازە تاکەکەسییەکان',
 'postcomment'       => 'بەشی نوێ',

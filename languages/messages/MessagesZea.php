@@ -309,9 +309,9 @@ $messages = array(
 'nosuchaction'      => 'Opeheven handelieng besti nie',
 'nosuchactiontext'  => 'Den opdracht in de URL wier nie herkend deur de wiki',
 'nosuchspecialpage' => 'Deêze speciaole pagina besti nie',
-'nospecialpagetext' => "<big>'''Je ei een onbestaende speciaole pagina opevrogen.'''</big>
+'nospecialpagetext' => '<strong>Je ei een onbestaende speciaole pagina opevrogen.</strong>
 
-Een lieste mie speciaole pagina’s sti op [[Special:SpecialPages|speciaole pagina’s]].",
+Een lieste mie speciaole pagina’s sti op [[Special:SpecialPages|speciaole pagina’s]].',
 
 # General errors
 'error'                => 'Fout',
@@ -379,7 +379,8 @@ De heheven reeën is ''$2''.",
 
 # Login and logout pages
 'logouttitle'                => 'Gebruker afmelden',
-'logouttext'                 => "'''Je bin noe ofemeld.'''<br />
+'logouttext'                 => "'''Je bin noe ofemeld.'''
+
 Je kan {{SITENAME}} noe anoniem gebruken of wee anmelden as dezelven of een aore gebruker.
 Meuhlijk worn nog een antal pagina's weereheven asof a je anemeld bin totda je de cache van je browser leeg.",
 'welcomecreation'            => '== Welkom, $1! ==
@@ -399,10 +400,10 @@ Vergeet nie je [[Special:Preferences|vòkeuren voe {{SITENAME}}]] an te passen.'
 'logout'                     => 'Ofmelden',
 'userlogout'                 => 'Ofmelden',
 'notloggedin'                => 'Nie anemeld',
-'nologin'                    => 'Nog hin gebrukersnaem? $1.',
+'nologin'                    => "Nog hin gebrukersnaem? '''$1'''.",
 'nologinlink'                => 'Mik een gebruker an',
 'createaccount'              => 'Gebruker anmaeken',
-'gotaccount'                 => 'È je a een gebrukersnaem? $1.',
+'gotaccount'                 => "È je a een gebrukersnaem? '''$1'''.",
 'gotaccountlink'             => 'Anmelden',
 'createaccountmail'          => 'per e-mail',
 'badretype'                  => 'De wachtwoôrden die-a je ingegeven typ bin nie eênder.',
@@ -549,7 +550,7 @@ Vermeld dat a je erhens over deêze blokkaode wil reaheern.",
 'confirmedittext'           => "Je mò jen e-mailadres bevestihen voe da je kan bewerken.
 Voer jen e-mailadres in en bevestig 't via [[Special:Preferences|je vòkeuren]].",
 'nosuchsectiontitle'        => 'Deêze subkop besti nie',
-'nosuchsectiontext'         => 'Je probeern een subkop te bewerken die a nie besti. Omda subkop $1 nie besti, kan je bewerkieng ok nie worn opeslogen.',
+'nosuchsectiontext'         => 'Je probeern een subkop te bewerken die a nie besti.',
 'loginreqtitle'             => 'Anmelden verplicht',
 'loginreqlink'              => 'anmelden',
 'loginreqpagetext'          => "$1 is verplicht om aore pagina's te kunn'n ziene.",
@@ -791,7 +792,7 @@ Zurg da je bie deêze wiezigieng de heschiedenisdeurloôpendeid van de pagina be
 'notextmatches'         => "Hin pagina's evon'n",
 'prevn'                 => 'vorrege $1',
 'nextn'                 => 'volhende $1',
-'viewprevnext'          => 'Bekiek ($1) ($2) ($3).',
+'viewprevnext'          => 'Bekiek ($1 {{int:pipe-separator}} $2) ($3).',
 'searchhelp-url'        => 'Help:Inoud',
 'search-result-size'    => '$1 ({{PLURAL:$2|1 woôrd|$2 woôrn}})',
 'search-result-score'   => 'Rillevantie: $1%',

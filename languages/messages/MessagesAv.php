@@ -4,6 +4,7 @@
  * @ingroup Language
  * @file
  *
+ * @author Amikeco
  * @author MF-Warburg
  * @author MONARCH79
  * @author Phoebe
@@ -24,15 +25,17 @@ $messages = array(
 'mytalk' => 'Дур бахlс',
 'and'    => '&#32;ва',
 
-'errorpagetitle' => 'Гъалатl',
-'help'           => 'Кумек',
-'history'        => 'Хиса-басазул тарих',
-'edit'           => 'Хисизабе',
-'talkpage'       => 'Гьумералда тlасан бахlс',
-'talk'           => 'Бахlс',
-'toolbox'        => 'Алатал',
-'userpage'       => 'ГIахьалчиясул гьумер',
-'otherlanguages' => 'Цойги мацIазда',
+'errorpagetitle'   => 'Гъалатl',
+'help'             => 'Кумек',
+'history'          => 'Хиса-басазул тарих',
+'printableversion' => 'КутIизе версия',
+'permalink'        => 'Кидаго букIунеб рехсей',
+'edit'             => 'Хисизабе',
+'talkpage'         => 'Гьумералда тlасан бахlс',
+'talk'             => 'Бахlс',
+'toolbox'          => 'Алатал',
+'userpage'         => 'ГIахьалчиясул гьумер',
+'otherlanguages'   => 'Цойги мацIазда',
 
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'currentevents'        => 'Жакъасел лъугьа-бахъинал',
@@ -80,6 +83,9 @@ $messages = array(
 'minoreditletter' => 'гI.-м.',
 'newpageletter'   => 'ЦI',
 
+# Recent changes linked
+'recentchangeslinked' => 'Рухьарал хиса-басиял',
+
 # Upload
 'uploadnologin' => 'Дуца цIар бицун гьечIо',
 
@@ -107,6 +113,9 @@ $messages = array(
 # Contributions
 'contributions' => 'ГIахьалчиясул хIалтIи',
 'mycontris'     => 'Дур гlахьаллъи',
+
+# What links here
+'whatlinkshere' => 'Рехсей гьанибе',
 
 # Move page
 'move-page-legend' => 'Гьумералъул цlар хисизе',

@@ -4,6 +4,7 @@
  * @ingroup Language
  * @file
  *
+ * @author Gott wisst
  * @author JJohnson
  * @author Omnipaedista
  * @author Spacebirdy
@@ -31,6 +32,7 @@ $messages = array(
 'tog-watchcreations'     => 'Ēac trametas þe ic scieppe tō mīnre wæccgetale',
 'tog-watchdefault'       => 'Ēac trametas þe ic ādihte tō mīnre wæcctale',
 'tog-watchmoves'         => 'Ēac trametas þe ic hweorfe tō mīnre wæcctale',
+'tog-minordefault'       => 'Mǣlan ealle ādihtende tōlas gewunelīce',
 'tog-watchlisthideown'   => 'Hȳdan mīna ādihtunga wiþ þā behealdnestale',
 'tog-watchlisthideminor' => 'Hȳdan minlica ādihtunga wiþ þæt wæccbrede',
 'tog-ccmeonemails'       => 'Sendan mē twifealdunga þāra e-ǣrenda þe ic ōðrum brūcendum tō sende',
@@ -152,6 +154,7 @@ $messages = array(
 'redirectedfrom'    => '(Edlǣded of $1)',
 'redirectpagesub'   => 'Edlǣdungtramet',
 'protectedpage'     => 'Geweardod tramet',
+'jumpto'            => 'Forðgangan on:',
 'jumptosearch'      => 'sēcan',
 
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
@@ -162,6 +165,7 @@ $messages = array(
 'currentevents-url'    => 'Project:Efenealde belimpas',
 'edithelp'             => 'Ādihtunge help',
 'edithelppage'         => 'Help:Ādihtung',
+'faq'                  => 'Oftost ascoda ascunga',
 'helppage'             => 'Help:Innung',
 'mainpage'             => 'Hēafodsīde',
 'mainpage-description' => 'Hēafodsīde',
@@ -171,12 +175,17 @@ $messages = array(
 
 'versionrequired' => 'Fadunge $1 þæs MediaWicis nēodaþ',
 
+'retrievedfrom'           => 'Gefangen fram "$1"',
 'youhavenewmessages'      => 'Þu hæfst $1 ($2).',
 'newmessageslink'         => 'nīwu ǣrendgewritu',
 'newmessagesdifflink'     => 'nīwoste wendung',
 'youhavenewmessagesmulti' => 'Þu hæfst nīwu ǣrendu on $1',
 'editsection'             => 'ādihtan',
 'editold'                 => 'ādihtan',
+'viewsourceold'           => 'Sēon andweorc',
+'editlink'                => 'Ādihtan',
+'viewsourcelink'          => 'Sēon andweorc',
+'editsectionhint'         => 'Ādihtunge tōdǣlung',
 'toc'                     => 'Innungbred',
 'showtoc'                 => 'geswutelian',
 'hidetoc'                 => 'hȳdan',
@@ -207,6 +216,10 @@ $messages = array(
 
 # Login and logout pages
 'logouttitle'                => 'Brūcendūtmeldung',
+'logouttext'                 => "'''Þū eart nū ūtmeldod.'''
+
+Þū canst ætfeolan tō brūcenne {{SITENAME}} ungecūðe, oþþe þū canst [[Special:UserLogin|inmeldian eft]] tō ylcan oþþe ōðrum brūcende.
+Cnāw þæt sume sīdan cunnon gelǣstende ēowod wesan swā þū wǣre gīet inmeldod, oþ þæt þū clǣnsie þīnes sēcendtōles gemynd.",
 'welcomecreation'            => '== Wilcume, $1! ==
 
 Þín hordcleofa wearþ geseted.  Ne forgiet tó hwierfenne þína {{SITENAME}} foreberunga.',
@@ -489,6 +502,10 @@ Bidde behycge þæt þu bricst þone tramet intō smalrum dǣlum.',
 'wlnote'            => 'Under sind þā æftemestan $1 hweorfunga in þǣm æftemestum <b>$2</b> stundum.',
 'wlshowlast'        => 'Īewan æftemestan $1 stunda $2 daga $3',
 
+# Displayed when you click the "watch" button and it is in the process of watching
+'watching'   => 'Behealdende...',
+'unwatching' => 'Unbehealdende...',
+
 'enotif_newpagetext' => 'Þēs is nīwe tramet.',
 'created'            => 'gescapen',
 
@@ -515,7 +532,7 @@ Bidde behycge þæt þu bricst þone tramet intō smalrum dǣlum.',
 'unprotectedarticle'     => 'unweardod "[[$1]]"',
 'protect-title'          => 'Weardiende "$1"',
 'prot_1movedto2'         => '[[$1]] gefered tō [[$2]]',
-'protect-expiry-options' => '1 stund:1 hour, 2 stunda:2 hours,1 dæg:1 day,3 dagas:3 days,1 wucu:1 week,2 wuca:2 weeks,1 mōnaþ:1 month,3 mōnþas:3 months,6 mōnþas:6 months,1 gēar:1 year,unendiendlic:infinite', # display1:time1,display2:time2,...
+'protect-expiry-options' => '1 stund:1 hour,1 dæg:1 day,1 wucu:1 week,2 wuca:2 weeks,1 mōnaþ:1 month,3 mōnþas:3 months,6 mōnþas:6 months,1 gēar:1 year,unendiendlic:infinite', # display1:time1,display2:time2,...
 'restriction-type'       => 'Gelēafnes:',
 
 # Restrictions (nouns)
@@ -578,6 +595,7 @@ Bidde cēos ōðerne naman.',
 '1movedto2'       => '[[$1]] gefered tō [[$2]]',
 '1movedto2_redir' => '[[$1]] gefered tō [[$2]] ofer edlǣdunge',
 'movereason'      => 'Racu:',
+'revertmove'      => 'Undōn',
 
 # Namespace 8 related
 'allmessagesname'    => 'Nama',
@@ -595,16 +613,18 @@ Bidde cēos ōðerne naman.',
 'importsuccess' => 'Geinnung gesǣled!',
 
 # Tooltip help for the actions
-'tooltip-pt-userpage'    => 'Mīn brūcendtramet',
-'tooltip-pt-preferences' => 'Mīna foreberunga',
-'tooltip-pt-mycontris'   => 'Getalu mīnra forðunga',
-'tooltip-pt-logout'      => 'Ūtmeldian',
-'tooltip-ca-history'     => 'Forþgewitena fadunga þisses trametes.',
-'tooltip-search'         => 'Sēcan {{SITENAME}}',
-'tooltip-p-logo'         => 'Hēafodsīde',
-'tooltip-minoredit'      => 'Mearcian þis swā lȳtle ādihtunge',
-'tooltip-save'           => 'Sparian þīna onwendunga',
-'tooltip-preview'        => 'Forescēawa þīne āwendednessa, bidde brūc þis ǣr þǣm þe þu sparast! [alt-p]',
+'tooltip-pt-userpage'     => 'Mīn brūcendtramet',
+'tooltip-pt-mytalk'       => 'Þīn gesprece sīde',
+'tooltip-pt-preferences'  => 'Mīna foreberunga',
+'tooltip-pt-mycontris'    => 'Getalu mīnra forðunga',
+'tooltip-pt-logout'       => 'Ūtmeldian',
+'tooltip-ca-history'      => 'Forþgewitena fadunga þisses trametes.',
+'tooltip-search'          => 'Sēcan {{SITENAME}}',
+'tooltip-p-logo'          => 'Hēafodsīde',
+'tooltip-n-currentevents' => 'Findan stǣrlice gewitnesse ymb nīwa gelimpunga',
+'tooltip-minoredit'       => 'Mearcian þis swā lȳtle ādihtunge',
+'tooltip-save'            => 'Sparian þīna onwendunga',
+'tooltip-preview'         => 'Forescēawa þīne āwendednessa, bidde brūc þis ǣr þǣm þe þu sparast! [alt-p]',
 
 # Attribution
 'anonymous' => 'Namcūþlēas(e) brūcend {{SITENAME}}n',

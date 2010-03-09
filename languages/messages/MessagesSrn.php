@@ -417,9 +417,9 @@ $messages = array(
 'nosuchaction'      => 'A sani disi no man',
 'nosuchactiontext'  => 'A wiki no sabi a komanderi ini a URL',
 'nosuchspecialpage' => 'A spesrutu papira disi no de',
-'nospecialpagetext' => "<big>'''Yu aksi fu si wan spesrutu papira san no de.'''</big>
+'nospecialpagetext' => '<strong>Yu aksi fu si wan spesrutu papira san no de.</strong>
 
-Wan réy fu spesrutu papira de fu feni na [[Special:SpecialPages|{{int:specialpages}}]].",
+Wan réy fu spesrutu papira de fu feni na [[Special:SpecialPages|{{int:specialpages}}]].',
 
 # General errors
 'error'                => 'Fowtu',
@@ -452,7 +452,8 @@ Fu san ede: ''$2''.",
 
 # Login and logout pages
 'logouttitle'               => 'Kenroikiman psa gwe',
-'logouttext'                => "'''Yu psa gwe now.'''<br />
+'logouttext'                => "'''Yu psa gwe now.'''
+
 Yu kan tan kebroiki {{SITENAME}} sondro nen, noso yu kan psa kon baka leki a srefi noso wan tra kebroikiman.
 Sabi taki a kan gersi leki yu psa kon ete, te leki yu leygi a cache fu yu browser.",
 'welcomecreation'           => '== Welkom, $1! ==
@@ -471,10 +472,10 @@ No fergiti fu kenki den seti fu yu gi {{SITENAME}}.',
 'logout'                    => 'Psa gwe',
 'userlogout'                => 'Psa gwe',
 'notloggedin'               => 'No psa kon',
-'nologin'                   => 'No abi wan kebroikiman nen ete? $1.',
+'nologin'                   => "No abi wan kebroikiman nen ete? '''$1'''.",
 'nologinlink'               => 'Meki wan account',
 'createaccount'             => 'Meki wan account',
-'gotaccount'                => 'Abi wan kebroikiman nen kba? $1.',
+'gotaccount'                => "Abi wan kebroikiman nen kba? '''$1'''.",
 'gotaccountlink'            => 'Psa kon',
 'createaccountmail'         => 'via e-mail',
 'badretype'                 => 'Den tu psa wortu no de srefi.',
@@ -676,7 +677,7 @@ Yu kan [[:\$1|meki a papira disi]].",
 'noexactmatch-nocreate' => "'''Da ben no papira nanga a nen \"\$1\".'''",
 'prevn'                 => '$1 di psa',
 'nextn'                 => '$1 trawan',
-'viewprevnext'          => 'Luku ($1) ($2) ($3).',
+'viewprevnext'          => 'Luku ($1 {{int:pipe-separator}} $2) ($3).',
 'searchhelp-url'        => 'Help:San de',
 'powersearch'           => 'Suku moro dipi',
 

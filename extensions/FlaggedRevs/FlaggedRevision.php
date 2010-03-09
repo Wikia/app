@@ -218,7 +218,7 @@ class FlaggedRevision {
 			'fr_text'	       => '', # not used anymore
 			'fr_flags'	       => $textFlags,
 			'fr_img_name'      => $this->getFileName(),
-			'fr_img_timestamp' => $this->getFileTimestamp(),
+			'fr_img_timestamp' => $dbw->timestamp( $this->getFileTimestamp() ),
 			'fr_img_sha1'      => $this->getFileSha1()
 		);
 		# Update flagged revisions table

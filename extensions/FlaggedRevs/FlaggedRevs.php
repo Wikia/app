@@ -52,8 +52,8 @@ if( !defined('READER_FEEDBACK_SIZE') )
 $wgExtensionCredits['specialpage'][] = array(
 	'name'           => 'Flagged Revisions',
 	'author'         => array( 'Aaron Schulz', 'Joerg Baach' ),
-	'svn-date'       => '$LastChangedDate: 2009-03-25 00:15:40 +0000 (Wed, 25 Mar 2009) $',
-	'svn-revision'   => '$LastChangedRevision: 48774 $',
+	'svn-date'       => '$LastChangedDate: 2010-01-08 21:54:02 +0000 (Fri, 08 Jan 2010) $',
+	'svn-revision'   => '$LastChangedRevision: 60856 $',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:FlaggedRevs',
 	'descriptionmsg' => 'flaggedrevs-desc',
 );
@@ -564,7 +564,7 @@ function efFlaggedRevsSchemaUpdates() {
 		$wgExtNewIndexes[] = array('flaggedpage_config', 'fpc_expiry', "$base/postgres/patch-expiry-index.sql" );
 		$wgExtNewTables[] = array( 'flaggedrevs_promote', "$base/postgres/patch-flaggedrevs_promote.sql" );
 		$wgExtNewTables[] = array( 'flaggedpages', "$base/postgres/patch-flaggedpages.sql" );
-		$wgExtNewIndexes[] = array('flaggedrevs', 'key_timestamp', "$base/postgres/patch-fr_img_name.sql" );
+		$wgExtNewIndexes[] = array('flaggedrevs', 'fr_img_sha1', "$base/postgres/patch-fr_img_name.sql" );
 		$wgExtNewTables[] = array( 'reader_feedback', "$base/postgres/patch-reader_feedback.sql" );
 		$wgExtNewTables[] = array( 'flaggedrevs_tracking', "$base/postgres/patch-flaggedrevs_tracking.sql" );
 		$wgExtNewIndexes[] = array('flaggedpages', 'fp_pending_since', "$base/postgres/patch-fp_pending_since.sql" );

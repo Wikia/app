@@ -7,6 +7,7 @@
  * @author Gadao01
  * @author Jatrobat
  * @author Magalahi
+ * @author MisterWiki
  */
 
 $namespaceNames = array(
@@ -257,7 +258,7 @@ $messages = array(
 'nstab-main'      => 'Påhina',
 'nstab-user'      => "Påhina muna'sesetbi",
 'nstab-media'     => 'Påhinan media',
-'nstab-special'   => 'Espesiat na påhina',
+'nstab-special'   => 'Påhina espesiat',
 'nstab-project'   => 'Påhinan proyekto',
 'nstab-image'     => 'Atkibu',
 'nstab-mediawiki' => 'Mensahe',
@@ -313,10 +314,10 @@ Munga mamalefa tumulaika ga'ña-mu {{SITENAME}}.",
 'logout'                     => 'Log out',
 'userlogout'                 => 'Log out',
 'notloggedin'                => 'Ti malogin',
-'nologin'                    => "Tåya' iyo-mu login? $1.",
+'nologin'                    => "Tåya' iyo-mu login? '''$1'''.",
 'nologinlink'                => "Fama'tinas kuenta",
 'createaccount'              => "Fa'tinas kuenta-hu",
-'gotaccount'                 => 'Guåha esta kuenta-mu? $1.',
+'gotaccount'                 => "Guåha esta kuenta-mu? '''$1'''.",
 'gotaccountlink'             => 'Log in',
 'createaccountmail'          => 'gi e-mail',
 'badretype'                  => "Ti parehu i password siha ni un po'lo.",
@@ -357,7 +358,7 @@ Chek fan i dineletrea.',
 'wrongpasswordempty'         => "Ti mamo'lu hao password. Pot fabot, chagi fan ta'lo.",
 'passwordtooshort'           => "Lachi pat mampos kadada' iyo-mu password.
 Na'seguro na mas ki {{PLURAL:$1|1 na letra|$1 na letras}} ha' ya ti parehu ha' yan i na'an-mu muna'setbi.",
-'mailmypassword'             => "Na'e-mail password",
+'mailmypassword'             => 'E-mail password neu',
 'passwordremindertitle'      => 'I nuebu na password temporårio para {{SITENAME}}',
 'passwordremindertext'       => 'Guåha na mamaisen (hågu ha\' buente, ginen i IP $1)
 na para in na\'hanague hao ni password nuebu para {{SITENAME}} ($4).
@@ -463,8 +464,7 @@ Pot fabot, na'hålom i ID gi todus i finaisen-mu siha.",
 'confirmedittext'                  => "Un nesisita un konfotme iyo-mu email åntes di tumulaika påhina.
 Pot fabot po'lo yan konfotme iyo-mu e-mail gi [[Special:Preferences|prifirensia muna'sesetbi]].",
 'nosuchsectiontitle'               => "Tåya' na påtte",
-'nosuchsectiontext'                => "Tåya' na påtte ni un chagi tumulaika.
-Sa' tåya' na påtten $1, tåya' na lugåt para u såtba i tinilaika-mu.",
+'nosuchsectiontext'                => "Tåya' na påtte ni un chagi tumulaika.",
 'loginreqtitle'                    => 'Manesita login',
 'loginreqlink'                     => 'log in',
 'loginreqpagetext'                 => "Debi di un $1 para manli'e' påhina.",
@@ -662,7 +662,7 @@ Siña un [[:\$1|fa'tinas i påhina]].",
 'notextmatches'             => "Tåya' na tinige' påhina siha ni manaya",
 'prevn'                     => "$1 ni manmå'pos",
 'nextn'                     => "$1 ni manmamaila'",
-'viewprevnext'              => 'Atan i ($1) ($2) ($3)',
+'viewprevnext'              => 'Atan i ($1 {{int:pipe-separator}} $2) ($3)',
 'searchhelp-url'            => 'Help:Guinaha',
 'search-result-size'        => '$1 ({{PLURAL:$2|1 na palabra|$2 na palabra siha}})',
 'search-result-score'       => 'Prinisisu: $1%',
@@ -1068,6 +1068,7 @@ Ayek fan otru nå'an-ña.",
 'tooltip-ca-watch'                => "Po'lu i påhina este gi listan pinilan-hu",
 'tooltip-ca-unwatch'              => "Na'suha i påhina gi i listan pinilan-mu",
 'tooltip-search'                  => 'Aligao gi {{SITENAME}}',
+'tooltip-search-go'               => "Ir na páhina'i e ma'nome si cumplido",
 'tooltip-p-logo'                  => 'Fanhaluman',
 'tooltip-n-mainpage'              => 'Bisita i Fanhaluman',
 'tooltip-n-portal'                => "Pot i proyektu, håfa siña hao chumo'gue, månu na siña masodda' kosas",

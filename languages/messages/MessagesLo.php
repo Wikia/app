@@ -1,6 +1,9 @@
 <?php
 /** Lao (ລາວ)
  *
+ * See MessagesQqq.php for message documentation incl. usage of parameters
+ * To improve a translation please visit http://translatewiki.net
+ *
  * @ingroup Language
  * @file
  *
@@ -133,8 +136,9 @@ $messages = array(
 'tog-diffonly'                => 'ບໍ່ສະແດງເນື້ອໃນຂອງບົດຄວາມ ຢູ່ທາງລຸ່ມ ສ່ວນຕ່າງ',
 'tog-showhiddencats'          => 'ສະແດງໝວດເຊື່ອງ',
 
-'underline-always' => 'ທຸກຄັ້ງ',
-'underline-never'  => 'ບໍ່ຂີດ',
+'underline-always'  => 'ທຸກຄັ້ງ',
+'underline-never'   => 'ບໍ່ຂີດ',
+'underline-default' => 'ຄ່າຕັ້ງເດີມ ຂອງ ບຣາວເຊີ',
 
 # Dates
 'sunday'        => 'ວັນອາທິດ',
@@ -189,15 +193,18 @@ $messages = array(
 'dec'           => 'ທັນວາ',
 
 # Categories related messages
-'pagecategories'         => '{{PLURAL:$1|ໝວດ|ໝວດ}}',
-'category_header'        => 'ບົດຄວາມໃນໝວດ "$1"',
-'subcategories'          => 'ໝວດຍ່ອຍ',
-'category-media-header'  => 'ໜ້າຕ່າງ າ ໃນ "$1"',
-'category-empty'         => "''ບໍ່ມີໜ້າໃດຢູ່ໃນໝວດນີ້''",
-'category-article-count' => '{{PLURAL:$2|ໝວດນີ້ມີໜ້າຢູ່ພຽງໜ້າດຽວ|ມີ {{PLURAL:$1|ໜ້າດຽວ|$1 ໜ້າ}} ໃນໝວດນີ້ ເຕັມ $2}}',
-'listingcontinuesabbrev' => 'ຕໍ່.',
+'pagecategories'                => '{{PLURAL:$1|ໝວດ|ໝວດ}}',
+'category_header'               => 'ບົດຄວາມໃນໝວດ "$1"',
+'subcategories'                 => 'ໝວດຍ່ອຍ',
+'category-media-header'         => 'ໜ້າຕ່າງ າ ໃນ "$1"',
+'category-empty'                => "''ບໍ່ມີໜ້າໃດຢູ່ໃນໝວດນີ້''",
+'hidden-categories'             => '{{PLURAL:$1|ໜວດເຊື່ອງ|ໜວດເຊື່ອງ}}',
+'hidden-category-category'      => 'ບັນດາໜວດເຊື່ອງ', # Name of the category where hidden categories will be listed
+'category-subcat-count-limited' => 'ໜວດນີ້ ມີ ໜວດຍ່ອຍ ດັ່ງຕໍ່ໄປນີ້ {{PLURAL:$1|ໜວດຍ່ອຍ|$1 ໜວດຍ່ອຍ}}.',
+'category-article-count'        => '{{PLURAL:$2|ໝວດນີ້ມີໜ້າຢູ່ພຽງໜ້າດຽວ|ມີ {{PLURAL:$1|ໜ້າດຽວ|$1 ໜ້າ}} ໃນໝວດນີ້ ເຕັມ $2}}',
+'listingcontinuesabbrev'        => 'ຕໍ່.',
 
-'mainpagetext' => "<big>'''ຕິດຕັ້ງມີເດຍວິກິນີ້ສຳເລັດແລ້ວ'''</big>",
+'mainpagetext' => "<big>'''ຕິດຕັ້ງມີເດຍວິກິນີ້ສຳເລັດແລ້ວ.'''</big>",
 
 'about'          => 'ກ່ຽວກັບ',
 'article'        => 'ບົດຄວາມ',
@@ -208,12 +215,14 @@ $messages = array(
 'qbpageoptions'  => 'ໜ້ານີ້',
 'qbmyoptions'    => 'ໝ້າຂ້ອຍ',
 'qbspecialpages' => 'ໜ້າພິເສດ',
+'moredotdotdot'  => 'ຕື່ມ...',
 'mypage'         => 'ໜ້າຂ້ອຍ',
 'mytalk'         => 'ສົນທະນາ',
 'anontalk'       => 'ສົນທະນາ ສຳຫຼັບ IP ນີ້',
 'navigation'     => 'ນຳທິດ',
 'and'            => '&#32;ແລະ',
 
+'errorpagetitle'   => 'ຜິດພາດ',
 'returnto'         => 'ກັບໄປ  $1.',
 'tagline'          => 'ຈາກ {{SITENAME}}',
 'help'             => 'ຊ່ວຍເຫຼືອ',
@@ -226,6 +235,7 @@ $messages = array(
 'info_short'       => 'ຂ້ອມູນ',
 'printableversion' => 'ສະບັບພິມໄດ້',
 'permalink'        => 'ລິ້ງຄ໌ຖາວອນ',
+'print'            => 'ພິມ',
 'edit'             => 'ດັດແກ້',
 'create'           => 'ສ້າງ',
 'editthispage'     => 'ດັດແກ້ໜ້ານີ້',
@@ -245,7 +255,11 @@ $messages = array(
 'talk'             => 'ສົນທະນາ',
 'views'            => 'ເທື່ອເບິ່ງ',
 'toolbox'          => 'ກັບອຸບປະກອນ',
+'userpage'         => 'ເບິ່ງໜ້າສົນທະນາຂອງຜູ້ໃຊ້',
+'projectpage'      => 'ເບິ່ງໝ້າໂຄງການ',
+'mediawikipage'    => 'ເບິ່ງ ໝ້າຂໍ້ຄວາມ',
 'templatepage'     => 'ເບິ່ງໜ້າແມ່ແບບ',
+'viewhelppage'     => 'ເບິ່ງ ໝ້າຊ່ອຍເຫຼືອ',
 'categorypage'     => 'ເບິ່ງ ໜ້າ ໝວດ',
 'otherlanguages'   => 'ເປັນພາສາອື່ນໆ',
 'redirectedfrom'   => '(ໂອນມາຈາກ $1)',
@@ -282,6 +296,7 @@ $messages = array(
 
 'versionrequired' => 'ຕ້ອງການເວີຣ໌ຊັ່ນ $1 ຂອງມີເດຍວິກິ',
 
+'ok'                      => 'ຕົກລົງ',
 'retrievedfrom'           => 'ຖອນມາຈາກ "$1"',
 'youhavenewmessages'      => 'ທ່ານ ມີ $1 ($2).',
 'newmessageslink'         => 'ຂໍ້ຄວາມໃໝ່',
@@ -289,6 +304,8 @@ $messages = array(
 'youhavenewmessagesmulti' => 'ທ່ານມີຂໍ້ຄວາມໃໝ່ ຢູ່ $1',
 'editsection'             => 'ດັດແກ້',
 'editold'                 => 'ດັດແກ້',
+'viewsourceold'           => 'ເບິ່ງ ຊອສ',
+'editlink'                => 'ດັດແກ້',
 'editsectionhint'         => 'ດັດແກ້ ພາກ: $1',
 'toc'                     => 'ເນື້ອໃນ',
 'showtoc'                 => 'ສະແດງ',
@@ -310,23 +327,31 @@ $messages = array(
 'nstab-help'      => 'ໜ້າຊ່ອຍເຫຼືອ',
 'nstab-category'  => 'ໝວດ',
 
+# Main script and global functions
+'nosuchspecialpage' => 'ບໍ່ມີໝ້າພິເສດຊື່ນັ້ນ',
+
 # General errors
-'noconnect'          => 'ຂໍອະໄພ! ວິກີ ພວມປະສົບບັນຫາ ທາງດ້ານເຕັກນິກ ແລະ ບໍ່ສາມາດເຂົ້າຫາ ຖານຂໍ້ມູນ.<br />$1',
-'cachederror'        => 'ທາງລຸ່ມນີ້ ແມ່ນ ບັນທຶກຂໍ້ມູນ ຂອງ ໜ້າທີ່ທ່ານຊອກຫາ ເຊິ່ງອາດຈະບໍ່ແມ່ນສະບັບຫຼ້າສຸດ.',
-'filerenameerror'    => 'ບໍ່ສາມາດ ປ່ຽນ ຊື່ໄຟລ໌  "$1" ໄປເປັນ  "$2" ໄດ້.',
-'cannotdelete'       => 'ບໍ່ສາມາດລຶບໜ້າ ຫຼື ໄຟລ໌ ໄດ້. (ມັນອາດຈະຖືກລຶບໂດຍໃຜຜູ້ໜຶ່ງແລ້ວ.)',
-'badtitle'           => 'ຫົວຂໍ້ບໍ່ຖືກຕ້ອງ',
-'viewsource'         => 'ເບິ່ງຊອສ໌',
-'viewsourcefor'      => 'ສຳຫຼັບ $1',
-'namespaceprotected' => "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດ ໃຫ້ ດັດແກ້ ໜ້າ ໃນ  '''$1'''.",
+'databaseerror'       => 'ມີຄວາມຜິດພາດ ດ້ານ ຖານຂໍ້ມູນ',
+'noconnect'           => 'ຂໍອະໄພ! ວິກີ ພວມປະສົບບັນຫາ ທາງດ້ານເຕັກນິກ ແລະ ບໍ່ສາມາດເຂົ້າຫາ ຖານຂໍ້ມູນ.<br />$1',
+'nodb'                => 'ບໍ່ສາມາດເລືອກຖານຂໍ້ມູນ $1',
+'cachederror'         => 'ທາງລຸ່ມນີ້ ແມ່ນ ບັນທຶກຂໍ້ມູນ ຂອງ ໜ້າທີ່ທ່ານຊອກຫາ ເຊິ່ງອາດຈະບໍ່ແມ່ນສະບັບຫຼ້າສຸດ.',
+'readonly'            => 'ຖານຂໍ້ມູນຖືກລອັກ',
+'enterlockreason'     => 'ກະລຸນາຂຽນເຫດຜົນໃນການລອັກ, ລວມທັງ ປະມານເວລາທີ່ຈະປົດລອັກ',
+'missingarticle-diff' => '(ສ່ວນຕ່າງ: $1, $2)',
+'internalerror'       => 'ມີຄວາມຜິດພາດພາຍໃນ',
+'filerenameerror'     => 'ບໍ່ສາມາດ ປ່ຽນ ຊື່ໄຟລ໌  "$1" ໄປເປັນ  "$2" ໄດ້.',
+'cannotdelete'        => 'ບໍ່ສາມາດລຶບໜ້າ ຫຼື ໄຟລ໌ ໄດ້. (ມັນອາດຈະຖືກລຶບໂດຍໃຜຜູ້ໜຶ່ງແລ້ວ.)',
+'badtitle'            => 'ຫົວຂໍ້ບໍ່ຖືກຕ້ອງ',
+'viewsource'          => 'ເບິ່ງຊອສ໌',
+'viewsourcefor'       => 'ສຳຫຼັບ $1',
+'namespaceprotected'  => "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດ ໃຫ້ ດັດແກ້ ໜ້າ ໃນ  '''$1'''.",
 
 # Login and logout pages
 'logouttitle'                => 'ຜູ້ໃຊ້ ເຊັນອອກ',
-'logouttext'                 => "'''ທ່່ານ ໄດ້ ເຊັນອອກແລ້ວ.'''<br />
-ທ່ານ ສາມາດສືບຕໍ່ໃຊ້ {{SITENAME}} ແບບບໍ່ສະແດງຊື່, ຫຼື ທ່ານ ສາມາດ ເຊັນເຂົ້າ
-ອີກ ໂດຍ ຊື່ຜູ້ໃຊ້ ເກົ່າ ຫຼື ໃໝ່ ກໍ່ໄດ້. ກະລຸນາ ຮັບຊາບວ່າ ບາງໜ້າ ອາດຈະສືບຕໍ່ ສະແດງ
-ຄືວ່າ ທ່ານ ຍັງເຊັນເຂົ້າຢູ່ ຈົນກວ່າ ທ່ານ ຂໍ້ມູນບັນທຶກຊົ່ວຄາວ ໃນ ໂປຣແກຣມທ່ອງເວັບ
-ຂອງ ທ່ານ ຈະຖືກລຶບ.",
+'logouttext'                 => "'''ທ່່ານ ໄດ້ ເຊັນອອກແລ້ວ.'''
+
+ທ່ານ ສາມາດສືບຕໍ່ໃຊ້ {{SITENAME}} ແບບບໍ່ສະແດງຊື່, ຫຼື ທ່ານ ສາມາດ ເຊັນເຂົ້າ ອີກ ໂດຍ ຊື່ຜູ້ໃຊ້ ເກົ່າ ຫຼື ໃໝ່ ກໍ່ໄດ້.
+ກະລຸນາ ຮັບຊາບວ່າ ບາງໜ້າ ອາດຈະສືບຕໍ່ ສະແດງ ຄືວ່າ ທ່ານ ຍັງເຊັນເຂົ້າຢູ່ ຈົນກວ່າ ທ່ານ ຂໍ້ມູນບັນທຶກຊົ່ວຄາວ ໃນ ໂປຣແກຣມທ່ອງເວັບ ຂອງ ທ່ານ ຈະຖືກລຶບ.",
 'welcomecreation'            => '== ຍິນດີຕ້ອນຮັບ, $1! ==
 
 ບັນຊີ ຂອງທ່ານ ຖືກສ້າງຂຶ້ນແລ້ວ. ຢ່າລືມ ຕັ້ງຄ່າ ທ່ານ ຢູ່ {{SITENAME}}.',
@@ -342,10 +367,10 @@ $messages = array(
 'userlogin'                  => 'ເຊັນເຂົ້າ / ສ້າງບັນຊີ',
 'logout'                     => 'ເຊັນອອກ',
 'userlogout'                 => 'ເຊັນອອກ',
-'nologin'                    => 'ບໍ່ມີບັນຊີເທື່ອບໍ? $1.',
+'nologin'                    => "ບໍ່ມີບັນຊີເທື່ອບໍ? '''$1'''.",
 'nologinlink'                => 'ສ້າງບັນຊີໃໝ່',
 'createaccount'              => 'ສ້າງບັນຊີ',
-'gotaccount'                 => 'ມີ ບັນຊີແລ້ວບໍ? $1.',
+'gotaccount'                 => "ມີ ບັນຊີແລ້ວບໍ? '''$1'''.",
 'gotaccountlink'             => 'ເຊັນເຂົ້າ',
 'createaccountmail'          => 'ໂດຍ ອີເມລ',
 'badretype'                  => 'ລະຫັດຜ່ານ ທີ່ ທ່ານພິມຄືນ ບໍ່ຖືກກັບ ທີ່ພິມກ່ອນ.',
@@ -471,17 +496,28 @@ $messages = array(
 'editundo'                => 'ກັບຄືນ',
 
 # Search results
-'searchresulttext'    => 'ສຳຫຼັບ ຂໍ້ມູນເພີ່ມເຕີມ ກ່ຽວກັບ ການຊອກຫາ ຢູ່ {{SITENAME}}, ກະລຸນາເບິ່ງ [[{{MediaWiki:Helppage}}|{{int:help}}]].',
-'searchsubtitle'      => "ທ່ານ ຊອກຫາ '''[[:$1]]'''",
-'noexactmatch'        => "'''ຍັງບໍ່ມີໜ້າ ຊື່ວ່າ  \"\$1\".''' ທ່ານ ສາມາດ [[:\$1|ສ້າງໜ້ານີ້ໄດ້]].",
-'prevn'               => '$1 ກ່ອນໜ້າ',
-'nextn'               => '$1 ຕໍ່ໄປ',
-'viewprevnext'        => 'ເບິ່ງ ($1) ($2) ($3).',
-'searchhelp-url'      => 'Help:ເນື້ອໃນ',
-'search-result-size'  => '$1 ({{PLURAL:$2|1 ຄຳ|$2 ຄຳ}})',
-'search-result-score' => 'ຄວາມກ່ຽວຂ້ອງ: $1%',
-'search-redirect'     => '(ໂອນ $1)',
-'powersearch'         => 'ຊອກຫາ',
+'searchresulttext'          => 'ສຳຫຼັບ ຂໍ້ມູນເພີ່ມເຕີມ ກ່ຽວກັບ ການຊອກຫາ ຢູ່ {{SITENAME}}, ກະລຸນາເບິ່ງ [[{{MediaWiki:Helppage}}|{{int:help}}]].',
+'searchsubtitle'            => "ທ່ານ ຊອກຫາ '''[[:$1]]'''",
+'noexactmatch'              => "'''ຍັງບໍ່ມີໜ້າ ຊື່ວ່າ  \"\$1\".''' ທ່ານ ສາມາດ [[:\$1|ສ້າງໜ້ານີ້ໄດ້]].",
+'prevn'                     => '$1 ກ່ອນໜ້າ',
+'nextn'                     => '$1 ຕໍ່ໄປ',
+'viewprevnext'              => 'ເບິ່ງ ($1 {{int:pipe-separator}} $2) ($3).',
+'searchhelp-url'            => 'Help:ເນື້ອໃນ',
+'search-result-size'        => '$1 ({{PLURAL:$2|1 ຄຳ|$2 ຄຳ}})',
+'search-result-score'       => 'ຄວາມກ່ຽວຂ້ອງ: $1%',
+'search-redirect'           => '(ໂອນ $1)',
+'search-mwsuggest-enabled'  => 'ແບບມີຄຳແນະນຳ',
+'search-mwsuggest-disabled' => 'ແບບບໍ່ມີຄຳແນະນຳ',
+'search-relatedarticle'     => 'ກ່ຽວຂ້ອງ',
+'mwsuggest-disable'         => 'ບໍ່ໃຊ້ການແນະນຳ ໂດຍ AJAX',
+'searchrelated'             => 'ກ່ຽວຂ້ອງ',
+'searchall'                 => 'ທັງໜົດ',
+'showingresults'            => "ສະແດງທາງລຸ່ມ ຮອດ {{PLURAL:$1|'''1''' ຜົນ|'''$1''' ຜົນ}} ເລີ່ມຈາກ  #'''$2'''.",
+'showingresultsnum'         => "ສະແດງທາງລຸ່ມ  {{PLURAL:$3|'''1''' ຜົນ|'''$3''' ຜົນ}} ເລີ່ມຈາກ #'''$2'''.",
+'showingresultstotal'       => "ສະແດງທາງລຸ່ມ {{PLURAL:$4|ຜົນ '''$1''' of '''$3'''|ຜົນ '''$1 - $2''' of '''$3'''}}",
+'nonefound'                 => "'''ໜາຍເຫດ''': ຈະຄົ້ນຫາແຕ່ໃນ ບາງຂອບເຂດຊື່ ຖ້າບໍ່ມີການຕັ້ງຄ່າ.
+ທົດລອງ ໃຊ້ຄຳນຳໝ້າ ''all:'' ໃນຂໍ້ຄວາມຊອກຫາ ຂອງ ທ່ານ ເພື່ອ ຄົ້ນຫາ ທຸກໆເນື້ອໃນ (ລວມທັງໝ້າສົນທະນາ, ແມ່ແບບ ແລະອື່ນໆ), ຫຼື ໃຊ້ ຂອບເຂດຊື່ໃດໝຶ່ງເປັນ ຄຳນຳໝ້າເລີຍ.",
+'powersearch'               => 'ຊອກຫາ',
 
 # Preferences page
 'preferences'           => 'ການຕັ້ງຄ່າ',
@@ -557,7 +593,7 @@ $messages = array(
 'badfilename'       => 'ຊື່ໄຟລ໌ ໄດ້ຖືກປ່ຽນເປັນ  "$1".',
 'large-file'        => 'ໄຟລ໌ບໍ່ຄວນມີຂະໜາດໃຫຍ່ກວ່າ $1 ແຕ່ໄຟລ໌ນີ້ມີຂະໜາດ  $2',
 'largefileserver'   => 'ໄຟລ໌ມີຂະໜາດໃຫຍ່ກວ່າຄ່າທີ່ໃຊ້ໄດ້',
-'filepageexists'    => "ມີໜ້າສຳຫຼັບຫັວເຮື່ອງນີ້ອຍູ່ແລ້ວ (ບໍ່ໃຊ່ໄຟລ໌) ກະລຸນາຕວດສອບ '''$1''' ຫາກຄຸນບໍ່ແນ່ໃຈວ່າຕ້ອງການຈະປ່ຽນໜ້ານີ້",
+'filepageexists'    => "ມີໜ້າສຳຫຼັບຫັວເຮື່ອງນີ້ອຍູ່ແລ້ວ (ບໍ່ໃຊ່ໄຟລ໌) ກະລຸນາຕວດສອບ '''[[:$1]]''' ຫາກຄຸນບໍ່ແນ່ໃຈວ່າຕ້ອງການຈະປ່ຽນໜ້ານີ້",
 'savefile'          => 'ບັນທຶກໄຟລ໌',
 'watchthisupload'   => 'ຕິດຕາມໜ້ານີ້',
 
