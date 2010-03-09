@@ -40,7 +40,7 @@ class WikiaAssets {
 
 		$type = $wgRequest->getVal('type');
 
-		//if($type == 'CoreCSS') {
+		if($type == 'CoreCSS') {
 
 			$themename = $wgRequest->getVal('themename');
 			$browser = $wgRequest->getVal('browser');
@@ -72,8 +72,97 @@ class WikiaAssets {
 			echo $out;
 			exit();
 
-		//}
+		} else if($type == 'SiteCSS') {
+			$out = '';
+			$themename = $wgRequest->getVal('themename');
+			$ref = WikiaAssets::GetSiteCSSReferences($themename);
+			foreach($ref as $reference) {
+				$out .= '<!--# include virtual="'.$reference['url'].'" -->';
+			}
+			header('Content-type: text/css');
+			echo $out;
+			exit();
+		}
 
+	}
+
+	private function GetSiteCSSReferences($themename) {
+		$cssReferences = array();
+		global $wgSquidMaxage;
+		$siteargs = array(
+			'action' => 'raw',
+			'maxage' => $wgSquidMaxage,
+		);
+		$query = wfArrayToCGI( array(
+			'usemsgcache' => 'yes',
+			'ctype' => 'text/css',
+			'smaxage' => $wgSquidMaxage
+		) + $siteargs );
+
+		$cssReferences[] = array('url' => Skin::makeNSUrl('Common.css', $query, NS_MEDIAWIKI));
+
+		if(empty($themename) || $themename == 'custom' ) {
+			$cssReferences[] = array('url' => Skin::makeNSUrl('Monaco.css', $query, NS_MEDIAWIKI));
+		}
+
+		$siteargs['gen'] = 'css';
+		$siteargs['useskin'] = 'monaco';
+		$cssReferences[] = array('url' => Skin::makeUrl( '-', wfArrayToCGI( $siteargs ) ));
+
+		return $cssReferences;
+	}
+
+	public static function GetExtensionsCSS($styles) {
+		// exclude user and site css
+		foreach($styles as $style => $options) {
+			if(strpos($style, ':Common.css') > 0
+				|| strpos($style, ':Monaco.css') > 0
+				|| strpos($style, 'title=User:') > 0
+				|| strpos($style, 'title=-')) {
+				unset($styles[$style]);
+			}
+		}
+
+		$out = "\n\n<!-- GetExtensionsCSS -->";
+		$tmpOut = new OutputPage();
+		$tmpOut->styles = $styles;
+
+		return $out . $tmpOut->buildCssLinks();
+	}
+
+	public static function GetUserCSS($styles) {
+		foreach($styles as $style => $options) {
+			if(strpos($style, 'title=User:') === false) {
+				unset($styles[$style]);
+			}
+		}
+
+		$out = "\n\n<!-- GetUserCSS -->";
+		$tmpOut = new OutputPage();
+		$tmpOut->styles = $styles;
+
+		return $out . $tmpOut->buildCssLinks();
+	}
+
+	public static function GetSiteCSS($themename, $isRTL, $isAllInOne) {
+		$out = "\n\n<!-- GetSiteCSS -->";
+
+		if($isAllInOne) {
+			global $parserMemc;
+			$cb = $parserMemc->get(wfMemcKey('wgMWrevId'));
+			if(empty($cb)) {
+				$cb = 1;
+			}
+			$url = "/__wikia_combined/cb={$cb}&type=SiteCSS&themename={$themename}&rtl={$isRTL}?server=ap8";
+			$out .= '<link rel="stylesheet" type="text/css" href="'.$url.'" />';
+		} else {
+			$ref = WikiaAssets::GetSiteCSSReferences($themename);
+			foreach($ref as $reference) {
+				$out .= '<link rel="stylesheet" type="text/css" href="'.$reference['url'].'" />';
+			}
+		}
+
+		return $out;
 	}
 
 	public static function GetCoreCSS($themename, $isRTL, $isAllInOne) {
@@ -84,7 +173,8 @@ class WikiaAssets {
 
 			$commonPart = "http://images1.wikia.nocookie.net/__wikia_combined/cb={$wgStyleVersion}&type=CoreCSS&themename={$themename}&rtl={$isRTL}";
 
-			$out = '<!--[if lt IE 7]<link rel="stylesheet" type="text/css" href="'.$commonPart.'&browser=IElt7" /><![endif]-->';
+			$out = "\n\n<!-- GetCoreCSS -->";
+			$out .= '<!--[if lt IE 7]<link rel="stylesheet" type="text/css" href="'.$commonPart.'&browser=IElt7" /><![endif]-->';
 			$out .= '<!--[if IE 7]><link rel="stylesheet" type="text/css" href="'.$commonPart.'&browser=IEeq7" /><![endif]-->';
 			$out .= '<!--[if IE 8]><link rel="stylesheet" type="text/css" href="'.$commonPart.'&browser=IEeq8" /><![endif]-->';
 			$out .= '<!--[if !IE]>--><link rel="stylesheet" type="text/css" href="'.$commonPart.'&browser=notIE" /><!--<![endif]-->';
@@ -112,7 +202,8 @@ class WikiaAssets {
 
 			$references = array_merge($references, WikiaAssets::GetBrowserSpecificCSS());
 
-			$out = '<style type="text/css">';
+			$out = "\n\n<!-- GetCoreCSS -->";
+			$out .= '<style type="text/css">';
 			foreach($references as $reference) {
 				if(isset($reference['cond'])) {
 					$out .='<!--['.$reference['cond'].']';
