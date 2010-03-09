@@ -1116,6 +1116,8 @@ EOF;
 
 		// JS - begin
 		if($tpl->data['jsvarurl']) {
+			wfProfileIn(__METHOD__ . '::checkForEmptyMergedJS');
+
 			// macbre: check for empty merged JS file
 			$s = '';
 			$s .= !isMsgEmpty('Common.js') ? wfMsgForContent('Common.js') : '';
@@ -1128,8 +1130,12 @@ EOF;
 			if ($s != '') {
 				$js[] = array('url' => $tpl->data['jsvarurl'], 'mime' => 'text/javascript');
 			}
+
+			wfProfileOut(__METHOD__ . '::checkForEmptyMergedJS');
 		}
 		if($tpl->data['userjs']) {
+			wfProfileIn(__METHOD__ . '::checkForEmptyUserJS');
+
 			// macbre: check for empty User:foo/skin.js
 			$userJStitle = Title::newFromText($this->userpage.'/monaco.js');
 			if ($userJStitle->exists()) {
@@ -1138,14 +1144,18 @@ EOF;
 					$js[] = array('url' => $tpl->data['userjs'], 'mime' => 'text/javascript');
 				}
 			}
+
+			wfProfileOut(__METHOD__ . '::checkForEmptyUserJS');
 		}
 		if($tpl->data['userjsprev']) {
 			$js[] = array('content' => $tpl->data['userjsprev'], 'mime' => 'text/javascript');
 		}
 		// JS - end
 
+		$ret = array('js' => $js, 'css' => $css, 'cssstyle' => $cssstyle);
+
 		wfProfileOut( __METHOD__ );
-		return array('js' => $js, 'css' => $css, 'cssstyle' => $cssstyle);
+		return $ret;
 	}
 
 	/**
