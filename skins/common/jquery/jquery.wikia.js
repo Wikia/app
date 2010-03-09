@@ -106,7 +106,7 @@ $.loadYUI = function(callback) {
 		$().log('YUI: rq start ');
 		
 		if (typeof wsl  == 'undefined') {
-			wsl.loadScript(wgYUIPackageURL, YUIloadingCallBack);
+			$.getScript(wgYUIPackageURL, YUIloadingCallBack);
 		} else {
 			wsl.loadScript(wgYUIPackageURL, YUIloadingCallBack);
 		}
