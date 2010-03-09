@@ -566,6 +566,13 @@ EOS;
 		global $wgAllInOne;
 		wfProfileIn(__METHOD__ . '::JSloader');
 
+		global $wgTitle ;
+		$jsHtml = $StaticChute->getChuteHtmlForPackage($package);
+		
+		if ($wgTitle->getNamespace() == NS_SPECIAL) {
+			$jsHtml .= $StaticChute->getChuteHtmlForPackage("yui");
+		}
+		
 		$allinone = $wgRequest->getBool('allinone', $wgAllInOne);
 
 		$jsReferences = array();
