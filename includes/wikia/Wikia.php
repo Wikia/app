@@ -74,6 +74,31 @@ class WikiaAssets {
 			foreach($ref as $reference) {
 				$out .= '<!--# include virtual="'.$reference['url'].'" -->';
 			}
+		} else if($type == 'CoreJS') {
+			header('Content-type: text/javascript');
+			header('Cache-Control: max-age=2592000, public');
+
+			$references = array();
+
+			// static chute
+			global $wgServer;
+			$wgRequest->setVal('allinone', true);
+			$staticChute = new StaticChute('js');
+			$staticChute->useLocalChuteUrl();
+			preg_match_all("/src=\"([^\"]+)/", $staticChute->getChuteHtmlForPackage('monaco_anon_article_js'), $matches, PREG_SET_ORDER);
+			foreach($matches as $script) {
+				$references[] = str_replace($wgServer.'/', '', $script[1]).'&amp;server=ap8';
+			}
+
+			// -
+			$references[] = Skin::makeUrl('-', "action=raw&gen=js&useskin=monaco");
+
+			$out = '';
+			foreach($references as $reference) {
+				$out .= '<!--# include virtual="'.$reference.'" -->';
+			}
+			echo $out;
+			exit();
 		}
 
 		header('Content-type: text/css');
