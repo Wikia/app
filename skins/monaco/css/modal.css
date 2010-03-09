@@ -215,3 +215,17 @@ h1.modalTitle img {
 	background-color:#D6E0F5;
 	border:1px solid #3366CC;
 }
+
+.yui-overlay,
+.yui-panel-container {
+    visibility:hidden;
+    position:absolute;
+    z-index: 2;
+}
+
+.yui-panel {
+    visibility:hidden;
+    position:relative;
+    left:0;
+    top:0;
+}

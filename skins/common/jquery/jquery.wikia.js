@@ -96,9 +96,7 @@ $.loadYUI = function(callback) {
 		$().log('YUI: loading on-demand');
 		
 		var YUIloadingCallBack = function(){
-			console.log( loadYUICallBackFIFO );
 			for (var i = 0; i < loadYUICallBackFIFO.length; i++ ){
-				console.log(loadYUICallBackFIFO[i]);
 				loadYUICallBackFIFO[i]();
 			}
 			loadYUICallBackFIFO = null;
