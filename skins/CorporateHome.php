@@ -87,9 +87,6 @@ class CorporateHomeTemplate extends CorporateBaseTemplate {
 							</div>
 						</section>
 
-<script>
-var christianrules = "totally true";
-</script>
 						<section id="spotlight-slider">
 						<h1 id="featured-wikis-headline"><?php print wfMsg('corporatepage-featured-wikis-headline'); ?></h1>
 						<ul>
