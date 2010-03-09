@@ -14,79 +14,81 @@
 		<input type="hidden" name="wkDefaultAvatar" id="wkDefaultAvatar" value="" >
 		<script type="text/javascript">
 		/*<![CDATA[*/
-		YAHOO.util.Event.onDOMReady(function () {
-			if (document.createTextNode) {
-				var defaultAvatar = YAHOO.util.Dom.get("wkDefaultAvatar");
-				var listDiv = YAHOO.util.Dom.get("wkDefaultAvatarList");
-				if (!listDiv && !defaultAvatar) {
-					return;
-				}
-				var imgs = new Array();
-<? if ( !empty($aDefAvatars) && is_array($aDefAvatars) ) { $loop = 0; foreach ($aDefAvatars as $id => $sDefAvatarUrl) { ?>
-				imgs[<?=$loop?>] = document.createElement('img');
-				imgs[<?=$loop?>].src = '<?=$sDefAvatarUrl?>';
-				imgs[<?=$loop?>].style.border = '2px solid #FFFFFF';
-				imgs[<?=$loop?>].style.margin = '2px';
-				imgs[<?=$loop?>].style.cursor = 'pointer';
-				imgs[<?=$loop?>].setAttribute('width', '40');
-				imgs[<?=$loop?>].setAttribute('height', '40');
-				imgs[<?=$loop?>].onclick = function() {
-					clearBorders();
-					clearUploadAvatar();
-					if (defaultAvatar.value == this.src) {
-						this.style.border = '2px solid #FFFFFF';
-						defaultAvatar.value = "";
-					} else {
-						this.style.border = '2px solid #008000';
-						defaultAvatar.value = this.src;
+		$.loadYUI( function() {
+			YAHOO.util.Event.onDOMReady(function () {
+				if (document.createTextNode) {
+					var defaultAvatar = YAHOO.util.Dom.get("wkDefaultAvatar");
+					var listDiv = YAHOO.util.Dom.get("wkDefaultAvatarList");
+					if (!listDiv && !defaultAvatar) {
+						return;
 					}
-				}
-				listDiv.appendChild(imgs[<?=$loop?>]);
-<? $loop++; } } ?>
-
-				var chooseDivTxt = YAHOO.util.Dom.get("wkUserChooseDivText");
-				if (chooseDivTxt) {
-					chooseDivTxt.innerHTML = "<?=wfMsg('blog-avatar-choose-avatar')?>";
-				}
-
-				var uploadDivTxt = YAHOO.util.Dom.get("wkUserUploadDivText");
-				if (uploadDivTxt) {
-					uploadDivTxt.innerHTML = "<?=wfMsg('blog-avatar-upload-avatar')?>";
-				}
-
-				var uploadDiv = YAHOO.util.Dom.get("wkUserUploadDiv");
-				if (uploadDiv) {
-					uploadFile = document.createElement('input');
-					uploadFile.setAttribute('type', 'file');
-					uploadFile.setAttribute('name', '<?=$sFieldName?>');
-					uploadFile.setAttribute('id', '<?=$sFieldName?>');
-					uploadFile.onchange = function() {
+					var imgs = new Array();
+	<? if ( !empty($aDefAvatars) && is_array($aDefAvatars) ) { $loop = 0; foreach ($aDefAvatars as $id => $sDefAvatarUrl) { ?>
+					imgs[<?=$loop?>] = document.createElement('img');
+					imgs[<?=$loop?>].src = '<?=$sDefAvatarUrl?>';
+					imgs[<?=$loop?>].style.border = '2px solid #FFFFFF';
+					imgs[<?=$loop?>].style.margin = '2px';
+					imgs[<?=$loop?>].style.cursor = 'pointer';
+					imgs[<?=$loop?>].setAttribute('width', '40');
+					imgs[<?=$loop?>].setAttribute('height', '40');
+					imgs[<?=$loop?>].onclick = function() {
 						clearBorders();
-						clearDefaultAvatar();
+						clearUploadAvatar();
+						if (defaultAvatar.value == this.src) {
+							this.style.border = '2px solid #FFFFFF';
+							defaultAvatar.value = "";
+						} else {
+							this.style.border = '2px solid #008000';
+							defaultAvatar.value = this.src;
+						}
 					}
-					uploadDiv.appendChild(uploadFile);
-				}
+					listDiv.appendChild(imgs[<?=$loop?>]);
+	<? $loop++; } } ?>
 
-				function clearBorders() {
-					if (imgs && imgs.length > 0) {
-						for (var i in imgs) {
-							imgs[i].style.border = '2px solid #FFFFFF';
+					var chooseDivTxt = YAHOO.util.Dom.get("wkUserChooseDivText");
+					if (chooseDivTxt) {
+						chooseDivTxt.innerHTML = "<?=wfMsg('blog-avatar-choose-avatar')?>";
+					}
+
+					var uploadDivTxt = YAHOO.util.Dom.get("wkUserUploadDivText");
+					if (uploadDivTxt) {
+						uploadDivTxt.innerHTML = "<?=wfMsg('blog-avatar-upload-avatar')?>";
+					}
+
+					var uploadDiv = YAHOO.util.Dom.get("wkUserUploadDiv");
+					if (uploadDiv) {
+						uploadFile = document.createElement('input');
+						uploadFile.setAttribute('type', 'file');
+						uploadFile.setAttribute('name', '<?=$sFieldName?>');
+						uploadFile.setAttribute('id', '<?=$sFieldName?>');
+						uploadFile.onchange = function() {
+							clearBorders();
+							clearDefaultAvatar();
+						}
+						uploadDiv.appendChild(uploadFile);
+					}
+
+					function clearBorders() {
+						if (imgs && imgs.length > 0) {
+							for (var i in imgs) {
+								imgs[i].style.border = '2px solid #FFFFFF';
+							}
+						}
+					}
+					function clearDefaultAvatar() {
+						var defaultAvatar = YAHOO.util.Dom.get("wkDefaultAvatar");
+						if (defaultAvatar) {
+							defaultAvatar.value = "";
+						}
+					}
+					function clearUploadAvatar() {
+						var uploadAvatar = YAHOO.util.Dom.get("wkUserAvatar");
+						if (uploadAvatar) {
+							uploadAvatar.value = "";
 						}
 					}
 				}
-				function clearDefaultAvatar() {
-					var defaultAvatar = YAHOO.util.Dom.get("wkDefaultAvatar");
-					if (defaultAvatar) {
-						defaultAvatar.value = "";
-					}
-				}
-				function clearUploadAvatar() {
-					var uploadAvatar = YAHOO.util.Dom.get("wkUserAvatar");
-					if (uploadAvatar) {
-						uploadAvatar.value = "";
-					}
-				}
-			}
+			});
 		});
 		</script>
 		</div>
@@ -98,5 +100,5 @@
 </table>
 </td>
 </tr>
-<tr><td colspan="2"><?=wfMsg('blog-avatar-save-info')?></td></tr>	
-<!-- e:<?= __FILE__ ?> -->	
+<tr><td colspan="2"><?=wfMsg('blog-avatar-save-info')?></td></tr>
+<!-- e:<?= __FILE__ ?> -->
