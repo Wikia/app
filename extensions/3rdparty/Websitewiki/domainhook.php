@@ -90,7 +90,7 @@ function wsinfo($parser, $thetext) {
      array_key_exists("Fehlerseiten", $parser->mOutput->mCategories) 
      )
   {
-    $forsale = "<a href=\"http://www.sedo.de/checkdomainoffer.php4?partnerid=13318&domain=$dom\" class=\"external text\" target=\"_new\">Ankauf der domain versuchen</a><br>\n";
+    $forsale = "<a href=\"http://www.sedo.de/checkdomainoffer.php4?partnerid=13318&domain=$dom\" class=\"external text\" target=\"_new\">" . wfMsgForContent( 'websiteinfo-buy' ) . "</a><br>\n";
   }
 
   if($wswErotik)
@@ -125,11 +125,10 @@ function wsinfo($parser, $thetext) {
     $result .= "\n<table border=\"1\" cellspacing=\"0\" cellpadding=\"4\" style=\"float:right; margin:0 0 .5em 1em;
      width:260px; background:#fff; border-collapse:collapse; border:1px solid #999;
      font-size:smaller; line-height:1.5; \" summary=\"" . wfMsgForContent( 'websiteinfo-title', $title ) . "\">
-     <tr><td style=\"text-align:center; background:#c0c0c0;\"><b><a href=\"/Website-Infos\">Website-Infos</a>
-     f&uuml;r $title</b></td></tr>
+     <tr><td style=\"text-align:center; background:#c0c0c0;\"><b>" . wfMsgForContent( 'websiteinfo-summary-link', $title ) . "</b></td></tr>
      <tr><td style=\"text-align:center; background:#f0f0f0;\"><img src=\"$img\"
-	 width=\"250\" height=\"188\" alt=\"Screenshot $domtext\" border=\"0\" /></td></tr>
-     <tr>$forsale<td style=\"text-align:center; background:#f0f0f0;\"><a href=\"/Spezial:Checksite/?param=$dom\" rel=\"nofollow\">&Uuml;berpr&uuml;fen</a>
+	 width=\"250\" height=\"188\" alt=\"" . wfMsgForContent( 'websiteinfo-screenshot-alt', $domtext ) . "\" border=\"0\" /></td></tr>
+     <tr>$forsale<td style=\"text-align:center; background:#f0f0f0;\"><a href=\"/Special:Checksite/?param=$dom\" rel=\"nofollow\">" . wfMsgForContent( 'websiteinfo-verify' ) . "</a>
 	 </td></tr>
 	 \n";
   }
@@ -138,14 +137,13 @@ function wsinfo($parser, $thetext) {
     $result .= "\n<table border=\"1\" cellspacing=\"0\" cellpadding=\"4\" style=\"float:right; margin:0 0 .5em 1em;
      width:260px; background:#fff; border-collapse:collapse; border:1px solid #999;
      font-size:smaller; line-height:1.5; \" summary=\"" . wfMsgForContent( 'websiteinfo-title', $title ) . "\">
-     <tr><td style=\"text-align:center; background:#c0c0c0;\"><b><a href=\"/Website-Infos\">Website-Infos</a>
-     f&uuml;r $title</b></td></tr>
+     <tr><td style=\"text-align:center; background:#c0c0c0;\"><b>" . wfMsgForContent( 'websiteinfo-summary-link', $title ) . "</b></td></tr>
      <tr><td style=\"text-align:center; background:#f0f0f0;\"><a href=\"$domlink\"
          title=\"$domtext\" rel=\"nofollow\" target=\"_new\"><img src=\"$img\"
-	 width=\"250\" height=\"188\" alt=\"Screenshot $domtext\" border=\"0\" /></a></td></tr>
+	 width=\"250\" height=\"188\" alt=\"" . wfMsgForContent( 'websiteinfo-screenshot-alt', $domtext ) . "\" border=\"0\" /></a></td></tr>
      <tr><td style=\"text-align:center; background:#f0f0f0;\"><a href=\"$domlink\"
          title=\"$domtext\" class=\"external text\" target=\"_new\">$domtext</a><br>
-	 $forsale<a href=\"/Spezial:Checksite/?param=$dom\" rel=\"nofollow\">&Uuml;berpr&uuml;fen</a>
+	 $forsale<a href=\"/Special:Checksite/?param=$dom\" rel=\"nofollow\">" . wfMsgForContent( 'websiteinfo-verify' ) . "</a>
 	 </td></tr>
 	 \n";
   }
@@ -189,8 +187,7 @@ EOI;
 
   $bookurl = $wgTitle->getFullURL();
   $bookdesc = "WebsiteWiki+$title";
-  $result .= "<tr><td align=\"center\" style=\"background:#ffffff;\"><strong>
-    Bookmarken bei ...</strong><br />\n";
+  $result .= "<tr><td align=\"center\" style=\"background:#ffffff;\"><strong>" . wfMsgForContent( 'websiteinfo-bookmarks' ) . "</strong><br />\n";
   $result .= "<a href=\"http://www.mister-wong.de/index.php?action=addurl&amp;bm_url=$bookurl&amp;bm_description=$bookdesc\" target=\"_new\" rel=\"nofollow\"><img src=\"$wgUploadPath/social/mrwong.gif\" border=\"0\" width=\"20\" height=\"20\" title=\"Mr. Wong\" alt=\"Mr. Wong\"></a>\n";
   $result .= "<a href=\"http://www.google.com/bookmarks/mark?op=add&amp;hl=de&amp;bkmk=$bookurl&amp;title=$bookdesc\" target=\"_new\" rel=\"nofollow\"><img src=\"$wgUploadPath/social/google.gif\" border=\"0\" width=\"20\" height=\"20\" title=\"Google\" alt=\"Google\"></a>\n";
   $result .= "<a href=\"http://del.icio.us/post?url=$bookurl&amp;title=$bookdesc\" target=\"_new\" rel=\"nofollow\"><img src=\"$wgUploadPath/social/delicious.gif\" border=\"0\" width=\"20\" height=\"20\" title=\"del.icio.us\" alt=\"del.icio.us\"></a>\n";
@@ -202,7 +199,7 @@ EOI;
 
   if($wswErotik)
   {
-    $result .= "<tr><td align=\"center\" style=\"background:#ffffff;\">Anzeige<p>
+    $result .= "<tr><td align=\"center\" style=\"background:#ffffff;\">" . wfMsgForContent( 'websiteinfo-advert' ) . "<p>
     <a href=\"$erolink\" rel=\"nofollow\" target=\"_new\"><img
     src=\"http://www.sexnutz.de/images/soft_200x200.jpg\" alt=\"" . wfMsgForContent( 'websiteinfo-erotik-alt' ) . "\" width=\"200\" height=\"200\" border=\"0\">
     </td></tr>\n";
