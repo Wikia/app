@@ -65,7 +65,7 @@ class StaticChute {
 		$this->generateConfigSkinMonaco($widgetsAssets);
 		$this->generateConfigSkinCorporate();
 	}
-	
+
 	private function generateConfigSkinMonobook() {
 		// JS for monobook (both anons/logged-in)
 		$this->config['monobook_js'] = array(
@@ -91,7 +91,7 @@ class StaticChute {
 			'common/contributed.js',
 		);
 	}
-	
+
 	/* build st for monaco skin */
 	private function generateConfigSkinMonaco($widgetsAssets){
 
@@ -105,8 +105,9 @@ class StaticChute {
 
 			'common/ajax.js',
 			'common/wikibits.js',
-			'monaco/js/main.js',       
-            'common/jquery/jquery.wikia.tracker.js',
+			'common/mwsuggest.js',
+			'monaco/js/main.js',
+			'common/jquery/jquery.wikia.tracker.js',
 			'monaco/js/tracker.js',
 			'monaco/js/SearchAutoComplete.js',
 			'common/widgets/js/widgetsConfig.js',
@@ -146,8 +147,9 @@ class StaticChute {
 			'common/ajax.js',
 			'common/wikibits.js',
 			'common/ajaxwatch.js',
+			'common/mwsuggest.js',
 			'monaco/js/main.js',
-            'common/jquery/jquery.wikia.tracker.js',
+			'common/jquery/jquery.wikia.tracker.js',
 			'monaco/js/tracker.js',
 			'monaco/js/SearchAutoComplete.js',
 			'common/widgets/js/widgetsConfig.js',
@@ -182,8 +184,9 @@ class StaticChute {
 
 			'common/ajax.js',
 			'common/wikibits.js',
+			'common/mwsuggest.js',
 			'monaco/js/main.js',
-            'common/jquery/jquery.wikia.tracker.js',
+			'common/jquery/jquery.wikia.tracker.js',
 			'monaco/js/tracker.js',
 			'monaco/js/SearchAutoComplete.js',
 			'common/widgets/js/widgetsConfig.js',
@@ -230,7 +233,7 @@ class StaticChute {
 			'common/commonPrint.css',
 		);
 	}
-	
+
 	/* build st for corporate page */
 	private function generateConfigSkinCorporate(){
 		//JS
@@ -239,13 +242,13 @@ class StaticChute {
 			'common/jquery/jquery-1.4.1.min.js',
 			'common/jquery/jquery.wikia.js',
 			'corporate/js/main.js',
-            'common/jquery/jquery.wikia.tracker.js',
+			'common/jquery/jquery.wikia.tracker.js',
 			'corporate/js/tracker.js',
 			'common/ajax.js',
 			'common/ajaxwatch.js',
 			'common/mwsuggest.js',
 		);
-		
+
 		$this->config['corporate_specialpage_js'] = array(
 			'common/wikibits.js',
 			'common/jquery/jquery-1.4.1.min.js',
@@ -260,16 +263,16 @@ class StaticChute {
 			'common/mwsuggest.js',
 		);
 		//CSS
-		$this->config['corporate_page_css'] = array(		
+		$this->config['corporate_page_css'] = array(
 			'common/yui300css-reset-min.css',
-			'common/wikia-ui.css',	
+			'common/wikia-ui.css',
 			'common/shared.css',
 			'corporate/css/modal.css',
 			'corporate/css/main.css',
 		);
-	
-	}	
-	
+
+	}
+
 	/* message function that will print the message appropriately based on the format */
 	public function comment ($msg){
 		switch ($this->fileType){
