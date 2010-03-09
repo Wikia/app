@@ -1,14 +1,15 @@
+$.loadYUI( function() {
+
 YAHOO.namespace("wikia.UserProfile");
-var Event = YAHOO.util.Event;
 
 (function() { 
-    
+
 YAHOO.wikia.UserProfile = {
     
 	init: function() {
         var optArray = new Array("all", "last_edits", "last_votes", "gift_sent", "gift_rec", "friend", "foe");
         for (var i in optArray) {
-            Event.addListener("wk-activity-" + optArray[i], "click", YAHOO.wikia.UserProfile.ShowUserActivityEvent, [optArray[i]]);
+            YAHOO.util.Event.addListener("wk-activity-" + optArray[i], "click", YAHOO.wikia.UserProfile.ShowUserActivityEvent, [optArray[i]]);
         }
     },
     
@@ -34,6 +35,8 @@ YAHOO.wikia.UserProfile = {
         return true;
     }
 }
-Event.onDOMReady(YAHOO.wikia.UserProfile.init, YAHOO.wikia.UserProfile, true); 
+YAHOO.util.Event.onDOMReady(YAHOO.wikia.UserProfile.init, YAHOO.wikia.UserProfile, true); 
 }
 )();
+
+});
