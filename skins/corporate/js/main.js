@@ -51,7 +51,7 @@ function autoHubToggle(e) {
 			'action':'ajax',
 			'rs':'AutoHubsPagesHelper::setHubsFeedsVariable',
 			'feed':feed,
-			'tag':tag,
+			'tag':tag
 		},
 		function(response) {
 			if( response.result == 'ok' ) {
@@ -133,6 +133,11 @@ function wikiaSearch_setup() {
 }
 
 function sliderImages_load() {
+	
+  if (( typeof feature_image_1 == "undefined" ) || ( typeof  feature_image_2 == "undefined" ) || ( typeof  feature_image_3 == "undefined" )) {
+	  return true;
+  }
+  
   var imgTag_pt1 = '<img width="620" height="250" src="';
   var imgTag_pt2 = '" class="spotlight-slider">';
   
