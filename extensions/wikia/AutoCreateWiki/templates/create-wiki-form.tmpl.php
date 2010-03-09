@@ -250,56 +250,62 @@ endif
 <iframe id="awc-process-login" height="1" width="1" style="visibility: hidden;"></iframe>
 <script type="text/javascript">
 /*<![CDATA[*/
-YC = YAHOO.util.Connect;
-YD = YAHOO.util.Dom;
-YE = YAHOO.util.Event;
-<?php if ( !empty($mPostedErrors) && is_array($mPostedErrors) ) : ?>
-<?php 	foreach ( $mPostedErrors as $field => $value ) : ?>
-<?php 		if ( !empty($value) ) : ?>
-if ( YD.get('<?=$field?>') ) {
-	YD.addClass('<?=$field?>', 'error');
-	if ( YD.get('<?=$field?>-error') ) {
-		YD.setStyle('<?=$field?>-error', 'display', 'block');
-		YD.get('<?=$field?>-error').innerHTML = "<?=str_replace("\n", "<br />", $value)?>";
-	}
-	if ( YD.get('<?=$field?>-label') ) YD.addClass('<?=$field?>-label', 'error');
-<?
-	if ($field == 'wiki-blurry-word') {
-?>
-		if ( YD.get('wpCaptchaWord') ) YD.addClass('wpCaptchaWord', 'error');
-<?
-	}
-?>
-}
-<?php		endif ?>
-<?php 	endforeach ?>
-<?php endif ?>
+$(function () { 
+	$.loadYUI( function() {
+		YC = YAHOO.util.Connect;
+		YD = YAHOO.util.Dom;
+		YE = YAHOO.util.Event;
+		<?php if ( !empty($mPostedErrors) && is_array($mPostedErrors) ) : ?>
+		<?php 	foreach ( $mPostedErrors as $field => $value ) : ?>
+		<?php 		if ( !empty($value) ) : ?>
+		if ( YD.get('<?=$field?>') ) {
+			YD.addClass('<?=$field?>', 'error');
+			if ( YD.get('<?=$field?>-error') ) {
+				YD.setStyle('<?=$field?>-error', 'display', 'block');
+				YD.get('<?=$field?>-error').innerHTML = "<?=str_replace("\n", "<br />", $value)?>";
+			}
+			if ( YD.get('<?=$field?>-label') ) YD.addClass('<?=$field?>-label', 'error');
+		<?
+			if ($field == 'wiki-blurry-word') {
+		?>
+				if ( YD.get('wpCaptchaWord') ) YD.addClass('wpCaptchaWord', 'error');
+		<?
+			}
+		?>
+		}
+		<?php		endif ?>
+		<?php 	endforeach ?>
+		<?php endif ?>
+	});
+});
 /*]]>*/
 </script>
 <script type="text/javascript" src="<?=$wgExtensionsPath?>/wikia/AutoCreateWiki/js/autocreatewiki.js?<?=$wgStyleVersion?>"></script>
 <script type="text/javascript">
 /*<![CDATA[*/
-YE.onDOMReady(function () {
-	if (YD.get('userloginRound')) {
-		__showLoginPanel = function(e) {
-			var ifr = YD.get('awc-process-login');
-			var titleUrl = '<?=$mTitle->getLocalURL()."/Caching".(( $mLanguage != 'en' ) ? '?uselang=' . $mLanguage : '')?>';
-			var wikiName = YD.get('wiki-name');
-			var wikiDomain = YD.get('wiki-domain');
-			var wikiCategory = YD.get('wiki-category');
-			var wikiLanguage = YD.get('wiki-language');
-			titleUrl += "?wiki-name=" + wikiName.value;
-			titleUrl += "&wiki-domain=" + wikiDomain.value;
-			titleUrl += "&wiki-category=" + wikiCategory.value;
-			titleUrl += "&wiki-language=" + wikiLanguage.value;
-			ifr.src = titleUrl;
-			YAHOO.wikia.AjaxLogin.showLoginPanel(e);
-			return false;
+$(function () { 
+	$.loadYUI( function() {
+		if (YD.get('userloginRound')) {
+			__showLoginPanel = function(e) {
+				var ifr = YD.get('awc-process-login');
+				var titleUrl = '<?=$mTitle->getLocalURL()."/Caching".(( $mLanguage != 'en' ) ? '?uselang=' . $mLanguage : '')?>';
+				var wikiName = YD.get('wiki-name');
+				var wikiDomain = YD.get('wiki-domain');
+				var wikiCategory = YD.get('wiki-category');
+				var wikiLanguage = YD.get('wiki-language');
+				titleUrl += "?wiki-name=" + wikiName.value;
+				titleUrl += "&wiki-domain=" + wikiDomain.value;
+				titleUrl += "&wiki-category=" + wikiCategory.value;
+				titleUrl += "&wiki-language=" + wikiLanguage.value;
+				ifr.src = titleUrl;
+				YAHOO.wikia.AjaxLogin.showLoginPanel(e);
+				return false;
+			}
+	
+			YE.addListener('AWClogin', 'click', __showLoginPanel);
+			YE.addListener('login', 'click', __showLoginPanel);
 		}
-
-		YE.addListener('AWClogin', 'click', __showLoginPanel);
-		YE.addListener('login', 'click', __showLoginPanel);
-	}
+	});
 });
 /*]]>*/
 </script>
