@@ -131,7 +131,9 @@ function WMU_addHandler() {
 		setTimeout('WMU_addHandler()', 250);
 		return;
 	}
-	YAHOO.util.Event.addListener(['wmuLink', 'wmuHelpLink', btn], 'click',  WMU_show);
+	$.loadYUI(function(){ 	
+		YAHOO.util.Event.addListener(['wmuLink', 'wmuHelpLink', $G('mw-editbutton-wmu')], 'click',  WMU_show);
+	});
 }
 
 function WMU_licenseSelectorCheck() {

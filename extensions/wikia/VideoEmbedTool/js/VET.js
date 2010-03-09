@@ -163,17 +163,21 @@ if(mwCustomEditButtons) {
 	}
 }
 
-if(skin == 'monaco' || skin == 'answers' ) {
-	addOnloadHook(function () {
-		if(document.forms.editform) {
-			VET_addHandler();
-		} else if ( $G( 'VideoEmbedCreate' ) && ( 400 == wgNamespaceNumber ) ) {
-			VET_addCreateHandler();
-		} else if ( $G( 'VideoEmbedReplace' ) && ( 400 == wgNamespaceNumber ) ) {
-			VET_addReplaceHandler();
+$(function() { 
+	$.loadYUI(function(){ 	
+		if(skin == 'monaco' || skin == 'answers' ) {
+			addOnloadHook(function () {
+				if(document.forms.editform) {
+					VET_addHandler();
+				} else if ( $G( 'VideoEmbedCreate' ) && ( 400 == wgNamespaceNumber ) ) {
+					VET_addCreateHandler();
+				} else if ( $G( 'VideoEmbedReplace' ) && ( 400 == wgNamespaceNumber ) ) {
+					VET_addReplaceHandler();
+				}
+			});
 		}
 	});
-}
+});
 
 function VET_addCreateHandler() {
 	var btn = $G( 'VideoEmbedCreate' );
