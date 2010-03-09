@@ -566,21 +566,32 @@ EOS;
 		global $wgAllInOne;
 		wfProfileIn(__METHOD__ . '::JSloader');
 
-		$jsHtml = $StaticChute->getChuteHtmlForPackage($package);
 		$allinone = $wgRequest->getBool('allinone', $wgAllInOne);
+
 		$jsReferences = array();
 
-		// get URL of StaticChute package (or a list of separated files) and use WSL to load it
-		preg_match_all("/src=\"([^\"]+)/", $jsHtml, $matches, PREG_SET_ORDER);
+		if($allinone && $package == 'monaco_anon_article_js') {
+			global $parserMemc, $wgStyleVersion;
+			$cb = $parserMemc->get(wfMemcKey('wgMWrevId'));
+			$jsReferences[] = "/__wikia_combined/cb={$cb}{$wgStyleVersion}&type=CoreJS?server=ap8";
+		} else {
+			$jsHtml = $StaticChute->getChuteHtmlForPackage($package);
+			// get URL of StaticChute package (or a list of separated files) and use WSL to load it
+			preg_match_all("/src=\"([^\"]+)/", $jsHtml, $matches, PREG_SET_ORDER);
 
-		foreach($matches as $script) {
-			$jsReferences[] = str_replace('&amp;', '&', $script[1]);
+			foreach($matches as $script) {
+				$jsReferences[] = str_replace('&amp;', '&', $script[1]);
+			}
 		}
+
 
 		// scripts from getReferencesLinks() method
 		foreach($tpl->data['references']['js'] as $script) {
 			if (!empty($script['url'])) {
 				$url = $script['url'];
+				if($allinone && $package == 'monaco_anon_article_js' && strpos($url, 'title=-') > 0) {
+					continue;
+				}
 				$jsReferences[] = $url;
 			}
 		}
