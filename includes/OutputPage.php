@@ -102,7 +102,7 @@ class OutputPage {
 
 	function addKeyword( $text ) { array_push( $this->mKeywords, $text ); }
 	function addScript( $script ) { $this->mScripts .= "\t\t".$script; }
-	
+
 	function addExtensionStyle( $url ) {
 		$linkarr = array( 'rel' => 'stylesheet', 'href' => $url, 'type' => 'text/css' );
 		array_push( $this->mExtStyles, $linkarr );
@@ -121,7 +121,7 @@ class OutputPage {
 		}
 		$this->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$path?$wgStyleVersion\"></script>\n" );
 	}
-	
+
 	/**
 	 * Add a self-contained script tag with the given contents
 	 * @param string $script JavaScript text, no <script> tags
@@ -159,7 +159,7 @@ class OutputPage {
 		# $linkarr should be an associative array of attributes. We'll escape on output.
 		array_push( $this->mLinktags, $linkarr );
 	}
-	
+
 	# Get all links added by extensions
 	function getExtStyle() {
 		return $this->mExtStyles;
@@ -184,7 +184,7 @@ class OutputPage {
 	 */
 	function checkLastModified( $timestamp ) {
 		global $wgCachePages, $wgCacheEpoch, $wgUser, $wgRequest;
-		
+
 		if ( !$timestamp || $timestamp == '19700101000000' ) {
 			wfDebug( __METHOD__ . ": CACHE DISABLED, NO TIMESTAMP\n" );
 			return false;
@@ -237,9 +237,9 @@ class OutputPage {
 		}
 		$clientHeaderTime = wfTimestamp( TS_MW, $clientHeaderTime );
 
-		wfDebug( __METHOD__ . ": client sent If-Modified-Since: " . 
+		wfDebug( __METHOD__ . ": client sent If-Modified-Since: " .
 			wfTimestamp( TS_ISO_8601, $clientHeaderTime ) . "\n", false );
-		wfDebug( __METHOD__ . ": effective Last-Modified: " . 
+		wfDebug( __METHOD__ . ": effective Last-Modified: " .
 			wfTimestamp( TS_ISO_8601, $maxModified ) . "\n", false );
 		if( $clientHeaderTime < $maxModified ) {
 			wfDebug( __METHOD__ . ": STALE, $info\n", false );
@@ -247,7 +247,7 @@ class OutputPage {
 		}
 
 		# Not modified
-		# Give a 304 response code and disable body output 
+		# Give a 304 response code and disable body output
 		wfDebug( __METHOD__ . ": NOT MODIFIED, $info\n", false );
 		ini_set('zlib.output_compression', 0);
 		$wgRequest->response()->header( "HTTP/1.1 304 Not Modified" );
@@ -494,7 +494,7 @@ class OutputPage {
 		$val = is_null( $revid ) ? null : intval( $revid );
 		return wfSetVar( $this->mRevisionId, $val );
 	}
-	
+
 	public function getRevisionId() {
 		return $this->mRevisionId;
 	}
@@ -951,26 +951,29 @@ class OutputPage {
 		$sk = $wgUser->getSkin();
 
 		if ( $wgUseAjax ) {
-			// macbre@wikia: ajax.js and ajaxwatch.js files are part of allinone.js for Monaco skin - don't add them twice
-			if ( !in_array(get_class($sk), array('SkinMonaco', 'SkinAwesome', 'SkinCorporate', 'SkinCorporateHome', 'SkinCorporateHubs')) ) {
+			// macbre: following files are part of merged JS for following skins - don't load them from here
+			$skinName = get_class($sk);
+			$skipWikiaSkins = array('SkinMonaco', 'SkinCorporate', 'SkinCorporateHome', 'SkinCorporateHubs');
+
+			if (!in_array($skinName, $skipWikiaSkins)) {
 				$this->addScriptFile( 'ajax.js' );
 			}
-			
+
 			wfRunHooks( 'AjaxAddScript', array( &$this ) );
 
-			if ( !in_array(get_class($sk), array('SkinMonaco', 'SkinAwesome', 'SkinCorporate', 'SkinCorporateHome', 'SkinCorporateHubs')) ) {
+			if (!in_array($skinName, $skipWikiaSkins)) {
 				if( $wgAjaxWatch && $wgUser->isLoggedIn() ) {
 					$this->addScriptFile( 'ajaxwatch.js' );
 				}
 			}
-			
-			if ( !in_array(get_class($sk), array( 'SkinCorporate', 'SkinCorporateHome', 'SkinCorporateHubs')) ) {	
+
+			if (!in_array($skinName, $skipWikiaSkins)) {
 				if ( $wgEnableMWSuggest && !$wgUser->getOption( 'disablesuggest', false ) ){
 					$this->addScriptFile( 'mwsuggest.js' );
 				}
 			}
 		}
-		
+
 		if( $wgUser->getBoolOption( 'editsectiononrightclick' ) ) {
 			$this->addScriptFile( 'rightclickedit.js' );
 		}
@@ -993,7 +996,7 @@ class OutputPage {
 				) );
 			}
 		}
-		
+
 		# Buffer output; final headers may depend on later processing
 		ob_start();
 
@@ -1469,7 +1472,7 @@ class OutputPage {
 		if ( $returnto == null ) {
 			$returnto = $wgRequest->getText( 'returnto' );
 		}
-		
+
 		if ( $returntoquery == null ) {
 			$returntoquery = $wgRequest->getText( 'returntoquery' );
 		}
@@ -1569,12 +1572,12 @@ class OutputPage {
 		$ret .= "</head>\n";
 		return $ret;
 	}
-	
+
 	protected function addDefaultMeta() {
 		global $wgVersion, $wgRequest;
 		$this->addMeta( 'http:Content-Style-Type', 'text/css' ); //bug 15835
 		$this->addMeta( 'generator', "MediaWiki $wgVersion" );
-		
+
 		$p = "{$this->mIndexPolicy},{$this->mFollowPolicy}";
 		if( $p !== 'index,follow' ) {
 			// http://www.robotstxt.org/wc/meta-user.html
@@ -1596,12 +1599,12 @@ class OutputPage {
 	 */
 	public function getHeadLinks() {
 		global $wgRequest, $wgFeed;
-		
+
 		// Ideally this should happen earlier, somewhere. :P
 		$this->addDefaultMeta();
-		
+
 		$tags = array();
-		
+
 		foreach ( $this->mMetatags as $tag ) {
 			if ( 0 == strcasecmp( 'http:', substr( $tag[0], 0, 5 ) ) ) {
 				$a = 'http-equiv';
@@ -1632,19 +1635,19 @@ class OutputPage {
 					wfMsg( "page-{$format}-feed", $wgTitle->getPrefixedText() ) ); # Used messages: 'page-rss-feed' and 'page-atom-feed' (for an easier grep)
 			}
 
-			# Recent changes feed should appear on every page (except recentchanges, 
-			# that would be redundant). Put it after the per-page feed to avoid 
-			# changing existing behavior. It's still available, probably via a 
+			# Recent changes feed should appear on every page (except recentchanges,
+			# that would be redundant). Put it after the per-page feed to avoid
+			# changing existing behavior. It's still available, probably via a
 			# menu in your browser. Some sites might have a different feed they'd
 			# like to promote instead of the RC feed (maybe like a "Recent New Articles"
 			# or "Breaking news" one). For this, we see if $wgOverrideSiteFeed is defined.
 			# If so, use it instead.
-			
+
 			global $wgOverrideSiteFeed, $wgSitename, $wgFeedClasses;
 			$rctitle = SpecialPage::getTitleFor( 'Recentchanges' );
-			
+
 			if ( $wgOverrideSiteFeed ) {
-				foreach ( $wgOverrideSiteFeed as $type => $feedUrl ) { 
+				foreach ( $wgOverrideSiteFeed as $type => $feedUrl ) {
 					$tags[] = $this->feedLink (
 						$type,
 						htmlspecialchars( $feedUrl ),
