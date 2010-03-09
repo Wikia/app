@@ -653,9 +653,20 @@ END;
 				// @FIXME: properly escape the cdata!
 				$this->usercss = "/*<![CDATA[*/\n" . $previewCss . "/*]]>*/";
 			} else {
-				$skinName = ($this->getSkinName() == 'awesome') ? 'monaco' : $this->getSkinName(); // macbre: temp fix
-				$out->addStyle( self::makeUrl($this->userpage . '/' . $skinName .'.css',
-					'action=raw&ctype=text/css' ) );
+				wfProfileIn(__METHOD__ . '::checkForEmptyUserCSS');
+
+				// macbre: check for empty User:foo/skins.css
+				$userCSS = $this->userpage . '/' . $this->getSkinName() .'.css';
+
+				$userCSStitle = Title::newFromText($userCSS);
+				if ($userCSStitle->exists()) {
+					$rev = Revision::newFromTitle($userCSStitle, $userCSStitle->getLatestRevID());
+					if (!empty($rev) && $rev->getText() != '') {
+						$out->addStyle( self::makeUrl($userCSS, 'action=raw&ctype=text/css') );
+					}
+				}
+
+				wfProfileOut(__METHOD__ . '::checkForEmptyUserCSS');
 			}
 		}
 
