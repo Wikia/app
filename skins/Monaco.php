@@ -635,6 +635,7 @@ EOF;
 		}
 
 		// re-render CSS to be included in head
+		$tpl->set('csslinks-urls', $tmpOut->styles);
 		$tpl->set('csslinks', $tmpOut->buildCssLinks());
 
 		// render CSS to be included at the bottom
@@ -1116,8 +1117,6 @@ EOF;
 
 		// JS - begin
 		if($tpl->data['jsvarurl']) {
-			wfProfileIn(__METHOD__ . '::checkForEmptyMergedJS');
-
 			// macbre: check for empty merged JS file
 			$s = '';
 			$s .= !isMsgEmpty('Common.js') ? wfMsgForContent('Common.js') : '';
@@ -1130,12 +1129,8 @@ EOF;
 			if ($s != '') {
 				$js[] = array('url' => $tpl->data['jsvarurl'], 'mime' => 'text/javascript');
 			}
-
-			wfProfileOut(__METHOD__ . '::checkForEmptyMergedJS');
 		}
 		if($tpl->data['userjs']) {
-			wfProfileIn(__METHOD__ . '::checkForEmptyUserJS');
-
 			// macbre: check for empty User:foo/skin.js
 			$userJStitle = Title::newFromText($this->userpage.'/monaco.js');
 			if ($userJStitle->exists()) {
@@ -1144,18 +1139,14 @@ EOF;
 					$js[] = array('url' => $tpl->data['userjs'], 'mime' => 'text/javascript');
 				}
 			}
-
-			wfProfileOut(__METHOD__ . '::checkForEmptyUserJS');
 		}
 		if($tpl->data['userjsprev']) {
 			$js[] = array('content' => $tpl->data['userjsprev'], 'mime' => 'text/javascript');
 		}
 		// JS - end
 
-		$ret = array('js' => $js, 'css' => $css, 'cssstyle' => $cssstyle);
-
 		wfProfileOut( __METHOD__ );
-		return $ret;
+		return array('js' => $js, 'css' => $css, 'cssstyle' => $cssstyle);
 	}
 
 	/**
@@ -1452,16 +1443,30 @@ class MonacoTemplate extends QuickTemplate {
 		<?php print Skin::makeGlobalVariablesScript( $this->data ); ?>
 
 <?php
+
+print_pre($this->data['csslinks-urls']);
+print_pre($this->data['references']['cssstyle']);
+print_pre($this->data['references']['css']);
+exit();
+
 	$allinone = $wgRequest->getBool('allinone', $wgAllInOne);
 	echo WikiaAssets::GetCoreCSS($skin->themename, $wgContLang->isRTL(), $allinone); // StaticChute + browser specific
+	echo WikiaAssets::GetExtensionsCSS($this->data['csslinks-urls']);
+	echo WikiaAssets::GetSiteCSS($skin->themename, $wgContLang->isRTL(), $allinone); // Common.css, Monaco.css, -
+	echo WikiaAssets::GetUserCSS($this->data['csslinks-urls']);
+
+
+
+
+//print_pre($this->data['references']['css']);
+//exit();
+
 	/*echo WikiaAssets::GetExtensionsCSS();
 	echo WikiaAssets::GetSiteCSS();
 	echo WikiaAssets::GetUserCSS();*/
 ?>
 
 <?php
-	//$this->html('mergedCSS');
-
 	foreach($this->data['references']['cssstyle'] as $cssstyle) {
 ?>
 		<style type="text/css"><?= $cssstyle['content'] ?></style>
@@ -1470,7 +1475,9 @@ class MonacoTemplate extends QuickTemplate {
 
         echo "\t\t";
 
-	$this->html('csslinks');
+	//echo '1-2';
+	//print_pre($this->data['csslinks-urls']);
+	//exit();
 
 	echo "\n";
 
