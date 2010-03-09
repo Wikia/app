@@ -155,7 +155,7 @@
 				?>
 				</select>
 			</fieldset>
-			
+
 			<fieldset>
 				<legend><?= wfMsg('swm-label-language') ?></legend>
 				<?php
@@ -199,34 +199,35 @@
 </div>
 
 <script type="text/javascript">
-function $(id) {
-	return document.getElementById(id);
-}
-function grayOut(e) {
-	var source = YAHOO.util.Event.getTarget(e);
-	switch (source.id) {
-		case 'mSendModeWikisH':
-		case 'mSendModeWikisW':
-			$('mSendModeUsersA').disabled = true;
-			if ($('mSendModeUsersA').checked)
-				$('mSendModeUsersC').checked = true;
-			break;
-		case 'mSendModeUsersU':
-			$('mSendModeWikisA').disabled = true;
-			$('mSendModeWikisH').disabled = true;
-			$('mSendModeWikisW').disabled = true;
-			$('input.swm-lang-checkbox').disabled = true;
-			break;
-		default:
-			if ($('mSendModeWikisA').checked)
-				$('mSendModeUsersA').disabled = false;
-			$('mSendModeWikisA').disabled = false;
-			$('mSendModeWikisH').disabled = false;
-			$('mSendModeWikisW').disabled = false;
-			$('input.swm-lang-checkbox').disabled = false;
+$.loadYUI( function() {
+	function $(id) {
+		return document.getElementById(id);
 	}
-}
-var radio = ['mSendModeWikisA', 'mSendModeWikisH', 'mSendModeWikisW', 'mSendModeUsersA', 'mSendModeUsersC', 'mSendModeUsersG', 'mSendModeUsersU'];
-YAHOO.util.Event.addListener(radio, 'click', grayOut);
+	function grayOut(e) {
+		var source = YAHOO.util.Event.getTarget(e);
+		switch (source.id) {
+			case 'mSendModeWikisH':
+			case 'mSendModeWikisW':
+				$('mSendModeUsersA').disabled = true;
+				if ($('mSendModeUsersA').checked)
+					$('mSendModeUsersC').checked = true;
+				break;
+			case 'mSendModeUsersU':
+				$('mSendModeWikisA').disabled = true;
+				$('mSendModeWikisH').disabled = true;
+				$('mSendModeWikisW').disabled = true;
+				$('input.swm-lang-checkbox').disabled = true;
+				break;
+			default:
+				if ($('mSendModeWikisA').checked)
+					$('mSendModeUsersA').disabled = false;
+				$('mSendModeWikisA').disabled = false;
+				$('mSendModeWikisH').disabled = false;
+				$('mSendModeWikisW').disabled = false;
+				$('input.swm-lang-checkbox').disabled = false;
+		}
+	}
+	YAHOO.util.Event.addListener( ['mSendModeWikisA', 'mSendModeWikisH', 'mSendModeWikisW', 'mSendModeUsersA', 'mSendModeUsersC', 'mSendModeUsersG', 'mSendModeUsersU'], 'click', grayOut );
+});
 </script>
 <!-- e:<?= __FILE__ ?> -->
