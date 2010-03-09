@@ -46,8 +46,7 @@ class HomePageStatisticCollector
 		if (self::chackNamespace($article)){
 			return true;
 		}
-    
-		if ($status['value']['new'] == 1){
+		if ($status->value['new']){
 			self::updatePagesAddedInLastHour(1);
 		}
 		return true;
