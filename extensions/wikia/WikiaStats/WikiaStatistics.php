@@ -18,9 +18,9 @@
 /*
  * hooks
  */
-#$wgHooks['ArticleSaveComplete'][] = "WikiaEditStatistics::saveComplete";
-#$wgHooks['ArticleDeleteComplete'][] = "WikiaEditStatistics::deleteComplete";
-#$wgHooks['UndeleteComplete'][] = "WikiaEditStatistics::undeleteComplete";
+$wgHooks['ArticleSaveComplete'][] = "WikiaEditStatistics::saveComplete";
+$wgHooks['ArticleDeleteComplete'][] = "WikiaEditStatistics::deleteComplete";
+$wgHooks['UndeleteComplete'][] = "WikiaEditStatistics::undeleteComplete";
 
 /*
  * update statistics 
