@@ -363,7 +363,7 @@ class AutoCreateWikiLocalJob extends Job {
 		global $wgUser, $wgPasswordSender;
 
 		$oReceiver = $this->mFounder;
-		$sServer = sprintf("http://%s.wikia.com", $this->mParams["subdomain"] );
+		$sServer = $this->mParams["url"];
 
 		/**
 		 * set apropriate staff member
