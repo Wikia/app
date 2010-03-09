@@ -1098,10 +1098,6 @@ EOF;
 		$tpl->set('mergedCSS', "\n\t\t" . $StaticChute->getChuteHtmlForPackage('monaco_css') . "\n" );
 		$tpl->set('mergedCSSprint', "\n\t\t" . $StaticChute->getChuteHtmlForPackage('monaco_css_print') );
 
-		//$css[] = array('url' => $wgStylePath.'/monaco/css/monaco_ltie7.css?'.$wgStyleVersion, 'cond' => 'if lt IE 7');
-		//$css[] = array('url' => $wgStylePath.'/monaco/css/monaco_ie7.css?'.$wgStyleVersion, 'cond' => 'if IE 7');
-		//$css[] = array('url' => $wgStylePath.'/monaco/css/monaco_ie8.css?'.$wgStyleVersion, 'cond' => 'if IE 8');
-
 		// RTL support
 		if ($wgContLang->isRTL()) {
 			$css[] = array('url' => $wgStylePath.'/monaco/rtl.css?'.$wgStyleVersion);
@@ -1448,6 +1444,9 @@ class MonacoTemplate extends QuickTemplate {
 <?php
 	$allinone = $wgRequest->getBool('allinone', $wgAllInOne);
 	echo WikiaAssets::GetCoreCSS($skin->themename, $wgContLang->isRTL(), $allinone); // StaticChute + browser specific
+	/*echo WikiaAssets::GetExtensionsCSS();
+	echo WikiaAssets::GetSiteCSS();
+	echo WikiaAssets::GetUserCSS();*/
 ?>
 
 <?php

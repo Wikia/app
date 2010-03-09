@@ -12,46 +12,68 @@ $wgAjaxExportList[] = 'WikiaAssets::combined';
 
 class WikiaAssets {
 
-	public static function combined() {
-		global $wgRequest, $wgStylePath;
-
-		$themename = $wgRequest->getVal('themename');
-		$browser = $wgRequest->getVal('browser');
-
-		$wgRequest->setVal('allinone', true);
-
-		$staticChute = new StaticChute('css');
-		$staticChute->useLocalChuteUrl();
-		if($themename != 'custom' && $themename != 'sapphire') {
-			$staticChute->setTheme($themename);
-		}
-
-		preg_match("/href=\"([^\"]+)/", $staticChute->getChuteHtmlForPackage('monaco_css'), $matches);
+	private static function GetBrowserSpecificCSS() {
+		global $wgStylePath;
 
 		$references = array();
 
-		$url = $matches[1];
-		$url = str_replace('http://www.wikia.com/', '', $url);
-		$url .= '&amp;server=ap8';
-		$references[] = array('url' => $url);
+		$references[] = array(
+			'url' => $wgStylePath.'/monaco/css/monaco_ltie7.css',
+			'cond' => 'if lt IE 7',
+			'browser' => 'IElt7');
 
-		if($browser == 'IElt7') {
-			$references[] = array('url' => $wgStylePath.'/monaco/css/monaco_ltie7.css');
-		}else if($browser == 'IEeq7') {
-			$references[] = array('url' => $wgStylePath.'/monaco/css/monaco_ie7.css');
-		}else if($browser == 'IEeq8') {
-			$references[] = array('url' => $wgStylePath.'/monaco/css/monaco_ie8.css');
-		}
+		$references[] = array(
+			'url' => $wgStylePath.'/monaco/css/monaco_ie7.css',
+			'cond' => 'if IE 7',
+			'browser' => 'IEeq7');
 
-		$out = '';
+		$references[] = array(
+			'url' => $wgStylePath.'/monaco/css/monaco_ie8.css',
+			'cond' => 'if IE 8',
+			'browser' => 'IEeq8');
 
-		foreach($references as $reference) {
-			$out .= '<!--# include virtual="'.$reference['url'].'" -->';
-		}
+		return $references;
+	}
 
-		header('Content-type: text/css');
-		echo $out;
-		exit();
+	public static function combined() {
+		global $wgRequest, $wgStylePath;
+
+		$type = $wgRequest->getVal('type');
+
+		//if($type == 'CoreCSS') {
+
+			$themename = $wgRequest->getVal('themename');
+			$browser = $wgRequest->getVal('browser');
+
+			$wgRequest->setVal('allinone', true);
+			$staticChute = new StaticChute('css');
+			$staticChute->useLocalChuteUrl();
+			if($themename != 'custom' && $themename != 'sapphire') {
+				$staticChute->setTheme($themename);
+			}
+
+			preg_match("/href=\"([^\"]+)/", $staticChute->getChuteHtmlForPackage('monaco_css'), $matches);
+
+			$references = array();
+			$references[] = array('url' => str_replace('http://www.wikia.com/', '', $matches[1]).'&amp;server=ap8');
+
+			$references = array_merge($references, WikiaAssets::GetBrowserSpecificCSS());
+
+			$out = '';
+
+			foreach($references as $reference) {
+				if(isset($reference['browser']) && $reference['browser'] != $browser) {
+					continue;
+				}
+				$out .= '<!--# include virtual="'.$reference['url'].'" -->';
+			}
+
+			header('Content-type: text/css');
+			echo $out;
+			exit();
+
+		//}
+
 	}
 
 	public static function GetCoreCSS($themename, $isRTL, $isAllInOne) {
@@ -60,8 +82,8 @@ class WikiaAssets {
 
 			global $wgStyleVersion;
 
-			$commonPart = "http://images.wikia.com/__varnish_combined/themename=$themename&rtl=".$isRTL;
-			$commonPart .= "&cb=$wgStyleVersion";
+			$commonPart = "http://images1.wikia.nocookie.net/__wikia_combined/cb={$wgStyleVersion}&type=CoreCSS&themename={$themename}&rtl={$isRTL}";
+
 			$out = '<!--[if lt IE 7]<link rel="stylesheet" type="text/css" href="'.$commonPart.'&browser=IElt7" /><![endif]-->';
 			$out .= '<!--[if IE 7]><link rel="stylesheet" type="text/css" href="'.$commonPart.'&browser=IEeq7" /><![endif]-->';
 			$out .= '<!--[if IE 8]><link rel="stylesheet" type="text/css" href="'.$commonPart.'&browser=IEeq8" /><![endif]-->';
@@ -88,12 +110,9 @@ class WikiaAssets {
 				$references[] = array('url' => $match);
 			}
 
-			$references[] = array('url' => $wgStylePath.'/monaco/css/monaco_ltie7.css', 'cond' => 'if lt IE 7');
-			$references[] = array('url' => $wgStylePath.'/monaco/css/monaco_ie7.css', 'cond' => 'if IE 7');
-			$references[] = array('url' => $wgStylePath.'/monaco/css/monaco_ie8.css', 'cond' => 'if IE 8');
+			$references = array_merge($references, WikiaAssets::GetBrowserSpecificCSS());
 
 			$out = '<style type="text/css">';
-
 			foreach($references as $reference) {
 				if(isset($reference['cond'])) {
 					$out .='<!--['.$reference['cond'].']';
@@ -103,7 +122,6 @@ class WikiaAssets {
 					$out .='<![endif]-->';
 				}
 			}
-
 			$out .= '</style>';
 
 			return $out;
