@@ -52,6 +52,12 @@ class StaticChute {
 			'common/yui_extra/carousel-min.js',
 		);
 
+		// YUI css
+		$this->config['yui_css'] = array(
+			'common/yui_2.5.2/container/assets/container.css',
+			'common/yui_2.5.2/tabview/assets/tabview.css',
+		);
+
 		// jQuery package (for home skin)
 		$this->config['jquery'] = array(
 			'common/jquery/jquery-1.3.2.js',
@@ -204,11 +210,7 @@ class StaticChute {
 
 		// CSS
 		$this->config['monaco_css'] = array(
-
-		/*'common/yui_2.5.2/container/assets/container.css',
-			'common/yui_2.5.2/tabview/assets/tabview.css',
-		*/
-        	'common/shared.css',
+	        	'common/shared.css',
 			'monaco/css/monobook_modified.css',
 			'monaco/css/reset_modified.css',
 			'common/wikia-ui.css',
