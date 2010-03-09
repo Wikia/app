@@ -573,7 +573,7 @@ EOS;
 		if($allinone && $package == 'monaco_anon_article_js') {
 			global $parserMemc, $wgStyleVersion;
 			$cb = $parserMemc->get(wfMemcKey('wgMWrevId'));
-			$jsReferences[] = "/__wikia_combined/cb={$cb}{$wgStyleVersion}&type=CoreJS?server=ap8";
+			$jsReferences[] = "/__wikia_combined/cb={$cb}{$wgStyleVersion}&type=CoreJS&server=ap8";
 		} else {
 			$jsHtml = $StaticChute->getChuteHtmlForPackage($package);
 			// get URL of StaticChute package (or a list of separated files) and use WSL to load it
