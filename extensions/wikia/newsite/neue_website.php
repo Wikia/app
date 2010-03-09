@@ -395,8 +395,8 @@ function get_content($host)
 
   function getcharset($web)
   {
-    if(eregi("<META[^>]*http-equiv=\"Content-Type\"[^>]*content=\"([^\"]*)\"[^>]*>", $web, $desc) ||
-       eregi("<META[^>]*content=\"([^\"]*)\"[^>]*http-equiv=\"Content-Type\"[^>]*>", $web, $desc))
+    if(preg_match("|<META[^>]*http-equiv=\"?Content-Type\"?[^>]*content=\"([^\"]*)\"[^>]*>|", $web, $desc) ||
+       preg_match("|<META[^>]*content=\"([^\"]*)\"[^>]*http-equiv=\"?Content-Type\"?[^>]*>|", $web, $desc))
     {
       // echo "ctype ===${desc[1]}===\n";
       if(eregi("charset=([a-zA-Z0-9-]+)", $desc[1], $cset))
