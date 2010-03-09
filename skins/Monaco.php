@@ -1441,45 +1441,19 @@ class MonacoTemplate extends QuickTemplate {
 
 		<title><?php $this->text('pagetitle') ?></title>
 		<?php print Skin::makeGlobalVariablesScript( $this->data ); ?>
-
 <?php
-
-print_pre($this->data['csslinks-urls']);
-print_pre($this->data['references']['cssstyle']);
-print_pre($this->data['references']['css']);
-exit();
-
-	$allinone = $wgRequest->getBool('allinone', $wgAllInOne);
-	echo WikiaAssets::GetCoreCSS($skin->themename, $wgContLang->isRTL(), $allinone); // StaticChute + browser specific
-	echo WikiaAssets::GetExtensionsCSS($this->data['csslinks-urls']);
-	echo WikiaAssets::GetSiteCSS($skin->themename, $wgContLang->isRTL(), $allinone); // Common.css, Monaco.css, -
-	echo WikiaAssets::GetUserCSS($this->data['csslinks-urls']);
-
-
-
-
-//print_pre($this->data['references']['css']);
-//exit();
-
-	/*echo WikiaAssets::GetExtensionsCSS();
-	echo WikiaAssets::GetSiteCSS();
-	echo WikiaAssets::GetUserCSS();*/
+$allinone = $wgRequest->getBool('allinone', $wgAllInOne);
+echo WikiaAssets::GetCoreCSS($skin->themename, $wgContLang->isRTL(), $allinone); // StaticChute + browser specific
+echo WikiaAssets::GetExtensionsCSS($this->data['csslinks-urls']);
+echo WikiaAssets::GetSiteCSS($skin->themename, $wgContLang->isRTL(), $allinone); // Common.css, Monaco.css, -
+echo WikiaAssets::GetUserCSS($this->data['csslinks-urls']);
 ?>
-
 <?php
 	foreach($this->data['references']['cssstyle'] as $cssstyle) {
 ?>
 		<style type="text/css"><?= $cssstyle['content'] ?></style>
 <?php
 	}
-
-        echo "\t\t";
-
-	//echo '1-2';
-	//print_pre($this->data['csslinks-urls']);
-	//exit();
-
-	echo "\n";
 
 	foreach($this->data['references']['css'] as $css) {
 ?>

@@ -123,7 +123,7 @@ class WikiaAssets {
 			}
 		}
 
-		$out = "\n\n<!-- GetExtensionsCSS -->";
+		$out = "\n<!-- GetExtensionsCSS -->";
 		$tmpOut = new OutputPage();
 		$tmpOut->styles = $styles;
 
@@ -132,12 +132,16 @@ class WikiaAssets {
 
 	public static function GetUserCSS($styles) {
 		foreach($styles as $style => $options) {
-			if(strpos($style, 'title=User:') === false) {
-				unset($styles[$style]);
+			if(strpos($style, 'title=User:') > 0) {
+				continue;
 			}
+			if(strpos($style, 'title=-') > 0 && strpos($style, 'ts=') > 0) {
+				continue;
+			}
+			unset($styles[$style]);
 		}
 
-		$out = "\n\n<!-- GetUserCSS -->";
+		$out = "\n<!-- GetUserCSS -->";
 		$tmpOut = new OutputPage();
 		$tmpOut->styles = $styles;
 
@@ -145,7 +149,7 @@ class WikiaAssets {
 	}
 
 	public static function GetSiteCSS($themename, $isRTL, $isAllInOne) {
-		$out = "\n\n<!-- GetSiteCSS -->";
+		$out = "\n<!-- GetSiteCSS -->";
 
 		if($isAllInOne) {
 			global $parserMemc;
@@ -173,7 +177,7 @@ class WikiaAssets {
 
 			$commonPart = "http://images1.wikia.nocookie.net/__wikia_combined/cb={$wgStyleVersion}&type=CoreCSS&themename={$themename}&rtl={$isRTL}";
 
-			$out = "\n\n<!-- GetCoreCSS -->";
+			$out = "\n<!-- GetCoreCSS -->";
 			$out .= '<!--[if lt IE 7]<link rel="stylesheet" type="text/css" href="'.$commonPart.'&browser=IElt7" /><![endif]-->';
 			$out .= '<!--[if IE 7]><link rel="stylesheet" type="text/css" href="'.$commonPart.'&browser=IEeq7" /><![endif]-->';
 			$out .= '<!--[if IE 8]><link rel="stylesheet" type="text/css" href="'.$commonPart.'&browser=IEeq8" /><![endif]-->';
@@ -202,7 +206,7 @@ class WikiaAssets {
 
 			$references = array_merge($references, WikiaAssets::GetBrowserSpecificCSS());
 
-			$out = "\n\n<!-- GetCoreCSS -->";
+			$out = "\n<!-- GetCoreCSS -->";
 			$out .= '<style type="text/css">';
 			foreach($references as $reference) {
 				if(isset($reference['cond'])) {
