@@ -3,7 +3,7 @@
 /**
  * @package MediaWiki
  * @author Piotr Molski <moli@wikia.com> for Wikia.com
- * @copyright (C) 2007, Wikia Inc.
+ * @copyright (C) 2010, Wikia Inc.
  * @licence GNU General Public Licence 2.0 or later
  * @version: $Id: Classes.php 6127 2007-10-11 11:10:32Z moli $
  */
@@ -18,9 +18,9 @@
 /*
  * hooks
  */
-$wgHooks['ArticleSaveComplete'][] = "WikiaEditStatistics::saveComplete";
-$wgHooks['ArticleDeleteComplete'][] = "WikiaEditStatistics::deleteComplete";
-$wgHooks['UndeleteComplete'][] = "WikiaEditStatistics::undeleteComplete";
+#$wgHooks['ArticleSaveComplete'][] = "WikiaEditStatistics::saveComplete";
+#$wgHooks['ArticleDeleteComplete'][] = "WikiaEditStatistics::deleteComplete";
+#$wgHooks['UndeleteComplete'][] = "WikiaEditStatistics::undeleteComplete";
 
 /*
  * update statistics 
@@ -31,10 +31,11 @@ class WikiaEditStatistics {
 		$mPageId, 
 		$mPageNs, 
 		$mIsContent,
-		$mDate;
+		$mDate,
+		$mText;
 	const updateWithToday = false;
 		
-	public function __construct( $Title, $User, $articleId = 0 ) {
+	public function __construct( $Title, $User, $articleId = 0, $text = '' ) {
 		global $wgEnableBlogArticles;
 		/**
 		 * initialization	
@@ -62,6 +63,9 @@ class WikiaEditStatistics {
 			);
 
 		$this->mDate = date('Y-m-d');
+		if ( $text ) {
+			$this->mText = preg_replace( '/\[\[[^\:\]]+\:[^\]]*\]\]/', '', $text );
+		}
 	}
 
 	public function setPageId($page_id) { $this->mPageId = $page_id; }
@@ -88,21 +92,24 @@ class WikiaEditStatistics {
 				'pe_wikia_id'	=> $wgCityId,
 				'pe_page_id'	=> $this->mPageId,
 				'pe_page_ns'	=> $this->mPageNs,
-				'pe_date'		=> $this->mDate
+				'pe_date'		=> $this->mDate,
 			);
 
 			$oRow = $dbw->selectRow( 
 				array( 'page_edits' ),
-				array( 'pe_page_id, pe_all_count, pe_anon_count' ),
+				array( 'pe_page_id, pe_all_count, pe_anon_count, pe_words' ),
 				$conditions,
 				__METHOD__
 			);
 
 			if ( $oRow ) {
 				# update edits count
+				$newWords = str_word_count($this->mText) - $oRow->pe_words;
 				$data = array( 
 					'pe_all_count' 	=> intval($oRow->pe_all_count + $inc),
-					'pe_is_content' => intval($this->mIsContent)
+					'pe_is_content' => intval($this->mIsContent),
+					'pe_diff_words'	=> intval($newWords),
+					'pe_words' 		=> intval(str_word_count($this->mText))
 				);
 				if ( empty($this->mUserId) ) {
 					$data['pe_anon_count'] = intval($oRow->pe_anon_count + $inc);
@@ -113,6 +120,10 @@ class WikiaEditStatistics {
 				# insert edits count
 				$conditions['pe_all_count'] = $inc;
 				$conditions['pe_is_content'] = intval($this->mIsContent);
+				$numberWords = $this->numberWords();
+				$newWords = str_word_count($this->mText);
+				$conditions['pe_diff_words'] = intval($newWords - $numberWords);
+				$conditions['pe_words'] = intval($newWords);
 				if ( empty($this->mUserId) ) {
 					$conditions['pe_anon_count'] = $inc;
 				} else {
@@ -127,7 +138,7 @@ class WikiaEditStatistics {
 				'pc_page_id'	=> $this->mPageId,
 				'pc_page_ns'	=> $this->mPageNs,
 				'pc_date'		=> $this->mDate,
-				'pc_user_id'	=> $this->mUserId
+				'pc_user_id'	=> $this->mUserId,
 			);
 
 			$oRow = $dbw->selectRow( 
@@ -155,6 +166,37 @@ class WikiaEditStatistics {
 		
 		wfProfileOut( __METHOD__ );
 		return $return;
+	}
+
+	/*
+	 * get number of words for article 
+	 *  
+	 * @access private
+	 * 
+	 * return integer
+	 */
+	private function numberWords() {
+		global $wgExternalDatawareDB, $wgCityId;
+		wfProfileIn( __METHOD__ );
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );			
+
+		# number of edits 
+		$conditions = array( 
+			'pe_wikia_id'	=> $wgCityId,
+			'pe_page_id'	=> $this->mPageId,
+			'pe_page_ns'	=> $this->mPageNs
+		);
+
+		$oRow = $dbr->selectRow( 
+			array( 'page_edits' ),
+			array( 'pe_words' ),
+			$conditions,
+			__METHOD__,
+			array('ORDER BY' => 'pe_date desc', 'LIMIT' => 1)
+		);
+		
+		wfProfileOut( __METHOD__ );
+		return intval($oRow->pe_words);
 	}
 
 	/**
@@ -244,12 +286,11 @@ class WikiaEditStatistics {
 	 *
 	 * @return true
 	 */
-	static public function saveComplete(&$Article, &$User /* other params */) {
+	static public function saveComplete(&$Article, &$User, $text /* other params */) {
 		wfProfileIn( __METHOD__ );
-		error_log("save \n");
 		if ( ( $Article instanceof Article ) && ( $User instanceof User ) ) {
 			$Title = $Article->mTitle;
-			$oEdits = new WikiaEditStatistics($Title, $User);
+			$oEdits = new WikiaEditStatistics($Title, $User, 0, $text);
 			$oEdits->increase();
 		}
 		wfProfileOut( __METHOD__ );
@@ -273,7 +314,7 @@ class WikiaEditStatistics {
 		wfProfileIn( __METHOD__ );
 		if ( ( $Article instanceof Article ) && ( $User instanceof User ) ) {
 			$Title = $Article->mTitle;
-			$oEdits = new WikiaEditStatistics($Title, $User, $articleId);
+			$oEdits = new WikiaEditStatistics($Title, $User, $articleId, '');
 			$oEdits->decrease();
 		}
 		wfProfileOut( __METHOD__ );
