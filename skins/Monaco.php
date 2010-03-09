@@ -568,21 +568,20 @@ EOS;
 
 		$jsHtml = $StaticChute->getChuteHtmlForPackage($package);
 		$allinone = $wgRequest->getBool('allinone', $wgAllInOne);
-		$jsLoader = "\n\t\t<script type=\"text/javascript\">/*<![CDATA[*/";
+		$jsReferences = array();
 
 		// get URL of StaticChute package (or a list of separated files) and use WSL to load it
 		preg_match_all("/src=\"([^\"]+)/", $jsHtml, $matches, PREG_SET_ORDER);
 
 		foreach($matches as $script) {
-			$url = Xml::encodeJSvar(str_replace('&amp;', '&', $script[1]));
-			$jsLoader .= "wsl.loadScript({$url});";
+			$jsReferences[] = str_replace('&amp;', '&', $script[1]);
 		}
 
 		// scripts from getReferencesLinks() method
 		foreach($tpl->data['references']['js'] as $script) {
 			if (!empty($script['url'])) {
-				$url = Xml::encodeJSvar($script['url']);
-				$jsLoader .= "wsl.loadScript({$url});";
+				$url = $script['url'];
+				$jsReferences[] = $url;
 			}
 		}
 
@@ -594,14 +593,25 @@ EOS;
 		$headScripts = $tpl->data['headscripts'];
 		preg_match_all("#<script type=\"{$wgJsMimeType}\" src=\"([^\"]+)\"></script>#", $headScripts, $matches, PREG_SET_ORDER);
 		foreach($matches as $script) {
-			$url = Xml::encodeJSvar(str_replace('&amp;', '&', $script[1]));
-			$jsLoader .= "wsl.loadScript({$url});";
-
+			$jsReferences[] = str_replace('&amp;', '&', $script[1]);
 			$headScripts = str_replace($script[0], '', $headScripts);
 		}
-		$jsLoader .= "/*]]>*/</script>\n";
-
 		$tpl->data['headscripts'] = $headScripts;
+
+		// generate code to load JS files
+		$jsReferences = Wikia::json_encode($jsReferences);
+		$jsLoader = <<<EOF
+
+		<script type="text/javascript">/*<![CDATA[*/
+			(function(){
+				var jsReferences = $jsReferences;
+				var len = jsReferences.length;
+				for(var i=0; i<len; i++)
+					wsl.loadScript(jsReferences[i]);
+			})();
+		/*]]>*/</script>
+EOF;
+
 		$tpl->set('JSloader', $jsLoader);
 
 		wfProfileOut(__METHOD__ . '::JSloader');
@@ -2284,7 +2294,8 @@ wfProfileOut( __METHOD__ . '-body');
 		<script type="text/javascript">/*<![CDATA[*/
 			(function(){
 				var cssReferences = $cssReferences;
-				for(var i=0; i<cssReferences.length; i++)
+				var len = cssReferences.length;
+				for(var i=0; i<len; i++)
 					setTimeout("wsl.loadCSS.call(wsl, '" + cssReferences[i] + "', 'print')", 100);
 			})();
 		/*]]>*/</script>
