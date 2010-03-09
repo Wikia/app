@@ -67,11 +67,6 @@ class WikiaAssets {
 				}
 				$out .= '<!--# include virtual="'.$reference['url'].'" -->';
 			}
-
-			header('Content-type: text/css');
-			echo $out;
-			exit();
-
 		} else if($type == 'SiteCSS') {
 			$out = '';
 			$themename = $wgRequest->getVal('themename');
@@ -79,11 +74,12 @@ class WikiaAssets {
 			foreach($ref as $reference) {
 				$out .= '<!--# include virtual="'.$reference['url'].'" -->';
 			}
-			header('Content-type: text/css');
-			echo $out;
-			exit();
 		}
 
+		header('Content-type: text/css');
+		header('Cache-Control: max-age=2592000, public');
+		echo $out;
+		exit();
 	}
 
 	private function GetSiteCSSReferences($themename) {
