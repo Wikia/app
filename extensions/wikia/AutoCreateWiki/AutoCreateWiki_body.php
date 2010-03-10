@@ -390,22 +390,23 @@ class AutoCreateWikiPage extends SpecialPage {
 
 		$msgType = 'OK';
 		if ( !$this->canCreateDatabase() ) {
+			$this->log( "Database {$this->mWikiData[ "dbname"]} exists" );
 			$msgType = 'ERROR';
 		} else {
-			$oRow = $dbw_local->selectRow(
-				"INFORMATION_SCHEMA.SCHEMATA",
-				array( "count(*) as cnt" ),
-				array( 'SCHEMA_NAME' => $this->mWikiData[ "dbname"]),
-				__METHOD__
-			);
+#			$oRow = $dbw_local->selectRow(
+#				"INFORMATION_SCHEMA.SCHEMATA",
+#				array( "count(*) as cnt" ),
+#				array( 'SCHEMA_NAME' => $this->mWikiData[ "dbname"]),
+#				__METHOD__
+#			);
 
-			if ( empty($oRow->cnt) ) {
+#			if ( empty($oRow->cnt) ) {
 				$dbw_local->query( sprintf( "CREATE DATABASE `%s`", $this->mWikiData[ "dbname"]) );
 				$this->log( "Creating database {$this->mWikiData[ "dbname"]}" );
-			} else {
-				$this->log( "Database {$this->mWikiData[ "dbname"]} exists" );
-				$msgType = 'ERROR';
-			}
+#			} else {
+#				$this->log( "Database {$this->mWikiData[ "dbname"]} exists" );
+#				$msgType = 'ERROR';
+#			}
 		}
 
 		$this->setInfoLog( $msgType, wfMsg('autocreatewiki-step2') );
