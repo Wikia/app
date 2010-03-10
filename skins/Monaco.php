@@ -565,22 +565,21 @@ EOS;
 		// use WikiaScriptLoader to load StaticChute in parallel with other scripts added by wgOut->addScript
 		global $wgAllInOne;
 		wfProfileIn(__METHOD__ . '::JSloader');
-
-		global $wgTitle ;
-		$jsHtml = $StaticChute->getChuteHtmlForPackage($package);
-		
-		if ($wgTitle->getNamespace() == NS_SPECIAL) {
-			$jsHtml .= $StaticChute->getChuteHtmlForPackage("yui");
-		}
 		
 		$allinone = $wgRequest->getBool('allinone', $wgAllInOne);
 
 		$jsReferences = array();
 
 		if($allinone && $package == 'monaco_anon_article_js') {
-			global $parserMemc, $wgStyleVersion;
+			global $parserMemc, $wgStyleVersion, $wgEnableViewYUI;
 			$cb = $parserMemc->get(wfMemcKey('wgMWrevId'));
-			$jsReferences[] = "/__wikia_combined/cb={$cb}{$wgStyleVersion}&type=CoreJS&server=ap8";
+			
+			$addParam = "";
+			if (empty($wgEnableViewYUI)) {
+				$addParam = "&yui=1";	
+			}			
+			
+			$jsReferences[] = "/__wikia_combined/cb={$cb}{$wgStyleVersion}&type=CoreJS.".$addParam.".&server=ap8";
 		} else {
 			$jsHtml = $StaticChute->getChuteHtmlForPackage($package);
 			// get URL of StaticChute package (or a list of separated files) and use WSL to load it
