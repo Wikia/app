@@ -582,6 +582,11 @@ EOS;
 			$jsReferences[] = "/__wikia_combined/cb={$cb}{$wgStyleVersion}&type=CoreJS.".$addParam.".&server=ap8";
 		} else {
 			$jsHtml = $StaticChute->getChuteHtmlForPackage($package);
+			
+			if ($package == "monaco_anon_article_js") {
+				$jsHtml .= $StaticChute->getChuteHtmlForPackage("yui");				
+			}
+			
 			// get URL of StaticChute package (or a list of separated files) and use WSL to load it
 			preg_match_all("/src=\"([^\"]+)/", $jsHtml, $matches, PREG_SET_ORDER);
 
