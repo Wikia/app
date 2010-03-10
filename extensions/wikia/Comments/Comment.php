@@ -2,7 +2,7 @@
 $wgComments = true;
 $wgCommentsLog = false;
 $wgExtensionFunctions[] = "wfComments";
-$wgExtensionMessagesFiles['Comment'] = dirname(__FILE__).'/Comment.i18n.php';
+$wgExtensionMessagesFiles['Comment'] = dirname(__FILE__).'/Comments.i18n.php';
 $wgExtensionMessagesFiles['CommentLog'] = dirname(__FILE__).'/CommentLog.i18n.php';
 
 function wfComments() {
@@ -11,7 +11,7 @@ function wfComments() {
 	wfLoadExtensionMessages('Comment');
 
     if( $wgCommentsLog ){
-		# Add a new log type	 
+		# Add a new log type
 		global $wgLogTypes, $wgLogNames, $wgLogHeaders, $wgLogActions;
 
 		wfLoadExtensionMessages('CommentLog');
@@ -27,12 +27,12 @@ function wfComments() {
 
 function DisplayComments( $input , $args, &$parser ){
 	global $wgUser, $wgTitle, $wgOut, $wgVoteDirectory, $wgReadOnly, $wgStyleVersion;
-	
+
 	wfProfileIn(__METHOD__);
-	  
+
 	//$wgOut->addScript("<script type=\"text/javascript\" src=\"extensions/wikia/Comments/Comment.js?{$wgStyleVersion}\"></script>\n");
 	$parser->disableCache();
-	
+
 	$wgOut->addHTML("<script type=\"text/javascript\">
 				var _COMMENT_VOTED = \"" . wfMsgForContent( 'comment_voted_label' ) . "\"
 				var _COMMENT_LOADING = \"" . wfMsgForContent( 'comment_loading' ) . "\"
@@ -46,11 +46,11 @@ function DisplayComments( $input , $args, &$parser ){
 				var _COMMENT_BLOCK_USER = \"" . wfMsgForContent( 'comment_block_user' ) . "\"
 			</script>
 			");
-		
+
 	getValue($allow,$input,"Allow");
 	getValue($voting,$input,"Voting");
 	getValue($title,$input,"title");
-	
+
 	$Comment = new Comment($wgTitle->mArticleID);
 	$Comment->setAllow($allow);
 	$Comment->setVoting($voting);
@@ -61,18 +61,18 @@ function DisplayComments( $input , $args, &$parser ){
 		$Comment->delete();
 	}
 	//$output = $Comment->displayOrderForm();
-	
+
 	$output =   "<div id=\"allcomments\">" . $Comment->display() . "</div>";
-	
+
 	if(!$wgReadOnly){
 		$output .= $Comment->diplayForm();
 	}else{
 		$output .= wfMsgForContent( 'comments_db_locked');
 	}
-	
+
 	wfProfileOut(__METHOD__);
-	
-	return $output; 
+
+	return $output;
 }
 
 ?>
