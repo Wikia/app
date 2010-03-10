@@ -90,6 +90,14 @@ class WikiaAssets {
 				$references[] = str_replace($wgServer.'/', '', $script[1]).'&amp;server=ap8';
 			}
 
+			// optinal yui
+			if($wgRequest->getBool('yui', false)) {
+				preg_match_all("/src=\"([^\"]+)/", $staticChute->getChuteHtmlForPackage('yui'), $matches, PREG_SET_ORDER);
+				foreach($matches as $script) {
+					$references[] = str_replace($wgServer.'/', '', $script[1]).'&amp;server=ap8';
+				}
+			}
+
 			// -
 			$references[] = Skin::makeUrl('-', "action=raw&gen=js&useskin=monaco");
 
