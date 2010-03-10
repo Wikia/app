@@ -1,13 +1,17 @@
-YAHOO.namespace('CategorySelect');
 
-var Event = YAHOO.util.Event;
-var Dom = YAHOO.util.Dom;
-var DDM = YAHOO.util.DragDropMgr;
 var oAutoComp;
 var categories;
 var fixCategoryRegexp = new RegExp('\\[\\[(?:' + csCategoryNamespaces + '):([^\\]]+)]]', 'i');
 var ajaxUrl = wgServer + wgScript + '?action=ajax';
 var csType = 'edit';
+
+
+function initCatSelect() {
+	YAHOO.namespace('CategorySelect');
+	Event = YAHOO.util.Event;
+	Dom = YAHOO.util.Dom;
+	DDM = YAHOO.util.DragDropMgr;
+};
 
 function positionSuggestBox() {
 	$G('csSuggestContainer').style.top = $G('csCategoryInput').offsetTop + jQuery("#" + 'csCategoryInput').height() + 5 + 'px';
@@ -541,31 +545,34 @@ function initHandlers() {
 
 //`view article` mode
 function showCSpanel() {
-	csType = 'view';
-	var pars = 'rs=CategorySelectGenerateHTMLforView';
-	var callback = {
-		success: function(originalRequest) {
-			//prevent multiple instances when user click very fast
-			if ($G('csMainContainer') != null) {
-				return;
-			}
-			var el = document.createElement('div');
-			el.innerHTML = originalRequest.responseText;
-			$G('catlinks').appendChild(el);
-			initHandlers();
-			initAutoComplete();
-			initializeDragAndDrop();
-			initializeCategories();
-			YAHOO.util.Get.css(wgExtensionsPath+'/wikia/CategorySelect/CategorySelect.css?'+wgStyleVersion, {onSuccess:function() {
-				setTimeout('replaceAddToInput()', 60);
-				setTimeout('positionSuggestBox()', 666);	//sometimes it can take more time to parse downloaded CSS - be sure to position hint in proper place
-				YAHOO.util.Dom.removeClass('catlinks', 'csLoading');
-			}});
-		},
-		timeout: 30000
-	};
-	YAHOO.util.Connect.asyncRequest('POST', ajaxUrl, callback, pars);
-	$G('csAddCategorySwitch').style.display = 'none';
+	$.loadYUI(function() {
+		initCatSelect();
+		csType = 'view';
+		var pars = 'rs=CategorySelectGenerateHTMLforView';
+		var callback = {
+			success: function(originalRequest) {
+				//prevent multiple instances when user click very fast
+				if ($G('csMainContainer') != null) {
+					return;
+				}
+				var el = document.createElement('div');
+				el.innerHTML = originalRequest.responseText;
+				$G('catlinks').appendChild(el);
+				initHandlers();
+				initAutoComplete();
+				initializeDragAndDrop();
+				initializeCategories();
+				YAHOO.util.Get.css(wgExtensionsPath+'/wikia/CategorySelect/CategorySelect.css?'+wgStyleVersion, {onSuccess:function() {
+					setTimeout('replaceAddToInput()', 60);
+					setTimeout('positionSuggestBox()', 666);	//sometimes it can take more time to parse downloaded CSS - be sure to position hint in proper place
+					YAHOO.util.Dom.removeClass('catlinks', 'csLoading');
+				}});
+			},
+			timeout: 30000
+		};
+		YAHOO.util.Connect.asyncRequest('POST', ajaxUrl, callback, pars);
+		$G('csAddCategorySwitch').style.display = 'none';
+	});
 }
 
 function csSave() {
