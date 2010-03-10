@@ -200,11 +200,11 @@ function make_related($dbw, $dom, $domdom)
 
     $umatches = array_unique($newmatches);
 
-    foreach($umatches as $match)
-    {
-      // echo "match: $dom $match ---";
-      $qr = $dbw->query("insert into related set name1='$domdom', name2='$match'");
-      // hope it works
+    foreach($umatches as $match) {
+	// echo "match: $dom $match ---";
+	wfWaitForSlaves( 5 );
+	$qr = $dbw->query("insert into related set name1='$domdom', name2='$match'");
+	// hope it works
     }
   }
   // else
