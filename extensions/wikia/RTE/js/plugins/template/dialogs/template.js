@@ -21,7 +21,7 @@ CKEDITOR.dialog.add('rte-template', function(editor)
 				type: 'button',
 				label: lang.editor.chooseAnotherTpl,
 				className: 'cke_dialog_choose_another_tpl',
-				buttonType: 'secondary_back',
+				buttonType: 'secondary',
 				onClick: function (ev) {
 					// go back to step #1
 					RTE.templateEditor.selectStep(1);
