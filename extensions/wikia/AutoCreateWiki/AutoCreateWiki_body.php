@@ -386,27 +386,28 @@ class AutoCreateWikiPage extends SpecialPage {
 		/*
 		 * connect to the local database
 		 */
-		$dbw_local = wfGetDB( DB_MASTER, array(), $dbname );
+		$dbwTarget = wfGetDB( DB_MASTER, array(), $dbname );
 
 		$msgType = 'OK';
 		if ( !$this->canCreateDatabase() ) {
 			$this->log( "Database {$this->mWikiData[ "dbname"]} exists" );
 			$msgType = 'ERROR';
 		} else {
-#			$oRow = $dbw_local->selectRow(
-#				"INFORMATION_SCHEMA.SCHEMATA",
-#				array( "count(*) as cnt" ),
-#				array( 'SCHEMA_NAME' => $this->mWikiData[ "dbname"]),
-#				__METHOD__
-#			);
+			$row = $dbwTarget->selectRow(
+				"INFORMATION_SCHEMA.SCHEMATA",
+				array( "SCHEMA_NAME as name" ),
+				array( 'SCHEMA_NAME' => $this->mWikiData[ "dbname"]),
+				__METHOD__
+			);
 
-#			if ( empty($oRow->cnt) ) {
-				$dbw_local->query( sprintf( "CREATE DATABASE `%s`", $this->mWikiData[ "dbname"]) );
+			if( isset( $row->name ) && $row->name === $this->mWikiData[ "dbname"] ) {
+				$this->log( "Database {$this->mWikiData[ "dbname"]} exists" );
+				$msgType = 'ERROR';
+			}
+			else {
+				$dbwTarget->query( sprintf( "CREATE DATABASE `%s`", $this->mWikiData[ "dbname"]) );
 				$this->log( "Creating database {$this->mWikiData[ "dbname"]}" );
-#			} else {
-#				$this->log( "Database {$this->mWikiData[ "dbname"]} exists" );
-#				$msgType = 'ERROR';
-#			}
+			}
 		}
 
 		$this->setInfoLog( $msgType, wfMsg('autocreatewiki-step2') );
@@ -515,10 +516,9 @@ class AutoCreateWikiPage extends SpecialPage {
 		 * we got empty database created, now we have to create tables and
 		 * populate it with some default values
 		 */
-
 		$tmpSharedDB = $wgSharedDB;
 		$wgSharedDB = $this->mWikiData[ "dbname"];
-		$dbw_local->selectDB( $this->mWikiData[ "dbname"] );
+		$dbwTarget->selectDB( $this->mWikiData[ "dbname"] );
 
 		$sqlfiles = array(
 			"{$IP}/maintenance/tables.sql",
@@ -546,7 +546,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		}
 
 		foreach ($sqlfiles as $file) {
-			$error = $dbw_local->sourceFile( $file );
+			$error = $dbwTarget->sourceFile( $file );
 			if ( $error !== true ) {
 				$this->setInfoLog( 'ERROR', wfMsg('autocreatewiki-step6') );
 				$wgOut->addHTML(wfMsg('autocreatewiki-step6-error'));
@@ -573,7 +573,7 @@ class AutoCreateWikiPage extends SpecialPage {
 				$starter[ "password"  ],
 				$starter[ "dbStarter" ],
 				$this->mMYSQLbin,
-				$dbw_local->getLBInfo( 'host' ),
+				$dbwTarget->getLBInfo( 'host' ),
 				$wgDBuser,
 				$wgDBpassword,
 				$this->mWikiData[ "dbname"]
@@ -581,7 +581,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			$this->log($cmd);
 			wfShellExec( $cmd );
 
-			$error = $dbw_local->sourceFile( "{$IP}/maintenance/cleanupStarter.sql" );
+			$error = $dbwTarget->sourceFile( "{$IP}/maintenance/cleanupStarter.sql" );
 			if ($error !== true) {
 				$this->setInfoLog( 'ERROR', wfMsg('autocreatewiki-step7') );
 				$wgOut->addHTML(wfMsg('autocreatewiki-step7-error'));
@@ -614,21 +614,21 @@ class AutoCreateWikiPage extends SpecialPage {
 		 * making the wiki founder a sysop/bureaucrat
 		 */
 		if ( $this->mWikiData[ "founder" ] ) {
-			$dbw_local->replace( "user_groups", array( ), array( "ug_user" => $this->mWikiData[ "founder" ], "ug_group" => "sysop" ) );
-			$dbw_local->replace( "user_groups", array( ), array( "ug_user" => $this->mWikiData[ "founder" ], "ug_group" => "bureaucrat" ) );
+			$dbwTarget->replace( "user_groups", array( ), array( "ug_user" => $this->mWikiData[ "founder" ], "ug_group" => "sysop" ) );
+			$dbwTarget->replace( "user_groups", array( ), array( "ug_user" => $this->mWikiData[ "founder" ], "ug_group" => "bureaucrat" ) );
 		}
 		$this->log( "Create user sysop/bureaucrat" );
 
 		/**
 		 * set images timestamp to current date (see: #1687)
 		 */
-		$dbw_local->update("image", array( "img_timestamp" => date('YmdHis') ), "*", __METHOD__ );
+		$dbwTarget->update("image", array( "img_timestamp" => date('YmdHis') ), "*", __METHOD__ );
 		$this->log( "Set images timestamp to current date" );
 
 		/**
 		 * init site_stats table (add empty row)
 		 */
-		$dbw_local->insert( "site_stats", array( "ss_row_id" => "1"), __METHOD__ );
+		$dbwTarget->insert( "site_stats", array( "ss_row_id" => "1"), __METHOD__ );
 
 		/**
 		 * commit all in new database
@@ -645,7 +645,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		/**
 		 * destroy connection to newly created database
 		 */
-		$dbw_local->commit();
+		$dbwTarget->commit();
 		$wgSharedDB = $tmpSharedDB;
 
 		/**
