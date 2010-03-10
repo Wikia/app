@@ -7,6 +7,10 @@ var csType = 'edit';
 
 
 function initCatSelect() {
+	if ( (typeof(initCatSelect.isint) != "undefined") && (initCatSelect.isint) ) {
+		return true;
+	}
+	initCatSelect.isint = true;
 	YAHOO.namespace('CategorySelect');
 	Event = YAHOO.util.Event;
 	Dom = YAHOO.util.Dom;
@@ -280,7 +284,7 @@ function initializeCategories(cats) {
 }
 
 function initializeDragAndDrop() {
-
+	initCatSelect();
 	YAHOO.CategorySelect.DDList = function(id, sGroup, config) {
 		YAHOO.CategorySelect.DDList.superclass.constructor.call(this, id, sGroup, config);
 		this.logger = this.logger || YAHOO;
