@@ -27,7 +27,6 @@ class TokyoTyrantSession {
 	const KEY_COLUMN	= 'key';
 	const NBR_CONN		= 20;
 
-
 	private $mDebug = false;
 
 	var $servers = null;
@@ -144,7 +143,7 @@ class TokyoTyrantSession {
 		return false;
 	}
 
-	public static function get( $key ) {
+	public static function read( $key ) {
 		$TT = TokyoTyrantSession::newFromKey($key);
 		if ( $TT ) {
 			$result = $TT->get($key);
@@ -171,7 +170,7 @@ class TokyoTyrantSession {
 		return self::close();
 	}
 	public static function __read( $id ) {
-		return self::get( self::get_key($id) );
+		return self::read( self::get_key($id) );
 	}
 	public static function __write( $id, $data ) {
 		return self::put( self::get_key($id), $data );
@@ -181,6 +180,99 @@ class TokyoTyrantSession {
 	}
 	public static function __gc( $maxlifetime ) {
 		return true;
+	}
+}
+
+class TokyoTyrantCache extends TokyoTyrantSession {
+	public function set ($key, $value, $exp = 0) {
+		if ( empty($exp) ) {
+			$exp = getrandmax();
+		} else {
+			$exp = time() + $exp;
+		}
+		$TT = self::newFromKey($key);
+		if ( $TT ) {
+			if ( !empty($value) ) {
+				$value = @serialize($value);
+				$values = array(
+					self::V_COLUMN => $value,
+					self::X_COLUMN => $exp
+				);
+				return $TT->put($key, $values);
+			}
+		}
+		return true;
+	}
+	
+	private function __get($key) {
+		$value = $exp = 0;
+		$TT = TokyoTyrantSession::newFromKey($key);
+		if ( $TT ) {
+			$result = $TT->get($key);
+			if ( is_array( $result ) && isset( $result[self::V_COLUMN] ) ) {
+				$value = $result[self::V_COLUMN];
+				$exp = $result[self::X_COLUMN];
+			} 
+		}
+		return array($value, $exp);
+	}
+	
+	public function get($key) {
+		list ($value, $exp) = $this->__get($key);
+		if ( $exp < time() ) {
+			$value = null;
+		} else {
+			$value = @unserialize($value);
+		}
+		return $value;
+	}
+	
+	public function decr ($key, $amt=1) {
+		list ($value, $exp) = $this->__get($key);
+		if ( $exp < time() ) {
+			$value = null;
+		} else {
+			$value = @unserialize($value);
+			if ( is_numeric($value) ) {
+				$value = $value - intval($amt);
+			} else {
+				Wikia::log( __METHOD__, "info", "Invalid value" );
+				$value = 0;
+			}
+			if ( $exp > time() ) {
+				$exp = time() - $exp;
+			}
+			$this->set($key, $value, $exp );
+		}
+		return $value;
+	}
+	
+	public function incr($key, $amt=1) {
+		list ($value, $exp) = $this->__get($key);
+		if ( $exp < time() ) {
+			$value = null;
+		} else {
+			$value = @unserialize($value);
+			if ( is_numeric($value) ) {
+				$value = $value + intval($amt);
+			} else {
+				Wikia::log( __METHOD__, "info", "Invalid value" );
+				$value = 0;
+			}
+			if ( $exp > time() ) {
+				$exp = time() - $exp;
+			}
+			$this->set($key, $value, $exp );
+		}
+		return $value;
+	}
+	
+	public function replace($key, $value, $exp = 0) {
+		return $this->set($key, $value, $exp);
+	}
+	
+	public function delete($key) {
+		return self::out($key);
 	}
 }
 
