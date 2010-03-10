@@ -262,6 +262,7 @@ $wgHooks['SpecialRecentChangesLinks'][] = "Wikia::addRecentChangesLinks";
 $wgHooks['SpecialRecentChangesQuery'][] = "Wikia::makeRecentChangesQuery";
 $wgHooks['SpecialPage_initList'][] = "Wikia::disableSpecialPage";
 $wgHooks['UserRights'][] = "Wikia::notifyUserOnRightsChange";
+$wgHooks['SetupAfterCache'][] = "Wikia::setupAfterCache";
 
 /**
  * This class have only static methods so they can be used anywhere
@@ -976,6 +977,17 @@ class Wikia {
 		}
 
 		return $val;
+	}
+	
+	/**
+	 * Wikia Setup.php
+	 *
+	 * @author      MoLi
+	 */
+	static public function setupAfterCache() {
+		global $wgTTCache;
+		$wgTTCache = wfGetMainTTCache();
+		return true;
 	}
 
 }

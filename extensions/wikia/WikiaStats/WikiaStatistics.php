@@ -573,13 +573,13 @@ class WikiaGlobalStats {
 	}
 
 	public static function getPagesEditors( $days = 7, $limit = 5, $onlyContent = true, $recalculateLimit = false, $noHubDepe = false, $from_db = false ) {
-    	global $wgExternalDatawareDB, $wgMemc;
+    	global $wgExternalDatawareDB, $wgTTCache;
 		wfProfileIn( __METHOD__ );
     	
 		$dbLimit = self::$defaultLimit;
 		$date_diff = date('Y-m-d', time() - $days * 60 * 60 * 24);
 		$memkey = wfMemcKey( "WS:getPagesEditors", $days, $limit, intval($onlyContent), intval($recalculateLimit), intval($noHubDepe) );
-		$result = ( $from_db === true ) ? "" : $wgMemc->get( $memkey );
+		$result = ( $from_db === true ) ? "" : $wgTTCache->get( $memkey );
 		if ( empty($result) ) {
 			$data = array();
 			$dbr = wfGetDB( DB_SLAVE, 'blobs', $wgExternalDatawareDB );
@@ -660,7 +660,7 @@ class WikiaGlobalStats {
 			}
 			unset($data);
 			unset($servers);
-			$wgMemc->set( $memkey, $result );
+			$wgTTCache->set( $memkey, $result );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -688,12 +688,12 @@ class WikiaGlobalStats {
 	 * 	- check article doesn't exist in excludeWikiArticles list (textRegex)
 	 */ 
 	private static function allowResultsForEditedArticles ( $row, $from_db = false ) {
-		global $wgMemc;
+		global $wgTTCache;
 		wfProfileIn( __METHOD__ );
 		$result = array();
 
 		$memkey = wfMemcKey( __METHOD__, 'oWikia', intval($row['wikia']) );
-		$oWikia = $wgMemc->get( $memkey );
+		$oWikia = $wgTTCache->get( $memkey );
 		
 		if ( !isset($oWikia) ) {
 			$allowed = true;
@@ -736,7 +736,9 @@ class WikiaGlobalStats {
 			
 			if ( !$allowed ) $oWikia = 'ERROR';
 			# set in memc
-			$wgMemc->set( $memkey, $oWikia, 60*60 );
+			if ( $oWikia != 'ERROR' ) {
+				$wgTTCache->set( $memkey, $oWikia, 60*60 );
+			}
 		}
 		
 		if ( $oWikia == 'ERROR' ) {
@@ -746,7 +748,7 @@ class WikiaGlobalStats {
 
 		/* check article */
 		$memkey = wfMemcKey( __METHOD__, 'article', intval($row['wikia']), intval($row['page']), $oWikia->city_dbname );
-		$result = ( $from_db === true ) ? null : $wgMemc->get( $memkey );
+		$result = ( $from_db === true ) ? null : $wgTTCache->get( $memkey );
 	
 		if ( !isset($result) ) {
 			$allowedPage = true;
@@ -803,9 +805,9 @@ class WikiaGlobalStats {
 					'page_url'	=> $pageUrl,
 					'count'		=> $row['count']
 				);
+				# set in memc
+				$wgTTCache->set( $memkey, $result, 60*30 );
 			}
-			# set in memc
-			$wgMemc->set( $memkey, $result, 60*30 );
 		}
 		
 		if ( $result == 'ERROR' ) {
@@ -817,11 +819,11 @@ class WikiaGlobalStats {
 	}
 
 	public static function getCountEditedPages( $days = 7, $onlyContent = false ) {
-    	global $wgExternalDatawareDB, $wgMemc;
+    	global $wgExternalDatawareDB, $wgTTCache;
 		wfProfileIn( __METHOD__ );
     	
 		$memkey = wfMemcKey( __METHOD__, $days, intval($onlyContent) );
-		$count = $wgMemc->get( $memkey );
+		$count = $wgTTCache->get( $memkey );
 		if ( empty($count) ) {
 			$count = 0;
 			$dbr = wfGetDB( DB_SLAVE, 'blobs', $wgExternalDatawareDB );
@@ -849,7 +851,7 @@ class WikiaGlobalStats {
 			}
 			$dbr->freeResult( $oRes );
 
-			$wgMemc->set( $memkey , $count, 60*30 );
+			$wgTTCache->set( $memkey , $count, 60*30 );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -857,12 +859,12 @@ class WikiaGlobalStats {
 	}
 
 	public static function getCountAverageDayCreatePages( $month ) {
-		global $wgExternalStatsDB, $wgMemc;
+		global $wgExternalStatsDB, $wgTTCache;
 		wfProfileIn( __METHOD__ );
     	
     	$month = str_replace("-", "", $month);
 		$memkey = wfMemcKey( __METHOD__, $month );
-		$count = $wgMemc->get( $memkey );
+		$count = $wgTTCache->get( $memkey );
 		if ( empty($count) ) {
 			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalStatsDB );
 			
@@ -877,7 +879,7 @@ class WikiaGlobalStats {
 			$count = 0; if ( $oRow ) {
 				$count = $oRow->all_count;
 			}
-			$wgMemc->set( $memkey , $data, 60*60*3 );
+			$wgTTCache->set( $memkey , $data, 60*60*3 );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -885,12 +887,12 @@ class WikiaGlobalStats {
 	}
 
 	public static function getCountWordsInMonth( $month ) {
-		global $wgExternalStatsDB, $wgMemc;
+		global $wgExternalStatsDB, $wgTTCache;
 		wfProfileIn( __METHOD__ );
     	
     	$month = str_replace("-", "", $month);
 		$memkey = wfMemcKey( __METHOD__, $month );
-		$count = $wgMemc->get( $memkey );
+		$count = $wgTTCache->get( $memkey );
 		if ( empty($count) ) {
 			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalStatsDB );
 			
@@ -905,7 +907,7 @@ class WikiaGlobalStats {
 			$count = 0; if ( $oRow ) {
 				$count = $oRow->all_count;
 			}
-			$wgMemc->set( $memkey , $data, 60*60*12 );
+			$wgTTCache->set( $memkey , $data, 60*60*12 );
 		}
 
 		wfProfileOut( __METHOD__ );

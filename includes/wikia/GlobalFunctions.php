@@ -922,3 +922,23 @@ function wfTimeFormatAgoOnlyRecent($stamp){
 	wfProfileOut(__METHOD__);
 	return $res;
 } // end wfTimeFormatAgoOnlyRecent()
+
+/** Get the main TT cache object */
+function wfGetMainTTCache() {
+	global $wgCaches, $wgCachedTTServers;
+	$cache = false;
+
+	if ( class_exists('TokyoTyrantCache') ) {
+		if ( !array_key_exists( CACHE_TT, $wgCaches ) ) {
+			$wgCaches[CACHE_TT] = new TokyoTyrantCache();
+			$wgCaches[CACHE_TT]->set_servers( $wgCachedTTServers );
+		}
+		$cache = $wgCaches[CACHE_TT];
+	} else {
+		reset( $wgCaches );
+		$type = key( $wgCaches );		
+		$cache = $wgCaches[$type];
+	}
+	
+	return $cache;
+}

@@ -91,7 +91,7 @@ class HomePageStatistic
 				$level ++;
 				if ($out[$key]['count'] != $out[$key+1]['count']){
 					$outLevel = $level;
-				}				
+				}
 			} else {
 				$out[$key]['level'] = 'x';
 			}
