@@ -106,11 +106,17 @@ function RelatedPages_Display(&$template, &$templateEngine) {
 			}
 
 			if(count($out) > 0) {
-				$templateEngine->data['bodytext'] .= '<div style="clear:both;"></div><div id="RelatedPages" class="widget" style="margin-top: 10px;"><div class="accent" style="padding: 6px; font-weight: bold;">Check out these related pages:</div><div style="padding: 10px; text-align: center; line-height: 1.5em;">';
-
 				unset($out[array_search($wgArticle->getID(), $out)]);
 
+				// quit if we have no data after removing current page
+				if ( empty( $out ) ) {
+					return true;
+				}
+
 				$i = 0;
+
+                                $templateEngine->data['bodytext'] .= '<div style="clear:both;"></div><div id="RelatedPages" class="widget" style="margin-top: 10px;"><div class="accent" style="padding: 6px; font-weight: bold;">Check out these related pages:</div><div style="padding: 10px; text-align: center; line-height: 1.5em;">';
+
 				foreach($out as $item) {
 					$title = Title::newFromId($item);
 					if(!empty($title) && $title->exists() && $i < 4) {
