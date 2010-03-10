@@ -2,7 +2,7 @@
 $wgComments = true;
 $wgCommentsLog = false;
 $wgExtensionFunctions[] = "wfComments";
-$wgExtensionMessagesFiles['Comment'] = dirname(__FILE__).'/Comments.i18n.php';
+$wgExtensionMessagesFiles['Comment'] = dirname(__FILE__).'/Comment.i18n.php';
 $wgExtensionMessagesFiles['CommentLog'] = dirname(__FILE__).'/CommentLog.i18n.php';
 
 function wfComments() {
