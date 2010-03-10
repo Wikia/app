@@ -115,7 +115,7 @@ function print_pre($param, $return = 0)
  * @return String -- new url
  */
 function wfReplaceImageServer( $url, $timestamp = false ) {
-	global $wgImagesServers;
+	global $wgImagesServers, $wgDevelEnvironment;
 
 	if(substr(strtolower($url), -4) != '.ogg' && isset($wgImagesServers) && is_int($wgImagesServers)) {
 		if(strlen($url) > 7 && substr($url,0,7) == 'http://') {
@@ -125,7 +125,10 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 			$serverNo = $inthash%($wgImagesServers-1);
 			$serverNo++;
 
-			return str_replace('http://images.wikia.com/',sprintf('http://images%s.wikia.nocookie.net/',$serverNo),$url) . "/cb$timestamp";
+			// macbre: don't add CB value on dev machines
+			$cb = empty($wgDevelEnvironment) ? "/cb{$timestamp}" : '';
+
+			return str_replace('http://images.wikia.com/',sprintf('http://images%s.wikia.nocookie.net/',$serverNo),$url) . $cb;
 		}
 	}
 	return $url;
