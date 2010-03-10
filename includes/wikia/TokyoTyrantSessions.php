@@ -204,7 +204,7 @@ class TokyoTyrantCache extends TokyoTyrantSession {
 		return true;
 	}
 	
-	private function __get($key) {
+	private function _get($key) {
 		$value = $exp = 0;
 		$TT = TokyoTyrantSession::newFromKey($key);
 		if ( $TT ) {
@@ -218,7 +218,7 @@ class TokyoTyrantCache extends TokyoTyrantSession {
 	}
 	
 	public function get($key) {
-		list ($value, $exp) = $this->__get($key);
+		list ($value, $exp) = $this->_get($key);
 		if ( $exp < time() ) {
 			$value = null;
 		} else {
@@ -228,7 +228,7 @@ class TokyoTyrantCache extends TokyoTyrantSession {
 	}
 	
 	public function decr ($key, $amt=1) {
-		list ($value, $exp) = $this->__get($key);
+		list ($value, $exp) = $this->_get($key);
 		if ( $exp < time() ) {
 			$value = null;
 		} else {
@@ -248,7 +248,7 @@ class TokyoTyrantCache extends TokyoTyrantSession {
 	}
 	
 	public function incr($key, $amt=1) {
-		list ($value, $exp) = $this->__get($key);
+		list ($value, $exp) = $this->_get($key);
 		if ( $exp < time() ) {
 			$value = null;
 		} else {
