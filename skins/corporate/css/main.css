@@ -904,6 +904,9 @@ footer {
 .wikia_search_header {
 	display: none;
 }
+.wikia_search_field {
+	font-size: 10pt;
+}
 #MainArticle .mw-search-results {
 	padding: 0;
 }
