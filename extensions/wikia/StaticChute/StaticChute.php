@@ -131,17 +131,6 @@ class StaticChute {
 
 		// JS served for logged-in
 		$this->config['monaco_loggedin_js'] = array(
-/*			'common/yui_2.5.2/utilities/utilities.js',
-			'common/yui_2.5.2/cookie/cookie-beta.js',
-			'common/yui_2.5.2/container/container.js',
-			'common/yui_2.5.2/autocomplete/autocomplete.js',
-			'common/yui_2.5.2/animation/animation-min.js',
-			'common/yui_2.5.2/logger/logger.js',
-			'common/yui_2.5.2/menu/menu.js',
-			'common/yui_2.5.2/tabview/tabview.js',
-			'common/yui_2.5.2/slider/slider.js',
-			'common/yui_extra/tools-min.js',
-			'common/yui_extra/carousel-min.js', */
 
 			'common/jquery/jquery-1.4.2.js',
 			'common/jquery/jquery.json-1.3.js',
@@ -167,20 +156,10 @@ class StaticChute {
 			'../extensions/wikia/ShareFeature/js/ShareFeature.js',
 			'../extensions/wikia/CreatePage/js/CreatePage.js',
 		);
-		$this->config['monaco_loggedin_js'] = array_merge($this->config['monaco_loggedin_js'], $widgetsAssets['js']);
+		$this->config['monaco_loggedin_js'] = array_merge($this->config['yui'], $this->config['monaco_loggedin_js'], $widgetsAssets['js']);
 
 		// JS served for anon for everything that's not an article view
 		$this->config['monaco_anon_everything_else_js'] = array(
-	/*		'common/yui_2.5.2/utilities/utilities.js',
-			'common/yui_2.5.2/cookie/cookie-beta.js',
-			'common/yui_2.5.2/container/container.js',
-			'common/yui_2.5.2/autocomplete/autocomplete.js',
-			'common/yui_2.5.2/animation/animation-min.js',
-			'common/yui_2.5.2/logger/logger.js',
-			'common/yui_2.5.2/menu/menu.js',
-			'common/yui_2.5.2/tabview/tabview.js',
-			'common/yui_2.5.2/slider/slider.js',
-			'common/yui_extra/tools-min.js', */
 
 			'common/jquery/jquery-1.4.2.js',
 			'common/jquery/jquery.json-1.3.js',
@@ -206,11 +185,11 @@ class StaticChute {
 			'../extensions/wikia/CreatePage/js/CreatePage.js',
 			'../extensions/wikia/Interstitial/Interstitial.js',
 		);
-		$this->config['monaco_anon_everything_else_js'] = array_merge($this->config['monaco_anon_everything_else_js'], $widgetsAssets['js']);
+		$this->config['monaco_anon_everything_else_js'] = array_merge($this->config['yui'], $this->config['monaco_anon_everything_else_js'], $widgetsAssets['js']);
 
 		// CSS
 		$this->config['monaco_css'] = array(
-	        	'common/shared.css',
+	        'common/shared.css',
 			'monaco/css/monobook_modified.css',
 			'monaco/css/reset_modified.css',
 			'common/wikia-ui.css',
