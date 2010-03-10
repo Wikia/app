@@ -116,7 +116,7 @@ class RTE {
 	 * @author Inez Korczyński, Macbre
 	 */
 	public static function init(&$form) {
-		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgRequest;
+		global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgRequest;
 
 		wfProfileIn(__METHOD__);
 
@@ -145,12 +145,12 @@ class RTE {
 		self::$devMode = $wgRequest->getVal('source', false);
 		if (!empty(self::$devMode)) {
 			// load development version
-			$wgOut->addScript( "<script src=\"$wgExtensionsPath/wikia/RTE/ckeditor/ckeditor_source.js?$wgStyleVersion\"></script>" );
-			$wgOut->addScript( "<script src=\"$wgExtensionsPath/wikia/RTE/js/RTE.js?$wgStyleVersion\"></script>" );
+			$wgOut->addScript("<script type=\"$wgJsMimeType\" src=\"$wgExtensionsPath/wikia/RTE/ckeditor/ckeditor_source.js?$wgStyleVersion\"></script>");
+			$wgOut->addScript("<script type=\"$wgJsMimeType\" src=\"$wgExtensionsPath/wikia/RTE/js/RTE.js?$wgStyleVersion\"></script>");
 		}
 		else {
 			// load minified version
-			$wgOut->addScript( "<script src=\"$wgExtensionsPath/wikia/RTE/ckeditor/ckeditor.js?$wgStyleVersion\"></script>" );
+			$wgOut->addScript("<script type=\"$wgJsMimeType\" src=\"$wgExtensionsPath/wikia/RTE/ckeditor/ckeditor.js?$wgStyleVersion\"></script>");
 		}
 
 		$wgOut->addExtensionStyle("$wgExtensionsPath/wikia/RTE/css/RTE.css?$wgStyleVersion");
