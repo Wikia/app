@@ -928,7 +928,7 @@ function wfGetMainTTCache() {
 	global $wgCaches, $wgCachedTTServers;
 	$cache = false;
 
-	if ( class_exists('TokyoTyrantCache') ) {
+	if ( class_exists('TokyoTyrantCache')  && !empty($wgCachedTTServers) ) {
 		if ( !array_key_exists( CACHE_TT, $wgCaches ) ) {
 			$wgCaches[CACHE_TT] = new TokyoTyrantCache();
 			$wgCaches[CACHE_TT]->set_servers( $wgCachedTTServers );
