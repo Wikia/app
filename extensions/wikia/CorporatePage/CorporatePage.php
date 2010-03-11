@@ -17,6 +17,6 @@ $wgAutoloadClasses['CorporatePageHelper']  = $dir . 'CorporatePageHelper.class.p
 $wgExtensionMessagesFiles['CorporatePage'] = $dir . 'CorporatePage.i18n.php'; 
 $wgHooks['MakeGlobalVariablesScript'][] = 'CorporatePageHelper::jsVars';
 $wgHooks['ArticleFromTitle'][] = 'CorporatePageHelper::ArticleFromTitle';
-$wgHooks['MessageCacheReplace'][] = 'CorporatePageHelper::clearMessageCache';
+$wgHooks['ArticleSaveComplete'][] = 'CorporatePageHelper::clearMessageCache';
 $wgHooks['OutputPageCheckLastModified'][] = 'CorporatePageHelper::forcePageReload';
 $wgAjaxExportList[] = 'CorporatePageHelper::blockArticle';
