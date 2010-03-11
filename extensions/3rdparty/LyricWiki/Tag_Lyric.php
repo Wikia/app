@@ -103,6 +103,11 @@ function renderLyricTag($input, $argv, $parser)
 	// If appropriate, build ringtones links.
 	GLOBAL $wgFirstLyricTag, $wgLyricTagDisplayRingtone;
 	$ringtoneLink = "";
+
+	// For whatever reason, the links were not showing up after page-edits.
+	// It seems that the parser is called multiple-times when saving a page-edit.
+	$wgFirstLyricTag = true;
+
 	// NOTE: we put the link here even if wfAdPrefs_doRingtones() is false since ppl all share the article-cache, so the ad will always be in the HTML.
 	// If a user has ringtone-ads turned off, their CSS will make the ad invisible.
 	if( !empty( $wgLyricTagDisplayRingtone ) && $wgFirstLyricTag ){
