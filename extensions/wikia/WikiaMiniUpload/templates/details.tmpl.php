@@ -128,11 +128,11 @@ if($props['file']->media_type == 'BITMAP' || $props['file']->media_type == 'DRAW
 	</tr>
 	<tr id="ImageCaptionRow">
 		<th><?= wfMsg('wmu-caption') ?></th>
-		<td><input id="ImageUploadCaption" type="text" /><?= wfMsg('wmu-optional') ?></td>
+		<td><input id="ImageUploadCaption" type="text" /><?= wfMsg('word-separator') . wfMsg('wmu-optional') ?></td>
 	</tr>
 	<tr id="ImageLinkRow">
 		<th><?= wfMsg('wmu-link') ?></th>
-		<td><input id="ImageUploadLink" type="text" /><?= wfMsg('wmu-optional') ?></td>
+		<td><input id="ImageUploadLink" type="text" /><?= wfMsg('word-separator') . wfMsg('wmu-optional') ?></td>
 	</tr>
 
 	<tr class="ImageUploadNoBorder">
