@@ -178,7 +178,7 @@ class WikiaEditStatistics {
 	private function numberWords() {
 		global $wgExternalDatawareDB, $wgCityId;
 		wfProfileIn( __METHOD__ );
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );			
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );	
 
 		# number of edits 
 		$conditions = array( 
@@ -196,7 +196,7 @@ class WikiaEditStatistics {
 		);
 		
 		wfProfileOut( __METHOD__ );
-		return intval($oRow->pe_words);
+		return (isset($oRow->pe_words)) ? intval( $oRow->pe_words ) : 0;
 	}
 
 	/**
@@ -913,5 +913,39 @@ class WikiaGlobalStats {
 		wfProfileOut( __METHOD__ );
 		return $count;
 	}
-
+	
+	public static function countWordsInLastDays( $days = 7, $from_db = 0 ) {
+		global $wgExternalDatawareDB, $wgTTCache;
+		wfProfileIn( __METHOD__ );
+		
+		$result = 0;
+		$memkey = wfMemcKey( "WS:countWordsLastDays", $days );
+		if ( $from_db ) {
+			$queries = array();
+			for ( $i = 0; $i < $days; $i++ ) {
+				$date = date( 'Y-m-d', time() - $i * 24 * 60 * 60 );
+				$queries[] = "select pe_wikia_id, pe_page_id, pe_diff_words from page_edits where pe_date = '". $date . "'";
+			}
+			
+			$q = "";
+			if ( count($queries) ) { 
+				$q  = "select sum(pe_diff_words) as cnt_words from ( ";
+				$q .= implode( " union distinct ", $queries );
+				$q .= ") as c";
+			}
+			
+			if ( $q ) {
+				$dbr = wfGetDB( DB_SLAVE, 'blobs', $wgExternalDatawareDB );	
+				$res = $dbr->query($q, __METHOD__);
+				if ( $oRow = $dbr->fetchObject($res) ) {
+					$result = $oRow->cnt_words;
+				}
+				$wgTTCache->set($memkey, $oRow->cnt_words);
+			}
+		} else {
+			$result = $wgTTCache->get($memkey);
+		}
+		
+		return $result;
+	}
 }

@@ -22,7 +22,7 @@ function showHelp() {
 }
 
 function wfEditStats($options = array()) {
-	global $wgExternalDatawareDB, $wgMemc, $wgDBname;
+	global $wgExternalDatawareDB, $wgTTCache, $wgDBname;
 
 	$m = array();
 	$count_edits = $count_content_edits = 0;
@@ -134,6 +134,8 @@ function wfEditStats($options = array()) {
 		WikiaGlobalStats::getEditedArticles($i, 10, true, true);
 		wfOut( "\nTop 5 most edited pages in last $i days ... " );
 		WikiaGlobalStats::getEditedArticles($i, 5, true, true);
+		wfOut( "\Number of words in last $i days ... " );
+		WikiaGlobalStats::countWordsInLastDays($i, 1);
 	}
 
 	wfOut( "\ndone.\n" );
