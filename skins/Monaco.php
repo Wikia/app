@@ -575,7 +575,7 @@ EOS;
 			$cb = $parserMemc->get(wfMemcKey('wgMWrevId'));
 			
 			$addParam = "";
-			if (empty($wgEnableViewYUI)) {
+			if (!empty($wgEnableViewYUI)) {
 				$addParam = "&yui=1";	
 			}			
 			
