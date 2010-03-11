@@ -342,6 +342,27 @@ class WikiFactoryTags {
 		return $this->getTags( true );
 	}
 
+	/**
+	 * remove all tags defined for wiki
+	 *
+	 * @access public
+	 *
+	 * @return boolean -- status of operation
+	 */
+	public function removeTagsAll( ) {
+		wfProfileIn( __METHOD__ );
+
+		$dbw  = WikiFactory::db( DB_MASTER );
+		$status = $dbw->delete(
+			"city_tag_map",
+			array( "city_id" => $this->mCityId ),
+			__METHOD__
+		);
+
+		wfProfileOut( __METHOD__ );
+
+		return $status;
+	}
 
 	/**
 	 * get tag name by using its id
