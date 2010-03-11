@@ -2681,7 +2681,7 @@ function wfSetupSession() {
 	if( $wgSessionsInMemcached ) {
 		require_once( 'MemcachedSessions.php' );
 	} elseif ( $wgSessionsInTokyoTyrant ) {
-		require_once( 'wikia/TokyoTyrantSessions.php' );
+		require_once( 'wikia/TokyoTyrantSessionsHandler.php' );
 	} elseif( 'files' != ini_get( 'session.save_handler' ) ) {
 		# If it's left on 'user' or another setting from another
 		# application, it will end up failing. Try to recover.
