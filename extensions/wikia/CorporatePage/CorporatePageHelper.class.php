@@ -10,8 +10,14 @@ class CorporatePageHelper{
 	* Author: Tomek Odrobny
 	* Hook for clear parsed message cache
 	*/
-	 	static function clearMessageCache($title, $text){
+	 	static function clearMessageCache(&$article){
 		global $wgMemc;
+		
+		$title = strtolower($article->getTitle()); 
+		if (! (strpos($title, "mediawiki:") === 0 )){
+			return true;
+		}
+		
 		$CorporatePageMessageList = 
 			array(	'corporatepage-footer-middlecolumn',
 					'corporatepage-footer-bottom',
@@ -21,20 +27,12 @@ class CorporatePageHelper{
 					'corporatepage-sidebar',
 					'corporatepage-wikia-whats-up',
 					'corporatepage-test-msg' );
-			
-		$title = strtolower($title);
-		if (in_array($title,$CorporatePageMessageList)){
-			$wgMemc->delete( wfMemcKey( "hp_msg_parser",  $title ) );
-			/*$pageList = $wgMemc->get(wfMemcKey( "hp_page_list"),null);
-			if ($pageList != null){
-				$pageList = array_keys($pageList);
-				foreach ($pageList as $value){
-					$cachedTitle = Title::newFromURL($value);
-					$cachedTitle->purgeSquid();
-				}
-				$pageList = $wgMemc->delete(wfMemcKey( "hp_page_list"));
-			}*/
+		
+		foreach ($CorporatePageMessageList as $value) {
+			echo  wfMemcKey( "hp_msg_parser",  $value ) ;
+			$wgMemc->delete( wfMemcKey( "hp_msg_parser",  $value ) );	
 		}
+		
 		return true;
 	}
 
@@ -134,7 +132,7 @@ class CorporatePageHelper{
 			$out[0]['isfirst'] = true;
 			$out[count($out)-1]['islast'] = true;
 		}
-		$wgMemc->set( $mcKey, $out, 60*60*12);
+		$wgMemc->set( $mcKey, $out, 60*30);
         wfProfileOut( __METHOD__ );     
 		return $out;
 	}
