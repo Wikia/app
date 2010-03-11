@@ -87,6 +87,7 @@ $wgAutoloadClasses[ "ApiImageThumb"                ] = "{$IP}/extensions/wikia/O
 $wgAutoloadClasses[ "WikiaApiReportEmail"          ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiReportEmail.php";
 $wgAutoloadClasses[ "WikiaApiCreatorReminderEmail" ] = "{$IP}/extensions/wikia/AutoCreateWiki/WikiaApiCreatorReminderEmail.php";
 $wgAutoloadClasses[ "TokyoTyrantSession"           ] = "{$IP}/includes/wikia/TokyoTyrantSessions.php";
+$wgAutoloadClasses[ "TokyoTyrantCache"             ] = "{$IP}/includes/wikia/TokyoTyrantSessions.php";
 $wgAutoloadClasses[ "WikiFactoryTags"              ] = "{$IP}/extensions/wikia/WikiFactory/Tags/WikiFactoryTags.php";
 
 /**
@@ -412,4 +413,3 @@ $wgNoExternals = false;
  */
 define( 'CACHE_TT', 666 ); 
 $wgTTCache = null;
-require_once ( $IP."/includes/wikia/TokyoTyrantSessions.php" );
