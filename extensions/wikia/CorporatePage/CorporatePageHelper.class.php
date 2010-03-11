@@ -24,6 +24,7 @@ class CorporatePageHelper{
 					'corporatepage-footer-rightcolumn',
 					'corporatepage-footer-bottom',
 					'corporatepage-footer-leftcolumn',
+					'corporatepage-slider',
 					'corporatepage-sidebar',
 					'corporatepage-wikia-whats-up',
 					'corporatepage-test-msg' );
