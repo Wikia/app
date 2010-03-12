@@ -48,7 +48,7 @@ class WikiaStatsAutoHubsConsumer {
 						continue;
 					}
 					$dest = explode( '.', $frame->headers['destination'] );
-					$producerDB = new WikiaStatsAutoHubsConsumerDB;
+					$producerDB = new WikiaStatsAutoHubsConsumerDB();
 					$body = Wikia::json_decode( $frame->body );					
 					if( is_object( $body ) ) {
 						Wikia::log( __METHOD__, 'Stomp_frame', 'Initiated frame processing' );				
