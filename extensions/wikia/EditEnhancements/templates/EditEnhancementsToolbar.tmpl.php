@@ -31,12 +31,8 @@
 		min-width: 100px;
 	}
 	#wpDiff {
-		background: none;
-		border: none;
-		color: inherit;
 		cursor: pointer;
 		margin: 0 0 0 0.5em !important;
-		padding: 0;
 	}
 	#edit_enhancements_toolbar #scroll_down_arrow {
 		font-weight: bold;
