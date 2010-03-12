@@ -275,8 +275,11 @@ class WikiaStatsAutoHubsConsumerDB {
 			}
 		}
 
+		$date = date("Ymd", mktime(0, 0, 0, date("m"), date("d") - 30, date("Y")));
+		
 		$tag_id = (int) $tag_id;
-		$conditions = array( "tags_pv = $tag_id and ta_city_lang = '$lang'" );
+		$conditions = array( "tags_pv = $tag_id and ta_city_lang = '$lang' and use_date > " . $date );
+		
 		$res = $this->dbs->select(
 				array( 'tags_pv as tags_pv ' ),
 				array( 'tag_id as tag_id,
