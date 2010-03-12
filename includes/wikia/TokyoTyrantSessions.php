@@ -80,10 +80,10 @@ class TokyoTyrantSession {
 			return false;
 		}
 
-		$conn = self::isConnected();
+		/*$conn = self::isConnected();
 		if ( $conn ) {
 			return $conn;
-		}
+		}*/
 
 		if( strpos($key, ' ') ) {
 			Wikia::log( __METHOD__, "info", "found a space character in the key '".$key."'. Fixing it", $this->mDebug );
