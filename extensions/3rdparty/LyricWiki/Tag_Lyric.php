@@ -7,7 +7,7 @@
 # Tested on MediaWiki 1.6devel, PHP 5.0.5 (apache2handler)
 #
 # developed to support the notation of lyrics in mediawiki.
-# see http://lyricwiki.org/User:TrevorP/Notation
+# see http://lyrics.wikia.com/User:TrevorP/Notation
 #
 # Features:
 #  * Allows basic lyric notation

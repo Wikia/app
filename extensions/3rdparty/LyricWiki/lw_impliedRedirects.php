@@ -13,8 +13,8 @@ if(isset($wgScriptPath)){
 	$wgExtensionCredits["other"][]=array(
 		'name' => 'Implied Redirects extension',
 		'version' => '0.1',
-		//'url' => 'http://lyricwiki.org/User:Sean_Colombo',
-		'author' => '[http://lyricwiki.org/User:Sean_Colombo Sean Colombo]',
+		'url' => 'http://lyrics.wikia.com/User:Sean_Colombo',
+		'author' => '[http://www.seancolombo.com Sean Colombo]',
 		'description' => 'Allows the wiki to find songs for implied redirects.  For example, if "Prodigy" redirects to "The Prodigy" and a user goes to the page for "Prodigy:Firestarter", this will allow the wiki to understand that there is an implied redirect, and the "The Prodigy:Firestarter" page should be displayed.'
 	);
 

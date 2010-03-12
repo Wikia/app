@@ -26,7 +26,8 @@ $wgGroupPermissions['sysop']['linkstoredirects'] = true;
 $wgExtensionFunctions[] = 'wfSetupLinksToRedirects';
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Links To Redirects',
-	'author' => '[http://www.lyricwiki.org/User:Sean_Colombo Sean Colombo]',
+	'url' => 'http://lyrics.wikia.com/User:Sean_Colombo',
+	'author' => '[http://www.seancolombo.com Sean Colombo]',
 	'description' => 'Special page showing all links which point to redirects',
 	'version' => '0.1.1',
 );

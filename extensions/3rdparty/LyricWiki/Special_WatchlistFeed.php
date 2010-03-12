@@ -8,7 +8,7 @@ Tested on
 # PHP: 5.0.5-2ubuntu1.5 (apache2handler)
 # MySQL: 4.0.24_Debian-10ubuntu2.3-log
 
-Developed for use by LryicWiki.org (http://www.lyricwiki.org/)
+Developed for use by LyricWiki (http://lyrics.wikia.com/)
 
 ***********************************************************************************
 
@@ -22,8 +22,8 @@ if(isset($wgScriptPath)){
 	$wgExtensionCredits["specialpage"][] = array(
 	  'name' => 'Watchlist Feeds',
 	  'version' => '0.0.3',
-	  'url' => 'http://lyricwiki.org/User:Teknomunk',
-	  'author' => '[http://lyricwiki.org/User:Sean_Colombo Sean Colombo], [http://lyricwiki.org/User:Teknomunk teknomunk]',
+	  'url' => 'http://lyrics.wikia.com/User:Teknomunk',
+	  'author' => '[http://www.seancolombo.com Sean Colombo], [http://lyrics.wikia.com/User:Teknomunk teknomunk]',
 	  'description' => 'Enable User Watchlist Feeds'
 	);
 }

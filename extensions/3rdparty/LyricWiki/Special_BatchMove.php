@@ -8,7 +8,7 @@ Tested on
 # PHP: 5.0.5-2ubuntu1.5 (apache2handler)
 # MySQL: 4.0.24_Debian-10ubuntu2.3-log
 
-Developed for use by LryicWiki.org (http://www.lyricwiki.org/)
+Developed for use by LryicWiki (http://lyrics.wikia.com/)
 
 What has been verified:
 * this works for most artists
@@ -48,7 +48,7 @@ $wgExtensionMessagesFiles['BatchMove'] = $dir.'Special_BatchMove.i18n.php';
 $wgExtensionFunctions[] = 'wfSetupBatchMove';
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Batch Move',
-	'author' => '[http://www.lyricwiki.org/User:Teknomunk teknomunk]',
+	'author' => '[http://lyrics.wikia.com/User:Teknomunk teknomunk]',
 	'description' => 'Batch move special page',
 	'version' => '0.2.2',
 );

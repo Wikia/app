@@ -12,9 +12,9 @@ if (defined('MEDIAWIKI')) {
 	// Credits
 	$wgExtensionCredits['other'][] = array(
 	    'name'=>'LyricWiki MetaTags',
-		'url' => 'http://lyricwiki.org/User:Sean_Colombo',
-		'author' => '[http://lyricwiki.org/User:Sean_Colombo Sean Colombo]',
-	    'description'=>'Extension for custom meta-tags that make sense for [http://lyricwiki.org LyricWiki.org]',
+		'url' => 'http://lyrics.wikia.com/User:Sean_Colombo',
+		'author' => '[http://www.seancolombo.com Sean Colombo]',
+	    'description'=>'Extension for custom meta-tags that make sense for [http://lyrics.wikia.com LyricWiki]',
 	    'version'=>'0.1'
 	);
 

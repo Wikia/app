@@ -32,7 +32,8 @@ $wgGroupPermissions['sysop']['soapfailures'] = true;
 $wgExtensionFunctions[] = 'wfSetupSoapFailures';
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'SOAP Failures',
-	'author' => '[http://www.lyricwiki.org/User:Sean_Colombo Sean Colombo]',
+	'url' => 'http://lyrics.wikia.com/User:Sean_Colombo',
+	'author' => '[http://www.seancolombo.com Sean Colombo]',
 	'description' => 'SOAP Failures Log special page',
 	'version' => '1.2',
 );
