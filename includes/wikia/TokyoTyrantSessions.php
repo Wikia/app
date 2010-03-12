@@ -75,7 +75,7 @@ class TokyoTyrantSession {
 		return hexdec(substr(md5($key),0,8)) & 0x7fffffff;
 	}
 
-	private function connect($key) {
+	public function connect($key) {
 		if ( !$this->active ) {
 			return false;
 		}
@@ -190,7 +190,7 @@ class TokyoTyrantCache extends TokyoTyrantSession {
 		} else {
 			$exp = time() + $exp;
 		}
-		$TT = self::newFromKey($key);
+		$TT = $this->connect($key);
 		if ( $TT ) {
 			if ( !empty($value) ) {
 				$value = @serialize($value);
@@ -206,7 +206,7 @@ class TokyoTyrantCache extends TokyoTyrantSession {
 	
 	private function _get($key) {
 		$value = $exp = 0;
-		$TT = TokyoTyrantSession::newFromKey($key);
+		$TT = $this->connect($key);
 		if ( $TT ) {
 			$result = $TT->get($key);
 			if ( is_array( $result ) && isset( $result[self::V_COLUMN] ) ) {
@@ -274,15 +274,4 @@ class TokyoTyrantCache extends TokyoTyrantSession {
 	public function delete($key) {
 		return self::out($key);
 	}
-}
-
-if( empty( $wgSessionsInMemcached ) && !empty( $wgSessionsInTokyoTyrant ) ) {
-	session_set_save_handler(
-		array('TokyoTyrantSession','__open'),
-		array('TokyoTyrantSession','__close'),
-		array('TokyoTyrantSession','__read'),
-		array('TokyoTyrantSession','__write'),
-		array('TokyoTyrantSession','__destroy'),
-		array('TokyoTyrantSession','__gc')
-	);
 }
