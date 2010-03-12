@@ -22,8 +22,6 @@ class Wikify extends SpecialPage
 		$songName = trim($songName);
 		return wfMsg("wft-track", $this->artist,mb_ucwords($songName),$songName)."\n";
 	}
-
-
 	function format_musicbrainz( $discog )
 	{
 		$result = "";
@@ -40,7 +38,6 @@ class Wikify extends SpecialPage
 
 		return $result;
 	}
-	
 	function format_discogs ($discog)
 	{
 		$result = "";
@@ -57,8 +54,6 @@ class Wikify extends SpecialPage
 
 		return $result;
 	}
-
-
 	function format_plain_list( $discog )
 	{
 		$result = "";

@@ -41,8 +41,8 @@ if(isset($wgScriptPath)){
 	$wgExtensionCredits["parserhook"][] = array(
 	  'name' => 'LyricWiki New-Page Templates Extension',
 	  'version' => '0.1.3',
-	  'url' => 'http://lyricwiki.org/User:Sean_Colombo',
-	  'author' => '[http://lyricwiki.org/User:Sean_Colombo Sean Colombo]',
+	  'url' => 'http://lyrics.wikia.com/User:Sean_Colombo',
+	  'author' => '[http://www.seancolombo.com Sean Colombo]',
 	  'description' => 'Creates basic templates for new-pages to make adding easier for new users and quicker all around.'
 	);
 }

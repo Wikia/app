@@ -8,7 +8,7 @@ Tested on
 # PHP: 5.0.5-2ubuntu1.5 (apache2handler)
 # MySQL: 4.0.24_Debian-10ubuntu2.3-log
 
-Developed for use by LyricWiki.org (http://www.lyricwiki.org/)
+Developed for use by LyricWiki (http://lyrics.wikia.com/)
 
 
 Does the processing for sending mail messages containing links to a LyricWiki page.
@@ -85,8 +85,8 @@ if(isset($wgScriptPath)){
 	$wgExtensionCredits["specialpage"][] = array(
 	  'name' => 'Send to a Friend',
 	  'version' => '0.2.4',
-	  'url' => 'http://lyricwiki.org/User:Sean_Colombo',
-	  'author' => '[http://lyricwiki.org/User:Sean_Colombo Sean Colombo], [http://lyricwiki.org/User:Teknomunk teknomunk]',
+	  'url' => 'http://lyrics.wikia.com/User:Sean_Colombo',
+	  'author' => '[http://www.seancolombo.com Sean Colombo], [http://lyrics.wikia.com/User:Teknomunk teknomunk]',
 	  'description' => 'Send links to a friend in the body of an email.'
 	);
 }

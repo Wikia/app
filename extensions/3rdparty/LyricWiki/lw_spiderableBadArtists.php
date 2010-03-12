@@ -15,8 +15,8 @@ if(isset($wgScriptPath)){
 	$wgExtensionCredits["other"][]=array(
 		'name' => 'Spiderable Artist Typos',
 		'version' => '0.1',
-		//'url' => 'http://lyricwiki.org/User:Sean_Colombo',
-		'author' => '[http://lyricwiki.org/User:Sean_Colombo Sean Colombo]',
+		'url' => 'http://lyrics.wikia.com/User:Sean_Colombo',
+		'author' => '[http://www.seancolombo.com Sean Colombo]',
 		'description' => 'Allows the wiki to find links to the implied-redirect pages.  For example, if "Of A Revolution" redirects to "O.A.R." and a user searches a search engine for "Of A Revolution Crazy Game Of Poker", this will allow the spiders to understand that there is an implied redirect, and to index the "Of A Revolution:Crazy Game Of Poker" implied-redirect page.'
 	);
 

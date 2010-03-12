@@ -8,7 +8,7 @@ Tested on
 # PHP: 5.0.5-2ubuntu1.5 (apache2handler)
 # MySQL: 4.0.24_Debian-10ubuntu2.3-log
 
-Developed for use by LryicWiki.org (http://www.lyricwiki.org/)
+Developed for use by LyricWiki (http://lyrics.wikia.com/)
 
 ***********************************************************************************
 
@@ -63,7 +63,7 @@ if(isset($wgScriptPath))
 $wgExtensionCredits["parserhook"][]=array(
 'name' => 'XML Formatter',
 'version' => '0.2.3',
-'author' => '[http://www.lyricwiki.org/User:Teknomunk teknomunk]',
+'author' => '[http://lyrics.wikia.com/User:Teknomunk teknomunk]',
 'description' => 'Allows expanding XML-based files into wikitext' );
 }
 

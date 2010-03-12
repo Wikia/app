@@ -11,8 +11,8 @@ if(isset($wgScriptPath)){
 	$wgExtensionCredits["specialpage"][] = array(
 	  'name' => 'Google Search-Results',
 	  'version' => '0.0.1',
-	  'url' => 'http://lyricwiki.org/User:Sean_Colombo',
-	  'author' => '[http://lyricwiki.org/User:Sean_Colombo Sean Colombo]',
+	  'url' => 'http://lyrics.wikia.com/User:Sean_Colombo',
+	  'author' => '[http://www.seancolombo.com Sean Colombo]',
 	  'description' => 'Special page to display the results of a Google Site-Search.'
 	);
 }
