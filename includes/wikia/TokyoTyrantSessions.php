@@ -102,7 +102,7 @@ class TokyoTyrantSession {
 					if ( $TT ) {
 						$sock = $TT->socket();
 						self::$sess_conn[$sock] = array($this->host, $this->port, $this->cid);
-						Wikia::log( __METHOD__, "info", "Connected to TTserver ({$this->host}, {$this->port}, {$this->cid})", $this->mDebug );
+						#Wikia::log( __METHOD__, "info", "Connected to TTserver ({$this->host}, {$this->port}, {$this->cid})", $this->mDebug );
 						return $TT;
 					}
 				} catch (Tyrant_Exception $e) {
