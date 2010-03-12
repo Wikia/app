@@ -78,10 +78,11 @@ class WikiaStatsAutoHubsConsumer {
 					Wikia::log( __METHOD__, 'Stomp_frame', 'Acknowledgement was sent' );				
 				}	
 			}	
-		} catch( StompException $e ) {
-			$mesg = $e->getMessage();			
+		} catch( Exception $e ) {
+			$mesg = $e->getMessage();
+			$class = get_class( $e ); 			
 			Wikia::log( __METHOD__, 'stomp_exception', $mesg );
-			die( 'Stomp connection failed. Data logged. Message was: ' . $mesg  );
+			die( 'Stomp connection failed. Data logged. Message was: ' . $mesg . '. Class was:' . $class );
 		}
 
 		unset($stomp);	
