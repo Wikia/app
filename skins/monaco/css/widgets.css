@@ -140,6 +140,7 @@ body.widgetsAddingBlocked .add {
 	color: gray;
 	font-size: 9pt;
 	height: 22px;
+	line-height: 22px;
 	margin: 4px;
 	padding: 0 23px 0 3px;
 	width: 164px;
