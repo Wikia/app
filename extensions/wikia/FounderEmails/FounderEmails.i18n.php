@@ -4,15 +4,6 @@ $messages = array();
 
 $messages['en'] = array(
 	'tog-founderemailsdisabled' => 'Unsubscribe me from founder emails',
-	'founderemails-email-page-edited-subject' => 'Someone changed your wiki!',
-	'founderemails-email-page-edited-body' => 'Hey $FOUNDERNAME,
-
-It looks like $EDITORNAME has edited your wiki! Why don\'t you drop by their userpage ($EDITORPAGEURL) to say hello?
-
--- The Wikia Team',
-	'founderemails-email-page-edited-body-HTML' => 'Hey $FOUNDERNAME,<br /><br />
-It looks like $USERNAME has edited your wiki! Why don\'t you drop by their <a href="$USERPAGEURL">userpage</a> to say hello?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
 	'founderemails-email-user-registered-subject' => 'Someone registered an account on your wiki!',
 	'founderemails-email-user-registered-body' => 'Hey $FOUNDERNAME,
 

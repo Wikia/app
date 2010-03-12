@@ -28,15 +28,10 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 				$msgKeys['body'] = 'founderemails-email-page-edited-reg-user-first-edit-body';
 				$msgKeys['body-html'] = 'founderemails-email-page-edited-reg-user-first-edit-body-HTML';
 			}
-			else if(  $eventData['data']['registeredUser'] ) {
+			else {
 				$msgKeys['subject'] = 'founderemails-email-page-edited-reg-user-subject';
 				$msgKeys['body'] = 'founderemails-email-page-edited-reg-user-body';
 				$msgKeys['body-html'] = 'founderemails-email-page-edited-reg-user-body-HTML';
-			}
-			else {
-				$msgKeys['subject'] = 'founderemails-email-page-edited-subject';
-				$msgKeys['body'] = 'founderemails-email-page-edited-body';
-				$msgKeys['body-html'] = 'founderemails-email-page-edited-body-HTML';
 			}
 
 			$langCode = $founderEmails->getWikiFounder()->getOption('language');
