@@ -3,6 +3,10 @@
 	padding: 0;
 }
 
+.activityfeed img.sprite {
+	margin-left: -20px;
+}
+
 .WidgetCommunity .community_header {
 	border-bottom-style: solid;
 	border-bottom-width: 1px;
