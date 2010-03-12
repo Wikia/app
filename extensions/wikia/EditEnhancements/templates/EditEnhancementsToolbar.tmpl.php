@@ -55,7 +55,6 @@
 
 <script type="text/javascript">
 	$(function() {
-		$('#wpDiff').css('color', $('#wpEdithelp').css('color') );
 		$('.editHelp').prepend(' | ');
 	});
 </script>
