@@ -55,6 +55,7 @@
 
 <script type="text/javascript">
 	$(function() {
+		$('#wpDiff').addClass('secondary');
 		$('.editHelp').prepend(' | ');
 	});
 </script>
