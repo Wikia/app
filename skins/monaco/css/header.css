@@ -30,6 +30,7 @@
 	-moz-box-shadow: none;
 	-webkit-border-radius: 5px;
 	-webkit-box-shadow: none;
+	filter: none;
 }
 .header-button img {
 	background: url(http://images2.wikia.nocookie.net/common/skins/monaco/images/monaco-sprite.png/cb1) -72px -74px;
