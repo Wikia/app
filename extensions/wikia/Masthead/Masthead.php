@@ -872,52 +872,9 @@ class Masthead {
 				//stats
 				$firstDate = $editCount = 0;
 				if (!$isDestinationUserAnon) {
-					global $wgCityId, $wgExternalDatawareDB;
-
-					$destionationUser = User::newFromName($userspace);
-					$destionationUserId = $destionationUser ? $destionationUser->getId() : 0;
-					if($destionationUserId != 0) {
-						global $wgMemc, $wgEnableAnswers;
-
-						if(!empty($wgEnableAnswers) && class_exists('AttributionCache')) {
-							// use AttributionCache to get edit points and first edit date
-							$attrCache = AttributionCache::getInstance();
-
-							$editCount = $attrCache->getUserEditPoints($destionationUserId);
-							$firstDate = $wgLang->date(wfTimestamp(TS_MW, $attrCache->getUserFirstEditDateFromCache($destionationUserId)));
-						}
-						else {
-							$mastheadDataEditDateKey = wfMemcKey('mmastheadData-editDate-' . $destionationUserId);
-							$mastheadDataEditCountKey = wfMemcKey('mmastheadData-editCount-' . $destionationUserId);
-							$mastheadDataEditDate = $wgMemc->get($mastheadDataEditDateKey);
-							$mastheadDataEditCount = $wgMemc->get($mastheadDataEditCountKey);
-
-							if(empty($mastheadDataEditCount) || empty($mastheadDataEditDate)) {
-								$dbr = wfGetDB(DB_SLAVE);
-
-								$dbResult = $dbr->select(
-									'revision',
-									array('min(rev_timestamp) AS date, count(*) AS edits'),
-									array('rev_user_text' => $destionationUser->getName()),
-									__METHOD__
-								);
-
-								if ($row = $dbr->FetchObject($dbResult)) {
-									$firstDate = $wgLang->date(wfTimestamp(TS_MW, $row->date));
-									$editCount = $row->edits;
-								}
-								if ($dbResult !== false) {
-									$dbr->FreeResult($dbResult);
-								}
-								$wgMemc->set($mastheadDataEditDateKey, $firstDate, 60 * 60);
-								$wgMemc->set($mastheadDataEditCountKey, $editCount, 60 * 60);
-							} else {
-								$firstDate = $mastheadDataEditDate;
-								$editCount = $mastheadDataEditCount;
-							}
-						}
-
-					}
+					$userStats = Masthead::getUserStatsData($userspace);
+					$editCount = $userStats['editCount'];
+					$firstDate = $userStats['firstDate'];
 				}
 
 				$out['edit_counter'] = $wgLang->formatNum($editCount);
@@ -947,6 +904,59 @@ class Masthead {
 			}
 		}
 		return true;
+	}
+
+	static public function getUserStatsData( $userName, $useMasterDb = false ) {
+		global $wgLang, $wgCityId, $wgExternalDatawareDB;
+
+		$result = array( 'editCount' => 0, 'firstDate' => 0 );
+
+		$destionationUser = User::newFromName($userName);
+		$destionationUserId = $destionationUser ? $destionationUser->getId() : 0;
+		if($destionationUserId != 0) {
+			global $wgMemc, $wgEnableAnswers;
+
+			if(!empty($wgEnableAnswers) && class_exists('AttributionCache')) {
+				// use AttributionCache to get edit points and first edit date
+				$attrCache = AttributionCache::getInstance();
+
+				$editCount = $attrCache->getUserEditPoints($destionationUserId);
+				$firstDate = $wgLang->date(wfTimestamp(TS_MW, $attrCache->getUserFirstEditDateFromCache($destionationUserId)));
+			}
+			else {
+				$mastheadDataEditDateKey = wfMemcKey('mmastheadData-editDate-' . $destionationUserId);
+				$mastheadDataEditCountKey = wfMemcKey('mmastheadData-editCount-' . $destionationUserId);
+				$mastheadDataEditDate = $wgMemc->get($mastheadDataEditDateKey);
+				$mastheadDataEditCount = $wgMemc->get($mastheadDataEditCountKey);
+
+				if(empty($mastheadDataEditCount) || empty($mastheadDataEditDate)) {
+					$dbr = wfGetDB( $useMasterDb ? DB_MASTER : DB_SLAVE );
+
+					$dbResult = $dbr->select(
+						'revision',
+						array('min(rev_timestamp) AS date, count(*) AS edits'),
+						array('rev_user_text' => $destionationUser->getName()),
+						__METHOD__
+					);
+
+					if ($row = $dbr->FetchObject($dbResult)) {
+						$firstDate = $wgLang->date(wfTimestamp(TS_MW, $row->date));
+						$editCount = $row->edits;
+					}
+					if ($dbResult !== false) {
+						$dbr->FreeResult($dbResult);
+					}
+					$wgMemc->set($mastheadDataEditDateKey, $firstDate, 60 * 60);
+					$wgMemc->set($mastheadDataEditCountKey, $editCount, 60 * 60);
+				} else {
+					$firstDate = $mastheadDataEditDate;
+					$editCount = $mastheadDataEditCount;
+				}
+			}
+			$result['editCount'] = $editCount;
+			$result['firstDate'] = $firstDate;
+		}
+		return $result;
 	}
 
 	static public function userMastheadInvalidateCache(&$article, &$user, &$text, &$summary, &$minoredit, &$watchthis, &$sectionanchor, &$flags, $revision, &$status, $baseRevId) {

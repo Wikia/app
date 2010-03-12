@@ -54,7 +54,7 @@ class AutoCreateWikiLocalJob extends Job {
 	 *
 	 * @access public
 	 */
-    public function run() {
+	public function run() {
 
 		global $wgUser, $wgErrorLog, $wgExtensionMessagesFiles;
 
@@ -100,6 +100,8 @@ class AutoCreateWikiLocalJob extends Job {
 				$this->copyDefaultAvatars();
 				break;
 		}
+
+		wfRunHooks( 'CreateWikiLocalJob-complete', array( &$this->mParams ) );
 
 		wfProfileOut( __METHOD__ );
 
