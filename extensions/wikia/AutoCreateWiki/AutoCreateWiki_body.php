@@ -1516,7 +1516,7 @@ class AutoCreateWikiPage extends SpecialPage {
 				$WFSettingsVars[ "wgEnableAnswers"                   ] = true;
 				$WFSettingsVars[ "wgEnableCategoryBlueLinks"         ] = true;
 				$WFSettingsVars[ "wgAnswersEnableSocial"             ] = true;
-				$WFSettingsVars[ "AutoFriendOnRegisterUsername"      ] = "Jimbo Wales";
+				$WFSettingsVars[ "AutoFriendOnRegisterUsername"      ] = $this->mWikiData[ "founder-name" ];
 				$WFSettingsVars[ "wgEnableRandomUsersWithAvatarsExt" ] = true;
 				$WFSettingsVars[ "wgEnableRandomInCategoryExt"       ] = true;
 				$WFSettingsVars[ "wgEnableMagicAnswer"               ] = false;
