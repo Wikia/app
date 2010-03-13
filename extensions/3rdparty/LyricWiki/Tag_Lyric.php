@@ -126,12 +126,12 @@ function renderLyricTag($input, $argv, $parser)
 		}
 		$artistLink = str_replace("_", "+", $artistLink);
 		$songLink = str_replace("_", "+", $songLink);
-		$href = "<a href='http://www.ringtonematcher.com/co/ringtonematcher/02/noc.asp?sid=WILWros&amp;artist=".urlencode($artistLink)."&amp;song=".urlencode($songLink)."' target='_blank'>";
+		$href = "<a href='http://www.ringtonematcher.com/co/ringtonematcher/02/noc.asp?sid=WILWros&amp;artist=".urlencode($artistLink)."&amp;song=".urlencode($songLink)."' rel='nofollow' target='_blank'>";
 		$ringtoneLink = "";
 		$ringtoneLink = "<div class='rtMatcher'>";
-		$ringtoneLink.= "$href<img src='" . $wgUploadPath . "/phone_left.gif' alt='phone' width='16' height='17'/></a> ";
-		$ringtoneLink.= $href."Send \"$songTitle\" Ringtone to your Cell</a>";
-		$ringtoneLink.= " $href<img src='" . $wgUploadPath . "/phone_right.gif' alt='phone' width='16' height='17'/></a>";
+		$ringtoneLink.= "$href<img src='" . $wgUploadPath . "/phone_left.gif' alt='phone' width='16' height='17'/> ";
+		$ringtoneLink.= "Send \"$songTitle\" Ringtone to your Cell";
+		$ringtoneLink.= " <img src='" . $wgUploadPath . "/phone_right.gif' alt='phone' width='16' height='17'/></a>";
 		$ringtoneLink.= "</div>";
 		$wgFirstLyricTag = false;
 	}
