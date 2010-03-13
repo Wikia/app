@@ -184,12 +184,12 @@ function renderGracenoteLyricsTag($input, $argv, $parser)
 	}
 	$artistLink = str_replace("_", "+", $artistLink);
 	$songLink = str_replace("_", "+", $songLink);
-	$href = "<a href='http://www.ringtonematcher.com/co/ringtonematcher/02/noc.asp?sid=WILWros&amp;artist=".urlencode($artistLink)."&amp;song=".urlencode($songLink)."' target='_blank'>";
+	$href = "<a href='http://www.ringtonematcher.com/co/ringtonematcher/02/noc.asp?sid=WILWros&amp;artist=".urlencode($artistLink)."&amp;song=".urlencode($songLink)."' rel='nofollow' target='_blank'>";
 	$ringtoneLink = "";
 	$ringtoneLink.= "<div class='rtMatcher'>";
-	$ringtoneLink.= "$href<img src='$wgUploadPath/phone_left.gif' alt='phone' width='16' height='17'/></a> ";
-	$ringtoneLink.= $href."Send \"$songTitle\" Ringtone to your Cell</a>";
-	$ringtoneLink.= " $href<img src='$wgUploadPath/phone_right.gif' alt='phone' width='16' height='17'/></a>";
+	$ringtoneLink.= "$href<img src='$wgUploadPath/phone_left.gif' alt='phone' width='16' height='17'/> ";
+	$ringtoneLink.= "Send \"$songTitle\" Ringtone to your Cell";
+	$ringtoneLink.= " <img src='$wgUploadPath/phone_right.gif' alt='phone' width='16' height='17'/></a>";
 	$ringtoneLink.= "</div>";
 	GLOBAL $wgFirstLyricTag;
 	$wgFirstLyricTag = false; // Even though the gracenote extension ignores these, this will prevent ringtones on other <lyrics> tags.
@@ -200,6 +200,7 @@ function renderGracenoteLyricsTag($input, $argv, $parser)
 	$transform = $parser->parse($transform, $parser->mTitle, $parser->mOptions, false, false)->getText();
 
 	$retVal.= gracenote_getNoscriptTag();
+
 	$retVal.= "<div class='lyricbox'>";
 	$retVal.= ($isInstrumental?"":$ringtoneLink)."\n"; // if this is an instrumental, just a ringtone link on the bottom is plenty.
 	$retVal.= gracenote_obfuscateText($transform);
