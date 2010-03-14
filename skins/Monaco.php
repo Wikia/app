@@ -2342,14 +2342,15 @@ EOF;
 		<div id="page_bar" class="reset color1 clearfix">
 				<ul id="page_controls">
 		  <?php
-		  if(isset($this->data['articlelinks']['left'])) {
-			  foreach($this->data['articlelinks']['left'] as $key => $val) {
+			if(isset($this->data['articlelinks']['left'])) {
+				global $wgBlankImgUrl;
+				foreach($this->data['articlelinks']['left'] as $key => $val) {
 		  ?>
 							  <li id="control_<?= $key ?>" class="<?= $val['class'] ?>"><img src="<?php print $wgBlankImgUrl; ?>" class="sprite <?= (isset($val['icon'])) ? $val['icon'] : $key ?>" /><a rel="nofollow" id="ca-<?= $key ?>" href="<?= htmlspecialchars($val['href']) ?>" <?= $skin->tooltipAndAccesskey('ca-'.$key) ?>><?= htmlspecialchars(ucfirst($val['text'])) ?></a></li>
 		  <?php
-			  }
-			  wfRunHooks( 'MonacoAfterArticleLinks' );
-		  }
+				}
+				wfRunHooks( 'MonacoAfterArticleLinks' );
+			}
 		  ?>
 						  </ul>
 						  <ul id="page_tabs">
