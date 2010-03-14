@@ -19,6 +19,7 @@ class StaticChute {
 	private $theme = false;
 
 	// RT #23935 - one value to purge'em all
+	// NOTE: Is this still needed now that we have a __cb1/ in wgCdnStylePath?  Maybe the stylepath should be the cache-buster?
 	const imagesCacheBuster = '000';
 
 	public function __construct($fileType){
@@ -532,8 +533,18 @@ class StaticChute {
 
 		// macbre: RT #11257 - add ? to images included in CSS
 		$css = preg_replace("#\.(png|gif)([\"'\)]+)#s", '.\\1?' . self::imagesCacheBuster . '\\2', $css);
+		
+		// Replace the local image URLs with the CDN's URL on non-dev machines anywhere we've indicated to do this.
+		global $wgDevelEnvironment;
+		if(empty($wgDevelEnvironment)){
+			global $wgCdnStylePath;
+			
+			// If a line has a "/* $wgCdnStylePath */" comment after it, modify the URL to start with the actual wgCdnStylePath.
+			// This can't be in the line itself (as in the .sql setup files) because that's not valid in CSS to have a comment inside a line.
+			$css = preg_replace("/([\(\"'])([^[\n]*)\s*\/\*\s*[\\\$]?wgCdnStylePath\s*\*\//is", '\\1'.$wgCdnStylePath.'\\2', $css);
+		}
 
-    		return Minify_CSS_Compressor::process($css);
+		return Minify_CSS_Compressor::process($css);
 	}
 
 	public function minifyCssFile($file){
