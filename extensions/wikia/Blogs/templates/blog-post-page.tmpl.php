@@ -1,4 +1,4 @@
-<!-- s:<?= __FILE__ ?> -->
+<!-- s:<?php print __FILE__ ?> -->
 <div id="wk_blogs_loader" style="float:right;"></div>
 <div class="wk_blogs_post" id="wk_blogs_post">
 <? if (!empty($aRows)) { ?>
@@ -14,7 +14,7 @@ foreach ($aRows as $pageId => $aRow) {
 		$isCommenting = $aRow['props']['commenting'];
 	}
 ?>
-<li class="list"><div class="wk_blogs_link"> <a href="<?=$oTitle->getLocalUrl()?>"><?=BlogTemplateClass::getSubpageText($oTitle)?></a></div>
+<li class="list"><div class="wk_blogs_link"> <a href="<?php print $oTitle->getLocalUrl()?>"><?php print BlogTemplateClass::getSubpageText($oTitle)?></a></div>
 <?
 /* s: TIMESTAMP */
 	if ( !empty($aOptions['timestamp']) ) {
@@ -26,23 +26,23 @@ foreach ($aRows as $pageId => $aRow) {
 			}
 		}
 ?>
-<div class="wk_date"><span class="left"><?=$wgLang->date($aRow['rev_timestamp'], true)?></span><span class="right"><?=$sUserLinks?></span></div>
+<div class="wk_date"><span class="left"><?php print $wgLang->date($aRow['rev_timestamp'], true)?></span><span class="right"><?php print $sUserLinks?></span></div>
 <?
 	}
 /* e: TIMESTAMP */
 /* s: SUMMARY */
 	if ( !empty($aOptions['summary']) ) {
 ?>
-<div class="wk_blogs_summary"><?= $aRow['text'] ?></div>
+<div class="wk_blogs_summary"><?php print $aRow['text'] ?></div>
 <?
 	}
 	/* s: COMMENTS */
 ?>
 <div class="wk_blogs_comments"><ul class="links">
 <? $commentTitle = clone $oTitle; $commentTitle->setFragment("#comments"); ?>
-<? if (!empty($isCommenting)) { ?><li class="blog-comment"><img src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1" border="0" class="sprite talk" /> <?=$skin->makeLinkObj($commentTitle, wfMsg('blog-nbrcomments', intval($aRow['comments'])))?></li><? } ?>
-<? if (!empty($isVoting)) { ?><li class="wk_star_list"><?=$aRow['votes']?></li><? } ?>
-<li><?=$skin->makeLinkObj($oTitle, wfMsg('blog-readfullpost'))?></li>
+<? if (!empty($isCommenting)) { global $wgBlankImgUrl; ?><li class="blog-comment"><img src="<?php print $wgBlankImgUrl; ?>" border="0" class="sprite talk" /> <?php print $skin->makeLinkObj($commentTitle, wfMsg('blog-nbrcomments', intval($aRow['comments'])))?></li><? } ?>
+<? if (!empty($isVoting)) { ?><li class="wk_star_list"><?php print $aRow['votes']?></li><? } ?>
+<li><?php print $skin->makeLinkObj($oTitle, wfMsg('blog-readfullpost'))?></li>
 </ul>
 </div>
 <?
@@ -57,6 +57,6 @@ foreach ($aRows as $pageId => $aRow) {
 <?
 } /* if (!empty($aRows)) */
 ?>
-<div class="wk_blogs_pager"><? if (!empty($sPager)) { ?><?=$sPager?><? } ?></div>
+<div class="wk_blogs_pager"><? if (!empty($sPager)) { ?><?php print $sPager?><? } ?></div>
 </div>
-<!-- e:<?= __FILE__ ?> -->
+<!-- e:<?php print __FILE__ ?> -->
