@@ -126,9 +126,10 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 			$serverNo++;
 
 			// macbre: don't add CB value on dev machines
-			$cb = empty($wgDevelEnvironment) ? "/cb{$timestamp}" : '';
+			// NOTE: This should be the only use of the cache-buster which does not use $wgCdnStylePath.
+			$cb = empty($wgDevelEnvironment) ? "__cb{$timestamp}/" : '';
 
-			return str_replace('http://images.wikia.com/',sprintf('http://images%s.wikia.nocookie.net/',$serverNo),$url) . $cb;
+			return str_replace('http://images.wikia.com/', sprintf("http://images%s.wikia.nocookie.net/%s",$serverNo, $cb), $url);
 		}
 	}
 	return $url;

@@ -39,10 +39,10 @@ function wfImpliedRedirects_articleFromTitle(&$title, &$article){
 
 		// If there is more than one colon, the vast majority of the time it seems to be in the name of the song rather than the artist so we
 		// use strpos instead of strrpos (this query was used to create this assumption: "SELECT page_title FROM wiki_page WHERE page_title LIKE '%:%:%'").
-		$index = strpos($origTitle, ":");
+		$index = mb_strpos($origTitle, ":");
 		if($index !== false){
-			$artist = substr($origTitle, 0, $index);
-			$song = substr($origTitle, ($index+1));
+			$artist = mb_substr($origTitle, 0, $index);
+			$song = mb_substr($origTitle, ($index+1));
 
 			// Borrow functions from the SOAP
 			define('LYRICWIKI_SOAP_FUNCS_ONLY', true); // so we can borrow functions from server.php w/o initializing a SOAP request.

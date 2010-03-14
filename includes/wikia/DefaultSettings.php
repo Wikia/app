@@ -413,3 +413,18 @@ $wgNoExternals = false;
 define( 'CACHE_TT', 666 ); 
 $wgTTCache = null;
 include_once("{$IP}/includes/wikia/TokyoTyrantSessions.php");
+
+/**
+ * Style path for resources on the CDN.
+ *
+ * NOTE: while the normal wgStylePath would include /skins/ in it,
+ * this path will NOT have that in it so that CSS and other static
+ * files can use a correct local path (such as "/skins/common/blank.gif")
+ * which would be a completely functioning local path (which will be prepended
+ * in the CSS combiner with wgCdnStylePath).  The advantages of this are two-fold:
+ * 1) if the combiner fails to prepend the wgCdnStylePath, the link will still work,
+ * 2) the combiner WON'T prepend the wgCdnStylePath on development machines so that
+ * the local resource is used (makes testing easier).
+ */
+$wgCdnStylePath = "http://images1.wikia.nocookie.net/__cb1/common";
+$wgBlankImgUrl = $wgCdnStylePath."/skins/common/blank.gif";
