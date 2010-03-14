@@ -395,5 +395,5 @@ span.searchmatch {
 }
 
 #bodyContent a.external, #bodyContent a[href^="gopher://"] {
-	background: url(http://images2.wikia.nocookie.net/common/skins/monaco/images/monaco-sprite.png/cb1) top right no-repeat;
+	background: url(/skins/monaco/images/monaco-sprite.png) top right no-repeat; /* $wgCdnStylePath */
 }
