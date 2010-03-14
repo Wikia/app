@@ -22,9 +22,10 @@ class FeedRenderer {
 
 		$this->template = new EasyTemplate(dirname(__FILE__) . '/../templates');
 
+		global $wgBlankImgUrl;
 		$this->template->set_vars(array(
 			'assets' => array(
-				'blank' => 'http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1',
+				'blank' => $wgBlankImgUrl,
 			),
 			'type' => $this->type,
 		));

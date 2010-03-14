@@ -101,11 +101,12 @@ class RTE {
 		$dataIdx = RTEData::put('data', $data);
 
 		// render placeholder
+		global $wgBlankImgUrl;
 		return Xml::element('img', array(
 			'_rte_dataidx' => sprintf('%04d', $dataIdx),
 			'_rte_placeholder' => true,
 			'class' => "placeholder placeholder-{$data['type']}",
-			'src' => 'http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1',
+			'src' => $wgBlankImgUrl,
 			'type' => $data['type'],
 		));
 	}

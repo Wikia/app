@@ -26,11 +26,12 @@ class VideoEmbedTool {
 
                 $out .= '</script>';
 
+		global $wgBlankImgUrl;
 		$out = '<div class="reset" id="VideoEmbed">';
                 $out .= '<div id="VideoEmbedBorder"></div>';
                 $out .= '<div id="VideoEmbedProgress1" class="VideoEmbedProgress"></div>';
-		$out .= '<div id="VideoEmbedBack"><img src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1" id="fe_vetback_img" class="sprite back" alt="'.wfMsg('vet-back').'" /><a href="#">' . wfMsg( 'vet-back' ) . '</a></div>' ;
-		$out .= '<div id="VideoEmbedClose"><img src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1" id="fe_vetclose_img" class="sprite close" alt="'.wfMsg('vet-close').'" /><a href="#">' . wfMsg( 'vet-close' ) . '</a></div>';
+		$out .= '<div id="VideoEmbedBack"><img src="'.$wgBlankImgUrl.'" id="fe_vetback_img" class="sprite back" alt="'.wfMsg('vet-back').'" /><a href="#">' . wfMsg( 'vet-back' ) . '</a></div>' ;
+		$out .= '<div id="VideoEmbedClose"><img src="'.$wgBlankImgUrl.'" id="fe_vetclose_img" class="sprite close" alt="'.wfMsg('vet-close').'" /><a href="#">' . wfMsg( 'vet-close' ) . '</a></div>';
                 $out .= '<div id="VideoEmbedBody">';
                 $out .= '<div id="VideoEmbedError"></div>';
                 $out .= '<div id="VideoEmbedMain">' . $this->loadMain() . '</div>';

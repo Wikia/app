@@ -21,7 +21,7 @@ class SignupTemplate extends QuickTemplate {
 
 	function execute() {
 
-		global $wgOut, $wgStylePath, $wgStyleVersion;
+		global $wgOut, $wgStylePath, $wgStyleVersion, $wgBlankImgUrl;
 
 		$wgOut->addScript('<link rel="stylesheet" type="text/css" href="'. $wgStylePath . '/wikia/common/NewUserRegister.css?' . $wgStyleVersion . "\" />\n");
 
@@ -56,7 +56,7 @@ if( $wgUser->isAllowed('createaccount') ) {
 				}				
 			</style>');
 		} ?>
-		<img alt="status" class="sprite error" src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1"/>
+		<img alt="status" class="sprite error" src="<?php print $wgBlankImgUrl; ?>"/>
 		<span id="userloginInnerErrorBox">
 			<?php $this->html('message'); ?>
 		</span>
@@ -80,21 +80,21 @@ if( $wgUser->isAllowed('createaccount') ) {
 		</colgroup>
 		<tr>
 			<td class="mw-input" id="wpNameTD">
-				<label for='wpName2'><?php $this->msg('yourname') ?></label> <img alt="status" src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1"/><br/>
+				<label for='wpName2'><?php $this->msg('yourname') ?></label> <img alt="status" src="<?php print $wgBlankImgUrl; ?>"/><br/>
 				<input type='text' class='loginText' name="wpName" id="wpName2" value="<?php $this->text('name') ?>" size='20' />
 			</td>
 		</tr>
 		<tr>
 			<?php if( $this->data['useemail'] ) { ?>
 			<td class="mw-input" id="wpEmailTD">
-				<label for='wpEmail'><?php $this->msg('signup-mail') ?></label><a id="wpEmailInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a> <img alt="status" src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1"/><br/>
+				<label for='wpEmail'><?php $this->msg('signup-mail') ?></label><a id="wpEmailInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a> <img alt="status" src="<?php print $wgBlankImgUrl; ?>"/><br/>
 				<input type='text' class='loginText' name="wpEmail" id="wpEmail" value="<?php $this->text('email') ?>" size='20' />
 			</td>
 			<?php } ?>
 		</tr>
 		<tr>
 			<td class="mw-input" id="wpPasswordTD">
-				<label for='wpPassword2'><?php $this->msg('yourpassword') ?></label> <img alt="status" src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1"/><br/>
+				<label for='wpPassword2'><?php $this->msg('yourpassword') ?></label> <img alt="status" src="<?php print $wgBlankImgUrl; ?>"/><br/>
 				<input type='password' class='loginPassword' name="wpPassword" id="wpPassword2" value="" size='20' />
 			</td>
 		</tr>
@@ -115,7 +115,7 @@ if( $wgUser->isAllowed('createaccount') ) {
 	<?php } ?>
 		<tr>
 			<td class="mw-input" id="wpRetypeTD">
-				<label for='wpRetype'><?php $this->msg('yourpasswordagain') ?></label> <img alt="status" src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1"/><br/>
+				<label for='wpRetype'><?php $this->msg('yourpasswordagain') ?></label> <img alt="status" src="<?php print $wgBlankImgUrl; ?>"/><br/>
 				<input type='password' class='loginPassword' name="wpRetype" id="wpRetype" value="" size='20' />
 			</td>
 		</tr>
@@ -165,7 +165,7 @@ if( $wgUser->isAllowed('createaccount') ) {
 		</tr>
 		<tr>
 			<td class="mw-input" id="wpBirthDateTD">
-				<label for='wpBirthYear'><?php $this->msg('yourbirthdate') ?></label><a id="wpBirthDateInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a> <img alt="status" src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1"/><br/>
+				<label for='wpBirthYear'><?php $this->msg('yourbirthdate') ?></label><a id="wpBirthDateInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a> <img alt="status" src="<?php print $wgBlankImgUrl; ?>"/><br/>
 				<select name="wpBirthYear" id="wpBirthYear">
 					<option value="-1"><?php $this->msg('userlogin-choose-year') ?></option>
 					<?php
@@ -202,7 +202,7 @@ if( $wgUser->isAllowed('createaccount') ) {
 	<?php if($this->haveData('captcha')) { ?>
 		<tr>
 			<td>
-				<div id="blurryword"><span class="pseudolabel"><?php $this->msg( 'usercaptcha' ) ?></span><a id="wpUserCaptchaInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a> <img alt="status" src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1"/></div>
+				<div id="blurryword"><span class="pseudolabel"><?php $this->msg( 'usercaptcha' ) ?></span><a id="wpUserCaptchaInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a> <img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></div>
 			</td>
 
 		</tr>
@@ -582,7 +582,7 @@ if( $wgUser->isAllowed('createaccount') ) {
 				}				
 			</style>');
 		} ?>
-		<img alt="status" class="sprite error" src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1"/>
+		<img alt="status" class="sprite error" src="<?php print $wgBlankImgUrl; ?>"/>
 		<span id="userloginInnerErrorBox2">
 			<? $this->html('message'); ?>
 		</span>
@@ -643,5 +643,5 @@ if( $wgUser->isAllowed('createaccount') ) {
 <div id="signupend" style="clear: both;"><?php $this->msgWiki( 'signupend' ); ?></div>
 <?php
 
-	}
+	} // end execute()
 }

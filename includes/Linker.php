@@ -941,9 +941,10 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 			} else {
 				/* Wikia change begin - @author: christian, Marooned */
 				/* Change img src from magnify-clip.png to blank.gif. Image is set via CSS Background */
+				global $wgBlankImgUrl;
 				$zoomicon =  '<div class="magnify">'.
 					'<a href="'.$url.'" class="internal" title="'.$more.'">'.
-					'<img src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1" class="sprite magnify-clip" ' .
+					'<img src="'.$wgBlankImgUrl.'" class="sprite magnify-clip" ' .
 					'width="16" height="16" alt="" /></a></div>';
 				/* Wikia change end */
 			}

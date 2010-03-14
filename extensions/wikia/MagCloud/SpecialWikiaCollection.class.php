@@ -292,6 +292,7 @@ CSS
 
 		$wgOut->addHTML("</div>\n");
 
+		global $wgBlankImgUrl;
 		$wgOut->addHTML("<script type=\"text/javascript\">/*<![CDATA[*/
 			var content = $('#bolek');
 			$('body').html( content.html() ).attr('class', '');
@@ -303,7 +304,7 @@ CSS
 				var height = img.height();
 				var next = $(this).next('p, div.quote, ul');
 				if (next.length) {
-					next.prepend('<img src=\"http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1\" width=\"' + width + '\" height=\"' + height + '\" style=\"float: left; margin-right: 10px\" />');
+					next.prepend('<img src=\"$wgBlankImgUrl\" width=\"' + width + '\" height=\"' + height + '\" style=\"float: left; margin-right: 10px\" />');
 					next.css({'margin-top': -(height + 2) + 'px'});
 					$(this).prev('p, div.quote, ul').append('<br clear=\"left\" />');
 					$(this).replaceWith(img);

@@ -23,7 +23,7 @@ class UserAjaxCreateTemplate extends QuickTemplate {
 
 	function execute() {
 
-		global $wgOut, $wgStylePath, $wgStyleVersion;
+		global $wgOut, $wgStylePath, $wgStyleVersion, $wgBlankImgUrl;
 
 		$wgOut->addScript('<link rel="stylesheet" type="text/css" href="'. $wgStylePath . '/wikia/common/NewUserRegister.css?' . $wgStyleVersion . "\" />\n");
 
@@ -42,13 +42,13 @@ class UserAjaxCreateTemplate extends QuickTemplate {
 		<?php $this->html('message') ?>
 	</div>
 	<div class="visualClear"></div>
-<?php } ?>
+<?php	} ?>
 <br/>
 <div id="userloginErrorBox">
 	<table>
 	<tr>
 		<td style="vertical-align:top;">
-			<span style="position: relative; top: -1px;"><img alt="status" src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1"/></span>
+			<span style="position: relative; top: -1px;"><img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span>
 		</td>
 	<td>
 		<div id="userloginInnerErrorBox"></div>
@@ -78,23 +78,23 @@ class UserAjaxCreateTemplate extends QuickTemplate {
 		</colgroup>
 		<tr class="wpAjaxLoginLine">
 			<td class="wpAjaxLoginInput" id="wpNameTD">
-				<label for='wpName2'><?php $this->msg('yourname') ?></label><span>&nbsp;<img alt="status" src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1"/></span><br/>
+				<label for='wpName2'><?php $this->msg('yourname') ?></label><span>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span><br/>
 				<input type='text'  name="wpName" id="wpName2"	value="<?php $this->text('name') ?>" size='20' />
 			</td>
 			<td class="wpAjaxLoginInput" id="wpPasswordTD">
-				<label for='wpPassword2'><?php $this->msg('yourpassword') ?></label><span>&nbsp;<img alt="status" src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1"/></span><br/>
+				<label for='wpPassword2'><?php $this->msg('yourpassword') ?></label><span>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span><br/>
 				<input type='password'  name="wpPassword" id="wpPassword2" value="" size='20' />
 			</td>
 		</tr>
 		<tr class="wpAjaxLoginPreLine" >
 			<td class="wpAjaxLoginInput" id="wpEmailTD">
 				<?php if( $this->data['useemail'] ) { ?>
-					<label for='wpEmail'><?php $this->msg('signup-mail') ?></label><a id="wpEmailInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a><span>&nbsp;<img alt="status" src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1"/></span><br/>
+					<label for='wpEmail'><?php $this->msg('signup-mail') ?></label><a id="wpEmailInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a><span>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span><br/>
 					<input type='text'  name="wpEmail" id="wpEmail" value="<?php $this->text('email') ?>" size='20' />
 				<?php } ?>
 			</td>
 			<td class="wpAjaxLoginInput" id="wpRetypeTD">
-				<label for='wpRetype'><?php $this->msg('yourpasswordagain') ?></label><span>&nbsp;<img alt="status" src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1"/></span><br/>
+				<label for='wpRetype'><?php $this->msg('yourpasswordagain') ?></label><span>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span><br/>
 				<input type='password' name="wpRetype" id="wpRetype" value="" size='20' />
 			</td>
 		</tr>
@@ -143,14 +143,14 @@ class UserAjaxCreateTemplate extends QuickTemplate {
 			</td>
 			<td rowspan="2" class="wpAjaxLoginInput">
 				<?php if($this->haveData('captcha')) { ?> 
-							<span class="pseudolabel"><?php $this->msg( 'usercaptcha' ) ?></span><a id="wpUserCaptchaInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a><span>&nbsp;<img alt="status" src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1"/></span>
+							<span class="pseudolabel"><?php $this->msg( 'usercaptcha' ) ?></span><a id="wpUserCaptchaInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a><span>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span>
 							<?php $this->html('captcha'); ?>
 				<?php } ?>
 			</td>
 		</tr>
 		<tr class="wpAjaxLoginPreLine">
 			<td class="wpAjaxLoginInput wpAjaxLoginData" id="wpBirthDateTD">
-				<label for='wpBirthYear'><?php $this->msg('yourbirthdate') ?></label><a id="wpBirthDateInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a><span>&nbsp;<img alt="status" src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1"/></span><br/>
+				<label for='wpBirthYear'><?php $this->msg('yourbirthdate') ?></label><a id="wpBirthDateInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a><span>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span><br/>
 				<select name="wpBirthYear" id="wpBirthYear">
 					<option value="-1"><?php $this->msg('userlogin-choose-year') ?></option>
 					<?php

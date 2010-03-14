@@ -1445,7 +1445,7 @@ class MonacoTemplate extends QuickTemplate {
 
 	function execute() {
 		wfProfileIn( __METHOD__ );
-		global $wgContLang, $wgAllInOne, $wgArticle, $wgUser, $wgLogo, $wgStylePath, $wgStyleVersion, $wgRequest, $wgTitle, $wgSitename, $wgEnableFAST_HOME2, $wgExtensionsPath, $wgAllInOne, $wgContentNamespaces, $wgEnableRecipesTweaksExt;
+		global $wgContLang, $wgAllInOne, $wgArticle, $wgUser, $wgLogo, $wgStylePath, $wgStyleVersion, $wgRequest, $wgTitle, $wgSitename, $wgEnableFAST_HOME2, $wgExtensionsPath, $wgAllInOne, $wgContentNamespaces, $wgEnableRecipesTweaksExt, $wgBlankImgUrl;
 
 		$skin = $wgUser->getSkin();
 		$namespace = $wgTitle->getNamespace();
@@ -1534,17 +1534,17 @@ wfProfileIn( __METHOD__ . '-body'); ?>
 		// <img src="http://www.google-analytics.com/__utm.gif?utmwv=1.3&amp;utmdt=test.wikia.com&amp;utmp=/tewst&amp;utmac=UA-288915-14" alt="" style="display: none" />
 	//}
 
-// Sometimes we need an ad delivered at the very top of the page (like for a skin)
-// This sucks to have a blocking call at the top of the page, but they promised
-// to only do it if they needed. Only use DART or Google (fast Ad Providers with good infrastructure)
-global $wgEnableAdInvisibleTop, $wgEnableAdInvisibleHomeTop, $wgOut;
-if (!empty($wgEnableAdInvisibleHomeTop) && ArticleAdLogic::isMainPage()){
-	echo '<script type="text/javascript" src="/extensions/wikia/AdEngine/AdEngine.js"></script>' . "\n";
-	echo AdEngine::getInstance()->getAd('HOME_INVISIBLE_TOP');
-} else if (!empty($wgEnableAdInvisibleTop) && $wgOut->isArticle() && ArticleAdLogic::isContentPage()){
-	echo '<script type="text/javascript" src="/extensions/wikia/AdEngine/AdEngine.js"></script>' . "\n";
-	echo AdEngine::getInstance()->getAd('INVISIBLE_TOP');
-}
+	// Sometimes we need an ad delivered at the very top of the page (like for a skin)
+	// This sucks to have a blocking call at the top of the page, but they promised
+	// to only do it if they needed. Only use DART or Google (fast Ad Providers with good infrastructure)
+	global $wgEnableAdInvisibleTop, $wgEnableAdInvisibleHomeTop, $wgOut;
+	if (!empty($wgEnableAdInvisibleHomeTop) && ArticleAdLogic::isMainPage()){
+		echo '<script type="text/javascript" src="/extensions/wikia/AdEngine/AdEngine.js"></script>' . "\n";
+		echo AdEngine::getInstance()->getAd('HOME_INVISIBLE_TOP');
+	} else if (!empty($wgEnableAdInvisibleTop) && $wgOut->isArticle() && ArticleAdLogic::isContentPage()){
+		echo '<script type="text/javascript" src="/extensions/wikia/AdEngine/AdEngine.js"></script>' . "\n";
+		echo AdEngine::getInstance()->getAd('INVISIBLE_TOP');
+	}
 ?>
 <?php
 	// add hidden login-box, so firefox can fill it using stored login/password
@@ -1582,7 +1582,7 @@ wfProfileIn( __METHOD__ . '-header'); ?>
 $categorylist = $this->data['data']['categorylist'];
 if(isset($categorylist['nodes']) && count($categorylist['nodes']) > 0 ) {
 ?>
-				<button id="headerButtonHub" class="header-button color1"><?= isset($categorylist['cat']['text']) ? $categorylist['cat']['text'] : '' ?><img src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1" /></button>
+				<button id="headerButtonHub" class="header-button color1"><?= isset($categorylist['cat']['text']) ? $categorylist['cat']['text'] : '' ?><img src="<?php print $wgBlankImgUrl; ?>" /></button>
 
 <?php
 }
@@ -1617,7 +1617,7 @@ if( $custom_user_data ) {
 				<li id="header_mytalk"><a href="<?= htmlspecialchars($this->data['userlinks']['mytalk']['href']) ?>"<?= $skin->tooltipAndAccesskey('pt-mytalk') ?>><?= htmlspecialchars($this->data['userlinks']['mytalk']['text']) ?></a></li>
 				<li id="header_watchlist"><a href="<?= htmlspecialchars($this->data['userlinks']['watchlist']['href']) ?>"<?= $skin->tooltipAndAccesskey('pt-watchlist') ?>><?= htmlspecialchars($this->data['userlinks']['watchlist']['text']) ?></a></li>
 				<li>
-					<button id="headerButtonUser" class="header-button color1"><?= trim(wfMsg('moredotdotdot'), ' .') ?><img src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1" /></button>
+					<button id="headerButtonUser" class="header-button color1"><?= trim(wfMsg('moredotdotdot'), ' .') ?><img src="<?php print $wgBlankImgUrl; ?>" /></button>
 				</li>
 				<li><a rel="nofollow" href="<?= htmlspecialchars($this->data['userlinks']['logout']['href']) ?>"<?= $skin->tooltipAndAccesskey('pt-logout') ?>><?= htmlspecialchars($this->data['userlinks']['logout']['text']) ?></a></li>
 	<?php
@@ -1798,13 +1798,13 @@ if ($custom_article_footer !== '') {
 			$actions =
 								'<ul id="articleFooterActions3" class="actions clearfix">' .
 								(!empty($this->data['content_actions']['history']) ? ('
-								<li id="fe_history"><a rel="nofollow" id="fe_history_icon" href="' . htmlspecialchars($this->data['content_actions']['history']['href']) . '"><img src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1" id="fe_history_img" class="sprite history" alt="' . wfMsg('history_short') . '" /></a> <div><a id="fe_history_link" rel="nofollow" href="' . htmlspecialchars($this->data['content_actions']['history']['href']) . '">' . $this->data['content_actions']['history']['text'] . '</a></div></li>') : '') .
+								<li id="fe_history"><a rel="nofollow" id="fe_history_icon" href="' . htmlspecialchars($this->data['content_actions']['history']['href']) . '"><img src="'.$wgBlankImgUrl.'" id="fe_history_img" class="sprite history" alt="' . wfMsg('history_short') . '" /></a> <div><a id="fe_history_link" rel="nofollow" href="' . htmlspecialchars($this->data['content_actions']['history']['href']) . '">' . $this->data['content_actions']['history']['text'] . '</a></div></li>') : '') .
 
 								(!empty($nav_urls['recentchangeslinked']) ? ('
-								<li id="fe_recent"><a rel="nofollow" id="fe_recent_icon" href="' . htmlspecialchars($nav_urls['recentchangeslinked']['href']) . '"><img src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1" id="fe_recent_img" class="sprite recent" alt="' . wfMsg('recentchangeslinked') . '" /></a> <div><a id="fe_recent_link" rel="nofollow" href="' . htmlspecialchars($nav_urls['recentchangeslinked']['href']) . '">' . wfMsg('recentchangeslinked') . '</a></div></li>') : '') .
+								<li id="fe_recent"><a rel="nofollow" id="fe_recent_icon" href="' . htmlspecialchars($nav_urls['recentchangeslinked']['href']) . '"><img src="'.$wgBlankImgUrl.'" id="fe_recent_img" class="sprite recent" alt="' . wfMsg('recentchangeslinked') . '" /></a> <div><a id="fe_recent_link" rel="nofollow" href="' . htmlspecialchars($nav_urls['recentchangeslinked']['href']) . '">' . wfMsg('recentchangeslinked') . '</a></div></li>') : '') .
 
 								((!empty($wgEnableShareFeatureExt) && !empty($wgEnableRecipesTweaksExt)) ?
-								('<li><img src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1" id="fe_sharefeature_img" class="sprite share" alt="'.wfMsg('sf-link').'" /> <div><a style="cursor:pointer" id="fe_sharefeature_link">'.wfMsg('sf-link').'</a></div></li>') : '').
+								('<li><img src="'.$wgBlankImgUrl.'" id="fe_sharefeature_img" class="sprite share" alt="'.wfMsg('sf-link').'" /> <div><a style="cursor:pointer" id="fe_sharefeature_link">'.wfMsg('sf-link').'</a></div></li>') : '').
 
 								'</ul>';
 
@@ -1814,10 +1814,10 @@ if ($custom_article_footer !== '') {
 								'<ul id="articleFooterActions4" class="actions clearfix">' .
 
 								(!empty($nav_urls['permalink']) ? ('
-								<li id="fe_permalink"><a rel="nofollow" id="fe_permalink_icon" href="' . htmlspecialchars($nav_urls['permalink']['href']) . '"><img src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1" id="fe_permalink_img" class="sprite move" alt="' . wfMsg('permalink') . '" /></a> <div><a id="fe_permalink_link" rel="nofollow" href="' . htmlspecialchars($nav_urls['permalink']['href']) . '">' . $nav_urls['permalink']['text'] . '</a></div></li>') : '') .
+								<li id="fe_permalink"><a rel="nofollow" id="fe_permalink_icon" href="' . htmlspecialchars($nav_urls['permalink']['href']) . '"><img src="'.$wgBlankImgUrl.'" id="fe_permalink_img" class="sprite move" alt="' . wfMsg('permalink') . '" /></a> <div><a id="fe_permalink_link" rel="nofollow" href="' . htmlspecialchars($nav_urls['permalink']['href']) . '">' . $nav_urls['permalink']['text'] . '</a></div></li>') : '') .
 
 								((!empty($nav_urls['whatlinkshere']) && empty($wgEnableRecipesTweaksExt)) ? ('
-								<li id="fe_whatlinkshere"><a rel="nofollow" id="fe_whatlinkshere_icon" href="' . htmlspecialchars($nav_urls['whatlinkshere']['href']) . '"><img src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1" id="fe_whatlinkshere_img" class="sprite pagelink" alt="' . wfMsg('whatlinkshere') . '" /></a> <div><a id="fe_whatlinkshere_link" rel="nofollow" href="' . htmlspecialchars($nav_urls['whatlinkshere']['href']) . '">' . wfMsg('whatlinkshere') . '</a></div></li>') : '') . '</ul>';
+								<li id="fe_whatlinkshere"><a rel="nofollow" id="fe_whatlinkshere_icon" href="' . htmlspecialchars($nav_urls['whatlinkshere']['href']) . '"><img src="'.$wgBlankImgUrl.'" id="fe_whatlinkshere_img" class="sprite pagelink" alt="' . wfMsg('whatlinkshere') . '" /></a> <div><a id="fe_whatlinkshere_link" rel="nofollow" href="' . htmlspecialchars($nav_urls['whatlinkshere']['href']) . '">' . wfMsg('whatlinkshere') . '</a></div></li>') : '') . '</ul>';
 
 
 
@@ -1839,11 +1839,11 @@ if ($custom_article_footer !== '') {
 		} elseif ($namespaceType == 'blog') {
 			$href = htmlspecialchars(Title::makeTitle(NS_SPECIAL, 'CreateBlogPage')->getLocalURL());
 ?>
-								<li><a rel="nofollow" id="fe_createblog_icon" href="<?= $href ?>"><img src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1" id="fe_createblog_img" class="sprite edit" alt="<?= wfMsg('blog-create-next-label') ?>" /></a> <div><a id="fe_createblog_link" rel="nofollow" href="<?= $href ?>"><?= wfMsg('blog-create-next-label') ?></a></div></li>
+								<li><a rel="nofollow" id="fe_createblog_icon" href="<?= $href ?>"><img src="<?php print $wgBlankImgUrl; ?>" id="fe_createblog_img" class="sprite edit" alt="<?= wfMsg('blog-create-next-label') ?>" /></a> <div><a id="fe_createblog_link" rel="nofollow" href="<?= $href ?>"><?= wfMsg('blog-create-next-label') ?></a></div></li>
 <?php
 		} else if(empty($wgEnableRecipesTweaksExt)) {
 ?>
-								<li><a rel="nofollow" id="fe_edit_icon" href="<?= htmlspecialchars($wgTitle->getEditURL()) ?>"><img src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1" id="fe_edit_img" class="sprite edit" alt="<?= wfMsg('edit') ?>" /></a> <div><?= wfMsg('footer_1', $wgSitename) ?> <a id="fe_edit_link" rel="nofollow" href="<?= htmlspecialchars($wgTitle->getEditURL()) ?>"><?= wfMsg('footer_1.5') ?></a></div></li>
+								<li><a rel="nofollow" id="fe_edit_icon" href="<?= htmlspecialchars($wgTitle->getEditURL()) ?>"><img src="<?php print $wgBlankImgUrl; ?>" id="fe_edit_img" class="sprite edit" alt="<?= wfMsg('edit') ?>" /></a> <div><?= wfMsg('footer_1', $wgSitename) ?> <a id="fe_edit_link" rel="nofollow" href="<?= htmlspecialchars($wgTitle->getEditURL()) ?>"><?= wfMsg('footer_1.5') ?></a></div></li>
 <?php
 		}
 
@@ -1857,7 +1857,7 @@ if ($custom_article_footer !== '') {
 				$userPageLink = $userPageTitle->getLocalUrl();
 				$userPageExists = $userPageTitle->exists();
 ?>
-								<li><?= $userPageExists ? '<a id="fe_user_icon" rel="nofollow" href="'.$userPageLink.'">' : '' ?><img src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1" id="fe_user_img" class="sprite user" alt="<?= wfMsg('userpage') ?>" /><?= $userPageExists ? '</a>' : '' ?> <div><?= wfMsg('footer_5', '<a id="fe_user_link" rel="nofollow" '.($userPageExists ? '' : ' class="new" ').'href="'.$userPageLink.'">'.$userText.'</a>', $lastUpdate) ?></div></li>
+								<li><?= $userPageExists ? '<a id="fe_user_icon" rel="nofollow" href="'.$userPageLink.'">' : '' ?><img src="<?php print $wgBlankImgUrl; ?>" id="fe_user_img" class="sprite user" alt="<?= wfMsg('userpage') ?>" /><?= $userPageExists ? '</a>' : '' ?> <div><?= wfMsg('footer_5', '<a id="fe_user_link" rel="nofollow" '.($userPageExists ? '' : ' class="new" ').'href="'.$userPageLink.'">'.$userText.'</a>', $lastUpdate) ?></div></li>
 <?php
 			}
 		}
@@ -1874,19 +1874,19 @@ if ($custom_article_footer !== '') {
 		} else {
 ?>
 							<ul class="actions" id="articleFooterActions2">
-								<li><a rel="nofollow" id="fe_random_icon" href="<?= Skin::makeSpecialUrl( 'Randompage' ) ?>"><img src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1" id="fe_random_img" class="sprite random" alt="<?= wfMsg('randompage') ?>" /></a> <div><a rel="nofollow" id="fe_random_link" href="<?= Skin::makeSpecialUrl( 'Randompage' ) ?>"><?= wfMsg('footer_6') ?></a></div></li>
+								<li><a rel="nofollow" id="fe_random_icon" href="<?= Skin::makeSpecialUrl( 'Randompage' ) ?>"><img src="<?php print $wgBlankImgUrl; ?>" id="fe_random_img" class="sprite random" alt="<?= wfMsg('randompage') ?>" /></a> <div><a rel="nofollow" id="fe_random_link" href="<?= Skin::makeSpecialUrl( 'Randompage' ) ?>"><?= wfMsg('footer_6') ?></a></div></li>
 <?php
 			global $wgProblemReportsEnable;
 
 			if ( !empty($wgProblemReportsEnable) ) {
 ?>
-								<li><img src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1" id="fe_report_img" class="sprite error" alt="<?= wfMsg('reportproblem') ?>" /> <div><a style="cursor:pointer" id="fe_report_link"><?= wfMsg('reportproblem'); ?></a></div></li>
+								<li><img src="<?php print $wgBlankImgUrl; ?>" id="fe_report_img" class="sprite error" alt="<?= wfMsg('reportproblem') ?>" /> <div><a style="cursor:pointer" id="fe_report_link"><?= wfMsg('reportproblem'); ?></a></div></li>
 <?php
 			}
 
 			if(!empty($nav_urls['whatlinkshere']) && !empty($wgEnableRecipesTweaksExt)) {
 ?>
-								<li id="fe_whatlinkshere"><a rel="nofollow" id="fe_whatlinkshere_icon" href="<?= htmlspecialchars($nav_urls['whatlinkshere']['href']) ?>"><img src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1" id="fe_whatlinkshere_img" class="sprite pagelink" alt="<?= wfMsg('whatlinkshere') ?>" /></a> <div><a id="fe_whatlinkshere_link" rel="nofollow" href="<?= htmlspecialchars($nav_urls['whatlinkshere']['href']) ?>"><?= wfMsg('whatlinkshere') ?></a></div></li>
+								<li id="fe_whatlinkshere"><a rel="nofollow" id="fe_whatlinkshere_icon" href="<?= htmlspecialchars($nav_urls['whatlinkshere']['href']) ?>"><img src="<?php print $wgBlankImgUrl; ?>" id="fe_whatlinkshere_img" class="sprite pagelink" alt="<?= wfMsg('whatlinkshere') ?>" /></a> <div><a id="fe_whatlinkshere_link" rel="nofollow" href="<?= htmlspecialchars($nav_urls['whatlinkshere']['href']) ?>"><?= wfMsg('whatlinkshere') ?></a></div></li>
 <?php
 			}
 
@@ -1894,13 +1894,13 @@ if ($custom_article_footer !== '') {
 			if(!empty($wgNotificationEnableSend)) {
 			/* TODO: Is this used? */
 ?>
-								<li><img src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1" id="fe_email_img" class="sprite" alt="email" /> <div><a href="#" id="shareEmail_a"><?= wfMsg('footer_7') ?></a></div></li>
+								<li><img src="<?php print $wgBlankImgUrl; ?>" id="fe_email_img" class="sprite" alt="email" /> <div><a href="#" id="shareEmail_a"><?= wfMsg('footer_7') ?></a></div></li>
 <?php
 			}
 ?>
 
 <?php if( !empty( $wgEnableShareFeatureExt ) && empty($wgEnableRecipesTweaksExt) ) { ?>
-								<li><img src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1" id="fe_sharefeature_img" class="sprite share" alt="<?= wfMsg('sf-link') ?>" /> <div><a style="cursor:pointer" id="fe_sharefeature_link"><?= wfMsg('sf-link'); ?></a></div></li>
+								<li><img src="<?php print $wgBlankImgUrl; ?>" id="fe_sharefeature_img" class="sprite share" alt="<?= wfMsg('sf-link') ?>" /> <div><a style="cursor:pointer" id="fe_sharefeature_link"><?= wfMsg('sf-link'); ?></a></div></li>
 <?php } ?>
 							</ul>
 <?php
@@ -1984,7 +1984,7 @@ if ( $wgRequest->getVal('action') != 'edit' ) {
 					<form action="<?php $this->text('searchaction') ?>" id="searchform">
 						<input id="search_field" name="search" type="text" value="<?= htmlspecialchars($searchLabel) ?>" maxlength="200" onfocus="sf_focus(event);" alt="<?= htmlspecialchars($searchLabel) ?>" autocomplete="off"<?= $skin->tooltipAndAccesskey('search'); ?> />
 						<input type="hidden" name="go" value="1" />
-						<input type="image" src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1" id="search-button" class="sprite search" />
+						<input type="image" src="<?php print $wgBlankImgUrl; ?>" id="search-button" class="sprite search" />
 					</form>
 				</div>
 <?php
@@ -2083,7 +2083,7 @@ if ( $wgRequest->getVal('action') != 'edit' ) {
 			foreach ($dynamicLinksArray as $link) {
 				//print_r($link);
 				$tracker = " onclick=\"WET.byStr('toolbox/dynamic/{$link['tracker']}')\"";
-				echo '<li id="' . $link['id']  .'-row" class="link_box_dynamic_item"><a rel="nofollow" id="' . $link['id'] . '-icon" href="' . htmlspecialchars($link['url']) . '"' . $tracker . '><img src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1" id="' . $link['id'] . '-img" class="sprite '. $link['icon'] .'" alt="' . $link['text'] . '" /></a> <a id="' . $link['id'] . '-link" rel="nofollow" href="' . htmlspecialchars($link['url']) . '"' . $tracker . '>'. $link['text'] .'</a></li>';
+				echo '<li id="' . $link['id']  .'-row" class="link_box_dynamic_item"><a rel="nofollow" id="' . $link['id'] . '-icon" href="' . htmlspecialchars($link['url']) . '"' . $tracker . '><img src="'.$wgBlankImgUrl.'" id="' . $link['id'] . '-img" class="sprite '. $link['icon'] .'" alt="' . $link['text'] . '" /></a> <a id="' . $link['id'] . '-link" rel="nofollow" href="' . htmlspecialchars($link['url']) . '"' . $tracker . '>'. $link['text'] .'</a></li>';
 			}
 ?>
 					</ul>
@@ -2265,7 +2265,7 @@ wfProfileOut( __METHOD__ . '-body');
 </html>
 <?php
 		wfProfileOut( __METHOD__ );
-	}
+	} // end execute()
 
 	//@author Marooned
 	function delayedPrintCSSdownload() {
@@ -2338,7 +2338,7 @@ EOF;
 		  if(isset($this->data['articlelinks']['left'])) {
 			  foreach($this->data['articlelinks']['left'] as $key => $val) {
 		  ?>
-							  <li id="control_<?= $key ?>" class="<?= $val['class'] ?>"><img src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1" class="sprite <?= (isset($val['icon'])) ? $val['icon'] : $key ?>" /><a rel="nofollow" id="ca-<?= $key ?>" href="<?= htmlspecialchars($val['href']) ?>" <?= $skin->tooltipAndAccesskey('ca-'.$key) ?>><?= htmlspecialchars(ucfirst($val['text'])) ?></a></li>
+							  <li id="control_<?= $key ?>" class="<?= $val['class'] ?>"><img src="<?php print $wgBlankImgUrl; ?>" class="sprite <?= (isset($val['icon'])) ? $val['icon'] : $key ?>" /><a rel="nofollow" id="ca-<?= $key ?>" href="<?= htmlspecialchars($val['href']) ?>" <?= $skin->tooltipAndAccesskey('ca-'.$key) ?>><?= htmlspecialchars(ucfirst($val['text'])) ?></a></li>
 		  <?php
 			  }
 			  wfRunHooks( 'MonacoAfterArticleLinks' );

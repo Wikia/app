@@ -124,7 +124,8 @@ function RelatedPages_Display(&$template, &$templateEngine) {
 						$templateEngine->data['bodytext'] .= '<a href="'.htmlspecialchars($title->getFullUrl()).'">'.htmlspecialchars($title->getPrefixedText()).'</a>';
 
 						if($i % 2 == 0) {
-							$templateEngine->data['bodytext'] .= '<img src="http://images3.wikia.nocookie.net/common/skins/monobook/bullet.gif/cb1" style="margin: 0 15px"/>';
+							global $wgCdnStylePath;
+							$templateEngine->data['bodytext'] .= '<img src="'.$wgCdnStylePath.'/skins/monobook/bullet.gif" style="margin: 0 15px"/>';
 						}
 						if($i % 2 == 1 && $i < 3) {
 							$templateEngine->data['bodytext'] .= '<br />';
