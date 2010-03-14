@@ -36,6 +36,8 @@ $wgCityId = $oWiki->execute();
 # To fake any Wiki Factory settings, put them here:
 
 $wgExtensionsPath = "{$wgScriptPath}/extensions";
+$wgAllInOne = false;
+
 
 # End of fake Wiki Factory settings.
 ####
