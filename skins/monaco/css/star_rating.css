@@ -2,7 +2,7 @@
 .star-rating a:hover,
 .star-rating .current-rating
 {
-	background:transparent url('http://images2.wikia.nocookie.net/common/skins/monaco/images/monaco-sprite.png/cb1') repeat-x 0 -20px;
+	background:transparent url(/skins/monaco/images/monaco-sprite.png) repeat-x 0 -20px; /* $wgCdnStylePath */
 }
 
 .star-rating

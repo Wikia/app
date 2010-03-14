@@ -6,7 +6,7 @@
 	position: relative;
 }
 #wikia_logo {
-	background: url(http://images4.wikia.nocookie.net/common/skins/monaco/images/wikia_logo.png/cb1) no-repeat;
+	background: url(/skins/monaco/images/wikia_logo.png) no-repeat; /* $wgCdnStylePath */
 	height: 24px;
 	margin: 0 auto;
 	padding: 0;
@@ -33,7 +33,7 @@
 	filter: none;
 }
 .header-button img {
-	background: url(http://images2.wikia.nocookie.net/common/skins/monaco/images/monaco-sprite.png/cb1) -72px -74px;
+	background: url(/skins/monaco/images/monaco-sprite.png) -72px -74px; /* $wgCdnStylePath */
 	height: 4px;
 	margin-left: 3px;
 	width: 7px;

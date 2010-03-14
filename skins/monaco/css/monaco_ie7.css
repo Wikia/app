@@ -67,7 +67,7 @@ ol li {
 }
 
 .wikistickiesfeed ul li {
-    background: url(http://images3.wikia.nocookie.net/common/skins/monobook/bullet.gif/cb1) no-repeat 5px 3px;
+    background: url(/skins/monobook/bullet.gif) no-repeat 5px 3px; /* $wgCdnStylePath */
     list-style-type: none;
     margin-left: -16px;
     padding-left: 16px;

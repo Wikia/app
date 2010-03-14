@@ -41,7 +41,7 @@
 	color: #fec423;
 }
 #wikia_logo {
-	background-image: url(http://images4.wikia.nocookie.net/common/skins/monaco/smoke/images/wikia_logo.png/cb1);
+	background-image: url(/skins/monaco/smoke/images/wikia_logo.png); /* $wgCdnStylePath */
 }
 .editsectionbutton {
 	background-color: #FFC;
