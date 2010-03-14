@@ -33,7 +33,7 @@
 	color: #228b22;
 }
 #wikia_logo {
-	background-image: url(http://images4.wikia.nocookie.net/common/skins/monaco/jade/images/wikia_logo.png/cb1);
+	background-image: url(/skins/monaco/jade/images/wikia_logo.png); /* $wgCdnStylePath */
 }
 .headerMenuButton dt, .headerMenuButton dd {
 	background-image: url(http://images.wikia.com/common/skins/monaco/jade/images/header_button.png);

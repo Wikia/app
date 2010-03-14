@@ -204,7 +204,7 @@ div#userlogin .inputError {
 
 #userloginInnerErrorBox li {
 	line-height: 1.5em;
-	list-style-image: url(http://images3.wikia.nocookie.net/common/skins/monobook/bullet.gif/cb1);
+	list-style-image: url(/skins/monobook/bullet.gif); /* $wgCdnStylePath */
 	list-style-type: square;
 	margin: 0 0 0.1em;
 }

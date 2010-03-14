@@ -538,10 +538,10 @@ class StaticChute {
 		global $wgDevelEnvironment;
 		if(empty($wgDevelEnvironment)){
 			global $wgCdnStylePath;
-			
+
 			// If a line has a "/* $wgCdnStylePath */" comment after it, modify the URL to start with the actual wgCdnStylePath.
 			// This can't be in the line itself (as in the .sql setup files) because that's not valid in CSS to have a comment inside a line.
-			$css = preg_replace("/([\(\"'])([^[\n]*)\s*\/\*\s*[\\\$]?wgCdnStylePath\s*\*\//is", '\\1'.$wgCdnStylePath.'\\2', $css);
+			$css = preg_replace("/([\(][\"']?)([^\n]*?)\s*\/\*\s*[\\\$]?wgCdnStylePath\s*\*\//is", '\\1'.$wgCdnStylePath.'\\2', $css);
 		}
 
 		return Minify_CSS_Compressor::process($css);
