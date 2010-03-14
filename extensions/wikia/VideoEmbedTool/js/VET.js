@@ -249,7 +249,7 @@ function VET_showPreview(e) {
 	var html = '';
 	html += '<div class="reset" id="VideoEmbedPreview">';
 	html += '	<div id="VideoEmbedBorder"></div>';
-	html += '	<div id="VideoEmbedPreviewClose"><img src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1" id="fe_vetpreviewclose_img" class="sprite close" alt="' + vet_close + '" /><a href="#">' + vet_close + '</a></div>';
+	html += '	<div id="VideoEmbedPreviewClose"><img src="'+wgBlankImgUrl+'" id="fe_vetpreviewclose_img" class="sprite close" alt="' + vet_close + '" /><a href="#">' + vet_close + '</a></div>';
 	html += '	<div id="VideoEmbedPreviewBody">';
 	html += '		<div id="VideoEmbedPreviewContent" style="display: none;"></div>';
 	html += '	</div>';
@@ -471,8 +471,8 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 		html += '<div class="reset" id="VideoEmbed">';
 		html += '	<div id="VideoEmbedBorder"></div>';
 		html += '	<div id="VideoEmbedProgress1" class="VideoEmbedProgress"></div>';
-		html += '	<div id="VideoEmbedBack"><img src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1" id="fe_vetback_img" class="sprite back" alt="' + vet_back + '" /><a href="#">' + vet_back + '</a></div>';
-		html += '	<div id="VideoEmbedClose"><img src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1" id="fe_vetclose_img" class="sprite close" alt="' + vet_close + '" /><a href="#">' + vet_close + '</a></div>';
+		html += '	<div id="VideoEmbedBack"><img src="'+wgBlankImgUrl+'" id="fe_vetback_img" class="sprite back" alt="' + vet_back + '" /><a href="#">' + vet_back + '</a></div>';
+		html += '	<div id="VideoEmbedClose"><img src="'+wgBlankImgUrl+'" id="fe_vetclose_img" class="sprite close" alt="' + vet_close + '" /><a href="#">' + vet_close + '</a></div>';
 		html += '	<div id="VideoEmbedBody">';
 		html += '		<div id="VideoEmbedError"></div>';
 		html += '		<div id="VideoEmbedMain"></div>';
