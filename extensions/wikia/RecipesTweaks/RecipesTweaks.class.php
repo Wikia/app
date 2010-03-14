@@ -131,8 +131,9 @@ class RecipesTweaks {
 
 		// render tabs
 		$template = new EasyTemplate(dirname(__FILE__) . '/templates');
+		global $wgBlankImgUrl;
 		$template->set_vars(array(
-			'blank' => "http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1",
+			'blank' => $wgBlankImgUrl,
 			'newRecipeAction' => Skin::makeSpecialUrl('CreatePage'),
 			'searchAction' =>  $skin->data['searchaction'],
 			'skin' => $wgUser->getSkin(),

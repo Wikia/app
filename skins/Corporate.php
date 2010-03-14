@@ -62,9 +62,10 @@ class CorporateTemplate extends CorporateBaseTemplate {
 					<?php print $this->htmlMainArticleContents();?>
 
 
-					<?php if (!$wgUser->isAnon() && $wgOut->isArticleRelated()) { ?>
+					<?php if (!$wgUser->isAnon() && $wgOut->isArticleRelated()) {
+						global $wgBlankImgUrl; ?>
 						<p>
-							<img src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1" class="sprite watch"> <?= $this->skin->watchThisPage(); ?>
+							<img src="<?php print $wgBlankImgUrl; ?>" class="sprite watch"> <?= $this->skin->watchThisPage(); ?>
 						</p>
 					<?php } ?>
 				</div>

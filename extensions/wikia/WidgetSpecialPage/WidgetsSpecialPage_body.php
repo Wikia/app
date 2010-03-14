@@ -98,10 +98,10 @@ class WidgetsSpecialPage extends SpecialPage
 			$desc = wfMsg($data['desc']);
 
 			$thumbClass = $widget . 'Thumb';
-			global $wgStylePath;	
+			global $wgBlankImgUrl;
 			$wgOut->addHTML('<dl>'."\n\t".
 				'<dt class="' . ($skinname == 'SkinMonaco' ? $thumbClass : '') . '">'.
-				($wgUser->isLoggedIn() ? '<img src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1" class="sprite add" id="widgets_special_page-' . $widget . '-add" rel="' . $widget . '" alt="'. wfMsg('add') .'"/>' : '').
+				($wgUser->isLoggedIn() ? '<img src="'.$wgBlankImgUrl.'" class="sprite add" id="widgets_special_page-' . $widget . '-add" rel="' . $widget . '" alt="'. wfMsg('add') .'"/>' : '').
 				'<div class="widgetsThumb ' . ($skinname == 'SkinQuartz' ? $thumbClass : '')  .'" title="'.$name.'"'.
 				'>&nbsp;</div></dt>'."\n\t".
 				'<dd><h4>'.$name.

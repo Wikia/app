@@ -184,7 +184,8 @@ class WikiStickies {
 		}
 
 		if( '' != $header ) {
-			$html .= '<img alt="" class="sprite ' . $sprite_type . '" src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1" />'.
+			global $wgBlankImgUrl;
+			$html .= '<img alt="" class="sprite ' . $sprite_type . '" src="'.$wgBlankImgUrl.'" />'.
 			Xml::openElement( 'h2' ).
 						$header.
 			Xml::closeElement( 'h2' );

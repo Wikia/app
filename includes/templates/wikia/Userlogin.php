@@ -134,7 +134,7 @@ class UsercreateTemplate extends QuickTemplate {
 	<table>
 	<tr>
 	<td style="vertical-align:top;">
-	<span style="position: relative; top: -1px;"><img alt="status" src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1"/></span>
+	<span style="position: relative; top: -1px;"><img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span>
 	</td>
 	<td>
 	<div id="userloginInnerErrorBox">
@@ -161,21 +161,21 @@ class UsercreateTemplate extends QuickTemplate {
 		</colgroup>
 		<tr>
 			<td class="mw-input" id="wpNameTD">
-				<label for='wpName2'><?php $this->msg('yourname') ?></label><span>&nbsp;<img alt="status" src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1"/></span><br/>
+				<label for='wpName2'><?php $this->msg('yourname') ?></label><span>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span><br/>
 				<input type='text' class='loginText' name="wpName" id="wpName2"	value="<?php $this->text('name') ?>" size='20' />
 			</td>
 		</tr>
 		<tr>
 			<?php if( $this->data['useemail'] ) { ?>
 			<td class="mw-input" id="wpEmailTD">
-				<label for='wpEmail'><?php $this->msg('signup-mail') ?></label><a id="wpEmailInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a><span>&nbsp;<img alt="status" src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1"/></span><br/>
+				<label for='wpEmail'><?php $this->msg('signup-mail') ?></label><a id="wpEmailInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a><span>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span><br/>
 				<input type='text' class='loginText' name="wpEmail" id="wpEmail" value="<?php $this->text('email') ?>" size='20' />
 			</td>
 			<?php } ?>
 		</tr>
 		<tr>
 			<td class="mw-input" id="wpPasswordTD">
-				<label for='wpPassword2'><?php $this->msg('yourpassword') ?></label><span>&nbsp;<img alt="status" src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1"/></span><br/>
+				<label for='wpPassword2'><?php $this->msg('yourpassword') ?></label><span>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span><br/>
 				<input type='password' class='loginPassword' name="wpPassword" id="wpPassword2" value="" size='20' />
 			</td>
 		</tr>
@@ -196,7 +196,7 @@ class UsercreateTemplate extends QuickTemplate {
 	<?php } ?>
 		<tr>
 			<td class="mw-input" id="wpRetypeTD">
-				<label for='wpRetype'><?php $this->msg('yourpasswordagain') ?></label><span>&nbsp;<img alt="status" src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1"/></span><br/>
+				<label for='wpRetype'><?php $this->msg('yourpasswordagain') ?></label><span>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span><br/>
 				<input type='password' class='loginPassword' name="wpRetype" id="wpRetype" value="" size='20' />
 			</td>
 		</tr>
@@ -246,7 +246,7 @@ class UsercreateTemplate extends QuickTemplate {
 		</tr>
 		<tr>
 			<td class="mw-input" id="wpBirthDateTD">
-				<label for='wpBirthYear'><?php $this->msg('yourbirthdate') ?></label><a id="wpBirthDateInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a><span>&nbsp;<img alt="status" src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1"/></span><br/>
+				<label for='wpBirthYear'><?php $this->msg('yourbirthdate') ?></label><a id="wpBirthDateInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a><span>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span><br/>
 				<select name="wpBirthYear" id="wpBirthYear">
 					<option value="-1"><?php $this->msg('userlogin-choose-year') ?></option>
 					<?php
@@ -283,7 +283,7 @@ class UsercreateTemplate extends QuickTemplate {
 	<?php if($this->haveData('captcha')) { ?>
 		<tr>
 			<td>
-				<div id="blurryword"><span class="pseudolabel"><?php $this->msg( 'usercaptcha' ) ?></span><a id="wpUserCaptchaInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a><span>&nbsp;<img alt="status" src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1"/></span></div>
+				<div id="blurryword"><span class="pseudolabel"><?php $this->msg( 'usercaptcha' ) ?></span><a id="wpUserCaptchaInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a><span>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span></div>
 			</td>
 
 		</tr>
@@ -431,7 +431,7 @@ class UsercreateTemplate extends QuickTemplate {
 	<table>
 	<tr>
 	<td style="vertical-align:top;">
-	<span style="position: relative; top: -1px;"><img alt="status" src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1"/></span>
+	<span style="position: relative; top: -1px;"><img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span>
 	</td>
 	<td>
 	<div id="userloginInnerErrorBox2">

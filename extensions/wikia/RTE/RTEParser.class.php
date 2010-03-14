@@ -300,8 +300,9 @@ class RTEParser extends Parser {
 	static public function renderMediaPlaceholder($data) {
 		wfProfileIn(__METHOD__);
 
+		global $wgBlankImgUrl;
 		$attribs = array(
-			'src' => 'http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1',
+			'src' => $wgBlankImgUrl,
 			'class' => "media-placeholder {$data['type']} thumb",
 			'type' => $data['type'],
 			'height' => intval($data['params']['height']),

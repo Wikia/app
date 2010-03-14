@@ -16,26 +16,26 @@ class WikiaMiniUpload {
 
 		$script_a = array();
 
-                $script_a['wmu_back'] = htmlspecialchars( wfMsg('wmu-back') );
-                $script_a['wmu_imagebutton'] = htmlspecialchars( wfMsg('wmu-imagebutton') );
-                $script_a['wmu_close'] = htmlspecialchars( wfMsg('wmu-close') );
-                $script_a['wmu_warn1'] = htmlspecialchars( wfMsg('wmu-warn1') );
-                $script_a['wmu_warn2'] = htmlspecialchars( wfMsg('wmu-warn2') );
-                $script_a['wmu_warn3'] = htmlspecialchars( wfMsg('wmu-warn3') );
+		$script_a['wmu_back'] = htmlspecialchars( wfMsg('wmu-back') );
+		$script_a['wmu_imagebutton'] = htmlspecialchars( wfMsg('wmu-imagebutton') );
+		$script_a['wmu_close'] = htmlspecialchars( wfMsg('wmu-close') );
+		$script_a['wmu_warn1'] = htmlspecialchars( wfMsg('wmu-warn1') );
+		$script_a['wmu_warn2'] = htmlspecialchars( wfMsg('wmu-warn2') );
+		$script_a['wmu_warn3'] = htmlspecialchars( wfMsg('wmu-warn3') );
 
-                $script_a['wmu_bad_extension'] = htmlspecialchars( wfMsg('wmu-bad-extension') );
-                $script_a['wmu_show_message'] = htmlspecialchars( wfMsg('wmu-show-message') );
-                $script_a['wmu_hide_message'] = htmlspecialchars( wfMsg('wmu-hide-message') );
-                $script_a['wmu_title'] = htmlspecialchars( wfMsg('wmu-title') );
-                $script_a['wmu_max_thumb'] = htmlspecialchars( wfMsg('wmu-max-thumb') );
+		$script_a['wmu_bad_extension'] = htmlspecialchars( wfMsg('wmu-bad-extension') );
+		$script_a['wmu_show_message'] = htmlspecialchars( wfMsg('wmu-show-message') );
+		$script_a['wmu_hide_message'] = htmlspecialchars( wfMsg('wmu-hide-message') );
+		$script_a['wmu_title'] = htmlspecialchars( wfMsg('wmu-title') );
+		$script_a['wmu_max_thumb'] = htmlspecialchars( wfMsg('wmu-max-thumb') );
 		$script_a['wmu_no_protect'] = htmlspecialchars( wfMsg('wmu-no-protect') );
 		$script_a['wmu_no_rights'] = htmlspecialchars( wfMsg('wmu-no-rights') );
 		$script_a['badfilename'] = htmlspecialchars( wfMsg('badfilename') );
 
-	        $script_a['file_extensions'] = $wgFileExtensions;
-	        $script_a['file_blacklist'] = $wgFileBlacklist;
-        	$script_a['check_file_extensions'] = htmlspecialchars( $wgCheckFileExtensions );
-	        $script_a['strict_file_extensions'] = htmlspecialchars( $wgStrictFileExtensions );
+		$script_a['file_extensions'] = $wgFileExtensions;
+		$script_a['file_blacklist'] = $wgFileBlacklist;
+		$script_a['check_file_extensions'] = htmlspecialchars( $wgCheckFileExtensions );
+		$script_a['strict_file_extensions'] = htmlspecialchars( $wgStrictFileExtensions );
 
 		( $wgUser->isBlocked() ) ? $script_a['user_blocked'] = true : $script_a['user_blocked'] = false;
 
@@ -48,19 +48,20 @@ class WikiaMiniUpload {
 		// for disabled anonymous editing
 		( !$wgUser->isLoggedIn() && !$title->userCan( 'edit' ) ) ? $script_a['wmu_init_login'] = true : $script_a['wmu_init_login'] = false;
 
-                $out = '<div class="reset" id="ImageUpload">';
-                $out .= '<div id="ImageUploadBorder"></div>';
-                $out .= '<div id="ImageUploadProgress1" class="ImageUploadProgress"></div>';
-                $out .= '<div id="ImageUploadBack"><img src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1" id="fe_wmuback_img" class="sprite back" alt="'.wfMsg('wmu-back').'" /><a href="#">' . wfMsg( 'wmu-back' ) . '</a></div>' ;
-                $out .= '<div id="ImageUploadClose"><img src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1" id="fe_wmuclose_img" class="sprite close" alt="'.wfMsg('wmu-close').'" /><a href="#">' . wfMsg( 'wmu-close' ) . '</a></div>';
-                $out .= '<div id="ImageUploadBody">';
-                $out .= '<div id="ImageUploadError"></div>';
-                $out .= '<div id="ImageUploadMain">' . $this->loadMain() . '</div>';
-                $out .= '<div id="ImageUploadDetails" style="display: none;"></div>';
-                $out .= '<div id="ImageUploadConflict" style="display: none;"></div>';
-                $out .= '<div id="ImageUploadSummary" style="display: none;"></div>';
-                $out .= '</div>';
-                $out .= '</div>';
+		global $wgBlankImgUrl;
+		$out = '<div class="reset" id="ImageUpload">';
+		$out .= '<div id="ImageUploadBorder"></div>';
+		$out .= '<div id="ImageUploadProgress1" class="ImageUploadProgress"></div>';
+		$out .= '<div id="ImageUploadBack"><img src="'.$wgBlankImgUrl.'" id="fe_wmuback_img" class="sprite back" alt="'.wfMsg('wmu-back').'" /><a href="#">' . wfMsg( 'wmu-back' ) . '</a></div>' ;
+		$out .= '<div id="ImageUploadClose"><img src="'.$wgBlankImgUrl.'" id="fe_wmuclose_img" class="sprite close" alt="'.wfMsg('wmu-close').'" /><a href="#">' . wfMsg( 'wmu-close' ) . '</a></div>';
+		$out .= '<div id="ImageUploadBody">';
+		$out .= '<div id="ImageUploadError"></div>';
+		$out .= '<div id="ImageUploadMain">' . $this->loadMain() . '</div>';
+		$out .= '<div id="ImageUploadDetails" style="display: none;"></div>';
+		$out .= '<div id="ImageUploadConflict" style="display: none;"></div>';
+		$out .= '<div id="ImageUploadSummary" style="display: none;"></div>';
+		$out .= '</div>';
+		$out .= '</div>';
 
 		$script_a['html'] = $out;
 
