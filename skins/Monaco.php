@@ -579,7 +579,14 @@ EOS;
 				$addParam = "&yui=1";	
 			}			
 			
-			$jsReferences[] = "/__wikia_combined/cb={$cb}{$wgStyleVersion}&type=CoreJS". $addParam ."&server=ap8";
+			global $wgDevelEnvironment;
+			if(empty($wgDevelEnvironment)){
+				$prefix = "__wikia_combined/";
+			} else {
+				global $wgWikiaCombinedPrefix;
+				$prefix = $wgWikiaCombinedPrefix;
+			}
+			$jsReferences[] = "/{$prefix}cb={$cb}{$wgStyleVersion}&type=CoreJS". $addParam ."&server=ap8";
 		} else {
 			$jsHtml = $StaticChute->getChuteHtmlForPackage($package);
 			

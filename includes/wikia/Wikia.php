@@ -186,7 +186,16 @@ class WikiaAssets {
 			if(empty($cb)) {
 				$cb = 1;
 			}
-			$url = "/__wikia_combined/cb={$cb}&type=SiteCSS&themename={$themename}&rtl={$isRTL}?server=ap8";
+			
+			global $wgDevelEnvironment;
+			if(empty($wgDevelEnvironment)){
+				$prefix = "__wikia_combined/";
+			} else {
+				global $wgWikiaCombinedPrefix;
+				$prefix = $wgWikiaCombinedPrefix;
+			}
+
+			$url = "/{$prefix}cb={$cb}&type=SiteCSS&themename={$themename}&rtl={$isRTL}?server=ap8";
 			$out .= '<link rel="stylesheet" type="text/css" href="'.$url.'" />';
 		} else {
 			$ref = WikiaAssets::GetSiteCSSReferences($themename);
@@ -204,7 +213,14 @@ class WikiaAssets {
 
 			global $wgStyleVersion;
 
-			$commonPart = "http://images1.wikia.nocookie.net/__wikia_combined/cb={$wgStyleVersion}&type=CoreCSS&themename={$themename}&rtl={$isRTL}";
+			global $wgDevelEnvironment;
+			if(empty($wgDevelEnvironment)){
+				$prefix = "__wikia_combined/";
+			} else {
+				global $wgWikiaCombinedPrefix;
+				$prefix = $wgWikiaCombinedPrefix;
+			}
+			$commonPart = "http://images1.wikia.nocookie.net/{$prefix}cb={$wgStyleVersion}&type=CoreCSS&themename={$themename}&rtl={$isRTL}";
 
 			$out = "\n<!-- GetCoreCSS -->";
 			$out .= '<!--[if lt IE 7]<link rel="stylesheet" type="text/css" href="'.$commonPart.'&browser=IElt7" /><![endif]-->';

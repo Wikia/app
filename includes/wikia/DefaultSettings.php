@@ -428,3 +428,10 @@ include_once("{$IP}/includes/wikia/TokyoTyrantSessions.php");
  */
 $wgCdnStylePath = "http://images1.wikia.nocookie.net/__cb1/common";
 $wgBlankImgUrl = $wgCdnStylePath."/skins/common/blank.gif";
+
+/**
+ * The actual path to wikia_combined (without rewrites).  Used for development servers.
+ *
+ * NOTE: Keep this in sync with the value in /wikia-ops/config/varnish/wikia.vcl
+ */
+$wgWikiaCombinedPrefix = "index.php?action=ajax&rs=WikiaAssets::combined&";
