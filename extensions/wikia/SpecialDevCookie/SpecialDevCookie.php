@@ -71,7 +71,7 @@ class SpecialDevCookie extends UnlistedSpecialPage {
 		$wgOut->addHTML( Xml::openElement( 'form', array( 'action' => $this->mTitle->getFullURL(), 'method' => 'post' ) ) );
 		$select = new XMLSelect( 'cookie', 'cookie' );
 		$select->addOption( 'Set cookie to true', 1 );
-		$select->addOption( 'Set cookie to false', 0 );
+		//$select->addOption( 'Set cookie to false', 0 );
 		$select->addOption( 'Remove cookie', -1 );
 		$wgOut->addHTML( $select->getHTML() );
 		$wgOut->addHTML( Xml::submitButton( 'submit' ) );
