@@ -10,30 +10,31 @@ class CorporatePageHelper{
 	* Author: Tomek Odrobny
 	* Hook for clear parsed message cache
 	*/
-	 	static function clearMessageCache(&$article){
+	 	static function clearMessageCache($title, $text){
 		global $wgMemc;
-		
-		$title = strtolower($article->getTitle()); 
-		if (! (strpos($title, "mediawiki:") === 0 )){
-			return true;
-		}
-		
 		$CorporatePageMessageList = 
 			array(	'corporatepage-footer-middlecolumn',
 					'corporatepage-footer-bottom',
 					'corporatepage-footer-rightcolumn',
 					'corporatepage-footer-bottom',
 					'corporatepage-footer-leftcolumn',
-					'corporatepage-slider',
 					'corporatepage-sidebar',
 					'corporatepage-wikia-whats-up',
 					'corporatepage-test-msg' );
-		
-		foreach ($CorporatePageMessageList as $value) {
-			echo  wfMemcKey( "hp_msg_parser",  $value ) ;
-			$wgMemc->delete( wfMemcKey( "hp_msg_parser",  $value ) );	
+			
+		$title = strtolower($title);
+		if (in_array($title,$CorporatePageMessageList)){
+			$wgMemc->delete( wfMemcKey( "hp_msg_parser",  $title ) );
+			/*$pageList = $wgMemc->get(wfMemcKey( "hp_page_list"),null);
+			if ($pageList != null){
+				$pageList = array_keys($pageList);
+				foreach ($pageList as $value){
+					$cachedTitle = Title::newFromURL($value);
+					$cachedTitle->purgeSquid();
+				}
+				$pageList = $wgMemc->delete(wfMemcKey( "hp_page_list"));
+			}*/
 		}
-		
 		return true;
 	}
 
@@ -133,7 +134,7 @@ class CorporatePageHelper{
 			$out[0]['isfirst'] = true;
 			$out[count($out)-1]['islast'] = true;
 		}
-		$wgMemc->set( $mcKey, $out, 60*30);
+		$wgMemc->set( $mcKey, $out, 60*60*12);
         wfProfileOut( __METHOD__ );     
 		return $out;
 	}
@@ -234,13 +235,14 @@ class CorporatePageHelper{
 	 * @author Marooned
 	 */
 	static function ArticleFromTitle(&$title, &$article) {
-		global $wgRequest;
+		global $wgRequest,$wgTitle;
 		//do not redirect for action different than view (allow creating, deleting, etc)
 		if ($wgRequest->getVal('action', 'view') != 'view') {
 			return true;
 		}
 		wfProfileIn(__METHOD__);
 
+		
 		switch ($title->getNamespace()) {
 			case NS_USER:
 			case NS_USER_TALK:
@@ -288,6 +290,12 @@ class CorporatePageHelper{
 				}
 				break;
 		}
+
+		if( !wfRunHooks( 'CorporateBeforeRedirect', array( &$title ) ) ) {
+			wfProfileOut(__METHOD__);
+			return true;
+		}
+		
 		if (!empty($redirect)) {
 			header("Location: $redirect");
 			wfProfileOut(__METHOD__);
