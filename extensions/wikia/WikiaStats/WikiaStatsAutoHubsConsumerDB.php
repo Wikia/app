@@ -666,6 +666,9 @@ class WikiaStatsAutoHubsConsumerDB {
 	    	
 	    }
 	    if ($char_count > 0)  {
+	    	if (strlen($source_text) <= $char_count ) {
+	    		return 0 ;
+	    	}
 	    	$source_text_out = substr($source_text, 0, strrpos(substr($source_text, 0, $char_count), ' '));
 	    	if ($source_text_out != $source_text) {
 	    		$source_text = $source_text_out.'...';
