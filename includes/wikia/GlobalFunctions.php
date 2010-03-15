@@ -124,6 +124,19 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 
 			$serverNo = $inthash%($wgImagesServers-1);
 			$serverNo++;
+			
+			// If there is no timestamp, use the cache-busting number from wgCdnStylePath.
+			if($timestamp == ""){
+				global $wgCdnStylePath;
+				$matches = array();
+				if(0 < preg_match("/\/__cb([0-9]+)\//i", $wgCdnStylePath, $matches)){
+					$timestamp = $matches[1];
+				} else {
+					// This results in no caching of the image.  Bad bad bad, but the best way to fail.
+					Wikia::log( __METHOD__, "", "BAD FOR CACHING!: There is a call to ".__METHOD__." without a timestamp and we could not parse a fallback cache-busting number out of wgCdnStylePath.  This means the image won't be cacheable!");
+					$timestamp = rand(0, 1000);
+				}
+			}
 
 			// macbre: don't add CB value on dev machines
 			// NOTE: This should be the only use of the cache-buster which does not use $wgCdnStylePath.
