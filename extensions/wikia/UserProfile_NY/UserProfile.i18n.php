@@ -183,7 +183,7 @@ function efWikiaUserProfile() {
 		'avatarupload_removesuccess'=>'The avatar has been successfully removed',
 		'avatarupload_removeanother'=>'Remove another',
 		'profilelogpage'           => 'User Profile edit log',
-		'profilelogpagetext'       => 'This is a log of user profile dits',
+		'profilelogpagetext'       => 'This is a log of user profile edits',
 		'profilelogentry'          => '', # For compatibility, don't translate this,
 		'avatarlogpage'           => 'Avatar upload log',
 		'avatarlogpagetext'       => 'This is a log of user avatar uploads',
@@ -192,5 +192,3 @@ function efWikiaUserProfile() {
 		),
 	); 
 }
-
-?>
