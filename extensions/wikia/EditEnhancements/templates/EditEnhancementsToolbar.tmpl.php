@@ -60,7 +60,7 @@
 	});
 </script>
 
-<div class="color1 clearfix" id="edit_enhancements_toolbar">
+<div class="accent clearfix" id="edit_enhancements_toolbar">
 	<ul>
 		<li><?=$summary ?></div></li>
 		<li><?=$buttons['save'] ?></li>
