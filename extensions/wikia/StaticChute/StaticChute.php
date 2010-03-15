@@ -9,6 +9,10 @@ class StaticChute {
 	public $httpCache = true;
 	public $bytesIn = 0;
 	public $bytesOut = 0;
+	
+	// TODO: FIXME: This is not great having this here AND in wgCdnStylePath in CommonSettings, etc., but since StaticChute
+	// does not load the MediaWiki stack in many cases, not sure what a better longterm solution would be.
+	public $cdnStylePath = "http://images1.wikia.nocookie.net/__cb1/common";
 
 	public $config = array();
 
@@ -375,8 +379,7 @@ class StaticChute {
 			$urls = array($this->getChuteUrlForPackage($package, $type));
 			$prefix = '';
 			$cb = '';
-		}
-		else {
+		} else {
 			// include files separately
 			global $wgStyleVersion;
 			$urls = $this->config[$package];
@@ -530,16 +533,12 @@ class StaticChute {
 
 		// macbre: RT #11257 - add ? to images included in CSS
 		$css = preg_replace("#\.(png|gif)([\"'\)]+)#s", '.\\1?' . self::imagesCacheBuster . '\\2', $css);
-		
-		// Replace the local image URLs with the CDN's URL on non-dev machines anywhere we've indicated to do this.
-		global $wgDevelEnvironment;
-		if(empty($wgDevelEnvironment)){
-			global $wgCdnStylePath;
 
-			// If a line has a "/* $wgCdnStylePath */" comment after it, modify the URL to start with the actual wgCdnStylePath.
-			// This can't be in the line itself (as in the .sql setup files) because that's not valid in CSS to have a comment inside a line.
-			$css = preg_replace("/([\(][\"']?)([^\n]*?)\s*\/\*\s*[\\\$]?wgCdnStylePath\s*\*\//is", '\\1'.$wgCdnStylePath.'\\2', $css);
-		}
+		// Replace the local image URLs with the CDN's URL anywhere we've indicated to do this.
+
+		// If a line has a "/* $wgCdnStylePath */" comment after it, modify the URL to start with the actual wgCdnStylePath.
+		// This can't be in the line itself (as in the .sql setup files) because that's not valid in CSS to have a comment inside a line.
+		$css = preg_replace("/([\(][\"']?)([^\n]*?)\s*\/\*\s*[\\\$]?wgCdnStylePath\s*\*\//is", '\\1'.$this->cdnStylePath.'\\2', $css);
 
 		return Minify_CSS_Compressor::process($css);
 	}
