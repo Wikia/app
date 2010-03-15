@@ -2,13 +2,96 @@ $(function() {
 	wikiaSearch_setup();
 	$('.staff-hide-link').click(blockArticle);
 	$('#MainContent').find('.toggleFeed').click(autoHubToggle);
+
+	$('.toggleContainer').each(function(i){
+		var link = $(this).find('a');
+		if( 'Unhide' == link.html() ) {
+			$(this).parent().addClass( "hiddenAdminSection" ); 
+		}
+	});
+
+
+	$('#top-wikis-lists-box').click(trackContainer);
+	$('#hub-blogs').click(trackContainer);
+	$('#wikia-global-hot-spots').click(trackContainer);
+	$('#hub-top-contributors').click(trackContainer);
+
+	WET.byStr( 'hub/' + wgTitle );
+
 	makeWikiaButtons();
+	initHideLinks(); 
 });
 
 $(window).load(function() {
 	setTimeout(sliderImages_load, 300);
 	spotlightSlider_setup(blockArticle);
+	$('#spotlight-slider').click(trackContainer);	
 });
+
+function trackTag( str ) {
+	WET.byStr( 'hub/' + wgTitle + '/' + str );
+};
+
+function trackContainer ( ev ) {
+	var obj = $(ev.target);
+
+	if( 'IMG' == obj.attr( 'nodeName' ) ) {
+		if( obj.parent().hasClass( 'nav' ) ) {
+			trackTag( 'slider/thumb' );				
+		}
+	} 
+
+		if( obj.parent().hasClass( 'secondary' ) ) {
+			if( obj.parent().parent().parent().attr( 'id' ) == 'spotlight-slider-1' ) {
+				trackTag( 'slider/featured-2' );
+
+			} else if( obj.parent().parent().parent().attr( 'id' ) == 'spotlight-slider-2'  ) {
+				trackTag( 'slider/featured-3' );
+
+			} else if( obj.parent().parent().parent().attr( 'id' ) == 'spotlight-slider-3'  ) {
+				trackTag( 'slider/featured-4' );
+
+			} else if( obj.parent().parent().parent().attr( 'id' ) == 'spotlight-slider-0'  ) {
+				trackTag( 'slider/featured-1' );
+
+			}	
+		}
+	
+	if( 'A' == obj.attr( 'nodeName' ) ) {
+		if( obj.parent().parent().hasClass( 'top-wiki-data' )  ) {
+			trackTag( 'featuredwikis' );
+		} else if( obj.parent().hasClass( 'page-activity-sources' )  ) {
+			trackTag( 'hotspots/article' );
+		} else if( obj.parent().hasClass( 'page-activity-wiki' )  ) {
+			trackTag( 'hotspots/wiki_name' );
+		} else if( obj.parent().hasClass( 'hub-blog-artlink' )  ) {
+			trackTag( 'blog/article' );
+
+		} else if( obj.parent().hasClass( 'user-info' )  ) {
+			trackTag( 'blog/username' );
+
+		} else if( obj.parent().hasClass( 'blog-jump' )  ) {
+			trackTag( 'blog/continue' );
+
+		} else if( obj.hasClass( 'secondary' ) ) {
+			if( obj.parent().parent().hasClass( 'spotlight-slider-1' )  ) {
+				trackTag( 'slider/featured-2' );
+
+			} else if( obj.parent().parent().attr( 'id' ) == 'spotlight-slider-2'  ) {
+				trackTag( 'slider/featured-3' );
+
+			} else if( obj.parent().parent().attr( 'id' ) == 'spotlight-slider-3'  ) {
+				trackTag( 'slider/featured-4' );
+
+			} else if( obj.parent().parent().attr( 'id' ) == 'spotlight-slider-0'  ) {
+				trackTag( 'slider/featured-1' );
+
+			}
+		} else if( obj.parent().parent().parent().attr( 'id' ) == 'spotlight-slider'  ) {
+			trackTag( 'slider/thumb' );
+		}
+	}
+}
 
 function makeWikiaButtons() {
 	//There is no way to provide CSS class for links created in MediaWiki. This function adds appropriate classes and markup to buttons.
@@ -44,7 +127,7 @@ function autoHubToggle(e) {
 	var me = $(this);
 	var feed = me.parent().attr("id");
 	// todo this is probably only temporary location
-	var tag = $('#TagDB').attr('value');
+	var tag = $('#autohubTagDB').attr('value');
 
 	$.getJSON(wgScript,
 		{
@@ -54,15 +137,15 @@ function autoHubToggle(e) {
 			'tag':tag
 		},
 		function(response) {
-			if( response.result == 'ok' ) {
-				if( response.disabled ) {
-					me.parent().addClass( "disabledFeed" );
+			if( response.response == 'ok' ) {
+				var inside_a = me.closest('a');
+				if( inside_a.html() == 'Hide' ) {
+					me.parent().parent().addClass( "hiddenAdminSection" );					
+					inside_a.html('Unhide');				
 				} else {
-					me.parent().removeClass( "disabledFeed" );
+					me.parent().parent().removeClass( "hiddenAdminSection" );
+					inside_a.html('Hide');						
 				}
-			}
-			else {
-				// todo display error message? Christian will decide
 			}
 		}
 	);
@@ -133,7 +216,7 @@ function wikiaSearch_setup() {
 }
 
 function sliderImages_load() {
-	
+
   if (( typeof feature_image_1 == "undefined" ) || ( typeof  feature_image_2 == "undefined" ) || ( typeof  feature_image_3 == "undefined" )) {
 	  return true;
   }
@@ -144,4 +227,17 @@ function sliderImages_load() {
   $('li#spotlight-slider-1 > a').html(imgTag_pt1 + feature_image_1 + imgTag_pt2);
   $('li#spotlight-slider-2 > a').html(imgTag_pt1 + feature_image_2 + imgTag_pt2);
   $('li#spotlight-slider-3 > a').html(imgTag_pt1 + feature_image_3 + imgTag_pt2);
+
+}
+
+function initHideLinks() {
+	$('.head-hide-link').click(function(e){
+		target = $(e.target); 
+		var args = target.attr("href").split("?")[1];
+		$("body").css("cursor", "progress");
+		$.postJSON(window.wgScriptPath + "/index.php", args, function(data) {
+			window.location.reload();
+		});
+		return false; 
+	});
 }

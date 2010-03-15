@@ -42,6 +42,14 @@ body {
 	padding: 20px 0;
 }
 
+#MainContent .hiddenSection {
+	display: none;
+}
+
+#MainContent .hiddenAdminSection {
+	opacity: .5;	
+}
+
 /* Typography. */
 h1, h2, h3, h4, h5, h6,
 #GlobalNav,
@@ -894,6 +902,24 @@ footer {
 
 /* @end */
 
+#MainArticle .toggleContainer {
+	float: right;
+	margin-top: -30px;
+	margin-right: 5px;
+}
+
+#MainArticle #hub-blogs .toggleContainer {
+	margin-top: -20px;
+}
+
+#MainArticle #wikia-global-hot-spots .toggleContainer {
+	margin-top: -16px;
+}
+
+#MainArticle #hub-top-contributors .toggleContainer {
+	margin-top: -8px;
+}
+
 /* @group Extension exceptions. */
 
 #contactform td {
@@ -964,6 +990,10 @@ footer {
   width: 620px;
 }
 
+#MainArticle #hub-featured-box #hub-top-wikis {
+  margin-top: 20px;
+}
+
 #MainArticle #hub-featured-box #hub-top-wikis h1 {
   font-size: 2em;
   margin-top: 5px;
@@ -1007,15 +1037,15 @@ footer {
 #MainArticle #hub-top-wikis #top-wiki-info img {
   float: left;
   margin-left: 10px;
-  height: 100px;
-  width: 160px;
+  max-height: 100px;
+  max-width: 160px;
 }
 
 #MainArticle #top-wiki-meta-box {
   float: right;
   width: 400px;
   text-align: center;
-  margin: auto 0;
+  margin: 10px 0;
 }
 
 #MainArticle #top-wiki-meta-box h2 {
@@ -1046,7 +1076,7 @@ footer {
 }
 
 #MainArticle #hub-top-wikis #top-wiki-info ul#top-wiki-meta li span {
-  color: #000;
+  color: #339900;
   font-weight: bold;
   font-size: 1.2em;
 }
@@ -1079,6 +1109,8 @@ footer {
   font-size:0.9em;
   font-weight:bold;
   padding:0 2px;
+  text-align:center;
+  width:15px;
 }
 
 #MainArticle #hub-top-wikis #top-wikis-lists-box .top-wiki-data {
@@ -1107,7 +1139,8 @@ footer {
 }
 
 #MainArticle #hub-top-wikis #top-wikis-lists-box ul li .top-wiki-data {
-  max-width: 260px;
+  width: 260px;
+  height: 65px;
 }
 
 #MainArticle #hub-side-box {
@@ -1117,8 +1150,8 @@ footer {
 }
 
 #MainArticle #hub-side-box h1 {
-  font-size: 1.9em;
-  margin: 5px 0;
+  font-size: 2.2em;
+  margin: 10px 0 5px;
   color: #000;
 }
 
@@ -1207,7 +1240,6 @@ footer {
   width: 300px;
 }
 
-#MainArticle #hub-side-box #wikia-global-hot-spots h1,
 #MainArticle #hub-side-box #wikia-global-hot-spots p {
   margin: 0;
 }
@@ -1221,7 +1253,7 @@ footer {
 }
 
 #MainArticle #hub-side-box #wikia-global-hot-spots .page-activity-sources {
-  margin-left: 125px;
+  margin-left: 110px;
 }
 
 #MainArticle #hub-side-box #wikia-global-hot-spots .wikia-page-link { 
@@ -1229,11 +1261,14 @@ footer {
 }
 
 #MainArticle #hub-side-box #wikia-global-hot-spots strong {
-  width: 40px;  
+  width: 30px;
+  padding-left: 8px;  
 }
 
 #MainArticle #hub-side-box #wikia-global-hot-spots .page-activity-badge span {
-  padding-right:10px;
+  padding-right: 0px;
+  margin-left: 8px;
+  margin-right: 8px
 }
 
 #MainArticle #hub-side-box #hub-top-contributors ul {
@@ -1249,7 +1284,7 @@ footer {
   height: 30px;
   width: 30px;
   background-color: white;
-  padding: 5px;
+  padding: 2px;
   float: left;
   margin: 0 10px 0 0;
   border:1px solid #AAAAAA;
@@ -1294,4 +1329,8 @@ footer {
   margin:0;
   padding:0 3px;
   font-size: .9em;
+}
+
+.hide-blog {
+	background: gray ;
 }

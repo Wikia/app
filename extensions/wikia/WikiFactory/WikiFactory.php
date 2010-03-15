@@ -30,6 +30,7 @@ if( ! function_exists( "wfUnserializeHandler" ) ) {
  * define hooks for WikiFactory here
  */
 
+$wgHooks[ "ArticleSaveComplete" ][] = "WikiFactory::updateCityDescription";
 #$wgHooks[ "RecentChange_save" ][] = "WikiFactoryUpdate::addPostCommitUpdate";
 
 class WikiFactory {
@@ -2247,7 +2248,34 @@ class WikiFactory {
 		wfProfileOut( __METHOD__ );
 		return $bStatus;
 	} // end createVariable()
-
+	
+	/**
+	 * updateCityDescription
+	 *
+	 * static method called as hook
+	 *
+	 * @static
+	 * @access public
+	 *
+	 * @param update description in city list base on msg in city 
+	 *
+	 */
+	
+	static public function updateCityDescription (&$article, &$user ) {
+		global $wgCityId;
+	
+		$search = array('@<script[^>]*?>.*?</script>@si');
+		$text = preg_replace($search, '', $document); 
+	
+		if( strtolower($article->getTitle()) == "mediawiki:description" ) {
+			$out = trim( strip_tags( wfMsg('description') ) );
+			$db = WikiFactory::db( DB_MASTER );
+			$sql = " UPDATE city_list SET city_description =" . $db->addQuotes($out) . " where city_id= '".$wgCityId."' ;\n";
+			$db->query($sql);
+		}
+		
+		return true;
+	}
 };
 
 /**
