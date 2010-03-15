@@ -382,7 +382,7 @@ class WikiaStatsAutoHubsConsumerDB {
 		while ( $value = $this->dbs->fetchRow($res) ) {
 			if( !empty($city_array[$value['city_id']]) ) {
 				$city_array[$value['city_id']] = array_merge( $value, $city_array[$value['city_id']]);	
-				$city_array[$value['city_id']]['city_description'] = $this->shortenText( $city_array[$value['city_id']]['city_description'],0 ,120 );
+				$this->shortenText( $city_array[$value['city_id']]['city_description'],0 ,120 );
 			}
 		}
 
