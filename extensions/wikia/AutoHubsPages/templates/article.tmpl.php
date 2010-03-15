@@ -1,4 +1,4 @@
-
+<?php wfSuppressWarnings();  ?>
 <input type="hidden" id="autohubTagDB" name="autohubTagDB" value="<?php echo $data['tagname'] ?>" />
 <h1 id="hub-name"><?php echo wfMsg('hub-header', $data['title']) ?></h1>
 
@@ -6,7 +6,7 @@
 	<section id="spotlight-slider">
 		<ul>
 		<?php //TODO: PROVIDE DATA ?>
-		<?php wfSuppressWarnings();
+		<?php 
 					foreach($data['slider'] as $key => $value): ?>
 			<li id="spotlight-slider-<?php echo $key; ?>">
 				<a href="<?php echo $value['href'] ?>">
