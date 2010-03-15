@@ -131,21 +131,27 @@ body.widgetsAddingBlocked .add {
 	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0.0, rgba(0,0,0,0.06)), color-stop(0.33, rgba(0,0,0,0)), color-stop(0.42, rgba(0,0,0,0)), color-stop(1.0, rgba(0,0,0,0.1)));
 	background-position: top left;
 	background-repeat: repeat-x;
+	padding: 4px;
 	position: relative;
 }
-#search_field {
+#searchform {
+	background-color: #FFF;
       	background-image: -moz-linear-gradient(top, #BFBFBF 0%, #FFF 40%);
       	background-image: -webkit-gradient(linear, 0% 0%, 0% 40%, from(#BFBFBF), to(#FFF));
 	border: 1px solid #039;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+#search_field {
+	background: transparent;
+	border: 0;
 	color: gray;
 	font-size: 9pt;
 	height: 22px;
 	line-height: 22px;
-	margin: 4px;
-	padding: 0 23px 0 3px;
+	margin: 0;
+	padding: 0 3px 0 3px;
 	width: 164px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
 }
 #search_field.field_active {
 	color: #000;
