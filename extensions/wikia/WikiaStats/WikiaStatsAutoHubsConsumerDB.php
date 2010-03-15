@@ -12,13 +12,13 @@ class WikiaStatsAutoHubsConsumerDB {
 	private $dbs =  null;
     private $article_limits = null;
     private $refresh_time = 60; 
-    private $baned_user_groups = array('staff');
+    private $baned_user_groups = array('staff', 'bot', 'patrollers');
 	/**
 	 * constructor
 	 */
 	function __construct($db = DB_MASTER  ) {
 		global $wgStatsDB;
-		$this->dbs = wfGetDB( $db, array(), $wgStatsDB );
+		$this->dbs = wfGetDB( $db, array(), $wgStatsDB);
 	}
 
 	 /**
@@ -101,7 +101,9 @@ class WikiaStatsAutoHubsConsumerDB {
 									values  ( " . implode(",",$inster_array) . ") 		
 					ON DUPLICATE KEY UPDATE `tu_count` = `tu_count` + 1 ;";
 		
-		$this->dbs->query($sql);
+		if( ((int) $user_id) != 0 ) {
+			$this->dbs->query($sql);	
+		}
 		
 		$inster_array = array(
   					'ta_city_id' => (int) $city_id,
@@ -174,7 +176,7 @@ class WikiaStatsAutoHubsConsumerDB {
 		if( !$force_reload ) {
 			$out = $wgMemc->get($mcKey,null);
 			if( !empty($out) ) {
-				return $out;
+			//	return $out;
 			}
 		}
 		$tag_id = (int) $tag_id;
@@ -232,7 +234,7 @@ class WikiaStatsAutoHubsConsumerDB {
 	 * @access public
 	 *
 	 */
-	
+
 	public function getTopArticles($tag_id, $lang = "en", $limit = 5, $per_wiki = 1, $show_hide = false, $force_reload = false) {
 		global $wgMemc;
 		
@@ -268,6 +270,21 @@ class WikiaStatsAutoHubsConsumerDB {
 		);	
 		
 		$out = $this->filterArticleBlog($res,$tag_id,$limit,$per_wiki,'article',$show_hide);
+	
+		$level = 1; 
+		$outLevel = $level;
+		foreach ($out as $key => $value){
+			$out[$key]['level'] = $outLevel;
+			if( $out[$key]['wiki_counter'] == 1) {
+				$level ++;
+				if((!empty($out[$key+1]['all_count'])) && ( $out[$key]['all_count'] != $out[$key+1]['all_count'] )) {
+					$outLevel = $level;
+				}				
+			} else {
+				$out[$key]['level'] = 'x';
+			} 
+		}
+		
 		$out = array("value" => $out, "age" => time());
 		$wgMemc->set($mcKey, $out,60*60 );
 		wfProfileOut( __METHOD__ );
@@ -286,7 +303,7 @@ class WikiaStatsAutoHubsConsumerDB {
 		global $wgMemc;
 		
 		wfProfileIn( __METHOD__ );
-		$mcKey = wfSharedMemcKey( "auto_hubs", "wikis", $tag_id, $lang, $limit, $per_wiki );
+		$mcKey = wfSharedMemcKey( "auto_hubs", "wikis", $tag_id, $lang, $limit );
 		if( !$force_reload ) {
 			$out = $wgMemc->get($mcKey,null);
 			if( !empty($out) ) {
@@ -294,13 +311,10 @@ class WikiaStatsAutoHubsConsumerDB {
 			}
 		}
 
-		$date = date("Ymd", mktime(0, 0, 0, date("m"), date("d") - 30, date("Y")));
-		
 		$tag_id = (int) $tag_id;
-		$conditions = array( "tag_id = $tag_id and city_lang = '$lang' and use_date > " . $date );
-		
+		$conditions = array( "tag_id = $tag_id and city_lang = '$lang'" );
 		$res = $this->dbs->select(
-				array( 'tags_pv as tags_pv ' ),
+				array( 'tags_pv' ),
 				array( 'tag_id as tag_id,
 						city_id as city_id,
 						sum(pviews) as count ' ),
@@ -352,7 +366,6 @@ class WikiaStatsAutoHubsConsumerDB {
 		}
 
 		$dbw = WikiFactory::db( DB_MASTER );
-		$dbw->begin();
 
 		$res = $dbw->select(
 				array( "city_list"),
@@ -390,7 +403,7 @@ class WikiaStatsAutoHubsConsumerDB {
 		if( !$force_reload ) {
 			$out = $wgMemc->get($mcKey,null);
 			if( !empty($out) ) {
-				return $out;
+			//	return $out;
 			}
 		}
 		
@@ -464,9 +477,16 @@ class WikiaStatsAutoHubsConsumerDB {
 			case 'blog': 
 				$result = $this->getTopBlogs($tag_id, $lang, 5, 1);
 				if(( ( $time - $result['age'] ) > $this->refresh_time ) || $force ) {
-					$this->getTopBlogs($tag_id, $lang, 5, 1, false, true);
-					$this->getTopBlogs($tag_id, $lang, 15, 3, true, true);
+					$this->getTopBlogs($tag_id, $lang, 3, 1, false, true);
+					$this->getTopBlogs($tag_id, $lang, 9, 3, true, true);
 				}
+			case 'city':
+				$result =  $this->getTopWikis($tag_id, $lang, 20, false, false);
+				if(( ( $time - $result['age'] ) > $this->refresh_time ) || $force ) {
+					$this->getTopWikis($tag_id, $lang, 20, false, true);
+					$this->getTopWikis($tag_id, $lang, 30, true, true);
+				}
+			break;
 			break;
 		}
 	}
@@ -715,9 +735,15 @@ class WikiaStatsAutoHubsConsumerDB {
 	
 	private function filterBanUsers($row) {
 		wfProfileIn( __METHOD__ );
+		
+		if( $row['user_id'] == 0 ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+		
 		$groups = explode(";",$row['groups']);
 		foreach ( $groups as $value ) {
-			if( in_array($value, $this->baned_user_groups) ) {
+			if( in_array(strtolower($value), $this->baned_user_groups) ) {
 				wfProfileOut( __METHOD__ );
 				return false;
 			} 
@@ -746,10 +772,12 @@ class WikiaStatsAutoHubsConsumerDB {
 		$out = array();
 		
 		while ( $row = $this->dbs->fetchRow( $res ) ) {
+			$row['real_pagename'] = $row['page_name'];
+			$row['page_name'] = urldecode( str_replace('_' ,' ' , $row['page_name']) );
 			if( $this->filterArticlesBlog($row, $tag_id, $type ) ) {
 				if( $this->filterLimitPerWiki($row, $per_wiki, $per_wiki_counter ) ) {
-					$out[] = $row;
 					$counter++;
+					$out[] = $row;
 				}
 			} else {
 		
@@ -767,7 +795,7 @@ class WikiaStatsAutoHubsConsumerDB {
 		return $out;
 	}
 	
-	private function filterLimitPerWiki($row,$limit,&$counter) {
+	private function filterLimitPerWiki(&$row,$limit,&$counter) {
 		$city_id = $row['city_id'];
 		$page_id = $row['page_id'];
 		
@@ -777,6 +805,7 @@ class WikiaStatsAutoHubsConsumerDB {
 		
 		if( ((int) $counter[$city_id]) < $limit ){
 			$counter[$city_id]++;
+			$row['wiki_counter'] = $counter[$city_id];
 			return true;
 		}
 		return false;
