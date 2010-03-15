@@ -425,8 +425,10 @@ include_once("{$IP}/includes/wikia/TokyoTyrantSessions.php");
  * 1) if the combiner fails to prepend the wgCdnStylePath, the link will still work,
  * 2) the combiner WON'T prepend the wgCdnStylePath on development machines so that
  * the local resource is used (makes testing easier).
+ *
+ * WARNING: Currently we need to dupliate this value into StaticChute::cdnStylePath.
  */
-$wgCdnStylePath = "http://images1.wikia.nocookie.net/__cb1/common";
+$wgCdnStylePath = "http://images1.wikia.nocookie.net/__cb1/common"; // NOTE: When changing this, also update StaticChute::cdnStylePath
 $wgBlankImgUrl = $wgCdnStylePath."/skins/common/blank.gif";
 
 /**
