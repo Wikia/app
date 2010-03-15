@@ -382,6 +382,7 @@ class WikiaStatsAutoHubsConsumerDB {
 		while ( $value = $this->dbs->fetchRow($res) ) {
 			if( !empty($city_array[$value['city_id']]) ) {
 				$city_array[$value['city_id']] = array_merge( $value, $city_array[$value['city_id']]);	
+				$city_array[$value['city_id']]['city_description'] = $this->shortenText( $city_array[$value['city_id']]['city_description'],0 ,72 );
 			}
 		}
 
@@ -615,13 +616,14 @@ class WikiaStatsAutoHubsConsumerDB {
 		
 		$html_out = Http::get( $wikiurl."/api.php?action=blogs&page_id=".( (int) $page_id)."&summarylength=20&format=json" );
 		$wikis = json_decode($html_out, true);
-		
-		$wgMemc->set($mcKey, $wikis['blogpage'][$page_id], 60*60 );
-		wfProfileOut( __METHOD__ );
-		
+
 		if ( empty($wikis['blogpage'][$page_id]) ){
 			return array();
 		}
+		
+		$wgMemc->set($mcKey, $wikis['blogpage'][$page_id], 60*60 );
+		wfProfileOut( __METHOD__ );
+
 	//	shortenText
 
 		$this->shortenText($wikis['blogpage'][$page_id]['description'], 30);
@@ -653,12 +655,25 @@ class WikiaStatsAutoHubsConsumerDB {
 	 *
 	 */	
 	
-	private function shortenText(&$source_text, $word_count) 
+	private function shortenText(&$source_text, $word_count = 0 , $char_count = 0) 
 	{
 		$source_text = strip_tags($source_text);
 	    $word_count++; 
-	    $long_enough = TRUE; 
-	    if ((trim($source_text) != "") && ($word_count > 0)) 
+	    $long_enough = TRUE;
+	    $source_text = trim($source_text); 
+	    
+	    if ($source_text != "") {
+	    	
+	    }
+	    if ($char_count > 0)  {
+	    	$source_text_out = substr($source_text, 0, strrpos(substr($source_text, 0, $char_count), ' '));
+	    	if ($source_text_out != $source_text) {
+	    		$source_text = $source_text_out.'...';
+	    	}
+	    	return 0;
+	    }
+	    
+	    if ($word_count > 0) 
 	    { 
 	        $split_text = explode(" ", $source_text, $word_count); 
 	        if (sizeof($split_text) < $word_count) 

@@ -37,7 +37,7 @@ class WikiaStatsAutoHubsConsumer {
 					'exchange' => 'amq.topic',
 					'ack' => 'client',
 					'activemq.prefetchSize'	=> 1,
-					'routing_key' => "wikia.article.hubpages"
+					'routing_key' => "wikia.article.#"
 				)
 			);
 			Wikia::log( __METHOD__, 'Stomp_queue', 'Subscribed to queue successfully' );				
