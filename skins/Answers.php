@@ -795,8 +795,7 @@ global $wgExtensionsPath;
 ?>
 <!-- End Analytics -->
 
-<script type="text/javascript" src="<?= $wgExtensionsPath ?>/wikia/AdEngine/AdEngine.js"></script>
-<script type="text/javascript" src="<?= $wgExtensionsPath ?>/wikia/TieDivLibrary/TieDivLibrary.js"></script>
+<script type="text/javascript" src="<?php print $wgExtensionsPath ?>/wikia/AdEngine/AdEngine.js"></script>
 
 <?php
 
