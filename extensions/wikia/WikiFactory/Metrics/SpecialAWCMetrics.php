@@ -36,6 +36,7 @@ class WikiMetrics {
     private $axFrom;
     private $axTo;
     private $axLanguage;
+    private $axHub;
     private $axDbname;
     private $axDomain;
     private $axExactDomain;
@@ -356,6 +357,9 @@ class WikiMetrics {
 			if ( !empty( $this->mLanguages ) && in_array( $this->axLanguage, array_keys($this->mLanguages) ) ) {
 				$where[] = 'city_lang = ' . $dbr->addQuotes($this->axLanguage);
 			}
+		}
+		if ( !empty($this->axHub) ) {
+			$where[] = 'city_id in (select city_id from city_cat_mapping where cat_id = '.intval($this->axHub).')';
 		}
 		if ( !empty($this->axDbname) ) {
 			$where[] = 'city_dbname LIKE "%' . $dbr->escapeLike($this->axDbname) . '%"';

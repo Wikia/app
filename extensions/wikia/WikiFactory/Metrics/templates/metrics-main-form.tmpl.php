@@ -504,6 +504,7 @@ function wkAWCMetricsDetails(limit, offset, ord, desc)
 	params += "&awc-from=" + between_f.value;
 	params += "&awc-to=" + between_to.value;
 	params += "&awc-language=" + language.value;
+	params += "&awc-hub=" + category.value;
 	params += "&awc-dbname=" + dbname.value;
 	params += "&awc-domain=" + domain.value;
 	params += "&awc-exactDomain=" + ((exact_domain.checked) ? 1 : 0);
@@ -563,6 +564,7 @@ __ShowCategories = function(e, args) {
 	var f 			= YD.get( "awc-metrics-form" );
 	var created 	= YD.get( "awc-metrics-created" );
 	var language	= YD.get( "awc-metrics-language" );
+	var category	= YD.get( "awc-metrics-category-hub" );
 	var between_f 	= YD.get( "awc-metrics-between-from" );
 	var between_to  = YD.get( "awc-metrics-between-to" );
 	//----
@@ -705,6 +707,7 @@ __ShowCategories = function(e, args) {
 	params += "&awc-from=" + between_f.value;
 	params += "&awc-to=" + between_to.value;
 	params += "&awc-language=" + language.value;
+	params += "&awc-hub=" + category.value;
 	params += "&awc-dbname=" + dbname.value;
 	params += "&awc-domain=" + domain.value;
 	params += "&awc-exactDomain=" + ((exact_domain.checked) ? 1 : 0);
