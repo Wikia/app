@@ -24,12 +24,16 @@ class WikiaStatsAutoHubsConsumer {
 	public function receiveFromStomp() {
 		global $wgStompServer, $wgStompUser, $wgStompPassword, $wgCityId;
 		wfProfileIn( __METHOD__ );
+		
+		error_reporting( E_ERROR | E_WARNING | E_PARSE | E_NOTICE );
+		set_error_handler( "WikiaStatsAutoHubsConsumer::ErrorHandler" );
+		
 		try {
 			$stomp = new Stomp( $wgStompServer );
 			$stomp->connect( $wgStompUser, $wgStompPassword );
 			$stomp->setReadTimeout(120);		
 
-			$stomp->subscribe('wikia.article.#', array(
+			$stomp->subscribe('wikia.article.hubpages', array(
 					'exchange' => 'amq.topic',
 					'ack' => 'client',
 					'activemq.prefetchSize'	=> 1,
@@ -48,6 +52,12 @@ class WikiaStatsAutoHubsConsumer {
 						continue;
 					}
 					$dest = explode( '.', $frame->headers['destination'] );
+					
+					if ( (count($dest) < 2) || ($dest[0] != 'wikia') || ($dest[1] != 'article') ) {
+						Wikia::log( __METHOD__, 'Stomp_frame', 'Wrong destination' );
+						continue;
+					}
+					
 					$producerDB = new WikiaStatsAutoHubsConsumerDB();
 					$body = Wikia::json_decode( $frame->body );					
 					if( is_object( $body ) ) {
@@ -89,4 +99,21 @@ class WikiaStatsAutoHubsConsumer {
 
 		wfProfileOut( __METHOD__ );
 	}
+	
+	public static function ErrorHandler($errno, $errstr, $errfile, $errline){		
+		/* skip memc error because of @ */
+		if ( strpos( $errfile, 'memcached-client.php' ) > 0 ) {
+			return true;
+		}
+		
+
+		if ($errno  == E_STRICT){	
+			return true;	
+		}	
+	        $log = "php error: [$errno] $errstr; file: $errfile ; line: $errline \n";
+		Wikia::log( __METHOD__, 'php error', $log );
+	       	die( $log );
+		sleep(3);
+	       	return true; 
+    	}
 }
