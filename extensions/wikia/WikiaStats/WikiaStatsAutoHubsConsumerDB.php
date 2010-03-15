@@ -166,7 +166,7 @@ class WikiaStatsAutoHubsConsumerDB {
 	 */
 	
 	public function getTopBlogs($tag_id, $lang, $limit = 5, $per_wiki = 1, $show_hide = false, $force_reload = false) {
-		global $wgMemc, $wgContLang;
+		global $wgMemc;
 		
 		wfProfileIn( __METHOD__ );
 		$mcKey = wfSharedMemcKey( "auto_hubs", "blogs", $tag_id, $lang, $limit, $per_wiki );
@@ -200,25 +200,6 @@ class WikiaStatsAutoHubsConsumerDB {
 		);	
 		
 		$out = $this->filterArticleBlog($res,$tag_id,$limit,$per_wiki,'blog',$show_hide);
-
-		// add info about the logo, fix the page name		
-		foreach( $out as $key => $val ) {
-			$out[$key]['logo'] = WikiFactory::getVarValueByName( "wgLogo", $val['city_id'] );
-			$parts = explode( '/', $val['page_name'] );
-			$out[$key]["user_name"] = str_replace(" ", "_", $parts[0]); 
-			$out[$key]["user_page"] = $out[$key]["wikiurl"]."/User:".$out[$key]["user_name"];
-			if( count( $parts ) > 1 ) {
-				array_shift( $parts );
-				$out[$key]['page_name'] = implode( '/', $parts );
-			} else {
-				$out[$key]['page_name'] = $out[$key]['wikiname'];		
-			}
-			
-			$out[$key] = array_merge($out[$key], $this->getBlogInfoByApi($out[$key]['wikiurl'], $out[$key]['page_id']));
-			if (!empty($out[$key]['timestamp'])) {
-				$out[$key]['date'] =   $wgContLang->date( wfTimestamp( TS_MW, $out[$key]['timestamp'] ) );	
-			}
-		}
 		$out = array("value" => $out, "age" => time());
 		$wgMemc->set($mcKey, $out, 60*60);
 		wfProfileOut( __METHOD__ );
@@ -290,15 +271,12 @@ class WikiaStatsAutoHubsConsumerDB {
 		if( !$force_reload ) {
 			$out = $wgMemc->get($mcKey,null);
 			if( !empty($out) ) {
-			//	return $out;
+				return $out;
 			}
 		}
 
-		$date = date("Ymd", mktime(0, 0, 0, date("m"), date("d") - 30, date("Y")));
-		
 		$tag_id = (int) $tag_id;
-		$conditions = array( "tags_pv = $tag_id and ta_city_lang = '$lang' and use_date > " . $date );
-		
+		$conditions = array( "tags_pv = $tag_id and ta_city_lang = '$lang'" );
 		$res = $this->dbs->select(
 				array( 'tags_pv as tags_pv ' ),
 				array( 'tag_id as tag_id,
@@ -316,67 +294,37 @@ class WikiaStatsAutoHubsConsumerDB {
 		$limits = $this->loadHideLimits("city");	
 		$limits_array = array();
 		
-		if ((!empty($limits[$tag_id])) && (count($limits[$tag_id]) > 0) ) {
-			foreach ($limits[$tag_id] as $value) {
-				$limits_array[] = $value['city_id'];
-			}			
-		} else {
-			$limits_array = array();
+		foreach ($limits as $value) {
+			$limits_array[] = $value['city_id'];
 		}
-
+		
 		$pre_out = 1;
 		$count = 0;
 		$city_array = array();
-		$numberOne = 1;
-
-		while ( $value = $this->dbs->fetchRow($res) ) {
-			$in_limits = in_array($value['city_id'], $limits_array);
-			if( (!$in_limits) || $show_hide ) { 
-				$row = array('count' => $value['count']);
-				
-				if ($in_limits) {
-					$row['hide'] = true;
-				}
-				
-				$city_array[$value['city_id']] = $row;
-
+		
+		foreach ( $res as $value ) {
+			if( !in_array($value['city_id'],$limits_array) ) { 
+				$city_array[$value['city_id']] = array('count' => $value['count']); 
 				$count ++;
 				if ( $count == $limit ) {
 					break;
 				}
-				
-				if ($count == 1) {
-					$numberOne = $value['city_id'];
-				}	
 			}
-		}
+		} 
 
 		$dbw = WikiFactory::db( DB_MASTER );
 		$dbw->begin();
 
-		$res = $dbw->select(
-				array( "city_list"),
-				array( "city_id, 
-						city_description as city_description,
-						city_sitename, 
-						city_url, 
-						city_title" ),
-				array( "city_id "),
-				"city_id in city_id in (".array_keys($city_array).")",
-				__METHOD__
+		$oRow = $dbw->selectRow(
+			array( "city_sitename" ),
+			array( "city_id "),
+			"city_id in city_id in (".$city_array.")",
+			__METHOD__
 		);
 
-		while ( $value = $this->dbs->fetchRow($res) ) {
-			if( !empty($city_array[$value['city_id']]) ) {
-				$city_array[$value['city_id']] = array_merge( $value, $city_array[$value['city_id']]);	
-			}
-		}
 
-		$city_array[$numberOne] = array_merge($city_array[$numberOne], $this->getWikiArticleCount($city_array[$numberOne]['city_url'])); 
-		$city_array[$numberOne]['logo']	= WikiFactory::getVarValueByName( "wgLogo", $city_array[$numberOne]['city_id'] );
-		$out = array("value" => $city_array, "age" => time(), "number_one" => $numberOne);
-
-		$wgMemc->set($mcKey, $out, 60*60*12 );
+		$out = array("value" => $out, "age" => time());
+		$wgMemc->set($mcKey, $out,60*60 );
 
 		wfProfileOut( __METHOD__ );
 		return $out;
@@ -424,14 +372,6 @@ class WikiaStatsAutoHubsConsumerDB {
 				break;
 			}
 		}
-
-		// get avatars for the users
-		foreach( $out as $key => $val ) {
-			$avatar = Masthead::newFromUserId( $val['user_id'] );			
-			$out[$key]['avatar'] = $avatar->display( 30, 30 );   
-			$out[$key]['userpage'] = 'http://community.wikia.com/User:' . $val['username'];                   
-		}
-
 		$out = array("value" => $out, "age" => time());
 		$wgMemc->set( $mcKey, $out,60*60 );
 		wfProfileOut( __METHOD__ );
@@ -450,9 +390,9 @@ class WikiaStatsAutoHubsConsumerDB {
 		$time = time();
 		switch ($type) {
 			case 'article': 
-				$result = $this->getTopArticles($tag_id, $lang, 3, 1);
+				$result = $this->getTopArticles($tag_id, $lang, 5, 1);
 				if(( ( $time - $result['age'] ) > $this->refresh_time ) || $force ) {
-					$this->getTopArticles($tag_id, $lang, 3, 1, false, true);
+					$this->getTopArticles($tag_id, $lang, 5, 1, false, true);
 					$this->getTopArticles($tag_id, $lang, 15, 3, true, true);
 				}
 				
@@ -513,174 +453,9 @@ class WikiaStatsAutoHubsConsumerDB {
 	 *
 	 */	
 		
-	public function addExludeWiki($tag_id, $city_id, $lang) {
-		if ($this->addExlude($tag_id, $city_id, 0, 0, 'city')) {
-			$this->loadHideLimits('city',true);
-			$this->rebuildMemc($tag_id, $lang, $type,true);
-			return true;
-		}
-		return false;
+	public function addExludeWiki($tag_id, $city_id) {
+		return $this->addExlude($tag_id, $city_id, 0, 0, 'city'); 
 	}
-	/**
-	 * remove exclude article to list
-	 *
-	 * @author Tomasz Odrobny 
-	 * @access public
-	 *
-	 */	
-		
-	public function removeExludeArticle($tag_id, $city_id, $page_id, $lang) {
-		if ($this->removeExlude($tag_id, $city_id, $page_id, 0, 'article')) {
-			$this->loadHideLimits('article',true);
-			$this->rebuildMemc($tag_id, $lang, 'article', true);
-			return true;
-		} 
-		return false;
-	}
- 
-	/**
-	 * remove exclude article to list
-	 *
-	 * @author Tomasz Odrobny 
-	 * @access public
-	 *
-	 */	
-		
-	public function removeExludeBlog($tag_id, $city_id, $page_id, $lang) {
-		if ($this->removeExlude($tag_id, $city_id, $page_id, 0, 'blog')) {
-			$this->loadHideLimits('blog',true);
-			$this->rebuildMemc($tag_id, $lang, 'blog', true);
-			return true;
-		} 
-		return false;
-	}
-	
-	/**
-	 * remove exclude wiki to list
-	 *
-	 * @author Tomasz Odrobny 
-	 * @access public
-	 *
-	 */	
-		
-	public function removeExludeWiki($tag_id, $city_id, $lang) {
-		if ($this->removeExlude($tag_id, $city_id, 0, 0, 'city')) {
-			$this->loadHideLimits('city',true);
-			$this->rebuildMemc($tag_id, $lang, $type,true);
-			return true;
-		}
-		return false;
-	}
-	
-	
-	/**
-	 * api call for get blog body 
-	 *
-	 * @author Tomasz Odrobny 
-	 * @access private
-	 *
-	 */	
-	
-	public function getBlogInfoByApi( $wikiurl, $page_id ) {
-		global $wgMemc, $wgContLang;
-
-		wfProfileIn( __METHOD__ );
-		
-	    $mcKey = wfSharedMemcKey( "auto_hubs", "blogi_info", $page_id );
-		
-	    $out = $wgMemc->get($mcKey,null);
-		if( !empty($out) ) {
-		//	return $out;
-		}
-		
-		$html_out = Http::get( $wikiurl."/api.php?action=blogs&page_id=".( (int) $page_id)."&summarylength=20&format=json" );
-		$wikis = json_decode($html_out, true);
-		
-		$wgMemc->set($mcKey, $wikis['blogpage'][$page_id], 60*60 );
-		wfProfileOut( __METHOD__ );
-		
-		if ( empty($wikis['blogpage'][$page_id]) ){
-			return array();
-		}
-	//	shortenText
-
-		$this->shortenText($wikis['blogpage'][$page_id]['description'], 30);
-		//description
-		return $wikis['blogpage'][$page_id];
-	}
-	
-	
-	/**
-	 * load page stats by api
-	 *
-	 * @author Tomasz Odrobny 
-	 * @access private
-	 *
-	 */	
-
-	
-	private function getWikiArticleCount($city_url) {
-		$out = Http::get( $city_url."api.php?action=query&meta=siteinfo&siprop=statistics&format=json" );
-		$out = json_decode($out, true);
-		return $out['query']['statistics']; 
-	} 
-	
-	/**
-	 * short text for blog
-	 *
-	 * @author Tomasz Odrobny 
-	 * @access private
-	 *
-	 */	
-	
-	private function shortenText(&$source_text, $word_count) 
-	{
-		$source_text = strip_tags($source_text);
-	    $word_count++; 
-	    $long_enough = TRUE; 
-	    if ((trim($source_text) != "") && ($word_count > 0)) 
-	    { 
-	        $split_text = explode(" ", $source_text, $word_count); 
-	        if (sizeof($split_text) < $word_count) 
-	        { 
-	            $long_enough = FALSE; 
-	        } 
-	        else 
-	        { 
-	            array_pop($split_text); 
-	            $source_text = implode(" ", $split_text); 
-	        } 
-	    } 
-	    $source_text = trim($source_text);
-	    if ( substr($source_text, -1) == "." ) {
-	    	$source_text = trim($source_text)."..";	
-	    } else {
-	    	$source_text = trim($source_text)."...";	    	
-	    }
-	    
-	    return $long_enough; 
-	}
-	
-	/**
-	 * add display exclude to db 
-	 *
-	 * @author Tomasz Odrobny 
-	 * @access private
-	 *
-	 */	
-
-	private function removeExlude($tag_id, $city_id = 0, $page_id = 0, $user_id = 0, $type ) {
-		$this->dbs->begin();
-		$delete_date = date("Y-m-d", mktime(0, 0, 0, date("m")  , date("d") - $date_col['exp'], date("Y")));
-				
-		$con = "sf_city_id = $city_id and sf_page_id = $page_id and sf_user_id = $user_id and sf_tag_id = $tag_id and sf_type = '$type' ";
-
-		$this->dbs->delete( 'tags_stats_filter' , array(  $con ) );
-
-		$this->dbs->commit();
-		return true;
-	}
-	
 	
 	/**
 	 * add display exclude to db 
@@ -722,12 +497,6 @@ class WikiaStatsAutoHubsConsumerDB {
 				return false;
 			} 
 		}
-
-		if( 'Wikia' == $row['username'] ) {
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
-
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
@@ -744,7 +513,7 @@ class WikiaStatsAutoHubsConsumerDB {
 		$per_wiki_counter = array();
 		$counter = 0;
 		$out = array();
-		
+			
 		while ( $row = $this->dbs->fetchRow( $res ) ) {
 			if( $this->filterArticlesBlog($row, $tag_id, $type ) ) {
 				if( $this->filterLimitPerWiki($row, $per_wiki, $per_wiki_counter ) ) {
@@ -752,7 +521,6 @@ class WikiaStatsAutoHubsConsumerDB {
 					$counter++;
 				}
 			} else {
-		
 				if($show_hide){
 					$row['hide'] = true;
 					$out[] = $row;
@@ -809,7 +577,7 @@ class WikiaStatsAutoHubsConsumerDB {
 				return $out;
 			}
 		}
-
+		
 		$res = $this->dbs->select(
 			array( 'tags_stats_filter' ),
 			array( 'sf_id as id,
