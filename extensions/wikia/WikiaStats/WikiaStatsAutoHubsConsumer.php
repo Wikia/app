@@ -33,11 +33,11 @@ class WikiaStatsAutoHubsConsumer {
 			$stomp->connect( $wgStompUser, $wgStompPassword );
 			$stomp->setReadTimeout(120);		
 
-			$stomp->subscribe('wikia.article.hubpages', array(
+			$stomp->subscribe('wikia.article.#', array(
 					'exchange' => 'amq.topic',
 					'ack' => 'client',
 					'activemq.prefetchSize'	=> 1,
-					'routing_key' => "wikia.article.#"
+					'routing_key' => "wikia.article.hubpages"
 				)
 			);
 			Wikia::log( __METHOD__, 'Stomp_queue', 'Subscribed to queue successfully' );				

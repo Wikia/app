@@ -22,5 +22,6 @@ $messages['en'] = array(
 	'hub-blog-continue' => 'Continue reading',
 	'hub-blog-showarticle' => 'Show Article',
 	'hub-topusers-editpoints' => 'edit points', 
+	'hub-hotspot-from' => 'from',
 );
 
