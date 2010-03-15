@@ -12,13 +12,17 @@ class AutoHubsPagesArticle extends Article {
 
 	public function prepareData() {
 		global $wgTitle, $wgUser;
-		$data = AutoHubsPagesData::newFromTagTitle($wgTitle);
-		$tagname = AutoHubsPagesHelper::getHubNameFromTitle($wgTitle);	
-		$vars = AutoHubsPagesHelper::getHubsFeedsVariable( $tagname );
-		
+		print_r( json_decode(file_get_contents('fakedata.json'),true ));
+			exit;
+			
 		$pars = array();
 		$pars['slider'] = array();
 		if (class_exists("WikiaStatsAutoHubsConsumerDB")){
+			
+			$data = AutoHubsPagesData::newFromTagTitle($wgTitle);
+			$tagname = AutoHubsPagesHelper::getHubNameFromTitle($wgTitle);	
+			$vars = AutoHubsPagesHelper::getHubsFeedsVariable( $tagname );
+		
 			$lang = "en";
 			$isMenager = $wgUser->isAllowed( 'corporatepagemanager' );
 			$datafeeds = new WikiaStatsAutoHubsConsumerDB(DB_SLAVE);
