@@ -3,7 +3,7 @@
 // this is to be able to pull related websites feed
 ini_set("user_agent",  "");
 
-function neue_website($nws) 
+function neue_website($nws)
 {
   global $wgUser, $wgOut;
 
@@ -39,7 +39,7 @@ function neue_website($nws)
   // $output .= "newpage: =$newpage= newdom: =$newdom= newhost =$newhost=\n";
 
   $title = Title::newFromUrl($newpage);
-  if(!is_object($title)) 
+  if(!is_object($title))
   {
     $output = wfMsg( 'newsite-error-invalid', $newdom );
     return;
@@ -84,9 +84,9 @@ function neue_website($nws)
 ****/
 
   $armor = substr(md5($newdom), 0,16) . 'WsWImG=' . $newdom . "=no=Ws3ik1Ju5ch=" . substr(md5($newdom), 16);
-  $crypt = strtr(trim(base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, 'WsImgS33CCrret', $armor, MCRYPT_MODE_ECB, 
+  $crypt = strtr(trim(base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, 'WsImgS33CCrret', $armor, MCRYPT_MODE_ECB,
                 mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB), MCRYPT_RAND)))), '+/', '-!');
-  
+
   $url = fopen("http://thumbs.websitewiki.de/$crypt", "r");
   fclose($url);
 
@@ -102,7 +102,7 @@ function neue_website($nws)
 }
 
 
-function validate_domain($dom) 
+function validate_domain($dom)
 {
   global $exDomainList;
 
@@ -129,9 +129,9 @@ function validate_domain($dom)
   return $d;
 }
 
-function get_host($dom) 
+function get_host($dom)
 {
-  $dnsrec = dns_get_record("www.$dom", DNS_A);
+  $dnsrec = @dns_get_record("www.$dom", DNS_A);
 //   print_r($dnsrec);
   if(isset($dnsrec[0]) && array_key_exists('ip', $dnsrec[0]))
     return "www.$dom";
@@ -144,7 +144,7 @@ function get_host($dom)
 }
 
 
-function Substrings($text, $openingMarker, $closingMarker) 
+function Substrings($text, $openingMarker, $closingMarker)
 {
   $openingMarkerLength = strlen($openingMarker);
   $closingMarkerLength = strlen($closingMarker);
@@ -162,7 +162,7 @@ function Substrings($text, $openingMarker, $closingMarker)
 }
 
 
-function make_related($dbw, $dom, $domdom) 
+function make_related($dbw, $dom, $domdom)
 {
   global $exDomainList;
   $gourl = "http://www.google.de/ie?safe=off&q=related%3A$dom&hl=de&start=0&num=30&sa=N";
@@ -211,7 +211,7 @@ function make_related($dbw, $dom, $domdom)
   //   echo "NIX FOUND $dom\n";
 }
 
-function get_content($host) 
+function get_content($host)
 {
   system(escapeshellcmd("/var/www/mkwebsites/bin/mkhtml $host"), $ret);
   if($ret == 0)
@@ -229,7 +229,7 @@ function get_content($host)
 
     return strlen($haystack)
            - strpos( strrev($haystack) , strrev($needle) , $offset)
-           - strlen($needle); 
+           - strlen($needle);
   }
 
   function getservertech($log)
@@ -242,7 +242,7 @@ function get_content($host)
 
     $tok = strtok($sline, " ");
 
-    while ($tok !== false) 
+    while ($tok !== false)
     {
        $ret[] = $tok;
        $tok = strtok(" ");
@@ -323,7 +323,7 @@ function get_content($host)
   {
     if(has_iso_umlauts($str))
       return utf8_encode($str);
-    else 
+    else
       return $str;
   }
 
@@ -331,7 +331,7 @@ function get_content($host)
 	  $cset = strtoupper( $cset );
 
 	  if ( $cset != "UTF-8" ) {
-		  $str = @iconv( $cset, "UTF-8//IGNORE", $str );	
+		  $str = @iconv( $cset, "UTF-8//IGNORE", $str );
 	  }
 
 	  $str = eregi_replace("<[^>]*>|[]\001-\037{}\\[]", " ", $str);
@@ -431,7 +431,7 @@ function get_content($host)
     $res = $qr->result;
     if($res)
     {
-      while ($row = mysql_fetch_row($res)) 
+      while ($row = mysql_fetch_row($res))
       {
 	if($row[0] != $dom)
 	  $rela[] = $row[0];
@@ -481,7 +481,7 @@ function get_wikitext($dbw, $site, $domsite)
     "sedoparking.com",
     "sedoparking.de",
   );
-  
+
   $empty_redir = Array(
     "leere.seite",
     "localhost",
