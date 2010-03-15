@@ -129,18 +129,18 @@ function validate_domain($dom)
   return $d;
 }
 
-function get_host($dom)
-{
-  $dnsrec = @dns_get_record("www.$dom", DNS_A);
-//   print_r($dnsrec);
-  if(isset($dnsrec[0]) && array_key_exists('ip', $dnsrec[0]))
-    return "www.$dom";
+function get_host($dom) {
+	$dnsrec = @dns_get_record("www.$dom", DNS_A);
+	if( isset( $dnsrec[0] ) && array_key_exists( 'ip', $dnsrec[0] ) ) {
+		return "www.$dom";
+	}
 
-  $dnsrec = dns_get_record($dom, DNS_A);
-  if(isset($dnsrec[0]) && array_key_exists('ip', $dnsrec[0]))
-    return $dom;
+	$dnsrec = @dns_get_record($dom, DNS_A);
+	if( isset( $dnsrec[0] ) && array_key_exists( 'ip', $dnsrec[0] ) ) {
+		return $dom;
+	}
 
-  return '';
+	return '';
 }
 
 
