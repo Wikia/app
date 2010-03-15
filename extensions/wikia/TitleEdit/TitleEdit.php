@@ -28,7 +28,7 @@ function wfTitleEditPrintFirstHeading() {
 	}
 
 	$ns = $wgTitle->getNamespace();
-	if( defined( 'NS_BLOG_ARTICLE' ) && in_array( $ns, array( NS_BLOG_ARTICLE, NS_BLOG_LISTING ) ) {
+	if( defined( 'NS_BLOG_ARTICLE' ) && in_array( $ns, array( NS_BLOG_ARTICLE, NS_BLOG_LISTING ) ) ) {
 		return true;
 	}
 
