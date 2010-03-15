@@ -243,7 +243,7 @@ class WikiaStatsAutoHubsConsumerDB {
 		if( !$force_reload ) {
 			$out = $wgMemc->get($mcKey,null);
 			if( !empty($out) ) {
-				return $out;
+			//	return $out;
 			}
 		}
 		
