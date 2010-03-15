@@ -35,6 +35,8 @@
       background-image: -moz-linear-gradient(top, #093 20%, #006722 70%);
       background-image: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#093), to(#006722));
       border: 1px solid #beddbe;
+      border-radius: 7px;
+      box-shadow: 0 1px 0 #2c802c, 0 -1px 0 #2c802c, 1px 0 0 #2c802c, -1px 0 0 #2c802c;
       color: #FFF;
       cursor: pointer;
       display: inline-block;
@@ -63,6 +65,7 @@
       background-image: -moz-linear-gradient(top, #CCC 20%, #AAA 70%);
       background-image: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#CCC), to(#AAA));
       border-color: #E2E2E2;
+      box-shadow: 0 1px 0 #999, 0 -1px 0 #999, 1px 0 0 #999, -1px 0 0 #999;
       color: #333;
       -moz-box-shadow: 0 0 0 1px #999;
       -webkit-box-shadow: 0 1px 0 #999, 0 -1px 0 #999, 1px 0 0 #999, -1px 0 0 #999;
@@ -117,8 +120,8 @@
       width: auto;
     }
     
-    a.wikia_button.secondary,
-    span.wikia_button.secondary a, 
+    a.wikia-button.secondary,
+    span.wikia-button.secondary a, 
     input[type="submit"].secondary, 
     input[type="reset"].secondary, 
     input[type="button"].secondary, 
