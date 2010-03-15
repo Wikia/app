@@ -222,7 +222,7 @@ class Masthead {
 			$url = array_shift( $defaults );
 		}
 
-		return wfReplaceImageServer( $url );
+		return wfReplaceImageServer( $url, $this->mUser->getTouched() );
 	}
 
 	/**
