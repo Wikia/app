@@ -1593,13 +1593,14 @@ if(isset($categorylist['nodes']) && count($categorylist['nodes']) > 0 ) {
 
 <?php
 }
+?>
+			</div>
+<?php
 			wfRunHooks('MonacoAdLink');
 
 			$this->printRequestWikiLink();
-
 ?>
-			</div>
-			<ul id="userData">
+			<div id="userData">
 <?php
 
 $custom_user_data = "";
@@ -1613,34 +1614,36 @@ if( $custom_user_data ) {
 	global $wgUser, $wgStylePath;
 	if ($wgUser->isLoggedIn()) {
 	?>
-				<li id="header_username"><a href="<?= htmlspecialchars($this->data['userlinks']['userpage']['href']) ?>"<?= $skin->tooltipAndAccesskey('pt-userpage') ?>><?= htmlspecialchars($this->data['userlinks']['userpage']['text']) ?></a></li>
+				<span id="header_username"><a href="<?= htmlspecialchars($this->data['userlinks']['userpage']['href']) ?>"<?= $skin->tooltipAndAccesskey('pt-userpage') ?>><?= htmlspecialchars($this->data['userlinks']['userpage']['text']) ?></a></span>
 <?php
 		if (isset($this->data['userlinks']['myhome'])) {
 ?>
-				<li id="header_myhome"><a href="<?= htmlspecialchars($this->data['userlinks']['myhome']['href']) ?>" rel="nofollow"<?= $skin->tooltipAndAccesskey('pt-myhome') ?>><?= htmlspecialchars($this->data['userlinks']['myhome']['text']) ?></a></li>
+				<span id="header_myhome"><a href="<?= htmlspecialchars($this->data['userlinks']['myhome']['href']) ?>" rel="nofollow"<?= $skin->tooltipAndAccesskey('pt-myhome') ?>><?= htmlspecialchars($this->data['userlinks']['myhome']['text']) ?></a></span>
 <?php
 		}
 ?>
-				<li id="header_mytalk"><a href="<?= htmlspecialchars($this->data['userlinks']['mytalk']['href']) ?>"<?= $skin->tooltipAndAccesskey('pt-mytalk') ?>><?= htmlspecialchars($this->data['userlinks']['mytalk']['text']) ?></a></li>
-				<li id="header_watchlist"><a href="<?= htmlspecialchars($this->data['userlinks']['watchlist']['href']) ?>"<?= $skin->tooltipAndAccesskey('pt-watchlist') ?>><?= htmlspecialchars($this->data['userlinks']['watchlist']['text']) ?></a></li>
-				<li>
+				<span id="header_mytalk"><a href="<?= htmlspecialchars($this->data['userlinks']['mytalk']['href']) ?>"<?= $skin->tooltipAndAccesskey('pt-mytalk') ?>><?= htmlspecialchars($this->data['userlinks']['mytalk']['text']) ?></a></span>
+				<span id="header_watchlist"><a href="<?= htmlspecialchars($this->data['userlinks']['watchlist']['href']) ?>"<?= $skin->tooltipAndAccesskey('pt-watchlist') ?>><?= htmlspecialchars($this->data['userlinks']['watchlist']['text']) ?></a></span>
+				<span>
 					<button id="headerButtonUser" class="header-button color1"><?= trim(wfMsg('moredotdotdot'), ' .') ?><img src="<?php print $wgBlankImgUrl; ?>" /></button>
-				</li>
-				<li><a rel="nofollow" href="<?= htmlspecialchars($this->data['userlinks']['logout']['href']) ?>"<?= $skin->tooltipAndAccesskey('pt-logout') ?>><?= htmlspecialchars($this->data['userlinks']['logout']['text']) ?></a></li>
+				</span>
+				<span>
+					<a rel="nofollow" href="<?= htmlspecialchars($this->data['userlinks']['logout']['href']) ?>"<?= $skin->tooltipAndAccesskey('pt-logout') ?>><?= htmlspecialchars($this->data['userlinks']['logout']['text']) ?></a>
+				</span>
 	<?php
 	} else {
 ?>
-				<li id="userLogin">
+				<span id="userLogin">
 					<a rel="nofollow" class="ajaxLogin" id="login" href="<?= htmlspecialchars($this->data['userlinks']['login']['href']) ?>"><?= htmlspecialchars($this->data['userlinks']['login']['text']) ?></a>
-				</li>
-				<li>
+				</span>
+				<span>
 					<a rel="nofollow" class="wikia-button" id="register" href="<?= htmlspecialchars($this->data['userlinks']['register']['href']) ?>"><?= htmlspecialchars($this->data['userlinks']['register']['text']) ?></a>
-				</li>
+				</span>
 <?php
 	}
 }
 ?>
-		</ul>
+		</div>
 		</div>
 	</div>
 
@@ -2569,12 +2572,12 @@ EOF;
 	/* Often times the request wiki is overridden by sub skins of monaco */
 	function printRequestWikiLink(){
 		global $wgUser;
-		echo '<ul id="requestWikiData"><li>';
-			echo '<a rel="nofollow" href="http://www.wikia.com/Special:CreateWiki" id="request_wiki" class="wikia-button">'. wfMsg('createwikipagetitle') .'</a>';
+		echo '<div id="requestWikiData">';
+			echo '<a rel="nofollow" href="http://www.wikia.com/Special:CreateWiki" id="request_wiki" class="wikia-button">'. wfMsg('createwikipagetitle') .'</a>&nbsp;';
 			if (!$wgUser->isLoggedIn()) {
 				echo '<span id="request_wiki_ad">' . wfMsgExt('monaco-request-wiki-ad-text', array( "parseinline" )) . '</span>';
 			}
-		echo '</li></ul>';
+		echo '</div>';
 	}
 
 	/* Allow logo to be different */
