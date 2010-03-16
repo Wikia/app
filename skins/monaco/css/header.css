@@ -33,7 +33,7 @@
 	filter: none;
 }
 .header-button img {
-	background: url(/skins/monaco/images/monaco-sprite.png) -72px -74px; /* $wgCdnStylePath */
+	background: url(/skins/monaco/images/monaco-sprite.png) -72px -94px; /* $wgCdnStylePath */
 	height: 4px;
 	margin-left: 3px;
 	width: 7px;
