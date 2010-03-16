@@ -45,6 +45,7 @@ function wfAutoPageCreateViewPage( $article, $out, &$text, &$return404 ) {
 				$overlayMsgKey = "autopagecreate-newpage-notice-content";
 			} elseif( $article->mTitle->isTalkPage() ) {
 				$overlayMsgKey = "autopagecreate-newpage-notice-talk";
+				$out->setRobotPolicy( 'noindex,nofollow' );
 			} else {
 				switch( $article->mTitle->getNamespace() ) {
 					case NS_USER:		$overlayMsgKey = "autopagecreate-newpage-notice-user"; break;
@@ -53,6 +54,7 @@ function wfAutoPageCreateViewPage( $article, $out, &$text, &$return404 ) {
 					case 110 /* NS_FORUM */:	$overlayMsgKey = "autopagecreate-newpage-notice-forum"; break;
 					case 502 /* NS_BLOG_LISTING */:	$overlayMsgKey = "autopagecreate-newpage-notice-blog"; break;
 				}
+				$out->setRobotPolicy( 'noindex,nofollow' );
 			}
 			$overlayMsg4JS = Xml::escapeJsString( wfMsgExt( $overlayMsgKey, "parseinline" ) );
 			$js = <<<END
