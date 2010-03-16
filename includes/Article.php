@@ -915,7 +915,7 @@ class Article {
 			}
 
 			# Non-existent pages
-			if( $this->getID() === 0 ) {
+			if( $this->getID() === 0 && wfRunHooks( 'ArticleNonExistentPage', array( $this, $wgOut, &$text, &$return404 ) ) ) {
 				$wgOut->setRobotPolicy( 'noindex,nofollow' );
 				$text = "<div class='noarticletext'>\n$text\n</div>";
 				if( !$this->hasViewableContent() ) {

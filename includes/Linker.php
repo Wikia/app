@@ -242,7 +242,10 @@ class Linker {
 		if( in_array( 'broken', $options ) and empty( $query['action'] )
 		and $target->getNamespace() != NS_SPECIAL ) {
 			$query['action'] = 'edit';
-			$query['redlink'] = '1';
+			global $wgWikiaEnableAutoPageCreateExt;
+			if( empty( $wgWikiaEnableAutoPageCreateExt ) ) {
+				$query['redlink'] = '1';
+			}
 		}
 		$ret = $target->getLinkUrl( $query );
 		wfProfileOut( __METHOD__ );
