@@ -21,6 +21,6 @@ $wgExtensionMessagesFiles['AutoHubsPages'] = $dir . 'AutoHubsPages.i18n.php';
 
 $wgHooks[ "ArticleFromTitle" ][] = "AutoHubsPagesArticle::ArticleFromTitle";
 $wgHooks['CorporateBeforeRedirect'][] = 'AutoHubsPagesHelper::beforeRedirect';
-
+$wgHooks['CorporateBeforeMsgCacheClear'][] = 'AutoHubsPagesHelper::beforeMsgCacheClear';
 $wgAjaxExportList[] = 'AutoHubsPagesHelper::setHubsFeedsVariable';
 $wgAjaxExportList[] = 'AutoHubsPagesHelper::hideFeed';
