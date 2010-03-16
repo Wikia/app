@@ -20,7 +20,7 @@
 }
 
 .header-button, .header-button:hover, .header-button:active {
-	background-image: none;	
+	background-image: none;
 	border: 0;
 	font: bold 8pt/15px "Arial", sans-serif;
 	height: 15px;
@@ -124,7 +124,9 @@ a.greyButton big {
 	font-size: 9pt;
 	margin-right: 5px;
 }
-
+#userData a, #wikiaBranding a {
+	color: #000;
+}
 #header_username a {
 	color: #36C;
 	font-weight: bold;
