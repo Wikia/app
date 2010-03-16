@@ -159,30 +159,4 @@ foreach ($diffData as $date => $columns) {
 </table>
 </div>
 <div id="ws_visualize"></div>
-<script>
-$(function() {
-	var thead = $('#ws-main-table-result').children('thead').children('td');
-	var rows = $('#ws-main-table-result').children('tr');
-	var cols = $('#ws-main-table-result').children('tfoot').children('td');
-
-	$().log(rows);
-
-	rows.each(function(i) {
-		var row = $(this).clone();
-		var table = $('<table>');
-		table.append('<caption>').html('i chuj');
-		table.append('<thead>').append(thead);
-		
-		oThead = table.insertRow();
-		oThead thead
-		
-		table.append(row).appendTo('body');
-		table.attr('id', 'fuck');
-		$().log(table);
-		return false;
-	});
-
-	$('table#fuck').visualize();
-});
-</script>
 <!-- END OF MAIN STATISTICS TABLE -->

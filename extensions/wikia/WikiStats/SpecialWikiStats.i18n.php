@@ -221,6 +221,7 @@ $messages['en'] = array(
 	"wikistats_see_definitions" => "See definitions",
 	"wikistats_generate_stats_msg" => "Please wait ... generating ...",
 	"wikistats_generate_XLS_file_title" => "Generate XLS file for download",
+	"wikistats_language_stats" => "Language stats",
 	"wikistats_main_statistics_legend" => "Main statistics",
 	"wikistats_other_statistics_legend" => "Other statistics",
 	"wikistats_statistics_legend" => "Columns definitions",
@@ -283,8 +284,8 @@ Please [[Special:UserLogin|log in or create an account]] if you do not already h
 	"wikistats_nbr_mega" => "M = K x 1000",
 	"wikistats_nbr_giga" => "G = M x 1000",
 	"wikistats_nbr_format" => "Numbers format:",
-	"wikistats_pageviews_daily" => "Daily stats (current month)",
-	"wikistats_pageviews_month" => "Monthly stats",
+	"wikistats_daily" => "Daily stats (current month)",
+	"wikistats_month" => "Monthly stats",
 	"wikistats_current_month" => "Current month",
 	"wikistats_wikiawide_stats" => "http://community.wikia.com/wiki/Special:WikiStats",
 	"wikistats_help_stats" => "http://help.wikia.com/wiki/Help:WikiaStats",
@@ -517,8 +518,8 @@ $messages['af'] = array(
 	'wikistats_nbr_mega' => 'M = K x 1000',
 	'wikistats_nbr_giga' => 'G = M x 1000',
 	'wikistats_nbr_format' => 'Nommerformaat:',
-	'wikistats_pageviews_daily' => 'Daaglikse statistieke (huidige maand)',
-	'wikistats_pageviews_month' => 'Maandelikse statistieke',
+	'wikistats_daily' => 'Daaglikse statistieke (huidige maand)',
+	'wikistats_month' => 'Maandelikse statistieke',
 );
 
 /** Arabic (العربية)
@@ -769,8 +770,8 @@ $messages['br'] = array(
 	'wikistats_nbr_mega' => 'M = K x 1000',
 	'wikistats_nbr_giga' => 'G = M x 1000',
 	'wikistats_nbr_format' => 'Furmad an niveroù :',
-	'wikistats_pageviews_daily' => 'Stadegoù dre zeiz (er miz-mañ)',
-	'wikistats_pageviews_month' => 'Stadegoù miziek',
+	'wikistats_daily' => 'Stadegoù dre zeiz (er miz-mañ)',
+	'wikistats_month' => 'Stadegoù miziek',
 );
 
 /** Greek (Ελληνικά)
@@ -1210,8 +1211,8 @@ de noms',
 	'wikistats_nbr_mega' => 'M = K x 1000',
 	'wikistats_nbr_giga' => 'G = M x 1000',
 	'wikistats_nbr_format' => 'Format des nombres :',
-	'wikistats_pageviews_daily' => 'Statistiques journalières (mois actuel)',
-	'wikistats_pageviews_month' => 'Statistiques mensuelles',
+	'wikistats_daily' => 'Statistiques journalières (mois actuel)',
+	'wikistats_month' => 'Statistiques mensuelles',
 );
 
 /** Galician (Galego)
@@ -1424,8 +1425,8 @@ Por favor, [[Special:UserLogin|acceda ao sistema ou cree unha conta]] se aínda 
 	'wikistats_nbr_mega' => 'M = K x 1000',
 	'wikistats_nbr_giga' => 'G = M x 1000',
 	'wikistats_nbr_format' => 'Formato dos números:',
-	'wikistats_pageviews_daily' => 'Estatísticas diarias (mes actual)',
-	'wikistats_pageviews_month' => 'Estatísticas mensuais',
+	'wikistats_daily' => 'Estatísticas diarias (mes actual)',
+	'wikistats_month' => 'Estatísticas mensuais',
 );
 
 /** Hebrew (עברית)
@@ -1535,8 +1536,8 @@ $messages['hu'] = array(
 	'wikistats_nbr_mega' => 'M = K×1000',
 	'wikistats_nbr_giga' => 'G = M×1000',
 	'wikistats_nbr_format' => 'Számformátum:',
-	'wikistats_pageviews_daily' => 'Napi statisztika (aktuális hónap)',
-	'wikistats_pageviews_month' => 'Havi statisztika',
+	'wikistats_daily' => 'Napi statisztika (aktuális hónap)',
+	'wikistats_month' => 'Havi statisztika',
 );
 
 /** Interlingua (Interlingua)
@@ -1747,8 +1748,8 @@ $messages['ia'] = array(
 	'wikistats_nbr_mega' => 'M = K × 1000',
 	'wikistats_nbr_giga' => 'G = M × 1000',
 	'wikistats_nbr_format' => 'Formato del numeros:',
-	'wikistats_pageviews_daily' => 'Statisticas quotidian (mense actual)',
-	'wikistats_pageviews_month' => 'Statisticas mensual',
+	'wikistats_daily' => 'Statisticas quotidian (mense actual)',
+	'wikistats_month' => 'Statisticas mensual',
 );
 
 /** Igbo (Igbo)
@@ -1954,8 +1955,8 @@ $messages['ja'] = array(
 	'wikistats_nbr_mega' => 'M (メガ) = Kx1000',
 	'wikistats_nbr_giga' => 'G (ギガ) = Mx1000',
 	'wikistats_nbr_format' => '数値のフォーマット:',
-	'wikistats_pageviews_daily' => '一日ごとの統計 (今月)',
-	'wikistats_pageviews_month' => '月ごとの統計',
+	'wikistats_daily' => '一日ごとの統計 (今月)',
+	'wikistats_month' => '月ごとの統計',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -2152,8 +2153,8 @@ $messages['lb'] = array(
 	'wikistats_mediawiki_stats' => 'MediaWiki Statistiken:',
 	'wikistats_statistics_information' => 'Statistesch Informatiounen',
 	'wikistats_nbr_format' => 'Format vun den Zuelen:',
-	'wikistats_pageviews_daily' => 'Statistike pro Dag (aktuelle Mount)',
-	'wikistats_pageviews_month' => 'Statistike pro Mount',
+	'wikistats_daily' => 'Statistike pro Dag (aktuelle Mount)',
+	'wikistats_month' => 'Statistike pro Mount',
 );
 
 /** Macedonian (Македонски)
@@ -2365,8 +2366,8 @@ $messages['mk'] = array(
 	'wikistats_nbr_mega' => 'M = K x 1000',
 	'wikistats_nbr_giga' => 'G = M x 1000',
 	'wikistats_nbr_format' => 'Формат на бројките:',
-	'wikistats_pageviews_daily' => 'Дневни статистики (овој месец)',
-	'wikistats_pageviews_month' => 'Месечни статистики',
+	'wikistats_daily' => 'Дневни статистики (овој месец)',
+	'wikistats_month' => 'Месечни статистики',
 );
 
 /** Dutch (Nederlands)
@@ -2584,8 +2585,8 @@ U moet aangemeld zijn om de Wikia-statistieken in te zien.
 	'wikistats_nbr_mega' => 'M: K keer 1000',
 	'wikistats_nbr_giga' => 'G: M keer 1000',
 	'wikistats_nbr_format' => 'Getallenopmaak:',
-	'wikistats_pageviews_daily' => 'Dagelijkse statistieken (huidige maand)',
-	'wikistats_pageviews_month' => 'Maandelijkse statistieken',
+	'wikistats_daily' => 'Dagelijkse statistieken (huidige maand)',
+	'wikistats_month' => 'Maandelijkse statistieken',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -2754,8 +2755,8 @@ Vennligst [[Special:UserLogin|logg inn eller opprett en konto]] dersom du ikke a
 	'wikistats_nbr_mega' => 'M = K x 1000',
 	'wikistats_nbr_giga' => 'G = M x 1000',
 	'wikistats_nbr_format' => 'Nummerformat:',
-	'wikistats_pageviews_daily' => 'Daglig statistikk (denne måneden)',
-	'wikistats_pageviews_month' => 'Månedlig statistikk',
+	'wikistats_daily' => 'Daglig statistikk (denne måneden)',
+	'wikistats_month' => 'Månedlig statistikk',
 );
 
 /** Deitsch (Deitsch)
@@ -2988,8 +2989,8 @@ $messages['ru'] = array(
 	'wikistats_mediawiki_stats' => 'Статистика MediaWiki:',
 	'wikistats_statistics_information' => 'Статистическая информация',
 	'wikistats_nbr_format' => 'Формат чисел:',
-	'wikistats_pageviews_daily' => 'Ежедневная статистика (текущий месяц)',
-	'wikistats_pageviews_month' => 'Ежемесячная статистика',
+	'wikistats_daily' => 'Ежедневная статистика (текущий месяц)',
+	'wikistats_month' => 'Ежемесячная статистика',
 );
 
 /** Swedish (Svenska)
