@@ -29,6 +29,7 @@ class WikiStatsPage extends IncludableSpecialPage
     var $mAction;
 	   
 	private $allowedGroups = array('staff', 'sysop', 'janitor', 'bureaucrat');
+	private $TEST = 1;
     const USE_MEMC = 0;
 
     #--- constructor
@@ -62,7 +63,7 @@ class WikiStatsPage extends IncludableSpecialPage
 		$this->mToDate = intval($wgRequest->getVal( "to", sprintf("%d%d", date("Y"), date("m") ) ));
 		$this->mTitle = Title::makeTitle( NS_SPECIAL, "WikiStats" );
 		$this->mAction = $wgRequest->getVal("action", "");
-		$this->mCityId = $wgCityId;
+		$this->mCityId = ($this->TEST == 1 ) ? 177 : $wgCityId;
 		
 		$m = array();
 		$this->toYear = date('Y');
