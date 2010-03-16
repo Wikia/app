@@ -20,8 +20,8 @@ class ApiCreateMultiplePages extends ApiBase {
 		}
 		if ($params['type'] == 'answers') {
 			// this cannot be done in JS as NWB doesn't have acess to all msgs there
-			wfLoadExtensionMessages( 'answers' );
-			$params['category'] = wfMsgWithFallback( 'unanswered_category' );
+			wfLoadExtensionMessages( 'Answers' );
+			$params['category'] = wfMsgForContent( 'unanswered_category' );
 		}
 
 		$r = array();
@@ -95,7 +95,8 @@ class ApiCreateMultiplePages extends ApiBase {
 		return array (
 			'pagelist' => null, 
 			'category' => null,
-			'pagetext' => null
+			'pagetext' => null,
+			'type' => null,
 		);
 	}
 
@@ -103,7 +104,8 @@ class ApiCreateMultiplePages extends ApiBase {
 		return array (
 			'pagelist' => 'The titles of the pages to create. Pipe separated',
 			'category' => 'Optional category to assign the newly created pages to',
-			'pagetext' => 'Optional text for the newly created pages to'
+			'pagetext' => 'Optional text for the newly created pages to',
+			'type' => 'Optional wiki type, modyfing behaviour as needed',
 		);
 	}
 
@@ -123,5 +125,3 @@ class ApiCreateMultiplePages extends ApiBase {
         public function getVersion() { return __CLASS__ . ': $Id: '.__CLASS__.'.php '.filesize(dirname(__FILE__)."/".__CLASS__.".php").' '.strftime("%Y-%m-%d %H:%M:%S", time()).'Z wikia $'; }
 
 }
-
-
