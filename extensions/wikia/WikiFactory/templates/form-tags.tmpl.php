@@ -28,7 +28,7 @@ $.getScript(stylepath+'/common/jquery/jquery.autocomplete.js', function() {
 	<legend>Tags management  </legend>
 	<table>
 	<tr>
-	<td class="mw-label">
+	<td class="mw-label" style="width: 150px;">
 		Tags defined for this wiki
 	</td>
 	<td class="mw-input">
@@ -36,7 +36,7 @@ $.getScript(stylepath+'/common/jquery/jquery.autocomplete.js', function() {
 <?php
 	if( is_array( $tags ) ):
 		foreach( $tags as $id => $tag ):
-			echo " <strong>{$tag}</strong><sup><a href=\"";
+			echo " <a href=\"" . $title->getFullUrl().  "/{$tag}\"><strong>{$tag}</strong></a><sup><a href=\"";
 			echo $title->getFullUrl( array( "wpTagId" => $id, "wpTagName" => $tag ) );
 			echo "\" class=\"wfTagRemove\" onclick=\"return deletechecked()\" >remove</a></sup> ";
 		endforeach;
@@ -51,9 +51,34 @@ $.getScript(stylepath+'/common/jquery/jquery.autocomplete.js', function() {
 		<td class="mw-input">
 			&nbsp;
 			<input type="text" name="wpTag" id="wftaginput" />
-			<input type="submit" value="Add" />
+			<input type="submit" name="wpAddTagSubmit" value="Add" />
 		</td>
 	</tr>
+	</table>
+</fieldset>
+<fieldset>
+	<legend>Search for wikis</legend>
+	<table>
+	<tr>
+		<td class="mw-label" style="width: 150px;">
+			Tag name
+		</td>
+		<td class="mw-input">
+			&nbsp;
+			<input type="text" name="wpSearchTag" id="wftagsearchinput" value="<?php echo $searchTag; ?>" />
+			<input type="submit" name="wpSearchTagSubmit" value="Search" />
+		</td>
+	</tr>
+	<?php if( count( $searchTagWikiIds ) > 0 ): ?>
+		<tr>
+			<td class="mw-label">Tagged wikis</td>
+			<td class="mw-input">
+				<?php foreach( $searchTagWikiIds as $wikiId ): ?>
+					<a href="<?php echo $wikiFactoryUrl . "/".$wikiId; ?>"><?php echo "<strong>" . $wikiId . "</strong> (" . WikiFactory::getVarValueByName('wgServer', $wikiId) . ")"; ?></a>&nbsp;&nbsp;
+				<?php endforeach; ?>
+			</td>
+		</tr>
+	<?php endif; ?>
 	</table>
 </fieldset>
 </form
