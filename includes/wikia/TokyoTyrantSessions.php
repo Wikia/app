@@ -4,7 +4,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	die( "This file is part of MediaWiki, it is not a valid entry point" );
 }
 
-require_once( "Tyrant.php" );
+require_once( "$IP/lib/Tyrant.php" );
 
 #ttserver -port 1979 -ext /path/to/expire.lua -extpc expire 1.0 '/tmp/sessions.tct#idx=key:lex#idx=x:dec#idx=val:lex#dfunit=8'
 # where
