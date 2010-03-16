@@ -2,10 +2,13 @@
 /**
  * Configuration settings introduced by Wikia.
  *
- * Any new variables should be declared here.
- * If you want to change their value rather edit LocalSettings.php
- * than this file.
+ * Any new variables should be declared here. Since this file is used during
+ * installation, the defaults should work on any installation (including local
+ * installs).
  *
+ * If you want to change their value, edit LocalSettings.php to make a change
+ * for this specific installation. To override values for production,
+ * edit /wikia-conf/CommonSettings.php
  */
 
 # This is not a valid entry point, perform no further processing unless MEDIAWIKI is defined
@@ -428,7 +431,7 @@ include_once("{$IP}/includes/wikia/TokyoTyrantSessions.php");
  *
  * WARNING: Currently we need to dupliate this value into StaticChute::cdnStylePath.
  */
-$wgCdnStylePath = "http://images1.wikia.nocookie.net/__cb1/common"; // NOTE: When changing this, also update StaticChute::cdnStylePath
+$wgCdnStylePath = '';
 $wgBlankImgUrl = $wgCdnStylePath."/skins/common/blank.gif";
 
 /**
