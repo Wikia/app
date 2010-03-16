@@ -45,7 +45,7 @@
 </tr>
 </thead>
 <tbody>
-<?php $cols = array(); foreach ($data as $date => $columns) { ?>
+<?php $cols = array(); if (!empty($data)) { foreach ($data as $date => $columns) { ?>
 <tr id="ws-table-row-<?=$date?>">
 <?php 
 	$out = ""; $cols = array();
@@ -82,7 +82,7 @@
 	}
 ?>
 </tr>
-<?php } ?>
+<?php } } ?>
 </tbody>
 <!-- column numbers -->
 <tfoot>

@@ -503,6 +503,7 @@ class WikiStats {
 				__METHOD__,
 				$options
 			);
+			$this->mMainStats = array();
 			while( $oRow = $dbr->fetchObject( $oRes ) ) {
 				if ( !isset($this->mMainStats[$oRow->date]) ) {
 					$this->mMainStats[$oRow->date] = array();
