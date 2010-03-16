@@ -196,4 +196,14 @@ class AutoHubsPagesHelper{
 			return false;
 		}
 	}
+
+	/*
+	* Author: Tomasz Odrobny
+	* add slider msg to list of cached msg
+	*/
+	
+	static function beforeMsgCacheClear(&$list) {
+		global $wgHubsPages;
+		$list = array_marge( $list,array_values( $wgHubsPages ) ); 			
+	}
 }
