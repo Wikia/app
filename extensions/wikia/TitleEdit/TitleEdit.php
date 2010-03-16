@@ -27,6 +27,11 @@ function wfTitleEditPrintFirstHeading() {
 		return true;
 	}
 
+	$ns = $wgTitle->getNamespace();
+	if( defined( 'NS_BLOG_ARTICLE' ) && in_array( $ns, array( NS_BLOG_ARTICLE, NS_BLOG_LISTING ) ) ) {
+		return true;
+	}
+
 	wfLoadExtensionMessages( 'TitleEdit' );
 	$sk = $wgUser->getSkin();
 	$result = '';
@@ -61,7 +66,8 @@ function wfTitleEditPrintFirstHeading() {
 		$attributes['class'] = 'wikia-button';
 
 		$link = $sk->link(
-			$wgTitle, wfMsg( 'titleedit' ),
+			$wgTitle,
+			wfMsg( 'titleedit' ),
 			$attributes,
 			$query
 		);
