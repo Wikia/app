@@ -223,7 +223,8 @@ NWB.handleFirstPages = function (event){
                 Mediawiki.apiCall({
                         "action" : "createmultiplepages",
 			"pagelist" : pages.join("|"),
-                        "pagetext" : pagetext
+                        "pagetext" : pagetext,
+			"type" : NWB.type
                         }, NWB.handleFirstPagesCallback, NWB.apiFailed, "POST");
         } catch (e) {
                   Mediawiki.updateStatus(NWB.msg("nwb-error-saving-articles"));
