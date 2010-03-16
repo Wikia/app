@@ -18,8 +18,9 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  */
 class WikiFactoryPage extends SpecialPage {
 
-	private $mWiki, $mTitle, $mDomain, $mTab, $mVariableName, $mTags;
+	private $mWiki, $mTitle, $mDomain, $mTab, $mVariableName, $mTags, $mSearchTag;
 	public $mStatuses = array( "disabled", "enabled", "redirected" );
+	private $mTagWikiIds = array();
 
 	/**
 	 * constructor
@@ -122,7 +123,7 @@ class WikiFactoryPage extends SpecialPage {
 
 		$domain	= $wgRequest->getVal( "wpCityDomain", null );
 		$cityid	= $wgRequest->getVal( "cityid", null );
-		$tab 	= "variables";
+		$tab = "variables";
 		if( is_null( $cityid ) && ( isset( $subpage ) || isset( $domain ) ) ) {
 
 			/**
@@ -135,6 +136,9 @@ class WikiFactoryPage extends SpecialPage {
 					$tab = $parts[1];
 					if ( ( $tab === "variables" ) && ( isset($parts[2]) ) ) {
 						$this->mVariableName = trim($parts[2]);
+					}
+					if ( ( $tab === "tags" ) && ( isset($parts[2]) ) ) {
+						$this->mSearchTag = trim($parts[2]);
 					}
 				}
 			}
@@ -233,7 +237,13 @@ class WikiFactoryPage extends SpecialPage {
 					$info = $this->doUpdateDomains( $wgRequest );
 				break;
 				case "tags":
-					$info = $this->doUpdateTags( $wgRequest );
+					if($wgRequest->getVal('wpSearchTagSubmit') == null) {
+						$info = $this->doUpdateTags( $wgRequest );
+					}
+					else {
+						$this->mSearchTag = $wgRequest->getVal('wpSearchTag');
+						$info = $this->doSearchTags( $this->mSearchTag );
+					}
 				break;
 				case "ezsharedupload":
 					if($wgRequest->getVal('ezsuSave') != null) {
@@ -251,6 +261,9 @@ class WikiFactoryPage extends SpecialPage {
 					$tag_id  = $wgRequest->getVal( "wpTagId", false );
 					if( $tag_id ) {
 						$info = $this->doUpdateTags( $wgRequest, $tag_id );
+					}
+					if ( !empty( $this->mSearchTag ) ) {
+						$info = $this->doSearchTags( $this->mSearchTag );
 					}
 					break;
 			}
@@ -289,6 +302,11 @@ class WikiFactoryPage extends SpecialPage {
 			"user_name"   => $user_name,
 			"isDevel"     => $wgDevelEnvironment
 		);
+		if( $this->mTab === "tags" ) {
+			$vars[ 'searchTag' ] = $this->mSearchTag;
+			$vars[ 'searchTagWikiIds' ] = $this->mTagWikiIds;
+			$vars[ 'wikiFactoryUrl' ] = Title::makeTitle( NS_SPECIAL, 'WikiFactory' )->getFullUrl();
+		}
 		if( $this->mTab === "clog" ) {
 			$pager = new ChangeLogPager( $this->mWiki->city_id );
 			$vars[ "changelog" ] = array(
@@ -297,7 +315,7 @@ class WikiFactoryPage extends SpecialPage {
 				"nav"       => $pager->getNavigationBar()
 			);
 		}
-		if( $this->mTab == "ezsharedupload" ) {
+		if( $this->mTab === "ezsharedupload" ) {
 			global $wgServer;
 			$vars[ "EZSharedUpload" ] = array(
 				"active" => WikiFactory::getVarValueByName( "wgUseSharedUploads", $this->mWiki->city_id ),
@@ -454,6 +472,29 @@ class WikiFactoryPage extends SpecialPage {
 		wfProfileOut( __METHOD__ );
 
 		return Wikia::successbox( $msg );
+	}
+
+	/**
+	 * doSearchTags
+	 *
+	 * @access private
+	 * @author adi@wikia-inc.com
+	 */
+	private function doSearchTags( $searchTag ) {
+		if( empty( $searchTag ) ) {
+			$result = Wikia::errorbox( "Nothing to search" );
+		}
+		else {
+			$tagsQuery = new WikiFactoryTagsQuery( $searchTag );
+			$this->mTagWikiIds = $tagsQuery->doQuery();
+			if( count( $this->mTagWikiIds ) == 0 ) {
+				$result = Wikia::errorbox( "No wikis with \"" . $searchTag . "\" tag assigned" );
+			}
+			else {
+				$result = Wikia::successbox( count( $this->mTagWikiIds ) . " wiki(s) found with \"" . $searchTag . "\" tag assigned" );
+			}
+		}
+		return $result;
 	}
 
 	/**

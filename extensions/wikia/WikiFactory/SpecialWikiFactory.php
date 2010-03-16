@@ -41,6 +41,7 @@ require_once( $dir . '/Metrics/SpecialAWCMetrics.php' );
  * tags
  */
 require_once( $dir . '/Tags/WikiFactoryTags.php' );
+require_once( $dir . '/Tags/WikiFactoryTagsQuery.php' );
 
 /**
  * permissions
