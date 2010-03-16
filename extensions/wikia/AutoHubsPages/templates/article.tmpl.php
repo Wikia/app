@@ -89,9 +89,9 @@
 						<p><?php echo $value['city_description'] ?></p>
 						<?php if( $data['is_menager']): ?>
 							<?php if($value['hide']): ?>
-								<a class="wikia-page-link head-hide-link" href="/index.php?action=ajax&rs=AutoHubsPagesHelper::hideFeed&type=city&tag_id=<?php echo $data['tag_id'] ?>&city_id=<?php echo $value['city_id'] ?>&dir=delete">Show</a>
+								<a class="wikia-page-link head-hide-link" href="/index.php?action=ajax&rs=AutoHubsPagesHelper::hideFeed&type=city&tag_id=<?php echo $data['tag_id'] ?>&city_id=<?php echo $value['city_id'] ?>&dir=delete"><?php echo wfMsg('hub-show-feed'); ?></a>
 							<?php else: ?>
-								<a class="wikia-page-link head-hide-link" href="/index.php?action=ajax&rs=AutoHubsPagesHelper::hideFeed&type=city&tag_id=<?php echo $data['tag_id'] ?>&city_id=<?php echo $value['city_id'] ?>">Hide</a>
+								<a class="wikia-page-link head-hide-link" href="/index.php?action=ajax&rs=AutoHubsPagesHelper::hideFeed&type=city&tag_id=<?php echo $data['tag_id'] ?>&city_id=<?php echo $value['city_id'] ?>"><?php echo wfMsg('hub-hide-feed'); ?></a>
 							<?php endif; ?>
 						<?php endif; ?>
 					</div>
@@ -113,9 +113,9 @@
 						<p><?php echo $value['city_description'] ?></p>
 						<?php if( $data['is_menager']): ?>
 							<?php if($value['hide']): ?>
-								<a class="wikia-page-link head-hide-link" href="/index.php?action=ajax&rs=AutoHubsPagesHelper::hideFeed&type=city&tag_id=<?php echo $data['tag_id'] ?>&city_id=<?php echo $value['city_id'] ?>&dir=delete">Show</a>
+								<a class="wikia-page-link head-hide-link" href="/index.php?action=ajax&rs=AutoHubsPagesHelper::hideFeed&type=city&tag_id=<?php echo $data['tag_id'] ?>&city_id=<?php echo $value['city_id'] ?>&dir=delete"><?php echo wfMsg('hub-show-feed'); ?></a>
 							<?php else: ?>
-								<a class="wikia-page-link head-hide-link" href="/index.php?action=ajax&rs=AutoHubsPagesHelper::hideFeed&type=city&tag_id=<?php echo $data['tag_id'] ?>&city_id=<?php echo $value['city_id'] ?>">Hide</a>
+								<a class="wikia-page-link head-hide-link" href="/index.php?action=ajax&rs=AutoHubsPagesHelper::hideFeed&type=city&tag_id=<?php echo $data['tag_id'] ?>&city_id=<?php echo $value['city_id'] ?>"><?php echo wfMsg('hub-hide-feed'); ?></a>
 							<?php endif; ?>
 						<?php endif; ?>
 					</div>
@@ -173,9 +173,9 @@
 					| <a href="<?php echo $value['page_url'] ?>"><?php echo wfMsg('hub-blog-continue') ?></a></p>
 					<?php if( $data['is_menager']): ?>
 						<?php if ($value['hide'] ): ?>
-							<a class="wikia-page-link head-hide-link" href="/index.php?action=ajax&rs=AutoHubsPagesHelper::hideFeed&type=blog&tag_id=<?php echo $value['tag_id'] ?>&city_id=<?php echo $value['city_id'] ?>&page_id=<?php echo $value['page_id'] ?>&dir=delete" ><?php echo wfMsg('hub-blog-showarticle') ?></a>
+							<a class="wikia-page-link head-hide-link" href="/index.php?action=ajax&rs=AutoHubsPagesHelper::hideFeed&type=blog&tag_id=<?php echo $value['tag_id'] ?>&city_id=<?php echo $value['city_id'] ?>&page_id=<?php echo $value['page_id'] ?>&dir=delete" ><?php echo wfMsg('hub-show-feed'); ?></a>
 						<?php else: ?>
-							<a class="wikia-page-link head-hide-link" href="/index.php?action=ajax&rs=AutoHubsPagesHelper::hideFeed&type=blog&tag_id=<?php echo $value['tag_id'] ?>&city_id=<?php echo $value['city_id'] ?>&page_id=<?php echo $value['page_id'] ?>" ><?php echo wfMsg('corporatepage-hide'); ?></a>
+							<a class="wikia-page-link head-hide-link" href="/index.php?action=ajax&rs=AutoHubsPagesHelper::hideFeed&type=blog&tag_id=<?php echo $value['tag_id'] ?>&city_id=<?php echo $value['city_id'] ?>&page_id=<?php echo $value['page_id'] ?>" ><?php echo wfMsg('hub-hide-feed'); ?></a>
 						<?php endif;?>
 					<?php endif; ?>
 			</li>
@@ -230,9 +230,9 @@
 							<a class="wikia-wiki-link" href="<?php echo $value['wikiurl'] ?>"><?php echo $value['wikiname'] ?></a>
 							<?php if( $data['is_menager']): ?>
 								<?php if( $value['hide'] ): ?>
-									<a class="wikia-page-link head-hide-link" href="/index.php?action=ajax&rs=AutoHubsPagesHelper::hideFeed&type=article&tag_id=<?php echo $value['tag_id'] ?>&city_id=<?php echo $value['city_id'] ?>&page_id=<?php echo $value['page_id'] ?>&dir=1" >Show</a>
+									<a class="wikia-page-link head-hide-link" href="/index.php?action=ajax&rs=AutoHubsPagesHelper::hideFeed&type=article&tag_id=<?php echo $value['tag_id'] ?>&city_id=<?php echo $value['city_id'] ?>&page_id=<?php echo $value['page_id'] ?>&dir=1" ><?php echo wfMsg('hub-show-feed'); ?></a>
 								<?php else: ?>
-									<a class="wikia-page-link head-hide-link" href="/index.php?action=ajax&rs=AutoHubsPagesHelper::hideFeed&type=article&tag_id=<?php echo $value['tag_id'] ?>&city_id=<?php echo $value['city_id'] ?>&page_id=<?php echo $value['page_id'] ?>" >Hide</a>							
+									<a class="wikia-page-link head-hide-link" href="/index.php?action=ajax&rs=AutoHubsPagesHelper::hideFeed&type=article&tag_id=<?php echo $value['tag_id'] ?>&city_id=<?php echo $value['city_id'] ?>&page_id=<?php echo $value['page_id'] ?>" ><?php echo wfMsg('hub-hide-feed'); ?></a>							
 								<?php endif; ?>
 							<?php endif; ?>									
 					</span>

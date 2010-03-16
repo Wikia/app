@@ -15,8 +15,8 @@ class AutoHubsPagesHelper{
 		global $wgHubsPages;
 		wfProfileIn( __METHOD__ ); 
 
-		foreach ($wgHubsPages as $value){
-			if (strtolower($title->getUserCaseDBKey()) == strtolower($value)){
+		foreach ($wgHubsPages as $key => $value){
+			if (strtolower($title->getUserCaseDBKey()) == strtolower($key)){
 				wfProfileOut( __METHOD__ ); 
 				return true;
 			}
@@ -175,8 +175,9 @@ class AutoHubsPagesHelper{
 	*/
 	
 	static function getHubIdFromTitle($title){
+		global $wgHubsPages;
 		if (self::isHubsPage($title)){
-			return WikiFactoryTags::idFromName(strtolower($title->getUserCaseDBKey()));
+			return WikiFactoryTags::idFromName($wgHubsPages[strtolower($title->getUserCaseDBKey())]);
 		} else {
 			return false;
 		}
@@ -188,8 +189,9 @@ class AutoHubsPagesHelper{
 	*/
 
 	static function getHubNameFromTitle($title){
+		global $wgHubsPages;
 		if (self::isHubsPage($title)){
-			return strtolower($title->getUserCaseDBKey());
+			return $wgHubsPages[strtolower($title->getUserCaseDBKey())];
 		} else {
 			return false;
 		}
