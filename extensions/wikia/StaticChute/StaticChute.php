@@ -24,7 +24,7 @@ class StaticChute {
 
 	// RT #23935 - one value to purge'em all
 	// NOTE: Is this still needed now that we have a __cb1/ in wgCdnStylePath?  Maybe the stylepath should be the cache-buster?
-	const imagesCacheBuster = '000';
+	const imagesCacheBuster = '002';
 
 	public function __construct($fileType){
 		// macbre: we will return HTTP 400 when file type is invalid (RT #18825)
