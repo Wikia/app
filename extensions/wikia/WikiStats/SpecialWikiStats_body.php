@@ -25,6 +25,7 @@ class WikiStatsPage extends IncludableSpecialPage
     var $mUserRights;
     var $mSkin;
     var $mCityId;
+    var $mCityDBName;
     var $mCityDomain;
     var $mAction;
 	   
@@ -64,6 +65,7 @@ class WikiStatsPage extends IncludableSpecialPage
 		$this->mTitle = Title::makeTitle( NS_SPECIAL, "WikiStats" );
 		$this->mAction = $wgRequest->getVal("action", "");
 		$this->mCityId = ($this->TEST == 1 ) ? 177 : $wgCityId;
+		$this->mCityDBName = ($this->TEST == 1 ) ? WikiFactory::IDtoDB($this->mCityId) : $wgDBname;
 		
 		$m = array();
 		$this->toYear = date('Y');
@@ -91,11 +93,11 @@ class WikiStatsPage extends IncludableSpecialPage
 		$domain = $wgRequest->getVal( "ws-domain", "" );
 		if ( !empty($domain) && $this->userIsSpecial == 1 ) {
         	$this->mCityId = WikiFactory::DomainToId($domain);
+        	$this->mCityDBName = WikiFactory::IDToDB($this->mCityId);
         	$this->mCityDomain = $domain;
 		} else {
-        	$this->mCityDomain = WikiFactory::DBToDomain($wgDBname);
+        	$this->mCityDomain = WikiFactory::DBToDomain($this->mCityDBName);
 		}
-		
 
         #--- WikiaGenericStats instance
         $this->mStats = WikiStats::newFromId($this->mCityId);
@@ -211,6 +213,7 @@ class WikiStatsPage extends IncludableSpecialPage
 			"wgStatsExcludedNonSpecialGroup" => $wgStatsExcludedNonSpecialGroup
         ) );
 		$wgOut->addHTML( $this->showMenu() );
+		$wgOut->addHTML( $this->mStats->getBasicInformation() );
         $wgOut->addHTML( $oTmpl->execute("main-table-stats") ); 
         
 		$oTmpl->set_vars( array(
@@ -232,6 +235,12 @@ class WikiStatsPage extends IncludableSpecialPage
 	}
 
 	private function showCurrent() {
+        wfProfileIn( __METHOD__ );
+        echo __METHOD__ ;
+        wfProfileOut( __METHOD__ );
+	}
+
+	private function showCompare() {
         wfProfileIn( __METHOD__ );
         echo __METHOD__ ;
         wfProfileOut( __METHOD__ );

@@ -2,9 +2,10 @@
 $tabsUrl = array(
 	0 => sprintf("%s/%d/main", $mTitle->getLocalUrl(), $wgCityId),
 	1 => sprintf("%s/%d/month", $mTitle->getLocalUrl(), $wgCityId),
-	2 => sprintf("%s/%d/current", $mTitle->getLocalUrl(), $wgCityId)
+	2 => sprintf("%s/%d/current", $mTitle->getLocalUrl(), $wgCityId),
+	2 => sprintf("%s/%d/compare", $mTitle->getLocalUrl(), $wgCityId)
 );
-$tabsName = array( "ws-main", "ws-month", "ws-day" );
+$tabsName = array( "ws-main", "ws-month", "ws-day", "ws-compare" );
 ?>
 <script type="text/javascript">
 var tabsName = new Array( <?= "'" . implode("','", $tabsName) . "'" ?> );
@@ -68,7 +69,8 @@ function reloadTab() {
 	<ul>
 		<li><a href="<?=$tabsUrl[0]?>#ws-main"><span><?=wfMsg('wikistats_main_statistics_legend')?></span></a></li>
 		<li><a href="<?=$tabsUrl[1];?>#ws-month"><span><?=wfMsg('wikistats_current_month')?></span></a></li>
-		<li><a href="<?=$tabsUrl[2];?>#ws-day"><span><?=wfMsg('wikistats_pageviews_daily')?></span></a></li>
+		<li><a href="<?=$tabsUrl[2];?>#ws-day"><span><?=wfMsg('wikistats_daily')?></span></a></li>
+		<li><a href="<?=$tabsUrl[2];?>#ws-compare"><span><?=wfMsg('wikistats_comparision')?></span></a></li>
 	</ul>
 	<div id="<?=$tabsName[0]?>"></div>
 	<div id="<?=$tabsName[1]?>"></div>
