@@ -67,8 +67,7 @@ function wfTitleEditPrintFirstHeading() {
 
 		$link = $sk->link(
 			$wgTitle, wfMsg( 'titleedit' ),
-			$attributes,
-			''
+			$attributes
 		);
 	}
 
