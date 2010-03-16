@@ -120,20 +120,14 @@ a.greyButton big {
 
 /*** USER DATA ***/
 #userData {
-	height: 32px;
+	line-height: 32px;
 	position: absolute;
 	right: 5px;
 	top: 0;
 }
-#userData li {
-	float: left;
+#userData span {
 	font-size: 9pt;
-	line-height: 32px;
-	margin-right: 8px;
-}
-.loggedout #userData li {
-	float: none;
-	display: inline;
+	margin-right: 5px;
 }
 
 #header_username a {
@@ -282,12 +276,6 @@ a.greyButton big {
 	position: absolute;
 	top: 0;
 	white-space: nowrap;
-}
-#requestWikiData li {
-	float: left;
-	font-size: 9pt;
-	line-height: 32px;
-	margin-right: 8px;
 }
 
 /*** WIDGET COCKPIT ***/
