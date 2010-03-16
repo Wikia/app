@@ -200,44 +200,44 @@
 	top: -1px;
 }
 
-.sprite-small.settings { background-position:  0 -74px; }
-.sprite-small.sorted { background-position:  -12px -74px; }
-.sprite-small.sort { background-position:  -24px -74px; }
-.sprite-small.add { background-position:  -36px -74px; }
-.sprite-small.close { background-position:  -48px -74px; }
+.sprite-small.settings { background-position:  0 -94px; }
+.sprite-small.sorted { background-position:  -12px -94px; }
+.sprite-small.sort { background-position:  -24px -94px; }
+.sprite-small.add { background-position:  -36px -94px; }
+.sprite-small.close { background-position:  -48px -94px; }
 
-.sprite.edit { background-position: 0 -86px; }
-.sprite.new { background-position: -16px -86px; }
-.sprite.photo { background-position: -32px -86px; }
-.sprite.video { background-position: -48px -86px; }
-.sprite.close { background-position: -64px -86px; }
+.sprite.edit { background-position: 0 -106px; }
+.sprite.new { background-position: -16px -106px; }
+.sprite.photo { background-position: -32px -106px; }
+.sprite.video { background-position: -48px -106px; }
+.sprite.close { background-position: -64px -106px; }
 
-.sprite.history { background-position: 0 -102px; }
-.sprite.pagelink { background-position: -16px -102px; }
-.sprite.move { background-position: -32px -102px; }
-.sprite.protect { background-position: -48px -102px; }
-.sprite.viewsource { background-position: -64px -102px; }
+.sprite.history { background-position: 0 -122px; }
+.sprite.pagelink { background-position: -16px -122px; }
+.sprite.move { background-position: -32px -122px; }
+.sprite.protect { background-position: -48px -122px; }
+.sprite.viewsource { background-position: -64px -122px; }
 
-.sprite.ok { background-position: 0 -118px; }
-.sprite.error { background-position: -16px -118px; }
-.sprite.add { background-position: -32px -118px; }
-.sprite.delete { background-position: -48px -118px; }
-.sprite.random { background-position: -64px -118px; }
+.sprite.ok { background-position: 0 -138px; }
+.sprite.error { background-position: -16px -138px; }
+.sprite.add { background-position: -32px -138px; }
+.sprite.delete { background-position: -48px -138px; }
+.sprite.random { background-position: -64px -138px; }
 
-.sprite.user { background-position: 0 -134px; }
-.sprite.bloglist { background-position: -16px -134px; }
-.sprite.blog { background-position: -32px -134px; }
-.sprite.talk { background-position: -48px -134px; }
-.sprite.share { background-position: -64px -134px; }
+.sprite.user { background-position: 0 -154px; }
+.sprite.bloglist { background-position: -16px -154px; }
+.sprite.blog { background-position: -32px -154px; }
+.sprite.talk { background-position: -48px -154px; }
+.sprite.share { background-position: -64px -154px; }
 
-.sprite.recent { background-position: 0 -150px; }
-.sprite.watch { background-position: -16px -150px; }
-.sprite.unwatch { background-position: -32px -150px; }
-.sprite.search { background-position: -48px -150px; }
-.sprite.refresh { background-position: -64px -150px; }
+.sprite.recent { background-position: 0 -170px; }
+.sprite.watch { background-position: -16px -170px; }
+.sprite.unwatch { background-position: -32px -170px; }
+.sprite.search { background-position: -48px -170px; }
+.sprite.refresh { background-position: -64px -170px; }
 
-.sprite.back { background-position: 0 -166px; }
-.sprite.magnify-clip { background-position: -16px -166px; }
+.sprite.back { background-position: 0 -186px; }
+.sprite.magnify-clip { background-position: -16px -186px; }
 
 .sprite.progress { background-image: url(http://images.wikia.com/common/skins/common/images/ajax.gif); }
 
