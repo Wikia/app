@@ -443,12 +443,54 @@ class WikiaStatsAutoHubsConsumerDB {
 		foreach( $out as $key => $val ) {
 			$avatar = Masthead::newFromUserId( $val['user_id'] );			
 			$out[$key]['avatar'] = $avatar->display( 30, 30 );   
-			$out[$key]['userpage'] = 'http://community.wikia.com/User:' . $val['username'];                   
+			$out[$key]['userpage'] = $this->getUserWiki($val['user_id']). 'User:' . $val['username'];                   
 		}
 
 		$out = array("value" => $out, "age" => time());
 		$wgMemc->set( $mcKey, $out,60*60 );
 		wfProfileOut( __METHOD__ );
+		return $out;
+	}
+
+	public function getUserWiki( $user_id ) {
+		global $wgMemc, $wgExternalDatawareDB;
+		
+		$dbw = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );			
+		
+		$mcKey = wfSharedMemcKey( "auto_hubs", "user_wiki", $user_id  );
+		
+		$out = $wgMemc->get($mcKey,null);
+		if( !empty($out) ) {
+			return $out;
+		}
+		
+		$res = $dbw->select(
+				array( 'user_summary' ),
+				array( 'user_id , 
+						city_id ' ),
+				"city_id > 0 and user_id  = " . ((int) $user_id),
+				__METHOD__,
+				array(
+					'ORDER BY' 	=> 'ts_edit_last desc',
+					'LIMIT'		=> 1
+				)
+		);	
+		
+		$row = $this->dbs->fetchRow( $res );
+		
+		$dbc = WikiFactory::db( DB_MASTER );
+
+		$res = $dbc->select(
+				array( "city_list"),
+				array( " city_url " ),
+				" city_id  = " . ((int) $row['city_id']),
+				__METHOD__
+		);
+		
+		$out = $this->dbs->fetchRow( $res );
+		$out = $out['city_url'];
+		
+		$wgMemc->set( $mcKey, $out,60*60*24 );
 		return $out;
 	}
 
@@ -607,11 +649,11 @@ class WikiaStatsAutoHubsConsumerDB {
 
 		wfProfileIn( __METHOD__ );
 		
-	    $mcKey = wfSharedMemcKey( "auto_hubs", "blogi_info", $page_id );
+	    $mcKey = wfSharedMemcKey( "auto_hubs", "blogi_api_info", $wikiurl, $page_id );
 		
 	    $out = $wgMemc->get($mcKey,null);
 		if( !empty($out) ) {
-		//	return $out;
+			return $out;
 		}
 		
 		$html_out = Http::get( $wikiurl."/api.php?action=blogs&page_id=".( (int) $page_id)."&summarylength=20&format=json" );
@@ -621,13 +663,16 @@ class WikiaStatsAutoHubsConsumerDB {
 			return array();
 		}
 		
-		$wgMemc->set($mcKey, $wikis['blogpage'][$page_id], 60*60 );
-		wfProfileOut( __METHOD__ );
 
-	//	shortenText
 
 		$this->shortenText($wikis['blogpage'][$page_id]['description'], 30);
-		//description
+		
+		$search = array('@<script[^>]*?>.*?</script>@si');
+		$wikis['blogpage'][$page_id]['description'] = preg_replace($search, '', $wikis['blogpage'][$page_id]['description']);
+		
+		$wgMemc->set($mcKey, $wikis['blogpage'][$page_id], 60*60 );
+
+		wfProfileOut( __METHOD__ );
 		return $wikis['blogpage'][$page_id];
 	}
 	

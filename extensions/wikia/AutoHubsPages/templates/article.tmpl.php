@@ -85,7 +85,7 @@
 				<li class="clearfix  <?php echo $value['hide'] ? 'hide-blog':''; ?>">
 					<span class="green-box"><?php echo $lp; ?></span>
 					<div class="top-wiki-data">
-						<h2><a href="#" class="top-wiki-link"><?php echo $value['city_title'] ?></a></h2>
+						<h2><a href="<?php echo $value['city_url'] ?>" class="top-wiki-link"><?php echo $value['city_title'] ?></a></h2>
 						<p><?php echo $value['city_description'] ?></p>
 						<?php if( $data['is_menager']): ?>
 							<?php if($value['hide']): ?>
@@ -109,7 +109,7 @@
 				<li class="clearfix  <?php echo $value['hide'] ? 'hide-blog':''; ?>">
 					<span class="green-box"><?php echo $lp; ?></span>
 					<div class="top-wiki-data">
-						<h2><a href="#"><?php echo $value['city_title'] ?></a></h2>
+						<h2><a href="<?php echo $value['city_url'] ?>"><?php echo $value['city_title'] ?></a></h2>
 						<p><?php echo $value['city_description'] ?></p>
 						<?php if( $data['is_menager']): ?>
 							<?php if($value['hide']): ?>
