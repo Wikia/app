@@ -1640,9 +1640,9 @@ if( $custom_user_data ) {
 				<span id="userLogin">
 					<a rel="nofollow" class="ajaxLogin" id="login" href="<?= htmlspecialchars($this->data['userlinks']['login']['href']) ?>"><?= htmlspecialchars($this->data['userlinks']['login']['text']) ?></a>
 				</span>
-				<span>
+				
 					<a rel="nofollow" class="wikia-button" id="register" href="<?= htmlspecialchars($this->data['userlinks']['register']['href']) ?>"><?= htmlspecialchars($this->data['userlinks']['register']['text']) ?></a>
-				</span>
+				
 <?php
 	}
 }
