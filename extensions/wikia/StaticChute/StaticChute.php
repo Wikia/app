@@ -12,7 +12,7 @@ class StaticChute {
 	
 	// TODO: FIXME: This is not great having this here AND in wgCdnStylePath in CommonSettings, etc., but since StaticChute
 	// does not load the MediaWiki stack in many cases, not sure what a better longterm solution would be.
-	public $cdnStylePath = "http://images1.wikia.nocookie.net/__cb1/common";
+	public $cdnStylePath = "http://images1.wikia.nocookie.net/__cb19979/common";
 
 	public $config = array();
 
@@ -21,10 +21,6 @@ class StaticChute {
 
 	// macbre: RT #18765
 	private $theme = false;
-
-	// RT #23935 - one value to purge'em all
-	// NOTE: Is this still needed now that we have a __cb1/ in wgCdnStylePath?  Maybe the stylepath should be the cache-buster?
-	const imagesCacheBuster = '002';
 
 	public function __construct($fileType){
 		// macbre: we will return HTTP 400 when file type is invalid (RT #18825)
@@ -352,7 +348,8 @@ class StaticChute {
 		foreach($files as $file){
 			$data .= file_get_contents($file);
 		}
-		return md5($data . self::imagesCacheBuster);
+		global $wgCdnStylePath;
+		return md5($data . $wgCdnStylePath);
 	}
 
 	public function getChuteHtmlForPackage($package, $type = null){
@@ -531,11 +528,7 @@ class StaticChute {
 	public function minifyCssData($css){
 		require_once dirname(__FILE__) . '/Minify_CSS_Compressor.php';
 
-		// macbre: RT #11257 - add ? to images included in CSS
-		$css = preg_replace("#\.(png|gif)([\"'\)]+)#s", '.\\1?' . self::imagesCacheBuster . '\\2', $css);
-
 		// Replace the local image URLs with the CDN's URL anywhere we've indicated to do this.
-
 		// If a line has a "/* $wgCdnStylePath */" comment after it, modify the URL to start with the actual wgCdnStylePath.
 		// This can't be in the line itself (as in the .sql setup files) because that's not valid in CSS to have a comment inside a line.
 		$css = preg_replace("/([\(][\"']?)([^\n]*?)\s*\/\*\s*[\\\$]?wgCdnStylePath\s*\*\//is", '\\1'.$this->cdnStylePath.'\\2', $css);
