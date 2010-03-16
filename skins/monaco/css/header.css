@@ -109,11 +109,6 @@ a.bigButton small {
 	width: 300px;
 }
 
-/* macbre: greyed out buttons */
-a.greyButton big, a.greyButton small {
-	background: url(http://images.wikia.com/common/releases_MagCloud/skins/monaco/images/grey_button.png?1) no-repeat; /* TODO */
-}
-
 a.greyButton big {
 	color: #111;
 }
