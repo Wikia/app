@@ -57,13 +57,15 @@ function wfAutoPageCreateViewPage( $article, $out, &$text, &$return404 ) {
 				$out->setRobotPolicy( 'noindex,nofollow' );
 			}
 			$overlayMsg4JS = Xml::escapeJsString( wfMsgExt( $overlayMsgKey, "parseinline" ) );
-			$js = <<<END
+			if( $overlayMsg4JS != "-" ) {
+				$js = <<<END
 wgAfterContentAndJS.push( function() { $( function() {
 	$("#wikia_page").prepend("<div id=\"NoArticleTextNotice\">{$overlayMsg4JS}<div id=\"NoArticleTextNoticeClose\" /></div>");
 	$("#NoArticleTextNoticeClose").click( function() { $(this).parent().slideUp() } );
 } ) } );
 END;
-			$out->addInlineScript( $js );
+				$out->addInlineScript( $js );
+			}
 	}
 	return false;
 }
