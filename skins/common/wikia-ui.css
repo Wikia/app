@@ -239,6 +239,8 @@
 .sprite.back { background-position: 0 -186px; }
 .sprite.magnify-clip { background-position: -16px -186px; }
 
-.sprite.progress { background-image: url(http://images.wikia.com/common/skins/common/images/ajax.gif); }
+.sprite.progress { 
+	background-image: url(/skins/common/images/ajax.gif); /* $wgCdnStylePath */ 
+}
 
 /* @end */
