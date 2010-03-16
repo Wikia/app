@@ -565,7 +565,7 @@ EOS;
 		// use WikiaScriptLoader to load StaticChute in parallel with other scripts added by wgOut->addScript
 		global $wgAllInOne;
 		wfProfileIn(__METHOD__ . '::JSloader');
-		
+
 		$allinone = $wgRequest->getBool('allinone', $wgAllInOne);
 
 		$jsReferences = array();
@@ -573,12 +573,12 @@ EOS;
 		if($allinone && $package == 'monaco_anon_article_js') {
 			global $parserMemc, $wgStyleVersion, $wgEnableViewYUI;
 			$cb = $parserMemc->get(wfMemcKey('wgMWrevId'));
-			
+
 			$addParam = "";
 			if (!empty($wgEnableViewYUI)) {
-				$addParam = "&yui=1";	
-			}			
-			
+				$addParam = "&yui=1";
+			}
+
 			global $wgDevelEnvironment;
 			if(empty($wgDevelEnvironment)){
 				$prefix = "__wikia_combined/";
@@ -589,11 +589,11 @@ EOS;
 			$jsReferences[] = "/{$prefix}cb={$cb}{$wgStyleVersion}&type=CoreJS". $addParam ."&server=ap8";
 		} else {
 			$jsHtml = $StaticChute->getChuteHtmlForPackage($package);
-			
+
 			if ($package == "monaco_anon_article_js") {
-				$jsHtml .= $StaticChute->getChuteHtmlForPackage("yui");				
+				$jsHtml .= $StaticChute->getChuteHtmlForPackage("yui");
 			}
-			
+
 			// get URL of StaticChute package (or a list of separated files) and use WSL to load it
 			preg_match_all("/src=\"([^\"]+)/", $jsHtml, $matches, PREG_SET_ORDER);
 
@@ -617,19 +617,22 @@ EOS;
 		// scripts from $wgOut->mScripts
 		// <script type="text/javascript" src="URL"></script>
 		// load them using WSL and remove from $wgOut->mScripts
-		global $wgJsMimeType;
+		//
+		// macbre: Perform only for Monaco skin! New Answers skin does not use WikiaScriptLoader
+		if (get_class($this) == 'SkinMonaco') {
+			global $wgJsMimeType;
 
-		$headScripts = $tpl->data['headscripts'];
-		preg_match_all("#<script type=\"{$wgJsMimeType}\" src=\"([^\"]+)\"></script>#", $headScripts, $matches, PREG_SET_ORDER);
-		foreach($matches as $script) {
-			$jsReferences[] = str_replace('&amp;', '&', $script[1]);
-			$headScripts = str_replace($script[0], '', $headScripts);
-		}
-		$tpl->data['headscripts'] = $headScripts;
+			$headScripts = $tpl->data['headscripts'];
+			preg_match_all("#<script type=\"{$wgJsMimeType}\" src=\"([^\"]+)\"></script>#", $headScripts, $matches, PREG_SET_ORDER);
+			foreach($matches as $script) {
+				$jsReferences[] = str_replace('&amp;', '&', $script[1]);
+				$headScripts = str_replace($script[0], '', $headScripts);
+			}
+			$tpl->data['headscripts'] = $headScripts;
 
-		// generate code to load JS files
-		$jsReferences = Wikia::json_encode($jsReferences);
-		$jsLoader = <<<EOF
+			// generate code to load JS files
+			$jsReferences = Wikia::json_encode($jsReferences);
+			$jsLoader = <<<EOF
 
 		<script type="text/javascript">/*<![CDATA[*/
 			(function(){
@@ -641,7 +644,8 @@ EOS;
 		/*]]>*/</script>
 EOF;
 
-		$tpl->set('JSloader', $jsLoader);
+			$tpl->set('JSloader', $jsLoader);
+		}
 
 		wfProfileOut(__METHOD__ . '::JSloader');
 
