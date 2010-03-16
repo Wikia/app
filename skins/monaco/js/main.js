@@ -195,8 +195,8 @@ function openLogin(event) {
 function showComboAjaxForPalceHolder(element,isPlaceholder,callback) {
 	if ( typeof showComboAjaxForPalceHolder.statusAjaxLogin == 'undefined' ) { // java script static var
 		showComboAjaxForPalceHolder.statusAjaxLogin = false;
-    }
-	$('html, body').attr("scrollTop",0);
+	}
+
 	if ( (typeof wgIsLogin == 'undefined') || (wgIsLogin)
 		|| (typeof wgComboAjaxLogin == 'undefined') || (!wgComboAjaxLogin) ) {
 		return false;
@@ -217,6 +217,10 @@ function showComboAjaxForPalceHolder(element,isPlaceholder,callback) {
    		.height($(document).height())
 		.css({zIndex: 9999}).fadeTo("fast", 0.65); */
 	showComboAjaxForPalceHolder.statusAjaxLogin = true;
+
+	// scroll top
+	window.scrollTo(0,0);
+
 	$().getModal(window.wgScript + '?action=ajax&rs=GetComboAjaxLogin&uselang=' + window.wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion,  false, {
 			callback: function() {
 				$.getScript(window.wgScript + '?action=ajax&rs=getRegisterJS&uselang=' + window.wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion, function() {
