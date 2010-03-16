@@ -988,6 +988,7 @@ footer {
 #MainArticle #hub-featured-box {
   float: left;
   width: 620px;
+  margin-top: 10px;
 }
 
 #MainArticle #hub-featured-box #hub-top-wikis {
@@ -1006,6 +1007,22 @@ footer {
   background-color: pink;
   height: 300px;
   margin-bottom: 30px;
+}
+
+#MainArticle #hub-featured-box #spotlight-slider ul {
+  padding: 0 0;
+}
+
+#MainArticle #hub-featured-box #spotlight-slider .nav {
+  top: 240px;
+}
+
+#MainArticle #hub-featured-box #spotlight-slider .description h2 {
+  font-size: 24px;
+}
+
+#MainArticle #hub-featured-box #spotlight-slider .description p {
+  font-size: 16px;
 }
 
 #MainArticle #hub-top-wikis #top-wiki-info {
@@ -1043,7 +1060,7 @@ footer {
 
 #MainArticle #top-wiki-meta-box {
   float: right;
-  width: 400px;
+  width: 450px;
   text-align: center;
   margin: 10px 0;
 }
