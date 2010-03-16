@@ -18,6 +18,12 @@ class ApiCreateMultiplePages extends ApiBase {
 		if (empty($params['pagelist'])){
                         $this->dieUsageMsg(array('missingparam', 'pagelist'));
 		}
+		if ($params['type'] == 'answers') {
+			// this cannot be done in JS as NWB doesn't have acess to all msgs there
+			wfLoadExtensionMessages( 'answers' );
+			$params['category'] = wfMsgWithFallback( 'unanswered_category' );
+		}
+
 		$r = array();
 
 		$pages = explode('|', $params['pagelist']);
