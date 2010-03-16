@@ -956,3 +956,14 @@ function wfGetMainTTCache() {
 	
 	return $cache;
 }
+
+/* this is an ugly hack. DO NOT use unless absolutely necessary */
+function wfMsgWithFallback( $key ) {
+	$msg = wfMsgForContent( $key );
+
+	if ( wfEmptyMsg( $key, $msg ) ) {
+		$msg = wfMsgExt( $key, array( 'language' => 'en' ) );
+	}
+
+	return $msg;
+}
