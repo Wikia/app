@@ -264,7 +264,7 @@ class CorporateBaseTemplate extends QuickTemplate {
 
 		<!-- headscripts -->
 		<!--[if IE]>
-		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<script>/*@cc_on'abbr article aside audio canvas details figcaption figure footer header hgroup mark menu meter nav output progress section summary time video'.replace(/\w+/g,function(n){document.createElement(n)})@*/</script>
 		<![endif]-->
 		<?php $this->html('wikia_headscripts'); ?>
 		<?php $this->html('static_chute_js') ?>
