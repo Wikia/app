@@ -16,7 +16,7 @@ $StaticChute->useLocalChuteUrl();
 echo $StaticChute->getChuteHtmlForPackage('monaco_loggedin_js');
 ?>
 <script type="text/javascript" src="/extensions/wikia/JavascriptAPI/Mediawiki.js?<?= $wgStyleVersion ?>"></script>
-<script type="text/javascript" src="/extensions/wikia/NewWikiBuilder/main.js?<?= filemtime(dirname(__FILE__) . '/main.js')?>"></script>
+<script type="text/javascript" src="/extensions/wikia/NewWikiBuilder/main.js?<?= $wgStyleVersion ?>"></script>
 <script type="text/javascript">
 // Set up the cookie prefix, which is set in Mediawiki as $wgCookiePrefix
 Mediawiki.cookiePrefix = "wikicities";
