@@ -771,6 +771,13 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->mWikiData[ "hub"        ] = $this->awcCategory;
 		$this->mWikiData[ "name"       ] = strtolower( trim( $this->awcDomain ) );
 		$this->mWikiData[ "title"      ] = $fixedTitle . " Wiki";
+
+		switch( $this->mType ) {
+			case "answers":
+				$this->mWikiData[ "title"      ] = $fixedTitle . " Answers";
+				break;
+		}
+
 		$this->mWikiData[ "language"   ] = $this->awcLanguage;
 		$this->mWikiData[ "subdomain"  ] = $this->mWikiData[ "name"];
 		$this->mWikiData[ "redirect"   ] = $this->mWikiData[ "name"];
@@ -1525,6 +1532,7 @@ class AutoCreateWikiPage extends SpecialPage {
 				$WFSettingsVars[ "wgEnableMagCloudExt"               ] = false;
 				$WFSettingsVars[ "wgEnableAnswersMonacoWidget"       ] = false;
 				$WFSettingsVars[ "wgEnableMagicAnswer"               ] = false;
+				$WFSettingsVars[ "wgEnableCategoryHubsExt"           ] = false;
 				break;
 		}
 
