@@ -112,6 +112,8 @@ EOD;
 	global $wgWidgetAnswersForceCategoryForAsk;
 	if (!empty($wgWidgetAnswersForceCategoryForAsk)) {
 		$category = $wgWidgetAnswersForceCategoryForAsk;
+
+		if ("-" == $category) $category = "";
 	} else {
 		$category = $wgSitename;
 	}
