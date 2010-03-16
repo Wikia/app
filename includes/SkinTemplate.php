@@ -742,7 +742,7 @@ class SkinTemplate extends Skin {
 				$istalkclass = $istalk?' istalk':'';
 				$content_actions['edit'] = array(
 					'class' => ((($action == 'edit' or $action == 'submit') and $section != 'new') ? 'selected' : '').$istalkclass,
-					'text' => $this->mTitle->exists()
+					'text' => $this->mTitle->isKnown()
 						? wfMsg( 'edit' )
 						: wfMsg( 'create' ),
 					'href' => $this->mTitle->getLocalUrl( $this->editUrlOptions() )

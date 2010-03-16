@@ -3437,7 +3437,7 @@ class Title {
 	 * @return \type{\bool} TRUE or FALSE
 	 */
 	public function isAlwaysKnown() {
-		global $wgEnableCategoryBlueLinks;
+		global $wgEnableCategoryBlueLinks, $wgWikiaEnableAutoPageCreateExt;
 		if ($wgEnableCategoryBlueLinks && $this->mNamespace == NS_CATEGORY){
 			return true;
 		}
@@ -3451,7 +3451,8 @@ class Title {
 		case NS_SPECIAL:
 			return SpecialPage::exists( $this->getDBKey() );  // valid special page
 		case NS_MAIN:
-			return $this->mDbkeyform == '';  // selflink, possibly with fragment
+			return $this->mDbkeyform == ''  // selflink, possibly with fragment
+				|| !empty( $wgWikiaEnableAutoPageCreateExt );
 		case NS_MEDIAWIKI:
 			// If the page is form Mediawiki:message/lang, calling wfMsgWeirdKey causes
 			// the full l10n of that language to be loaded. That takes much memory and
@@ -3461,6 +3462,9 @@ class Title {
 			list( $basename, /* rest */ ) = explode( '/', $this->mDbkeyform, 2 );
 			return wfMsgWeirdKey( $basename );  // known system message
 		default:
+			if( !empty( $wgWikiaEnableAutoPageCreateExt ) ) {
+				return true;
+			}
 			return false;
 		}
 	}
