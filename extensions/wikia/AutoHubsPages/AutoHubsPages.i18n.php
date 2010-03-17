@@ -10,11 +10,11 @@ $messages = array();
 
 $messages['en'] = array(
         'unhide' => 'Unhide',
-	'hub-blog-header' => '$1 Blogs',
-	'hub-hotspot-header' => '$1 Hot Spots',
-	'hub-topusers-header' => '$1 Top Contributors',
+	'hub-blog-header' => 'Top $1 Posts',
+	'hub-hotspot-header' => 'Hot Spots',
+	'hub-topusers-header' => 'Top $1 Users',
 	'hub-featured' => 'Top $1 Wikis',
-	'hub-header' => 'Wikia $1 Hub',
+	'hub-header' => '$1 Wikis',
 	'hub-hotspot-info' => 'These are the hottest pages this week, ranked by most editors.',
 	'hub-featured-articles' => 'articles',
 	'hub-featured-pageviews' => 'monthly pageviews',
@@ -24,6 +24,7 @@ $messages['en'] = array(
 	'hub-topusers-editpoints' => 'edit points', 
 	'hub-hotspot-from' => 'from',
 	'hub-hide-feed' => 'Hide feed',
-	'hub-show-feed' => 'Show Feed'
+	'hub-show-feed' => 'Show Feed',
+	'hub-contributors-info' => 'These are the top users this week, ranked by most edits.'
 );
 

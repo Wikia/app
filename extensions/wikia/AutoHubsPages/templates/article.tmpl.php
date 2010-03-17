@@ -1,4 +1,4 @@
-<?php wfSuppressWarnings();  ?>
+<?php wfSuppressWarnings(); ?>
 <input type="hidden" id="autohubTagDB" name="autohubTagDB" value="<?php echo $data['tagname'] ?>" />
 <h1 id="hub-name"><?php echo wfMsg('hub-header', $data['title']) ?></h1>
 
@@ -15,7 +15,7 @@
 				<div class="description">
 					<h2><?php echo $value['title'] ?></h2>
 					<p><?php echo $value['desc'] ?></p>
-					<a href="<?php echo $value['href'] ?>" class="wikia_button secondary">
+					<a href="<?php echo $value['href'] ?>" class="wikia-button secondary">
 						<span><?php echo wfMsg('corporatepage-go-to-wiki',$value['title']); ?></span>
 					</a>
 				</div>
@@ -40,7 +40,7 @@
 	<section id="hub-top-wikis"<?php echo $hidetopwikis ?>>
 		<h1><?php echo wfMsg('hub-featured', $data['title']) ?></h1>
 		<?php
-			global $wgUser;	
+			global $wgUser, $wgStylePath;	
 			if( $wgUser->isAllowed( 'corporatepagemanager' ) ) {
 				if( $data['var_feeds']['topwikis'] ) {
 		?>
@@ -58,7 +58,7 @@
 			}
 		?>
 
-		<div id="top-wiki-info">			
+		<div id="top-wiki-info" style="display:none;">			
 			<div class="shrinkwrap">
 				<div id="stuff-it">&nbsp;</div>
 				<div class="clearfix">
@@ -86,30 +86,6 @@
 					<span class="green-box"><?php echo $lp; ?></span>
 					<div class="top-wiki-data">
 						<h2><a href="<?php echo $value['city_url'] ?>" class="top-wiki-link"><?php echo $value['city_title'] ?></a></h2>
-						<p><?php echo $value['city_description'] ?></p>
-						<?php if( $data['is_menager']): ?>
-							<?php if($value['hide']): ?>
-								<a class="wikia-page-link head-hide-link" href="/index.php?action=ajax&rs=AutoHubsPagesHelper::hideFeed&type=city&tag_id=<?php echo $data['tag_id'] ?>&city_id=<?php echo $value['city_id'] ?>&dir=delete"><?php echo wfMsg('hub-show-feed'); ?></a>
-							<?php else: ?>
-								<a class="wikia-page-link head-hide-link" href="/index.php?action=ajax&rs=AutoHubsPagesHelper::hideFeed&type=city&tag_id=<?php echo $data['tag_id'] ?>&city_id=<?php echo $value['city_id'] ?>"><?php echo wfMsg('hub-hide-feed'); ?></a>
-							<?php endif; ?>
-						<?php endif; ?>
-					</div>
-				</li>
-				<?php $lp ++;?>
-				<?php endforeach ;?>
-			</ul>
-	
-			<ul id="top-wikis-list-1">
-				<?php $lp = 11;?>
-				<?php if( $data['is_menager']): ?>
-					<?php $lp = 16;?>
-				<?php endif; ?>
-				<?php foreach ($data['topWikis2'] as $value): ?>
-				<li class="clearfix  <?php echo $value['hide'] ? 'hide-blog':''; ?>">
-					<span class="green-box"><?php echo $lp; ?></span>
-					<div class="top-wiki-data">
-						<h2><a href="<?php echo $value['city_url'] ?>"><?php echo $value['city_title'] ?></a></h2>
 						<p><?php echo $value['city_description'] ?></p>
 						<?php if( $data['is_menager']): ?>
 							<?php if($value['hide']): ?>
@@ -158,7 +134,7 @@
 	
 			}
 		?>
-	
+			
 		<ul id="hub-blog-articles">
 			<?php foreach( $data['topBlogs'] as $value ): ?>
 			<li class="clearfix <?php echo $value['hide'] ? 'hide-blog':''; ?>">
@@ -169,8 +145,7 @@
 					<p><?php echo $value['description']; ?></p>
 				</div>
 				<p class="blog-jump">
-					<a href="<?php echo $value['page_name'] ?>#blog-comments-ul"><img class="blog-jump-icon" src="http://images.wikia.com/common/skins/monaco/images/sprite.png?20100128"> </img>  <span><?php echo wfMsg( 'hub-blog-comments', $value['all_count']) ?></span></a> 
-					| <a href="<?php echo $value['page_url'] ?>"><?php echo wfMsg('hub-blog-continue') ?></a></p>
+					<a href="<?php echo $value['page_name'] ?>#blog-comments-ul"><img src="<?= $wgStylePath ?>/common/blank.gif" class="sprite talk" /> <span><?php echo wfMsg( 'hub-blog-comments', $value['all_count']) ?></span></a></p>
 					<?php if( $data['is_menager']): ?>
 						<?php if ($value['hide'] ): ?>
 							<a class="wikia-page-link head-hide-link" href="/index.php?action=ajax&rs=AutoHubsPagesHelper::hideFeed&type=blog&tag_id=<?php echo $value['tag_id'] ?>&city_id=<?php echo $value['city_id'] ?>&page_id=<?php echo $value['page_id'] ?>&dir=delete" ><?php echo wfMsg('hub-show-feed'); ?></a>
@@ -241,7 +216,7 @@
 			<?php endforeach; ?>
 			
 		</ol>
-	</section><!-- END: #hub-blogs -->
+	</section><!-- END: #wikia-global-hot-spots -->
 
 
 	<?php
@@ -271,13 +246,15 @@
 	
 			}
 		?>
+		
+		<p><?php echo wfMsg('hub-contributors-info') ?></p>
 	
 		<ul>
 			<?php foreach( $data['topEditors'] as $value ): ?>
-			<li class="clearfix">
+			<li>
 				<?php echo $value['avatar'] ?>
-				<a href="<?php echo $value['userpage'] ?>" class="h2"><?php echo $value['username'];	?></a>
-				<div class="userEditPoints"><nobr><span class="userPoints"><?php echo $value['all_count'];	?></span> <span class="txt"><?php echo wfMsg('hub-topusers-editpoints') ?></span></nobr></div>
+				<span class="h2"><a href="<?php echo $value['userpage'] ?>"><?php echo $value['username'];	?></a></span>
+				<span class="userEditPoints"><nobr><span class="userPoints"><?php echo $value['all_count'];	?></span><span class="txt"><?php echo wfMsg('hub-topusers-editpoints') ?></span></nobr></span>
 			</li>
 			<?php endforeach; ?>
 		</ul>
