@@ -2264,9 +2264,6 @@ class WikiFactory {
 	static public function updateCityDescription (&$article, &$user ) {
 		global $wgCityId;
 	
-		$search = array('@<script[^>]*?>.*?</script>@si');
-		$text = preg_replace($search, '', $document); 
-	
 		if( strtolower($article->getTitle()) == "mediawiki:description" ) {
 			$out = trim( strip_tags( wfMsg('description') ) );
 			$db = WikiFactory::db( DB_MASTER );
