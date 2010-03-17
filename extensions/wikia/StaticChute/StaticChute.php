@@ -12,7 +12,7 @@ class StaticChute {
 	
 	// TODO: FIXME: This is not great having this here AND in wgCdnStylePath in CommonSettings, etc., but since StaticChute
 	// does not load the MediaWiki stack in many cases, not sure what a better longterm solution would be.
-	public $cdnStylePath = "http://images1.wikia.nocookie.net/__cb19979/common";
+	public $cdnStylePath = "http://images1.wikia.nocookie.net/__cb20014/common";
 
 	public $config = array();
 
@@ -348,8 +348,7 @@ class StaticChute {
 		foreach($files as $file){
 			$data .= file_get_contents($file);
 		}
-		global $wgCdnStylePath;
-		return md5($data . $wgCdnStylePath);
+		return md5($data . $this->cdnStylePath);
 	}
 
 	public function getChuteHtmlForPackage($package, $type = null){
