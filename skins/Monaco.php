@@ -1209,6 +1209,8 @@ EOF;
 				$val['icon'] = 'delete';
 			} else if ($key == 'purge') {
 				$val['icon'] = 'refresh';
+			} else if ($key == 'addsection') {
+				$val['icon'] = 'talk';
 			}
 
 			if($key == 'report-problem') {
