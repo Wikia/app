@@ -65,6 +65,7 @@ class WikiaAssets {
 				if(isset($reference['browser']) && $reference['browser'] != $browser) {
 					continue;
 				}
+				$out .= '/* Call to: '.$reference['url'].' */'."\n\n";
 				$out .= '<!--# include virtual="'.$reference['url'].'" -->';
 			}
 		} else if($type == 'SiteCSS') {
