@@ -28,14 +28,14 @@ class CorporatePageHelper{
 					'corporatepage-sidebar',
 					'corporatepage-wikia-whats-up',
 					'corporatepage-test-msg' );
+	
 
 		wfRunHooks( 'CorporateBeforeMsgCacheClear', array( &$CorporatePageMessageList ) ); 
-	
+
 		foreach ($CorporatePageMessageList as $value) {
-			echo  wfMemcKey( "hp_msg_parser",  $value ) ;
-			$wgTTCache->delete( wfMemcKey( "hp_msg_parser",  $value ) );	
+			$value = wfMemcKey( "hp_msg_parser", strtolower(  $value  ) ) ;
+			$wgTTCache->set( $value, "-1" );
 		}
-		
 		return true;
 	}
 	
@@ -88,9 +88,9 @@ class CorporatePageHelper{
 	
 	static public function parseMsg($msg,$isFavicon = false){
 		global $wgTTCache, $wgArticlePath;
-		$mcKey = wfMemcKey( "hp_msg_parser", $msg );
-		$out = $wgTTCache->get( $mcKey, null);
-		if ( $out != null ){
+		$mcKey = wfMemcKey( "hp_msg_parser", strtolower( $msg ) );
+		$out = $wgTTCache->get( $mcKey, -1 );
+		if ( is_array($out) ){
 			return $out;
 		}
         wfProfileIn( __METHOD__ );     
@@ -150,9 +150,9 @@ class CorporatePageHelper{
 	
 	static public function parseMsgImg($msg,$descThumb = false){
 		global $wgTTCache;
-		$mcKey = wfMemcKey( "hp_msg_parser", $msg );
-		$out = $wgTTCache->get( $mcKey, null);
-		if ( $out != null ){
+		$mcKey = wfMemcKey( "hp_msg_parser", strtolower( $msg ) );
+		$out = $wgTTCache->get( $mcKey, -1 );
+		if ( is_array( $out ) ){
 			return $out;
 		}
         	wfProfileIn( __METHOD__ );        
