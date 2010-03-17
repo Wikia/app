@@ -183,7 +183,7 @@ class WikiaAssets {
 		$out = "\n<!-- GetSiteCSS -->";
 
 		if($isAllInOne) {
-			global $parserMemc;
+			global $parserMemc, $wgStyleVersion;
 			$cb = $parserMemc->get(wfMemcKey('wgMWrevId'));
 			if(empty($cb)) {
 				$cb = 1;
@@ -197,7 +197,7 @@ class WikiaAssets {
 				$prefix = $wgWikiaCombinedPrefix;
 			}
 
-			$url = "/{$prefix}cb={$cb}&type=SiteCSS&themename={$themename}&rtl={$isRTL}";
+			$url = "/{$prefix}cb={$cb}{$wgStyleVersion}&type=SiteCSS&themename={$themename}&rtl={$isRTL}";
 			$out .= '<link rel="stylesheet" type="text/css" href="'.$url.'" />';
 		} else {
 			$ref = WikiaAssets::GetSiteCSSReferences($themename);
