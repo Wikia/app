@@ -104,37 +104,39 @@
     }
 
     /* IE Styles */
-    a.wikia-button,
-    span.wikia-button a, 
-    input[type="submit"], 
-    input[type="reset"], 
-    input[type="button"], 
-    button {
-      filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr="#FF009933", EndColorStr="#FF006722");
-      outline: 1px solid #2c802c\9;
-      overflow: visible;
-      width: auto;
-    }
+	a.wikia-button,
+	span.wikia-button a, 
+	input[type="submit"], 
+	input[type="reset"], 
+	input[type="button"], 
+	button {
+		filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr="#FF009933", EndColorStr="#FF006722");
+		outline: 1px solid #2c802c\9;
+		overflow: visible;
+		width: auto;
+		color: #FFF;
+	}
     
-    a.wikia-button.secondary,
-    span.wikia-button.secondary a, 
-    input[type="submit"].secondary, 
-    input[type="reset"].secondary, 
-    input[type="button"].secondary, 
-    button.secondary {
-      filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr="#FFCCCCCC", EndColorStr="#FFAAAAAA");
-      outline: 1px solid #999\9;
-    }
+	a.wikia-button.secondary,
+	span.wikia-button.secondary a, 
+	input[type="submit"].secondary, 
+	input[type="reset"].secondary, 
+	input[type="button"].secondary, 
+	button.secondary {
+		filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr="#FFCCCCCC", EndColorStr="#FFAAAAAA");
+		outline: 1px solid #999\9;
+		color: #333;
+	}
 
     /* Visited, Hover and Active states */
-    a.wikia-button:visited, 
-    span.wikia-button a:visited {
-      color: #FFF;
-    } 
-    a.wikia-button.secondary:visited, 
-    span.wikia-button.secondary a:visited {
-      color: #333;
-    } 
+	a.wikia-button:visited, 
+	span.wikia-button a:visited {
+		color: #FFF;
+	} 
+	a.wikia-button.secondary:visited, 
+	span.wikia-button.secondary a:visited {
+		color: #333;
+	} 
  
     a.wikia-button:hover, 
     span.wikia-button a:hover, 
