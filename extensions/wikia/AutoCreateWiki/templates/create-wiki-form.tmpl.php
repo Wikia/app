@@ -243,7 +243,6 @@ endif
 	<div class="toolbar neutral">
 		<input type="hidden" value="<?php echo $mType ?>" name="wiki-type" id="wiki-type" />
 		<input type="submit" value="<?php echo wfMsg( "autocreatewiki-page-title-" . $type ) ?>" name="wiki-submit" id="wiki-submit" />
-		<input type="reset" value="<?php echo wfMsg( "cancel" ) ?>" name="wiki-cancel" id="wiki-cancel" />
 	</div>
 </div>
 </form>
