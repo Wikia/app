@@ -176,7 +176,7 @@ class WikiaStatsAutoHubsConsumerDB {
 		if( !$force_reload ) {
 			$out = $wgTTCache->get($mcKey,null);
 			if( !empty($out) ) {
-				return $out;
+			//	return $out;
 			}
 		}
 		$tag_id = (int) $tag_id;
@@ -215,8 +215,7 @@ class WikiaStatsAutoHubsConsumerDB {
 			} else {
 				$out[$key]['page_name'] = $out[$key]['wikiname'];		
 			}
-			
-			$out[$key] = array_merge($out[$key], $this->getBlogInfoByApi($out[$key]['wikiurl'], $out[$key]['page_id']));
+	
 			if (!empty($out[$key]['timestamp'])) {
 				$out[$key]['date'] =   $wgContLang->date( wfTimestamp( TS_MW, $out[$key]['timestamp'] ) );	
 			}
@@ -662,14 +661,15 @@ class WikiaStatsAutoHubsConsumerDB {
 		if ( empty($wikis['blogpage'][$page_id]) ){
 			return array();
 		}
-		
-
 
 		$this->shortenText($wikis['blogpage'][$page_id]['description'], 30);
-		
-		$search = array('@<script[^>]*?>.*?</script>@si');
-		$wikis['blogpage'][$page_id]['description'] = preg_replace($search, '', $wikis['blogpage'][$page_id]['description']);
-		
+			
+		if (strpos( $wikis['blogpage'][$page_id]['description'], 'wgAfterContentAndJS' ) > 0 ) {
+			$temp = explode('wgAfterContentAndJS', $wikis['blogpage'][$page_id]['description']);
+
+			$wikis['blogpage'][$page_id]['description'] = trim($temp[0]).". ";
+		}
+
 		$wgTTCache->set($mcKey, $wikis['blogpage'][$page_id], 60*60 );
 
 		wfProfileOut( __METHOD__ );
@@ -835,6 +835,14 @@ class WikiaStatsAutoHubsConsumerDB {
 		$out = array();
 		
 		while ( $row = $this->dbs->fetchRow( $res ) ) {
+			
+			if ($type == 'blog' ) {
+				$row = array_merge($row, $this->getBlogInfoByApi($row['wikiurl'], $row['page_id']));
+				if ( strlen($row['description']) < 50 ) {
+					continue;
+				}				
+			}			
+			
 			$row['real_pagename'] = $row['page_name'];
 			$row['page_name'] = urldecode( str_replace('_' ,' ' , $row['page_name']) );
 			if( $this->filterArticlesBlog($row, $tag_id, $type ) ) {
