@@ -18,17 +18,17 @@ class WikiaAssets {
 		$references = array();
 
 		$references[] = array(
-			'url' => 'skins/monaco/css/monaco_ltie7.css',
+			'url' => 'skins/monaco/css/monaco_ltie7.css?StaticChute',
 			'cond' => 'if lt IE 7',
 			'browser' => 'IElt7');
 
 		$references[] = array(
-			'url' => 'skins/monaco/css/monaco_ie7.css',
+			'url' => 'skins/monaco/css/monaco_ie7.css?StaticChute',
 			'cond' => 'if IE 7',
 			'browser' => 'IEeq7');
 
 		$references[] = array(
-			'url' => 'skins/monaco/css/monaco_ie8.css',
+			'url' => 'skins/monaco/css/monaco_ie8.css?StaticChute',
 			'cond' => 'if IE 8',
 			'browser' => 'IEeq8');
 
