@@ -16,22 +16,6 @@ class SDFilter {
 	var $input_type = null;
 	var $allowed_values;
 	var $possible_applied_filters = array();
-	var $mDb = false;
-
-	/**
-	 * @author Krzysztof Krzyżaniak (eloy)
-	 * @return Database handler
-	 */
-	private function &getDB() {
-
-		wfProfileIn( __METHOD__ );
-		if( !$this->mDb ) {
-			$this->mDb = wfGetDB( DB_SLAVE, "smw" );
-		}
-		wfProfileOut( __METHOD__ );
-
-		return $this->mDb;
-	}
 
 	function load($filter_name) {
 		$f = new SDFilter();
@@ -96,7 +80,7 @@ class SDFilter {
 
 		$possible_dates = array();
 		$property_value = str_replace(' ', '_', $this->property);
-		$dbr = $this->getDB();
+		$dbr = wfGetDB( DB_SLAVE );
 		if ($this->time_period == wfMsg('sd_filter_month')) {
 			$fields = "YEAR(value_xsd), MONTH(value_xsd)";
 		} else {
@@ -107,7 +91,7 @@ class SDFilter {
 			$smw_ids = $dbr->tableName( 'smw_ids' );
 			$sql =<<<END
 	SELECT $fields, count(*)
-	FROM semantic_drilldown_values sdv
+	FROM semantic_drilldown_values sdv 
 	JOIN $smw_attributes a ON sdv.id = a.s_id
 	JOIN $smw_ids p_ids ON a.p_id = p_ids.smw_id
 	WHERE p_ids.smw_title = '$property_value'
@@ -119,7 +103,7 @@ END;
 			$smw_attributes = $dbr->tableName( 'smw_attributes' );
 			$sql =<<<END
 	SELECT $fields, count(*)
-	FROM semantic_drilldown_values sdv
+	FROM semantic_drilldown_values sdv 
 	JOIN $smw_attributes a ON sdv.id = a.subject_id
 	WHERE a.attribute_title = '$property_value'
 	GROUP BY $fields
@@ -161,7 +145,7 @@ END;
 	function getAllValues_orig() {
 		$possible_values = array();
 		$property_value = str_replace(' ', '_', $this->property);
-		$dbr = $this->getDB();
+		$dbr = wfGetDB( DB_SLAVE );
 		if ($this->is_relation) {
 			$property_table_name = $dbr->tableName('smw_relations');
 			$property_table_nickname = "r";
@@ -174,7 +158,7 @@ END;
 			$value_field = 'value_xsd';
 		}
 		$sql = "SELECT $value_field, count(*)
-			FROM semantic_drilldown_values sdv
+			FROM semantic_drilldown_values sdv 
 			JOIN $property_table_name $property_table_nickname
 			ON sdv.id = $property_table_nickname.subject_id
 			WHERE $property_table_nickname.$property_field = '$property_value'
@@ -193,7 +177,7 @@ END;
 	function getAllValues_2() {
 		$possible_values = array();
 		$property_value = str_replace(' ', '_', $this->property);
-		$dbr = $this->getDB();
+		$dbr = wfGetDB( DB_SLAVE );
 		if ($this->is_relation) {
 			$property_table_name = $dbr->tableName('smw_rels2');
 			$property_table_nickname = "r";
@@ -207,7 +191,7 @@ END;
 		$prop_ns = SMW_NS_PROPERTY;
 		$sql =<<<END
 	SELECT $value_field, count(*)
-	FROM semantic_drilldown_values sdv
+	FROM semantic_drilldown_values sdv 
 	JOIN $property_table_name $property_table_nickname ON sdv.id = $property_table_nickname.s_id
 
 END;
@@ -251,7 +235,7 @@ END;
 	}
 
 	function createTempTable_orig() {
-		$dbr = $this->getDB();
+		$dbr = wfGetDB( DB_SLAVE );
 		if ($this->is_relation) {
 			$table_name = $dbr->tableName( 'smw_relations' );
 			$property_field = 'relation_title';
@@ -275,7 +259,7 @@ END;
 	}
 
 	function createTempTable_2() {
-		$dbr = $this->getDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 		$smw_ids = $dbr->tableName( 'smw_ids' );
 		if ($this->is_relation) {
 			$table_name = $dbr->tableName( 'smw_rels2' );
@@ -305,7 +289,7 @@ END;
 	 * Deletes the temporary table.
 	 */
 	function dropTempTable() {
-		$dbr = $this->getDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 		$sql = "DROP TEMPORARY TABLE semantic_drilldown_filter_values";
 		$dbr->query($sql);
 	}
