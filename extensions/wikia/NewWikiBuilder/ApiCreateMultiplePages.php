@@ -18,11 +18,6 @@ class ApiCreateMultiplePages extends ApiBase {
 		if (empty($params['pagelist'])){
                         $this->dieUsageMsg(array('missingparam', 'pagelist'));
 		}
-		if ($params['type'] == 'answers') {
-			// this cannot be done in JS as NWB doesn't have acess to all msgs there
-			wfLoadExtensionMessages( 'Answers' );
-			$params['category'] = wfMsgForContent( 'unanswered_category' );
-		}
 
 		$r = array();
 
@@ -32,8 +27,14 @@ class ApiCreateMultiplePages extends ApiBase {
 			$this->dieUsageMsg(array("invalidparam", "pagelist")); 
 		}
 
+		$createType = 'createPage';
+                if ($params['type'] == 'answers') {
+                        $createType .= $params['type'];
+                }
+
 		foreach ($pages as $page){
-			$create = $this->createPage($page, $params['category'], $params['pagetext']);
+			$create = $this->$createType($page, $params['category'], $params['pagetext']);
+
 			if (!empty($create)){
 				$r['success'][$page] = $create;
 			} else {
@@ -85,6 +86,17 @@ class ApiCreateMultiplePages extends ApiBase {
 		} else {
 			return false;
 		}
+	}
+
+	private function createPageAnswers( $page, $category = null ) {
+		$q = new DefaultQuestion( $page );
+		if ( !is_object( $q ) ) {
+			return false;
+		}
+
+		$res = $q->create();
+
+		return $res;
 	}
 
 	public function mustBePosted() { 
