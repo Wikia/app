@@ -125,13 +125,12 @@ a.greyButton big {
 	margin-right: 5px;
 }
 
-
-#userData #header_username a {
+#header_username a {
 	color: #36C;
 	font-weight: bold;
 	text-decoration: none;
 }
-#userData #header_username a:hover {
+#header_username a:hover {
 	text-decoration: underline;
 }
 #userData .headerMenuButton {
@@ -140,10 +139,6 @@ a.greyButton big {
 #userName {
 	font-weight: bold;
 	color: #36C;
-}
-
-#userData span a, #wikiaBranding a {
-	color: #000;
 }
 
 /*** HEADER MENU ***/
