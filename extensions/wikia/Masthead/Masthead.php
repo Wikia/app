@@ -532,7 +532,7 @@ class Masthead {
 				unlink($sTmpFile);
 
 				/**
-				 * notice image replication system
+				 * notify image replication system
 				 */
 				global $wgEnableUploadInfoExt;
 				if( $wgEnableUploadInfoExt ) {

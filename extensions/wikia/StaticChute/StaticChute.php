@@ -408,8 +408,7 @@ class StaticChute {
 			if ($type == "css"){
 				if ($this->allinone) {
 					$html .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$prefix}{$u}{$cb}\"{$media} />";
-				}
-				else {
+				} else {
 					// IE has some strange limit of ~30 links per page
 					// output <style> + @import when not using merged CSS files
 					$html .= "\n\t\t\t@import url({$prefix}{$u}{$cb});";
