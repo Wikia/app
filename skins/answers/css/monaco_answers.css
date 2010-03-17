@@ -169,15 +169,13 @@ body.mainpage .firstHeading { display:none; }
 #wikia_corporate_footer { color:#888; }
 #wikia_corporate_footer a { color:#888; }
 #wikia_header { border-bottom: none; }
-#wikiaBranding { padding-top:4px; }
 
-/* Create a wiki link */
+/* Create a wiki link
 #request_wiki {
        text-decoration:none;
        margin-left: 5px;
        font-size: 10pt !important;
-       color: #ddd;
-}
+} */
 
 /* tagline */
 #siteSub {
