@@ -61,8 +61,10 @@
 #wikisticky_browser { display:none;}
 .wikisticky_special_link { display:none;}
 
+/* === HELP PAGES === */
 
-
+.sharedHelp {border: 0px !important;}
+ 
 /* ================================== */
 /* === THE QUESTION / ANSWER PAGE === */
 /* ================================== */
