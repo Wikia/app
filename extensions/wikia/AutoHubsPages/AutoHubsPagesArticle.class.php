@@ -64,7 +64,7 @@ class AutoHubsPagesArticle extends Article {
 			}
 			
 			$pars['hotSpots'] = $temp['value'];
-			$pars['slider'] = CorporatePageHelper::parseMsgImg('Hub-' . $tag_name . '-slider',true);
+			$pars['slider'] = CorporatePageHelper::parseMsgImg( 'hub-' . $tag_name . '-slider', true );
 
 			$pars['wikia_whats_up'] = wfMsgExt("corporatepage-wikia-whats-up",array("parsemag"));
 
