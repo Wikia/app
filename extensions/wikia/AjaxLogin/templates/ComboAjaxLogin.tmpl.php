@@ -18,7 +18,7 @@ $link = $titleObj->getLocalUrl('type=signup');
         <tbody>
         <tr>
             <td style="vertical-align: top;">
-                    <span style="position: relative; top: -1px;"><img src="$wgBlankImgUrl" alt="status"/></span>
+                    <span style="position: relative; top: -1px;"><img src="<?php print $wgBlankImgUrl; ?>" alt="status"/></span>
             </td>
             <td>
                 <div id="wpError"></div>

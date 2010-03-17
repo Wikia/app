@@ -38,7 +38,7 @@ foreach ($aRows as $pageId => $aRow) {
 		global $wgBlankImgUrl;
 ?>
 <div class="wk_blogs_summary"><?= $aRow['text'] ?></div>
-<div class="wk_blogs_comments"><?php if (!empty($isCommenting)) : ?><?php $commentTitle = clone $oTitle; $commentTitle->setFragment("#comments"); ?><span class="blog-comment"><img src="$wgBlankImgUrl" class="sprite talk" /><?=$skin->link($commentTitle, wfMsg('blog-nbrcomments', intval($aRow['comments'])), array('rel' => 'nofollow'))?></span> | <?php endif ?><?=$skin->link($oTitle, wfMsg('blog-continuereading'), array('rel' => 'nofollow'))?></div>
+<div class="wk_blogs_comments"><?php if (!empty($isCommenting)) : ?><?php $commentTitle = clone $oTitle; $commentTitle->setFragment("#comments"); ?><span class="blog-comment"><img src="<?php print $wgBlankImgUrl; ?>" class="sprite talk" /><?=$skin->link($commentTitle, wfMsg('blog-nbrcomments', intval($aRow['comments'])), array('rel' => 'nofollow'))?></span> | <?php endif ?><?=$skin->link($oTitle, wfMsg('blog-continuereading'), array('rel' => 'nofollow'))?></div>
 <?
 	}
 /* e: SUMMARY */
