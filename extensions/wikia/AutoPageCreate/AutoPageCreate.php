@@ -60,7 +60,7 @@ function wfAutoPageCreateViewPage( $article, $out, &$text, &$return404 ) {
 			if( $overlayMsg4JS != "-" ) {
 				$js = <<<END
 wgAfterContentAndJS.push( function() { $( function() {
-	$("#wikia_page").prepend("<div id=\"NoArticleTextNotice\">{$overlayMsg4JS}<div id=\"NoArticleTextNoticeClose\" /></div>");
+	$("#wikia_page").prepend("<div id=\"NoArticleTextNotice\">{$overlayMsg4JS}<img id=\"NoArticleTextNoticeClose\" src=\""+wgBlankImgUrl+"\" class=\"sprite close\" /></div>");
 	$("#NoArticleTextNoticeClose").click( function() { $(this).parent().slideUp() } );
 } ) } );
 END;

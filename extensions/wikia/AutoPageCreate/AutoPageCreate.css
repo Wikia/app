@@ -17,12 +17,7 @@ a.new, #quickbar a.new {
 }
 
 #NoArticleTextNoticeClose {
-	background-image: url(/skins/monaco/images/sprite.png); /* $wgCdnStylePath */
-	background-position: -304px 0;
-	cursor: pointer;
-	height: 16px;
 	position: absolute;
 	right: 4px;
 	top: 4px;
-	width: 16px;
 }
