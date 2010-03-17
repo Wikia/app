@@ -885,6 +885,7 @@ div.userInfoNoAvatar .userPoints {
 #editingTips {
 	-moz-border-radius: 10px 10px 10px 10px;
 	-webkit-border-radius: 10px 10px 10px 10px;
+	display:none !important;
 }
 
 #star-rating-row {
