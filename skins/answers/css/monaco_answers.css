@@ -604,7 +604,7 @@ div.article-comm-input-text textarea {
 /* realign text in the widget */
 
 .WidgetCommunity li strong {
-	text-align: left;
+/*	text-align: left; */
 /*	font-size: 9pt; */
 	font-weight:normal;
 }
@@ -616,7 +616,7 @@ div.article-comm-input-text textarea {
 }
 
 #sidebar_1 {
-	text-align: right;
+/*	text-align: right; */
 }
 
 #search_button {
@@ -635,14 +635,14 @@ div.article-comm-input-text textarea {
 
 .WidgetCommunity .community_header {
 	border: none;
-	text-align: left;
+/*	text-align: left; */
 	padding:0 0 20px;
 }
 
 .widget dt {
-       font-family:"Helvetica Neue",Helvetica,Arial,default;
-       text-align: left;
-       display: none;
+	font-family:"Helvetica Neue",Helvetica,Arial,default;
+/*	text-align: left; */
+	display: none;
 }
 
 .neutral {
@@ -650,9 +650,9 @@ div.article-comm-input-text textarea {
 }
 
 .WidgetCommunity .widgetfeed li {
-    margin-bottom:12px;
-    font-size: 8pt;
-    color: #aaa;
+	margin-bottom:12px;
+	font-size: 8pt;
+	color: #aaa;
 }
 
 .activityfeed a:link { color:#369; }
