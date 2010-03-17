@@ -30,7 +30,7 @@ if( !empty( $mType ) ) {
 		<ul>
 			<li class="label"><label class="required" id="wiki-name-label"><?=wfMsg('allmessagesname')?>:</label></li>
 			<li class="data1">
-				<input type="text" autocomplete="off" name="wiki-name" id="wiki-name" value="<?=@$params['wiki-name']?>"/> <?php if( empty( $mType) ) echo "Wiki" ?><span class="error-status" id="wiki-name-error-status">&nbsp;</span>
+				<input type="text" autocomplete="off" name="wiki-name" id="wiki-name" value="<?=@$params['wiki-name']?>"/> <?php echo $subName ?><span class="error-status" id="wiki-name-error-status">&nbsp;</span>
 				<div class="error" style="display: none;" id="wiki-name-error">
 			</li>
 			<li class="data2"><span class="note"><?=wfMsg('autocreatewiki-info-topic')?></span></li>

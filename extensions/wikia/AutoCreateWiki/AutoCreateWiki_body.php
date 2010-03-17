@@ -58,6 +58,7 @@ class AutoCreateWikiPage extends SpecialPage {
 	const DEFAULT_DOMAIN    = "wikia.com";
 	const CACHE_LOGIN_KEY   = 'awc_beforelog';
 	const ACTIVE_CLUSTER    = "c2";
+	const DEFAULT_NAME      = "Wiki";
 
 	/**
 	 * constructor
@@ -171,10 +172,12 @@ class AutoCreateWikiPage extends SpecialPage {
 		switch( $this->mType ) {
 			case "answers":
 				$this->mDefSubdomain = "answers.wikia.com";
+				$this->mDefSubname   = wfMsgExt("answers-name", array("language" => $this->mLang));
 				break;
 
 			default:
 				$this->mDefSubdomain = self::DEFAULT_DOMAIN;
+				$this->mDefSubname   = self::DEFAULT_NAME;
 		}
 
 		$this->mUserLanguage = $wgUser->getOption( 'language', $wgContLanguageCode );
@@ -918,7 +921,8 @@ class AutoCreateWikiPage extends SpecialPage {
 			"mPostedErrors"    => $this->mPostedErrors,
 			"wgStylePath"      => $wgStylePath,
 			"captchaForm"      => $f->getForm(),
-			"params"           => $params
+			"params"           => $params,
+			"subName"          => $this->mDefSubname,
 		));
 
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
