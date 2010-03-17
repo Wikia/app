@@ -1534,7 +1534,7 @@ class AutoCreateWikiPage extends SpecialPage {
 				$WFSettingsVars[ "wgEnableMagicAnswer"               ] = false;
 				$WFSettingsVars[ "wgEnableCategoryHubsExt"           ] = false;
 
-				if (Wikia::langToSomethingMap($this->mWikiData["language"], array("ar" => true, "he" => true, "ja" => true, "zh" => true), false) {
+				if (Wikia::langToSomethingMap($this->mWikiData["language"], array("ar" => true, "he" => true, "ja" => true, "zh" => true), false)) {
 					$WFSettingsVars[ "wgDisableAnswersShortQuestionsRedirect" ] = true;
 				}
 				break;
