@@ -37,7 +37,7 @@ class WikiaStatsStompProducer {
 	 * @author Bartek Lapinski
 	 */
 	function __construct( $cityId, $factoryTags, $pageId = null, $title = null, $user = null, $timestamp = null ) {
-		global $wgLanguageCode, $wgEnableBlogArticles, $wgDBname, $wgSitename, $wgServer;
+		global $wgLanguageCode, $wgEnableBlogArticles, $wgDBname, $wgSitename, $wgServer, $wgEnableBlogArticles;
 
 		$this->mCityId = $cityId;
 		$this->mCityTag = serialize( $factoryTags );
@@ -46,9 +46,11 @@ class WikiaStatsStompProducer {
 		if( empty( $pageId ) ) {
 			if( !empty( $title ) ) {
 				// check if it is a blog comment, if so, then load all the data from "parent" blog article
-				if( NS_BLOG_ARTICLE_TALK == $title->getNamespace() ) {
-					$comment = BlogComment::newFromId( $title->getArticleId() );						
-					$title = $comment->getBlogTitle();					
+				if ( $wgEnableBlogArticles ) {
+					if( NS_BLOG_ARTICLE_TALK == $title->getNamespace() ) {
+						$comment = BlogComment::newFromId( $title->getArticleId() );						
+						$title = $comment->getBlogTitle();					
+					}					
 				}
 				$this->mPageId = $title->getArticleId();				
 			} else {
