@@ -18,17 +18,17 @@ class WikiaAssets {
 		$references = array();
 
 		$references[] = array(
-			'url' => $wgStylePath.'/monaco/css/monaco_ltie7.css',
+			'url' => '/skins/monaco/css/monaco_ltie7.css',
 			'cond' => 'if lt IE 7',
 			'browser' => 'IElt7');
 
 		$references[] = array(
-			'url' => $wgStylePath.'/monaco/css/monaco_ie7.css',
+			'url' => '/skins/monaco/css/monaco_ie7.css',
 			'cond' => 'if IE 7',
 			'browser' => 'IEeq7');
 
 		$references[] = array(
-			'url' => $wgStylePath.'/monaco/css/monaco_ie8.css',
+			'url' => '/skins/monaco/css/monaco_ie8.css',
 			'cond' => 'if IE 8',
 			'browser' => 'IEeq8');
 
@@ -55,7 +55,7 @@ class WikiaAssets {
 			preg_match("/href=\"([^\"]+)/", $staticChute->getChuteHtmlForPackage('monaco_css'), $matches);
 
 			$references = array();
-			$references[] = array('url' => str_replace('http://images.wikia.com/common/releases_trunk/', '', str_replace('http://www.wikia.com/', '', $matches[1])));
+			$references[] = array('url' => str_replace('http://www.wikia.com/', '', $matches[1]));
 
 			$references = array_merge($references, WikiaAssets::GetBrowserSpecificCSS());
 
