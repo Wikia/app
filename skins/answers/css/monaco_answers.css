@@ -142,7 +142,9 @@ body.mainpage .firstHeading { display:none; }
 #control_edit { display: none; }
 #control_watch { display: none; }
 #control_sharefeature { display: none; }
-
+#profile-actions-wikiuserpage { display:none;}
+.div.noarticletext { display: none; }
+#navigation_widget { display: none; }
 
 /* === THESE AFFECT SPECIFIC ELEMENTS in order from top to bottom === */
 
@@ -809,6 +811,8 @@ div.userInfoNoAvatar .userPoints {
 	text-decoration:none;
 	color: #fff;
 	padding: 2px;
+	-moz-border-radius:3px 3px 3px 3px;
+	-webkit-border-radius:3px 3px 3px 3px;
 }
 
 .action-right {
