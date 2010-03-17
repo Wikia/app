@@ -92,7 +92,7 @@ function AddNewTalkSectionAddFooter(&$skin, &$tpl, &$custom_article_footer) {
 		$text = wfMsg('addnewtalksection-link');
 		$url = $wgTitle->getLocalURL('action=edit&section=new');
 
-		$custom_article_footer = '<li id="fe_newsection"><a rel="nofollow" id="fe_newsection_icon" href="' . $url . '"><img src="$wgBlankImgUrl" id="fe_newsection_img" class="sprite" alt="' . $text . '" /></a> <div><a id="fe_newsection_link" rel="nofollow" href="' . $url . '">' . $text . '</a></div></li>';
+		$custom_article_footer = '<li id="fe_newsection"><a rel="nofollow" id="fe_newsection_icon" href="' . $url . '"><img src="'. $wgBlankImgUrl .'" id="fe_newsection_img" class="sprite talk" alt="' . $text . '" /></a> <div><a id="fe_newsection_link" rel="nofollow" href="' . $url . '">' . $text . '</a></div></li>';
 	}
 	return true;
 }
