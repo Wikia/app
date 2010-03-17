@@ -204,6 +204,12 @@ class AutoHubsPagesHelper{
 	
 	static function beforeMsgCacheClear(&$list) {
 		global $wgHubsPages;
-		$list = array_marge( $list,array_values( $wgHubsPages ) ); 			
+		$values = array_values( $wgHubsPages );
+		
+		foreach ( $values as $key =>  $value) {
+			$values[ $key ] = 'Hub-' . $value . '-slider';
+		}
+		$list = array_merge( $list, $values ); 			
+		return true;
 	}
 }
