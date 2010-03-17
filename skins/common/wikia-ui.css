@@ -24,9 +24,7 @@
 /* @group Buttons. */
 
     a.wikia-button, 
-    a.wikia-button:visited,
     span.wikia-button a,
-    span.wikia-button a:visited,
     input[type="submit"], 
     input[type="reset"], 
     input[type="button"], 
@@ -54,9 +52,7 @@
   
     /* Secondary Buttons */
     a.wikia-button.secondary, 
-    a.wikia-button.secondary:visited,
     span.wikia-button.secondary a, 
-    span.wikia-button.secondary a:visited,
     input[type="submit"].secondary, 
     input[type="reset"].secondary, 
     input[type="button"].secondary, 
@@ -130,7 +126,16 @@
       outline: 1px solid #999\9;
     }
 
-    /* Hover and Active states */
+    /* Visited, Hover and Active states */
+    a.wikia-button:visited, 
+    span.wikia-button a:visited {
+      color: #FFF;
+    } 
+    a.wikia-button.secondary:visited, 
+    span.wikia-button.secondary a:visited {
+      color: #333;
+    } 
+ 
     a.wikia-button:hover, 
     span.wikia-button a:hover, 
     input[type="submit"]:hover, 
