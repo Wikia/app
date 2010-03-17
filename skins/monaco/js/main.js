@@ -71,13 +71,17 @@ $(function() {
 
 // macbre: page loading times (onDOMready / window onLoad)
 $(function() {
-	var loadTime = (new Date()).getTime() - wgNow.getTime();
-	$().log('DOM ready after ' + loadTime + ' ms', 'Monaco');
+	if (typeof wgNow != 'undefined') {
+		var loadTime = (new Date()).getTime() - wgNow.getTime();
+		$().log('DOM ready after ' + loadTime + ' ms', 'Monaco');
+	}
 });
 
 $(window).bind('load', function() {
-	var loadTime = (new Date()).getTime() - wgNow.getTime();
-	$().log('window onload after ' + loadTime + ' ms', 'Monaco');
+	if (typeof wgNow != 'undefined') {
+		var loadTime = (new Date()).getTime() - wgNow.getTime();
+		$().log('window onload after ' + loadTime + ' ms', 'Monaco');
+	}
 });
 
 //Ajax Wait Indicator
