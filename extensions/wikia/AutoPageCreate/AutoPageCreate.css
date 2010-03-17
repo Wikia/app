@@ -9,6 +9,7 @@ a.new, #quickbar a.new {
 #NoArticleTextNotice {
 	background: #ff9;
 	color: #000;
+	font-size: 140%;
 	margin-bottom: 2px;
 	padding: 5px;
 	position: relative;
