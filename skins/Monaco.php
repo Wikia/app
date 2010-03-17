@@ -1196,10 +1196,17 @@ EOF;
 		# @todo: might actually be useful to move this to a global var and handle this in extension files --TOR
 		$force_right = array( 'userprofile', 'talk', 'TheoryTab' );
 		foreach($tpl->data['content_actions'] as $key => $val) {
+			/* Fix icons */
 			if($key == 'unprotect') {
 				//unprotect uses the same icon as protect
 				$val['icon'] = 'protect';
+			} else if ($key == 'undelete') {
+				//undelete uses the same icon as delelte
+				$val['icon'] = 'delete';
+			} else if ($key == 'purge') {
+				$val['icon'] = 'refresh';
 			}
+
 			if($key == 'report-problem') {
 				// Do nothing
 			} else if( strpos($key, 'nstab-') === 0 || in_array($key, $force_right) ) {
