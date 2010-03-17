@@ -1128,6 +1128,10 @@ EOF;
 				$StaticChute->setTheme($this->themename);
 			}
 		}
+		else {
+			// macbre: kill notice in calls to WikiaAssets
+			$this->themename = 'sapphire';
+		}
 
 		$tpl->set('mergedCSS', "\n\t\t" . $StaticChute->getChuteHtmlForPackage('monaco_css') . "\n" );
 		$tpl->set('mergedCSSprint', "\n\t\t" . $StaticChute->getChuteHtmlForPackage('monaco_css_print') );
