@@ -12,12 +12,12 @@ $wgExtensionMessagesFiles['AutoPageCreate'] = dirname(__FILE__) . '/AutoPageCrea
 $wgExtensionFunctions[] = 'wfAutoPageCreateInit';
 
 function wfAutoPageCreateInit() {
-	global $wgHooks, $wgOut, $wgExtensionsPath;
+	global $wgHooks, $wgOut, $wgExtensionsPath, $wgStyleVersion;
 
 	$wgHooks['EditPage::showEditForm:initial'][] = 'wfAutoPageCreateEditPage';
 	$wgHooks['ArticleNonExistentPage'][] = 'wfAutoPageCreateViewPage';
 
-	$wgOut->addExtensionStyle( $wgExtensionsPath . "/wikia/AutoPageCreate/AutoPageCreate.css" );
+	$wgOut->addExtensionStyle( "$wgExtensionsPath/wikia/AutoPageCreate/AutoPageCreate.css?$wgStyleVersion" );
 }
 
 function wfAutoPageCreateEditPage( $editpage ) {
