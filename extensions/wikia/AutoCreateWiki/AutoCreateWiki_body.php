@@ -774,7 +774,7 @@ class AutoCreateWikiPage extends SpecialPage {
 
 		switch( $this->mType ) {
 			case "answers":
-				$this->mWikiData[ "title"      ] = $fixedTitle . " Answers";
+				$this->mWikiData[ "title"      ] = $fixedTitle . " " . wfMsgExt("answers-name", array("language" => $this->awcLanguage));
 				break;
 		}
 
