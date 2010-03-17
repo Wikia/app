@@ -147,11 +147,14 @@ class CheckUser extends SpecialPage
 			$encipedits = 1;
 		else
 			$encuserips = 1;
+
+		# (wikia change) show summary message to all users, even if they cant -log, (uberfuzzy)
+		$wgOut->addWikiText( wfMsg( 'checkuser-summary' ) );
+
 		# Compile our nice form
 		# User box length should fit things like "2001:0db8:85a3:08d3:1319:8a2e:0370:7344/100/xff"
 		if( $wgUser->isAllowed( 'checkuser-log' ) ) {
-			$wgOut->addWikiText( wfMsg( 'checkuser-summary' ) . 
-				"\n\n[[" . $this->getLogSubpageTitle()->getPrefixedText() . '|' . wfMsg( 'checkuser-showlog' ) . ']]'
+			$wgOut->addWikiText( "\n\n[[" . $this->getLogSubpageTitle()->getPrefixedText() . '|' . wfMsg( 'checkuser-showlog' ) . ']]'
 			);
 		}
 		$form = "<form name='checkuserform' id='checkuserform' action=\"$action\" method='post'>";
