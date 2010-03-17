@@ -20,9 +20,9 @@ if( !defined( 'MEDIAWIKI' ) ) {
 /**
  * Use revision number
  */
-$wgStyleVersion         = '20004';
-$wgMergeStyleVersionJS  = '20004';
-$wgMergeStyleVersionCSS = '20004';
+$wgStyleVersion         = '20005';
+$wgMergeStyleVersionJS  = '20005';
+$wgMergeStyleVersionCSS = '20005';
 
 /**
  * @name $wgCityId
@@ -410,10 +410,10 @@ $IPA = "/usr/wikia/source/answers";
 $wgNoExternals = false;
 
 /**
- * cache in TT 
+ * cache in TT
  * class: TokyoTyrantCache
  */
-define( 'CACHE_TT', 666 ); 
+define( 'CACHE_TT', 666 );
 $wgTTCache = null;
 include_once("{$IP}/includes/wikia/TokyoTyrantSessions.php");
 
