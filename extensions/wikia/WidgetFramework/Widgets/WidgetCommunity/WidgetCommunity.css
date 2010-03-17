@@ -21,6 +21,7 @@
 .WidgetCommunity .toolbar {
 	height: 1%;
 	text-align: right;
+	overflow: hidden;
 }
 
 .WidgetCommunity .widgetfeed {
