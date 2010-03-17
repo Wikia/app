@@ -265,7 +265,7 @@ class WikiMetrics {
 			$dbs->freeResult( $oRes );
 			
 			#--- page views 
-			$db = wfGetDB(DB_SLAVE, array(), $wgExternalStatsDB);
+			$db = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 			$table = "city_page_views";
 			$where = array( 'pv_city_id in (' . $wikiList . ')' );
 			$oRes = $db->select( 
