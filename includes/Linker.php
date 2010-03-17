@@ -241,9 +241,9 @@ class Linker {
 		# (i.e., for a nonexistent special page).
 		if( in_array( 'broken', $options ) and empty( $query['action'] )
 		and $target->getNamespace() != NS_SPECIAL ) {
-			$query['action'] = 'edit';
 			global $wgWikiaEnableAutoPageCreateExt;
 			if( empty( $wgWikiaEnableAutoPageCreateExt ) ) {
+				$query['action'] = 'edit';
 				$query['redlink'] = '1';
 			}
 		}
@@ -532,8 +532,9 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 		$nt = $this->normaliseSpecialPage( $title );
 
 		$attribs = array();
-		global $wgWikiaUseNoFollow;
-		if( !empty( $wgWikiaUseNoFollow ) ) {
+		global $wgWikiaUseNoFollow, $wgWikiaEnableAutoPageCreateExt;
+		if( !empty( $wgWikiaUseNoFollow ) && 
+				( empty( $wgWikiaEnableAutoPageCreateExt ) || ( !$title->isContentPage() ) ) ) {
 			$attribs['rel'] = 'nofollow';
 		}
 
