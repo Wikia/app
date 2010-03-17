@@ -45,7 +45,7 @@ class BrowseDataPage extends QueryPage {
 
 		wfProfileIn( __METHOD__ );
 		if( !$this->mDb ) {
-			$this->mDb = wfGetDB( DB_SLAVE, "smw" );
+			$this->mDb = wfGetDB( DB_SLAVE );
 		}
 		wfProfileOut( __METHOD__ );
 
