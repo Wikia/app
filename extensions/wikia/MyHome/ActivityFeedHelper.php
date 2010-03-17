@@ -151,7 +151,7 @@ class ActivityFeedHelper {
 	static function getListForWidget($parameters, $userLangEqContent) {
 		global $wgMemc;
 		wfProfileIn(__METHOD__);
-		$key = wfMemcKey('community_widget', $parameters['uselang']);
+		$key = wfMemcKey('community_widget_v1', $parameters['uselang']);
 		$feedHTML = $wgMemc->get($key);
 		if (empty($feedHTML)) {
 			$feedHTML = ActivityFeedHelper::getList($parameters);
@@ -236,7 +236,7 @@ function CommunityWidgetPurgeVarnish(&$article, &$user, $text, $summary, &$minor
 	global $wgScript, $wgContentNamespaces, $wgContLang, $wgMemc;
 	if (in_array($article->mTitle->getNamespace(), $wgContentNamespaces)) {
 		$lang = $wgContLang->getCode();
-		$key = wfMemcKey('community_widget', $lang);
+		$key = wfMemcKey('community_widget_v1', $lang);
 		$wgMemc->delete($key);
 		SquidUpdate::purge(array($wgScript . '?action=ajax&rs=CommunityWidgetAjax&uselang=$lang'));
 	}
