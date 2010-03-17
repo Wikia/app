@@ -257,6 +257,10 @@ body.mainpage .firstHeading { display:none; }
 	background-color: #fff;
 }
 
+.sprite-small.add {
+	display:none;
+}
+
 #mw-normal-catlinks {
     padding-bottom:3px;
     color: #fff;
@@ -296,7 +300,7 @@ body.mainpage .firstHeading { display:none; }
     -moz-border-radius: 3px 3px 3px 3px;
     -webkit-border-radius: 3px 3px 3px 3px;
     line-height:16px !important;
-    padding:0 0 0 4px !important;
+    padding:0px 4px !important;
 }
 
 /* this is the "enter when done" box */
