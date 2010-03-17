@@ -114,7 +114,6 @@
 		outline: 1px solid #2c802c\9;
 		overflow: visible;
 		width: auto;
-		color: #FFF;
 	}
     
 	a.wikia-button.secondary,
@@ -125,7 +124,6 @@
 	button.secondary {
 		filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr="#FFCCCCCC", EndColorStr="#FFAAAAAA");
 		outline: 1px solid #999\9;
-		color: #333;
 	}
 
     /* Visited, Hover and Active states */
