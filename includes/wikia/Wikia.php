@@ -18,17 +18,17 @@ class WikiaAssets {
 		$references = array();
 
 		$references[] = array(
-			'url' => 'skins/monaco/css/monaco_ltie7.css?StaticChute',
+			'url' => 'skins/monaco/css/monaco_ltie7.css',
 			'cond' => 'if lt IE 7',
 			'browser' => 'IElt7');
 
 		$references[] = array(
-			'url' => 'skins/monaco/css/monaco_ie7.css?StaticChute',
+			'url' => 'skins/monaco/css/monaco_ie7.css',
 			'cond' => 'if IE 7',
 			'browser' => 'IEeq7');
 
 		$references[] = array(
-			'url' => 'skins/monaco/css/monaco_ie8.css?StaticChute',
+			'url' => 'skins/monaco/css/monaco_ie8.css',
 			'cond' => 'if IE 8',
 			'browser' => 'IEeq8');
 
@@ -221,7 +221,8 @@ class WikiaAssets {
 				global $wgWikiaCombinedPrefix;
 				$prefix = $wgWikiaCombinedPrefix;
 			}
-			$commonPart = "http://images1.wikia.nocookie.net/{$prefix}cb={$wgStyleVersion}&type=CoreCSS&themename={$themename}&rtl={$isRTL}";
+			//$commonPart = "http://images1.wikia.nocookie.net/{$prefix}cb={$wgStyleVersion}&type=CoreCSS&themename={$themename}&rtl={$isRTL}";
+			$commonPart = "http://www.wowwiki.com/{$prefix}cb={$wgStyleVersion}&type=CoreCSS&themename={$themename}&rtl={$isRTL}";
 
 			$out = "\n<!-- GetCoreCSS -->";
 			$out .= "\n".'<!--[if lt IE 7]><link rel="stylesheet" type="text/css" href="'.$commonPart.'&browser=IElt7" /><![endif]-->';
