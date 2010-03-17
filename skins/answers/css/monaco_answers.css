@@ -391,11 +391,14 @@ body.mainpage .firstHeading { display:none; }
 	padding: 2px 5px;
 	margin-right: 3px;
     font-family:"Helvetica Neue",Helvetica,Arial,default;
+	height:25px;
+	-moz-box-shadow:none;
 }
 
 #article_save_button:hover {
-  color: #2966B8;
-  background: #fff;
+	color: #2966B8;
+	background: #fff;
+	text-shadow:none;
 }
 
 #answer_edit_link, #question_edit_link {
