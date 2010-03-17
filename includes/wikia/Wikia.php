@@ -223,10 +223,10 @@ class WikiaAssets {
 			$commonPart = "http://images1.wikia.nocookie.net/{$prefix}cb={$wgStyleVersion}&type=CoreCSS&themename={$themename}&rtl={$isRTL}";
 
 			$out = "\n<!-- GetCoreCSS -->";
-			$out .= '<!--[if lt IE 7]><link rel="stylesheet" type="text/css" href="'.$commonPart.'&browser=IElt7" /><![endif]-->';
-			$out .= '<!--[if IE 7]><link rel="stylesheet" type="text/css" href="'.$commonPart.'&browser=IEeq7" /><![endif]-->';
-			$out .= '<!--[if IE 8]><link rel="stylesheet" type="text/css" href="'.$commonPart.'&browser=IEeq8" /><![endif]-->';
-			$out .= '<!--[if !IE]>--><link rel="stylesheet" type="text/css" href="'.$commonPart.'&browser=notIE" /><!--<![endif]-->';
+			$out .= "\n".'<!--[if lt IE 7]><link rel="stylesheet" type="text/css" href="'.$commonPart.'&browser=IElt7" /><![endif]-->';
+			$out .= "\n".'<!--[if IE 7]><link rel="stylesheet" type="text/css" href="'.$commonPart.'&browser=IEeq7" /><![endif]-->';
+			$out .= "\n".'<!--[if IE 8]><link rel="stylesheet" type="text/css" href="'.$commonPart.'&browser=IEeq8" /><![endif]-->';
+			$out .= "\n".'<!--[if !IE]>--><link rel="stylesheet" type="text/css" href="'.$commonPart.'&browser=notIE" /><!--<![endif]-->';
 
 			return $out;
 
