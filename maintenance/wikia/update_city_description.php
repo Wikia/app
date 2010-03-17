@@ -24,9 +24,9 @@ function deleteScript($document){
 	return trim(strip_tags($text)); 
 };
 
-$db = WikiFactory::db( DB_MASTER );
+$sql = 'SELECT cv_id, city_url, city_description FROM `city_list`';
 
-$sql = 'SELECT city_id, city_url, city_description FROM `city_list` where city_id ';
+$db = WikiFactory::db( DB_MASTER );
 $res = $db->query($sql);
 $countAll = $countNoEmpty = 0;
 $sql = '';
