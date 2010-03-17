@@ -55,7 +55,7 @@ class WikiaAssets {
 			preg_match("/href=\"([^\"]+)/", $staticChute->getChuteHtmlForPackage('monaco_css'), $matches);
 
 			$references = array();
-			$references[] = array('url' => str_replace('http://www.wikia.com/', '', $matches[1]));
+			$references[] = array('url' => str_replace('http://images.wikia.com/common/releases_trunk/', '', str_replace('http://www.wikia.com/', '', $matches[1])));
 
 			$references = array_merge($references, WikiaAssets::GetBrowserSpecificCSS());
 
