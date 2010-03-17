@@ -55,7 +55,9 @@ class WikiaAssets {
 			preg_match("/href=\"([^\"]+)/", $staticChute->getChuteHtmlForPackage('monaco_css'), $matches);
 
 			$references = array();
-			$references[] = array('url' => str_replace('http://www.wikia.com/', '', $matches[1]));
+			//$references[] = array('url' => str_replace('http://www.wikia.com/', '', $matches[1]));
+			global $wgServer;
+			$references[] = array('url' => str_replace($wgServer.'/', '', $matches[1]));
 
 			$references = array_merge($references, WikiaAssets::GetBrowserSpecificCSS());
 
@@ -222,7 +224,8 @@ class WikiaAssets {
 				$prefix = $wgWikiaCombinedPrefix;
 			}
 			$commonPart = "http://images1.wikia.nocookie.net/{$prefix}cb={$wgStyleVersion}&type=CoreCSS&themename={$themename}&rtl={$isRTL}";
-			//$commonPart = "http://www.wowwiki.com/{$prefix}cb={$wgStyleVersion}&type=CoreCSS&themename={$themename}&rtl={$isRTL}";
+			global $wgServer;
+			$commonPart = $wgServer . "/{$prefix}cb={$wgStyleVersion}&type=CoreCSS&themename={$themename}&rtl={$isRTL}";
 
 			$out = "\n<!-- GetCoreCSS -->";
 			$out .= "\n".'<!--[if lt IE 7]><link rel="stylesheet" type="text/css" href="'.$commonPart.'&browser=IElt7" /><![endif]-->';
