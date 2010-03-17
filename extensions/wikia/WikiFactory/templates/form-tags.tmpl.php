@@ -74,7 +74,7 @@ $.getScript(stylepath+'/common/jquery/jquery.autocomplete.js', function() {
 			<td class="mw-label">Tagged wikis</td>
 			<td class="mw-input">
 				<?php foreach( $searchTagWikiIds as $wikiId ): ?>
-					<a href="<?php echo $wikiFactoryUrl . "/".$wikiId; ?>"><?php echo "<strong>" . $wikiId . "</strong> (" . WikiFactory::getVarValueByName('wgServer', $wikiId) . ")"; ?></a>&nbsp;&nbsp;
+					<a href="<?php echo $wikiFactoryUrl . "/".$wikiId; ?>"><?php echo "<strong>" . $wikiId . "</strong> - " . WikiFactory::getVarValueByName('wgServer', $wikiId); ?></a><br />
 				<?php endforeach; ?>
 			</td>
 		</tr>
