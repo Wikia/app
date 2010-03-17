@@ -55,7 +55,7 @@ class WikiaAssets {
 			preg_match("/href=\"([^\"]+)/", $staticChute->getChuteHtmlForPackage('monaco_css'), $matches);
 
 			$references = array();
-			$references[] = array('url' => str_replace('http://www.wikia.com/', '', $matches[1]).'&amp;server=ap8');
+			$references[] = array('url' => str_replace('http://www.wikia.com/', '', $matches[1]));
 
 			$references = array_merge($references, WikiaAssets::GetBrowserSpecificCSS());
 
@@ -87,14 +87,14 @@ class WikiaAssets {
 			$staticChute->useLocalChuteUrl();
 			preg_match_all("/src=\"([^\"]+)/", $staticChute->getChuteHtmlForPackage('monaco_anon_article_js'), $matches, PREG_SET_ORDER);
 			foreach($matches as $script) {
-				$references[] = str_replace($wgServer.'/', '', $script[1]).'&amp;server=ap8';
+				$references[] = str_replace($wgServer.'/', '', $script[1]);
 			}
 
 			// optinal yui
 			if($wgRequest->getBool('yui', false)) {
 				preg_match_all("/src=\"([^\"]+)/", $staticChute->getChuteHtmlForPackage('yui'), $matches, PREG_SET_ORDER);
 				foreach($matches as $script) {
-					$references[] = str_replace($wgServer.'/', '', $script[1]).'&amp;server=ap8';
+					$references[] = str_replace($wgServer.'/', '', $script[1]);
 				}
 			}
 
@@ -186,7 +186,7 @@ class WikiaAssets {
 			if(empty($cb)) {
 				$cb = 1;
 			}
-			
+
 			global $wgDevelEnvironment;
 			if(empty($wgDevelEnvironment)){
 				$prefix = "__wikia_combined/";
@@ -195,7 +195,7 @@ class WikiaAssets {
 				$prefix = $wgWikiaCombinedPrefix;
 			}
 
-			$url = "/{$prefix}cb={$cb}&type=SiteCSS&themename={$themename}&rtl={$isRTL}?server=ap8";
+			$url = "/{$prefix}cb={$cb}&type=SiteCSS&themename={$themename}&rtl={$isRTL}";
 			$out .= '<link rel="stylesheet" type="text/css" href="'.$url.'" />';
 		} else {
 			$ref = WikiaAssets::GetSiteCSSReferences($themename);
@@ -994,7 +994,7 @@ class Wikia {
 
 		return $val;
 	}
-	
+
 	/**
 	 * Wikia Setup.php
 	 *
