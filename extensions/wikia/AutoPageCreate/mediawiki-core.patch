@@ -1,0 +1,75 @@
+Index: includes/Article.php
+===================================================================
+--- includes/Article.php	(revision 19949)
++++ includes/Article.php	(revision 19950)
+@@ -915,7 +915,7 @@
+ 			}
+ 
+ 			# Non-existent pages
+-			if( $this->getID() === 0 ) {
++			if( $this->getID() === 0 && wfRunHooks( 'ArticleNonExistentPage', array( $this, $wgOut, &$text, &$return404 ) ) ) {
+ 				$wgOut->setRobotPolicy( 'noindex,nofollow' );
+ 				$text = "<div class='noarticletext'>\n$text\n</div>";
+ 				if( !$this->hasViewableContent() ) {
+Index: includes/Linker.php
+===================================================================
+--- includes/Linker.php	(revision 19949)
++++ includes/Linker.php	(revision 19950)
+@@ -242,7 +242,10 @@
+ 		if( in_array( 'broken', $options ) and empty( $query['action'] )
+ 		and $target->getNamespace() != NS_SPECIAL ) {
+ 			$query['action'] = 'edit';
+-			$query['redlink'] = '1';
++			global $wgWikiaEnableAutoPageCreateExt;
++			if( empty( $wgWikiaEnableAutoPageCreateExt ) ) {
++				$query['redlink'] = '1';
++			}
+ 		}
+ 		$ret = $target->getLinkUrl( $query );
+ 		wfProfileOut( __METHOD__ );
+Index: includes/Title.php
+===================================================================
+--- includes/Title.php	(revision 19949)
++++ includes/Title.php	(revision 19950)
+@@ -3437,7 +3437,7 @@
+ 	 * @return \type{\bool} TRUE or FALSE
+ 	 */
+ 	public function isAlwaysKnown() {
+-		global $wgEnableCategoryBlueLinks;
++		global $wgEnableCategoryBlueLinks, $wgWikiaEnableAutoPageCreateExt;
+ 		if ($wgEnableCategoryBlueLinks && $this->mNamespace == NS_CATEGORY){
+ 			return true;
+ 		}
+@@ -3451,7 +3451,8 @@
+ 		case NS_SPECIAL:
+ 			return SpecialPage::exists( $this->getDBKey() );  // valid special page
+ 		case NS_MAIN:
+-			return $this->mDbkeyform == '';  // selflink, possibly with fragment
++			return $this->mDbkeyform == ''  // selflink, possibly with fragment
++				|| !empty( $wgWikiaEnableAutoPageCreateExt );
+ 		case NS_MEDIAWIKI:
+ 			// If the page is form Mediawiki:message/lang, calling wfMsgWeirdKey causes
+ 			// the full l10n of that language to be loaded. That takes much memory and
+@@ -3461,6 +3462,9 @@
+ 			list( $basename, /* rest */ ) = explode( '/', $this->mDbkeyform, 2 );
+ 			return wfMsgWeirdKey( $basename );  // known system message
+ 		default:
++			if( !empty( $wgWikiaEnableAutoPageCreateExt ) ) {
++				return true;
++			}
+ 			return false;
+ 		}
+ 	}
+Index: includes/SkinTemplate.php
+===================================================================
+--- includes/SkinTemplate.php	(revision 19949)
++++ includes/SkinTemplate.php	(revision 19950)
+@@ -742,7 +742,7 @@
+ 				$istalkclass = $istalk?' istalk':'';
+ 				$content_actions['edit'] = array(
+ 					'class' => ((($action == 'edit' or $action == 'submit') and $section != 'new') ? 'selected' : '').$istalkclass,
+-					'text' => $this->mTitle->exists()
++					'text' => $this->mTitle->isKnown()
+ 						? wfMsg( 'edit' )
+ 						: wfMsg( 'create' ),
+ 					'href' => $this->mTitle->getLocalUrl( $this->editUrlOptions() )
