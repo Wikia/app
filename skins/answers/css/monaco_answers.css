@@ -43,6 +43,8 @@
        margin: 8px 8px 5px 8px;
        background-color:#fff;
        display: inline-block;
+       -moz-border-radius: 10px 10px 10px 10px;
+       -webkit-border-radius: 10px 10px 10px 10px;
 }
 
 #answer_edit_link div, #question_edit_link div {
@@ -153,11 +155,12 @@ body.mainpage .firstHeading { display:none; }
 /* Change the background image of the logo */
 #wikia_logo {
         /* background: url(http://images.wikia.com/common/skins/monaco/images/wikia_logo.png) no-repeat; */
-        background: url(http://images.wikia.com/common/trunk/skins/answers/images/wikianswers_logo_transparent.png) no-repeat;
+        /* background: url(http://images.wikia.com/common/trunk/skins/answers/images/wikianswers_logo_transparent.png) no-repeat; */
 }
+
 #wikia_logo, #wikia_logo a {
         height: 25px;
-        width: 198px;
+/*        width: 198px; */
 }
 
 /* The header row: Username, My Home, My Talk and so on */
@@ -228,11 +231,14 @@ body.mainpage .firstHeading { display:none; }
     font-size: 111%;
     border:1px solid;
     font-family:"Helvetica Neue",Helvetica,Arial,default;
+    height: 32px;
+	-moz-box-shadow: none;
 }
 
 #ask_button:hover, #ask_button_intab:hover {
-  color: #2966B8;
-  background: #fff;
+	color: #2966B8;
+	background: #fff;
+	text-shadow:none;
 }
 
 
