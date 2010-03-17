@@ -586,7 +586,7 @@ EOS;
 				global $wgWikiaCombinedPrefix;
 				$prefix = $wgWikiaCombinedPrefix;
 			}
-			$jsReferences[] = "/{$prefix}cb={$cb}{$wgStyleVersion}&type=CoreJS". $addParam ."&server=ap8";
+			$jsReferences[] = "/{$prefix}cb={$cb}{$wgStyleVersion}&type=CoreJS";
 		} else {
 			$jsHtml = $StaticChute->getChuteHtmlForPackage($package);
 
