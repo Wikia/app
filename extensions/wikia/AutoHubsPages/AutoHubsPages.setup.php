@@ -11,6 +11,25 @@ $wgExtensionCredits['specialpage'][] = array(
 	'version' => '1.0.0',
 );
 
+$wgHubsPages = array(   
+	'handheld_games' => 'handheld',
+	'pc_games' => 'pc',
+	'xbox_360_games' => 'xbox_360',
+	'ps3_games' => 'ps3',
+	'mobile_games' => 'mobile',
+	'movie' => 'movie',
+	'tv' => 'tv',
+	'entertainment' => 'entertainment',
+	'music' => 'music',                                          
+	'animation' => 'anime',
+	'anime' => 'anime',
+	'music' => 'music',
+	'sci-fi' => 'sci-fi',
+	'horror' => 'horror',
+	'gaming' => 'gaming',
+	'lifestyle' => 'lifestyle', 
+);
+
 $dir = dirname(__FILE__) . '/';
 
 $wgAutoloadClasses['AutoHubsPagesHelper']  = $dir . 'AutoHubsPagesHelper.class.php';

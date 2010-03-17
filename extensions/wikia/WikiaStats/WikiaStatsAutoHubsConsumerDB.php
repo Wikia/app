@@ -176,7 +176,7 @@ class WikiaStatsAutoHubsConsumerDB {
 		if( !$force_reload ) {
 			$out = $wgTTCache->get($mcKey,null);
 			if( !empty($out) ) {
-			//	return $out;
+				return $out;
 			}
 		}
 		$tag_id = (int) $tag_id;
@@ -452,13 +452,13 @@ class WikiaStatsAutoHubsConsumerDB {
 	}
 
 	public function getUserWiki( $user_id ) {
-		global $wgTTCache, $wgExternalDatawareDB;
+		global $wgMemc, $wgExternalDatawareDB;
 		
 		$dbw = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );			
 		
 		$mcKey = wfSharedMemcKey( "auto_hubs", "user_wiki", $user_id  );
 		
-		$out = $wgTTCache->get($mcKey,null);
+		$out = $wgMemc->get($mcKey,null);
 		if( !empty($out) ) {
 			return $out;
 		}
@@ -489,7 +489,7 @@ class WikiaStatsAutoHubsConsumerDB {
 		$out = $this->dbs->fetchRow( $res );
 		$out = $out['city_url'];
 		
-		$wgTTCache->set( $mcKey, $out,60*60*24 );
+		$wgMemc->set( $mcKey, $out,60*60*24 );
 		return $out;
 	}
 
@@ -644,13 +644,13 @@ class WikiaStatsAutoHubsConsumerDB {
 	 */	
 	
 	public function getBlogInfoByApi( $wikiurl, $page_id ) {
-		global $wgTTCache, $wgContLang;
+		global $wgMemc, $wgContLang;
 
 		wfProfileIn( __METHOD__ );
 		
 	    $mcKey = wfSharedMemcKey( "auto_hubs", "blogi_api_info", $wikiurl, $page_id );
 		
-	    $out = $wgTTCache->get($mcKey,null);
+	    $out = $wgMemc->get($mcKey,null);
 		if( !empty($out) ) {
 			return $out;
 		}
@@ -670,7 +670,7 @@ class WikiaStatsAutoHubsConsumerDB {
 			$wikis['blogpage'][$page_id]['description'] = trim($temp[0]).". ";
 		}
 
-		$wgTTCache->set($mcKey, $wikis['blogpage'][$page_id], 60*60 );
+		$wgMemc->set($mcKey, $wikis['blogpage'][$page_id], 60*60 );
 
 		wfProfileOut( __METHOD__ );
 		return $wikis['blogpage'][$page_id];

@@ -43,6 +43,8 @@ while ($row = $db->fetchRow($res)) {
 		$sql = " UPDATE city_list SET city_description =" . $db->addQuotes($out) . " where city_id=".$row['city_id'].";\n";
 		$db->query($sql);
 		$countNoEmpty ++;
+	} else {
+		echo "is up to date\n";
 	}
 } 
 
