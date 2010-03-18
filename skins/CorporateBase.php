@@ -272,7 +272,7 @@ class CorporateBaseTemplate extends QuickTemplate {
 
 		<?php	if($this->data['jsvarurl']) { ?>
 		<!-- MediaWiki site js -->
-		<script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('jsvarurl') ?>"></script>
+		<script src="<?php $this->text('jsvarurl') ?>"></script>
 <?php	} ?>
 <?php	if($this->data['pagecss']) { ?>
 		<!-- page css -->
@@ -284,11 +284,11 @@ class CorporateBaseTemplate extends QuickTemplate {
 <?php	}
 		if($this->data['userjs']) { ?>
 		<!-- user js -->
-		<script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('userjs' ) ?>"></script>
+		<script src="<?php $this->text('userjs' ) ?>"></script>
 <?php	}
 		if($this->data['userjsprev']) { ?>
 		<!-- user js prev -->
-		<script type="<?php $this->text('jsmimetype') ?>"><?php $this->html('userjsprev') ?></script>
+		<script><?php $this->html('userjsprev') ?></script>
 <?php	}
 		if($this->data['trackbackhtml']) print $this->data['trackbackhtml']; ?>
 	</head>
