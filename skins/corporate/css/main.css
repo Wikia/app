@@ -1009,19 +1009,19 @@ footer {
   margin-bottom: 30px;
 }
 
-#spotlight-slider ul {
+#MainArticle #hub-featured-box #spotlight-slider ul {
   padding: 0 0;
 }
 
-#spotlight-slider .nav {
+#MainArticle #hub-featured-box #spotlight-slider .nav {
   top: 240px;
 }
 
-#spotlight-slider .description h2 {
+#MainArticle #hub-featured-box #spotlight-slider .description h2 {
   font-size: 24px;
 }
 
-#spotlight-slider .description p {
+#MainArticle #hub-featured-box #spotlight-slider .description p {
   font-size: 16px;
 }
 
