@@ -23,157 +23,157 @@
 
 /* @group Buttons. */
 
-    a.wikia-button, 
-    span.wikia-button a,
-    input[type="submit"], 
-    input[type="reset"], 
-    input[type="button"], 
-    button {
-      background-color: #093;
-      background-image: -moz-linear-gradient(top, #093 20%, #006722 70%);
-      background-image: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#093), to(#006722));
-      border: 1px solid #beddbe;
-      border-radius: 7px;
-      box-shadow: 0 1px 0 #2c802c, 0 -1px 0 #2c802c, 1px 0 0 #2c802c, -1px 0 0 #2c802c;
-      color: #FFF;
-      cursor: pointer;
-      display: inline-block;
-      font: bold 12px/17px "Lucida Grande", sans-serif;
-      height: 17px;
-      margin: 0;
-      padding: 0 7px;
-      text-decoration: none;
-      white-space: nowrap;
-      -moz-border-radius: 7px;
-      -webkit-border-radius: 7px;
-      -moz-box-shadow: 0 0 0 1px #2c802c;
-      -webkit-box-shadow: 0 1px 0 #2c802c, 0 -1px 0 #2c802c, 1px 0 0 #2c802c, -1px 0 0 #2c802c;
-    }
+a.wikia-button, 
+span.wikia-button a,
+input[type="submit"], 
+input[type="reset"], 
+input[type="button"], 
+button {
+	background-color: #093;
+	background-image: -moz-linear-gradient(top, #093 20%, #006722 70%);
+	background-image: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#093), to(#006722));
+	border: 1px solid #beddbe;
+	border-radius: 7px;
+	box-shadow: 0 1px 0 #2c802c, 0 -1px 0 #2c802c, 1px 0 0 #2c802c, -1px 0 0 #2c802c;
+	color: #FFF;
+	cursor: pointer;
+	display: inline-block;
+	font: bold 12px/17px "Lucida Grande", sans-serif;
+	height: 17px;
+	margin: 0;
+	padding: 0 7px;
+	text-decoration: none;
+	white-space: nowrap;
+	-moz-border-radius: 7px;
+	-webkit-border-radius: 7px;
+	-moz-box-shadow: 0 0 0 1px #2c802c;
+	-webkit-box-shadow: 0 1px 0 #2c802c, 0 -1px 0 #2c802c, 1px 0 0 #2c802c, -1px 0 0 #2c802c;
+}
   
-    /* Secondary Buttons */
-    a.wikia-button.secondary, 
-    span.wikia-button.secondary a, 
-    input[type="submit"].secondary, 
-    input[type="reset"].secondary, 
-    input[type="button"].secondary, 
-    button.secondary {
-      background-color: #CCC;
-      background-image: -moz-linear-gradient(top, #CCC 20%, #AAA 70%);
-      background-image: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#CCC), to(#AAA));
-      border-color: #E2E2E2;
-      box-shadow: 0 1px 0 #999, 0 -1px 0 #999, 1px 0 0 #999, -1px 0 0 #999;
-      color: #333;
-      -moz-box-shadow: 0 0 0 1px #999;
-      -webkit-box-shadow: 0 1px 0 #999, 0 -1px 0 #999, 1px 0 0 #999, -1px 0 0 #999;
-    }
+/* Secondary Buttons */
+a.wikia-button.secondary, 
+span.wikia-button.secondary a, 
+input[type="submit"].secondary, 
+input[type="reset"].secondary, 
+input[type="button"].secondary, 
+button.secondary {
+	background-color: #CCC;
+	background-image: -moz-linear-gradient(top, #CCC 20%, #AAA 70%);
+	background-image: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#CCC), to(#AAA));
+	border-color: #E2E2E2;
+	box-shadow: 0 1px 0 #999, 0 -1px 0 #999, 1px 0 0 #999, -1px 0 0 #999;
+	color: #333;
+	-moz-box-shadow: 0 0 0 1px #999;
+	-webkit-box-shadow: 0 1px 0 #999, 0 -1px 0 #999, 1px 0 0 #999, -1px 0 0 #999;
+}
     
-    /* Big Buttons*/
-    a.wikia-button.big, 
-    span.wikia-button.big a,
-    input[type="submit"].big,
-    input[type="reset"].big, 
-    input[type="button"].big, 
-    button.big {
-      height: 30px;
-      font-size: 15px;
-      line-height: 30px;
-      padding: 0 15px;
-    }
+/* Big Buttons*/
+a.wikia-button.big, 
+span.wikia-button.big a,
+input[type="submit"].big,
+input[type="reset"].big, 
+input[type="button"].big, 
+button.big {
+	height: 30px;
+	font-size: 15px;
+	line-height: 30px;
+	padding: 0 15px;
+}
 
-    /* Border-box model: Inputs and buttons count border as part of height. Increase height. */
-    input[type="submit"], 
-    input[type="reset"], 
-    input[type="button"], 
-    button {
-      height: 19px;
-    }
-    input[type="submit"].big, 
-    input[type="reset"].big, 
-    input[type="button"].big, 
-    button.big {
-      height: 32px;
-    }
-  
-    /* Fix Mozilla Button Sizing */
-    input[type="submit"]::-moz-focus-inner,
-    input[type="reset"]::-moz-focus-inner,
-    input[type="button"]::-moz-focus-inner,
-    button::-moz-focus-inner {
-      padding: 0;
-      border: 0;
-    }
+/* Border-box model: Inputs and buttons count border as part of height. Increase height. */
+input[type="submit"], 
+input[type="reset"], 
+input[type="button"], 
+button {
+	height: 19px;
+}
+input[type="submit"].big, 
+input[type="reset"].big, 
+input[type="button"].big, 
+button.big {
+	height: 32px;
+}
 
-    /* IE Styles */
-	a.wikia-button,
-	span.wikia-button a, 
-	input[type="submit"], 
-	input[type="reset"], 
-	input[type="button"], 
-	button {
-		filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr="#FF009933", EndColorStr="#FF006722");
-		outline: 1px solid #2c802c\9;
-		overflow: visible;
-		width: auto;
-	}
-    
-	a.wikia-button.secondary,
-	span.wikia-button.secondary a, 
-	input[type="submit"].secondary, 
-	input[type="reset"].secondary, 
-	input[type="button"].secondary, 
-	button.secondary {
-		filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr="#FFCCCCCC", EndColorStr="#FFAAAAAA");
-		outline: 1px solid #999\9;
-	}
+/* Fix Mozilla Button Sizing */
+input[type="submit"]::-moz-focus-inner,
+input[type="reset"]::-moz-focus-inner,
+input[type="button"]::-moz-focus-inner,
+button::-moz-focus-inner {
+	padding: 0;
+	border: 0;
+}
 
-    /* Visited, Hover and Active states */
-	a.wikia-button:visited, 
-	span.wikia-button a:visited {
-		color: #FFF;
-	} 
-	a.wikia-button.secondary:visited, 
-	span.wikia-button.secondary a:visited {
-		color: #333;
-	} 
+/* IE Styles */
+a.wikia-button,
+span.wikia-button a, 
+input[type="submit"], 
+input[type="reset"], 
+input[type="button"], 
+button {
+	filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr="#FF009933", EndColorStr="#FF006722");
+	outline: 1px solid #2c802c\9;
+	overflow: visible;
+	width: auto;
+}
+
+a.wikia-button.secondary,
+span.wikia-button.secondary a, 
+input[type="submit"].secondary, 
+input[type="reset"].secondary, 
+input[type="button"].secondary, 
+button.secondary {
+	filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr="#FFCCCCCC", EndColorStr="#FFAAAAAA");
+	outline: 1px solid #999\9;
+}
+
+/* Visited, Hover and Active states */
+a.wikia-button:visited, 
+span.wikia-button a:visited {
+	color: #FFF;
+} 
+a.wikia-button.secondary:visited, 
+span.wikia-button.secondary a:visited {
+	color: #333;
+} 
  
-    a.wikia-button:hover, 
-    span.wikia-button a:hover, 
-    input[type="submit"]:hover, 
-    input[type="reset"]:hover,
-    input[type="button"]:hover, 
-    button:hover {
-      text-decoration: none;
-      text-shadow: #000 0 1px 1px;
-    } 
-    a.wikia-button.secondary:hover, 
-    span.wikia-button.secondary a:hover, 
-    input[type="submit"].secondary:hover, 
-    input[type="reset"].secondary:hover,
-    input[type="button"].secondary:hover, 
-    button.secondary:hover {
-      text-shadow: #FFF 0 1px 1px;
-    } 
+a.wikia-button:hover, 
+span.wikia-button a:hover, 
+input[type="submit"]:hover, 
+input[type="reset"]:hover,
+input[type="button"]:hover, 
+button:hover {
+	text-decoration: none;
+	text-shadow: #000 0 1px 1px;
+} 
+a.wikia-button.secondary:hover, 
+span.wikia-button.secondary a:hover, 
+input[type="submit"].secondary:hover, 
+input[type="reset"].secondary:hover,
+input[type="button"].secondary:hover, 
+button.secondary:hover {
+	text-shadow: #FFF 0 1px 1px;
+} 
 
-    a.wikia-button:active, 
-    span.wikia-button a:active, 
-    input[type="submit"]:active, 
-    input[type="reset"]:active,
-    input[type="button"]:active, 
-    button:active {
-      color: #FFF;
-      background-image: -moz-linear-gradient(top, #006722 20%, #093 70%);
-      background-image: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#006722), to(#093));
-    } 
-    a.wikia-button.secondary:active, 
-    span.wikia-button.secondary a:active, 
-    input[type="submit"].secondary:active, 
-    input[type="reset"].secondary:active,
-    input[type="button"].secondary:active, 
-    button.secondary:active {
-      color: #333;
-      background-image: -moz-linear-gradient(top, #AAA 20%, #CCC 70%);
-      background-image: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#AAA), to(#CCC));
-    } 
+a.wikia-button:active, 
+span.wikia-button a:active, 
+input[type="submit"]:active, 
+input[type="reset"]:active,
+input[type="button"]:active, 
+button:active {
+	color: #FFF;
+	background-image: -moz-linear-gradient(top, #006722 20%, #093 70%);
+	background-image: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#006722), to(#093));
+} 
+a.wikia-button.secondary:active, 
+span.wikia-button.secondary a:active, 
+input[type="submit"].secondary:active, 
+input[type="reset"].secondary:active,
+input[type="button"].secondary:active, 
+button.secondary:active {
+	color: #333;
+	background-image: -moz-linear-gradient(top, #AAA 20%, #CCC 70%);
+	background-image: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#AAA), to(#CCC));
+} 
 
 /* @end */
 
