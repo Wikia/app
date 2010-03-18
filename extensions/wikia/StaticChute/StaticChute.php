@@ -529,7 +529,9 @@ class StaticChute {
 		// Replace the local image URLs with the CDN's URL anywhere we've indicated to do this.
 		// If a line has a "/* $wgCdnStylePath */" comment after it, modify the URL to start with the actual wgCdnStylePath.
 		// This can't be in the line itself (as in the .sql setup files) because that's not valid in CSS to have a comment inside a line.
-		$css = preg_replace("/([\(][\"']?)([^\n]*?)\s*\/\*\s*[\\\$]?wgCdnStylePath\s*\*\//is", '\\1'.$this->cdnStylePath.'\\2', $css);
+		if(strpos($css, "wgCdnStylePath") !== false){ // faster to skip the regex in most cases
+			$css = preg_replace("/([\(][\"']?)([^\n]*?)\s*\/\*\s*[\\\$]?wgCdnStylePath\s*\*\//is", '\\1'.$this->cdnStylePath.'\\2', $css);
+		}
 
 		return Minify_CSS_Compressor::process($css);
 	}
