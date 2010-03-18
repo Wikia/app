@@ -74,6 +74,13 @@ $Factory.VariableCallback = {
         var div = $Dom.get( aData["div-name"] );
         div.innerHTML = aData["div-body"];
         //--- now add listeners and events
+	$.getScript(stylepath+'/common/jquery/jquery.autocomplete.js', function() {
+		$('#tagName').autocomplete({
+			serviceUrl: wgServer+wgScript+'?action=ajax&rs=WikiFactoryTags::axQuery',
+			minChars:3,
+			deferRequestBy: 0
+		});
+	});
         $Factory.Busy(0);
     },
     failure: function( oResponse ) {
