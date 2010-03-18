@@ -851,9 +851,10 @@ class UserProfilePage extends Article{
 				$this->getProfileSection(wfMsg("custom-info-field2"),$profile_data["custom_2"],false).
 				$this->getProfileSection(wfMsg("custom-info-field3"),$profile_data["custom_3"],false).
 				$this->getProfileSection(wfMsg("custom-info-field4"),$profile_data["custom_4"],false).
-			"</div>";
+			"</div></span>";
 		} else if ($wgUser->getName()==$user_name) {
 			$output .= "<div class=\"user-section-heading\">
+				<span id=\"user-section-custom\">
 				<div class=\"user-section-title\">
 					".wfMSg("custom-info-title")."
 				</div>
@@ -869,11 +870,12 @@ class UserProfilePage extends Article{
 			<div class=\"cleared\"></div>
 			<div class=\"no-info-container\">
 				".wfMSg("custom-no-info")."
-			</div>";
+			</div></span>";
 		}
 
 		return $output;
 	}
+
 
 	function getInterests($user_name) {
 		global $IP, $wgTitle, $wgUser, $wgMemc, $wgUserProfileDisplay;
@@ -1083,7 +1085,7 @@ class UserProfilePage extends Article{
 			}
 
 			if( $wgTitle->getNamespace() == NS_USER && ( !$this->profile_data["user_id"] || $this->profile_data["user_page_type"] == 1) ){
-				$output .= "| <a href=\"".$user_wiki->escapeFullURL()."\" rel=\"nofollow\">".wfMsg("user-wiki-link")."</a>";
+				$output .= "| <span id=\"profile-actions-wikiuserpage\"><a href=\"".$user_wiki->escapeFullURL()."\" rel=\"nofollow\">".wfMsg("user-wiki-link")."</a></span>";
 			}
 
 
