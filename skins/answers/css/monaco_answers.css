@@ -91,10 +91,12 @@ body {
        font-family:"Helvetica Neue",Helvetica,Arial,default;
 }
 
-a:link {color: #369; text-decoration: none; }
-a:active {color: #369; text-decoration: none; }
-a:visited {color: #369; text-decoration: none; }
-a:hover {color: #369; text-decoration: underline; }
+a, a:active, a:visited {
+	color: #369; 
+}
+a:hover {
+	text-decoration: underline; 
+}
 /* Important to override the inline styles */
 a.new {color:#BA5500 !important;}
 
