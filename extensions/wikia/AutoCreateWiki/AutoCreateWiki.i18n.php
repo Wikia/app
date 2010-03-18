@@ -158,7 +158,8 @@ This is a brand-new project, so please write to us if you have any questions!
 
 <p>This is a brand-new project, so please write to us if you have any questions!</p>
 
-<p>-- Wikia Community Team</p>"
+<p>-- Wikia Community Team</p>",
+	'answers-name' => 'Answers',
 );
 
 /** Message documentation (Message documentation)

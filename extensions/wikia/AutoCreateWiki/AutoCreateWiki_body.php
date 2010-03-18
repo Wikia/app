@@ -173,11 +173,6 @@ class AutoCreateWikiPage extends SpecialPage {
 			case "answers":
 				$this->mDefSubdomain = "answers.wikia.com";
 				$this->mDefSubname   = wfMsgExt("answers-name", array("language" => $this->mLang));
-
-				# hack rt#42994 till rt#43197 is fixed
-				if (wfEmptyMsg("answers-name", $this->mDefSubname)) $this->mDefSubname = "Answers";
-				# /hack
-
 				break;
 
 			default:
