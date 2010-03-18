@@ -18,6 +18,45 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 ############################## Ajax methods ##################################
 
 /**
+ * axWFactoryTagCheck
+ *
+ * Method for checking tag name and getting number of tagged wikis
+ *
+ * @author Adrian 'ADi' Wieczorek <adi(at)wikia-inc.com>
+ * @access public
+ *
+ * @return json data
+ */
+function axWFactoryTagCheck() {
+	global $wgRequest, $wgUser;
+
+	if ( !$wgUser->isAllowed( 'wikifactory' ) ) {
+		return;
+	}
+
+	$tagName = $wgRequest->getVal( "tagName" );
+	if( !empty( $tagName ) ) {
+		$tagsQuery = new WikiFactoryTagsQuery( $tagName );
+		$wikiIds = $tagsQuery->doQuery();
+		$result = array(
+			'tagName' => $tagName,
+			'wikiCount' => count( $wikiIds ),
+			'divName' => 'wf-variable-parse'
+		);
+	}
+	else {
+		$result = array(
+			'errorMsg' => 'empty tag name',
+			'divName' => 'wf-variable-parse',
+			'wikiCount' => 0
+		);
+	}
+
+	return Wikia::json_encode( $result );
+}
+
+
+/**
  * axWFactoryGetVariable
  *
  * Method for getting variable form via AJAX request.
@@ -393,6 +432,8 @@ function axWFactorySaveVariable() {
 		$cv_name			= $wgRequest->getVal( 'varName' );
 		$cv_value			= $wgRequest->getVal( 'varValue' );
 		$cv_variable_type	= $wgRequest->getVal( 'varType' );
+		$tag_name = $wgRequest->getVal( 'tagName' );
+		$tag_wiki_count = 0;
 
 		#--- check if variable is valid
 		switch ( $cv_variable_type ) {
@@ -462,14 +503,27 @@ function axWFactorySaveVariable() {
 						" This variable is tied with others. Check: ". implode(", ", $tied )
 					);
 				}
+				if ( !empty( $tag_name ) ) {
+					// apply changes to all wikis with given tag
+					$tagsQuery = new WikiFactoryTagsQuery( $tag_name );
+					foreach ( $tagsQuery->doQuery() as $tagged_wiki_id ) {
+						if ( WikiFactory::setVarByID( $cv_id, $tagged_wiki_id, $cv_value ) ) {
+							$tag_wiki_count++;
+						}
+					}
+					$return .= Wikia::successmsg(" ({$tag_wiki_count} wikis affected)");
+				}
 			}
 		}
+
 	}
 
 	return Wikia::json_encode(
 		array(
 			"div-body" => $return,
 			"is-error" => $error,
+			"tag-name" => $tag_name,
+			"tag-wikis" => $tag_wiki_count,
 			"div-name" => "wf-variable-parse"
 		)
 	);
@@ -587,14 +641,27 @@ function axWFactoryRemoveVariable( ) {
 		$return = Wikia::errormsg( "You are not allowed to change variable value" );
 	}
 	else {
-		$cv_id				= $wgRequest->getVal( 'varId' );
-		$city_id			= $wgRequest->getVal( 'cityid' );
+		$cv_id    = $wgRequest->getVal( 'varId' );
+		$city_id  = $wgRequest->getVal( 'cityid' );
+		$tag_name = $wgRequest->getVal( 'tagName' );
+		$tag_wiki_count = 0;
 
 		if( ! WikiFactory::removeVarById( $cv_id, $city_id ) ) {
 			$error++;
 			$return = Wikia::errormsg( "Variable not removed because of problems with database. Try again." );
 		} else {
 			$return = Wikia::successmsg( " Value of variable was removed ");
+			if ( !empty( $tag_name ) ) {
+				// apply changes to all wikis with given tag
+				$tagsQuery = new WikiFactoryTagsQuery( $tag_name );
+				foreach ( $tagsQuery->doQuery() as $tagged_wiki_id ) {
+					if ( WikiFactory::removeVarByID( $cv_id, $tagged_wiki_id ) ) {
+						$tag_wiki_count++;
+					}
+				}
+				$return .= Wikia::successmsg(" ({$tag_wiki_count} wikis affected)");
+			}
+
 		}
 	}
 
@@ -602,6 +669,8 @@ function axWFactoryRemoveVariable( ) {
 		array(
 			"div-body" => $return,
 			"is-error" => $error,
+			"tag-name" => $tag_name,
+			"tag-wikis" => $tag_wiki_count,
 			"div-name" => "wf-variable-parse"
 		)
 	);
@@ -757,3 +826,4 @@ $wgAjaxExportList[] = "axAWCMetrics";
 $wgAjaxExportList[] = "axAWCMetricsCategory";
 $wgAjaxExportList[] = "axAWCMetricsAllWikis";
 $wgAjaxExportList[] = "axWFactoryRemoveVariable";
+$wgAjaxExportList[] = "axWFactoryTagCheck";

@@ -102,6 +102,7 @@ $Factory.ReplaceCallback = {
     success: function( oResponse ) {
         var Data = YAHOO.Tools.JSONParse(oResponse.responseText);
         $Dom.get( Data["div-name"] ).innerHTML = Data["div-body"];
+
         $Factory.Busy(0);
         // other conditions
         if ( Data["div-name"] == "wf-clear-cache") {
@@ -337,14 +338,51 @@ $Factory.Variable.submit = function () {
     $Connect.asyncRequest( 'POST', ajaxpath+"?action=ajax&rs=axWFactorySaveVariable", $Factory.ReplaceCallback );
 };
 
-// submit form with new variable data
-$Factory.Variable.remove_submit = function () {
-	if (window.confirm('Are You sure?')) {
-		$Factory.Busy(1);
-		var oForm = $Dom.get('wf-variable-form');
-		$Connect.setForm(oForm, false);
-		$Connect.asyncRequest( 'POST', ajaxpath+"?action=ajax&rs=axWFactoryRemoveVariable", $Factory.ReplaceCallback );
+$Factory.Variable.tagCheck = function ( submitType ) {
+	$Dom.get( 'wf-tag-parse' ).innerHTML = '';
+	var tagName = $Dom.get('tagName').value;
+	if ( tagName == '' ) {
+		if( submitType == 'remove' ) {
+			$Factory.Variable.remove_submit(true);
+		}
+		else {
+			$Factory.Variable.submit();
+		}
 	}
+	else {
+		$Connect.asyncRequest( 'POST', ajaxpath+"?action=ajax&rs=axWFactoryTagCheck&tagName="+tagName, {
+			success: function( oResponse ) {
+				var data = YAHOO.Tools.JSONParse(oResponse.responseText);
+				if( data.wikiCount == 0 ) {
+					$Dom.get( 'wf-tag-parse' ).innerHTML = "<span style=\"color: red; font-weight: bold;\">tag doesn't exists</span>";
+				}
+				else {
+					if( !window.confirm('This change will apply to all "'+tagName+'" tagged wikis ('+data.wikiCount+' in total). Are you really, really sure?') ) {
+						return false;
+					}
+					if( submitType == 'remove' ) {
+						$Factory.Variable.remove_submit(false);
+					}
+					else {
+						$Factory.Variable.submit();
+					}
+				}
+			},
+			timeout: 50000
+		});
+	}
+};
+
+// submit form with new variable data
+$Factory.Variable.remove_submit = function ( confirm ) {
+	if ( ( confirm == true ) && !window.confirm('Are You sure?') ) {
+		return false;
+	}
+
+	$Factory.Busy(1);
+	var oForm = $Dom.get('wf-variable-form');
+	$Connect.setForm(oForm, false);
+	$Connect.asyncRequest( 'POST', ajaxpath+"?action=ajax&rs=axWFactoryRemoveVariable", $Factory.ReplaceCallback );
 };
 
 $Factory.Variable.close_submit = function (opt) {
