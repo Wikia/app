@@ -10,7 +10,7 @@
 
 class WikiaStatsAutoHubsConsumerDB {
 	private $dbs =  null;
-    private $article_limits = null;
+    private $article_limits = array();
     private $refresh_time = 60; 
     private $baned_user_groups = array('staff', 'bot', 'patrollers');
 	/**
@@ -507,7 +507,7 @@ class WikiaStatsAutoHubsConsumerDB {
 			case 'article': 
 				$result = $this->getTopArticles($tag_id, $lang, 3, 1);
 				if(( ( $time - $result['age'] ) > $this->refresh_time ) || $force ) {
-					$this->getTopArticles($tag_id, $lang, 3, 1, false, true);
+					$this->getTopArticles($tag_id, $lang, 5, 1, false, true);
 					$this->getTopArticles($tag_id, $lang, 15, 3, true, true);
 				}
 				
@@ -883,15 +883,15 @@ class WikiaStatsAutoHubsConsumerDB {
 	}
 	
 	private function filterArticlesBlog($row, $tag_id, $type) {
-		if( empty($this->article_limits) ) {
-			$this->article_limits = $this->loadHideLimits($type);	
+		if( empty($this->article_limits[$type]) ) {
+			$this->article_limits[$type] = $this->loadHideLimits($type);	
 		}
 
-		if (empty($this->article_limits[$tag_id])) {
+		if (empty($this->article_limits[$type][$tag_id])) {
 			return true;
 		}
 	
-		foreach ( $this->article_limits[$tag_id] as $value ) {
+		foreach ( $this->article_limits[$type][$tag_id] as $value ) {
 			if( ($value['city_id'] == $row['city_id']) && ($value['page_id'] == $row['page_id']) ) {
 				return false;
 			}

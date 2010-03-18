@@ -31,7 +31,7 @@ class AutoHubsPagesArticle extends Article {
 			$pars['title'] = $wgTitle;
 			$pars['var_feeds'] = $vars[$tag_name];
 			$pars['is_menager'] = $isMenager;
-			$pars['tag_id'] = $isMenager;
+			$pars['tag_id'] = $tag_id;
 			if ($isMenager) {
 				$temp = $datafeeds->getTopWikis($tag_id, $lang, 30, true, true);
 				
