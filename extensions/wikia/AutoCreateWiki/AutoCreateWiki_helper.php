@@ -280,7 +280,7 @@ class AutoCreateWiki {
 			$sResponse = wfMsg('autocreatewiki-empty-username');
 		} else {
 			$u = User::newFromName( $sValue );
-			if( is_null( $u ) || $u->getId() == 0 ) {
+			if ( is_null($u) ) {
 				$sResponse = wfMsg('autocreatewiki-invalid-username');
 			} else {
 				$iId = User::idFromName( $sValue );
