@@ -204,7 +204,11 @@ NWB.handleFirstPages = function (event){
 		if ( pages.length == 0 ) {
 			event.preventDefault();
 			Mediawiki.statusBar.release();
-			NWB.gotostep(5);
+			if (NWB.type == "answers" ) {
+				NWB.gotostep(4);
+			} else {
+				NWB.gotostep(5);
+			}
 			return;
 		}
 
