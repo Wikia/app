@@ -480,11 +480,14 @@ YAHOO.util.Event.addListener("wf-clear-cache", "click", $Factory.Variable.clear)
 					<a href="<?php echo $GLOBALS[ "wgScript" ] ?>?title=Special:WikiFactory/<?php echo $wiki->city_id ?>/tags">edit</a>
 				</sup>
 			</li>
-            <li>
+			<li>
 				<a href="#" id="wf-clear-cache"><?php echo wfMsg("wikifactory_removevariable") ?></a>
 			</li>
-        </ul>
-    </div>
+			<li>
+				<a href="<?php echo $GLOBALS[ "wgScript" ] ?>?title=Special:WikiFactory/"><?php echo wfMsg( "wikifactory-label-return" ); ?></a>
+			</li>
+		</ul>
+	</div>
 	<div id="wiki-factory-panel">
 		<ul class="tabs">
 			<li>
@@ -529,11 +532,6 @@ YAHOO.util.Event.addListener("wf-clear-cache", "click", $Factory.Variable.clear)
 				<?php echo WikiFactoryPage::showTab( "close", $tab, $wiki->city_id ); ?>
 			</li>
 				&nbsp;
-			</li>
-			<li class="inactive">
-				<a href="<?php echo Title::newFromText( "WikiFactory", NS_SPECIAL )->getLocalUrl(); ?>">
-					<?php echo wfMsg( "wikifactory-label-return" ) ?>
-				</a>
 			</li>
 		</ul>
 <?php
