@@ -302,7 +302,8 @@ class WikiaStatsAutoHubsConsumerDB {
 		global $wgTTCache;
 		
 		wfProfileIn( __METHOD__ );
-		$mcKey = wfSharedMemcKey( "auto_hubs", "wikis", $tag_id, $lang, $limit );
+		$mcKey = wfSharedMemcKey( "auto_hubs", "wikis_top", 
+$tag_id, $lang, $limit );
 		if( !$force_reload ) {
 			$out = $wgTTCache->get($mcKey,null);
 			if( !empty($out) ) {
@@ -381,7 +382,8 @@ class WikiaStatsAutoHubsConsumerDB {
 		while ( $value = $this->dbs->fetchRow($res) ) {
 			if( !empty($city_array[$value['city_id']]) ) {
 				$city_array[$value['city_id']] = array_merge( $value, $city_array[$value['city_id']]);	
-				$this->shortenText( $city_array[$value['city_id']]['city_description'],0 ,120 );
+				$this->shortenText( 
+$city_array[$value['city_id']]['city_description'],0 ,100 );
 			}
 		}
 
