@@ -87,7 +87,7 @@
 
 body {
        color: #514833;
-       font-size:80%;
+/*       font-size:80%; */
        font-family:"Helvetica Neue",Helvetica,Arial,default;
 }
 
@@ -166,8 +166,8 @@ body.mainpage .firstHeading { display:none; }
 }
 
 /* The header row: Username, My Home, My Talk and so on */
-#wikiaBranding a { color:#888; }
-#userData a { color:#888; }
+/* #wikiaBranding a { color:#888; } */
+/*#userData a { color:#888; } */
 #wikia_corporate_footer { color:#888; }
 #wikia_corporate_footer a { color:#888; }
 #wikia_header { border-bottom: none; }
@@ -225,20 +225,20 @@ body.mainpage .firstHeading { display:none; }
 #ask_button,
 #ask_button_intab,
 #search_button_intab {
-    color: #fff;
+    font-size: 111%;
+    height: 32px;
+/*    color: #fff;
     background: #2966B8;
     font-weight: bold;
-    font-size: 111%;
     border:1px solid;
     font-family:"Helvetica Neue",Helvetica,Arial,default;
-    height: 32px;
-	-moz-box-shadow: none;
+	-moz-box-shadow: none; */
 }
 
 #ask_button:hover, #ask_button_intab:hover {
-	color: #2966B8;
+/*	color: #2966B8;
 	background: #fff;
-	text-shadow:none;
+	text-shadow:none; */
 }
 
 
