@@ -155,7 +155,7 @@ body.mainpage .firstHeading { display:none; }
 #control_watch { display: none; }
 #control_sharefeature { display: none; }
 #profile-actions-wikiuserpage { display:none;}
-.div.noarticletext { display: none; }
+div.noarticletext { display: none; }
 #navigation_widget { display: none; }
 
 /* === THESE AFFECT SPECIFIC ELEMENTS in order from top to bottom === */
