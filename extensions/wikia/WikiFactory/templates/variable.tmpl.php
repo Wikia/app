@@ -1,15 +1,6 @@
 <!-- s:<?= __FILE__ ?> -->
 <script type="text/javascript">
 /*<![CDATA[*/
-
-$.getScript(stylepath+'/common/jquery/jquery.autocomplete.js', function() {
-	$('#tagName').autocomplete({
-		serviceUrl: wgServer+wgScript+'?action=ajax&rs=WikiFactoryTags::axQuery',
-		minChars:3,
-		deferRequestBy: 0
-	});
-});
-
 /*]]>*/
 </script>
 <style type="text/css">
@@ -93,7 +84,7 @@ Current value:
 	<input type="button" id="wk-submit-remove" name="remove-submit" value="Remove value" onclick="YAHOO.Wiki.Factory.Variable.tagCheck('remove');" />
 	&nbsp;<span id="wf-variable-parse">&nbsp;</span>
 	&nbsp;&nbsp;Apply change to all wikis by tag:
-	<input type="text" name="tagName" id="tagName" value="" />
+	<input type="text" name="tagName" id="tagName" value="" style="width: 100px;" />
 	&nbsp;<span id="wf-tag-parse">&nbsp;</span>
 </form>
 <?php else: ?>
