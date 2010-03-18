@@ -1,6 +1,15 @@
 <!-- s:<?= __FILE__ ?> -->
 <script type="text/javascript">
 /*<![CDATA[*/
+
+$.getScript(stylepath+'/common/jquery/jquery.autocomplete.js', function() {
+	$('#tagName').autocomplete({
+		serviceUrl: wgServer+wgScript+'?action=ajax&rs=WikiFactoryTags::axQuery',
+		minChars:3,
+		deferRequestBy: 0
+	});
+});
+
 /*]]>*/
 </script>
 <style type="text/css">
@@ -80,10 +89,12 @@ Current value:
 	 <textarea name="varValue" id="varValue"><?php if( isset( $variable->cv_value ) ) echo var_export( unserialize( $variable->cv_value ), 1) ?></textarea><br />
 
 <?php endif ?>
-
-	<input type="button" id="wk-submit" name="submit" value="Parse &amp; Save changes" onclick="YAHOO.Wiki.Factory.Variable.submit();" />
-	<input type="button" id="wk-submit-remove" name="remove-submit" value="Remove value" onclick="YAHOO.Wiki.Factory.Variable.remove_submit();" />
+	<input type="button" id="wk-submit" name="submit" value="Parse &amp; Save changes" onclick="YAHOO.Wiki.Factory.Variable.tagCheck();" />
+	<input type="button" id="wk-submit-remove" name="remove-submit" value="Remove value" onclick="YAHOO.Wiki.Factory.Variable.tagCheck('remove');" />
 	&nbsp;<span id="wf-variable-parse">&nbsp;</span>
+	&nbsp;&nbsp;Apply change to all wikis by tag:
+	<input type="text" name="tagName" id="tagName" value="" />
+	&nbsp;<span id="wf-tag-parse">&nbsp;</span>
 </form>
 <?php else: ?>
 <em>read only</em>

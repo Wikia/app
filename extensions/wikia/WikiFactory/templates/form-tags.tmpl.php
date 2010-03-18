@@ -12,6 +12,11 @@ $.getScript(stylepath+'/common/jquery/jquery.autocomplete.js', function() {
 		minChars:3,
 		deferRequestBy: 0
 	});
+	$('#wftagsearchinput').autocomplete({
+		serviceUrl: wgServer+wgScript+'?action=ajax&rs=WikiFactoryTags::axQuery',
+		minChars:3,
+		deferRequestBy: 0
+	});
 });
 
 /*]]>*/
