@@ -192,14 +192,14 @@ class TokyoTyrantCache extends TokyoTyrantSession {
 		}
 		$TT = $this->connect($key);
 		if ( $TT ) {
-			if ( !empty($value) ) {
+			if ( strlen($value) > 0 ) {
 				$value = @serialize($value);
 				$values = array(
 					self::V_COLUMN => $value,
 					self::X_COLUMN => $exp
 				);
 				return $TT->put($key, $values);
-			}
+			} 
 		}
 		return true;
 	}
