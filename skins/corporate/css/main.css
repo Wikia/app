@@ -1354,3 +1354,7 @@ ul#hub-blog-articles li .blog-jump-icon {
 .clear-fix {
   clear:both;
 }
+
+#wikia-search-submit {
+ outline:none\9;
+}
