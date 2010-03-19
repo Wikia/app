@@ -274,7 +274,7 @@ class WikiaStatsAutoHubsConsumerDB {
 		$outLevel = $level;
 		foreach ($out as $key => $value){
 			$out[$key]['level'] = $outLevel;
-			if( $out[$key]['wiki_counter'] == 1) {
+			if( (!empty($out[$key]['wiki_counter'])) && ($out[$key]['wiki_counter'] == 1) ) {
 				$level ++;
 				if((!empty($out[$key+1]['all_count'])) && ( $out[$key]['all_count'] != $out[$key+1]['all_count'] )) {
 					$outLevel = $level;

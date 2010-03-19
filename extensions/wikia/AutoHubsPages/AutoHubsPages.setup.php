@@ -30,6 +30,11 @@ $wgHubsPages = array(
 	'lifestyle' => 'lifestyle', 
 );
 
+if ( !empty($wgAutoHubTestTag) ) {
+	$wgHubsPages['test_tag'] = 'test_tag';	
+}
+
+
 $dir = dirname(__FILE__) . '/';
 
 $wgAutoloadClasses['AutoHubsPagesHelper']  = $dir . 'AutoHubsPagesHelper.class.php';
