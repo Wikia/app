@@ -196,8 +196,8 @@ class WikiaAssets {
 				global $wgWikiaCombinedPrefix;
 				$prefix = $wgWikiaCombinedPrefix;
 			}
-
-			$url = "/{$prefix}cb={$cb}{$wgStyleVersion}&type=SiteCSS&themename={$themename}&rtl={$isRTL}";
+			global $wgScriptPath;
+			$url = $wgScriptPath."/{$prefix}cb={$cb}{$wgStyleVersion}&type=SiteCSS&themename={$themename}&rtl={$isRTL}";
 			$out .= '<link rel="stylesheet" type="text/css" href="'.$url.'" />';
 		} else {
 			$ref = WikiaAssets::GetSiteCSSReferences($themename);
