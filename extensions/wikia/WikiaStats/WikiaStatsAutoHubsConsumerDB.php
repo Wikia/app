@@ -73,17 +73,17 @@ class WikiaStatsAutoHubsConsumerDB {
 	 */
 	
 	public function insertArticleEdit($city_id, $page_id, $user_id, $tag_id, $page_name, $page_url, $wikiname, $wikiurl, $groups, $username, $lang) {
-		global $wgTTCache;
+		global $wgTTCache, $wgMemc;
 		wfProfileIn( __METHOD__ );
 		$date = date ("Y-m-d");
 		
 		$mcKey = wfSharedMemcKey( "auto_hubs", "unique_control", $city_id, $page_id, $user_id, $tag_id, $date );
-		$out = $wgTTCache->get($mcKey,null);
+		$out = $wgMemc->get($mcKey,null);
 		
 		if ($out == 1) {
 			return ;
 		}
-		$wgTTCache->set($mcKey,1,24*60*60);
+		$wgMemc->set($mcKey,1,24*60*60);
 		
   		$this->dbs->begin();
 
@@ -838,10 +838,8 @@ $city_array[$value['city_id']]['city_description'],0 ,100 );
 		$out = array();
 		
 		while ( $row = $this->dbs->fetchRow( $res ) ) {
-			
 			if ($type == 'blog' ) {
 				$row = array_merge($row, $this->getBlogInfoByApi($row['wikiurl'], $row['page_id']));
-
 				if ( empty( $row['description'] ) || ( strlen($row['description']) < 50 ) ) {
 					continue;
 				}				
