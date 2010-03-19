@@ -1149,16 +1149,19 @@ class WikiFactory {
 			return false;
 		}
 
-		/**
-		 * increase number in city_list
-		 */
 		if( ! is_numeric( $city_id ) ) {
 			return false;
 		}
+
 		wfProfileIn( __METHOD__ );
-		if($wgWikicitiesReadOnly){
+
+		if( $wgWikicitiesReadOnly ) {
 			Wikia::log( __METHOD__, "", "wgWikicitiesReadOnly mode. Skipping update.");
-		} else {
+		}
+		else {
+			/**
+			 * increase number in city_list
+			 */
 			$dbw = self::db( DB_MASTER );
 			$dbw->update(
 				"city_list",
@@ -1174,6 +1177,9 @@ class WikiFactory {
 		$tags = new WikiFactoryTags( $city_id );
 		$tags->clearCache();
 
+		/**
+		 * clear domains cache
+		 */
 		$domains = self::getDomains( $city_id, true );
 		if( is_array( $domains ) ) {
 			foreach( $domains as $domain ) {
@@ -1181,8 +1187,11 @@ class WikiFactory {
 				Wikia::log( __METHOD__, "", "Remove {$domain} from wikifactory cache" );
 			}
 		}
-		$wgMemc->delete( self::getVarsKey( $city_id ) );
 
+		/**
+		 * clear variables cache
+		 */
+		$wgMemc->delete( self::getVarsKey( $city_id ) );
 
 		wfProfileOut( __METHOD__ );
 
