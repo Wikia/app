@@ -1168,6 +1168,12 @@ class WikiFactory {
 			);
 		}
 
+		/**
+		 * clear tags cache
+		 */
+		$tags = new WikiFactoryTags( $city_id );
+		$tags->clearCache();
+
 		$domains = self::getDomains( $city_id, true );
 		if( is_array( $domains ) ) {
 			foreach( $domains as $domain ) {
@@ -1177,7 +1183,9 @@ class WikiFactory {
 		}
 		$wgMemc->delete( self::getVarsKey( $city_id ) );
 
+
 		wfProfileOut( __METHOD__ );
+
 		return true;
 	}
 
@@ -2248,7 +2256,7 @@ class WikiFactory {
 		wfProfileOut( __METHOD__ );
 		return $bStatus;
 	} // end createVariable()
-	
+
 	/**
 	 * updateCityDescription
 	 *
@@ -2257,20 +2265,20 @@ class WikiFactory {
 	 * @static
 	 * @access public
 	 *
-	 * @param update description in city list base on msg in city 
+	 * @param update description in city list base on msg in city
 	 *
 	 */
-	
+
 	static public function updateCityDescription (&$article, &$user ) {
 		global $wgCityId;
-	
+
 		if( strtolower($article->getTitle()) == "mediawiki:description" ) {
 			$out = trim( strip_tags( wfMsg('description') ) );
 			$db = WikiFactory::db( DB_MASTER );
 			$sql = " UPDATE city_list SET city_description =" . $db->addQuotes($out) . " where city_id= '".$wgCityId."' ;\n";
 			$db->query($sql);
 		}
-		
+
 		return true;
 	}
 };
