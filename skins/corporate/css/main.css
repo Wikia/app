@@ -1350,3 +1350,7 @@ ul#hub-blog-articles li .blog-jump-icon {
 #hub-blogs p.first_head {
   margin-bottom: 15px;
 }
+
+.clear-fix {
+  clear:both;
+}

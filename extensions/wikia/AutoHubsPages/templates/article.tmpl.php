@@ -6,8 +6,8 @@
 	<section id="spotlight-slider">
 		<ul>
 		<?php //TODO: PROVIDE DATA ?>
-		<?php 
-					foreach($data['slider'] as $key => $value): ?>
+		<?php foreach($data['slider'] as $key => $value): ?>
+
 			<li id="spotlight-slider-<?php echo $key; ?>">
 				<a href="<?php echo $value['href'] ?>">
 					<img width="620" height="250" src="<?php echo $value['imagename'] ?>" class="spotlight-slider">
@@ -254,9 +254,10 @@
 			<li>
 				<?php echo $value['avatar'] ?>
 				<span class="h2"><a href="<?php echo $value['userpage'] ?>"><?php echo $value['username'];	?></a></span>
-				<span class="userEditPoints"><nobr><span class="userPoints"><?php echo $value['all_count'];	?></span><span class="txt"><?php echo wfMsg('hub-topusers-editpoints') ?></span></nobr></span>
+				<span class="userEditPoints clearfix"><nobr><span class="userPoints"><?php echo $value['all_count'];	?></span><span class="txt"><?php echo wfMsg('hub-topusers-editpoints') ?></span></nobr></span>
 			</li>
 			<?php endforeach; ?>
 		</ul>
 	</section><!-- END: #hub-blogs -->
 </div><!-- END: #hub-side-box -->
+<div class="clear-fix"></div>
