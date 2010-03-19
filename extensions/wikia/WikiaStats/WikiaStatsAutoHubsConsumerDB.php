@@ -841,7 +841,8 @@ $city_array[$value['city_id']]['city_description'],0 ,100 );
 			
 			if ($type == 'blog' ) {
 				$row = array_merge($row, $this->getBlogInfoByApi($row['wikiurl'], $row['page_id']));
-				if ( strlen($row['description']) < 50 ) {
+
+				if ( empty( $row['description'] ) || ( strlen($row['description']) < 50 ) ) {
 					continue;
 				}				
 			}			
