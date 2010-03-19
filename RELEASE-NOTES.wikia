@@ -1,5 +1,6 @@
 == Changes since 201003.1 ==
-* rt#40468: Rich text editor: indent uses different measurement compared to article page (macbre)
+* rt#41323: RTE: category link addition problem (macbre)
+* rt#40468: RTE: indent uses different measurement compared to article page (macbre)
 * rt#43207: rename answers-name msg. (Nef)
 * rt#43167: enable 2 new starters. (Nef)
 * rt#43139: name missing on createwiki. (Nef)
@@ -29,7 +30,7 @@
 * rt#41402: scorecard image url has multiple unencoded ampersands, causing many html validation errors. (Nef)
 * rt#41403: scorecard javascript missing required type attribute. (Nef)
 * StaffSigs: add multiuser/random selection to override (uberfuzzy)
-* rt#40913:	Nofollow on CC-BY-SA link. (Nef)
+* rt#40913: Nofollow on CC-BY-SA link. (Nef)
 * rt#40916: Turn on Top content widget for anon users on 5 wikis. (Nef)
 
 == Changes since 201002.3 ==
