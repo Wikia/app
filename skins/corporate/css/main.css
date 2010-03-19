@@ -1199,6 +1199,11 @@ ul#hub-blog-articles li cite {
   margin: 0;
 }
 
+ul#hub-blog-articles div.clearfix {
+  height: 95px\9;
+  margin-bottom: 5px\9;
+}
+
 ul#hub-blog-articles li p {
   font-size: .9em;
   margin: 5px 0;
@@ -1323,8 +1328,8 @@ ul#hub-blog-articles li .blog-jump-icon {
   background-color: #e0e0e0;
   background: -moz-linear-gradient(top, #fbfbfb 20%, #e0e0e0 70%);
  Êbackground: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#fbfbfb), to(#e0e0e0));
-  padding: 1px 5px;
-  line-height: 18px;
+  line-height:17px;
+  padding:1px 5px 2px;
   display: inline-block;
 }
 

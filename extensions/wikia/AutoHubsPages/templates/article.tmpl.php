@@ -153,6 +153,7 @@
 							<a class="wikia-page-link head-hide-link" href="/index.php?action=ajax&rs=AutoHubsPagesHelper::hideFeed&type=blog&tag_id=<?php echo $data['tag_id'] ?>&city_id=<?php echo $value['city_id'] ?>&page_id=<?php echo $value['page_id'] ?>" ><?php echo wfMsg('hub-hide-feed'); ?></a>
 						<?php endif;?>
 					<?php endif; ?>
+					<div class="clear-fix"></div>
 			</li>
 			<?php endforeach; ?>
 		</ul>
