@@ -57,6 +57,23 @@ class WikiFactoryTags {
 		return sprintf( "wikifactory:tags:v1:%d", $this->mCityId );
 	}
 
+
+	/**
+	 *
+	 * clear Tags cache
+	 *
+	 * @access public
+	 */
+	public function clearCache() {
+		global $wgMemc;
+
+		wfProfileIn( __METHOD__ );
+		if( $this->mCityId ) {
+			$wgMemc->delete( $this->cacheKey() );
+		}
+		wfProfileOut( __METHOD__ );
+	}
+
 	/**
 	 * getTags -- get all tags defined from database mapped to current wiki
 	 *
