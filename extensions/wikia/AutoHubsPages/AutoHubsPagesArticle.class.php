@@ -35,8 +35,7 @@ class AutoHubsPagesArticle extends Article {
 			if ($isMenager) {
 				$temp = $datafeeds->getTopWikis($tag_id, $lang, 30, true, true);
 				
-				$pars['topWikis1'] = array_slice($temp['value'],0,15);
-				$pars['topWikis2'] = array_slice($temp['value'],15,15);					
+				$pars['topWikis1'] = $temp['value'];				
 			} else {
 				$temp = $datafeeds->getTopWikis($tag_id, $lang, 20, false);
 
