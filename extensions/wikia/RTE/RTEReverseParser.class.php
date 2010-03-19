@@ -711,6 +711,24 @@ class RTEReverseParser {
 				if (isset($data['noforce']) && $data['noforce'] == false) {
 					$out .= ':';
 				}
+				// and add : before [[Category:Foo]] links (RT #41323)
+				else if (strpos($data['link'], ':') !== false) {
+					RTE::log(__METHOD__, "'namespaces' link - {$data['link']}");
+
+					wfProfileIn(__METHOD__ . '::namespacedLink');
+
+					// list of namespaces for which : should be prepended
+					$namespaces = array(NS_CATEGORY, NS_FILE);
+					$title = Title::newFromText($data['link']);
+
+					if (in_array($title->getNamespace(), $namespaces)) {
+						$out .= ':';
+					}
+
+					unset($title);
+
+					wfProfileOut(__METHOD__ . '::namespacedLink');
+				}
 
 				// [[<current_page_name>/foo|/foo]] -> [[/foo]]
 				global $wgTitle;
