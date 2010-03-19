@@ -28,6 +28,7 @@ $wgHubsPages = array(
 	'horror' => 'horror',
 	'gaming' => 'gaming',
 	'lifestyle' => 'lifestyle', 
+	'wii_games' => 'wii'
 );
 
 if ( !empty($wgAutoHubTestTag) ) {
