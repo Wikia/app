@@ -527,6 +527,7 @@ $city_array[$value['city_id']]['city_description'],0 ,100 );
 			case 'city':
 				$result =  $this->getTopWikis($tag_id, $lang, 20, false, false);
 				if(( ( $time - $result['age'] ) > $this->refresh_time ) || $force ) {
+				echo "rebuild";
 					$this->getTopWikis($tag_id, $lang, 20, false, true);
 					$this->getTopWikis($tag_id, $lang, 30, true, true);
 				}
@@ -580,7 +581,7 @@ $city_array[$value['city_id']]['city_description'],0 ,100 );
 	public function addExludeWiki($tag_id, $city_id, $lang) {
 		if ($this->addExlude($tag_id, $city_id, 0, 0, 'city')) {
 			$this->loadHideLimits('city',true);
-			$this->rebuildMemc($tag_id, $lang, $type,true);
+			$this->rebuildMemc($tag_id, $lang, 'city', true);
 			return true;
 		}
 		return false;
