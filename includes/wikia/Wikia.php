@@ -89,14 +89,14 @@ class WikiaAssets {
 			$staticChute->useLocalChuteUrl();
 			preg_match_all("/src=\"([^\"]+)/", $staticChute->getChuteHtmlForPackage('monaco_anon_article_js'), $matches, PREG_SET_ORDER);
 			foreach($matches as $script) {
-				$references[] = str_replace($wgServer.'/', '', $script[1]);
+				$references[] = str_replace($wgServer.'/', '/', $script[1]);
 			}
 
 			// optinal yui
 			if($wgRequest->getBool('yui', false)) {
 				preg_match_all("/src=\"([^\"]+)/", $staticChute->getChuteHtmlForPackage('yui'), $matches, PREG_SET_ORDER);
 				foreach($matches as $script) {
-					$references[] = str_replace($wgServer.'/', '', $script[1]);
+					$references[] = str_replace($wgServer.'/', '/', $script[1]);
 				}
 			}
 
