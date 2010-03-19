@@ -219,8 +219,11 @@ window.RTE = {
 
 		var body = RTE.getEditor();
 
-		// set ID, so CSS rules from MW can be applied
-		body.attr('id', RTE.instance.config.bodyId);
+		body.
+			// set ID, so CSS rules from MW can be applied
+			attr('id', RTE.instance.config.bodyId).
+			// set CSS class with content language of current wiki (used by RT #40248)
+			addClass('lang-' + window.wgContentLanguage);
 
 		// RT #38516: remove first <BR> tag (fix strange Opera bug)
 		setTimeout(function() {
