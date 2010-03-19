@@ -114,3 +114,8 @@ img.image-placeholder {
 img.video-placeholder {
 	background-image: url(../images/videoPlaceholder.png);
 }
+
+/* Language customization */
+.lang-en img.image-placeholder {
+	background-image: url(../images/imagePlaceholderEn.png);
+}
