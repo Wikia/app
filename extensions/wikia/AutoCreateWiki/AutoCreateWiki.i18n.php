@@ -159,7 +159,7 @@ This is a brand-new project, so please write to us if you have any questions!
 <p>This is a brand-new project, so please write to us if you have any questions!</p>
 
 <p>-- Wikia Community Team</p>",
-	'answers-name' => 'Answers',
+	'autocreatewiki-subname-answers' => 'Answers',
 );
 
 /** Message documentation (Message documentation)
