@@ -1543,9 +1543,14 @@ wfProfileIn( __METHOD__ . '-body'); ?>
 	} else {
 		$body_css_action = '';
 	}
+	
+	if(!isset($this->extraBodyClasses)){
+		// For extra classes to put on the body tag.  This allows overriding sub-skins to create selectors specific to their sub-skin (such as custom answers).
+		$this->extraBodyClasses = array(); 
+	}
 ?>
 	<body<?php if($this->data['body_onload'    ]) { ?> onload="<?php     $this->text('body_onload')     ?>"<?php } ?>
- class="mediawiki <?php $this->text('dir') ?> <?php $this->text('pageclass') ?><?php if(!empty($this->data['printable']) ) { ?> printable<?php } ?><?php if (!$wgUser->isLoggedIn()) { ?> loggedout<?php } ?> color2 wikiaSkinMonaco<?=$isMainpage?> <?= $body_css_action ?>" id="body">
+ class="mediawiki <?php $this->text('dir') ?> <?php $this->text('pageclass') ?><?php if(!empty($this->data['printable']) ) { ?> printable<?php } ?><?php if (!$wgUser->isLoggedIn()) { ?> loggedout<?php } ?> color2 wikiaSkinMonaco<?=$isMainpage?> <?= $body_css_action ?><?php print " ".implode($this->extraBodyClasses, " "); ?>" id="body">
 	<?php
 	// Hardcoded Google Analytics tag... commented out because it isn't working yet.
 	// Allow URL override.
@@ -1667,7 +1672,11 @@ if( $custom_user_data ) {
 	<div class="monaco_shrinkwrap"><div id="background_accent1"></div></div>
 	<div style="position: relative;"><div id="background_accent2"></div></div>
 
-<?php if (wfRunHooks('AlternateNavLinks')): ?>
+<?php if (wfRunHooks('AlternateNavLinks')):
+
+		// Rewrite the logo to have the last modified timestamp so that a the newer one will be used after an update.
+		// $wgLogo = 
+		?>
 		<div id="background_strip" class="reset">
 			<div class="monaco_shrinkwrap">
 
