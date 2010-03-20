@@ -80,8 +80,8 @@ function categoryHubAddMagicWords(&$magicWords, $langCode){
 function categoryHubAdditionalScripts( &$out, &$sk ){
 	global $wgExtensionsPath,$wgStyleVersion;
 	$out->addStyle( "$wgExtensionsPath/wikia/CategoryHubs/CategoryHubs.css?$wgStyleVersion" );
-	$out->addScript('<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css" rel="stylesheet" />\n');
-	$out->addScript('<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>\n');
+	$out->addScript("<link type='text/css' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css' rel='stylesheet' />\n");
+	$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/CategoryHubs/jquery-ui.min.js?$wgStyleVersion'></script>\n");
 	$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/CategoryHubs/interactiveLists.js?$wgStyleVersion'></script>\n");
 	$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/CategoryHubs/tracking.js?$wgStyleVersion'></script>\n");
 	return true;
