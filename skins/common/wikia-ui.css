@@ -248,4 +248,11 @@ button.secondary:active {
 	background-image: url(/skins/common/images/ajax.gif); /* $wgCdnStylePath */ 
 }
 
+/* centering code for custom answers (dangerous to load outside of CoreCSS) */
+body.custom_answers .monaco_shrinkwrap{
+   left: 50%;
+   margin-left: -505px !important;
+   width: 1010px;
+}
+
 /* @end */
