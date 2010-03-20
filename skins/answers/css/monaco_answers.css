@@ -11,12 +11,6 @@
 
 /* === MESSING WITH MONACO === */
 
-.monaco_shrinkwrap {
-   left: 50%;
-   margin-left: -505px !important;
-   width: 1010px;
-}
-
 /* beeezarely needed fix for the "create a new" button */
 
 #request_wiki {
@@ -31,8 +25,6 @@
 
 .activityfeed img.sprite {
 	display: none;
-/*	background:transparent url(http://images1.wikia.nocookie.net/test123/images/d/d7/Sprite.png?20091113)
-*/
 }
 
 #contentSub {
