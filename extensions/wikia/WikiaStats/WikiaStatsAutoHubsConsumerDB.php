@@ -527,7 +527,6 @@ $city_array[$value['city_id']]['city_description'],0 ,100 );
 			case 'city':
 				$result =  $this->getTopWikis($tag_id, $lang, 20, false, false);
 				if(( ( $time - $result['age'] ) > $this->refresh_time ) || $force ) {
-				echo "rebuild";
 					$this->getTopWikis($tag_id, $lang, 20, false, true);
 					$this->getTopWikis($tag_id, $lang, 30, true, true);
 				}
