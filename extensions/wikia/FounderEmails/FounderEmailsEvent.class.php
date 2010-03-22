@@ -27,6 +27,12 @@ abstract class FounderEmailsEvent {
 		return $oEvent;
 	}
 
+	static public function getConfig( $eventType = null ) {
+		global $wgFounderEmailsExtensionConfig;
+
+		return is_null($eventType) ? $wgFounderEmailsExtensionConfig['events'] : ( isset( $wgFounderEmailsExtensionConfig['events'][$eventType] ) ? $wgFounderEmailsExtensionConfig['events'][$eventType] : array() );
+	}
+
 	public function getID() {
 		return $this->id;
 	}
