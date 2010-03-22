@@ -2,6 +2,10 @@ a.new, #quickbar a.new {
 	color: #002bb8 !important;
 }
 
+a.new:visited, #quickbar a.new:visited {
+	color: #5A3696 !important;
+}
+
 #page_tabs a {
 	color: inherit !important;
 }
