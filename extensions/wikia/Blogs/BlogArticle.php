@@ -130,7 +130,7 @@ class BlogArticle extends Article {
 		$listing = false;
 		$purge   = $wgRequest->getVal( "action" ) == 'purge';
 		$page    = $wgRequest->getVal( "page", 0 );
-		$offset  = $page * 5;
+		$offset  = $page * $this->mCount;
 
 		$wgOut->setSyndicated( true );
 
@@ -150,7 +150,7 @@ class BlogArticle extends Article {
 				"offset" => $offset
 			);
 			$listing = BlogTemplateClass::parseTag( "<author>$user</author>", $params, $wgParser );
-			$wgMemc->set( wfMemcKey( "blog", "listing", $userMem, $offset ), $page, 3600 );
+			$wgMemc->set( wfMemcKey( "blog", "listing", $userMem, $page ), $page, 3600 );
 		}
 
 		$wgOut->addHTML( $listing );
