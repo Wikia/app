@@ -80,8 +80,9 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			$editor = ( $wgUser->getName() == $oRecentChange->getAttribute('rc_user_text') ) ? $wgUser : User::newFromName( $oRecentChange->getAttribute('rc_user_text'), false );
 		}
 
-		if($editor->getId() == FounderEmails::getInstance()->getWikiFounder()->getId()) {
-			// page edited by founder, skipping
+		$config = FounderEmailsEvent::getConfig( 'edit' );
+		if( ( $editor->getId() == FounderEmails::getInstance()->getWikiFounder()->getId() ) || in_array( 'staff', $editor->getGroups() ) || in_array( $editor->getId(), $config['skipUsers'] ) ) {
+			// page edited by founder, staff member or excluded user, skipping..
 			wfProfileOut( __METHOD__ );
 			return true;
 		}

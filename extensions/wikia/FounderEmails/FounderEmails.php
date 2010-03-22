@@ -29,7 +29,8 @@ $wgFounderEmailsExtensionConfig = array(
 		'edit'       => array(
 			'className'  => 'FounderEmailsEditEvent',
 			'threshold'  => 1,
-			'hookName'   => 'RecentChange_save'
+			'hookName'   => 'RecentChange_save',
+			'skipUsers'  => array( 929702 /* CreateWiki script */ )
 		),
 		'register'   => array(
 			'className'  => 'FounderEmailsRegisterEvent',

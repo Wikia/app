@@ -14,27 +14,10 @@ It looks like $USERNAME has registered on your wiki! Why don\'t you drop by thei
 It looks like $USERNAME has registered on your wiki! Why don\'t you drop by their <a href="$USERPAGEURL">userpage</a> to say hello?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
 	'founderemails-email-0-days-passed-subject' => 'Welcome to Wikia!',
-	'founderemails-email-0-days-passed-body' => 'Congratulations on creating $3 - you\'re now part of the Wikia community!
-
-Available params:
-
-FOUNDERNAME
-FOUNDERPAGEEDITURL
-WIKINAME
-WIKIURL
-WIKIMAINPAGEURL
+	'founderemails-email-0-days-passed-body' => 'Congratulations on creating $WIKINAME - you\'re now part of the Wikia community!
 
 -- The Wikia Team',
-	'founderemails-email-0-days-passed-body-HTML' => 'Congratulations on creating <strong>$3</strong> - you\'re now part of the Wikia community!<br /><br />
-
-Available params:<br /><br />
-
-FOUNDERNAME
-FOUNDERPAGEEDITURL
-WIKINAME
-WIKIURL
-WIKIMAINPAGEURL
-
+	'founderemails-email-0-days-passed-body-HTML' => 'Congratulations on creating <strong>$WIKINAME</strong> - you\'re now part of the Wikia community!<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
 	'founderemails-email-3-days-passed-subject' => 'Checking in',
 	'founderemails-email-3-days-passed-body' => 'Hey there $FOUNDERNAME,
