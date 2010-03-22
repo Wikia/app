@@ -79,9 +79,11 @@ function RelatedPages_Display(&$template, &$templateEngine) {
 					uasort($results, 'RelatedPages_Compare');
 					$out = array_slice(array_keys($results), 0, 5);
 				} else {
-					$out = array_rand($results, min(count($results), 5));
-					if(!is_array($out)){
-						$out = array($out);
+					if(count($results) > 0) {
+						$out = array_rand($results, min(count($results), 5));
+						if(!is_array($out)){
+							$out = array($out);
+						}
 					}
 				}
 				if(count($categories) > 1 && count($out) < 5) {
