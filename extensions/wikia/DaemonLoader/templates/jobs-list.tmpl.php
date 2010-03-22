@@ -132,9 +132,6 @@ function wkDTshowDetails(limit, offset, ord, desc)
 				records.innerHTML = pager + resData['data'];
 			}
 			jobsLoader.innerHTML = "";
-			if (typeof TieDivLibrary != "undefined" ) {
-				TieDivLibrary.calculate();
-			};
 		},
 		failure: function( oResponse )
 		{
@@ -142,9 +139,6 @@ function wkDTshowDetails(limit, offset, ord, desc)
 			if (!resData) {
 				records.innerHTML = "<?=wfMsg('daemonloader_nojobsfound')?>";
 			}
-			if (typeof TieDivLibrary != "undefined" ) {
-				TieDivLibrary.calculate();
-			}; 
 		}
 	};
 
@@ -167,15 +161,9 @@ function removeJobTask(id) {
 		success: function( oResponse ) {
 			wkDTshowDetails(30, 0, 'dj_id', -1);
 			jobsLoader.innerHTML = "";
-			if (typeof TieDivLibrary != "undefined" ) {
-				TieDivLibrary.calculate();
-			};
 		},
 		failure: function( oResponse )
 		{
-			if (typeof TieDivLibrary != "undefined" ) {
-				TieDivLibrary.calculate();
-			}; 
 		}
 	};
 
@@ -211,16 +199,10 @@ function changeJobTask(id) {
 
 			tabView.set('activeIndex', 0);
 			jobsLoader.innerHTML = "";
-			if (typeof TieDivLibrary != "undefined" ) {
-				TieDivLibrary.calculate();
-			}; 
 		},
 		failure: function( oResponse )
 		{
 			jobsLoader.innerHTML = "";
-			if (typeof TieDivLibrary != "undefined" ) {
-				TieDivLibrary.calculate();
-			}; 
 		}
 	};
 	

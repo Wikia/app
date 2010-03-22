@@ -341,7 +341,6 @@ YAHOO.extend(YAHOO.wikia.ddObject, YAHOO.util.DDProxy, {
 	},
 
 	onDrag: function(e) {
-		TieDivLibrary.calculate();
 		var y = Event.getPageY(e);
 		if(y < this.lastY) {
 			this.goingUp = true;
@@ -469,9 +468,6 @@ function showCarousel(e) {
 		}
 
 		Event.addListener(window, 'resize', getNumberForCarousel);
-	}
-	if (typeof TieDivLibrary != 'undefined') {
-		TieDivLibrary.calculate();	
 	}
 }
 

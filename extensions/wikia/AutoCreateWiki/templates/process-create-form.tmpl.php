@@ -52,9 +52,6 @@ YE.onDOMReady(function () {
 				}
 
 				if (isEnd > 0) {
-					if (typeof TieDivLibrary != "undefined" ) {
-						TieDivLibrary.calculate();
-					};
 					//window.location.href = 'http://'+redirServer+'.<?=$domain?>';
 				} else if ( !(isError > 0) ) {
 					if (loop < 100) {

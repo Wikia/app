@@ -49,9 +49,6 @@ $Factory.Variable.__filter = function ( e ) {
 				$Dom.get( "wk-variable-select" ).selectedIndex = 0;
 				$Factory.Variable.select(e, [ "wk-variable-select", 1]);
 			}
-			if (typeof TieDivLibrary != "undefined" ) {
-				TieDivLibrary.calculate();
-			};
 		}
 	}
 	

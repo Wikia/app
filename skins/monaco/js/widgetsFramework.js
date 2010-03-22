@@ -302,11 +302,6 @@ var WidgetFramework = {
 			$('#positioned_elements').css('visibility', 'visible');
 
 			WidgetFramework.carouselVisible = true;
-
-			// reposition ads
-			if (typeof TieDivLibrary != 'undefined') {
-				TieDivLibrary.calculate();
-			}
 		},
 
 		_sort: function (widgets) {

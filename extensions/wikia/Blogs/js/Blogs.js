@@ -34,10 +34,6 @@ Blogs.callback.toggle = function( data ) {
 		
 		$("a .blog-comm-edit").click("click", Blogs.edit);
 		Blogs.render();
-		
-		if (typeof TieDivLibrary != "undefined" ) {
-			TieDivLibrary.calculate();
-		}
 	}
 };
 
@@ -69,9 +65,6 @@ Blogs.callback.add = function( data ) {
 	$("#blog-comm-top").attr('readonly', false).val("").css('cursor', 'default')
 	
 	Blogs.render();
-	if (typeof TieDivLibrary != "undefined" ) {
-		TieDivLibrary.calculate();
-	}
 };
 
 Blogs.callback.replace = function( data ) {
@@ -88,9 +81,6 @@ Blogs.callback.replace = function( data ) {
 	
 	document.body.style.cursor = "default";
 	Blogs.render();
-	if (typeof TieDivLibrary != "undefined" ) {
-		TieDivLibrary.calculate();
-	}
 };
 
 Blogs.callback.edit = function( data ) {
@@ -104,10 +94,6 @@ Blogs.callback.edit = function( data ) {
 		$("#blog-comm-submit-" + data[ "id" ]).bind("click", {id: data[ "id" ]}, Blogs.save)
 		
 		document.body.style.cursor = "default";
-
-		if (typeof TieDivLibrary != "undefined" ) {
-			TieDivLibrary.calculate();
-		}
 	}
 };
 
