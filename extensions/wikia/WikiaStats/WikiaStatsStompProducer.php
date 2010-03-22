@@ -47,7 +47,7 @@ class WikiaStatsStompProducer {
 			if( !empty( $title ) ) {
 				// check if it is a blog comment, if so, then load all the data from "parent" blog article
 				if ( $wgEnableBlogArticles ) {
-					if( NS_BLOG_ARTICLE_TALK == $title->getNamespace() ) {
+					if( ( defined( "NS_BLOG_ARTICLE_TALK" ) ) && ( NS_BLOG_ARTICLE_TALK == $title->getNamespace()) ) {
 						$comment = BlogComment::newFromId( $title->getArticleId() );						
 						$title = $comment->getBlogTitle();					
 					}					
