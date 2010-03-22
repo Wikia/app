@@ -16,6 +16,7 @@ function wfAutoPageCreateInit() {
 
 	$wgHooks['EditPage::showEditForm:initial'][] = 'wfAutoPageCreateEditPage';
 	$wgHooks['ArticleNonExistentPage'][] = 'wfAutoPageCreateViewPage';
+	$wgHooks['MakeGlobalVariablesScript'][] = 'wfAutoPageCreateSetupVars';
 
 	$wgOut->addExtensionStyle( "$wgExtensionsPath/wikia/AutoPageCreate/AutoPageCreate.css?$wgStyleVersion" );
 }
@@ -25,6 +26,14 @@ function wfAutoPageCreateEditPage( $editpage ) {
 		$editpage->textbox1 = wfMsgForContent( 'newpagelayout' );
 	}
 	return true;
+}
+
+function wfAutoPageCreateSetupVars( $vars ) {
+        global $wgWikiaEnableAutoPageCreateExt;
+
+        $vars['WikiaEnableAutoPageCreate'] = $wgWikiaEnableAutoPageCreateExt;
+
+        return true;
 }
 
 function wfAutoPageCreateViewPage( $article, $out, &$text, &$return404 ) {
