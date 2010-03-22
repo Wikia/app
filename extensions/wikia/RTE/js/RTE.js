@@ -152,6 +152,12 @@ window.RTE = {
 			CKEDITOR.basePath + '../css/RTEcontent.css',
 			window.RTEMWCommonCss
 		];
+
+		// Bartek - for RT #43217
+		if( WikiaEnableAutoPageCreate ) {
+			css.push( wgExtensionsPath + '/wikia/AutoPageCreate/AutoPageCreate.css' );
+		}
+
 		for (var n=0; n<css.length; n++) {
 			var cb = ( (css[n].indexOf('?') > -1) ? '' : ('?' + CKEDITOR.timestamp) );
 			RTE.instance.addCss('@import url(' + css[n] + cb + ');');
