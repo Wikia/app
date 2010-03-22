@@ -85,82 +85,91 @@ class WikiaEditStatistics {
 		
 		$return = 0;
 		if ( !empty($this->mPageId) ) {
+			$numberWords = $this->numberWords();
+			$newWords = str_word_count($this->mText);
+
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );			
-
-			# number of edits 
-			$conditions = array( 
-				'pe_wikia_id'	=> $wgCityId,
-				'pe_page_id'	=> $this->mPageId,
-				'pe_page_ns'	=> $this->mPageNs,
-				'pe_date'		=> $this->mDate,
-			);
-
-			$oRow = $dbw->selectRow( 
-				array( 'page_edits' ),
-				array( 'pe_page_id, pe_all_count, pe_anon_count, pe_words' ),
-				$conditions,
-				__METHOD__
-			);
-
-			if ( $oRow ) {
-				# update edits count
-				$newWords = str_word_count($this->mText) - $oRow->pe_words;
-				$data = array( 
-					'pe_all_count' 	=> intval($oRow->pe_all_count + $inc),
-					'pe_is_content' => intval($this->mIsContent),
-					'pe_diff_words'	=> intval($newWords),
-					'pe_words' 		=> intval(str_word_count($this->mText))
+			$dbw->begin( __METHOD__ );
+			try {
+				# number of edits 
+				$conditions = array( 
+					'pe_wikia_id'	=> $wgCityId,
+					'pe_page_id'	=> $this->mPageId,
+					'pe_page_ns'	=> $this->mPageNs,
+					'pe_date'		=> $this->mDate,
 				);
-				if ( empty($this->mUserId) ) {
-					$data['pe_anon_count'] = intval($oRow->pe_anon_count + $inc);
-				}
-				$dbw->update( 'page_edits', $data, $conditions, __METHOD__ );
-			} 
-			else {
-				# insert edits count
-				$conditions['pe_all_count'] = $inc;
-				$conditions['pe_is_content'] = intval($this->mIsContent);
-				$numberWords = $this->numberWords();
-				$newWords = str_word_count($this->mText);
-				$conditions['pe_diff_words'] = intval($newWords - $numberWords);
-				$conditions['pe_words'] = intval($newWords);
-				if ( empty($this->mUserId) ) {
-					$conditions['pe_anon_count'] = $inc;
-				} else {
-					$conditions['pe_anon_count'] = 0;
-				}
-				$dbw->insert( 'page_edits', $conditions, __METHOD__ );
-			}
-			
-			#editor stats
-			$conditions = array( 
-				'pc_wikia_id'	=> $wgCityId,
-				'pc_page_id'	=> $this->mPageId,
-				'pc_page_ns'	=> $this->mPageNs,
-				'pc_date'		=> $this->mDate,
-				'pc_user_id'	=> $this->mUserId,
-			);
 
-			$oRow = $dbw->selectRow( 
-				array( 'page_editors' ),
-				array( 'pc_all_count' ),
-				$conditions,
-				__METHOD__
-			);
-
-			if ( $oRow ) {
-				# update edits count
-				$data = array( 
-					'pc_all_count' 	=> intval($oRow->pc_all_count + $inc),
-					'pc_is_content' => intval($this->mIsContent)
+				$oRow = $dbw->selectRow( 
+					array( 'page_edits' ),
+					array( 'pe_page_id, pe_all_count, pe_anon_count, pe_words' ),
+					$conditions,
+					__METHOD__
 				);
-				$dbw->update( 'page_editors', $data, $conditions, __METHOD__ );
-			} 
-			else {
-				# insert edits count
-				$conditions['pc_all_count'] = $inc;
-				$conditions['pc_is_content'] = intval($this->mIsContent);
-				$dbw->insert( 'page_editors', $conditions, __METHOD__ );
+
+				if ( $oRow ) {
+					# update edits count
+					$data = array( 
+						'pe_all_count' 	=> intval($oRow->pe_all_count + $inc),
+						'pe_is_content' => intval($this->mIsContent),
+						'pe_diff_words'	=> intval($newWords - $oRow->pe_words),
+						'pe_words' 		=> intval($newWords)
+					);
+					if ( empty($this->mUserId) ) {
+						$data['pe_anon_count'] = intval($oRow->pe_anon_count + $inc);
+					}
+					$dbw->update( 'page_edits', $data, $conditions, __METHOD__ );
+				} 
+				else {
+					# insert edits count
+					$conditions['pe_all_count'] = $inc;
+					$conditions['pe_is_content'] = intval($this->mIsContent);
+					$conditions['pe_diff_words'] = intval($newWords - $numberWords);
+					$conditions['pe_words'] = intval($newWords);
+					if ( empty($this->mUserId) ) {
+						$conditions['pe_anon_count'] = $inc;
+					} else {
+						$conditions['pe_anon_count'] = 0;
+					}
+					$dbw->insert( 'page_edits', $conditions, __METHOD__ );
+				}
+				
+				#editor stats
+				$conditions = array( 
+					'pc_wikia_id'	=> $wgCityId,
+					'pc_page_id'	=> $this->mPageId,
+					'pc_page_ns'	=> $this->mPageNs,
+					'pc_date'		=> $this->mDate,
+					'pc_user_id'	=> $this->mUserId,
+				);
+
+				$oRow = $dbw->selectRow( 
+					array( 'page_editors' ),
+					array( 'pc_all_count' ),
+					$conditions,
+					__METHOD__
+				);
+
+				if ( $oRow ) {
+					# update edits count
+					$data = array( 
+						'pc_all_count' 	=> intval($oRow->pc_all_count + $inc),
+						'pc_is_content' => intval($this->mIsContent)
+					);
+					$dbw->update( 'page_editors', $data, $conditions, __METHOD__ );
+				} 
+				else {
+					# insert edits count
+					$conditions['pc_all_count'] = $inc;
+					$conditions['pc_is_content'] = intval($this->mIsContent);
+					$dbw->insert( 'page_editors', $conditions, __METHOD__ );
+				}
+				$dbw->commit( __METHOD__ );
+			} catch ( DBConnectionError $error ) {
+				$dbw->rollback( __METHOD__ );
+				Wikia::log( __METHOD__, "info", "cannot update stats for Wikia: $wgCityId");
+			} catch( DBQueryError $error ) {
+				$dbw->rollback( __METHOD__ );
+				Wikia::log( __METHOD__, "info", "cannot update stats for Wikia: $wgCityId");
 			}
 		}
 		
