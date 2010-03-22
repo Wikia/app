@@ -31,6 +31,7 @@ var initTracker = function()
 	 addTrack('#homepage-feature-spotlight .nav','main_page/slider/thumb');
 	 addTrack('.create-wiki-container .wikia-button','main_page/create_a_wiki');
 	 addTrack('#wikia-create-wiki .wikia-button','bottom/create_a_wiki')
+	 addTrack('#wikia-whats-up a', 'Special_coverage');
 	 
 	 addFooterTrack('wikia-international', 'left_column');
 	 addFooterTrack('wikia-in-the-know', 'middle_column');
@@ -62,6 +63,7 @@ var initTracker = function()
 		 targetId = e.target.id.split("_");
 		 WET.byStr('nav-bar/' + parent + '/menu' + targetId[4]);
 	 });
+	 
 }
 
 
