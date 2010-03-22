@@ -47,9 +47,11 @@ class HomePageStatistic
 	}
 	
 	public static function getMostEditArticles72(){
-		global $wgUser;  
-        wfProfileIn( __METHOD__ );          
+		global $wgUser;
+        wfProfileIn( __METHOD__ );
 		if ($wgUser->isAllowed( 'corporatepagemanager' )){
+			// NOTE: If you update the values here, make sure they're still being purged
+			// in extensions/wikia/WikiaStats/WikiaStatistic.php/WikiaGlobalStats::excludeArticle
 			$out = WikiaGlobalStats::getPagesEditors(3, 10,true,true);
 		} else {
 			$out = WikiaGlobalStats::getPagesEditors(3);

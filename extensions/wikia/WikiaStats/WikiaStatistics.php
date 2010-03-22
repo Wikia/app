@@ -681,10 +681,17 @@ class WikiaGlobalStats {
 		$res = false;
 		if ( is_object($oRegexCore) ) {
 			$res = $oRegexCore->addPhrase(preg_quote($text));
+
+			// Regenerate the top 5 & 10 for the last 3 days (ie: purge memcache).
+			self::getPagesEditors(3, 10, true, true, false, true);
+			self::getPagesEditors(3, 10, true, false, false, true);
+			self::getPagesEditors(3, 5, true, true, false, true);
+			self::getPagesEditors(3, 5, true, false, false, true);
 		}
+
 		return $res;
 	}
-	
+
 	/*
 	 * allowResultsForEditedArticles
 	 * 
