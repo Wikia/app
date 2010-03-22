@@ -36,7 +36,7 @@ class WikiaStatsStompProducer {
 	 *
 	 * @author Bartek Lapinski
 	 */
-	function __construct( $cityId, $factoryTags, $pageId = null, $title = null, $user = null, $timestamp = null ) {
+	function __construct( $cityId, $factoryTags, $pageId = null, $title = null, $user = null, $timestamp = null, $revid = 0 ) {
 		global $wgLanguageCode, $wgEnableBlogArticles, $wgDBname, $wgSitename, $wgServer, $wgEnableBlogArticles;
 
 		$this->mCityId = $cityId;
@@ -80,7 +80,7 @@ class WikiaStatsStompProducer {
 				 ($wgEnableBlogArticles) &&
 				 (!in_array($this->mPageNs, array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK, NS_BLOG_LISTING, NS_BLOG_LISTING_TALK)))
 				);
-			$this->mRevId = $title->getLatestRevID();
+			$this->mRevId = ( empty($revid) ) ? $title->getLatestRevID(GAID_FOR_UPDATE) : $revid;
 		}
 
 		$this->mDBname = $wgDBname;
@@ -136,8 +136,7 @@ class WikiaStatsStompProducer {
 		catch( StompException $e ) {
 			Wikia::log( __METHOD__, 'stomp_exception', $e->getMessage() );
 		}
-	
-                wfProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -152,11 +151,11 @@ class WikiaStatsStompProducer {
 	 * @author Bartek Lapinski 
 	 * @return true
 	 */
-	static public function saveComplete(&$article, &$user ) {
+	static public function saveComplete(&$article, &$user, $text, $summary, $minor, $undef1, $undef2, &$flags, $revision, &$status, $baseRevId ) {
 		global $wgCityId, $wgWikiFactoryTags;
 		wfProfileIn( __METHOD__ );
 		if( empty( $wgWikiFactoryTags ) ) {
-                	wfProfileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return true;			
 		}
 
@@ -164,18 +163,19 @@ class WikiaStatsStompProducer {
 
 		if( ( !class_exists( 'BlogComment' ) && ( NS_BLOG_ARTICLE_TALK == $title->getNamespace() ) ) ) {
 			// NY blogs, not Eloy's - cut them down, they would break the code...
-                	wfProfileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return true;			
 		}		
 
 		if ( ( $article instanceof Article ) && ( $user instanceof User ) ) {
-			$oEdits = new WikiaStatsStompProducer( $wgCityId, $wgWikiFactoryTags, null, $title, $user );
+			$revid = ( $revision instanceof Revision ) ? $revision->getId() : 0;
+			$oEdits = new WikiaStatsStompProducer( $wgCityId, $wgWikiFactoryTags, null, $title, $user, $revid);
 			$oEdits->storeData( 'edit' );
 		}
 		
-                wfProfileOut( __METHOD__ );
-                return true;
-        }
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
 
 	/**
 	 * deleteComplete -- hook 
@@ -191,18 +191,17 @@ class WikiaStatsStompProducer {
 	 * @author Bartek Lapinski
 	 * @return true
 	 */
-        static public function deleteComplete( &$article, &$user, $reason, $articleId ) {
+	static public function deleteComplete( &$article, &$user, $reason, $articleId ) {
 		global $wgCityId;
-                wfProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		if ( ( $article instanceof Article ) && ( $user instanceof User ) ) {
 			$title = $article->mTitle;
 			$oEdits = new WikiaStatsStompProducer( $wgCityId, $articleId, $title, $user );
 			$oEdits->storeData( 'delete' );
 		}
-
-                wfProfileOut( __METHOD__ );
-                return true;
-        }
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
 
 	/**
 	 * undeleteComplete -- hook 
@@ -219,14 +218,13 @@ class WikiaStatsStompProducer {
 	 */
 	static public function undeleteComplete( &$title, $user, $reason ) {
 		global $wgCityId;
-                wfProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		if ( ( $title instanceof Title ) && ( $user instanceof User ) ) {
 			$oEdits = new WikiaStatsStompProducer( $wgCityId, null, $title, $user );
 			$oEdits->storeData( 'undelete' );
 		}
-
-                wfProfileOut( __METHOD__ );
-                return true;
-        }
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
 }
 
