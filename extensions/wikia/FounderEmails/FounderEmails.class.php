@@ -3,7 +3,6 @@
 class FounderEmails {
 
 	static private $instance = null;
-	private $mWikiFounder = null;
 	private $mLastEvetType = null;
 
 	private function __construct() { }
@@ -26,16 +25,14 @@ class FounderEmails {
 	public function getWikiFounder() {
 		global $wgCityId, $wgFounderEmailsDebugUserId;
 
-		if( $this->mWikiFounder == null ) {
-			if( empty($wgFounderEmailsDebugUserId) ) {
-				$this->mWikiFounder = User::newFromId( WikiFactory::getWikiById($wgCityId)->city_founding_user );
-			}
-			else {
-				$this->mWikiFounder = User::newFromId( $wgFounderEmailsDebugUserId );
-			}
+		if( empty($wgFounderEmailsDebugUserId) ) {
+			$wikiFounder = User::newFromId( WikiFactory::getWikiById($wgCityId)->city_founding_user );
+		}
+		else {
+			$wikiFounder = User::newFromId( $wgFounderEmailsDebugUserId );
 		}
 
-		return $this->mWikiFounder;
+		return $wikiFounder;
 	}
 
 	/**
