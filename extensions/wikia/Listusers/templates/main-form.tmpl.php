@@ -246,9 +246,6 @@ function wkLUshowDetails(limit, offset, ord, desc)
 				_tmp += "</table><br />";
 				records.innerHTML = _tmp + pager + "</div>";
 				_addEvents(order, desc);
-				if (typeof TieDivLibrary != "undefined" ) {
-					TieDivLibrary.calculate();
-				};
 			}
 		},
 		failure: function( oResponse )
@@ -259,9 +256,6 @@ function wkLUshowDetails(limit, offset, ord, desc)
 			if (!resData) {
 				records.innerHTML = "<?=wfMsg('lookupcontribsinvalidresults')?>";
 			}
-			if (typeof TieDivLibrary != "undefined" ) {
-				TieDivLibrary.calculate();
-			}; 
 		}
 	};
 

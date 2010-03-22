@@ -133,7 +133,6 @@ $MF['monaco_loggedin_js']['source'] = array(
 	'common/widgets/js/widgetsFramework.js',
 	'../extensions/wikia/ProblemReports/js/ProblemReports-loader.js',
 	'../extensions/wikia/AdEngine/AdEngine.js',
-	'../extensions/wikia/TieDivLibrary/TieDivLibrary.js',
 	'common/contributed.js',
 	'../extensions/wikia/ShareFeature/js/ShareFeature.js',
 );
@@ -169,7 +168,6 @@ $MF['monaco_non_loggedin_js']['source'] = array(
 	'../extensions/wikia/ProblemReports/js/ProblemReports-loader.js',
 	'../extensions/wikia/AdEngine/AdEngine.js',
 	'../extensions/wikia/Userengagement/Userengagement.js',
-	'../extensions/wikia/TieDivLibrary/TieDivLibrary.js',
 	'common/contributed.js',
 	'../extensions/wikia/ShareFeature/js/ShareFeature.js',
 );

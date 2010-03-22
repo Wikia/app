@@ -270,9 +270,6 @@ function __closeAllListed () {
 		failure: function( oResponse ) {
 			alert("<?=wfMsg('awc-metrics-not-found')?>");
 			div_details.innerHTML = "";
-			if (typeof TieDivLibrary != "undefined" ) {
-				TieDivLibrary.calculate();
-			}; 
 		}
 	};
 
@@ -482,9 +479,6 @@ function wkAWCMetricsDetails(limit, offset, ord, desc)
 				_tmp += "</table><br />";
 				records.innerHTML = _tmp + pager + "</div>";
 				_addEvents(order, desc);
-				if (typeof TieDivLibrary != "undefined" ) {
-					TieDivLibrary.calculate();
-				};
 			}
 		},
 		failure: function( oResponse )
@@ -494,9 +488,6 @@ function wkAWCMetricsDetails(limit, offset, ord, desc)
 			if (!resData) {
 				records.innerHTML = "<?=wfMsg('awc-metrics-not-found')?>";
 			}
-			if (typeof TieDivLibrary != "undefined" ) {
-				TieDivLibrary.calculate();
-			}; 
 		}
 	};
 
@@ -684,10 +675,6 @@ __ShowCategories = function(e, args) {
 						}
 					}
 				}
-
-				if (typeof TieDivLibrary != "undefined" ) {
-					TieDivLibrary.calculate();
-				};
 			}
 		},
 		failure: function( oResponse )
@@ -697,9 +684,6 @@ __ShowCategories = function(e, args) {
 			if (!resData) {
 				records.innerHTML = "<?=wfMsg('awc-metrics-not-found')?>";
 			}
-			if (typeof TieDivLibrary != "undefined" ) {
-				TieDivLibrary.calculate();
-			}; 
 		}
 	};
 

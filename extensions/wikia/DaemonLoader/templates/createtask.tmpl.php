@@ -162,17 +162,11 @@ function showSecondStep(data) {
 					YD.get('dt_emails').value = data.result_emails;
 				}
 			}
-			if (typeof TieDivLibrary != "undefined" ) {
-				TieDivLibrary.calculate();
-			};
 		},
 		failure: function( oResponse )
 		{
 			divCreatorLoader.innerHTML = "";
 			YAHOO.util.Dom.get("dt-task-3step").innerHTML = "";
-			if (typeof TieDivLibrary != "undefined" ) {
-				TieDivLibrary.calculate();
-			};
 		}		
 	}
 
@@ -275,18 +269,11 @@ function loadDaemonById(formValues) {
 					}
 				}
 			}
-
-			if (typeof TieDivLibrary != "undefined" ) {
-				TieDivLibrary.calculate();
-			};
 		},
 		failure: function( oResponse )
 		{
 			divCreatorLoader.innerHTML = "";
 			YAHOO.util.Dom.get("dt-task-2step").innerHTML = "";
-			if (typeof TieDivLibrary != "undefined" ) {
-				TieDivLibrary.calculate();
-			};
 		}
 	};
 
@@ -323,17 +310,10 @@ function loadWikiList(value, txtname) {
 				var select = YAHOO.util.Dom.get('dt-select-' + txtName);
 				txtArea.value = txtArea.value + ((txtArea.value != '') ? ', ' + select.value : select.value);
 			}, [txtname]);
-
-			if (typeof TieDivLibrary != "undefined" ) {
-				TieDivLibrary.calculate();
-			};
 		},
 		failure: function( oResponse )
 		{
 			YAHOO.util.Dom.get('dt-wikia-search-result').innerHTML = oResponse.responseText;
-			if (typeof TieDivLibrary != "undefined" ) {
-				TieDivLibrary.calculate();
-			};
 		}
 	}
 
@@ -386,16 +366,10 @@ YAHOO.util.Event.onDOMReady(function() {
 				divDaemonInfo.innerHTML = "";
 			}
 			divCreatorLoader.innerHTML = "";
-			if (typeof TieDivLibrary != "undefined" ) {
-				TieDivLibrary.calculate();
-			};
 		},
 		failure: function( oResponse ) {
 			divCreatorLoader.innerHTML = "";
 			divDaemonInfo.innerHTML = "";
-			if (typeof TieDivLibrary != "undefined" ) {
-				TieDivLibrary.calculate();
-			};
 		}
 	};
 		

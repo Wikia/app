@@ -30,9 +30,6 @@ ArticleComments.save = function(e) {
 				//reenable textarea
 				textfield.removeAttr('readonly');
 			}
-			if (typeof TieDivLibrary != 'undefined') {
-				TieDivLibrary.calculate();
-			}
 			ArticleComments.processing = false;
 		});
 		ArticleComments.processing = true;
@@ -49,9 +46,6 @@ ArticleComments.edit = function(e) {
 		if (!json.error) {
 			$('#comm-text-' + json.id).html(json.text);
 			$('#article-comm-submit-' + json.id).bind('click', {id: json.id}, ArticleComments.save);
-			if (typeof TieDivLibrary != 'undefined') {
-				TieDivLibrary.calculate();
-			}
 		}
 		ArticleComments.processing = false;
 	});
@@ -86,9 +80,6 @@ ArticleComments.postComment = function(e) {
 		}
 		$(e.data.source).removeAttr('readonly');
 		$(e.data.source).val('');
-		if (typeof TieDivLibrary != 'undefined' ) {
-			TieDivLibrary.calculate();
-		}
 		ArticleComments.processing = false;
 	});
 	ArticleComments.processing = true;
