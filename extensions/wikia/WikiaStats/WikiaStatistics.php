@@ -587,7 +587,10 @@ class WikiaGlobalStats {
     	
 		$dbLimit = self::$defaultLimit;
 		$date_diff = date('Y-m-d', time() - $days * 60 * 60 * 24);
+
+		// Keep in sync with the key generation in self::excludeArticle.
 		$memkey = wfMemcKey( "WS:getPagesEditors", $days, $limit, intval($onlyContent), intval($recalculateLimit), intval($noHubDepe) );
+
 		$result = ( $from_db === true ) ? "" : $wgTTCache->get( $memkey );
 		if ( empty($result) ) {
 			$data = array();
@@ -682,11 +685,13 @@ class WikiaGlobalStats {
 		if ( is_object($oRegexCore) ) {
 			$res = $oRegexCore->addPhrase(preg_quote($text));
 
-			// Regenerate the top 5 & 10 for the last 3 days (ie: purge memcache).
-			self::getPagesEditors(3, 10, true, true, false, true);
-			self::getPagesEditors(3, 10, true, false, false, true);
-			self::getPagesEditors(3, 5, true, true, false, true);
-			self::getPagesEditors(3, 5, true, false, false, true);
+			// Purge the memcaches for the top 5 & 10 for the last 3 days - with and without onlyContent set.
+			// Is there a cleaner way to do this?
+			global $wgMemc;
+			$wgMemc->delete(wfMemcKey( "WS:getPagesEditors", 3, 10, 1, 1, 0, 1));
+			$wgMemc->delete(wfMemcKey( "WS:getPagesEditors", 3, 10, 1, 0, 0, 1));
+			$wgMemc->delete(wfMemcKey( "WS:getPagesEditors", 3, 5, 1, 1, 0, 1));
+			$wgMemc->delete(wfMemcKey( "WS:getPagesEditors", 3, 5, 1, 0, 0, 1));
 		}
 
 		return $res;
