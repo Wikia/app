@@ -287,6 +287,12 @@ function VET_showPreview(e) {
 function VET_getCaret() {
 	if (typeof FCK == 'undefined') {
 		var control = document.getElementById('wpTextbox1');
+		RTE_source = $('#cke_contents_wpTextbox1 textarea');
+		
+		if( RTE_source.length > 0 ) {
+			control = $('#cke_contents_wpTextbox1 textarea')[0];
+		}
+		
 	} else {
 		var control = FCK.EditingArea.Textarea;
 	}
