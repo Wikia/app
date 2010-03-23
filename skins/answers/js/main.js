@@ -1,64 +1,66 @@
 var $G = YAHOO.util.Dom.get;
 
 jQuery("#answers_ask_field").ready(function() {
-	var answers_ask_field_default = wgAskFormTitle;
-	var answers_category_field_default = wgAskFormCategory;
-	jQuery(".header_field").focus(function() {
-		if (jQuery(this).attr('value') == eval(this.id + '_default')) {
-			jQuery(this).removeClass('alt').attr('value', '');
+	$.loadYUI(function(){
+		var answers_ask_field_default = wgAskFormTitle;
+		var answers_category_field_default = wgAskFormCategory;
+		jQuery(".header_field").focus(function() {
+			if (jQuery(this).attr('value') == eval(this.id + '_default')) {
+				jQuery(this).removeClass('alt').attr('value', '');
+			}
+		}).blur(function() {
+			if (jQuery(this).attr('value') == '') {
+				jQuery(this).addClass('alt').attr('value', eval(this.id + '_default'));
+			}
+		});
+		
+		var oDS = new YAHOO.util.XHRDataSource(wgServer + '/api.php');
+		// Set the responseType 
+		oDS.responseType = YAHOO.util.XHRDataSource.TYPE_JSON; 
+		// Define the schema of the JSON results 
+		oDS.responseSchema = { 
+			resultsList : "ResultSet.Result", 
+			fields : ["title", "rank"] 
+		}; 
+		var myAutoComp = new YAHOO.widget.AutoComplete("answers_ask_field","answers_suggest", oDS); 
+		myAutoComp.maxResultsDisplayed = 10;  
+		myAutoComp.minQueryLength = 5; 
+		myAutoComp.queryDelay = 1; 
+
+		// Add a question mark to the end of the result
+		myAutoComp.formatResult = function(oResultData, sQuery, sResultMatch) {
+				var sMarkup = (sResultMatch) ? sResultMatch + '?' : "";
+			return sMarkup;
+		};
+		// Don't highlight the first result
+		myAutoComp.autoHighlight = false; 
+
+		myAutoComp.generateRequest = function(sQuery) {
+			return "?action=superdeduper&lang=" + wgContentLanguage + "&db=" + wgDB + "&query=" + sQuery;
 		}
-	}).blur(function() {
-		if (jQuery(this).attr('value') == '') {
-			jQuery(this).addClass('alt').attr('value', eval(this.id + '_default'));
-		}
-	});
-	
-	var oDS = new YAHOO.util.XHRDataSource(wgServer + '/api.php');
-	// Set the responseType 
-	oDS.responseType = YAHOO.util.XHRDataSource.TYPE_JSON; 
-	// Define the schema of the JSON results 
-	oDS.responseSchema = { 
-  		resultsList : "ResultSet.Result", 
-		fields : ["title", "rank"] 
-	}; 
-	var myAutoComp = new YAHOO.widget.AutoComplete("answers_ask_field","answers_suggest", oDS); 
-	myAutoComp.maxResultsDisplayed = 10;  
-	myAutoComp.minQueryLength = 5; 
-	myAutoComp.queryDelay = 1; 
 
-	// Add a question mark to the end of the result
-	myAutoComp.formatResult = function(oResultData, sQuery, sResultMatch) {
-	        var sMarkup = (sResultMatch) ? sResultMatch + '?' : "";
-		return sMarkup;
-	};
-	// Don't highlight the first result
-	myAutoComp.autoHighlight = false; 
-
-	myAutoComp.generateRequest = function(sQuery) {
-		return "?action=superdeduper&lang=" + wgContentLanguage + "&db=" + wgDB + "&query=" + sQuery;
-	}
-
-	var submitAutoComplete_callback = {
-		success: function(o) {
-			if(o.responseText !== undefined) {
-				WET.byStr('ask/goToSuggest');
-				window.location.href=o.responseText;
+		var submitAutoComplete_callback = {
+			success: function(o) {
+				if(o.responseText !== undefined) {
+					WET.byStr('ask/goToSuggest');
+					window.location.href=o.responseText;
+				}
 			}
 		}
-	}
 
-	var submitAutoComplete = function(comp, resultListItem) {
-		//YAHOO.Wikia.Tracker.trackByStr(null, 'search/suggestItem/' + escape(YAHOO.util.Dom.get('search_field').value.replace(/ /g, '_')));
-		sUrl = wgServer + wgScriptPath + '?action=ajax&rs=getSuggestedArticleURL&rsargs=' + encodeURIComponent(YAHOO.util.Dom.get('answers_ask_field').value);
-		console.log(sUrl);
-		var request = YAHOO.util.Connect.asyncRequest('GET', sUrl, submitAutoComplete_callback);
-	}
-	myAutoComp.itemSelectEvent.subscribe(submitAutoComplete);
+		var submitAutoComplete = function(comp, resultListItem) {
+			//YAHOO.Wikia.Tracker.trackByStr(null, 'search/suggestItem/' + escape(YAHOO.util.Dom.get('search_field').value.replace(/ /g, '_')));
+			sUrl = wgServer + wgScriptPath + '?action=ajax&rs=getSuggestedArticleURL&rsargs=' + encodeURIComponent(YAHOO.util.Dom.get('answers_ask_field').value);
+			console.log(sUrl);
+			var request = YAHOO.util.Connect.asyncRequest('GET', sUrl, submitAutoComplete_callback);
+		}
+		myAutoComp.itemSelectEvent.subscribe(submitAutoComplete);
 
-	YAHOO.util.Event.addListener('answers_ask_field', 'keypress', function(e) {if(e.keyCode==13) {
-		WET.byStr('ask/enter');
-		askQuestion();
-	}});
+		YAHOO.util.Event.addListener('answers_ask_field', 'keypress', function(e) {if(e.keyCode==13) {
+			WET.byStr('ask/enter');
+			askQuestion();
+		}});
+	});
 });
 
 jQuery("#header_menu_user").ready(function() {
