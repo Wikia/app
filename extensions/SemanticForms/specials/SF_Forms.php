@@ -5,7 +5,7 @@
  * @author Yaron Koren
  */
 
-if (!defined('MEDIAWIKI')) die();
+if ( !defined( 'MEDIAWIKI' ) ) die();
 
 class SFForms extends SpecialPage {
 
@@ -13,11 +13,11 @@ class SFForms extends SpecialPage {
 	 * Constructor
 	 */
 	function SFForms() {
-		SpecialPage::SpecialPage('Forms');
-		wfLoadExtensionMessages('SemanticForms');
+		SpecialPage::SpecialPage( 'Forms' );
+		wfLoadExtensionMessages( 'SemanticForms' );
 	}
 
-	function execute($query) {
+	function execute( $query ) {
 		$this->setHeaders();
 		list( $limit, $offset ) = wfCheckLimits();
 		$rep = new FormsPage();
@@ -37,13 +37,13 @@ class FormsPage extends QueryPage {
 	function getPageHeader() {
 		global $wgUser;
 		
-		wfLoadExtensionMessages('SemanticForms');
+		wfLoadExtensionMessages( 'SemanticForms' );
 		
 		$sk = $wgUser->getSkin();
-		$cf = SpecialPage::getPage('CreateForm');
-		$create_form_link = $sk->makeKnownLinkObj($cf->getTitle(), $cf->getDescription());
+		$cf = SpecialPage::getPage( 'CreateForm' );
+		$create_form_link = $sk->makeKnownLinkObj( $cf->getTitle(), $cf->getDescription() );
 		$header = "<p>" . $create_form_link . ".</p>\n";
-		$header .= '<p>' . wfMsg('sf_forms_docu') . "</p><br />\n";
+		$header .= '<p>' . wfMsg( 'sf_forms_docu' ) . "</p><br />\n";
 		return $header;
 	}
 
@@ -68,7 +68,7 @@ class FormsPage extends QueryPage {
 		return false;
 	}
 
-	function formatResult($skin, $result) {
+	function formatResult( $skin, $result ) {
 		$title = Title::makeTitle( SF_NS_FORM, $result->value );
 		return $skin->makeLinkObj( $title, $title->getText() );
 	}

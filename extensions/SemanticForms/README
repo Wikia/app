@@ -12,10 +12,10 @@ Notes on installing Semantic Forms can be found in the file INSTALL.
 == Credits ==
 
 Semantic Forms was created, and mostly written by, Yaron Koren.
-Important code contributions were also made by Daniel Friesen,
-Eugene Mednikov, Harold Solbrig, Jayson Harshbarger, Jeffrey Stuckman,
-Louis Gerbarg, Matt Williamson, Nils Opperman, Sergey Chernyshev and
-wheresmytab.
+Important code contributions were also made by Daniel Friesen, Daniel
+Hansch, Eugene Mednikov, Harold Solbrig, Jayson Harshbarger, Jeffrey
+Stuckman, Louis Gerbarg, Matt Williamson, Nils Opperman, Patrick Nagel,
+Sergey Chernyshev and wheresmytab.
 
 Language translations were provided by many people; see the
 files /languages/SF_Messages.php and /languages/SF_Aliases.php for
@@ -38,7 +38,10 @@ which is compatible with the GPL license under which Semantic
 Forms is distributed.
 
 * Semantic Forms also includes the Floatbox Javascript library
-by Byron McGregor (http://randomous.com/tools/floatbox/). Floatbox
-is distributed via the Creative Commons Attribution 3.0 License
-(http://creativecommons.org/licenses/by/3.0/), which is compatible
-with the GPL license under which Semantic Forms is distributed.
+by Byron McGregor (http://randomous.com/tools/floatbox/). The
+version of Floatbox being used (NOT the current version, it
+should be noted, but one from May 2008) is distributed via the
+Creative Commons Attribution 3.0 License
+(http://creativecommons.org/licenses/by/3.0/). The license for
+this old version is compatible with the GPL license under which
+Semantic Forms is distributed.

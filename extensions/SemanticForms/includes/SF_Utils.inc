@@ -12,11 +12,22 @@ class SFUtils {
 	static function initProperties() {
 		global $sfgContLang;
 		$sf_props = $sfgContLang->getPropertyLabels();
-		SMWPropertyValue::registerProperty('_SF_DF', '__spf', $sf_props[SF_SP_HAS_DEFAULT_FORM], true);
-		SMWPropertyValue::registerProperty('_SF_AF', '__spf', $sf_props[SF_SP_HAS_ALTERNATE_FORM], true);
+		if (array_key_exists(SF_SP_HAS_DEFAULT_FORM, $sf_props))
+			SMWPropertyValue::registerProperty('_SF_DF', '__spf', $sf_props[SF_SP_HAS_DEFAULT_FORM], true);
+		if (array_key_exists(SF_SP_HAS_ALTERNATE_FORM, $sf_props))
+			SMWPropertyValue::registerProperty('_SF_AF', '__spf', $sf_props[SF_SP_HAS_ALTERNATE_FORM], true);
+		if (array_key_exists(SF_SP_CREATES_PAGES_WITH_FORM, $sf_props))
+			SMWPropertyValue::registerProperty('_SF_CP', '__spf', $sf_props[SF_SP_CREATES_PAGES_WITH_FORM], true);
+		if (array_key_exists(SF_SP_PAGE_HAS_DEFAULT_FORM, $sf_props))
+			SMWPropertyValue::registerProperty('_SF_PDF', '__spf', $sf_props[SF_SP_PAGE_HAS_DEFAULT_FORM], true);
+		if (array_key_exists(SF_SP_HAS_FIELD_LABEL_FORMAT, $sf_props))
+			SMWPropertyValue::registerProperty('_SF_FLF', '_str', $sf_props[SF_SP_HAS_FIELD_LABEL_FORMAT], true);
 		// also initialize hardcoded English values, if it's a non-English-language wiki
 		SMWPropertyValue::registerProperty('_SF_DF_BACKUP', '__spf', 'Has default form', true);
 		SMWPropertyValue::registerProperty('_SF_AF_BACKUP', '__spf', 'Has alternate form', true);
+		SMWPropertyValue::registerProperty('_SF_CP_BACKUP', '__spf', 'Creates pages with form', true);
+		SMWPropertyValue::registerProperty('_SF_PDF_BACKUP', '__spf', 'Page has default form', true);
+		SMWPropertyValue::registerProperty('_SF_FLF_BACKUP', '_str', 'Has field label format', true);
 
 		return true;
 	}
@@ -42,14 +53,17 @@ class SFUtils {
 	 * etc.
 	 */
 	static function printRedirectForm($title, $page_contents, $edit_summary, $is_save, $is_preview, $is_diff, $is_minor_edit, $watch_this, $start_time, $edit_time) {
-		$article = new Article($title);
-		$new_url = $title->getLocalURL('action=submit');
+		if ($title instanceof Title)
+			$new_url = $title->getLocalURL('action=submit');
+		else
+			$new_url = $title;
 		global $wgUser;
 		if ( $wgUser->isLoggedIn() )
 			$token = htmlspecialchars($wgUser->editToken());
 		else
 			$token = EDIT_TOKEN_SUFFIX;
 
+		$edit_summary = htmlspecialchars($edit_summary);
 		if ($is_save)
 			$action = "wpSave";
 		elseif ($is_preview)
@@ -60,21 +74,22 @@ class SFUtils {
 		global $sfgScriptPath;
 		$text =<<<END
 	<p style="position: absolute; left: 45%; top: 45%;"><img src="$sfgScriptPath/skins/loading.gif" /></p>
-	<form id="editform" name="editform" method="post" action="$new_url">
-	<input type="hidden" name="wpTextbox1" id="wpTextbox1" value="$page_contents" />
-	<input type="hidden" name="wpSummary" value="$edit_summary" />
-	<input type="hidden" name="wpStarttime" value="$start_time" />
-	<input type="hidden" name="wpEdittime" value="$edit_time" />
-	<input type="hidden" name="wpEditToken" value="$token" />
-	<input type="hidden" name="$action" />
 
 END;
+		$form_body = '	' . Xml::element('input', array('type' => 'hidden', 'name' => 'wpTextbox1', 'id' => 'wpTextbox1', 'value' => $page_contents), null) . "\n";
+		$form_body .= '	' . Xml::element('input', array('type' => 'hidden', 'name' => 'wpSummary', 'value' => $edit_summary), null) . "\n";
+		$form_body .= '	' . Xml::element('input', array('type' => 'hidden', 'name' => 'wpStarttime', 'value' => $start_time), null) . "\n";
+		$form_body .= '	' . Xml::element('input', array('type' => 'hidden', 'name' => 'wpEdittime', 'value' => $edit_time), null) . "\n";
+		$form_body .= '	' . Xml::element('input', array('type' => 'hidden', 'name' => 'wpEditToken', 'value' => $token), null) . "\n";
+		$form_body .= '	' . Xml::element('input', array('type' => 'hidden', 'name' => $action), null) . "\n";
+
 		if ($is_minor_edit)
-			$text .= '    <input type="hidden" name="wpMinoredit">' . "\n";
+			$form_body .= '	' . Xml::element('input', array('type' => 'hidden', 'name' => 'wpMinorEdit'), null) . "\n";
 		if ($watch_this)
-			$text .= '    <input type="hidden" name="wpWatchthis">' . "\n";
+			$form_body .= '	' . Xml::element('input', array('type' => 'hidden', 'name' => 'wpWatchthis'), null) . "\n";
+		$text .= Xml::tags('form', array('id' => 'editform', 'name' => 'editform', 'method' => 'post', 'action' => $new_url), $form_body);
+
 		$text .=<<<END
-	</form>
 	<script type="text/javascript">
 	window.onload = function() {
 		document.editform.submit();
@@ -82,76 +97,85 @@ END;
 	</script>
 
 END;
+		wfRunHooks('sfPrintRedirectForm', array($is_save, $is_preview, $is_diff, &$text));
 		return $text;
 	}
 
 	/**
 	 * Includes the necessary Javascript and CSS files for the form
 	 * to display and work correctly
+	 * 
+	 * Accepts an optional Parser instance, or uses $wgOut if omitted.
 	 */
-	static function addJavascriptAndCSS() {
-		global $wgOut, $sfgScriptPath, $sfgYUIBase, $wgScriptPath, $wgFCKEditorDir;
+	static function addJavascriptAndCSS($parser = NULL) {
+		global $wgOut, $sfgScriptPath, $sfgYUIBase, $smwgScriptPath, $wgScriptPath, $wgFCKEditorDir, $wgJsMimeType, $sfgUseFormEditPage;
 
-		$mainCssUrl = $sfgScriptPath . '/skins/SF_main.css';
-		$wgOut->addLink( array(
-			'rel' => 'stylesheet',
-			'type' => 'text/css',
-			'media' => "screen, projection",
-			'href' => $mainCssUrl
-		));
-		$wgOut->addLink( array(
-			'rel' => 'stylesheet',
-			'type' => 'text/css',
-			'media' => "screen, projection",
-			'href' => $sfgYUIBase . "autocomplete/assets/skins/sam/autocomplete.css"
-		));
-		$wgOut->addLink( array(
-			'rel' => 'stylesheet',
-			'type' => 'text/css',
-			'media' => "screen, projection",
-			'href' => $sfgScriptPath . '/skins/SF_yui_autocompletion.css'
-		));
-		$wgOut->addLink( array(
-			'rel' => 'stylesheet',
-			'type' => 'text/css',
-			'media' => "screen, projection",
-			'href' => $sfgScriptPath . '/skins/floatbox.css'
-		));
-		$wgOut->addScript('<script type="text/javascript" src="' . $sfgYUIBase . 'yahoo/yahoo-min.js"></script>' . "\n");
-		$wgOut->addScript('<script type="text/javascript" src="' . $sfgYUIBase . 'dom/dom-min.js"></script>' . "\n");
-		$wgOut->addScript('<script type="text/javascript" src="' . $sfgYUIBase . 'event/event-min.js"></script>' . "\n");
-		$wgOut->addScript('<script type="text/javascript" src="' . $sfgYUIBase . 'get/get-min.js"></script>' . "\n");
-		$wgOut->addScript('<script type="text/javascript" src="' . $sfgYUIBase . 'connection/connection-min.js"></script>' . "\n");
-		$wgOut->addScript('<script type="text/javascript" src="' . $sfgYUIBase . 'json/json-min.js"></script>' . "\n");
-		$wgOut->addScript('<script type="text/javascript" src="' .  $sfgYUIBase . 'datasource/datasource-min.js"></script>' . "\n");
-		$wgOut->addScript('<script type="text/javascript" src="' .  $sfgYUIBase . 'autocomplete/autocomplete-min.js"></script>' . "\n");
-		$wgOut->addScript('<script type="text/javascript" src="' . $sfgScriptPath . '/libs/SF_yui_autocompletion.js"></script>' . "\n");
-		$wgOut->addScript('<script type="text/javascript" src="' . $sfgScriptPath . '/libs/floatbox.js"></script>' . "\n");
+		$links = array(
+			array(
+				'rel' => 'stylesheet',
+				'type' => 'text/css',
+				'media' => "screen",
+				'href' => $sfgScriptPath . '/skins/SF_main.css'
+			),
+			array(
+				'rel' => 'stylesheet',
+				'type' => 'text/css',
+				'media' => "screen",
+				'href' => $sfgYUIBase . "autocomplete/assets/skins/sam/autocomplete.css"
+			),
+			array(
+				'rel' => 'stylesheet',
+				'type' => 'text/css',
+				'media' => "screen",
+				'href' => $sfgScriptPath . '/skins/SF_yui_autocompletion.css'
+			),
+			array(
+				'rel' => 'stylesheet',
+				'type' => 'text/css',
+				'media' => "screen",
+				'href' => $sfgScriptPath . '/skins/floatbox.css'
+			),
+			array(
+				'rel' => 'stylesheet',
+				'type' => 'text/css',
+				'media' => "screen",
+				'href' => $smwgScriptPath . '/skins/SMW_custom.css'
+			),
+		);
+		foreach( $links as $link ) {
+			if ( $parser )
+				$parser->getOutput()->addHeadItem(Xml::element( 'link', $link ));
+			else
+				$wgOut->addLink($link);
+		}
+		
+		
+		$scripts = array();
+		$scripts[] = "{$sfgYUIBase}yahoo/yahoo-min.js";
+		$scripts[] = "{$sfgYUIBase}dom/dom-min.js";
+		$scripts[] = "{$sfgYUIBase}event/event-min.js";
+		$scripts[] = "{$sfgYUIBase}get/get-min.js";
+		$scripts[] = "{$sfgYUIBase}connection/connection-min.js";
+		$scripts[] = "{$sfgYUIBase}json/json-min.js";
+		$scripts[] = "{$sfgYUIBase}datasource/datasource-min.js";
+		$scripts[] = "{$sfgYUIBase}autocomplete/autocomplete-min.js";
+		$scripts[] = "$sfgScriptPath/libs/SF_yui_autocompletion.js";
+		if ( !$sfgUseFormEditPage )
+			$scripts[] = "$sfgScriptPath/libs/SF_ajax_form_preview.js";
+		$scripts[] = "$sfgScriptPath/libs/floatbox.js";
+		$scripts[] = "$smwgScriptPath/skins/SMW_tooltip.js";
+		$scripts[] = "$smwgScriptPath/skins/SMW_sorttable.js";
 		if ($wgFCKEditorDir)
-			$wgOut->addScript('<script type="text/javascript" src="' . "$wgScriptPath/$wgFCKEditorDir" . '/fckeditor.js"></script>' . "\n");
-		$wgOut->addMeta('robots','noindex,nofollow');
-	}
-
-	/**
-	 * A helper function to generate a property object given its name,
-	 * since the class for properties changed from Title to
-	 * SMWPropertyValue in SMW 1.4
-	 */
-	static function createProperty($property_name) {
-		if (class_exists('SMWPropertyValue'))
-			return SMWPropertyValue::makeProperty($property_name);
-		else
-			return Title::makeTitleSafe(SMW_NS_PROPERTY, $property_name);
-	}
-
-	/**
-	 * Same idea as createProperty()
-	 */
-	static function getPropertyName($property) {
-		if ($property instanceof Title)
-			return $property->getText();
-		else // $property instanceof SMWPropertyValue
-			return $property->getWikiValue();
+			$scripts[] = "$wgScriptPath/$wgFCKEditorDir/fckeditor.js";
+		foreach( $scripts as $js ) {
+			$script = "<script type=\"$wgJsMimeType\" src=\"$js\"></script>\n";
+			if ( $parser )
+				$parser->getOutput()->addHeadItem($script);
+			else
+				$wgOut->addScript($script);
+		}
+		if ( !$parser )
+			$wgOut->addMeta('robots','noindex,nofollow');
 	}
 
 	/**
@@ -177,16 +201,12 @@ END;
 		global $sfgContLang;
 		$namespace_labels = $sfgContLang->getNamespaces();
 		$form_label = $namespace_labels[SF_NS_FORM];
-		$str = <<<END
-		$form_label:
-			<select name="form">
-
-END;
 		$form_names = SFUtils::getAllForms();
+		$select_body = "";
 		foreach ($form_names as $form_name) {
-			$str .= "			<option>$form_name</option>\n";
+			$select_body .= '	' . Xml::element('option', null, $form_name) . "\n";
 		}
-		$str .= "			</select>\n";
+		$str = "	$form_label:" . Xml::tags('select', array('name' => 'form'), $select_body) . "\n";
 		return $str;
 	}
 
@@ -202,7 +222,7 @@ END;
 		$store = smwfGetStore();
 		$requestoptions = new SMWRequestOptions();
 		$requestoptions->limit = $sfgMaxAutocompleteValues;
-		$property = SFUtils::createProperty($property_name);
+		$property = SMWPropertyValue::makeProperty($property_name);
 		$data_values = $store->getPropertyValues(null, $property, $requestoptions);
 		$values = array();
 		foreach ($data_values as $dv) {
@@ -225,7 +245,6 @@ END;
 		global $sfgMaxAutocompleteValues;
 
 		$db = wfGetDB( DB_SLAVE );
-		$fname = "getAllPagesForCategory";
 		$top_category = str_replace(' ', '_', $top_category);
 		$categories = array($top_category);
 		$checkcategories = array($top_category);
@@ -237,7 +256,7 @@ END;
 					$substring = str_replace(' ', '_', strtolower($substring));
 					$substring = str_replace('_', '\_', $substring);
 					$substring = str_replace("'", "\'", $substring);
-					$conditions = 'cl_to = '. $db->addQuotes($category) . " AND (LOWER(page_title) LIKE '" . $substring . "%' OR LOWER(page_title) LIKE '%\_" . $substring . "%' OR page_namespace = " . NS_CATEGORY . ")";
+					$conditions = 'cl_to = '. $db->addQuotes($category) . " AND (LOWER(CONVERT(`page_title` USING utf8)) LIKE '" . $substring . "%' OR LOWER(CONVERT(`page_title` USING utf8)) LIKE '%\_" . $substring . "%' OR page_namespace = " . NS_CATEGORY . ")";
 				} else {
 					$conditions = 'cl_to = '. $db->addQuotes($category);
 				}
@@ -245,7 +264,8 @@ END;
 					array('categorylinks', 'page'),
 					array('page_title', 'page_namespace'),
 					array('cl_from = page_id', $conditions),
-					$fname);
+					__METHOD__,
+					'SORT BY cl_sortkey');
 				if ($res) {
 					while ($res && $row = $db->fetchRow($res)) {
 						if (array_key_exists('page_title', $row)) {
@@ -257,10 +277,12 @@ END;
 								}
 							} else {
 								$cur_value = str_replace("_", " ", $row['page_title']);
-								if ($substring == null)
-									$pages[] = $cur_value;
-								else
-									$pages[] = array('title' => $cur_value);
+								if (! in_array($cur_value, $pages)) {
+									if ($substring == null)
+										$pages[] = $cur_value;
+									else
+										$pages[] = array('title' => $cur_value);
+								}
 								// return if we've reached the maximum number of allowed values
 								if (count($pages) > $sfgMaxAutocompleteValues)
 									return $pages;
@@ -271,14 +293,12 @@ END;
 				}
 			}
 			if (count($newcategories) == 0) {
-				sort($pages);
 				return $pages;
 			} else {
 				$categories = array_merge($categories, $newcategories);
 			}
 			$checkcategories = array_diff($newcategories, array());
 		}
-		sort($pages);
 		return $pages;
 	}
 
@@ -308,6 +328,7 @@ END;
 		while ($res = $query_result->getNext()) {
 			$pages[] = $res[0]->getNextText(SMW_OUTPUT_WIKI);
 		}
+		sort($pages);
 		return $pages;
 	}
 
@@ -318,7 +339,6 @@ END;
 		global $wgContLang;
 		$namespaces = $wgContLang->getNamespaces();
 		$db = wfGetDB( DB_SLAVE );
-		$fname = "SFUtils::getAllPagesForNamespace";
 		$pages = array();
 		foreach ($namespaces as $ns_code => $ns_name) {
 			if ($ns_name == $namespace_name) {
@@ -327,16 +347,16 @@ END;
 					$substring = str_replace(' ', '_', strtolower($substring));
 					$substring = str_replace('_', '\_', $substring);
 					$substring = str_replace("'", "\'", $substring);
-					$conditions .= " AND (LOWER(page_title) LIKE '$substring%' OR LOWER(page_title) LIKE '%\_$substring%')";
+					$conditions .= " AND (LOWER(CONVERT(`page_title` USING utf8)) LIKE '$substring%' OR LOWER(CONVERT(`page_title` USING utf8)) LIKE '%\_$substring%')";
 				}
 				$sql_options['ORDER BY'] = 'page_title';
 				$res = $db->select( $db->tableNames('page'),
 					'page_title',
-					$conditions, $fname, $sql_options);
+					$conditions, __METHOD__, $sql_options);
 				while ($row = $db->fetchRow($res)) {
 					$cur_value = str_replace('_', ' ', $row[0]);
 					if ($substring == null) {
-						$pages[] = str_replace("'", "\'", $cur_value);
+						$pages[] = $cur_value;
 					} else {
 						$pages[] = array('title' => $cur_value);
 					}
@@ -345,6 +365,49 @@ END;
 			}
 		}
 		return $pages;
+	}
+
+	static function getValuesFromExternalURL($external_url_alias, $substring) {
+		global $sfgAutocompletionURLs;
+		if (empty($sfgAutocompletionURLs)) return array();
+		$url = $sfgAutocompletionURLs[$external_url_alias];
+		if (empty($url)) return array();
+		$url = str_replace('<substr>', $substring, $url);
+		$page_contents = Http::get($url);
+		if (empty($page_contents)) return array();
+		$data = json_decode($page_contents);
+		if (empty($data)) return array();
+		$return_values = array();
+		foreach ($data->sfautocomplete as $val) {
+			$return_values[] = (array)$val;
+		}
+		return $return_values;
+	}
+
+	/**
+	 * Parse the form definition and store the resulting HTML in the
+	 * page_props table, if caching has been specified in LocalSettings.php
+	 */
+	function cacheFormDefinition($parser, $text) {
+		global $sfgCacheFormDefinitions;
+		if (! $sfgCacheFormDefinitions)
+			return true;
+
+		if ($parser->getTitle()->getNamespace() != SF_NS_FORM) return true;
+		// Remove <noinclude> sections and <includeonly> tags from form definition
+		$form_def = StringUtils::delimiterReplace('<noinclude>', '</noinclude>', '', $text);
+		$form_def = strtr($form_def, array('<includeonly>' => '', '</includeonly>' => ''));
+
+		// parse wiki-text
+		// add '<nowiki>' tags around every triple-bracketed form definition
+		// element, so that the wiki parser won't touch it - the parser will
+		// remove the '<nowiki>' tags, leaving us with what we need
+		$form_def = "__NOEDITSECTION__" . strtr($form_def, array('{{{' => '<nowiki>{{{', '}}}' => '}}}</nowiki>'));
+		$dummy_title = Title::newFromText('Form definition title for caching purposes');
+		$form_def = $parser->parse($form_def, $dummy_title, $parser->mOptions)->getText();
+
+		$parser->mOutput->setProperty( 'formdefinition', $form_def );
+		return true;
 	}
 
 }

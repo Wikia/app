@@ -27,16 +27,18 @@ class SFForm {
 
 	function createMarkup() {
 		$title = Title::makeTitle( SF_NS_FORM, $this->form_name );
-		$ad = SpecialPage::getPage('AddPage');
-		$add_data_url = SFLinkUtils::titleURLString($ad->getTitle()) . "/" . $title->getPartialURL();
-		$form_description = wfMsgForContent('sf_form_docu', $this->form_name, $add_data_url);
-		$form_input = "{{#forminput:" . $this->form_name . "}}\n";
+		$fs = SpecialPage::getPage('FormStart');
+		$form_start_url = SFLinkUtils::titleURLString($fs->getTitle()) . "/" . $title->getPartialURL();
+		$form_description = wfMsgForContent('sf_form_docu', $this->form_name, $form_start_url);
+		$form_input = "{{#forminput:form=" . $this->form_name . "}}\n";
 		$text =<<<END
 <noinclude>
 $form_description
 
+
 $form_input
 </noinclude><includeonly>
+<div id="wikiPreview" style="display: none; padding-bottom: 25px; margin-bottom: 25px; border-bottom: 1px solid #AAAAAA;"></div>
 
 END;
 		foreach ($this->templates as $template) {
@@ -46,7 +48,7 @@ END;
 		$text .=<<<END
 '''$free_text_label:'''
 
-{{{standard input|free text}}}
+{{{standard input|free text|rows=10}}}
 
 
 {{{standard input|summary}}}
@@ -71,6 +73,7 @@ class SFTemplateInForm {
 	var $fields;
 
 	function getAllFields() {
+		global $wgContLang;
 		$template_fields = array();
 		$field_names_array = array();
 
@@ -102,7 +105,7 @@ class SFTemplateInForm {
 					$semantic_property = $matches[2][$i];
 					$full_field_text = $matches[0][$i];
 					if (! in_array($field_name, $field_names_array)) {
-						$template_field = SFTemplateField::create($field_name, ucfirst($field_name));
+						$template_field = SFTemplateField::create($field_name, $wgContLang->ucfirst($field_name));
 						$template_field->setSemanticProperty($semantic_property);
 						$template_field->is_list = true;
 						$cur_pos = stripos($template_text, $full_field_text);
@@ -122,7 +125,7 @@ class SFTemplateInForm {
 					$field_name = $matches[3][$i];
 					$full_field_text = $matches[0][$i];
 					if (! in_array($field_name, $field_names_array)) {
-						$template_field = SFTemplateField::create($field_name, ucfirst($field_name));
+						$template_field = SFTemplateField::create($field_name, $wgContLang->ucfirst($field_name));
 						$template_field->setSemanticProperty($semantic_property);
 						$cur_pos = stripos($template_text, $full_field_text);
 						$template_fields[$cur_pos] = $template_field;
@@ -139,7 +142,7 @@ class SFTemplateInForm {
 					$full_field_text = $matches[0][$i];
 					if (($full_field_text != '') && (! in_array($field_name, $field_names_array))) {
 						$cur_pos = stripos($template_text, $full_field_text);
-						$template_fields[$cur_pos] = SFTemplateField::create($field_name, ucfirst($field_name));
+						$template_fields[$cur_pos] = SFTemplateField::create($field_name, $wgContLang->ucfirst($field_name));
 						$field_names_array[] = $field_name;
 					}
 				}
