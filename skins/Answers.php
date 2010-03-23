@@ -130,14 +130,11 @@ class AnswersTemplate extends MonacoTemplate {
 		<script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('stylepath' ) ?>/common/wikibits.js?<?php echo $GLOBALS['wgStyleVersion'] ?>"><!-- wikibits js --></script>
 		<!-- Head Scripts -->
 <?php
-		if(!($wgTitle->getNamespace() == NS_SPECIAL)) {
-			print "<!-- Head scripts -->\n";
-			$this->html('WikiaScriptLoader');
-			$this->html('JSloader');
-			$this->html('headscripts');
-			print "<!-- End Head scripts -->\n";
-		}
+		$this->html('WikiaScriptLoader');
+		$this->html('JSloader');
+		$this->html('headscripts');
 		?>
+		<!-- End Head Scripts -->
 	        <link rel="stylesheet" type="text/css" href="<?=$wgStylePath?>/answers/css/main.css?<?=$wgStyleVersion?>" />
 		<!--[if IE 6]>
 	        <link rel="stylesheet" type="text/css" href="<?=$wgStylePath?>/answers/css/ie6.css?<?=$wgStyleVersion?>" />
