@@ -157,12 +157,13 @@ $messages['ia'] = array(
 
 /** Japanese (日本語)
  * @author Fryed-peach
+ * @author Tommy6
  */
 $messages['ja'] = array(
 	'ajaxpoll-percentVotes' => '全投票中 $1%',
 	'ajaxpoll-thankyou' => '投票ありがとうございます！',
 	'ajaxpoll-error' => '投票を処理中に問題が発生しました。再投票してください。',
-	'ajaxpoll-summary' => 'この投票は $1 $2 に作成され、これまでに$3人が投票しました。',
+	'ajaxpoll-summary' => 'この投票は $2 $1 に作成され、これまでに$3人が投票しました。',
 	'ajaxpoll-submit' => '投票',
 	'ajaxpoll-closed' => '投票は既に終了しています。結果をお楽しみください。',
 	'ajaxpoll-submitting' => 'あなたの投票を送信しています。お待ちください・・・',
@@ -289,6 +290,10 @@ $messages['ru'] = array(
  * @author Verlor
  */
 $messages['sr-ec'] = array(
+	'ajaxpoll-thankyou' => 'Хвала Вам што сте гласали!',
+	'ajaxpoll-error' => 'Био је неки проблем са обрадом вашег гласа, молимо Вас да покушате поново да гласате!',
 	'ajaxpoll-submit' => 'Гласај!',
+	'ajaxpoll-closed' => 'Гласање је завршено. ПОгледајте резултате.',
+	'ajaxpoll-submitting' => 'Сачекајте, шаљемо ваш глас...',
 );
 

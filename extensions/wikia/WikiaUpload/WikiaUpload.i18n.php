@@ -26,8 +26,16 @@ $messages['ar'] = array(
 	'wikiaupload' => 'رفع ويكيا',
 );
 
+/** Araucanian (Mapudungun)
+ * @author Kaniw
+ */
+$messages['arn'] = array(
+	'wikiaupload' => 'Wikia mew pvramkvnun',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
+ * @author Jim-by
  */
 $messages['be-tarask'] = array(
 	'wikiaupload' => 'Загрузка Wikia',
@@ -88,7 +96,7 @@ $messages['he'] = array(
  * @author Michawiki
  */
 $messages['hsb'] = array(
-	'wikiaupload' => 'Wikija_Nahraće',
+	'wikiaupload' => 'Wikija nahraće',
 );
 
 /** Hungarian (Magyar)
@@ -103,6 +111,13 @@ $messages['hu'] = array(
  */
 $messages['ia'] = array(
 	'wikiaupload' => 'Incargamento in Wikia',
+);
+
+/** Japanese (日本語)
+ * @author Tommy6
+ */
+$messages['ja'] = array(
+	'wikiaupload' => 'ウィキアアップロード',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -135,9 +150,10 @@ $messages['nn'] = array(
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
+ * @author Nghtwlkr
  */
 $messages['no'] = array(
-	'wikiaupload' => 'Wikia-opplasting',
+	'wikiaupload' => 'Opplasting til Wikia',
 );
 
 /** Occitan (Occitan)
@@ -154,9 +170,11 @@ $messages['pms'] = array(
 	'wikiaupload' => 'Carié Wikia',
 );
 
-/** Tarandíne (Tarandíne) */
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
 $messages['roa-tara'] = array(
-	'wikiaupload' => 'Wikia Upload',
+	'wikiaupload' => 'Uicchi Upload',
 );
 
 /** Russian (Русский)
@@ -164,6 +182,20 @@ $messages['roa-tara'] = array(
  */
 $messages['ru'] = array(
 	'wikiaupload' => 'Загрузки Wikia',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'wikiaupload' => 'Викија слање',
+);
+
+/** Telugu (తెలుగు)
+ * @author Ravichandra
+ */
+$messages['te'] = array(
+	'wikiaupload' => 'వికియా ఎగుమతి',
 );
 
 /** Turkish (Türkçe)

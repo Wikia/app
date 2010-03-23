@@ -178,6 +178,7 @@ Er wordt gewerkt aan het oplossen van deze tekortkoming.',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
  * @author Nghtwlkr
  */
 $messages['no'] = array(
@@ -186,6 +187,9 @@ $messages['no'] = array(
 	'cntool-button-save' => 'Lagre',
 	'cntool-label-content' => 'Endre artikkelinnhold nedenfor:',
 	'cntool-label-preview' => 'Forhåndsvisning:',
+	'cntool-caveat' => 'Denne utvidelsen bør ikke brukes lettsindig.
+
+Husk at resultatene ikke blir loggført noen steder og ikke er lett tilbakestillbar uten Tech-hjelp (dette jobbes med for øyeblikket).',
 );
 
 /** Piedmontese (Piemontèis)

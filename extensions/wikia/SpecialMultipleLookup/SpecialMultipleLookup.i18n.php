@@ -172,7 +172,9 @@ $messages['hu'] = array(
 	'multilookupgo' => 'Menj',
 	'multilookupnext' => 'következő',
 	'multilookupprevious' => 'előző',
+	'multilookupnbrresult' => 'Találatok száma:',
 	'multilookupwiki' => 'Wiki',
+	'multilookupdetails' => 'Részletek megtekintése',
 );
 
 /** Interlingua (Interlingua)
@@ -265,7 +267,11 @@ Controleer het opgegeven IP-adres; mogelijk hebt u een invoerfout gemaakt.</p>',
  * @author Nghtwlkr
  */
 $messages['no'] = array(
+	'multilookup' => 'Slå opp flere',
+	'multilookupstitle' => 'Slå opp flere',
+	'multilookupselectuser' => 'Søk etter kontoer med samme IP på flere wikier',
 	'multilookupgo' => 'Gå',
+	'multilookupnotspecify' => 'Du har ikke oppgitt en IP ennå',
 	'multilookupnext' => 'neste',
 	'multilookupprevious' => 'forrige',
 	'multilookupnbrresult' => 'Antall resultat:',
@@ -274,6 +280,8 @@ $messages['no'] = array(
 	'multilookupwiki' => 'Wiki',
 	'multilookuplink' => 'Bidragslenke',
 	'multilookupdetails' => 'Se detaljer',
+	'multilookuplistwikiainfo' => 'Liste over wikier der artikler har blitt redigert av brukere fra IP: <b>$1</b>',
+	'multilookupinvaliduser' => '<p class="error">IP <b>«$1»</b> finnes ikke. Sjekk oppgitt IP for mulige skrivefeil.</p>',
 	'multilookuplastedit' => 'Sist redigert fra denne IP-en:',
 );
 
@@ -349,7 +357,13 @@ $messages['ru'] = array(
  * @author Verlor
  */
 $messages['sr-ec'] = array(
+	'multilookupnotspecify' => 'Нисте још специфицирали ИП',
+	'multilookupnext' => 'следеће',
+	'multilookupprevious' => 'Претходна',
+	'multilookupinvalidresults' => 'Неправилни резултати',
+	'multilookupnoresultfound' => 'Нема резултата претраге',
 	'multilookupwiki' => 'Вики',
+	'multilookupdetails' => 'погледај детаље',
 );
 
 /** Telugu (తెలుగు)

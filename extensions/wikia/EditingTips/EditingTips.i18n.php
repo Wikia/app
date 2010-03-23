@@ -226,6 +226,14 @@ wiki文法をつかうか、HTMLで装飾できます。
 この編集ガイドは[[MediaWiki:EditingTips]]で編集できます。",
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'editingtips_enter_widescreen' => 'Breeden Ecran benotzen',
+	'editingtips_exit_widescreen' => 'Breeden Ecran net méi benotzen',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -266,10 +274,14 @@ $messages['nn'] = array(
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
  * @author Nghtwlkr
  */
 $messages['no'] = array(
 	'tog-disableeditingtips' => 'Ikke vis redigeringstips',
+	'tog-widescreeneditingtips' => 'Bruk fullskjermsredigering',
+	'editingtips_enter_widescreen' => 'Fullskjermsvisning',
+	'editingtips_exit_widescreen' => 'Gå ut av fullskjermsvisning',
 	'editingtips_hide' => 'Skjul redigeringstips',
 	'editingtips_show' => 'Vis redigeringstips',
 	'editingTips' => 'Legg til dine tips [[MediaWiki:EditingTips|her]]',
@@ -319,6 +331,8 @@ $messages['ru'] = array(
  */
 $messages['sr-ec'] = array(
 	'tog-disableeditingtips' => 'Не показуј савете за уређивање',
+	'editingtips_hide' => 'Сакријте уређивачке напомене',
+	'editingtips_show' => 'Покажите уређивачке напомене',
 );
 
 /** Chinese (中文) */

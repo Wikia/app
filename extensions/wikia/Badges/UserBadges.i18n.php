@@ -118,6 +118,24 @@ $messages['de'] = array(
 	'user-badge-save-info' => 'Wenn du die Änderungen speichern möchtest, scrolle bitte zum Ende der Seite und klicke auf "Speichern".',
 );
 
+/** British English (British English)
+ * @author Lcawte
+ */
+$messages['en-gb'] = array(
+	'user-badge-show-color' => 'Show colour details',
+	'user-badge-hide-color' => 'Hide colour details',
+	'user-badge-selected-color' => 'Currently selected colour {rgb}',
+	'user-badge-web-color' => 'Closest websafe colour: {rgb} Click to select!',
+	'user-badge-dialog-title' => 'Please choose a colour',
+	'user-badge-configure' => 'Configure your badge',
+	'user-badge-header-text' => 'Header text colour:',
+	'user-badge-header-bgcolor' => 'Header background colour:',
+	'user-badge-body-bgcolor' => 'Body background colour:',
+	'user-badge-label-color' => 'Label colour (username, edits):',
+	'user-badge-small-wikia-logo-color' => 'Wikia logo colour:',
+	'user-badge-data-color' => 'Data colour:',
+);
+
 /** Finnish (Suomi)
  * @author Centerlink
  */
@@ -281,6 +299,14 @@ $messages['ja'] = array(
 	'user-badge-save-info' => '変更を保存するには、ページの最後までスクロールし"設定を保存"ボタンをクリックしてください。',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'user-badge-logo-opt' => 'Bild-Optiounen:',
+	'user-badge-edits-txt' => 'Ännerungen',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -353,19 +379,30 @@ Klik om te selecteren!',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
  * @author Nghtwlkr
  */
 $messages['no'] = array(
+	'user-badge-invalid-color' => 'Ugyldig hex-verdi angitt',
 	'user-badge-show-color' => 'Vis fargedetaljer',
 	'user-badge-hide-color' => 'Skjul fargedetaljer',
 	'user-badge-selected-color' => 'Gjeldende valgte farge {rgb}',
 	'user-badge-web-color' => 'Nærmeste nettsikre farge: {rgb}. Klikk for å velge!',
 	'user-badge-dialog-title' => 'Vennligst velg en farge',
+	'user-badge-header-body-box' => 'Overskrift og hoveddel:',
+	'user-badge-header-text' => 'Overskriftstekstsfarge:',
+	'user-badge-header-bgcolor' => 'Overskriftsbakgrunnsfarge:',
+	'user-badge-body-bgcolor' => 'Hoveddelsbakgrunnsfarge:',
+	'user-badge-logo-opt' => 'Bildealternativer:',
+	'user-badge-wikia-logo-pos' => 'Wikia-logo posisjon:',
+	'user-badge-small-wikia-logo-pos' => 'Liten Wikia-logos posisjon:',
 	'user-badge-small-wikia-logo-color' => 'Wikia-logofarge:',
 	'user-badge-data-color' => 'Datafarge:',
+	'user-badge-edits-txt' => 'Redigeringer',
 	'user-bagde-copypaste-ext-code' => 'Kopier og lim inn (eksterne nettsteder)',
 	'user-bagde-copypaste-int-code' => 'Kopier og lim inn (denne Wikiaen)',
 	'user-bagde-copypaste-int-other-code' => 'Kopier og lim inn (andre Wikiaer)',
+	'user-badge-save-info' => 'Hvis du vil lagre endringene, bla ned til sidens slutt og trykk på "Lagre"-knappen',
 );
 
 /** Piedmontese (Piemontèis)

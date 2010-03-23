@@ -44,6 +44,14 @@ $messages['es'] = array(
 	'imgplc-notinhistory' => 'No puedes añadir una imagen en modo historial',
 );
 
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'imgplc-create' => 'Irudia gehitu',
+	'imgplc-image' => 'Irudia',
+);
+
 /** Persian (فارسی) */
 $messages['fa'] = array(
 	'imgplc-create' => 'افزودن تصویر',
@@ -251,10 +259,13 @@ $messages['sr-ec'] = array(
 	'imgplc-image' => 'Слика',
 );
 
-/** Swedish (Svenska) */
+/** Swedish (Svenska)
+ * @author Sertion
+ */
 $messages['sv'] = array(
 	'imgplc-create' => 'Lägg till bild',
 	'imgplc-placeholder' => 'Platshållare',
 	'imgplc-image' => 'Bild',
+	'imgplc-notinhistory' => 'Du kan inte lägga till bilder i historik-läget.',
 );
 

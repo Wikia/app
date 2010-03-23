@@ -317,7 +317,9 @@ Se está falto de inspiración, olle os exemplos de embaixo!',
  */
 $messages['hu'] = array(
 	'magcloud-discard-magazine-save' => 'Mentés és kilépés',
+	'magcloud-design-default-subtitle' => 'Felirat',
 	'magcloud-design-preview' => 'Előnézet',
+	'magcloud-design-image-selected' => '$1 kiválasztva',
 );
 
 /** Interlingua (Interlingua)
@@ -567,6 +569,7 @@ Onze excuses!',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
  * @author Nghtwlkr
  */
 $messages['no'] = array(
@@ -611,6 +614,7 @@ Dersom du er tom for inspirasjon, ta en titt på eksemplene under!',
 	'magcloud-preview-publish' => 'Publiser magasinet ditt',
 	'magcloud-preview-generating-pdf' => 'Oppretter magasinet ditt...',
 	'magcloud-publish-status-title' => 'Publiserer magasinet ditt',
+	'magcloud-publish-error' => 'Det oppstod en feil under forsøket på å sende magasinet til MagCloud - vi loggførte det for å prøve å finne ut hva som hendte. Det beste vil være å forsøke igjen senere - forhåpentligvis har vi løst problemet. Vi beklager!',
 	'magcloud-publish-done' => '...og vi er ferdige! Omdirigerer til MagCloud...',
 	'magcloud-publish-ajax-initialize' => 'Vi logger inn på MagCloud...',
 	'magcloud-publish-ajax-login' => '...setter opp publikasjonen...',
@@ -705,39 +709,84 @@ $messages['roa-tara'] = array(
 
 /** Russian (Русский)
  * @author Lockal
+ * @author Александр Сигачёв
  */
 $messages['ru'] = array(
+	'wikiacollection' => 'Создать журнал!',
 	'magcloud-intro-get-started' => 'Собрать статьи',
 	'magcloud-intro-create-magazine' => 'Создайте журнал из статей этой вики!',
+	'magcloud-intro-check-out' => 'Нажмите на журнал, чтобы увидеть пример из нашего сообщества!',
 	'magcloud-intro-hint' => 'Используйте панель инструментов в верхней части страницы, чтобы выбрать статьи, которые вы хотите объединить в журнал. Нажмите кнопку «Перейти в ваш журнал», когда закончите!',
 	'magcloud-intro-view-my-magazines' => 'Посмотреть мои журналы',
 	'magcloud-load-magazine-title' => 'Загрузить журнал',
 	'magcloud-load-magazine-load' => 'Загрузить этот журнал',
 	'magcloud-load-magazine-empty' => 'Вы пока не сохранили ни одного журнала. Создайте и сохраните его, чтобы увидеть в этом списке!',
+	'magcloud-add-article-success' => "Страница '''$1''' была добавлена в ваш журнал",
 	'magcloud-add-article-already' => "Страница '''$1''' уже добавлена",
 	'magcloud-toolbar-step' => 'Шаг $1: $2',
+	'magcloud-toolbar-article-in-collection' => "Страница '''$1''' уже находится в вашем журнале",
+	'magcloud-toolbar-article-add' => "Добавить '''$1''' в ваш журнал?",
 	'magcloud-toolbar-add' => 'Добавить',
+	'magcloud-toolbar-articles-count' => '<big>$1</big> {{PLURAL:$1|статья|статьи|статей}}',
 	'magcloud-toolbar-go-to-magazine' => 'Перейти к вашему журналу',
+	'magcloud-discard-magazine-title' => 'Сохраните вашу коллекцию?',
+	'magcloud-discard-magazine-msg' => 'Вы работаете над несохранённым журналом. Хотите, сохранить его? (Вы должны представиться системе, чтобы сохранить свою коллекцию.)',
 	'magcloud-discard-magazine-discard' => 'Отменить и выйти',
 	'magcloud-discard-magazine-save' => 'Сохранить и выйти',
+	'magcloud-special-collection-title' => 'Сделать журнал!',
+	'magcloud-special-collection-empty' => 'Вы ещё не выбрали ни одной статьи! Вернитесь в вики и выберите пункт «Добавить» на панели инструментов, чтобы  составить ваш журнал.',
 	'magcloud-special-collection-review-list-info' => 'Замечательно, вы выбрали $1 {{PLURAL:$1|статью|статьи|статей}} для своего журнала. Если вы хотите добавить ещё, просто посетите другие страницы и нажмите «Добавить» на панели вверху!',
+	'magcloud-special-collection-review-list-tips' => '<big>Советы по созданию хорошего журнала</big>
+
+# Попробуйте выбрать статьи, следующие одной теме, например, про комических злодеев или уникальные мечи.
+# Ваш журнал в итоге должен быть не более 100 страниц, это примерно 8 — 10 статей (зависит от размера конкретных статей).
+
+Если вам не хватает вдохновения, посмотрите приведённые ниже примеры!',
 	'magcloud-order-your-articles' => 'Измените порядок ваших статей',
 	'magcloud-button-design-a-cover' => 'Разработать обложку',
 	'magcloud-design-default-title' => 'Мой журнал $1',
 	'magcloud-design-default-subtitle' => 'Подзаголовок',
 	'magcloud-design-review-list' => 'Возврат к обзорному списку',
 	'magcloud-design-preview' => 'Предпросмотр',
+	'magcloud-design-license-policy' => 'Просто загрузить изображение, которое вы имеете право печатать и которое соответствует правилам этой вики.',
 	'magcloud-design-image-selected' => 'Выбрано $1',
+	'magcloud-preview-done' => 'Ваш журнал создан.',
+	'magcloud-preview-back-to-cover' => 'Вернуться к созданию обложки',
 	'magcloud-preview-save-magazine' => 'Сохранить ваш журнал',
+	'magcloud-preview-publish' => 'Опубликовать журнал',
+	'magcloud-preview-generating-pdf' => 'Создание вашего журнала…',
+	'magcloud-publish-status-title' => 'Публикация вашего журнала',
+	'magcloud-publish-status' => 'Отлично! Мы выдаём ваш журнал.',
+	'magcloud-publish-error' => 'Мы столкнулись с ошибкой при попытке отправить ваш журнал в MagCloud, мы записали её, чтобы попытаться выяснить, что случилось. Попробуйте повторите попытку позже, надеемся, что к тому времени мы разберёмся с этой проблемой. Пожалуйста, примите наши извинения!',
+	'magcloud-publish-done' => '… и мы сделали! Перенаправление на MagCloud…',
+	'magcloud-publish-ajax-initialize' => 'Заходим в MagCloud…',
+	'magcloud-publish-ajax-login' => '... теперь настраивается публикация…',
+	'magcloud-publish-ajax-publication' => '… настраивается выпуск…',
+	'magcloud-publish-ajax-issue' => '… заканчивается загрузка…',
+	'magcloud-publish-ajax-upload' => '… и делается уборка, как нас учили этому родители…',
+	'magcloud-publish-ajax-processing' => '… теперь появилась большая красная кнопка ОПУБЛИКОВАТЬ…',
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Verlor
  */
 $messages['sr-ec'] = array(
+	'wikiacollection' => 'Направите часопис!',
+	'magcloud-intro-get-started' => 'Сакупи чланак',
+	'magcloud-intro-create-magazine' => 'Направи часопис од чланака на овој Викији!',
+	'magcloud-intro-view-my-magazines' => 'Погледај часопис',
+	'magcloud-add-article-already' => "'''$1''' је већ додано",
+	'magcloud-toolbar-step' => 'Корак $1: $2',
+	'magcloud-toolbar-article-in-collection' => "'''$1''' је већ у вашем часопису",
+	'magcloud-toolbar-article-add' => "Додајете '''$1''' у ваш часопис?",
 	'magcloud-toolbar-add' => 'Додај',
+	'magcloud-toolbar-go-to-magazine' => 'Идите на ваш часопис',
 	'magcloud-discard-magazine-save' => 'Сачувај и изађи',
+	'magcloud-special-collection-title' => 'Направите часопис!',
 	'magcloud-order-your-articles' => 'Поредај ваше чланке',
+	'magcloud-design-default-title' => 'Мој $1 часопис',
+	'magcloud-design-default-subtitle' => 'Поднаслов',
 	'magcloud-design-preview' => 'Претпреглед',
+	'magcloud-design-image-selected' => '$1 је одабрано',
 );
 

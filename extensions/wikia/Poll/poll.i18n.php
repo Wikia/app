@@ -31,10 +31,13 @@ $messages['af'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author OsamaK
  */
 $messages['ar'] = array(
 	'pollVoteUpdate' => 'تم تحديث صوتك.',
+	'pollVoteAdd' => 'تم إضافة تصويتك',
+	'pollInfo' => 'هذه كانت $1 تصويتا منذ بداية التصويت في $2.',
 	'pollSubmitting' => 'من فضلك انتظر، يرسل صوتك.',
 );
 
@@ -261,6 +264,18 @@ $messages['ru'] = array(
 	'pollNoVote' => 'Пожалуйста, проголосуйте ниже.',
 	'pollInfo' => 'С момента создания голосования $2 поступило $1 голосов.',
 	'pollSubmitting' => 'Пожалуйста, подождите, ваш голос обрабатывается.',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Sasa Stefanovic
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'pollVoteUpdate' => 'аш глас је био урачунат.',
+	'pollVoteAdd' => 'Ваш галс је додан',
+	'pollPercentVotes' => '$1% од свих гласова',
+	'pollNoVote' => 'Молимо гласајте испод.',
+	'pollSubmitting' => 'Чекајте, шаљемо ваш глас.',
 );
 
 /** Chinese (中文) */

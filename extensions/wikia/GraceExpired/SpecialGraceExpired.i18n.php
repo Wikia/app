@@ -152,3 +152,11 @@ $messages['ru'] = array(
 Действия на страницах оценки '''не''' учитываются.",
 );
 
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'graceexpired' => 'Истекао период одгоде',
+	'graceexpired-row' => '$1 (у $2, зади пут уређивано у $3)',
+);
+

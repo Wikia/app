@@ -51,6 +51,15 @@ $messages['ia'] = array(
 	'widgetdashboard-description' => 'Iste pagina servi de loco pro testar tu widgets in action. Pro vider un lista de tote le widgets disponibile, visita [[Special:Widgets]].',
 );
 
+/** Japanese (日本語)
+ * @author Tommy6
+ */
+$messages['ja'] = array(
+	'widgetdashboard-wrong-skin' => '<p>ウィジェットダッシュボードは、<a href="./Special:WidgetDashboard?useskin=monaco">Monacoスキン</a>で最もよく動くようになっています。</p>
+<p>このツールを使用するには、<a href="./Special:Preferences">設定</a>を変更してください。</p>',
+	'widgetdashboard-description' => 'このページでは、ウィジェットのテストが行えます。有効な全ウィジェットのリストは[[Special:Widgets]]で見ることができます。',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -67,6 +76,14 @@ $messages['nl'] = array(
 <p>Wijzig alstublieft uw <a href="./Special:Preferences">voorkeuren</a> om dit hulpmiddel te gebruiken.</p>',
 	'widgetdashboard-description' => 'Op deze pagina kunt u testen hoe uw widgets werken.
 Zie ook de [[Special:Widgets|lijst met alle beschikbare widgets]].',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'widgetdashboard-wrong-skin' => '<p>Panelbordskjermelementet fungerer best med noen av de nye draktene, for eksempel <a href="./Special:WidgetDashboard?useskin=monaco">Monaco</a>.</p><p>Endre <a href="./Special:Preferences">innstillingene dine</a> for å bruke dette verktøyet.</p>',
+	'widgetdashboard-description' => 'Denne siden fungerer som et sted å teste hvordan dine skjermelement virker. For å se en liste over alle tilgjengelige skjermelement, gå til [[Special:Widgets]].',
 );
 
 /** Occitan (Occitan)
@@ -92,6 +109,13 @@ $messages['pms'] = array(
 $messages['ru'] = array(
 	'widgetdashboard-wrong-skin' => '<p>Панель виджетов лучше всего работает с новыми темами оформления, например, <a href="./Special:WidgetDashboard?useskin=monaco">Monaco</a>.</p><p>Пожалуйста, сделайти изменения в <a href="./Special:Preferences">ваших настройках</a> для использования этого инструмента.</p>',
 	'widgetdashboard-description' => 'Эта страница служит местом проверки работы ваших виджетов. Чтобы увидеть список всех доступных виджетов перейдите на страницу [[Special:Widgets]].',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'widgetdashboard-description' => 'Ова страница служи да би могли да проверите како раде ваше алатке. Да би видели све расположиве алатке идите на [[Special:Widgets]].',
 );
 
 /** Ukrainian (Українська)

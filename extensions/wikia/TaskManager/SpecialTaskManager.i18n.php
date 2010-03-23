@@ -163,3 +163,11 @@ $messages['ru'] = array(
 	'taskmanager_tasklist' => 'Вернуться к списку заданий',
 );
 
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'taskmanager_title' => 'покажи и уради нешто са позадинским задацима',
+	'taskmanager_tasklist' => 'Повратак на списак задатака',
+);
+

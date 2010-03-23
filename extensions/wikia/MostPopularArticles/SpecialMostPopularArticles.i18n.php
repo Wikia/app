@@ -106,6 +106,13 @@ $messages['ja'] = array(
 	'mostpopulararticles' => '人気のあるページ（データベースより）',
 );
 
+/** Khmer (ភាសាខ្មែរ)
+ * @author គីមស៊្រុន
+ */
+$messages['km'] = array(
+	'mostpopulararticles' => 'អត្ថបទពេញនិយមបំផុត (ដកស្រង់ពីមូលដ្ឋានទិន្នន័យ)',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -188,6 +195,13 @@ $messages['ru'] = array(
  */
 $messages['sr-ec'] = array(
 	'mostpopulararticles' => 'Најпопуларнији чланци  (према бази података)',
+);
+
+/** Sundanese (Basa Sunda)
+ * @author Kandar
+ */
+$messages['su'] = array(
+	'mostpopulararticles' => 'Artikel pangpolulérna (ti pangkalan data)',
 );
 
 /** Swedish (Svenska)

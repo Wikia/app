@@ -311,6 +311,27 @@ Groet, Wikia
  * @author Nghtwlkr
  */
 $messages['no'] = array(
+	'tog-watchlistdigest' => 'Send meg en e-post med et ukentlig sammendrag av overvåkningslisten min',
+	'tog-watchlistdigestclear' => 'Marker alle sider fra dette ukentlige sammendraget som besøkt',
+	'globalwatchlist-see-more' => 'Sjekk din lokale overvåkningsliste for flere endringer',
+	'globalwatchlist-digest-email-subject' => 'Ukentlig sammendrag',
+	'globalwatchlist-digest-email-body' => 'Kjære $1,
+
+Dette er en liste over sider på din Wikiaovervåkningsliste som har blitt endret siden du sist besøkte dem.
+
+$2
+
+
+Dette er en liste over bloggsider på din Wikiaovervåkningsliste som har blitt endret eller kommentert siden du sist besøkte dem.
+
+$3
+
+Besøk dem og rediger ofte...
+
+Wikia
+
+* For å endre innstillingene dine for overvåkningslistevarsel, besøk http://www.wikia.com/wiki/Special:Preferences
+* For å markere alle sider fra dette ukentlige sammendraget, se valgene i «Overvåkningsliste»-fanen på siden for dine innstillinger',
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|kommentar|kommentarer}})',
 	'globalwatchlist-no-page-found' => 'Ingen side funnet.',
 	'globalwatchlist-no-blog-page-found' => 'Ingen bloggside funnet.',
@@ -412,6 +433,8 @@ Wikia
  * @author Verlor
  */
 $messages['sr-ec'] = array(
+	'globalwatchlist-digest-email-subject' => 'Седмични преглед',
 	'globalwatchlist-no-page-found' => 'Није нађена страница',
+	'globalwatchlist-no-blog-page-found' => 'Није нађена блог страница',
 );
 

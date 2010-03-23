@@ -57,14 +57,24 @@ Desexa ir á [[{{MediaWiki:Mainpage}}|páxina principal]] ou quizais a unha [[Sp
  * @author Michawiki
  */
 $messages['hsb'] = array(
-	'outbound-screen-login-text' => '<a href="$1">Załož konto</a> abo <a href="$2">přizjew so do swojeho eksistowaceho konta</a>, zo by tutu stronu přichodnje přeskočił',
+	'outbound-screen-login-text' => '[[Special:UserLogin/signup|Załož nowe konto]] abo [[Special:UserLogin|přizjew so do swojeho eksistowaceho konta]], zo by tutu stronu přichodnje přeskočił',
+	'outbound-screen-already-logged-in-no-link' => 'Žadyn cil nastajeny.
+Tu njeje ničo widźeć!
+
+Chceće k [[{{MediaWiki:Mainpage}}|hłownej stronje]] abo snano k [[Special:Random|připadnej stronje]] hić?',
+	'outbound-screen-you-are-leaving' => 'Wopušćeće nětko Wikiju.',
 );
 
 /** Hungarian (Magyar)
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
-	'outbound-screen-login-text' => '<a href="$1">Felhasználói fiók létrehozása</a>, vagy <a href="$2">bejelentkezés a meglevőbe</a>, hogy átugord ezt a lapot a jövőben',
+	'outbound-screen-login-text' => '[[Special:UserLogin/signup|Hozz létre új felhasználói fiókot]], vagy [[Special:UserLogin|jelentkezz be a meglevőbe]], hogy átugord ezt a lapot a jövőben.',
+	'outbound-screen-already-logged-in-no-link' => 'Nincs cél megadva.
+Itt nincs semmi látnivaló!
+
+Szeretnél a [[{{MediaWiki:Mainpage}}|kezdőlapra]] vagy [[Special:Random|egy lapra találomra]] továbblépni?',
+	'outbound-screen-you-are-leaving' => 'Épp elhagyod a Wikia oldalait.',
 );
 
 /** Interlingua (Interlingua)
@@ -116,6 +126,11 @@ Wilt u naar de [[{{MediaWiki:Mainpage}}|hoofdpagina]] gaan, of wellicht naar een
  */
 $messages['no'] = array(
 	'outbound-screen-login-text' => '[[Special:UserLogin/signup|Opprett en ny brukerkonto]] eller [[Special:UserLogin|logg inn til din eksisterende brukerkonto]] for å hoppe over denne siden i fremtiden.',
+	'outbound-screen-already-logged-in-no-link' => 'Det er ikke satt noe mål.
+Det er ingenting å se her.
+
+Vil du gå til [[{{MediaWiki:Mainpage}}|Hovedsiden]] eller kanskje en [[Special:Random|tilfeldig side]]?',
+	'outbound-screen-you-are-leaving' => 'Du forlater nå Wikia.',
 );
 
 /** Occitan (Occitan)

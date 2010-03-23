@@ -261,8 +261,11 @@ $messages['diq'] = array(
 	'titleedit' => 'Bıvurne',
 );
 
-/** Lower Sorbian (Dolnoserbski) */
+/** Lower Sorbian (Dolnoserbski)
+ * @author Michawiki
+ */
 $messages['dsb'] = array(
+	'titleedit-desc' => 'Pśidawa tłocašk za wobźěłowanje titela na zachopjeńku bokow',
 	'titleedit' => 'wobźěłaś',
 );
 
@@ -281,8 +284,11 @@ $messages['ee'] = array(
 	'titleedit' => 'Trɔ asi le eŋu',
 );
 
-/** Greek (Ελληνικά) */
+/** Greek (Ελληνικά)
+ * @author Crazymadlover
+ */
 $messages['el'] = array(
+	'titleedit-desc' => 'Προσθέτει το κουμπί Επεξεργασία τίτλου στην κορυφή των σελίδων',
 	'titleedit' => 'Επεξεργασία',
 );
 
@@ -309,8 +315,11 @@ $messages['et'] = array(
 	'titleedit' => 'redigeeri',
 );
 
-/** Basque (Euskara) */
+/** Basque (Euskara)
+ * @author An13sa
+ */
 $messages['eu'] = array(
+	'titleedit-desc' => 'Izenburua aldatzeko botoia gehitzen du orrialdearen goialdean',
 	'titleedit' => 'Aldatu',
 );
 
@@ -435,8 +444,11 @@ $messages['gu'] = array(
 	'titleedit' => 'ફેરફાર કરો',
 );
 
-/** Manx (Gaelg) */
+/** Manx (Gaelg)
+ * @author MacTire02
+ */
 $messages['gv'] = array(
+	'titleedit-desc' => 'Cur cramman reaghey enmys lesh baare duillagyn',
 	'titleedit' => 'Reaghey',
 );
 
@@ -470,8 +482,11 @@ $messages['hr'] = array(
 	'titleedit' => 'Uredi',
 );
 
-/** Upper Sorbian (Hornjoserbsce) */
+/** Upper Sorbian (Hornjoserbsce)
+ * @author Michawiki
+ */
 $messages['hsb'] = array(
+	'titleedit-desc' => 'Přidawa tłóčatko za wobdźěłowanje titula na započatku strony',
 	'titleedit' => 'wobdźěłać',
 );
 
@@ -609,7 +624,7 @@ $messages['krj'] = array(
 	'titleedit' => 'Iislan',
 );
 
-/** Ripoarisch (Ripoarisch) */
+/** Colognian (Ripoarisch) */
 $messages['ksh'] = array(
 	'titleedit' => 'Ändere',
 );
@@ -950,8 +965,11 @@ $messages['ps'] = array(
 	'titleedit' => 'سمون',
 );
 
-/** Portuguese (Português) */
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
 $messages['pt'] = array(
+	'titleedit-desc' => 'Adiciona no topo das páginas um botão para editar o título',
 	'titleedit' => 'Editar',
 );
 
@@ -974,7 +992,7 @@ $messages['rif'] = array(
 	'titleedit' => 'Ẓṛeg',
 );
 
-/** Rhaeto-Romance (Rumantsch) */
+/** Romansh (Rumantsch) */
 $messages['rm'] = array(
 	'titleedit' => 'Editar',
 );
@@ -1101,6 +1119,7 @@ $messages['sq'] = array(
  * @author Verlor
  */
 $messages['sr-ec'] = array(
+	'titleedit-desc' => 'Додаје дугме за уређивање наслова на врх стране',
 	'titleedit' => 'уреди',
 );
 
@@ -1119,13 +1138,19 @@ $messages['stq'] = array(
 	'titleedit' => 'Siede beoarbaidje',
 );
 
-/** Sundanese (Basa Sunda) */
+/** Sundanese (Basa Sunda)
+ * @author Kandar
+ */
 $messages['su'] = array(
+	'titleedit-desc' => 'Nambahkeun tombol robah judul kana punclut kaca',
 	'titleedit' => 'Édit',
 );
 
-/** Swedish (Svenska) */
+/** Swedish (Svenska)
+ * @author Sertion
+ */
 $messages['sv'] = array(
+	'titleedit-desc' => 'Lägger till en knapp längst upp på sidan för att ändra sidans titel',
 	'titleedit' => 'Redigera',
 );
 
@@ -1149,8 +1174,11 @@ $messages['tcy'] = array(
 	'titleedit' => 'ಸಂಪಾದನೆ ಮಲ್ಪುಲೆ(Edit this page)',
 );
 
-/** Telugu (తెలుగు) */
+/** Telugu (తెలుగు)
+ * @author Ravichandra
+ */
 $messages['te'] = array(
+	'titleedit-desc' => 'పుట పైభాగంలో శీర్షిక దిద్దుబాటు బటన్ ను చేరుస్తుంది',
 	'titleedit' => 'మార్చు',
 );
 
@@ -1315,7 +1343,7 @@ $messages['yo'] = array(
 	'titleedit' => 'Àtúnṣe',
 );
 
-/** Yue (粵語) */
+/** Cantonese (粵語) */
 $messages['yue'] = array(
 	'titleedit' => '編輯',
 );

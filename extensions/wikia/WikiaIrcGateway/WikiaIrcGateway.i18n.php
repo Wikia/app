@@ -65,6 +65,7 @@ $messages['es'] = array(
  */
 $messages['eu'] = array(
 	'ircgate-username' => 'Lankide izena:',
+	'ircgate-channel' => 'Kanala:',
 );
 
 /** Finnish (Suomi)
@@ -168,6 +169,14 @@ $messages['pms'] = array(
 $messages['pt-br'] = array(
 	'ircgate-username' => 'Nome de usuário:',
 	'ircgate-channel' => 'Canal:',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'ircgate-username' => "Nome de l'utende:",
+	'ircgate-channel' => 'Canale:',
 );
 
 /** Russian (Русский)

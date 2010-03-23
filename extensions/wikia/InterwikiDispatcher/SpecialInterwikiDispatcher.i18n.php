@@ -33,9 +33,11 @@ $messages['af'] = array(
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
+ * @author Wizardist
  */
 $messages['be-tarask'] = array(
 	'interwikidispatcher' => 'Дыспэтчар інтэрвікі',
+	'interwikidispatcher-desc' => 'Вырашае інтэрвікі-спасылкі для зьмяншэньня перанакіраваньняў Apache',
 );
 
 /** Breton (Brezhoneg)
@@ -75,7 +77,8 @@ $messages['gl'] = array(
  * @author Michawiki
  */
 $messages['hsb'] = array(
-	'interwikidispatcher' => 'InterwikiDispatcher',
+	'interwikidispatcher' => 'Interwiki dispatcher',
+	'interwikidispatcher-desc' => 'Rozpušća mjezyrěčne wotkazy, zo bychu so dalesposrědkowanja Apache redukowali',
 );
 
 /** Hungarian (Magyar)
@@ -155,5 +158,12 @@ $messages['pt-br'] = array(
 $messages['ru'] = array(
 	'interwikidispatcher' => 'Интервики-диспетчер',
 	'interwikidispatcher-desc' => 'Разрешает интервики ссылки для сокращения перенаправлений Apache',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'interwikidispatcher-desc' => 'Решава међувики везе, да би смањило Апаш преусмерења',
 );
 

@@ -16,9 +16,11 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author EugeneZelenko
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'tagsreportgo' => '{{Identical|Show}}',
 	'tagsreportpagesfound' => 'Needs plural support on "$1 pages"',
 	'tagsreportgenerated' => 'If $1 is a time stamp, split date and time.',
 );
@@ -34,6 +36,13 @@ $messages['af'] = array(
 	'tagsreportmainnspace' => 'Hoofnaamruimte',
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|bladsy|bladsye}})',
 	'tagsreportgenerated' => 'Gegenereer op $1',
+);
+
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'tagsreportgo' => 'Паказаць',
 );
 
 /** Breton (Brezhoneg)
@@ -189,10 +198,15 @@ $messages['nl'] = array(
  * @author Nghtwlkr
  */
 $messages['no'] = array(
+	'tagsreport' => 'Merkelapprapport',
+	'tagsreporttitle' => 'Merkelapprapport',
+	'tagsreportselecttag' => 'Velg merkelapp:',
 	'tagsreportgo' => 'Vis',
+	'tagsreportnotspecify' => 'Du har ikke valgt noen spesialmerkelapp ennå',
 	'tagsreportnoresults' => 'Ingen resultat funnet',
 	'tagsreportmainnspace' => 'Hoved',
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|side|sider}})',
+	'tagsreportpagesfound' => 'Fant <strong>$1</strong> sider som inneholder en spesialmerkelapp (dpl, youtube, osv.)',
 	'tagsreportgenerated' => 'Generert den $1',
 );
 
@@ -249,7 +263,9 @@ $messages['ru'] = array(
  * @author Verlor
  */
 $messages['sr-ec'] = array(
+	'tagsreportgo' => 'покажи',
 	'tagsreportnoresults' => 'Нема резултата претраге',
+	'tagsreportmainnspace' => 'Главно',
 );
 
 /** Ukrainian (Українська)

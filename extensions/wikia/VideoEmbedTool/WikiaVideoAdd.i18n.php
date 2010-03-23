@@ -14,6 +14,13 @@ $messages['en'] = array(
 	'wva-notallowed' => 'You cannot insert videos on this wiki.',
 );
 
+/** Message documentation (Message documentation)
+ * @author EugeneZelenko
+ */
+$messages['qqq'] = array(
+	'wva-add' => '{{Identical|Add}}',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -27,6 +34,22 @@ $messages['af'] = array(
 	'wva-title' => "Voeg vinnig 'n video vanaf URL by",
 	'wva-notlogged' => "U moet aanteken of registreer om video's by te kan voeg.",
 	'wva-notallowed' => "U kan nie video's op hierdie wiki byvoeg nie.",
+);
+
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'wva-success' => 'Старонка відэа $1 пасьпяхова дададзеная.',
+	'wva-success-replaced' => 'Старонка відэа $1 пасьпяхова замененая.',
+	'wva-failure' => 'Калі ласка, падайце слушныя парамэтры.',
+	'wva-name' => 'Увядзіце назву:',
+	'wva-url' => 'Увядзіце URL-адрас:',
+	'wva-add' => 'Дадаць',
+	'wva-title' => 'Хуткае даданьне відэа па URL-адрасу',
+	'wva-notlogged' => 'Каб дадаць відэа, Вам неабходна ўвайсьці ў сыстэму альбо зарэгістравацца.',
+	'wva-notallowed' => 'Вы ня можаце устаўляць відэа ў {{GRAMMAR:месны|{{SITENAME}}}}.',
 );
 
 /** Breton (Brezhoneg)
@@ -289,6 +312,17 @@ $messages['pt-br'] = array(
 	'wva-title' => 'Adicionar Vídeo Rapidamente Via URL',
 	'wva-notlogged' => 'Você precisa se autenticar ou registrar para inserir vídeos.',
 	'wva-notallowed' => 'Você não pode inserir vídeos nesta wiki.',
+);
+
+/** Romanian (Română)
+ * @author Misterr
+ */
+$messages['ro'] = array(
+	'wva-success' => 'Video-ul $1 a fost adăugat cu succes',
+	'wva-url' => 'Înserează adres URL a video-ului',
+	'wva-add' => 'Adaugă video',
+	'wva-notlogged' => 'Trebuie să fii logat sau înregistrat pentru a adăuga video-uri',
+	'wva-notallowed' => 'Nu poţi însera video-uri în acest wiki',
 );
 
 /** Russian (Русский)

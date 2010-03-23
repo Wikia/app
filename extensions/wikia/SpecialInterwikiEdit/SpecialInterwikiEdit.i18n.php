@@ -130,6 +130,17 @@ $messages['ja'] = array(
 	'iwedit-success' => '<p>リンクの作成に成功しました。</p>',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'iwedit-title' => 'Interwiki Editeur',
+	'iwedit-all-interwikis' => 'all Interwikien',
+	'iwedit-update' => 'Aktualiséieren',
+	'iwedit-error' => '<p>Et ass e Feeler geschitt.</p>',
+	'iwedit-success' => '<p>De Linkg gouf ugeluecht</p>',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -204,6 +215,21 @@ $messages['ru'] = array(
  * @author Verlor
  */
 $messages['sr-ec'] = array(
+	'iwedit-title' => 'Међувики Уређивач',
+	'iwedit-language-interwikis' => 'само језички међувики',
+	'iwedit-all-interwikis' => 'сви међувикији',
 	'iwedit-error' => '<p>Догодила се грешка.</p>',
+);
+
+/** Swedish (Svenska)
+ * @author Sertion
+ */
+$messages['sv'] = array(
+	'iwedit-title' => 'Interwikiredigerare',
+	'iwedit-language-interwikis' => 'bara språkinterwikis',
+	'iwedit-all-interwikis' => 'alla interwikis',
+	'iwedit-update' => 'Uppdatera',
+	'iwedit-error' => '<p>Ett fel uppstod.</p>',
+	'iwedit-success' => '<p>Länk skapad.</p>',
 );
 

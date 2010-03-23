@@ -187,6 +187,29 @@ $messages['ia'] = array(
 	'protectsite-unprotect' => 'Disproteger',
 );
 
+/** Japanese (日本語)
+ * @author Tommy6
+ */
+$messages['ja'] = array(
+	'protectsite' => 'サイトの保護',
+	'protectsite-title' => 'サイト保護の設定',
+	'protectsite-allowall' => '全利用者',
+	'protectsite-allowusersysop' => '登録利用者および管理者',
+	'protectsite-allowsysop' => '管理者のみ',
+	'protectsite-createaccount' => '新規アカウント作成を許可する利用者グループ',
+	'protectsite-createpage' => 'ページ作成を許可する利用者グループ',
+	'protectsite-edit' => '編集を許可する利用者グループ',
+	'protectsite-move' => 'ページの移動を許可する利用者グループ',
+	'protectsite-upload' => 'ファイルのアップロードを許可する利用者グループ',
+	'protectsite-timeout' => '期間:',
+	'protectsite-timeout-error' => "'''期間設定が不適切です'''",
+	'protectsite-maxtimeout' => '最大:',
+	'protectsite-comment' => '保護の理由:',
+	'protectsite-ucomment' => '保護解除の理由:',
+	'protectsite-protect' => '保護',
+	'protectsite-unprotect' => '保護解除',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -346,6 +369,9 @@ $messages['sr-ec'] = array(
 	'protectsite-allowusersysop' => 'Регистровани корисници и Администратори',
 	'protectsite-allowsysop' => 'Само администратори',
 	'protectsite-createpage' => 'Дозволи стварање страна од',
+	'protectsite-edit' => 'Дозволи уређивање страна од стране',
+	'protectsite-move' => 'Дозволи преусмеравање страна од стране',
+	'protectsite-timeout' => 'Време истекло (тајмаут)',
 	'protectsite-maxtimeout' => 'Максимум:',
 	'protectsite-comment' => 'Коментар:',
 	'protectsite-until' => 'Заштићена јединица',

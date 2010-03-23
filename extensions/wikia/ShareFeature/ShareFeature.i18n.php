@@ -180,6 +180,24 @@ $messages['ru'] = array(
 	'sf-link-tooltip' => 'Поделиться ссылкой на статью с друзьями',
 );
 
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'sf-link' => 'Подели овај чланак',
+	'sf-link-popup' => 'Подели овај чланак другима',
+	'sf-link-tooltip' => 'Подели овај чланак пријатељима',
+);
+
+/** Swedish (Svenska)
+ * @author Sertion
+ */
+$messages['sv'] = array(
+	'sf-link' => 'Dela den här artikeln',
+	'sf-link-popup' => 'Dela den här artikeln',
+	'sf-link-tooltip' => 'Dela den här artikeln med dina vänner',
+);
+
 /** Turkish (Türkçe)
  * @author Joseph
  */

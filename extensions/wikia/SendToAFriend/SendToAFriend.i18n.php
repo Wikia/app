@@ -205,6 +205,22 @@ Ma soñj deoc'h ez eo dre fazi, roit dimp da c'houzout, mar plij, war support@wi
 	'stf_select_friends' => 'Diuzañ Mignoned :',
 );
 
+/** Welsh (Cymraeg)
+ * @author Lloffiwr
+ */
+$messages['cy'] = array(
+	'stf_button' => 'Anfoner yr erthygl hon at ffrind',
+	'stf_subject' => 'Mae $2 wedi anfon erthygl o $1 atoch!',
+	'stf_error' => 'Cafwyd gwall wrth ddanfon yr e-bost.',
+	'stf_error_name' => 'Wnaethoch chi ddim rhoi eich enw.',
+	'stf_error_from' => 'Wnaethoch chi ddim rhoi eich cyfeiriad e-bost.',
+	'stf_frm1' => 'Eich cyfeiriad e-bost:',
+	'stf_msg_label' => "Y neges i'w hanfon",
+	'stf_name_label' => 'Eich enw',
+	'stf_email_label' => 'Eich cyfeiriad e-bost',
+	'stf_sending' => 'Arhoswch ...',
+);
+
 /** German (Deutsch) */
 $messages['de'] = array(
 	'invitespecialpage' => 'Lade Freunde zu Wikia ein',
@@ -263,6 +279,15 @@ Wenn du glaubst, dass dieses Angebot missbraucht wird, teile uns dies bitte unte
 	'stf_instructions' => '1. Freunde auswählen.|2. "$1" klicken',
 	'stf_select_all' => 'Alle auswählen',
 	'stf_select_friends' => 'Freunde auswählen:',
+);
+
+/** Greek (Ελληνικά)
+ * @author Crazymadlover
+ * @author Omnipaedista
+ */
+$messages['el'] = array(
+	'stf_frm4_cancel' => 'Ακύρωση',
+	'stf_message' => 'Μήνυμα',
 );
 
 /** Spanish (Español)
@@ -1104,7 +1129,10 @@ $2
  */
 $messages['sr-ec'] = array(
 	'invitespecialpage' => 'пОзови своје пријатеље да се придруже Викији',
+	'sendtoafriend-desc' => '[Special:InviteSpecialPage|Позови пријатеље да се придруже викији]]',
+	'sendtoafriend-button-desc' => 'Показује "Пошаљи пријатељу" дугме на страницама',
 	'stf_button' => 'Пошаљи овај чланак пријатељу',
+	'stf_after_reg' => '[Special:InviteSpecialPage|Позови пријатеља да се придружи викији!]]',
 	'stf_subject' => '$2 вам је послао чланак од $1!',
 	'stf_confirm' => 'Порука послана! Позивате друге!',
 	'stf_error' => 'Грешка при слању е-поште',
@@ -1112,20 +1140,41 @@ $messages['sr-ec'] = array(
 	'stf_error_from' => 'Нисте дали своју адресу е-поште',
 	'stf_error_to' => 'Нисте означили адресу е-поште вашег пријатеља',
 	'stf_frm1' => 'Ваша адреса е-поште',
+	'stf_frm2' => 'Адресе е-поште (више од једне? Раздвојите их зарезом)',
 	'stf_msg_label' => 'Порука коју треба послати',
 	'stf_name_label' => 'Ваше име',
 	'stf_email_label' => 'Ваш мејл',
+	'stf_frm3_send' => 'Здраво!
+
+$1 мисли да би ти желео ову страну са Викије!
+
+$2
+
+Дођи и види!',
 	'stf_frm4_send' => 'Пошаљи',
 	'stf_frm4_cancel' => 'Одустани',
 	'stf_frm4_invite' => 'ПОшаљи позив!',
+	'stf_multiemail' => 'Пошаљи ово на више пошиљалаца?',
+	'stf_frm6' => 'Затвори овај прозор',
+	'stf_abuse' => 'Ову е-пошту послао је  $1 преко Викије-
+Ако мислите да је погрешно послано, можете да нам дате то до знања на support@wikia.com.',
+	'stf_ctx_check' => 'Провери контакте',
+	'stf_ctx_invalid' => 'Корисничко име или лозинка коју сте унели није исправна. Молимо покушајте поново!',
 	'stf_sending' => 'Молим сачекајте ...',
 	'stf_email_sent' => 'Пошаљи потврду',
+	'stf_back_to_article' => 'натраг на чланак',
 	'stf_most_popular' => 'Најпопуларнији чланци на $1:',
+	'stf_choose_from_existing' => 'Изаберите из ваших постојећих контаката:',
+	'stf_add_emails' => 'Додај адресу е-поште',
 	'stf_your_login' => 'Ваше корисничко име (логин)',
 	'stf_your_password' => 'Ваша лозинка',
 	'stf_your_name' => 'Ваше име',
 	'stf_your_address' => 'Адреса е-поште',
+	'stf_need_approval' => 'Не шаље се е.пошта без вашег одобрења',
 	'stf_message' => 'Порука',
+	'stf_instructions' => '1. Изаберите пријатеље.|2. Кликните "$1"',
+	'stf_select_all' => 'Изабери све',
+	'stf_select_friends' => 'Означи пријатеље',
 );
 
 /** Telugu (తెలుగు)

@@ -293,6 +293,9 @@ $messages['gl'] = array(
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
+	'lookupcontribsselectuser' => 'Felhasználó kiválasztása:',
+	'lookupcontribsdisplaymode' => 'Megjelenítési mód:',
+	'lookupcontribsgo' => 'Menj',
 	'lookupcontribswiki' => 'Wiki',
 	'lookupcontribswikidbname' => 'Adatbázisnév',
 	'lookupcontribswikiurl' => 'URL',
@@ -301,6 +304,7 @@ $messages['hu'] = array(
 	'lookupcontribsprevious' => 'előző',
 	'lookupcontribspageremoved' => 'Eltávolítva:',
 	'lookupcontribsrestore' => 'visszaállítás',
+	'lookupcontribsdiff' => 'eltérés',
 );
 
 /** Interlingua (Interlingua)
@@ -472,8 +476,26 @@ Controleer of u een tikfout hebt gemaakt in de gebruikersnaam.</p>',
  * @author Nghtwlkr
  */
 $messages['no'] = array(
+	'lookupcontribs' => 'Slå opp bidrag',
+	'lookupcontribstitle' => 'Slå opp bidrag',
+	'lookupcontribsrecentcontributions' => 'Nylige bidrag for $1',
+	'lookupcontribsfinalcontributions' => 'Siste bidrag for $1',
+	'lookupcontribshelp' => 'Denne spesialsiden kan brukes for å vise en brukers bidrag på flere Wikiaer.
+For å vise listen, oppgi brukernavnet under.',
+	'lookupcontribusernotspecify' => 'Du har ikke oppgitt en bruker ennå',
 	'lookupcontribsselectuser' => 'Velg bruker:',
+	'lookupcontribsselectfor' => 'Velg for:',
+	'lookupcontribsdisplaymode' => 'Visningsmodus:',
+	'lookupcontribsselectmodenormal' => 'nylige bidrag for den brukeren',
+	'lookupcontribsselectmodefinal' => 'siste bidrag for den brukeren',
+	'lookupcontribsselectmodeall' => 'alle bidrag for den brukeren',
+	'lookupcontribsfullurls' => 'hele nettadresser',
+	'lookupcontribslinks' => 'bidragslenker',
 	'lookupcontribsgo' => 'Gå',
+	'lookupcontribsinvaliduser' => '<p class="error">Bruker <b>«$1</b> finnes ikke.
+Sjekk oppgitt brukernavn for mulige skrivefeil.</p>',
+	'lookupcontribsinvalidviewmode' => '<p class="error"><b>«$1»</b> er ikke en gyldig visningsmodus.</p>',
+	'lookupcontribsinvalidmode' => '<p class="error"><b>«$1»</b> er ikke en gyldig modus.</p>',
 	'lookupcontribsselectwikis' => 'Velg wikier:',
 	'lookupcontribslistwikiainfo' => 'Liste over wikier der artikler ble redigert av <b>$1</b>',
 	'lookupcontribsnoresultfound' => 'Ingen resultat funnet!',
@@ -493,6 +515,7 @@ $messages['no'] = array(
 	'lookupcontribslog' => 'logg',
 	'lookupcontribshist' => 'historikk',
 	'lookupcontribsdiff' => 'forskjell',
+	'right-lookupcontribs' => 'Vis brukerens globale endringer',
 	'lookupcontribsshowpages' => 'Alle sider ($1 navnerom)',
 	'lookupcontribscontent' => 'innhold',
 );
@@ -580,15 +603,51 @@ $messages['roa-tara'] = array(
 
 /** Russian (Русский)
  * @author Lockal
+ * @author Александр Сигачёв
  */
 $messages['ru'] = array(
+	'lookupcontribs' => 'Просмотр вклада',
+	'lookupcontribstitle' => 'Просмотр вклада',
+	'lookupcontribsrecentcontributions' => 'Недавний вклад $1',
+	'lookupcontribsfinalcontributions' => 'Заключительный вклад $1',
+	'lookupcontribshelp' => 'Эта служебная страница может быть использована для отображения вклада участника в различных вики.
+Для вывода списка укажите имя участника ниже.',
+	'lookupcontribusernotspecify' => 'Вы ещё не указали участника',
 	'lookupcontribsselectuser' => 'Выберите участника:',
+	'lookupcontribsselectfor' => 'Выбор для:',
+	'lookupcontribsdisplaymode' => 'Режим отображения:',
+	'lookupcontribsselectmodenormal' => 'недавний вклад этого участника',
+	'lookupcontribsselectmodefinal' => 'окончательный вклад этого участника',
+	'lookupcontribsselectmodeall' => 'весь вклад этого участника',
 	'lookupcontribsfullurls' => 'полные URL-адреса',
+	'lookupcontribslinks' => 'ссылки на вклад',
+	'lookupcontribsgo' => 'Перейти',
+	'lookupcontribsinvaliduser' => '<p class="error">Участника <b>$1</b> не существует.
+Проверьте, нет ли опечаток в указанном ими участника.</p>',
+	'lookupcontribsinvalidviewmode' => '<p class="error"><b>«$1»</b> не является допустимым режимом.</p>',
+	'lookupcontribsinvalidmode' => '<p class="error"><b>«$1»</b> не является допустимым режимом. </p>',
+	'lookupcontribsselectwikis' => 'Выберите вики:',
+	'lookupcontribslistwikiainfo' => 'Список вики-сайтов, где <b>$1</b> редактировал статьи',
 	'lookupcontribsnoresultfound' => 'Ничего не найдено!',
+	'lookupcontribsinvalidresults' => 'Неверные результаты!',
 	'lookupcontribswiki' => 'Вики',
-	'lookupcontribswikidbname' => 'Имя БД',
+	'lookupcontribswikidbname' => 'Название БД',
+	'lookupcontribswikiurl' => 'URL',
+	'lookupcontribswikititle' => 'Название',
 	'lookupcontribscontribslink' => 'Ссылка на вклад',
+	'lookupcontribsdetails' => 'Подробнее о:',
 	'lookupcontribscontribs' => 'вклад',
+	'lookupcontribsnbrresult' => 'Количество результатов:',
+	'lookupcontribsnext' => 'след.',
+	'lookupcontribsprevious' => 'пред.',
+	'lookupcontribspageremoved' => 'Удалено:',
+	'lookupcontribsrestore' => 'восстановить',
+	'lookupcontribslog' => 'журнал',
+	'lookupcontribshist' => 'история',
+	'lookupcontribsdiff' => 'разн.',
+	'right-lookupcontribs' => 'просмотр глобальных правок участника',
+	'lookupcontribsshowpages' => 'Все страницы ($1 пространств имён)',
+	'lookupcontribscontent' => 'содержимое',
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
@@ -598,10 +657,18 @@ $messages['sr-ec'] = array(
 	'lookupcontribsselectuser' => 'Одабери корисника',
 	'lookupcontribsnoresultfound' => 'Нема резултата претраге',
 	'lookupcontribsinvalidresults' => 'Неправилан резултат',
+	'lookupcontribswiki' => 'Вики',
+	'lookupcontribswikidbname' => 'Име базе под.',
+	'lookupcontribswikiurl' => 'УРЛ',
 	'lookupcontribswikititle' => 'Наслов',
+	'lookupcontribsdetails' => 'Погледајте детаље за:',
 	'lookupcontribscontribs' => 'прилози',
 	'lookupcontribsnext' => 'следеће',
 	'lookupcontribsprevious' => 'Претходна',
+	'lookupcontribspageremoved' => 'уклоњено:',
+	'lookupcontribslog' => 'лог',
+	'lookupcontribshist' => 'ист',
+	'lookupcontribsdiff' => 'разл',
 	'lookupcontribscontent' => 'садржај',
 );
 

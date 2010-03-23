@@ -129,6 +129,16 @@ $messages['nl'] = array(
 	'searchranktracker-empty-list' => 'Er zijn op dit moment geen te volgen zoektermen.',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'searchranktracker-add-new-entry' => 'Legg til ny oppføring',
+	'searchranktracker-edit-entry' => 'Rediger oppføring',
+	'searchranktracker-page-name-required' => 'Sidenavn påkrevd',
+	'searchranktracker-serach-phrase-required' => 'Søkefrase påkrevd',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
@@ -167,5 +177,13 @@ $messages['ru'] = array(
 	'searchranktracker-page-name-required' => 'Требуется название страницы',
 	'searchranktracker-serach-phrase-required' => 'Требуется поисковая фраза',
 	'searchranktracker-empty-list' => 'В настоящее время нет поисковых фраз для отслеживания.',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'searchranktracker-page-name-required' => 'Тражи се име стране',
+	'searchranktracker-serach-phrase-required' => 'Тражи се претрага фразе',
 );
 

@@ -99,6 +99,7 @@ $messages['hsb'] = array(
 	'mostvisitedpages' => 'Najhusćišo wopytane strony',
 	'mostvisitedpagessearchtext' => 'Mjeno nastawka:',
 	'mostvisitedpagessearchbtn' => 'pytać',
+	'mostvisitedpageslatest' => 'w běhu {{PLURAL:$1|poslednjeje $1 mjeńšiny|poslednjeje $1 mjeńšinow|poslednich $1 mjeńšin|poslednich $1 mjeńšin}}',
 );
 
 /** Hungarian (Magyar)
@@ -137,6 +138,7 @@ $messages['lb'] = array(
 	'mostvisitedpages' => 'Am dackste besichte Säiten',
 	'mostvisitedpagessearchtext' => 'Numm vum Artikel:',
 	'mostvisitedpagessearchbtn' => 'sichen',
+	'mostvisitedpageslatest' => 'an de leschten $1 Minutten',
 );
 
 /** Macedonian (Македонски)
@@ -195,6 +197,7 @@ $messages['pms'] = array(
 	'mostvisitedpages' => 'Pàgine pi visità',
 	'mostvisitedpagessearchtext' => "Nòm ëd l'artìcol:",
 	'mostvisitedpagessearchbtn' => 'serca',
+	'mostvisitedpageslatest' => "ant j'ùltime $1 minute",
 );
 
 /** Pashto (پښتو)
@@ -218,11 +221,13 @@ $messages['pt-br'] = array(
 
 /** Russian (Русский)
  * @author Lockal
+ * @author Александр Сигачёв
  */
 $messages['ru'] = array(
 	'mostvisitedpages' => 'Наиболее часто посещаемые страницы',
 	'mostvisitedpagessearchtext' => 'Название статьи:',
 	'mostvisitedpagessearchbtn' => 'найти',
+	'mostvisitedpageslatest' => 'за последние $1 минут',
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
@@ -230,8 +235,19 @@ $messages['ru'] = array(
  */
 $messages['sr-ec'] = array(
 	'mostvisitedpages' => 'Најпосећеније стране',
+	'mostvisitedpagessearchtext' => 'Име чланака:',
 	'mostvisitedpagessearchbtn' => 'претрага',
 	'mostvisitedpageslatest' => 'последњих $1 минута',
+);
+
+/** Swedish (Svenska)
+ * @author Sertion
+ */
+$messages['sv'] = array(
+	'mostvisitedpages' => 'Sidor med flest besök',
+	'mostvisitedpagessearchtext' => 'Artikelns namn:',
+	'mostvisitedpagessearchbtn' => 'sök',
+	'mostvisitedpageslatest' => 'under de senaste $1 minuterna',
 );
 
 /** Ukrainian (Українська)

@@ -144,12 +144,15 @@ $messages['nl'] = array(
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
  * @author Nghtwlkr
  */
 $messages['no'] = array(
 	'search_wikipedia' => 'Søk i Wikipedia',
 	'previous' => 'forrige',
 	'research_no_results' => 'Ingen sider funnet. Vennligst søk på nytt.',
+	'research_wikipedia_title' => 'Gransk svaret ditt på Wikipedia',
+	'research_this' => 'Gransk dette',
 );
 
 /** Occitan (Occitan)
@@ -180,6 +183,17 @@ $messages['pms'] = array(
  */
 $messages['ps'] = array(
 	'previous' => 'پخوانی',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'search_wikipedia' => 'Ricerche de Uicchipèdie',
+	'previous' => 'precedende',
+	'research_no_results' => 'Nisciuna pàgene acchiate. Pe piacere cirche arrete.',
+	'research_wikipedia_title' => 'Cirche le resposte tune sus a Uicchipèdie',
+	'research_this' => 'Cerche quiste',
 );
 
 /** Russian (Русский)

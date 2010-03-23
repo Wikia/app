@@ -148,10 +148,24 @@ $messages['ru'] = array(
 	'staffpowers-ipblock-aborted' => 'Невозможно заблокировать сотрудника Wikia. Пожалуйста, воспользуйтесь [[Special:Contact]], чтобы сообщить о проблемах, связанных с нашими сотрудниками.',
 );
 
+/** Sundanese (Basa Sunda)
+ * @author Kandar
+ */
+$messages['su'] = array(
+	'staffpowers-ipblock-aborted' => 'Pagawé Wikia teu bisa dipeungpeuk. Mangga cobi saluran [[Special:Contact]] pikeun ngalaporkeun hal-hal anu tumali jeung pagawé.',
+);
+
 /** Swedish (Svenska)
  * @author Per
  */
 $messages['sv'] = array(
 	'staffpowers-ipblock-aborted' => 'Blockering av Wikiamedarbetare är inte möjligt. Vänligen använd [[Special:Contact|Kontakta]] för att rapportera problem med någon av våra medarbetare.',
+);
+
+/** Telugu (తెలుగు)
+ * @author Ravichandra
+ */
+$messages['te'] = array(
+	'staffpowers-ipblock-aborted' => 'వికియా సిబ్బందిని నిరోధించడం సాధ్యం కాదు.మా సిబ్బందితో సమస్యలను నివేదించడానికి దయచేసి  [[Special:Contact]] ను వాడండి.',
 );
 

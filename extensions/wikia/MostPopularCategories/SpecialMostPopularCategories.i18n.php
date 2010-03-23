@@ -19,6 +19,13 @@ $messages['af'] = array(
 	'mostpopularcategories' => 'Mees populêre kategorieë',
 );
 
+/** Araucanian (Mapudungun)
+ * @author Kaniw
+ */
+$messages['arn'] = array(
+	'mostpopularcategories' => 'Zoy ayvgelu xokiñ',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  */
@@ -172,6 +179,13 @@ $messages['ru'] = array(
  */
 $messages['sr-ec'] = array(
 	'mostpopularcategories' => 'Најпопуларније категорије',
+);
+
+/** Sundanese (Basa Sunda)
+ * @author Kandar
+ */
+$messages['su'] = array(
+	'mostpopularcategories' => 'Kategori pangpolulérna',
 );
 
 /** Swedish (Svenska)
