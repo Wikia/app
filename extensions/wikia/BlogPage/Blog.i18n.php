@@ -1,9 +1,7 @@
 <?php
-function efWikiaBlog() {
 
-	return array(
-	
-	'en' => array(
+$messages = array();
+$messages[ "en" ]  = array(
 		'blog_view_archive_link'  => 'View All',
 		'blog_by_user_category' => '$1 by User',
 		'blog_by' => 'by',
@@ -11,11 +9,11 @@ function efWikiaBlog() {
 		'blog_last_edited' => 'last edited',
 		'blog_created' => 'created',
 		'blog_new_articles' => 'New Articles',
-		'blog_popular_articles' => 'Don\'t Miss',		
-		'blog_inthenews' => 'In the News',			
-		'blog_comments_of_day' => 'Comments of the Day',			
-		'blog_author_title' => 'About the {{PLURAL:$1|Author|Authors}}',	
-		'blog_author_more_by' => 'More By $1',	
+		'blog_popular_articles' => 'Don\'t Miss',
+		'blog_inthenews' => 'In the News',
+		'blog_comments_of_day' => 'Comments of the Day',
+		'blog_author_title' => 'About the {{PLURAL:$1|Author|Authors}}',
+		'blog_author_more_by' => 'More By $1',
 		'blog_multiple_authors' => 'This article was written collaboratively by $1',
 		'blog-author-points'=>'$1 pts',
 		'blog-author-comments'=>'$1 {{PLURAL:$1|comment|comments}}',
@@ -27,8 +25,4 @@ function efWikiaBlog() {
 		'game_unit_picturegame_title'=>'Play the Picture Game',
 		'blog-recent-editors-message'=>'Make this page better by editing it.',
 		'blog-recent-voters-message'=>'If you like the article, vote for it.',
-		),
-	); 
-}
-
-?>
+);
