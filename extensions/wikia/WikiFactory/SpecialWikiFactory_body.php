@@ -167,6 +167,12 @@ class WikiFactoryPage extends SpecialPage {
 					if( sizeof(explode(".", $domain )) <= 2 && strlen( $domain ) > 0) {
 						$this->mDomain = $domain;
 						$domain = $domain.".wikia.com";
+					} else {
+						list( $code, $domain ) = explode(".", $domain, 2 );
+						if ( in_array( $code, array_keys( Language::getLanguageNames() ) ) ) {
+							$this->mDomain = $code.$domain;
+							$domain = sprintf("%s.%s.%s", $code, $domain, "wikia.com" );
+						}
 					}
 					$cityid = WikiFactory::DomainToId( $domain );
 				}
