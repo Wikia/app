@@ -291,17 +291,20 @@ function get_content($host)
   }
 
 
-  function getredir($log)
-  {
-    if($lastloc = substr($log, stringrpos($log, ' Location: http://')))
-    {
-      $start = stristr($lastloc, ' Location: http://');
-      $lline = substr($start, 18, strpos($start, "\n") - 18);
-      return uridomain($lline);
-    }
-
-    return "";
-  }
+	/**
+	 * check if theres location line in log stream
+	 */
+	function getredir( $log, $site ) {
+		if( $lastloc = substr( $log, stringrpos( $log, ' Location: http://') ) ) {
+			$start = stristr( $lastloc, ' Location: http://' );
+			$lline = substr( $start, 18, strpos( $start, "\n" ) - 18 );
+			$lline = uridomain( $lline );
+			if( strtolower( $lline ) !== strtolower( $site ) ) {
+				return $lline;
+			}
+		}
+		return "";
+	}
 
   function geterror($log)
   {
@@ -610,7 +613,7 @@ function get_wikitext($dbw, $site, $domsite)
       $verkauf = stristr($title, "zu verkaufen");
     }
 
-    $redir = getredir($locontent);
+    $redir = getredir( $locontent, $site );
     if(!$redir)
       $redir = $metaredir;
 
