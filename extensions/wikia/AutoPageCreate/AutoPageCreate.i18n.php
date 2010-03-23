@@ -8,6 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	"autopagecreate-empty" => "-",
 	"autopagecreate-newpage-notice-content"	=> "<p>'''This article is just starting. You can help by adding a sentence or a photo!'''</p>",
 	"autopagecreate-newpage-notice-talk"	=> "<p>'''This article is just starting. You can help by adding a sentence or a photo!'''</p>",
 	"autopagecreate-newpage-notice-user"	=> "<p>'''This article is just starting. You can help by adding a sentence or a photo!'''</p>",
