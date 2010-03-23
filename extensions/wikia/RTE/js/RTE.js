@@ -154,7 +154,7 @@ window.RTE = {
 		];
 
 		// Bartek - for RT #43217
-		if( WikiaEnableAutoPageCreate ) {
+		if( typeof WikiaEnableAutoPageCreate != "undefined" ) {
 			css.push( wgExtensionsPath + '/wikia/AutoPageCreate/AutoPageCreate.css' );
 		}
 
