@@ -34,7 +34,7 @@ $wgHooks['ComposeCommonBodyMail'][] = 'ArticleComment::ComposeCommonMail';
 # ActivityFeed
 $wgHooks['MyHome:BeforeStoreInRC'][] = 'ArticleCommentList::BeforeStoreInRC';
 # TOC
-$wgHooks['Parser::InjectTOCitem'][] = 'ArticleCommentList::InjectTOCitem';
+$wgHooks['Parser::InjectTOCitem'][] = 'ArticleCommentInit::InjectTOCitem';
 # omit captcha
 $wgHooks['ConfirmEdit::onConfirmEdit'][] = 'ArticleCommentList::onConfirmEdit';
 # redirect
@@ -67,12 +67,6 @@ class ArticleCommentInit {
 			if ( $wgEnableBlogArticles && in_array($wgTitle->getNamespace(), array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK)) ) {
 				self::$enable = false;
 			}
-
-			// Initialize only for allowed skins
-//			$allowedSkins = array('SkinMonaco');
-//			if(!in_array(get_class($wgUser->getSkin()), $allowedSkins)) {
-//				self::$enable = false;
-//			}
 
 			$action = $wgRequest->getVal('action', 'view');
 			if ($action == 'purge' && $wgUser->isAnon() && !$wgRequest->wasPosted()) {
@@ -141,6 +135,28 @@ class ArticleCommentInit {
 		}
 
 		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
+	/**
+	 * Hook
+	 *
+	 * @param Parser $rc -- instance of Parser class
+	 * @param Skin $sk -- instance of Skin class
+	 * @param string $toc -- HTML for TOC
+	 * @param array $sublevelCount -- last used numbers for each indentation
+	 *
+	 * @static
+	 * @access public
+	 *
+	 * @return true -- because it's a hook
+	 */
+	static function InjectTOCitem($parser, $sk, &$toc, &$sublevelCount) {
+		if (self::ArticleCommentCheck()) {
+			wfLoadExtensionMessages('ArticleComments');
+			$tocnumber = ++$sublevelCount[1];
+			$toc .= $sk->tocLine('article-comment-header', wfMsg('article-comments-toc-item'), $tocnumber, 1);
+		}
 		return true;
 	}
 }
@@ -1575,26 +1591,6 @@ class ArticleCommentList {
 		if (strpos($rcTitle, '/') !== false && strpos(end(explode('/', $rcTitle)), ARTICLECOMMENT_PREFIX) === 0) {
 			$data['articleComment'] = true;
 		}
-		return true;
-	}
-
-	/**
-	 * Hook
-	 *
-	 * @param Parser $rc -- instance of Parser class
-	 * @param Skin $sk -- instance of Skin class
-	 * @param string $toc -- HTML for TOC
-	 * @param array $sublevelCount -- last used numbers for each indentation
-	 *
-	 * @static
-	 * @access public
-	 *
-	 * @return true -- because it's a hook
-	 */
-	static function InjectTOCitem($parser, $sk, &$toc, &$sublevelCount) {
-		wfLoadExtensionMessages('ArticleComments');
-		$tocnumber = ++$sublevelCount[1];
-		$toc .= $sk->tocLine('article-comment-header', wfMsg('article-comments-toc-item'), $tocnumber, 1);
 		return true;
 	}
 
