@@ -80,8 +80,6 @@ class AdProviderDART implements iAdProvider {
 		$url .= $this->getProviderValues($slot);
 		$url .= $this->getArticleKV();
 		$url .= $this->getDomainKV($_SERVER['HTTP_HOST']);
-		$url .= 'AQ=@@WIKIA_AQ@@;'; // To be filled in from AdEngine.bucket via javascript
-		$url .= 'wkabkt=@@WIKIA_BUCKET@@;'; // To be filled in from AdEngine.bucket via javascript
 		$url .= 'pos=' . $slotname . ';';
 		$url .= $this->getKeywordsKV();
 		$url .= $this->getLocKV($slotname);
@@ -91,16 +89,13 @@ class AdProviderDART implements iAdProvider {
 		$url .= 'mtfIFPath=/extensions/wikia/AdEngine/;';  // http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=117857
 		// special "end" delimiter, this is for when we redirect ads to other places. Per Michael
 		$url .= 'endtag=$;';
-		$url .= "ord=@@WIKIA_RANDOM@@?"; // See note above, ord MUST be last. Also note that DART told us to put the ? at the end
+		$url .= "ord=" . mt_rand() . "?"; // See note above, ord MUST be last. Also note that DART told us to put the ? at the end
 
 		$out = "<!-- " . __CLASS__ . " slot: $slotname -->";
 		$out .= '<script type="text/javascript">/*<![CDATA[*/' . "\n";
 		// Ug. Heredocs suck, but with all the combinations of quotes, it was the cleanest way.
 		$out .= <<<EOT
 		dartUrl = "$url";
-		dartUrl = dartUrl.replace(/@@WIKIA_BUCKET@@/, AdEngine.bucketid || '');
-		dartUrl = dartUrl.replace(/@@WIKIA_AQ@@/, AdEngine.getMinuteTargeting());
-		dartUrl = dartUrl.replace(/@@WIKIA_RANDOM@@/, AdsCB);
 		document.write("<scr"+"ipt type='text/javascript' src='"+ dartUrl +"'><\/scr"+"ipt>");
 EOT;
 		$out .= "/*]]>*/</script>\n";
