@@ -9,11 +9,13 @@
 
 class SFTemplateField {
 	var $field_name;
+	var $value_labels;
 	var $label;
 	var $semantic_property;
 	var $field_type;
 	var $possible_values;
 	var $is_list;
+	var $input_type;
 
 	static function create($name, $label) {
 		$f = new SFTemplateField();
@@ -53,23 +55,27 @@ class SFTemplateField {
 		if ($proptitle === NULL)
 			return;
 		$store = smwfGetStore();
-		if (class_exists('SMWPropertyValue')) {
-			$types = $store->getPropertyValues($proptitle, SMWPropertyValue::makeUserProperty("Has type"));
-			// this returns an array of objects
-			$allowed_values = $store->getPropertyValues($proptitle, SMWPropertyValue::makeUserProperty("Allows value"));
-		} else {
-			$types = $store->getSpecialValues($proptitle, SMW_SP_HAS_TYPE);
-			// this returns an array of objects
-			$allowed_values = $store->getSpecialValues($proptitle, SMW_SP_POSSIBLE_VALUE);
-		}
+		$types = $store->getPropertyValues($proptitle, SMWPropertyValue::makeUserProperty("Has type"));
+		// this returns an array of objects
+		$allowed_values = $store->getPropertyValues($proptitle, SMWPropertyValue::makeUserProperty("Allows value"));
+		$label_formats = $store->getPropertyValues($proptitle, SMWPropertyValue::makeUserProperty("Has field label format"));
 		// TODO - need handling for the case of more than one type
 		if (count($types) > 0)
 			$this->field_type = $types[0]->getWikiValue();
 
 		foreach ($allowed_values as $value) {
 			// HTML-unencode each value
-			$this->possible_values[] = html_entity_decode($value->getWikiValue());
+			$wiki_value = html_entity_decode($value->getWikiValue());
+			$this->possible_values[] = $wiki_value;
+			if (count($label_formats) > 0) {
+				$label_format = $label_formats[0]->getWikiValue();
+				$prop_instance = SMWDataValueFactory::findTypeID($this->field_type);
+				$label_value = SMWDataValueFactory::newTypeIDValue($prop_instance, $wiki_value);
+				$label_value->setOutputFormat($label_format);
+				$this->value_labels[$wiki_value] = html_entity_decode($label_value->getWikiValue());
+			}
 		}
+
 		// HACK - if there were any possible values, set the field
 		// type to be 'enumeration', regardless of what the actual type is
 		if (count($this->possible_values) > 0) {

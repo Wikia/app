@@ -18,7 +18,8 @@ abstract class SF_Language {
 	// special properties and namespaces
 	protected $m_SpecialPropertyAliases = array(
 		'Has default form'	=> SF_SP_HAS_DEFAULT_FORM,
-		'Has alternate form'	=> SF_SP_HAS_ALTERNATE_FORM
+		'Has alternate form'	=> SF_SP_HAS_ALTERNATE_FORM,
+		'Creates pages with form'	=> SF_SP_CREATES_PAGES_WITH_FORM,
 	);
 
 	protected $m_NamespaceAliases = array(

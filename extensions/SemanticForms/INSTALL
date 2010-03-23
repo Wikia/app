@@ -1,4 +1,4 @@
-[[Semantic Forms 1.5.4]]
+[[Semantic Forms 1.9]]
 
 Contents:
 * Disclaimer
@@ -30,7 +30,7 @@ installation requirements.
       include_once('extensions/SemanticForms/includes/SF_Settings.php');
 
 '''Remark:'''  Semantic Forms creates an additional custom namespace, "Form"
-(see http://meta.wikimedia.org/wiki/Help:Custom_namespaces). If you have your
+(see http://www.mediawiki.org/wiki/Manual:Using_custom_namespaces). If you have your
 own custom namespaces, you have to set the parameter $sfgNamespaceIndex before
 including SF_Settings.php. See SF_Settings.php for more details.
 

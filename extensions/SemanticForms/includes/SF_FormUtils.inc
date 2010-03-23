@@ -70,13 +70,13 @@ END;
 	static function validationJavascript() {
 		global $sfgJSValidationCalls;
 
-		$form_errors_header = wfMsg('sf_formerrors_header');
-		$blank_error_str = wfMsg('sf_blank_error');
-		$bad_url_error_str = wfMsg('sf_bad_url_error');
-		$bad_email_error_str = wfMsg('sf_bad_email_error');
-		$bad_number_error_str = wfMsg('sf_bad_number_error');
-		$bad_integer_error_str = wfMsg('sf_bad_integer_error');
-		$bad_date_error_str = wfMsg('sf_bad_date_error');
+		$form_errors_header = Xml::escapeJsString(wfMsg('sf_formerrors_header'));
+		$blank_error_str = Xml::escapeJsString(wfMsg('sf_blank_error'));
+		$bad_url_error_str = Xml::escapeJsString(wfMsg('sf_bad_url_error'));
+		$bad_email_error_str = Xml::escapeJsString(wfMsg('sf_bad_email_error'));
+		$bad_number_error_str = Xml::escapeJsString(wfMsg('sf_bad_number_error'));
+		$bad_integer_error_str = Xml::escapeJsString(wfMsg('sf_bad_integer_error'));
+		$bad_date_error_str = Xml::escapeJsString(wfMsg('sf_bad_date_error'));
 
 		$javascript_text =<<<END
 
@@ -95,7 +95,7 @@ function validate_mandatory_field(field_id, info_id) {
 // is the first radiobutton, which has value of "None"
 function validate_mandatory_radiobutton(none_button_id, info_id) {
 	none_button = document.getElementById(none_button_id);
-	if (none_button.checked) {
+	if (none_button && none_button.checked) {
 		infobox = document.getElementById(info_id);
 		infobox.innerHTML = "$blank_error_str";
 		return false;
@@ -169,21 +169,12 @@ function validate_field_type(field_id, type, info_id) {
 				infobox.innerHTML = "$bad_email_error_str";
 				return false;
 			}
-		} else if (type == 'float') {
-			if (field.value.match(/^[\d\.,]+$/)) {
+		} else if (type == 'number') {
+			if (field.value.match(/^\-?[\d\.,]+$/)) {
 				return true;
 			} else {
 				infobox = document.getElementById(info_id);
 				infobox.innerHTML = "$bad_number_error_str";
-				return false;
-			}
-		} else if (type == 'integer') {
-			var num_regexp = /[0-9,]*/;
-			if (field.value.match(/^[\d,]+$/)) {
-				return true;
-			} else {
-				infobox = document.getElementById(info_id);
-				infobox.innerHTML = "$bad_integer_error_str";
 				return false;
 			}
 		} else if (type == 'date') {
@@ -193,8 +184,9 @@ function validate_field_type(field_id, type, info_id) {
 			if (day_field.value == '' || year_field.value == '') {
 				return true;
 			} else if (day_field.value.match(/^\d+$/) &&
-				day_field.value <= 31 &&
-				year_field.value.match(/^\d+$/)) {
+				day_field.value <= 31) {
+				// no year validation, since it can also include
+				// 'BC' and possibly other non-number strings
 				return true;
 			} else {
 				infobox = document.getElementById(info_id);
@@ -252,7 +244,7 @@ END;
 	}
 
 	static function instancesJavascript($using_choosers) {
-		$remove_text = wfMsg('sf_editdata_remove');
+		$remove_text = wfMsg('sf_formedit_remove');
 		$javascript_text =<<<END
 
 var num_elements = 0;
@@ -273,6 +265,8 @@ function addInstance(starter_div_id, main_div_id, tab_index)
 	// make internal ID unique for the relevant divs and spans, and replace
 	// the [num] index in the element names with an actual unique index
 	var children = new_div.getElementsByTagName('*');
+	// this array is needed to counteract an IE bug
+	var orig_children = starter_div.getElementsByTagName('*');
 	var x;
 	for (x = 0; x < children.length; x++) {
 		if (children[x].name)
@@ -282,6 +276,14 @@ function addInstance(starter_div_id, main_div_id, tab_index)
 				.replace(/input_/g, 'input_' + num_elements + '_')
 				.replace(/info_/g, 'info_' + num_elements + '_')
 				.replace(/div_/g, 'div_' + num_elements + '_');
+		if (children[x].href)
+			children[x].href = children[x].href
+				.replace(/input_/g, 'input_' + num_elements + '_');
+		// for dropdowns, copy over selectedIndex from original div,
+		// to get around a bug in IE
+		if (children[x].type == 'select-one') {
+			children[x].selectedIndex = orig_children[x].selectedIndex;
+		}
 	}
 	if (children[x]) {
 		//We clone the last object
@@ -292,7 +294,9 @@ function addInstance(starter_div_id, main_div_id, tab_index)
 				.replace(/div_/g, 'div_' + num_elements + '_');
 		}
 	}
-	//Since we clone the first object and we have uploadable field we must replace the input_ in order to let the printer return the value into the right field
+	// Since we clone the first object and we have uploadable field
+	// we must replace the input_ in order to let the printer return
+	// the value into the right field
 	//Create remove button
 	var remove_button = document.createElement('input');
 	remove_button.type = 'button';
@@ -404,11 +408,15 @@ END;
 	}
 
 	static function hiddenFieldHTML($input_name, $cur_value) {
-		$text =<<<END
-	<input type="hidden" name="$input_name" value="$cur_value" />
+		$input = self::buttonHTML(array(
+			'type' => 'hidden',
+			'name' => $input_name,
+			'value' => $cur_value,
+		));
+		return <<<END
+	$input
 
 END;
-		return $text;
 	}
 
 	/**
@@ -418,12 +426,8 @@ END;
 	static function unhandledFieldsHTML($template_contents) {
 		$text = "";
 		foreach ($template_contents as $key => $value) {
-			if ($key != '' && !is_numeric($key)) {
-				$text .=<<<END
-	<input type="hidden" name="_unhandled_$key" value="$value" />
-
-END;
-			}
+			if ($key != '' && !is_numeric($key))
+				$text .= self::hiddenFieldHTML("_unhandled_$key", $value);
 		}
 		return $text;
 	}
@@ -444,76 +448,87 @@ END;
 		return $additional_template_text;
 	}
 
-	static function summaryInputHTML($is_disabled, $label = null) {
+	static function summaryInputHTML($is_disabled, $label = null, $attr = array()) {
 		global $sfgTabIndex;
 
 		$sfgTabIndex++;
 		if ($label == null)
 			$label = wfMsg('summary');
-		$disabled_text = ($is_disabled) ? "disabled" : "";
+		$disabled_text = ($is_disabled) ? " disabled" : "";
+		$attr = Xml::expandAttributes($attr);
 		$text =<<<END
 	<span id='wpSummaryLabel'><label for='wpSummary'>$label</label></span>
-	<input tabindex="$sfgTabIndex" type='text' value="" name='wpSummary' id='wpSummary' maxlength='200' size='60' $disabled_text/>
+	<input tabindex="$sfgTabIndex" type='text' value="" name='wpSummary' id='wpSummary' maxlength='200' size='60'$disabled_text$attr/>
 
 END;
 		return $text;
 	}
 
-	static function minorEditInputHTML($is_disabled, $label = null) {
+	static function minorEditInputHTML($is_disabled, $label = null, $attr = array()) {
 		global $sfgTabIndex;
 
 		$sfgTabIndex++;
-		$disabled_text = ($is_disabled) ? "disabled" : "";
+		$disabled_text = ($is_disabled) ? " disabled" : "";
 		if ($label == null)
 			$label = wfMsgExt('minoredit', array('parseinline'));
 		$accesskey = wfMsg('accesskey-minoredit');
 		$tooltip = wfMsg('tooltip-minoredit');
+		$attr = Xml::expandAttributes($attr);
 		$text =<<<END
-	<input tabindex="$sfgTabIndex" type="checkbox" value="1" name="wpMinoredit" accesskey="$accesskey" id="wpMinoredit" $disabled_text/>
+	<input tabindex="$sfgTabIndex" type="checkbox" value="1" name="wpMinoredit" accesskey="$accesskey" id="wpMinoredit"$disabled_text$attr/>
 	<label for="wpMinoredit" title="$tooltip">$label</label>
 
 END;
 		return $text;
 	}
 
-	static function watchInputHTML($is_disabled, $label = null) {
+	static function watchInputHTML($is_disabled, $label = null, $attr = array()) {
 		global $sfgTabIndex, $wgUser, $wgTitle;
 
 		$sfgTabIndex++;
 		$checked_text = "";
-		$disabled_text = ($is_disabled) ? "disabled" : "";
+		$disabled_text = ($is_disabled) ? " disabled" : "";
 		// figure out if the checkbox should be checked - 
 		// this code borrowed from /includes/EditPage.php
 		if ($wgUser->getOption('watchdefault')) {
 			# Watch all edits
-			$checked_text = "checked";
+			$checked_text = " checked";
 		} elseif ($wgUser->getOption('watchcreations') && !$wgTitle->exists() ) {
 			# Watch creations
-			$checked_text = "checked";
+			$checked_text = " checked";
 		} elseif ($wgTitle->userIsWatching()) {
 			# Already watched
-			$checked_text = "checked";
+			$checked_text = " checked";
 		}
 		if ($label == null)
 			$label = wfMsgExt('watchthis', array('parseinline'));
 		$accesskey = htmlspecialchars(wfMsg('accesskey-watch'));
 		$tooltip = htmlspecialchars(wfMsg('tooltip-watch'));
+		$attr = Xml::expandAttributes($attr);
 		$text =<<<END
-	<input tabindex="$sfgTabIndex" type="checkbox" name="wpWatchthis" accesskey="$accesskey" id='wpWatchthis' $checked_text $disabled_text/>
+	<input tabindex="$sfgTabIndex" type="checkbox" name="wpWatchthis" accesskey="$accesskey" id='wpWatchthis'$checked_text$disabled_text$attr/>
 	<label for="wpWatchthis" title="$tooltip">$label</label>
 
 END;
 		return $text;
 	}
 
-	static function saveButtonHTML($is_disabled, $label = null) {
+	/**
+	 * Helper function to display a simple button
+	 */
+	static function buttonHTML($values) {
+		$button_html = Xml::element('input', $values, '');
+		return "		$button_html\n";
+	}
+
+	static function saveButtonHTML($is_disabled, $label = null, $attr = array()) {
 		global $sfgTabIndex;
 
 		$sfgTabIndex++;
 		$disabled_text = ($is_disabled) ? "disabled" : "";
 		if ($label == null)
 			$label = wfMsg('savearticle');
-		$temp = array(
+		$temp = $attr + array(
 			'id'        => 'wpSave',
 			'name'      => 'wpSave',
 			'type'      => 'submit',
@@ -523,18 +538,17 @@ END;
 			'title'     => wfMsg('tooltip-save'),
 			$disabled_text => '',
 		);
-		$text = "		" . wfElement('input', $temp, '') . "\n";
-		return $text;
+		return self::buttonHTML($temp);
 	}
 
-	static function showPreviewButtonHTML($is_disabled, $label = null) {
+	static function showPreviewButtonHTML($is_disabled, $label = null, $attr = array()) {
 		global $sfgTabIndex;
 
 		$sfgTabIndex++;
 		$disabled_text = ($is_disabled) ? "disabled" : "";
 		if ($label == null)
 			$label = wfMsg('showpreview');
-		$temp = array(
+		$temp = $attr + array(
 			'id'        => 'wpPreview',
 			'name'      => 'wpPreview',
 			'type'      => 'submit',
@@ -544,18 +558,17 @@ END;
 			'title'     => wfMsg('tooltip-preview'),
 			$disabled_text => '',
 		);
-		$text = "		" . wfElement('input', $temp, '') . "\n";
-		return $text;
+		return self::buttonHTML($temp);
 	}
 
-	static function showChangesButtonHTML($is_disabled, $label = null) {
+	static function showChangesButtonHTML($is_disabled, $label = null, $attr = array()) {
 		global $sfgTabIndex;
 
 		$sfgTabIndex++;
 		$disabled_text = ($is_disabled) ? "disabled" : "";
 		if ($label == null)
 			$label = wfMsg('showdiff');
-		$temp = array(
+		$temp = $attr + array(
 			'id'        => 'wpDiff',
 			'name'      => 'wpDiff',
 			'type'      => 'submit',
@@ -565,11 +578,10 @@ END;
 			'title'     => wfMsg('tooltip-diff'),
 			$disabled_text => '',
 		);
-		$text = "		" . wfElement('input', $temp, '') . "\n";
-		return $text;
+		return self::buttonHTML($temp);
 	}
 
-	static function cancelLinkHTML($is_disabled, $label = null) {
+	static function cancelLinkHTML($is_disabled, $label = null, $attr = array()) {
 		global $wgUser, $wgTitle;
 
 		$sk = $wgUser->getSkin();
@@ -577,22 +589,33 @@ END;
 			$label = wfMsgExt('cancel', array('parseinline'));
 		if ($wgTitle == null)
 			$cancel = '';
-		// if this is the special 'AddData' or 'EditData' page, get
-		// the form name, and link to 'AddPage' with that form name
-		elseif (($wgTitle->getText() == 'AddData' || $wgTitle->getText() == 'EditData')
+		// if we're on the special 'FormEdit' page, just send the user
+		// back to the previous page they were on
+		elseif ($wgTitle->getText() == 'FormEdit'
 			 && $wgTitle->getNamespace() == NS_SPECIAL) {
-			global $wgRequest;
-			$title_components = split('/', $wgRequest->data['title']);
-			if (count($title_components) >= 2) {
-				$add_page_title = Title::makeTitleSafe(NS_SPECIAL, 'AddPage');
-				$cancel = $sk->makeKnownLink($add_page_title->getPrefixedText() . '/' . $title_components[1], $label);
-			} else {
-				$cancel = '';
-			}
+			$cancel = '<a href="javascript:history.go(-1);">' . $label . '</a>';
 		} else
 			$cancel = $sk->makeKnownLink( $wgTitle->getPrefixedText(), $label);
 		$text = "		<span class='editHelp'>$cancel</span>\n";
 		return $text;
+	}
+	
+	static function runQueryButtonHTML($is_disabled = false, $label = null, $attr = array()) {
+		// is_disabled is currently ignored
+		global $sfgTabIndex;
+
+		$sfgTabIndex++;
+		$disabled_text = ($is_disabled) ? "disabled" : "";
+		if ($label == null)
+			$label = wfMsg('runquery');
+		return self::buttonHTML($attr + array(
+			'id'        => 'wpRunQuery',
+			'name'      => 'wpRunQuery',
+			'type'      => 'submit',
+			'tabindex'  => $sfgTabIndex,
+			'value'     => $label,
+			'title'     => $label,
+		));
 	}
 
 	// Much of this function is based on MediaWiki's EditPage::showEditForm()
@@ -651,6 +674,13 @@ END;
 		}
 	} 
 
+	/**
+	 * Used by 'RunQuery' page
+	 */
+	static function queryFormBottom() {
+		return self::runQueryButtonHTML( false );
+	}
+
 	static function getMonthNames() {
 		return array(
 			wfMsgForContent('january'),
@@ -669,17 +699,16 @@ END;
 	}
 
 	static function getShowFCKEditor() {
-		global $wgUser;
+		global $wgUser, $wgDefaultUserOptions;
 
 		$showFCKEditor = 0;
-		if ( !$wgUser->getOption( 'riched_start_disabled' ) ) {
+		if ( !$wgUser->getOption( 'riched_start_disabled', $wgDefaultUserOptions['riched_start_disabled'] ) ) {
 			$showFCKEditor += RTE_VISIBLE;
-
 		}
-		if ( $wgUser->getOption( 'riched_use_popup' ) ) {
+		if ( $wgUser->getOption( 'riched_use_popup', $wgDefaultUserOptions['riched_use_popup'] ) ) {
 			$showFCKEditor += RTE_POPUP;
 		}
-		if ( $wgUser->getOption( 'riched_use_toggle' ) ) {
+		if ( $wgUser->getOption( 'riched_use_toggle', $wgDefaultUserOptions['riched_use_toggle'] ) ) {
 			$showFCKEditor += RTE_TOGGLE_LINK;
 		}
 
@@ -889,10 +918,8 @@ function initEditor()
 	var toolbar = document.getElementById('free_text');
 	//show popup or toogle link
 	if (showFCKEditor & (RTE_POPUP|RTE_TOGGLE_LINK)){
-		//add new toolbar before wiki toolbar
 		var fckTools = document.createElement('div');
 		fckTools.setAttribute('id', 'fckTools');
-		toolbar.parentNode.insertBefore( fckTools, toolbar );
 		
 		var SRCtextarea = document.getElementById( "free_text" ) ;
 		if (showFCKEditor & RTE_VISIBLE) SRCtextarea.style.display = "none";
@@ -900,12 +927,17 @@ function initEditor()
 
 	if (showFCKEditor & RTE_TOGGLE_LINK)
 	{
-		fckTools.innerHTML='[<a class="fckToogle" id="toggle_wpTextbox1" href="javascript:void(0)" onclick="ToggleFCKEditor(\'toggle\',\'free_text\')">'+ editorLink +'</a>] ';
+		fckTools.innerHTML='[<a class="fckToogle" id="toggle_free_text" href="javascript:void(0)" onclick="ToggleFCKEditor(\'toggle\',\'free_text\')">'+ editorLink +'</a>] ';
 	}
 	if (showFCKEditor & RTE_POPUP)
 	{
 		var style = (showFCKEditor & RTE_VISIBLE) ? 'style="display:none"' : "";
-		fckTools.innerHTML+='<span ' + style + ' id="popup_wpTextbox1">[<a class="fckPopup" href="javascript:void(0)" onclick="ToggleFCKEditor(\'popup\',\'free_text\')">{$newWinMsg}</a>]</span>';
+		fckTools.innerHTML+='<span ' + style + ' id="popup_free_text">[<a class="fckPopup" href="javascript:void(0)" onclick="ToggleFCKEditor(\'popup\',\'free_text\')">{$newWinMsg}</a>]</span>';
+	}
+
+	if (showFCKEditor & (RTE_POPUP|RTE_TOGGLE_LINK)){
+		//add new toolbar before wiki toolbar
+		toolbar.parentNode.insertBefore( fckTools, toolbar );
 	}
 
 	if (showFCKEditor & RTE_VISIBLE)
@@ -955,7 +987,13 @@ function ToggleFCKEditor(mode, objId)
 	if ( firstLoad )
 	{
 		// firstLoad = true => FCKeditor start invisible
-		if (oToggleLink) oToggleLink.innerHTML = "Loading...";
+		// "innerHTML" fails for IE - use "innerText" instead
+		if (oToggleLink) {
+			if (oToggleLink.innerText)
+				oToggleLink.innerText = "Loading...";
+			else
+				oToggleLink.innerHTML = "Loading...";
+		}
 		sajax_request_type = 'POST' ;
 		oFCKeditor.ready = false;
 		sajax_do_call('wfSajaxWikiToHTML', [SRCtextarea.value], function ( result ){
@@ -963,7 +1001,13 @@ function ToggleFCKEditor(mode, objId)
 			{
 				SRCtextarea.value = result.responseText; //insert parsed text
 				onLoadFCKeditor();
-				if (oToggleLink) oToggleLink.innerHTML = editorMsgOff;
+				// "innerHTML" fails for IE - use "innerText" instead
+				if (oToggleLink) {
+					if (oToggleLink.innerText)
+						oToggleLink.innerText = editorMsgOff;
+					else
+						oToggleLink.innerHTML = editorMsgOff;
+				}
 				oFCKeditor.ready = true;
 			}
 		});
@@ -991,7 +1035,12 @@ function ToggleFCKEditor(mode, objId)
 			sajax_request_type = 'GET' ;
 			sajax_do_call( 'wfSajaxToggleFCKeditor', ['hide'], function(){} ) ;		//remember closing in session
 		}
-		if (oToggleLink) oToggleLink.innerHTML = editorMsgOn;
+		if (oToggleLink) {
+			if (oToggleLink.innerText)
+				oToggleLink.innerText = editorMsgOn;
+			else
+				oToggleLink.innerHTML = editorMsgOn;
+		}
 		if (oPopupLink) oPopupLink.style.display = '';
 		showFCKEditor -= RTE_VISIBLE;
 		oEditorIframe.style.display = 'none';
@@ -1008,8 +1057,13 @@ function ToggleFCKEditor(mode, objId)
 		//FCKtoolbar.style.display = 'none';
 		oEditorIframe.style.display = '';
 		if ( !bIsWysiwyg ) oEditorIns.SwitchEditMode();		//switch to WYSIWYG
-		showFCKEditor += RTE_VISIBLE; // showFCKEditor+=RTE_VISIBLE
-		if (oToggleLink) oToggleLink.innerHTML = editorMsgOff;
+		showFCKEditor += RTE_VISIBLE;
+		if (oToggleLink) {
+			if (oToggleLink.innerText)
+				oToggleLink.innerText = editorMsgOff;
+			else
+				oToggleLink.innerHTML = editorMsgOff;
+		}
 		if (oPopupLink) oPopupLink.style.display = 'none';
 	}
 	return true;

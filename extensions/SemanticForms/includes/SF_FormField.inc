@@ -96,8 +96,7 @@ class SFFormField {
 		$code_type = array_key_exists('_cod', $datatypeLabels) ? $datatypeLabels['_cod'] : 'code';
 		$url_type = $datatypeLabels['_uri'];
 		$email_type = $datatypeLabels['_ema'];
-		$float_type = $datatypeLabels['_num'];
-		$int_type = $datatypeLabels['_num'];
+		$number_type = $datatypeLabels['_num'];
 		$bool_type = $datatypeLabels['_boo'];
 		$date_type = $datatypeLabels['_dat'];
 		$enum_type = 'enumeration'; // not a real type
@@ -107,14 +106,13 @@ class SFFormField {
 		// the field type and whether this field will contain multiple
 		// values
 		if ($semantic_type == $string_type ||
-			$semantic_type == $float_type ||
-			$semantic_type == $int_type ||
+			$semantic_type == $number_type ||
 			$semantic_type == $url_type ||
 			$semantic_type == $email_type) {
 			if ($is_list) {
-				return array('text', 'textarea');
+				return array('text', 'textarea', 'categories');
 			} else {
-				return array('text');
+				return array('text', 'category');
 			}
 		} elseif ($semantic_type == $text_type || $semantic_type == $code_type) {
 			return array('textarea');
@@ -135,7 +133,7 @@ class SFFormField {
 				return array('text');
 			}
 		} else { // blank or an unknown type
-			return array('text', 'textarea', 'checkbox', 'date', 'datetime', 'datetime with timezone');
+			return array('text', 'textarea', 'checkbox', 'date', 'datetime', 'datetime with timezone', 'category', 'categories');
 		}
 	}
 
@@ -219,7 +217,8 @@ END;
 		}
 		if (! $part_of_multiple) { $text .= "| "; }
 		$text .= "{{{field|" . $this->template_field->field_name;
-		if ($this->template_field->input_type != '') {
+		if (isset($this->template_field->input_type) &&
+			$this->template_field->input_type != null) {
 			$text .= "|input type=" . $this->template_field->input_type;
 		}
 		if ($this->is_mandatory) {
@@ -251,8 +250,10 @@ END;
 		// the coresponding value for the template field
 		if ($this->possible_values != null)
 			$other_args['possible_values'] = $this->possible_values;
-		else
+		else {
 			$other_args['possible_values'] = $this->template_field->possible_values;
+			$other_args['value_labels'] = $this->template_field->value_labels;
+		}
 		$other_args['is_list'] = ($this->is_list || $this->template_field->is_list);
 		if ($this->template_field->semantic_property != '' && ! array_key_exists('semantic_property', $other_args))
 			$other_args['semantic_property'] = $this->template_field->semantic_property;

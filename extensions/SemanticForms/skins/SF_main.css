@@ -45,7 +45,10 @@ table.formtable2 th, table.formtable2 td {
 /* this makes sure that in long lists with checkboxes the checkbox and the
 corresponding label are not torn apart by a line break */
 span.checkboxSpan {
-	white-space: nowrap;
+	/* 'nowrap' doesn't work in IE, unfortunately */
+	/* white-space: nowrap; */
+	float: left;
+	padding-right: 9px;
 }
 /* the "remove" and "add another" buttons used for multiple templates */
 input.remove, input.addanother {
