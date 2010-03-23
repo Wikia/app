@@ -254,7 +254,7 @@
 			<?php foreach( $data['topEditors'] as $value ): ?>
 			<li>
 				<?php echo $value['avatar'] ?>
-				<span class="h2"><a href="<?php echo $value['userpage'] ?>"><?php echo $value['username'];	?></a></span>
+				<span class="topuser-info h2"><a href="<?php echo $value['userpage'] ?>"><?php echo $value['username'];	?></a></span>
 				<span class="userEditPoints clearfix"><nobr><span class="userPoints"><?php echo $value['all_count'];	?></span><span class="txt"><?php echo wfMsg('hub-topusers-editpoints') ?></span></nobr></span>
 			</li>
 			<?php endforeach; ?>
