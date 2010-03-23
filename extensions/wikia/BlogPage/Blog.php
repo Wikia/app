@@ -23,9 +23,9 @@ $wgExtensionMessagesFiles['Blog'] = dirname(__FILE__).'/Blog.i18n.php';
 //ArticleFromTitle
 //Calls BlogPage instead of standard article
 function wfBlogFromTitle( &$title, &$article ){
-	global $wgUser, $wgRequest, $IP, $wgOut, $wgTitle, $wgMessageCache, $wgStyleVersion, $wgParser, 
+	global $wgUser, $wgRequest, $IP, $wgOut, $wgTitle, $wgMessageCache, $wgStyleVersion, $wgParser,
 	$wgSupressPageTitle, $wgSupressSubTitle, $wgSupressPageCategories;
-	
+
 	if ( NS_BLOG == $title->getNamespace()  ) {
 		if( !$wgRequest->getVal("action") ){
 			$wgSupressPageTitle = true;
@@ -33,19 +33,19 @@ function wfBlogFromTitle( &$title, &$article ){
 
 		$wgSupressSubTitle = true;
 		$wgSupressPageCategories = true;
-		
+
 		//this will supress in SkinTemplate Skin
 		global $wgHooks;
 		$wgHooks["SkinTemplateOutputPageBeforeExec"][] = "wfSuppressCategoryLinks";
-		
+
 		$wgOut->enableClientCache(false);
 		$wgParser->disableCache();
-		
-		wfLoadExtensionMessages('Blog');
+
+		wfLoadExtensionMessages( 'Blog' );
 
 		require_once( "BlogPage.php" );
 		$wgOut->addScript("<link rel='stylesheet' type='text/css' href=\"/extensions/wikia/BlogPage/BlogPage.css?{$wgStyleVersion}\"/>\n");
-		
+
 		$article = new BlogPage($wgTitle);
 	}
 
@@ -58,7 +58,7 @@ function wfFixRHTML() {
     global $wgParser, $wgOut;
     $wgParser->setHook( "rhtml", "FixRHTML" );
 }
+
 function FixRHTML(){
 	return "";
 }
-?>
