@@ -386,6 +386,10 @@ $messages['gl'] = array(
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
+	'daemonloader_search' => 'Keresés:',
+	'daemonloader_string' => 'karakterlánc',
+	'daemonloader_number' => 'szám',
+	'daemonloader_date_yyyy' => 'év (ÉÉÉÉ)',
 	'daemonloader_day' => 'minden nap',
 	'daemonloader_week' => 'minden héten',
 	'daemonloader_month' => 'minden hónapban',
@@ -580,14 +584,48 @@ $messages['nl'] = array(
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
+ * @author Nghtwlkr
  */
 $messages['no'] = array(
+	'daemonloader' => 'Nisselaster',
+	'daemonloader_pagetitle' => 'Nisselaster',
+	'daemonloader_createtask' => 'Opprett oppgave',
+	'daemonloader_listtask' => 'Liste over oppgaver',
+	'daemonloader_configure' => 'Konfigurer nisse',
+	'daemonloader_daemonname' => 'Nissenavn',
+	'daemonloader_scriptname' => 'Skriptnavn',
+	'daemonloader_daemondesc' => 'Beskrivelse',
+	'daemonloader_inputparams' => 'Innparametre',
+	'daemonloader_paramname' => 'Parameternavn',
+	'daemonloader_paramdesc' => 'Parameterbeskrivelse',
+	'daemonloader_paramtype' => 'Parametertype',
+	'daemonloader_paramremove' => 'Fjern?',
+	'daemonloader_removedaemon' => 'Fjern nisse',
+	'daemonloader_paramdefvalue' => 'Standardverdi',
+	'daemonloader_alldaemons' => 'Alle nisser',
+	'daemonloader_loaddaemon' => 'Velg nisse for å redigere eller opprette en ny en under:',
+	'daemonloader_selectdaemon' => 'Velg nisse for å få informasjon og klikk på knappen for å gå til det neste steget',
+	'daemonloader_selectlist' => 'Velg fra liste',
 	'daemonloader_search' => 'Søk:',
+	'daemonloader_daemonchanged' => 'Endringene ble lagret',
+	'daemonloader_daemonnotchanged' => 'Endringene ble ikke lagret',
+	'daemonloader_string' => 'streng',
 	'daemonloader_number' => 'nummer',
+	'daemonloader_date_yyyymmdd' => 'dato (ÅÅÅÅMMDD)',
+	'daemonloader_date_yyyymm' => 'måneder (ÅÅÅÅMM)',
+	'daemonloader_date_yyyy' => 'år (ÅÅÅÅ)',
+	'daemonloader_wikilist' => 'Wikiliste',
+	'daemonloader_gonextstep' => 'Gå til neste steg',
+	'daemonloader_setparams' => 'Sett verdier for innparametre til nisse:',
+	'daemonloader_1step' => 'Første steg (velg nisse)',
+	'daemonloader_2step' => 'Andre steg (nissevalg)',
+	'daemonloader_3step' => 'Tredje steg (oppgavevalg)',
 	'daemonloader_steps' => 'Ditt nåværende trinn:',
+	'daemonloader_daemoninfo' => 'Nissebeskrivelse',
 	'daemonloader_configtaskparams' => 'Konfigurer oppgaveparametre:',
 	'daemonloader_startdate' => 'Startdato',
 	'daemonloader_enddate' => 'Sluttdato',
+	'daemonloader_frequency' => 'Rapporteringsfrekvens',
 	'daemonloader_emails' => 'E-postadresser',
 	'daemonloader_files' => 'XLS-filer',
 	'daemonloader_period' => 'Rapportperiode',
@@ -598,7 +636,7 @@ $messages['no'] = array(
 	'daemonloader_month' => 'hver måned',
 	'daemonloader_taskid' => 'Id',
 	'daemonloader_newtask' => 'Ny oppgave',
-	'daemonloader_daemonparams' => 'Daemon parametre',
+	'daemonloader_daemonparams' => 'Nisseparametre',
 	'daemonloader_createdby' => 'Opprettet av',
 	'daemonloader_created' => 'Opprettet',
 	'daemonloader_options' => 'Alternativer',
@@ -689,6 +727,7 @@ $messages['pt-br'] = array(
 	'daemonloader_week' => 'toda semana',
 	'daemonloader_month' => 'todo mês',
 	'daemonloader_options' => 'Opções',
+	'daemonloader_removejobconfirm' => 'Você tem certeza?',
 );
 
 /** Russian (Русский)
@@ -757,10 +796,22 @@ $messages['ru'] = array(
  * @author Verlor
  */
 $messages['sr-ec'] = array(
+	'daemonloader_createtask' => 'Направите задатак',
+	'daemonloader_listtask' => 'Списак задатака',
+	'daemonloader_daemondesc' => 'Опис',
+	'daemonloader_inputparams' => 'Улазни параметри',
+	'daemonloader_paramname' => 'Име параметра',
+	'daemonloader_paramdesc' => 'Опис параметра',
+	'daemonloader_paramtype' => 'Тип параметра',
 	'daemonloader_paramremove' => 'Уклони',
+	'daemonloader_selectlist' => 'Одабери са списка',
+	'daemonloader_search' => 'Претрага',
+	'daemonloader_daemonchanged' => 'Ваше измене су снимљене',
+	'daemonloader_daemonnotchanged' => 'Ваше измене нису сачуване',
 	'daemonloader_date_yyyymmdd' => 'датум (YYYYMMDD)',
 	'daemonloader_date_yyyymm' => ' месеци  (YYYYMM)',
 	'daemonloader_date_yyyy' => ' године (YYYY)',
+	'daemonloader_wikilist' => 'списак викија',
 	'daemonloader_gonextstep' => 'Иди на следећи корак',
 	'daemonloader_startdate' => 'Почетни датум',
 	'daemonloader_enddate' => 'Завршни датум',
@@ -768,6 +819,7 @@ $messages['sr-ec'] = array(
 	'daemonloader_day' => ' сваки дан',
 	'daemonloader_week' => ' сваке седмице',
 	'daemonloader_month' => ' сваки месец',
+	'daemonloader_newtask' => 'нови задатак',
 	'daemonloader_removejobconfirm' => 'Да ли сте сигурни?',
 );
 

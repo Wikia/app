@@ -141,6 +141,16 @@ $messages['es'] = array(
 	'dump-database-info-more' => 'Por favor, <a href="http://community.wikia.com/wiki/Help:Database_download">ver esto</a> para más información',
 );
 
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'dump-database-full-pages-info' => '(Oharra: fitxategi hau handiegia izan daiteke)',
+	'dump-database-request' => 'Eguneraketa eskatu',
+	'dump-database-request-submit' => 'Eskaera bidali',
+	'dump-database-info-more' => 'Mesedez <a href="http://community.wikia.com/wiki/Help:Database_download">ikusi</a> informazio gehiagorako',
+);
+
 /** Finnish (Suomi)
  * @author Centerlink
  * @author Crt
@@ -208,8 +218,11 @@ $messages['he'] = array(
 $messages['hu'] = array(
 	'dump-database' => 'Adatbázis dumpok',
 	'dump-database-curr-pages' => 'Aktuális lapok',
+	'dump-database-curr-pages-info' => '(Általában ez a verzió a legmegfelelőbb bottal való feldolgozásra)',
 	'dump-database-full-pages' => 'Aktuális lapok és laptörténet',
+	'dump-database-full-pages-info' => '(Figyelmeztetés: ez a fájl igen nagy lehet)',
 	'dump-database-request' => 'Frissítés kérése',
+	'dump-database-request-submit' => 'Kérelem elküldése',
 );
 
 /** Interlingua (Interlingua)
@@ -346,6 +359,15 @@ $messages['ru'] = array(
 	'dump-database-request-submit' => 'Отправить запрос',
 	'dump-database-request-requested' => 'Запрос на дамп базы данных отправлен',
 	'dump-database-info-more' => 'Пожалуйста, <a href="http://community.wikia.com/wiki/Help:Database_download">см. дополнительные сведения</a>',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'dump-database-curr-pages' => 'Садашње странице',
+	'dump-database-full-pages' => 'Садашња страница и историја',
+	'dump-database-request-submit' => 'Пошаљи захтев',
 );
 
 /** Swedish (Svenska)

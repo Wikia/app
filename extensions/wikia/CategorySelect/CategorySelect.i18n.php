@@ -61,6 +61,31 @@ $messages['af'] = array(
 	'categoryselect-error-db-locked' => 'Databasis is gesluit.',
 );
 
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'categoryselect-code-view' => 'عرض الرموز',
+	'categoryselect-visual-view' => 'عرض مرئي',
+	'categoryselect-infobox-caption' => 'خيارات التصنيف',
+	'categoryselect-infobox-category' => 'يقدم إسما للتصنيف',
+	'categoryselect-infobox-sortkey' => 'يرتب أبجديا هذا المقال في صفحة تصنيف "$1" تحت الاسم',
+	'categoryselect-addcategory-button' => 'أضف تصنيفا',
+	'categoryselect-suggest-hint' => 'إظغط على Enter اذا انتهيت',
+	'categoryselect-tooltip' => "'''جديد!''' شريط أدوات علامات التصنيف. جربه أو أنظر [[مساعدة:CategorySelect|المساعدة]] لتعرف المزيد",
+	'categoryselect-unhandled-syntax' => 'تم الكشف عن بناء جملة غير معالج - يتم التحويل إلى العرض المرئي',
+	'categoryselect-edit-summary' => 'إضافة التصانيف',
+	'categoryselect-empty-name' => 'يوفر إسم التصنيف (الجزء قبل |)',
+	'categoryselect-button-save' => 'سجل',
+	'categoryselect-button-cancel' => 'إلغاء',
+	'categoryselect-error-not-exist' => 'المقالة [id=$1] لا وجود لها',
+	'categoryselect-error-user-rights' => 'خطأ في حقوق المستخدم',
+	'categoryselect-error-db-locked' => 'قاعدة البيانات مغلقة',
+	'categoryselect-desc' => 'يوفر واجهة لإدارة التصنيفات في مقالة دون تعديل كامل المقالة',
+	'categoryselect-edit-abort' => 'التعديل الذي تحاول أن تقوم به أجهض من قبل تمديد هوك',
+	'tog-disablecategoryselect' => 'تعطيل وسم التصنيفات',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  */
@@ -117,6 +142,13 @@ $messages['de'] = array(
 	'categoryselect-error-user-rights' => 'Keine ausreichenden Benutzerrechte.',
 	'categoryselect-error-db-locked' => 'Die Datenbank ist vorübergehend gesperrt.',
 	'tog-disablecategoryselect' => 'Vereinfachtes Kategorisieren ausschalten',
+);
+
+/** Greek (Ελληνικά)
+ * @author Crazymadlover
+ */
+$messages['el'] = array(
+	'categoryselect-button-cancel' => 'Ακύρωση',
 );
 
 /** Spanish (Español)
@@ -277,7 +309,8 @@ $messages['ja'] = array(
 	'categoryselect-error-user-rights' => '利用者権限のエラーです。',
 	'categoryselect-error-db-locked' => 'データベースがロックされています',
 	'categoryselect-desc' => '記事を編集することなくカテゴリを操作するためのインターフェースを提供する',
-	'tog-disablecategoryselect' => 'カテゴリタグ付け機能を無効にする。',
+	'categoryselect-edit-abort' => 'システムにより変更が中断されました',
+	'tog-disablecategoryselect' => 'カテゴリタグ付け機能を無効にする',
 );
 
 /** Macedonian (Македонски)
@@ -337,17 +370,25 @@ Terugschakelen naar visuele weergave is niet mogelijk.',
  * @author Nghtwlkr
  */
 $messages['no'] = array(
+	'categoryselect-code-view' => 'Kodevisning',
+	'categoryselect-visual-view' => 'Visuell visning',
 	'categoryselect-infobox-caption' => 'Kategorivalg',
 	'categoryselect-infobox-category' => 'Oppgi navnet på kategorien:',
 	'categoryselect-infobox-sortkey' => 'Alfabetiser denne artikkelen under kategorisiden «$1» under navnet:',
 	'categoryselect-addcategory-button' => 'Legg til kategori',
 	'categoryselect-suggest-hint' => 'Trykk Enter når du er ferdig',
+	'categoryselect-tooltip' => "'''Ny.''' Verktøylinje for kategorimerking. Prøv den eller se [[Help:CategorySelect|her]] for å lære mer",
+	'categoryselect-unhandled-syntax' => 'Uhåndtert syntaks oppdaget - umulig å bytte tilbake til visuell modus.',
 	'categoryselect-edit-summary' => 'Legg til kategorier',
 	'categoryselect-empty-name' => 'Oppgi kategorinavn (del før |)',
 	'categoryselect-button-save' => 'Lagre',
 	'categoryselect-button-cancel' => 'Avbryt',
 	'categoryselect-error-not-exist' => 'Artikkel [id=$1] finnes ikke.',
+	'categoryselect-error-user-rights' => 'Feil med brukerrettigheter.',
 	'categoryselect-error-db-locked' => 'Database er låst.',
+	'categoryselect-desc' => 'Tilbyr et grensesnitt for håndtering av kategorier i artikler uten å redigere hele artikkelen.',
+	'categoryselect-edit-abort' => 'Endringene du prøvde å utføre ble avbrutt av en utvidelseskrok',
+	'tog-disablecategoryselect' => 'Deaktiver kategorimerking',
 );
 
 /** Piedmontese (Piemontèis)
@@ -372,6 +413,7 @@ $messages['pms'] = array(
 	'categoryselect-error-user-rights' => "Eror dij drit dj'utent.",
 	'categoryselect-error-db-locked' => "La base ëd dàit a l'é blocà.",
 	'categoryselect-desc' => "A dà n'antërfacia për gestì categorìe ant j'artìcoj sensa modifiché tut l'artìcol.",
+	'categoryselect-edit-abort' => "La modìfica ch'it l'has provà a fé a l'é stàita abortìa da n'agancc ëd n'estension",
 	'tog-disablecategoryselect' => 'Disabìlita etichëtté categorìe',
 );
 
@@ -429,6 +471,7 @@ $messages['ru'] = array(
 	'categoryselect-error-user-rights' => 'Ошибка прав участника.',
 	'categoryselect-error-db-locked' => 'База данных заблокирована.',
 	'categoryselect-desc' => 'Предоставляет интерфейс для управления категориями в статье без редактирования всей статьи.',
+	'categoryselect-edit-abort' => 'Изменение, которые вы пытались сделать, прервано обработчиком расширения',
 	'tog-disablecategoryselect' => 'Отключить Category Taging',
 );
 

@@ -56,6 +56,13 @@ $messages['gl'] = array(
 	'tog-disablelinksuggest' => 'Non mostrar as ligazón suxeridas',
 );
 
+/** Manx (Gaelg)
+ * @author MacTire02
+ */
+$messages['gv'] = array(
+	'tog-disablelinksuggest' => 'Ny taishbyney kiangley-choyrlaghey',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
@@ -148,5 +155,19 @@ $messages['roa-tara'] = array(
 /** Russian (Русский) */
 $messages['ru'] = array(
 	'tog-disablelinksuggest' => 'Не показывать предложения ссылок',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'tog-disablelinksuggest' => 'Не показуј предложену везу',
+);
+
+/** Swedish (Svenska)
+ * @author Sertion
+ */
+$messages['sv'] = array(
+	'tog-disablelinksuggest' => 'Visa inte länkförslag',
 );
 

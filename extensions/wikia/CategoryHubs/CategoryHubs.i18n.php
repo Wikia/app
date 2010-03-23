@@ -217,8 +217,8 @@ $messages['ia'] = array(
  */
 $messages['ja'] = array(
 	'cathub-desc' => 'http://answers.wikia.com/ の編集者や閲覧者のためにデザインされた、カテゴリページを活動のハブとするための拡張機能。',
-	'cathub-progbar-mouseover-answered' => '$1%が回答済み',
-	'cathub-progbar-mouseover-not-answered' => '$1%が回答待ち',
+	'cathub-progbar-mouseover-answered' => '$1%が回答済み（$2 件の回答）',
+	'cathub-progbar-mouseover-not-answered' => '$1%が回答待ち（$2 件の質問）',
 	'cathub-progbar-label-answered' => '回答済み',
 	'cathub-progbar-label-unanswered' => '回答待ち',
 	'cathub-progbar-none-done' => '回答済みの質問はまだ一つもありません',
@@ -340,8 +340,8 @@ $messages['no'] = array(
  */
 $messages['pms'] = array(
 	'cathub-desc' => "Estension për rapresenté pàgine ëd categorìa ant na vista ëd categorìa com n'ansema d'atività. Progetà për [http://answers.wikia.com answers.wikia.com]",
-	'cathub-progbar-mouseover-answered' => '$1% arspondù',
-	'cathub-progbar-mouseover-not-answered' => '$1% pa ancó arspondù',
+	'cathub-progbar-mouseover-answered' => '$1% arspondù ($2 arspòste)',
+	'cathub-progbar-mouseover-not-answered' => '$1% pa ancó arspondù ($2 chestion)',
 	'cathub-progbar-label-answered' => 'Arspondù',
 	'cathub-progbar-label-unanswered' => 'Pa arspondù',
 	'cathub-progbar-none-done' => "Gnun-a chestion a l'ha al moment na rispòsta",
@@ -408,8 +408,15 @@ $messages['ru'] = array(
  * @author Verlor
  */
 $messages['sr-ec'] = array(
+	'cathub-progbar-label-answered' => 'Одговорено',
+	'cathub-progbar-label-unanswered' => 'Није још стигао одговор',
+	'cathub-progbar-none-done' => 'Није још одговорено на питања',
+	'cathub-progbar-all-done' => 'Одговорено је на сва питања!',
+	'cathub-question-asked-ago' => 'Питао  $1 $2',
+	'cathub-question-answered-ago' => 'одговорио  $1 $2',
 	'cathub-answer-heading' => 'Одговор',
 	'cathub-button-answer' => 'Одговор',
 	'cathub-button-improve-answer' => 'Неправилан одговор',
+	'cathub-edit-success' => 'Ваш одговор је сачуван',
 );
 

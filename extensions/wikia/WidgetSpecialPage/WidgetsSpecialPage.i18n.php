@@ -89,6 +89,16 @@ Prošu změń [[Special:Preferences#prefsection-1|swoje nastajenja]], zo by tut�
 	'widgets-specialpage-try-dashboard' => 'Tuta strona wobsahuje lisćinu wšěch k dispoziciji stejacych asistentow. Zo by swoje asistenty při dźěle widźał, dźi k [[Special:WidgetDashboard]].',
 );
 
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'widgets-specialpage-info' => 'A minialkalmazások az új felületek egyikével működnek jól, például [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco].
+
+Kérlek változtasd meg [[Special:Preferences#prefsection-1|a beállításaidat]] az eszköz használatához.',
+	'widgets-specialpage-try-dashboard' => 'Ez a lap az összes elérhető minialkalmazás listája. A minialkalmazásaidat működés közben a [[Special:WidgetDashboard]] lapon tudod megnézni.',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -100,13 +110,14 @@ Per favor cambia [[Special:Preferences#prefsection-1|tu preferentias]] pro usar 
 );
 
 /** Japanese (日本語)
+ * @author Tommy6
  * @author 青子守歌
  */
 $messages['ja'] = array(
 	'widgets-specialpage-info' => 'ウィジェットは、[{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco]スキンで最もよく動くようになっています。
 
 この機能を最大限に利用したいのであれば、[[Special:Preferences#prefsection-1|オプション]]でMonacoスキンに変更してください。',
-	'widgets-specialpage-try-dashboard' => 'このページは、利用可能なウィジットの一覧が含まれています。あなたの現在動作中のウィジットについては[[Special:WidgetDashboard]]をご覧下さい。',
+	'widgets-specialpage-try-dashboard' => 'このページでは、利用可能なウィジェットの一覧を表示しています。現在動作中のウィジェットについては[[Special:WidgetDashboard]]をご覧ください。',
 );
 
 /** Macedonian (Македонски)
@@ -128,6 +139,16 @@ $messages['nl'] = array(
 Wijzig alstublieft uw [[Special:Preferences#prefsection-1|voorkeuren]] om dit hulpmiddel te gebruiken.',
 	'widgets-specialpage-try-dashboard' => 'Deze pagina bevat een lijst met alle beschikbare widgets.
 [[Special:WidgetDashboard|U kunt ook bekijken hoe uw widgets werken]].',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'widgets-specialpage-info' => 'Skjermelement fungerer best med noen av de nye draktene, for eksempel [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco].
+
+Endre [[Special:Preferences#prefsection-1|innstillingene dine]] for å bruke dette verktøyet.',
+	'widgets-specialpage-try-dashboard' => 'Denne siden inneholder en liste over alle tilgjengelige skjermelement. For å se dem i bruk, gå til [[Special:WidgetDashboard]].',
 );
 
 /** Occitan (Occitan)
@@ -161,6 +182,16 @@ Por favor altere as [[Special:Preferences#prefsection-1|suas preferências]] par
 	'widgets-specialpage-try-dashboard' => 'Esta página contém a lista de todos os widgets disponíveis. Para ver seus widgets funcionando vá para [[Special:WidgetDashboard]].',
 );
 
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'widgets-specialpage-info' => 'Le gioielle fatìane megghie cu une de le masckere nove, pe esembie cu [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco].<br />
+
+Pe piacere cange [[Special:Preferences#prefsection-1|le preferenze tune]] pe ausà stu strumende.',
+	'widgets-specialpage-try-dashboard' => "Sta pàgene tène 'n'elenghe de tutte le gioielle disponibbele. Pe vedè le gioielle tune fatià veje jndr'à [[Special:WidgetDashboard]].",
+);
+
 /** Russian (Русский)
  * @author Lockal
  */
@@ -169,6 +200,16 @@ $messages['ru'] = array(
 
 Пожалуйста, измените [[Special:Preferences#prefsection-1|свои настройки]] для использования этого инструмента.',
 	'widgets-specialpage-try-dashboard' => 'Эта страница содержит список всех доступных виджетов. Чтобы увидеть ваши виджеты в действии, перейдите на [[Special:WidgetDashboard]].',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'widgets-specialpage-info' => 'Алатке раде најбоље са једним од нових скинова, нпр. [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco].
+
+Промените [[Special:Preferences#prefsection-1|your preferences]] да би користили ову алатку.',
+	'widgets-specialpage-try-dashboard' => 'ова страница садржи списак свих потребних алатки. Да би видели како раде идите на [[Special:WidgetDashboard]].',
 );
 
 /** Ukrainian (Українська)

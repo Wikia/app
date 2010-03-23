@@ -271,15 +271,17 @@ Mar plij adskrivit ho kemenadenn.",
 	'right-problemreports_global' => 'Kemmañ statud ha seurt an DanevelloùKudennoù dre wikioù',
 );
 
-/** German (Deutsch) */
+/** German (Deutsch)
+ * @author The Evil IP address
+ */
 $messages['de'] = array(
 	'problemreports' => 'Liste der Problemmeldungen',
 	'reportproblem' => 'Problem melden',
 	'prlogtext' => 'Problemmeldungs-Logbuch',
 	'prlogheader' => 'Liste gemeldeter Probleme und des jeweiligen Status',
 	'prlog_reportedentry' => 'meldete ein Problem mit $1 ($2)',
-	'prlog_changedentry' => 'markierte Problem $1 als "$2"',
-	'prlog_typeentry' => 'änderte Art des Problems $1 auf "$2"',
+	'prlog_changedentry' => 'markierte Problem $1 als „$2“',
+	'prlog_typeentry' => 'änderte Art des Problems $1 auf „$2“',
 	'prlog_removedentry' => 'löschte Problem $1',
 	'prlog_emailedentry' => 'sandte E-Mail an $2 ($3)',
 	'pr_introductory_text' => 'Die meisten Seiten in diesem Wiki können bearbeitet werden und du bist ebenfalls herzlich eingeladen dies zu tun und Fehler zu korrigieren, falls dir welche auffallen. Auf der Seite [[w:c:de:Hilfe:Editieren|Hilfe:Editieren]] findest du weitere Hilfe.
@@ -309,7 +311,7 @@ Berichte, die über dieses Formular abgeschickt werden, sind für jeden [[Specia
 	'pr_spam_found' => 'In deiner Zusammenfassung wurde Spam gefunden. Bitte passe sie an.',
 	'pr_empty_summary' => 'Bitte gib eine kurze Problembeschreibung an',
 	'pr_empty_email' => 'Bitte gib deine E-Mail-Adresse an',
-	'pr_mailer_notice' => 'Die von dir in deinen Einstellungen angegebene E-Mail-Adresse wird im "From"-Header der Mail angegeben, so dass der Empfänger dir antworten kann.',
+	'pr_mailer_notice' => 'Die von dir in deinen Einstellungen angegebene E-Mail-Adresse wird im „From“-Header der Mail angegeben, so dass der Empfänger dir antworten kann.',
 	'pr_mailer_subject' => 'Problembericht über',
 	'pr_mailer_tmp_info' => 'Du kannst die Antwortvorlagen [[MediaWiki:ProblemReportsResponses|hier]] anpassen.',
 	'pr_mailer_to_default' => 'Wikia-Benutzer',
@@ -670,6 +672,7 @@ $messages['hu'] = array(
 	'pr_what_problem_spam_short' => 'spam',
 	'pr_what_problem_vandalised_short' => 'vandalizmus',
 	'pr_what_problem_incorrect_content_short' => 'tartalom',
+	'pr_what_problem_software_bug_short' => 'bug',
 	'pr_what_problem_other_short' => 'egyéb',
 	'pr_what_problem_change' => 'Probléma típusának megváltoztatása',
 	'pr_describe_problem' => 'Üzenet',
@@ -1007,8 +1010,23 @@ Kort uw bericht alstublieft in.',
  */
 $messages['no'] = array(
 	'problemreports' => 'Problemrapportsliste',
+	'reportproblem' => 'Rapporter et problem',
+	'prlogtext' => 'Problemrapporter',
+	'prlogheader' => 'Liste over rapporterte problem og endringer i deres status',
+	'prlog_reportedentry' => 'rapporterte et problem på $1 ($2)',
+	'prlog_changedentry' => 'markerte problem $1 som «$2»',
+	'prlog_typeentry' => 'endret problem $1 sin type til «$2»',
 	'prlog_removedentry' => 'fjernet problem $1',
+	'prlog_emailedentry' => 'sendte e-postmelding til $2 ($3)',
+	'pr_introductory_text' => 'De fleste sider på denne wikien kan redigeres og du må gjerne redigere sider og rette opp feil selv.
+Om du trenger hjelp med dette, se [[help:editing|hvordan redigere]] og [[help:revert|hvordan tilbakestille vandalisme]].
+
+For å kontakte staben eller rapportere brudd på opphavsrett, se [[w:contact us|Wikias «kontakt oss»-side]].
+
+Programvarefeil kan rapporteres på forumene.
+Rapporter som gjøres her vil bli [[Special:ProblemReports|vist på wikien]].',
 	'pr_what_problem' => 'Emne',
+	'pr_what_problem_spam' => 'det er en søppellenke her',
 	'pr_what_problem_vandalised' => 'denne siden har blitt vandalisert',
 	'pr_what_problem_incorrect_content' => 'dette innholdet er ukorrekt',
 	'pr_what_problem_software_bug' => 'det er en feil i wiki-programvaren',
@@ -1023,11 +1041,34 @@ $messages['no'] = array(
 	'pr_what_problem_change' => 'Endre problemtype',
 	'pr_describe_problem' => 'Melding',
 	'pr_what_page' => 'Tittel på siden',
+	'pr_email_visible_only_to_staff' => 'kun synlig for stab',
+	'pr_thank_you' => 'Takk for at du rapporterte et problem.
+
+[[Special:ProblemReports/$1|Du kan følge løsningen av det her]].',
+	'pr_thank_you_error' => 'En feil oppsto under innsending av problemrapporten, prøv igjen senere...',
+	'pr_spam_found' => 'Søppel ble funnet i rapportsammendraget ditt.
+Endre innholdet i sammendraget',
+	'pr_empty_summary' => 'Gi en kort beskrivelse av problemet',
+	'pr_empty_email' => 'Oppgi e-postadressen din',
+	'pr_mailer_notice' => 'E-postadressen du oppga i brukerinnstillingene dine vil stå som «Fra»-adresse i e-posten slik at mottakeren kan svare deg.',
+	'pr_mailer_subject' => 'Rapportert problem om',
+	'pr_mailer_tmp_info' => 'Du kan [[MediaWiki:ProblemReportsResponses|redigere svarmaler]]',
 	'pr_mailer_to_default' => 'Wikiabruker',
+	'pr_mailer_go_to_wiki' => 'For å sende e-post, gå til [$1 wikien problemet ble rapportert fra]',
+	'pr_total_number' => 'Totalt antall rapporter',
+	'pr_view_archive' => 'Vis arkiverte problem',
+	'pr_view_all' => 'Vis alle rapporter',
+	'pr_view_staff' => 'Vis rapporter som trenger hjelp fra staben',
+	'pr_raports_from_this_wikia' => 'Vis rapporter fra bare denne Wikiaen',
+	'pr_reports_from' => 'Rapporter fra bare',
+	'pr_no_reports' => 'Ingen rapporter passet dine kriterier',
+	'pr_sysops_notice' => 'Du kan <a href="$1">endre status på problemrapporter</a> fra din wiki...',
+	'pr_table_problem_id' => 'Problem-ID',
 	'pr_table_wiki_name' => 'Wikinavn',
 	'pr_table_problem_type' => 'Problemtype',
 	'pr_table_page_link' => 'Side',
 	'pr_table_date_submitted' => 'Dato innsendt',
+	'pr_table_reporter_name' => 'Rapportør',
 	'pr_table_description' => 'Beskrivelse',
 	'pr_table_comments' => 'Kommentarer',
 	'pr_table_status' => 'Status',
@@ -1035,8 +1076,18 @@ $messages['no'] = array(
 	'pr_status_0' => 'venter',
 	'pr_status_1' => 'fikset',
 	'pr_status_2' => 'lukket',
+	'pr_status_3' => 'trenger hjelp fra stab',
+	'pr_status_10' => 'fjern rapport',
+	'pr_status_undo' => 'Angre endring av rapportstatus',
+	'pr_status_ask' => 'Endre rapportstatus?',
+	'pr_remove_ask' => 'Fjerne rapport permanent?',
 	'pr_status_wait' => 'vent ...',
+	'pr_read_only' => 'Nye rapporter kan ikke sendes akkurat nå, prøv igjen senere.',
+	'pr_msg_exceeded' => 'Maks antall tegn i meldingsfeltet er 512.
+Skriv meldingen din på nytt.',
 	'pr_msg_exchead' => 'Meldingen er for lang',
+	'right-problemreports_action' => 'Endre tilstand og type på problemrapporter',
+	'right-problemreports_global' => 'Endre tilstand og type på problemrapporter på tvers av wikier',
 );
 
 /** Polish (Polski) */
@@ -1293,6 +1344,7 @@ Por favor, reescreva a sua mensagem.',
 
 /** Russian (Русский)
  * @author Lockal
+ * @author Александр Сигачёв
  */
 $messages['ru'] = array(
 	'problemreports' => 'Список сообщений о проблемах',
@@ -1301,17 +1353,27 @@ $messages['ru'] = array(
 	'prlogheader' => 'Список сообщений о проблемах и изменений их статуса',
 	'prlog_reportedentry' => 'сообщил о проблеме в $1 ($2)',
 	'prlog_changedentry' => 'установил отметку «$2» для проблемы $1',
+	'prlog_typeentry' => 'изменил изменил тип проблемы $1 на «$2»',
 	'prlog_removedentry' => 'удалил проблему $1',
+	'prlog_emailedentry' => 'отправил сообщение по электронной почте $2 ($3)',
 	'pr_introductory_text' => 'Большинство страниц в этой вики доступны для редактирования, что позволяет изменить их и исправить ошибки самостоятельно. Если вам нужна помощь в этом, см. [[help:editing|справку по редактированию]] и [[help:revert|по откату вандализма]].
 
 Для связи с сотрудниками или сообщений о проблемах с авторским правом, пожалуйста, используйте [[w:contact us|страницу обратной связи Викия]].
 
 Об ошибках в программном обеспечении можно сообщить на форуме. Такие сообщения будут [[Special:ProblemReports|отображены в вики]].',
 	'pr_what_problem' => 'Тема',
+	'pr_what_problem_spam' => 'здесь присутствует спам-ссылка',
+	'pr_what_problem_vandalised' => 'эта страница была вандализирована',
+	'pr_what_problem_incorrect_content' => 'содержательная ошибка',
+	'pr_what_problem_software_bug' => 'ошибка в программном обеспечении вики',
+	'pr_what_problem_other' => 'другое',
 	'pr_what_problem_select' => 'Пожалуйста, выберите тип проблемы',
+	'pr_what_problem_unselect' => 'все',
 	'pr_what_problem_spam_short' => 'спам',
 	'pr_what_problem_vandalised_short' => 'вандализм',
 	'pr_what_problem_incorrect_content_short' => 'содержание',
+	'pr_what_problem_software_bug_short' => 'ошибка',
+	'pr_what_problem_other_short' => 'другое',
 	'pr_what_problem_change' => 'Измените тип проблемы',
 	'pr_describe_problem' => 'Сообщение',
 	'pr_what_page' => 'Название страницы',
@@ -1319,15 +1381,24 @@ $messages['ru'] = array(
 	'pr_thank_you' => 'Благодарим вас за сообщение о проблеме!
 
 [[Special:ProblemReports/$1|Вы можете следить за её решением]].',
+	'pr_thank_you_error' => 'Произошла ошибка при отправке сообщения о проблеме, пожалуйста, повторите попытку позже…',
+	'pr_spam_found' => 'В кратком описании сообщения обнаружен спам.
+Пожалуйста, изменение содержание краткого описания.',
 	'pr_empty_summary' => 'Пожалуйста, предоставьте краткое описание проблемы',
 	'pr_empty_email' => 'Пожалуйста, укажите адрес вашей электронной почты',
+	'pr_mailer_notice' => 'Заданный в ваших настройках адрес электронной почты будет указан в поле письма «От кого», поэтому получатель будет иметь возможность ответить.',
+	'pr_mailer_subject' => 'Сообщение о проблеме в',
+	'pr_mailer_tmp_info' => 'Вы можете [[MediaWiki:ProblemReportsResponses|редактировать шаблоны ответов]]',
 	'pr_mailer_to_default' => 'Участник Викии',
+	'pr_mailer_go_to_wiki' => 'Для отправки письма, пожалуйста, перейдите на страницу [$1 вики проблемы, полученной от]',
 	'pr_total_number' => 'Общее число сообщений',
 	'pr_view_archive' => 'Просмотр архива проблем',
 	'pr_view_all' => 'Показать все сообщения',
 	'pr_view_staff' => 'Показать сообщения, требующие помощи сотрудников',
+	'pr_raports_from_this_wikia' => 'Просмотр сообщений только из этой Wikia',
 	'pr_reports_from' => 'Сообщения только из',
 	'pr_no_reports' => 'Нет сообщений, соответствующих заданному критерию',
+	'pr_sysops_notice' => 'Вы можете <a href="$1">изменять статус сообщений о проблемах</a> в вашей вики…',
 	'pr_table_problem_id' => 'ID проблемы',
 	'pr_table_wiki_name' => 'Название вики',
 	'pr_table_problem_type' => 'Тип проблемы',
@@ -1343,36 +1414,54 @@ $messages['ru'] = array(
 	'pr_status_2' => 'закрыта',
 	'pr_status_3' => 'необходима помощь сотрудников',
 	'pr_status_10' => 'удалить сообщение',
+	'pr_status_undo' => 'Отменить изменение статуса сообщения',
 	'pr_status_ask' => 'Изменить статус сообщения?',
-	'pr_remove_ask' => 'Удалить отчёт навсегда?',
+	'pr_remove_ask' => 'Удалить сообщение навсегда?',
 	'pr_status_wait' => 'подождите…',
+	'pr_read_only' => 'В настоящее время новые сообщения не могут быть оформлены, пожалуйста, повторите попытку позже.',
+	'pr_msg_exceeded' => 'Максимальное количество символов в поле сообщения составляет 512.
+Пожалуйста, перепишите ваше сообщение.',
 	'pr_msg_exchead' => 'Слишком длинное сообщение',
+	'right-problemreports_action' => 'изменение состояний и типов сообщений об проблемах',
+	'right-problemreports_global' => 'изменение состояний и типов сообщений о проблемах во всех вики',
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Verlor
  */
 $messages['sr-ec'] = array(
+	'reportproblem' => 'Пријави проблем',
+	'prlogtext' => 'Извештај о проблему',
 	'pr_what_problem' => 'Тема',
 	'pr_what_problem_spam' => 'Постоји један спам линк',
 	'pr_what_problem_vandalised' => 'Страница је вандализована',
 	'pr_what_problem_incorrect_content' => 'Садржај није тачан',
 	'pr_what_problem_software_bug' => 'Постоји буг у вики софтверу',
 	'pr_what_problem_other' => 'остало',
+	'pr_what_problem_select' => 'Молимо Вас да изаберете тип проблема',
+	'pr_what_problem_unselect' => 'све',
 	'pr_what_problem_spam_short' => 'спам',
 	'pr_what_problem_vandalised_short' => 'вандал',
 	'pr_what_problem_incorrect_content_short' => 'садржај',
 	'pr_what_problem_software_bug_short' => 'буг (софтверска грешка)',
 	'pr_what_problem_other_short' => 'остало',
+	'pr_what_problem_change' => 'Промените тип проблема',
 	'pr_describe_problem' => 'Порука',
 	'pr_what_page' => 'Наслов стране',
 	'pr_email_visible_only_to_staff' => 'Видљиво само за особље',
+	'pr_empty_summary' => 'Молимо Вас да укратко опишете проблем',
+	'pr_empty_email' => 'Молимо Вас да дате адресу е-поште',
 	'pr_mailer_to_default' => 'Викија корисник',
 	'pr_total_number' => 'Укупни број извештаја',
 	'pr_view_archive' => 'Погледај архивиране проблеме',
 	'pr_view_all' => 'Покажи све извештаје',
 	'pr_raports_from_this_wikia' => 'Покажи извештаје само са ове Викије',
+	'pr_table_problem_id' => 'ИД проблема',
+	'pr_table_wiki_name' => 'Име викије',
+	'pr_table_problem_type' => 'Тип проблема',
+	'pr_table_page_link' => 'Страна',
 	'pr_table_date_submitted' => 'Датум слања',
+	'pr_table_reporter_name' => 'Име известиоца проблема',
 	'pr_table_description' => 'Опис',
 	'pr_table_comments' => 'коментари',
 	'pr_table_status' => 'Статус',

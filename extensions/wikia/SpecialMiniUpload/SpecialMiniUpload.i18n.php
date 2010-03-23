@@ -117,6 +117,9 @@ $messages['gl'] = array(
  */
 $messages['hu'] = array(
 	'thumbnailsize' => 'Bélyegkép mérete',
+	'insertimage' => 'Kép beillesztése',
+	'leftalign-tooltip' => 'Balra igazítás',
+	'rightalign-tooltip' => 'Jobbra igazítás',
 );
 
 /** Interlingua (Interlingua)
@@ -172,6 +175,12 @@ Geef daarna een bijschrift op en klik "Invoegen".',
  * @author Nghtwlkr
  */
 $messages['no'] = array(
+	'widgetdashboard' => 'Panelbordskjermelement',
+	'mu_size_your_image' => 'Sett størrelse for ditt bilde',
+	'almosttheretext' => 'Bruk glidebryteren for å velge størrelse på miniatyrbildet, skriv inn en bildetekst og klikk Sett inn',
+	'insertfullsize' => 'Sett inn det opprinngelig bildet i full størrelse',
+	'insertthumbnail' => 'Sett inn miniatyrbildet',
+	'thumbnailsize' => 'Miniatyrbildestørrelse',
 	'captionoptional' => 'Bildetekst (valgfritt):',
 	'insertimage' => 'Sett inn bilde',
 	'leftalign-tooltip' => 'Venstrejuster',
@@ -223,7 +232,21 @@ $messages['ru'] = array(
  * @author Verlor
  */
 $messages['sr-ec'] = array(
+	'widgetdashboard' => 'Табла са алаткама',
 	'mu_size_your_image' => 'Одредите величину ваше слике',
+	'insertthumbnail' => 'убаци умањену слику',
+	'thumbnailsize' => 'Величина умањеног приказа :',
+	'captionoptional' => 'Додај наслов (необавезно):',
+	'insertimage' => 'убаци слику',
+	'leftalign-tooltip' => 'Поравној налево',
+	'rightalign-tooltip' => 'Поравнај надесно',
+);
+
+/** Sundanese (Basa Sunda)
+ * @author Kandar
+ */
+$messages['su'] = array(
+	'rightalign-tooltip' => 'Rata katuhu',
 );
 
 /** Ukrainian (Українська)

@@ -84,6 +84,14 @@ $messages['nl'] = array(
 	'helperPanel_widgets' => 'Mijn widgets',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'helperPanel_help' => 'Skjermelement for hjelp',
+	'helperPanel_widgets' => 'Mine skjermelement',
+);
+
 /** Occitan (Occitan)
  * @author Cedric31
  */
@@ -109,6 +117,14 @@ $messages['pt-br'] = array(
 	'helperPanel_widgets' => 'Meus widgets',
 );
 
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'helperPanel_help' => 'Aiute de le gioielle',
+	'helperPanel_widgets' => 'Le gioielle mije',
+);
+
 /** Russian (Русский)
  * @author Александр Сигачёв
  */
@@ -123,6 +139,14 @@ $messages['ru'] = array(
 $messages['sr-ec'] = array(
 	'helperPanel_help' => 'Помоћна алатка',
 	'helperPanel_widgets' => 'Моје алатке',
+);
+
+/** Swedish (Svenska)
+ * @author Sertion
+ */
+$messages['sv'] = array(
+	'helperPanel_help' => 'Hjälp widget',
+	'helperPanel_widgets' => 'Mina widgets',
 );
 
 /** Ukrainian (Українська)

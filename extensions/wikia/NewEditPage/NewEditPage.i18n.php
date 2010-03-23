@@ -160,12 +160,27 @@ $messages['pt-br'] = array(
 	'templatesused-toggle' => 'Mostrar/esconder {{PLURAL:$1|$1 item|$1 itens}}',
 );
 
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'new-edit-page-preview-notice' => 'Modalità andeprime: nisciuna cangiamende ha state reggistrate angore! Scinne abbasce pe condinuà a cangià.',
+	'templatesused-toggle' => 'Fà vedè/scunne {{PLURAL:$1|$1 artichele|$1 artichele}}',
+);
+
 /** Russian (Русский)
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
 	'new-edit-page-preview-notice' => 'Режим предварительного просмотра. Изменения ещё не сохранены! Прокрутите страницу вниз для продолжения редактирования.',
 	'templatesused-toggle' => 'Показать/скрыть $1 {{PLURAL:$1|запись|записи|записей}}',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'new-edit-page-preview-notice' => 'Претпреглед: још увек промена није сачувана! Доле можете да наставите са уређивањем.',
 );
 
 /** Ukrainian (Українська)

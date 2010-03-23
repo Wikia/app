@@ -18,6 +18,13 @@ $messages['af'] = array(
 	'wikifactoryreporter' => 'Wikifactory rapportering',
 );
 
+/** Araucanian (Mapudungun)
+ * @author Kaniw
+ */
+$messages['arn'] = array(
+	'wikifactoryreporter' => 'WikiFactory kimelzugun',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  */
@@ -58,6 +65,13 @@ $messages['de'] = array(
  */
 $messages['es'] = array(
 	'wikifactoryreporter' => 'Informe de WikiFactory',
+);
+
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'wikifactoryreporter' => 'WikiFactory Txostena',
 );
 
 /** Finnish (Suomi)
@@ -170,5 +184,26 @@ $messages['roa-tara'] = array(
  */
 $messages['ru'] = array(
 	'wikifactoryreporter' => 'Репортёр WikiFactory',
+);
+
+/** Sundanese (Basa Sunda)
+ * @author Kandar
+ */
+$messages['su'] = array(
+	'wikifactoryreporter' => 'Panglapor WikiFactory',
+);
+
+/** Swedish (Svenska)
+ * @author Sertion
+ */
+$messages['sv'] = array(
+	'wikifactoryreporter' => 'WikiFactory reporter',
+);
+
+/** Telugu (తెలుగు)
+ * @author Ravichandra
+ */
+$messages['te'] = array(
+	'wikifactoryreporter' => 'వికీకార్మాగారపు నివేదకుడు',
 );
 

@@ -152,7 +152,14 @@ Bijvoorbeeld:</p>
  * @author Nghtwlkr
  */
 $messages['no'] = array(
+	'privatedomains_nomanageaccess' => 'Beklager, du har ikke nok rettigheter til å håndtere tillatte private domener for denne wikien. Kun wikibyråkrater og stabsmedlemmer har tilgang.</p><p>Du bør <a href="/wiki/Special:Userlogin">logge inn</a> om du ikke alt har gjort det.',
+	'privatedomains' => 'Håndter private domener',
+	'privatedomains_ifemailcontact' => 'Hvis ikke, kontakt [[Special:Emailuser/$1|$1]] om du har spørsmål.',
+	'saveprivatedomains_success' => 'Endringer for private domener lagret.',
+	'privatedomains_invalidemail' => 'Beklager, tilgang til denne wikien er begrenset til medlemmer av $1. Om du har en e-postadresse tilknyttet $1 kan du skrive den inn eller bekrefte den på din side for <a href="/wiki/Special:Preferences>kontoinnstillinger</a>. Du kan fortsatt se sidene på denne wikien, men du kan ikke redigere dem.',
 	'privatedomains_affiliatenamelabel' => 'Navn på organisasjon:',
+	'privatedomains_emailadminlabel' => 'Kontakt brukernavn for tilgangsproblemer eller spørsmål:',
+	'privatedomainsinstructions' => 'Under er en liste over e-postdomener som er tillatt for bidragsytere i denne wikien. Hver linje angir et e-postsuffiks som er gitt tilgang til redigering. Denne bør være formatert med ett suffiks per linje. For eksempel:</p><p style="width:20%; padding:5px; border:1px solid grey;">cs.stanford.edu<br /> stanfordalumni.org</p><p>Dette ville tillatt redigeringer fra enhver med e-postadresse hvasomhelst@cs.stanford.edu og hvasomhelst@stanfordalumni.org</p><p><b>Skriv inn tillatte domener i tekstboksen under og klikk «lagre».</b>',
 );
 
 /** Piedmontese (Piemontèis)

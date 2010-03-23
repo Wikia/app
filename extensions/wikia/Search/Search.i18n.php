@@ -136,6 +136,16 @@ $messages['nl'] = array(
 	'wikiasearch-search-wikia' => 'Wikia doorzoeken',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'wikiasearch-titles-only' => 'Kun søk i sidetitler',
+	'wikiasearch-search-this-wiki' => 'Søk kun i Wikiasentralen',
+	'wikiasearch-search-wikia' => 'Søk i Wikia',
+);
+
 /** Occitan (Occitan)
  * @author Cedric31
  */
@@ -175,5 +185,15 @@ $messages['ru'] = array(
 	'wikiasearch-system-error-msg' => 'Из-за системной ошибки, поиск не может быть выполнен',
 	'wikiasearch-search-this-wiki' => 'Поиск только по Wikia Central',
 	'wikiasearch-search-wikia' => 'Найти на Wikia',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'wikiasearch-titles-only' => 'Претражи само у насловима страница',
+	'wikiasearch-system-error-msg' => 'Због системске грешке ваша претрага не може да се изврши',
+	'wikiasearch-search-this-wiki' => 'Претражи само централну викију',
+	'wikiasearch-search-wikia' => 'Претражи викију',
 );
 

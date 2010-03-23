@@ -87,6 +87,14 @@ $messages['nl'] = array(
 	'quickcreate' => 'recept toevoegen',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'quickcreate-desc' => 'Legger til en «opprett ny side»-knapp med muligheten for å logge inn for anonyme brukere',
+	'quickcreate' => 'send inn din oppskrift',
+);
+
 /** Occitan (Occitan)
  * @author Cedric31
  */
@@ -104,11 +112,26 @@ $messages['pms'] = array(
 	'quickcreate' => "ch'a manda soa arseta",
 );
 
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'quickcreate-desc' => "Aggiunge 'nu buttone de ccrejazione de 'na pàgena nove cu l'abbilità de trasè pe le utinde anonime",
+	'quickcreate' => "conferme 'a ricetta toje",
+);
+
 /** Russian (Русский)
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
 	'quickcreate-desc' => 'Добавляет кнопку создания страницы с возможностью войти в систему для анонимных пользователей',
 	'quickcreate' => 'отправить свой рецепт',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'quickcreate' => 'пошаљите ваш рецепт',
 );
 

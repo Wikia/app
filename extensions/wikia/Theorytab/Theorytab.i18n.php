@@ -89,6 +89,14 @@ $messages['it'] = array(
 	'theorytab-parent-title' => 'Articolo principale',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'theorytab-title' => 'Theorie',
+	'theorytab-parent-title' => 'Haaptartikel',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */

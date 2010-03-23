@@ -19,9 +19,12 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author EugeneZelenko
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'wikiavideo-back' => '{{Identical|Back}}',
+	'wikiavideo-links' => '{{Identical|Link}}',
 	'wikiavideo-intro-old' => 'Parameters:
 * $1 is the URL of the local video file
 * $2 is the time the old video version was created
@@ -55,6 +58,27 @@ $messages['af'] = array(
  */
 $messages['ar'] = array(
 	'wikiavideo-create' => 'أضف فيديو',
+);
+
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'wikiavideo-reverted' => 'Відэа $1 было пасьпяхова вернутае да пачатковага стану. Вярніцеся да $2.',
+	'wikiavideo-unreverted' => 'Вы ня маеце правоў для вяртаньня да пачатковага стану $1.',
+	'wikiavideo-added' => 'дададзенае відэа $1',
+	'wikiavideo-back' => 'вярнуцца',
+	'wikiavideo-create' => 'Дадаць відэа',
+	'wikiavideo-replace' => 'Замяніць відэа',
+	'wikiavideo-category' => 'Відэа',
+	'wikiavideo-links' => 'Спасылкі',
+	'wikiavideo-placeholder' => 'Запаўняльнік',
+	'wikiavideo-gallery-template' => 'Гэтая відэа-галерэя знаходзіцца ў шаблёне, і ня можа рэдагавацца ў рэжыме прагляду. Калі ласка, рэдагуйце адпаведны шаблён.',
+	'wikiavideo-not-supported' => 'Гэтае афармленьне не падтрымлівае ўстаўку відэа ў галерэі ў рэжыме прагляду.',
+	'wikiavideo-pixel' => '  піксэлі',
+	'wikiavideo-deleted-old' => "Вэрсія '''[$1 $2]''' ад $4, $3 была выдаленая.",
+	'wikiavideo-intro-old' => "Вы выдаляеце вэрсію '''[$1 $5]''' ад [$4 $3, $2].",
 );
 
 /** Bulgarian (Български)
@@ -103,6 +127,22 @@ $messages['cs'] = array(
 	'wikiavideo-pixel' => 'pixel',
 	'wikiavideo-deleted-old' => "Verze $3, $4 souboru '''[$1 $2]''' byla vymazána.",
 	'wikiavideo-intro-old' => "Chystáte se smazat verzi [$4 $3, $2] souboru '''[$1 $5]'''.",
+);
+
+/** Welsh (Cymraeg)
+ * @author Lloffiwr
+ */
+$messages['cy'] = array(
+	'wikiavideo-reverted' => "Llwyddwyd gwrthdroi'r fideo $1. Ewch yn ôl i $2.",
+	'wikiavideo-unreverted' => "Nid yw'r gallu gennych i wrthdroi $1.",
+	'wikiavideo-added' => "wedi ychwanegu'r fideo $1t",
+	'wikiavideo-back' => 'nôl',
+	'wikiavideo-create' => 'Ychwanegu Fideo',
+	'wikiavideo-replace' => 'Disodli Fideo',
+	'wikiavideo-category' => 'Fideos',
+	'wikiavideo-links' => 'Cysylltau',
+	'wikiavideo-pixel' => '  picsel',
+	'wikiavideo-intro-old' => "Rydych yn dileu hen fersiwn o'r ffeil '''[$1 $5]''' fel ag yr oedd ar [$4 $3, am $2].",
 );
 
 /** German (Deutsch) */
@@ -212,6 +252,7 @@ $messages['gl'] = array(
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
+	'wikiavideo-added' => '$1 videó hozzáadva',
 	'wikiavideo-back' => 'vissza',
 	'wikiavideo-create' => 'Videó hozzáadása',
 	'wikiavideo-replace' => 'Videó cseréje',
@@ -315,6 +356,7 @@ $messages['no'] = array(
 	'wikiavideo-links' => 'Lenker',
 	'wikiavideo-placeholder' => 'Plassholder',
 	'wikiavideo-gallery-template' => 'Dette videogalleriet er innenfor en mal og er kan ikke redigeres fra visningsmodusen. Vennligst rediger den gjeldende malen.',
+	'wikiavideo-not-supported' => 'Denne drakten støtter ikke innsetting av videoer i gallerier fra visningsmodus.',
 	'wikiavideo-pixel' => '  piksel',
 	'wikiavideo-deleted-old' => "Versjonen av '''[$1 $2]''' fra $4, $3 har blitt slettet.",
 	'wikiavideo-intro-old' => "Du sletter versjonen av '''[$1 $5]''' fra [$4 $3, $2].",
@@ -355,6 +397,15 @@ $messages['pms'] = array(
 	'wikiavideo-pixel' => '   pontin',
 	'wikiavideo-deleted-old' => "La version '''[$1 $2]''' ëd $4, $3 a l'é stàita scancelà.",
 	'wikiavideo-intro-old' => "A l'é dapress a scancelé la version ëd '''[$1 $5]''' dij [$4 $3, $2].",
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'wikiavideo-create' => 'ويډيو ورګډول',
+	'wikiavideo-category' => 'ويډيوګانې',
+	'wikiavideo-links' => 'تړنې',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -398,10 +449,28 @@ $messages['ru'] = array(
 	'wikiavideo-intro-old' => "Вы удаляете версию '''[$1 $5]''' от [$4 $3, $2].",
 );
 
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'wikiavideo-added' => 'додан видео $1',
+	'wikiavideo-create' => 'Додај видео',
+	'wikiavideo-replace' => 'замени видео',
+	'wikiavideo-links' => 'Видео везе',
+	'wikiavideo-pixel' => 'пиксел',
+);
+
 /** Telugu (తెలుగు)
  * @author Veeven
  */
 $messages['te'] = array(
 	'wikiavideo-back' => 'వెనక్కి',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'wikiavideo-intro-old' => "Ви вилучаєте версію '''[$1 $5]''' від [$4 $3, $2].",
 );
 

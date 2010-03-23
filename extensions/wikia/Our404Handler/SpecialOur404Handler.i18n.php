@@ -49,6 +49,7 @@ N'eo ket bet kavet ar pennad '''$1'''.
 
 /** German (Deutsch)
  * @author McDutchie
+ * @author Merlissimo
  * @author Tim 'Avatar' Bartel
  */
 $messages['de'] = array(
@@ -321,6 +322,13 @@ Article '''$1''' introbable.
 * Per aténher la pagina d'acuèlh, clicatz aqueste ligam : [{{SERVER}} {{SITENAME}}]",
 );
 
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'our404handler' => 'Error 404: Ken Blatt gfunne!',
+);
+
 /** Polish (Polski)
  * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
  */
@@ -372,6 +380,14 @@ $messages['ru'] = array(
 * Вы можете попробовать статью [[$2]].
 * Вы можете воспользоваться окном поиска в левой части страницы.
 * Чтобы перейти на главную страницу этого сайта, нажмите на данную ссылку [{{SERVER}} {{SITENAME}}].",
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'our404handler' => 'Грешка 404: Није нађена страница',
+	'our404handler-oops' => 'Нема страница које тражите. Идите даље.',
 );
 
 /** Swedish (Svenska)

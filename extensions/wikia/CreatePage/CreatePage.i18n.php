@@ -154,11 +154,12 @@ $messages['de'] = array(
 );
 
 /** Greek (Ελληνικά)
+ * @author Dead3y3
  * @author Περίεργος
  */
 $messages['el'] = array(
 	'createpage_title' => 'Δημιουργήστε ένα καινούργιο άρθρο',
-	'createpage_title_caption' => 'Τίτλος Άρθρου',
+	'createpage_title_caption' => 'Τίτλος:',
 );
 
 /** Spanish (Español)
@@ -375,6 +376,14 @@ $messages['he'] = array(
 כתוב את הקטע השני במאמר שלך כאן.',
 );
 
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'createpage_title_caption' => 'Cím:',
+	'createpage_enter_text' => 'Szöveg:',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -475,8 +484,13 @@ Sicht Iech w.e.g. en aneren Numm.',
 	'createpage-dialog-format' => 'Standard-Layout',
 	'createpage-dialog-blank' => 'Eidel Säit',
 	'createpage-error-empty-title' => 'Schreiwt w.e.g. en Titel an Ären Artikel',
+	'createpage-error-invalid-title' => 'Pardon den titel vum Artikel ass net valabel.
+Benotzt w.e.g. en aneren Titel.',
 	'createpage-error-article-exists' => 'Et gëtt schonn en Artikel mat deem Titel.
 Dir kënnt op <a href="$1">$2</a> goen oder Är Säit ëmbenennen',
+	'createpage-error-article-spam' => 'Pardon, den Titel vum Artikel gouf vun eisem Spam-Filter blockéiert.
+Benotzt w.e.g. en aneren Titel.',
+	'createpage-error-article-blocked' => 'Pardon, Dir kënnt deen Artikel elo net uleeën.',
 	'tog-createpagedefaultblank' => 'Benotzt eng eidel Säit als Standard fir eng nei Säit unzeleeën',
 );
 
@@ -588,6 +602,16 @@ Du kan gå til <a href="$1">$2</a> eller gi siden din et nytt navn',
 Vennligst bruk en annen tittel.',
 	'createpage-error-article-blocked' => 'Beklager, du kan ikke opprettet artikler akkurat nå.',
 	'tog-createpagedefaultblank' => 'Bruk en blank side som standard for å opprette en ny side',
+	'newpagelayout' => '[[File:Placeholder|right|300px]]
+Skriv det første avsnittet i artikkelen din her.
+
+==Seksjonsoverskrift==
+
+Skriv den første seksjonen av artikkelen din her.
+
+==Seksjonsoverskrift==
+
+Skriv den andre seksjonen av artikkelen din her.',
 );
 
 /** Polish (Polski) */
@@ -627,6 +651,16 @@ A peul andé a <a href="$1">$2</a>, o deje n\'àutr nòm a soa pàgina.',
 Për piasì, ch'a deuvra un tìtol diferent.",
 	'createpage-error-article-blocked' => 'Darmagi, a peul pa creé col artìcol adess.',
 	'tog-createpagedefaultblank' => "Ch'a deuvra na pàgina polida për creé na neuva pàgina.",
+	'newpagelayout' => "[[File:Placeholder|right|300px]]
+Ch'a scriva ambelessì ël prim paràgraf ëd sò artìcol.
+
+==Antestassion ëd la session==
+
+Ch'a scriva ambelessì la prima session ëd sò artìcol.
+
+==Antestassion ëd la session==
+
+Ch'a scriva ambelessì la sconda session ëd sò artìcol.",
 );
 
 /** Pashto (پښتو)
@@ -741,7 +775,9 @@ $messages['sr-ec'] = array(
 Молимо Вас да одаберете друго име.',
 	'createpage_spam' => 'Извините, али не може се сачувати ваша измена',
 	'createpage_cant_edit' => 'Не може се извести измена',
+	'createpage-dialog-title' => 'Напишите нови чланак',
 	'createpage-dialog-message1' => 'Ура, ви пишете нову страницу!',
+	'createpage-dialog-message2' => 'Како желите да га назовете?',
 	'createpage-dialog-choose' => 'Одаберите изглед странице:',
 	'createpage-dialog-format' => 'Стандардан изглед',
 	'createpage-dialog-blank' => 'празна страна',
@@ -750,6 +786,7 @@ $messages['sr-ec'] = array(
 Молимо Вас да користите други наслов',
 	'createpage-error-article-exists' => 'Већ постоји чланак са тим именом.
 Можете да одете на <a href="$1">$2</a> или можете да преименујете страницу',
+	'createpage-error-article-blocked' => 'Нажалост неможете сада да направите чланак',
 );
 
 /** Swedish (Svenska)

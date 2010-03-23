@@ -175,6 +175,13 @@ $messages['ru'] = array(
 	'force-subject-for-new-section-message' => 'Пожалуйста, введите заголовок для раздела',
 );
 
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'force-subject-for-new-section-message' => 'Молимо Вас унесите наслов за овај део',
+);
+
 /** Swedish (Svenska)
  * @author Per
  */

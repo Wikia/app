@@ -229,6 +229,16 @@ $messages['ru'] = array(
 	'whereisextension-name-contains' => 'имя переменной содержит',
 );
 
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Verlor
+ */
+$messages['sr-ec'] = array(
+	'whereisextension-submit' => 'Претрага',
+	'whereisextension-list' => 'Листа викија са траженим критеријима',
+	'whereisextension-filter' => 'Филтар',
+	'whereisextension-all-groups' => 'Све групе',
+);
+
 /** Telugu (తెలుగు)
  * @author Veeven
  */

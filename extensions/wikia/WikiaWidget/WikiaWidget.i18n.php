@@ -19,11 +19,18 @@ $messages['af'] = array(
 	'wikiawidget' => 'Wikia-widgets',
 );
 
+/** Araucanian (Mapudungun)
+ * @author Kaniw
+ */
+$messages['arn'] = array(
+	'wikiawidget' => 'Wikia ñi widgets',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author Jim-by
  */
 $messages['be-tarask'] = array(
-	'wikiawidget' => 'Прылада Wikia',
+	'wikiawidget' => 'Прылады Wikia',
 );
 
 /** Breton (Brezhoneg)
@@ -75,7 +82,7 @@ $messages['gl'] = array(
  * @author Michawiki
  */
 $messages['hsb'] = array(
-	'wikiawidget' => 'Wikia_Asistenty',
+	'wikiawidget' => 'Wikija woknowe elementy',
 );
 
 /** Hungarian (Magyar)
@@ -93,10 +100,11 @@ $messages['ia'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Tommy6
  * @author 青子守歌
  */
 $messages['ja'] = array(
-	'wikiawidget' => 'ウィキアウィジット',
+	'wikiawidget' => 'ウィキアウィジェット',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -122,9 +130,10 @@ $messages['nl'] = array(
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
+ * @author Nghtwlkr
  */
 $messages['no'] = array(
-	'wikiawidget' => 'Wikia-widget',
+	'wikiawidget' => 'Skjermelement for Wikia',
 );
 
 /** Occitan (Occitan)
@@ -148,9 +157,11 @@ $messages['pt-br'] = array(
 	'wikiawidget' => 'WikiaWidget',
 );
 
-/** Tarandíne (Tarandíne) */
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
 $messages['roa-tara'] = array(
-	'wikiawidget' => 'Wikia Widget',
+	'wikiawidget' => 'Uicchi gingille',
 );
 
 /** Russian (Русский)
@@ -165,5 +176,19 @@ $messages['ru'] = array(
  */
 $messages['sr-ec'] = array(
 	'wikiawidget' => 'Викија алатке',
+);
+
+/** Swedish (Svenska)
+ * @author Sertion
+ */
+$messages['sv'] = array(
+	'wikiawidget' => 'Wikia widgets',
+);
+
+/** Telugu (తెలుగు)
+ * @author Ravichandra
+ */
+$messages['te'] = array(
+	'wikiawidget' => 'వికియా విడ్జెట్లు',
 );
 
