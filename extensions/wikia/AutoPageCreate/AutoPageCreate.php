@@ -33,7 +33,11 @@ function wfAutoPageCreateEditPage( $editpage ) {
 }
 
 function wfAutoPageCreateIsAnonUserpage( $title  ) {
-
+	if( User::IsIP( $title ) ) {
+		if( !User::idFromName( $title ) ) {
+			return true;
+		}
+	}	
 	return false;
 }
 
