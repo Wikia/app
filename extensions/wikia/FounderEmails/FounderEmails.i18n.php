@@ -7,11 +7,11 @@ $messages['en'] = array(
 	'founderemails-email-user-registered-subject' => 'Someone registered an account on your wiki!',
 	'founderemails-email-user-registered-body' => 'Hey $FOUNDERNAME,
 
-It looks like $USERNAME has registered on your wiki! Why don\'t you drop by their userpage ($USERPAGEURL) to say hello?
+It looks like $USERNAME has registered on your wiki! Why don\'t you drop by their talkpage $USERTALKPAGEURL to say hello?
 
 -- The Wikia Team',
 	'founderemails-email-user-registered-body-HTML' => 'Hey $FOUNDERNAME,<br /><br />
-It looks like $USERNAME has registered on your wiki! Why don\'t you drop by their <a href="$USERPAGEURL">userpage</a> to say hello?<br /><br />
+It looks like $USERNAME has registered on your wiki! Why don\'t you drop by their <a href="$USERTALKPAGEURL">talkpage</a> to say hello?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
 	'founderemails-email-0-days-passed-subject' => 'Welcome to Wikia!',
 	'founderemails-email-0-days-passed-body' => 'Congratulations on creating $WIKINAME - you\'re now part of the Wikia community!
@@ -44,19 +44,19 @@ It\'s been a little while since you started a wiki on Wikia - we hope it\'s goin
 	'founderemails-email-page-edited-reg-user-first-edit-subject' => 'Registered user changed your wiki for the first time!',
 	'founderemails-email-page-edited-reg-user-first-edit-body' => 'Hey $FOUNDERNAME,
 
-It looks like registerd user $USERNAME has edited your wiki for the first time! Why don\'t you drop by their userpage ($USERPAGEURL) to say hello?
+It looks like registerd user $USERNAME has edited your wiki for the first time! Why don\'t you drop by their talkpage ($USERTALKPAGEURL) to say hello?
 
 -- The Wikia Team',
 	'founderemails-email-page-edited-reg-user-first-edit-body-HTML' => 'Hey $FOUNDERNAME,<br /><br />
-It looks like registered user $USERNAME has edited your wiki for the first time! Why don\'t you drop by their <a href="$USERPAGEURL">userpage</a> to say hello?<br /><br />
+It looks like registered user $USERNAME has edited your wiki for the first time! Why don\'t you drop by their <a href="$USERTALKPAGEURL">talkpage</a> to say hello?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
 	'founderemails-email-page-edited-reg-user-subject' => 'Registered user changed your wiki!',
 	'founderemails-email-page-edited-reg-user-body' => 'Hey $FOUNDERNAME,
 
-It looks like registerd user $USERNAME has edited your wiki! Why don\'t you drop by their userpage ($USERPAGEURL) to say hello?
+It looks like registerd user $USERNAME has edited your wiki! Why don\'t you drop by their talkpage ($USERTALKPAGEURL) to say hello?
 
 -- The Wikia Team',
 	'founderemails-email-page-edited-reg-user-body-HTML' => 'Hey $FOUNDERNAME,<br /><br />
-It looks like registered user $USERNAME has edited your wiki! Why don\'t you drop by their <a href="$USERPAGEURL">userpage</a> to say hello?<br /><br />
+It looks like registered user $USERNAME has edited your wiki! Why don\'t you drop by their <a href="$USERTALKPAGEURL">talkpage</a> to say hello?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>'
 );
