@@ -57,9 +57,11 @@ class CorporateTemplate extends CorporateBaseTemplate {
 
 		<div id="MainContent">
 			<!-- DEV NOTE: This area has the blue-striped background.  -->
+			<?php AdEngine::getInstance()->getSetupHtml(); ?>
 
 			<article id="MainArticle" class="clearfix">
 				<div class="shrinkwrap">
+					<?php echo $this->getTopAdCode() ?>
 					<?php print $this->htmlMainArticleContents();?>
 
 
@@ -74,7 +76,6 @@ class CorporateTemplate extends CorporateBaseTemplate {
 
 			<!-- DEV NOTE: These spotlights only show up on non-"homepage" pages. -->
 			<section id="wikia-spotlights">
-				<?php AdEngine::getInstance()->getSetupHtml(); ?>
 				<?php echo AdEngine::getInstance()->getAd('FOOTER_SPOTLIGHT_LEFT'); ?>
 				<?php echo AdEngine::getInstance()->getAd('FOOTER_SPOTLIGHT_MIDDLE_LEFT'); ?>
 				<?php echo AdEngine::getInstance()->getAd('FOOTER_SPOTLIGHT_MIDDLE_RIGHT'); ?>
@@ -89,6 +90,17 @@ class CorporateTemplate extends CorporateBaseTemplate {
 </html>
 
 <?php
+	}
+
+	function getTopAdCode() {
+		global $wgOut;
+		$topAdCode = '';
+		if (! $wgOut->isArticle() || ArticleAdLogic::isMainPage()){
+			return $topAdCode;
+		}
+		$topAdCode .= "<div id='CORP_TOP_LEADERBOARD' style='width:728px; margin-left: auto; margin-right:auto; padding-bottom: 10px'>" . AdEngine::getInstance()->getAd('CORP_TOP_LEADERBOARD') . "</div>"; 
+		$topAdCode .= "<div id='CORP_TOP_RIGHT_BOXAD' style='float:right; padding:10px'>" . AdEngine::getInstance()->getAd('CORP_TOP_RIGHT_BOXAD') . "</div>"; 
+		return $topAdCode;
 	}
 } // end of class
 
