@@ -19,6 +19,7 @@ class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 				'$FOUNDERNAME' => $founderEmails->getWikiFounder()->getName(),
 				'$USERNAME' => $eventData['data']['userName'],
 				'$USERPAGEURL' => $eventData['data']['userPageUrl'],
+				'$USERTALKPAGEURL' => $eventData['data']['userTalkPageUrl'],
 				'$UNSUBSCRIBEURL' => $eventData['data']['unsubscribeUrl']
 			);
 
@@ -41,6 +42,7 @@ class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 		$eventData = array(
 			'userName' => $user->getName(),
 			'userPageUrl' => $user->getUserPage()->getFullUrl('ctc=FE01'),
+			'userTalkPageUrl' => $user->getTalkPage()->getFullUrl('ctc=FE01'),
 			'unsubscribeUrl' => Title::newFromText('Preferences', NS_SPECIAL)->getFullUrl('ctc=FE04')
 		);
 
