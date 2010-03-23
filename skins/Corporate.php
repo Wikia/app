@@ -16,6 +16,7 @@ if( !defined( 'MEDIAWIKI' ) )
  */
 
 require_once(dirname( __FILE__ )."/CorporateBase.php");
+require_once(dirname( __FILE__ )."/../extensions/wikia/CorporatePage/CorporatePageHelper.class.php");
 
 class SkinCorporate extends SkinCorporateBase {
 	function initPage( OutputPage $out ) {
