@@ -13,6 +13,7 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 
 		$founderEmails = FounderEmails::getInstance();
 		foreach($events as $event) {
+			$wikiId = $event['wikiId'];
 			$activateTime = $event['data']['activateTime'];
 			$activateDays = $event['data']['activateDays'];
 
@@ -27,12 +28,12 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 					'$UNSUBSCRIBEURL' => $event['data']['unsubscribeUrl']
 				);
 
-				$langCode = $founderEmails->getWikiFounder()->getOption('language');
+				$langCode = $founderEmails->getWikiFounder( $wikiId )->getOption('language');
 				$mailSubject = $this->getLocalizedMsgBody( 'founderemails-email-' . $activateDays . '-days-passed-subject', $langCode, array() );
 				$mailBody = $this->getLocalizedMsgBody( 'founderemails-email-' . $activateDays . '-days-passed-body', $langCode, $emailParams );
 				$mailBodyHTML = $this->getLocalizedMsgBody( 'founderemails-email-' . $activateDays . '-days-passed-body-HTML', $langCode, $emailParams );
 
-				$result = $founderEmails->notifyFounder( $mailSubject, $mailBody, $mailBodyHTML );
+				$result = $founderEmails->notifyFounder( $mailSubject, $mailBody, $mailBodyHTML, $wikiId );
 
 				if( $result ) {
 					$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
@@ -70,7 +71,7 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 
 			$eventData = array(
 				'activateDays' => $daysToActivate,
-				'activateTime' => time() + ( 86400 * $daysToActivate ) - 1, // -1 to make sure "0 days passed" case will be processed strightaway
+				'activateTime' => time() + ( 86400 * $daysToActivate ),
 				'wikiName' => $wikiParams['title'],
 				'wikiUrl' => $wikiParams['url'],
 				'wikiMainpageUrl' => $mainpageTitle->getFullUrl(),
@@ -83,7 +84,7 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 				$eventData['activateTime'] = 0;
 			}
 
-			$founderEmails->registerEvent( new FounderEmailsDaysPassedEvent($eventData) );
+			$founderEmails->registerEvent( new FounderEmailsDaysPassedEvent($eventData), false );
 		}
 
 		wfProfileOut( __METHOD__ );

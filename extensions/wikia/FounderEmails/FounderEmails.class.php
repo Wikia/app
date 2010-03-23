@@ -22,11 +22,13 @@ class FounderEmails {
 	 * get wiki founder
 	 * @return User
 	 */
-	public function getWikiFounder() {
+	public function getWikiFounder( $wikiId = 0 ) {
 		global $wgCityId, $wgFounderEmailsDebugUserId;
 
+		$wikiId = !empty($wikiId) ? $wikiId : $wgCityId;
+
 		if( empty($wgFounderEmailsDebugUserId) ) {
-			$wikiFounder = User::newFromId( WikiFactory::getWikiById($wgCityId)->city_founding_user );
+			$wikiFounder = User::newFromId( WikiFactory::getWikiById( $wikiId )->city_founding_user );
 		}
 		else {
 			$wikiFounder = User::newFromId( $wgFounderEmailsDebugUserId );
@@ -38,21 +40,24 @@ class FounderEmails {
 	/**
 	 * send notification email to wiki founder
 	 */
-	public function notifyFounder($mailSubject, $mailBody, $mailBodyHTML) {
-		return $this->getWikiFounder()->sendMail( $mailSubject, $mailBody, null, null, 'FounderEmails', $mailBodyHTML );
+	public function notifyFounder($mailSubject, $mailBody, $mailBodyHTML, $wikiId = 0) {
+		return $this->getWikiFounder( $wikiId )->sendMail( $mailSubject, $mailBody, null, null, 'FounderEmails', $mailBodyHTML );
 	}
 
 	/**
 	 * register new event on wiki
 	 * @param FounderEmailsEvent $event
+	 * @param bool $doProcess perform event processing when done
 	 */
-	public function registerEvent(FounderEmailsEvent $event) {
+	public function registerEvent(FounderEmailsEvent $event, $doProcess = true) {
 		global $wgCityId;
 		wfProfileIn( __METHOD__ );
 
 		if( !$this->getWikiFounder()->getOption('founderemailsdisabled', false) ) {
 			$event->create();
-			$this->processEvents( $event->getType(), true, $wgCityId );
+			if( $doProcess ) {
+				$this->processEvents( $event->getType(), true, $wgCityId );
+			}
 			$this->mLastEvetType = $event->getType();
 		}
 
@@ -77,7 +82,7 @@ class FounderEmails {
 
 		$aEventsData = array();
 		while($row = $dbs->fetchObject($res)) {
-			$aEventsData[] = array( 'id' => $row->feev_id, 'timestamp' => $row->feev_timestamp, 'data' => unserialize($row->feev_data) );
+			$aEventsData[] = array( 'id' => $row->feev_id, 'wikiId' => $row->feev_wiki_id, 'timestamp' => $row->feev_timestamp, 'data' => unserialize($row->feev_data) );
 		}
 
 		if( count($aEventsData) ) {
