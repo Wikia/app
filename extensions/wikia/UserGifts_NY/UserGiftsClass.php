@@ -117,7 +117,7 @@ class UserGifts {
 
 	public function doesUserOwnGift($user_id, $ug_id){
 		$dbr =& wfGetDB( DB_SLAVE );
-		$s = $dbr->selectRow( '`user_gift`', array( 'ug_user_id_to' ), array( 'ug_id' => $ug_id ), $fname );
+		$s = $dbr->selectRow( '`user_gift`', array( 'ug_user_id_to' ), array( 'ug_id' => $ug_id ), __METHOD__ );
 		if ( $s !== false ) {
 			if($user_id == $s->ug_user_id_to){
 				return true;
@@ -209,7 +209,7 @@ class UserGifts {
 		$key = wfMemcKey( 'user_gifts', 'new_count', $user_id );
 		$dbr =& wfGetDB( DB_MASTER );
 		$new_gift_count = 0;
-		$s = $dbr->selectRow( '`user_gift`', array( 'count(*) as count' ), array( 'ug_user_id_to' => $user_id, 'ug_status' => 1 ), $fname );
+		$s = $dbr->selectRow( '`user_gift`', array( 'count(*) as count' ), array( 'ug_user_id_to' => $user_id, 'ug_status' => 1 ), __METHOD__ );
 		if ( $s !== false )$new_gift_count = $s->count;	
 		
 		$wgMemc->set($key,$new_gift_count);
