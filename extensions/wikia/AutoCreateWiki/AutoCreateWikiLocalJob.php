@@ -362,7 +362,13 @@ class AutoCreateWikiLocalJob extends Job {
 	 * @return boolean status
 	 */
 	private function sendWelcomeMail() {
-		global $wgUser, $wgPasswordSender;
+		global $wgUser, $wgPasswordSender, $wgWikiaEnableFounderEmailsExt;
+
+		if(!empty($wgWikiaEnableFounderEmailsExt)) {
+			// skip this step when FounderEmails extension is enabled
+			Wikia::log( __METHOD__, "mail", "FounderEmails extension is enabled. Welcome email is not sent" );
+			return true;
+		}
 
 		$oReceiver = $this->mFounder;
 		$sServer = $this->mParams["url"];
@@ -443,7 +449,12 @@ class AutoCreateWikiLocalJob extends Job {
 	 * TheSchwartz will call api.php?method=awcreminder
 	 */
 	private function queueReminderMail() {
-		global $wgServer, $wgTheSchwartzSecretToken;
+		global $wgServer, $wgTheSchwartzSecretToken, $wgWikiaEnableFounderEmailsExt;
+
+		if(!empty($wgWikiaEnableFounderEmailsExt)) {
+			// skip this step when FounderEmails extension is enabled
+			return true;
+		}
 
 		$backurl = sprintf( "%s/api.php?action=awcreminder&user_id=%d&token=%s",
 			$wgServer, $this->mFounder->getId(), $wgTheSchwartzSecretToken );
