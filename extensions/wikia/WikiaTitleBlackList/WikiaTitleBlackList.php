@@ -148,7 +148,9 @@ function wfSpamBlacklistTitleGenericTitleCheck( $titleObj ) {
 	$retVal = true;
 
 	// titleObj is already verified as object earlier in CDQP
-	$retVal = wfBlackListTitleParse($titleObj);
+	if ($titleObj instanceof Title) {
+		$retVal = wfBlackListTitleParse($titleObj);
+	}
 
 	wfProfileOut( __METHOD__ );
 	return $retVal;
