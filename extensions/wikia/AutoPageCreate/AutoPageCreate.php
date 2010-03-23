@@ -25,7 +25,7 @@ function wfAutoPageCreateEditPage( $editpage ) {
 	if( !$editpage->mTitle->exists() ) {
 		if( $editpage->mTitle->isContentPage() ) {
 			$editpage->textbox1 = wfMsgForContent( 'newpagelayout' );
-		} else if( ( $editpage->mTitle->getNamespace() == NS_USER ) && !wfAutoPageCreateIsAnonUserpage( $editpage->mTitle  ) ) {
+		} else if( ( $editpage->mTitle->getNamespace() == NS_USER ) && !wfAutoPageCreateIsAnonUserpage( $editpage->mTitle->getText()  ) ) {
 			$editpage->textbox1 = wfMsgForContent( 'welcome-user-page' );
 		}
 	}
@@ -71,9 +71,11 @@ function wfAutoPageCreateViewPage( $article, $out, &$text, &$return404 ) {
 			} else {
 				switch( $article->mTitle->getNamespace() ) {
 					case NS_USER:
-						if( !wfAutoPageCreateIsAnonUserpage( $article->mTitle ) ) {
+						if( !wfAutoPageCreateIsAnonUserpage( $article->mTitle->getText() ) ) {
 							$text = wfMsgForContent( "welcome-user-page" );
 							$overlayMsgKey = "autopagecreate-newpage-notice-user";
+						} else {
+							$overlayMsgKey = "autopagecreate-empty";
 						}
 						break;
 					case NS_PROJECT:	$overlayMsgKey = "autopagecreate-newpage-notice-project"; break;
