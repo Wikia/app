@@ -54,7 +54,9 @@ jQuery("#answers_ask_field").ready(function() {
 			console.log(sUrl);
 			var request = YAHOO.util.Connect.asyncRequest('GET', sUrl, submitAutoComplete_callback);
 		}
-		myAutoComp.itemSelectEvent.subscribe(submitAutoComplete);
+
+		//FIXME: Hasn't worked since Even Faster Monaco was rolled out (which changed a bunch in the way scripts were loaded).
+		//myAutoComp.itemSelectEvent.subscribe(submitAutoComplete);
 
 		YAHOO.util.Event.addListener('answers_ask_field', 'keypress', function(e) {if(e.keyCode==13) {
 			WET.byStr('ask/enter');
