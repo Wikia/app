@@ -69,10 +69,10 @@ function trackContainer ( ev ) {
 
 		} else if( obj.parent().hasClass( 'user-info' )  ) {
 			trackTag( 'blog/username' );
-
+		} else if( obj.parent().hasClass( 'topuser-info' )  ) {
+			trackTag( 'topusers' );
 		} else if( obj.parent().hasClass( 'blog-jump' )  ) {
 			trackTag( 'blog/continue' );
-
 		} else if( obj.hasClass( 'secondary' ) ) {
 			if( obj.parent().parent().hasClass( 'spotlight-slider-1' )  ) {
 				trackTag( 'slider/featured-2' );
