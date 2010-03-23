@@ -31,7 +31,7 @@ if( !empty( $mType ) ) {
 			<li class="label"><label class="required" id="wiki-name-label"><?=wfMsg('allmessagesname')?>:</label></li>
 			<li class="data1">
 				<input type="text" autocomplete="off" name="wiki-name" id="wiki-name" value="<?=@$params['wiki-name']?>"/> <?php echo $subName ?><span class="error-status" id="wiki-name-error-status">&nbsp;</span>
-				<div class="error" style="display: none;" id="wiki-name-error">
+				<div class="error" style="display: <?= (!empty($mPostedErrors['wiki-name'])) ? 'block' : 'none'?>;" id="wiki-name-error"><?=@$mPostedErrors['wiki-name']?></div>
 			</li>
 			<li class="data2"><span class="note"><?=wfMsg('autocreatewiki-info-topic')?></span></li>
 		</ul>
@@ -41,7 +41,7 @@ if( !empty( $mType ) ) {
 			<li class="label"><label class="required" id="wiki-domain-label"><?=wfMsg('autocreatewiki-web-address')?></label></li>
 			<li class="data1">
 				<span id="prefixedAddress">http://</span><input type="text" maxlength="245" autocomplete="off" name="wiki-domain" id="wiki-domain" value="<?=@$params['wiki-domain']?>" style="width:145px" />.<?php echo $subDomain ?> <span class="error-status" id="wiki-domain-error-status">&nbsp;</span>
-				<div class="error" style="display: none;" id="wiki-domain-error"></div>
+				<div class="error" style="display: <?= (!empty($mPostedErrors['wiki-domain'])) ? 'block' : 'none'?>;" id="wiki-domain-error"><?=@$mPostedErrors['wiki-domain']?></div>				
 			</li>
 			<li class="data2"><span class="note"><?=wfMsg('autocreatewiki-info-domain')?></span></li>
 		</ul>
@@ -77,7 +77,7 @@ elseif( $mType == "answers" ):
 endif
 ?>
 				</select>
-				<div class="error" style="display: none;" id="wiki-category-error"></div>
+				<div class="error" style="display: <?= (!empty($mPostedErrors['wiki-category'])) ? 'block' : 'none'?>;" id="wiki-category-error"><?=@$mPostedErrors['wiki-category']?></div>				
 			</li>
 			<li class="data2"><span class="note"><?php echo wfMsg('autocreatewiki-info-category-' . $type )?></span></li>
 		</ul>
@@ -119,7 +119,7 @@ endif
 				</optgroup>
 <?php endif ?>
 				</select>
-				<div class="error" style="display: none;" id="wiki-language-error"></div>
+				<div class="error" style="display: <?= (!empty($mPostedErrors['wiki-language'])) ? 'block' : 'none'?>;" id="wiki-language-error"><?=@$mPostedErrors['wiki-language']?></div>
 			</li>
 			<li class="data2"><span class="note"><?=wfMsg('autocreatewiki-info-language')?></span></li>
 		</ul>
@@ -156,7 +156,7 @@ endif
 			<li class="label"><label class="required" id="wiki-username-label"><?=wfMsg('yourname')?></label></li>
 			<li class="data1">
 				<input type="text" autocomplete="off" name="wiki-username" value="<?=@$params['wiki-username']?>" id="wiki-username" /> <span class="error-status" id="wiki-username-error-status">&nbsp;</span>
-				<div class="error" style="display: none;" id="wiki-username-error"></div>
+				<div class="error" style="display: <?= (!empty($mPostedErrors['wiki-username'])) ? 'block' : 'none'?>;" id="wiki-username-error"><?=@$mPostedErrors['wiki-username']?></div>
 			</li>
 		</ul>
 	</div>
@@ -165,7 +165,7 @@ endif
 			<li class="label"><label class="required" id="wiki-email-label"><?=wfMsg('youremail')?></label></li>
 			<li class="data1">
 				<input type="text" autocomplete="off" value="<?=@$params['wiki-email']?>" name="wiki-email" id="wiki-email" /> <span class="error-status" id="wiki-email-error-status">&nbsp;</span>
-				<div class="error" style="display: none;" id="wiki-email-error"></div>
+				<div class="error" style="display: <?= (!empty($mPostedErrors['wiki-email'])) ? 'block' : 'none'?>;" id="wiki-email-error"><?=@$mPostedErrors['wiki-email']?></div>
 			</li>
 			<li class="data2"><span class="note"><?=wfMsg('autocreatewiki-info-email-address')?></span></li>
 		</ul>
@@ -175,7 +175,7 @@ endif
 			<li class="label"><label class="required" id="wiki-password-label"><?=wfMsg('yourpassword')?></label></li>
 			<li class="data1">
 				<input type="password" name="wiki-password" id="wiki-password" /> <span class="error-status" id="wiki-password-error-status">&nbsp;</span>
-				<div class="error" style="display: none;" id="wiki-password-error"></div>
+				<div class="error" style="display: <?= (!empty($mPostedErrors['wiki-password'])) ? 'block' : 'none'?>;" id="wiki-password-error"><?=@$mPostedErrors['wiki-password']?></div>
 			</li>
 		</ul>
 	</div>
@@ -184,7 +184,7 @@ endif
 			<li class="label"><label class="required" id="wiki-retype-password-label"><?=wfMsg('yourpasswordagain')?></label></li>
 			<li class="data1">
 				<input type="password" id="wiki-retype-password" name="wiki-retype-password" /> <span class="error-status" id="wiki-retype-password-error-status">&nbsp;</span>
-				<div class="error" style="display: none;" id="wiki-retype-password-error"></div>
+				<div class="error" style="display: <?= (!empty($mPostedErrors['wiki-retype-password'])) ? 'block' : 'none'?>;" id="wiki-retype-password-error"><?=@$mPostedErrors['wiki-retype-password']?></div>
 			</li>
 		</ul>
 	</div>
@@ -211,7 +211,7 @@ endif
 					<? } ?>
 				</select><span class="error-status" id="wiki-birthday-error-status">&nbsp;</span>
 				<input type="hidden" name="wiki-birthday" id="wiki-birthday" />
-				<div class="error" style="display: none;" id="wiki-birthday-error"></div>
+				<div class="error" style="display: <?= (!empty($mPostedErrors['wiki-birthday'])) ? 'block' : 'none'?>;" id="wiki-birthday-error"><?=@$mPostedErrors['wiki-birthday']?></div>
 			</li>
 			<li id="AWCInfoBirthday" class="data2"><span class="note"><?=wfMsg('autocreatewiki-info-birthdate')?></span></li>
 		</ul>
@@ -223,7 +223,7 @@ endif
 				<span class="note"><?=wfMsg('autocreatewiki-info-blurry-word')?></span><br />
 				<?=$captchaForm?>
 				<input type="hidden" name="wiki-blurry-word" id="wiki-blurry-word" />
-				<div class="error" style="display: none;" id="wiki-blurry-word-error"></div>
+				<div class="error" style="display: <?= (!empty($mPostedErrors['wiki-blurry-word'])) ? 'block' : 'none'?>;" id="wiki-blurry-word-error"><?=@$mPostedErrors['wiki-blurry-word']?></div>
 			</li>
 			<li class="data2"></li>
 		</ul>
