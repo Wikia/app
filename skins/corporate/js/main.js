@@ -10,13 +10,15 @@ $(function() {
 		}
 	});
 
+	// Bartek - pack tracking so it doesn't pollute other pages
+	if( $('#hub-name') ) {
+		$('#top-wikis-lists-box').click(trackContainer);
+		$('#hub-blogs').click(trackContainer);
+		$('#wikia-global-hot-spots').click(trackContainer);
+		$('#hub-top-contributors').click(trackContainer);
 
-	$('#top-wikis-lists-box').click(trackContainer);
-	$('#hub-blogs').click(trackContainer);
-	$('#wikia-global-hot-spots').click(trackContainer);
-	$('#hub-top-contributors').click(trackContainer);
-
-	WET.byStr( 'hub/' + wgTitle );
+		WET.byStr( 'hub/' + wgTitle );
+	}
 
 	makeWikiaButtons();
 	initHideLinks(); 
