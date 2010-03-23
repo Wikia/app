@@ -217,8 +217,8 @@ class BlogPage extends Article{
 		$stats_data = $stats->getUserStats();
 		$user_level = new UserLevel( $stats_data["points"] );
 		$level_link = Title::makeTitle(NS_HELP,"User Levels");
-		
-		require_once("$IP/extensions/wikia/UserProfile/UserProfileClass.php");
+
+		require_once("$IP/extensions/wikia/UserProfile_NY/UserProfileClass.php");
 		$profile = new UserProfile( $author_user_name );
 		$profile_data = $profile->getProfile();
 		
