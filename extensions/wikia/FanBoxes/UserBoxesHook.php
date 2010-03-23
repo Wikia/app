@@ -7,7 +7,7 @@ function wfUserBoxesHook() {
 }
 
 function UserBoxesHook( $input, $args, &$parser ){	
-		global $wgOut, $IP, $wgParser, $wgUser, $wgTitle, $wgMemc, $wgUserProfileDisplay, $wgMessageCache, $wgFanBoxScripts, $wgFanBoxDirectory, $wgUploadPath;
+		global $wgOut, $IP, $wgParser, $wgUser, $wgTitle, $wgMemc, $wgMessageCache, $wgFanBoxScripts, $wgFanBoxDirectory, $wgUploadPath;
 		global $wgStyleVersion;
 
 		$parser->disableCache();
