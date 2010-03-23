@@ -428,6 +428,7 @@ class StaticChute {
 	}
 
 	// macbre: RT #18410
+	// TODO: This appears not to be used anymore - verify, and delete if true.
 	public function setChuteUrlPath($path) {
 		$this->path = $path;
 	}
