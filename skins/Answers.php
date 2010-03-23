@@ -129,7 +129,15 @@ class AnswersTemplate extends MonacoTemplate {
 
 		<script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('stylepath' ) ?>/common/wikibits.js?<?php echo $GLOBALS['wgStyleVersion'] ?>"><!-- wikibits js --></script>
 		<!-- Head Scripts -->
-<?php $this->html('headscripts') ?>
+<?php
+		if(!($wgTitle->getNamespace() == NS_SPECIAL)) {
+			print "<!-- Head scripts -->\n";
+			$this->html('WikiaScriptLoader');
+			$this->html('JSloader');
+			$this->html('headscripts');
+			print "<!-- End Head scripts -->\n";
+		}
+		?>
 	        <link rel="stylesheet" type="text/css" href="<?=$wgStylePath?>/answers/css/main.css?<?=$wgStyleVersion?>" />
 		<!--[if IE 6]>
 	        <link rel="stylesheet" type="text/css" href="<?=$wgStylePath?>/answers/css/ie6.css?<?=$wgStyleVersion?>" />
@@ -149,7 +157,8 @@ class AnswersTemplate extends MonacoTemplate {
 		if($this->data['userjsprev']) { ?>
 		<script type="<?php $this->text('jsmimetype') ?>"><?php $this->html('userjsprev') ?></script>
 <?php	}
-		if($this->data['trackbackhtml']) print $this->data['trackbackhtml']; ?>
+		if($this->data['trackbackhtml']) print $this->data['trackbackhtml'];
+		?>
 	</head>
 <body<?php if($this->data['body_ondblclick']) { ?> ondblclick="<?php $this->text('body_ondblclick') ?>"<?php } ?>
 <?php if($this->data['body_onload']) { ?> onload="<?php $this->text('body_onload') ?>"<?php } ?>
