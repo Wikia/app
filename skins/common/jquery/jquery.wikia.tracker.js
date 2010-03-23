@@ -164,11 +164,12 @@ jQuery.tracker.track = function(fakeurl) {
     if(typeof urchinTracker != 'undefined') {
         _uacct = "UA-2871474-1";
         var username = wgUserName == null ? 'anon' : 'user';
-        var fake = '/1_' + skin + '/' + username + '/' + fakeurl;
+		  var skinname = (skin == "answers" || skin == "SkinAnswers") ? "ansmco" : "monaco";
+        var fake = '/1_' + skinname + '/' + username + '/' + fakeurl;
         $().log('tracker: ' + fake);
         urchinTracker(fake);
         if(wgPrivateTracker) {
-            fake = '/1_' + skin + '/' + wgDB + '/' + username + '/' + fakeurl;
+            fake = '/1_' + skinname + '/' + wgDB + '/' + username + '/' + fakeurl;
             $().log('tracker: ' + fake);
             urchinTracker(fake);
         }
