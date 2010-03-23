@@ -753,6 +753,9 @@ function axAWCMetricsCategory() {
 
 	$OAWCMetrics = new WikiMetrics();
 	$OAWCMetrics->getRequestParams();
+	if ( !$OAWCMetrics->getFrom() ) {
+		$OAWCMetrics->setFrom( date('Y/m/d', time() - WikiMetrics::TIME_DELTA * 60 * 60 * 24 ) );
+	}
 	list ($res, $count, $categories) = $OAWCMetrics->getCategoriesRecords();
 
 	if ( !empty($res) ) {

@@ -30,6 +30,7 @@ class WikiMetrics {
 	const LIMIT 			= 25;
 	const ORDER 			= "created";
 	const DESC 				= 1;
+	const TIME_DELTA		= 120;
 	/* ajax params */
 	private $axAction;
     private $axCreated;
@@ -128,6 +129,9 @@ class WikiMetrics {
 		$aCategories = $hubs->getCategories();
 		
 		$params = $wgRequest->getValues();
+		if ( empty($params['from']) ) {
+			$params['from'] = date('Y/m/d', time() - WikiMetrics::TIME_DELTA * 60 * 60 * 24 );
+		}
 		$oCloseWikiTitle = Title::makeTitle( NS_SPECIAL, "CloseWiki" );
 		$action = $oCloseWikiTitle->getFullURL();
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
@@ -811,5 +815,8 @@ class WikiMetrics {
 		}
 		return $selected;
 	}
+	
+	public function getFrom() { return $this->axFrom; }
+	public function setFrom( $value ) { $this->axFrom = $value; }
 
 }
