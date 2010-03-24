@@ -12,6 +12,13 @@ CKEDITOR.command = function( editor, commandDefinition )
 		if ( this.state == CKEDITOR.TRISTATE_DISABLED )
 			return false;
 
+		// Wikia - start
+		// disable toolbar buttons until editor is fully loaded (RT #40472)
+		if (!RTE.loaded) {
+			return false;
+		}
+		// Wikia - end
+
 		if( this.editorFocus )     // Give editor focus if necessary (#4355).
 			editor.focus();
 

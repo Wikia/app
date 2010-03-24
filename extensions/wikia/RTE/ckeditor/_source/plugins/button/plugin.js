@@ -107,6 +107,14 @@ CKEDITOR.ui.button.prototype =
 		{
 			editor.on( 'mode', function()
 				{
+					// Wikia - start
+					// disable toolbar buttons until editor is fully loaded (RT #40472)
+					if (!RTE.loaded) {
+						this.setState(CKEDITOR.TRISTATE_DISABLED);
+						return;
+					}
+					// Wikia - end
+
 					this.setState( this.modes[ editor.mode ] ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED );
 				}, this);
 		}
@@ -119,6 +127,14 @@ CKEDITOR.ui.button.prototype =
 			{
 				command.on( 'state', function()
 					{
+						// Wikia - start
+						// disable toolbar buttons until editor is fully loaded (RT #40472)
+						if (!RTE.loaded) {
+							this.setState(CKEDITOR.TRISTATE_DISABLED);
+							return;
+						}
+						// Wikia - end
+
 						this.setState( command.state );
 					}, this);
 

@@ -58,9 +58,6 @@ CKEDITOR.plugins.add('rte-toolbar',
 				// add placeholder for source mode toolbar
 				output.push('<div id="mw-toolbar"></div>');
 
-				// add toolbar covering div - will be used during loading state
-				output.push('<div id="cke_toolbar_cover" class="color1" />');
-
 				event.data.html += output.join( '' );
 
 				// try to resize toolbar a bit earlier (RT #40132)
@@ -307,9 +304,6 @@ CKEDITOR.plugins.add('rte-toolbar',
 
 		// toolbar height might have changed - reposition #RTEStuff
 		RTE.repositionRTEStuff();
-
-		// resize toolbar cover
-		$('#cke_toolbar_cover').height(wrapperHeight);
 
 		// remove lock after 500 ms, so next updateToolbar() can be executed
 		setTimeout(function() {

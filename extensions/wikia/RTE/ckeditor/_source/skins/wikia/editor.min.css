@@ -186,11 +186,9 @@ a{background-position:0 -2024px}#cke_toolbar span.cke_disabled .cke_icon,
 .tagline{display:block;height:0px}.rte_source
 #cke_top_wpTextbox1{height:45px !important}.rte_source
 #cke_toolbar{visibility:hidden}.rte_source
-span.cke_button_source{border:solid 1px #000;position:absolute;right:10px;top:10px;visibility:visible;z-index:50}#editform #mw-toolbar{display:block !important;left:12px;position:absolute;top:12px;visibility:hidden}.rte_source #editform #mw-toolbar{visibility:visible}#cke_toolbar_cover{display:none;left:0;opacity:0.25;position:absolute;top:0;width:100%;z-index:2000}.rte_source
-#cke_toolbar_cover{height:45px !important}.rte_source .cke_browser_ie7 #cke_toolbar
+span.cke_button_source{border:solid 1px #000;position:absolute;right:10px;top:10px;visibility:visible;z-index:50}#editform #mw-toolbar{display:block !important;left:12px;position:absolute;top:12px;visibility:hidden}.rte_source #editform #mw-toolbar{visibility:visible}.rte_source .cke_browser_ie7 #cke_toolbar
 td{border:none}.rte_source .cke_browser_ie
-#cke_toolbar_row{height:45px !important}.RTEloading
-#cke_toolbar_cover{display:block}.cke_skin_wikia
+#cke_toolbar_row{height:45px !important}.cke_skin_wikia
 .cke_contextmenu{padding:2px}.cke_skin_wikia .cke_menuitem
 a{display:block}.cke_skin_wikia .cke_menuitem
 span{cursor:default}.cke_skin_wikia .cke_menuitem a:hover,

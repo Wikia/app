@@ -580,21 +580,6 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	visibility: visible;
 }
 
-/* hide toolbars during mode switches */
-#cke_toolbar_cover {
-	display: none;
-	left: 0;
-	opacity: 0.25;
-	position: absolute;
-	top: 0;
-	width: 100%;
-	z-index: 2000;
-}
-
-.rte_source #cke_toolbar_cover {
-	height: 45px !important;
-}
-
 /* remove white borders between buckets in source mode */
 .rte_source .cke_browser_ie7 #cke_toolbar td {
 	border: none;
@@ -602,8 +587,4 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 .rte_source .cke_browser_ie #cke_toolbar_row {
 	height: 45px !important;
-}
-
-.RTEloading #cke_toolbar_cover {
-	display: block;
 }
