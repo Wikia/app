@@ -8,7 +8,7 @@
 $wgExtensionCredits['other'][] = array(
 	'name' => 'SectionEdit',
 	'description' => 'Adds green section edit buttons',
-	'version' => '1.1',
+	'version' => '1.11',
 	'author' => array('Christian Williams', 'Maciej Brencz')
 );
 
@@ -44,10 +44,11 @@ if (skin == "monaco") {
 		$script = '
 if (skin == "monaco") {
 	$("h2 span.editsection").each(function(i) {
+		var link = $(this).children("a");
 		//remove nodes in the editsection that are not anchors
-		$(this).contents().not("a").remove();
+		$(this).contents().not(link).remove();
 		//add elements and styling
-		$(this).find("a").click(function(){WET.byStr(\'articleAction/editSection\')}).addClass("wikia-button").end().parent().css("position", "relative").css("top", "-3px").css("margin-bottom", "-2px");
+		link.addClass("wikia-button").end().parent().css("position", "relative").css("top", "-3px").css("margin-bottom", "-2px");
 	});
 }';
 	}
