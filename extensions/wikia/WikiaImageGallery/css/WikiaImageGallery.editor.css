@@ -1,0 +1,88 @@
+.WikiaImageGalleryEditorPage {
+	display: none;
+	height: 400px;
+	overflow: auto;
+	position: relative;
+}
+
+#WikiaImageGalleryEditor .WikiaImageGalleryEditorPageInner {
+	padding: 10px 15px;
+}
+
+/* Upload */
+#WikiaImageGalleryEditorUploadTable td {
+	border-bottom: solid 1px #ccc;
+	padding: 8px 0;
+}
+
+#WikiaImageGalleryEditorUploadTable h1 {
+	color: #222;
+	font-size: 1.8em;
+	font-weight: bold;
+	letter-spacing: -1px;
+}
+
+#WikiaImageGallerySearchForm {
+	display: inline;
+}
+
+#WikiaImageGallerySearchProgress {
+	display: none;
+}
+
+#WikiaImageGallerySearchHeadline {
+	font-size: 0.9em;
+	margin: 6px 0;
+}
+
+#WikiaImageGallerySearchHeader {
+	float: left;
+}
+
+#WikiaImageGallerySearchPagination {
+	float: right;
+}
+
+#WikiaImageGallerySearchPagination a {
+	margin-left: 8px;
+}
+
+#WikiaImageGallerySearchResults {
+	background: #eee;
+	height: 260px;
+	overflow: hidden;
+	padding: 0 15px;
+}
+
+#WikiaImageGallerySearchResults td {
+	padding-top: 10px;
+	text-align: center;
+}
+
+#WikiaImageGallerySearchResults span {
+	display: table-cell;
+	height: 100px;
+	vertical-align: middle;
+	width: 150px;
+}
+
+.WikiaImageGalleryResultsInsertLink {
+	font-size: 0.8em;
+	font-weight: bold;
+}
+
+/* Photo options */
+#WikiaImageGalleryEditor .WikiaImageGalleryEditorPageIntro {
+	border-bottom: solid 1px;
+	padding: 15px;
+}
+
+/* toolbar with Save / Cancel buttons */
+#WikiaImageGalleryEditor .WikiaImageGalleryEditorToolbar {
+	border-top: solid 1px;
+	padding: 5px 10px;
+}
+
+#WikiaImageGalleryEditor .WikiaImageGalleryEditorToolbar a {
+	margin-right: 5px;
+}

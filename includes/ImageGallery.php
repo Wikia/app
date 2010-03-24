@@ -30,12 +30,12 @@ class ImageGallery
 	 * Contextual title, used when images are being screened
 	 * against the bad image list
 	 */
-	private $contextTitle = false;
+	protected $contextTitle = false;
 
-	private $mPerRow = 4; // How many images wide should the gallery be?
-	private $mWidths = 120, $mHeights = 120; // How wide/tall each thumbnail should be
+	protected $mPerRow = 4; // How many images wide should the gallery be?
+	protected $mWidths = 120, $mHeights = 120; // How wide/tall each thumbnail should be
 
-	private $mAttribs = array();
+	protected $mAttribs = array();
 
 	/**
 	 * Create a new image gallery object.

@@ -30,6 +30,11 @@ function mwInsertEditButton(parent, item) {
 		return false;
 	};
 
+	// Wikia: add ability to provide onclick handler
+	if (typeof item.onclick == 'function') {
+		image.onclick = item.onclick;
+	}
+
 	parent.appendChild(image);
 	return true;
 }
@@ -88,7 +93,7 @@ function insertTags(tagOpen, tagClose, sampleText) {
 			var winScroll = document.documentElement.scrollTop
 		else if (document.body)
 			var winScroll = document.body.scrollTop;
-		//get current selection  
+		//get current selection
 		txtarea.focus();
 		var range = document.selection.createRange();
 		selText = range.text;
@@ -99,10 +104,10 @@ function insertTags(tagOpen, tagClose, sampleText) {
 		if (isSample && range.moveStart) {
 			if (window.opera)
 				tagClose = tagClose.replace(/\n/g,'');
-			range.moveStart('character', - tagClose.length - selText.length); 
-			range.moveEnd('character', - tagClose.length); 
+			range.moveStart('character', - tagClose.length - selText.length);
+			range.moveEnd('character', - tagClose.length);
 		}
-		range.select();   
+		range.select();
 		//restore window scroll position
 		if (document.documentElement && document.documentElement.scrollTop)
 			document.documentElement.scrollTop = winScroll
@@ -133,7 +138,7 @@ function insertTags(tagOpen, tagClose, sampleText) {
 		}
 		//restore textarea scroll position
 		txtarea.scrollTop = textScroll;
-	} 
+	}
 
 	function checkSelectedText(){
 		if (!selText) {
@@ -142,7 +147,7 @@ function insertTags(tagOpen, tagClose, sampleText) {
 		} else if (selText.charAt(selText.length - 1) == ' ') { //exclude ending space char
 			selText = selText.substring(0, selText.length - 1);
 			tagClose += ' '
-		} 
+		}
 	}
 
 }
@@ -159,7 +164,7 @@ function scrollEditBox() {
 		if( scrollTop.value )
 			editBox.scrollTop = scrollTop.value;
 		addHandler( editForm, 'submit', function() {
-			document.getElementById( 'wpScrolltop' ).value = document.getElementById( 'wpTextbox1' ).scrollTop; 
+			document.getElementById( 'wpScrolltop' ).value = document.getElementById( 'wpTextbox1' ).scrollTop;
 		} );
 	}
 }

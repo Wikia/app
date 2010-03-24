@@ -1,0 +1,37 @@
+/**
+ * CSS in this file is used by *all* skins.
+ */
+
+/* WikiaImageGallery: CSS for modified <gallery> tag */
+.wikia-gallery {
+	list-style: none;
+	margin: 16px 0;
+	padding: 0;
+}
+
+.wikia-gallery-caption {
+	font-weight: bold;
+	text-align: center;
+}
+
+.wikia-gallery-item {
+	display: inline-block;
+	padding: 5px;
+	vertical-align: top;
+}
+
+.wikia-gallery-item .thumb {
+	text-align: center;
+}
+
+.wikia-gallery-item .thumb div {
+	margin: 0 auto;
+}
+
+.wikia-gallery-captions-center .wikia-gallery-item {
+	text-align: center;
+}
+
+.wikia-gallery-captions-right .wikia-gallery-item {
+	text-align: right;
+}

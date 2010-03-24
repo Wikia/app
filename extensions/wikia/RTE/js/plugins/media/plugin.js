@@ -481,6 +481,10 @@ CKEDITOR.plugins.add('rte-media',
 			case 'video-placeholder':
 				type = 'videoPlaceholder';
 				break;
+
+			case 'image-gallery':
+				type = 'picturegallery';
+				break;
 		}
 
 		return type;

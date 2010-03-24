@@ -3524,9 +3524,23 @@ class Parser
 		global $wgRTEParserEnabled;
 		if(!empty($wgRTEParserEnabled)) {
 			$wikitextIdx = RTEMarker::getDataIdx(RTEMarker::EXT_WIKITEXT, $content);
-			if($wikitextIdx !== null) {
-				$dataIdx = RTEData::put('placeholder', array('type' => 'ext', 'wikitextIdx' => $wikitextIdx));
-				return RTEMarker::generate(RTEMarker::PLACEHOLDER, $dataIdx);
+
+			# Allow parser extensions to generate their own placeholders (instead of default one from RTE)
+			# @author: Macbre
+			if (wfRunHooks('RTEUseDefaultPlaceholder', array($name, $params, $frame, $wikitextIdx))) {
+				if($wikitextIdx !== null) {
+					$dataIdx = RTEData::put('placeholder', array('type' => 'ext', 'wikitextIdx' => $wikitextIdx));
+					return RTEMarker::generate(RTEMarker::PLACEHOLDER, $dataIdx);
+				}
+			}
+			else {
+				RTE::log(__METHOD__, "skipped default placeholder for <{$name}>");
+
+				// restore value of $content
+				$content = RTEData::get('wikitext', $wikitextIdx);
+
+				// keep inner content of tag
+				$content = preg_replace('#^<[^>]+>(.*)<[^>]+>$#s', '\1', $content);
 			}
 		}
 		# RTE - end
@@ -4440,6 +4454,12 @@ class Parser
 	 */
 	function renderImageGallery( $text, $params ) {
 		$ig = new ImageGallery();
+
+		/* Wikia change begin */
+		/* Allow extensions to use different class to render image gallery */
+		wfRunHooks('renderImageGallerySetup', array(&$ig, &$text, &$params));
+		/* Wikia change end */
+
 		$ig->setContextTitle( $this->mTitle );
 		$ig->setShowBytes( false );
 		$ig->setShowFilename( false );
@@ -4465,7 +4485,12 @@ class Parser
 			$ig->setHeights( $params['heights'] );
 		}
 
-		wfRunHooks( 'BeforeParserrenderImageGallery', array( &$this, &$ig ) );
+		/* Wikia change begin */
+		/* Allow extensions to use their own "parser" for <gallery> tag content */
+		if ( !wfRunHooks( 'BeforeParserrenderImageGallery', array( &$this, &$ig ) ) ) {
+			return $ig->toHTML();
+		}
+		/* Wikia change end */
 
 		$lines = StringUtils::explode( "\n", $text );
 		foreach ( $lines as $line ) {

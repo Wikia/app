@@ -126,6 +126,7 @@ class StaticChute {
 			'../extensions/wikia/ShareFeature/js/ShareFeature.js',
 			'../extensions/wikia/CreatePage/js/CreatePage.js',
 			'../extensions/wikia/Interstitial/Interstitial.js',
+			'../extensions/wikia/WikiaImageGallery/js/WikiaImageGallery.view.js',
 		);
 		$this->config['monaco_anon_article_js'] = array_merge($this->config['monaco_anon_article_js'], $widgetsAssets['js']);
 
@@ -154,6 +155,7 @@ class StaticChute {
 			'common/contributed.js',
 			'../extensions/wikia/ShareFeature/js/ShareFeature.js',
 			'../extensions/wikia/CreatePage/js/CreatePage.js',
+			'../extensions/wikia/WikiaImageGallery/js/WikiaImageGallery.view.js',
 		);
 		$this->config['monaco_loggedin_js'] = array_merge($this->config['yui'], $this->config['monaco_loggedin_js'], $widgetsAssets['js']);
 
@@ -187,7 +189,8 @@ class StaticChute {
 
 		// CSS
 		$this->config['monaco_css'] = array(
-	        'common/shared.css',
+			'common/shared.css',
+			'wikia/shared.css',
 			'monaco/css/monobook_modified.css',
 			'monaco/css/reset_modified.css',
 			'common/wikia-ui.css',
@@ -203,6 +206,9 @@ class StaticChute {
 			'../extensions/wikia/Masthead/css/Masthead.css',
 			'../extensions/wikia/ShareFeature/css/ShareFeature.css',
 			'../extensions/wikia/CreatePage/css/CreatePage.css',
+
+			// macbre: temporary
+			'../extensions/wikia/WikiaImageGallery/css/WikiaImageGallery.view.css',
 		);
 		$this->config['monaco_css'] = array_merge($this->config['monaco_css'], $widgetsAssets['css']);
 
