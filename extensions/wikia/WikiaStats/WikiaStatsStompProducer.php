@@ -161,7 +161,7 @@ class WikiaStatsStompProducer {
 
 		$title = $article->mTitle; 
 
-		if( ( !class_exists( 'BlogComment' ) && ( NS_BLOG_ARTICLE_TALK == $title->getNamespace() ) ) ) {
+		if( ( !class_exists( 'BlogComment' ) && defined( "NS_BLOG_ARTICLE_TALK" ) && ( NS_BLOG_ARTICLE_TALK == $title->getNamespace() ) ) ) {
 			// NY blogs, not Eloy's - cut them down, they would break the code...
 			wfProfileOut( __METHOD__ );
 			return true;			
