@@ -164,7 +164,7 @@ legend {font-size: 8pt; font-family:Trebuchet MS,arial,verdana;padding:0px;}
 .ws-info-url ul { line-height:9pt; margin:0px; }
 .ws-info-url li { display: block !important; }
 .ws-info-generated { float:right; font-size:7pt; padding:5px 0 0; text-align:right; width:auto; }
-.ws-addinfo { float:right; font-size:8pt; height:60px; margin:-75px 0 0; position:relative; }
+.ws-addinfo { float:right; font-size:8pt; height:30px; margin:-5px 0 0; position:relative; }
 .ws-addinfo ul { list-style-image:none; list-style-type:none; margin:0px; padding: 0px; line-height:12pt; }
 /*.ws-wiki-info { font-size:8pt; height:100px; margin:-110px 0 0; position: absolute; }
 .ws-wiki-info strong { padding:3px 2px 5px; }
