@@ -65,14 +65,12 @@ class NeueWebsiteJob extends Job {
 					}
 				}
 
-				$umatches = array_unique($newmatches);
+				$umatches = array_unique( $newmatches );
 
+				$dbw = wfGetDB( DB_MASTER );
 				foreach($umatches as $match) {
-					// echo "match: $dom $match ---";
 					wfWaitForSlaves( 5 );
-					$dbw = wfGetDB( DB_MASTER );
 					$qr = $dbw->query("insert into related set name1='$domdom', name2='$match'");
-					// hope it works
 				}
 			}
 		}
