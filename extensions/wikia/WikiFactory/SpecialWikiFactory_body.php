@@ -155,6 +155,7 @@ class WikiFactoryPage extends SpecialPage {
 				 * if $domain starts with db: it means that we want to search by
 				 * database name
 				 */
+				$cityid = null;
 				if( preg_match( "/^db\:/", $domain ) ) {
 					list( $prefix, $name ) = explode( ":", $domain, 2 );
 					$cityid = WikiFactory::DBtoID( strtolower( $name ) );
@@ -168,13 +169,24 @@ class WikiFactoryPage extends SpecialPage {
 						$this->mDomain = $domain;
 						$domain = $domain.".wikia.com";
 					} else {
-						list( $code, $domain ) = explode(".", $domain, 2 );
+						list( $code, $subdomain ) = explode(".", $domain, 2 );
+						$exists = 0;
 						if ( in_array( $code, array_keys( Language::getLanguageNames() ) ) ) {
-							$this->mDomain = $code.".".$domain;
-							$domain = sprintf("%s.%s.%s", $code, $domain, "wikia.com" );
+							$exists = 1;
+						} else {
+							$cityid = WikiFactory::DomainToId( $domain );
+							if ( !is_null($cityid) ) {
+								$exists = 1;
+							}
+						}
+						if ( $exists == 1 ) {
+							$this->mDomain = $code.".".$subdomain;
+							$domain = sprintf("%s.%s", $code, $subdomain );
 						}
 					}
-					$cityid = WikiFactory::DomainToId( $domain );
+					if ( is_null($cityid) ) {
+						$cityid = WikiFactory::DomainToId( $domain );
+					}
 				}
 			}
 		}
