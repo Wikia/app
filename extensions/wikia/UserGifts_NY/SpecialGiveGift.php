@@ -202,7 +202,7 @@ class GiveGift extends SpecialPage {
 			
 			if ($wgFriendingEnabled) {
 			
-				require_once("$IP/extensions/wikia/UserRelationship/UserRelationshipClass.php");
+				require_once("$IP/extensions/wikia/UserRelationship_NY/UserRelationshipClass.php");
 			
 				$rel = new UserRelationship($wgUser->getName());
 				$friends = $rel->getRelationshipList(1);

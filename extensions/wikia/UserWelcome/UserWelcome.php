@@ -113,8 +113,8 @@ function getRequests() {
 		global $wgUser, $IP, $wgUploadPath;
 
 		// macbre: fix fatal "Cannot redeclare class UserRelationship"
-		if (!class_exists('UserRelationship')) {
-			require_once("$IP/extensions/wikia/UserRelationship/UserRelationshipClass.php");
+		if (!class_exists('UserRelationship')) { // probably superfluous now that we're using the correct version of UserRelationship - SWC
+			require_once("$IP/extensions/wikia/UserRelationship_NY/UserRelationshipClass.php");
 		}
 
 		$friend_request_count = UserRelationship::getOpenRequestCount($wgUser->getID(),1);
