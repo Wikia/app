@@ -182,7 +182,7 @@ button.secondary:active {
 /* These styles use the Monaco sprite image. This is not ideal because Wikia UI should not be skin-specific. The Monaco sprite contains just a couple images that are Monaco-specific. It is more efficient for most wikis to bundle the icons and these Monaco-specific images together. */
 
 .sprite, .sprite-small {
-	background-image: url(../monaco/images/monaco-sprite.png); /* $wgCdnStylePath */
+	background-image: url(/skins/monaco/images/monaco-sprite.png); /* $wgCdnStylePath */
 }
 .sprite {
 	height: 16px;
@@ -245,7 +245,7 @@ button.secondary:active {
 .sprite.magnify-clip { background-position: -16px -186px; }
 
 .sprite.progress {
-	background-image: url(images/ajax.gif); /* $wgCdnStylePath */
+	background-image: url(/skins/common/images/ajax.gif); /* $wgCdnStylePath */
 }
 
 /* centering code for custom answers (dangerous to load outside of CoreCSS) */
