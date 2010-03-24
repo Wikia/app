@@ -54,24 +54,26 @@ class NeueWebsiteJob extends Job {
 			$matches = array();
 			$newmatches = array();
 			preg_match_all( '|http://([^/]+)/|', $go, $matches );
+			$matches = $matches[ 1 ];
 
 			foreach( $matches as $match ) {
 				$n = strtolower($match);
 				if(!strncmp($n, "www.", 4)) {
 					$n = substr($n, 4);
-					if(ereg($exDomainList, $n) && stripos($n, "google") === false)
+					if(ereg($exDomainList, $n) && stripos($n, "google") === false) {
 						$newmatches[] = $n;
 					}
 				}
 
-			$umatches = array_unique($newmatches);
+				$umatches = array_unique($newmatches);
 
-			foreach($umatches as $match) {
-				// echo "match: $dom $match ---";
-				wfWaitForSlaves( 5 );
-				$dbw = wfGetDB( DB_MASTER );
-				$qr = $dbw->query("insert into related set name1='$domdom', name2='$match'");
-				// hope it works
+				foreach($umatches as $match) {
+					// echo "match: $dom $match ---";
+					wfWaitForSlaves( 5 );
+					$dbw = wfGetDB( DB_MASTER );
+					$qr = $dbw->query("insert into related set name1='$domdom', name2='$match'");
+					// hope it works
+				}
 			}
 		}
 	}
