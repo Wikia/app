@@ -27,7 +27,10 @@ class WikiStatsPage extends IncludableSpecialPage
     var $mCityId;
     var $mCityDBName;
     var $mCityDomain;
+    var $mLang;
+    var $mHub;
     var $mAction;
+    var $mXLS;
 	   
 	private $allowedGroups = array('staff', 'sysop', 'janitor', 'bureaucrat');
 	private $TEST = 1;
@@ -56,16 +59,17 @@ class WikiStatsPage extends IncludableSpecialPage
             return;
         }
         
-        error_log ( print_r($wgRequest, true) ) ;
-
 		$this->mUser = $wgUser;
-		$this->mUserRights = $this->mUser->getGroups(); 
-		$this->mFromDate = intval($wgRequest->getVal( "from", sprintf("%d%d", WIKISTATS_MIN_STATS_YEAR, WIKISTATS_MIN_STATS_MONTH) ));
-		$this->mToDate = intval($wgRequest->getVal( "to", sprintf("%d%d", date("Y"), date("m") ) ));
-		$this->mTitle = Title::makeTitle( NS_SPECIAL, "WikiStats" );
-		$this->mAction = $wgRequest->getVal("action", "");
-		$this->mCityId = ($this->TEST == 1 ) ? 177 : $wgCityId;
-		$this->mCityDBName = ($this->TEST == 1 ) ? WikiFactory::IDtoDB($this->mCityId) : $wgDBname;
+		$this->mUserRights 	= $this->mUser->getGroups(); 
+		$this->mFromDate 	= intval($wgRequest->getVal( "from", sprintf("%d%d", WIKISTATS_MIN_STATS_YEAR, WIKISTATS_MIN_STATS_MONTH) ));
+		$this->mToDate 		= intval($wgRequest->getVal( "to", sprintf("%d%d", date("Y"), date("m") ) ));
+		$this->mTitle 		= Title::makeTitle( NS_SPECIAL, "WikiStats" );
+		$this->mAction		= $wgRequest->getVal("action", "");
+		$this->mLang 		= $wgRequest->getVal("lang", "");
+		$this->mHub 		= $wgRequest->getVal("hub", "");
+		$this->mXLS 		= $wgRequest->getVal("css", false);
+		$this->mCityId 		= ($this->TEST == 1 ) ? 177 : $wgCityId;
+		$this->mCityDBName 	= ($this->TEST == 1 ) ? WikiFactory::IDtoDB($this->mCityId) : $wgDBname;
 		
 		$m = array();
 		$this->toYear = date('Y');
@@ -91,7 +95,11 @@ class WikiStatsPage extends IncludableSpecialPage
 		}
 
 		$domain = $wgRequest->getVal( "ws-domain", "" );
-		if ( !empty($domain) && $this->userIsSpecial == 1 ) {
+		if ( $domain == 'all' ) {
+        	$this->mCityId = 0;
+        	$this->mCityDBName = WIKISTATS_CENTRAL_ID;
+        	$this->mCityDomain = WikiFactory::DBToDomain($this->mCityDBName);
+		} elseif ( !empty($domain) && $this->userIsSpecial == 1 ) {
         	$this->mCityId = WikiFactory::DomainToId($domain);
         	$this->mCityDBName = WikiFactory::IDToDB($this->mCityId);
         	$this->mCityDomain = $domain;
@@ -172,6 +180,13 @@ class WikiStatsPage extends IncludableSpecialPage
 		global $wgOut;
         wfProfileIn( __METHOD__ );
 
+		$aTopLanguages = explode(',', wfMsg('wikistats_language_toplist'));
+		$aLanguages = wfGetFixedLanguageNames();
+		asort($aLanguages);
+		#-
+		$hubs = WikiFactoryHub::getInstance();
+		$aCategories = $hubs->getCategories();
+
 		# main page
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
         $oTmpl->set_vars( array(
@@ -183,6 +198,9 @@ class WikiStatsPage extends IncludableSpecialPage
         	"fromMonth"			=> $this->fromMonth,
         	"fromYear"			=> $this->fromYear,
         	"curMonth"			=> intval($this->toMonth),
+        	"topLanguages"		=> $aTopLanguages,
+        	"aLanguages"		=> $aLanguages,
+        	"categories"		=> $aCategories,
         	"curYear"			=> intval($this->toYear),
         ));
         $res = $oTmpl->execute("select");
@@ -193,38 +211,44 @@ class WikiStatsPage extends IncludableSpecialPage
 	
 	private function showMain() {
         global $wgUser, $wgContLang, $wgLang, $wgStatsExcludedNonSpecialGroup, $wgOut;
-		wfProfileIn( __METHOD__ );
 		#---
         #$this->mStats->loadStatsFromDB();
         #$this->mStats->loadMonthlyDiffs();
 		#---
-        $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-        $oTmpl->set_vars( array(
-            "data"			=> $this->mStats->loadStatsFromDB(),
-            "today" 		=> date("Ym"),
-            "today_day"     => time(),
-            "user"			=> $wgUser,
-            "diffData"		=> $this->mStats->loadMonthlyDiffs(),
-            "cityId"		=> $this->mCityId,
-			"wgContLang" 	=> $wgContLang,
-			"wgLang"		=> $wgLang,
-			"mStats"		=> $this->mStats,
-			"userIsSpecial" => $this->userIsSpecial,
-			"wgStatsExcludedNonSpecialGroup" => $wgStatsExcludedNonSpecialGroup
-        ) );
-		$wgOut->addHTML( $this->showMenu() );
-		$wgOut->addHTML( $this->mStats->getBasicInformation() );
-        $wgOut->addHTML( $oTmpl->execute("main-table-stats") ); 
-        
-		$oTmpl->set_vars( array(
-			"columns" 		=> $this->mStats->getRangeColumns(),
-			"userIsSpecial"	=> $this->userIsSpecial,
-			"wgStatsExcludedNonSpecialGroup" => $wgStatsExcludedNonSpecialGroup
-		));
-		$wgOut->addHTML( $oTmpl->execute("main-stats-definitions") );
-
+		if ( empty($this->mXLS) ) {
+			wfProfileIn( __METHOD__ );
+			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+			$oTmpl->set_vars( array(
+				"data"			=> $this->mStats->loadStatsFromDB(),
+				"today" 		=> date("Ym"),
+				"today_day"     => time(),
+				"user"			=> $wgUser,
+				"diffData"		=> $this->mStats->loadMonthlyDiffs(),
+				"cityId"		=> $this->mCityId,
+				"wgContLang" 	=> $wgContLang,
+				"wgLang"		=> $wgLang,
+				"mStats"		=> $this->mStats,
+				"userIsSpecial" => $this->userIsSpecial,
+				"wgStatsExcludedNonSpecialGroup" => $wgStatsExcludedNonSpecialGroup
+			) );
+			$wgOut->addHTML( $this->showMenu() );
+			$wgOut->addHTML( $this->mStats->getBasicInformation() );
+			$wgOut->addHTML( $oTmpl->execute("main-table-stats") ); 
+			
+			$oTmpl->set_vars( array(
+				"columns" 		=> $this->mStats->getRangeColumns(),
+				"userIsSpecial"	=> $this->userIsSpecial,
+				"wgStatsExcludedNonSpecialGroup" => $wgStatsExcludedNonSpecialGroup
+			));
+			$wgOut->addHTML( $oTmpl->execute("main-stats-definitions") );
+			wfProfileOut( __METHOD__ );
+		} else {
+			$data = $this->mStats->loadStatsFromDB();
+			$columns = $this->mStats->getRangeColumns();
+			$XLSObj = new WikiStatsXLS( $this->mStats, $data, wfMsg('wikistats_filename_mainstats', $this->mCityDBName));
+			$XLSObj->makeMainStats($columns);
+		}
         #---
-		wfProfileOut( __METHOD__ );
         return 1; 
 	}
 

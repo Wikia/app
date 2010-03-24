@@ -289,7 +289,10 @@ Please [[Special:UserLogin|log in or create an account]] if you do not already h
 	"wikistats_current_month" => "Current month",
 	"wikistats_wikiawide_stats" => "http://community.wikia.com/wiki/Special:WikiStats",
 	"wikistats_help_stats" => "http://help.wikia.com/wiki/Help:WikiaStats",
-	"wikistats_see_also" => "See also:"
+	"wikistats_see_also" => "See also:",
+	"wikistats_language_top" => "Top $1 languages",
+	"wikistats_language_all" => "All languages",
+	"wikistats_language_toplist" => "de,en,es,he,fr,it,ja,no,pl,pt,pt-br,zh",
 );
 
 /** Message documentation (Message documentation)
