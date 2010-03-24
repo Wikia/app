@@ -28,7 +28,7 @@ $(function() {
 	reloadTab();
 });
 
-function reloadTab() {
+function reloadTab(css) {
 	var dateFrom = $('#ws-date-year-from').val();
 	var monthFrom = $('#ws-date-month-from').val();
 	dateFrom += ( monthFrom < 10 ) ? '0' + monthFrom : monthFrom;
@@ -37,19 +37,37 @@ function reloadTab() {
 	var monthTo = $('#ws-date-month-to').val();
 	dateTo += ( monthTo < 10 ) ? '0' + monthTo : monthTo;
 
+	var hub = $('#ws-category').val();
+	var lang = $('#ws-language').val();
+
 	var ws_domain = $('#ws-domain').val();
-	var data = {
-		'from': ( dateFrom != NaN) ? dateFrom : 0,
-		'to': ( dateTo != NaN ) ? dateTo : 0,
-		'ws-domain': ( ws_domain != undefined ) ? ws_domain : ''
-	};
-	$('#' + tabsName[activeTab]).load(tabsUrl[0], data, function() {
-		$("#ws-loader").css('display', 'none'); 
-		$('#ws-show-stats').click(function() {
-			reloadTab();
-		});	
-		//$('table').visualize({type: 'line'});
-	});
+	if ( css ) { 
+		dataString = '?from=' + dateFrom;
+		dataString += '&to=' + dateTo;
+		dataString += '&hub=' + hub;
+		dataString += '&lang=' + lang;
+		dataString += '&css=1&ws-domain=' + ws_domain;
+		top.wsxlshelper.location.href = tabsUrl[0] + dataString;
+	} else {
+		var data = {
+			'from': ( dateFrom != NaN) ? dateFrom : 0,
+			'to': ( dateTo != NaN ) ? dateTo : 0,
+			'hub': ( hub ) ? hub : '',
+			'lang': ( lang ) ? lang : '',
+			'css' : ( css ) ? 1 : 0,
+			'ws-domain': ( ws_domain != undefined ) ? ws_domain : ''
+		};
+		$('#' + tabsName[activeTab]).load(tabsUrl[0], data, function() {
+			$("#ws-loader").css('display', 'none'); 
+			$('#ws-show-stats').click(function() {
+				reloadTab();
+			});	
+			$('#ws-export-xls').click(function() {
+				reloadTab(true);
+			});	
+			//$('table').visualize({type: 'line'});
+		});
+	}
 	var refreshId = setInterval( function() {
 		$("#ws-loader").css('display', 'block');  
 		$('#' + tabsName[activeTab]).load(tabsUrl[0], data, function() {
@@ -57,12 +75,16 @@ function reloadTab() {
 			$('#ws-show-stats').click(function() {
 				reloadTab();
 			});	
+			$('#ws-export-xls').click(function() {
+				reloadTab(true);
+			});	
 			//$('table').visualize({type: 'line'});
 		}); 
 	}, 500000 ); 
 }
 
 </script>
+<iframe id="wsxlshelper" name="wsxlshelper" style="dispaly:none;height:0px;width:0px;border:0px;"></iframe>
 <div id="ws-addinfo" class="ws-addinfo"></div>
 <div id="ws-loader" class="ws-loader"><img src="<?=$wgStylePath?>/common/images/ajax.gif" width="16" height="16"></div>
 <div id="ws-tabs">	

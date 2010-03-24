@@ -1,6 +1,6 @@
 <div id="ws-upload">
 	<div id="ws-progress-bar"></div>
-	<div class="ws-select-stats">
+	<div class="formblock ws-select-stats">
 		<ul>
 			<li><?= wfMsg("wikistats_info") ?>: <input name="ws-domain" id="ws-domain" value="<?=$domain?>" onfocus="ws_focus(event,'ws-domain','axWFactoryDomainQuery');" /></li>
 		</ul>
@@ -31,6 +31,38 @@ $minYear = intval($dateRange['minYear']); $maxYear = intval($dateRange['maxYear'
 while ($minYear <= $maxYear) { $selected = ($curYear == $minYear) ? " selected=\"selected\" " : ""; ?>
 				<option <?= $selected ?> value="<?= $minYear ?>"><?= $minYear ?></option>
 <?php $minYear++; } ?>
+				</select>
+			</li>
+		</ul>
+		<ul>
+			<li><span><?=wfMsg('wikistats_wikicategory')?></span></li>
+			<li><select name="ws-category" id="ws-category">
+<?php if (!empty($categories) && is_array($categories) ): ?>
+				<option value=""></option>
+<?php foreach ($categories as $iCat => $sCatName) : ?>
+				<option value="<?php echo $iCat ?>"><?php echo $sCatName?></option>
+<?php endforeach ?>
+				<option value="9"><?=wfMsg('wikistats_other')?></option>
+<?php endif ?>
+				</select>
+			</li>
+			<li><span><?=wfMsg('wikistats_wikilang')?></span></li>
+			<li><select name="ws-language" id="ws-language">
+				<option value=""></option>
+<?php if (!empty($topLanguages) && is_array($topLanguages)) : ?>
+				<optgroup label="<?= wfMsg('wikistats_language_top', count($topLanguages)) ?>">
+<?php foreach ($topLanguages as $sLang) : ?>
+				<option value="<?=$sLang?>"><?=$sLang?>: <?=$aLanguages[$sLang]?></option>
+<?php endforeach ?>
+				</optgroup>
+<?php endif ?>
+				<optgroup label="<?= wfMsg('wikistats_language_all') ?>">
+<?php if (!empty($aLanguages) && is_array($aLanguages)) : ?>
+<?php ksort($aLanguages); foreach ($aLanguages as $sLang => $sLangName) : ?>
+				<option value="<?=$sLang?>"><?=$sLang?>: <?=$sLangName?></option>
+<?php endforeach ?>
+				</optgroup>
+<?php endif ?>
 				</select>
 			</li>
 		</ul>

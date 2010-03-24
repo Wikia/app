@@ -77,7 +77,7 @@
 		}
 		$cols[] = $column;
 ?>
-	<<?=$row?> style="white-space:nowrap;" title="<?=$__number?>"><?= $__number ?></<?=$row?>>
+	<<?=$row?> style="white-space:nowrap;" title="<?=$__number?>"><?= $out ?></<?=$row?>>
 <?php		
 	}
 ?>

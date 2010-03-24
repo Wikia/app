@@ -485,16 +485,23 @@ class WikiStats {
 			if ( !empty( $this->mCityId ) ) {
 				$where['wikia_id'] = $this->mCityId;
 			} else {
+				if ( !empty($this->mLang) ) {
+					$where['wikia_lang'] = $this->mLang;
+				}
+				if ( !empty($this->mHub) ) {
+					$where['wikia_hub'] = $this->mHub;
+				}
 				$where[] = "wikia_id not in (" . $dbr->makeList( $this->getClosedWikis() ) . ")";
 			}
+
 			# set date range
 			$where[] = sprintf(" stats_date >= '%04d%02d' ", $this->mStatsDate['fromYear'], $this->mStatsDate['fromMonth'] );
 			$where[] = sprintf(" stats_date <= '%04d%02d' ", $this->mStatsDate['toYear'], $this->mStatsDate['toMonth'] );
 
 			#options
-			if ( !empty( $this->mCityId ) ) {
-				$options = array('GROUP BY' => 'stats_date');
-			}
+			#if ( !empty( $this->mCityId ) ) {
+			$options = array('GROUP BY' => 'stats_date');
+			#}
 
 			$oRes = $dbr->select(
 				array( "stats_summary" ),

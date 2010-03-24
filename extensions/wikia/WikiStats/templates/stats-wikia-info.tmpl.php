@@ -9,9 +9,9 @@
 	</ul>
 	<ul>
 		<li>
-			<strong><?= wfMsg('wikistats_wikilang')?></strong><input type="button" value="<?= @$oWikia->city_lang ?>" />
+			<strong><?= wfMsg('wikistats_wikilang')?></strong> <?= @$oWikia->city_lang ?>
 		</li>
-		<li><strong><?= wfMsg('wikistats_wikicategory')?></strong><input type="button" value="<?= @$oWikia->category->cat_name ?>" />
+		<li><strong><?= wfMsg('wikistats_wikicategory')?></strong> <?= @$oWikia->category->cat_name ?>
 		</li>
 	</ul>
 </div>
