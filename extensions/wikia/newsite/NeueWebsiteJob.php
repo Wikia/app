@@ -43,6 +43,11 @@ class NeueWebsiteJob extends Job {
 	 * make related pages data using google related info
 	 *
 	 * @access private
+	 *
+	 * @todo change to multiline insert
+	 * @todo change to english google
+	 * @todo check what is in $exDomainList
+	 * @todo replace ereg with preg_match
 	 */
 	private function makeRelated( $dom, $domdom ) {
 		global $exDomainList;
