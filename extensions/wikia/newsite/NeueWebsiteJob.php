@@ -17,6 +17,8 @@ $wgJobClasses[ "NeueWebsite" ] = "NeueWebsiteJob";
 
 class NeueWebsiteJob extends Job {
 
+	private $mTest;
+
 	/**
 	 * constructor
 	 *
@@ -25,6 +27,7 @@ class NeueWebsiteJob extends Job {
 	public function __construct( $title, $params, $id = 0 ) {
 		parent::__construct( "NeueWebsite", $title, $params, $id );
 		$this->mParams = $params;
+		$this->mTest = isset( $params[ "test" ] ) ? (bool)$params[ "test" ] : false;
 	}
 
 	/**
@@ -36,6 +39,8 @@ class NeueWebsiteJob extends Job {
 		global $wgUser, $wgOut;
 		wfProfileIn( __METHOD__ );
 
+		$this->makeRelated( $this->mParams[ "domain"], $this->mParams[ "key"] );
+
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -44,21 +49,24 @@ class NeueWebsiteJob extends Job {
 	 *
 	 * @access private
 	 *
+	 * @param String $domain -- domain name we search google against
+	 * @param String $key -- primary key used in table related
+	 *
 	 * @todo change to multiline insert
 	 * @todo change to english google
 	 * @todo check what is in $exDomainList
 	 * @todo replace ereg with preg_match
 	 */
-	private function makeRelated( $dom, $domdom ) {
+	private function makeRelated( $domain, $key ) {
 		global $exDomainList;
 
-		$gourl = "http://www.google.de/ie?safe=off&q=related%3A$dom&hl=de&start=0&num=30&sa=N";
-		$go = Http::get( $gourl );
+		$go = Http::get( sprintf( "http://www.google.de/ie?safe=off&q=related%3A{$domain}&hl=de&start=0&num=30&sa=N" ) );
 
 		if( !strstr( $go, "keine mit Ihrer Suchanfrage" ) ) {
 			$matches = array();
 			$newmatches = array();
 			preg_match_all( '|http://([^/]+)/|', $go, $matches );
+			print_r( $matches );
 			$matches = $matches[ 1 ];
 
 			foreach( $matches as $match ) {
@@ -75,7 +83,12 @@ class NeueWebsiteJob extends Job {
 				$dbw = wfGetDB( DB_MASTER );
 				foreach($umatches as $match) {
 					wfWaitForSlaves( 5 );
-					$qr = $dbw->query("insert into related set name1='$domdom', name2='$match'");
+					if( ! $this->mTest ) {
+						$qr = $dbw->query("insert into related set name1='$key', name2='$match'");
+					}
+					else {
+						echo "insert into related set name1='$key', name2='$match'\n";
+					}
 				}
 			}
 		}
