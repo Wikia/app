@@ -159,30 +159,35 @@ jQuery.tracker.byId = function(e) {
     $.tracker.track(this.id);
 };
 
-jQuery.tracker.track = function(fakeurl) {     
-    fakeurlArray = fakeurl.split('/');
-    if(typeof urchinTracker != 'undefined') {
-        _uacct = "UA-2871474-1";
-        var username = wgUserName == null ? 'anon' : 'user';
-		  var skinname = (skin == "answers" || skin == "SkinAnswers") ? "ansmco" : "monaco";
-        var fake = '/1_' + skinname + '/' + username + '/' + fakeurl;
-        $().log('tracker: ' + fake);
-        urchinTracker(fake);
-        if(wgPrivateTracker) {
-            fake = '/1_' + skinname + '/' + wgDB + '/' + username + '/' + fakeurl;
-            $().log('tracker: ' + fake);
-            urchinTracker(fake);
-        }
-    }
+jQuery.tracker.track = function(fakeurl) {
+	fakeurlArray = fakeurl.split('/');
+
+	var username = wgUserName == null ? 'anon' : 'user';
+	var skinname = (skin == "answers" || skin == "SkinAnswers") ? "ansmco" : "monaco";
+	var fake = '/1_' + skinname + '/' + username + '/' + fakeurl;
+
+	if(typeof urchinTracker != 'undefined') {
+		_uacct = "UA-2871474-1";
+		$().log('tracker: ' + fake);
+		urchinTracker(fake);
+		if(wgPrivateTracker) {
+			fake = '/1_' + skinname + '/' + wgDB + '/' + username + '/' + fakeurl;
+			$().log('tracker: ' + fake);
+			urchinTracker(fake);
+		}
+	}
+	else {
+		$().log('tracker [void]: ' + fake);
+	}
 };
 
 
 // macbre: temporary fix
 var WET = {
-    byStr: function(str) {
-        $.tracker.byStr(str)
-    },
-    byId: $.tracker.byId
+	byStr: function(str) {
+	       $.tracker.byStr(str)
+	},
+	byId: $.tracker.byId
 };
 
 $(document).ready($.tracker);
