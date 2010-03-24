@@ -34,12 +34,29 @@ class ImageLightbox {
 
 		// generate thumbnail
 		$thumb = $image->getThumbnail($width, $height);
+		$height = max($thumb->getHeight(), 200);
+		$width = max($thumb->getWidth(), 200);
+
+		// render it
+		$html = Xml::element('img', array(
+			'alt' => '',
+			'height' => $height,
+			'width' => $width,
+			'src' => 'http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1',
+			'style' => "background-image: url('{$thumb->url}')",
+		));
+
+		wfLoadExtensionMessages('ImageLightbox');
 
 		$res = array(
-			'width' => $thumb->getWidth(),
-			'height' => $thumb->getHeight(),
-			'html' => $thumb->toHtml(),
+			'width' => $width,
+			'height' => $height,
+			'name' => $wgTitle->getText(),
+			'html' => $html,
 			'href' => $wgTitle->getLocalUrl(),
+			'msg' => array(
+				'tooltip' => wfMsg('lightbox_details_tooltip'),
+			),
 		);
 
 		wfProfileOut(__METHOD__);

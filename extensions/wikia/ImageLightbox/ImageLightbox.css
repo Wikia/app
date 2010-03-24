@@ -1,13 +1,23 @@
+#lightbox-image img {
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+}
+
 #lightbox-caption {
 	padding: 5px;
-	text-align: right;
+}
+
+#lightbox-caption-content {
+	margin-right: 25px;
+	text-align: left;
 }
 
 #lightbox-link {
-	background-image: url(http://images.wikia.com/common/skins/common/images/magnify-clip.png);
+	background-image: url(images/page_white_text.png);
 	display: inline-block;
-	height: 11px;
-	width: 15px;
+	float: right;
+	height: 16px;
+	width: 16px;
 }
 
 #lightbox-link:hover {

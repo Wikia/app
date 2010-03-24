@@ -3,14 +3,20 @@ var ImageLightbox = {
 		$().log(msg, 'ImageLightbox');
 	},
 
+	track: function(fakeUrl) {
+		window.jQuery.tracker.byStr('lightbox' + fakeUrl);
+	},
+
 	isEditPage: function() {
 		return $('#wikiPreview').exists();
 	},
 
 	// setup clicks on links with .lightbox class
 	init: function() {
+		var self = this;
+
 		// don't run on edit page
-		if (ImageLightbox.isEditPage()) {
+		if (this.isEditPage()) {
 			return;
 		}
 
@@ -19,10 +25,11 @@ var ImageLightbox = {
 			return;
 		}
 
-		ImageLightbox.log('init for ' + images.length + ' images');
-		//ImageLightbox.log(images);
+		this.log('init for ' + images.length + ' images');
 
-		images.click(ImageLightbox.onClick);
+		images.click(function(ev) {
+			self.onClick.call(self, ev);
+		});
 	},
 
 	// handle click on link
@@ -40,7 +47,8 @@ var ImageLightbox = {
 
 		if (matches) {
 			var imageName = matches.pop();
-			ImageLightbox.show(imageName);
+			var caption = target.attr('caption');
+			this.show(imageName, caption);
 		}
 
 		// don't follow href
@@ -48,16 +56,28 @@ var ImageLightbox = {
 	},
 
 	// show lightbox
-	show: function(imageName) {
-		ImageLightbox.log(imageName);
+	show: function(imageName, caption) {
+		var self = this;
+		this.log(imageName);
 
 		// locking to prevent double clicks
-		if (ImageLightbox.lock) {
-			ImageLightbox.log('lock detected: another lightbox is loading');
+		if (this.lock) {
+			this.log('lock detected: another lightbox is loading');
 			return;
 		}
 
-		ImageLightbox.lock = true;
+		this.lock = true;
+
+		// tracking
+		this.track('/init');
+
+		// render caption bar
+		if (typeof caption != 'undefined') {
+			caption = '<p id="lightbox-caption-content">' + caption + '</p>';
+		}
+		else {
+			caption = '';
+		}
 
 		$.getJSON(wgScript + '?action=ajax&rs=ImageLightboxAjax', {
 			'title': imageName,
@@ -65,30 +85,41 @@ var ImageLightbox = {
 			'maxheight': $.getViewportHeight()
 		}, function(res) {
 			if (res.html) {
-				// popup title
-				var desc = imageName.replace(/_/g, ' ');
-
 				// open modal
 				$.getScript(stylepath + '/common/jquery/jquery.wikia.modal.js?' + wgStyleVersion, function() {
-					var html = '<div id="lightbox-image" title="' + desc  +'">' +
+					var html = '<div id="lightbox-image" title="' + res.name + '" style="text-align: center">' +
 						res.html +
-						'<div id="lightbox-caption" class="neutral"><a id="lightbox-link" href="' + res.href + '">&nbsp;</a></div>' +
-						'</div>';
+						'<div id="lightbox-caption" class="neutral clearfix">' +
+						'<a id="lightbox-link" href="' + res.href + '" title="' + res.msg.tooltip + '"></a>' +
+						caption +
+						'</div></div>';
 
 					$("#positioned_elements").append(html);
 					$('#lightbox-image').makeModal({
 						'id': 'lightbox',
-						'width': res.width
-						});
+						'width': res.width,
+
+						// track when popup is closed
+						'onClose': function() {
+							self.track('/close');
+						}
 					});
 
+					// tracking
+					$('#lightbox-link').click(function() {
+						self.track('/details');
+					});
+				});
+
 				// remove lock
-				delete ImageLightbox.lock;
+				delete self.lock;
 			}
 		});
 	}
 };
 
-if (window.skin == 'monaco') {
-	$(ImageLightbox.init);
+if ( (typeof window.skin != 'undefined') && (window.skin == 'monaco') ) {
+	$(function() {
+		ImageLightbox.init.call(ImageLightbox);
+	});
 }

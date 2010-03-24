@@ -1,0 +1,25 @@
+/* Handle border of on-hover effect */
+.wikia-gallery {
+	padding: 1px;
+}
+
+/* CSS for "Add an image to this gallery" button in view mode (shown only in Monaco) */
+.wikia-gallery-add {
+	background: #DDD;
+	border:  1px solid #BBB;
+	line-height:  16px;
+	float: left;
+	left: 5px;
+	padding: 0 5px;
+	position: relative;
+	top: 9px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+
+.wikia-gallery-add a {
+	color: #000;
+	display: inline-block;
+	font-size: 0.85em;
+	text-decoration: none;
+}

@@ -42,6 +42,21 @@ h1.modalTitle img {
 	visibility: hidden;
 }
 
+/* Modal version of confirm() */
+#WikiaConfirm p {
+	font-size: 0.9em;
+	line-height: 1.4em;
+	padding: 8px 5px;
+}
+
+#WikiaConfirm .modalToolbar {
+	text-align: right;
+}
+
+#WikiaConfirm .modalToolbar a {
+	margin: 0 0 0 4px;
+}
+
 /* Fields in AjaxLogin modal */
 #wpName1Ajax, #wpPassword1Ajax {
 	width: 150px;
@@ -66,7 +81,7 @@ h1.modalTitle img {
 }
 .wpAjaxLoginInput label
 {
-	display: block; 
+	display: block;
 	font-weight: bold;
 	font-family:arial,sans-serif;
 	font-size:10pt;
@@ -102,7 +117,7 @@ h1.modalTitle img {
 	padding:4px 4px 4px 4px;
 	border-style: solid;
 	border-width: 1px;
-	border-color: #AAAAAA; 
+	border-color: #AAAAAA;
 	margin-left:6px;
 }
 
@@ -121,7 +136,7 @@ h1.modalTitle img {
 {
 	border-top-style: solid;
 	border-top-color: #AAAAAA;
- 	border-width: 1px; 
+ 	border-width: 1px;
 }
 
 .wpAjaxLoginLine td
@@ -135,7 +150,7 @@ h1.modalTitle img {
 	color: black;
 
 }
-	
+
 .ajaxregister_button span {
 	color: black;
 	width: 120px;
@@ -144,11 +159,11 @@ h1.modalTitle img {
 .ajaxregister_button_enable {
 	color: black; 
 }
-	 
+
 .ajaxregister_button_enable span {
 	color: black;
 }
- 
+
 
 #AjaxLoginButtons
 {
@@ -157,7 +172,7 @@ h1.modalTitle img {
 }
 
 #userloginErrorBox,#userloginErrorBox2,#userloginErrorBox3 {
-	background-color: #FFFFCC;	
+	background-color: #FFFFCC;
 	border: 1px solid #AAA;
 	margin: 1em 3em 1em 0;
 	padding: 6px 6px 6px 6px;

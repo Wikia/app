@@ -75,6 +75,55 @@ jQuery.showModal = function(title, content, options) {
 	});
 }
 
+// show modal version of confirm()
+jQuery['confirm'] = function(options) {
+	// init options
+	options = (typeof options != 'object') ? {} : options;
+	options.id = 'WikiaConfirm';
+
+	$.getScript(stylepath + '/common/jquery/jquery.wikia.modal.js?' + wgStyleVersion, function() {
+		$().log('confirm: plugin loaded');
+
+		var html = '<p>' + (options.content || '') + '</p>' +
+			'<div class="neutral modalToolbar">' +
+			'<a id="WikiaConfirmCancel" class="wikia-button secondary">' + (options.cancelMsg || 'Cancel') + '</a>' +
+			'<a id="WikiaConfirmOk" class="wikia-button">' + (options.okMsg || 'Ok') + '</a>' +
+			'</div>';
+
+		var dialog = $('<div>').
+			appendTo('#positioned_elements').
+			html(html).
+			attr('title', options.title || '');
+
+		// fire callbackBefore if provided
+		if (typeof options.callbackBefore == 'function') {
+			options.callbackBefore();
+		}
+
+		// handle clicks on Ok
+		$('#WikiaConfirmOk').click(function() {
+			 $('#WikiaConfirm').closeModal();
+
+			 // try to call callback when Ok is pressed
+			 if (typeof options.onOk == 'function') {
+				 options.onOk();
+			 }
+		});
+
+		// handle clicks on Cancel
+		$('#WikiaConfirmCancel').click(function() {
+			$('#WikiaConfirm').closeModal();
+		});
+
+		dialog.makeModal(options);
+
+		// fire callback if provided
+		if (typeof options.callback == 'function') {
+			options.callback();
+		}
+	});
+}
+
 // send POST request and parse returned JSON
 jQuery.postJSON = function(u, d, callback) {
 	return jQuery.post(u, d, callback, "json");
