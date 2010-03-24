@@ -1155,7 +1155,7 @@ ul#top-wiki-meta li span {
 #hub-side-box {
   width: 300px;
   float: right;
-  margin: 25px 0 0;
+  margin: 25px 0 0 20px;
 }
 
 #hub-side-box h1 {
@@ -1175,7 +1175,7 @@ ul#top-wiki-meta li span {
 }
 
 #hub-top-contributors {
-  margin: 20px 0 0 20px;
+  margin: 20px 0;
 }
 
 ul#hub-blog-articles {
