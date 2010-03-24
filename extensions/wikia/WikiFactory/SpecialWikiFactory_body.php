@@ -170,7 +170,7 @@ class WikiFactoryPage extends SpecialPage {
 					} else {
 						list( $code, $domain ) = explode(".", $domain, 2 );
 						if ( in_array( $code, array_keys( Language::getLanguageNames() ) ) ) {
-							$this->mDomain = $code.$domain;
+							$this->mDomain = $code.".".$domain;
 							$domain = sprintf("%s.%s.%s", $code, $domain, "wikia.com" );
 						}
 					}
