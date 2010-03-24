@@ -33,13 +33,10 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 				$mailBody = $this->getLocalizedMsgBody( 'founderemails-email-' . $activateDays . '-days-passed-body', $langCode, $emailParams );
 				$mailBodyHTML = $this->getLocalizedMsgBody( 'founderemails-email-' . $activateDays . '-days-passed-body-HTML', $langCode, $emailParams );
 
-				$result = $founderEmails->notifyFounder( $mailSubject, $mailBody, $mailBodyHTML, $wikiId );
+				$founderEmails->notifyFounder( $mailSubject, $mailBody, $mailBodyHTML, $wikiId );
 
-				if( $result ) {
-					$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-					$dbw->delete( 'founder_emails_event', array( 'feev_id' => $event['id'] ) );
-				}
-
+				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+				$dbw->delete( 'founder_emails_event', array( 'feev_id' => $event['id'] ) );
 			}
 		}
 
