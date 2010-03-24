@@ -66,7 +66,7 @@ function wfSpecialUserRegister(){
 				
 				if ($wgFriendingEnabled) {
 					
-					require_once("$IP/extensions/wikia/UserRelationship/UserRelationshipClass.php");
+					require_once("$IP/extensions/wikia/UserRelationship_NY/UserRelationshipClass.php");
 					
 					//need to create request first
 					$rel = new UserRelationship($referral_title->getText());

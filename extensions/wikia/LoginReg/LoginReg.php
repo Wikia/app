@@ -1,6 +1,6 @@
 <?php
 
-
+// FIXME: Document what this extension does.
 
 #$wgHooks['UserLoginComplete'][] = 'fnLoginRedirect';
 
@@ -83,7 +83,7 @@ function fnRegisterAutoAddFriend($user) {
 				//clear the status
 				$rel->updateRelationshipRequestStatus($request_id,1);
 				
-				//automatically add relationhips
+				//automatically add relationships
 				$rel = new UserRelationship($user->getName());
 				$rel->addRelationship($request_id,true);
 			}
