@@ -36,7 +36,7 @@ class WikiaAssets {
 	}
 
 	public static function combined() {
-		global $wgRequest, $wgStylePath;
+		global $wgRequest, $wgStylePath, $wgStyleVersion;
 
 		$type = $wgRequest->getVal('type');
 
@@ -65,6 +65,11 @@ class WikiaAssets {
 			foreach($references as $reference) {
 				if(isset($reference['browser']) && $reference['browser'] != $browser) {
 					continue;
+				}
+				if(strpos($reference['url'], '?') === false) {
+					$reference['url'] .= '?'.$wgStyleVersion;
+				} else {
+					$reference['url'] .= '&'.$wgStyleVersion;
 				}
 				$out .= '/* Call to: '.$reference['url'].' */'."\n\n";
 				$out .= '<!--# include virtual="'.$reference['url'].'" -->';
