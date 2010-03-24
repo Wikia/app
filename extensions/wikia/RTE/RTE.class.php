@@ -146,8 +146,8 @@ class RTE {
 		self::$devMode = $wgRequest->getVal('source', false);
 		if (!empty(self::$devMode)) {
 			// load development version
-			$wgOut->addScript("<script type=\"$wgJsMimeType\" src=\"$wgExtensionsPath/wikia/RTE/ckeditor/ckeditor_source.js?$wgStyleVersion\"></script>");
-			$wgOut->addScript("<script type=\"$wgJsMimeType\" src=\"$wgExtensionsPath/wikia/RTE/js/RTE.js?$wgStyleVersion\"></script>");
+			$wgOut->addScript("<script src=\"$wgExtensionsPath/wikia/RTE/ckeditor/ckeditor_source.js?$wgStyleVersion\" type=\"$wgJsMimeType\"></script>");
+			$wgOut->addScript("<script src=\"$wgExtensionsPath/wikia/RTE/js/RTE.js?$wgStyleVersion\" type=\"$wgJsMimeType\"></script>");
 		}
 		else {
 			// load minified version
