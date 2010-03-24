@@ -621,7 +621,7 @@ function getMenu() {
 				$magicWords[$word][] = array('className' => 'Monaco-sidebar_more', 'url' => Title::makeTitle(NS_CATEGORY, $name)->getLocalURL(), 'text' => '-more-');
 			}
 		}
-		$content .= 'var magicWords = '.Wikia::json_encode($magicWords).';';
+		$content .= 'window.magicWords = '.Wikia::json_encode($magicWords).';';
 		$duration = 60 * 60 * 12; // two days
 	}
 
