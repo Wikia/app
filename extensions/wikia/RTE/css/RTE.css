@@ -457,6 +457,10 @@ div.linkEditorDialog .cke_browser_ie8 .cke_dialog_title {
 	background-position: 0 -1247px;
 }
 
+#editform .RTEGalleryButton .cke_icon {
+	background-position: 0 -1311px;
+}
+
 #editform .RTEVideoButton .cke_icon {
 	background-position: 0 -1232px;
 }

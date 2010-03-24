@@ -38,6 +38,9 @@ class WikiaSkinMonoBook extends SkinTemplate {
 	function setupSkinUserCss( OutputPage $out ) {
 		parent::setupSkinUserCss( $out );
 
+		// Wikia version of /skins/common/shared.css
+		$out->addStyle('wikia/shared.css');
+
 		// add YUI css
 		$out->addStyle('common/yui_2.5.2/container/assets/container.css');
 		$out->addStyle('common/yui_2.5.2/logger/assets/logger.css');
@@ -104,7 +107,7 @@ class WikiaSkinMonoBook extends SkinTemplate {
 		$tpl->set('advertise',  '<a href="http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia" title="advertise on Wikia">Advertise</a>'); # rt33045
 		$tpl->set('hosting',    '<i>Wikia</i>&reg; is a registered service mark of Wikia, Inc. All rights reserved.');
 		$tpl->set('credits',    ' ');
-		
+
 		# rt33045
 		$tpl->set('contact',    '<a href="'. $wgUser->getSkin()->makeUrl('Special:Contact') . '" title="Contact Wikia">Contact Wikia</a>');
 

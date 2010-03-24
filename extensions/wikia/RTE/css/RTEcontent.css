@@ -114,3 +114,8 @@ img.video-placeholder {
 .lang-en img.image-placeholder {
 	background-image: url(../images/imagePlaceholderEn.png);
 }
+
+/* Wikia Image Gallery placeholder */
+img.image-gallery {
+	background-image: url(../../WikiaImageGallery/images/images.png);
+}

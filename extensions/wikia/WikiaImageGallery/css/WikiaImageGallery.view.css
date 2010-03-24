@@ -1,0 +1,26 @@
+/* Handle border of on-hover effect */
+.wikia-gallery {
+	border: solid 1px transparent;
+}
+
+/* CSS for "Add an image to this gallery" button in view mode (shown only in Monaco) */
+.wikia-gallery-add {
+	-moz-border-radius: 3px 3px 3px 3px;
+	background: #ddd url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20100128) no-repeat -655px 1px;
+	border: 1px solid #bbb;
+	float: left;
+	left: 9px;
+	line-height: 16px;
+	padding: 0pt 0pt 0pt 12px;
+	position: relative;
+	top: 9px;
+}
+
+.wikia-gallery-add a {
+	background: #ddd;
+	color: #000 !important;
+	display: block;
+	font-size: 0.85em;
+	padding: 0 7px 0 3px;
+	text-decoration: none;
+}

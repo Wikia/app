@@ -195,6 +195,7 @@ packages :
 					'../js/plugins/edit-buttons/plugin.js',
 					'../js/plugins/entities/plugin.js',
 					'../js/plugins/first-run-notice/plugin.js',
+					'../js/plugins/gallery/plugin.js',
 					'../js/plugins/justify/plugin.js',
 					'../js/plugins/link/plugin.js',
 					'../js/plugins/link/dialogs/link.js',

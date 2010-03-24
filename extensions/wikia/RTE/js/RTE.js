@@ -42,6 +42,7 @@ window.RTE = {
 		'edit-buttons',
 		'entities',
 		'first-run-notice',
+		'gallery',
 		'justify',
 		'link',
 		'linksuggest',
@@ -398,7 +399,7 @@ CKEDITOR.config.toolbar_Wikia =
 	{
 		msg: 'insert',
 		groups: [
-			['Image', 'Video'],
+			['Image', 'Gallery', 'Video'],
 			['Table'],
 			['Template'],
 			['Signature']
