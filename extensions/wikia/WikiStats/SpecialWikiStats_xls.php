@@ -165,7 +165,7 @@ class WikiStatsXLS {
 							$stamp = mktime(23, 59, 59, substr($out, 4, 2), 1, substr($out, 0, 4));
 							if ( $out == date("Ym") ) {
 								$stamp = time();
-								$out = $wgLang->sprintfDate( $mStats->dateFormat(0), wfTimestamp(TS_MW, $stamp));
+								$out = $wgLang->sprintfDate( $this->mStats->dateFormat(0), wfTimestamp(TS_MW, $stamp));
 							} else {
 								$out = $wgLang->sprintfDate("M Y", wfTimestamp(TS_MW, $stamp));
 							}
