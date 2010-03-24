@@ -83,7 +83,10 @@ class ExtendedLoginForm extends LoginForm {
                 global $wgAuth, $wgEmailConfirmToEdit, $wgCookieExpiration;
 
                 $titleObj = SpecialPage::getTitleFor( 'Userlogin' );
-
+ 
+		 		if (!$this->mPosted) {
+		 			$this->mType = null;
+		 		} 
 		// this is tracking
                 if( ('' != $msg) && ('error' == $msgtype) ) { // we have an error
 			if('login' != $this->mType) { //signup error
