@@ -239,7 +239,7 @@ class WikiaAssets {
 
 		} else {
 
-			global $wgRequest, $wgStylePath;
+			global $wgRequest, $wgStylePath, $wgStyleVersion;
 
 			$wgRequest->setVal('allinone', false);
 
@@ -264,7 +264,7 @@ class WikiaAssets {
 				if(isset($reference['cond'])) {
 					$out .='<!--['.$reference['cond'].']';
 				}
-				$out .= '@import url('.$reference['url'].');';
+				$out .= '@import url('.$reference['url'].'?'.$wgStyleVersion.');';
 				if(isset($reference['cond'])) {
 					$out .='<![endif]-->';
 				}
