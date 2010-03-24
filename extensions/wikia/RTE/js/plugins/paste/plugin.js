@@ -28,13 +28,13 @@ CKEDITOR.plugins.add('rte-paste',
 				self.htmlBeforePaste = self.getHtml();
 
 				// handle pasted HTML (mainly for tracking stuff)
-				setTimeout(function() {self.handlePaste.call(self)}, 250);
+				setTimeout(function() {self.handlePaste.call(self, editor)}, 250);
 			});
 		});
 	},
 
 	// get pasted HTML
-	handlePaste: function() {
+	handlePaste: function(editor) {
 		RTE.log('paste detected');
 
 		// get HTML after paste
@@ -74,6 +74,17 @@ CKEDITOR.plugins.add('rte-paste',
 		}
 		else {
 			this.track('plainText');
+		}
+
+		// double single line breaks (<br />) - RT #38978
+		if (typeof diff.pasted == 'string') {
+			if ((/<br>/).test(diff.pasted)) {
+				RTE.log('paste: detected <br> in pasted content');
+
+				// let's replace <br>
+				var html = diff['new'].replace(/([^>])<br>/g, '$1<br /><br />');
+				editor.setData(html);
+			}
 		}
 	},
 
@@ -127,6 +138,6 @@ CKEDITOR.plugins.add('rte-paste',
 		prefix = n.substring(0, idx.start);
 		suffix = n.substring(idx.end + 1, n.length);
 
-		return {pasted: pasted, prefix: prefix, suffix: suffix, 'new': n, 'old': o};
+		return {pasted: pasted, prefix: prefix, suffix: suffix, 'new': n, 'old': o, 'start': idx.start, 'end': idx.end};
 	}
 });
