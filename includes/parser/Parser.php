@@ -1818,7 +1818,7 @@ class Parser
 				}
 				wfProfileOut( __METHOD__."-interwiki" );
 
-				/* Wikia change begin */
+				/* Wikia change begin - @author: Bartek */
 				/* Support for [[Video:...]] */
 				/* TODO: Get the hell out with this code from here */
 				if( $ns == NS_VIDEO ) {
@@ -4455,7 +4455,7 @@ class Parser
 	function renderImageGallery( $text, $params ) {
 		$ig = new ImageGallery();
 
-		/* Wikia change begin */
+		/* Wikia change begin - @author: Macbre */
 		/* Allow extensions to use different class to render image gallery */
 		wfRunHooks('renderImageGallerySetup', array(&$ig, &$text, &$params));
 		/* Wikia change end */

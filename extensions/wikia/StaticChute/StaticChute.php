@@ -126,7 +126,7 @@ class StaticChute {
 			'../extensions/wikia/ShareFeature/js/ShareFeature.js',
 			'../extensions/wikia/CreatePage/js/CreatePage.js',
 			'../extensions/wikia/Interstitial/Interstitial.js',
-			'../extensions/wikia/WikiaImageGallery/js/WikiaImageGallery.view.js',
+			'../extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js',
 		);
 		$this->config['monaco_anon_article_js'] = array_merge($this->config['monaco_anon_article_js'], $widgetsAssets['js']);
 
@@ -137,7 +137,7 @@ class StaticChute {
 			'common/jquery/jquery.json-1.3.js',
 			'common/jquery/jquery.cookies.2.1.0.js',
 			'common/jquery/jquery.wikia.js',
-			'common/jquery/jquery-ui-1.7.1.custom.js',
+			'common/jquery/jquery-ui-1.7.2.custom.js',
 			'common/jquery/jquery.timeago.js',
 
 			'common/ajax.js',
@@ -155,7 +155,7 @@ class StaticChute {
 			'common/contributed.js',
 			'../extensions/wikia/ShareFeature/js/ShareFeature.js',
 			'../extensions/wikia/CreatePage/js/CreatePage.js',
-			'../extensions/wikia/WikiaImageGallery/js/WikiaImageGallery.view.js',
+			'../extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js',
 		);
 		$this->config['monaco_loggedin_js'] = array_merge($this->config['yui'], $this->config['monaco_loggedin_js'], $widgetsAssets['js']);
 
@@ -208,7 +208,7 @@ class StaticChute {
 			'../extensions/wikia/CreatePage/css/CreatePage.css',
 
 			// macbre: temporary
-			'../extensions/wikia/WikiaImageGallery/css/WikiaImageGallery.view.css',
+			'../extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.view.css',
 		);
 		$this->config['monaco_css'] = array_merge($this->config['monaco_css'], $widgetsAssets['css']);
 

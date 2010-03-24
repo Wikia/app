@@ -12,6 +12,9 @@ $wgAutoloadClasses['ImageLightbox'] = "$dir/ImageLightbox.class.php";
 // hooks
 $wgHooks['BeforePageDisplay'][] = 'ImageLightbox::beforePageDisplay';
 
+// i18n
+$wgExtensionMessagesFiles['ImageLightbox'] = $dir.'/ImageLightbox.i18n.php';
+
 // Ajax dispatcher
 $wgAjaxExportList[] = 'ImageLightboxAjax';
 function ImageLightboxAjax() {

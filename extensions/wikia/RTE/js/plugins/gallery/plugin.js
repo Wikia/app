@@ -10,54 +10,43 @@ CKEDITOR.plugins.add('rte-gallery',
 			self.setupGallery(gallery);
 		});
 
-		// handle clicks on WMU/VET buttons in source mode (RT #35276)
-		editor.on('toolbarReady', function(toolbar) {/*
-			$('#mw-toolbar').children('#mw-editbutton-wmu').click(function(ev) {
-				window.WMU_show(ev);
-			});
-
-			$('#mw-toolbar').children('#mw-editbutton-vet').click(function(ev) {
-				window.VET_show(ev);
-			});*/
-		});
-
-		// check existance of WikiaImageGallery extension
-		if (typeof window.WikiaImageGallery != 'undefined') {
+		// check existance of WikiaPhotoGallery extension
+		if (typeof window.WikiaPhotoGallery != 'undefined') {
 			// register "Add Image" command
-			editor.addCommand('addgallery', {
+			editor.addCommand('addphotogallery', {
 				exec: function(editor) {
 					// call editor
-					WikiaImageGallery.showEditor();
+					WikiaPhotoGallery.showEditor({
+						from: 'wysiwyg'
+					});
 				}
 			});
 
 			// register "Image" toolbar button
 			editor.ui.addButton('Gallery', {
-				title: editor.lang.picturegallery.add,
+				title: editor.lang.photoGallery.add,
 				className: 'RTEGalleryButton',
-				command: 'addgallery'
+				command: 'addphotogallery'
 			});
 		}
 		else {
-			RTE.log('WikiaImageGallery is not enabled here - disabling "Gallery" button');
+			RTE.log('WikiaPhotoGallery is not enabled here - disabling "Gallery" button');
 			return;
 		}
 	},
 
 	setupGallery: function(gallery) {
 		gallery.
-			attr('title', RTE.instance.lang.picturegallery.tooltip).
+			attr('title', RTE.instance.lang.photoGallery.tooltip).
 			unbind('.gallery').
 			bind('edit.gallery', function(ev) {
 				var gallery = $(this);
-				var data = gallery.getData();
 
-				RTE.log(data);
-
-				alert(data.wikitext);
-
-				// call editor and provide it with gallery clicked + inform it's placeholder
-				//RTE.tools.callFunction(window.WMU_show,$(this), {isPlaceholder: true});
+				// call editor
+				WikiaPhotoGallery.showEditor({
+					from: 'wysiwyg',
+					gallery: gallery
+				});
 			});
 	}
 });

@@ -22,8 +22,19 @@ $.fn.extend({
 		wrapper.addClass(options.className);
 	}
 
-	// let's have it dynamically generated, so every newly created modal will be on the top
-	var zIndex = ($('.blackout').length+1) * 1000;
+	// let's have it dynamically generated, so every newly created modal will be on top
+	if (options.zIndex) {
+		var zIndex = parseInt(options.zIndex);
+	}
+	else {
+		var zIndex = 0;
+
+		$('#positioned_elements').children('.blackout').each(function() {
+			zIndex = Math.max(zIndex, parseInt($(this).css('zIndex')));
+		});
+
+		zIndex += 1000;
+	}
 
 	function getModalTop() {
 		var modalTop = (($(window).height() - wrapper.outerHeight()) / 2) + $(window).scrollTop();
@@ -43,10 +54,11 @@ $.fn.extend({
 			zIndex: zIndex + 1
    		})
    		.fadeIn("fast")
-		.log('makeModal: #' + this.attr('id'));
+		.data('options', options)
+		.log('makeModal: #' + id);
 
 	$("[id$='TOP_LEADERBOARD']").add("[id$='TOP_RIGHT_BOXAD']").css("visibility", "hidden");
-	
+
 	// get rid of tooltip - remove title attr
 	this.removeAttr('title');
 
@@ -56,9 +68,16 @@ $.fn.extend({
 	// macbre: function called when modal is closed
 	var onClose = (typeof options.onClose == 'function') ? options.onClose : false;
 
-	$("h1.modalTitle .close").bind("click", function() {
-		if (onClose) {
-			onClose();
+	wrapper.find('h1.modalTitle').children('.close').bind("click", function() {
+		var wrapper = $(this).closest('.modalWrapper');
+		var options = wrapper.data('options');
+
+		if (typeof options.onClose == 'function') {
+			// let extension decide what to do
+			// close can be prevented by onClose() returning false
+			if (options.onClose({click:1}) == false) {
+				return;
+			}
 		}
 
 		if (persistent) {
@@ -73,7 +92,11 @@ $.fn.extend({
    		.bind("keypress.modal", function(event) {
    			if (event.keyCode == 27) {
 				if (onClose) {
-					onClose();
+					// let extension decide what to do
+					// close can be prevented by onClose() returning false
+					if (onClose({keypress:1}) == false) {
+						return;
+					}
 				}
 
 				if (persistent) {
@@ -89,14 +112,22 @@ $.fn.extend({
    			$(".blackout:last").height($(document).height());
    		});
 
-   	$("#positioned_elements").append('<div class="blackout"></div>');
-   	$(".blackout:last")
-   		.height($(document).height())
+
+	// macbre: associate blackout with current modal
+	var blackout = $('<div>').addClass('blackout');
+
+	blackout
+		.appendTo('#positioned_elements')
+		.height($(document).height())
 		.css({zIndex: zIndex})
-   		.fadeTo("fast", 0.65)
-   		.bind("click", function() {
+		.fadeTo("fast", 0.65)
+		.bind("click", function() {
 			if (onClose) {
-				onClose();
+				// let extension decide what to do
+				// close can be prevented by onClose() returning false
+				if (onClose({click:1}) == false) {
+					return;
+				}
 			}
 
 			if (persistent) {
@@ -106,6 +137,8 @@ $.fn.extend({
 				wrapper.closeModal();
 			}
    		});
+
+	wrapper.data('blackout', blackout);
   },
   closeModal: function() {
   	$(window).unbind(".modal");
@@ -115,14 +148,21 @@ $.fn.extend({
   	}, "fast", function() {
   		$(this).remove();
   	});
-  	$(".blackout:last").fadeOut("fast", function() {
+
+	// removed associated blackout
+	var blackout = $(this).data('blackout');
+	blackout.fadeOut("fast", function() {
   		$(this).remove();
   	});
+
 	$("[id$='TOP_LEADERBOARD']").add("[id$='TOP_RIGHT_BOXAD']").css("visibility", "visible");
   },
   // just hide the modal - don't remove DOM node
   hideModal: function() {
-	$(".blackout:last").fadeOut("fast").addClass('blackoutHidden');
+	// hide associated blackout
+	var blackout = $(this).data('blackout');
+	blackout.fadeOut("fast").addClass('blackoutHidden');
+
 	this.animate({
   			top: this.offset()["top"] + 100,
   			opacity: 0
@@ -130,16 +170,19 @@ $.fn.extend({
 			$(this).css("display", "none");
 		}
 	);
+
 	$("[id$='TOP_LEADERBOARD']").add("[id$='TOP_RIGHT_BOXAD']").css("visibility", "visible");
   },
   // show previously hidden modal
   showModal: function() {
-
 	var wrapper = this.closest(".modalWrapper");
 
 	// let's have it dynamically generated, so every newly created modal will be on the top
-	var zIndex = ($('.blackout').length+1) * 1000;
-   	$(".blackout.blackoutHidden:last")
+	var zIndex = ($('#positioned_elements').children('.blackout').length+1) * 1000;
+
+	// show associated blackout
+	var blackout = $(this).data('blackout');
+   	blackout
    		.height($(document).height())
 		.css({
 			display: 'block',
@@ -156,6 +199,7 @@ $.fn.extend({
 			display: "block"
 		})
 		.log('showModal: #' + this.attr('id'));
+
 	$("[id$='TOP_LEADERBOARD']").add("[id$='TOP_RIGHT_BOXAD']").css("visibility", "hidden");
 
 	//Defined twice in different scopes. This is bad. Figure out how to define just once.

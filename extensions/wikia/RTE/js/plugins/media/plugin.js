@@ -483,7 +483,7 @@ CKEDITOR.plugins.add('rte-media',
 				break;
 
 			case 'image-gallery':
-				type = 'picturegallery';
+				type = 'photoGallery';
 				break;
 		}
 
