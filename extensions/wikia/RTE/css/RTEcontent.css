@@ -118,4 +118,5 @@ img.video-placeholder {
 /* Wikia Image Gallery placeholder */
 img.image-gallery {
 	background-image: url(../../WikiaImageGallery/images/images.png);
+	display: block;
 }
