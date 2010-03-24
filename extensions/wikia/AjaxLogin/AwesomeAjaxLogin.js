@@ -8,10 +8,11 @@ var AjaxLogin = {
 		this.form = form;
 
 		// move login/password/remember fields from hidden form to AjaxLogin
+		// changes to tabindex - see RT#41245
 		var labels = this.form.find('label');
-		$('#wpName1Ajax').clone().attr("id","wpName2Ajax").appendTo("#ajaxlogin_username_cell");
-		$('#wpPassword1Ajax').clone().attr("id","wpPassword2Ajax").appendTo("#ajaxlogin_password_cell");
-		$('#wpRemember1Ajax').clone().attr("id","wpRemember2Ajax").insertBefore(labels[2]);
+		$('#wpName1Ajax').clone().attr("id","wpName2Ajax").attr('tabindex', parseInt($('#wpName1Ajax').attr('tabindex')) + 100).appendTo("#ajaxlogin_username_cell");
+		$('#wpPassword1Ajax').clone().attr("id","wpPassword2Ajax").attr('tabindex', parseInt($('#wpPassword1Ajax').attr('tabindex')) + 100).appendTo("#ajaxlogin_password_cell");
+		$('#wpRemember1Ajax').clone().attr("id","wpRemember2Ajax").attr('tabindex', parseInt($('#wpRemember1Ajax').attr('tabindex')) + 100).insertBefore(labels[2]);
 
 		// remove hidden form
 		$('#userajaxloginform').attr("id","");
@@ -20,7 +21,7 @@ var AjaxLogin = {
 
 		// add submit event handler for login form
 		this.form.bind('submit', this.formSubmitHandler);
-		$('#wpLoginattemptAjax').click( this.clickLogIn );
+		$('#wpLoginattemptAjax').attr('tabindex', parseInt($('#wpRemember1Ajax').attr('tabindex')) + 101).click( this.clickLogIn );
 
 		$().log('AjaxLogin: init()');
 
