@@ -34,6 +34,9 @@ var ImageLightbox = {
 
 	// handle click on link
 	onClick: function(ev) {
+		// don't follow href
+		ev.preventDefault();
+
 		var target = $(ev.target);
 
 		// move to parent to an image - anchor
@@ -42,17 +45,26 @@ var ImageLightbox = {
 		}
 
 		// get name of an image
-		var re = wgArticlePath.replace(/\$1/, '(.*)');
-		var matches = target.attr('href').match(re);
+		var imageName = false;
 
-		if (matches) {
-			var imageName = matches.pop();
+		// ref="File:Foo.jpg"
+		if (target.attr('ref')) {
+			imageName = target.attr('ref');
+		}
+		// href="/wiki/File:Foo.jpg"
+		else {
+			var re = wgArticlePath.replace(/\$1/, '(.*)');
+			var matches = target.attr('href').match(re);
+
+			if (matches) {
+				imageName = matches.pop();
+			}
+		}
+
+		if (imageName != false) {
 			var caption = target.attr('caption');
 			this.show(imageName, caption);
 		}
-
-		// don't follow href
-		ev.preventDefault();
 	},
 
 	// show lightbox

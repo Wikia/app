@@ -565,7 +565,7 @@ class FeedRenderer {
 
 			// wrapper for thumbnail
 			$attribs = array(
-				'class' => ($type == 'videos') ? 'activityfeed-video-thumbnail' :  'activityfeed-image-thumbnail',
+				'class' => ($type == 'videos') ? 'activityfeed-video-thumbnail' :  'lightbox',
 				'rel' => 'nofollow',
 				'ref' => ($type == 'videos' ? 'Video:' : 'File:') . $item['name'], /* TODO: check that name doesn't have NS prefix */
 				'title' => $popupTitle,
