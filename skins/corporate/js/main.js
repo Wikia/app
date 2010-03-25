@@ -11,7 +11,7 @@ $(function() {
 	});
 
 	// Bartek - pack tracking so it doesn't pollute other pages
-	if( $('#hub-name') ) {
+	if( $('#hub-name').exists() ) {
 		$('#top-wikis-lists-box').click(trackContainer);
 		$('#hub-blogs').click(trackContainer);
 		$('#wikia-global-hot-spots').click(trackContainer);
