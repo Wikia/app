@@ -31,6 +31,7 @@ class WikiStatsPage extends IncludableSpecialPage
     var $mHub;
     var $mAction;
     var $mXLS;
+    var $mAllWikis;
 	   
 	private $allowedGroups = array('staff', 'sysop', 'janitor', 'bureaucrat');
 	private $TEST = 1;
@@ -70,6 +71,7 @@ class WikiStatsPage extends IncludableSpecialPage
 		$this->mXLS 		= $wgRequest->getVal("css", false);
 		$this->mCityId 		= ($this->TEST == 1 ) ? 177 : $wgCityId;
 		$this->mCityDBName 	= ($this->TEST == 1 ) ? WikiFactory::IDtoDB($this->mCityId) : $wgDBname;
+		$this->mAllWikis 	= 0;
 		
 		$m = array();
 		$this->toYear = date('Y');
@@ -98,7 +100,8 @@ class WikiStatsPage extends IncludableSpecialPage
 		if ( $domain == 'all' ) {
         	$this->mCityId = 0;
         	$this->mCityDBName = WIKISTATS_CENTRAL_ID;
-        	$this->mCityDomain = WikiFactory::DBToDomain($this->mCityDBName);
+        	$this->mCityDomain = 'all';
+        	$this->mAllWikis = 1;
 		} elseif ( !empty($domain) && $this->userIsSpecial == 1 ) {
         	$this->mCityId = WikiFactory::DomainToId($domain);
         	$this->mCityDBName = WikiFactory::IDToDB($this->mCityId);
@@ -115,6 +118,9 @@ class WikiStatsPage extends IncludableSpecialPage
         	'toMonth'	=> $this->toMonth,
         	'toYear'	=> $this->toYear
         ));
+        
+        $this->mStats->setHub($this->mHub);
+        $this->mStats->setLang($this->mLang);
         
         #---
         $this->mSkin = $wgUser->getSkin();
@@ -202,6 +208,9 @@ class WikiStatsPage extends IncludableSpecialPage
         	"aLanguages"		=> $aLanguages,
         	"categories"		=> $aCategories,
         	"curYear"			=> intval($this->toYear),
+			"mHub"				=> $this->mHub,
+			"mLang"				=> $this->mLang,
+			"mAllWikis"			=> $this->mAllWikis
         ));
         $res = $oTmpl->execute("select");
 
@@ -211,9 +220,6 @@ class WikiStatsPage extends IncludableSpecialPage
 	
 	private function showMain() {
         global $wgUser, $wgContLang, $wgLang, $wgStatsExcludedNonSpecialGroup, $wgOut;
-		#---
-        #$this->mStats->loadStatsFromDB();
-        #$this->mStats->loadMonthlyDiffs();
 		#---
 		if ( empty($this->mXLS) ) {
 			wfProfileIn( __METHOD__ );

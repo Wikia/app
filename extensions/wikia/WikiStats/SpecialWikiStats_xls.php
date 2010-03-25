@@ -85,7 +85,7 @@ class WikiStatsXLS {
 		#----
 		$this->setXLSFileBegin();
 		$this->writeXLSLabel(1,1,wfMsg('wikistats_pagetitle'));
-		$this->mergeXLSColsRows(1, 1, 1, count($columns));
+		$this->mergeXLSColsRows(1, 1, 1, count($columnNames));
 		/*
 		 * table header
 		 */

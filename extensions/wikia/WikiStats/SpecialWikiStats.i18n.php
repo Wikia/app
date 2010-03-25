@@ -26,6 +26,7 @@ $messages['en'] = array(
 	"wikistats_anon_wikians_count" => "$1 anonymous users found",
 	"wikistats_reg_wikians_count" => "$1 register $2 found",
 	"wikistats_unreg_wikians_count" => "$1 register $2 found",
+	"wikistats_latest_pageviews" => "Latest visited pages",
 	"wikistats_pageviews" => "Page views per namespace per month",
 	"wikistats_article_size" => "Articles that contain at least one internal link and .. characters readable text, disregarding wiki- and html codes, hidden links, etc.;<br />Also headers do not count (excl. redirects)",
 	"wikistats_article_one_link" => "Articles that contain at least one internal link",

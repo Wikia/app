@@ -24,6 +24,8 @@ class WikiStats {
     var $mStatsDate;
     var $mLocalStats;
     var $mMonthDiffs;
+    var $mLang;
+    var $mHub;
     
     var $mAllStats;
     var $mMonthDiffsStats;
@@ -78,6 +80,8 @@ class WikiStats {
 	public function setUpdateDate($value) 	{ $this->mUpdateDate = $value; }
     public function setStatsDate($value)	{ $this->mStatsDate = $value; }
     public function setMonthDiffs($value)	{ $this->mMonthDiffs = $value; }
+    public function setHub($value)			{ $this->mHub = $value; }
+    public function setLang($value)			{ $this->mLang = $value; }
 
 	public function getLocalStats() 		{ return $this->localStats; }
     public function getRangeColumns() 		{ return $this->mRange; }
@@ -85,6 +89,8 @@ class WikiStats {
     public function getUpdateDate() 		{ return $this->mUpdateDate; }
     public function getStatsDate()			{ return $this->mStatsDate; }
     public function getMonthDiffs()			{ return $this->mMonthDiffs; }
+    public function getHub()				{ return $this->mHub; }
+    public function getLang()				{ return $this->mLang; }
 
 	private function getSkin() {
 		if ( !isset( $this->mSkin ) ) {
@@ -281,19 +287,23 @@ class WikiStats {
         global $wgUser, $wgContLang, $wgLang;
 		wfProfileIn( __METHOD__ );
 		#---
-        $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-        $oTmpl->set_vars( array(
-            "today" 		=> date("Y-m"),
-            "updateDate"    => $this->mUpdateDate,
-            "user"			=> $wgUser,
-            "oWikia"		=> $this->oWikia,
-            "cityId"		=> $this->mCityId,
-			"wgContLang" 	=> $wgContLang,
-			"wgLang"		=> $wgLang,
-        ));
+		$res = "";
+		if ( empty($this->mAllStats) ) { 
+			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+			$oTmpl->set_vars( array(
+				"today" 		=> date("Y-m"),
+				"updateDate"    => $this->mUpdateDate,
+				"user"			=> $wgUser,
+				"oWikia"		=> $this->oWikia,
+				"cityId"		=> $this->mCityId,
+				"wgContLang" 	=> $wgContLang,
+				"wgLang"		=> $wgLang,
+			));
+			$res = $oTmpl->execute("stats-wikia-info");
+		}
         #---
 		wfProfileOut( __METHOD__ );
-        return $oTmpl->execute("stats-wikia-info");
+        return $res;
 	}
 
 	/**
@@ -306,17 +316,18 @@ class WikiStats {
         global $wgUser, $wgContLang, $wgLang;
 		wfProfileIn( __METHOD__ );
 		#---
-        $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-        $oTmpl->set_vars( array(
-            "user"			=> $wgUser,
-            "oWikia"		=> $this->oWikia,
-            "cityId"		=> $this->mCityId,
+		$res = "";
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl->set_vars( array(
+			"user"			=> $wgUser,
+			"oWikia"		=> $this->oWikia,
+			"cityId"		=> $this->mCityId,
 			"wgContLang" 	=> $wgContLang,
 			"wgLang"		=> $wgLang,
-        ));
+		));
         #---
 		wfProfileOut( __METHOD__ );
-        return $oTmpl->execute("addinfo");
+        return $res;
 	}
 	
 	/**
@@ -448,7 +459,7 @@ class WikiStats {
 			return false;
 		} 
 
-		$memkey = md5($this->mCityId . "-" . implode("-", array_values($this->mStatsDate)) . "-" . $this->mLocalStats );
+		$memkey = md5($this->mCityId . "-" . implode("-", array_values($this->mStatsDate)) . "-" . $this->mLocalStats . "-" . $this->mLang . "-" . $this->mHub );
     	$memkey = __METHOD__ . "_" . $memkey;
     	#---
 		$columns = array();

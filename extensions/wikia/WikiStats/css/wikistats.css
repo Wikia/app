@@ -155,6 +155,7 @@ fieldset {font-size: 9pt; font-family: Trebuchet MS,arial,sans-serif,helvetica;b
 legend {font-size: 8pt; font-family:Trebuchet MS,arial,verdana;padding:0px;}
 .ws-select-stats { text-align:right; margin:0px; font-size:8pt; }
 .ws-select-stats ul { padding:0px; line-height:1em; margin:0px; }
+.ws-select-stats li { vertical-align:middle; }
 .ws-select-stats select { padding: 0px; font-size:8pt; }
 .ws-select-stats input { padding: 1px; font-size:8pt; }
 .ws-select-stats span { vertical-align: middle; padding: 9px 0 0; }
@@ -171,7 +172,7 @@ legend {font-size: 8pt; font-family:Trebuchet MS,arial,verdana;padding:0px;}
 .ws-wiki-info ul { list-style-image:none; list-style-type:none; margin:0px; padding: 0px; line-height:12pt; }
 .ws-wiki-info li { margin:0px; }*/
 .ws-wikia-main-info { margin:0; font-size: 8pt }
-.ws-wikia-main-info ul { line-height:9pt; vertical-align:top; width:200px; display:inline-block;}
+.ws-wikia-main-info ul { line-height:9pt; vertical-align:top; width:200px; display:inline-block; margin:0 10px;}
 .ws-main-table { font-size:8pt; width:700px; }
 .ws-main-table th { padding:1px; }
 .ws-main-table td { padding:1px 2px; text-align:right; }
