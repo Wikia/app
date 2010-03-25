@@ -189,6 +189,7 @@ class StaticChute {
 
 		// CSS
 		$this->config['monaco_css'] = array(
+		    'common/yui_2.5.2/tabview/assets/tabview.css', 	
 			'common/shared.css',
 			'wikia/shared.css',
 			'monaco/css/monobook_modified.css',
