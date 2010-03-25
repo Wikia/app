@@ -59,6 +59,7 @@ class AutoCreateWikiPage extends SpecialPage {
 	const CACHE_LOGIN_KEY   = 'awc_beforelog';
 	const ACTIVE_CLUSTER    = "c2";
 	const DEFAULT_NAME      = "Wiki";
+	const DEFAULT_WIKI_TYPE = "default";
 
 	/**
 	 * constructor
@@ -669,7 +670,12 @@ class AutoCreateWikiPage extends SpecialPage {
 		/**
 		 * set variables per language
 		 */
-		$this->addCustomSettings( $this->mWikiData[ "language" ], $wgLangCreationVariables, "language" );
+		$wiki_type = ( !empty($this->mType) ) ? $this->mType : DEFAULT_WIKI_TYPE;
+		$this->addCustomSettings( 
+			$this->mWikiData[ "language" ], 
+			isset($wgLangCreationVariables[$wiki_type]) ? $wgLangCreationVariables[$wiki_type] : $wgLangCreationVariables, 
+			"language" 
+		);
 
 		/**
 		 * move main page
