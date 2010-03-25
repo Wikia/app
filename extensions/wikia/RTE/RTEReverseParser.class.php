@@ -585,6 +585,14 @@ class RTEReverseParser {
 			}
 		}
 
+		// RT#40786: handle "filler" paragraphs added between headings
+		if ($node->hasAttribute('_rte_filler') && $textContent == "\n") {
+			RTE::log(__METHOD__.'::filler', 'empty filler paragraph found');
+
+			wfProfileOut(__METHOD__);
+			return '';
+		}
+
 		// handle paragraphs alignment and indentation
 		// (ignore when paragraph is empty)
 		if ($node->hasAttribute('style') && (trim($textContent) != '')) {
