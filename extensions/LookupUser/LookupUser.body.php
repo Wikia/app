@@ -72,7 +72,7 @@ class LookupUserPage extends SpecialPage {
 <tr>
 <td align="right">$username</td>
 <td align="left"><input type="text" size="50" name="target" value="$target" />
-<td colspan="2" align="center"><input type="submit" name="submit" value="$ok" /></td>
+<td colspan="2" align="center"><input type="submit" value="$ok" /></td>
 </tr>
 </table>
 </form>
@@ -143,7 +143,7 @@ EOT
 <tr>
 <td align="right">{$foundInfo}</td>
 <td align="left">$selectForm</td>
-<td colspan="2" align="center"><input type="submit" name="submit" value="$ok" /></td>
+<td colspan="2" align="center"><input type="submit" value="$ok" /></td>
 </tr>
 </table>
 </form>
