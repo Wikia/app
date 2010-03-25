@@ -21,36 +21,32 @@ function neue_website( $nws ) {
 		return $output;
 	}
 
-  $newdom = validate_domain($nws);
-  if(!$newdom)
-  {
-    $nws = htmlspecialchars($nws);
-    $output = wfMsg( 'newsite-error-invalid', $nws );
-    return $output;
-  }
+	$newdom = validate_domain( $nws );
+	if( !$newdom ) {
+		$nws = htmlspecialchars($nws);
+		$output = wfMsg( 'newsite-error-invalid', $nws );
+		return $output;
+	}
 
-  $newhost = get_host($newdom);
-  if(!$newhost)
-  {
-    $output = wfMsg( 'newsite-error-notfound', $newdom );
-    return $output;
-  }
+	$newhost = get_host($newdom);
+	if( !$newhost ) {
+		$output = wfMsg( 'newsite-error-notfound', $newdom );
+		return $output;
+	}
 
-  $newpage = $newdom;
-  $newpage{0} = strtoupper($newpage{0});
-  // $output .= "newpage: =$newpage= newdom: =$newdom= newhost =$newhost=\n";
+	$newpage = $newdom;
+	$newpage{0} = strtoupper($newpage{0});
 
-  $title = Title::newFromUrl($newpage);
-  if(!is_object($title))
-  {
-    $output = wfMsg( 'newsite-error-invalid', $newdom );
-    return;
-  }
-  if($title->exists())
-  {
-    $output = wfMsg( 'newsite-error-exists', $title->getText(), $title->getFullUrl() );
-    return $output;
-  }
+	$title = Title::newFromUrl($newpage);
+	if( !is_object( $title ) ) {
+		$output = wfMsg( 'newsite-error-invalid', $newdom );
+		return;
+	}
+
+	if( $title->exists( ) ) {
+		$output = wfMsg( 'newsite-error-exists', $title->getText(), $title->getFullUrl() );
+		return $output;
+	}
 
 	/**
 	 * get related sites as job
@@ -62,52 +58,34 @@ function neue_website( $nws ) {
 	 * make_related($dbw, $newhost, $newdom);
 	 */
 
-  $dbw = wfGetDB( DB_MASTER );
-  if(!get_content($newhost))
-  {
-    $output = wfMsg( 'newsite-error-nocontact', $newhost );
-    return $output;
-  }
+	$dbw = wfGetDB( DB_MASTER );
+	if(!get_content($newhost)) {
+		$output = wfMsg( 'newsite-error-nocontact', $newhost );
+		return $output;
+	}
 
-  $wikitext = get_wikitext($dbw, $newhost, $newdom);
-  if(!$wikitext)
-  {
-    $output = wfMsg( 'newsite-error-nowikitext', $newhost );
-    return $output;
-  }
+	$wikitext = get_wikitext($dbw, $newhost, $newdom);
+	if( !$wikitext ) {
+		$output = wfMsg( 'newsite-error-nowikitext', $newhost );
+		return $output;
+	}
 
-# FIXME: is this needed? messes with skin, among other things
-# if(!is_object($wgUser) || User::isIP($wgUser->getName()))
-#   $wgUser = User::newFromName('Anonym');
+	# FIXME: is this needed? messes with skin, among other things
+	# if(!is_object($wgUser) || User::isIP($wgUser->getName()))
+	#   $wgUser = User::newFromName('Anonym');
 
-  $article = new Article( $title );
-  $article->doEdit( $wikitext, wfMsg( 'newsite-edit-comment' ) );
+	$article = new Article( $title );
+	$article->doEdit( $wikitext, wfMsg( 'newsite-edit-comment' ) );
 
-/****
-  $todo = fopen("/var/www/mkwebsites/todo", "a");
-  if($todo)
-  {
-    fputs($todo, "$newdom\n");
-    fclose($todo);
-  }
-****/
+	$armor = substr(md5($newdom), 0,16) . 'WsWImG=' . $newdom . "=no=Ws3ik1Ju5ch=" . substr(md5($newdom), 16);
+	$crypt = strtr(trim(base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, 'WsImgS33CCrret', $armor, MCRYPT_MODE_ECB,
+		mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB), MCRYPT_RAND)))), '+/', '-!');
 
-  $armor = substr(md5($newdom), 0,16) . 'WsWImG=' . $newdom . "=no=Ws3ik1Ju5ch=" . substr(md5($newdom), 16);
-  $crypt = strtr(trim(base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, 'WsImgS33CCrret', $armor, MCRYPT_MODE_ECB,
-                mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB), MCRYPT_RAND)))), '+/', '-!');
+	$url = fopen("http://thumbs.websitewiki.de/$crypt", "r");
+	fclose($url);
 
-  $url = fopen("http://thumbs.websitewiki.de/$crypt", "r");
-  fclose($url);
-
-/**
-  $tw = new Twitter('WebsiteWiki', 'Waehhpps1tt');
-  $twstatus = "Neue Website $newpage eingetragen - http://websitewiki.de/$newpage";
-  if(strlen($twstatus <= 140))
-    $tw->updateStatus($twstatus);
-**/
-
-  // redirect on success!
-  $wgOut->redirect( $title->getFullURL() );
+	// redirect on success!
+	$wgOut->redirect( $title->getFullURL() );
 }
 
 
