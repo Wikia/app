@@ -18,4 +18,4 @@ if( !function_exists( 'wfFounderEmailsInit' ) ) {
 	wfFounderEmailsInit();
 }
 
-FounderEmails::getInstance()->processEvents( 'daysPassed' );
+FounderEmails::getInstance()->processEvents( 'daysPassed', true );
