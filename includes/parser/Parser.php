@@ -336,7 +336,14 @@ class Parser
 			'/(\\302\\253) /' => '\\1&nbsp;',
 			'/&nbsp;(!\s*important)/' => ' \\1', #Beware of CSS magic word !important, bug #11874.
 		);
-		$text = preg_replace( array_keys($fixtags), array_values($fixtags), $text );
+
+		/* Wikia change begin - @author: Macbre */
+		/* RT #42007 */
+		global $wgRTEParserEnabled;
+		if (empty($wgRTEParserEnabled)) {
+			$text = preg_replace( array_keys($fixtags), array_values($fixtags), $text );
+		}
+		/* Wikia change end */
 
 		$text = $this->doBlockLevels( $text, $linestart );
 

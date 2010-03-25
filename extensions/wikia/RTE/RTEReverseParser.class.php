@@ -70,6 +70,11 @@ class RTEReverseParser {
 				// trim trailing whitespaces
 				$out = rtrim($out, "\n ");
 
+				// ultimate fix for invalid utf8 characets
+				if (function_exists('mb_convert_encoding')) {
+					$out = mb_convert_encoding($out, 'UTF-8', 'UTF-8');
+				}
+
 				RTE::log('wikitext', $out);
 			}
 			else {
