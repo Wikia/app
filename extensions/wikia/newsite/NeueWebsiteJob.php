@@ -60,36 +60,58 @@ class NeueWebsiteJob extends Job {
 	private function makeRelated( $domain, $key ) {
 		global $exDomainList;
 
-		$go = Http::get( sprintf( "http://www.google.de/ie?safe=off&q=related%3A{$domain}&hl=de&start=0&num=30&sa=N" ) );
+		/**
+		 * curl doesn't work, google is blocking somehow it
+		 */
+		//$go = Http::get(
+		//	"http://www.google.de/ie?safe=off&q=related%3A{$domain}&hl=de&start=0&num=30&sa=N",
+		//	"default",
+		//	array( CURLOPT_USERAGENT => '' )
+		//);
+		$fp = @fopen( "http://www.google.de/ie?safe=off&q=related%3A{$domain}&hl=de&start=0&num=30&sa=N", "r");
+		$go = @fread($fp, 10240);
+		$go = $go.fread($fp, 10240);
+		$go = $go.fread($fp, 10240);
+		$go = $go.fread($fp, 10240);
+		$go = $go.fread($fp, 10240);
+		fclose($gofp);
 
 		if( !strstr( $go, "keine mit Ihrer Suchanfrage" ) ) {
 			$matches = array();
 			$newmatches = array();
 			preg_match_all( '|http://([^/]+)/|', $go, $matches );
-			print_r( $matches );
 			$matches = $matches[ 1 ];
 
 			foreach( $matches as $match ) {
+				/**
+				 * only valid domain names
+				 */
+				if( !preg_match( "/[\d\w\.\-]+/", $match ) ) {
+					continue;
+				}
 				$n = strtolower($match);
-				if(!strncmp($n, "www.", 4)) {
+				if( !strncmp( $n, "www.", 4 ) ) {
 					$n = substr($n, 4);
-					if(ereg($exDomainList, $n) && stripos($n, "google") === false) {
+					if( preg_match( "/{$exDomainList}/", $n ) && stripos($n, "google") === false ) {
 						$newmatches[] = $n;
 					}
 				}
 
-				$umatches = array_unique( $newmatches );
+				$newmatches = array_unique( $newmatches );
+				$sites = array();
 
-				$dbw = wfGetDB( DB_MASTER );
-				foreach($umatches as $match) {
-					wfWaitForSlaves( 5 );
-					if( ! $this->mTest ) {
-						$qr = $dbw->query("insert into related set name1='$key', name2='$match'");
-					}
-					else {
-						echo "insert into related set name1='$key', name2='$match'\n";
-					}
-				}
+			}
+			$dbw = wfGetDB( DB_MASTER );
+			foreach( $newmatches as $match ) {
+				$sites[] = array( "name1" => $key, "name2" => $match );
+			}
+
+			if( ! $this->mTest ) {
+				wfWaitForSlaves( 5 );
+				$qr = $dbw->insert( );
+			}
+			else {
+				print_r( $sites );
 			}
 		}
 	}
