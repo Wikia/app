@@ -416,70 +416,70 @@ YAHOO.util.Event.addListener("wf-clear-cache", "click", $Factory.Variable.clear)
 /*]]>*/
 </script>
 <div id="wiki-factory">
-    <h2>
-        Wiki info: <?php echo $wiki->city_title ?>
-    </h2>
-    <div id="wk-busy-div" style="display: none;">
-        <img src="http://images.wikia.com/common/progress_bar.gif" width="100" height="9" alt="Wait..." border="0" />'
-    </div>
-    <div id="wk-wf-info">
-        <?php echo $wiki->city_description ?>
-        <ul>
-            <li>
-				Wiki identifier is <strong><?php echo $wiki->city_id ?></strong>
-			</li>
-            <li>
-				Wiki uses database <strong><?php echo $wiki->city_dbname ?></strong>
-				on cluster <strong><?php echo empty( $cluster ) ? "c1 (DEFAULT)" : $cluster ?></strong>
-			</li>
-            <li>
-				Wiki language is <strong><?php echo $wiki->city_lang ?></strong>
-			</li>
-            <li>
-				Wiki Hub is <strong>
-				<?php
+	<h2>
+		Wiki info: <?php echo $wiki->city_title ?>
+	</h2>
+	<div id="wk-busy-div" style="display: none;">
+		<img src="http://images.wikia.com/common/progress_bar.gif" width="100" height="9" alt="Wait..." border="0" />'
+	</div>
+	<div id="wk-wf-info">
+		<?php echo $wiki->city_description ?>
+		<table border="1" cellpadding="3" cellspacing="0">
+			<tr>
+				<th>id</th>
+				<th>database</th>
+				<th>cluster</th>
+				<th>language</th>
+				<th>hub</th>
+			</tr>
+			<tr>
+				<td><?php echo $wiki->city_id ?></td>
+				<td><?php echo $wiki->city_dbname ?></td>
+				<td><?php echo empty( $cluster ) ? "c1 (DEFAULT)" : $cluster ?></td>
+				<td><?php echo $wiki->city_lang ?></td>
+				<td><?php
 					$cats = $hub->getBreadCrumb( $wiki->city_id );
 					if( is_array( $cats ) ):
 						foreach( $cats as $cat ):
-							echo "<a href=\"{$cat["url"]}\">{$cat["name"]}</a>";
+							echo "<acronym title=\"id:{$cat["id"]}\">{$cat["name"]}</acronym>";
 						endforeach;
 					endif;
-				?>
-				</strong>
-			</li>
-            <li>
-			    Wiki founder name is <strong><?php echo $user_name ?></strong> (id <?php echo $wiki->city_founding_user ?>)
-                   <? if($wiki->city_founding_user): ?>
-                   <sup><a href="/index.php?title=Special:WikiFactory/Metrics&founder=<?php echo urlencode($user_name); ?>">more by user</a></sup>
-                   <? endif; ?>
-                and his/her email is <strong><?php if( empty( $wiki->city_founding_email) ) :
-                   ?><i>empty</i><? else: ?>
-                   <? echo $wiki->city_founding_email; ?>
-                   <sup><a href="/index.php?title=Special:WikiFactory/Metrics&email=<?php echo urlencode($wiki->city_founding_email); ?>">more by email</a></sup>
-                   <? endif; ?></strong>
-            </li>
+				?></td>
+			</tr>
+		</table>
+		<ul>
 			<li>
 				Wiki was created on <strong><?php echo $wiki->city_created ?></strong>
 			</li>
-            <li>
-                This wiki is <strong><?php echo $statuses[ $wiki->city_public ] ?></strong>.
+			<li>
+				Founder name: <strong><?php echo $user_name ?></strong> (id <?php echo $wiki->city_founding_user ?>)
+					<? if($wiki->city_founding_user): ?>
+					<sup><a href="/index.php?title=Special:WikiFactory/Metrics&founder=<?php echo urlencode($user_name); ?>">more by user</a></sup><? endif; ?>
+			</li>
+			<li>
+				Founder email: <?php if( empty( $wiki->city_founding_email) ) :
+				?><i>empty</i><? else: ?>
+				<strong><? echo $wiki->city_founding_email; ?></strong>
+				<sup><a href="/index.php?title=Special:WikiFactory/Metrics&email=<?php echo urlencode($wiki->city_founding_email); ?>">more by email</a></sup><? endif; ?>
+			</li>
+			<li>
+				This wiki is <strong><?php echo $statuses[ $wiki->city_public ] ?></strong>.
 <?php if(($statuses[$wiki->city_public] == 'disabled') && is_object($wikiRequest)): ?>
 				(<a href="/index.php?title=Special:CreateWiki&request=<?=$wikiRequest->request_id;?>&action=delete&doit=1">delete request for this wiki</a>)
 <?php elseif(($statuses[$wiki->city_public] == 'disabled') && ($wikiRequest != null)): ?>
 				(<i>no wiki request were found with name: <?=$wikiRequest;?></i>)
 <?php endif;
-	  if ($statuses[$wiki->city_public] == 'disabled') : ?>
-            <div>
-            	(<?=wfMsg('closed-reason')?> <?=$wiki->city_additional?>)
-            </div>
+	if ($statuses[$wiki->city_public] == 'disabled') : ?>
+			<div>
+			(<?=wfMsg('closed-reason')?> <?=$wiki->city_additional?>)
+			</div>
 <?php endif ?>
-            </li>
-			<li>
-				Tags: <?php if( is_array( $tags ) ): foreach( $tags as $id => $tag ): echo "<strong>{$tag}</strong> "; endforeach; endif; ?>
-				<sup>
-					<a href="<?php echo $GLOBALS[ "wgScript" ] ?>?title=Special:WikiFactory/<?php echo $wiki->city_id ?>/tags">edit</a>
-				</sup>
 			</li>
+			<?php  #hide tags in upper area when on tags tab, so people dont get confused by non-updating data
+				if( $tab !== "tags" ): ?><li>
+				Tags: <?php if( is_array( $tags ) ): echo "<strong>"; foreach( $tags as $id => $tag ): echo "{$tag} "; endforeach; echo "</strong>"; endif; ?>
+				<sup><a href="<?php echo $GLOBALS[ "wgScript" ] ?>?title=Special:WikiFactory/<?php echo $wiki->city_id ?>/tags">edit</a></sup>
+			</li><?php endif; ?>
 			<li>
 				<a href="#" id="wf-clear-cache"><?php echo wfMsg("wikifactory_removevariable") ?></a>
 			</li>
@@ -489,7 +489,7 @@ YAHOO.util.Event.addListener("wf-clear-cache", "click", $Factory.Variable.clear)
 		</ul>
 	</div>
 	<div id="wiki-factory-panel">
-		<ul class="tabs">
+		<ul class="tabs" id="wiki-factory-tabs">
 			<li>
 				&nbsp;
 			</li>
