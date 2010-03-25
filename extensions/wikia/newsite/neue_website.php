@@ -2,7 +2,6 @@
 
 // this is to be able to pull related websites feed
 ini_set("user_agent",  "");
-
 require_once( "$IP/extensions/wikia/newsite/NeueWebsiteJob.php" );
 
 
