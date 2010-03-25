@@ -484,7 +484,7 @@ YAHOO.util.Event.addListener("wf-clear-cache", "click", $Factory.Variable.clear)
 				<a href="#" id="wf-clear-cache"><?php echo wfMsg("wikifactory_removevariable") ?></a>
 			</li>
 			<li>
-				<a href="<?php echo $GLOBALS[ "wgScript" ] ?>?title=Special:WikiFactory/"><?php echo wfMsg( "wikifactory-label-return" ); ?></a>
+				<a href="<?php echo $GLOBALS[ "wgScript" ] ?>?title=Special:WikiFactory"><?php echo wfMsg( "wikifactory-label-return" ); ?></a>
 			</li>
 		</ul>
 	</div>
