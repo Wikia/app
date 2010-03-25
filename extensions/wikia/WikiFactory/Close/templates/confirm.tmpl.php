@@ -19,6 +19,7 @@ function close_allowToSave() {
 	<table class="filehistory" style="width: 100%">
 	<tr>
 		<th><?=wfMsg('allmessagesname')?></th>
+		<th><?=wfMsg('wf_city_id')?></th>
 		<th><?=wfMsg('wf_city_lang')?></th>
 		<th><?=wfMsg('wf_city_created')?></th>
 		<th><?=wfMsg('wf_city_founding_user')?></th>
@@ -28,16 +29,16 @@ function close_allowToSave() {
 		<td>
 			<ul>
 				<li style="list-style:none;">
-					<strong><?php echo $wiki->city_title ?> <?php echo $wiki->city_id ?></strong></em>
+					<strong><?php echo $wiki->city_title ?></strong>
 				</li>
 				<li style="list-style:none;">
 					<a href="<?php echo $wiki->city_url ?>"><em><?php echo $wiki->city_url ?></em></a>
 				</li>
-				<li style="list-style:none;">
-					<?php echo $wiki->city_description ?>
-				</li>
 			</ul>
 			<input type="hidden" name="wikis[ ]" value="<?php echo $wiki->city_id ?>" />
+		</td>
+		<td>
+			<?php echo $wiki->city_id ?>
 		</td>
 		<td>
 			<?php echo $wiki->city_lang ?>
@@ -57,6 +58,11 @@ function close_allowToSave() {
 					<?php echo $wiki->city_founding_email ?>
 				</li>
 			</ul>
+		</td>
+	</tr>
+	<tr>
+		<td colspan='5'>
+			<?php echo $wiki->city_description ?>
 		</td>
 	</tr>
 <?php endforeach ?>
@@ -87,7 +93,7 @@ function close_allowToSave() {
 		<li>
 			<?php $value = WikiFactory::FLAG_REDIRECT; $id = sprintf("%s_%s", "flag", $value); $checked = isset($flags[$value]) ? "checked=\"checked\"" : ""; ?>
 			<input type="checkbox" name="close_flags[]" id="<?=$id?>" value="<?=$value?>" <?=$checked?>> <?=wfMsg('closed-redirect-url')?>
-			<input type="text" name="redirect_url" id="redirect_url" value="<?=$redirect?>">
+			<input type="text" name="redirect_url" id="redirect_url" value="<?=$redirect?>"> <i>ex: foo.wikia.com</i>
 		</li>
 		</ul>
 		<ul style="list-style:none;padding:1px 10px">
