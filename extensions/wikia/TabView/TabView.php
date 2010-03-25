@@ -67,9 +67,9 @@ function tabviewRender($input, $params, &$parser ) {
 	$optins = array();
 
 	foreach($tabs as $tab) {
-	$onetab = explode('|', trim($tab));
-	if(isset($onetab[0]) ) {
-		
+		$onetab = explode('|', trim($tab));
+
+		if(isset($onetab[0]) && strpos($onetab[0], '<') === false && strpos($onetab[0], '>') === false) {
 			$titleObj = Title::newFromText($onetab[0]);
 			if(is_object($titleObj) && $titleObj->exists()) {
 				$url = $titleObj->getLocalURL('action=render');
