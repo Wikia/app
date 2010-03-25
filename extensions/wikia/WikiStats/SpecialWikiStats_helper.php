@@ -27,6 +27,7 @@ class WikiStats {
     var $mLang;
     var $mHub;
     
+    var $mExcludedWikis;
     var $mAllStats;
     var $mMonthDiffsStats;
     var $mSkin;
@@ -192,7 +193,7 @@ class WikiStats {
 			$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 			#---
 			$oRow = $dbr->selectRow( 
-				'stats_summary',
+				'stats_summary_part',
 				array( 'substr(min(stats_date), 1, 4) as minYear' ),
 				array( 'stats_date > ' . intval(WIKISTATS_MIN_COUNT_STATS_YEAR), 'wikia_id > 0' ), 
 				__METHOD__
@@ -228,7 +229,7 @@ class WikiStats {
 			#---
 			if ( !empty($this->mCityId) ) {
 				$oRow = $dbr->selectRow( 
-					"stats_summary",
+					"stats_summary_part",
 					array( "max(unix_timestamp(ts)) as date" ),
 					array( "wikia_id" => $this->mCityId ), 
 					__METHOD__
@@ -238,7 +239,7 @@ class WikiStats {
 				}
 			} else {
 				$oRow = $dbr->selectRow( 
-					"stats_summary",
+					"stats_summary_part",
 					array( "min(unix_timestamp(ts)) as date" ),
 					array( "ts >= date_format(now(), '%Y-%m-%d') " ), 
 					__METHOD__
@@ -502,12 +503,18 @@ class WikiStats {
 				if ( !empty($this->mHub) ) {
 					$where['wikia_hub'] = $this->mHub;
 				}
-				$where[] = "wikia_id not in (" . $dbr->makeList( $this->getClosedWikis() ) . ")";
 			}
 
 			# set date range
-			$where[] = sprintf(" stats_date >= '%04d%02d' ", $this->mStatsDate['fromYear'], $this->mStatsDate['fromMonth'] );
-			$where[] = sprintf(" stats_date <= '%04d%02d' ", $this->mStatsDate['toYear'], $this->mStatsDate['toMonth'] );
+			$where[] = sprintf(
+				" stats_date between '%04d%02d' and '%04d%02d' ", 
+				$this->mStatsDate['fromYear'], $this->mStatsDate['fromMonth'],
+				$this->mStatsDate['toYear'], $this->mStatsDate['toMonth']
+			);
+
+			if ( !empty($this->mAllStats) ) {
+				$this->excludedWikis($db_fields, $where);
+			}
 
 			#options
 			#if ( !empty( $this->mCityId ) ) {
@@ -515,7 +522,7 @@ class WikiStats {
 			#}
 
 			$oRes = $dbr->select(
-				array( "stats_summary" ),
+				array( "stats_summary_part" ),
 				array( implode(", ", array_values( $db_fields ) ) ),
 				$where,
 				__METHOD__,
@@ -527,7 +534,8 @@ class WikiStats {
 					$this->mMainStats[$oRow->date] = array();
 				}
 				foreach ( $oRow as $field => $value ) {
-					$this->mMainStats[$oRow->date][$field] = $value;
+					$excludedValues = isset($this->mExcludedWikis[$oRow->date][$field]) ? intval($this->mExcludedWikis[$oRow->date][$field]) : 0;
+					$this->mMainStats[$oRow->date][$field] = $value - $excludedValues;
 				}
 			}
 			$dbr->freeResult( $oRes );
@@ -540,6 +548,47 @@ class WikiStats {
 		#---
 		wfProfileOut( __METHOD__ );
 		return $this->mMainStats;
+	}
+
+	/**
+	 * loadMonthlyDiffs
+	 * 
+	 * generate montly differences for the last 6 months
+	 * @access public
+	 * 
+	 */
+	private function excludedWikis($db_fields, $where) {
+		global $wgMemc, $wgStatsDB; 
+		
+		wfProfileIn( __METHOD__ );
+    	$memkey = __METHOD__;
+    	#---
+		$this->mExcludedWikis = $wgMemc->get($memkey);
+		if ( empty($this->mExcludedWikis) ) {
+			$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+			$where[] = "wikia_id in (" . $dbr->makeList( $this->getClosedWikis() ) . ")";
+			$options = array('GROUP BY' => 'stats_date');
+
+			$oRes = $dbr->select(
+				array( "stats_summary_part" ),
+				array( implode(", ", array_values( $db_fields ) ) ),
+				$where,
+				__METHOD__,
+				$options
+			);
+			$this->mMainStats = array();
+			while( $oRow = $dbr->fetchObject( $oRes ) ) {
+				if ( !isset($this->mMainStats[$oRow->date]) ) {
+					$this->mExcludedWikis[$oRow->date] = array();
+				}
+				foreach ( $oRow as $field => $value ) {
+					$this->mExcludedWikis[$oRow->date][$field] = $value;
+				}
+			}
+			$dbr->freeResult( $oRes );
+			$wgMemc->set( $memkey, $this->mMainStats, 60*60*3 );
+		}
+		wfProfileOut( __METHOD__ );
 	}
 	
 	/**
