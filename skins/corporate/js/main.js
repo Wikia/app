@@ -68,10 +68,6 @@ function trackContainer ( ev ) {
 	if( 'A' == obj.attr( 'nodeName' ) ) {
 		if( obj.parent().parent().hasClass( 'top-wiki-data' )  ) {
 			trackTag( 'featuredwikis' );
-		} else if( obj.parent().hasClass( 'page-activity-sources' )  ) {
-			trackTag( 'hotspots/article' );
-		} else if( obj.hasClass( 'wikia-wiki-link' )  ) {
-			trackTag( 'hotspots/wiki_name' );
 		} else if( obj.parent().hasClass( 'hub-blog-artlink' )  ) {
 			trackTag( 'blog/article' );
 

@@ -22,11 +22,19 @@ var initTracker = function()
 		 });
 	 }
 	 
+	var addTrackIf = function(name,url){
+		 if (wgIsMainpage) {
+			 addTrack(name, 'main_page/' + url);
+		 } else {
+			 addTrack(name, 'hub/' + url);
+		 }
+	 }
+
 	 addTrack('#wikia-search-submit', 'find_a_wiki');
 	 addTrack('#wikia-login-link', 'log-in');
 	 addTrack('#wikia-create-account-link', 'sign-up');
-	 addTrack('#wikia-global-hot-spots .wikia-page-link','main_page/hotspots/article');
-	 addTrack('#wikia-global-hot-spots .wikia-wiki-link','main_page/hotspots/wiki_name');
+	 addTrackIf('#wikia-global-hot-spots .wikia-page-link','hotspots/article');
+	 addTrackIf('#wikia-global-hot-spots .wikia-wiki-link','hotspots/wiki_name');
 	 addTrack('.create-wiki-container .wikia-button','main_page/create_a_wiki');
 	 addTrack('#homepage-feature-spotlight .nav','main_page/slider/thumb');
 	 addTrack('.create-wiki-container .wikia-button','main_page/create_a_wiki');
