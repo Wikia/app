@@ -209,34 +209,6 @@
 .RTEPlaceholderPreviewTools a {
 	cursor: pointer;
 	margin: 0 10px 0 0;
-	padding-left: 20px;
-	position: relative;
-}
-
-.RTEPlaceholderPreviewTools .sprite {
-	background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20100120);
-	height: 16px;
-	left: 0;
-	position: absolute;
-	width: 16px;
-}
-
-.RTEPlaceholderPreviewToolsEdit .sprite {
-	background-position: 0 0;
-}
-
-.RTEPlaceholderPreviewToolsDelete .sprite {
-	background-position: -80px 0;
-}
-
-.RTEPlaceholderPreviewToolsButtonDisabled {
-	display: none;
-/*
-	cursor: default !important;
-	color: #ccc;
-	opacity: 0.5;
-	text-decoration: none !important;
-*/
 }
 
 /* wikia editor pop-ups */

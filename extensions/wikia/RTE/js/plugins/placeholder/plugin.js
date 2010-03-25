@@ -136,15 +136,14 @@ CKEDITOR.plugins.add('rte-placeholder',
 				var tools = '',
 					showEdit = true;
 
-				var spriteImg = '<img class="sprite" src="'+wgBlankImgUrl+'" />';
-
-				if (showEdit) {
-					tools += '<a class="RTEPlaceholderPreviewToolsEdit' +
-						(!isEditable ? ' RTEPlaceholderPreviewToolsButtonDisabled' : '') +
-						'">' + spriteImg + lang.edit + '</a>';
+				if (showEdit && isEditable) {
+					tools += '<img class="sprite edit" src="'+wgBlankImgUrl+'" />' +
+						'<a class="RTEPlaceholderPreviewToolsEdit">' + lang.edit + '</a>';
 				}
 
-				tools += '<a class="RTEPlaceholderPreviewToolsDelete">' + spriteImg + lang['delete'] + '</a>';
+				tools += '<img class="sprite delete" src="'+wgBlankImgUrl+'" />' +
+					'<a class="RTEPlaceholderPreviewToolsDelete">' +
+					lang['delete'] + '</a>';
 
 				//
 				// render HTML
