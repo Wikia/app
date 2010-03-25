@@ -13,3 +13,9 @@ function ws_focus(e, field, method) {
 	}
 }
 
+function ws_disable(e, checkbox, textfield) {
+	var is_checked = $('#' + checkbox ).is(':checked');
+	if ( is_checked ) {
+		$('#' + textfield).val('');
+	} 
+}
