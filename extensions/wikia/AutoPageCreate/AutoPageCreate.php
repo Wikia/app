@@ -22,7 +22,10 @@ function wfAutoPageCreateInit() {
 }
 
 function wfAutoPageCreateEditPage( $editpage ) {
-	if( !$editpage->mTitle->exists() && !$editpage->preview ) {
+	global $wgRequest;
+	$preload = $wgRequest->getVal( 'preload' );
+
+	if( !$editpage->mTitle->exists() && !$editpage->preview  && empty( $preload ) ) {
 		if( $editpage->mTitle->isContentPage() ) {
 			$editpage->textbox1 = wfMsgForContent( 'newpagelayout' );
 		} else if( ( $editpage->mTitle->getNamespace() == NS_USER ) && !wfAutoPageCreateIsAnonUserpage( $editpage->mTitle->getText()  ) ) {
