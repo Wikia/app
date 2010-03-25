@@ -3,21 +3,23 @@
 // this is to be able to pull related websites feed
 ini_set("user_agent",  "");
 
-function neue_website($nws)
-{
-  global $wgUser, $wgOut;
+require_once( "$IP/extensions/wikia/newsite/NeueWebsiteJob.php" );
 
-  // $output = "Schnapp. ++$nws++\n\n";
-  $output = "";
 
-  if(stristr($nws, "fuerbesucher.net") ||
-     stristr($nws, "blogspot.com") ||
-     stristr($nws, "4visitors.net"))
-  {
-    $nws = htmlspecialchars($nws);
-    $output = wfMsg( 'newsite-error-invalid', $nws );
-    return $output;
-  }
+function neue_website( $nws ) {
+	global $wgUser, $wgOut;
+
+	// $output = "Schnapp. ++$nws++\n\n";
+	$output = "";
+
+	if( stristr($nws, "fuerbesucher.net" ) ||
+		stristr($nws, "blogspot.com" ) ||
+		stristr($nws, "4visitors.net" ) )
+	{
+		$nws = htmlspecialchars($nws);
+		$output = wfMsg( 'newsite-error-invalid', $nws );
+		return $output;
+	}
 
   $newdom = validate_domain($nws);
   if(!$newdom)
@@ -50,10 +52,17 @@ function neue_website($nws)
     return $output;
   }
 
+	/**
+	 * get related sites as job
+	 */
+	$job = new NeueWebsiteJob( $title, array( "domain" => $newhost, "key" => $newdom ) );
+	$job->insert();
+
+	/**
+	 * make_related($dbw, $newhost, $newdom);
+	 */
+
   $dbw = wfGetDB( DB_MASTER );
-
-  make_related($dbw, $newhost, $newdom);
-
   if(!get_content($newhost))
   {
     $output = wfMsg( 'newsite-error-nocontact', $newhost );
