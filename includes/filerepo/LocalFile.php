@@ -803,6 +803,12 @@ class LocalFile extends File
 		$this->purgeThumbnails();
 		$this->saveToCache();
 		SquidUpdate::purge( array( $this->getURL() ) );
+		/* Wikia change begin - @author: Marooned, see RT#44185 */
+		global $wgLogo;
+		if ($this->url == $wgLogo) {
+			SquidUpdate::purge( array( $this->url ) );
+		}
+		/* Wikia change end */
 
 		// Fail now if the file isn't there
 		if ( !$this->fileExists ) {
