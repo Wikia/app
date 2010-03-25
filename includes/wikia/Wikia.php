@@ -135,15 +135,16 @@ class WikiaAssets {
 			'smaxage' => $wgSquidMaxage
 		) + $siteargs );
 
-		$cssReferences[] = array('url' => Skin::makeNSUrl('Common.css', $query, NS_MEDIAWIKI));
+		// We urldecode these now because nginx does not expect them to be URL encoded.
+		$cssReferences[] = array('url' => urldecode(Skin::makeNSUrl('Common.css', $query, NS_MEDIAWIKI)));
 
 		if(empty($themename) || $themename == 'custom' ) {
-			$cssReferences[] = array('url' => Skin::makeNSUrl('Monaco.css', $query, NS_MEDIAWIKI));
+			$cssReferences[] = array('url' => urldecode(Skin::makeNSUrl('Monaco.css', $query, NS_MEDIAWIKI)));
 		}
 
 		$siteargs['gen'] = 'css';
 		$siteargs['useskin'] = 'monaco';
-		$cssReferences[] = array('url' => Skin::makeUrl( '-', wfArrayToCGI( $siteargs ) ));
+		$cssReferences[] = array('url' => urldecode(Skin::makeUrl( '-', wfArrayToCGI( $siteargs ) )));
 
 		return $cssReferences;
 	}
