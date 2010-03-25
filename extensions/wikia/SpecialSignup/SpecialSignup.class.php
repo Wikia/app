@@ -31,6 +31,8 @@ class ExtendedLoginForm extends LoginForm {
 	
 	// give data about password sending
         function execute() {
+        echo Title::newFromText( '');
+        
                 if ( !is_null( $this->mCookieCheck ) ) {
                         $this->onCookieRedirectCheck( $this->mCookieCheck );
                         return;
