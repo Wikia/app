@@ -70,11 +70,14 @@ function reloadTab(xls) {
 		$('#' + tabsName[activeTab]).load(tabsUrl[0], data, function() {
 			$("#ws-loader").css('display', 'none'); 
 			$('#ws-show-stats').click(function() {
+				$("#ws-loader").css('display', 'block'); 
 				reloadTab();
 				refreshInfo();
 			});	
 			$('#ws-export-xls').click(function() {
+				$("#ws-loader").css('display', 'block'); 
 				reloadTab(true);
+				$("#ws-loader").css('display', 'none'); 
 			});	
 			//$('table').visualize({type: 'line'});
 		});
@@ -102,10 +105,6 @@ function reloadTab(xls) {
 <div id="ws-tabs">		
 	<ul>
 		<li><a href="<?=$tabsUrl[0]?>#ws-main"><span><?=wfMsg('wikistats_main_statistics_legend')?></span></a></li>
-		<!--<li><a href="<?=$tabsUrl[1]?>#ws-pv"><span><?=wfMsg('wikistats_latest_pageviews')?></span></a></li>
-		<li><a href="<?=$tabsUrl[1];?>#ws-month"><span><?=wfMsg('wikistats_current_month')?></span></a></li>
-		<li><a href="<?=$tabsUrl[2];?>#ws-day"><span><?=wfMsg('wikistats_daily')?></span></a></li>
-		<li><a href="<?=$tabsUrl[2];?>#ws-compare"><span><?=wfMsg('wikistats_comparision')?></span></a></li>-->
 	</ul>
 	<div id="<?=$tabsName[0]?>"></div>
 </div>
