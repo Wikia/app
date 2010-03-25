@@ -313,8 +313,10 @@ class RTEReverseParser {
 				$out = $this->handleImage($node, $textContent);
 				break;
 
-			// try to fix RT #38262
+			// try to fix RT #38262 / RT #38262
 			case 'script':
+			case 'object':
+			case 'iframe':
 				$out = '';
 				break;
 
