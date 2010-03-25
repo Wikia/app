@@ -462,6 +462,8 @@ class RTEParser extends Parser {
 		$html = preg_replace_callback('/ _rte_dataidx="(\d{4})" /', 'RTEData::replaceIdxByData', $html);
 
 		$html = preg_replace("/\x7f-(?:".RTEMarker::INTERNAL_WIKITEXT."|".RTEMarker::EXTERNAL_WIKITEXT.")-\d{4}/", '', $html);
+		// RT#40786: add empty paragraphs between headings (</h3>\n<h3 ...)
+		$html = preg_replace("%(</h\d>\s)(<h\d)%s", '$1<p _rte_filler="true"></p>$2', $html);
 
 		wfProfileOut(__METHOD__ . '::regexp');
 
