@@ -233,8 +233,11 @@ class AutoCreateWikiLocalJob extends Job {
 
 		$sourceTitle = Title::newFromText( $source );
 		if( !$sourceTitle ) {
-		    Wikia::log( __METHOD__, "err", "Invalid page title: {$source}" );
-		    return;
+			$sourceTitle = Title::newFromText( "Main_page" );
+			if( !$sourceTitle ) {
+		    	Wikia::log( __METHOD__, "err", "Invalid page title: {$source} and Main_page" );
+		    	return;	
+			}
 		}
 
 		$mainArticle = new Article( $sourceTitle, 0 );
