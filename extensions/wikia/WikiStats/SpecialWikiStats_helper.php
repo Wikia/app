@@ -561,7 +561,7 @@ class WikiStats {
 		global $wgMemc, $wgStatsDB; 
 		
 		wfProfileIn( __METHOD__ );
-    	$memkey = __METHOD__;
+    	$memkey = __METHOD__ . "_" . $this->mCityId;
     	#---
 		$this->mExcludedWikis = $wgMemc->get($memkey);
 		if ( empty($this->mExcludedWikis) ) {
@@ -576,7 +576,7 @@ class WikiStats {
 				__METHOD__,
 				$options
 			);
-			$this->mMainStats = array();
+			$this->mExcludedWikis = array();
 			while( $oRow = $dbr->fetchObject( $oRes ) ) {
 				if ( !isset($this->mMainStats[$oRow->date]) ) {
 					$this->mExcludedWikis[$oRow->date] = array();
@@ -586,7 +586,7 @@ class WikiStats {
 				}
 			}
 			$dbr->freeResult( $oRes );
-			$wgMemc->set( $memkey, $this->mMainStats, 60*60*3 );
+			$wgMemc->set( $memkey, $this->mExcludedWikis, 60*60*3 );
 		}
 		wfProfileOut( __METHOD__ );
 	}
