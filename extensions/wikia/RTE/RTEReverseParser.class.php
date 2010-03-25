@@ -721,7 +721,7 @@ class RTEReverseParser {
 					$namespaces = array(NS_CATEGORY, NS_FILE);
 					$title = Title::newFromText($data['link']);
 
-					if (in_array($title->getNamespace(), $namespaces)) {
+					if (!empty($title) && in_array($title->getNamespace(), $namespaces)) {
 						$out .= ':';
 					}
 
