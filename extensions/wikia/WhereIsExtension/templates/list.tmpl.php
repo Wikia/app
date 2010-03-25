@@ -13,12 +13,21 @@
 select {
 	vertical-align: inherit;
 }
+
+#wikiSelectTag {
+	width: 120px;
+}
 </style>
 
 <div id="busyDiv" style="display: none;">
 	<img src="http://images.wikia.com/common/progress_bar.gif" width="100" height="9" alt="Wait..." border="0" />'
 </div>
-
+<?php if( !empty( $tagResultInfo ) ): ?>
+	<div class="successbox" "style="margin: 0;margin-bottom: 1em;">
+		<?php echo $tagResultInfo; ?>
+	</div>
+	<br style="clear: both;" />
+<?php endif; ?>
 <div id="PaneList">
 	<form method="get" action="<?php print $formData['actionURL'] ?>">
 		<div style="float: left; margin-right: 6px">
@@ -67,18 +76,37 @@ select {
 	if (!empty($formData['wikis']) && count($formData['wikis'])) {
 		?>
 		<h3 id="headerWikis"><?php print wfMsg('whereisextension-list') ?> (<?php print count($formData['wikis']) ?>)</h3>
-		<ul>
-		<?php
-		$front = '&nbsp;<a href="' . Title::makeTitle( NS_SPECIAL, 'WikiFactory' )->getFullUrl() . '/';
-		$back = '/variables/' . $formData['vars'][ $formData['selectedVar'] ] . '">[edit]</a>';
-		foreach($formData['wikis'] as $wikiID => $wikiInfo) {
-			$editURL = $front . $wikiID . $back;
-			?>
-			<li><a href="<?php print htmlspecialchars($wikiInfo['u']) ?>"><?php print $wikiInfo['t'] ?></a><?php print $editURL ?></li>
+		<form method="post" action="<?php print $formData['actionURL'] ?>" name="wikiSelectForm">
+			<ul>
 			<?php
-		}
-		?>
-		</ul>
+			$front = '&nbsp;<a href="' . Title::makeTitle( NS_SPECIAL, 'WikiFactory' )->getFullUrl() . '/';
+			$back = '/variables/' . $formData['vars'][ $formData['selectedVar'] ] . '">[edit]</a>';
+			foreach($formData['wikis'] as $wikiID => $wikiInfo) {
+				$editURL = $front . $wikiID . $back;
+				?>
+				<li>
+					<input type="checkbox" name="wikiSelected[]" id="wikiSelected_<?php print $wikiID; ?>" value="<?php print $wikiID; ?>" />&nbsp;
+					<a href="<?php print htmlspecialchars($wikiInfo['u']) ?>" <?php echo ( !$wikiInfo['p'] ? "style=\"color: red;\"" : "" ); ?>><?php print $wikiInfo['t'] ?></a><?php print $editURL ?>
+				</li>
+				<?php
+			}
+			?>
+			</ul>
+			Tag name:&nbsp;
+			<input type="text" name="wikiSelectTagName" id="wikiSelectTagName" value="" />&nbsp;
+			<input type="submit" name="wikiSelectSubmit" value="Tag selected" />
+		</form>
+<script type="text/javascript">
+/*<![CDATA[*/
+	$.getScript(stylepath+'/common/jquery/jquery.autocomplete.js', function() {
+		$('#wikiSelectTagName').autocomplete({
+			serviceUrl: wgServer+wgScript+'?action=ajax&rs=WikiFactoryTags::axQuery',
+			minChars:3,
+			deferRequestBy: 0
+		});
+	});
+/*]]>*/
+</script>
 		<?php
 	}
 	?>
