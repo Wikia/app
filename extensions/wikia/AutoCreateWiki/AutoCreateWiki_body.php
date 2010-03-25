@@ -670,7 +670,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		/**
 		 * set variables per language
 		 */
-		$wiki_type = ( !empty($this->mType) ) ? $this->mType : DEFAULT_WIKI_TYPE;
+		$wiki_type = ( !empty($this->mType) ) ? $this->mType : self::DEFAULT_WIKI_TYPE;
 		$this->addCustomSettings( 
 			$this->mWikiData[ "language" ], 
 			isset($wgLangCreationVariables[$wiki_type]) ? $wgLangCreationVariables[$wiki_type] : $wgLangCreationVariables, 
