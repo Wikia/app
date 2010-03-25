@@ -45,7 +45,7 @@ function trackContainer ( ev ) {
 		if( obj.parent().hasClass( 'nav' ) ) {
 			trackTag( 'slider/thumb' );				
 		} else if( obj.hasClass( 'avatar' )  ) {
-			trackTag( 'topusers-avatar' );
+			trackTag( 'topusers/avatar' );
 		}
 	} 
 
@@ -78,7 +78,7 @@ function trackContainer ( ev ) {
 		} else if( obj.parent().hasClass( 'user-info' )  ) {
 			trackTag( 'blog/username' );
 		} else if( obj.parent().hasClass( 'topuser-info' )  ) {
-			trackTag( 'topusers' );
+			trackTag( 'topusers/name' );
 		} else if( obj.hasClass( 'secondary' ) ) {
 			if( obj.parent().parent().hasClass( 'spotlight-slider-1' )  ) {
 				trackTag( 'slider/featured/2' );
