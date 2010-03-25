@@ -106,12 +106,9 @@ class NeueWebsiteJob extends Job {
 				$sites[] = array( "name1" => $key, "name2" => $match );
 			}
 
-			if( ! $this->mTest ) {
+			if( !$this->mTest ) {
 				wfWaitForSlaves( 5 );
-				$qr = $dbw->insert( );
-			}
-			else {
-				print_r( $sites );
+				$dbw->insert( "related", $sites, __METHOD__ );
 			}
 		}
 	}
