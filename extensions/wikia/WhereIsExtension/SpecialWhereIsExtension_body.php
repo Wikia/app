@@ -57,6 +57,13 @@ class WhereIsExtension extends SpecialPage {
 			2 => array('not empty', '', '!=')
 		);
 
+		$tagName = $wgRequest->getVal( 'wikiSelectTagName', null);
+		$tagWikis = $wgRequest->getArray( 'wikiSelected' );
+		$tagResultInfo = '';
+		if ( $wgRequest->wasPosted() && !empty( $tagName ) && count( $tagWikis )) {
+			$tagResultInfo = $this->tagSelectedWikis( $tagName, $tagWikis );
+		}
+
 		$formData['vars'] = $this->getListOfVars($gVar == '');
 		$formData['vals'] = $this->values;
 		$formData['selectedVal'] = $gVal;
@@ -70,6 +77,7 @@ class WhereIsExtension extends SpecialPage {
 		$oTmpl = new EasyTemplate(dirname( __FILE__ ) . '/templates/');
 		$oTmpl->set_vars( array(
 				'formData' => $formData,
+				'tagResultInfo' => $tagResultInfo
 			));
 		$wgOut->addHTML($oTmpl->execute('list'));
 	}
@@ -101,6 +109,29 @@ class WhereIsExtension extends SpecialPage {
 		return $aVariables;
 	}
 
+	private function tagSelectedWikis( $tagName, Array $tagWikis) {
+		global $wgCityId;
+
+		if(!class_exists('WikiFactoryTags', true)) {
+			return "WikiFactory extension must be enabled";
+		}
+
+		if (!empty($tagName) ) {
+			foreach( $tagWikis as $wikiId ) {
+				$wikiTags = new WikiFactoryTags( $wikiId );
+				$wikiTags->addTagsByName( $tagName );
+			}
+			$wikiFactoryUrl = Title::makeTitle( NS_SPECIAL, 'WikiFactory' )->getFullUrl() . '/' . $wgCityId . '/tags/' . $tagName;
+
+			$msg = count( $tagWikis ) . " wiki(s) tagged with tag: <a href=\"$wikiFactoryUrl\">$tagName</a>";
+		}
+		else {
+			$msg = "Empty tag name";
+		}
+
+		return $msg;
+	}
+
 	//fetching wiki list with selected variable set to 'true'
 	private function getListOfWikisWithVar($varId, $val) {
 		global $wgExternalSharedDB;
@@ -124,14 +155,14 @@ class WhereIsExtension extends SpecialPage {
 		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 		$oRes = $dbr->select(
 			$aTables,
-			array('city_id', 'city_title', 'city_url'),
+			array('city_id', 'city_title', 'city_url', 'city_public'),
 			$aWhere,
 			__METHOD__,
 			array('ORDER BY' => 'city_sitename')
 		);
 
 		while ($oRow = $dbr->fetchObject($oRes)) {
-			$aWikis[$oRow->city_id] = array('u' => $oRow->city_url, 't' => $oRow->city_title);
+			$aWikis[$oRow->city_id] = array('u' => $oRow->city_url, 't' => $oRow->city_title, 'p' => ( !empty($oRow->city_public) ? true : false ) );
 		}
 		$dbr->freeResult( $oRes );
 
