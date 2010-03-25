@@ -73,8 +73,6 @@ window.RTE = {
 		params.method = method;
 
 		jQuery.post(window.wgScript + '?action=ajax&rs=RTEAjax', params, function(data) {
-			RTE.log(data);
-
 			if (typeof callback == 'function') {
 				callback(data);
 			}
