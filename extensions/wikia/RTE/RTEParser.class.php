@@ -438,6 +438,8 @@ class RTEParser extends Parser {
 		// wrap HTML entities inside span "placeholders" (&amp; &#58; &#x5f;)
 		$html = self::wrapEntities($html);
 
+		wfProfileIn(__METHOD__ . '::regexp');
+
 		// remove EMPTY_LINES_BEFORE comments which are before closing tags - refs RT#38889
 		// <!-- RTE_EMPTY_LINES_BEFORE_1 --></td></tr></table>  <= remove this one
 		// <!-- RTE_EMPTY_LINES_BEFORE_1 --><p>
@@ -447,7 +449,8 @@ class RTEParser extends Parser {
 		$html = preg_replace('%<!-- RTE_EMPTY_LINES_BEFORE_(\d+) -->(?!<!)(.*?)(<[^/][^>]*)>%s', '\2\3 _rte_empty_lines_before="\1">', $html);
 
 		// remove not replaced EMPTY_LINES_BEFORE comments
-		$html = preg_replace('%<!-- RTE_EMPTY_LINES_BEFORE_(\d+) -->%s', '', $html);
+		// <!-- RTE_EMPTY_LINES_BEFORE_1 -- _rte_empty_lines_before="1">
+		$html = preg_replace('%<!-- RTE_EMPTY_LINES_BEFORE_(\d+) [^>]+>%s', '', $html);
 
 		// add _rte_spaces_before for list items and table cells
 		$html = preg_replace_callback("/<(li|dd|dt|td|th)([^>]*)>(\x20+)/", 'RTEParser::spacesBeforeCallback', $html);
@@ -459,6 +462,8 @@ class RTEParser extends Parser {
 		$html = preg_replace_callback('/ _rte_dataidx="(\d{4})" /', 'RTEData::replaceIdxByData', $html);
 
 		$html = preg_replace("/\x7f-(?:".RTEMarker::INTERNAL_WIKITEXT."|".RTEMarker::EXTERNAL_WIKITEXT.")-\d{4}/", '', $html);
+
+		wfProfileOut(__METHOD__ . '::regexp');
 
 		// add extra attribute for p tags coming from parser
 		$html = strtr($html, array('<p>' => '<p _rte_fromparser="true">', '<p ' => '<p _rte_fromparser="true" '));
