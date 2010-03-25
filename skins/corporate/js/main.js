@@ -17,7 +17,7 @@ $(function() {
 		$('#wikia-global-hot-spots').click(trackContainer);
 		$('#hub-top-contributors').click(trackContainer);
 
-		WET.byStr( 'hub/' + wgTitle );
+		trackTag( 'pv/' + wgPageName );
 	}
 
 	makeWikiaButtons();
@@ -31,7 +31,11 @@ $(window).load(function() {
 });
 
 function trackTag( str ) {
-	WET.byStr( 'hub/' + wgTitle + '/' + str );
+	WET.byStr( 'hub/' + str );
+
+	if (str.search(/^slider\/featured/) != -1) {
+		trackTag('sf/' + wgPageName + str.replace(/^slider\/featured/, ""));
+	}
 };
 
 function trackContainer ( ev ) {
@@ -40,21 +44,23 @@ function trackContainer ( ev ) {
 	if( 'IMG' == obj.attr( 'nodeName' ) ) {
 		if( obj.parent().hasClass( 'nav' ) ) {
 			trackTag( 'slider/thumb' );				
+		} else if( obj.hasClass( 'avatar' )  ) {
+			trackTag( 'topusers-avatar' );
 		}
 	} 
 
 		if( obj.parent().hasClass( 'secondary' ) ) {
 			if( obj.parent().parent().parent().attr( 'id' ) == 'spotlight-slider-1' ) {
-				trackTag( 'slider/featured-2' );
+				trackTag( 'slider/featured/2' );
 
 			} else if( obj.parent().parent().parent().attr( 'id' ) == 'spotlight-slider-2'  ) {
-				trackTag( 'slider/featured-3' );
+				trackTag( 'slider/featured/3' );
 
 			} else if( obj.parent().parent().parent().attr( 'id' ) == 'spotlight-slider-3'  ) {
-				trackTag( 'slider/featured-4' );
+				trackTag( 'slider/featured/4' );
 
 			} else if( obj.parent().parent().parent().attr( 'id' ) == 'spotlight-slider-0'  ) {
-				trackTag( 'slider/featured-1' );
+				trackTag( 'slider/featured/1' );
 
 			}	
 		}
@@ -64,7 +70,7 @@ function trackContainer ( ev ) {
 			trackTag( 'featuredwikis' );
 		} else if( obj.parent().hasClass( 'page-activity-sources' )  ) {
 			trackTag( 'hotspots/article' );
-		} else if( obj.parent().hasClass( 'page-activity-wiki' )  ) {
+		} else if( obj.hasClass( 'wikia-wiki-link' )  ) {
 			trackTag( 'hotspots/wiki_name' );
 		} else if( obj.parent().hasClass( 'hub-blog-artlink' )  ) {
 			trackTag( 'blog/article' );
@@ -73,26 +79,28 @@ function trackContainer ( ev ) {
 			trackTag( 'blog/username' );
 		} else if( obj.parent().hasClass( 'topuser-info' )  ) {
 			trackTag( 'topusers' );
-		} else if( obj.parent().hasClass( 'blog-jump' )  ) {
-			trackTag( 'blog/continue' );
 		} else if( obj.hasClass( 'secondary' ) ) {
 			if( obj.parent().parent().hasClass( 'spotlight-slider-1' )  ) {
-				trackTag( 'slider/featured-2' );
+				trackTag( 'slider/featured/2' );
 
 			} else if( obj.parent().parent().attr( 'id' ) == 'spotlight-slider-2'  ) {
-				trackTag( 'slider/featured-3' );
+				trackTag( 'slider/featured/3' );
 
 			} else if( obj.parent().parent().attr( 'id' ) == 'spotlight-slider-3'  ) {
-				trackTag( 'slider/featured-4' );
+				trackTag( 'slider/featured/4' );
 
 			} else if( obj.parent().parent().attr( 'id' ) == 'spotlight-slider-0'  ) {
-				trackTag( 'slider/featured-1' );
+				trackTag( 'slider/featured/1' );
 
 			}
 		} else if( obj.parent().parent().parent().attr( 'id' ) == 'spotlight-slider'  ) {
 			trackTag( 'slider/thumb' );
 		}
 	}
+
+		if( obj.parent().parent().hasClass( 'blog-jump' )  ) {
+			trackTag( 'blog/comments' );
+		}
 }
 
 function makeWikiaButtons() {
