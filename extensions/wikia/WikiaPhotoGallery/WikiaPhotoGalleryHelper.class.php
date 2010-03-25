@@ -440,8 +440,11 @@ class WikiaPhotoGalleryHelper {
 		$parserOptions = new ParserOptions();
 
 		$rev = Revision::newFromTitle($wgTitle);
-		$wikitext = $rev->getText();
-		$parser->parse($wikitext, $wgTitle, $parserOptions)->getText();
+		//should never happen
+		if (!is_null($rev)) {
+			$wikitext = $rev->getText();
+			$parser->parse($wikitext, $wgTitle, $parserOptions)->getText();
+		}
 
 		if (empty(self::$mGalleryData)) {
 			$result['error'] = wfMsg('wikiaPhotoGallery-error-outdated');
