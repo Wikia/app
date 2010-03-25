@@ -17,6 +17,11 @@ select {
 #wikiSelectTag {
 	width: 120px;
 }
+
+.selectorLink {
+	font-size: x-small;
+}
+
 </style>
 
 <div id="busyDiv" style="display: none;">
@@ -84,7 +89,7 @@ select {
 			foreach($formData['wikis'] as $wikiID => $wikiInfo) {
 				$editURL = $front . $wikiID . $back;
 				?>
-				<li>
+				<li class="wikiList">
 					<input type="checkbox" name="wikiSelected[]" id="wikiSelected_<?php print $wikiID; ?>" value="<?php print $wikiID; ?>" />&nbsp;
 					<a href="<?php print htmlspecialchars($wikiInfo['u']) ?>" <?php echo ( !$wikiInfo['p'] ? "style=\"color: red;\"" : "" ); ?>><?php print $wikiInfo['t'] ?></a><?php print $editURL ?>
 				</li>
@@ -92,12 +97,28 @@ select {
 			}
 			?>
 			</ul>
+			<a href="#" id="wikiSelectAll" class="selectorLink">select all</a>&nbsp;
+			<a href="#" id="wikiDeselectAll" class="selectorLink">deselect all</a><br />
 			Tag name:&nbsp;
 			<input type="text" name="wikiSelectTagName" id="wikiSelectTagName" value="" />&nbsp;
 			<input type="submit" name="wikiSelectSubmit" value="Tag selected" />
 		</form>
 <script type="text/javascript">
 /*<![CDATA[*/
+	$('#wikiSelectAll').bind('click', function(e) {
+		$(".wikiList").find('input').each( function(i, element) {
+				element.checked = true;
+			});
+			return false;
+		});
+
+	$('#wikiDeselectAll').bind('click', function(e) {
+		$(".wikiList").find('input').each( function(i, element) {
+				element.checked = false;
+			});
+			return false;
+		});
+
 	$.getScript(stylepath+'/common/jquery/jquery.autocomplete.js', function() {
 		$('#wikiSelectTagName').autocomplete({
 			serviceUrl: wgServer+wgScript+'?action=ajax&rs=WikiFactoryTags::axQuery',
