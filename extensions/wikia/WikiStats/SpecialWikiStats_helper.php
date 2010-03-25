@@ -460,7 +460,7 @@ class WikiStats {
 			return false;
 		} 
 
-		$memkey = md5($this->mCityId . "-" . implode("-", array_values($this->mStatsDate)) . "-" . $this->mLocalStats . "-" . $this->mLang . "-" . $this->mHub );
+		$memkey = md5($this->mCityId . implode("-", array_values($this->mStatsDate)) . $this->mLocalStats . $this->mLang . $this->mHub );
     	$memkey = __METHOD__ . "_" . $memkey;
     	#---
 		$columns = array();
@@ -534,7 +534,9 @@ class WikiStats {
 					$this->mMainStats[$oRow->date] = array();
 				}
 				foreach ( $oRow as $field => $value ) {
-					$excludedValues = isset($this->mExcludedWikis[$oRow->date][$field]) ? intval($this->mExcludedWikis[$oRow->date][$field]) : 0;
+					$excludedValues = isset( $this->mExcludedWikis[$oRow->date][$field] ) 
+						? intval( $this->mExcludedWikis[$oRow->date][$field] ) 
+						: 0;
 					$this->mMainStats[$oRow->date][$field] = $value - $excludedValues;
 				}
 			}
