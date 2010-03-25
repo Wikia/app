@@ -537,7 +537,11 @@ class WikiStats {
 					$excludedValues = isset( $this->mExcludedWikis[$oRow->date][$field] ) 
 						? intval( $this->mExcludedWikis[$oRow->date][$field] ) 
 						: 0;
-					$this->mMainStats[$oRow->date][$field] = $value - $excludedValues;
+					if ( $field == 'date' ) {
+						$this->mMainStats[$oRow->date][$field] = $value;
+					} else {
+						$this->mMainStats[$oRow->date][$field] = $value - $excludedValues;
+					}
 				}
 			}
 			$dbr->freeResult( $oRes );
