@@ -46,39 +46,30 @@ class WikiaReplicateImages {
 				),
 				"file2" => array(
 					"address" => "10.8.2.190",
-					"directory" => "/images/",
+					"directory" => "/raid/images/by_id/",
 					"flag" => 4
-			));
+				)
+			);
 		}
 		else {
 			$this->mDatacenter = "s";
-#			$this->mServers = array(
-#				"file3" => array(
-#					"address" => "10.8.2.133",
-#					"directory" => "/raid/images/by_id/",
-#					"flag" => 1
-#				),
-#				"willow" => array(
-#					"address" => "10.8.2.136",
-#					"directory" => "/images/",
-#					"flag" => 2
-#				),
-#				"file4" => array(
-#					"address" => "10.6.32.35",
-#					"directory" => "/raid/images/by_id/",
-#					"flag" => 4
-#                       ));
 			$this->mServers = array(
 				"willow" => array(
 					"address" => "10.8.2.136",
 					"directory" => "/images/",
 					"flag" => 1
 				),
-				"file4" => array(
+				"file-i4" => array(
 					"address" => "10.6.32.35",
 					"directory" => "/raid/images/by_id/",
 					"flag" => 2
-			));
+				),
+				"file2" => array(
+					"address" => "10.8.2.190",
+					"directory" => "/raid/images/by_id/",
+					"flag" => 4
+				)
+			);
 		}
 
 	}
