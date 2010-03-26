@@ -214,7 +214,8 @@ class WikiaPhotoGalleryHelper {
 			$image['thumbnail'] = self::renderThumbnail($imageTitle, $thumbSize, $thumbSize);
 
 			$parsedCaption = $parser->recursiveTagParse($image['caption']);
-			$image['caption'] = $parsedCaption;
+			//need to use parse() - see RT#44270
+			$image['caption'] = $parser->parse($image['caption'], $wgTitle, $parser->mOptions)->getText();
 		}
 
 		//wfDebug(__METHOD__.'::after' . "\n" . print_r($gallery, true));
@@ -226,9 +227,6 @@ class WikiaPhotoGalleryHelper {
 			'thumbSize' => $thumbSize,
 		));
 		$html = $template->render('galleryPreview');
-
-		// replace <!-- LINK 0:1 --> link holder comments
-		$parser->replaceLinkHolders($html);
 
 		wfProfileOut(__METHOD__);
 		return $html;
