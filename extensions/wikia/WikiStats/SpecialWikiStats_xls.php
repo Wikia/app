@@ -77,7 +77,7 @@ class WikiStatsXLS {
 		$this->setXLSFileEnd();
 	}
 
-	public function makeMainStats($columnNames) {
+	public function makeOldMainStats($columnNames) {
 		global $wgUser, $wgLang;
 
 		#----
@@ -194,6 +194,103 @@ class WikiStatsXLS {
 			if ($column == "date") $column = "";
 			$this->writeXLSLabel( $row, $col, $column);
 			$col++;
+		}
+		unset( $columnNames );
+		$this->setXLSFileEnd();
+	}
+
+	public function makeMainStats($columnNames) {
+		global $wgUser, $wgLang;
+
+		#----
+		$this->setXLSHeader();
+		#----
+		$this->setXLSFileBegin();
+		$this->writeXLSLabel(1,1,wfMsg('wikistats_pagetitle'));
+		$this->mergeXLSColsRows(1, 1, 1, count($columnNames));
+		/*
+		 * table header
+		 */
+		$this->writeXLSLabel( 3 /*row*/, 1 /*column*/, wfMsg('wikistats_date') );
+		$this->mergeXLSColsRows( 3, 1, 5, 1 );
+		$this->writeXLSLabel( 3, 2, wfMsg('wikistats_wikians') );
+		$this->mergeXLSColsRows( 3 /*row*/, 2 /*col*/, 3 /*row*/, 5 /*col*/ );
+		$this->writeXLSLabel( 3, 6, wfMsg('wikistats_articles') );
+		$this->mergeXLSColsRows( 3, 6, 3, 8 );
+		$this->writeXLSLabel( 3, 9, wfMsg('wikistats_media') );
+		$this->mergeXLSColsRows( 3, 9, 3, 12 );
+
+		// second row
+		// date
+		$this->writeXLSLabel( 4, 1, '' );
+		// wikians/articles/media
+		$this->writeXLSLabel( 4, 2, wfMsg('wikistats_namespaces') );
+		$this->mergeXLSColsRows( 4, 2, 4, 3 );
+		$this->writeXLSLabel( 4, 2, wfMsg('wikistats_edits') );
+		$this->mergeXLSColsRows( 4, 4, 4, 5 );
+		$this->writeXLSLabel( 4, 6, wfMsg('wikistats_total') );
+		$this->mergeXLSColsRows( 4, 6, 5, 6 );
+		$this->writeXLSLabel( 4, 7, str_replace("<br />", " ", wfMsg('wikistats_new_per_day')) );
+		$this->mergeXLSColsRows( 4, 7, 5, 7 );
+		$this->writeXLSLabel( 4, 8, wfMsg('wikistats_edits') );
+		$this->mergeXLSColsRows( 4, 8, 5, 8 );
+		$this->writeXLSLabel( 4, 9, wfMsg('wikistats_images') );
+		$this->mergeXLSColsRows( 4, 9, 4, 10 );
+		$this->writeXLSLabel( 4, 11, wfMsg('wikistats_video') );
+		$this->mergeXLSColsRows( 4, 11, 4, 12 );
+
+		$this->writeXLSLabel( 5, 2, wfMsg('wikistats_total') );
+		$this->writeXLSLabel( 5, 3, wfMsg('wikistats_content') );
+		$this->writeXLSLabel( 5, 4, '>5' );
+		$this->writeXLSLabel( 5, 5, '>100' );
+		$this->writeXLSLabel( 5, 9, wfMsg('wikistats_links') );
+		$this->writeXLSLabel( 5, 10, wfMsg('wikistats_uploaded_images') );
+		$this->writeXLSLabel( 5, 11, wfMsg('wikistats_video_embeded') );
+		$this->writeXLSLabel( 5, 12, wfMsg('wikistats_uploaded_images') );
+
+		// monthly stats
+		$row = 5;
+		$out = ""; $cols = array();
+		// statistics
+		foreach ($this->mData as $date => $columns) {
+			$row++;
+			$col = 1;
+			foreach ( $columns as $column => $out ) {
+				$__number = $out;
+				if ( empty($out) ) {
+					$out = "0";
+				} else {
+					switch ($column) {
+						case 'date': 
+							$stamp = mktime(23, 59, 59, substr($out, 4, 2), 1, substr($out, 0, 4));
+							if ( $out == date("Ym") ) {
+								$stamp = time();
+								$out = $wgLang->sprintfDate( $this->mStats->dateFormat(0), wfTimestamp(TS_MW, $stamp));
+							} else {
+								$out = $wgLang->sprintfDate("M Y", wfTimestamp(TS_MW, $stamp));
+							}
+							break;
+						default: 
+							$out = sprintf( "%0.1f", $out ); 
+							break;
+					}
+				}
+				if ($out != "") {
+					if ($column == 'date')
+						$this->writeXLSLabel($row,$col,$out);
+					else
+						$this->writeXLSNumber($row, $col, $out);
+				}
+				$col++;
+			}
+		}
+
+		// column's names -> A, B, C ...
+		$row++; $col = 1;
+		$this->writeXLSLabel( $row, $col, '');
+		foreach ($columnNames as $column) {
+			$col++;
+			$this->writeXLSLabel( $row, $col, $column);
 		}
 		unset( $columnNames );
 		$this->setXLSFileEnd();

@@ -433,7 +433,7 @@ class WikiStats {
 	 * @access public
 	 * 
 	 */
-	public function loadStatsFromDB() {
+	public function loadOldStatsFromDB() {
     	global $wgMemc, $wgStatsDB;
     	#---
 		wfProfileIn( __METHOD__ );
@@ -542,6 +542,126 @@ class WikiStats {
 					} else {
 						$this->mMainStats[$oRow->date][$field] = $value - $excludedValues;
 					}
+				}
+			}
+			$dbr->freeResult( $oRes );
+			#---
+			if ( !empty($this->mMainStats) ) {
+				krsort($this->mMainStats);
+			}
+			$wgMemc->set( $memkey, $this->mMainStats, 60*10 );
+		}
+		#---
+		wfProfileOut( __METHOD__ );
+		return $this->mMainStats;
+	}
+
+	/**
+	 * __loadStatsFromDB
+	 * 
+	 * Main table with statistics
+	 * @access public
+	 * 
+	 */
+	public function loadStatsFromDB() {
+    	global $wgMemc, $wgStatsDB;
+    	#---
+		wfProfileIn( __METHOD__ );
+		#---
+		$result = array();
+		#---
+		if ( !isset($this->mCityId) || ( $this->mCityId < 0 ) ) {
+			wfProfileOut( __METHOD__ );
+			Wikia::log( __METHOD__, false, wfMsg('wikiastats_nostats_found') );
+			return false;
+		} 
+
+		#---
+		if ( !isset($this->mStatsDate) || 
+			( 
+				empty( $this->mStatsDate['fromMonth'] ) ||  
+				empty( $this->mStatsDate['fromYear'] ) ||  
+				empty( $this->mStatsDate['toMonth'] ) ||  
+				empty( $this->mStatsDate['toYear'] ) 
+			) 
+		) {
+			wfProfileOut( __METHOD__ );
+			Wikia::log( _METHOD__, false, wfMsg('wikiaststs_invalid_date') );
+			return false;
+		} 
+
+		$memkey = md5($this->mCityId . implode("-", array_values($this->mStatsDate)) . $this->mLocalStats . $this->mLang . $this->mHub );
+    	$memkey = __METHOD__ . "_" . $memkey;
+    	#---
+		$columns = array();
+		$this->mMainStats = $wgMemc->get($memkey);
+    	if ( empty($this->mMainStats) ) {
+			#--- database instance - DB_SLAVE
+			$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+
+			$db_fields = array(
+				'date' => "stats_date",
+				'A' => empty($this->mAllStats) ? 'editors_month_allns' : 'sum(editors_month_allns)',
+				'B' => empty($this->mAllStats) ? 'editors_month_contentns' : 'sum(editors_month_contentns)',
+				'C' => empty($this->mAllStats) ? 'editors_month_5times' : 'sum(editors_month_5times)',
+				'D' => empty($this->mAllStats) ? 'editors_month_100times' : 'sum(editors_month_100times)',
+				'E' => empty($this->mAllStats) ? 'articles' : 'sum(articles)',
+				'F' => empty($this->mAllStats) ? 'articles_day' : 'sum(articles_day)',
+				'G' => empty($this->mAllStats) ? 'database_edits' : 'sum(database_edits)',
+				'H' => empty($this->mAllStats) ? 'images_links' : 'sum(images_links)',
+				'I' => empty($this->mAllStats) ? 'images_uploaded' : 'sum(images_uploaded)',
+				'J' => empty($this->mAllStats) ? 'video_embeded' : 'sum(video_embeded)',
+				'K' => empty($this->mAllStats) ? 'video_uploaded' : 'sum(video_uploaded)',
+			);
+			
+			array_walk($db_fields, create_function('&$v,$k', '$v = $v . " as " . $k;'));
+
+			$where = $options = array();
+			# set city_id 
+			if ( !empty( $this->mCityId ) ) {
+				$where['wikia_id'] = $this->mCityId;
+			} else {
+				if ( !empty($this->mLang) ) {
+					$where['wikia_lang'] = $this->mLang;
+				}
+				if ( !empty($this->mHub) ) {
+					$where['wikia_hub'] = $this->mHub;
+				}
+			}
+
+			# set date range
+			$where[] = sprintf(
+				" stats_date between '%04d%02d' and '%04d%02d' ", 
+				$this->mStatsDate['fromYear'], $this->mStatsDate['fromMonth'],
+				$this->mStatsDate['toYear'], $this->mStatsDate['toMonth']
+			);
+
+			if ( !empty($this->mAllStats) ) {
+				$this->excludedWikis($db_fields, $where);
+			}
+
+			#options
+			#if ( !empty( $this->mCityId ) ) {
+			$options = array('GROUP BY' => 'stats_date');
+			#}
+
+			$oRes = $dbr->select(
+				array( "stats_summary_part" ),
+				array( implode(", ", array_values( $db_fields ) ) ),
+				$where,
+				__METHOD__,
+				$options
+			);
+			$this->mMainStats = array();
+			while( $oRow = $dbr->fetchObject( $oRes ) ) {
+				if ( !isset($this->mMainStats[$oRow->date]) ) {
+					$this->mMainStats[$oRow->date] = array();
+				}
+				foreach ( $oRow as $field => $value ) {
+					$excludedValues = isset( $this->mExcludedWikis[$oRow->date][$field] ) 
+						? intval( $this->mExcludedWikis[$oRow->date][$field] ) 
+						: 0;
+					$this->mMainStats[$oRow->date][$field] = $value - $excludedValues;
 				}
 			}
 			$dbr->freeResult( $oRes );
