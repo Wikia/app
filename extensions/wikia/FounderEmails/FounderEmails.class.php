@@ -53,7 +53,9 @@ class FounderEmails {
 		global $wgCityId;
 		wfProfileIn( __METHOD__ );
 
-		if( !$this->getWikiFounder()->getOption('founderemailsdisabled', false) ) {
+		// Backward compatibility for opposite option ([..]disabled) prior to rt#44284 - SWC
+		if( !$this->getWikiFounder()->getOption('founderemailsdisabled', false)
+			&& $this->getWikiFounder()->getOption('founderemailsenabled', true)) {
 			$event->create();
 			if( $doProcess ) {
 				$this->processEvents( $event->getType(), true, $wgCityId );
@@ -107,10 +109,10 @@ class FounderEmails {
 
 	public static function userTogglesHook( $toggles, $defaults = false ) {
 		if( is_array($defaults) ) {
-			$defaults[] = 'founderemailsdisabled';
+			$defaults[] = 'founderemailsenabled';
 		}
 		else {
-			$toggles[] = 'founderemailsdisabled';
+			$toggles[] = 'founderemailsenabled';
 		}
 		return true;
 	}
@@ -119,8 +121,8 @@ class FounderEmails {
 		global $wgUser;
 
 		if( FounderEmails::getInstance()->getWikiFounder()->getId() == $wgUser->getId() ) {
-			$prefsForm->mUsedToggles['founderemailsdisabled'] = true;
-			$toggleHtml .= $prefsForm->getToggle('founderemailsdisabled') . "<br />";
+			$prefsForm->mUsedToggles['founderemailsenabled'] = true;
+			$toggleHtml .= $prefsForm->getToggle('founderemailsenabled') . "<br />";
 		}
 
 		return true;
