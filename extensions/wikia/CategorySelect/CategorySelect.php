@@ -231,6 +231,7 @@ function CategorySelectAjaxSaveCategories($articleId, $categories) {
 				$dbw->begin();
 				$editPage = new EditPage( $article );
 				$editPage->edittime = $article->getTimestamp();
+				$editPage->recreate = true;
 				$editPage->textbox1 = $article_text;
 				$editPage->summary = wfMsgForContent('categoryselect-edit-summary');
 				$bot = $wgUser->isAllowed('bot');
