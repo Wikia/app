@@ -25,11 +25,11 @@ foreach ($columns as $column) {
 ?>
 <span class="wk-column-group"><?= wfMsg("wikistats_wikians") ?><a name="wikians"></a>&nbsp;<b><a href="#mainstats" class="big">&uarr;</a></b></span><br />
 <?
-	} elseif ($i == 8) {
+	} elseif ($i == 4) {
 ?>
 <span class="wk-column-group"><?= wfMsg("wikistats_articles") ?><a name="articles"></a>&nbsp;<b><a href="#mainstats" class="big">&uarr;</a></b></span><br />
 <?
-	} elseif ($i == 13) {
+	} elseif ($i == 7) {
 ?>
 <span class="wk-column-group"><?= wfMsg("wikistats_media") ?><a name="media"></a>&nbsp;<b><a href="#mainstats" class="big">&uarr;</a></b></span><br />
 <?
