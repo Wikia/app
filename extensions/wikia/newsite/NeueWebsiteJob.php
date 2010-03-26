@@ -111,5 +111,8 @@ class NeueWebsiteJob extends Job {
 				$dbw->insert( "related", $sites, __METHOD__ );
 			}
 		}
+		else {
+			echo "0 related sites\n";
+		}
 	}
 }
