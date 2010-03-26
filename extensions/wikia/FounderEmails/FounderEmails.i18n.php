@@ -3,7 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'tog-founderemailsenabled' => 'E-mail me updates on what other people are doing',
+	'tog-founderemailsenabled' => 'E-mail me updates on what other people are doing (founders only)',
 	'founderemails-email-user-registered-subject' => 'Someone registered an account on your wiki!',
 	'founderemails-email-user-registered-body' => 'Hey $FOUNDERNAME,
 
