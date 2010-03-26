@@ -74,7 +74,7 @@ class NeueWebsiteJob extends Job {
 		$go = $go.fread($fp, 10240);
 		$go = $go.fread($fp, 10240);
 		$go = $go.fread($fp, 10240);
-		fclose($gofp);
+		fclose($fp);
 
 		if( !strstr( $go, "keine mit Ihrer Suchanfrage" ) ) {
 			$matches = array();
