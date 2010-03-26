@@ -77,7 +77,7 @@ function wfFounderEmailsInit() {
 	$wgHooks['UserToggles'][] = 'FounderEmails::userTogglesHook';
 	$wgHooks['getUserProfilePreferencesCustomEmailToggles'][] = 'FounderEmails::userProfilePreferencesHook';
 
-	// for testing purposes only, remove when released & fully tested
+	// for testing purposes only, TODO: remove when released & fully tested
 	global $wgRequest, $wgUser;
 	if( $wgRequest->getCheck('founderEmailsTest') && ( $wgRequest->getVal('eventType') != null ) ) {
 		$eventType  = $wgRequest->getVal('eventType');
