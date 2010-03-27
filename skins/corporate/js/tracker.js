@@ -22,21 +22,21 @@ var initTracker = function()
 		 });
 	 }
 	 
-	var addTrackIf = function(name,url){
+	var addPageOrHub = function(str){
 		 if (wgIsMainpage) {
-			 addTrack(name, 'main_page/' + url);
+			 return "main_page/" + str;
 		 } else {
-			 addTrack(name, 'hub/' + url);
+			 return "hub/" + str;
 		 }
-	 }
+	}
 
 	 addTrack('#wikia-search-submit', 'find_a_wiki');
 	 addTrack('#wikia-login-link', 'log-in');
 	 addTrack('#wikia-create-account-link', 'sign-up');
-	 addTrackIf('#wikia-global-hot-spots .wikia-page-link','hotspots/article');
-	 addTrackIf('#wikia-global-hot-spots .wikia-wiki-link','hotspots/wiki_name');
+	 addTrack('#wikia-global-hot-spots .wikia-page-link', addPageOrHub('hotspots/article'));
+	 addTrack('#wikia-global-hot-spots .wikia-wiki-link', addPageOrHub('hotspots/wiki_name'));
 	 addTrack('.create-wiki-container .wikia-button','main_page/create_a_wiki');
-	 addTrack('#homepage-feature-spotlight .nav','main_page/slider/thumb');
+	 addTrack('#spotlight-slider .nav', addPageOrHub('slider/thumb'));
 	 addTrack('.create-wiki-container .wikia-button','main_page/create_a_wiki');
 	 addTrack('#wikia-create-wiki .wikia-button','bottom/create_a_wiki')
 	 addTrack('#wikia-whats-up a', 'Special_coverage');
@@ -46,14 +46,18 @@ var initTracker = function()
 	 addFooterTrack('wikia-more-links', 'right_column');
 	 addFooterTrack('SupplementalNav', 'bottom');
 	 
-	 $('.homepage-spotlight,#homepage-feature-spotlight .wikia-button').click(function(e){
+	 $('.spotlight-slider, #spotlight-slider .wikia-button').click(function(e){
 		 switch(e.target.nodeName){
 		 	case 'SPAN': element = e.target.parentNode.parentNode.parentNode ; break;
 		 	case 'A': element = e.target.parentNode.parentNode; break;
 		 	case 'IMG': element = e.target.parentNode.parentNode; break;
 		 }
 		 out = element.id.split('-');
-		 WET.byStr('main_page/slider/featured/' + (parseInt(out[3]) + 1) );
+		 WET.byStr(addPageOrHub('slider/featured/' + (parseInt(out[2]) + 1) ));
+
+		if (!wgIsMainpage) {
+			 WET.byStr('hub/sf/' + wgPageName + '/' + (parseInt(out[2]) + 1) );
+		}
 	 });
 	 
 	 $("#GlobalNav ul:first > li").hover(function(e){
