@@ -1,7 +1,7 @@
 <!-- s:<?= __FILE__ ?> -->
 <a name="comments"></a>
 <h2 class="wikia_header">
-<?php echo wfMsg("blog-comments") ?>
+<?php echo wfMsgExt("blog-comments", array('parse') ) ?>
 </h2>
 <?php
 if( isset( $props[ "commenting" ] ) && $props[ "commenting" ] == 1  && count( $comments ) > 1 ):
