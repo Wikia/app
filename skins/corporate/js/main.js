@@ -27,44 +27,21 @@ $(function() {
 $(window).load(function() {
 	setTimeout(sliderImages_load, 300);
 	spotlightSlider_setup(blockArticle);
-	$('#spotlight-slider').click(trackContainer);	
 });
 
 function trackTag( str ) {
 	WET.byStr( 'hub/' + str );
-
-	if (str.search(/^slider\/featured/) != -1) {
-		trackTag('sf/' + wgPageName + str.replace(/^slider\/featured/, ""));
-	}
 };
 
 function trackContainer ( ev ) {
 	var obj = $(ev.target);
 
 	if( 'IMG' == obj.attr( 'nodeName' ) ) {
-		if( obj.parent().hasClass( 'nav' ) ) {
-			trackTag( 'slider/thumb' );				
-		} else if( obj.hasClass( 'avatar' )  ) {
+		if( obj.hasClass( 'avatar' )  ) {
 			trackTag( 'topusers/avatar' );
 		}
 	} 
 
-		if( obj.parent().hasClass( 'secondary' ) ) {
-			if( obj.parent().parent().parent().attr( 'id' ) == 'spotlight-slider-1' ) {
-				trackTag( 'slider/featured/2' );
-
-			} else if( obj.parent().parent().parent().attr( 'id' ) == 'spotlight-slider-2'  ) {
-				trackTag( 'slider/featured/3' );
-
-			} else if( obj.parent().parent().parent().attr( 'id' ) == 'spotlight-slider-3'  ) {
-				trackTag( 'slider/featured/4' );
-
-			} else if( obj.parent().parent().parent().attr( 'id' ) == 'spotlight-slider-0'  ) {
-				trackTag( 'slider/featured/1' );
-
-			}	
-		}
-	
 	if( 'A' == obj.attr( 'nodeName' ) ) {
 		if( obj.parent().parent().hasClass( 'top-wiki-data' )  ) {
 			trackTag( 'featuredwikis' );
@@ -75,22 +52,6 @@ function trackContainer ( ev ) {
 			trackTag( 'blog/username' );
 		} else if( obj.parent().hasClass( 'topuser-info' )  ) {
 			trackTag( 'topusers/name' );
-		} else if( obj.hasClass( 'secondary' ) ) {
-			if( obj.parent().parent().hasClass( 'spotlight-slider-1' )  ) {
-				trackTag( 'slider/featured/2' );
-
-			} else if( obj.parent().parent().attr( 'id' ) == 'spotlight-slider-2'  ) {
-				trackTag( 'slider/featured/3' );
-
-			} else if( obj.parent().parent().attr( 'id' ) == 'spotlight-slider-3'  ) {
-				trackTag( 'slider/featured/4' );
-
-			} else if( obj.parent().parent().attr( 'id' ) == 'spotlight-slider-0'  ) {
-				trackTag( 'slider/featured/1' );
-
-			}
-		} else if( obj.parent().parent().parent().attr( 'id' ) == 'spotlight-slider'  ) {
-			trackTag( 'slider/thumb' );
 		}
 	}
 
@@ -222,7 +183,7 @@ function wikiaSearch_setup() {
 }
 
 function sliderImages_load() {
-
+return true;
   if (( typeof feature_image_1 == "undefined" ) || ( typeof  feature_image_2 == "undefined" ) || ( typeof  feature_image_3 == "undefined" )) {
 	  return true;
   }

@@ -96,9 +96,7 @@ class CorporateHomeTemplate extends CorporateBaseTemplate {
 							?>
 							<li id="spotlight-slider-<?php echo $key; ?>">
 								<a href="<?php echo $value['href'] ?>">
-								<?php if ($key == 0) { ?>
 									<img width="620" height="250" src="<?php echo $value['imagename'] ?>" class="spotlight-slider">
-								<?php } ?>
 								</a>
 								<div class="description">
 									<h2><?php echo $value['title'] ?></h2>
