@@ -1,0 +1,232 @@
+/* @group Main Colors */
+
+.color1 {
+	background: #B6D0B5;
+	color: #000;
+}
+.color1 a {
+	color: #000;
+}
+.color2 {
+	background: #000 repeat-x;
+	background-image: url(/skins/monaco/forest/images/background.png); /* $wgCdnStylePath */
+}
+.accent {
+	background-color: #DBE5DA;
+	border-color: #999;
+}
+.dark_text_1 {
+	color: #333;
+}
+.dark_text_2 {
+	color: #768C5D;
+}
+
+#background_strip {
+	background: transparent;
+	border: none;
+	margin-bottom: 1px;
+}
+#search_box, #page_bar {
+	background: #646651;
+	background-image: -moz-linear-gradient(top, #B6D0B5, #646651);
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#B6D0B5), to(#646651));
+}
+#page_tabs li {
+	background: #DDD;
+}
+#wikia_page, #page_tabs li.selected {
+	background: #EEE;
+	color: #333;
+}
+#page_controls a {
+	color: #FFF;
+}
+
+/* @end */
+
+/* @group Header and Footer */
+
+#wikia_header {
+	background: transparent;
+	border-bottom: none;
+	margin-bottom: 1px;
+	position: relative;
+	z-index: 1;
+}
+.header-button {
+	background-color: #303030;
+	color: #FFF;
+}
+.headerMenu {
+	background: #303030;
+}
+.headerMenu a {
+	color: #FFF;	
+}
+#wikia_logo {
+	background-image: url(/skins/monaco/forest/images/wikia_logo.png); /* $wgCdnStylePath */
+}
+#userData a, #wikiaBranding a {
+	color: #DDD;
+}
+#header_username a {
+	color: #FF9;
+}
+#wikia_footer, #wikia_footer a {
+	color: #FFF;
+}
+
+/* @end */
+
+/* @group Widgets */
+
+.widget {
+	background: #999;
+	border-color: #999;
+	color: #222;
+}
+.widget a {
+	color: #000;
+}
+.widget dd {
+	background: #eee;
+}
+
+/* Navigation */
+#navigation a {
+	background: #EEE;
+	color: #333;
+}
+#navigation .navigation-hover>a {
+	background: #696;
+	color: #FFF;
+}
+#navigation .menu-item {
+	border-color: #888;
+}
+#link_box, #link_box_dynamic {
+	background: #B6D0B5;
+}
+#link_box_table a {
+	color: #111;
+}
+
+/* Community Widget */
+.WidgetCommunity .community_header {
+	color: #333;
+	background: transparent;
+	border-bottom: none;
+}
+.WidgetCommunity .toolbar {
+	background: transparent;
+	border-top: none;
+}
+
+/* @end */
+
+/* @group Main Page */
+
+body.mainpage div.monaco_shrinkwrap {
+	left: 50%;
+	margin-left: -486px;
+	width: 972px;
+}
+body.mainpage #background_accent1 {
+	background-image: url(/skins/monaco/forest/images/forest_left.png); /* $wgCdnStylePath */
+	height: 431px;
+	margin-right: 390px;
+	top: -51px;
+	width: 300px;
+}
+body.mainpage #background_accent2 {
+	background-image: url(/skins/monaco/forest/images/forest_right.png); /* $wgCdnStylePath */
+	background-position: 300px 0;
+	height: 433px;
+	top: -51px;
+	z-index: 0;
+}
+
+/* @end */
+
+/* @group Masthead */
+
+#user_masthead {
+	background: #B6D0B5;
+}
+#user_masthead ul.nav_links li {
+	background: #768C5D;
+}
+#user_masthead ul.nav_links li a {
+	background: transparent;
+	color: #333;	
+}
+#user_masthead ul.nav_links li.selected {
+	background: #555;
+	border-color: #AAA;
+	color: #FFF;
+}
+#user_masthead ul.nav_links li.selected a {
+	color: #FFF;
+}
+body.masthead-regular #page_bar, 
+body.masthead-special #page_bar {
+	background: #555;
+	border-color: #AAA;
+}
+
+/* @end */
+
+/* @group BUTTONS */
+
+a.wikia-button,
+a.wikia-button:visited,
+span.wikia-button a,
+span.wikia-button a:visited,
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button {
+	background-color: #9D0000;
+	background-image: -moz-linear-gradient(top, #9D0000 20%, #700000 70%);
+	background-image: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#9D0000), to(#700000));
+	border-color: #FFFFFF;
+	box-shadow: 0 1px 0 #6A0000, 0 -1px 0 #6A0000, 1px 0 0 #6A0000, -1px 0 0 #6A0000;
+	color: #FFFFFF;
+	-moz-box-shadow: 0 0 0 1px #6A0000;
+	-webkit-box-shadow: 0 1px 0 #6A0000, 0 -1px 0 #6A0000, 1px 0 0 #6A0000, -1px 0 0 #6A0000;
+}
+
+/* IE Styles */
+a.wikia-button,
+span.wikia-button a,
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button {
+	filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr="#FF9D0000", EndColorStr="#FF700000");
+	outline: 1px solid #6A0000\9;
+}
+
+/* Hover and Active states */
+a.wikia-button:hover,
+span.wikia-button a:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="button"]:hover,
+button:hover {
+	text-shadow: #000 0 1px 1px;
+}
+
+a.wikia-button:active,
+span.wikia-button a:active,
+input[type="submit"]:active,
+input[type="reset"]:active,
+input[type="button"]:active,
+button:active {
+	color: #FFF;
+	background-image: -moz-linear-gradient(top, #700000 20%, #9D0000 70%);
+	background-image: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#700000), to(#9D0000));
+}
+
+/* @end */
