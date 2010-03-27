@@ -9,13 +9,17 @@ class WikiaVideoAddForm extends SpecialPage {
 	/* constructor */
 	function __construct () {
 		$this->mAction = "";
+		wfLoadExtensionMessages('WikiaVideoAdd');
 		parent::__construct( "WikiaVideoAdd", "wikiavideoadd" );
 	}
 
 	public function execute( $subpage ) {
-		global $wgOut, $wgRequest;
+		global $wgOut, $wgRequest, $wgUser;
 
-		wfLoadExtensionMessages('WikiaVideoAdd');
+		if( $wgUser->isBlocked() ) {
+			$wgOut->blockedPage();
+			return;
+		}
 
 		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'WikiaVideoAdd' );
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
