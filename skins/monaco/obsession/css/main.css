@@ -1,0 +1,464 @@
+/* @group Main Colors */
+
+.color1 {
+	background-color: #720808;
+	color: #DDD;
+}
+.color1 a {
+	color: #DDD;
+}
+.color2 {
+	background: #000 repeat-x;
+	background-image: url(/skins/monaco/obsession/images/background.png);  /* $wgCdnStylePath */
+}
+.accent {
+	background-color: #2F0600;
+	border-color: #5A0B00;
+	color: #DDD;
+}
+.accent a {
+	color: #F36F1F;
+}
+.neutral {
+	background-color: #222;
+	border-color: #444;
+	color: #DDD;
+}
+.neutral a {
+	color: #DDD;
+}
+.dark_text_1 {
+	color: #F36F1F;
+}
+.dark_text_2 {
+	color: #32C032;
+}
+#background_strip {
+	background: transparent;
+	border: none;
+	margin-bottom: 1px;
+}
+
+/* @end */
+
+/* @group Header and Footer */
+
+#wikia_header {
+	background: transparent;
+	border: none;
+	margin-bottom: 1px;
+}
+#wikia_logo {
+	background-image: url(/skins/monaco/obsession/images/wikia_logo.png); /* $wgCdnStylePath */
+}
+.header-button {
+	background-color: #720808;
+}
+#userData a, #wikiaBranding a {
+	color: #DDD;
+}
+#header_username a {
+	color: #F36F1F;
+}
+#wikia_footer, #wikia_footer a {
+	color: #DDD;
+}
+
+/* @end */
+
+/* @group Widgets */
+
+.widget {
+	background: #5A0B00;
+	border-color: #2F0600;
+}
+.widget dd {
+	color: #CCC;
+	background: #2F0600;
+}
+.widget dt {
+	background-color: #780000;
+	background-image: -moz-linear-gradient(top, #780000 0%, #D30000 33%, #D30000 42%, #780000 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0.0, #780000), color-stop(0.33, #D30000), color-stop(0.42, #D30000), color-stop(1.0, #780000));
+	color: #CCC;
+}
+
+/* Navigation */
+#search_box {
+	background-color: #780000;
+	background-image: -moz-linear-gradient(top, #780000 0%, #D30000 33%, #D30000 42%, #780000 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0.0, #780000), color-stop(0.33, #D30000), color-stop(0.42, #D30000), color-stop(1.0, #780000));
+}
+#navigation .menu-item {
+	border-color: #1C0400;
+}
+#navigation a {
+	background: #2F0600;
+	color: #CCC;
+}
+#navigation .navigation-hover>a {
+	background: #7D0B0D;
+}
+#link_box, #link_box_dynamic {
+	background: #1C0400;
+}
+#link_box_table a {
+	color: #F36F1F;
+}
+
+/* Latest Activity widget */
+.WidgetCommunity .community_header {
+	color: #CCC;
+	background: transparent;
+	border-bottom: #333;
+}
+.WidgetCommunity .toolbar {
+	background: transparent;
+	border-top: none;
+}
+
+/* @end */
+
+/* @group Page */
+
+a, table.gallery td a, div.thumbinner a {
+	color: #F36F1F;
+}
+a:visited, table.gallery td a:visited {
+	color: #FF9235;
+}
+a.new {
+	color: #ED1901 !important;
+}
+#bodyContent a.external, #bodyContent a.extiw {
+	color: #F36F1F;
+}
+#bodyContent a.external:visited, #bodyContent a.extiw:visited {
+	color: #F36F1F;
+}
+#bodyContent a.external, #bodyContent a[href ^="gopher://"] {
+	background: center right no-repeat;
+	background-image: url(/skins/monaco/obsession/images/external.png); /* $wgCdnStylePath */
+}
+#page_bar {
+	background-color: #780000;
+	background-image: -moz-linear-gradient(top, #780000 0%, #D30000 33%, #D30000 42%, #780000 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0.0, #780000), color-stop(0.33, #D30000), color-stop(0.42, #D30000), color-stop(1.0, #780000));
+	border-bottom: none;
+}
+#page_tabs li {
+	background: #480F06;
+	border: none;
+}
+#page_tabs li.selected {
+	background: #111;
+	color: #EEE;
+	border: none;
+}
+#page_tabs li a, #page_tabs li.selected a {
+	color: #EEE;
+}
+#page_tabs li a.new {
+	color: #E01700;
+}
+#wikia_page {
+	background: #111;
+	border-color: #222;
+	color: #DDD;
+}
+#articleFooter {
+	background: #111;
+	border-top: 1px dashed #555;
+}
+#articleFooter td.col2 {
+	border-left: 1px dashed #555;
+}
+#articleFooter strong {
+	color: #EEE;
+}
+#toc,
+.toc,
+#catlinks,
+#userloginForm form,
+.forumheader,
+ul#filetoc
+{
+	color: #FFF;
+	background-color: #222;
+	border: 1px solid #555;
+}
+code {
+	background-color: #191919;
+	color: #FFF;
+}
+pre {
+	border: 1px dashed #444;
+	background-color: #222;
+	color: #FFF;
+}
+
+/* @end */
+
+/* @group Main Page */
+
+body.mainpage div.monaco_shrinkwrap {
+	left: 50%;
+	margin-left: -486px;
+	width: 972px;
+}
+body.mainpage .firstHeading {
+	display: none;
+}
+
+/* @end */
+
+/* @group Masthead */
+
+#user_masthead {
+	background: #000;
+}
+#user_masthead h2 {
+	color: #EEE;
+}
+#user_masthead ul.nav_links li, #user_masthead ul.nav_links li a {
+	background: #720808;
+	color: #EEE;
+}
+#user_masthead ul.nav_links li.selected, #user_masthead ul.nav_links li.selected a {
+	background: #8F0600;
+	border-color: #555;
+	color: #EEE;
+}
+body.masthead-regular #page_bar, body.masthead-special #page_bar, 
+body.masthead-regular #page_bar a, body.masthead-special #page_bar a {
+	background: #8F0600;
+	border-color: #555;
+	color: #EEE;
+}
+.dark_text_1 {
+	color: #F36F1F;
+}
+
+/* @end */
+
+/* @group Blog */
+
+#blogPostForm, #blogInfo {
+	color: #EEE;
+}
+div.blog-comm-input {
+	background: #222;
+	border: 1px solid #777;
+}
+h2.wikia_header {
+	background: #303030;
+	border: none;
+	color: #FDB966;
+}
+div.wk_blogs_post .wk_blogs_summary {
+	color:#FFF !important;
+}
+
+/* @end */
+
+/* @group History */
+
+#pagehistory li {
+	border: 1px solid #000;
+}
+#pagehistory li.selected {
+	background-color: #2F0600;
+	border: 1px dashed #404040;
+	color: #FFF;
+}
+table.diff {
+	background: #191919;
+}
+td.diff-otitle, td.diff-ntitle {
+	background: transparent;
+}
+td.diff-context {
+	background-color: #000;
+}
+td.diff-deletedline {
+	background-color: #331100;
+}
+td.diff-addedline {
+	background-color: #2F0600;
+}
+
+/* @end */
+
+/* @group Preferences */
+
+#preferences, .prefsection table, .prefsection legend {
+	background-color: #202020;
+	border-color: #606060;
+	color: #FFF;
+}
+#preftoc li {
+	border-color: #606060;
+	background-color: #151515;
+}
+#preftoc li.selected {
+	background-color: #202020;
+	border-color: #606060;
+	color: #FFF;
+}
+#preftoc li a {
+	color: #FFF;
+}
+
+/* @end */
+
+/* @group Gallery */
+
+table.gallery {
+	background-color: #111;
+	border: none;
+}
+table.gallery td {
+	background-color: #111;
+	border: none;
+	color: #FFF;
+}
+div.gallerybox {
+	border-color: #606060;
+}
+div.gallerybox div.thumb {
+	border: 1px solid #777;
+	background-color: #1F1F1F;
+}
+div.gallerybox div.thumb:hover, 
+div.gallerybox div.thumb div:hover {
+	background-color: #2A2A2A;
+}
+
+/* @end */
+
+/* @group Thumb */
+
+div.thumb div {
+	background-color: #202020;
+	border-color: #606060;
+	color: #FDF8E2;
+}
+div.thumb div a img {
+	border-color: #444;
+}
+
+/* @end */
+
+/* @group Special Pages */
+
+h4.mw-specialpagesgroup {
+	background-color: #222;
+	color: #CCC;
+}
+.not-patrolled {
+	background-color: #111;
+}
+
+/* @end */
+
+/* @group Problem Reports */
+
+.problemReportsList thead tr {
+	background: #2F0600 !important;
+	color: #FFF !important;
+}
+.problemReportsList .odd {
+	background-color: #2F0600 !important;
+	color: #FFF !important;
+}
+
+/* @end */
+
+/* @group Recent Changes */
+
+.mw-plusminus-pos {
+	color: #009800;
+}
+.mw-plusminus-neg {
+	color: #CC2200;
+}
+
+/* @end */
+
+/* @group Misc */
+
+div.noarticletext {
+	background: transparent;
+	border: 1px solid #333;
+	color: #EEE;
+}
+.forumlist td.forum_edited a {
+	color: #FFF;
+}
+.TablePager, .TablePager td, .TablePager th {
+	background: #222222 !important;
+	border: 1px solid #555555;
+	color: #FFFFFF !important;
+}
+
+.usermessage {
+	background-color: #222;
+	border: 1px solid #777;
+	color: #EEE;
+}
+
+/* @end */
+
+/* @group BUTTONS */
+
+a.wikia-button,
+a.wikia-button:visited,
+span.wikia-button a,
+span.wikia-button a:visited,
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button {
+	background-color: #710A0C;
+	background-image: -moz-linear-gradient(top, #920D0F 20%, #710A0C 70%);
+	background-image: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#920D0F), to(#710A0C));
+	border-color: #FFFFFF;
+	box-shadow: 0 1px 0 #6D0A0C, 0 -1px 0 #6D0A0C, 1px 0 0 #6D0A0C, -1px 0 0 #6D0A0C;
+	color: #FFFFFF;
+	-moz-box-shadow: 0 0 0 1px #6D0A0C;
+	-webkit-box-shadow: 0 1px 0 #6D0A0C, 0 -1px 0 #6D0A0C, 1px 0 0 #6D0A0C, -1px 0 0 #6D0A0C;
+}
+
+/* IE Styles */
+a.wikia-button,
+span.wikia-button a,
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button {
+	filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr="#FF920D0F", EndColorStr="#FF710A0C");
+	outline: 1px solid #6D0A0C\9;
+}
+
+/* Hover and Active states */
+a.wikia-button:hover,
+span.wikia-button a:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="button"]:hover,
+button:hover {
+	text-shadow: #000 0 1px 1px;
+}
+
+a.wikia-button:active,
+span.wikia-button a:active,
+input[type="submit"]:active,
+input[type="reset"]:active,
+input[type="button"]:active,
+button:active {
+	color: #FFF;
+	background-image: -moz-linear-gradient(top, #710A0C 20%, #920D0F 70%);
+	background-image: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#710A0C), to(#920D0F));
+}
+
+/* @end */

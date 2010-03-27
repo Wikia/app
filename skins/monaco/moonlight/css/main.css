@@ -1,0 +1,212 @@
+/* @group Main Colors */
+
+.color1 {
+	background: #036;
+	color: #FFF;
+}
+.color1 a {
+	color: #FFF;
+}
+.color2 {
+	background: #161F30 repeat-x;
+	background-image: url(/skins/monaco/moonlight/images/stars.png); /* $wgCdnStylePath */
+}
+.accent {
+	background-color: #D6E0F5;
+	border-color: #036;
+	color: #333;
+}
+.dark_text_1 {
+ 	color: #036;
+}
+.dark_text_2 {
+	color: #333;
+}
+
+#background_strip {
+	background: transparent;
+	border: none;
+	margin-bottom: 1px;
+}
+#search_box, #page_bar {
+	background: #6281AF;
+	background-image: -moz-linear-gradient(top, #6281AF, #152036);
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#6281AF), to(#152036));
+}
+#wikia_page {
+	background: #E3E3EE;
+	color: #003;
+}
+#page_tabs li.selected {
+	background: #E3E3EE;
+}
+
+/* @end */
+
+/* @group Header and Footer */
+
+#wikia_header {
+	background: transparent;
+	border-bottom: none;
+	margin-bottom: 1px;
+}
+.header-button, .header-button:active {
+	background-color: #FFF;
+	color: #333;
+}
+.header-button img {
+	background-position: -72px -98px;
+}
+#wikia_logo {
+	background-image: url(/skins/monaco/moonlight/images/wikia_logo.png); /* $wgCdnStylePath */
+}
+#userData a, #wikiaBranding a {
+	color: #FFF;
+}
+#header_username a {
+	color: #CCF;
+}
+#wikia_footer, #wikia_footer a {
+	color: #FFF;
+}
+
+/* @end */
+
+/* @group Widgets */
+
+.widget {
+	background: #FFF;
+	border-color: #FFF;
+	color: #222;
+}
+.widget a {
+	color: #000;
+}
+.widget dd {
+	background: #FFF;
+}
+
+/* Navigation */
+#navigation a {
+	background: #E3E3EE;
+	color: #333;
+}
+#navigation .navigation-hover>a {
+	background: #036;
+	color: #FFF;
+}
+#navigation .menu-item {
+	border-color: #FFF;
+}
+#link_box, #link_box_dynamic {
+	background: #333;
+}
+#link_box_table a {
+	color: #FFF;
+}
+
+/* Community Widget */
+.WidgetCommunity .community_header {
+	border: 0;
+}
+.WidgetCommunity .toolbar {
+	background: transparent;
+	border-top: none;
+}
+
+/* @end */
+
+/* @group Main Page */
+
+body.mainpage div.monaco_shrinkwrap {
+	left: 50%;
+	margin-left: -486px;
+	width: 972px;
+}
+body.mainpage {
+	background-position: center top;
+}
+
+/* @end */
+
+/* @group Masthead */
+
+#user_masthead {
+	background: #E3E3EE;
+}
+#user_masthead ul.nav_links li {
+	background: #1D283E;
+}
+#user_masthead ul.nav_links li a {
+	background: transparent;
+	color: #E3E3EE;	
+}
+#user_masthead ul.nav_links li.selected {
+	background: #6180AE;
+	border-color: #1D283E;
+	color: #FFF;
+}
+#user_masthead ul.nav_links li.selected a {
+	color: #FFF;
+}
+body.masthead-regular #page_bar, 
+body.masthead-special #page_bar {
+	background: #6180AE;
+	border-color: #1D283E;
+}
+
+/* @end */
+
+/* @group Buttons */
+
+a.wikia-button,
+a.wikia-button:visited,
+span.wikia-button a,
+span.wikia-button a:visited,
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button {
+	background-color: #9D0000;
+	background-image: -moz-linear-gradient(top, #9D0000 20%, #700000 70%);
+	background-image: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#9D0000), to(#700000));
+	border-color: #FFFFFF;
+	box-shadow: 0 1px 0 #6A0000, 0 -1px 0 #6A0000, 1px 0 0 #6A0000, -1px 0 0 #6A0000;
+	color: #FFFFFF;
+	-moz-box-shadow: 0 0 0 1px #6A0000;
+	-webkit-box-shadow: 0 1px 0 #6A0000, 0 -1px 0 #6A0000, 1px 0 0 #6A0000, -1px 0 0 #6A0000;
+}
+
+/* IE Styles */
+a.wikia-button,
+span.wikia-button a,
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button {
+	filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr="#FF9D0000", EndColorStr="#FF700000");
+	outline: 1px solid #6A0000\9;
+}
+
+/* Hover and Active states */
+a.wikia-button:hover,
+span.wikia-button a:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="button"]:hover,
+button:hover {
+	text-shadow: #000 0 1px 1px;
+}
+
+a.wikia-button:active,
+span.wikia-button a:active,
+input[type="submit"]:active,
+input[type="reset"]:active,
+input[type="button"]:active,
+button:active {
+	color: #FFF;
+	background-image: -moz-linear-gradient(top, #700000 20%, #9D0000 70%);
+	background-image: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#700000), to(#9D0000));
+}
+
+/* @end */

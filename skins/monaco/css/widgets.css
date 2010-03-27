@@ -237,13 +237,13 @@ body.widgetsAddingBlocked .add {
 }
 
 #link_box_table .disabled * {
-        filter:alpha(opacity=40);
-        opacity: .4;
-        cursor: wait;
+	filter:alpha(opacity=40);
+	opacity: .4;
+	cursor: wait;
 }
 
 #link_box_table td {
-	padding: 5px;
+	padding: 1px 4px;
 	vertical-align: top;
 	overflow: hidden;
 }
