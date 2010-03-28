@@ -35,7 +35,6 @@ var initTracker = function()
 	 addTrack('#wikia-create-account-link', 'sign-up');
 	 addTrack('#wikia-global-hot-spots .wikia-page-link', addPageOrHub('hotspots/article'));
 	 addTrack('#wikia-global-hot-spots .wikia-wiki-link', addPageOrHub('hotspots/wiki_name'));
-	 addTrack('.create-wiki-container .wikia-button','main_page/create_a_wiki');
 	 addTrack('#spotlight-slider .nav', addPageOrHub('slider/thumb'));
 	 addTrack('.create-wiki-container .wikia-button','main_page/create_a_wiki');
 	 addTrack('#wikia-create-wiki .wikia-button','bottom/create_a_wiki')
