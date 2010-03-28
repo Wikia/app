@@ -54,8 +54,8 @@ function wfGlobalWatchlistPrefsCustomHtml($prefsForm) {
 		// only for staff members at the moment
 		wfLoadExtensionMessages('GlobalWatchlist');
 
-	 $tname = 'watchlistdigestclear';
-	 $prefsForm->mUsedToggles[$tname] = true;
+		$tname = 'watchlistdigestclear';
+		$prefsForm->mUsedToggles[$tname] = true;
 
 		$wgOut->addHtml( $prefsForm->getToggle($tname) );
 	}
