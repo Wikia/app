@@ -74,6 +74,6 @@ function wfGlobalWatchlistPrefsEmailToggle($prefsForm, $toggleHtml) {
 
 	$toggleHtml .= $prefsForm->getToggle($tname) . '<br />';
 
- return true;
+	return true;
 }
 
