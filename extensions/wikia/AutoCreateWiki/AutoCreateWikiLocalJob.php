@@ -231,13 +231,13 @@ class AutoCreateWikiLocalJob extends Job {
 		$source = wfMsgForContent('Mainpage');
 		$target = $wgSitename;
 
-        if( !$sourceTitle ) { 
-        	$sourceTitle = Title::newFromText( "Main_page" );
-	        if( !$sourceTitle ) { 
-	        	Wikia::log( __METHOD__, "err", "Invalid page title: {$source} and Main_page" ); 
-                return;  
- 	 	    } 
-        } 
+		if( !$sourceTitle ) { 
+			$sourceTitle = Title::newFromText( "Main_Page" );
+			if( !$sourceTitle ) { 
+				Wikia::log( __METHOD__, "err", "Invalid page title: {$source} and Main_page" ); 
+				return;  
+			} 
+		} 
 
 		$mainArticle = new Article( $sourceTitle, 0 );
 		if( $mainArticle->exists() ) {
