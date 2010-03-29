@@ -479,7 +479,9 @@ class WikiaPhotoGalleryHelper {
 	 * @author Marooned
 	 */
 	static public function fetchTemplateAndTitle($text, $finalTitle) {
-		$text = str_replace('<gallery ', "<gallery source=\"template\x7f\" ", $text);
+		if( $text !== false ) {
+			$text = str_replace('<gallery ', "<gallery source=\"template\x7f\" ", $text);
+		}
 		return true;
 	}
 }
