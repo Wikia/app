@@ -4,10 +4,12 @@ var WikiaPhotoGalleryView = {
 		$().log(msg, 'ImageGallery');
 	},
 
-	// check are we on view page (ignore diffs between revisions, edit page previews, special pages)
+	// check are we on view page
 	isViewPage: function() {
 		var urlVars = $.getUrlVars();
-		return (window.wgAction == 'view') && (typeof urlVars.oldid == 'undefined') && (window.wgNamespaceNumber != -1);
+		return (window.wgAction == 'view' || window.wgAction == 'purge') &&	// view page
+			(typeof urlVars.oldid == 'undefined') &&			// ignore diffs between revisions
+			(window.wgNamespaceNumber != -1);				// ignore special pages
 	},
 
 	init: function() {
