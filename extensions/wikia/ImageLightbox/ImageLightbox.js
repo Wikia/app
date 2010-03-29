@@ -62,6 +62,9 @@ var ImageLightbox = {
 		}
 
 		if (imageName != false) {
+			// RT #44281
+			imageName = decodeURIComponent(imageName);
+
 			var caption = target.attr('caption');
 			this.show(imageName, caption);
 		}
