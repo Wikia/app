@@ -70,6 +70,8 @@ if (preg_match('/dev/', $hostname)){
 	curl_setopt($ch, CURLOPT_PROXY, '127.0.0.1:6081');
 	$host = "search";
 } 
+$url = "http://$host/solr/select?" . http_build_query($params);
+curl_setopt($ch, CURLOPT_URL, $url);
 
 $result = curl_exec($ch);
 if (curl_error($ch) || empty($result)){
