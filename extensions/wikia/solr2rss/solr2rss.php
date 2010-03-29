@@ -53,17 +53,24 @@ $params['wt'] = 'php'; // hard code to php output
 if (empty($params['rows']) || $params['rows'] > 100){
 	$params['rows'] = 15;	
 }
-// No varnishes on dev boxes :(
+
+// Curl setup
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_HEADER, false);
+curl_setopt($ch, CURLOPT_TIMEOUT, 15);
+curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+// No varnishes on dev boxes 
 if (preg_match('/dev/', $hostname)){
 	$host = "10.8.2.216:8983";
 } else {
-	$host = "search";
+	// Live site usese local varnish proxy
+	curl_setopt($ch, CURLOPT_PROXY, '127.0.0.1:6081');
+	$host = "search:6081";
 } 
 $url = "http://$host/solr/select?" . http_build_query($params);
-$ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $url);
-curl_setopt($ch, CURLOPT_HEADER, false);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
 
 $result = curl_exec($ch);
 if (curl_error($ch) || empty($result)){
@@ -74,6 +81,7 @@ if (curl_error($ch) || empty($result)){
 eval('$parsedResult=' . $result . ';');
 
 
+header('Cache-Control: max-age=60');
 //********* Format as rss
 header('Content-Type: text/xml');
 echo '<?xml version="1.0"?>' . "\n";
@@ -96,4 +104,4 @@ echo '<?xml version="1.0"?>' . "\n";
   <?php } // foreach ?>
   </channel>
 </rss>
-<!-- Served by <?php echo trim(`hostname`) ?> -->
+<!-- Served by <?php echo $hostname ?> -->
