@@ -87,10 +87,10 @@ function runBackups( $from, $to, $full, $options ) {
 
 	if( $from !== false && $to !== false ) {
 		$range[] = sprintf( "city_id >= %d AND city_id < %d", $from, $to );
-		Wikia::log( __METHOD__, "info", "Running from {$from} to {$to}" );
+		Wikia::log( __METHOD__, "info", "Running from {$from} to {$to}", true, true );
 	}
 	else {
-		Wikia::log( __METHOD__, "info", "Running for all wikis" );
+		Wikia::log( __METHOD__, "info", "Running for all wikis", true, true );
 	}
 	$dbw = Wikifactory::db( DB_MASTER );
 
@@ -115,7 +115,7 @@ function runBackups( $from, $to, $full, $options ) {
 		if( $full || $both ) {
 			$path = sprintf("%s/pages_full.xml.gz", $basedir );
 			$time = wfTime();
-			Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} {$path}");
+			Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} {$path}", true, true );
 			$cmd = array(
 				"SERVER_ID={$row->city_id}",
 				"php",
@@ -130,12 +130,12 @@ function runBackups( $from, $to, $full, $options ) {
 			);
 			wfShellExec( implode( " ", $cmd ), $status );
 			$time = Wikia::timeDuration( wfTime() - $time );
-			Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} status: {$status}, time: {$time}");
+			Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} status: {$status}, time: {$time}", true, true );
 		}
 		if( !$full || $both ) {
 			$path = sprintf("%s/pages_current.xml.gz", $basedir );
 			$time = wfTime();
-			Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} {$path}");
+			Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} {$path}", true, true);
 			$cmd = array(
 				"SERVER_ID={$row->city_id}",
 				"php",
@@ -150,7 +150,7 @@ function runBackups( $from, $to, $full, $options ) {
 			);
 			wfShellExec( implode( " ", $cmd ), $status );
 			$time = Wikia::timeDuration( wfTime() - $time );
-			Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} status: {$status}, time: {$time}");
+			Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} status: {$status}, time: {$time}", true, true);
 		}
 		/**
 		 * generate index.json
@@ -202,7 +202,7 @@ function getDirectory( $database, $hide = false ) {
 		$database
 	);
 	if( !is_dir( $directory ) ) {
-		Wikia::log( __METHOD__ , "dir", "create {$directory}" );
+		Wikia::log( __METHOD__ , "dir", "create {$directory}", true, true );
 		wfMkdirParents( $directory );
 	}
 
