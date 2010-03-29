@@ -201,7 +201,6 @@ class WikiaPhotoGalleryHelper {
 
 		$parser = new Parser();
 		$parser->mOptions = new ParserOptions();
-		$parser->setTitle($wgTitle);
 		$parser->clearState();
 
 		wfProfileOut(__METHOD__.'::parserInit');

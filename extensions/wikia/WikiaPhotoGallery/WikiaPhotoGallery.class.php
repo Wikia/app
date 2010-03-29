@@ -112,7 +112,6 @@ class WikiaPhotoGallery extends ImageGallery {
 		if (count($lines)) {
 			$parser = new Parser();
 			$parser->mOptions = new ParserOptions();
-			$parser->setTitle($wgTitle);
 			$parser->clearState();
 		}
 		foreach ($lines as $line) {
