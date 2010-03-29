@@ -133,9 +133,10 @@ class ArticleCommentInit {
 	}
 
 	static public function ArticleCommentHideTab(&$skin, &$content_actions) {
+		global $wgArticleCommentsHideDiscussionTab;
 		wfProfileIn( __METHOD__ );
 
-		if (self::ArticleCommentCheck()) {
+		if (!empty($wgArticleCommentsHideDiscussionTab) && self::ArticleCommentCheck()) {
 			unset($content_actions['talk']);
 		}
 
