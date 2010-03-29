@@ -213,7 +213,6 @@ class WikiaPhotoGalleryHelper {
 			$imageTitle = Title::newFromText($image['name'], NS_FILE);
 			$image['thumbnail'] = self::renderThumbnail($imageTitle, $thumbSize, $thumbSize);
 
-			$parsedCaption = $parser->recursiveTagParse($image['caption']);
 			//need to use parse() - see RT#44270
 			$image['caption'] = $parser->parse($image['caption'], $wgTitle, $parser->mOptions)->getText();
 		}
