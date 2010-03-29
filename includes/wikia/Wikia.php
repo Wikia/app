@@ -287,7 +287,7 @@ $wgHooks['SpecialRecentChangesQuery'][] = "Wikia::makeRecentChangesQuery";
 $wgHooks['SpecialPage_initList'][] = "Wikia::disableSpecialPage";
 $wgHooks['UserRights'][] = "Wikia::notifyUserOnRightsChange";
 $wgHooks['SetupAfterCache'][] = "Wikia::setupAfterCache";
-
+$wgHooks['RawPageViewBeforeOutput'][] = 'Wikia::rawPageViewBeforeOutput';
 /**
  * This class have only static methods so they can be used anywhere
  *
@@ -312,6 +312,15 @@ class Wikia {
 	public static function unsetVar($key) {
 		unset(Wikia::$vars[$key]);
 	}
+	
+
+	public static function rawPageViewBeforeOutput(&$self, &$text) {
+		if ( $self->ctype == "text/css" ) {
+			$text = strip_tags($text);
+		}
+		return true;
+	}
+	
 
 	/**
 	 * @author inez@wikia.com
