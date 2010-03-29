@@ -662,12 +662,14 @@ var WikiaPhotoGallery = {
 
 		$('#WikiaPhotoGalleryEditorCaption').unbind('.editor').
 			bind('focus.editor', function(ev) {
+				clearTimeout(toolbarHideTimeout);
+
 				captionToolbar.show();
 			}).
 			bind('blur.editor', function(ev) {
 				toolbarHideTimeout = setTimeout(function() {
 					captionToolbar.hide();
-				}, 100);
+				}, 250);
 			});
 
 		var messages = this.editor.msg;
