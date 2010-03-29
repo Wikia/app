@@ -34,6 +34,8 @@ class RawPage {
 		}
 
 		$ctype = $this->mRequest->getVal( 'ctype' );
+		$this->ctype = strtolower($ctype);
+		
 		$smaxage = $this->mRequest->getIntOrNull( 'smaxage' );
 		$maxage = $this->mRequest->getInt( 'maxage', $wgSquidMaxage );
 
