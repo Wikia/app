@@ -1222,5 +1222,5 @@ li:hover .hideUntilHover{
 }
 
 .sprite, .sprite-small {
-	background-image:url('../monaco/images/monaco-sprite.png');
+	background-image:url('../../monaco/images/monaco-sprite.png');
 }
