@@ -4,9 +4,10 @@ var WikiaPhotoGalleryView = {
 		$().log(msg, 'ImageGallery');
 	},
 
+	// check are we on view page (ignore diffs between revisions, edit page previews, special pages)
 	isViewPage: function() {
 		var urlVars = $.getUrlVars();
-		return (window.wgAction == 'view') && (typeof urlVars.oldid == 'undefined');
+		return (window.wgAction == 'view') && (typeof urlVars.oldid == 'undefined') && (window.wgNamespaceNumber != -1);
 	},
 
 	init: function() {
