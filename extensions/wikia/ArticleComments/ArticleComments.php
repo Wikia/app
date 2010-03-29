@@ -80,6 +80,11 @@ class ArticleCommentInit {
 			if (Title::newMainPage()->getText() == $wgTitle->getText()) {
 				self::$enable = false;
 			}
+
+			//disable on redirect pages (RT#44315)
+			if ($wgTitle->isRedirect()) {
+				self::$enable = false;
+			}
 		}
 		wfProfileOut( __METHOD__ );
 		return self::$enable;
