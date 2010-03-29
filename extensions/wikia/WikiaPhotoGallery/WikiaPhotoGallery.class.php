@@ -104,9 +104,17 @@ class WikiaPhotoGallery extends ImageGallery {
 	 * Parse content of <gallery> tag (add images with captions and links provided)
 	 */
 	public function parse() {
+		global $wgTitle;
 		wfProfileIn(__METHOD__);
 
 		$lines = StringUtils::explode("\n", $this->mText);
+
+		if (count($lines)) {
+			$parser = new Parser();
+			$parser->mOptions = new ParserOptions();
+			$parser->setTitle($wgTitle);
+			$parser->clearState();
+		}
 		foreach ($lines as $line) {
 			if ($line == '') {
 				continue;
@@ -151,7 +159,8 @@ class WikiaPhotoGallery extends ImageGallery {
 				'link' => $link,
 			);
 
-			$this->add($nt, $this->mParser->recursiveTagParse($caption), $link);
+			$caption = $parser->parse($caption, $wgTitle, $parser->mOptions)->getText();
+			$this->add($nt, $caption, $link);
 
 			// Only add real images (bug #5586)
 			if ($nt->getNamespace() == NS_FILE) {
