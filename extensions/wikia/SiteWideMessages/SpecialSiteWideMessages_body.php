@@ -860,7 +860,9 @@ class SiteWideMessages extends SpecialPage {
 			$wgMemc->set($key, 'deleted', 100);
 
 			//omit browser cache by increasing pageTouch
-			$wgTitle->invalidateCache();
+			if ( is_object( $wgTitle ) ) {
+				$wgTitle->invalidateCache();
+			}
 
 			$DB->commit();
 
