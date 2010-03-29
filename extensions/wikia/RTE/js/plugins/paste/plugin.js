@@ -79,10 +79,10 @@ CKEDITOR.plugins.add('rte-paste',
 		// double single line breaks (<br />) - RT #38978
 		if (typeof diff.pasted == 'string') {
 			if ((/<br>/).test(diff.pasted)) {
-				RTE.log('paste: detected <br> in pasted content');
+				RTE.log('paste: detected line breaks in pasted content');
 
-				// let's replace <br>
-				var html = diff['new'].replace(/([^>])<br>/g, '$1<br /><br />');
+				// let's replace single linebreaks with HTML <br />
+				var html = diff['new'].replace(/([^>])<br>([^<])/g, '$1<br _rte_washtml="true" />$2');
 				editor.setData(html);
 			}
 		}
