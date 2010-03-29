@@ -658,10 +658,10 @@ class Wikia {
 	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
 	 *
 	 * @param String $method     -- use __METHOD__
-	 * @param String $sub        -- if more in one method default false
-	 * @param String $message    -- additional message default false
-	 * @param Boolean $always    -- skip checking of $wgErrorLog and write log (or not)
-	 * @param Boolean $timestamp -- write timestamp before line default false
+	 * @param String $sub        -- if more in one method; default false
+	 * @param String $message    -- additional message; default false
+	 * @param Boolean $always    -- skip checking of $wgErrorLog and write log (or not); default false
+	 * @param Boolean $timestamp -- write timestamp before line; default false
 	 *
 	 */
 	static public function log( $method, $sub = false, $message = '', $always = false, $timestamp = false ) {
