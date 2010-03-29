@@ -10,6 +10,9 @@ class RTEReverseParser {
 	private $listBullets;
 	private $listIndent;
 
+	// node ID counter
+	private $nodeId = 0;
+
 	function __construct() {
 		$this->dom = new DOMdocument();
 
@@ -24,6 +27,8 @@ class RTEReverseParser {
 		wfProfileIn(__METHOD__);
 
 		$out = '';
+
+		$this->nodeId = 0;
 
 		if(is_string($html) && $html != '') {
 			// apply pre-parse HTML fixes
@@ -150,8 +155,11 @@ class RTEReverseParser {
 	 * Recursively parses given DOM node
 	 */
 	private function parseNode($node, $level = 0) {
-		wfProfileIn(__METHOD__);
+		$nodeId = $this->nodeId++;
+
+		wfProfileIn(__METHOD__ );
 		wfProfileIn(__METHOD__ . "::{$node->nodeName}");
+		//wfProfileIn(__METHOD__ . "::{$node->nodeName}::{$nodeId}");
 
 		RTE::log('node ' . str_repeat('.', $level) . $node->nodeName);
 
@@ -197,6 +205,7 @@ class RTEReverseParser {
 			}
 		}
 
+		//wfProfileOut(__METHOD__ . "::{$node->nodeName}::{$nodeId}");
 		wfProfileOut(__METHOD__ . "::{$node->nodeName}");
 		wfProfileOut(__METHOD__);
 
@@ -727,22 +736,8 @@ class RTEReverseParser {
 					$out .= ':';
 				}
 				// and add : before [[Category:Foo]] links (RT #41323)
-				else if (strpos($data['link'], ':') !== false) {
-					RTE::log(__METHOD__, "'namespaces' link - {$data['link']}");
-
-					wfProfileIn(__METHOD__ . '::namespacedLink');
-
-					// list of namespaces for which : should be prepended
-					$namespaces = array(NS_CATEGORY, NS_FILE);
-					$title = Title::newFromText($data['link']);
-
-					if (!empty($title) && in_array($title->getNamespace(), $namespaces)) {
-						$out .= ':';
-					}
-
-					unset($title);
-
-					wfProfileOut(__METHOD__ . '::namespacedLink');
+				else if (self::isNamespacedLink($node, $data)) {
+					$out .= ':';
 				}
 
 				// [[<current_page_name>/foo|/foo]] -> [[/foo]]
@@ -1741,5 +1736,38 @@ class RTEReverseParser {
 		RTE::log(__METHOD__, $count);
 
 		return "<!-- RTE_EMPTY_LINES_BEFORE_{$count} -->";
+	}
+
+	/**
+	 * Check given link whether it is in Category/File namespace (refs RT #41323)
+	 */
+	private static function isNamespacedLink($node, $data) {
+		wfProfileIn(__METHOD__);
+
+		$ret = false;
+
+		if (strpos($data['link'], ':') !== false) {
+			// get localised names of namespaces and cache them
+			global $wgContLang;
+			static $namespaces = false;
+			if ($namespaces === false) {
+				$namespaces = array(
+					$wgContLang->getNsText(NS_CATEGORY),
+					$wgContLang->getNsText(NS_FILE),
+				);
+			}
+
+			foreach($namespaces as $NSprefix) {
+				if ( substr($data['link'], 0, strlen($NSprefix) + 1) == ($NSprefix . ':') ) {
+					RTE::log(__METHOD__, $data['link']);
+
+					$ret = true;
+					break;
+				}
+			}
+		}
+
+		wfProfileOut(__METHOD__);
+		return $ret;
 	}
 }
