@@ -3,6 +3,8 @@
  */
 
 /* WikiaImageGallery: CSS for modified <gallery> tag */
+.important-test {
+}
 .wikia-gallery {
 	list-style: none;
 	margin: 16px 0;
