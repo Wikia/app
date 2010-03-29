@@ -41,8 +41,10 @@ $hostname = trim(`hostname`);
 
 $params = $_GET;
 if (empty($params)){
+	echo "<!--\n";
 	echo "A search query must be supplied. Example:\n";
 	echo "http://{$_SERVER['HTTP_HOST']}/solr2rss.php?q=hub:Wikianswers&sort=created+desc&rows=15";
+	echo "-->\n";
 	exit;
 }
 
@@ -64,17 +66,16 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 if (preg_match('/dev/', $hostname)){
 	$host = "10.8.2.216:8983";
 } else {
-	// Live site usese local varnish proxy
+	// Live site use local varnish proxy
 	curl_setopt($ch, CURLOPT_PROXY, '127.0.0.1:6081');
-	$host = "search:6081";
+	$host = "search";
 } 
-$url = "http://$host/solr/select?" . http_build_query($params);
-curl_setopt($ch, CURLOPT_URL, $url);
-
 
 $result = curl_exec($ch);
 if (curl_error($ch) || empty($result)){
-	echo "Error fetching $url, " . curl_error($ch); 
+	echo "<!--\n";
+	echo "Error fetching $url: " . curl_error($ch); 
+	echo "-->\n";
 	exit;
 }
 
