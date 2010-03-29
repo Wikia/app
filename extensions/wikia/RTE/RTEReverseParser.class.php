@@ -32,13 +32,15 @@ class RTEReverseParser {
 
 		if(is_string($html) && $html != '') {
 			// apply pre-parse HTML fixes
-			$html = strtr($html, array(
-				// fix IE bug with &nbsp; being added add the end of HTML
-				'<p><br _rte_bogus="true" />&nbsp;</p>' => '',
+			wfProfileIn(__METHOD__.'::preFixes');
 
-				// fix &nbsp; entity b0rken by CK
-				"\xC2\xA0" => '&nbsp;',
-			));
+			// fix IE bug with &nbsp; being added add the end of HTML
+			$html = str_replace('<p><br _rte_bogus="true" />&nbsp;</p>', '', $html);
+
+			// fix &nbsp; entity b0rken by CK
+			$html = str_replace("\xC2\xA0", '&nbsp;', $html);
+
+			wfProfileOut(__METHOD__.'::preFixes');
 
 			// try to parse fixed HTML as XML
 			$bodyNode = $this->parseToDOM($html);
@@ -57,6 +59,7 @@ class RTEReverseParser {
 				$out = $this->parseNode($bodyNode);
 
 				// apply post-parse modifications
+				wfProfileIn(__METHOD__.'::postFixes');
 
 				// handle HTML entities (&lt; -> <)
 				$out = html_entity_decode($out);
@@ -79,6 +82,8 @@ class RTEReverseParser {
 				if (function_exists('mb_convert_encoding')) {
 					$out = mb_convert_encoding($out, 'UTF-8', 'UTF-8');
 				}
+
+				wfProfileOut(__METHOD__.'::postFixes');
 
 				RTE::log('wikitext', $out);
 			}
@@ -105,7 +110,7 @@ class RTEReverseParser {
 
 		if ($parseAsXML) {
 			// form proper XML string
-			$html = strtr($html, array('&' => '&amp;'));
+			$html = str_replace('&', '&amp;', $html);
 
 			$xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><body>{$html}</body>";
 
