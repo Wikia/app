@@ -88,7 +88,7 @@ var ImageLightbox = {
 
 		// render caption bar
 		if (typeof caption != 'undefined') {
-			caption = '<p id="lightbox-caption-content">' + caption + '</p>';
+			caption = '<div id="lightbox-caption-content">' + caption + '</div>';
 		}
 		else {
 			caption = '';
