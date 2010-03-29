@@ -382,14 +382,13 @@ function get_content($host)
       return false;
   }
 
-  function getcharset($web)
-  {
-    if(preg_match("|<META[^>]*http-equiv=['\"]?Content-Type['\"]?[^>]*content=[\"']([^\"']*)[\"'][^>]*>|", $web, $desc) ||
-       preg_match("|<META[^>]*content=[\"']([^\"']*)[\"'][^>]*http-equiv=[\"']?Content-Type[\"']?[^>]*>|", $web, $desc))
+  function getcharset($web) {
+    if(preg_match("|<META[^>]*http-equiv=['\"]?Content-Type['\"]?[^>]*content=[\"']([^\"']*)[\"'][^>]*>|i", $web, $desc) ||
+       preg_match("|<META[^>]*content=[\"']([^\"']*)[\"'][^>]*http-equiv=[\"']?Content-Type[\"']?[^>]*>|i", $web, $desc))
     {
       // echo "ctype ===${desc[1]}===\n";
       if(eregi("charset=([a-zA-Z0-9-]+)", $desc[1], $cset))
-        return trimnl($cset[1]);
+        return trimnl(strtoupper($cset[1]));
     }
     else
       return "iso-8859-1";
