@@ -4,15 +4,16 @@ var WikiaPhotoGalleryView = {
 		$().log(msg, 'ImageGallery');
 	},
 
-	isEditPage: function() {
-		return $('#wikiPreview').exists();
+	isViewPage: function() {
+		var urlVars = $.getUrlVars();
+		return (window.wgAction == 'view') && (typeof urlVars.oldid == 'undefined');
 	},
 
 	init: function() {
 		var self = this;
 
-		// don't run on edit page (leave galleries shown in preview)
-		if (this.isEditPage()) {
+		// don't run on edit page and view with oldid param in URL (leave galleries shown in preview)
+		if (!this.isViewPage()) {
 			return;
 		}
 
