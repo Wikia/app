@@ -85,6 +85,7 @@ class AnswersTemplate extends MonacoTemplate {
 	        <link rel="stylesheet" type="text/css" href="<?=$wgStylePath?>/answers/css/monobook_modified.css?<?=$wgStyleVersion?>" />
 	        <link rel="stylesheet" type="text/css" href="<?=$wgStylePath?>/answers/css/reset_modified.css?<?=$wgStyleVersion?>" />
 	        <link rel="stylesheet" type="text/css" href="<?=$wgStylePath?>/answers/css/modal.css?<?=$wgStyleVersion?>" />
+	        <link rel="stylesheet" type="text/css" href="<?=$wgStylePath?>/common/sprite.css?<?=$wgStyleVersion?>" />
 		<!-- Combo-handled YUI CSS files: -->
 		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?2.7.0/build/autocomplete/assets/skins/sam/autocomplete.css&2.7.0/build/container/assets/skins/sam/container.css"/>
 		<link rel="stylesheet" type="text/css" href="<?=$wgStylePath?>/common/yui_2.5.2/container/assets/container.css"/>
