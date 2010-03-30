@@ -15,6 +15,15 @@ div#sidebar { display: none !important; }
 .TablePager th { font-size:91%; }
 .TablePager td { padding:1px; }
 .TablePager th a {font-weight:normal;}
+.red_button {
+	background-color: #900;
+	background-image: -moz-linear-gradient(top, #c00 20%, #670000 70%);
+	background-image: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#c00), to(#670000));
+	border-color: #ff0000;
+	color: #FFF;
+	-moz-box-shadow: 0 0 0 1px #800000;
+	-webkit-box-shadow: 0 1px 0 #800000, 0 -1px 0 #800000, 1px 0 0 #800000, -1px 0 0 #800000;
+}
 </style>
 <p class='error'><?=$error?></p>
 <div>
@@ -334,7 +343,7 @@ function wkAWCMetricsDetails(limit, offset, ord, desc)
 				div_details.innerHTML = foundText.replace("CNT", resData['nbr_records']);
 				//
 				var buttons = "<div class=\"awc-buttons\">";
-				buttons += "<input type=\"submit\" value=\"<?=wfMsg('awc-metrics-close-listed')?>\" name=\"submit0\" id=\"submit0\" style=\"color:#FF0000\" onclick=\"__closeAllListed(); return false;\" />";
+				buttons += "<input type=\"submit\" value=\"<?=wfMsg('awc-metrics-close-listed')?>\" name=\"submit0\" id=\"submit0\" class=\"red_button\" onclick=\"__closeAllListed(); return false;\" />";
 				buttons += "<input type=\"submit\" value=\"<?=wfMsg('awc-metrics-close-checked')?>\" name=\"submit1\"/>";
 				buttons += "</div>";
 				
