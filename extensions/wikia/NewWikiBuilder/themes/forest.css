@@ -1,0 +1,38 @@
+body {
+	background: #000 repeat-x;
+	background-image: url(/skins/monaco/forest/images/background.png); /* $wgCdnStylePath */
+	color: #000;
+}
+.accent {
+	background-color: #DBE5DA;
+	border-color: #999;
+	color: #000;
+}
+#header {
+	background: transparent;
+	border-bottom: 0;
+	margin-bottom: 1px;
+}
+#progress li {
+	color: #FFF;
+}
+#progress li.selected {
+	background: #DBE5DA;
+	color: #000;
+}
+h1.headline {
+	background: #646651;
+	background-image: -moz-linear-gradient(top, #B6D0B5, #646651);
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#B6D0B5), to(#646651));
+	color: #FFF;
+}
+.wrapper {
+	background-color: #EEE;
+	border-color: #AAA;
+}
+.nav {
+	color: #CCC;
+}
+.nav a {
+	color: #FFF;
+}

@@ -1,0 +1,37 @@
+body {
+	background: #252525 repeat;
+	background-image: url(/skins/monaco/carbon/images/background.gif); /* $wgCdnStylePath */
+	color: #FFF;
+}
+.accent {
+	background-color: #003555;
+	border-color: #004777;
+	color: #FFF;
+}
+#header {
+	background: transparent;
+	border-bottom: 0;
+	margin-bottom: 1px;
+}
+#progress li {
+	color: #CCC;
+}
+#progress li.selected {
+	background: #003555;
+	color: #FFF;
+}
+h1.headline {
+	background: #252525;
+	background-image: url(/skins/monaco/carbon/images/background.gif); /* $wgCdnStylePath */
+	color: #FFF;
+}
+.wrapper {
+	background-color: #333;
+	border-color: #666;
+}
+.nav {
+	color: #CCC;
+}
+.nav a {
+	color: #FFF;
+}

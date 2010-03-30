@@ -9,7 +9,7 @@ body {
 }
 #header {
 	background: #FFF;
-	border-color: #AAA;
+	border-bottom: 1px solid #AAA;
 }
 #progress li {
 	color: #AAA;

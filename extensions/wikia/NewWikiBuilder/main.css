@@ -47,8 +47,6 @@ ul, li {
 }
 
 #header {
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
 	height: 120px;
 	left: 0;
 	padding: 15px 0;
