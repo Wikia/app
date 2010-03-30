@@ -139,9 +139,6 @@ class AnswersTemplate extends MonacoTemplate {
 		<!--[if IE 6]>
 	        <link rel="stylesheet" type="text/css" href="<?=$wgStylePath?>/answers/css/ie6.css?<?=$wgStyleVersion?>" />
 		<![endif]-->
-<?php	if($this->data['jsvarurl']) { ?>
-		<script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('jsvarurl') ?>"><!-- site js --></script>
-<?php	} ?>
 <?php	if($this->data['pagecss']) { ?>
 		<style type="text/css"><?php $this->html('pagecss') ?></style>
 <?php	}
