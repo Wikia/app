@@ -2555,6 +2555,7 @@ class Title {
 				foreach( Skin::getSkinNames() as $skinkey => $skinname ) {
 					if( $this->getText() == ucfirst($skinkey).'.css' ) {
 						$urls[] = str_replace('text%2Fcss', 'text/css', $this->getInternalURL( $query )); // For Artur
+						$urls[] = $this->getInternalURL( $query ); // For Artur
 						break;
 					} elseif ( $wgUseSiteJs && $this->getText() == 'Common.js' ) {
 						$urls[] = Skin::makeUrl('-', "action=raw&gen=js&useskin=" .urlencode( $skinkey ) );
