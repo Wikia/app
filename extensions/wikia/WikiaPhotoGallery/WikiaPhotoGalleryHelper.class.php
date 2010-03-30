@@ -191,19 +191,13 @@ class WikiaPhotoGalleryHelper {
 	 * Render gallery preview
 	 */
 	static public function renderGalleryPreview($gallery) {
-		global $wgTitle;
+		global $wgTitle, $wgParser;
 		wfProfileIn(__METHOD__);
 
 		//wfDebug(__METHOD__ . "\n" . print_r($gallery, true));
 
-		// initialize parser
-		wfProfileIn(__METHOD__.'::parserInit');
-
-		$parser = new Parser();
-		$parser->mOptions = new ParserOptions();
-		$parser->clearState();
-
-		wfProfileOut(__METHOD__.'::parserInit');
+		// use global instance of parser (RT #44689 / RT #44712)
+		$parserOptions = new ParserOptions();
 
 		// render thumbnail and parse caption for each image (default "box" is 120x120)
 		$thumbSize = !empty($gallery['params']['widths']) ? $gallery['params']['widths'] : 120;
@@ -213,7 +207,7 @@ class WikiaPhotoGalleryHelper {
 			$image['thumbnail'] = self::renderThumbnail($imageTitle, $thumbSize, $thumbSize);
 
 			//need to use parse() - see RT#44270
-			$image['caption'] = $parser->parse($image['caption'], $wgTitle, $parser->mOptions)->getText();
+			$image['caption'] = $wgParser->parse($image['caption'], $wgTitle, $parserOptions)->getText();
 		}
 
 		//wfDebug(__METHOD__.'::after' . "\n" . print_r($gallery, true));

@@ -92,10 +92,6 @@ class WikiaPhotoGallery extends ImageGallery {
 	 * @param $link  String: value of link= parameter
 	 */
 	function add($title, $html='', $link='') {
-		if ($title instanceof File) {
-			// Old calling convention
-			$title = $title->getTitle();
-		}
 		$this->mImages[] = array($title, $html, $link);
 		wfDebug( __METHOD__ . ' - ' . $title->getText() . "\n" );
 	}
@@ -109,11 +105,6 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		$lines = StringUtils::explode("\n", $this->mText);
 
-		if (count($lines)) {
-			$parser = new Parser();
-			$parser->mOptions = new ParserOptions();
-			$parser->clearState();
-		}
 		foreach ($lines as $line) {
 			if ($line == '') {
 				continue;
@@ -158,7 +149,9 @@ class WikiaPhotoGallery extends ImageGallery {
 				'link' => $link,
 			);
 
-			$caption = $parser->parse($caption, $wgTitle, $parser->mOptions)->getText();
+			// use global instance of parser (RT #44689 / RT #44712)
+			$caption = $this->mParser->recursiveTagParse($caption);
+
 			$this->add($nt, $caption, $link);
 
 			// Only add real images (bug #5586)
@@ -288,11 +281,6 @@ class WikiaPhotoGallery extends ImageGallery {
 					'title' => $nt->getText(),
 				);
 
-				// "caption" attribute is used by ImageLightbox extension
-				if ($text != '') {
-					$linkParams['caption'] = $text;
-				}
-
 				// detect internal / external links (|links= param)
 				if ($link != '') {
 					$chars = Parser::EXT_LINK_URL_CLASS;
@@ -376,7 +364,11 @@ class WikiaPhotoGallery extends ImageGallery {
 					'style' => 'width: '.($this->mWidths+35).'px'
 				))
 				. $thumbhtml
-				. $textlink . $text . $nb
+				. $textlink
+				. '<div class="lightbox-caption">'
+				. $text
+				. '</div>'
+				. $nb
 				. '</span>';
 
 			// handle "perrow" attribute

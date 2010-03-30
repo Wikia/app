@@ -65,7 +65,9 @@ var ImageLightbox = {
 			// RT #44281
 			imageName = decodeURIComponent(imageName);
 
-			var caption = target.attr('caption');
+			// find caption node and use it in lightbox popup
+			var caption = target.closest('.thumb').next('.lightbox-caption').html();
+
 			this.show(imageName, caption);
 		}
 	},

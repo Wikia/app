@@ -279,6 +279,11 @@ img.WikiaPhotoGalleryProgress {
 	text-decoration: none !important;
 }
 
+/* hide error from Cite extension when <ref> is used in image caption */
+.WikiaPhotoGalleryPreviewItemCaption strong.error {
+	display: none;
+}
+
 .WikiaPhotoGalleryPreviewCaptionsCenter .WikiaPhotoGalleryPreviewItemCaption {
 	cursor: pointer;
 	text-align: center;
