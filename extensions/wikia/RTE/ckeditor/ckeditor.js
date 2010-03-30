@@ -5,7 +5,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 if(!window.CKEDITOR)
 {window.CKEDITOR=(function()
-{var CKEDITOR={timestamp:'',version:'20100330',revision:'r20614',_:{},status:'unloaded',basePath:(function()
+{var CKEDITOR={timestamp:'',version:'20100330',revision:'r20622',_:{},status:'unloaded',basePath:(function()
 {var path=window.CKEDITOR_BASEPATH||'';if(!path)
 {var scripts=document.getElementsByTagName('script');for(var i=0;i<scripts.length;i++)
 {var match=scripts[i].src.match(/(^|.*[\\\/])ckeditor(?:_basic)?(?:_source)?.js(?:\?.*)?$/i);if(match)
@@ -988,8 +988,6 @@ element.isEmpty=true;if(CKEDITOR.dtd.$removeEmpty[tagName])
 else if(tagName=='pre')
 inPre=true;else if(tagName=='br'&&inPre)
 {currentNode.add(new CKEDITOR.htmlParser.text('\n'));return;}
-if(tagName=='br')
-{pendingBRs.push(element);return;}
 var currentName=currentNode.name;var currentDtd=currentName&&(CKEDITOR.dtd[currentName]||(currentNode._.isBlockLike?CKEDITOR.dtd.div:CKEDITOR.dtd.span));if(currentDtd&&!element.isUnknown&&!currentNode.isUnknown&&!currentDtd[tagName])
 {var reApply=false,addPoint;if(tagName in listBlocks&&currentName in listBlocks)
 {var children=currentNode.children,lastChild=children[children.length-1];if(!(lastChild&&lastChild.name in listItems))
