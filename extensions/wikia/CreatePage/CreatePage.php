@@ -57,14 +57,14 @@ function wfCreatePageInit() {
 }
 
 function wfCreatePageSetupVars( $vars ) {
-	global $wgWikiaEnableNewCreatepageExt, $wgContentNamespaces, $wgContLang;
+	global $wgWikiaEnableNewCreatepageExt, $wgContentNamespaces, $wgContLang, $wgUser;
 
 	$contentNamespaces = array();
 	foreach($wgContentNamespaces as $contentNs) {
 		$contentNamespaces[] = $wgContLang->getNsText($contentNs);
 	}
 
-	$vars['WikiaEnableNewCreatepage'] = $wgWikiaEnableNewCreatepageExt;
+	$vars['WikiaEnableNewCreatepage'] = $wgUser->getOption( 'createpagepopupdisabled', false ) ? false : $wgWikiaEnableNewCreatepageExt;
 	$vars['ContentNamespacesText'] = $contentNamespaces;
 
 	return true;
@@ -82,9 +82,11 @@ function wfCreatePageLoadPreformattedContent( $editpage ) {
 function wfCreatePageToggleUserPreference($toggles, $default_array = false) {
 	if(is_array($default_array)) {
 		$default_array[] = 'createpagedefaultblank';
+		$default_array[] = 'createpagepopupdisabled';
 	}
 	else {
 		$toggles[] = 'createpagedefaultblank';
+		$toggles[] = 'createpagepopupdisabled';
 	}
 	return true;
 }
