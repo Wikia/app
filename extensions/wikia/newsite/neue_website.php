@@ -58,7 +58,7 @@ function neue_website( $nws ) {
 	 */
 
 	$dbw = wfGetDB( DB_MASTER );
-	if(!get_content($newhost)) {
+	if( !get_content( $newhost ) ) {
 		$output = wfMsg( 'newsite-error-nocontact', $newhost );
 		return $output;
 	}
@@ -624,9 +624,6 @@ function get_wikitext($dbw, $site, $domsite)
     if(stristr($htcontent, "<script"))
       $scripts = true;
 
-    // echo "$site fram=$framesets ifr=$iframes scr=$scripts\n";
-    $related = getrelated($domsite, $dbw);
-
 
     // OUTPUT
     $wtitle = webclean($title, $charset);
@@ -724,13 +721,8 @@ function get_wikitext($dbw, $site, $domsite)
       }
     }
 
-    if(count($related) > 0)
-    {
-      $output .= wfMsgForContent( 'newsite-output-related' ) . "\n<span class=\"small\">";
-      foreach($related as $rel)
-	$output .= wikilink($rel) . " ";
-      $output .= "</span>\n";
-    }
+    $output .= Xml::openElement( "nws:related" );
+	$output .= Xml::closeElement( "nws:related" );
 
     # add category
     if($erotik)

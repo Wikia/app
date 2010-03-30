@@ -12,8 +12,8 @@ $dir = dirname(__FILE__);
 /**
  * initialize parse hooks
  */
-// $wgHooks['ParserFirstCallInit'][] = 'efNeueWebsiteHooks';
-// $wgAutoloadClasses['NeueWebsiteHooks'] = $dir . '/NeueWebsite.hooks.php';
+$wgHooks['ParserFirstCallInit'][] = 'efNeueWebsiteHooks';
+$wgAutoloadClasses['NeueWebsiteHooks'] = $dir . '/NeueWebsite.hooks.php';
 
 $wgAutoloadClasses['NeueWebsite'] = $dir . '/NeueWebsite.body.php';
 $wgSpecialPages['NewWebsite'] = 'NeueWebsite';
