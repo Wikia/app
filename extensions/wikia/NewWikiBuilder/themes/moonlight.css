@@ -1,0 +1,38 @@
+body {
+	background: #161F30 repeat-x;
+	background-image: url(/skins/monaco/moonlight/images/stars.png); /* $wgCdnStylePath */
+	color: #000;
+}
+.accent {
+	background-color: #D6E0F5;
+	border-color: #036;
+	color: #333;
+}
+#header {
+	background: transparent;
+	border-bottom: 0;
+	margin-bottom: 1px;
+}
+#progress li {
+	color: #FFF;
+}
+#progress li.selected {
+	background: #D6E0F5;
+	color: #333;
+}
+h1.headline {
+	background: #6281AF;
+	background-image: -moz-linear-gradient(top, #6281AF, #152036);
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#6281AF), to(#152036));
+	color: #FFF;
+}
+.wrapper {
+	background-color: #E3E3EE;
+	border-color: #AAA;
+}
+.nav {
+	color: #CCC;
+}
+.nav a {
+	color: #FFF;
+}

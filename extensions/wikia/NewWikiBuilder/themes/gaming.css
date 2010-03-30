@@ -9,7 +9,7 @@ body {
 }
 #header {
 	background: transparent url(http://images.wikia.com/common/skins/monaco/gaming/images/background.jpg);
-	border-color: #71d1ef;
+	border-bottom: 1px solid #71d1ef;
 }
 #progress li {
 	color: #AAA;

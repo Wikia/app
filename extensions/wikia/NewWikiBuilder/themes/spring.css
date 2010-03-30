@@ -1,0 +1,38 @@
+body {
+	background: #8DC7A0 no-repeat;
+	background-image: url(/skins/monaco/spring/images/background.jpg); /* $wgCdnStylePath */
+	color: #000;
+}
+.accent {
+	background-color: #DAE6DE;
+	border-color: #74B58A;
+	color: #000;
+}
+#header {
+	background: transparent;
+	border-bottom: 0;
+	margin-bottom: 1px;
+}
+#progress li {
+	color: #555;
+}
+#progress li.selected {
+	background: #FBD398;
+	color: #555;
+}
+h1.headline {
+	background: #FBD398;
+	background-image: -moz-linear-gradient(top, #FFEACD, #FBD398);
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#FFEACD), to(#FBD398));
+	color: #555;
+}
+.wrapper {
+	background-color: #FDFDF0;
+	border-color: #AAA;
+}
+.nav {
+	color: #000;
+}
+.nav a {
+	color: #00F;
+}

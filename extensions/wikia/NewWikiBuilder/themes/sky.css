@@ -1,0 +1,38 @@
+body {
+	background: #FFF no-repeat;
+	background-image: url(/skins/monaco/sky/images/background.jpg); /* $wgCdnStylePath */
+	color: #000;
+}
+.accent {
+	background-color: #F0F7FD;
+	border-color: #036;
+	color: #000;
+}
+#header {
+	background: transparent;
+	border-bottom: 0;
+	margin-bottom: 1px;
+}
+#progress li {
+	color: #AAA;
+}
+#progress li.selected {
+	background: #9CF;
+	color: #036;
+}
+h1.headline {
+	background: #4598E6;
+	background-image: -moz-linear-gradient(top, #4598E6, #A2C8f9);
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#4598E6), to(#A2C8f9));
+	color: #FFF;
+}
+.wrapper {
+	background-color: #FFF;
+	border-color: #AAA;
+}
+.nav {
+	color: #000;
+}
+.nav a {
+	color: #00F;
+}
