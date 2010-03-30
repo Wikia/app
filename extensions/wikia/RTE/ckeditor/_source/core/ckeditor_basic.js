@@ -40,6 +40,7 @@ if ( CKEDITOR.status == 'unloaded' )
 			var script = document.createElement( 'script' );
 			script.type = 'text/javascript';
 			script.src = CKEDITOR.basePath + 'ckeditor.js';
+			script.src = CKEDITOR.basePath + 'ckeditor_source.js';		// %REMOVE_LINE%
 
 			document.getElementsByTagName( 'head' )[0].appendChild( script );
 		};

@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -59,17 +59,27 @@ CKEDITOR.config.smiley_images = [
  * must match its relative pair in the {@link CKEDITOR.config.smiley_images}
  * setting.
  * @type Array
- * @default (see example)
+ * @default  The textual descriptions of smiley.
  * @example
- * // This is actually the default value.
- * config.smiley_descriptions = [
- *     ':)', ':(', ';)', ':D', ':/', ':P',
- *     '', '', '', '', '', '',
- *     '', ';(', '', '', '', '',
- *     '', ':kiss', '' ];
+ * // Default settings.
+ * config.smiley_descriptions =
+ *     [
+ *         'smiley', 'sad', 'wink', 'laugh', 'frown', 'cheeky', 'blush', 'surprise',
+ *         'indecision', 'angry', 'angle', 'cool', 'devil', 'crying', 'enlightened', 'no',
+ *         'yes', 'heart', 'broken heart', 'kiss', 'mail'
+ *     ];
+ * @example
+ * // Use textual emoticons as description.
+ * config.smiley_descriptions =
+ *     [
+ *         ':)', ':(', ';)', ':D', ':/', ':P', ':*)', ':-o',
+ *         ':|', '>:(', 'o:)', '8-)', '>:-)', ';(', '', '', '',
+ *         '', '', ':-*', ''
+ *     ];
  */
-CKEDITOR.config.smiley_descriptions = [
-	':)', ':(', ';)', ':D', ':/', ':P',
-	'', '', '', '', '', '',
-	'', ';(', '', '', '', '',
-	'', ':kiss', '' ];
+CKEDITOR.config.smiley_descriptions =
+	[
+		'smiley', 'sad', 'wink', 'laugh', 'frown', 'cheeky', 'blush', 'surprise',
+		'indecision', 'angry', 'angle', 'cool', 'devil', 'crying', 'enlightened', 'no',
+		'yes', 'heart', 'broken heart', 'kiss', 'mail'
+	];

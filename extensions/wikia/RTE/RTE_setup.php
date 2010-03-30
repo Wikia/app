@@ -19,6 +19,7 @@ $wgAutoloadClasses['RTEMarker'] = "$dir/RTEMarker.class.php";
 $wgAutoloadClasses['RTEData'] = "$dir/RTEData.class.php";
 $wgAutoloadClasses['RTEMagicWord'] = "$dir/RTEMagicWord.class.php";
 $wgAutoloadClasses['RTELang'] = "$dir/RTELang.class.php";
+$wgAutoloadClasses['CKEditor'] = "$dir/ckeditor/ckeditor_php5.php";
 
 // hooks
 $wgHooks['EditPage::showEditForm:initial'][] = 'RTE::init';

@@ -218,7 +218,7 @@ body .cke_dialog
 }
 
 /* button */
-.cke_dialog .wikia-button 
+.cke_dialog .wikia-button
 {
 	cursor: pointer !important;
 	height:17px  !important;
@@ -227,6 +227,11 @@ body .cke_dialog
 	border:1px solid #BEDDBE  !important;
 	color:#FFFFFF  !important;
 	cursor:pointer  !important;
+}
+
+.cke_dialog .wikia-button .cke_dialog_ui_button {
+	color: inherit;
+	cursor: pointer;
 }
 
 .cke_dialog .secondary {

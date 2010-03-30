@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -194,7 +194,7 @@ CKEDITOR.skins = (function()
 			else
 			{
 				paths[ skinName ] = skinPath;
-				CKEDITOR.scriptLoader.load( skinPath + 'skin.js', function()
+				CKEDITOR.scriptLoader.load( CKEDITOR.getUrl( skinPath + 'skin.js' ), function()
 						{
 							 loadPart( editor, skinName, skinPart, callback );
 						});

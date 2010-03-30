@@ -249,6 +249,9 @@ class RTE {
 
 		wfProfileIn(__METHOD__);
 
+		// CKEditor core version
+		$vars['CKEditorVersion'] = CKEditor::version;
+
 		// CK instance id
 		$vars['RTEInstanceId'] = self::getInstanceId();
 

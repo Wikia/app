@@ -149,6 +149,7 @@ foreach($messages as $lang => $data) {
 
 	foreach($data as $key => $msg) {
 		$msg = str_replace("'", "\\'", $msg);
+		$msg = str_replace("\r\n", "\n", $msg);
 		$out .= "\t'{$key}' => '{$msg}',\n";
 	}
 
