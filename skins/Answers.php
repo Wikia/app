@@ -128,7 +128,6 @@ class AnswersTemplate extends MonacoTemplate {
 
 		<?php print Skin::makeGlobalVariablesScript( $this->data ); ?>
 
-		<script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('stylepath' ) ?>/common/wikibits.js?<?php echo $GLOBALS['wgStyleVersion'] ?>"><!-- wikibits js --></script>
 		<!-- Head Scripts -->
 <?php
 		$this->html('WikiaScriptLoader');
