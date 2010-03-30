@@ -51,7 +51,7 @@ $out->setSubtitle( wfMsgHtml( 'formerror' ) ); ?>
 <tr>
 <td align="right">&nbsp;</td>
 <td align="left">
-    <input tabindex="6" name="wpRegexBlockedSubmit" type="submit" value="<?=wfMsg('regexblock_submit_block')?>" style="color:#2F6FAB;" />
+    <input tabindex="6" name="wpRegexBlockedSubmit" type="submit" value="<?=wfMsg('regexblock_submit_block')?>" class="red_button" />
 </td>
 </tr>
 </table>
