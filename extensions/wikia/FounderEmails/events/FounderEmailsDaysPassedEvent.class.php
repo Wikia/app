@@ -52,6 +52,11 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 		$founderEmails = FounderEmails::getInstance();
 		$wikiFounder = $founderEmails->getWikiFounder();
 		$mainpageTitle = Title::newFromText( wfMsgForContent('Mainpage') );
+
+		// set FounderEmails notifications enabled by default for wiki founder
+		$wikiFounder->setOption('founderemailsenabled', true);
+		$wikiFounder->saveSettings();
+
 		foreach($wgFounderEmailsExtensionConfig['events']['daysPassed']['days'] as $daysToActivate) {
 			switch($daysToActivate) {
 				case 0:
@@ -81,10 +86,6 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 			if($debugMode) {
 				$eventData['activateTime'] = 0;
 			}
-
-			// set FounderEmails notifications enabled by default for wiki founder
-			$wikiFounder->setOption('founderemailsenabled', true);
-			$wikiFounder->saveSettings();
 
 			$founderEmails->registerEvent( new FounderEmailsDaysPassedEvent($eventData), false );
 		}
