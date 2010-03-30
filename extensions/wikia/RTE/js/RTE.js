@@ -16,7 +16,7 @@ window.RTE = {
 		'removePlugins': 'about,elementspath,filebrowser,flash,forms,horizontalrule,image,justify,link,maximize,newpage,pagebreak,save,scayt,smiley,wsc,toolbar',
 		'resize_enabled': false,
 		'skin': 'wikia',
-		'startupFocus': true,
+		'startupFocus': CKEDITOR.env.gecko ? false : true,
 		'theme': 'wikia',
 		'toolbar': 'Wikia',
 		'toolbarCanCollapse': false
@@ -216,6 +216,10 @@ window.RTE = {
 
 		// fire custom event for "track" plugin
 		RTE.instance.fire('RTEready');
+
+		if(!RTE.config.startupFocus) {
+			setTimeout(function() {RTE.instance.focus(); }, 100);
+		}
 	},
 
 	// extra setup of <body> wrapping editing area in wysiwyg mode
