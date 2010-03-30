@@ -54,6 +54,8 @@
 				}
 				$row = "th";
 				$column = "&nbsp;";
+			} else {
+				$out = $wgContLang->formatNum($out);
 			}
 		}
 		$cols[] = $column;
