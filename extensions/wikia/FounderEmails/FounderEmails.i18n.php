@@ -58,5 +58,14 @@ It looks like registerd user $USERNAME has edited your wiki! Why don\'t you drop
 -- The Wikia Team',
 	'founderemails-email-page-edited-reg-user-body-HTML' => 'Hey $FOUNDERNAME,<br /><br />
 It looks like registered user $USERNAME has edited your wiki! Why don\'t you drop by their <a href="$USERTALKPAGEURL">talkpage</a> to say hello?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
+	'founderemails-email-page-edited-anon-subject' => 'Someone changed your wiki!',
+	'founderemails-email-page-edited-anon-body' => 'Hey $FOUNDERNAME,
+
+It looks like someone has edited your wiki! Why don\'t you check it out $MYHOMEURL to see what changed?
+
+-- The Wikia Team',
+	'founderemails-email-page-edited-anon-body-HTML' => 'Hey $FOUNDERNAME,<br /><br />
+It looks like someone has edited your wiki! Why don\'t you <a href="$MYHOMEURL">check it out</a> to see what changed?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>'
 );

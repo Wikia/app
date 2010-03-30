@@ -22,6 +22,7 @@ FounderEmails.track = function( code ) {
 	codes.FE17 = '3days/forums';
 	codes.FE18 = '0days/gettingstarted';
 	codes.FE19 = '0days/forums';
+	codes.FE20 = 'editanon/myhome';
 
 	WET.byStr( '1_emails/founder/' + codes[code] );
 };
