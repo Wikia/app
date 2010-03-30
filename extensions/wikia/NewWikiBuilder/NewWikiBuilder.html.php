@@ -86,7 +86,7 @@ var wgAdminSkin = '<?php echo $wgAdminSkin?>';
 
 // TODO: Pull this list from wgSkinTheme? 
 // TODO: convert this to a loop in PHP?
-var themes = ['Sapphire','Jade','Sky','Spring','Beach','Forest','Moonlight','Carbon','Obsession'];
+var themes = ['Sapphire', 'Jade', 'Slate', 'Smoke', 'Beach', 'Brick', 'Gaming'];
 for (var i = 0; i < themes.length; i++){
 	// Copy the template, search and replace the values
 	var ltheme = themes[i].toLowerCase();
