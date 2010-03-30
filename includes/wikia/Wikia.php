@@ -79,6 +79,7 @@ class WikiaAssets {
 			$themename = $wgRequest->getVal('themename');
 			$ref = WikiaAssets::GetSiteCSSReferences($themename);
 			foreach($ref as $reference) {
+				$out .= '/* Call to: '.$reference['url'].' */'."\n\n";
 				$out .= '<!--# include virtual="'.$reference['url'].'" -->';
 			}
 		} else if($type == 'CoreJS') {
@@ -312,7 +313,7 @@ class Wikia {
 	public static function unsetVar($key) {
 		unset(Wikia::$vars[$key]);
 	}
-	
+
 
 	public static function rawPageViewBeforeOutput(&$self, &$text) {
 		if ( $self->ctype == "text/css" ) {
@@ -320,7 +321,7 @@ class Wikia {
 		}
 		return true;
 	}
-	
+
 
 	/**
 	 * @author inez@wikia.com
