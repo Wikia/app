@@ -56,6 +56,9 @@ class NeueWebsiteHooks {
 			}
 			$output .= Xml::closeElement( "span" );
 		}
+		else {
+			$output .= "<!-- 0 related -->";
+		}
 
 		wfProfileOut( __METHOD__ );
 
