@@ -32,12 +32,13 @@ You can go to <a href="$1">$2</a>, or rename your page',
 Please use a different title.',
 	'createpage-error-article-blocked' => 'Sorry, you are unable to create that article at this time.',
 	'tog-createpagedefaultblank' => 'Use blank page as default for creating a new page',
+	'tog-createpagepopupdisabled' => 'Disable Create Page pop-up',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
 Write the first paragraph of your article here.
 
 ==Section heading==
 
-Write the first section of your article here. 
+Write the first section of your article here.
 
 ==Section heading==
 
@@ -221,7 +222,7 @@ Hemen zure artikuluaren lehen parrafoa idatz ezazu.
 
 ==Atal goiburua==
 
-Hemen zure artikuluaren lehen atala idatz ezazu.  
+Hemen zure artikuluaren lehen atala idatz ezazu.
 
 ==Atal goiburua==
 
@@ -345,7 +346,7 @@ $messages['he'] = array(
 	'createpage_empty_title_error' => 'דרושה כותרת',
 	'createpage_empty_article_body_error' => 'דרוש טקסט במאמר',
 	'createpage_invalid_title_error' => 'כותרת לא תקינה',
-	'createpage_article_already_exists' => 'מאמר עם שם זה כבר קיים. 
+	'createpage_article_already_exists' => 'מאמר עם שם זה כבר קיים.
 אנא בחר שם אחר.',
 	'createpage_spam' => 'מצטערים, לא היה ניתן לשמור את העריכה שלך',
 	'createpage_cant_edit' => 'אין אפשרות לבצע עריכה',
@@ -360,7 +361,7 @@ $messages['he'] = array(
 אנא השתמש בכותרת שונה.',
 	'createpage-error-article-exists' => 'מאמר בשם זה כבר קיים.
 אתה יכול ללכת ל <a href="$1">$2</a>, או לשנות את שם המאמר',
-	'createpage-error-article-spam' => 'מצטערים, כותרת המאמר נדחתה על ידי המסנן שלנו. 
+	'createpage-error-article-spam' => 'מצטערים, כותרת המאמר נדחתה על ידי המסנן שלנו.
 אנא השתמש בכותרת שונה.',
 	'createpage-error-article-blocked' => 'מצטערים, אינך יכול ליצור את המאמר הזה כרגע.',
 	'tog-createpagedefaultblank' => 'השתמש בדף ריק ליצירת מאמרים כברירת מחדל',
@@ -419,7 +420,7 @@ Scribe hic le prime paragrapho de tu articulo.
 
 ==Titulo de section==
 
-Scribe hic le prime section de tu articulo.  
+Scribe hic le prime section de tu articulo.
 
 ==Titulo de section==
 
@@ -525,7 +526,7 @@ $messages['mk'] = array(
 
 ==Наслов на заглавие==
 
-Тука напишете го првото заглавие од статијата.  
+Тука напишете го првото заглавие од статијата.
 
 ==Наслов на заглавие==
 
