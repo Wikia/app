@@ -20,7 +20,8 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 				'$USERNAME' => $eventData['data']['editorName'],
 				'$USERPAGEURL' => $eventData['data']['editorPageUrl'],
 				'$USERTALKPAGEURL' => $eventData['data']['editorTalkPageUrl'],
-				'$UNSUBSCRIBEURL' => $eventData['data']['unsubscribeUrl']
+				'$UNSUBSCRIBEURL' => $eventData['data']['unsubscribeUrl'],
+				'$MYHOMEURL' => $eventData['data']['myHomeUrl']
 			);
 
 			$msgKeys = array();
@@ -29,10 +30,15 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 				$msgKeys['body'] = 'founderemails-email-page-edited-reg-user-first-edit-body';
 				$msgKeys['body-html'] = 'founderemails-email-page-edited-reg-user-first-edit-body-HTML';
 			}
-			else {
+			elseif( $eventData['data']['registeredUser'] ) {
 				$msgKeys['subject'] = 'founderemails-email-page-edited-reg-user-subject';
 				$msgKeys['body'] = 'founderemails-email-page-edited-reg-user-body';
 				$msgKeys['body-html'] = 'founderemails-email-page-edited-reg-user-body-HTML';
+			}
+			else {
+				$msgKeys['subject'] = 'founderemails-email-page-edited-anon-subject';
+				$msgKeys['body'] = 'founderemails-email-page-edited-anon-body';
+				$msgKeys['body-html'] = 'founderemails-email-page-edited-anon-body-HTML';
 			}
 
 			$langCode = $founderEmails->getWikiFounder()->getOption('language');
@@ -97,7 +103,8 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			'editorTalkPageUrl' => $editor->getTalkPage()->getFullUrl( 'ctc=' . $ctcUserpage ),
 			'registeredUser' => $isRegisteredUser,
 			'registeredUserFirstEdit' => $isRegisteredUserFirstEdit,
-			'unsubscribeUrl' => Title::newFromText('Preferences', NS_SPECIAL)->getFullUrl( 'ctc=' . $ctcUnsubscribe )
+			'unsubscribeUrl' => Title::newFromText('Preferences', NS_SPECIAL)->getFullUrl( 'ctc=' . $ctcUnsubscribe ),
+			'myHomeUrl' => Title::newFromText('MyHome', NS_SPECIAL)->getFullUrl( 'ctc=FE20' )
 		);
 
 		FounderEmails::getInstance()->registerEvent( new FounderEmailsEditEvent($eventData) );
