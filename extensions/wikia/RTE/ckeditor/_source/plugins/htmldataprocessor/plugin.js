@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -23,7 +23,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	{
 		var lastIndex = block.children.length,
 			last = block.children[ lastIndex - 1 ];
-		while(  last && last.type == CKEDITOR.NODE_TEXT && !CKEDITOR.tools.trim( last.value ) )
+		while (  last && last.type == CKEDITOR.NODE_TEXT && !CKEDITOR.tools.trim( last.value ) )
 			last = block.children[ --lastIndex ];
 		return last;
 	}
@@ -194,6 +194,11 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 					if ( !element.attributes.type )
 						element.attributes.type = 'text/css';
+				},
+
+				title : function( element )
+				{
+					element.children[ 0 ].value = element.attributes[ '_cke_title' ];
 				}
 			},
 

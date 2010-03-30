@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -616,6 +616,16 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				{
 					fn.apply( scope || this, arguments );
 				}) - 1;
+		},
+
+		/**
+		 * Removes the function reference created with {@see CKEDITOR.tools.addFunction}.
+		 * @param {Number} ref The function reference created with
+		 *		CKEDITOR.tools.addFunction.
+		 */
+		removeFunction : function( ref )
+		{
+			functions[ ref ] = null;
 		},
 
 		/**

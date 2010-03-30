@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -159,7 +159,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					// Should we make all first cells in a row TH?
 					if ( !this.hasColumnHeaders && ( headers == 'col' || headers == 'both' ) )
 					{
-						for( row = 0 ; row < table.$.rows.length ; row++ )
+						for ( row = 0 ; row < table.$.rows.length ; row++ )
 						{
 							newCell = new CKEDITOR.dom.element( table.$.rows[ row ].cells[ 0 ] );
 							newCell.renameNode( 'th' );
@@ -170,7 +170,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					// Should we make all first TH-cells in a row make TD? If 'yes' we do it the other way round :-)
 					if ( ( this.hasColumnHeaders ) && !( headers == 'col' || headers == 'both' ) )
 					{
-						for( i = 0 ; i < table.$.rows.length ; i++ )
+						for ( i = 0 ; i < table.$.rows.length ; i++ )
 						{
 							row = new CKEDITOR.dom.element( table.$.rows[i] );
 							if ( row.getParent().getName() == 'tbody' )
@@ -197,7 +197,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					else
 						table.removeStyle( 'width' );
 
-					if( !table.getAttribute( 'style' ) )
+					if ( !table.getAttribute( 'style' ) )
 						table.removeAttribute( 'style' );
 				}
 
@@ -355,7 +355,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 											label : editor.lang.table.align,
 											items :
 											[
-												[ editor.lang.table.alignNotSet , ''],
+												[ editor.lang.common.notSet , ''],
 												[ editor.lang.table.alignLeft , 'left'],
 												[ editor.lang.table.alignCenter , 'center'],
 												[ editor.lang.table.alignRight , 'right']
@@ -391,18 +391,33 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 													label : editor.lang.table.width,
 													'default' : 200,
 													validate : CKEDITOR.dialog.validate['number']( editor.lang.table.invalidWidth ),
+
+													// Extra labelling of width unit type.
+													onLoad : function()
+													{
+														var widthType = this.getDialog().getContentElement( 'info', 'cmbWidthType' ),
+															labelElement = widthType.getElement(),
+															inputElement = this.getInputElement(),
+															ariaLabelledByAttr = inputElement.getAttribute( 'aria-labelledby' );
+
+														inputElement.setAttribute( 'aria-labelledby', [ ariaLabelledByAttr, labelElement.$.id ].join( ' ' ) );
+													},
+
 													setup : function( selectedTable )
 													{
 														var widthMatch = widthPattern.exec( selectedTable.$.style.width );
 														if ( widthMatch )
 															this.setValue( widthMatch[1] );
+														else
+															this.setValue( '' );
 													},
 													commit : commitValue
 												},
 												{
 													id : 'cmbWidthType',
 													type : 'select',
-													label : '&nbsp;',
+													label : editor.lang.table.widthUnit,
+													labelStyle: 'visibility:hidden',
 													'default' : 'pixels',
 													items :
 													[
@@ -431,6 +446,18 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 													label : editor.lang.table.height,
 													'default' : '',
 													validate : CKEDITOR.dialog.validate['number']( editor.lang.table.invalidHeight ),
+
+													// Extra labelling of height unit type.
+													onLoad : function()
+													{
+														var heightType = this.getDialog().getContentElement( 'info', 'htmlHeightType' ),
+															labelElement = heightType.getElement(),
+															inputElement = this.getInputElement(),
+															ariaLabelledByAttr = inputElement.getAttribute( 'aria-labelledby' );
+
+														inputElement.setAttribute( 'aria-labelledby', [ ariaLabelledByAttr, labelElement.$.id ].join( ' ' ) );
+													},
+
 													setup : function( selectedTable )
 													{
 														var heightMatch = heightPattern.exec( selectedTable.$.style.height );
@@ -440,8 +467,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 													commit : commitValue
 												},
 												{
+													id : 'htmlHeightType',
 													type : 'html',
-													html : '<br />' + editor.lang.table.widthPx
+													html : '<div><br />' + editor.lang.table.widthPx + '</div>'
 												}
 											]
 										},

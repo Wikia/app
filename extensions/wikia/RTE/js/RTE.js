@@ -205,7 +205,7 @@ window.RTE = {
 		// calculate load time
 		RTE.loadTime = ( (new Date()).getTime() - window.wgRTEStart.getTime() ) / 1000;
 
-		RTE.log('CKeditor (' +
+		RTE.log('CKeditor v' + window.CKEditorVersion + ' (' +
 			(window.RTEDevMode ? 'in development mode' : CKEDITOR.revision + ' build ' + CKEDITOR.version) +
 			') is ready in "' + RTE.instance.mode + '" mode (loaded in ' + RTE.loadTime + ' s)');
 

@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -81,6 +81,7 @@ CKEDITOR.dialog.add( 'anchor', function( editor )
 						type : 'text',
 						id : 'txtName',
 						label : editor.lang.anchor.name,
+						required: true,
 						validate : function()
 						{
 							if ( !this.getValue() )

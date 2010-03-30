@@ -1,4 +1,4 @@
-/*
+﻿/*
 Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -64,4 +64,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 .cke_skin_kama .cke_browser_ie .cke_rtl .cke_path .cke_empty
 {
 	float: none;
+}
+
+.cke_skin_kama .cke_path .cke_label
+{
+	display: none;
 }

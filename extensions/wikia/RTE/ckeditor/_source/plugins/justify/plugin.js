@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -66,7 +66,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	justifyCommand.prototype = {
 		exec : function( editor )
 		{
-			var selection = editor.getSelection();
+			var selection = editor.getSelection(),
+				enterMode = editor.config.enterMode;
+
 			if ( !selection )
 				return;
 
@@ -80,6 +82,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			for ( var i = ranges.length - 1 ; i >= 0 ; i-- )
 			{
 				iterator = ranges[ i ].createIterator();
+				iterator.enlargeBr = enterMode != CKEDITOR.ENTER_BR;
+
 				while ( ( block = iterator.getNextParagraph() ) )
 				{
 					block.removeAttribute( 'align' );

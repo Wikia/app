@@ -19,7 +19,7 @@ CKEDITOR.command = function( editor, commandDefinition )
 		}
 		// Wikia - end
 
-		if( this.editorFocus )     // Give editor focus if necessary (#4355).
+		if ( this.editorFocus )     // Give editor focus if necessary (#4355).
 			editor.focus();
 
 		return ( commandDefinition.exec.call( this, editor, data ) !== false );
