@@ -40,18 +40,22 @@ function WikiaVideoFetchTemplateAndTitle( $text, $finalTitle ) {
 }
 
 function WikiaVideoWantedFilesGetSQL( $sql, $querypage, $name, $imagelinks, $page ) {
-       	$sql = "
-                        SELECT
-                                $name as type,
-                                " . NS_FILE . " as namespace,
-                                il_to as title,
-                                COUNT(*) as value
-                        FROM $imagelinks
-			LEFT JOIN $page ON il_to = page_title AND page_namespace = ". NS_FILE ."
-			WHERE page_title IS NULL AND LOCATE(':', il_to) != 1
-                        GROUP BY il_to
-                        ";
-        return true;
+	global $wgExcludedWantedFiles;
+	
+	$where = "";
+	if ( !empty($wgExcludedWantedFiles) && is_array($wgExcludedWantedFiles) ) {
+		$dbr = wfGetDB( DB_SLAVE );
+		$where = " and il_to not in (" . $dbr->makeList($wgExcludedWantedFiles) . ") ";
+	}
+	
+	$sql = "SELECT $name as type, " . NS_FILE . " as namespace,il_to as title, COUNT(*) as value ";
+	$sql .= "FROM $imagelinks ";
+	$sql .= "LEFT JOIN $page ON il_to = page_title AND page_namespace = ". NS_FILE ." ";
+	$sql .= "WHERE page_title IS NULL AND LOCATE(':', il_to) != 1 ";
+	$sql .= $where;
+	$sql .= "GROUP BY il_to ";
+	
+	return true;
 }
 
 function WikiaVideoSpecialUndeleteSwitchArchive( $archive, $title ) {
