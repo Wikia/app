@@ -115,11 +115,11 @@ class WikiaPhotoGalleryAjax {
 
 		if (!empty($results)) {
 			$html = WikiaPhotoGalleryHelper::renderImagesList('results', $results);
-			$msg = wfMsg('wikiaPhotoGallery-upload-filestitle-post', count($results));
+			$msg = wfMsgExt( 'wikiaPhotoGallery-upload-filestitle-post', array( 'parsemag' ), count($results) );
 		}
 		else {
 			$html = false;
-			$msg = wfMsg('wikiaPhotoGallery-upload-filestitle-post', 0);
+			$msg = wfMsgExt( 'wikiaPhotoGallery-upload-filestitle-post', array( 'parsemag' ), 0 );
 		}
 
 		wfProfileOut(__METHOD__);
