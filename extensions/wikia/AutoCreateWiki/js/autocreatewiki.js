@@ -150,6 +150,7 @@ $(function () {
 					YAHOO.util.Dom.setStyle("wiki-retype-password-error", 'display', 'none');
 					YD.get("wiki-retype-password-error-status").innerHTML = "";
 				}
+
 				var req = wgAjaxPath + "?action=ajax&rs=axACWRequestCheckAccount&name=" + encodeURIComponent(fid) + "&lang=" + encodeURIComponent(lang) + "&value=" + encodeURIComponent(name.value);
 				YC.asyncRequest( "GET", req + params, YAHOO.ACWikiRequest.NameCallback);
 			}
@@ -210,6 +211,8 @@ $(function () {
 		YE.addListener(["wiki-user-year","wiki-user-month","wiki-user-day"] , "change", YAHOO.ACWikiRequest.wikiBirthdayCheck );
 		YE.addListener("wiki-cancel", "click", YAHOO.ACWikiRequest.resetForm );
 		YE.addListener("wiki-submit", "click", YAHOO.ACWikiRequest.submitForm );
+		
+		YE.addListener(["wiki-username"], "change", YAHOO.ACWikiRequest.checkWikiName ); 
 	});
 });
 
