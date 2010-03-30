@@ -196,11 +196,16 @@ CKEDITOR.htmlParser.fragment = function()
 				return;
 			}
 
+			// Wikia - start
+			// this breaks test case 123\n<br />\n456 - add <br> tags immediately
+			/*
 			if ( tagName == 'br' )
 			{
 				pendingBRs.push( element );
 				return;
 			}
+			*/
+			// Wikia - end
 
 			var currentName = currentNode.name;
 
