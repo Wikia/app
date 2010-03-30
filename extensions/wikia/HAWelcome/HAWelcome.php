@@ -127,6 +127,10 @@ class HAWelcomeJob extends Job {
 
 				if( $talkPage ) {
 					$this->mSysop = $this->getLastSysop();
+					$gEG = $this->mSysop->getEffectiveGroups();
+					$isSysop = in_array('sysop', $gEG);
+					$isStaff = in_array('staff', $gEG);
+					unset($gEG);
 					$tmpTitle     = $wgTitle;
 					$sysopPage    = $this->mSysop->getUserPage()->getTalkPage();
 					$signature    = $this->expandSig();
@@ -138,7 +142,7 @@ class HAWelcomeJob extends Job {
 					if( ! $talkArticle->exists() ) {
 						if( $this->mAnon ) {
 							if( $this->isEnabled( "message-anon" ) ) {
-								if( in_array('staff', $this->mSysop->getEffectiveGroups()) ) {
+								if( $isStaff && !$isSysop ) {
 									$key = "welcome-message-anon-staff";
 								}
 								else {
@@ -180,7 +184,7 @@ class HAWelcomeJob extends Job {
 							}
 
 							if( $this->isEnabled( "message-user" ) ) {
-								if( in_array('staff', $this->mSysop->getEffectiveGroups()) ) {
+								if( $isStaff && !$isSysop ) {
 									$key = "welcome-message-user-staff";
 								}
 								else {
