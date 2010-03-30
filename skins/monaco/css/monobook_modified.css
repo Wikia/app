@@ -940,6 +940,10 @@ table.gallery caption {
 	font-weight: bold;
 }
 
+.wikiaPlaceholder .gallerybox a {
+	color: #FFFFFF;
+} 
+
 div.gallerybox {
 	margin: 2px;
 }
