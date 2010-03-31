@@ -74,7 +74,7 @@ function neue_website( $nws ) {
 	#   $wgUser = User::newFromName('Anonym');
 
 	$article = new Article( $title );
-	$article->doEdit( $wikitext, wfMsg( 'newsite-edit-comment' ) );
+	$article->doEdit( WSINFO_PLACEHOLDER . "\n" . $wikitext, wfMsg( 'newsite-edit-comment' ) );
 
 	$armor = substr(md5($newdom), 0,16) . 'WsWImG=' . $newdom . "=no=Ws3ik1Ju5ch=" . substr(md5($newdom), 16);
 	$crypt = strtr(trim(base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, 'WsImgS33CCrret', $armor, MCRYPT_MODE_ECB,
