@@ -3,7 +3,7 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'EditEnhancements',
 	'description' => 'Puts edit summary and save button above the fold',
 	'version' => '1.2',
-	'author' => array('[http://pl.wikia.com/wiki/User:Macbre Maciej Brencz]', 'Christian Williams', '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]')
+	'author' => array('Maciej Brencz', 'Christian Williams', '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]')
 );
 
 $wgExtensionFunctions[] = 'wfEditEnhancementsInit';
