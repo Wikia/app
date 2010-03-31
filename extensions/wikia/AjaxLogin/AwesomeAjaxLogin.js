@@ -196,7 +196,7 @@ var AjaxLogin = {
 		WET.byStr(AjaxLogin.WET_str + '/switchtocreateaccount');
 	},
 	showFromDOM: function() {
-		$('#AjaxLoginBox').showModal();
+		$('#AjaxLoginBoxWrapper').showModal();
 		$('#wpName1Ajax').focus();
 		return true
 	}
@@ -276,7 +276,7 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 				showComboFromDOM: function() {
 					if ($('#AjaxLoginButtons').length > 0)
 					{
-						$('#AjaxLoginBox').showModal();
+						$('#AjaxLoginBoxWrapper').showModal();
 						$('#wpName1Ajax').focus();
 						$('#AjaxLoginBoxWrapper').css({'top' : AjaxLogin.topPos});
 						return true;
