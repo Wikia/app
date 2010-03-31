@@ -6,7 +6,9 @@ class RTEAjax {
 	 * Perform wikitext parsing to HTML
 	 */
 	static public function wiki2html() {
+		wfProfileIn(__METHOD__);
 		global $wgRequest;
+
 		$wikitext = $wgRequest->getVal('wikitext', '');
 
 		RTE::log(__METHOD__, $wikitext);
@@ -27,6 +29,7 @@ class RTEAjax {
 			unset($ret['html']);
 		}
 
+		wfProfileOut(__METHOD__);
 		return $ret;
 	}
 
