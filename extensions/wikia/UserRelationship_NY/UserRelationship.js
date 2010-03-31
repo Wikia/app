@@ -1,16 +1,11 @@
 	function requestResponse(response,id){
-		var url = "index.php?action=ajax";
-		var pars = 'rs=wfRelationshipRequestResponse&rsargs[]=' + response + '&rsargs[]=' + id
-		YAHOO.widget.Effects.Hide('request_action_'+id);
-		var callback = {
-			success: function( oResponse ) {
-				document.getElementById('request_action_'+id).innerHTML = oResponse.responseText
-				YAHOO.widget.Effects.Appear('request_action_'+id,{duration:2.0} );
-			}
-		};
-		var request = YAHOO.util.Connect.asyncRequest('POST', url, callback, pars);
+		var url = "index.php?action=ajax&rs=wfRelationshipRequestResponse&rsargs[]=" + response + "&rsargs[]=" + id;
+		$( '#request_action_' + id ).hide();
 
+		$.ajax({ url: url, context: document.body, success: function( data ) {
+				$( '#request_action_' + id ).html( data );
+				$( '#request_action_' + id ).show( 2 );
+			}
+		});
 	}	
-	
-	
 	
