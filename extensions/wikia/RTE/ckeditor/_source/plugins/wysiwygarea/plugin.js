@@ -546,10 +546,6 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 								}
 							},
 							0 );
-
-							// Wikia - start
-							editor.fire('wysiwygModeReady');
-							// Wikia - end
 					};
 
 					editor.addMode( 'wysiwyg',
