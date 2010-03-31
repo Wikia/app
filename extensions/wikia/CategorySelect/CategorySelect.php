@@ -438,6 +438,8 @@ function CategorySelectGetCategoryLinksEnd(&$categoryLinks) {
 	if (($action == 'view' || $action == 'purge') && strpos($categoryLinks, '<div id="csAddCategorySwitch"') === false) {
 		global $wgBlankImgUrl;
 		$categoryLinks .= ' <div id="csAddCategorySwitch" class="noprint" style="background:#DDD;position:relative;float:left;border: 1px solid #BBB;-moz-border-radius:3px;-webkit-border-radius:3px;padding:0 5px;line-height: 16px;"><img src="'.$wgBlankImgUrl.'" class="sprite-small add" /><a href="#" onfocus="this.blur();" style="color:#000;font-size:0.85em;text-decoration:none;display:inline-block;" rel="nofollow">' . wfMsg('categoryselect-addcategory-button') . '</a></div>';
+
+		// TODO: REMOVE THE loadYUI wrapper around the .getScript call after YUI is removed.
 		$wgOut->addInlineScript(<<<JS
 /* CategorySelect */
 wgAfterContentAndJS.push(function() {
