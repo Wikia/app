@@ -51,23 +51,30 @@ $wgEnableMWSuggest = true;
 // Ajax dispatcher
 $wgAjaxExportList[] = 'RTEAjax';
 function RTEAjax() {
-        global $wgRequest;
-        $method = $wgRequest->getVal('method', false);
+	wfProfileIn(__METHOD__);
+	global $wgRequest;
 
-        if ($method && method_exists('RTEAjax', $method)) {
-                wfLoadExtensionMessages('RTE');
+	$ret = false;
 
-                $data = RTEAjax::$method();
+	$method = $wgRequest->getVal('method', false);
+
+	if ($method && method_exists('RTEAjax', $method)) {
+		wfLoadExtensionMessages('RTE');
+
+		$data = RTEAjax::$method();
 
 		if (is_array($data)) {
 			$json = Wikia::json_encode($data);
 
 			$response = new AjaxResponse($json);
 			$response->setContentType('application/json; charset=utf-8');
-			return $response;
+			$ret = $response;
 		}
 		else {
-			return $data;
+			$ret = $data;
 		}
-        }
+	}
+
+	wfProfileOut(__METHOD__);
+	return $ret;
 }
