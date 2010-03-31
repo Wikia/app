@@ -68,7 +68,7 @@ class ContactForm extends SpecialPage {
 
 		//build common top of both emails
 		$m_shared = '';
-		$m_shared .= ( !empty($this->mRealName) && strlen( trim($this->mRealName) )) ? $this->mRealName : $this->mName;
+		$m_shared .= $this->mName;
 		$m_shared .= " ({$this->mEmail})";
 		$m_shared .= " {$this->mWhichWiki}";
 		$m_shared .= ( !empty($this->mName) ) ? "/wiki/User:" . urlencode(str_replace(" ", "_", $this->mName)) : '';
