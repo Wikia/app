@@ -119,12 +119,29 @@ window.RTE = {
 		// load CSS files
 		RTE.loadCss();
 
+		//
 		// register event handlers
 		//
+
+		// editor is loaded
 		CKEDITOR.on('instanceReady', RTE.onEditorReady);
 
-		RTE.instance.on('beforeModeUnload', function() {
-			RTE.onBeforeModeSwitch(RTE.instance.mode);
+		// user wants to switch modes - send AJAX request
+		RTE.instance.on('modeSwitch', function() {
+			RTE.modeSwitch(RTE.instance.mode);
+		});
+
+		// mode is ready
+		RTE.instance.on('mode', function() {
+			RTE.loading(false);
+			RTE.log('mode "' + this.mode + '" is loaded');
+		});
+
+		// wysiwyg mode is ready - fire "wysiwygModeReady" custom event
+		RTE.instance.on('dataReady', function() {
+			if (this.mode == 'wysiwyg') {
+				this.fire('wysiwygModeReady');
+			}
 		});
 
 		RTE.instance.on('wysiwygModeReady', RTE.onWysiwygModeReady);
@@ -283,7 +300,7 @@ window.RTE = {
 	},
 
 	// handle mode switching (prepare data)
-	onBeforeModeSwitch: function(mode) {
+	modeSwitch: function(mode) {
 		RTE.log('switching from "' + mode +'" mode');
 
 		// get HTML / wikitext
@@ -296,8 +313,9 @@ window.RTE = {
 		switch (mode) {
 			case 'wysiwyg':
 				RTE.ajax('html2wiki', {html: content, title: window.wgPageName}, function(data) {
+					RTE.instance.setMode('source');
 					RTE.instance.setData(data.wikitext);
-					RTE.loading(false);
+
 					RTE.track('switchMode', 'wysiwyg2source');
 				});
 				break;
@@ -323,7 +341,7 @@ window.RTE = {
 						RTE.tools.alert(data.edgecase.info.title, data.edgecase.info.content);
 
 						// stay in source mode
-						RTE.instance.forceSetMode('source', content);
+						RTE.instance.getCommand('source').setState(CKEDITOR.TRISTATE_ON);
 						RTE.loading(false);
 
 						// tracking
@@ -331,12 +349,10 @@ window.RTE = {
 						return;
 					}
 
+					RTE.instance.setMode('wysiwyg');
 					RTE.instance.setData(data.html);
 
-					setTimeout(function() {
-						RTE.loading(false);
-						RTE.track('switchMode', 'source2wysiwyg');
-					}, 150);
+					RTE.track('switchMode', 'source2wysiwyg');
 				});
 				break;
 		}
@@ -479,17 +495,30 @@ CKEDITOR.getUrl = function( resource ) {
 	return resource;
 }
 
-// forced mode switch (don't send AJAX request, use provided html/wikitext)
-CKEDITOR.editor.prototype.forceSetMode = function(mode, data) {
-	// following code is based on "editingblock" plugin from CK core
-	var modeEditor = this._.modes && this._.modes[ mode || this.mode ];
-	var holderElement = this.getThemeSpace('contents');
+// override "Source" button to send AJAX request first, instead of mode switching
+CKEDITOR.plugins.sourcearea.commands.source.exec = function(editor) {
+	RTE.log('switching mode');
 
-	modeEditor.load(holderElement, data);
-	this.mode = mode;
+	if (editor.mode == 'wysiwyg') {
+		editor.fire('saveSnapshot');
+	}
 
-	// set correct body class
-	$('body').removeClass('rte_wysiwyg rte_source').addClass('rte_' + mode);
+	editor.getCommand('source').setState(CKEDITOR.TRISTATE_DISABLED);
+
+	editor.fire('modeSwitch');
+}
+
+// use this method to change current mode from JS code (selenium test)
+CKEDITOR.editor.prototype.switchMode = function(mode) {
+	if (this.mode == mode) {
+		return;
+	}
+
+	RTE.log('switchMode("' + mode + '")');
+
+	this.mode = (mode == 'wysiwyg') ? 'source' : 'wysiwyg';
+
+	CKEDITOR.plugins.sourcearea.commands.source.exec(this);
 }
 
 // modify parent node of button

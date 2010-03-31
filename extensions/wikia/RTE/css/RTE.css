@@ -26,6 +26,15 @@
 	left: -10000px;
 }
 
+.RTEloading.rte_wysiwyg #cke_toolbar,
+.RTEloading.rte_source #mw-toolbar {
+	visibility: hidden !important;
+}
+
+.RTEloading.rte_wysiwyg #cke_toolbar .cke_button_source {
+	visibility: visible;
+}
+
 /* RT #37254 / #37260 */
 .cke_browser_ie #cke_contents_wpTextbox1 {
 	position: static !important;
