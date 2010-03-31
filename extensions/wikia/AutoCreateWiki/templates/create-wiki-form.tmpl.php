@@ -46,13 +46,13 @@ if( !empty( $mType ) ) {
 			<li class="data2"><span class="note"><?=wfMsg('autocreatewiki-info-domain')?></span></li>
 		</ul>
 	</div>
+<?php
+if (!empty($aCategories) && is_array($aCategories) && ( $mType != "answers" ) ):
+?>
 	<div class="formblock">
 		<ul>
 			<li class="label"><label class="required" id="wiki-category-label"><?=wfMsg('nstab-category')?>:</label></li>
 			<li class="data1"><select name="wiki-category" id="wiki-category">
-<?php
-if (!empty($aCategories) && is_array($aCategories) && ( $mType != "answers" ) ):
-?>
 				<option value=""><?=wfMsg('autocreatewiki-category-select')?></option>
 <?php
 	foreach ($aCategories as $iCat => $sCatName) :
@@ -69,19 +69,19 @@ if (!empty($aCategories) && is_array($aCategories) && ( $mType != "answers" ) ):
 	endforeach
 ?>
 				<option value="9"><?=wfMsg('autocreatewiki-category-other')?></option>
-<?php
-elseif( $mType == "answers" ):
-?>
-				<option value="20" selected="selected">Wikianswers</option>
-<?php
-endif
-?>
 				</select>
 				<div class="error" style="display: <?= (!empty($mPostedErrors['wiki-category'])) ? 'block' : 'none'?>;" id="wiki-category-error"><?=@$mPostedErrors['wiki-category']?></div>				
 			</li>
 			<li class="data2"><span class="note"><?php echo wfMsg('autocreatewiki-info-category-' . $type )?></span></li>
 		</ul>
 	</div>
+<?php
+elseif( $mType == "answers" ):
+?>
+	<input name="wiki-category" type="hidden" value="20" /><!--Wikianswers-->
+<?php
+endif
+?>
 	<div class="formblock">
 		<ul>
 			<li class="label"><label class="required" id="wiki-language-label"><?=wfMsg('yourlanguage')?></label></li>
