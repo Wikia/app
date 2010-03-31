@@ -120,13 +120,15 @@ CreatePage.redLinkClick = function(e, titleText) {
 
 $(function() {
 	if( window.WikiaEnableNewCreatepage ) {
-		if( $( '#dynamic-links-write-article-icon' ).exists() ) {
-			// open dialog on clicking
-			$( '#dynamic-links-write-article-icon' ).click( function(e) { CreatePage.openDialog(e, null); });
-		}
-		if( $( '#dynamic-links-write-article-link' ).exists() ) {
-			// open dialog on clicking
-			$( '#dynamic-links-write-article-link' ).click( function(e) { CreatePage.openDialog(e, null); });
+		if( !window.WikiaDisableDynamicLinkCreatePagePopup ) {
+			if( $( '#dynamic-links-write-article-icon' ).exists() ) {
+				// open dialog on clicking
+				$( '#dynamic-links-write-article-icon' ).click( function(e) { CreatePage.openDialog(e, null); });
+			}
+			if( $( '#dynamic-links-write-article-link' ).exists() ) {
+				// open dialog on clicking
+				$( '#dynamic-links-write-article-link' ).click( function(e) { CreatePage.openDialog(e, null); });
+			}
 		}
 
 		// macbre: RT #38478

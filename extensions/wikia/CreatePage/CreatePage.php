@@ -57,7 +57,7 @@ function wfCreatePageInit() {
 }
 
 function wfCreatePageSetupVars( $vars ) {
-	global $wgWikiaEnableNewCreatepageExt, $wgContentNamespaces, $wgContLang, $wgUser;
+	global $wgWikiaEnableNewCreatepageExt, $wgWikiaDisableDynamicLinkCreatePagePopup, $wgContentNamespaces, $wgContLang, $wgUser;
 
 	$contentNamespaces = array();
 	foreach($wgContentNamespaces as $contentNs) {
@@ -65,6 +65,7 @@ function wfCreatePageSetupVars( $vars ) {
 	}
 
 	$vars['WikiaEnableNewCreatepage'] = $wgUser->getOption( 'createpagepopupdisabled', false ) ? false : $wgWikiaEnableNewCreatepageExt;
+	$vars['WikiaDisableDynamicLinkCreatePagePopup'] = !empty($wgWikiaDisableDynamicLinkCreatePagePopup) ? true : false;
 	$vars['ContentNamespacesText'] = $contentNamespaces;
 
 	return true;
