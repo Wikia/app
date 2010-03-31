@@ -1,214 +1,153 @@
 <?php
 
-class Checksite extends SpecialPage
-{
-  function Checksite() 
-  {
-    SpecialPage::SpecialPage("Checksite");
-  }
+class Checksite extends SpecialPage {
 
-  function execute($par) 
-  {
-    global $wgRequest, $wgOut;
+	function  __construct() {
+		parent::__construct( 'Checksite' , '' /*restriction*/);
+		wfLoadExtensionMessages('Checksite');
+	}
 
-    $param = $wgRequest->getText('param');
-    $parcheck = $wgRequest->getText('parcheck');
+	function execute($par) {
+		global $wgRequest, $wgOut, $wgTitle;
 
-    $post = "<p />
-      <form action=\"/Spezial:Checksite\" method=\"get\">
-      <ul>
-      <li>Mit dieser Spezialseite kann der Screenshot aktualisiert werden. Die Screenshots werden in der Reihenfolge der Anforderung aktualisiert - bei vielen Screenshots kann das etwas dauern. Mehrfache Anforderung beschleunigt den Vorgang nicht.</li>
-      <li>Ausserdem wird anhand von robots.txt überprüft, ob der Inhaber einer Website diese für ungeeignet
-      hält, im WebsiteWiki diskutiert zu werden.</li>
-      </ul>
-      <b>Website überprüfen: </b>
-      <input type=\"text\" name=\"parcheck\" value=\"$param\" size=\"40\" maxlength=\"80\" />
-      <input type=\"submit\" value=\" überprüfen \" /> 
-      </form><p />";
+		$param = $wgRequest->getText('param');
+		$parcheck = $wgRequest->getText('parcheck');
+		$action = $wgTitle->getFullURL();
 
-    $this->setHeaders();
+		wfLoadExtensionMessages('Checksite');
+		$description = wfMsgExt('checksite-description', array('parse'));
+		$label = wfMsgExt('checksite-label', array('parseinline'));
+		$submit = wfMsg('checksite-submit');
 
-    # Get request data from, e.g.
+		$post = "
+			<form action=\"$action\" method=\"get\">
+			$description
+			$label
+			<input type=\"text\" name=\"parcheck\" value=\"$param\" size=\"40\" maxlength=\"80\" />
+			<input type=\"submit\" value=\"$submit\" />
+			</form>";
 
+		$this->setHeaders();
 
-//    $output = "Schnapp. ++$param++ ++$parcheck++\n\n";
-//    $post .= $output;
+		if (!isset($parcheck) || strlen($parcheck) < 5) {
+			$wgOut->addHTML($post);
+			return;
+		}
 
-    # Do stuff
+		$newdom = check_validate_domain($parcheck);
+		if (!$newdom) {
+			$parcheck = htmlspecialchars($parcheck);
+			$wgOut->addWikiMsg('checksite-cant-check', $parcheck);
+			return;
+		}
 
-    if(!isset($parcheck) || strlen($parcheck) < 5)
-    {
-      $wgOut->addHTML("$post");
-      return;
-    }
+		$newpage = $newdom;
+		$newpage{0} = strtoupper($newpage{0});
 
-    $newdom = check_validate_domain($parcheck);
-    if(!$newdom)
-    {
-      $parcheck = htmlspecialchars($parcheck);
-      $wgOut->addHTML("$parcheck kann nicht überprüft werden.");
-      return;
-    }
+		$title = Title::newFromUrl($newpage);
+		if (!is_object($title)) {
+			$wgOut->addWikiMsg('checksite-not-found', $newpage);
+			return;
+		}
 
-    $newpage = $newdom;
-    $newpage{0} = strtoupper($newpage{0});
-    // $output .= "newpage: =$newpage= newdom: =$newdom= newhost =$newhost=\n";
+		if (!$title->exists()) {
+			$wgOut->addWikiMsg('checksite-not-exist', $newpage);
+			return;
+		}
 
-    $title = Title::newFromUrl($newpage);
-    if(!is_object($title)) 
-    {
-      $wgOut->addHTML("$newpage kann nicht als Wikipage gefunden werden.");
-      return;
-    }
+		$newhost = check_get_host($newdom);
+		if (!$newhost) {
+			$wgOut->addWikiMsg('checksite-url-not-found', $newdom);
+			return;
+		}
 
-    if(!$title->exists())
-    {
-      $wgOut->addHTML("Die Website <a href=\"/$newpage\">$newpage</a> existiert nicht im WebsiteWiki.");
-      return;
-    }
+		if ($rob = @fopen("http://$newhost/robots.txt", 'r')) {
+			$txt = fread($rob, 4096);
 
-    if(nxdomain($newdom))
-    {
-      $output = "$newpage ist nicht im DNS vorhanden (NXDOMAIN), die Seite wird gelöscht.";
-      $article = new Article( $title );
-      $article->updateArticle( "#REDIRECT [[Gelöscht]]", 'Redirect: Gelöscht', false, false );
-      return;
-    }
+			while (!feof($rob)) {
+				$txt .= fread($rob, 4096);
+				if (strlen($txt) > 20000) {
+					break;
+				}
+			}
 
-    $newhost = check_get_host($newdom);
-    if(!$newhost)
-    {
-      $wgOut->addHTML("Die Website $newdom wurde nicht gefunden.");
-      return;
-    }
+			fclose($rob);
 
-    if($rob = @fopen("http://$newhost/robots.txt", "r"))
-    {
-      $txt = fread($rob, 4096);
+			if (eregi("User-agent:[ \t\n]*WebsiteWiki[ \t\r\n]*Disallow:[ \t\r\n]*/", $txt)) {
+				global $wgUser;
 
-      while(!feof($rob))
-      {
-        $txt .= fread($rob, 4096);
-	if(strlen($txt) > 20000)
-	  break;
-      }
+				$output = wfMsg('checksite-robots', $newhost, $newpage);
 
-      fclose($rob);
+				$orgUser = $wgUser;
+				//TODO: should this hardcoded user be here?
+				$wgUser = User::newFromName('Sysop');
 
-//echo "newhost $newhost $rob $txt\n";
+				$article = new Article($title);
+				$restrict = Array('edit' => 'sysop', 'move' => 'sysop');
+				$article->updateRestrictions($restrict, $output);
+				$redirectUrl = wfMsg('checksite-redirect-url');
+				$redirectComment = wfMsg('checksite-redirect-comment');
+				$article->updateArticle("#REDIRECT [[$redirectUrl]]", $redirectComment, false, false);
 
-      if(eregi("User-agent:[ \t\n]*WebsiteWiki[ \t\r\n]*Disallow:[ \t\r\n]*/", $txt))
-      {
-	global $wgUser;
+				$wgUser = $orgUser;
+				return;
+			}
+		}
 
-        $output = "http://$newhost/robots.txt empfiehlt, $newpage nicht im Websitewiki aufzuführen.";
+		//TODO: check if this hardcoded URL should remain here
+		if (stristr($newhost, 'duckshop.de')) {
+			$wgOut->addWikiMsg('checksite-screenshot-error');
+			return;
+		}
 
-	$orgUser = $wgUser;
-	$wgUser = User::newFromName("Sysop");
-	
-	$article = new Article( $title );
-	$restrict = Array("edit" => "sysop", "move" => "sysop");
-	$article->updateRestrictions($restrict, $output);
-	$article->updateArticle( "#REDIRECT [[Ungeeignet]]", 'Redirect: Ungeeignet', false, false );
+		$output = wfMsg('checksite-screenshot-updating', $newpage);
 
-	$wgUser = $orgUser;
-	return;
-      }
-    }
+		//TODO: should this URL be like this? or had we imported this script too?
+		$url = fopen("http://thumbs.websitewiki.de/newthumb.php?name=$newdom", 'r');
+		fclose($url);
 
-    if(stristr($newhost, "duckshop.de"))
-    {
-      $wgOut->addHTML("Der Screenshot kann nicht aktualisiert werden.");
-      return;
-    }
-
-  
-    $output = "Der Screenshot von $newpage wird aktualisiert.";
-
-/****** LOCAL
-    $oldimg = "/var/www/htdocs.www.websitewiki.de/websites/${newdom[0]}/${newdom[1]}/$newdom.jpg";
-    $newimg = "/var/www/htdocs.www.websitewiki.de/websites/${newdom[0]}/${newdom[1]}/$newdom.bak" . time();
-
-//        $output = "new $newimg old $oldimg";
-
-    if(file_exists($oldimg))
-      rename($oldimg, $newimg);
-    
-    $todo = fopen("/var/www/mkwebsites/todo", "a");
-    if($todo)
-    {
-      fputs($todo, "$newdom\n");
-      fclose($todo);
-    }
-******/
-
-    $url = fopen("http://thumbs.websitewiki.de/newthumb.php?name=$newdom", "r");
-    fclose($url);
-
-    # Output
-    $wgOut->addHTML( $output);
-  }
-
-  function loadMessages() 
-  {
-	  static $messagesLoaded = false;
-	  global $wgMessageCache;
-	  if ( $messagesLoaded ) return;
-	  $messagesLoaded = true;
-
-	  require( dirname( __FILE__ ) . '/Checksite.i18n.php' );
-	  foreach ( $allMessages as $lang => $langMessages ) {
-		  $wgMessageCache->addMessages( $langMessages, $lang );
-	  }
-  }
+		# Output
+		$wgOut->addHTML( $output);
+	}
 }
 
-function check_validate_domain($dom) 
-{
-  global $exDomainList;
+function check_validate_domain($dom) {
+	global $exDomainList;
 
-  $d = strtolower(ltrim(trim($dom)));
+	$d = strtolower(ltrim(trim($dom)));
 
-  $d = ereg_replace("^http://", "", $d);
-  $d = ereg_replace("^www\.", "", $d);
+	$d = preg_replace('#^http://#i', '', $d);
+	$d = preg_replace('#^www\.#i', '', $d);
 
-  if($p = strpos($d, ' '))
-    $d = substr($d, 0, $p);
-  if($p = strpos($d, '/'))
-    $d = substr($d, 0, $p);
+	if ($p = strpos($d, ' '))
+		$d = substr($d, 0, $p);
+	if ($p = strpos($d, '/'))
+		$d = substr($d, 0, $p);
 
-  if(ereg("[^-0-9.a-z]", $d))
-    return '';
-  if(ereg("^[-.]", $d))
-    return '';
-  if(ereg("\.\.", $d))
-    return '';
+	if (preg_match('#[^-.\w]#', $d))
+		return '';
+	if (preg_match('#^[-.]#', $d))
+		return '';
+	if (preg_match('#\.\.#', $d))
+		return '';
 
-  if(!ereg($exDomainList, $d))
-    return '';
+	//TODO: change it to preg_match - but it has to be changed in any files that is using exDomainList AND this variable has to be changed to match preg requirements
+	if (!ereg($exDomainList, $d))
+		return '';
 
-  return $d;
+	return $d;
 }
 
-function check_get_host($dom) 
-{
-  $dnsrec = dns_get_record("www.$dom", DNS_A);
-//   print_r($dnsrec);
-  if(isset($dnsrec[0]) && array_key_exists('ip', $dnsrec[0]))
-    return "www.$dom";
+function check_get_host($dom) {
+	$dnsrec = dns_get_record("www.$dom", DNS_A);
+	if (isset($dnsrec[0]) && array_key_exists('ip', $dnsrec[0])) {
+		return "www.$dom";
+	}
 
-  $dnsrec = dns_get_record($dom, DNS_A);
-  if(isset($dnsrec[0]) && array_key_exists('ip', $dnsrec[0]))
-    return $dom;
+	$dnsrec = dns_get_record($dom, DNS_A);
+	if (isset($dnsrec[0]) && array_key_exists('ip', $dnsrec[0])) {
+		return $dom;
+	}
 
-  return '';
+	return '';
 }
-
-function nxdomain($dom) 
-{
-  // popen("dig +noall +comment $dom");
-  return false;
-}
-
-
-?>

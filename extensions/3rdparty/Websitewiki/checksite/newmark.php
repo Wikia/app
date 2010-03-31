@@ -10,36 +10,37 @@
 # To activate the extension, include it from your LocalSettings.php
 # with: include("extensions/YourExtensionName.php");
 
-$wgExtensionFunctions[] = "newpageExtension";
+$wgExtensionFunctions[] = 'newpageExtension';
 
 function newpageExtension() {
-    global $wgParser;
-    # register the extension with the WikiText parser
-    # the first parameter is the name of the new tag.
-    # In this case it defines the tag <example> ... </example>
-    # the second parameter is the callback function for
-    # processing the text between the tags
-    $wgParser->setHook( "newpage", "renderNewpage" );
+	global $wgParser;
+	# register the extension with the WikiText parser
+	# the first parameter is the name of the new tag.
+	# In this case it defines the tag <example> ... </example>
+	# the second parameter is the callback function for
+	# processing the text between the tags
+	$wgParser->setHook('newpage', 'renderNewpage');
 }
 
 # The callback function for converting the input text to HTML output
-function renderNewpage( $input, $argv, &$parser ) {
-    # $argv is an array containing any arguments passed to the
-    # extension like <example argument="foo" bar>..
-    # Put this on the sandbox page:  (works in MediaWiki 1.5.5)
-    #   <example argument="foo" argument2="bar">Testing text **example** in between the new tags</example>
+function renderNewpage($input, $argv, &$parser) {
+	# $argv is an array containing any arguments passed to the
+	# extension like <example argument="foo" bar>..
+	# Put this on the sandbox page:  (works in MediaWiki 1.5.5)
+	#   <example argument="foo" argument2="bar">Testing text **example** in between the new tags</example>
 
-    $saneinput = $parser->getTitle()->getText();
-    if($saneinput == "Homepage" || $saneinput == "Suche" || $saneinput == "Neue Seite erstellen")
-      $saneinput = "";
+	wfLoadExtensionMessages('Checksite');
+	$saneinput = empty($argv['emptysearchbox']) ? $parser->getTitle()->getText() : '';
+	$action = Skin::makeSpecialUrl('NewWebsite');
+	$header = wfMsgExt('newmark-header', array('parseinline'));
+	$submit = wfMsg('newmark-submit');
 
-    $output = "<p />
-      <form action=\"/Spezial:NeueWebsite\" method=\"get\">
-      <b>Neue Website: </b>
-      <input type=\"text\" name=\"param\" size=\"40\" maxlength=\"80\" value=\"$saneinput\" />
-      <input type=\"submit\" value=\" anlegen \" /> 
-      </form><p />";
+	$output = "<p />
+		<form action=\"$action\" method=\"get\">
+		$header
+		<input type=\"text\" name=\"param\" size=\"40\" maxlength=\"80\" value=\"$saneinput\" />
+		<input type=\"submit\" value=\"$submit\" />
+		</form><p />";
 
-    return $output;
+	return $output;
 }
-?>

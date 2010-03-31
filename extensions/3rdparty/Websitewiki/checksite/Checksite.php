@@ -1,24 +1,11 @@
 <?php
 # Not a valid entry point, skip unless MEDIAWIKI is defined
-if (!defined('MEDIAWIKI')) 
-{
-        echo <<<EOT
-  ... Not installed ...
-EOT;
-        exit( 1 );
+if (!defined('MEDIAWIKI')) {
+	echo "This is MediaWiki extension named CheckSite.\n";
+	exit(1) ;
 }
 
-$wgAutoloadClasses['Checksite'] = dirname(__FILE__) . '/Checksite.body.php';
+$dir = dirname(__FILE__);
+$wgAutoloadClasses['Checksite'] = $dir . '/Checksite.body.php';
+$wgExtensionMessagesFiles['Checksite'] = $dir . '/Checksite.i18n.php';
 $wgSpecialPages['Checksite'] = 'Checksite';
-// $wgHooks['LoadAllMessages'][] = 'NeueWebsite::loadMessages';
-
-$wgExtensionFunctions[] = 'checksitesetup';
-
-function checksitesetup() 
-{
-  global $wgMessageCache;
-  $wgMessageCache->addMessage('checksite', 'Website überprüfen');
-}
-
-
-?>
