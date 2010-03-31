@@ -30,7 +30,7 @@ abstract class MediaTransformOutput {
 	 * @return string The thumbnail URL
 	 */
 	function getUrl() {
-		return wfReplaceImageServer( $this->url );
+		return $this->url;
 	}
 
 	/**
@@ -111,7 +111,7 @@ class ThumbnailImage extends MediaTransformOutput {
 	 */
 	function ThumbnailImage( $file, $url, $width, $height, $path = false, $page = false ) {
 		$this->file = $file;
-		$this->url = $url;
+		$this->url = wfReplaceImageServer( $url, $file->getTimestamp() );
 		# These should be integers when they get here.
 		# If not, there's a bug somewhere.  But let's at
 		# least produce valid HTML code regardless.
@@ -164,7 +164,7 @@ class ThumbnailImage extends MediaTransformOutput {
 		} elseif ( !empty( $options['desc-link'] ) ) {
 			$linkAttribs = $this->getDescLinkAttribs( $title, $query );
 		} elseif ( !empty( $options['file-link'] ) ) {
-			$linkAttribs = array( 'href' => $this->file->getURL() );
+			$linkAttribs = array( 'href' => wfReplaceImageServer( $this->file->getURL(), $this->file->getTimestamp() ) );
 		} else {
 			$linkAttribs = false;
 		}

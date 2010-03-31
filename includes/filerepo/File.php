@@ -170,7 +170,7 @@ abstract class File {
 		if ( !isset( $this->url ) ) {
 			$this->url = $this->repo->getZoneUrl( 'public' ) . '/' . $this->getUrlRel();
 		}
-		return wfReplaceImageServer( $this->url, $this->getTimestamp() );
+		return $this->url;
 	}
 
 	/**
@@ -773,7 +773,7 @@ abstract class File {
 		} else {
 			$path .= rawurlencode( $suffix );
 		}
-		return wfReplaceImageServer( $path, $this->getTimestamp() );
+		return $path;
 	}
 
 	/** Get the URL of the thumbnail directory, or a particular file if $suffix is specified */
@@ -782,7 +782,7 @@ abstract class File {
 		if ( $suffix !== false ) {
 			$path .= '/' . rawurlencode( $suffix );
 		}
-		return wfReplaceImageServer( $path, $this->getTimestamp() );
+		return $path;
 	}
 
 	/** Get the virtual URL for an archive file or directory */
