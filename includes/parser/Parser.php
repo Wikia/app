@@ -1966,7 +1966,6 @@ class Parser
 					'wikitextIdx' => $RTE_wikitextIdx,
 					'text' => $text,
 					'link' => $link,
-					'trail' => $trail,
 					'wasblank' => $wasblank,
 					'noforce' => $noforce))).$text;
 			}
