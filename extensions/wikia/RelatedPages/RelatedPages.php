@@ -10,6 +10,21 @@ function RelatedPages_Setup() {
 function RelatedPages_GetInCategories($a, $categories, $b) {
 	global $wgTitle, $wgContentNamespaces, $wgHooks;
 
+	// Bartek for RT#44740, added check for mainpage
+	$main =  wfMsgForContent( 'mainpage' );
+	$ismain = ($wgTitle->getArticleId() == Title::newMainPage()->getArticleId() && $wgTitle->getArticleId() != 0);
+	if(!$ismain) {
+		if(!empty($wgArticle->mRedirectedFrom)) {
+			if($main == $wgArticle->mRedirectedFrom->getPrefixedText()) {
+				$ismain = true;
+			}
+		}
+	}
+
+	if( $ismain ) {
+		return true;
+	}	
+
 	if(!empty($wgTitle) && in_array($wgTitle->getNamespace(), $wgContentNamespaces)) {
 		if(count($categories) > 0) {
 			$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'RelatedPages_Display';
