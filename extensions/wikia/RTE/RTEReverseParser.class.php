@@ -53,7 +53,7 @@ class RTEReverseParser {
 
 			// now we should have properly parsed HTML
 			if (!empty($bodyNode)) {
-				RTE::log('XML (as seen by DOM)' ,$this->dom->saveXML());
+				//RTE::log('XML (as seen by DOM)', $this->dom->saveXML());
 
 				// do recursive reverse parsing
 				$out = $this->parseNode($bodyNode);
@@ -85,7 +85,7 @@ class RTEReverseParser {
 
 				wfProfileOut(__METHOD__.'::postFixes');
 
-				RTE::log('wikitext', $out);
+				//RTE::log('wikitext', $out);
 			}
 			else {
 				RTE::log('HTML parsing failed!');
@@ -166,7 +166,7 @@ class RTEReverseParser {
 		wfProfileIn(__METHOD__ . "::{$node->nodeName}");
 		//wfProfileIn(__METHOD__ . "::{$node->nodeName}::{$nodeId}");
 
-		RTE::log('node ' . str_repeat('.', $level) . $node->nodeName);
+		RTE::log('node ' . str_repeat('.', $level) . "{$node->nodeName} (#{$nodeId})");
 
 		$childOut = '';
 
@@ -1452,30 +1452,45 @@ class RTEReverseParser {
 	 * Checks name of parent of given node
 	 */
 	private static function isChildOf($node, $parentName) {
+		wfProfileIn(__METHOD__);
+
 		if (is_string($parentName)) {
 			$parentName = array($parentName);
 		}
 
-		return ( !empty($node->parentNode) && in_array($node->parentNode->nodeName, $parentName) );
+		$ret = ( !empty($node->parentNode) && in_array($node->parentNode->nodeName, $parentName) );
+
+		wfProfileOut(__METHOD__);
+		return $ret;
 	}
 
 	/**
 	 * Checks whether two given nodes have the same parent node
 	 */
 	private static function haveSameParent($nodeA, $nodeB) {
-		return ( !empty($nodeA->parentNode) && !empty($nodeB->parentNode) && $nodeA->parentNode->isSameNode($nodeB->parentNode) );
+		wfProfileIn(__METHOD__);
+
+		$ret = !empty($nodeA->parentNode) && !empty($nodeB->parentNode) && $nodeA->parentNode->isSameNode($nodeB->parentNode);
+
+		wfProfileOut(__METHOD__);
+		return $ret;
 	}
 
 	/**
 	 * Checks if first child of given node has given name
 	 */
 	private static function firstChildIs($node, $nodeName) {
+		wfProfileIn(__METHOD__);
+
 		if (is_string($nodeName)) {
 			$nodeName = array($nodeName);
 		}
 		$firstChild = $node->firstChild;
 
-		return ( !empty($firstChild) && $firstChild->nodeType == XML_ELEMENT_NODE && in_array($firstChild->nodeName, $nodeName) );
+		$ret = !empty($firstChild) && $firstChild->nodeType == XML_ELEMENT_NODE && in_array($firstChild->nodeName, $nodeName);
+
+		wfProfileOut(__METHOD__);
+		return $ret;
 	}
 
 	/**
@@ -1760,6 +1775,8 @@ class RTEReverseParser {
 					$wgContLang->getNsText(NS_CATEGORY),
 					$wgContLang->getNsText(NS_FILE),
 				);
+
+				RTE::log(__METHOD__, 'got localised namespaces');
 			}
 
 			foreach($namespaces as $NSprefix) {
