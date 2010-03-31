@@ -3,7 +3,7 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'New Edit Page',
 	'description' => 'Applies edit page changes',
 	'version' => 0.7,
-	'author' => array('[http://pl.wikia.com/wiki/User:Macbre Maciej Brencz]', '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]')
+	'author' => array('Maciej Brencz', '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]')
 );
 
 $dir = dirname(__FILE__) . '/';
