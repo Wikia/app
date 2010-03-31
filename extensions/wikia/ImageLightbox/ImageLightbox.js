@@ -89,7 +89,7 @@ var ImageLightbox = {
 		this.track('/init');
 
 		// render caption bar
-		if (typeof caption != 'undefined') {
+		if (typeof caption == 'string') {
 			caption = '<div id="lightbox-caption-content">' + caption + '</div>';
 		}
 		else {
