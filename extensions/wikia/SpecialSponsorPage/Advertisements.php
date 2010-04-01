@@ -6,7 +6,7 @@ This file is not meant to be run by itself, but only as a part of MediaWiki
 EOT;
         exit( 1 );
 }
-
+ 
 
 
 class Advertisement
@@ -261,7 +261,7 @@ Class AdDisplay
 		$wgArticle->doPurge();
 		return true;
   }
- 
+  
   //Note that some hooks may or may not render wikitext, so plan accordingly
   public static function OutputAdvertisement() {
    		$ads = Advertisement::GetAdsForCurrentPage();
@@ -288,7 +288,7 @@ Class AdDisplay
   /**
 	 * See if we're on a page that can have ads (main namespace only, but not main_page)
 	 * assumes using MediaWiki:Mainpage for name of main page
-	 *
+   *
 	 * @return bool
 	 * @private
 	 */
@@ -302,3 +302,4 @@ Class AdDisplay
 		return true;
   }
 }
+?>

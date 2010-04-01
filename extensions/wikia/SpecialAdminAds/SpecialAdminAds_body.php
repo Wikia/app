@@ -8,16 +8,22 @@
 class SpecialAdminAds extends SpecialPage {
 	
 	private $adlimit = 10;//number of ads to show on page
+	private $ispaypal;
 	
 	public function __construct() {
 		if($this->HandlePayPal()){
+			$this->ispaypal = 1;
+			parent::__construct( 'AdminAds');
 			return;
+		}else{
+			//restrict to only those with edit interface rights
+			$this->ispaypal = 0;
+			parent::__construct( 'AdminAds', 'editinterface'  );
 		}
-		//restrict to only those with edit interface rights
-		parent::__construct( 'AdminAds', 'editinterface'  );
 	}
 	
 	public function execute( $par ) {
+		if($this->ispaypal == 1) return;
 		global $wgOut, $wgRequest, $wgMessageCache;
 		global $wgUser;
 
@@ -104,19 +110,20 @@ class SpecialAdminAds extends SpecialPage {
 	//when registering with Paypal
 	private function HandlePayPal(){
 		global $wgRequest;
+		global $wgEmergencyContact;
+		//address to send error messages to 			
+		$defaultemail = $wgEmergencyContact;
 		//NOTE: sending to https may require further configuration
 		//an empty $result variable may be an indicator of this problem
 		//may need to do other stuff to enable https
 		//$url = "http://www.sandbox.paypal.com/cgi-bin/webscr";
 		$url = "http://www.paypal.com/cgi-bin/webscr";
-		//address to send error messages to 			
-		$defaultemail = "asylvan@gmail.com";
-		mail($defaultemail, "Processing PayPal", print_r($_POST,1));
+
 		if(is_array($_POST) && isset($_POST['payment_status'])!=''){
 			if(get_magic_quotes_gpc()) {
 				foreach($_POST as $key=>$value){
 					$_POST[$key]=$value;
-        }
+				}
 			}
 			// Read the post from PayPal and add 'cmd' 
 			$req = 'cmd=_notify-validate'; 
@@ -124,7 +131,6 @@ class SpecialAdminAds extends SpecialPage {
 				$pcode = urlencode($value); 
 				$req .= "&$key=$pcode";   
 			}
-			mail($defaultemail, "Processing PayPal", $req);
 			$ch = curl_init();    // Starts the curl handler
 			curl_setopt($ch, CURLOPT_URL,$url); // Sets the paypal address for curl
 			curl_setopt($ch, CURLOPT_FAILONERROR, 1);
@@ -141,7 +147,7 @@ class SpecialAdminAds extends SpecialPage {
 				// Check that txn_id has not been previously processed (necessary?)
 				// Check that receiver_email is your Primary PayPal email 
 
-				mail($defaultemail, "Live-VERIFIED IPN x", print_r($_POST,1) . "\n\n" . $req); 
+				//mail($defaultemail, "Live-VERIFIED IPN x", print_r($_POST,1) . "\n\n" . $req); 
 				//post the payment info to the database - should be local database
 				global $wgDBname;
 				$dbw = wfGetDB( DB_MASTER, array(), $wgDBname );
@@ -159,14 +165,17 @@ class SpecialAdminAds extends SpecialPage {
 				$dbw->Insert('advert_pmts',$saveAry);
 				//check the payment amount and currency
 				//TODO:  Check that the pay_status is "Completed"
-				if($wgRequest->getText('mc_currency') == 'USD' && $wgRequest->getText('payment_status') == 'Completed'){
+				if($wgRequest->getText('payment_status') == 'Completed'){
 					$ad = new Advertisement();
 					$ad->LoadFromDB($adID);
-					if($amt == $ad->ad_price){
+					if($wgRequest->getText('mc_currency') == 'USD' && $amt == $ad->ad_price){
 						$ad->last_pay_date = date('Y-m-d');
 						$ad->Save();
+					}else{
+						mail($defaultemail, "Invalid Payment Amount or Currency", print_r($_POST,1) . "\n\n" . $req);
 					}
 				}
+				//we could trap for some other statuses here... worry about that later
 			} else if (strcmp ($result, "INVALID") == 0) { 
 			// If 'INVALID', send an email. TODO: Log for manual investigation. 
 				mail($defaultemail, "Invalid PayPal Payment IPN Verfication", print_r($_POST,1) . "\n\n" . $req); 
