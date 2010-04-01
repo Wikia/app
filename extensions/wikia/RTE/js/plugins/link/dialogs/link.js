@@ -5,6 +5,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 CKEDITOR.dialog.add( 'link', function( editor )
 {
+	var plugin = CKEDITOR.plugins.link;
 	var setupDialog = function( editor, element )
 	{
 		RTE.log('opening link dialog');
@@ -212,18 +213,12 @@ CKEDITOR.dialog.add( 'link', function( editor )
 				ranges = selection.getRanges(),
 				element = null,
 				me = this;
-			// Fill in all the relevant fields if there's already one link selected.
-			if ( ranges.length == 1 )
-			{
-				var rangeRoot = ranges[0].getCommonAncestor( true );
-				element = rangeRoot.getAscendant( 'a', true );
-				if ( element && element.getAttribute( 'href' ) )
-				{
-					selection.selectElement( element );
-				}
-				else
-					element = null;
-			}
+
+			element = plugin.getSelectedLink( editor );
+			if ( element && element.getAttribute( 'href' ) )
+				selection.selectElement( element );
+			else
+				element = null;
 
 			// setup editor fields
 			setupDialog.apply( this, [editor, element] );
