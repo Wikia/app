@@ -9,7 +9,7 @@ class StaticChute {
 	public $httpCache = true;
 	public $bytesIn = 0;
 	public $bytesOut = 0;
-	
+
 	// TODO: FIXME: This is not great having this here AND in wgCdnStylePath in CommonSettings, etc., but since StaticChute
 	// does not load the MediaWiki stack in many cases, not sure what a better longterm solution would be.
 	public $cdnStylePath = "http://images1.wikia.nocookie.net/__cb20014/common";
@@ -127,12 +127,12 @@ class StaticChute {
 			'../extensions/wikia/CreatePage/js/CreatePage.js',
 			'../extensions/wikia/Interstitial/Interstitial.js',
 			'../extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js',
+			'../extensions/wikia/ImageLightbox/ImageLightbox.js',
 		);
 		$this->config['monaco_anon_article_js'] = array_merge($this->config['monaco_anon_article_js'], $widgetsAssets['js']);
 
 		// JS served for logged-in
 		$this->config['monaco_loggedin_js'] = array(
-
 			'common/jquery/jquery-1.4.2.js',
 			'common/jquery/jquery.json-1.3.js',
 			'common/jquery/jquery.cookies.2.1.0.js',
@@ -156,12 +156,12 @@ class StaticChute {
 			'../extensions/wikia/ShareFeature/js/ShareFeature.js',
 			'../extensions/wikia/CreatePage/js/CreatePage.js',
 			'../extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js',
+			'../extensions/wikia/ImageLightbox/ImageLightbox.js',
 		);
 		$this->config['monaco_loggedin_js'] = array_merge($this->config['yui'], $this->config['monaco_loggedin_js'], $widgetsAssets['js']);
 
 		// JS served for anon for everything that's not an article view
 		$this->config['monaco_anon_everything_else_js'] = array(
-
 			'common/jquery/jquery-1.4.2.js',
 			'common/jquery/jquery.json-1.3.js',
 			'common/jquery/jquery.cookies.2.1.0.js',
@@ -189,7 +189,7 @@ class StaticChute {
 
 		// CSS
 		$this->config['monaco_css'] = array(
-		    'common/yui_2.5.2/tabview/assets/tabview.css', 	
+			'common/yui_2.5.2/tabview/assets/tabview.css',
 			'common/shared.css',
 			'wikia/shared.css',
 			'monaco/css/monobook_modified.css',
@@ -209,9 +209,8 @@ class StaticChute {
 			'../extensions/wikia/Masthead/css/Masthead.css',
 			'../extensions/wikia/ShareFeature/css/ShareFeature.css',
 			'../extensions/wikia/CreatePage/css/CreatePage.css',
-
-			// macbre: temporary
 			'../extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.view.css',
+			'../extensions/wikia/ImageLightbox/ImageLightbox.css',
 		);
 		$this->config['monaco_css'] = array_merge($this->config['monaco_css'], $widgetsAssets['css']);
 
