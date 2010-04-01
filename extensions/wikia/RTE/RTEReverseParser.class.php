@@ -1187,6 +1187,14 @@ class RTEReverseParser {
 
 				$out = $this->fixForTableCell($node, $out);
 				$out = $this->fixForDiv($node, $out);
+
+				// add \n if previous node is header and table is inside <div> (RT #44119)
+				if (self::isChildOf($node, 'div')) {
+					if (!empty($node->previousSibling) && self::isHeaderNode($node->previousSibling)) {
+						$out = "\n{$out}";
+					}
+				}
+
 				break;
 
 			case 'caption':
@@ -1368,6 +1376,13 @@ class RTEReverseParser {
 	 */
 	private static function isListNode($node) {
 		return in_array($node->nodeName, array('ul', 'ol', 'dt', 'dd'));
+	}
+
+	/**
+	 * Checks if given node is header
+	 */
+	private static function isHeaderNode($node) {
+		return !empty($node->nodeName) && $node->nodeName{0} == 'h' && is_numeric($node->nodeName{1});
 	}
 
 	/**
