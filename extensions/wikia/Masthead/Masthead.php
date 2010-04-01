@@ -82,6 +82,11 @@ class Masthead {
 	 */
 	public $mDefaultAvatars = false;
 
+	/**
+	 * custom URL to avatar - if set, will be overriden
+	 */
+	public $avatarUrl = null;
+
 	public function __construct( User $User ) {
 		wfProfileIn( __METHOD__ );
 		$this->mUser = $User;
@@ -188,41 +193,53 @@ class Masthead {
 	}
 
 	/**
+	 * setUrl -- set url for avatar - if set, it will override default behavior
+	 *
+	 * @access public
+	 */
+	public function setUrl($url) {
+		$this->avatarUrl = $url;
+	}
+
+	/**
 	 * getUrl -- read url from preferences or from defaults if preference is
 	 * not set.
 	 *
-	 * @access private
+	 * @access public
 	 *
 	 * @return String
 	 */
 	public function getUrl() {
-		global $wgBlogAvatarPath;
-		$url = $this->mUser->getOption( AVATAR_USER_OPTION_NAME );
-		if( $url ) {
-			/**
-			 * if default avatar we glue with messaging.wikia.com
-			 * if uploaded avatar we glue with common avatar path
-			 */
-			if( strpos( $url, '/' ) !== false ) {
+		if (!empty($this->avatarUrl)) {
+			return $this->avatarUrl;
+		} else {
+			global $wgBlogAvatarPath;
+			$url = $this->mUser->getOption( AVATAR_USER_OPTION_NAME );
+			if( $url ) {
 				/**
-				 * uploaded file, we are adding common/avatars path
+				 * if default avatar we glue with messaging.wikia.com
+				 * if uploaded avatar we glue with common avatar path
 				 */
-				$url = $wgBlogAvatarPath . $url . '?' . $this->mUser->mTouched;
+				if( strpos( $url, '/' ) !== false ) {
+					/**
+					 * uploaded file, we are adding common/avatars path
+					 */
+					$url = $wgBlogAvatarPath . $url . '?' . $this->mUser->mTouched;
+				}
+				else {
+					/**
+					 * default avatar, path from messaging.wikia.com
+					 */
+					$hash = FileRepo::getHashPathForLevel( $url, 2 );
+					$url = $this->mDefaultPath . $hash . $url;
+				}
 			}
 			else {
-				/**
-				 * default avatar, path from messaging.wikia.com
-				 */
-				$hash = FileRepo::getHashPathForLevel( $url, 2 );
-				$url = $this->mDefaultPath . $hash . $url;
+				$defaults = $this->getDefaultAvatars();
+				$url = array_shift( $defaults );
 			}
+			return wfReplaceImageServer( $url, $this->mUser->getTouched() );
 		}
-		else {
-			$defaults = $this->getDefaultAvatars();
-			$url = array_shift( $defaults );
-		}
-
-		return wfReplaceImageServer( $url, $this->mUser->getTouched() );
 	}
 
 	/**
