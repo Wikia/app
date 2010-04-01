@@ -71,6 +71,11 @@ class OutputPage {
 		$this->mRedirect = str_replace( "\n", '', $url );
 		$this->mRedirectCode = $responsecode;
 
+		# change code for cross-wikia redirects to 301, see rt#44699
+		if( strpos( $this->mRedirect, '.wikia.com' ) !== false ) {
+			$this->mRedirectCode = '301';
+		}
+
 		# Cache permanent redirects for 20 minutes, see rt#18297
 		if( $responsecode == '301' ) {
 			$this->setSquidMaxage( 1200 );
