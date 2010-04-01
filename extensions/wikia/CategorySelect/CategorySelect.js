@@ -453,13 +453,12 @@ function moveElement(movedId, prevSibId) {
 	categories = newCat;
 }
 
-// TODO: PORT AWAY FROM YUI
 function inputKeyPress(e) {
 	if(e.keyCode == 13) {
 		WET.byStr('articleAction/enterCategory');
 
 		//TODO: stop AJAX call for AutoComplete
-		YAHOO.util.Event.preventDefault(e);
+		e.preventDefault();
 		category = $('#csCategoryInput').attr('value');
 		if (category != '' && oAutoComp._oCurItem == null) {
 			addCategory(category);
@@ -494,9 +493,8 @@ function expandAutoComplete(sQuery , aResults) {
 	$('#csHintContainer').css('display', 'none');
 }
 
-// TODO: PORT AWAY FROM YUI
 function regularEditorSubmit(e) {
-	$('#wpCategorySelectWikitext').attr('value', YAHOO.Tools.JSONEncode(categories));
+	$('#wpCategorySelectWikitext').attr('value', JSON.stringify(categories));
 }
 
 function getCategories(sQuery) {
@@ -540,13 +538,12 @@ function initAutoComplete() {
 	oAutoComp.doBeforeExpandContainer = function (elTextbox, elContainer, sQuery, aResults) {return elTextbox.value != '';};
 }
 
-// TODO: PORT AWAY FROM YUI
 function initHandlers() {
 	//handle [enter] for non existing categories
-	YAHOO.util.Event.addListener('csCategoryInput', 'keypress', inputKeyPress);
-	YAHOO.util.Event.addListener('csCategoryInput', 'blur', inputBlur);
+	$('#csCategoryInput').keypress(inputKeyPress);
+	$('#csCategoryInput').blur(inputBlur);
 	if (typeof formId != 'undefined') {
-		YAHOO.util.Event.addListener(formId, 'submit', regularEditorSubmit);
+		$('#'+formId).submit(regularEditorSubmit);
 	}
 }
 
