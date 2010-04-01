@@ -72,7 +72,7 @@ class OutputPage {
 		$this->mRedirectCode = $responsecode;
 
 		# change code for cross-wikia redirects to 301, see rt#44699
-		if( strpos( $this->mRedirect, '.wikia.com' ) !== false ) {
+		if( Http::isLocalURL( $this->mRedirect ) ) {
 			$this->mRedirectCode = '301';
 		}
 
