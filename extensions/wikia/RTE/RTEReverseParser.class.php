@@ -85,7 +85,7 @@ class RTEReverseParser {
 
 				wfProfileOut(__METHOD__.'::postFixes');
 
-				//RTE::log('wikitext', $out);
+				RTE::log('wikitext', $out);
 			}
 			else {
 				RTE::log('HTML parsing failed!');
@@ -642,6 +642,19 @@ class RTEReverseParser {
 			// next element is (not pasted) paragraph
 			if (self::nextSiblingIs($node, 'p') && self::isNewNode($node->nextSibling)) {
 				$out = "{$out}\n";
+			}
+		}
+
+		// RT #40935
+		else if (self::isChildOf($node, 'div') && (trim($textContent) != '')) {
+			// this is first paragraph in this <div>
+			if (self::previousSiblingIsTextNode($node, 'p')) {
+				$out = "\n{$out}";
+			}
+
+			// this is last paragraph in this <div>
+			if (self::nextSiblingIsTextNode($node, 'p')) {
+				$out .= "\n";
 			}
 		}
 
