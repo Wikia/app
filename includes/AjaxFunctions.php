@@ -152,7 +152,7 @@ function wfAjaxGetFileUrl( $file ) {
 	if ( !$file || !$file->exists() )
 		return null;
 		
-	$url = wfReplaceImageServer( $file->getUrl(), $file->getTimestamp() );
+	$url = $file->getUrl();
 	
 	return $url;
 }
