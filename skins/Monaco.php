@@ -1543,10 +1543,10 @@ wfProfileIn( __METHOD__ . '-body'); ?>
 	} else {
 		$body_css_action = '';
 	}
-	
+
 	if(!isset($this->extraBodyClasses)){
 		// For extra classes to put on the body tag.  This allows overriding sub-skins to create selectors specific to their sub-skin (such as custom answers).
-		$this->extraBodyClasses = array(); 
+		$this->extraBodyClasses = array();
 	}
 ?>
 	<body<?php if($this->data['body_onload'    ]) { ?> onload="<?php     $this->text('body_onload')     ?>"<?php } ?>
@@ -1675,7 +1675,7 @@ if( $custom_user_data ) {
 <?php if (wfRunHooks('AlternateNavLinks')):
 
 		// Rewrite the logo to have the last modified timestamp so that a the newer one will be used after an update.
-		// $wgLogo = 
+		// $wgLogo =
 		?>
 		<div id="background_strip" class="reset">
 			<div class="monaco_shrinkwrap">
