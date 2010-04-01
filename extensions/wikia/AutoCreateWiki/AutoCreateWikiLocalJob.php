@@ -84,6 +84,15 @@ class AutoCreateWikiLocalJob extends Job {
 		 * main page should be move in first stage of create wiki, but sometimes
 		 * is too early for that. This is fallback function
 		 */
+		
+		$this->wikiaName = isset( $this->mParams[ "title" ] )
+			? $this->mParams[ "title" ]
+			: WikiFactory::getVarValueByName( "wgSitename", $this->mParams[ "city_id"], true );
+		$this->wikiaLang = isset( $this->mParams[ "language" ] )
+			? $this->mParams[ "language" ]
+			: WikiFactory::getVarValueByName( "wgLanguageCode", $this->mParams[ "city_id"] );
+
+		
 		$this->moveMainPage();
 		$this->changeStarterContributions();
 		$this->setWelcomeTalkPage();
@@ -98,6 +107,7 @@ class AutoCreateWikiLocalJob extends Job {
 		switch( $this->mParams[ "type" ] ) {
 			case "answers":
 				$this->copyDefaultAvatars();
+				$this->sendWelcomeBoardMessage();
 				break;
 		}
 
@@ -168,34 +178,28 @@ class AutoCreateWikiLocalJob extends Job {
 		$talkPage = $this->mFounder->getTalkPage();
 		if( $talkPage ) {
 			Wikia::log( __METHOD__, "talk", $talkPage->getFullUrl() );
-			$wikiaName = isset( $this->mParams[ "title" ] )
-				? $this->mParams[ "title" ]
-				: WikiFactory::getVarValueByName( "wgSitename", $this->mParams[ "city_id"], true );
-			$wikiaLang = isset( $this->mParams[ "language" ] )
-				? $this->mParams[ "language" ]
-				: WikiFactory::getVarValueByName( "wgLanguageCode", $this->mParams[ "city_id"] );
 
-			Wikia::log( __METHOD__, "vars", "sitename: {$wikiaName}; language: {$wikiaLang}" );
+			Wikia::log( __METHOD__, "vars", "sitename: {$this->wikiaName}; language: {$this->wikiaLang}" );
 
 			/**
 			 * set apropriate staff member
 			 */
-			$wgUser = Wikia::staffForLang( $wikiaLang );
+			$wgUser = Wikia::staffForLang( $this->wikiaLang );
 			$wgUser = ( $wgUser instanceof User ) ? $wgUser : User::newFromName( "Angela" );
 
 			$talkParams = array(
 				$this->mFounder->getName(),
 				$wgUser->getName(),
 				$wgUser->getRealName(),
-				$wikiaName
+				$this->wikiaName
 			);
 
 			$talkBody = false;
-			if (! empty( $wikiaLang ) ) {
+			if (! empty( $this->wikiaLang ) ) {
 				/**
 				 * custom lang translation
 				 */
-				$talkBody = wfMsgExt( "autocreatewiki-welcometalk", array( 'language' => $wikiaLang ), $talkParams );
+				$talkBody = wfMsgExt( "autocreatewiki-welcometalk", array( 'language' => $this->wikiaLang ), $talkParams );
 			}
 
 			if( ! $talkBody ) {
@@ -494,5 +498,38 @@ class AutoCreateWikiLocalJob extends Job {
 		else {
 			Wikia::log( __METHOD__, "error", "Cannot create {$target} folder" );
 		}
+		wfProfileOut( __METHOD__ );
+	}
+	
+	/**
+	 * set welcome message on user board
+	 * 
+	 * @access private
+	 */
+	private function sendWelcomeBoardMessage() {
+		global $wgEnableUserBoard, $wgUser;
+		wfProfileIn( __METHOD__ );
+		if ( !empty($wgEnableUserBoard) ) {
+			$message = "autocreatewiki-welcomeuserboard";
+			if ( !wfEmptyMsg( $message, wfMsg($message) ) ) {
+				if ( !$wgUser instanceof User ) {
+					$wgUser = Wikia::staffForLang( $this->wikiaLang );
+					$wgUser = ( $wgUser instanceof User ) ? $wgUser : User::newFromName( "Angela" );
+				}
+				
+				$message = wfMsgExt( 
+					$message, 
+					array( 'language' => $this->wikiaLang ), 
+					array(
+						$this->mFounder->getName(),
+						$wgUser->getName(),
+						$wgUser->getRealName(),
+						$this->wikiaName
+					)
+				);
+				wfSendBoardMessage($this->mFounder->getName(), $message, 0, 1);
+			}
+		}
+		wfProfileOut( __METHOD__ );
 	}
 }
