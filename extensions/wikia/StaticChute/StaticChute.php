@@ -184,6 +184,7 @@ class StaticChute {
 			'../extensions/wikia/ShareFeature/js/ShareFeature.js',
 			'../extensions/wikia/CreatePage/js/CreatePage.js',
 			'../extensions/wikia/Interstitial/Interstitial.js',
+			'../extensions/wikia/ImageLightbox/ImageLightbox.js',
 		);
 		$this->config['monaco_anon_everything_else_js'] = array_merge($this->config['yui'], $this->config['monaco_anon_everything_else_js'], $widgetsAssets['js']);
 

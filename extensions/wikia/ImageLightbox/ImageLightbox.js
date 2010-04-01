@@ -7,18 +7,9 @@ var ImageLightbox = {
 		window.jQuery.tracker.byStr('lightbox' + fakeUrl);
 	},
 
-	isEditPage: function() {
-		return $('#wikiPreview').exists();
-	},
-
 	// setup clicks on links with .lightbox class
 	init: function() {
 		var self = this;
-
-		// don't run on edit page
-		if (this.isEditPage()) {
-			return;
-		}
 
 		var images = $('#bodyContent').find('.lightbox');
 		if (!images.exists()) {
