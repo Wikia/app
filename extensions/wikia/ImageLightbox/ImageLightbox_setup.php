@@ -10,8 +10,8 @@ $wgExtensionCredits['other'][] = array(
 $dir = dirname(__FILE__);
 $wgAutoloadClasses['ImageLightbox'] = "$dir/ImageLightbox.class.php";
 
-// hooks
-$wgHooks['BeforePageDisplay'][] = 'ImageLightbox::beforePageDisplay';
+// hooks (JS/CSS loaded via StaticChute)
+//$wgHooks['BeforePageDisplay'][] = 'ImageLightbox::beforePageDisplay';
 
 // i18n
 $wgExtensionMessagesFiles['ImageLightbox'] = $dir.'/ImageLightbox.i18n.php';
