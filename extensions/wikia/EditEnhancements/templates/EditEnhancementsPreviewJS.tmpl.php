@@ -14,6 +14,11 @@ EditEnhancementsPreview = {
 			textAreaOffset = $('#wpTextbox1___Frame').offset().top + $('#wpTextbox1___Frame').outerHeight();
 		}
 
+		if (typeof RTE  == 'object') {
+			if ($('#cke_wpTextbox1').offset() == null) return;
+			textAreaOffset = $('#cke_wpTextbox1').offset().top + $('#cke_wpTextbox1').outerHeight();
+		}
+		
 		var positionFixed = false;
 
 		// choose positioning method
