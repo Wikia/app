@@ -124,6 +124,16 @@ class WidgetFramework {
 					$this->config[1][] = array('type' => 'WidgetTopContent', 'id' => 144);
 				}
 
+				global $wgEnableAnswers;
+				global $wgEnableWidgetFounderBadge;
+				if (!empty($wgEnableWidgetFounderBadge) && !empty($wgEnableAnswers)) {
+					$this->config[1][] = array('type' => 'WidgetFounderBadge',  'id' => 145);
+				}
+				global $wgEnableWidgetCategoryCloud;
+				if (!empty($wgEnableWidgetCategoryCloud) && !empty($wgEnableAnswers)) {
+					$this->config[1][] = array('type' => 'WidgetCategoryCloud', 'id' => 146);
+				}
+
 			} else if($this->skinname == "quartz") {
 				$this->config = array(
 					1 => array(
