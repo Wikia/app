@@ -277,7 +277,7 @@ class ImagePage extends Article {
 
 		$this->loadFile();
 
-		$full_url  = $this->displayImg->getURL();
+		$full_url  = wfReplaceImageServer( $this->displayImg->getURL(), $this->displayImg->getTimestamp() );
 		$linkAttribs = false;
 		$sizeSel = intval( $wgUser->getOption( 'imagesize') );
 		if( !isset( $wgImageLimits[$sizeSel] ) ) {
@@ -854,7 +854,7 @@ class ImageHistoryList {
 			$row .= '<span class="history-deleted">'.$url.'</span>';
 		} else {
 			$url = $iscur ? $this->current->getUrl() : $this->current->getArchiveUrl( $img );
-			$row .= Xml::element( 'a', array( 'href' => $url ), $wgLang->timeAndDate( $timestamp, true ) );
+			$row .= Xml::element( 'a', array( 'href' => wfReplaceImageServer( $url, $timestamp )  ), $wgLang->timeAndDate( $timestamp, true ) );
 		}
 
 		// Thumbnail
