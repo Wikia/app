@@ -212,6 +212,19 @@ window.RTE = {
 		RTE.instance.dataProcessor.writer.indentationChars = '';
 		RTE.instance.dataProcessor.writer.lineBreakChars = '';
 
+		// override "Source" button to send AJAX request first, instead of mode switching
+		CKEDITOR.plugins.sourcearea.commands.source.exec = function(editor) {
+			RTE.log('switching mode');
+
+			if (editor.mode == 'wysiwyg') {
+				editor.fire('saveSnapshot');
+			}
+
+			editor.getCommand('source').setState(CKEDITOR.TRISTATE_DISABLED);
+
+			editor.fire('modeSwitch');
+		}
+
 		// reposition #RTEStuff
 		RTE.repositionRTEStuff();
 
@@ -493,19 +506,6 @@ CKEDITOR.getUrl = function( resource ) {
 	}
 
 	return resource;
-}
-
-// override "Source" button to send AJAX request first, instead of mode switching
-CKEDITOR.plugins.sourcearea.commands.source.exec = function(editor) {
-	RTE.log('switching mode');
-
-	if (editor.mode == 'wysiwyg') {
-		editor.fire('saveSnapshot');
-	}
-
-	editor.getCommand('source').setState(CKEDITOR.TRISTATE_DISABLED);
-
-	editor.fire('modeSwitch');
 }
 
 // use this method to change current mode from JS code (selenium test)
