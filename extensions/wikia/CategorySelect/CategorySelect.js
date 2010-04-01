@@ -49,8 +49,8 @@ function extractSortkey(text) {
 		}
 	}
 	if (pipePos != -1) {
-		result.name = text.slice(0, pipePos);
-		result.sort = text.slice(pipePos + 1);
+		result['name'] = text.slice(0, pipePos);
+		result['sort'] = text.slice(pipePos + 1);
 	}
 	return result;
 }
@@ -383,6 +383,7 @@ function initializeDragAndDrop() {
 	});
 }
 
+// TODO: PORT AWAY FROM YUI
 function toggleCodeView() {
 	if ($('#csWikitextContainer').css('display') != 'block') {	//switch to code view
 		WET.byStr('editpage/codeviewCategory');
@@ -398,26 +399,32 @@ function toggleCodeView() {
 	} else {	//switch to visual code
 		WET.byStr('editpage/visualviewCategory');
 
-		$.post(ajaxUrl, {rs: "CategorySelectAjaxParseCategories", rsargs: $('#csWikitext').attr('value') + ' '}, function(result){
-			if (result.error !== undefined) {
-				$().log('AJAX result: error');
-				alert(result.error);
-			} else if (result.categories !== undefined) {
-				$().log('AJAX result: OK');
-				//delete old categories [HTML items]
-				var items = $('#csItemsContainer').find('a');
-				for (var i=items.length-1; i>=0; i--) {
-					if (items.get(i).getAttribute('catId') !== null) {
-						items.get(i).parentNode.removeChild(items.get(i));
+		var pars = 'rs=CategorySelectAjaxParseCategories&rsargs=' + encodeURIComponent($('#csWikitext').attr('value') + ' ');
+		var callback = {
+			success: function(originalRequest) {
+				var result = eval('(' + originalRequest.responseText + ')');
+				if (result['error'] != undefined) {
+					YAHOO.log('AJAX result: error');
+					alert(result['error']);
+				} else if (result['categories'] != undefined) {
+					YAHOO.log('AJAX result: OK');
+					//delete old categories [HTML items] (done in reverse to prevent race-conditions)
+					var items = $('#csItemsContainer').find('a');
+					for (var i=items.length-1; i>=0; i--) {
+						if (items.get(i).getAttribute('catId') !== null) {
+							items.get(i).parentNode.removeChild(items.get(i));
+						}
 					}
-				}
 
-				initializeCategories(result['categories']);
-				$('#csSwitchView').html(csCodeView);
-				$('#csWikitextContainer').css('display', 'none');
-				$('#csItemsContainer').css('display', 'block');
-			}
-		}, "json");
+					initializeCategories(result['categories']);
+					$('#csSwitchView').html(csCodeView);
+					$('#csWikitextContainer').css('display', 'none');
+					$('#csItemsContainer').css('display', 'block');
+				}
+			},
+			timeout: 30000
+		};
+		YAHOO.util.Connect.asyncRequest('POST', ajaxUrl, callback, pars);
 	}
 }
 
@@ -550,67 +557,65 @@ function initHandlers() {
 	}
 }
 
+// TODO: PORT AWAY FROM YUI
 //`view article` mode
 function showCSpanel() {
 	$.loadYUI(function() {
 		initCatSelect();
 		csType = 'view';
-		$.post(ajaxUrl, {rs: 'CategorySelectGenerateHTMLforView'}, function(result){
-			//prevent multiple instances when user click very fast
-			if ($('#csMainContainer').length > 0) {
-				return;
-			}
-			var el = document.createElement('div');
-			el.innerHTML = result;
-			$('#catlinks').get(0).appendChild(el);
-			initHandlers();
-			initAutoComplete();
-			initializeDragAndDrop();
-			initializeCategories();
-
-			// Dynamically load & apply the CSS.
-			$("head").append("<link>");
-			css = $("head").children(":last");
-			css.attr({
-				rel:  "stylesheet",
-				type: "text/css",
-				href: wgExtensionsPath+'/wikia/CategorySelect/CategorySelect.css?'+wgStyleVersion
-			});
-			setTimeout(replaceAddToInput, 60);
-			setTimeout(positionSuggestBox, 666); //sometimes it can take more time to parse downloaded CSS - be sure to position hint in proper place
-			$('#catlinks').removeClass('csLoading');
-		}, "html");
-
+		var pars = 'rs=CategorySelectGenerateHTMLforView';
+		var callback = {
+			success: function(originalRequest) {
+				//prevent multiple instances when user click very fast
+				if ($('#csMainContainer').length > 0) {
+					return;
+				}
+				var el = document.createElement('div');
+				el.innerHTML = originalRequest.responseText;
+				$('#catlinks').get(0).appendChild(el);
+				initHandlers();
+				initAutoComplete();
+				initializeDragAndDrop();
+				initializeCategories();
+				YAHOO.util.Get.css(wgExtensionsPath+'/wikia/CategorySelect/CategorySelect.css?'+wgStyleVersion, {onSuccess:function() {
+					setTimeout(replaceAddToInput, 60);
+					setTimeout(positionSuggestBox, 666);	//sometimes it can take more time to parse downloaded CSS - be sure to position hint in proper place
+					$('#catlinks').removeClass('csLoading');
+				}});
+			},
+			timeout: 30000
+		};
+		YAHOO.util.Connect.asyncRequest('POST', ajaxUrl, callback, pars);
 		$('#csAddCategorySwitch').css('display', 'none');
 	});
 }
 
+// TODO: PORT AWAY FROM YUI
 function csSave() {
 	if ($('#csCategoryInput').attr('value') != '') {
 		addCategory($('#csCategoryInput').attr('value'));
 	}
-	var pars = 'rs=CategorySelectAjaxSaveCategories&rsargs[]=' + wgArticleId + '&rsargs[]=' + encodeURIComponent(JSON.stringify(categories));
-	//$.post(ajaxUrl, {rs: 'CategorySelectAjaxSaveCategories', 'rsargs[]': [wgArticleId, JSON.stringify(categories)]}, function(result){
-	$.ajax({
-		url: ajaxUrl,
-		data: pars,
-		dataType: "json",
-		success: function(result){
-			if (result.info == 'ok' && result.html != '') {
+	var pars = 'rs=CategorySelectAjaxSaveCategories&rsargs[]=' + wgArticleId + '&rsargs[]=' + encodeURIComponent(YAHOO.Tools.JSONEncode(categories));
+	var callback = {
+		success: function(originalRequest) {
+			var result = eval('(' + originalRequest.responseText + ')');
+			if (result['info'] == 'ok' && result['html'] != '') {
 				tmpDiv = document.createElement('div');
 				tmpDiv.innerHTML = result['html'];
-				var innerCatlinks = $('#mw-normal-catlinks').get(0);
+				var innerCatlinks = $G('mw-normal-catlinks');
 				if (innerCatlinks) {
-					$('#mw-normal-catlinks').get(0).parentNode.replaceChild(tmpDiv.firstChild, $('#mw-normal-catlinks').get(0));
+					$('#mw-normal-catlinks').get(0).parentNode.replaceChild(tmpDiv.firstChild, $G('mw-normal-catlinks'));
 				} else {
-					$('#catlinks').get(0).insertBefore(tmpDiv.firstChild, $('#catlinks').get(0).firstChild);
+					$('#catlinks').get(0).insertBefore(tmpDiv.firstChild, $G('catlinks').firstChild);
 				}
-			} else if (result.error != undefined) {
-				alert(result.error);
+			} else if (result['error'] != undefined) {
+				alert(result['error']);
 			}
 			csCancel();
-		}
-	});
+		},
+		timeout: 30000
+	};
+	YAHOO.util.Connect.asyncRequest('POST', ajaxUrl, callback, pars);
 
 	// add loading indicator and disable buttons
 	$('#csButtonsContainer').addClass('csSaving');
