@@ -67,7 +67,7 @@ class Keyword extends SpecialPage {
 			while ($res && $row = mysql_fetch_row($res)) {
 				$kword = $row[0];
 				$kcount = $row[1];
-				$output .= '<li>' . kwlink($kword) . " ($kcount)</li>\n";
+				$output .= '<li>' . $this->kwlink($kword) . " ($kcount)</li>\n";
 			}
 			$output .= "</ol>\n";
 			$wgOut->addHTML($google . $output);
@@ -136,7 +136,7 @@ class Keyword extends SpecialPage {
 		$res = $dbr->doQuery("SELECT kw_word FROM kw_keywords,kw_page WHERE kw_page IN $similstring AND kw_key=kw_id GROUP BY kw_key ORDER BY COUNT(kw_key) DESC LIMIT 15 OFFSET 1");
 		while ($res && $row = mysql_fetch_row($res)) {
 			$sameword = $row[0];
-			$output .= '<li>' . kwlink($sameword) . "</li>\n";
+			$output .= '<li>' . $this->kwlink($sameword) . "</li>\n";
 		}
 		$output .= "</ul></li>\n";
 
