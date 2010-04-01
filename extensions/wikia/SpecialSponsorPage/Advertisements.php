@@ -241,9 +241,9 @@ Class AdDisplay
   public static function OutputAdvertisementOutputHook( &$out, &$text ){
 		if(!self::ArticleCanShowAd()) return true;
 		global $wgParser, $wgTitle;
-		$wtext = "===External Sponsored Links===\n";
-		$out = $wgParser->parse($wtext, $wgTitle, new ParserOptions());
-		$text.= $out->getText();
+		$wtext = "==External Sponsored Links==\n";
+		$parser = $wgParser->parse($wtext, $wgTitle, new ParserOptions());
+		$text.= $parser->getText();
 		$text.= self::OutputAdvertisement();
 		return true;
   }
