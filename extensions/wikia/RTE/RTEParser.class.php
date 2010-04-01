@@ -210,9 +210,16 @@ class RTEParser extends Parser {
 		RTE::log(__METHOD__, $data);
 
 		// image width
+		$imageWidth = $image->getWidth();
+
 		if (!empty($data['params']['width'])) {
 			// width provided in wikitext
 			$width = $data['params']['width'];
+
+			// images with width provided should not be resized larger than the original file resolution (RT #41805)
+			if ($imageWidth < $width) {
+				$width = $imageWidth;
+			}
 		}
 		// image height (RT #37266)
 		// [[Image:foo|x250px|caption]]
@@ -234,7 +241,6 @@ class RTEParser extends Parser {
 			$width = $wgThumbLimits[$wopt];
 
 			// thumbed images should not be resized larger than the original file resolution
-			$imageWidth = $image->getWidth();
 			if ($imageWidth < $width) {
 				$width = $imageWidth;
 			}
