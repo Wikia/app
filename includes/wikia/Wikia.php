@@ -464,21 +464,27 @@ class Wikia {
 
 		$name = strtolower( $name );
 
-		if( $language && $language != "en" ) {
-			$name = $language.".".$name;
-		}
-
 		$parts = explode(".", trim($name));
 		Wikia::log( __METHOD__, "info", "$name $language $type" );
 		if( is_array( $parts ) ) {
 			if( count( $parts ) <= 2 ) {
+				$allowLang = true;
 				switch( $type ) {
 					case "answers":
-						$name = $name.".answers.wikia.com";
+						$domains = self::getAnswersDomains();
+						if ( $language && isset($domains[$language]) && !empty($domains[$language]) ) {
+							$name =  sprintf("%s.%s.%s", $name, $domains[$language], "wikia.com");
+							$allowLang = false;
+						} else {
+							$name =  sprintf("%s.%s.%s", $name, $domains["default"], "wikia.com");
+						}
 						break;
 
 					default:
 						$name = $name.".wikia.com";
+				}
+				if ( $language && $language != "en" && $allowLang ) {
+					$name = $language.".".$name;
 				}
 			}
 		}
@@ -1022,6 +1028,31 @@ class Wikia {
 		global $wgTTCache;
 		$wgTTCache = wfGetMainTTCache();
 		return true;
+	}
+
+	/**
+	 * fixed answers domains
+	 */
+	public static function getAnswersDomains() {
+		global $wgAvailableAnswersLang, $wgContLang;
+		wfProfileIn(__METHOD__);
+		$msg = "autocreatewiki-subname-answers";
+		$default = wfMsgExt( $msg, array( "language" => "en" ) );
+		#--
+		$domains = array( 'default' => $wgContLang->lcfirst( $default ) );
+		if ( !empty($wgAvailableAnswersLang) ) {
+			foreach ( $wgAvailableAnswersLang as $lang ) {
+				$domain = wfMsgExt( $msg, array( "language" => $lang ) );
+				if ( !empty($domain) ) {
+					$domain = $wgContLang->lcfirst( $domain );
+					if ( !wfEmptyMsg( $msg, $domain ) &&  $domain != $domains['default'] ) {
+						$domains[$lang] = $domain;
+					}
+				}
+			}
+		}
+		wfProfileOut(__METHOD__);
+		return $domains;
 	}
 
 }
