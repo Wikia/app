@@ -57,7 +57,8 @@ function WidgetCategoryCloudGetData() {
 		"category",
 		array("cat_title", "cat_pages", "cat_files"),
 		array("cat_hidden" => 0), /* FIXME cat_hidden is never updated, fill in with pp_properties!=hiddencat (populateCategories.php?) */
-		__METHOD__
+		__METHOD__,
+		array("ORDER BY" => "cat_title")
 	);
 	while ($row = $res->fetchObject()) {
 		if (WidgetCategoryCloudSkipRow($row->cat_title)) continue;
