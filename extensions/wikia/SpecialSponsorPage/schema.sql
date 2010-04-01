@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS `advert_ads` (
   `ad_status` int(11) NOT NULL COMMENT 'moderation status',
   `last_pay_date` date NOT NULL COMMENT 'last completed paypal payment',
   PRIMARY KEY  (`ad_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 CREATE TABLE IF NOT EXISTS `advert_pmts` (
   `pay_id` int(10) unsigned NOT NULL auto_increment,
@@ -24,4 +24,4 @@ CREATE TABLE IF NOT EXISTS `advert_pmts` (
   `pay_status` varchar(50) NOT NULL,
   `pay_conf_msg` mediumtext NOT NULL,
   PRIMARY KEY  (`pay_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1; 
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1; 
