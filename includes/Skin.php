@@ -1028,7 +1028,7 @@ END;
 				$name = $wgTitle->getDBkey();
 				$image = wfFindFile( $wgTitle );
 				if( $image ) {
-					$link = htmlspecialchars( $image->getURL() );
+					$link = htmlspecialchars( wfReplaceImageServer( $image->getURL(), $image->getTimestamp() ) );
 					$style = $this->getInternalLinkAttributes( $link, $name );
 					$s[] = "<a href=\"{$link}\"{$style}>{$name}</a>";
 				}

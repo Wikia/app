@@ -1027,7 +1027,7 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 		} else {
 			$img  = wfFindFile( $title, $time );
 			if( $img ) {
-				$url  = $img->getURL();
+				$url  = wfReplaceImageServer( $img->getURL(), $img->getTimestamp() );
 				$class = 'internal';
 				$nofollow = '';
 			} else {
