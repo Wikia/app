@@ -15,8 +15,10 @@
  * To activate this functionality, place this file in your extensions/
  * subdirectory, and add the following line to LocalSettings.php:
  *     require_once("$IP/extensions/wikia/Lists/Lists.php");
- 
- 
+ *
+ * This code was heavily based on CategorySelect.
+
+
 // TODO: Extension which is a fork of the CategorySelect... to basically render the wikiText for a list differently.  It should only be called conditionally based on the namespace of the page.
 
 // TODO: Add an extension which creates a box floated to the right which is a small vanity-box about the creator of the list & tells what other lists he/she has created
@@ -186,18 +188,16 @@ function LinksGetCategoryLinksBegin(&$categoryLinks) {
 
 	$action = $wgRequest->getVal('action', 'view');
 	if (($action == 'view' || $action == 'purge') && count($wgOut->mCategoryLinks) == 0) {
-		CategorySelectGetCategoryLinksEnd($categoryLinks);
+		ListsGetCategoryLinksEnd($categoryLinks);
 		return false;
 	}
 	return true;
 }
 
 /**
- * Add 'add category' button next to category list under article (in view mode)
- *
- * @author Maciej Blaszkowski <marooned at wikia-inc.com>
+ * Add 'add item' button next to list under article (in view mode)
  */
-function CategorySelectGetCategoryLinksEnd(&$categoryLinks) {
+function ListsGetCategoryLinksEnd(&$categoryLinks) {
 	global $wgRequest, $wgExtensionsPath, $wgOut, $wgStylePath;
 
 	$action = $wgRequest->getVal('action', 'view');
