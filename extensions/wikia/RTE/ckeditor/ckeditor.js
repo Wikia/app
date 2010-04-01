@@ -5,7 +5,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 if(!window.CKEDITOR)
 {window.CKEDITOR=(function()
-{var CKEDITOR={timestamp:'',version:'20100401',revision:'r20678',_:{},status:'unloaded',basePath:(function()
+{var CKEDITOR={timestamp:'',version:'20100401',revision:'r20681',_:{},status:'unloaded',basePath:(function()
 {var path=window.CKEDITOR_BASEPATH||'';if(!path)
 {var scripts=document.getElementsByTagName('script');for(var i=0;i<scripts.length;i++)
 {var match=scripts[i].src.match(/(^|.*[\\\/])ckeditor(?:_basic)?(?:_source)?.js(?:\?.*)?$/i);if(match)
@@ -1882,12 +1882,7 @@ editor.insertText(data['text']);},null,null,1000);editor.on('pasteDialog',functi
 {editor.openDialog('paste');},0);});function addButtonCommand(buttonName,commandName,command,ctxMenuOrder)
 {var lang=editor.lang[commandName];editor.addCommand(commandName,command);editor.ui.addButton(buttonName,{label:lang,command:commandName});if(editor.addMenuItems)
 {editor.addMenuItem(commandName,{label:lang,command:commandName,group:'clipboard',order:ctxMenuOrder});}}
-addButtonCommand('Cut','cut',new cutCopyCmd('cut'),1);addButtonCommand('Copy','copy',new cutCopyCmd('copy'),4);addButtonCommand('Paste','paste',pasteCmd,8);CKEDITOR.dialog.add('paste',CKEDITOR.getUrl(this.path+'dialogs/paste.js'));editor.on('key',onKey,editor);var mode=editor.config.forcePasteAsPlainText?'text':'html';editor.on('contentDom',function()
-{var body=editor.document.getBody();body.on(((mode=='text'&&CKEDITOR.env.ie)||CKEDITOR.env.webkit)?'paste':'beforepaste',function(evt)
-{if(depressBeforePasteEvent)
-return;getClipboardData.call(editor,evt,mode,function(data)
-{if(!data)
-return;var dataTransfer={};dataTransfer[mode]=data;editor.fire('paste',dataTransfer);});});});if(editor.contextMenu)
+addButtonCommand('Cut','cut',new cutCopyCmd('cut'),1);addButtonCommand('Copy','copy',new cutCopyCmd('copy'),4);addButtonCommand('Paste','paste',pasteCmd,8);CKEDITOR.dialog.add('paste',CKEDITOR.getUrl(this.path+'dialogs/paste.js'));editor.on('key',onKey,editor);var mode=editor.config.forcePasteAsPlainText?'text':'html';if(editor.contextMenu)
 {var depressBeforePasteEvent;function stateFromNamedCommand(command)
 {CKEDITOR.env.ie&&command=='Paste'&&(depressBeforePasteEvent=1);var retval=editor.document.$.queryCommandEnabled(command)?CKEDITOR.TRISTATE_OFF:CKEDITOR.TRISTATE_DISABLED;depressBeforePasteEvent=0;return retval;}
 editor.contextMenu.addListener(function()

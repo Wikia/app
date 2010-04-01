@@ -315,6 +315,10 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				// We'll be catching all pasted content in one line, regardless of whether the
 				// it's introduced by a document command execution (e.g. toolbar buttons) or
 				// user paste behaviors. (e.g. Ctrl-V)
+
+				// Wikia - start
+				// commented out (caused RT #40922)
+				/*
 				editor.on( 'contentDom', function()
 				{
 					var body = editor.document.getBody();
@@ -338,6 +342,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						});
 
 				});
+				*/
+				// Wikia - end
 
 				// If the "contextmenu" plugin is loaded, register the listeners.
 				if ( editor.contextMenu )
