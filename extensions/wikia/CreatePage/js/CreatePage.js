@@ -18,7 +18,7 @@ CreatePage.checkTitle = function( title, enterWasHit ) {
 					else {
 						CreatePage.track('create/' + ( CreatePage.pageLayout == 'format' ? 'standardlayout' : 'blankpage'));
 					}
-					location.href = wgScript + '?title=' + escape( title ) + '&action=edit' + ( CreatePage.pageLayout == 'format' ? '&useFormat=1' : '');
+					location.href = wgScript + '?title=' + encodeURIComponent( title ) + '&action=edit' + ( CreatePage.pageLayout == 'format' ? '&useFormat=1' : '');
 				}
 				else {
 					CreatePage.displayError(response.msg);
