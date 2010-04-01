@@ -110,7 +110,6 @@ class StaticChute {
 			'common/jquery/jquery.wikia.js',
 			'common/jquery/jquery.timeago.js',
 
-			'common/json2.js', // for JSON.stringify (in CategorySuggest at least)
 			'common/ajax.js',
 			'common/wikibits.js',
 			'common/mwsuggest.js',
@@ -141,7 +140,6 @@ class StaticChute {
 			'common/jquery/jquery-ui-1.7.2.custom.js',
 			'common/jquery/jquery.timeago.js',
 
-			'common/json2.js', // for JSON.stringify (in CategorySuggest at least)
 			'common/ajax.js',
 			'common/wikibits.js',
 			'common/ajaxwatch.js',
@@ -170,7 +168,6 @@ class StaticChute {
 			'common/jquery/jquery.wikia.js',
 			'common/jquery/jquery.timeago.js',
 
-			'common/json2.js', // for JSON.stringify (in CategorySuggest at least)
 			'common/ajax.js',
 			'common/wikibits.js',
 			'common/mwsuggest.js',
