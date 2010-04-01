@@ -5,7 +5,7 @@
 <?=wfMsg('multilookupselectuser')?> <input name="target" value="<?=htmlspecialchars($username)?>"/>&#160;&#160;
 <input type="submit" value="<?=wfMsg('multilookupgo')?>">
 </form>
-<? if ( $username !== null ) { ?>
+<? if ( empty($username) ) { ?>
 <br/><?=wfMsg('multilookupnotspecify')?>
 <? } ?>
 <!-- END OF MAIN-FORM -->

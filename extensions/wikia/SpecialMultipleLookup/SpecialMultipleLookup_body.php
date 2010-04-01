@@ -47,7 +47,7 @@ class MultipleLookupPage extends SpecialPage {
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
 		$this->mUsername = $wgRequest->getVal ('target');
-		#if($this->mUsername !== null) { $this->mUsername = trim($this->mUsername); }
+		if($this->mUsername !== null) { $this->mUsername = trim($this->mUsername); }
 
 		/**
 		 * show form
