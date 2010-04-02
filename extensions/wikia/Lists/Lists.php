@@ -150,8 +150,8 @@ function ListsInitializeHooks( $output, $article, $title, $user, $request, $wiki
 					return true;
 				}
 				//view mode
-				$wgHooks['Skin::getCategoryLinks::end'][] = 'ListsGetCategoryLinksEnd';
-				$wgHooks['Skin::getCategoryLinks::begin'][] = 'ListsGetCategoryLinksBegin';
+				array_unshift($wgHooks['Skin::getCategoryLinks::end'], 'ListsGetCategoryLinksEnd');
+				array_unshift($wgHooks['Skin::getCategoryLinks::begin'], 'ListsGetCategoryLinksBegin');
 				$wgHooks['MakeGlobalVariablesScript'][] = 'ListsSetupVars';
 			} else if($action == 'edit' || $action == 'submit') {
 				//edit mode
@@ -205,7 +205,8 @@ function ListsGetCategoryLinksBegin(&$categoryLinks) {
 	$action = $wgRequest->getVal('action', 'view');
 	if (($action == 'view' || $action == 'purge') && count($wgOut->mCategoryLinks) == 0) { // TODO: PORT THIS FROM CATEGORYSELECT
 		ListsGetCategoryLinksEnd($categoryLinks);
-		return false;
+// TODO: Allow CatgeorySelect to still run.
+//		return false;
 	}
 	return true;
 }

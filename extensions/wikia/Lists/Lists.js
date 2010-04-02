@@ -13,8 +13,8 @@ function initLists() {
 }
 
 function positionSuggestBox() {
-	$('#listsSuggestContainer').css('top', ($('#listsItemInput').offset().top + $('#listsItemInput').height() + 5) + 'px');
-	$('#listsSuggestContainer').css('left', Math.min($('#listsItemInput').offset().left, ($(window).width() - $('#listsItemsContainer').offset().left - $('#listsSuggestContainer').width() - 10)) + 'px');
+	$('#csSuggestContainer').css('top', ($('#csCategoryInput').get(0).offsetTop + $('#csCategoryInput').height() + 5) + 'px');
+	$('#csSuggestContainer').css('left', Math.min($('#csCategoryInput').get(0).offsetLeft, ($(window).width() - $('#csItemsContainer').get(0).offsetLeft - $('#csSuggestContainer').width() - 10)) + 'px');
 }
 
 function extractSortkey(text) {
@@ -53,7 +53,7 @@ function extractSortkey(text) {
 function deleteCategory(e) {
 	var catId = e.parentNode.getAttribute('catId');
 	e.parentNode.parentNode.removeChild(e.parentNode);
-	delete categories[catId];
+	categories.splice(catId, 1);
 }
 
 function replaceAddToInput(e) {
@@ -187,7 +187,7 @@ function toggleCodeView() {
 		$('#listsItemsContainer').css('display', 'none');
 		$('#listsHintContainer').css('display', 'none');
 		$('#listsCategoryInput').css('display', 'none');
-		$('#listsSwitchView').get(0).innerHTML = listsVisualView;
+		$('#listsSwitchView').html(listsVisualView);
 		$('#listsWikitextContainer').css('display', 'block');
 		$('#wpListsWikitext').attr('value', '');	//remove JSON - this will inform PHP to use wikitext instead
 		$('#wpListsSourceType').attr('value', 'wiki');	//inform PHP what source it should use
