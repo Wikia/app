@@ -214,7 +214,7 @@ class AutoCreateWikiLocalJob extends Job {
 			 */
 			$talkArticle = new Article( $talkPage, 0 );
 			if( !$talkArticle->exists() ) {
-				$talkArticle->doEdit( $talkBody,  wfMsg( "autocreatewiki-welcometalk-log" ), EDIT_MINOR | EDIT_FORCE_BOT );
+				$talkArticle->doEdit( $talkBody,  wfMsg( "autocreatewiki-welcometalk-log" ), EDIT_SUPPRESS_RC | EDIT_MINOR | EDIT_FORCE_BOT );
 			}
 			else {
 				Wikia::log( __METHOD__, "talkpage", sprintf("%s already exists", $talkPage->getFullURL()) );
