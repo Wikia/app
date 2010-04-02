@@ -41,6 +41,7 @@ $wgSpecialPageGroups['CreateWiki'] = 'wikia';
  */
 $wgAvailableRights[] = 'createwikimakefounder'; // user can give another's name as founder
 $wgAvailableRights[] = 'createwikilimitsexempt'; // user not bound by creation throttle
+$wgGroupPermissions['staff']['createwikilimitsexempt'] = true;
 
 /**
  * register job class
