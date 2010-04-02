@@ -185,8 +185,10 @@ class SFFormPrinter {
       // anonymous, and it's not a query -
       // wikitext for bolding has to be replaced with HTML
       if ($wgUser->isAnon() && ! $is_query) {
-        $anon_edit_warning = preg_replace("/'''(.*)'''/", "<strong>$1</strong>", wfMsg('anoneditwarning'));
-        $form_text .= "<p>$anon_edit_warning</p>\n";
+        #wikia change: we wiki text this message, core does not, so need to proper parse
+        $anon_edit_warning = wfMsgExt('anoneditwarning', array('parse'));
+        $form_text .= $anon_edit_warning . "\n";
+        #end wikia change
       }
     } else {
       $form_is_disabled = true;
