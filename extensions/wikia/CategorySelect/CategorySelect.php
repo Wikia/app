@@ -152,6 +152,9 @@ function CategorySelectSetupVars($vars) {
 }
 
 /**
+ * Returns an array of all of the categories on the current wiki.  Used for
+ * autocomplete.
+ *
  * @author Inez Korczyński
  */
 function CategorySelectGetCategories($inline = false) {
