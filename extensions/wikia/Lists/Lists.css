@@ -1,0 +1,177 @@
+#listsSuggestContainer {
+	position: relative;
+	top: 4px;
+	left: 0;
+	width: 250px;
+}
+
+#listsMainContainer {
+	border: 1px solid #AAA;
+	padding: 5px 5px 2px 5px;
+	position: relative;
+}
+
+#listsItemsContainer {
+	position: relative;
+}
+
+#listsHintContainer {
+	background: #DDD;
+	border: 1px solid #777;
+	color: #000;
+	display: none;
+	font-size: 11px;
+	padding: 2px 4px;
+	position: absolute;
+}
+
+#listsCategoryInput {
+	background: transparent;
+	border: 0;
+	color: inherit;
+	display: block;
+	float: left;
+	outline: none;
+}
+
+#listsSwitchViewContainer {
+	display: none;
+	float: right;
+	white-space: pre;
+}
+
+#listsButtonsContainer {
+	float: right;
+}
+
+.LISTSitem {
+	background: #9Cf;
+	border: 1px solid #82add8;
+	color: #000 !important;
+	cursor: default;
+	display: block;
+	float: left;
+	font-size: 11px;
+	line-height: 16px;
+	margin: 0 5px 3px 0;
+	padding: 0 5px;
+	position: relative;
+	white-space: nowrap;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+
+.LISTSitem .sprite-small {
+	cursor: pointer;
+}
+.LISTSitem .sprite-small.sort, .LISTSitem .sprite-small.sorted {
+	margin-left: 5px;
+}
+.LISTSitem .sprite-small.add {
+	margin-right: 3px;
+}
+
+.LISTSaddCategory {
+	background: #DDD;
+	border-color: #BBB;
+	cursor: pointer;
+}
+
+.LISTSitemOuter {
+	padding: 0 35px 0 4px;
+}
+
+.LISTSitemOuterAddCategory {
+	margin: 0 4px 0 18px;
+}
+
+.LISTSitem:hover {
+	text-decoration: none;
+}
+
+.LISTSitem:visited, .LISTSitem:active {
+	color: black;
+}
+
+.LISTSsuggestHover {
+	background-color: #D2E3FF;
+}
+
+/** View mode **/
+.listsViewMode {
+	border: none !important;
+}
+
+.listsViewMode #listsButtonsContainer {
+	float: none;
+	margin: 25px -10px -12px -10px;
+	padding: 5px;
+}
+
+.listsViewMode #listsItemsContainer {
+	padding: 5px 0;
+}
+
+.listsLoading {
+	background-image: url('http://images.wikia.com/common/skins/common/images/ajax.gif'); /* FIXME: Use wgStyleVersion formats */
+	background-repeat: no-repeat;
+	background-position: 99% 50%;
+}
+
+.listsSaving {
+	background-image: url('http://images.wikia.com/common/skins/common/images/ajax.gif');
+	background-repeat: no-repeat;
+	background-position: 99% 50%;
+}
+
+/** IE6 fixes **/
+* html #listsMainContainer,
+* html .LISTSitem {
+	height: 1%;
+}
+
+/* fix for YUI AutoComplete in CategorySelect */
+* html #article,
+* html #listsMainContainer {
+	z-index: 10 !important;
+}
+
+* html .listsViewMode #listsButtonsContainer {
+	margin: 0;
+}
+
+/* copied from monaco/css/widgets.css for Anwers skin */
+.yui-ac-content {
+	background: #FFFFFF none repeat scroll 0 0;
+	border: 1px solid #808080 !important;
+	color: #000000;
+	overflow: hidden;
+	position: absolute;
+	width: 100%;
+	z-index: 9050;
+}
+
+.yui-ac-content ul {
+	float: none !important;
+	list-style-image: none !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	width: 100%;
+}
+
+.yui-ac-content li {
+	cursor: default;
+	float:none !important;
+	font-size: 9pt;
+	margin: 0 !important;
+	padding: 1px 0 0 3px;
+	white-space: nowrap;
+}
+
+/* rt#26278 */
+.catlinks-allhidden {
+	display: block !important;
+}
+
+/* rt#20523 */
+#listsInfoboxCategory, #listsInfoboxSortKey { width: 98%; }
