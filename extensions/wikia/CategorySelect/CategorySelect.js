@@ -18,8 +18,8 @@ function initCatSelect() {
 }
 
 function positionSuggestBox() {
-	$('#csSuggestContainer').css('top', ($('#csCategoryInput').offset().top + $('#csCategoryInput').height() + 5) + 'px');
-	$('#csSuggestContainer').css('left', Math.min($('#csCategoryInput').offset().left, ($(window).width() - $('#csItemsContainer').offset().left - $('#csSuggestContainer').width() - 10)) + 'px');
+	$('#csSuggestContainer').css('top', ($('#csCategoryInput').get(0).offsetTop + $('#csCategoryInput').height() + 5) + 'px');
+	$('#csSuggestContainer').css('left', Math.min($('#csCategoryInput').get(0).offsetLeft, ($(window).width() - $('#csItemsContainer').get(0).offsetLeft - $('#csSuggestContainer').width() - 10)) + 'px');
 }
 
 function extractSortkey(text) {
@@ -391,7 +391,7 @@ function toggleCodeView() {
 		$('#csItemsContainer').css('display', 'none');
 		$('#csHintContainer').css('display', 'none');
 		$('#csCategoryInput').css('display', 'none');
-		$('#csSwitchView').get(0).innerHTML = csVisualView;
+		$('#csSwitchView').html(csVisualView);
 		$('#csWikitextContainer').css('display', 'block');
 		$('#wpCategorySelectWikitext').attr('value', '');	//remove JSON - this will inform PHP to use wikitext instead
 		$('#wpCategorySelectSourceType').attr('value', 'wiki');	//inform PHP what source it should use
