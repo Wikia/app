@@ -23,7 +23,9 @@ $messages['en'] = array(
 	'lists-desc' => 'Allows existing wikis or standalone wikis to easily create and share lists.',
 	'lists-default-category-prefix' => 'Lists/',
 	'lists-default-item-category-prefix' => 'Lists Containing/',
-
+	'lists-additem-button' => 'Add Item',
+	'lists-code-view' => 'Code view',
+	'lists-visual-view' => 'Visual view',
 
 );
 

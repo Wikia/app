@@ -1,20 +1,20 @@
 
 var oAutoComp;
 var categories;
-var fixCategoryRegexp = new RegExp('\\[\\[(?:' + csCategoryNamespaces + '):([^\\]]+)]]', 'i');
+var fixCategoryRegexp = new RegExp('\\[\\[(?:' + listsCategoryNamespaces + '):([^\\]]+)]]', 'i');
 var ajaxUrl = wgServer + wgScript + '?action=ajax';
-var csType = 'edit';
+var listsType = 'edit';
 
-function initCatSelect() {
-	if ( (typeof(initCatSelect.isint) != "undefined") && (initCatSelect.isint) ) {
+function initLists() {
+	if ( (typeof(initLists.isint) != "undefined") && (initLists.isint) ) {
 		return true;
 	}
-	initCatSelect.isint = true;
+	initLists.isint = true;
 }
 
 function positionSuggestBox() {
-	$('#csSuggestContainer').css('top', ($('#csCategoryInput').offset().top + $('#csCategoryInput').height() + 5) + 'px');
-	$('#csSuggestContainer').css('left', Math.min($('#csCategoryInput').offset().left, ($(window).width() - $('#csItemsContainer').offset().left - $('#csSuggestContainer').width() - 10)) + 'px');
+	$('#listsSuggestContainer').css('top', ($('#listsItemInput').offset().top + $('#listsItemInput').height() + 5) + 'px');
+	$('#listsSuggestContainer').css('left', Math.min($('#listsItemInput').offset().left, ($(window).width() - $('#listsItemsContainer').offset().left - $('#listsSuggestContainer').width() - 10)) + 'px');
 }
 
 function extractSortkey(text) {
@@ -57,20 +57,20 @@ function deleteCategory(e) {
 }
 
 function replaceAddToInput(e) {
-	$('#csAddCategoryButton').css('display', 'none');
-	$('#csCategoryInput').css('display', 'block');
+	$('#listsAddItemButton').css('display', 'none');
+	$('#listsItemInput').css('display', 'block');
 	positionSuggestBox();
-	$('#csHintContainer').css('display', 'block');
-	$('#csCategoryInput').focus();
+	$('#listsHintContainer').css('display', 'block');
+	$('#listsItemInput').focus();
 }
 
-function addAddCategoryButton() {
-	if ($('#csAddCategoryButton').length > 0) {
-		$('#csAddCategoryButton').css('display', 'block');
+function addAddItemButton() {
+	if ($('#listsAddItemButton').length > 0) {
+		$('#listsAddItemButton').css('display', 'block');
 	} else {
 		elementA = document.createElement('a');
-		elementA.id = 'csAddCategoryButton';
-		elementA.className = 'CSitem CSaddCategory'; //setAttribute doesn't work in IE
+		elementA.id = 'listsAddItemButton';
+		elementA.className = 'LISTSitem LISTSaddItem'; //setAttribute doesn't work in IE
 		elementA.tabindex = '-1';
 		elementA.onfocus = 'this.blur()';
 		elementA.onclick = function(e) {replaceAddToInput(this); return false;};
@@ -81,24 +81,24 @@ function addAddCategoryButton() {
 		elementImg.onclick = function(e) {replaceAddToInput(this); return false;};
 		elementA.appendChild(elementImg);
 
-		elementText = document.createTextNode(csAddCategoryButtonText);
+		elementText = document.createTextNode(listsAddItemButtonText);
 		elementA.appendChild(elementText);
 
-		$('#csItemsContainer').get(0).appendChild(elementA);
+		$('#listsItemsContainer').get(0).appendChild(elementA);
 	}
 }
 
 function inputBlur() {
-	if ($('#csCategoryInput').attr('value') == '') {
-		$('#csCategoryInput').css('display', 'none');
-		$('#csHintContainer').css('display', 'none');
-		addAddCategoryButton();
+	if ($('#listsItemInput').attr('value') == '') {
+		$('#listsItemInput').css('display', 'none');
+		$('#listsHintContainer').css('display', 'none');
+		addAddItemButton();
 	}
 }
 
 function addCategory(category, params, index) {
 	if (params === undefined) {
-		params = {'namespace': csDefaultNamespace, 'outerTag': '', 'sortkey': ''};
+		params = {'namespace': listsDefaultNamespace, 'outerTag': '', 'sortkey': ''};
 	}
 
 	if (index === undefined) {
@@ -113,14 +113,14 @@ function addCategory(category, params, index) {
 	params['sortkey'] = extractedParams['sort'] + params['sortkey'];
 
 	if (category == '') {
-		alert(csEmptyName);
+		alert(listsEmptyName);
 		return;
 	}
 
-	categories[index] = {'namespace': params['namespace'] ? params['namespace'] : csDefaultNamespace, 'category': category, 'outerTag': params['outerTag'], 'sortkey': params['sortkey']};
+	categories[index] = {'namespace': params['namespace'] ? params['namespace'] : listsDefaultNamespace, 'category': category, 'outerTag': params['outerTag']};
 
 	elementA = document.createElement('a');
-	elementA.className = 'CSitem';	//setAttribute doesn't work in IE
+	elementA.className = 'LISTSitem';	//setAttribute doesn't work in IE
 	elementA.tabindex = '-1';
 	elementA.onfocus = 'this.blur()';
 	elementA.setAttribute('catId', index);
@@ -134,11 +134,11 @@ function addCategory(category, params, index) {
 	elementImg.onclick = function(e) {WET.byStr('articleAction/deleteCategory'); deleteCategory(this); return false;};
 	elementA.appendChild(elementImg);
 
-	$('#csItemsContainer').get(0).insertBefore(elementA, $('#csCategoryInput').get(0));
-	if ($('#csCategoryInput').css('display') != 'none') {
-		$('#csHintContainer').css('display', 'block');
+	$('#listsItemsContainer').get(0).insertBefore(elementA, $('#listsItemInput').get(0));
+	if ($('#listsItemInput').css('display') != 'none') {
+		$('#listsHintContainer').css('display', 'block');
 	}
-	$('#csCategoryInput').attr('value', '');
+	$('#listsItemInput').attr('value', '');
 
 }
 
@@ -157,51 +157,51 @@ function generateWikitextForCategories() {
 function initializeCategories(cats) {
 	//move categories metadata from hidden field [JSON encoded] into array
 	if (cats === undefined) {
-		cats = $('#wpCategorySelectWikitext').length == 0 ? '' : $('#wpCategorySelectWikitext').attr('value');
+		cats = $('#wpListsWikitext').length == 0 ? '' : $('#wpListsWikitext').attr('value');
 		categories = cats == '' ? [] : eval(cats);
 	} else {
 		categories = cats;
 	}
 
 	//inform PHP what source should it use [this field exists only in 'edit page' mode]
-	if ($('#wpCategorySelectSourceType').length > 0) {
-		$('#wpCategorySelectSourceType').attr('value', 'json');
+	if ($('#wpListsSourceType').length > 0) {
+		$('#wpListsSourceType').attr('value', 'json');
 	}
 
-	addAddCategoryButton();
+	addAddItemButton();
 	for (var c=0; c < categories.length; c++) {
 		addCategory(categories[c].category, {'namespace': categories[c].namespace, 'outerTag': categories[c].outerTag, 'sortkey': categories[c].sortkey}, c);
 	}
 }
 
 function initializeDragAndDrop() {
-	initCatSelect();
+	initLists();
 	// TODO: If we want drag & drop, we'll have to write it from scratch in jQuery.  Once done, try to also update CategorySelect to not use YUI.
 }
 
 function toggleCodeView() {
-	if ($('#csWikitextContainer').css('display') != 'block') {	//switch to code view
+	if ($('#listsWikitextContainer').css('display') != 'block') {	//switch to code view
 		WET.byStr('editpage/codeviewCategory');
 
-		$('#csWikitext').attr('value', generateWikitextForCategories());
-		$('#csItemsContainer').css('display', 'none');
-		$('#csHintContainer').css('display', 'none');
-		$('#csCategoryInput').css('display', 'none');
-		$('#csSwitchView').get(0).innerHTML = csVisualView;
-		$('#csWikitextContainer').css('display', 'block');
-		$('#wpCategorySelectWikitext').attr('value', '');	//remove JSON - this will inform PHP to use wikitext instead
-		$('#wpCategorySelectSourceType').attr('value', 'wiki');	//inform PHP what source it should use
+		$('#listsWikitext').attr('value', generateWikitextForCategories());
+		$('#listsItemsContainer').css('display', 'none');
+		$('#listsHintContainer').css('display', 'none');
+		$('#listsCategoryInput').css('display', 'none');
+		$('#listsSwitchView').get(0).innerHTML = listsVisualView;
+		$('#listsWikitextContainer').css('display', 'block');
+		$('#wpListsWikitext').attr('value', '');	//remove JSON - this will inform PHP to use wikitext instead
+		$('#wpListsSourceType').attr('value', 'wiki');	//inform PHP what source it should use
 	} else {	//switch to visual code
 		WET.byStr('editpage/visualviewCategory');
 
-		$.post(ajaxUrl, {rs: "CategorySelectAjaxParseCategories", rsargs: $('#csWikitext').attr('value') + ' '}, function(result){
+		$.post(ajaxUrl, {rs: "CategorySelectAjaxParseCategories", rsargs: $('#listsWikitext').attr('value') + ' '}, function(result){
 			if (result.error !== undefined) {
 				$().log('AJAX result: error');
 				alert(result.error);
 			} else if (result.categories !== undefined) {
 				$().log('AJAX result: OK');
 				//delete old categories [HTML items]
-				var items = $('#csItemsContainer').find('a');
+				var items = $('#listsItemsContainer').find('a');
 				for (var i=items.length-1; i>=0; i--) {
 					if (items.get(i).getAttribute('catId') !== null) {
 						items.get(i).parentNode.removeChild(items.get(i));
@@ -209,9 +209,9 @@ function toggleCodeView() {
 				}
 
 				initializeCategories(result['categories']);
-				$('#csSwitchView').html(csCodeView);
-				$('#csWikitextContainer').css('display', 'none');
-				$('#csItemsContainer').css('display', 'block');
+				$('#listsSwitchView').html(listsCodeView);
+				$('#listsWikitextContainer').css('display', 'none');
+				$('#listsItemsContainer').css('display', 'block');
 			}
 		}, "json");
 	}
@@ -238,7 +238,7 @@ function moveElement(movedId, prevSibId) {
 	}
 	//reorder catId in HTML elements
 	var itemId = 0;
-	var items = $('#csItemsContainer').get(0).getElementsByTagName('a');
+	var items = $('#listsItemsContainer').get(0).getElementsByTagName('a');
 	for (var catId=0; catId < newCat.length; catId++) {
 		if (newCat[catId] === undefined) {
 			continue;
@@ -255,7 +255,7 @@ function inputKeyPress(e) {
 
 		//TODO: stop AJAX call for AutoComplete
 		e.preventDefault();
-		category = $('#csCategoryInput').attr('value');
+		category = $('#listsCategoryInput').attr('value');
 		if (category != '' && oAutoComp._oCurItem == null) {
 			addCategory(category);
 		}
@@ -280,17 +280,17 @@ function submitAutoComplete(comp, resultListItem) {
 }
 
 function collapseAutoComplete() {
-	if ($('#csCategoryInput').css('display') != 'none' && $('#csWikitextContainer').css('display') != 'block') {
-		$('#csHintContainer').css('display', 'block');
+	if ($('#listsCategoryInput').css('display') != 'none' && $('#listsWikitextContainer').css('display') != 'block') {
+		$('#listsHintContainer').css('display', 'block');
 	}
 }
 
 function expandAutoComplete(sQuery , aResults) {
-	$('#csHintContainer').css('display', 'none');
+	$('#listsHintContainer').css('display', 'none');
 }
 
 function regularEditorSubmit(e) {
-	$('#wpCategorySelectWikitext').attr('value', $.toJSON(categories));
+	$('#wpListsWikitext').attr('value', $.toJSON(categories));
 }
 
 function getCategories(sQuery) {
@@ -321,26 +321,26 @@ function initAutoComplete() {
 
 function initHandlers() {
 	//handle [enter] for non existing categories
-	$('#csCategoryInput').keypress(inputKeyPress);
-	$('#csCategoryInput').blur(inputBlur);
+	$('#listsCategoryInput').keypress(inputKeyPress);
+	$('#listsCategoryInput').blur(inputBlur);
 	if (typeof formId != 'undefined') {
 		$('#'+formId).submit(regularEditorSubmit);
 	}
 }
 
 //`view article` mode
-function showCSpanel() {
+function showLISTSpanel() {
 	$.loadYUI(function() {
-		initCatSelect();
-		csType = 'view';
+		initLists();
+		listsType = 'view';
 		$.post(ajaxUrl, {rs: 'CategorySelectGenerateHTMLforView'}, function(result){
 			//prevent multiple instances when user click very fast
-			if ($('#csMainContainer').length > 0) {
+			if ($('#listsMainContainer').length > 0) {
 				return;
 			}
 			var el = document.createElement('div');
 			el.innerHTML = result;
-			$('#catlinks').get(0).appendChild(el);
+			$('#listlinks').get(0).appendChild(el);
 			initHandlers();
 			initAutoComplete();
 			initializeDragAndDrop();
@@ -352,20 +352,20 @@ function showCSpanel() {
 			css.attr({
 				rel:  "stylesheet",
 				type: "text/css",
-				href: wgExtensionsPath+'/wikia/CategorySelect/CategorySelect.css?'+wgStyleVersion
+				href: wgExtensionsPath+'/wikia/Lists/Lists.css?'+wgStyleVersion
 			});
 			setTimeout(replaceAddToInput, 60);
 			setTimeout(positionSuggestBox, 666); //sometimes it can take more time to parse downloaded CSS - be sure to position hint in proper place
-			$('#catlinks').removeClass('csLoading');
+			$('#listlinks').removeClass('listsLoading');
 		}, "html");
 
-		$('#csAddCategorySwitch').css('display', 'none');
+		$('#listsAddItemSwitch').css('display', 'none');
 	});
 }
 
-function csSave() {
-	if ($('#csCategoryInput').attr('value') != '') {
-		addCategory($('#csCategoryInput').attr('value'));
+function listsSave() {
+	if ($('#listsCategoryInput').attr('value') != '') {
+		addCategory($('#listsCategoryInput').attr('value'));
 	}
 	var pars = 'rs=CategorySelectAjaxSaveCategories&rsargs[]=' + wgArticleId + '&rsargs[]=' + encodeURIComponent($.toJSON(categories));
 	//$.post(ajaxUrl, {rs: 'CategorySelectAjaxSaveCategories', 'rsargs[]': [wgArticleId, $.toJSON(categories)]}, function(result){
@@ -377,38 +377,38 @@ function csSave() {
 			if (result.info == 'ok' && result.html != '') {
 				tmpDiv = document.createElement('div');
 				tmpDiv.innerHTML = result['html'];
-				var innerCatlinks = $('#mw-normal-catlinks').get(0);
+				var innerCatlinks = $('#mw-normal-listlinks').get(0);
 				if (innerCatlinks) {
-					$('#mw-normal-catlinks').get(0).parentNode.replaceChild(tmpDiv.firstChild, $('#mw-normal-catlinks').get(0));
+					$('#mw-normal-listlinks').get(0).parentNode.replaceChild(tmpDiv.firstChild, $('#mw-normal-listlinks').get(0));
 				} else {
-					$('#catlinks').get(0).insertBefore(tmpDiv.firstChild, $('#catlinks').get(0).firstChild);
+					$('#listlinks').get(0).insertBefore(tmpDiv.firstChild, $('#listlinks').get(0).firstChild);
 				}
 			} else if (result.error != undefined) {
 				alert(result.error);
 			}
-			csCancel();
+			listsCancel();
 		}
 	});
 
 	// add loading indicator and disable buttons
-	$('#csButtonsContainer').addClass('csSaving');
-	$('#csSave').get(0).disabled = true;
-	$('#csCancel').get(0).disabled = true;
+	$('#listsButtonsContainer').addClass('listsSaving');
+	$('#listsSave').get(0).disabled = true;
+	$('#listsCancel').get(0).disabled = true;
 }
 
-function csCancel() {
-	var csMainContainer = $('#csMainContainer').get(0);
-	csMainContainer.parentNode.removeChild(csMainContainer);
-	$('#csAddCategorySwitch').css('display', 'block');
+function listsCancel() {
+	var listsMainContainer = $('#listsMainContainer').get(0);
+	listsMainContainer.parentNode.removeChild(listsMainContainer);
+	$('#listsAddItemSwitch').css('display', 'block');
 }
 
 wgAfterContentAndJS.push(function() {
-	if (csType == 'edit') {
+	if (listsType == 'edit') {
 		initHandlers();
 		initAutoComplete();
 		initializeDragAndDrop();
 		initializeCategories();
 		//show switch after loading categories
-		$('#csSwitchViewContainer').css('display', 'block');
+		$('#listsSwitchViewContainer').css('display', 'block');
 	}
 });

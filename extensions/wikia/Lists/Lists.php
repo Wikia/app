@@ -16,10 +16,12 @@
  * subdirectory, and add the following line to LocalSettings.php:
  *     require_once("$IP/extensions/wikia/Lists/Lists.php");
  *
- * This code was heavily based on CategorySelect.
+ * This code was heavily based on/forked from CategorySelect.  If there are references to categories that
+ * in the code that don't make sense, it's because this was a rapid, hacky, prototype.  Please fix any
+ * ambiguities as you encounter them.
 
 
-// TODO: Extension which is a fork of the CategorySelect... to basically render the wikiText for a list differently.  It should only be called conditionally based on the namespace of the page.
+// TODO: Extension which is a fork of the CategorySelect... to basically render the wikiText for a list differently.
 
 // TODO: Add an extension which creates a box floated to the right which is a small vanity-box about the creator of the list & tells what other lists he/she has created
 
@@ -50,7 +52,7 @@ if (!defined('MEDIAWIKI')) {
 	echo "This is MediaWiki extension named 'Lists'.\n";
 	exit(1) ;
 }
- 
+
 define('NS_LISTS', 300);
 define('NS_LISTS_TALK', 301);
 
@@ -148,10 +150,9 @@ function ListsInitializeHooks( $output, $article, $title, $user, $request, $wiki
 					return true;
 				}
 				//view mode
-// TODO: PORT THESE OVER
-//				$wgHooks['Skin::getCategoryLinks::end'][] = 'CategorySelectGetCategoryLinksEnd';
-//				$wgHooks['Skin::getCategoryLinks::begin'][] = 'CategorySelectGetCategoryLinksBegin';
-//				$wgHooks['MakeGlobalVariablesScript'][] = 'CategorySelectSetupVars';
+				$wgHooks['Skin::getCategoryLinks::end'][] = 'ListsGetCategoryLinksEnd';
+				$wgHooks['Skin::getCategoryLinks::begin'][] = 'ListsGetCategoryLinksBegin';
+				$wgHooks['MakeGlobalVariablesScript'][] = 'ListsSetupVars';
 			} else if($action == 'edit' || $action == 'submit') {
 				//edit mode
 // TODO: PORT THESE OVER
@@ -162,7 +163,7 @@ function ListsInitializeHooks( $output, $article, $title, $user, $request, $wiki
 //				$wgHooks['EditPage::showDiff::begin'][] = 'CategorySelectDiffArticle';
 //				$wgHooks['EditForm::MultiEdit:Form'][] = 'CategorySelectDisplayCategoryBox';
 
-//				$wgHooks['MakeGlobalVariablesScript'][] = 'CategorySelectSetupVars';
+				$wgHooks['MakeGlobalVariablesScript'][] = 'ListsSetupVars';
 			}
 		}
 	}
@@ -178,16 +179,30 @@ function ListsInitializeHooks( $output, $article, $title, $user, $request, $wiki
 } // end ListsInitializeHooks()
 
 
+/**
+ * Set variables for JS usage.
+ */
+function ListsSetupVars($vars) {
+	global $wgParser, $wgContLang;
+
+	$vars['listsAddItemButtonText'] = wfMsg('lists-additem-button');
+	$vars['listsCategoryNamespaces'] = 'Category|' . $wgContLang->getNsText(NS_CATEGORY);
+	$vars['listsDefaultNamespace'] = $wgContLang->getNsText(NS_CATEGORY);
+	$vars['listsCodeView'] = wfMsg('lists-code-view');
+	$vars['listsVisualView'] = wfMsg('lists-visual-view');
+
+	return true;
+}
 
 
 /**
  * Remove regular category list under article (in view mode)
  */
-function LinksGetCategoryLinksBegin(&$categoryLinks) {
+function ListsGetCategoryLinksBegin(&$categoryLinks) {
 	global $wgRequest, $wgOut;
 
 	$action = $wgRequest->getVal('action', 'view');
-	if (($action == 'view' || $action == 'purge') && count($wgOut->mCategoryLinks) == 0) {
+	if (($action == 'view' || $action == 'purge') && count($wgOut->mCategoryLinks) == 0) { // TODO: PORT THIS FROM CATEGORYSELECT
 		ListsGetCategoryLinksEnd($categoryLinks);
 		return false;
 	}
@@ -202,23 +217,21 @@ function ListsGetCategoryLinksEnd(&$categoryLinks) {
 
 	$action = $wgRequest->getVal('action', 'view');
 	//for redirected page this hook is ran twice - check for button existence and don't add second one (fixes rt#12223)
-	if (($action == 'view' || $action == 'purge') && strpos($categoryLinks, '<div id="csAddCategorySwitch"') === false) {
+	if (($action == 'view' || $action == 'purge') && strpos($categoryLinks, '<div id="listsAddItemSwitch"') === false) {
 		global $wgBlankImgUrl;
-		$categoryLinks .= ' <div id="csAddCategorySwitch" class="noprint" style="background:#DDD;position:relative;float:left;border: 1px solid #BBB;-moz-border-radius:3px;-webkit-border-radius:3px;padding:0 5px;line-height: 16px;"><img src="'.$wgBlankImgUrl.'" class="sprite-small add" /><a href="#" onfocus="this.blur();" style="color:#000;font-size:0.85em;text-decoration:none;display:inline-block;" rel="nofollow">' . wfMsg('categoryselect-addcategory-button') . '</a></div>';
+		$categoryLinks .= ' <div id="listsAddItemSwitch" class="noprint" style="background:#DDD;position:relative;float:left;border: 1px solid #BBB;-moz-border-radius:3px;-webkit-border-radius:3px;padding:0 5px;line-height: 16px;"><img src="'.$wgBlankImgUrl.'" class="sprite-small add" /><a href="#" onfocus="this.blur();" style="color:#000;font-size:0.85em;text-decoration:none;display:inline-block;" rel="nofollow">' . wfMsg('lists-additem-button') . '</a></div>';
 		$wgOut->addInlineScript(<<<JS
-/* CategorySelect */
+/* Lists */
 wgAfterContentAndJS.push(function() {
-	$(".catlinks-allhidden").css("display", "block");
-	$('#csAddCategorySwitch').children('a').click(function() {
-		WET.byStr('articleAction/addCategory');
-
-		$.getScript(wgServer + wgScriptPath + '?action=ajax&rs=CategorySelectGetCategories');
+	$(".listlinks-allhidden").css("display", "block");
+	$('#listsAddItemSwitch').children('a').click(function() {
+		WET.byStr('articleAction/addListItem');
 
 		$.loadYUI( function() {
-			$.getScript(wgExtensionsPath+ '/wikia/CategorySelect/CategorySelect.js?' + wgStyleVersion, function(){showCSpanel();});
+			$.getScript(wgExtensionsPath+ '/wikia/Lists/Lists.js?' + wgStyleVersion, function(){showLISTSpanel();});
 		});
 
-		$('#catlinks').addClass('csLoading');
+		$('#listlinks').addClass('listsLoading');
 		return false;
 	});
 });
@@ -227,7 +240,3 @@ JS
 	}
 	return true;
 }
-
-
-
-
