@@ -288,6 +288,7 @@ class SquidUpdate {
 					Wikia::json_encode( array(
 						'key' => $key,
 						'url' => $url,
+                                                'time' => time(),
 					) ),
 					array( 'exchange' => 'amq.topic', 'bytes_message' => 1 )
 				);
