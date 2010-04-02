@@ -58,7 +58,7 @@ function extractSortkey(text) {
 function deleteCategory(e) {
 	var catId = e.parentNode.getAttribute('catId');
 	e.parentNode.parentNode.removeChild(e.parentNode);
-	delete categories[catId];
+	categories.splice(catId, 1);
 }
 
 // TODO: PORT AWAY FROM YUI
