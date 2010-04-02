@@ -11,7 +11,7 @@
 class WikiaStatsAutoHubsConsumerDB {
 	private $dbs =  null;
     private $article_limits = array();
-    private $refresh_time = 60; 
+    private $refresh_time = 300; 
     private $baned_user_groups = array('staff', 'bot', 'patrollers');
 	/**
 	 * constructor
@@ -442,9 +442,14 @@ $tag_id, $lang, $limit );
 
 		// get avatars for the users
 		foreach( $out as $key => $val ) {
-			$avatar = Masthead::newFromUserId( $val['user_id'] );			
-			$out[$key]['avatar'] = $avatar->display( 30, 30 );   
-			$out[$key]['userpage'] = $this->getUserWiki($val['user_id']). 'User:' . $val['username'];                   
+			$userWiki = $this->getUserWiki($val['user_id']);
+			if ( $userWiki !== false ) {
+				list ( $wikiUrl, $pageUrl ) = array_values($userWiki);
+				$avatar = Masthead::newFromUserId( $val['user_id'] );
+				$avatar->setUserPageUrl($pageUrl);
+				$out[$key]['avatar'] = $avatar->display( 30, 30 );   
+				$out[$key]['userpage'] = $pageUrl; 
+			}
 		}
 
 		$out = array("value" => $out, "age" => time());
@@ -454,45 +459,78 @@ $tag_id, $lang, $limit );
 	}
 
 	public function getUserWiki( $user_id ) {
-		global $wgMemc, $wgExternalDatawareDB;
+		global $wgContLang, $wgMemc, $wgExternalDatawareDB;
 		
-		$dbw = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );			
+		wfProfileIn( __METHOD__ );
+		$dbw = wfGetDB( DB_SLAVE, 'blobs', $wgExternalDatawareDB );			
 		
-		$mcKey = wfSharedMemcKey( "auto_hubs", "user_wiki", $user_id  );
+		$mcKey = wfSharedMemcKey( "auto_hubs", "gt_user_wiki", $user_id  );
 		
 		$out = $wgMemc->get($mcKey,null);
 		if( !empty($out) ) {
+			wfProfileOut( __METHOD__ );
 			return $out;
 		}
-		
-		$res = $dbw->select(
-				array( 'user_summary' ),
-				array( 'user_id , 
-						city_id ' ),
-				"city_id > 0 and user_id  = " . ((int) $user_id),
-				__METHOD__,
-				array(
-					'ORDER BY' 	=> 'ts_edit_last desc',
-					'LIMIT'		=> 1
-				)
-		);	
-		
-		$row = $this->dbs->fetchRow( $res );
-		
-		$dbc = WikiFactory::db( DB_MASTER );
 
-		$res = $dbc->select(
-				array( "city_list"),
-				array( " city_url " ),
-				" city_id  = " . ((int) $row['city_id']),
-				__METHOD__
-		);
+		$oUser = User::newFromId( $user_id );
+		if ( !$oUser instanceof User ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+
+		$oRes = $dbw->select(
+			array( 'user_summary' ),
+			array( 'edit_count', 'city_id' ),
+			array( 'user_id' => $user_id ),
+			__METHOD__,
+			array(
+				'ORDER BY' 	=> 'edit_count desc',
+				'LIMIT'		=> 11
+			)
+		);	
+		$city_id = 0; while ( $oRow = $dbw->fetchObject( $oRes ) ) {
+			if ( $oRow->city_id > 0 ) {
+				$oRowPage = $dbw->selectRow(
+					array( 'pages' ),
+					array( 'page_wikia_id' ),
+					array( 
+						'page_title'     => $oUser->getName(), 
+						'page_namespace' => NS_USER,
+						'page_wikia_id'  => $oRow->city_id
+					),
+					__METHOD__
+				);
+				if ( $oRowPage && isset($oRowPage->page_wikia_id) ) {
+					$city_id = $oRowPage->page_wikia_id;
+					break;
+				}
+			}
+		}
+		$dbw->freeResult( $oRes );
+
+		if ( empty($city_id) ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+
+		$oGTitle = GlobalTitle::newFromText( $oUser->getName(), NS_USER, $city_id );
+
+		$result = array();
+		if ( is_object($oGTitle) ) {
+			$result = array(
+				'userWikiUrl' => $oGTitle->getServer(),
+				'userPageUrl' => $oGTitle->getFullURL()
+			);
+		}
 		
-		$out = $this->dbs->fetchRow( $res );
-		$out = $out['city_url'];
+		if ( empty($result) ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
 		
-		$wgMemc->set( $mcKey, $out,60*60*24 );
-		return $out;
+		$wgMemc->set( $mcKey, $result, 60*60*24 );
+		wfProfileOut( __METHOD__ );
+		return $result;
 	}
 
 	/**
