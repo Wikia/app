@@ -26,6 +26,7 @@ $messages['en'] = array(
 	'lists-additem-button' => 'Add Item',
 	'lists-code-view' => 'Code view',
 	'lists-visual-view' => 'Visual view',
+	'lists-empty-name' => 'Provide category name (part before |)',
 
 );
 
