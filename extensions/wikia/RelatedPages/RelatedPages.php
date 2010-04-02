@@ -23,7 +23,7 @@ function RelatedPages_GetInCategories($a, $categories, $b) {
 
 	if( $ismain ) {
 		return true;
-	}	
+	}
 
 	if(!empty($wgTitle) && in_array($wgTitle->getNamespace(), $wgContentNamespaces)) {
 		if(count($categories) > 0) {
@@ -132,27 +132,29 @@ function RelatedPages_Display(&$template, &$templateEngine) {
 
 				$i = 0;
 
-                                $templateEngine->data['bodytext'] .= '<div style="clear:both;"></div><div id="RelatedPages" class="widget" style="margin-top: 10px;"><div class="accent" style="padding: 6px; font-weight: bold;">Check out these related pages:</div><div style="padding: 10px; text-align: center; line-height: 1.5em;">';
+                                $html = '<div style="clear:both;"></div><div id="RelatedPages" class="widget" style="margin-top: 10px;"><div class="accent" style="padding: 6px; font-weight: bold;">Check out these related pages:</div><div style="padding: 10px; text-align: center; line-height: 1.5em">';
 
 				foreach($out as $item) {
 					$title = Title::newFromId($item);
 					if(!empty($title) && $title->exists() && $i < 4) {
 
-						$templateEngine->data['bodytext'] .= '<a href="'.htmlspecialchars($title->getFullUrl()).'">'.htmlspecialchars($title->getPrefixedText()).'</a>';
+						$html .= '<a href="'.htmlspecialchars($title->getFullUrl()).'">'.htmlspecialchars($title->getPrefixedText()).'</a>';
 
 						if($i % 2 == 0) {
 							global $wgCdnStylePath;
-							$templateEngine->data['bodytext'] .= '<img src="'.$wgCdnStylePath.'/skins/monobook/bullet.gif" style="margin: 0 15px"/>';
+							$html .= '<img src="'.$wgCdnStylePath.'/skins/monobook/bullet.gif" style="margin: 0 15px; vertical-align: baseline; position: relative; top: -1px"/>';
 						}
 						if($i % 2 == 1 && $i < 3) {
-							$templateEngine->data['bodytext'] .= '<br />';
+							$html .= '<br/>';
 						}
 
 						$i++;
 					}
 				}
 
-				$templateEngine->data['bodytext'] .= '</div></div>';
+				$html .= '</div></div>';
+
+				$templateEngine->data['bodytext'] .= $html;
 			}
 		}
 
