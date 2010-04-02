@@ -84,7 +84,7 @@ class AutoCreateWikiLocalJob extends Job {
 		 * main page should be move in first stage of create wiki, but sometimes
 		 * is too early for that. This is fallback function
 		 */
-		
+
 		$this->wikiaName = isset( $this->mParams[ "title" ] )
 			? $this->mParams[ "title" ]
 			: WikiFactory::getVarValueByName( "wgSitename", $this->mParams[ "city_id"], true );
@@ -92,7 +92,7 @@ class AutoCreateWikiLocalJob extends Job {
 			? $this->mParams[ "language" ]
 			: WikiFactory::getVarValueByName( "wgLanguageCode", $this->mParams[ "city_id"] );
 
-		
+
 		$this->moveMainPage();
 		$this->changeStarterContributions();
 		$this->setWelcomeTalkPage();
@@ -214,7 +214,7 @@ class AutoCreateWikiLocalJob extends Job {
 			 */
 			$talkArticle = new Article( $talkPage, 0 );
 			if( !$talkArticle->exists() ) {
-				$talkArticle->doEdit( $talkBody,  wfMsg( "autocreatewiki-welcometalk-log" ), EDIT_FORCE_BOT );
+				$talkArticle->doEdit( $talkBody,  wfMsg( "autocreatewiki-welcometalk-log" ), EDIT_MINOR | EDIT_FORCE_BOT );
 			}
 			else {
 				Wikia::log( __METHOD__, "talkpage", sprintf("%s already exists", $talkPage->getFullURL()) );
@@ -235,13 +235,13 @@ class AutoCreateWikiLocalJob extends Job {
 		$source = wfMsgForContent('Mainpage');
 		$target = $wgSitename;
 
-		if( !$sourceTitle ) { 
+		if( !$sourceTitle ) {
 			$sourceTitle = Title::newFromText( "Main_Page" );
-			if( !$sourceTitle ) { 
-				Wikia::log( __METHOD__, "err", "Invalid page title: {$source} and Main_page" ); 
-				return;  
-			} 
-		} 
+			if( !$sourceTitle ) {
+				Wikia::log( __METHOD__, "err", "Invalid page title: {$source} and Main_page" );
+				return;
+			}
+		}
 
 		$mainArticle = new Article( $sourceTitle, 0 );
 		if( $mainArticle->exists() ) {
@@ -500,10 +500,10 @@ class AutoCreateWikiLocalJob extends Job {
 		}
 		wfProfileOut( __METHOD__ );
 	}
-	
+
 	/**
 	 * set welcome message on user board
-	 * 
+	 *
 	 * @access private
 	 */
 	private function sendWelcomeBoardMessage() {
@@ -516,10 +516,10 @@ class AutoCreateWikiLocalJob extends Job {
 					$wgUser = Wikia::staffForLang( $this->wikiaLang );
 					$wgUser = ( $wgUser instanceof User ) ? $wgUser : User::newFromName( "Angela" );
 				}
-				
-				$message = wfMsgExt( 
-					$message, 
-					array( 'language' => $this->wikiaLang ), 
+
+				$message = wfMsgExt(
+					$message,
+					array( 'language' => $this->wikiaLang ),
 					array(
 						$this->mFounder->getName(),
 						$wgUser->getName(),
