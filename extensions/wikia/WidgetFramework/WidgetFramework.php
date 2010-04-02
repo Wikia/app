@@ -134,6 +134,22 @@ class WidgetFramework {
 					$this->config[1][] = array('type' => 'WidgetCategoryCloud', 'id' => 146);
 				}
 
+				if (in_array($wgCityId, array(
+					26337 /* Glee */,
+					1573 /* The Office */,
+					2111 /* Degrassi */,
+					6342 /* iCarly */,
+					9863 /* True Blood */,
+					2889 /* Ed Edd and Eddy */,
+					4055 /* One Tree Hill */,
+					4093 /* Suitelife */,
+					681 /* Desperate Housewives */,
+					8388 /* Secret Life */,
+					38772 /* Alice in Wonderland */
+				))) {
+					array_unshift($this->config[1], array('type' => 'WidgetSlideshow', 'id' => 147));
+				}
+
 			} else if($this->skinname == "quartz") {
 				$this->config = array(
 					1 => array(
