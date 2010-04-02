@@ -87,6 +87,11 @@ class Masthead {
 	 */
 	public $avatarUrl = null;
 
+	/**
+	 * custom URL to user page - if set, will be overriden
+	 */
+	public $userPageUrl = null;
+
 	public function __construct( User $User ) {
 		wfProfileIn( __METHOD__ );
 		$this->mUser = $User;
@@ -190,6 +195,28 @@ class Masthead {
 			$username = $this->mUser->getName();
 		}
 		return $username;
+	}
+
+	/**
+	 * setUserPageUrl -- set url for user page
+	 *
+	 * @access public
+	 */
+	public function setUserPageUrl($url) {
+		$this->userPageUrl = $url;
+	}
+
+	/**
+	 * getUserPageUrl -- url for user page
+	 *
+	 * @access public
+	 */
+	public function getUserPageUrl() {
+		if ( isset($this->userPageUrl) ) 
+			$url = $this->userPageUrl;
+		else 
+			$url = $this->mUser->getUserPage()->getFullUrl();
+		return $url;
 	}
 
 	/**
@@ -310,7 +337,7 @@ class Masthead {
 			$additionalAttribs .= " onclick=\"WET.byStr('{$tracker}')\"";
 		}
 		if( ! $this->mUser->isAnon() ) {
-			$url = sprintf('<a href="%s" %s>%s</a>', $this->mUser->getUserPage()->getFullUrl(), $additionalAttribs, $image );
+			$url = sprintf('<a href="%s" %s>%s</a>', $this->getUserPageUrl(), $additionalAttribs, $image );
 		}
 		else {
 			$url = $image;
