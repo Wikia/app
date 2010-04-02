@@ -25,7 +25,7 @@
 	position: absolute;
 }
 
-#listsCategoryInput {
+#listsItemInput {
 	background: transparent;
 	border: 0;
 	color: inherit;
@@ -71,7 +71,7 @@
 	margin-right: 3px;
 }
 
-.LISTSaddCategory {
+.LISTSaddItem {
 	background: #DDD;
 	border-color: #BBB;
 	cursor: pointer;
@@ -169,7 +169,7 @@
 }
 
 /* rt#26278 */
-.catlinks-allhidden {
+.listlinks-allhidden {
 	display: block !important;
 }
 
