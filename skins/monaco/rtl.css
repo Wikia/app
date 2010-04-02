@@ -1,5 +1,5 @@
 body {
-	direction: rtl;	
+	direction: rtl;
 }
 .reset caption, .reset th {
 	text-align: right;
@@ -7,7 +7,7 @@ body {
 
 #wikiaBranding {
 	position: absolute;
-	right: 7px;	
+	right: 7px;
 }
 #userData {
 	float: left;
@@ -85,7 +85,7 @@ body {
 	direction: ltr;
 }
 #wiki_logo, #wikia_logo {
-	left: auto;	
+	left: auto;
 	right: 5px;
 	overflow: hidden;
 }
@@ -102,12 +102,12 @@ body {
 	right: 5px;
 }
 #link_box ul {
-	float: right;	
+	float: right;
 }
 
 #search_field {
 	left: auto;
-	right: 5px;	
+	right: 5px;
 }
 #search_button {
 	clip: rect(22px 20px 44px 0px);
@@ -118,12 +118,12 @@ body {
 
 #navigation em {
 	right: auto;
-	left: 8px;	
+	left: 8px;
 }
 
 #navigation a.yuimenuitemlabel-hassubmenu {
 	padding-right: 5px;
-	padding-left: 15px;	
+	padding-left: 15px;
 }
 #articleFooter td.col2 {
 	border-left: 0;
@@ -212,7 +212,7 @@ ul.star-rating {
 	position: relative;
 	float: none;
 	width: 95%;
-	left: 5px;	
+	left: 5px;
 }
 #preftoc li a {
 	margin: 0 5px 0 5px;
@@ -246,6 +246,11 @@ ul.star-rating {
 
 * html #headerMenuHub {
 	width: 200px;
+}
+
+#requestWikiData {
+	left: auto;
+	right: 221px;
 }
 
 #request_wiki.loggedin {
