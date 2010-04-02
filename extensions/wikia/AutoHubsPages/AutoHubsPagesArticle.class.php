@@ -16,11 +16,11 @@ class AutoHubsPagesArticle extends Article {
 		$pars = array();
 		$pars['slider'] = array();
 		if ( class_exists("WikiaStatsAutoHubsConsumerDB") ){
-			
+
 			$data = AutoHubsPagesData::newFromTagTitle($wgTitle);
-			$tagname = AutoHubsPagesHelper::getHubNameFromTitle($wgTitle);	
+			$tagname = AutoHubsPagesHelper::getHubNameFromTitle($wgTitle);
 			$vars = AutoHubsPagesHelper::getHubsFeedsVariable( $tagname );
-		
+
 			$lang = "en";
 			$isMenager = $wgUser->isAllowed( 'corporatepagemanager' );
 			$datafeeds = new WikiaStatsAutoHubsConsumerDB(DB_SLAVE);
@@ -34,15 +34,15 @@ class AutoHubsPagesArticle extends Article {
 			$pars['tag_id'] = $tag_id;
 			if ($isMenager) {
 				$temp = $datafeeds->getTopWikis($tag_id, $lang, 30, true, true);
-				
-				$pars['topWikis1'] = $temp['value'];				
+
+				$pars['topWikis1'] = $temp['value'];
 			} else {
 				$temp = $datafeeds->getTopWikis($tag_id, $lang, 20, false);
 
 				$pars['topWikis1'] = array_slice($temp['value'],0,10);
 				$pars['topWikis2'] = array_slice($temp['value'],10,10);
 			}
-			
+
 			$pars['topWikisOne'] = $temp['value'][$temp['number_one']];
 
 			$temp = $datafeeds->getTopUsers($tag_id,'en',5);
@@ -53,15 +53,15 @@ class AutoHubsPagesArticle extends Article {
 			} else {
 				$temp = $datafeeds->getTopBlogs($tag_id, "en", 3, 1);
 			}
-			
+
 			$pars['topBlogs'] = $temp['value'];
-		
+
 			if ($isMenager) {
 				$temp = $datafeeds->getTopArticles($tag_id, $lang, 15, 3, true, true);
 			} else {
 				$temp = $datafeeds->getTopArticles($tag_id, "en", 5, 1);
 			}
-			
+
 			$pars['hotSpots'] = $temp['value'];
 			$pars['slider'] = CorporatePageHelper::parseMsgImg( 'hub-' . $tag_name . '-slider', true );
 
@@ -78,11 +78,13 @@ class AutoHubsPagesArticle extends Article {
 	public function view() {
 		global $wgOut;
 		wfLoadExtensionMessages('AutoHubsPages');
-		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );	
+		$data = $this->prepareData();
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars(array(
-			"data" => $this->prepareData()
+			"data" => $data
 		));
-		$wgOut->addHTML( $oTmpl->render("article") );		
+		$wgOut->setPageTitle( wfMsg('hub-header', $data['title']) );
+		$wgOut->addHTML( $oTmpl->render("article") );
 	}
 
 	/**
@@ -93,10 +95,10 @@ class AutoHubsPagesArticle extends Article {
 	 */
 	static public function ArticleFromTitle( &$title, &$article ) {
 		if( !AutoHubsPagesHelper::isHubsPage( $title ) ) {
-			return true;			
+			return true;
 		}
 
-		$article = new AutoHubsPagesArticle( $title );	
+		$article = new AutoHubsPagesArticle( $title );
 
 		return true;
 	}
