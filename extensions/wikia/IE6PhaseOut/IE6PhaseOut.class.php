@@ -7,10 +7,20 @@ class IE6PhaseOut {
 	 */
 	public static function showNotice(&$skin, &$tpl) {
 		wfProfileIn(__METHOD__);
+		global $wgTitle, $wgRequest;
 
 		// show this message only in Monaco & Answers skins
 		$skinName = get_class($skin);
 		if (!in_array($skinName, array('SkinAnswers', 'SkinMonaco'))) {
+			wfProfileOut(__METHOD__);
+			return true;
+		}
+
+		// show this message only on view of main namespace pages
+		$isMainNamespacePage = !empty($wgTitle) && $wgTitle->getNamespace() == NS_MAIN;
+		$isPageView = in_array($wgRequest->getVal('action', 'view'), array('view', 'purge'));
+
+		if (!$isMainNamespacePage || !$isPageView) {
 			wfProfileOut(__METHOD__);
 			return true;
 		}
