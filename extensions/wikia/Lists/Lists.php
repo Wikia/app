@@ -188,6 +188,7 @@ function ListsSetupVars($vars) {
 	$vars['listsAddItemButtonText'] = wfMsg('lists-additem-button');
 	$vars['listsCategoryNamespaces'] = 'Category|' . $wgContLang->getNsText(NS_CATEGORY);
 	$vars['listsDefaultNamespace'] = $wgContLang->getNsText(NS_CATEGORY);
+	$vars['listsEmptyName'] = wfMsg('lists-empty-name');
 	$vars['listsCodeView'] = wfMsg('lists-code-view');
 	$vars['listsVisualView'] = wfMsg('lists-visual-view');
 

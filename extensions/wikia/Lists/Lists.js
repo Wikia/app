@@ -131,7 +131,7 @@ function addCategory(category, params, index) {
 	elementImg = document.createElement('img');
 	elementImg.src = wgBlankImgUrl;
 	elementImg.className = 'sprite-small close';
-	elementImg.onclick = function(e) {WET.byStr('articleAction/deleteCategory'); deleteCategory(this); return false;};
+	elementImg.onclick = function(e) {WET.byStr('articleAction/deleteListItem'); deleteCategory(this); return false;};
 	elementA.appendChild(elementImg);
 
 	$('#listsItemsContainer').get(0).insertBefore(elementA, $('#listsItemInput').get(0));
@@ -181,7 +181,7 @@ function initializeDragAndDrop() {
 
 function toggleCodeView() {
 	if ($('#listsWikitextContainer').css('display') != 'block') {	//switch to code view
-		WET.byStr('editpage/codeviewCategory');
+		WET.byStr('editpage/codeviewLists');
 
 		$('#listsWikitext').attr('value', generateWikitextForCategories());
 		$('#listsItemsContainer').css('display', 'none');
@@ -192,7 +192,7 @@ function toggleCodeView() {
 		$('#wpListsWikitext').attr('value', '');	//remove JSON - this will inform PHP to use wikitext instead
 		$('#wpListsSourceType').attr('value', 'wiki');	//inform PHP what source it should use
 	} else {	//switch to visual code
-		WET.byStr('editpage/visualviewCategory');
+		WET.byStr('editpage/visualviewLists');
 
 		$.post(ajaxUrl, {rs: "CategorySelectAjaxParseCategories", rsargs: $('#listsWikitext').attr('value') + ' '}, function(result){
 			if (result.error !== undefined) {
@@ -251,7 +251,7 @@ function moveElement(movedId, prevSibId) {
 
 function inputKeyPress(e) {
 	if(e.keyCode == 13) {
-		WET.byStr('articleAction/enterCategory');
+		WET.byStr('articleAction/enterListItem');
 
 		//TODO: stop AJAX call for AutoComplete
 		e.preventDefault();
@@ -261,13 +261,13 @@ function inputKeyPress(e) {
 		}
 		//hide input and show button when [enter] pressed with empty input
 		if (category == '') {
-			WET.byStr('articleAction/enterCategoryEmpty');
+			WET.byStr('articleAction/enterListItemEmpty');
 
 			inputBlur();
 		}
 	}
 	if(e.keyCode == 27) {
-		WET.byStr('articleAction/escapeCategory');
+		WET.byStr('articleAction/escapeListItem');
 
 		inputBlur();
 	}
