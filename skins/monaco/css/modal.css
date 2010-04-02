@@ -157,7 +157,7 @@ h1.modalTitle img {
 }
 
 .ajaxregister_button_enable {
-	color: black; 
+	color: black;
 }
 
 .ajaxregister_button_enable span {
@@ -244,3 +244,10 @@ h1.modalTitle img {
     left:0;
     top:0;
 }
+
+/* RTL fixes */
+body.rtl h1.modalTitle img {
+	left: 5px;
+	right: auto;
+}
+
