@@ -3,7 +3,7 @@
 class IE6PhaseOut {
 
 	/**
-	 * Show message for Internet Explorer 6 users in site notice area
+	 * Show message for Internet Explorer 6 users below first heading
 	 */
 	public static function showNotice(&$skin, &$tpl) {
 		wfProfileIn(__METHOD__);
@@ -18,7 +18,7 @@ class IE6PhaseOut {
 		wfLoadExtensionMessages('IE6PhaseOut');
 		$msg = wfMsgExt('ie6-phaseout-message', array('parseinline'));
 
-		$notice = '<div id="ie6-phaseout-message" class="usermessage" style="display: block">' . $msg . '</div>';
+		$notice = '<!--[if lt IE 7]><div id="ie6-phaseout-message" class="usermessage" style="display: block">' . $msg . '</div><![endif]-->';
 
 		$tpl->data['bodytext'] = $notice . $tpl->data['bodytext'];
 
