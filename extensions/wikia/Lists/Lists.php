@@ -64,7 +64,13 @@ $wgExtensionCredits['other'][] = array(
 	'description-msg' => 'lists-desc',
 );
 
+$wgExtraNamespaces[NS_LISTS] = "Lists";
+$wgExtraNamespaces[NS_LISTS_TALK] = "Lists_talk";
 $wgExtensionFunctions[] = 'ListsInit';
+$wgAjaxExportList[] = 'ListsAjaxParseCategories';
+$wgAjaxExportList[] = 'ListsAjaxSaveCategories';
+$wgAjaxExportList[] = 'ListsGenerateHTMLforView';
+$wgAjaxExportList[] = 'ListsGetCategories';
 $wgExtensionMessagesFiles['Lists'] = dirname(__FILE__) . '/Lists.i18n.php';
 
 /**
@@ -135,7 +141,7 @@ function ListsInitializeHooks( $output, $article, $title, $user, $request, $wiki
 		if( !in_array( get_class($wgUser->getSkin()), $allowedSkins ) ) {
 			return true;
 		}
-		
+
 		// Don't initialize when user will see the source instead of the editor, similar to CategorySelect with RT#25246
 		if ( !$title->quickUserCan('edit') && ( NS_SPECIAL != $title->mNamespace ) ) {
 			return true;
@@ -150,8 +156,13 @@ function ListsInitializeHooks( $output, $article, $title, $user, $request, $wiki
 					return true;
 				}
 				//view mode
-				array_unshift($wgHooks['Skin::getCategoryLinks::end'], 'ListsGetCategoryLinksEnd');
-				array_unshift($wgHooks['Skin::getCategoryLinks::begin'], 'ListsGetCategoryLinksBegin');
+				// Make sure to run this hook first in case CategorySelect is also enabled.
+				if(isset($wgHooks['Skin::getCategoryLinks::begin'])){
+					array_unshift($wgHooks['Skin::getCategoryLinks::begin'], 'ListsGetCategoryLinksBegin');
+				} else {
+					$wgHooks['Skin::getCategoryLinks::begin'][] = 'ListsGetCategoryLinksBegin';
+				}
+				$wgHooks['Skin::getCategoryLinks::end'][] = 'ListsGetCategoryLinksEnd';
 				$wgHooks['MakeGlobalVariablesScript'][] = 'ListsSetupVars';
 			} else if($action == 'edit' || $action == 'submit') {
 				//edit mode
@@ -205,8 +216,7 @@ function ListsGetCategoryLinksBegin(&$categoryLinks) {
 	$action = $wgRequest->getVal('action', 'view');
 	if (($action == 'view' || $action == 'purge') && count($wgOut->mCategoryLinks) == 0) { // TODO: PORT THIS FROM CATEGORYSELECT
 		ListsGetCategoryLinksEnd($categoryLinks);
-// TODO: Allow CatgeorySelect to still run.
-//		return false;
+		return false;
 	}
 	return true;
 }
@@ -242,3 +252,66 @@ JS
 	}
 	return true;
 }
+
+
+/**
+ * Add required JS & CSS and return HTML [for 'edit article' mode]
+ */
+function ListsGenerateHTMLforEdit($formId = '') {
+	global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgCategorySelectMetaData;
+
+	// TODO: RE-ENABLE IF WE ADD AUTO-COMPLETE
+	//$wgOut->addScript("<script type=\"text/javascript\">var formId = '$formId';".ListsGetCategories(true)."</script>");
+
+	$wgOut->addScript("<script type=\"text/javascript\" src=\"$wgExtensionsPath/wikia/Lists/Lists.js?$wgStyleVersion\"></script>");
+	$wgOut->addScript("<link rel=\"stylesheet\" type=\"text/css\" href=\"$wgExtensionsPath/wikia/Lists/Lists.css?$wgStyleVersion\" />");
+
+	// TODO: PORT THIS METHOD FROM HERE DOWN
+	$categories = is_null($wgCategorySelectMetaData) ? '' : CategorySelectChangeFormat($wgCategorySelectMetaData['categories'], 'array', 'wiki');
+
+	$result = '
+	<script type="text/javascript">document.write(\'<style type="text/css">#csWikitextContainer {display: none}</style>\');</script>
+	<div id="csMainContainer">
+		<div id="csSuggestContainer">
+			<div id="csHintContainer">' . wfMsg('categoryselect-suggest-hint') . '</div>
+		</div>
+		<div id="csItemsContainer">
+			<input id="csCategoryInput" type="text" style="display: none; outline: none;" />
+		</div>
+		<div id="csWikitextContainer"><textarea id="csWikitext" name="csWikitext">' . $categories . '</textarea></div>
+		<div id="csSwitchViewContainer"><a id="csSwitchView" href="#" onclick="toggleCodeView(); return false;" onfocus="this.blur()" tabindex="-1" rel="nofollow">' . wfMsg('categoryselect-code-view') . '</a></div>
+		<div class="clearfix"></div>
+	</div>
+	';
+
+	return $result;
+} // end ListsGenerateHTMLforEdit()
+
+/**
+ * Add required JS & CSS and return HTML [for 'view article' mode]
+ */
+function ListsGenerateHTMLforView() {
+	global $wgExtensionsPath, $wgStyleVersion;
+	wfLoadExtensionMessages('Lists');
+
+	// TODO: PORT THIS METHOD FROM HERE DOWN
+	$result = '
+	<div id="csMainContainer" class="csViewMode">
+		<div id="csSuggestContainer">
+			<div id="csHintContainer">' . wfMsg('categoryselect-suggest-hint') . '</div>
+		</div>
+		<div id="csItemsContainer" class="clearfix">
+			<input id="csCategoryInput" type="text" style="display: none; outline: none;" />
+		</div>
+		<div id="csButtonsContainer" class="color1">
+			<input type="button" id="csSave" onclick="WET.byStr(\'articleAction/saveCategory\');csSave()" value="' . wfMsg('categoryselect-button-save') . '" />
+			<input type="button" id="csCancel" onclick="WET.byStr(\'articleAction/cancelCategory\');csCancel()" value="' . wfMsg('categoryselect-button-cancel') . '" />
+		</div>
+	</div>
+	';
+
+	$ar = new AjaxResponse($result);
+	$ar->setCacheDuration(60 * 60);
+
+	return $ar;
+} // end ListsGenerateHTMLforView()
