@@ -333,7 +333,7 @@ function showLISTSpanel() {
 	$.loadYUI(function() {
 		initLists();
 		listsType = 'view';
-		$.post(ajaxUrl, {rs: 'CategorySelectGenerateHTMLforView'}, function(result){
+		$.post(ajaxUrl, {rs: 'ListsGenerateHTMLforView'}, function(result){
 			//prevent multiple instances when user click very fast
 			if ($('#listsMainContainer').length > 0) {
 				return;
@@ -377,8 +377,8 @@ function listsSave() {
 			if (result.info == 'ok' && result.html != '') {
 				tmpDiv = document.createElement('div');
 				tmpDiv.innerHTML = result['html'];
-				var innerCatlinks = $('#mw-normal-listlinks').get(0);
-				if (innerCatlinks) {
+				var innerListLinks = $('#mw-normal-listlinks').get(0);
+				if (innerListLinks) {
 					$('#mw-normal-listlinks').get(0).parentNode.replaceChild(tmpDiv.firstChild, $('#mw-normal-listlinks').get(0));
 				} else {
 					$('#listlinks').get(0).insertBefore(tmpDiv.firstChild, $('#listlinks').get(0).firstChild);
