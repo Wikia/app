@@ -56,12 +56,15 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
+ * @author Lloffiwr
  * @author Siebrand
  */
 $messages['qqq'] = array(
 	'stf_frm4_cancel' => '{{Identical|Cancel}}',
+	'stf_frm4_invite' => 'Button text',
 	'stf_throttle' => 'Needs plural support',
 	'stf_ctx_invite' => 'Supports plural for $1.',
+	'stf_your_friends' => 'Apparently the pipe character is replaced with an HTML break. Very strange coding practice. The whole message is a column header, I think.',
 );
 
 /** Afrikaans (Afrikaans)
@@ -206,24 +209,73 @@ Ma soñj deoc'h ez eo dre fazi, roit dimp da c'houzout, mar plij, war support@wi
 );
 
 /** Welsh (Cymraeg)
+ * @author Babel AutoCreate
  * @author Lloffiwr
  */
 $messages['cy'] = array(
+	'invitespecialpage' => 'Gwahodd ffrindiau i ymuno â Wikia',
+	'sendtoafriend-desc' => '[[Special:InviteSpecialPage|Gwahodd ffrindiau i ymuno â Wikia]]',
+	'sendtoafriend-button-desc' => 'Yn gosod botwm "Anfon at ffrind" ar dudalennau',
 	'stf_button' => 'Anfoner yr erthygl hon at ffrind',
+	'stf_after_reg' => '[[Special:InviteSpecialPage|Gwahoddwch ffrind i ymuno â Wikia!]]',
 	'stf_subject' => 'Mae $2 wedi anfon erthygl o $1 atoch!',
+	'stf_confirm' => 'Anfonwyd y neges! Am wahodd pobl eraill?',
 	'stf_error' => 'Cafwyd gwall wrth ddanfon yr e-bost.',
 	'stf_error_name' => 'Wnaethoch chi ddim rhoi eich enw.',
 	'stf_error_from' => 'Wnaethoch chi ddim rhoi eich cyfeiriad e-bost.',
+	'stf_error_to' => 'Nid ydych wedi ysgrifennu cyfeiriad e-bost eich ffrind.',
 	'stf_frm1' => 'Eich cyfeiriad e-bost:',
+	'stf_frm2' => 'Users in this category indicate they have skill level 5 for language íslenska.',
 	'stf_msg_label' => "Y neges i'w hanfon",
 	'stf_name_label' => 'Eich enw',
 	'stf_email_label' => 'Eich cyfeiriad e-bost',
+	'stf_frm3_send' => "Sut mae?
+
+Mae $1 yn meddwl y byddech yn mwynhau darllen y dudalen Wikia isod!
+
+$2
+
+Dewch draw i'w weld!",
+	'stf_frm3_invite' => "Sut mae?
+
+Rwyf newydd ymuno â'r wici hwn yn Wikia... $1
+
+Dewch draw i'w weld!",
+	'stf_frm4_send' => 'Anfoner',
+	'stf_frm4_cancel' => 'Diddymer',
+	'stf_frm4_invite' => 'Anfoner y gwahoddiad!',
+	'stf_multiemail' => 'Am anfon at fwy nag un?',
+	'stf_frm5' => '(bydd URL y safle hwn yn cael ei gosod wrth gwt eich neges)',
+	'stf_frm6' => "Cau'r ffenestr hon",
+	'stf_abuse' => 'Anfonwyd yr e-bost hwn drwy Wikia gan $1.
+Os ydych yn credu mai drwy gamgymeriad y cafodd ei anfon, rhowch wybod i ni yn support@wikia.com, os gwelwch yn dda.',
+	'stf_ctx_invite' => 'Mwy nag un? Gwahanwch nhw gydag atalnodau - hyd at $1 ohonynt!',
+	'stf_ctx_invalid' => "Mae'r enw defnyddiwr neu'r cyfrinair a deipiasoch yn annilys. Rhowch gynnig arall arni.",
 	'stf_sending' => 'Arhoswch ...',
+	'stf_back_to_article' => "Nôl i'r erthygl",
+	'stf_most_emailed' => 'Users in this category indicate they have knowledge of language íslenska.',
+	'stf_most_popular' => "Dyma'r erthyglau mwyaf poblogaidd ar $1:",
+	'stf_add_emails' => 'Ychwanegu cyfeiriadau e-bost:',
+	'stf_your_email' => 'Eich gwasanaeth e-bost',
+	'stf_your_login' => 'Eich enw defnyddiwr',
+	'stf_your_password' => 'Eich cyfrinair',
+	'stf_your_name' => 'Eich enw',
+	'stf_your_address' => 'Eich cyfeiriad e-bost',
+	'stf_we_dont_keep' => "Ni fyddwn yn cadw'r cyfeiriad e-bost hwn na'r cyfrinair",
+	'stf_need_approval' => 'Ni anfonir e-byst heb eich caniatâd',
+	'stf_message' => 'Neges',
+	'stf_instructions' => '1. Dewiswch eich ffrindiau. | 2. Cliciwch "$1"',
+	'stf_select_all' => 'Dewis pawb',
+	'stf_select_friends' => 'Dewis ffrindiau:',
 );
 
-/** German (Deutsch) */
+/** German (Deutsch)
+ * @author LWChris
+ */
 $messages['de'] = array(
 	'invitespecialpage' => 'Lade Freunde zu Wikia ein',
+	'sendtoafriend-desc' => '[[Special:InviteSpecialPage|Freunde einladen Wikia beizutreten]]',
+	'sendtoafriend-button-desc' => 'Zeigt einen "Weiterempfehlen"-Button auf den Seiten',
 	'stf_button' => 'Artikel an einen Freund versenden',
 	'stf_after_reg' => '[[Special:InviteSpecialPage|Lade einen Freund zu Wikia ein!]].',
 	'stf_subject' => '$2 hat dir einen Artikel von $1 geschickt!',
@@ -254,9 +306,9 @@ Schau doch mal vorbei!",
 	'stf_frm5' => '(Die URL dieser Seite wird an deine Nachricht angehängt.)',
 	'stf_frm6' => 'Fenster schließen',
 	'stf_throttle' => 'Aus Sicherheitsgründen kannst du nur {{PLURAL:$1|1 Einladung|$1 Einladungen}} pro Tag verschicken.',
-	'stf_abuse' => 'Diese E-Mail wurde über Wikia verschickt.
-Wenn du glaubst, dass dieses Angebot missbraucht wird, teile uns dies bitte unter support@wikia.com mit!',
-	'stf_ctx_invite' => 'Mehrere Adressen? Mit Komma getrennt - bis zu $1!',
+	'stf_abuse' => 'Diese E-Mail wurde von $1 über Wikia verschickt.
+Wenn du glaubst, dass sie irrtümlicherweise gesendet wurde, teile uns dies bitte unter support@wikia.com mit.',
+	'stf_ctx_invite' => 'Mehr als eine? Mit Komma trennen - bis zu $1!',
 	'stf_ctx_check' => 'Checke Kontakte',
 	'stf_ctx_empty' => 'Unter diesem Benutzerkonto existieren keine Kontakte.',
 	'stf_ctx_invalid' => 'Der Benutzername oder das Passwort ist ungültig. Bitte probier es noch einmal.',
@@ -603,10 +655,12 @@ Si tu pensa que isto ha essite inviate in error, per favor face nos lo saper a s
 );
 
 /** Japanese (日本語)
+ * @author Naohiro19
  * @author Tommy6
  */
 $messages['ja'] = array(
 	'invitespecialpage' => '友人を招待する',
+	'sendtoafriend-button-desc' => '"Send to a friend"ボタンをページに表示する',
 	'stf_button' => 'この記事を友達に送ります',
 	'stf_after_reg' => '友達をウィキアに招待してみましょう! [[Special:InviteSpecialPage|こちら]]をクリックしてください。',
 	'stf_subject' => '$2さんが$1からの記事を送りました。',

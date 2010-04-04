@@ -83,12 +83,19 @@ $messages['cs'] = array(
 	'wva-notallowed' => 'Na této wiki nemůžete vkládat videa.',
 );
 
-/** German (Deutsch) */
+/** German (Deutsch)
+ * @author LWChris
+ */
 $messages['de'] = array(
 	'wva-success' => 'Videoseite für $1 wurde erfolgreich erstellt.',
 	'wva-success-replaced' => 'Videoseite für $1 wurde erfolgreich ersetzt.',
+	'wva-failure' => 'Gib bitte gültige Parameter ein.',
+	'wva-name' => 'Name eingeben:',
 	'wva-url' => 'Gib die URL hier ein:',
+	'wva-add' => 'Hinzufügen',
 	'wva-title' => 'Video von URL hinzufügen',
+	'wva-notlogged' => 'Du musst dich einloggen oder registrieren um Videos einzufügen.',
+	'wva-notallowed' => 'Du kannst in diesem Wiki keine Videos einfügen.',
 );
 
 /** Spanish (Español)

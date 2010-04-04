@@ -25,6 +25,13 @@ $messages['en'] = array(
 	'protectsite-unprotect' => 'Unprotect',
 );
 
+/** Message documentation (Message documentation)
+ * @author EugeneZelenko
+ */
+$messages['qqq'] = array(
+	'protectsite-comment' => '{{Identical|Comment}}',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -40,6 +47,13 @@ $messages['af'] = array(
 	'protectsite-until' => 'Beveilig tot:',
 	'protectsite-protect' => 'Beskerm',
 	'protectsite-unprotect' => 'Verwyder beskerming',
+);
+
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'protectsite-comment' => 'Камэнтар:',
 );
 
 /** Breton (Brezhoneg)
@@ -67,6 +81,32 @@ $messages['br'] = array(
 	'protectsite-until' => 'Gwarezet betek :',
 	'protectsite-protect' => 'Gwareziñ',
 	'protectsite-unprotect' => 'Diwareziñ',
+);
+
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'protectsite' => 'Seite schützen',
+	'protectsite-text-protect' => '<!-- Anweisungen/Kommentare/Richtlinie zur Verwendung -->',
+	'protectsite-text-unprotect' => '<!-- Anweisungen/Kommentare wenn geschützt -->',
+	'protectsite-title' => 'Seitenschutz Einstellungen',
+	'protectsite-allowall' => 'Alle Benutzer',
+	'protectsite-allowusersysop' => 'Registrierte Benutzer und Administratoren',
+	'protectsite-allowsysop' => 'Nur Administratoren',
+	'protectsite-createaccount' => 'Erlaube die Erstellung neuer Accounts von',
+	'protectsite-createpage' => 'Erlaube Erstellung von Seiten von',
+	'protectsite-edit' => 'Erlaube Bearbeiten von Seiten von',
+	'protectsite-move' => 'Erlaube Verschieben von Seiten von',
+	'protectsite-upload' => 'Erlaube Datei-Uploads von',
+	'protectsite-timeout' => 'Sperrdauer:',
+	'protectsite-timeout-error' => "'''Ungültige Sperrdauer.'''",
+	'protectsite-maxtimeout' => 'Maximum:',
+	'protectsite-comment' => 'Grund:',
+	'protectsite-ucomment' => 'Aufhebungsgrund:',
+	'protectsite-until' => 'Geschützt bis:',
+	'protectsite-protect' => 'Schützen',
+	'protectsite-unprotect' => 'Freigeben',
 );
 
 /** Spanish (Español)
@@ -156,7 +196,14 @@ $messages['gl'] = array(
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
+	'protectsite' => 'Oldal védelme',
+	'protectsite-title' => 'Oldal védelmi beállításai',
+	'protectsite-allowall' => 'Összes felhasználó',
+	'protectsite-allowsysop' => 'Csak adminisztrátorok',
+	'protectsite-timeout' => 'Időtúllépés:',
+	'protectsite-maxtimeout' => 'Legfeljebb:',
 	'protectsite-comment' => 'Megjegyzés:',
+	'protectsite-ucomment' => 'Védelem feloldása megjegyzés:',
 	'protectsite-protect' => 'Védelem',
 	'protectsite-unprotect' => 'Védelem feloldása',
 );
@@ -208,6 +255,20 @@ $messages['ja'] = array(
 	'protectsite-ucomment' => '保護解除の理由:',
 	'protectsite-protect' => '保護',
 	'protectsite-unprotect' => '保護解除',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'protectsite-title' => 'Astellunge vun de Späre vum Site',
+	'protectsite-allowall' => 'All Benotzer',
+	'protectsite-allowusersysop' => 'Registréiert Benotzer an Administrateuren',
+	'protectsite-allowsysop' => 'Nëmmen Administrateuren',
+	'protectsite-maxtimeout' => 'Maximum:',
+	'protectsite-comment' => 'Bemierkung:',
+	'protectsite-until' => 'Gespaart bis:',
+	'protectsite-protect' => 'Spären',
 );
 
 /** Macedonian (Македонски)

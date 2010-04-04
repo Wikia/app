@@ -21,6 +21,20 @@ $messages['af'] = array(
 	'ajaxpoll-submit' => 'Stem!',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Wizardist
+ */
+$messages['be-tarask'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp; ад усіх галасоў',
+	'ajaxpoll-thankyou' => 'Дзякуй за Ваш голас!',
+	'ajaxpoll-error' => 'Адбылася памылка падчас захаваньня Вашага голасу, калі ласка, паспрабуйце яшчэ.',
+	'ajaxpoll-summary' => 'Апытаньне было створанае ў $1 $2, цяпер {{PLURAL:$3|прагаласаваў|прагаласавала|прагаласавалі}} $3 {{PLURAL:$3|чалавек|чалавекі|чалавек}}.',
+	'ajaxpoll-submit' => 'Прагаласаваць!',
+	'ajaxpoll-closed' => 'Апытаньне скончанае. Глядзіце вынікі.',
+	'ajaxpoll-submitting' => 'Калі ласка, пачакайце, пакуль захоўваецца Ваш голас…',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
@@ -34,8 +48,11 @@ $messages['br'] = array(
 	'ajaxpoll-submitting' => 'Gortozit mar plij, emeur o kas ho vot...',
 );
 
-/** German (Deutsch) */
+/** German (Deutsch)
+ * @author LWChris
+ */
 $messages['de'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp;aller Stimmen',
 	'ajaxpoll-thankyou' => 'Vielen Dank für deine Stimme!',
 	'ajaxpoll-error' => 'Es gab ein Problem bei der Verarbeitung deiner Stimme. Probiere es bitte noch einmal.',
 	'ajaxpoll-summary' => 'Die Umfrage wurde erstellt am $1 $2. Bisher haben $3 Nutzer abgestimmt.',

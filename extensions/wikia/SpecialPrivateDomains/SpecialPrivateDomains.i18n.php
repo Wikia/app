@@ -48,6 +48,34 @@ $messages['br'] = array(
 	'privatedomainsinstructions' => 'Diskwelet eo roll domanioù ar chomlec\'hioù postel zo aotreet evit embannerien ar wiki-mañ. Pep linenn a ziskouez ur rakverk postel a ro tro d\'an embannerien da vont warno. Furmadet e tle ar roll  bezañ gant ur rakverk dre linenn. Da skouer,  :</p><p style="width: 20%; padding:5px; border: 1px solid grey;">cs.stanford.edu<br /> stanfordalumni.org</p><p>p>This would allow edits from anyone with the email address whatever@cs.stanford.edu or whatever@stanfordalumni.org</p><p><b>Ebarzhit roll an domanioù aotreet er voest amañ amañ dindan ha klikit war « saveteiñ».</b>',
 );
 
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'privatedomains_nomanageaccess' => "Sorry, du hast nicht genügend Rechte, um die erlaubten privaten Domains für dieses Wiki zu verwalten. Nur Wiki Bürokraten und Mitarbeiter haben Zugang.</p><p>Wenn du nicht eingeloggt bist, solltest du das wahrscheinlich <a href='/wiki/Special:Userlogin'>machen</a>.",
+	'privatedomains' => 'Private Domains verwalten',
+	'privatedomains_ifemailcontact' => 'Andernfalls wende dich bitte an [[Special:Emailuser/$1|$1]] falls du Fragen hast.',
+	'saveprivatedomains_success' => 'Änderungen an privaten Domains gespeichert.',
+	'privatedomains_invalidemail' => 'Tut uns leid, aber der Zugang zu diesem Wiki ist auf Mitglieder von $1 beschränkt. Wenn du eine E-Mail-Adresse von $1 besitzt, kannst du es betreten, oder bestätige deine E-Mail Adresse in deinen Konteneinstellungen <a href=/wiki/Special:Preferences>hier</a>. Du kannst weiterhin Seiten in diesem Wiki asehen, wirst sie aber nicht bearbeiten können.',
+	'privatedomains_affiliatenamelabel' => 'Name der Organisation:',
+	'privatedomains_emailadminlabel' => 'Kontakt-Benutzername bei Zugangsproblemen oder Fragen:',
+	'privatedomainsinstructions' => 'Unten ist die Liste der erlaubten E-Mail-Domains für Editoren dieses Wikis. Jede Zeile bezeichnet einen E-Mail-Suffix, dem Bearbeitungen erlaubt werden. Dies sollte mit einem Suffix pro Zeile formatiert werden. Zum Beispiel:</p><p style="width: 20%; padding:5px; border: 1px solid grey;"> cs.stanford.edu<br /> stanfordalumni.org</p><p>Dies würde Bearbeitungen von jedem mit der E-Mail-Adresse whatever@cs.stanford.edu oder whatever@stanfordalumni.org erlauben.</p><p><b>Gib die erlaubten Domains in das Textfeld unterhalb ein und klicke auf "Speichern".</b>',
+);
+
+/** Spanish (Español)
+ * @author Pertile
+ */
+$messages['es'] = array(
+	'privatedomains_nomanageaccess' => "Lo sentimos, no tiene los privilegios suficientes para administrar los dominios privados permitidos para esta wiki. Solamente los burócratas wiki y los miembros del personal tienen acceso.</p><p>Si no accedió al sistema, probablemente <a href='/wiki/Special:Userlogin'>debería hacerlo</a>.",
+	'privatedomains' => 'Administrar Dominios Privados',
+	'privatedomains_ifemailcontact' => 'En caso contrario, póngase en contacto con [[Special:Emailuser/$1|$1]] por cualquier consulta.',
+	'saveprivatedomains_success' => 'Se guardaron los cambios en los Dominios Privados.',
+	'privatedomains_invalidemail' => 'Lo sentimos, el acceso a esta wiki está restringido a los miembros de $1. Si posee una cuenta de correo electrónico afiliada a $1, puede ingresarla o volver a confirmar su dirección de correo electrónico en la página de preferencias de su cuenta <a href=/wiki/Special:Preferences>aquí</a>. Todavía puede ver las páginas en esta wiki, pero no podrá editarlas.',
+	'privatedomains_affiliatenamelabel' => 'Nombre de la organización:',
+	'privatedomains_emailadminlabel' => 'Nombre de usuario del contacto para problemas o consultas:',
+	'privatedomainsinstructions' => 'A continuación se presenta la lista de dominios de correo electrónico permitidos para los editores de esta wiki. Cad línea designa un sufijo de correo electrónico que puede editar en esta wiki. Esta debería tener un formato de un sufijo por línea. Por ejemplo:</p><p style="width: 20%; padding:5px; border: 1px solid grey;">cs.stanford.edu<br /> stanfordalumni.org</p><p>El ejemplo anterior debería permitir las ediciones de alguien cuya dirección de correo sea loquesea@cs.stanford.edu o loquesea@stanfordalumni.org</p><p><b>Ingrese los dominios permitidos en el cuadro de texto que se muestra debajo y haga clic en "guardar".</b>',
+);
+
 /** Finnish (Suomi)
  * @author Centerlink
  */

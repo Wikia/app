@@ -138,6 +138,13 @@ $messages['pms'] = array(
 	'tog-disablelinksuggest' => "Mostra pa ij sugeriment ëd j'anliure",
 );
 
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'tog-disablelinksuggest' => 'Não apresentar sugestões de links',
+);
+
 /** Brazilian Portuguese (Português do Brasil)
  * @author Daemorris
  */

@@ -153,6 +153,13 @@ $messages['pms'] = array(
 	'mostpopularcategories' => 'Categorìe pi popolar',
 );
 
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'mostpopularcategories' => 'Categorias mais populares',
+);
+
 /** Brazilian Portuguese (Português do Brasil)
  * @author Daemorris
  */

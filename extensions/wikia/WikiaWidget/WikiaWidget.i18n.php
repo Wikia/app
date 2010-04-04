@@ -48,6 +48,13 @@ $messages['cs'] = array(
 	'wikiawidget' => 'Wikia widgety',
 );
 
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'wikiawidget' => 'Wikia Widgets',
+);
+
 /** Spanish (Español)
  * @author Peter17
  * @author Translationista
@@ -148,6 +155,13 @@ $messages['oc'] = array(
  */
 $messages['pms'] = array(
 	'wikiawidget' => 'Widget ëd Wikia',
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'wikiawidget' => 'Widgets Wikia',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

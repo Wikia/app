@@ -82,6 +82,28 @@ $messages['br'] = array(
 	'multilookuplastedit' => "Kemm diwezhañ ar chomlec'h IP-mañ :",
 );
 
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'multilookup' => 'Multiaccount Suche',
+	'multilookupstitle' => 'Multiaccount Suche',
+	'multilookupselectuser' => 'Suche nach Konten von derselben IP-Adresse in mehreren Wikis',
+	'multilookupgo' => 'Suchen',
+	'multilookupnotspecify' => 'Du hast noch keine IP angegeben',
+	'multilookupnext' => 'Nächste',
+	'multilookupprevious' => 'Vorherige',
+	'multilookupnbrresult' => 'Anzahl der Ergebnisse:',
+	'multilookupinvalidresults' => 'Ungültige Ergebnisse!',
+	'multilookupnoresultfound' => 'Kein Ergebnis gefunden!',
+	'multilookupwiki' => 'Wiki',
+	'multilookuplink' => 'Beiträge-Link',
+	'multilookupdetails' => 'Details anzeigen',
+	'multilookuplistwikiainfo' => 'Liste von Wikis, in denen Artikel bearbeitet wurden von Benutzer mit der IP-Adresse: <b>$1</b>',
+	'multilookupinvaliduser' => '<p class="error">IP-Adresse "<b>$1</b>" existiert nicht. Überprüfe die angegebene IP-Adresse auf mögliche Tippfehler.</p>',
+	'multilookuplastedit' => 'Letzte Bearbeitung mit dieser IP-Adresse:',
+);
+
 /** Spanish (Español)
  * @author Translationista
  */

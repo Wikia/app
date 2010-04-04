@@ -42,11 +42,14 @@ $messages['br'] = array(
 	'mostvisitedpageslatest' => 'e kerzh ar $1 minutenn ziwezhañ',
 );
 
-/** German (Deutsch) */
+/** German (Deutsch)
+ * @author LWChris
+ */
 $messages['de'] = array(
 	'mostvisitedpages' => 'Häufig aufgerufene Seiten',
 	'mostvisitedpagessearchtext' => 'Artikelname:',
 	'mostvisitedpagessearchbtn' => 'Suchen',
+	'mostvisitedpageslatest' => 'in den letzten $1 Minuten',
 );
 
 /** Spanish (Español)
@@ -109,6 +112,7 @@ $messages['hu'] = array(
 	'mostvisitedpages' => 'Legnézettebb lapok',
 	'mostvisitedpagessearchtext' => 'Szócikk neve:',
 	'mostvisitedpagessearchbtn' => 'keresés',
+	'mostvisitedpageslatest' => 'az utóbbi $1 percben',
 );
 
 /** Interlingua (Interlingua)
@@ -248,6 +252,16 @@ $messages['sv'] = array(
 	'mostvisitedpagessearchtext' => 'Artikelns namn:',
 	'mostvisitedpagessearchbtn' => 'sök',
 	'mostvisitedpageslatest' => 'under de senaste $1 minuterna',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'mostvisitedpages' => 'ఎక్కువగా చూసిన పేజీలు',
+	'mostvisitedpagessearchtext' => 'వ్యాసపు పేరు:',
+	'mostvisitedpagessearchbtn' => 'వెతుకు',
+	'mostvisitedpageslatest' => 'గత $1 నిమిషాలలో',
 );
 
 /** Ukrainian (Українська)

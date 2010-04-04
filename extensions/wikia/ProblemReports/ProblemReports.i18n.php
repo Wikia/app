@@ -119,6 +119,7 @@ Please rewrite your message.',
 $messages['qqq'] = array(
 	'pr_mailer_go_to_wiki' => 'What does $1 stands for here?',
 	'pr_table_description' => '{{Identical|Description}}',
+	'pr_table_comments' => '{{Identical|Comment}}',
 	'pr_table_status' => '{{Identical|Status}}',
 	'pr_table_actions' => '{{Identical|Action}}',
 );
@@ -189,6 +190,7 @@ $messages['ar'] = array(
  */
 $messages['be-tarask'] = array(
 	'pr_table_description' => 'Апісаньне',
+	'pr_table_comments' => 'Камэнтары',
 	'pr_table_status' => 'Статус',
 	'pr_table_actions' => 'Дзеяньні',
 );
@@ -272,6 +274,7 @@ Mar plij adskrivit ho kemenadenn.",
 );
 
 /** German (Deutsch)
+ * @author LWChris
  * @author The Evil IP address
  */
 $messages['de'] = array(
@@ -284,11 +287,13 @@ $messages['de'] = array(
 	'prlog_typeentry' => 'änderte Art des Problems $1 auf „$2“',
 	'prlog_removedentry' => 'löschte Problem $1',
 	'prlog_emailedentry' => 'sandte E-Mail an $2 ($3)',
-	'pr_introductory_text' => 'Die meisten Seiten in diesem Wiki können bearbeitet werden und du bist ebenfalls herzlich eingeladen dies zu tun und Fehler zu korrigieren, falls dir welche auffallen. Auf der Seite [[w:c:de:Hilfe:Editieren|Hilfe:Editieren]] findest du weitere Hilfe.
+	'pr_introductory_text' => 'Die meisten Seiten in diesem Wiki können bearbeitet werden und du bist ebenfalls herzlich eingeladen dies zu tun und Fehler selbst zu korrigieren!
+Wenn du dabei Hilfe brauchst, lies die [[help:Editieren|Hilfe zum Bearbeiten]] und [[help:Zurücksetzen|Hilfe zum Zurücksetzen von Vandalismus]].
 
-Um Wikia direkt zu kontaktieren und Urheberrechtsprobleme zu melden, benutze bitte die Seite [[Special:Contact|Kontakt zu Wikia]].
+Um Wikia direkt zu kontaktieren oder Urheberrechtsprobleme zu melden, benutze bitte die Seite [[Special:Contact|Kontakt zu Wikia]].
 
-Berichte, die über dieses Formular abgeschickt werden, sind für jeden [[Special:ProblemReports|im Wiki einsehbar]].',
+Softwarefehler können in den Foren berichtet werden.
+Hier abgeschickte Berichte werden [[Special:ProblemReports|im Wiki anzeigt]].',
 	'pr_what_problem' => 'Betreff',
 	'pr_what_problem_spam' => 'Seite enthält Spam',
 	'pr_what_problem_vandalised' => 'Die Seite wurde vandaliert',
@@ -332,6 +337,7 @@ Berichte, die über dieses Formular abgeschickt werden, sind für jeden [[Specia
 	'pr_table_reporter_name' => 'Gemeldet von',
 	'pr_table_description' => 'Beschreibung',
 	'pr_table_comments' => 'Kommentare',
+	'pr_table_status' => 'Status',
 	'pr_table_actions' => 'Aktionen',
 	'pr_status_0' => 'offen',
 	'pr_status_1' => 'behoben',
@@ -342,8 +348,11 @@ Berichte, die über dieses Formular abgeschickt werden, sind für jeden [[Specia
 	'pr_status_ask' => 'Status der Meldung ändern?',
 	'pr_remove_ask' => 'Meldung endgültig löschen?',
 	'pr_status_wait' => 'Etwas Geduld...',
+	'pr_read_only' => 'Im Moment können keine neue Berichte ausgefüllt werden, bitte versuche es später erneut.',
 	'pr_msg_exceeded' => 'Das Maximum der Zeichen in diesem Nachrichtenfeld ist 512. Bitte schreibe deine Nachricht neu.',
 	'pr_msg_exchead' => 'Die Nachricht ist zu lang',
+	'right-problemreports_action' => 'Zustand und Art der ProblemReports ändern',
+	'right-problemreports_global' => 'Zustand und Art der ProblemReports wikiübergreifend ändern',
 );
 
 /** Spanish (Español)
@@ -1530,8 +1539,10 @@ $messages['sv'] = array(
  * @author Prima klasy4na
  */
 $messages['uk'] = array(
+	'problemreports' => 'Список повідомлень про проблеми',
 	'reportproblem' => 'Повідомити про проблему',
 	'pr_what_problem' => 'Тема',
+	'pr_what_problem_software_bug' => 'помилка у програмному забезпеченні вікі',
 	'pr_what_problem_select' => 'Будь ласка, виберіть тип проблеми',
 	'pr_what_problem_spam_short' => 'спам',
 	'pr_what_problem_vandalised_short' => 'вандал',
@@ -1546,6 +1557,7 @@ $messages['uk'] = array(
 	'pr_table_problem_type' => 'Тип проблеми',
 	'pr_table_page_link' => 'Сторінка',
 	'pr_table_description' => 'Опис',
+	'pr_table_status' => 'Статус',
 	'pr_table_actions' => 'Дії',
 	'pr_msg_exceeded' => 'Максимальна кількість символів у полі «Повідомлення» — 512. Будь ласка, перепишіть своє повідомлення.',
 	'pr_msg_exchead' => 'Повідомлення занадто довге',

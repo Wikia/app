@@ -71,6 +71,13 @@ $messages['gl'] = array(
 	'mostpopulararticles' => 'Artigos máis populares (da base de datos)',
 );
 
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'mostpopulararticles' => 'Am meischte gändereti Artikel in dr Datebank',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */

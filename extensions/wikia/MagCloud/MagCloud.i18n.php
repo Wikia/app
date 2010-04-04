@@ -72,10 +72,13 @@ If you're stuck for inspiration, check out the examples below!",
 );
 
 /** Message documentation (Message documentation)
+ * @author LWChris
  * @author McDutchie
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'magcloud-special-collection-review-list-info' => 'typo in "article"',
+	'magcloud-special-collection-review-list-tips' => 'are comic villains meant?',
 	'magcloud-order-your-articles' => ' "Order" as in "sort", or "get printed and delivered"?',
 	'magcloud-design-image-selected' => 'Using Magcloud you can choose one of two or three predefined cover designs - or upload your own image. Parameters:
 * $1 is the name of the image the user has uploaded as cover',
@@ -151,13 +154,21 @@ Klikit war « Mont d'ho kelaouenn » pa vo echuet ganeoc'h.",
 	'magcloud-discard-magazine-discard' => 'Disteuler ha mont er-maez',
 	'magcloud-discard-magazine-save' => 'Enrollañ ha kuitaat',
 	'magcloud-special-collection-title' => 'Sevel ur gelaouenn !',
+	'magcloud-special-collection-empty' => 'Ma n\'ho peus dibabet pennad ebet c\'hoazh ! Kit er wiki, ha klikit  war "Ouzhpennañ" er voest ostilloù evit kenpunañ ho kelaouenn.',
 	'magcloud-special-collection-review-list-info' => 'Mat, dibabet ho peus $1 pennad{{PLURAL:$1||}} evit ho kelaouenn. M\'ho peus c\'hoant ouzhpenn re all, merdeit er wiki ha klikit war ar bouton "Ouzhpennañ" er boest ostilhoù amañ a-us !',
+	'magcloud-special-collection-review-list-tips' => "<big> Aloùigoù evit krouiñ ur gelaouenn</big>
+
+# Klaskit dibab ar pennadoù diwar-benn an hevelep dodenn,  da skouer, diwar-benn an dud drouk er bannoù-treset pe ar c'hlezeier burzhudus.
+# Ho kelaouenn a ranko bezañ nebeutoc'h a 100 pajenn enni, ar pezh a ra war-dro 8/10 pennad , hervez ar pennadoù a ouzhpennit.
+
+Ma n'oc'h ket awenet, gwelit ar skouerioù amañ dindan !",
 	'magcloud-order-your-articles' => 'Urzhiañ ho pennadoù',
 	'magcloud-button-design-a-cover' => 'Krouiñ ur golo',
 	'magcloud-design-default-title' => "Va c'helaouenn $1",
 	'magcloud-design-default-subtitle' => 'Istitl',
 	'magcloud-design-review-list' => "Distreiñ d'ar roll adlenn",
 	'magcloud-design-preview' => 'Rakwelet',
+	'magcloud-design-license-policy' => 'Na emporzhiit nemet ur skeudenn ho peus gwir da voullañ hag a zere ouzh reolennoù ar wiki-mañ.',
 	'magcloud-design-image-selected' => '$1 diuzet',
 	'magcloud-preview-done' => 'Krouet eo bet ho kelaouenn.',
 	'magcloud-preview-back-to-cover' => 'Distreiñ da grouidigezh ar golo',
@@ -166,6 +177,7 @@ Klikit war « Mont d'ho kelaouenn » pa vo echuet ganeoc'h.",
 	'magcloud-preview-generating-pdf' => 'Emeur ho krouinn ho Kelaouenn',
 	'magcloud-publish-status-title' => "Oc'h embann ho kelaouenn",
 	'magcloud-publish-status' => 'Mat ! Emaomp o vont da dreuskas ho kelaouenn.',
+	'magcloud-publish-error' => "Ur fazi zo bet pa'z eo bet kaset ho kelaouenn da vMagCloud - enrollet eo bet ar fazi evit ma c'hallit kavout an dro da ziagnostikañ perak ez eus ur gudenn. Ar gwellañ tra d'ober eo klask en-dro. Emichañs omp deuet a-benn da reizhañ ar gudenn. Digarezit ac'hanomp !",
 	'magcloud-publish-done' => '...graet eo ! Adkas davet MagCloud...',
 	'magcloud-publish-ajax-initialize' => "O kevreañ da MagCloud emaoc'h...",
 	'magcloud-publish-ajax-login' => '...emeur bremañ o prientiñ an embann...',
@@ -173,6 +185,77 @@ Klikit war « Mont d'ho kelaouenn » pa vo echuet ganeoc'h.",
 	'magcloud-publish-ajax-issue' => "...oc'h echuiñ ar pellgargañ...",
 	'magcloud-publish-ajax-upload' => "...hag un tamm kempenn, evel m'o deus lavaret deoc'h ho kerent...",
 	'magcloud-publish-ajax-processing' => "...bremañ pelec'h emañ ar bouton bras ruz EMBANN...",
+);
+
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'wikiacollection' => 'Mach ein Magazin!',
+	'magcloud-intro-get-started' => 'Sammle Artikel',
+	'magcloud-intro-create-magazine' => 'Erstelle ein Magazin aus Artikeln in diesem Wiki!',
+	'magcloud-intro-check-out' => 'Klicke auf das Magazin um ein Beispiel aus unserer Community zu sehen!',
+	'magcloud-intro-hint' => 'Verwende einfach die Symbolleiste am oberen Rand der Seite um die Artikel zu wählen, die du in deinem Magazin zusammenstellen möchtest. Klicke auf "Gehe zu deinem Magazin" wenn du fertig bist!',
+	'magcloud-intro-view-my-magazines' => 'Meine Magazine anzeigen',
+	'magcloud-load-magazine-title' => 'Lade ein Magazin',
+	'magcloud-load-magazine-load' => 'Lade dieses Magazin',
+	'magcloud-load-magazine-empty' => 'Du hast noch keine Magazine gespeichert. Versuche eines zu erstellen und speicher es, um es in dieser Liste zu sehen!',
+	'magcloud-add-article-success' => "'''$1''' wurde zu deinem Magazin hinzugefügt",
+	'magcloud-add-article-already' => "'''$1''' wurde bereits hinzugefügt",
+	'magcloud-toolbar-step' => 'Schritt $1: $2',
+	'magcloud-toolbar-article-in-collection' => "'''$1''' ist bereits in deinem Magazin",
+	'magcloud-toolbar-article-add' => "'''$1''' zu deinem Magazin hinzufügen?",
+	'magcloud-toolbar-add' => 'Hinzufügen',
+	'magcloud-toolbar-articles-count' => '<big>$1</big> {{PLURAL:$1|Artikel|Artikel}}',
+	'magcloud-toolbar-go-to-magazine' => 'Gehe zu deinem Magazin',
+	'magcloud-discard-magazine-title' => 'Deine Sammlung speichern?',
+	'magcloud-discard-magazine-msg' => 'Du bearbeitest ein nicht gespeichertes Magazin. Möchtest du es abspeichern? (Du musst angemeldet sein, um deine Sammlung zu speichern.)',
+	'magcloud-discard-magazine-discard' => 'Verwerfen und Beenden',
+	'magcloud-discard-magazine-save' => 'Speichern und Beenden',
+	'magcloud-special-collection-title' => 'Mach ein Magazin!',
+	'magcloud-special-collection-empty' => 'Du hast noch keine Artikel ausgewählt! Kehre zurück zum Wiki, und wähle "Hinzufügen" in der Symbolleiste oben, um dein Magazin zusammenzustellen.',
+	'magcloud-special-collection-review-list-info' => 'Gut, du hast $1 {{PLURAL:$1|Artikel|Artikel}} für dein Magazin ausgewählt. Wenn du weitere hinzufügen möchtest, besuche einfach weitere Seiten und klicke oben in der Symbolleiste auf "Hinzufügen"!',
+	'magcloud-special-collection-review-list-tips' => '<big>Tipps zum Erstellen eines großartigen Magazines</big>
+
+# Versuche, Artikel zu einem bestimmen Thema zu wählen, wie Comic-Schurken oder einzigartige Schwerter.
+# Dein fertiges Magazin sollte weniger als 100 Seiten haben, was wahrscheinlich etwa 8 bis 10 Artikeln entspricht, je nachdem, welche Artikel du hinzufügst.
+
+Wenn du eine Inspiration brauchst, sieh dir die folgenden Beispiele an!',
+	'magcloud-order-your-articles' => 'Sortiere deine Artikel',
+	'magcloud-button-design-a-cover' => 'Entwirf ein Deckblatt',
+	'magcloud-design-default-title' => 'Mein $1 Magazin',
+	'magcloud-design-default-subtitle' => 'Untertitel',
+	'magcloud-design-review-list' => 'Zurück zur Prüfliste',
+	'magcloud-design-preview' => 'Vorschau',
+	'magcloud-design-license-policy' => 'Lade nur ein Bild hoch, dessen Druckrechte du besitzt, und das sich an die Richtlinien dieses Wikis hält.',
+	'magcloud-design-image-selected' => '$1 ausgewählt',
+	'magcloud-preview-done' => 'Dein Magazin wurde erstellt.',
+	'magcloud-preview-back-to-cover' => 'Zurück zum Design Cover',
+	'magcloud-preview-save-magazine' => 'Speicher dein Magazin',
+	'magcloud-preview-publish' => 'Veröffentliche dein Magazin',
+	'magcloud-preview-generating-pdf' => 'Dein Magazin wird erstellt...',
+	'magcloud-publish-status-title' => 'Dein Magazin wird veröffentlicht',
+	'magcloud-publish-status' => 'Super! Wir schicken dir das Magazin zu.',
+	'magcloud-publish-error' => 'Wir stießen auf einen Fehler beim Versuch, dein Magazin zu MagCloud zu schicken - wir haben ihn aufgezeichnet um herauszufinden was passiert ist. Am bestes versuchst du es später erneut - hoffentlich haben wir bis dahin das Problem gelöst. Wir bitten um Entschuldigung!',
+	'magcloud-publish-done' => '...und fertig! Weiterleitung zu MagCloud...',
+	'magcloud-publish-ajax-initialize' => 'Wir loggen uns bei MagCloud ein...',
+	'magcloud-publish-ajax-login' => '...richten die Veröffentlichung ein...',
+	'magcloud-publish-ajax-publication' => '...richten die Ausstellung ein...',
+	'magcloud-publish-ajax-issue' => '...noch schnell den Upload vervollständigen...',
+	'magcloud-publish-ajax-upload' => '...und aufräumen, wie unsere Eltern uns das beigebracht haben...',
+	'magcloud-publish-ajax-processing' => '...und wo ist jetzt die große rote Schaltfläche VERÖFFENTLICHEN...',
+);
+
+/** Spanish (Español)
+ * @author Locos epraix
+ * @author Pertile
+ */
+$messages['es'] = array(
+	'magcloud-toolbar-add' => 'Añadir',
+	'magcloud-order-your-articles' => 'Pedir sus artículos',
+	'magcloud-button-design-a-cover' => 'Diseñar una Portada',
+	'magcloud-design-default-title' => 'Mi revista $1',
+	'magcloud-design-default-subtitle' => 'Subtítulo',
 );
 
 /** Finnish (Suomi)
@@ -316,10 +399,25 @@ Se está falto de inspiración, olle os exemplos de embaixo!',
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
+	'wikiacollection' => 'Magazin készítése',
+	'magcloud-intro-get-started' => 'Szócikkek gyűjtése',
+	'magcloud-intro-view-my-magazines' => 'Magazinjaim megjelenítése',
+	'magcloud-load-magazine-title' => 'Egy magazin betöltése',
+	'magcloud-load-magazine-load' => 'Magazin betöltése',
+	'magcloud-add-article-already' => "'''$1''' már hozzáadva",
+	'magcloud-toolbar-step' => '$1 lépés: $2',
+	'magcloud-toolbar-add' => 'Hozzáadás',
+	'magcloud-discard-magazine-discard' => 'Eldobás és kilépés',
 	'magcloud-discard-magazine-save' => 'Mentés és kilépés',
+	'magcloud-special-collection-title' => 'Magazin elkészítése!',
+	'magcloud-order-your-articles' => 'Szócikkek sorbarendezése',
+	'magcloud-button-design-a-cover' => 'Borító tervezése',
 	'magcloud-design-default-subtitle' => 'Felirat',
 	'magcloud-design-preview' => 'Előnézet',
 	'magcloud-design-image-selected' => '$1 kiválasztva',
+	'magcloud-preview-back-to-cover' => 'Vissza a borítótervezéshez',
+	'magcloud-preview-save-magazine' => 'Magazin mentése',
+	'magcloud-preview-publish' => 'Magazin közzététele',
 );
 
 /** Interlingua (Interlingua)
@@ -788,5 +886,12 @@ $messages['sr-ec'] = array(
 	'magcloud-design-default-subtitle' => 'Поднаслов',
 	'magcloud-design-preview' => 'Претпреглед',
 	'magcloud-design-image-selected' => '$1 је одабрано',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'magcloud-toolbar-articles-count' => '<big>$1</big> {{PLURAL:$1|стаття|статті|статей}}',
 );
 

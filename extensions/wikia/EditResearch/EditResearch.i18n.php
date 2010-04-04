@@ -37,6 +37,17 @@ $messages['bug'] = array(
 	'previous' => 'Ala na',
 );
 
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'search_wikipedia' => 'Wikipedia-Suche',
+	'previous' => 'Vorherige',
+	'research_no_results' => 'Keine Seiten gefunden. Bitte suche erneut.',
+	'research_wikipedia_title' => 'Deine Antwort auf Wikipedia recherchieren',
+	'research_this' => 'Das hier recherchieren',
+);
+
 /** Greek (Ελληνικά)
  * @author Περίεργος
  */
@@ -96,7 +107,11 @@ $messages['gl'] = array(
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
+	'search_wikipedia' => 'Keresés a Wikipédián',
 	'previous' => 'előző',
+	'research_no_results' => 'Nincs találat. Kérlek keress újra.',
+	'research_wikipedia_title' => 'Kutatás a válasz után a Wikipédián',
+	'research_this' => 'Kutatás ez után',
 );
 
 /** Interlingua (Interlingua)

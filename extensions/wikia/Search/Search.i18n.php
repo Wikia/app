@@ -27,6 +27,16 @@ $messages['br'] = array(
 	'wikiasearch-search-wikia' => 'Klask e Wikia',
 );
 
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'wikiasearch-titles-only' => 'Suche nur in Seitentiteln',
+	'wikiasearch-system-error-msg' => 'Aufgrund eines Systemfehlers konnte deine Suche nicht abgeschlossen werden',
+	'wikiasearch-search-this-wiki' => 'Nur Wikia Zentrale durchsuchen',
+	'wikiasearch-search-wikia' => 'Wikia durchsuchen',
+);
+
 /** Spanish (Español)
  * @author Translationista
  */
@@ -116,6 +126,16 @@ $messages['ja'] = array(
 	'wikiasearch-search-wikia' => 'ウィキア全体を検索',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'wikiasearch-titles-only' => 'Nëmmen an de Säitentitele sichen',
+	'wikiasearch-system-error-msg' => 'Duerch e Feeler am System konnt Är Sich net fäerdeg gemaach ginn',
+	'wikiasearch-search-this-wiki' => 'Nëmmen a Wikia Central sichen',
+	'wikiasearch-search-wikia' => 'A Wikia sichen',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -167,6 +187,15 @@ $messages['pms'] = array(
 	'wikiasearch-search-wikia' => 'Serca an Wikia',
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'wikiasearch-titles-only' => 'يوازې د مخ په سرليکونو کې پلټل',
+	'wikiasearch-system-error-msg' => 'د غونډال د ستونزو له امله، ستاسې پلټنه نه شي بشپړه کېدای.',
+	'wikiasearch-search-wikia' => 'ويکيا پلټل',
+);
+
 /** Brazilian Portuguese (Português do Brasil)
  * @author Daemorris
  */
@@ -195,5 +224,12 @@ $messages['sr-ec'] = array(
 	'wikiasearch-system-error-msg' => 'Због системске грешке ваша претрага не може да се изврши',
 	'wikiasearch-search-this-wiki' => 'Претражи само централну викију',
 	'wikiasearch-search-wikia' => 'Претражи викију',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'wikiasearch-titles-only' => 'Шукати тільки в заголовках сторінок',
 );
 

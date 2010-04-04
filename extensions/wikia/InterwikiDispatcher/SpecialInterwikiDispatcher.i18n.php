@@ -48,6 +48,14 @@ $messages['br'] = array(
 	'interwikidispatcher-desc' => 'Diskoulmañ a ra al liammoù etrewiki evit reduiñ an adkasoù Apache',
 );
 
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'interwikidispatcher' => 'Interwiki-Dispatcher',
+	'interwikidispatcher-desc' => 'Löst Interwiki-Links auf um Apache-redirects zu reduzieren',
+);
+
 /** Spanish (Español)
  * @author Translationista
  */
@@ -95,6 +103,14 @@ $messages['hu'] = array(
 $messages['ia'] = array(
 	'interwikidispatcher' => 'Repartitor interwiki',
 	'interwikidispatcher-desc' => 'Resolve ligamines interwiki pro reducer redirectiones de Apache',
+);
+
+/** Japanese (日本語)
+ * @author Naohiro19
+ */
+$messages['ja'] = array(
+	'interwikidispatcher' => 'インターウィキの送出',
+	'interwikidispatcher-desc' => 'Apacheリダイレクトへのインターウィキを解決する',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

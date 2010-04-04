@@ -19,12 +19,29 @@ $messages['af'] = array(
 	'helperPanel_widgets' => 'My widgets',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Wizardist
+ */
+$messages['be-tarask'] = array(
+	'helperPanel_help' => 'Віджэт дапамогі',
+	'helperPanel_widgets' => 'Мае віджэты',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
 $messages['br'] = array(
 	'helperPanel_help' => 'Skoazell ar widget',
 	'helperPanel_widgets' => 'Va widgetoù',
+);
+
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'helperPanel_help' => 'Hilfe-Widget',
+	'helperPanel_widgets' => 'Meine Widgets',
 );
 
 /** Spanish (Español)
@@ -57,6 +74,14 @@ $messages['gl'] = array(
 $messages['hsb'] = array(
 	'helperPanel_help' => 'Asistent pomocy',
 	'helperPanel_widgets' => 'Moje asistenty',
+);
+
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'helperPanel_help' => 'Súgó minialkalmazás',
+	'helperPanel_widgets' => 'Saját minialkalmazásaim',
 );
 
 /** Interlingua (Interlingua)

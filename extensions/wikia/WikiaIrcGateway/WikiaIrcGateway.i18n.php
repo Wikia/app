@@ -52,6 +52,14 @@ $messages['cy'] = array(
 	'ircgate-channel' => 'Sianel:',
 );
 
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'ircgate-username' => 'Benutzername:',
+	'ircgate-channel' => 'Channel:',
+);
+
 /** Spanish (Español)
  * @author VegaDark
  */
@@ -161,6 +169,13 @@ $messages['oc'] = array(
 $messages['pms'] = array(
 	'ircgate-username' => 'Nòm utent:',
 	'ircgate-channel' => 'Canal:',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'ircgate-username' => 'کارن-نوم:',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

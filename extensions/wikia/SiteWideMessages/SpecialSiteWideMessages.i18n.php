@@ -91,6 +91,7 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'swm-label-comment' => '{{Identical|Comment}}',
 	'swm-label-language' => '{{Identical|Language}}',
 	'swm-button-save' => '{{Identical|Save}}',
 	'swm-expire-info' => 'If $1 is a time stamp, split date and time.',
@@ -170,6 +171,7 @@ Dit kan nie ongedaan gemaak word nie!',
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
+	'swm-label-comment' => 'Камэнтар',
 	'swm-label-language' => 'Мова',
 	'swm-button-save' => '[ Захаваць ]',
 	'swm-list-table-lang' => 'Мовы',
@@ -254,7 +256,9 @@ $messages['cy'] = array(
 	'swm-list-table-lang' => 'Ieithoedd',
 );
 
-/** German (Deutsch) */
+/** German (Deutsch)
+ * @author LWChris
+ */
 $messages['de'] = array(
 	'sitewidemessages' => 'Nachricht an Alle',
 	'swm-page-title-editor' => 'Nachricht an Alle :: Editor',
@@ -269,10 +273,25 @@ $messages['de'] = array(
 	'swm-label-sent' => 'Abgeschickt',
 	'swm-label-list' => 'Übersicht',
 	'swm-label-recipient' => 'Empfänger',
+	'swm-label-recipient-wikis' => 'Wikis',
+	'swm-label-recipient-users' => 'Benutzer',
 	'swm-label-expiration' => 'Verfallsdatum',
+	'swm-label-mode-wikis-all' => 'Alle Wikis',
+	'swm-label-mode-wikis-hub' => 'Ausgewählter Hub',
+	'swm-label-mode-wikis-wiki' => 'Ausgewähltes Wiki',
+	'swm-label-mode-users-all' => 'Alle Benutzer',
+	'swm-label-mode-users-active' => 'Aktive Benutzer',
+	'swm-label-mode-users-group' => 'Benutzer in der Gruppe',
+	'swm-label-mode-users-group-hint' => '<i>Wähle eine Gruppe aus dem Dropdown, oder schreibe den Namen per Hand um die Dropdown-Auswahl zu überschreiben.</i>',
+	'swm-label-mode-users-user' => 'Ausgewählter Benutzer',
+	'swm-label-mode-users-user-hint' => '<i>Diese Option ignoriert die Auswahl in der Gruppe "Wikis".</i>',
 	'swm-label-content' => 'Inhalt',
 	'swm-label-comment' => 'Kommentar',
 	'swm-label-dismissed' => 'Ausgeblendet',
+	'swm-label-language' => 'Sprache',
+	'swm-button-lang-checkall' => '[ Alle auswählen ]',
+	'swm-button-lang-checknone' => '[ Keine auswählen ]',
+	'swm-taskmanager-hint' => '<i>Beachte, dass einige Optionen mehr Zeit beanspruchen und in die Warteschlange des TaskManagers kommen.</i>',
 	'swm-button-preview' => '[ Vorschau ]',
 	'swm-button-send' => '[ Abschicken ]',
 	'swm-button-save' => '[ Speichern ]',
@@ -280,6 +299,7 @@ $messages['de'] = array(
 	'swm-msg-sent-ok' => '<h3>Die Nachricht wurde verschickt.</h3>',
 	'swm-msg-sent-err' => '<h3>Die Nachricht wurde NICHT verschickt.</h3>
 Mehr Informationen findest du im Fehler-Log.',
+	'swm-msg-remove' => 'Willst du diese Nachricht wirklich entfernen? Dies kann nicht rückgängig gemacht werden!',
 	'swm-days' => 'nie,Tag,Tage',
 	'swm-expire-info' => 'Diese Nachricht wird am $1 ablaufen.',
 	'swm-link-dismiss' => 'Nachricht ausblenden',
@@ -295,14 +315,18 @@ Mehr Informationen findest du im Fehler-Log.',
 	'swm-list-table-removed' => 'Entfernt',
 	'swm-list-table-content' => 'Inhalt',
 	'swm-list-table-tools' => 'Tools',
+	'swm-list-table-lang' => 'Sprachen',
 	'swm-yes' => 'Ja',
 	'swm-no' => 'Nein',
 	'swm-error-no-such-wiki' => 'Es gibt kein solches Wiki!',
+	'swm-error-no-such-user' => 'Das angegebene Benutzerkonto ist nicht vorhanden.',
 	'swm-error-empty-message' => 'Gib den Inhalt der Nachricht ein.',
 	'swm-error-empty-group' => 'Gib den Namen der Gruppe ein.',
+	'swm-lang-other' => 'alle übrigen Sprachen',
 );
 
 /** Spanish (Español)
+ * @author Crazymadlover
  * @author McDutchie
  * @author Peter17
  */
@@ -327,10 +351,12 @@ $messages['es'] = array(
 	'swm-button-send' => '[ Enviar ]',
 	'swm-button-save' => '[ Guardar ]',
 	'swm-button-new' => '[ Nuevo ]',
+	'swm-msg-remove' => 'Estás seguro de querer remover este mensaje? Esto no puede ser deshecho!',
 	'swm-days' => 'nunca,hora,horas,día,días',
 	'swm-expire-info' => 'Este mensaje expirará en $1.',
 	'swm-link-dismiss' => 'descartar este mensaje',
 	'swm-dismiss-content' => '<p>El mensaje fue descartado.</p><p>%s</p>',
+	'swm-list-no-messages' => 'Sin mensajes.',
 	'swm-list-table-id' => 'ID',
 	'swm-list-table-sender' => 'Remitente',
 	'swm-list-table-wiki' => 'Wiki',
@@ -339,13 +365,16 @@ $messages['es'] = array(
 	'swm-list-table-expire' => 'Expira',
 	'swm-list-table-date' => 'Fecha de envío',
 	'swm-list-table-removed' => 'Quitado',
+	'swm-list-table-content' => 'Contenido',
 	'swm-list-table-tools' => 'Herramientas',
 	'swm-list-table-lang' => 'Idiomas',
 	'swm-yes' => 'Sí',
 	'swm-no' => 'No',
+	'swm-error-no-such-wiki' => 'No existe tal wiki!',
 	'swm-error-no-such-user' => '¡El usuario especificado no existe!',
 	'swm-error-empty-message' => 'Introduce el contenido del mensaje.',
 	'swm-error-empty-group' => 'Introduce el nombre del grupo.',
+	'swm-lang-other' => 'Todos los idiomas restantes',
 );
 
 /** Basque (Euskara)

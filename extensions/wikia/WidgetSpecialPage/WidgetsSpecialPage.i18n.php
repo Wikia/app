@@ -142,10 +142,11 @@ Wijzig alstublieft uw [[Special:Preferences#prefsection-1|voorkeuren]] om dit hu
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
  * @author Nghtwlkr
  */
 $messages['no'] = array(
-	'widgets-specialpage-info' => 'Skjermelement fungerer best med noen av de nye draktene, for eksempel [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco].
+	'widgets-specialpage-info' => 'Skjermelement fungerer best med noen av de nye utseendene, for eksempel [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco].
 
 Endre [[Special:Preferences#prefsection-1|innstillingene dine]] for å bruke dette verktøyet.',
 	'widgets-specialpage-try-dashboard' => 'Denne siden inneholder en liste over alle tilgjengelige skjermelement. For å se dem i bruk, gå til [[Special:WidgetDashboard]].',

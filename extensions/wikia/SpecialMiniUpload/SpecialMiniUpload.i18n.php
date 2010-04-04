@@ -55,6 +55,22 @@ $messages['br'] = array(
 	'rightalign-tooltip' => 'Steudañ a-zehoù',
 );
 
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'widgetdashboard' => 'Widget-Verwaltung',
+	'mu_size_your_image' => 'Größe deines Bildes ändern',
+	'almosttheretext' => 'Nutze den Schieberegler um eine Thumbnail-Größe zu wählen, gib eine Beschreibung ein und klicke auf Einfügen',
+	'insertfullsize' => 'Originalbild in voller Größe einfügen',
+	'insertthumbnail' => 'Thumbnail einfügen',
+	'thumbnailsize' => 'Thumbnail-Größe',
+	'captionoptional' => 'Bildunterschrift (optional):',
+	'insertimage' => 'Bild einfügen',
+	'leftalign-tooltip' => 'Linksbündig',
+	'rightalign-tooltip' => 'Rechtsbündig',
+);
+
 /** Spanish (Español)
  * @author Manuelt15
  * @author Peter17
@@ -116,6 +132,7 @@ $messages['gl'] = array(
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
+	'insertthumbnail' => 'Bélyegkép beszúrása',
 	'thumbnailsize' => 'Bélyegkép mérete',
 	'insertimage' => 'Kép beillesztése',
 	'leftalign-tooltip' => 'Balra igazítás',

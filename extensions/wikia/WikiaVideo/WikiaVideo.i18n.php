@@ -20,11 +20,19 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
+ * @author LWChris
  * @author Siebrand
  */
 $messages['qqq'] = array(
 	'wikiavideo-back' => '{{Identical|Back}}',
 	'wikiavideo-links' => '{{Identical|Link}}',
+	'wikiavideo-deleted-old' => 'Message displayed when you succeed in deleting a version of a video.
+
+Parameters:
+* $1 is the URL of the local video file
+* $2 is the video title
+* $3 is the time the old video version was created
+* $4 is the date the old video version was created',
 	'wikiavideo-intro-old' => 'Parameters:
 * $1 is the URL of the local video file
 * $2 is the time the old video version was created
@@ -145,14 +153,24 @@ $messages['cy'] = array(
 	'wikiavideo-intro-old' => "Rydych yn dileu hen fersiwn o'r ffeil '''[$1 $5]''' fel ag yr oedd ar [$4 $3, am $2].",
 );
 
-/** German (Deutsch) */
+/** German (Deutsch)
+ * @author LWChris
+ */
 $messages['de'] = array(
 	'wikiavideo-reverted' => 'Das Video $1 wurde erfolgreich zurückgesetzt. Zurück zu $2.',
+	'wikiavideo-unreverted' => 'Du hast keine Berechtigung, $1 rückgängig zu machen.',
 	'wikiavideo-added' => 'Video $1 hinzugefügt',
 	'wikiavideo-back' => 'zurück',
 	'wikiavideo-create' => 'Video hinzufügen',
 	'wikiavideo-replace' => 'Ersetze Video',
 	'wikiavideo-category' => 'Videos',
+	'wikiavideo-links' => 'Links',
+	'wikiavideo-placeholder' => 'Platzhalter',
+	'wikiavideo-gallery-template' => 'Diese Video-Galerie ist Teil einer Vorlage, und ist aus dem Ansichtsmodus nicht editierbar. Bitte ändere die entsprechende Vorlage.',
+	'wikiavideo-not-supported' => 'Dieses Skin unterstützt kein Einfügen von Videos in Galerien vom Ansichtsmodus aus.',
+	'wikiavideo-pixel' => ' Pixel',
+	'wikiavideo-deleted-old' => "Die Version von '''[$1 $2]''' vom $4, $3 wurde gelöscht.",
+	'wikiavideo-intro-old' => "Du löschst die Version von '''[$1 $5]''' vom [$4 $3, $2].",
 );
 
 /** Spanish (Español)
@@ -429,6 +447,7 @@ $messages['pt-br'] = array(
 );
 
 /** Russian (Русский)
+ * @author Eleferen
  * @author Lockal
  * @author Александр Сигачёв
  */
@@ -442,7 +461,7 @@ $messages['ru'] = array(
 	'wikiavideo-category' => 'Видео',
 	'wikiavideo-links' => 'Ссылки',
 	'wikiavideo-placeholder' => 'Заполнитель',
-	'wikiavideo-gallery-template' => 'Это видео-галерея находится в шаблоне, и не может быть изменена в режиме просмотра. Пожалуйста, измените соответствующий шаблон.',
+	'wikiavideo-gallery-template' => 'Эта видео-галерея находится в шаблоне, и не может быть изменена в режиме просмотра. Пожалуйста, измените соответствующий шаблон.',
 	'wikiavideo-not-supported' => 'Эта тема оформления не поддерживает вставку видео в галерею в режиме просмотра.',
 	'wikiavideo-pixel' => 'пиксел',
 	'wikiavideo-deleted-old' => "Версия '''[$1 $2]''' от $4 $3 была удалена.",

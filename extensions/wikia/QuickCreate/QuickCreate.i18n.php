@@ -30,6 +30,14 @@ $messages['br'] = array(
 	'quickcreate' => 'kinnigit ho rekipe',
 );
 
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'quickcreate-desc' => 'Fügt einen Neue Seite Button hinzu mit der Möglichkeit für anonyme Benutzer sich anzumelden',
+	'quickcreate' => 'Sende dein Rezept',
+);
+
 /** Spanish (Español)
  * @author Translationista
  */
@@ -110,6 +118,14 @@ $messages['oc'] = array(
 $messages['pms'] = array(
 	'quickcreate-desc' => "A gionta un boton për creé dle pàgina neuve con la possibilità d'intré ant ël sistema për j'utent anònim",
 	'quickcreate' => "ch'a manda soa arseta",
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'quickcreate-desc' => 'Adiciona um botão "Criar página nova" com capacidade de autenticação para utilizadores anónimos',
+	'quickcreate' => 'envie a sua receita',
 );
 
 /** Tarandíne (Tarandíne)

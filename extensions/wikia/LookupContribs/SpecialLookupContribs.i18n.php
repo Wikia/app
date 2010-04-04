@@ -139,6 +139,54 @@ $messages['br'] = array(
 	'lookupcontribscontent' => 'danvez',
 );
 
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'lookupcontribs' => 'Beiträge ansehen',
+	'lookupcontribstitle' => 'Beiträge ansehen',
+	'lookupcontribsrecentcontributions' => 'Kürzliche Beiträge von $1',
+	'lookupcontribsfinalcontributions' => 'Letzte Beiträge von $1',
+	'lookupcontribshelp' => 'Diese Spezialseite kann verwendet werden, um Benutzerbeiträge in mehreren Wikias anzuzeigen.
+Gib zur Anzeige der Liste den Benutzernamen unten ein.',
+	'lookupcontribusernotspecify' => 'Du hast noch keinen Benutzer angegeben',
+	'lookupcontribsselectuser' => 'Benutzer wählen:',
+	'lookupcontribsselectfor' => 'Auswählen für:',
+	'lookupcontribsdisplaymode' => 'Anzeigemodus:',
+	'lookupcontribsselectmodenormal' => 'kürzliche Beiträge für diesen Benutzer',
+	'lookupcontribsselectmodefinal' => 'letzte Beiträge für diesen Benutzer',
+	'lookupcontribsselectmodeall' => 'alle Beiträge für diesen Benutzer',
+	'lookupcontribsfullurls' => 'vollständige URLs',
+	'lookupcontribslinks' => 'Links zu Beiträgen',
+	'lookupcontribsgo' => 'Anzeigen',
+	'lookupcontribsinvaliduser' => '<p class="error">Der Benutzer "<b>$1</b>" existiert nicht.
+Bitte überprüfe den angegebenen Benutzernamen auf mögliche Tippfehler.</p>',
+	'lookupcontribsinvalidviewmode' => '<p class="error">"<b>$1</b>" ist kein gültiger Anzeigemodus.</p>',
+	'lookupcontribsinvalidmode' => '<p class="error">"<b>$1</b>" ist kein gültiger Modus.</p>',
+	'lookupcontribsselectwikis' => 'Wikis auswählen:',
+	'lookupcontribslistwikiainfo' => 'Liste von Wikis in denen Artikel von <b>$1</b> bearbeitet wurden',
+	'lookupcontribsnoresultfound' => 'Kein Ergebnis gefunden!',
+	'lookupcontribsinvalidresults' => 'Ungültige Ergebnisse!',
+	'lookupcontribswiki' => 'Wiki',
+	'lookupcontribswikidbname' => 'DB-Name',
+	'lookupcontribswikiurl' => 'URL',
+	'lookupcontribswikititle' => 'Titel',
+	'lookupcontribscontribslink' => 'Link zu Beiträgen',
+	'lookupcontribsdetails' => 'Weitere Details für:',
+	'lookupcontribscontribs' => 'Beiträge',
+	'lookupcontribsnbrresult' => 'Anzahl der Ergebnisse:',
+	'lookupcontribsnext' => 'Nächste',
+	'lookupcontribsprevious' => 'Vorherige',
+	'lookupcontribspageremoved' => 'Entfernt:',
+	'lookupcontribsrestore' => 'Wiederherstellen',
+	'lookupcontribslog' => 'Logbücher',
+	'lookupcontribshist' => 'Versionen',
+	'lookupcontribsdiff' => 'Unterschied',
+	'right-lookupcontribs' => 'Globale Beiarbeitungen des Benutzer anzeigen',
+	'lookupcontribsshowpages' => 'Alle Seiten ($1 Namensräume)',
+	'lookupcontribscontent' => 'Inhalt',
+);
+
 /** Spanish (Español)
  * @author Peter17
  */

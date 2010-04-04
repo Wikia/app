@@ -73,9 +73,23 @@ Gallout a rit lezel ur gemennadenn war ma fajenn V [[$2|discussion]] ma c'hallan
 
 Arabat kaout aon kas din ur gemenadenn war [[$2|ma fajenn kaozeadenn]] ma c'hellan sikour ac'hanoc'h evit tra pe dra ! $3",
 	'welcome-message-log' => 'Degemer un implijer nevez',
+	'welcome-message-user-staff' => "==Degemer mat==
+
+Demat, Degemer mat war {{SITENAME}} Ho trugarekaat a reomp da vezañ kemmet ar bajenn [[:$1]].
+
+M'ho peus ezhomm skoazell ha ma n'eus merour ebet amañ e c'hallit gweladenniñ [[wikia:Forum:Community Central Forum|foromoù Wiki Kreiz ar Gumuniezh]] $3",
+	'welcome-message-anon-staff' => "==Degemer mat ! ==
+
+Demat, Degemer mat war {{SITENAME}}; Trugarez da vezañ kemmet ar bajenn [[:$1]].
+
+'''[[Special:Userlogin|Please sign in and create a user name]]'''. Un doare aes eo evit mirout roudoù eus ho labourioù hag evel-se e c'hallot mont e darempred gant ar peurrest eus ar gumuniezh.
+
+M'ho peus ezhomm skoazell ha ma n'eus merour ebet amañ e c'hallit gweladenniñ ar [[wikia:Forum:Community Central Forum|foromoù Kreiz ar Gumuniezh]] $3",
 );
 
-/** German (Deutsch) */
+/** German (Deutsch)
+ * @author LWChris
+ */
 $messages['de'] = array(
 	'welcome-user-page' => "== Über mich ==
 
@@ -93,16 +107,25 @@ $messages['de'] = array(
 	'welcome-message-user' => 'Hi, {{SITENAME}} freut sich, dass du zu uns gestoßen bist! Danke für deine Bearbeitung auf der Seite [[:$1]].
 
 Falls du irgendwelche Hilfe brauchen solltest, kannst du mir gerne eine Nachricht auf [[$2|meiner Diskussionsseite]] hinterlassen! $3',
-	'welcome-message-anon' => "Hi, {{SITENAME}} freut sich, dass du zu uns gestoßen bist! Danke für deine Bearbeitung auf der Seite [[:$1]].
+	'welcome-message-anon' => "Hi, Willkommen bei {{SITENAME}}! Danke für deine Bearbeitung auf der Seite [[:$1]].
 
 '''[[Special:Userlogin|Bitte lege dir ein Benutzerkonto an]]'''. So kannst du ganz einfach deine Beiträge im Überblick behalten und dich besser mit dem Rest der Community verständigen.
 
-Falls du irgendwelche Hilfe brauchen solltest, kannst du mir gerne eine Nachricht auf [[$2|meiner Diskussionsseite]] hinterlassen! $3
-
-----
-
-PS: Du kannst auch gerne anonym editieren, allerdings wird dann deine IP-Adresse in der Versionsgeschichte gespeichert. Das Anlegen eines Benutzerkontos ist gratis und du musst keine privaten Daten angeben. Wenn du deine E-Mail-Adresse angibst, kannst du dir Hinweise schicken lassen, wenn dir jemand schreibt oder falls du dein Passwort vergessen hast. Mit diesem Benutzerkonto kannst du in jedem Wiki bei [[w:c:de|Wikia]] aktiv sein - du brauchst dich nicht nochmal neu anmelden.",
+Falls du irgendwelche Hilfe brauchst, kannst du mir gerne eine Nachricht auf [[$2|meiner Diskussionsseite]] hinterlassen! $3",
 	'welcome-message-log' => 'Begrüßung eines neuen Autors',
+	'welcome-message-user-staff' => '==Willkommen==
+
+Hi, Willkommen bei {{SITENAME}}! Danke für deine Bearbeitung auf der Seite [[:$1]].
+
+Wenn du Hilfe brauchst, und kein Admin von hier in der Nähe ist, möchtest du vielleicht
+die [[wikia:Forum:Community Central Forum|Foren des Community Zentralwikis]] besuchen $3',
+	'welcome-message-anon-staff' => "==Willkommen==
+
+Hi, Willkommen bei {{SITENAME}}! Danke für deine Bearbeitung auf der [[:$1]] Seite.
+
+'''[[Special:Userlogin|Bitte lege dir ein Benutzerkonto an]]'''. So kannst du ganz einfach deine Beiträge im Überblick behalten und dich besser mit dem Rest der Community verständigen.
+
+Wenn du Hilfe brauchst, und kein Admin von hier in der Nähe ist, möchtest du vielleicht die [[wikia:Forum:Community Central Forum|Foren des Community Zentralwikis]] besuchen $3",
 );
 
 /** Spanish (Español) */
@@ -222,7 +245,7 @@ Bonjour et bienvenue sur {{SITENAME}}. Merci d'avoir modifié la page [[:$1]].
 
 '''[[Special:Userlogin|Merci de bien vouloir vous enregistrer et créer un nom d'utilisateur]]'''. C'est un moyen simple pour garder la trace de vos contributions et qui vous aidera à communiquer avec le reste de la communauté.
 
-Si vous avez besoin d'aide et qu'il n'y a pas d'administrateur ici, vous pouvez visiter les [[wikia: Forum:Community Central Forum|forums du Wiki Central de la Communauté]] $3",
+Si vous avez besoin d'aide et qu'il n'y a pas d'administrateur ici, vous pouvez visiter les [[wikia:Forum:Community Central Forum|forums du Wiki Central de la Communauté]] $3",
 );
 
 /** Galician (Galego)
@@ -259,17 +282,19 @@ Ola, benvido(a) a {{SITENAME}}! Grazas pola súa edición na páxina "[[:$1]]".
 Se necesita axuda e non hai administradores locais aquí, quizais queira
 visitar os [[wikia:Forum:Community Central Forum|foros no wiki central
 da comunidade]] $3',
-	'welcome-message-anon-staff' => "
-==Benvida==
+	'welcome-message-anon-staff' => "==Benvida==
 
 Ola, benvido(a) a {{SITENAME}}. Grazas pola súa edición na páxina \"[[:\$1]]\".
 
 '''Por favor, [[Special:Userlogin|rexístrese e cree unha conta de usuario]]'''. É un xeito doado de manter baixo control as súas achegas e axuda á comunicación co resto da comunidade.
 
-Se necesita axuda e non hai administradores locais aquí, quizais queira visitar os [[wikia: Forum:Community Central Forum|foros no wiki central da comunidade]] \$3",
+Se necesita axuda e non hai administradores locais aquí, quizais queira visitar os [[wikia:Forum:Community Central Forum|foros no wiki central da comunidade]] \$3",
 );
 
-/** Hebrew (עברית) */
+/** Hebrew (עברית)
+ * @author Amire80
+ * @author Rotemliss
+ */
 $messages['he'] = array(
 	'welcome-user-page' => "==עליי==
 ''זה דף המשתמש שלך. כדאי לערוך דף זה כדי שמשתמשים אחרים יוכלו לדעת עליך יותר!''
@@ -283,13 +308,23 @@ $messages['he'] = array(
 * [[דף אהוב שלישי]]",
 	'welcome-message-user' => 'שלום, ברוך הבא ל{{SITENAME}}. תודה על תרומתך בדף [[:$1]].
 
-במידה ואתה זקוק לעזרה כלשהי, אנא השאר הודעה ב[[$2|דף השיחה שלי]], $3',
+אם אתה זקוק לעזרה כלשהי, אנא השאר הודעה ב[[$2|דף השיחה שלי]], $3',
 	'welcome-message-anon' => "שלום, ברוך הבא ל{{SITENAME}}. תודה על תרומתך בדף [[:$1]].
 
-'''[[מיוחד:התחברות לחשבון|רצוי להרשם לאתר וליצור משתמש]]'''. הרשמות היא דרך נוחה לעקוב אחרי עריכות ועוזרת לך לתקשר עם שאר הקהילה.
+'''[[Special:Userlogin|רצוי להירשם לאתר וליצור חשבון]]'''. הרשמה היא דרך נוחה לעקוב אחרי עריכות ועוזרת לך לתקשר עם שאר הקהילה.
 
-במידה ואתה זקוק לעזרה כלשהי, אנא השאר הודעה ב[[$2|דף השיחה שלי]], $3",
+אם אתה זקוק לעזרה כלשהי, אנא השאר הודעה ב[[$2|דף השיחה שלי]], $3",
 	'welcome-message-log' => 'ברך משתמש חדש',
+);
+
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'welcome-message-user' => 'Szia, üdvözlünk a(z) {{SITENAME}} wikin! Köszönjük a(z) [[:$1]] lapon tett szerkesztésedet.
+
+Kérlek hagyj üzenetet a [[$2|vitalapomon]], ha segíthetek valamiben. $3',
+	'welcome-message-log' => 'új közreműködő üdvözlése',
 );
 
 /** Interlingua (Interlingua)
@@ -326,14 +361,13 @@ Salute, benvenite a {{SITENAME}}! Gratias pro tu modification del pagina [[:$1]]
 Si tu ha besonio de adjuta, e il ha nulle administratores local hic, nos suggere
 visitar le [[wikia:Forum:Community Central Forum|foros in le wiki Community
 Central]] $3',
-	'welcome-message-anon-staff' => "
-==Benvenite==
+	'welcome-message-anon-staff' => "==Benvenite==
 
 Salute, benvenite a {{SITENAME}}. Gratias pro tu modification del pagina [[:$1]].
 
 '''[[Special:Userlogin|Per favor crea un conto e aperi un session]]'''. Es un modo facile de tener tracia de tu contributiones e te adjuta a communicar con le resto del communitate.
 
-Si tu ha besonio de adjuta, e il ha nulle administratores local hic, nos suggere visitar le [[wikia: Forum:Community Central Forum|foros in le wiki Community Central]] $3",
+Si tu ha besonio de adjuta, e il ha nulle administratores local hic, nos suggere visitar le [[wikia:Forum:Community Central Forum|foros in le wiki Community Central]] $3",
 );
 
 /** Italian (Italiano) */
@@ -418,7 +452,7 @@ $messages['mk'] = array(
 
 '''[[Special:Userlogin|Најавете се и создајте корисничко име]]'''. Вака лесно ќе можеме да ги следиме вашите придонеси, а воедно ја олеснува и вашата комуникација со останатите членови на заедницата.
 
-Ако ви треба помош, а нема локални администратори, ви препорачуваме да ги посетите [[wikia: Forum:Community Central Forum|форумите на Центарот на Заедницата]] $3",
+Ако ви треба помош, а нема локални администратори, ви препорачуваме да ги посетите [[wikia:Forum:Community Central Forum|форумите на Центарот на Заедницата]] $3",
 );
 
 /** Dutch (Nederlands)
@@ -457,7 +491,7 @@ Hallo! Welkom bij {{SITENAME}}. Dank u wel voor uw bewerking aan de pagina [[:$1
 
 '''[[Special:Userlogin|Meld u zich alstublieft aan of maak een gebruiker aan]]'''. Zo kunt u eenvoudig uw bewerkingen bijhouden en contact houden met de andere leden van de gemeenschap.
 
-Als u hulp zoekt en er zijn geen lokale beheerders, ga dan naar de [[wikia: Forum:Community Central Forum|forums op de Centrale Gemeenschapswiki]] $3",
+Als u hulp zoekt en er zijn geen lokale beheerders, ga dan naar de [[wikia:Forum:Community Central Forum|forums op de Centrale Gemeenschapswiki]] $3",
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -500,7 +534,7 @@ Hei, velkommen til {{SITENAME}}. Takk for at du har redigert [[:$1]]-siden.
 
 '''[[Special:Userlogin|Registrer deg og opprett et brukernavn]]'''. Det er en enkel måte å holde styring på bidragene dine og hjelper deg med å kommunisere med resten av felleskapet.
 
-Hvis du trenger hjelp og det ikke er noen lokale administratorer her vil du kanskje besøke [[wikia: Forum:Community Central Forum|forumene på Community Central Wiki]] $3",
+Hvis du trenger hjelp og det ikke er noen lokale administratorer her vil du kanskje besøke [[wikia:Forum:Community Central Forum|forumene på Community Central Wiki]] $3",
 );
 
 /** Occitan (Occitan)
@@ -591,7 +625,7 @@ Cerea, bin ëvnù su {{SITENAME}}! Mersì për soa modìfica a la pàgina [[:$1]
 
 '''[[Special:Userlogin|Për piasì ch'a intra e ch'a crea un nòm utent]]'''. A l'é na manera bel fé ëd ten-e trassa ëd soe contribussion e a-j giuta a comuniché con ël rest ëd la comunità.
 
-S'a l'has dabzògn d'agiut, e a-i é gnun aministrator locaj ambelessì, a peul visité le [[wikia: Forum:Community Central Forum|piasse ëd la Wiki Sentral ëd la Comunità]] $3",
+S'a l'has dabzògn d'agiut, e a-i é gnun aministrator locaj ambelessì, a peul visité le [[wikia:Forum:Community Central Forum|piasse ëd la Wiki Sentral ëd la Comunità]] $3",
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -661,7 +695,7 @@ $messages['ru'] = array(
 
 '''[[Special:Userlogin|Пожалуйста создайте учётную запись и представьтесь системе]]'''. Это поможет вам следить за своими исправлениями и общаться с остальными членами сообщества.
 
-Если вам нужна помощь, а локальные администраторы отсутствуют, вы можете посетить [[wikia: Forum:Community Central Forum|форумы Центральной вики сообщества]] $3",
+Если вам нужна помощь, а локальные администраторы отсутствуют, вы можете посетить [[wikia:Forum:Community Central Forum|форумы Центральной вики сообщества]] $3",
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))

@@ -56,11 +56,19 @@ $messages['cs'] = array(
 	'wikiaupload' => 'Wikia načtení',
 );
 
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'wikiaupload' => 'Wikia-Upload',
+);
+
 /** Spanish (Español)
+ * @author Crazymadlover
  * @author Translationista
  */
 $messages['es'] = array(
-	'wikiaupload' => 'WikiaSubida:',
+	'wikiaupload' => 'Cargas Wikia',
 );
 
 /** Finnish (Suomi)
@@ -168,6 +176,13 @@ $messages['oc'] = array(
  */
 $messages['pms'] = array(
 	'wikiaupload' => 'Carié Wikia',
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'wikiaupload' => 'Upload na Wikia',
 );
 
 /** Tarandíne (Tarandíne)

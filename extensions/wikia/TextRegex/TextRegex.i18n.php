@@ -119,6 +119,47 @@ $messages['br'] = array(
 	'textregex-return-mainpage' => "[{{SERVIJER}}$1 distreiñ d'ar roll.]",
 );
 
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'textregex' => 'Text RegEx',
+	'textregex-desc' => '[[Special:textregex/XXXX|Filtere]] ungewollte Phrasen, basierend auf regulären Ausdrücken, aus geänderten Seiten aus',
+	'textregex-page-title' => 'Liste von unerwünschten Ausdrücken',
+	'textregex-error-unblocking' => 'Fehler bei Entsperrung ($1).
+Versuche es noch einmal.',
+	'textregex-currently-blocked' => "'''Derzeit gesperrte Phrasen:'''",
+	'textregex_nocurrently-blocked' => 'Keine gesperrten Phrasen gefunden',
+	'textregex-addedby-user' => 'hinzugefügt von $1 am $2',
+	'textregex-remove-url' => '[{{SERVER}}$1&id=$2 entfernen]',
+	'textregex-stats-url' => '[{{SERVER}}$1&id=$2 Statistiken]',
+	'textregex-unblock-succ' => 'Entsperrung erfolgreich',
+	'textregex-block-succ' => 'Sperrung erfolgreich',
+	'textregex-unblock-message' => "Phrase '''$1''' ist aus den unerwünschten Ausdrücken entfernt worden.",
+	'textregex-block-message' => "Phrase '''$1''' wurde zu den unerwünschten Ausdrücken hinzugefügt.",
+	'textregex-regex-block' => 'Zu sperrende Phrase:',
+	'textregex-submit-regex' => 'Phrase hinzufügen',
+	'textregex-empty-regex' => 'Gib eine korrekte Phrase zum Sperren an.',
+	'textregex-invalid-regex' => 'Ungültiger regulärer Ausdruck.',
+	'textregex-already-added' => '"$1" wurde bereits hinzugefügt',
+	'textregex-nodata-found' => 'Keine Daten gefunden',
+	'textregex-stats-record' => "Word ''$1'' wurde von $2 auf $3 verwendet (''Kommentar: $4'')",
+	'textregex-select-subpage' => 'Wähle eine Liste von Phrasen:',
+	'textregex-select-default' => '-- wählen --',
+	'textregex-create-subpage' => 'oder neue Liste erstellen:',
+	'textregex-select-regexlist' => 'gehe zur Liste',
+	'textregex-invalid-regexid' => 'Ungültige Phrase.',
+	'textregex-phrase-statistics' => "Statistiken für \"'''\$1'''\" Phrase (Anzahl von Aufzeichnungen: \$2)",
+	'textregex-return-mainpage' => '[{{SERVER}}$1 zurück zur Liste]',
+);
+
+/** Spanish (Español)
+ * @author Locos epraix
+ */
+$messages['es'] = array(
+	'textregex-invalid-regex' => 'Expresión regular inválida.',
+);
+
 /** Finnish (Suomi)
  * @author Centerlink
  */
@@ -205,6 +246,7 @@ $messages['hu'] = array(
 	'textregex-addedby-user' => 'hozzáadta $1 ekkor: $2',
 	'textregex-unblock-succ' => 'A blokk feloldása sikeres',
 	'textregex-block-succ' => 'A blokk sikeres',
+	'textregex-regex-block' => 'Blokkolandó kifejezés:',
 	'textregex-submit-regex' => 'Reguláris kifejezés hozzáadása',
 	'textregex-invalid-regex' => 'Érvénytelen reguláris kifejezés.',
 	'textregex-nodata-found' => 'Nem található adat',
@@ -316,6 +358,7 @@ Probeer het opnieuw.',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
  * @author Nghtwlkr
  */
 $messages['no'] = array(
@@ -345,6 +388,7 @@ Prøv igjen.',
 	'textregex-create-subpage' => 'eller opprett en ny liste:',
 	'textregex-select-regexlist' => 'gå til listen',
 	'textregex-invalid-regexid' => 'Ugyldig frase.',
+	'textregex-phrase-statistics' => "Statistikk for \"'''\$1'''\"-frasen (antall treff: \$2)",
 	'textregex-return-mainpage' => '[{{SERVER}}$1 gå tilbake til listen]',
 );
 
@@ -380,6 +424,13 @@ $messages['pms'] = array(
 	'textregex-invalid-regexid' => "Identificator d'espression regolar pa bon.",
 	'textregex-phrase-statistics' => "Statìstiche për la fras '''$1''' (nùmer d'argistrassion: $2)",
 	'textregex-return-mainpage' => '[{{SERVER}}$1 artorna a la lista]',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'textregex-select-default' => '-- ټاکل --',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

@@ -16,6 +16,14 @@ $messages['af'] = array(
 	'theorytab-parent-title' => 'Hoof-artikel',
 );
 
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'theorytab-title' => 'نظريات',
+	'theorytab-parent-title' => 'المقالة الأصلية',
+);
+
 /** Breton (Brezhoneg)
  * @author Gwenn-Ael
  * @author Y-M D
@@ -163,6 +171,14 @@ $messages['sr-ec'] = array(
 $messages['sv'] = array(
 	'theorytab-title' => 'Teori',
 	'theorytab-parent-title' => 'Överordnad artikel',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'theorytab-title' => 'సిద్ధాంతం',
+	'theorytab-parent-title' => 'మాతృ వ్యాసం',
 );
 
 /** Turkish (Türkçe)
