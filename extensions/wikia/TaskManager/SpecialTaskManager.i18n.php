@@ -101,6 +101,15 @@ $messages['ia'] = array(
 	'taskmanager_tasklist' => 'Retornar al lista de processos',
 );
 
+/** Japanese (日本語)
+ * @author Naohiro19
+ */
+$messages['ja'] = array(
+	'taskmanager' => '表示とバックグランド管理タスク',
+	'taskmanager_title' => '表示とバックグランド管理タスク',
+	'taskmanager_tasklist' => 'タスク一覧へ戻る',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */

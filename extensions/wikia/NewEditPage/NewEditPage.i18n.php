@@ -14,6 +14,13 @@ $messages['af'] = array(
 	'templatesused-toggle' => 'Wys/versteek {{PLURAL:$1|$1 item|$1 items}}',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'templatesused-toggle' => 'Паказаць/схаваць $1 {{PLURAL:$1|элемэнт|элемэнты|элемэнтаў}}',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
@@ -22,9 +29,12 @@ $messages['br'] = array(
 	'templatesused-toggle' => 'Diskouez/kuzhat $1 elfenn{{PLURAL:$1||}}',
 );
 
-/** German (Deutsch) */
+/** German (Deutsch)
+ * @author LWChris
+ */
 $messages['de'] = array(
 	'new-edit-page-preview-notice' => 'Vorschau: Es wurden noch keine Änderungen gespeichert! Scrolle runter zum Editieren.',
+	'templatesused-toggle' => '{{PLURAL:$1|$1 Eintrag|$1 Einträge}} anzeigen/ausblenden',
 );
 
 /** Spanish (Español)
@@ -71,6 +81,7 @@ $messages['hsb'] = array(
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
+	'new-edit-page-preview-notice' => 'Előnézeti mód: a változtatások még nincsenek elmentve! Görgess lefelé a szerkesztés folytatásához.',
 	'templatesused-toggle' => '$1 tétel megjelenítése/elrejtése',
 );
 
@@ -150,6 +161,14 @@ $messages['pl'] = array(
 $messages['pms'] = array(
 	'new-edit-page-preview-notice' => "Manera previsualisassion: gnun cangiament a l'é stàit ancó salvà! Andé an bass për continué a modifiché.",
 	'templatesused-toggle' => 'Mostra/stërma {{PLURAL:$1|$1 element|$1 element}}',
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'new-edit-page-preview-notice' => 'Modo de antevisão: ainda não foram gravadas alterações! Deslize a página para continuar a editar.',
+	'templatesused-toggle' => 'Mostrar/esconder $1 {{PLURAL:$1|elemento|elementos}}',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

@@ -51,6 +51,13 @@ $messages['bs'] = array(
 	'force-subject-for-new-section-message' => 'Molimo unesite naslov za sekciju',
 );
 
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'force-subject-for-new-section-message' => 'Bitte gib eine Überschrift für den Abschnitt ein',
+);
+
 /** Spanish (Español)
  * @author Translationista
  */
@@ -152,6 +159,13 @@ $messages['pl'] = array(
  */
 $messages['pms'] = array(
 	'force-subject-for-new-section-message' => "Për piasì ch'a anserissa un tìtol për la session",
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'force-subject-for-new-section-message' => 'Introduza um título para a secção',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

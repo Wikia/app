@@ -71,6 +71,19 @@ $messages['br'] = array(
 	'whereisextension-name-contains' => 'Anv an argemmenn zo ennañ',
 );
 
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'whereisextension' => 'Wo ist Erweiterung',
+	'whereisextension-submit' => 'Suchen',
+	'whereisextension-list' => 'Liste von Wikis mit zutreffenden Kriterien',
+	'whereisextension-isset' => 'ist eingestellt auf',
+	'whereisextension-filter' => 'Filter',
+	'whereisextension-all-groups' => 'Alle Gruppen',
+	'whereisextension-name-contains' => 'Variablenname enthält',
+);
+
 /** Spanish (Español)
  * @author Peter17
  */
@@ -133,6 +146,7 @@ $messages['gl'] = array(
 $messages['hu'] = array(
 	'whereisextension-submit' => 'Keresés',
 	'whereisextension-filter' => 'Szűrő',
+	'whereisextension-all-groups' => 'Összes csoport',
 );
 
 /** Interlingua (Interlingua)
@@ -146,6 +160,14 @@ $messages['ia'] = array(
 	'whereisextension-filter' => 'Filtro',
 	'whereisextension-all-groups' => 'Tote le gruppos',
 	'whereisextension-name-contains' => 'nomine de variabile contine',
+);
+
+/** Japanese (日本語)
+ * @author Naohiro19
+ */
+$messages['ja'] = array(
+	'whereisextension-submit' => '検索',
+	'whereisextension-list' => 'ウィキに一致した基準の一覧',
 );
 
 /** Macedonian (Македонски)
@@ -199,6 +221,15 @@ $messages['pms'] = array(
 	'whereisextension-filter' => 'Filtr',
 	'whereisextension-all-groups' => 'Tute le partìe',
 	'whereisextension-name-contains' => 'ël nòm ëd variàbil a conten',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'whereisextension-submit' => 'پلټنه',
+	'whereisextension-filter' => 'چاڼګر',
+	'whereisextension-all-groups' => 'ټولې ډلې',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

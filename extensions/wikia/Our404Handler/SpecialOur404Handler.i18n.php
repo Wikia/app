@@ -172,9 +172,18 @@ Nastawk '''$1''' njeda so namakać.
 
 /** Hungarian (Magyar)
  * @author Blogadmin
+ * @author Glanthor Reviol
  */
 $messages['hu'] = array(
 	'our404handler' => '404-es hiba: az oldal nincs meg.',
+	'our404handler-oops' => 'Ez nem az a lap amit keresel. Kérjük menj tovább.',
+	'message404' => "'''Nagyon sajnáljuk, de az általad kért lap valamilyen okból nem létezik.'''
+
+A(z) '''$1''' szócikk nem található.
+
+* Próbálkozhatsz a(z) [[$2]] szócikkel
+* Használhatod a keresődobozt a lap bal oldalán
+* A kezdőoldalra ugráshoz kattints a következő hivatkozásra: [{{SERVER}} {{SITENAME}}]",
 );
 
 /** Interlingua (Interlingua)
@@ -351,6 +360,22 @@ L'artìcol '''$1''' a peul pa esse trovà.
 * Për andé a la pàgina prinsipal dë sto sit-sì, ch'a sgnaca an sl'anliura: [{{SERVER}} {{SITENAME}}]",
 );
 
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'our404handler' => 'Erro 404: Página não foi encontrada!',
+	'our404handler-oops' => 'Estas não são as páginas que procura. Continue, por favor.',
+	'message404' => "
+'''Lamentamos mas, por qualquer razão, a página que pretende não existe.'''
+
+Não foi possível encontrar o artigo '''$1'''.
+
+* Pode tentar o artigo [[$2]]
+* Pode usar a caixa de pesquisa à esquerda da página
+* Para visitar a página principal deste site, clique o link: [{{SERVER}} {{SITENAME}}]",
+);
+
 /** Brazilian Portuguese (Português do Brasil)
  * @author Daemorris
  */
@@ -403,5 +428,12 @@ Artikeln '''$1''' kunde inte hittas.
 * Kanske artikeln [[$2]] kan hjälpa dig
 * Du kan använda sökfältet till vänster på sidan
 * För att gå till huvudsidan för denna sajten klickar du på länken: [{{SERVER}} {{SITENAME}}]",
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'our404handler' => '404 పొరపాటు: పేజీ కనబడలేదు!',
 );
 

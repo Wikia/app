@@ -66,10 +66,12 @@ $messages['bg'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Y-M D
  */
 $messages['br'] = array(
 	'dump-database' => 'Tumpoù an diaz roadennoù',
+	'dump-database-info' => "Gallout a ra dilerc'hioù ar bank roadennoù bezañ implijet da eilenn savete personel (ent emgefre e sav Wikia eilennoù savete diforc'h evit an holl wikioù) pe evit ar botoù trezalc'h",
 	'dump-database-curr-pages' => 'Pajennoù a-vremañ',
 	'dump-database-curr-pages-info' => "(Gwelloc'h eo ar stumm-se evit implijoù ur bot)",
 	'dump-database-full-pages' => 'Pajennoù a-vremañ hag istor',
@@ -108,9 +110,11 @@ $messages['cs'] = array(
 );
 
 /** German (Deutsch)
+ * @author LWChris
  * @author MtaÄ
  */
 $messages['de'] = array(
+	'dump-database' => 'Datenbank-Dumps',
 	'dump-database-info' => 'Database Dumps können als persönliches Backup (Wiki produziert seperate Backups aller Wikis automatisch) genutzt werden, oder für Wartungsbots.',
 	'dump-database-curr-pages' => 'Aktuelle Seiten',
 	'dump-database-curr-pages-info' => '(Diese Version eignet sich am Besten für Bots)',
@@ -217,12 +221,16 @@ $messages['he'] = array(
  */
 $messages['hu'] = array(
 	'dump-database' => 'Adatbázis dumpok',
+	'dump-database-info' => 'Az adatbázis dumpok használhatóak személyes biztonsági mentésként (a Wikia az összes wikiről automatikusan készít különálló mentéseket) vagy karbantartó botokhoz',
 	'dump-database-curr-pages' => 'Aktuális lapok',
 	'dump-database-curr-pages-info' => '(Általában ez a verzió a legmegfelelőbb bottal való feldolgozásra)',
 	'dump-database-full-pages' => 'Aktuális lapok és laptörténet',
 	'dump-database-full-pages-info' => '(Figyelmeztetés: ez a fájl igen nagy lehet)',
 	'dump-database-request' => 'Frissítés kérése',
+	'dump-database-request-info' => '(Általában hetente készülnek dumpok)',
 	'dump-database-request-submit' => 'Kérelem elküldése',
+	'dump-database-request-requested' => 'Aadtbázis-dump készítési kérelem elküldve',
+	'dump-database-info-more' => 'További információkat <a href="http://community.wikia.com/wiki/Help:Database_download">itt</a> találsz',
 );
 
 /** Interlingua (Interlingua)
@@ -299,12 +307,16 @@ Wikia maakt automatisch back-ups van alle wiki's.",
  * @author Nghtwlkr
  */
 $messages['no'] = array(
+	'dump-database' => 'Databasedumper',
+	'dump-database-info' => 'Databasedumper kan brukes som en personlig sikkerhetskopi (Wikia produserer separate sikkerhetskopier av alle wikier automatisk) eller for vedlikeholdsroboter',
 	'dump-database-curr-pages' => 'Nåværende sider',
 	'dump-database-curr-pages-info' => '(Denne versjonen er vanligvis best for bot-bruk)',
 	'dump-database-full-pages' => 'Nåværende sider og historikk',
 	'dump-database-full-pages-info' => '(Advarsel: Denne filen kan være veldig stor)',
 	'dump-database-request' => 'Be om en oppdatering',
+	'dump-database-request-info' => '(Dumpinger er vanligvis generert ukentlig)',
 	'dump-database-request-submit' => 'Send forespørsel',
+	'dump-database-request-requested' => 'Forespørsel om databasedump sendt',
 	'dump-database-info-more' => 'Vennligst <a href="http://community.wikia.com/wiki/Help:Database_download">se</a> for mer info',
 );
 
@@ -378,10 +390,20 @@ $messages['sv'] = array(
 	'dump-database-request-submit' => 'Skicka begäran',
 );
 
+/** Telugu (తెలుగు)
+ * @author Ravichandra
+ */
+$messages['te'] = array(
+	'dump-database-curr-pages' => 'ప్రస్తుర పుటలు',
+	'dump-database-full-pages' => 'ప్రస్తుత పుటలు మరియు చరిత్ర',
+	'dump-database-info-more' => 'మరింత సమాచారం కోసం దయచేసి <a href="http://community.wikia.com/wiki/Help:Database_download">దీన్ని చూడండి</a>',
+);
+
 /** Ukrainian (Українська)
  * @author Prima klasy4na
  */
 $messages['uk'] = array(
 	'dump-database-curr-pages' => 'Поточні сторінки',
+	'dump-database-info-more' => 'Будь ласка, ознайомтесь з детальнішою інформацією <a href="http://community.wikia.com/wiki/Help:Database_download">тут</a>',
 );
 

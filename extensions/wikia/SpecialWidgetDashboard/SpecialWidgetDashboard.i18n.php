@@ -43,6 +43,14 @@ $messages['gl'] = array(
 	'widgetdashboard-description' => 'Esta páxina serve como lugar para probar os widgets no traballo. Para ollar unha lista de todos os widgets dispoñibles vaia a [[Special:Widgets]].',
 );
 
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'widgetdashboard-wrong-skin' => '<p>A minialkalmazás műszerfal az új felületek egyikével működik a legjobban, például a <a href="./Special:WidgetDashboard?useskin=monaco">Monacoval</a>.</p><p>Kérlek változtasd meg <a href="./Special:Preferences">a beállításaidat</a> az eszköz használatához.</p>',
+	'widgetdashboard-description' => 'Ezen a lapon tesztelheted a minialkalmazásaidat működés közben. Az összes elérhető minialkalmazás listája a [[Special:Widgets]] lapon található.',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */

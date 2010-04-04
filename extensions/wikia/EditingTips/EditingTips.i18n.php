@@ -32,7 +32,9 @@ $messages['br'] = array(
 	'editingTips' => 'Ouzhpennit ho tunioù [[MediaWiki:EditingTips|amañ]]',
 );
 
-/** German (Deutsch) */
+/** German (Deutsch)
+ * @author LWChris
+ */
 $messages['de'] = array(
 	'tog-disableeditingtips' => 'Bearbeitungs-Tipps ausblenden',
 	'tog-widescreeneditingtips' => 'Benutze den Editor auf voller Breite',
@@ -40,6 +42,7 @@ $messages['de'] = array(
 	'editingtips_exit_widescreen' => 'Normale Breite',
 	'editingtips_hide' => 'Bearbeitungs-Tipps ausblenden',
 	'editingtips_show' => 'Bearbeitungs-Tipps einblenden',
+	'editingTips' => 'Füge deine Tipps [[MediaWiki:EditingTips|hier]] hinzu',
 );
 
 /** Spanish (Español)
@@ -90,6 +93,19 @@ $messages['gl'] = array(
 	'editingtips_hide' => 'Agochar os consellos de edición',
 	'editingtips_show' => 'Mostrar os consellos de edición',
 	'editingTips' => 'Engada os seus consellos [[MediaWiki:EditingTips|aquí]]',
+);
+
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'tog-disableeditingtips' => 'Ne jelenítse meg a szerkesztési tippeket',
+	'tog-widescreeneditingtips' => 'Széles képernyős mód használata',
+	'editingtips_enter_widescreen' => 'Belépés széles képernyős módba',
+	'editingtips_exit_widescreen' => 'Kilépés széles képernyős módból',
+	'editingtips_hide' => 'Szerkesztési tippek elrejtése',
+	'editingtips_show' => 'Szerkesztési tippek megjelenítése',
+	'editingTips' => 'Add hozzá a tippjeidet [[MediaWiki:EditingTips|itt]]',
 );
 
 /** Interlingua (Interlingua)
@@ -230,8 +246,13 @@ wiki文法をつかうか、HTMLで装飾できます。
  * @author Robby
  */
 $messages['lb'] = array(
+	'tog-disableeditingtips' => 'Ännerungs-Tuyaue net weisen',
+	'tog-widescreeneditingtips' => 'Eng breet Fënster beim Ännere benotzen',
 	'editingtips_enter_widescreen' => 'Breeden Ecran benotzen',
 	'editingtips_exit_widescreen' => 'Breeden Ecran net méi benotzen',
+	'editingtips_hide' => 'Ännerungs-Tuyaue verstoppen',
+	'editingtips_show' => 'Ännerungs-Tuyaue weisen',
+	'editingTips' => 'Setzt Är Tuyauen [[MediaWiki:EditingTips|hei]] derbäi',
 );
 
 /** Macedonian (Македонски)

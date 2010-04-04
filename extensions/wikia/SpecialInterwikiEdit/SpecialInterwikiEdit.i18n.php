@@ -23,10 +23,11 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author LWChris
  * @author Translationista
  */
 $messages['qqq'] = array(
-	'iwedit-success' => 'There is an extra "l" at the end of "successful". Needs correction in EN.',
+	'iwedit-success' => 'succe-ss-fu-l, not succe-s-fu-ll. Needs correction in EN.',
 );
 
 /** Afrikaans (Afrikaans)
@@ -51,6 +52,18 @@ $messages['br'] = array(
 	'iwedit-update' => 'Hizivaat',
 	'iwedit-error' => "<p>ur fazi zo c'hoarvezet</p>",
 	'iwedit-success' => '<p>Liamm krouet gant berzh.</p>',
+);
+
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'iwedit-title' => 'Interwiki-Editor',
+	'iwedit-language-interwikis' => 'nur Sprach-Interwikis',
+	'iwedit-all-interwikis' => 'alle Interwikis',
+	'iwedit-update' => 'Aktualisieren',
+	'iwedit-error' => '<p>Ein Fehler ist aufgetreten.</p>',
+	'iwedit-success' => '<p>Link-Erzeugung erfolgreich.</p>',
 );
 
 /** Spanish (Español)
@@ -103,7 +116,12 @@ $messages['gl'] = array(
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
+	'iwedit-title' => 'Wikiközi hivatkozás szerkesztő',
+	'iwedit-language-interwikis' => 'csak a nyelvi wikiközi hivatkozások',
+	'iwedit-all-interwikis' => 'összes wikiközi hivatkozás',
 	'iwedit-update' => 'Frissítés',
+	'iwedit-error' => '<p>Hiba történt.</p>',
+	'iwedit-success' => '<p>A hivatkozás létrehozása sikerült.</p>',
 );
 
 /** Interlingua (Interlingua)
@@ -135,6 +153,7 @@ $messages['ja'] = array(
  */
 $messages['lb'] = array(
 	'iwedit-title' => 'Interwiki Editeur',
+	'iwedit-language-interwikis' => 'nëmme Sproochen-Interwikien',
 	'iwedit-all-interwikis' => 'all Interwikien',
 	'iwedit-update' => 'Aktualiséieren',
 	'iwedit-error' => '<p>Et ass e Feeler geschitt.</p>',

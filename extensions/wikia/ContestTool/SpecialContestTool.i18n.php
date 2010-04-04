@@ -60,6 +60,24 @@ $messages['br'] = array(
 Dalc'hit soñj n'eo ket dalc'het en ur roll an disoc'hoù ha n'int ket aes da derriñ hep sikour ar skipailh teknikel er mare-mañ (emeur o kemm an dra-se).",
 );
 
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'cntool-page-title-editor' => 'ContestTool :: Editor',
+	'cntool-page-title-preview' => 'ContestTool :: Vorschau',
+	'cntool-page-title-select' => 'ContestTool',
+	'cntool-label-select' => 'Gib einen gültigen Seitentitel ein',
+	'cntool-button-preview' => 'Vorschau betrachten',
+	'cntool-button-save' => 'Speichern',
+	'cntool-label-content' => 'Ändere den Artikelinhalt unterhalb:',
+	'cntool-label-preview' => 'Vorschau:',
+	'cntool-label-caveat' => 'Warnung',
+	'cntool-caveat' => 'Diese Erweiterung sollte nicht leichtfertig verwendet werden.
+
+Beachte, dass die Ergebnisse nirgendwo geloggt werden und momentan nicht ohne Weiteres ohne Tech-Hilfe rückgängig zu machen sind (daran wird gearbeitet).',
+);
+
 /** Spanish (Español)
  * @author Manuelt15
  */
@@ -182,11 +200,15 @@ Er wordt gewerkt aan het oplossen van deze tekortkoming.',
  * @author Nghtwlkr
  */
 $messages['no'] = array(
+	'cntool-page-title-editor' => 'KonkurranseVerktøy :: Redaktør',
+	'cntool-page-title-preview' => 'KonkurranseVerktøy :: Forhåndsvisning',
+	'cntool-page-title-select' => 'KonkurranseVerktøy',
 	'cntool-label-select' => 'Skriv inn en gyldig sidetittel',
 	'cntool-button-preview' => 'Forhåndsvis',
 	'cntool-button-save' => 'Lagre',
 	'cntool-label-content' => 'Endre artikkelinnhold nedenfor:',
 	'cntool-label-preview' => 'Forhåndsvisning:',
+	'cntool-label-caveat' => 'Appell',
 	'cntool-caveat' => 'Denne utvidelsen bør ikke brukes lettsindig.
 
 Husk at resultatene ikke blir loggført noen steder og ikke er lett tilbakestillbar uten Tech-hjelp (dette jobbes med for øyeblikket).',

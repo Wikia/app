@@ -40,6 +40,19 @@ $messages['br'] = array(
 	'searchranktracker-empty-list' => "N'eus frazenn klask ebet da hemolc'hañ er mare-mañ.",
 );
 
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'searchranktracker' => 'Suchrang Tracker',
+	'searchranktracker-add-new-entry' => 'Neuen Eintrag hinzufügen',
+	'searchranktracker-edit-entry' => 'Eintrag bearbeiten',
+	'searchranktracker-entry-list' => 'Liste von trackenden Wiki-Seiten',
+	'searchranktracker-page-name-required' => 'Seitenname erforderlich',
+	'searchranktracker-serach-phrase-required' => 'Suchbegriff erforderlich',
+	'searchranktracker-empty-list' => 'Derzeit gibt es keine zu trackenden Suchbegriffe.',
+);
+
 /** Spanish (Español)
  * @author Translationista
  */
@@ -84,10 +97,13 @@ $messages['gl'] = array(
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
+	'searchranktracker' => 'Keresési helyezés követő',
 	'searchranktracker-add-new-entry' => 'Új bejegyzés hozzáadása',
 	'searchranktracker-edit-entry' => 'Bejegyzés szerkesztése',
+	'searchranktracker-entry-list' => 'Követő wiki lapok listája',
 	'searchranktracker-page-name-required' => 'Lapnév megadása kötelező',
 	'searchranktracker-serach-phrase-required' => 'Keresőkifejezés megadása kötelező',
+	'searchranktracker-empty-list' => 'Jelenleg nincsenek követendő keresőkifejezések.',
 );
 
 /** Interlingua (Interlingua)

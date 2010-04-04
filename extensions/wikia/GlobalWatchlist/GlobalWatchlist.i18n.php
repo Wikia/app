@@ -40,19 +40,37 @@ $messages['af'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Gwenn-Ael
  * @author Y-M D
  */
 $messages['br'] = array(
 	'tog-watchlistdigest' => 'Kas din dre bostel un diverañ eus Ma Rollad evezhiañ bep sizhun',
 	'tog-watchlistdigestclear' => 'Merkañ evel lennet holl pajennoù ma rollad evezhiañ sizhuniek',
 	'globalwatchlist-see-more' => "Mar plij gwirit ho rolloù evezhiañ lec'hel evit diskouez muioc'h a gemmoù",
-	'globalwatchlist-digest-email-subject' => 'Diverañ ar sizhun',
+	'globalwatchlist-digest-email-subject' => 'Diverrañ ar sizhun',
+	'globalwatchlist-digest-email-body' => "$1 ker,
+
+Setu ur roll eus pajennoù ho roll da heuliañ Wiki zo bet kemmet ar wech diwezhañ ho peus gweladennet al lec'hienn.
+
+$2
+
+Setu ur roll eus pajennoù blog eus ho roll da heuliañ Wiki zo kemmet pe zo bet skrivet evezhiadennoù warno abaoe m'ho peus gweladennet al lec'hienn.
+
+£3
+Gweladennit ha kemmit, diouzh an dro...
+
+Wiki
+
+*evit kemmañ an notennoù skrivet ha kavet gwelloc'h ganeoc'h, gweladennit http://www.wikia.com/wiki/Special:dibaboù gwelloc'h
+*evit merkañ an holl bajennoù evel merket evit diverrañ ar sizhun, daveit da zibab an ivinell «Roll heuliañ » war ho pajenn dibaboù gwelloc'h",
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 evezhiadenn{{PLURAL:$2||}})',
 	'globalwatchlist-no-page-found' => "N'eo bet kavet pajenn ebet.",
 	'globalwatchlist-no-blog-page-found' => "N'eo bet kavet pajenn blog ebet.",
 );
 
-/** German (Deutsch) */
+/** German (Deutsch)
+ * @author LWChris
+ */
 $messages['de'] = array(
 	'tog-watchlistdigest' => 'Schicke mir wöchentlich eine Liste aller Seiten, die nach meinem letzten Besuch bearbeitet wurden',
 	'tog-watchlistdigestclear' => 'Markiere alle Seiten der wöchentlichen Zusammenfassung meiner Beobachtungsliste als besucht',
@@ -64,11 +82,20 @@ Dies ist eine Liste aller Seiten auf deiner Wikia-Beobachtungsliste, die seit de
 
 $2
 
+
+Dies ist eine Liste aller Blogseiten auf deiner Wikia-Beobachtungsliste, die seit deinem letzten Besuch bearbeitet wurden.
+
+$3
+
 Schau doch mal rein und bearbeite sie weiter...
 
 Wikia
 
-* Du kannst deine Einstellungen zur Benachrichtigung über deine Beobachtungsliste hier anpassen: http://www.wikia.com/wiki/Special:Preferences',
+* Du kannst deine Einstellungen zur Benachrichtigung über deine Beobachtungsliste hier anpassen: http://www.wikia.com/wiki/Special:Preferences
+* Um alle Seiten dieses wöchentlichen Überblicks als besucht zu markieren, verwende die Option unter "Beobachtungsliste" in deinen Einstellungen',
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|Kommentar|Kommentare}})',
+	'globalwatchlist-no-page-found' => 'Keine Seite gefunden.',
+	'globalwatchlist-no-blog-page-found' => 'Keine Blogseite gefunden.',
 );
 
 /** Spanish (Español)
@@ -189,6 +216,15 @@ Wikia
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|comentario|comentarios}})',
 	'globalwatchlist-no-page-found' => 'Non se atopou ningunha páxina.',
 	'globalwatchlist-no-blog-page-found' => 'Non se atopou ningunha páxina de blogue.',
+);
+
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'globalwatchlist-see-more' => 'Kérlek nézd meg a helyi figyelőlistáidat további változtatásokért',
+	'globalwatchlist-no-page-found' => 'Nincs találat.',
+	'globalwatchlist-no-blog-page-found' => 'Nincs blog-találat.',
 );
 
 /** Interlingua (Interlingua)

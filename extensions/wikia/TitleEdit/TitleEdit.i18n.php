@@ -251,8 +251,11 @@ $messages['da'] = array(
 	'titleedit' => 'Redigér',
 );
 
-/** German (Deutsch) */
+/** German (Deutsch)
+ * @author LWChris
+ */
 $messages['de'] = array(
+	'titleedit-desc' => 'Fügt Titel Bearbeitungs-Button oben auf den Seiten hinzu',
 	'titleedit' => 'Bearbeiten',
 );
 
@@ -286,9 +289,10 @@ $messages['ee'] = array(
 
 /** Greek (Ελληνικά)
  * @author Crazymadlover
+ * @author Omnipaedista
  */
 $messages['el'] = array(
-	'titleedit-desc' => 'Προσθέτει το κουμπί Επεξεργασία τίτλου στην κορυφή των σελίδων',
+	'titleedit-desc' => 'Προσθέτει ένα κουμπί επεξεργασίας τίτλου στην κορυφή των σελίδων',
 	'titleedit' => 'Επεξεργασία',
 );
 
@@ -714,8 +718,11 @@ $messages['loz'] = array(
 	'titleedit' => "Hloli ye ng'i",
 );
 
-/** Lithuanian (Lietuvių) */
+/** Lithuanian (Lietuvių)
+ * @author Garas
+ */
 $messages['lt'] = array(
+	'titleedit-desc' => 'Prideda pavadinimo keitimo mygtuką puslapių viršuje',
 	'titleedit' => 'Redaguoti',
 );
 

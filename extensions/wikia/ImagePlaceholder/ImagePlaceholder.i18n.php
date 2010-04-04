@@ -8,6 +8,13 @@ $messages['en'] = array(
 	'imgplc-notinhistory' => "You can't add picture in history mode."
 );
 
+/** Message documentation (Message documentation)
+ * @author LWChris
+ */
+$messages['qqq'] = array(
+	'imgplc-notinhistory' => 'add a picture - or - add pictures',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -15,6 +22,16 @@ $messages['af'] = array(
 	'imgplc-create' => 'Voeg beeld by',
 	'imgplc-placeholder' => 'Plekhouer',
 	'imgplc-image' => 'Beeld',
+);
+
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author Wizardist
+ */
+$messages['be-tarask'] = array(
+	'imgplc-create' => 'Дадаць выяву',
+	'imgplc-placeholder' => 'Запаўняльнік',
+	'imgplc-image' => 'Выява',
+	'imgplc-notinhistory' => 'Вы ня можаце дадаць выяву ў рэжыме гісторыі.',
 );
 
 /** Breton (Brezhoneg)
@@ -27,11 +44,14 @@ $messages['br'] = array(
 	'imgplc-notinhistory' => "Ne c'helloc'h ket ouzhpennañ poltriji er mod istor.",
 );
 
-/** German (Deutsch) */
+/** German (Deutsch)
+ * @author LWChris
+ */
 $messages['de'] = array(
 	'imgplc-create' => 'Bild hinzufügen',
 	'imgplc-placeholder' => 'Platzhalter',
 	'imgplc-image' => 'Bild',
+	'imgplc-notinhistory' => 'Du kannst keine Bilder im Verlaufsmodus hinzufügen.',
 );
 
 /** Spanish (Español)
@@ -267,5 +287,13 @@ $messages['sv'] = array(
 	'imgplc-placeholder' => 'Platshållare',
 	'imgplc-image' => 'Bild',
 	'imgplc-notinhistory' => 'Du kan inte lägga till bilder i historik-läget.',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'imgplc-create' => 'Додати зображення',
+	'imgplc-image' => 'Зображення',
 );
 

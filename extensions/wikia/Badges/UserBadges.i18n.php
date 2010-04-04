@@ -136,6 +136,25 @@ $messages['en-gb'] = array(
 	'user-badge-data-color' => 'Data colour:',
 );
 
+/** Spanish (Español)
+ * @author Locos epraix
+ * @author Pertile
+ */
+$messages['es'] = array(
+	'user-badge-invalid-color' => 'Se ingresó un valor hexadecimal inválido',
+	'user-badge-show-color' => 'Mostrar los detalles de los colores',
+	'user-badge-hide-color' => 'Ocultar los detalles del color',
+	'user-badge-selected-color' => 'Color {rgb} actualmente seleccionado',
+	'user-badge-web-color' => 'Color web estándar más cercano: {rgb}. ¡Haga clic aquí para seleccionarlo!',
+	'user-badge-dialog-title' => 'Por favor escoja un color',
+	'user-badge-current' => 'Insignia actual',
+	'user-badge-configure' => 'Configure su insignia',
+	'user-badge-not-found' => '¡No se ha encontrado ninguna insignia!',
+	'user-badge-use-configurator' => '¡Use el configurador para crear una nueva insignia!',
+	'user-badge-create' => 'Crear insignia:',
+	'user-badge-edits-txt' => 'Ediciones',
+);
+
 /** Finnish (Suomi)
  * @author Centerlink
  */
@@ -220,12 +239,35 @@ $messages['gl'] = array(
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
+	'user-badge-title' => 'Felhasználói kitűző',
 	'user-badge-invalid-color' => 'Érvénytelen hexa érték',
+	'user-badge-show-color' => 'Színezés részleteinek megjelenítése',
+	'user-badge-hide-color' => 'Színezés részleteinek elrejtése',
+	'user-badge-selected-color' => 'Jelenleg kiválasztott szín {rgb}',
+	'user-badge-web-color' => 'Legközelebbi webtűrő szín: {rgb}. Kattints a kiválasztáshoz!',
+	'user-badge-dialog-title' => 'Kérlek válassz egy színt',
+	'user-badge-current' => 'Jelenlegi kitűző',
+	'user-badge-configure' => 'Kitűződ beállítása',
+	'user-badge-not-found' => 'Nem található kitűző!',
+	'user-badge-use-configurator' => 'Használd a beállító segédeszközt új kitűző létrehozásához!',
+	'user-badge-create' => 'Kitűző készítése:',
+	'user-badge-overwrite-msg' => 'Létező kitűző felülírása',
 	'user-badge-header-body-box' => 'Fejléc és szövegtörzs:',
 	'user-badge-header-text' => 'Fejléc szövegszíne:',
+	'user-badge-header-bgcolor' => 'Fejléc háttérszíne:',
+	'user-badge-body-bgcolor' => 'Törzs háttérszíne:',
+	'user-badge-text-align' => 'Fejléc szövegének igazítása:',
 	'user-badge-logo-opt' => 'Kép beállítások:',
+	'user-badge-wikia-logo-pos' => 'Wikia logójának helye:',
+	'user-badge-small-wikia-logo-pos' => 'A kis Wikia logó helye:',
+	'user-badge-label-color' => 'Címke színe (felhasználónév, szerkesztések):',
 	'user-badge-small-wikia-logo-color' => 'Wikia logó színe:',
+	'user-badge-data-color' => 'Adatok színe:',
 	'user-badge-edits-txt' => 'Szerkesztések',
+	'user-bagde-copypaste-ext-code' => 'Másolás és beillesztés (külső honlapokra)',
+	'user-bagde-copypaste-int-code' => 'Másolás és beillesztés (ezen a Wikián)',
+	'user-bagde-copypaste-int-other-code' => 'Másolás és beillesztés (más Wikián)',
+	'user-badge-save-info' => 'Ha szeretnéd menteni a változtatásokat, görgess a lap aljára és nyomd meg a „Mentés” gombot',
 );
 
 /** Interlingua (Interlingua)
@@ -383,19 +425,28 @@ Klik om te selecteren!',
  * @author Nghtwlkr
  */
 $messages['no'] = array(
+	'user-badge-title' => 'Brukerutmerkelse',
 	'user-badge-invalid-color' => 'Ugyldig hex-verdi angitt',
 	'user-badge-show-color' => 'Vis fargedetaljer',
 	'user-badge-hide-color' => 'Skjul fargedetaljer',
 	'user-badge-selected-color' => 'Gjeldende valgte farge {rgb}',
 	'user-badge-web-color' => 'Nærmeste nettsikre farge: {rgb}. Klikk for å velge!',
 	'user-badge-dialog-title' => 'Vennligst velg en farge',
+	'user-badge-current' => 'Nåværende utmerkelse',
+	'user-badge-configure' => 'Konfigurer utmerkelsen din',
+	'user-badge-not-found' => 'Ingen utmerkelse funnet!',
+	'user-badge-use-configurator' => 'Bruk konfiguratøren for å lage en ny utmerkelse!',
+	'user-badge-create' => 'Lag utmerkelse:',
+	'user-badge-overwrite-msg' => 'Overskriv eksisterende utmerkelse',
 	'user-badge-header-body-box' => 'Overskrift og hoveddel:',
 	'user-badge-header-text' => 'Overskriftstekstsfarge:',
 	'user-badge-header-bgcolor' => 'Overskriftsbakgrunnsfarge:',
 	'user-badge-body-bgcolor' => 'Hoveddelsbakgrunnsfarge:',
+	'user-badge-text-align' => 'Justering av overskrift:',
 	'user-badge-logo-opt' => 'Bildealternativer:',
 	'user-badge-wikia-logo-pos' => 'Wikia-logo posisjon:',
 	'user-badge-small-wikia-logo-pos' => 'Liten Wikia-logos posisjon:',
+	'user-badge-label-color' => 'Etikettfarge (brukernavn, redigeringer):',
 	'user-badge-small-wikia-logo-color' => 'Wikia-logofarge:',
 	'user-badge-data-color' => 'Datafarge:',
 	'user-badge-edits-txt' => 'Redigeringer',
@@ -492,5 +543,18 @@ $messages['ru'] = array(
  */
 $messages['sr-ec'] = array(
 	'user-badge-edits-txt' => 'Измене',
+);
+
+/** Telugu (తెలుగు)
+ * @author Ravichandra
+ */
+$messages['te'] = array(
+	'user-badge-title' => 'వాడుకరి చిహ్నం',
+	'user-badge-invalid-color' => 'సరైన అష్టాదశాంశ విలువ కాదు',
+	'user-badge-show-color' => 'వర్ణాల వివరాలు చూపండి',
+	'user-badge-hide-color' => 'వర్ణాల వివరాలు దాచండి',
+	'user-badge-dialog-title' => 'దయచేసి ఒక రంగును ఎన్నుకోండి',
+	'user-badge-edits-txt' => 'దిద్దుబాట్లు',
+	'user-badge-save-info' => 'మార్పులను భద్రపరచాలంటే, పుట అడుగుభాగానికి జారి "భద్రపరుచు" బొత్తాము నొక్కండి',
 );
 

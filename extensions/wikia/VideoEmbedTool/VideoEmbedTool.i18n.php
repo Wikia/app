@@ -176,6 +176,7 @@ $messages['be-tarask'] = array(
 	'vet-insert' => 'Уставіць',
 	'vet-license' => 'Ліцэнзія',
 	'vet-size' => 'Памер',
+	'vet-gallery' => 'Галерэя',
 );
 
 /** Breton (Brezhoneg)
@@ -257,20 +258,25 @@ $messages['br'] = array(
 	'vet-protected' => 'Gwarezet eo ar video-mañ',
 );
 
-/** German (Deutsch) */
+/** German (Deutsch)
+ * @author LWChris
+ */
 $messages['de'] = array(
 	'vet-upload' => 'Komplette URL',
 	'vet-notlogged' => 'Melde dich an oder registriere dich, um Videos einzubinden',
 	'vet-find' => 'Video suchen',
 	'vet-thiswiki' => 'Dieses Wiki',
+	'vet-flickr' => 'Flickr',
 	'vet-upload-btn' => 'Einfügen',
 	'vet-find-btn' => 'Suchen',
+	'vet-flickr-inf' => 'Durchsuche passend lizenzierte Fotos von Flickr und importiere sie in dein Wiki.',
 	'vet-conflict-inf' => '<h1>Es existiert bereits ein Video unter diesem Namen!</h1>Was willst du mit <b>$1</b> machen?',
 	'vet-rename' => 'Video umbenennen',
 	'vet-existing' => 'Benutze existierendes Video',
 	'vet-overwrite' => 'Überschreibe das bestehende Video mit deinem.',
 	'vet-insert' => 'Einfügen',
 	'vet-details-inf' => '<h1>Dateiname</h1>Bitte gib einen möglichst aussagekräftigen Namen für diese Datei an.',
+	'vet-name' => 'Name',
 	'vet-license' => 'Lizenz',
 	'vet-details-inf2' => '<h1>Video Anzeige-Optionen</h1>',
 	'vet-size' => 'Größe',
@@ -279,7 +285,9 @@ $messages['de'] = array(
 	'vet-width' => 'Breite',
 	'vet-layout' => 'Ausrichtung',
 	'vet-caption' => 'Beschreibung',
+	'vet-optional' => '(Optional)',
 	'vet-insert2' => 'Video einfügen',
+	'vet-update' => 'Video aktualisieren',
 	'vet-video-replace-link' => 'Um dieses Video zu ersetzten, besuche [[:$1]].',
 	'vet-prev' => 'Vorherige 8',
 	'vet-next' => 'Nächste 8',
@@ -291,16 +299,21 @@ $messages['de'] = array(
 	'vet-return' => 'Zurück zur Bearbeitung',
 	'vet-back' => 'zurück',
 	'vet-close' => 'schließen',
+	'vet-warn1' => 'Du musst zuerst einen Suchbegriff eingeben!',
 	'vet-warn2' => 'Bitte gib die URL des Videos an, das du einfügen möchtest',
 	'vet-warn3' => 'Bitte gib dem hinzuzufügenden Video einen Namen',
 	'vet-imagelink' => 'Videos hinzufügen (neu!)',
 	'vet-imagebutton' => 'Videos einfügen',
 	'vet-license-cc' => 'Lizenziert unter der Creative Commons Attribution-Share Alike 3.0 Lizenz',
 	'vet-name-incorrect' => 'Dieser Video-Name enthält ungültige Zeichen',
+	'vet-uploadtext' => "'''Dieses Formular erlaubt dir das schnelle Hochladen und Einbinden von Bildern in Artikel.'''
+
+''Siehe auch das [[Special:Log/upload|Datei-Logbuch]] und die [[Special:ImageList|Liste aller hochgeladenen Dateien]].''",
 	'vet-show-message' => 'Hinweis',
 	'vet-hide-message' => 'Ausblenden',
 	'vet-hide-license-msg' => 'Lizenz-Text ausblenden',
 	'vet-show-license-msg' => 'Lizenz-Text einblenden',
+	'vet-max-thumb' => 'Maximale Vorschau-Größe überschritten, zurückgesetzt auf Original-Größe',
 	'vet-notallowed' => 'Du kannst in diesem Wiki keine Videos einbinden',
 	'vet-title' => 'Füge ein Video in den Artikel ein',
 	'vet-supported' => 'Unterstützte Video-Anbieter:',
@@ -319,6 +332,7 @@ $messages['de'] = array(
 	'vet-gallery-add-success' => 'Video wurde zur Video-Gallery im Artikel hinzugefügt.',
 	'vet-left' => 'Links',
 	'vet-right' => 'Rechts',
+	'vet-gallery' => 'Galerie',
 	'vet-protected' => 'Dieses Video ist geschützt.',
 );
 
@@ -425,6 +439,7 @@ $messages['fi'] = array(
 /** French (Français)
  * @author IAlex
  * @author McDutchie
+ * @author Peter17
  */
 $messages['fr'] = array(
 	'vet-upload' => 'URL complète',
@@ -439,7 +454,7 @@ $messages['fr'] = array(
 	'vet-rename' => 'Renommer la vidéo',
 	'vet-existing' => 'Utiliser le vidéo existant',
 	'vet-overwrite' => 'Remplacer la vidéo existante par votre vidéo.',
-	'vet-insert' => 'Coller',
+	'vet-insert' => 'Insérer',
 	'vet-details-inf' => '<h1>Le nom du fichier</h1>Merci de donner un nom très significatif pour la vidéo.',
 	'vet-name' => 'Nom',
 	'vet-license' => 'Licence',
@@ -591,9 +606,11 @@ $messages['hu'] = array(
 	'vet-find-btn' => 'Keresés',
 	'vet-rename' => 'Videó átnevezése',
 	'vet-existing' => 'Létező videó használata',
+	'vet-overwrite' => 'Jelenlegi videó felülírása a tiéddel',
 	'vet-insert' => 'Beillesztés',
 	'vet-name' => 'Név',
 	'vet-license' => 'Licenc',
+	'vet-details-inf2' => '<h1>Videó megjelenítési beállítások</h1>',
 	'vet-size' => 'Méret',
 	'vet-thumbnail' => 'Bélyegkép',
 	'vet-width' => 'Szélesség',
@@ -604,6 +621,7 @@ $messages['hu'] = array(
 	'vet-return' => 'Vissza a szerkesztéshez',
 	'vet-back' => 'vissza',
 	'vet-close' => 'bezárás',
+	'vet-imagelink' => '<b>Újdonság!</b> Videók beszúrása',
 	'vet-imagebutton' => 'Videók beillesztése',
 	'vet-show-message' => 'üzenet megjelenítése',
 	'vet-hide-message' => 'üzenet elrejtése',
@@ -1120,8 +1138,18 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'vet-find' => 'يوه ويډيو موندل',
+	'vet-thiswiki' => 'همدا ويکي',
+	'vet-upload-btn' => 'ورځه',
+	'vet-find-btn' => 'پلټل',
 	'vet-name' => 'نوم',
+	'vet-thumbnail' => 'بټنوک',
+	'vet-layout' => 'ليدنمخ',
 	'vet-close' => 'تړل',
+	'vet-see-all' => 'ټول کتل',
+	'vet-left' => 'کيڼ',
+	'vet-right' => 'ښي',
+	'vet-gallery' => 'نندارتون',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

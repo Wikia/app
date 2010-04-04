@@ -86,6 +86,7 @@ $messages['be-tarask'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Gwenn-Ael
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -93,6 +94,7 @@ $messages['br'] = array(
 	'editaccount-title' => 'Special:EditAccount',
 	'editaccount-frame-manage' => 'Kemmañ ur gont',
 	'editaccount-frame-usage' => 'Notenn',
+	'editaccount-usage' => "Kuzhet e vez roadennoù an implijerien a-unanoù evit pep wiki. Ma teraouekait ar ger-tremen pe ar chomlec'h postel en-dro ne vo nullet ar grubuilh nemet evit ar wiki-mañ. Kasit, mar plij, an implijer war-du ar wiki-se evit ma c'hallo kevreañ ouzh e c'her-tremen nevez evit ma ne vefe ket a gudennoù krubuilh.",
 	'editaccount-label-select' => 'Dibab ur gont implijer',
 	'editaccount-submit-account' => 'Merañ ar gont',
 	'editaccount-frame-account' => 'Kemmoù ar gont implijer : $1',
@@ -104,8 +106,11 @@ $messages['br'] = array(
 	'editaccount-submit-pass' => 'Enrollañ ar ger-tremen',
 	'editaccount-submit-realname' => 'Enrollañ an anv klok',
 	'editaccount-submit-close' => 'Serriñ ar gont',
+	'editaccount-usage-close' => "Gallout a rit ivez diweredekaat ur gont implijer en ur rinegiñ he ger-tremen hag en ur implijout he chomlec'h postel. Diwallit ! Kollet e vo ar roadennoù ha ne c'hallor ket adtapout anezho.",
+	'editaccount-warning-close' => "<b>Diwallit !</b> Emaoc'h war-nes diweredekaat ar gont implijer <b>$1</b> da vat. Ne c'hallor ket en dizober. Ha c'hoant ho peus d'en ober ?",
 	'editaccount-status' => 'Kemenadenn statud',
 	'editaccount-success-email' => 'Kemmet eo bet ar postel evit ar gont $1 da $2.',
+	'editaccount-success-email-blank' => "Dilamet mat eo bet chomlec'h postel ar gont $1.",
 	'editaccount-success-pass' => 'Kemmet eo bet ger tremen ar gont $1.',
 	'editaccount-success-realname' => 'Kemmet eo bet anv gwir ar gont $1.',
 	'editaccount-success-close' => 'Diweredekaet eo bet ar gont $1.',
@@ -125,13 +130,66 @@ $messages['br'] = array(
 	'right-editaccount' => 'Kemmañ penndibaboù implijerien all',
 );
 
-/** German (Deutsch) */
+/** German (Deutsch)
+ * @author LWChris
+ */
 $messages['de'] = array(
+	'editaccount' => 'Konto bearbeiten',
+	'editaccount-title' => 'Special:EditAccount',
+	'editaccount-frame-manage' => 'Ein Benutzerkonto bearbeiten',
+	'editaccount-frame-usage' => 'Notiz',
+	'editaccount-usage' => 'User-Daten werden separat für jedes Wiki gespeichert. Wenn du ein Passwort oder E-Mail-Adresse zurücksetzt, wird er nur für dieses Wiki gelöscht werden. Bitte schicke den Benutzer zu diesem Wiki zum Einzuloggen mit neuem Passwort, um Cache-Probleme zu vermeiden.',
+	'editaccount-label-select' => 'Wähle ein Benutzerkonto',
+	'editaccount-submit-account' => 'Konto verwalten',
+	'editaccount-frame-account' => 'Bearbeiten von Benutzerkonto: $1',
+	'editaccount-frame-close' => 'Deaktivieren von Benutzerkonto: $1',
+	'editaccount-label-email' => 'Neue E-Mail-Adresse setzen',
+	'editaccount-label-pass' => 'Neues Passwort setzen',
+	'editaccount-label-realname' => 'Neuen tatsächlichen Namen setzen',
+	'editaccount-submit-email' => 'E-Mail-Adresse speichern',
+	'editaccount-submit-pass' => 'Passwort speichern',
+	'editaccount-submit-realname' => 'Tatsächlichen Namen speichern',
+	'editaccount-submit-close' => 'Konto schließen',
+	'editaccount-usage-close' => 'Du kannst ein Konto auch deaktivieren indem du das Passwort zerwürfelst und die E-Mail-Adresse löschst. Beachte, dass diese Daten verloren und nicht wiederherstellbar sind.',
+	'editaccount-warning-close' => '<b>Achtung!</b> Du bist dabei, das Konto von Benutzer <b>$1</b> dauerhaft zu deaktivieren. Dies kann nicht rückgängig gemacht werden. Bist du sicher, dass du das tun möchtest?',
+	'editaccount-status' => 'Statusmeldung',
+	'editaccount-success-email' => 'E-Mail-Adresse für das Konto $1 erfolgreich in $2 geändert.',
+	'editaccount-success-email-blank' => 'E-Mail-Adresse für Konto $1 erfolgreich entfernt.',
+	'editaccount-success-pass' => 'Passwort für Konto $1 erfolgreich geändert.',
+	'editaccount-success-realname' => 'Tatsächlicher name für Konto $1 erfolgreich geändert.',
+	'editaccount-success-close' => 'Konto $1 erfolgreich deaktiviert.',
+	'editaccount-error-email' => 'Die E-Mail-Adresse wurde nicht geändert. Versuche es erneut oder kontaktiere das Tech Team.',
+	'editaccount-error-pass' => 'Das Passwort wurde nicht geändert. Versuche es erneut oder kontaktiere das Tech Team.',
+	'editaccount-error-realname' => 'Der tatsächliche Name wurde nicht geändert. Versuche es erneut oder kontaktiere das Tech Team.',
+	'editaccount-error-close' => 'Beim Schließen des Kontos trat ein Fehler auf. Versuche es erneut oder kontaktiere das Tech Team.',
+	'editaccount-invalid-email' => '"$1" ist keine gültige E-Mail-Adresse!',
+	'editaccount-nouser' => 'Konto "$1" existiert nicht!',
+	'editaccount-log' => 'Benutzerkonten-Logbuch',
+	'editaccount-log-header' => 'Diese Seite listet Änderungen von Benutzereinstellungen durch das Wikia Personal.',
+	'editaccount-log-entry-email' => 'änderte die E-Mail-Adresse von Benutzer $2',
+	'editaccount-log-entry-pass' => 'änderte das Passwort von Benutzer $2',
+	'editaccount-log-entry-realname' => 'änderte den tatsächlichen Namen von Benutzer $2',
+	'editaccount-log-entry-close' => 'deaktivierte das Konto $2',
 	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Dieses Benutzerkonto wurde deaktiviert.</div>',
+	'right-editaccount' => 'Bearbeite andere Benutzereinstellungen',
 );
 
-/** Spanish (Español) */
+/** Spanish (Español)
+ * @author Pertile
+ */
 $messages['es'] = array(
+	'editaccount' => 'Editar Cuenta',
+	'editaccount-title' => 'Especial:EditAccount',
+	'editaccount-frame-manage' => 'Editar una cuenta',
+	'editaccount-frame-usage' => 'Nota',
+	'editaccount-usage' => 'Los datos de usuario están en una memoria intermedia separada para cada wiki. Cuando se reinicie una contraseña o cuenta de correo electrónico, la memoria intermedia será únicamente anulada para esta wiki. Por favor dirija el usuario a esta wiki para acceder al sistema con una nueva contraseña y evitar problemas de memoria intermedia.',
+	'editaccount-label-select' => 'Seleccionar una cuenta de usuario',
+	'editaccount-submit-account' => 'Administrar Cuenta',
+	'editaccount-frame-account' => 'Editando cuenta de usuario: $1',
+	'editaccount-frame-close' => 'Desactivar la cuenta de usuario: $1',
+	'editaccount-label-email' => 'Fijar una nueva dirección de correo electrónico',
+	'editaccount-label-pass' => 'Fijar una nueva contraseña',
+	'editaccount-label-realname' => 'Fijar un nuevo nombre real',
 	'right-editaccount' => 'Editar las preferencias de otros usuarios',
 );
 
@@ -278,8 +336,26 @@ $messages['gl'] = array(
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
+	'editaccount' => 'Felhasználói fiók szerkesztése',
+	'editaccount-title' => 'Special:Felhasználói fiók szerkesztése',
+	'editaccount-frame-manage' => 'Egy felhasználói fiók szerkesztése',
 	'editaccount-frame-usage' => 'Megjegyzés',
+	'editaccount-label-select' => 'Felhasználói fiók kiválasztása',
 	'editaccount-submit-account' => 'Felhasználói fiók kezelése',
+	'editaccount-label-email' => 'Új e-mail cím beállítása',
+	'editaccount-label-pass' => 'Új jelszó beállítása',
+	'editaccount-label-realname' => 'Új valódi név beállítása',
+	'editaccount-submit-email' => 'E-mail mentése',
+	'editaccount-submit-pass' => 'Jelszó mentése',
+	'editaccount-submit-realname' => 'Valódi név mentése',
+	'editaccount-submit-close' => 'Felhasználói fiók lezárása',
+	'editaccount-status' => 'Állapotüzenet',
+	'editaccount-success-close' => '„$1” felhasználói fiók sikeresen letiltva.',
+	'editaccount-nouser' => 'A(z) „$1” felhasználói fiók nem létezik!',
+	'editaccount-log-entry-email' => '„$2” e-mail címe megváltoztatva',
+	'editaccount-log-entry-pass' => '„$2” jelszava megváltoztatva',
+	'editaccount-log-entry-realname' => '„$2” valódi neve megváltoztatva',
+	'editaccount-log-entry-close' => '„$2” felhasználói fiók letiltva',
 );
 
 /** Interlingua (Interlingua)
@@ -623,5 +699,12 @@ $messages['sr-ec'] = array(
 	'editaccount-log-entry-pass' => ' промењена лозинка за корисника $2',
 	'editaccount-log-entry-realname' => ' промењено право име за корисника $2',
 	'editaccount-log-entry-close' => ' угашен налог $2',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'editaccount-log' => 'Журнал облікових записів',
 );
 

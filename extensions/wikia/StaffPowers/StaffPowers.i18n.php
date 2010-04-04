@@ -23,6 +23,13 @@ $messages['af'] = array(
 Gebruik asseblief die [[Special:Contact|kontakblad]] om enige probleme rakende ons personeel te rapporteer.',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'staffpowers-ipblock-aborted' => 'Немагчыма заблякаваць пэрсанал Wikia. Калі ласка, выкарыстоўвайце [[Special:Contact]], каб паведаміць пра праблемы, датычныя нашых супрацоўнікаў.',
+);
+
 /** Breton (Brezhoneg)
  * @author Gwenn-Ael
  */

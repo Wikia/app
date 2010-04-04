@@ -198,6 +198,79 @@ $messages['br'] = array(
 	'daemonloader_removejobconfirm' => "Ha sur oc'h ?",
 );
 
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'daemonloader' => 'Daemon Lader',
+	'daemonloader_pagetitle' => 'Daemon Lader',
+	'daemonloader_createtask' => 'Aufgabe erstellen',
+	'daemonloader_listtask' => 'Liste der Aufgaben',
+	'daemonloader_configure' => 'Daemon konfigurieren',
+	'daemonloader_daemonname' => 'Daemon-Name',
+	'daemonloader_scriptname' => 'Script-Name',
+	'daemonloader_daemondesc' => 'Beschreibung',
+	'daemonloader_inputparams' => 'Eingabeparameter',
+	'daemonloader_paramname' => 'Parameter-Name',
+	'daemonloader_paramdesc' => 'Parameter-Beschreibung',
+	'daemonloader_paramtype' => 'Parameter-Typ',
+	'daemonloader_paramremove' => 'Entfernen?',
+	'daemonloader_removedaemon' => 'Daemon entfernen',
+	'daemonloader_paramdefvalue' => 'Standardwert',
+	'daemonloader_alldaemons' => 'Alle Daemons',
+	'daemonloader_loaddaemon' => 'Wähle den zu bearbeitenden Daemon oder erstelle unten einen neuen:',
+	'daemonloader_selectdaemon' => 'Wähle einen Daemon für Informationen und klicke auf den Button, um zum nächsten Schritt zu gehen',
+	'daemonloader_selectlist' => 'Wähle aus der Liste',
+	'daemonloader_search' => 'Suche:',
+	'daemonloader_daemonchanged' => 'Deine Änderungen wurden gespeichert',
+	'daemonloader_daemonnotchanged' => 'Deine Änderungen wurden nicht gespeichert',
+	'daemonloader_string' => 'Zeichenkette',
+	'daemonloader_number' => 'Zahl',
+	'daemonloader_date_yyyymmdd' => 'Datum (JJJJMMTT)',
+	'daemonloader_date_yyyymm' => 'Monate (JJJJMM)',
+	'daemonloader_date_yyyy' => 'Jahre (JJJJ)',
+	'daemonloader_wikilist' => 'Wiki-Liste',
+	'daemonloader_gonextstep' => 'Gehe zum nächsten Schritt',
+	'daemonloader_setparams' => 'Setze die Eingangswerte für den Daemon:',
+	'daemonloader_1step' => 'Erster Schritt (Daemon wählen)',
+	'daemonloader_2step' => 'Zweiter Schritt (Daemon Optionen)',
+	'daemonloader_3step' => 'Dritter Schritt (Aufgaben Optionen)',
+	'daemonloader_steps' => 'Dein aktueller Schritt:',
+	'daemonloader_daemoninfo' => 'Daemon-Beschreibung',
+	'daemonloader_configtaskparams' => 'Aufgaben-Parameter konfigurieren:',
+	'daemonloader_startdate' => 'Startdatum',
+	'daemonloader_enddate' => 'Enddatum',
+	'daemonloader_frequency' => 'Bericht-Intervall',
+	'daemonloader_emails' => 'E-Mail-Adressen',
+	'daemonloader_files' => 'XLS-Dateien',
+	'daemonloader_period' => 'Bericht-Zeitraum',
+	'daemonloader_dateformat' => 'Datums-Format: JJJJMMTT',
+	'daemonloader_emails_info' => 'Durch Kommata getrennte Liste von E-Mail-Adressen, an die das Ergebnis der Aufgabe versandt wird',
+	'daemonloader_day' => 'täglich',
+	'daemonloader_week' => 'jede Woche',
+	'daemonloader_month' => 'jeden Monat',
+	'daemonloader_taskid' => 'ID',
+	'daemonloader_newtask' => 'Neue Aufgabe',
+	'daemonloader_daemonparams' => 'Deamon-Parameter',
+	'daemonloader_createdby' => 'Erstellt von',
+	'daemonloader_created' => 'Erstellt',
+	'daemonloader_options' => 'Optionen',
+	'daemonloader_nojobsfound' => 'Keine Jobs gefunden',
+	'daemonloader_removejobconfirm' => 'Bist du sicher?',
+);
+
+/** Spanish (Español)
+ * @author Pertile
+ */
+$messages['es'] = array(
+	'daemonloader_string' => 'cadena de caracteres',
+	'daemonloader_number' => 'número',
+	'daemonloader_date_yyyymmdd' => 'fecha (YYYYMMDD)',
+	'daemonloader_date_yyyymm' => 'meses (YYYYMM)',
+	'daemonloader_date_yyyy' => 'años (YYYY)',
+	'daemonloader_wikilist' => 'Lista de wikis',
+);
+
 /** Finnish (Suomi)
  * @author Centerlink
  * @author Crt
@@ -390,6 +463,12 @@ $messages['hu'] = array(
 	'daemonloader_string' => 'karakterlánc',
 	'daemonloader_number' => 'szám',
 	'daemonloader_date_yyyy' => 'év (ÉÉÉÉ)',
+	'daemonloader_wikilist' => 'Wiki lista',
+	'daemonloader_startdate' => 'Kezdődátum',
+	'daemonloader_enddate' => 'Záródátum',
+	'daemonloader_emails' => 'E-mail címek',
+	'daemonloader_files' => 'XLS fájlok',
+	'daemonloader_dateformat' => 'Dátumformátum: ÉÉÉÉHHNN',
 	'daemonloader_day' => 'minden nap',
 	'daemonloader_week' => 'minden héten',
 	'daemonloader_month' => 'minden hónapban',
@@ -397,6 +476,7 @@ $messages['hu'] = array(
 	'daemonloader_newtask' => 'Új feladat',
 	'daemonloader_created' => 'Létrehozva',
 	'daemonloader_options' => 'Beállítások',
+	'daemonloader_removejobconfirm' => 'Biztos vagy benne?',
 );
 
 /** Interlingua (Interlingua)

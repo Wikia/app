@@ -17,12 +17,13 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
+ * @author LWChris
  * @author Siebrand
  */
 $messages['qqq'] = array(
 	'tagsreportgo' => '{{Identical|Show}}',
 	'tagsreportpagesfound' => 'Needs plural support on "$1 pages"',
-	'tagsreportgenerated' => 'If $1 is a time stamp, split date and time.',
+	'tagsreportgenerated' => '$1 is a time stamp, please split date and time.',
 );
 
 /** Afrikaans (Afrikaans)
@@ -60,6 +61,22 @@ $messages['br'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|pajenn|pajennoù}})',
 	'tagsreportpagesfound' => 'Kavet <strong>$1</strong> pajennoù, zo enno ur valizenn arbennik (dpl, youtube, ...)',
 	'tagsreportgenerated' => "Krouet d'an $1",
+);
+
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'tagsreport' => 'Verwendung von Tags',
+	'tagsreporttitle' => 'Verwendung von Tags',
+	'tagsreportselecttag' => 'Tag wählen:',
+	'tagsreportgo' => 'Anzeigen',
+	'tagsreportnotspecify' => 'Du hast noch keinen besonderen Tag ausgewählt',
+	'tagsreportnoresults' => 'Keine Ergebnisse gefunden',
+	'tagsreportmainnspace' => 'Seiten',
+	'tagsreportpages' => '(<strong>$1</strong>  {{PLURAL:$1|Seite|Seiten}})',
+	'tagsreportpagesfound' => '<strong>$1</strong> {{PLURAL:$1|Seite|Seiten}} gefunden, die besondere Tags enthalten (dpl, youtube, etc.)',
+	'tagsreportgenerated' => 'Erzeugt am $1',
 );
 
 /** Spanish (Español)

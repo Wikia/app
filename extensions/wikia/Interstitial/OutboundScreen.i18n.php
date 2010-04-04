@@ -23,9 +23,28 @@ Ha fellout a rafe deoc'h mont da welet ar [[{{MediaWiki:Mainpage}}|bajenn degeme
 	'outbound-screen-you-are-leaving' => "Emaoc'h o kuitaat Wikia.",
 );
 
-/** Spanish (Español) */
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'outbound-screen-login-text' => '[[Special:UserLogin/signup|Erstelle ein neues Konto]] oder [[Special:UserLogin|melde dich mit deinem bestehenden an]] um diese Seite in Zukunft zu überspringen.',
+	'outbound-screen-already-logged-in-no-link' => 'Es wurde kein Ziel gesetzt.
+Es gibt hier nichts zu sehen!
+
+Möchtest du zur [[{{MediaWiki:Mainpage}}|Hauptseite]] oder vielleicht auf eine [[Special:Random|zufällige Seite]]?',
+	'outbound-screen-you-are-leaving' => 'Du verlässt jetzt Wikia.',
+);
+
+/** Spanish (Español)
+ * @author Crazymadlover
+ */
 $messages['es'] = array(
-	'outbound-screen-login-text' => '<a href="$1">Crea una cuenta</a> o <a href="$2">si ya la tienes, accede a ella</a> para evitar esta página en el futuro',
+	'outbound-screen-login-text' => '[[Special:UserLogin/signup|Crear una nueva cuenta]] o [[Special:UserLogin|iniciar sesión en tu cuenta existente]] para saltar esta página en el futuro.',
+	'outbound-screen-already-logged-in-no-link' => 'No hay configuración de destino.
+No hay nada que ver aquí!
+
+Desearías ir a la [[{{MediaWiki:Mainpage}}|Página principal]] o tal vez a una [[Special:Random|página aleatoria]]?',
+	'outbound-screen-you-are-leaving' => 'Estás ahora saliendo de Wikia',
 );
 
 /** French (Français)

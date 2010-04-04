@@ -35,6 +35,17 @@ $messages['br'] = array(
 Ne vez ''ket'' kemeret e kont an oberezhioù war ar pajennoù priziañ gant ar pajenn-mañ.",
 );
 
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'graceexpired' => 'Grace abgelaufen',
+	'graceexpired-row' => '$1 (in $2, zuletzt bearbeitet am $3)',
+	'graceexpired-header' => "Diese Seite listet alle Versionen, die entweder [[:Category:Abandoned|verlassen]], [[:Category:Trash builds|Müll]], [[:Category:Build stubs|unvollständig]] oder [[:Category:Trial Builds|experimentell]] sind, und seit mindestens zwei Wochen nicht bearbeitet wurden.
+
+Aktivitäten bei der Bewertung von Seiten werden hier ''nicht'' berücksichtigt.",
+);
+
 /** Spanish (Español)
  * @author Translationista
  */
@@ -65,6 +76,13 @@ $messages['gl'] = array(
 	'graceexpired-header' => "Esta páxina lista todas as versións que ou ben están [[:Category:Abandoned|abandonadas]], ben no [[:Category:Trash_builds|lixo]], ben son [[:Category:Build stubs|bosquexos]] ou ben están en [[:Category:Trial Builds|probas]], e que non foron editadas en, polo menos, dúas semanas.
 
 A actividade nas páxinas de avaliación '''non''' se ten en conta aquí.",
+);
+
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'graceexpired' => 'A türelmi idő lejárt',
 );
 
 /** Interlingua (Interlingua)

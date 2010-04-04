@@ -688,6 +688,7 @@ $messages['cs'] = array(
 );
 
 /** German (Deutsch)
+ * @author LWChris
  * @author McDutchie
  * @author Mr. Richard Bolla
  * @author MtaÄ
@@ -714,6 +715,8 @@ $messages['de'] = array(
 	'wikifactory-label-clog' => 'Änderungslogbuch',
 	'wikifactory-label-actions' => 'Aktionen',
 	'wikifactory-label-close' => 'Schließen',
+	'wikifactory-label-tags' => 'Tags',
+	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
 	'right-wikifactory' => 'Interne Einstellungen für Wikis ändern',
 	'closewiki-check-and-confirm' => 'Wikis überprüfen und Operation bestätigen',
 	'closewiki-redirect-to' => 'Weiterleiten nach',
@@ -744,6 +747,7 @@ $messages['de'] = array(
 	'awc-metrics-wikis-found' => '$1 Wikis gefunden',
 	'awc-metrics-by-email' => '  oder (Benutzer-E-Mail):',
 	'awc-metrics-by-user' => 'gegründet von (Benutzername):',
+	'awc-metrics-by-dbname' => 'wo DB-Namen enthalten:',
 	'awc-metrics-by-title' => '  und Titel, beginnend ab:',
 	'awc-metrics-by-domains' => '  und Domains beinhalten:',
 	'awc-metrics-not-found' => 'Keine Wikis gefunden',
@@ -770,13 +774,31 @@ $messages['de'] = array(
 	'awc-metrics-news-day' => 'Neue Wikis (täglich)',
 	'awc-metrics-sum-month' => 'Anzahl (pro Monat)',
 	'awc-metrics-sum-day' => 'Anzahl (pro Tag)',
-	'awc-metrics-fewer-than' => 'das hat weniger als $1 Arikel,',
-	'awc-metrics-edits-label' => '$1 Bearbeitungen in $2,',
+	'awc-metrics-fewer-than' => 'das weniger als {{PLURAL:$1|$1 Artikel|$1 Artikel}} hat,',
+	'awc-metrics-edits-label' => '{{PLURAL:$1|$1 Bearbeitung|$1 Bearbeitungen}} in $2,',
 	'awc-metrics-this-month' => 'diesen Monat',
-	'awc-metrics-last-month' => 'die letzten $1 Monate',
-	'awc-metrics-pageviews-label' => 'und $1 Seitenaufrufe in den letzten $2 Tagen',
+	'awc-metrics-last-month' => '{{PLURAL:$1|im letzten Monat|in den letzten $1 Monaten}}',
+	'awc-metrics-pageviews-label' => 'und {{PLURAL:$1|$1 Seitenaufruf|$1 Seitenaufrufe}} in den letzten $2 Tagen',
 	'awc-metrics-close-listed' => 'Schließe alle aufgelisteten Wikis',
 	'awc-metrics-close-checked' => 'Schließen überprüft',
+	'awc-metrics-exact-match' => 'genaue Übereinstimmung',
+	'closed-wiki' => 'Geschlossenes Wiki',
+	'closed-wiki-info' => 'Dieses Wiki wurde geschlossen',
+	'disabled-wiki-info' => 'Dieses Wiki wurde deaktiviert',
+	'closed-wiki-dump-exists' => 'Bitte klicken Sie [$1 hier], wenn Sie Ihre Inhalte abrufen möchten',
+	'closed-wiki-dump-noexists' => 'Dieses Wiki wurde geschlossen. Der Inhaltsdump wird innerhalb von 24 Stunden zur Verfügung stehen. Bitte sieh dann noch einmal nach.',
+	'closed-wiki-create-wiki' => 'Erstelle ein neues Wiki',
+	'closed-wiki-policy' => 'Zeige Wikias Schließungs-Richtlinie',
+	'closed-create-dump' => 'Einen Datenbank-Dump erzeugen',
+	'closed-create-image-archive' => 'Ein Bild-Archiv erstellen',
+	'closed-delete-database-images' => 'Datenbank und Bilder löschen',
+	'closed-delete-images' => 'Die Bilder löschen',
+	'closed-free-url' => 'URL für eine Neugründung freigeben',
+	'closed-hide-dumps' => 'Datenbank- und Bilder-Dump verstecken',
+	'closed-redirect-url' => 'Die URL weiterleiten',
+	'closed-confirm-btn' => 'Schließen bestätigen',
+	'closed-redirect-alert' => 'Bitte gib die neue URL der Weiterleitung ein!',
+	'closed-reason' => 'Grund:',
 );
 
 /** Greek (Ελληνικά)
@@ -1283,6 +1305,8 @@ $messages['hu'] = array(
 	'wf_city_public' => 'Állapot',
 	'wf_city_lang' => 'Nyelv',
 	'wf_cc_name' => 'Kategória',
+	'wikifactory_removevariable' => 'Wiki adatainak eltávolítása a gyorsítótárból',
+	'wikifactory_removeconfirm' => 'Wiki adatai eltávolítva a gyorsítótárból!',
 	'wikifactory-label-variables' => 'Változók',
 	'wikifactory-label-domains' => 'Tartományok',
 	'wikifactory-label-return' => 'Vissza a listához',
@@ -1291,30 +1315,52 @@ $messages['hu'] = array(
 	'wikifactory-label-close' => 'Bezárás',
 	'wikifactory-label-tags' => 'Címkék',
 	'right-wikifactory' => 'Wikik belső beállításainak megváltoztatása',
+	'closewiki-redirect-to' => 'Átirányítás ide:',
 	'closewiki-images-url' => 'Képarchívum: $1',
 	'closewiki-unknown' => 'Ismeretlen',
 	'closewiki-return' => 'Vissza ide: $1',
+	'awc-metrics-wikis' => 'Wikik megjelenítése',
 	'awc-metrics-select' => 'Wikik megjelenítése:',
 	'awc-metrics-by-language' => 'nyelvek szerint:',
+	'awc-metrics-category' => ' és kategória:',
 	'awc-metrics-all' => 'összes Wiki',
 	'awc-metrics-all-languages' => 'összes nyelv',
 	'awc-metrics-search' => 'Keresési beállítások:',
+	'awc-metrics-one-week' => 'kevesebb mint egy hete létrehozva',
+	'awc-metrics-two-weeks' => 'kevesebb mint két hete létrehozva',
+	'awc-metrics-three-weeks' => 'kevesebb mint három hete létrehozva',
+	'awc-metrics-one-months' => 'kevesebb mint egy hónapja létrehozva',
+	'awc-metrics-two-months' => 'kevesebb mint két hónapja létrehozva',
+	'awc-metrics-three-months' => 'kevesebb mint három hónapja létrehozva',
+	'awc-metrics-half-year' => 'kevesebb mint hat hónapja létrehozva',
 	'awc-metrics-wikis-found' => '$1 wiki találat',
+	'awc-metrics-by-dbname' => 'ahol az adatbázisnév tartalmazza a következőt:',
+	'awc-metrics-not-found' => 'nem található wiki',
 	'awc-metrics-nbr-result' => 'Eredmények:',
 	'awc-metrics-articles' => 'Szócikkek',
+	'awc-metrics-articles-per-day' => 'Szócikkek<br />(napi átlag)',
+	'awc-metrics-revisions-per-page' => 'Változatok<br />(átlag / lap)',
 	'awc-metrics-article-avg-size' => 'Átl. szócikk<br />méret',
 	'awc-metrics-edits' => 'Szerkesztések',
 	'awc-metrics-db-size' => 'Adatbázisméret',
 	'awc-metrics-images' => 'Képek',
 	'awc-metrics-all-users' => 'Regisztrált<br />felhasználók',
+	'awc-metrics-all-users-edit-main-ns' => 'Reg. felhasználók<br />(NS_MAIN)',
+	'awc-metrics-pageviews' => 'Oldal-<br />megtekintések',
+	'awc-metrics-statistics' => 'Statisztikák (az összes hónap átlaga)',
 	'awc-metrics-close' => 'Bezárás',
 	'awc-metrics-active' => 'aktív',
 	'awc-metrics-closed' => 'bezárt',
+	'awc-metrics-redirected' => 'lezárva és átirányítva',
 	'awc-metrics-removed' => 'eltávolítva',
+	'awc-metrics-hubs' => 'Új wikik (havonta)',
+	'awc-metrics-news-day' => 'Új wikik (naponta)',
 	'awc-metrics-this-month' => 'ez a hónap',
 	'awc-metrics-exact-match' => 'pontos találat',
 	'closed-wiki' => 'Bezárt Wiki',
 	'closed-wiki-create-wiki' => 'Új wiki létrehozása',
+	'closed-delete-database-images' => 'Adatbázis és képek törlése',
+	'closed-delete-images' => 'Képek törlése',
 	'closed-redirect-url' => 'URL átirányítása',
 	'closed-confirm-btn' => 'Bezárás megerősítése',
 	'closed-reason' => 'Indoklás:',
@@ -1444,6 +1490,7 @@ $messages['ig'] = array(
 
 /** Japanese (日本語)
  * @author Hosiryuhosi
+ * @author Naohiro19
  */
 $messages['ja'] = array(
 	'wf_city_url' => 'アドレス',
@@ -1459,8 +1506,17 @@ $messages['ja'] = array(
 	'closewiki-dump-url' => 'データベース タンプ: $1',
 	'closewiki-images-url' => 'イメージアーカイブ: $1',
 	'closewiki-unknown' => '不明',
+	'closewiki-return' => '$1へ戻る',
 	'awc-metrics-all' => 'すべてのウィキ',
 	'awc-metrics-all-languages' => 'すべての言語',
+	'awc-metrics-one-week' => '1週間前に作成',
+	'awc-metrics-two-weeks' => '2週間前に作成',
+	'awc-metrics-three-weeks' => '3週間前に作成',
+	'awc-metrics-one-months' => '１か月前に作成',
+	'awc-metrics-two-months' => '２か月前に作成',
+	'awc-metrics-three-months' => '3か月前に作成',
+	'awc-metrics-half-year' => '半年前に作成',
+	'awc-metrics-not-found' => 'ウィキが見つかりません',
 	'awc-metrics-images' => 'イメージ',
 	'closed-wiki-create-wiki' => '新しいWikiを作成する',
 	'closed-create-dump' => 'データベース ダンプの作成',
@@ -1970,6 +2026,7 @@ $messages['ps'] = array(
 	'awc-metrics-all' => 'ټولې ويکي ګانې',
 	'awc-metrics-all-languages' => 'ټولې ژبې',
 	'awc-metrics-search' => 'د پلټلو خوښنې:',
+	'awc-metrics-articles' => 'ليکنې',
 	'awc-metrics-edits' => 'سمونونه',
 	'awc-metrics-images' => 'انځورونه',
 	'awc-metrics-close' => 'تړل',
@@ -1984,9 +2041,18 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (Português)
+ * @author Crazymadlover
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
+	'closewiki' => 'Fechar wiki',
+	'wf_city_url' => 'Direcção',
+	'wf_city_title' => 'Título',
+	'wf_city_created' => 'Criado',
+	'wf_city_founding_user' => 'Fundador',
+	'wf_city_founding_email' => 'Correio electrónico do fundador',
+	'wf_city_lang' => 'Língua',
+	'wf_cc_name' => 'Categoria',
 	'closewiki-images-url' => 'Arquivo de ficheiros: $1',
 	'awc-metrics-articles' => 'Páginas',
 	'awc-metrics-article-avg-size' => 'Tam. méd.<br />de página',
@@ -2090,13 +2156,14 @@ $messages['pt-br'] = array(
 
 /** Russian (Русский)
  * @author DCamer
+ * @author Exlex
  * @author Lockal
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
 	'wikifactorypagetitle' => 'Конфигуратор Wiki Factory',
 	'wikifactory' => 'Конфигуратор Wiki Factory',
-	'closewiki' => 'Закрыть Вики',
+	'closewiki' => 'Закрыть вики',
 	'wf_city_url' => 'Адрес',
 	'wf_city_id' => 'ID',
 	'wf_city_title' => 'Название',
@@ -2352,9 +2419,10 @@ $messages['uk'] = array(
 	'awc-metrics-images' => 'Зображення',
 	'awc-metrics-close' => 'Закрити',
 	'awc-metrics-fewer-than' => 'що мають менше ніж $1 {{PLURAL:$1|статтю|статті|статей}},',
+	'awc-metrics-edits-label' => '$1 {{PLURAL:$1|редагування|редагування|редагувань}} за $2,',
 	'awc-metrics-this-month' => 'цього місяця',
 	'awc-metrics-last-month' => '{{PLURAL:$1|останній місяць|останні $1 місяці|останні $1 місяців}}',
-	'awc-metrics-pageviews-label' => 'і {{PLURAL:$1|$1 перегляд|$1 перегляди|$1 переглядів}} сторінки за {{PLURAL:$2|останній день|останні $2 дні|останні $2 днів}}',
+	'awc-metrics-pageviews-label' => 'і $1 {{PLURAL:$1|перегляд|перегляди|переглядів}} сторінки за {{PLURAL:$2|останній день|останні $2 дні|останні $2 днів}}',
 	'closed-wiki-create-wiki' => 'Створити нову вікі',
 	'closed-create-image-archive' => 'Створити архів зображень',
 	'closed-delete-database-images' => 'Вилучити базу даних і зображення',

@@ -102,6 +102,7 @@ $messages['bg'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Gwenn-Ael
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -113,6 +114,7 @@ $messages['br'] = array(
 	'categoryselect-addcategory-button' => 'Ouzhpennañ rummadoù',
 	'categoryselect-suggest-hint' => 'Pouezit war "Enter" evit echuiñ',
 	'categoryselect-tooltip' => "'''Nevez!''' Barenn ostilhoù evit diuzañ rummadoù. Amprouit anezhi pe lennit [[Help:CategorySelect|ar sikour]] evit gouzout hiroc'h",
+	'categoryselect-unhandled-syntax' => "Ur gudenn ereadurezh dianav zo. Ne c'haller ket kemmañ  e gwel grafek.",
 	'categoryselect-edit-summary' => 'Ouzhpennañ ur rummad',
 	'categoryselect-empty-name' => 'Reiñ a ra anv ar rummad (al lodenn skrivet a-raok |)',
 	'categoryselect-button-save' => 'Enrollañ',
@@ -120,10 +122,14 @@ $messages['br'] = array(
 	'categoryselect-error-not-exist' => "N'eus ket eus ar pennad [id=$1].",
 	'categoryselect-error-user-rights' => 'Fazi en aotreoù implijerien.',
 	'categoryselect-error-db-locked' => 'Stanket eo ar bank roadennoù',
+	'categoryselect-desc' => 'a bourchas un etrefas evit gallout merañ rummadoù ur pennad hep ma vefe ezhomm da voullañ ar pennad a-bezh.',
+	'categoryselect-edit-abort' => "Ar c'hemm ho peus klask ober zo bet ehanet gant ur c'hrog astenn.",
 	'tog-disablecategoryselect' => 'Diweredekaat balizadur ar rummadoù',
 );
 
-/** German (Deutsch) */
+/** German (Deutsch)
+ * @author LWChris
+ */
 $messages['de'] = array(
 	'categoryselect-code-view' => 'Quelltext',
 	'categoryselect-visual-view' => 'Grafische Ansicht',
@@ -132,7 +138,7 @@ $messages['de'] = array(
 	'categoryselect-infobox-sortkey' => 'Ordne diesen Artikel in der Kategorie „$1“ unter folgendem Namen ein:',
 	'categoryselect-addcategory-button' => 'Kategorie hinzufügen',
 	'categoryselect-suggest-hint' => 'Mit Eingabetaste beenden',
-	'categoryselect-tooltip' => "'''Neu!:''' Unsere KategorieAuswahl-Leiste. Probier sie aus oder lies die [[Hilfe:KategorieAuswahl|Hilfe]] für weitere Informationen.",
+	'categoryselect-tooltip' => "'''Neu!''' Unsere Kategorieauswahl-Leiste. Probier sie aus oder lies die [[Help:KategorieAuswahl|Hilfe]] für weitere Informationen",
 	'categoryselect-unhandled-syntax' => 'Nicht unterstützte Syntax entdeckt - Wechsel in grafische Ansicht nicht möglich.',
 	'categoryselect-edit-summary' => 'Kategorien hinzufügen',
 	'categoryselect-empty-name' => 'Kategorie-Name (der Teil vor |)',
@@ -141,6 +147,8 @@ $messages['de'] = array(
 	'categoryselect-error-not-exist' => 'Der angegebene Artikel [id=$1] existiert nicht (mehr).',
 	'categoryselect-error-user-rights' => 'Keine ausreichenden Benutzerrechte.',
 	'categoryselect-error-db-locked' => 'Die Datenbank ist vorübergehend gesperrt.',
+	'categoryselect-desc' => 'Stellt eine Oberfläche zur Verwaltung der Kategorien in einem Artikel ohne Bearbeitung des ganzen Artikels zur Verfügung.',
+	'categoryselect-edit-abort' => 'Deine versuchte Änderung wurde durch ein Aufhängen einer Erweiterung abgebrochen',
 	'tog-disablecategoryselect' => 'Vereinfachtes Kategorisieren ausschalten',
 );
 
@@ -259,8 +267,14 @@ $messages['gl'] = array(
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
+	'categoryselect-code-view' => 'Kódnézet',
+	'categoryselect-visual-view' => 'Grafikus nézet',
+	'categoryselect-infobox-caption' => 'Kategóriabeállítások',
+	'categoryselect-addcategory-button' => 'Kategória hozzáadása',
 	'categoryselect-button-save' => 'Mentés',
 	'categoryselect-button-cancel' => 'Mégse',
+	'categoryselect-error-user-rights' => 'Felhasználói jog hiba.',
+	'categoryselect-error-db-locked' => 'Az adatbázis zárolva.',
 );
 
 /** Interlingua (Interlingua)
