@@ -30,24 +30,20 @@ Please leave a message on [[$2|my talk page]] if I can help with anything! $3",
 
 Please leave a message on [[$2|my talk page]] if I can help with anything! $3",
 	"welcome-message-log" => "welcoming new contributor",
-	"welcome-message-user-staff" => "
-==Welcome==
+	"welcome-message-user-staff" => "==Welcome==
 
 Hi, welcome to {{SITENAME}}! Thanks for your edit to the [[:$1]] page.
 
 If you need help, and there are no local admins here, you may want to
 visit the [[wikia:Forum:Community Central Forum|forums on the Community
 Central Wiki]] $3",
-	"welcome-message-anon-staff" => "
-==Welcome==
+	"welcome-message-anon-staff" => "==Welcome==
 
 Hi, welcome to {{SITENAME}}. Thanks for your edit to the [[:$1]] page.
 
 '''[[Special:Userlogin|Please sign in and create a user name]]'''. It's an easy way to keep track of your contributions and helps you communicate with the rest of the community.
 
-If you need help, and there are no local admins here, you may want to visit the [[wikia:Forum:Community Central Forum|forums on the Community Central Wiki]] $3
-"
-
+If you need help, and there are no local admins here, you may want to visit the [[wikia:Forum:Community Central Forum|forums on the Community Central Wiki]] $3",
 );
 
 /** Breton (Brezhoneg)
