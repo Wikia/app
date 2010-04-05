@@ -535,7 +535,8 @@ class StaticChute {
 
 	public function minifyCssData($css){
 		require_once dirname(__FILE__) . '/Minify_CSS_Compressor.php';
-		
+	
+// TODO: FIXME: This is not the right place to re-write SiteCSS.  It does not get minified.	
 		// In the SiteCSS, users will typically copy-paste the image URL that they see on a page.  This will include a cache-busting number,
 		// but we typically don't want this to be the SPECIFIC revision (which is what a specific URL would refer to), so we will re-write it
 		// to use the current timestamp at the time that this file was pulled.  This isn't perfect, but if we can get the SiteCSS files to be
@@ -543,8 +544,8 @@ class StaticChute {
 		// up right away, even though there would be some un-needed re-pulls of unchanged imges.
 		// NOTE: Do this before replacing wgCdnStylePath below so that we don't end up rewriting those URLs (which have exactly the right __cb value already).
 		// TODO: Re-write the reg-ex to append a very small comment on the end of the line which makes it clear that this line was re-written (otherwise this will be very confusing to people debugging the CSS).
-		$css = preg_replace("/(http:\/\/images[0-9]*\.wikia\.nocookie\.net\/__cb)([0-9]*)\//i", '\\1'.time().'/', $css);
-		$css = preg_replace("/(http:\/\/images[0-9]*\.wikia\.nocookie\.net\/)([^_])/i", '\\1'.'__cb'.time().'/\\2', $css); // cases where they've removed the __cb value entirely.
+//		$css = preg_replace("/(http:\/\/images[0-9]*\.wikia\.nocookie\.net\/__cb)([0-9]*)\//i", '\\1'.time().'/', $css);
+//		$css = preg_replace("/(http:\/\/images[0-9]*\.wikia\.nocookie\.net\/)([^_])/i", '\\1'.'__cb'.time().'/\\2', $css); // cases where they've removed the __cb value entirely.
 
 		// Replace the local image URLs with the CDN's URL anywhere we've indicated to do this.
 		// If a line has a "/* $wgCdnStylePath */" comment after it, modify the URL to start with the actual wgCdnStylePath.
