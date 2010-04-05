@@ -12,7 +12,7 @@ class StaticChute {
 
 	// TODO: FIXME: This is not great having this here AND in wgCdnStylePath in CommonSettings, etc., but since StaticChute
 	// does not load the MediaWiki stack in many cases, not sure what a better longterm solution would be.
-	public $cdnStylePath = "http://images1.wikia.nocookie.net/__cb20014/common";
+	public $cdnStylePath = "http://images1.wikia.nocookie.net/__cb20015/common"; // NOTE: ALSO CHANGE VALUE IN /wikia-conf/CommonSettings.php!
 
 	public $config = array();
 
@@ -535,6 +535,14 @@ class StaticChute {
 
 	public function minifyCssData($css){
 		require_once dirname(__FILE__) . '/Minify_CSS_Compressor.php';
+		
+		// In the SiteCSS, users will typically copy-paste the image URL that they see on a page.  This will include a cache-busting number,
+		// but we typically don't want this to be the SPECIFIC revision (which is what a specific URL would refer to), so we will re-write it
+		// to use the current timestamp at the time that this file was pulled.  This isn't perfect, but if we can get the SiteCSS files to be
+		// purged like normal pages once the images included on them are updated, then this will at least make it so that the updates show
+		// up right away, even though there would be some un-needed re-pulls of unchanged imges.
+		// NOTE: Do this before replacing wgCdnStylePath below so that we don't end up rewriting those URLs (which have exactly the right __cb value already).
+		$css = preg_replace("/(http:\/\/images[0-9]*\.wikia\.nocookie\.net\/__cb)([0-9]*)\//i", '\\1'.time().'/', $css);
 
 		// Replace the local image URLs with the CDN's URL anywhere we've indicated to do this.
 		// If a line has a "/* $wgCdnStylePath */" comment after it, modify the URL to start with the actual wgCdnStylePath.
