@@ -544,6 +544,7 @@ class StaticChute {
 		// NOTE: Do this before replacing wgCdnStylePath below so that we don't end up rewriting those URLs (which have exactly the right __cb value already).
 		// TODO: Re-write the reg-ex to append a very small comment on the end of the line which makes it clear that this line was re-written (otherwise this will be very confusing to people debugging the CSS).
 		$css = preg_replace("/(http:\/\/images[0-9]*\.wikia\.nocookie\.net\/__cb)([0-9]*)\//i", '\\1'.time().'/', $css);
+		$css = preg_replace("/(http:\/\/images[0-9]*\.wikia\.nocookie\.net\/)([^_])/i", '\\1'.'__cb'.time().'/\\2', $css); // cases where they've removed the __cb value entirely.
 
 		// Replace the local image URLs with the CDN's URL anywhere we've indicated to do this.
 		// If a line has a "/* $wgCdnStylePath */" comment after it, modify the URL to start with the actual wgCdnStylePath.
