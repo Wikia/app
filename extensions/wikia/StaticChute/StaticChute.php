@@ -542,6 +542,7 @@ class StaticChute {
 		// purged like normal pages once the images included on them are updated, then this will at least make it so that the updates show
 		// up right away, even though there would be some un-needed re-pulls of unchanged imges.
 		// NOTE: Do this before replacing wgCdnStylePath below so that we don't end up rewriting those URLs (which have exactly the right __cb value already).
+		// TODO: Re-write the reg-ex to append a very small comment on the end of the line which makes it clear that this line was re-written (otherwise this will be very confusing to people debugging the CSS).
 		$css = preg_replace("/(http:\/\/images[0-9]*\.wikia\.nocookie\.net\/__cb)([0-9]*)\//i", '\\1'.time().'/', $css);
 
 		// Replace the local image URLs with the CDN's URL anywhere we've indicated to do this.
