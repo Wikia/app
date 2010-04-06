@@ -74,6 +74,7 @@ fb.'intro'    => 'This wiki is enabled with Facebook Connect, the next evolution
                  'that when you are Connected, in addition to the normal [[Wikipedia:Help:Logging in#Why log in?' .
                  '|benefits]] you see when logging in, you will be able to take advantage of some extra features...',
 fb.'click-to-login' => 'Click this button to login to this site via facebook',
+fb.'click-to-connect-existing' => 'Click this button to connect your facebook account to $1',
 fb.'conv'     => 'Convenience',
 fb.'convdesc' => 'Connected users are automatically logged you in. If permission is given, then this wiki can even ' .
                  'use Facebook as an email proxy so you can continue to receive important notifications without ' .
