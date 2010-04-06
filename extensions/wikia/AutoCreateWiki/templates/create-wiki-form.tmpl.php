@@ -9,6 +9,8 @@ var isAutoCreateWiki = true;
 var formViewAction = "<?=$mTitle->getLocalURL(( $mLanguage != 'en' ) ? 'action=view&uselang=' . $mLanguage : 'action=reload')?>";
 var msgError = "<?php echo addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 var createType = "<?php echo $mType ?>";
+var defaultDomain = "<?php echo $defaultDomain ?>";
+var definedDomains = YAHOO.Tools.JSONParse('<?php echo Wikia::json_encode($mDomains); ?>');
 /*]]>*/
 </script>
 <?php
@@ -30,7 +32,7 @@ if( !empty( $mType ) ) {
 		<ul>
 			<li class="label"><label class="required" id="wiki-name-label"><?=wfMsg('allmessagesname')?>:</label></li>
 			<li class="data1">
-				<input type="text" autocomplete="off" name="wiki-name" id="wiki-name" value="<?=@$params['wiki-name']?>"/> <?php echo $subName ?><span class="error-status" id="wiki-name-error-status">&nbsp;</span>
+				<input type="text" autocomplete="off" name="wiki-name" id="wiki-name" value="<?=@$params['wiki-name']?>"/> <span id="wiki-subTitle"><?php echo $subName ?></span><span class="error-status" id="wiki-name-error-status">&nbsp;</span>
 				<div class="error" style="display: <?= (!empty($mPostedErrors['wiki-name'])) ? 'block' : 'none'?>;" id="wiki-name-error"><?=@$mPostedErrors['wiki-name']?></div>
 			</li>
 			<li class="data2"><span class="note"><?=wfMsg('autocreatewiki-info-topic')?></span></li>
@@ -40,7 +42,7 @@ if( !empty( $mType ) ) {
 		<ul>
 			<li class="label"><label class="required" id="wiki-domain-label"><?=wfMsg('autocreatewiki-web-address')?></label></li>
 			<li class="data1">
-				<span id="prefixedAddress">http://</span><input type="text" maxlength="245" autocomplete="off" name="wiki-domain" id="wiki-domain" value="<?=@$params['wiki-domain']?>" style="width:145px" />.<?php echo $subDomain ?> <span class="error-status" id="wiki-domain-error-status">&nbsp;</span>
+				<span id="prefixedAddress">http://</span><input type="text" maxlength="245" autocomplete="off" name="wiki-domain" id="wiki-domain" value="<?=@$params['wiki-domain']?>" style="width:145px" />.<span id="domainAddress"><?php echo $subDomain ?></span> <span class="error-status" id="wiki-domain-error-status">&nbsp;</span>
 				<div class="error" style="display: <?= (!empty($mPostedErrors['wiki-domain'])) ? 'block' : 'none'?>;" id="wiki-domain-error"><?=@$mPostedErrors['wiki-domain']?></div>				
 			</li>
 			<li class="data2"><span class="note"><?=wfMsg('autocreatewiki-info-domain')?></span></li>

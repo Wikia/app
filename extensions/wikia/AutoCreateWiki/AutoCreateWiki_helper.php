@@ -99,9 +99,25 @@ class AutoCreateWiki {
 					$sDomain = Wikia::fixDomainName( $n, $language, $type );
 					$tmp_array['exact'][] = "city_domain = '{$sDomain}'";
 					$n = strtr($n, '0123456789-', '%%%%%%%%%%%%');
-					$tmp_array['similar'][] = ( empty( $type ) )
-						? "city_domain like '%{$n}%'"
-						: "city_domain like '%{$n}.{$type}%'";
+					if ( empty($type) ) {
+						$tmp_array['similar'][] = "city_domain like '%{$n}%'";
+					} else {
+						switch ( $type ) {
+							case "answers" : 
+								$__domains = Wikia::getAnswersDomains();
+								if ( $__domains && $language && isset($__domains[$language]) ) {
+									$likeName = $__domains[$language];
+								} elseif ( $__domains && isset($__domains["default"]) ) {
+									$likeName = $__domains["default"];
+								} 
+								if ( $likeName ) {
+									$tmp_array['similar'][] = "city_domain like '%{$n}.{$likeName}%'";
+								}
+								$tmp_array['similar'][] = "city_domain like '%{$n}.{$type}%'";
+								break;
+							default : $tmp_array['similar'][] = "city_domain like '%{$n}.{$type}%'";
+						}
+					}
 				}
 				if( sizeof( $tmp_array ) ) {
 					$condition = implode(" or ", $tmp_array['exact']);
@@ -503,6 +519,4 @@ class AutoCreateWiki {
 
 		return $res;
 	}
-
-
 }
