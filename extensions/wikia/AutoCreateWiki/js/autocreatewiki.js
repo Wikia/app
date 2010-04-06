@@ -72,13 +72,36 @@ $(function () {
 		
 		YAHOO.ACWikiRequest.wikiLanguageChange = function(e) {
 			var prefixDiv = YD.get("prefixedAddress");
+			var domainDiv = YD.get("domainAddress");
+			var subTitle = YD.get("wiki-subTitle");
+
+			var subdomain = '';
+			var prefixLang = true;
+			if (definedDomains[this.value]) {
+				subdomain = definedDomains[this.value];
+				prefixLang = false;
+			} else if (definedDomains['default']) {
+				subdomain = definedDomains['default'];
+			}
+			
+			var domain = ( subdomain ) ? subdomain + "." + defaultDomain : defaultDomain ;
+			
+			if (domainDiv) {
+				domainDiv.innerHTML = domain;
+			}
+
+			if ( subdomain && subTitle ) {
+				subTitle.innerHTML = subdomain.charAt(0).toUpperCase() + subdomain.substr(1);
+			}
+
 			var value = prefixDiv.innerHTML;
-			if (this.value != 'en' && prefixDiv) {
+			if (this.value != 'en' && prefixDiv && prefixLang) {
 				value.replace("http://", "");
 				value = "http://" + this.value + ".";
 			} else {
 				value = "http://";
 			}
+			
 			prefixDiv.innerHTML = value;
 			YAHOO.ACWikiRequest.checkDomain(e);
 		}

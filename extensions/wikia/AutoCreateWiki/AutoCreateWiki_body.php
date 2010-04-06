@@ -173,17 +173,8 @@ class AutoCreateWikiPage extends SpecialPage {
 		/**
 		 * other AWC version changes, so far answers only
 		 */
-		switch( $this->mType ) {
-			case "answers":
-				$this->mDefSubdomain = "answers.wikia.com";
-				$this->mDefSubname   = wfMsgExt("autocreatewiki-subname-answers", array("language" => $this->mLang));
-				break;
-
-			default:
-				$this->mDefSubdomain = self::DEFAULT_DOMAIN;
-				$this->mDefSubname   = self::DEFAULT_NAME;
-		}
-
+		$this->fixSubdomains($this->mLang);
+		
 		$this->mUserLanguage = $wgUser->getOption( 'language', $wgContLanguageCode );
 		$this->mNbrCreated = $this->countCreatedWikis();
 
@@ -366,6 +357,11 @@ class AutoCreateWikiPage extends SpecialPage {
 		 * this will clean test database and fill mWikiData with test data
 		 */
 		$this->prepareValues();
+
+		if ( $this->mFounder->getId() == 0 ) {
+			$query = ( $this->mLang != 'en' ) ? 'uselang=' . $this->mLang : '';
+			$wgOut->redirect( $this->mTitle->getLocalURL($query) );
+		}
 
 		/*
 		 * time of process begin
@@ -763,9 +759,12 @@ class AutoCreateWikiPage extends SpecialPage {
 		global $wgContLang, $wgUser;
 		wfProfileIn( __METHOD__ );
 
+		$this->mLangSubdomain = true;
 		$this->mFounder = $wgUser;
 		$this->mDefaultUser = User::newFromName( self::DEFAULT_USER );
 		$this->mDefaultUser->load();
+
+		$this->fixSubdomains($this->awcLanguage);
 
 		#-- for other users -> for staff only
 		if ( $wgUser->isAllowed( 'createwikimakefounder' ) && !empty($this->awcStaff_username) ) {
@@ -786,7 +785,7 @@ class AutoCreateWikiPage extends SpecialPage {
 
 		switch( $this->mType ) {
 			case "answers":
-				$this->mWikiData[ "title"      ] = $fixedTitle . " " . wfMsgExt("answers-name", array("language" => $this->awcLanguage));
+				$this->mWikiData[ "title"      ] = $fixedTitle . " " . wfMsgExt("autocreatewiki-subname-answers", array("language" => $this->awcLanguage));
 				break;
 		}
 
@@ -801,8 +800,10 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->mWikiData[ "images_dir" ] = sprintf("%s/%s", strtolower( substr( $this->mWikiData[ "name"], 0, 1 ) ), $this->mWikiData[ "images_url" ]);
 
 		if ( isset( $this->mWikiData[ "language" ] ) && $this->mWikiData[ "language" ] !== "en" ) {
-			$this->mWikiData[ "subdomain"  ]  = strtolower( $this->mWikiData[ "language"] ) . "." . $this->mWikiData[ "name"];
-			$this->mWikiData[ "redirect"   ]  = strtolower( $this->mWikiData[ "language" ] ) . "." . ucfirst( $this->mWikiData[ "name"] );
+			if ( $this->mLangSubdomain ) {
+				$this->mWikiData[ "subdomain"  ]  = strtolower( $this->mWikiData[ "language"] ) . "." . $this->mWikiData[ "name"];
+				$this->mWikiData[ "redirect"   ]  = strtolower( $this->mWikiData[ "language" ] ) . "." . ucfirst( $this->mWikiData[ "name"] );
+			}
 			$this->mWikiData[ "images_url" ] .= "/" . strtolower( $this->mWikiData[ "language" ] );
 			$this->mWikiData[ "images_dir" ] .= "/" . strtolower( $this->mWikiData[ "language" ] );
 		}
@@ -932,6 +933,8 @@ class AutoCreateWikiPage extends SpecialPage {
 			"captchaForm"      => $f->getForm(),
 			"params"           => $params,
 			"subName"          => $this->mDefSubname,
+			"defaultDomain"    => self::DEFAULT_DOMAIN,
+			"mDomains"         => $this->mDomains
 		));
 
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
@@ -980,7 +983,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			"awcCategory"      => $this->awcCategory,
 			"awcLanguage"      => $this->awcLanguage,
 			"domain"           => $this->mDefSubdomain,
-			"subdomain"        => ( $this->awcLanguage === 'en' ) ? strtolower( trim( $this->awcDomain ) ) : $this->awcLanguage . "." . strtolower( trim( $this->awcDomain ) ),
+			"subdomain"        => ( $this->awcLanguage === 'en' && $this->mLangSubdomain ) ? strtolower( trim( $this->awcDomain ) ) : $this->awcLanguage . "." . strtolower( trim( $this->awcDomain ) ),
 			"ajaxToken"        => md5($this->mTitle . "_" . $this->awcName . "_" . $this->awcDomain . "_" . $this->awcCategory . "_" . $this->awcLanguage ),
 			"wgExtensionsPath" => $wgExtensionsPath,
 			"wgStyleVersion"   => $wgStyleVersion,
@@ -1722,5 +1725,36 @@ class AutoCreateWikiPage extends SpecialPage {
 		wfProfileOut( __METHOD__ );
 
 		return $result;
+	}
+	
+	/**
+	 * set subdomain name
+	 *
+	 * @access private
+	 * @author moli
+	 *
+	 * @return 
+	 */
+	private function fixSubdomains($lang) {
+		wfProfileIn( __METHOD__ );
+		switch( $this->mType ) {
+			case "answers":
+				$this->mDomains = Wikia::getAnswersDomains();
+				if ( isset($this->mDomains[$lang]) && !empty($this->mDomains[$lang]) ) {
+					$this->mDefSubdomain =  sprintf("%s.%s", $this->mDomains[$lang], self::DEFAULT_DOMAIN);
+					$this->mLangSubdomain = false;
+				} else {
+					$this->mDefSubdomain =  sprintf("%s.%s", $this->mDomains["default"], self::DEFAULT_DOMAIN);
+					$this->mLangSubdomain = true;
+				}
+				$this->mDefSubname   = wfMsgExt("autocreatewiki-subname-answers", array("language" => $lang));
+				break;
+
+			default:
+				$this->mDefSubdomain = self::DEFAULT_DOMAIN;
+				$this->mDefSubname = self::DEFAULT_NAME;
+				$this->mDomains = array('default' => '');
+		}
+		wfProfileOut( __METHOD__ );
 	}
 }
