@@ -8,10 +8,10 @@
 // TODO: If these backwards-compatibility tricks work, they should be committed back to trunk.
 global $wgVersion;
 if ( version_compare( $wgVersion, "1.16", '<' ) ){
-	$dir = dirname( __FILE__ );
-	include $dir.'/backwards-compat-v1.15/Html.php';
+	$currDir = dirname( __FILE__ ) . '/';
+	include $currDir.'backwards-compat-v1.15/Html.php';
 }
- 
+
 
 ### FBCONNECT CONFIGURATION VARIABLES ###
 

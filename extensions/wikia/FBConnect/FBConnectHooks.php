@@ -28,10 +28,10 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  * Class FBConnectHooks
  * 
  * This class contains all the hooks used in this extension. HOOKS DO NOT NEED
- * TO BE EXPLICITLY ADDED TO $wgHooks. Simply write a static function with the
- * same name as the hook that provokes it, place it inside this class and let
- * FBConnect::init() do its magic. Helper functions should be private, because
- * only public static methods are added as hooks.
+ * TO BE EXPLICITLY ADDED TO $wgHooks. Simply write a public static function
+ * with the same name as the hook that provokes it, place it inside this class
+ * and let FBConnect::init() do its magic. Helper functions should be private,
+ * because only public static methods are added as hooks.
  */
 class FBConnectHooks {
 	/**
@@ -88,7 +88,7 @@ class FBConnectHooks {
 	/**
 	 * Injects some important CSS and Javascript into the <head> of the page.
 	 */
-	static function BeforePageDisplay( &$out, &$sk ) {
+	public static function BeforePageDisplay( &$out, &$sk ) {
 		global $fbLogo, $wgScriptPath, $wgJsMimeType, $fbScript;
 		
 		// Asynchronously load the Facebook Connect JavaScript SDK before the page's content
@@ -168,7 +168,7 @@ STYLE;
 	 * If we are not at revision 38397 or later, this function is called from BeforePageDisplay
 	 * to retain backward compatability.
 	 */
-	static function MakeGlobalVariablesScript( &$vars ) {
+	public static function MakeGlobalVariablesScript( &$vars ) {
 		global $wgTitle, $fbApiKey, $fbUseMarkup, $fbLogo;
 		$thisurl = $wgTitle->getPrefixedURL();
 		$vars['fbApiKey'] = $fbApiKey;
@@ -209,7 +209,7 @@ STYLE;
 	 * Accomplishes this by asking FBConnectXFBML to create a hook function that then
 	 * redirects to FBConnectXFBML::parserHook().
 	 */
-	static function ParserFirstCallInit( &$parser ) {
+	public static function ParserFirstCallInit( &$parser ) {
 		$pHooks = FBConnectXFBML::availableTags();
 		foreach( $pHooks as $tag ) {
 			$parser->setHook( $tag, FBConnectXFBML::createParserHook( $tag ));
@@ -222,13 +222,13 @@ STYLE;
 	 * 
 	 * TODO: Better 'returnto' code
 	 */
-	static function PersonalUrls( &$personal_urls, &$wgTitle ) {
+	public static function PersonalUrls( &$personal_urls, &$wgTitle ) {
 		global $wgUser, $wgLang, $wgShowIPinHeader, $fbPersonalUrls, $fbConnectOnly;
 		wfLoadExtensionMessages('FBConnect');
 		// Get the logged-in user from the Facebook API
 		$fb = new FBConnectAPI();
 		$fb_user = $fb->user();
-		
+
 		/*
 		 * Personal URLs option: remove_user_talk_link
 		 */
@@ -426,7 +426,7 @@ STYLE;
 	 * the user is uninitialized with almost all members blank except for mFrom,
 	 * equal to 'session'. The second time around, $user seems to point to the
 	 * User object after being loaded from the session. After the user is loaded
-	 * it has all the appropriate groups. However, before being laoded it seems
+	 * it has all the appropriate groups. However, before being loaded it seems
 	 * that instead of being null, mRights is equal to the array
 	 * (createaccount, createpage, createtalk, writeapi).
 	 */
