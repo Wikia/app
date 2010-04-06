@@ -63,7 +63,7 @@ class SpecialConnect extends SpecialPage {
 			$this->sendPage('alreadyLoggedIn');
 			return;
 		}
-		
+
 		// Connect to the Facebook API
 		$fb = new FBConnectAPI();
 		$fb_user = $fb->user();
@@ -305,9 +305,10 @@ class SpecialConnect extends SpecialPage {
 	}
 	
 	private function alreadyLoggedIn() {
-		global $wgOut, $wgUser, $wgRequest;
+		global $wgOut, $wgUser, $wgRequest, $wgSiteName;
 		$wgOut->setPageTitle(wfMsg('fbconnect-error'));
 		$wgOut->addWikiMsg('fbconnect-alreadyloggedin', $wgUser->getName());
+		$wgOut->addWikiMsg('fbconnect-click-to-connect-existing', $wgSiteName);
 		// Render the "Return to" text retrieved from the URL
 		$wgOut->returnToMain(false, $wgRequest->getText('returnto'), $wgRequest->getVal('returntoquery'));
 	}
@@ -427,7 +428,7 @@ class SpecialConnect extends SpecialPage {
 		
 		// Render a humble Facebook Connect button
 		$wgOut->addHTML('<h2>' . wfMsg( 'fbconnect' ) . '</h2>
-			<div>'.wfMsg( 'fbconnect-intro') . '<br/>' . wfMsg( 'fbconnect-click-to-login') ,
+			<div>'.wfMsg( 'fbconnect-intro') . '<br/>' . wfMsg( 'fbconnect-click-to-login') .'
 			<fb:login-button size="large" background="black" length="long"></fb:login-button>
 			</div>'
 		);
