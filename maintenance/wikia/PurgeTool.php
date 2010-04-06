@@ -1,7 +1,7 @@
 <?php
 
 
-ini_set( "include_path", dirname(__FILE__)."/../.." );
+ini_set( "include_path", dirname(__FILE__)."/.." );
 require_once( 'commandLine.inc' );
 
 $urls = array(
@@ -12,13 +12,14 @@ $urls = array(
 );
 
 
-include 'includes/SquidUpdate.php';
+include '../includes/SquidUpdate.php';
 
-for($cnt=0; $cnt< count($urls); $cnt++){
-	$url = $urls[$cnt];
-	print "Purging $url...\n";
-	SquidUpdate::StompPurge($url);
-}
+//for($cnt=0; $cnt< count($urls); $cnt++){
+	//$url = $urls[$cnt];
+	print "Purging ";
+	print_r($urls);
+	SquidUpdate::StompPurge($urls);
+//}
 
 print "Done.\n";
 

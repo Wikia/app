@@ -1380,7 +1380,19 @@ EOF;
 				'text' => $tpl->data['personal_urls']['preferences']['text'],
 				'href' => $tpl->data['personal_urls']['preferences']['href']
 				);
-
+				
+			// This function ignores anything from PersonalUrls hook which it doesn't expect.  This
+			// loops lets it expect anything starting with "fb*" (because we need that for facebook connect).
+			// Perhaps we should have some system to let PersonalUrls hook work again on its own?
+			// - Sean Colombo
+			foreach($tpl->data['personal_urls'] as $urlName => $urlData){
+				if(strpos($urlName, "fb") === 0){
+					$data[$urlName] = array(
+						'text' => $urlData['text'],
+						'href' => $urlData['href']
+					);
+				}
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -1634,6 +1646,16 @@ if( $custom_user_data ) {
 	echo $custom_user_data;
 } else {
 	global $wgUser, $wgStylePath;
+	
+	// Output the facebook connect links that were added with PersonalUrls.
+	// @author Sean Colombo
+	foreach($this->data['userlinks'] as $linkName => $linkData){
+		if(strpos($linkName, "fb") === 0){
+			print "				<span id='$linkName'><a href=\"".htmlspecialchars($linkData['href']).'"'.$skin->tooltipAndAccesskey('pt-'.$linkName).">";
+			print htmlspecialchars($linkData['text'])."</a></span>\n";
+		}
+	}
+
 	if ($wgUser->isLoggedIn()) {
 	?>
 				<span id="header_username"><a href="<?= htmlspecialchars($this->data['userlinks']['userpage']['href']) ?>"<?= $skin->tooltipAndAccesskey('pt-userpage') ?>><?= htmlspecialchars($this->data['userlinks']['userpage']['text']) ?></a></span>
