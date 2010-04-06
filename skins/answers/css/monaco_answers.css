@@ -263,6 +263,7 @@ div.noarticletext { display: none; }
     padding-bottom:3px;
     color: #fff;
     padding-left:7px;
+	font-size: 90%;
 }
 
 #mw-normal-catlinks span a:link {
@@ -294,7 +295,7 @@ div.noarticletext { display: none; }
 
 #csAddCategorySwitch, #csAddCategoryButton {
     background: #8EB4E6 !important;
-    border: none !important;
+	border:1px solid #2966B8 !important;
     -moz-border-radius: 3px 3px 3px 3px;
     -webkit-border-radius: 3px 3px 3px 3px;
     line-height:16px !important;
