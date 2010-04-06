@@ -228,6 +228,10 @@ function getLangSpecificNamespace( &$lang, $code, $bot='' ){
 	$r .= "Allow: /Special:WhatLinksHere\n";
 	$r .= "Allow: /wiki/Special:WhatLinksHere\n";
    }
+   if ( $code == "en" && !empty( $wgArticleRobotPolicies['Special:Newwikis'] ) ) {
+	$r .= "Allow: /Special:Newwikis\n";
+	$r .= "Allow: /wiki/Special:Newwikis\n";
+   }
  }else{
    $r .= "# " . $code . "\n" ;
    $r .= 'Disallow: /wiki/' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
