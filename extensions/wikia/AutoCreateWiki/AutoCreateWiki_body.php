@@ -97,6 +97,7 @@ class AutoCreateWikiPage extends SpecialPage {
 				"fr" => "frstarteranswers",
 				"he" => "hestarteranswers",
 				"ar" => "arstarteranswers",
+				"nl" => "nlstarteranswers",
 			)
 		);
 
