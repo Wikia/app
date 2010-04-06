@@ -427,7 +427,7 @@ class SpecialConnect extends SpecialPage {
 		
 		// Render a humble Facebook Connect button
 		$wgOut->addHTML('<h2>' . wfMsg( 'fbconnect' ) . '</h2>
-			<div>To log in to Triangle Labs,
+			<div>'.wfMsg( 'fbconnect-intro') . '<br/>' . wfMsg( 'fbconnect-click-to-login') ,
 			<fb:login-button size="large" background="black" length="long"></fb:login-button>
 			</div>'
 		);

@@ -73,6 +73,7 @@ fb.'title'    => 'Connect account with Facebook',
 fb.'intro'    => 'This wiki is enabled with Facebook Connect, the next evolution of Facebook Platform. This means ' .
                  'that when you are Connected, in addition to the normal [[Wikipedia:Help:Logging in#Why log in?' .
                  '|benefits]] you see when logging in, you will be able to take advantage of some extra features...',
+fb.'click-to-login' => 'Click this button to login to this site via facebook',
 fb.'conv'     => 'Convenience',
 fb.'convdesc' => 'Connected users are automatically logged you in. If permission is given, then this wiki can even ' .
                  'use Facebook as an email proxy so you can continue to receive important notifications without ' .
@@ -139,9 +140,9 @@ fb.'convertothertext' => 'That is someone else\'s OpenID.',
 
 /**
  * Message documentation (Message documentation)
- * What is this used for?
+ * What is this used for? Answer: This is shown to translators to help them know what the string is for.
  * @author Garrett Brown
- *
+ */
 $messages['qqq'] = array(
 	'fbconnect-desc' => 'Short description of the FBConnect extension, shown in [[Special:Version]]. Do not translate or change links.',
 	'fbconnect-trustinstructions' => '* $1 is a trust root. A trust root looks much like a normal URL, but is used to describe a set of URLs. Trust roots are used by OpenID to verify that a user has approved the OpenID enabled website.',
