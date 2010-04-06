@@ -150,6 +150,29 @@ body.mainpage .firstHeading { display:none; }
 div.noarticletext { display: none; }
 #navigation_widget { display: none; }
 
+/* === HIDING A BUNCH OF WIDGETS IN THE SIDEBAR === */
+
+.WidgetTopVoted { display: none; }
+.WidgetWatchlist { display: none; }
+.WidgetWikiPage { display: none; }
+.WidgetTopContent { display: none; }
+.WidgetTips { display: none; }
+.WidgetAncientPages { display: none; }
+.WidgetShoutBox { display: none; }
+.WidgetEditedRecently { display: none; }
+.WidgetRecentChanges { display: none; }
+.WidgetProblemReports { display: none; }
+.WidgetNewPages { display: none; }
+.WidgetMostVisited { display: none; }
+.WidgetMagCloud { display: none; }
+.WidgetLastWikis { display: none; }
+.WidgetSlideshow { display: none; }
+.WidgetNeedHelp { display: none; }
+.WidgetContribs { display: none; }
+.WidgetBookmark { display: none; }
+.WidgetActiveTalkPages { display: none; }
+.WidgetAnswers { display: none; }
+
 /* === THESE AFFECT SPECIFIC ELEMENTS in order from top to bottom === */
 
 /* Change the background image of the logo */
