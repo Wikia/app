@@ -77,7 +77,8 @@ class WikiaAssets {
 		} else if($type == 'SiteCSS') {
 			$out = '';
 			$themename = $wgRequest->getVal('themename');
-			$ref = WikiaAssets::GetSiteCSSReferences($themename);
+			$cb = $wgRequest->getVal('cb');
+			$ref = WikiaAssets::GetSiteCSSReferences($themename, $cb);
 			foreach($ref as $reference) {
 				$out .= '/* Call to: '.$reference['url'].' */'."\n\n";
 				$out .= '<!--# include virtual="'.$reference['url'].'" -->';
@@ -123,7 +124,10 @@ class WikiaAssets {
 		exit();
 	}
 
-	private function GetSiteCSSReferences($themename) {
+	/**
+	 * The optional cache-buster can be used to get around the current problems where purges are behind.
+	 */
+	private function GetSiteCSSReferences($themename, $cb = "") {
 		$cssReferences = array();
 		global $wgSquidMaxage;
 		$siteargs = array(
@@ -133,7 +137,8 @@ class WikiaAssets {
 		$query = wfArrayToCGI( array(
 			'usemsgcache' => 'yes',
 			'ctype' => 'text/css',
-			'smaxage' => $wgSquidMaxage
+			'smaxage' => $wgSquidMaxage,
+			'cb' => $cb
 		) + $siteargs );
 
 		// We urldecode these now because nginx does not expect them to be URL encoded.
