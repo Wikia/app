@@ -61,7 +61,7 @@ $wgExtensionCredits['specialpage'][] = array(
 /*
  * Initialization of the autoloaders and special extension pages.
  */
-$dir = dirname(__FILE__) . '/'; 
+$dir = dirname(__FILE__) . '/';
 require_once $dir . 'config.php';
 require_once $dir . 'facebook-client/facebook.php';
 
