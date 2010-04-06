@@ -2,6 +2,7 @@
 * 
 
 == Changes since 201003.1 ==
+* rt#45154: enable Dutch Answers starter (Nef)
 * rt#43123: Createwiki button in wrong location on RTL wikis (macbre)
 * rt#43122: Modal dialogs close button in wrong place on RTL wikis (macbre)
 * rt#44794: Phase out IE6 with message to users (macbre)
