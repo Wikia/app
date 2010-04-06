@@ -292,19 +292,30 @@ div.noarticletext { display: none; }
 #mw-normal-catlinks span a:link {
     background: #EAF1FB;
     padding: 2px;
+	-moz-border-radius:4px 4px 4px 4px;
+	-webkit-border-radius:4px 4px 4px 4px;
+	border-bottom:1px solid #6094DB;
+	border-right:1px solid #8EB4E6;
 }
 
 #mw-normal-catlinks span a:visited {
     background: #EAF1FB;
     padding: 2px;
+	-moz-border-radius:4px 4px 4px 4px;
+	-webkit-border-radius:4px 4px 4px 4px;
+	border-bottom:1px solid #6094DB;
+	border-right:1px solid #8EB4E6;
 }
 
 #mw-normal-catlinks span a:hover {
     background: #6094DB;
-    padding: 0px;
+    padding: 2px;
+	-moz-border-radius:4px 4px 4px 4px;
+	-webkit-border-radius:4px 4px 4px 4px;
+	border-bottom:1px solid #6094DB;
+	border-right:1px solid #8EB4E6;
     text-decoration:none;
     color: #fff;
-    padding: 2px;
 }
 
 /* using !important because of the inline styling */
