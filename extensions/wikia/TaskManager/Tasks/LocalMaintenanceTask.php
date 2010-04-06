@@ -85,6 +85,12 @@ class LocalMaintenanceTask extends BatchTask {
 				}
 			}
 
+			$dbname = WikiFactory::IDtoDB($city_id);			
+			$cmd = sprintf( "perl $IP/../backend/bin/wikia_local_users.pl --usedb={$dbname} " );
+			$this->addLog( "Running {$cmd}" );
+			$retval = wfShellExec( $cmd, $status );
+			$this->addLog( $retval );
+
 			/**
 			 * once again clear cache at the very end
 			 */
