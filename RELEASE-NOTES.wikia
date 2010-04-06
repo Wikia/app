@@ -1,4 +1,5 @@
 == Changes since 201004.2 ==
+* rt#45112: Special:Newwikis now indexable by robots (TOR)
 * rt#43119: wgDisableAnswersShortQuestionsRedirect for some languages (Nef) 
 
 == Changes since 201003.1 ==
