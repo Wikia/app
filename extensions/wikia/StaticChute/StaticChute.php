@@ -535,8 +535,8 @@ class StaticChute {
 
 	public function minifyCssData($css){
 		require_once dirname(__FILE__) . '/Minify_CSS_Compressor.php';
-	
-// TODO: FIXME: This is not the right place to re-write SiteCSS.  It does not get minified.	
+
+// TODO: FIXME: This is not the right place to re-write SiteCSS.  It does not get minified.
 		// In the SiteCSS, users will typically copy-paste the image URL that they see on a page.  This will include a cache-busting number,
 		// but we typically don't want this to be the SPECIFIC revision (which is what a specific URL would refer to), so we will re-write it
 		// to use the current timestamp at the time that this file was pulled.  This isn't perfect, but if we can get the SiteCSS files to be
