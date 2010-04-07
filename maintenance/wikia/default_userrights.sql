@@ -65,6 +65,7 @@ insert into user_groups(ug_user, ug_group) values
 (/*Tedjuh10*/1171508,'helper'),
 (/*Tommy6*/239851,'helper'),
 (/*Urai Fen*/1165627,'helper'),
+(/*VERITĀS ĀÉQUITĀS*/1967932,'helper'),
 (/*Wagnike2*/99965,'helper'),
 (/*Zeyi*/874612,'helper')
 ;
@@ -87,4 +88,10 @@ insert into user_groups(ug_user, ug_group) values
 (/*Grunny*/11536,'vstf'),
 (/*Joeyaa*/417287,'vstf'),
 (/*Ose*/400262,'vstf')
+;
+
+insert into user_groups(ug_user, ug_group) values
+(/*Bola*/126681,'checkuser'),
+(/*Cizagna*/35784,'checkuser'),
+(/*MtaÄ*/826221,'checkuser')
 ;
