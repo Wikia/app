@@ -269,7 +269,7 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 						$('#AjaxLoginBoxWrapper').remove();
 						return false;
 					}
-					$('#AjaxLoginBox').showModal();
+					$('#AjaxLoginBoxWrapper').showModal();
 					$('#wpName1Ajax').focus();
 					return true;
 				},
