@@ -616,6 +616,7 @@ if( $wgUser->isAllowed('createaccount') ) {
 	<div id="ControlBox" style="display:none"></div>
 	<label for="wpRemember2Ajax" class="plain"><?= wfMsg('remembermypassword') ?></label>
 	</div>
+	<?php if( @$this->haveData( 'token' ) ) { ?><input type="hidden" name="wpLoginToken" value="<?php $this->text( 'token' ); ?>" /><?php } ?>
 	<input onclick="AjaxLogin2.action='login';" id="wpLoginattempt" type="submit" value="<?= wfMsg("login") ?>" />
 	</form>
 	
