@@ -620,6 +620,8 @@ class WikiaMiniUpload {
 			$article_obj = new Article( $title_obj );
 			$text = $article_obj->getContent();
 
+			wfRunHooks( 'WikiaMiniUpload::fetchTextForImagePlaceholder', array( &$title_obj, &$text ) );
+
 			( '' != $wgRequest->getVal( 'box' ) ) ? $box = $wgRequest->getVal( 'box' ) : $box = '' ;
 
 			$placeholder_msg = wfMsgForContent( 'imgplc-placeholder' );
