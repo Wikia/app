@@ -83,7 +83,7 @@ class AutoHubsPagesArticle extends Article {
 		$oTmpl->set_vars(array(
 			"data" => $data
 		));
-		$wgOut->setPageTitle( wfMsg('hub-header', $data['title']) );
+		$wgOut->setHTMLTitle( wfMsg('hub-header', $data['title']) ); // does not add a h1, this is done later
 		$wgOut->addHTML( $oTmpl->render("article") );
 	}
 
