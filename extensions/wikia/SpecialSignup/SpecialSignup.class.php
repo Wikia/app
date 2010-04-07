@@ -190,6 +190,11 @@ class ExtendedLoginForm extends LoginForm {
                 $template->set( 'birthyear', $this->wpBirthYear );
                 $template->set( 'birthmonth', $this->wpBirthMonth );
                 $template->set( 'birthday', $this->wpBirthDay );
+
+        		if ( !LoginForm::getLoginToken() ) {
+					LoginForm::setLoginToken();
+				}
+	
                 $template->set( 'token', $this->getLoginToken() );
                 
                 # Prepare language selection links as needed
