@@ -35,7 +35,7 @@ function wfBecomeRecipesSpecial( $par ) {
 
 	// Detect if this is a recipes site...
 	$isAlreadyRecipes = false;
-	$dbr = wfGetDB(DB_MASTER)->;
+	$dbr = wfGetDB(DB_MASTER);
 	$queryString = "SHOW COLUMNS FROM watchlist";
 	$result = $dbr->query($queryString, __METHOD__);
 	if (!$result) {
