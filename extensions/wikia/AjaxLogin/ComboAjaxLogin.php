@@ -16,6 +16,11 @@ $wgExtensionMessagesFiles['ComboAjaxLogin'] = dirname(__FILE__) . '/ComboAjaxLog
 
 function GetComboAjaxLogin() {
 	global $wgRequest;
+	
+	if ( session_id() == '' ) {
+		wfSetupSession();
+	}
+	
 	wfLoadExtensionMessages('ComboAjaxLogin');
 	if ($wgRequest->getCheck( 'wpCreateaccount' )) {
 		return "error";
