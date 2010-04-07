@@ -230,6 +230,12 @@ class Advertisement
 		if(!is_int($this->page_id)) $errs[]="Invalid page id";
 		if(!is_int($this->ad_price)) $errs[]="Invalid ad price";
 		if(!is_int($this->ad_months)) $errs[]="Invalid months";
+
+		$title = Title::newFromID( $this->page_id );
+		if ( !is_object( $title ) || !$title->exists() || $title->getNamespace() != NS_MAIN ) {
+			$errs[] = "Invalid page name (non-existant or not a regular page)";
+		}
+
 		if(count($errs) > 0) return $errs;
 		return true;
 	}
