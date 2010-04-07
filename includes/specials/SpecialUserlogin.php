@@ -45,12 +45,16 @@ class LoginForm {
 	const ABORTED = 8;
 	const CREATE_BLOCKED = 9;
 	const THROTTLED = 10;
+	const USER_BLOCKED = 11;
+ 	const NEED_TOKEN = 12;
+ 	const WRONG_TOKEN = 13;
 
 	var $mName, $mPassword, $mRetype, $mReturnTo, $mCookieCheck, $mPosted;
 	var $mAction, $mCreateaccount, $mCreateaccountMail, $mMailmypassword;
 	var $mLoginattempt, $mRemember, $mEmail, $mDomain, $mLanguage;
 	var $mSkipCookieCheck, $mReturnToQuery;
 	var $mMarketingOptIn, $wpBirthYear, $wpBirthMonth, $wpBirthDay;
+	var $mToken;
 
 	/**
 	 * Constructor
@@ -81,6 +85,7 @@ class LoginForm {
 		$this->mMarketingOptIn = $request->getCheck( 'wpMarketingOptIn' );
 		$this->mLanguage = $request->getText( 'uselang' );
 		$this->mSkipCookieCheck = $request->getCheck( 'wpSkipCookieCheck' );
+		$this->mToken = $request->getVal( 'wpLoginToken' );
 
 		$this->wpBirthYear = $request->getVal( 'wpBirthYear' );
 		$this->wpBirthMonth = $request->getVal( 'wpBirthMonth' );
@@ -448,6 +453,21 @@ class LoginForm {
 			return self::NO_NAME;
 		}
 
+		// We require a login token to prevent login CSRF
+		// Handle part of this before incrementing the throttle so
+		// token-less login attempts don't count towards the throttle
+		// but wrong-token attempts do.
+		
+		// If the user doesn't have a login token yet, set one.
+		if ( !self::getLoginToken() ) {
+			self::setLoginToken();
+			return self::NEED_TOKEN;
+		}
+		// If the user didn't pass a login token, tell them we need one
+		if ( !$this->mToken ) {
+			return self::NEED_TOKEN;
+		}
+
 		global $wgPasswordAttemptThrottle;
 
 		$throttleCount=0;
@@ -465,6 +485,11 @@ class LoginForm {
 			} else if ( $throttleCount >= $count ) {
 				return self::THROTTLED;
 			}
+		}
+		
+		// Validate the login token
+		if ( $this->mToken !== self::getLoginToken() ) {
+			return self::WRONG_TOKEN;
 		}
 
 		// Load $wgUser now, and check to see if we're logging in as the same
@@ -597,6 +622,7 @@ class LoginForm {
 					$wgUser->invalidateCache();
 				}
 				$wgUser->setCookies();
+				self::clearLoginToken();
 
 				// Reset the throttle
 				$key = wfMemcKey( 'password-throttle', wfGetIP(), md5( $this->mName ) );
@@ -615,7 +641,11 @@ class LoginForm {
 					return $this->cookieRedirectCheck( 'login' );
 				}
 				break;
-
+			
+			case self::NEED_TOKEN:
+			case self::WRONG_TOKEN:
+				$this->mainLoginForm( wfMsg( 'sessionfailure' ) );
+				break;
 			case self::NO_NAME:
 			case self::ILLEGAL:
 				$this->mainLoginForm( wfMsg( 'noname' ) );
@@ -974,6 +1004,11 @@ class LoginForm {
 		$template->set( 'birthmonth', $this->wpBirthMonth );
 		$template->set( 'birthday', $this->wpBirthDay );
 
+		if ( !self::getLoginToken() ) {
+			self::setLoginToken();
+		}
+		$template->set( 'token', self::getLoginToken() );
+
 		# Prepare language selection links as needed
 		if( $wgLoginLanguageSelector ) {
 			$template->set( 'languages', $this->makeLanguageSelector() );
@@ -1021,6 +1056,32 @@ class LoginForm {
 	function hasSessionCookie() {
 		global $wgDisableCookieCheck, $wgRequest;
 		return $wgDisableCookieCheck ? true : $wgRequest->checkSessionCookie();
+	}
+	
+	/**
+	 * Get the login token from the current session
+	 */
+	public static function getLoginToken() {
+		global $wgRequest;
+		return $wgRequest->getSessionData( 'wsLoginToken' );
+	}
+	
+	/**
+	 * Generate a new login token and attach it to the current session
+	 */
+	public static function setLoginToken() {
+		global $wgRequest;
+		// Use User::generateToken() instead of $user->editToken()
+		// because the latter reuses $_SESSION['wsEditToken']
+		$wgRequest->setSessionData( 'wsLoginToken', User::generateToken() );
+	}
+	
+	/**
+	 * Remove any login token attached to the current session
+	 */
+	public static  function clearLoginToken() {
+		global $wgRequest;
+		$wgRequest->setSessionData( 'wsLoginToken', null );
 	}
 
 	/**
