@@ -124,7 +124,7 @@ class WikiFactory {
 
 	/**
 	 * wrapper to database connection for connecting to the database
-	 * containing the mappings of wiki to daatabase.
+	 * containing the mappings of wiki to database.
 	 *
 	 * @access public
 	 * @static
