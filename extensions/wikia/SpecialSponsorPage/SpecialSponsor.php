@@ -18,6 +18,8 @@ $wgExtensionCredits['specialpage'][] = array(
  
 $dir = dirname(__FILE__) . '/';
 
+$wgExtensionMessagesFiles['SponsorPage'] = $dir . 'Sponsor.i18n.php';
+
 //enable the advertisements
 include_once($dir.'Advertisements.php');
 $wgHooks['OutputPageBeforeHTML'][] = 'AdDisplay::OutputAdvertisementOutputHook';
@@ -30,5 +32,3 @@ $wgAutoloadClasses['SpecialSponsor'] = $dir . 'SpecialSponsor_body.php';
 //$wgExtensionMessagesFiles['SpecialSponsor'] = $dir . 'MyExtension.i18n.php';
 //$wgExtensionAliasesFiles['SpecialSponsor'] = $dir . 'MyExtension.alias.php';
 $wgSpecialPages['Sponsor'] = 'SpecialSponsor'; 
-
-?>

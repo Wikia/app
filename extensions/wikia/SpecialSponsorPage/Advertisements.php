@@ -25,6 +25,10 @@ class Advertisement
 	public $ad_months = 1;
 	public $ad_status = 0;
 	public $last_pay_date ='0000-00-00';
+
+	function __construct() {
+		wfLoadExtensionMessages( 'SponsorPage' );
+	}
  
 	public function Save(){
 		global $wgExternalSharedDB;
@@ -80,6 +84,9 @@ class Advertisement
 	
 	/**
 	 * load from database, uses globals to load ads for current article
+	 *
+	 * NOTE: if $limit is ever greater than ten (the default retrieved from the database)
+	 * then this will need to be reworked
 	 *
 	 * @return Advertisement Array
 	 * @public
@@ -188,9 +195,20 @@ class Advertisement
 	 * @public
 	 */
 	public function OutPutHTML(){
-		$text = "<div id='ad' style='border:1px black solid; padding:2em;'>";
+		$text = '<div class="sponsorad">';
 		$text .= '<a href="http://'.$this->ad_link_url.'">'.$this->ad_link_text.'</a><br />'.$this->ad_text.'<br /><br />'."\n";
 		$text .= "</div>\n";
+		return $text;
+	}
+	
+	/**
+	 * Outputs the wikitext for this ad
+	 *
+	 * @return string
+	 * @public
+	 */
+	public function OutPutWikiText(){
+		$text = wfMsgForContent( 'sponsor-template', $this->ad_link_url, $this->ad_link_text, $this->ad_text );
 		return $text;
 	}
 	
@@ -240,8 +258,6 @@ Class AdDisplay
   //use this one
   public static function OutputAdvertisementOutputHook( &$out, &$text ){
 		if(!self::ArticleCanShowAd()) return true;
-		global $wgParser, $wgTitle;
-		$text.= "\n<h2>External Sponsored Links</h2>\n";
 		$text.= self::OutputAdvertisement();
 		return true;
   }
@@ -262,25 +278,50 @@ Class AdDisplay
   
   //Note that some hooks may or may not render wikitext, so plan accordingly
   public static function OutputAdvertisement() {
-   		$ads = Advertisement::GetAdsForCurrentPage();
-   		$adtext = "";
-   		if(!is_array($ads) || count($ads)<1) {
-   			//possibly use a mediawiki message via wfMsg
-			global $wgTitle, $wgParser;
-			$page = $wgTitle->getText();
-			$specPage = Title::newFromText("Special:Sponsor");
-			$specUrl = $specPage->getLocalURL("page_name=".$page);
-			$adtext = "\n<div id='ad' style='border:1px black solid; padding:2em;'>";
-			$adtext .= '<p><a href="'.$specUrl.'">Sponsor this page</a></p>';
-			$adtext .= "</div>\n";
-   		}else{
-			if(is_array($ads)){
-				foreach($ads as $ad){
-					$adtext .= $ad->OutPutHTML();
-				}
-			}
-   		}
-		return $adtext;
+	global $wgParser;
+	global $wgTitle;
+	$ads = Advertisement::GetAdsForCurrentPage();
+	$adtext = wfMsg('sponsor-header');
+	if(!is_array($ads) || count($ads)<2) {
+		//possibly use a mediawiki message via wfMsg
+		$adtext .= self::ShowSponsorMessage();
+	}
+	if(is_array($ads)){
+		foreach($ads as $ad){
+			$adtext .= $ad->OutPutWikiText();
+		}
+	}
+	$output = $wgParser->parse($adtext,$wgTitle,new ParserOptions());
+	$text = $output->getText();
+	return $text;
+  }
+  
+  /**
+	 * Shows the sponsorship message
+   * Later, use a wfmsg for the actual message
+   *
+	 * @return string
+	 * @public
+	 */
+  public static function ShowSponsorMessage(){
+		global $wgTitle, $wgParser;
+		$page = $wgTitle->getText();
+		$specPage = Title::newFromText("Special:Sponsor");
+		$specUrl = $specPage->getLocalURL("page_name=".$page);
+		$fullUrl = $specPage->getFullUrl(array("page_name"=>$page));
+		$text = wfMsg( 'sponsor-msg', $specPage, $specUrl, $fullUrl );
+		return $text;
+  }
+  
+   public static function ShowSponsorMessageOld(){
+		global $wgTitle, $wgParser;
+		$page = $wgTitle->getText();
+		$specPage = Title::newFromText("Special:Sponsor");
+		$specUrl = $specPage->getLocalURL("page_name=".$page);
+		$text = "\n".'<div class="sponsormsg" style="border:1px black solid; padding:2em;">';
+		$text .= '<p><a href="'.$specUrl.'">Sponsor this page</a></p>';
+		$text .= "</div>\n";
+		return $text;
   }
   
   /**
@@ -296,7 +337,7 @@ Class AdDisplay
 		$page = $wgTitle->getText();
 		$mainpage = wfMsg('Mainpage');
 		//Only show ads in main namespace, but not on the main page
-		if($mainpage == $page || $wgTitle->getNamespace() != 0) return false;
+		if($mainpage == $page || $wgTitle->getNamespace() != NS_MAIN ) return false;
 		return true;
   }
 }
