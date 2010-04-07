@@ -22,6 +22,7 @@ $link = $titleObj->getLocalUrl('type=signup');
 <?php if( $wgEnableEmail && $wgAuth->allowPasswordChange() ) { ?>
 			<br /><input style="margin:3px 0;padding:0 .25em;width:auto;overflow:visible;font-size:0.9em" type="submit" name="wpMailmypassword" id="wpMailmypassword" tabindex="106" value="<?= wfMsg('mailmypassword') ?>" />
 <?php } ?>
+
 		<br/><a id="wpAjaxRegister" href="<?= htmlspecialchars($link) ?>"><?= wfMsg('nologinlink') ?></a>
 		</form>
 

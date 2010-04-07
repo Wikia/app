@@ -55,6 +55,12 @@ class PBLoginForm extends LoginForm {
 
 		$this->mOtherName = $request->getVal( 'wpOtherName' );
 		parent::LoginForm( &$request );
+	
+		if ( !LoginForm::getLoginToken() ) {
+			LoginForm::setLoginToken();
+		}
+		$this->exTemplate->set("token", LoginForm::getLoginToken());
+		
 		$this->mType = "login";
 		/* fake to don't change remember password */
 		$this->mRemember = (bool) $wgUser->getOption( 'rememberpassword' );
