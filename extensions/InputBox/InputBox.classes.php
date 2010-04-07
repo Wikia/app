@@ -501,7 +501,28 @@ class InputBox {
 		// Validate the width; make sure it's a valid, positive integer
 		$this->mWidth = intval( $this->mWidth <= 0 ? 50 : $this->mWidth );
 
+		// Validate background color
+		if ( !$this->isValidColor( $this->mBGColor ) ) {
+			$this->mBGColor = 'transparent';
+		}
 		wfProfileOut( __METHOD__ );
 	}
 
+	/**
+	 * Do a security check on the bgcolor parameter
+	 */
+	public function isValidColor( $color ) {
+		$regex = <<<REGEX
+			/^ (
+				[a-zA-Z]* |       # color names
+				\# [0-9a-f]{3} |  # short hexadecimal
+				\# [0-9a-f]{6} |  # long hexadecimal
+				rgb \s* \( \s* (
+					\d+ \s* , \s* \d+ \s* , \s* \d+ |    # rgb integer
+					[0-9.]+% \s* , \s* [0-9.]+% \s* , \s* [0-9.]+%   # rgb percent
+				) \s* \)
+			) $ /xi
+REGEX;
+		return (bool) preg_match( $regex, $color );
+	}
 }
