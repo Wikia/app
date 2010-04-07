@@ -142,13 +142,11 @@ body.page-Wikianswers h1.firstHeading, body.page-Wikianswers #contentSub { displ
 #navigation .Monaco-sidebar_edit { display: none; }
 body.mainpage .firstHeading { display:none; }
 .usermessage { display: none; }
-#search_box { display: none;}
 #control_edit { display: none; }
 #control_watch { display: none; }
 #control_sharefeature { display: none; }
 #profile-actions-wikiuserpage { display:none;}
 div.noarticletext { display: none; }
-#navigation_widget { display: none; }
 
 /* === HIDING A BUNCH OF WIDGETS IN THE SIDEBAR === */
 
@@ -215,7 +213,7 @@ div.noarticletext { display: none; }
 /* ask box */
 #answers_ask input.header_field,
 #tabAsk input.header_field,
-#tabSearch input.header_field {
+#tab input.header_field {
 	font-size:16pt;
 	width:620px;
 	border:3px solid #E0EAF8;
@@ -492,7 +490,6 @@ div.noarticletext { display: none; }
 
 /* SEARCH & ASK TABS */
 
-#search_field { position: relative;}
 
 #answers_article .ui-tabs-nav {
 	background-color:#fff;
@@ -631,12 +628,23 @@ div.article-comm-input-text textarea {
 /* === LEFT NAV === */
 
 #search_box {
-	background-image: none;
-	background:#CEE296 none repeat scroll 0 0;
-	border:1px solid #A5BF5E;
+/*	background:#CEE296 none repeat scroll 0 0;
+	border:1px solid #A5BF5E; */
+	background-image:none;
+	padding:0px;
 }
 
-#search_field { border:1px solid #A5BF5E; }
+#searchform {
+	background-image:none;
+	border: 2px solid #E0EAF8;
+}
+
+#search_field {
+	border:none;
+	width: 190px;
+}
+
+#search-button { display: none; }
 
 /* realign text in the widget */
 
@@ -650,10 +658,6 @@ div.article-comm-input-text textarea {
 .WidgetCommunity .widgetfeed {
 	margin-left: 1px;
 	margin-right: 10px;
-}
-
-#sidebar_1 {
-/*	text-align: right; */
 }
 
 #search_button {
