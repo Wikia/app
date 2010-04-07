@@ -25,10 +25,6 @@ class Advertisement
 	public $ad_months = 1;
 	public $ad_status = 0;
 	public $last_pay_date ='0000-00-00';
-
-	function __construct() {
-		wfLoadExtensionMessages( 'SponsorPage' );
-	}
  
 	public function Save(){
 		global $wgExternalSharedDB;
@@ -264,6 +260,7 @@ Class AdDisplay
   //use this one
   public static function OutputAdvertisementOutputHook( &$out, &$text ){
 		if(!self::ArticleCanShowAd()) return true;
+		wfLoadExtensionMessages( 'SponsorPage' );
 		$text.= self::OutputAdvertisement();
 		return true;
   }
@@ -288,6 +285,7 @@ Class AdDisplay
 	global $wgTitle;
 	$ads = Advertisement::GetAdsForCurrentPage();
 	$adtext = wfMsg('sponsor-header');
+	$adtext = '<div class="sponsormsg" style="border:1px black solid; padding:2em;">';
 	if(!is_array($ads) || count($ads)<2) {
 		//possibly use a mediawiki message via wfMsg
 		$adtext .= self::ShowSponsorMessage();
@@ -297,9 +295,8 @@ Class AdDisplay
 			$adtext .= $ad->OutPutWikiText();
 		}
 	}
-	$output = $wgParser->parse($adtext,$wgTitle,new ParserOptions());
-	$text = $output->getText();
-	return $text;
+	$adtext .= '</div>';
+	return $adtext;
   }
   
   /**
@@ -315,7 +312,7 @@ Class AdDisplay
 		$specPage = Title::newFromText("Special:Sponsor");
 		$specUrl = $specPage->getLocalURL("page_name=".$page);
 		$fullUrl = $specPage->getFullUrl(array("page_name"=>$page));
-		$text = wfMsg( 'sponsor-msg', $specPage, $specUrl, $fullUrl );
+		$text = wfMsg( 'sponsor-msg', $fullUrl );
 		return $text;
   }
   
