@@ -15,6 +15,7 @@ class WikiaApiAjaxLogin extends ApiBase {
 
 	public function execute() {
 		$Name = $Password = $Remember = $Loginattempt = $Mailmypassword = null;
+		
 		extract($this->extractRequestParams());
 
 		if(!empty($Loginattempt)) {
@@ -23,7 +24,8 @@ class WikiaApiAjaxLogin extends ApiBase {
 				'wpName' => $Name,
 				'wpPassword' => $Password,
 				'wpRemember' => $Remember,
-				'wpLoginattempt' => $Loginattempt
+				'wpLoginattempt' => $Loginattempt,
+				'wpLoginToken' => $LoginToken
 			));
 
 			// Init session if necessary
@@ -135,7 +137,8 @@ class WikiaApiAjaxLogin extends ApiBase {
 			'Password' => null,
 			'Remember' => null,
 			'Loginattempt' => null,
-			'Mailmypassword' => null
+			'Mailmypassword' => null,
+			'LoginToken' => null
 		);
 	}
 

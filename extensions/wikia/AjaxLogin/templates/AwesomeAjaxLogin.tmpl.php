@@ -45,6 +45,7 @@ $link = $titleObj->getLocalUrl('type=signup');
 				<label for="wpRemember2Ajax" style="padding-left: 5px"><?= wfMsg('remembermypassword') ?></label>
 			</div>
 		</div>
+		<input type="hidden" name="wpLoginToken" value="<?php echo $token; ?>" />
 		<div class="modalToolbar neutral">
 			<input type="submit" value="<?= wfMsg("login") ?>" id="wpLoginattemptAjax" />
 		</div>

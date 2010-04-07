@@ -32,9 +32,16 @@ function GetAjaxLogin() {
 	
 	$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 	$response = new AjaxResponse();
+	
+	if ( !LoginForm::getLoginToken() ) {
+		LoginForm::setLoginToken();
+	}
+	$tmpl->set_vars(array(
+		"token" => LoginForm::getLoginToken()
+	));
+	
 	$response->addText( $tmpl->execute('AwesomeAjaxLogin') );
-	$response->setCacheDuration( 3600 * 24 * 365 * 10); // 10 years
-	header("X-Pass-Cache-Control: s-maxage=315360000, max-age=315360000");
+
 
 	return $response;
 }

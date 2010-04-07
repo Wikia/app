@@ -59,6 +59,7 @@ $link = $titleObj->getLocalUrl('type=signup');
 	        	<input type="submit" id="wpLoginCombo" value="<?= wfMsg("login") ?>" onclick="AjaxLogin.action='login'; AjaxLogin.form.submit(); return false;" />
 	        	<input type="submit" id="wpLoginCancel" class="secondary" value="<?= wfMsg("Cancel") ?> "onclick="AjaxLogin.close(); return false;" />
 	        </div>
+	        <input type="hidden" name="wpLoginToken" value="<?php echo $token; ?>" />
         </form>
     </div>
     <div id="AjaxLoginRegisterForm" style="display:none" title="<?= wfMsg('login') ?>">

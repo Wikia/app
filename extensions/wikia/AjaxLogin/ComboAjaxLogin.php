@@ -33,6 +33,12 @@ function GetComboAjaxLogin() {
         $tmpl->set("isReadOnly", 1);                 
     }
     
+    
+    if ( !LoginForm::getLoginToken() ) {
+		LoginForm::setLoginToken();
+	}
+	$tmpl->set( "token", LoginForm::getLoginToken() );
+    
     $response->addText( $tmpl->execute('ComboAjaxLogin') );
 	return $response;
 }
