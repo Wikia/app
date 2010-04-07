@@ -13,7 +13,6 @@ $wgHooks['GetHTMLAfterBody'][] = 'GetAjaxLoginForm';
 
 function GetAjaxLoginForm($skin) {
 	global $wgTitle, $wgUser;
-
 	// different approach for Lean Monaco
 	global $wgUseMonaco2;
 	if (!empty($wgUseMonaco2)) {
@@ -30,6 +29,10 @@ function GetAjaxLoginForm($skin) {
 $wgAjaxExportList[] = 'GetAjaxLogin';
 function GetAjaxLogin() {
 	
+	if ( session_id() == '' ) {
+		wfSetupSession();
+	}
+			
 	$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 	$response = new AjaxResponse();
 	
