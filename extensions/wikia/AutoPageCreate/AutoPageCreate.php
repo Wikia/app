@@ -17,8 +17,21 @@ function wfAutoPageCreateInit() {
 	$wgHooks['EditPage::showEditForm:initial'][] = 'wfAutoPageCreateEditPage';
 	$wgHooks['ArticleNonExistentPage'][] = 'wfAutoPageCreateViewPage';
 	$wgHooks['MakeGlobalVariablesScript'][] = 'wfAutoPageCreateSetupVars';
+	$wgHooks['WikiaMiniUpload::fetchTextForImagePlaceholder'][] = 'wfAutoPageCreateTextForImagePlaceholder';
 
 	$wgOut->addExtensionStyle( "$wgExtensionsPath/wikia/AutoPageCreate/AutoPageCreate.css?$wgStyleVersion" );
+}
+
+function wfAutoPageCreateTextForImagePlaceholder( $title, $text ) {
+	// this was for RT#45568 - Bartek
+	// basic idea is to load the template for ImagePlaceholder to work when the article does not yet exist
+	// but on view, not on article edit (on preview the placeholder is blocked by default)
+	global $wgRequest;
+	if( !$title->exists() && ( 'edit' != $wgRequest->getVal( 'action' ) ) ) {
+		$text = wfMsgForContent( 'newpagelayout' );
+	}
+
+	return true;
 }
 
 function wfAutoPageCreateEditPage( $editpage ) {
