@@ -60,9 +60,11 @@ window.fbAsyncInit = function() {
 	
 	// Register a function for when the user logs out of Facebook
 	FB.Event.subscribe('auth.logout', function(response) {
-		var login = confirm("Not logged in.\n\nYou have been loggout out of " +
-		                    "Facebook. Press OK to log in via Facebook Connect " +
-		                    "again, or press Cancel to stay on the current page.");
+		var login = confirm("Not logged in.\n\nWe detected that you have been logged " +
+		                    "out of Facebook. If this isn't the case, don't worry! " +
+		                    "Facebook's new library seems to have some growing pains. " +
+		                    "Just press Cancel to stay on the current page. Otherwise, " +
+		                    "Press OK to log in via Facebook Connect again.");
 		if (login) {
 			window.location = window.wgArticlePath.replace(/\$1/, "Special:Connect");
 		}
