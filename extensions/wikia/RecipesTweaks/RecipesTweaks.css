@@ -78,6 +78,10 @@
 	width: 245px !important;
 }
 
+#search_box{ /* there is a different box for recipes search */
+	display:none;
+}
+
 /* tabs */
 #recipe_tabs .recipe_tab {
 	background-image: url(images/bg.tabs.png);
