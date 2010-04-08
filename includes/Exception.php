@@ -147,6 +147,7 @@ class MWException extends Exception {
 		if ( $this->useOutputPage() ) {
 			$wgOut->setPageTitle( $this->getPageTitle() );
 			$wgOut->setRobotPolicy( "noindex,nofollow" );
+			$wgOut->setStatusCode( 500 );
 			$wgOut->setArticleRelated( false );
 			$wgOut->enableClientCache( false );
 			$wgOut->redirect( '' );
