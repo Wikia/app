@@ -35,9 +35,6 @@ $wgAutoloadClasses['WikiaPhotoGalleryUpload'] = "$dir/WikiaPhotoGalleryUpload.cl
 
 $wgAutoloadClasses['FakeLocalFile'] = "$dir/FakeLocalFile.class.php";
 
-// special page (used during development to test image search)
-include("$dir/WikiaPhotoGallery.special.php");
-
 // hooks
 $wgHooks['renderImageGallerySetup'][] = 'WikiaPhotoGalleryHelper::setup';
 $wgHooks['BeforeParserrenderImageGallery'][] = 'WikiaPhotoGalleryHelper::beforeRenderImageGallery';
