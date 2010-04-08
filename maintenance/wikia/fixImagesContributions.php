@@ -37,13 +37,14 @@ while( $row = $dbw->fetchRow( $sth ) ) {
 	/**
 	 * check local user name first
 	 */
-	$localUser = $dbw->selectRow(
-		'`user`',
-		array( "user_id", "user_name"),
-		array( "user_id" => $row->img_user ),
-		__METHOD__
-	);
-
+#	$localUser = $dbw->selectRow(
+#				     array( '`user`' ),
+#		array( "user_id", "user_name"),
+#		array( "user_id" => $row->img_user ),
+#		__METHOD__
+#	);
+	print_r( $row->img_user );
+#	print_r( $localUser );
 	if( !empty( $localUser->user_name ) ) {
 
 		/**

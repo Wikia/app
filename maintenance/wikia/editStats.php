@@ -138,6 +138,10 @@ function wfEditStats($options = array()) {
 		WikiaGlobalStats::countWordsInLastDays($i, 1);
 	}
 
+	#$memkey = wfMemcKey( "WS:getPagesEditors", 3, 10, 1, 0, 0 );
+	#echo "memkey = $memkey \n";
+	#echo print_r( $wgMemc->get( $memkey ), true );
+
 	wfOut( "\ndone.\n" );
 }
 
