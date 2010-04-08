@@ -438,7 +438,7 @@ class RecipesTweaks {
 
 		$out = array();
 
-		while($row = $dbr->fetchObject($res)) {
+		foreach( $res as $row ) {
 			$title = Title::newFromText($row->wl_title, $row->wl_namespace);
 
 			if(!($title instanceof Title)) {
