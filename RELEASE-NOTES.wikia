@@ -2,6 +2,7 @@
 * rt#42594: Add tracking to content links (Nef)
 * rt#45112: Special:Newwikis now indexable by robots (TOR)
 * rt#43119: wgDisableAnswersShortQuestionsRedirect for some languages (Nef) 
+* rt#45545: DB error returning a 404 (without Google Analytics) instead of 503 which is preventing failover (Emil)
 
 == Changes since 201003.1 ==
 * rt#45154: enable Dutch Answers starter (Nef)
