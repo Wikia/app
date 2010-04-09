@@ -5,6 +5,9 @@ $wgHooks["fillInAdPlaceholder"][] = "wfAnswersSudoAd2";
 function wfAnswersSudoAd2($placeholdertype, $slotname, $AdEngine, $html) {
 	if (("HOME_TOP_LEADERBOARD" != $slotname) && ("TOP_LEADERBOARD" != $slotname)) return true;
 
+	$var = "wgAdslot_{$slotname}";
+	if (!empty($GLOBALS[$var]) && "null" == strtolower($GLOBALS[$var])) return true;
+
 	global $wgUser;
 	if (empty($_GET["showads"]) && is_object($wgUser) && $wgUser->isLoggedIn() && !$wgUser->getOption("showAds")) return true;
 					 
