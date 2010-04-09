@@ -12,7 +12,10 @@ $dbw = WikiFactory::db( DB_MASTER );
 $sth = $dbw->select(
 	array( "city_list" ),
 	array( "city_dbname", "city_id" ),
-	array( "city_public" => 1, "city_created" => '0000-00-00 00:00:00' ),
+	array( 
+		"city_public" => 1, 
+		"( city_created = '0000-00-00 00:00:00' or city_created is null ) " 
+	),
 	__METHOD__
 );
 
