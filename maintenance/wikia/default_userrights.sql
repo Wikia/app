@@ -15,15 +15,14 @@ insert into user_groups(ug_user, ug_group) values
 (/*Emil*/27301,'staff'),
 (/*Gil*/20251,'staff'),
 (/*Inez*/51654,'staff'),
-(/*Jeremie*/123457,'staff'),
 (/*Jimbo Wales*/13,'staff'),
 (/*JoePlay*/171752,'staff'),
+(/*Kacieh*/1704661,'staff'),
+(/*Kimberly McCollister*/1735815,'staff'),
 (/*Kirkburn*/126761,'staff'),
-(/*KimberlySue*/1670804,'staff'),
 (/*Lleowen*/261184,'staff'),
 (/*Macbre*/119245,'staff'),
 (/*Marooned*/250810,'staff'),
-(/*Meitar*/967856,'staff'),
 (/*Moli.wikia*/115748,'staff'),
 (/*Ppiotr*/60069,'staff'),
 (/*Przemek wikia*/157013,'staff'),
@@ -40,7 +39,6 @@ insert into user_groups(ug_user, ug_group) values
 (/*VickyBC*/1066766, 'staff'),
 (/*WikiaBot*/269919,'staff'),
 (/*Xean*/1627201,'staff'),
-(/*Zuirdj*/47,'staff'),
 (/*WikiaStaff*/1342530,'staff')
 ;
 
@@ -53,7 +51,6 @@ insert into user_groups(ug_user, ug_group) values
 (/*Defchris*/1636,'helper'),
 (/*Game widow*/390665,'helper'),
 (/*JParanoid*/10970,'helper'),
-(/*Kacieh*/1704661,'helper'),
 (/*McCouman*/1332157,'helper'),
 (/*Merrystar*/11001,'helper'),
 (/*MtaÄ*/826221, 'helper'),
