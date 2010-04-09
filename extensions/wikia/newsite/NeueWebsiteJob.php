@@ -39,9 +39,61 @@ class NeueWebsiteJob extends Job {
 		global $wgUser, $wgOut;
 		wfProfileIn( __METHOD__ );
 
+		$this->makeThumbnail( $this->mParams[ "domain" ] );
+
 		$this->makeRelated( $this->mParams[ "domain"], $this->mParams[ "key"] );
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	private function makeThumbnail( $domain ) {
+		global $wgUploadDirectory;
+
+		wfProfileIn( __METHOD__ );
+
+		$hash = md5( $domain );
+
+		$basePath = $wgUploadDirectory . '/screenshots/' . substr( $hash, 0, 1 ) . '/' . substr( $hash, 0, 2 );
+		$pdfPath = $basePath . '/' . $domain . '.pdf';
+		$imagePath = $basePath . '/' . $domain . '.png';
+
+		wfMkdirParents( $basePath );
+
+		// create a PDF
+		$cmd = "/opt/wikia/bin/wkhtmltopdf --page-size Letter -B 0 -T 0 -L 0 -R 0 \"http://{$domain}\" {$pdfPath}";
+
+		wfShellExec( $cmd, $result );
+		if ( $result !== 0 ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+
+		// create a PNG from the PDF
+		$cmd = "/usr/local/bin/gs -sDEVICE=png16m -dFirstPage=1 -dLastPage=1 -dNOPAUSE -dBATCH -dSAFER -sOutputFile={$imagePath} -r35 {$pdfPath}";	
+
+		wfShellExec( $cmd, $result );
+		if ( $result !== 0 ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+
+		// resize using ImageMagick
+		// hardcoded dimentions, taken from websitewiki.de
+		$cmd = "convert -thumbnail 250x188^ -crop 250x188+0+0 +repage {$imagePath} {$imagePath}";
+
+		wfShellExec( $cmd, $result );
+		if ( $result !== 0 ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+
+		// remove PDF
+		$cmd = "rm {$pdfPath}";
+		wfShellExec( $cmd );
+
+		wfProfileOut( __METHOD__ );
+
+		return true;
 	}
 
 	/**
