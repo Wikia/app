@@ -28,7 +28,10 @@ class IE6PhaseOut {
 		wfLoadExtensionMessages('IE6PhaseOut');
 		$msg = wfMsgExt('ie6-phaseout-message', array('parseinline'));
 
-		$notice = '<!--[if lt IE 7]><div id="ie6-phaseout-message" class="usermessage" style="display: block">' . $msg . '</div><![endif]-->';
+		$notice = '<div id="ie6-phaseout-message" class="usermessage" style="display: none">' . $msg . '</div><script type="text/javascript">wgIsIE6 = true</script>';
+
+		// only for IE6
+		$notice = "<!--[if lt IE 7]>{$notice}<![endif]-->";
 
 		$tpl->data['bodytext'] = $notice . $tpl->data['bodytext'];
 
