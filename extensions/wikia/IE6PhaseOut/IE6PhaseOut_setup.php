@@ -26,3 +26,6 @@ $wgExtensionMessagesFiles['IE6PhaseOut'] = $dir . 'IE6PhaseOut.i18n.php';
 
 // hooks
 $wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'IE6PhaseOut::showNotice';
+
+// AJAX
+$wgAjaxExportList[] = 'IE6PhaseOut::getNotice';
