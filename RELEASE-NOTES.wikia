@@ -1,9 +1,11 @@
 == Changes since 201004.2 ==
+* rt#45765: Add frequency cap or dismiss option to IE6 Phase Out message (macbre)
+* rt#45768: Add texts and links to IE6 phase out messages (EN+top5) (macbre)
 * rt#45716: hack in google code @three answers sites (Nef)
 * rt#45645: new starter for english answers (Nef)
 * rt#42594: Add tracking to content links (Nef)
 * rt#45112: Special:Newwikis now indexable by robots (TOR)
-* rt#43119: wgDisableAnswersShortQuestionsRedirect for some languages (Nef) 
+* rt#43119: wgDisableAnswersShortQuestionsRedirect for some languages (Nef)
 * rt#45545: DB error returning a 404 (without Google Analytics) instead of 503 which is preventing failover (Emil)
 
 == Changes since 201003.1 ==
