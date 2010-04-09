@@ -8,7 +8,7 @@ $(function() {
 
 			// show notice
 			$.get(wgScript + '?action=ajax&rs=IE6PhaseOut::getNotice&uselang='+ wgUserLanguage, function(msg) {
-				$(msg).	prependTo('#article').slideDown();
+				$(msg).prependTo('#article').slideDown();
 
 				// set cookie
 				$.cookies.set('ie6phaseout', 1, {domain: wgCookieDomain, path: wgCookiePath});
