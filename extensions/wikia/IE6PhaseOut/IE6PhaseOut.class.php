@@ -25,17 +25,32 @@ class IE6PhaseOut {
 			return true;
 		}
 
-		wfLoadExtensionMessages('IE6PhaseOut');
-		$msg = wfMsgExt('ie6-phaseout-message', array('parseinline'));
-
-		$notice = '<div id="ie6-phaseout-message" class="usermessage" style="display: none">' . $msg . '</div><script type="text/javascript">wgIsIE6 = true</script>';
+		// let JS check cookie and fetch message via AJAX
+		$noticeTrigger = '<script type="text/javascript">var wgShowIE6PhaseOutMessage = true;</script>';
 
 		// only for IE6
-		$notice = "<!--[if lt IE 7]>{$notice}<![endif]-->";
+		$noticeTrigger = "\t\t<!--[if lt IE 7]>{$noticeTrigger}<![endif]-->\n";
 
-		$tpl->data['bodytext'] = $notice . $tpl->data['bodytext'];
+		$tpl->data['headlinks'] .= $noticeTrigger;
 
 		wfProfileOut(__METHOD__);
 		return true;
+	}
+
+	/**
+	 * Get message for Internet Explorer 6 users via AJAX
+	 */
+	public static function getNotice() {
+		wfProfileIn(__METHOD__);
+
+		wfLoadExtensionMessages('IE6PhaseOut');
+
+		$msg = wfMsgExt('ie6-phaseout-message', array('parseinline'));
+		$notice = '<div id="ie6-phaseout-message" class="usermessage" style="display:none">' . $msg . '</div>';
+
+		$ret = new AjaxResponse($notice);
+
+		wfProfileOut(__METHOD__);
+		return $ret;
 	}
 }
