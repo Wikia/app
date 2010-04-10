@@ -55,7 +55,7 @@ class InviteEmail extends UnlistedSpecialPage {
 			foreach($addresses as $address){
 				$to = trim($address);
 				if ( User::isValidEmailAddr( $to ) ) {
-					UserMailer::send( $to, $this->from, $subject, $message, null, null, 'InviteEmail');
+					UserMailer::send( new MailAddress( $to ), $this->from, $subject, $message, null, null, 'InviteEmail');
 				}
 			}
 			$mail = new UserEmailTrack($wgUser->getID(),$wgUser->getName());
