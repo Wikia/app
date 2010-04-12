@@ -22,7 +22,7 @@ class NeueWebsiteHooks {
 	 * @param Object $parser: Wiki Parser object
 	 */
 	static public function renderRelated( $input, $params, &$parser ) {
-		global $wgTitle;
+		global $wgTitle, $wgOut;
 
 		wfProfileIn( __METHOD__ );
 
@@ -49,7 +49,7 @@ class NeueWebsiteHooks {
 		$results = array_unique( $results );
 		if( count( $results ) ) {
 			wfLoadExtensionMessages( 'Newsite' );
-			$output .= wfMsgForContent( 'newsite-output-related' );
+			$output .= wfMsgForContent( 'newsite-output-related' ) . "\n";
 			$output .= Xml::openElement( "span", array( "class" => "small" ) );
 			foreach( $results as $site ) {
 				$output .= sprintf("[[%s]] ", ucfirst( strtolower( $site ) ) );
@@ -59,6 +59,8 @@ class NeueWebsiteHooks {
 		else {
 			$output .= "<!-- 0 related -->";
 		}
+
+		$output = $wgOut->parse( $output );
 
 		wfProfileOut( __METHOD__ );
 
