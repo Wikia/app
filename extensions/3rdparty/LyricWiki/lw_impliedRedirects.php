@@ -95,11 +95,11 @@ function wfImpliedRedirects_articleFromTitle(&$title, &$article){
 			                $this->mIsRedirect = true;
 			            }
 
-				    // since we're certain the target exists, we might as well say so
-				    // this fools Our404Handler into following the redirect
-				    function exists() {
-					return true;
-				    }
+						// since we're certain the target exists, we might as well say so
+						// this fools Our404Handler into following the redirect
+						function exists() {
+							return true;
+						}
 			        }
 			    }
 				$target = Title::newFromDBkey($titleStr);
