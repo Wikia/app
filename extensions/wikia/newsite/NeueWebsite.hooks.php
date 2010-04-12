@@ -60,10 +60,7 @@ class NeueWebsiteHooks {
 			$output .= "<!-- 0 related -->";
 		}
 
-		$localParser = new Parser();
-		$parserOutput = $localParser->parse( $output, $parser->getTitle(), $parser->getOptions() );
-
-		$output = $parserOutput->getText();
+		$output = $parser->recursiveTagParse( $output );
 
 		wfProfileOut( __METHOD__ );
 
