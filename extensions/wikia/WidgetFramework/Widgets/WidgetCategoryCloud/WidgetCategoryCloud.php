@@ -55,16 +55,16 @@ function WidgetCategoryCloudGetData() {
 
 	$dbr = wfGetDB( DB_SLAVE );
 	$res = $dbr->select(
-		"categorylinks",
-		array("cl_to", "count(*) as count"),
-		array(),
+		"category",
+		array("cat_title", "cat_pages", "cat_files"),
+		array("cat_hidden" => 0), /* FIXME cat_hidden is never updated, fill in with pp_properties!=hiddencat (populateCategories.php?) */
 		__METHOD__,
-		array("GROUP BY" => "cl_to", "ORDER BY" => "cl_to")
+		array("ORDER BY" => "cat_title")
 	);
 	while ($row = $res->fetchObject()) {
-		if (WidgetCategoryCloudSkipRow($row->cl_to)) continue;
+		if (WidgetCategoryCloudSkipRow($row->cat_title)) continue;
 
-		$data[$row->cl_to] = $row->count;
+		$data[$row->cat_title] = $row->cat_pages + $row->cat_files;
 	}
 
 	wfProfileOut(__METHOD__);
@@ -72,6 +72,7 @@ function WidgetCategoryCloudGetData() {
 }
 
 function WidgetCategoryCloudSkipRow($name) {
+	/* TODO remove when cat_hidden is fixed */
 	if (in_array($name, WidgetCategoryCloudGetHiddenCategories())) return true;
 
 	global $wgBiggestCategoriesBlacklist;
@@ -84,6 +85,7 @@ function WidgetCategoryCloudSkipRow($name) {
 	return false;
 }
 
+/* TODO remove when cat_hidden is fixed */
 function WidgetCategoryCloudGetHiddenCategories() {
 	$data = array();
 
