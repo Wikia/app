@@ -20,7 +20,6 @@ function WidgetCategoryCloud($id, $params) {
 	global $wgMemc;
 	$key = wfMemcKey("WidgetCategoryCloud", "data");
 	$data = $wgMemc->get($key);
-$data = null;
 	if (is_null($data)) {
 		$data = WidgetCategoryCloudCloudizeData(WidgetCategoryCloudGetData());
 		$wgMemc->set($key, $data, 3600);
