@@ -57,7 +57,7 @@ function WidgetCategoryCloudGetData() {
 	$res = $dbr->select(
 		"category",
 		array("cat_title", "cat_pages", "cat_files"),
-		array("cat_hidden" => 0), /* FIXME cat_hidden is never updated, fill in with pp_properties!=hiddencat (populateCategories.php?) */
+		array("(cat_pages > 0 OR cat_files > 0)", "cat_hidden" => 0), /* FIXME cat_hidden is never updated, fill in with pp_properties!=hiddencat (populateCategories.php?) */
 		__METHOD__,
 		array("ORDER BY" => "cat_title")
 	);
