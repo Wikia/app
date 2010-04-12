@@ -20,6 +20,7 @@ function WidgetCategoryCloud($id, $params) {
 	global $wgMemc;
 	$key = wfMemcKey("WidgetCategoryCloud", "data");
 	$data = $wgMemc->get($key);
+$data = null;
 	if (is_null($data)) {
 		$data = WidgetCategoryCloudCloudizeData(WidgetCategoryCloudGetData());
 		$wgMemc->set($key, $data, 3600);
@@ -27,7 +28,6 @@ function WidgetCategoryCloud($id, $params) {
 
 	if (empty($data)) return wfMsgForContent("widget-categorycloud-empty");
 
-	$output = Xml::openElement("ul");
 	foreach ($data as $name => $value) {
 		$category = Title::newFromText($name, NS_CATEGORY);
 		if (is_object($category)) {
@@ -39,9 +39,10 @@ function WidgetCategoryCloud($id, $params) {
 			$output .= "\n";
 		}
 	}
-	$output .= Xml::closeElement("ul");
 
-	if ("<ul></ul>" == $output) return wfMsgForContent("widget-categorycloud-empty");
+	if (empty($output)) return wfMsgForContent("widget-categorycloud-empty");
+
+	$output = Xml::openElement("ul") . $output . Xml::closeElement("ul");
 
 	wfProfileOut(__METHOD__);
 	return $output;
