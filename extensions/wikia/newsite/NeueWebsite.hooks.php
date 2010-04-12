@@ -22,7 +22,7 @@ class NeueWebsiteHooks {
 	 * @param Object $parser: Wiki Parser object
 	 */
 	static public function renderRelated( $input, $params, &$parser ) {
-		global $wgTitle, $wgOut;
+		global $wgTitle;
 
 		wfProfileIn( __METHOD__ );
 
@@ -60,7 +60,10 @@ class NeueWebsiteHooks {
 			$output .= "<!-- 0 related -->";
 		}
 
-		$output = $wgOut->parse( $output );
+		$localParser = new Parser();
+		$parserOutput = $localParser->parse( $output, $parser->getTitle(), $parser->getOptions() );
+
+		$output = $parserOutput->getText();
 
 		wfProfileOut( __METHOD__ );
 
