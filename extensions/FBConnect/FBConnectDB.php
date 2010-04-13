@@ -43,10 +43,10 @@ class FBConnectDB {
 	 * Find the Facebook IDs of the given user, if any.
 	 */
 	public static function getFacebookIDs( $user ) {
-		global $wgDBprefix;
+		global $wgDBprefix, $wgSharedDB;
 		$fbid = array();
 		if ( $user instanceof User && $user->getId() != 0 ) {
-			$dbr = wfGetDB( DB_SLAVE );
+			$dbr = wfGetDB( DB_SLAVE, array(), $wgSharedDB );
 			$res = $dbr->select(
 				array( "{$wgDBprefix}user_fbconnect" ),
 				array( 'user_fbid' ),
@@ -65,8 +65,8 @@ class FBConnectDB {
 	 * Find the user by their Facebook ID.
 	 */
 	public static function getUser( $fbid ) {
-		global $wgDBprefix;
-		$dbr = wfGetDB( DB_SLAVE );
+		global $wgDBprefix, $wgSharedDB;
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgSharedDB );
 		$id = $dbr->selectField(
 			"{$wgDBprefix}user_fbconnect",
 			'user_id',
@@ -84,8 +84,8 @@ class FBConnectDB {
 	 * Add a User <-> Facebook ID association to the database.
 	 */
 	public static function addFacebookID( $user, $fbid ) {
-		global $wgDBprefix;
-		$dbw = wfGetDB( DB_MASTER );
+		global $wgDBprefix, $wgSharedDB;
+		$dbw = wfGetDB( DB_MASTER, array(), $wgSharedDB );
 		$dbw->insert(
 			"{$wgDBprefix}user_fbconnect",
 			array(
@@ -100,8 +100,8 @@ class FBConnectDB {
 	 * Remove a User <-> Facebook ID association from the database.
 	 */
 	public static function removeFacebookID( $user, $fbid ) {
-		global $wgDBprefix;
-		$dbw = wfGetDB( DB_MASTER );
+		global $wgDBprefix, $wgSharedDB;
+		$dbw = wfGetDB( DB_MASTER, array(), $wgSharedDB );
 		$dbw->delete(
 			"{$wgDBprefix}user_fbconnect",
 			array(
@@ -118,8 +118,8 @@ class FBConnectDB {
 	 * database. If there are no users, then the estimate will probably be 1.
 	 */
 	public static function countUsers() {
-		global $wgDBprefix;
-		$dbr = wfGetDB( DB_SLAVE );
+		global $wgDBprefix, $wgSharedDB;
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgSharedDB );
 		// An estimate is good enough for choosing a unique nickname
 		$count = $dbr->estimateRowCount("{$wgDBprefix}user_fbconnect");
 		// Avoid returning 0 or -1
