@@ -133,42 +133,42 @@ a.new {color:#BA5500 !important;}
 
 /* === THESE ARE ELEMENTS TO BE HIDDEN === */
 
+.usermessage,
+#header_mytalk,
+#page_tabs,
+#link_box_table,
+#navigation,
+#headerButtonHub,
+#navigation .Monaco-sidebar_edit,
+#control_edit,
+#control_watch,
+#control_sharefeature,
+#profile-actions-wikiuserpage,
+body.mainpage .firstHeading,
 body.page-Wikianswers h1.firstHeading, body.page-Wikianswers #contentSub { display:none; }
-#header_mytalk { display:none; }
-#page_tabs { display: none; }
-#link_box_table { display: none; }
-#navigation { display: none; }
-#headerButtonHub { display: none; }
-#navigation .Monaco-sidebar_edit { display: none; }
-body.mainpage .firstHeading { display:none; }
-.usermessage { display: none; }
-#control_edit { display: none; }
-#control_watch { display: none; }
-#control_sharefeature { display: none; }
-#profile-actions-wikiuserpage { display:none;}
 div.noarticletext { display: none; }
 
 /* === HIDING A BUNCH OF WIDGETS IN THE SIDEBAR === */
 
-.WidgetTopVoted { display: none; }
-.WidgetWatchlist { display: none; }
-.WidgetWikiPage { display: none; }
-.WidgetTopContent { display: none; }
-.WidgetTips { display: none; }
-.WidgetAncientPages { display: none; }
-.WidgetShoutBox { display: none; }
-.WidgetEditedRecently { display: none; }
-.WidgetRecentChanges { display: none; }
-.WidgetProblemReports { display: none; }
-.WidgetNewPages { display: none; }
-.WidgetMostVisited { display: none; }
-.WidgetMagCloud { display: none; }
-.WidgetLastWikis { display: none; }
-.WidgetSlideshow { display: none; }
-.WidgetNeedHelp { display: none; }
-.WidgetContribs { display: none; }
-.WidgetBookmark { display: none; }
-.WidgetActiveTalkPages { display: none; }
+.WidgetTopVoted,
+.WidgetWatchlist,
+.WidgetWikiPage,
+.WidgetTopContent,
+.WidgetTips,
+.WidgetAncientPages,
+.WidgetShoutBox,
+.WidgetEditedRecently,
+.WidgetRecentChanges,
+.WidgetProblemReports,
+.WidgetNewPages,
+.WidgetMostVisited,
+.WidgetMagCloud,
+.WidgetLastWikis,
+.WidgetSlideshow,
+.WidgetNeedHelp,
+.WidgetContribs,
+.WidgetBookmark,
+.WidgetActiveTalkPages,
 .WidgetAnswers { display: none; }
 
 /* === THESE AFFECT SPECIFIC ELEMENTS in order from top to bottom === */
@@ -354,6 +354,8 @@ div.noarticletext { display: none; }
 	margin-left: 500px;
 }
 
+/* killing answers tip box for now
+
 .answers-tips, .category-tips {
 	background-color: #ffe;
 	margin-top:10px;
@@ -366,6 +368,8 @@ div.noarticletext { display: none; }
 	padding-top:0px;
 	padding-bottom:0px;
 }
+
+*/
 
 #answers_article {
 /* set to 1.5 in monaco article. Why? */
@@ -599,6 +603,7 @@ div.noarticletext { display: none; }
 .dark_text_1 {
 	font-size:15pt;
 	font-weight:bold;
+	color:#514833;
 }
 
 #article-comments-wrapper {
@@ -943,3 +948,24 @@ div.userInfoNoAvatar .userPoints {
 	color:#888888;
 	font-size:90%;
 }
+
+/* === FRONT PAGE, CONTENT === */
+
+.activity-type-move:before {
+    content: "rephrased:";
+}
+
+.activityfeed.shortlist li {
+    margin-bottom:10px;
+    padding:2px;
+}
+
+.activityfeed-diff { display: none; }
+
+/* activity feed for editsonly */
+.ActivityFeedEditsOnly .activity-type-new { display:none; }
+
+/* activity feed for new questions only */
+.ActivityFeedNewOnly .activity-type-edit,
+.ActivityFeedNewOnly .activity-type-move,
+.ActivityFeedNewOnly .activity-type-talk { display:none; }
