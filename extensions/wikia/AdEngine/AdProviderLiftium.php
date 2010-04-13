@@ -1,6 +1,6 @@
 <?php
 
-class AdProviderAthena implements iAdProvider {
+class AdProviderLiftium implements iAdProvider {
 
 	protected static $instance = false;
 
@@ -27,36 +27,35 @@ class AdProviderAthena implements iAdProvider {
 
 		global $wgDBname, $wgLang, $wgUser, $wgTitle, $wgLiftiumDevHosts;
 
-		// Page vars are variables that you want available in javascript for serving ads
-		$pageVars = array();
-		$pageVars['pubid'] = 999;
-		$pageVars['kv_wgDBname'] = $wgDBname;
+		// See Liftium.js for documentation on options
+		$options = array();
+		$options['pubid'] = 999;
+		$options['baseUrl'] = 'http://liftium.wikia.com/';
+		$options['kv_wgDBname'] = $wgDBname;
                 if (is_object($wgTitle)){
-                       $pageVars['kv_article_id'] = $wgTitle->getArticleID();
+                       $options['kv_article_id'] = $wgTitle->getArticleID();
 		}
 		$cat = AdEngine::getCachedCategory();
-		$pageVars['kv_hub'] = $cat['name'];
-		$pageVars['kv_skin'] = $wgUser->getSkin()->getSkinName();
-		$pageVars['kv_user_lang'] = $wgLang->getCode();
-		$pageVars['kv_cont_lang'] = $GLOBALS['wgLanguageCode'];
+		$options['kv_hub'] = $cat['name'];
+		$options['kv_skin'] = $wgUser->getSkin()->getSkinName();
+		$options['kv_user_lang'] = $wgLang->getCode();
+		$options['kv_cont_lang'] = $GLOBALS['wgLanguageCode'];
 
-		// LiftiumOptions javascript
-		$out .= '<script type="text/javascript">' . "\n";
-		$out .= "LiftiumOptions = {\n";
-		foreach ($pageVars as $name => $value){
-			$out.= "$name: \"" . addslashes($value) . '";' . "\n";
-		}
-		$out .= '};</script>';
+		// LiftiumOptions as json
+		$out = '<script type="text/javascript">' . "\n";
+		$out .= "LiftiumOptions = " . json_encode($options) . ';</script>';
 
 		// Call the script
 		if (!empty($_GET['liftium_dev_hosts']) || !empty($wgLiftiumDevHosts)){
 			$base = "http://liftium.dev.wikia-inc.com/";
 			$version = mt_rand();
-			$out = "<script type=\"text/javascript\">var liftium_dev_hosts = 1;</script>";
+			$out .= "<script type=\"text/javascript\">var liftium_dev_hosts = 1;</script>";
+		} else if ($wgDevelEnvironment){
+			$base = "http://liftium.wikia.com/";
+			$version = 1;
 		} else {
 			$base = "/__varnish_liftium/";
-			$version = "1";
-			$out = '';
+			$version = 1;
 		}
 		$out .=  '<script type="text/javascript" src="'. $base .'/js/Liftium.js?' . $version . '"></script>' . "\n";
 
@@ -65,14 +64,14 @@ class AdProviderAthena implements iAdProvider {
 
 	public static function getInstance() {
 		if(self::$instance == false) {
-			self::$instance = new AdProviderAthena();
+			self::$instance = new AdProviderLiftium();
 		}
 		return self::$instance;
 	}
 
         public function getAd($slotname, $slot){
 		$out = $this->getSetupHtml();
-		$out .= '<script type="text/javascript">Liftium.callAd("' . $slotname . '");</script>' . "\n";
+		$out .= '<script type="text/javascript">LiftiumOptions.placement = "' . $slotname . '";Liftium.callAd("' . $slot['size'] . '");</script>' . "\n";
 		return $out;
         }
 

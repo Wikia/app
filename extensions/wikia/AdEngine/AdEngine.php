@@ -463,7 +463,7 @@ class AdEngine {
 			 * See Christian or Nick for more info.
 			*/
 			$out .= '<script type="text/javascript">' .
-				'AdEngine.displaySlotIfAd("'. $slotname .'");' .
+				'AdEngine.displaySlotIfAd("'. addslashes($slotname) .'");' .
 				'</script>' . "\n";
 		}
 		$out .= "<!-- #### END " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
