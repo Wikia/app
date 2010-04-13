@@ -11,6 +11,7 @@ var msgError = "<?php echo addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?
 var createType = "<?php echo $mType ?>";
 var defaultDomain = "<?php echo $defaultDomain ?>";
 var definedDomains = YAHOO.Tools.JSONParse('<?php echo Wikia::json_encode($mDomains); ?>');
+var definedSitename = YAHOO.Tools.JSONParse('<?php echo Wikia::json_encode($mSitenames); ?>');
 /*]]>*/
 </script>
 <?php

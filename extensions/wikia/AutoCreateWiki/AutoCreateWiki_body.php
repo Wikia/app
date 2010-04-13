@@ -785,7 +785,7 @@ class AutoCreateWikiPage extends SpecialPage {
 
 		switch( $this->mType ) {
 			case "answers":
-				$this->mWikiData[ "title"      ] = $fixedTitle . " " . wfMsgExt("autocreatewiki-subname-answers", array("language" => $this->awcLanguage));
+				$this->mWikiData[ "title"      ] = $fixedTitle . " " . $this->mDefSitename;
 				break;
 		}
 
@@ -932,9 +932,10 @@ class AutoCreateWikiPage extends SpecialPage {
 			"wgStylePath"      => $wgStylePath,
 			"captchaForm"      => $f->getForm(),
 			"params"           => $params,
-			"subName"          => $this->mDefSubname,
+			"subName"          => $this->mDefSitename,
 			"defaultDomain"    => self::DEFAULT_DOMAIN,
-			"mDomains"         => $this->mDomains
+			"mDomains"         => $this->mDomains,
+			"mSitenames"       => $this->mSitenames
 		));
 
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
@@ -1738,24 +1739,34 @@ class AutoCreateWikiPage extends SpecialPage {
 	 * @return 
 	 */
 	private function fixSubdomains($lang) {
+		global $wgContLang;
 		wfProfileIn( __METHOD__ );
 		switch( $this->mType ) {
 			case "answers":
 				$this->mDomains = Wikia::getAnswersDomains();
+				$this->mSitenames = Wikia::getAnswersSitenames();
 				if ( isset($this->mDomains[$lang]) && !empty($this->mDomains[$lang]) ) {
-					$this->mDefSubdomain =  sprintf("%s.%s", $this->mDomains[$lang], self::DEFAULT_DOMAIN);
+					$this->mDefSubdomain = sprintf("%s.%s", $this->mDomains[$lang], self::DEFAULT_DOMAIN);
 					$this->mLangSubdomain = false;
 				} else {
-					$this->mDefSubdomain =  sprintf("%s.%s", $this->mDomains["default"], self::DEFAULT_DOMAIN);
+					$this->mDefSubdomain = sprintf("%s.%s", $this->mDomains["default"], self::DEFAULT_DOMAIN);
 					$this->mLangSubdomain = true;
 				}
-				$this->mDefSubname   = wfMsgExt("autocreatewiki-subname-answers", array("language" => $lang));
+
+				if ( isset( $this->mSitenames[$lang] ) ) {
+					$this->mDefSitename = $this->mSitenames[$lang];
+				} elseif ( isset($this->mDomains[$lang]) && !empty($this->mDomains[$lang]) ) {
+					$this->mDefSitename = $wgContLang->ucfirst( $this->mDomains[$lang] );
+				} else {
+					$this->mDefSitename = $wgContLang->ucfirst( $this->mDomains['default'] );
+				}
 				break;
 
 			default:
 				$this->mDefSubdomain = self::DEFAULT_DOMAIN;
-				$this->mDefSubname = self::DEFAULT_NAME;
+				$this->mDefSitename = self::DEFAULT_NAME;
 				$this->mDomains = array('default' => '');
+				$this->mSitenames = array();
 		}
 		wfProfileOut( __METHOD__ );
 	}
