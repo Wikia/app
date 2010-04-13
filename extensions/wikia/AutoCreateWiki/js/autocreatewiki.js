@@ -91,7 +91,12 @@ $(function () {
 			}
 
 			if ( subdomain && subTitle ) {
-				subTitle.innerHTML = subdomain.charAt(0).toUpperCase() + subdomain.substr(1);
+				if ( definedSitename[this.value] ) {
+					_title = definedSitename[this.value];
+				} else {
+					_title = subdomain.charAt(0).toUpperCase() + subdomain.substr(1);
+				} 
+				subTitle.innerHTML = _title;
 			}
 
 			var value = prefixDiv.innerHTML;
