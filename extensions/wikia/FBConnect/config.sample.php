@@ -113,3 +113,8 @@ $fbLogo = 'http://static.ak.fbcdn.net/images/icons/favicon.gif';
  */
 $fbScript = 'http://static.ak.fbcdn.net/connect/en_US/core.js';
 
+/**
+ * Whether to include jQuery.  If you already have jQuery included on your site, you can
+ * safely set this to false.
+ */
+$fbIncludeJquery = true;
