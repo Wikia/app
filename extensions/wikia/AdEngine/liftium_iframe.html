@@ -1,0 +1,13 @@
+<!-- Small html file to be called from iframe to enable Cross Domain Messages for non HTML 5 browsers. Contact support at liftium d o t com for more details -->
+<html>
+<body>
+</body>
+<script src="http://cdn.liftium.com/js/XDM.js"></script>
+<script>
+XDM.allowedMethods = [ "Liftium.iframeHop", "LiftiumTest.testPassed", "Liftium.XDM"];
+function XDM_onload (){
+        XDM.executeMessage(window.location.search);
+}
+window.onload = XDM_onload;
+</script>
+</html>
