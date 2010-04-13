@@ -31,6 +31,7 @@ class AdEngine {
 		'6' => 'Athena',
 		'7' => 'ContextWeb',
 		'8' => 'DARTMobile',
+		'9' => 'Liftium',
 		'-1' => 'Null'
 	);
 
@@ -317,6 +318,7 @@ class AdEngine {
 			case 'athena': return AdProviderAthena::getInstance();
 			case 'contextweb': return AdProviderContextWeb::getInstance();
 			case 'dartmobile': return AdProviderDARTMobile::getInstance();
+			case 'liftium': return AdProviderLiftium::getInstance();
 			default: return new AdProviderNull('Unrecognized provider id', true);
 		}
 	}
