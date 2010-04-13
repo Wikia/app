@@ -69,8 +69,6 @@ window.fbAsyncInit = function() {
 			window.location = window.wgArticlePath.replace(/\$1/, "Special:Connect");
 		}
 	});
-	
-	FB.XFBML.parse();
 };
 
 /**
