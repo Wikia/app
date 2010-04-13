@@ -19,6 +19,9 @@
  *        logo appears in the Connect dialog when the user connects with your application.
  *    5.  Click Submit.
  *    6.  Copy the displayed API key and application secret into this config file.
+ *    7.  Go to "Edit Application Profile" for your application, then "Application Settings"
+ *    8.  In the "Connect" section, make sure to fill out the Connect URL (such as
+ *        "http://foo.bar.com/") and the Base Domain (such as "bar.com").
  */
 $fbApiKey         = 'YOUR_API_KEY';    # Change this!
 $fbApiSecret      = 'YOUR_SECRET';    # Change this!
