@@ -137,9 +137,9 @@ STYLE;
 		if (version_compare($wgVersion, '1.16', '>=')) {
 			$out->addScriptFile("$wgScriptPath/extensions/FBConnect/fbconnect.min.js?$wgStyleVersion");
 		} else {
-// TODO: TEMPORARY DEV HACK... DON'T COMMIT
-//			$out->addScript("<script type='text/javascript' src='$wgScriptPath/extensions/FBConnect/fbconnect.min.js?$wgStyleVersion'></script>\n");
-$out->addScript("<script type='text/javascript' src='$wgScriptPath/extensions/FBConnect/fbconnect.js?$wgStyleVersion'></script>\n");
+// TODO: TEMPORARY DEV HACK... DON'T COMMIT TO EXTENSION'S SVN
+//$out->addScript("<script type='text/javascript' src='$wgScriptPath/extensions/FBConnect/fbconnect.js?$wgStyleVersion'></script>\n");
+			$out->addScript("<script type='text/javascript' src='$wgScriptPath/extensions/FBConnect/fbconnect.min.js?$wgStyleVersion'></script>\n");
 		}
 
 		return true;
