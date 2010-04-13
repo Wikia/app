@@ -88,7 +88,7 @@ class FBConnectXFBML {
 	
 	/**
 	 * Helper function for parserHook. Originally, all tags were directed to
-	 * that function, but I had no way of knowing whick tag provoked the function.
+	 * that function, but I had no way of knowing which tag provoked the function.
 	 */
 	static function createParserHook($tag) {
 		$args = '$text,$args,&$parser';

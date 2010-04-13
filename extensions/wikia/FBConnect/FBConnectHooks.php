@@ -89,8 +89,8 @@ class FBConnectHooks {
 	 * Injects some important CSS and Javascript into the <head> of the page.
 	 */
 	public static function BeforePageDisplay( &$out, &$sk ) {
-		global $fbLogo, $wgScriptPath, $wgJsMimeType, $fbScript;
-		
+		global $fbLogo, $wgScriptPath, $wgJsMimeType, $fbScript, $wgStyleVersion;
+
 		// Asynchronously load the Facebook Connect JavaScript SDK before the page's content
 		$out->prependHTML('
 			<div id="fb-root"></div>
@@ -107,7 +107,7 @@ class FBConnectHooks {
 		}
 		
 		// Include the extension's stylesheet
-		$out->addExtensionStyle("$wgScriptPath/extensions/FBConnect/fbconnect.css");
+		$out->addExtensionStyle("$wgScriptPath/extensions/FBConnect/fbconnect.css?$wgStyleVersion");
 		
 		// Add a pretty Facebook logo in front of userpage links if $fbLogo is set
 		if ($fbLogo) {
@@ -123,17 +123,25 @@ STYLE;
 			if (version_compare($wgVersion, '1.16', '>=')) {
 				$out->addInlineStyle($style);
 			} else {
-				$out->addScript(Html::inlineStyle($style));
+				$out->addScript('<style type="text/css">' . $style . '</style>');
 			}
 		}
-		
+
 		// JQuery 1.4.2
 		// TODO: Does this conflict with jQuery 1.3.2 included with MW for page editing?
-		$out->addScriptFile("http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js");
+		if(!empty($fbIncludeJquery)){
+			$out->addScriptFile("http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js");
+		}
 		
 		// FBConnect JavaScript code
-		$out->addScriptFile("$wgScriptPath/extensions/FBConnect/fbconnect.min.js");
-		
+		if (version_compare($wgVersion, '1.16', '>=')) {
+			$out->addScriptFile("$wgScriptPath/extensions/FBConnect/fbconnect.min.js?$wgStyleVersion");
+		} else {
+// TODO: TEMPORARY DEV HACK... DON'T COMMIT
+//			$out->addScript("<script type='text/javascript' src='$wgScriptPath/extensions/FBConnect/fbconnect.min.js?$wgStyleVersion'></script>\n");
+$out->addScript("<script type='text/javascript' src='$wgScriptPath/extensions/FBConnect/fbconnect.js?$wgStyleVersion'></script>\n");
+		}
+
 		return true;
 	}
 	

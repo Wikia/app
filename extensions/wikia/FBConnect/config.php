@@ -119,4 +119,12 @@ $fbLogo = 'http://static.ak.fbcdn.net/images/icons/favicon.gif';
  * 
  * For more info, see <http://github.com/facebook/connect-js>.
  */
-$fbScript = 'http://static.ak.fbcdn.net/connect/en_US/core.js';
+//$fbScript = 'http://static.ak.fbcdn.net/connect/en_US/core.js';
+global $wgScriptPath, $wgStyleVersion;
+$fbScript = "$wgScriptPath/extensions/wikia/FBConnect/fbsdk_core.js?$wgStyleVersion"; // insulate from changes by hosting locally.  Also, one less dns lookup.
+
+/**
+ * Whether to include jQuery.  If you already have jQuery included on your site, you can
+ * safely set this to false.
+ */
+$fbIncludeJquery = false;
