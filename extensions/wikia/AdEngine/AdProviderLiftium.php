@@ -58,6 +58,7 @@ class AdProviderLiftium implements iAdProvider {
 			$version = 1;
 		}
 		$out .=  '<script type="text/javascript" src="'. $base .'/js/Liftium.js?' . $version . '"></script>' . "\n";
+		$out .=  '<script type="text/javascript" src="'. $base .'/js/Wikia.js?' . $version . '"></script>' . "\n";
 
 		return $out;
 	}
@@ -75,10 +76,9 @@ class AdProviderLiftium implements iAdProvider {
 		return $out;
         }
 
-	/*
-	public function getIframeFillHtml($slotname) {
-		$sl = addslashes($slotname);
-		return "<script type=\"text/javascript\">Athena.callIframeAdDirect(\"$sl\");</script>\n";
+	public function getIframeFillHtml($slotname, $slot) {
+		return '<script type="text/javascript">' .
+			'Liftium.callInjectedIframeAd("' . addslashes($slot['size']) . 
+			'", document.getElementById("' . addslashes($slotname) .'_iframe"));</script>';
 	}
-	*/
 }

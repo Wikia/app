@@ -378,11 +378,20 @@ class AdEngine {
 			$h = 600;
 		}
 
+		static $adnum = 0;
+		$adnum++;
+		if ($AdProvider instanceof AdProviderLiftium){
+			$slotdiv = "Liftium_" . $this->slots[$slotname]['size'] . "_" . $adnum; 
+		} else {
+			$slotdiv = "Wikia_" . $this->slots[$slotname]['size'] . "_" . $adnum; 
+		}
+	
 		return '<div id="' . htmlspecialchars($slotname) . '" class="noprint">' . 
+			'<div id="' . htmlspecialchars($slotdiv) . '">' . 
 			'<iframe width="' . intval($w) . '" height="' . intval($h) . '" ' . 
 			'id="' . htmlspecialchars($slotname) . '_iframe" ' .
                 	'noresize="true" scrolling="no" frameborder="0" marginheight="0" ' . 
-			'marginwidth="0" style="border:none" target="_blank"></iframe></div>';
+			'marginwidth="0" style="border:none" target="_blank"></iframe></div></div>';
 	}
 
 	/* For delayed ad loading, we have a place holder div that gets placed in the content,
@@ -501,7 +510,7 @@ class AdEngine {
 	                $AdProvider = $this->getAdProvider($slotname);
 			// Currently only supported by GAM and Athena
 			if (method_exists($AdProvider, "getIframeFillHtml")){
-                        	$out .= $AdProvider->getIframeFillHtml($slotname);
+                        	$out .= $AdProvider->getIframeFillHtml($slotname, $this->slots[$slotname]);
 			} 
 		}
 
