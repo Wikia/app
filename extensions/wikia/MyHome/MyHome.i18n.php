@@ -223,9 +223,11 @@ $messages['as'] = array(
 $messages['be-tarask'] = array(
 	'myhome-feed-new-blog-comment-details' => 'Камэнтар',
 	'myhome-feed-new-article-comment-details' => 'Камэнтар',
+	'myhome-community-corner-edit' => 'рэдагаваць паведамленьне',
 );
 
 /** Breton (Brezhoneg)
+ * @author Gwenn-Ael
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -235,6 +237,8 @@ $messages['br'] = array(
 	'myhome-activity-feed-empty' => "Emañ ar wiki-mañ o gortoz e kemerfer perzh ennañ.
 Klikit war '''[[Special:CreatePage|Pajenn nevez]]''' evit kregiñ da skrivañ !",
 	'myhome-watchlist-feed' => 'Roll evezhiañ',
+	'myhome-watchlist-feed-empty' => "Gallout a rit ouzhpennañ pajennoù d'ho roll heuliañ en ur glikañ war al liamm « Heuliañ » zo er varrenn e krec'h ar bajenn.
+Gallout a rit implijout ho roll heuliañ evit mirout ur roud eus eus ar cheñchamañtoù diwezhañ ho peus graet er pajennoù a zedenn ac'hanoc'h.",
 	'myhome-user-contributions-feed' => 'Degasadennoù',
 	'myhome-hot-spots-feed' => 'Pajennoù ar muiañ oberiant',
 	'myhome-hot-spots-feed-empty' => "Emañ ar wiki-mañ o gortoz e kemerfer perzh ennañ.
@@ -272,10 +276,31 @@ Klikit war '''[[Special:CreatePage|Pajenn nevez]]''' evit kregiñ da skrivañ !"
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Poltred bet ouzhpennet|Poltriji bet ouzhpennet}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Video bet ouzhpennet|Videoioù bet ouzhpennet}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Rummad bet ouzhpennet|Rummadoù bet ouzhpennet}}',
+	'myhome-user-contributions-empty' => "Gallout a rit implijout ar wiki-mañ en ur glikañ war \"kemmañ e n'eus forzh peseurt pajenn eus ur pennad, hag en ur ouzhpennañ ar pezh ho peus c'hoant.
+Ne vern piv a c'hall degas cheñchamañtoù, ouzhpennañ titouroù pe reizhañ ur fazi. Savet eo ar wki gant ar gumuniezh. Ur wech m'ho po kliket war ar bouton kemmañ e viot ezel eus ar gumuniezh. Klakskit eta !",
 	'myhome-hot-spots-number-of-editors' => 'kenlabourerien',
+	'myhome-log-in' => "<center>An arc'hwel Ma Degemer a c'hallit kaout nemet e vefec'h kevreet.<br /><br /><big>'''<span class=\"plainlinks\">[{{fullurl:Special:Signup|\$1}} Kevreit, mar plij, evit gwelet ar  bajenn-mañ]</span>'''</big></center>",
+	'myhome-switch-to-monaco' => "Ne c'haller kaout an Arc'hwel Ma Degemer nemet e vefe implijet ar fichadenn Monaco ganeoc'h. M'ho peus c'hoant da vont war Ma Degemer, gweladennit'''[[Special:Preferences|ho Tibaboù gwellañ]]''', mar plij, evit kemmañ ho fichadenn.",
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'Korn ar gumuniezh',
 	'myhome-community-corner-edit' => 'kemmañ ar gemennadenn',
+	'community-corner' => "'''Degemer mat war Ma Degemer!''' 
+
+Gant ar bajenn-mañ e c'hallit bezañ kelaouet diwar-benn darvoudoù nevez ar wiki
+
+Ma'z oc'h diazezer ar wiki-mañ pe unan eus merourien anezhañ e c'hallit kemmañ ar gemennadenn-mañ reiñ da c'houzout d'an implijerien ez eus  traoù nevez a bouez war al lec'hienn-mañ. Evel-se e c'hallit, da skouer :
+
+
+* Aozañ ur raktres evit lakaat war-sav ul lodenn nevez eus ar wiki
+
+* Diskwel pajennoù zo a c'hallfe bezañ gwelet gant an holl dud
+
+* Lakaat an dud da gemer perzh en ur gaozeadeg war al lelc'hienn
+
+* Trugarekaat un den degaset gantañ un dra bennak dedennus evit ar wiki
+
+
+* Pe postañ un nebeud gerioù evit kalonekaat unan bennak hepken !",
 	'myhome-hot-spots-definition' => 'Ar pajennoù gant ar muiañ a genlabourer e kerzh an $1 devezh ziwezhañ.',
 	'myhome-default-view-checkbox' => 'Lakaat ar sell $1 da ziouer',
 	'myhome-default-view-success' => 'Mat eo, hon sell dre ziouer eo bremañ',
@@ -287,13 +312,14 @@ Klikit war '''[[Special:CreatePage|Pajenn nevez]]''' evit kregiñ da skrivañ !"
  */
 $messages['de'] = array(
 	'myhome' => 'Startseite',
-	'myhome-activity-more' => 'mehr',
+	'myhome-activity-more' => 'mehr kürzliche Änderungen',
 	'myhome-activity-feed' => 'Letzte Aktivitäten',
 	'myhome-activity-feed-empty' => "Dieses Wiki wartet auf deine Beteiligung.
 Klicke auf '''[[Special:CreatePage|Neue Seite]]''' um mit dem Schreiben zu beginnen!",
 	'myhome-watchlist-feed' => 'Beobachtungsliste',
-	'myhome-watchlist-feed-empty' => 'Du kannst Seiten zu deiner Beobachtungsliste hinzufügen, indem du den Link "Beobachten" klickst, der auf jeder Seite ist. Mit einer Beobachtungsliste kannst du die letzten Änderungen an Seiten verfolgen, die dich interessieren.',
-	'myhome-user-contributions-feed' => 'Benutzerbeiträge',
+	'myhome-watchlist-feed-empty' => 'Du kannst Seiten zu deiner Beobachtungsliste hinzufügen, indem du den Link "Beobachten" klickst, der oben in der Leiste auf der Seite ist.
+Mit deiner Beobachtungsliste kannst du die letzten Änderungen an Seiten verfolgen, die dich interessieren.',
+	'myhome-user-contributions-feed' => 'Beiträge',
 	'myhome-hot-spots-feed' => 'Angesagte Seiten',
 	'myhome-hot-spots-feed-empty' => "Dieses Wiki wartet auf deine Beteiligung.
 Klicke auf '''[[Special:CreatePage|Neue Seite]]''' um mit dem Schreiben zu beginnen!",
@@ -308,15 +334,15 @@ Klicke auf '''[[Special:CreatePage|Neue Seite]]''' um mit dem Schreiben zu begin
 	'myhome-feed-delete' => 'gelöscht',
 	'myhome-feed-image' => 'Bild hinzugefügt',
 	'myhome-feed-video' => 'Video hinzugefügt',
-	'myhome-feed-created-by' => 'erstellt von $1',
-	'myhome-feed-added-by' => 'hinzugefügt von $1',
-	'myhome-feed-edited-by' => 'bearbeitet von $1',
-	'myhome-feed-posted-by' => 'verfasst von $1',
-	'myhome-feed-comment-by' => 'kommentiert von $1',
-	'myhome-feed-deleted-by' => 'gelöscht von $1',
-	'myhome-feed-moved-by' => 'verschoben von $1',
+	'myhome-feed-created-by' => 'von $1 erstellt',
+	'myhome-feed-added-by' => 'von $1 hinzugefügt',
+	'myhome-feed-edited-by' => 'von $1 bearbeitet',
+	'myhome-feed-posted-by' => 'von $1 verfasst',
+	'myhome-feed-comment-by' => 'von $1 kommentiert',
+	'myhome-feed-deleted-by' => 'von $1 gelöscht',
+	'myhome-feed-moved-by' => 'von $1 verschoben',
 	'myhome-feed-article-comment-created-by' => 'Neuer Kommentar von $1',
-	'myhome-feed-article-comment-edited-by' => 'Bearbeiteter Kommentar von $1',
+	'myhome-feed-article-comment-edited-by' => 'Kommentar von $1 bearbeitetet',
 	'myhome-feed-by' => 'von $1',
 	'myhome-feed-diff-alt' => 'Unterschied zur letzten Version',
 	'myhome-feed-new-page-details' => 'Neue Seite',
@@ -330,9 +356,10 @@ Klicke auf '''[[Special:CreatePage|Neue Seite]]''' um mit dem Schreiben zu begin
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Bild hinzugefügt|Bilder hinzugefügt}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Video hinzugefügt|Videos hinzugefügt}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Kategorie hinzugefügt|Kategorien hinzugefügt}}',
-	'myhome-user-contributions-empty' => 'Du kannst dich ganz einfach an diesem Wiki beteiligen, indem du auf einer beliebigen Seite den Link "Bearbeiten" anklickst. Jeder kann Seiten ändern, Informationen hinzufügen oder Fehler berichtigen.
-
-Das Wiki wird durch die Gemeinschaft der Nutzer erstellt - und durch den Klick auf den Bearbeiten-Link wirst du selbst zum Teil dieser Gemeinschaft. Probier es einfach aus!',
+	'myhome-user-contributions-empty' => 'Du kannst dich an diesem Wiki beteiligen, indem du auf einer beliebigen Seite den Link "Bearbeiten" anklickst und hinzufügst was du weißt.
+Jeder kann Seiten ändern, Informationen hinzufügen oder Fehler berichtigen.
+Das Wiki wird durch die Gemeinschaft der Nutzer erstellt, und durch den Klick auf den Bearbeiten-Link wirst du selbst zum Teil dieser Gemeinschaft.
+Probier es einfach aus!',
 	'myhome-hot-spots-number-of-editors' => 'Bearbeiter',
 	'myhome-log-in' => "<center>Die Startseiten-Funktion ist nur verfügbar wenn du eingeloggt bist.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Bitte melde dich an um diese Seite zu sehen!]'''</big></center>",
 	'myhome-switch-to-monaco' => "Die Startseiten-Funktion ist nur für das Monaco-Design verfügbar.
@@ -356,8 +383,89 @@ Wenn du der Gründer oder ein Admin dieses Wikis bist, kannst du diese Nachricht
 
 * Oder einfach ein paar Worte zur Motivation!",
 	'myhome-hot-spots-definition' => 'Seiten mit den meisten Bearbeitern in den letzten $1 Tagen.',
-	'myhome-default-view-checkbox' => 'Mache $1 zu meiner Standardansicht',
+	'myhome-default-view-checkbox' => '$1 zu meiner Standardansicht machen',
 	'myhome-default-view-success' => 'Deine Einstellung wurde gespeichert.',
+	'tooltip-pt-myhome' => 'Gehe zu meiner Startseite',
+);
+
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'myhome' => 'Startseite',
+	'myhome-activity-more' => 'mehr kürzliche Änderungen',
+	'myhome-activity-feed' => 'Letzte Aktivitäten',
+	'myhome-activity-feed-empty' => "Dieses Wiki wartet auf Ihre Beteiligung.
+Klicken Sie auf '''[[Special:CreatePage|Neue Seite]]''' um mit dem Schreiben zu beginnen!",
+	'myhome-watchlist-feed' => 'Beobachtungsliste',
+	'myhome-watchlist-feed-empty' => 'Sie können Seiten zu Ihrer Beobachtungsliste hinzufügen, indem Sie den Link "Beobachten" klicken, der oben in der Leiste auf der Seite ist.
+Mit Ihrer Beobachtungsliste können Sie die letzten Änderungen an Seiten verfolgen, die Sie interessieren.',
+	'myhome-user-contributions-feed' => 'Beiträge',
+	'myhome-hot-spots-feed' => 'Angesagte Seiten',
+	'myhome-hot-spots-feed-empty' => "Dieses Wiki wartet auf Ihre Beteiligung.
+Klicken Sie auf '''[[Special:CreatePage|Neue Seite]]''' um mit dem Schreiben zu beginnen!",
+	'myhome-hot-spots-newest' => 'Neue Seiten im Wiki',
+	'myhome-hot-spots-brandnew' => 'Dies ist ein nagelneues Wiki. Klicken Sie auf [[Special:CreatePage|Neue Seite]] um mit dem Schreiben zu beginnen!',
+	'tog-myhomedisableredirect' => 'Weiterleitung zur Startseite unterbinden',
+	'myhome-feed-newpage' => 'neue Seite',
+	'myhome-feed-edit' => 'bearbeiten',
+	'myhome-feed-move' => 'Seite verschoben',
+	'myhome-feed-talkpage' => 'Diskussions-Seite',
+	'myhome-feed-blogcomment' => 'Blog-Kommentar',
+	'myhome-feed-delete' => 'gelöscht',
+	'myhome-feed-image' => 'Bild hinzugefügt',
+	'myhome-feed-video' => 'Video hinzugefügt',
+	'myhome-feed-created-by' => 'von $1 erstellt',
+	'myhome-feed-added-by' => 'von $1 hinzugefügt',
+	'myhome-feed-edited-by' => 'von $1 bearbeitet',
+	'myhome-feed-posted-by' => 'von $1 verfasst',
+	'myhome-feed-comment-by' => 'von $1 kommentiert',
+	'myhome-feed-deleted-by' => 'von $1 gelöscht',
+	'myhome-feed-moved-by' => 'von $1 verschoben',
+	'myhome-feed-article-comment-created-by' => 'Neuer Kommentar von $1',
+	'myhome-feed-article-comment-edited-by' => 'Kommentar von $1 bearbeitetet',
+	'myhome-feed-by' => 'von $1',
+	'myhome-feed-diff-alt' => 'Unterschied zur letzten Version',
+	'myhome-feed-new-page-details' => 'Neue Seite',
+	'myhome-feed-summary-details' => 'Zusammenfassung',
+	'myhome-feed-section-edit-details' => 'Bearbeitete den Abschnitt',
+	'myhome-feed-new-blog-post-details' => 'Neuer Blog-Beitrag',
+	'myhome-feed-new-blog-comment-details' => 'Kommentar',
+	'myhome-feed-new-article-comment-details' => 'Kommentar',
+	'myhome-feed-move-details' => 'Umbenannt',
+	'myhome-feed-redirect-details' => 'Weiterleitung',
+	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Bild hinzugefügt|Bilder hinzugefügt}}',
+	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Video hinzugefügt|Videos hinzugefügt}}',
+	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Kategorie hinzugefügt|Kategorien hinzugefügt}}',
+	'myhome-user-contributions-empty' => 'Sie können sich an diesem Wiki beteiligen, indem Sie auf einer beliebigen Seite den Link "Bearbeiten" anklicken und hinzufügen was Sie wissen.
+Jeder kann Seiten ändern, Informationen hinzufügen oder Fehler berichtigen.
+Das Wiki wird durch die Gemeinschaft der Nutzer erstellt, und durch den Klick auf den Bearbeiten-Link werden Sie selbst zum Teil dieser Gemeinschaft.
+Probieren Sie es einfach aus!',
+	'myhome-hot-spots-number-of-editors' => 'Bearbeiter',
+	'myhome-log-in' => "<center>Die Startseiten-Funktion ist nur verfügbar wenn Sie eingeloggt sind.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Bitte melden Sie sich an um diese Seite zu sehen!]'''</big></center>",
+	'myhome-switch-to-monaco' => "Die Startseiten-Funktion ist nur für das Monaco-Design verfügbar.
+Wenn Sie die Startseite sehen möchten, gehen Sie bitte zu '''[[Special:Preferences|Ihren Einstellungen]]''' um Ihr Design zu wechseln.",
+	'myhome-namespace-blog' => 'Benutzer-Blog',
+	'myhome-community-corner-header' => 'Community-Bereich',
+	'myhome-community-corner-edit' => 'Bearbeiten',
+	'community-corner' => "'''Willkommen auf Ihrer Startseite!'''
+
+Diese Seite hilft Ihnen, den Überblick über alle wichtigen Vorgänge im Wiki zu behalten.
+
+Wenn Sie der Gründer oder ein Admin dieses Wikis sind, können Sie diese Nachricht ändern um der Community wichtige Dinge mitzuteilen. Zum Beispiel: 
+
+* Einige Seiten aufführen, die jeder sehen sollte.
+
+* Benutzer dazu bringen, sich an einer aktiven Diskussion zu beteiligen.
+
+* Ein Projekt organisieren, um einen neuen Bereich im Wiki aufzubauen.
+
+* Einen Benutzer vorstellen, der etwas Spezielles zum Wiki beigetragen hat.
+
+* Oder einfach ein paar Worte zur Motivation!",
+	'myhome-hot-spots-definition' => 'Seiten mit den meisten Bearbeitern in den letzten $1 Tagen.',
+	'myhome-default-view-checkbox' => '$1 zu meiner Standardansicht machen',
+	'myhome-default-view-success' => 'Ihre Einstellung wurde gespeichert.',
 	'tooltip-pt-myhome' => 'Gehe zu meiner Startseite',
 );
 
@@ -799,6 +907,7 @@ $messages['hu'] = array(
 	'myhome-feed-delete' => 'törölve',
 	'myhome-feed-image' => 'kép hozzáadva',
 	'myhome-feed-video' => 'videó hozzáadva',
+	'myhome-feed-moved-by' => '$1 áthelyezte',
 	'myhome-feed-new-page-details' => 'Új lap',
 	'myhome-feed-summary-details' => 'Összefoglaló',
 	'myhome-feed-new-blog-post-details' => 'Új blog',
@@ -902,6 +1011,8 @@ $messages['it'] = array(
 	'myhome-hot-spots-newest' => 'Nuove pagine',
 	'myhome-hot-spots-brandnew' => "Questo wiki è nuovo di zecca. Clicca su '''[[Special:CreatePage|Nuova pagina]]''' per iniziare a scrivere!",
 	'tog-myhomedisableredirect' => 'Disattiva la redirezione a My Home',
+	'myhome-feed-newpage' => 'nuova pagina',
+	'myhome-feed-edit' => 'modifica',
 	'myhome-feed-created-by' => 'creato da $1',
 	'myhome-feed-added-by' => 'aggiunto da $1',
 	'myhome-feed-edited-by' => 'modificato da $1',
@@ -909,12 +1020,14 @@ $messages['it'] = array(
 	'myhome-feed-comment-by' => 'commentato da $1',
 	'myhome-feed-deleted-by' => 'eliminato da $1',
 	'myhome-feed-moved-by' => 'spostato da $1',
+	'myhome-feed-by' => 'da $1',
 	'myhome-feed-diff-alt' => 'visualizza le modifiche di questa pagina',
 	'myhome-feed-new-page-details' => 'Nuova pagina',
 	'myhome-feed-summary-details' => 'Oggetto della modifica',
 	'myhome-feed-section-edit-details' => 'Sezione modificata',
 	'myhome-feed-new-blog-post-details' => 'Nuovo blog',
 	'myhome-feed-new-blog-comment-details' => 'Commento',
+	'myhome-feed-new-article-comment-details' => 'Oggetto',
 	'myhome-feed-move-details' => 'Rinominato',
 	'myhome-feed-redirect-details' => 'Redirezione',
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Foto aggiunta|Foto aggiunte}}',
@@ -1544,6 +1657,15 @@ $messages['ru'] = array(
 	'myhome-default-view-checkbox' => 'Просматривать «$1» по умолчанию',
 	'myhome-default-view-success' => 'Теперь это представление данных установлено по умолчанию',
 	'tooltip-pt-myhome' => 'Перейти в личный кабинет',
+);
+
+/** Rusyn (русиньскый язык)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'myhome' => 'Моя домашня сторінка',
+	'myhome-watchlist-feed' => 'Слїдованы сторінкы',
+	'myhome-user-contributions-feed' => 'Мої приспевкы',
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))

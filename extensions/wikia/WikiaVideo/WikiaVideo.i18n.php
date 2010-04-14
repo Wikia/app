@@ -29,6 +29,7 @@ $messages['qqq'] = array(
 	'wikiavideo-deleted-old' => 'Message displayed when you succeed in deleting a version of a video.
 
 Parameters:
+
 * $1 is the URL of the local video file
 * $2 is the video title
 * $3 is the time the old video version was created
@@ -117,6 +118,19 @@ $messages['br'] = array(
 	'wikiavideo-intro-old' => "!Emaoc'h o tilemel an doare '''[$1 $5]''' eus ($4 $3, $2).",
 );
 
+/** Catalan (Català)
+ * @author Paucabot
+ */
+$messages['ca'] = array(
+	'wikiavideo-unreverted' => 'No teniu permís per a revertir $1.',
+	'wikiavideo-added' => "s'ha afegit el vídeo $1",
+	'wikiavideo-back' => 'Enrere',
+	'wikiavideo-create' => 'Afegir vídeo',
+	'wikiavideo-category' => 'Vídeos',
+	'wikiavideo-links' => 'Enllaços',
+	'wikiavideo-pixel' => 'píxel',
+);
+
 /** Czech (Česky)
  * @author Mr. Richard Bolla
  */
@@ -171,6 +185,26 @@ $messages['de'] = array(
 	'wikiavideo-pixel' => ' Pixel',
 	'wikiavideo-deleted-old' => "Die Version von '''[$1 $2]''' vom $4, $3 wurde gelöscht.",
 	'wikiavideo-intro-old' => "Du löschst die Version von '''[$1 $5]''' vom [$4 $3, $2].",
+);
+
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'wikiavideo-reverted' => 'Das Video $1 wurde erfolgreich zurückgesetzt. Zurück zu $2.',
+	'wikiavideo-unreverted' => 'Sie haben keine Berechtigung, $1 rückgängig zu machen.',
+	'wikiavideo-added' => 'Video $1 hinzugefügt',
+	'wikiavideo-back' => 'zurück',
+	'wikiavideo-create' => 'Video hinzufügen',
+	'wikiavideo-replace' => 'Ersetze Video',
+	'wikiavideo-category' => 'Videos',
+	'wikiavideo-links' => 'Links',
+	'wikiavideo-placeholder' => 'Platzhalter',
+	'wikiavideo-gallery-template' => 'Diese Video-Galerie ist Teil einer Vorlage, und ist aus dem Ansichtsmodus nicht editierbar. Bitte ändern Sie die entsprechende Vorlage.',
+	'wikiavideo-not-supported' => 'Dieses Skin unterstützt kein Einfügen von Videos in Galerien vom Ansichtsmodus aus.',
+	'wikiavideo-pixel' => ' Pixel',
+	'wikiavideo-deleted-old' => "Die Version von '''[$1 $2]''' vom $4, $3 wurde gelöscht.",
+	'wikiavideo-intro-old' => "Sie löschsen die Version von '''[$1 $5]''' vom [$4 $3, $2].",
 );
 
 /** Spanish (Español)
@@ -270,6 +304,7 @@ $messages['gl'] = array(
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
+	'wikiavideo-unreverted' => 'Nincs jogosultságod a következő videó visszaállításához: $1.',
 	'wikiavideo-added' => '$1 videó hozzáadva',
 	'wikiavideo-back' => 'vissza',
 	'wikiavideo-create' => 'Videó hozzáadása',
@@ -298,6 +333,17 @@ $messages['ia'] = array(
 	'wikiavideo-pixel' => '  pixel',
 	'wikiavideo-deleted-old' => "Le version de '''[$1 $2]''' del $3 a $4 ha essite delite.",
 	'wikiavideo-intro-old' => "Tu es al puncto de deler le version de '''[$1 $5]''' del [$4 $3 a $2].",
+);
+
+/** Indonesian (Bahasa Indonesia) */
+$messages['id'] = array(
+	'wikiavideo-back' => 'kembali',
+);
+
+/** Italian (Italiano) */
+$messages['it'] = array(
+	'wikiavideo-back' => 'indietro',
+	'wikiavideo-links' => 'Collegamenti',
 );
 
 /** Japanese (日本語)
@@ -380,19 +426,24 @@ $messages['no'] = array(
 	'wikiavideo-intro-old' => "Du sletter versjonen av '''[$1 $5]''' fra [$4 $3, $2].",
 );
 
-/** Polish (Polski) */
+/** Polish (Polski)
+ * @author Marcin Łukasz Kiejzik
+ * @author Sp5uhe
+ */
 $messages['pl'] = array(
-	'wikiavideo-reverted' => 'Wideo $1 zostało pomyślnie wycofane. Przejdź do $2.',
-	'wikiavideo-added' => 'dodał/a wideo $1',
+	'wikiavideo-reverted' => 'Film $1 został pomyślnie wycofany. Powróć do $2.',
+	'wikiavideo-unreverted' => 'Nie masz uprawnień do przywrócenia $1.',
+	'wikiavideo-added' => 'dodał film $1',
 	'wikiavideo-back' => 'powrót',
-	'wikiavideo-create' => 'Dodaj wideo',
-	'wikiavideo-replace' => 'Zamień wideo',
-	'wikiavideo-category' => 'Wideo',
+	'wikiavideo-create' => 'Dodaj film',
+	'wikiavideo-replace' => 'Podmień film',
+	'wikiavideo-category' => 'Filmy',
 	'wikiavideo-links' => 'Linki',
-	'wikiavideo-gallery-template' => 'Ta galeria wideo znajduje się w szablonie, i nie jest edytowalna w trybie podglądu. Proszę edytować odpowiedni szablon.',
-	'wikiavideo-not-supported' => 'Ta skórka nie obsługuje wstawiania wideo do galerii z trybu widoku.',
+	'wikiavideo-placeholder' => 'Wypełniacz',
+	'wikiavideo-gallery-template' => 'Ta galeria filmów tworzona jest poprzez szablon; nie ma możliwości modyfikacji jej w trybie podglądu. Zmiany należy wprowadzić do odpowiedniego szablonu.',
+	'wikiavideo-not-supported' => 'Skórka w trybie przeglądania nie obsługuje dodawania filmów do galerii.',
 	'wikiavideo-pixel' => ' pikseli',
-	'wikiavideo-deleted-old' => "Usunięto video '''[$1 $1]''' w wersji z $4, $3.",
+	'wikiavideo-deleted-old' => "Film '''[$1 $2]''' w wersji z dnia $4 o $3 został usunięty.",
 	'wikiavideo-intro-old' => "Usuwasz wersję '''[$1 $5]''' z [$4 $3, $2].",
 );
 
@@ -484,6 +535,7 @@ $messages['sr-ec'] = array(
  */
 $messages['te'] = array(
 	'wikiavideo-back' => 'వెనక్కి',
+	'wikiavideo-links' => 'లంకెలు',
 );
 
 /** Ukrainian (Українська)

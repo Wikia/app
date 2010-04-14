@@ -52,6 +52,16 @@ $messages['de'] = array(
 	'mostvisitedpageslatest' => 'in den letzten $1 Minuten',
 );
 
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'mostvisitedpages' => 'Häufig aufgerufene Seiten',
+	'mostvisitedpagessearchtext' => 'Artikelname:',
+	'mostvisitedpagessearchbtn' => 'Suchen',
+	'mostvisitedpageslatest' => 'in den letzten $1 Minuten',
+);
+
 /** Spanish (Español)
  * @author McDutchie
  * @author Translationista
@@ -125,6 +135,11 @@ $messages['ia'] = array(
 	'mostvisitedpageslatest' => 'in le ultime $1 minutas',
 );
 
+/** Italian (Italiano) */
+$messages['it'] = array(
+	'mostvisitedpagessearchbtn' => 'ricerca',
+);
+
 /** Japanese (日本語)
  * @author Tommy6
  */
@@ -194,6 +209,16 @@ $messages['oc'] = array(
 	'mostvisitedpageslatest' => 'dins las $1 darrièras minutas',
 );
 
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'mostvisitedpages' => 'Najczęściej odwiedzane strony',
+	'mostvisitedpagessearchtext' => 'Nazwa artykułu',
+	'mostvisitedpagessearchbtn' => 'szukaj',
+	'mostvisitedpageslatest' => 'w ostatnich $1 minut',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Dragonòt
  */
@@ -210,6 +235,16 @@ $messages['pms'] = array(
 $messages['ps'] = array(
 	'mostvisitedpagessearchtext' => 'د ليکنې نوم:',
 	'mostvisitedpagessearchbtn' => 'پلټل',
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'mostvisitedpages' => 'Páginas mais visitadas',
+	'mostvisitedpagessearchtext' => 'Nome da página:',
+	'mostvisitedpagessearchbtn' => 'pesquisar',
+	'mostvisitedpageslatest' => 'nos últimos $1 minutos',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -232,6 +267,16 @@ $messages['ru'] = array(
 	'mostvisitedpagessearchtext' => 'Название статьи:',
 	'mostvisitedpagessearchbtn' => 'найти',
 	'mostvisitedpageslatest' => 'за последние $1 минут',
+);
+
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'mostvisitedpages' => 'Strani z največ ogledi',
+	'mostvisitedpagessearchtext' => 'Naslov članka:',
+	'mostvisitedpagessearchbtn' => 'išči',
+	'mostvisitedpageslatest' => 'v zadnjih $1 minutah',
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))

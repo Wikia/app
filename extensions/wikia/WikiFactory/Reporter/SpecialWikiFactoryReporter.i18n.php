@@ -60,6 +60,13 @@ $messages['de'] = array(
 	'wikifactoryreporter' => 'WikiFactory-Reporter',
 );
 
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'wikifactoryreporter' => 'WikiFactory-Reporter',
+);
+
 /** Spanish (Español)
  * @author Bola
  */
@@ -116,6 +123,13 @@ $messages['ia'] = array(
 	'wikifactoryreporter' => 'Reportator WikiFactory',
 );
 
+/** Italian (Italiano)
+ * @author Civvì
+ */
+$messages['it'] = array(
+	'wikifactoryreporter' => 'WikiFactory Reporter',
+);
+
 /** Japanese (日本語)
  * @author 青子守歌
  */
@@ -156,6 +170,13 @@ $messages['no'] = array(
  */
 $messages['oc'] = array(
 	'wikifactoryreporter' => 'Raportador de WikiFactory',
+);
+
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'wikifactoryreporter' => 'WikiFabryka — raporty',
 );
 
 /** Piedmontese (Piemontèis)
@@ -205,5 +226,12 @@ $messages['sv'] = array(
  */
 $messages['te'] = array(
 	'wikifactoryreporter' => 'వికీకార్మాగారపు నివేదకుడు',
+);
+
+/** Vèneto (Vèneto)
+ * @author Vajotwo
+ */
+$messages['vec'] = array(
+	'wikifactoryreporter' => 'WikiFactory Reporter',
 );
 

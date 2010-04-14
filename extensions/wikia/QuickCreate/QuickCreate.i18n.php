@@ -38,6 +38,14 @@ $messages['de'] = array(
 	'quickcreate' => 'Sende dein Rezept',
 );
 
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'quickcreate-desc' => 'Fügt einen Neue Seite Button hinzu mit der Möglichkeit für anonyme Benutzer sich anzumelden',
+	'quickcreate' => 'Senden Sie Ihr Rezept',
+);
+
 /** Spanish (Español)
  * @author Translationista
  */
@@ -61,6 +69,14 @@ $messages['fr'] = array(
 $messages['gl'] = array(
 	'quickcreate-desc' => 'Engade un botón para crear unha nova páxina coa capacidade de acceder ao sistema para os usuarios anónimos',
 	'quickcreate' => 'enviar a súa receita',
+);
+
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'quickcreate-desc' => '„Új lap létrehozása” gomb bejelentkezési lehetőséggel névtelen felhasználóknak',
+	'quickcreate' => 'recept elküldése',
 );
 
 /** Interlingua (Interlingua)

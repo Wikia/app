@@ -59,18 +59,34 @@ $messages['br'] = array(
 );
 
 /** German (Deutsch)
+ * @author LWChris
  * @author McDutchie
  * @author MovGP0
  */
 $messages['de'] = array(
 	'action_panel_edit_title' => 'Antworten',
 	'action_panel_title' => 'Quick Action Panel',
-	'action_panel_categorize' => 'Kategorie',
+	'action_panel_categorize' => 'Kategorisieren',
 	'action_panel_categorize_help' => 'Eine Kategorie pro Zeile',
 	'action_panel_categories_summary' => 'Kategorien hinzufügen',
-	'action_panel_save_success' => 'Der Beitrag wurde gespeichert.',
-	'action_panel_rename_success' => 'Die Frage wurde umformuliert.',
-	'action_panel_categorize_success' => 'Kategorien hinzugefügt',
+	'action_panel_save_success' => 'Dein Beitrag wurde gespeichert.',
+	'action_panel_rename_success' => 'Dein Artikel wurde umbenannt.',
+	'action_panel_categorize_success' => 'Deine Kategorien wurden hinzugefügt.',
+	'actionpanel-desc' => 'Ein praktisches Popup-Fenster, welches die Kategorisierung, Umbenennung und Bearbeitung von Artikeln ermöglicht.',
+);
+
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'action_panel_edit_title' => 'Antworten',
+	'action_panel_title' => 'Quick Action Panel',
+	'action_panel_categorize' => 'Kategorisieren',
+	'action_panel_categorize_help' => 'Eine Kategorie pro Zeile',
+	'action_panel_categories_summary' => 'Kategorien hinzufügen',
+	'action_panel_save_success' => 'Ihr Beitrag wurde gespeichert.',
+	'action_panel_rename_success' => 'Ihr Artikel wurde umbenannt.',
+	'action_panel_categorize_success' => 'Ihre Kategorien wurden hinzugefügt.',
 	'actionpanel-desc' => 'Ein praktisches Popup-Fenster, welches die Kategorisierung, Umbenennung und Bearbeitung von Artikeln ermöglicht.',
 );
 
@@ -193,6 +209,21 @@ $messages['ia'] = array(
 	'action_panel_rename_success' => 'Le articulo ha essite renominate.',
 	'action_panel_categorize_success' => 'Le categorias ha essite addite.',
 	'actionpanel-desc' => 'Un fenestra pop-up practic que permitte categorisar, renominar e modificar paginas',
+);
+
+/** Japanese (日本語)
+ * @author Naohiro19
+ */
+$messages['ja'] = array(
+	'action_panel_edit_title' => '答え',
+	'action_panel_title' => ' クイックアクションパネル',
+	'action_panel_categorize' => 'カテゴリ',
+	'action_panel_categorize_help' => '１行カテゴリ',
+	'action_panel_categories_summary' => 'カテゴリ追加',
+	'action_panel_save_success' => '記事が保存されました',
+	'action_panel_rename_success' => '記事が改名されています',
+	'action_panel_categorize_success' => 'カテゴリが追加されました',
+	'actionpanel-desc' => 'カテゴライズ、改名、およびページの編集のハンディポップアップ',
 );
 
 /** Macedonian (Македонски)

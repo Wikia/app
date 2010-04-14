@@ -109,12 +109,56 @@ $messages['de'] = array(
 	'protectsite-unprotect' => 'Freigeben',
 );
 
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'protectsite' => 'Seite schützen',
+	'protectsite-text-protect' => '<!-- Anweisungen/Kommentare/Richtlinie zur Verwendung -->',
+	'protectsite-text-unprotect' => '<!-- Anweisungen/Kommentare wenn geschützt -->',
+	'protectsite-title' => 'Seitenschutz Einstellungen',
+	'protectsite-allowall' => 'Alle Benutzer',
+	'protectsite-allowusersysop' => 'Registrierte Benutzer und Administratoren',
+	'protectsite-allowsysop' => 'Nur Administratoren',
+	'protectsite-createaccount' => 'Erlaube die Erstellung neuer Accounts von',
+	'protectsite-createpage' => 'Erlaube Erstellung von Seiten von',
+	'protectsite-edit' => 'Erlaube Bearbeiten von Seiten von',
+	'protectsite-move' => 'Erlaube Verschieben von Seiten von',
+	'protectsite-upload' => 'Erlaube Datei-Uploads von',
+	'protectsite-timeout' => 'Sperrdauer:',
+	'protectsite-timeout-error' => "'''Ungültige Sperrdauer.'''",
+	'protectsite-maxtimeout' => 'Maximum:',
+	'protectsite-comment' => 'Grund:',
+	'protectsite-ucomment' => 'Aufhebungsgrund:',
+	'protectsite-until' => 'Geschützt bis:',
+	'protectsite-protect' => 'Schützen',
+	'protectsite-unprotect' => 'Freigeben',
+);
+
 /** Spanish (Español)
+ * @author Crazymadlover
  * @author Peter17
+ * @author Translationista
  */
 $messages['es'] = array(
 	'protectsite' => 'Proteger el sitio',
+	'protectsite-text-protect' => '<!-- Instrucciones/Comentario/Políticas de uso -->',
+	'protectsite-text-unprotect' => '<!-- Instrucciones/Comentarios al estar protegidos-->',
+	'protectsite-title' => 'Configuraciones de protección de sitio',
+	'protectsite-allowall' => 'Todos los usuarios',
+	'protectsite-allowusersysop' => 'Usuarios registrados y administradores de sistema',
+	'protectsite-allowsysop' => 'Sólo administradores de sistema',
+	'protectsite-createaccount' => 'Permitir creción de nuevas cuentas por',
+	'protectsite-createpage' => 'Permitir creación de páginas por',
+	'protectsite-edit' => 'Permitir edición de páginas por',
+	'protectsite-move' => 'Permitir movimiento de páginas por',
+	'protectsite-upload' => 'Permitir cargas de archivo por',
+	'protectsite-timeout' => 'Tiempo de espera:',
+	'protectsite-timeout-error' => "'''Tiempo de espera inválido.'''",
+	'protectsite-maxtimeout' => 'Máximo:',
 	'protectsite-comment' => 'Comentario:',
+	'protectsite-ucomment' => 'Desproteger comentario:',
+	'protectsite-until' => 'Protegido hasta:',
 	'protectsite-protect' => 'Proteger',
 	'protectsite-unprotect' => 'Desproteger',
 );
@@ -234,6 +278,13 @@ $messages['ia'] = array(
 	'protectsite-unprotect' => 'Disproteger',
 );
 
+/** Italian (Italiano) */
+$messages['it'] = array(
+	'protectsite-allowall' => 'Tutti gli utenti',
+	'protectsite-maxtimeout' => 'Massimo:',
+	'protectsite-comment' => 'Oggetto:',
+);
+
 /** Japanese (日本語)
  * @author Tommy6
  */
@@ -261,14 +312,21 @@ $messages['ja'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'protectsite' => 'Site schützen',
+	'protectsite-text-protect' => '<!-- Instruktiounen/Commentairen/Richtlinne fir de Gebrauch -->',
 	'protectsite-title' => 'Astellunge vun de Späre vum Site',
 	'protectsite-allowall' => 'All Benotzer',
 	'protectsite-allowusersysop' => 'Registréiert Benotzer an Administrateuren',
 	'protectsite-allowsysop' => 'Nëmmen Administrateuren',
+	'protectsite-createpage' => "Erlaabt d'Uleeë vu Säiten duerch",
+	'protectsite-move' => "D'Réckele vu Säiten erlaben fir",
+	'protectsite-upload' => "D'Eropluede vu Fichieren erlaben fir",
 	'protectsite-maxtimeout' => 'Maximum:',
 	'protectsite-comment' => 'Bemierkung:',
+	'protectsite-ucomment' => "Grond fir d'Ophiewe vun der Spär:",
 	'protectsite-until' => 'Gespaart bis:',
 	'protectsite-protect' => 'Spären',
+	'protectsite-unprotect' => 'Spär ophiewen',
 );
 
 /** Macedonian (Македонски)
@@ -444,8 +502,14 @@ $messages['sr-ec'] = array(
  * @author Veeven
  */
 $messages['te'] = array(
+	'protectsite-text-protect' => '<!-- ఉపయోగించడానికి సూచనలు/వ్యాఖ్యలు/విధానం -->',
+	'protectsite-title' => 'సైటు సంరక్షణ అమరికలు',
 	'protectsite-allowall' => 'అందరు వాడుకరులు',
+	'protectsite-allowusersysop' => 'నమోదైన వాడుకరులు మరియు నిర్వాహకులు',
+	'protectsite-allowsysop' => 'నిర్వాహకులు మాత్రమే',
+	'protectsite-maxtimeout' => 'గరిష్ఠం:',
 	'protectsite-comment' => 'వ్యాఖ్య:',
+	'protectsite-protect' => 'సంరక్షించు',
 );
 
 /** Ukrainian (Українська)

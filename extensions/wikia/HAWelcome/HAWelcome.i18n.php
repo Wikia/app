@@ -128,7 +128,50 @@ Hi, Willkommen bei {{SITENAME}}! Danke für deine Bearbeitung auf der [[:$1]] Se
 Wenn du Hilfe brauchst, und kein Admin von hier in der Nähe ist, möchtest du vielleicht die [[wikia:Forum:Community Central Forum|Foren des Community Zentralwikis]] besuchen $3",
 );
 
-/** Spanish (Español) */
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'welcome-user-page' => "== Über mich ==
+
+''Dies ist Ihre Benutzerseite. Hier können Sie anderen ein paar Informationen über sich verraten!''
+
+== Meine Beiträge ==
+
+* [[Special:Contributions/{{PAGENAME}}|Benutzerbeiträge]]
+
+== Meine beliebtesten Seiten ==
+
+* Hier können Sie Links zu Ihren beliebtesten Artikeln im Wiki hinzufügen!
+* Link auf Seite #2
+* Link auf Seite #3",
+	'welcome-message-user' => 'Guten Tag, {{SITENAME}} freut sich, dass Sie zu uns gestoßen sind! Danke für Ihre Bearbeitung auf der Seite [[:$1]].
+
+Falls Sie irgendwelche Hilfe brauchen sollten, können Sie mir gerne eine Nachricht auf [[$2|meiner Diskussionsseite]] hinterlassen! $3',
+	'welcome-message-anon' => "Guten Tag, Willkommen bei {{SITENAME}}! Danke für Ihre Bearbeitung auf der Seite [[:$1]].
+
+'''[[Special:Userlogin|Bitte legen Sie sich ein Benutzerkonto an]]'''. So können Sie ganz einfach Ihre Beiträge im Überblick behalten und sich besser mit dem Rest der Community verständigen.
+
+Falls Sie irgendwelche Hilfe brauchen, können Sie mir gerne eine Nachricht auf [[$2|meiner Diskussionsseite]] hinterlassen! $3",
+	'welcome-message-log' => 'Begrüßung eines neuen Autors',
+	'welcome-message-user-staff' => '==Willkommen==
+
+Guten Tag, Willkommen bei {{SITENAME}}! Danke für Ihre Bearbeitung auf der Seite [[:$1]].
+
+Wenn Sie Hilfe brauchen, und kein Admin von hier in der Nähe ist, möchten Sie vielleicht
+die [[wikia:Forum:Community Central Forum|Foren des Community Zentralwikis]] besuchen $3',
+	'welcome-message-anon-staff' => "==Willkommen==
+
+Guten Tag, Willkommen bei {{SITENAME}}! Danke für Ihre Bearbeitung auf der [[:$1]] Seite.
+
+'''[[Special:Userlogin|Bitte legen Sie sich ein Benutzerkonto an]]'''. So können Sie ganz einfach Ihre Beiträge im Überblick behalten und sich besser mit dem Rest der Community verständigen.
+
+Wenn Sie Hilfe brauchen, und kein Admin von hier in der Nähe ist, möchten Sie vielleicht die [[wikia:Forum:Community Central Forum|Foren des Community Zentralwikis]] besuchen $3",
+);
+
+/** Spanish (Español)
+ * @author Pertile
+ */
 $messages['es'] = array(
 	'welcome-user-page' => "==Sobre mi==
 
@@ -152,6 +195,18 @@ Por favor, si tienes alguna duda, no seas tímido, deja un mensaje en [[$2|mi di
 
 Por favor, si tienes alguna duda, no seas tímido, deja un mensaje en [[$2|mi discusión]] para ver si puedo ayudarte con cualquier cosa. $3",
 	'welcome-message-log' => 'Bienvenida',
+	'welcome-message-user-staff' => '==Bienvenido==
+
+Hola, ¡bienvenido a {{SITENAME}}! Gracias por editar la página [[:$1]].
+
+Si necesita ayuda y no hay administradores locales aquí, quizás quiera visitar los $3 [[wikia:Forum:Community Central Forum|foros de la Comunidad Wiki Central]] $3',
+	'welcome-message-anon-staff' => "==Bienvenido==
+
+Hola, bienvenido a {{SITENAME}}. Gracias por editar la página [[:$1]].
+
+'''[[Special:Userlogin|Por favor regístrese y cree un nombre de usuario]]'''. Es una forma sencilla de mantener un registro de sus contribuciones y para ayudar a comunicarnos con el resto de la comunidad.
+
+Si necesita ayuda y no hay administradores locales aquí, quizás quiera visitar los $3 [[wikia:Forum:Community Central Forum|foros de la Comunidad Central Wiki]] $3",
 );
 
 /** Persian (فارسی) */
@@ -321,10 +376,40 @@ $messages['he'] = array(
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
+	'welcome-user-page' => "== Magamról ==
+
+''Ez a felhasználólapod. Kérlek szerkeszd ezt a lapot és írj magadról a közösségnek!''
+
+== Közreműködéseim  ==
+
+* [[Special:Contributions/{{PAGENAME}}|Felhasználó közreműködései]]
+
+== Kedvenc lapjaim ==
+
+* Adj meg hivatkozásokat a kedvenc wiki lapjaidra!
+* Második kedvenc lap
+* Harmadik kedvenc lap",
 	'welcome-message-user' => 'Szia, üdvözlünk a(z) {{SITENAME}} wikin! Köszönjük a(z) [[:$1]] lapon tett szerkesztésedet.
 
 Kérlek hagyj üzenetet a [[$2|vitalapomon]], ha segíthetek valamiben. $3',
+	'welcome-message-anon' => "Szia, üdvözlünk a(z) {{SITENAME}} wikin! Köszönjük a(z) [[:$1]] lapon tett szerkesztésedet.
+
+'''[[Special:Userlogin|Kérlek regisztrálj egy felhasználónevet és jelentkezz be.]]'''. Így könnyen tudod majd követni a  szerkesztéseidet, és segít a közösséggel való kommunikációban.
+
+Kérlek hagyj üzenetet a [[$2|vitalapomon]], ha segíthetek valamiben. $3",
 	'welcome-message-log' => 'új közreműködő üdvözlése',
+	'welcome-message-user-staff' => '== Üdvözlet ==
+
+Szia, üdvözlünk a(z) {{SITENAME}} wikin! Köszönjük a(z) [[:$1]] lapon tett szerkesztésedet.
+
+Ha segítségre van szükséged, és nincsenek helyi adminisztrátorok, látogasd meg a [[wikia:Forum:Community Central Forum|Community Central Wiki fórumait]] $3',
+	'welcome-message-anon-staff' => "== Üdvözlet ==
+
+Szia, üdvözlünk a(z) {{SITENAME}} wikin! Köszönjük a(z) [[:$1]] lapon tett szerkesztésedet.
+
+'''[[Special:Userlogin|Kérlek regisztrálj egy felhasználónevet, és jelentkezz be.]]'''. Így könnyen tudod majd követni a  szerkesztéseidet, és segít a közösséggel való kommunikációban.
+
+Ha segítségre van szükséged, és nincsenek helyi adminisztrátorok, látogasd meg a [[wikia:Forum:Community Central Forum|Community Central Wiki fórumait]] $3",
 );
 
 /** Interlingua (Interlingua)
@@ -563,27 +648,44 @@ Trantalhetz pas a daissar un messatge sus [[$2|ma pagina de discussion]] se vos 
 	'welcome-message-log' => 'Aculhir un novèl utilizaire',
 );
 
-/** Polish (Polski) */
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
 $messages['pl'] = array(
 	'welcome-user-page' => "== O mnie ==
-''To Twoja strona użytkownika. Edytuj ją i powiedz społeczności coś o sobie!''
+
+''To jest Twoja strona użytkownika. Wyedytuj ją i powiedz społeczności coś o sobie!''
 
 == Mój wkład ==
-* [[Specjalna:Wkład/{{PAGENAME}}|wkład]]
+
+* [[Special:Contributions/{{PAGENAME}}|wkład]]
 
 == Moje ulubione strony ==
-* Dodaj tu linki do swoich ulubionych stron!
+
+* Dodaj tu linki do swoich ulubionych stron wiki!
 * Drugi link.
 * I trzeci.",
-	'welcome-message-user' => 'Witaj, $4, na Wikii Polska. Dzięki za edycję w artykule $1.
+	'welcome-message-user' => 'Witaj w {{GRAMMAR:MS.lp|{{SITENAME}}}}! Dziękujemy za poprawienie artykułu [[:$1]].
 
-Zostaw wiadomość na [[$2|mojej stronie dyskusji]], gdyby potrzebna była Ci jakakolwiek pomoc. $3',
-	'welcome-message-anon' => 'Witaj na Wikii Polska. Dzięki za edycję w artykule $1.
+Zostaw wiadomość na [[$2|mojej stronie dyskusji]] jeśli potrzebujesz jakiejkolwiek pomocy! $3',
+	'welcome-message-anon' => "Witaj w {{GRAMMAR:MS.lp|{{SITENAME}}}}. Dziękujemy za poprawienie strony [[:$1]].
 
-Proszę, [[Specjalna:Zaloguj|załóż konto]]. Ułatwi Ci to kontakt ze społecznością projektu i sprawi, że wszystkie Twoje edycje będą trzymane w jednym miejscu.
+'''[[Special:Userlogin|Możesz się zarejestrować i założyć konto]]'''. Ułatwi Ci to kontrolę własnego wkładu i pomoże w komunikacji z resztą społeczności.
 
-Zostaw wiadomość na [[$2|mojej stronie dyskusji]], gdyby potrzebna była Ci jakakolwiek pomoc. $3',
+Zostaw wiadomość na [[$2|mojej stronie dyskusji]] jeśli potrzebujesz jakiejkolwiek pomocy! $3",
 	'welcome-message-log' => 'powitanie',
+	'welcome-message-user-staff' => '==Witamy==
+
+Serdecznie witamy w {{GRAMMAR:MS.lp|{{SITENAME}}}}! Dziękujemy za to, że poprawiłeś stronę [[:$1]].
+
+Jeśli potrzebujesz pomocy, a brak jest tutaj lokalnych administratorów możesz odwiedzić [[wikia:Forum:Community Central Forum|forum dyskusyjne centralnej wiki społeczności]] $3',
+	'welcome-message-anon-staff' => "==Witamy==
+
+Serdecznie witamy w {{GRAMMAR:MS.lp|{{SITENAME}}}}. Dziękujemy za to, że poprawileś stronę [[:$1]].
+
+'''[[Special:Userlogin|Możesz się teraz zarejestrować i utworzyć konto]]'''.  Ułatwi Ci to śledzenie własnego wkładu oraz pomoże w komunikacji z resztą społeczności.
+
+Jeśli potrzebujesz pomocy, a nie ma tutaj lokalnych administratorów, możesz odwiedzić [[wikia:Forum:Community Central Forum|forum dyskusyjne centralnej wiki społeczności]] $3",
 );
 
 /** Piedmontese (Piemontèis)
@@ -626,6 +728,48 @@ Cerea, bin ëvnù su {{SITENAME}}! Mersì për soa modìfica a la pàgina [[:$1]
 '''[[Special:Userlogin|Për piasì ch'a intra e ch'a crea un nòm utent]]'''. A l'é na manera bel fé ëd ten-e trassa ëd soe contribussion e a-j giuta a comuniché con ël rest ëd la comunità.
 
 S'a l'has dabzògn d'agiut, e a-i é gnun aministrator locaj ambelessì, a peul visité le [[wikia:Forum:Community Central Forum|piasse ëd la Wiki Sentral ëd la Comunità]] $3",
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'welcome-user-page' => "==Quem sou==
+
+''Esta é sua página de utilizador. Por favor, edite esta página e apresente-se à comunidade!''
+
+==As minhas contribuições==
+
+* [[Special:Contributions/{{PAGENAME}}|Contribuições deste utilizador]]
+
+==As minhas páginas preferidas==
+
+* Adicione links para as suas páginas preferidas nesta wiki!
+* Página preferida #2
+* Página preferida #3",
+	'welcome-message-user' => 'Olá, bem-vindo(a) à {{SITENAME}}! Obrigado pela sua edição da página [[:$1]].
+
+Por favor, deixe uma mensagem na [[$2|minha página de discussão]] se eu puder ajudar nalguma coisa! $3',
+	'welcome-message-anon' => "Olá, bem-vindo(a) à {{SITENAME}}! Obrigado pela sua edição da página [[:$1]].
+
+'''[[Special:Userlogin|Por favor, registe-se e crie um utilizador]]'''. É uma forma fácil de registar as suas contribuições e facilita a comunicação com os restantes utilizadores.
+
+Por favor, deixe uma mensagem na [[$2|minha página de discussão]] se eu puder ajudar nalguma coisa! $3",
+	'welcome-message-log' => 'boas-vindas a novo colaborador',
+	'welcome-message-user-staff' => '==Bem-vindo(a)==
+
+Olá, bem-vindo(a) à translatewiki.net! Obrigado pela sua edição da página [[:$1]].
+
+Se necessita de ajuda e não encontra administradores locais, talvez
+queira visitar os [[wikia:Forum:Community Central Forum|fóruns na
+Wiki Community Central]] $3',
+	'welcome-message-anon-staff' => "==Bem-vindo(a)==
+
+Olá, bem-vindo(a) à {{SITENAME}}! Obrigado pela sua edição da página [[:$1]].
+
+'''[[Special:Userlogin|Por favor, registe-se e crie um utilizador]]'''. É uma forma fácil de registar as suas contribuições e facilita a comunicação com os restantes utilizadores.
+
+Se necessita de ajuda e não encontra administradores locais, talvez queira visitar os [[wikia:Forum:Community Central Forum|fóruns na Wiki Community Central]] $3",
 );
 
 /** Brazilian Portuguese (Português do Brasil)

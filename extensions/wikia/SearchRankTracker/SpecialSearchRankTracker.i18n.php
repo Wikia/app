@@ -26,6 +26,13 @@ $messages['af'] = array(
 	'searchranktracker-serach-phrase-required' => "'n Soekterm is verpligtend",
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'searchranktracker-page-name-required' => 'Патрабуецца назва старонкі',
+);
+
 /** Breton (Brezhoneg)
  * @author Gwenn-Ael
  * @author Y-M D
@@ -44,6 +51,19 @@ $messages['br'] = array(
  * @author LWChris
  */
 $messages['de'] = array(
+	'searchranktracker' => 'Suchrang Tracker',
+	'searchranktracker-add-new-entry' => 'Neuen Eintrag hinzufügen',
+	'searchranktracker-edit-entry' => 'Eintrag bearbeiten',
+	'searchranktracker-entry-list' => 'Liste von trackenden Wiki-Seiten',
+	'searchranktracker-page-name-required' => 'Seitenname erforderlich',
+	'searchranktracker-serach-phrase-required' => 'Suchbegriff erforderlich',
+	'searchranktracker-empty-list' => 'Derzeit gibt es keine zu trackenden Suchbegriffe.',
+);
+
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
 	'searchranktracker' => 'Suchrang Tracker',
 	'searchranktracker-add-new-entry' => 'Neuen Eintrag hinzufügen',
 	'searchranktracker-edit-entry' => 'Eintrag bearbeiten',
@@ -146,13 +166,17 @@ $messages['nl'] = array(
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
  * @author Nghtwlkr
  */
 $messages['no'] = array(
+	'searchranktracker' => 'Oppfølging av søkerangeringer',
 	'searchranktracker-add-new-entry' => 'Legg til ny oppføring',
 	'searchranktracker-edit-entry' => 'Rediger oppføring',
+	'searchranktracker-entry-list' => 'Liste over oppfulgte wikisider',
 	'searchranktracker-page-name-required' => 'Sidenavn påkrevd',
 	'searchranktracker-serach-phrase-required' => 'Søkefrase påkrevd',
+	'searchranktracker-empty-list' => 'For øyeblikket er det ingen søkefraser å spore.',
 );
 
 /** Piedmontese (Piemontèis)

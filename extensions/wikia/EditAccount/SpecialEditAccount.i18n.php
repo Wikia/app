@@ -138,7 +138,7 @@ $messages['de'] = array(
 	'editaccount-title' => 'Special:EditAccount',
 	'editaccount-frame-manage' => 'Ein Benutzerkonto bearbeiten',
 	'editaccount-frame-usage' => 'Notiz',
-	'editaccount-usage' => 'User-Daten werden separat für jedes Wiki gespeichert. Wenn du ein Passwort oder E-Mail-Adresse zurücksetzt, wird er nur für dieses Wiki gelöscht werden. Bitte schicke den Benutzer zu diesem Wiki zum Einzuloggen mit neuem Passwort, um Cache-Probleme zu vermeiden.',
+	'editaccount-usage' => 'User-Daten werden separat für jedes Wiki gespeichert. Wenn du ein Passwort oder E-Mail-Adresse zurücksetzt, wird der Speicher nur für dieses Wiki gelöscht werden. Bitte schicke den Benutzer zu diesem Wiki zum Einzuloggen mit neuem Passwort, um Cache-Probleme zu vermeiden.',
 	'editaccount-label-select' => 'Wähle ein Benutzerkonto',
 	'editaccount-submit-account' => 'Konto verwalten',
 	'editaccount-frame-account' => 'Bearbeiten von Benutzerkonto: $1',
@@ -174,8 +174,62 @@ $messages['de'] = array(
 	'right-editaccount' => 'Bearbeite andere Benutzereinstellungen',
 );
 
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'editaccount' => 'Konto bearbeiten',
+	'editaccount-title' => 'Special:EditAccount',
+	'editaccount-frame-manage' => 'Ein Benutzerkonto bearbeiten',
+	'editaccount-frame-usage' => 'Notiz',
+	'editaccount-usage' => 'User-Daten werden separat für jedes Wiki gespeichert. Wenn Sie ein Passwort oder E-Mail-Adresse zurücksetzen, wird der Speicher nur für dieses Wiki gelöscht werden. Bitte schicken Sie den Benutzer zu diesem Wiki zum Einzuloggen mit neuem Passwort, um Cache-Probleme zu vermeiden.',
+	'editaccount-label-select' => 'Wählen Sie ein Benutzerkonto',
+	'editaccount-submit-account' => 'Konto verwalten',
+	'editaccount-frame-account' => 'Bearbeiten von Benutzerkonto: $1',
+	'editaccount-frame-close' => 'Deaktivieren von Benutzerkonto: $1',
+	'editaccount-label-email' => 'Neue E-Mail-Adresse setzen',
+	'editaccount-label-pass' => 'Neues Passwort setzen',
+	'editaccount-label-realname' => 'Neuen tatsächlichen Namen setzen',
+	'editaccount-submit-email' => 'E-Mail-Adresse speichern',
+	'editaccount-submit-pass' => 'Passwort speichern',
+	'editaccount-submit-realname' => 'Tatsächlichen Namen speichern',
+	'editaccount-submit-close' => 'Konto schließen',
+	'editaccount-usage-close' => 'Sie können ein Konto auch deaktivieren indem Sie das Passwort zerwürfeln und die E-Mail-Adresse löschen. Beachten Sie, dass diese Daten verloren und nicht wiederherstellbar sind.',
+	'editaccount-warning-close' => '<b>Achtung!</b> Sie sind dabei, das Konto von Benutzer <b>$1</b> dauerhaft zu deaktivieren. Dies kann nicht rückgängig gemacht werden. Sind Sie sicher, dass Sie das tun möchten?',
+	'editaccount-status' => 'Statusmeldung',
+	'editaccount-success-email' => 'E-Mail-Adresse für das Konto $1 erfolgreich in $2 geändert.',
+	'editaccount-success-email-blank' => 'E-Mail-Adresse für Konto $1 erfolgreich entfernt.',
+	'editaccount-success-pass' => 'Passwort für Konto $1 erfolgreich geändert.',
+	'editaccount-success-realname' => 'Tatsächlicher name für Konto $1 erfolgreich geändert.',
+	'editaccount-success-close' => 'Konto $1 erfolgreich deaktiviert.',
+	'editaccount-error-email' => 'Die E-Mail-Adresse wurde nicht geändert. Versuchen Sie es erneut oder kontaktieren Sie das Tech Team.',
+	'editaccount-error-pass' => 'Das Passwort wurde nicht geändert. Versuchen Sie es erneut oder kontaktieren Sie das Tech Team.',
+	'editaccount-error-realname' => 'Der tatsächliche Name wurde nicht geändert. Versuchen Sie es erneut oder kontaktieren Sie das Tech Team.',
+	'editaccount-error-close' => 'Beim Schließen des Kontos trat ein Fehler auf. Versuchen Sie es erneut oder kontaktieren Sie das Tech Team.',
+	'editaccount-invalid-email' => '"$1" ist keine gültige E-Mail-Adresse!',
+	'editaccount-nouser' => 'Konto "$1" existiert nicht!',
+	'editaccount-log' => 'Benutzerkonten-Logbuch',
+	'editaccount-log-header' => 'Diese Seite listet Änderungen von Benutzereinstellungen durch das Wikia Personal.',
+	'editaccount-log-entry-email' => 'änderte die E-Mail-Adresse von Benutzer $2',
+	'editaccount-log-entry-pass' => 'änderte das Passwort von Benutzer $2',
+	'editaccount-log-entry-realname' => 'änderte den tatsächlichen Namen von Benutzer $2',
+	'editaccount-log-entry-close' => 'deaktivierte das Konto $2',
+	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Dieses Benutzerkonto wurde deaktiviert.</div>',
+	'right-editaccount' => 'Bearbeiten Sie andere Benutzereinstellungen',
+);
+
+/** Greek (Ελληνικά)
+ * @author Crazymadlover
+ * @author Dada
+ */
+$messages['el'] = array(
+	'editaccount-submit-pass' => 'Αποθήκευση κωδικού',
+	'editaccount-log-entry-pass' => 'Έγινε αλλαγή στον κωδικό πρόσβασης του χρήστη $2',
+);
+
 /** Spanish (Español)
  * @author Pertile
+ * @author Translationista
  */
 $messages['es'] = array(
 	'editaccount' => 'Editar Cuenta',
@@ -190,6 +244,31 @@ $messages['es'] = array(
 	'editaccount-label-email' => 'Fijar una nueva dirección de correo electrónico',
 	'editaccount-label-pass' => 'Fijar una nueva contraseña',
 	'editaccount-label-realname' => 'Fijar un nuevo nombre real',
+	'editaccount-submit-email' => 'Guardar correo electrónico',
+	'editaccount-submit-pass' => 'Guardar contraseña',
+	'editaccount-submit-realname' => 'Guardar nombre verdadero',
+	'editaccount-submit-close' => 'Cerrar cuenta',
+	'editaccount-usage-close' => 'También puedes desactivar una cuenta de usuario desordenando su contraseña y eliminando la dirección de correo electrónico. Ten en cuenta que estos datos se perderán y no se podrán recuperar.',
+	'editaccount-warning-close' => '<b>Atención:</b> Estás a punto de desactivar permanentemente la cuenta del usuario <b>$1</b>. Esta acción es irreversible. ¿Seguro que eso es lo que deseas?',
+	'editaccount-status' => 'Mensaje de estado',
+	'editaccount-success-email' => 'Se ha cambiado correctamente el correo electrónico de la cuenta de $1 a $2.',
+	'editaccount-success-email-blank' => 'Se ha eliminado con éxito el correo electrónico de la cuenta de $1.',
+	'editaccount-success-pass' => 'Se ha cambiado correctamente la contraseña de cuenta de $1.',
+	'editaccount-success-realname' => 'Se ha cambiado correctamente el nombre real de la cuenta de $1.',
+	'editaccount-success-close' => 'Se ha inhabilitado correctamente la cuenta $1.',
+	'editaccount-error-email' => 'El correo electrónico no se ha cambiado. Inténtalo de nuevo o contacta con el Equipo Técnico.',
+	'editaccount-error-pass' => 'La clave ha sido cambiada. Inténtalo de nuevo o contacta con el Equipo Técnico.',
+	'editaccount-error-realname' => 'El nombre real no se ha modificado. Inténtalo de nuevo o contacta con el Equipo Técnico.',
+	'editaccount-error-close' => 'Ha ocurrido un problema mientras cerrabas la cuenta. Inténtalo de nuevo o contacta con el Equipo Técnico.',
+	'editaccount-invalid-email' => '¡"$1" no es una dirección válida de correo electrónico!',
+	'editaccount-nouser' => '¡La cuenta "$1" no existe!',
+	'editaccount-log' => 'Registro de cuentas del usuario',
+	'editaccount-log-header' => 'Esta página se enumera los cambios que el personal de Wikia ha realizado a las preferencias de usuario.',
+	'editaccount-log-entry-email' => 'Se ha cambiado de correo electrónico del usuario $2',
+	'editaccount-log-entry-pass' => 'Se ha cambiado la contraseña del usuario $2',
+	'editaccount-log-entry-realname' => 'Se ha cambiado el nombre real del usuario $2',
+	'editaccount-log-entry-close' => 'inhabilitado cuenta $2',
+	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Esta cuenta ha sido inhabilitada.</div>',
 	'right-editaccount' => 'Editar las preferencias de otros usuarios',
 );
 
@@ -350,8 +429,11 @@ $messages['hu'] = array(
 	'editaccount-submit-realname' => 'Valódi név mentése',
 	'editaccount-submit-close' => 'Felhasználói fiók lezárása',
 	'editaccount-status' => 'Állapotüzenet',
+	'editaccount-success-email' => 'A(z) $1 felhasználói fiók email címe sikeresen megváltoztatva erre: $2.',
+	'editaccount-success-email-blank' => 'A(z) $1 felhasználói fiók email címe sikeresen eltávolítva.',
 	'editaccount-success-close' => '„$1” felhasználói fiók sikeresen letiltva.',
 	'editaccount-nouser' => 'A(z) „$1” felhasználói fiók nem létezik!',
+	'editaccount-log' => 'Felhasználói fiókok naplója',
 	'editaccount-log-entry-email' => '„$2” e-mail címe megváltoztatva',
 	'editaccount-log-entry-pass' => '„$2” jelszava megváltoztatva',
 	'editaccount-log-entry-realname' => '„$2” valódi neve megváltoztatva',
@@ -400,6 +482,12 @@ $messages['ia'] = array(
 	'editaccount-log-entry-close' => 'disactivava le conto $2',
 	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Iste conto ha essite disactivate.</div>',
 	'right-editaccount' => 'Modificar le preferentias de altere usatores',
+);
+
+/** Italian (Italiano) */
+$messages['it'] = array(
+	'editaccount' => 'Modifica account',
+	'editaccount-label-pass' => 'Riscrivi la nuova password',
 );
 
 /** Macedonian (Македонски)
@@ -509,6 +597,7 @@ $messages['no'] = array(
 	'editaccount-title' => 'Special:EditAccount',
 	'editaccount-frame-manage' => 'Rediger en konto',
 	'editaccount-frame-usage' => 'Merk',
+	'editaccount-usage' => 'Brukerdata blir mellomlagret separat for hver wiki. Når du tilbakestiller et passord eller en e-post, vil mellomlageret kun bli tømt for denne wikien. Vennligst led brukeren til denne wikien for å logge inn med det nyinnsatte passordet for å unngå problemer med mellomlageret.',
 	'editaccount-label-select' => 'Velg en brukerkonto',
 	'editaccount-submit-account' => 'Administrer konto',
 	'editaccount-frame-account' => 'Redigerer brukerkonto: $1',

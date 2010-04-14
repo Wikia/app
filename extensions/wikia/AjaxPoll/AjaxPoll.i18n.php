@@ -61,6 +61,19 @@ $messages['de'] = array(
 	'ajaxpoll-submitting' => 'Bitte warte kurz, deine Stimme wird verarbeitet.',
 );
 
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp;aller Stimmen',
+	'ajaxpoll-thankyou' => 'Vielen Dank für Ihre Stimme!',
+	'ajaxpoll-error' => 'Es gab ein Problem bei der Verarbeitung Ihrer Stimme. Probieren Sie es bitte noch einmal.',
+	'ajaxpoll-summary' => 'Die Umfrage wurde erstellt am $1 $2. Bisher haben $3 Nutzer abgestimmt.',
+	'ajaxpoll-submit' => 'Abstimmen!',
+	'ajaxpoll-closed' => 'Die Umfrage ist beendet. Viel Spaß mit den Ergebnissen.',
+	'ajaxpoll-submitting' => 'Bitte warten Sie kurz, Ihre Stimme wird verarbeitet.',
+);
+
 /** Spanish (Español)
  * @author Bola
  */
@@ -170,6 +183,11 @@ $messages['ia'] = array(
 	'ajaxpoll-submit' => 'Vota!',
 	'ajaxpoll-closed' => 'Le sondage ha essite claudite. Bon divertimento con le resultatos.',
 	'ajaxpoll-submitting' => 'Un momento, submission de tu voto…',
+);
+
+/** Italian (Italiano) */
+$messages['it'] = array(
+	'ajaxpoll-submit' => 'Voti!',
 );
 
 /** Japanese (日本語)

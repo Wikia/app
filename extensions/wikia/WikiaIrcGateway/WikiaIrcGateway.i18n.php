@@ -36,6 +36,14 @@ $messages['br'] = array(
 	'ircgate-channel' => 'Kanol :',
 );
 
+/** Catalan (Català)
+ * @author Paucabot
+ */
+$messages['ca'] = array(
+	'ircgate-username' => "Nom d'usuari:",
+	'ircgate-channel' => 'Canal:',
+);
+
 /** Czech (Česky)
  * @author Mr. Richard Bolla
  */
@@ -56,6 +64,14 @@ $messages['cy'] = array(
  * @author LWChris
  */
 $messages['de'] = array(
+	'ircgate-username' => 'Benutzername:',
+	'ircgate-channel' => 'Channel:',
+);
+
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
 	'ircgate-username' => 'Benutzername:',
 	'ircgate-channel' => 'Channel:',
 );
@@ -123,6 +139,14 @@ $messages['ia'] = array(
 	'ircgate-channel' => 'Canal:',
 );
 
+/** Italian (Italiano)
+ * @author Civvì
+ */
+$messages['it'] = array(
+	'ircgate-username' => 'Nome utente:',
+	'ircgate-channel' => 'Canale:',
+);
+
 /** Japanese (日本語)
  * @author Hosiryuhosi
  */
@@ -161,6 +185,14 @@ $messages['no'] = array(
 $messages['oc'] = array(
 	'ircgate-username' => "Nom de l'utilizaire :",
 	'ircgate-channel' => 'Canal :',
+);
+
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'ircgate-username' => 'Nazwa użytkownika',
+	'ircgate-channel' => 'Kanał',
 );
 
 /** Piedmontese (Piemontèis)

@@ -45,6 +45,20 @@ $messages['de'] = array(
 	'mostpopularcategories' => 'Beliebteste Kategorien',
 );
 
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'mostpopularcategories' => 'Beliebteste Kategorien',
+);
+
+/** Greek (Ελληνικά)
+ * @author Dada
+ */
+$messages['el'] = array(
+	'mostpopularcategories' => 'Περισσότερο δημοφιλείς κατηγορίες',
+);
+
 /** Spanish (Español) */
 $messages['es'] = array(
 	'mostpopularcategories' => 'Categorías más populares',
@@ -146,6 +160,13 @@ $messages['oc'] = array(
 	'mostpopularcategories' => 'Categorias mai popularas',
 );
 
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'mostpopularcategories' => 'Najbardziej popularne kategorie',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Dragonòt
  */
@@ -179,6 +200,13 @@ $messages['roa-tara'] = array(
  */
 $messages['ru'] = array(
 	'mostpopularcategories' => 'Самые популярные категории',
+);
+
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'mostpopularcategories' => 'Najbolj priljubljene kategorije',
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))

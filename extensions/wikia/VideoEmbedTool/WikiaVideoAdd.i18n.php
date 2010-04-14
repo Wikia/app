@@ -68,6 +68,14 @@ $messages['br'] = array(
 	'wva-notallowed' => "Ne c'hallit ket ensoc'hañ videoioù war ar wiki-mañ",
 );
 
+/** Catalan (Català)
+ * @author Paucabot
+ */
+$messages['ca'] = array(
+	'wva-url' => 'Introduïu la URL:',
+	'wva-add' => 'Afegeix',
+);
+
 /** Czech (Česky)
  * @author Mr. Richard Bolla
  */
@@ -96,6 +104,21 @@ $messages['de'] = array(
 	'wva-title' => 'Video von URL hinzufügen',
 	'wva-notlogged' => 'Du musst dich einloggen oder registrieren um Videos einzufügen.',
 	'wva-notallowed' => 'Du kannst in diesem Wiki keine Videos einfügen.',
+);
+
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'wva-success' => 'Videoseite für $1 wurde erfolgreich erstellt.',
+	'wva-success-replaced' => 'Videoseite für $1 wurde erfolgreich ersetzt.',
+	'wva-failure' => 'Geben Sie bitte gültige Parameter ein.',
+	'wva-name' => 'Name eingeben:',
+	'wva-url' => 'Geben Sie die URL hier ein:',
+	'wva-add' => 'Hinzufügen',
+	'wva-title' => 'Video von URL hinzufügen',
+	'wva-notlogged' => 'Sie müssen sich einloggen oder registrieren um Videos einzufügen.',
+	'wva-notallowed' => 'Sie können in diesem Wiki keine Videos einfügen.',
 );
 
 /** Spanish (Español)
@@ -181,6 +204,7 @@ $messages['hu'] = array(
 	'wva-name' => 'Add meg a nevet:',
 	'wva-url' => 'Add meg az URL-t:',
 	'wva-add' => 'Hozzáadás',
+	'wva-title' => 'Videó gyors hozzáadása URL alapján',
 );
 
 /** Interlingua (Interlingua)
@@ -196,6 +220,16 @@ $messages['ia'] = array(
 	'wva-title' => 'Adder video rapidemente con URL',
 	'wva-notlogged' => 'Tu debe aperir un session o registrar te pro inserer videos.',
 	'wva-notallowed' => 'Non es possibile inserer videos in iste wiki.',
+);
+
+/** Indonesian (Bahasa Indonesia) */
+$messages['id'] = array(
+	'wva-add' => 'Tambahkan',
+);
+
+/** Italian (Italiano) */
+$messages['it'] = array(
+	'wva-add' => 'Aggiungi',
 );
 
 /** Japanese (日本語)
@@ -273,11 +307,18 @@ $messages['no'] = array(
 	'wva-notallowed' => 'Du kan ikke legge til videoer på denne wikien.',
 );
 
-/** Polish (Polski) */
+/** Polish (Polski)
+ * @author Marcin Łukasz Kiejzik
+ * @author Sp5uhe
+ */
 $messages['pl'] = array(
 	'wva-success' => 'Strona video „$1” została pomyślnie dodana.',
 	'wva-name' => 'Wpisz nazwę:',
 	'wva-url' => 'Podaj URL:',
+	'wva-add' => 'Dodaj',
+	'wva-title' => 'Dodaj szybko film, korzystając z jego adresu URL.',
+	'wva-notlogged' => 'Dodawanie filmów jest możliwe po zarejestrowaniu i zalogowaniu się.',
+	'wva-notallowed' => 'Nie możesz dodawać filmów do tej wiki.',
 );
 
 /** Piedmontese (Piemontèis)

@@ -130,11 +130,66 @@ $messages['de'] = array(
 	'cathub-next' => 'Nächste &rarr;',
 );
 
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'cathub-desc' => 'Erweiterung zum Umwandeln von Kategorieseiten in eine Übersicht von Aktivitäten. Konzipiert für [http://answers.wikia.com answers.wikia.com]',
+	'cathub-progbar-mouseover-answered' => '$1% beantwortet ($2 Antworten)',
+	'cathub-progbar-mouseover-not-answered' => '$1% noch nicht beantwortet ($2 Fragen)',
+	'cathub-progbar-label-answered' => 'Beantwortet',
+	'cathub-progbar-label-unanswered' => 'Unbeantwortet',
+	'cathub-progbar-none-done' => 'Noch keine Fragen beantwortet',
+	'cathub-progbar-all-done' => 'Alle Fragen beantwortet!',
+	'cathub-progbar-allmost-done' => '$1 {{PLURAL:$1|unbeantwortete Frage|unbeantwortete Fragen}} verbleibend!',
+	'cathub-no-unanswered-questions' => 'Momentan gibt es keine unbeantworteten Fragen zu sehen.',
+	'cathub-no-answered-questions' => 'Momentan gibt es keine beantworteten Fragen zu sehen.',
+	'cathub-top-contributors' => 'Top-Mitwirkende an dieser Kategorie',
+	'cathub-top-contribs-all-time' => 'Aller Zeiten',
+	'cathub-top-contribs-recent' => '{{PLURAL:$1|für den letzten Tag|in den letzten $1 Tagen}}',
+	'cathub-question-asked-ago' => 'gefragt $1 $2',
+	'cathub-question-answered-ago' => 'beantwortet $1 $2',
+	'cathub-question-asked-by' => 'von $1',
+	'cathub-anon-username' => 'einem interessierten Benutzer',
+	'cathub-answer-heading' => 'Antworten',
+	'cathub-button-answer' => 'Antworten',
+	'cathub-button-improve-answer' => 'Antwort verbessern',
+	'cathub-button-rephrase' => 'neu formulieren',
+	'cathub-edit-success' => 'Ihre Antwort wurde gespeichert',
+	'cathub-prev' => '&larr; Vorherige',
+	'cathub-next' => 'Nächste &rarr;',
+);
+
 /** Spanish (Español)
+ * @author Crazymadlover
  * @author Locos epraix
+ * @author Pertile
  */
 $messages['es'] = array(
+	'cathub-desc' => 'Extensión para convertir las páginas de categorías en una vista de la categoría como un centro de actividad. Diseñado para [http://answers.wikia.com answers.wikia.com]',
+	'cathub-progbar-mouseover-answered' => '$1% respondido ($2 respuesta)',
+	'cathub-progbar-mouseover-not-answered' => '$1% no respondido aún ($2 preguntas)',
+	'cathub-progbar-label-answered' => 'Respondido',
+	'cathub-progbar-label-unanswered' => 'Sin responder',
+	'cathub-progbar-none-done' => 'Todavía no se ha respondido ninguna pregunta',
+	'cathub-progbar-all-done' => '¡Todas las preguntas fueron respondidas!',
+	'cathub-progbar-allmost-done' => '¡{{PLURAL:$1|Queda|Quedan}} $1 {{PLURAL:$1|pregunta|preguntas}} sin responder!',
+	'cathub-no-unanswered-questions' => 'En este momento no hay preguntas sin respuestas para ver.',
+	'cathub-no-answered-questions' => 'No hay preguntas respondidas para ver ahora mismo.',
+	'cathub-top-contributors' => 'Contribuyentes top a esta categoría',
+	'cathub-top-contribs-all-time' => 'De todos los tiempos',
+	'cathub-top-contribs-recent' => 'En los últimos $1 {{PLURAL:$1|día|días}}',
+	'cathub-question-asked-ago' => 'preguntado $1 $2',
+	'cathub-question-answered-ago' => 'respondido $1 $2',
+	'cathub-question-asked-by' => 'por $1',
+	'cathub-anon-username' => 'un usuario curioso',
 	'cathub-answer-heading' => 'Respuesta',
+	'cathub-button-answer' => 'Responder',
+	'cathub-button-improve-answer' => 'Mejorar respuesta',
+	'cathub-button-rephrase' => 'refrasear',
+	'cathub-edit-success' => 'Tu respuesta ha sido grabada',
+	'cathub-prev' => '&larr; Anterior',
+	'cathub-next' => 'Siguiente &rarr;',
 );
 
 /** Finnish (Suomi)
@@ -225,10 +280,13 @@ $messages['gl'] = array(
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
+	'cathub-progbar-mouseover-answered' => '$1% megválaszolva ($2 válasz)',
+	'cathub-progbar-mouseover-not-answered' => '$1% megválaszolatlan ($2 kérdés)',
 	'cathub-progbar-label-answered' => 'Megválaszolva',
 	'cathub-progbar-label-unanswered' => 'Nincs megválaszolva',
 	'cathub-progbar-none-done' => 'Még nincsenek feltett kérdések',
 	'cathub-progbar-all-done' => 'Minden kérdés megválaszolva!',
+	'cathub-top-contributors' => 'Legaktívabb közreműködők ebben a kategóriában',
 	'cathub-answer-heading' => 'Válasz',
 	'cathub-button-answer' => 'Válasz',
 	'cathub-button-improve-answer' => 'Válasz javítása',
@@ -388,6 +446,19 @@ $messages['no'] = array(
 	'cathub-edit-success' => 'Svaret ditt har blitt lagret',
 	'cathub-prev' => '← Forrige',
 	'cathub-next' => 'Neste →',
+);
+
+/** Polish (Polski)
+ * @author Marcin Łukasz Kiejzik
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'cathub-answer-heading' => 'Odpowiedź',
+	'cathub-button-answer' => 'Odpowiedź',
+	'cathub-button-improve-answer' => 'Poprawna odpowiedź',
+	'cathub-button-rephrase' => 'parafrazując',
+	'cathub-edit-success' => 'Twoja odpowiedź została zapisana',
+	'cathub-prev' => '&larr; Poprzedni',
 );
 
 /** Piedmontese (Piemontèis)

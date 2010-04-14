@@ -34,6 +34,13 @@ $messages['af'] = array(
 	'privatedomains_affiliatenamelabel' => 'Naam van organisasie:',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'privatedomains_affiliatenamelabel' => 'Назва арганізацыі:',
+);
+
 /** Breton (Brezhoneg)
  * @author Gwenn-Ael
  */
@@ -56,10 +63,24 @@ $messages['de'] = array(
 	'privatedomains' => 'Private Domains verwalten',
 	'privatedomains_ifemailcontact' => 'Andernfalls wende dich bitte an [[Special:Emailuser/$1|$1]] falls du Fragen hast.',
 	'saveprivatedomains_success' => 'Änderungen an privaten Domains gespeichert.',
-	'privatedomains_invalidemail' => 'Tut uns leid, aber der Zugang zu diesem Wiki ist auf Mitglieder von $1 beschränkt. Wenn du eine E-Mail-Adresse von $1 besitzt, kannst du es betreten, oder bestätige deine E-Mail Adresse in deinen Konteneinstellungen <a href=/wiki/Special:Preferences>hier</a>. Du kannst weiterhin Seiten in diesem Wiki asehen, wirst sie aber nicht bearbeiten können.',
+	'privatedomains_invalidemail' => 'Tut uns leid, aber der Zugang zu diesem Wiki ist auf Mitglieder von $1 beschränkt. Wenn du eine E-Mail-Adresse von $1 besitzt, kannst du es betreten, oder bestätige deine E-Mail Adresse in deinen Konteneinstellungen <a href=/wiki/Special:Preferences>hier</a>. Du kannst weiterhin Seiten in diesem Wiki ansehen, wirst sie aber nicht bearbeiten können.',
 	'privatedomains_affiliatenamelabel' => 'Name der Organisation:',
 	'privatedomains_emailadminlabel' => 'Kontakt-Benutzername bei Zugangsproblemen oder Fragen:',
 	'privatedomainsinstructions' => 'Unten ist die Liste der erlaubten E-Mail-Domains für Editoren dieses Wikis. Jede Zeile bezeichnet einen E-Mail-Suffix, dem Bearbeitungen erlaubt werden. Dies sollte mit einem Suffix pro Zeile formatiert werden. Zum Beispiel:</p><p style="width: 20%; padding:5px; border: 1px solid grey;"> cs.stanford.edu<br /> stanfordalumni.org</p><p>Dies würde Bearbeitungen von jedem mit der E-Mail-Adresse whatever@cs.stanford.edu oder whatever@stanfordalumni.org erlauben.</p><p><b>Gib die erlaubten Domains in das Textfeld unterhalb ein und klicke auf "Speichern".</b>',
+);
+
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'privatedomains_nomanageaccess' => "Entschuldigung, Sie haben nicht genügend Rechte, um die erlaubten privaten Domains für dieses Wiki zu verwalten. Nur Wiki Bürokraten und Mitarbeiter haben Zugang.</p><p>Wenn Sie nicht eingeloggt sind, sollten Sie dies wahrscheinlich <a href='/wiki/Special:Userlogin'>machen</a>.",
+	'privatedomains' => 'Private Domains verwalten',
+	'privatedomains_ifemailcontact' => 'Andernfalls wenden Sie sich bitte an [[Special:Emailuser/$1|$1]] falls Sie Fragen haben.',
+	'saveprivatedomains_success' => 'Änderungen an privaten Domains gespeichert.',
+	'privatedomains_invalidemail' => 'Tut uns leid, aber der Zugang zu diesem Wiki ist auf Mitglieder von $1 beschränkt. Wenn Sie eine E-Mail-Adresse von $1 besitzen, können Sie es betreten, oder bestätigen Sie Ihre E-Mail Adresse in Ihren Konteneinstellungen <a href=/wiki/Special:Preferences>hier</a>. Sie können weiterhin Seiten in diesem Wiki ansehen, werden sie aber nicht bearbeiten können.',
+	'privatedomains_affiliatenamelabel' => 'Name der Organisation:',
+	'privatedomains_emailadminlabel' => 'Kontakt-Benutzername bei Zugangsproblemen oder Fragen:',
+	'privatedomainsinstructions' => 'Unten ist die Liste der erlaubten E-Mail-Domains für Editoren dieses Wikis. Jede Zeile bezeichnet einen E-Mail-Suffix, dem Bearbeitungen erlaubt werden. Dies sollte mit einem Suffix pro Zeile formatiert werden. Zum Beispiel:</p><p style="width: 20%; padding:5px; border: 1px solid grey;"> cs.stanford.edu<br /> stanfordalumni.org</p><p>Dies würde Bearbeitungen von jedem mit der E-Mail-Adresse whatever@cs.stanford.edu oder whatever@stanfordalumni.org erlauben.</p><p><b>Geben Sie die erlaubten Domains in das Textfeld unterhalb ein und klicken Sie auf "Speichern".</b>',
 );
 
 /** Spanish (Español)
@@ -224,5 +245,12 @@ $messages['ru'] = array(
  */
 $messages['sr-ec'] = array(
 	'privatedomains_affiliatenamelabel' => 'Име организације:',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'privatedomains_affiliatenamelabel' => 'సంస్థ యొక్క పేరు:',
 );
 

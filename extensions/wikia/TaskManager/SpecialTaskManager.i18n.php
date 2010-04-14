@@ -31,8 +31,26 @@ $messages['br'] = array(
 	'taskmanager_tasklist' => 'Distreiñ da roll an trevelloù',
 );
 
+/** Catalan (Català)
+ * @author Paucabot
+ */
+$messages['ca'] = array(
+	'taskmanager' => 'Mostra i gestiona les tasques en segon pla',
+	'taskmanager_title' => 'Mostra i gestiona les tasques en segon pla',
+	'taskmanager_tasklist' => 'Torna a la Llista de Tasques',
+);
+
 /** German (Deutsch) */
 $messages['de'] = array(
+	'taskmanager' => 'Anzeige und Verwaltung von Hintergrund-Aufgaben',
+	'taskmanager_title' => 'Anzeige und Verwaltung von Hintergrund-Aufgaben',
+	'taskmanager_tasklist' => 'Zurück zur Aufgaben-Liste',
+);
+
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
 	'taskmanager' => 'Anzeige und Verwaltung von Hintergrund-Aufgaben',
 	'taskmanager_title' => 'Anzeige und Verwaltung von Hintergrund-Aufgaben',
 	'taskmanager_tasklist' => 'Zurück zur Aufgaben-Liste',
@@ -161,6 +179,15 @@ $messages['pms'] = array(
 	'taskmanager' => "Visualisé e gestì j'atività an slë sfond",
 	'taskmanager_title' => "Visualisé e gestì j'atività an slë sfond",
 	'taskmanager_tasklist' => "Artorna a la Lista dj'Atività",
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'taskmanager' => 'Ver e administrar as tarefas de segundo plano',
+	'taskmanager_title' => 'Ver e administrar as tarefas de segundo plano',
+	'taskmanager_tasklist' => 'Voltar à Lista de Tarefas',
 );
 
 /** Russian (Русский)

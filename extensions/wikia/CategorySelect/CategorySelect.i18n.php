@@ -144,11 +144,36 @@ $messages['de'] = array(
 	'categoryselect-empty-name' => 'Kategorie-Name (der Teil vor |)',
 	'categoryselect-button-save' => 'Speichern',
 	'categoryselect-button-cancel' => 'Abbrechen',
-	'categoryselect-error-not-exist' => 'Der angegebene Artikel [id=$1] existiert nicht (mehr).',
+	'categoryselect-error-not-exist' => 'Der Artikel [id=$1] existiert nicht.',
 	'categoryselect-error-user-rights' => 'Keine ausreichenden Benutzerrechte.',
 	'categoryselect-error-db-locked' => 'Die Datenbank ist vorübergehend gesperrt.',
 	'categoryselect-desc' => 'Stellt eine Oberfläche zur Verwaltung der Kategorien in einem Artikel ohne Bearbeitung des ganzen Artikels zur Verfügung.',
 	'categoryselect-edit-abort' => 'Deine versuchte Änderung wurde durch ein Aufhängen einer Erweiterung abgebrochen',
+	'tog-disablecategoryselect' => 'Vereinfachtes Kategorisieren ausschalten',
+);
+
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'categoryselect-code-view' => 'Quelltext',
+	'categoryselect-visual-view' => 'Grafische Ansicht',
+	'categoryselect-infobox-caption' => 'Kategorie-Optionen',
+	'categoryselect-infobox-category' => 'Geben Sie den Namen der Kategorie an:',
+	'categoryselect-infobox-sortkey' => 'Ordne diesen Artikel in der Kategorie „$1“ unter folgendem Namen ein:',
+	'categoryselect-addcategory-button' => 'Kategorie hinzufügen',
+	'categoryselect-suggest-hint' => 'Mit Eingabetaste beenden',
+	'categoryselect-tooltip' => "'''Neu!''' Unsere Kategorieauswahl-Leiste. Probieren Sie sie aus oder lesen Sie die [[Help:KategorieAuswahl|Hilfe]] für weitere Informationen",
+	'categoryselect-unhandled-syntax' => 'Nicht unterstützte Syntax entdeckt - Wechsel in grafische Ansicht nicht möglich.',
+	'categoryselect-edit-summary' => 'Kategorien hinzufügen',
+	'categoryselect-empty-name' => 'Kategorie-Name (der Teil vor |)',
+	'categoryselect-button-save' => 'Speichern',
+	'categoryselect-button-cancel' => 'Abbrechen',
+	'categoryselect-error-not-exist' => 'Der Artikel [id=$1] existiert nicht.',
+	'categoryselect-error-user-rights' => 'Keine ausreichenden Benutzerrechte.',
+	'categoryselect-error-db-locked' => 'Die Datenbank ist vorübergehend gesperrt.',
+	'categoryselect-desc' => 'Stellt eine Oberfläche zur Verwaltung der Kategorien in einem Artikel ohne Bearbeitung des ganzen Artikels zur Verfügung.',
+	'categoryselect-edit-abort' => 'Ihre versuchte Änderung wurde durch ein Aufhängen einer Erweiterung abgebrochen',
 	'tog-disablecategoryselect' => 'Vereinfachtes Kategorisieren ausschalten',
 );
 
@@ -160,6 +185,7 @@ $messages['el'] = array(
 );
 
 /** Spanish (Español)
+ * @author Pertile
  * @author Translationista
  */
 $messages['es'] = array(
@@ -180,6 +206,7 @@ $messages['es'] = array(
 	'categoryselect-error-user-rights' => 'Error de derechos de usuario.',
 	'categoryselect-error-db-locked' => 'La base de datos está bloqueada.',
 	'categoryselect-desc' => 'Proporciona una interfaz para gestionar las categorías de los artículos sin editar todo el artículo.',
+	'categoryselect-edit-abort' => 'La modificación que ha intentado realizar fue abortada por un gancho de extensión',
 	'tog-disablecategoryselect' => 'Desactivar el Etiquetador de Categorías (Category Tagging)',
 );
 
@@ -271,6 +298,7 @@ $messages['hu'] = array(
 	'categoryselect-visual-view' => 'Grafikus nézet',
 	'categoryselect-infobox-caption' => 'Kategóriabeállítások',
 	'categoryselect-addcategory-button' => 'Kategória hozzáadása',
+	'categoryselect-edit-summary' => 'Kategóriák hozzáadása',
 	'categoryselect-button-save' => 'Mentés',
 	'categoryselect-button-cancel' => 'Mégse',
 	'categoryselect-error-user-rights' => 'Felhasználói jog hiba.',
@@ -300,6 +328,14 @@ $messages['ia'] = array(
 	'categoryselect-desc' => 'Provide un interfacie pro gerer le categorias in un articulo sin modificar tote le articulo.',
 	'categoryselect-edit-abort' => 'Le modification que tu tentava facer ha essite abortate per un extension.',
 	'tog-disablecategoryselect' => 'Disactivar selection de categorias',
+);
+
+/** Italian (Italiano) */
+$messages['it'] = array(
+	'categoryselect-addcategory-button' => 'Aggiungi categoria',
+	'categoryselect-button-save' => 'Salva',
+	'categoryselect-button-cancel' => 'Annulla',
+	'categoryselect-error-db-locked' => 'Database bloccato.',
 );
 
 /** Japanese (日本語)
@@ -374,7 +410,7 @@ Terugschakelen naar visuele weergave is niet mogelijk.',
 	'categoryselect-button-cancel' => 'Annuleren',
 	'categoryselect-error-not-exist' => 'De pagina [id=$1] bestaat niet.',
 	'categoryselect-error-user-rights' => 'Fout in de gebruikersrechten.',
-	'categoryselect-error-db-locked' => 'De database zit op slot.',
+	'categoryselect-error-db-locked' => 'De database is geblokkeerd.',
 	'categoryselect-desc' => 'Biedt een interface voor het beheren van categorieën in een pagina zonder de hele pagina te bewerken.',
 	'categoryselect-edit-abort' => 'De wijziging die u probeerde te maken is afgebroken door een uitbreidingshook',
 	'tog-disablecategoryselect' => 'Categorielabels uitschakelen',
@@ -437,6 +473,31 @@ $messages['pms'] = array(
 $messages['ps'] = array(
 	'categoryselect-addcategory-button' => 'وېشنيزه ورګډول',
 	'categoryselect-button-save' => 'خوندي کول',
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'categoryselect-code-view' => 'Modo de código',
+	'categoryselect-visual-view' => 'Modo de visionamento',
+	'categoryselect-infobox-caption' => 'Opções de categoria',
+	'categoryselect-infobox-category' => 'Introduza o nome da categoria:',
+	'categoryselect-infobox-sortkey' => 'Na página da categoria "$1", listar esta página na posição do nome:',
+	'categoryselect-addcategory-button' => 'Adicionar categoria',
+	'categoryselect-suggest-hint' => 'Pressione Enter quando tiver acabado',
+	'categoryselect-tooltip' => "'''Novo!''' Barra de ferramentas de categorização. Experimente-a ou consulte a [[Help:CategorySelect|ajuda]] para saber mais",
+	'categoryselect-unhandled-syntax' => 'Foi detectada sintaxe que não pode ser tratada - não é possível voltar ao modo de visionamento.',
+	'categoryselect-edit-summary' => 'A adicionar categorias',
+	'categoryselect-empty-name' => 'Introduza o nome da categoria (a parte antes de |)',
+	'categoryselect-button-save' => 'Gravar',
+	'categoryselect-button-cancel' => 'Cancelar',
+	'categoryselect-error-not-exist' => 'A página [id=$1] não existe.',
+	'categoryselect-error-user-rights' => 'Erro de permissões.',
+	'categoryselect-error-db-locked' => 'A base de dados está trancada.',
+	'categoryselect-desc' => 'Fornece uma interface para gerir as categorias de um artigo sem editar o artigo completo.',
+	'categoryselect-edit-abort' => 'A alteração que tentou fazer foi abortada pelo hook de uma extensão',
+	'tog-disablecategoryselect' => 'Desligar a Categorização',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
