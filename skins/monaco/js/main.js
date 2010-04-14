@@ -16,7 +16,7 @@ var magicWords = {};
 
 //Attach DOM-Ready handlers
 $(function() {
-	$("#ca-watch").click(function(e){showComboAjaxForPalceHolder(false,"");});
+	$("#ca-watch").click(function(e){showComboAjaxForPlaceHolder(false,"");});
 	$("#headerButtonHub").bind("click.headerMenu", openHubMenu);
 	$("#headerButtonUser").bind("click.headerMenu", openUserMenu);
 	$('.ajaxLogin').click(openLogin);
@@ -28,11 +28,11 @@ $(function() {
 		$(".wikiaPlaceholder .wikia-button").removeAttr("onclick");
 		$(".wikiaPlaceholder .wikia-button").click(function(e){
 			if( e.target.nodeName == "SPAN" ){
-				showComboAjaxForPalceHolder($(e.target.parentNode).attr('id'),true);
+				showComboAjaxForPlaceHolder($(e.target.parentNode).attr('id'),true);
 			}
 			else
 			{
-				showComboAjaxForPalceHolder($(e.target).attr('id'),true);
+				showComboAjaxForPlaceHolder($(e.target).attr('id'),true);
 			}
 			return false;
 		});
@@ -45,7 +45,7 @@ $(function() {
 		}
 
 		editpromptable.click(function(e){
-			showComboAjaxForPalceHolder(false, "", function(){
+			showComboAjaxForPlaceHolder(false, "", function(){
 				AjaxLogin.doSuccess = function() {
 					var target = $(e.target);
 					if( target.is('a') ){
@@ -59,7 +59,7 @@ $(function() {
 		});
 
 		 $(".wikiaComboAjaxLogin").click(function(e){
-			showComboAjaxForPalceHolder(false, "", function(){
+			showComboAjaxForPlaceHolder(false, "", function(){
 				AjaxLogin.doSuccess = function() {
 					CreatePage.openDialog(e, null);
 				}
@@ -196,9 +196,9 @@ function openLogin(event) {
 
 //Combo login WikiaImagePlaceholde
 
-function showComboAjaxForPalceHolder(element,isPlaceholder,callback) {
-	if ( typeof showComboAjaxForPalceHolder.statusAjaxLogin == 'undefined' ) { // java script static var
-		showComboAjaxForPalceHolder.statusAjaxLogin = false;
+function showComboAjaxForPlaceHolder(element,isPlaceholder,callback) {
+	if ( typeof showComboAjaxForPlaceHolder.statusAjaxLogin == 'undefined' ) { // java script static var
+		showComboAjaxForPlaceHolder.statusAjaxLogin = false;
 	}
 
 	if ( (typeof wgIsLogin == 'undefined') || (wgIsLogin)
@@ -212,7 +212,7 @@ function showComboAjaxForPalceHolder(element,isPlaceholder,callback) {
 		return true;
 	}
 
-	if (showComboAjaxForPalceHolder.statusAjaxLogin){
+	if (showComboAjaxForPlaceHolder.statusAjaxLogin){
 		return true;
 	}
 
@@ -220,7 +220,7 @@ function showComboAjaxForPalceHolder(element,isPlaceholder,callback) {
    	$(".blackout:last")
    		.height($(document).height())
 		.css({zIndex: 9999}).fadeTo("fast", 0.65); */
-	showComboAjaxForPalceHolder.statusAjaxLogin = true;
+	showComboAjaxForPlaceHolder.statusAjaxLogin = true;
 
 	// scroll top
 	window.scrollTo(0,0);
@@ -232,7 +232,7 @@ function showComboAjaxForPalceHolder(element,isPlaceholder,callback) {
 						if (isPlaceholder) AjaxLogin.setPlaceHolder(element);
 						AjaxLogin.init( $('#AjaxLoginLoginForm form') );
 						AjaxLogin.show();
-						showComboAjaxForPalceHolder.statusAjaxLogin = false;
+						showComboAjaxForPlaceHolder.statusAjaxLogin = false;
 						if (typeof callback != 'undefined'){
 							callback();
 						}
