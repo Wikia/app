@@ -144,8 +144,18 @@ function openUserMenu(event) {
 }
 
 // AjaxLogin
-// TODO: FBConnect: This gets called a lot... it probably needs to be combined in some way with showComboAjaxForPlaceHolder, this way definitely defaulting to login rather than create account.
 function openLogin(event) {
+
+
+	// TODO: FBConnect: This gets called a lot... it probably needs to be combined in some way with showComboAjaxForPlaceHolder, this way definitely defaulting to login rather than create account.
+	// TODO: FBConnect: Make sure this just calls the comboLogin all the time... if this works, then delete this method, the Ajax call it makes, and therefore the whole plain AjaxLogin extension (at least the PHP code... have to check on JS and templates still).
+	return AjaxLogin.showLogin(event);
+
+	
+	
+	
+	
+
 
 	if ( typeof openLogin.statusAjaxLogin == 'undefined' ) { // java script static var
 		openLogin.statusAjaxLogin = false;

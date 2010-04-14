@@ -1,171 +1,385 @@
 /*
- * Author: Inez Korczynski
+ * Author: Maciej Brencz (based on code from Inez Korczynski)
+ * Mod by: Tomasz Odrobny
  */
+var AjaxLogin = {
+	WET_str : 'signupActions/popup',
+	init: function(form) {
+		this.form = form;
 
-if(typeof wgEnableAjaxLogin != 'undefined' && wgEnableAjaxLogin) {
+		// move login/password/remember fields from hidden form to AjaxLogin
+		// changes to tabindex - see RT#41245
+		var labels = this.form.find('label');
+		$('#wpName1Ajax').clone().attr("id","wpName2Ajax").attr('tabindex', parseInt($('#wpName1Ajax').attr('tabindex')) + 100).appendTo("#ajaxlogin_username_cell");
+		$('#wpPassword1Ajax').clone().attr("id","wpPassword2Ajax").attr('tabindex', parseInt($('#wpPassword1Ajax').attr('tabindex')) + 100).appendTo("#ajaxlogin_password_cell");
+		$('#wpRemember1Ajax').clone().attr("id","wpRemember2Ajax").attr('tabindex', parseInt($('#wpRemember1Ajax').attr('tabindex')) + 100).insertBefore(labels[2]);
 
-	
-	
-	YAHOO.namespace("wikia.AjaxLogin");
+		// remove hidden form
+		$('#userajaxloginform').attr("id","");
 
-	(function() {
+		this.form.attr('id', 'userajaxloginform');
 
-	var Dom = YAHOO.util.Dom;
-	var Event = YAHOO.util.Event;
-	var DDM = YAHOO.util.DragDropMgr;
+		// add submit event handler for login form
+		this.form.bind('submit', this.formSubmitHandler);
+		$('#wpLoginattemptAjax').attr('tabindex', parseInt($('#wpRemember1Ajax').attr('tabindex')) + 101).click( this.clickLogIn );
 
-	YAHOO.wikia.AjaxLogin = {
-		init: function() {
-			if(Dom.get('userloginRound')) {
-				Event.addListener('login', 'click', YAHOO.wikia.AjaxLogin.showLoginPanel);
-			}
-		},
-		showLoginPanel: function(e) {
-			// Prevent the default action for clicked element (probably A)
-			if(e) {
-				YAHOO.util.Event.preventDefault(e);
-			}
+		$().log('AjaxLogin: init()');
 
-			if(YAHOO.lang.isUndefined(YAHOO.wikia.AjaxLogin.loginPanel)) {
+		// ask before going to register form from edit page
+		$('#wpAjaxRegister').click(this.ajaxRegisterConfirm);
+		// get proper returnto/returntoquery param
+		$('#wpAjaxRegister').attr('href', $('#register').attr('href'));
+	},
+	close: function()
+	{
+		$('#AjaxLoginBoxWrapper').closeModal();
+	},
+	doSuccess: function(openwindow) {
 
-				var keylistenerHandler = function(type, args, obj) {
-					YAHOO.wikia.AjaxLogin.loginPanel.hide();
-				}
+		if( (typeof isAutoCreateWiki != 'undefined') && isAutoCreateWiki ) {
+			realoadAutoCreateForm();
+			return ;
+		}
 
-				YAHOO.wikia.AjaxLogin.keylistener = new YAHOO.util.KeyListener(document, { keys:[27] }, { fn:keylistenerHandler } );
+		// macbre: call custom function (if provided by any extension)
+		if (typeof window.wgAjaxLoginOnSuccess == 'function') {
+			// let's update wgUserName
+			window.wgUserName = response.ajaxlogin.lgusername;
 
-				YAHOO.log("Initiate and display loginPanel", "info", "AjaxLogin.js");
-				YAHOO.wikia.AjaxLogin.loginPanel = new YAHOO.widget.Panel('userloginRound',
-				{
-					width:"auto",
-					modal:true,
-					constraintoviewport:true,
-					draggable: false,
-					fixedcenter: true,
-					underlay: "none",
-					visible: true,
-					keylisteners: YAHOO.wikia.AjaxLogin.keylistener
-				});
-				Dom.setStyle('userloginRound', 'display', '');
-				YAHOO.wikia.AjaxLogin.loginPanel.render(document.body);
+			// close AjaxLogin form
+			$('#AjaxLoginBoxWrapper').closeModal();
 
-				// add submit event handler for login form
-				Event.addListener('userajaxloginform', 'submit', YAHOO.wikia.AjaxLogin.formSubmitHandler);
+			$().log('AjaxLogin: calling custom function');
+			window.wgAjaxLoginOnSuccess();
+			return;
+		}
 
-				Event.addListener('wpAjaxRegister', 'click', YAHOO.wikia.AjaxLogin.ajaxRegisterConfirm);
+		// we're on edit page
+		if($('#wpPreview').exists() && $('#wpLogin').exists()) {
+			$('#editform').append('<input value="1" name="wpIsReload" ></input>');
+			if ($('#wikiDiff').children().exists()) {
+				$('#wpDiff').click();
 			} else {
-				YAHOO.log("Display initiated loginPanel", "info", "AjaxLogin.js");
-				YAHOO.wikia.AjaxLogin.loginPanel.show();
+				if (!$('#wikiPreview').children().exists()) {
+					$('#wpLogin').attr('value', 1);
+				}
+				$('#wpPreview').click();
 			}
-			if(Dom.get('wpName1')) {
-				Dom.get('wpName1').focus();
+		} else {
+			if(wgCanonicalSpecialPageName == "Userlogout") {
+				window.location.href = wgServer + wgScriptPath;
+			} else {
+				AjaxLogin.doReload();
 			}
-		},
-		formSubmitHandler: function(e) {
-			// Prevent the default action for event (submit of form)
-			if(e) {
-				YAHOO.util.Event.preventDefault(e);
-			}
+		}
+	},
+	doReload: function() {
+		window.location.reload(true);
+	},
+	clickLogIn: function( ev ) {
+		// Prevent the default action for event (click)
+		if(ev) {
+			ev.preventDefault();
+		}
 
-			var ajaxLoginCallback = {
-				success: YAHOO.wikia.AjaxLogin.handleSuccess,
-				failure: YAHOO.wikia.AjaxLogin.handleFailure,
-				scope: YAHOO.wikia.AjaxLogin
-			};
+		AjaxLogin.action = 'login';
+		AjaxLogin.form.submit();
+	},
+	formSubmitHandler: function(ev) {
 
-			YAHOO.util.Connect.setForm('userajaxloginform');
 
-			// Let's block login form (disable buttons and input boxes)
-			YAHOO.wikia.AjaxLogin.blockLoginForm(true);
 
-			var actionURL = wgServer + wgScriptPath + '/api.php?action=ajaxlogin&format=json';
-			var cObj = YAHOO.util.Connect.asyncRequest('POST', actionURL, ajaxLoginCallback);
-		},
-		handleSuccess: function(o) {
-			var response = YAHOO.Tools.JSONParse(o.responseText);
-			var responseResult = response.ajaxlogin.result;
-			switch(responseResult) {
-				case 'Reset':
-					if(Dom.get('wpPreview') && Dom.get('wpLogin')) {
-						if(typeof(ajaxLogin1)!="undefined" && !confirm(ajaxLogin1)) {
-							break;
-						}
-					}
-					Dom.get('userajaxloginform').action = wgServer + wgScriptPath + '/index.php?title=Special:Userlogin&action=submitlogin&type=login';
-					Event.removeListener('userajaxloginform', 'submit', YAHOO.wikia.AjaxLogin.formSubmitHandler);
-					YAHOO.wikia.AjaxLogin.blockLoginForm(false);
-					Dom.get('userajaxloginform').submit();
-					YAHOO.wikia.AjaxLogin.blockLoginForm(true);
+
+
+		// Prevent the default action for event (submit of form)
+		if(ev) {
+			ev.preventDefault();
+		}
+		AjaxLogin.form.log('AjaxLogin: selected action = ' + AjaxLogin.action);
+
+		// tracking
+		WET.byStr('loginActions/' + AjaxLogin.action);
+
+		var params = [
+			'action=ajaxlogin',
+			'format=json',
+			(AjaxLogin.action == 'password' ? 'wpMailmypassword=1' : 'wpLoginattempt=1'),
+		];
+
+		var POSTparams = AjaxLogin.form.serialize();
+
+		// Let's block login form (disable buttons and input boxes)
+		AjaxLogin.blockLoginForm(true);
+
+		$.postJSON(window.wgScriptPath + '/api.php?' + params.join('&'), POSTparams, function(response) {
+					var responseResult = response.ajaxlogin.result;
+					switch(responseResult) {
+					case 'Reset':
+					// password reset
+
+					// we're on edit page
+					if($('#wpPreview').exists() && $('#wpLogin').exists()) {
+					if(typeof(ajaxLogin1)!="undefined" && !confirm(ajaxLogin1)) {
 					break;
-				case 'Success':
-					if(wgCanonicalNamespace == 'Special' && wgCanonicalSpecialPageName == 'RequestWiki') {
-						Event.removeListener('pSubmit', 'click', YAHOO.wikia.AjaxLogin.showLoginPanel);
-						Dom.get('pSubmit').click();
-					} else if(Dom.get('wpPreview') && Dom.get('wpLogin')) {
-						if (Dom.get('wikiDiff') && (Dom.get('wikiDiff').childNodes.length > 0)) {
-							Dom.get('wpDiff').click();
+					}
+					}
+
+					// change the action of the AjaxLogin form
+					$('#userajaxloginform').attr('action', wgServer + wgScriptPath + '/index.php?title=Special:Userlogin&action=submitlogin&type=login');
+
+					// remove AJAX functionality from login form
+					AjaxLogin.form.unbind('submit', this.formSubmitHandler);
+
+					// unblock and submit the form
+					AjaxLogin.blockLoginForm(false);
+					$('#userajaxloginform').submit();
+					break;
+
+					case 'Success':
+
+					// Bartek: tracking
+
+					if( AjaxLogin.action == 'password'  ) {
+						WET.byStr(AjaxLogin.WET_str + '/emailpassword/success');
+					} else {
+						WET.byStr(AjaxLogin.WET_str + '/login/success');
+					}
+						AjaxLogin.doSuccess();
+					break;
+
+					case 'NotExists':
+					AjaxLogin.blockLoginForm(false);
+					$('#wpPassword1n').attr('value', '');
+					$('#wpName1').attr('value', '').focus();
+
+					case 'WrongPass':
+					AjaxLogin.blockLoginForm(false);
+					$('#wpPassword1').attr('value', '').focus();
+
+					default:
+
+                                        // Bartek: tracking
+                                        if( AjaxLogin.action == 'password'  ) {
+                                                if( responseResult == 'OK' ) {
+                                                        WET.byStr(AjaxLogin.WET_str + '/emailpassword/success');
+                                                } else {
+                                                        WET.byStr(AjaxLogin.WET_str + '/emailpassword/failure');
+                                                }
+                                        } else {
+                                                WET.byStr(AjaxLogin.WET_str + '/login/failure');
+                                        }
+
+					AjaxLogin.blockLoginForm(false);
+					AjaxLogin.displayReason(response.ajaxlogin.text);
+					break;
+				}
+		});
+	},
+	handleFailure: function() {
+		AjaxLogin.form.log('AjaxLogin: handleFailure was called');
+	},
+	displayReason: function(reason) {
+		$('#wpError').css('display', '').html(reason);
+		$('#userloginErrorBox3').show();
+	},
+	blockLoginForm: function(block) {
+		AjaxLogin.form.find('input').attr('disabled', (block ? true : false));
+	},
+	ajaxRegisterConfirm: function(ev) {
+		AjaxLogin.form.log('AjaxLogin: ajaxRegisterConfirm()');
+
+		if($('#wpPreview').exists() && $('#wpLogin').exists()) {
+			if(typeof(ajaxLogin2)!="undefined" && !confirm(ajaxLogin2)) {
+				ev.preventDefault();
+			}
+		}
+		WET.byStr(AjaxLogin.WET_str + '/switchtocreateaccount');
+	},
+	showFromDOM: function() {
+		$('#AjaxLoginBoxWrapper').showModal();
+		$('#wpName1Ajax').focus();
+		return true
+	}
+};
+
+
+/* over load for ajaxComboLogin */
+
+if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
+	/* clear repted names */
+
+	/* extend AjaxLogin object for combo ajax login */
+	$.extend(AjaxLogin,{
+				clicked : 0,
+				placeholderID : null,
+				isShow : false,
+				topPos : "130px",
+				getNewTop: function(newHeight){
+					var modalTop = (($(window).height() - newHeight) / 2) + $(window).scrollTop();
+					if (modalTop < $(window).scrollTop() + 20) {
+						return $(window).scrollTop() + 20;
+					} else {
+						return modalTop;
+					}
+				},
+				getNewMarginLeft: function(newWidth){
+					return  -newWidth / 2;
+				},
+				showRegister: function() {
+					AjaxLogin.isShow = true;
+					$('#AjaxLoginBox').css({'height' : ''});
+					$('#wpGoRegister').addClass('ajaxregister-enable');
+					$('#wpGoLogin').removeClass('ajaxregister-enable');
+					$('#AjaxLoginLoginForm').hide();
+			        $("#AjaxLoginBoxWrapper").animate({
+			        	'width': "700px",
+			        	'marginLeft': parseInt(this.getNewMarginLeft(709))+"px",
+			        	'top': AjaxLogin.topPos
+			        }, 500 );
+			        $('#AjaxLoginEndDiv').hide();
+			        $('#AjaxLoginRegisterForm').show("fast");
+
+			        WET.byStr(AjaxLogin.WET_str + '/choosecreateaccount');
+				},
+				showLogin : function() {
+					AjaxLogin.isShow = true;
+					$('#AjaxLoginBox').css({'height' : ''});
+					$('#wpGoLogin').addClass('ajaxregister-enable');
+					$('#wpGoRegister').removeClass('ajaxregister-enable');
+					$('#AjaxLoginRegisterForm').hide();
+					$("#AjaxLoginBoxWrapper").animate({
+				          'width': "320px",
+				          'marginLeft': parseInt(this.getNewMarginLeft(329))+"px",
+				          'top':  AjaxLogin.topPos
+						}, 500 );
+					$('#AjaxLoginEndDiv').hide();
+					$('#AjaxLoginLoginForm').show("fast");
+
+					WET.byStr(AjaxLogin.WET_str + '/chooselogin');
+				},
+				close: function()
+				{
+					$('#AjaxLoginBoxWrapper').hideModal();
+					WET.byStr(AjaxLogin.WET_str + '/close');
+					AjaxLogin.isShow = false;
+				},
+				showFromDOM: function() {
+					if ($('#AjaxLoginButtons').length > 0)
+					{
+						$('#AjaxLoginBoxWrapper').remove();
+						return false;
+					}
+					$('#AjaxLoginBoxWrapper').showModal();
+					$('#wpName1Ajax').focus();
+					return true;
+				},
+				showComboFromDOM: function() {
+					if ($('#AjaxLoginButtons').length > 0)
+					{
+						$('#AjaxLoginBoxWrapper').showModal();
+						$('#wpName1Ajax').focus();
+						$('#AjaxLoginBoxWrapper').css({'top' : AjaxLogin.topPos});
+						return true;
+					}
+					/* remove normal ajax login to show combo (id)*/
+					$('#AjaxLoginBoxWrapper').remove();
+					return false;
+				},
+				setPlaceHolder: function(id) {
+					AjaxLogin.placeholderID = id;
+				},
+				doReload: function(){
+					params = "";
+					if( AjaxLogin.placeholderID !== null){
+						params = "placeholder=" + AjaxLogin.placeholderID;
+					} else {
+        	                                 window.location.reload(true);
+						return;
+					}
+
+					var reload_loc = '';
+				       	if( window.location.href.indexOf("#") > 0 ) {
+						reload_loc = window.location.href.substring( 0, window.location.href.indexOf("#") );
+					} else {
+						reload_loc = window.location.href;
+					}
+					if( "" != params ) {
+						if (window.location.href.indexOf("?") > 0) {
+							window.location.href = reload_loc + ("&" + params);
 						} else {
-							if (Dom.get('wikiPreview') && Dom.get('wikiPreview').childNodes.length == 0) {
-								Dom.get('wpLogin').value = 1;
-							}
-							Dom.get('wpPreview').click();
+							window.location.href = reload_loc + ("?" + params);
 						}
 					} else {
-						if(wgCanonicalSpecialPageName == "Userlogout") {
-							window.location.href = wgServer + wgScriptPath;
-						} else {
-							window.location.reload(true);
-						}
+						window.location.href = reload_loc;
 					}
-					break;
-				case 'NotExists':
-					this.blockLoginForm(false);
-					Dom.get('wpName1').value = '';
-					Dom.get('wpPassword1').value = '';
-					Dom.get('wpName1').focus();
-				case 'WrongPass':
-					this.blockLoginForm(false);
-					Dom.get('wpPassword1').value = '';
-					Dom.get('wpPassword1').focus();
-				default:
-					this.blockLoginForm(false);
-					this.displayReason(response.ajaxlogin.text);
-					break;
-			}
-		},
-		handleFailure: function() {
-			YAHOO.log("YAHOO.wikia.AjaxLogin.handleFailure was called", "error", "AjaxLogin.js");
-		},
-		displayReason: function(reason) {
-			Dom.setStyle('wpError', 'display', '');
-			Dom.get('wpError').innerHTML = reason + '<br/><br/>';
-		},
-		blockLoginForm: function(block) {
-			if(!YAHOO.lang.isBoolean(block)) {
-				YAHOO.log("YAHOO.wikia.AjaxLogin.blockLoginForm was called with parameter which is not boolean", "error", "AjaxLogin.js");
-				return;
-			}
-			if(Dom.get('wpName1'))
-				Dom.get('wpName1').disabled = block;
-			if(Dom.get('wpPassword1'))
-				Dom.get('wpPassword1').disabled = block;
-			if(Dom.get('wpLoginattempt'))
-				Dom.get('wpLoginattempt').disabled = block;
-			if(Dom.get('wpRemember'))
-				Dom.get('wpRemember').disabled = block;
-			if(Dom.get('wpMailmypassword'))
-				Dom.get('wpMailmypassword').disabled = block;
-		},
-		ajaxRegisterConfirm: function(e) {
-			if(Dom.get('wpPreview') && Dom.get('wpLogin')) {
-				if(typeof(ajaxLogin2)!="undefined" && !confirm(ajaxLogin2)) {
-					YAHOO.util.Event.preventDefault(e);
+				},
+				show: function() {
+					AjaxLogin.WET_str = 'signupActions/combopopup';
+					UserRegistration.WET_str = AjaxLogin.WET_str;
+					$('#AjaxLoginBox').makeModal({width: 320, persistent: true, onClose: function(){ WET.byStr(AjaxLogin.WET_str + '/close'); } });
+					setTimeout(function() {
+									$('#AjaxLoginBoxWrapper').css({ 'top' : AjaxLogin.topPos});
+									$('#wpName2Ajax').focus();
+								},100);
+					WET.byStr(AjaxLogin.WET_str + '/open');
 				}
+			});
+	//override submitForm for submitForm
+	if (typeof UserRegistration != 'undefined')
+	{
+		UserRegistration.submitForm2 = function() {
+			if( typeof UserRegistration.submitForm.statusAjax == 'undefined' ) { // java script static var
+				UserRegistration.submitForm.statusAjax = false;
+		    }
+
+			if(UserRegistration.submitForm.statusAjax)
+			{
+				return false;
+			}
+			UserRegistration.submitForm.statusAjax = true;
+			if (UserRegistration.checkForm()) {
+				$("#userloginErrorBox").hide();
+				 $.ajax({
+					   type: "POST",
+					   dataType: "json",
+					   url: window.wgScriptPath  + "/index.php",
+					   data: $("#userajaxregisterform").serialize() + "&action=ajax&rs=createUserLogin",
+					   beforeSend: function(){
+					 		$("#userRegisterAjax").find("input,select").attr("disabled",true);
+				 	   },
+					   success: function(msg){
+				 		   	$("#userRegisterAjax").find("input,select").removeAttr("disabled");
+					 		$("#wpCaptchaWord").val("");
+					 		/* post data to normal form if age < 13 */
+					 		if (msg.type === "redirectQuery") {
+					 			WET.byStr(UserRegistration.WET_str + '/createaccount/failure');
+					 			$('#userajaxregisterform').submit();
+					 			return ;
+					 		}
+
+					 		if( msg.status == "OK" ) {
+					 			$('#AjaxLoginBoxWrapper').closeModal();
+					 			WET.byStr(UserRegistration.WET_str + '/createaccount/success');
+			 					AjaxLogin.doSuccess();
+					 			return ;
+					 		}
+
+					 		WET.byStr(UserRegistration.WET_str + '/createaccount/failure');
+					 		$('#userloginInnerErrorBox').empty().append(msg.msg);
+					 		$("#userloginErrorBox").show();
+					 		$(".captcha img").attr("src",msg.captchaUrl);
+					 		$("#wpCaptchaId").val(msg.captcha);
+					 		UserRegistration.submitForm.statusAjax = false;
+
+					   }
+					 });
+			} else {
+				$("#userloginErrorBox").show();
+				WET.byStr(UserRegistration.WET_str + '/createaccount/failure');
+				UserRegistration.submitForm.statusAjax = false;
 			}
 		}
 	}
-
-	Event.onDOMReady(YAHOO.wikia.AjaxLogin.init, YAHOO.wikia.AjaxLogin, true);
-
-	})();
 }
+
+
