@@ -31,6 +31,13 @@ $wgHooks['LinksUpdateComplete'][] = 'MyHome::getInserts';
 // i18n
 $wgExtensionMessagesFiles['MyHome'] = $dir . 'MyHome.i18n.php';
 
+if (!empty($wgEnableActivityFeedApiFeed)) {
+	$wgAutoloadClasses["ApiQueryActivityFeed"] = $dir . "ApiQueryActivityFeed.php";
+	$wgAPIListModules["activityfeed"] = "ApiQueryActivityFeed";
+	$wgAutoloadClasses["ApiFeedActivityFeed"] = $dir . "ApiFeedActivityFeed.php";
+	$wgAPIModules["feedactivityfeed"] = "ApiFeedActivityFeed";
+}
+
 // Ajax dispatcher
 $wgAjaxExportList[] = 'MyHomeAjax';
 function MyHomeAjax() {
