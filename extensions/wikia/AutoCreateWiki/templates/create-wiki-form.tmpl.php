@@ -285,9 +285,11 @@ $(function () {
 <script type="text/javascript" src="<?=$wgExtensionsPath?>/wikia/AutoCreateWiki/js/autocreatewiki.js?<?=$wgStyleVersion?>"></script>
 <script type="text/javascript">
 /*<![CDATA[*/
-$(function () { 
+$(function () {
 	$.loadYUI( function() {
 		if (YD.get('userloginRound')) {
+			// TODO: FBConnect: Make sure this still works now that the YUI version of AjaxLogin has been removed.  This login/signup part of CreateWiki probably just needs to be rewritten completely to re-use other code.
+			/*
 			__showLoginPanel = function(e) {
 				var ifr = YD.get('awc-process-login');
 				var titleUrl = '<?=$mTitle->getLocalURL()."/Caching".(( $mLanguage != 'en' ) ? '?uselang=' . $mLanguage : '')?>';
@@ -300,12 +302,15 @@ $(function () {
 				titleUrl += "&wiki-category=" + wikiCategory.value;
 				titleUrl += "&wiki-language=" + wikiLanguage.value;
 				ifr.src = titleUrl;
-				YAHOO.wikia.AjaxLogin.showLoginPanel(e);
+
+				openLogin(e);
+
 				return false;
 			}
-	
-			YE.addListener('AWClogin', 'click', __showLoginPanel);
-			YE.addListener('login', 'click', __showLoginPanel);
+			*/
+
+			YE.addListener('AWClogin', 'click', openLogin);
+			YE.addListener('login', 'click', openLogin);
 		}
 	});
 });

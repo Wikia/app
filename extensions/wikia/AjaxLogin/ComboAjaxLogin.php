@@ -148,7 +148,7 @@ function createUserLogin(){
 	return $response;
 }
 
-		
+
 class AjaxLoginForm extends LoginForm {
 	var $mActionType;
 	var $ajaxTemplate;
