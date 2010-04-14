@@ -144,6 +144,7 @@ function openUserMenu(event) {
 }
 
 // AjaxLogin
+// TODO: SWC: FIXME: REMOVE! This is deprecated in favor of the showComboAjaxForPlaceHolder (I think... but clean it out all the way first).
 function openLogin(event) {
 
 	if ( typeof openLogin.statusAjaxLogin == 'undefined' ) { // java script static var
@@ -171,7 +172,7 @@ function openLogin(event) {
 	}
 	openLogin.statusAjaxLogin = true;
 	$().getModal(window.wgScript + '?action=ajax&rs=GetAjaxLogin&uselang=' + window.wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion,  false, {callback: function() {
-			$.getScript(wgExtensionsPath + '/wikia/AjaxLogin/AwesomeAjaxLogin.js?' + wgStyleVersion, function() {
+			$.getScript(wgExtensionsPath + '/wikia/AjaxLogin/AjaxLogin.js?' + wgStyleVersion, function() {
 
 				// should not happen - but sometimes it does )-: rt#32793
 				if ( (typeof AjaxLogin == 'undefined') || !(typeof AjaxLogin.init == 'function') ) {
