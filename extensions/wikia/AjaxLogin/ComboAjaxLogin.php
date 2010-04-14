@@ -57,7 +57,7 @@ $wgAjaxExportList[] = 'getRegisterJS';
 function getRegisterJS(){
 	$response = new AjaxResponse();
 	$response->addText( AjaxLoginForm::getRegisterJS());
-	$response->addText( file_get_contents(dirname( __FILE__ ) . '/AwesomeAjaxLogin.js') );
+	$response->addText( file_get_contents(dirname( __FILE__ ) . '/AjaxLogin.js') );
 	
 	header("X-Pass-Cache-Control: s-maxage=315360000, max-age=315360000");	
 	$response->setCacheDuration( 3600 * 24 * 365);
