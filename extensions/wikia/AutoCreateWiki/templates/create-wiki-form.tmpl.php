@@ -289,6 +289,7 @@ $(function () {
 	$.loadYUI( function() {
 		if (YD.get('userloginRound')) {
 			// TODO: FBConnect: Make sure this still works now that the YUI version of AjaxLogin has been removed.  This login/signup part of CreateWiki probably just needs to be rewritten completely to re-use other code.
+			//					What were all these variables being set up for?
 			/*
 			__showLoginPanel = function(e) {
 				var ifr = YD.get('awc-process-login');
@@ -303,7 +304,7 @@ $(function () {
 				titleUrl += "&wiki-language=" + wikiLanguage.value;
 				ifr.src = titleUrl;
 
-				openLogin(e);
+				openLogin(e); // THIS WASN'T IN THE YUI VERSION, THE ABOVE AND BELOW WERE
 
 				return false;
 			}
