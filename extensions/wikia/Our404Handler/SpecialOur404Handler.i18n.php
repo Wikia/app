@@ -48,19 +48,36 @@ N'eo ket bet kavet ar pennad '''$1'''.
 );
 
 /** German (Deutsch)
+ * @author LWChris
  * @author McDutchie
  * @author Merlissimo
  * @author Tim 'Avatar' Bartel
  */
 $messages['de'] = array(
-	'our404handler' => 'Error 404: Seite nicht gefunden!',
-	'our404handler-oops' => 'Die Seite nach der du gesucht hast, konnte nicht gefunden werden.',
+	'our404handler' => 'Fehler 404: Seite nicht gefunden!',
+	'our404handler-oops' => 'Dies sind nicht die Seiten, die du gesucht hast. Versuche eine andere.',
 	'message404' => "'''Es tut uns leid, aber die Seite, die du angefordert hast, existiert nicht.'''
+
 Der Artikel '''$1''' konnte nicht gefunden werden.
 
-* Vielleicht hilft der Artikel [[$2]] weiter.
-* Du kannst das Suchfeld benutzen.
-* Um auf die Hauptseite zu wechseln, klicke den folgenden Link: [{{SERVER}} {{SITENAME}}]",
+* Vielleicht hilft dir der Artikel [[$2]] weiter
+* Du kannst das Suchfeld auf der linken Seite benutzen
+* Um zur Hauptseite zu gelangen, klicke auf diesen Link: [{{SERVER}} {{SITENAME}}]",
+);
+
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'our404handler' => 'Fehler 404: Seite nicht gefunden!',
+	'our404handler-oops' => 'Dies sind nicht die Seiten, die Sie gesucht haben. Versuchen Sie eine andere.',
+	'message404' => "'''Es tut uns leid, aber die Seite, die Sie angefordert haben, existiert nicht.'''
+
+Der Artikel '''$1''' konnte nicht gefunden werden.
+
+* Vielleicht hilft Ihnen der Artikel [[$2]] weiter
+* Sie können das Suchfeld auf der linken Seite benutzen
+* Um zur Hauptseite zu gelangen, klicken Sie auf diesen Link: [{{SERVER}} {{SITENAME}}]",
 );
 
 /** Greek (Ελληνικά)
@@ -340,9 +357,17 @@ $messages['pdc'] = array(
 
 /** Polish (Polski)
  * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
+ * @author Sp5uhe
  */
 $messages['pl'] = array(
 	'our404handler' => 'Błąd 404: Nie odnaleziono strony!',
+	'our404handler-oops' => 'To nie jest strona, której szukasz. Przejdź na inną.',
+	'message404' => "'''Niestety, ale z jakiegoś powodu strona, którą wybrałeś nie istnieje.'''
+
+Artykułu '''$1''' nie można odnaleźć.
+* Możesz sprawdzić artykuł [[$2]]
+* Możesz również skorzystać z wyszukiwarki po lewej stronie
+* Aby przejść na stronę główną tej witryny, kliknij link [{{SERVER}} {{SITENAME}}]",
 );
 
 /** Piedmontese (Piemontèis)
@@ -405,6 +430,13 @@ $messages['ru'] = array(
 * Вы можете попробовать статью [[$2]].
 * Вы можете воспользоваться окном поиска в левой части страницы.
 * Чтобы перейти на главную страницу этого сайта, нажмите на данную ссылку [{{SERVER}} {{SITENAME}}].",
+);
+
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'our404handler' => 'Napaka 404: Strani ni mogoče najti!',
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))

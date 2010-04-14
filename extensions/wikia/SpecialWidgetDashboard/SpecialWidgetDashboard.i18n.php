@@ -15,10 +15,25 @@ $messages['br'] = array(
 	'widgetdashboard-description' => "Ar bajenn-mañ a dalvez da arnodiñ ho widgetoù o vont en-dro. Evit gwelet roll ar widgetoù a c'haller kaout war [[Special:Widgets]].",
 );
 
+/** Catalan (Català)
+ * @author Paucabot
+ */
+$messages['ca'] = array(
+	'widgetdashboard-description' => 'Aquesta pàgina serveix com a lloc per provar el funcionament dels teus ginys. Per veure una llista de tots els ginys disponibles aneu a [[Special:Widgets]].',
+);
+
 /** German (Deutsch) */
 $messages['de'] = array(
 	'widgetdashboard-wrong-skin' => '<p>Die Widget-Verwaltung funktioniert am besten im <a href="./Special:WidgetDashboard?useskin=monaco">Monaco-Skin</a>.</p><p>Bitte passe <a href="./Special:Preferences">deine Einstellungen</a> an, um dieses Tool zu benutzen.</p>',
 	'widgetdashboard-description' => 'Diese Seite dient zum Testen deiner Widgets. Um eine Liste aller Widgets zu sehen, besuche [[Special:Widgets]].',
+);
+
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'widgetdashboard-wrong-skin' => '<p>Die Widget-Verwaltung funktioniert am besten im <a href="./Special:WidgetDashboard?useskin=monaco">Monaco-Skin</a>.</p><p>Bitte passen Sie <a href="./Special:Preferences">Ihre Einstellungen</a> an, um dieses Tool zu benutzen.</p>',
+	'widgetdashboard-description' => 'Diese Seite dient zum Testen Ihrer Widgets. Um eine Liste aller Widgets zu sehen, besuchen Sie [[Special:Widgets]].',
 );
 
 /** Spanish (Español) */

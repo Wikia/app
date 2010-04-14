@@ -26,11 +26,31 @@ $messages['br'] = array(
 	'sf-link-tooltip' => 'Rannañ ar pennad-mañ gant ho mignoned',
 );
 
-/** German (Deutsch) */
+/** Catalan (Català)
+ * @author Paucabot
+ */
+$messages['ca'] = array(
+	'sf-link' => 'Comparteix aquest article',
+	'sf-link-popup' => 'Comparteix aquest article',
+	'sf-link-tooltip' => 'Comparteix aquest article amb els teus amics',
+);
+
+/** German (Deutsch)
+ * @author LWChris
+ */
 $messages['de'] = array(
 	'sf-link' => 'Artikel teilen',
-	'sf-link-popup' => 'Verweise auf diesen Artikel',
-	'sf-link-tooltip' => 'Weise deine Freunde auf diesen Artikel hin.',
+	'sf-link-popup' => 'Diesen Artikel teilen',
+	'sf-link-tooltip' => 'Teile diesen Artikel mit deinen Freunden',
+);
+
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'sf-link' => 'Artikel teilen',
+	'sf-link-popup' => 'Diesen Artikel teilen',
+	'sf-link-tooltip' => 'Teilen Sie diesen Artikel mit Ihren Freunden',
 );
 
 /** Spanish (Español) */

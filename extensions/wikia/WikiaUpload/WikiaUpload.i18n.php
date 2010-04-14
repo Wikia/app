@@ -49,6 +49,13 @@ $messages['br'] = array(
 	'wikiaupload' => 'Enporzhiadenn Wikia',
 );
 
+/** Catalan (Català)
+ * @author Paucabot
+ */
+$messages['ca'] = array(
+	'wikiaupload' => 'Carrega a Wikia',
+);
+
 /** Czech (Česky)
  * @author Mr. Richard Bolla
  */
@@ -60,6 +67,13 @@ $messages['cs'] = array(
  * @author LWChris
  */
 $messages['de'] = array(
+	'wikiaupload' => 'Wikia-Upload',
+);
+
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
 	'wikiaupload' => 'Wikia-Upload',
 );
 
@@ -121,6 +135,13 @@ $messages['ia'] = array(
 	'wikiaupload' => 'Incargamento in Wikia',
 );
 
+/** Italian (Italiano)
+ * @author Civvì
+ */
+$messages['it'] = array(
+	'wikiaupload' => 'Wikia upload',
+);
+
 /** Japanese (日本語)
  * @author Tommy6
  */
@@ -169,6 +190,13 @@ $messages['no'] = array(
  */
 $messages['oc'] = array(
 	'wikiaupload' => 'Impòrt wikia',
+);
+
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'wikiaupload' => 'Wikia — przesyłanie plików',
 );
 
 /** Piedmontese (Piemontèis)

@@ -104,6 +104,28 @@ $messages['de'] = array(
 	'multilookuplastedit' => 'Letzte Bearbeitung mit dieser IP-Adresse:',
 );
 
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'multilookup' => 'Multiaccount Suche',
+	'multilookupstitle' => 'Multiaccount Suche',
+	'multilookupselectuser' => 'Suche nach Konten von derselben IP-Adresse in mehreren Wikis',
+	'multilookupgo' => 'Suchen',
+	'multilookupnotspecify' => 'Sie haben noch keine IP angegeben',
+	'multilookupnext' => 'Nächste',
+	'multilookupprevious' => 'Vorherige',
+	'multilookupnbrresult' => 'Anzahl der Ergebnisse:',
+	'multilookupinvalidresults' => 'Ungültige Ergebnisse!',
+	'multilookupnoresultfound' => 'Kein Ergebnis gefunden!',
+	'multilookupwiki' => 'Wiki',
+	'multilookuplink' => 'Beiträge-Link',
+	'multilookupdetails' => 'Details anzeigen',
+	'multilookuplistwikiainfo' => 'Liste von Wikis, in denen Artikel bearbeitet wurden von Benutzer mit der IP-Adresse: <b>$1</b>',
+	'multilookupinvaliduser' => '<p class="error">IP-Adresse "<b>$1</b>" existiert nicht. Überprüfen Sie die angegebene IP-Adresse auf mögliche Tippfehler.</p>',
+	'multilookuplastedit' => 'Letzte Bearbeitung mit dieser IP-Adresse:',
+);
+
 /** Spanish (Español)
  * @author Translationista
  */
@@ -219,6 +241,14 @@ $messages['ia'] = array(
 	'multilookuplistwikiainfo' => 'Lista de wikis ubi articulos ha essite modificate per usatores con le adresse IP: <b>$1</b>',
 	'multilookupinvaliduser' => '<p class="error">Le adresse IP "<b>$1</b>" non existe. Verifica que le adresse IP date non ha errores.</p>',
 	'multilookuplastedit' => 'Ultime modification desde iste adresse IP:',
+);
+
+/** Italian (Italiano) */
+$messages['it'] = array(
+	'multilookupgo' => 'Vai',
+	'multilookupnext' => 'succ',
+	'multilookupnoresultfound' => 'Valide risultati!',
+	'multilookupwiki' => 'Wiki',
 );
 
 /** Japanese (日本語)

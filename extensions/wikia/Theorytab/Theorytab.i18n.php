@@ -33,9 +33,26 @@ $messages['br'] = array(
 	'theorytab-parent-title' => '',
 );
 
-/** German (Deutsch) */
+/** Catalan (Català)
+ * @author Paucabot
+ */
+$messages['ca'] = array(
+	'theorytab-title' => 'Teoria',
+);
+
+/** German (Deutsch)
+ * @author LWChris
+ */
 $messages['de'] = array(
-	'theorytab-title' => 'Theorien',
+	'theorytab-title' => 'Theorie',
+	'theorytab-parent-title' => 'Hauptartikel',
+);
+
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'theorytab-title' => 'Theorie',
 	'theorytab-parent-title' => 'Hauptartikel',
 );
 
@@ -142,6 +159,14 @@ $messages['oc'] = array(
 $messages['pms'] = array(
 	'theorytab-title' => 'Teorìa',
 	'theorytab-parent-title' => 'Artìcol pare',
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'theorytab-title' => 'Teoria',
+	'theorytab-parent-title' => 'Artigo principal',
 );
 
 /** Brazilian Portuguese (Português do Brasil) */

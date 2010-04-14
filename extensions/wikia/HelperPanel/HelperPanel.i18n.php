@@ -44,6 +44,14 @@ $messages['de'] = array(
 	'helperPanel_widgets' => 'Meine Widgets',
 );
 
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'helperPanel_help' => 'Hilfe-Widget',
+	'helperPanel_widgets' => 'Meine Widgets',
+);
+
 /** Spanish (Español)
  * @author Translationista
  */
@@ -123,6 +131,14 @@ $messages['no'] = array(
 $messages['oc'] = array(
 	'helperPanel_help' => "Widget d'ajuda",
 	'helperPanel_widgets' => 'Mos widgets',
+);
+
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'helperPanel_help' => 'Pomoc dla widżetów',
+	'helperPanel_widgets' => 'Moje widżety',
 );
 
 /** Piedmontese (Piemontèis)

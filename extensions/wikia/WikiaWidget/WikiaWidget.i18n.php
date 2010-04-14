@@ -41,6 +41,13 @@ $messages['br'] = array(
 	'wikiawidget' => 'Widgetoù wikia',
 );
 
+/** Catalan (Català)
+ * @author Paucabot
+ */
+$messages['ca'] = array(
+	'wikiawidget' => 'Ginys de Wikia',
+);
+
 /** Czech (Česky)
  * @author Mr. Richard Bolla
  */
@@ -52,6 +59,13 @@ $messages['cs'] = array(
  * @author LWChris
  */
 $messages['de'] = array(
+	'wikiawidget' => 'Wikia Widgets',
+);
+
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
 	'wikiawidget' => 'Wikia Widgets',
 );
 
@@ -106,6 +120,13 @@ $messages['ia'] = array(
 	'wikiawidget' => 'Widgets de Wikia',
 );
 
+/** Italian (Italiano)
+ * @author Civvì
+ */
+$messages['it'] = array(
+	'wikiawidget' => 'Wikia widget',
+);
+
 /** Japanese (日本語)
  * @author Tommy6
  * @author 青子守歌
@@ -148,6 +169,13 @@ $messages['no'] = array(
  */
 $messages['oc'] = array(
 	'wikiawidget' => 'Widgets wikia',
+);
+
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'wikiawidget' => 'Wikia — widgety',
 );
 
 /** Piedmontese (Piemontèis)

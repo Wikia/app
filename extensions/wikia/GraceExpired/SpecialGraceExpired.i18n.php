@@ -46,6 +46,17 @@ $messages['de'] = array(
 Aktivitäten bei der Bewertung von Seiten werden hier ''nicht'' berücksichtigt.",
 );
 
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'graceexpired' => 'Grace abgelaufen',
+	'graceexpired-row' => '$1 (in $2, zuletzt bearbeitet am $3)',
+	'graceexpired-header' => "Diese Seite listet alle Versionen, die entweder [[:Category:Abandoned|verlassen]], [[:Category:Trash builds|Müll]], [[:Category:Build stubs|unvollständig]] oder [[:Category:Trial Builds|experimentell]] sind, und seit mindestens zwei Wochen nicht bearbeitet wurden.
+
+Aktivitäten bei der Bewertung von Seiten werden hier ''nicht'' berücksichtigt.",
+);
+
 /** Spanish (Español)
  * @author Translationista
  */
@@ -83,6 +94,10 @@ A actividade nas páxinas de avaliación '''non''' se ten en conta aquí.",
  */
 $messages['hu'] = array(
 	'graceexpired' => 'A türelmi idő lejárt',
+	'graceexpired-row' => '$1 ($2, utolsó szerkesztés: $3)',
+	'graceexpired-header' => "Az összes [[:Category:Abandoned|elhagyatott]], [[:Category:Trash_builds|kuka]], [[:Category:Build stubs|csonk]] vagy [[:Category:Trial Builds|kísérleti]] build, amit legalább két hete nem szerkesztettek.
+
+A szavazási lapokon való aktivitás itt ''nem'' számít.",
 );
 
 /** Interlingua (Interlingua)
@@ -123,6 +138,9 @@ Er wordt ''geen rekening gehouden'' met beoordelingen van pagina's.",
  */
 $messages['no'] = array(
 	'graceexpired-row' => '$1 (i $2, sist endret $3)',
+	'graceexpired-header' => "Denne siden lister opp alle sider som enten er [[:Category:Abandoned|forlatt]], [[:Category:Trash_builds|søppel]], [[:Category:Build stubs|stubber]] eller [[:Category:Trial Builds|tester]], og som ikke har blitt redigert på minst to uker.
+
+Aktivitet på karaktersider er ''ikke'' tatt hensyn til her.",
 );
 
 /** Occitan (Occitan)

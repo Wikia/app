@@ -115,16 +115,45 @@ $messages['cs'] = array(
  */
 $messages['de'] = array(
 	'dump-database' => 'Datenbank-Dumps',
-	'dump-database-info' => 'Database Dumps können als persönliches Backup (Wiki produziert seperate Backups aller Wikis automatisch) genutzt werden, oder für Wartungsbots.',
+	'dump-database-info' => 'Database Dumps können als persönliches Backup (Wikia produziert automatisch seperate Backups aller Wikis) oder für Wartungsbots genutzt werden',
 	'dump-database-curr-pages' => 'Aktuelle Seiten',
-	'dump-database-curr-pages-info' => '(Diese Version eignet sich am Besten für Bots)',
+	'dump-database-curr-pages-info' => '(Diese Version eignet sich normalerweise am besten für Bots)',
+	'dump-database-full-pages' => 'Aktuelle Seiten und Versionsgeschichte',
+	'dump-database-full-pages-info' => '(Warnung: Diese Datei könnte sehr groß sein)',
+	'dump-database-request' => 'Ein Update beantragen',
+	'dump-database-request-info' => '(Dumps werden normalerweise wöchentlich generiert)',
+	'dump-database-request-submit' => 'Anfrage absenden',
+	'dump-database-request-requested' => 'Anfrage nach Datenbank-Dump gesendet',
+	'dump-database-info-more' => 'Bitte siehe <a href="http://community.wikia.com/wiki/Help:Database_download">hier</a> für weitere Infos.',
+);
+
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'dump-database' => 'Datenbank-Dumps',
+	'dump-database-info' => 'Database Dumps können als persönliches Backup (Wikia produziert automatisch seperate Backups aller Wikis) oder für Wartungsbots genutzt werden',
+	'dump-database-curr-pages' => 'Aktuelle Seiten',
+	'dump-database-curr-pages-info' => '(Diese Version eignet sich normalerweise am besten für Bots)',
 	'dump-database-full-pages' => 'Aktuelle Seiten und deren Versionsgeschichte',
 	'dump-database-full-pages-info' => '(Warnung: Diese Datei könnte sehr groß sein)',
 	'dump-database-request' => 'Ein Update beantragen',
 	'dump-database-request-info' => '(Dumps werden normalerweise wöchentlich generiert)',
 	'dump-database-request-submit' => 'Anfrage absenden',
-	'dump-database-request-requested' => 'Anfrage nach versendet.',
+	'dump-database-request-requested' => 'Anfrage nach Datenbank-Dump gesendet',
 	'dump-database-info-more' => 'Bitte siehe <a href="http://community.wikia.com/wiki/Help:Database_download">hier</a> für weitere Infos.',
+);
+
+/** Greek (Ελληνικά)
+ * @author Crazymadlover
+ */
+$messages['el'] = array(
+	'dump-database-curr-pages' => 'Τρέχουσες σελίδες',
+	'dump-database-full-pages' => 'Τρέχουσες σελίδες και ιστορία',
+	'dump-database-full-pages-info' => '(Προσοχή: αυτό το αρχείο μπορεί να είναι πολύ μεγάλο)',
+	'dump-database-request' => 'Ζητήστε μια ενημέρωση',
+	'dump-database-request-submit' => 'Αποστολή αίτησης',
+	'dump-database-info-more' => 'Παρακαλώ να <a href="http://community.wikia.com/wiki/Help:Database_download">δείτε</a>  για περισσότερες πληροφορίες',
 );
 
 /** Spanish (Español)
@@ -318,6 +347,23 @@ $messages['no'] = array(
 	'dump-database-request-submit' => 'Send forespørsel',
 	'dump-database-request-requested' => 'Forespørsel om databasedump sendt',
 	'dump-database-info-more' => 'Vennligst <a href="http://community.wikia.com/wiki/Help:Database_download">se</a> for mer info',
+);
+
+/** Polish (Polski)
+ * @author Marcin Łukasz Kiejzik
+ */
+$messages['pl'] = array(
+	'dump-database' => 'Zrzuty bazy danych',
+	'dump-database-info' => 'Zrzuty bazy danych mogą być używane jako osobista kopia zapasowa (produkty Wikii automatycznie oddzielają kopie zapasowe ze wszystkich wiki automatycznie) lub przez boty',
+	'dump-database-curr-pages' => 'Obecne strony',
+	'dump-database-curr-pages-info' => '(Ta wersja jest najlepsza dla używania przez boty)',
+	'dump-database-full-pages' => 'Obecne strony i historia',
+	'dump-database-full-pages-info' => '(Ostrzeżenie: plik może być bardzo duży)',
+	'dump-database-request' => 'Wniosek o aktualizację',
+	'dump-database-request-info' => '(Zrzuty są zwykle generowane co tydzień)',
+	'dump-database-request-submit' => 'Wyślij zapytanie',
+	'dump-database-request-requested' => 'Wniosek o wysłanie zrzutu bazy danych',
+	'dump-database-info-more' => 'Proszę zobaczyć<a href="http://community.wikia.com/wiki/Help:Database_download">tę stronę</a> po więcej informacji',
 );
 
 /** Piedmontese (Piemontèis)

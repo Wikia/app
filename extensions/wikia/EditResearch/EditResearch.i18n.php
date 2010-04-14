@@ -48,6 +48,17 @@ $messages['de'] = array(
 	'research_this' => 'Das hier recherchieren',
 );
 
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'search_wikipedia' => 'Wikipedia-Suche',
+	'previous' => 'Vorherige',
+	'research_no_results' => 'Keine Seiten gefunden. Bitte suchen Sie erneut.',
+	'research_wikipedia_title' => 'Ihre Antwort auf Wikipedia recherchieren',
+	'research_this' => 'Das hier recherchieren',
+);
+
 /** Greek (Ελληνικά)
  * @author Περίεργος
  */
@@ -123,6 +134,11 @@ $messages['ia'] = array(
 	'research_no_results' => 'Nulle pagina trovate. Face un altere cerca.',
 	'research_wikipedia_title' => 'Recerca tu responsa in Wikipedia',
 	'research_this' => 'Recercar isto',
+);
+
+/** Italian (Italiano) */
+$messages['it'] = array(
+	'previous' => 'precedenti',
 );
 
 /** Japanese (日本語)

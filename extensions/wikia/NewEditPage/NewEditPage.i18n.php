@@ -37,6 +37,14 @@ $messages['de'] = array(
 	'templatesused-toggle' => '{{PLURAL:$1|$1 Eintrag|$1 Einträge}} anzeigen/ausblenden',
 );
 
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'new-edit-page-preview-notice' => 'Vorschau: Es wurden noch keine Änderungen gespeichert! Scrollen Sie runter zum Editieren.',
+	'templatesused-toggle' => '{{PLURAL:$1|$1 Eintrag|$1 Einträge}} anzeigen/ausblenden',
+);
+
 /** Spanish (Español)
  * @author Translationista
  */
@@ -150,8 +158,11 @@ $messages['oc'] = array(
 	'templatesused-toggle' => 'Afichar/amagar {{PLURAL:$1|$1 element|$1 elements}}',
 );
 
-/** Polish (Polski) */
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
 $messages['pl'] = array(
+	'new-edit-page-preview-notice' => 'Tryb podglądu — żadne zmiany nie zostały jeszcze zapisane! Przewiń do dołu, aby kontynuować edycję.',
 	'templatesused-toggle' => 'Pokaż/ukryj {{PLURAL:$1|1 element|$1 elementów}}',
 );
 

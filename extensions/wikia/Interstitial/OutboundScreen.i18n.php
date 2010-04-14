@@ -35,6 +35,18 @@ Möchtest du zur [[{{MediaWiki:Mainpage}}|Hauptseite]] oder vielleicht auf eine 
 	'outbound-screen-you-are-leaving' => 'Du verlässt jetzt Wikia.',
 );
 
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'outbound-screen-login-text' => '[[Special:UserLogin/signup|Erstellen Sie ein neues Konto]] oder [[Special:UserLogin|melden Sie sich mit Ihrem bestehenden an]] um diese Seite in Zukunft zu überspringen.',
+	'outbound-screen-already-logged-in-no-link' => 'Es wurde kein Ziel gesetzt.
+Es gibt hier nichts zu sehen!
+
+Möchten Sie zur [[{{MediaWiki:Mainpage}}|Hauptseite]] oder vielleicht auf eine [[Special:Random|zufällige Seite]]?',
+	'outbound-screen-you-are-leaving' => 'Sie verlassen jetzt Wikia.',
+);
+
 /** Spanish (Español)
  * @author Crazymadlover
  */

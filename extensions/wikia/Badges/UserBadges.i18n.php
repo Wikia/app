@@ -82,14 +82,16 @@ $messages['br'] = array(
 	'user-badge-save-info' => "M'ho peus c'hoant enrollañ ar c'hemmoù, kit e traoñ ar bajenn ha klikit war ar bouton \"Enrollañ\".",
 );
 
-/** German (Deutsch) */
+/** German (Deutsch)
+ * @author LWChris
+ */
 $messages['de'] = array(
 	'user-badge-title' => 'Benutzer-Sticker',
 	'user-badge-invalid-color' => 'Ungültiger Hex-Wert',
-	'user-badge-show-color' => 'Zeige Details',
-	'user-badge-hide-color' => 'Verstecke Details',
+	'user-badge-show-color' => 'Zeige Farbdetails',
+	'user-badge-hide-color' => 'Verstecke Farbdetails',
 	'user-badge-selected-color' => 'Momentan gewählte Farbe {rgb}',
-	'user-badge-web-color' => 'Näheste websichere Farbe: {rgb}. Klicke zur Auswahl!',
+	'user-badge-web-color' => 'Ähnlichste websichere Farbe: {rgb}. Klicke zur Auswahl!',
 	'user-badge-dialog-title' => 'Bitte wähle eine Farbe',
 	'user-badge-left-align' => 'links',
 	'user-badge-right-align' => 'rechts',
@@ -100,22 +102,57 @@ $messages['de'] = array(
 	'user-badge-use-configurator' => 'Benutze den Konfigurator um einen neuen Sticker zu erstellen!',
 	'user-badge-create' => 'Sticker erstellen:',
 	'user-badge-overwrite-msg' => 'Existierenden Sticker überschreiben',
-	'user-badge-header-body-box' => 'Überschrift und Inhalt',
+	'user-badge-header-body-box' => 'Überschrift und Inhalt:',
 	'user-badge-header-text' => 'Farbe Überschrift:',
 	'user-badge-header-bgcolor' => 'Hintergrundfarbe Überschrift:',
 	'user-badge-body-bgcolor' => 'Hintergrundfarbe:',
 	'user-badge-text-align' => 'Textausrichtung Überschrift:',
-	'user-badge-logo-opt' => 'Bild-Optionen',
-	'user-badge-wikia-logo-pos' => 'Position Wiki-Logo:',
-	'user-badge-small-wikia-logo-pos' => 'Position Wikia-Logo:',
-	'user-badge-label-color' => 'Farbe der Bezeichner:',
+	'user-badge-logo-opt' => 'Bild-Optionen:',
+	'user-badge-wikia-logo-pos' => 'Position Wikia-Logo:',
+	'user-badge-small-wikia-logo-pos' => 'Position kleines Wikia-Logo:',
+	'user-badge-label-color' => 'Farbe Feldnamen:',
 	'user-badge-small-wikia-logo-color' => 'Farbe Wikia-Logo:',
 	'user-badge-data-color' => 'Farbe der Werte:',
 	'user-badge-edits-txt' => 'Bearbeitungen',
 	'user-bagde-copypaste-ext-code' => 'Copy & Paste (externe Seiten)',
 	'user-bagde-copypaste-int-code' => 'Copy & Paste (in diesem Wiki)',
-	'user-bagde-copypaste-int-other-code' => 'Copy & Paste (anderes Wikia-Wiki)',
+	'user-bagde-copypaste-int-other-code' => 'Copy & Paste (anderes Wikia)',
 	'user-badge-save-info' => 'Wenn du die Änderungen speichern möchtest, scrolle bitte zum Ende der Seite und klicke auf "Speichern".',
+);
+
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'user-badge-title' => 'Benutzer-Sticker',
+	'user-badge-invalid-color' => 'Ungültiger Hex-Wert',
+	'user-badge-show-color' => 'Zeige Farbdetails',
+	'user-badge-hide-color' => 'Verstecke Farbdetails',
+	'user-badge-selected-color' => 'Momentan gewählte Farbe {rgb}',
+	'user-badge-web-color' => 'Ähnlichste websichere Farbe: {rgb}. Klicke zur Auswahl!',
+	'user-badge-dialog-title' => 'Bitte wählen Sie eine Farbe',
+	'user-badge-current' => 'Aktueller Sticker',
+	'user-badge-configure' => 'Richten Sie Ihren Sticker ein',
+	'user-badge-not-found' => 'Kein Sticker gefunden!',
+	'user-badge-use-configurator' => 'Benutzen Sie den Konfigurator um einen neuen Sticker zu erstellen!',
+	'user-badge-create' => 'Sticker erstellen:',
+	'user-badge-overwrite-msg' => 'Existierenden Sticker überschreiben',
+	'user-badge-header-body-box' => 'Überschrift und Inhalt:',
+	'user-badge-header-text' => 'Farbe Überschrift:',
+	'user-badge-header-bgcolor' => 'Hintergrundfarbe Überschrift:',
+	'user-badge-body-bgcolor' => 'Hintergrundfarbe:',
+	'user-badge-text-align' => 'Textausrichtung Überschrift:',
+	'user-badge-logo-opt' => 'Bild-Optionen:',
+	'user-badge-wikia-logo-pos' => 'Position Wikia-Logo:',
+	'user-badge-small-wikia-logo-pos' => 'Position kleines Wikia-Logo:',
+	'user-badge-label-color' => 'Farbe Feldnamen:',
+	'user-badge-small-wikia-logo-color' => 'Farbe Wikia-Logo:',
+	'user-badge-data-color' => 'Farbe der Werte:',
+	'user-badge-edits-txt' => 'Bearbeitungen',
+	'user-bagde-copypaste-ext-code' => 'Copy & Paste (externe Seiten)',
+	'user-bagde-copypaste-int-code' => 'Copy & Paste (in diesem Wiki)',
+	'user-bagde-copypaste-int-other-code' => 'Copy & Paste (anderes Wikia)',
+	'user-badge-save-info' => 'Wenn Sie die Änderungen speichern möchten, scrollen Sie bitte zum Ende der Seite und klicken Sie auf "Speichern".',
 );
 
 /** British English (British English)
@@ -139,8 +176,10 @@ $messages['en-gb'] = array(
 /** Spanish (Español)
  * @author Locos epraix
  * @author Pertile
+ * @author Translationista
  */
 $messages['es'] = array(
+	'user-badge-title' => 'Insignia de usuario',
 	'user-badge-invalid-color' => 'Se ingresó un valor hexadecimal inválido',
 	'user-badge-show-color' => 'Mostrar los detalles de los colores',
 	'user-badge-hide-color' => 'Ocultar los detalles del color',
@@ -152,7 +191,23 @@ $messages['es'] = array(
 	'user-badge-not-found' => '¡No se ha encontrado ninguna insignia!',
 	'user-badge-use-configurator' => '¡Use el configurador para crear una nueva insignia!',
 	'user-badge-create' => 'Crear insignia:',
+	'user-badge-overwrite-msg' => 'Sobreescribir insignia existente',
+	'user-badge-header-body-box' => 'Encabezado y cuerpo:',
+	'user-badge-header-text' => 'Color del texto del encabezado:',
+	'user-badge-header-bgcolor' => 'Color del fondo del encabezado:',
+	'user-badge-body-bgcolor' => 'color del fondo del cuerpo:',
+	'user-badge-text-align' => 'Alineación del texto del encabezado:',
+	'user-badge-logo-opt' => 'Opciones de imagen:',
+	'user-badge-wikia-logo-pos' => 'Posición del logo de Wikia:',
+	'user-badge-small-wikia-logo-pos' => 'Posición del logo pequeño de Wikia:',
+	'user-badge-label-color' => 'Color de la etiqueta (nombre de usuario, ediciones):',
+	'user-badge-small-wikia-logo-color' => 'Color del logo de Wikia:',
+	'user-badge-data-color' => 'Color de la información:',
 	'user-badge-edits-txt' => 'Ediciones',
+	'user-bagde-copypaste-ext-code' => 'copiar y pegar (sitios externos):',
+	'user-bagde-copypaste-int-code' => 'Copiar y pegar (esta Wikia)',
+	'user-bagde-copypaste-int-other-code' => 'Copiar y pegar (otra Wikia)',
+	'user-badge-save-info' => 'Si deseas guardar los cambios, ve al final de la página y haz clic sobre el botón "Guardar"',
 );
 
 /** Finnish (Suomi)

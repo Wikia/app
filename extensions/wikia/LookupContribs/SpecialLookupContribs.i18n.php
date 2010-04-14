@@ -55,10 +55,12 @@ Check given username for possible typos.</p>',
 );
 
 /** Message documentation (Message documentation)
+ * @author EugeneZelenko
  * @author Siebrand
  */
 $messages['qqq'] = array(
 	'lookupcontribsshowpages' => 'If $1 is a number, this should support plural.',
+	'lookupcontribscontent' => '{{Identical|Content}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -90,6 +92,14 @@ $messages['af'] = array(
 	'right-lookupcontribs' => 'Kyk na gebruiker se globale wysigings',
 	'lookupcontribsshowpages' => 'Alle bladsye ($1 naamruimtes)',
 	'lookupcontribscontent' => 'inhoud',
+);
+
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'lookupcontribswikidbname' => 'Назва базы зьвестак',
+	'lookupcontribscontent' => 'зьмест',
 );
 
 /** Breton (Brezhoneg)
@@ -187,8 +197,57 @@ Bitte überprüfe den angegebenen Benutzernamen auf mögliche Tippfehler.</p>',
 	'lookupcontribscontent' => 'Inhalt',
 );
 
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'lookupcontribs' => 'Beiträge ansehen',
+	'lookupcontribstitle' => 'Beiträge ansehen',
+	'lookupcontribsrecentcontributions' => 'Kürzliche Beiträge von $1',
+	'lookupcontribsfinalcontributions' => 'Letzte Beiträge von $1',
+	'lookupcontribshelp' => 'Diese Spezialseite kann verwendet werden, um Benutzerbeiträge in mehreren Wikias anzuzeigen.
+Geben Sie zur Anzeige der Liste den Benutzernamen unten ein.',
+	'lookupcontribusernotspecify' => 'Sie haben noch keinen Benutzer angegeben',
+	'lookupcontribsselectuser' => 'Benutzer wählen:',
+	'lookupcontribsselectfor' => 'Auswählen für:',
+	'lookupcontribsdisplaymode' => 'Anzeigemodus:',
+	'lookupcontribsselectmodenormal' => 'kürzliche Beiträge für diesen Benutzer',
+	'lookupcontribsselectmodefinal' => 'letzte Beiträge für diesen Benutzer',
+	'lookupcontribsselectmodeall' => 'alle Beiträge für diesen Benutzer',
+	'lookupcontribsfullurls' => 'vollständige URLs',
+	'lookupcontribslinks' => 'Links zu Beiträgen',
+	'lookupcontribsgo' => 'Anzeigen',
+	'lookupcontribsinvaliduser' => '<p class="error">Der Benutzer "<b>$1</b>" existiert nicht.
+Bitte überprüfen Sie den angegebenen Benutzernamen auf mögliche Tippfehler.</p>',
+	'lookupcontribsinvalidviewmode' => '<p class="error">"<b>$1</b>" ist kein gültiger Anzeigemodus.</p>',
+	'lookupcontribsinvalidmode' => '<p class="error">"<b>$1</b>" ist kein gültiger Modus.</p>',
+	'lookupcontribsselectwikis' => 'Wikis auswählen:',
+	'lookupcontribslistwikiainfo' => 'Liste von Wikis in denen Artikel von <b>$1</b> bearbeitet wurden',
+	'lookupcontribsnoresultfound' => 'Kein Ergebnis gefunden!',
+	'lookupcontribsinvalidresults' => 'Ungültige Ergebnisse!',
+	'lookupcontribswiki' => 'Wiki',
+	'lookupcontribswikidbname' => 'DB-Name',
+	'lookupcontribswikiurl' => 'URL',
+	'lookupcontribswikititle' => 'Titel',
+	'lookupcontribscontribslink' => 'Link zu Beiträgen',
+	'lookupcontribsdetails' => 'Weitere Details für:',
+	'lookupcontribscontribs' => 'Beiträge',
+	'lookupcontribsnbrresult' => 'Anzahl der Ergebnisse:',
+	'lookupcontribsnext' => 'Nächste',
+	'lookupcontribsprevious' => 'Vorherige',
+	'lookupcontribspageremoved' => 'Entfernt:',
+	'lookupcontribsrestore' => 'Wiederherstellen',
+	'lookupcontribslog' => 'Logbücher',
+	'lookupcontribshist' => 'Versionen',
+	'lookupcontribsdiff' => 'Unterschied',
+	'right-lookupcontribs' => 'Globale Beiarbeitungen des Benutzer anzeigen',
+	'lookupcontribsshowpages' => 'Alle Seiten ($1 Namensräume)',
+	'lookupcontribscontent' => 'Inhalt',
+);
+
 /** Spanish (Español)
  * @author Peter17
+ * @author Translationista
  */
 $messages['es'] = array(
 	'lookupcontribs' => 'Búsqueda de Contribuciones',
@@ -198,6 +257,8 @@ $messages['es'] = array(
 	'lookupcontribshelp' => 'Esta página especial puede ser usada para mostrar las contribuciones de los usuarios en múltiples wikias. Para mostrar la lista, pon un nombre de usuario debajo.',
 	'lookupcontribusernotspecify' => 'No has especificado un usuario aún',
 	'lookupcontribsselectuser' => 'Seleccionar usuario:',
+	'lookupcontribsselectfor' => 'Seleccionar para:',
+	'lookupcontribsdisplaymode' => 'Modo de visualización:',
 	'lookupcontribsselectmodenormal' => 'contribuciones recientes para este usuario',
 	'lookupcontribsselectmodefinal' => 'contribuciones finales para este usuario',
 	'lookupcontribsselectmodeall' => 'todas las contribuciones para este usuario',
@@ -212,6 +273,7 @@ $messages['es'] = array(
 	'lookupcontribsnoresultfound' => '¡No se encontraron resultados!',
 	'lookupcontribsinvalidresults' => '¡Resultados inválidos!',
 	'lookupcontribswiki' => 'Wiki',
+	'lookupcontribswikidbname' => 'Nombre de la BD',
 	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Título',
 	'lookupcontribscontribslink' => 'Enlace a sus contribuciones',
@@ -225,6 +287,8 @@ $messages['es'] = array(
 	'lookupcontribslog' => 'log',
 	'lookupcontribshist' => 'hist',
 	'lookupcontribsdiff' => 'dif',
+	'right-lookupcontribs' => 'Ver las ediciones globales del usuario',
+	'lookupcontribsshowpages' => 'Todas las páginas ($1 espacios de nombre)',
 	'lookupcontribscontent' => 'contenido',
 );
 
@@ -343,7 +407,10 @@ $messages['gl'] = array(
 $messages['hu'] = array(
 	'lookupcontribsselectuser' => 'Felhasználó kiválasztása:',
 	'lookupcontribsdisplaymode' => 'Megjelenítési mód:',
+	'lookupcontribsfullurls' => 'teljes URL-ek',
 	'lookupcontribsgo' => 'Menj',
+	'lookupcontribsselectwikis' => 'Wikik kiválasztása:',
+	'lookupcontribsinvalidresults' => 'Érvénytelen eredmények!',
 	'lookupcontribswiki' => 'Wiki',
 	'lookupcontribswikidbname' => 'Adatbázisnév',
 	'lookupcontribswikiurl' => 'URL',
@@ -401,7 +468,21 @@ $messages['ia'] = array(
 	'lookupcontribscontent' => 'contento',
 );
 
+/** Italian (Italiano) */
+$messages['it'] = array(
+	'lookupcontribsgo' => 'Vai',
+	'lookupcontribswikiurl' => 'URL',
+	'lookupcontribswikititle' => 'Titolo',
+	'lookupcontribscontribs' => 'contributi',
+	'lookupcontribsnext' => 'succ',
+	'lookupcontribsprevious' => 'precedenti',
+	'lookupcontribshist' => 'cron',
+	'lookupcontribsdiff' => 'diff',
+	'lookupcontribscontent' => 'contenuto',
+);
+
 /** Japanese (日本語)
+ * @author Naohiro19
  * @author Tommy6
  */
 $messages['ja'] = array(
@@ -421,8 +502,10 @@ $messages['ja'] = array(
 	'lookupcontribsnbrresult' => '表示件数:',
 	'lookupcontribsnext' => '次',
 	'lookupcontribsprevious' => '前',
+	'lookupcontribslog' => 'ログ',
 	'lookupcontribshist' => '履歴',
 	'lookupcontribsdiff' => '差分',
+	'right-lookupcontribs' => '利用者のグローバル編集を表示',
 );
 
 /** Macedonian (Македонски)
@@ -729,5 +812,12 @@ $messages['sv'] = array(
 	'lookupcontribsnext' => 'nästa',
 	'lookupcontribsprevious' => 'föregående',
 	'lookupcontribsrestore' => 'återställ',
+);
+
+/** Ukrainian (Українська)
+ * @author Тест
+ */
+$messages['uk'] = array(
+	'lookupcontribslog' => 'журнал',
 );
 

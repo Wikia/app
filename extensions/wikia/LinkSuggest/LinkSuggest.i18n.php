@@ -27,8 +27,22 @@ $messages['br'] = array(
 	'tog-disablelinksuggest' => 'Chomp hep diskouez al liammoù kinniget',
 );
 
+/** Catalan (Català)
+ * @author Paucabot
+ */
+$messages['ca'] = array(
+	'tog-disablelinksuggest' => "No mostris suggeriments d'enllaços",
+);
+
 /** German (Deutsch) */
 $messages['de'] = array(
+	'tog-disablelinksuggest' => 'Keine Link-Vorschläge anzeigen',
+);
+
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
 	'tog-disablelinksuggest' => 'Keine Link-Vorschläge anzeigen',
 );
 
@@ -131,6 +145,13 @@ $messages['oc'] = array(
 	'tog-disablelinksuggest' => 'Far pas veire los ligams suggerits',
 );
 
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'tog-disablelinksuggest' => 'Nie pokazuj sugerowanych linków',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  */
@@ -169,6 +190,13 @@ $messages['ru'] = array(
  */
 $messages['sr-ec'] = array(
 	'tog-disablelinksuggest' => 'Не показуј предложену везу',
+);
+
+/** Sundanese (Basa Sunda)
+ * @author Kandar
+ */
+$messages['su'] = array(
+	'tog-disablelinksuggest' => 'Sumputkeun usulan tutumbu',
 );
 
 /** Swedish (Svenska)

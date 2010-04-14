@@ -119,6 +119,16 @@ $messages['br'] = array(
 	'textregex-return-mainpage' => "[{{SERVIJER}}$1 distreiñ d'ar roll.]",
 );
 
+/** Catalan (Català)
+ * @author Paucabot
+ */
+$messages['ca'] = array(
+	'textregex-submit-regex' => "Afegiu l'expressió",
+	'textregex-select-default' => '-- Seleccioneu --',
+	'textregex-select-regexlist' => 'vés a la llista',
+	'textregex-invalid-regexid' => 'Expressió no vàlida.',
+);
+
 /** German (Deutsch)
  * @author LWChris
  */
@@ -143,7 +153,7 @@ Versuche es noch einmal.',
 	'textregex-invalid-regex' => 'Ungültiger regulärer Ausdruck.',
 	'textregex-already-added' => '"$1" wurde bereits hinzugefügt',
 	'textregex-nodata-found' => 'Keine Daten gefunden',
-	'textregex-stats-record' => "Word ''$1'' wurde von $2 auf $3 verwendet (''Kommentar: $4'')",
+	'textregex-stats-record' => "Wort ''$1'' wurde von $2 auf $3 verwendet (''Kommentar: $4'')",
 	'textregex-select-subpage' => 'Wähle eine Liste von Phrasen:',
 	'textregex-select-default' => '-- wählen --',
 	'textregex-create-subpage' => 'oder neue Liste erstellen:',
@@ -153,11 +163,74 @@ Versuche es noch einmal.',
 	'textregex-return-mainpage' => '[{{SERVER}}$1 zurück zur Liste]',
 );
 
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'textregex' => 'Text RegEx',
+	'textregex-desc' => '[[Special:textregex/XXXX|Filtern]] Sie ungewollte Phrasen, basierend auf regulären Ausdrücken, aus geänderten Seiten aus',
+	'textregex-page-title' => 'Liste von unerwünschten Ausdrücken',
+	'textregex-error-unblocking' => 'Fehler bei Entsperrung ($1).
+Versuchen Sie es noch einmal.',
+	'textregex-currently-blocked' => "'''Derzeit gesperrte Phrasen:'''",
+	'textregex_nocurrently-blocked' => 'Keine gesperrten Phrasen gefunden',
+	'textregex-addedby-user' => 'hinzugefügt von $1 am $2',
+	'textregex-remove-url' => '[{{SERVER}}$1&id=$2 entfernen]',
+	'textregex-stats-url' => '[{{SERVER}}$1&id=$2 Statistiken]',
+	'textregex-unblock-succ' => 'Entsperrung erfolgreich',
+	'textregex-block-succ' => 'Sperrung erfolgreich',
+	'textregex-unblock-message' => "Phrase '''$1''' ist aus den unerwünschten Ausdrücken entfernt worden.",
+	'textregex-block-message' => "Phrase '''$1''' wurde zu den unerwünschten Ausdrücken hinzugefügt.",
+	'textregex-regex-block' => 'Zu sperrende Phrase:',
+	'textregex-submit-regex' => 'Phrase hinzufügen',
+	'textregex-empty-regex' => 'Geben Sie eine korrekte Phrase zum Sperren an.',
+	'textregex-invalid-regex' => 'Ungültiger regulärer Ausdruck.',
+	'textregex-already-added' => '"$1" wurde bereits hinzugefügt',
+	'textregex-nodata-found' => 'Keine Daten gefunden',
+	'textregex-stats-record' => "Wort ''$1'' wurde von $2 auf $3 verwendet (''Kommentar: $4'')",
+	'textregex-select-subpage' => 'Wählen Sie eine Liste von Phrasen:',
+	'textregex-select-default' => '-- wählen --',
+	'textregex-create-subpage' => 'oder neue Liste erstellen:',
+	'textregex-select-regexlist' => 'gehe zur Liste',
+	'textregex-invalid-regexid' => 'Ungültige Phrase.',
+	'textregex-phrase-statistics' => "Statistiken für \"'''\$1'''\" Phrase (Anzahl von Aufzeichnungen: \$2)",
+	'textregex-return-mainpage' => '[{{SERVER}}$1 zurück zur Liste]',
+);
+
 /** Spanish (Español)
+ * @author Crazymadlover
  * @author Locos epraix
+ * @author Pertile
  */
 $messages['es'] = array(
+	'textregex' => 'Texto de expresión regular',
+	'textregex-desc' => '[[Special:textregex/XXXX|Filtrar]] frases no deseadas en páginas editadas, basadas en expresiones regulares',
+	'textregex-page-title' => 'Lista de expresiones no deseadas',
+	'textregex-error-unblocking' => 'Error al desbloquear ($1).
+Por favor intente nuevamente.',
+	'textregex-currently-blocked' => "'''Frases actualmente bloqueadas:'''",
+	'textregex_nocurrently-blocked' => 'No se encontraron frases bloqueada',
+	'textregex-addedby-user' => 'agregado por $1 en $2',
+	'textregex-remove-url' => '[{{SERVER}}$1&id=$2 remover]',
+	'textregex-stats-url' => '[{{SERVER}}$1&id=$2 estadísticas]',
+	'textregex-unblock-succ' => 'Desbloqueo exitoso',
+	'textregex-block-succ' => 'Bloqueo exitoso',
+	'textregex-unblock-message' => "Frase '''$1''' ha sido removido de las expresiones indeseadas.",
+	'textregex-block-message' => "Frase '''$1''' ha sido agregado a las expresiones indeseadas.",
+	'textregex-regex-block' => 'Frase a bloquear:',
+	'textregex-submit-regex' => 'Agregar frase',
+	'textregex-empty-regex' => 'Dar una frase apropiada para bloquear.',
 	'textregex-invalid-regex' => 'Expresión regular inválida.',
+	'textregex-already-added' => '"$1" ya esta agregada',
+	'textregex-nodata-found' => 'Sin datos encontrados',
+	'textregex-stats-record' => "la palabra ''$1'' fue usada por $2 en $3 (''comentario: $4'')",
+	'textregex-select-subpage' => 'Seleccione una de las listas de frases:',
+	'textregex-select-default' => '-- seleccionar --',
+	'textregex-create-subpage' => 'o crear nueva lista:',
+	'textregex-select-regexlist' => 'ir a la lsita',
+	'textregex-invalid-regexid' => 'Frase inválida',
+	'textregex-phrase-statistics' => "Estadísticas de \"'''\$1'''\"frase (número de registros: \$2)",
+	'textregex-return-mainpage' => '[{{SERVER}}$1 regresar a la lista]',
 );
 
 /** Finnish (Suomi)
@@ -243,12 +316,16 @@ $messages['gl'] = array(
  */
 $messages['hu'] = array(
 	'textregex-page-title' => 'Nemkívánatos kifejezések listája',
+	'textregex-currently-blocked' => "'''Jelenleg blokkolt kifejezések:'''",
+	'textregex_nocurrently-blocked' => 'Nem találhatóak blokkolt kifejezések',
 	'textregex-addedby-user' => 'hozzáadta $1 ekkor: $2',
 	'textregex-unblock-succ' => 'A blokk feloldása sikeres',
 	'textregex-block-succ' => 'A blokk sikeres',
 	'textregex-regex-block' => 'Blokkolandó kifejezés:',
 	'textregex-submit-regex' => 'Reguláris kifejezés hozzáadása',
+	'textregex-empty-regex' => 'Adj meg egy megfelelő blokkolandó kifejezést.',
 	'textregex-invalid-regex' => 'Érvénytelen reguláris kifejezés.',
+	'textregex-already-added' => '„$1” már hozzáadva',
 	'textregex-nodata-found' => 'Nem található adat',
 	'textregex-select-subpage' => 'Válassz egyet a reguláris kifejezések listájából:',
 	'textregex-select-default' => '–– kiválasztás ––',

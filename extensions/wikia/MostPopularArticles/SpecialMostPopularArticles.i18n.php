@@ -38,6 +38,13 @@ $messages['de'] = array(
 	'mostpopulararticles' => 'Häufig geänderte Artikel',
 );
 
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'mostpopulararticles' => 'Häufig geänderte Artikel',
+);
+
 /** Greek (Ελληνικά)
  * @author Περίεργος
  */
@@ -162,6 +169,13 @@ $messages['oc'] = array(
 	'mostpopulararticles' => "Articles mai populars (d'aprèp la banca de donadas)",
 );
 
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'mostpopulararticles' => 'Najbardziej popularne artykuły (na podstawie bazy danych)',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  */
@@ -195,6 +209,13 @@ $messages['roa-tara'] = array(
  */
 $messages['ru'] = array(
 	'mostpopulararticles' => 'Самые популярные статьи (из базы данных)',
+);
+
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'mostpopulararticles' => 'Najbolj priljubljeni članki (iz zbirke podatkov)',
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))

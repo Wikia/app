@@ -40,6 +40,7 @@ $messages['af'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
  */
@@ -48,21 +49,22 @@ $messages['br'] = array(
 	'tog-watchlistdigestclear' => 'Merkañ evel lennet holl pajennoù ma rollad evezhiañ sizhuniek',
 	'globalwatchlist-see-more' => "Mar plij gwirit ho rolloù evezhiañ lec'hel evit diskouez muioc'h a gemmoù",
 	'globalwatchlist-digest-email-subject' => 'Diverrañ ar sizhun',
-	'globalwatchlist-digest-email-body' => "$1 ker,
+	'globalwatchlist-digest-email-body' => '$1 ker,
 
-Setu ur roll eus pajennoù ho roll da heuliañ Wiki zo bet kemmet ar wech diwezhañ ho peus gweladennet al lec'hienn.
+Setu aze roll ho pajennoù evezhiañ war Wikia zo bet kemmet abaoe ar wezh ziwezhañ hoc\'h eus graet war-dro.
 
 $2
 
-Setu ur roll eus pajennoù blog eus ho roll da heuliañ Wiki zo kemmet pe zo bet skrivet evezhiadennoù warno abaoe m'ho peus gweladennet al lec'hienn.
+Setu aze roll ar pajennoù blog war ho rollad evezhiañ Wikia zo bet kemmet pe zo bet skrivet evezhiadennoù warno abaoe m\'hoc\'h eus graet war o zro da ziwezhañ.
 
 £3
-Gweladennit ha kemmit, diouzh an dro...
 
-Wiki
+Kit warno ha degasit kemmoù enno alies...
 
-*evit kemmañ an notennoù skrivet ha kavet gwelloc'h ganeoc'h, gweladennit http://www.wikia.com/wiki/Special:dibaboù gwelloc'h
-*evit merkañ an holl bajennoù evel merket evit diverrañ ar sizhun, daveit da zibab an ivinell «Roll heuliañ » war ho pajenn dibaboù gwelloc'h",
+Wikia
+
+*Evit cheñch penndibaboù kemenn ho roll evezhiañ, kit da welet http://www.wikia.com/wiki/Special:Penndibaboù
+*Evit merkañ holl bajennoù an diverradenn sizhuniek-mañ, grit gant an dibarzh zo evit se en ivinell "Roll evezhiañ" war ho pajenn penndibaboù',
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 evezhiadenn{{PLURAL:$2||}})',
 	'globalwatchlist-no-page-found' => "N'eo bet kavet pajenn ebet.",
 	'globalwatchlist-no-blog-page-found' => "N'eo bet kavet pajenn blog ebet.",
@@ -93,6 +95,36 @@ Wikia
 
 * Du kannst deine Einstellungen zur Benachrichtigung über deine Beobachtungsliste hier anpassen: http://www.wikia.com/wiki/Special:Preferences
 * Um alle Seiten dieses wöchentlichen Überblicks als besucht zu markieren, verwende die Option unter "Beobachtungsliste" in deinen Einstellungen',
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|Kommentar|Kommentare}})',
+	'globalwatchlist-no-page-found' => 'Keine Seite gefunden.',
+	'globalwatchlist-no-blog-page-found' => 'Keine Blogseite gefunden.',
+);
+
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'tog-watchlistdigest' => 'Schicke mir wöchentlich eine Liste aller Seiten, die nach meinem letzten Besuch bearbeitet wurden',
+	'tog-watchlistdigestclear' => 'Markiere alle Seiten der wöchentlichen Zusammenfassung meiner Beobachtungsliste als besucht',
+	'globalwatchlist-see-more' => 'Weitere Änderungen finden Sie auf Ihrer lokalen Beobachtungsliste...',
+	'globalwatchlist-digest-email-subject' => 'Wöchentliche Zusammenfassung',
+	'globalwatchlist-digest-email-body' => 'Hallo $1,
+
+Dies ist eine Liste aller Seiten auf Ihrer Wikia-Beobachtungsliste, die seit Ihrem letzten Besuch bearbeitet wurden.
+
+$2
+
+
+Dies ist eine Liste aller Blogseiten auf Ihrer Wikia-Beobachtungsliste, die seit Ihrem letzten Besuch bearbeitet wurden.
+
+$3
+
+Schauen Sie doch mal rein und bearbeiten Sie sie weiter...
+
+Wikia
+
+* Sie können Ihre Einstellungen zur Benachrichtigung über Ihre Beobachtungsliste hier anpassen: http://www.wikia.com/wiki/Special:Preferences
+* Um alle Seiten dieses wöchentlichen Überblicks als besucht zu markieren, verwenden Sie die Option unter "Beobachtungsliste" in Ihren Einstellungen',
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|Kommentar|Kommentare}})',
 	'globalwatchlist-no-page-found' => 'Keine Seite gefunden.',
 	'globalwatchlist-no-blog-page-found' => 'Keine Blogseite gefunden.',

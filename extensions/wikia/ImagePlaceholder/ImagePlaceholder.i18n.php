@@ -54,6 +54,16 @@ $messages['de'] = array(
 	'imgplc-notinhistory' => 'Du kannst keine Bilder im Verlaufsmodus hinzufügen.',
 );
 
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'imgplc-create' => 'Bild hinzufügen',
+	'imgplc-placeholder' => 'Platzhalter',
+	'imgplc-image' => 'Bild',
+	'imgplc-notinhistory' => 'Sie können keine Bilder im Verlaufsmodus hinzufügen.',
+);
+
 /** Spanish (Español)
  * @author Translationista
  */
@@ -150,6 +160,12 @@ $messages['ia'] = array(
 	'imgplc-notinhistory' => 'Non es possibile adder imagines in modo de historia.',
 );
 
+/** Italian (Italiano) */
+$messages['it'] = array(
+	'imgplc-create' => 'Aggiungi immagine',
+	'imgplc-image' => 'Immagine',
+);
+
 /** Japanese (日本語)
  * @author Tommy6
  */
@@ -188,7 +204,7 @@ $messages['nb'] = array(
  * @author Siebrand
  */
 $messages['nl'] = array(
-	'imgplc-create' => 'Voeg afbeelding toe',
+	'imgplc-create' => 'Afbeelding toevoegen',
 	'imgplc-placeholder' => 'Plaatshouder',
 	'imgplc-image' => 'Afbeelding',
 	'imgplc-notinhistory' => 'U kunt geen afbeelding toevoegen in geschiedenismodus.',
@@ -225,11 +241,14 @@ $messages['oc'] = array(
 	'imgplc-notinhistory' => "Podètz pas apondre cap d'imatge en mòde istoric.",
 );
 
-/** Polish (Polski) */
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
 $messages['pl'] = array(
 	'imgplc-create' => 'Dodaj obrazek',
 	'imgplc-placeholder' => 'Wypełniacz',
 	'imgplc-image' => 'Obrazek',
+	'imgplc-notinhistory' => 'Nie możesz dodać zdjęcia w trybie historii.',
 );
 
 /** Piedmontese (Piemontèis)

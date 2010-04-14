@@ -37,6 +37,26 @@ $messages['de'] = array(
 	'wikiasearch-search-wikia' => 'Wikia durchsuchen',
 );
 
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'wikiasearch-titles-only' => 'Suche nur in Seitentiteln',
+	'wikiasearch-system-error-msg' => 'Aufgrund eines Systemfehlers konnte Ihre Suche nicht abgeschlossen werden',
+	'wikiasearch-search-this-wiki' => 'Nur Wikia Zentrale durchsuchen',
+	'wikiasearch-search-wikia' => 'Wikia durchsuchen',
+);
+
+/** Greek (Ελληνικά)
+ * @author Dada
+ */
+$messages['el'] = array(
+	'wikiasearch-titles-only' => 'Αναζήτηση μόνο στους τίτλους των σελίδων',
+	'wikiasearch-system-error-msg' => 'Εξαιτίας ενός σφάλματος του συστήματος, η αναζήτησή σας δεν ολοκληρώθηκε',
+	'wikiasearch-search-this-wiki' => 'Αναζήτηση μόνο στο Wikia Central',
+	'wikiasearch-search-wikia' => 'Αναζήτηση στο Wikia',
+);
+
 /** Spanish (Español)
  * @author Translationista
  */
@@ -162,6 +182,7 @@ $messages['nl'] = array(
  */
 $messages['no'] = array(
 	'wikiasearch-titles-only' => 'Kun søk i sidetitler',
+	'wikiasearch-system-error-msg' => 'På grunn av en systemfeil kunne ikke søket ditt fullføres',
 	'wikiasearch-search-this-wiki' => 'Søk kun i Wikiasentralen',
 	'wikiasearch-search-wikia' => 'Søk i Wikia',
 );
@@ -174,6 +195,16 @@ $messages['oc'] = array(
 	'wikiasearch-system-error-msg' => "A causa d'una error del sistèma, avèm pas pogut acomplir vòstra recèrca",
 	'wikiasearch-search-this-wiki' => 'Cercar pas que dins Wikia Central',
 	'wikiasearch-search-wikia' => 'Cercar dins Wikia',
+);
+
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'wikiasearch-titles-only' => 'Szukaj wyłącznie w tytułach stron',
+	'wikiasearch-system-error-msg' => 'Ze względu na błąd systemu, wyszukiwanie nie mogło zostać wykonane',
+	'wikiasearch-search-this-wiki' => 'Szukaj wyłącznie w Wikia Central',
+	'wikiasearch-search-wikia' => 'Szukaj w Wikii',
 );
 
 /** Piedmontese (Piemontèis)
@@ -194,6 +225,16 @@ $messages['ps'] = array(
 	'wikiasearch-titles-only' => 'يوازې د مخ په سرليکونو کې پلټل',
 	'wikiasearch-system-error-msg' => 'د غونډال د ستونزو له امله، ستاسې پلټنه نه شي بشپړه کېدای.',
 	'wikiasearch-search-wikia' => 'ويکيا پلټل',
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'wikiasearch-titles-only' => 'Pesquisar apenas nos títulos de página',
+	'wikiasearch-system-error-msg' => 'Não foi possível concluir a sua pesquisa devido a um erro de sistema',
+	'wikiasearch-search-this-wiki' => 'Pesquisar apenas na Wikia Central',
+	'wikiasearch-search-wikia' => 'Pesquisar na Wikia',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

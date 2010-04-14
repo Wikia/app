@@ -66,6 +66,18 @@ $messages['de'] = array(
 	'iwedit-success' => '<p>Link-Erzeugung erfolgreich.</p>',
 );
 
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'iwedit-title' => 'Interwiki-Editor',
+	'iwedit-language-interwikis' => 'nur Sprach-Interwikis',
+	'iwedit-all-interwikis' => 'alle Interwikis',
+	'iwedit-update' => 'Aktualisieren',
+	'iwedit-error' => '<p>Ein Fehler ist aufgetreten.</p>',
+	'iwedit-success' => '<p>Link-Erzeugung erfolgreich.</p>',
+);
+
 /** Spanish (Español)
  * @author Translationista
  */
@@ -134,6 +146,11 @@ $messages['ia'] = array(
 	'iwedit-update' => 'Actualisar',
 	'iwedit-error' => '<p>Un error ha occurrite.</p>',
 	'iwedit-success' => '<p>Creation de ligamine succedite.</p>',
+);
+
+/** Italian (Italiano) */
+$messages['it'] = array(
+	'iwedit-update' => 'Aggiorna',
 );
 
 /** Japanese (日本語)
@@ -250,5 +267,12 @@ $messages['sv'] = array(
 	'iwedit-update' => 'Uppdatera',
 	'iwedit-error' => '<p>Ett fel uppstod.</p>',
 	'iwedit-success' => '<p>Länk skapad.</p>',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'iwedit-all-interwikis' => 'అన్ని అంతర్వికీలు',
 );
 

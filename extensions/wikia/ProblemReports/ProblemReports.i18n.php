@@ -114,10 +114,13 @@ Please rewrite your message.',
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
+ * @author LWChris
  * @author Translationista
  */
 $messages['qqq'] = array(
-	'pr_mailer_go_to_wiki' => 'What does $1 stands for here?',
+	'pr_what_problem_incorrect_content_short' => '{{Identical|Content}}',
+	'pr_describe_problem' => '{{Identical|Message}}',
+	'pr_mailer_go_to_wiki' => '$1 is the URL to the wiki the problem was reported from',
 	'pr_table_description' => '{{Identical|Description}}',
 	'pr_table_comments' => '{{Identical|Comment}}',
 	'pr_table_status' => '{{Identical|Status}}',
@@ -189,6 +192,8 @@ $messages['ar'] = array(
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
+	'pr_what_problem_incorrect_content_short' => 'зьмест',
+	'pr_describe_problem' => 'Паведамленьне',
 	'pr_table_description' => 'Апісаньне',
 	'pr_table_comments' => 'Камэнтары',
 	'pr_table_status' => 'Статус',
@@ -196,6 +201,7 @@ $messages['be-tarask'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -208,6 +214,14 @@ $messages['br'] = array(
 	'prlog_typeentry' => 'en deus kemmet seurt ar gudenn $1 da "$2"',
 	'prlog_removedentry' => 'en deus dilamet ar gudenn $1',
 	'prlog_emailedentry' => 'en deus kaset ur postel da $2 ($3)',
+	'pr_introductory_text' => "Gallout a reer degas kemmoù war ar pep brasañ eus pajennoù ar wiki-mañ ha pedet oc'h d'en ober ha da reizhañ ar fazioù c'hwi hoc'h-unan !
+M'hoc'h eus ezhom skoazell evit se; sellit ouzh [[help:editing|penaos degas kemmoù]] hag ouzh [[help:revert|penaos disteuler ar vandalerezh]].
+
+Evit mont e darempred gant ar skipailh pe kelaouiñ war kudennoù gwirioù aozer, implijit [[w:contact us|pajenn \"mont e darempred ganeomp\" Wikia]].
+
+Drein ar meziant a c'haller kelaouiñ an dud diwar o fenn war ar foromoù.
+
+Ar c'hudennoù dispaket amañ a vo [[Special:ProblemReports|diskouezet war ar wiki]].",
 	'pr_what_problem' => 'Objed',
 	'pr_what_problem_spam' => 'un liamm strob a zo amañ',
 	'pr_what_problem_vandalised' => 'Vandalerezh a zo bet er bajenn-mañ',
@@ -311,16 +325,18 @@ Hier abgeschickte Berichte werden [[Special:ProblemReports|im Wiki anzeigt]].',
 	'pr_describe_problem' => 'Nachricht',
 	'pr_what_page' => 'Name der Seite',
 	'pr_email_visible_only_to_staff' => 'nur sichtbar für Staff',
-	'pr_thank_you' => 'Danke für die Meldung des Problems! [[Special:ProblemReports/$1|Du kannst den aktuellen Status hier verfolgen]].',
-	'pr_thank_you_error' => 'Ein Fehler ist beim Versand der Problemmeldung aufgetreten, bitte probier es später noch einmal.',
+	'pr_thank_you' => 'Danke für die Meldung des Problems!
+
+[[Special:ProblemReports/$1|Du kannst den aktuellen Status hier verfolgen]].',
+	'pr_thank_you_error' => 'Ein Fehler ist beim Versand der Problemmeldung aufgetreten, bitte versuche es später noch einmal...',
 	'pr_spam_found' => 'In deiner Zusammenfassung wurde Spam gefunden. Bitte passe sie an.',
 	'pr_empty_summary' => 'Bitte gib eine kurze Problembeschreibung an',
 	'pr_empty_email' => 'Bitte gib deine E-Mail-Adresse an',
-	'pr_mailer_notice' => 'Die von dir in deinen Einstellungen angegebene E-Mail-Adresse wird im „From“-Header der Mail angegeben, so dass der Empfänger dir antworten kann.',
+	'pr_mailer_notice' => 'Die von dir in deinen Einstellungen angegebene E-Mail-Adresse wird als Absender der Mail angegeben, so dass der Empfänger dir antworten kann.',
 	'pr_mailer_subject' => 'Problembericht über',
 	'pr_mailer_tmp_info' => 'Du kannst die Antwortvorlagen [[MediaWiki:ProblemReportsResponses|hier]] anpassen.',
 	'pr_mailer_to_default' => 'Wikia-Benutzer',
-	'pr_mailer_go_to_wiki' => 'Um eine Mail zu schicken, gehe bitte zum [$1 Wiki, wo das Problem gemeldet wurde].',
+	'pr_mailer_go_to_wiki' => 'Um eine E-Mail zu schicken, gehe bitte zum [$1 Wiki, wo das Problem gemeldet wurde]',
 	'pr_total_number' => 'Gesamtzahl Problemmeldungen',
 	'pr_view_archive' => 'Zeige archivierte Meldungen',
 	'pr_view_all' => 'Zeige alle Meldungen',
@@ -349,10 +365,95 @@ Hier abgeschickte Berichte werden [[Special:ProblemReports|im Wiki anzeigt]].',
 	'pr_remove_ask' => 'Meldung endgültig löschen?',
 	'pr_status_wait' => 'Etwas Geduld...',
 	'pr_read_only' => 'Im Moment können keine neue Berichte ausgefüllt werden, bitte versuche es später erneut.',
-	'pr_msg_exceeded' => 'Das Maximum der Zeichen in diesem Nachrichtenfeld ist 512. Bitte schreibe deine Nachricht neu.',
+	'pr_msg_exceeded' => 'Die maximale Anzahl der Zeichen in diesem Nachrichtenfeld ist 512.
+Bitte schreibe deine Nachricht neu.',
 	'pr_msg_exchead' => 'Die Nachricht ist zu lang',
-	'right-problemreports_action' => 'Zustand und Art der ProblemReports ändern',
-	'right-problemreports_global' => 'Zustand und Art der ProblemReports wikiübergreifend ändern',
+	'right-problemreports_action' => 'Zustand und Art von Problemmeldungen ändern',
+	'right-problemreports_global' => 'Zustand und Art von Problemmeldungen wikiübergreifend ändern',
+);
+
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'problemreports' => 'Liste der Problemmeldungen',
+	'reportproblem' => 'Problem melden',
+	'prlogtext' => 'Problemmeldungs-Logbuch',
+	'prlogheader' => 'Liste gemeldeter Probleme und des jeweiligen Status',
+	'prlog_reportedentry' => 'meldete ein Problem mit $1 ($2)',
+	'prlog_changedentry' => 'markierte Problem $1 als "$2"',
+	'prlog_typeentry' => 'änderte Art des Problems $1 auf "$2"',
+	'prlog_removedentry' => 'löschte Problem $1',
+	'prlog_emailedentry' => 'sandte E-Mail an $2 ($3)',
+	'pr_introductory_text' => 'Die meisten Seiten in diesem Wiki können bearbeitet werden und Sie sind ebenfalls herzlich eingeladen dies zu tun und Fehler selbst zu korrigieren!
+Wenn Sie dabei Hilfe brauchen, lesen Sie die [[help:Editieren|Hilfe zum Bearbeiten]] und [[help:Zurücksetzen|Hilfe zum Zurücksetzen von Vandalismus]].
+
+Um Wikia direkt zu kontaktieren oder Urheberrechtsprobleme zu melden, benutzen Sie bitte die Seite [[Special:Contact|Kontakt zu Wikia]].
+
+Softwarefehler können in den Foren berichtet werden.
+Hier abgeschickte Berichte werden [[Special:ProblemReports|im Wiki anzeigt]].',
+	'pr_what_problem' => 'Betreff',
+	'pr_what_problem_spam' => 'Seite enthält Spam',
+	'pr_what_problem_vandalised' => 'Die Seite wurde vandaliert',
+	'pr_what_problem_incorrect_content' => 'Der Inhalt ist falsch',
+	'pr_what_problem_software_bug' => 'Fehler in der Wiki-Software',
+	'pr_what_problem_other' => 'Sonstiges',
+	'pr_what_problem_select' => 'Bitte wählen Sie die Art des Problems',
+	'pr_what_problem_unselect' => 'Alle',
+	'pr_what_problem_spam_short' => 'Spam',
+	'pr_what_problem_vandalised_short' => 'Vandalismus',
+	'pr_what_problem_incorrect_content_short' => 'Inhalt',
+	'pr_what_problem_software_bug_short' => 'Bug',
+	'pr_what_problem_other_short' => 'Sonstiges',
+	'pr_what_problem_change' => 'Art des Problems ändern',
+	'pr_describe_problem' => 'Nachricht',
+	'pr_what_page' => 'Name der Seite',
+	'pr_email_visible_only_to_staff' => 'nur sichtbar für Staff',
+	'pr_thank_you' => 'Danke für die Meldung des Problems!
+
+[[Special:ProblemReports/$1|Sie können den aktuellen Status hier verfolgen]].',
+	'pr_thank_you_error' => 'Ein Fehler ist beim Versand der Problemmeldung aufgetreten, bitte versuchen Sie es später noch einmal...',
+	'pr_spam_found' => 'In Ihrer Zusammenfassung wurde Spam gefunden. Bitte passen Sie sie an.',
+	'pr_empty_summary' => 'Bitte geben Sie eine kurze Problembeschreibung an',
+	'pr_empty_email' => 'Bitte geben Sie Ihre E-Mail-Adresse an',
+	'pr_mailer_notice' => 'Die von Ihnen in Ihren Einstellungen angegebene E-Mail-Adresse wird als Absender der Mail angegeben, sodass der Empfänger Ihnen antworten kann.',
+	'pr_mailer_subject' => 'Problembericht über',
+	'pr_mailer_tmp_info' => 'Sie können die Antwortvorlagen [[MediaWiki:ProblemReportsResponses|hier]] anpassen.',
+	'pr_mailer_to_default' => 'Wikia-Benutzer',
+	'pr_mailer_go_to_wiki' => 'Um eine Mail zu schicken, gehen Sie bitte zum [$1 Wiki, wo das Problem gemeldet wurde]',
+	'pr_total_number' => 'Gesamtzahl Problemmeldungen',
+	'pr_view_archive' => 'Zeige archivierte Meldungen',
+	'pr_view_all' => 'Zeige alle Meldungen',
+	'pr_view_staff' => 'Zeige Meldungen die Staff-Hilfe benötigen',
+	'pr_raports_from_this_wikia' => 'Zeige nur Problemmeldungen dieses Wikis',
+	'pr_reports_from' => 'Zeige nur Meldungen von',
+	'pr_no_reports' => 'Keine passenden Problemmeldungen gefunden',
+	'pr_sysops_notice' => 'Wenn Sie den Status von Problemmeldungen Ihres Wikis ändern möchten, können Sie das <a href="$1">hier</a> tun...',
+	'pr_table_problem_id' => 'Problem-ID',
+	'pr_table_wiki_name' => 'Wiki-Name',
+	'pr_table_problem_type' => 'Art des Problems',
+	'pr_table_page_link' => 'Seite',
+	'pr_table_date_submitted' => 'Gemeldet am',
+	'pr_table_reporter_name' => 'Gemeldet von',
+	'pr_table_description' => 'Beschreibung',
+	'pr_table_comments' => 'Kommentare',
+	'pr_table_status' => 'Status',
+	'pr_table_actions' => 'Aktionen',
+	'pr_status_0' => 'offen',
+	'pr_status_1' => 'behoben',
+	'pr_status_2' => 'geschlossen',
+	'pr_status_3' => 'benötigt Hilfe von Staff',
+	'pr_status_10' => 'Meldung entfernen',
+	'pr_status_undo' => 'Änderung des Status rückgängig machen',
+	'pr_status_ask' => 'Status der Meldung ändern?',
+	'pr_remove_ask' => 'Meldung endgültig löschen?',
+	'pr_status_wait' => 'Etwas Geduld...',
+	'pr_read_only' => 'Im Moment können keine neue Berichte ausgefüllt werden, bitte versuchen Sie es später erneut.',
+	'pr_msg_exceeded' => 'Die maximale Anzahl der Zeichen in diesem Nachrichtenfeld ist 512.
+Bitte schreibe deine Nachricht neu.',
+	'pr_msg_exchead' => 'Die Nachricht ist zu lang',
+	'right-problemreports_action' => 'Zustand und Art von Problemmeldungen ändern',
+	'right-problemreports_global' => 'Zustand und Art von Problemmeldungen wikiübergreifend ändern',
 );
 
 /** Spanish (Español)
@@ -699,6 +800,7 @@ $messages['hu'] = array(
 	'pr_table_comments' => 'Megjegyzések',
 	'pr_table_status' => 'Állapot',
 	'pr_table_actions' => 'Műveletek',
+	'pr_status_10' => 'jelentés eltávolítása',
 	'pr_status_wait' => 'várj…',
 	'pr_msg_exchead' => 'Az üzenet túl hosszú',
 );
@@ -784,7 +886,27 @@ Defectos in le software pote esser reportate in le foros. Le reportos facite hic
 	'right-problemreports_global' => 'Cambiar le stato e typo de reportos de problemas trans wikis',
 );
 
-/** Japanese (日本語) */
+/** Italian (Italiano) */
+$messages['it'] = array(
+	'pr_what_problem' => 'Oggetto',
+	'pr_what_problem_other' => 'altro',
+	'pr_what_problem_unselect' => 'tutti',
+	'pr_what_problem_incorrect_content_short' => 'contenuto',
+	'pr_what_problem_other_short' => 'altro',
+	'pr_describe_problem' => 'Messaggio',
+	'pr_what_page' => 'Titolo della pagina',
+	'pr_table_page_link' => 'Pagina',
+	'pr_table_description' => 'Descrizione',
+	'pr_table_comments' => 'Commenti',
+	'pr_table_status' => 'Stato',
+	'pr_table_actions' => 'Azioni',
+	'pr_status_2' => 'chiusa',
+);
+
+/** Japanese (日本語)
+ * @author Hosiryuhosi
+ * @author Naohiro19
+ */
 $messages['ja'] = array(
 	'problemreports' => '報告された問題のリスト',
 	'reportproblem' => '問題の報告',
@@ -815,14 +937,19 @@ $messages['ja'] = array(
 	'pr_what_problem_change' => '問題のタイプを変更',
 	'pr_describe_problem' => '詳細',
 	'pr_what_page' => 'ページ名',
+	'pr_email_visible_only_to_staff' => 'スタッフだけを表示',
 	'pr_thank_you' => '報告ありがとうございます!
 
 [[Special:ProblemReports/$1|こちらから修正の確認を行えます]]',
 	'pr_thank_you_error' => 'エラーが発生して、問題の送信が出来ませんでした。あとでもう一度お願いいたします。',
+	'pr_spam_found' => 'スパムはあなたの要約欄の報告で見つかりました。
+要約欄の内容を変更してください。',
 	'pr_empty_summary' => '問題の詳細を入力してください',
 	'pr_empty_email' => 'メールアドレスを入力してください',
 	'pr_mailer_notice' => 'メールを受け取った人が返信できるように、あなたがオプションページで設定したEメールアドレスが送信されるメールの送信元 (From) として設定されます。',
 	'pr_mailer_subject' => '報告された問題について',
+	'pr_mailer_tmp_info' => 'あなたは[[MediaWiki:ProblemReportsResponses|応答用のテンプレートを編集できます]]',
+	'pr_mailer_to_default' => 'ウィキアの利用者',
 	'pr_mailer_go_to_wiki' => 'メールを送信するには[$1 問題が報告されたウィキを訪れる必要があります]。',
 	'pr_total_number' => '報告の総数',
 	'pr_view_archive' => 'アーカイブにされた問題を見る',
@@ -1099,7 +1226,9 @@ Skriv meldingen din på nytt.',
 	'right-problemreports_global' => 'Endre tilstand og type på problemrapporter på tvers av wikier',
 );
 
-/** Polish (Polski) */
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
 $messages['pl'] = array(
 	'problemreports' => 'Lista zgłoszonych problemów',
 	'reportproblem' => 'Zgłoś problem',
@@ -1143,6 +1272,7 @@ Błędy w oprogramowaniu mogą być zgłaszane na forach. Problemy zgłaszane tu
 	'pr_mailer_subject' => 'Zgłoszono problem związany z',
 	'pr_mailer_tmp_info' => 'Możesz edytować schematy odpowiedzi na [[MediaWiki:ProblemReportsResponses|tej stronie]]',
 	'pr_mailer_to_default' => 'Użytkownik Wikii',
+	'pr_mailer_go_to_wiki' => 'Aby wysłać e-mail przejdź na stronę [$1 na której został zgłoszony wiki problem]',
 	'pr_total_number' => 'Łączna liczba raportów',
 	'pr_view_archive' => 'Przejrzyj archiwalne raporty',
 	'pr_view_all' => 'Przeglądaj wszystkie raporty',
@@ -1173,6 +1303,8 @@ Błędy w oprogramowaniu mogą być zgłaszane na forach. Problemy zgłaszane tu
 	'pr_read_only' => 'Nowe zgłoszenia nie mogą zostać teraz dodane, prosimy spróbować później.',
 	'pr_msg_exceeded' => 'Maksymalna liczba znaków w polu Wiadomości wynosi 512, prosimy o zmianę zawartości tego pola.',
 	'pr_msg_exchead' => 'Wiadomość jest zbyt długa',
+	'right-problemreports_action' => 'Zmiana stanu i typu raportów o problemach.',
+	'right-problemreports_global' => 'Zmiana stanu i typu raportów o problemach pomiędzy różnymi wiki',
 );
 
 /** Piedmontese (Piemontèis)

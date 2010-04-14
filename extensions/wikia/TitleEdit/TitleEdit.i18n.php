@@ -25,6 +25,13 @@ $messages['niu'] = array(
 	'titleedit' => 'Fakahakohako',
 );
 
+/** Abkhazian (Аҧсуа)
+ * @author Temuri rajavi
+ */
+$messages['ab'] = array(
+	'titleedit' => 'ариашамҭа',
+);
+
 /** Achinese (Acèh) */
 $messages['ace'] = array(
 	'titleedit' => 'Andam',
@@ -259,6 +266,14 @@ $messages['de'] = array(
 	'titleedit' => 'Bearbeiten',
 );
 
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'titleedit-desc' => 'Fügt Titel Bearbeitungs-Button oben auf den Seiten hinzu',
+	'titleedit' => 'Bearbeiten',
+);
+
 /** Zazaki (Zazaki) */
 $messages['diq'] = array(
 	'titleedit' => 'Bıvurne',
@@ -481,8 +496,11 @@ $messages['hil'] = array(
 	'titleedit' => 'Ilisan',
 );
 
-/** Croatian (Hrvatski) */
+/** Croatian (Hrvatski)
+ * @author Ex13
+ */
 $messages['hr'] = array(
+	'titleedit-desc' => 'Dodaje gumb uredi naslov na vrh stranice',
 	'titleedit' => 'Uredi',
 );
 
@@ -550,8 +568,11 @@ $messages['is'] = array(
 	'titleedit' => 'Breyta',
 );
 
-/** Italian (Italiano) */
+/** Italian (Italiano)
+ * @author Civvì
+ */
 $messages['it'] = array(
+	'titleedit-desc' => 'Aggiunge in cima alla pagina un tasto per modificare il titolo',
 	'titleedit' => 'Modifica',
 );
 
@@ -943,8 +964,11 @@ $messages['pih'] = array(
 	'titleedit' => 'Edet',
 );
 
-/** Polish (Polski) */
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
 $messages['pl'] = array(
+	'titleedit-desc' => 'Dodaje na górze strony przycisk edycji tytułu',
 	'titleedit' => 'edytuj',
 );
 

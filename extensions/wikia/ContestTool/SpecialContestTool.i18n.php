@@ -78,13 +78,39 @@ $messages['de'] = array(
 Beachte, dass die Ergebnisse nirgendwo geloggt werden und momentan nicht ohne Weiteres ohne Tech-Hilfe rückgängig zu machen sind (daran wird gearbeitet).',
 );
 
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'cntool-page-title-editor' => 'ContestTool :: Editor',
+	'cntool-page-title-preview' => 'ContestTool :: Vorschau',
+	'cntool-page-title-select' => 'ContestTool',
+	'cntool-label-select' => 'Geben Sie einen gültigen Seitentitel ein',
+	'cntool-button-preview' => 'Vorschau betrachten',
+	'cntool-button-save' => 'Speichern',
+	'cntool-label-content' => 'Ändern Sie den Artikelinhalt unterhalb:',
+	'cntool-label-preview' => 'Vorschau:',
+	'cntool-label-caveat' => 'Warnung',
+	'cntool-caveat' => 'Diese Erweiterung sollte nicht leichtfertig verwendet werden.
+
+Beachten Sie, dass die Ergebnisse nirgendwo geloggt werden und momentan nicht ohne Weiteres ohne Tech-Hilfe rückgängig zu machen sind (daran wird gearbeitet).',
+);
+
 /** Spanish (Español)
  * @author Manuelt15
+ * @author Translationista
  */
 $messages['es'] = array(
+	'cntool-page-title-editor' => 'ContestTool  :: Editor',
+	'cntool-page-title-preview' => 'ContestTool  :: Previsualización',
+	'cntool-page-title-select' => 'ContestTool',
+	'cntool-label-select' => 'Escriba un título de la página válida',
 	'cntool-button-preview' => 'Previsualizar',
 	'cntool-button-save' => 'Guardar',
+	'cntool-label-content' => 'Modificar contenido del artículo a continuación:',
 	'cntool-label-preview' => 'Previsualización:',
+	'cntool-label-caveat' => 'Advertencia',
+	'cntool-caveat' => 'Esta extensión no debe utilizarse a la ligera. Ten en cuenta que los resultados no se registran en cualquier lugar y no son fácilmente reversibles en este momento sin la ayuda de Tech (estamos trabajando en esto).',
 );
 
 /** Finnish (Suomi)
@@ -135,8 +161,10 @@ Teña presente que os resultados non se rexistran en ningures e son dificilmente
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
+	'cntool-label-select' => 'Adj meg egy érvényes lapcímet',
 	'cntool-button-preview' => 'Előnézet',
 	'cntool-button-save' => 'Mentés',
+	'cntool-label-content' => 'Módosítsd a szócikk tartalmát alább:',
 	'cntool-label-preview' => 'Előnézet:',
 );
 
@@ -156,6 +184,13 @@ $messages['ia'] = array(
 	'cntool-caveat' => 'Iste extension non debe esser usate inconsideratemente.
 
 Guarda in consideration que le resultatos non es registrate in alcun loco e non pote esser facilemente revertite sin adjuta del equipa technic. (On labora al solution de iste problema.)',
+);
+
+/** Italian (Italiano) */
+$messages['it'] = array(
+	'cntool-button-preview' => 'Anteprima',
+	'cntool-button-save' => 'Salva',
+	'cntool-label-preview' => 'Anteprima:',
 );
 
 /** Macedonian (Македонски)

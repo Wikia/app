@@ -37,6 +37,16 @@ Bitte passe [[Special:Preferences#prefsection-1|deine Einstellungen]] an, um die
 	'widgets-specialpage-try-dashboard' => 'Diese Seite enthält eine Liste aller verfügbaren Widgets. Deine aktiven Widgets kannst du dir unter [[Special:WidgetDashboard]] anschauen.',
 );
 
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'widgets-specialpage-info' => 'Widgets sind dafür ausgelegt um im Standard-Skin (Monaco) benutzt zu werden.
+
+Bitte passen Sie [[Special:Preferences#prefsection-1|Ihre Einstellungen]] an, um dieses Tool zu benutzen.',
+	'widgets-specialpage-try-dashboard' => 'Diese Seite enthält eine Liste aller verfügbaren Widgets. Ihre aktiven Widgets können Sie sich unter [[Special:WidgetDashboard]] anschauen.',
+);
+
 /** Spanish (Español) */
 $messages['es'] = array(
 	'widgets-specialpage-info' => 'Los Widgets trabajan mejor con alguna de las nuevas pieles, por ejemplo [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco].
@@ -160,6 +170,16 @@ $messages['oc'] = array(
 
 Modificatz [[Special:Preferences#prefsection-1| vòstras preferéncias]] per utilizar aqueste esplech.',
 	'widgets-specialpage-try-dashboard' => 'Aquesta pagina fa la lista de totes los widgets disponibles. Per veire los widgets en accion anatz sus [[Special:WidgetDashboard]].',
+);
+
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'widgets-specialpage-info' => 'Widżety najlepiej funkcjonują z jedną z nowych skórek np [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monako].
+
+Zmień swoje [[Special:Preferences#prefsection-1|preferencje]], jeśli chcesz korzystać z tego narzędzia.',
+	'widgets-specialpage-try-dashboard' => 'Ta strona zawiera listę wszystkich dostępnych widżetów. Włączone widżety można zobaczyć na stronie [[Special:WidgetDashboard]].',
 );
 
 /** Piedmontese (Piemontèis)

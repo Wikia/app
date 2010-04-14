@@ -71,14 +71,39 @@ $messages['de'] = array(
 	'rightalign-tooltip' => 'Rechtsbündig',
 );
 
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'widgetdashboard' => 'Widget-Verwaltung',
+	'mu_size_your_image' => 'Größe Ihres Bildes ändern',
+	'almosttheretext' => 'Nutzen Sie den Schieberegler um eine Thumbnail-Größe zu wählen, geben Sie eine Beschreibung ein und klicken Sie auf Einfügen',
+	'insertfullsize' => 'Originalbild in voller Größe einfügen',
+	'insertthumbnail' => 'Thumbnail einfügen',
+	'thumbnailsize' => 'Thumbnail-Größe',
+	'captionoptional' => 'Bildunterschrift (optional):',
+	'insertimage' => 'Bild einfügen',
+	'leftalign-tooltip' => 'Linksbündig',
+	'rightalign-tooltip' => 'Rechtsbündig',
+);
+
 /** Spanish (Español)
+ * @author Crazymadlover
  * @author Manuelt15
+ * @author Pertile
  * @author Peter17
  */
 $messages['es'] = array(
+	'widgetdashboard' => 'Asistente de Pizarra',
+	'mu_size_your_image' => 'Dimensionar tu imagen',
+	'almosttheretext' => 'Utilizar el deslizador para seleccionar un tamaño de miniatura, ingrese un título y haga clic en Insertar',
+	'insertfullsize' => 'Insertar imagen a tamaño completo original',
+	'insertthumbnail' => 'Insertar imagen miniatura',
 	'thumbnailsize' => 'Tamaño de la miniatura',
 	'captionoptional' => 'Título (opcional):',
 	'insertimage' => 'Insertar Imagen',
+	'leftalign-tooltip' => 'Alinear a la izquierda',
+	'rightalign-tooltip' => 'Alinear a la derecha',
 );
 
 /** Finnish (Suomi)
@@ -153,6 +178,11 @@ $messages['ia'] = array(
 	'insertimage' => 'Inserer imagine',
 	'leftalign-tooltip' => 'Alinear a sinistra',
 	'rightalign-tooltip' => 'Alinear a dextra',
+);
+
+/** Italian (Italiano) */
+$messages['it'] = array(
+	'thumbnailsize' => 'Grandezza delle miniature',
 );
 
 /** Macedonian (Македонски)

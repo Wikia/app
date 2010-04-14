@@ -51,11 +51,32 @@ $messages['bs'] = array(
 	'force-subject-for-new-section-message' => 'Molimo unesite naslov za sekciju',
 );
 
+/** Catalan (Català)
+ * @author Paucabot
+ */
+$messages['ca'] = array(
+	'force-subject-for-new-section-message' => 'Si us plau, introduïu un títol per a la secció',
+);
+
 /** German (Deutsch)
  * @author LWChris
  */
 $messages['de'] = array(
 	'force-subject-for-new-section-message' => 'Bitte gib eine Überschrift für den Abschnitt ein',
+);
+
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'force-subject-for-new-section-message' => 'Bitte geben Sie eine Überschrift für den Abschnitt ein',
+);
+
+/** Greek (Ελληνικά)
+ * @author Dada
+ */
+$messages['el'] = array(
+	'force-subject-for-new-section-message' => 'Παρακαλώ εισάγετε μια επικεφαλίδα για την ενότητα',
 );
 
 /** Spanish (Español)

@@ -63,6 +63,15 @@ $messages['br'] = array(
 	'tagsreportgenerated' => "Krouet d'an $1",
 );
 
+/** Catalan (Català)
+ * @author Paucabot
+ */
+$messages['ca'] = array(
+	'tagsreportgo' => 'Mostra',
+	'tagsreportmainnspace' => 'Principal',
+	'tagsreportgenerated' => 'Generat el $1',
+);
+
 /** German (Deutsch)
  * @author LWChris
  */
@@ -72,6 +81,22 @@ $messages['de'] = array(
 	'tagsreportselecttag' => 'Tag wählen:',
 	'tagsreportgo' => 'Anzeigen',
 	'tagsreportnotspecify' => 'Du hast noch keinen besonderen Tag ausgewählt',
+	'tagsreportnoresults' => 'Keine Ergebnisse gefunden',
+	'tagsreportmainnspace' => 'Seiten',
+	'tagsreportpages' => '(<strong>$1</strong>  {{PLURAL:$1|Seite|Seiten}})',
+	'tagsreportpagesfound' => '<strong>$1</strong> {{PLURAL:$1|Seite|Seiten}} gefunden, die besondere Tags enthalten (dpl, youtube, etc.)',
+	'tagsreportgenerated' => 'Erzeugt am $1',
+);
+
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'tagsreport' => 'Verwendung von Tags',
+	'tagsreporttitle' => 'Verwendung von Tags',
+	'tagsreportselecttag' => 'Tag wählen:',
+	'tagsreportgo' => 'Anzeigen',
+	'tagsreportnotspecify' => 'Sie haben noch keinen besonderen Tag ausgewählt',
 	'tagsreportnoresults' => 'Keine Ergebnisse gefunden',
 	'tagsreportmainnspace' => 'Seiten',
 	'tagsreportpages' => '(<strong>$1</strong>  {{PLURAL:$1|Seite|Seiten}})',
@@ -144,6 +169,7 @@ $messages['hu'] = array(
 	'tagsreportselecttag' => 'Címke kiválasztása:',
 	'tagsreportgo' => 'Megjelenítés',
 	'tagsreportnoresults' => 'Nincs találat',
+	'tagsreportpages' => '(<strong>$1</strong> lap)',
 	'tagsreportgenerated' => 'Készült: $1',
 );
 
@@ -161,6 +187,12 @@ $messages['ia'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|pagina|paginas}})',
 	'tagsreportpagesfound' => '<strong>$1</strong> paginas trovate que contine un etiquetta special (dpl, youtube, etc.)',
 	'tagsreportgenerated' => 'Generate a $1',
+);
+
+/** Italian (Italiano) */
+$messages['it'] = array(
+	'tagsreportgo' => 'Mostra',
+	'tagsreportnoresults' => 'Nessun risultato',
 );
 
 /** Japanese (日本語)

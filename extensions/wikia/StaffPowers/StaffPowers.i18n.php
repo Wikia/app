@@ -37,9 +37,25 @@ $messages['br'] = array(
 	'staffpowers-ipblock-aborted' => "N'eo ket posupl stankañ izili skipailh Wikia. Gallout a reot implijout [[Special:Contact]] evit reiñ da c'houzout  kudenn pe gudenn d'hor skipailh",
 );
 
-/** German (Deutsch) */
+/** Catalan (Català)
+ * @author Paucabot
+ */
+$messages['ca'] = array(
+	'staffpowers-ipblock-aborted' => 'No es pot bloquejar el personal de Wikia. Si us plau, utilitzeu [[Special:Contact]] per a informar sobre qualsevol assumpte o problema amb el nostre personal.',
+);
+
+/** German (Deutsch)
+ * @author LWChris
+ */
 $messages['de'] = array(
-	'staffpowers-ipblock-aborted' => 'Dieser Benutzer ist Mitarbeiter von Wikia und kann nicht gesperrt werden. Falls es irgendwelche Problemen gibt, [[Special:Contact|melde dich bei uns]].',
+	'staffpowers-ipblock-aborted' => 'Mitarbeiter von Wikia können nicht gesperrt werden. Verwende bitte bei Problemen mit Mitarbeitern [[Special:Contact|das Kontaktformular]].',
+);
+
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'staffpowers-ipblock-aborted' => 'Mitarbeiter von Wikia können nicht gesperrt werden. Verwenden Sie bitte bei Problemen mit Mitarbeitern [[Special:Contact|das Kontaktformular]].',
 );
 
 /** Spanish (Español)
@@ -98,6 +114,13 @@ $messages['id'] = array(
 	'staffpowers-ipblock-aborted' => 'Pemblokiran staf Wikia adalah tidak mungkin. Tolong gunakan [[Special:Contact]] untuk melaporkan isu atau masalah apapun dengan staf kami.',
 );
 
+/** Italian (Italiano)
+ * @author Civvì
+ */
+$messages['it'] = array(
+	'staffpowers-ipblock-aborted' => 'Non è possibile bloccare lo staff di Wikia. Per segnalare eventuali problemi con il nostro staff si prega di utilizzare [[Special:Contact]].',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -134,11 +157,25 @@ $messages['oc'] = array(
 	'staffpowers-ipblock-aborted' => 'Es pas possible de blocar los membres de la còla Wikia. Podètz utilizar [[Special:Contact]] per nos senhalar tot problèma amb nòstra còla.',
 );
 
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'staffpowers-ipblock-aborted' => 'Nie jest możliwe blokowanie pracowników Wikii. Użyj [[Special:Contact|strony kontaktu]], aby zgłosić wszelkie problemy związane z naszym personelem.',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  */
 $messages['pms'] = array(
 	'staffpowers-ipblock-aborted' => "A l'é pa possìbil bloché l'echip ëd Wikia. Për piasì ch'a deuvra [[Special:Contact]] për signalé tut problema con nòsta echip.",
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'staffpowers-ipblock-aborted' => 'Não é possível bloquear a equipa Wikia. Por favor, use [[Special:Contact]] para reportar qualquer questão ou problema com a nossa equipa.',
 );
 
 /** Tarandíne (Tarandíne)

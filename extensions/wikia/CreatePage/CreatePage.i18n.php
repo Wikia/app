@@ -177,6 +177,49 @@ Schreibe den ersten Abschnitt deines Artikels hier.
 Schreibe den zweiten Abschnitt deines Artikels hier.',
 );
 
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'createpage-sp-title' => 'Neue Seite anlegen',
+	'createpage_title' => 'Neue Seite anlegen',
+	'createpage_title_caption' => 'Titel:',
+	'createpage_enter_text' => 'Text:',
+	'createpage_empty_title_error' => 'Titel erforderlich',
+	'createpage_empty_article_body_error' => 'Artikeltext erforderlich',
+	'createpage_invalid_title_error' => 'Ungültiger Titel',
+	'createpage_article_already_exists' => 'Ein Artikel mit diesem Namen existiert bereits.
+Bitte wählen Sie einen anderen Namen.',
+	'createpage_spam' => 'Entschuldigung, Ihre Bearbeitung konnte nicht gespeichert werden',
+	'createpage_cant_edit' => 'Konnte die Bearbeitung nicht durchführen',
+	'createpage-dialog-title' => 'Neue Seite anlegen',
+	'createpage-dialog-message1' => 'Juhu, Sie erstellen eine neue Seite!',
+	'createpage-dialog-message2' => 'Wie wollen Sie die Seite nennen?',
+	'createpage-dialog-choose' => 'Wählen Sie ein Seitenlayout:',
+	'createpage-dialog-format' => 'Standardlayout',
+	'createpage-dialog-blank' => 'Leere Seite',
+	'createpage-error-empty-title' => 'Bitte geben Sie einen Titel für Ihren Artikel ein',
+	'createpage-error-invalid-title' => 'Entschuldigung, der Artikelname war ungültig.
+Bitte verwenden Sie einen anderen Titel.',
+	'createpage-error-article-exists' => 'Ein Artikel mit diesem Titel besteht bereits.
+Sie können zu <a href="$1">$2</a> gehen, oder Ihre Seite umbenennen',
+	'createpage-error-article-spam' => 'Entschuldigung, der Artikelname wurde von unserem Spamfilter zurückgewiesen.
+Bitte verwenden Sie einen anderen Titel.',
+	'createpage-error-article-blocked' => 'Entschuldigung, wir können diesen Artikel im Moment nicht erstellen.',
+	'tog-createpagedefaultblank' => 'Eine leere Seite als Standard für neue Seiten verwenden',
+	'tog-createpagepopupdisabled' => 'Seite erstellen-Popup deaktivieren',
+	'newpagelayout' => '[[File:Placeholder|right|300px]]
+Schreiben Sie den ersten Absatz Ihres Artikels hier.
+
+==Überschrift des Abschnittes==
+
+Schreiben Sie den ersten Abschnitt Ihres Artikels hier.
+
+==Überschrift des Abschnittes==
+
+Schreiben Sie den zweiten Abschnitt Ihres Artikels hier.',
+);
+
 /** Greek (Ελληνικά)
  * @author Dead3y3
  * @author Περίεργος
@@ -207,6 +250,22 @@ $messages['es'] = array(
 	'createpage-dialog-format' => 'Diseño estándar',
 	'createpage-dialog-blank' => 'Página en blanco',
 	'createpage-error-empty-title' => 'Por favor, escribe un título para tu artículo',
+	'createpage-error-invalid-title' => 'Lo sentimos, el título del artículo no era válido. Por favor, usa un título diferente.',
+	'createpage-error-article-exists' => 'YA existe un artículo con ese título. Puedes ir a <a href="$1">$2</a> o cambiar el nombre de tu página',
+	'createpage-error-article-spam' => 'Lo sentimos, el título del artículo fue rechazado por nuestro filtro de contenido no deseado. Por favor, usa un título diferente.',
+	'createpage-error-article-blocked' => 'Lo sentimos, no puedes crear ese artículo en este momento.',
+	'tog-createpagedefaultblank' => 'Usa una página en blanco de manera predeterminada para la traducción de nuevas páginas.',
+	'tog-createpagepopupdisabled' => 'Inhabilitar la ventana emergente de Crear Página',
+	'newpagelayout' => '[[File:Placeholder|right|300px]]
+Escribe aquí el primer párrafo de tu artículo.
+
+==Encabezado de sección==
+
+Escribe aquí la primera sección de tu artículo.
+
+==Encabezado de sección==
+
+EScribe aquí la segunda sección de tu artículo.',
 );
 
 /** Basque (Euskara)
@@ -304,6 +363,7 @@ $messages['fr'] = array(
 	'createpage-error-article-spam' => 'Désolé, le titre de la page a été rejeté par notre filtre anti-spam. Veuillez utiliser un nom différent.',
 	'createpage-error-article-blocked' => 'Désolé, vous ne pouvez créer cet article en ce moment.',
 	'tog-createpagedefaultblank' => 'Utiliser une page vierge par défaut pour créer une nouvelle page',
+	'tog-createpagepopupdisabled' => 'Désactiver la fenêtre surgissante de création de page',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
 Écrivez le premier paragraphe de votre article ici.
 
@@ -411,6 +471,8 @@ $messages['hu'] = array(
 	'createpage_enter_text' => 'Szöveg:',
 	'createpage_empty_title_error' => 'A cím megadása kötelező',
 	'createpage_empty_article_body_error' => 'A szócikk nem lehet üres',
+	'createpage_invalid_title_error' => 'Érvénytelen cím',
+	'createpage-dialog-title' => 'Új szócikk létrehozása',
 	'createpage-dialog-blank' => 'Üres lap',
 );
 
@@ -455,6 +517,14 @@ Scribe hic le prime section de tu articulo.
 ==Titulo de section==
 
 Scribe hic le secunde section de tu articulo.',
+);
+
+/** Italian (Italiano) */
+$messages['it'] = array(
+	'createpage_title_caption' => 'Titolo:',
+	'createpage_enter_text' => 'Testo:',
+	'createpage_invalid_title_error' => 'Titolo non valido',
+	'createpage-dialog-blank' => 'Pagina vuota',
 );
 
 /** Japanese (日本語)
@@ -636,6 +706,7 @@ $messages['no'] = array(
 	'createpage-dialog-message1' => 'Hurra, du oppretter en ny side!',
 	'createpage-dialog-message2' => 'Hva vil du kalle den?',
 	'createpage-dialog-choose' => 'Velg en sideutforming:',
+	'createpage-dialog-format' => 'Standardoppsett',
 	'createpage-dialog-blank' => 'Blank side',
 	'createpage-error-empty-title' => 'Vennligst skriv en tittel på artikkelen din',
 	'createpage-error-invalid-title' => 'Beklager, artikkeltittelen var ugyldig.
@@ -646,6 +717,7 @@ Du kan gå til <a href="$1">$2</a> eller gi siden din et nytt navn',
 Vennligst bruk en annen tittel.',
 	'createpage-error-article-blocked' => 'Beklager, du kan ikke opprettet artikler akkurat nå.',
 	'tog-createpagedefaultblank' => 'Bruk en blank side som standard for å opprette en ny side',
+	'tog-createpagepopupdisabled' => 'Deaktiver sprett-oppvindu for opprettelse av side',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
 Skriv det første avsnittet i artikkelen din her.
 

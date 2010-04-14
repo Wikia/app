@@ -57,6 +57,13 @@ $messages['ar'] = array(
 	'whereisextension-filter' => 'مُرشِّح',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'whereisextension-all-groups' => 'Усе групы',
+);
+
 /** Breton (Brezhoneg)
  * @author Gwenn-Ael
  * @author Y-M D
@@ -69,6 +76,15 @@ $messages['br'] = array(
 	'whereisextension-filter' => 'Sil',
 	'whereisextension-all-groups' => 'An holl strolladoù',
 	'whereisextension-name-contains' => 'Anv an argemmenn zo ennañ',
+);
+
+/** Catalan (Català)
+ * @author Paucabot
+ */
+$messages['ca'] = array(
+	'whereisextension' => "Extensió ''Where is''",
+	'whereisextension-submit' => 'Cerca',
+	'whereisextension-filter' => 'Filtre',
 );
 
 /** German (Deutsch)
@@ -84,13 +100,32 @@ $messages['de'] = array(
 	'whereisextension-name-contains' => 'Variablenname enthält',
 );
 
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author LWChris
+ */
+$messages['de-formal'] = array(
+	'whereisextension' => 'Wo ist Erweiterung',
+	'whereisextension-submit' => 'Suchen',
+	'whereisextension-list' => 'Liste von Wikis mit zutreffenden Kriterien',
+	'whereisextension-isset' => 'ist eingestellt auf',
+	'whereisextension-filter' => 'Filter',
+	'whereisextension-all-groups' => 'Alle Gruppen',
+	'whereisextension-name-contains' => 'Variablenname enthält',
+);
+
 /** Spanish (Español)
+ * @author Crazymadlover
+ * @author Pertile
  * @author Peter17
  */
 $messages['es'] = array(
+	'whereisextension' => 'Dónde está la extensión',
 	'whereisextension-submit' => 'Buscar',
+	'whereisextension-list' => 'Lista de wikis con criterios coincidentes',
+	'whereisextension-isset' => 'está fijado en',
 	'whereisextension-filter' => 'Filtro',
 	'whereisextension-all-groups' => 'Todos los grupos',
+	'whereisextension-name-contains' => 'Nombre de variable contiene',
 );
 
 /** Basque (Euskara)
@@ -144,9 +179,13 @@ $messages['gl'] = array(
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
+	'whereisextension' => '„Hol van” kiterjesztés',
 	'whereisextension-submit' => 'Keresés',
+	'whereisextension-list' => 'Wikik listája egyező kritériumokkal',
+	'whereisextension-isset' => 'beállítása:',
 	'whereisextension-filter' => 'Szűrő',
 	'whereisextension-all-groups' => 'Összes csoport',
+	'whereisextension-name-contains' => 'változónév tartalmazza:',
 );
 
 /** Interlingua (Interlingua)
@@ -160,6 +199,12 @@ $messages['ia'] = array(
 	'whereisextension-filter' => 'Filtro',
 	'whereisextension-all-groups' => 'Tote le gruppos',
 	'whereisextension-name-contains' => 'nomine de variabile contine',
+);
+
+/** Italian (Italiano) */
+$messages['it'] = array(
+	'whereisextension-submit' => 'Ricerca',
+	'whereisextension-all-groups' => 'Tutti i gruppi',
 );
 
 /** Japanese (日本語)
