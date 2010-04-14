@@ -43,7 +43,6 @@ function WidgetMagCloud($id, $params) {
 	// return placeholder for now
 	$output = <<<HTML
 	<div class="WidgetMagCloudSample WidgetMagCloudClickable">&nbsp;</div>
-	<p><a href="#" class="WidgetMagCloudClickable">Create a magazine from articles on {$wgSitename}!</a></p>
 	<div class="WidgetMagCloudPoweredBy">Powered by</div>
 HTML;
 
