@@ -343,10 +343,7 @@ proto.imageUpload = function (tagOpen, tagClose, sampleText) {
 	 */
 	if ((wgEnableAjaxLogin == 1) && (typeof wgUserName != 'string')) {
 		wgAjaxLoginSkipSuccess = true;
-		 if ( ! YAHOO.Wikia.AjaxLoginApp.loginPanel ) { 
-		 	YAHOO.Wikia.AjaxLoginApp.buildLoginPanel(); 
-		 } 
-			YAHOO.Wikia.AjaxLoginApp.loginPanel.show();
+		openLogin(null);
 		return;
 	}
 	/* add a guard for Ajax login disabled and reload in this window, as done before */

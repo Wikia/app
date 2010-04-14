@@ -144,7 +144,7 @@ function openUserMenu(event) {
 }
 
 // AjaxLogin
-// TODO: SWC: FIXME: REMOVE! This is deprecated in favor of the showComboAjaxForPlaceHolder (I think... but clean it out all the way first).
+// TODO: FBConnect: This gets called a lot... it probably needs to be combined in some way with showComboAjaxForPlaceHolder, this way definitely defaulting to login rather than create account.
 function openLogin(event) {
 
 	if ( typeof openLogin.statusAjaxLogin == 'undefined' ) { // java script static var
@@ -195,7 +195,7 @@ function openLogin(event) {
 	});
 }
 
-//Combo login WikiaImagePlaceholde
+//Combo login WikiaImagePlaceholder
 
 function showComboAjaxForPlaceHolder(element,isPlaceholder,callback) {
 	if ( typeof showComboAjaxForPlaceHolder.statusAjaxLogin == 'undefined' ) { // java script static var
