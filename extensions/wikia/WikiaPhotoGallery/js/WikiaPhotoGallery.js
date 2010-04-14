@@ -1358,8 +1358,8 @@ var WikiaPhotoGallery = {
 		var self = WikiaPhotoGallery;
 
 		// for anons show ComboAjaxLogin
-		if (typeof showComboAjaxForPalceHolder == 'function') {
-                        if (showComboAjaxForPalceHolder('', false)) {
+		if (typeof showComboAjaxForPlaceHolder == 'function') {
+                        if (showComboAjaxForPlaceHolder('', false)) {
 				self.log('please login to use this feature');
 				return;
 			}

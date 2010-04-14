@@ -339,12 +339,12 @@ function WMU_loadMainFromView() {
 function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 
 	if(gallery === -2){
-	//	if (showComboAjaxForPalceHolder("WikiaImagePlaceholderInner" + box,true)) return false;
+	//	if (showComboAjaxForPlaceHolder("WikiaImagePlaceholderInner" + box,true)) return false;
 	}
 
 	if(typeof gallery == "undefined") {
-		if (typeof showComboAjaxForPalceHolder == 'function') {
-			if (showComboAjaxForPalceHolder("",false)) return false;
+		if (typeof showComboAjaxForPlaceHolder == 'function') {
+			if (showComboAjaxForPlaceHolder("",false)) return false;
 		}
 	}
 
