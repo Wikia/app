@@ -1348,10 +1348,13 @@ EOF;
 				'href' => $tpl->data['personal_urls']['watchlist']['href']
 				);
 
-			$data['logout'] = array(
-				'text' => $tpl->data['personal_urls']['logout']['text'],
-				'href' => $tpl->data['personal_urls']['logout']['href']
+			// In some cases, logout will be removed explicitly (such as when it is replaced by fblogout).
+			if(isset($tpl->data['personal_urls']['logout'])){
+				$data['logout'] = array(
+					'text' => $tpl->data['personal_urls']['logout']['text'],
+					'href' => $tpl->data['personal_urls']['logout']['href']
 				);
+			}
 
 
 			$data['more']['userpage'] = array(
