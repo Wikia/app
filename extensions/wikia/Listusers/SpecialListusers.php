@@ -29,4 +29,4 @@ global $wgAjaxExportList;
 $wgAjaxExportList[] = "Listusers::axShowUsers";
 
 $wgHooks['SpecialPage_initList'][] = 'Listusers::Activeusers';
-
+$wgHooks['UserRights'][] = "Listusers::updateUserRights";
