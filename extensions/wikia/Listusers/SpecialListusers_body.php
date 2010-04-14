@@ -362,4 +362,64 @@ class Listusers extends SpecialPage {
 		$list['Activeusers'] = array( 'SpecialRedirectToSpecial', 'Activeusers', 'Listusers' );
 		return true;
 	}
+	
+	/**
+	 * update list users table on user right change
+	 *
+	 * @author      Piotr Molski <moli@wikia-inc.com>
+	 * @version     1.0.0
+	 * @param       User    $user object
+	 * @param       Array   $addgroup - selected groups for user
+	 * @param       Array   $removegroup - disabled groups for user
+	 */
+	static public function updateUserRights( &$user, $addgroup, $removegroup ) {
+		global $wgCityId, $wgExternalDatawareDB;
+		
+		if ( $user instanceof User ) {
+			$dbr = wfGetDB(DB_SLAVE, 'blobs', $wgExternalDatawareDB);
+			$condition = array( 
+				"lu_user_id" 	=> $user->getID(),
+				"lu_wikia_id" 	=> $wgCityId
+			);
+
+			$s = $dbr->selectRow( 
+				"city_local_users", 
+				array( "lu_allgroups" ), 
+				$condition,
+				__METHOD__ 
+			);
+			if ( $s !== false ) {
+				$lu_groups = array();
+				$lu_singlegroup = "";
+				if ( !empty( $s->lu_allgroups ) ) {
+					$lu_groups = explode( ";", $s->lu_allgroups );
+					if ( !empty($addgroup) ) {
+						$lu_groups = array_unique( array_merge($lu_groups, $addgroup) );
+					} 
+					if ( !empty($removegroup) ) {
+						$lu_groups = array_unique( array_diff($lu_groups, $removegroup) );
+					}
+					if ( !empty($lu_groups) ) { 
+						sort($lu_groups);
+						$elements = count($lu_groups);
+						$lu_singlegroup = ( $elements > 0 ) ? $lu_groups[$elements-1] : "";
+						
+						$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
+						$dbw->update(
+							"city_local_users",
+							array(
+								"lu_singlegroup" => $lu_singlegroup,
+								"lu_allgroups"   => @implode(";", $lu_groups)
+							),
+							$condition,
+							__METHOD__
+						);
+					}
+				}
+			}
+		}
+
+		return true;
+	}
+
 }
