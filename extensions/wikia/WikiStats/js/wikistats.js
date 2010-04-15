@@ -1,4 +1,4 @@
-function ws_focus(e, field, method) {
+function ws_focus(field, method) {
 	if(!window.sf_initiated) {
 		window.sf_initiated = true;
 

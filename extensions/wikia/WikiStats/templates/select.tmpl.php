@@ -4,7 +4,7 @@
 		<ul>
 			<li>
 				<?= wfMsg("wikistats_info") ?>: 
-				<input name="ws-domain" id="ws-domain" value="<?= (empty($mAllWikis)) ? $domain : "" ?>" onfocus="ws_focus(event,'ws-domain','axWFactoryDomainQuery');" />
+				<input name="ws-domain" id="ws-domain" value="<?= (empty($mAllWikis)) ? $domain : "" ?>" />
 			</li>	
 			<li>
 				<input name="ws-all-domain" id="ws-all-domain" type="checkbox" onclick="ws_disable(event,'ws-all-domain','ws-domain');" <?= ($mAllWikis == 1) ? "checked=\"checked\"" : "" ?> />
