@@ -371,19 +371,28 @@ class DataProvider
 	 */
 	final public static function /* array */ GetNewlyChangedArticles($limit = 7) {
 		wfProfileIn( __METHOD__ );
-		global $wgDBname, $wgMemc;
+		global $wgExternalDatawareDB, $wgMemc, $wgCityId;
 
 		$memckey = wfMemcKey("NewlyChanged", $limit);
 		$results = $wgMemc->get( $memckey );
 
 		if ( !is_array( $results ) ) {
-
-			$query = "SELECT page_namespace, page_title FROM page WHERE page_namespace = 0 ORDER BY page_latest DESC";
-			$dbr = &wfGetDB( DB_SLAVE );
-			$res = $dbr->query( $dbr->limitResult($query, $limit * 2, 0) );
+			$dbr = wfGetDB( DB_SLAVE, 'blobs', $wgExternalDatawareDB ); 
+			$res = $dbr->select(
+				'pages',
+				array( 'page_namespace, page_title' ),
+				array( 
+					'page_wikia_id'		=> $wgCityId,
+					'page_namespace' 	=> 0
+				),
+				__METHOD__, 
+				array(
+					'ORDER BY' => 'page_latest desc',
+					'LIMIT'    => $limit * 2
+				)
+			);
 
 			$results = array();
-
 			while ( $row = $dbr->fetchObject($res) ) {
 				$title = Title::makeTitleSafe( $row->page_namespace, $row->page_title );
 
