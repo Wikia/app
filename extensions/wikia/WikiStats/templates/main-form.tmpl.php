@@ -79,7 +79,10 @@ function reloadTab(xls) {
 				reloadTab(true);
 				$("#ws-loader").css('display', 'none'); 
 			});	
-			//$('table').visualize({type: 'line'});
+			$('#ws-domain').focus(function() {
+				ws_focus('ws-domain','axWFactoryDomainQuery');
+				window.sf_initiated = false;
+			});
 		});
 	}
 /*	var refreshId = setInterval( function() {
