@@ -163,6 +163,7 @@ function showComboAjaxForPlaceHolder(element,isPlaceholder,callback) {
 
 	if ((typeof  AjaxLogin != 'undefined') && AjaxLogin.showComboFromDOM()) {
 		// show ajax login dialog if already in DOM
+		if (isPlaceholder) AjaxLogin.setPlaceHolder(element);
 		WET.byStr('signupActions/signup/open');
 		return true;
 	}
