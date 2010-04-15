@@ -315,7 +315,9 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 				},
 				show: function() {
 					AjaxLogin.WET_str = 'signupActions/combopopup';
-					UserRegistration.WET_str = AjaxLogin.WET_str;
+					if (typeof UserRegistration != 'undefined'){
+						UserRegistration.WET_str = AjaxLogin.WET_str;
+					}
 					$('#AjaxLoginBox').makeModal({width: 320, persistent: true, onClose: function(){ WET.byStr(AjaxLogin.WET_str + '/close'); } });
 					setTimeout(function() {
 									$('#AjaxLoginBoxWrapper').css({ 'top' : AjaxLogin.topPos});
