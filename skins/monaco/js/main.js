@@ -145,18 +145,6 @@ function openUserMenu(event) {
 
 // AjaxLogin
 function openLogin(event) {
-
-
-	// TODO: FBConnect: This gets called a lot... it probably needs to be combined in some way with showComboAjaxForPlaceHolder, this way definitely defaulting to login rather than create account.
-	// TODO: FBConnect: Make sure this just calls the comboLogin all the time... if this works, then delete this method, the Ajax call it makes, and therefore the whole plain AjaxLogin extension (at least the PHP code... have to check on JS and templates still).
-	return AjaxLogin.showLogin(event);
-
-	
-	
-	
-	
-
-
 	if ( typeof openLogin.statusAjaxLogin == 'undefined' ) { // java script static var
 		openLogin.statusAjaxLogin = false;
     }
@@ -181,7 +169,7 @@ function openLogin(event) {
 		return true;
 	}
 	openLogin.statusAjaxLogin = true;
-	$().getModal(window.wgScript + '?action=ajax&rs=GetAjaxLogin&uselang=' + window.wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion,  false, {callback: function() {
+	$().getModal(window.wgScript + '?action=ajax&rs=GetComboAjaxLogin&uselang=' + window.wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion,  false, {callback: function() {
 			$.getScript(wgExtensionsPath + '/wikia/AjaxLogin/AjaxLogin.js?' + wgStyleVersion, function() {
 
 				// should not happen - but sometimes it does )-: rt#32793
@@ -200,6 +188,7 @@ function openLogin(event) {
 				setTimeout("$('#wpName1Ajax').focus()", 100);
 				WET.byStr('signupActions/signup/open');
 				openLogin.statusAjaxLogin = false;
+			
 			});
 		}
 	});

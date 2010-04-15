@@ -170,7 +170,6 @@ include_once( "$IP/extensions/wikia/WidgetFramework/WidgetFramework.php" );
 include_once( "$IP/extensions/wikia/SpecialWidgetDashboard/SpecialWidgetDashboard_setup.php" );
 include_once( "$IP/extensions/wikia/StaffSig/StaffSig.php" );
 include_once( "$IP/extensions/wikia/SpecialSignup/SpecialSignup.php" );
-include_once( "$IP/extensions/wikia/AjaxLogin/AjaxLogin.php" );
 include_once( "$IP/extensions/wikia/MergeFiles/MergeFiles.php" );
 include_once( "$IP/extensions/wikia/TagCloud/TagCloudClass.php" );
 include_once( "$IP/extensions/wikia/MostPopularCategories/SpecialMostPopularCategories.php" );

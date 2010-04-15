@@ -2848,7 +2848,7 @@ function &wfGetLBFactory() {
  * @return File, or false if the file does not exist
  */
 function wfFindFile( $title, $time = false, $flags = 0, $bypass = false ) {
-        if( !$time && !$flags && !$bypass ) {
+	if( !$time && !$flags && !$bypass ) {
 		return FileCache::singleton()->findFile( $title );
 	} else {
 		return RepoGroup::singleton()->findFile( $title, $time, $flags );
@@ -2909,6 +2909,7 @@ function wfBoolToStr( $value ) {
  * on MediaWiki prior to that
  */
 function wfLoadExtensionMessages( $extensionName, $langcode = false ) {
+	wfProfileIn(__METHOD__);
 	global $wgExtensionMessagesFiles, $wgMessageCache, $wgLang, $wgContLang;
 
 	#For recording whether extension message files have been loaded in a given language.
@@ -2937,6 +2938,7 @@ function wfLoadExtensionMessages( $extensionName, $langcode = false ) {
 		# Mark that they have been loaded.
 		$loaded[$extensionName][$langcode] = true;
 	}
+	wfProfileOut(__METHOD__);
 }
 
 /**
