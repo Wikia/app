@@ -80,8 +80,6 @@ class ApiFeedActivityFeed extends ApiBase {
 			$user = $info["user"];
 		}
 
-		$titleStr = "({$info["type"]}) " . $titleStr . " ({$comment})";
-
 		return new FeedItem($titleStr, $comment, $titleUrl, $timestamp, $user);
 	}
 
