@@ -74,7 +74,9 @@ class UserloginTemplate extends QuickTemplate {
 		</tr>
 		<?php } ?>
 		<tr>
-			<td></td>
+			<td>
+			<?php if( $this->haveData( 'token' ) ) { ?><input type="hidden" name="wpLoginToken" value="<?php $this->text( 'token' ); ?>" /><?php } ?> 
+			</td>
 			<td class="mw-submit">
 				<input type='submit' name="wpLoginattempt" id="wpLoginattempt" value="<?php $this->msg('login') ?>" />&nbsp;<?php if( $this->data['useemail'] && $this->data['canreset']) { ?><input type='submit' name="wpMailmypassword" id="wpMailmypassword" value="<?php $this->msg('mailmypassword') ?>" />
 				<?php } ?>
