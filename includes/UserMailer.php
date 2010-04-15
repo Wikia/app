@@ -644,7 +644,7 @@ class EmailNotification {
 		}
 		$pagetitle = $this->title->getPrefixedText();
 		$keys['$PAGETITLE']          = $pagetitle;
-		$keys['$PAGETITLE_URL']      = wfUrlencodeExt( $this->title->getFullUrl('s=wl') ); // watchlist tracking, rt#33913
+		$keys['$PAGETITLE_URL']      = $this->title->escapeFullURL('s=wl'); // watchlist tracking, rt#33913
 
 		$keys['$PAGEMINOREDIT']      = $medit;
 		$keys['$PAGESUMMARY']        = $summary;
@@ -685,10 +685,10 @@ class EmailNotification {
 			$subject = str_replace('$PAGEEDITOR', $name, $subject);
 			$keys['$PAGEEDITOR']          = $name;
 			$emailPage = SpecialPage::getSafeTitleFor( 'Emailuser', $name );
-			$keys['$PAGEEDITOR_EMAIL'] = wfUrlencodeExt( $emailPage->getFullUrl() );
+			$keys['$PAGEEDITOR_EMAIL'] = $emailPage->escapeFullURL();
 		}
 		$userPage = $editor->getUserPage();
-		$keys['$PAGEEDITOR_WIKI'] = wfUrlencodeExt( $userPage->getFullUrl() );
+		$keys['$PAGEEDITOR_WIKI'] = $userPage->escapeFullURL();
 		wfRunHooks('ComposeCommonBodyMail', array( $this->title, &$keys, &$body, $editor ));
 		$body = strtr( $body, $keys );
 		if ($bodyHTML) {
