@@ -650,18 +650,32 @@ class Wikia {
      *
      * @return string: path to php binary
      */
-    static public function binphp() {
+	static public function binphp() {
 		wfProfileIn( __METHOD__ );
 
-        $path = ( file_exists( "/opt/wikia/php/bin/php" )
-            && is_executable( "/opt/wikia/php/bin/php" ) )
-            ? "/opt/wikia/php/bin/php"
-            : "/usr/bin/php";
+		$path = ( file_exists( "/opt/wikia/php/bin/php" )
+			&& is_executable( "/opt/wikia/php/bin/php" ) )
+			? "/opt/wikia/php/bin/php"
+			: "/usr/bin/php";
 
 		wfProfileOut( __METHOD__ );
 
-        return $path;
-    }
+		return $path;
+	}
+
+	static public function binWkhtmltopdf() {
+		wfProfileIn( __METHOD__ );
+
+		$path = ( file_exists( "/opt/wikia/bin/wkhtmltopdf" )
+			&& is_executable( "/opt/wikia/bin/wkhtmltopdf" ) )
+			? "/opt/wikia/bin/wkhtmltopdf"
+			: "/usr/bin/wkhtmltopdf";
+
+		wfProfileOut( __METHOD__ );
+
+		return $path;
+	}
+
 
 	/**
 	 * simple logger which log message to STDERR if devel environment is set
