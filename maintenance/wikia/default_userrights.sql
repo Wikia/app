@@ -8,6 +8,7 @@ insert into user_groups(ug_user, ug_group) values
 (/*BartL*/80238,'staff'),
 (/*BillK*/38903,'staff'),
 (/*BladeBronson*/140142,'staff'),
+(/*CommodoreR*/2006499,'staff'),
 (/*Crucially*/182546,'staff'),
 (/*DaNASCAT*/22224,'staff'),
 (/*Dmurphy*/138300,'staff'),
