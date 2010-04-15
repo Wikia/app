@@ -99,7 +99,7 @@ function getLinkSuggest() {
 		$namespaceName = $queryParts[0];
 
 		// try to get the index by canonical name first
-		$namespace = Namespace::getCanonicalIndex(strtolower($namespaceName));
+		$namespace = MWNamespace::getCanonicalIndex(strtolower($namespaceName));
 		if ( $namespace == null ) {
 			// if we failed, try looking through localized namespace names
 			$namespace = array_search(ucfirst($namespaceName), $wgContLang->getNamespaces());
