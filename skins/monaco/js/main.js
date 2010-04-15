@@ -145,53 +145,8 @@ function openUserMenu(event) {
 
 // AjaxLogin
 function openLogin(event) {
-	if ( typeof openLogin.statusAjaxLogin == 'undefined' ) { // java script static var
-		openLogin.statusAjaxLogin = false;
-    }
-
-	if (openLogin.statusAjaxLogin ){
-		return false;
-	}
-
-
-	// check wgEnableAjaxLogin
-	if ( (typeof wgEnableAjaxLogin == 'undefined') || !wgEnableAjaxLogin ) {
-		$().log('AjaxLogin: wgEnableAjaxLogin is false, going to Special:Userlogin...');
-		return;
-	}
-
-	if(typeof event.preventDefault == 'function') {
-		event.preventDefault();
-	}
-
-	if((typeof AjaxLogin != 'undefined') && AjaxLogin.showFromDOM()){
-		WET.byStr('signupActions/signup/open');
-		return true;
-	}
-	openLogin.statusAjaxLogin = true;
-	$().getModal(window.wgScript + '?action=ajax&rs=GetComboAjaxLogin&uselang=' + window.wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion,  false, {callback: function() {
-			$.getScript(wgExtensionsPath + '/wikia/AjaxLogin/AjaxLogin.js?' + wgStyleVersion, function() {
-
-				// should not happen - but sometimes it does )-: rt#32793
-				if ( (typeof AjaxLogin == 'undefined') || !(typeof AjaxLogin.init == 'function') ) {
-					$().log('AjaxLogin: AjaxLogin object does not exist, going to Special:Userlogin...');
-					WET.byStr('signupActions/signup/rt32793_error');
-					document.location = wgServer + wgScriptPath + $('#login').attr('href');
-					return;
-				}
-
-				// first initialized AjaxLogin form (move login/password fields)
-				AjaxLogin.init( $('#AjaxLoginBox form') );
-
-				// then show as modal
-				$('#AjaxLoginBox').makeModal({width: 320, persistent: true, onClose: function(){ WET.byStr('signupActions/popup/close'); } });
-				setTimeout("$('#wpName1Ajax').focus()", 100);
-				WET.byStr('signupActions/signup/open');
-				openLogin.statusAjaxLogin = false;
-			
-			});
-		}
-	});
+	showComboAjaxForPlaceHolder(false, "");
+	return false;
 }
 
 //Combo login WikiaImagePlaceholder
