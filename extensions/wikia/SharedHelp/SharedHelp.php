@@ -173,7 +173,7 @@ function SharedHelpHook(&$out, &$text) {
 				$destinationPageIndex = strpos( $destinationUrl, "$helpNs:" );
 				# if $helpNs was not found, assume we're on help.wikia.com and try again
 				if ( $destinationPageIndex === false )
-					$destinationPageIndex = strpos( $destinationUrl, Namespace::getCanonicalName(NS_HELP) . ":" );
+					$destinationPageIndex = strpos( $destinationUrl, MWNamespace::getCanonicalName(NS_HELP) . ":" );
 				$destinationPage = substr( $destinationUrl, $destinationPageIndex );
 				$link = $wgServer . str_replace( "$1", $destinationPage, $wgArticlePath );
 				if ( 'no' != $wgRequest->getVal( 'redirect' ) ) {
@@ -204,7 +204,7 @@ function SharedHelpHook(&$out, &$text) {
 			curl_close( $c );
 		}
 
-		if (empty($content)) return true; 
+		if (empty($content)) return true;
 
 		//process article if not redirected before
 		if (empty($wasRedirected)) {
@@ -222,8 +222,8 @@ function SharedHelpHook(&$out, &$text) {
 			$skinNamespaces[] = $wgContLang->getNsText(NS_FILE);
 			$skipNamespaces[] = "Advice";
 			if ($wgLanguageCode != 'en') {
-				$skipNamespaces[] = Namespace::getCanonicalName(NS_CATEGORY);
-				$skipNamespaces[] = Namespace::getCanonicalName(NS_IMAGE);
+				$skipNamespaces[] = MWNamespace::getCanonicalName(NS_CATEGORY);
+				$skipNamespaces[] = MWNamespace::getCanonicalName(NS_IMAGE);
 			}
 
 			# replace help wiki links with local links, except for special namespaces defined above
@@ -245,21 +245,21 @@ function SharedHelpHook(&$out, &$text) {
 					$content
 				);
 			}
-                
+
             /* Tomasz Odrobny #36016 */
             $sharedRedirectsArticlesKey = wfSharedMemcKey('sharedRedirectsArticles', $wgHelpWikiId, MWNamespace::getCanonicalName( $wgTitle->getNamespace() ), $wgTitle->getDBkey());
             $articleLink = $wgMemc->get($sharedRedirectsArticlesKey, null);
-            
+
             if ( $articleLink == null ){
-                $articleLink =  Namespace::getCanonicalName(NS_HELP_TALK) . ':' . $wgTitle->getDBkey();    
+                $articleLink =  MWNamespace::getCanonicalName(NS_HELP_TALK) . ':' . $wgTitle->getDBkey();
                 $apiUrl = $sharedServer."/api.php?action=query&redirects&format=json&titles=".$articleLink;
                 $file = @file_get_contents($apiUrl, FALSE );
-                $json = new Services_JSON();      
+                $json = new Services_JSON();
                 $APIOut = $json->decode($file);
-                if (isset($APIOut->query) && isset($APIOut->query->redirects) && (count($APIOut->query->redirects) > 0) ){      
+                if (isset($APIOut->query) && isset($APIOut->query->redirects) && (count($APIOut->query->redirects) > 0) ){
                     $articleLink =  str_replace(" ", "_", $APIOut->query->redirects[0]->to);
                 }
-                $wgMemc->set($sharedRedirectsArticlesKey, $articleLink, 60*60*12); 
+                $wgMemc->set($sharedRedirectsArticlesKey, $articleLink, 60*60*12);
             }
 
 			// "this text is stored..."
@@ -377,11 +377,11 @@ function SharedHelpWantedPagesSql( $page, $sql ) {
 
 	$helpPages = "";
 	$helpdb = WikiFactory::IDtoDB( $wgHelpWikiId  );
-	
+
 	if ($helpdb) {
 		$helpPagesKey = "helppages:{$helpdb}";
 		$helpArticles = $wgMemc->get($helpPagesKey);
-		
+
 		if ( empty($helpArticles) ) {
 			$dbr = wfGetDB( DB_SLAVE, array(), $helpdb );
 			$oRes = $dbr->select(
@@ -407,21 +407,21 @@ function SharedHelpWantedPagesSql( $page, $sql ) {
 	$notInHelpPages = ""; if ( !empty($helpPages) ) {
 		$notInHelpPages = " OR pl_title NOT IN (" . $helpPages . ") ";
 	}
-	
+
 	$blogNamespaces = "";
 	if ( defined('NS_BLOG_ARTICLE') ) {
 		$blogNamespaces = "," . implode(",", array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK));
 	}
 
-	$sql = "SELECT '{$type}' AS type, pl_namespace AS namespace, pl_title AS title, COUNT(*) AS value 
+	$sql = "SELECT '{$type}' AS type, pl_namespace AS namespace, pl_title AS title, COUNT(*) AS value
 	FROM pagelinks
-	LEFT JOIN page AS pg1 ON pl_namespace = pg1.page_namespace AND pl_title = pg1.page_title 
-	LEFT JOIN page AS pg2 ON pl_from = pg2.page_id 
-	WHERE pg1.page_namespace IS NULL 
-	AND pl_namespace NOT IN ( 2, 3 {$blogNamespaces}) 
-	AND pg2.page_namespace != 8 
-	AND ( pl_namespace != 12 {$notInHelpPages} ) 
-	{$page->excludetitles} 
+	LEFT JOIN page AS pg1 ON pl_namespace = pg1.page_namespace AND pl_title = pg1.page_title
+	LEFT JOIN page AS pg2 ON pl_from = pg2.page_id
+	WHERE pg1.page_namespace IS NULL
+	AND pl_namespace NOT IN ( 2, 3 {$blogNamespaces})
+	AND pg2.page_namespace != 8
+	AND ( pl_namespace != 12 {$notInHelpPages} )
+	{$page->excludetitles}
 	GROUP BY pl_namespace, pl_title HAVING COUNT(*) > $count";
 
 	wfProfileOut( __METHOD__ );
