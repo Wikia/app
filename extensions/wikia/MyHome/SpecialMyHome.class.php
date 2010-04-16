@@ -11,7 +11,7 @@ class SpecialMyHome extends SpecialPage {
 		wfProfileIn(__METHOD__);
 		global $wgOut, $wgUser, $wgTitle;
 		$this->setHeaders();
-		
+
 		if( isset( $_SESSION['Signup_AccountCreated'] ) || !empty($_GET['accountcreated']) ) {
 			$wgOut->addScript('<script type="text/javascript">WET.byStr(\'signupActions/signup/createaccount/success\');</script>');
 			unset( $_SESSION['Signup_AccountCreated'] );
@@ -20,6 +20,7 @@ class SpecialMyHome extends SpecialPage {
 		// not available for skins different then monaco
 		if(get_class($wgUser->getSkin()) != 'SkinMonaco' && get_class($wgUser->getSkin()) != 'SkinAnswers'){
 			$wgOut->addWikiMsg( 'myhome-switch-to-monaco' );
+			wfProfileOut(__METHOD__);
 			return;
 		}
 
@@ -100,10 +101,10 @@ JS
 		$communityCornerHTML = $communityCornerTemplate->render('communityCorner');
 
                 // hook to enable adding something extra on the top of the MyHome sidebar
-		
+
 		$sidebarBeforeContent = '';
-		wfRunHooks( 'MyHome::sidebarBeforeContent', array( &$sidebarBeforeContent ) ); 
-		
+		wfRunHooks( 'MyHome::sidebarBeforeContent', array( &$sidebarBeforeContent ) );
+
 		######
 		### Show HTML
 		######
