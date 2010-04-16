@@ -1,4 +1,5 @@
 == Changes since 201004.3 ==
+* rt#46440: kill skinpref cookie (uberfuzzy)
 * rt#45400: remove 1 layer of urlencoding in watchlist variables (uberfuzzy)
 * rt#45629: Xml feed for Activity feed tag (Nef)
 * rt#44047: Change out Magcloud Widget across Wikia (Nef)
