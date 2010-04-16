@@ -9,12 +9,6 @@
 $wgGroupPermissions['sysop']['setadminskin'] = true;
 $wgGroupPermissions['staff']['setadminskin'] = true;
 
-$wgHooks['UserSetCookies'][] = 'SetSkinChooserCookies';
-function SetSkinChooserCookies( $user, &$session, &$cookies ) {
-	$cookies['skinpref'] = join('-',array($user->getOption('skin'), $user->getOption('theme'), $user->getOption('skinoverwrite')));
-	return true;
-}
-
 $wgHooks['ModifyPreferencesValue'][] = 'SetThemeForPreferences';
 function SetThemeForPreferences($pref) {
 	global $wgUser, $wgSkinTheme, $wgDefaultTheme;
@@ -341,32 +335,13 @@ function WikiaGetSkin ($user) {
 	wfProfileIn(__METHOD__.'::GetSkinLogic');
 
 	if(!$user->isLoggedIn()) { # If user is not logged in
-		if(count($_COOKIE) > 0 && isset($_COOKIE[$wgCookiePrefix.'skinpref'])) { # If user has cookie with variable 'skinpref'
-			$skinpref = preg_split('/-/', $_COOKIE[$wgCookiePrefix.'skinpref']);
-			if(true == (bool) $skinpref[2]) { # Doest have overwrite enabled?
-
-				if(!empty($wgAdminSkin)) {
-					$elems = preg_split('/-/',$wgAdminSkin);
-                    $userSkin = ( array_key_exists(0, $elems) ) ? $elems[0] : null;
-                    $userTheme = ( array_key_exists(1, $elems) ) ? $elems[1] : null;
-				} else {
-					$userSkin = $skinpref[0];
-					$userTheme = $skinpref[1];
-				}
-
-			} else {
-				$userSkin = $skinpref[0];
-				$userTheme = $skinpref[1];
-			}
+		if(!empty($wgAdminSkin)) {
+			$adminSkinArray = preg_split('/-/', $wgAdminSkin);
+			$userSkin = isset($adminSkinArray[0]) ? $adminSkinArray[0] : null;
+			$userTheme = isset($adminSkinArray[1]) ? $adminSkinArray[1] : null;
 		} else {
-			if(!empty($wgAdminSkin)) {
-				$adminSkinArray = preg_split('/-/', $wgAdminSkin);
-				$userSkin = isset($adminSkinArray[0]) ? $adminSkinArray[0] : null;
-				$userTheme = isset($adminSkinArray[1]) ? $adminSkinArray[1] : null;
-			} else {
-				$userSkin = $wgDefaultSkin;
-				$userTheme = $wgDefaultTheme;
-			}
+			$userSkin = $wgDefaultSkin;
+			$userTheme = $wgDefaultTheme;
 		}
 	} else {
 		$userSkin = $user->getOption('skin');
