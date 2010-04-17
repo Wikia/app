@@ -30,13 +30,13 @@ class AdProviderLiftium implements iAdProvider {
 		// See Liftium.js for documentation on options
 		$options = array();
 		$options['pubid'] = 999;
-		$options['baseUrl'] = 'http://liftium.wikia.com/';
+		$options['baseUrl'] = '/__varnish_liftium/';
 		$options['kv_wgDBname'] = $wgDBname;
                 if (is_object($wgTitle)){
                        $options['kv_article_id'] = $wgTitle->getArticleID();
 		}
 		$cat = AdEngine::getCachedCategory();
-		$options['kv_hub'] = $cat['name'];
+		$options['kv_Hub'] = $cat['name'];
 		$options['kv_skin'] = $wgUser->getSkin()->getSkinName();
 		$options['kv_user_lang'] = $wgLang->getCode();
 		$options['kv_cont_lang'] = $GLOBALS['wgLanguageCode'];
@@ -78,6 +78,7 @@ class AdProviderLiftium implements iAdProvider {
 
 	public function getIframeFillHtml($slotname, $slot) {
 		return '<script type="text/javascript">' .
+			'LiftiumOptions.placement = "' . $slotname . '";' . "\n" .
 			'Liftium.callInjectedIframeAd("' . addslashes($slot['size']) . 
 			'", document.getElementById("' . addslashes($slotname) .'_iframe"));</script>';
 	}
