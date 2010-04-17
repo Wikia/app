@@ -2,8 +2,6 @@
 
 class AnalyticsProviderComscore implements iAnalyticsProvider {
 
-	private $account = 'p-8bG6eLqkH6Avk';
-
 	function getSetupHtml(){
 		return null;
 	}
