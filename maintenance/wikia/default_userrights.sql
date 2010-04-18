@@ -85,6 +85,7 @@ insert into user_groups(ug_user, ug_group) values
 (/*Eulalia459678*/223485,'vstf'),
 (/*Grunny*/11536,'vstf'),
 (/*Joeyaa*/417287,'vstf'),
+(/*Misiek95*/436149,'vstf'),
 (/*Ose*/400262,'vstf')
 ;
 
