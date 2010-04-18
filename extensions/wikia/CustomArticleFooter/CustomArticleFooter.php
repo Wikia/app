@@ -43,22 +43,22 @@ function wfCustomArticleFooter(  $skin , &$tpl, &$custom_article_footer ) {
 					</div>
 					<ul class=\"actions\">
 						<li>
-							<a id=\"fe_edit_icon\" href=\"".$wgTitle->getEditURL()."\"><img src=\"$wgBlankImgUrl\" id=\"fe_edit_icon\" class=\"sprite\" /></a>
+							<a id=\"fe_edit_icon\" href=\"".$wgTitle->getEditURL()."\"><img src=\"$wgBlankImgUrl\" id=\"fe_edit_icon\" class=\"sprite edit\" /></a>
 							<div>Improve Wikia by <a href=\"".$wgTitle->getEditURL()."\">".wfMsg('footer_1.5')."</a></div>
 						</li>
 						<li>
-							<a id=\"fe_history_icon\" href=\"".$skin->data['content_actions']['history']['href']."\"><img src=\"$wgBlankImgUrl\" id=\"fe_history_icon\" class=\"sprite\" /></a>
+							<a id=\"fe_history_icon\" href=\"".$skin->data['content_actions']['history']['href']."\"><img src=\"$wgBlankImgUrl\" id=\"fe_history_icon\" class=\"sprite history\" /></a>
 							<div><a href=\"".$skin->data['content_actions']['history']['href']."\">".$skin->data['content_actions']['history']['text']."</a></div>
 						</li>
 						<li>
-							<a id=\"fe_random_icon\" href=\"" . Title::makeTitle(NS_SPECIAL,"Random")->escapeFullURL() . "\"><img src=\"$wgBlankImgUrl\" id=\"fe_random_icon\" class=\"sprite\" /></a>
+							<a id=\"fe_random_icon\" href=\"" . Title::makeTitle(NS_SPECIAL,"Random")->escapeFullURL() . "\"><img src=\"$wgBlankImgUrl\" id=\"fe_random_icon\" class=\"sprite random\" /></a>
 							<div><a id=\"fe_random_link\" href=\"" . Title::makeTitle(NS_SPECIAL,"Random")->escapeFullURL() . "\">".wfMsg('footer_6')."</a></div>
 						</li>";
 
 				if (!empty($wgProblemReportsEnable)) {
 					$custom_article_footer .= "
 						<li id=\"fe_report_link\">
-							<a id=\"fe_create_icon\" href=\"#wikia_header\"><img src=\"$wgBlankImgUrl\" id=\"fe_report_icon\" class=\"sprite\" /></a>
+							<a id=\"fe_create_icon\" href=\"#wikia_header\"><img src=\"$wgBlankImgUrl\" id=\"fe_report_icon\" class=\"sprite error\" /></a>
 							<div><a href=\"#wikia_header\">".wfMsg('reportproblem')."</a></div>
 						</li>";
 				}
