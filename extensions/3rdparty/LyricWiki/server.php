@@ -1739,8 +1739,10 @@ function lw_getPage($pageTitle, $pages=array(), &$finalName='', $debug=false){
 				$reTitle = $article->followRedirect(); // follows redirects recursively
 				$article = Article::newFromId($reTitle->getArticleID());
 			}
-			$finalName = $article->getTitle()->getDBkey();
-			$retVal = $article->getRawText();
+			if(is_object($article)){
+				$finalName = $article->getTitle()->getDBkey();
+				$retVal = $article->getRawText();
+			}
 		}
 	}
 	print (!$debug?"":"page code\n$retVal\n");
