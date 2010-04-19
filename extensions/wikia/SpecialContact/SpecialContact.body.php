@@ -216,19 +216,23 @@ class ContactForm extends SpecialPage {
 				</tr>\n");
 		}
 		else {
-			//nope, hide it
+			//nope, print it and hidden the value.
 			$wgOut->addHTML( "
-			<input type=\"hidden\" id=\"wpContactWikiName\" name=\"wpContactWikiName\" value=\"{$wgServer}\" />
 			<table border='0'>
+				<tr>
+					<td align='right'>" . wfMsg( 'contactwikiname' ) . "</td>
+					<td align='left'>{$wgServer}".
+					" <input type=\"hidden\" id=\"wpContactWikiName\" name=\"wpContactWikiName\" value=\"{$wgServer}\" /></td>
+				</tr>\n");
+		}
+
+		$wgOut->addHTML( "
 				<tr>
 					<td align='right'>". wfMsg( 'contactusername' ) .":</td>
 					<td align='left'>
 						<input tabindex='" . ($ti++) . "' type='text' name=\"wpName\" value=\"{$encName}\" size='40' {$user_readonly}/> {$autofill_marker}
 					</td>
-				</tr>\n");
-		}
-
-		$wgOut->addHTML( "
+				</tr>
 				<tr>
 					<td align='right'>". wfMsg( 'contactrealname' ) .":</td>
 					<td align='left'>
