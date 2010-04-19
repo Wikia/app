@@ -155,19 +155,22 @@ var initTracker = function() {
 		$("#bodyContent").find("a").click(function(e) {
 			$.tracker.byStr("articleAction/contentLink-all");
 
+			var _this = $(this);
+			var _href = _this.attr("href");
+
 			/* regular wiki link */
 			/* DON'T PUT IT AT THE END AND MAKE CATCH-ALL, BE BRAVE (-; */
-			if ($(this).attr("class") == "" && $(this).attr("title") != "" && !$(this).attr("href").match(/\/index\.php\?title=.*\&action=edit/)) {
+			if (_this.attr("class") == "" && _this.attr("title") != "" && !_href.match(/\/index\.php\?title=.*\&action=edit/)) {
 
 				/* catlinks */
 				/* nonexistent (red) categories will be traced below as regular red links */
-				if ($(this).parents("div").is("div#catlinks")) {
+				if (_this.parents("div").is("div#catlinks")) {
 					$.tracker.byStr("articleAction/contentLink/ignore/categories");
 					return;
 				}
 
 				/* smw factbox */
-				if ($(this).parents("div").is("div.smwfact")) {
+				if (_this.parents("div").is("div.smwfact")) {
 					$.tracker.byStr("articleAction/contentLink/ignore/smwfactbox");
 					return;
 				}
@@ -177,51 +180,51 @@ var initTracker = function() {
 			}
 
 			/* href="#" or href="javascript:..." */
-			if ($(this).attr("href") == "#" || $(this).attr("href").match(/^javascript:/)) {
+			if (_href == "#" || _href.match(/^javascript:/)) {
 				$.tracker.byStr("articleAction/contentLink/ignore/javascript");
 				return;
 			}
 			/* href="#anchor" */
-			if ($(this).attr("href").match(/^#/)) {
+			if (_href.match(/^#/)) {
 				$.tracker.byStr("articleAction/contentLink/ignore/anchor");
 				return;
 			}
 
 			/* section edit link (already tracked as editSection) */
-			if ($(this).attr("href").match(/\/index\.php\?title=.*\&action=edit\&section=/)) {
+			if (_href.match(/\/index\.php\?title=.*\&action=edit\&section=/)) {
 				$.tracker.byStr("articleAction/contentLink/ignore/editSection");
 				return;
 			}
 			/* regular red link */
 			/* including categories */
-			if ($(this).attr("href").match(/\/index\.php\?title=.*&action=edit&redlink=/) /* && $(this).hasClass("new") */ ) {
+			if (_href.match(/\/index\.php\?title=.*&action=edit&redlink=/) /* && _this.hasClass("new") */ ) {
 				$.tracker.byStr("articleAction/contentLink/red");
 				return;
 			}
 			/* other edit link (eg. template "e" shortcut) */
-			if ($(this).attr("href").match(/\/index\.php\?title=.*\&action=edit/) /* && $(this).hasClass("new") */ ) {
+			if (_href.match(/\/index\.php\?title=.*\&action=edit/) /* && _this.hasClass("new") */ ) {
 				$.tracker.byStr("articleAction/contentLink/ignore/edit");
 				return;
 			}
 
 			/* image */
-			if ($(this).hasClass("image")) {
+			if (_this.hasClass("image")) {
 				$.tracker.byStr("articleAction/contentLink/image");
 				return;
 			}
 			/* bottom right of thumbnails... is this reliable? */
-			if ($(this).hasClass("internal")) {
+			if (_this.hasClass("internal")) {
 				$.tracker.byStr("articleAction/contentLink/imageIcon");
 				return;
 			}
 
 			/* external */
-			if ($(this).hasClass("external") || $(this).hasClass("extiw") /* && $(this).attr("href").match(/^https?:\/\//) */ ) {
+			if (_this.hasClass("external") || _this.hasClass("extiw") /* && _href.match(/^https?:\/\//) */ ) {
 				$.tracker.byStr("articleAction/contentLink/blueExternal");
 				return;
 			}
 
-			$.tracker.byStr("articleAction/contentLink/unknown/" + wgCityId + "-" + wgArticleId + "/" + encodeURIComponent($(this).attr("href")));
+			$.tracker.byStr("articleAction/contentLink/unknown/" + wgCityId + "-" + wgArticleId + "/" + encodeURIComponent(_href));
 		});
 	}
 };
