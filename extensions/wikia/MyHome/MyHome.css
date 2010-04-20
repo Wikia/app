@@ -238,3 +238,8 @@ td.activityfeed-details-label {
 #myhome-community-corner {
 	clear: right;
 }
+
+/* Special:ActivityFeed */
+#activityfeed-wrapper #myhome-main {
+	margin-right: 0;
+}

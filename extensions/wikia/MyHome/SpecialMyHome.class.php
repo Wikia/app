@@ -17,12 +17,14 @@ class SpecialMyHome extends SpecialPage {
 			unset( $_SESSION['Signup_AccountCreated'] );
 		}
 
-		// not available for skins different then monaco
-		if(get_class($wgUser->getSkin()) != 'SkinMonaco' && get_class($wgUser->getSkin()) != 'SkinAnswers'){
+		// not available for skins different then monaco / answers
+		$skinName = get_class($wgUser->getSkin());
+		if (!in_array($skinName, array('SkinMonaco', 'SkinAnswers'))) {
 			$wgOut->addWikiMsg( 'myhome-switch-to-monaco' );
 			wfProfileOut(__METHOD__);
 			return;
 		}
+
 
 		// not available for anons
 		if($wgUser->isAnon()) {
