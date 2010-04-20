@@ -321,7 +321,7 @@ class FeedRenderer {
 					// content NS
 					default:
 						if (empty($row['articleComment'])) {
-							$type = Namespace::isTalk($row['ns']) ? self::FEED_TALK_ICON : self::FEED_SUN_ICON;
+							$type = MWNamespace::isTalk($row['ns']) ? self::FEED_TALK_ICON : self::FEED_SUN_ICON;
 						} else {
 							$type = self::FEED_COMMENT_ICON;
 						}
@@ -332,7 +332,7 @@ class FeedRenderer {
 				// edit done from editor
 				if (empty($row['viewMode'])) {
 					// talk pages
-					if (isset($row['ns']) && Namespace::isTalk($row['ns'])) {
+					if (isset($row['ns']) && MWNamespace::isTalk($row['ns'])) {
 						if (empty($row['articleComment'])) {
 							$type = self::FEED_TALK_ICON;
 						} else {
