@@ -122,19 +122,26 @@ class RecipesTweaks {
 	 * Render search box, "Add new recipe" tab and article rating tool (if needed)
 	 */
 	public static function renderArticleHeaderTabs($skin) {
+		global $wgTitle, $wgUser, $wgRequest, $wgBlankImgUrl;
 		wfProfileIn(__METHOD__);
-
-		global $wgTitle, $wgUser, $wgRequest;
 
 		// i18n
 		wfLoadExtensionMessages('RecipesTweaks');
 
+		// where "Add a recipe" should point to
+		global $wgEnableRecipesTemplateExt;
+		if (!empty($wgEnableRecipesTemplateExt)) {
+			$newRecipeAction = Skin::makeSpecialUrl('CreateRecipe');
+		}
+		else {
+			$newRecipeAction = Skin::makeSpecialUrl('CreatePage');
+		}
+
 		// render tabs
 		$template = new EasyTemplate(dirname(__FILE__) . '/templates');
-		global $wgBlankImgUrl;
 		$template->set_vars(array(
 			'blank' => $wgBlankImgUrl,
-			'newRecipeAction' => Skin::makeSpecialUrl('CreatePage'),
+			'newRecipeAction' => $newRecipeAction,
 			'searchAction' =>  $skin->data['searchaction'],
 			'skin' => $wgUser->getSkin(),
 		));
@@ -181,7 +188,7 @@ class RecipesTweaks {
 
 		// get first contributor (only for main namespace / exclude main page)
 		if (self::isArticleView()) {
-			global $wgTitle;
+			global $wgTitle, $wgEnableRecipesTemplateExt;
 			$firstRevision = $wgTitle->getFirstRevision();
 
 			if (!empty($firstRevision)) {
@@ -213,8 +220,10 @@ class RecipesTweaks {
 
 				$template->set_vars(array(
 					'avatar' => $avatar,
+					'showAvatarOnly' => !empty($wgEnableRecipesTemplateExt),
 					'showContrib' => true,
 					'userLink' => $userLink,
+					'userPage' => $url,
 				));
 			}
 		}

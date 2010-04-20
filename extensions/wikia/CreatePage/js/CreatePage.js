@@ -132,8 +132,14 @@ $(function() {
 		}
 
 		// macbre: RT #38478
-		if ($('#add_recipe_tab').exists()) {
-			$('#add_recipe_tab').find('a').click( function(e) { CreatePage.openDialog(e, null); });
+		var addRecipeTab = $('#add_recipe_tab');
+		if (addRecipeTab.exists()) {
+			var addRecipeLink = addRecipeTab.find('a');
+
+			// only show popup if this tab really points to CreatePage
+			if (addRecipeLink.attr('href').match(/CreatePage$/)) {
+				addRecipeLink.click(CreatePage.openDialog);
+			}
 		}
 
 		$(".new").bind('click', function(e) { CreatePage.redLinkClick(e, CreatePage.getTitleFromUrl(this.href)) } );
