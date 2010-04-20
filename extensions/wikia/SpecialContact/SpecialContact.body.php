@@ -209,7 +209,7 @@ class ContactForm extends SpecialPage {
 			$wgOut->addHTML( "
 			<table border='0'>
 				<tr>
-					<td align='right'>" . wfMsg( 'contactwikiname' ) . "</td>
+					<td align='right'>" . wfMsg( 'contactwikiname' ) . ":</td>
 					<td align='left'>
 						<input tabindex='" . ($ti++) . "' type='text' name=\"wpContactWikiName\" value=\"{$wgServer}\" size='40' />
 					</td>
@@ -220,7 +220,7 @@ class ContactForm extends SpecialPage {
 			$wgOut->addHTML( "
 			<table border='0'>
 				<tr>
-					<td align='right'>" . wfMsg( 'contactwikiname' ) . "</td>
+					<td align='right'>" . wfMsg( 'contactwikiname' ) . ":</td>
 					<td align='left'>{$wgServer}".
 					" <input type=\"hidden\" id=\"wpContactWikiName\" name=\"wpContactWikiName\" value=\"{$wgServer}\" /></td>
 				</tr>\n");
