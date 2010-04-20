@@ -124,7 +124,7 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 
 			$serverNo = $inthash%($wgImagesServers-1);
 			$serverNo++;
-			
+
 			// If there is no timestamp, use the cache-busting number from wgCdnStylePath.
 			if($timestamp == ""){
 				global $wgCdnStylePath;
@@ -601,7 +601,7 @@ function getMenu() {
 	if($words) {
 		$magicWords = array();
 		$map = array('voted' => array('highest_ratings', 'GetTopVotedArticles'), 'popular' => array('most_popular', 'GetMostPopularArticles'), 'visited' => array('most_visited', 'GetMostVisitedArticles'), 'newlychanged' => array('newly_changed', 'GetNewlyChangedArticles'), 'topusers' => array('community', 'GetTopFiveUsers'));
-		$words = split(',', $words);
+		$words = explode(',', $words);
 		foreach($words as $word) {
 			if(isset($map[$word])) {
 				$magicWords[$word] = DataProvider::$map[$word][1]();
@@ -950,10 +950,10 @@ function wfGetMainTTCache() {
 		$cache = $wgCaches[CACHE_TT];
 	} else {
 		reset( $wgCaches );
-		$type = key( $wgCaches );		
+		$type = key( $wgCaches );
 		$cache = $wgCaches[$type];
 	}
-	
+
 	return $cache;
 }
 
