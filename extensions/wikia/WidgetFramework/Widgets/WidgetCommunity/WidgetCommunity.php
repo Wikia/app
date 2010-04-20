@@ -37,20 +37,14 @@ function WidgetCommunity($id, $params) {
 	$total = $wgLang->formatNum($total);
 
 	$footerButton = array();
-	if ($wgUser->isLoggedIn()) {
-		if (!empty($wgEnableMyHomeExt)) {
-			$footerButton['text'] = wfMsg('widget-community-more');
-			$footerButton['href'] = Skin::makeSpecialUrl('MyHome');
-			$footerButton['class'] = 'wikia-button forward';
-		} else {
-			$footerButton['text'] = wfMsg('recentchanges');
-			$footerButton['href'] = Skin::makeSpecialUrl('RecentChanges');
-			$footerButton['class'] = 'wikia-button forward';
-		}
+	if (!empty($wgEnableMyHomeExt)) {
+		$footerButton['text'] = wfMsg('widget-community-more');
+		$footerButton['href'] = Skin::makeSpecialUrl( ($wgUser->isLoggedIn() ? 'MyHome' : 'ActivityFeed') );
+		$footerButton['class'] = 'wikia-button forward';
 	} else {
-		$footerButton['text'] = wfMsg('nologinlink');
-		$footerButton['href'] = htmlspecialchars(Skin::makeSpecialUrl( 'Signup', 'returnto=' . $wgTitle->getPrefixedURL() ));
-		$footerButton['class'] = 'wikia-button';
+		$footerButton['text'] = wfMsg('recentchanges');
+		$footerButton['href'] = Skin::makeSpecialUrl('RecentChanges');
+		$footerButton['class'] = 'wikia-button forward';
 	}
 
 	$maxElements = 5;

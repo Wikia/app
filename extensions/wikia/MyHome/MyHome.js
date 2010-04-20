@@ -3,6 +3,9 @@ var MyHome = {};
 // timestamps to fetch feeds since
 MyHome.fetchSince = {};
 
+// prefix used for tracking
+MyHome.trackerRoot = 'MyHome';
+
 // send AJAX request to MyHome Ajax dispatcher in MW
 MyHome.ajax = function(method, params, callback) {
 	$.getJSON(wgScript + '?action=ajax&rs=MyHomeAjax&method=' + method, params, callback);
@@ -10,12 +13,12 @@ MyHome.ajax = function(method, params, callback) {
 
 // track events
 MyHome.track = function(fakeUrl) {
-	WET.byStr('MyHome' + fakeUrl);
+	WET.byStr(MyHome.trackerRoot + fakeUrl);
 }
 
 // console logging
 MyHome.log = function(msg) {
-	$().log(msg, 'MyHome');
+	$().log(msg, MyHome.trackerRoot);
 }
 
 // show popup with video player when clicked on video thumbnail
@@ -114,11 +117,8 @@ MyHome.fetchMore = function(node) {
 		'type': feedType,
 		'since': fetchSince
 	}, function(data) {
-		MyHome.log(data);
-
 		if (data.html) {
 			// add rows
-			//feedContent.append(data.html);
 			$(data.html).insertAfter(feedContent);
 
 			// setup onclicks on thumbnails
@@ -202,7 +202,18 @@ MyHome.trackClick = function(e) {
 
 // init onclicks
 jQuery(function() {
-	MyHome.mode = ($("#myhome-main").children().filter("[id$='-feed-content']").attr("id") == "myhome-activity-feed-content") ? "activity" : "watchlist";
+	if ($('#activityfeed-wrapper').exists()) {
+		// Special:ActivityFeed
+		MyHome.mode = 'activity';
+
+		// change prefix used for tracking and logging
+		MyHome.trackerRoot = 'ActivityFeedPage';
+	}
+	else {
+		// Special:MyHome
+		MyHome.mode = ($("#myhome-main").children().filter("[id$='-feed-content']").attr("id") == "myhome-activity-feed-content") ? "activity" : "watchlist";
+	}
+
 	MyHome.setupThumbnails($('.activityfeed'));
 	$('#myhome-feed-switch-default-checkbox').removeAttr('disabled').click(MyHome.setDefaultView);
 	$('#myhome-wrapper').click(MyHome.trackClick);

@@ -8,11 +8,15 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $dir = dirname(__FILE__) . '/';
 
-// special page
+// Special:MyHome
 $wgAutoloadClasses['SpecialMyHome'] = $dir.'SpecialMyHome.class.php';
 $wgSpecialPages['MyHome'] = 'SpecialMyHome';
 $wgSpecialPageGroups['MyHome'] = 'users';
 $wgExtensionAliasesFiles['MyHome'] = $dir . 'SpecialMyHome.alias.php';
+
+// Special:ActivityFeed
+$wgAutoloadClasses['SpecialActivityFeed'] = $dir.'SpecialActivityFeed.class.php';
+$wgSpecialPages['ActivityFeed'] = 'SpecialActivityFeed';
 
 // hooks
 $wgHooks['CustomUserData'][] = 'MyHome::addToUserMenu';

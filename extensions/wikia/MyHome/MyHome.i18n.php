@@ -91,6 +91,8 @@ For example, you could:
 
 	'accesskey-pt-myhome' => 'g', # do not translate or duplicate this message to other languages
 	'tooltip-pt-myhome' => "Go to My Home",
+
+	'activityfeed' => 'Activity feed',
 );
 
 /** Message documentation (Message documentation)
@@ -190,16 +192,16 @@ $messages['ar'] = array(
 
 هذه الصفحة تساعدك على معرفة ما يحدث على الويكي.
 
- إذا كنت مؤسس أو مشرفا على هذا الويكي ، بإمكانك تغيير هذه الرسالة لاجراء محادثات مع المجتمع حول أشياء هامة تحدث على هذا 
+ إذا كنت مؤسس أو مشرفا على هذا الويكي ، بإمكانك تغيير هذه الرسالة لاجراء محادثات مع المجتمع حول أشياء هامة تحدث على هذا
 الموقع. على سبيل المثال ، يمكن أن
 
-* تنظم مشروعا لبناء منطقة من الويكي 
+* تنظم مشروعا لبناء منطقة من الويكي
 
-*قم بإظهار بعض الصفحات الجديدة التي يجب للجميع أن يراها 
+*قم بإظهار بعض الصفحات الجديدة التي يجب للجميع أن يراها
 
-*احصل على أشخاص لكي يشاركوا في النقاش الذي يدور حول الموقع 
+*احصل على أشخاص لكي يشاركوا في النقاش الذي يدور حول الموقع
 
-*عرف بأحد المساهمين الذي أضاف شيئا خاصا للويكي 
+*عرف بأحد المساهمين الذي أضاف شيئا خاصا للويكي
 
 *أو اكتفي بوضع بعض كلمات التشجيع!",
 	'tooltip-pt-myhome' => 'اذهب الى صفحتي الرئيسية',
@@ -284,7 +286,7 @@ Ne vern piv a c'hall degas cheñchamañtoù, ouzhpennañ titouroù pe reizhañ u
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'Korn ar gumuniezh',
 	'myhome-community-corner-edit' => 'kemmañ ar gemennadenn',
-	'community-corner' => "'''Degemer mat war Ma Degemer!''' 
+	'community-corner' => "'''Degemer mat war Ma Degemer!'''
 
 Gant ar bajenn-mañ e c'hallit bezañ kelaouet diwar-benn darvoudoù nevez ar wiki
 
@@ -371,7 +373,7 @@ Wenn du die Startseite sehen möchtest, gehe bitte zu '''[[Special:Preferences|d
 
 Diese Seite hilft dir, den Überblick über alle wichtigen Vorgänge im Wiki zu behalten.
 
-Wenn du der Gründer oder ein Admin dieses Wikis bist, kannst du diese Nachricht ändern um der Community wichtige Dinge mitzuteilen. Zum Beispiel: 
+Wenn du der Gründer oder ein Admin dieses Wikis bist, kannst du diese Nachricht ändern um der Community wichtige Dinge mitzuteilen. Zum Beispiel:
 
 * Einige Seiten aufführen, die jeder sehen sollte.
 
@@ -452,7 +454,7 @@ Wenn Sie die Startseite sehen möchten, gehen Sie bitte zu '''[[Special:Preferen
 
 Diese Seite hilft Ihnen, den Überblick über alle wichtigen Vorgänge im Wiki zu behalten.
 
-Wenn Sie der Gründer oder ein Admin dieses Wikis sind, können Sie diese Nachricht ändern um der Community wichtige Dinge mitzuteilen. Zum Beispiel: 
+Wenn Sie der Gründer oder ein Admin dieses Wikis sind, können Sie diese Nachricht ändern um der Community wichtige Dinge mitzuteilen. Zum Beispiel:
 
 * Einige Seiten aufführen, die jeder sehen sollte.
 
@@ -511,7 +513,7 @@ $messages['el'] = array(
 	'myhome-hot-spots-number-of-editors' => 'συντάκτες',
 	'myhome-community-corner-header' => 'Στέκι της κοινώτητας',
 	'myhome-community-corner-edit' => 'επεξεργασία του μηνύματος',
-	'community-corner' => "' ' 'Καλωσήρθατε στην Αρχική σας Σελίδα! ' ' ' 
+	'community-corner' => "' ' 'Καλωσήρθατε στην Αρχική σας Σελίδα! ' ' '
 
 Αυτή η σελίδα σας βοηθάει να ξέρετε τί συμβαίνει στο wiki.
 
@@ -586,9 +588,9 @@ $messages['es'] = array(
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'Rincón de la comunidad',
 	'myhome-community-corner-edit' => '[editar mensaje]',
-	'community-corner' => "'''¡Bienvenido a Mi página de inicio!''' 
+	'community-corner' => "'''¡Bienvenido a Mi página de inicio!'''
 
-Esta página te ayuda a mantenerte al día sobre lo que está ocurriendo en el wiki. 
+Esta página te ayuda a mantenerte al día sobre lo que está ocurriendo en el wiki.
 
 Si eres el fundador o un administrador de este wiki, puedes cambiar este mensaje para contarle a la comunidad qué cosas importantes están pasando en el sitio. Por ejemplo, puedes:
 
@@ -662,11 +664,11 @@ Jos olet tämän wikin perustaja tai olet ylläpitäjänä tässä wikissä, voi
 * Järjestää projektin uuden alueen tekoon.
 
 * Esitellä uusia sivuja jotka jokaisen tulisi nähdä.
-    
+
 * Saada ihmisiä mukaan keskusteluun sivuston tapahtumista.
-    
+
 * Antaa koko yhteisön tietää muokkaajasta, joka on lisännyt wikiin jotain erityistä.
-   
+
 * Tai vain lähettää muutamia rohkaisevia sanoja!",
 	'myhome-hot-spots-definition' => 'Eniten muokatut sivut viimeisen $1  päivän ajalta.',
 	'myhome-default-view-checkbox' => 'Tee sivusta $1 oletusnäkymäni.',
@@ -727,9 +729,9 @@ $messages['fr'] = array(
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'Le coin de la Communauté',
 	'myhome-community-corner-edit' => 'modifier le message',
-	'community-corner' => "'''Bienvenue sur Mon Accueil!''' 
+	'community-corner' => "'''Bienvenue sur Mon Accueil!'''
 
-Cette page vous permet de rester informé sur les nouveaux évènements du wiki. 
+Cette page vous permet de rester informé sur les nouveaux évènements du wiki.
 
 Si vous êtes le fondateur ou bien un administrateur de ce wiki, vous pouvez changer ce message afin d'annoncer aux utilisateurs de nouvelles choses importantes sur le site. Ainsi, vous pouvez par exemple:
 
@@ -1113,7 +1115,7 @@ $messages['ja'] = array(
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'コミュニティコーナー',
 	'myhome-community-corner-edit' => 'メッセージを編集',
-	'community-corner' => "'''My Home にようこそ！''' 
+	'community-corner' => "'''My Home にようこそ！'''
 
 このページは、ウィキで何が起きているのかをわかりやすく示し、あなたがこのウィキに居続ける手助けとするためのものです。
 
@@ -1254,7 +1256,7 @@ Klik op '''[[Special:CreatePage|Nieuwe pagina]]''' om te beginnen met schrijven!
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Categorie toegevoegd|Categorieën toegevoegd}}',
 	'myhome-user-contributions-empty' => 'U kunt meewerken aan deze wiki door op "bewerken" te klikken op een pagina en daarna toe te voegen wat u weet.
 Iedereen kan wijzigingen maken, informatie toevoegen of een fout verbeteren.
-De wiki is gebouwd door de gemeenschap, en zo gauw u op de knop "bewerken" klikt, maar u ook 
+De wiki is gebouwd door de gemeenschap, en zo gauw u op de knop "bewerken" klikt, maar u ook
 onderdeel uit van de gemeenschap.
 Probeer het maar!',
 	'myhome-hot-spots-number-of-editors' => 'bewerkers',
@@ -1553,7 +1555,7 @@ Você pode utilizar a sua lista de artigos vigiados para se manter atualizado da
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'Portal comunitário',
 	'myhome-community-corner-edit' => 'editar mensagem',
-	'community-corner' => "'''Bem-vindo a sua página inicial!'''  
+	'community-corner' => "'''Bem-vindo a sua página inicial!'''
 
 Esta página ajuda você a se manter atualizado sobre o que está acontecendo nesta wiki.
 
@@ -1785,7 +1787,7 @@ Den här sidan hjälper dig att hålla dig uppdaterad med vad som händer på wi
 
 Om du är grundaren eller en administratör på denna wiki kan du ändra detta budskap att tala med community om viktiga saker som händer på sajten. Till exempel kan du:
 
-* Ordna ett projekt för att bygga upp ett område i wiki 
+* Ordna ett projekt för att bygga upp ett område i wiki
 
 * Visa upp några nya sidor som alla borde se
 
