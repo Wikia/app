@@ -165,13 +165,13 @@ class ExternalStorageUpdate {
 	 * @access public
 	 * @author Krzysztof Krzyżaniak <eloy@wikia.com>
 	 *
-	 * @param Revision	$revision	revision object
+	 * @param Revision	$revision	revision object (reference)
 	 * @param string	$url		url to external object
 	 * @param string	$flags		flags for this revision
 	 *
 	 * @return true means process other hooks
 	 */
-	static public function addDeferredUpdate( &$revision, &$url, &$flags ) {
+	static public function addDeferredUpdate( &$revision, $url, $flags ) {
 		global $wgDeferredUpdateList;
 
 		if( strpos( $flags, "external" ) !== false ) {
