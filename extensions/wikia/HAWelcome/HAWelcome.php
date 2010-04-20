@@ -343,7 +343,7 @@ class HAWelcomeJob extends Job {
 	 *
 	 * @return true means process other hooks
 	 */
-	public static function revisionInsertComplete( &$revision, &$url, &$flags ) {
+	public static function revisionInsertComplete( &$revision, $url, $flags ) {
 		global $wgUser, $wgCityId, $wgCommandLineMode, $wgSharedDB,
 			$wgErrorLog, $wgMemc;
 
