@@ -1003,7 +1003,7 @@ class Masthead {
 		return $result;
 	}
 
-	static public function userMastheadInvalidateCache(&$article, &$user, $text, $summary, $minoredit, $watchthis, &$sectionanchor, &$flags, $revision, &$status, $baseRevId) {
+	static public function userMastheadInvalidateCache(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 		if (!$user->isAnon()) {
 			if(count($status->errors) == 0) {
 				global $wgMemc;
