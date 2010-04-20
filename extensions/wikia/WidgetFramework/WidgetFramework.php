@@ -12,6 +12,9 @@ $wgExtensionCredits['specialpage'][] = array(
     'author' => 'Inez Korczyński',
 );
 
+$wgAutoloadClasses["ReorderWidgets"] = "$IP/extensions/wikia/WidgetFramework/ReorderWidgets.php";
+$wgHooks["ReorderWidgets"][] = "ReorderWidgets::WF";
+
 /**
  * IMPORTANT: If you want to make any changes in this class or in any part of widget
  * framework (also JS) then you need to discuss it with me.
@@ -134,21 +137,24 @@ class WidgetFramework {
 					$this->config[1][] = array('type' => 'WidgetCategoryCloud', 'id' => 146);
 				}
 
-				if (in_array($wgCityId, array(
-					26337 /* Glee */,
-					1573 /* The Office */,
-					2111 /* Degrassi */,
-					6342 /* iCarly */,
-					9863 /* True Blood */,
-					2889 /* Ed Edd and Eddy */,
-					4055 /* One Tree Hill */,
-					4093 /* Suitelife */,
-					681 /* Desperate Housewives */,
-					8388 /* Secret Life */,
-					38772 /* Alice in Wonderland */
-				))) {
-					array_unshift($this->config[1], array('type' => 'WidgetSlideshow', 'id' => 147));
+				/* simplify widget config array from config[1][](name, id) to (name, name, name) */
+				$widgets = array();
+				foreach ($this->config[1] as $c) {
+					$widgets[] = $c["type"];
 				}
+
+error_log("in: " . print_r($widgets, true));
+				wfRunHooks("ReorderWidgets", array(&$widgets));
+error_log("out: " . print_r($widgets, true));
+
+				/* rebuild proper(???) widget config array */
+				$config1 = array();
+				$id = 300;
+				foreach ($widgets as $w) {
+					$config1[] = array("type" => $w, "id" => $id++);
+				}
+
+				$this->config[1] = $config1;
 
 			} else if($this->skinname == "quartz") {
 				$this->config = array(
