@@ -5,6 +5,20 @@
  * @addtopackage maintenance
  */
 
+/*
+CREATE TABLE `avatars_migrate` (
+  `user_id` int(10) unsigned NOT NULL,
+  `old_path` varchar(255) not null default '',
+  `city_id` int(8) unsigned not null,
+  `new_path` varchar(255) not null default '',
+  `removed` boolean default false,
+  `date` timestamp NOT NULL default now(),
+  PRIMARY KEY (`user_id`, `city_id`),
+  KEY (`old_path`),
+  KEY (`new_path`)
+) ENGINE=InnoDB;
+*/
+
 ini_set( "include_path", dirname(__FILE__)."/.." );
 require_once( "commandLine.inc" );
 require_once( $GLOBALS["IP"]."/extensions/wikia/Masthead/Masthead.php" );
@@ -125,13 +139,16 @@ function copyAvatarsToMasthead() {
 
 			$avatar = Masthead::newFromUserID($user_id);
 			$path = $avatar->getFullPath();
+			$city_id = 0;
 			$pathny = false;
 			if ( !file_exists( $path ) ) {
-				$pathEnAnswers = checkNYAvatar($answersWikis['en'], $user_id);
+				$city_id = $answersWikis['en'];
+				$pathEnAnswers = checkNYAvatar($city_id, $user_id);
 				if ( $pathEnAnswers == 'NULL' ) {
 					__log("NY Avatar (en): doesn't exist");
 					if ( $lang != 'en' && isset($answersWikis[$lang]) ) {
-						$pathLangAnswers = checkNYAvatar($answersWikis[$lang], $user_id);
+						$city_id = $answersWikis[$lang];
+						$pathLangAnswers = checkNYAvatar($city_id, $user_id);
 						if ( $pathLangAnswers == 'NULL' ) {
 							__log("NY Avatar ($lang): doesn't exist");
 						} else {
@@ -145,9 +162,9 @@ function copyAvatarsToMasthead() {
 				__log("Avatar: $path exists");
 			}
 			
-			if ( $pathny !== false ) {
+			if ( $pathny !== false && $city_id > 0 ) {
 				__log("Move $pathny to $path");
-				$uploaded = uploadAvatar($avatar, $oUser, $pathny);
+				$uploaded = uploadAvatar($avatar, $oUser, $pathny, $city_id);
 				__log("Done with code: " . intval($uploaded));
 			}
 		}
@@ -155,8 +172,8 @@ function copyAvatarsToMasthead() {
 	unset($wikiArr);
 }
 
-function uploadAvatar($oMasthead, $mUser, $nypath) {
-	global $wgTmpDirectory, $UNLINK_OLD;
+function uploadAvatar($oMasthead, $mUser, $nypath, $city_id) {
+	global $wgTmpDirectory, $UNLINK_OLD, $wgStatsDB;
 	$filename = wfBasename($nypath);
 
 	if( !isset( $wgTmpDirectory ) || !is_dir( $wgTmpDirectory ) ) {
@@ -278,17 +295,27 @@ function uploadAvatar($oMasthead, $mUser, $nypath) {
 				$mUser->setOption( AVATAR_USER_OPTION_NAME, $newAvatarPath );
 				$mUser->saveSettings();
 			}
-			
+
+			$__path = str_replace($filename, "", $nypath);
+			$__files = $__path . "/answers_" . $mUser->getId() . "_*";
 			if ( $UNLINK_OLD ) {
-				$__path = str_replace($filename, "", $nypath);
-				$files = glob($__path . "/answers_" . $mUser->getId() . "_*");
+				$files = glob($__files);
 				if ( $files ) {
 					foreach ( $files as $file ) {
 						__log("Unlink $file");
 						unlink($file);
 					}
 				}
-			}			
+			}
+			$dbs = wfGetDB(DB_MASTER, array(), $wgStatsDB);
+			$data = array(
+				'user_id' 		=> $mUser->getId(),
+				'old_path' 		=> $__files,
+				'city_id' 		=> $city_id,
+				'new_path' 		=> $sFilePath,
+				'removed' 		=> $UNLINK_OLD ? true : false
+			);
+			$dbs->insert( 'avatars_migrate', $data, __METHOD__ );
 		}
 		else {
 			__log(sprintf("File %s doesn't exist", $sTmpFile ));
