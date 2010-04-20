@@ -212,9 +212,9 @@ class Masthead {
 	 * @access public
 	 */
 	public function getUserPageUrl() {
-		if ( isset($this->userPageUrl) ) 
+		if ( isset($this->userPageUrl) )
 			$url = $this->userPageUrl;
-		else 
+		else
 			$url = $this->mUser->getUserPage()->getFullUrl();
 		return $url;
 	}
@@ -1003,7 +1003,7 @@ class Masthead {
 		return $result;
 	}
 
-	static public function userMastheadInvalidateCache(&$article, &$user, &$text, &$summary, &$minoredit, &$watchthis, &$sectionanchor, &$flags, $revision, &$status, $baseRevId) {
+	static public function userMastheadInvalidateCache(&$article, &$user, $text, $summary, $minoredit, &$watchthis, &$sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 		if (!$user->isAnon()) {
 			if(count($status->errors) == 0) {
 				global $wgMemc;
