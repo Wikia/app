@@ -171,6 +171,10 @@
 	padding: 1px;
 }
 
+#recipes_contributor_avatar .avatar {
+	vertical-align: top;
+}
+
 /* article action bar */
 .recipes_page_bar {
 	background: none !important;
