@@ -232,7 +232,7 @@ $wgHooks['ArticleSaveComplete'][] = 'CommunityWidgetPurgeVarnish';
 /**
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
-function CommunityWidgetPurgeVarnish(&$article, &$user, $text, $summary, &$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
+function CommunityWidgetPurgeVarnish(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 	global $wgScript, $wgContentNamespaces, $wgContLang, $wgMemc;
 	if (in_array($article->mTitle->getNamespace(), $wgContentNamespaces)) {
 		$lang = $wgContLang->getCode();
