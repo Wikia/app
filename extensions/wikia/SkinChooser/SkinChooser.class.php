@@ -2,6 +2,8 @@
 
 class SkinChooser {
 
+	static private $wgAllowUserSkinOriginal;
+
 	/**
 	 * Generate proper key for user option
 	 *
@@ -42,9 +44,10 @@ class SkinChooser {
 		global $wgUser;
 		wfProfileIn(__METHOD__);
 
-		$wgUser->setOption(self::getUserOptionKey($option), $value);
+		$key = self::getUserOptionKey($option);
 
-		self::log(__METHOD__, "{$option} = {$value}");
+		$wgUser->setOption($key, $value);
+		self::log(__METHOD__, "{$key} = {$value}");
 
 		wfProfileOut(__METHOD__);
 	}
@@ -78,6 +81,8 @@ class SkinChooser {
 	public static function savePreferences($pref) {
 		global $wgUser, $wgCityId, $wgAdminSkin, $wgTitle, $wgRequest;
 
+		//self::log(__METHOD__, print_r($pref, true));
+
 		# Save setting for admin skin
 		if(!empty($pref->mAdminSkin)) {
 			if( $wgUser->isAllowed( 'setadminskin' ) && !$wgUser->isBlocked() ) {
@@ -98,9 +103,35 @@ class SkinChooser {
 			}
 		}
 
+		// disable $wgAllowUserSkin so skin preference can be set only here
+		global $wgAllowUserSkin;
+		self::$wgAllowUserSkinOriginal = $wgAllowUserSkin;
+
+		$wgAllowUserSkin = false;
+
+		// set skin
+		if ( !is_null($pref->mSkin) ) {
+			self::setUserOption('skin', $pref->mSkin);
+		}
+
+		// set theme
 		if ( !is_null($pref->mTheme) ) {
 			self::setUserOption('theme', $pref->mTheme);
 		}
+
+		return true;
+	}
+
+	/**
+	 * This method is called after preferences are updated
+	 *
+	 * Value of $wgAllowUserSkin will be restored here
+	 */
+	public static function savePreferencesAfter($prefs, $wgUser, &$msg, $oldOptions) {
+		global $wgAllowUserSkin;
+
+		// restore value of $wgAllowUserSkin
+		$wgAllowUserSkin = self::$wgAllowUserSkinOriginal;
 
 		return true;
 	}
@@ -260,7 +291,7 @@ class SkinChooser {
 					continue;
 				}
 				if($skinKey == 'quartz') {
-					$skinKeyA = preg_split('/-/', $wgAdminSkin);
+					$skinKeyA = explode('-', $wgAdminSkin);
 					if($skinKey != $skinKeyA[0]) {
 						continue;
 					}
@@ -291,7 +322,7 @@ class SkinChooser {
 		} else {
 			$wgOut->addHTML('<br/>');
 			if(!empty($wgAdminSkin)) {
-				$elems = preg_split('/-/', $wgAdminSkin);
+				$elems = explode('-', $wgAdminSkin);
 				$skin = ( array_key_exists(0, $elems) ) ? $elems[0] : null;
 				$theme = ( array_key_exists(1, $elems) ) ? $elems[1] : null;
 				if($theme != 'custom') {
@@ -322,7 +353,7 @@ class SkinChooser {
 
 		wfProfileIn(__METHOD__);
 
-		if(!($wgTitle instanceof Title) || in_array( $user->getOption('skin'), $wgSkipSkins )) {
+		if(!($wgTitle instanceof Title) || in_array( self::getUserOption('skin'), $wgSkipSkins )) {
 			$user->mSkin = &Skin::newFromKey(isset($wgDefaultSkin) ? $wgDefaultSkin : 'monobook');
 			wfProfileOut(__METHOD__);
 			return false;
@@ -354,12 +385,15 @@ class SkinChooser {
 		}
 		if(!empty($wgForceSkin)) {
 			$wgForceSkin = $wgRequest->getVal('useskin', $wgForceSkin);
-			$elems = preg_split('/-/', $wgForceSkin);
+			$elems = explode('-', $wgForceSkin);
 			$userSkin = ( array_key_exists(0, $elems) ) ? $elems[0] : null;
 			$userTheme = ( array_key_exists(1, $elems) ) ? $elems[1] : null;
 
 			$user->mSkin = &Skin::newFromKey($userSkin);
 			$user->mSkin->themename = $userTheme;
+
+			self::log(__METHOD__, "forced skin to be {$wgForceSkin}");
+
 			wfProfileOut(__METHOD__);
 			return false;
 		}
@@ -386,7 +420,7 @@ class SkinChooser {
 
 		if(!$user->isLoggedIn()) { # If user is not logged in
 			if(!empty($wgAdminSkin)) {
-				$adminSkinArray = preg_split('/-/', $wgAdminSkin);
+				$adminSkinArray = explode('-', $wgAdminSkin);
 				$userSkin = isset($adminSkinArray[0]) ? $adminSkinArray[0] : null;
 				$userTheme = isset($adminSkinArray[1]) ? $adminSkinArray[1] : null;
 			} else {
@@ -394,12 +428,12 @@ class SkinChooser {
 				$userTheme = $wgDefaultTheme;
 			}
 		} else {
-			$userSkin = $user->getOption('skin');
-			$userTheme = $user->getOption('theme');
+			$userSkin = self::getUserOption('skin');
+			$userTheme = self::getUserOption('theme');
 
-			if(true == (bool) $user->getOption('skinoverwrite')) { # Doest have overwrite enabled?
+			if(true == (bool) self::getUserOption('skinoverwrite')) { # Doest have overwrite enabled?
 				if(!empty($wgAdminSkin)) {
-					$adminSkinArray = preg_split('/-/', $wgAdminSkin);
+					$adminSkinArray = explode('-', $wgAdminSkin);
 					$userSkin = isset($adminSkinArray[0]) ? $adminSkinArray[0] : null;
 					$userTheme = isset($adminSkinArray[1]) ? $adminSkinArray[1] : null;
 				}
@@ -408,7 +442,7 @@ class SkinChooser {
 		wfProfileOut(__METHOD__.'::GetSkinLogic');
 
 		$useskin = $wgRequest->getVal('useskin', $userSkin);
-		$elems = preg_split('/-/', $useskin);
+		$elems = explode('-', $useskin);
 		$userSkin = ( array_key_exists(0, $elems) ) ? $elems[0] : null;
 		$userTheme = ( array_key_exists(1, $elems) ) ? $elems[1] : $userTheme;
 		$userTheme = $wgRequest->getVal('usetheme', $userTheme);
@@ -434,11 +468,11 @@ class SkinChooser {
 			$userSkin = 'monaco';
 		}
 
+		self::log(__METHOD__, "using skin {$userSkin}");
+
 		$user->mSkin = &Skin::newFromKey($userSkin);
 
 		$normalizedSkinName = substr(strtolower(get_class($user->mSkin)),4);
-
-		self::log(__METHOD__, "using skin {$userSkin}");
 
 		# Normalize theme name and set it as a variable for skin object.
 		if(isset($wgSkinTheme[$normalizedSkinName])){
