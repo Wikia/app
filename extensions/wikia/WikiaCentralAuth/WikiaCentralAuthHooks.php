@@ -530,4 +530,21 @@ class WikiaCentralAuthHooks {
 		}
 		return true;
 	}
+	
+	static function onUserNameLoadFromId ( $user_name, $oRow ) {
+        if ( wfReadOnly() ) {
+			wfDebug( __METHOD__ . ": DB is running with the --read-only option " );
+            return true;
+        }
+		
+		if ( User::isValidUserName($user_name) ) {
+			$oRow2 = WikiaCentralAuthUser::loadFromDatabaseByName($user_name);
+			if ( $oRow2 ) { 
+				$oRow = $oRow2;
+			}
+		} 
+		
+		return true;
+	}
+
 }

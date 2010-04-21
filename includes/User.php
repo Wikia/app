@@ -483,6 +483,11 @@ class User {
 		$s = $dbr->selectRow( 'user', array( 'user_id' ), array( 'user_name' => $nt->getText() ), __METHOD__ );
 
 		if ( $s === false ) {
+			$user_name = $nt->getText();
+			wfRunHooks( 'UserNameLoadFromId', array( $user_name, &$s ) );
+		}
+
+		if ( $s === false ) {
 			return 0;
 		} else {
 			return $s->user_id;
