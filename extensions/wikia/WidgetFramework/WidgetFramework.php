@@ -122,21 +122,6 @@ class WidgetFramework {
 					$this->config[1] = $config1;
 				}
 
-				// RT #40916 #41794 FIXME make a hook from this+above
-				if (in_array($wgCityId, array(5687 /* twilightsaga */, 26337 /* glee */, 1573 /* theoffice */, 9863 /* trueblood */, 835 /* southpark */, 3313 /* olympians */, 277 /* powerrangers */))) {
-					$this->config[1][] = array('type' => 'WidgetTopContent', 'id' => 144);
-				}
-
-				global $wgEnableAnswers;
-				global $wgEnableWidgetFounderBadge;
-				if (!empty($wgEnableWidgetFounderBadge) && !empty($wgEnableAnswers)) {
-					$this->config[1][] = array('type' => 'WidgetFounderBadge',  'id' => 145);
-				}
-				global $wgEnableWidgetCategoryCloud;
-				if (!empty($wgEnableWidgetCategoryCloud) && !empty($wgEnableAnswers)) {
-					$this->config[1][] = array('type' => 'WidgetCategoryCloud', 'id' => 146);
-				}
-
 				/* simplify widget config array from config[1][](name, id) to (name, name, name) */
 				$widgets = array();
 				foreach ($this->config[1] as $c) {
