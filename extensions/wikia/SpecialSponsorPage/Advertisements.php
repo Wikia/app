@@ -286,14 +286,16 @@ Class AdDisplay
 	$ads = Advertisement::GetAdsForCurrentPage();
 	$adtext = wfMsg('sponsor-header');
 	$adtext .= '<div class="sponsormsg">';
+	$adtext .= '<ul>';
 	if(is_array($ads)){
-		$adtext .= "<ul>\n";
 		foreach($ads as $ad){
 			$adtext .= $ad->OutPutWikiText();
 		}
-		$adtext .= "</ul>\n";
 	}
-	$adtext .= self::ShowSponsorMessage();
+	if(!is_array($ads) || count($ads) < 2 ){
+		$adtext .= self::ShowSponsorMessage();
+	}
+	$adtext .= '</ul>';
 	$adtext .= '</div>';
 	return $adtext;
   }
