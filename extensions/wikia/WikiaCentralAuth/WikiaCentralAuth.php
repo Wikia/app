@@ -112,3 +112,4 @@ $wgHooks['UserLoadFromSession'][] = 'WikiaCentralAuthHooks::onUserLoadFromSessio
 #$wgHooks['UserLoadGroups'][] = 'WikiaCentralAuthHooks::onUserLoadGroups';
 
 $wgHooks['UserLoadFromDatabase'][] = 'WikiaCentralAuthHooks::onUserLoadFromDatabase';
+$wgHooks['UserNameLoadFromId'][] = 'WikiaCentralAuthHooks::onUserNameLoadFromId';
