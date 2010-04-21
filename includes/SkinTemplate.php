@@ -841,8 +841,8 @@ class SkinTemplate extends Skin {
 			}
 
 			wfProfileOut( __METHOD__."-live" );
-
-			if( $this->loggedin ) {
+			global $wgEnableWikiaFollowedPages;
+			if( $this->loggedin || $wgEnableWikiaFollowedPages) {
 				if( !$this->mTitle->userIsWatching()) {
 					$content_actions['watch'] = array(
 						'class' => ($action == 'watch' or $action == 'unwatch') ? 'selected' : false,

@@ -1250,31 +1250,36 @@ class PreferencesForm {
 			Xml::closeElement( 'fieldset' )
 		);
 
+		/* Wikia change begin - @author: Tomasz Odrobny */
+		if (wfRunHooks( 'beforeRenderPrefsWatchlist', array( &$this, &$wgOut ) ) ) {
 		# Watchlist
-		$watchlistToggles = array( 'watchlisthideminor', 'watchlisthidebots', 'watchlisthideown',
+			$watchlistToggles = array( 'watchlisthideminor', 'watchlisthidebots', 'watchlisthideown',
 			'watchlisthideanons', 'watchlisthideliu' );
-		if( $wgUseRCPatrol ) $watchlistToggles[] = 'watchlisthidepatrolled';
-
-		$wgOut->addHTML(
-			Xml::fieldset( wfMsg( 'prefs-watchlist' ) ) .
-			Xml::inputLabel( wfMsg( 'prefs-watchlist-days' ), 'wpWatchlistDays', 'wpWatchlistDays', 3, $this->mWatchlistDays ) . ' ' .
-			wfMsgHTML( 'prefs-watchlist-days-max' ) .
-			'<br /><br />' .
-			$this->getToggle( 'extendwatchlist' ) .
-			Xml::inputLabel( wfMsg( 'prefs-watchlist-edits' ), 'wpWatchlistEdits', 'wpWatchlistEdits', 3, $this->mWatchlistEdits ) . ' ' .
-			wfMsgHTML( 'prefs-watchlist-edits-max' ) .
-			'<br /><br />' .
-			$this->getToggles( $watchlistToggles )
-		);
-
-		if( $wgUser->isAllowed( 'createpage' ) || $wgUser->isAllowed( 'createtalk' ) ) {
-			$wgOut->addHTML( $this->getToggle( 'watchcreations' ) );
+			if( $wgUseRCPatrol ) $watchlistToggles[] = 'watchlisthidepatrolled';
+		/* Wikia change end */
+			$wgOut->addHTML(
+				Xml::fieldset( wfMsg( 'prefs-watchlist' ) ) .
+				Xml::inputLabel( wfMsg( 'prefs-watchlist-days' ), 'wpWatchlistDays', 'wpWatchlistDays', 3, $this->mWatchlistDays ) . ' ' .
+				wfMsgHTML( 'prefs-watchlist-days-max' ) .
+				'<br /><br />' .
+				$this->getToggle( 'extendwatchlist' ) .
+				Xml::inputLabel( wfMsg( 'prefs-watchlist-edits' ), 'wpWatchlistEdits', 'wpWatchlistEdits', 3, $this->mWatchlistEdits ) . ' ' .
+				wfMsgHTML( 'prefs-watchlist-edits-max' ) .
+				'<br /><br />' .
+				$this->getToggles( $watchlistToggles )
+			);
+			if( $wgUser->isAllowed( 'createpage' ) || $wgUser->isAllowed( 'createtalk' ) ) {
+				$wgOut->addHTML( $this->getToggle( 'watchcreations' ) );
+			}
+	
+			foreach( array( 'edit' => 'watchdefault', 'move' => 'watchmoves', 'delete' => 'watchdeletion' ) as $action => $toggle ) {
+				if( $wgUser->isAllowed( $action ) )
+					$wgOut->addHTML( $this->getToggle( $toggle ) );
+			}
+		/* Wikia change begin - @author: Tomasz Odrobny */
 		}
-
-		foreach( array( 'edit' => 'watchdefault', 'move' => 'watchmoves', 'delete' => 'watchdeletion' ) as $action => $toggle ) {
-			if( $wgUser->isAllowed( $action ) )
-				$wgOut->addHTML( $this->getToggle( $toggle ) );
-		}
+		/* Wikia change end */
+		
 		$this->mUsedToggles['watchcreations'] = true;
 		$this->mUsedToggles['watchdefault'] = true;
 		$this->mUsedToggles['watchmoves'] = true;

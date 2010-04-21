@@ -1,5 +1,7 @@
 <?/*<div class="activityfeed reset clearfix">*/?>
+
 <h2 class="dark_text_2"><?= wfMsg("myhome-{$type}-feed") ?></h2>
+
 <?php
 	echo $defaultSwitch;
 ?>

@@ -1,0 +1,29 @@
+.watched-list {
+  float: left;
+  width: 98%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  clear: both;
+  font-family:Arial,sans-serif;
+  font-size:13px;
+  list-style: none inside none;
+  margin-left: 0px;
+}
+ 
+.watched-list li {
+  float: left;
+  width: 30%;
+  margin: 0;
+  padding: 0;
+} 
+
+.watched-list .unwatch {
+	width: 25px;
+	float:left;
+	margin: 0px;
+}
+
+.ajax-show-more {
+  font-size:15px;	
+}

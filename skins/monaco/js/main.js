@@ -16,7 +16,6 @@ var magicWords = {};
 
 //Attach DOM-Ready handlers
 $(function() {
-	$("#ca-watch").click(function(e){showComboAjaxForPlaceHolder(false,"");});
 	$("#headerButtonHub").bind("click.headerMenu", openHubMenu);
 	$("#headerButtonUser").bind("click.headerMenu", openUserMenu);
 	$('.ajaxLogin').click(openLogin);
@@ -421,3 +420,17 @@ function setupVoting() {
 		WET.byStr('ArticleFooter/vote/unrate');
 	});
 }
+
+
+//watch unwatch combomodal 
+$(function() {
+	 $("#ca-watch").click(function(e){
+		 	var callback_link = $(e.target).attr("href");
+			showComboAjaxForPlaceHolder(false, false, function(){
+				AjaxLogin.doSuccess = function() {
+					window.location = callback_link;
+				}
+			});
+			return false;
+	});
+});

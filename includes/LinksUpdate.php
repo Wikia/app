@@ -134,6 +134,8 @@ class LinksUpdate {
 		$categoryUpdates = $categoryInserts + $categoryDeletes;
 		$this->invalidateCategories( $categoryUpdates );
 		$this->updateCategoryCounts( $categoryInserts, $categoryDeletes );
+		
+		wfRunHooks( 'AfterCategoriesUpdate', array( $categoryInserts, $categoryDeletes ) );
 
 		Wikia::setVar('categoryInserts', $categoryInserts);
 
