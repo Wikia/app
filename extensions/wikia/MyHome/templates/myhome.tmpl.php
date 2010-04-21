@@ -1,15 +1,4 @@
 <div id="myhome-wrapper">
-
-	<!-- switch -->
-	<div id="myhome-feed-switch">
-<?php if($feedSelected == 'activity') { ?>
-		<span class="selected"><?=wfMsg('myhome-activity-feed')?></span> | <a href="<?=$myhomeUrl?>/watchlist" rel="nofollow"><?=wfMsg('myhome-watchlist-feed')?></a>
-<?php } else { ?>
-		<a href="<?=$myhomeUrl?>/activity" rel="nofollow"><?=wfMsg('myhome-activity-feed')?></a> | <span class="selected"><?=wfMsg('myhome-watchlist-feed')?></span>
-<?php } ?>
-	</div>
-	<!-- /switch -->
-
 	<!-- right sidebar -->
 	<div id="myhome-sidebar">
 
@@ -42,6 +31,32 @@
 
 	<!-- feed -->
 	<div id="myhome-main">
+		<h2 class="dark_text_2"><?= wfMsg("myhome-activity-feed") ?></h2>
+
+	<!-- switch -->
+	<div id="activity-feed-tabs">
+		<ul>
+		<?php global $wgBlankImgUrl; ?>
+<?php if($feedSelected == 'activity') { ?>
+			<li class="selected"><?=wfMsg('myhome-activity-feed')?></li>
+			<li class="accent">
+				<img class="sprite watch" src="<?php echo $wgBlankImgUrl; ?>">
+				<a href="<?=$myhomeUrl?>/watchlist" rel="nofollow"><?=wfMsg('myhome-watchlist-feed')?></a>
+			</li>
+<?php } else { ?>
+			<li class="accent"><a href="<?=$myhomeUrl?>/activity" rel="nofollow"><?=wfMsg('myhome-activity-feed')?></a></li>
+			<li class="selected">
+				<img class="sprite watch" src="<?php echo $wgBlankImgUrl; ?>">
+				<?=wfMsg('myhome-watchlist-feed')?>			
+			</li>
+<?php } ?>
+		</ul>
+	</div>
+	<!-- /switch -->
+
+
+
+
 		<?=$feedHTML?>
 	</div>
 	<!-- /feed -->

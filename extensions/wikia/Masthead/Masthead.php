@@ -725,6 +725,7 @@ class Masthead {
 			'Contributions',
 			'Emailuser',
 			'SavedPages',
+			'Following'
 		);
 
 		if (in_array($namespace, $allowedNamespaces)) {
@@ -754,7 +755,7 @@ class Masthead {
 		$namespace = $wgTitle->getNamespace();
 		$dbKey = SpecialPage::resolveAlias( $wgTitle->getDBkey() );
 		$isAnon = $wgUser->isAnon();
-
+		
 		$allowedNamespaces = array( NS_USER, NS_USER_TALK );
 		if ( defined('NS_BLOG_ARTICLE') ) {
 			$allowedNamespaces[] = NS_BLOG_ARTICLE;
@@ -775,6 +776,7 @@ class Masthead {
 			'Contributions',
 			'Emailuser',
 			'SavedPages',
+			'Following',
 		);
 
 		if( in_array( $namespace, $allowedNamespaces ) ||
@@ -796,6 +798,7 @@ class Masthead {
 			if ( in_array( $namespace, $allowedNamespaces ) ) {
 				# Title::getBaseText only backs up one step, we need the leftmost part
 				list( $userspace ) = explode( "/", $wgTitle->getText(), 2 );
+				echo $usertalk;
 				$Avatar = Masthead::newFromUserName( $userspace );
 			} elseif ( in_array( $dbKey, $allowedPagesSingle ) ) {
 				$userspace = $wgUser->getName();
@@ -839,6 +842,11 @@ class Masthead {
 					if ($oTitle instanceof Title) {
 						$out['nav_links'][] = array('text' => wfMsg('blog-page'), 'href' => $oTitle->getLocalUrl(), 'dbkey' => NS_BLOG_ARTICLE, 'tracker' => 'userblog');
 					}
+				}
+				
+				global $wgEnableWikiaFollowedPages;
+				if ( !empty($wgEnableWikiaFollowedPages) ) {
+					$out['nav_links'][] = FollowHelper::getMasthead();
 				}
 
 				// macbre: hide "Contributions" tab on Recipes Wiki

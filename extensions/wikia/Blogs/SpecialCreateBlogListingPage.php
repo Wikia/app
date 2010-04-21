@@ -179,6 +179,11 @@ class CreateBlogListingPage extends SpecialBlogPage {
 
 			$this->mPostArticle->doEdit($sPageBody, wfMsgForContent( 'blog-listing-created' ) );
 
+			$aListingCategories = explode('|', $this->mFormData['listingCategories']);
+			$aListingAuthors = explode(',', $this->mFormData['listingAuthors']);
+			
+			wfRunHooks( 'BlogListingSave', array( $this->mFormData['listingTitle'], $aListingCategories, $aListingAuthors ) );
+
 			$wgOut->redirect($this->mPostArticle->getTitle()->getFullUrl());
 		}
 	}

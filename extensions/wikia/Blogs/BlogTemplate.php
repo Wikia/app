@@ -267,7 +267,7 @@ class BlogTemplateClass {
 		wfProfileIn( __METHOD__ );
 		wfLoadExtensionMessages("Blogs");
 		/* add the magic word */
-		$magicWords[BLOGTPL_TAG] = array( 0, BLOGTPL_TAG );
+		$magicWords[¤] = array( 0, BLOGTPL_TAG );
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
@@ -913,13 +913,16 @@ class BlogTemplateClass {
 					wfDebugLog( __METHOD__, "ignore comment line: ".$iKey." \n" );
 					continue;
 				}
-
+				$relationArray = array();
 				/* parse value of parameter */
 				switch ($sParamName) {
 					case 'category'		:
 						if ( !empty($aParamValues) ) {
 							$aParamValues = array_slice($aParamValues, 0, self::$aBlogParams[$sParamName]['count']);
 							$aParamValues = str_replace (" ", "_", $aParamValues);
+							if ( !empty($aParamValues) && is_array( $aParamValues ) ) {
+								$relationArray[$sParamName] = $aParamValues;
+							}
 							$aPages = self::__getCategories($aParamValues, $parser);
 							if ( !empty($aPages) ) {
 								self::$aWhere[] = "page_id in (" . implode(",", $aPages) . ")";
@@ -937,6 +940,7 @@ class BlogTemplateClass {
 						if ( !empty($aParamValues) ) {
 							$aParamValues = array_slice($aParamValues, 0, self::$aBlogParams[$sParamName]['count']);
 							if ( !empty($aParamValues) && is_array( $aParamValues ) ) {
+								$relationArray[$sParamName] = $aParamValues;
 								$aTmpWhere = array();
 								foreach ( $aParamValues as $id => $sParamValue ) {
 									$sParamValue = str_replace(" ", "_", $sParamValue);
@@ -985,6 +989,8 @@ class BlogTemplateClass {
 						break;
 				}
 			}
+			
+			wfRunHooks( 'BlogListAfterParse', array( self::$oTitle, $relationArray ) );
 			
 			/* */
 			if ( !empty($showOnlyPage) ) {
