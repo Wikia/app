@@ -468,11 +468,11 @@ class SkinChooser {
 			$userSkin = 'monaco';
 		}
 
-		self::log(__METHOD__, "using skin {$userSkin}");
-
 		$user->mSkin = &Skin::newFromKey($userSkin);
 
 		$normalizedSkinName = substr(strtolower(get_class($user->mSkin)),4);
+
+		self::log(__METHOD__, "using skin {$normalizedSkinName}");
 
 		# Normalize theme name and set it as a variable for skin object.
 		if(isset($wgSkinTheme[$normalizedSkinName])){
