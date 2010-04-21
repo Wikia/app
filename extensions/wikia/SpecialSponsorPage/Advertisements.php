@@ -285,16 +285,15 @@ Class AdDisplay
 	global $wgTitle;
 	$ads = Advertisement::GetAdsForCurrentPage();
 	$adtext = wfMsg('sponsor-header');
-	$adtext .= '<div class="sponsormsg" style="padding:1em;">';
-	if(!is_array($ads) || count($ads)<2) {
-		//possibly use a mediawiki message via wfMsg
-		$adtext .= self::ShowSponsorMessage();
-	}
+	$adtext .= '<div class="sponsormsg">';
 	if(is_array($ads)){
+		$adtext .= "<ul>\n";
 		foreach($ads as $ad){
 			$adtext .= $ad->OutPutWikiText();
 		}
+		$adtext .= "</ul>\n";
 	}
+	$adtext .= self::ShowSponsorMessage();
 	$adtext .= '</div>';
 	return $adtext;
   }
