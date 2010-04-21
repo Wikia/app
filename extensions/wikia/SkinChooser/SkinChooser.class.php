@@ -52,6 +52,18 @@ class SkinChooser {
 		wfProfileOut(__METHOD__);
 	}
 
+	private static function getToggle( $tname, $trailer = false, $disabled = false ) {
+		global $wgLang;
+
+		$ttext = $wgLang->getUserToggle( $tname );
+
+		$checked = self::getUserOption( $tname ) == 1 ? ' checked="checked"' : '';
+		$disabled = $disabled ? ' disabled="disabled"' : '';
+		$trailer = $trailer ? $trailer : '';
+		return "<div class='toggle'><input type='checkbox' value='1' id=\"$tname\" name=\"wpOp$tname\"$checked$disabled />" .
+			" <span class='toggletext'><label for=\"$tname\">$ttext</label>$trailer</span></div>\n";
+	}
+
 	/**
 	 * Select current theme in user preferences form
 	 */
@@ -119,6 +131,10 @@ class SkinChooser {
 			self::setUserOption('theme', $pref->mTheme);
 		}
 
+		// set skinoverwrite
+		self::setUserOption('skinoverwrite', $pref->mToggles['skinoverwrite']);
+		unset($pref->mToggles['skinoverwrite']);
+
 		return true;
 	}
 
@@ -151,9 +167,12 @@ class SkinChooser {
 	public static function renderSkinPreferencesForm($pref) {
 		global $wgOut, $wgSkinTheme, $wgSkipSkins, $wgStylePath, $wgSkipThemes, $wgUser, $wgDefaultSkin, $wgDefaultTheme, $wgSkinPreviewPage, $wgAdminSkin, $wgSkipOldSkins, $wgForceSkin;
 
+		// don't show "See custom wikis" inside misc tab
+		$pref->mUsedToggles['skinoverwrite'] = true;
+
 		if(!empty($wgForceSkin)) {
 			$wgOut->addHTML(wfMsg('skin-forced'));
-			$wgOut->addHTML('<div style="display:none;">'.$pref->getToggle('skinoverwrite').'</div>');
+			$wgOut->addHTML('<div style="display:none;">'.self::getToggle('skinoverwrite').'</div>');
 
 			self::log(__METHOD__, 'skin is forced');
 			return false;
@@ -276,7 +295,7 @@ class SkinChooser {
 
 
 		# Display skin overwrite checkbox
-		$wgOut->addHTML('<br/>'.$pref->getToggle('skinoverwrite'));
+		$wgOut->addHTML('<br/>'.self::getToggle('skinoverwrite'));
 
 		# Display ComboBox for admins/staff only
 		if( $wgUser->isAllowed( 'setadminskin' ) ) {
