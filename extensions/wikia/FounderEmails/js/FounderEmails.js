@@ -27,6 +27,8 @@ FounderEmails.track = function( code ) {
 	WET.byStr( '1_emails/founder/' + codes[code] );
 };
 
-if( $.getUrlVar("ctc") != undefined ) {
-	FounderEmails.track( $.getUrlVar("ctc") )
-};
+$(function() {
+	if( $.getUrlVar("ctc") != undefined ) {
+		FounderEmails.track( $.getUrlVar("ctc") )
+	};
+});
