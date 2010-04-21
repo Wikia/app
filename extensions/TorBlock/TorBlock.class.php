@@ -5,7 +5,7 @@ if ( ! defined( 'MEDIAWIKI' ) )
 class TorBlock {
 	public static $mExitNodes;
 
-	public static function onGetUserPermissionsErrorsExpensive( &$title, &$user, &$action, &$result ) {
+	public static function onGetUserPermissionsErrorsExpensive( &$title, &$user, $action, &$result ) {
 		global $wgTorAllowedActions;
 		if (in_array( $action, $wgTorAllowedActions)) {
 			return true;
@@ -23,7 +23,7 @@ class TorBlock {
 					return true;
 				}
 			}
-			
+
 			if (Block::isWhitelistedFromAutoblocks( wfGetIp() )) {
 				wfDebug( "-IP is in autoblock whitelist. Exempting from Tor blocks.\n" );
 				return true;
@@ -51,12 +51,12 @@ class TorBlock {
 
 		return true;
 	}
-	
+
 	public static function onAbuseFilterFilterAction( &$vars, $title ) {
 		$vars->setVar( 'tor_exit_node', self::isExitNode() ? 1 : 0 );
 		return true;
 	}
-	
+
 	public static function onAbuseFilterBuilder( &$builder ) {
 		wfLoadExtensionMessages( 'TorBlock' );
 		$builder['vars']['tor_exit_node'] = 'tor-exit-node';
@@ -182,18 +182,18 @@ class TorBlock {
 
 		return true;
 	}
-	
+
 	public static function onAutopromoteCondition( $type, $args, $user, &$result ) {
 		if ($type == APCOND_TOR) {
 			$result = self::isExitNode();
 		}
-		
+
 		return true;
 	}
 
 	public static function onRecentChangeSave( $recentChange ) {
 		global $wgTorTagChanges;
-		
+
 		if ( class_exists('ChangeTags') && $wgTorTagChanges && self::isExitNode() ) {
 			ChangeTags::addTags( 'tor', $recentChange->mAttribs['rc_id'], $recentChange->mAttribs['rc_this_oldid'], $recentChange->mAttribs['rc_logid'] );
 		}
@@ -202,7 +202,7 @@ class TorBlock {
 
 	public static function onListDefinedTags( &$emptyTags ) {
 		global $wgTorTagChanges;
-		
+
 		if ($wgTorTagChanges)
 			$emptyTags[] = 'tor';
 		return true;
