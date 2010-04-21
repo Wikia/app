@@ -2,10 +2,60 @@
 
 class SkinChooser {
 
-	public static function setThemeForPreferences($pref) {
-		global $wgUser, $wgSkinTheme, $wgDefaultTheme;
+	/**
+	 * Generate proper key for user option
+	 *
+	 * This allow us to use different user preferences for answers / recipes / other wikis
+	 */
+	private static function getUserOptionKey($option) {
+		global $wgEnableAnswers;
+		wfProfileIn(__METHOD__);
 
-		$userTheme = $wgUser->getOption('theme');
+		if (!empty($wgEnableAnswers)) {
+			$key = "answers-{$option}";
+		}
+		else {
+			$key = $option;
+		}
+
+		wfProfileOut(__METHOD__);
+		return $key;
+	}
+
+	/**
+	 * Get given option from user preferences
+	 */
+	private static function getUserOption($option) {
+		global $wgUser;
+		wfProfileIn(__METHOD__);
+
+		$val = $wgUser->getOption(self::getUserOptionKey($option));
+
+		wfProfileOut(__METHOD__);
+		return $val;
+	}
+
+	/**
+	 * Set given option in user preferences
+	 */
+	private static function setUserOption($option, $value) {
+		global $wgUser;
+		wfProfileIn(__METHOD__);
+
+		$wgUser->setOption(self::getUserOptionKey($option), $value);
+
+		self::log(__METHOD__, "{$option} = {$value}");
+
+		wfProfileOut(__METHOD__);
+	}
+
+	/**
+	 * Select current theme in user preferences form
+	 */
+	public static function setThemeForPreferences($pref) {
+		global $wgSkinTheme, $wgDefaultTheme;
+
+		$userTheme = self::getUserOption('theme');
 
 		# Normalize theme name and set it as a variable for skin object.
 		if(isset($wgSkinTheme[$pref->mSkin])){
@@ -22,7 +72,10 @@ class SkinChooser {
 		return true;
 	}
 
-	public static function savePreferencesSkinChooser($pref) {
+	/**
+	 * Update user skin/theme preferences
+	 */
+	public static function savePreferences($pref) {
 		global $wgUser, $wgCityId, $wgAdminSkin, $wgTitle, $wgRequest;
 
 		# Save setting for admin skin
@@ -46,25 +99,32 @@ class SkinChooser {
 		}
 
 		if ( !is_null($pref->mTheme) ) {
-			$wgUser->setOption('theme', $pref->mTheme);
+			self::setUserOption('theme', $pref->mTheme);
 		}
 
 		return true;
 	}
 
-
+	/**
+	 * Extra user options related to SkinChooser
+	 */
 	public static function skinChooserExtraToggle(&$extraToggle) {
 		$extraToggle[] = 'skinoverwrite';
 		$extraToggle[] = 'showAds';
 		return true;
 	}
 
-	public static function wikiaSkinPreferences($pref) {
+	/**
+	 * Render skin chooser form for Special:Preferences
+	 */
+	public static function renderSkinPreferencesForm($pref) {
 		global $wgOut, $wgSkinTheme, $wgSkipSkins, $wgStylePath, $wgSkipThemes, $wgUser, $wgDefaultSkin, $wgDefaultTheme, $wgSkinPreviewPage, $wgAdminSkin, $wgSkipOldSkins, $wgForceSkin;
 
 		if(!empty($wgForceSkin)) {
 			$wgOut->addHTML(wfMsg('skin-forced'));
 			$wgOut->addHTML('<div style="display:none;">'.$pref->getToggle('skinoverwrite').'</div>');
+
+			self::log(__METHOD__, 'skin is forced');
 			return false;
 		}
 
@@ -231,9 +291,9 @@ class SkinChooser {
 		} else {
 			$wgOut->addHTML('<br/>');
 			if(!empty($wgAdminSkin)) {
-		    $elems = preg_split('/-/', $wgAdminSkin);
-		    $skin = ( array_key_exists(0, $elems) ) ? $elems[0] : null;
-		    $theme = ( array_key_exists(1, $elems) ) ? $elems[1] : null;
+				$elems = preg_split('/-/', $wgAdminSkin);
+				$skin = ( array_key_exists(0, $elems) ) ? $elems[0] : null;
+				$theme = ( array_key_exists(1, $elems) ) ? $elems[1] : null;
 				if($theme != 'custom') {
 					$wgOut->addHTML(wfMsg('defaultskin1', wfMsg($skin.'_skins').' '.wfMsg($wgAdminSkin)));
 				} else {
@@ -252,8 +312,10 @@ class SkinChooser {
 		return false;
 	}
 
-
-	public static function wikiaGetSkin ($user) {
+	/**
+	 * Select proper skin and theme based on user preferences / default settings
+	 */
+	public static function getSkin($user) {
 		global $wgCookiePrefix, $wgCookieExpiration, $wgCookiePath, $wgCookieDomain, $wgCookieSecure, $wgDefaultSkin, $wgDefaultTheme;
 		global $wgVisitorSkin, $wgVisitorTheme, $wgOldDefaultSkin, $wgSkinTheme, $wgOut, $wgForceSkin, $wgRequest, $wgHomePageSkin, $wgTitle;
 		global $wgAdminSkin, $wgSkipSkins, $wgArticle, $wgRequest;
@@ -376,7 +438,7 @@ class SkinChooser {
 
 		$normalizedSkinName = substr(strtolower(get_class($user->mSkin)),4);
 
-		wfDebug("\nSkinChooser: using skin '{$userSkin}'\n");
+		self::log(__METHOD__, "using skin {$userSkin}");
 
 		# Normalize theme name and set it as a variable for skin object.
 		if(isset($wgSkinTheme[$normalizedSkinName])){
@@ -391,11 +453,15 @@ class SkinChooser {
 
 			$user->mSkin->themename = $userTheme;
 
-			wfDebug("SkinChooser: using theme '{$userTheme}'\n");
+			self::log(__METHOD__, "using theme {$userTheme}");
 			wfProfileOut(__METHOD__.'::NormalizeThemeName');
 		}
 
 		wfProfileOut(__METHOD__);
 		return false;
+	}
+
+	private static function log($method, $msg) {
+		wfDebug("{$method}: {$msg}\n");
 	}
 }
