@@ -35,6 +35,18 @@ class FollowModel {
 			NS_VIDEO => 'wikiafollowedpages-special-heading-media',
 		);
 
+		$order = array(
+                        'wikiafollowedpages-special-heading-categories',
+			'wikiafollowedpages-special-heading-main',
+                        'wikiafollowedpages-special-heading-blogs',
+			'wikiafollowedpages-special-heading-forum',
+                        'wikiafollowedpages-special-heading-project',
+                        'wikiafollowedpages-special-heading-user',
+			'wikiafollowedpages-special-heading-templates',
+                        'wikiafollowedpages-special-heading-mediawiki',
+                        'wikiafollowedpages-special-heading-media',
+                );
+
 		foreach ($wgContentNamespaces as $value) {
 			$namespaces[$value] = 'wikiafollowedpages-special-heading-main'; 
 		}
@@ -75,7 +87,8 @@ class FollowModel {
 			
 			$out_data[$namespaces[ $row['wl_namespace'] ]][] = $row; 	
 		}
-		$query = "select wl_namespace, count(wl_title) as cnt  from watchlist where wl_user = ".intval($user_id)." and wl_namespace in (".implode(',', $namespaces_keys).") group by wl_namespace";
+		$query = "select wl_namespace, count(wl_title) as cnt  from watchlist where wl_user = ".intval($user_id)." and wl_namespace in 
+(".implode(',', $namespaces_keys).") group by wl_namespace";
 		
 		$res =$db->query( $query );
 		$out_count = array();
@@ -85,7 +98,7 @@ class FollowModel {
 			if ( !empty($out[$ns]) ) {
 				$out[$ns]['count'] += $row['cnt'];
 			} else {
-				$out[$ns] = array('count' => $row['cnt'], 'data' => $out_data[$ns]); 	
+				$out[$ns] = array('ns' => $ns,'count' => $row['cnt'], 'data' => $out_data[$ns]); 	
 			}
 			
 			$out[$ns]['show_more'] = 0;
@@ -94,8 +107,16 @@ class FollowModel {
 			}
 		}
 
+		foreach ($order as $key => $value) {
+			if (!empty($out[$value]) ) {
+				$order[$key] = $out[$value];
+			} else {
+				unset($order[$key]);
+			}
+		}
+		
 		wfProfileOut( __METHOD__ );
-		return $out;
+		return $order;
 	}
 
 	/**
