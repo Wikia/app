@@ -5,7 +5,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 if(!window.CKEDITOR)
 {window.CKEDITOR=(function()
-{var CKEDITOR={timestamp:'',version:'20100422',revision:'r21345',_:{},status:'unloaded',basePath:(function()
+{var CKEDITOR={timestamp:'',version:'20100422',revision:'r21349',_:{},status:'unloaded',basePath:(function()
 {var path=window.CKEDITOR_BASEPATH||'';if(!path)
 {var scripts=document.getElementsByTagName('script');for(var i=0;i<scripts.length;i++)
 {var match=scripts[i].src.match(/(^|.*[\\\/])ckeditor(?:_basic)?(?:_source)?.js(?:\?.*)?$/i);if(match)
@@ -4812,7 +4812,7 @@ else{$('body').removeClass('RTEloading');}},modeSwitch:function(mode){RTE.log('s
 if(data.edgecase){RTE.log('edgecase found!');RTE.tools.alert(data.edgecase.info.title,data.edgecase.info.content);RTE.instance.getCommand('source').setState(CKEDITOR.TRISTATE_ON);RTE.loading(false);RTE.track('switchMode','edgecase',data.edgecase.type);return;}
 RTE.instance.setMode('wysiwyg');RTE.instance.setData(data.html);RTE.track('switchMode','source2wysiwyg');});break;}},constants:{localPath:window.RTELocalPath,urlProtocols:window.RTEUrlProtocols,validTitleChars:window.RTEValidTitleChars},messages:window.RTEMessages};CKEDITOR.config.bodyId='';CKEDITOR.config.baseBackgroundColor='#ddd';CKEDITOR.config.baseColor='#000';CKEDITOR.config.toolbar_Wikia=[{msg:'textAppearance',groups:[['Format'],['Bold','Italic','Underline','Strike'],['BulletedList','NumberedList'],['Link','Unlink'],['Outdent','Indent'],['JustifyLeft','JustifyCenter','JustifyRight']]},{msg:'insert',groups:[['Image','Gallery','Video'],['Table'],['Template'],['Signature']]},{msg:'controls',groups:[['Undo','Redo'],['Widescreen'],['Source']]}];CKEDITOR.dom.element.prototype.hasAttributesOriginal=CKEDITOR.dom.element.prototype.hasAttributes;CKEDITOR.dom.element.prototype.hasAttributes=function(){var ret=this.hasAttributesOriginal();if(ret==true){var internalAttribs=['_rte_washtml','_rte_line_start','_rte_empty_lines_before'];for(i=0;i<internalAttribs.length;i++){if(this.hasAttribute(internalAttribs[i])){ret=false;}}}
 return ret;}
-CKEDITOR.langRegExp=/lang\/(\w+).js/;CKEDITOR.getUrl=function(resource){if(CKEDITOR.langRegExp.test(resource)){var matches=resource.match(CKEDITOR.langRegExp);var lang=matches[1];RTE.log('language "'+lang+'" requested');var url=window.wgServer+wgScript+'?action=ajax&rs=RTEAjax&method=i18n&uselang='+lang+'&cb='+window.wgMWrevId+'-'+window.wgStyleVersion;return url;}
+CKEDITOR.langRegExp=/lang\/([\w\-]+).js/;CKEDITOR.getUrl=function(resource){if(CKEDITOR.langRegExp.test(resource)){var matches=resource.match(CKEDITOR.langRegExp);var lang=matches[1];RTE.log('language "'+lang+'" requested');var url=window.wgServer+wgScript+'?action=ajax&rs=RTEAjax&method=i18n&uselang='+lang+'&cb='+window.wgMWrevId+'-'+window.wgStyleVersion;return url;}
 if(resource.indexOf('://')==-1&&resource.indexOf('/')!==0){if(resource.indexOf('_source')==-1){resource='_source/'+resource;}
 resource=this.basePath+resource;}
 if(this.timestamp&&resource.charAt(resource.length-1)!='/'){resource+=(resource.indexOf('?')>=0?'&':'?')+this.timestamp;}
