@@ -174,7 +174,7 @@ class SkinChooser {
 			$wgOut->addHTML(wfMsg('skin-forced'));
 			$wgOut->addHTML('<div style="display:none;">'.self::getToggle('skinoverwrite').'</div>');
 
-			self::log(__METHOD__, 'skin is forced');
+			self::log(__METHOD__, "skin is forced ({$wgForceSkin})");
 			return false;
 		}
 
