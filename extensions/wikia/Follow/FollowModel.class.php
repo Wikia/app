@@ -46,8 +46,6 @@ class FollowModel {
 			'wikiafollowedpages-special-heading-mediawiki',
 			'wikiafollowedpages-special-heading-media',
 		);
-
-		$wgContentNamespaces[] = NS_CATEGORY;
 		
 		foreach ($wgContentNamespaces as $value) {
 			$namespaces[$value] = 'wikiafollowedpages-special-heading-article'; 

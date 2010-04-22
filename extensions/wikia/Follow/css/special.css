@@ -20,11 +20,14 @@
 	width: 25px;
 	float:left;
 	margin: 0px;
-	visibility: hidden;
 }
 
 .ajax-show-more {
   font-size:15px;
+}
+
+.ajax-unwatch {
+	visibility: hidden;
 }
 
 .otherNs {
