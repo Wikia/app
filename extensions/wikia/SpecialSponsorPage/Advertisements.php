@@ -135,7 +135,7 @@ class Advertisement
 			$fields,
 			$paramAry,
 			__METHOD__,
-			array('ORDER BY' => 'ad_price DESC','LIMIT' =>$limit,'OFFSET'=>$startlimit)
+			array('ORDER BY' => 'ad_price DESC','LIMIT' =>$limit,'OFFSET'=>$start)
 		);
 		if( $res->numRows() > 0 ) {
 		//or use fetchRow
