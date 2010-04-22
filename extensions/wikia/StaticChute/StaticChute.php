@@ -14,6 +14,9 @@ class StaticChute {
 	// does not load the MediaWiki stack in many cases, not sure what a better longterm solution would be.
 	public $cdnStylePath = "http://images1.wikia.nocookie.net/__cb20015/common"; // NOTE: ALSO CHANGE VALUE IN /wikia-conf/CommonSettings.php!
 
+	// RT #23935 - one value to purge'em all
+	const cacheBuster = '000';
+
 	public $config = array();
 
 	// macbre: RT #18410
@@ -359,7 +362,7 @@ class StaticChute {
 		foreach($files as $file){
 			$data .= file_get_contents($file);
 		}
-		return md5($data . $this->cdnStylePath);
+		return md5($data . $this->cdnStylePath . self::cacheBuster);
 	}
 
 	public function getChuteHtmlForPackage($package, $type = null){
