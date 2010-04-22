@@ -273,9 +273,6 @@ class FollowHelper {
 		global $wgUser, $wgEnotifWatchlist, $wgEnotifMinorEdits,$disableEmailPrefs,$wgStyleVersion, $wgExtensionsPath, $wgJsMimeType;
 		wfLoadExtensionMessages( 'Follow' );
 		$watchlistToggles = array();
-		
-		$watchlistToggles = array( 'watchlisthideminor', 'watchlisthidebots', 'watchlisthideown',
-			'watchlisthideanons', 'watchlisthideliu' );
 					
 		$self->mUsedToggles['hidefollowedpages'] = true;
 		$self->mUsedToggles['enotiffollowedpages']  = true;
@@ -306,6 +303,9 @@ class FollowHelper {
 				$out->addHTML( $self->getToggle( $toggle ) );
 		}
 		
+		$watchlistToggles = array( 'watchlisthideminor', 'watchlisthidebots', 'watchlisthideown',
+			'watchlisthideanons', 'watchlisthideliu' );
+				
 		$out->addHTML(
 			"<br><h2>".wfMsg('wikiafollowedpages-prefs-watchlist')."</h2>".
 			Xml::inputLabel( wfMsg( 'prefs-watchlist-days' ), 'wpWatchlistDays', 'wpWatchlistDays', 3, $self->mWatchlistDays ) . ' ' .
