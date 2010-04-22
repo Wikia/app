@@ -9,8 +9,13 @@
 $wgGroupPermissions['sysop']['setadminskin'] = true;
 $wgGroupPermissions['staff']['setadminskin'] = true;
 
+$dir = dirname(__FILE__) . '/';
+
 // register class
-$wgAutoloadClasses['SkinChooser'] = dirname(__FILE__).'/SkinChooser.class.php';
+$wgAutoloadClasses['SkinChooser'] = $dir . 'SkinChooser.class.php';
+
+// i18n
+$wgExtensionMessagesFiles['SkinChooser'] = $dir . 'SkinChooser.i18n.php';
 
 // register hooks
 $wgHooks['ModifyPreferencesValue'][] = 'SkinChooser::setThemeForPreferences';

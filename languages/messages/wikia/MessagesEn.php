@@ -260,7 +260,6 @@ $messages = array_merge( $messages , array(
 .mw-plusminus-pos { color: #006500; }
 .mw-plusminus-neg { color: #8B0000; }
 /* </pre> */',
-'skinchooser-customcss' => 'For custom themes, select the custom option in the menu above and specify custom CSS in [[MediaWiki:Monaco.css]].',
 'confirmemail_subject' => 'Welcome to Wikia!',
 'confirmemail_body' => "Hi $2,
 
