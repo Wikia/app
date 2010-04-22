@@ -11,13 +11,13 @@
 
 </h2>
 <?php if (!empty($data)): ?>
-	<ul class="fallowedList fallowedListFirst" >
+	<ul class="followedList followedListFirst" >
 		<?php foreach($data as $value): ?>
 			<li><a href="<?php echo $value['url']; ?>" ><?php echo $value['wl_title']; ?></a> </li>
 		<?php endforeach; ?>
 	</ul>
 	<?php if (!empty($data2)): ?>
-		<ul class="fallowedList" >
+		<ul class="followedList" >
 			<?php foreach($data2 as $value): ?>
 				<li><a href="<?php echo $value['url']; ?>" ><?php echo $value['wl_title']; ?></a> </li>	
 			<?php endforeach; ?>

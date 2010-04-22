@@ -2,23 +2,9 @@
 
 $messages = array();
 
-/* some of this massage is only for dev time 
-   
-* Categories
-* Articles (All content namespaces)
-* Blogs and blog posts (Blog, Blog_Talk, User_Blog, User_Blog/username/foo) - for blog posts, add "by [user]" to the right of the post name
-* Discussion pages (All talk Pages: content namespaces, User_Talk, etc)
-* Forum threads
-* Project pages
- * 
-    * Templates
-    * MediaWiki pages
-    * Images and videos 
-   */ 
-    
 $messages['en'] = array(
-	'wikiafollowedpages-special-heading-categories' => "Categories ($1) ",
-	'wikiafollowedpages-special-heading-main' => "Article ($1)",
+	'wikiafollowedpages-special-heading-category' => "Categories ($1) ",
+	'wikiafollowedpages-special-heading-article' => "Article ($1)",
 	'wikiafollowedpages-special-heading-blogs' => "Blogs and Posts ($1)",
 	'wikiafollowedpages-special-heading-forum' => 'Forum threads ($1)',
 	'wikiafollowedpages-special-heading-project' => 'Project pages ($1)',
@@ -26,17 +12,17 @@ $messages['en'] = array(
 	'wikiafollowedpages-special-heading-templates' => 'Templates pages ($1)',
 	'wikiafollowedpages-special-heading-mediawiki' => 'MediaWiki pages ($1)',
 	'wikiafollowedpages-special-heading-media' => 'Images and videos ($1)',
-	
+	'wikiafollowedpages-special-namespace' => "($1 page) ",
 	'wikiafollowedpages-special-empty' => "This user's followed pages list is empty. (Add pages to this list by clicking \"Follow\" at the top of an article). ",
 	'wikiafollowedpages-special-anon' => 'Please log in to create or view your followed pages list.', 
 
 	'wikiafollowedpages-special-showall' => 'Show All',
 	'wikiafollowedpages-special-title' => 'Followed pages',
 	'wikiafollowedpages-special-delete-tooltip' => 'Remove this page',
-	'wikiafollowedpages-special-by' => '(by $1)',
 
-    'wikiafollowedpages-special-hidden' => 'This user has chosen to hide their followed pages list.', 
-
+    'wikiafollowedpages-special-hidden' => 'This user has chosen to hide their followed pages list.',  
+	'wikiafollowedpages-special-hidden-unhide' => 'Unhide this list.',
+	'wikiafollowedpages-special-blog-by' => 'by $1',
 	'wikiafollowedpages-masthead' => 'Followed pages',  
 	'wikiafollowedpages-following' => 'Following',
 	'wikiafollowedpages-special-title-userbar' => 'Follow',
