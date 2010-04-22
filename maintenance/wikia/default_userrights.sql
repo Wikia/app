@@ -94,5 +94,6 @@ insert into user_groups(ug_user, ug_group) values
 insert into user_groups(ug_user, ug_group) values
 (/*Bola*/126681,'checkuser'),
 (/*Cizagna*/35784,'checkuser'),
-(/*MtaÄ*/826221,'checkuser')
+(/*MtaÄ*/826221,'checkuser'),
+(/*Zeyi*/874612,'checkuser')
 ;
