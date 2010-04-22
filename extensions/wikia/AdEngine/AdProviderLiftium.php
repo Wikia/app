@@ -25,7 +25,7 @@ class AdProviderLiftium implements iAdProvider {
                 }
                 $called = true;
 
-		global $wgDBname, $wgLang, $wgUser, $wgTitle, $wgLiftiumDevHosts;
+		global $wgDBname, $wgLang, $wgUser, $wgTitle, $wgLiftiumDevHosts, $wgDevelEnvironment;
 
 		// See Liftium.js for documentation on options
 		$options = array();
