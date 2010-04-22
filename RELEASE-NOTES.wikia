@@ -1,4 +1,5 @@
 == Changes since 201004.4 ==
+* rt#46687: en-gb crashes RTE (macbre)
 * rt#46877: added English messages to Checksite (TOR)
 * rt#46408: RTE: image/video hover is positioned badly in Fx3.6 (macbre)
 
