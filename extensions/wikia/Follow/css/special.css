@@ -20,8 +20,13 @@
 	width: 25px;
 	float:left;
 	margin: 0px;
+	visibility: hidden;
 }
 
 .ajax-show-more {
-  font-size:15px;	
+  font-size:15px;
 }
+
+.otherNs {
+  visibility: hidden;
+}	

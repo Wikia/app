@@ -23,7 +23,7 @@ class FollowModel {
 		$db = wfGetDB( DB_SLAVE );
 
 		$namespaces = array(
-			NS_CATEGORY => 'wikiafollowedpages-special-heading-categories',	
+			NS_CATEGORY => 'wikiafollowedpages-special-heading-category',	
 			NS_BLOG_ARTICLE => 'wikiafollowedpages-special-heading-blogs',
 			NS_BLOG_LISTING => 'wikiafollowedpages-special-heading-blogs',
 			NS_PROJECT => 'wikiafollowedpages-special-heading-project' ,
@@ -36,19 +36,21 @@ class FollowModel {
 		);
 
 		$order = array(
-                        'wikiafollowedpages-special-heading-categories',
-			'wikiafollowedpages-special-heading-main',
-                        'wikiafollowedpages-special-heading-blogs',
+			'wikiafollowedpages-special-heading-category',
+			'wikiafollowedpages-special-heading-article',
+			'wikiafollowedpages-special-heading-blogs',
 			'wikiafollowedpages-special-heading-forum',
-                        'wikiafollowedpages-special-heading-project',
-                        'wikiafollowedpages-special-heading-user',
+			'wikiafollowedpages-special-heading-project',
+			'wikiafollowedpages-special-heading-user',
 			'wikiafollowedpages-special-heading-templates',
-                        'wikiafollowedpages-special-heading-mediawiki',
-                        'wikiafollowedpages-special-heading-media',
-                );
+			'wikiafollowedpages-special-heading-mediawiki',
+			'wikiafollowedpages-special-heading-media',
+		);
 
+		$wgContentNamespaces[] = NS_CATEGORY;
+		
 		foreach ($wgContentNamespaces as $value) {
-			$namespaces[$value] = 'wikiafollowedpages-special-heading-main'; 
+			$namespaces[$value] = 'wikiafollowedpages-special-heading-article'; 
 		}
 		
 		if ($namespace_head != null) {
@@ -87,10 +89,20 @@ class FollowModel {
 			
 			$out_data[$namespaces[ $row['wl_namespace'] ]][] = $row; 	
 		}
-		$query = "select wl_namespace, count(wl_title) as cnt  from watchlist where wl_user = ".intval($user_id)." and wl_namespace in 
-(".implode(',', $namespaces_keys).") group by wl_namespace";
+		$con = " wl_user = ".intval($user_id)." and wl_namespace in (".implode(',', $namespaces_keys).")"; 
 		
-		$res =$db->query( $query );
+		$res = $db->select(
+				array( 'watchlist' ),
+				array( 'wl_namespace',
+					   'count(wl_title) as cnt' ),
+				$con,
+				__METHOD__,
+				array(
+					'ORDER BY' 	=> 'wl_created desc,wl_title',
+					'GROUP BY' => 'wl_namespace'
+				)
+		);	
+		
 		$out_count = array();
 		
 		while ($row =  $db->fetchRow( $res ) ) {
@@ -140,7 +152,7 @@ class FollowModel {
 		
 		wfProfileIn( __METHOD__ );
 		$db = wfGetDB( DB_SLAVE );
-		$con = 'wl_user = '.intval($user_id).' and wl_namespace not in ('.implode(',', $NS).')';
+		$con = 'wl_user = '.intval($user_id).' and wl_namespace in ('.implode(',', $NS).')';
 		$res = $db->select(
 				array( 'watchlist' ),
 				array( 'wl_namespace',
@@ -148,9 +160,8 @@ class FollowModel {
 				$con,
 				__METHOD__,
 				array(
-					'ORDER BY' 	=> 'wl_created desc',
-					'LIMIT'		=> 10,
-					'GROUP BY' => 'wl_title'
+					'ORDER BY' 	=> 'wl_created desc,wl_title',
+					'LIMIT'		=> 10
 				)
 		);	
 

@@ -3,6 +3,28 @@ $(function(){
 	$('.ajax-show-more').click(Follow.showMore);
 	$('.ajax-show-more').show();
 	$('#enotiffollowedminoredits,#enotiffollowedpages,#enotifminoredits,#enotifwatchlistpages').click(Follow.syncUserPrefs);
+	
+	$('.watched-list li').hover(
+		function(e) {
+		    $(e.target).find(".otherNs,.ajax-unwatch").css('visibility', 'visible');
+		},
+		function(e) {
+		    $(".otherNs,.ajax-unwatch").css('visibility', 'hidden');
+		} 
+	);
+	
+	$('.title-link').click(
+		function(e) {
+			var index = 0;
+			var ul = null;
+			var msg = "";
+			ul = $( $(e.target).parent().parent().parent() );
+			index = $(e.target).parent().parent().index() + 1;
+		    msg = ul.attr("id").split("-"); 
+		    WET.byStr( 'WikiaFollowedPages/specialpage/links/' + msg[3] + '/' + index );    
+		}
+	);
+
 });
 
 
@@ -10,12 +32,22 @@ Follow = {};
 
 Follow.uwatch = function(e) {
 	var url = "";
+	var index = 0;
+	var ul = null;
+	var msg = "";
 	if (e.target.tagName == "IMG") {
 		url = $(e.target.parentNode).attr("href");
-		console.log(url);
+		ul = $( $(e.target).parent().parent().parent() );
+		index = $(e.target).parent().parent().index() + 1;
 	} else {
 		url = $(e.target).attr("href");
+		index = $(e.target).parent().index() + 1;
+		ul = $( $(e.target).parent().parent() );
 	}	
+	
+    msg = ul.attr("id").split("-"); 
+    WET.byStr( 'WikiaFollowedPages/specialpage/delete/' + msg[3] + '/' + index);    
+    
 	$.ajax({
 		  url: url,
 		  success: function() {
@@ -27,6 +59,10 @@ Follow.uwatch = function(e) {
 
 
 Follow.showMore = function(e) {
+	
+    msg = $(e.target).attr("id").split("-"); 
+    WET.byStr( 'WikiaFollowedPages/specialpage/viewall/' + msg[4] );   
+    
 	var url = $(e.target).attr("href");
 	$(e.target).hide();
 	var head = Follow.getUrlParam( url, "head" );

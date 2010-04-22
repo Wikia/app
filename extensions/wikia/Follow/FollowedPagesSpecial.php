@@ -16,6 +16,11 @@ class FollowedPages extends SpecialPage {
 
 	function execute( $par ) {
 		global $wgRequest, $wgOut, $wgUser,$wgTitle, $wgExtensionsPath, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
+		
+		if( ($wgUser->getId() != 0) && ($wgRequest->getVal( "show_followed", 0) == 1) ) {
+			$wgUser->setOption( "hidefollowedpages", false ); 
+			$wgUser->saveSettings();
+		}
 							
 		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/Follow/css/special.css?{$wgStyleVersion}");
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/Follow/js/ajax.js?{$wgStyleVersion}\"></script>\n");
@@ -41,8 +46,10 @@ class FollowedPages extends SpecialPage {
 			return true;
 		}
 		
-		if( $user->getId() != $wgUser->getId() ) {
-			if ( $user->getOption('hidefollowedpages') ) {
+		$is_hide = false;
+		if ( $user->getOption('hidefollowedpages') ) {
+			$is_hide = true;	
+			if( $user->getId() != $wgUser->getId() ) {
 				$wgOut->addHTML( wfMsg('wikiafollowedpages-special-hidden') );
 				return true;				
 			}	
@@ -54,7 +61,7 @@ class FollowedPages extends SpecialPage {
 			$wgOut->addHTML( wfMsg('wikiafollowedpages-special-empty') );
 			return true;
 		}
-		
+
 		$this->setHeaders();
 		
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
@@ -62,7 +69,9 @@ class FollowedPages extends SpecialPage {
 			array (
 				"data" 	=> FollowModel::getWatchList( $user->getId() ),
 				"owner" => $wgUser->getId() == $user->getId(),
-				"user_id" =>  $user->getId()
+				"user_id" =>  $user->getId(),
+				"is_hide" => $is_hide,
+				"show_link" => $wgTitle->getFullUrl( "show_followed=1" ),
 			)
 		);
 				

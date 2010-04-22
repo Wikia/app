@@ -3,7 +3,12 @@
 $wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'UserProfile_handler';
 
 function UserProfile_handler(&$skin, &$tpl) {
-	global $wgTitle,$wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
+	global $wgTitle,$wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgRequest;
+	
+	if ( $wgRequest->getVal('action','view') != 'view' ) {
+		return true;	
+	}
+	
 	$wgOut->addStyle( "common/userpage_sidebar.css" );
 	
 	wfProfileIn(__METHOD__);

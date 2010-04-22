@@ -227,4 +227,19 @@ var initTracker = function() {
 			$.tracker.byStr("articleAction/contentLink/unknown/" + wgCityId + "-" + wgArticleId + "/" + encodeURIComponent(_href));
 		});
 	}
+	
+	$('.followedList li').click(
+		function(e) {
+		    var index = 0;
+		    var li = $(e.target).parent();
+		    if (li.parent().hasClass('followedListFirst') ) {
+		        index = li.index() + 1;
+		    } else {
+		        index = li.index() + 6;
+		    }
+
+		    WET.byStr( 'WikiaFollowedPages/userpage/' + index );    
+		}
+	);
+	
 };

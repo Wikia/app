@@ -89,7 +89,7 @@
 	 font-size:9pt;
 }
 
-.fallowedList {
+.followedList {
 	font-family:Arial,sans-serif;
 	font-size:12px;
 	list-style:none inside none;
@@ -99,7 +99,7 @@
 	width:45%;
 	margin-bottom:20px;
 }
-.fallowedListFirst {
+.followedListFirst {
 	border-right:1px solid #AAAAAA;
 	margin-right:10px;
 }
