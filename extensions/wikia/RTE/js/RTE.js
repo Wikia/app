@@ -471,7 +471,7 @@ CKEDITOR.dom.element.prototype.hasAttributes = function() {
 }
 
 // catch requests for language JS files
-CKEDITOR.langRegExp = /lang\/(\w+).js/;
+CKEDITOR.langRegExp = /lang\/([\w\-]+).js/;
 
 // load CK files from _source subdirectory
 CKEDITOR.getUrl = function( resource ) {
