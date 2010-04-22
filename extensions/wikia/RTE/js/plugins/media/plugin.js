@@ -198,24 +198,18 @@ CKEDITOR.plugins.add('rte-media',
 		// position image menu over an image
 		var position = RTE.tools.getPlaceholderPosition(image);
 
-		// position fix for non-gecko browsers
-		if ( !CKEDITOR.env.gecko) {
-			if (image.hasClass('media-placeholder')) {
-				// image / video placeholder
-				position.top += 2;
-				position.left += 2;
-			}
-			else {
-				// take image margins into consideration
-				// fix "framed" images for Opera and IE8 (standards & compatibility modes)
-				var fixFramed = (CKEDITOR.env.opera || CKEDITOR.env.ie);
+		if (image.hasClass('media-placeholder')) {
+			// image / video placeholder
+			position.top += 2;
+			position.left += 2;
+		}
+		else {
+			// take image margins into consideration
+			if ( image.hasClass('thumb') || image.hasClass('frame') ) {
+				position.top += 6;
 
-				if ( image.hasClass('thumb') || (image.hasClass('frame') && fixFramed) ) {
-					position.top += 6;
-
-					if (!image.hasClass('alignLeft')) {
-						position.left += 18;
-					}
+				if (!image.hasClass('alignLeft')) {
+					position.left += 18;
 				}
 			}
 		}
