@@ -704,10 +704,13 @@ class RTEReverseParser {
 	/**
 	 * Handle <hr /> tags
 	 */
-	private function handleHorizontalLines() {
+	private function handleHorizontalLines($node) {
 		wfProfileIn(__METHOD__);
 
 		$out = "----\n";
+
+		// RT #45087
+		$out = self::fixForTableCell($node, $out);
 
 		wfProfileOut(__METHOD__);
 
