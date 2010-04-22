@@ -165,10 +165,16 @@ class SkinChooser {
 	 * Render skin chooser form for Special:Preferences
 	 */
 	public static function renderSkinPreferencesForm($pref) {
-		global $wgOut, $wgSkinTheme, $wgSkipSkins, $wgStylePath, $wgSkipThemes, $wgUser, $wgDefaultSkin, $wgDefaultTheme, $wgSkinPreviewPage, $wgAdminSkin, $wgSkipOldSkins, $wgForceSkin;
+		global $wgOut, $wgSkinTheme, $wgSkipSkins, $wgStylePath, $wgSkipThemes, $wgUser, $wgDefaultSkin, $wgDefaultTheme, $wgSkinPreviewPage, $wgAdminSkin, $wgSkipOldSkins, $wgForceSkin, $wgEnableAnswers;
 
 		// don't show "See custom wikis" inside misc tab
 		$pref->mUsedToggles['skinoverwrite'] = true;
+
+		// hacks for Answers
+		if (!empty($wgEnableAnswers)) {
+			$pref->mSkin = 'answers';
+			$pref->mTheme = self::getUserOption('theme');
+		}
 
 		if(!empty($wgForceSkin)) {
 			$wgOut->addHTML(wfMsg('skin-forced'));
@@ -244,7 +250,8 @@ class SkinChooser {
 
 				$wgOut->addHTML('<tr>');
 				$wgOut->addHTML('<td><input type="radio" value="'.$skinkey.'" id="wpSkin'.$skinkey.'" name="wpSkin"'.($skinkey == $pref->mSkin.'-'.$pref->mTheme ? ' checked="checked" ' : '').'/><label for="wpSkin'.$skinkey.'">'.wfMsg($skinkey).'</label> '.$previewlink.'</td>');
-				if ($skinKey == 'monaco') {
+				// show theme previews
+				if (in_array($skinKey, array('monaco', 'answers'))) {
 					$wgOut->addHTML('<td><label for="wpSkin'.$skinkey.'"><img src="'.$wgStylePath.'/'.$skinKey.'/'.$themeKey.'/images/preview.png" width="100" /></label>'.($skinkey == $defaultSkinKey ? ' (' . wfMsg( 'default' ) . ')' : '').'</td>');
 				}
 				$wgOut->addHTML('</tr>');
