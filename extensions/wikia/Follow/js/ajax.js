@@ -4,31 +4,32 @@ $(function(){
 	$('.ajax-show-more').show();
 	$('#enotiffollowedminoredits,#enotiffollowedpages,#enotifminoredits,#enotifwatchlistpages').click(Follow.syncUserPrefs);
 	
-	$('.watched-list li').hover(
-		function(e) {
-		    $(e.target).find(".otherNs,.ajax-unwatch").css('visibility', 'visible');
-		},
-		function(e) {
-		    $(".otherNs,.ajax-unwatch").css('visibility', 'hidden');
-		} 
-	);
-	
-	$('.title-link').click(
-		function(e) {
-			var index = 0;
-			var ul = null;
-			var msg = "";
-			ul = $( $(e.target).parent().parent().parent() );
-			index = $(e.target).parent().parent().index() + 1;
-		    msg = ul.attr("id").split("-"); 
-		    WET.byStr( 'WikiaFollowedPages/specialpage/links/' + msg[3] + '/' + index );    
-		}
-	);
-
+	$('.watched-list li').hover( Follow.hover,Follow.unhover );
+	$('.title-link').click(Follow.tracklick);
 });
 
 
 Follow = {};
+
+Follow.tracklick = function(e) {
+	var index = 0;
+	var ul = null;
+	var msg = "";
+	ul = $( $(e.target).parent().parent().parent() );
+	index = $(e.target).parent().parent().index() + 1;
+    msg = ul.attr("id").split("-"); 
+    WET.byStr( 'WikiaFollowedPages/specialpage/links/' + msg[3] + '/' + index );    	
+}
+
+Follow.hover = function(e) {
+    $(e.target).find(".otherNs,.ajax-unwatch").css('visibility', 'visible');	
+}
+
+
+Follow.unhover = function(e) {
+	$(".otherNs,.ajax-unwatch").css('visibility', 'hidden');
+}
+
 
 Follow.uwatch = function(e) {
 	var url = "";
@@ -70,6 +71,11 @@ Follow.showMore = function(e) {
 		  url: url,
 		  success: function(data) {
 			$( "#" + head ).html(data);
+			setTimeout(function() {
+				$( "#" + head ).find('li').hover( Follow.hover,Follow.unhover );
+				$( "#" + head ).find('.title-link').click(Follow.tracklick);
+				$( "#" + head ).find('.ajax-unwatch').click(Follow.uwatch);
+			}, 500);
 		  }
 		});	
 	return false;
