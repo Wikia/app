@@ -1,4 +1,4 @@
-/*
+﻿/*
 Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -36,6 +36,7 @@ CKEDITOR.UI_MENUBUTTON = 5;
 		if ( !menu )
 		{
 			menu = _.menu = new CKEDITOR.plugins.contextMenu( editor );
+			menu.definition.panel.attributes[ 'aria-label' ] = editor.lang.common.options;
 
 			menu.onHide = CKEDITOR.tools.bind( function()
 				{

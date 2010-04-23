@@ -1,4 +1,4 @@
-/*
+﻿/*
 Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -110,17 +110,24 @@ CKEDITOR.lang['uk'] =
 		unavailable		: '%1<span class="cke_accessibility">, не доступне</span>'
 	},
 
+	contextmenu :
+	{
+		options : 'Context Menu Options' // MISSING
+	},
+
 	// Special char dialog.
 	specialChar		:
 	{
 		toolbar		: 'Вставити спеціальний символ',
-		title		: 'Оберіть спеціальний символ'
+		title		: 'Оберіть спеціальний символ',
+		options : 'Special Character Options' // MISSING
 	},
 
 	// Link dialog.
 	link :
 	{
 		toolbar		: 'Вставити/Редагувати посилання',
+		other 		: '<інший>',
 		menu		: 'Вставити посилання',
 		title		: 'Посилання',
 		info		: 'Інформація посилання',
@@ -476,12 +483,13 @@ CKEDITOR.lang['uk'] =
 	smiley :
 	{
 		toolbar	: 'Смайлик',
-		title	: 'Вставити смайлик'
+		title	: 'Вставити смайлик',
+		options : 'Smiley Options' // MISSING
 	},
 
 	elementsPath :
 	{
-		eleLabel : 'Elements path',  // MISSING
+		eleLabel : 'Elements path', // MISSING
 		eleTitle : '%1 елемент'
 	},
 
@@ -503,9 +511,9 @@ CKEDITOR.lang['uk'] =
 	clipboard :
 	{
 		title		: 'Вставити',
-		cutError	: 'Настройки безпеки вашого браузера не дозволяють редактору автоматично виконувати операції вирізування. Будь ласка, використовуйте клавіатуру для цього (Ctrl+X).',
-		copyError	: 'Настройки безпеки вашого браузера не дозволяють редактору автоматично виконувати операції копіювання. Будь ласка, використовуйте клавіатуру для цього (Ctrl+C).',
-		pasteMsg	: 'Будь ласка, вставте з буфера обміну в цю область, користуючись комбінацією клавіш (<STRONG>Ctrl+V</STRONG>) та натисніть <STRONG>OK</STRONG>.',
+		cutError	: 'Настройки безпеки вашого браузера не дозволяють редактору автоматично виконувати операції вирізування. Будь ласка, використовуйте клавіатуру для цього (Ctrl/Cmd+X).',
+		copyError	: 'Настройки безпеки вашого браузера не дозволяють редактору автоматично виконувати операції копіювання. Будь ласка, використовуйте клавіатуру для цього (Ctrl/Cmd+C).',
+		pasteMsg	: 'Будь ласка, вставте з буфера обміну в цю область, користуючись комбінацією клавіш (<STRONG>Ctrl/Cmd+V</STRONG>) та натисніть <STRONG>OK</STRONG>.',
 		securityMsg	: 'Редактор не може отримати прямий доступ до буферу обміну у зв\'язку з налаштуваннями вашого браузера. Вам потрібно вставити інформацію повторно в це вікно.',
 		pasteArea	: 'Paste Area' // MISSING
 	},
@@ -528,6 +536,7 @@ CKEDITOR.lang['uk'] =
 	{
 		button			: 'Шаблони',
 		title			: 'Шаблони змісту',
+		options : 'Template Options', // MISSING
 		insertOption	: 'Замінити поточний вміст',
 		selectPromptMsg	: 'Оберіть, будь ласка, шаблон для відкриття в редакторі<br>(поточний зміст буде втрачено):',
 		emptyListMsg	: '(Не визначено жодного шаблону)'

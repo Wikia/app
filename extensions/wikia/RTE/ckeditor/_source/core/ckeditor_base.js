@@ -136,6 +136,9 @@ if ( !window.CKEDITOR )
 						path = location.href.match( /^[^\?]*\/(?:)/ )[0] + path;
 				}
 
+				if ( !path )
+						throw 'The CKEditor installation path could not be automatically detected. Please set the global variable "CKEDITOR_BASEPATH" before creating editor instances.';
+
 				return path;
 			})(),
 

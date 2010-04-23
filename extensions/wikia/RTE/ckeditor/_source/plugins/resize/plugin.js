@@ -1,4 +1,4 @@
-/*
+﻿/*
 Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -53,7 +53,9 @@ CKEDITOR.plugins.add( 'resize',
 						editor.document.on( 'mousemove', dragHandler );
 						editor.document.on( 'mouseup', dragEndHandler );
 					}
-				} );
+				});
+
+			editor.on( 'destroy', function() { CKEDITOR.tools.removeFunction( mouseDownFn ); } );
 
 			editor.on( 'themeSpace', function( event )
 				{

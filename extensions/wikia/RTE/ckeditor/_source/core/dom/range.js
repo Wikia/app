@@ -1,4 +1,4 @@
-/*
+﻿/*
 Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -931,7 +931,7 @@ CKEDITOR.dom.range = function( document )
 
 										siblingText = sibling.getText();
 
-										if ( !(/[^\s\ufeff]/).test( siblingText ) )	// Spaces + Zero Width No-Break Space (U+FEFF)
+										if ( (/[^\s\ufeff]/).test( siblingText ) )	// Spaces + Zero Width No-Break Space (U+FEFF)
 											sibling = null;
 										else
 										{
@@ -1090,7 +1090,7 @@ CKEDITOR.dom.range = function( document )
 
 										siblingText = sibling.getText();
 
-										if ( !(/[^\s\ufeff]/).test( siblingText ) )
+										if ( (/[^\s\ufeff]/).test( siblingText ) )
 											sibling = null;
 										else
 										{
@@ -1314,6 +1314,100 @@ CKEDITOR.dom.range = function( document )
 
 					if ( !movingOut && node.type == CKEDITOR.NODE_ELEMENT )
 						currentElement = node;
+				};
+
+				if ( moveStart )
+				{
+					var textStart = walker[ mode == CKEDITOR.SHRINK_ELEMENT ? 'lastForward' : 'next']();
+					textStart && this.setStartBefore( textStart );
+				}
+
+				if ( moveEnd )
+				{
+					walker.reset();
+					var textEnd = walker[ mode == CKEDITOR.SHRINK_ELEMENT ? 'lastBackward' : 'previous']();
+					textEnd && this.setEndAfter( textEnd );
+				}
+
+				return !!( moveStart || moveEnd );
+			}
+		},
+
+		/**
+		 *  Descrease the range to make sure that boundaries
+		 *  always anchor beside text nodes or innermost element.
+		 * @param {Number} mode  ( CKEDITOR.SHRINK_ELEMENT | CKEDITOR.SHRINK_TEXT ) The shrinking mode.
+		 */
+		shrink : function( mode )
+		{
+			// Unable to shrink a collapsed range.
+			if ( !this.collapsed )
+			{
+				mode = mode || CKEDITOR.SHRINK_TEXT;
+
+				var walkerRange = this.clone();
+
+				var startContainer = this.startContainer,
+					endContainer = this.endContainer,
+					startOffset = this.startOffset,
+					endOffset = this.endOffset,
+					collapsed = this.collapsed;
+
+				// Whether the start/end boundary is moveable.
+				var moveStart = 1,
+						moveEnd = 1;
+
+				if ( startContainer && startContainer.type == CKEDITOR.NODE_TEXT )
+				{
+					if ( !startOffset )
+						walkerRange.setStartBefore( startContainer );
+					else if ( startOffset >= startContainer.getLength( ) )
+						walkerRange.setStartAfter( startContainer );
+					else
+					{
+						// Enlarge the range properly to avoid walker making
+						// DOM changes caused by triming the text nodes later.
+						walkerRange.setStartBefore( startContainer );
+						moveStart = 0;
+					}
+				}
+
+				if ( endContainer && endContainer.type == CKEDITOR.NODE_TEXT )
+				{
+					if ( !endOffset )
+						walkerRange.setEndBefore( endContainer );
+					else if ( endOffset >= endContainer.getLength( ) )
+						walkerRange.setEndAfter( endContainer );
+					else
+					{
+						walkerRange.setEndAfter( endContainer );
+						moveEnd = 0;
+					}
+				}
+
+				var walker = new CKEDITOR.dom.walker( walkerRange );
+
+				walker.evaluator = function( node )
+				{
+					return node.type == ( mode == CKEDITOR.SHRINK_ELEMENT ?
+						CKEDITOR.NODE_ELEMENT : CKEDITOR.NODE_TEXT );
+				};
+
+				var currentElement;
+				walker.guard = function( node, movingOut )
+				{
+					// Stop when we're shrink in element mode while encountering a text node.
+					if ( mode == CKEDITOR.SHRINK_ELEMENT && node.type == CKEDITOR.NODE_TEXT )
+						return false;
+
+					// Stop when we've already walked "through" an element.
+					if ( movingOut && node.equals( currentElement ) )
+						return false;
+
+					if ( !movingOut && node.type == CKEDITOR.NODE_ELEMENT )
+						currentElement = node;
+
+					return true;
 				};
 
 				if ( moveStart )
@@ -1728,6 +1822,10 @@ CKEDITOR.dom.range = function( document )
 		moveToElementEditablePosition : function( el, isMoveToEnd )
 		{
 			var isEditable;
+
+			// Empty elements are rejected.
+			if ( CKEDITOR.dtd.$empty[ el.getName() ] )
+				return false;
 
 			while ( el && el.type == CKEDITOR.NODE_ELEMENT )
 			{
