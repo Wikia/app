@@ -1,4 +1,4 @@
-<h2 class="dark_text_2" id="userPageFallowedHead"> 
+<h2 class="dark_text_2" id="userPageFollowedHead"> 
 
 <span>
 	<?php if($isLogin): ?>

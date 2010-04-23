@@ -84,14 +84,12 @@
   margin-top: 2px;
 }
 
-#userPageFallowedHead span{
+#userPageFollowedHead span{
 	 float: right;
 	 font-size:9pt;
 }
 
 .followedList {
-	font-family:Arial,sans-serif;
-	font-size:12px;
 	list-style:none inside none;
 	float:left;
 	margin-left:4px;
