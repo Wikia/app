@@ -78,7 +78,12 @@ class AdProviderAthena implements iAdProvider {
 
 	public static function getInstance() {
 		if(self::$instance == false) {
-			self::$instance = new AdProviderAthena();
+			$h = AdEngine::getCachedCategory();
+			if (in_array($h['name'], array("Gaming", "Entertainment"))){
+				self::$instance = new AdProviderAthena();
+			} else {
+				self::$instance = new AdProviderLiftium();
+			}
 		}
 		return self::$instance;
 	}
