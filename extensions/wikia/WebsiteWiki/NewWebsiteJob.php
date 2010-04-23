@@ -416,7 +416,7 @@ class NewWebsiteJob extends Job {
 	 * create thumbnail for web site
 	 */
 	private function makeThumbnail() {
-		global $wgUploadDirectory;
+		global $wgEnableUploadInfoExt;
 
 		wfProfileIn( __METHOD__ );
 
@@ -447,6 +447,10 @@ class NewWebsiteJob extends Job {
 		// hardcoded dimentions, taken from websitewiki.de
 		$cmd = "convert -thumbnail 250x188^ -crop 250x188+0+0 -antialias +repage {$imagePath} {$imagePath}";
 		Wikia::log( __METHOD__, "cmd", $cmd );
+
+		if( $wgEnableUploadInfoExt ) {
+			UploadInfo::log( $this->title, $imagePath, $imagePath );
+		}
 
 		wfShellExec( $cmd, $result );
 		if ( $result !== 0 ) {
