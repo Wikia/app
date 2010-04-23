@@ -1931,7 +1931,7 @@ class Article {
 	 * User interface handler for the "unwatch" action.
 	 */
 	public function unwatch() {
-		global $wgUser, $wgOut;
+		global $wgUser, $wgOut, $wgEnableWikiaFollowedPages;
 		if( $wgUser->isAnon() ) {
 			$wgOut->showErrorPage( 'watchnologin', 'watchnologintext' );
 			return;
@@ -1941,6 +1941,9 @@ class Article {
 			return;
 		}
 		if( $this->doUnwatch() ) {
+			if ($wgEnableWikiaFollowedPages) {
+				$wgOut->redirect($this->mTitle->getFullUrl("action=view"));
+			}
 			$wgOut->setPagetitle( wfMsg( 'removedwatch' ) );
 			$wgOut->setRobotPolicy( 'noindex,nofollow' );
 			$wgOut->addWikiMsg( 'removedwatchtext', $this->mTitle->getPrefixedText() );
