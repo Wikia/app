@@ -13,7 +13,8 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Founder Emails',
 	'author' => 'Adrian \'ADi\' Wieczorek',
 	'url' => 'http://www.wikia.com' ,
-	'description' => 'Helps informing founders about changes on their wiki'
+	'description' => 'Helps informing founders about changes on their wiki',
+	'descriptionmsg' => 'founderemails-desc'
 );
 
 /**
