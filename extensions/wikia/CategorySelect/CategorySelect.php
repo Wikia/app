@@ -42,7 +42,7 @@ $wgAjaxExportList[] = 'CategorySelectGetCategories';
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function CategorySelectInit($forceInit = false) {
-	global $wgRequest, $wgUser;
+	global $wgRequest, $wgUser, $wgContentNamespaces, $wgTitle
 
 	if( (!$forceInit) && (!$wgUser->isAllowed('edit')) ){
 		return true;
@@ -57,6 +57,11 @@ function CategorySelectInit($forceInit = false) {
 	if (($undo > 0 && $undoafter > 0) || $diff || ($oldid && $action != 'edit' && $action != 'submit')) {
 		return true;
 	}
+
+	if ( !in_array( $wgTitle->getNamespace(), $wgContentNamespaces ) && $action == 'view' ) {
+		return true;
+	}
+
 
 	global $IP, $wgHooks, $wgAutoloadClasses;
 	$wgAutoloadClasses['CategorySelect'] = "$IP/extensions/wikia/CategorySelect/CategorySelect_body.php";
