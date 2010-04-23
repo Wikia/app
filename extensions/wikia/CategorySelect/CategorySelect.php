@@ -84,8 +84,13 @@ function CategorySelectInitializeHooks($output, $article, $title, $user, $reques
 		return true;
 	}
 
-	// Initialize only for namespace: content
-	if(!in_array($title->mNamespace, $wgContentNamespaces) && !in_array($title->mNamespace, array( NS_CATEGORY ))) {
+	$action = $wgRequest->getVal('action', 'view');
+
+	// Initialize only for namespace:
+	// (a) content (on view)
+	// (b) content, file, user, etc. (on edit)
+	if ( ( !in_array($title->mNamespace, $wgContentNamespaces) && ( $action == 'view' || $action == 'purge' ) )
+		|| !in_array($title->mNamespace, array_merge( $wgContentNamespaces, array( NS_FILE, NS_USER, NS_CATEGORY, NS_VIDEO, NS_SPECIAL ) ) ) ) {
 		return true;
 	}
 
@@ -98,8 +103,6 @@ function CategorySelectInitializeHooks($output, $article, $title, $user, $reques
 	if ( !$title->quickUserCan('edit') && ( NS_SPECIAL != $title->mNamespace ) ) {
 		return true;
 	}
-
-	$action = $wgRequest->getVal('action', 'view');
 
 	if($action == 'view' || $action == 'purge') {
 		if($title->mArticleID == 0) {
