@@ -20,3 +20,4 @@ $wgSpecialPages[ "NewWebsite"         ] = 'NewWebsite';
 $wgJobClasses[ "newsite"              ] = "NewWebsiteJob";
 
 include( $dir . "/domainhook.php" );
+include( $dir . "/Keywords/Keyword.php" );
