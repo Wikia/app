@@ -62,8 +62,6 @@ function loadAnswersToCheck() {
 	global $wgExternalSharedDB, $wgCityId;
 
 	$dbr = wfGetDB (DB_SLAVE, 'stats', $wgExternalSharedDB);
-	$namespace = "500";
-	$username = "Maintenance script";
 
 	$varAnsEnable = 663;
 
@@ -93,17 +91,81 @@ function loadAnswersToCheck() {
 	return $wikiArr;
 }
 
+function loadWikisToCheck() {
+	global $wgExternalSharedDB, $wgCityId;
+
+	$dbr = wfGetDB (DB_SLAVE, 'stats', $wgExternalSharedDB);
+	$varAnsEnable = 663;
+
+	$wikisWithNYCodes = array(458,462,4541,3236,6164,1657,3828,3829,3827,3603);
+	
+	$where = array("city_id IN (" . $dbr->makeList( $wikisWithNYCodes ) . ")");
+	$oRes = $dbr->select(
+		array( "city_list" ),
+		array( "city_id, city_url" ),
+		$where,
+		__METHOD__
+	);
+
+	$wikiArr = array();
+	while ($oRow = $dbr->fetchObject($oRes)) {
+		$wikiArr[$oRow->city_id] = $oRow->city_url;
+	}
+	$dbr->freeResult ($oRes) ;
+
+	return $wikiArr;
+}
+
+function getAnswersAvatar($answersWikis, $user_id, $lang) {
+	$pathny = false;
+	$city_id = $answersWikis['en'];
+	$pathEnAnswers = checkNYAvatar($city_id, $user_id);
+	if ( $pathEnAnswers == 'NULL' ) {
+		__log("NY Avatar (en): doesn't exist");
+		if ( $lang != 'en' && isset($answersWikis[$lang]) ) {
+			$city_id = $answersWikis[$lang];
+			$pathLangAnswers = checkNYAvatar($city_id, $user_id);
+			if ( $pathLangAnswers == 'NULL' ) {
+				__log("NY Avatar ($lang): doesn't exist");
+			} else {
+				$pathny = $pathEnAnswers;							
+			}
+		} 
+	} else {
+		$pathny = $pathEnAnswers;
+	}
+	
+	return array($pathny, $city_id);
+}
+
+function getNYWikisAvatar($wikis, $user_id) {
+	$city_id = 0;
+	$pathny = false;
+	if (!empty($wikis) ) {
+		foreach ( $wikis as $cid => $city_url ) {
+			$city_id = $cid;
+			$pathEnAnswers = checkNYAvatar($city_id, $user_id);
+			if ( $pathEnAnswers != 'NULL' ) {
+				$pathny = $pathEnAnswers;
+				break;
+			} else {
+				__log("NY Avatar on ({$city_url}): doesn't exist");
+			}
+		}
+	}
+	return array($pathny, $city_id);
+}
+
 function copyAvatarsToMasthead() {
 	global $wgExternalSharedDB, $wgExternalDatawareDB, $wgWikiaLocalSettingsPath ;
 	global $wgStylePath, $IP;
 	global $USER_TEST;
 
 	$answersWikis = loadAnswersToCheck();
+	$nycodeWikis = loadWikisToCheck();
 	#echo print_r($answersWikis, true);
 
 	$dbr = wfGetDB (DB_SLAVE, 'stats', $wgExternalSharedDB);
-	$namespace = "500";
-	$username = "Maintenance script";
 
 	$where = array("user_id > 0");
 	if ( $USER_TEST ) {
@@ -142,31 +204,25 @@ function copyAvatarsToMasthead() {
 			$city_id = 0;
 			$pathny = false;
 			if ( !file_exists( $path ) ) {
-				$city_id = $answersWikis['en'];
-				$pathEnAnswers = checkNYAvatar($city_id, $user_id);
-				if ( $pathEnAnswers == 'NULL' ) {
-					__log("NY Avatar (en): doesn't exist");
-					if ( $lang != 'en' && isset($answersWikis[$lang]) ) {
-						$city_id = $answersWikis[$lang];
-						$pathLangAnswers = checkNYAvatar($city_id, $user_id);
-						if ( $pathLangAnswers == 'NULL' ) {
-							__log("NY Avatar ($lang): doesn't exist");
-						} else {
-							$pathny = $pathEnAnswers;							
-						}
-					} 
-				} else {
-					$pathny = $pathEnAnswers;
-				}
+				list($pathny, $city_id) = getAnswersAvatar($answersWikis, $user_id, $lang);
 			} else {
 				__log("Avatar: $path exists");
 			}
 			
 			if ( $pathny !== false && $city_id > 0 ) {
-				__log("Move $pathny to $path");
+				__log("Move Answers Avatar $pathny to $path");
 				$uploaded = uploadAvatar($avatar, $oUser, $pathny, $city_id);
 				__log("Done with code: " . intval($uploaded));
+			} else {
+				if ( !empty($nycodeWikis) ) {
+					list($pathny, $city_id) = getNYWikisAvatar($nycodeWikis, $user_id);
+					if ( $pathny !== false && $city_id > 0 ) {
+						__log("Move Wikia NY code Avatar $pathny to $path");
+						$uploaded = uploadAvatar($avatar, $oUser, $pathny, $city_id);
+					}
+				}
 			}
+			
 		}
 	}
 	unset($wikiArr);
@@ -329,7 +385,7 @@ function uploadAvatar($oMasthead, $mUser, $nypath, $city_id) {
 	return true;
 }
 
-if ( $options['ny'] == 1 ) {
+if ( isset($options['ny']) && $options['ny'] == 1 ) {
 	getNYAvatar($options['user']);
 } else {
 	__log("Start... \n");
