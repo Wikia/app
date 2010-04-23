@@ -42,7 +42,7 @@ $wgAjaxExportList[] = 'CategorySelectGetCategories';
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function CategorySelectInit($forceInit = false) {
-	global $wgRequest, $wgUser, $wgContentNamespaces, $wgTitle;
+	global $wgRequest, $wgUser;
 
 	if( (!$forceInit) && (!$wgUser->isAllowed('edit')) ){
 		return true;
@@ -57,11 +57,6 @@ function CategorySelectInit($forceInit = false) {
 	if (($undo > 0 && $undoafter > 0) || $diff || ($oldid && $action != 'edit' && $action != 'submit')) {
 		return true;
 	}
-
-	if ( !in_array( $wgTitle->getNamespace(), $wgContentNamespaces ) && $action == 'view' ) {
-		return true;
-	}
-
 
 	global $IP, $wgHooks, $wgAutoloadClasses;
 	$wgAutoloadClasses['CategorySelect'] = "$IP/extensions/wikia/CategorySelect/CategorySelect_body.php";
@@ -89,8 +84,8 @@ function CategorySelectInitializeHooks($output, $article, $title, $user, $reques
 		return true;
 	}
 
-	// Initialize only for namespace: content, file, user (same as for Wysiwyg)
-	if(!in_array($title->mNamespace, $wgContentNamespaces) && !in_array($title->mNamespace, array( NS_FILE, NS_USER, NS_CATEGORY, NS_VIDEO, NS_SPECIAL ))) {
+	// Initialize only for namespace: content
+	if(!in_array($title->mNamespace, $wgContentNamespaces) && !in_array($title->mNamespace, array( NS_CATEGORY ))) {
 		return true;
 	}
 
