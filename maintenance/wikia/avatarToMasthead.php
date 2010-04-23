@@ -205,24 +205,24 @@ function copyAvatarsToMasthead() {
 			$pathny = false;
 			if ( !file_exists( $path ) ) {
 				list($pathny, $city_id) = getAnswersAvatar($answersWikis, $user_id, $lang);
+
+				if ( $pathny !== false && $city_id > 0 ) {
+					__log("Move Answers Avatar $pathny to $path");
+					$uploaded = uploadAvatar($avatar, $oUser, $pathny, $city_id);
+					__log("Done with code: " . intval($uploaded));
+				} else {
+					if ( !empty($nycodeWikis) ) {
+						list($pathny, $city_id) = getNYWikisAvatar($nycodeWikis, $user_id);
+						if ( $pathny !== false && $city_id > 0 ) {
+							__log("Move Wikia NY code Avatar $pathny to $path");
+							$uploaded = uploadAvatar($avatar, $oUser, $pathny, $city_id);
+						}
+					}
+				}
+
 			} else {
 				__log("Avatar: $path exists");
 			}
-			
-			if ( $pathny !== false && $city_id > 0 ) {
-				__log("Move Answers Avatar $pathny to $path");
-				$uploaded = uploadAvatar($avatar, $oUser, $pathny, $city_id);
-				__log("Done with code: " . intval($uploaded));
-			} else {
-				if ( !empty($nycodeWikis) ) {
-					list($pathny, $city_id) = getNYWikisAvatar($nycodeWikis, $user_id);
-					if ( $pathny !== false && $city_id > 0 ) {
-						__log("Move Wikia NY code Avatar $pathny to $path");
-						$uploaded = uploadAvatar($avatar, $oUser, $pathny, $city_id);
-					}
-				}
-			}
-			
 		}
 	}
 	unset($wikiArr);
