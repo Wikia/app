@@ -1,4 +1,4 @@
-/*
+﻿/*
 Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -110,17 +110,24 @@ CKEDITOR.lang['ru'] =
 		unavailable		: '%1<span class="cke_accessibility">, недоступно</span>'
 	},
 
+	contextmenu :
+	{
+		options : 'Context Menu Options' // MISSING
+	},
+
 	// Special char dialog.
 	specialChar		:
 	{
 		toolbar		: 'Вставить специальный символ',
-		title		: 'Выберите специальный символ'
+		title		: 'Выберите специальный символ',
+		options : 'Special Character Options' // MISSING
 	},
 
 	// Link dialog.
 	link :
 	{
 		toolbar		: 'Вставить/Редактировать ссылку',
+		other 		: '<другой>',
 		menu		: 'Вставить ссылку',
 		title		: 'Ссылка',
 		info		: 'Информация ссылки',
@@ -476,12 +483,13 @@ CKEDITOR.lang['ru'] =
 	smiley :
 	{
 		toolbar	: 'Смайлик',
-		title	: 'Вставить смайлик'
+		title	: 'Вставить смайлик',
+		options : 'Smiley Options' // MISSING
 	},
 
 	elementsPath :
 	{
-		eleLabel : 'Elements path',  // MISSING
+		eleLabel : 'Elements path', // MISSING
 		eleTitle : '%1 элемент'
 	},
 
@@ -503,9 +511,9 @@ CKEDITOR.lang['ru'] =
 	clipboard :
 	{
 		title		: 'Вставить',
-		cutError	: 'Настройки безопасности вашего браузера не позволяют редактору автоматически выполнять операции вырезания. Пожалуйста, используйте клавиатуру для этого (Ctrl+X).',
-		copyError	: 'Настройки безопасности вашего браузера не позволяют редактору автоматически выполнять операции копирования. Пожалуйста, используйте клавиатуру для этого (Ctrl+C).',
-		pasteMsg	: 'Пожалуйста, вставьте текст в прямоугольник, используя сочетание клавиш (<STRONG>Ctrl+V</STRONG>), и нажмите <STRONG>OK</STRONG>.',
+		cutError	: 'Настройки безопасности вашего браузера не позволяют редактору автоматически выполнять операции вырезания. Пожалуйста, используйте клавиатуру для этого (Ctrl/Cmd+X).',
+		copyError	: 'Настройки безопасности вашего браузера не позволяют редактору автоматически выполнять операции копирования. Пожалуйста, используйте клавиатуру для этого (Ctrl/Cmd+C).',
+		pasteMsg	: 'Пожалуйста, вставьте текст в прямоугольник, используя сочетание клавиш (<STRONG>Ctrl/Cmd+V</STRONG>), и нажмите <STRONG>OK</STRONG>.',
 		securityMsg	: 'По причине настроек безопасности браузера, редактор не имеет доступа к данным буфера обмена напрямую. Вам необходимо вставить текст снова в это окно.',
 		pasteArea	: 'Paste Area' // MISSING
 	},
@@ -528,6 +536,7 @@ CKEDITOR.lang['ru'] =
 	{
 		button			: 'Шаблоны',
 		title			: 'Шаблоны содержимого',
+		options : 'Template Options', // MISSING
 		insertOption	: 'Заменить текущее содержание',
 		selectPromptMsg	: 'Пожалуйста, выберете шаблон для открытия в редакторе<br>(текущее содержимое будет потеряно):',
 		emptyListMsg	: '(Ни одного шаблона не определено)'

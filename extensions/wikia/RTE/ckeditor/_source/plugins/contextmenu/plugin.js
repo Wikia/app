@@ -1,4 +1,4 @@
-/*
+﻿/*
 Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -36,14 +36,14 @@ CKEDITOR.plugins.contextMenu = CKEDITOR.tools.createClass(
 			},
 			this);
 
-		this._.definiton =
+		this.definition =
 		{
 			panel:
 			{
 				className : editor.skinClass + ' cke_contextmenu',
 				attributes :
 				{
-					'aria-label' : editor.lang.common.options
+					'aria-label' : editor.lang.contextmenu.options
 				}
 			}
 		};
@@ -67,7 +67,7 @@ CKEDITOR.plugins.contextMenu = CKEDITOR.tools.createClass(
 			}
 			else
 			{
-				menu = this._.menu = new CKEDITOR.menu( editor );
+				menu = this._.menu = new CKEDITOR.menu( editor, this.definition );
 				menu.onClick = CKEDITOR.tools.bind( function( item )
 				{
 					menu.hide();

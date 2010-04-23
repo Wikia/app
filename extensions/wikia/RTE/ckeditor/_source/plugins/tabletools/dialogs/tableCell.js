@@ -1,4 +1,4 @@
-/*
+﻿/*
 Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -515,6 +515,9 @@ CKEDITOR.dialog.add( 'cellProperties', function( editor )
 			},
 			onOk : function()
 			{
+				var selection = this._.editor.getSelection(),
+					bookmarks = selection.createBookmarks();
+
 				var cells = this.cells;
 				for ( var i = 0 ; i < cells.length ; i++ ) {
 					this.commitContent( cells[ i ] );
@@ -523,6 +526,8 @@ CKEDITOR.dialog.add( 'cellProperties', function( editor )
 					cells[i].removeAttribute('_rte_attribs');
 					cells[i].removeAttribute('_rte_style');
 				}
+
+				selection.selectBookmarks( bookmarks );
 			}
 		};
 	} );

@@ -1,4 +1,4 @@
-/*
+﻿/*
 Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -50,7 +50,13 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	function blockNeedsExtension( block )
 	{
 		var lastChild = lastNoneSpaceChild( block );
-		return !lastChild || isRawBr(lastChild); //lastChild.type == CKEDITOR.NODE_ELEMENT && lastChild.name == 'br';
+
+		return !lastChild
+			|| isRawBr(lastChild)
+			// || lastChild.type == CKEDITOR.NODE_ELEMENT && lastChild.name == 'br' // Wikia
+			// Some of the controls in form needs extension too,
+			// to move cursor at the end of the form. (#4791)
+			|| block.name == 'form' && lastChild.name == 'input';
 	}
 
 	function extendBlockForDisplay( block )

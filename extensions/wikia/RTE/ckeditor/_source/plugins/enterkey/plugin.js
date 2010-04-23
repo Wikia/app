@@ -1,4 +1,4 @@
-/*
+﻿/*
 Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -25,6 +25,19 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			range = range || getRange( editor );
 
 			var doc = range.document;
+
+			// Exit the list when we're inside an empty list item block. (#5376)
+			if ( range.checkStartOfBlock() && range.checkEndOfBlock() )
+			{
+				var path = new CKEDITOR.dom.elementPath( range.startContainer ),
+						block = path.block;
+
+				if ( block.is( 'li' ) || block.getParent().is( 'li' ) )
+				{
+					editor.execCommand( 'outdent' );
+					return;
+				}
+			}
 
 			// Determine the block element to be used.
 			var blockTag = ( mode == CKEDITOR.ENTER_DIV ? 'div' : 'p' );
@@ -91,13 +104,6 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			}
 			else
 			{
-
-				if ( isStartOfBlock && isEndOfBlock && previousBlock.is( 'li' ) )
-				{
-					editor.execCommand( 'outdent' );
-					return;
-				}
-
 				var newBlock;
 
 				if ( previousBlock )
@@ -105,7 +111,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					// Do not enter this block if it's a header tag, or we are in
 					// a Shift+Enter (#77). Create a new block element instead
 					// (later in the code).
-					if ( !forceMode && !headerTagRegex.test( previousBlock.getName() ) )
+					if ( previousBlock.is( 'li' ) ||
+						 !( forceMode || headerTagRegex.test( previousBlock.getName() ) ) )
 					{
 						// Otherwise, duplicate the previous block.
 						newBlock = previousBlock.clone();
@@ -240,9 +247,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 				isPre = ( startBlockTag == 'pre' );
 
-				if ( isPre ) {
+				// Gecko prefers <br> as line-break inside <pre> (#4711).
+				if ( isPre && !CKEDITOR.env.gecko )
 					lineBreak = doc.createText( CKEDITOR.env.ie ? '\r' : '\n' );
-				}
 				else {
 					lineBreak = doc.createElement( 'br' );
 
@@ -317,6 +324,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 	function enter( editor, mode, forceMode )
 	{
+		forceMode = editor.config.forceEnterMode || forceMode;
+
 		// Only effective within document.
 		if ( editor.mode != 'wysiwyg' )
 			return false;
