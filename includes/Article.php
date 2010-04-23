@@ -1891,7 +1891,7 @@ class Article {
 	 */
 
 	public function watch() {
-		global $wgUser, $wgOut;
+		global $wgUser, $wgOut, $wgEnableWikiaFollowedPages;
 		if( $wgUser->isAnon() ) {
 			$wgOut->showErrorPage( 'watchnologin', 'watchnologintext' );
 			return;
@@ -1901,6 +1901,9 @@ class Article {
 			return;
 		}
 		if( $this->doWatch() ) {
+			if ($wgEnableWikiaFollowedPages) {
+				$wgOut->redirect($this->mTitle->getFullUrl("action=view"));
+			}
 			$wgOut->setPagetitle( wfMsg( 'addedwatch' ) );
 			$wgOut->setRobotPolicy( 'noindex,nofollow' );
 			$wgOut->addWikiMsg( 'addedwatchtext', $this->mTitle->getPrefixedText() );

@@ -96,7 +96,9 @@ wgAjaxWatch.processResult = function(request) {
 		window.location.href = wgAjaxWatch.watchLinks[0].href;
 		return;
 	}
-	jsMsg( response.substr(4), 'watch' );
+	if(typeof wgEnableWikiaFollowedPages === "undefined" || !wgEnableWikiaFollowedPages) {
+		jsMsg( response.substr(4), 'watch' );
+	}
 	wgAjaxWatch.inprogress = false;
 	if(wgAjaxWatch.timeoutID) {
 		window.clearTimeout(wgAjaxWatch.timeoutID);
