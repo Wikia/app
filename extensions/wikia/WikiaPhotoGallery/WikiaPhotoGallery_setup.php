@@ -43,7 +43,7 @@ $wgHooks['EditPage::showEditForm:initial2'][] = 'WikiaPhotoGalleryHelper::setupE
 $wgHooks['Parser::FetchTemplateAndTitle'][] = 'WikiaPhotoGalleryHelper::fetchTemplateAndTitle';
 
 // i18n
-$wgExtensionMessagesFiles['WikiaPhotoGallery'] = $dir.'/i18n/WikiaPhotoGallery.i18n.php';
+$wgExtensionMessagesFiles['WikiaPhotoGallery'] = $dir.'/WikiaPhotoGallery.i18n.php';
 
 // Ajax dispatcher
 $wgAjaxExportList[] = 'WikiaPhotoGalleryAjax';
