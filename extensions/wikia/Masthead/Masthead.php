@@ -798,7 +798,6 @@ class Masthead {
 			if ( in_array( $namespace, $allowedNamespaces ) ) {
 				# Title::getBaseText only backs up one step, we need the leftmost part
 				list( $userspace ) = explode( "/", $wgTitle->getText(), 2 );
-				echo $usertalk;
 				$Avatar = Masthead::newFromUserName( $userspace );
 			} elseif ( in_array( $dbKey, $allowedPagesSingle ) ) {
 				$userspace = $wgUser->getName();
