@@ -16,7 +16,6 @@ class NeueWebsiteWF {
 		$sqlfiles = array(
 			"{$IP}/extensions/3rdparty/Websitewiki/keywords.sql",
 			"{$IP}/extensions/3rdparty/Websitewiki/ratings.sql",
-			"{$IP}/extensions/wikia/newsite/related.sql",
 		);
 
 		foreach ($sqlfiles as $file) {
