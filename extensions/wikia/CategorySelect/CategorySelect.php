@@ -42,7 +42,7 @@ $wgAjaxExportList[] = 'CategorySelectGetCategories';
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function CategorySelectInit($forceInit = false) {
-	global $wgRequest, $wgUser, $wgContentNamespaces, $wgTitle
+	global $wgRequest, $wgUser, $wgContentNamespaces, $wgTitle;
 
 	if( (!$forceInit) && (!$wgUser->isAllowed('edit')) ){
 		return true;
