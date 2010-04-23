@@ -1,9 +1,8 @@
-
 <h2 class="dark_text_2" id="userPageFallowedHead"> 
 
 <span>
 	<?php if($isLogin): ?>
-		<a href="<?php echo $hideUrl; ?>">(<?php echo wfMsg('wikiafollowedpages-userpage-hide'); ?>)</a>
+		<a id="follow_hide_link" href="<?php echo $hideUrl; ?>">(<?php echo wfMsg('wikiafollowedpages-userpage-hide'); ?>)</a>
 	<?php endif; ?>
 </span> 
 
@@ -24,7 +23,7 @@
 		</ul> 
 	<?php endif; ?>
 	<div style="clear: both;"></div>
-	<a class="wikia-button" id="ShowMoreFollowed" href="<?php echo $moreUrl; ?>" rel="nofollow"><?php echo wfMsg('wikiafollowedpages-userpage-more'); ?></a>
+	<a id="follow_more_link" class="wikia-button" id="ShowMoreFollowed" href="<?php echo $moreUrl; ?>" rel="nofollow"><?php echo wfMsg('wikiafollowedpages-userpage-more'); ?></a>
 <?php else: ?>
 	<?php echo wfMsg( 'wikiafollowedpages-userpage-empty' );?>
 <?php endif; ?>

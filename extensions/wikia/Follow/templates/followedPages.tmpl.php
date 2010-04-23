@@ -1,6 +1,6 @@
 <?php if( $is_hide ): ?>
 	<?php echo wfMsg('wikiafollowedpages-special-hidden'); ?>
-	<a href="<?php echo $show_link; ?>"><?php echo wfMsg("wikiafollowedpages-special-hidden-unhide"); ?></a>
+	<a id="unhide_list" href="<?php echo $show_link; ?>"><?php echo wfMsg("wikiafollowedpages-special-hidden-unhide"); ?></a>
 <?php endif; ?>
 
 <?php global  $wgServer,$wgScript;?>
