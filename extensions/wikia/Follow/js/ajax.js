@@ -26,6 +26,16 @@ Follow.tracklick = function(e) {
 }
 
 Follow.hover = function(e) {
+	if (e.target.tagName == "SPAN" ) {
+		$(e.target.parentNode).find(".otherNs,.ajax-unwatch").css('visibility', 'visible');
+		return true;
+	}
+	
+	if (e.target.tagName == "A" ) {
+		$(e.target.parentNode.parentNode).find(".otherNs,.ajax-unwatch").css('visibility', 'visible');
+		return true;
+	}	
+	
     $(e.target).find(".otherNs,.ajax-unwatch").css('visibility', 'visible');	
 }
 
