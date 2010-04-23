@@ -40,6 +40,7 @@ class AdProviderLiftium implements iAdProvider {
 		$options['kv_skin'] = $wgUser->getSkin()->getSkinName();
 		$options['kv_user_lang'] = $wgLang->getCode();
 		$options['kv_cont_lang'] = $GLOBALS['wgLanguageCode'];
+		$options['geoUrl'] = "http://geoiplookup.wikia.com/";
 
 		// LiftiumOptions as json
 		$out = '<script type="text/javascript">' . "\n";
