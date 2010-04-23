@@ -259,8 +259,15 @@ Class AdDisplay
   
   //use this one
   public static function OutputAdvertisementOutputHook( &$out, &$text ){
+		global $wgUser;
+
+		if ( $wgUser->isLoggedIn() ) {
+			return true;
+		}
+
 		if(!self::ArticleCanShowAd()) return true;
 		wfLoadExtensionMessages( 'SponsorPage' );
+
 		$text.= self::OutputAdvertisement();
 		return true;
   }
