@@ -13,7 +13,7 @@ function keymarkExtension() {
 }
 
 # The callback function for converting the input text to HTML output
-function renderKeypage( $input, $argv, &$parser ) {
+function renderKeypage( $input, $argv, $parser ) {
 	# $argv is an array containing any arguments passed to the
 	# extension like <example argument="foo" bar>..
 	# Put this on the sandbox page:  (works in MediaWiki 1.5.5)
@@ -30,6 +30,7 @@ function renderKeypage( $input, $argv, &$parser ) {
 	}
 
 	$kws = array_unique($kws);
+	Wikia::log( __METHOD__, "info", print_r( $kws ) );
 	$output = "<span class=\"small\">";
 	$komma = "";
 	if(count($kws)) {

@@ -90,8 +90,9 @@ function wsinfo( $parser, $thetext ) {
 
   $dom = strtolower($title);
 
-  if(ereg("[^-0-9.a-z]", $dom))
-    return true;
+	if( !Wikia::isValidDomain( $dom ) ) {
+		return true;
+	}
 
   if(array_key_exists("Geparkt", $parser->mOutput->mCategories) ||
      array_key_exists("Baustelle", $parser->mOutput->mCategories) ||
