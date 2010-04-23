@@ -6,6 +6,10 @@ $(function(){
 	
 	$('.watched-list li').hover( Follow.hover,Follow.unhover );
 	$('.title-link').click(Follow.tracklick);
+	
+	$('#unhide_list').click( function() {
+	    WET.byStr( 'WikiaFollowedPages/specialpage/unhide' );   
+	});
 });
 
 
@@ -59,8 +63,7 @@ Follow.uwatch = function(e) {
 }
 
 
-Follow.showMore = function(e) {
-	
+Follow.showMore = function(e) {	
     msg = $(e.target).attr("id").split("-"); 
     WET.byStr( 'WikiaFollowedPages/specialpage/viewall/' + msg[4] );   
     

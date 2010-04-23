@@ -242,4 +242,11 @@ var initTracker = function() {
 		}
 	);
 	
+	$('#follow_hide_link').click( function() {
+	    WET.byStr( 'WikiaFollowedPages/userpage/hide' );   
+	});
+	
+	$('#follow_more_link').click( function() {
+	    WET.byStr( 'WikiaFollowedPages/userpage/more' );   
+	});
 };
