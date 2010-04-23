@@ -6,7 +6,6 @@
 
 ini_set( "include_path", dirname(__FILE__)."/../../../maintenance/" );
 require_once( "commandLine.inc" );
-require_once( "$IP/extensions/wikia/newsite/NeueWebsite.php" );
 
 $job = new NewWebsiteJob( Title::newFromText( "Gazeta.pl", NS_MAIN ), array( "test" => true ) );
 $job->run();
