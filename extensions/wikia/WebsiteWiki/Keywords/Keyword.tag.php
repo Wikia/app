@@ -14,39 +14,29 @@ function keymarkExtension() {
 
 # The callback function for converting the input text to HTML output
 function renderKeypage( $input, $argv, $parser ) {
-	# $argv is an array containing any arguments passed to the
-	# extension like <example argument="foo" bar>..
-	# Put this on the sandbox page:  (works in MediaWiki 1.5.5)
-	#   <example argument="foo" argument2="bar">Testing text **example** in between the new tags</example>
+	global $wgContLang;
 
-	$kwline = trim(html_entity_decode($input, ENT_QUOTES, "UTF-8"));
+	$tokens   = explode( ",", trim( html_entity_decode( $input, ENT_QUOTES, "UTF-8" ) ) );
+	$keywords = array();
+	$output   = "";
 
-	$tok = strtok($kwline, ",;");
-
-	$kws = array();
-	while ($tok !== false) {
-		$kws[] = strtolower(trim($tok));
-		$tok = strtok(",;");
+	foreach( $tokens as $keyword ) {
+		$keyword = substr( $wgContLang->ucfirst( $wgContLang->lc( trim( $keyword ) ) ), 0, 80 );
+		$keywords[] = Wikia::link(
+			Title::makeTitle( NS_SPECIAL, "Keyword/{$keyword}" )->getLocalURL(),
+			$keyword
+		);
 	}
 
-	$kws = array_unique($kws);
-	Wikia::log( __METHOD__, "info", print_r( $kws ) );
-	$output = "<span class=\"small\">";
-	$komma = "";
-	if(count($kws)) {
-		foreach($kws as $kw) {
-			if(strlen($kw) > 80) {
-				$kw = substr($kw, 0, 80);
-			}
+	$keywords = array_unique( $keywords );
+	Wikia::log( __METHOD__, "info", print_r( $keywords, 1) );
 
-			$kwu = $kw;
-			$kwu{0} = strtoupper($kwu{0});
-
-			$output .= "$komma<a href=\"/Spezial:Keyword/$kw\">$kwu</a>";
-			$komma = ", ";
-		}
+	if( count( $keywords ) ) {
+		$output .= Xml::openElement( "span",  array( "class" => "small" ) );
+		$output .= implode( ", ", $keywords );
+		$output .= Xml::closeElement( "span" );
 	}
-	$output .= "</span>\n";
+
 
 	return $output;
 }
