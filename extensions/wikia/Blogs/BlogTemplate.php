@@ -267,7 +267,7 @@ class BlogTemplateClass {
 		wfProfileIn( __METHOD__ );
 		wfLoadExtensionMessages("Blogs");
 		/* add the magic word */
-		$magicWords[BLOGTPL_TAG] = array( 0, BLOGTPL_TAG );
+		$magicWords[ BLOGTPL_TAG ] = array( 0, BLOGTPL_TAG );
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
