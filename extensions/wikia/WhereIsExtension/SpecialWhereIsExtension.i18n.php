@@ -31,10 +31,13 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author EugeneZelenko
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'whereisextension-filter' => 'Used as some kind of fieldset description.',
+	'whereisextension-submit' => '{{Identical|Search}}',
+	'whereisextension-filter' => 'Used as some kind of fieldset description.
+{{Identical|Filter}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -59,9 +62,16 @@ $messages['ar'] = array(
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
+ * @author Jim-by
  */
 $messages['be-tarask'] = array(
+	'whereisextension' => 'Дзе пашырэньне',
+	'whereisextension-submit' => 'Шукаць',
+	'whereisextension-list' => 'Сьпіс вікі, якія адпавядаюць умовам',
+	'whereisextension-isset' => 'усталяваны як',
+	'whereisextension-filter' => 'Фільтар',
 	'whereisextension-all-groups' => 'Усе групы',
+	'whereisextension-name-contains' => 'назва зьменнай утрымлівае',
 );
 
 /** Breton (Brezhoneg)

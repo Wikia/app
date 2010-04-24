@@ -415,10 +415,12 @@ $messages['hu'] = array(
 	'lookupcontribswikidbname' => 'Adatbázisnév',
 	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Cím',
+	'lookupcontribsnbrresult' => 'Találatok száma:',
 	'lookupcontribsnext' => 'következő',
 	'lookupcontribsprevious' => 'előző',
 	'lookupcontribspageremoved' => 'Eltávolítva:',
 	'lookupcontribsrestore' => 'visszaállítás',
+	'lookupcontribslog' => 'napló',
 	'lookupcontribsdiff' => 'eltérés',
 );
 
@@ -505,7 +507,7 @@ $messages['ja'] = array(
 	'lookupcontribslog' => 'ログ',
 	'lookupcontribshist' => '履歴',
 	'lookupcontribsdiff' => '差分',
-	'right-lookupcontribs' => '利用者のグローバル編集を表示',
+	'right-lookupcontribs' => '利用者のプロジェクト全体における投稿記録を見る',
 );
 
 /** Macedonian (Македонски)

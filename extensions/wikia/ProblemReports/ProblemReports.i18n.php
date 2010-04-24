@@ -787,6 +787,7 @@ $messages['hu'] = array(
 	'pr_what_problem_change' => 'Probléma típusának megváltoztatása',
 	'pr_describe_problem' => 'Üzenet',
 	'pr_what_page' => 'A lap címe',
+	'pr_email_visible_only_to_staff' => 'csak személyzet láthatja',
 	'pr_mailer_subject' => 'Problémabejelentése ideje:',
 	'pr_mailer_to_default' => 'Wikia felhasználó',
 	'pr_view_all' => 'Összes bejelentés megjelenítése',
@@ -906,6 +907,7 @@ $messages['it'] = array(
 /** Japanese (日本語)
  * @author Hosiryuhosi
  * @author Naohiro19
+ * @author Tommy6
  */
 $messages['ja'] = array(
 	'problemreports' => '報告された問題のリスト',
@@ -937,19 +939,18 @@ $messages['ja'] = array(
 	'pr_what_problem_change' => '問題のタイプを変更',
 	'pr_describe_problem' => '詳細',
 	'pr_what_page' => 'ページ名',
-	'pr_email_visible_only_to_staff' => 'スタッフだけを表示',
+	'pr_email_visible_only_to_staff' => 'スタッフに対してのみ表示',
 	'pr_thank_you' => '報告ありがとうございます!
 
 [[Special:ProblemReports/$1|こちらから修正の確認を行えます]]',
 	'pr_thank_you_error' => 'エラーが発生して、問題の送信が出来ませんでした。あとでもう一度お願いいたします。',
-	'pr_spam_found' => 'スパムはあなたの要約欄の報告で見つかりました。
-要約欄の内容を変更してください。',
+	'pr_spam_found' => '報告の要約の中にスパムと思われるものが見つかりました。要約の内容を変更してください。',
 	'pr_empty_summary' => '問題の詳細を入力してください',
 	'pr_empty_email' => 'メールアドレスを入力してください',
 	'pr_mailer_notice' => 'メールを受け取った人が返信できるように、あなたがオプションページで設定したEメールアドレスが送信されるメールの送信元 (From) として設定されます。',
 	'pr_mailer_subject' => '報告された問題について',
-	'pr_mailer_tmp_info' => 'あなたは[[MediaWiki:ProblemReportsResponses|応答用のテンプレートを編集できます]]',
-	'pr_mailer_to_default' => 'ウィキアの利用者',
+	'pr_mailer_tmp_info' => '[[MediaWiki:ProblemReportsResponses|返信用のテンプレートを編集できます]]',
+	'pr_mailer_to_default' => 'Wikia User',
 	'pr_mailer_go_to_wiki' => 'メールを送信するには[$1 問題が報告されたウィキを訪れる必要があります]。',
 	'pr_total_number' => '報告の総数',
 	'pr_view_archive' => 'アーカイブにされた問題を見る',
@@ -970,6 +971,14 @@ $messages['ja'] = array(
 	'pr_status_2' => '終了',
 	'pr_status_3' => 'スタッフによるヘルプが必要',
 	'pr_status_wait' => 'お待ちください....',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'pr_describe_problem' => 'ಸಂದೇಶ',
+	'pr_table_status' => 'ಸ್ಥಾನಮಾನ',
 );
 
 /** Macedonian (Македонски)
@@ -1624,6 +1633,8 @@ $messages['sv'] = array(
 	'reportproblem' => 'Rapportera ett problem',
 	'prlogtext' => 'Problemrapporter',
 	'prlogheader' => 'Lista över rapporterade problem och ändringar på deras status',
+	'prlog_reportedentry' => 'rapportera ett problem med $1 ($2)',
+	'prlog_typeentry' => 'ändrat problemet $1s typ till "$2"',
 	'prlog_emailedentry' => 'skickat e-post till $2 ($3)',
 	'pr_what_problem' => 'Ärende',
 	'pr_what_problem_spam' => 'det finns en spam-länk här',

@@ -185,8 +185,13 @@ $messages['ia'] = array(
 	'ajaxpoll-submitting' => 'Un momento, submission de tu voto…',
 );
 
-/** Italian (Italiano) */
+/** Italian (Italiano)
+ * @author Beta16
+ */
 $messages['it'] = array(
+	'ajaxpoll-thankyou' => 'Grazie per aver votato!',
+	'ajaxpoll-error' => "C'è stato un problema con l'elaborazione del tuo voto, si prega di riprovare.",
+	'ajaxpoll-summary' => 'Il sondaggio è stato creato da $1 il $2, e finora $3 persone hanno votato.',
 	'ajaxpoll-submit' => 'Voti!',
 );
 

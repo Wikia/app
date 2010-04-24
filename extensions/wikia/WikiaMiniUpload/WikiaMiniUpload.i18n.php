@@ -91,8 +91,14 @@ $messages['qqq'] = array(
 	'wmu-license' => '{{Identical|License}}',
 	'wmu-size' => '{{Identical|Size}}',
 	'wmu-width' => '{{Identical|Width}}',
+	'wmu-caption' => '{{Identical|Caption}}',
 	'wmu-link' => '{{Identical|Link}}',
+	'wmu-optional' => '{{Identical|Optional}}',
 	'wmu-insert2' => 'Text of a submit button.',
+	'wmu-prev' => '{{Identical|Previous}}',
+	'wmu-next' => '{{Identical|Next}}',
+	'wmu-back' => '{{Identical|Back}}',
+	'wmu-close' => '{{Identical|Close}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -205,12 +211,58 @@ $messages['be-tarask'] = array(
 	'wmu-details-inf' => '<h1>Апісаньне файла</h1>Пазначце назву гэтага файла. Паспрабуйце апісаць ёй зьмест файла.',
 	'wmu-name' => 'Назва',
 	'wmu-license' => 'Ліцэнзія',
+	'wmu-details-inf2' => '<h1>Устаноўкі артыкула</h1>Выберыце, як павінен выглядаць файл на Вашай старонцы.',
 	'wmu-size' => 'Памер',
+	'wmu-thumbnail' => 'Мініятура',
+	'wmu-fullsize' => 'Поўны памер ($1×$2пкс)',
 	'wmu-width' => 'Шырыня',
+	'wmu-layout' => 'Разьмяшчэньне',
+	'wmu-caption' => 'Подпіс',
 	'wmu-link' => 'Спасылка',
+	'wmu-optional' => '(неабавязковае)',
+	'wmu-insert2' => 'Уставіць файл',
+	'wmu-prev' => 'Папярэднія 8',
+	'wmu-next' => 'Наступныя 8',
+	'wmu-flickr2' => 'Выявы Flickr ($1 {{PLURAL:$1|вынік|вынікі|вынікаў}})',
+	'wmu-insert3' => 'Уставіць гэтую выяву',
+	'wmu-recent-inf' => 'Нядаўна загружаныя выявы',
+	'wmu-thiswiki2' => 'Выявы {{GRAMMAR:родны|{{SITENAME}}}} ($1 {{PLURAL:$1|вынік|вынікі|вынікаў}})',
+	'wmu-success' => '<h1>Посьпех</h1>Вашая выява была ўстаўленая.',
+	'wmu-success-placeholder' => '<h1>Посьпех</h1>',
+	'wmu-return' => 'Вярнуцца да рэдагаваньня',
+	'wmu-back' => 'вярнуцца',
+	'wmu-close' => 'закрыць',
+	'wmu-warn1' => 'Спачатку Вам неабходна пазначыць запыт!',
+	'wmu-warn2' => 'Спачатку Вам неабходна выбраць файл!',
+	'wmu-warn3' => 'Спачатку Вам неабходна пазначыць назву файла!',
+	'wmu-imagelink' => '<b>Новае!</b> Дадаць выявы',
+	'wmu-imagebutton' => 'Дадаць выявы',
+	'wmu-license-cc' => 'На ўмовах ліцэнзіі Creative Commons Attribution-Share Alike 3.0',
+	'wmu-bad-extension' => 'Вы спрабавалі загрузіць файл недазволенага тыпу. Калі ласка, паспрабуйце зноў.',
+	'wmu-filetype-missing' => 'У гэтай загрузкі адсутнічае пашырэньне файла',
+	'wmu-filetype-incorrect' => 'У гэтай загрузкі няслушнае пашырэньне файла',
+	'wmu-uploadtext' => "'''Гэтая форма дазваляе Вам хутка загружаць і паказваць файлы на старонках.'''
+
+''Глядзіце таксама [[Special:Log/upload|журнал загрузак]] і [[Special:ImageList|сьпіс усіх загружаных файлаў]].''",
 	'wmu-show-message' => 'паказаць паведамленьне',
 	'wmu-hide-message' => 'схаваць паведамленьне',
+	'wmu-hide-license-msg' => 'схаваць тэкст ліцэнзіі',
+	'wmu-show-license-msg' => 'паказаць тэкст ліцэнзіі',
+	'wmu-max-thumb' => 'перавышаны максымальны памер мініятуры, вярніцеся да пачатковага памеру',
+	'wmu-notallowed' => 'Вы ня можаце загружаць выявы ў {{GRAMMAR:вінавальны|{{SITENAME}}}}',
+	'wmu-readonly' => 'Вы ня можаце загружаць выявы, {{SITENAME}} даступная толькі для чытаньня',
+	'wmu-placeholder' => 'Запаўняльнік',
 	'wmu-gallery' => 'Галерэя',
+	'wmu-columns' => '$1 {{PLURAL:$1|слупок|слупкі|слупкоў}}',
+	'wmu-column' => 'Слупкі',
+	'wmu-added-from-plc' => 'Файл дададзены праз запаўняльнік выяваў',
+	'wmu-uploaddisabled' => 'Загрузка файлаў адключаная ў {{GRAMMAR:месны|{{SITENAME}}}}',
+	'wmu-gallery-success' => 'Вы дадалі выяву ў новую галерэю. Націсьніце ніжэй, каб дадаць болей выяваў альбо ўставіць галерэю',
+	'wmu-gallery-btn1' => 'Дадаць іншую выяву',
+	'wmu-gallery-btn2' => 'Уставіць галерэю на гэту старонку',
+	'wmu-no-preview' => 'Вы ня можаце дадаць выяву са старонкі ў рэжыме папярэдняга прагляду',
+	'wmu-no-protect' => 'Гэта старонка абароненая, Вы ня можаце уставіць у яе выяву',
+	'wmu-no-rights' => 'Вам не дазволена дадаваць выявы на гэту старонку',
 );
 
 /** Breton (Brezhoneg)
@@ -841,6 +893,8 @@ $messages['hu'] = array(
 	'wmu-flickr2' => 'Flickr képek ($1 találat)',
 	'wmu-insert3' => 'Kép beillesztése',
 	'wmu-recent-inf' => 'Frissen feltöltött képek',
+	'wmu-success' => '<h1>Siker</h1>A kép beillesztve.',
+	'wmu-success-placeholder' => '<h1>Siker</h1>',
 	'wmu-return' => 'Vissza a szerkesztéshez',
 	'wmu-back' => 'vissza',
 	'wmu-close' => 'bezárás',
@@ -1025,6 +1079,13 @@ $messages['ja'] = array(
 	'wmu-no-preview' => 'プレビューモードでは記事に画像を追加できません',
 	'wmu-no-protect' => 'このページは保護されており画像を追加できません',
 	'wmu-no-rights' => 'このページに画像を追加する権限がありません',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'wmu-name' => 'ಹೆಸರು',
 );
 
 /** Korean (한국어) */

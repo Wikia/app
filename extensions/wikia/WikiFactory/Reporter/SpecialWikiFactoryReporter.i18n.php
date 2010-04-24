@@ -67,6 +67,13 @@ $messages['de-formal'] = array(
 	'wikifactoryreporter' => 'WikiFactory-Reporter',
 );
 
+/** Lower Sorbian (Dolnoserbski)
+ * @author Michawiki
+ */
+$messages['dsb'] = array(
+	'wikifactoryreporter' => 'WikiFactory Reporter',
+);
+
 /** Spanish (Español)
  * @author Bola
  */
@@ -135,6 +142,13 @@ $messages['it'] = array(
  */
 $messages['ja'] = array(
 	'wikifactoryreporter' => 'ウィキファクトリー・レポーター',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'wikifactoryreporter' => 'ವಿಕಿಫ಼್ಯಾಕ್ಟರಿ ವರದಿಗಾರ',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

@@ -85,6 +85,14 @@ $messages['be-tarask'] = array(
 	'editaccount-submit-realname' => 'Захаваць сапраўднае імя',
 );
 
+/** Bihari (भोजपुरी)
+ * @author Ganesh
+ */
+$messages['bh'] = array(
+	'editaccount' => 'खाता सम्पादन',
+	'editaccount-title' => 'विशेष: खाता सम्पादन',
+);
+
 /** Breton (Brezhoneg)
  * @author Gwenn-Ael
  * @author Y-M D
@@ -676,6 +684,50 @@ $messages['pms'] = array(
 	'editaccount-log-entry-close' => 'disabilità cont $2',
 	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Sto cont-sì a l\'é stàit disabilità.</div>',
 	'right-editaccount' => "Modifiché ij gust ëd j'àutri utent",
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'editaccount' => 'Editar Conta',
+	'editaccount-title' => 'Special:EditAccount',
+	'editaccount-frame-manage' => 'Editar uma conta',
+	'editaccount-frame-usage' => 'Nota',
+	'editaccount-usage' => 'Os dados do utilizador são mantidos em caches separadas para cada wiki. Ao reiniciar a palavra-chave ou o endereço de correio electrónico, será desfeita somente a cache desta wiki. Para evitar problemas de cache, direccione o utilizador para esta wiki para se autenticar com uma palavra-chave nova.',
+	'editaccount-label-select' => 'Seleccione uma conta de utilizador',
+	'editaccount-submit-account' => 'Administrar Conta',
+	'editaccount-frame-account' => 'A editar a conta: $1',
+	'editaccount-frame-close' => 'Deactivar a conta: $1',
+	'editaccount-label-email' => 'Definir endereço de correio electrónico novo',
+	'editaccount-label-pass' => 'Definir palavra-chave nova',
+	'editaccount-label-realname' => 'Definir nome verdadeiro novo',
+	'editaccount-submit-email' => 'Gravar Correio Electrónico',
+	'editaccount-submit-pass' => 'Gravar Palavra-chave',
+	'editaccount-submit-realname' => 'Gravar Nome Verdadeiro',
+	'editaccount-submit-close' => 'Fechar Conta',
+	'editaccount-usage-close' => 'Também pode desactivar uma conta de utilizador misturando a palavra-chave e removendo o endereço electrónico. Note que estes dados serão perdidos e não podem ser recuperados.',
+	'editaccount-warning-close' => '<b>Cuidado!</b> Está prestes a desactivar definitivamente a conta do utilizador <b>$1</b>. Esta operação não pode ser desfeita. Tem a certeza de que pretende fazê-lo?',
+	'editaccount-status' => 'Estado',
+	'editaccount-success-email' => 'Alterou com sucesso o endereço electrónico da conta $1 para $2.',
+	'editaccount-success-email-blank' => 'Removeu com sucesso o endereço electrónico da conta $1.',
+	'editaccount-success-pass' => 'Alterou com sucesso a palavra-chave da conta $1.',
+	'editaccount-success-realname' => 'Alterou com sucesso o nome verdadeiro da conta $1.',
+	'editaccount-success-close' => 'Desactivou com sucesso a conta $1.',
+	'editaccount-error-email' => 'O endereço electrónico não foi alterado. Tente novamente ou contacte o Suporte Técnico.',
+	'editaccount-error-pass' => 'A palavra-chave não foi alterada. Tente novamente ou contacte o Suporte Técnico.',
+	'editaccount-error-realname' => 'O nome verdadeiro não foi alterado. Tente novamente ou contacte o Suporte Técnico.',
+	'editaccount-error-close' => 'Ocorreu um problema ao fechar a conta. Tente novamente ou contacte o Suporte Técnico.',
+	'editaccount-invalid-email' => '"$1" não é um endereço electrónico válido!',
+	'editaccount-nouser' => 'A conta "$1" não existe!',
+	'editaccount-log' => 'Registo de contas de utilizador',
+	'editaccount-log-header' => 'Esta página lista as alterações feitas às suas preferências pela Equipa Wikia.',
+	'editaccount-log-entry-email' => 'alterou o endereço electrónico do utilizador $2',
+	'editaccount-log-entry-pass' => 'alterou a palavra-chave do utilizador $2',
+	'editaccount-log-entry-realname' => 'alterou o nome verdadeiro do utilizador $2',
+	'editaccount-log-entry-close' => 'desactivou a conta $2',
+	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Esta conta foi desactivada.</div>',
+	'right-editaccount' => 'Editar as preferências de outros utilizadores',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

@@ -23,10 +23,12 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author EugeneZelenko
  * @author LWChris
  * @author Translationista
  */
 $messages['qqq'] = array(
+	'iwedit-update' => '{{Identical|Update}}',
 	'iwedit-success' => 'succe-ss-fu-l, not succe-s-fu-ll. Needs correction in EN.',
 );
 
@@ -39,6 +41,13 @@ $messages['af'] = array(
 	'iwedit-update' => 'Opdateer',
 	'iwedit-error' => "<p>'n Fout het voorgekom.</p>",
 	'iwedit-success' => '<p>Die skakel is geskep.</p>',
+);
+
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'iwedit-update' => 'Абнавіць',
 );
 
 /** Breton (Brezhoneg)

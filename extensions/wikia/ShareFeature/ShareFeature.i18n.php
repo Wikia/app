@@ -182,6 +182,15 @@ $messages['pms'] = array(
 	'sf-link-tooltip' => "Condivide st'artìcol-sì con ij sò amis",
 );
 
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'sf-link' => 'Partilhe este artigo',
+	'sf-link-popup' => 'Partilhe este artigo',
+	'sf-link-tooltip' => 'Partilhe este artigo com os amigos',
+);
+
 /** Brazilian Portuguese (Português do Brasil)
  * @author Jesielt
  */

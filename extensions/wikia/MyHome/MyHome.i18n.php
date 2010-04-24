@@ -192,16 +192,16 @@ $messages['ar'] = array(
 
 هذه الصفحة تساعدك على معرفة ما يحدث على الويكي.
 
- إذا كنت مؤسس أو مشرفا على هذا الويكي ، بإمكانك تغيير هذه الرسالة لاجراء محادثات مع المجتمع حول أشياء هامة تحدث على هذا
+ إذا كنت مؤسس أو مشرفا على هذا الويكي ، بإمكانك تغيير هذه الرسالة لاجراء محادثات مع المجتمع حول أشياء هامة تحدث على هذا 
 الموقع. على سبيل المثال ، يمكن أن
 
-* تنظم مشروعا لبناء منطقة من الويكي
+* تنظم مشروعا لبناء منطقة من الويكي 
 
-*قم بإظهار بعض الصفحات الجديدة التي يجب للجميع أن يراها
+*قم بإظهار بعض الصفحات الجديدة التي يجب للجميع أن يراها 
 
-*احصل على أشخاص لكي يشاركوا في النقاش الذي يدور حول الموقع
+*احصل على أشخاص لكي يشاركوا في النقاش الذي يدور حول الموقع 
 
-*عرف بأحد المساهمين الذي أضاف شيئا خاصا للويكي
+*عرف بأحد المساهمين الذي أضاف شيئا خاصا للويكي 
 
 *أو اكتفي بوضع بعض كلمات التشجيع!",
 	'tooltip-pt-myhome' => 'اذهب الى صفحتي الرئيسية',
@@ -286,7 +286,7 @@ Ne vern piv a c'hall degas cheñchamañtoù, ouzhpennañ titouroù pe reizhañ u
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'Korn ar gumuniezh',
 	'myhome-community-corner-edit' => 'kemmañ ar gemennadenn',
-	'community-corner' => "'''Degemer mat war Ma Degemer!'''
+	'community-corner' => "'''Degemer mat war Ma Degemer!''' 
 
 Gant ar bajenn-mañ e c'hallit bezañ kelaouet diwar-benn darvoudoù nevez ar wiki
 
@@ -307,9 +307,11 @@ Ma'z oc'h diazezer ar wiki-mañ pe unan eus merourien anezhañ e c'hallit kemma�
 	'myhome-default-view-checkbox' => 'Lakaat ar sell $1 da ziouer',
 	'myhome-default-view-success' => 'Mat eo, hon sell dre ziouer eo bremañ',
 	'tooltip-pt-myhome' => "Mont d'am Degemer",
+	'activityfeed' => 'Gwazh obererezh',
 );
 
 /** German (Deutsch)
+ * @author Kghbln
  * @author LWChris
  */
 $messages['de'] = array(
@@ -373,7 +375,7 @@ Wenn du die Startseite sehen möchtest, gehe bitte zu '''[[Special:Preferences|d
 
 Diese Seite hilft dir, den Überblick über alle wichtigen Vorgänge im Wiki zu behalten.
 
-Wenn du der Gründer oder ein Admin dieses Wikis bist, kannst du diese Nachricht ändern um der Community wichtige Dinge mitzuteilen. Zum Beispiel:
+Wenn du der Gründer oder ein Admin dieses Wikis bist, kannst du diese Nachricht ändern um der Community wichtige Dinge mitzuteilen. Zum Beispiel: 
 
 * Einige Seiten aufführen, die jeder sehen sollte.
 
@@ -388,6 +390,7 @@ Wenn du der Gründer oder ein Admin dieses Wikis bist, kannst du diese Nachricht
 	'myhome-default-view-checkbox' => '$1 zu meiner Standardansicht machen',
 	'myhome-default-view-success' => 'Deine Einstellung wurde gespeichert.',
 	'tooltip-pt-myhome' => 'Gehe zu meiner Startseite',
+	'activityfeed' => 'Aktivitäten-Feed',
 );
 
 /** German (formal address) (Deutsch (Sie-Form))
@@ -454,7 +457,7 @@ Wenn Sie die Startseite sehen möchten, gehen Sie bitte zu '''[[Special:Preferen
 
 Diese Seite hilft Ihnen, den Überblick über alle wichtigen Vorgänge im Wiki zu behalten.
 
-Wenn Sie der Gründer oder ein Admin dieses Wikis sind, können Sie diese Nachricht ändern um der Community wichtige Dinge mitzuteilen. Zum Beispiel:
+Wenn Sie der Gründer oder ein Admin dieses Wikis sind, können Sie diese Nachricht ändern um der Community wichtige Dinge mitzuteilen. Zum Beispiel: 
 
 * Einige Seiten aufführen, die jeder sehen sollte.
 
@@ -513,7 +516,7 @@ $messages['el'] = array(
 	'myhome-hot-spots-number-of-editors' => 'συντάκτες',
 	'myhome-community-corner-header' => 'Στέκι της κοινώτητας',
 	'myhome-community-corner-edit' => 'επεξεργασία του μηνύματος',
-	'community-corner' => "' ' 'Καλωσήρθατε στην Αρχική σας Σελίδα! ' ' '
+	'community-corner' => "'''Καλωσήρθατε στην Αρχική σας Σελίδα!'''
 
 Αυτή η σελίδα σας βοηθάει να ξέρετε τί συμβαίνει στο wiki.
 
@@ -536,6 +539,7 @@ $messages['el'] = array(
 
 /** Spanish (Español)
  * @author Crazymadlover
+ * @author Locos epraix
  * @author Peter17
  */
 $messages['es'] = array(
@@ -588,9 +592,9 @@ $messages['es'] = array(
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'Rincón de la comunidad',
 	'myhome-community-corner-edit' => '[editar mensaje]',
-	'community-corner' => "'''¡Bienvenido a Mi página de inicio!'''
+	'community-corner' => "'''¡Bienvenido a Mi página de inicio!''' 
 
-Esta página te ayuda a mantenerte al día sobre lo que está ocurriendo en el wiki.
+Esta página te ayuda a mantenerte al día sobre lo que está ocurriendo en el wiki. 
 
 Si eres el fundador o un administrador de este wiki, puedes cambiar este mensaje para contarle a la comunidad qué cosas importantes están pasando en el sitio. Por ejemplo, puedes:
 
@@ -607,6 +611,7 @@ Si eres el fundador o un administrador de este wiki, puedes cambiar este mensaje
 	'myhome-default-view-checkbox' => 'Hacer de $1 mi vista por defecto',
 	'myhome-default-view-success' => 'Perfecto, así será a partir de ahora',
 	'tooltip-pt-myhome' => 'Ir a mi página',
+	'activityfeed' => 'Lista de actividad',
 );
 
 /** Finnish (Suomi)
@@ -664,11 +669,11 @@ Jos olet tämän wikin perustaja tai olet ylläpitäjänä tässä wikissä, voi
 * Järjestää projektin uuden alueen tekoon.
 
 * Esitellä uusia sivuja jotka jokaisen tulisi nähdä.
-
+    
 * Saada ihmisiä mukaan keskusteluun sivuston tapahtumista.
-
+    
 * Antaa koko yhteisön tietää muokkaajasta, joka on lisännyt wikiin jotain erityistä.
-
+   
 * Tai vain lähettää muutamia rohkaisevia sanoja!",
 	'myhome-hot-spots-definition' => 'Eniten muokatut sivut viimeisen $1  päivän ajalta.',
 	'myhome-default-view-checkbox' => 'Tee sivusta $1 oletusnäkymäni.',
@@ -677,6 +682,7 @@ Jos olet tämän wikin perustaja tai olet ylläpitäjänä tässä wikissä, voi
 );
 
 /** French (Français)
+ * @author Crochet.david
  * @author Peter17
  */
 $messages['fr'] = array(
@@ -729,9 +735,9 @@ $messages['fr'] = array(
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'Le coin de la Communauté',
 	'myhome-community-corner-edit' => 'modifier le message',
-	'community-corner' => "'''Bienvenue sur Mon Accueil!'''
+	'community-corner' => "'''Bienvenue sur Mon Accueil!''' 
 
-Cette page vous permet de rester informé sur les nouveaux évènements du wiki.
+Cette page vous permet de rester informé sur les nouveaux évènements du wiki. 
 
 Si vous êtes le fondateur ou bien un administrateur de ce wiki, vous pouvez changer ce message afin d'annoncer aux utilisateurs de nouvelles choses importantes sur le site. Ainsi, vous pouvez par exemple:
 
@@ -748,6 +754,7 @@ Si vous êtes le fondateur ou bien un administrateur de ce wiki, vous pouvez cha
 	'myhome-default-view-checkbox' => 'Faire de $1 ma vue par défaut',
 	'myhome-default-view-success' => "C'est parfait, ceci est désormais votre vue par défaut",
 	'tooltip-pt-myhome' => 'Aller à Mon Accueil',
+	'activityfeed' => 'Flux d’activité',
 );
 
 /** Galician (Galego)
@@ -756,7 +763,7 @@ Si vous êtes le fondateur ou bien un administrateur de ce wiki, vous pouvez cha
 $messages['gl'] = array(
 	'myhome' => 'A miña páxina de inicio',
 	'myhome-activity-more' => 'ver a actividade máis recente',
-	'myhome-activity-feed' => 'Fonte de novas de actividade',
+	'myhome-activity-feed' => 'Fonte de novas da actividade',
 	'myhome-activity-feed-empty' => "Este wiki está agardando a que se involucre. Prema sobre '''[[Special:CreatePage|páxina nova]]''' para comezar a escribir!",
 	'myhome-watchlist-feed' => 'Lista de vixilancia',
 	'myhome-watchlist-feed-empty' => 'Pode engadir páxinas á súa lista de vixilancia premendo na ligazón "Vixiar" da barra superior da páxina. Pode usar a súa lista de vixilancia para seguir as modificacións recentes nas páxinas que lle interesan.',
@@ -822,6 +829,7 @@ Se vostede é o fundador ou un administrador desde wiki, pode cambiar esta mensa
 	'myhome-default-view-checkbox' => 'Facer que $1 sexa a miña vista por defecto',
 	'myhome-default-view-success' => 'De acordo, así será de agora en diante',
 	'tooltip-pt-myhome' => 'Ir á miña páxina de inicio',
+	'activityfeed' => 'Fonte de novas da actividade',
 );
 
 /** Hebrew (עברית)
@@ -906,6 +914,8 @@ $messages['hu'] = array(
 	'myhome-user-contributions-feed' => 'Közreműködések',
 	'myhome-feed-newpage' => 'új lap',
 	'myhome-feed-edit' => 'szerkesztés',
+	'myhome-feed-move' => 'lap átnevezve',
+	'myhome-feed-talkpage' => 'vitalap',
 	'myhome-feed-delete' => 'törölve',
 	'myhome-feed-image' => 'kép hozzáadva',
 	'myhome-feed-video' => 'videó hozzáadva',
@@ -995,6 +1005,7 @@ Si tu es le fundator o un administrator de iste wiki, tu pote cambiar iste messa
 	'myhome-default-view-checkbox' => 'Facer de $1 mi vista predefinite',
 	'myhome-default-view-success' => 'Ben, predefinition succedite',
 	'tooltip-pt-myhome' => 'Ir a mi pagina initial',
+	'activityfeed' => 'Summario de activitate',
 );
 
 /** Italian (Italiano)
@@ -1115,7 +1126,7 @@ $messages['ja'] = array(
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'コミュニティコーナー',
 	'myhome-community-corner-edit' => 'メッセージを編集',
-	'community-corner' => "'''My Home にようこそ！'''
+	'community-corner' => "'''My Home にようこそ！''' 
 
 このページは、ウィキで何が起きているのかをわかりやすく示し、あなたがこのウィキに居続ける手助けとするためのものです。
 
@@ -1203,6 +1214,7 @@ $messages['mk'] = array(
 	'myhome-default-view-checkbox' => 'Постави го погледот на $1 како основен',
 	'myhome-default-view-success' => 'Во ред, сега ова е вашиот основен поглед',
 	'tooltip-pt-myhome' => 'Оди на Мојата домашна страница',
+	'activityfeed' => 'Лента на активности',
 );
 
 /** Dutch (Nederlands)
@@ -1256,7 +1268,7 @@ Klik op '''[[Special:CreatePage|Nieuwe pagina]]''' om te beginnen met schrijven!
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Categorie toegevoegd|Categorieën toegevoegd}}',
 	'myhome-user-contributions-empty' => 'U kunt meewerken aan deze wiki door op "bewerken" te klikken op een pagina en daarna toe te voegen wat u weet.
 Iedereen kan wijzigingen maken, informatie toevoegen of een fout verbeteren.
-De wiki is gebouwd door de gemeenschap, en zo gauw u op de knop "bewerken" klikt, maar u ook
+De wiki is gebouwd door de gemeenschap, en zo gauw u op de knop "bewerken" klikt, maar u ook 
 onderdeel uit van de gemeenschap.
 Probeer het maar!',
 	'myhome-hot-spots-number-of-editors' => 'bewerkers',
@@ -1286,6 +1298,7 @@ Als u de oprichter of een beheerder van deze wiki bent, kunt u dit bericht gebru
 	'myhome-default-view-checkbox' => 'Maak $1 mijn standaard weergave',
 	'myhome-default-view-success' => 'De nieuwe instellingen zijn opgeslagen',
 	'tooltip-pt-myhome' => 'Naar Mijn startpagina',
+	'activityfeed' => 'Activiteitenfeed',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -1369,6 +1382,7 @@ For eksempel kan du:
 	'myhome-default-view-checkbox' => 'Gjør $1 til mitt standardutseende',
 	'myhome-default-view-success' => 'Greit, dette er standarden din nå',
 	'tooltip-pt-myhome' => 'Gå til Mitt hjem',
+	'activityfeed' => 'Aktivitetsfeed',
 );
 
 /** Occitan (Occitan)
@@ -1484,6 +1498,7 @@ Se chiel a l'é ël fondador o n'aministrator ëd la wiki, a peul cangé sto më
 	'myhome-default-view-checkbox' => 'Rende $1 mia visualisassion ëstàndard',
 	'myhome-default-view-success' => "Va bin, adess cost a l'é sò stàndard",
 	'tooltip-pt-myhome' => 'Andé a Mia Intrada',
+	'activityfeed' => "Fluss d'atività",
 );
 
 /** Pashto (پښتو)
@@ -1555,7 +1570,7 @@ Você pode utilizar a sua lista de artigos vigiados para se manter atualizado da
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'Portal comunitário',
 	'myhome-community-corner-edit' => 'editar mensagem',
-	'community-corner' => "'''Bem-vindo a sua página inicial!'''
+	'community-corner' => "'''Bem-vindo a sua página inicial!'''  
 
 Esta página ajuda você a se manter atualizado sobre o que está acontecendo nesta wiki.
 
@@ -1589,6 +1604,7 @@ $messages['roa-tara'] = array(
 /** Russian (Русский)
  * @author Lockal
  * @author Prima klasy4na
+ * @author Александр Сигачёв
  */
 $messages['ru'] = array(
 	'myhome' => 'Личный кабинет',
@@ -1659,6 +1675,7 @@ $messages['ru'] = array(
 	'myhome-default-view-checkbox' => 'Просматривать «$1» по умолчанию',
 	'myhome-default-view-success' => 'Теперь это представление данных установлено по умолчанию',
 	'tooltip-pt-myhome' => 'Перейти в личный кабинет',
+	'activityfeed' => 'Лента действий',
 );
 
 /** Rusyn (русиньскый язык)
@@ -1787,7 +1804,7 @@ Den här sidan hjälper dig att hålla dig uppdaterad med vad som händer på wi
 
 Om du är grundaren eller en administratör på denna wiki kan du ändra detta budskap att tala med community om viktiga saker som händer på sajten. Till exempel kan du:
 
-* Ordna ett projekt för att bygga upp ett område i wiki
+* Ordna ett projekt för att bygga upp ett område i wiki 
 
 * Visa upp några nya sidor som alla borde se
 

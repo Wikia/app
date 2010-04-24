@@ -83,13 +83,22 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'vet-upload-btn' => '{{Identical|Go}}',
+	'vet-find-btn' => '{{Identical|Search}}',
 	'vet-flickr-inf' => ' Maybe "free videos" is meant here?',
 	'vet-insert' => '{{Identical|Insert}}',
 	'vet-name' => '{{Identical|Name}}',
 	'vet-license' => '{{Identical|License}}',
 	'vet-size' => '{{Identical|Size}}',
+	'vet-width' => '{{Identical|Width}}',
+	'vet-caption' => '{{Identical|Caption}}',
+	'vet-optional' => '{{Identical|Optional}}',
+	'vet-prev' => '{{Identical|Previous}}',
+	'vet-next' => '{{Identical|Next}}',
 	'vet-metacafe' => 'Needs plural support',
 	'vet-thiswiki2' => 'Needs plural support',
+	'vet-back' => '{{Identical|Back}}',
+	'vet-close' => '{{Identical|Close}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -174,14 +183,58 @@ U sal moontlik die videobladsy moet opruim (purge) om die verandering te sien.',
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
+ * @author Jim-by
  */
 $messages['be-tarask'] = array(
+	'vet-upload' => 'Поўны URL-адрас',
+	'vet-notlogged' => 'Увайдзіце ў сыстэму альбо зарэгіструйцеся, каб устаўляць відэа',
+	'vet-find' => 'Знайсьці відэа',
+	'vet-thiswiki' => '{{SITENAME}}',
+	'vet-flickr' => 'Flickr',
+	'vet-upload-btn' => 'Перайсьці',
+	'vet-find-btn' => 'Пошук',
+	'vet-flickr-inf' => 'Пошук вольных выяваў з адпаведнай ліцэнзіяй на Flickr і імпарт іх ў {{GRAMMAR:вінавальны|{{SITENAME}}}}.',
+	'vet-conflict-inf' => '<h1>Відэа з такой назвай ужо існуе.</h1>Што Вы жадаеце зрабіць з <b>$1</b>?',
+	'vet-rename' => 'Перайменаваць відэа',
+	'vet-existing' => 'Выкарыстоўваць існуючае відэа',
+	'vet-overwrite' => 'Замяніць існуючае відэа Вашым',
 	'vet-insert' => 'Уставіць',
+	'vet-details-inf' => '<h1>Апісаньне файла</h1>Пазначце назву гэтага відэа. Паспрабуйце апісаць ёй зьмест файла.',
 	'vet-name' => 'Назва',
 	'vet-license' => 'Ліцэнзія',
+	'vet-details-inf2' => '<h1>Устаноўкі паказу відэа</h1>',
 	'vet-size' => 'Памер',
+	'vet-thumbnail' => 'Мініятура',
+	'vet-fullsize' => 'Поўны памер ($1×$2пкс)',
+	'vet-width' => 'Шырыня',
+	'vet-layout' => 'Разьмяшчэньне',
+	'vet-caption' => 'Подпіс',
+	'vet-optional' => '(Неабавязковае)',
+	'vet-insert2' => 'Уставіць відэа',
+	'vet-update' => 'Абнавіць відэа',
+	'vet-video-replace-link' => 'Каб замяніць гэтае відэа, калі ласка, перайдзіце на [[:$1]]',
+	'vet-prev' => 'Папярэднія 8',
+	'vet-next' => 'Наступныя 8',
+	'vet-metacafe' => 'Відэа з Metacafe ($1 {{PLURAL:$1|вынік|вынікі|вынікаў}})',
+	'vet-insert3' => 'Уставіць гэтае відэа',
+	'vet-recent-inf' => 'Нядаўна дададзеныя відэа',
+	'vet-thiswiki2' => 'Відэа {{GRAMMAR:родны|{{SITENAME}}}} ($1 {{PLURAL:$1|вынік|вынікі|вынікаў}})',
+	'vet-success' => '<h1>Посьпех</h1>',
+	'vet-return' => 'Вярнуцца да рэдагаваньня',
+	'vet-back' => 'вярнуцца',
+	'vet-close' => 'закрыць',
+	'vet-warn1' => 'Спачатку Вам неабходна пазначыць запыт!',
+	'vet-warn2' => 'Калі ласка, падайце URL-адрас відэа, якое Вы жадаеце дадаць',
+	'vet-warn3' => 'Калі ласка, падайце назву відэа, якое Вы жадаеце дадаць',
+	'vet-imagelink' => '<b>Новае!</b> Уставіць відэа',
+	'vet-imagebutton' => 'Уставіць відэа',
+	'vet-license-cc' => 'На ўмовах ліцэнзіі Creative Commons Attribution-Share Alike 3.0',
+	'vet-name-incorrect' => 'Гэтая назва відэа ўтрымлівае няслушныя сымбалі',
 	'vet-show-message' => 'паказаць паведамленьне',
 	'vet-hide-message' => 'схаваць паведамленьне',
+	'vet-hide-license-msg' => 'схаваць тэкст ліцэнзіі',
+	'vet-show-license-msg' => 'паказаць тэкст ліцэнзіі',
+	'vet-add-button' => 'Дадаць відэа',
 	'vet-gallery' => 'Галерэя',
 );
 
@@ -730,6 +783,7 @@ $messages['hu'] = array(
 	'vet-details-inf2' => '<h1>Videó megjelenítési beállítások</h1>',
 	'vet-size' => 'Méret',
 	'vet-thumbnail' => 'Bélyegkép',
+	'vet-fullsize' => 'Teljes méret ($1×$2 képpont)',
 	'vet-width' => 'Szélesség',
 	'vet-optional' => ' (nem kötelező)',
 	'vet-insert2' => 'Videó beillesztése',
@@ -751,6 +805,7 @@ $messages['hu'] = array(
 	'vet-bad-url' => 'A megadott URL érvénytelen',
 	'vet-add-button' => 'Videó hozzáadása',
 	'vet-see-all' => 'összes megjelenítése',
+	'vet-bad-search' => 'Hiba a keresési lekérdezés betöltésekor.',
 	'vet-left' => 'Bal',
 	'vet-right' => 'Jobb',
 	'vet-gallery' => 'Galéria',
@@ -932,6 +987,13 @@ $messages['ja'] = array(
 	'vet-right' => '右寄せ',
 	'vet-gallery' => 'ギャラリー',
 	'vet-protected' => 'この動画は保護されています',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'vet-name' => 'ಹೆಸರು',
 );
 
 /** Macedonian (Македонски)

@@ -1324,6 +1324,11 @@ $messages['hu'] = array(
 	'autocreatewiki-invalid-username' => 'Ez a felhasználónév érvénytelen.',
 	'autocreatewiki-empty-category' => 'Válassz egy kategóriát.',
 	'autocreatewiki-category-other' => 'Egyéb',
+	'autocreatewiki-invalid-birthday' => 'Érvénytelen születési dátum',
+	'autocreatewiki-step2' => 'Adatbázis létrehozása…',
+	'autocreatewiki-step2-error' => 'Az adatbázis létezik!',
+	'autocreatewiki-welcomesubject' => '$1 elkészült!',
+	'autocreatewiki-subname-answers' => 'Válaszok',
 );
 
 /** Interlingua (Interlingua)
@@ -1631,10 +1636,10 @@ $3
 
 -- Wikia Community Team',
 	'autocreatewiki-reminder-body-HTML' => '<p>$1 さん、</p>
-<p>新しいウィキの開始おめでとうございます。$1 さんが作成した $2 には、いつでも戻って情報を追加することができます。</p>
+<p>新しいウィキの開始おめでとうございます。$1 さんが作成した <a href="$2">$2</a> には、いつでも戻って情報を追加することができます。</p>
 <p>このプロジェクトはできたばかりの状態です。もし、何か質問があれば、私たちまでおたずねください。</p>
 <p>-- Wikia Community Team</p>',
-	'autocreatewiki-subname-answers' => '回答',
+	'autocreatewiki-subname-answers' => 'Answers',
 );
 
 /** Macedonian (Македонски)

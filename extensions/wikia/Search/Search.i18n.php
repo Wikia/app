@@ -136,6 +136,16 @@ $messages['ig'] = array(
 	'wikiasearch-search-wikia' => 'Chöwá na imé Wikia',
 );
 
+/** Italian (Italiano)
+ * @author Beta16
+ */
+$messages['it'] = array(
+	'wikiasearch-titles-only' => 'Cerca solo nei titoli delle pagine',
+	'wikiasearch-system-error-msg' => 'A causa di un errore di sistema, la tua ricerca non è stata completata',
+	'wikiasearch-search-this-wiki' => 'Cerca sono in Wikia Central',
+	'wikiasearch-search-wikia' => 'Cerca in Wikia',
+);
+
 /** Japanese (日本語)
  * @author Tommy6
  */

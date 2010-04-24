@@ -59,7 +59,7 @@ $messages['an'] = array(
 	'titleedit' => 'Editar',
 );
 
-/** Old English (Anglo-Saxon) */
+/** Old English (Ænglisc) */
 $messages['ang'] = array(
 	'titleedit' => 'Ādihtan',
 );
@@ -225,9 +225,12 @@ $messages['co'] = array(
 	'titleedit' => 'Mudificà',
 );
 
-/** Czech (Česky) */
+/** Czech (Česky)
+ * @author Reaperman
+ */
 $messages['cs'] = array(
-	'titleedit' => 'Editovat',
+	'titleedit-desc' => 'Přidává odkaz pro editaci sekcí i k úvodní části',
+	'titleedit' => 'editovat',
 );
 
 /** Kashubian (Kaszëbsczi) */
@@ -747,8 +750,11 @@ $messages['lt'] = array(
 	'titleedit' => 'Redaguoti',
 );
 
-/** Latvian (Latviešu) */
+/** Latvian (Latviešu)
+ * @author Papuass
+ */
 $messages['lv'] = array(
+	'titleedit-desc' => 'Pievieno virsrakstu rediģēšanas pogu lapas augšā',
 	'titleedit' => 'Izmainīt šo lapu',
 );
 
@@ -1271,9 +1277,11 @@ $messages['ty'] = array(
 	'titleedit' => 'Fa’ahuru ’ē',
 );
 
-/** Tuvinian (Тыва дыл) */
+/** Tuvinian (Тыва дыл)
+ * @author Sborsody
+ */
 $messages['tyv'] = array(
-	'titleedit' => 'Өскертир',
+	'titleedit' => 'Өскертири',
 );
 
 /** Udmurt (Удмурт) */

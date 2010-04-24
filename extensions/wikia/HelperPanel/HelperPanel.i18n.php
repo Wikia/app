@@ -150,6 +150,14 @@ $messages['pms'] = array(
 	'helperPanel_widgets' => 'Ij mè widget',
 );
 
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'helperPanel_help' => 'Widget de ajuda',
+	'helperPanel_widgets' => 'Widgets',
+);
+
 /** Brazilian Portuguese (Português do Brasil)
  * @author Daemorris
  */

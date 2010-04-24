@@ -659,10 +659,12 @@ $messages['hu'] = array(
 	'stf_frm4_send' => 'Küldés',
 	'stf_frm4_cancel' => 'Mégse',
 	'stf_frm4_invite' => 'Meghívó küldése!',
+	'stf_frm6' => 'Ablak bezárása',
 	'stf_sending' => 'Kérlek várj …',
 	'stf_email_sent' => 'Visszaigazolás küldése',
 	'stf_back_to_article' => 'Vissza a szócikkhez',
 	'stf_add_emails' => 'Email címek hozzáadása:',
+	'stf_your_email' => 'Az email szolgáltatód',
 	'stf_your_login' => 'Bejelentkezési neved',
 	'stf_your_password' => 'Jelszavad',
 	'stf_your_name' => 'Neved',
@@ -813,6 +815,15 @@ $2
 	'stf_instructions' => '1. 友達を選択|2. "$1"をクリックする',
 	'stf_select_all' => '全て選択',
 	'stf_select_friends' => '友達を選択:',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'stf_name_label' => 'ನಿಮ್ಮ ಹೆಸರು',
+	'stf_your_name' => 'ನಿಮ್ಮ ಹೆಸರು',
+	'stf_message' => 'ಸಂದೇಶ',
 );
 
 /** Macedonian (Македонски)

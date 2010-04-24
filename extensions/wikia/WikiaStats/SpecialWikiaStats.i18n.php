@@ -555,6 +555,13 @@ $messages['af'] = array(
 	'wikiastats_pageviews_month' => 'Maandelikse statistieke',
 );
 
+/** Aragonese (Aragonés)
+ * @author Juanpabl
+ */
+$messages['an'] = array(
+	'wikiastats_hide' => 'Amagar',
+);
+
 /** Arabic (العربية)
  * @author OsamaK
  */
@@ -1106,6 +1113,7 @@ $messages['cy'] = array(
 
 /** German (Deutsch)
  * @author LWChris
+ * @author MF-Warburg
  */
 $messages['de'] = array(
 	'wikiastats' => 'Wikia Statistiken',
@@ -1147,6 +1155,7 @@ $messages['de'] = array(
 	'wikiastats_other_nspaces_edits' => 'Am häufigsten bearbeitete Seiten (andere Namensräume) (&gt; 25 Bearbeitungen)',
 	'wikiastats_page_edits_count' => '$1 {{PLURAL:$1|bearbeiteter|am häufigsten bearbeitete}} Artikel gefunden',
 	'wikiastats_other_nspaces_edits_count' => '$1 {{PLURAL:$1|bearbeitete Seite|am häufigsten bearbeitete Seiten}} gefunden',
+	'wikiastats_active_wikians_date' => 'Zeige Änderungen in den letzten',
 	'wikiastats_active_day' => 'Tag',
 	'wikiastats_active_month' => 'Monat',
 	'wikiastats_active_year' => 'Jahr',
@@ -2483,6 +2492,10 @@ $messages['hu'] = array(
 	'wikiastats_trend_value' => 'érték',
 	'wikiastats_trend_where_text' => 'hol:',
 	'wikiastats_trend_all_wikia_text' => 'Összes wiki',
+	'wikiastats_always_selected' => '(mindig kiválasztva)',
+	'wikiastats_creation_legend' => 'Átlagos havi növekedés:',
+	'wikiastats_select_statistics' => 'Statisztika kiválasztása',
+	'wikiastats_select_wikia_statistics' => '$1 Wikiához tartozó statisztika kiválasztása',
 	'wikiastats_full_dump_stats' => 'Teljes',
 	'wikiastats_current_dump_stats' => 'Aktuális',
 	'wikiastats_database_name_stats' => 'Adatbázisnév',
@@ -2492,9 +2505,11 @@ $messages['hu'] = array(
 	'wikiastats_select_text' => 'Wikia kiválasztása:',
 	'wikiastats_select_btn' => 'Kijelölés',
 	'wikiastats_xls_uncheck_list' => 'Kijelölés megszüntetése',
+	'wikiastats_dbdump_generated' => 'módosítva:',
 	'wikiastats_xml_dump' => 'XML dump',
 	'wikiastats_other_statistics_legend' => 'További statisztikák',
 	'wikiastats_search_text' => 'Keresés:',
+	'wikiastats_sort_list_size' => 'Lista rendezése méret alapján',
 	'wikiastats_lifetime_editors' => 'Összes szerkesztő',
 	'wikiastats_months_edits' => 'Szerkesztők ebben a hónapban',
 	'wikiastats_main_namespace' => 'tartalmi<br />névterek',
@@ -3001,7 +3016,7 @@ $messages['ja'] = array(
 	'wikiastats_select_btn' => '選択',
 	'wikiastats_xls_uncheck_list' => 'チェックを外す',
 	'wikiastats_xls_press_uncheck' => '全てのチェックを外すには、このボタンを押してください。',
-	'wikiastats_dbdump_generated' => '変更:',
+	'wikiastats_dbdump_generated' => 'ダンプ生成:',
 	'wikiastats_records' => 'レコード',
 	'wikiastats_xml_dump' => 'XMLダンプ',
 	'wikiastats_see_MW_stats' => 'MediaWikiの統計を見る:',
@@ -3044,6 +3059,8 @@ $messages['kn'] = array(
 	'wikiastats_active_month' => 'ತಿಂಗಳು',
 	'wikiastats_active_year' => 'ವರ್ಷ',
 	'wikiastats_active_months' => 'ತಿಂಗಳುಗಳು',
+	'wikiastats_wikiname' => 'ಹೆಸರು:',
+	'wikiastats_wikicategory' => 'ವರ್ಗ:',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -3269,6 +3286,13 @@ $messages['lb'] = array(
 	'wikiastats_nbr_format' => 'Format vun den Zuelen:',
 	'wikiastats_pageviews_daily' => 'Statistike pro Dag (aktuelle Mount)',
 	'wikiastats_pageviews_month' => 'Statistike pro Mount',
+);
+
+/** Ganda (Luganda)
+ * @author Kizito
+ */
+$messages['lg'] = array(
+	'wikiastats_namespace' => 'kuŋaanyizo',
 );
 
 /** Macedonian (Македонски)
