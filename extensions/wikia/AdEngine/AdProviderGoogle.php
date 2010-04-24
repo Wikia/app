@@ -40,7 +40,8 @@ class AdProviderGoogle implements iAdProvider {
                         google_ad_width     = "' . $dim['width'] . '";
 			google_ad_height    = "' . $dim['height'] . '";
                         google_ad_format    = google_ad_width + "x" + google_ad_height + "_as";
-                        google_ad_type      = "text";' . "\n";
+                        google_ad_type      = "text";
+                        google_ad_region    = "region";' . "\n";
 
                 $skin_name = null;
                 if (is_object($wgUser)){

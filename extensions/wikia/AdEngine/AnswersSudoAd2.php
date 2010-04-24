@@ -17,7 +17,8 @@ function wfAnswersSudoAd2($placeholdertype, $slotname, $AdEngine, $html) {
 			/* Wikia 728x90 */
 			google_ad_slot = "1429918703";
 			google_ad_width = 728;
-			google_ad_height = 90;
+	 		google_ad_height = 90;
+			google_ad_region = "region";
 			//-->
 		</script>
 		<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>

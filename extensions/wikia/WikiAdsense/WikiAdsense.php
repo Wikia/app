@@ -50,6 +50,7 @@ google_ad_client = \"$this->client\";
 google_ad_width = $width;
 google_ad_height = $height;
 google_ad_format = \"{$width}x{$height}_as\";{$ad_type}
+google_ad_region = \"region\";
 google_ad_channel = \"$this->channel\";{$ad_hints}
 google_alternate_ad_url = \"$this->alt_url\";
 google_color_border = \"$this->color_border\";
