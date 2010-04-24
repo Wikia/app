@@ -1,4 +1,5 @@
 == Changes since 201004.4 ==
+* rt#47065: AdSense tweak (Nef)
 * rt#46403: RTE: upgrade CKE to 3.2.1 (macbre)
 * rt#46912: hide CategorySelect on non-content NSes in view mode (TOR)
 * rt#45087: RTE makes a line part of the table (macbre)
