@@ -715,6 +715,7 @@ $messages['cs'] = array(
  * @author McDutchie
  * @author Mr. Richard Bolla
  * @author MtaÄ
+ * @author The Evil IP address
  */
 $messages['de'] = array(
 	'wikifactorypagetitle' => 'Wiki Factory-Konfigurator',
@@ -744,7 +745,7 @@ $messages['de'] = array(
 	'closewiki-check-and-confirm' => 'Wikis überprüfen und Aktion bestätigen',
 	'closewiki-redirect-to' => 'Weiterleiten nach',
 	'closewiki-message' => 'Domainname $1',
-	'closewiki-confirm-button' => "Bestätige '$1' von $2",
+	'closewiki-confirm-button' => 'Bestätige „$1” von $2',
 	'closewiki-nbr-wiki' => '$1 Wikis',
 	'closewiki-wiki-closed' => "'''$1''' wurde geschlossen ($2)",
 	'closewiki-wiki-closed_removed' => "'''$1''' ist jetzt geschlossen und es ist geplant, gelöscht zu werden ($2)",
@@ -768,11 +769,11 @@ $messages['de'] = array(
 	'awc-metrics-three-months' => 'vor < 3 Monaten erstellt',
 	'awc-metrics-half-year' => 'vor < 6 Monaten erstellt',
 	'awc-metrics-wikis-found' => '$1 Wikis gefunden',
-	'awc-metrics-by-email' => '  oder (Benutzer-E-Mail):',
+	'awc-metrics-by-email' => 'oder (Benutzer-E-Mail):',
 	'awc-metrics-by-user' => 'gegründet von (Benutzername):',
 	'awc-metrics-by-dbname' => 'wo DB-Namen enthalten:',
-	'awc-metrics-by-title' => '  und Titel, beginnend ab:',
-	'awc-metrics-by-domains' => '  und Domains beinhalten:',
+	'awc-metrics-by-title' => 'und Titel, beginnend ab:',
+	'awc-metrics-by-domains' => 'und Domains beinhalten:',
 	'awc-metrics-not-found' => 'Keine Wikis gefunden',
 	'awc-metrics-nbr-result' => 'Resultate:',
 	'awc-metrics-created-between' => 'erstellt zwischen $1 (JJJJ/MM/TT) und $2 (JJJJ/MM/TT)',
@@ -1713,6 +1714,22 @@ $messages['ja'] = array(
 	'closed-delete-images' => 'イメージの削除',
 	'closed-hide-dumps' => 'データベースとイメージダンプを非表示',
 	'closed-reason' => '理由:',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'wf_city_url' => 'ವಿಳಾಸ',
+	'wf_city_title' => 'ಶೀರ್ಷಿಕೆ',
+	'wf_city_public' => 'ಸ್ಥಾನಮಾನ',
+	'wf_city_lang' => 'ಭಾಷೆ',
+	'wf_cc_name' => 'ವರ್ಗ',
+	'awc-metrics-category' => 'ಮತ್ತು ವರ್ಗ:',
+	'awc-metrics-all-languages' => 'ಎಲ್ಲಾ ಭಾಷೆಗಳು',
+	'awc-metrics-nbr-result' => 'ಫಲಿತಾಂಶಗಳು:',
+	'awc-metrics-articles' => 'ಲೇಖನಗಳು',
+	'closed-reason' => 'ಕಾರಣ:',
 );
 
 /** Karachay-Balkar (Къарачай-Малкъар)

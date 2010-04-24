@@ -1108,6 +1108,7 @@ $messages['hu'] = array(
 	'blog-comment-unhide' => 'megjelenítés',
 	'blog-comment-history' => 'történet',
 	'blog-comment-edit' => 'szerkesztés',
+	'blog-avatar-contrib' => 'közreműködés',
 	'blog-refresh-label' => 'Frissítés',
 	'blog-userblog' => '$1 blogja',
 	'blogs-reportproblem' => 'Probléma jelentése',
@@ -1401,6 +1402,13 @@ $messages['ja'] = array(
 	'blogs-recent-url-text' => '最近のブログの投稿',
 	'blog-desc' => 'ブログスタイルの記事',
 	'blog-movepage-badtitle' => '無効なタイトルです',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'blog-comment-delete' => 'ಅಳಿಸು',
 );
 
 /** Macedonian (Македонски)

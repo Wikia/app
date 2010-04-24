@@ -70,3 +70,263 @@ It looks like someone has edited your wiki! Why don\'t you check it out $MYHOMEU
 It looks like someone has edited your wiki! Why don\'t you <a href="$MYHOMEURL">check it out</a> to see what changed?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>'
 );
+
+/** Breton (Brezhoneg)
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'founderemails-email-0-days-passed-subject' => "Deuet mat oc'h war Wikia !",
+	'founderemails-email-0-days-passed-body' => "Gourc'hemennoùevit bezañ krouet \$WIKINAME - er gumuniezh Wkia emaoc'h bremañ !
+
+-- Strollad Wikia",
+	'founderemails-email-0-days-passed-body-HTML' => 'Gourc\'hemennoù evit bezañ krouet <strong>$WIKINAME</strong> - er gumuniezh Wkia emaoc\'h bremañ !<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Strollad Wikia</div>',
+	'founderemails-email-3-days-passed-body-HTML' => 'Demat $FOUNDERNAME<br /><br />
+
+Bremañ ma \'z out abaoe un nebeut devezhioù gant da wiki e soñjomp e peus c\'hoant dizoloiñ un nebeut traoù ouzhpenn a c\'hellfes ober.<br /><br />
+
+<div style="font-style: italic; font-size: 120%;">-- Strollad Wikia</div>',
+	'founderemails-email-10-days-passed-subject' => "Penaos 'mañ kont gant ho wiki ?",
+	'founderemails-email-page-edited-reg-user-first-edit-subject' => 'Un implijer enrollet end eus kemmet traoù en da wiki evit ar wech kentañ !',
+	'founderemails-email-page-edited-reg-user-subject' => 'Un implijer enrollet en deus kemmet ho wiki !',
+	'founderemails-email-page-edited-anon-subject' => 'Unan bennak en deus kemmet ho wiki !',
+);
+
+/** Spanish (Español)
+ * @author Bola
+ */
+$messages['es'] = array(
+	'founderemails-desc' => 'Ayuda a informar a los fundadores sobre los cambios que ocurrieron en su wiki',
+	'tog-founderemailsenabled' => 'Mandadme por correo electrónico las actualizaciones que hacen otras personas (solamente fundadores)',
+	'founderemails-email-user-registered-subject' => '¡Alguien registró una cuenta en tu wiki!',
+	'founderemails-email-user-registered-body' => 'Ey $FOUNDERNAME,
+
+¡Parece que $USERNAME se ha registrado en tu wiki! ¿Por qué no te pasas por su página de discusión $USERTALKPAGEURL para saludarle?
+
+-- El equipo de Wikia',
+	'founderemails-email-user-registered-body-HTML' => 'Ey $FOUNDERNAME,<br /><br />
+¡Parece que $USERNAME se ha registrado en tu wiki! ¿Por qué no te pasas por su <a href="$USERTALKPAGEURL">página de discusión</a> para saludarle?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- El equipo de Wikia</div>',
+	'founderemails-email-0-days-passed-subject' => '¡Bienvenido/a a Wikia!',
+	'founderemails-email-0-days-passed-body' => '¡Felicidades por la creación de $WIKINAME - ahora eres parte de la comunidad de Wikia!
+
+-- El equipo de Wikia',
+	'founderemails-email-0-days-passed-body-HTML' => '¡Felicidades por la creación de <strong>$WIKINAME</strong> - ahora eres parte de la comunidad de Wikia!<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- El equipo de Wikia</div>',
+	'founderemails-email-3-days-passed-subject' => 'Comprobando',
+	'founderemails-email-3-days-passed-body' => 'Ey $FOUNDERNAME,
+
+Ahora que has pasado unos días en tu wiki, pensamos que es posible que quieras comprobar algunas cosas que podrías hacer.
+
+-- El equipo de Wikia',
+	'founderemails-email-3-days-passed-body-HTML' => 'Ey $FOUNDERNAME<br /><br />
+
+Ahora que has estado unos días en tu wiki, pensamos que es posible que quieras comprobar unas cuantas cosas que podrías hacer.<br /><br />
+
+<div style="font-style: italic; font-size: 120%;">-- El equipo de Wikia</div>',
+	'founderemails-email-10-days-passed-subject' => '¿Cómo van las cosas en tu wiki?',
+	'founderemails-email-10-days-passed-body' => 'Ey $FOUNDERNAME,
+
+Ha pasado un tiempo desde que abriste un wiki en Wikia - ¡Esperamos que vaya genial! Queríamos compartir contigo unas cuantas cosas para ayudarte a que cuando estés en tu wiki, estés como en casa.
+
+-- El equipo de Wikia',
+	'founderemails-email-10-days-passed-body-HTML' => 'Ey $FOUNDERNAME,<br /><br />
+
+Ha pasado un tiempo desde que abriste un wiki en Wikia - ¡Esperamos que vaya genial! Queríamos compartir contigo unas cuantas cosas para ayudarte a que cuando estés en tu wiki, estés como en casa.<br /><br />
+
+<div style="font-style: italic; font-size: 120%;">-- El equipo de Wikia</div>',
+	'founderemails-email-page-edited-reg-user-first-edit-subject' => '¡Un usuario registrado ha realizado cambios en tu wiki por primera vez!',
+	'founderemails-email-page-edited-reg-user-first-edit-body' => 'Ey $FOUNDERNAME,
+
+¡Parece que el usuario registrado $USERNAME ha editado tu wiki por primera vez! ¿Por qué no te pasas por su página de discusión ($USERTALKPAGEURL) para saludarle?
+
+-- El equipo de Wikia',
+	'founderemails-email-page-edited-reg-user-first-edit-body-HTML' => 'Ey $FOUNDERNAME,<br /><br />
+¡Parece que el usuario registrado $USERNAME ha editado tu wiki por primera vez! ¿Por qué no te pasas por su <a href="$USERTALKPAGEURL">página de discusión</a> para saludarle?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- El equipo de Wikia</div>',
+	'founderemails-email-page-edited-reg-user-subject' => '¡Un usuario registrado ha realizado cambios en tu wiki!',
+	'founderemails-email-page-edited-reg-user-body' => 'Ey $FOUNDERNAME,
+
+¡Parece que el usuario registrado $USERNAME ha editado en tu wiki! ¿Por qué no te pasas por su página de discusión ($USERTALKPAGEURL) para saludarle?
+
+-- El equipo de Wikia',
+	'founderemails-email-page-edited-reg-user-body-HTML' => 'Ey $FOUNDERNAME,<br /><br />
+¡Parece que el usuario registrado $USERNAME ha editado en tu wiki! ¿Por qué no te pasas por su <a href="$USERTALKPAGEURL">página de discusión</a> para saludarle?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- El equipo de Wikia</div>',
+	'founderemails-email-page-edited-anon-subject' => '¡Alguien ha hecho cambios en tu wiki!',
+	'founderemails-email-page-edited-anon-body' => 'Ey $FOUNDERNAME,
+
+¡Parece que alguien ha editado en tu wiki! ¿Por qué no echas un vistazo a $MYHOMEURL para ver qué ha cambiado?
+
+-- El equipo de Wikia',
+	'founderemails-email-page-edited-anon-body-HTML' => 'Ey $FOUNDERNAME,<br /><br />
+¡Parece que alguien ha editado en tu wiki! ¿Por qué no <a href="$MYHOMEURL">echas un vistazo</a> para ver qué ha cambiado?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- El equipo de Wikia</div>',
+);
+
+/** French (Français)
+ * @author IAlex
+ */
+$messages['fr'] = array(
+	'founderemails-desc' => 'Aide les fondateurs en les informant des changements sur leurs wikis',
+	'tog-founderemailsenabled' => "M'envoyer des mises à jour à propos de quoi les autres personnes font (fondateurs seulement)",
+	'founderemails-email-user-registered-subject' => "Quelqu'un a créé un compte sur votre wiki !",
+	'founderemails-email-0-days-passed-subject' => 'Bienvenue sur Wikia !',
+	'founderemails-email-0-days-passed-body' => 'Félicitations pour la création de $WIKINAME - Vous faites maintenant partie de la communauté Wikia !
+
+-- L\'équipe de Wikia',
+	'founderemails-email-0-days-passed-body-HTML' => 'Félicitations pour la création de <strong>$WIKINAME</strong> - Vous faites maintenant partie de la communauté Wikia ! <br /><br />
+<div style="font-style: italic; font-size: 120%;">-- L\'équipe de Wikia</div>',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'founderemails-desc' => 'Ги информира основачите за промените на нивното вики',
+	'tog-founderemailsenabled' => 'Испраќај ми по е-пошта што прават другите (само основачи)',
+	'founderemails-email-user-registered-subject' => 'Некој направи сметка на вашето вики!',
+	'founderemails-email-user-registered-body' => 'Здраво $FOUNDERNAME,
+
+Корисникот $USERNAME се регистрираше на вашето вики! Зошто не пуштите поздрав на неговата страница за разговор $USERTALKPAGEURL?
+
+-- Екипата на Викија',
+	'founderemails-email-user-registered-body-HTML' => 'Здраво $FOUNDERNAME,<br /><br />
+Корисникот $USERNAME се регистрираше на вашето вики! Зошто не пуштите поздрав на неговата <a href="$USERTALKPAGEURL">страница за разговор</a>?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Екипата на Викија</div>',
+	'founderemails-email-0-days-passed-subject' => 'Добредојдовте на Викија!',
+	'founderemails-email-0-days-passed-body' => 'Ви честитаме што го создадовте викито $WIKINAME - сега сте дел од заедницата на Викија!
+
+-- Екипата на Викија',
+	'founderemails-email-0-days-passed-body-HTML' => 'Ви честитаме што го создадовте викито <strong>$WIKINAME</strong> - сега сте дел од заедницата на Викија!<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Екипата на Викија</div>',
+	'founderemails-email-3-days-passed-subject' => 'Мала проверка',
+	'founderemails-email-3-days-passed-body' => 'Здраво $FOUNDERNAME,
+
+Поминаа неколку дена откако го создадовте вашето вики, и затоа би сакале да ви предложиме некои други нешта што можете да ги направите.
+
+-- Екипата на Викија',
+	'founderemails-email-3-days-passed-body-HTML' => 'Здраво $FOUNDERNAME<br /><br />
+
+Веќе неколку дека го имате вашето вики, па затоа би сакале да ви предложиме некои други нешта што можете да ги направите.<br /><br />
+
+<div style="font-style: italic; font-size: 120%;">-- Екипата на Викија</div>',
+	'founderemails-email-10-days-passed-subject' => 'Како ви оди со вашето вики?',
+	'founderemails-email-10-days-passed-body' => 'Здраво $FOUNDERNAME,
+
+Помина извесно време откако го започнавте вашето вики на Викија - се надеваме дека ви оди добро! Би сакале да ве потсетиме на неколку завршни поединости кои ќе ви овозможат да го направите вашето вики што попријатно.
+
+-- Екипата на Викија',
+	'founderemails-email-10-days-passed-body-HTML' => 'Здраво $FOUNDERNAME,<br /><br />
+
+Помина повеќе време откако го започнавте вашето вики на Викија - се деваме дека ви оди добро! Би сакале да ве посоветуваме за неколку поединости што ќе го направат викито попријатно.<br /><br />
+
+<div style="font-style: italic; font-size: 120%;">-- Екипата на Викија</div>',
+	'founderemails-email-page-edited-reg-user-first-edit-subject' => 'За прв пат регистриран корисник го измени вашето вики!',
+	'founderemails-email-page-edited-reg-user-first-edit-body' => 'Здраво $FOUNDERNAME,
+
+Регистрираниот корисник $USERNAME за прв пат го уреди вашето вики! Зошто не пуштите поздрав на неговата страница за разговор ($USERTALKPAGEURL) ?
+
+-- Екипата на Викија',
+	'founderemails-email-page-edited-reg-user-first-edit-body-HTML' => 'Здраво $FOUNDERNAME,<br /><br />
+Регистрираниот корисник $USERNAME за прв пат го уреди вашето вики! Зошто не пуштите еден поздрав на неговата <a href="$USERTALKPAGEURL">страница за развогор</a>?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Екипата на Викија</div>',
+	'founderemails-email-page-edited-reg-user-subject' => 'Регистриран корисник го измени вашето вики!',
+	'founderemails-email-page-edited-reg-user-body' => 'Здраво $FOUNDERNAME,
+
+Регистрираниот корисник $USERNAME го уреди вашето вики! Зошто не пуштите поздрав на неговата страница за разговор ($USERTALKPAGEURL)?
+
+-- Екипата на Викија',
+	'founderemails-email-page-edited-reg-user-body-HTML' => 'Здраво $FOUNDERNAME,<br /><br />
+Регистрираниот корисник $USERNAME го уреди вашето вики! Зошто не пуштите поздрав на неговата <a href="$USERTALKPAGEURL">страница за разговор</a>?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Екипата на Викија</div>',
+	'founderemails-email-page-edited-anon-subject' => 'Некој го измени вашето вики!',
+	'founderemails-email-page-edited-anon-body' => 'Здраво $FOUNDERNAME,
+
+Некој го има уредено вашето вики! Зошто не појдете на $MYHOMEURL да видите што е изменето?
+
+-- The Wikia Team',
+	'founderemails-email-page-edited-anon-body-HTML' => 'Здраво $FOUNDERNAME,<br /><br />
+Некој ви го уредил вашето вики! Зошто не <a href="$MYHOMEURL">проверите</a> да видите што е изменето?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Екипата на Викија</div>',
+);
+
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'founderemails-desc' => 'Informeert oprichters over wijzigingen in hun wiki',
+	'tog-founderemailsenabled' => 'Mij informatie mailen over wat andere gebruikers doen (alleen voor oprichters)',
+	'founderemails-email-user-registered-subject' => 'Iemand heeft een gebruiker geregistreerd op uw wiki!',
+	'founderemails-email-user-registered-body' => 'Hallo $FOUNDERNAME,
+
+$USERNAME heeft zich geregistreerd bij uw wiki! Waarom gaat u niet even naar de overlegpagina van de gebruiker om goedendag te zeggen? $USERTALKPAGEURL
+
+-- Het Wikia-team',
+	'founderemails-email-user-registered-body-HTML' => 'Hallo $FOUNDERNAME,<br /><br />
+$USERNAME heeft zich geregistreerd bij uw wiki! Waarom gaat u niet even naar de <a href="$USERTALKPAGEURL">overlegpagina</a> van de gebruiker om goedendag te zeggen?
+
+<div style="font-style: italic; font-size: 120%;">-- Het Wikia-team</div>',
+	'founderemails-email-0-days-passed-subject' => 'Welkom bij Wikia!',
+	'founderemails-email-0-days-passed-body' => 'Gefeliciteerd met het aanmaken van $WIKINAME. U bent nu onderdeel van de Wikia-gemeenschap!
+
+-- Het Wikia-team',
+	'founderemails-email-0-days-passed-body-HTML' => 'Gefeliciteerd met het aanmaken van <strong>$WIKINAME</strong>. U bent nu onderdeel van de Wikia-gemeenschap!<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Het Wikia-team</div>',
+	'founderemails-email-3-days-passed-subject' => 'Even in contact blijven',
+	'founderemails-email-3-days-passed-body' => 'Hallo $FOUNDERNAME,
+
+Nu uw wiki een aantal dagen bestaat, vermoeden we dat u wellicht tips wilt hebben over andere dingen die u kunt doen.
+
+-- Het Wikia-team',
+	'founderemails-email-3-days-passed-body-HTML' => 'Hallo $FOUNDERNAME,<br /><br />
+
+Nu uw wiki een aantal dagen bestaat, vermoeden we dat u wellicht tips wilt hebben over andere dingen die u kunt doen.<br /><br />
+
+<div style="font-style: italic; font-size: 120%;">-- Het Wikia-team</div>',
+	'founderemails-email-10-days-passed-subject' => 'Hoe gaat het met uw wiki?',
+	'founderemails-email-10-days-passed-body' => 'Hallo $FOUNDERNAME,
+
+Uw Wikia-wiki bestaat nu een tijdje. We hopen dat het fantastisch gaat! We willen een aantal tips met u delen om uw wiki gezellig te maken.
+
+-- Het Wikia-team',
+	'founderemails-email-10-days-passed-body-HTML' => 'Hallo $FOUNDERNAME,<br /><br />
+
+Uw Wikia-wiki bestaat nu een tijdje. We hopen dat het fantastisch gaat! We willen een aantal tips met u delen om uw wiki gezellig te maken.<br /><br />
+
+<div style="font-style: italic; font-size: 120%;">-- Het Wikia-team</div>',
+	'founderemails-email-page-edited-reg-user-first-edit-subject' => 'Een geregistreerde gebruiker heeft de eerste wijziging in uw wiki aangebracht!',
+	'founderemails-email-page-edited-reg-user-first-edit-body' => 'Hallo $FOUNDERNAME,
+
+De geregistreerde gebruikers $USERNAME heeft uw wiki voor de eerste keer bewerkt! Waarom gaat u niet even langs op de overlegpagina om goedendag te zeggen? $USERTALKPAGEURL
+
+-- Het Wikia-team',
+	'founderemails-email-page-edited-reg-user-first-edit-body-HTML' => 'Hallo $FOUNDERNAME,<br /><br />
+
+De geregistreerde gebruikers $USERNAME heeft uw wiki voor de eerste keer bewerkt! Waarom gaat u niet even langs op de <a href="$USERTALKPAGEURL">overlegpagina</a> om goedendag te zeggen?<br /><br />
+
+<div style="font-style: italic; font-size: 120%;">-- Het Wikia-team</div>',
+	'founderemails-email-page-edited-reg-user-subject' => 'Een geregistreerde gebruiker heeft uw wiki gewijzigd!',
+	'founderemails-email-page-edited-reg-user-body' => 'Hallo $FOUNDERNAME,
+
+De geregistreerde gebruiker $USERNAME heeft uw wiki bewerkt. Waarom gaat u niet even langs op de overlegpagina om goedendag te zeggen? $USERTALKPAGEURL
+
+-- Het Wikia-team',
+	'founderemails-email-page-edited-reg-user-body-HTML' => 'Hallo $FOUNDERNAME,<br /><br />
+
+De geregistreerde gebruiker $USERNAME heeft uw wiki bewerkt. Waarom gaat u niet even langs op de <a href="$USERTALKPAGEURL">overlegpagina</a> om goedendag te zeggen?<br /><br />
+
+<div style="font-style: italic; font-size: 120%;">-- Het Wikia-team</div>',
+	'founderemails-email-page-edited-anon-subject' => 'Iemand heeft uw wiki gewijzigd!',
+	'founderemails-email-page-edited-anon-body' => 'Hallo $FOUNDERNAME,
+
+Het ziet ernaar uit dat iemand uw wiki heeft bewerkt! Waarom gaat u niet even kijken wat er is gewijzigd? $MYHOMEURL
+
+-- Het Wikia-team',
+	'founderemails-email-page-edited-anon-body-HTML' => 'Hallo $FOUNDERNAME,<br /><br />
+
+Het ziet ernaar uit dat iemand uw wiki heeft bewerkt! Waarom gaat u niet even kijken <a href="$MYHOMEURL">wat er is gewijzigd</a>?<br /><br />
+
+<div style="font-style: italic; font-size: 120%;">Het Wikia-team</div>',
+);
+

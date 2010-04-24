@@ -112,10 +112,11 @@ $messages['cs'] = array(
 /** German (Deutsch)
  * @author LWChris
  * @author MtaÄ
+ * @author The Evil IP address
  */
 $messages['de'] = array(
 	'dump-database' => 'Datenbank-Dumps',
-	'dump-database-info' => 'Database Dumps können als persönliches Backup (Wikia produziert automatisch seperate Backups aller Wikis) oder für Wartungsbots genutzt werden',
+	'dump-database-info' => 'Datenbank-Dumps können als persönliches Backup (Wikia produziert automatisch separate Backups aller Wikis) oder für Wartungsbots genutzt werden',
 	'dump-database-curr-pages' => 'Aktuelle Seiten',
 	'dump-database-curr-pages-info' => '(Diese Version eignet sich normalerweise am besten für Bots)',
 	'dump-database-full-pages' => 'Aktuelle Seiten und Versionsgeschichte',

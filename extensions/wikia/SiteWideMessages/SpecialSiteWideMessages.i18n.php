@@ -406,11 +406,19 @@ $messages['de-formal'] = array(
 );
 
 /** Spanish (Español)
+ * @author Bola
  * @author Crazymadlover
  * @author McDutchie
  * @author Peter17
  */
 $messages['es'] = array(
+	'sitewidemessages' => 'Mensajes de amplia difusión',
+	'swm-page-title-editor' => 'Mensajes de amplia difusión :: Editor',
+	'swm-page-title-preview' => 'Mensajes de amplia difusión :: Previsualización',
+	'swm-page-title-send' => 'Mensajes de amplia difusión :: Enviar',
+	'swm-page-title-sent' => 'Mensajes de amplia difusión :: Enviado',
+	'swm-page-title-dismiss' => 'Mensajes de amplia difusión :: Descartar',
+	'swm-page-title-list' => 'Mensajes de amplia difusión :: Lista',
 	'swm-label-preview' => 'Previsualización',
 	'swm-label-edit' => 'Editar',
 	'swm-label-remove' => 'Quitar',
@@ -421,10 +429,12 @@ $messages['es'] = array(
 	'swm-label-recipient-users' => 'Usuarios',
 	'swm-label-expiration' => 'Tiempo de expiración',
 	'swm-label-mode-wikis-all' => 'Todos los wikis',
+	'swm-label-mode-wikis-hub' => 'Categoría (Hub) seleccionado',
 	'swm-label-mode-wikis-wiki' => 'Wiki seleccionado',
 	'swm-label-mode-users-all' => 'Todos los usuarios',
 	'swm-label-mode-users-active' => 'Usuarios activos',
 	'swm-label-mode-users-group' => 'Usuarios pertenecientes al grupo',
+	'swm-label-mode-users-group-hint' => '<i>Elije un grupo del menú desplegable o escriba el nombre a mano para sobrescribir la selección del menú desplegable.</i>',
 	'swm-label-mode-users-user' => 'Usuario seleccionado',
 	'swm-label-mode-users-user-hint' => '<i>esta opción ignora selección en "Wikis" de grupo.</i>',
 	'swm-label-content' => 'Contenido',
@@ -707,6 +717,7 @@ $messages['hu'] = array(
 	'swm-list-table-recipient' => 'Címzett',
 	'swm-list-table-group' => 'Csoport',
 	'swm-list-table-expire' => 'Lejárat',
+	'swm-list-table-date' => 'Küldés dátuma',
 	'swm-list-table-removed' => 'Eltávolítva',
 	'swm-list-table-content' => 'Tartalom',
 	'swm-list-table-tools' => 'Eszközök',

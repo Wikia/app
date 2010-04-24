@@ -77,6 +77,13 @@ $messages['de-formal'] = array(
 	'wikiaupload' => 'Wikia-Upload',
 );
 
+/** Lower Sorbian (Dolnoserbski)
+ * @author Michawiki
+ */
+$messages['dsb'] = array(
+	'wikiaupload' => 'Nagraśe Wikia',
+);
+
 /** Spanish (Español)
  * @author Crazymadlover
  * @author Translationista

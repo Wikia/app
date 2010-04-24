@@ -289,6 +289,15 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => 'Nulle pagina de blog trovate.',
 );
 
+/** Italian (Italiano)
+ * @author Beta16
+ */
+$messages['it'] = array(
+	'globalwatchlist-digest-email-subject' => 'Digest settimanale',
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|commento|commenti}})',
+	'globalwatchlist-no-page-found' => 'Nessuna pagina trovata.',
+);
+
 /** Japanese (日本語)
  * @author Tommy6
  */
@@ -434,6 +443,36 @@ Wikia
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|coment|coment}})',
 	'globalwatchlist-no-page-found' => 'Pa gnun-e pàgine trovà.',
 	'globalwatchlist-no-blog-page-found' => 'Gnun-a pàgine dë scartari trovà.',
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'tog-watchlistdigest' => 'Enviar-me, por correio electrónico, uma Compilação Semanal de Mudanças nas Páginas Vigiadas',
+	'tog-watchlistdigestclear' => 'Marcar como visitadas todas as páginas da Compilação Semanal de Mudanças nas Páginas Vigiadas',
+	'globalwatchlist-see-more' => 'Para ver mudanças adicionais, verifique as páginas vigiadas locais',
+	'globalwatchlist-digest-email-subject' => 'Compilação Semanal',
+	'globalwatchlist-digest-email-body' => 'Caro(a) $1,
+
+Estas são as páginas da sua lista de páginas vigiadas da Wikia que foram editadas desde a sua última visita.
+
+$2
+
+
+Estas são as páginas de blogues da sua lista de páginas vigiadas da Wikia que foram editadas ou comentadas desde a sua última visita.
+
+$3
+
+Por favor, visite e edite frequentemente...
+
+Wikia
+
+* Para alterar as suas preferências de notificações das páginas vigiadas, visite http://www.wikia.com/wiki/Special:Preferences
+* Para marcar como visitadas todas as páginas desta Compilação Semanal, veja a respectiva opção no separador "páginas vigiadas" das suas preferências',
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|comentário|comentários}})',
+	'globalwatchlist-no-page-found' => 'Não foi encontrada nenhuma página.',
+	'globalwatchlist-no-blog-page-found' => 'Não foi encontrada nenhuma página de blogues.',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

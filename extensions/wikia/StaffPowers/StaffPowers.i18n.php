@@ -175,7 +175,7 @@ $messages['pms'] = array(
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
-	'staffpowers-ipblock-aborted' => 'Não é possível bloquear a equipa Wikia. Por favor, use [[Special:Contact]] para reportar qualquer questão ou problema com a nossa equipa.',
+	'staffpowers-ipblock-aborted' => 'Não é possível bloquear a equipa Wikia. Por favor, use [[Special:Contact]] para nos comunicar quaisquer problemas com a nossa equipa.',
 );
 
 /** Tarandíne (Tarandíne)

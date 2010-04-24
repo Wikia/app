@@ -9,6 +9,16 @@ Please change [[Special:Preferences#prefsection-1|your preferences]] to use this
 	'widgets-specialpage-try-dashboard' => 'This page contains a list of all available widgets. To see your widgets at work go to [[Special:WidgetDashboard]].',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'widgets-specialpage-info' => 'Віджэты лепей за ўсё працуюць з новымі афармленьнямі, напрыклад [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco].
+
+Калі ласка, зьмяніце [[Special:Preferences#prefsection-1|Вашыя ўстаноўкі]] для выкарыстаньня гэтага інструмэнта.',
+	'widgets-specialpage-try-dashboard' => 'Гэтая старонка ўтрымлівае сьпіс усіх даступных віджэтаў. Каб паглядзець Вашыя віджэты ў працы, перайдзіце на [[Special:WidgetDashboard]].',
+);
+
 /** Breton (Brezhoneg)
  * @author Gwenn-Ael
  */
@@ -191,6 +201,16 @@ $messages['pms'] = array(
 
 Për piasì, ch'a cangia [[Special:Preferences#prefsection-1|ij sò gust]] për dovré st'utiss-sì.",
 	'widgets-specialpage-try-dashboard' => 'Sta pàgina-sì a conten na lista ëd tùit ij widget disponìbij. Për vëdde ij tò widget al travaj va a [[Special:WidgetDashboard]].',
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'widgets-specialpage-info' => 'Os widgets funcionam melhor com um dos novos temas, por exemplo, o [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Mónaco].
+
+Por favor, altere as [[Special:Preferences#prefsection-1|suas preferências]] para usar esta ferramenta.',
+	'widgets-specialpage-try-dashboard' => 'Esta página contém uma lista de todos os widgets disponíveis. Para ver os seus widgets em acção, visite [[Special:WidgetDashboard]].',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

@@ -20,12 +20,27 @@ $messages['en'] = array(
 *group-end'
 );
 
+/** Message documentation (Message documentation)
+ * @author EugeneZelenko
+ */
+$messages['qqq'] = array(
+	'ircgate-username' => '{{Identical|Username}}',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
 $messages['af'] = array(
 	'ircgate-username' => 'Gebruikersnaam:',
 	'ircgate-channel' => 'Kanaal:',
+);
+
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'ircgate-username' => 'Імя ўдзельніка:',
+	'ircgate-channel' => 'Канал:',
 );
 
 /** Breton (Brezhoneg)

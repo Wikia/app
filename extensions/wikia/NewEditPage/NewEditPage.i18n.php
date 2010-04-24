@@ -14,6 +14,14 @@ $messages['af'] = array(
 	'templatesused-toggle' => 'Wys/versteek {{PLURAL:$1|$1 item|$1 items}}',
 );
 
+/** Old English (Ænglisc)
+ * @author Wōdenhelm
+ */
+$messages['ang'] = array(
+	'new-edit-page-preview-notice' => 'Forescēaƿemōd: nāne hƿearfas ȝiet spared! Gā niðerƿeard to þurhstandenne ādihtende.',
+	'templatesused-toggle' => 'Sēon/hȳdan {{PLURAL:$1|$1 þing|$1 þing}}',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  */

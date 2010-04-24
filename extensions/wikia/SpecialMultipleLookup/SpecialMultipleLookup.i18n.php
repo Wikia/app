@@ -217,6 +217,7 @@ $messages['hu'] = array(
 	'multilookupnext' => 'következő',
 	'multilookupprevious' => 'előző',
 	'multilookupnbrresult' => 'Találatok száma:',
+	'multilookupinvalidresults' => 'Érvénytelen eredmények!',
 	'multilookupwiki' => 'Wiki',
 	'multilookupdetails' => 'Részletek megtekintése',
 );

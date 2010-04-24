@@ -287,6 +287,7 @@ $messages['hu'] = array(
 	'cathub-progbar-none-done' => 'Még nincsenek feltett kérdések',
 	'cathub-progbar-all-done' => 'Minden kérdés megválaszolva!',
 	'cathub-top-contributors' => 'Legaktívabb közreműködők ebben a kategóriában',
+	'cathub-anon-username' => 'egy kíváncsi felhasználó',
 	'cathub-answer-heading' => 'Válasz',
 	'cathub-button-answer' => 'Válasz',
 	'cathub-button-improve-answer' => 'Válasz javítása',

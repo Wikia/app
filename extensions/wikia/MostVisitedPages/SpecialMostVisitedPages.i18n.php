@@ -42,6 +42,13 @@ $messages['br'] = array(
 	'mostvisitedpageslatest' => 'e kerzh ar $1 minutenn ziwezhañ',
 );
 
+/** Czech (Česky)
+ * @author Reaperman
+ */
+$messages['cs'] = array(
+	'mostvisitedpages' => 'Nejnavštěvovanější stránky',
+);
+
 /** German (Deutsch)
  * @author LWChris
  */
@@ -307,6 +314,14 @@ $messages['te'] = array(
 	'mostvisitedpagessearchtext' => 'వ్యాసపు పేరు:',
 	'mostvisitedpagessearchbtn' => 'వెతుకు',
 	'mostvisitedpageslatest' => 'గత $1 నిమిషాలలో',
+);
+
+/** Tuvinian (Тыва дыл)
+ * @author Sborsody
+ */
+$messages['tyv'] = array(
+	'mostvisitedpagessearchtext' => 'Чүүлдиң ады:',
+	'mostvisitedpagessearchbtn' => 'дилээри',
 );
 
 /** Ukrainian (Українська)
