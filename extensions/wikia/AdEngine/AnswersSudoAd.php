@@ -9,6 +9,9 @@ class AnswersSudoAd {
 	static public function getAd($placeholdertype, $slotname, $AdEngine, $html) {
 		if (("HOME_TOP_LEADERBOARD" != $slotname) && ("TOP_LEADERBOARD" != $slotname)) return true;
 
+		$var = "wgAdslot_{$slotname}";
+		if (!empty($GLOBALS[$var]) && "null" == strtolower($GLOBALS[$var])) return true;
+
 		global $wgUser;
 		if (empty($_GET["showads"]) && is_object($wgUser) && $wgUser->isLoggedIn() && !$wgUser->getOption("showAds")) return true;
 						 
@@ -17,6 +20,7 @@ class AnswersSudoAd {
 		$html = wfMsgForContent("asa-leaderboard");
 		if (empty($html)) {
 			$html = self::getImgAd();
+			$html = '<div id="' . htmlspecialchars($slotname) . '" class="noprint">' . $html . '</div>';
 			return true;
 		}
 
@@ -27,10 +31,12 @@ class AnswersSudoAd {
 
 				if (empty($data)) {
 					$html = self::getImgAd();
+					$html = '<div id="' . htmlspecialchars($slotname) . '" class="noprint">' . $html . '</div>';
 					return true;
 				}
 
 				$html = str_replace($placeholder, $data, $html);
+				$html = '<div id="' . htmlspecialchars($slotname) . '" class="noprint">' . $html . '</div>';
 			}
 		}
 
