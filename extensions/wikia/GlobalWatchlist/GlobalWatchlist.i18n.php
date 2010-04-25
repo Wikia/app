@@ -104,10 +104,7 @@ Wikia
  * @author LWChris
  */
 $messages['de-formal'] = array(
-	'tog-watchlistdigest' => 'Schicke mir wöchentlich eine Liste aller Seiten, die nach meinem letzten Besuch bearbeitet wurden',
-	'tog-watchlistdigestclear' => 'Markiere alle Seiten der wöchentlichen Zusammenfassung meiner Beobachtungsliste als besucht',
 	'globalwatchlist-see-more' => 'Weitere Änderungen finden Sie auf Ihrer lokalen Beobachtungsliste...',
-	'globalwatchlist-digest-email-subject' => 'Wöchentliche Zusammenfassung',
 	'globalwatchlist-digest-email-body' => 'Hallo $1,
 
 Dies ist eine Liste aller Seiten auf Ihrer Wikia-Beobachtungsliste, die seit Ihrem letzten Besuch bearbeitet wurden.
@@ -125,9 +122,6 @@ Wikia
 
 * Sie können Ihre Einstellungen zur Benachrichtigung über Ihre Beobachtungsliste hier anpassen: http://www.wikia.com/wiki/Special:Preferences
 * Um alle Seiten dieses wöchentlichen Überblicks als besucht zu markieren, verwenden Sie die Option unter "Beobachtungsliste" in Ihren Einstellungen',
-	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|Kommentar|Kommentare}})',
-	'globalwatchlist-no-page-found' => 'Keine Seite gefunden.',
-	'globalwatchlist-no-blog-page-found' => 'Keine Blogseite gefunden.',
 );
 
 /** Spanish (Español)
@@ -323,6 +317,14 @@ Wikia
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 コメント)',
 	'globalwatchlist-no-page-found' => 'ページは見つかりませんでした。',
 	'globalwatchlist-no-blog-page-found' => 'ブログページは見つかりませんでした。',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'globalwatchlist-no-page-found' => 'Keng Säit fonnt.',
+	'globalwatchlist-no-blog-page-found' => 'Keng Blogsäit fonnt.',
 );
 
 /** Macedonian (Македонски)

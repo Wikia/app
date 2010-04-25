@@ -58,9 +58,6 @@ $messages['de'] = array(
  * @author LWChris
  */
 $messages['de-formal'] = array(
-	'imgplc-create' => 'Bild hinzufügen',
-	'imgplc-placeholder' => 'Platzhalter',
-	'imgplc-image' => 'Bild',
 	'imgplc-notinhistory' => 'Sie können keine Bilder im Verlaufsmodus hinzufügen.',
 );
 

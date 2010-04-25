@@ -83,14 +83,6 @@ $messages['de'] = array(
 	'ircgate-channel' => 'Channel:',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
- * @author LWChris
- */
-$messages['de-formal'] = array(
-	'ircgate-username' => 'Benutzername:',
-	'ircgate-channel' => 'Channel:',
-);
-
 /** Spanish (Español)
  * @author VegaDark
  */

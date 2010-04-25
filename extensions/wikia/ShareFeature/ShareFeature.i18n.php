@@ -48,8 +48,6 @@ $messages['de'] = array(
  * @author LWChris
  */
 $messages['de-formal'] = array(
-	'sf-link' => 'Artikel teilen',
-	'sf-link-popup' => 'Diesen Artikel teilen',
 	'sf-link-tooltip' => 'Teilen Sie diesen Artikel mit Ihren Freunden',
 );
 

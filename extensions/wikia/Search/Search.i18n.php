@@ -41,10 +41,7 @@ $messages['de'] = array(
  * @author LWChris
  */
 $messages['de-formal'] = array(
-	'wikiasearch-titles-only' => 'Suche nur in Seitentiteln',
 	'wikiasearch-system-error-msg' => 'Aufgrund eines Systemfehlers konnte Ihre Suche nicht abgeschlossen werden',
-	'wikiasearch-search-this-wiki' => 'Nur Wikia Zentrale durchsuchen',
-	'wikiasearch-search-wikia' => 'Wikia durchsuchen',
 );
 
 /** Greek (Ελληνικά)

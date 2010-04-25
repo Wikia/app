@@ -192,6 +192,7 @@ De forma alternativa puedes hacer clic en "$2" para ver la página actualizada.'
 /** French (Français)
  * @author IAlex
  * @author Jean-Frédéric
+ * @author Peter17
  */
 $messages['fr'] = array(
 	'wikiaphotogallery-desc' => 'Fournit une interface pour la gestion des galeries dans les pages',
@@ -237,6 +238,7 @@ Décrivez cette photo.",
 	'wikiaPhotoGallery-photooptions-linksub' => "'''Optionnel.''' Quand cette photo est cliquée, aller sur cette page.",
 	'wikiaPhotoGallery-photooptions-done' => 'Terminé',
 	'wikiaPhotoGallery-preview-title' => 'Modifier la galerie',
+	'wikiaPhotoGallery-preview-intro' => 'Ceci est la page de prévisualisation des galeries. Vous pouvez y ajouter de nouvelles photos ainsi que déplacer et redimensionner les photos existantes.',
 	'wikiaPhotoGallery-preview-hover-modify' => 'modifier',
 	'wikiaPhotoGallery-preview-hover-delete' => 'supprimer',
 	'wikiaPhotoGallery-preview-add-photo' => 'Ajouter une photo',
@@ -248,6 +250,10 @@ Décrivez cette photo.",
 	'wikiaPhotoGallery-preview-captions-center' => 'Centre',
 	'wikiaPhotoGallery-preview-captions-right' => 'Droite',
 	'wikiaPhotoGallery-conflict-title' => "Un conflit de modification s'est produit",
+	'wikiaPhotoGallery-conflict-intro' => 'Nous n’avons malheureusement pas pu enregistrer votre modification, car un autre utilisateur a modifié la page avant que vous ne cliquiez sur « Enregistrer ».',
+	'wikiaPhotoGallery-conflict-help' => 'Le texte que votre modification a créé est affiché ci-dessous.
+Vous pouvez le copier, cliquer sur « $1 » et le coller à l’endroit voulu pour restaurer vos modifications.
+Autrement, vous pouvez cliquer sur « $2 » pour voir la page telle qu’elle est à présent.',
 	'wikiaPhotoGallery-conflict-edit' => "Visiter le mode d'édition",
 	'wikiaPhotoGallery-conflict-view' => 'Voir la page actuelle',
 	'wikiaPhotoGallery-preview-delete-title' => 'Supprimer cette photo ?',
@@ -258,6 +264,82 @@ Décrivez cette photo.",
 	'wikiaPhotoGallery-quit-intro' => "Êtes-vous sûr de vouloir quitter l'éditeur de galerie ?",
 	'wikiaPhotoGallery-quit-savequit' => 'Sauvegarder et quitter',
 	'wikiaPhotoGallery-quit-quitonly' => 'Ignorer les modifications et quitter',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'wikiaphotogallery-desc' => 'Provide un interfacie pro le gestion de galerias in paginas',
+	'wikiaPhotoGallery-add-gallery' => 'Inserer un galeria de photos',
+	'wikiaPhotoGallery-viewmode-addphoto' => 'Adder un photo a iste galeria',
+	'wikiaPhotoGallery-edit-abort' => 'Le modification que tu tentava facer ha essite abortate per un extension.',
+	'wikiaPhotoGallery-edit-summary' => 'Modification de un galeria',
+	'wikiaPhotoGallery-error-caption' => 'Error',
+	'wikiaPhotoGallery-error-outdated' => 'Iste galeria ha essite modificate durante que tu legeva le pagina.
+Per favor refresca le pagina e proba lo de novo.',
+	'wikiaPhotoGallery-error-user-rights' => 'Error de derectos de usator.',
+	'wikiaPhotoGallery-upload-title' => 'Selige photo',
+	'wikiaPhotoGallery-upload-intro-first' => 'Tu ha comenciate a crear un nove galeria! Selige tu prime photo.',
+	'wikiaPhotoGallery-upload-intro' => 'Selige un nove photo pro le galeria.',
+	'wikiaPhotoGallery-upload-uploadtitle' => 'Incargamento',
+	'wikiaPhotoGallery-upload-uploadbutton' => 'Incargar',
+	'wikiaPhotoGallery-upload-findtitle' => 'Recerca',
+	'wikiaPhotoGallery-upload-findbutton' => 'Cercar',
+	'wikiaPhotoGallery-upload-filestitle-pre' => 'Files recentemente incargate',
+	'wikiaPhotoGallery-upload-filestitle-post' => 'Photos in iste wiki ($1 {{PLURAL:$1|resultato|resultatos}})',
+	'wikiaPhotoGallery-upload-page-next' => '8 sequentes',
+	'wikiaPhotoGallery-upload-page-prev' => '8 precedentes',
+	'wikiaPhotoGallery-upload-filesinsert' => 'Inserer iste photo',
+	'wikiaPhotoGallery-upload-error-title' => 'Tu incargamento poteva esser completate',
+	'wikiaPhotoGallery-upload-error-bad-extension' => 'Iste typo de file non pote esser usate.',
+	'wikiaPhotoGallery-upload-error-filename-incorrect' => 'Le nomine de file contine characteres que non es permittite in le titulos de paginas.
+Per favor renomina le file e tenta lo de novo.',
+	'wikiaPhotoGallery-upload-error-filetype-incorrect' => 'Le nomine del file ha un extension incorrecte.',
+	'wikiaPhotoGallery-upload-error-filetype missing' => 'Le nomine del file non ha un extension.',
+	'wikiaPhotoGallery-upload-error-readonly' => 'Tu non pote incargar imagines in iste momento, proque le wiki es in stato de lectura sol.',
+	'wikiaPhotoGallery-upload-error-conflict-intro' => 'Un file con iste nomine ja existe!
+Que vole tu facer?',
+	'wikiaPhotoGallery-upload-error-conflict-rename' => 'Renominar tu photo',
+	'wikiaPhotoGallery-upload-error-conflict-reuse' => 'Usar le photo existente',
+	'wikiaPhotoGallery-upload-error-conflict-overwrite' => 'Reimplaciar le photo existente per le tue',
+	'wikiaPhotoGallery-upload-error-conflict-insert' => 'Inserer',
+	'wikiaPhotoGallery-photooptions-title' => 'Optiones del photo',
+	'wikiaPhotoGallery-photooptions-intro' => 'Cata photo in un galeria pote haber un legenda e un ligamine a un pagina specific del wiki.',
+	'wikiaPhotoGallery-photooptions-captiontitle' => 'Legenda del photo',
+	'wikiaPhotoGallery-photooptions-captionsub' => "'''Optional.'''
+Describe iste photo.",
+	'wikiaPhotoGallery-photooptions-changepicture' => 'cambiar iste photo',
+	'wikiaPhotoGallery-photooptions-linktitle' => 'Ligar a un pagina',
+	'wikiaPhotoGallery-photooptions-linksub' => "'''Optional.''' Quando iste photo es cliccate, ir a iste pagina.",
+	'wikiaPhotoGallery-photooptions-done' => 'Facite',
+	'wikiaPhotoGallery-preview-title' => 'Modificar galeria',
+	'wikiaPhotoGallery-preview-intro' => 'Isto es le pagina de previsualisation del galeria. Hic tu pote adder nove photos o renominar, modificar e redimensionar photos existente.',
+	'wikiaPhotoGallery-preview-hover-modify' => 'modificar',
+	'wikiaPhotoGallery-preview-hover-delete' => 'deler',
+	'wikiaPhotoGallery-preview-add-photo' => 'Adder un photo',
+	'wikiaPhotoGallery-preview-add-caption' => 'Adder un legenda',
+	'wikiaPhotoGallery-preview-link-tooltip' => 'Le photo liga a "$1"',
+	'wikiaPhotoGallery-preview-size' => 'Dimension del photo',
+	'wikiaPhotoGallery-preview-captions' => 'Legendas',
+	'wikiaPhotoGallery-preview-captions-left' => 'Sinistra',
+	'wikiaPhotoGallery-preview-captions-center' => 'Centro',
+	'wikiaPhotoGallery-preview-captions-right' => 'Dextra',
+	'wikiaPhotoGallery-conflict-title' => 'Un conflicto de modification ha occurrite',
+	'wikiaPhotoGallery-conflict-intro' => 'Regrettabilemente, nos non poteva salveguardar tu modification, proque un altere usator modificava le pagina ante que tu cliccava super "salveguardar".',
+	'wikiaPhotoGallery-conflict-help' => 'Nos ha fornite le wikitexto create per tu modification hic infra.
+Tu pote copiar iste texto, cliccar super "$1" e collar lo in le loco correcte a fin de restaurar tu modificationes.
+Alternativemente, tu pote cliccar super "$2" pro vider le pagina in su forma actualisate.',
+	'wikiaPhotoGallery-conflict-edit' => 'Visitar le modo de modification',
+	'wikiaPhotoGallery-conflict-view' => 'Vider le pagina actual',
+	'wikiaPhotoGallery-preview-delete-title' => 'Remover iste photo?',
+	'wikiaPhotoGallery-preview-delete' => 'Es tu secur de voler remover le photo de iste galeria?',
+	'wikiaPhotoGallery-preview-saving-title' => 'Salveguarda in curso',
+	'wikiaPhotoGallery-preview-saving-intro' => 'Per favor attende le salveguarda de tu galeria.',
+	'wikiaPhotoGallery-quit-title' => 'Quitar le editor de galerias',
+	'wikiaPhotoGallery-quit-intro' => 'Es tu secur de voler quitar le editor de galerias?',
+	'wikiaPhotoGallery-quit-savequit' => 'Salveguardar e quitar',
+	'wikiaPhotoGallery-quit-quitonly' => 'Abandonar modificationes e quitar',
 );
 
 /** Macedonian (Македонски)
@@ -334,5 +416,97 @@ $messages['mk'] = array(
 	'wikiaPhotoGallery-quit-intro' => 'Дали сте сигурни дека сакате да излезете од галерискиот уредник?',
 	'wikiaPhotoGallery-quit-savequit' => 'Зачувај и излези',
 	'wikiaPhotoGallery-quit-quitonly' => 'Откажи ги промените и излези',
+);
+
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'wikiaphotogallery-desc' => "Biedt een interface voor het beheren van galerijen in pagina's",
+	'wikiaPhotoGallery-add-gallery' => 'Galerij met bestanden toevoegen',
+	'wikiaPhotoGallery-viewmode-addphoto' => 'Bestand aan deze galerij toevoegen',
+	'wikiaPhotoGallery-edit-abort' => 'De wijziging die u probeerde te maken is afgebroken door een uitbreidingshook',
+	'wikiaPhotoGallery-edit-summary' => 'Galerij bewerken',
+	'wikiaPhotoGallery-error-caption' => 'Fout',
+	'wikiaPhotoGallery-error-outdated' => 'Deze galerij is bewerkt terwijl u de pagina aan het bekijken was.
+Ververs de pagina en probeer het opnieuw.',
+	'wikiaPhotoGallery-error-user-rights' => 'Fout in de gebruikersrechten.',
+	'wikiaPhotoGallery-upload-title' => 'Foto kiezen',
+	'wikiaPhotoGallery-upload-intro-first' => 'U maakt een nieuwe galerij aan.
+Kies uw eerste bestand.',
+	'wikiaPhotoGallery-upload-intro' => 'Kies een nieuwe afbeelding voor de galerij.',
+	'wikiaPhotoGallery-upload-uploadtitle' => 'Uploaden',
+	'wikiaPhotoGallery-upload-uploadbutton' => 'Uploaden',
+	'wikiaPhotoGallery-upload-findtitle' => 'Zoeken',
+	'wikiaPhotoGallery-upload-findbutton' => 'Zoeken',
+	'wikiaPhotoGallery-upload-filestitle-pre' => 'Recent toegevoegde bestanden',
+	'wikiaPhotoGallery-upload-filestitle-post' => 'Bestanden op deze wiki ($1 {{PLURAL:$1|resultaat|resultaten}})',
+	'wikiaPhotoGallery-upload-page-next' => 'Volgende 8',
+	'wikiaPhotoGallery-upload-page-prev' => 'Vorige 8',
+	'wikiaPhotoGallery-upload-filesinsert' => 'Deze afbeelding invoegen',
+	'wikiaPhotoGallery-upload-error-title' => 'Uw upload is voltooid',
+	'wikiaPhotoGallery-upload-error-bad-extension' => 'Dit bestandstype kan niet worden gebruikt.',
+	'wikiaPhotoGallery-upload-error-filename-incorrect' => 'De bestandsnaam bevat ongeldige karakters.
+Geef het bestand een andere naam, en probeer het dan opnieuw te uploaden.',
+	'wikiaPhotoGallery-upload-error-filetype-incorrect' => 'Dit bestand heeft een onjuiste extensie.',
+	'wikiaPhotoGallery-upload-error-filetype missing' => 'Dit bestand heeft geen extensie.',
+	'wikiaPhotoGallery-upload-error-readonly' => 'U kunt geen bestanden uploaden.
+Deze wiki is alleen-lezen.',
+	'wikiaPhotoGallery-upload-error-conflict-intro' => 'Er bestaat al een bestand met deze naam.
+Wat wilt u doen?',
+	'wikiaPhotoGallery-upload-error-conflict-rename' => 'Uw bestand hernoemen',
+	'wikiaPhotoGallery-upload-error-conflict-reuse' => 'Het bestaande bestand gebruiken',
+	'wikiaPhotoGallery-upload-error-conflict-overwrite' => 'Het bestaande bestand met uw bestand overschrijven',
+	'wikiaPhotoGallery-upload-error-conflict-insert' => 'Invoegen',
+	'wikiaPhotoGallery-photooptions-title' => 'Bestandsinstellingen',
+	'wikiaPhotoGallery-photooptions-intro' => 'Elk bestand in een galerij kan een bijschrift en een verwijzing naar een specifieke pagina op de wiki hebben.',
+	'wikiaPhotoGallery-photooptions-captiontitle' => 'Bijschrift',
+	'wikiaPhotoGallery-photooptions-captionsub' => "'''Optioneel.'''
+Beschrijf deze foto.",
+	'wikiaPhotoGallery-photooptions-changepicture' => 'deze afbeelding wijzigen',
+	'wikiaPhotoGallery-photooptions-linktitle' => 'Naar een pagina verwijzen',
+	'wikiaPhotoGallery-photooptions-linksub' => "'''Optioneel.'''
+Als dit bestand wordt aangeklikt, ga dan naar de aangegeven pagina.",
+	'wikiaPhotoGallery-photooptions-done' => 'Afgerond',
+	'wikiaPhotoGallery-preview-title' => 'Galerij bewerken',
+	'wikiaPhotoGallery-preview-intro' => 'Dit is de voorvertoning van de galerij.
+Hier kunt u nieuwe bestanden toevoegen of verplaatsen, wijzigen en van afmetingen veranderen.',
+	'wikiaPhotoGallery-preview-hover-modify' => 'wijzigen',
+	'wikiaPhotoGallery-preview-hover-delete' => 'verwijderen',
+	'wikiaPhotoGallery-preview-add-photo' => 'Bestand toevoegen',
+	'wikiaPhotoGallery-preview-add-caption' => 'Bijschrift toevoegen',
+	'wikiaPhotoGallery-preview-link-tooltip' => 'Bestand verwijst naar "$1"',
+	'wikiaPhotoGallery-preview-size' => 'Afmetingen',
+	'wikiaPhotoGallery-preview-captions' => 'Bijschriften',
+	'wikiaPhotoGallery-preview-captions-left' => 'Links',
+	'wikiaPhotoGallery-preview-captions-center' => 'Gecentreerd',
+	'wikiaPhotoGallery-preview-captions-right' => 'Rechts',
+	'wikiaPhotoGallery-conflict-title' => 'Er is een bewerkingsconflict opgetreden',
+	'wikiaPhotoGallery-conflict-intro' => 'Helaas was het niet mogelijk uw bewerking op te slaan omdat een andere gebruiker de pagina heeft bewerkt terwijl u deze aan het bewerken was.',
+	'wikiaPhotoGallery-conflict-help' => 'De wikitekst voor uw bewerking wordt hieronder weergegeven.
+U kunt deze tekst kopiëren, op "$1" klikken en de tekst plakken op de juiste plaats om uw wijzigingen te herstellen.
+U kunt ook op "$2" klikken om de bijgewerkte pagina te bekijken.',
+	'wikiaPhotoGallery-conflict-edit' => 'Omschakelen naar bewerkingsmodus',
+	'wikiaPhotoGallery-conflict-view' => 'Huidige pagina bekijken',
+	'wikiaPhotoGallery-preview-delete-title' => 'Dit bestand verwijderen?',
+	'wikiaPhotoGallery-preview-delete' => 'Weet u zeker dat u dit bestand uit de galerij wilt verwijderen?',
+	'wikiaPhotoGallery-preview-saving-title' => 'Bezig met opslaan',
+	'wikiaPhotoGallery-preview-saving-intro' => 'Wacht even totdat uw galerij is opgeslagen.',
+	'wikiaPhotoGallery-quit-title' => 'Galerijbewerking verlaten',
+	'wikiaPhotoGallery-quit-intro' => 'Weet u zeker dat u de galerijbewerking wilt verlaten?',
+	'wikiaPhotoGallery-quit-savequit' => 'Opslaan en sluiten',
+	'wikiaPhotoGallery-quit-quitonly' => 'Wijzigingen negeren en afsluiten',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['no'] = array(
+	'wikiaPhotoGallery-preview-captions-left' => 'Venstre',
+	'wikiaPhotoGallery-preview-captions-center' => 'Midt',
+	'wikiaPhotoGallery-preview-captions-right' => 'Høyre',
+	'wikiaPhotoGallery-preview-delete-title' => 'Fjern dette bildet?',
+	'wikiaPhotoGallery-preview-saving-title' => 'Lagring pågår',
+	'wikiaPhotoGallery-quit-savequit' => 'Lagre og avslutt',
 );
 

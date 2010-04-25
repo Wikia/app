@@ -38,13 +38,6 @@ $messages['de'] = array(
 	'mostpopulararticles' => 'Häufig geänderte Artikel',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
- * @author LWChris
- */
-$messages['de-formal'] = array(
-	'mostpopulararticles' => 'Häufig geänderte Artikel',
-);
-
 /** Greek (Ελληνικά)
  * @author Περίεργος
  */
@@ -125,6 +118,13 @@ $messages['ja'] = array(
  */
 $messages['km'] = array(
 	'mostpopulararticles' => 'អត្ថបទពេញនិយមបំផុត (ដកស្រង់ពីមូលដ្ឋានទិន្នន័យ)',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'mostpopulararticles' => 'ಅತ್ಯಂತ ಜನಪ್ರಿಯ ಲೇಖನಗಳು (ದತ್ತಸಂಚಯದಿಂದ)',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

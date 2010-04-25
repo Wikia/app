@@ -153,7 +153,6 @@ Falls Sie irgendwelche Hilfe brauchen sollten, können Sie mir gerne eine Nachri
 '''[[Special:Userlogin|Bitte legen Sie sich ein Benutzerkonto an]]'''. So können Sie ganz einfach Ihre Beiträge im Überblick behalten und sich besser mit dem Rest der Community verständigen.
 
 Falls Sie irgendwelche Hilfe brauchen, können Sie mir gerne eine Nachricht auf [[$2|meiner Diskussionsseite]] hinterlassen! $3",
-	'welcome-message-log' => 'Begrüßung eines neuen Autors',
 	'welcome-message-user-staff' => '==Willkommen==
 
 Guten Tag, Willkommen bei {{SITENAME}}! Danke für Ihre Bearbeitung auf der Seite [[:$1]].

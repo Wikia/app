@@ -269,14 +269,6 @@ $messages['de'] = array(
 	'titleedit' => 'Bearbeiten',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
- * @author LWChris
- */
-$messages['de-formal'] = array(
-	'titleedit-desc' => 'Fügt Titel Bearbeitungs-Button oben auf den Seiten hinzu',
-	'titleedit' => 'Bearbeiten',
-);
-
 /** Zazaki (Zazaki) */
 $messages['diq'] = array(
 	'titleedit' => 'Bıvurne',

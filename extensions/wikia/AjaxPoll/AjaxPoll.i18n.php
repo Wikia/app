@@ -65,12 +65,8 @@ $messages['de'] = array(
  * @author LWChris
  */
 $messages['de-formal'] = array(
-	'ajaxpoll-percentVotes' => '$1%&nbsp;aller Stimmen',
 	'ajaxpoll-thankyou' => 'Vielen Dank für Ihre Stimme!',
 	'ajaxpoll-error' => 'Es gab ein Problem bei der Verarbeitung Ihrer Stimme. Probieren Sie es bitte noch einmal.',
-	'ajaxpoll-summary' => 'Die Umfrage wurde erstellt am $1 $2. Bisher haben $3 Nutzer abgestimmt.',
-	'ajaxpoll-submit' => 'Abstimmen!',
-	'ajaxpoll-closed' => 'Die Umfrage ist beendet. Viel Spaß mit den Ergebnissen.',
 	'ajaxpoll-submitting' => 'Bitte warten Sie kurz, Ihre Stimme wird verarbeitet.',
 );
 
@@ -263,6 +259,19 @@ $messages['no'] = array(
 	'ajaxpoll-submit' => 'Stem!',
 	'ajaxpoll-closed' => 'Avstemningen er stengt nå. Nyt resultatene.',
 	'ajaxpoll-submitting' => 'Vennligst vent, sender inn stemmen din...',
+);
+
+/** Occitan (Occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'ajaxpoll-percentVotes' => '$1% de totes los vòtes',
+	'ajaxpoll-thankyou' => "Mercés d'aver votat !",
+	'ajaxpoll-error' => "Una error s'es producha al moment de la validacion de vòstre vòte, tornatz ensajar.",
+	'ajaxpoll-summary' => 'Lo sondatge foguèt creat lo $1 $2, e $3 personas an ja votat.',
+	'ajaxpoll-submit' => 'Votatz !',
+	'ajaxpoll-closed' => "Lo sondatge es d'ara enlà acabat. Comparatz los resultats.",
+	'ajaxpoll-submitting' => 'Pacientatz pendent lo mandadís de vòstre vòte...',
 );
 
 /** Piedmontese (Piemontèis)

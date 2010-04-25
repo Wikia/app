@@ -60,19 +60,6 @@ $messages['de'] = array(
 	'searchranktracker-empty-list' => 'Derzeit gibt es keine zu trackenden Suchbegriffe.',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
- * @author LWChris
- */
-$messages['de-formal'] = array(
-	'searchranktracker' => 'Suchrang Tracker',
-	'searchranktracker-add-new-entry' => 'Neuen Eintrag hinzufügen',
-	'searchranktracker-edit-entry' => 'Eintrag bearbeiten',
-	'searchranktracker-entry-list' => 'Liste von trackenden Wiki-Seiten',
-	'searchranktracker-page-name-required' => 'Seitenname erforderlich',
-	'searchranktracker-serach-phrase-required' => 'Suchbegriff erforderlich',
-	'searchranktracker-empty-list' => 'Derzeit gibt es keine zu trackenden Suchbegriffe.',
-);
-
 /** Spanish (Español)
  * @author Translationista
  */

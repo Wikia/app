@@ -168,7 +168,8 @@ Vil du gå til [[{{MediaWiki:Mainpage}}|Hovedsiden]] eller kanskje en [[Special:
  * @author Cedric31
  */
 $messages['oc'] = array(
-	'outbound-screen-login-text' => '<a href="$1">Creatz un compte</a> o <a href="$2">identificatz-vos sus vòstre compte existent</a> per evitar aquesta pagina a l\'avenidor',
+	'outbound-screen-login-text' => "[[Special:UserLogin/signup|Creatz un compte]] o [[Special:UserLogin|identificatz-vos sus vòstre compte existent]] per evitar aquesta pagina a l'avenidor",
+	'outbound-screen-you-are-leaving' => 'Ara, sètz a quitar Wikia.',
 );
 
 /** Piedmontese (Piemontèis)

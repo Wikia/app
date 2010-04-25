@@ -45,13 +45,6 @@ $messages['de'] = array(
 	'mostpopularcategories' => 'Beliebteste Kategorien',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
- * @author LWChris
- */
-$messages['de-formal'] = array(
-	'mostpopularcategories' => 'Beliebteste Kategorien',
-);
-
 /** Greek (Ελληνικά)
  * @author Dada
  */
@@ -116,6 +109,13 @@ $messages['ia'] = array(
  */
 $messages['ja'] = array(
 	'mostpopularcategories' => '人気のあるカテゴリ',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'mostpopularcategories' => 'ಅತ್ಯಂತ ಜನಪ್ರಿಯ ವರ್ಗಗಳು',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

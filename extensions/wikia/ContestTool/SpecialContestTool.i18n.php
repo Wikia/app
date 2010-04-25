@@ -82,15 +82,8 @@ Beachte, dass die Ergebnisse nirgendwo geloggt werden und momentan nicht ohne We
  * @author LWChris
  */
 $messages['de-formal'] = array(
-	'cntool-page-title-editor' => 'ContestTool :: Editor',
-	'cntool-page-title-preview' => 'ContestTool :: Vorschau',
-	'cntool-page-title-select' => 'ContestTool',
 	'cntool-label-select' => 'Geben Sie einen gültigen Seitentitel ein',
-	'cntool-button-preview' => 'Vorschau betrachten',
-	'cntool-button-save' => 'Speichern',
 	'cntool-label-content' => 'Ändern Sie den Artikelinhalt unterhalb:',
-	'cntool-label-preview' => 'Vorschau:',
-	'cntool-label-caveat' => 'Warnung',
 	'cntool-caveat' => 'Diese Erweiterung sollte nicht leichtfertig verwendet werden.
 
 Beachten Sie, dass die Ergebnisse nirgendwo geloggt werden und momentan nicht ohne Weiteres ohne Tech-Hilfe rückgängig zu machen sind (daran wird gearbeitet).',

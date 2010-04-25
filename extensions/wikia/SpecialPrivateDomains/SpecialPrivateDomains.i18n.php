@@ -74,12 +74,8 @@ $messages['de'] = array(
  */
 $messages['de-formal'] = array(
 	'privatedomains_nomanageaccess' => "Entschuldigung, Sie haben nicht genügend Rechte, um die erlaubten privaten Domains für dieses Wiki zu verwalten. Nur Wiki Bürokraten und Mitarbeiter haben Zugang.</p><p>Wenn Sie nicht eingeloggt sind, sollten Sie dies wahrscheinlich <a href='/wiki/Special:Userlogin'>machen</a>.",
-	'privatedomains' => 'Private Domains verwalten',
 	'privatedomains_ifemailcontact' => 'Andernfalls wenden Sie sich bitte an [[Special:Emailuser/$1|$1]] falls Sie Fragen haben.',
-	'saveprivatedomains_success' => 'Änderungen an privaten Domains gespeichert.',
 	'privatedomains_invalidemail' => 'Tut uns leid, aber der Zugang zu diesem Wiki ist auf Mitglieder von $1 beschränkt. Wenn Sie eine E-Mail-Adresse von $1 besitzen, können Sie es betreten, oder bestätigen Sie Ihre E-Mail Adresse in Ihren Konteneinstellungen <a href=/wiki/Special:Preferences>hier</a>. Sie können weiterhin Seiten in diesem Wiki ansehen, werden sie aber nicht bearbeiten können.',
-	'privatedomains_affiliatenamelabel' => 'Name der Organisation:',
-	'privatedomains_emailadminlabel' => 'Kontakt-Benutzername bei Zugangsproblemen oder Fragen:',
 	'privatedomainsinstructions' => 'Unten ist die Liste der erlaubten E-Mail-Domains für Editoren dieses Wikis. Jede Zeile bezeichnet einen E-Mail-Suffix, dem Bearbeitungen erlaubt werden. Dies sollte mit einem Suffix pro Zeile formatiert werden. Zum Beispiel:</p><p style="width: 20%; padding:5px; border: 1px solid grey;"> cs.stanford.edu<br /> stanfordalumni.org</p><p>Dies würde Bearbeitungen von jedem mit der E-Mail-Adresse whatever@cs.stanford.edu oder whatever@stanfordalumni.org erlauben.</p><p><b>Geben Sie die erlaubten Domains in das Textfeld unterhalb ein und klicken Sie auf "Speichern".</b>',
 );
 
@@ -224,6 +220,20 @@ $messages['pms'] = array(
 	'privatedomains_affiliatenamelabel' => "Nòm ëd l'organisassion:",
 	'privatedomains_emailadminlabel' => "Nòm utent ëd contat për problema d'acess o arceste:",
 	'privatedomainsinstructions' => "Sota a-i é la lista dij domini ëd pòsta eletrònica përmëttù a j'editor dë sta wiki-sì. Minca linia a spessìfica un sufiss ëd pòsta eletrònica che a l'ha acess për modifiché. Sòn a dovrìa pijé la forma con un sufiss për linia. Për esempi:</p> <p style=\"width: 20%; padding:5px; border: 1px solid grey;\">cs.stanford.edu<br /> stanfordalumni.org</p> <p>Sòn a përmët modìfiche da tuti coj ch'a l'han l'adrëssa ëd pòsta eletrònica whatever@cs.stanford.edu o whatever@stanfordalumni.org</p> <p><b>Ch'a anserissa ij domini përmëttù ant la casela ëd test sì-sota, e ch'a sgnaca \"salvé\".</b>",
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'privatedomains_nomanageaccess' => "Desculpe, mas não tem privilégios para administrar os domínios privados permitidos nesta wiki. Só os burocratas e os membros da equipa têm acesso.</p><p>Se não se autenticou, provavelmente <a href='/wiki/Special:Userlogin'>devia</a>.",
+	'privatedomains' => 'Administrar Domínios Privados',
+	'privatedomains_ifemailcontact' => 'Caso contrário, contacte [[Special:Emailuser/$1|$1]] se tiver dúvidas, por favor.',
+	'saveprivatedomains_success' => 'As alterações aos Domínios Privados foram gravadas.',
+	'privatedomains_invalidemail' => 'Desculpe, mas o acesso a esta wiki está restrito aos membros de $1. Se tem um correio electrónico afiliado com $1 pode introduzir ou reconfirmar o endereço de correio electrónico na página de preferências da sua conta <a href=/wiki/Special:Preferences>aqui</a>. Pode continuar a ver as páginas da wiki, mas não pode editá-las.',
+	'privatedomains_affiliatenamelabel' => 'Nome da organização:',
+	'privatedomains_emailadminlabel' => 'Nome do utilizador de contacto para problemas e questões:',
+	'privatedomainsinstructions' => 'É apresentada abaixo a lista de domínios de correio electrónico permitidos para os editores desta wiki. Cada linha designa um sufixo de correio electrónico com permissões de edição. Deve existir um sufixo por linha. Por exemplo:</p><p style="width: 20%; padding:5px; border: 1px solid grey;">uma.pt<br /> unl.pt</p><p>Isto permite edições a todos aqueles com um endereço de correio electrónico nome@uma.pt ou nome@unl.pt</p><p><b>Introduza os domínios permitidos na caixa de texto abaixo e clique "gravar".</b>',
 );
 
 /** Russian (Русский)

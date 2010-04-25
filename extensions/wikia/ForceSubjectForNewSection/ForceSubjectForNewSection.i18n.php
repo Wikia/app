@@ -128,6 +128,13 @@ $messages['ia'] = array(
 	'force-subject-for-new-section-message' => 'Per favor entra un titulo pro le section',
 );
 
+/** Italian (Italiano)
+ * @author Civvì
+ */
+$messages['it'] = array(
+	'force-subject-for-new-section-message' => 'Si prega di inserire un titolo per la sezione',
+);
+
 /** Japanese (日本語)
  * @author Tommy6
  */

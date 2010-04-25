@@ -50,7 +50,6 @@ $messages['de'] = array(
  */
 $messages['de-formal'] = array(
 	'new-edit-page-preview-notice' => 'Vorschau: Es wurden noch keine Änderungen gespeichert! Scrollen Sie runter zum Editieren.',
-	'templatesused-toggle' => '{{PLURAL:$1|$1 Eintrag|$1 Einträge}} anzeigen/ausblenden',
 );
 
 /** Spanish (Español)

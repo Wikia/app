@@ -56,14 +56,6 @@ $messages['de'] = array(
 	'interwikidispatcher-desc' => 'Löst Interwiki-Links auf um Apache-redirects zu reduzieren',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
- * @author LWChris
- */
-$messages['de-formal'] = array(
-	'interwikidispatcher' => 'Interwiki-Dispatcher',
-	'interwikidispatcher-desc' => 'Löst Interwiki-Links auf um Apache-redirects zu reduzieren',
-);
-
 /** Spanish (Español)
  * @author Translationista
  */
