@@ -1186,6 +1186,7 @@ class PreferencesForm {
 		#
 		global $wgLivePreview;
 		/* Wikia change begin - @author: Bartek */
+		// NOTE: In 1.16, we will be able to get rid of this core-hack by using GetPreferences hook: http://www.mediawiki.org/wiki/Manual:Hooks/GetPreferences
 		$default_array = array(
 				'editsection',
 				'editsectiononrightclick',
