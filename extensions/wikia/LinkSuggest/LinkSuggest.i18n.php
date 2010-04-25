@@ -39,13 +39,6 @@ $messages['de'] = array(
 	'tog-disablelinksuggest' => 'Keine Link-Vorschläge anzeigen',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
- * @author LWChris
- */
-$messages['de-formal'] = array(
-	'tog-disablelinksuggest' => 'Keine Link-Vorschläge anzeigen',
-);
-
 /** Spanish (Español) */
 $messages['es'] = array(
 	'tog-disablelinksuggest' => 'No mostrar sugerencias de vínculos',
@@ -96,6 +89,13 @@ $messages['hu'] = array(
  */
 $messages['ia'] = array(
 	'tog-disablelinksuggest' => 'Non monstrar suggestiones de ligamines',
+);
+
+/** Italian (Italiano)
+ * @author Civvì
+ */
+$messages['it'] = array(
+	'tog-disablelinksuggest' => 'Non mostrare link suggeriti',
 );
 
 /** Japanese (日本語) */

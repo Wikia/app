@@ -109,32 +109,6 @@ $messages['de'] = array(
 	'protectsite-unprotect' => 'Freigeben',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
- * @author LWChris
- */
-$messages['de-formal'] = array(
-	'protectsite' => 'Seite schützen',
-	'protectsite-text-protect' => '<!-- Anweisungen/Kommentare/Richtlinie zur Verwendung -->',
-	'protectsite-text-unprotect' => '<!-- Anweisungen/Kommentare wenn geschützt -->',
-	'protectsite-title' => 'Seitenschutz Einstellungen',
-	'protectsite-allowall' => 'Alle Benutzer',
-	'protectsite-allowusersysop' => 'Registrierte Benutzer und Administratoren',
-	'protectsite-allowsysop' => 'Nur Administratoren',
-	'protectsite-createaccount' => 'Erlaube die Erstellung neuer Accounts von',
-	'protectsite-createpage' => 'Erlaube Erstellung von Seiten von',
-	'protectsite-edit' => 'Erlaube Bearbeiten von Seiten von',
-	'protectsite-move' => 'Erlaube Verschieben von Seiten von',
-	'protectsite-upload' => 'Erlaube Datei-Uploads von',
-	'protectsite-timeout' => 'Sperrdauer:',
-	'protectsite-timeout-error' => "'''Ungültige Sperrdauer.'''",
-	'protectsite-maxtimeout' => 'Maximum:',
-	'protectsite-comment' => 'Grund:',
-	'protectsite-ucomment' => 'Aufhebungsgrund:',
-	'protectsite-until' => 'Geschützt bis:',
-	'protectsite-protect' => 'Schützen',
-	'protectsite-unprotect' => 'Freigeben',
-);
-
 /** Spanish (Español)
  * @author Crazymadlover
  * @author Peter17
@@ -314,6 +288,7 @@ $messages['ja'] = array(
 $messages['lb'] = array(
 	'protectsite' => 'Site schützen',
 	'protectsite-text-protect' => '<!-- Instruktiounen/Commentairen/Richtlinne fir de Gebrauch -->',
+	'protectsite-text-unprotect' => '<!-- Instruktiounen/Bemierkunge wa gespaart -->',
 	'protectsite-title' => 'Astellunge vun de Späre vum Site',
 	'protectsite-allowall' => 'All Benotzer',
 	'protectsite-allowusersysop' => 'Registréiert Benotzer an Administrateuren',

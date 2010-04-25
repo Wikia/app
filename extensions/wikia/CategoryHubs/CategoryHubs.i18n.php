@@ -134,30 +134,7 @@ $messages['de'] = array(
  * @author LWChris
  */
 $messages['de-formal'] = array(
-	'cathub-desc' => 'Erweiterung zum Umwandeln von Kategorieseiten in eine Übersicht von Aktivitäten. Konzipiert für [http://answers.wikia.com answers.wikia.com]',
-	'cathub-progbar-mouseover-answered' => '$1% beantwortet ($2 Antworten)',
-	'cathub-progbar-mouseover-not-answered' => '$1% noch nicht beantwortet ($2 Fragen)',
-	'cathub-progbar-label-answered' => 'Beantwortet',
-	'cathub-progbar-label-unanswered' => 'Unbeantwortet',
-	'cathub-progbar-none-done' => 'Noch keine Fragen beantwortet',
-	'cathub-progbar-all-done' => 'Alle Fragen beantwortet!',
-	'cathub-progbar-allmost-done' => '$1 {{PLURAL:$1|unbeantwortete Frage|unbeantwortete Fragen}} verbleibend!',
-	'cathub-no-unanswered-questions' => 'Momentan gibt es keine unbeantworteten Fragen zu sehen.',
-	'cathub-no-answered-questions' => 'Momentan gibt es keine beantworteten Fragen zu sehen.',
-	'cathub-top-contributors' => 'Top-Mitwirkende an dieser Kategorie',
-	'cathub-top-contribs-all-time' => 'Aller Zeiten',
-	'cathub-top-contribs-recent' => '{{PLURAL:$1|für den letzten Tag|in den letzten $1 Tagen}}',
-	'cathub-question-asked-ago' => 'gefragt $1 $2',
-	'cathub-question-answered-ago' => 'beantwortet $1 $2',
-	'cathub-question-asked-by' => 'von $1',
-	'cathub-anon-username' => 'einem interessierten Benutzer',
-	'cathub-answer-heading' => 'Antworten',
-	'cathub-button-answer' => 'Antworten',
-	'cathub-button-improve-answer' => 'Antwort verbessern',
-	'cathub-button-rephrase' => 'neu formulieren',
 	'cathub-edit-success' => 'Ihre Antwort wurde gespeichert',
-	'cathub-prev' => '&larr; Vorherige',
-	'cathub-next' => 'Nächste &rarr;',
 );
 
 /** Spanish (Español)

@@ -397,62 +397,20 @@ Wenn du der Gründer oder ein Admin dieses Wikis bist, kannst du diese Nachricht
  * @author LWChris
  */
 $messages['de-formal'] = array(
-	'myhome' => 'Startseite',
-	'myhome-activity-more' => 'mehr kürzliche Änderungen',
-	'myhome-activity-feed' => 'Letzte Aktivitäten',
 	'myhome-activity-feed-empty' => "Dieses Wiki wartet auf Ihre Beteiligung.
 Klicken Sie auf '''[[Special:CreatePage|Neue Seite]]''' um mit dem Schreiben zu beginnen!",
-	'myhome-watchlist-feed' => 'Beobachtungsliste',
 	'myhome-watchlist-feed-empty' => 'Sie können Seiten zu Ihrer Beobachtungsliste hinzufügen, indem Sie den Link "Beobachten" klicken, der oben in der Leiste auf der Seite ist.
 Mit Ihrer Beobachtungsliste können Sie die letzten Änderungen an Seiten verfolgen, die Sie interessieren.',
-	'myhome-user-contributions-feed' => 'Beiträge',
-	'myhome-hot-spots-feed' => 'Angesagte Seiten',
 	'myhome-hot-spots-feed-empty' => "Dieses Wiki wartet auf Ihre Beteiligung.
 Klicken Sie auf '''[[Special:CreatePage|Neue Seite]]''' um mit dem Schreiben zu beginnen!",
-	'myhome-hot-spots-newest' => 'Neue Seiten im Wiki',
 	'myhome-hot-spots-brandnew' => 'Dies ist ein nagelneues Wiki. Klicken Sie auf [[Special:CreatePage|Neue Seite]] um mit dem Schreiben zu beginnen!',
-	'tog-myhomedisableredirect' => 'Weiterleitung zur Startseite unterbinden',
-	'myhome-feed-newpage' => 'neue Seite',
-	'myhome-feed-edit' => 'bearbeiten',
-	'myhome-feed-move' => 'Seite verschoben',
-	'myhome-feed-talkpage' => 'Diskussions-Seite',
-	'myhome-feed-blogcomment' => 'Blog-Kommentar',
-	'myhome-feed-delete' => 'gelöscht',
-	'myhome-feed-image' => 'Bild hinzugefügt',
-	'myhome-feed-video' => 'Video hinzugefügt',
-	'myhome-feed-created-by' => 'von $1 erstellt',
-	'myhome-feed-added-by' => 'von $1 hinzugefügt',
-	'myhome-feed-edited-by' => 'von $1 bearbeitet',
-	'myhome-feed-posted-by' => 'von $1 verfasst',
-	'myhome-feed-comment-by' => 'von $1 kommentiert',
-	'myhome-feed-deleted-by' => 'von $1 gelöscht',
-	'myhome-feed-moved-by' => 'von $1 verschoben',
-	'myhome-feed-article-comment-created-by' => 'Neuer Kommentar von $1',
-	'myhome-feed-article-comment-edited-by' => 'Kommentar von $1 bearbeitetet',
-	'myhome-feed-by' => 'von $1',
-	'myhome-feed-diff-alt' => 'Unterschied zur letzten Version',
-	'myhome-feed-new-page-details' => 'Neue Seite',
-	'myhome-feed-summary-details' => 'Zusammenfassung',
-	'myhome-feed-section-edit-details' => 'Bearbeitete den Abschnitt',
-	'myhome-feed-new-blog-post-details' => 'Neuer Blog-Beitrag',
-	'myhome-feed-new-blog-comment-details' => 'Kommentar',
-	'myhome-feed-new-article-comment-details' => 'Kommentar',
-	'myhome-feed-move-details' => 'Umbenannt',
-	'myhome-feed-redirect-details' => 'Weiterleitung',
-	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Bild hinzugefügt|Bilder hinzugefügt}}',
-	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Video hinzugefügt|Videos hinzugefügt}}',
-	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Kategorie hinzugefügt|Kategorien hinzugefügt}}',
 	'myhome-user-contributions-empty' => 'Sie können sich an diesem Wiki beteiligen, indem Sie auf einer beliebigen Seite den Link "Bearbeiten" anklicken und hinzufügen was Sie wissen.
 Jeder kann Seiten ändern, Informationen hinzufügen oder Fehler berichtigen.
 Das Wiki wird durch die Gemeinschaft der Nutzer erstellt, und durch den Klick auf den Bearbeiten-Link werden Sie selbst zum Teil dieser Gemeinschaft.
 Probieren Sie es einfach aus!',
-	'myhome-hot-spots-number-of-editors' => 'Bearbeiter',
 	'myhome-log-in' => "<center>Die Startseiten-Funktion ist nur verfügbar wenn Sie eingeloggt sind.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Bitte melden Sie sich an um diese Seite zu sehen!]'''</big></center>",
 	'myhome-switch-to-monaco' => "Die Startseiten-Funktion ist nur für das Monaco-Design verfügbar.
 Wenn Sie die Startseite sehen möchten, gehen Sie bitte zu '''[[Special:Preferences|Ihren Einstellungen]]''' um Ihr Design zu wechseln.",
-	'myhome-namespace-blog' => 'Benutzer-Blog',
-	'myhome-community-corner-header' => 'Community-Bereich',
-	'myhome-community-corner-edit' => 'Bearbeiten',
 	'community-corner' => "'''Willkommen auf Ihrer Startseite!'''
 
 Diese Seite hilft Ihnen, den Überblick über alle wichtigen Vorgänge im Wiki zu behalten.
@@ -468,10 +426,7 @@ Wenn Sie der Gründer oder ein Admin dieses Wikis sind, können Sie diese Nachri
 * Einen Benutzer vorstellen, der etwas Spezielles zum Wiki beigetragen hat.
 
 * Oder einfach ein paar Worte zur Motivation!",
-	'myhome-hot-spots-definition' => 'Seiten mit den meisten Bearbeitern in den letzten $1 Tagen.',
-	'myhome-default-view-checkbox' => '$1 zu meiner Standardansicht machen',
 	'myhome-default-view-success' => 'Ihre Einstellung wurde gespeichert.',
-	'tooltip-pt-myhome' => 'Gehe zu meiner Startseite',
 );
 
 /** Greek (Ελληνικά)
@@ -516,7 +471,7 @@ $messages['el'] = array(
 	'myhome-hot-spots-number-of-editors' => 'συντάκτες',
 	'myhome-community-corner-header' => 'Στέκι της κοινώτητας',
 	'myhome-community-corner-edit' => 'επεξεργασία του μηνύματος',
-	'community-corner' => "'''Καλωσήρθατε στην Αρχική σας Σελίδα!'''
+	'community-corner' => "'''Καλωσήρθατε στην Αρχική σας Σελίδα!''' 
 
 Αυτή η σελίδα σας βοηθάει να ξέρετε τί συμβαίνει στο wiki.
 

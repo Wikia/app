@@ -167,34 +167,11 @@ Versuche es noch einmal.',
  * @author LWChris
  */
 $messages['de-formal'] = array(
-	'textregex' => 'Text RegEx',
 	'textregex-desc' => '[[Special:textregex/XXXX|Filtern]] Sie ungewollte Phrasen, basierend auf regulären Ausdrücken, aus geänderten Seiten aus',
-	'textregex-page-title' => 'Liste von unerwünschten Ausdrücken',
 	'textregex-error-unblocking' => 'Fehler bei Entsperrung ($1).
 Versuchen Sie es noch einmal.',
-	'textregex-currently-blocked' => "'''Derzeit gesperrte Phrasen:'''",
-	'textregex_nocurrently-blocked' => 'Keine gesperrten Phrasen gefunden',
-	'textregex-addedby-user' => 'hinzugefügt von $1 am $2',
-	'textregex-remove-url' => '[{{SERVER}}$1&id=$2 entfernen]',
-	'textregex-stats-url' => '[{{SERVER}}$1&id=$2 Statistiken]',
-	'textregex-unblock-succ' => 'Entsperrung erfolgreich',
-	'textregex-block-succ' => 'Sperrung erfolgreich',
-	'textregex-unblock-message' => "Phrase '''$1''' ist aus den unerwünschten Ausdrücken entfernt worden.",
-	'textregex-block-message' => "Phrase '''$1''' wurde zu den unerwünschten Ausdrücken hinzugefügt.",
-	'textregex-regex-block' => 'Zu sperrende Phrase:',
-	'textregex-submit-regex' => 'Phrase hinzufügen',
 	'textregex-empty-regex' => 'Geben Sie eine korrekte Phrase zum Sperren an.',
-	'textregex-invalid-regex' => 'Ungültiger regulärer Ausdruck.',
-	'textregex-already-added' => '"$1" wurde bereits hinzugefügt',
-	'textregex-nodata-found' => 'Keine Daten gefunden',
-	'textregex-stats-record' => "Wort ''$1'' wurde von $2 auf $3 verwendet (''Kommentar: $4'')",
 	'textregex-select-subpage' => 'Wählen Sie eine Liste von Phrasen:',
-	'textregex-select-default' => '-- wählen --',
-	'textregex-create-subpage' => 'oder neue Liste erstellen:',
-	'textregex-select-regexlist' => 'gehe zur Liste',
-	'textregex-invalid-regexid' => 'Ungültige Phrase.',
-	'textregex-phrase-statistics' => "Statistiken für \"'''\$1'''\" Phrase (Anzahl von Aufzeichnungen: \$2)",
-	'textregex-return-mainpage' => '[{{SERVER}}$1 zurück zur Liste]',
 );
 
 /** Spanish (Español)

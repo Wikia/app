@@ -59,16 +59,6 @@ $messages['de'] = array(
 	'mostvisitedpageslatest' => 'in den letzten $1 Minuten',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
- * @author LWChris
- */
-$messages['de-formal'] = array(
-	'mostvisitedpages' => 'Häufig aufgerufene Seiten',
-	'mostvisitedpagessearchtext' => 'Artikelname:',
-	'mostvisitedpagessearchbtn' => 'Suchen',
-	'mostvisitedpageslatest' => 'in den letzten $1 Minuten',
-);
-
 /** Spanish (Español)
  * @author McDutchie
  * @author Translationista

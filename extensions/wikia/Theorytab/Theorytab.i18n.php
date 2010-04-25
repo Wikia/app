@@ -48,14 +48,6 @@ $messages['de'] = array(
 	'theorytab-parent-title' => 'Hauptartikel',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
- * @author LWChris
- */
-$messages['de-formal'] = array(
-	'theorytab-title' => 'Theorie',
-	'theorytab-parent-title' => 'Hauptartikel',
-);
-
 /** Spanish (Español) */
 $messages['es'] = array(
 	'theorytab-title' => 'Teorias',

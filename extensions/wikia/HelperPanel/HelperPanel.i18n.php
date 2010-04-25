@@ -44,14 +44,6 @@ $messages['de'] = array(
 	'helperPanel_widgets' => 'Meine Widgets',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
- * @author LWChris
- */
-$messages['de-formal'] = array(
-	'helperPanel_help' => 'Hilfe-Widget',
-	'helperPanel_widgets' => 'Meine Widgets',
-);
-
 /** Spanish (Español)
  * @author Translationista
  */

@@ -156,25 +156,9 @@ $messages['de'] = array(
  * @author LWChris
  */
 $messages['de-formal'] = array(
-	'categoryselect-code-view' => 'Quelltext',
-	'categoryselect-visual-view' => 'Grafische Ansicht',
-	'categoryselect-infobox-caption' => 'Kategorie-Optionen',
 	'categoryselect-infobox-category' => 'Geben Sie den Namen der Kategorie an:',
-	'categoryselect-infobox-sortkey' => 'Ordne diesen Artikel in der Kategorie „$1“ unter folgendem Namen ein:',
-	'categoryselect-addcategory-button' => 'Kategorie hinzufügen',
-	'categoryselect-suggest-hint' => 'Mit Eingabetaste beenden',
 	'categoryselect-tooltip' => "'''Neu!''' Unsere Kategorieauswahl-Leiste. Probieren Sie sie aus oder lesen Sie die [[Help:KategorieAuswahl|Hilfe]] für weitere Informationen",
-	'categoryselect-unhandled-syntax' => 'Nicht unterstützte Syntax entdeckt - Wechsel in grafische Ansicht nicht möglich.',
-	'categoryselect-edit-summary' => 'Kategorien hinzufügen',
-	'categoryselect-empty-name' => 'Kategorie-Name (der Teil vor |)',
-	'categoryselect-button-save' => 'Speichern',
-	'categoryselect-button-cancel' => 'Abbrechen',
-	'categoryselect-error-not-exist' => 'Der Artikel [id=$1] existiert nicht.',
-	'categoryselect-error-user-rights' => 'Keine ausreichenden Benutzerrechte.',
-	'categoryselect-error-db-locked' => 'Die Datenbank ist vorübergehend gesperrt.',
-	'categoryselect-desc' => 'Stellt eine Oberfläche zur Verwaltung der Kategorien in einem Artikel ohne Bearbeitung des ganzen Artikels zur Verfügung.',
 	'categoryselect-edit-abort' => 'Ihre versuchte Änderung wurde durch ein Aufhängen einer Erweiterung abgebrochen',
-	'tog-disablecategoryselect' => 'Vereinfachtes Kategorisieren ausschalten',
 );
 
 /** Greek (Ελληνικά)

@@ -42,7 +42,6 @@ $messages['de'] = array(
  * @author LWChris
  */
 $messages['de-formal'] = array(
-	'quickcreate-desc' => 'Fügt einen Neue Seite Button hinzu mit der Möglichkeit für anonyme Benutzer sich anzumelden',
 	'quickcreate' => 'Senden Sie Ihr Rezept',
 );
 

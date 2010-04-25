@@ -110,19 +110,6 @@ $messages['de'] = array(
 	'whereisextension-name-contains' => 'Variablenname enthält',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
- * @author LWChris
- */
-$messages['de-formal'] = array(
-	'whereisextension' => 'Wo ist Erweiterung',
-	'whereisextension-submit' => 'Suchen',
-	'whereisextension-list' => 'Liste von Wikis mit zutreffenden Kriterien',
-	'whereisextension-isset' => 'ist eingestellt auf',
-	'whereisextension-filter' => 'Filter',
-	'whereisextension-all-groups' => 'Alle Gruppen',
-	'whereisextension-name-contains' => 'Variablenname enthält',
-);
-
 /** Spanish (Español)
  * @author Crazymadlover
  * @author Pertile
@@ -223,6 +210,13 @@ $messages['it'] = array(
 $messages['ja'] = array(
 	'whereisextension-submit' => '検索',
 	'whereisextension-list' => 'ウィキに一致した基準の一覧',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'whereisextension-submit' => 'ಹುಡುಕು',
 );
 
 /** Macedonian (Македонски)

@@ -49,12 +49,6 @@ $messages['de'] = array(
  * @author LWChris
  */
 $messages['de-formal'] = array(
-	'tog-disableeditingtips' => 'Bearbeitungs-Tipps ausblenden',
-	'tog-widescreeneditingtips' => 'Benutze den Editor auf voller Breite',
-	'editingtips_enter_widescreen' => 'Volle Breite',
-	'editingtips_exit_widescreen' => 'Normale Breite',
-	'editingtips_hide' => 'Bearbeitungs-Tipps ausblenden',
-	'editingtips_show' => 'Bearbeitungs-Tipps einblenden',
 	'editingTips' => 'Fügen Sie Ihre Tipps [[MediaWiki:EditingTips|hier]] hinzu',
 );
 

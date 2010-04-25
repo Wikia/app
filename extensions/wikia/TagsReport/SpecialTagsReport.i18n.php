@@ -92,16 +92,7 @@ $messages['de'] = array(
  * @author LWChris
  */
 $messages['de-formal'] = array(
-	'tagsreport' => 'Verwendung von Tags',
-	'tagsreporttitle' => 'Verwendung von Tags',
-	'tagsreportselecttag' => 'Tag wählen:',
-	'tagsreportgo' => 'Anzeigen',
 	'tagsreportnotspecify' => 'Sie haben noch keinen besonderen Tag ausgewählt',
-	'tagsreportnoresults' => 'Keine Ergebnisse gefunden',
-	'tagsreportmainnspace' => 'Seiten',
-	'tagsreportpages' => '(<strong>$1</strong>  {{PLURAL:$1|Seite|Seiten}})',
-	'tagsreportpagesfound' => '<strong>$1</strong> {{PLURAL:$1|Seite|Seiten}} gefunden, die besondere Tags enthalten (dpl, youtube, etc.)',
-	'tagsreportgenerated' => 'Erzeugt am $1',
 );
 
 /** Spanish (Español)

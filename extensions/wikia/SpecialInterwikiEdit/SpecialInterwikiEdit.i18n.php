@@ -75,18 +75,6 @@ $messages['de'] = array(
 	'iwedit-success' => '<p>Link-Erzeugung erfolgreich.</p>',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
- * @author LWChris
- */
-$messages['de-formal'] = array(
-	'iwedit-title' => 'Interwiki-Editor',
-	'iwedit-language-interwikis' => 'nur Sprach-Interwikis',
-	'iwedit-all-interwikis' => 'alle Interwikis',
-	'iwedit-update' => 'Aktualisieren',
-	'iwedit-error' => '<p>Ein Fehler ist aufgetreten.</p>',
-	'iwedit-success' => '<p>Link-Erzeugung erfolgreich.</p>',
-);
-
 /** Spanish (Español)
  * @author Translationista
  */
@@ -174,6 +162,15 @@ $messages['ja'] = array(
 	'iwedit-success' => '<p>リンクの作成に成功しました。</p>',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'iwedit-title' => 'ಇಂಟರ್ವಿಕಿ ಸಂಪಾದಕ',
+	'iwedit-language-interwikis' => 'ಭಾಷಾ ಇಂಟರ್ವಿಕಿಗಳು ಮಾತ್ರ',
+	'iwedit-all-interwikis' => 'ಎಲ್ಲಾ ಇಂಟರ್ವಿಕಿಗಳು',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -222,6 +219,18 @@ $messages['no'] = array(
 	'iwedit-success' => '<p>Opprettet lenke.</p>',
 );
 
+/** Occitan (Occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'iwedit-title' => 'Editor Interwiki',
+	'iwedit-language-interwikis' => 'interwikis de lengas solament',
+	'iwedit-all-interwikis' => 'totes los interwikis',
+	'iwedit-update' => 'Metre a jorn',
+	'iwedit-error' => "<p>Una error s'es producha.</p>",
+	'iwedit-success' => '<p>Lo ligam es estat creat amb succès.</p>',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
@@ -233,6 +242,18 @@ $messages['pms'] = array(
 	'iwedit-update' => 'Modìfica',
 	'iwedit-error' => "<p>A l'é capitaje n'eror.</p>",
 	'iwedit-success' => '<p>Creassion dël colegament andàit bin.</p>',
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'iwedit-title' => 'Editor de Interwikis',
+	'iwedit-language-interwikis' => 'só interwikis de língua',
+	'iwedit-all-interwikis' => 'todas as interwikis',
+	'iwedit-update' => 'Actualizar',
+	'iwedit-error' => '<p>Ocorreu um erro.</p>',
+	'iwedit-success' => '<p>Criação de link com sucesso.</p>',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

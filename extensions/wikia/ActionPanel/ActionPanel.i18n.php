@@ -79,15 +79,9 @@ $messages['de'] = array(
  * @author LWChris
  */
 $messages['de-formal'] = array(
-	'action_panel_edit_title' => 'Antworten',
-	'action_panel_title' => 'Quick Action Panel',
-	'action_panel_categorize' => 'Kategorisieren',
-	'action_panel_categorize_help' => 'Eine Kategorie pro Zeile',
-	'action_panel_categories_summary' => 'Kategorien hinzufügen',
 	'action_panel_save_success' => 'Ihr Beitrag wurde gespeichert.',
 	'action_panel_rename_success' => 'Ihr Artikel wurde umbenannt.',
 	'action_panel_categorize_success' => 'Ihre Kategorien wurden hinzugefügt.',
-	'actionpanel-desc' => 'Ein praktisches Popup-Fenster, welches die Kategorisierung, Umbenennung und Bearbeitung von Artikeln ermöglicht.',
 );
 
 /** Spanish (Español)

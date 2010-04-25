@@ -559,6 +559,7 @@ $messages['af'] = array(
  * @author Juanpabl
  */
 $messages['an'] = array(
+	'wikiastats_other' => 'Atros',
 	'wikiastats_hide' => 'Amagar',
 );
 
@@ -1349,7 +1350,6 @@ $messages['de-formal'] = array(
 	'wikiastats_comparision' => 'Vergleiche',
 	'wikiastats_showstats_btn' => 'Statistik anzeigen',
 	'wikiastats_wikia_information' => 'Wikia Informationen',
-	'wikiastast_refresh_data' => 'Daten aktualisieren',
 	'wikiastats_showcharts' => 'Charts anzeigen',
 	'wikiastats_export_xls' => 'Nach XLS exportieren',
 	'wikiastats_panel_close_btn' => 'Schließen',
@@ -1358,18 +1358,9 @@ $messages['de-formal'] = array(
 	'wikiastats_nostats_found' => 'Keine Statistiken für das ausgewählte Wikia gefunden',
 	'wikiaststs_invalid_date' => 'Ungültiger Datumsbereich',
 	'wikiastats_distrib_article' => 'Editoren Aktivitätsverteilung',
-	'wikiastats_active_absent_wikians' => 'Aktivitätsaufschlüsselung registrierter Editoren',
-	'wikiastats_anon_wikians' => 'Aktivitätsaufschlüsselung anonymer Editoren',
-	'wikiastats_anon_wikians_count' => '$1 {{PLURAL:$1|anonymer|anonyme}} Benutzer gefunden',
 	'wikiastats_pageviews' => 'Seitenaufrufe pro Namensraum pro Monat',
-	'wikiastats_article_size' => 'Artikel, die mindestens einen internen Link enthalten, und .. Zeichen lesbaren Text, ohne Wiki- und HTML-Codes, versteckte Links, etc.;<br />Auch Header zählen nicht (außer Weiterleitungen)',
-	'wikiastats_article_one_link' => 'Artikel, die mindestens einen internen Link enthalten',
-	'wikiastats_article_size_subtitle' => 'Wähle eine oder mehrere Artikelgrößen und klicke den Button um Statistiken anzuzeigen',
 	'wikiastats_recently_active_wikians' => '$1 vor kurzem {{PLURAL:$1|aktiver registrierter Editor|aktive registrierte Editoren, nach Anzahl der Beiträge sortiert}}',
 	'wikiastats_recently_absent_wikians' => '$1 seit kurzem {{PLURAL:$1|abwesender registrierter Editor|abwesende registrierte Editoren, nach Anzahl der Beiträge sortiert}}',
-	'wikiastats_active_wikians_subtitle' => 'nur Bearbeitungen im Artikelnamensraum werden gezählt, abgesehen von der Spalte "Andere"',
-	'wikiastats_anon_wikians_subtitle' => 'nur Bearbeitungen im Artikelnamensraum werden gezählt',
-	'wikiastats_active_wikians_subtitle_info' => 'Δ = Veränderung in der Platzierung seit 30 Tagen',
 	'wikiastats_pageviews_subtext' => 'Seitenaufrufe in diesem Monat (K = x 1000, M = K x 1000, G = M x 1000, T = G x 1000)',
 	'wikiastats_pageviews_counting' => 'x% = Veränderung gegenüber dem Vortag/Vormonat',
 	'wikiastats_pageviews_percent' => 'Prozentuales Wachstum oder Rückgang im Vergleich zum Vormonat',
@@ -1379,14 +1370,7 @@ $messages['de-formal'] = array(
 	'wikiastats_other_nspaces_edits' => 'Am häufigsten bearbeitete Seiten (andere Namensräume) (&gt; 25 Bearbeitungen)',
 	'wikiastats_page_edits_count' => '$1 {{PLURAL:$1|bearbeiteter|am häufigsten bearbeitete}} Artikel gefunden',
 	'wikiastats_other_nspaces_edits_count' => '$1 {{PLURAL:$1|bearbeitete Seite|am häufigsten bearbeitete Seiten}} gefunden',
-	'wikiastats_active_day' => 'Tag',
-	'wikiastats_active_month' => 'Monat',
-	'wikiastats_active_year' => 'Jahr',
-	'wikiastats_active_months' => 'Monate',
 	'wikiastats_wikians' => 'Registrierte Editoren',
-	'wikiastats_articles' => 'Artikel (ohne Weiterleitungen)',
-	'wikiastats_articles_text' => 'Artikel',
-	'wikiastats_archived' => 'Archivierte',
 	'wikiastats_other' => 'Andere',
 	'wikiastats_database' => 'Datenbank',
 	'wikiastats_links' => 'Links',
@@ -1412,7 +1396,6 @@ $messages['de-formal'] = array(
 	'wikiastats_username' => 'Benutzer',
 	'wikiastats_usernames' => 'Benutzer',
 	'wikiastats_edits' => 'Bearbeitungen',
-	'wikiastats_bytes' => 'Bytes',
 	'wikiastats_size' => 'Größe',
 	'wikiastats_words' => 'Worte',
 	'wikiastats_internal' => 'interne',
@@ -1495,8 +1478,6 @@ $messages['de-formal'] = array(
 	'wikiastats_comparisons_table_15' => 'Bilder',
 	'wikiastats_comparisons_table_16' => 'Externe Links',
 	'wikiastats_comparisons_table_17' => 'Hochgeladene Bilder',
-	'wikiastats_back_to_mainpage' => 'Zur Hauptseite der Statistiken gehen',
-	'wikiastats_back_to_prevpage' => 'Zurück',
 	'wikiastats_trend_mean_info' => 'Mittelwert = Durchschnittswerte über gezeigte Monate',
 	'wikiastats_trend_growth_info' => 'Wachstum = Durchschnittswachstum über gezeigte Monate',
 	'wikiastats_trend_value' => 'Wert',
@@ -1504,7 +1485,6 @@ $messages['de-formal'] = array(
 	'wikiastats_trend_ordered' => 'Alle Wikis sind nach der Anrtikelanzahl sortiert.<br />Teil dieser Statistiken wählen:',
 	'wikiastats_trend_where_text' => 'wo:',
 	'wikiastats_trend_all_wikia_text' => 'Alle Wikis',
-	'wikiastats_always_selected' => '(immer ausgewählt)',
 	'wikiastats_creation_wikia_text' => 'Entstehungsgeschichte / Erfolge',
 	'wikiastats_creation_panel_header' => 'Statistik der "Entstehungsgeschichte" wird generiert',
 	'wikiastats_creation_legend' => 'Durchschnittliche Zunahme pro Monat:',
@@ -3061,6 +3041,7 @@ $messages['kn'] = array(
 	'wikiastats_active_months' => 'ತಿಂಗಳುಗಳು',
 	'wikiastats_wikiname' => 'ಹೆಸರು:',
 	'wikiastats_wikicategory' => 'ವರ್ಗ:',
+	'wikiastats_search_text' => 'ಹುಡುಕು:',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

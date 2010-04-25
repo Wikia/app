@@ -75,16 +75,8 @@ $messages['de'] = array(
  * @author LWChris
  */
 $messages['de-formal'] = array(
-	'widgetdashboard' => 'Widget-Verwaltung',
 	'mu_size_your_image' => 'Größe Ihres Bildes ändern',
 	'almosttheretext' => 'Nutzen Sie den Schieberegler um eine Thumbnail-Größe zu wählen, geben Sie eine Beschreibung ein und klicken Sie auf Einfügen',
-	'insertfullsize' => 'Originalbild in voller Größe einfügen',
-	'insertthumbnail' => 'Thumbnail einfügen',
-	'thumbnailsize' => 'Thumbnail-Größe',
-	'captionoptional' => 'Bildunterschrift (optional):',
-	'insertimage' => 'Bild einfügen',
-	'leftalign-tooltip' => 'Linksbündig',
-	'rightalign-tooltip' => 'Rechtsbündig',
 );
 
 /** Spanish (Español)

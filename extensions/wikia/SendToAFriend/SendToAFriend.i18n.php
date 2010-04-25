@@ -137,6 +137,13 @@ Probeer asseblief weer.',
 	'stf_select_friends' => 'Kies vriende:',
 );
 
+/** Aragonese (Aragonés)
+ * @author Juanpabl
+ */
+$messages['an'] = array(
+	'stf_message' => 'Mensache',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  */
@@ -355,19 +362,12 @@ Wenn du glaubst, dass sie irrtümlicherweise gesendet wurde, teile uns dies bitt
  */
 $messages['de-formal'] = array(
 	'invitespecialpage' => 'Laden Sie Freunde zu Wikia ein',
-	'sendtoafriend-desc' => '[[Special:InviteSpecialPage|Freunde einladen Wikia beizutreten]]',
-	'sendtoafriend-button-desc' => 'Zeigt einen "Weiterempfehlen"-Button auf den Seiten',
-	'stf_button' => 'Artikel an einen Freund versenden',
-	'stf_after_reg' => '[[Special:InviteSpecialPage|Lade einen Freund zu Wikia ein!]].',
 	'stf_subject' => '$2 hat Ihnen einen Artikel von $1 geschickt!',
-	'stf_confirm' => 'Nachricht versandt! Weitere Freunde einladen?',
-	'stf_error' => 'Fehler beim Mailversand.',
 	'stf_error_name' => 'Sie haben Ihren Namen nicht angegeben.',
 	'stf_error_from' => 'Sie haben Ihre E-Mail-Adresse nicht angegeben.',
 	'stf_error_to' => 'Sie haben die E-Mail-Adresse Ihres Freundes nicht angegeben.',
 	'stf_frm1' => 'Ihre E-Mail-Adresse:',
 	'stf_frm2' => 'E-Mail-Adressen (Mehr als eine? Trennen Sie sie durch Kommata)',
-	'stf_msg_label' => 'Zu versendende Nachricht',
 	'stf_name_label' => 'Ihr Name',
 	'stf_email_label' => 'Ihre E-Mail-Adresse:',
 	'stf_frm3_send' => 'Guten Tag!
@@ -382,38 +382,19 @@ Werfen Sie doch einmal einen Blick drauf!',
 Ich habe mich gerade bei diesem Wiki bei Wikia angemeldet... $1
 
 Schauen Sie doch auch mal vorbei!',
-	'stf_frm4_send' => 'Abschicken',
-	'stf_frm4_cancel' => 'Abbrechen',
-	'stf_frm4_invite' => 'Einladung verschicken!',
-	'stf_multiemail' => 'An mehr als einen Empfänger verschicken?',
 	'stf_frm5' => '(die URL dieser Seite wird an Ihre Nachricht angehängt)',
-	'stf_frm6' => 'Fenster schließen',
 	'stf_throttle' => 'Aus Sicherheitsgründen können Sie nur $1 {{PLURAL:$1|Einladung|Einladungen}} pro Tag verschicken.',
 	'stf_abuse' => 'Diese E-Mail wurde von $1 über Wikia verschickt.
 Wenn Sie glauben, dass sie irrtümlicherweise gesendet wurde, teilen Sie uns dies bitte unter support@wikia.com mit.',
-	'stf_ctx_invite' => 'Mehr als eine? Mit Komma trennen - bis zu $1!',
-	'stf_ctx_check' => 'Checke Kontakte',
-	'stf_ctx_empty' => 'Unter diesem Benutzerkonto existieren keine Kontakte.',
 	'stf_ctx_invalid' => 'Der Benutzername oder das Passwort ist ungültig. Bitte probieren Sie es noch einmal.',
-	'stf_sending' => 'Etwas Geduld...',
-	'stf_email_sent' => 'Bestätigung senden',
-	'stf_back_to_article' => 'Zurück zum Artikel',
-	'stf_most_emailed' => 'Heute am häufigsten verschickter Artikel in $1:',
-	'stf_most_popular' => 'Beliebteste Artikel auf $1:',
 	'stf_choose_from_existing' => 'Wählen Sie aus Ihren bestehenden Kontakten:',
-	'stf_add_emails' => 'E-Mail-Adressen hinzufügen:',
 	'stf_your_email' => 'Ihr E-Mail-Dienst',
 	'stf_your_login' => 'Ihr Benutzername',
 	'stf_your_password' => 'Ihr Passwort',
 	'stf_your_name' => 'Ihr Name',
 	'stf_your_address' => 'Ihre E-Mail-Adresse',
 	'stf_your_friends' => 'E-Mail-Adressen|Ihrer Freunde',
-	'stf_we_dont_keep' => 'Diese E-Mail-Adresse und das Passwort werden nicht gespeichert',
 	'stf_need_approval' => 'Es werden keine E-Mails ohne Ihre Zustimmung verschickt',
-	'stf_message' => 'Nachricht',
-	'stf_instructions' => '1. Freunde auswählen.|2. "$1" klicken',
-	'stf_select_all' => 'Alle auswählen',
-	'stf_select_friends' => 'Freunde auswählen:',
 );
 
 /** Greek (Ελληνικά)

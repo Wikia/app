@@ -69,7 +69,6 @@ Der Artikel '''$1''' konnte nicht gefunden werden.
  * @author LWChris
  */
 $messages['de-formal'] = array(
-	'our404handler' => 'Fehler 404: Seite nicht gefunden!',
 	'our404handler-oops' => 'Dies sind nicht die Seiten, die Sie gesucht haben. Versuchen Sie eine andere.',
 	'message404' => "'''Es tut uns leid, aber die Seite, die Sie angefordert haben, existiert nicht.'''
 

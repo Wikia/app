@@ -181,6 +181,13 @@ $messages['af'] = array(
 	'pr_msg_exchead' => 'Boodskap is te lank',
 );
 
+/** Aragonese (Aragonés)
+ * @author Juanpabl
+ */
+$messages['an'] = array(
+	'pr_describe_problem' => 'Mensache',
+);
+
 /** Arabic (العربية)
  * @author OsamaK
  */
@@ -376,15 +383,8 @@ Bitte schreibe deine Nachricht neu.',
  * @author LWChris
  */
 $messages['de-formal'] = array(
-	'problemreports' => 'Liste der Problemmeldungen',
-	'reportproblem' => 'Problem melden',
-	'prlogtext' => 'Problemmeldungs-Logbuch',
-	'prlogheader' => 'Liste gemeldeter Probleme und des jeweiligen Status',
-	'prlog_reportedentry' => 'meldete ein Problem mit $1 ($2)',
 	'prlog_changedentry' => 'markierte Problem $1 als "$2"',
 	'prlog_typeentry' => 'änderte Art des Problems $1 auf "$2"',
-	'prlog_removedentry' => 'löschte Problem $1',
-	'prlog_emailedentry' => 'sandte E-Mail an $2 ($3)',
 	'pr_introductory_text' => 'Die meisten Seiten in diesem Wiki können bearbeitet werden und Sie sind ebenfalls herzlich eingeladen dies zu tun und Fehler selbst zu korrigieren!
 Wenn Sie dabei Hilfe brauchen, lesen Sie die [[help:Editieren|Hilfe zum Bearbeiten]] und [[help:Zurücksetzen|Hilfe zum Zurücksetzen von Vandalismus]].
 
@@ -392,23 +392,7 @@ Um Wikia direkt zu kontaktieren oder Urheberrechtsprobleme zu melden, benutzen S
 
 Softwarefehler können in den Foren berichtet werden.
 Hier abgeschickte Berichte werden [[Special:ProblemReports|im Wiki anzeigt]].',
-	'pr_what_problem' => 'Betreff',
-	'pr_what_problem_spam' => 'Seite enthält Spam',
-	'pr_what_problem_vandalised' => 'Die Seite wurde vandaliert',
-	'pr_what_problem_incorrect_content' => 'Der Inhalt ist falsch',
-	'pr_what_problem_software_bug' => 'Fehler in der Wiki-Software',
-	'pr_what_problem_other' => 'Sonstiges',
 	'pr_what_problem_select' => 'Bitte wählen Sie die Art des Problems',
-	'pr_what_problem_unselect' => 'Alle',
-	'pr_what_problem_spam_short' => 'Spam',
-	'pr_what_problem_vandalised_short' => 'Vandalismus',
-	'pr_what_problem_incorrect_content_short' => 'Inhalt',
-	'pr_what_problem_software_bug_short' => 'Bug',
-	'pr_what_problem_other_short' => 'Sonstiges',
-	'pr_what_problem_change' => 'Art des Problems ändern',
-	'pr_describe_problem' => 'Nachricht',
-	'pr_what_page' => 'Name der Seite',
-	'pr_email_visible_only_to_staff' => 'nur sichtbar für Staff',
 	'pr_thank_you' => 'Danke für die Meldung des Problems!
 
 [[Special:ProblemReports/$1|Sie können den aktuellen Status hier verfolgen]].',
@@ -417,43 +401,10 @@ Hier abgeschickte Berichte werden [[Special:ProblemReports|im Wiki anzeigt]].',
 	'pr_empty_summary' => 'Bitte geben Sie eine kurze Problembeschreibung an',
 	'pr_empty_email' => 'Bitte geben Sie Ihre E-Mail-Adresse an',
 	'pr_mailer_notice' => 'Die von Ihnen in Ihren Einstellungen angegebene E-Mail-Adresse wird als Absender der Mail angegeben, sodass der Empfänger Ihnen antworten kann.',
-	'pr_mailer_subject' => 'Problembericht über',
 	'pr_mailer_tmp_info' => 'Sie können die Antwortvorlagen [[MediaWiki:ProblemReportsResponses|hier]] anpassen.',
-	'pr_mailer_to_default' => 'Wikia-Benutzer',
 	'pr_mailer_go_to_wiki' => 'Um eine Mail zu schicken, gehen Sie bitte zum [$1 Wiki, wo das Problem gemeldet wurde]',
-	'pr_total_number' => 'Gesamtzahl Problemmeldungen',
-	'pr_view_archive' => 'Zeige archivierte Meldungen',
-	'pr_view_all' => 'Zeige alle Meldungen',
-	'pr_view_staff' => 'Zeige Meldungen die Staff-Hilfe benötigen',
-	'pr_raports_from_this_wikia' => 'Zeige nur Problemmeldungen dieses Wikis',
-	'pr_reports_from' => 'Zeige nur Meldungen von',
-	'pr_no_reports' => 'Keine passenden Problemmeldungen gefunden',
 	'pr_sysops_notice' => 'Wenn Sie den Status von Problemmeldungen Ihres Wikis ändern möchten, können Sie das <a href="$1">hier</a> tun...',
-	'pr_table_problem_id' => 'Problem-ID',
-	'pr_table_wiki_name' => 'Wiki-Name',
-	'pr_table_problem_type' => 'Art des Problems',
-	'pr_table_page_link' => 'Seite',
-	'pr_table_date_submitted' => 'Gemeldet am',
-	'pr_table_reporter_name' => 'Gemeldet von',
-	'pr_table_description' => 'Beschreibung',
-	'pr_table_comments' => 'Kommentare',
-	'pr_table_status' => 'Status',
-	'pr_table_actions' => 'Aktionen',
-	'pr_status_0' => 'offen',
-	'pr_status_1' => 'behoben',
-	'pr_status_2' => 'geschlossen',
-	'pr_status_3' => 'benötigt Hilfe von Staff',
-	'pr_status_10' => 'Meldung entfernen',
-	'pr_status_undo' => 'Änderung des Status rückgängig machen',
-	'pr_status_ask' => 'Status der Meldung ändern?',
-	'pr_remove_ask' => 'Meldung endgültig löschen?',
-	'pr_status_wait' => 'Etwas Geduld...',
 	'pr_read_only' => 'Im Moment können keine neue Berichte ausgefüllt werden, bitte versuchen Sie es später erneut.',
-	'pr_msg_exceeded' => 'Die maximale Anzahl der Zeichen in diesem Nachrichtenfeld ist 512.
-Bitte schreibe deine Nachricht neu.',
-	'pr_msg_exchead' => 'Die Nachricht ist zu lang',
-	'right-problemreports_action' => 'Zustand und Art von Problemmeldungen ändern',
-	'right-problemreports_global' => 'Zustand und Art von Problemmeldungen wikiübergreifend ändern',
 );
 
 /** Spanish (Español)

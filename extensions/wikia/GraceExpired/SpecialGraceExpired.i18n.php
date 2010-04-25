@@ -46,17 +46,6 @@ $messages['de'] = array(
 Aktivitäten bei der Bewertung von Seiten werden hier ''nicht'' berücksichtigt.",
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
- * @author LWChris
- */
-$messages['de-formal'] = array(
-	'graceexpired' => 'Grace abgelaufen',
-	'graceexpired-row' => '$1 (in $2, zuletzt bearbeitet am $3)',
-	'graceexpired-header' => "Diese Seite listet alle Versionen, die entweder [[:Category:Abandoned|verlassen]], [[:Category:Trash builds|Müll]], [[:Category:Build stubs|unvollständig]] oder [[:Category:Trial Builds|experimentell]] sind, und seit mindestens zwei Wochen nicht bearbeitet wurden.
-
-Aktivitäten bei der Bewertung von Seiten werden hier ''nicht'' berücksichtigt.",
-);
-
 /** Spanish (Español)
  * @author Translationista
  */

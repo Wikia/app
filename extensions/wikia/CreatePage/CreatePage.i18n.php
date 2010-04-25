@@ -181,23 +181,14 @@ Schreibe den zweiten Abschnitt deines Artikels hier.',
  * @author LWChris
  */
 $messages['de-formal'] = array(
-	'createpage-sp-title' => 'Neue Seite anlegen',
-	'createpage_title' => 'Neue Seite anlegen',
-	'createpage_title_caption' => 'Titel:',
-	'createpage_enter_text' => 'Text:',
-	'createpage_empty_title_error' => 'Titel erforderlich',
-	'createpage_empty_article_body_error' => 'Artikeltext erforderlich',
-	'createpage_invalid_title_error' => 'Ungültiger Titel',
 	'createpage_article_already_exists' => 'Ein Artikel mit diesem Namen existiert bereits.
 Bitte wählen Sie einen anderen Namen.',
 	'createpage_spam' => 'Entschuldigung, Ihre Bearbeitung konnte nicht gespeichert werden',
-	'createpage_cant_edit' => 'Konnte die Bearbeitung nicht durchführen',
 	'createpage-dialog-title' => 'Neue Seite anlegen',
 	'createpage-dialog-message1' => 'Juhu, Sie erstellen eine neue Seite!',
 	'createpage-dialog-message2' => 'Wie wollen Sie die Seite nennen?',
 	'createpage-dialog-choose' => 'Wählen Sie ein Seitenlayout:',
 	'createpage-dialog-format' => 'Standardlayout',
-	'createpage-dialog-blank' => 'Leere Seite',
 	'createpage-error-empty-title' => 'Bitte geben Sie einen Titel für Ihren Artikel ein',
 	'createpage-error-invalid-title' => 'Entschuldigung, der Artikelname war ungültig.
 Bitte verwenden Sie einen anderen Titel.',
@@ -207,7 +198,6 @@ Sie können zu <a href="$1">$2</a> gehen, oder Ihre Seite umbenennen',
 Bitte verwenden Sie einen anderen Titel.',
 	'createpage-error-article-blocked' => 'Entschuldigung, wir können diesen Artikel im Moment nicht erstellen.',
 	'tog-createpagedefaultblank' => 'Eine leere Seite als Standard für neue Seiten verwenden',
-	'tog-createpagepopupdisabled' => 'Seite erstellen-Popup deaktivieren',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
 Schreiben Sie den ersten Absatz Ihres Artikels hier.
 

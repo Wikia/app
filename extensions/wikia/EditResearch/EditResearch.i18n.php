@@ -52,11 +52,8 @@ $messages['de'] = array(
  * @author LWChris
  */
 $messages['de-formal'] = array(
-	'search_wikipedia' => 'Wikipedia-Suche',
-	'previous' => 'Vorherige',
 	'research_no_results' => 'Keine Seiten gefunden. Bitte suchen Sie erneut.',
 	'research_wikipedia_title' => 'Ihre Antwort auf Wikipedia recherchieren',
-	'research_this' => 'Das hier recherchieren',
 );
 
 /** Greek (Ελληνικά)

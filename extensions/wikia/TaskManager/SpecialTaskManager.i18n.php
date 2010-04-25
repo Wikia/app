@@ -47,15 +47,6 @@ $messages['de'] = array(
 	'taskmanager_tasklist' => 'Zurück zur Aufgaben-Liste',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
- * @author LWChris
- */
-$messages['de-formal'] = array(
-	'taskmanager' => 'Anzeige und Verwaltung von Hintergrund-Aufgaben',
-	'taskmanager_title' => 'Anzeige und Verwaltung von Hintergrund-Aufgaben',
-	'taskmanager_tasklist' => 'Zurück zur Aufgaben-Liste',
-);
-
 /** Spanish (Español)
  * @author Translationista
  */

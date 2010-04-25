@@ -60,13 +60,6 @@ $messages['de'] = array(
 	'wikifactoryreporter' => 'WikiFactory-Reporter',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
- * @author LWChris
- */
-$messages['de-formal'] = array(
-	'wikifactoryreporter' => 'WikiFactory-Reporter',
-);
-
 /** Lower Sorbian (Dolnoserbski)
  * @author Michawiki
  */
