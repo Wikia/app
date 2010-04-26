@@ -214,13 +214,13 @@ class NewWebsiteJob extends Job {
 			if( isset( $metainfo[ "description"] ) && strcmp( $metainfo[ "title"], $metainfo[ "description"] ) ) {
 				$text .= sprintf( "%s\n%s\n\n",
 					wfMsgForContent( 'newsite-output-description' ),
-					$this->webclean( $metainfo[ "description"], $metainfo[ "charset"] )
+					$metainfo[ "description"]
 				);
 			}
 
-			$text .= wfMsgForContent( 'newsite-output-status' ) . "\n";
 
 			if( isset( $metainfo[ "error" ] ) && $metainfo[ "error" ] >= 400 ) {
+				$text .= wfMsgForContent( 'newsite-output-status' ) . "\n";
 				$text .=  wfMsgForContent( 'newsite-output-status-error', $this->wikilink( $metainfo[ "error" ] ) ) . "\n";
 			}
 
@@ -328,8 +328,7 @@ class NewWebsiteJob extends Job {
 		 */
 		if( preg_match( "|<META[^>]*name=\"description\"[^>]*content=\"([^\"]*)\"[^>]*>|i", $this->mBody, $match ) ||
 			preg_match( "|<META[^>]*content=\"([^\"]*)\"[^>]*name=\"description\"[^>]*>|i", $this->mBody, $match )) {
-			$match[ 1 ] = $this->webclean( $match[ 1 ], $info[ "charset" ] );
-			$info[ "description" ] = $match[ 1 ];
+			$info[ "description" ] = $this->webclean( $match[ 1 ], $info[ "charset" ] );
 		}
 
 		/**
