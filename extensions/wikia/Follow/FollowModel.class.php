@@ -62,7 +62,7 @@ class FollowModel {
 		
 		$queryArray = array();
 		foreach ($namespaces_keys as $value) {
-			$queryArray[] = "(select wl_namespace, wl_title from watchlist where wl_user = ".intval($user_id)." and wl_namespace = ".intval($value)." ORDER BY wl_created desc limit ".intval($limit).")";
+			$queryArray[] = "(select wl_namespace, wl_title from watchlist where wl_user = ".intval($user_id)." and wl_namespace = ".intval($value)." ORDER BY wl_wikia_addedtimestamp desc limit ".intval($limit).")";
 		}
 
 		$res = $db->query( implode(" union ",$queryArray) );
@@ -96,7 +96,7 @@ class FollowModel {
 				$con,
 				__METHOD__,
 				array(
-					'ORDER BY' 	=> 'wl_created desc,wl_title',
+					'ORDER BY' 	=> 'wl_wikia_addedtimestamp desc,wl_title',
 					'GROUP BY' => 'wl_namespace'
 				)
 		);	
@@ -158,7 +158,7 @@ class FollowModel {
 				$con,
 				__METHOD__,
 				array(
-					'ORDER BY' 	=> 'wl_created desc,wl_title',
+					'ORDER BY' 	=> 'wl_wikia_addedtimestamp desc,wl_title',
 					'LIMIT'		=> 10
 				)
 		);	
