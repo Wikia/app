@@ -8,6 +8,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 	}
 
 	public function process( Array $events ) {
+		global $wgEnableAnswers;
 		wfProfileIn( __METHOD__ );
 
 		if( $this->isThresholdMet(count($events)) ) {
@@ -25,20 +26,21 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			);
 
 			$msgKeys = array();
+			$wikiType = !empty($wgEnableAnswers) ? '-answers' : '';
 			if( $eventData['data']['registeredUserFirstEdit'] ) {
-				$msgKeys['subject'] = 'founderemails-email-page-edited-reg-user-first-edit-subject';
-				$msgKeys['body'] = 'founderemails-email-page-edited-reg-user-first-edit-body';
-				$msgKeys['body-html'] = 'founderemails-email-page-edited-reg-user-first-edit-body-HTML';
+				$msgKeys['subject'] = 'founderemails' . $wikiType . '-email-page-edited-reg-user-first-edit-subject';
+				$msgKeys['body'] = 'founderemails' . $wikiType . '-email-page-edited-reg-user-first-edit-body';
+				$msgKeys['body-html'] = 'founderemails' . $wikiType . '-email-page-edited-reg-user-first-edit-body-HTML';
 			}
 			elseif( $eventData['data']['registeredUser'] ) {
-				$msgKeys['subject'] = 'founderemails-email-page-edited-reg-user-subject';
-				$msgKeys['body'] = 'founderemails-email-page-edited-reg-user-body';
-				$msgKeys['body-html'] = 'founderemails-email-page-edited-reg-user-body-HTML';
+				$msgKeys['subject'] = 'founderemails' . $wikiType . '-email-page-edited-reg-user-subject';
+				$msgKeys['body'] = 'founderemail' . $wikiType . '-email-page-edited-reg-user-body';
+				$msgKeys['body-html'] = 'founderemails' . $wikiType . '-email-page-edited-reg-user-body-HTML';
 			}
 			else {
-				$msgKeys['subject'] = 'founderemails-email-page-edited-anon-subject';
-				$msgKeys['body'] = 'founderemails-email-page-edited-anon-body';
-				$msgKeys['body-html'] = 'founderemails-email-page-edited-anon-body-HTML';
+				$msgKeys['subject'] = 'founderemails' . $wikiType . '-email-page-edited-anon-subject';
+				$msgKeys['body'] = 'founderemails' . $wikiType . '-email-page-edited-anon-body';
+				$msgKeys['body-html'] = 'founderemails' . $wikiType . '-email-page-edited-anon-body-HTML';
 			}
 
 			$langCode = $founderEmails->getWikiFounder()->getOption('language');

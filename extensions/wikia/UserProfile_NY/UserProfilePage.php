@@ -33,8 +33,9 @@ class UserProfilePage extends Article{
 		$wgOut->setPageTitle(  $wgTitle->getPrefixedText() );
 
 		# No need to display noarticletext, we use our own message
-		if ( !$this->user_id ) {
+		if ( !$this->user_id ) {			
 			parent::view();
+			$wgOut->addHTML( wfMsg( 'user-no-profile' ) );
 			return "";
 		}
 
@@ -833,6 +834,7 @@ class UserProfilePage extends Article{
 		}
 		$edit_info_link = Title::MakeTitle(NS_SPECIAL,"UpdateProfile");
 
+		/*
 		if ($joined_data) {
 			$output .= "<div class=\"user-section-heading\">
 				<div class=\"user-section-title\">
@@ -854,7 +856,7 @@ class UserProfilePage extends Article{
 			"</div></span>";
 		} else if ($wgUser->getName()==$user_name) {
 			$output .= "<div class=\"user-section-heading\">
-				<span id=\"user-section-custom\">
+				<span id=\"user-section-custom\">???
 				<div class=\"user-section-title\">
 					".wfMSg("custom-info-title")."
 				</div>
@@ -872,6 +874,7 @@ class UserProfilePage extends Article{
 				".wfMSg("custom-no-info")."
 			</div></span>";
 		}
+		*/
 
 		return $output;
 	}

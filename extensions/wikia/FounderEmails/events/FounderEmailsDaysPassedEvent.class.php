@@ -8,7 +8,7 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 	}
 
 	public function process( Array $events ) {
-		global $wgExternalSharedDB;
+		global $wgExternalSharedDB, $wgEnableAnswers;
 		wfProfileIn( __METHOD__ );
 
 		$founderEmails = FounderEmails::getInstance();
@@ -28,10 +28,11 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 					'$UNSUBSCRIBEURL' => $event['data']['unsubscribeUrl']
 				);
 
+				$wikiType = !empty($wgEnableAnswers) ? '-answers' : '';
 				$langCode = $founderEmails->getWikiFounder( $wikiId )->getOption('language');
-				$mailSubject = $this->getLocalizedMsgBody( 'founderemails-email-' . $activateDays . '-days-passed-subject', $langCode, array() );
-				$mailBody = $this->getLocalizedMsgBody( 'founderemails-email-' . $activateDays . '-days-passed-body', $langCode, $emailParams );
-				$mailBodyHTML = $this->getLocalizedMsgBody( 'founderemails-email-' . $activateDays . '-days-passed-body-HTML', $langCode, $emailParams );
+				$mailSubject = $this->getLocalizedMsgBody( 'founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-subject', $langCode, array() );
+				$mailBody = $this->getLocalizedMsgBody( 'founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-body', $langCode, $emailParams );
+				$mailBodyHTML = $this->getLocalizedMsgBody( 'founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-body-HTML', $langCode, $emailParams );
 
 				$founderEmails->notifyFounder( $mailSubject, $mailBody, $mailBodyHTML, $wikiId );
 

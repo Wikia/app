@@ -106,11 +106,9 @@ function createAnswerForm(button){
 				//return false;
 
 				url = wgServer + wgScriptPath + "/api.php?format=json&token=" + encodeURIComponent(token) + "&action=edit&title=" + this_title + "&text=" + encodeURIComponent(add_answer.value);
-				jQuery.post( url, "", function( response ){
-					eval("j=" + response);
-
-					if( j.error ){
-						$(button).parents('li').find('.cathub-actual-answer-wrapper').prepend("<div>" + j.error.info + "</div>");
+				jQuery.postJSON( url, "", function( response ){
+					if( response.error ){
+						$(button).parents('li').find('.cathub-actual-answer-wrapper').prepend("<div>" + response.error.info + "</div>");
 						return false;
 					}else{
 						// Add a spinner (for loading of new content) and display a success message for a bit.
