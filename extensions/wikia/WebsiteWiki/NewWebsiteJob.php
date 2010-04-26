@@ -338,12 +338,7 @@ class NewWebsiteJob extends Job {
 			preg_match( "|<META[^>]*content=\"([^\"]*)\"[^>]*name=\"keywords\"[^>]*>|i", $this->mBody, $match )) {
 			if( isset( $match[ 1 ] ) ) {
 				$match[ 1 ] = $this->webclean( $match[ 1 ], $info[ "charset" ] );
-				if( strpos( $match[ 1 ], "," ) ) {
-					$info[ "keywords" ] = explode( ",", $match[ 1 ] );
-				}
-				else {
-					$info[ "keywords" ] = explode( " ", $match[ 1 ] );
-				}
+				$info[ "keywords" ] = preg_split( "/[\s;,]/", $match[ 1 ] );
 			}
 		}
 
@@ -408,6 +403,7 @@ class NewWebsiteJob extends Job {
 		    }
 		}
 		print_r( $info );
+		exit(0);
 		return $info;
 	}
 

@@ -7,6 +7,9 @@
 ini_set( "include_path", dirname(__FILE__)."/../../../maintenance/" );
 require_once( "commandLine.inc" );
 
+$job = new NewWebsiteJob( Title::newFromText( "Irbapol.pl", NS_MAIN ), array( "test" => true ) );
+$job->run();
+
 $job = new NewWebsiteJob( Title::newFromText( "Itaio.pl", NS_MAIN ), array( "test" => true ) );
 $job->run();
 
