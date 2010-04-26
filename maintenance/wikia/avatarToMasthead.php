@@ -221,7 +221,7 @@ function copyAvatarsToMasthead() {
 				}
 				
 				if ( $uploaded === true ) {
-					saveDataInDB($mUser, $city_id, $__files, $sFilePath);
+					saveDataInDB($user_id, $city_id, $__files, $sFilePath);
 				}
 
 			} else {
@@ -232,11 +232,11 @@ function copyAvatarsToMasthead() {
 	unset($wikiArr);
 }
 
-function saveDataInDB($mUser, $city_id, $__files, $sFilePath) {
+function saveDataInDB($user_id, $city_id, $__files, $sFilePath) {
 	global $wgStatsDB, $UNLINK_OLD;
 	$dbs = wfGetDB(DB_MASTER, array(), $wgStatsDB);
 	$data = array(
-		'user_id' 		=> $mUser->getId(),
+		'user_id' 		=> $user_id,
 		'old_path' 		=> $__files,
 		'city_id' 		=> $city_id,
 		'new_path' 		=> $sFilePath,
