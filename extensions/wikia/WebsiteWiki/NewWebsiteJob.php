@@ -307,14 +307,16 @@ class NewWebsiteJob extends Job {
 			/**
 			 * check meta headers
 			 */
-		    if(	preg_match( "|<META.*charset=([\w\d\-]+)>|Ui", $this->mBody, $match ) )  {
+		    if(	preg_match( "|<meta.*charset=([\w\d\-]+)|i", $this->mBody, $match ) )  {
+				print_r( $match );
 				$info[ "charset" ] = $match[ 1 ];
 			}
 			else {
 				$info[ "charset" ] = "iso-8859-1";
 			}
 		}
-
+		print_r( $info );
+		exit(0);
 		/**
 		 * get title
 		 */
