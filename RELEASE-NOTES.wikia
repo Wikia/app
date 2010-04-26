@@ -1,4 +1,5 @@
 == Changes since 201004.5 ==
+* rt#47096: add Emoticons ext (uberfuzzy)
 * rt#47082: Recipes Template: wrong description message used on the ingredients page (macbre)
 * rt#47093: Possible security problem with Barrylb calendar extension (Nef)
 * rt#47080: Carbon theme, header menu linking coloring useless (Nef)
