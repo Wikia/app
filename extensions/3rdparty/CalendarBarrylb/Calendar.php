@@ -54,7 +54,7 @@ function createmwCalendar($input)
   {
     $month = intval($_GET['month']);
     $month = ($month<10?"0".$month:$month);
-    $year = $_GET['year'];
+    $year = intval($_GET['year']);
   }
   else
   {

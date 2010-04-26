@@ -33,16 +33,16 @@ if( defined( 'MEDIAWIKI' ) ) {
     function execute( $par ) {
       global $wgOut, $wgRequest, $wgParser, $wgTitle, $wgUser;
       
-      $year = isset($_GET['year']) ? $_REQUEST['year'] : null;
-      $month = isset($_GET['month']) ? $_REQUEST['month'] : null;
-      $day = isset($_GET['day']) ? $_REQUEST['day'] : null;
+      $year = isset($_GET['year']) ? intval($_REQUEST['year']) : null;
+      $month = isset($_GET['month']) ? intval($_REQUEST['month']) : null;
+      $day = isset($_GET['day']) ? intval($_REQUEST['day']) : null;
       if ($year == "")
         $year = date("Y"); 
       if ($month == "")
         $month = date("m");
         
       if (isset($_GET['category']))
-        $catname = $_GET['category'];
+        $catname = htmlspecialchars($_GET['category']);
       else
         $catname = 'Events';
         
