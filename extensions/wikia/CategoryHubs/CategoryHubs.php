@@ -52,9 +52,10 @@ if( $wgEnableCategoryHubsExt ) {
 	$wgHooks['FlexibleCategoryViewer::getCategoryTop'][] = 'categoryHubCategoryTop';
 	$wgHooks['FlexibleCategoryViewer::getOtherSection'][] = 'categoryHubOtherSection';
 	$wgHooks['FlexibleCategoryViewer::getSubcategorySection'][] = 'categoryHubSubcategorySection';
-	
 	//$wgHooks['FlexibleCategoryViewer::getCategoryBottom'][] = 'categoryHubCategoryBottom';
 }
+
+$wgAjaxExportList[] = 'wfAnswersTagsAjaxGetArticles';
 
 // parser hooks for Q&A project tags
 function CategoryHubs_initParserHook(&$parser) {
@@ -383,6 +384,38 @@ function wfAnswersSubcategoriesParserHook( $input, $args, $parser ) {
 
 	}
 	return $out;
+}
+
+function wfAnswersTagsAjaxGetArticles( ) {
+	global $wgRequest;	
+	$type = $wgRequest->getVal( 'type', 'u' );
+	$numRet = $wgRequest->getVal( 'numRet', 0 );
+	$offset = $wgRequest->getVal( 'offset', 0 );
+
+	$UN_CLASS = "unanswered_questions";
+	$ANS_CLASS = "answered_questions";
+	$U_SUFFIX = "_u"; // appended to url params to differentiate whihc tab is being paginated
+	$A_SUFFIX = "_a";
+
+	$r = '';
+
+	if( 'a' == $type ) {
+		$answered = CategoryHub::getAnsweredCategory();
+		$answeredTitle = Title::newFromText( $answered, NS_CATEGORY );
+		$answeredArticles = wfAnswersTagsDoCategoryQuery( $answeredTitle );
+		wfCategoryHubGetAnsweredQuestions( $answeredArticles, &$r, $ANS_CLASS, $A_SUFFIX, $numRet, $offse );
+	} else {
+		$unanswered =  CategoryHub::getUnAnsweredCategory();
+		$unansweredTitle = Title::newFromText( $unanswered, NS_CATEGORY );
+		$unansweredArticles = wfAnswersTagsDoCategoryQuery( $unansweredTitle );
+		wfCategoryHubGetUnansweredQuestions( $answeredArticles, &$r, $ANS_CLASS, $A_SUFFIX, $numRet, $offset, $parser );
+	}
+
+        $response = new AjaxResponse( $r );
+        //$response->setCacheDuration( 60 * 2 );
+        $response->setContentType('text/plain; charset=utf-8');
+
+        return $response;
 }
 
 $wgExtensionMessagesFiles['CategoryHub'] = dirname(__FILE__).'/CategoryHubs.i18n.php';
@@ -744,11 +777,12 @@ function categoryHubsProgressBar( $categoryEdits, &$r ) {
 
 function wfCategoryHubGetAnsweredQuestions( $answeredArticles, &$r, $type, $suffix, $numReturned_a, $offset_a, $parser = null ) {
 	global $wgUser, $wgCategoryHubArticleLimitPerTab;
-
+	$inTag = true;
 	if( empty( $parser ) ) {
 		$tmpParser = new Parser();
 		$tmpParser->setOutputType(OT_HTML);
 		$tmpParserOptions = new ParserOptions();
+		$inTag = false;
 	}
 
 	$r .= "<ul class='interactive-questions'>\n";
@@ -791,11 +825,11 @@ function wfCategoryHubGetAnsweredQuestions( $answeredArticles, &$r, $type, $suff
 	$r .= "</ul>\n";
 
 	if($numReturned_a > 0){
-		$r .= categoryHubPagination($wgCategoryHubArticleLimitPerTab, $offset_a, $numReturned_a, $suffix);
+		$r .= categoryHubPagination($wgCategoryHubArticleLimitPerTab, $offset_a, $numReturned_a, $suffix, $inTag);
 	}
 }
 
-function wfCategoryHubGetUnansweredQuestions( $unansweredArticles, &$r, $type, $suffix, $numReturned_u, $offset_u ) {
+function wfCategoryHubGetUnansweredQuestions( $unansweredArticles, &$r, $type, $suffix, $numReturned_u, $offset_u, $inTag = false ) {
 	global $wgUser, $wgCategoryHubArticleLimitPerTab;
 	// the plan is: load through js, and then do
 	// ^_^  
@@ -823,7 +857,7 @@ function wfCategoryHubGetUnansweredQuestions( $unansweredArticles, &$r, $type, $
 	$r .= "</ul>\n";
 
 	if($numReturned_u > 0){
-		$r .= categoryHubPagination($wgCategoryHubArticleLimitPerTab, $offset_u, $numReturned_u, $suffix);
+		$r .= categoryHubPagination($wgCategoryHubArticleLimitPerTab, $offset_u, $numReturned_u, $suffix, $inTag);
 	}
 }
 
@@ -1053,7 +1087,7 @@ function categoryHubOtherSection(&$catView, &$r){
  * @param suffix String - a suffix to append to the offset.  This is needed since there are two pagination links
  *                        per page (one for each tab).
  */
-function categoryHubPagination($limit, $offset, $numReturned, $suffix) {
+function categoryHubPagination($limit, $offset, $numReturned, $suffix, $inTag = false) {
 	$html = "";
 	$html .= Xml::openElement('ul', array('class' => "cathub-pagination"));
 
@@ -1061,8 +1095,11 @@ function categoryHubPagination($limit, $offset, $numReturned, $suffix) {
 	$sk = $wgUser->getSkin();
 	$html .= Xml::openElement('li', array('class' => "first"));
 	if($offset > 0){
-		$html .= $sk->link( $wgTitle, wfMsgExt('cathub-prev', array()), array('rel' => 'previous'),
-							array( "offset$suffix" => ($offset - $limit)), array('known'));
+		if( $inTag ) {
+			$html .= $sk->link( $wgTitle, wfMsgExt('cathub-prev', array()), array('rel' => 'previous'), array( "offset$suffix" => ($offset - $limit)), array('known'));
+		} else {
+			$html .= $sk->link( $wgTitle, wfMsgExt('cathub-prev', array()), array('rel' => 'previous'), array( "offset$suffix" => ($offset - $limit)), array('known'));
+		}
 	} else {
 		$html .= "&nbsp;";
 	}
@@ -1071,8 +1108,11 @@ function categoryHubPagination($limit, $offset, $numReturned, $suffix) {
 	$nextLink = "";
 	$html .= Xml::openElement('li', array('class' => 'last'));
 	if($numReturned > $limit){
-		$html .= $sk->link( $wgTitle, wfMsgExt('cathub-next', array()), array('rel' => 'next'),
-							array( "offset$suffix" => ($offset + $limit)), array('known'));
+		if( $inTag ) {
+			$html .= $sk->link( $wgTitle, wfMsgExt('cathub-next', array()), array('rel' => 'next'), array( "offset$suffix" => ($offset + $limit)), array('known'));
+		} else {
+			$html .= $sk->link( $wgTitle, wfMsgExt('cathub-next', array()), array('rel' => 'next'), array( "offset$suffix" => ($offset + $limit)), array('known'));
+		}
 	} else {
 		$html .= "&nbsp;";
 	}
