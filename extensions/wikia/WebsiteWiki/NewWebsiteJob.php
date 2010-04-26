@@ -145,14 +145,15 @@ class NewWebsiteJob extends Job {
 			$this->mHeaders = array_pop( $headers );
 			$this->mBody = $page;
 
+			$this->makeRelated();
+			$this->makeArticle();
+
 			/**
 			 * do not make thumbnails for redirects
 			 */
 			if( !$this->mIsRedirect ) {
 				$this->makeThumbnail();
 			}
-			$this->makeRelated();
-			$this->makeArticle();
 		}
 		else {
 			$delete  = true;
@@ -407,7 +408,7 @@ class NewWebsiteJob extends Job {
 				$info[ "system" ] = "Windows";
 		    }
 		}
-
+		print_r( $info );
 		return $info;
 	}
 
