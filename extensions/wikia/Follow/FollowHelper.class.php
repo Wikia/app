@@ -357,7 +357,7 @@ class FollowHelper {
 	 * @return  array
 	 */
 	
-	static public function getMasthead() {
+	static public function getMasthead($userspace) {
 		wfLoadExtensionMessages( 'Follow' );
 		return array('text' => wfMsg('wikiafollowedpages-masthead'), 'href' => Title::newFromText("Following/{$userspace}", NS_SPECIAL )->getLocalUrl(), 'dbkey' => 'Following', 'tracker' => 'following');	
 	} 
