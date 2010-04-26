@@ -19,6 +19,7 @@ $messages['en'] = array(
 	'recipes-template-error-field-required' => 'This field is required',
 	'recipes-template-error-title-exists' => '"$1" already exists. [{{fullurl:$1|action=edit}} Edit it?]',
 	'recipes-template-hours' => 'hours',
+	'recipes-template-ingredient-description-hint' => 'What kind of ingredient is this? Where does it come from? What is it typically used for? How does it taste?',
 	'recipes-template-ingredient-edit-summary' => 'Creating an ingredient page',
 	'recipes-template-ingredients-hint' => 'To link each ingredient to a page with more information -- highlight the name of the ingredient (milk, green peppers, brown sugar) and click the Link button.',
 	'recipes-template-ingredients-label' => 'Ingredients:',
