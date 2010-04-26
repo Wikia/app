@@ -8,6 +8,7 @@ class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 	}
 
 	public function process( Array $events ) {
+		global $wgEnableAnswers;
 		wfProfileIn( __METHOD__ );
 
 		if( $this->isThresholdMet(count($events)) ) {
@@ -23,10 +24,11 @@ class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 				'$UNSUBSCRIBEURL' => $eventData['data']['unsubscribeUrl']
 			);
 
+			$wikiType = !empty($wgEnableAnswers) ? '-answers' : '';
 			$langCode = $founderEmails->getWikiFounder()->getOption('language');
-			$mailSubject = $this->getLocalizedMsgBody( 'founderemails-email-user-registered-subject', $langCode, array() );
-			$mailBody = $this->getLocalizedMsgBody( 'founderemails-email-user-registered-body', $langCode, $emailParams );
-			$mailBodyHTML = $this->getLocalizedMsgBody( 'founderemails-email-user-registered-body-HTML', $langCode, $emailParams );
+			$mailSubject = $this->getLocalizedMsgBody( 'founderemails' . $wikiType . '-email-user-registered-subject', $langCode, array() );
+			$mailBody = $this->getLocalizedMsgBody( 'founderemails' . $wikiType . '-email-user-registered-body', $langCode, $emailParams );
+			$mailBodyHTML = $this->getLocalizedMsgBody( 'founderemails' . $wikiType . '-email-user-registered-body-HTML', $langCode, $emailParams );
 
 			wfProfileOut( __METHOD__ );
 			return $founderEmails->notifyFounder( $mailSubject, $mailBody, $mailBodyHTML );

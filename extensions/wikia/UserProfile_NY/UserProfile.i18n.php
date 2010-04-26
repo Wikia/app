@@ -162,6 +162,7 @@ function efWikiaUserProfile() {
 		'user-profile-picture-scanfailed'=>'scan failed',
 		'user-profile-goback'=>'Go Back',
 		'user-no-images'=>'No images uploaded',
+		'user-no-profile' => '<br/><br/><div>This username hasn\'t been registered. <a href="/wiki/Special:Signup">Sign up</a> if you would like to claim it!</div>',
 		'edit-profile-title'=>'Edit Your Profile',
 		'user-page-link'=>'User Page',		
 		'user-social-profile-link'=>'Social Profile',

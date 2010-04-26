@@ -1032,4 +1032,17 @@ class CategoryEdits {
 		wfProfileOut( __METHOD__ );
 		return $cats;
 	}
+
+        /**
+         * getPageCount
+         *
+         * @access public
+         *
+         *
+         */
+
+        public function getPageCount() {
+                return $this->mCatPageCount;
+        }
+
 }

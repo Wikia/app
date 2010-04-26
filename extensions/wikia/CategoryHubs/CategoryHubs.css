@@ -26,6 +26,16 @@ body.ns-14 #answers_page #answers_article{ padding-top:0; }
 #answers_page .ui-widget-header{
 	background-image:url(tab_navbar_bg.png);
 }
+
+.answers-parser-left {
+	float: left;
+}
+
+.answers-parser-right {
+/*	float: right; 	*/
+	text-align: right;
+}
+
 .cathub-actual-answer { position: relative; }
 .cathub-add-answer-wrapper { margin-right: 150px; }
 .cathub-actual-answer .cathub-button {
@@ -58,4 +68,8 @@ body.ns-14 #answers_page #answers_article{ padding-top:0; }
     border-color: #000080;
 	text-decoration:none;
 	background-color:#eef;
+}
+
+#tag-tabs{
+	display: none;
 }

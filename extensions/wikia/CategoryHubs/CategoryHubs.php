@@ -23,30 +23,367 @@ define('UNANSWERED_CATEGORY', 'unanswered_questions');
 
 // Since the entire article for the answered questions will be loaded, we create a more conservative limit.
 // The maximum number of articles per tab because the whole article will be loaded (eg: max of 10 answered, 10 unanswered)
-// WARNING: Defaults to 0 (since not this would involve a lot of extra data-loading that will only be needed if CategoryHubs is enabled).
 global $wgCategoryHubArticleLimitPerTab;
+// WARNING: Defaults to 0 (since not this would involve a lot of extra data-loading that will only be needed if CategoryHubs is enabled).
 $wgCategoryHubArticleLimitPerTab = 10; // required (otherwise will default to 0).
 
+if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
+        $wgHooks['ParserFirstCallInit'][] = 'CategoryHubs_initParserHook';
+} else {
+        $wgExtensionFunctions[] = 'CategoryHubs_initParserHook';
+}
 
-///// BEGIN - SETUP HOOKS /////
-$wgHooks['LanguageGetMagic'][] = 'categoryHubAddMagicWords'; // setup names for parser functions (needed here)
-$wgHooks['ParserAfterStrip'][] = 'categoryHubCheckForMagicWords';
+if( $wgEnableCategoryHubsExt ) {
+	///// BEGIN - SETUP HOOKS /////
+	$wgHooks['LanguageGetMagic'][] = 'categoryHubAddMagicWords'; // setup names for parser functions (needed here)
+	$wgHooks['ParserAfterStrip'][] = 'categoryHubCheckForMagicWords';
 	// TODO: FIXME: Can this be put somewhere better so that the scripts are only included on CategoryHubs rather than all Answers pages?
 	$wgHooks['BeforePageDisplay'][] = 'categoryHubAdditionalScripts';
-$wgHooks['MakeGlobalVariablesScript'][] = 'categoryHubJsGlobalVariables';
+	$wgHooks['MakeGlobalVariablesScript'][] = 'categoryHubJsGlobalVariables';
 
-// Allows us to define a special order for the various sections on the page.
-$wgHooks['CategoryViewer::getOtherSection'][] = 'categoryHubPreviewCheck'; // only for neutering display of previews.
-$wgHooks['FlexibleCategoryPage::openShowCategory'][] = 'categoryHubBeforeArticleText';
-$wgHooks['FlexibleCategoryPage::closeShowCategory'][] = 'categoryHubAfterArticleText';
+	// Allows us to define a special order for the various sections on the page.
+	$wgHooks['CategoryViewer::getOtherSection'][] = 'categoryHubPreviewCheck'; // only for neutering display of previews.
+	$wgHooks['FlexibleCategoryPage::openShowCategory'][] = 'categoryHubBeforeArticleText';
+	$wgHooks['FlexibleCategoryPage::closeShowCategory'][] = 'categoryHubAfterArticleText';
 
-// Override the appearance of the sections on the category page.
-$wgHooks['FlexibleCategoryViewer::init'][] = 'categoryHubInitViewer';
-$wgHooks['FlexibleCategoryViewer::doCategoryQuery'][] = 'categoryHubDoCategoryQuery';
-$wgHooks['FlexibleCategoryViewer::getCategoryTop'][] = 'categoryHubCategoryTop';
-$wgHooks['FlexibleCategoryViewer::getOtherSection'][] = 'categoryHubOtherSection';
-$wgHooks['FlexibleCategoryViewer::getSubcategorySection'][] = 'categoryHubSubcategorySection';
-//$wgHooks['FlexibleCategoryViewer::getCategoryBottom'][] = 'categoryHubCategoryBottom';
+	// Override the appearance of the sections on the category page.
+	$wgHooks['FlexibleCategoryViewer::init'][] = 'categoryHubInitViewer';
+	$wgHooks['FlexibleCategoryViewer::doCategoryQuery'][] = 'categoryHubDoCategoryQuery';
+	$wgHooks['FlexibleCategoryViewer::getCategoryTop'][] = 'categoryHubCategoryTop';
+	$wgHooks['FlexibleCategoryViewer::getOtherSection'][] = 'categoryHubOtherSection';
+	$wgHooks['FlexibleCategoryViewer::getSubcategorySection'][] = 'categoryHubSubcategorySection';
+	
+	//$wgHooks['FlexibleCategoryViewer::getCategoryBottom'][] = 'categoryHubCategoryBottom';
+}
+
+// parser hooks for Q&A project tags
+function CategoryHubs_initParserHook(&$parser) {
+	wfLoadExtensionMessages('CategoryHub');
+	global $wgAnswersTabTags;
+
+	$wgAnswersTabTags = 0;
+	$parser->setHook( 'answers_stats', 'wfAnswersStatsParserHook' );
+	$parser->setHook( 'answers_leaderboard_all_time', 'wfAnswersLeaderboardAllTimeParserHook' );
+	$parser->setHook( 'answers_leaderboard_last_7_days', 'wfAnswersLeaderboardLastParserHook' );
+	$parser->setHook( 'answers_tabs', 'wfAnswersTabsParserHook' );
+	$parser->setHook( 'answers_subcategories', 'wfAnswersSubcategoriesParserHook' );
+
+        return true;
+}
+
+function wfAnswersStatsParserHook( $input, $args, $parser ) {
+	$r = '';
+
+	// todo get data from the entire site for that
+
+	$answered = CategoryHub::getAnsweredCategory();
+	$unanswered =  CategoryHub::getUnAnsweredCategory();
+
+	$answeredCategoryEdits = CategoryEdits::newFromName( $answered );		
+	$unansweredCategoryEdits = CategoryEdits::newFromName( $unanswered );	
+
+	$PROG_BAR_WIDTH = 250; // in pixels.  If this is changed, make sure to re-evaluate MIN_PERCENT_TO_SHOW_TEXT_ON_LEFT
+	$MIN_PERCENT_TO_SHOW_TEXT = 11; // if cat is this percentage or more complete, the percentage will be shown in left side of progress bar.
+	$MIN_PERCENT_TO_ADD_SPACE = 14; // adds a second non-breaking space before % answered if there is room for it (to make it look better).
+	$r .= "<div style='display:table;width:$PROG_BAR_WIDTH"."px'>"; // wraps the progress bar and the labels below it
+	$r .= "<div class='cathub-progbar-wrapper' style='width:$PROG_BAR_WIDTH"."px'>";
+
+	$countAnswered = $answeredCategoryEdits->getPageCount();
+	$countUnAnswered = $unansweredCategoryEdits->getPageCount();
+	
+	$percentAnswered = ( 100 * $countAnswered ) / ( $countAnswered + $countUnAnswered ) ;
+
+	$allQuestions = $countAnswered + $countUnAnswered;
+	if($percentAnswered <= 0){
+		$percentAnswered = 0;
+		$r .= "<div class='cathub-progbar-unanswered' style='width:$PROG_BAR_WIDTH'>".wfMsgExt('cathub-progbar-none-done', array())."</div>\n";
+	} else if($percentAnswered >= 100){
+		if ( empty($countUnAnswered) ) {
+			$percentAnswered = 100;
+			$r .= "<div class='cathub-progbar-answered' style='width:$PROG_BAR_WIDTH' title=''>".wfMsgExt('cathub-progbar-all-done', array())."</div>\n";
+		} else {
+			// some unanswered questions
+			$r .= "<div class='cathub-progbar-answered' style='width:$PROG_BAR_WIDTH' title=''>".wfMsgExt('cathub-progbar-allmost-done', 'parsemag', $countUnAnswered)."</div>\n";
+		}
+	} else {
+		// TODO: EXTRACT THIS TO A FUNCTION WHICH WILL MAKE A BANDWIDTH-EFFICIENT PROGRESS BAR FOR ANY USE (IF POSSIBLE TO DO CLEANLY... MIGHT HAVE TO REQUIRE IT TO BE ANSWERS-SPECIFIC).
+		#$aPercent = substr($percentAnswered, 0, -1); // removes the "%" sign
+		$aPercent = $percentAnswered;
+		$uPercent = (100 - $percentAnswered);
+		$aWidth = round(($PROG_BAR_WIDTH * $aPercent) / 100);
+		$uWidth = $PROG_BAR_WIDTH - $aWidth;
+		$aTitle = wfMsgExt('cathub-progbar-mouseover-answered', array(), $aPercent, $countAnswered);
+		$uTitle = wfMsgExt('cathub-progbar-mouseover-not-answered', array(), $uPercent, $countUnAnswered);
+
+		// Heuristic to figure out which side to put the text on (prefering to put it on the left whenever possible since it is more intuitive
+		// to see the percent done rather than not done).  Since users have various font-sizes, this is meant to give a sizable leeway.
+		$aText = $uText = "&nbsp;";
+		if($aPercent >= $MIN_PERCENT_TO_ADD_SPACE){
+			$aText .= "&nbsp;";
+		}
+		if($aPercent < $MIN_PERCENT_TO_SHOW_TEXT){ // if possible, be less confusing by leaving the number on the left.
+			$aText = "&nbsp;";
+			$uText = "&nbsp;";
+		} else if($uPercent < $MIN_PERCENT_TO_SHOW_TEXT){
+			$aText .= round($aPercent)."%";
+			$uText = "&nbsp;";
+		} else {
+			$aText .= round($aPercent)."%";
+			$uText = round($uPercent)."%&nbsp;&nbsp;";
+		}
+
+		$r .= "<div class='cathub-progbar cathub-progbar-answered answers-parser-left' style='width:$aWidth"."px' title='$aTitle'>$aText</div>";
+		$r .= "<div class='cathub-progbar cathub-progbar-unanswered answers-parser-right' style='width:$uWidth"."px' title='$uTitle'>$uText</div>";
+	}
+	$r .= "</div>"; // close the wrapper on the progress bar
+
+	$r .= "<div class='cathub-progbar-label cathub-progbar-label-left answers-parser-left'>".wfMsgExt('cathub-progbar-label-answered', array())."</div>";
+	$r .= "<div class='cathub-progbar-label cathub-progbar-label-right answers-parser-right'>".wfMsgExt('cathub-progbar-label-unanswered', array())."</div>";
+	$r .= "</div>"; // close the wrapper on the div containing the progress bar and the labels.
+
+	return $r;
+}
+
+function wfAnswersLeaderboardAllTimeParserHook( $input, $args, $parser ) {
+	$out = '';
+	wfLoadExtensionMessages( 'CategoryHub' );
+	$NUM_CONTRIBS_PER_SECTION = 10;
+	$show_staff = false;
+
+	$out .= "<div class='tagTopContribsAllTime'>\n";
+	$out .= "<h3>".wfMsgExt('cathub-top-contribs-all-time', array())."</h3>";
+	$out .= categoryHubContributorsToHtml( wfAnswersGetContribs( $show_staff, $NUM_CONTRIBS_PER_SECTION ) );
+	$out .= "</div>\n";
+	$out .= "<div style='clear:both'>&nbsp;</div>\n";
+
+	return $out;
+		
+}
+
+function wfAnswersLeaderboardLastParserHook( $input, $args, $parser ) {
+	$out = '';
+	wfLoadExtensionMessages( 'CategoryHub' );
+	$NUM_CONTRIBS_PER_SECTION = 10;
+	$show_staff = false;
+
+	$out .= "<div class='tagTopContribsRecent'>\n";
+	$out .= "<h3>".wfMsgExt('cathub-top-contribs-recent', 'parsemag', CATHUB_RECENT_CONTRIBS_LOOKBACK_DAYS)."</h3>";
+	$out .= categoryHubContributorsToHtml(wfAnswersGetXDayContribs(CATHUB_RECENT_CONTRIBS_LOOKBACK_DAYS, $show_staff, $NUM_CONTRIBS_PER_SECTION));
+	$out .= "</div>\n";
+	$out .= "<div style='clear:both'>&nbsp;</div>\n";
+
+	return $out;
+}
+
+/*
+
+
+	@params
+
+*/
+
+function wfAnswersGetContribs($show_staff = true, $limit = 30, $offset = 0) {
+	global $wgMemc;
+	wfProfileIn( __METHOD__ );
+
+	$memkey = wfMemcKey( 'answerstag_contribs', intval($show_staff), $limit, $offset );
+	$users = $wgMemc->get( $memkey );
+
+	if ( empty($users) ) {
+		$group_cond = "ug_group = 'bot'";
+		if ( empty($show_staff) ) {
+			$group_cond = "ug_group in ('bot', 'staff')";
+		}
+
+		$dbr = wfGetDB( DB_SLAVE );
+		$res = $dbr->select (
+				array( 'category_user_edits', 'user_groups' ),
+				array( 'cue_user_id as user_id, cue_count as cnt' ),
+				array( "ug_user is null" ),
+				__METHOD__,
+				array(
+					'ORDER BY' => 'cue_count DESC',
+					'LIMIT' => $limit,
+					'OFFSET' => $offset * $limit
+				     ),
+				array(
+					'user_groups' => array( 'LEFT JOIN',
+						implode ( ' AND ',
+							array(
+								"cue_user_id = ug_user",
+								$group_cond
+							     )
+							)
+						)
+				     )
+					);
+		if ( $dbr->numRows($res) ) {
+			$users = array();
+			while( $oRow = $dbr->fetchObject($res) ) {
+				$users[$oRow->user_id] = $oRow->cnt;
+			}
+			$dbr->freeResult($res);
+			$wgMemc->set( $memkey, $users, 60*2 );
+		}
+	}
+
+	wfProfileOut( __METHOD__ );
+	return $users;
+}
+
+/*
+
+	@params
+
+*/
+
+function wfAnswersGetXDayContribs($days = 7, $show_staff = true, $limit = 30, $offset = 0) {
+	global $wgMemc;
+	wfProfileIn( __METHOD__ );
+
+	$memkey = wfMemcKey( 'answerstag_xdayscontribs', intval($show_staff), $days, $limit, $offset );
+	$users = $wgMemc->get( $memkey );
+
+	if ( empty($users) ) {
+		$group_cond = "ug_group = 'bot'";
+		if ( empty($show_staff) ) {
+			$group_cond = "ug_group in ('bot', 'staff')";
+		}
+		$min_date = date('Y-m-d', time() - $days * 24 * 60 * 60);
+		$dbr = wfGetDB( DB_SLAVE );
+		$res = $dbr->select (
+				array( 'category_edits', 'user_groups' ),
+				array( 'ce_user_id as user_id, ce_count as cnt' ),
+				array(
+					"ug_user is null",
+					"ce_date >= '$min_date'"
+				     ),
+				__METHOD__,
+				"",
+				array(
+					'user_groups' => array( 'LEFT JOIN',
+						implode ( ' AND ',
+							array(
+								"ce_user_id = ug_user",
+								$group_cond
+							     )
+							)
+						)
+				     )
+				);
+
+		if ( $dbr->numRows($res) ) {
+			$users = $tmp = array();
+			while( $oRow = $dbr->fetchObject($res) ) {
+				if ( !isset($tmp[$oRow->user_id]) ) {
+					$tmp[$oRow->user_id] = 0;
+				}
+				$tmp[$oRow->user_id] += $oRow->cnt;
+			}
+			$dbr->freeResult($res);
+			if ( count($tmp) > 0 ) {
+				arsort($tmp);
+				$users = array_slice($tmp, $limit * $offset, $limit, true);
+			}
+			$wgMemc->set( $memkey, $users, 60*15 );
+		}
+	}
+
+	wfProfileOut( __METHOD__ );
+	return $users;
+}
+
+/*
+
+	@params $category Title
+
+*/
+
+function wfAnswersTagsDoCategoryQuery( $category ) {
+	global $wgCategoryMagicGallery, $wgOut, $wgTitle;
+	$showGallery = $wgCategoryMagicGallery && !$wgOut->mNoGallery;
+			
+	$dbr = wfGetDB( DB_SLAVE, 'category' );
+
+	$res = $dbr->select(
+			array( 'page', 'categorylinks', 'category' ),
+			array( 'page_title', 'page_namespace', 'page_len', 'page_is_redirect', 'cl_sortkey',
+				'cat_id', 'cat_title', 'cat_subcats', 'cat_pages', 'cat_files' ),
+			array( 'cl_to' => $category->getDBkey() ),
+			__METHOD__,
+			array( 'ORDER BY' => 'cl_sortkey',
+				'USE INDEX' => array( 'categorylinks' => 'cl_sortkey' ) ),
+			array( 'categorylinks'  => array( 'INNER JOIN', 'cl_from = page_id' ),
+				'category' => array( 'LEFT JOIN', 'cat_title = page_title AND page_namespace = ' . NS_CATEGORY ) )
+			);
+
+	$articles = array();
+
+	while( $x = $dbr->fetchObject( $res ) ) {
+		$title = Title::makeTitle( $x->page_namespace, $x->page_title );
+		$ns = $title->getNamespace();
+
+		// in original function, categories and files aren't added as "pages" - is that ok? todo ask
+		if( ( $ns != NS_CATEGORY ) && ( !$showGallery || $ns != NS_FILE ) ) {
+			if( $title->getText() != $wgTitle->getText() ) {
+				$articles[] = Article::newFromID( $title->getArticleID() );
+			}
+		}
+	}
+	return $articles;
+}
+
+function wfAnswersTabsParserHook( $input, $args, $parser ) {
+	global $wgAnswersTabTags;
+	$out = '';
+	if( $wgAnswersTabTags == 0 ) {
+		$answered = CategoryHub::getAnsweredCategory();
+		$unanswered =  CategoryHub::getUnAnsweredCategory();
+
+		$answeredTitle = Title::newFromText( $answered, NS_CATEGORY );
+		$unansweredTitle = Title::newFromText( $unanswered, NS_CATEGORY );
+
+		$answeredArticles = wfAnswersTagsDoCategoryQuery( $answeredTitle );
+		$unansweredArticles = wfAnswersTagsDoCategoryQuery( $unansweredTitle );
+		categoryHubRenderTabs( null, $answeredArticles, $unansweredArticles, &$out, &$parser );
+		$wgAnswersTabTags++;
+	}
+		
+	return $out;
+}
+
+function wfAnswersSubcategoriesParserHook( $input, $args, $parser ) {
+	global $wgUser;
+	$out = '';
+
+	$dbr = wfGetDB( DB_SLAVE );
+	$result_array = array () ;
+	$res = $dbr->select (
+			array ('category') ,
+			array ('cat_title', 'cat_pages' ) ,
+			array(),
+			__METHOD__ ,
+			array ( 'ORDER_BY'  => 'cat_title' ,
+				'USE_INDEX' => 'cat_title'
+			      )
+			) ;
+
+	$sk = $wgUser->getSkin();
+	while( $x = $dbr->fetchObject ( $res ) ) {
+			$title = Title::newFromText( $x->cat_title, NS_CATEGORY );
+			$result_array [] = $sk->makeKnownLinkObj( $title, $title->getText() ) ;
+	}
+
+	if (!empty ($result_array) ) {
+		$out .= "<div class=\"tags-hub-subcategories\">\n";
+		$out .= '<h3>' . wfMsg( 'subcategories' ) . "</h3>\n";
+
+		$out .= implode($result_array, "&nbsp;|&nbsp;");
+		$out .= "\n</div>";
+
+	}
+	return $out;
+}
 
 $wgExtensionMessagesFiles['CategoryHub'] = dirname(__FILE__).'/CategoryHubs.i18n.php';
 $wgExtensionCredits['other'][] = array(
@@ -79,6 +416,7 @@ function categoryHubAddMagicWords(&$magicWords, $langCode){
  */
 function categoryHubAdditionalScripts( &$out, &$sk ){
 	global $wgExtensionsPath,$wgStyleVersion;
+
 	$out->addStyle( "$wgExtensionsPath/wikia/CategoryHubs/CategoryHubs.css?$wgStyleVersion" );
 	$out->addScript("<link type='text/css' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css' rel='stylesheet' />\n");
 	$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/CategoryHubs/jquery-ui.min.js?$wgStyleVersion'></script>\n");
@@ -123,8 +461,6 @@ function categoryHubCheckForMagicWords(&$parser, &$text, &$strip_state) {
 	}
 	return true;
 }
-
-
 
 ///// THE NEXT TWO FUNCTIONS LET US OVERRIDE THE ORDER OF THE SECTIONS ON THE CATEGORY PAGE /////
 
@@ -277,6 +613,7 @@ function categoryHubDoCategoryQuery(&$flexibleCategoryViewer){
  * the Top Contributors section.
  */
 function categoryHubCategoryTop(&$catView, &$r){
+
 	global $wgCatHub_useDefaultView;
 	if(!$wgCatHub_useDefaultView){
 
@@ -334,10 +671,19 @@ function categoryHubTitleBar(&$catView, &$r){
 	// The actual title that will show up (since we hide the default).
 	$r .= "<h1>".$catView->getCat()->getTitle()."</h1>";
 
+	$allQuestions = categoryHubsProgressBar( CategoryEdits::newFromId($catView->getCat()->getId()), $r );
+
+	$r .= "</div>\n";
+
+	return $allQuestions;
+} // end categoryHubTitleBar()
+
+
+function categoryHubsProgressBar( $categoryEdits, &$r ) {
+
 	$PROG_BAR_WIDTH = 250; // in pixels.  If this is changed, make sure to re-evaluate MIN_PERCENT_TO_SHOW_TEXT_ON_LEFT
 	$MIN_PERCENT_TO_SHOW_TEXT = 11; // if cat is this percentage or more complete, the percentage will be shown in left side of progress bar.
 	$MIN_PERCENT_TO_ADD_SPACE = 14; // adds a second non-breaking space before % answered if there is room for it (to make it look better).
-	$categoryEdits = CategoryEdits::newFromId($catView->getCat()->getId());
 	$r .= "<div style='display:table;width:$PROG_BAR_WIDTH"."px'>"; // wraps the progress bar and the labels below it
 	$r .= "<div class='cathub-progbar-wrapper' style='width:$PROG_BAR_WIDTH"."px'>";
 
@@ -392,10 +738,176 @@ function categoryHubTitleBar(&$catView, &$r){
 	$r .= "<div class='cathub-progbar-label cathub-progbar-label-right'>".wfMsgExt('cathub-progbar-label-unanswered', array())."</div>";
 	$r .= "</div>"; // close the wrapper on the div containing the progress bar and the labels.
 
-	$r .= "</div>\n";
 
 	return $allQuestions;
-} // end categoryHubTitleBar()
+}
+
+function wfCategoryHubGetAnsweredQuestions( $answeredArticles, &$r, $type, $suffix, $numReturned_a, $offset_a, $parser = null ) {
+	global $wgUser, $wgCategoryHubArticleLimitPerTab;
+
+	if( empty( $parser ) ) {
+		$tmpParser = new Parser();
+		$tmpParser->setOutputType(OT_HTML);
+		$tmpParserOptions = new ParserOptions();
+	}
+
+	$r .= "<ul class='interactive-questions'>\n";
+	foreach($answeredArticles as $qArticle) {
+		if(is_object($qArticle)) {
+			$r .= "<li class=\"$type\">\n";
+
+			// Button to trigger the form for changing an answer inline.
+			$r .= "<div class='cathub-button hideUntilHover'>\n";
+			$r .= "<a rel='nofollow' class='bigButton cathub-button-answer' href='javascript:void(0)'><big>";
+			$r .= wfMsgExt('cathub-button-improve-answer', array())."</big><small>&nbsp;</small></a>\n";
+			$r .= "</div>\n";
+
+			// Question & attribution for last edit.
+			$title = $qArticle->getTitle();
+			$r .= "<span class=\"$type cathub-article-link\">" . $wgUser->getSkin()->makeKnownLinkObj( $title, $title->getPrefixedText() . '?' ) . '</span>';
+			// TODO: RESTORE THIS WHEN rephrase IS WORKING.
+			//$r .= "&nbsp;<span class='cathub-button-rephrase hideUntilHover'><a href='javascript:void(0)'>".wfMsgExt('cathub-button-rephrase', array())."</a></span>";
+			$r .= categoryHubGetAttributionByArticle($qArticle, true); //'true' uses messages for 'answered'
+
+			// Show the  actual answer.
+			$r .= "<div class='cathub-actual-answer'>";
+			$r .= "<span class='cathub-answer-heading'>".wfMsgExt('cathub-answer-heading', array())."</span><br/>\n";
+
+			$articleText = $qArticle->getRawText();
+			// don't render the same tag which renders the list of articles etc. please
+			$articleText = str_replace( '<answers_tabs/>', '', $articleText );
+			$articleText = str_replace( '<answers_tabs />', '', $articleText );
+
+			if( empty( $parser ) ) {
+				$r .= $tmpParser->parse( $articleText, $title, $tmpParserOptions, false)->getText();
+			} else {
+				$r .= $parser->recursiveTagParse( $articleText );
+			}
+			$r .= "</div>\n";
+
+			$r .= "</li>\n";
+		}
+	}
+	$r .= "</ul>\n";
+
+	if($numReturned_a > 0){
+		$r .= categoryHubPagination($wgCategoryHubArticleLimitPerTab, $offset_a, $numReturned_a, $suffix);
+	}
+}
+
+function wfCategoryHubGetUnansweredQuestions( $unansweredArticles, &$r, $type, $suffix, $numReturned_u, $offset_u ) {
+	global $wgUser, $wgCategoryHubArticleLimitPerTab;
+	// the plan is: load through js, and then do
+	// ^_^  
+
+	$r .= "<ul class='interactive-questions'>\n";
+
+	foreach($unansweredArticles as $qArticle) {
+		if(is_object($qArticle)) {
+			$r .= "<li class=\"$type\">\n";
+
+			// Button to trigger the form for answering inline.
+			$r .= "<div class='cathub-button hideUntilHover'>\n";
+			$r .= "<a rel='nofollow' class='bigButton cathub-button-answer' href='javascript:void(0)'><big>";
+			$r .= wfMsgExt('cathub-button-answer', array())."</big><small>&nbsp;</small></a>\n";
+			$r .= "</div>\n";
+
+			// Question & attribution for last edit.
+			$title = $qArticle->getTitle();
+			$r .= "<span class=\"$type cathub-article-link\">" . $wgUser->getSkin()->makeKnownLinkObj( $title, $title->getPrefixedText() . '?' ) . '</span>';
+			$r .= categoryHubGetAttributionByArticle($qArticle);
+
+			$r .= "</li>\n";
+		}
+	}
+	$r .= "</ul>\n";
+
+	if($numReturned_u > 0){
+		$r .= categoryHubPagination($wgCategoryHubArticleLimitPerTab, $offset_u, $numReturned_u, $suffix);
+	}
+}
+
+/*
+*
+*
+*
+*
+*	$category Title
+*/
+
+function categoryHubRenderTabs( $category, $answeredArticles, $unansweredArticles, &$r, $parser = null ) {
+	wfProfileIn(__METHOD__);
+	global $wgCatHub_useDefaultView, $wgCategoryHubArticleLimitPerTab, $wgRequest;
+	if(!$wgCatHub_useDefaultView){
+		global $wgUser;
+		$r .= "<div id='tabs'>\n"; // jquery ui tabs widget
+		if( !empty( $parser ) ) {
+			$r .= '<span id="tag-tabs">&nbsp;</span>';
+		}
+		$UN_CLASS = "unanswered_questions";
+		$ANS_CLASS = "answered_questions";
+		$U_SUFFIX = "_u"; // appended to url params to differentiate whihc tab is being paginated
+		$A_SUFFIX = "_a";
+
+		$offset_u = $wgRequest->getVal("offset$U_SUFFIX", 0);
+		$offset_a = $wgRequest->getVal("offset$A_SUFFIX", 0);
+
+		// Determine if there needs to be a "Next" button (ie: there are more items than the limit), then actually enforce the limit.
+		if(empty($unansweredArticles)){
+			$unansweredArticles = array();
+		}
+		if(empty($answeredArticles)){
+			$answeredArticles = array();
+		}
+		$numReturned_u = count($unansweredArticles);
+		$numReturned_a = count($answeredArticles);
+		while(count($unansweredArticles) > $wgCategoryHubArticleLimitPerTab){
+			array_pop($unansweredArticles);
+		}
+		while(count($answeredArticles) > $wgCategoryHubArticleLimitPerTab){
+			array_pop($answeredArticles);
+		}
+
+		// Store info in the DOM on which tab to select (interactiveLists.js will apply this selection).
+		$tabIndex = (($offset_a != 0) && ($offset_u == 0))?1:0; // if we are paginating Answered questions, select that tab.
+		$r .= "<div id=\"cathub-tab-index-to-select\" style='display:none'>$tabIndex</div>\n";
+
+		// The tabs.
+		$r .= "<ul>\n";
+		$r .= "<li><a href='#cathub-tab-unanswered' id=\"cathub-tablink-unanswered\"><span>".wfMsgExt('Unanswered_category', array())."</span></a></li>\n";
+		$r .= "<li><a href='#cathub-tab-answered'   id=\"cathub-tablink-answered\"><span>".wfMsgExt('Answered_category', array())."</span></a></li>\n";
+		$r .= "</ul>\n";
+
+		// Unanswered questions in this category.
+		$r .= "<div id=\"cathub-tab-unanswered\">\n";
+		if(empty($unansweredArticles) || count($unansweredArticles) == 0){
+			$r .= "<div class='no-questions-now'>";
+			$r .= wfMsgExt('cathub-no-unanswered-questions', array());
+			$r .= "</div>";
+		} else {
+			wfCategoryHubGetUnansweredQuestions( $unansweredArticles, &$r, $UN_CLASS, $U_SUFFIX, $numReturned_u, $offset_u );
+		}
+
+		$r .= "&nbsp;</div>\n";
+
+		// Answered questions in this category.
+		$r .= "<div id=\"cathub-tab-answered\">\n";
+		if(empty($answeredArticles) || count($answeredArticles) == 0){
+			$r .= "<div class='no-questions-now'>";
+			$r .= wfMsgExt('cathub-no-answered-questions', array());
+			$r .= "</div>";
+		} else {
+			wfCategoryHubGetAnsweredQuestions( $answeredArticles, &$r, $ANS_CLASS, $A_SUFFIX, $numReturned_a, $offset_a, $parser );
+		}
+
+		$r .= "&nbsp;</div>\n";
+
+		$r .= "</div>\n"; // end of #tabs
+	}
+
+	wfProfileOut(__METHOD__);
+	return $wgCatHub_useDefaultView;
+}
 
 function categoryHubGetLogo($cat_name) {
 	$cat_name = str_replace("_", " ", $cat_name);
@@ -521,145 +1033,11 @@ function categoryHubContributorsToHtml( $editsByUserId ) {
  */
 function categoryHubOtherSection(&$catView, &$r){
 	wfProfileIn(__METHOD__);
-	global $wgCatHub_useDefaultView;
-	if(!$wgCatHub_useDefaultView){
-		global $wgUser;
 
-		$ti = htmlspecialchars( $catView->title->getText() );
-		$cat = $catView->getCat();
+	$ret = categoryHubRenderTabs( $catView->title, $catView->answerArticles["answered_questions"], $catView->answerArticles["unanswered_questions"], $r);
 
-		if ( $wgUser->isAnon() && $cat->getSubcatCount() > 0 && ( !empty($catView->answers["answered_questions"]) || !empty($catView->answers["unanswered_questions"]) ) ) {
-			//$r .= AdEngine::getInstance()->getPlaceHolderDiv('ANSWERSCAT_LEADERBOARD_U');
-		}
+	return $ret;
 
-		$r .= "<div id='tabs'>\n"; // jquery ui tabs widget
-
-		$UN_CLASS = "unanswered_questions";
-		$ANS_CLASS = "answered_questions";
-		$U_SUFFIX = "_u"; // appended to url params to differentiate whihc tab is being paginated
-		$A_SUFFIX = "_a";
-
-		global $wgCategoryHubArticleLimitPerTab, $wgRequest;
-		$offset_u = $wgRequest->getVal("offset$U_SUFFIX", 0);
-		$offset_a = $wgRequest->getVal("offset$A_SUFFIX", 0);
-
-		// Determine if there needs to be a "Next" button (ie: there are more items than the limit), then actually enforce the limit.
-		if(empty($catView->answerArticles[$UN_CLASS])){
-			$catView->answerArticles[$UN_CLASS] = array();
-		}
-		if(empty($catView->answerArticles[$ANS_CLASS])){
-			$catView->answerArticles[$ANS_CLASS] = array();
-		}
-		$numReturned_u = count($catView->answerArticles[$UN_CLASS]);
-		$numReturned_a = count($catView->answerArticles[$ANS_CLASS]);
-		while(count($catView->answerArticles[$UN_CLASS]) > $wgCategoryHubArticleLimitPerTab){
-			array_pop($catView->answerArticles[$UN_CLASS]);
-		}
-		while(count($catView->answerArticles[$ANS_CLASS]) > $wgCategoryHubArticleLimitPerTab){
-			array_pop($catView->answerArticles[$ANS_CLASS]);
-		}
-
-		// Store info in the DOM on which tab to select (interactiveLists.js will apply this selection).
-		$tabIndex = (($offset_a != 0) && ($offset_u == 0))?1:0; // if we are paginating Answered questions, select that tab.
-		$r .= "<div id=\"cathub-tab-index-to-select\" style='display:none'>$tabIndex</div>\n";
-
-		// The tabs.
-		$r .= "<ul>\n";
-		$r .= "<li><a href='#cathub-tab-unanswered' id=\"cathub-tablink-unanswered\"><span>".wfMsgExt('Unanswered_category', array())."</span></a></li>\n";
-		$r .= "<li><a href='#cathub-tab-answered'   id=\"cathub-tablink-answered\"><span>".wfMsgExt('Answered_category', array())."</span></a></li>\n";
-		$r .= "</ul>\n";
-
-		// Unanswered questions in this category.
-		$r .= "<div id=\"cathub-tab-unanswered\">\n";
-		if(empty($catView->answerArticles[$UN_CLASS]) || count($catView->answerArticles[$UN_CLASS]) == 0){
-			$r .= "<div class='no-questions-now'>";
-			$r .= wfMsgExt('cathub-no-unanswered-questions', array());
-			$r .= "</div>";
-		} else {
-			$r .= "<ul class='interactive-questions'>\n";
-
-			foreach($catView->answerArticles[$UN_CLASS] as $qArticle){
-				if(is_object($qArticle)){
-					$r .= "<li class=\"$UN_CLASS\">\n";
-
-					// Button to trigger the form for answering inline.
-					$r .= "<div class='cathub-button hideUntilHover'>\n";
-					$r .= "<a rel='nofollow' class='bigButton cathub-button-answer' href='javascript:void(0)'><big>";
-					$r .= wfMsgExt('cathub-button-answer', array())."</big><small>&nbsp;</small></a>\n";
-					$r .= "</div>\n";
-
-					// Question & attribution for last edit.
-					$title = $qArticle->getTitle();
-					$r .= "<span class=\"$UN_CLASS cathub-article-link\">" . $catView->getSkin()->makeKnownLinkObj( $title, $title->getPrefixedText() . '?' ) . '</span>';
-					$r .= categoryHubGetAttributionByArticle($qArticle);
-
-					$r .= "</li>\n";
-				}
-			}
-			$r .= "</ul>\n";
-		}
-		if($numReturned_u > 0){
-			$r .= categoryHubPagination($wgCategoryHubArticleLimitPerTab, $offset_u, $numReturned_u, $U_SUFFIX);
-		}
-		$r .= "&nbsp;</div>\n";
-		if ( $wgUser->isAnon() ) {
-			//$r .= AdEngine::getInstance()->getPlaceHolderDiv('ANSWERSCAT_BOXAD_U');
-		}
-
-		// Answered questions in this category.
-		$r .= "<div id=\"cathub-tab-answered\">\n";
-		if(empty($catView->answerArticles[$ANS_CLASS]) || count($catView->answerArticles[$ANS_CLASS]) == 0){
-			$r .= "<div class='no-questions-now'>";
-			$r .= wfMsgExt('cathub-no-answered-questions', array());
-			$r .= "</div>";
-		} else {
-			global $wgParser;
-			$tmpParser = new Parser();
-			$tmpParser->setOutputType(OT_HTML);
-			$tmpParserOptions = new ParserOptions();
-
-			$r .= "<ul class='interactive-questions'>\n";
-			foreach($catView->answerArticles[$ANS_CLASS] as $qArticle){
-				if(is_object($qArticle)){
-					$r .= "<li class=\"$ANS_CLASS\">\n";
-
-					// Button to trigger the form for changing an answer inline.
-					$r .= "<div class='cathub-button hideUntilHover'>\n";
-					$r .= "<a rel='nofollow' class='bigButton cathub-button-answer' href='javascript:void(0)'><big>";
-					$r .= wfMsgExt('cathub-button-improve-answer', array())."</big><small>&nbsp;</small></a>\n";
-					$r .= "</div>\n";
-
-					// Question & attribution for last edit.
-					$title = $qArticle->getTitle();
-					$r .= "<span class=\"$ANS_CLASS cathub-article-link\">" . $catView->getSkin()->makeKnownLinkObj( $title, $title->getPrefixedText() . '?' ) . '</span>';
-					// TODO: RESTORE THIS WHEN rephrase IS WORKING.
-					//$r .= "&nbsp;<span class='cathub-button-rephrase hideUntilHover'><a href='javascript:void(0)'>".wfMsgExt('cathub-button-rephrase', array())."</a></span>";
-					$r .= categoryHubGetAttributionByArticle($qArticle, true); //'true' uses messages for 'answered'
-
-					// Show the  actual answer.
-					$r .= "<div class='cathub-actual-answer'>";
-					$r .= "<span class='cathub-answer-heading'>".wfMsgExt('cathub-answer-heading', array())."</span><br/>\n";
-					$r .= $tmpParser->parse($qArticle->getRawText(), $title, $tmpParserOptions, false)->getText();
-					$r .= "</div>\n";
-
-					$r .= "</li>\n";
-				}
-			}
-			$r .= "</ul>\n";
-			if ( $wgUser->isAnon() ) {
-				//$r .= AdEngine::getInstance()->getPlaceHolderDiv('ANSWERSCAT_BOXAD_A');
-			}
-		}
-		if($numReturned_a > 0){
-			$r .= categoryHubPagination($wgCategoryHubArticleLimitPerTab, $offset_a, $numReturned_a, $A_SUFFIX);
-		}
-		$r .= "&nbsp;</div>\n";
-
-		$r .= "</div>\n"; // end of #tabs
-	}
-
-	wfProfileOut(__METHOD__);
-	return $wgCatHub_useDefaultView;
 } // end categoryHubOtherSection()
 
 /**
@@ -712,7 +1090,7 @@ function categoryHubSubcategorySection(&$catView, &$r){
 	global $wgCatHub_useDefaultView;
 	if(!$wgCatHub_useDefaultView){
 
-		# Don't show subcategories section if there are none.
+# Don't show subcategories section if there are none 
 		$r = '';
 		$rescnt = count( $catView->children );
 		if( $rescnt > 0 ) {

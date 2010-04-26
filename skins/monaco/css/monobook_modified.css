@@ -655,6 +655,186 @@ special external link styling */
 	background: none !important;
 	padding: 0 !important;
 }
+
+#cathub-title-bar h1{
+border: 0px;
+	margin-bottom: 7px;
+}
+#cathub-title-bar .cathub-title-bar-wikilogo{
+float:left;
+padding:5px 5px 5px 0px;
+}
+.cathub-progbar-wrapper{
+float:left;
+height:25px;
+margin:0px;
+       padding-left:1px;padding-right:1px;
+}
+.cathub-progbar{
+float:left;
+margin:0;
+height:100%;
+cursor:help;
+       text-align:center;
+       font-weight:bold;
+       line-height:25px;
+padding:0px !important;
+}
+.cathub-progbar-answered{
+	text-align:left;
+color:#fff;
+      background-color:#55ff55;
+      background-color:transparent;
+}
+.cathub-progbar-unanswered{
+	text-align:right;
+color:#000;
+      border-left:1px #717171 solid;
+      margin-left:-1px; /* to make room for the border */
+      background-color:#888;
+      background-color:transparent;
+}
+.cathub-progbar-label{
+	font-size:.75em;
+	font-weight:bold;
+}
+
+
+.cathub-progbar-label-left{
+float:left;
+}
+.cathub-progbar-label-right{
+width:100%;
+      text-align:right;
+}
+.cathub-contributors-list{
+float:left;
+      list-style:none;
+      margin-top:0px !important;
+}
+.cathub-contributors-list-wide{
+width:60%;
+}
+.cathub-contributors-list-narrow{
+width:40%;
+}
+
+.cathub-contributors-list li{
+margin:0px;
+width:100%;
+padding: 0px !important;
+}
+.cathub-contributors-list li .listNumber{
+float:left;
+height:100% !important;
+}
+.cathub-contributors-list li .badgeWrapper{
+display:inline;
+height:100% !important;
+}
+.interactive-questions{
+	list-style:none;
+margin:0px;
+padding:0px;
+}
+.interactive-questions li{
+margin:0px;
+padding:10px;
+	border-bottom: 1px #aaa solid;
+	font-size:1em;
+}
+.interactive-questions li:hover{
+	background-color:#f5f5f5;
+}
+span.answered_questions a, span.unanswered_questions a{
+color:#00c;
+      font-size:1.2em;
+}
+span.unanswered_questions a{
+	padding-right:75px;
+}
+.cathub-asked {
+	font-size:.9em;
+color:#707070;
+      line-height:1em;
+      margin-top:7px;
+}
+
+.cathub-actual-answer{
+	margin-top:15px;
+}
+.cathub-answer-heading{
+	font-size:1.1em;
+	font-weight:bold;
+color:#090;
+      line-height:.8em;
+}
+.cathub-button{
+float:right;
+}
+.cathub-button-rephrase{
+	margin-left:10px;
+	font-style:italic;
+	font-size:.8em;
+}
+.cathub-button-rephrase a{
+color:#00c;
+}
+li .hideUntilHover{
+visibility:hidden;
+}
+li:hover .hideUntilHover{
+visibility:visible;
+   }
+.cathub-add-answer-wrapper textarea{
+	font-size:1.2em;
+color:#222;
+}
+.ui-tabs-nav span{
+	font-weight:bold;
+}
+.ui-tabs-panel{
+padding:0px !important;
+	margin-left:-2px !important;
+	margin-right:-2px !important;
+}
+.ui-widget-content{
+border:0px;
+       margin-bottom:10px;
+}
+.no-questions-now{
+padding:10px;
+	font-style:italic;
+}
+.ui-widget *{
+	font-family: sans-serif;
+}
+
+.cathub-contributors-list .userInfo
+{
+	margin-left:0px;
+}
+
+.cathub-contributors-list .userInfo .userPageLink
+{
+	margin-left:0px;
+}
+
+.cathub-contributors-list .userInfoNoAvatar .userPageLink
+{
+	margin-top:0px;
+}
+.cathub-contributors-list .userEditPoints
+{
+	margin-left:0px;
+float: left;
+}
+
+
+
+
+
+
 /*
 ** Structural Elements
 */
@@ -775,6 +955,11 @@ div.prefsectiontip {
 
 .page-Special_UserLogin .firstHeading {
 	display: none !important;	
+}
+
+.tagTopContribsAllTime .userInfoBadgeAvatarWrapper,
+.tagTopContribsRecent .userInfoBadgeAvatarWrapper {
+	float: left;
 }
 
 div#userlogin form#userlogin2 label,
