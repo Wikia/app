@@ -1,5 +1,5 @@
 == Changes since 201004.5 ==
-* 
+* rt#47080: Carbon theme, header menu linking coloring useless (Nef) 
 
 == Changes since 201004.4 ==
 * rt#45767: port AnswersSudoAd2 stuff (Nef)
