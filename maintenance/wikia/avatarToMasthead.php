@@ -21,8 +21,8 @@ CREATE TABLE `avatars_migrate` (
 
 ini_set( "include_path", dirname(__FILE__)."/.." );
 require_once( "commandLine.inc" );
-require_once( $GLOBALS["IP"]."/extensions/wikia/Masthead/Masthead.php" );
-require_once( $GLOBALS["IP"]."/extensions/wikia/UserProfile_NY/AvatarClass.php" );
+include_once( $GLOBALS["IP"]."/extensions/wikia/Masthead/Masthead.php" );
+#include_once( $GLOBALS["IP"]."/extensions/wikia/UserProfile_NY/AvatarClass.php" );
 
 $USER_TEST = (isset ($options['u']) ) ? $options['u'] : "";
 $UNLINK_OLD = (isset ($options['remove']) ) ? $options['remove'] : "";
@@ -202,7 +202,7 @@ function copyAvatarsToMasthead() {
 			$avatar = Masthead::newFromUserID($user_id);
 			$path = $avatar->getFullPath();
 			$city_id = 0;
-			$pathny = false;
+			$pathny = $uploaded = false;
 			if ( !file_exists( $path ) ) {
 				list($pathny, $city_id) = getAnswersAvatar($answersWikis, $user_id, $lang);
 
@@ -219,6 +219,10 @@ function copyAvatarsToMasthead() {
 						}
 					}
 				}
+				
+				if ( $uploaded === true ) {
+					saveDataInDB();
+				}
 
 			} else {
 				__log("Avatar: $path exists");
@@ -228,8 +232,21 @@ function copyAvatarsToMasthead() {
 	unset($wikiArr);
 }
 
+function saveDataInDB() {
+	global $wgStatsDB, $UNLINK_OLD;
+	$dbs = wfGetDB(DB_MASTER, array(), $wgStatsDB);
+	$data = array(
+		'user_id' 		=> $mUser->getId(),
+		'old_path' 		=> $__files,
+		'city_id' 		=> $city_id,
+		'new_path' 		=> $sFilePath,
+		'removed' 		=> $UNLINK_OLD ? true : false
+	);
+	$dbs->insert( 'avatars_migrate', $data, __METHOD__ );
+}
+
 function uploadAvatar($oMasthead, $mUser, $nypath, $city_id) {
-	global $wgTmpDirectory, $UNLINK_OLD, $wgStatsDB;
+	global $wgTmpDirectory, $UNLINK_OLD;
 	$filename = wfBasename($nypath);
 
 	if( !isset( $wgTmpDirectory ) || !is_dir( $wgTmpDirectory ) ) {
@@ -363,15 +380,6 @@ function uploadAvatar($oMasthead, $mUser, $nypath, $city_id) {
 					}
 				}
 			}
-			$dbs = wfGetDB(DB_MASTER, array(), $wgStatsDB);
-			$data = array(
-				'user_id' 		=> $mUser->getId(),
-				'old_path' 		=> $__files,
-				'city_id' 		=> $city_id,
-				'new_path' 		=> $sFilePath,
-				'removed' 		=> $UNLINK_OLD ? true : false
-			);
-			$dbs->insert( 'avatars_migrate', $data, __METHOD__ );
 		}
 		else {
 			__log(sprintf("File %s doesn't exist", $sTmpFile ));
