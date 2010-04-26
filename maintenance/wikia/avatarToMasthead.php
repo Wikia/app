@@ -26,6 +26,7 @@ include_once( $GLOBALS["IP"]."/extensions/wikia/UserProfile_NY/AvatarClass.php" 
 
 $USER_TEST = (isset ($options['u']) ) ? $options['u'] : "";
 $UNLINK_OLD = (isset ($options['remove']) ) ? $options['remove'] : "";
+$TEST = (isset ($options['test']) ) ? $options['test'] : "";
 $ADD_TO_USER_LOG = 1;
 
 function __log($text) {
@@ -220,11 +221,6 @@ function copyAvatarsToMasthead() {
 					}
 				}
 				
-				if ( $uploaded !== false ) {
-					list ( $__files, $sFilePath ) = $uploaded;
-					saveDataInDB($user_id, $city_id, $__files, $sFilePath);
-				}
-
 			} else {
 				__log("Avatar: $path exists");
 			}
@@ -247,10 +243,20 @@ function saveDataInDB($user_id, $city_id, $__files, $sFilePath) {
 }
 
 function uploadAvatar($oMasthead, $mUser, $nypath, $city_id) {
-	global $wgTmpDirectory, $UNLINK_OLD;
+	global $wgTmpDirectory, $UNLINK_OLD, $TEST;
 	
 	$result = false;
 	$filename = wfBasename($nypath);
+	$sFilePath = $oMasthead->getFullPath();
+
+	$user_id = $mUser->getId();
+	$__path = str_replace($filename, "", $nypath);
+	$__files = $__path . "/answers_" . $user_id . "_*";
+	
+	if ( $TEST === 1 ) {
+		saveDataInDB($user_id, $city_id, $__files, $sFilePath);
+		return true;
+	}
 
 	if( !isset( $wgTmpDirectory ) || !is_dir( $wgTmpDirectory ) ) {
 		$wgTmpDirectory = '/tmp';
@@ -295,7 +301,6 @@ function uploadAvatar($oMasthead, $mUser, $nypath, $city_id) {
 			 * generate new image to png format
 			 */
 			$addedAvatars = array();
-			$sFilePath = $oMasthead->getFullPath();
 
 			/**
 			 * calculate new image size - should be 100 x 100
@@ -372,8 +377,6 @@ function uploadAvatar($oMasthead, $mUser, $nypath, $city_id) {
 				$mUser->saveSettings();
 			}
 
-			$__path = str_replace($filename, "", $nypath);
-			$__files = $__path . "/answers_" . $mUser->getId() . "_*";
 			if ( $UNLINK_OLD ) {
 				$files = glob($__files);
 				if ( $files ) {
@@ -383,7 +386,8 @@ function uploadAvatar($oMasthead, $mUser, $nypath, $city_id) {
 					}
 				}
 			}
-			$result = array($__files, $sFilePath);
+			saveDataInDB($user_id, $city_id, $__files, $sFilePath);
+			$result = true;
 		}
 		else {
 			__log(sprintf("File %s doesn't exist", $sTmpFile ));
