@@ -402,8 +402,6 @@ class NewWebsiteJob extends Job {
 				$info[ "system" ] = "Windows";
 		    }
 		}
-		print_r( $info );
-		exit(0);
 		return $info;
 	}
 
