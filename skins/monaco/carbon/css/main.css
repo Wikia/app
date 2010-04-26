@@ -135,6 +135,9 @@ a, table.gallery td a, div.thumbinner a {
 a:visited, table.gallery td a:visited {
 	color: #7078FF;
 }
+.headerMenu a:visited {
+	color: #FFFFFF;
+}
 a.new {
 	color: #ED1901 !important;
 }
