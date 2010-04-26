@@ -94,12 +94,7 @@
 	float:left;
 	margin-left:4px;
 	margin-top:0;
-	width:45%;
 	margin-bottom:20px;
-}
-.followedListFirst {
-	border-right:1px solid #AAAAAA;
-	margin-right:10px;
 }
 
 #ShowMoreFollowed {
@@ -108,4 +103,8 @@
 
 #profile-content {
 	padding-right: 320px;
+}
+
+#follow_more_link {
+	margin-left:250px;
 }

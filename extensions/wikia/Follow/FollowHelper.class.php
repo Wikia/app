@@ -222,7 +222,6 @@ class FollowHelper {
 		);
 
 		wfProfileOut(__METHOD__);
-
 		return true;
 	}
 	
@@ -238,6 +237,7 @@ class FollowHelper {
 	
 	static public function showAll(){
 		global $wgRequest,$wgUser,$wgExternalSharedDB,$wgWikiaEnableConfirmEditExt;
+		wfProfileIn(__METHOD__);
 		$user_id = $wgRequest->getVal( 'user_id' );
 		$head = $wgRequest->getVal( 'head' );
 
@@ -255,6 +255,7 @@ class FollowHelper {
 		$text = $template->render( "followedPages" );
 		
 		$response->addText( $text );
+		wfProfileOut(__METHOD__);
 		return $response;
 	}
 	
@@ -271,6 +272,7 @@ class FollowHelper {
 	
 	static public function renderFollowPrefs($self, $out) {
 		global $wgUser, $wgEnotifWatchlist, $wgEnotifMinorEdits,$disableEmailPrefs,$wgStyleVersion, $wgExtensionsPath, $wgJsMimeType;
+		wfProfileIn(__METHOD__);
 		wfLoadExtensionMessages( 'Follow' );
 		$watchlistToggles = array();
 					
@@ -319,7 +321,7 @@ class FollowHelper {
 			 );	
 			
 		$out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/Follow/js/ajax.js?{$wgStyleVersion}\"></script>\n");
-		
+		wfProfileOut(__METHOD__);
 		return false;
 	}
 	
@@ -374,7 +376,7 @@ class FollowHelper {
 	
 	static public function renderUserProfile(&$out) {
 		global $wgTitle, $wgRequest, $wgOut, $wgStyleVersion, $wgExtensionsPath, $wgJsMimeType, $wgStyleVersion, $wgUser;
-		
+		wfProfileIn(__METHOD__);
 		if( ($wgUser->getId() != 0) && ($wgRequest->getVal( "hide_followed", 0) == 1) ) {
 			$wgUser->setOption( "hidefollowedpages", true ); 
 			$wgUser->saveSettings();
@@ -404,22 +406,22 @@ class FollowHelper {
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 		
 		if ( count($data) == 0 ) $data = null;
-		
+	/*	
 		if ( count($data) > 5 ) {
 			$data2 = array_slice($data, 5 );
 			$data = array_slice($data, 0, 5);
-		}
+		} */
 		
 		$template->set_vars(
 			array (
 				"isLogin" => ($wgUser->getId() == $user->getId() ),
 				"hideUrl" => $wgTitle->getFullUrl( "hide_followed=1" ),
 				"data" 	=> $data,
-				"data2" => $data2,
+		//		"data2" => $data2,
 				"moreUrl" => Skin::makeSpecialUrlSubpage('following', $user->getName()),
 			)
 		);
-		
+		wfProfileOut(__METHOD__);
 		$out['followedPages'] = $template->render( "followedUserPage" );
 		return true;
 	}
