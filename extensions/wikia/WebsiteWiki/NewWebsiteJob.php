@@ -208,7 +208,7 @@ class NewWebsiteJob extends Job {
 			$text .= WSINFO_PLACEHOLDER . "\n";
 
 			if( isset( $metainfo[ "title"] ) ) {
-				$text .= sprintf("'''%s'''\n\n", $this->webclean( $metainfo[ "title"], $metainfo[ "charset"] ) );
+				$text .= sprintf("'''%s'''\n\n", $metainfo[ "title"] );
 			}
 
 			if( isset( $metainfo[ "description"] ) && strcmp( $metainfo[ "title"], $metainfo[ "description"] ) ) {
