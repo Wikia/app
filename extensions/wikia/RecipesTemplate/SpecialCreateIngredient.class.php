@@ -17,7 +17,7 @@ class SpecialCreateIngredient extends RecipesTemplate {
 			'wpDescription' => array(
 				'type' => 'textarea',
 				'label' => 'description',
-				'hint' => 'description',
+				'hint' => 'ingredient-description',
 			),
 
 			'wpBuying' => array(
