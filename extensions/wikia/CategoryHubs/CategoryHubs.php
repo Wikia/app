@@ -1096,7 +1096,7 @@ function categoryHubPagination($limit, $offset, $numReturned, $suffix, $inTag = 
 	$html .= Xml::openElement('li', array('class' => "first"));
 	if($offset > 0){
 		if( $inTag ) {
-			$html .= $sk->link( $wgTitle, wfMsgExt('cathub-prev', array()), array('rel' => 'previous'), array( "offset$suffix" => ($offset - $limit)), array('known'));
+			$html .= $sk->link( $wgTitle, wfMsgExt('cathub-prev', array()), array('id' => 'answers_tags_prev', 'rel' => 'previous'), array( "offset$suffix" => ($offset - $limit)), array('known'));
 		} else {
 			$html .= $sk->link( $wgTitle, wfMsgExt('cathub-prev', array()), array('rel' => 'previous'), array( "offset$suffix" => ($offset - $limit)), array('known'));
 		}
@@ -1109,7 +1109,7 @@ function categoryHubPagination($limit, $offset, $numReturned, $suffix, $inTag = 
 	$html .= Xml::openElement('li', array('class' => 'last'));
 	if($numReturned > $limit){
 		if( $inTag ) {
-			$html .= $sk->link( $wgTitle, wfMsgExt('cathub-next', array()), array('rel' => 'next'), array( "offset$suffix" => ($offset + $limit)), array('known'));
+			$html .= $sk->link( $wgTitle, wfMsgExt('cathub-next', array()), array('id' => 'answers_tags_next', 'rel' => 'next'), array( "offset$suffix" => ($offset + $limit)), array('known'));
 		} else {
 			$html .= $sk->link( $wgTitle, wfMsgExt('cathub-next', array()), array('rel' => 'next'), array( "offset$suffix" => ($offset + $limit)), array('known'));
 		}
