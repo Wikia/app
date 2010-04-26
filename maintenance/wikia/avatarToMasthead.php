@@ -220,7 +220,8 @@ function copyAvatarsToMasthead() {
 					}
 				}
 				
-				if ( $uploaded === true ) {
+				if ( $uploaded !== false ) {
+					list ( $__files, $sFilePath ) = $uploaded;
 					saveDataInDB($user_id, $city_id, $__files, $sFilePath);
 				}
 
@@ -240,13 +241,15 @@ function saveDataInDB($user_id, $city_id, $__files, $sFilePath) {
 		'old_path' 		=> $__files,
 		'city_id' 		=> $city_id,
 		'new_path' 		=> $sFilePath,
-		'removed' 		=> $UNLINK_OLD ? true : false
+		'removed' 		=> $UNLINK_OLD ? 1 : 0
 	);
 	$dbs->insert( 'avatars_migrate', $data, __METHOD__ );
 }
 
 function uploadAvatar($oMasthead, $mUser, $nypath, $city_id) {
 	global $wgTmpDirectory, $UNLINK_OLD;
+	
+	$result = false;
 	$filename = wfBasename($nypath);
 
 	if( !isset( $wgTmpDirectory ) || !is_dir( $wgTmpDirectory ) ) {
@@ -258,7 +261,7 @@ function uploadAvatar($oMasthead, $mUser, $nypath, $city_id) {
 		$iFileSize = filesize($sTmpFile);
 		if ( empty( $iFileSize ) ) {
 			__log("Empty file {$input} reported size {$iFileSize}");
-			return false;
+			return $result;
 		}
 		
 		__log("Temp file set to {$sTmpFile}");
@@ -269,7 +272,7 @@ function uploadAvatar($oMasthead, $mUser, $nypath, $city_id) {
 			$aAllowMime = array( 'image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png', 'image/jpg' );
 			if (!in_array($aImgInfo['mime'], $aAllowMime)) {
 				__log("Invalid mime type " . $aImgInfo['mime'] . ", allowed: " . implode(',', $aAllowMime));
-				return false;
+				return $result;
 			}
 
 			switch ($aImgInfo['mime']) {
@@ -331,12 +334,12 @@ function uploadAvatar($oMasthead, $mUser, $nypath, $city_id) {
 			 */
 			if ( !is_dir( dirname( $sFilePath ) ) && !wfMkdirParents( dirname( $sFilePath ) ) ) {
 				__log( sprintf("Cannot create directory %s", dirname( $sFilePath ) ) );
-				return false;
+				return $result;
 			}
 
 			if ( !imagepng( $oImg, $sFilePath ) ) {
 				__log( sprintf("Cannot save png Avatar: %s", $sFilePath ) );
-				return false;
+				return $result;
 			}
 
 			/* remove tmp file */
@@ -380,17 +383,18 @@ function uploadAvatar($oMasthead, $mUser, $nypath, $city_id) {
 					}
 				}
 			}
+			$result = array($__files, $sFilePath);
 		}
 		else {
 			__log(sprintf("File %s doesn't exist", $sTmpFile ));
-			return false;
+			return $result;
 		}
 	} else {
 		__log("Cannot copy $nypath to $sTmpFile");
-		return false;
+		return $result;
 	}
 	
-	return true;
+	return $result;
 }
 
 if ( isset($options['ny']) && $options['ny'] == 1 ) {
