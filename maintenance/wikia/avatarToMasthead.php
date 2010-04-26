@@ -22,7 +22,7 @@ CREATE TABLE `avatars_migrate` (
 ini_set( "include_path", dirname(__FILE__)."/.." );
 require_once( "commandLine.inc" );
 include_once( $GLOBALS["IP"]."/extensions/wikia/Masthead/Masthead.php" );
-#include_once( $GLOBALS["IP"]."/extensions/wikia/UserProfile_NY/AvatarClass.php" );
+include_once( $GLOBALS["IP"]."/extensions/wikia/UserProfile_NY/AvatarClass.php" );
 
 $USER_TEST = (isset ($options['u']) ) ? $options['u'] : "";
 $UNLINK_OLD = (isset ($options['remove']) ) ? $options['remove'] : "";
@@ -221,7 +221,7 @@ function copyAvatarsToMasthead() {
 				}
 				
 				if ( $uploaded === true ) {
-					saveDataInDB();
+					saveDataInDB($mUser, $city_id, $__files, $sFilePath);
 				}
 
 			} else {
@@ -232,7 +232,7 @@ function copyAvatarsToMasthead() {
 	unset($wikiArr);
 }
 
-function saveDataInDB() {
+function saveDataInDB($mUser, $city_id, $__files, $sFilePath) {
 	global $wgStatsDB, $UNLINK_OLD;
 	$dbs = wfGetDB(DB_MASTER, array(), $wgStatsDB);
 	$data = array(
