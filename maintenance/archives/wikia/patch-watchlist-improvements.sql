@@ -1,3 +1,5 @@
+--relation for blogs pages
+
 CREATE TABLE `blog_listing_relation` ( 
   `blr_relation`  VARBINARY(255) NOT NULL DEFAULT '',
   `blr_title` VARBINARY(255) NOT NULL DEFAULT '',
@@ -6,4 +8,5 @@ CREATE TABLE `blog_listing_relation` (
   KEY `type_relation` (`blr_relation`,`blr_type`)
 ) ENGINE=INNODB DEFAULT CHARSET=BINARY;
 
+-- time stamp for watch list 
 alter table watchlist add wl_wikia_addedtimestamp TIMESTAMP DEFAULT NOW();
