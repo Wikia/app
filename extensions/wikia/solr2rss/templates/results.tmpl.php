@@ -3,6 +3,7 @@
  <channel>
   <title>RSS format of Wikia Solr search results</title>
   <description>Feed from: <?php echo htmlspecialchars($url); ?></description>
+  <link><?php echo htmlspecialchars($url); ?></link>
   <atom:link href="<?php echo htmlspecialchars($url); ?>" rel="self" type="application/rss+xml" />
   <pubDate><?php echo date($dateFormat); ?></pubDate>
   <generator><?php echo htmlspecialchars($url); ?></generator>
