@@ -41,7 +41,7 @@ CKEDITOR.plugins.add('rte-paste',
 		var newHTML = this.getHtml();
 
 		// regenerate pasted placeholder / image
-		RTE.instance.fire('wysiwygModeReady');
+		editor.fire('wysiwygModeReady');
 
 		// we have HTML before and after the paste -> generate 'diff'
 		var diff = this.diff(this.htmlBeforePaste, newHTML);
@@ -86,6 +86,11 @@ CKEDITOR.plugins.add('rte-paste',
 				editor.setData(html);
 			}
 		}
+
+		// regenerate content after paste
+		setTimeout(function() {
+			editor.fire('afterPaste');
+		}, 250);
 	},
 
 	// performs quick diff between two strings (original and one with pasted content)

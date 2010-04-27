@@ -195,6 +195,13 @@ window.RTE.tools = {
 		}
 	},
 
+	// check whether given URL is external
+	isExternalLink: function(href) {
+		return this.isExternalLinkRegExp.test(href);
+	},
+
+	isExternalLinkRegExp: new RegExp('^' + window.RTEUrlProtocols),
+
 	// simple JS "cache" for parse() method
 	parseCache: {},
 
