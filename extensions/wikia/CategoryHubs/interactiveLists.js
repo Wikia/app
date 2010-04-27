@@ -42,7 +42,7 @@ function goOnePageAway( e ) {
 	var offset = pre_offset.split( '=' )[1];
 	var pre_type = pre_offset.split( '=' )[0];
 	var type = pre_type.split( '_' )[1];
-	var url = wgServer + wgScriptPath +  "?action=ajax&rs=wfAnswersTagsAjaxGetArticles&type=" + type + "&offset" + offset;
+	var url = wgServer + wgScriptPath +  "?action=ajax&rs=wfAnswersTagsAjaxGetArticles&type=" + type + "&offset=" + offset;
 
 	jQuery.getJSON( url, "", function( response ){
 		if( 'a' == type ) {
