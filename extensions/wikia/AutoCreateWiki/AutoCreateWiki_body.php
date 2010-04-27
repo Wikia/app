@@ -1552,6 +1552,7 @@ class AutoCreateWikiPage extends SpecialPage {
 				$WFSettingsVars[ "wgEnableCategoryHubsExt"           ] = false;
 				$WFSettingsVars[ "wgEnableEditingTipsExt"            ] = false;
 				$WFSettingsVars[ "wgAdslot_HOME_TOP_LEADERBOARD"     ] = "Null";
+				$WFSettingsVars[ "wgAdslot_HOME_LEFT_SKYSCRAPER_1"   ] = "Null";
 				$WFSettingsVars[ "wgAdslot_TOP_LEADERBOARD"          ] = "Null";
 
 				if (Wikia::langToSomethingMap($this->mWikiData["language"], array("ar" => true, "he" => true, "ja" => true, "th" => true, "zh" => true), false)) {
