@@ -20,9 +20,44 @@ $(document).ready(function(){
 	// Rephrase button.
 	$(".cathub-button-rephrase").live('click', function(){
 		createRephraseForm(this);
-	});
+		});
+
+	// add paging in case of tags, cannot be done other way  really
+	if( $( '#answers_tags_next' ).exists() ) {
+		$( '#answers_tags_next' ).live( 'click', goOnePageAway );
+		
+	} else if( $( '#answers_tags_prev' ).exists() ) {
+		$( '#answers_tags_prev' ).live( 'click', goOnePageAway );
+	}	
+
 });
 
+function goOnePageAway( e ) {		
+	if( e ) {
+		e.preventDefault();
+	}
+	var target = $(e.target);
+	var href = target.attr( 'href' );
+	var pre_offset = href.split( '&' )[1];
+	var offset = pre_offset.split( '=' )[1];
+	var pre_type = pre_offset.split( '=' )[0];
+	var type = pre_type.split( '_' )[1];
+	var url = wgServer + wgScriptPath +  "?action=ajax&rs=wfAnswersTagsAjaxGetArticles&type=" + type + "&offset" + offset;
+
+	jQuery.getJSON( url, "", function( response ){
+		if( 'a' == type ) {
+			var placeholder = $( '#cathub-tab-answered' );
+		} else {
+			var placeholder = $( '#cathub-tab-unanswered' );
+		}
+		if( !response.error ) {
+			placeholder.html( response.text );	
+		} else {
+			placeholder.html( 'error' );
+		}
+
+	});
+}
 
 function createAnswerForm(button){
 	$(button).hide(); // do this first to prevent confusion

@@ -389,7 +389,6 @@ function wfAnswersSubcategoriesParserHook( $input, $args, $parser ) {
 function wfAnswersTagsAjaxGetArticles( ) {
 	global $wgRequest;	
 	$type = $wgRequest->getVal( 'type', 'u' );
-	$numRet = $wgRequest->getVal( 'numRet', 0 );
 	$offset = $wgRequest->getVal( 'offset', 0 );
 
 	$UN_CLASS = "unanswered_questions";
@@ -403,11 +402,13 @@ function wfAnswersTagsAjaxGetArticles( ) {
 		$answered = CategoryHub::getAnsweredCategory();
 		$answeredTitle = Title::newFromText( $answered, NS_CATEGORY );
 		$answeredArticles = wfAnswersTagsDoCategoryQuery( $answeredTitle );
+		$numRet = count( $answeredArticles );
 		wfCategoryHubGetAnsweredQuestions( $answeredArticles, &$r, $ANS_CLASS, $A_SUFFIX, $numRet, $offset );
 	} else {
 		$unanswered =  CategoryHub::getUnAnsweredCategory();
 		$unansweredTitle = Title::newFromText( $unanswered, NS_CATEGORY );
 		$unansweredArticles = wfAnswersTagsDoCategoryQuery( $unansweredTitle );
+		$numRet = count( $unansweredArticles );
 		wfCategoryHubGetUnansweredQuestions( $answeredArticles, &$r, $ANS_CLASS, $A_SUFFIX, $numRet, $offset, $parser );
 	}
 
