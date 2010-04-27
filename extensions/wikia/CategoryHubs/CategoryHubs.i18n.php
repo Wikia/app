@@ -36,6 +36,7 @@ $messages['en'] = array(
 	'cathub-edit-success'                   => 'Your answer has been saved',
 	'cathub-prev'                           => '&larr; Previous',
 	'cathub-next'                           => 'Next &rarr;',
+	'cathub-tags'				=> 'Tags',
 );
 
 /** Afrikaans (Afrikaans)
