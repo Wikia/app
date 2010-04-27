@@ -55,7 +55,6 @@ function goOnePageAway( e ) {
 		} else {
 			placeholder.html( 'error' );
 		}
-
 	});
 }
 
