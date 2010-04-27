@@ -377,7 +377,7 @@ function wfAnswersSubcategoriesParserHook( $input, $args, $parser ) {
 
 	if (!empty ($result_array) ) {
 		$out .= "<div class=\"tags-hub-subcategories\">\n";
-		$out .= '<h3>' . wfMsg( 'subcategories' ) . "</h3>\n";
+		$out .= '<h3>' . wfMsg( 'cathub-tags' ) . "</h3>\n";
 
 		$out .= implode($result_array, "&nbsp;|&nbsp;");
 		$out .= "\n</div>";
@@ -403,7 +403,7 @@ function wfAnswersTagsAjaxGetArticles( ) {
 		$answered = CategoryHub::getAnsweredCategory();
 		$answeredTitle = Title::newFromText( $answered, NS_CATEGORY );
 		$answeredArticles = wfAnswersTagsDoCategoryQuery( $answeredTitle );
-		wfCategoryHubGetAnsweredQuestions( $answeredArticles, &$r, $ANS_CLASS, $A_SUFFIX, $numRet, $offse );
+		wfCategoryHubGetAnsweredQuestions( $answeredArticles, &$r, $ANS_CLASS, $A_SUFFIX, $numRet, $offset );
 	} else {
 		$unanswered =  CategoryHub::getUnAnsweredCategory();
 		$unansweredTitle = Title::newFromText( $unanswered, NS_CATEGORY );
@@ -411,11 +411,12 @@ function wfAnswersTagsAjaxGetArticles( ) {
 		wfCategoryHubGetUnansweredQuestions( $answeredArticles, &$r, $ANS_CLASS, $A_SUFFIX, $numRet, $offset, $parser );
 	}
 
-        $response = new AjaxResponse( $r );
-        //$response->setCacheDuration( 60 * 2 );
-        $response->setContentType('text/plain; charset=utf-8');
-
-        return $response;
+	return Wikia::json_encode(
+			array(
+				"error" => 0,
+				"text"  => $r
+			     )
+                );
 }
 
 $wgExtensionMessagesFiles['CategoryHub'] = dirname(__FILE__).'/CategoryHubs.i18n.php';
