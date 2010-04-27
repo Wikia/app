@@ -24,10 +24,11 @@ CKEDITOR.plugins.add('rte-template',
 				var templates = window.RTETemplatesDropdown;
 
 				for (t=0; t < templates.length; t++) {
-					var label = templates[t].replace(/_/g, ' ');
+					var value = templates[t].replace(/_/g, ' ');
+					var label = window.RTEMessages.template + ':' + value;
 
 					// add the template entry to the panel list
-					this.add(templates[t], label, label);
+					this.add(templates[t], label, value);
 				}
 
 				// add "Other template / magic word"

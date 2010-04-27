@@ -609,7 +609,7 @@ HTML
 				$title = Title::newFromText(trim($line, '* '));
 				//$templateDropdown[$title->getPrefixedText()] = RTE::getTemplateParams($title, RTE::$parser);
 				if ( is_object( $title ) ) {
-					$templateDropdown[] = $title->getPrefixedText();
+					$templateDropdown[] = $title->getText();
 				}
 			}
 		}
