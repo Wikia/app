@@ -73,9 +73,20 @@ var initTracker = function() {
 			$.tracker.byStr('userengagement/msg_click_' + e.target.id);
 		}
 	});
-
 	// Article content actions
 	$('#page_controls, #page_tabs').click(function(e) {
+		if( typeof wgEnableWikiaFollowedPages != 'undefined' && wgEnableWikiaFollowedPages ) {
+			if( $(e.target).attr("id") == "ca-unwatch" ) {
+				$.tracker.byStr( 'articleAction/unwatch' );
+				return true;
+			}
+			
+			if( $(e.target).attr("id") == "ca-watch" ) {
+				$.tracker.byStr( 'articleAction/watch' );
+				return true;
+			}		
+		}	
+		
 		if(e.target.nodeName == 'A') {
 			$.tracker.byStr('articleAction/' + e.target.id.substring(3).replace(/nstab-/, 'view/'));
 		}

@@ -32,6 +32,7 @@ function GetHubMenu() {
 
 $wgAjaxExportList[] = 'GetUserMenu';
 function GetUserMenu($userName = '') {
+	global $wgEnableWikiaFollowedPages;
 	$links = array();
 
 	$userPage = Title::newFromText($userName, NS_USER);
@@ -44,6 +45,15 @@ function GetUserMenu($userName = '') {
 			);
 	}
 
+	if(!empty($wgEnableWikiaFollowedPages) && $wgEnableWikiaFollowedPages) {
+		wfLoadExtensionMessages( 'Follow' );
+		$links['follow'] = array(
+			'text' => wfMsg('wikiafollowedpages-special-title-userbar'),
+			'id' => 'menuMyFollowing',
+			'href' => Title::newFromText("Following", NS_SPECIAL )->getLocalUrl()
+			);
+	}
+	
 	$userContribs = Title::newFromText('Contributions/'.$userName, NS_SPECIAL);
 
 	if (!empty($userContribs)) {

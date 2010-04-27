@@ -1679,7 +1679,10 @@ if( $custom_user_data ) {
 		}
 ?>
 				<span id="header_mytalk"><a href="<?= htmlspecialchars($this->data['userlinks']['mytalk']['href']) ?>"<?= $skin->tooltipAndAccesskey('pt-mytalk') ?>><?= htmlspecialchars($this->data['userlinks']['mytalk']['text']) ?></a></span>
-				<span id="header_watchlist"><a href="<?= htmlspecialchars($this->data['userlinks']['watchlist']['href']) ?>"<?= $skin->tooltipAndAccesskey('pt-watchlist') ?>><?= htmlspecialchars($this->data['userlinks']['watchlist']['text']) ?></a></span>
+				<?php global $wgEnableWikiaFollowedPages; ?>
+				<?php if( empty($wgEnableWikiaFollowedPages) || !$wgEnableWikiaFollowedPages ): ?>
+					<span id="header_watchlist"><a href="<?= htmlspecialchars($this->data['userlinks']['watchlist']['href']) ?>"<?= $skin->tooltipAndAccesskey('pt-watchlist') ?>><?= htmlspecialchars($this->data['userlinks']['watchlist']['text']) ?></a></span>
+				<?php endif; ?>
 				<span>
 					<button id="headerButtonUser" class="header-button color1"><?= trim(wfMsg('moredotdotdot'), ' .') ?><img src="<?php print $wgBlankImgUrl; ?>" /></button>
 				</span>

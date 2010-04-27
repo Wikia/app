@@ -425,6 +425,7 @@ function setupVoting() {
 //watch unwatch combomodal 
 $(function() {
 	 $("#ca-watch").click(function(e){
+		 	$.tracker.byStr( 'articleAction/watch' );
 		 	var callback_link = $(e.target).attr("href");
 			showComboAjaxForPlaceHolder(false, false, function(){
 				AjaxLogin.doSuccess = function() {
