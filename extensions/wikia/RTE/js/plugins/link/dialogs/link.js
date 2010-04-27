@@ -292,6 +292,33 @@ CKEDITOR.dialog.add( 'link', function( editor )
 			// set / update meta data and link text
 			var data = {};
 
+			// check for full link to local wiki when on "external" tab (RT #47456)
+			if (currentTab == 'external') {
+				var href = this.getValueOf('external', 'url');
+
+				if (href.indexOf(window.wgServer) == 0) {
+					// URL to local wiki provided - get article name from it
+					var re = new RegExp( window.wgArticlePath.replace(/\$1/, '(.*)') );
+					var matches = href.match(re);
+
+					if (matches) {
+						var pageName = matches[1];
+
+						// decode page name
+						pageName = decodeURIComponent(pageName);
+						pageName = pageName.replace(/_/g, ' ');
+
+						// move values to "internal" tab
+						this.setValueOf('internal', 'name', pageName);
+						this.setValueOf('internal', 'label', this.getValueOf('external', 'label') );
+
+						currentTab = 'internal';
+
+						RTE.log('detected internal link: ' + href + ' > ' + pageName);
+					}
+				}
+			}
+
 			switch (currentTab) {
 				case 'external':
 					data = {
