@@ -62,9 +62,65 @@ CKEDITOR.plugins.add('rte-link',
 				});
 		}
 
-	},
+		// handle pasted links from local wiki
+		editor.on('afterPaste', function() {
+			// get links without _rte_data attribute
+			var pastedLinks = RTE.getEditor().find('a').not('a[_rte_data]');
 
-	afterInit: function(editor) {
+			if (!pastedLinks.exists()) {
+				return;
+			}
+
+			RTE.log('pasted links');
+			RTE.log(pastedLinks);
+
+			pastedLinks.each(function() {
+				var link = $(this);
+				var href = link.attr('href');
+
+				// link from external site - skip
+				if (RTE.tools.isExternalLink(href)) {
+					return;
+				}
+
+				// get page name from title / href attribute
+				var pageName = "";
+
+				if (href.indexOf('&action=edit') == -1) {
+					// blue link
+					pageName = link.attr('title');
+				}
+				else {
+					// red link
+					var matches = href.match('title=(.*)&action=edit');
+
+					if (matches) {
+						pageName = matches[1];
+
+						// decode page name
+						pageName = decodeURIComponent(pageName);
+						pageName = pageName.replace(/_/g, ' ');
+					}
+				}
+
+				if (pageName == "") {
+					return;
+				}
+
+				RTE.log('local link pointing to "' + pageName + '" found');
+
+				// set link's meta-data
+				var data = {
+					type: 'internal',
+					link: pageName,
+					text: link.text(),
+					noforce: true,
+					wasblank: false
+				};
+
+				link.setData(data);
+			});
+		});
 	}
 });
 
