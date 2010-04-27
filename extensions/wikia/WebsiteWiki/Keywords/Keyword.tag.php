@@ -22,10 +22,12 @@ function renderKeypage( $input, $argv, $parser ) {
 
 	foreach( $tokens as $keyword ) {
 		$keyword = substr( $wgContLang->lc( trim( $keyword ) ), 0, 80 );
-		$keywords[] = Wikia::link(
-			Title::makeTitle( NS_SPECIAL, sprintf( "Keyword/%s", $wgContLang->lc( $keyword ) )  )->getLocalURL(),
-			$keyword
-		);
+		if( strlen( $keyword ) ) {
+			$keywords[] = Wikia::link(
+				Title::makeTitle( NS_SPECIAL, sprintf( "Keyword/%s", $wgContLang->lc( $keyword ) )  )->getLocalURL(),
+				$keyword
+			);
+		}
 	}
 
 	$keywords = array_unique( $keywords );
@@ -36,7 +38,6 @@ function renderKeypage( $input, $argv, $parser ) {
 		$output .= implode( ", ", $keywords );
 		$output .= Xml::closeElement( "span" );
 	}
-
 
 	return $output;
 }
