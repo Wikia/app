@@ -56,63 +56,101 @@ function RelatedPages_Display(&$template, &$templateEngine) {
 	if($templateEngine->data['catlinks']) {
 		$categories = Wikia::getVar('InCategories');
 
-		if($categories) {
-			sort($categories);
+		if ( $categories ) {
+			sort( $categories );
 
 			$cacheKey = wfMemcKey(__CLASS__, join(':', $categories), 1);
 
 			$out = $wgMemc->get($cacheKey);
 
 			if(!is_array($out)) {
-				if(count($wgContentNamespaces) > 0) {
-					$joinSql = ' JOIN page ON page_id = cl_from AND page_namespace';
-					if(count($wgContentNamespaces) == 1) {
-						$joinSql .= ' = ' . array_shift($wgContentNamespaces) . ' ';
-					} else {
-						$joinSql .= ' IN ('.join(',', $wgContentNamespaces).') ';
-					}
-				} else {
-					$joinSql = '';
-				}
 
 				$dbr = wfGetDB(DB_SLAVE, 'stats');
+
+				$tables = array( "categorylinks" );
+				
+				if(count($wgContentNamespaces) > 0) {
+					$joinSql = array( "page" => 
+						array(
+							"JOIN",
+							implode( 
+								" AND ", 
+								array(
+									"page_id = cl_from",
+									( count($wgContentNamespaces) == 1) 
+										? "page_namespace = " . intval(array_shift($wgContentNamespaces))
+										: "page_namespace in ( " . $dbr->makeList( $wgContentNamespaces ) . " )",
+								)
+							)
+						)
+					);
+					$tables[] = "page";
+				} else {
+					$joinSql = array();
+				}
+				
+				$options = array("GROUP BY" => "cl_from");
+				if (count($categories) > 1) {
+					$options["HAVING"] = "COUNT(cl_to) > 1";
+				} else {
+					$options["LIMIT"] = 100;
+				}
+				
+				$res1 = $dbr->select( 
+					$tables,
+					array( "cl_from", "COUNT(cl_to) AS count" ),
+					array(
+						"cl_to in ( " . $dbr->makeList( $categories ) . " )",
+					),
+					"RelatedPages Query 1",
+					$options,
+					$joinSql
+				);
 				$out = array();
 				$results = array();
-				$query1 = 'SELECT /* RelatedPages Query 1 */ cl_from, COUNT(cl_to) AS count FROM categorylinks USE KEY(cl_from)'.$joinSql.' WHERE cl_to IN ("'.join('","', $categories).'") GROUP BY 1';
-
-				if(count($categories) > 1) {
-					$query1 .= ' HAVING COUNT(cl_to) > 1';
-				} else {
-					$query1 .= ' LIMIT 100';
-				}
-				$res1 = $dbr->query($query1);
 				while($row1 = $dbr->fetchObject($res1)) {
 					$results[$row1->cl_from] = $row1->count;
 				}
-				if(count($categories) > 1) {
+				
+				if ( count($categories) > 1 ) {
 					arsort($results);
 					uasort($results, 'RelatedPages_Compare');
 					$out = array_slice(array_keys($results), 0, 5);
 				} else {
-					if(count($results) > 0) {
+					if ( count($results) > 0 ) {
 						$out = array_rand($results, min(count($results), 5));
-						if(!is_array($out)){
+						if ( !is_array($out) ) {
 							$out = array($out);
 						}
 					}
 				}
-				if(count($categories) > 1 && count($out) < 5) {
+
+				if ( count($categories) > 1 && count($out) < 5 ) {
 					$results = array();
-					$query2 = 'SELECT /* RelatedPages Query 2 */ cl_from FROM categorylinks USE KEY(cl_from)'.$joinSql.' WHERE cl_to IN ("'.join('","', $categories).'") GROUP BY 1 LIMIT 100';
-					$res2 = $dbr->query($query2);
+					
+					$res2 = $dbr->select( 
+						$tables,
+						array( "cl_from" ),
+						array(
+							"cl_to in ( " . $dbr->makeList( $categories ) . " )",
+						),
+						"RelatedPages Query 2",
+						array(
+							"GROUP BY" => "cl_from",
+							"LIMIT" => 100
+						),
+						$joinSql
+					);
+
 					while($row2 = $dbr->fetchObject($res2)) {
 						if(!in_array($row2->cl_from, $out)) {
 							$results[] = $row2->cl_from;
 						}
 					}
-					if(!empty($results)) {
+
+					if ( !empty($results) ) {
 						$randOut = array_rand(array_flip($results), min(count($results), 5 - count($out)));
-						if(!is_array($randOut)){ // array_rand will return a single element instead of an array of size 1
+						if ( !is_array($randOut) ) { // array_rand will return a single element instead of an array of size 1
 							$randOut = array($randOut);
 						}
 						$out = array_merge($out, $randOut);
@@ -122,7 +160,7 @@ function RelatedPages_Display(&$template, &$templateEngine) {
 				$wgMemc->set($cacheKey, $out, 60 * 60 * 6);
 			}
 
-			if(count($out) > 0) {
+			if ( count($out) > 0 ) {
 				unset($out[array_search($wgArticle->getID(), $out)]);
 
 				// quit if we have no data after removing current page
@@ -131,10 +169,10 @@ function RelatedPages_Display(&$template, &$templateEngine) {
 				}
 
 				$i = 0;
+				
+				$html = '<div style="clear:both;"></div><div id="RelatedPages" class="widget" style="margin-top: 10px;"><div class="accent" style="padding: 6px; font-weight: bold;">Check out these related pages:</div><div style="padding: 10px; text-align: center; line-height: 1.5em">';
 
-                                $html = '<div style="clear:both;"></div><div id="RelatedPages" class="widget" style="margin-top: 10px;"><div class="accent" style="padding: 6px; font-weight: bold;">Check out these related pages:</div><div style="padding: 10px; text-align: center; line-height: 1.5em">';
-
-				foreach($out as $item) {
+				foreach ( $out as $item ) {
 					$title = Title::newFromId($item);
 					if(!empty($title) && $title->exists() && $i < 4) {
 
