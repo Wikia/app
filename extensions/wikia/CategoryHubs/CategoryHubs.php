@@ -300,7 +300,7 @@ function wfAnswersGetXDayContribs($days = 7, $show_staff = true, $limit = 30, $o
 
 */
 
-function wfAnswersTagsDoCategoryQuery( $category ) {
+function wfAnswersTagsDoCategoryQuery( $category, $offset = 0 ) {
 	global $wgCategoryMagicGallery, $wgOut, $wgTitle;
 	$showGallery = $wgCategoryMagicGallery && !$wgOut->mNoGallery;
 			
@@ -313,7 +313,10 @@ function wfAnswersTagsDoCategoryQuery( $category ) {
 			array( 'cl_to' => $category->getDBkey() ),
 			__METHOD__,
 			array( 'ORDER BY' => 'cl_sortkey',
-				'USE INDEX' => array( 'categorylinks' => 'cl_sortkey' ) ),
+				'USE INDEX' => array( 'categorylinks' => 'cl_sortkey' ),
+				'LIMIT' => 20,
+				'OFFSET' => $offset
+			),
 			array( 'categorylinks'  => array( 'INNER JOIN', 'cl_from = page_id' ),
 				'category' => array( 'LEFT JOIN', 'cat_title = page_title AND page_namespace = ' . NS_CATEGORY ) )
 			);
@@ -401,13 +404,13 @@ function wfAnswersTagsAjaxGetArticles( ) {
 	if( 'a' == $type ) {
 		$answered = CategoryHub::getAnsweredCategory();
 		$answeredTitle = Title::newFromText( $answered, NS_CATEGORY );
-		$answeredArticles = wfAnswersTagsDoCategoryQuery( $answeredTitle );
-		$numRet = count( $answeredArticles );
+		$answeredArticles = wfAnswersTagsDoCategoryQuery( $answeredTitle, $offset );
+		$numRet = count( $answeredArticles );				
 		wfCategoryHubGetAnsweredQuestions( $answeredArticles, &$r, $ANS_CLASS, $A_SUFFIX, $numRet, $offset, null, true );
 	} else {
 		$unanswered =  CategoryHub::getUnAnsweredCategory();
 		$unansweredTitle = Title::newFromText( $unanswered, NS_CATEGORY );
-		$unansweredArticles = wfAnswersTagsDoCategoryQuery( $unansweredTitle );
+		$unansweredArticles = wfAnswersTagsDoCategoryQuery( $unansweredTitle, $offset );
 		$numRet = count( $unansweredArticles );
 		wfCategoryHubGetUnansweredQuestions( $answeredArticles, &$r, $ANS_CLASS, $A_SUFFIX, $numRet, $offset, null, true );
 	}
