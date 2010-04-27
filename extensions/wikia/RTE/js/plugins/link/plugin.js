@@ -36,6 +36,32 @@ CKEDITOR.plugins.add('rte-link',
 				}
 			});
 		}
+
+		// If the "contextmenu" plugin is loaded, register the listeners.
+		// added to solve RT #47452
+		if ( editor.contextMenu )
+		{
+			editor.contextMenu.addListener( function( element, selection )
+				{
+					if ( !element )
+						return null;
+
+					var isAnchor = ( element.is( 'img' ) && element.getAttribute( '_cke_real_element_type' ) == 'anchor' );
+
+					if ( !isAnchor )
+					{
+						if ( !( element = CKEDITOR.plugins.link.getSelectedLink( editor ) ) )
+							return null;
+
+						isAnchor = ( element.getAttribute( 'name' ) && !element.getAttribute( 'href' ) );
+					}
+
+					return isAnchor ?
+							{ anchor : CKEDITOR.TRISTATE_OFF } :
+							{ link : CKEDITOR.TRISTATE_OFF, unlink : CKEDITOR.TRISTATE_OFF };
+				});
+		}
+
 	},
 
 	afterInit: function(editor) {
