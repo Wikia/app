@@ -77,12 +77,24 @@ function axWFactoryGetVariable() {
 	$cv_id = $wgRequest->getVal("varid");
 	$city_id = $wgRequest->getVal("wiki");
 
+	$variable = WikiFactory::getVarById( $cv_id, $city_id );
+
+	$related = array();
+	if (preg_match("/Related variables(.*)$/", $variable->cv_description, $matches)) {
+		$names = preg_split("/[^a-z0-9_]+/i", $matches[1], null, PREG_SPLIT_NO_EMPTY);
+		foreach ($names as $name) {
+			$rel_var = WikiFactory::getVarByName( $name, $city_id );
+			if (!empty($rel_var)) $related[] = $rel_var;
+		}
+	}
+
 	$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 	$oTmpl->set_vars( array(
 		"cityid"        => $city_id,
-		"variable"      => WikiFactory::getVarById( $cv_id, $city_id ),
+		"variable"      => $variable,
 		"groups"        => WikiFactory::getGroups(),
 		"accesslevels"  => WikiFactory::$levels,
+		"related"       => $related,
 	));
 
 	return Wikia::json_encode( array(
@@ -434,6 +446,7 @@ function axWFactorySaveVariable() {
 		$cv_variable_type	= $wgRequest->getVal( 'varType' );
 		$tag_name = $wgRequest->getVal( 'tagName' );
 		$tag_wiki_count = 0;
+		$form_id = $wgRequest->getVal("formId", null);
 
 		#--- check if variable is valid
 		switch ( $cv_variable_type ) {
@@ -518,13 +531,15 @@ function axWFactorySaveVariable() {
 
 	}
 
+	if (empty($form_id)) $div_name = "wf-variable-parse"; else $div_name = "wf-variable-parse-{$form_id}";
+
 	return Wikia::json_encode(
 		array(
 			"div-body" => $return,
 			"is-error" => $error,
 			"tag-name" => $tag_name,
 			"tag-wikis" => $tag_wiki_count,
-			"div-name" => "wf-variable-parse"
+			"div-name" => $div_name,
 		)
 	);
 }
