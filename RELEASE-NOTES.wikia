@@ -1,4 +1,7 @@
 == Changes since 201004.5 ==
+* rt#47452: RTE: add "Remove link" context menu option (macbre)
+* rt#47454: RTE: When external link pasted, link dialog should switch to "external" tab (macbre)
+* rt#47457: RTE: don't add "Template:" when inserting stuff via the template dropdown/editor (macbre)
 * rt#47096: add Emoticons ext (uberfuzzy)
 * rt#47082: Recipes Template: wrong description message used on the ingredients page (macbre)
 * rt#47093: Possible security problem with Barrylb calendar extension (Nef)
