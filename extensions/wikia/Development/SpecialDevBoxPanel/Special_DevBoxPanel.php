@@ -75,8 +75,13 @@ define('DEVBOX_ACTION_PULL_DOMAIN', 'devbox-pull-domain');
 define('DEVBOX_FIELD_DOMAIN_TO_PULL', 'domainToPull');
 
 define('DEVBOX_DEFAULT_WIKI_DOMAIN', 'devbox.wikia.com');
-define('DEV_BOX_CLUSTER', "devbox_section");
 define('DEV_BOX_SERVER_NAME', "devbox-server");
+
+// Doing it as its own cluster didn't work because of some details of how wikicities_[cluster] works.
+// Instead, we will try to use the main cluster, but override what server that means.
+// TODO: SWAP ME!  This probably is the solution, but there needs to be some testing (and I can't login at the moment).
+define('DEV_BOX_CLUSTER', "devbox_section");
+//define('DEV_BOX_CLUSTER', "DEFAULT");
 
 function wfSetupDevBoxPanel() {
 	global $IP, $wgMessageCache;
