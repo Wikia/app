@@ -14,6 +14,23 @@ CKEDITOR.dialog.add( 'link', function( editor )
 		var data = element ? $(element.$).getData() : null;
 
 		if (data) {
+			// detect pasted links (RT #47454)
+			if (typeof data.type == 'undefined') {
+				RTE.log('pasted link detected');
+
+				// detect external links
+				var href = element.getAttribute('href');
+				var re = new RegExp('^' + window.RTEUrlProtocols);
+
+				if (re.test(href)) {
+					data = {
+						type: 'external',
+						link: href,
+						text: element.getText(),
+					};
+				}
+			}
+
 			RTE.log(data);
 
 			// get "Link text" field
