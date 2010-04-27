@@ -24,10 +24,10 @@ $(document).ready(function(){
 
 	// add paging in case of tags, cannot be done other way  really
 	if( $( '#answers_tags_next' ).exists() ) {
-		$( '#answers_tags_next' ).live( 'click', goOnePageAway );
+		$( '#answers_tags_next' ).click( goOnePageAway );
 		
 	} else if( $( '#answers_tags_prev' ).exists() ) {
-		$( '#answers_tags_prev' ).live( 'click', goOnePageAway );
+		$( '#answers_tags_prev' ).click( goOnePageAway );
 	}	
 
 });
@@ -55,6 +55,13 @@ function goOnePageAway( e ) {
 		} else {
 			placeholder.html( 'error' );
 		}
+		if( $( '#answers_tags_next' ).exists() ) {
+			$( '#answers_tags_next' ).click( goOnePageAway );
+		
+		} else if( $( '#answers_tags_prev' ).exists() ) {
+			$( '#answers_tags_prev' ).click( goOnePageAway );
+		}	
+
 	});
 }
 
