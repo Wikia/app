@@ -403,13 +403,13 @@ function wfAnswersTagsAjaxGetArticles( ) {
 		$answeredTitle = Title::newFromText( $answered, NS_CATEGORY );
 		$answeredArticles = wfAnswersTagsDoCategoryQuery( $answeredTitle );
 		$numRet = count( $answeredArticles );
-		wfCategoryHubGetAnsweredQuestions( $answeredArticles, &$r, $ANS_CLASS, $A_SUFFIX, $numRet, $offset );
+		wfCategoryHubGetAnsweredQuestions( $answeredArticles, &$r, $ANS_CLASS, $A_SUFFIX, $numRet, $offset, null, true );
 	} else {
 		$unanswered =  CategoryHub::getUnAnsweredCategory();
 		$unansweredTitle = Title::newFromText( $unanswered, NS_CATEGORY );
 		$unansweredArticles = wfAnswersTagsDoCategoryQuery( $unansweredTitle );
 		$numRet = count( $unansweredArticles );
-		wfCategoryHubGetUnansweredQuestions( $answeredArticles, &$r, $ANS_CLASS, $A_SUFFIX, $numRet, $offset, $parser );
+		wfCategoryHubGetUnansweredQuestions( $answeredArticles, &$r, $ANS_CLASS, $A_SUFFIX, $numRet, $offset, null, true );
 	}
 
 	return Wikia::json_encode(
@@ -777,14 +777,14 @@ function categoryHubsProgressBar( $categoryEdits, &$r ) {
 	return $allQuestions;
 }
 
-function wfCategoryHubGetAnsweredQuestions( $answeredArticles, &$r, $type, $suffix, $numReturned_a, $offset_a, $parser = null ) {
+function wfCategoryHubGetAnsweredQuestions( $answeredArticles, &$r, $type, $suffix, $numReturned_a, $offset_a, $parser = null, $inTag = false ) {
 	global $wgUser, $wgCategoryHubArticleLimitPerTab;
-	$inTag = true;
 	if( empty( $parser ) ) {
 		$tmpParser = new Parser();
 		$tmpParser->setOutputType(OT_HTML);
 		$tmpParserOptions = new ParserOptions();
-		$inTag = false;
+	} else {
+		$inTag = true;
 	}
 
 	$r .= "<ul class='interactive-questions'>\n";
