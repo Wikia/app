@@ -148,15 +148,28 @@ jQuery.tracker = function() {
         $.tracker.byStr('createPage');
     }
 
-    initTracker();
+	// MW toolbar tracking (RT #47458)
+	$('#toolbar').click(function(ev) {
+		var button = $(ev.target);
+
+		if (!button.is('img')) {
+			return;
+		}
+
+		var id = button.attr('id').split('-').pop();
+
+		$.tracker.byStr('editpage/toolbar/' + id);
+	});
+
+	initTracker();
 };
 
 jQuery.tracker.byStr = function(message) {
-    $.tracker.track(message);
+	$.tracker.track(message);
 };
 
 jQuery.tracker.byId = function(e) {
-    $.tracker.track(this.id);
+	$.tracker.track(this.id);
 };
 
 jQuery.tracker.track = function(fakeurl) {
@@ -180,7 +193,6 @@ jQuery.tracker.track = function(fakeurl) {
 		$().log('tracker [void]: ' + fake);
 	}
 };
-
 
 // macbre: temporary fix
 var WET = {
