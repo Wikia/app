@@ -20,9 +20,8 @@ CKEDITOR.dialog.add( 'link', function( editor )
 
 				// detect external links
 				var href = element.getAttribute('href');
-				var re = new RegExp('^' + window.RTEUrlProtocols);
 
-				if (re.test(href)) {
+				if (RTE.tools.isExternalLink(href)) {
 					data = {
 						type: 'external',
 						link: href,
