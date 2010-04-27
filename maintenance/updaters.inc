@@ -1104,9 +1104,9 @@ function do_all_updates( $shared = false, $purge = true ) {
 	}
 
 
-	wfOut( "Deleting old default messages (this may take a long time!)..." );
-	deleteDefaultMessages();
-	wfOut( "Done\n" );
+#	wfOut( "Deleting old default messages (this may take a long time!)..." );
+#	deleteDefaultMessages();
+#	wfOut( "Done\n" );
 
 	do_stats_init();
 
