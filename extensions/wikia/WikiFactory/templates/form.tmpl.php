@@ -338,9 +338,10 @@ $Factory.Variable.remove = function ( e, step ) {
 };
 
 // submit form with new variable data
-$Factory.Variable.submit = function () {
+$Factory.Variable.submit = function (form) {
+    if (form == null) form = "wf-variable-form";
     $Factory.Busy(1);
-    var oForm = $Dom.get('wf-variable-form');
+    var oForm = $Dom.get(form);
     $Connect.setForm(oForm, false);
     $Connect.asyncRequest( 'POST', ajaxpath+"?action=ajax&rs=axWFactorySaveVariable", $Factory.ReplaceCallback );
 };
