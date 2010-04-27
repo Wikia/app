@@ -60,7 +60,7 @@ class solr2rss extends SpecialPage {
 				));
 
 			$wgRequest->response()->header('Cache-Control: max-age=60');
-			$wgRequest->response()->header('Content-Type: text/xml');
+			$wgRequest->response()->header('Content-Type: application/xml');
 
 			echo $oTmpl->execute( 'results' );
 			exit;
