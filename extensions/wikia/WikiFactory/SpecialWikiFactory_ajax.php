@@ -660,6 +660,7 @@ function axWFactoryRemoveVariable( ) {
 		$city_id  = $wgRequest->getVal( 'cityid' );
 		$tag_name = $wgRequest->getVal( 'tagName' );
 		$tag_wiki_count = 0;
+		$form_id = $wgRequest->getVal("formId", null);
 
 		if( ! WikiFactory::removeVarById( $cv_id, $city_id ) ) {
 			$error++;
@@ -680,13 +681,15 @@ function axWFactoryRemoveVariable( ) {
 		}
 	}
 
+	if (empty($form_id)) $div_name = "wf-variable-parse"; else $div_name = "wf-variable-parse-{$form_id}";
+
 	return Wikia::json_encode(
 		array(
 			"div-body" => $return,
 			"is-error" => $error,
 			"tag-name" => $tag_name,
 			"tag-wikis" => $tag_wiki_count,
-			"div-name" => "wf-variable-parse"
+			"div-name" => $div_name,
 		)
 	);
 }

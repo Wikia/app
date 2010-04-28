@@ -382,13 +382,14 @@ $Factory.Variable.tagCheck = function ( submitType ) {
 };
 
 // submit form with new variable data
-$Factory.Variable.remove_submit = function ( confirm ) {
+$Factory.Variable.remove_submit = function ( confirm, form ) {
 	if ( ( confirm == true ) && !window.confirm('Are You sure?') ) {
 		return false;
 	}
 
+	if (form == null) form = "wf-variable-form";
 	$Factory.Busy(1);
-	var oForm = $Dom.get('wf-variable-form');
+	var oForm = $Dom.get(form);
 	$Connect.setForm(oForm, false);
 	$Connect.asyncRequest( 'POST', ajaxpath+"?action=ajax&rs=axWFactoryRemoveVariable", $Factory.ReplaceCallback );
 };
