@@ -23,7 +23,7 @@
  * @ingroup SpecialPage
  */
 
-class SpecialAdBulkUpload extends SpecialPage {
+class SpecialAdBulkUpload extends UnlistedSpecialPage {
 	
 	private $uploadedfile;
 	
