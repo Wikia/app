@@ -1,7 +1,7 @@
 <?php
 $wgExtensionCredits['other'][] = array(
 	'name' => 'Image Lightbox',
-	'version' => '1.11',
+	'version' => '1.12',
 	'description' => 'Add lightbox preview for gallery images',
 	'author' => 'Maciej Brencz',
 );
@@ -9,9 +9,6 @@ $wgExtensionCredits['other'][] = array(
 // register extension class
 $dir = dirname(__FILE__);
 $wgAutoloadClasses['ImageLightbox'] = "$dir/ImageLightbox.class.php";
-
-// hooks (JS/CSS loaded via StaticChute)
-//$wgHooks['BeforePageDisplay'][] = 'ImageLightbox::beforePageDisplay';
 
 // i18n
 $wgExtensionMessagesFiles['ImageLightbox'] = $dir.'/ImageLightbox.i18n.php';
