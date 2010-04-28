@@ -11,7 +11,7 @@ var ImageLightbox = {
 	init: function() {
 		var self = this;
 
-		var images = $('#bodyContent').find('.lightbox');
+		var images = $('#bodyContent').find('a.lightbox, a.image');
 		if (!images.exists()) {
 			return;
 		}
@@ -59,7 +59,19 @@ var ImageLightbox = {
 			imageName = decodeURIComponent(imageName);
 
 			// find caption node and use it in lightbox popup
-			var caption = target.closest('.thumb').next('.lightbox-caption').html();
+			var caption = false;
+
+			if (target.hasClass('lightbox')) {
+				// <gallery> lightboxes
+				caption = target.closest('.thumb').next('.lightbox-caption').html();
+			}
+			else if (target.hasClass('image')) {
+				// image thumbs
+				var captionNode = target.next('.thumbcaption').clone();
+				captionNode.children('.magnify').remove();
+
+				caption = captionNode.html();
+			}
 
 			this.show(imageName, caption);
 		}
