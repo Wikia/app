@@ -18,9 +18,11 @@ var ImageLightbox = {
 
 		this.log('init for ' + images.length + ' images');
 
-		images.click(function(ev) {
-			self.onClick.call(self, ev);
-		});
+		images.
+			unbind('.lightbox').
+			bind('click.lightbox', function(ev) {
+				self.onClick.call(self, ev);
+			});
 	},
 
 	// handle click on link

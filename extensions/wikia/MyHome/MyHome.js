@@ -142,10 +142,15 @@ MyHome.fetchMore = function(node) {
 
 // setup onclick events for image/video thumbnails
 MyHome.setupThumbnails = function(node) {
-	$(node).find('.activityfeed-image-thumbnail').click(MyHome.loadFullSizeImage);
+	// setup video players
 	$(node).find('.activityfeed-video-thumbnail').click(MyHome.loadVideoPlayer);
 
-	MyHome.log('thumbnails setup');
+	// setup image lightbox
+	if (typeof ImageLightbox != 'undefined') {
+		ImageLightbox.init();
+	}
+
+	MyHome.log('thumbnails set up');
 }
 
 // set default feed
