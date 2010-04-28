@@ -138,7 +138,7 @@ Current value:
 
 <?php endif ?>
 	<input type="button" id="wk-submit" name="submit" value="Parse &amp; Save changes" onclick="YAHOO.Wiki.Factory.Variable.submit($(this).parent().attr('id'));" />
-<!--	<input type="button" id="wk-submit-remove" name="remove-submit" value="Remove value" onclick="YAHOO.Wiki.Factory.Variable.remove_submit();" /> -->
+	<input type="button" id="wk-submit-remove" name="remove-submit" value="Remove value" onclick="YAHOO.Wiki.Factory.Variable.remove_submit(true, $(this).parent().attr('id'));" />
 	&nbsp;<span id="wf-variable-parse-<?= $form_id ?>">&nbsp;</span>
 </form>
 <?php else: ?>
