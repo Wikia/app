@@ -13,7 +13,7 @@ class ImageLightbox {
 		// limit dimensions of returned image
 		global $wgRequest;
 		$maxWidth = $wgRequest->getInt('maxwidth', 500) - 20;
-		$maxHeight = $wgRequest->getInt('maxheight', 300) - 75;
+		$maxHeight = $wgRequest->getInt('maxheight', 300) - 150;
 
 		$image = wfFindFile($wgTitle);
 
