@@ -191,7 +191,7 @@ class BlogTemplateClass {
 			'type' 		=> 'string',
 			'default' 	=> 'float:right;clear:left;',
 		),
-		
+
 		/*
 		 * Get Blog info
 		 *
@@ -567,7 +567,7 @@ class BlogTemplateClass {
 		}
     	wfProfileOut( __METHOD__ );
 	}
-	
+
 	private static function __makeDBOrder() {
     	wfProfileIn( __METHOD__ );
     	$dbOption = array();
@@ -595,8 +595,8 @@ class BlogTemplateClass {
     	wfProfileOut( __METHOD__ );
     	return $dbOption;
 	}
-	
-	private static function __parseCategories($text, $parser) { 
+
+	private static function __parseCategories($text, $parser) {
 		if ( is_object($parser) ) {
 			$pOptions = $parser->getOptions();
 			if ( is_null($pOptions) ) {
@@ -604,7 +604,7 @@ class BlogTemplateClass {
 			}
 			$text = $parser->replaceVariables($text);
 		}
-		return $text; 
+		return $text;
 	}
 
 	private static function __getCategories ($aParamValues, &$parser) {
@@ -613,13 +613,13 @@ class BlogTemplateClass {
 		$aPages = array();
     	if ( !empty($aParamValues) ) {
     		#RT 26917
-    		$aParamValues = array_map( "strip_tags", 
+    		$aParamValues = array_map( "strip_tags",
     			array_map(
-    				array("self","__parseCategories"), 
-    				$aParamValues, 
-    				array($parser) 
-    			) 
-    		); 
+    				array("self","__parseCategories"),
+    				$aParamValues,
+    				array($parser)
+    			)
+    		);
 			/* set max length of group concat query */
 			self::$dbr->query( 'SET group_concat_max_len = '.GROUP_CONCAT, __METHOD__ );
 			/* run query */
@@ -895,6 +895,9 @@ class BlogTemplateClass {
 			self::$dbr = wfGetDB( DB_SLAVE, 'dpl' );
 			/* parse parameters as XML tags */
 			wfDebugLog( __METHOD__, "parse ".count($aInput)." parameters (XML tags)\n" );
+
+			$relationArray = array();
+
 			foreach ($aInput as $sParamName => $aParamValues) {
 				/* ignore empty lines */
 				if ( empty($aParamValues) ) {
@@ -913,7 +916,7 @@ class BlogTemplateClass {
 					wfDebugLog( __METHOD__, "ignore comment line: ".$iKey." \n" );
 					continue;
 				}
-				$relationArray = array();
+
 				/* parse value of parameter */
 				switch ($sParamName) {
 					case 'category'		:
@@ -989,14 +992,14 @@ class BlogTemplateClass {
 						break;
 				}
 			}
-			
+
 			wfRunHooks( 'BlogListAfterParse', array( self::$oTitle, $relationArray ) );
-			
+
 			/* */
 			if ( !empty($showOnlyPage) ) {
 				self::$aWhere = array("page_id in (" . self::$dbr->makeList($showOnlyPage) . ")");
 			}
-			
+
 			/* parse parameters */
 			foreach ($aParams as $sParamName => $sParamValue) {
 				/* ignore empty lines */
