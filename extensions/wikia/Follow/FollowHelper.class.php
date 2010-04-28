@@ -271,7 +271,7 @@ class FollowHelper {
 	
 	
 	static public function renderFollowPrefs($self, $out) {
-		global $wgUser, $wgEnotifWatchlist, $wgEnotifMinorEdits,$disableEmailPrefs,$wgStyleVersion, $wgExtensionsPath, $wgJsMimeType;
+		global $wgUser, $wgEnableWikiaFollowedPages, $wgEnotifWatchlist, $wgEnotifMinorEdits,$disableEmailPrefs,$wgStyleVersion, $wgExtensionsPath, $wgJsMimeType;
 		wfProfileIn(__METHOD__);
 		wfLoadExtensionMessages( 'Follow' );
 		$watchlistToggles = array();
@@ -294,10 +294,13 @@ class FollowHelper {
 		if( $wgUser->isAllowed( 'edit' ) )
 			$out->addHTML( $self->getToggle( 'watchdefault' ) );
 		
-		$out->addHTML( ($wgEnotifWatchlist) ? $self->getToggle( 'enotiffollowedpages', false, $disableEmailPrefs ) : '');
-		$out->addHTML( ($wgEnotifWatchlist && $wgEnotifMinorEdits) ? $self->getToggle( 'enotiffollowedminoredits', false, $disableEmailPrefs ) : '');
-		
-		$out->addHTML( $self->getToggle( 'hidefollowedpages', false  ) );
+		if ( !empty($wgEnableWikiaFollowedPages) || $wgEnableWikiaFollowedPages ) {
+			$out->addHTML( ($wgEnotifWatchlist) ? $self->getToggle( 'enotiffollowedpages', false, $disableEmailPrefs ) : '');
+			$out->addHTML( ($wgEnotifWatchlist && $wgEnotifMinorEdits) ? $self->getToggle( 'enotiffollowedminoredits', false, $disableEmailPrefs ) : '');
+			
+			$out->addHTML( $self->getToggle( 'hidefollowedpages', false  ) );			
+		}		
+
 		
 		$out->addHTML( "<br><h2>".wfMsg('wikiafollowedpages-prefs-advanced')."</h2>" );			
 		foreach( array(  'move' => 'watchmoves', 'delete' => 'watchdeletion' ) as $action => $toggle ) {

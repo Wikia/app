@@ -844,7 +844,7 @@ class Masthead {
 				}
 				
 				global $wgEnableWikiaFollowedPages;
-				if ( !empty($wgEnableWikiaFollowedPages) ) {
+				if ( !empty($wgEnableWikiaFollowedPages) && $wgEnableWikiaFollowedPages) {
 					$out['nav_links'][] = FollowHelper::getMasthead($userspace);
 				}
 
