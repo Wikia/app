@@ -144,8 +144,7 @@ function openUserMenu(event) {
 
 // AjaxLogin
 function openLogin(event) {
-	showComboAjaxForPlaceHolder(false, "");
-	return false;
+	return showComboAjaxForPlaceHolder(false, "");
 }
 
 //Combo login WikiaImagePlaceholder
@@ -157,7 +156,7 @@ function showComboAjaxForPlaceHolder(element,isPlaceholder,callback) {
 
 	if ( (typeof wgIsLogin == 'undefined') || (wgIsLogin)
 		|| (typeof wgComboAjaxLogin == 'undefined') || (!wgComboAjaxLogin) ) {
-		return false;
+		return true;
 	}
 
 	if ((typeof  AjaxLogin != 'undefined') && AjaxLogin.showComboFromDOM()) {

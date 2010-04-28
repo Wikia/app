@@ -5,7 +5,6 @@ $titleObj = SpecialPage::getTitleFor( 'Userlogin' );
 $link = $titleObj->getLocalUrl('type=signup');
 ?>
 <div id="AjaxLoginBox" title="<?= wfMsg('comboajaxlogin-createlog') ?>">
-    <div style="margin-left:10px;margin-top:10px;margin-bottom:10px;"><?= wfMsg('comboajaxlogin-actionmsg') ?></div>
     <? if (!$isReadOnly ) { ?> 
         <div id="AjaxLoginButtons" title="<?= wfMsg('login') ?>">
         	<input type="submit" id="wpGoLogin" value="<?= wfMsg("login") ?>" onclick="AjaxLogin.showLogin(this); return false;" />
