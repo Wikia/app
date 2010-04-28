@@ -33,8 +33,8 @@ class TokyoTyrantSession {
 	var $active = 0;
 
 	var $cid = null;
-	var $host = "";
-	var $port = "";
+	public $host = "";
+	public $port = "";
 
 	public static $sess_conn = array();
 
@@ -130,6 +130,7 @@ class TokyoTyrantSession {
 	}
 
 	public static function put( $key, $value ) {
+		$res = false;
 		$TT = TokyoTyrantSession::newFromKey($key);
 		if ( $TT ) {
 			if ( !empty($value) ) {
@@ -137,16 +138,25 @@ class TokyoTyrantSession {
 					self::V_COLUMN => $value,
 					self::X_COLUMN => time() + self::SESS_EXPIRE
 				);
-				return $TT->put($key, $values);
+				try {
+					$res = $TT->put($key, $values);
+				} catch (Tyrant_Exception $e) {
+					Wikia::log( __METHOD__, "info", "cannot put $value to TT (key: {$key}, host: ".$TT->gethost().", port: ".$TT->getport()."): " . $e->getMessage(), false );
+				}
 			}
 		}
-		return false;
+		return $res;
 	}
 
 	public static function read( $key ) {
+		$result = array();
 		$TT = TokyoTyrantSession::newFromKey($key);
 		if ( $TT ) {
-			$result = $TT->get($key);
+			try {
+				$result = $TT->get($key);
+			} catch (Tyrant_Exception $e) {
+				Wikia::log( __METHOD__, "info", "cannot read data from TT (key: {$key}, host: ".$TT->gethost().", port: ".$TT->getport()."): " . $e->getMessage(), false );
+			}
 			if ( is_array( $result ) && isset( $result[self::V_COLUMN] ) ) {
 				return $result[self::V_COLUMN];
 			}
@@ -155,11 +165,16 @@ class TokyoTyrantSession {
 	}
 
 	public static function out( $key ) {
+		$res = false;
 		$TT = TokyoTyrantSession::newFromKey($key);
 		if ( $TT ) {
-			return $TT->out( $key );
+			try {
+				$res = $TT->out( $key );
+			} catch (Tyrant_Exception $e) {
+				Wikia::log( __METHOD__, "info", "cannot delete record in TT (key: {$key}, host: ".$TT->gethost().", port: ".$TT->getport()."): " . $e->getMessage(), false );
+			}
 		}
-		return false;
+		return $res;
 	}
 
 	# sessions functions
@@ -185,6 +200,7 @@ class TokyoTyrantSession {
 
 class TokyoTyrantCache extends TokyoTyrantSession {
 	public function set ($key, $value, $exp = 0) {
+		$res = true;
 		if ( empty($exp) ) {
 			$exp = getrandmax();
 		} else {
@@ -198,21 +214,30 @@ class TokyoTyrantCache extends TokyoTyrantSession {
 					self::V_COLUMN => $value,
 					self::X_COLUMN => $exp
 				);
-				return $TT->put($key, $values);
+				
+				try {
+					$res = $TT->put($key, $values);
+				} catch (Tyrant_Exception $e) {
+					Wikia::log( __METHOD__, "info", "cannot put $value to TT (key: {$key}, host: ".$TT->gethost().", port: ".$TT->getport()."): " . $e->getMessage(), $this->mDebug );
+				}
 			} 
 		}
-		return true;
+		return $res;
 	}
 	
 	private function _get($key) {
 		$value = $exp = 0;
 		$TT = $this->connect($key);
 		if ( $TT ) {
-			$result = $TT->get($key);
-			if ( is_array( $result ) && isset( $result[self::V_COLUMN] ) ) {
-				$value = $result[self::V_COLUMN];
-				$exp = $result[self::X_COLUMN];
-			} 
+			try {
+				$result = $TT->get($key);
+				if ( is_array( $result ) && isset( $result[self::V_COLUMN] ) ) {
+					$value = $result[self::V_COLUMN];
+					$exp = $result[self::X_COLUMN];
+				} 
+			} catch (Tyrant_Exception $e) {
+				Wikia::log( __METHOD__, "info", "cannot read data from TT (key: {$key}, host: ".$TT->gethost().", port: ".$TT->getport()."): " . $e->getMessage(), $this->mDebug );
+			}
 		}
 		return array($value, $exp);
 	}
