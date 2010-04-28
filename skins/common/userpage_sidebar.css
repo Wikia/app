@@ -2,8 +2,10 @@
   min-height: 300px;
   width: 300px;
   padding: 0 5px;
-  border-left: 1px solid #AAAAAA;
   float: right;
+  position:absolute;
+  right:5px;
+  top:5px;
 }
 
 #profile-sidebar h2.first {
@@ -102,7 +104,10 @@
 }
 
 #profile-content {
-	padding-right: 320px;
+	border-right:1px solid #AAAAAA;
+	min-height:400px;
+	margin-right:320px;
+ 	padding-right:10px;
 }
 
 #follow_more_link {
