@@ -517,6 +517,10 @@ div.noarticletext,
 	position: relative;
 }
 
+#tabs {
+	border: 0 none;
+}
+
 #answers_article .ui-tabs-nav {
 	background-color: #FFF;
 	background-image: none;
