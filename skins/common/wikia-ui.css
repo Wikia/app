@@ -4,10 +4,6 @@
  * This file defines Wikia "standard" implementations of user interface components.
  * See https://contractor.wikia-inc.com/wiki/Wikia_Standards for more info.
  *
- * NOTE: It is currently ONLY used by the new Wikia Global homepage skin. Our
- * intent is to carefully artichect a Wikia-wide "look and feel" that utilizes
- * reusable components. Please keep this stylesheet as generic as possible.
- *
  * @author Christian Williams <christian@wikia-inc.com>
  * @author Meitar Moscovitz <meitar@wikia-inc.com>
  */
@@ -176,12 +172,3 @@ button.secondary:active {
 }
 
 /* @end *
-
-/* centering code for custom answers (dangerous to load outside of CoreCSS) */
-body.custom_answers .monaco_shrinkwrap{
-   left: 50%;
-   margin-left: -505px !important;
-   width: 1010px;
-}
-
-/* @end */

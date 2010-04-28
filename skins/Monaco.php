@@ -1573,6 +1573,8 @@ wfProfileIn( __METHOD__ . '-body'); ?>
 	<body<?php if($this->data['body_onload'    ]) { ?> onload="<?php     $this->text('body_onload')     ?>"<?php } ?>
  class="mediawiki <?php $this->text('dir') ?> <?php $this->text('pageclass') ?><?php if(!empty($this->data['printable']) ) { ?> printable<?php } ?><?php if (!$wgUser->isLoggedIn()) { ?> loggedout<?php } ?> color2 wikiaSkinMonaco<?=$isMainpage?> <?= $body_css_action ?><?php print " ".implode($this->extraBodyClasses, " "); ?>" id="body">
 	<?php
+	global $wgForceSkin;
+	print_r($wgForceSkin);
 	// Hardcoded Google Analytics tag... commented out because it isn't working yet.
 	// Allow URL override.
 	//global $wgNoExternals, $wgRequest;
