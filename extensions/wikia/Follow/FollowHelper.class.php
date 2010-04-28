@@ -294,13 +294,9 @@ class FollowHelper {
 		if( $wgUser->isAllowed( 'edit' ) )
 			$out->addHTML( $self->getToggle( 'watchdefault' ) );
 		
-		if ( !empty($wgEnableWikiaFollowedPages) || $wgEnableWikiaFollowedPages ) {
-			$out->addHTML( ($wgEnotifWatchlist) ? $self->getToggle( 'enotiffollowedpages', false, $disableEmailPrefs ) : '');
-			$out->addHTML( ($wgEnotifWatchlist && $wgEnotifMinorEdits) ? $self->getToggle( 'enotiffollowedminoredits', false, $disableEmailPrefs ) : '');
-			
-			$out->addHTML( $self->getToggle( 'hidefollowedpages', false  ) );			
-		}		
-
+		$out->addHTML( ($wgEnotifWatchlist) ? $self->getToggle( 'enotiffollowedpages', false, $disableEmailPrefs ) : '');
+		$out->addHTML( ($wgEnotifWatchlist && $wgEnotifMinorEdits) ? $self->getToggle( 'enotiffollowedminoredits', false, $disableEmailPrefs ) : '');	
+		$out->addHTML( $self->getToggle( 'hidefollowedpages', false  ) );	
 		
 		$out->addHTML( "<br><h2>".wfMsg('wikiafollowedpages-prefs-advanced')."</h2>" );			
 		foreach( array(  'move' => 'watchmoves', 'delete' => 'watchdeletion' ) as $action => $toggle ) {
