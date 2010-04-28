@@ -216,7 +216,6 @@ class StaticChute {
 			'../extensions/wikia/ShareFeature/css/ShareFeature.css',
 			'../extensions/wikia/CreatePage/css/CreatePage.css',
 			'../extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.view.css',
-			'../extensions/wikia/ImageLightbox/ImageLightbox.css',
 		);
 		$this->config['monaco_css'] = array_merge($this->config['monaco_css'], $widgetsAssets['css']);
 

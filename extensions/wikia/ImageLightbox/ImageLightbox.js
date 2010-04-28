@@ -76,16 +76,11 @@ var ImageLightbox = {
 
 		this.lock = true;
 
+		// fix caption when not provided
+		caption = caption || '';
+
 		// tracking
 		this.track('/init');
-
-		// render caption bar
-		if (typeof caption == 'string') {
-			caption = '<div id="lightbox-caption-content">' + caption + '</div>';
-		}
-		else {
-			caption = '';
-		}
 
 		$.getJSON(wgScript + '?action=ajax&rs=ImageLightboxAjax', {
 			'title': imageName,
@@ -95,14 +90,10 @@ var ImageLightbox = {
 			if (res.html) {
 				// open modal
 				$.getScript(stylepath + '/common/jquery/jquery.wikia.modal.js?' + wgStyleVersion, function() {
-					var html = '<div id="lightbox-image" title="' + res.name + '" style="text-align: center">' +
-						res.html +
-						'<div id="lightbox-caption" class="neutral clearfix">' +
-						'<a id="lightbox-link" href="' + res.href + '" title="' + res.msg.tooltip + '"></a>' +
-						caption +
-						'</div></div>';
+					$("#positioned_elements").append(res.html);
 
-					$("#positioned_elements").append(html);
+					$('#lightbox-caption-content').html(caption);
+
 					$('#lightbox-image').makeModal({
 						'id': 'lightbox',
 						'width': res.width,
