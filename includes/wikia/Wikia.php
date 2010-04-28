@@ -1110,4 +1110,41 @@ class Wikia {
 		return (bool )preg_match("/^([a-z0-9]([-a-z0-9]*[a-z0-9])?\\.)+((a[cdefgilmnoqrstuwxz]|aero|arpa)|(b[abdefghijmnorstvwyz]|biz)|(c[acdfghiklmnorsuvxyz]|cat|com|coop)|d[ejkmoz]|(e[ceghrstu]|edu)|f[ijkmor]|(g[abdefghilmnpqrstuwy]|gov)|h[kmnrtu]|(i[delmnoqrst]|info|int)|(j[emop]|jobs)|k[eghimnprwyz]|l[abcikrstuvy]|(m[acdghklmnopqrstuvwxyz]|mil|mobi|museum)|(n[acefgilopruz]|name|net)|(om|org)|(p[aefghklmnrstwy]|pro)|qa|r[eouw]|s[abcdeghijklmnortvyz]|(t[cdfghjklmnoprtvwz]|travel)|u[agkmsyz]|v[aceginu]|w[fs]|y[etu]|z[amw])$/i", $domain );
 	}
 
+	/* TODO remove when cat_hidden is fixed */
+	public static function categoryCloudGetHiddenCategories() {
+		$data = array();
+
+		wfProfileIn( __METHOD__ );
+
+		global $wgMemc;
+		$key = wfMemcKey("WidgetCategoryCloud", "hidcats");
+		$data = $wgMemc->get($key);
+		if (is_null($data)) {
+			$dbr = wfGetDB( DB_SLAVE );
+			$res = $dbr->select(
+					array("page", "page_props"),
+					array("page_title"),
+					array("page_id = pp_page", "page_namespace" => NS_CATEGORY, "pp_propname" => "hiddencat"),
+					__METHOD__
+					);
+			while ($row = $res->fetchObject()) {
+				$data[] = $row->page_title;
+			}
+			$wgMemc->set($key, $data, 300);
+		}
+
+		wfProfileOut(__METHOD__);
+		return $data;
+	}
+
+	// todo check if it isn't reduntant
+	public static function categoryCloudMsgToArray( $key ) {
+		$data = array();
+		
+		$msg = wfMsg($key);
+		if (!wfEmptyMsg($msg, $key)) {
+			$data = preg_split("/[*\s,]+/", $msg, null, PREG_SPLIT_NO_EMPTY);
+		}
+		return $data;
+	}
 }

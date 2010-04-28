@@ -383,6 +383,7 @@ function wfAnswersSubcategoriesParserHook( $input, $args, $parser ) {
 
 	$sk = $wgUser->getSkin();
 	while( $x = $dbr->fetchObject ( $res ) ) {
+			if( wfAnswersSubcategoriesSkipRow( $x->cat_title) ) continue;
 			$title = Title::newFromText( $x->cat_title, NS_CATEGORY );
 			$result_array [] = $sk->makeKnownLinkObj( $title, $title->getText() ) ;
 	}
@@ -396,6 +397,24 @@ function wfAnswersSubcategoriesParserHook( $input, $args, $parser ) {
 
 	}
 	return $out;
+}
+
+function wfAnswersSubcategoriesSkipRow($name) {
+	$hiddens = Wikia::categoryCloudGetHiddenCategories();
+	// todo this is taken from Widgets, the array should be taken one step above and passed to array
+	// will have to modify, also see WidgetCategoryCloud 
+	if( !empty( $hiddens ) ) { 
+	        if (in_array($name, $hiddens)) return true;
+	}
+
+        global $wgBiggestCategoriesBlacklist;
+        if (in_array($name, $wgBiggestCategoriesBlacklist)) return true;
+
+	// this takes from widget messages
+        if (in_array($name, Wikia::categoryCloudMsgToArray("widget-categorycloud-blacklist-global"))) return true;
+        if (in_array($name, Wikia::categoryCloudMsgToArray("widget-categorycloud-blacklist"))) return true;
+
+        return false;
 }
 
 function wfAnswersTagsAjaxGetArticles( ) {
