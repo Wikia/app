@@ -1,5 +1,14 @@
 <?php
 
+
+
+		// ***************** Athena has been replaced by Liftium
+		
+
+
+
+
+
 class AdProviderAthena implements iAdProvider {
 
 	protected static $instance = false;
@@ -79,11 +88,8 @@ class AdProviderAthena implements iAdProvider {
 	public static function getInstance() {
 		if(self::$instance == false) {
 			$h = AdEngine::getCachedCategory();
-			if (in_array($h['name'], array("Entertainment"))){
-				self::$instance = new AdProviderAthena();
-			} else {
-				self::$instance = new AdProviderLiftium();
-			}
+			// ***************** Athena has been replaced by Liftium
+			return self::$instance = new AdProviderLiftium();
 		}
 		return self::$instance;
 	}
