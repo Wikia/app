@@ -37,8 +37,6 @@ $messages['en'] = array(
 	'follow-categoryadd-summery' => "Page added to category", //TODO check this 
 	'follow-bloglisting-summery' => "Blog posted on blog page",
 
-	'prefs-watchlist' =>  'Followed pages', 
-
 	'wikiafollowedpages-userpage-heading' => "Pages I'm Following",
 	'wikiafollowedpages-userpage-more'  =>  'More',
 	'wikiafollowedpages-userpage-hide'  =>  'hide', 
