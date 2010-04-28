@@ -9,7 +9,7 @@
 if [ $# -ne 2 ]
 then
   echo "Usage: `basename $0` <url> <target.png>"
-  exit $E_BADARGS
+  exit 1
 fi
 TMPFILE="`tempfile`".png
 URL="$1"
