@@ -27,6 +27,8 @@ include_once( $GLOBALS["IP"]."/extensions/wikia/UserProfile_NY/AvatarClass.php" 
 $USER_TEST = (isset ($options['u']) ) ? $options['u'] : "";
 $UNLINK_OLD = (isset ($options['remove']) ) ? $options['remove'] : "";
 $TEST = (isset ($options['test']) ) ? $options['test'] : "";
+$USER_FROM = (isset ($options['from']) ) ? $options['from'] : "";
+$USER_TO = (isset ($options['to']) ) ? $options['to'] : "";
 $ADD_TO_USER_LOG = 1;
 
 function __log($text) {
@@ -160,7 +162,7 @@ function getNYWikisAvatar($wikis, $user_id) {
 function copyAvatarsToMasthead() {
 	global $wgExternalSharedDB, $wgExternalDatawareDB, $wgWikiaLocalSettingsPath ;
 	global $wgStylePath, $IP;
-	global $USER_TEST;
+	global $USER_FROM, $USER_TO, $USER_TEST;
 
 	$answersWikis = loadAnswersToCheck();
 	$nycodeWikis = loadWikisToCheck();
@@ -171,6 +173,12 @@ function copyAvatarsToMasthead() {
 	$where = array("user_id > 0");
 	if ( $USER_TEST ) {
 		$where["user_id"] = $USER_TEST;
+	}
+	if ( $USER_FROM ) {
+		$where[] = "user_id > " . intval($USER_FROM);
+	}
+	if ( $USER_TO ) {
+		$where[] = "user_id < " . intval($USER_TO);
 	}
 	$oRes = $dbr->select(
 		array( "user" ),
