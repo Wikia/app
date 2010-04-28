@@ -49,7 +49,7 @@ class AdProviderLiftium implements iAdProvider {
 
 		// Call the script
 		if (!empty($_GET['liftium_dev_hosts']) || !empty($wgLiftiumDevHosts)){
-			$base = "http://liftium.dev.wikia-inc.com/";
+			$base = "http://nick.dev.liftium.com/";
 			$version = mt_rand();
 			$out .= "<script type=\"text/javascript\">var liftium_dev_hosts = 1;</script>";
 		} else if ($wgDevelEnvironment){
@@ -59,8 +59,8 @@ class AdProviderLiftium implements iAdProvider {
 			$base = "/__varnish_liftium/";
 			$version = 1;
 		}
-		$out .=  '<script type="text/javascript" src="'. $base .'/js/Liftium.js?' . $version . '"></script>' . "\n";
-		$out .=  '<script type="text/javascript" src="'. $base .'/js/Wikia.js?' . $version . '"></script>' . "\n";
+		$out .=  '<script type="text/javascript" src="'. $base .'js/Liftium.js?' . $version . '"></script>' . "\n";
+		$out .=  '<script type="text/javascript" src="'. $base .'js/Wikia.js?' . $version . '"></script>' . "\n";
 
 		return $out;
 	}
