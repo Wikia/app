@@ -224,7 +224,7 @@ function wfAnswersGetContribs($show_staff = true, $limit = 30, $offset = 0) {
 				$users[$oRow->user_id] = $oRow->cnt;
 			}
 			$dbr->freeResult($res);
-			$wgMemc->set( $memkey, $users, 60*2 );
+			$wgMemc->set( $memkey, $users, 60 * 2 );
 		}
 	}
 
@@ -301,39 +301,48 @@ function wfAnswersGetXDayContribs($days = 7, $show_staff = true, $limit = 30, $o
 */
 
 function wfAnswersTagsDoCategoryQuery( $category, $offset = 0 ) {
-	global $wgCategoryMagicGallery, $wgOut, $wgTitle;
+	global $wgCategoryMagicGallery, $wgOut, $wgTitle, $wgMemc;
 	$showGallery = $wgCategoryMagicGallery && !$wgOut->mNoGallery;
 			
 	$dbr = wfGetDB( DB_SLAVE, 'category' );
 
-	$res = $dbr->select(
-			array( 'page', 'categorylinks', 'category' ),
-			array( 'page_title', 'page_namespace', 'page_len', 'page_is_redirect', 'cl_sortkey',
-				'cat_id', 'cat_title', 'cat_subcats', 'cat_pages', 'cat_files' ),
-			array( 'cl_to' => $category->getDBkey() ),
-			__METHOD__,
-			array( 'ORDER BY' => 'cl_sortkey',
-				'USE INDEX' => array( 'categorylinks' => 'cl_sortkey' ),
-				'LIMIT' => 20,
-				'OFFSET' => $offset
-			),
-			array( 'categorylinks'  => array( 'INNER JOIN', 'cl_from = page_id' ),
-				'category' => array( 'LEFT JOIN', 'cat_title = page_title AND page_namespace = ' . NS_CATEGORY ) )
-			);
+	$memkey = wfMemcKey( 'answerstag_categoryquery', $category, $offset );
+	$data = $wgMemc->get( $memkey );
 
-	$articles = array();
+	if( empty( $data ) ) {
+		$res = $dbr->select(
+				array( 'page', 'categorylinks', 'category' ),
+				array( 'page_title', 'page_namespace', 'page_len', 'page_is_redirect', 'cl_sortkey',
+					'cat_id', 'cat_title', 'cat_subcats', 'cat_pages', 'cat_files' ),
+				array( 'cl_to' => $category->getDBkey() ),
+				__METHOD__,
+				array( 'ORDER BY' => 'cl_sortkey',
+					'USE INDEX' => array( 'categorylinks' => 'cl_sortkey' ),
+					'LIMIT' => 20,
+					'OFFSET' => $offset
+				     ),
+				array( 'categorylinks'  => array( 'INNER JOIN', 'cl_from = page_id' ),
+					'category' => array( 'LEFT JOIN', 'cat_title = page_title AND page_namespace = ' . NS_CATEGORY ) )
+				);
 
-	while( $x = $dbr->fetchObject( $res ) ) {
-		$title = Title::makeTitle( $x->page_namespace, $x->page_title );
-		$ns = $title->getNamespace();
+		$articles = array();
 
-		// in original function, categories and files aren't added as "pages" - is that ok? todo ask
-		if( ( $ns != NS_CATEGORY ) && ( !$showGallery || $ns != NS_FILE ) ) {
-			if( $title->getText() != $wgTitle->getText() ) {
-				$articles[] = Article::newFromID( $title->getArticleID() );
+		while( $x = $dbr->fetchObject( $res ) ) {
+			$title = Title::makeTitle( $x->page_namespace, $x->page_title );
+			$ns = $title->getNamespace();
+
+			// in original function, categories and files aren't added as "pages" - is that ok? todo ask
+			if( ( $ns != NS_CATEGORY ) && ( !$showGallery || $ns != NS_FILE ) ) {
+				if( $title->getText() != $wgTitle->getText() ) {
+					$articles[] = Article::newFromID( $title->getArticleID() );
+				}
 			}
 		}
+		$wgMemc->set( $memkey, $articles, 60 * 2 );
+	} else {
+		$articles = $data;
 	}
+
 	return $articles;
 }
 
