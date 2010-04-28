@@ -189,7 +189,6 @@ include_once( "$IP/extensions/wikia/MostVisitedPages/SpecialMostVisitedPages.php
  * A SELECT on city_variables will get you a list.
  */
 $wgSkipSkins = array(
-		'answers',
 		'armchairgm',
 		'cars',
 		'chick',
