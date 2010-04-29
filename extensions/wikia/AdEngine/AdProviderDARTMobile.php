@@ -7,7 +7,7 @@ class AdProviderDARTMobile extends AdProviderDART {
 		$slot['size']='5x5'; // Odd convention for mobile
 
 		$url = 'http://ad.mo.doubleclick.net/DARTProxy/mobile.handler?k=' .
-			$this->getDartSite() . '/' .
+			$this->getDartSite($this->getHub()) . '/' .
 			$this->getZone1() . '/' .
 			$this->getZone2() . ';' .
 			$this->getProviderValues($slot) . 
