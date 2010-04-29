@@ -121,8 +121,8 @@ NWB.changeTheme("Sapphire", false);
 		<input type="hidden" name="category" value="<?php echo htmlspecialchars(wfMsgForContent("nwb-new-pages"))?>">
 			<ul class="fp_block" id="fp_block_1">
 				<!-- Ids aren't necessary for the form, only used for Selenium -->
-				<li><input id="fp_1" class="fp_page" type="text" onfocus="NWB.firstPagesInputs()" /></li>
-				<li><input id="fp_2" class="fp_page" type="text" onfocus="NWB.firstPagesInputs()" /></li>
+				<li><input id="fp_1" class="fp_page" type="text" onfocus="NWB.firstPagesInputs()" value="<?php echo htmlspecialchars(wfMsgForContent("nwb-question-1"))?>"/></li>
+				<li><input id="fp_2" class="fp_page" type="text" onfocus="NWB.firstPagesInputs()" value="<?php echo htmlspecialchars(wfMsgForContent("nwb-question-2"))?>"/></li>
 				<li><input id="fp_3" class="fp_page" type="text" onfocus="NWB.firstPagesInputs()" /></li>
 				<li><input id="fp_4" class="fp_page" type="text" onfocus="NWB.firstPagesInputs()" /></li>
 				<li><input id="fp_5" class="fp_page" type="text" onfocus="NWB.firstPagesInputs()" /></li>
