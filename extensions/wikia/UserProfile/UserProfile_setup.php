@@ -20,10 +20,12 @@ function UserProfile_handler(&$skin, &$tpl) {
 	wfRunHooks('AddToUserProfile', array(&$out));
 
 	if(count($out) > 0) {
-		$html .= "<div id='profile-content' class='clearfix' >";
+		$html .= "<div id='profile-content' >";
+		$html .= "<div id='profile-content-inner' >";
 		$html .= $tpl->data['bodytext'];
 		$html .= "</div>";
-		
+		$html .= "</div>";
+	
 		$html .= '<div id="profile-sidebar">';
 		if(isset($out['UserProfile1'])) {
 			$html .= $out['UserProfile1'];
@@ -32,7 +34,7 @@ function UserProfile_handler(&$skin, &$tpl) {
 			$html .= $out['followedPages'];
 		}
 		$html .= '</div>';		
-		
+	
 		$tpl->data['bodytext'] = $html;
 	}	
 	wfProfileOut(__METHOD__);
