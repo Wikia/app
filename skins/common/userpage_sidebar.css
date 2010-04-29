@@ -1,11 +1,10 @@
 #profile-sidebar {
-  min-height: 300px;
-  width: 300px;
-  padding: 0 5px;
-  float: right;
-  position:absolute;
-  right:5px;
-  top:5px;
+	border-left: 1px solid #AAA;
+  	float: right;
+  	min-height: 300px;
+	padding-left: 10px;
+	position: relative;
+  	width: 280px;
 }
 
 #profile-sidebar h2.first {
@@ -104,14 +103,18 @@
 }
 
 #profile-content {
-	border-right:1px solid #AAAAAA;
-	min-height:400px;
-	margin-right:320px;
- 	padding-right:10px;
+	float: left;
+	margin-right: -300px;
+	min-height: 400px;
+	position: relative;
+	width: 100%;
+}
+#profile-content-inner {
+	margin-right: 300px;
 }
 
 #follow_more_link {
-	margin-left:250px;
+	float: right;
 }
 
 .usermessage {
