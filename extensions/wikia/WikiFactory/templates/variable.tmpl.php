@@ -150,4 +150,18 @@ Current value:
 </div>
 <?php endif; ?>
 
+<?php if (!empty($related_pages)): ?>
+<h2>Related Pages</h2>
+<div id="wf-related-pages">
+<?php foreach ($related_pages as $rel_page): ?>
+<h3><?= $rel_page["name"] ?></h3>
+
+<div>
+<?= Xml::element("a", array("class" => "wikia-button", "href" => $rel_page["script"] . "?" . http_build_query(array("title" => $rel_page["name"], "action" => "edit"))), "Edit") ?>
+</div>
+
+<?php endforeach; ?>
+</div>
+<?php endif; ?>
+
 <!-- e:<?= __FILE__ ?> -->
