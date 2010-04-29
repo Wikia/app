@@ -143,13 +143,19 @@ function openUserMenu(event) {
 }
 
 // AjaxLogin
+// If ComboAjaxLogin is disabled, will return true so that the link to the login page is followed.
 function openLogin(event) {
-	showComboAjaxForPlaceHolder(false, "");
-	return false;
+	if( (typeof wgComboAjaxLogin == 'undefined') || (!wgComboAjaxLogin) ) {
+		return true;
+	} else {
+		showComboAjaxForPlaceHolder(false, "");
+		return false;
+	}
 }
 
-//Combo login WikiaImagePlaceholder
-
+// Combo login WikiaImagePlaceholder
+// Returns true if/when the login dialog is showing.
+// Returns false if the user is logged in or ComboAjaxLogin is not enabled.
 function showComboAjaxForPlaceHolder(element,isPlaceholder,callback) {
 	if ( typeof showComboAjaxForPlaceHolder.statusAjaxLogin == 'undefined' ) { // java script static var
 		showComboAjaxForPlaceHolder.statusAjaxLogin = false;
