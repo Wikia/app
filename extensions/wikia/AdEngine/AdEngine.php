@@ -148,7 +148,6 @@ class AdEngine {
 				LEFT OUTER JOIN $ad_slot_override_table AS adso
 				  ON ad_slot.as_id = adso.as_id AND city_id=".intval($wgCityId)."
 				WHERE skin='".$db->strencode($skin_name)."'";
-		if ($athena) 
 
 		$res = $db->query($sql);
 		$this->slots = array();
