@@ -18,5 +18,6 @@ TARGET="$2"
 if [ -f $TMPFILE ];
 then
 	/usr/bin/convert -thumbnail "250x188^" -crop "250x188+0+0" +repage $TMPFILE $TARGET
+	chmod ug+rw $TARGET
 	rm $TMPFILE
 fi
