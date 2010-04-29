@@ -79,12 +79,23 @@ function axWFactoryGetVariable() {
 
 	$variable = WikiFactory::getVarById( $cv_id, $city_id );
 
+	$script = "";
+	foreach (array("wgServer", "wgScriptPath", "wgScript") as $part) {
+		$script .= unserialize(WikiFactory::getVarByName($part, $city_id)->cv_value);
+	}
+
 	$related = array();
-	if (preg_match("/Related variables(.*)$/", $variable->cv_description, $matches)) {
-		$names = preg_split("/[^a-z0-9_]+/i", $matches[1], null, PREG_SPLIT_NO_EMPTY);
+	$r_pages = array();
+	if (preg_match("/Related variables:(.*)$/", $variable->cv_description, $matches)) {
+		$names = preg_split("/[\s,;.()]+/", $matches[1], null, PREG_SPLIT_NO_EMPTY);
 		foreach ($names as $name) {
 			$rel_var = WikiFactory::getVarByName( $name, $city_id );
 			if (!empty($rel_var)) $related[] = $rel_var;
+			else {
+				if (preg_match("/^MediaWiki:.*$/", $name, $matches2)) {
+					$r_pages[] = array("script" => $script, "name" => $name);
+				}
+			}
 		}
 	}
 
@@ -95,6 +106,7 @@ function axWFactoryGetVariable() {
 		"groups"        => WikiFactory::getGroups(),
 		"accesslevels"  => WikiFactory::$levels,
 		"related"       => $related,
+		"related_pages" => $r_pages,
 	));
 
 	return Wikia::json_encode( array(
