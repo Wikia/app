@@ -78,7 +78,7 @@ function WidgetSlideshow($id, $params) {
 function WidgetSlideshowGetImages($set, $limit) {
 	global $wgMemc;
 
-	$key = wfMemcKey('widget', 'slideshow', $set, '2');
+	$key = wfMemcKey('widget', 'slideshow', $set, 3);
 
 	$images = $wgMemc->get( $key );
 	//$images = false;
@@ -93,18 +93,18 @@ function WidgetSlideshowGetImages($set, $limit) {
 		switch( $set ) {
 			case 1: // newest
 				$images = WidgetSlideshowGetImagesFromNewest();
-				break;	    
+				break;
 
 			case 2: // random
 				$images = WidgetSlideshowGetImagesFromRandom();
-				break;	    
+				break;
 
 			case 3: // list
 				$images = WidgetSlideshowGetImagesFromSpecialPage();
 				break;
 		}
 
-		// set memcache entry	
+		// set memcache entry
 		$wgMemc->set($key, $images, 600);
 	}
 
@@ -122,7 +122,7 @@ function WidgetSlideshowGetImages($set, $limit) {
 		$images = false;
 	}
 	else {
-		$list['count'] = count($images);    
+		$list['count'] = count($images);
 	}
 
 	$list['images'] = $images;
@@ -134,26 +134,26 @@ function WidgetSlideshowGetImages($set, $limit) {
 function WidgetSlideshowGetImagesFromSpecialPage()
 {
 	wfProfileIn(__METHOD__);
-		
+
 	$images = array();
-	
+
 	// format: "*File_name.ext description goes here\n" (no spaces in the filename; no \newlines inside the description)
 	$content = WidgetFrameworkGetArticle('WidgetSlideshowImages', NS_MEDIAWIKI);
-	
+
 	if ( empty($content) )
 		return array();
-			
+
 	$list = explode("\n*", trim($content, "\n *"));
-		
+
 	// format data and get image thumb src
 	foreach ($list as $row) {
 		list($imageName, $description) = explode(' ', trim($row, '* '), 2);
-		
+
 		$img = wfFindFile( $imageName );
-			
+
 		if (is_object($img)) {
 			$url = Title::newFromText( $imageName, NS_IMAGE );
-				
+
 			$thumb = $img->createThumb(250, 125);
 
 			if (!empty($thumb)) {
@@ -164,11 +164,11 @@ function WidgetSlideshowGetImagesFromSpecialPage()
 			    );
 			}
 		}
-		
-	}		
-			
+
+	}
+
 	wfProfileOut(__METHOD__);
-	
+
 	return $images;
 }
 
@@ -178,28 +178,40 @@ function WidgetSlideshowGetImagesFromSpecialPage()
 function WidgetSlideshowGetImagesFromNewest() {
 
 	wfProfileIn(__METHOD__);
-		
+
 	$since = date('YmdHis', strtotime('-120 days 00:00') );
-		
+
 	// grab data from image table (img_major_mime == 'image')
 	$dbr =& wfGetDB( DB_SLAVE );
-		
+
 	$res = $dbr->select('image',								// table name
 		array('img_name', 'img_description', 'img_user_text', 'img_timestamp'), 	// fields to get
 		array('img_timestamp > "'.$since.'"', 'img_major_mime = "image"'),		// WHERE conditions
 		__METHOD__,									// for profiling
 		array('ORDER BY' => 'img_timestamp DESC', 'LIMIT' => 50)			// ORDER BY upload timestamp
 	);
-		
+
 	$images = array();
-		
+
 	// format data and get image thumb src
 	while ( ($row = $dbr->fetchObject($res)) ) {
 		$img = wfFindFile( $row->img_name );
-			
+
 		if (is_object($img)) {
+			// filter by filetype and filesize (RT #42075)
+			$type = $img->minor_mime;
+			$size = $img->size;
+
+			wfDebug(__FUNCTION__ . ": {$row->img_name} / {$type} / {$size} bytes\n");
+
+			// don't show PNG files / files smaller than 2 kB
+			if ( ($type == 'png') || ($size < 2048) ) {
+				wfDebug(__FUNCTION__ . ": {$row->img_name} skipped...\n");
+				continue;
+			}
+
 			$url = Title::newFromText( $row->img_name, NS_IMAGE );
-				
+
 			$thumb = $img->createThumb(250, 125);
 
 			if (!empty($thumb)) {
@@ -211,40 +223,40 @@ function WidgetSlideshowGetImagesFromNewest() {
 			}
 		}
 	}
-		
+
 	$dbr->freeResult($res);
-		
-	wfProfileOut(__METHOD__);    
-		
+
+	wfProfileOut(__METHOD__);
+
 	return $images;
 }
-    
+
 
 // grab random images from whole image DB table
 function WidgetSlideshowGetImagesFromRandom() {
 
 	wfProfileIn(__METHOD__);
-		
-		
+
+
 	// grab data from image table (img_major_mime == 'image')
 	$dbr =& wfGetDB( DB_SLAVE );
-		
+
 	$res = $dbr->select('image',								// table name
 		array('img_name', 'img_description', 'img_user_text', 'img_timestamp'), 	// fields to get
 		array('img_major_mime = "image"'),						// WHERE conditions
 		__METHOD__,									// for profiling
 		array('ORDER BY' => 'RAND()', 'LIMIT' => 50)					// ORDER BY upload timestamp (I know! ORDER BY RAND() is very heavy)
 	);
-		
+
 	$images = array();
-		
+
 	// format data and get image thumb src
 	while ( ($row = $dbr->fetchObject($res)) ) {
 		$img = wfFindFile( $row->img_name );
-			
+
 		if (is_object($img)) {
 			$url = Title::newFromText( $row->img_name, NS_IMAGE );
-				
+
 			$thumb = $img->createThumb(250, 125);
 
 			if (!empty($thumb)) {
@@ -256,10 +268,10 @@ function WidgetSlideshowGetImagesFromRandom() {
 			}
 		}
 	}
-		
+
 	$dbr->freeResult($res);
-		
-	wfProfileOut(__METHOD__);    
-		
+
+	wfProfileOut(__METHOD__);
+
 	return $images;
 }
