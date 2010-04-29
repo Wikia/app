@@ -24,14 +24,14 @@ function UserProfile_handler(&$skin, &$tpl) {
 		$html .= $tpl->data['bodytext'];
 		$html .= "</div>";
 		
-		$html .= '<aside id="profile-sidebar">';
+		$html .= '<div id="profile-sidebar">';
 		if(isset($out['UserProfile1'])) {
 			$html .= $out['UserProfile1'];
 		}
 		if(isset($out['followedPages'])) {
 			$html .= $out['followedPages'];
 		}
-		$html .= '</aside>';		
+		$html .= '</div>';		
 		
 		$tpl->data['bodytext'] = $html;
 	}	
