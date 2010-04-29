@@ -1,4 +1,5 @@
 == Changes since 201004.5 ==
+* rt#43119: wgDisableAnswersShortQuestionsRedirect for some languages (Nef)
 * rt#47426: remove defriending emails (Nef)
 * rt#46350: ActivityFeed tag errors on Pet Care Wiki main page (macbre)
 * rt#47571: Answers: random question box uses hardcoded category name (macbre)
