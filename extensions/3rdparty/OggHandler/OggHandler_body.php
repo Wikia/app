@@ -497,9 +497,13 @@ class OggTransformOutput extends MediaTransformOutput {
 		$this->isVideo = $isVideo;
 		$this->path = $path;
 		$this->noIcon = $noIcon;
+
+		// Wikia: use fixed width (RT #46188)
+		$this->width = 150;
 	}
 
 	function toHtml( $options = array() ) {
+		global $wgStylePath;
 
 		// Wikia - begin
 		// RT #25329
@@ -541,7 +545,6 @@ class OggTransformOutput extends MediaTransformOutput {
 			// Sound file
 			if ( $height > 100 ) {
 				// Use a big file icon
-				global $wgStylePath;
 				$imgAttribs = array(
 					'src' => "$wgStylePath/common/images/icons/fileicon-ogg.png",
 					'width' => 125,
@@ -606,23 +609,16 @@ class OggTransformOutput extends MediaTransformOutput {
 		$s = Xml::tags( 'div',
 			array(
 				'id' => $id,
-				'style' => "width: {$width}px;" ),
+				'style' => "width: {$width}px; text-align: center" ),
 			( $thumb ? Xml::tags( 'div', array(), $thumb ) : '' ) .
 			Xml::tags( 'div', array(),
 				Xml::tags( 'button',
 					array(
 						'onclick' => "if (typeof(wgOggPlayer) != 'undefined') wgOggPlayer.init(false, $playerParams);",
-						'style' => "width: {$width}px; text-align: center",
+						'style' => "width: {$width}px; background-image: url('$wgStylePath/common/images/ogg-button.png'); height: 30px; -moz-box-shadow: none; border: none",
 						'title' => $msgStartPlayer,
 					),
-					Xml::element( 'img',
-						array(
-							'src' => "$scriptPath/play.png",
-							'width' => 22,
-							'height' => 22,
-							'alt' => $msgStartPlayer
-						)
-					)
+					'&nbsp;'
 				)
 			) .
 			( $descIcon ? Xml::tags( 'div', array(), $descIcon ) : '' )
@@ -642,5 +638,3 @@ class OggAudioDisplay extends OggTransformOutput {
 		parent::__construct( $file, $videoUrl, false, $width, $height, $length, false, $path, $noIcon );
 	}
 }
-
-?>
