@@ -34,7 +34,8 @@ class ApiCreateMultiplePages extends ApiBase {
 
 		$categories = explode('|', $params['category']);
 		for ($i = 0; $i< sizeof($pages); $i++){
-			$create = $this->$createType($page[$i], $categories[$i], $params['pagetext']);
+			$page = $pages[$i];
+			$create = $this->$createType($page, $categories[$i], $params['pagetext']);
 
 			if (!empty($create)){
 				$r['success'][$page] = $create;
@@ -117,7 +118,7 @@ class ApiCreateMultiplePages extends ApiBase {
 	public function getParamDescription() {
 		return array (
 			'pagelist' => 'The titles of the pages to create. Pipe separated',
-			'category' => 'Optional category to assign the newly created pages to',
+			'category' => 'Optional category to assign the newly created pages to, can be a parallel list with pagelist, pipe separated',
 			'pagetext' => 'Optional text for the newly created pages to',
 			'type' => 'Optional wiki type, modyfing behaviour as needed',
 		);
