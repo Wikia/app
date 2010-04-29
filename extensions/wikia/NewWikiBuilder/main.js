@@ -119,7 +119,7 @@ NWB.finalize = function (redir){
 NWB.firstPagesInputs = function (){
 	var empties = 0, fulls = 0;
 
-	$("#all_fp input[type='text']").each(function(i, o) {
+	$(".fp_page").each(function(i, o) {
 		if (Mediawiki.e(o.value)){
 			empties++;
 		} else {
@@ -191,17 +191,31 @@ NWB.handleFirstPages = function (event){
 		Mediawiki.updateStatus(NWB.msg("nwb-saving-articles"));
 
 		// Go through the form fields and get the titles
-		var pages = [];
-		$("#all_fp input[type='text']").each(
+		var tpages = [];
+		$("#all_fp .fp_page").each(
 			function(i, o){
-				if (!Mediawiki.e(o.value)){
-					pages.push(o.value);
-				}
+				tpages.push(o.value.replace(/\|/, ''));
 			}
 		);
 
+		// And the categories
+		var tcats = [];
+		$("#all_fp .fp_cat").each(
+			function(i, o){
+				tcats.push(o.value.replace(/\|/, ''));
+			}
+		);
+
+		var pages = [], cats = [];
+		for (var i = 0; i < tpages.length; i++){
+			if (! Mediawiki.e(tpages[i])){
+				pages.push(tpages[i]);
+				cats.push(tcats[i]);
+			}
+		}
+
 		// if no titles were specified, just skip to the next step
-		if ( pages.length == 0 ) {
+		if ( pages.length === 0 ) {
 			event.preventDefault();
 			Mediawiki.statusBar.release();
 			if (NWB.type == "answers" ) {
@@ -215,6 +229,7 @@ NWB.handleFirstPages = function (event){
 		// Reverse the order of the pages, so that the first one is created last,
 		// so that when they show up on home page, they are in correct order
 		pages.reverse();
+		cats.reverse();
 
 		Mediawiki.waiting();
 		var pagetext;
@@ -228,9 +243,11 @@ NWB.handleFirstPages = function (event){
                         "action" : "createmultiplepages",
 			"pagelist" : pages.join("|"),
                         "pagetext" : pagetext,
+			"category" : cats.join("|"),
 			"type" : NWB.type
                         }, NWB.handleFirstPagesCallback, NWB.apiFailed, "POST");
         } catch (e) {
+			console.dir(e);
                   Mediawiki.updateStatus(NWB.msg("nwb-error-saving-articles"));
                   Mediawiki.debug(Mediawiki.print_r(e));
         }

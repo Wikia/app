@@ -231,6 +231,12 @@ button.secondary span {
 	padding: 5px;
 	width: 300px;
 }
+.fp_cat {
+	font-size: 14px;
+	padding: 5px;
+	width: 220px;
+	margin-left: 5px;
+}
 
 /*** Step 5: Done ***/
 #wiki_army_container {
