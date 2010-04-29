@@ -113,7 +113,7 @@ class AdEngine {
 			return true;
 		}
 
-		global $wgMemc, $wgCityId, $wgUser, $wgRequest, $wgExternalSharedDB;
+		global $wgMemc, $wgCityId, $wgUser, $wgRequest, $wgExternalSharedDB, $wgDBname;
 
 		$skin_name = null;
 		if ( is_object($wgUser)){
@@ -123,6 +123,9 @@ class AdEngine {
 		if ($skin_name == 'awesome' || $skin_name == 'answers' ){
 			// Temporary hack while we transition to lean monaco
 			$skin_name = 'monaco';
+		} else if ($wgDBname == "wikiaglobal"){
+			// Hack for www
+			$skin_name = 'corporate';
 		}
 
 		$cacheKey = wfMemcKey(__CLASS__ . 'slots', $skin_name, self::cacheKeyVersion);
@@ -145,6 +148,7 @@ class AdEngine {
 				LEFT OUTER JOIN $ad_slot_override_table AS adso
 				  ON ad_slot.as_id = adso.as_id AND city_id=".intval($wgCityId)."
 				WHERE skin='".$db->strencode($skin_name)."'";
+		if ($athena) 
 
 		$res = $db->query($sql);
 		$this->slots = array();
