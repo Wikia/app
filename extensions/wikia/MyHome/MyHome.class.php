@@ -74,6 +74,11 @@ class MyHome {
 
 				// remove [edit] section links
 				$content = preg_replace('#<span class="editsection">(.*)</a>]</span>#', '', $content);
+
+				// remove <script> tags (RT #46350)
+				$content = preg_replace('#<script[^>]+>(.*)<\/script>#', '', $content);
+
+				// remove HTML tags
 				$content = trim(strip_tags($content));
 
 				// store first 150 characters of parsed content
@@ -193,7 +198,7 @@ class MyHome {
 		if(get_class($wgUser->getSkin()) == 'SkinMonaco') {
 			if( session_id() != '' ) {
 				$urlaction = '';
-				$_SESSION['Signup_AccountCreated'] = 'created';			
+				$_SESSION['Signup_AccountCreated'] = 'created';
 			} else {
 				$urlaction = 'accountcreated=1';
 			}
