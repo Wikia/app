@@ -66,9 +66,10 @@ Write the first section of your article here. Remember to include links to other
 ==Section heading==
 
 Write the second section of your article here. Don't forget to add a category, to help people find the article.",
-	"nwb-question-1" => "What is this site about?",
-	"nwb-question-2" => "Who created this site?"
-	
+	"nwb-sample-question-1" => "What is this site about?",
+	"nwb-sample-question-2" => "Who created this site?",
+        "nwb-question" => "Question",
+        "nwb-tag" => "Tag"
 );
 
 /** Afrikaans (Afrikaans)
