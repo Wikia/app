@@ -159,8 +159,7 @@ function wfAnswersLeaderboardAllTimeParserHook( $input, $args, $parser ) {
 	$out .= "</div>\n";
 	$out .= "<div style='clear:both'>&nbsp;</div>\n";
 
-	return $out;
-		
+	return $out;		
 }
 
 function wfAnswersLeaderboardLastParserHook( $input, $args, $parser ) {
@@ -351,7 +350,8 @@ function wfAnswersTagsDoCategoryQuery( $category, $offset = 0 ) {
 function wfAnswersTabsParserHook( $input, $args, $parser ) {
 	global $wgAnswersTabTags;
 	$out = '';
-	if( $wgAnswersTabTags == 0 ) {
+
+	if( $wgAnswersTabTags < 2 ) {
 		$answered = CategoryHub::getAnsweredCategory();
 		$unanswered =  CategoryHub::getUnAnsweredCategory();
 
@@ -363,7 +363,6 @@ function wfAnswersTabsParserHook( $input, $args, $parser ) {
 		categoryHubRenderTabs( null, $answeredArticles, $unansweredArticles, &$out, &$parser );
 		$wgAnswersTabTags++;
 	}
-		
 	return $out;
 }
 
