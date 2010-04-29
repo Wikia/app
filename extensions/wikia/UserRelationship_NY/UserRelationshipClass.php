@@ -187,6 +187,8 @@ class UserRelationship {
 	}
 
 	public function sendRelationshipRemoveEmail($user_id_to, $user_from, $type){
+		return; // rt#47426
+
 		$user = User::newFromId($user_id_to);
 		$user->loadFromId();
 		
