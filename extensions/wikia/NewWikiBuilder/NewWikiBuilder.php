@@ -14,7 +14,7 @@ $wgExtensionCredits['specialpage'][] = array(
 
 // New user right, required to use the extension.
 $wgAvailableRights[] = 'newwikibuilder';
-$wgGroupPermissions['*']['newwikibuilder'] = true;
+$wgGroupPermissions['*']['newwikibuilder'] = false;
 $wgGroupPermissions['sysop']['newwikibuilder'] = true;
 $wgGroupPermissions['bureaucrat']['newwikibuilder'] = true;
 $wgGroupPermissions['staff']['newwikibuilder'] = true;
