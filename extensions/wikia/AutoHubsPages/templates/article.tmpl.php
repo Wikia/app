@@ -115,6 +115,8 @@
 		}
 	}
 	?>
+	<div id='CORP_TOP_RIGHT_BOXAD' style='padding:5px'><?php echo AdEngine::getInstance()->getAd('CORP_TOP_RIGHT_BOXAD')?></div>
+
 
 	<section id="hub-blogs"<?php echo $hidetopblogs ?>>
 		<h1><?php echo wfMsg('hub-blog-header', $data['title']) ?></h1>
