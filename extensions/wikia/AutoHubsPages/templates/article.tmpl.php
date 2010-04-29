@@ -115,7 +115,7 @@
 		}
 	}
 	?>
-	<div id='CORP_TOP_RIGHT_BOXAD' style='padding:5px'><?php echo AdEngine::getInstance()->getAd('CORP_TOP_RIGHT_BOXAD')?></div>
+	<div id='CORP_TOP_RIGHT_BOXAD' style='margin-top:-15px'><?php echo AdEngine::getInstance()->getAd('CORP_TOP_RIGHT_BOXAD')?></div>
 
 
 	<section id="hub-blogs"<?php echo $hidetopblogs ?>>
