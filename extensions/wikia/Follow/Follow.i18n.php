@@ -4,7 +4,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'wikiafollowedpages-special-heading-category' => "Categories ($1) ",
-	'wikiafollowedpages-special-heading-article' => "Article ($1)",
+	'wikiafollowedpages-special-heading-article' => "Articles ($1)",
 	'wikiafollowedpages-special-heading-blogs' => "Blogs and Posts ($1)",
 	'wikiafollowedpages-special-heading-forum' => 'Forum threads ($1)',
 	'wikiafollowedpages-special-heading-project' => 'Project pages ($1)',
@@ -20,20 +20,20 @@ $messages['en'] = array(
 	'wikiafollowedpages-special-title' => 'Followed pages',
 	'wikiafollowedpages-special-delete-tooltip' => 'Remove this page',
 
-    'wikiafollowedpages-special-hidden' => 'This user has chosen to hide their followed pages list.',  
+	'wikiafollowedpages-special-hidden' => 'This user has chosen to hide their followed pages list from public view.',  
 	'wikiafollowedpages-special-hidden-unhide' => 'Unhide this list.',
 	'wikiafollowedpages-special-blog-by' => 'by $1',
 	'wikiafollowedpages-masthead' => 'Followed pages',  
 	'wikiafollowedpages-following' => 'Following',
-	'wikiafollowedpages-special-title-userbar' => 'Follow',
+	'wikiafollowedpages-special-title-userbar' => 'Followed pages',
 
-	'tog-enotiffollowedpages' => 'E-mail me when a page on my watchlist is changed',
+	'tog-enotiffollowedpages' => 'E-mail me when a page I\'m following is changed',
 	'tog-enotiffollowedminoredits' => 'E-mail me for minor edits',
 
 	'wikiafollowedpages-prefs-advanced' => 'Advanced options',  
 	'wikiafollowedpages-prefs-watchlist' => 'Special:Watchlist only',
  
-    'tog-hidefollowedpages' => 	'Make my followed pages lists private', 
+	'tog-hidefollowedpages' => 	'Make my followed pages lists private', 
 	'follow-categoryadd-summery' => "Page added to category", //TODO check this 
 	'follow-bloglisting-summery' => "Blog posted on blog page",
 
@@ -122,5 +122,5 @@ Please visit and edit often...
 <li><a href="http://www.wikia.com">Check out our featured wikis!</a></li>
 <li>Want to control which emails you receive? Go to <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
 </ul>
-</p>' 
+</p>'
 );
