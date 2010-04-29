@@ -42,16 +42,12 @@ $messages['en'] = array(
 	'wikiafollowedpages-userpage-hide'  =>  'hide', 
 	'wikiafollowedpages-userpage-empty' => "This user's followed pages list is empty. (Add pages to this list by clicking \"Follow\" at the top of an article).",
 
-	'enotif_subject_categoryadd' => '{{SITENAME}} page $PAGETITLE has been $CHANGEDORCREATED by $PAGEEDITOR',
+	'enotif_subject_categoryadd' => '{{SITENAME}} page $PAGETITLE has been added to $CATEGORYNAME by $PAGEEDITOR',
 	'enotif_body_categoryadd' => 'Dear $WATCHINGUSERNAME,
 
-There has been an edit to a page you are watching on {{SITENAME}}.
+A page has been added to a category you are following on {{SITENAME}}.
 
-See "$PAGETITLE_URL" for the current version.
-
-$NEWPAGE
-
-$PAGESUMMARY
+See "$PAGETITLE_URL" for the new page.
 
 Please visit and edit often...
 
@@ -66,13 +62,9 @@ Go to: {{fullurl:{{ns:special}}:Preferences}}.',
 	'enotif_body_categoryadd-html' => '<p>
 Dear $WATCHINGUSERNAME,
 <br /><br />
-There has been an edit to a page you are watching on {{SITENAME}}.
+A page has been added to a category you are following on {{SITENAME}}.
 <br /><br />
-See <a href="$PAGETITLE_URL">$PAGETITLE</a> for the current version.
-<br /><br />
-$NEWPAGEHTML
-<br /><br />
-$PAGESUMMARY
+See <a href="$PAGETITLE_URL">$PAGETITLE</a> for the new page.
 <br /><br />
 Please visit and edit often...
 <br /><br />
@@ -82,17 +74,14 @@ Please visit and edit often...
 <li><a href="http://www.wikia.com">Check out our featured wikis!</a></li>
 <li>Want to control which emails you receive? Go to <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
 </ul>
-</p>', 
-	'enotif_subject_blogpost' => '{{SITENAME}} page $PAGETITLE has been $CHANGEDORCREATED by $PAGEEDITOR',
+</p>',
+ 
+	'enotif_subject_blogpost' => '{{SITENAME}} page $PAGETITLE has been posted to $BLOGLISTINGNAME by $PAGEEDITOR',
 	'enotif_body_blogpost' => 'Dear $WATCHINGUSERNAME,
 
-There has been an edit to a page you are watching on {{SITENAME}}.
+There has been an edit to a blog listing page you are following on {{SITENAME}}.
 
-See "$PAGETITLE_URL" for the current version.
-
-$NEWPAGE
-
-$PAGESUMMARY
+See "$PAGETITLE_URL" for the new post.
 
 Please visit and edit often...
 
@@ -106,13 +95,9 @@ Go to: {{fullurl:{{ns:special}}:Preferences}}.',
 	'enotif_body_blogpost-HTML' => '<p>
 Dear $WATCHINGUSERNAME,
 <br /><br />
-There has been an edit to a page you are watching on {{SITENAME}}.
+There has been an edit to a blog listing page you are following on {{SITENAME}}.
 <br /><br />
-See <a href="$PAGETITLE_URL">$PAGETITLE</a> for the current version.
-<br /><br />
-$NEWPAGEHTML
-<br /><br />
-$PAGESUMMARY
+See <a href="$PAGETITLE_URL">$PAGETITLE</a> for the new post.
 <br /><br />
 Please visit and edit often...
 <br /><br />
