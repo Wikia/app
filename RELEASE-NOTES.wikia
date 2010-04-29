@@ -1,4 +1,5 @@
 == Changes since 201004.5 ==
+* rt#42075: Restrict file size and type on Image Slideshow Widget (macbre)
 * rt#44323: Insert tagline into Answers skin (macbre)
 * rt#44847: make AnswersWidgetSetup work (Nef)
 * rt#47458: Add tracking to the MediaWiki toolbar (macbre)
