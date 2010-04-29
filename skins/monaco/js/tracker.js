@@ -80,13 +80,13 @@ var initTracker = function() {
 				$.tracker.byStr( 'articleAction/unwatch' );
 				return true;
 			}
-			
+
 			if( $(e.target).attr("id") == "ca-watch" ) {
 				$.tracker.byStr( 'articleAction/watch' );
 				return true;
-			}		
-		}	
-		
+			}
+		}
+
 		if(e.target.nodeName == 'A') {
 			$.tracker.byStr('articleAction/' + e.target.id.substring(3).replace(/nstab-/, 'view/'));
 		}
@@ -167,7 +167,7 @@ var initTracker = function() {
 			$.tracker.byStr("articleAction/contentLink-all");
 
 			var _this = $(this);
-			var _href = _this.attr("href");
+			var _href = _this.attr("href") || "";
 
 			/* regular wiki link */
 			/* DON'T PUT IT AT THE END AND MAKE CATCH-ALL, BE BRAVE (-; */
@@ -238,7 +238,7 @@ var initTracker = function() {
 			$.tracker.byStr("articleAction/contentLink/unknown/" + wgCityId + "-" + wgArticleId + "/" + encodeURIComponent(_href));
 		});
 	}
-	
+
 	$('.followedList li').click(
 		function(e) {
 		    var index = 0;
@@ -249,15 +249,15 @@ var initTracker = function() {
 		        index = li.index() + 6;
 		    }
 
-		    WET.byStr( 'WikiaFollowedPages/userpage/' + index );    
+		    WET.byStr( 'WikiaFollowedPages/userpage/' + index );
 		}
 	);
-	
+
 	$('#follow_hide_link').click( function() {
-	    WET.byStr( 'WikiaFollowedPages/userpage/hide' );   
+	    WET.byStr( 'WikiaFollowedPages/userpage/hide' );
 	});
-	
+
 	$('#follow_more_link').click( function() {
-	    WET.byStr( 'WikiaFollowedPages/userpage/more' );   
+	    WET.byStr( 'WikiaFollowedPages/userpage/more' );
 	});
 };
