@@ -11,6 +11,12 @@ var ImageLightbox = {
 	init: function() {
 		var self = this;
 
+		// is ImageLightbox extension enabled? (RT #47665)
+		if (!window.wgEnableImageLightboxExt) {
+			this.log('disabled');
+			return;
+		}
+
 		var images = $('#bodyContent').find('a.lightbox, a.image');
 		if (!images.exists()) {
 			return;
