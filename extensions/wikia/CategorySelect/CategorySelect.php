@@ -240,6 +240,7 @@ function CategorySelectAjaxSaveCategories($articleId, $categories) {
 				$editPage->recreate = true;
 				$editPage->textbox1 = $article_text;
 				$editPage->summary = wfMsgForContent('categoryselect-edit-summary');
+				$editPage->watchthis = $editPage->mTitle->userIsWatching();
 				$bot = $wgUser->isAllowed('bot');
 				$retval = $editPage->internalAttemptSave( $result, $bot );
 				Wikia::log( __METHOD__, "editpage", "Returned value {$retval}" );
