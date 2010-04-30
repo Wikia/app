@@ -295,6 +295,28 @@ function wfAnswersGetXDayContribs($days = 7, $show_staff = true, $limit = 30, $o
 	return $users;
 }
 
+function wfAnswersGetRandomQuestions() {
+	$UN_CLASS = "unanswered_questions";
+	$ANS_CLASS = "answered_questions";
+	$U_SUFFIX = "_u"; // appended to url params to differentiate whihc tab is being paginated
+	$A_SUFFIX = "_a";
+
+	$r = '';
+
+	$answered = CategoryHub::getAnsweredCategory();
+	$answeredTitle = Title::newFromText( $answered, NS_CATEGORY );
+	$answeredArticles = wfAnswersTagsDoCategoryQuery( $answeredTitle, $offset );
+
+	$unanswered =  CategoryHub::getUnAnsweredCategory();
+	$unansweredTitle = Title::newFromText( $unanswered, NS_CATEGORY );
+	$unansweredArticles = wfAnswersTagsDoCategoryQuery( $unansweredTitle, $offset );
+	
+	$questions = array_merge( $answeredArticles, $unansweredArticles );
+	$questions = array_rand( $questions, 10 );
+
+	return $questions;
+}
+
 /*
 
 	@params $category Title
@@ -577,6 +599,7 @@ function categoryHubBeforeArticleText(&$flexibleCategoryPage){
  * Overrides FlexibleCategoryPage::closeShowCategory to allow us to choose which sections to display
  * after the category's article text.
  */
+
 function categoryHubAfterArticleText(&$flexibleCategoryPage){
 	global $wgCatHub_useDefaultView;
 	wfLoadExtensionMessages('CategoryHub');
