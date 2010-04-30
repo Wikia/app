@@ -996,6 +996,7 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'unlockdb-wikifactory-error' => 'An error occurred. Failed to save or clear cache. The database might not be unlocked. Please try again or contact the TechTeam.',
 'addnewtalksection-link' => 'Add new section',
 'masthead-anonymous-user' => 'Anonymous contributor',
+'achievements-masthead-points' => '$1 <small>points</small>',
 
 # Wikia.php
 'rcshowhidelogs' => '$1 logs',

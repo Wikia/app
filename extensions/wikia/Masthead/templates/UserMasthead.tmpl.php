@@ -25,12 +25,12 @@ global $wgStyleVersion, $wgExtensionsPath, $wgTitle, $wgUser;
 <?php if ($anonymousUser) { ?>
 		<small id="user_masthead_anon"><?= $anonymousUser ?></small>
 <?php } else { ?>
-		<small id="user_masthead_since"><?= $data['edit_counter'] ?> <?= $data['edit_since'] ?> <?= $data['edit_date'] ?></small>
+		<small id="user_masthead_since"><?= $data['edit_counter_date'] ?> <?= $data['edit_since'] ?> <?= $data['edit_date'] ?></small>
 <?php } ?>
 		</h2>
 	</div>
 <?php if (!$anonymousUser) { ?>
-	<div id="user_masthead_scorecard" class="dark_text_1"><?= $data['edit_counter'] ?></div>
+	<div id="user_masthead_scorecard" class="dark_text_1"><?= $data['edit_counter_main'] ?></div>
 <?php } ?>
 	<ul id="user_masthead_tabs" class="nav_links">
 		<?php

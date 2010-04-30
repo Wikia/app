@@ -96,6 +96,21 @@ body.masthead-special #page_bar {
 	top: 4px;
 }
 
+#user_masthead_scorecard #masthead-achievements {
+	font-size: 40px;
+	position: relative;
+	text-align: right;
+}
+
+#user_masthead_scorecard #masthead-achievements small {
+	display: block;
+	font-size: 20px;
+	letter-spacing: 0;
+	line-height: 100%;
+	position: relative;
+	top: -5px;
+}
+
 avatarOverlayRight {
 	right:5px;
 	top:5px;
