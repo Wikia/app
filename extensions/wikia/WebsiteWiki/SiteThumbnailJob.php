@@ -30,7 +30,7 @@ class SiteThumbnailJob extends Job {
 
 		global $wgContLang;
 
-		parent::__construct( "newsite", $title, $params, $id );
+		parent::__construct( "SiteThumb", $title, $params, $id );
 
 		/**
 		 * init for local stuffs
