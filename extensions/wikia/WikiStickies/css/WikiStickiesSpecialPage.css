@@ -266,6 +266,10 @@
     margin-bottom: 5px;
 }
 
+#theme_scroller label {
+	text-transform: capitalize;
+}
+
 /*** Step 5: Done ***/
 #wiki_army_container {
     background: url(wiki_army_floor.png) bottom left repeat-x;
