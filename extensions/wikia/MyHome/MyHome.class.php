@@ -178,6 +178,7 @@ class MyHome {
 
 		// do not redirect for skins different then monaco
 		if(get_class($wgUser->getSkin()) != 'SkinMonaco') {
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 
