@@ -98,7 +98,7 @@
 					
 					$_SESSION["alreadysubmitted"] = true;
 					$rel->removeRelationshipByUserID($this->user_id_to,$wgUser->getID() );
-					$rel->sendRelationshipRemoveEmail($this->user_id_to, $wgUser->getName(), $this->relationship_type);
+					#$rel->sendRelationshipRemoveEmail($this->user_id_to, $wgUser->getName(), $this->relationship_type);
 					$avatar = new wAvatar($this->user_id_to,"l");
 					$avatar_img = "<img src=\"{$wgUploadPath}/avatars/" . $avatar->getAvatarImage() . "\" alt=\"\" border=\"\"/>";
 					
