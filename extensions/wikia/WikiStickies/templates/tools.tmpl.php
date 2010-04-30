@@ -68,7 +68,12 @@ var wgAdminSkin = '<?php echo $wgAdminSkin?>';
 var themes = <?php echo Wikia::json_encode($wgSkinTheme['monaco']) ?>;
 for (var i = 0; i < themes.length; i++){
         // Copy the template, search and replace the values
-        var ltheme = themes[i].toLowerCase();
+        var ltheme = themes[i];
+
+	if (ltheme == 'custom') {
+		continue;
+	}
+
         var thtml = $("#theme_template").html();
         thtml = thtml.replace(/\$Theme/g, themes[i]);
         thtml = thtml.replace(/\$theme/g, ltheme);
