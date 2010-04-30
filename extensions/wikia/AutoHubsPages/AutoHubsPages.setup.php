@@ -10,7 +10,6 @@ $wgExtensionCredits['specialpage'][] = array(
 	'descriptionmsg' => 'myextension-desc',
 	'version' => '1.0.0',
 );
-
 $wgHubsPages = array(   
 	'handheld_games' => 'handheld',
 	'pc_games' => 'pc',
@@ -28,7 +27,8 @@ $wgHubsPages = array(
 	'horror' => 'horror',
 	'gaming' => 'gaming',
 	'lifestyle' => 'lifestyle', 
-	'wii_games' => 'wii'
+	'wii_games' => 'wii',
+	'pl' => 'pl',
 );
 
 if ( !empty($wgAutoHubTestTag) ) {
