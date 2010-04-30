@@ -295,7 +295,7 @@ function wfAnswersGetXDayContribs($days = 7, $show_staff = true, $limit = 30, $o
 	return $users;
 }
 
-function wfAnswersGetRandomQuestions() {
+function wfAnswersTagsGetRandomQuestions() {
 	$UN_CLASS = "unanswered_questions";
 	$ANS_CLASS = "answered_questions";
 	$U_SUFFIX = "_u"; // appended to url params to differentiate whihc tab is being paginated
@@ -312,7 +312,7 @@ function wfAnswersGetRandomQuestions() {
 	$unansweredArticles = wfAnswersTagsDoCategoryQuery( $unansweredTitle, $offset );
 	
 	$questions = array_merge( $answeredArticles, $unansweredArticles );
-	$questions = array_rand( $questions, 10 );
+	$questions = array_rand( array_flip( $questions ), 5 );
 
 	return $questions;
 }
