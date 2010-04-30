@@ -28,13 +28,21 @@ class solr2rss extends SpecialPage {
 		}
 
 		$excludeWikis = $wgRequest->getVal('exclude');
-		if(!empty($excludeWikis)) {
+		if(!empty($excludeWikis) && !empty($query)) {
 			$excludeWikis = explode( ',', $excludeWikis);
 			foreach($excludeWikis as $wikiDomain) {
 				$wikiId = WikiFactory::DomainToID( $wikiDomain );
-				if(!empty($query) && !empty($wikiId)) {
+				if(!empty($wikiId)) {
 					$query .= ' AND !wid:' . $wikiId;
 				}
+			}
+		}
+
+		$namespaces = $wgRequest->getVal('ns');
+		if(!empty($namespaces) && !empty($query)) {
+			$namespaces = exclude(',', $namespaces);
+			foreach($namespaces as $ns) {
+				$query .= ' AND ns:' . $ns;
 			}
 		}
 
@@ -55,7 +63,7 @@ class solr2rss extends SpecialPage {
 			$oTmpl->set_vars(
 				array(
 					'url' => $wgRequest->getFullRequestURL(),
-					'docs' => $response->response->docs,
+					'docs' => !is_null($response->response->docs) ? $response->response->docs : array(),
 					'dateFormat' => 'D, d M Y H:i:s O'
 				));
 
