@@ -1,26 +1,28 @@
 #profile-sidebar {
-	border-left: 1px solid #AAA;
-  	float: right;
-  	min-height: 300px;
-	padding-left: 10px;
-	position: relative;
-  	width: 280px;
+  min-height: 300px;
+  width: 300px;
+  padding: 0 5px;
+  border-left: 1px solid #AAAAAA;
+  float: right;
 }
 
 #profile-sidebar h2.first {
   margin-top: 0px;
 }
 
-#profile-sidebar ul#badges {
-  list-style-type: none !important;
-  list-style-image: none !important;
-  margin: 0 0 0 0;
-  padding: 0 0 0 0;
+#profile-sidebar #badges {
   height: 200px;
   overflow: hidden;
 }
 
-#profile-sidebar ul#badges li {
+#profile-sidebar #badges ul {
+  list-style-type: none !important;
+  list-style-image: none !important;
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+}
+
+#profile-sidebar #badges ul li {
   list-style-type: none !important;
   list-style-image: none !important;
   float: left;
@@ -34,7 +36,8 @@
   margin-top: .6em;
 }
 
-#profile-sidebar #sub-badges button#view-all {
+#profile-sidebar #sub-badges button#view-all,
+#profile-sidebar #sub-badges button#view-less {
   height: 30px;
   width: 290px;
   background-image: -moz-linear-gradient(center top, #f5f5f5 20%, #f4f4f4 70%);
@@ -42,6 +45,11 @@
   -moz-box-shadow:0 0 0 0px #999999;
   color: #000;
   font-size: 14px;
+}
+
+#profile-sidebar #sub-badges button#view-all:hover,
+#profile-sidebar #sub-badges button#view-less:hover {
+  text-shadow: 0 0 0 0;
 }
 
 #profile-sidebar #sub-badges p {
@@ -56,12 +64,15 @@
 #profile-sidebar ul#challenges {
   list-style-type: none !important;
   list-style-image: none !important;
+  margin: 10px 0 0 0;
+  padding: 0 0 0 0;
 }
 
 #profile-sidebar ul#challenges li {
-  height: 50px;
-  overflow: hidden;
-  margin: 0 0 0 0;
+  min-height: 45px;
+  list-style-type: none !important;
+  list-style-image: none !important;
+  margin: 0 0 5px 0;
   padding: 0 0 0 0;
 }
 
@@ -78,24 +89,33 @@
 #profile-sidebar ul#challenges p {
   margin: 0 0 0 0;
   padding: 0 0 0 0;
+	font-size:12px;
 }
 
 #profile-sidebar ul#challenges p.badge-title {
   font-weight: bold;
   margin-top: 2px;
+	font-size:12px;
 }
 
-#userPageFollowedHead span{
+#userPageFallowedHead span{
 	 float: right;
 	 font-size:9pt;
 }
 
-.followedList {
+.fallowedList {
+	font-family:Arial,sans-serif;
+	font-size:12px;
 	list-style:none inside none;
 	float:left;
 	margin-left:4px;
 	margin-top:0;
+	width:45%;
 	margin-bottom:20px;
+}
+.fallowedListFirst {
+	border-right:1px solid #AAAAAA;
+	margin-right:10px;
 }
 
 #ShowMoreFollowed {
@@ -103,20 +123,53 @@
 }
 
 #profile-content {
-	float: left;
-	margin-right: -300px;
-	min-height: 400px;
-	position: relative;
-	width: 100%;
-}
-#profile-content-inner {
-	margin-right: 300px;
+	padding-right: 320px;
 }
 
-#follow_more_link {
-	float: right;
+div.profile-hover {
+  position: absolute;
+  top: -60px;
+  left: 430px;
+  width: 320px;
+  height: 120px;
+  padding: 10px !important;
+  -moz-border-radius:10px;
+  -webkit-border-radius:10px;
+  text-align: center;
+  border: 3px solid #009933; /*TODO - how do I get this with the wiki's primary color */
+  background-color: #fff; /*TODO - how do I get this with the wiki's primary bg color */
+  z-index: 10;
 }
 
-.usermessage {
-	margin-right:330px;
+div.profile-hover div.clearfix img {
+  float: left;
+  margin-top: 12px;
+}
+
+div.profile-hover div.clearfix div {
+  width: 215px;
+  float: right;
+  text-align: right;
+}
+
+#bodyContent div.profile-hover div.clearfix div h3.badge-name {
+  border-bottom: 0px;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 0px !important;
+}
+
+div.profile-hover div.clearfix div p {
+  font-size: 14px;
+  margin: 0 0 0 0 !important;
+}
+
+div.profile-hover div.clearfix div p.earned {
+  font-size: 11px;
+  margin: 0 0 0 0 !important;
+}
+
+div.profile-hover p.to-get {
+  font-style: italic;
+  font-size: 11px;
 }
