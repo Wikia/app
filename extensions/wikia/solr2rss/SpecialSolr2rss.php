@@ -40,7 +40,7 @@ class solr2rss extends SpecialPage {
 
 		$namespaces = $wgRequest->getVal('ns');
 		if(!empty($namespaces) && !empty($query)) {
-			$namespaces = exclude(',', $namespaces);
+			$namespaces = explode(',', $namespaces);
 			foreach($namespaces as $ns) {
 				$query .= ' AND ns:' . $ns;
 			}
