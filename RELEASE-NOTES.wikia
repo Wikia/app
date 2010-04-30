@@ -1,4 +1,5 @@
 == Changes since 201004.5 ==
+* rt#47460: Add captions to view mode image placeholders (macbre)
 * rt#47569: what links here broken on new answers skin (macbre)
 * rt#47692: Answers tag list tag not wrapping properly (macbre)
 * rt#47665: Photo Gallery assumed Lightbox extension is enabled, shouldn't (macbre)
