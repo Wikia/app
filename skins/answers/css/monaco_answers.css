@@ -104,10 +104,6 @@ a, a:active, a:visited {
 a:hover {
 	text-decoration: underline;
 }
-/* Important to override the inline styles */
-a.new {
-	color:#BA5500 !important;
-}
 
 /* Default monaco style names for anything I've missed */
 
