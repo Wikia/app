@@ -153,9 +153,12 @@ class MonoBookTemplate extends QuickTemplate {
 <?php $this->navbar(); ?>
 	<div id="globalWrapper">
 	<div id="column-content">
-	<div id="content" class="content-ads"<?php $this->wideSkyscraper();?><?php $this->noSkyscraper();?>>
+	<!--printTopHtml -->
 		<?php /* Allow for sub classes to print content here */
 		method_exists($this->skin, "printTopHtml") && $this->skin->printTopHtml(); ?>
+	<!--printTopHtml -->
+
+	<div id="content" class="content-ads"<?php $this->wideSkyscraper();?><?php $this->noSkyscraper();?>>
 		<a name="top" id="top"></a>
 		<?php if($this->data['sitenotice']) { ?><div id="siteNotice"><?php $this->html('sitenotice') ?></div><?php } ?>
 		<h1 id="firstHeading" class="firstHeading"><?php $this->data['displaytitle']!=""?$this->html('title'):$this->text('title') ?></h1>

@@ -8,10 +8,9 @@
 
 body {
     font-family: sans-serif;
-    font-size: 170%;
     color: Black;
-    margin: 10px;
-    padding: 0.3em;
+    margin: 0;
+    padding: 0;
 }
 
 a { color: #002bb8; }
@@ -242,6 +241,13 @@ table.small { font-size: 100% }
 /*
 ** content styles
 */
+
+#content {
+	border: 0 !important;
+	padding: 10px !important;
+	zoom: 30%;
+	font-size: 250%;
+}
 
 #toc {
     /*border:1px solid #2f6fab;*/
