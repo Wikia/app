@@ -1054,8 +1054,7 @@ function getLabelFor (obj_id) {
 
 if (skin != 'monaco' && skin != 'awesome' /* LeanMonaco */) {
 	//see RT#46116
-	if (skin == 'answers' && !window.wgOldAnswerSkin) {
-		return;
+	if ( !(skin == 'answers' && !window.wgOldAnswerSkin) ) {
+		addOnloadHook(function() { for(var i=0;i<wgAfterContentAndJS.length;i++){wgAfterContentAndJS[i]();} });
 	}
-	addOnloadHook(function() { for(var i=0;i<wgAfterContentAndJS.length;i++){wgAfterContentAndJS[i]();} });
 }
