@@ -37,7 +37,7 @@ class ExternalStorageUpdate {
 	 */
 	public function doUpdate() {
 
-		global $wgCityId;
+		global $wgCityId, $wgExternalDatawareDB;
 
 		$path = explode( "/", $this->mUrl );
 		$store    = $path[0];
@@ -45,6 +45,7 @@ class ExternalStorageUpdate {
 		$id       = $path[3];
 
 		wfProfileIn( __METHOD__ );
+
 		if( $this->mRevision instanceof Revision ) {
 			$this->mPageId = $this->mRevision->getPage();
 			$Title = Title::newFromID( $this->mPageId, GAID_FOR_UPDATE );
@@ -55,6 +56,9 @@ class ExternalStorageUpdate {
 				return false;
 			}
 
+			/**
+			 * blobs tables could be in different places
+			 */
 			$dbw = wfGetDBExt( DB_MASTER, $cluster );
 			$ip = ip2long(wfGetIP());
 
@@ -77,8 +81,10 @@ class ExternalStorageUpdate {
 
 			if( $ret ) {
 				/**
-				 * insert or update
+				 * ... but pages are always on dataware
 				 */
+				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
+
 				$Row = $dbw->selectRow(
 					"pages",
 					array( "page_id", "page_title", "page_namespace", "page_status" ),
@@ -198,11 +204,11 @@ class ExternalStorageUpdate {
 	 * @return true means process other hooks
 	 */
 	static public function deleteArticleExternal(&$oArticle, &$oUser, $reason, $page_id) {
-		global $wgCityId;
+		global $wgCityId, $wgExternalDatawareDB;
 
 		wfProfileIn( __METHOD__ );
 		if( !empty( $page_id ) ) {
-			$dbw = wfGetDBExt( DB_MASTER );
+			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 			/* begin transaction */
 			$dbw->begin();
 			/* set revision as 'removed' in blobs table
@@ -242,12 +248,17 @@ class ExternalStorageUpdate {
 	 * @return true means process other hooks
 	 */
 	static public function hiddenArticleExternal(&$oRevision) {
-		global $wgCityId;
+		global $wgCityId, $wgExternalDatawareDB;
+
+		return true;
 
 		wfProfileIn( __METHOD__ );
 		if ($oRevision instanceof Revision) {
 
-			$dbw = wfGetDBExt( DB_MASTER );
+			/**
+			 * we need here which archive contain blobs!
+			 */
+			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 			$ret = $dbw->update(
 				"blobs",
 				array (
@@ -343,7 +354,7 @@ class ExternalStorageUpdate {
 	 * @return true means process other hooks
 	 */
 	static public function setRevisionFromEdit( $oArticle, $oRevision, $baseRevId, $oUser) {
-		global $wgCityId;
+		global $wgCityId, $wgExternalDatawareDB;
 
 		wfProfileIn( __METHOD__ );
 
@@ -365,9 +376,9 @@ class ExternalStorageUpdate {
 			return false;
 		}
 
-		$page_status = $Title->isRedirect(GAID_FOR_UPDATE) ? 1 : 0;
+		$page_status = $Title->isRedirect( GAID_FOR_UPDATE) ? 1 : 0;
 
-		$dbw = wfGetDBExt( DB_MASTER );
+		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 
 		$dbw->update( "pages",
 		array( /* SET */
