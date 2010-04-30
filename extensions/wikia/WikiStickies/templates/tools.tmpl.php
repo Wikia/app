@@ -1,5 +1,4 @@
-
-<?php global $wgAdminSkin, $wgContLang, $NWBmessages; ?>
+<?php global $wgAdminSkin, $wgContLang, $NWBmessages, $wgSkinTheme; ?>
 
 <div id="wikistickies-admintools">
 <h2 class="bigger"><?= wfMsg('wikistickies-admins-hd'); ?></h2>
@@ -17,10 +16,10 @@
 <li class="step">
 <div class="wrapper clearfix">
 <h2><?php echo wfMsg("wikistickies-custom-hd")?></h2>
-<p><?= wfMsgExt('wikistickies-custom-msg', array( 'parseinline', 'replaceafter' ) ); ?></p>		
+<p><?= wfMsgExt('wikistickies-custom-msg', array( 'parseinline', 'replaceafter' ) ); ?></p>
 </div>
 </li>
-           
+
 <li id="step2" class="step">
 <div class="wrapper clearfix">
 <h2><?php echo wfMsg("wikistickies-logo-hd")?></h2>
@@ -66,7 +65,7 @@
 
 var wgAdminSkin = '<?php echo $wgAdminSkin?>';
 
-var themes = ['Sapphire', 'Jade', 'Slate', 'Smoke', 'Beach', 'Brick', 'Gaming'];
+var themes = <?php echo Wikia::json_encode($wgSkinTheme['monaco']) ?>;
 for (var i = 0; i < themes.length; i++){
         // Copy the template, search and replace the values
         var ltheme = themes[i].toLowerCase();
@@ -80,7 +79,7 @@ for (var i = 0; i < themes.length; i++){
 
         // Check the box with the current theme ($wgAdminSkin)
         if (wgAdminSkin.replace(/monaco-/, '')  == ltheme) {
-                // Check the box and change the theme 
+                // Check the box and change the theme
                 $("#theme_radio_" + ltheme).attr("checked", true);
                 NWB.changeTheme(ltheme, false);
         }
