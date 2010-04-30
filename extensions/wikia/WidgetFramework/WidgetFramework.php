@@ -128,9 +128,7 @@ class WidgetFramework {
 					$widgets[] = $c["type"];
 				}
 
-error_log("in: " . print_r($widgets, true));
 				wfRunHooks("ReorderWidgets", array(&$widgets));
-error_log("out: " . print_r($widgets, true));
 
 				/* rebuild proper(???) widget config array */
 				$config1 = array();

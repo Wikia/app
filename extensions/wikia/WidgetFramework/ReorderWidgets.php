@@ -3,8 +3,6 @@
 class ReorderWidgets {
 
 	static public function WF($widgets) {
-error_log(__METHOD__);
-
 		global $wgReorderWidgets;
 		if (empty($wgReorderWidgets) || !is_array($wgReorderWidgets)) return true;
 
@@ -16,11 +14,7 @@ error_log(__METHOD__);
 	}
 
 	static private function runCommand($command, &$widgets) {
-error_log(__METHOD__ . ": {$command}");
-
 		if (preg_match("/^(add|remove)\s+(Widget[^ ]*)\s*(.*)$/", $command, $matches)) {
-error_log(__METHOD__ . ": " . print_r($matches, true));
-
 			switch ($matches[1]) {
 			case "remove":
 				self::cmdRemove($matches[2], $widgets);
@@ -34,8 +28,6 @@ error_log(__METHOD__ . ": " . print_r($matches, true));
 	}
 
 	static private function cmdAdd($widget, $params, &$widgets) {
-error_log(__METHOD__ . ": {$widget}+{$params}");
-
 		$params = trim($params);
 		switch ($params) {
 			case "first":
@@ -49,8 +41,6 @@ error_log(__METHOD__ . ": {$widget}+{$params}");
 	}
 
 	static private function cmdRemove($widget, &$widgets) {
-error_log(__METHOD__ . ": {$widget}");
-
 		$widgets = array_diff($widgets, array($widget));
 	}
 }
