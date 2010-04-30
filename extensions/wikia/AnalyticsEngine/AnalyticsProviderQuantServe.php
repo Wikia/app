@@ -17,14 +17,14 @@ class AnalyticsProviderQuantServe implements iAnalyticsProvider {
 			try {
 				_qoptions = { qacct: '{$this->account}' };
 				// Hard code some hosts per Gil
-				if ((Athena.getPageVar('hostname') == 'answers.wikia.com') ||
-					 (Athena.getPageVar('hub')      == 'Lifestyle') ||
-					 (Athena.getPageVar('hub')      == 'Education')){ 
+				if ((document.domain == 'answers.wikia.com') ||
+					 (Liftium.getPageVar('hub')      == 'Lifestyle') ||
+					 (Liftium.getPageVar('hub')      == 'Education')){ 
 					_qoptions.labels = 'mom';
 				} else {
-					_qoptions.labels = Athena.getPageVar('hub');
+					_qoptions.labels = Liftium.getPageVar('hub');
 					for (var i = 0; i < ProviderValues.list.length; i++){
-						_qoptions.labels += ',' + Athena.getPageVar('hub') + '.' + ProviderValues.list[i].value;
+						_qoptions.labels += ',' + Liftium.getPageVar('hub') + '.' + ProviderValues.list[i].value;
 					}
 				}
 			} catch (e){
