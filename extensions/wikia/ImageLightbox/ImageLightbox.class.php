@@ -3,6 +3,14 @@
 class ImageLightbox {
 
 	/**
+	 * Add global JS variable indicating this extension is enabled (RT #47665)
+	 */
+	static public function addJSVariable(&$vars) {
+		$vars['wgEnableImageLightboxExt'] = true;
+		return true;
+	}
+
+	/**
 	 * Handle AJAX request and return bigger version of requested image
 	 */
 	static public function ajax() {
