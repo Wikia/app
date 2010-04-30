@@ -1,4 +1,5 @@
 == Changes since 201004.5 ==
+* rt#44324: Hide the "custom info" section on the Answers satellite sites social profiles (macbre)
 * rt#47460: Add captions to view mode image placeholders (macbre)
 * rt#47569: what links here broken on new answers skin (macbre)
 * rt#47692: Answers tag list tag not wrapping properly (macbre)
