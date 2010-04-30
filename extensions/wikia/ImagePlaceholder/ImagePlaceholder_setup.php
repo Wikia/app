@@ -271,8 +271,8 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 	$out .= wfMsg('imgplc-create');
 	$out .= Xml::closeElement('a');
 
-	// caption
-	if ( ($caption != '') && ($thumb || $frame) ) {
+	// caption (RT #47460)
+	if ($caption != '') {
 		$out .= Xml::element('span', array('class' => 'thumbcaption'), $caption);
 	}
 
