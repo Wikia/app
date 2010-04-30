@@ -128,6 +128,11 @@ class AnswersTemplate extends MonacoTemplate {
 
 		<?php print Skin::makeGlobalVariablesScript( $this->data ); ?>
 
+		<?php /* see RT#46116 for details why this variable is for - added directly and not via MakeGlobalVariablesScript hook to be faster - this skin is supposed to be replaced in the future by Monaco based one so this will disappear */ ?>
+		<script type= "text/javascript">/*<![CDATA[*/
+		var wgOldAnswerSkin = true;
+		/*]]>*/</script>
+
 		<!-- Head Scripts -->
 <?php
 		$this->html('WikiaScriptLoader');
