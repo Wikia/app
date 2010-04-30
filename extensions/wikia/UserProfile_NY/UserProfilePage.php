@@ -26,14 +26,14 @@ class UserProfilePage extends Article{
 	}
 
 	function view(){
-		global $wgOut, $wgUser, $wgRequest, $wgTitle, $wgSitename, $wgUserProfileScripts;
+		global $wgOut, $wgUser, $wgRequest, $wgTitle, $wgSitename, $wgUserProfileScripts, $wgUseNewAnswersSkin;
 
 		$sk = $wgUser->getSkin();
 		$wgOut->setHTMLTitle(  $wgTitle->getPrefixedText() );
 		$wgOut->setPageTitle(  $wgTitle->getPrefixedText() );
 
 		# No need to display noarticletext, we use our own message
-		if ( !$this->user_id ) {			
+		if ( !$this->user_id ) {
 			parent::view();
 			$wgOut->addHTML( wfMsg( 'user-no-profile' ) );
 			return "";
@@ -63,6 +63,12 @@ class UserProfilePage extends Article{
 		$wgOut->addHTML($this->getGifts($this->user_name) );
 		$wgOut->addHTML( $this->getAwards($this->user_name) );
 		$wgOut->addHTML( $this->getCustomInfo($this->user_name) );
+
+		// RT #44324
+		if (!empty($wgUseNewAnswersSkin)) {
+			$wgOut->addHTML( $this->getPersonalInfo($this->user_id, $this->user_name) );
+		}
+
 		$wgOut->addHTML( $this->getInterests($this->user_name) );
 		$wgOut->addHTML($this->getFanBoxes($this->user_name) );
 		$wgOut->addHTML( $this->getUserStats($this->user_id, $this->user_name) );
@@ -83,7 +89,11 @@ class UserProfilePage extends Article{
 			wfDebug( __METHOD__ . ": UserProfileBeginRight messed up profile!\n" );
 		}
 
-		$wgOut->addHTML( $this->getPersonalInfo($this->user_id, $this->user_name) );
+		// RT #44324
+		if (empty($wgUseNewAnswersSkin)) {
+			$wgOut->addHTML( $this->getPersonalInfo($this->user_id, $this->user_name) );
+		}
+
 		$wgOut->addHTML( $this->getActivity($this->user_name) );
 		$wgOut->addHTML( $this->getArticles($this->user_name) );
 		$wgOut->addHTML( $this->getMiniGallery($this->user_name) );
