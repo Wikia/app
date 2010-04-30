@@ -101,6 +101,11 @@ class AutoCreateWikiLocalJob extends Job {
 		$this->protectKeyPages();
 		$this->queueReminderMail();
 
+		if(class_exists(AchProcessor)) {
+			$ap = new AchProcessor();
+			$ap->giveCustomBadge($this->mFounder, BADGE_CREATOR);
+		}
+
 		/**
 		 * different things for different types
 		 */
