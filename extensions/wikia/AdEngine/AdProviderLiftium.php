@@ -48,6 +48,7 @@ class AdProviderLiftium implements iAdProvider {
 		$out .= "LiftiumOptions = " . json_encode($options) . ';</script>';
 
 		// Call the script
+		global $wgDevelEnvironment;
 		if (!empty($_GET['liftium_dev_hosts']) || !empty($wgLiftiumDevHosts)){
 			$base = "http://nick.dev.liftium.com/";
 			$version = mt_rand();
