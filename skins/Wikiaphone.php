@@ -27,6 +27,7 @@ class SkinWikiaphone extends SkinTemplate {
 
 	function setupSkinUserCss( OutputPage $out ){
 		parent::setupSkinUserCss( $out );
+		$out->addMeta("viewport", "width=device-width");
 		// Append to the default screen common & print styles...
 		$out->addStyle( 'wikiaphone/main.css', 'screen,handheld' );
 		// Nick wonders why we have IE 5 style sheets for a mobile skin?
