@@ -433,6 +433,7 @@ $(function() {
 	 $("#ca-watch").click(function(e){
 		 	$.tracker.byStr( 'articleAction/watch' );
 		 	var callback_link = $(e.target).attr("href");
+			// TODO: FIXME: Once the fbconnect branch is merged in, change this to use the extra parameter which instructs the combo-box to show the 'you need to login to do this action' message!
 			showComboAjaxForPlaceHolder(false, false, function(){
 				AjaxLogin.doSuccess = function() {
 					window.location = callback_link;
