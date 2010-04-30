@@ -48,7 +48,7 @@ class ContactForm extends SpecialPage {
 		}
 		
 		$this->mainContactForm();
-		return htmlspecialchars($errors);
+		return htmlspecialchars($this->err);
 	}
 	/**
 	 * @access private
