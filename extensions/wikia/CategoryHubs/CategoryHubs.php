@@ -312,9 +312,13 @@ function wfAnswersTagsGetRandomQuestions() {
 	$unansweredArticles = wfAnswersTagsDoCategoryQuery( $unansweredTitle, $offset );
 	
 	$questions = array_merge( $answeredArticles, $unansweredArticles );
-	$questions = array_rand( array_flip( $questions ), 5 );
+	$questions_keys = array_rand( $questions, 5 );
+	$randoms = array();
+	foreach( $questions_keys as $key ) {
+		$randoms[] = $questions[$key];		
+	}	
 
-	return $questions;
+	return $randoms;
 }
 
 /*
