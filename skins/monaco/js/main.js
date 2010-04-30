@@ -53,7 +53,7 @@ $(function() {
 						window.location.href = target.parent().attr('href');
 					}
 				}
-			});
+			}, false, true); // show the 'login required for this action' message.
 			return false;
 		});
 
@@ -156,7 +156,7 @@ function openLogin(event) {
 // Combo login WikiaImagePlaceholder
 // Returns true if/when the login dialog is showing.
 // Returns false if the user is logged in or ComboAjaxLogin is not enabled.
-function showComboAjaxForPlaceHolder(element,isPlaceholder,callback) {
+function showComboAjaxForPlaceHolder(element, isPlaceholder, callback, showRegisterTabFirst, showLoginRequiredMessage) {
 	if ( typeof showComboAjaxForPlaceHolder.statusAjaxLogin == 'undefined' ) { // java script static var
 		showComboAjaxForPlaceHolder.statusAjaxLogin = false;
 	}
@@ -433,12 +433,11 @@ $(function() {
 	 $("#ca-watch").click(function(e){
 		 	$.tracker.byStr( 'articleAction/watch' );
 		 	var callback_link = $(e.target).attr("href");
-			// TODO: FIXME: Once the fbconnect branch is merged in, change this to use the extra parameter which instructs the combo-box to show the 'you need to login to do this action' message!
 			showComboAjaxForPlaceHolder(false, false, function(){
 				AjaxLogin.doSuccess = function() {
 					window.location = callback_link;
 				}
-			});
+			}, false, true); // show the 'login required for this action' message.
 			return false;
 	});
 });
