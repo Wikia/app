@@ -41,9 +41,11 @@ class solr2rss extends SpecialPage {
 		$namespaces = $wgRequest->getVal('ns');
 		if(!empty($namespaces) && !empty($query)) {
 			$namespaces = explode(',', $namespaces);
+			$nsQuery = '';
 			foreach($namespaces as $ns) {
-				$query .= ' AND ns:' . $ns;
+				$nsQuery .= ( !empty($nsQuery) ? ' OR ' : '' ) . 'ns:' . $ns;
 			}
+			$query .= "AND ($nsQuery)";
 		}
 
 		$limit = $wgRequest->getVal('rows');
