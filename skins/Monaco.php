@@ -1510,8 +1510,9 @@ class MonacoTemplate extends QuickTemplate {
 		<?php print Skin::makeGlobalVariablesScript( $this->data ); ?>
 <?php
 $allinone = $wgRequest->getBool('allinone', $wgAllInOne);
-echo WikiaAssets::GetCoreCSS($skin->themename, $wgContLang->isRTL(), $allinone); // StaticChute + browser specific
+echo WikiaAssets::GetCoreCSS(null, $wgContLang->isRTL(), $allinone); // StaticChute + browser specific. "null" passed for theme because it's handled below with GetThemeCSS
 echo WikiaAssets::GetExtensionsCSS($this->data['csslinks-urls']);
+echo WikiaAssets::GetThemeCSS($skin); // Theme
 echo WikiaAssets::GetSiteCSS($skin->themename, $wgContLang->isRTL(), $allinone); // Common.css, Monaco.css, -
 echo WikiaAssets::GetUserCSS($this->data['csslinks-urls']);
 ?>
