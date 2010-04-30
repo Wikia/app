@@ -82,8 +82,8 @@ function wfAnswersStatsParserHook( $input, $args, $parser ) {
 	$answered = CategoryHub::getAnsweredCategory();
 	$unanswered =  CategoryHub::getUnAnsweredCategory();
 
-	$answeredCategoryEdits = CategoryEdits::newFromName( $answered );		
-	$unansweredCategoryEdits = CategoryEdits::newFromName( $unanswered );	
+	$answeredCategoryEdits = CategoryEdits::newFromName( $answered );
+	$unansweredCategoryEdits = CategoryEdits::newFromName( $unanswered );
 
 	$PROG_BAR_WIDTH = 250; // in pixels.  If this is changed, make sure to re-evaluate MIN_PERCENT_TO_SHOW_TEXT_ON_LEFT
 	$MIN_PERCENT_TO_SHOW_TEXT = 11; // if cat is this percentage or more complete, the percentage will be shown in left side of progress bar.
@@ -93,7 +93,7 @@ function wfAnswersStatsParserHook( $input, $args, $parser ) {
 
 	$countAnswered = $answeredCategoryEdits->getPageCount();
 	$countUnAnswered = $unansweredCategoryEdits->getPageCount();
-	
+
 	$percentAnswered = ( 100 * $countAnswered ) / ( $countAnswered + $countUnAnswered ) ;
 
 	$allQuestions = $countAnswered + $countUnAnswered;
@@ -159,7 +159,7 @@ function wfAnswersLeaderboardAllTimeParserHook( $input, $args, $parser ) {
 	$out .= "</div>\n";
 	$out .= "<div style='clear:both'>&nbsp;</div>\n";
 
-	return $out;		
+	return $out;
 }
 
 function wfAnswersLeaderboardLastParserHook( $input, $args, $parser ) {
@@ -304,7 +304,7 @@ function wfAnswersGetXDayContribs($days = 7, $show_staff = true, $limit = 30, $o
 function wfAnswersTagsDoCategoryQuery( $category, $offset = 0 ) {
 	global $wgCategoryMagicGallery, $wgOut, $wgTitle, $wgMemc;
 	$showGallery = $wgCategoryMagicGallery && !$wgOut->mNoGallery;
-			
+
 	$dbr = wfGetDB( DB_SLAVE, 'category' );
 
 	$memkey = wfMemcKey( 'answerstag_categoryquery', $category, $offset );
@@ -393,9 +393,8 @@ function wfAnswersSubcategoriesParserHook( $input, $args, $parser ) {
 		$out .= "<div class=\"tags-hub-subcategories\">\n";
 		$out .= '<h3>' . wfMsg( 'cathub-tags' ) . "</h3>\n";
 
-		$out .= implode($result_array, "&nbsp;|&nbsp;");
+		$out .= implode($result_array, '&nbsp;| ');
 		$out .= "\n</div>";
-
 	}
 	return $out;
 }
@@ -403,8 +402,8 @@ function wfAnswersSubcategoriesParserHook( $input, $args, $parser ) {
 function wfAnswersSubcategoriesSkipRow($name) {
 	$hiddens = Wikia::categoryCloudGetHiddenCategories();
 	// todo this is taken from Widgets, the array should be taken one step above and passed to array
-	// will have to modify, also see WidgetCategoryCloud 
-	if( !empty( $hiddens ) ) { 
+	// will have to modify, also see WidgetCategoryCloud
+	if( !empty( $hiddens ) ) {
 	        if (in_array($name, $hiddens)) return true;
 	}
 
@@ -419,7 +418,7 @@ function wfAnswersSubcategoriesSkipRow($name) {
 }
 
 function wfAnswersTagsAjaxGetArticles( ) {
-	global $wgRequest;	
+	global $wgRequest;
 	$type = $wgRequest->getVal( 'type', 'u' );
 	$offset = $wgRequest->getVal( 'offset', 0 );
 
@@ -434,7 +433,7 @@ function wfAnswersTagsAjaxGetArticles( ) {
 		$answered = CategoryHub::getAnsweredCategory();
 		$answeredTitle = Title::newFromText( $answered, NS_CATEGORY );
 		$answeredArticles = wfAnswersTagsDoCategoryQuery( $answeredTitle, $offset );
-		$numRet = count( $answeredArticles );				
+		$numRet = count( $answeredArticles );
 		wfCategoryHubGetAnsweredQuestions( $answeredArticles, &$r, $ANS_CLASS, $A_SUFFIX, $numRet, $offset, null, true );
 	} else {
 		$unanswered =  CategoryHub::getUnAnsweredCategory();
@@ -866,7 +865,7 @@ function wfCategoryHubGetAnsweredQuestions( $answeredArticles, &$r, $type, $suff
 function wfCategoryHubGetUnansweredQuestions( $unansweredArticles, &$r, $type, $suffix, $numReturned_u, $offset_u, $inTag = false ) {
 	global $wgUser, $wgCategoryHubArticleLimitPerTab;
 	// the plan is: load through js, and then do
-	// ^_^  
+	// ^_^
 
 	$r .= "<ul class='interactive-questions'>\n";
 
@@ -1164,7 +1163,7 @@ function categoryHubSubcategorySection(&$catView, &$r){
 	global $wgCatHub_useDefaultView;
 	if(!$wgCatHub_useDefaultView){
 
-# Don't show subcategories section if there are none 
+# Don't show subcategories section if there are none
 		$r = '';
 		$rescnt = count( $catView->children );
 		if( $rescnt > 0 ) {
@@ -1197,7 +1196,7 @@ function categoryHubGetAttributionByArticle($qArticle, $answered=false){
 		# get user who answered a question
 		$userName = $qArticle->getUserText();
 		$userTitle = Title::makeTitle(NS_USER, $userName);
-		$author = array( 
+		$author = array(
 			"user_id" => $qArticle->getUser(),
 			"user_name" => $userName,
 			"title" => $userTitle,
@@ -1210,7 +1209,7 @@ function categoryHubGetAttributionByArticle($qArticle, $answered=false){
 		list( $userId, $userText, $userPageTitle, $userAvatar, $timestamp ) = array_values( $author );
 	}
 	$lastUpdate = wfTimeFormatAgo($timestamp);
-	
+
 	if($userId > 0){
 		global $wgBlankImgUrl;
 		$userPageLink = $userPageTitle->getLocalUrl();
