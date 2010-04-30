@@ -305,13 +305,14 @@ function wfAnswersTagsGetRandomQuestions() {
 
 	$answered = CategoryHub::getAnsweredCategory();
 	$answeredTitle = Title::newFromText( $answered, NS_CATEGORY );
-	$answeredArticles = wfAnswersTagsDoCategoryQuery( $answeredTitle, 0 );
+	$questions = $answeredArticles = wfAnswersTagsDoCategoryQuery( $answeredTitle, 0 );
 
-	$unanswered =  CategoryHub::getUnAnsweredCategory();
-	$unansweredTitle = Title::newFromText( $unanswered, NS_CATEGORY );
-	$unansweredArticles = wfAnswersTagsDoCategoryQuery( $unansweredTitle, 0 );
+	//$unanswered =  CategoryHub::getUnAnsweredCategory();
+	//$unansweredTitle = Title::newFromText( $unanswered, NS_CATEGORY );
+	//$unansweredArticles = wfAnswersTagsDoCategoryQuery( $unansweredTitle, 0 );
 	
-	$questions = array_merge( $answeredArticles, $unansweredArticles );
+	//$questions = array_merge( $answeredArticles, $unansweredArticles );
+	
 	$questions_keys = array_rand( $questions, 5 );
 	$randoms = array();
 	foreach( $questions_keys as $key ) {
