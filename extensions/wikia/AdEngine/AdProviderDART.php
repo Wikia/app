@@ -2,7 +2,7 @@
 
 class AdProviderDART implements iAdProvider {
 
-	private $isMainPage;
+	private $isMainPage, $useIframe = false;
 
 	protected static $instance = false;
 
@@ -46,6 +46,20 @@ class AdProviderDART implements iAdProvider {
         public function getBatchCallHtml(){ return false; }
 
 	public function getAd($slotname, $slot){
+		$url = $this->getUrl($slotname, $slot);
+		$out = "<!-- " . __CLASS__ . " slot: $slotname -->";
+		$out .= '<script type="text/javascript">/*<![CDATA[*/' . "\n";
+		// Ug. Heredocs suck, but with all the combinations of quotes, it was the cleanest way.
+		$out .= <<<EOT
+		dartUrl = "$url";
+		document.write("<scr"+"ipt type='text/javascript' src='"+ dartUrl +"'><\/scr"+"ipt>");
+EOT;
+		$out .= "/*]]>*/</script>\n";
+
+		return $out;
+	}
+
+	public function getUrl($slotname, $slot){
 
 		// Manipulate DART sizes for values it expects
 		switch ($slot['size']){
@@ -69,6 +83,11 @@ class AdProviderDART implements iAdProvider {
 		 * 	Note that we also have an "endtag", which slightly contradicts the above, but apparently that's ok.
 		 * 	endtag=$ is for forwarding requests to other DART ad networks, ala Gamepro.
 		 */
+		static $rand;
+		if (empty($rand)){
+			// This should be the same for every ad on the page
+			$rand = mt_rand();
+		}
 
 		$url = 'http://ad.doubleclick.net/';
 		$url .= $this->getAdType() . '/';
@@ -87,18 +106,8 @@ class AdProviderDART implements iAdProvider {
 		$url .= 'mtfIFPath=/extensions/wikia/AdEngine/;';  // http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=117857
 		// special "end" delimiter, this is for when we redirect ads to other places. Per Michael
 		$url .= 'endtag=$;';
-		$url .= "ord=" . mt_rand() . "?"; // See note above, ord MUST be last. Also note that DART told us to put the ? at the end
-
-		$out = "<!-- " . __CLASS__ . " slot: $slotname -->";
-		$out .= '<script type="text/javascript">/*<![CDATA[*/' . "\n";
-		// Ug. Heredocs suck, but with all the combinations of quotes, it was the cleanest way.
-		$out .= <<<EOT
-		dartUrl = "$url";
-		document.write("<scr"+"ipt type='text/javascript' src='"+ dartUrl +"'><\/scr"+"ipt>");
-EOT;
-		$out .= "/*]]>*/</script>\n";
-
-		return $out;
+		$url .= "ord=" . $rand . "?"; // See note above, ord MUST be last. Also note that DART told us to put the ? at the end
+		return $url;
 	}
 
 	/* From DART Webmaster guide:
@@ -110,8 +119,11 @@ EOT;
 	 * adx - Served using streaming technologies.
 	 */
 	function getAdType(){
-		// Someday we may want to change this dynamically.
-		return 'adj';
+		if ($this->useIframe) {
+			return 'adi';
+		} else {
+			return 'adj';
+		}
 	}
 
 
@@ -351,6 +363,13 @@ EOT;
 
 		return 'dmn=' . $this->sanitizeKeyValue($match1[0]) . ';';
 	}
+
+
+        public function getIframeFillHtml($slotname, $slot) {
+		$this->useIframe = true;
+                return '<script type="text/javascript">' .
+			'document.getElementById("' . addslashes($slotname) .'_iframe").src = "' . addslashes($this->getUrl($slotname, $slot)) . '";</script>';
+        }
 
 }
 
