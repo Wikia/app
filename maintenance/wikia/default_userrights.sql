@@ -56,6 +56,7 @@ insert into user_groups(ug_user, ug_group) values
 (/*JParanoid*/10970,'helper'),
 (/*Kmanwing*/1712363,'helper'),
 (/*McCouman*/1332157,'helper'),
+(/*MagdaH*/2037464,'helper'),
 (/*Merrystar*/11001,'helper'),
 (/*MtaÄ*/826221, 'helper'),
 (/*Multimoog*/20290,'helper'),
