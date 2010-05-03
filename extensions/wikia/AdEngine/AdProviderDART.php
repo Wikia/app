@@ -88,6 +88,12 @@ EOT;
 			// This should be the same for every ad on the page
 			$rand = mt_rand();
 		}
+		global $wgTitle;
+		if (is_object($wgTitle) && method_exists($wgTitle, 'getText')){
+			$wpage = 'wpage=' . $wgTitle->getPartialURL();
+		} else {
+			$wpage = '';
+		}
 
 		$url = 'http://ad.doubleclick.net/';
 		$url .= $this->getAdType() . '/';
@@ -98,6 +104,7 @@ EOT;
 		$url .= $this->getArticleKV();
 		$url .= $this->getDomainKV($_SERVER['HTTP_HOST']);
 		$url .= 'pos=' . $slotname . ';';
+		$url .= $wpage;
 		$url .= $this->getKeywordsKV();
 		$url .= $this->getLocKV($slotname);
 		$url .= $this->getDcoptKV($slotname);
