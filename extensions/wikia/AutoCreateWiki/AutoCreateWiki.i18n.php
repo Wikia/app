@@ -47,7 +47,7 @@ $messages['en'] = array(
 	"autocreatewiki-info-staff-username" => "<b>Staff only:</b> The specified user will be listed as the founder.",
 // errors
 	"autocreatewiki-limit-day" => "Wikia has exceeded the maximum number of wiki creations today ($1).",
-	"autocreatewiki-limit-creation" => "You have exceeded the the maximum number of wiki creation in 24 hours ($1).",
+	"autocreatewiki-limit-creation" => "You have exceeded the maximum number of wiki creation in 24 hours ($1).",
 	"autocreatewiki-empty-field" => "Please complete this field.",
 	"autocreatewiki-bad-name" => "The name cannot contain special characters (like $ or @) and must be a single lower-case word without spaces.",
 	"autocreatewiki-invalid-wikiname" => "The name cannot contain special characters (like $ or @) and cannot be empty",
