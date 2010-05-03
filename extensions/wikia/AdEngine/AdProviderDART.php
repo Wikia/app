@@ -90,7 +90,7 @@ EOT;
 		}
 		global $wgTitle;
 		if (is_object($wgTitle) && method_exists($wgTitle, 'getText')){
-			$wpage = 'wpage=' . $wgTitle->getPartialURL();
+			$wpage = 'wpage=' . $wgTitle->getPartialURL() . ';';
 		} else {
 			$wpage = '';
 		}
