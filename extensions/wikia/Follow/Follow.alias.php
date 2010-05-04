@@ -7,5 +7,5 @@ $aliases['en'] = array(
 );
 
 $aliases['de'] = array(
-	'Following' => array('Verfolagen')
+	'Following' => array('Verfolgen')
 );
