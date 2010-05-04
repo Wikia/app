@@ -534,7 +534,7 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 		$attribs = array();
 		global $wgWikiaUseNoFollow, $wgWikiaEnableAutoPageCreateExt;
 		if( !empty( $wgWikiaUseNoFollow ) && 
-				( empty( $wgWikiaEnableAutoPageCreateExt ) || ( !$title->isContentPage() ) ) ) {
+				( ( empty( $wgWikiaEnableAutoPageCreateExt ) && !empty( $wgWikiaUseNoFollowForContent ) ) || ( !$title->isContentPage() ) ) ) {
 			$attribs['rel'] = 'nofollow';
 		}
 
