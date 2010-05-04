@@ -38,7 +38,7 @@ class SiteThumbnailJob extends Job {
 		$this->mDomain      = $wgContLang->lc( $this->title->getDBKey() );
 		$this->mTargetUrl   = sprintf( "http://%s/", $this->mDomain );
 		$this->mParams      = $params;
-		$this->mThumbnailer = dirname( __FILE__ ) . "/thumbnailer.sh";
+		$this->mThumbnailer = dirname( __FILE__ ) . "/thumbnail.sh";
 	}
 
 	/**
