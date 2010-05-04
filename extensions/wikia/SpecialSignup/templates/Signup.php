@@ -39,7 +39,7 @@ class SignupTemplate extends QuickTemplate {
 <script type="text/javascript">
     // Ajax Login functionality, added here
     var AjaxLogin2 = {};
-</script>        
+</script>
 <table id="userloginSpecial" width="100%">
 <tr>
 <td width="55%" style="border-right: 1px solid #AAA; vertical-align: top;">
@@ -53,7 +53,7 @@ if( $wgUser->isAllowed('createaccount') ) {
 			$wgOut->addHTML('<style type="text/css">
 				#userloginErrorBox {
 					display: block !important;
-				}				
+				}
 			</style>');
 		} ?>
 		<img alt="status" class="sprite error" src="<?php print $wgBlankImgUrl; ?>"/>
@@ -274,7 +274,7 @@ if( $wgUser->isAllowed('createaccount') ) {
 				<input onclick="UserRegistration.submitForm(); return false;" id="wpCreateaccountX" type="submit" value="<?= wfMsg("createaccount") ?>" />
 				<?php if( $this->data['createemail'] ) { ?>
 					<input id="wpCreateaccountX" value="<?= wfMsg("createaccountmail") ?>" onclick="$('#wpCreateaccountXSteer').value = false; $('#wpCreateaccountYSteer').value = true; UserRegistration.submitForm();" />
-					<input type="hidden" id="wpCreateaccountYSteer" name="wpCreateaccountMail" value="false" />							
+					<input type="hidden" id="wpCreateaccountYSteer" name="wpCreateaccountMail" value="false" />
 				<?php } else { ?>
 					<input type="hidden" id="wpCreateaccountXSteer" name="wpCreateaccount" value="true" />
 				<?php } ?>
@@ -312,7 +312,7 @@ if( $wgUser->isAllowed('createaccount') ) {
 
 		AjaxLogin2.displayReason = function (reason) {
 			$('#userloginInnerErrorBox2').css('display', '').html(reason);
-			$('#userloginErrorBox2').show();			
+			$('#userloginErrorBox2').show();
 		}
 
 		AjaxLogin2.blockLoginForm = function (block) {
@@ -568,10 +568,10 @@ if( $wgUser->isAllowed('createaccount') ) {
 			$wgOut->addHTML('<style type="text/css">
 				#userloginMessageBox {
 					display: block !important;
-				}				
+				}
 			</style>');
 			$this->html('message');
-		} ?>		
+		} ?>
 	</div>
 
 	<div id="userloginErrorBox2">
@@ -579,7 +579,7 @@ if( $wgUser->isAllowed('createaccount') ) {
 			$wgOut->addHTML('<style type="text/css">
 				#userloginErrorBox2 {
 					display: block !important;
-				}				
+				}
 			</style>');
 		} ?>
 		<img alt="status" class="sprite error" src="<?php print $wgBlankImgUrl; ?>"/>
@@ -619,7 +619,7 @@ if( $wgUser->isAllowed('createaccount') ) {
 	<?php if( @$this->haveData( 'token' ) ) { ?><input type="hidden" name="wpLoginToken" value="<?php $this->text( 'token' ); ?>" /><?php } ?>
 	<input onclick="AjaxLogin2.action='login';" id="wpLoginattempt" type="submit" value="<?= wfMsg("login") ?>" />
 	</form>
-	
+
 	<div id="loginIntro" class="accent rightSideElem">
 		<div class="announcementHeader dark_text_2">
 			<?php $this->msg( 'registerintro-title' ) ?>
@@ -630,8 +630,8 @@ if( $wgUser->isAllowed('createaccount') ) {
 			<?php $this->msg( 'registerintro-text' ) ?>
 			</td>
 			<td>
-			<?php global $wgExtensionsPath; ?>
-			<img src="<?=$wgExtensionsPath?>/wikia/SpecialSignup/images/signup_login_accent_graphic.png" alt="<?php $this->msg( 'registerintro-title' ) ?>"/>
+			<?php global $wgBlankImgUrl; ?>
+				<img src="<?=$wgBlankImgUrl?>" alt="<?php $this->msg( 'registerintro-title' ) ?>" width="145" height="148" id="userlogin-accent-image" />
 			</td>
 			</tr>
 			</table>
