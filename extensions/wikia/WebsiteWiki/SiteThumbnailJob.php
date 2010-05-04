@@ -53,6 +53,7 @@ class SiteThumbnailJob extends Job {
 		 * overwrite $wgTitle
 		 */
 		$wgTitle = $this->title;
+		$this->makeThumbnail();
 	}
 
 	/**
