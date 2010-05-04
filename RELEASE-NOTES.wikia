@@ -1,4 +1,5 @@
 == Changes since 201004.5 ==
+* rt#47585: Special:Signup accent image is not changeable (macbre)
 * rt#46246: Adding a category to a page removes it from your (Marooned)
 * rt#45432: Skin Chooser in Special:Wikistickies needs updating (macbre)
 * rt#46116: CategorySelect has doubling effect on answers wikis (Marooned)
