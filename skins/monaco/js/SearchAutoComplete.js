@@ -16,8 +16,12 @@ function sf_focus(e) {
 		$.getScript(stylepath+'/common/jquery/jquery.autocomplete.js', function() {
 			a=$('#search_field').autocomplete({
 				serviceUrl: wgServer+wgScript+'?action=ajax&rs=getLinkSuggest&format=json',
-				fnFormatResult: function(v) { return v; },
-				onSelect: function(v, d) { window.location.href = wgArticlePath.replace(/\$1/, encodeURIComponent(v.replace(/ /g, '_'))); },
+				fnFormatResult: function(v) {
+					return v;
+				},
+				onSelect: function(v, d) {
+					window.location.href = wgArticlePath.replace(/\$1/, v.replace(/ /g, '_'));
+				},
 				selectedClass: 'navigation-hover',
 				deferRequestBy: 1000,
 				appendTo: '#search_box'
@@ -30,5 +34,4 @@ function sf_focus(e) {
 	if($('#search_field').val() == $("#search_field").attr('alt')) {
 		$('#search_field').val('').addClass('field_active');
 	}
-
 }
