@@ -31,7 +31,7 @@ function renderKeypage( $input, $argv, $parser ) {
 	}
 
 	$keywords = array_unique( $keywords );
-	Wikia::log( __METHOD__, "info", print_r( $keywords, 1) );
+	Wikia::log( __METHOD__, "info", " Number of keywords: " . count( $keywords ) );
 
 	if( count( $keywords ) ) {
 		$output .= Xml::openElement( "span",  array( "class" => "small" ) );
