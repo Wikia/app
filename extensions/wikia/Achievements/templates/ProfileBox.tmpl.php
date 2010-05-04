@@ -16,7 +16,7 @@ if(count($badges) == 0) {
 				<div id="hover-<?= $i+1; ?>" class="profile-hover" style="display: none;">
 
           <div class="clearfix">
-	          <?= $wiki_logo ?>
+	          <img width="90" height="90" src="<?= $badges[$i]['badge_url'] ?>" alt="<?= htmlspecialchars($badges[$i]['badge_name']) ?>" />
 	          <div>
 		          <h3 class="badge-name"><?= $badges[$i]['badge_name'] ?></h3>
 		          <p><?= $badges[$i]['given_for'] ?></p>

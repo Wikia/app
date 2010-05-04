@@ -1,7 +1,7 @@
 #customize-sidebar {
   min-height: 300px;
   width: 300px;
-  padding: 0 5px;
+  padding: 0 10px;
   border-left: 1px solid #AAAAAA;
   float: right;
   margin-left: 5px;
@@ -36,7 +36,6 @@ ul.custom-badges li {
   height: 190px;
   padding-bottom: 10px;
   border-bottom: 1px solid #AAAAAA;
-  padding-right: 20px;
   margin-bottom: 15px;
 }
 
@@ -65,7 +64,6 @@ ul.custom-badges li input {
 ul.custom-badges li div.content-form {
   float: right;
   width: 230px;
-  margin-top: 70px;
   text-align: right;
 }
 
