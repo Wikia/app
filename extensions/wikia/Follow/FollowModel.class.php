@@ -18,14 +18,12 @@ class FollowModel {
 	 */
 	
 	static function getWatchList($user_id, $limit = 15, $namespace_head = null) {
-		global $wgServer, $wgScript, $wgContentNamespaces;
+		global $wgServer, $wgScript, $wgContentNamespaces, $wgEnableBlogArticles;
 		wfProfileIn( __METHOD__ );
 		$db = wfGetDB( DB_SLAVE );
 
 		$namespaces = array(
 			NS_CATEGORY => 'wikiafollowedpages-special-heading-category',	
-			NS_BLOG_ARTICLE => 'wikiafollowedpages-special-heading-blogs',
-			NS_BLOG_LISTING => 'wikiafollowedpages-special-heading-blogs',
 			NS_PROJECT => 'wikiafollowedpages-special-heading-project' ,
 			NS_TEMPLATE => 'wikiafollowedpages-special-heading-templates',
 			NS_USER => 'wikiafollowedpages-special-heading-user',
@@ -34,6 +32,12 @@ class FollowModel {
 			NS_FILE => 'wikiafollowedpages-special-heading-media',
 			NS_VIDEO => 'wikiafollowedpages-special-heading-media',
 		);
+		
+				
+		if ( !empty($wgEnableBlogArticles) ) {
+			$namespaces[NS_BLOG_ARTICLE] = 'wikiafollowedpages-special-heading-blogs';
+			$namespaces[NS_BLOG_LISTING] = 'wikiafollowedpages-special-heading-blogs';
+		} 
 
 		$order = array(
 			'wikiafollowedpages-special-heading-category',
@@ -140,11 +144,13 @@ class FollowModel {
 	 */
 		
 	static function getUserPageWatchList($user_id) {
-		global $wgMemc, $wgContentNamespaces;
+		global $wgMemc, $wgContentNamespaces, $wgEnableBlogArticles;
 		
-		$NS = array(
-			NS_BLOG_ARTICLE
-		);
+		$NS = array();
+				
+		if ( !empty($wgEnableBlogArticles) ) {			 
+			$NS[] = NS_BLOG_ARTICLE;
+		}
 		
 		$NS = array_merge($NS,$wgContentNamespaces);
 		
