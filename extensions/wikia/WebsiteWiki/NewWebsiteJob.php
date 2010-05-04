@@ -409,50 +409,13 @@ class NewWebsiteJob extends Job {
 	 * create thumbnail for web site
 	 */
 	private function makeThumbnail() {
-		global $wgEnableUploadInfoExt;
 
 		wfProfileIn( __METHOD__ );
 
-		$pdfPath   = NewWebsite::getThumbnailDirectory( $this->mDomain, 'pdf' ); ;
-		$imagePath = NewWebsite::getThumbnailDirectory( $this->mDomain, 'png' ); ;
+		$job = new SiteThumbnailJob( $this->title, array() );
+		$job->insert();
+		Wikia::log( __METHOD__, "info", sprintf( "SiteThumbnailJob for %s added", $this->title->getDBKey( ) ) );
 
-		// create a PDF
-		$cmd = sprintf( "%s --orientation Landscape --page-size A5 -B 0 -T 0 -L 0 -R 0 \"http://{$this->mDomain}\" {$pdfPath}", Wikia::binWkhtmltopdf() );
-		Wikia::log( __METHOD__, "cmd", $cmd );
-
-		wfShellExec( $cmd, $result );
-		if ( $result !== 0 ) {
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
-
-		// create a PNG from the PDF
-		$cmd = "gs -sDEVICE=png16m -dFirstPage=1 -dLastPage=1 -dNOPAUSE -dBATCH -dSAFER -sOutputFile={$imagePath} -r35 {$pdfPath}";
-		Wikia::log( __METHOD__, "cmd", $cmd );
-
-		wfShellExec( $cmd, $result );
-		if ( $result !== 0 ) {
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
-
-		// resize using ImageMagick
-		// hardcoded dimentions, taken from websitewiki.de
-		$cmd = "convert -thumbnail 250x188^ -crop 250x188+0+0 -antialias +repage {$imagePath} {$imagePath}";
-		Wikia::log( __METHOD__, "cmd", $cmd );
-
-		if( $wgEnableUploadInfoExt ) {
-			UploadInfo::log( $this->title, $imagePath, $imagePath );
-		}
-
-		wfShellExec( $cmd, $result );
-		if ( $result !== 0 ) {
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
-
-		// remove PDF
-		unlink( $pdfPath );
 
 		wfProfileOut( __METHOD__ );
 
