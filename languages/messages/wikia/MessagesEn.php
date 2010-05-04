@@ -707,6 +707,8 @@ hu',
 # MagCloud widget
 'magcloud-widget-title' => 'Magazine Creator',
 'magcloud-widget-desc' => 'Create a magazine from content on this wiki',
+'magcloudm-widget-title' => 'Check out these user-created Wikia magazines',
+'magcloudm-widget-desc' => 'Check out these user-created Wikia magazines',
 
 #Wikia Widgets tooltips
 'wt_help_startup'  => '|Not familiar with widgets?||Open user menu and click "Manage widgets"...',

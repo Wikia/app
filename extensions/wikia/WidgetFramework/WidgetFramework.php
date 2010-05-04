@@ -116,7 +116,7 @@ class WidgetFramework {
 					foreach ($this->config[1] as $widget) {
 						$config1[] = $widget;
 						if ("WidgetCommunity" == $widget["type"]) {
-							$config1[] = array('type' => 'WidgetMagCloud', 'id' => 143);
+							$config1[] = array('type' => 'WidgetMagCloudM', 'id' => 143);
 						}
 					}
 					$this->config[1] = $config1;
