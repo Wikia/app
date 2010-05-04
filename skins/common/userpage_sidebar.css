@@ -51,6 +51,7 @@
 #profile-sidebar #sub-badges button#view-all:hover,
 #profile-sidebar #sub-badges button#view-less:hover {
   text-shadow: none !important;
+  background: #F00;
 }
 
 #profile-sidebar #sub-badges p {
