@@ -931,7 +931,7 @@ class Masthead {
 				$editCounter = $wgLang->formatNum($editCount);
 				$out['edit_counter_date'] = $editCounter;
 
-				wfRunHooks('Masthead::editCounter', array(&$editCounter, User::newFromName($userspace)->getId()));
+				wfRunHooks('Masthead::editCounter', array(&$editCounter, User::newFromName($userspace)));
 				$out['edit_counter_main'] = $editCounter;
 				$out['edit_since'] = wfMsg('masthead-edits-since');
 				$out['edit_date'] = $firstDate ? $firstDate : $wgLang->date(wfTimestamp(TS_MW));
