@@ -64,8 +64,8 @@ class AutoCreateWikiPage extends SpecialPage {
 	/**
 	 * constructor
 	 */
-	public function  __construct() {
-		parent::__construct( "CreateWiki" /*class*/ );
+	public function  __construct( $name = 'CreateWiki' ) {
+		parent::__construct( $name /*class*/ );
 
 		/**
 		 * initialize some data
@@ -174,7 +174,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		 * other AWC version changes, so far answers only
 		 */
 		$this->fixSubdomains($this->mLang);
-		
+
 		$this->mUserLanguage = $wgUser->getOption( 'language', $wgContLanguageCode );
 		$this->mNbrCreated = $this->countCreatedWikis();
 
@@ -668,10 +668,10 @@ class AutoCreateWikiPage extends SpecialPage {
 		 * set variables per language
 		 */
 		$wiki_type = ( !empty($this->mType) ) ? $this->mType : self::DEFAULT_WIKI_TYPE;
-		$this->addCustomSettings( 
-			$this->mWikiData[ "language" ], 
-			isset($wgLangCreationVariables[$wiki_type]) ? $wgLangCreationVariables[$wiki_type] : $wgLangCreationVariables, 
-			"language" 
+		$this->addCustomSettings(
+			$this->mWikiData[ "language" ],
+			isset($wgLangCreationVariables[$wiki_type]) ? $wgLangCreationVariables[$wiki_type] : $wgLangCreationVariables,
+			"language"
 		);
 
 		/**
@@ -1730,14 +1730,14 @@ class AutoCreateWikiPage extends SpecialPage {
 
 		return $result;
 	}
-	
+
 	/**
 	 * set subdomain name
 	 *
 	 * @access private
 	 * @author moli
 	 *
-	 * @return 
+	 * @return
 	 */
 	private function fixSubdomains($lang) {
 		global $wgContLang;
@@ -1770,5 +1770,15 @@ class AutoCreateWikiPage extends SpecialPage {
 				$this->mSitenames = array();
 		}
 		wfProfileOut( __METHOD__ );
+	}
+}
+
+class AutoCreateAnswersPage extends AutoCreateWikiPage {
+
+	public function  __construct() {
+		global $wgRequest;
+		$wgRequest->setVal( 'type', 'answers' );
+
+		parent::__construct( 'CreateAnswers' );
 	}
 }
