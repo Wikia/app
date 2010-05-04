@@ -87,7 +87,6 @@ var Achievements = {
 						window.location = callbackLink;
 					}
 				});
-				showComboAjaxForPlaceHolder(false, false);
 				return false;
 			}
 		});
