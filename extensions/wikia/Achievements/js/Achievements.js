@@ -80,8 +80,16 @@ var Achievements = {
 
 		$('#about-achievements').find('a').click(function(e) {
 			self.track('leaderboard/yourprofile');
-			showComboAjaxForPlaceHolder(false, false);
-			return false;
+			if (wgUserName == null) {
+				var callbackLink = $(e.target).attr('href');
+				showComboAjaxForPlaceHolder(false, false, function(){
+					AjaxLogin.doSuccess = function() {
+						window.location = callbackLink;
+					}
+				});
+				showComboAjaxForPlaceHolder(false, false);
+				return false;
+			}
 		});
 
 		//avatars
