@@ -7,25 +7,26 @@ $wgExtensionMessagesFiles['wsinfo'] = dirname( __FILE__ ) . '/domainhook.i18n.ph
 
 define( 'WSINFO_PLACEHOLDER', '__wsinfo_here__' );
 
-function fnDomainHook(&$article, &$text)
-{
-  global $action;
-  global $exDomainList;
-  global $wgTitle;
-  global $wgParser;
+function fnDomainHook( &$article, &$text ) {
+	global $action;
+	global $exDomainList;
+	global $wgTitle;
+	global $wgParser;
 
-  if( !$wgTitle instanceof Title ||
-	  !$wgTitle->exists() ||
-      $wgTitle->getNamespace() != NS_MAIN ||
-      $wgTitle->isRedirect() ||
-      !preg_match( "/$exDomainList/", $wgTitle->getText() ) )
-    return true;
+	if( !$wgTitle instanceof Title ||
+		!$wgTitle->exists() ||
+		$wgTitle->getNamespace() != NS_MAIN ||
+		$wgTitle->isRedirect() ||
+		!preg_match( "/$exDomainList/", $wgTitle->getText() )
+	) {
+		return true;
+	}
 
-  if ( strpos( $text, WSINFO_PLACEHOLDER ) === false ) {
-	$text = WSINFO_PLACEHOLDER . "\n" . $text;
-  }
+	if ( strpos( $text, WSINFO_PLACEHOLDER ) === false ) {
+		$text = WSINFO_PLACEHOLDER . "\n" . $text;
+	}
 
-  return true;
+	return true;
 }
 
 $wswErotik = 0;
