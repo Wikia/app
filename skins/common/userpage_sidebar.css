@@ -1,10 +1,10 @@
 #profile-sidebar {
 	border-left: 1px solid #AAA;
-  	float: right;
-  	min-height: 300px;
+  float: right;
+  min-height: 300px;
 	padding-left: 10px;
 	position: relative;
-  	width: 300px;
+  width: 300px;
 }
 
 #profile-sidebar h2.first {
@@ -50,7 +50,7 @@
 
 #profile-sidebar #sub-badges button#view-all:hover,
 #profile-sidebar #sub-badges button#view-less:hover {
-  text-shadow: 0 0 0 0;
+  text-shadow: none !important;
 }
 
 #profile-sidebar #sub-badges p {
