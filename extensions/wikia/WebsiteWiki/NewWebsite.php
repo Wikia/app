@@ -10,14 +10,16 @@ $dir = dirname(__FILE__);
 /**
  * initialize parse hooks
  */
-$wgAutoloadClasses[ 'NewWebsiteJob'   ] = $dir . '/NewWebsiteJob.php';
-$wgAutoloadClasses[ 'NewWebsite'      ] = $dir . '/NewWebsite.body.php';
+$wgAutoloadClasses[ 'NewWebsiteJob'    ] = $dir . '/NewWebsiteJob.php';
+$wgAutoloadClasses[ 'NewWebsiteJob'    ] = $dir . '/NewWebsiteJob.php';
+$wgAutoloadClasses[ 'SiteThumbnailJob' ] = $dir . '/SiteThumbnailJob.php';
 
-$wgExtensionMessagesFiles[ 'Newsite'  ] = $dir . '/NewWebsite.i18n.php';
-$wgExtensionAliasesFiles[ 'Newsite'   ] = $dir . '/NewWebsite.alias.php';
+$wgExtensionMessagesFiles[ 'Newsite'   ] = $dir . '/NewWebsite.i18n.php';
+$wgExtensionAliasesFiles[ 'Newsite'    ] = $dir . '/NewWebsite.alias.php';
 
-$wgSpecialPages[ "NewWebsite"         ] = 'NewWebsite';
-$wgJobClasses[ "newsite"              ] = "NewWebsiteJob";
+$wgSpecialPages[ "NewWebsite"          ] = 'NewWebsite';
+$wgJobClasses[ "newsite"               ] = "NewWebsiteJob";
+$wgJobClasses[ "SiteThumb"             ] = "SiteThumbnailJob";
 
 include( $dir . "/domainhook.php" );
 include( $dir . "/Keywords/Keyword.php" );

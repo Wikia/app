@@ -76,7 +76,13 @@ class SiteThumbnailJob extends Job {
 			/**
 			 * log error
 			 */
+			Wikia::log( __METHOD__, "error", $out );
 		}
+
+		if( $wgEnableUploadInfoExt ) {
+			UploadInfo::log( $this->title, $imagePath, $imagePath );
+		}
+
 		wfProfileOut( __METHOD__ );
 
 		return true;
