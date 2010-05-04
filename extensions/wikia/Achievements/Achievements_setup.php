@@ -153,9 +153,14 @@ function Achievements_AddToUserProfile(&$out) {
  *
  * @author Marooned
  */
-function Achievements_MastheadEditCounter(&$editCounter, $userId) {
-	$editCounter = AchHelper::getScoreForUser($userId);
-	$editCounter = '<div id="masthead-achievements">' . wfMsg('achievements-masthead-points', $editCounter) . '</div>';
+function Achievements_MastheadEditCounter(&$editCounter, $user) {
+	if ($user instanceof User) {
+		$userId = $user->getId();
+		$editCounter = AchHelper::getScoreForUser($userId);
+		$editCounter = '<div id="masthead-achievements">' . wfMsg('achievements-masthead-points', $editCounter) . '</div>';
+	} else {
+		$editCounter = '';
+	}
 	return true;
 }
 
