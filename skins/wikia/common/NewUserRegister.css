@@ -38,7 +38,7 @@
 
 .announcementHeader {
 	font-size: 115%;
-	font-weight: bold;	
+	font-weight: bold;
 }
 
 .loginHeader {
@@ -49,7 +49,7 @@
 
 #userloginErrorBox, #userloginErrorBox2,
 #userloginMessageBox {
-	background-color: #FFFFCC;	
+	background-color: #FFFFCC;
 	border: 1px solid #AAA;
 	margin: 1em 3em 1em 0;
 	padding: 6px 6px 6px 6px;
@@ -166,6 +166,11 @@ div#userlogin .inputError {
 	display: none;
 	margin-left: 24px;
 	color: red;
+}
+
+/* Accent image on Special:Signup (RT #47585) */
+#userlogin-accent-image {
+	background-image: url(http://images.wikia.com/common/extensions/wikia/SpecialSignup/images/signup_login_accent_graphic.png);
 }
 
 /* @group Corporate skin */
