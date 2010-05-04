@@ -34,8 +34,8 @@ $messages['en'] = array(
 	'wikiafollowedpages-prefs-watchlist' => 'Special:Watchlist only',
  
 	'tog-hidefollowedpages' => 	'Make my followed pages lists private', 
-	'follow-categoryadd-summery' => "Page added to category", //TODO check this 
-	'follow-bloglisting-summery' => "Blog posted on blog page",
+	'follow-categoryadd-summary' => "Page added to category", //TODO check this 
+	'follow-bloglisting-summary' => "Blog posted on blog page",
 
 	'wikiafollowedpages-userpage-heading' => "Pages I'm Following",
 	'wikiafollowedpages-userpage-more'  =>  'More',

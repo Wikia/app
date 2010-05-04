@@ -34,7 +34,7 @@ class FollowHelper {
 			$queryIn[] = $value;
 		}
 
-		self::emailNotification($queryIn, NS_CATEGORY, $wgUser, $action, wfMsg('follow-categoryadd-summery'));
+		self::emailNotification($queryIn, NS_CATEGORY, $wgUser, $action, wfMsg('follow-categoryadd-summary'));
 		
 		wfProfileOut( __METHOD__ );
 		return true;
@@ -193,7 +193,7 @@ class FollowHelper {
 			while ($row = $dbw->fetchObject( $res ) ) {
 				$related[] = $row->blr_title;
 			}
-			self::emailNotification($related, NS_BLOG_LISTING, $user, "blogpost", wfMsg('follow-bloglisting-summery'));
+			self::emailNotification($related, NS_BLOG_LISTING, $user, "blogpost", wfMsg('follow-bloglisting-summary'));
 		}
 		wfProfileOut( __METHOD__ );
 		return true;
