@@ -127,6 +127,8 @@ function wsinfo( $parser, $thetext ) {
 
   $result = "";
 
+  $checksiteUrl = Title::makeTitle( NS_SPECIAL, "Checksite" )->getlLocalUrl( array( "param" => $dom ) );
+
   if($day && $wswErotik)
   {
     $result .= "\n<table border=\"1\" cellspacing=\"0\" cellpadding=\"4\" style=\"float:right; margin:0 0 .5em 1em;
@@ -135,7 +137,7 @@ function wsinfo( $parser, $thetext ) {
      <tr><td style=\"text-align:center; background:#c0c0c0;\"><b>" . wfMsgForContent( 'websiteinfo-summary-link', $title ) . "</b></td></tr>
      <tr><td style=\"text-align:center; background:#f0f0f0;\"><img src=\"$img\"
 	 width=\"250\" height=\"188\" alt=\"" . wfMsgForContent( 'websiteinfo-screenshot-alt', $domtext ) . "\" border=\"0\" /></td></tr>
-     <tr>$forsale<td style=\"text-align:center; background:#f0f0f0;\"><a href=\"/Special:Checksite/?param=$dom\" rel=\"nofollow\">" . wfMsgForContent( 'websiteinfo-verify' ) . "</a>
+     <tr>$forsale<td style=\"text-align:center; background:#f0f0f0;\"><a href=\"$checksiteUrl\" rel=\"nofollow\">" . wfMsgForContent( 'websiteinfo-verify' ) . "</a>
 	 </td></tr>
 	 \n";
   }
@@ -150,7 +152,7 @@ function wsinfo( $parser, $thetext ) {
 	 width=\"250\" height=\"188\" alt=\"" . wfMsgForContent( 'websiteinfo-screenshot-alt', $domtext ) . "\" border=\"0\" /></a></td></tr>
      <tr><td style=\"text-align:center; background:#f0f0f0;\"><a href=\"$domlink\"
          title=\"$domtext\" class=\"external text\" target=\"_new\">$domtext</a><br>
-	 $forsale<a href=\"/Special:Checksite/?param=$dom\" rel=\"nofollow\">" . wfMsgForContent( 'websiteinfo-verify' ) . "</a>
+	 $forsale<a href=\"$checksiteUrl\" rel=\"nofollow\">" . wfMsgForContent( 'websiteinfo-verify' ) . "</a>
 	 </td></tr>
 	 \n";
   }
