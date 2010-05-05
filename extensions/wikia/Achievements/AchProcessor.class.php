@@ -188,7 +188,7 @@ class AchProcessor {
 		$this->mUser = $user;
 
 		$dbr = wfGetDB(DB_SLAVE);
-		$badge = $dbr->selectField('achievements_badges', 'badge_type', array('user_id' => $this->mUser->getId(), 'badge_type' => $badge_type), __METHOD__);
+		$badge = $dbr->selectField('achievements_badges', 'badge_type', array('badge_type' => $badge_type, 'user_id' => $this->mUser->getId()), __METHOD__);
 
 		if ($badge === false) {
 			$this->loadAllUserBadges();
