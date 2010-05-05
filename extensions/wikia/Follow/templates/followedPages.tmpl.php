@@ -1,8 +1,10 @@
 <?php if( $is_hide ): ?>
-	<?php echo wfMsg('wikiafollowedpages-special-hidden'); ?>
-	<a id="unhide_list" href="<?php echo $show_link; ?>"><?php echo wfMsg("wikiafollowedpages-special-hidden-unhide"); ?></a>
+	<span class="hideInfoSpan" ><?php echo wfMsg('wikiafollowedpages-special-hidden'); ?></span>
+	<form action="<?php echo $show_link; ?>" method="post" >
+		<input type="hidden" value="1" name="show_followed" />
+		<input type="submit" value="<?php echo wfMsg("wikiafollowedpages-special-hidden-unhide"); ?>" />
+	</form>
 <?php endif; ?>
-
 <?php global  $wgServer,$wgScript;?>
 <?php foreach ($data as $key => $value): ?> 
 	<?php if(empty($more)): ?>	
