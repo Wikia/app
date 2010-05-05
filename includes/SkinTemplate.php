@@ -305,11 +305,10 @@ class SkinTemplate extends Skin {
 		$tpl->setRef( 'userjsprev', $this->userjsprev);
 		if( $wgUseSiteJs ) {
 			$jsCache = $this->loggedin ? '&smaxage=0' : '';
-			$skinName = ($this->getSkinName() == 'awesome') ? 'monaco' : $this->getSkinName(); // macbre: temp fix
 			$tpl->set( 'jsvarurl',
 				self::makeUrl('-',
 					"action=raw$jsCache&gen=js&useskin=" .
-						urlencode( $skinName ) ) );
+						urlencode( $this->getSkinName() ) ) );
 		} else {
 			$tpl->set('jsvarurl', false);
 		}
@@ -1039,8 +1038,7 @@ class SkinTemplate extends Skin {
 				# XXX: additional security check/prompt?
 				$this->userjsprev = '/*<![CDATA[*/ ' . $wgRequest->getText('wpTextbox1') . ' /*]]>*/';
 			} else {
-				$skinName = ($this->skinname == 'awesome') ? 'monaco' : $this->skinname; // macbre: temp fix
-				$this->userjs = self::makeUrl($this->userpage.'/'.$skinName.'.js', 'action=raw&ctype='.$wgJsMimeType);
+				$this->userjs = self::makeUrl($this->userpage.'/'.$this->skinname.'.js', 'action=raw&ctype='.$wgJsMimeType);
 			}
 		}
 		wfProfileOut( __METHOD__ );
