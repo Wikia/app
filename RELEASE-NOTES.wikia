@@ -1,4 +1,5 @@
 == Changes since 201005.1 ==
+* rt#48241: FastCat extension no longer displays on redirect pages (TOR)
 * rt#48181: fixed broken URL in AutoWikiCreate's welcome mail (TOR)
 * rt#46232: Search suggest is showing redirects (macbre)
 * rt#48213: fixed checksite link on Website wikis (TOR)
