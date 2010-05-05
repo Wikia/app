@@ -1168,14 +1168,19 @@ EOF;
 			}
 		}
 		if($tpl->data['userjs']) {
-			// macbre: check for empty User:foo/skin.js
-			$userJStitle = Title::newFromText($this->userpage.'/monaco.js');
+			wfProfileIn(__METHOD__ . '::userJS');
+
+			// macbre: check for empty User:foo/skin.js - don't use hardcoded skin name (RT #48040)
+			$userJStitle = Title::newFromText("{$this->userpage}/{$this->skinname}.js");
+
 			if ($userJStitle->exists()) {
 				$rev = Revision::newFromTitle($userJStitle, $userJStitle->getLatestRevID());
 				if (!empty($rev) && $rev->getText() != '') {
 					$js[] = array('url' => $tpl->data['userjs'], 'mime' => 'text/javascript');
 				}
 			}
+
+			wfProfileOut(__METHOD__ . '::userJS');
 		}
 		if($tpl->data['userjsprev']) {
 			$js[] = array('content' => $tpl->data['userjsprev'], 'mime' => 'text/javascript');
@@ -1656,7 +1661,7 @@ if( $custom_user_data ) {
 	echo $custom_user_data;
 } else {
 	global $wgUser, $wgStylePath;
-	
+
 	// Output the facebook connect links that were added with PersonalUrls.
 	// @author Sean Colombo
 	foreach($this->data['userlinks'] as $linkName => $linkData){
