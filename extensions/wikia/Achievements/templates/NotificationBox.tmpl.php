@@ -1,6 +1,6 @@
 <link href="<?= $css_url ?>" type="text/css" rel="stylesheet">
 
-<section id="wikia-alert" class="accent" style="display: none;">
+<div id="wikia-alert" class="accent" style="display: none;">
 	<img src="<?= $badge_url ?>" alt="<?= htmlspecialchars($badge_name) ?>" width="90" height="90" />
 	<div id="alert">
 		<h1><?= $title ?></h1>
@@ -12,7 +12,7 @@
 		<br />
 		<span id="shift"><?= $points ?></span>
 	</h3>
-</section>
+</div>
 
 <script>
 	wgAfterContentAndJS.push(
