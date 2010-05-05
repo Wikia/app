@@ -164,8 +164,16 @@ function copyAvatarsToMasthead() {
 	global $wgStylePath, $IP;
 	global $USER_FROM, $USER_TO, $USER_TEST;
 
+	$allUsers = array();
 	$answersWikis = loadAnswersToCheck();
 	$nycodeWikis = loadWikisToCheck();
+	
+	buildUserList($answersWikis, $allUsers);
+	buildUserList(array_keys($nycodeWikis), $allUsers);
+	
+	#echo print_r($allUsers, true);
+	#exit;
+	
 	#echo print_r($answersWikis, true);
 
 	$dbr = wfGetDB (DB_SLAVE, 'stats', $wgExternalSharedDB);
@@ -407,6 +415,28 @@ function uploadAvatar($oMasthead, $mUser, $nypath, $city_id) {
 	}
 	
 	return $result;
+}
+
+function buildUserList($answersWikis, &$allUsers) {
+	if ( !empty($answersWikis) ) {
+		foreach ( $answersWikis as $id => $city_id ) {
+			$uploadDirectory = getVarValueByName( "wgUploadDirectory", $city_id );
+			if ( !file_exists($uploadDirectory) ) {
+				continue;
+			}
+			$files = glob($uploadDirectory . "/avatars/*_*_l.*");
+			if ( empty($files) ) { 
+				continue;
+			}
+			foreach ($files as $file) {
+				if ( preg_match('/(.*)?\_(.*)?\_l\.(.*)/', $file, $m) ) {
+					if ( !empty($m) && isset($m[2]) ) {
+						$allUsers[] = $m[2];
+					}
+				}
+			}
+		}
+	}
 }
 
 if ( isset($options['ny']) && $options['ny'] == 1 ) {
