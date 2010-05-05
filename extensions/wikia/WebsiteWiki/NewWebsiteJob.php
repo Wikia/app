@@ -206,7 +206,7 @@ class NewWebsiteJob extends Job {
 			 * check if target page exists, if not add another task to make it
 			 * but first make placeholder!
 			 */
-			$redirTitle = Title::makeTitle( NS_MAIN, $this->mRedirectTaget );
+			$redirTitle = Title::makeTitle( NS_MAIN, $this->mRedirectUrl );
 			$article = new Article( $redirTitle, 0 );
 			if( ! $article->exists( ) ) {
 
