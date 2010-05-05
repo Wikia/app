@@ -77,6 +77,7 @@ class Interstitial extends UnlistedSpecialPage {
 		global $wgUser, $wgCityId;
 
 		$url = trim($wgRequest->getVal( 'u' ));
+		$noAutoRedirect = ( $wgRequest->getText( 'noredirect' ) == 1 ) ? true : false;
 		
 		if(($wgAdsInterstitialsEnabled) && (!$wgUser->isLoggedIn())){
 			global $wgExtensionsPath;
@@ -150,7 +151,7 @@ class Interstitial extends UnlistedSpecialPage {
 						'jsGlobals' => $jsGlobals,
 						'jsIncludes' => $jsIncludes,
 						'pageType' => 'interstitial',
-						'redirectDelay' => $redirectDelay,
+						'redirectDelay' => ( $noAutoRedirect ? 0 : $this->redirectDelay ),
 						'skip' => wfMsg('interstitial-skip-ad'),
 						'url' => $url,
 					)
