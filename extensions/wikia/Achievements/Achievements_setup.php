@@ -163,15 +163,3 @@ function Achievements_MastheadEditCounter(&$editCounter, $user) {
 	}
 	return true;
 }
-
-
-
-//
-$wgSpecialPages['PageStub1'] = 'SpecialPageStub1';
-$wgSpecialPages['PageStub2'] = 'SpecialPageStub2';
-$wgSpecialPages['PageStub3'] = 'SpecialPageStub3';
-$wgSpecialPages['PageStub4'] = 'SpecialPageStub4';
-// models autoloads
-$wgAutoloadClasses['SpecialPageStub1'] = $dir.'specials/SpecialPageStub1.class.php';
-$wgAutoloadClasses['SpecialPageStub2'] = $dir.'specials/SpecialPageStub2.class.php';
-$wgAutoloadClasses['SpecialPageStub3'] = $dir.'specials/SpecialPageStub3.class.php';
