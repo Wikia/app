@@ -451,18 +451,16 @@ class Skin extends Linker {
 		global $wgUseSiteJs;
 		if ($wgUseSiteJs) {
 			$jsCache = $wgUser->isLoggedIn() ? '&smaxage=0' : '';
-			$skinName = ($this->getSkinName() == 'awesome') ? 'monaco' : $this->getSkinName(); // macbre: temp fix
 			$r[] = "<script type=\"$wgJsMimeType\" src=\"".
 				htmlspecialchars(self::makeUrl('-',
 					"action=raw$jsCache&gen=js&useskin=" .
-					urlencode( $skinName ) ) ) .
+					urlencode( $this->getSkinName() ) ) ) .
 				"\"><!-- site js --></script>";
 		}
 		if( $allowUserJs && $wgUser->isLoggedIn() ) {
 			$userpage = $wgUser->getUserPage();
-			$skinName = ($this->getSkinName() == 'awesome') ? 'monaco' : $this->getSkinName(); // macbre: temp fix
 			$userjs = htmlspecialchars( self::makeUrl(
-				$userpage->getPrefixedText().'/'.$skinName.'.js',
+				$userpage->getPrefixedText().'/'.$this->getSkinName().'.js',
 				'action=raw&ctype='.$wgJsMimeType));
 			$r[] = '<script type="'.$wgJsMimeType.'" src="'.$userjs."\"></script>";
 		}
