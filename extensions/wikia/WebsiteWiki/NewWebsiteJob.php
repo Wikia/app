@@ -148,7 +148,6 @@ class NewWebsiteJob extends Job {
 					}
 				}
 			}
-			exit;
 
 			/**
 			 * only last headers section is interesting
