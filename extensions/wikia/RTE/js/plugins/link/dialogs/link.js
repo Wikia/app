@@ -25,7 +25,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 					data = {
 						type: 'external',
 						link: href,
-						text: element.getText(),
+						text: element.getText()
 					};
 				}
 			}
