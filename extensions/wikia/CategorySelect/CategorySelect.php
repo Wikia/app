@@ -271,7 +271,7 @@ function CategorySelectAjaxSaveCategories($articleId, $categories) {
 }
 
 /**
- * Replace content of edited article [with cutted out categories]
+ * Replace content of edited article [with cut out categories]
  *
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
