@@ -17,6 +17,14 @@ class MostvisitedpagesSpecialPage extends SpecialPage {
         
 		if (!empty($show)) {
             $this->setHeaders();
+			global $wgUser, $wgOut, $wgTitle;
+            $sk = $wgUser->getSkin();
+            if ( $article_id == 'latest' ) {
+            	$wgOut->setSubtitle( $sk->makeLinkObj( $wgTitle, wfMsg('mostvisitedpagesalllink') ) );
+			} else {
+				$title = Title::makeTitle( NS_SPECIAL, sprintf("%s/latest", $this->mName) );
+            	$wgOut->setSubtitle( $sk->makeLinkObj( $title, wfMsg('mostvisitedpageslatestlink') ) );
+			}
         } else {
             // return data as array - not like <LI> list
             $this->mpp->setListoutput(TRUE);
@@ -101,17 +109,29 @@ class MostvisitedpagesPage extends QueryPage {
 				$namespaces[] = NS_BLOG_ARTICLE;
 			}			
 		}
-		$where = " page_id = article_id and page_namespace in ('".implode("','", $namespaces)."') ";
+		
+		$where = array( 
+			" page_id = article_id ",
+			" page_namespace in (" . $dbr->makeList( $namespaces ) . ") "
+		);
+		
 		if ( !empty($this->mArticle) ) {
-			$where .= " and lower(page_title) like lower('%".htmlspecialchars($this->mArticle)."%') ";
+			$where[] = " lower(page_title) like lower('%".htmlspecialchars($this->mArticle)."%') ";
 		}
 		if ( !empty($this->mArticleId) && ( $this->mArticleId == 'latest' ) ) {
-			$where .= " and prev_diff > 0 ";
+			$where[] = " prev_diff > 0 ";
 		}
 		if ( !empty($this->mArticleId) && ( $this->mArticleId != 'latest' ) ) { 
-			$where .= " and page_id = '".$this->mArticleId."' ";
+			$where['page_id'] = intval($this->mArticleId);
 		}
-		$sql = "SELECT 'Mostpopularpages' as type, page_namespace as namespace, page_title as title, " . $this->order_column . " as value FROM $page, $page_visited where $where";
+		
+		$sql = $dbr->selectSQLText (
+			array( $page, $page_visited ),
+			array( "'Mostpopularpages' as type, page_namespace as namespace, page_title as title, " . $this->order_column . " as value" ),
+			$where,
+			__METHOD__	
+		);
+
 		return $sql;
 	}
 
