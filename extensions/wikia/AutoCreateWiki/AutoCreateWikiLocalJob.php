@@ -397,7 +397,7 @@ class AutoCreateWikiLocalJob extends Job {
 			$sServer,
 			$oReceiver->getName(),
 			$oStaffUser->getRealName(),
-			htmlspecialchars( $oStaffUser->getName() ),
+			htmlspecialchars( $oStaffUser->getTitleKey() ),
 			htmlspecialchars( $oReceiver->getTalkPage()->getFullURL() ),
 		);
 
