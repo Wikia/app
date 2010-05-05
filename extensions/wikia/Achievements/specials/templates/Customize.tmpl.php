@@ -46,7 +46,7 @@ foreach(AchStatic::$mInTrackConfig as $inTrack => $inTrackBadges) {
 				<form method="POST" enctype="multipart/form-data" class="customize-upload" action="<?= $wgScriptPath ?>/index.php?action=ajax&amp;rs=Ach&amp;method=uploadBadge&amp;file=<?= $inTrack ?>-<?= $i ?>">
 					<p class="input">
 						<input name="wpUploadFile" type="file"/>
-						<button><?= wfMsg('achievements-send') ?></button>
+						<button type="submit"><?= wfMsg('achievements-send') ?></button>
 					</p>
 				</form>
 			</div>
