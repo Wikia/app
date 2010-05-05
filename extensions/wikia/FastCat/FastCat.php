@@ -42,9 +42,9 @@ function efFastCatInit($out, $categories, $links) {
 
 	global $wgUser, $wgTitle, $wgHooks;
 
-	if ( $wgUser->isAnon() || $wgTitle->getNamespace() != NS_MAIN ) {
+	if ( $wgUser->isAnon() || $wgTitle->getNamespace() != NS_MAIN || $wgTitle->isRedirect() ) {
 		return true;
-	}
+	}	
 
 	wfLoadExtensionMessages( 'FastCat' );
 
