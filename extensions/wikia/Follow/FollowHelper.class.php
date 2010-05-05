@@ -238,6 +238,9 @@ class FollowHelper {
 	static public function showAll(){
 		global $wgRequest,$wgUser,$wgExternalSharedDB,$wgWikiaEnableConfirmEditExt;
 		wfProfileIn(__METHOD__);
+		
+		wfLoadExtensionMessages( 'Follow' );
+		
 		$user_id = $wgRequest->getVal( 'user_id' );
 		$head = $wgRequest->getVal( 'head' );
 
