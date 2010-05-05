@@ -181,7 +181,12 @@ function copyAvatarsToMasthead() {
 	if ( !empty($allUsers) ) {
 		foreach ( $allUsers as $user_id => $listAvatars ) {
 			if ( count($listAvatars) > 1 ) {
-				__log("$user_id: " . implode(", ", $listAvatars ) );
+				$oUser = User::newFromId($user_id);
+				if ( !$oUser instanceof User ) {
+					continue;
+				}
+
+				__log( $oUser->getName() . " ($user_id): " . implode(", ", $listAvatars ) );
 				$cnt++;
 			}
 		}
