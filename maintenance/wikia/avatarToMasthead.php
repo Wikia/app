@@ -181,7 +181,7 @@ function copyAvatarsToMasthead() {
 	if ( !empty($allUsers) ) {
 		foreach ( $allUsers as $user_id => $listAvatars ) {
 			if ( count($listAvatars) > 1 ) {
-				__log("$user_id: " . implode(", ", $listAvatars ) . " \n");
+				__log("$user_id: " . implode(", ", $listAvatars ) );
 				$cnt++;
 			}
 		}
@@ -416,18 +416,24 @@ function buildUserList($answersWikis, &$allUsers) {
 			if ( empty($files) ) { 
 				continue;
 			}
+			$tmp = array();
 			foreach ($files as $file) {
 				if ( preg_match('/(.*)?\_(.*)?\_l\.(.*)/', $file, $m) ) {
 					if ( !empty($m) && isset($m[2]) ) {
+						if ( !empty($tmp[$m[2]]) ) {
+							continue;
+						}
 						if ( empty($allUsers[$m[2]]) ) { 
 							$allUsers[$m[2]] = array();
 						}
 						if ( !in_array( $m[0], $allUsers[$m[2]] ) ) {
 							$allUsers[$m[2]][] = $m[0];
+							$tmp[$m[2]] = $m[0];
 						}
 					}
 				}
 			}
+			unset($tmp);
 		}
 	}
 }
