@@ -75,7 +75,7 @@ $messages['en'] = array(
 	//
 	'achievements-notification-title' => 'Way to go, $1!',
 	'achievements-notification-subtitle' => 'You just earned the "$1" badge $2',
-	'achievements-notification-link' => '[[User:$1|Go to your user profile to see your badges!]]',
+	'achievements-notification-link' => '[[Special:MyPage|Go to your user profile to see your badges!]]',
 	'achievements-points' => 'points',
 
 	//
