@@ -54,7 +54,8 @@ function renderKeypage( $input, $argv, &$parser ) {
 		$kwu{0} = strtoupper($kwu{0});
 
 
-		$output .= sprintf( "$komma<a href=\"%s\">%s</a>",
+		$output .= sprintf( "%s<a href=\"%s\">%s</a>",
+			$komma,
 			Title::makeTitle( NS_SPECIAL, sprintf( "Keyword/%s", $kw )  )->getLocalURL(),
 			$kwu
 		);
