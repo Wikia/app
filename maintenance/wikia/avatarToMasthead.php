@@ -181,13 +181,18 @@ function copyAvatarsToMasthead() {
 	if ( !empty($allUsers) ) {
 		foreach ( $allUsers as $user_id => $listAvatars ) {
 			if ( count($listAvatars) > 1 ) {
-				$oUser = User::newFromId($user_id);
-				if ( !$oUser instanceof User ) {
-					continue;
+				$avatar = Masthead::newFromUserID($user_id);
+				$path = $avatar->getFullPath();
+				$city_id = 0;
+				$pathny = $uploaded = false;
+				if ( !file_exists( $path ) ) {
+					$oUser = User::newFromId($user_id);
+					if ( !$oUser instanceof User ) {
+						continue;
+					}
+					__log( $oUser->getName() . " ($user_id): " . implode(", ", $listAvatars ) );
+					$cnt++;
 				}
-
-				__log( $oUser->getName() . " ($user_id): " . implode(", ", $listAvatars ) );
-				$cnt++;
 			}
 		}
 	}
