@@ -361,7 +361,8 @@ class AchProcessor {
 			$dbw->insert('achievements_badges', $this->mNewBadges, __METHOD__);
 
 			$_SESSION['achievementsNewBadges'] = true;
-
+			//touch user when badges are given
+			$this->mUser->invalidateCache();
 		}
 
 		wfProfileOut(__METHOD__);
