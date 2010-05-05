@@ -7,18 +7,18 @@ var Achievements = {
 	hoverIn: function(id) {
 		var pos = $('#'+id).position();
 		var numberID = id.split('badge-icon-')[1];
-		//alert('left: '+ pos.left + ' top: ' + pos.top + ' number id: ' + numberID);
 		$('#'+id).css({position: 'absolute', left: pos.left+'px', top: pos.top + 'px', zIndex: '100'});
-		$('#hover-'+numberID).css({left: pos.left - 240 + 'px', top: pos.top - 130 + 'px'}).show();
+		$('#hover-'+numberID).css({left: pos.left - 240 + 'px', top: pos.top - 130 + 'px', zIndex: '100'}).show();
+		$('#user_masthead').css({zIndex: '0'});
 		this.track('userprofile/hover');
 	},
 
 	hoverOut: function(id) {
 		var pos = $('#'+id).position();
 		var numberID = id.split('badge-icon-')[1];
-		//alert('left: '+ pos.left + ' top: ' + pos.top + ' number id: ' + numberID);
 		$('#hover-'+numberID).hide();
 		$('#'+id).css({position: 'inherit', zIndex: '1'});
+		$('#user_masthead').css({zIndex: '50'});
 	},
 
 	init: function() {
