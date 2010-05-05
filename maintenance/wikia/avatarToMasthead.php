@@ -87,8 +87,12 @@ function loadAnswersToCheck( $all = 0 ) {
 
 	$wikiArr = array();
 	while ($oRow = $dbr->fetchObject($oRes)) {
-		if ( !$wikiArr[$oRow->city_lang] ) {
-			$wikiArr[$oRow->city_lang] = $oRow->city_id;
+		if ( $all == 1 ) { 
+			$wikiArr[$oRow->city_id] = $oRow->city_id;
+		} else {
+			if ( !$wikiArr[$oRow->city_lang] ) {
+				$wikiArr[$oRow->city_lang] = $oRow->city_id;
+			}
 		}
 	}
 	$dbr->freeResult ($oRes) ;
@@ -174,10 +178,7 @@ function copyAvatarsToMasthead() {
 	buildUserList($allAnswersWikis, $allUsers);
 	buildUserList(array_keys($nycodeWikis), $allUsers);
 
-#	echo print_r($allUsers, true);
-#	exit;
-
-	$cnt = 1;
+/*	$cnt = 1;
 	if ( !empty($allUsers) ) {
 		foreach ( $allUsers as $user_id => $listAvatars ) {
 			if ( count($listAvatars) > 1 ) {
@@ -197,7 +198,7 @@ function copyAvatarsToMasthead() {
 		}
 	}
 	__log ("$cnt users to check \n");
-	exit;
+	exit;*/
 	
 	__log( "Found: " . count($allUsers) );
 	if ( !empty($allUsers) ) {
@@ -231,6 +232,14 @@ function copyAvatarsToMasthead() {
 						if ( $pathny !== false && $city_id > 0 ) {
 							__log("Move Wikia NY code Avatar $pathny to $path");
 							$uploaded = uploadAvatar($avatar, $oUser, $pathny, $city_id);
+						} else {
+							if ( !empty($allAnswersWikis) ) {
+								list($pathny, $city_id) = getNYWikisAvatar($allAnswersWikis, $user_id);
+								if ( $pathny !== false && $city_id > 0 ) {
+									__log("Move Wikia NY code Avatar $pathny to $path");
+									$uploaded = uploadAvatar($avatar, $oUser, $pathny, $city_id);
+								} 
+							}
 						}
 					}
 				}
