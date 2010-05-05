@@ -958,7 +958,7 @@ class OutputPage {
 		if ( $wgUseAjax ) {
 			// macbre: following files are part of merged JS for following skins - don't load them from here
 			$skinName = get_class($sk);
-			$skipWikiaSkins = array('SkinMonaco', 'SkinCorporate', 'SkinCorporateHome', 'SkinCorporateHubs');
+			$skipWikiaSkins = array('SkinMonaco', 'SkinAnswers', 'SkinCorporate', 'SkinCorporateHome', 'SkinCorporateHubs');
 
 			if (!in_array($skinName, $skipWikiaSkins)) {
 				$this->addScriptFile( 'ajax.js' );
