@@ -174,7 +174,7 @@ class AchUserProfile {
 			$data['customize_url'] = Skin::makeSpecialUrl("AchievementsCustomize");
 		}
 
-		$data['wiki_logo'] = wfFindFile('Wiki.png')->getThumbnail(90)->toHtml();
+		//$data['wiki_logo'] = wfFindFile('Wiki.png')->getThumbnail(90)->toHtml();
 
 		$template->set_vars($data);
 
