@@ -1,4 +1,4 @@
-DROP TABLE achievements_badges;
+DROP TABLE IF EXISTS achievements_badges;
 CREATE TABLE IF NOT EXISTS `achievements_badges` (
   `user_id` int(5) unsigned NOT NULL,
   `badge_type` tinyint(3) unsigned NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS `achievements_badges` (
   KEY `user_id_2` (`badge_type`,`badge_lap`,`user_id`)
 ) ENGINE=InnoDB;
 
-DROP TABLE achievements_counters;
+DROP TABLE IF EXISTS achievements_counters;
 CREATE TABLE IF NOT EXISTS `achievements_counters` (
   `user_id` int(5) unsigned NOT NULL,
   `data` text NOT NULL,
