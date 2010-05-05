@@ -30,14 +30,41 @@ $feedData = $feedProvider->get($parameters['maxElements']);
 
 		$data = array();
 		foreach ($feedData["results"] as $id => $row) {
-			if (is_array($row["new_categories"])) $row["new_categories"] = join(", ", $row["new_categories"]);
-			$data[] = $row;
+			$data[] = $this->rewriteRow($row);
 		}
 #print_r($data);
 #die;
 
 		$this->getResult()->setIndexedTagName($data, "af");
 		$this->getResult()->addValue("query", $this->getModuleName(), $data);
+	}
+
+	private function rewriteRow($row) {
+		foreach (array("url", "intro", "diff", "viewMode", "autosummaryType") as $key) {
+			if (isset($row[$key])) unset($row[$key]);
+		}
+
+		if (isset($row["user"])) {
+			if (preg_match("/<a href=\"\/wiki\/.*\" rel=\"nofollow\">(.*)<\/a>/", $row["user"], $matches)) {
+				$row["user"] = $matches[1];
+			}
+		}
+
+		if (isset($row["new_categories"])) {
+			if (is_array($row["new_categories"])) {
+				$row["new_categories"] = join(", ", $row["new_categories"]);
+			}
+
+			if (isset($row["comment"])) {
+				$row["comment"] = $row["comment"] . ": " . $row["new_categories"];
+			} else {
+				$row["comment"] = "Adding categories: " . $row["new_categories"];
+			}
+
+			unset($row["new_categories"]);
+		}
+
+		return $row;
 	}
 
 	public function getAllowedParams() {
