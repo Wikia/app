@@ -162,8 +162,9 @@ function getLinkSuggest() {
 	$dbs->freeResult( $res );
 
 	$results = array_unique($results);
+	$format = $wgRequest->getText('format');
 
-	if($wgRequest->getText('format') == 'json') {
+	if($format == 'json') {
 		$out = Wikia::json_encode(array('query' => $wgRequest->getText('query'), 'suggestions' => array_values($results)));
 	} else {
 		$out = implode("\n", $results);
@@ -171,6 +172,14 @@ function getLinkSuggest() {
 
 	$ar = new AjaxResponse($out);
 	$ar->setCacheDuration(60 * 60); // cache results for one hour
+
+	// set proper content type to ease development
+	if ($format == 'json') {
+		$ar->setContentType('application/json; charset=utf-8');
+	}
+	else {
+		$ar->setContentType('text/plain; charset=utf-8');
+	}
 
 	return $ar;
 }
