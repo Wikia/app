@@ -1333,7 +1333,7 @@ EOF;
 			$signUpHref = Skin::makeSpecialUrl( 'Signup', $returnto );
 			$data['login'] = array(
 				'text' => wfMsg('login'),
-				'href' => $signUpHref
+				'href' => $signUpHref . "&type=login"
 				);
 
 			$data['register'] = array(
@@ -1609,19 +1609,6 @@ wfProfileIn( __METHOD__ . '-body'); ?>
 	}
 ?>
 <?php
-	// add hidden login-box, so firefox can fill it using stored login/password
-	// then copy it to AjaxLogin box
-	// TODO: move to AjaxLogin extension and use GetHTMLAfterBody hook
-	if ($wgUser->isAnon()) {
-?>
-		<form action="" method="post" name="userajaxloginform" id="userajaxloginform" style="display: none">
-			<input type="text" name="wpName" id="wpName1Ajax" tabindex="101" size="20" />
-			<input type="password" name="wpPassword" id="wpPassword1Ajax" tabindex="102" size="20" />
-			<input type="checkbox" name="wpRemember" id="wpRemember1Ajax" tabindex="104" value="1" <?php if( $wgUser->getOption( 'rememberpassword' ) ) { ?>checked="checked"<?php } ?> />
-		</form>
-<?
-	}
-
 	// this hook allows adding extra HTML just after <body> opening tag
 	// append your content to $html variable instead of echoing
 	$html = '';
@@ -1708,7 +1695,7 @@ if( $custom_user_data ) {
 					<a rel="nofollow" class="ajaxLogin" id="login" href="<?= htmlspecialchars($this->data['userlinks']['login']['href']) ?>"><?= htmlspecialchars($this->data['userlinks']['login']['text']) ?></a>
 				</span>
 
-					<a rel="nofollow" class="wikia-button" id="register" href="<?= htmlspecialchars($this->data['userlinks']['register']['href']) ?>"><?= htmlspecialchars($this->data['userlinks']['register']['text']) ?></a>
+					<a rel="nofollow" class="wikia-button ajaxRegister" id="register" href="<?= htmlspecialchars($this->data['userlinks']['register']['href']) ?>"><?= htmlspecialchars($this->data['userlinks']['register']['text']) ?></a>
 
 <?php
 	}

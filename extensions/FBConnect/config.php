@@ -5,12 +5,20 @@
  *    2.  Follow the instructions below to make the extension work.
  */
 
-// TODO: If these backwards-compatibility tricks work, they should be committed back to trunk.
-global $wgVersion;
-if ( version_compare( $wgVersion, "1.16", '<' ) ){
-	$currDir = dirname( __FILE__ ) . '/';
-	include $currDir.'backwards-compat-v1.15/Html.php';
-}
+$currDir = dirname( __FILE__ ) . '/';
+include $currDir.'wikia/fbconnect_customizations.php';
+
+$wgExtensionMessagesFiles['FBConnect_wikia'] =	$currDir . 'wikia/FBConnect_wikia.i18n.php';
+$wgExtensionFunctions[] = 'wikia_fbconnect_init';
+
+// Set up this deployment to use our custom account-creation form instead of the one built into the extension.
+$wgHooks['SpecialConnect::chooseNameForm'][] = 'wikia_fbconnect_chooseNameForm'; // callbacks are in wikia/fbconnect_customizations.php
+$wgHooks['SpecialConnect::createUser::validateForm'][] = 'wikia_fbconnect_validateChooseNameForm';
+$wgHooks['SpecialConnect::createUser::postProcessForm'][] = 'wikia_fbconnect_postProcessForm';
+
+$wgHooks['FBConnectDB::addFacebookID'][] = 'wikia_fbconnect_addFacebookID';
+$wgHooks['AddNewAccount'][] = 'wikia_fbconnect_onAddNewAccount'; 
+$wgHooks['AuthPluginAutoCreate'][] = 'wikia_fbconnect_onAuthPluginAutoCreate';
 
 
 ### FBCONNECT CONFIGURATION VARIABLES ###
@@ -85,6 +93,8 @@ $fbUserRightsFromGroup = false;  # Or a group ID
  * hide_connect_button    Hides the "Log in with Facebook Connect" button.
  * hide_convert_button    Hides "Connect this account with Facebook" for non-
  *                        Connected users.
+ * hide_logout_of_fb      Hides the "logout of facebook" button and leaves only
+ *                        the button to log out of the current MediaWiki.
  * link_back_to_facebook  Shows a handy "Back to facebook.com" link for Connected
  *                        users. This helps enforce the idea that this wiki is
  *                        "in front" of Facebook.
@@ -96,11 +106,12 @@ $fbUserRightsFromGroup = false;  # Or a group ID
  * For more information, see <http://www.mediawiki.org/wiki/Manual:$wgShowIPinHeader>.
  */
 $fbPersonalUrls = array(
-	'hide_connect_button'   => false,
-	'hide_convert_button'   => false,
+	'hide_connect_button'   => true,
+	'hide_convert_button'   => true,
+	'hide_logout_of_fb'     => true,
 	'link_back_to_facebook' => false,
 	'remove_user_talk_link' => false,
-	'use_real_name_from_fb' => $fbUserName, # or true or false
+	'use_real_name_from_fb' => false, # or true or false
 );
 #$wgShowIPinHeader = false;
 
@@ -120,11 +131,96 @@ $fbLogo = 'http://static.ak.fbcdn.net/images/icons/favicon.gif';
  * For more info, see <http://github.com/facebook/connect-js>.
  */
 //$fbScript = 'http://static.ak.fbcdn.net/connect/en_US/core.js';
-global $wgScriptPath, $wgStyleVersion;
-$fbScript = "$wgScriptPath/extensions/wikia/FBConnect/fbsdk_core.js?$wgStyleVersion"; // insulate from changes by hosting locally.  Also, one less dns lookup.
+
+//global $wgScriptPath, $wgStyleVersion;
+//$fbScript = "$wgScriptPath/extensions/wikia/FBConnect/fbsdk_core.js?$wgStyleVersion"; // insulate from changes by hosting locally.  Also, one less dns lookup.
+$fbScript = ''; // NOTE: This is in StaticChute now, so don't use any URL here.
+
+/**
+ * Path to the extension's client-side JavaScript
+ */
+global $wgScriptPath;
+//$fbExtensionScript = "$wgScriptPath/extensions/FBConnect/fbconnect.js"; // only recommended if you are changing this extension.
+//$fbExtensionScript = "$wgScriptPath/extensions/FBConnect/fbconnect.min.js";
+$fbExtensionScript = ''; // this file is in StaticChute
 
 /**
  * Whether to include jQuery.  If you already have jQuery included on your site, you can
  * safely set this to false.
  */
 $fbIncludeJquery = false;
+
+/**
+ * Optionally override the default javascript handling which occurs when a user logs in.
+ *
+ * This will generally not be needed unless you are doing heavy customization of this extension.
+ *
+ * NOTE: This will be put inside of double-quotes, so any single-quotes should be used inside
+ * of any JS in this variable.
+ */
+$fbOnLoginJsOverride = "sendToConnectOnLogin();";
+
+/**
+ * Optionally turn off the inclusion of the PreferencesExtension.  Since this
+ * is an extension that you may already have installed in your instance of
+ * MediaWiki, there is the option to turn off FBConnect's inclusion of it (which
+ * will require you to already have PreferencesExtension enabled elsewhere).
+ *
+ * When running on MediaWiki v1.16 and above, the extension won't be included anyway.
+ */
+$fbIncludePreferencesExtension = true;
+
+/**
+ * An array of extended permissions to request from the user while they are
+ * signing up.
+ *
+ * NOTE: If fbEnablePushToFacebook is true, then publish_stream will automatically be
+ * added to this array.
+ *
+ * For more details see: http://wiki.developers.facebook.com/index.php/Extended_permissions
+ */
+$fbExtendedPermissions = array(
+	//'publish_stream',
+	//'read_stream',
+	//'email',
+	//'read_mailbox',
+	//'offline_access',
+	//'create_event',
+	//'rsvp_event',
+	//'sms',
+	//'xmpp_login',
+);
+
+/**
+ * PUSH EVENTS
+ *
+ * This section allows controlling of whether push events are enabled, and which
+ * of the push events to use.
+ */
+ global $wgEnableFacebookConnectPushing;
+$fbEnablePushToFacebook = (!empty($wgEnableFacebookConnectPushing));
+if(!empty($fbEnablePushToFacebook)){
+	$fbPushDir = dirname(__FILE__) . '/pushEvents/';
+	
+	// Convenience loop for push event classes in the fbPushDir directory
+	// whose file-name corresponds to the class-name.  To add a push event
+	// which does not meet these criteria, just explicitly add it below.
+	$pushEventClassNames = array(
+		'FBPush_OnAddBlogPost',
+		'FBPush_OnAddImage',
+		'FBPush_OnAddVideo',
+		'FBPush_OnArticleComment',
+		'FBPush_OnBlogComment',
+		'FBPush_OnLargeEdit',
+		'FBPush_OnRateArticle',
+		'FBPush_OnWatchArticle',
+	);
+	foreach($pushEventClassNames as $pClassName){
+		$fbPushEventClasses[] = $pClassName;
+		$wgAutoloadClasses[$pClassName] = $fbPushDir . "$pClassName.php";
+	}
+
+	// Example of explicitly adding a push event which doesn't meet the criteria above.
+	// $fbPushEventClasses[] = 'FBPush_OnEXAMPLE_CLASS';
+	// $wgAutoloadClasses['FBPush_OnEXAMPLE_CLASS'] = $fbPushDir . 'FBPush_OnEXAMPLE_version_1.php';
+}

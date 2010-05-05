@@ -48,17 +48,21 @@ class FBConnectXFBML {
 			
 			// To implement a custom XFBML tag handler, simply case it here like so
 			#case 'fb:login-button':
+			case 'fb:login-button-perms':
 			case 'fb:prompt-permission':
 				// Disable these tags by returning an empty string
 				break;
 			case 'fb:serverfbml':
+			case 'fb:server-fbml':
+				// TODO: Is this safe? Does it respect $fbAllowFacebookImages?
 				$attrs = self::implodeAttrs( $args );
 				return "<fb:serverfbml{$attrs}>$text</fb:serverfbml>";
 			case 'fb:profile-pic':
 			case 'fb:photo':
 			case 'fb:video':
-				if (!$fbAllowFacebookImages)
+				if (!$fbAllowFacebookImages) {
 					break;
+				}
 				// Careful - no "break;" if $fbAllowFacebookImages is true
 			default:
 				// Allow other tags by default
@@ -119,7 +123,7 @@ class FBConnectXFBML {
 	 * But for now... HELP! Where does Firefox pull in the XFBML tags in from??
 	 * 
 	 * After switching to the new JavaScript SDK, these will be the only tags
-	 * implemented for a while: <http://github.com/facebook/connect-js>.
+	 * implemented for a while: <http://github.com/facebook/connect-js/xfbml>.
 	 */
 	static function availableTags() {
 		if (!self::isEnabled()) {
@@ -127,46 +131,55 @@ class FBConnectXFBML {
 			return array( );
 		}
 		
-		// Older tags from the JavaScript API library in 2008
-		/*
-		// These are definitely valid tags
-		$validTags = array('fb:container',
-		                   'fb:eventLink',
-		                   'fb:groupLink',
-		                   'fb:login-button',
-		                   'fb:name',
-		                   'fb:photo',
-		                   'fb:profile-pic',
-		                   'fb:prompt-permission',
-		                   'fb:pronoun',
-		                   'fb:serverfbml',
-		                   'fb:unconnected-friends-count',
-		                   'fb:user-status');
-		// This tag is listed in the facebook dev wiki's documentation, but I couldn't
-		// find any mention of it in the JavaScript package connect.js.pkg.php
-		// Is it valid? What's going on in this JavaScript file?
-		$wikiTags =  array('fb:connect-form');
-		// I found these in the JavaScript package connect.js.pkg.php, but the wiki
-		// makes no mention of them. Are they valid? This article might have more info:
-		// http://wiki.developers.facebook.com/index.php/JS_API_N_FB.XFBML
-		$jsTags =    array('fb:add-section-button',
-		                   'fb:share-button',
-		                   'fb:userlink',
-		                   'fb:video');
-		// Oh well, include them anyway
-		$tags = array_merge( $validTags, $wikiTags, $jsTags );
-		/**/
-		
-		// XFBML tags in the alpha version of the Facebook Connect JavaScript SDK
+		// XFBML tags in the beta version of the Facebook Connect JavaScript SDK
+		// <http://wiki.github.com/facebook/connect-js/xfbml/5>
 		$tags = array('fb:comments',
-		              'fb:fan',
-		              'fb:live-stream',
 		              'fb:login-button',
-		              'fb:name',
+		              'fb:bookmark',
+		              'fb:recommendations',
+		              'fb:activity-border-color',
+		              'fb:add-profile-tab',
+		              'fb:login-button-with-faces',
+		              'fb:share-button',
+		              'fb:fan',
+		              'fb:activity',
+		              'fb:live-stream',
 		              'fb:profile-pic',
-		              'fb:serverfbml',
-		              'fb:share-button');
-		
+		              /*
+		               * Was <fb:serverFbml> renamed?
+		               * <http://wiki.developers.facebook.com/index.php/Fb:serverFbml>
+		               */
+		              'fb:server-fbml',
+		              #'fb:serverFbml',
+		              'fb:login-button-perms',
+		              'fb:like',
+		              'fb:name',
+		              /*
+		               * From the Facebook Developer's Wiki under the old JS library.
+		               * <http://wiki.developers.facebook.com/index.php/XFBML>
+		               */
+		              #'fb:connect-form',
+		              #'fb:container',
+		              #'fb:eventlink',
+		              #'fb:grouplink',
+		              #'fb:photo',
+		              #'fb:prompt-permission',
+		              #'fb:pronoun',
+		              #'fb:unconnected-friends-count',
+		              #'fb:user-status'
+		              /*
+		               * 2008 - I found these in the deprecated Facebook Connect
+		               * JavaScript library, connect.js.pkg.php, though no documentation
+		               * was available for them on the Facebook dev wiki. Will they be
+		               * implemented in the new JS SDK?
+		               */
+		              #'fb:add-section-button',
+		              #'fb:share-button',
+		              #'fb:userlink',
+		              #'fb:video',
+		);
+		              
+
 		// Reject discarded tags (that return an empty string) from Special:Version
 		$tempParser = new DummyParser();
 		foreach( $tags as $i => $tag ) {

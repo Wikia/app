@@ -344,7 +344,7 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 
 	if(typeof gallery == "undefined") {
 		if (typeof showComboAjaxForPlaceHolder == 'function') {
-			if (showComboAjaxForPlaceHolder("",false)) return false;
+			if (showComboAjaxForPlaceHolder("",false, "", false, true)) return false; // show the 'login required for this action' message.
 		}
 	}
 

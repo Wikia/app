@@ -5,17 +5,17 @@ class WikiaCentralAuthHooks {
 		$auth = new StubObject( 'wgAuth', 'WikiaCentralAuthPlugin' );
 		return true;
 	}
-	
+
 	/**
 	 * Make sure migration information in localuser table is populated
 	 * on local account creation
 	 */
 	static function onAddNewAccount( User $oUser, $addByEmail = false ) {
         if ( wfReadOnly() ) {
-			wfDebug( __METHOD__ . ": Cannot load from session - DB is running with the --read-only option " );
+			wfDebug( __METHOD__ . ": Cannot save user to local DB - DB is running with the --read-only option " );
             return true;
         }
-		
+
 		wfProfileIn( __METHOD__ );
 		if ( $addByEmail === false) {
 			$oCUser = WikiaCentralAuthUser::getInstance( $oUser );
@@ -99,7 +99,6 @@ class WikiaCentralAuthHooks {
 
 	static function onUserLoadFromSession( User $oUser, &$result ) {
 		global $wgCookiePrefix;
-
         if ( wfReadOnly() ) {
 			wfDebug( __METHOD__ . ": Cannot load from session - DB is running with the --read-only option " );
             return true;
@@ -252,7 +251,7 @@ class WikiaCentralAuthHooks {
 			wfDebug( __METHOD__ . ": DB is running with the --read-only option " );
             return false;
         }
-		
+
 		wfProfileIn( __METHOD__ );
 		// Denied by configuration?
 		if ( !$wgAuth->autoCreate() ) {
@@ -510,7 +509,7 @@ class WikiaCentralAuthHooks {
 			wfDebug( __METHOD__ . ": DB is running with the --read-only option " );
             return true;
         }
-		
+
 		if ( !$oUser instanceof User ) {
 			return true;
 		}

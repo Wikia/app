@@ -725,7 +725,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 
 	function setOptions($str) {
 		$this->loadState();
-		if ( $this->encodeOptions($this->mOptions) !== $str ) {
+		if ( (!$this->mOptions) || $this->encodeOptions($this->mOptions) !== $str ) {
 			$this->decodeOptions($str);
 			$this->mStateDirty = true;
 		}

@@ -33,6 +33,10 @@ class UserAjaxCreateTemplate extends QuickTemplate {
 		if (!array_key_exists('ajax', $this->data)) {
 			$this->data['ajax'] = "";
 		}
+		
+		// This didn't work right off the bat in the new signup forms, so the decision was made to just cut the functionality for now.
+		$this->data['createemail'] = false;
+		
 		if( $this->data['message'] && !$this->data['ajax'] ) {
 ?>
 	<div class="<?php $this->text('messagetype') ?>box">
@@ -219,7 +223,7 @@ class UserAjaxCreateTemplate extends QuickTemplate {
 					echo htmlspecialchars( $inputItem['value'] );
 				} else {
 					echo '1';
-				}					
+				}
 					?>" id="<?php echo htmlspecialchars( $inputItem['name'] ); ?>"
 					<?php 
 				if ( $inputItem['type'] == 'checkbox' && !empty( $inputItem['value'] ) )
@@ -244,11 +248,8 @@ class UserAjaxCreateTemplate extends QuickTemplate {
 	<input type="submit" value="Register" style="position: absolute; left: -10000px; width: 0" />
 <?php if( @$this->haveData( 'uselang' ) ) { ?><input type="hidden" name="uselang" value="<?php $this->text( 'uselang' ); ?>" /><?php } ?>
 
-<?php if($this->data['createemail']) { ?>
-	<a id="wpCreateaccountX" class="wikia-button" href="#" onclick="$('#wpCreateaccountXSteer').value = false; $('#wpCreateaccountYSteer').value = true; UserRegistration.submitForm();" ><?= wfMsg("createaccountmail") ?></a>		
-							
-<?php } else { ?>
-	<input type="hidden" id="wpCreateaccountXSteer" name="wpCreateaccount" value="true" >
+<?php if(!$this->data['createemail']) { ?>
+	<input type="hidden" id="wpCreateaccount" name="wpCreateaccount" value="true" />
 <?php } ?>
 
 
@@ -260,11 +261,12 @@ class UserAjaxCreateTemplate extends QuickTemplate {
 <div id="signupend" style="clear: both;height: 12px;"><?php $this->msgWiki( 'signupend' ); ?></div>
 
 <div class="modalToolbar neutral">
-	<input type="submit" id="wpCreateaccountXSteer" name="wpCreateaccountMail" onclick="UserRegistration.submitForm2(); return false;" value="<?= wfMsg("createaccount") ?>" />	
+
+	<input type="submit" id="wpCreateaccountXSteer" name="wpCreateaccountButton" onclick="UserRegistration.submitForm2(); return false;" value="<?php print wfMsg("createaccount") ?>" />	
 <?php if($this->data['createemail']) { ?>
-	<input type="submit" id="wpCreateaccountX" href="#" onclick="$('#wpCreateaccountXSteer').value = false; $('#wpCreateaccountYSteer').value = true; UserRegistration.submitForm2(); return false;" value="<?php wfMsg("createaccountmail") ?>" />									
-<?php }  ?>
-	<input type="submit" id="wpCreateaccountClose" class="secondary" onclick="AjaxLogin.close();" return false;" value="<?= wfMsg("Cancel") ?>" />
+	<input type="submit" id="wpCreateaccountX" href="#" onclick="$('#wpCreateaccountXSteer').value = false; $('#wpCreateaccountYSteer').value = true; UserRegistration.submitForm2(); return false;" value="<?php print wfMsg("createaccountmail") ?>" />
+<?php } ?>
+	<input type="submit" name="wpCreateaccountClose" id="wpCreateaccountClose" class="secondary" onclick="AjaxLogin.close(); return false;" value="<?php print wfMsg("Cancel") ?>" />
 </div>
 </form>
 <?php

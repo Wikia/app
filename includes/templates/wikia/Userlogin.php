@@ -559,9 +559,9 @@ class UsercreateTemplate extends QuickTemplate {
 		}
 
 		UserRegistration.update_day_field = function() {
-			var year = document.getElementById('wpBirthYear').value;
-			var month = document.getElementById('wpBirthMonth').value;
-			var day = document.getElementById('wpBirthDay');
+			var year = $('#wpBirthYear').attr('value');
+			var month = $('#wpBirthMonth').attr('value');
+			var day = $('#wpBirthDay').get(0);
 			var day_length = day.length;
 			var max_days = (year == -1 || month == -1) ? 31 : new Date(year, month, 0).getDate();
 			var day_diff = max_days - (day_length - 1);
@@ -636,52 +636,61 @@ class UsercreateTemplate extends QuickTemplate {
 			}
 		}
 		UserRegistration.checkPass = function() {
-			var pass = document.getElementById('wpPassword2').value;
-			var name = document.getElementById('wpName2').value;
-			if (pass == name) {
-				UserRegistration.toggleError('wpPasswordTD');
-				UserRegistration.errorPass = true;
-			} else {
-				var passLen = document.getElementById('wpPassword2').value.length;
-				if (passLen >= <?php global $wgMinimalPasswordLength; echo $wgMinimalPasswordLength; ?>) {
-					UserRegistration.toggleError('wpPasswordTD', 'ok');
-					UserRegistration.errorPass = false;
-				} else {
+			UserRegistration.errorPass = false;
+			if(document.getElementById('wpPassword2')){
+				var pass = $('#wpPassword2').attr('value');
+				var name = $('#wpName2').attr('value');
+				if (pass == name) {
 					UserRegistration.toggleError('wpPasswordTD');
 					UserRegistration.errorPass = true;
+				} else {
+					var passLen = $('#wpPassword2').attr('value').length;
+					if (passLen >= <?php global $wgMinimalPasswordLength; echo $wgMinimalPasswordLength; ?>) {
+						UserRegistration.toggleError('wpPasswordTD', 'ok');
+						UserRegistration.errorPass = false;
+					} else {
+						UserRegistration.toggleError('wpPasswordTD');
+						UserRegistration.errorPass = true;
+					}
 				}
 			}
 		}
 		UserRegistration.checkRetype = function() {
-			var pass = document.getElementById('wpPassword2').value;
-			var pass2= document.getElementById('wpRetype').value;
-			if (pass == pass2) {
-				if ('' == pass2) {
-					UserRegistration.toggleError('wpRetypeTD', 'clear');
-					UserRegistration.errorRetype = false;
-				} else {
-					UserRegistration.toggleError('wpRetypeTD', 'ok');
-					UserRegistration.errorRetype = false;
-				}
+			UserRegistration.errorRetype = false;
+			if(document.getElementById('wpRetype')){
+				var pass = $('#wpPassword2').attr('value');
+				var pass2= $('#wpRetype').attr('value');
+				if (pass == pass2) {
+					if ('' == pass2) {
+						UserRegistration.toggleError('wpRetypeTD', 'clear');
+						UserRegistration.errorRetype = false;
+					} else {
+						UserRegistration.toggleError('wpRetypeTD', 'ok');
+						UserRegistration.errorRetype = false;
+					}
 
-			} else {
-				UserRegistration.toggleError('wpRetypeTD');
-				UserRegistration.errorRetype = true;
+				} else {
+					UserRegistration.toggleError('wpRetypeTD');
+					UserRegistration.errorRetype = true;
+				}
 			}
 		}
 		UserRegistration.checkDate = function() {
-			UserRegistration.update_day_field();	//add/remove days according to the year & month
-			var year = document.getElementById('wpBirthYear').value;
-			var month = document.getElementById('wpBirthMonth').value;
-			var day = document.getElementById('wpBirthDay').value;
-			if (UserRegistration.dateAccessed == 1) {
-				UserRegistration.toggleError('wpBirthDateTD', 'clear');
-			} else if (UserRegistration.dateAccessed == 2 && year != -1 && month != -1 && day != -1) {
-				UserRegistration.toggleError('wpBirthDateTD', 'ok');
-				UserRegistration.errorDate = false;
-			} else if(UserRegistration.dateAccessed == 2) {
-				UserRegistration.toggleError('wpBirthDateTD', 'err');
-				UserRegistration.errorDate = true;
+			UserRegistration.errorDate = false;
+			if(document.getElementById('wpBirthYear')){ // some forms may not have a birthdate field (such as fbconnect)
+				UserRegistration.update_day_field();	//add/remove days according to the year & month
+				var year = $('#wpBirthYear').attr('value');
+				var month = $('#wpBirthMonth').attr('value');
+				var day = $('#wpBirthDay').attr('value');
+				if (UserRegistration.dateAccessed == 1) {
+					UserRegistration.toggleError('wpBirthDateTD', 'clear');
+				} else if (UserRegistration.dateAccessed == 2 && year != -1 && month != -1 && day != -1) {
+					UserRegistration.toggleError('wpBirthDateTD', 'ok');
+					UserRegistration.errorDate = false;
+				} else if(UserRegistration.dateAccessed == 2) {
+					UserRegistration.toggleError('wpBirthDateTD', 'err');
+					UserRegistration.errorDate = true;
+				}
 			}
 		}
 		UserRegistration.submitForm = function() {
@@ -700,7 +709,7 @@ class UsercreateTemplate extends QuickTemplate {
 		$('#wpName2').bind('blur', function(){
 			UserRegistration.toggleError('wpNameTD', 'progress');
 			UserRegistration.checkUsername();
-			UserRegistration.checkPass();
+			UserRegistration.checkPass(); // need to re-check since the pw can't be equal to the username
 		});
 
 		if (document.getElementById('wpEmail')) {

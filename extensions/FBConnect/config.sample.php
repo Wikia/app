@@ -80,6 +80,8 @@ $fbUserRightsFromGroup = false;  # Or a group ID
  * hide_connect_button    Hides the "Log in with Facebook Connect" button.
  * hide_convert_button    Hides "Connect this account with Facebook" for non-
  *                        Connected users.
+ * hide_logout_of_fb      Hides the "logout of facebook" button and leaves only
+ *                        the button to log out of the current MediaWiki.
  * link_back_to_facebook  Shows a handy "Back to facebook.com" link for Connected
  *                        users. This helps enforce the idea that this wiki is
  *                        "in front" of Facebook.
@@ -93,6 +95,7 @@ $fbUserRightsFromGroup = false;  # Or a group ID
 $fbPersonalUrls = array(
 	'hide_connect_button'   => false,
 	'hide_convert_button'   => false,
+	'hide_logout_of_fb'     => false,
 	'link_back_to_facebook' => true,
 	'remove_user_talk_link' => false,
 	'use_real_name_from_fb' => $fbUserName, # or true or false
@@ -117,7 +120,84 @@ $fbLogo = 'http://static.ak.fbcdn.net/images/icons/favicon.gif';
 $fbScript = 'http://static.ak.fbcdn.net/connect/en_US/core.js';
 
 /**
- * Whether to include jQuery.  If you already have jQuery included on your site, you can
- * safely set this to false.
+ * Path to the extension's client-side JavaScript
+ */
+global $wgScriptPath;
+//$fbExtensionScript = "$wgScriptPath/extensions/FBConnect/fbconnect.js"; // only recommended if you are changing this extension.
+$fbExtensionScript = "$wgScriptPath/extensions/FBConnect/fbconnect.min.js";
+
+/**
+ * Whether to include jQuery. This option is for backwards compatibility and is
+ * ignored in version 1.16. Otherwise, if you already have jQuery included on
+ * your site, you can safely set this to false.
  */
 $fbIncludeJquery = true;
+
+/**
+ * Optionally override the default javascript handling which occurs when a user logs in.
+ *
+ * This will generally not be needed unless you are doing heavy customization of this extension.
+ *
+ * NOTE: This will be put inside of double-quotes, so any single-quotes should be used inside
+ * of any JS in this variable.
+ */
+//$fbOnLoginJsOverride = "sendToConnectOnLogin();";
+
+/**
+ * Optionally turn off the inclusion of the PreferencesExtension.  Since this
+ * is an extension that you may already have installed in your instance of
+ * MediaWiki, there is the option to turn off FBConnect's inclusion of it (which
+ * will require you to already have PreferencesExtension enabled elsewhere).
+ *
+ * When running on MediaWiki v1.16 and above, the extension won't be included anyway.
+ */
+$fbIncludePreferencesExtension = true;
+
+/**
+ * An array of extended permissions to request from the user while they are
+ * signing up.
+ *
+ * NOTE: If fbEnablePushToFacebook is true, then publish_stream will automatically be
+ * added to this array.
+ *
+ * For more details see: http://wiki.developers.facebook.com/index.php/Extended_permissions
+ */
+$fbExtendedPermissions = array(
+	//'publish_stream',
+	//'read_stream',
+	//'email',
+	//'read_mailbox',
+	//'offline_access',
+	//'create_event',
+	//'rsvp_event',
+	//'sms',
+	//'xmpp_login',
+);
+
+/**
+ * PUSH EVENTS
+ *
+ * This section allows controlling of whether push events are enabled, and which
+ * of the push events to use.
+ */
+$fbEnablePushToFacebook = false;
+if(!empty($fbEnablePushToFacebook)){
+	$fbPushDir = dirname(__FILE__) . '/pushEvents/';
+	
+	// Convenience loop for push event classes in the fbPushDir directory
+	// whose file-name corresponds to the class-name.  To add a push event
+	// which does not meet these criteria, just explicitly add it below.
+	$pushEventClassNames = array(
+		'FBPush_OnAddImage',
+		'FBPush_OnLargeEdit',
+		'FBPush_OnWatchArticle',
+	);
+	foreach($pushEventClassNames as $pClassName){
+		$fbPushEventClasses[] = $pClassName;
+		$wgAutoloadClasses[$pClassName] = $fbPushDir . "$pClassName.php";
+	}
+
+	// Example of explicitly adding a push event which doesn't meet the criteria above.
+	// $fbPushEventClasses[] = 'FBPush_OnEXAMPLE_CLASS';
+	// $wgAutoloadClasses['FBPush_OnEXAMPLE_CLASS'] = $fbPushDir . 'FBPush_OnEXAMPLE_version_1.php';
+}

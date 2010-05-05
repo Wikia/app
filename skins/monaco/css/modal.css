@@ -165,12 +165,6 @@ h1.modalTitle img {
 }
 
 
-#AjaxLoginButtons
-{
-	height:20px;
-	text-align:center;
-}
-
 #userloginErrorBox,#userloginErrorBox2,#userloginErrorBox3 {
 	background-color: #FFFFCC;
 	border: 1px solid #AAA;

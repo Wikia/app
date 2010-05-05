@@ -19,6 +19,7 @@ $(function() {
 	$("#headerButtonHub").bind("click.headerMenu", openHubMenu);
 	$("#headerButtonUser").bind("click.headerMenu", openUserMenu);
 	$('.ajaxLogin').click(openLogin);
+	$('.ajaxRegister').click(openRegister);
 	$(document).ajaxSend(startAjax).ajaxComplete(stopAjax);
 	setupVoting();
 
@@ -153,6 +154,17 @@ function openLogin(event) {
 	}
 }
 
+// Open the same dialog as openLogin, but activate the registration tab
+// If ComboAjaxLogin is disabled, will return true so that the link to the registration page is followed.
+function openRegister(event) {
+	if( (typeof wgComboAjaxLogin == 'undefined') || (!wgComboAjaxLogin) ) {
+		return true;
+	} else {
+		showComboAjaxForPlaceHolder(false, "", "", true);
+		return false;
+	}
+}
+
 // Combo login WikiaImagePlaceholder
 // Returns true if/when the login dialog is showing.
 // Returns false if the user is logged in or ComboAjaxLogin is not enabled.
@@ -170,6 +182,14 @@ function showComboAjaxForPlaceHolder(element, isPlaceholder, callback, showRegis
 		// show ajax login dialog if already in DOM
 		if (isPlaceholder) AjaxLogin.setPlaceHolder(element);
 		WET.byStr('signupActions/signup/open');
+
+		// Show the tab that was configured to be shown first (defaults to login).
+		if((typeof showRegisterTabFirst != 'undefined') && showRegisterTabFirst){
+			AjaxLogin.showRegister($('#wpGoRegister'));
+		} else {
+			AjaxLogin.showLogin($('#wpGoLogin'));
+		}
+
 		return true;
 	}
 
@@ -191,10 +211,26 @@ function showComboAjaxForPlaceHolder(element, isPlaceholder, callback, showRegis
 				$.getScript(window.wgScript + '?action=ajax&rs=getRegisterJS&uselang=' + window.wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion, function() {
 						//$("#loadmask").remove();
 						if (isPlaceholder) AjaxLogin.setPlaceHolder(element);
-						AjaxLogin.init( $('#AjaxLoginLoginForm form') );
+						AjaxLogin.init( $('#AjaxLoginLoginForm form:first') );
 						AjaxLogin.show();
 						showComboAjaxForPlaceHolder.statusAjaxLogin = false;
-						if (typeof callback != 'undefined'){
+
+						// Show the tab that was configured to be shown first (defaults to login).
+						if((typeof showRegisterTabFirst != 'undefined') && showRegisterTabFirst){
+							AjaxLogin.showRegister($('#wpGoRegister'));
+						} else {
+							AjaxLogin.showLogin($('#wpGoLogin'));
+						}
+
+						if(typeof FB != 'undefined'){
+							window.fbAsyncInit(); // re-initialize FB JS SDK - will parse and activate the FBML login button.
+						}
+
+						if((typeof showLoginRequiredMessage != 'undefined') && (showLoginRequiredMessage)){
+							$('#comboajaxlogin-actionmsg').show();
+						}
+
+						if (typeof callback == 'function'){
 							callback();
 						}
 					});
