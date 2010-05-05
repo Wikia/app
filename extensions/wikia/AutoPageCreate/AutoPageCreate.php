@@ -53,7 +53,7 @@ function wfAutoPageCreateIsAnonUserpage( $title  ) {
 		if( !User::idFromName( $title ) ) {
 			return true;
 		}
-	}	
+	}
 	return false;
 }
 
@@ -66,51 +66,86 @@ function wfAutoPageCreateSetupVars( $vars ) {
 }
 
 function wfAutoPageCreateViewPage( $article, $out, &$text, &$return404 ) {
-	switch( $article->mTitle->getNamespace() ) {
+	wfProfileIn(__METHOD__);
+
+	$title = $article->mTitle;
+	$ns = $title->getNamespace();
+
+	switch( $ns ) {
 		case NS_MEDIAWIKI:
 			$return404 = true;
+
 		case NS_CATEGORY:
 		case NS_HELP:
 			$text = "<div class=\"noarticletext\">\n$text\n</div>";
 			break;
+
 		default:
 			wfLoadExtensionMessages( "AutoPageCreate" );
-			$text = $article->mTitle->isContentPage() ?
-					wfMsgForContent( "newpagelayout" ) :
-					"";
+
+			$text = $title->isContentPage() ? wfMsgForContent( "newpagelayout" ) : '';
 			$overlayMsgKey = "autopagecreate-newpage-notice-other";
-			if( $article->mTitle->isContentPage() ) {
+
+			if( $title->isContentPage() ) {
 				$overlayMsgKey = "autopagecreate-newpage-notice-content";
-			} elseif( $article->mTitle->isTalkPage() ) {
+			} elseif( $title->isTalkPage() ) {
 				$overlayMsgKey = "autopagecreate-newpage-notice-talk";
 				$out->setRobotPolicy( 'noindex,nofollow' );
 			} else {
-				switch( $article->mTitle->getNamespace() ) {
+				switch( $ns ) {
 					case NS_USER:
-						if( !wfAutoPageCreateIsAnonUserpage( $article->mTitle->getText() ) ) {
+						// RT #48042
+						if ( $title->isSubpage() ) {
+							$overlayMsgKey = false;
+						}
+						else if( !wfAutoPageCreateIsAnonUserpage( $title->getText() ) ) {
 							$text = wfMsgForContent( "welcome-user-page" );
 							$overlayMsgKey = "autopagecreate-newpage-notice-user";
-						} else {
+						}
+						else {
 							$overlayMsgKey = "autopagecreate-empty";
 						}
 						break;
-					case NS_PROJECT:	$overlayMsgKey = "autopagecreate-newpage-notice-project"; break;
-					case NS_TEMPLATE:	$overlayMsgKey = "autopagecreate-newpage-notice-template"; break;
-					case 110 /* NS_FORUM */:	$overlayMsgKey = "autopagecreate-newpage-notice-forum"; break;
-					case 502 /* NS_BLOG_LISTING */:	$overlayMsgKey = "autopagecreate-newpage-notice-blog"; break;
+
+					case NS_PROJECT:
+						$overlayMsgKey = "autopagecreate-newpage-notice-project";
+						break;
+
+					case NS_TEMPLATE:
+						$overlayMsgKey = "autopagecreate-newpage-notice-template";
+						break;
+
+					case 110 /* NS_FORUM */:
+						$overlayMsgKey = "autopagecreate-newpage-notice-forum";
+						break;
+
+					case 502 /* NS_BLOG_LISTING */:
+						$overlayMsgKey = "autopagecreate-newpage-notice-blog";
+						break;
 				}
+
 				$out->setRobotPolicy( 'noindex,nofollow' );
 			}
-			$overlayMsg4JS = Xml::escapeJsString( wfMsgExt( $overlayMsgKey, "parseinline" ) );
-			if( $overlayMsg4JS != "-" ) {
-				$js = <<<END
+
+			if (!empty($overlayMsgKey)) {
+				wfDebug(__METHOD__ . ": showing message '{$overlayMsgKey}'\n");
+
+				$overlayMsg4JS = Xml::escapeJsString( wfMsgExt( $overlayMsgKey, "parseinline" ) );
+				if( $overlayMsg4JS != "-" ) {
+					$js = <<<END
 wgAfterContentAndJS.push( function() { $( function() {
 	$("#wikia_page").prepend("<div id=\"NoArticleTextNotice\">{$overlayMsg4JS}<img id=\"NoArticleTextNoticeClose\" src=\""+wgBlankImgUrl+"\" class=\"sprite close\" /></div>");
 	$("#NoArticleTextNoticeClose").click( function() { $(this).parent().slideUp() } );
 } ) } );
 END;
-				$out->addInlineScript( $js );
+					$out->addInlineScript( $js );
+				}
+			}
+			else {
+				wfDebug(__METHOD__ . ": forced to not show the message\n");
 			}
 	}
+
+	wfProfileOut(__METHOD__);
 	return false;
 }
