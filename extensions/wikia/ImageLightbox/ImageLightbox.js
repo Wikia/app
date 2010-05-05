@@ -33,14 +33,16 @@ var ImageLightbox = {
 
 	// handle click on link
 	onClick: function(ev) {
-		// don't follow href
-		ev.preventDefault();
-
 		var target = $(ev.target);
 
 		// move to parent to an image - anchor
 		if (target.is('img')) {
 			target = target.parent();
+		}
+
+		// don't show thumbs for gallery images linking to a page
+		if (target.hasClass('link-internal')) {
+			return;
 		}
 
 		// get name of an image
@@ -80,6 +82,9 @@ var ImageLightbox = {
 			}
 
 			this.show(imageName, caption);
+
+			// don't follow href
+			ev.preventDefault();
 		}
 	},
 
