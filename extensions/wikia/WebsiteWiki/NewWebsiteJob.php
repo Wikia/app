@@ -204,10 +204,17 @@ class NewWebsiteJob extends Job {
 			$text = sprintf( "#redirect %s", $this->wikilink( $this->mRedirectUrl ) );
 			/**
 			 * check if target page exists, if not add another task to make it
+			 * but first make placeholder!
 			 */
 			$redirTitle = Title::makeTitle( NS_MAIN, $this->mRedirectTaget );
 			$article = new Article( $redirTitle, 0 );
 			if( ! $article->exists( ) ) {
+
+				/**
+				 * create page
+				 */
+				$article->doEdit( wfMsg( 'newsite-article-placeholder'), wfMsg( 'newsite-article-placeholder-log' ) );
+
 				$job = new NewWebsiteJob( $redirTitle, array() );
 				$job->insert();
 				Wikia::log( __METHOD__, "info", "job added" );
