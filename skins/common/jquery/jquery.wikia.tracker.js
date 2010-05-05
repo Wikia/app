@@ -175,8 +175,15 @@ jQuery.tracker.byId = function(e) {
 jQuery.tracker.track = function(fakeurl) {
 	fakeurlArray = fakeurl.split('/');
 
+
 	var username = wgUserName == null ? 'anon' : 'user';
 	var skinname = (skin == "answers" || skin == "SkinAnswers") ? "ansmco" : "monaco";
+
+	// override bad skin recognition (RT#47483)
+	if( window.wgOldAnswerSkin ) {
+		skinname = "answers";
+	}
+
 	var fake = '/1_' + skinname + '/' + username + '/' + fakeurl;
 
 	if(typeof urchinTracker != 'undefined') {
