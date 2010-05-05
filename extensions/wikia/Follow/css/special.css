@@ -32,4 +32,9 @@
 
 .otherNs {
   visibility: hidden;
-}	
+}
+
+.hideInfoSpan {
+	float:left;
+	margin-right:10px;
+}

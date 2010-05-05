@@ -17,9 +17,11 @@ class FollowedPages extends SpecialPage {
 	function execute( $par ) {
 		global $wgRequest, $wgOut, $wgUser,$wgTitle, $wgExtensionsPath, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
 		
-		if( ($wgUser->getId() != 0) && ($wgRequest->getVal( "show_followed", 0) == 1) ) {
-			$wgUser->setOption( "hidefollowedpages", false ); 
-			$wgUser->saveSettings();
+		if ($wgRequest->wasPosted()) {
+			if( ($wgUser->getId() != 0) && ($wgRequest->getVal( "show_followed", 0) == 1) ) {
+				$wgUser->setOption( "hidefollowedpages", false ); 
+				$wgUser->saveSettings();
+			}	
 		}
 							
 		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/Follow/css/special.css?{$wgStyleVersion}");
@@ -71,7 +73,7 @@ class FollowedPages extends SpecialPage {
 				"owner" => $wgUser->getId() == $user->getId(),
 				"user_id" =>  $user->getId(),
 				"is_hide" => $is_hide,
-				"show_link" => $wgTitle->getFullUrl( "show_followed=1" ),
+				"show_link" => $wgTitle->getFullUrl(),
 			)
 		);
 				
