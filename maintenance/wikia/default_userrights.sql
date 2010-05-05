@@ -51,7 +51,6 @@ insert into user_groups(ug_user, ug_group) values
 (/*Brandon Rhea*/20644,'helper'),
 (/*Cizagna*/35784,'helper'),
 (/*Cywil*/328677,'helper'),
-(/*Defchris*/1636,'helper'),
 (/*Game widow*/390665,'helper'),
 (/*JParanoid*/10970,'helper'),
 (/*Kmanwing*/1712363,'helper'),
