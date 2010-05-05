@@ -7,6 +7,12 @@
 ini_set( "include_path", dirname(__FILE__)."/../../../maintenance/" );
 require_once( "commandLine.inc" );
 
+#
+# Location: viewpage.php?page_id=7
+#
+$job = new NewWebsiteJob( Title::newFromText( "Irma.org.pl", NS_MAIN ), array( "test" => true ) );
+$job->run();
+
 $job = new NewWebsiteJob( Title::newFromText( "Irbapol.pl", NS_MAIN ), array( "test" => true ) );
 $job->run();
 
