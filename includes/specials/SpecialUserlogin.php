@@ -252,6 +252,7 @@ class LoginForm {
 		global $wgAuth, $wgMinimalPasswordLength;
 		global $wgEmailConfirmToEdit;
 
+		/* wikia change start */
 		//new registration - start [Marooned [at] wikia-inc.com]
 		//check if the date has been choosen
 		if ($this->wpBirthYear == -1 || $this->wpBirthMonth == -1 || $this->wpBirthDay == -1) {
@@ -274,10 +275,11 @@ class LoginForm {
 			return null;
 		}
 		//new registration - end
+		/* wikia change end */
 
 		// If the user passes an invalid domain, something is fishy
 		if( !$wgAuth->validDomain( $this->mDomain ) ) {
-			$this->mainLoginForm( wfMsg( 'wrongpassword' ) );
+			$this->mainLoginForm( wfMsg( 'wrongpassword' ) ); // TODO: Misleading message.
 			return false;
 		}
 

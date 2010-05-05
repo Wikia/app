@@ -6,20 +6,27 @@
 // This extension will allow logged-in users to chose their type of ads that will be displayed.
 //
 // Installation:
-// - Had to add "Ads" as the body of "http://lyricwiki.org/MediaWiki:Prefs-ads" to be the title of the new preferences tab.
+// - Add "Ads" as the body of "http://lyricwiki.org/MediaWiki:Prefs-ads" to be the title of the new preferences tab.
 // - Put the following into LocalSettings.php: "include_once 'extensions/PreferencesExtension.php';include_once 'extensions/LyricWiki/adPreferences.php';" (this extension requires the PreferencesExtension).
+//
+// NOTE: THIS EXTENSION IS NOT USED ANYMORE, BUT IF IT WERE TO BE USED AGAIN, THE wfAddPreferences CALL SHOULD BE INSIDE OF AN INIT FUNCTION
+// WHICH IS ADDED TO $wgExtensionFunctions[] SO THAT IT DOESN'T RUN ON EVERY SINGLE REQUEST.
 ////
 
-GLOBAL $DEFAULT_AD_TYPE;
-GLOBAL $ALLOWED_AD_TYPES;
-GLOBAL $AD_PREF_ID;
-$DEFAULT_AD_TYPE = ""; // the form will store nothing by default which will mean that the user should use whatever the current default is (ie: they have no preference).
-$ALLOWED_AD_TYPES = array(
-	"banners_no-rt" => "Banners, No Ringtone Links",
-	"rt_no-banners" => "Ringtone Links, No Banners",
-	"banners_and_rt" => "Banners and Ringtones"
-);
-$AD_PREF_ID = "ad_type";
+
+$wgExtensionFunctions[] = 'wfInitAdPreferences';
+
+function wfInitAdPreferences(){
+	GLOBAL $DEFAULT_AD_TYPE;
+	GLOBAL $ALLOWED_AD_TYPES;
+	GLOBAL $AD_PREF_ID;
+	$DEFAULT_AD_TYPE = ""; // the form will store nothing by default which will mean that the user should use whatever the current default is (ie: they have no preference).
+	$ALLOWED_AD_TYPES = array(
+		"banners_no-rt" => "Banners, No Ringtone Links",
+		"rt_no-banners" => "Ringtone Links, No Banners",
+		"banners_and_rt" => "Banners and Ringtones"
+	);
+	$AD_PREF_ID = "ad_type";
 
 	// Builds the HTML code to create the select-box (the "@VALUE@" will be replaced by PreferencesExtension to be the prior value).
 	$html = "<select name='$AD_PREF_ID' id='$AD_PREF_ID' title='@VALUE@'>
@@ -35,7 +42,7 @@ $AD_PREF_ID = "ad_type";
 		document.getElementById('$AD_PREF_ID').value = selBox.title;";
 	$html .= "</script>";
 
-	// Adss the user-preference (making use of the "PreferencesExtension" extension).
+	// Adds the user-preference (making use of the "PreferencesExtension" extension).
 	wfAddPreferences(array(
 		array(
 			"name" => $AD_PREF_ID,
@@ -51,6 +58,7 @@ $AD_PREF_ID = "ad_type";
 			"default" => ""
 		)
 	));
+}
 
 ////
 // This function will be called by ExtensionPreferences to verify that the input is valid.

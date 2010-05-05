@@ -45,36 +45,38 @@ class UserChangesHistory {
 		 * if user id is empty it means that user object is not loaded
 		 * store information only for registered users
 		 */
-		$id = $user->getId();
-		if ( $id ) {
+		if(!empty($user) && is_object($user)){
+			$id = $user->getId();
+			if ( $id ) {
 
-			if( $from == self::LOGIN_AUTO && $type == "session" ) {
-				# ignore
-			}
-			else {
-				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB ) ;
+				if( $from == self::LOGIN_AUTO && $type == "session" ) {
+					# ignore
+				}
+				else {
+					$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB ) ;
 
-				$status = $dbw->insert(
-					"user_login_history",
-					array(
-						"user_id"   => $id,
-						"city_id"   => $wgCityId,
-						"ulh_from"  => $from,
-						"ulh_rememberme" => $user->getOption('rememberpassword')
-					),
-					__METHOD__,
-					array('IGNORE')
-				);
-				
-				$status = $dbw->replace(
-					"user_login_history_summary",
-					array( 'user_id' ),
-					array( 'ulh_timestamp' => wfTimestampOrNull(), 'user_id' => $id ),
-					__METHOD__
-				);
-				
-				if ( $dbw->getFlag( DBO_TRX ) ) {
-					$dbw->commit();
+					$status = $dbw->insert(
+						"user_login_history",
+						array(
+							"user_id"   => $id,
+							"city_id"   => $wgCityId,
+							"ulh_from"  => $from,
+							"ulh_rememberme" => $user->getOption('rememberpassword')
+						),
+						__METHOD__,
+						array('IGNORE')
+					);
+					
+					$status = $dbw->replace(
+						"user_login_history_summary",
+						array( 'user_id' ),
+						array( 'ulh_timestamp' => wfTimestampOrNull(), 'user_id' => $id ),
+						__METHOD__
+					);
+					
+					if ( $dbw->getFlag( DBO_TRX ) ) {
+						$dbw->commit();
+					}
 				}
 			}
 		}

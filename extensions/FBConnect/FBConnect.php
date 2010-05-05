@@ -45,7 +45,7 @@ if ( !defined( 'MEDIAWIKI' )) {
 /*
  * FBConnect version. Note: this is not necessarily the most recent SVN revision number.
  */
-define( 'MEDIAWIKI_FBCONNECT_VERSION', 'r141, April 3, 2010' );
+define( 'MEDIAWIKI_FBCONNECT_VERSION', 'r152, April 14, 2010' );
 
 /*
  * Add information about this extension to Special:Version.
@@ -64,6 +64,22 @@ $wgExtensionCredits['specialpage'][] = array(
 $dir = dirname(__FILE__) . '/';
 require_once $dir . 'config.php';
 require_once $dir . 'facebook-client/facebook.php';
+if(!empty($fbIncludePreferencesExtension)){
+	// TODO: This inclusion isn't needed at the moment unless fbEnablePushToFacebook is also true.
+	// If we never need non-push preferences, just add an additional conditional.
+	// TODO: This extension is obsolete in v1.16... do a version-compare and skip this extension
+	// for >= 1.16 and use this hook instead: http://www.mediawiki.org/wiki/Manual:Hooks/GetPreferences
+	require_once $dir . 'PreferencesExtension.php';
+}
+
+$wgExtensionFunctions[] = 'FBConnect::init';
+
+if(!empty($fbEnablePushToFacebook)){
+	// Need to include it explicitly instead of autoload since it has initialization code of its own.
+	// This should be done after FBConnect::init is added to wgExtensionFunctions so that FBConnect
+	// gets fully initialized first.
+	require_once $dir . 'FBConnectPushEvent.php';
+}
 
 $wgExtensionMessagesFiles['FBConnect'] =	$dir . 'FBConnect.i18n.php';
 $wgExtensionAliasesFiles['FBConnect'] =		$dir . 'FBConnect.alias.php';
@@ -76,8 +92,6 @@ $wgAutoloadClasses['FBConnectXFBML'] =		$dir . 'FBConnectXFBML.php';
 $wgAutoloadClasses['SpecialConnect'] =		$dir . 'SpecialConnect.php';
 
 $wgSpecialPages['Connect'] = 'SpecialConnect';
-
-$wgExtensionFunctions[] = 'FBConnect::init';
 
 // Define new autopromote condition (use quoted text, numbers can cause collisions)
 define( 'APCOND_FB_INGROUP',   'fb*g' );
@@ -115,21 +129,34 @@ $wgAutopromote['autoconfirmed'] = array( '&', array( APCOND_EDITCOUNT, &$wgAutoC
  * non-authentification code.
  */
 class FBConnect {
+	static private $fbOnLoginJs;
+
 	/**
 	 * Initializes and configures the extension.
 	 */
 	public static function init() {
-		global $wgXhtmlNamespaces, $wgAuth, $wgHooks;
+		global $wgXhtmlNamespaces, $wgAuth, $wgHooks, $wgSharedTables;
 		
 		// The xmlns:fb attribute is required for proper rendering on IE
 		$wgXhtmlNamespaces['fb'] = 'http://www.facebook.com/2008/fbml';
+		
+		// Facebook/username associations should be shared when $wgSharedDB is enabled
+		$wgSharedTables[] = 'user_fbconnect';
 		
 		// Install all public static functions in class FBConnectHooks as MediaWiki hooks
 		$hooks = self::enumMethods('FBConnectHooks');
 		foreach( $hooks as $hookName ) {
 			$wgHooks[$hookName][] = "FBConnectHooks::$hookName";
 		}
-		
+
+		// Allow configurable over-riding of the onLogin handler.
+		global $fbOnLoginJsOverride;
+		if(!empty($fbOnLoginJsOverride)){
+			self::$fbOnLoginJs = $fbOnLoginJsOverride;
+		} else {
+			self::$fbOnLoginJs = "window.location.reload(true);";
+		}
+
 		// ParserFirstCallInit was introduced in modern (1.12+) MW versions so as to
 		// avoid unstubbing $wgParser on setHook() too early, as per r35980
 		if (!defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' )) {
@@ -137,7 +164,7 @@ class FBConnect {
 			wfRunHooks( 'ParserFirstCallInit', $wgParser );
 		}
 	}
-	
+
 	/**
 	 * Returns an array with the names of all public static functions
 	 * in the specified class.
@@ -161,4 +188,30 @@ class FBConnect {
 		}
 		return $hooks;
 	}
+	
+	/**
+	 * Return the code for the permissions attribute (with leading space) to use on all fb:login-buttons.
+	 */
+	public static function getPermissionsAttribute(){
+		global $fbExtendedPermissions;
+		$attr = "";
+		if(!empty($fbExtendedPermissions)){
+			$attr = " perms=\"".implode(",", $fbExtendedPermissions)."\"";
+		}
+		return $attr;
+	} // end getPermissionsAttribute()
+	
+	/**
+	 * Return the code for the onlogin attribute which should be appended to all fb:login-button's in this
+	 * extension.
+	 *
+	 * TODO: Generate the entire fb:login-button in a function in this class.  We have numerous buttons now.
+	 */
+	public static function getOnLoginAttribute(){
+		$attr = "";
+		if(!empty(self::$fbOnLoginJs)){
+			$attr = " onlogin=\"".self::$fbOnLoginJs."\"";
+		}
+		return $attr;
+	} // end getOnLoginAttribute()
 }

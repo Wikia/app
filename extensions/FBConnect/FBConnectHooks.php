@@ -89,59 +89,67 @@ class FBConnectHooks {
 	 * Injects some important CSS and Javascript into the <head> of the page.
 	 */
 	public static function BeforePageDisplay( &$out, &$sk ) {
-		global $fbLogo, $wgScriptPath, $wgJsMimeType, $fbScript, $wgStyleVersion;
-
+		global $wgVersion, $fbLogo, $fbScript, $fbExtensionScript, $fbIncludeJquery,
+		       $wgScriptPath, $wgJsMimeType, $wgStyleVersion;
+		
 		// Asynchronously load the Facebook Connect JavaScript SDK before the page's content
-		$out->prependHTML('
-			<div id="fb-root"></div>
-			<script>
-				(function(){var e=document.createElement("script");e.type="' .
-				$wgJsMimeType . '";e.src="' . $fbScript .
-				'";e.async=true;document.getElementById("fb-root").appendChild(e)})();
-			</script>' . "\n"
-		);
+		if(!empty($fbScript)){
+			$out->prependHTML('
+				<div id="fb-root"></div>
+				<script>
+					(function(){var e=document.createElement("script");e.type="' .
+					$wgJsMimeType . '";e.src="' . $fbScript .
+					'";e.async=true;document.getElementById("fb-root").appendChild(e)})();
+				</script>' . "\n"
+			);
+		}
 		
 		// Inserts list of global JavaScript variables if necessary
 		if (self::MGVS_hack( $mgvs_script )) {
 			$out->addInlineScript( $mgvs_script );
 		}
 		
-		// Include the extension's stylesheet
-		$out->addExtensionStyle("$wgScriptPath/extensions/FBConnect/fbconnect.css?$wgStyleVersion");
-		
-		// Add a pretty Facebook logo in front of userpage links if $fbLogo is set
-		if ($fbLogo) {
-			global $wgVersion;
-			$style = <<<STYLE
-			/* Add a pretty logo to Facebook links */
-			.mw-fblink {
-				background: url($fbLogo) top left no-repeat !important;
-				padding-left: 17px !important;
-			}
+		// Add a Facebook logo to the class .mw-fblink
+		$style = empty($fbLogo) ? '' : <<<STYLE
+		/* Add a pretty logo to Facebook links */
+		.mw-fblink {
+			background: url($fbLogo) top left no-repeat !important;
+			padding-left: 17px !important;
+		}
 STYLE;
-			// OutputPage::addInlineStyle() was added in r53282
-			if (version_compare($wgVersion, '1.16', '>=')) {
+
+		// Things get a little simpler in 1.16...
+		if (version_compare($wgVersion, '1.16', '>=')) {
+			// Add a pretty Facebook logo if $fbLogo is set
+			if ($fbLogo) {
 				$out->addInlineStyle($style);
-			} else {
+			}
+			
+			// Don't include jQuery if it's already in use on the site
+			#$out->includeJQuery();
+			// Temporary workaround until until MW is bundled with jQuery 1.4.2:
+			$out->addScriptFile('http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js');
+			
+			// Add the script file specified by $url
+			if(!empty($fbExtensionScript)){
+				$out->addScriptFile($fbExtensionScript);
+			}
+		} else {
+			// Add a pretty Facebook logo if $fbLogo is set
+			if ($fbLogo) {
 				$out->addScript('<style type="text/css">' . $style . '</style>');
 			}
+			
+			// Don't include jQuery if it's already in use on the site
+			if (!empty($fbIncludeJquery)){
+				$out->addScriptFile("http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js");
+			}
+			
+			// Add the script file specified by $url
+			if(!empty($fbExtensionScript)){
+				$out->addScript("<script type=\"$wgJsMimeType\" src=\"$fbExtensionScript?$wgStyleVersion\"></script>\n");
+			}
 		}
-
-		// JQuery 1.4.2
-		// TODO: Does this conflict with jQuery 1.3.2 included with MW for page editing?
-		if(!empty($fbIncludeJquery)){
-			$out->addScriptFile("http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js");
-		}
-		
-		// FBConnect JavaScript code
-		if (version_compare($wgVersion, '1.16', '>=')) {
-			$out->addScriptFile("$wgScriptPath/extensions/FBConnect/fbconnect.min.js?$wgStyleVersion");
-		} else {
-// TODO: TEMPORARY DEV HACK... DON'T COMMIT TO EXTENSION'S SVN
-//$out->addScript("<script type='text/javascript' src='$wgScriptPath/extensions/FBConnect/fbconnect.js?$wgStyleVersion'></script>\n");
-			$out->addScript("<script type='text/javascript' src='$wgScriptPath/extensions/FBConnect/fbconnect.min.js?$wgStyleVersion'></script>\n");
-		}
-
 		return true;
 	}
 	
@@ -264,11 +272,14 @@ STYLE;
 				}
 			}
 			// Replace logout link with a button to disconnect from Facebook Connect
-			unset( $personal_urls['logout'] );
-			$personal_urls['fblogout'] = array(
-				'text'   => wfMsg( 'fbconnect-logout' ),
-				'href'   => '#',
-				'active' => false );
+			if(empty($fbPersonalUrls['hide_logout_of_fb'])){
+				unset( $personal_urls['logout'] );
+				$personal_urls['fblogout'] = array(
+					'text'   => wfMsg( 'fbconnect-logout' ),
+					'href'   => '#',
+					'active' => false );
+			}
+
 			/*
 			 * Personal URLs option: link_back_to_facebook
 			 */
@@ -329,23 +340,25 @@ STYLE;
 	public static function RenderPreferencesForm( $form, $output ) {
 		global $wgUser;
 		
-		// If the user name is a valid Facebook ID, link to the Facebook profile
-		if( FBConnect::$api->isConnected() ) {
+		// If the user has a valid Facebook ID, link to the Facebook profile
+		$fb = new FBConnectAPI();
+		$fb_user = $fb->user();
+		if( $fb_user ) {
 			$html = $output->getHTML();
 			$name = $wgUser->getName();
 			$i = strpos( $html, $name );
 			if ($i !== FALSE) {
 				// Replace the old output with the new output
 				$html =  substr( $html, 0, $i ) . preg_replace( "/$name/",
-				    "<a href=\"http://www.facebook.com/profile.php?id=$name\" " .
-					"class='mw-userlink mw-fbconnectuser'>$name</a>", substr( $html, $i ), 1 );
+					"$name (<a href=\"http://www.facebook.com/profile.php?id=$fb_user\" " .
+					"class='mw-userlink mw-fbconnectuser'>".wfMsg('fbconnect-link-to-profile')."</a>", substr( $html, $i ), 1 );
 				$output->clearHTML();
 				$output->addHTML( $html );
 			}
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Adds the class "mw-userlink" to links belonging to Connect accounts on
 	 * the page Special:ListUsers.

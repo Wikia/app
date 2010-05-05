@@ -24,17 +24,47 @@ function getSuggestedArticleURL( $text )
  * @Return String
  */
 function cxValidateUserName () {
-	global $IP, $wgDBname, $wgExternalSharedDB, $wgRequest, $wgWikiaMaxNameChars;
+	global $wgRequest;
 	wfProfileIn(__METHOD__);
 
+	$uName = $wgRequest->getVal('uName');
+	
+	$result = wfValidateUserName($uName);
+
+	$data = array('result' => $result);
+
+	$json = Wikia::json_encode($data);
+	$response = new AjaxResponse($json);
+	$response->setContentType('application/json; charset=utf-8');
+	$response->setCacheDuration(60);
+	wfProfileOut(__METHOD__);
+	return $response;
+}
+
+/**
+ * Given a username, returns one of several codes to indicate whether it is valid to be a NEW username or not.
+ *
+ * Codes:
+ * - OK: A user with this username may be created.
+ * - INVALID: This is not a valid username.  This may mean that it is too long or has characters that aren't permitted, etc.
+ * - EXISTS: A user with this name, so you cannot create one with this name.
+ *
+ * TODO: Is this a duplicate of user::isCreatableName()? It is important to note that wgWikiaMaxNameChars may be less than wgMaxNameChars which
+ * is intentional because there are some long usernames that were created when only wgMaxNameChars limited to 255 characters and we still want
+ * those usernames to be valid (so that they can still login), but we just don't want NEW accounts to be created above the length of wgWikiaMaxNameChars.
+ */
+function wfValidateUserName($uName){
+	global $wgWikiaMaxNameChars, $wgExternalSharedDB;
+	wfProfileIn(__METHOD__);
+
+//	global $IP;
+//	require_once ($IP . '/includes/User.php');
 	if( empty($wgWikiaMaxNameChars) ) {
 		//emergency fallback
 		global $wgMaxNameChars;
 		$wgWikiaMaxNameChars = $wgMaxNameChars;
 	}
-//	require_once ($IP . '/includes/User.php');
 
-	$uName = $wgRequest->getVal('uName');
 	$result = 'OK';#wfMsg ('username-valid');
 
 	$nt = Title::newFromText( $uName );
@@ -52,6 +82,9 @@ function cxValidateUserName () {
 		if ($uName == '') {
 			$result = 'INVALID';
 		} else {
+
+			// TODO: Is it any faster just to test 0 == User::idFromName($uName)?  It appears that first we're checking the current wiki, then the external.
+
 			$oRow = $dbr->selectRow( 'user', 'user_name', array('user_name' => $uName), __METHOD__);
 			if ($oRow !== false) {
 				$result = 'EXISTS';#wfMsg ('username-exists');
@@ -59,19 +92,18 @@ function cxValidateUserName () {
 				$dbExt = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 				if ($dbExt->NumRows ($dbResults = $dbExt->Query ("SELECT User_Name FROM `user` WHERE User_Name = '$uName';"))) {
 					$result = 'EXISTS';#wfMsg ('username-exists');
+				} else {
+					global $wgReservedUsernames;
+					if(in_array($uName, $wgReservedUsernames)){
+						$result = 'EXISTS'; // if we returned 'invalid', that would be confusing once a user checked and found that the name already met the naming requirements.
+					}
 				}
 			}
 		}
 	}
-
-	$data = array('result' => $result);
-
-	$json = Wikia::json_encode($data);
-	$response = new AjaxResponse($json);
-	$response->setContentType('application/json; charset=utf-8');
-	$response->setCacheDuration(60);
+	
 	wfProfileOut(__METHOD__);
-	return $response;
+	return $result;
 }
 
 function wfSignForReview() {

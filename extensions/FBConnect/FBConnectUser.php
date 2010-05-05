@@ -46,6 +46,8 @@ class FBConnectUser extends User {
 	 * login.
 	 */
 	function updateFromFacebook() {
+		wfProfileIn(__METHOD__);
+
 		// Keep track of whether any settings were modified
 		$mod = false;
 		// Connect to the Facebook API and retrieve the user's info 
@@ -57,7 +59,7 @@ class FBConnectUser extends User {
 		foreach ($updateOptions as $option) {
 			// Translate Facebook parameters into MediaWiki parameters
 			$value = self::getOptionFromInfo($option, $userinfo); 
-			if ($value && $value != $this->getOption("fbconnect-update-on-login-$option")) {
+			if ($value && ($this->getOption("fbconnect-update-on-login-$option", "0") == "1")) {
 				switch ($option) {
 					case 'fullname':
 						$this->setRealName($value);
@@ -72,6 +74,8 @@ class FBConnectUser extends User {
 		if ($mod) {
 			$this->saveSettings();
 		}
+		
+		wfProfileOut(__METHOD__);
 	}
 	
 	/**

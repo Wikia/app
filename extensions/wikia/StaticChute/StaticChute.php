@@ -63,6 +63,7 @@ class StaticChute {
 		);
 
 		// jQuery package (for home skin)
+		// TODO: FIXME: Is this used anywhere?  It's an old version of jQuery and doesn't appear to be used (each skin lists the jQuery it uses).  Safe to remove?
 		$this->config['jquery'] = array(
 			'common/jquery/jquery-1.3.2.js',
 			'common/jquery/jquery.json-1.3.js',
@@ -92,13 +93,16 @@ class StaticChute {
 			'common/jquery/jquery.json-1.3.js',
 			'common/jquery/jquery.cookies.2.1.0.js',
 			'common/jquery/jquery.wikia.js',
-
+			
 			'common/wikibits.js',
 			'monobook/main.js',
 			'monobook/tracker.js',
 			'common/tracker.js',
 			'../extensions/wikia/ProblemReports/js/ProblemReports-loader.js',
 			'common/contributed.js',
+
+			'../extensions/FBConnect/fbsdk_core.js',
+			'../extensions/FBConnect/fbconnect.js',
 		);
 	}
 
@@ -132,6 +136,9 @@ class StaticChute {
 			'../extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js',
 			'../extensions/wikia/ImageLightbox/ImageLightbox.js',
 			'../extensions/wikia/IE6PhaseOut/IE6PhaseOut.js',
+
+			'../extensions/FBConnect/fbsdk_core.js',
+			'../extensions/FBConnect/fbconnect.js',
 		);
 		$this->config['monaco_anon_article_js'] = array_merge($this->config['monaco_anon_article_js'], $widgetsAssets['js']);
 
@@ -162,6 +169,9 @@ class StaticChute {
 			'../extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js',
 			'../extensions/wikia/ImageLightbox/ImageLightbox.js',
 			'../extensions/wikia/IE6PhaseOut/IE6PhaseOut.js',
+			
+			'../extensions/FBConnect/fbsdk_core.js',
+			'../extensions/FBConnect/fbconnect.js',
 		);
 		$this->config['monaco_loggedin_js'] = array_merge($this->config['yui'], $this->config['monaco_loggedin_js'], $widgetsAssets['js']);
 
@@ -190,6 +200,9 @@ class StaticChute {
 			'../extensions/wikia/CreatePage/js/CreatePage.js',
 			'../extensions/wikia/Interstitial/Interstitial.js',
 			'../extensions/wikia/ImageLightbox/ImageLightbox.js',
+			
+			'../extensions/FBConnect/fbsdk_core.js',
+			'../extensions/FBConnect/fbconnect.js',
 		);
 		$this->config['monaco_anon_everything_else_js'] = array_merge($this->config['yui'], $this->config['monaco_anon_everything_else_js'], $widgetsAssets['js']);
 
@@ -239,6 +252,8 @@ class StaticChute {
 			'common/ajax.js',
 			'common/ajaxwatch.js',
 			'common/mwsuggest.js',
+			'../extensions/FBConnect/fbsdk_core.js',
+			'../extensions/FBConnect/fbconnect.js',
 		);
 
 		$this->config['corporate_specialpage_js'] = array(
@@ -253,6 +268,8 @@ class StaticChute {
 			'common/ajax.js',
 			'common/ajaxwatch.js',
 			'common/mwsuggest.js',
+			'../extensions/FBConnect/fbsdk_core.js',
+			'../extensions/FBConnect/fbconnect.js',
 		);
 		//CSS
 		$this->config['corporate_page_css'] = array(

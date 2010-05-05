@@ -7,17 +7,16 @@ if (!defined('MEDIAWIKI')) {
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Sign up',
 	'author' => 'Bartek Lapinski',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:MyExtension',
+	'url' => '',
 	'description' => 'Alias extension for Special:Userlogin',
-	'descriptionmsg' => 'The new, improved Userlogin',
-	'version' => '1.1.1',
+	'descriptionmsg' => '',
+	'version' => '2.0.0',
 );
- 
+
 $dir = dirname(__FILE__) . '/';
 
 // special page
 $wgAutoloadClasses['Signup'] = $dir.'SpecialSignup.class.php';
-$wgAutoloadClasses['SignupTemplate'] = $dir.'templates/Signup.php';
 
 $wgSpecialPages['Signup'] = 'Signup';
 $wgSpecialPageGroups['Signup'] = 'users';
@@ -27,4 +26,3 @@ $wgExtensionMessagesFiles['Signup'] = $dir . 'Signup.i18n.php';
 
 // hooks
 $wgHooks ['OutputPageBeforeHTML'][] = 'Signup::TrackingOnSuccess';
-

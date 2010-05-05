@@ -149,7 +149,7 @@ endif
 		<ul>
 		<li class="infoline"><?=wfMsg('autocreatewiki-haveaccount-question')?></li>
 		<li class="data1">
-			<a id="AWClogin" class="wikia-button ajaxLogin" style="z-index: 10;" href="/index.php?title=Special:Signup&returnto=Special:CreateWiki" rel="nofollow"><?=wfMsg('login')?></a>
+			<a id="AWClogin" class="wikia-button ajaxLogin" style="z-index: 10;" href="/index.php?title=Special:Signup&returnto=Special:CreateWiki&type=login" rel="nofollow"><?=wfMsg('login')?></a>
 		</li>
 		<li class="legend"><?=wfMsg("autocreatewiki-required", "<img src='{$wgExtensionsPath}/wikia/AutoCreateWiki/images/required.png?{$wgStyleVersion}' />")?></li>
 		</ul>

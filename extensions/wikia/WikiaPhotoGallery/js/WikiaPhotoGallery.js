@@ -1359,11 +1359,11 @@ var WikiaPhotoGallery = {
 
 		// for anons show ComboAjaxLogin
 		if (typeof showComboAjaxForPlaceHolder == 'function') {
-                        if (showComboAjaxForPlaceHolder('', false)) {
+			if (showComboAjaxForPlaceHolder('', false, '', false, true)) { // last true shows the 'login required for this action' message.
 				self.log('please login to use this feature');
 				return;
 			}
-                }
+		}
 
 		// check lock to catch double-clicks on toolbar button
 		if (self.lock) {

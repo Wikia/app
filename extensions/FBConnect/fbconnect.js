@@ -18,7 +18,7 @@
  * fbconnect.js and fbconnect-min.js
  * 
  * FBConnect relies on several different libraries and frameworks for its JavaScript
- * code. Each framework has its own method to verify that the propper code won't be
+ * code. Each framework has its own method to verify that the proper code won't be
  * called before it's ready. (Below, lambda represents a named or anonymous function.)
  * 
  * MediaWiki:             addOnloadHook(lambda);
@@ -51,15 +51,12 @@ window.fbAsyncInit = function() {
 		cookie : true, // Enable cookies to allow the server to access the session
 		xfbml  : window.fbUseMarkup // Whether XFBML should be automatically parsed
 	});
-	
-	// Register a function for when the user logs in to Facebook
-	FB.Event.subscribe('auth.login', function(response) {
-		// Refresh the page to transfer the session to the server
-		window.location.reload(true);
-	});
+
+	// NOTE: Auth.login doesn't appear to work anymore.  The onlogin attribute of the fb:login-buttons is being used instead.
 	
 	// Register a function for when the user logs out of Facebook
 	FB.Event.subscribe('auth.logout', function(response) {
+		// TODO: Internationalize
 		var login = confirm("Not logged in.\n\nWe detected that you have been logged " +
 		                    "out of Facebook. If this isn't the case, don't worry! " +
 		                    "Facebook's new library seems to have some growing pains. " +
@@ -78,7 +75,7 @@ $(document).ready(function() {
 	// Add a pretty logo to Facebook links
 	$('#pt-fbconnect,#pt-fblink,#pt-fbconvert').addClass('mw-fblink');
 	
-	// Add the logout behaviour to the "Logout of Facebook" button
+	// Add the logout behavior to the "Logout of Facebook" button
 	$('#pt-fblogout').click(function() {
 		// TODO: Where did the fancy DHTML window go? Maybe consider jQuery Alert Dialogs:
 		// http://abeautifulsite.net/2008/12/jquery-alert-dialogs/
@@ -90,3 +87,15 @@ $(document).ready(function() {
 		}
 	});
 });
+
+/**
+ * An optional handler to use in fbOnLoginJsOverride for when a user logs in via facebook connect.
+ *
+ * This will redirect to Special:Connect with the returnto variables configured properly.
+ *
+ * TODO: Also set the value for 'returntoquery'!!
+ */
+function sendToConnectOnLogin(){
+	var destUrl = wgServer + wgScript + "?title=Special:Connect&returnto=" + wgPageName;
+	window.location.href = destUrl;
+}

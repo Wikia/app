@@ -1,6 +1,15 @@
 <?php
 /*
- * Author: Tomasz Odrobny
+ * @author: Tomasz Odrobny, Sean Colombo
+ *
+ * Extension for a combination of signup/login forms which can be shown
+ * as an ajax dialog box or as a page.
+ *
+ * The templates for the various forms are in the following locations:
+ * - Reigstration form: 	/includes/templates/wikia/UserAjaxCreateTemplate (UserAjaxCreate.php)
+ * - Login form: 			./templates/AjaxLoginComponent.tmpl.php
+ * - Ajax combo of both:	./templates/ComboAjaxLogin.tmpl.php
+ * - Page combo of both:	./templates/ComboPage.tmpl.php (for Special:Signup)
  */
 
 $wgExtensionCredits['other'][] = array(
@@ -11,40 +20,35 @@ $wgExtensionCredits['other'][] = array(
 
 $wgAjaxExportList[] = 'GetComboAjaxLogin';
 $wgHooks['MakeGlobalVariablesScript'][] = 'comboAjaxLoginVars';
+$wgHooks['GetHTMLAfterBody'][] = 'renderHiddenForm';
 
 $wgExtensionMessagesFiles['ComboAjaxLogin'] = dirname(__FILE__) . '/ComboAjaxLogin.i18n.php';
 
+
+/**
+ * Adds a hidden form to the page so user agents may prefill with client-stored information. The pre-filled information is later copied to the Ajax Login modal window. 
+*/
+function renderHiddenForm() {
+	global $wgUser;
+	$checked = ($wgUser->getOption('rememberpassword')) ? ' checked="checked" ' : '';
+	if ($wgUser->isAnon()) {
+		echo '<form action="" method="post" name="userajaxloginform" id="userajaxloginform" style="display: none">
+			<input type="text" name="wpName" id="wpName1Ajax" tabindex="101" size="20" />
+			<input type="password" name="wpPassword" id="wpPassword1Ajax" tabindex="102" size="20" />
+			<input type="checkbox" name="wpRemember" id="wpRemember1Ajax" tabindex="104" value="1"'. $checked .' />
+		</form>'."\n";
+	}
+	return true;
+}
+
+/**
+ * Returns an AjaxResponse containing the combo ajax login/register code.
+ */
 function GetComboAjaxLogin() {
-	global $wgRequest;
-	
-	if ( session_id() == '' ) {
-		wfSetupSession();
-	}
-	
 	wfLoadExtensionMessages('ComboAjaxLogin');
-	if ($wgRequest->getCheck( 'wpCreateaccount' )) {
-		return "error";
-	}
-    
-    $tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
-    $response = new AjaxResponse();
-        
-    if (!wfReadOnly()){
-	    $form =new AjaxLoginForm($wgRequest,'signup');
-	    $form->execute();
-        $tmpl->set("isReadOnly", 0);
-	    $tmpl->set("registerAjax", $form->ajaxRender());           
-    } else {
-        $tmpl->set("isReadOnly", 1);                 
-    }
-    
-    
-    if ( !LoginForm::getLoginToken() ) {
-		LoginForm::setLoginToken();
-	}
-	$tmpl->set( "token", LoginForm::getLoginToken() );
-    
-    $response->addText( $tmpl->execute('ComboAjaxLogin') );
+	$response = new AjaxResponse();
+	$tmpl = AjaxLoginForm::getTemplateForCombinedForms();
+	$response->addText( $tmpl->execute('ComboAjaxLogin') );
 	return $response;
 }
 
@@ -56,7 +60,7 @@ $wgAjaxExportList[] = 'GetComboAjaxLogin';
 $wgAjaxExportList[] = 'getRegisterJS';
 function getRegisterJS(){
 	$response = new AjaxResponse();
-	$response->addText( AjaxLoginForm::getRegisterJS());
+	$response->addText( AjaxLoginForm::getRegisterJS() );
 	$response->addText( file_get_contents(dirname( __FILE__ ) . '/AjaxLogin.js') );
 	
 	header("X-Pass-Cache-Control: s-maxage=315360000, max-age=315360000");	
@@ -92,23 +96,23 @@ function createUserLogin(){
 	$response = new AjaxResponse();
 	$response->setCacheDuration( 3600 * 24 * 365);
 	if (!($wgRequest->getCheck("wpCreateaccount") && ($wgRequest->wasPosted()))) {
-	
 		$response->addText(json_encode(
-			array(	
+			array(
 					'status' => "ERROR",
-					'msg' => '',
+					'msg' => wfMsgExt('comboajaxlogin-post-not-understood', array('parseinline')),
 					'type' => 'error')));
 		return $response;
 	}
 
-	$form =new AjaxLoginForm($wgRequest,'signup');	
-		
+	$form = new AjaxLoginForm($wgRequest,'signup');
+
 	if ( !$form->checkDate() ) {
+		// If the users is too young to legally register.
 		$response->addText(json_encode(
-			array(	
+			array(
 					'status' => "ERROR",
-					'msg' => '',
-					'type' => 'redirectQuery')));
+					'msg' => wfMsg( 'userlogin-unable-info' ),
+					'type' => 'error')));
 		return $response;
 	}
 
@@ -155,6 +159,72 @@ class AjaxLoginForm extends LoginForm {
 	var $msg;
 	var $msgtype;
 	
+	public function getAjaxTemplate(){
+		return $this->ajaxTemplate;
+	}
+
+	/**
+	 * Generates a template with the login form and registration form already filled into
+	 * it and other settings populated as well.  This template can then be executed with
+	 * different EasyTemplates to give different results such as one view for ajax dialogs
+	 * and one view for standalone pages (such as Special:Signup). 
+	 */
+	static public function getTemplateForCombinedForms(){
+		global $wgRequest;
+
+		// Setup the data for the templates, similar to GetComboAjaxLogin.
+		if ( session_id() == '' ) {
+			wfSetupSession();
+		}
+
+		wfLoadExtensionMessages('ComboAjaxLogin');
+		if ($wgRequest->getCheck( 'wpCreateaccount' )) {
+			return "error";
+		}
+
+		$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
+		$response = new AjaxResponse();
+
+		if (!wfReadOnly()){
+			$form = new AjaxLoginForm($wgRequest,'signup');
+			$form->execute();
+			$tmpl->set("registerAjax", $form->ajaxRender());
+		}
+
+		$tmpl->set("isReadOnly", wfReadOnly()?1:0);
+
+		if ( !LoginForm::getLoginToken() ) {
+			LoginForm::setLoginToken();
+		}
+		$tmpl->set( "token", LoginForm::getLoginToken() );
+
+		// Use the existing settings to generate the login portion of the form, which will then
+		// be fed back into the bigger template in this case (it is not always fed into ComboAjaxLogin template).
+		$tmpl->set("ajaxLoginComponent", $tmpl->execute('AjaxLoginComponent'));
+		$tmpl->set("actiontype", $wgRequest->getVal('type', ''));
+
+		return $tmpl;
+	}
+
+	/**
+	 * Used to create the body of Special:Signup in a way that reuses the same form code as the
+	 * modal dialog versions of the same login/signup functionality.
+	 */
+	public function executeAsPage(){
+		global $wgOut;
+
+		$wgOut->setPageTitle( wfMsg( 'userlogin' ) );
+		$wgOut->setRobotPolicy( 'noindex,nofollow' );
+		$wgOut->setArticleRelated( false );
+		$wgOut->disallowUserJs();  // just in case...
+		
+		// Output the HTML which combines the two forms (which are already in the template) in a way that looks right for a standalone page.
+		wfLoadExtensionMessages('ComboAjaxLogin');
+		$tmpl = self::getTemplateForCombinedForms();
+		$wgOut->addHTML( $tmpl->execute( 'ComboAjaxLogin' ) );
+		$wgOut->addHTML( $tmpl->execute( 'ComboPageFooter' ) );
+	}
+
 	public static function getRegisterJS(){
 		$tpl = new UsercreateTemplate();
 		ob_start();
@@ -163,11 +233,11 @@ class AjaxLoginForm extends LoginForm {
 		ob_end_clean();
 		return $out;
 	}
+
 	function ajaxRender(){
 		ob_start();
 		$this->ajaxTemplate->execute();
-		$out = ob_get_contents();
-		ob_end_clean();
+		$out = ob_get_clean();
 		return $out;
 	}
 
@@ -185,14 +255,13 @@ class AjaxLoginForm extends LoginForm {
 
 		$userBirthDay = strtotime($this->wpBirthYear . '-' . $this->wpBirthMonth . '-' . $this->wpBirthDay);
 		if($userBirthDay > strtotime('-13 years')) {
-			return false;		
+			return false;
 		} else
 		{
 			return true;
 		}
 	}
-	
-	
+
 	function mainLoginForm( $msg, $msgtype = 'error' ) {
 		global $wgUser, $wgOut, $wgAllowRealName, $wgEnableEmail;
 		global $wgCookiePrefix, $wgLoginLanguageSelector;
@@ -217,6 +286,12 @@ class AjaxLoginForm extends LoginForm {
 		
 		// ADi: marketing opt-in/out checkbox added
 		$template->addInputItem( 'wpMarketingOptIn', 1, 'checkbox', 'tog-marketingallowed');
+
+		$titleObj = SpecialPage::getTitleFor( 'Signup' );
+		$q = 'action=submitlogin&type=signup';
+		$q2 = 'action=submitlogin&type=login';
+		$template->set( 'actioncreate', $titleObj->getLocalUrl( $q ) );
+		$template->set( 'actionlogin', $titleObj->getLocalUrl( $q2 ) );
 
 		$template->set( 'link', '' );
 
