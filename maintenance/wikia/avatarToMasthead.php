@@ -422,7 +422,9 @@ function buildUserList($answersWikis, &$allUsers) {
 						if ( empty($allUsers[$m[2]]) ) { 
 							$allUsers[$m[2]] = array();
 						}
-						$allUsers[$m[2]][] = $m[0];
+						if ( !in_array( $m[0], $allUsers[$m[2]] ) ) {
+							$allUsers[$m[2]][] = $m[0];
+						}
 					}
 				}
 			}
