@@ -1154,10 +1154,14 @@ EOF;
 
 		// JS - begin
 		if($tpl->data['jsvarurl']) {
-			// macbre: check for empty merged JS file
+			wfProfileIn(__METHOD__ . '::siteJS');
+
+			// macbre: check for empty merged JS file - don't use hardcoded skin name (RT #48040)
+			$skinName = ucfirst($this->skinname);
+
 			$s = '';
 			$s .= !isMsgEmpty('Common.js') ? wfMsgForContent('Common.js') : '';
-			$s .= !isMsgEmpty('Monaco.js') ? wfMsgForContent('Monaco.js') : '';
+			$s .= !isMsgEmpty("{$skinName}.js") ? wfMsgForContent("{$skinName}.js") : '';
 
 			// eliminate multi-line comments in '/* ... */' form, at start of string
 			// taken from includes/api/ApiFormatJson_json.php
@@ -1166,6 +1170,8 @@ EOF;
 			if ($s != '') {
 				$js[] = array('url' => $tpl->data['jsvarurl'], 'mime' => 'text/javascript');
 			}
+
+			wfProfileOut(__METHOD__ . '::siteJS');
 		}
 		if($tpl->data['userjs']) {
 			wfProfileIn(__METHOD__ . '::userJS');
