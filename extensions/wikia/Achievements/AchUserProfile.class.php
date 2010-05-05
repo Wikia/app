@@ -9,7 +9,7 @@ class AchUserProfile {
 		$profileViewerUser = $wgUser;
 		$profileOwnerUser = User::newFromName($wgTitle->getText());
 
-		if(!$profileOwnerUser || !$profileOwnerUser->isLoggedIn()) {
+		if(!$profileOwnerUser || !$profileOwnerUser->isLoggedIn() || get_class($wgUser->getSkin()) != 'SkinMonaco') {
 			wfProfileOut(__METHOD__);
 			return;
 		}

@@ -27,7 +27,7 @@
 ?>
 	</ul>
 
-	<aside id="leaderboard-sidebar">
+	<div id="leaderboard-sidebar">
 <?php
 	foreach($recent as $level => $badges) {
 		if(count($badges) == 0) {
@@ -64,6 +64,6 @@
 <?php
 	}
 ?>
-	</aside>
+	</div>
 
 </div>

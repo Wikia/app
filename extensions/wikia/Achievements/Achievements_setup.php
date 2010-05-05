@@ -130,7 +130,7 @@ function Achievements_GetHTMLAfterBody($skin, &$html) {
 			$ap->giveCustomBadge($wgUser, BADGE_WELCOME);
 		}
 
-		if(!empty($_SESSION['achievementsNewBadges'])) {
+		if(!empty($_SESSION['achievementsNewBadges']) && get_class($wgUser->getSkin()) == 'SkinMonaco') {
 			$wgOut->addHTML(AchNotification::getNotifcationHTML());
 			unset($_SESSION['achievementsNewBadges']);
 		}
