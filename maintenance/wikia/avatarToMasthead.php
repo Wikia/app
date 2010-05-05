@@ -236,7 +236,7 @@ function copyAvatarsToMasthead() {
 							if ( !empty($allAnswersWikis) ) {
 								list($pathny, $city_id) = getNYWikisAvatar($allAnswersWikis, $user_id);
 								if ( $pathny !== false && $city_id > 0 ) {
-									__log("Move Wikia NY code Avatar $pathny to $path");
+									__log("Move Avatar (from rest answers pages) $pathny to $path");
 									$uploaded = uploadAvatar($avatar, $oUser, $pathny, $city_id);
 								} 
 							}
@@ -276,7 +276,7 @@ function uploadAvatar($oMasthead, $mUser, $nypath, $city_id) {
 	$__path = str_replace($filename, "", $nypath);
 	$__files = $__path . "/*_" . $user_id . "_*";
 	
-	if ( $TEST === 1 ) {
+	if ( $TEST == 1 ) {
 		saveDataInDB($user_id, $city_id, $__files, $sFilePath);
 		return true;
 	}
