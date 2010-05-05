@@ -12,7 +12,9 @@ $messages['en'] = array(
 	'mostvisitedpages' => 'Most visited pages',
 	'mostvisitedpagessearchtext' => 'Article\'s name:',
 	'mostvisitedpagessearchbtn' => 'search',
-	'mostvisitedpageslatest' => 'in the last $1 minutes'
+	'mostvisitedpageslatest' => 'in the last $1 minutes',
+	'mostvisitedpageslatestlink' => 'See latest visited pages',
+	'mostvisitedpagesalllink' => 'See most visited pages'
 );
 
 /** Message documentation (Message documentation)
