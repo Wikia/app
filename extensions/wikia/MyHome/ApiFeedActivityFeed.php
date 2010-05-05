@@ -64,21 +64,9 @@ class ApiFeedActivityFeed extends ApiBase {
 		$title = Title :: newFromText($titleStr);
 		$titleUrl = $title->getFullUrl();
 
-		// FIXME move it "upstream" to ApiQueryActivityFeed ?
-		if (!empty($info["new_categories"])) {
-			$comment = $info["comment"] . " " . $info["new_categories"];
-		} else {
-			$comment = $info["comment"];
-		}
-
+		$comment = $info["comment"];
 		$timestamp = $info["timestamp"];
-
-		// FIXME move it "upstream" to ApiQueryActivityFeed
-		if (preg_match("/<a href=\"\/wiki\/.*\" rel=\"nofollow\">(.*)<\/a>/", $info["user"], $matches)) {
-			$user = "User:{$matches[1]}";
-		} else {
-			$user = $info["user"];
-		}
+		$user = $info["user"];
 
 		return new FeedItem($titleStr, $comment, $titleUrl, $timestamp, $user);
 	}
