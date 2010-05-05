@@ -171,11 +171,12 @@ function copyAvatarsToMasthead() {
 	buildUserList($answersWikis, $allUsers);
 	buildUserList(array_keys($nycodeWikis), $allUsers);
 	
-	#echo print_r($allUsers, true);
-	#exit;
+	echo print_r($allUsers, true);
+	exit;
+	
 	__log( "Found: " . count($allUsers) );
 	if ( !empty($allUsers) ) {
-		foreach ( $allUsers as $id => $user_id ) {
+		foreach ( $allUsers as $user_id => $listAvatars ) {
 			__log("Processing: ".$user_id . ")");
 
 			# make user 
@@ -239,7 +240,7 @@ function uploadAvatar($oMasthead, $mUser, $nypath, $city_id) {
 
 	$user_id = $mUser->getId();
 	$__path = str_replace($filename, "", $nypath);
-	$__files = $__path . "/answers_" . $user_id . "_*";
+	$__files = $__path . "/*_" . $user_id . "_*";
 	
 	if ( $TEST === 1 ) {
 		saveDataInDB($user_id, $city_id, $__files, $sFilePath);
@@ -403,7 +404,10 @@ function buildUserList($answersWikis, &$allUsers) {
 			foreach ($files as $file) {
 				if ( preg_match('/(.*)?\_(.*)?\_l\.(.*)/', $file, $m) ) {
 					if ( !empty($m) && isset($m[2]) ) {
-						$allUsers[] = $m[2];
+						if ( empty($allUsers[$m[2]]) ) { 
+							$allUsers[$m[2]] = array();
+						}
+						$allUsers[$m[2]][] = $m[0];
 					}
 				}
 			}
