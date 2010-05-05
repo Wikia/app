@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `achievements_badges` (
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `notified` tinyint(1) NOT NULL DEFAULT '0',
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB;
 
 drop table achievements_counters;
 CREATE TABLE IF NOT EXISTS `achievements_counters` (
@@ -15,4 +15,4 @@ CREATE TABLE IF NOT EXISTS `achievements_counters` (
   `data` text NOT NULL,
   `score` int(5) DEFAULT NULL,
   UNIQUE KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB;
