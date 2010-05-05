@@ -1,4 +1,5 @@
 == Changes since 201005.1 ==
+* rt#48214: Keyword links broken in international WebsiteWikis (eloy)
 * rt#48042: message about user page appearing on user css/js subpages (macbre)
 * rt#48040: personal js/css missing on answers (macbre)
 * rt#47417: Removed nofollow from website wikis (TOR)
