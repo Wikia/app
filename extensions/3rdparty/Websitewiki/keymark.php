@@ -34,7 +34,7 @@ function renderKeypage( $input, $argv, &$parser ) {
     $tok = strtok($kwline, ",;");
 
     $kws = array();
-    while ($tok !== false) 
+    while ($tok !== false)
     {
       $kws[] = strtolower(trim($tok));
       $tok = strtok(",;");
@@ -45,19 +45,23 @@ function renderKeypage( $input, $argv, &$parser ) {
 
     $komma = "";
     if(count($kws))
-      foreach($kws as $kw)
-      {
-	if(strlen($kw) > 80)
-	  $kw = substr($kw, 0, 80);
+      foreach($kws as $kw) {
+		if(strlen($kw) > 80) {
+			$kw = substr($kw, 0, 80);
+		}
 
-	$kwu = $kw;
-	$kwu{0} = strtoupper($kwu{0});
+		$kwu = $kw;
+		$kwu{0} = strtoupper($kwu{0});
 
-	$output .= "$komma<a href=\"/Spezial:Keyword/$kw\">$kwu</a>";
-	$komma = ", ";
-      }
+
+		$output .= sprintf( "$komma<a href=\"%s\">%s</a>",
+			Title::makeTitle( NS_SPECIAL, sprintf( "Keyword/%s", $kw )  )->getLocalURL(),
+			$kwu
+		);
+
+		$komma = ", ";
+	}
 
     $output .= "</span>\n";
     return $output;
 }
-?>
