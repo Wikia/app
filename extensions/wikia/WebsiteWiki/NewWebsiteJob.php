@@ -123,21 +123,32 @@ class NewWebsiteJob extends Job {
 					 * there is redirect! but maybe it is internal redirect
 					 */
 					if( isset( $header[ "Location" ] ) ) {
-						$target = self::normalizeDomain( $header[ "Location" ] );
-						if( $this->mDomain != $target ) {
-							/**
-							 * external redirect to another domain
-							 */
-							$this->mIsRedirect  = true;
-							$this->mRedirectUrl = $target;
-							Wikia::log( __METHOD__, "redir", "External redirect to {$target}" );
+						/**
+						 * check if url has protocol or is just file redirect,
+						 * actually we handle only http requests
+						 */
+						if( preg_match( "|^http://|", $header[ "Location" ] ) ) {
+							$target = self::normalizeDomain( $header[ "Location" ] );
+							if( $this->mDomain != $target ) {
+								/**
+								 * external redirect to another domain
+								 */
+								$this->mIsRedirect  = true;
+								$this->mRedirectUrl = $target;
+								Wikia::log( __METHOD__, "redir", "External redirect to {$target}" );
+							}
+							else {
+								Wikia::log( __METHOD__, "redir", "Internal redirect to {$target}" );
+							}
 						}
 						else {
+							$target = $header[ "Location" ];
 							Wikia::log( __METHOD__, "redir", "Internal redirect to {$target}" );
 						}
 					}
 				}
 			}
+			exit;
 
 			/**
 			 * only last headers section is interesting
