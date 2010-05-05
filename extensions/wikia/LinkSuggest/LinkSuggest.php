@@ -125,9 +125,12 @@ function getLinkSuggest() {
 	$db = wfGetDB(DB_SLAVE, 'search' );
 
 	$res = $db->select(
-		array( "querycache" ),
+		array( "querycache", "page" ),
 		array( "qc_title" ),
 		array(
+			" qc_title = page_title ",
+			" qc_namespace = page_namespace ",
+			" page_is_redirect = 0 ",
 			" qc_type = 'Mostlinked' ",
 			" LOWER(qc_title) LIKE LOWER('{$query}%') ",
 			" qc_namespace = {$namespace} "
