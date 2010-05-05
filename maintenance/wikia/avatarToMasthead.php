@@ -61,7 +61,7 @@ function getNYAvatar($user_id) {
 	echo $img;
 }
 
-function loadAnswersToCheck() {
+function loadAnswersToCheck( $all = 0 ) {
 	global $wgExternalSharedDB, $wgCityId;
 
 	$dbr = wfGetDB (DB_SLAVE, 'stats', $wgExternalSharedDB);
@@ -72,10 +72,12 @@ function loadAnswersToCheck() {
 		"cv_city_id = city_id",
 		"city_public" => 1,
 		"cv_variable_id" => $varAnsEnable,
-		"cv_city_id > 10000",
-		"cv_city_id < 90000",
 		"cv_value" => "b:1;"
 	);
+	if ( $all == 1 ) {
+		$where[] = "cv_city_id > 10000";
+		$where[] = "cv_city_id < 90000";
+	}
 	$oRes = $dbr->select(
 		array( "city_variables", "city_list" ),
 		array( "city_id, city_lang" ),
@@ -166,12 +168,25 @@ function copyAvatarsToMasthead() {
 
 	$allUsers = array();
 	$answersWikis = loadAnswersToCheck();
+	$allAnswersWikis = loadAnswersToCheck(1);
 	$nycodeWikis = loadWikisToCheck();
 	
-	buildUserList($answersWikis, $allUsers);
+	buildUserList($allAnswersWikis, $allUsers);
 	buildUserList(array_keys($nycodeWikis), $allUsers);
-	
-	echo print_r($allUsers, true);
+
+#	echo print_r($allUsers, true);
+#	exit;
+
+	$cnt = 1;
+	if ( !empty($allUsers) ) {
+		foreach ( $allUsers as $user_id => $listAvatars ) {
+			if ( count($listAvatars) > 1 ) {
+				__log("$user_id: " . implode(", ", $listAvatars ) . " \n");
+				$cnt++;
+			}
+		}
+	}
+	__log ("$cnt users to check \n");
 	exit;
 	
 	__log( "Found: " . count($allUsers) );
