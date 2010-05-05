@@ -232,7 +232,7 @@ function CategorySelectAjaxSaveCategories($articleId, $categories) {
 				$article = new Article($title);
 				$article_text = $article->fetchContent();
 				$article_text .= $categories;
-				
+
 				$dbw = wfGetDB( DB_MASTER );
 				$dbw->begin();
 				$editPage = new EditPage( $article );
@@ -260,7 +260,7 @@ function CategorySelectAjaxSaveCategories($articleId, $categories) {
 					$result['error'] = wfMsg('spamprotectiontext');
 				} else {
 					$dbw->rollback();
-					$result['error'] = wfMsg('categoryselect-edit-abort');	
+					$result['error'] = wfMsg('categoryselect-edit-abort');
 				}
 			} else {
 				$result['error'] = wfMsg('categoryselect-error-user-rights');
