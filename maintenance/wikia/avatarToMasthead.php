@@ -173,43 +173,15 @@ function copyAvatarsToMasthead() {
 	
 	#echo print_r($allUsers, true);
 	#exit;
-	
-	#echo print_r($answersWikis, true);
-
-	$dbr = wfGetDB (DB_SLAVE, 'stats', $wgExternalSharedDB);
-
-	$where = array("user_id > 0");
-	if ( $USER_TEST ) {
-		$where["user_id"] = $USER_TEST;
-	}
-	if ( $USER_FROM ) {
-		$where[] = "user_id > " . intval($USER_FROM);
-	}
-	if ( $USER_TO ) {
-		$where[] = "user_id < " . intval($USER_TO);
-	}
-	$oRes = $dbr->select(
-		array( "user" ),
-		array( "user_id, user_name" ),
-		$where,
-		__METHOD__,
-		array( "ORDER BY" => "user_id" )
-	);
-
-	$wikiArr = array();
-	while ($oRow = $dbr->fetchObject($oRes)) {
-		$wikiArr[$oRow->user_id] = $oRow->user_name;
-	}
-	$dbr->freeResult ($oRes) ;
-
-	if ( !empty($wikiArr) ) {
-		foreach ( $wikiArr as $user_id => $user_name ) {
-			__log("Processing: " . $user_name . " (" . $user_id . ")");
+	__log( "Found: " . count($allUsers) );
+	if ( !empty($allUsers) ) {
+		foreach ( $allUsers as $id => $user_id ) {
+			__log("Processing: ".$user_id . ")");
 
 			# make user 
 			$oUser = User::newFromId($user_id);
 			if ( !$oUser instanceof User ) {
-				__log("Invalid user: $user_name");
+				__log("Invalid user: $user_id");
 				continue;
 			}
 
@@ -242,7 +214,7 @@ function copyAvatarsToMasthead() {
 			}
 		}
 	}
-	unset($wikiArr);
+	unset($allUsers);
 }
 
 function saveDataInDB($user_id, $city_id, $__files, $sFilePath) {
@@ -420,7 +392,7 @@ function uploadAvatar($oMasthead, $mUser, $nypath, $city_id) {
 function buildUserList($answersWikis, &$allUsers) {
 	if ( !empty($answersWikis) ) {
 		foreach ( $answersWikis as $id => $city_id ) {
-			$uploadDirectory = getVarValueByName( "wgUploadDirectory", $city_id );
+			$uploadDirectory = WikiFactory::getVarValueByName( "wgUploadDirectory", $city_id );
 			if ( !file_exists($uploadDirectory) ) {
 				continue;
 			}
