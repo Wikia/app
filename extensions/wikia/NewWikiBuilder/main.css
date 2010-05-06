@@ -238,6 +238,14 @@ button.secondary span {
 	margin-left: 5px;
 }
 
+.fp_answer {
+	width: 512px;
+}
+
+.fp_header {
+	float: left;
+}
+
 /*** Step 5: Done ***/
 #wiki_army_container {
 	background: url(wiki_army_floor.png) bottom left repeat-x;

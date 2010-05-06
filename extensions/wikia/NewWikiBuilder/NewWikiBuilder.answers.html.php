@@ -125,10 +125,16 @@ NWB.changeTheme("Sapphire", false);
 			<ul class="fp_block" id="fp_block_1">
 				<!-- Ids aren't necessary for the form, only used for Selenium -->
 				<li><input id="fp_1" class="fp_page" type="text" onfocus="NWB.firstPagesInputs()" value="<?php echo htmlspecialchars(wfMsgForContent("nwb-sample-question-1"))?>"/> <input type="text" size="15" class="fp_cat" value="<?php echo htmlspecialchars(wfMsgForContent("nwb-sample-tag")) ?>" /></li>
+				<li><div class="fp_header"><big><strong><?php echo wfMsg("nwb-answer") ?></strong></big></div></li>
+				<li><textarea id="fp_1_ans" class="fp_answer" rows="5"></textarea></li>
 				<li><input id="fp_2" class="fp_page" type="text" onfocus="NWB.firstPagesInputs()" value="<?php echo htmlspecialchars(wfMsgForContent("nwb-sample-question-2"))?>"/> <input type="text" size="15" class="fp_cat" value="<?php echo htmlspecialchars(wfMsgForContent("nwb-sample-tag")) ?>" /></li>
+				<li><textarea id="fp_2_ans" class="fp_answer" rows="5"></textarea></li>
 				<li><input id="fp_3" class="fp_page" type="text" onfocus="NWB.firstPagesInputs()" /> <input type="text" size="15" class="fp_cat"/></li>
+				<li><textarea id="fp_3_ans" class="fp_answer" rows="5"></textarea></li>
 				<li><input id="fp_4" class="fp_page" type="text" onfocus="NWB.firstPagesInputs()" /> <input type="text" size="15" class="fp_cat"/></li>
+				<li><textarea id="fp_4_ans" class="fp_answer" rows="5"></textarea></li>
 				<li><input id="fp_5" class="fp_page" type="text" onfocus="NWB.firstPagesInputs()" /> <input type="text" size="15" class="fp_cat"/></li>
+				<li><textarea id="fp_5_ans" class="fp_answer" rows="5"></textarea></li>
 			</ul>
 			<!-- Other fp_blocks will be inserted into the dom here with javascript:NWB.firstPagesInputs() -->
 		</form>
