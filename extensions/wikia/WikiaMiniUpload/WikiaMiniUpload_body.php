@@ -101,7 +101,7 @@ class WikiaMiniUpload {
 	}
 
      function query() {
-        global $wgRequest, $IP, $wgCityId;
+        global $wgRequest, $IP, $wgCityId, $wgExternalDatawareDB;
 
         $query = $wgRequest->getText('query');
         $page = $wgRequest->getVal('page');
@@ -115,7 +115,9 @@ class WikiaMiniUpload {
             $tmpl->set_vars(array('results' => $flickrResult, 'query' => addslashes($query)));
             return $tmpl->execute('results_flickr');
         } else if($sourceId == 0) {
-            $dbr = wfGetDBExt( DB_SLAVE );            
+			
+			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
+
             $query = mb_strtolower($dbr->escapeLike($query));
             $res = $dbr->select(
                     array( 'pages' ),
@@ -123,15 +125,15 @@ class WikiaMiniUpload {
                     array(
                            'page_wikia_id' => $wgCityId,
                            "page_title_lower like '%".$query."%' " ,
-                           'page_namespace' => 6, 
+                           'page_namespace' => 6,
                            'page_status' => 0 ),
                     __METHOD__ ,
                    array (
                          "LIMIT" => 8 )
             );
-                                     
+
             $row = $dbr->fetchRow($res);
-   
+
             $results = array();
             $results['total'] = $row['count'];
             $results['pages'] = ceil($row['count']/8);
@@ -143,14 +145,14 @@ class WikiaMiniUpload {
                     array(
                            'page_wikia_id' => $wgCityId,
                            "page_title_lower like '%".$query."%' " ,
-                           'page_namespace' => 6, 
+                           'page_namespace' => 6,
                            'page_status' => 0 ),
                     __METHOD__ ,
                    array (
                          "LIMIT" => 8,
                          "OFFSET" => ($page*8-8) )
             );
-                          
+
             while($row = $dbr->fetchObject($res)) {
                 $results['images'][] = array('title' => $row->page_title);
             }
