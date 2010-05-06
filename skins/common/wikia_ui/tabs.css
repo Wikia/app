@@ -1,0 +1,45 @@
+/**
+ * Wikia User Interface 
+ *
+ * This file defines styling for Wikia Tabs.
+ * https://contractor.wikia-inc.com/wiki/Wikia_tabs
+ *
+ * @author Christian Williams <christian@wikia-inc.com>
+ */
+
+.wikia-tabs {
+	border-bottom: 1px solid #AAA;
+}
+.wikia-tabs ul {
+	margin: 0;
+	overflow: hidden;
+	padding: 1px 0 0 3px;
+	position: relative;
+	top: 1px;
+}
+.wikia-tabs li {
+	border-color: #AAA;
+	border-style: solid;
+	border-width: 1px 1px 0;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	cursor: pointer;
+	float: left;
+	list-style: none;
+	margin: 0 0 0 2px;
+	padding: 2px 5px 0;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+}
+.wikia-tabs a {
+	color: #000;
+}
+.wikia-tabs .selected {
+	background-color: #FFF;
+	color: #000;
+	cursor: default;
+	font-weight: bold;
+	padding-bottom: 1px;
+}

@@ -44,7 +44,8 @@ JS
 		}
 
 		// load dependencies (CSS and JS)
-		global $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType;
+		global $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType, $wgStylePath;
+		$wgOut->addExtensionStyle("{$wgStylePath}/common/wikia_ui/tabs.css?{$wgStyleVersion}");
 		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/MyHome/MyHome.css?{$wgStyleVersion}");
 
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/MyHome/MyHome.js?{$wgStyleVersion}\"></script>\n");

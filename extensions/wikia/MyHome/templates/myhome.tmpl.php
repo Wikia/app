@@ -34,7 +34,7 @@
 		<h2 class="dark_text_2"><?= wfMsg("myhome-activity-feed") ?></h2>
 
 	<!-- switch -->
-	<div id="activity-feed-tabs">
+	<div class="wikia-tabs">
 		<ul>
 		<?php global $wgBlankImgUrl; ?>
 <?php if($feedSelected == 'activity') { ?>

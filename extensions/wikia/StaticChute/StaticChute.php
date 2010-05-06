@@ -213,7 +213,7 @@ class StaticChute {
 			'wikia/shared.css',
 			'monaco/css/monobook_modified.css',
 			'monaco/css/reset_modified.css',
-			'common/wikia-ui.css',
+			'common/wikia_ui/buttons.css',
 			'common/sprite.css',
 			'monaco/css/root.css',
 			'monaco/css/header.css',
@@ -274,7 +274,7 @@ class StaticChute {
 		//CSS
 		$this->config['corporate_page_css'] = array(
 			'common/yui300css-reset-min.css',
-			'common/wikia-ui.css',
+			'common/wikia_ui/buttons.css',
 			'common/shared.css',
 			'corporate/css/modal.css',
 			'corporate/css/main.css',
