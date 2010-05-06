@@ -206,6 +206,7 @@ button.secondary:active {
 }
 .wikia-tabs .selected {
 	background-color: #FFF;
+	color: #000;
 	cursor: default;
 	font-weight: bold;
 	padding-bottom: 1px;
