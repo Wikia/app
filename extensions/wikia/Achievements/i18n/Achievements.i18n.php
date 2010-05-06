@@ -65,6 +65,7 @@ $messages['en'] = array(
 	//
 	'leaderboard-intro' => '<b>&ldquo;What are Achievements?&rdquo;</b> You can earn special badges by participating on this wiki! Each badge that you earn adds points to your total score: Bronze badges are worth 10 points, Silver badges are worth 50 points, and Gold badges are worth 100 points.<br /><br />When you join the wiki, your user profile displays the badges that you\'ve earned, and shows you a list of the challenges that are available for you. [[Special:MyPage|Go to your user profile to check it out!]]',
 	'leaderboard' => 'Achievements Leaderboard',
+	'leaderboard-button' => 'Achievements Leaderboard',
 	'achievements-recent-gold' => 'Recent Gold Badges',
 	'achievements-recent-silver' => 'Recent Silver Badges',
 	'achievements-recent-bronze' => 'Recent Bronze Badges',

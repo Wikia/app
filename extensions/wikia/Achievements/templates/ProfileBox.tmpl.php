@@ -56,7 +56,7 @@ global $wgExtensionsPath;
 <?php
 	}
 ?>
-		<p><a href="<?= $leaderboard_url ?>" class="wikia-button" id="achievements-leaderboard"><?= wfMsg('leaderboard') ?></a></p>
+		<p><a href="<?= $leaderboard_url ?>" class="wikia-button" id="achievements-leaderboard"><?= wfMsg('leaderboard-button') ?></a></p>
 <?php
 	if(isset($customize_url)) {
 ?>
