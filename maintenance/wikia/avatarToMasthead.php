@@ -50,12 +50,13 @@ function getNYAvatar($user_id) {
 	$avatar = new wAvatar($user_id, 'l');
 	$img = $avatar->getAvatarImage();
 
+	__log("img: $user_id => $img");
 	if ( $img ) {
 		if ( substr($img, 0, 7) != 'default' ) {
 			$img = preg_replace("/\?(.*)/", '', $img);
 			$img = $wgUploadDirectory . "/avatars/" . trim($img);
 		} else {
-			$img = "NULL";
+			$img = '-';
 		}
 	}
 	echo $img;
@@ -129,12 +130,12 @@ function getAnswersAvatar($answersWikis, $user_id, $lang) {
 	$pathny = false;
 	$city_id = $answersWikis['en'];
 	$pathEnAnswers = checkNYAvatar($city_id, $user_id);
-	if ( $pathEnAnswers == 'NULL' ) {
+	if ( $pathEnAnswers == '-' ) {
 		__log("NY Avatar (en): doesn't exist");
 		if ( $lang != 'en' && isset($answersWikis[$lang]) ) {
 			$city_id = $answersWikis[$lang];
 			$pathLangAnswers = checkNYAvatar($city_id, $user_id);
-			if ( $pathLangAnswers == 'NULL' ) {
+			if ( $pathLangAnswers == '-' ) {
 				__log("NY Avatar ($lang): doesn't exist");
 			} else {
 				$pathny = $pathEnAnswers;							
@@ -154,7 +155,7 @@ function getNYWikisAvatar($wikis, $user_id) {
 		foreach ( $wikis as $cid => $city_url ) {
 			$city_id = $cid;
 			$pathEnAnswers = checkNYAvatar($city_id, $user_id);
-			if ( $pathEnAnswers != 'NULL' ) {
+			if ( $pathEnAnswers != '-' ) {
 				$pathny = $pathEnAnswers;
 				break;
 			} else {
