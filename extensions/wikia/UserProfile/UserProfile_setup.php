@@ -20,19 +20,16 @@ function UserProfile_handler(&$skin, &$tpl) {
 		$html .= "<div id='profile-content-inner'>";
 		$html .= $tpl->data['bodytext'];
 		$html .= "</div>";
-		$html .= "</div>";
-
+		
 		$html .= '<div id="profile-sidebar">';
-
 		if(isset($out['UserProfile1'])) {
 			$html .= $out['UserProfile1'];
 		}
 		if(isset($out['followedPages'])) {
 			$html .= $out['followedPages'];
 		}
-
-		$html .= '</div>';
-
+		$html .= '</div>';		
+		
 		$tpl->data['bodytext'] = $html;
 	}
 	wfProfileOut(__METHOD__);

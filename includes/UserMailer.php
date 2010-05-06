@@ -430,7 +430,7 @@ class EmailNotification {
 	 * @param $minorEdit
 	 * @param $oldid (default: false)
 	 */
-	function notifyOnPageChange($editor, $title, $timestamp, $summary, $minorEdit, $oldid = false, $action = '') {
+	function notifyOnPageChange($editor, $title, $timestamp, $summary, $minorEdit, $oldid = false, $action = '', $otherParam = array()) {
 		global $wgEnotifUseJobQ, $wgEnotifWatchlist, $wgShowUpdatedMarker;
 
 		if ($title->getNamespace() < 0)
@@ -478,11 +478,13 @@ class EmailNotification {
 				"minorEdit" => $minorEdit,
 				"oldid" => $oldid,
 				"watchers" => $watchers,
-				"action" => $action);
+				"action" => $action,
+				"othersParam" => $othersParam
+				);
 			$job = new EnotifNotifyJob( $title, $params );
 			$job->insert();
 		} else {
-			$this->actuallyNotifyOnPageChange( $editor, $title, $timestamp, $summary, $minorEdit, $oldid, $watchers, $action );
+			$this->actuallyNotifyOnPageChange( $editor, $title, $timestamp, $summary, $minorEdit, $oldid, $watchers, $action, $otherParam);
 		}
 
 	}
@@ -501,7 +503,7 @@ class EmailNotification {
 	 * @param $oldid int Revision ID
 	 * @param $watchers array of user IDs
 	 */
-	function actuallyNotifyOnPageChange($editor, $title, $timestamp, $summary, $minorEdit, $oldid, $watchers, $action='') {
+	function actuallyNotifyOnPageChange($editor, $title, $timestamp, $summary, $minorEdit, $oldid, $watchers, $action='', $otherParam = array()) {
 		# we use $wgPasswordSender as sender's address
 		global $wgEnotifWatchlist;
 		global $wgEnotifMinorEdits, $wgEnotifUserTalk;
@@ -525,6 +527,7 @@ class EmailNotification {
 		$this->action = $action;
 		$this->editor = $editor;
 		$this->composed_common = false;
+		$this->other_param = $otherParam;
 
 		$userTalkId = false;
 
@@ -651,6 +654,8 @@ class EmailNotification {
 
 		$keys['$ACTION']             = $this->action;
 
+		wfRunHooks('MailNotifyBuildKeys', array( &$keys, $this->action, $this->other_param ));
+		
 		wfRunHooks('ComposeCommonSubjectMail', array( $this->title, &$keys, &$subject, $this->editor ));
 		$subject = strtr( $subject, $keys );
 

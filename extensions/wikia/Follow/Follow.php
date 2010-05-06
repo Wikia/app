@@ -29,8 +29,8 @@ if ( !empty($wgEnableWikiaFollowedPages) && $wgEnableWikiaFollowedPages ) {
 	$wgSpecialPages['Following'] = 'FollowedPages'; # Let MediaWiki know about your new special page.
 	$wgSpecialPageGroups['Following'] = 'changes';
 	$wgAjaxExportList[] = 'FollowHelper::showAll';	
+	$wgHooks['MailNotifyBuildKeys'][] = 'FollowHelper::mailNotifyBuildKeys'; 
 }
-
 $wgHooks['UserToggles'][] = 'FollowHelper::addExtraToggles';
 $wgHooks['beforeRenderPrefsWatchlist'][] = 'FollowHelper::renderFollowPrefs';
 
