@@ -217,9 +217,6 @@ body.mainpage .firstHeading {
 	background: #2D2D2D;
 	color: #FFF;
 }
-#user_masthead li a {
-	color: #FFF;
-}
 body.masthead-regular #page_bar, 
 body.masthead-special #page_bar {
 	background: #252525;
