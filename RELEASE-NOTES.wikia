@@ -1,4 +1,5 @@
 == Changes since 201005.1 ==
+* rt#48346: New login popup has white text on a white bg on dark wikis (macbre)
 * rt#48231: Long words break answers toolbox (macbre)
 * rt#48304: Adding an image to gallery via ajax not counted as edit, internal link tables not updated (macbre)
 * rt#45612: Masthead avatar menu useless on carbon (uberfuzzy)
