@@ -244,6 +244,16 @@ class FollowHelper {
 		$user_id = $wgRequest->getVal( 'user_id' );
 		$head = $wgRequest->getVal( 'head' );
 
+		$response = new AjaxResponse();
+		
+		$user = User::newFromId($user_id);
+		if ( empty($user) || $user->getOption('hidefollowedpages') ) {
+			if( $user->getId() != $wgUser->getId() ) {
+				$response->addText( wfMsg('wikiafollowedpages-special-hidden') );
+				return $response;				
+			}	
+		}
+		
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 		$template->set_vars(
 			array (
@@ -253,7 +263,6 @@ class FollowHelper {
 				"more" => true,
 			)
 		);
-		$response = new AjaxResponse();
 		
 		$text = $template->render( "followedPages" );
 		

@@ -168,19 +168,20 @@ class FollowModel {
 					'LIMIT'		=> 10
 				)
 		);	
-
+		
 		while ($row = $db->fetchRow( $res ) ) {
 			$title = Title::makeTitle( $row['wl_namespace'], $row['wl_title'] );
 			$row['url'] = $title->getFullURL();
 			$row['wl_title'] = str_replace("_"," ",$row['wl_title'] );
-			if ($row['wl_namespace'] == NS_BLOG_ARTICLE || $row['wl_namespace'] == NS_BLOG_LISTING) {
-				$explode = explode("/", $row['wl_title']);
-				if ( count($explode) > 1) {
-					$row['wl_title'] = $explode[1];
-					$row['by_user'] =  $explode[0];	
+			if ( !empty($wgEnableBlogArticles) && $wgEnableBlogArticles ) {
+				if ($row['wl_namespace'] == NS_BLOG_ARTICLE || $row['wl_namespace'] == NS_BLOG_LISTING) {
+					$explode = explode("/", $row['wl_title']);
+					if ( count($explode) > 1) {
+						$row['wl_title'] = $explode[1];
+						$row['by_user'] =  $explode[0];	
+					}
 				}
-			}
-			
+			}			
 			$watchlist[] = $row; 
 		}
 		wfProfileOut( __METHOD__ );
