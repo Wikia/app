@@ -168,11 +168,12 @@ h1.modalTitle img {
 #userloginErrorBox,#userloginErrorBox2,#userloginErrorBox3 {
 	background-color: #FFFFCC;
 	border: 1px solid #AAA;
-	margin: 1em 3em 1em 0;
-	padding: 6px 6px 6px 6px;
+	color: #000;
 	display: none;
 	margin-left:10px;
 	margin-right:10px;
+	margin: 1em 3em 1em 0;
+	padding: 6px 6px 6px 6px;
 }
 
 .wpAjaxLoginInput .pseudolabel
