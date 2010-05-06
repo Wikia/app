@@ -30,12 +30,17 @@ class ApiCreateMultiplePages extends ApiBase {
 		$createType = 'createPage';
                 if ($params['type'] == 'answers') {
                         $createType .= $params['type'];
+			$pagetexts = explode( '|', $params['pagetext']  );
                 }
 
 		$categories = explode('|', $params['category']);
 		for ($i = 0; $i< sizeof($pages); $i++){
 			$page = $pages[$i];
-			$create = $this->$createType($page, $categories[$i], $params['pagetext']);
+			if( 'answers' == $params['type'] ) {
+				$create = $this->$createType($page, $categories[$i], $pagetexts[$i]);
+			else {
+				$create = $this->$createType($page, $categories[$i], $params['pagetext']);
+			}
 
 			if (!empty($create)){
 				$r['success'][$page] = $create;
