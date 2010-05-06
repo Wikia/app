@@ -404,6 +404,11 @@ class FollowHelper {
 		if ($user == null) {
 			return true;
 		}
+
+		// do not show Followed box on diffs
+		if ( $wgRequest->getVal( 'diff', null ) != null ) {
+			return true;
+		}
 		
 		if( $user->getOption( "hidefollowedpages" ) ) {
 			return true;
