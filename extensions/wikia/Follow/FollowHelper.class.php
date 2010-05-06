@@ -428,13 +428,27 @@ class FollowHelper {
 				"isLogin" => ($wgUser->getId() == $user->getId() ),
 				"hideUrl" => $wgTitle->getFullUrl( "hide_followed=1" ),
 				"data" 	=> $data,
-		//		"data2" => $data2,
 				"moreUrl" => Skin::makeSpecialUrlSubpage('following', $user->getName()),
 			)
 		);
 		wfProfileOut(__METHOD__);
 		$out['followedPages'] = $template->render( "followedUserPage" );
 		return true;
+	}
+	
+	/**
+	 * MailNotifyBuildKeys -- return build keys for mail 
+	 *
+	 * @static
+	 * @access public
+	 *
+	 *
+	 * @return  array
+	 */
+	
+	
+	static public function mailNotifyBuildKeys(&$keys, $action, $other_param) {
+
 	}
 	
 }
