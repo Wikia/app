@@ -178,9 +178,10 @@ class AjaxLoginForm extends LoginForm {
 		}
 
 		wfLoadExtensionMessages('ComboAjaxLogin');
-		if ($wgRequest->getCheck( 'wpCreateaccount' )) {
-			return "error";
-		}
+		// TODO: Invstigate why this was here.
+		//if ($wgRequest->getCheck( 'wpCreateaccount' )) {
+		//	return "error";
+		//}
 
 		$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 		$response = new AjaxResponse();
