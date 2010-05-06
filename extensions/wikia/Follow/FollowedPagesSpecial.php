@@ -44,7 +44,7 @@ class FollowedPages extends SpecialPage {
 		}
 		
 		if ( empty($user) ) {
-			$wgOut->addHTML( wfMsg('wikiafollowedpages-special-empty') );
+			$wgOut->addHTML( wfMsg('wikiafollowedpages-special-anon') );
 			return true;
 		}
 		
