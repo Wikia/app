@@ -116,7 +116,8 @@ class MostvisitedpagesPage extends QueryPage {
 		);
 		
 		if ( !empty($this->mArticle) ) {
-			$where[] = " lower(page_title) like lower('%".htmlspecialchars($this->mArticle)."%') ";
+			$like = $dbr->escapeLike( $this->mArticle ) ;
+   			$where[] = " lower(page_title) LIKE lower('%".$like."%') ";
 		}
 		if ( !empty($this->mArticleId) && ( $this->mArticleId == 'latest' ) ) {
 			$where[] = " prev_diff > 0 ";
