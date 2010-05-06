@@ -9,7 +9,6 @@ $wgHooks[ "RevisionInsertComplete" ][]	= "ExternalStorageUpdate::addDeferredUpda
 $wgHooks[ "ArticleDeleteComplete" ][]	= "ExternalStorageUpdate::deleteArticleExternal";
 $wgHooks[ "NewRevisionFromEditComplete" ][] = "ExternalStorageUpdate::setRevisionFromEdit";
 #$wgHooks[ "RevisionHiddenComplete" ][]	= "ExternalStorageUpdate::hiddenArticleExternal";
-#$wgHooks[ "ArticleRevisionUndeleted" ][] = "ExternalStorageUpdate::undeleteArticleExternal";
 
 class ExternalStorageUpdate {
 
@@ -277,62 +276,6 @@ class ExternalStorageUpdate {
 		return true;
 	}
 
-	/**
-	 * undeleteArticleExternal
-	 *
-	 * static method called as hook
-	 *
-	 * @static
-	 * @access public
-	 * @author Piotr Molski <moli@wikia.com>
-	 *
-	 * @param Revision	$oArticle	article object
-	 * @param User		$oUser		user object
-	 * @param string	$reason		reason of object removing
-	 * @param int		$page_id	page_id to remove
-	 *
-	 * @return true means process other hooks
-	 */
-	static public function undeleteArticleExternal(&$oTitle, $oRevision, $page_id) {
-		global $wgCityId;
-
-		wfProfileIn( __METHOD__ );
-		if ($oRevision instanceof Revision) {
-			$dbw = wfGetDBExt( DB_MASTER );
-			/* update revision mark as 'active' in blobs table */
-			$whereActive = array (
-				"rev_id" 		=> $oRevision->getId(),
-				"rev_wikia_id"	=> $wgCityId,
-				"blob_text is not NULL"
-			);
-
-			$ret = $dbw->update(
-				"blobs",
-				array (
-					"rev_status"	=> self::REV_ACTIVE,
-					"rev_page_id"	=> $oRevision->getPage(),
-				), $whereActive, __METHOD__
-			);
-			$whereNotActive = array(
-				"rev_id" => $oRevision->getId(),
-				"rev_page_id"	=> $oRevision->getPage(),
-				"rev_wikia_id" => $wgCityId,
-				" blob_text is NULL "
-			);
-
-			$dbw->update(
-				"blobs",
-				array (
-					"rev_status"	=> self::REV_DELETED,
-				), $whereNotActive, __METHOD__);
-		}
-
-		if( $dbw->getFlag( DBO_TRX ) ) {
-			$dbw->commit();
-		}
-		wfProfileOut( __METHOD__ );
-		return true;
-	}
 
 
 	/**
@@ -396,5 +339,4 @@ class ExternalStorageUpdate {
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
-
 };
