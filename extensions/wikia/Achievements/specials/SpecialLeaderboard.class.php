@@ -10,7 +10,7 @@ class SpecialLeaderboard extends SpecialPage {
 	function execute($user_id) {
 		wfProfileIn(__METHOD__);
 
-		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgSupressPageTitle, $wgUser, $wgWikiaBlogLikeUsers;
+		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgSupressPageTitle, $wgUser, $wgWikiaBotLikeUsers;
 
 		$wgSupressPageTitle = true;
 
@@ -25,7 +25,7 @@ class SpecialLeaderboard extends SpecialPage {
 		$res = $dbr->select('achievements_counters', 'user_id, score', null, __METHOD__, array('ORDER BY' => 'score desc'));
 		while($row = $dbr->fetchObject($res)) {
 			$user = User::newFromId($row->user_id);
-			if($user && !$user->isBlocked() && !in_array( $user->getName(), $wgWikiaBlogLikeUsers ) ) {
+			if($user && !$user->isBlocked() && !in_array( $user->getName(), $wgWikiaBotLikeUsers ) ) {
 				$ranking[] = array('score' => number_format($row->score), 'name' => htmlspecialchars($user->getName()), 'url' => Masthead::newFromUser($user)->getUrl(), 'userpage_url' => $user->getUserPage()->getLocalURL());
 			}
 		}
@@ -50,7 +50,7 @@ class SpecialLeaderboard extends SpecialPage {
 			$res = $dbr->query('select min(date) as mindate, user_id from achievements_badges where user_id in ('.join(',', array_unique($user_ids)).') group by user_id;');
 			while($row = $dbr->fetchObject($res)) {
 				$user = User::newFromId($row->user_id);
-				if($user && !$user->isBlocked() && !in_array( $user->getName(), $wgWikiaBlogLikeUsers ) ) {
+				if($user && !$user->isBlocked() && !in_array( $user->getName(), $wgWikiaBotLikeUsers ) ) {
 					$users[$row->user_id] = array('mindate' => $row->mindate, 'user' => $user);
 				}
 			}
