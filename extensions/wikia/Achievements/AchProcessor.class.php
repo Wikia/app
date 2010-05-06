@@ -16,11 +16,13 @@ class AchProcessor {
 	var $mNewBadges = array();
 
 	public function processSaveComplete($article, $user, $revision, $status) {
+		global $wgWikiaBotLikeUsers;
+
 		wfProfileIn(__METHOD__);
 
 		$this->mUser = $user;
 
-		if(!$this->mUser->isLoggedIn() || $this->mUser->isBot()) {
+		if(!$this->mUser->isLoggedIn() || $this->mUser->isBot() || in_array( $this->mUser->getName(), $wgWikiaBotLikeUsers ) ) {
 			return; // badges are only for logged in and not bot users
 		}
 
