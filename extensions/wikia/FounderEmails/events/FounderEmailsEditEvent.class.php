@@ -34,7 +34,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			}
 			elseif( $eventData['data']['registeredUser'] ) {
 				$msgKeys['subject'] = 'founderemails' . $wikiType . '-email-page-edited-reg-user-subject';
-				$msgKeys['body'] = 'founderemail' . $wikiType . '-email-page-edited-reg-user-body';
+				$msgKeys['body'] = 'founderemails' . $wikiType . '-email-page-edited-reg-user-body';
 				$msgKeys['body-html'] = 'founderemails' . $wikiType . '-email-page-edited-reg-user-body-HTML';
 			}
 			else {
