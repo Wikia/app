@@ -131,15 +131,16 @@ function getAnswersAvatar($answersWikis, $user_id, $lang) {
 	$pathny = false;
 	$city_id = $answersWikis['en'];
 	$pathEnAnswers = checkNYAvatar($city_id, $user_id);
-	if ( $pathEnAnswers == '-' ) {
-		__log("NY Avatar (en): doesn't exist");
+	if ( trim($pathEnAnswers) == '-' ) {
+		__log("NY Avatar (en): doesn't exist ($pathEnAnswers)");
 		if ( $lang != 'en' && isset($answersWikis[$lang]) ) {
 			$city_id = $answersWikis[$lang];
 			$pathLangAnswers = checkNYAvatar($city_id, $user_id);
-			if ( $pathLangAnswers == '-' ) {
-				__log("NY Avatar ($lang): doesn't exist");
+			if ( trim($pathLangAnswers) == '-' ) {
+				$pathny = false;
+				__log("NY Avatar ($lang): doesn't exist ($pathLangAnswers)");
 			} else {
-				$pathny = $pathEnAnswers;							
+				$pathny = $pathLangAnswers;							
 			}
 		} 
 	} else {
