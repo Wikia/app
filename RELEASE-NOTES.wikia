@@ -1,4 +1,5 @@
 == Changes since 201005.1 ==
+* rt#48294: A bunch of stuff that shouldn't be there on non-existent answers pages (macbre)
 * rt#48292: Disable auto page create on answers (macbre)
 * rt#48346: New login popup has white text on a white bg on dark wikis (macbre)
 * rt#48231: Long words break answers toolbox (macbre)
