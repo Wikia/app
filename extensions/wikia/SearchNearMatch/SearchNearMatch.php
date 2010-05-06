@@ -90,15 +90,18 @@ class SearchNearMatch {
 	 * @see Language::ucwordbreaks etc.
 	 */
 	public static function allCapitalOneLowerFromDB($term, &$title) {
-		global $wgMemc, $wgCityId;
+		global $wgMemc, $wgCityId, $wgExternalDatawareDB;
+
 		wfProfileIn(__METHOD__);
+
 		$word = strtolower(str_replace(" ", "_", $term));
 		$memkey = wfMemcKey( "searchnearmatch", $word );
 		$searchTitleId = $wgMemc->get( $memkey );
+
 		if (empty($searchTitleId)) {
 			// from DB
 			$pages = array();
-			$dbr = wfGetDBExt( DB_SLAVE );
+			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
 			$res = $dbr->select(
 				array( 'pages' ),
 				array( 'page_id', 'page_namespace' ),
