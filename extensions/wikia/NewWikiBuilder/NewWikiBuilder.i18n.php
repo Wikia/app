@@ -56,6 +56,7 @@ $messages['en'] = array(
 	"nwb-back-to-step-3" => "Back to step 3",
 	"nwb-back-to-step-4" => "Back to step 4",
 	"nwb-or" => "or",
+	'nwb-answer' => "Answer",
 	"nwb-new-pages-text" => "[[File:Placeholder|right|300px]]
 Write the first paragraph of your article here.
 
