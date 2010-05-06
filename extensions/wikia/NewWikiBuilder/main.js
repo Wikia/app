@@ -206,11 +206,20 @@ NWB.handleFirstPages = function (event){
 			}
 		);
 
-		var pages = [], cats = [];
+		var ttexts = [];
+		$("#all_fp .fp_answer").each(
+			function(i, o){
+				tcats.push(o.innerHTML.replace(/\|/, ''));
+			}
+		);
+
+
+		var pages = [], cats = [], texts = [];
 		for (var i = 0; i < tpages.length; i++){
 			if (! Mediawiki.e(tpages[i])){
 				pages.push(tpages[i]);
 				cats.push(tcats[i]);
+				texts.push(ttexts[i]);
 			}
 		}
 
@@ -230,12 +239,13 @@ NWB.handleFirstPages = function (event){
 		// so that when they show up on home page, they are in correct order
 		pages.reverse();
 		cats.reverse();
+		texts.reverse();
 
 		Mediawiki.waiting();
 		var pagetext;
 		if (NWB.type == "answers") {
-			// No initial page text for answers
-			pagetext = "";
+			// per RT#48002
+			pagetext = texts.join("|");
 		} else {
                         pagetext = NWB.msg("nwb-new-pages-text");
 		}
