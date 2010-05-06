@@ -273,10 +273,9 @@ class CloseWikiPage extends SpecialPage {
 		if ( !empty($this->mWikis) ) {
 			$output = Xml::openElement( 'ul', null );
 			foreach( $this->mWikis as $wiki ) {
-				$city_description = !empty($wiki->city_description) ? $wiki->city_description : $wiki->city_title;
-				Wikia::log( __METHOD__, "Closing: {$city_description} (url: {$wiki->city_url}) (id: {$wiki->city_id}) (dbname: {$wiki->city_dbname}) " );
+				Wikia::log( __METHOD__, "Closing: {$wiki->city_title} (url: {$wiki->city_url}) (id: {$wiki->city_id}) (dbname: {$wiki->city_dbname}) " );
 				#-- move to archive
-				$message = wfMsgExt( 'closewiki-wiki-closed', array('parse'), $city_description, $wiki->city_url );
+				$message = wfMsgExt( 'closewiki-wiki-closed', array('parse'), $wiki->city_title, $wiki->city_url );
 				if ( !empty($newWiki) ) {
 					Wikia::log( __METHOD__,  " ... and redirecting to: {$this->mRedirect} (id: {$newWiki})" );
 					$this->moveOldDomains( $wiki->city_id, $newWiki );
@@ -286,7 +285,7 @@ class CloseWikiPage extends SpecialPage {
 					$message = wfMsgExt(
 						'closewiki-wiki-closed_redirect',
 						array('parse'),
-						$city_description,
+						$wiki->city_title,
 						$wiki->city_url,
 						sprintf( "%s%s", "http://", $this->mRedirect )
 					);
