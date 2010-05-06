@@ -16,7 +16,7 @@ class FollowHelper {
 	 * @return bool
 	 */
 		
-	static public function watchCategories($categoryInserts, $categoryDeletes) {
+	static public function watchCategories($categoryInserts, $categoryDeletes, $title) {
 		global $wgUser;
 		wfProfileIn( __METHOD__ );
 		if ( empty($categoryInserts) ) {
@@ -34,7 +34,7 @@ class FollowHelper {
 			$queryIn[] = $value;
 		}
 
-		self::emailNotification($queryIn, NS_CATEGORY, $wgUser, $action, wfMsg('follow-categoryadd-summary'));
+		self::emailNotification($title, $queryIn, NS_CATEGORY, $wgUser, $action, wfMsg('follow-categoryadd-summary'));
 		
 		wfProfileOut( __METHOD__ );
 		return true;
@@ -50,18 +50,19 @@ class FollowHelper {
 	 * @return bool
 	 */
 	
-	function emailNotification($List, $namespace, $user, $action, $message) {
+	function emailNotification($childTitle, $list, $namespace, $user, $action, $message) {
+		global $wgTitle;
 		
 		wfProfileIn( __METHOD__ );
 
-		if ( count($List) < 1 ) {
+		if ( count($list) < 1 ) {
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
 	
 		$dbw = wfGetDB( DB_SLAVE );
 		$queryIn = "";
-		foreach ($List as $value) {
+		foreach ($list as $value) {
 			$queryIn[] = $dbw->addQuotes( $value ) ;
 		}
 
@@ -86,6 +87,8 @@ class FollowHelper {
 				}
 			}
 		}
+		
+
 		$now = wfTimestampNow();
 		
 		foreach ($watchers as $key => $value) {
@@ -96,7 +99,8 @@ class FollowHelper {
 				$message,
 				0,
 				0,
-				$action );
+				$action,
+				array('childTitle' => $childTitle) );
 		}
 		
 		wfProfileOut( __METHOD__ );
@@ -193,7 +197,7 @@ class FollowHelper {
 			while ($row = $dbw->fetchObject( $res ) ) {
 				$related[] = $row->blr_title;
 			}
-			self::emailNotification($related, NS_BLOG_LISTING, $user, "blogpost", wfMsg('follow-bloglisting-summary'));
+			self::emailNotification($article->getTitle(), $related, NS_BLOG_LISTING, $user, "blogpost", wfMsg('follow-bloglisting-summary'));
 		}
 		wfProfileOut( __METHOD__ );
 		return true;
@@ -451,9 +455,25 @@ class FollowHelper {
 	 * @return  array
 	 */
 	
-	
 	static public function mailNotifyBuildKeys(&$keys, $action, $other_param) {
+		$page = Title::newFromText( $keys['$PAGETITLE'] );
 
+		$keys['$PAGETITLE'] = $other_param['childTitle']->getPrefixedText();
+		$keys['$PAGETITLE_URL'] = $other_param['childTitle']->getFullUrl();
+			
+		if($action == 'categoryadd') {			
+			$keys['$CATEGORY_URL'] = $page->getFullUrl();  
+			$keys['$CATEGORY'] = $page->getText();
+			return true;
+		}
+
+		if($action == 'blogpost') {			
+			$keys['$BLOGLISTING_URL'] = $page->getFullUrl();  
+			$keys['$$BLOGLISTING'] = $page->getText();
+			return true;
+		}
+		
+		return true;
 	}
 	
 }

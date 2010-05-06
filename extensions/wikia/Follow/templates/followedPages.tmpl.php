@@ -1,4 +1,4 @@
-<?php if( $is_hide ): ?>
+<?php if( !empty($is_hide) &&  $is_hide): ?>
 	<span class="hideInfoSpan" ><?php echo wfMsg('wikiafollowedpages-special-hidden'); ?></span>
 	<form action="<?php echo $show_link; ?>" method="post" >
 		<input type="hidden" value="1" name="show_followed" />
