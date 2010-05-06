@@ -50,14 +50,15 @@ function getNYAvatar($user_id) {
 	$avatar = new wAvatar($user_id, 'l');
 	$img = $avatar->getAvatarImage();
 
-	__log("img: $user_id => $img");
 	if ( $img ) {
-		if ( substr($img, 0, 7) != 'default' ) {
+		if ( substr(trim($img), 0, 7) != 'default' ) {
 			$img = preg_replace("/\?(.*)/", '', $img);
 			$img = $wgUploadDirectory . "/avatars/" . trim($img);
 		} else {
 			$img = '-';
 		}
+	} else {
+		$img = '-';
 	}
 	echo $img;
 }
