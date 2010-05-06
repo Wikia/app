@@ -209,7 +209,7 @@ NWB.handleFirstPages = function (event){
 		var ttexts = [];
 		$("#all_fp .fp_answer").each(
 			function(i, o){
-				tcats.push(o.innerHTML.replace(/\|/, ''));
+				ttexts.push(o.value.replace(/\|/, ''));
 			}
 		);
 
