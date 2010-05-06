@@ -406,6 +406,12 @@ class WikiaPhotoGalleryHelper {
 				$result['errorCaption'] = wfMsg('wikiaPhotoGallery-error-caption');
 			}
 			//end of saving
+
+			wfDebug(__METHOD__ . ": saving from view mode done\n");
+
+			// commit (RT #48304)
+			$dbw = wfGetDB(DB_MASTER);
+			$dbw->commit();
 		}
 
 		wfProfileOut(__METHOD__);
