@@ -79,13 +79,18 @@ class ExternalStorageUpdate {
 				__METHOD__
 			);
 
+			if( $dbw->getFlag( DBO_TRX ) ) {
+				$dbw->commit();
+			}
+
+
 			if( $ret ) {
 				/**
 				 * ... but pages are always on dataware
 				 */
-				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
+				$dba = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 
-				$Row = $dbw->selectRow(
+				$Row = $dba->selectRow(
 					"pages",
 					array( "page_id", "page_title", "page_namespace", "page_status" ),
 					array(
@@ -108,7 +113,7 @@ class ExternalStorageUpdate {
 					 * update
 					 */
 					if( $Row->page_title != $page_title || $Row->page_namespace != $page_namespace ) {
-						$dbw->update(
+						$dba->update(
 							"pages",
 							array(
 								"page_wikia_id"    => $wgCityId,
@@ -130,7 +135,7 @@ class ExternalStorageUpdate {
 					/**
 					 * insert
 					 */
-					$dbw->insert(
+					$dba->insert(
 						"pages",
 						array(
 							"page_wikia_id"    => $wgCityId,
@@ -150,8 +155,8 @@ class ExternalStorageUpdate {
 				/**
 				 * be sure that data is written
 				 */
-				if( $dbw->getFlag( DBO_TRX ) ) {
-					$dbw->commit();
+				if( $dba->getFlag( DBO_TRX ) ) {
+					$dba->commit();
 				}
 			}
 		}
@@ -211,13 +216,6 @@ class ExternalStorageUpdate {
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 			/* begin transaction */
 			$dbw->begin();
-			/* set revision as 'removed' in blobs table
-			$where = array(
-				"rev_page_id"	=> $page_id,
-				"rev_wikia_id"	=> $wgCityId
-			);
-			$ret = $dbw->update( "blobs", array( "rev_status" => self::REV_DELETED), $where, __METHOD__ );
-			*/
 			$dbw->update(
 				"pages",
 				array( "page_status" => 2 ),
