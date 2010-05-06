@@ -531,6 +531,8 @@ class AutoCreateWikiPage extends SpecialPage {
 			"{$IP}/maintenance/wikia-additional-tables.sql",
 			"{$IP}/extensions/CheckUser/cu_changes.sql",
 			"{$IP}/extensions/CheckUser/cu_log.sql",
+			"{$IP}/maintenance/archives/wikia/patch-watchlist-improvements.sql",
+			"{$IP}/maintenance/archives/wikia/patch-create-blog_listing_relation.sql",
 		);
 
 		/**
@@ -548,7 +550,7 @@ class AutoCreateWikiPage extends SpecialPage {
 				break;
 		}
 
-		foreach ($sqlfiles as $file) {
+		foreach( $sqlfiles as $file ) {
 			$error = $dbwTarget->sourceFile( $file );
 			if ( $error !== true ) {
 				$this->setInfoLog( 'ERROR', wfMsg('autocreatewiki-step6') );
