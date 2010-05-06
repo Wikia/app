@@ -485,6 +485,12 @@ body.ns-0 div.noarticletext,
 	float:right;
 }
 
+#qa_control_clear {
+	clear: right;
+	display: block;
+	height: 1px;
+}
+
 #qa_control_protect img,
 #qa_control_delete img,
 #qa_control_history img {
