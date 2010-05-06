@@ -1,4 +1,5 @@
 == Changes since 201005.1 ==
+* rt#48304: Adding an image to gallery via ajax not counted as edit, internal link tables not updated (macbre)
 * rt#45612: Masthead avatar menu useless on carbon (uberfuzzy)
 * rt#48241: FastCat extension no longer displays on redirect pages (TOR)
 * rt#48181: fixed broken URL in AutoWikiCreate's welcome mail (TOR)
