@@ -36,6 +36,25 @@ abstract class SpecialEditPage extends SpecialPage {
 		}
 	}
 
+	protected function getPreloadedText( $preload ) {
+		if ( $preload === '' ) {
+			return '';
+		} else {
+			$preloadTitle = Title::newFromText( $preload );
+			if ( isset( $preloadTitle ) && $preloadTitle->userCanRead() ) {
+				$rev = Revision::newFromTitle($preloadTitle);
+				if ( is_object( $rev ) ) {
+					$text = $rev->getText();
+					$text = preg_replace( '~</?includeonly>~', '', $text );
+					$text = preg_replace( '/<noinclude>.*<\/noinclude>/', '', $text );
+
+					return $text;
+				} else
+					return '';
+			}
+		}
+	}
+
 	protected function createEditPage($sPostBody) {
 		$oArticle = new Article( Title::makeTitle( NS_MAIN, '' ) );
 
@@ -59,6 +78,13 @@ abstract class SpecialEditPage extends SpecialPage {
 	}
 
 	protected function renderForm() {
+		global $wgRequest;
+
+		$preload = $wgRequest->getVal( 'preload', '' );
+		if( !empty( $preload ) ) {
+			 $this->mEditPage->textbox1 = $this->getPreloadedText( $preload );
+		}
+
 		// CategorySelect compatibility (restore categories from article body)
 		if($this->mCategorySelectEnabled) {
 			CategorySelectReplaceContent( $this->mEditPage, $this->mEditPage->textbox1 );
