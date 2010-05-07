@@ -527,21 +527,29 @@ class WikiFactoryPage extends SpecialPage {
 	 * @param string	$tab		current tab
 	 * @param string 	$active		active tab
 	 * @param integer	$city_id	wiki id in city_list table
+	 * @param string	$tabtext	text to use that is not $tab
 	 *
 	 * @return string HTML/CSS code
 	 */
-	static public function showTab( $tab, $active, $city_id ) {
+	static public function showTab( $tab, $active, $city_id, $tabtext=null ) {
 
 		$title = Title::makeTitle( NS_SPECIAL, "WikiFactory/{$city_id}/{$tab}" );
 
+		if( empty($tabtext) ) {
+			$text = wfMsg( "wikifactory-label-{$tab}" );
+		}
+		else {
+			$text = wfMsg( "wikifactory-label-{$tabtext}" );
+		}
+
 		if( $tab === $active ) {
-			return wfMsg( "wikifactory-label-{$tab}" );
+			return $text;
 		}
 		else {
 			$attribs = array(
 				"href" => $title->getFullUrl()
 			);
-			return wfElement( "a", $attribs, wfMsg( "wikifactory-label-{$tab}" ) );
+			return wfElement( "a", $attribs, $text );
 		}
 	}
 
