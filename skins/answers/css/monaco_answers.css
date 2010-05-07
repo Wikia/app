@@ -165,27 +165,7 @@ body.mainpage .firstHeading,
 #control_sharefeature,
 #profile-actions-wikiuserpage,
 body.ns-0 div.noarticletext,
-#siteSub,
-.WidgetTopVoted,
-.WidgetWatchlist,
-.WidgetWikiPage,
-.WidgetTopContent,
-.WidgetTips,
-.WidgetAncientPages,
-.WidgetShoutBox,
-.WidgetEditedRecently,
-.WidgetRecentChanges,
-.WidgetProblemReports,
-.WidgetNewPages,
-.WidgetMostVisited,
-.WidgetMagCloud,
-.WidgetLastWikis,
-.WidgetSlideshow,
-.WidgetNeedHelp,
-.WidgetContribs,
-.WidgetBookmark,
-.WidgetActiveTalkPages,
-.WidgetAnswers {
+#siteSub {
 	display: none;
 }
 
