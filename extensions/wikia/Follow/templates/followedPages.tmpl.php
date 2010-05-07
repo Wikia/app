@@ -5,7 +5,10 @@
 		<input class="secondary" type="submit" value="<?php echo wfMsg("wikiafollowedpages-special-hidden-unhide"); ?>" />
 	</form>
 <?php endif; ?>
-<?php global  $wgServer,$wgScript;?>
+<?php
+	global $wgServer,$wgScript, $wgUser;
+	$sk = $wgUser->getSkin();
+?>
 <?php foreach ($data as $key => $value): ?> 
 	<?php if(empty($more)): ?>	
 		<h2 class="firstHeading"><?php echo wfMsg($value['ns'] , array("$1" => $value['count']) ) ?>
@@ -25,7 +28,7 @@ wfMsg('wikiafollowedpages-special-showall'); ?></a>
 			</a> 
 			<?php endif; ?>
 			<span>
-				<a rel="nofollow" class="title-link" href="<?php echo $value2['url']; ?>"><?php echo $value2['wl_title']; ?></a>
+				<?php echo $sk->link( Title::newFromText( $value2['wl_title'], $value2['wl_namespace'] ), $value2['wl_title'], array( 'class' => 'title-link' ) ); ?>
 				<?php if(!empty($value2['by_user'])): ?>
 					<?php echo wfMsg('wikiafollowedpages-special-blog-by', array("$1" => $value2['by_user']) ) ?>
 				<?php endif;?>		 
