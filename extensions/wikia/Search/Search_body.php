@@ -143,7 +143,7 @@ class SolrSearchSet extends SearchResultSet {
 	 * @access public
 	 */
 	public static function newFromQuery( $query, $queryFields, $namespaces = array(), $limit = 20, $offset = 0, $crossWikiaSearch = false ) {
-		global $wgSolrHost, $wgSolrPort, $wgCityId, $wgErrorLog, $wgCrossWikiaSearchExcludedWikis;
+		global $wgSolrHost, $wgSolrPort, $wgCityId, $wgErrorLog, $wgCrossWikiaSearchExcludedWikis, $wgSolrDebugWikiId;
 
 		$fname = 'SolrSearchSet::newFromQuery';
 		wfProfileIn( $fname );
@@ -194,7 +194,7 @@ class SolrSearchSet extends SearchResultSet {
 				}
 				$params['fq'] = $nsQuery; // filter results for selected ns
 			}
-			$params['fq'] = ( !empty( $params['fq'] ) ? "(" . $params['fq'] . ") AND " : "" ) . "wid:" . $wgCityId;
+			$params['fq'] = ( !empty( $params['fq'] ) ? "(" . $params['fq'] . ") AND " : "" ) . "wid:" . ( !empty($wgSolrDebugWikiId) ? $wgSolrDebugWikiId : $wgCityId );
 		}
 		//echo "fq=" . $params['fq'] . "<br />";
 
@@ -509,8 +509,8 @@ class SolrResultTitle extends Title {
 	}
 
 	private function sanitizeUrl($url) {
-		// RT #25474
-		$url = str_replace( '?', '%3F', $url );
+		// RT #25474 - not an issue anymore? (removed due to RT #46891)
+		//$url = str_replace( '?', '%3F', $url );
 		return wfUrlEncodeExt( $url );
 	}
 }
