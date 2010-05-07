@@ -45,6 +45,7 @@ class CreateBlogPage extends SpecialBlogPage {
 		if(function_exists('CategorySelectInitializeHooks') && ($wgUser->getOption('disablecategoryselect', false) == false)) {
 			$this->mCategorySelectEnabled = true;
 			$wgRequest->setVal('action', 'edit');
+			CategorySelectInit(true);
 			CategorySelectInitializeHooks(null, null, $this->mTitle, null, null);
 		}
 
