@@ -237,6 +237,9 @@ class AjaxLoginForm extends LoginForm {
 
 	function ajaxRender(){
 		ob_start();
+		if(!isset($this->ajaxTemplate)){
+			$this->mainLoginForm( '' ); // fallback if nothing has rendered the form yet rt#48451
+		}
 		$this->ajaxTemplate->execute();
 		$out = ob_get_clean();
 		return $out;
@@ -256,9 +259,9 @@ class AjaxLoginForm extends LoginForm {
 
 		$userBirthDay = strtotime($this->wpBirthYear . '-' . $this->wpBirthMonth . '-' . $this->wpBirthDay);
 		if($userBirthDay > strtotime('-13 years')) {
+			$this->mainLoginForm( wfMsg( 'userlogin-unable-info' ) );
 			return false;
-		} else
-		{
+		} else {
 			return true;
 		}
 	}
