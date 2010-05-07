@@ -42,7 +42,7 @@ foreach(AchStatic::$mInTrackConfig as $inTrack => $inTrackBadges) {
 			</div>
 
 			<div class="image-form">
-				<p><img width="90" height="90" src="<?= AchHelper::getBadgeUrl($inTrack, $i, 90) ?>" /><br /><span class="custom-text"><?= wfMsg('achievements-customize') ?> | <a href="#" onclick="Achievements.revert(this, <?= $inTrack ?>, <?= $i ?>);"><?= wfMsg('achievements-revert') ?></a></span></p>
+				<p><img width="90" height="90" src="<?= AchHelper::getBadgeUrl($inTrack, $i, 90) ?>" /><br /><span class="custom-text"><?= wfMsg('achievements-customize') ?><br /><a href="#" onclick="Achievements.revert(this, <?= $inTrack ?>, <?= $i ?>);"><?= wfMsg('achievements-revert') ?></a></span></p>
 				<form method="POST" enctype="multipart/form-data" class="customize-upload" action="<?= $wgScriptPath ?>/index.php?action=ajax&amp;rs=Ach&amp;method=uploadBadge&amp;file=<?= $inTrack ?>-<?= $i ?>">
 					<p class="input">
 						<input name="wpUploadFile" type="file"/>
@@ -94,7 +94,7 @@ foreach($notInTrack as $section => $badges) {
 			</div>
 
 			<div class="image-form">
-				<p><img width="90" height="90" src="<?= AchHelper::getBadgeUrl($badge_type, null, 90) ?>" /><br /><span class="custom-text"><?= wfMsg('achievements-customize') ?> | <a href="#" onclick="Achievements.revert(<?= $inTrack ?>);"><?= wfMsg('achievements-revert') ?></a></span></p>
+				<p><img width="90" height="90" src="<?= AchHelper::getBadgeUrl($badge_type, null, 90) ?>" /><br /><span class="custom-text"><?= wfMsg('achievements-customize') ?><br /><a href="#" onclick="Achievements.revert(<?= $inTrack ?>);"><?= wfMsg('achievements-revert') ?></a></span></p>
 				<form method="POST" enctype="multipart/form-data" class="customize-upload" action="<?= $wgScriptPath ?>/index.php?action=ajax&amp;rs=Ach&amp;method=uploadBadge&amp;file=<?= $badge_type ?>">
 					<p class="input">
 						<input name="wpUploadFile" type="file"/>
