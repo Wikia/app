@@ -24,7 +24,10 @@ wfMsg('wikiafollowedpages-special-showall'); ?></a>
 		<li>
 			<?php if ($owner): ?>
 			<a  class="ajax-unwatch" href="<?php echo $value2['hideurl'] ?>" >
-				<img alt="<?php echo wfMsg( 'wikiafollowedpages-special-delete-tooltip' ); ?>" class="sprite delete" id="" src="http://images1.wikia.nocookie.net/__cb20015/common/skins/common/blank.gif"/>
+				<?php
+				global $wgBlankImgUrl;
+				?>
+				<img alt="<?php echo wfMsg( 'wikiafollowedpages-special-delete-tooltip' ); ?>" class="sprite delete" id="" src="<?php print $wgBlankImgUrl; ?>"/>
 			</a> 
 			<?php endif; ?>
 			<span>
