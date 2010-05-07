@@ -1,4 +1,5 @@
 == Changes since 201005.1 ==
+* rt#47444: hide widgets via code, not css (Nef)
 * rt#48290: Achievements: layout issues on some browsers (macbre)
 * rt#47700: access keys broken on answers (macbre)
 * rt#37706: RTE: selecting formatted text and turning it into a link can make it lose formatting (macbre)
