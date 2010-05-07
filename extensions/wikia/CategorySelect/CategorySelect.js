@@ -108,51 +108,68 @@ function modifyCategory(e) {
 	var catId = e.parentNode.getAttribute('catId');
 	defaultSortkey = categories[catId].sortkey != '' ? categories[catId].sortkey : (csDefaultSort != '' ? csDefaultSort : wgTitle);
 
-	modifyCategoryDialog({
-		'catId': catId,
-		'caption': csInfoboxCaption,
-		'content': '<label for="csInfoboxCategory">' + csInfoboxCategoryText + '</label>' +
-			'<br/><input type="text" id="csInfoboxCategory" />' +
-			'<br/><label for="csInfoboxSortKey">' + csInfoboxSortkeyText.replace('$1', categories[catId].category).replace('<', '&lt;').replace('>', '&gt;') + '</label>' +
-			'<br/><input type="text" id="csInfoboxSortKey" />',
-		'data': {'category': categories[catId].category, 'sortkey': defaultSortkey},
-		'save': csInfoboxSave
-	},
-	function(data) {
-		extractedParams = extractSortkey(data['category']);
-		data['category'] = extractedParams['name'];
+	var category = categories[catId].category;
+	var sortkey = defaultSortkey;
+	var dialogContent = '<label for="csInfoboxCategory">' + csInfoboxCategoryText + '</label>' +
+		'<br/><input type="text" id="csInfoboxCategory" />' +
+		'<br/><label for="csInfoboxSortKey">' + csInfoboxSortkeyText.replace('$1', categories[catId].category).replace('<', '&lt;').replace('>', '&gt;') + '</label>' +
+		'<br/><input type="text" id="csInfoboxSortKey" />';
+	var dialogOptions = {
+		id: 'sortDialog',
+		callbackBefore: function() {
+			WET.byStr('articleAction/sortSave');
+			//fill up initial values
+			$('#csInfoboxCategory').val(category);
+			$('#csInfoboxSortKey').val(sortkey);
+		},
+		callback: function() {
+			//focus input on displayed dialog
+			$('#csInfoboxCategory').focus();
+		},
+		buttons: [
+			{id:'sortDialogSave', default:true, message:csInfoboxSave, handler:function() {
+				var category = $('#csInfoboxCategory').val();
+				var sortkey = $('#csInfoboxSortKey').val();
+				extractedParams = extractSortkey(category);
+				category = extractedParams['name'];
 
-		if (data['category'] == '') {
-			alert(csEmptyName);
-			return;
-		}
-
-		if (categories[catId].category != data['category']) {
-			categories[catId].category = data['category'];
-			$('#csItemsContainer').find('a').each(function(i){
-				if (this.getAttribute('catId') == catId) {
-					this.firstChild.firstChild.nodeValue = data['category'];
-					return false;
+				if (category == '') {
+					//TODO: use jQuery dialog
+					alert(csEmptyName);
+					return;
 				}
-			});
-		}
-		var sortkey = data['sortkey'];
-		if (sortkey !== null) {
-			if (sortkey == wgTitle || sortkey == csDefaultSort) {
-				sortkey = '';
-			}
-			sortkey = extractedParams['sort'] + sortkey;
-			categories[catId].sortkey = sortkey;
-		}
-		if (categories[catId].sortkey == '') {
-			oldClassName = 'sorted';
-			newClassName = 'sort';
-		} else {
-			oldClassName = 'sort';
-			newClassName = 'sorted';
-		}
-		$(e).removeClass(oldClassName).addClass(newClassName);
-	});
+
+				if (categories[catId].category != category) {
+					categories[catId].category = category;
+					$('#csItemsContainer').find('a').each(function(i) {
+						if ($(this).attr('catId') == catId) {
+							$(this).contents().eq(0).replaceWith(category);
+							return false;
+						}
+					});
+				}
+
+				if (sortkey !== null) {
+					if (sortkey == wgTitle || sortkey == csDefaultSort) {
+						sortkey = '';
+					}
+					sortkey = extractedParams['sort'] + sortkey;
+					categories[catId].sortkey = sortkey;
+				}
+				if (categories[catId].sortkey == '') {
+					oldClassName = 'sorted';
+					newClassName = 'sort';
+				} else {
+					oldClassName = 'sort';
+					newClassName = 'sorted';
+				}
+				$(e).removeClass(oldClassName).addClass(newClassName);
+				$('#sortDialog').closeModal();
+			}}
+		]
+	};
+
+	$.showCustomModal(csInfoboxCaption, dialogContent, dialogOptions);
 }
 
 function replaceAddToInput(e) {
