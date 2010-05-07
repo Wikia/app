@@ -721,7 +721,7 @@ special external link styling */
 	padding-top: 2em;
 	clear: both;
 }
-#preferences {
+.ns-special #preferences {
 	margin: 0;
 	border: 1px solid #aaa;
 	clear: both;
