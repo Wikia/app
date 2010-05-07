@@ -123,7 +123,12 @@ var AjaxLogin = {
 				window.location.href = wgServer + wgScriptPath;
 			} else if((wgCanonicalSpecialPageName == "Signup") || (wgCanonicalSpecialPageName == "Connect")){
 				// If we just registered from a whole registration page (not a popup), head back to where we came from.
-				var destUrl = wgServer + wgScriptPath + wgScript + "?title=" + wgReturnTo;
+				
+				var destUrl = wgServer + wgScript ;
+				if (wgReturnTo.length > 0 ) {
+					destUrl += "?title=" + wgReturnTo; 
+				}	
+				
 				if((typeof wgReturnToQuery != 'undefined') && (wgReturnToQuery.length > 0)){
 					destUrl += "&" + wgReturnToQuery
 				}
