@@ -222,13 +222,18 @@ class WikiaAssets {
 	}
 
 	public static function GetThemeCSS($skin) {
-		global $wgDevelEnvironment;
+		global $wgDevelEnvironment, $wgStylePath;
+		
+		if($skin->themename == 'custom' || $skin->themename == 'sapphire') {
+				return null;
+		}
+		
 		if(empty($wgDevelEnvironment)) {
 			$start = "http://images1.wikia.nocookie.net/common";
 		} else {
 			$start = "";
 		}
-		return "\n".'<!-- GetThemeCSS --><link rel="stylesheet" type="text/css" href="'. $start .'/skins/'. $skin->skinname .'/' . $skin->themename . '/css/main.css" />';
+		return "\n".'<!-- GetThemeCSS --><link rel="stylesheet" type="text/css" href="'. $wgStylePath .'/'. $skin->skinname .'/' . $skin->themename . '/css/main.css" />';
 	}
 
 	public static function GetCoreCSS($themename, $isRTL, $isAllInOne) {
