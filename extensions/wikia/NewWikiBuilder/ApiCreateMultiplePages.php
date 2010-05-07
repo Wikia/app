@@ -96,6 +96,7 @@ class ApiCreateMultiplePages extends ApiBase {
 	}
 
 	private function createPageAnswers( $page, $category = null, $text = null ) {
+		global $IP;
 		require_once("$IP/extensions/wikia/NewWikiBuilder/PrefilledDefaultQuestion.php");
 		$q = new PrefilledDefaultQuestion( $page );
 		if ( !is_object( $q ) ) {
