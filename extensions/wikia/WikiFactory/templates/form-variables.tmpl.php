@@ -5,7 +5,7 @@
 <div>
     <form id="wk-wf-variables-select">
             <div style="float: left">
-                <select size="16" style="width: 22em;" id="wk-variable-select">
+                <select size="10" style="width: 22em;" id="wk-variable-select">
                 <?php foreach($variables as $variable): ?>
                     <option value="<?php echo $variable->cv_id ?>">
                         <?php echo $variable->cv_name ?>

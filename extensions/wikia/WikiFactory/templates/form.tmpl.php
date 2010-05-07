@@ -495,8 +495,9 @@ YAHOO.util.Event.addListener("wf-clear-cache", "click", $Factory.Variable.clear)
 			<li>
 				&nbsp;
 			</li>
-			<li <?php echo ( $tab === "variables" ) ? 'class="active"' : 'class="inactive"' ?> >
-				<?php echo WikiFactoryPage::showTab( "variables", $tab, $wiki->city_id ); ?>
+			<li <?php $subVariables = in_array($tab, array("variables", "ezsharedupload", "eznamespace") );
+					  echo ( $subVariables ) ? 'class="active"' : 'class="inactive"' ?> >
+				<?php echo WikiFactoryPage::showTab( "variables", ( ($subVariables)?'variables':$tab ), $wiki->city_id ); ?>
 			</li>
 			<li>
 				&nbsp;
@@ -525,22 +526,53 @@ YAHOO.util.Event.addListener("wf-clear-cache", "click", $Factory.Variable.clear)
 			<li>
 				&nbsp;
 			</li>
-			<li <?php echo ( $tab === "ezsharedupload" ) ? 'class="active"' : 'class="inactive"' ?> >
-				<?php echo WikiFactoryPage::showTab( "ezsharedupload", $tab, $wiki->city_id ); ?>
-			</li>
-				&nbsp;
-			<li>
 			<li <?php echo ( $tab === "close" ) ? 'class="active"' : 'class="inactive"' ?> >
 				<?php echo WikiFactoryPage::showTab( "close", $tab, $wiki->city_id ); ?>
 			</li>
+			<li>
 				&nbsp;
 			</li>
 		</ul>
 <?php
+	if( $subVariables ) {
+?>
+		<ul class="tabs second-row" id="wiki-factory-tabs-second">
+			<li>
+				&nbsp;
+			</li>
+			<li <?php echo ( $tab === "variables" ) ? 'class="active"' : 'class="inactive"' ?> >
+				<?php echo WikiFactoryPage::showTab( "variables", $tab, $wiki->city_id, 'variables2' ); ?>
+			</li>
+			<li>
+				&nbsp;
+			</li>
+			<li <?php echo ( $tab === "ezsharedupload" ) ? 'class="active"' : 'class="inactive"' ?> >
+				<?php echo WikiFactoryPage::showTab( "ezsharedupload", $tab, $wiki->city_id ); ?>
+			</li>
+			<li>
+				&nbsp;
+			</li>
+			<li <?php echo ( $tab === "eznamespace" ) ? 'class="active"' : 'class="inactive"' ?> >
+				<?php echo WikiFactoryPage::showTab( "eznamespace", $tab, $wiki->city_id ); ?>
+			</li>
+			<li>
+				&nbsp;
+			</li>
+		</ul>
+<?php
+	}
 	switch( $tab ):
 		case "variables":
 			include_once( "form-variables.tmpl.php" );
 		break;
+
+			case "ezsharedupload":
+				include_once( "form-shared-upload.tmpl.php" );
+			break;
+
+			case "eznamespace":
+				print "coming soon!\n";
+			break;
 
 		case "domains":
 			include_once( "form-domains.tmpl.php" );
@@ -556,10 +588,6 @@ YAHOO.util.Event.addListener("wf-clear-cache", "click", $Factory.Variable.clear)
 
 		case "tags":
 			include_once( "form-tags.tmpl.php" );
-		break;
-
-		case "ezsharedupload":
-			include_once( "form-shared-upload.tmpl.php" );
 		break;
 
 		case "close":
