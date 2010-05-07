@@ -365,7 +365,11 @@ CKEDITOR.dialog.add( 'link', function( editor )
 					};
 
 					// set content of link element
-					element.setText(data.text != '' ? data.text : data.link);
+
+					// don't modify links containing HTML formatting (RT #37706)
+					if (element.getText() == element.getHtml()) {
+						element.setText(data.text != '' ? data.text : data.link);
+					}
 
 					if (data.text == '') {
 						type = 'internalSimple';
