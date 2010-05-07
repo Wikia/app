@@ -24,7 +24,7 @@ jQuery.fn.exists = function() {
 // show modal dialog with content fetched via AJAX request
 jQuery.fn.getModal = function(url, id, options) {
 	// get modal plugin
-	$.getScript(stylepath + '/common/jquery/jquery.wikia.modal.js?' + wgStyleVersion, function() {
+	$.loadModalJS(function() {
 		$().log('getModal: plugin loaded');
 
 		// get modal content via AJAX
@@ -54,7 +54,7 @@ jQuery.fn.getModal = function(url, id, options) {
 jQuery.showModal = function(title, content, options) {
 	options = (typeof options != 'object') ? {} : options;
 
-	$.getScript(stylepath + '/common/jquery/jquery.wikia.modal.js?' + wgStyleVersion, function() {
+	$.loadModalJS(function() {
 		$().log('showModal: plugin loaded');
 
 		var dialog = $(document.createElement('div')).html(content).attr('title', title);
@@ -81,7 +81,7 @@ jQuery['confirm'] = function(options) {
 	options = (typeof options != 'object') ? {} : options;
 	options.id = 'WikiaConfirm';
 
-	$.getScript(stylepath + '/common/jquery/jquery.wikia.modal.js?' + wgStyleVersion, function() {
+	$.loadModalJS(function() {
 		$().log('confirm: plugin loaded');
 
 		var html = '<p>' + (options.content || '') + '</p>' +
@@ -122,6 +122,59 @@ jQuery['confirm'] = function(options) {
 			options.callback();
 		}
 	});
+}
+
+/* example of usage
+$.showCustomModal('title', '<b>content</b>',
+	{buttons: [
+		{id:'ok', default:true, message:'OK', handler:function(){alert('ok');}},
+		{id:'cancel', message:'Cancel', handler:function(){alert('cancel');}}
+	]}
+);
+*/
+// show modal popup with title, content and set ot buttons
+jQuery.showCustomModal = function(title, content, options) {
+	options = (typeof options != 'object') ? {} : options;
+
+	$.loadModalJS(function() {
+		$().log('showCustomModal: plugin loaded');
+
+		var buttons = '';
+		if (options.buttons) {
+			buttons = $('<div class="neutral modalToolbar"></div>');
+			for (var buttonNo = 0; buttonNo < options.buttons.length; buttonNo++) {
+				var button = '<a id="' + options.buttons[buttonNo].id + '" class="wikia-button' + (options.buttons[buttonNo].default ? '' : ' secondary') + '">' + options.buttons[buttonNo].message + '</a>';
+				$(button).bind('click', options.buttons[buttonNo].handler).appendTo(buttons);
+			}
+		}
+
+		var dialog = $('<div>').html(content).attr('title', title).append(buttons);
+
+		$("#positioned_elements").append(dialog);
+
+		// fire callbackBefore if provided
+		if (typeof options.callbackBefore == 'function') {
+			options.callbackBefore();
+		}
+
+		dialog.makeModal(options);
+
+		// fire callback if provided
+		if (typeof options.callback == 'function') {
+			options.callback();
+		}
+	});
+}
+
+//load jquery.wikia.modal if necessary and run callback function
+jQuery.loadModalJS = function(callback) {
+	//check if we already loaded jquery.wikia.modal.js
+	if (typeof $().makeModal != 'function') {
+		$().log('modal plugin loading...');
+		$.getScript(stylepath + '/common/jquery/jquery.wikia.modal.js?' + wgStyleVersion, callback);
+	} else {
+		callback();
+	}
 }
 
 // send POST request and parse returned JSON
