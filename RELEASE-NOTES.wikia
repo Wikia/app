@@ -1,4 +1,5 @@
 == Changes since 201005.1 ==
+* rt#45418: colours are bad for diffs on monaco carbon (macbre)
 * rt#47444: hide widgets via code, not css (Nef)
 * rt#48290: Achievements: layout issues on some browsers (macbre)
 * rt#47700: access keys broken on answers (macbre)
