@@ -1,4 +1,5 @@
 == Changes since 201005.1 ==
+* rt#47700: access keys broken on answers (macbre)
 * rt#37706: RTE: selecting formatted text and turning it into a link can make it lose formatting (macbre)
 * rt#48342: Article links on Special:Following now red when non-existent (TOR)
 * rt#48395: Do not show following on diffs of user pages (TOR)
