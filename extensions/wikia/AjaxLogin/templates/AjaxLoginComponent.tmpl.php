@@ -36,7 +36,7 @@
 	            </tr>
 	            </table>
 	            <div style="margin: 15px 0;">
-	                <label for="wpRemember1" style="padding-left: 5px"><?php print wfMsg('remembermypassword') ?></label>
+	                <label for="wpRemember2Ajax" style="padding-left: 5px"><?php print wfMsg('remembermypassword') ?></label>
 	            </div>
 	        <input type="submit" id="wpLoginattempt" value="<?php print wfMsg("login") ?>" onclick="AjaxLogin.action='login'; AjaxLogin.form.submit(); return false;" />
 	        <input type="hidden" name="wpLoginToken" value="<?php echo $token; ?>" />
