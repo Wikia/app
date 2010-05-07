@@ -65,7 +65,7 @@ class DifferenceEngine {
 		} else {
 			$this->mOldid = intval($old);
 			$this->mNewid = intval($new);
-			wfRunHooks( 'NewDifferenceEngine', array(&$titleObj, &$this->mOldid, &$this->mNewid, $old, $new) ); 
+			wfRunHooks( 'NewDifferenceEngine', array(&$titleObj, &$this->mOldid, &$this->mNewid, $old, $new) );
 		}
 		$this->mRcidMarkPatrolled = intval($rcid);  # force it to be an integer
 		$this->mRefreshCache = $refreshCache;
@@ -76,15 +76,15 @@ class DifferenceEngine {
 	function getTitle() {
 		return $this->mTitle;
 	}
-	
+
 	function wasCacheHit() {
 		return $this->mCacheHit;
 	}
-	
+
 	function getOldid() {
 		return $this->mOldid;
 	}
-	
+
 	function getNewid() {
 		return $this->mNewid;
 	}
@@ -226,7 +226,7 @@ CONTROL;
 			}
 			// Build the link
 			if( $rcid ) {
-				$patrol = ' <span class="patrollink">[' . $sk->makeKnownLinkObj( $this->mTitle, 
+				$patrol = ' <span class="patrollink">[' . $sk->makeKnownLinkObj( $this->mTitle,
 					wfMsgHtml( 'markaspatrolleddiff' ), "action=markpatrolled&rcid={$rcid}" ) . ']</span>';
 			} else {
 				$patrol = '';
@@ -384,7 +384,7 @@ CONTROL;
 		if( $this->mRcidMarkPatrolled && $this->mTitle->quickUserCan('patrol') ) {
 			$sk = $wgUser->getSkin();
 			$wgOut->addHTML(
-				"<div class='patrollink'>[" . $sk->makeKnownLinkObj( $this->mTitle, 
+				"<div class='patrollink'>[" . $sk->makeKnownLinkObj( $this->mTitle,
 					wfMsgHtml( 'markaspatrolleddiff' ), "action=markpatrolled&rcid={$this->mRcidMarkPatrolled}" ) .
 				']</div>'
 			 );
@@ -496,7 +496,7 @@ CONTROL;
 		if( !$next ) {
 			$nextlink = '';
 		} else {
-			$nextlink = '<br/>' . $sk->makeKnownLinkObj( $this->mTitle, wfMsgHtml( 'nextdiff' ), 
+			$nextlink = '<br/>' . $sk->makeKnownLinkObj( $this->mTitle, wfMsgHtml( 'nextdiff' ),
 				'diff=next&oldid=' . $this->mNewid.$this->htmlDiffArgument(), '', '', 'id="differences-nextlink"' );
 		}
 		$header = "<div class=\"firstrevisionheader\" style=\"text-align: center\">" .
@@ -545,7 +545,15 @@ CONTROL;
 	 */
 	function showDiffStyle() {
 		global $wgStylePath, $wgStyleVersion, $wgOut;
-		$wgOut->addStyle( 'common/diff.css' );
+
+		/* Wikia change begin - @author: Macbre */
+		/* make sure this CSS is loaded before skin CSS (RT #45418) */
+		$wgOut->addLink(array(
+			'rel' => 'stylesheet',
+			'type' => 'text/css',
+			'href' => "{$wgStylePath}/common/diff.css?{$wgStyleVersion}",
+		));
+		/* Wikia change end */
 
 		// JS is needed to detect old versions of Mozilla to work around an annoyance bug.
 		$wgOut->addScript( "<script type=\"text/javascript\" src=\"$wgStylePath/common/diff.js?$wgStyleVersion\"></script>" );
