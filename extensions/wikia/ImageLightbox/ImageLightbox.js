@@ -114,7 +114,7 @@ var ImageLightbox = {
 		}, function(res) {
 			if (res.html) {
 				// open modal
-				$.getScript(stylepath + '/common/jquery/jquery.wikia.modal.js?' + wgStyleVersion, function() {
+				$.loadModalJS(function() {
 					$("#positioned_elements").append(res.html);
 
 					$('#lightbox-caption-content').html(caption);

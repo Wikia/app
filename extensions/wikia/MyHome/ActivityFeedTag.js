@@ -29,7 +29,7 @@ ActivityFeedTag.loadVideoPlayer = function(ev) {
 		if (res.html) {
 			// open modal
 			desc = desc.replace(/_/g, ' ');
-			$.getScript(stylepath + '/common/jquery/jquery.wikia.modal.js?' + wgStyleVersion, function() {
+			$.loadModalJS(function() {
 				var html = '<div id="myhome-video-player" title="' + desc  +'">' + res.html + '</div>';
 				$("#positioned_elements").append(html);
 				$('#myhome-video-player').makeModal({
@@ -71,7 +71,7 @@ ActivityFeedTag.loadFullSizeImage = function(ev) {
 		if (res.html) {
 			// open modal
 			desc = desc.replace(/_/g, ' ');
-			$.getScript(stylepath + '/common/jquery/jquery.wikia.modal.js?' + wgStyleVersion, function() {
+			$.loadModalJS(function() {
 				var html = '<div id="myhome-image-preview" title="' + desc  +'">' + res.html + '</div>';
 				$("#positioned_elements").append(html);
 				$('#myhome-image-preview').makeModal({
