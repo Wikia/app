@@ -30,13 +30,14 @@ If you prefer to use regular email or have attachments, you can contact us at [m
 		'contactusername' => 'Username',
 		'contactwikiname' => 'Which wiki',
 		'contactrealname' => 'Your name',
-		'contactyourmail' => 'Your email address',
+		'contactyourmail' => 'Email',
 		'contactproblem' => 'Subject',
 		'contactproblemdesc' => 'Message',
 		'contactmail' => 'Send to Wikia',
 		'contactfilledin' => 'This information has been filled in from your account preferences',
 		'contactccme' => 'Send me a copy of this message',
 		'contactccdisabled' => 'DISABLED: Please validate your email address to use this function',
+		'contactnotyou' => 'Not you?',
 		
 		/* errors */
 		'contactnomessage' => 'Please fill in a message',
