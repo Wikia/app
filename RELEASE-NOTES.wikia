@@ -1,4 +1,8 @@
 == Changes since 201005.1 ==
+* rt#46374: Category Options box doesn't have a border anymore (Marooned)
+* rt#43190: CategorySelect has started to break badly with the EF Monaco upgrade (Marooned)
+* rt#48365: jQuery modal functions should not request jquery.wikia.modal.js on every call (Marooned)
+* rt#40804: "Add category" button doesn't add the article to the category (Marooned)
 * rt#45418: colours are bad for diffs on monaco carbon (macbre)
 * rt#47444: hide widgets via code, not css (Nef)
 * rt#48290: Achievements: layout issues on some browsers (macbre)
