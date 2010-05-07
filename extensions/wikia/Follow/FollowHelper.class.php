@@ -456,6 +456,11 @@ class FollowHelper {
 	 */
 	
 	static public function mailNotifyBuildKeys(&$keys, $action, $other_param) {
+		$actionsList = array('categoryadd', 'blogpost');
+		if (!in_array($action, $actionsList)) {
+			return true;
+		}
+
 		$page = Title::newFromText( $keys['$PAGETITLE'] );
 
 		$keys['$PAGETITLE'] = $other_param['childTitle']->getPrefixedText();
@@ -469,7 +474,7 @@ class FollowHelper {
 
 		if($action == 'blogpost') {			
 			$keys['$BLOGLISTING_URL'] = $page->getFullUrl();  
-			$keys['$$BLOGLISTING'] = $page->getText();
+			$keys['$BLOGLISTING'] = $page->getText();
 			return true;
 		}
 		
