@@ -75,7 +75,10 @@ class AdProviderLiftium implements iAdProvider {
 
         public function getAd($slotname, $slot){
 		$out = $this->getSetupHtml();
-		$out .= '<script type="text/javascript">LiftiumOptions.placement = "' . $slotname . '";Liftium.callAd("' . $slot['size'] . '");</script>' . "\n";
+		$out .= '<script type="text/javascript">' . "\n" .
+			'LiftiumOptions.placement = "' . $slotname . '";' . "\n" . 
+			'LiftiumDART.placement = "' . $slotname . '";' . "\n" . 
+			'Liftium.callAd("' . $slot['size'] . '");</script>' . "\n";
 		return $out;
         }
 
