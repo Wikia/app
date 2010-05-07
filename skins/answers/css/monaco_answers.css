@@ -49,6 +49,15 @@
 	-webkit-border-radius: 10px;
 }
 
+/* hide page bar on main namespace except of mainpage (RT #47700) */
+body.ns-0 #page_bar {
+	display: none;
+}
+
+body.mainpage #page_bar {
+	display: block;
+}
+
 #answer_edit_link div, #question_edit_link div {
 	background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20100128);
 	clip: rect(0px, 16px, 16px, 0px);
