@@ -198,9 +198,15 @@ pre {
 /* @group Main Page */
 
 body.mainpage div.monaco_shrinkwrap {
-	left: 50%;
-	margin-left: -486px;
-	width: 972px;
+        width: 972px;
+}
+body.mainpage.ltr div.monaco_shrinkwrap {
+        left: 50%;
+        margin-left: -486px;
+}
+body.mainpage.rtl div.monaco_shrinkwrap {
+        right: 50%;
+        margin-right: -486px;
 }
 body.mainpage {
 	background-position: center top;
