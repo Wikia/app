@@ -509,3 +509,188 @@ Het ziet ernaar uit dat iemand uw wiki heeft bewerkt! Waarom gaat u niet even ki
 $messages['no'] = array(
 	'founderemails-email-10-days-passed-subject' => 'Hvordan går det med wikien din?',
 );
+
+
+$messages['de'] = array(
+	'tog-founderemailsenabled' => 'Schicke mir eine E-Mail über Aktivitäten anderer Benutzer (nur für Wikigründer)',
+	'founderemails-email-user-registered-subject' => 'Jemand hat ein Benutzerkonto in deinem Wiki erstellt!',
+	'founderemails-email-user-registered-body' => 'Hi $FOUNDERNAME,
+
+Sieht ganz so aus, als ob $USERNAME sich in deinem Wiki angemeldet hat! Schau doch mal auf der Benutzerdiskussionsseite ($USERTALKPAGEURL) vorbei und sag Hallo!
+
+Tschüss, Tim.
+http://de.wikia.com/wiki/Benutzer:Avatar
+
+Klicke hier ($UNSUBSCRIBEURL) um keine dieser E-Mails mehr zu erhalten.',
+	'founderemails-email-user-registered-body-html' => '<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Hi $FOUNDERNAME,</p>
+
+<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Sieht ganz so aus, als ob $USERNAME sich in deinem Wiki angemeldet hat! Schau doch mal auf der <a href="$USERTALKPAGEURL">Benutzerdiskussionsseite</a> vorbei und sag Hallo!</p>
+
+<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Tschüss, Tim.<br />http://de.wikia.com/wiki/Benutzer:Avatar</p>
+
+<div style="font-family:Arial,sans-serif;color: #333;font-size: 70%;margin-top: 25px;text-align: center;">Klicke <a href="$UNSUBSCRIBEURL">hier</a> um keine dieser E-Mails mehr zu erhalten.</div>',
+	'founderemails-email-0-days-passed-subject' => 'Willkommen bei Wikia!',
+	'founderemails-email-0-days-passed-body' => 'Herzlichen Glückwunsch zur Erstellung von $WIKINAME - du bist nun Teil der Wiki-Community!
+
+
+Wie mache ich jetzt weiter?
+
+Fange an, Inhalte zu schreiben! Bei Wikis geht es darum, deine Lieblingsthemen mit der Welt zu teilen - und du kannst direkt damit anfangen, indem du anfängst Artikel in deinem Wiki zu schreiben.
+
+Mach dir keine Gedanken darüber ob alles perfekt ist - tauch einfach ein und fang an. Wikis bringen alle möglichen Leute zusammen um gemeinsam zu arbeiten - wenn dir ein paar Informationen zu einem Thema fehlen, dann starte trotzdem. Vielleicht kommen jemand anderes und ergänzt die fehlenden Teile!
+
+Wie kann ich loslegen?
+
+ - Klicke den Link "Eine neue Seite anlegen" in der linken Bedienleiste und gib einen Titel für die neue Seite ein. Ein Beispiel: Wenn du ein Wiki über die Tiere Afrikas startest, könntest du einen Artikel über Löwen oder Elefanten anlegen.
+ - Den Link um einen neuen Artikel zu erstellen findest du auf jeder Seite.
+ - Am besten fügst du mindestens ein Bild zu jedem Artikel hinzu - da sieht viel schöner aus und macht es für den Leser spannender.
+
+Falls du noch mehr Hilfe brauchst, findest du eine Reihe von Fragen und Antwort auf der FAQ-Seite ($WIKIURLwiki/Hilfe:FAQ?ctc=FE18) oder sprich mit uns im Forum (http://de.wikia.com/wiki/Forum:%C3%9Cbersicht?ctc=FE19). Ansonsten gilt: Viel Spaß!
+
+Tschüss, Tim.
+http://de.wikia.com/wiki/Benutzer:Avatar
+
+Klicke hier ($UNSUBSCRIBEURL) um keine dieser E-Mails mehr zu erhalten.',
+	'founderemails-email-0-days-passed-body-html' => '<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Herzlichen Glückwunsch zur Erstellung von $WIKINAME - du bist nun Teil der Wiki-Community!</p>
+
+<h3 style="line-height: 150%;font-family:Arial,sans-serif;color: #990000;">Wie mache ich jetzt weiter?</h3>
+
+<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Fange an, Inhalte zu schreiben! Bei Wikis geht es darum, deine Lieblingsthemen mit der Welt zu teilen - und du kannst direkt damit anfangen, indem du anfängst Artikel in deinem Wiki zu schreiben.</p>
+
+<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;"><strong>Mach dir keine Gedanken darüber ob alles perfekt ist</strong> - tauch einfach ein und fang an. Wikis bringen alle möglichen Leute zusammen um gemeinsam zu arbeiten - wenn dir ein paar Informationen zu einem Thema fehlen, dann starte trotzdem. Vielleicht kommen jemand anderes und ergänzt die fehlenden Teile!
+</p>
+
+<h3 style="line-height: 150%;font-family:Arial,sans-serif;color: #990000;">Wie kann ich loslegen?</h3>
+
+<ul style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">
+<li>Klicke den Link "Eine neue Seite anlegen" in der linken Bedienleiste und gib einen Titel für die neue Seite ein. Ein Beispiel: Wenn du ein Wiki über die Tiere Afrikas startest, könntest du einen Artikel über Löwen oder Elefanten anlegen.</li>
+<li>Den Link um einen neuen Artikel zu erstellen findest du auf jeder Seite.</li>
+<li>Am besten fügst du mindestens ein Bild zu jedem Artikel hinzu - da sieht viel schöner aus und macht es für den Leser spannender.</li>
+</ul>
+
+<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Falls du noch mehr Hilfe brauchst, findest du eine Reihe von Fragen und Antwort auf der <a href="$WIKIURLwiki/Hilfe:FAQ?ctc=FE18">FAQ-Seite</a> oder sprich mit uns <a href="http://de.wikia.com/wiki/Forum:%C3%9Cbersicht?ctc=FE19">im Forum</a>. Ansonsten gilt: <em>Viel Spaß!</em></p>
+
+<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Tschüss, Tim.<br />http://de.wikia.com/wiki/Benutzer:Avatar</p>
+
+<div style="font-family:Arial,sans-serif;color: #333;font-size: 70%;margin-top: 25px;text-align: center;">Klicke <a href="$UNSUBSCRIBEURL">hier</a> um keine dieser E-Mails mehr zu erhalten.</div>',
+	'founderemails-email-3-days-passed-subject' => 'Mehr Aktivität ins Wiki bringen',
+	'founderemails-email-3-days-passed-body' => 'Hi $FOUNDERNAME
+
+Jetzt, wo du schon ein paar Tage dein Wiki gestartet hast, möchten wir dir ein paar Tipps geben, wie du mehr Aktivität in dein Wiki bringen kannst. Bring andere dazu, dir zu helfen!
+
+
+Bring deine Freunde und Bekannte mit an Bord
+
+ - Benutze den Link "Artikel teilen" um die besten Artikel in Facebook, Twitter und Co. zu verbreiten!
+ - Wenn du an eine, bestimmten Themas arbeitest, finde ein passendes Forum und frage dort nach Hilfe. Ein Beispiel: Wenn du ein Wiki über Katzen erstellst, such dir ein Katzenforum, weise auf deine bisherigen Artikel hin und frage, ob es Menschen gibt, die dir beim weiteren Ausbau helfen möchten.
+ - Schreib eine Mail an diejenigen Bekannten, die die Vorliebe für dein Thema teilen - vielleicht ein Mitarbeiter oder ein Freund in der Schule - und frag\' ob sie dir nicht helfen wollen.
+
+Wenn andere Nutzer auf das Wiki aufmerksam werden und Seiten bearbeiten, kannst du die Änderungen über die Startseite ($WIKIURL/wiki/Special:My_Home?ctc=FE15) im Auge behalten. Klicke auf die Namen der Nutzer, finde heraus ob sie ein paar Informationen über sich hinterlassen haben und hinterlasse ihnen einen kurzen Willkommensgruß!
+
+Ansonsten - wenn du weitere Hilfe brauchst, denk daran in den Hilfe-Seiten zu stöbern ($WIKIURL/wiki/Hilfe:FAQ?ctc=FE16) oder sprich mit uns im Forum (http://de.wikia.com/wiki/Forum:%C3%9Cbersicht?ctc=FE14.
+
+Tschüss, Tim.
+http://de.wikia.com/wiki/Benutzer:Avatar
+
+Klicke hier ($UNSUBSCRIBEURL) um keine dieser E-Mails mehr zu erhalten.',
+	'founderemails-email-3-days-passed-body-html' => '<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Hi $FOUNDERNAME,</p>
+
+<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Jetzt, wo du schon ein paar Tage dein Wiki gestartet hast, möchten wir dir ein paar Tipps geben, wie du mehr Aktivität in dein Wiki bringen kannst. <strong>Bring andere dazu, dir zu helfen!</strong></p>
+
+<h3 style="line-height: 150%;font-family:Arial,sans-serif;color: #990000;">Bring deine Freunde und Bekannte mit an Bord</h3>
+
+<ul style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">
+<li>Benutze den Link "Artikel teilen" um die besten Artikel in Facebook, Twitter und Co. zu verbreiten!</li>
+<li>Wenn du an eine, bestimmten Themas arbeitest, finde ein passendes Forum und frage dort nach Hilfe. <span class="example">Ein Beispiel: Wenn du ein Wiki über Katzen erstellst, such dir ein Katzenforum, weise auf deine bisherigen Artikel hin und frage, ob es Menschen gibt, die dir beim weiteren Ausbau helfen möchten.</span></li>
+<li>Schreib eine Mail an diejenigen Bekannten, die die Vorliebe für dein Thema teilen - vielleicht ein Mitarbeiter oder ein Freund in der Schule - und frag\' ob sie dir nicht helfen wollen.</li>
+</ul>
+
+<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Wenn andere Nutzer auf das Wiki aufmerksam werden und Seiten bearbeiten, kannst du die Änderungen über die <a href="$WIKIURL/wiki/Special:My_Home?ctc=FE15">Startseite</a> im Auge behalten. Klicke auf die Namen der Nutzer, finde heraus ob sie ein paar Informationen über sich hinterlassen haben und hinterlasse ihnen einen kurzen Willkommensgruß!</p>
+
+<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Ansonsten - wenn du weitere Hilfe brauchst, denk daran in den <a href="$WIKIURL/wiki/Hilfe:FAQ?ctc=FE16">Hilfe-Seiten</a> zu stöbern oder sprich mit uns im <a href="http://de.wikia.com/wiki/Forum:%C3%9Cbersicht?ctc=FE14">Forum</a>.</p>
+
+<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Tschüss, Tim.<br />http://de.wikia.com/wiki/Benutzer:Avatar</p>
+
+<div style="font-family:Arial,sans-serif;color: #333;font-size: 70%;margin-top: 25px;text-align: center;">Klicke <a href="$UNSUBSCRIBEURL">hier</a> um keine dieser E-Mails mehr zu erhalten.</div>',
+	'founderemails-email-10-days-passed-subject' => 'Pimp dein Wiki!',
+	'founderemails-email-10-days-passed-body' => 'Hi $FOUNDERNAME,
+
+Nachdem du dich jetzt etwas eingewöhnt hast, wollten wir dir noch ein paar Tipps mit auf den Weg geben, wie du dein Wiki so anpassen kannst, dass du es etwas "wohnlicher" machst und dich wie zuhause fühlst.
+
+Hübsch dein Wiki auf
+
+1) Lade ein eigenes Logo hoch.
+Du hast vielleicht einige der tollen Logos gesehen, die andere Wikis haben. In aller Kürze: Du musst nur ein 216x155 Pixel großes Bild Wiki.png erstellen und es in dein Wiki hochladen ($WIKIURL/wiki/Special:Upload?ctc=FE10). Eine ausführlichere Anleitung findest du hier (http://hilfe.wikia.com/wiki/Hilfe:Logo?ctc=FE11).
+
+2) Ändere den Skin.
+Rufe deine Einstellungen auf ($WIKIURL/wiki/Special:Preferences?ctc=FE12) und wähle den "Skin"-Reiter. Am Ende der Seite kannst du ein Standard-Farbschema für dein Wiki wählen.
+
+Ansonsten - wenn du weitere Hilfe brauchst, denk daran in den Hilfe-Seiten zu stöbern ($WIKIURL/wiki/Hilfe:FAQ?ctc=FE16) oder sprich mit uns im Forum (http://de.wikia.com/wiki/Forum:%C3%9Cbersicht?ctc=FE14).
+
+Tschüss, Tim.
+http://de.wikia.com/wiki/Benutzer:Avatar
+
+Klicke hier ($UNSUBSCRIBEURL) um keine dieser E-Mails mehr zu erhalten.',
+	'founderemails-email-10-days-passed-body-html' => '<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Hi $FOUNDERNAME,</p>
+
+<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Nachdem du dich jetzt etwas eingewöhnt hast, wollten wir dir noch ein paar Tipps mit auf den Weg geben, wie du dein Wiki so anpassen kannst, dass du es etwas "wohnlicher" machst und dich wie zuhause fühlst.</p>
+
+<h3 style="line-height: 150%;font-family:Arial,sans-serif;color: #990000;">Hübsch dein Wiki auf</h3>
+
+<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">1) <strong>Lade ein eigenes Logo hoch.</strong> Du hast vielleicht einige der tollen Logos gesehen, die andere Wikis haben. In aller Kürze: Du musst nur ein 216x155 Pixel großes Bild Wiki.png erstellen und es in dein Wiki <a href="$WIKIURL/wiki/Special:Upload?ctc=FE10">hochladen</a>. Eine ausführlichere Anleitung findest du <a href="http://hilfe.wikia.com/wiki/Hilfe:Logo?ctc=FE11">hier</a>.</p>
+
+<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">2) <strong>Ändere den Skin.</strong> Rufe deine <a href="$WIKIURL/wiki/Special:Preferences?ctc=FE12">Einstellungen</a> auf und wähle den "Skin"-Reiter. Am Ende der Seite kannst du ein Standard-Farbschema für dein Wiki wählen.</p>
+
+<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Ansonsten - wenn du weitere Hilfe brauchst, denk daran in den <a href="$WIKIURL/wiki/Hilfe:FAQ?ctc=FE16">Hilfe-Seiten</a> zu stöbern oder sprich mit uns im <a href="http://de.wikia.com/wiki/Forum:%C3%9Cbersicht?ctc=FE14">Forum</a>.</p>
+
+<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Tschüss, Tim.<br />http://de.wikia.com/wiki/Benutzer:Avatar</p>
+
+<div style="font-family:Arial,sans-serif;color: #333;font-size: 70%;margin-top: 25px;text-align: center;">Klicke <a href="$UNSUBSCRIBEURL">hier</a> um keine dieser E-Mails mehr zu erhalten.</div>',
+	'founderemails-email-page-edited-reg-user-first-edit-subject' => 'Jemand hat dein Wiki bearbeitet!',
+	'founderemails-email-page-edited-reg-user-first-edit-body' => 'Hi $FOUNDERNAME,
+
+Sieht ganz so aus als ob $USERNAME zum allerersten Mal dein Wiki bearbeitet hat! Wir haben ihm bereits eine automatisch Willkommensnachricht hinterlassen, aber warum schaust du nicht selbst mal auf seiner Diskussionseite ($USERTALKPAGEURL) vorbei um ihm Hallo zu sagen? Das wird ihn sicherlich freuen!
+
+Tschüss, Tim.
+http://de.wikia.com/wiki/Benutzer:Avatar
+
+Klicke hier ($UNSUBSCRIBEURL) um keine dieser E-Mails mehr zu erhalten.',
+	'founderemails-email-page-edited-reg-user-first-edit-body-html' => '<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Hi $FOUNDERNAME,</p>
+
+<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Sieht ganz so aus als ob $USERNAME zum allerersten Mal dein Wiki bearbeitet hat! Wir haben ihm bereits eine automatisch Willkommensnachricht hinterlassen, aber warum schaust du nicht selbst mal auf seiner <a href="$USERTALKPAGEURL">Diskussionseite</a> vorbei um ihm Hallo zu sagen? Das wird ihn sicherlich freuen!</p>
+
+<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Tschüss, Tim.<br />http://de.wikia.com/wiki/Benutzer:Avatar</p>
+
+<div style="font-family:Arial,sans-serif;color: #333;font-size: 70%;margin-top: 25px;text-align: center;">Klicke <a href="$UNSUBSCRIBEURL">hier</a> um keine dieser E-Mails mehr zu erhalten.</div>',
+	'founderemails-email-page-edited-reg-user-subject' => 'Jemand hat dein Wiki bearbeitet!',
+	'founderemails-email-page-edited-reg-user-body' => 'Hi $FOUNDERNAME,
+
+Sieht so aus, als ob $USERNAME dein Wiki bearbeitet hat! Warum schaust du nicht mal auf der Benutzerdiskussionsseite ($USERTALKPAGEURL) vorbei um Hallo zu sagen?</p>
+
+Tschüss, Tim.
+http://de.wikia.com/wiki/Benutzer:Avatar
+
+Klicke hier ($UNSUBSCRIBEURL) um keine dieser E-Mails mehr zu erhalten.</div>',
+	'founderemails-email-page-edited-reg-user-body-html' => '<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Hi $FOUNDERNAME,</p>
+
+<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Sieht so aus, als ob $USERNAME dein Wiki bearbeitet hat! Warum schaust du nicht mal auf der <a href="$USERTALKPAGEURL">Benutzerdiskussionsseite</a> vorbei um Hallo zu sagen?</p>
+
+<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Tschüss, Tim.<br />http://de.wikia.com/wiki/Benutzer:Avatar</p>
+
+<div style="font-family:Arial,sans-serif;color: #333;font-size: 70%;margin-top: 25px;text-align: center;">Klicke <a href="$UNSUBSCRIBEURL">hier</a> um keine dieser E-Mails mehr zu erhalten.</div>',
+	'founderemails-email-page-edited-anon-subject' => 'Jemand hat dein Wiki bearbeitet!',
+	'founderemails-email-page-edited-anon-body' => 'Hi $FOUNDERNAME,
+Sieht so aus, als ob jemand dein Wiki bearbeitet hat! Schau doch mal vorbei und sieh nach ($WIKIURL/wiki/Special:MyHome) was sich geändert hat!
+
+Tschüss, Tim.
+http://de.wikia.com/wiki/Benutzer:Avatar
+
+Klicke hier ($UNSUBSCRIBEURL) um keine dieser E-Mails mehr zu erhalten.',
+	'founderemails-email-page-edited-anon-body-html' => '<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Hi $FOUNDERNAME,</p>
+
+<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Sieht so aus, als ob jemand dein Wiki bearbeitet hat! Schau doch mal vorbei und <a href="$WIKIURL/wiki/Special:MyHome">sieh nach</a> was sich geändert hat!</p>
+
+<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Tschüss, Tim.<br />http://de.wikia.com/wiki/Benutzer:Avatar</p>
+
+<div style="font-family:Arial,sans-serif;color: #333;font-size: 70%;margin-top: 25px;text-align: center;">Klicke <a href="$UNSUBSCRIBEURL">hier</a> um keine dieser E-Mails mehr zu erhalten.</div>',
+);
