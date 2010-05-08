@@ -377,6 +377,11 @@ div.thumb div a img {
 
 /* @group Misc */
 
+.wikia-tabs .selected {
+	background: #333;
+	color: #EEE;
+}
+
 .TablePager, 
 .TablePager td, 
 .TablePager th {

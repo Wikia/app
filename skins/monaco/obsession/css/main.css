@@ -393,6 +393,11 @@ h4.mw-specialpagesgroup {
 
 /* @group Misc */
 
+.wikia-tabs .selected {
+	background: #000;
+	color: #DDD;
+}
+
 div.noarticletext {
 	background: transparent;
 	border: 1px solid #333;

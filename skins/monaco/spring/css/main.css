@@ -171,6 +171,14 @@ body.masthead-special #page_bar {
 
 /* @end */
 
+/* @group Misc */
+
+.wikia-tabs .selected {
+	background: #FDFDF0;
+}
+
+/* @end */
+
 /* @group BUTTONS */
 
 a.wikia-button,
