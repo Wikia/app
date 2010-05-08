@@ -948,7 +948,7 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 				global $wgBlankImgUrl;
 				$zoomicon =  '<div class="magnify">'.
 					'<a href="'.$url.'" class="internal" title="'.$more.'">'.
-					'<img src="'.$wgBlankImgUrl.'" class="sprite magnify-clip" ' .
+					'<img src="'.$wgBlankImgUrl.'" class="sprite details" ' .
 					'width="16" height="16" alt="" /></a></div>';
 				/* Wikia change end */
 			}

@@ -62,7 +62,7 @@
 .sprite.watch { background-position: -17px -170px; }
 .sprite.unwatch { background-position: -17px -170px; }
 
-.sprite.magnify-clip { background-position: 0 -186px; }
+.sprite.details { background-position: 0 -186px; }
 
 .sprite.progress { 
 	background-image: url(/skins/common/images/ajax.gif); /* $wgCdnStylePath */ 
