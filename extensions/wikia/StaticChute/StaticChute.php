@@ -101,7 +101,7 @@ class StaticChute {
 			'../extensions/wikia/ProblemReports/js/ProblemReports-loader.js',
 			'common/contributed.js',
 
-			'../extensions/FBConnect/fbsdk_core.js',
+			//'../extensions/FBConnect/fbsdk_core.js',
 			'../extensions/FBConnect/fbconnect.js',
 		);
 	}
@@ -137,7 +137,7 @@ class StaticChute {
 			'../extensions/wikia/ImageLightbox/ImageLightbox.js',
 			'../extensions/wikia/IE6PhaseOut/IE6PhaseOut.js',
 
-			'../extensions/FBConnect/fbsdk_core.js',
+			//'../extensions/FBConnect/fbsdk_core.js',
 			'../extensions/FBConnect/fbconnect.js',
 		);
 		$this->config['monaco_anon_article_js'] = array_merge($this->config['monaco_anon_article_js'], $widgetsAssets['js']);
@@ -170,7 +170,7 @@ class StaticChute {
 			'../extensions/wikia/ImageLightbox/ImageLightbox.js',
 			'../extensions/wikia/IE6PhaseOut/IE6PhaseOut.js',
 			
-			'../extensions/FBConnect/fbsdk_core.js',
+			//'../extensions/FBConnect/fbsdk_core.js',
 			'../extensions/FBConnect/fbconnect.js',
 		);
 		$this->config['monaco_loggedin_js'] = array_merge($this->config['yui'], $this->config['monaco_loggedin_js'], $widgetsAssets['js']);
@@ -201,7 +201,7 @@ class StaticChute {
 			'../extensions/wikia/Interstitial/Interstitial.js',
 			'../extensions/wikia/ImageLightbox/ImageLightbox.js',
 			
-			'../extensions/FBConnect/fbsdk_core.js',
+			//'../extensions/FBConnect/fbsdk_core.js',
 			'../extensions/FBConnect/fbconnect.js',
 		);
 		$this->config['monaco_anon_everything_else_js'] = array_merge($this->config['yui'], $this->config['monaco_anon_everything_else_js'], $widgetsAssets['js']);
@@ -252,7 +252,7 @@ class StaticChute {
 			'common/ajax.js',
 			'common/ajaxwatch.js',
 			'common/mwsuggest.js',
-			'../extensions/FBConnect/fbsdk_core.js',
+			//'../extensions/FBConnect/fbsdk_core.js',
 			'../extensions/FBConnect/fbconnect.js',
 		);
 
@@ -268,7 +268,7 @@ class StaticChute {
 			'common/ajax.js',
 			'common/ajaxwatch.js',
 			'common/mwsuggest.js',
-			'../extensions/FBConnect/fbsdk_core.js',
+			//'../extensions/FBConnect/fbsdk_core.js',
 			'../extensions/FBConnect/fbconnect.js',
 		);
 		//CSS
@@ -547,7 +547,7 @@ class StaticChute {
 		// Taking the easy, safe path. This could be improved if you want to go through the
 		// effort/expense/risk of processing the DOM. For now just strip leading space on each line
 		$min = preg_replace('/^\s+/', '', $html);
-    		return $min;
+		return $min;
 	}
 
 	public function minifyHtmlFile($file){
@@ -602,7 +602,7 @@ class StaticChute {
 			$min = shell_exec("cat $jsfile | $jsmin");
 		}
 
-    		return $min;
+		return $min;
 	}
 
 	public function minifyJSData($js){
@@ -613,7 +613,7 @@ class StaticChute {
 		$min = self::minifyJSFile($tmpfile);
 		unlink($tmpfile);
 
-    		return $min;
+		return $min;
 	}
 
 
