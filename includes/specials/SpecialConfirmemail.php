@@ -25,6 +25,14 @@ class EmailConfirmation extends UnlistedSpecialPage {
 	function execute( $code ) {
 		global $wgUser, $wgOut;
 		$this->setHeaders();
+
+		/* wikia change begin, auth: uberfuzzy */
+		if( empty( $code ) ) {
+			global $wgRequest;
+			$code = $wgRequest->getText( 'code' );
+		}
+		/* wikia change end */
+
 		if( empty( $code ) ) {
 			if( $wgUser->isLoggedIn() ) {
 				if( User::isValidEmailAddr( $wgUser->getEmail() ) ) {
@@ -77,6 +85,15 @@ class EmailConfirmation extends UnlistedSpecialPage {
 			$form .= Xml::submitButton( wfMsg( 'confirmemail_send' ) );
 			$form .= Xml::closeElement( 'form' );
 			$wgOut->addHTML( $form );
+
+			/* wikia change start */
+			$form  = Xml::openElement( 'form', array( 'method' => 'post', 'action' => $self->getLocalUrl() ) );
+			$form .= Xml::input( 'code' );
+			$form .= Xml::submitButton( 'Confirm' );
+			$form .= Xml::closeElement( 'form' );
+			$wgOut->addHTML( Xml::fieldset( wfMsg('enterconfirmcode'), $form) );
+			/* wikia change end */
+
 		}
 	}
 
