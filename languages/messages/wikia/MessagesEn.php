@@ -1009,4 +1009,7 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'wikia-hours-ago' => '$1 {{PLURAL:$1|hour|hours}} ago',
 'wikia-days-ago' => '$1 {{PLURAL:$1|day|days}} ago',
 
+# Special: ConfirmEmail
+'enterconfirmcode' => 'Enter code',
+
 ));
