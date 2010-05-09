@@ -1040,10 +1040,10 @@ $messages['ja'] = array(
 	'wmu-insert2' => '追加する',
 	'wmu-prev' => '前の8件',
 	'wmu-next' => '次の8件',
-	'wmu-flickr2' => '$1件のFlickrの画像',
+	'wmu-flickr2' => 'Flickrの画像（$1件）',
 	'wmu-insert3' => 'この画像を追加する',
 	'wmu-recent-inf' => '最近アップロードされた画像',
-	'wmu-thiswiki2' => '$1件の画像',
+	'wmu-thiswiki2' => 'このウィキのの画像（$1件）',
 	'wmu-success' => '<h1>成功しました</h1>
 記事に画像を挿入しました。',
 	'wmu-success-placeholder' => '<h1>成功しました</h1>',
@@ -1091,6 +1091,20 @@ $messages['kn'] = array(
 /** Korean (한국어) */
 $messages['ko'] = array(
 	'wmu-added-from-plc' => '플레이스홀더를 통해 삽입된 그림',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'wmu-upload' => 'Eroplueden',
+	'wmu-upload-btn' => 'Eroplueden',
+	'wmu-size' => 'Gréisst',
+	'wmu-link' => 'Link',
+	'wmu-back' => 'zréck',
+	'wmu-close' => 'zoumaachen',
+	'wmu-imagebutton' => 'Biller derbäisetzen',
+	'wmu-gallery' => 'Gallerie',
 );
 
 /** Macedonian (Македонски)

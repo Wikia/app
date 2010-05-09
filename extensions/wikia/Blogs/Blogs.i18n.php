@@ -1193,6 +1193,7 @@ $messages['it'] = array(
 
 /** Japanese (日本語)
  * @author Tommy6
+ * @author 青子守歌
  */
 $messages['ja'] = array(
 	'createblogpage' => 'ブログの記事を作成',
@@ -1236,7 +1237,7 @@ $messages['ja'] = array(
 	'create-blog-listing-matches' => '該当する記事',
 	'create-blog-listing-matches-calculate' => '検索',
 	'create-blog-listing-matches-recalculate' => '再検索',
-	'create-blog-listing-matches-info' => '件の該当する記事が見つかりました',
+	'create-blog-listing-matches-info' => '件の該当する{{PLURAL:$1|記事}}が見つかりました',
 	'create-blog-listing-sortby' => 'ソート',
 	'create-blog-listing-sortby-date' => '最近のものから',
 	'create-blog-listing-sortby-author' => '作者名',
@@ -1311,6 +1312,28 @@ $messages['ja'] = array(
  */
 $messages['kn'] = array(
 	'blog-comment-delete' => 'ಅಳಿಸು',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'create-blog-empty-title-error' => 'Titel obligatoresch',
+	'create-blog-save' => 'Säit späicheren',
+	'create-blog-listing-matches-calculate' => 'Berechnen',
+	'create-blog-listing-matches-recalculate' => 'Nei berechnen',
+	'create-blog-listing-sortby' => 'Zortéiert no',
+	'create-blog-listing-sortby-author' => 'Auteur',
+	'blog-added' => 'derbäigesat',
+	'blog-page' => 'Blog',
+	'blog-comments-anonymous' => 'Anonyme Benotzer',
+	'blog-comment-delete' => 'läschen',
+	'blog-comment-hide' => 'verstoppen',
+	'blog-comment-edit' => 'änneren',
+	'blog-avatar-talk' => 'Diskussioun',
+	'blog-avatar-preferences-title' => 'Avatar',
+	'blog-page-rate' => 'Dësen Artikel bewäerten:',
+	'blog-refresh-label' => 'Aktualiséieren',
 );
 
 /** Macedonian (Македонски)
@@ -1859,6 +1882,41 @@ $messages['ps'] = array(
 	'blog-create-label' => 'د بلاګ ليکنه ليکل',
 	'blog-create-next-label' => 'د بلاګ نوې ليکنه ليکل',
 	'blog-desc' => 'د بلاګ ليکنې',
+);
+
+/** Portuguese (Português)
+ * @author Crazymadlover
+ * @author Hamilton Abreu
+ * @author Luckas Blade
+ */
+$messages['pt'] = array(
+	'createblogpage' => 'Criar blogue',
+	'create-blog-spam' => 'Parece ser spam',
+	'create-blog-post-recent-listing' => 'Publicações recentes',
+	'create-blog-post-recent-listing-title' => 'Publicações recentes',
+	'create-blog-invalid-title-error' => 'Título inválido',
+	'create-listing-confirm-info' => 'Copie e insira o seguinte código:',
+	'create-blog-categories-textinput' => 'Adicionar uma categoria nova',
+	'create-blog-save' => 'Gravar página',
+	'create-blog-preview' => 'Mostrar antevisão',
+	'create-blog-listing-matches-calculate' => 'Calcular',
+	'create-blog-listing-matches-recalculate' => 'Recalcular',
+	'create-blog-listing-sortby-author' => 'Autor',
+	'blog-added' => 'adicionado',
+	'blog-edited' => 'editado',
+	'blog-page' => 'Blogue',
+	'blog-zero-comments' => 'Ainda não há comentários!',
+	'blog-comment-post' => 'Publicar comentário',
+	'blog-comments' => 'Comentários',
+	'blog-comments-new' => 'Comentário novo no blogue',
+	'blog-comments-save' => 'Gravar comentário no blogue',
+	'blog-comments-anonymous' => 'Utilizador anónimo',
+	'blog-comment-delete' => 'eliminar',
+	'blog-comment-hide' => 'esconder',
+	'blog-comment-history' => 'histórico',
+	'blog-comment-edit' => 'editar',
+	'blog-avatar-preferences-title' => 'Avatar',
+	'blog-refresh-label' => 'Refrescar',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

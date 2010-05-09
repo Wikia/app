@@ -347,6 +347,22 @@ $messages['ps'] = array(
 	'wva-add' => 'ورګډول',
 );
 
+/** Portuguese (Português)
+ * @author Crazymadlover
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'wva-success' => 'A página do vídeo $1 foi adicionada com sucesso.',
+	'wva-success-replaced' => 'A página do vídeo $1 foi substituída com sucesso.',
+	'wva-failure' => 'Forneça parâmetros válidos, por favor.',
+	'wva-name' => 'Introduza o nome:',
+	'wva-url' => 'Introduza a URL:',
+	'wva-add' => 'Adicionar',
+	'wva-title' => 'Adição Rápida de Vídeo a Partir da URL',
+	'wva-notlogged' => 'Precisa de se autenticar ou registar para inserir vídeos.',
+	'wva-notallowed' => 'Não pode inserir vídeos nesta wiki.',
+);
+
 /** Brazilian Portuguese (Português do Brasil)
  * @author Daemorris
  */

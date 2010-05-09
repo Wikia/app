@@ -217,6 +217,14 @@ $messages['ps'] = array(
 	'ircgate-username' => 'کارن-نوم:',
 );
 
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'ircgate-username' => 'Utilizador:',
+	'ircgate-channel' => 'Canal:',
+);
+
 /** Brazilian Portuguese (Português do Brasil)
  * @author Daemorris
  */

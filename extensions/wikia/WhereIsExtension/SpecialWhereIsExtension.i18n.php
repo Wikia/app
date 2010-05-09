@@ -281,6 +281,19 @@ $messages['ps'] = array(
 	'whereisextension-all-groups' => 'ټولې ډلې',
 );
 
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'whereisextension' => 'Onde está a extensão',
+	'whereisextension-submit' => 'Pesquisar',
+	'whereisextension-list' => 'Lista de wikis que correspondem aos critérios',
+	'whereisextension-isset' => 'tem o valor',
+	'whereisextension-filter' => 'Filtro',
+	'whereisextension-all-groups' => 'Todos os grupos',
+	'whereisextension-name-contains' => 'nome da variável contém',
+);
+
 /** Brazilian Portuguese (Português do Brasil)
  * @author Daemorris
  * @author McDutchie

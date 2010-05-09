@@ -135,6 +135,13 @@ $messages['ja'] = array(
 	'wikiawidget' => 'ウィキアウィジェット',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'wikiawidget' => 'ವಿಕಿಯಾ ವಿಡ್ಜೆಟ್‍ಗಳು',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

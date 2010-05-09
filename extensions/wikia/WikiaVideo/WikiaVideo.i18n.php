@@ -366,6 +366,17 @@ $messages['ja'] = array(
 	'wikiavideo-intro-old' => "あなたは'''[$1 $5]'''の[$4 $2 $3]の版を削除しようとしています。",
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'wikiavideo-back' => 'zréck',
+	'wikiavideo-create' => 'Video derbäisetzen',
+	'wikiavideo-replace' => 'Video ersetzen',
+	'wikiavideo-links' => 'Linken',
+	'wikiavideo-pixel' => 'Pixel',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -475,6 +486,27 @@ $messages['ps'] = array(
 	'wikiavideo-create' => 'ويډيو ورګډول',
 	'wikiavideo-category' => 'ويډيوګانې',
 	'wikiavideo-links' => 'تړنې',
+);
+
+/** Portuguese (Português)
+ * @author Crazymadlover
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'wikiavideo-reverted' => 'O vídeo $1 foi revertido com sucesso. Voltar a $2.',
+	'wikiavideo-unreverted' => 'Não tem as permissões para reverter $1.',
+	'wikiavideo-added' => 'adicionou o vídeo $1',
+	'wikiavideo-back' => 'voltar',
+	'wikiavideo-create' => 'Adicionar Vídeo',
+	'wikiavideo-replace' => 'Substituir Vídeo',
+	'wikiavideo-category' => 'Vídeos',
+	'wikiavideo-links' => 'Links',
+	'wikiavideo-placeholder' => 'Reserva de espaço',
+	'wikiavideo-gallery-template' => 'Esta galeria de vídeo está numa predefinição e não é editável a partir do modo de visionamento. Edite a devida predefinição, por favor.',
+	'wikiavideo-not-supported' => 'Este tema não permite inserir vídeos nas galerias a partir o modo de visionamento.',
+	'wikiavideo-pixel' => 'pixel',
+	'wikiavideo-deleted-old' => "A versão do vídeo '''[$1 $2]''' de $4, às $3 foi eliminada.",
+	'wikiavideo-intro-old' => "Está a eliminar a versão do vídeo '''[$1 $5]''' de [$4 $3, às $2].",
 );
 
 /** Brazilian Portuguese (Português do Brasil)

@@ -172,8 +172,11 @@ $messages['ia'] = array(
 	'rightalign-tooltip' => 'Alinear a dextra',
 );
 
-/** Italian (Italiano) */
+/** Italian (Italiano)
+ * @author Gifh
+ */
 $messages['it'] = array(
+	'insertthumbnail' => 'Inserisci anteprima',
 	'thumbnailsize' => 'Grandezza delle miniature',
 );
 
@@ -241,6 +244,22 @@ $messages['pms'] = array(
 	'insertimage' => 'Anserì la Plancia',
 	'leftalign-tooltip' => 'Alinia a snista',
 	'rightalign-tooltip' => 'Alinia a drita',
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'widgetdashboard' => 'Assistente de Widgets',
+	'mu_size_your_image' => 'Dimensione a sua imagem',
+	'almosttheretext' => 'Use o deslizador para seleccionar a dimensão da miniatura, introduza uma legenda e clique Inserir',
+	'insertfullsize' => 'Inserir imagem com as dimensões originais',
+	'insertthumbnail' => 'Inserir miniatura',
+	'thumbnailsize' => 'Dimensão da Miniatura',
+	'captionoptional' => 'Legenda (opcional):',
+	'insertimage' => 'Inserir Imagem',
+	'leftalign-tooltip' => 'Alinhar à esquerda',
+	'rightalign-tooltip' => 'Alinhar à direita',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

@@ -473,6 +473,22 @@ $messages['ja'] = array(
 	'right-lookupcontribs' => '利用者のプロジェクト全体における投稿記録を見る',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'lookupcontribusernotspecify' => 'Dir hutt nach kee Benotzer spezifizéiert',
+	'lookupcontribsselectuser' => 'Benotzer eraussichen:',
+	'lookupcontribsgo' => 'Lass',
+	'lookupcontribsnoresultfound' => 'Kee Resultat fonnt!',
+	'lookupcontribswiki' => 'Wiki',
+	'lookupcontribswikiurl' => 'URL',
+	'lookupcontribswikititle' => 'Titel',
+	'lookupcontribsnext' => 'nächst',
+	'lookupcontribsprevious' => 'vireg',
+	'lookupcontribsshowpages' => 'All Säiten ($1 Nummraim)',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */

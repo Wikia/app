@@ -19,6 +19,13 @@ $messages['af'] = array(
 	'mostpopularcategories' => 'Mees populêre kategorieë',
 );
 
+/** Arabic (العربية)
+ * @author OsamaK
+ */
+$messages['ar'] = array(
+	'mostpopularcategories' => 'أكثر التصانيف شهرة',
+);
+
 /** Araucanian (Mapudungun)
  * @author Kaniw
  */
@@ -102,6 +109,13 @@ $messages['hu'] = array(
  */
 $messages['ia'] = array(
 	'mostpopularcategories' => 'Categorias le plus popular',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Kenrick95
+ */
+$messages['id'] = array(
+	'mostpopularcategories' => 'Kategori paling populer',
 );
 
 /** Japanese (日本語)

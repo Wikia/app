@@ -24,6 +24,14 @@ $messages['ar'] = array(
 	'theorytab-parent-title' => 'المقالة الأصلية',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'theorytab-title' => 'Тэорыя',
+	'theorytab-parent-title' => 'Бацькоўскі артыкул',
+);
+
 /** Breton (Brezhoneg)
  * @author Gwenn-Ael
  * @author Y-M D
@@ -104,6 +112,14 @@ $messages['ia'] = array(
 $messages['it'] = array(
 	'theorytab-title' => 'Teorie',
 	'theorytab-parent-title' => 'Articolo principale',
+);
+
+/** Japanese (日本語)
+ * @author 青子守歌
+ */
+$messages['ja'] = array(
+	'theorytab-title' => '理論',
+	'theorytab-parent-title' => '親記事',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

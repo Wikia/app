@@ -155,6 +155,13 @@ $messages['ia'] = array(
 	'privatedomainsinstructions' => 'Hic infra se trova le lista de dominios de e-mail permittite pro le contributores de iste wiki. Cata linea designa un suffixo de e-mail que da accesso al modification. Isto debe esser formatate con un suffixo per linea. Per exemplo:</p><p style="width: 20%; padding:5px; border: 1px solid grey;">cs.stanford.edu<br /> stanfordalumni.org</p><p>Isto permitterea le modificationes de omne persona con le adresse de e-mail quecunque@cs.stanford.edu o quecunque@stanfordalumni.org</p><p><b>Entra le dominios permittite in le quadro de texto sequente, e clicca "salveguardar".</b>',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'privatedomains_affiliatenamelabel' => 'Numm vun der Organisatioun',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */

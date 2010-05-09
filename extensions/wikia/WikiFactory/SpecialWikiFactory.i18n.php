@@ -265,6 +265,13 @@ Kom asseblief later terug.",
 	'closed-reason' => 'Rede:',
 );
 
+/** Aragonese (Aragonés)
+ * @author Juanpabl
+ */
+$messages['an'] = array(
+	'wikifactory-label-actions' => 'Accions',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  * @author Jim-by
@@ -842,10 +849,11 @@ $messages['de-formal'] = array(
 
 /** Greek (Ελληνικά)
  * @author Crazymadlover
+ * @author Omnipaedista
  * @author Περίεργος
  */
 $messages['el'] = array(
-	'closewiki' => 'Κλείστε βίκι',
+	'closewiki' => 'Κλείστε το Βίκι',
 	'wf_city_url' => 'Διεύθυνση',
 	'wf_city_title' => 'Τίτλος',
 	'wf_city_created' => 'Δημιουργημένος',
@@ -990,6 +998,19 @@ $messages['es'] = array(
 	'closed-confirm-btn' => 'Confirmar cierre',
 	'closed-redirect-alert' => '¡Por favor, escribe un nuevo URL de redirección!',
 	'closed-reason' => 'Motivo:',
+);
+
+/** Estonian (Eesti)
+ * @author Hendrik
+ */
+$messages['et'] = array(
+	'wikifactory-label-close' => 'Sulge',
+	'awc-metrics-db-size' => 'Andmebaasi suurus',
+	'awc-metrics-images' => 'Pildid',
+	'awc-metrics-statistics' => 'Statistikad (kõikide kuude keskmine)',
+	'awc-metrics-close' => 'Sulge',
+	'awc-metrics-this-month' => 'see kuu',
+	'awc-metrics-exact-match' => 'täpne vaste',
 );
 
 /** Basque (Euskara)
@@ -1563,7 +1584,9 @@ $messages['ig'] = array(
 	'closed-wiki' => 'Wiki mechịrị',
 );
 
-/** Italian (Italiano) */
+/** Italian (Italiano)
+ * @author Gifh
+ */
 $messages['it'] = array(
 	'wf_city_title' => 'Titolo',
 	'wf_city_public' => 'Stato',
@@ -1577,6 +1600,7 @@ $messages['it'] = array(
 	'awc-metrics-close' => 'Chiudi',
 	'awc-metrics-active' => 'attivo',
 	'awc-metrics-closed' => 'chiusa',
+	'closed-wiki-create-wiki' => 'Crea un nuovo wiki',
 	'closed-reason' => 'Motivo:',
 );
 
@@ -1647,6 +1671,44 @@ $messages['krc'] = array(
 	'wf_cc_name' => 'Категория',
 	'wikifactory-label-domains' => 'Доменле',
 	'wikifactory-label-clog' => 'Тюрлениулени журналы',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'closewiki' => 'Wiki zoumaachen',
+	'wf_city_url' => 'Adress',
+	'wf_city_title' => 'Titel',
+	'wf_city_founding_user' => 'Grënner',
+	'wf_city_public' => 'Statut',
+	'wf_city_lang' => 'Sprooch',
+	'wf_cc_name' => 'Kategorie',
+	'wikifactory-label-actions' => 'Aktiounen',
+	'wikifactory-label-close' => 'Zoumaachen',
+	'closewiki-redirect-to' => 'Viruleeden op',
+	'closewiki-nbr-wiki' => '$1 Wikien',
+	'closewiki-images-url' => 'Billerarchiv: $1',
+	'closewiki-unknown' => 'Onbekannt',
+	'closewiki-return' => 'Zréck op $1',
+	'awc-metrics-by-language' => 'no Sprooch:',
+	'awc-metrics-all' => 'all Wikien',
+	'awc-metrics-all-languages' => 'all Sproochen',
+	'awc-metrics-search' => 'Sichoptiounen',
+	'awc-metrics-not-found' => 'Keng Wikie fonnt',
+	'awc-metrics-nbr-result' => 'Resultater:',
+	'awc-metrics-articles' => 'Artikelen',
+	'awc-metrics-edits' => 'Ännerungen',
+	'awc-metrics-db-size' => 'Gréisst vun der DB',
+	'awc-metrics-images' => 'Biller',
+	'awc-metrics-close' => 'Zoumaachen',
+	'awc-metrics-active' => 'aktiv',
+	'awc-metrics-this-month' => 'dëse Mount',
+	'closed-wiki-info' => 'Dës Wiki gouf zougemaach',
+	'closed-wiki-create-wiki' => 'Eng nei Wiki uleeën',
+	'closed-delete-images' => "D'Biller läschen",
+	'closed-redirect-url' => "D'URL viruleeden",
+	'closed-reason' => 'Grond:',
 );
 
 /** Macedonian (Македонски)
@@ -1780,6 +1842,7 @@ $messages['nl'] = array(
 	'wikifactory_removevariable' => 'Wikigegevens uit cache verwijderen',
 	'wikifactory_removeconfirm' => 'De wikigegevens zijn uit de cache verwijderd!',
 	'wikifactory-label-variables' => 'Variabelen',
+	'wikifactory-label-variables2' => 'Algemeen',
 	'wikifactory-label-hubs' => 'Hubs',
 	'wikifactory-label-domains' => 'Domeinen',
 	'wikifactory-label-return' => 'Terug naar de lijst',
@@ -2061,6 +2124,20 @@ $messages['pl'] = array(
 	'awc-metrics-wikis-found' => 'Znaleziono $1 Wiki',
 	'awc-metrics-by-email' => 'lub (e-mail użytkownika):',
 	'awc-metrics-by-user' => 'znalezione przez (nazwa użytkownika):',
+	'awc-metrics-by-dbname' => 'gdzie nazwy baz danych zawierają:',
+	'awc-metrics-by-title' => 'i tytuły zaczynające się na:',
+	'awc-metrics-by-domains' => 'i domeny zawierające',
+	'awc-metrics-not-found' => 'Nie znaleziono takich Wikii',
+	'awc-metrics-nbr-result' => 'Wyniki:',
+	'awc-metrics-created-between' => 'utworzone pomiędzy $1 (RRRR/MM/DD) i $2 (RRR/MM/DD)',
+	'awc-metrics-articles' => 'Artykuły',
+	'awc-metrics-articles-per-day' => 'Artykuły <br /> (średnio na dzień)',
+	'awc-metrics-revisions-per-page' => 'Zmiany <br /> (średnio na stronę)',
+	'awc-metrics-article-avg-size' => 'Średni rozmiar<br />artykułów',
+	'awc-metrics-edits' => 'Edycje',
+	'awc-metrics-db-size' => 'Rozmiar bazy danych',
+	'awc-metrics-images' => 'Zdjęć',
+	'awc-metrics-all-users' => 'Zarejestrowanych<br /> użytkowników',
 );
 
 /** Piedmontese (Piemontèis)
@@ -2215,17 +2292,41 @@ $messages['ps'] = array(
  */
 $messages['pt'] = array(
 	'closewiki' => 'Fechar wiki',
-	'wf_city_url' => 'Direcção',
+	'wf_city_url' => 'Endereço',
 	'wf_city_title' => 'Título',
 	'wf_city_created' => 'Criado',
 	'wf_city_founding_user' => 'Fundador',
 	'wf_city_founding_email' => 'Correio electrónico do fundador',
+	'wf_city_public' => 'Estado',
 	'wf_city_lang' => 'Língua',
 	'wf_cc_name' => 'Categoria',
+	'wikifactory-label-variables' => 'Variáveis',
+	'wikifactory-label-domains' => 'Domínios',
+	'wikifactory-label-return' => 'Voltar à lista',
+	'wikifactory-label-actions' => 'Acções',
+	'wikifactory-label-close' => 'Fechar',
+	'closewiki-message' => 'nome do domínio $1',
+	'closewiki-confirm-button' => "Confirmar '$1' de $2",
+	'closewiki-nbr-wiki' => '$1 Wikis',
+	'closewiki-wiki-closed' => "'''$1''' foi fechada ($2)",
+	'closewiki-wiki-closed_removed' => "'''$1''' está agora fechada e programada para eliminação ($2)",
+	'closewiki-wiki-closed_redirect' => "'''$1''' foi fechada ($2) e agora redirecciona para: $3",
 	'closewiki-images-url' => 'Arquivo de ficheiros: $1',
+	'closewiki-unknown' => 'Desconhecido',
 	'awc-metrics-articles' => 'Páginas',
 	'awc-metrics-article-avg-size' => 'Tam. méd.<br />de página',
 	'awc-metrics-images' => 'Ficheiros',
+	'awc-metrics-close' => 'Fechar',
+	'awc-metrics-active' => 'activas',
+	'awc-metrics-closed' => 'fechadas',
+	'awc-metrics-redirected' => 'fechadas e redireccionadas',
+	'awc-metrics-removed' => 'removidas',
+	'awc-metrics-hubs' => 'Wikis novas (por mês)',
+	'awc-metrics-news-day' => 'Wikis novas (por dia)',
+	'awc-metrics-this-month' => 'este mês',
+	'awc-metrics-last-month' => '{{PLURAL: $1|último mês|últimos $1 meses}}',
+	'closed-wiki' => 'Wiki fechada',
+	'closed-wiki-create-wiki' => 'Criar uma wiki nova',
 	'closed-create-image-archive' => 'Criar um arquivo de ficheiros',
 	'closed-delete-database-images' => 'Eliminar a base de dados e os ficheiros',
 	'closed-delete-images' => 'Eliminar os ficheiros',
@@ -2239,7 +2340,11 @@ $messages['pt'] = array(
 $messages['pt-br'] = array(
 	'wf_city_url' => 'Endereço',
 	'wf_city_title' => 'Título',
+	'wf_city_lang' => 'Língua',
+	'wf_cc_name' => 'Categoria',
+	'wikifactory-label-domains' => 'Domínios',
 	'wikifactory-label-actions' => 'Ações',
+	'wikifactory-label-close' => 'Fechar',
 	'closewiki-check-and-confirm' => 'Cheque as wikis e confirme a operação',
 	'closewiki-redirect-to' => 'Redirecionar para',
 	'closewiki-message' => 'nome do domínio $1',
@@ -2297,7 +2402,7 @@ $messages['pt-br'] = array(
 	'awc-metrics-sum-month' => 'Contagem (por mês)',
 	'awc-metrics-sum-day' => 'Contagem (por dia)',
 	'awc-metrics-fewer-than' => 'que tenha menos de $1 artigos,',
-	'awc-metrics-edits-label' => '$1 edições em $2,',
+	'awc-metrics-edits-label' => '{{PLURAL:$1|$1 edição|$1 edições}} em $2,',
 	'awc-metrics-this-month' => 'esse mês',
 	'awc-metrics-last-month' => 'nos últimos $1 mêses',
 	'awc-metrics-pageviews-label' => 'e $1 visitas nos últimos $2 dias',

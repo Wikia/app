@@ -472,6 +472,18 @@ Si piensas que fue enviado por error, por favor háznoslo saber a support@wikia.
 	'stf_select_friends' => 'Seleccionar amigos:',
 );
 
+/** Estonian (Eesti)
+ * @author Hendrik
+ */
+$messages['et'] = array(
+	'stf_error' => 'Viga e-kirja saatmisel.',
+	'stf_frm4_send' => 'Saada',
+	'stf_frm4_invite' => 'Saada kutse!',
+	'stf_frm6' => 'Sulge see aken',
+	'stf_email_sent' => 'Saada kinnitus',
+	'stf_select_all' => 'Vali kõik',
+);
+
 /** Persian (فارسی) */
 $messages['fa'] = array(
 	'invitespecialpage' => 'دعوت دوستان برای پیوستن به ویکیا',
@@ -1150,6 +1162,72 @@ $messages['ps'] = array(
 	'stf_frm4_send' => 'لېږل',
 	'stf_your_name' => 'ستاسې نوم',
 	'stf_message' => 'پيغام',
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'invitespecialpage' => 'Convidar amigos a juntar-se à Wikia',
+	'sendtoafriend-desc' => '[[Special:InviteSpecialPage|Convidar amigos a juntar-se à Wikia]]',
+	'sendtoafriend-button-desc' => 'Apresenta nas páginas um botão "Enviar a um amigo"',
+	'stf_button' => 'Enviar esta página a um amigo',
+	'stf_after_reg' => '[[Special:InviteSpecialPage|Convide um amigo a juntar-se à Wikia!]]',
+	'stf_subject' => '$2 enviou-lhe uma página da $1!',
+	'stf_confirm' => 'Mensagem enviada! Convidar outros?',
+	'stf_error' => 'Erro ao enviar mensagem.',
+	'stf_error_name' => 'Não introduziu o seu nome.',
+	'stf_error_from' => 'Não introduziu o seu endereço de correio electrónico.',
+	'stf_error_to' => 'Não introduziu o endereço de correio electrónico do seu amigo.',
+	'stf_frm1' => 'O seu correio electrónico:',
+	'stf_frm2' => 'Endereços de correio electrónico (Mais do que um? Separe-os usando vírgulas)',
+	'stf_msg_label' => 'Mensagem para enviar',
+	'stf_name_label' => 'O seu nome',
+	'stf_email_label' => 'O seu correio electrónico',
+	'stf_frm3_send' => 'Olá!
+
+$1 achou que gostaria desta página da Wikia!
+
+$2
+
+Venha vê-la!',
+	'stf_frm3_invite' => 'Olá!
+
+Acabei de inscrever-me nesta wiki da Wikia...  $1
+
+Vem cá vê-la!',
+	'stf_frm4_send' => 'Enviar',
+	'stf_frm4_cancel' => 'Cancelar',
+	'stf_frm4_invite' => 'Enviar convite!',
+	'stf_multiemail' => 'Enviar a mais do que um destinatário?',
+	'stf_frm5' => '(a URL deste site será acrescentada à sua mensagem)',
+	'stf_frm6' => 'Fechar esta janela',
+	'stf_throttle' => 'Por razões de segurança, só pode enviar $1 {{PLURAL:$1|convite|convites}} por dia.',
+	'stf_abuse' => 'Esta mensagem foi enviada por $1 através da Wikia.
+Se acha que ela foi enviada por engano, informe-nos em support@wikia.com.',
+	'stf_ctx_invite' => 'Mais do que um? Separe-os usando vírgulas - máx. $1!',
+	'stf_ctx_check' => 'Verificar contactos',
+	'stf_ctx_empty' => 'Não tem contactos nesta conta.',
+	'stf_ctx_invalid' => 'O utilizador ou palavra-chave que introduziu são inválidos. Tente novamente, por favor.',
+	'stf_sending' => 'Aguarde, por favor...',
+	'stf_email_sent' => 'Enviar confirmação',
+	'stf_back_to_article' => 'Voltar à página',
+	'stf_most_emailed' => 'Páginas mais enviadas na $1 hoje:',
+	'stf_most_popular' => 'Páginas mais populares da $1:',
+	'stf_choose_from_existing' => 'Escolha dos seus contactos:',
+	'stf_add_emails' => 'Adicionar endereços de correio electrónico:',
+	'stf_your_email' => 'O seu serviço de correio electrónico',
+	'stf_your_login' => 'O seu nome de utilizador',
+	'stf_your_password' => 'A sua palavra-chave',
+	'stf_your_name' => 'O seu nome',
+	'stf_your_address' => 'O seu correio electrónico',
+	'stf_your_friends' => 'O correio-e|do seu amigo',
+	'stf_we_dont_keep' => 'Não guardamos este correio electrónico e palavra-chave',
+	'stf_need_approval' => 'Não serão enviadas mensagens sem a sua aprovação',
+	'stf_message' => 'Mensagem',
+	'stf_instructions' => '1. Seleccione amigos.|2. Clique "$1"',
+	'stf_select_all' => 'Seleccionar todos',
+	'stf_select_friends' => 'Seleccionar amigos:',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

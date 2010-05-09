@@ -15,9 +15,12 @@ $messages['en'] = array(
 	'titleedit' => 'edit',
 );
 
-/** Message documentation (Message documentation) */
+/** Message documentation (Message documentation)
+ * @author EugeneZelenko
+ */
 $messages['qqq'] = array(
-	'titleedit' => 'This is shown next to the H1 element (article title) and opens the edit form (full article edit) when clicked',
+	'titleedit' => 'This is shown next to the H1 element (article title) and opens the edit form (full article edit) when clicked
+{{Identical|Edit}}',
 );
 
 /** Niuean (ko e vagahau Niuē) */
@@ -109,7 +112,7 @@ $messages['ay'] = array(
 	'titleedit' => 'Turkaña',
 );
 
-/** Azerbaijani (Azərbaycan) */
+/** Azerbaijani (Azərbaycanca) */
 $messages['az'] = array(
 	'titleedit' => 'Redaktə',
 );
@@ -137,6 +140,15 @@ $messages['bcl'] = array(
 /** Belarusian (Беларуская) */
 $messages['be'] = array(
 	'titleedit' => 'Правіць',
+);
+
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'titleedit-desc' => 'Дадае кнопку зьмены назвы на верх старонак',
+	'titleedit' => 'рэдагаваць',
 );
 
 /** Bulgarian (Български) */
@@ -1183,8 +1195,11 @@ $messages['sv'] = array(
 	'titleedit' => 'Redigera',
 );
 
-/** Swahili (Kiswahili) */
+/** Swahili (Kiswahili)
+ * @author Lloffiwr
+ */
 $messages['sw'] = array(
+	'titleedit-desc' => 'Inaongeza kitufe cha kuhariri jina la ukurasa mwanzoni mwa ukurasa',
 	'titleedit' => 'Hariri',
 );
 

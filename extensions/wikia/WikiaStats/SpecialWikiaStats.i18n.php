@@ -560,6 +560,7 @@ $messages['af'] = array(
  */
 $messages['an'] = array(
 	'wikiastats_other' => 'Atros',
+	'wikiastats_namespace' => 'Espacio de nombres',
 	'wikiastats_hide' => 'Amagar',
 );
 
@@ -1115,6 +1116,7 @@ $messages['cy'] = array(
 /** German (Deutsch)
  * @author LWChris
  * @author MF-Warburg
+ * @author Umherirrender
  */
 $messages['de'] = array(
 	'wikiastats' => 'Wikia Statistiken',
@@ -1138,6 +1140,8 @@ $messages['de'] = array(
 	'wikiastats_active_absent_wikians' => 'Aktivitätsaufschlüsselung registrierter Editoren',
 	'wikiastats_anon_wikians' => 'Aktivitätsaufschlüsselung anonymer Editoren',
 	'wikiastats_anon_wikians_count' => '$1 {{PLURAL:$1|anonymer|anonyme}} Benutzer gefunden',
+	'wikiastats_reg_wikians_count' => '$1 registrierte $2 gefunden',
+	'wikiastats_unreg_wikians_count' => '$1 registrierte $2 gefunden',
 	'wikiastats_pageviews' => 'Seitenaufrufe pro Namensraum pro Monat',
 	'wikiastats_article_size' => 'Artikel, die mindestens einen internen Link enthalten, und .. Zeichen lesbaren Text, ohne Wiki- und HTML-Codes, versteckte Links, etc.;<br />Auch Header zählen nicht (außer Weiterleitungen)',
 	'wikiastats_article_one_link' => 'Artikel, die mindestens einen internen Link enthalten',
@@ -4242,6 +4246,31 @@ $messages['ps'] = array(
 	'wikiastats_content' => 'مېنځپانګه',
 );
 
+/** Portuguese (Português)
+ * @author Crazymadlover
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'wikiastats_panel_close_btn' => 'Fechar',
+	'wikiastats_daterange_from' => 'Desde:',
+	'wikiastats_daterange_to' => 'Até:',
+	'wikiastats_active_day' => 'dia',
+	'wikiastats_active_month' => 'mês',
+	'wikiastats_active_year' => 'ano',
+	'wikiastats_active_months' => 'meses',
+	'wikiastats_wikians' => 'Editores registados',
+	'wikiastats_articles' => 'Páginas (excluindo redireccionamentos)',
+	'wikiastats_articles_text' => 'Artigos',
+	'wikiastats_archived' => 'Arquivado',
+	'wikiastats_other' => 'Outro',
+	'wikiastats_database' => 'Base de dados',
+	'wikiastats_images' => 'Imagens',
+	'wikiastats_connection_error' => 'Erro de ligação',
+	'wikiastats_distrib_edits' => 'Edições >=',
+	'wikiastats_distrib_wikians' => 'Editores registados',
+	'wikiastats_date' => 'Data',
+);
+
 /** Brazilian Portuguese (Português do Brasil)
  * @author Jesielt
  * @author Luckas Blade
@@ -4260,6 +4289,8 @@ $messages['pt-br'] = array(
 	'wikiastats_panel_close_btn' => 'Fechar',
 	'wikiastats_daterange_from' => 'De:',
 	'wikiastats_daterange_to' => 'Para:',
+	'wikiastats_article_one_link' => 'Artigos que contêm ao menos uma ligação interna',
+	'wikiastats_distrib_article_subtext' => 'somente as edições em artigos são contadas, não as edições em páginas de discussão, etc',
 	'wikiastats_active_day' => 'dia',
 	'wikiastats_active_month' => 'mês',
 	'wikiastats_active_year' => 'ano',
@@ -4324,19 +4355,44 @@ $messages['pt-br'] = array(
 	'wikiastats_wikiurl' => 'URL:',
 	'wikiastats_wikicreated' => 'Criado:',
 	'wikiastats_wikilang' => 'Idioma:',
+	'wikiastats_mainstats_column_B' => 'Editores registrados que contribuíram 5 vezes ou mais no mês atual',
+	'wikiastats_mainstats_column_C' => 'Editores registrados que contribuíram 100 vezes ou mais no mês atual',
+	'wikiastats_mainstats_column_F' => 'Número total de editores registrados que editaram ao menos uma vez em qualquer domínio',
+	'wikiastats_mainstats_column_G' => 'Artigos que contêm ao menos uma ligação interna',
 	'wikiastats_mainstats_column_H' => 'Artigos novos por dia no mês atual',
+	'wikiastats_mainstats_column_J' => 'Edições no mês passado (inclui redirecionamentos, inclui contribuições de não-registrados)',
+	'wikiastats_mainstats_column_N' => 'Número total de links para outros sites',
 	'wikiastats_mainstats_column_O' => 'Número total de imagens carregadas',
+	'wikiastats_mainstats_short_column_B' => 'Editores registrados ativos',
+	'wikiastats_mainstats_short_column_C' => 'Editores registrados muito ativos',
+	'wikiastats_mainstats_short_column_H' => 'Novos artigos por dia',
+	'wikiastats_mainstats_short_column_I' => 'Artigos acima de 0.5 Kb',
 	'wikiastats_mainstats_short_column_J' => 'Edições por mês',
+	'wikiastats_mainstats_short_column_K' => 'Tamanho da base de dados',
+	'wikiastats_mainstats_short_column_L' => 'Palavras',
 	'wikiastats_mainstats_short_column_M' => 'Imagens',
+	'wikiastats_mainstats_short_column_N' => 'Ligações externas',
 	'wikiastats_mainstats_short_column_O' => 'Imagens carregadas',
+	'wikiastats_comparisons_table_8' => 'Número total de editores registrados que editaram ao menos uma vez em qualquer domínio',
+	'wikiastats_comparisons_table_9' => 'Quantidade de artigos',
 	'wikiastats_comparisons_table_10' => 'Artigos novos por dia',
+	'wikiastats_comparisons_table_11' => 'Artigos acima de 0.5 Kb',
+	'wikiastats_comparisons_table_12' => 'Edições por mês/dia',
+	'wikiastats_comparisons_table_13' => 'Tamanho da base de dados',
+	'wikiastats_comparisons_table_14' => 'Palavras',
 	'wikiastats_comparisons_table_15' => 'Imagens',
+	'wikiastats_comparisons_table_16' => 'Ligações externas',
+	'wikiastats_comparisons_table_17' => 'Imagens carregadas',
+	'wikiastats_back_to_mainpage' => 'Ir à página principal das estatísticas',
 	'wikiastats_back_to_prevpage' => 'Voltar',
+	'wikiastats_trend_value' => 'valor',
 	'wikiastats_select_statistics' => 'Selecionar estatísticas',
 	'wikiastats_xls_generate' => 'Gerar',
 	'wikiastats_xls_cancel' => 'Cancelar',
 	'wikiastats_select_btn' => 'Selecionar',
 	'wikiastats_other_statistics_legend' => 'Outras estatísticas',
+	'wikiastats_pageviews_daily' => 'Estatísticas diárias (mês atual)',
+	'wikiastats_pageviews_month' => 'Estatísticas mensais',
 );
 
 /** Russian (Русский)

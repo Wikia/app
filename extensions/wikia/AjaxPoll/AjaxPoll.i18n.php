@@ -21,6 +21,19 @@ $messages['af'] = array(
 	'ajaxpoll-submit' => 'Stem!',
 );
 
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp;من مجموع التصويتات',
+	'ajaxpoll-thankyou' => 'شكرا لتصويتك!',
+	'ajaxpoll-error' => 'كانت هناك مشكلة مع تجهيز صوتك ، يرجى المحاولة مرة أخرى.',
+	'ajaxpoll-summary' => 'تم إنشاء هذا التصويت في $1 على $2، و حتى الآن صوت $3 شخصا.',
+	'ajaxpoll-submit' => 'تصويت!',
+	'ajaxpoll-closed' => 'تم إغلاق التصويت الآن. استمتع بالنتائج.',
+	'ajaxpoll-submitting' => 'يرجى الانتظار ، يتم تقديم صوتك...',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  * @author Wizardist
@@ -183,12 +196,16 @@ $messages['ia'] = array(
 
 /** Italian (Italiano)
  * @author Beta16
+ * @author Gifh
  */
 $messages['it'] = array(
+	'ajaxpoll-percentVotes' => '$1% di tutti i voti',
 	'ajaxpoll-thankyou' => 'Grazie per aver votato!',
 	'ajaxpoll-error' => "C'è stato un problema con l'elaborazione del tuo voto, si prega di riprovare.",
 	'ajaxpoll-summary' => 'Il sondaggio è stato creato da $1 il $2, e finora $3 persone hanno votato.',
 	'ajaxpoll-submit' => 'Voti!',
+	'ajaxpoll-closed' => 'Il sondaggio è chiuso. Consulta i risultati!',
+	'ajaxpoll-submitting' => 'Attendere prego, il tuo voto è in elaborazione ...',
 );
 
 /** Japanese (日本語)
@@ -254,7 +271,7 @@ $messages['nn'] = array(
 $messages['no'] = array(
 	'ajaxpoll-percentVotes' => '$1%&nbsp;av alle stemmer',
 	'ajaxpoll-thankyou' => 'Takk for din stemme!',
-	'ajaxpoll-error' => 'Det var et problem med mottak av stemmen din, prøv igjen.',
+	'ajaxpoll-error' => 'Det oppstod et problem under overføringen av stemmen din, vennligst prøv igjen.',
 	'ajaxpoll-summary' => 'Avstemningen ble opprettet $1 $2, og hittil har $3 personer stemt.',
 	'ajaxpoll-submit' => 'Stem!',
 	'ajaxpoll-closed' => 'Avstemningen er stengt nå. Nyt resultatene.',

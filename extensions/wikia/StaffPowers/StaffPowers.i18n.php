@@ -121,6 +121,13 @@ $messages['it'] = array(
 	'staffpowers-ipblock-aborted' => 'Non è possibile bloccare lo staff di Wikia. Per segnalare eventuali problemi con il nostro staff si prega di utilizzare [[Special:Contact]].',
 );
 
+/** Japanese (日本語)
+ * @author 青子守歌
+ */
+$messages['ja'] = array(
+	'staffpowers-ipblock-aborted' => 'ウィキアのスタッフを投稿ブロックすることはできません。スタッフについて何か問題がある場合、[[Special:Contact]]からご報告ください。',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

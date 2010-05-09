@@ -111,7 +111,7 @@ Mar plij dibabit un anv disheñvel',
 	'createpage_cant_edit' => "Diposubl eo ober ar c'hemm",
 	'createpage-dialog-title' => 'Krouiñ ur Pennad Nevez',
 	'createpage-dialog-message1' => "Youc'hou, emaoc'h o krouiñ ur bajenn nevez !",
-	'createpage-dialog-message2' => "Penaos o peus c'hoant envel anezhi ?",
+	'createpage-dialog-message2' => "Penaos hoc'h eus c'hoant envel anezhi ?",
 	'createpage-dialog-choose' => 'Dibabit ur bajennaozañ :',
 	'createpage-dialog-format' => 'Kinnig boaz',
 	'createpage-dialog-blank' => "Pajenn c'houllo",
@@ -543,6 +543,7 @@ $messages['ja'] = array(
 	'createpage-error-article-spam' => 'このタイトルはスパムフィルターによって拒否されました。他のタイトルに変更してください。',
 	'createpage-error-article-blocked' => '現在、記事が作成できなくなっています。',
 	'tog-createpagedefaultblank' => '白紙ページを新規記事の作成にデフォルトで使用する',
+	'tog-createpagepopupdisabled' => 'ポップアップウィンドウによるページの作成を無効にする',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
 ここに導入部分（第一段落）を書く。
 
@@ -781,6 +782,49 @@ $messages['ps'] = array(
 	'createpage_invalid_title_error' => 'ناسم سرليک',
 	'createpage-dialog-title' => 'يوه نوې ليکنه ليکل',
 	'createpage-dialog-blank' => 'تش مخ',
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'createpage-sp-title' => 'Criar uma página nova',
+	'createpage_title' => 'Criar uma página nova',
+	'createpage_title_caption' => 'Título:',
+	'createpage_enter_text' => 'Texto:',
+	'createpage_empty_title_error' => 'Título é obrigatório',
+	'createpage_empty_article_body_error' => 'Texto é obrigatório',
+	'createpage_invalid_title_error' => 'Título inválido',
+	'createpage_article_already_exists' => 'Já existe uma página com esse nome.
+Escolha outro nome, por favor.',
+	'createpage_spam' => 'Não foi possível gravar a sua edição',
+	'createpage_cant_edit' => 'Não foi possível fazer a edição',
+	'createpage-dialog-title' => 'Criar Uma Página Nova',
+	'createpage-dialog-message1' => 'Está a criar uma página nova!',
+	'createpage-dialog-message2' => 'Que nome lhe quer dar?',
+	'createpage-dialog-choose' => 'Escolha um modelo de página:',
+	'createpage-dialog-format' => 'Modelo padrão',
+	'createpage-dialog-blank' => 'Página em branco',
+	'createpage-error-empty-title' => 'Introduza um título para a sua página, por favor',
+	'createpage-error-invalid-title' => 'O título da página era inválido.
+Use outro título, por favor.',
+	'createpage-error-article-exists' => 'Já existe uma página com esse título.
+Pode visitá-la em <a href="$1">$2</a>, ou alterar o nome da sua',
+	'createpage-error-article-spam' => 'O título da página foi rejeitado pelo filtro de spam.
+Use outro título, por favor.',
+	'createpage-error-article-blocked' => 'Não pode criar essa página neste momento.',
+	'tog-createpagedefaultblank' => 'Por omissão, usar uma página em branco para criar uma página nova',
+	'tog-createpagepopupdisabled' => 'Desactivar a janela flutuante Criar Página',
+	'newpagelayout' => '[[File:Placeholder|right|300px]]
+Escreva aqui o primeiro parágrafo da sua página.
+
+==Cabeçalho de secção==
+
+Escreva aqui a primeira secção da sua página.
+
+==Cabeçalho de secção==
+
+Escreva aqui a segunda secção da sua página.',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

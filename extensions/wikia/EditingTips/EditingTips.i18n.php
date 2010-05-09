@@ -328,6 +328,19 @@ $messages['pms'] = array(
 	'editingTips' => "Ch'a gionta ij sò consèj [[MediaWiki:EditingTips|ambelessì]]",
 );
 
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'tog-disableeditingtips' => 'Não mostrar dicas de edição',
+	'tog-widescreeneditingtips' => 'Editar em formato largo',
+	'editingtips_enter_widescreen' => 'Iniciar Formato Largo',
+	'editingtips_exit_widescreen' => 'Terminar Formato Largo',
+	'editingtips_hide' => 'Ocultar Dicas de Edição',
+	'editingtips_show' => 'Mostrar Dicas de Edição',
+	'editingTips' => 'Adicione as suas dicas [[MediaWiki:EditingTips|aqui]]',
+);
+
 /** Brazilian Portuguese (Português do Brasil)
  * @author Daemorris
  */
