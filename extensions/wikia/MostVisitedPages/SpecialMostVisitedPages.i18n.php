@@ -53,12 +53,15 @@ $messages['cs'] = array(
 
 /** German (Deutsch)
  * @author LWChris
+ * @author Umherirrender
  */
 $messages['de'] = array(
 	'mostvisitedpages' => 'Häufig aufgerufene Seiten',
 	'mostvisitedpagessearchtext' => 'Artikelname:',
 	'mostvisitedpagessearchbtn' => 'Suchen',
 	'mostvisitedpageslatest' => 'in den letzten $1 Minuten',
+	'mostvisitedpageslatestlink' => 'Zuletzt besuchte Seiten anschauen',
+	'mostvisitedpagesalllink' => 'Meistbesuchte Seiten anschauen',
 );
 
 /** Spanish (Español)
@@ -177,6 +180,8 @@ $messages['nl'] = array(
 	'mostvisitedpagessearchtext' => 'Artikelnaam:',
 	'mostvisitedpagessearchbtn' => 'zoeken',
 	'mostvisitedpageslatest' => 'in de laatste $1 minuten',
+	'mostvisitedpageslatestlink' => "Recent bezochte pagina's bekijken",
+	'mostvisitedpagesalllink' => "Meest bezochte pagina's bekijken",
 );
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
@@ -189,6 +194,7 @@ $messages['nn'] = array(
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
  * @author Nghtwlkr
  */
 $messages['no'] = array(
@@ -196,6 +202,8 @@ $messages['no'] = array(
 	'mostvisitedpagessearchtext' => 'Artikkelens navn:',
 	'mostvisitedpagessearchbtn' => 'søk',
 	'mostvisitedpageslatest' => 'i de siste $1 minuttene',
+	'mostvisitedpageslatestlink' => 'Se sist besøkte sider',
+	'mostvisitedpagesalllink' => 'Se mest besøkte sider',
 );
 
 /** Occitan (Occitan)

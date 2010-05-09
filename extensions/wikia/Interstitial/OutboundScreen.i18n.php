@@ -124,7 +124,11 @@ Vole tu ir al [[{{MediaWiki:Mainpage}}|pagina principal]] o forsan a un [[Specia
  * @author Tommy6
  */
 $messages['ja'] = array(
-	'outbound-screen-login-text' => '<a href="$1">アカウントを作成する</a>か<a href="$2">ログインする</a>ことでこのページをスキップできるようになります。',
+	'outbound-screen-login-text' => '[[Special:UserLogin/signup|アカウントを作成する]]か[[Special:UserLogin|ログインする]]ことでこのページをスキップできるようになります。',
+	'outbound-screen-already-logged-in-no-link' => 'あて先が設定されていません。
+
+[[{{MediaWiki:Mainpage}}|メインページに戻る]] - [[Special:Random|ページをランダムで表示]]',
+	'outbound-screen-you-are-leaving' => 'ウィキアを離れようとしています。',
 );
 
 /** Macedonian (Македонски)

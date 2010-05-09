@@ -161,6 +161,14 @@ $messages['pms'] = array(
 	'interwikidispatcher-desc' => "A arzòlv j'anliure antërwiki për arduve le ridiression d'Apache",
 );
 
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'interwikidispatcher' => 'Expedidor interwikis',
+	'interwikidispatcher-desc' => 'Resolve os links interwikis para reduzir os reencaminhamentos do servidor Apache',
+);
+
 /** Brazilian Portuguese (Português do Brasil)
  * @author Daemorris
  * @author Jesielt

@@ -67,6 +67,13 @@ $messages['dsb'] = array(
 	'wikifactoryreporter' => 'WikiFactory Reporter',
 );
 
+/** Esperanto (Esperanto)
+ * @author Airon90
+ */
+$messages['eo'] = array(
+	'wikifactoryreporter' => 'Vikiara raportilo',
+);
+
 /** Spanish (Español)
  * @author Bola
  */
@@ -121,6 +128,13 @@ $messages['hu'] = array(
  */
 $messages['ia'] = array(
 	'wikifactoryreporter' => 'Reportator WikiFactory',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Kenrick95
+ */
+$messages['id'] = array(
+	'wikifactoryreporter' => 'WikiFactory Reporter',
 );
 
 /** Italian (Italiano)

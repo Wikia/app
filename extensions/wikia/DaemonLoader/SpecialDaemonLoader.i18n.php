@@ -283,15 +283,29 @@ $messages['el'] = array(
 
 /** Spanish (Español)
  * @author Crazymadlover
+ * @author Locos epraix
  * @author Pertile
+ * @author Tempestas
  */
 $messages['es'] = array(
+	'daemonloader' => 'Gestor Daemon',
+	'daemonloader_pagetitle' => 'Gestor Daemon',
 	'daemonloader_createtask' => 'Crear tarea',
 	'daemonloader_listtask' => 'Lista de tareas',
+	'daemonloader_configure' => 'Configurar Daemon',
+	'daemonloader_daemonname' => 'Nombre Daemon',
 	'daemonloader_scriptname' => 'Nombre de script',
 	'daemonloader_daemondesc' => 'Descripción',
+	'daemonloader_inputparams' => 'Entrada parámetros',
+	'daemonloader_paramname' => 'Nombre parámetro',
+	'daemonloader_paramdesc' => 'Descripción del parámetro',
+	'daemonloader_paramtype' => 'Tipo de parámetro',
 	'daemonloader_paramremove' => 'Remover?',
+	'daemonloader_removedaemon' => 'Eliminar Daemon',
 	'daemonloader_paramdefvalue' => 'Valor por defecto',
+	'daemonloader_alldaemons' => 'Todos los Daemon',
+	'daemonloader_loaddaemon' => 'Seleccione el Daemon a editar o crear uno nuevo a continuación:',
+	'daemonloader_selectdaemon' => 'Seleccione Daemon para obtener la información y haga click en el botón para continuar con el siguiente paso',
 	'daemonloader_selectlist' => 'Seleccionar de lista',
 	'daemonloader_search' => 'Buscar:',
 	'daemonloader_daemonchanged' => 'Tus cambios han sido grabados',
@@ -303,8 +317,12 @@ $messages['es'] = array(
 	'daemonloader_date_yyyy' => 'años (YYYY)',
 	'daemonloader_wikilist' => 'Lista de wikis',
 	'daemonloader_gonextstep' => 'Ir al próximo paso',
+	'daemonloader_setparams' => 'Fijar valores para los parametros de entrada Daemon',
+	'daemonloader_1step' => 'Primer paso (elija Daemon)',
+	'daemonloader_2step' => 'Segundo paso (opciones Daemon)',
 	'daemonloader_3step' => 'Tercer paso (opciones de tarea)',
 	'daemonloader_steps' => 'Tu paso actual:',
+	'daemonloader_daemoninfo' => 'Descripción Daemon',
 	'daemonloader_configtaskparams' => 'Configurar parámetros de la tarea:',
 	'daemonloader_startdate' => 'Fecha de inicio',
 	'daemonloader_enddate' => 'Fecha de término',
@@ -319,6 +337,7 @@ $messages['es'] = array(
 	'daemonloader_month' => 'todos los meses',
 	'daemonloader_taskid' => 'Id',
 	'daemonloader_newtask' => 'Nueva tarea',
+	'daemonloader_daemonparams' => 'Parametros Daemon',
 	'daemonloader_createdby' => 'Creado por',
 	'daemonloader_created' => 'Creado',
 	'daemonloader_options' => 'Opciones',
@@ -620,6 +639,13 @@ $messages['it'] = array(
 	'daemonloader_removejobconfirm' => 'Sei sicuro?',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'daemonloader_daemondesc' => 'ವಿವರ',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -884,6 +910,10 @@ $messages['pt-br'] = array(
 	'daemonloader_daemondesc' => 'Descrição',
 	'daemonloader_paramremove' => 'Remover?',
 	'daemonloader_paramdefvalue' => 'Valor padrão',
+	'daemonloader_number' => 'número',
+	'daemonloader_date_yyyymmdd' => 'data (AAAAMMDD)',
+	'daemonloader_date_yyyymm' => 'meses (AAAAMM)',
+	'daemonloader_date_yyyy' => 'anos (AAAA)',
 	'daemonloader_week' => 'toda semana',
 	'daemonloader_month' => 'todo mês',
 	'daemonloader_options' => 'Opções',

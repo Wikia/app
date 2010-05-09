@@ -1217,6 +1217,37 @@ $messages['kn'] = array(
 	'multidelete_german_wikis' => 'ಎಲ್ಲಾ ಜರ್ಮನ್ ವಿಕಿಗಳು',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'multitasks-link-back-label' => 'hei',
+	'multiwikiedit_button' => 'ÄNNEREN',
+	'multiwikiedit_confirm' => 'CONFIRMÉIEREN',
+	'multiwikiedit_or' => '<b>ODER</b>',
+	'multiwikiedit_on' => 'op',
+	'multiwikiedit_minoredit_caption' => 'Kleng Ännerung',
+	'multiwikiedit_norecentchanges_caption' => "D'Ännerung net an de rezenten Ännerunge weisen",
+	'multiwikiedit_processing' => 'Säite gi geännert',
+	'multiwikiedit_from_form' => 'vum Formulaire',
+	'multiwikiedit_this_wiki' => 'dës Wiki',
+	'multiwikiedit_inbox_caption' => 'duerch Kommae getrennt',
+	'multiwikiedit_all_wikis' => 'all Wikien',
+	'multiwikiedit_edit_options' => 'Ännerungsoptiounen',
+	'multidelete_button' => 'LÄSCHEN',
+	'multidelete_caption' => 'Lëscht vu Säiten',
+	'multidelete_or' => '<b>ODER</b>',
+	'multidelete_reason' => 'Grond fir ze läschen',
+	'multidelete_page' => 'Säiten déi geläscht solle ginn',
+	'multidelete_this_wiki' => 'dës Wiki',
+	'multidelete_all_wikis' => 'all Wikien',
+	'multidelete_spanish_wikis' => 'all spuenesch Wikien',
+	'multidelete_french_wikis' => 'all franséisch Wikien',
+	'multidelete_swedish_wikis' => 'all schwedesch Wikien',
+	'multidelete_german_wikis' => 'all däitsch Wkien',
+	'multiwikienterpagename' => 'Gitt w.e.g. ee Säitennumm un:',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */

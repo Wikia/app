@@ -109,6 +109,13 @@ El artículo '''$1''' no pudo ser encontrado.
 * Para ir a la portada de este sitio, haz click en el vínculo: [{{SERVER}} {{SITENAME}}]",
 );
 
+/** Estonian (Eesti)
+ * @author Pikne
+ */
+$messages['et'] = array(
+	'our404handler' => 'Tõrge 404: Lehte ei leitud!',
+);
+
 /** Finnish (Suomi)
  * @author Crt
  * @author Jack Phoenix <jack@countervandalism.net>
@@ -230,7 +237,15 @@ $messages['id'] = array(
  * @author Tommy6
  */
 $messages['ja'] = array(
-	'our404handler' => '404エラー:ページが見つかりませんでした。',
+	'our404handler' => '404エラー:　ページが見つかりませんでした',
+	'our404handler-oops' => 'お探しのページは見つかりませんでした。次のメッセージにそって移動してください。',
+	'message404' => "'''申し訳ありません。何らかの理由により、お探しのページが存在していません。'''
+
+ページ '''$1''' が見つかりませんでした。
+
+* 次のリンクが、お探しのページかもしれません: [[$2]] 
+* ページの左側にある検索ボックスを利用できます
+* このサイトのメインページへ飛ぶには、次のリンクをクリックしてください: [{{SERVER}} {{SITENAME}}]",
 );
 
 /** Korean (한국어)
@@ -466,5 +481,21 @@ Artikeln '''$1''' kunde inte hittas.
  */
 $messages['te'] = array(
 	'our404handler' => '404 పొరపాటు: పేజీ కనబడలేదు!',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Vinhtantran
+ */
+$messages['vi'] = array(
+	'our404handler' => 'Lỗi 404: Không tìm thấy trang!',
+	'our404handler-oops' => 'Đây không phải là những trang bạn đang tìm kiếm. Xin cứ tiếp tục.',
+	'message404' => "
+'''Chúng tôi thực sự rất tiếc, nhưng vì lý do nào đó, trang bạn yêu cầu không tồn tại.'''
+
+Bài viết '''$1''' không tìm thấy.
+
+* Bạn có thể thử bài viết [[$2]]
+* Bạn có thể sử dụng ô tìm kiếm ở phía bên trái trang
+* Để tiếp tục đến trang chính của website này, nhấn vào liên kết: [{{SERVER}} {{SITENAME}}]",
 );
 

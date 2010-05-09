@@ -156,6 +156,13 @@ $messages['ja'] = array(
 	'wikiaupload' => 'ウィキアアップロード',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'wikiaupload' => 'ವಿಕಿಯಾ ಅಪ್ಲೋಡ್',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

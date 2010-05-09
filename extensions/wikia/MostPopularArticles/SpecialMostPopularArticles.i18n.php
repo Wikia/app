@@ -19,6 +19,13 @@ $messages['af'] = array(
 	'mostpopulararticles' => 'Mees populêre artikels (vanuit die databasis)',
 );
 
+/** Arabic (العربية)
+ * @author OsamaK
+ */
+$messages['ar'] = array(
+	'mostpopulararticles' => 'أكثر المقالات شهرة (من قاعدة البيانات)',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  */

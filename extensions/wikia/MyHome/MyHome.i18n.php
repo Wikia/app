@@ -157,13 +157,14 @@ $messages['af'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author OsamaK
  */
 $messages['ar'] = array(
 	'myhome' => 'صفحتي الرئيسية',
 	'myhome-activity-more' => 'أنظر النشاطات الأكثر حداثة',
 	'myhome-activity-feed' => 'دليل النشاطات',
-	'myhome-activity-feed-empty' => "هذا الويكي في انتظار مشاركتك.
- أنقر على '''[[خاص:CreatePage|صفحة جديدة]]''' للبدء في التحرير!",
+	'myhome-activity-feed-empty' => "هذه الويكي في انتظار مشاركتك.
+أنقر على '''[[خاص:CreatePage|صفحة جديدة]]''' للبدء في التحرير!",
 	'myhome-watchlist-feed' => 'قائمة المراقبة',
 	'myhome-user-contributions-feed' => 'المساهمات',
 	'myhome-hot-spots-feed' => 'صفحات ساخنة',
@@ -185,7 +186,11 @@ $messages['ar'] = array(
 	'myhome-feed-article-comment-created-by' => 'تعليق جديد من قبل $1',
 	'myhome-feed-article-comment-edited-by' => 'عدل التعليق من قبل $1',
 	'myhome-feed-by' => 'من قبل $1',
+	'myhome-feed-new-page-details' => 'صفحة جديدة',
 	'myhome-feed-summary-details' => 'ملخص',
+	'myhome-feed-new-blog-post-details' => 'مدونة جديدة',
+	'myhome-feed-new-blog-comment-details' => 'تعليق',
+	'myhome-feed-move-details' => 'أعاد التسمية',
 	'myhome-community-corner-header' => 'ركن المجتمع',
 	'myhome-community-corner-edit' => 'عدل الرسالة',
 	'community-corner' => "'''مرحبا بك في صفحتي الرئيسية'''
@@ -1030,6 +1035,7 @@ Se sei il fondatore o un admin di questo wiki, puoi modificare questo messaggio 
 
 /** Japanese (日本語)
  * @author Tommy6
+ * @author 青子守歌
  */
 $messages['ja'] = array(
 	'myhome' => 'My Home',
@@ -1071,9 +1077,9 @@ $messages['ja'] = array(
 	'myhome-feed-new-article-comment-details' => 'コメント',
 	'myhome-feed-move-details' => 'ページ名の変更',
 	'myhome-feed-redirect-details' => 'リダイレクト',
-	'myhome-feed-inserted-image-details' => '画像の追加',
-	'myhome-feed-inserted-video-details' => '動画の追加',
-	'myhome-feed-inserted-category-details' => 'カテゴリの追加',
+	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|画像の追加}}',
+	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|動画の追加}}',
+	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|カテゴリの追加}}',
 	'myhome-user-contributions-empty' => '各ページにある"編集"をクリックして記述を追加することで、あなたもこのウィキに参加できます。だれでも、記述の変更・情報の追加や誤りの修正ができます。ウィキはコミュニティによって作られ、編集ボタンをクリックするとあなたもその一員となります。',
 	'myhome-hot-spots-number-of-editors' => 'editors',
 	'myhome-log-in' => '<center><big>My Home を利用するには[[Special:UserLogin|ログイン]]する必要があります。</big></center>',
@@ -1095,6 +1101,7 @@ $messages['ja'] = array(
 	'myhome-default-view-checkbox' => '$1をデフォルトの表示にする',
 	'myhome-default-view-success' => 'このページがデフォルトに設定されました',
 	'tooltip-pt-myhome' => 'My Home',
+	'activityfeed' => 'アクティビティフィード',
 );
 
 /** Macedonian (Македонски)

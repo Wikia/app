@@ -270,6 +270,24 @@ $messages['ps'] = array(
 	'cntool-label-preview' => 'مخليدنه:',
 );
 
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'cntool-page-title-editor' => 'Contestação :: Editor',
+	'cntool-page-title-preview' => 'Contestação :: Antevisão',
+	'cntool-page-title-select' => 'Contestação',
+	'cntool-label-select' => 'Introduza um título de página válido',
+	'cntool-button-preview' => 'Antever',
+	'cntool-button-save' => 'Gravar',
+	'cntool-label-content' => 'Altere o conteúdo do artigo abaixo:',
+	'cntool-label-preview' => 'Antevisão:',
+	'cntool-label-caveat' => 'Advertência',
+	'cntool-caveat' => 'Esta extensão não deve ser usada de forma ligeira.
+
+Tenha em conta que os resultados não ficam registados e que ainda não podem ser revertidos sem intervenção da equipa Técnica (estamos a trabalhar nisto).',
+);
+
 /** Brazilian Portuguese (Português do Brasil)
  * @author Daemorris
  */

@@ -186,6 +186,7 @@ $messages['af'] = array(
  */
 $messages['an'] = array(
 	'pr_describe_problem' => 'Mensache',
+	'pr_table_actions' => 'Accions',
 );
 
 /** Arabic (العربية)
@@ -254,7 +255,7 @@ Ar c'hudennoù dispaket amañ a vo [[Special:ProblemReports|diskouezet war ar wi
 Mar plij kemmit danvez an diverradenn.',
 	'pr_empty_summary' => 'Mar plij deskrivit buan ha buan ar gudenn',
 	'pr_empty_email' => "Mar plij roit ho chomlec'h postel",
-	'pr_mailer_notice' => 'Ar chomlec\'h postel o peus lakaet en ho penndibaboù implijer a vo lakaet e zonenn "Eus" ar postel, ar pezh a servijo d\'ar reseverien da respont dit.',
+	'pr_mailer_notice' => "Ar chomlec'h postel hoc'h eus lakaet en ho penndibaboù implijer a vo lakaet e zonenn \"Eus\" ar postel, ar pezh a servijo d'ar reseverien da respont dit.",
 	'pr_mailer_subject' => 'Danevell diwar-benn',
 	'pr_mailer_tmp_info' => "Posubl eo deoc'h kemmañ ho patromoù er respont [[MediaWiki:ProblemReportsResponses|amañ]].",
 	'pr_mailer_to_default' => 'Implijer Wikia',
@@ -929,7 +930,23 @@ $messages['ja'] = array(
  */
 $messages['kn'] = array(
 	'pr_describe_problem' => 'ಸಂದೇಶ',
+	'pr_table_description' => 'ವಿವರ',
 	'pr_table_status' => 'ಸ್ಥಾನಮಾನ',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'pr_what_problem' => 'Sujet',
+	'pr_what_problem_spam_short' => 'Spam',
+	'pr_what_problem_vandalised_short' => 'Vandal',
+	'pr_what_problem_software_bug_short' => 'Bug',
+	'pr_mailer_to_default' => 'Wikia Benotzer',
+	'pr_table_page_link' => 'Säit',
+	'pr_table_description' => 'Beschreiwung',
+	'pr_table_actions' => 'Aktiounen',
+	'pr_status_wait' => 'waart w.e.g. ...',
 );
 
 /** Macedonian (Македонски)

@@ -156,6 +156,17 @@ $messages['pms'] = array(
 L'atività an sle pàgine ëd vot a l'é ''pa'' pijà an cont ambelessì.",
 );
 
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'graceexpired' => 'Período de graça expirado',
+	'graceexpired-row' => '$1 (em $2, última edição em $3)',
+	'graceexpired-header' => 'Esta página lista todas as compilações que foram [[:Category:Abandoned|abandonadas]], [[:Category:Trash_builds|eliminadas]], [[:Category:Build stubs|stubs]] ou [[:Category:Trial Builds|experimentais]], e que não são editadas há, pelo menos, duas semanas.
+
+Não é tomada em consideração qualquer actividade nas páginas de avaliação.',
+);
+
 /** Brazilian Portuguese (Português do Brasil)
  * @author Daemorris
  */

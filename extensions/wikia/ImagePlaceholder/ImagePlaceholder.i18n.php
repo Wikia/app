@@ -267,6 +267,16 @@ $messages['ps'] = array(
 	'imgplc-image' => 'انځور',
 );
 
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'imgplc-create' => 'Adicionar Imagem',
+	'imgplc-placeholder' => 'Espaço reservado',
+	'imgplc-image' => 'Imagem',
+	'imgplc-notinhistory' => 'Não pode adicionar uma imagem no modo histórico.',
+);
+
 /** Brazilian Portuguese (Português do Brasil)
  * @author Daemorris
  */

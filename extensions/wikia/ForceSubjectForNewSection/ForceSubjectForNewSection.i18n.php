@@ -128,6 +128,13 @@ $messages['ia'] = array(
 	'force-subject-for-new-section-message' => 'Per favor entra un titulo pro le section',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Kenrick95
+ */
+$messages['id'] = array(
+	'force-subject-for-new-section-message' => 'Silakan masukkan judul untuk bagian ini',
+);
+
 /** Italian (Italiano)
  * @author Civvì
  */

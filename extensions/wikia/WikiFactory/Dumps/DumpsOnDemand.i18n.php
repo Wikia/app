@@ -130,10 +130,11 @@ $messages['de'] = array(
 
 /** Greek (Ελληνικά)
  * @author Crazymadlover
+ * @author Omnipaedista
  */
 $messages['el'] = array(
 	'dump-database-curr-pages' => 'Τρέχουσες σελίδες',
-	'dump-database-full-pages' => 'Τρέχουσες σελίδες και ιστορία',
+	'dump-database-full-pages' => 'Τρέχουσες σελίδες και ιστορικό',
 	'dump-database-full-pages-info' => '(Προσοχή: αυτό το αρχείο μπορεί να είναι πολύ μεγάλο)',
 	'dump-database-request' => 'Ζητήστε μια ενημέρωση',
 	'dump-database-request-submit' => 'Αποστολή αίτησης',
@@ -281,6 +282,16 @@ $messages['ja'] = array(
 	'dump-database-info-more' => '詳しくは<a href="http://community.wikia.com/wiki/Help:Database_download">データベースダウンロード</a>をご覧ください。',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'dump-database-curr-pages' => 'ಪ್ರಸ್ತುತ ಪುಟಗಳು',
+	'dump-database-full-pages' => 'ಪ್ರಸ್ತುತ ಪುಟಗಳು ಮತ್ತು ಇತಿಹಾಸ',
+	'dump-database-request-submit' => 'ಕೋರಿಕೆಯನ್ನು ಕಳುಹಿಸು',
+	'dump-database-info-more' => 'ಹೆಚ್ಚಿನ ಮಾಹಿತಿಗಾಗಿ <a href="http://community.wikia.com/wiki/Help:Database_download">ನೋಡಿ</a>',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -341,6 +352,7 @@ $messages['oc'] = array(
 	'dump-database-curr-pages' => 'Paginas actualas',
 	'dump-database-full-pages' => 'Paginas actualas e istoric',
 	'dump-database-request' => 'Demandar una mesa a jorn',
+	'dump-database-request-submit' => 'Mandar la requèsta',
 );
 
 /** Polish (Polski)
@@ -376,6 +388,24 @@ $messages['pms'] = array(
 	'dump-database-request-submit' => 'Manda arcesta',
 	'dump-database-request-requested' => 'Arcesta për dump dla base ëd dàit mandà',
 	'dump-database-info-more' => 'Për piasì <a href="http://community.wikia.com/wiki/Help:Database_download">varda</a> për savèjne ëd pi',
+);
+
+/** Portuguese (Português)
+ * @author Crazymadlover
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'dump-database' => 'Cópias da base de dados em ficheiro',
+	'dump-database-info' => 'Cópias da base de dados em ficheiro podem ser usadas como cópia de segurança pessoal (a Wikia produz automaticamente cópias de segurança separadas, de todas as wikis) ou por robôs de manutenção',
+	'dump-database-curr-pages' => 'páginas actuais',
+	'dump-database-curr-pages-info' => '(Normalmente, esta versão é melhor para uso por robôs)',
+	'dump-database-full-pages' => 'Versão actual e histórico das páginas',
+	'dump-database-full-pages-info' => '(Aviso: este ficheiro pode ser muito grande)',
+	'dump-database-request' => 'Pedir uma actualização',
+	'dump-database-request-info' => '(Normalmente as cópias em ficheiro são geradas semanalmente)',
+	'dump-database-request-submit' => 'Enviar pedido',
+	'dump-database-request-requested' => 'Foi enviado o pedido de cópia da base de dados para ficheiro',
+	'dump-database-info-more' => 'Consulte <a href="http://community.wikia.com/wiki/Help:Database_download">download da base de dados</a> para mais informação, por favor',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

@@ -64,6 +64,13 @@ $messages['es'] = array(
 	'wikiasearch-search-wikia' => 'Buscar en Wikia',
 );
 
+/** Estonian (Eesti)
+ * @author Hendrik
+ */
+$messages['et'] = array(
+	'wikiasearch-titles-only' => 'Otsi ainult lehtede pealkirjadest',
+);
+
 /** Finnish (Suomi)
  * @author Crt
  */
@@ -161,6 +168,15 @@ $messages['lb'] = array(
 	'wikiasearch-system-error-msg' => 'Duerch e Feeler am System konnt Är Sich net fäerdeg gemaach ginn',
 	'wikiasearch-search-this-wiki' => 'Nëmmen a Wikia Central sichen',
 	'wikiasearch-search-wikia' => 'A Wikia sichen',
+);
+
+/** Ganda (Luganda)
+ * @author Kizito
+ */
+$messages['lg'] = array(
+	'wikiasearch-titles-only' => "Noonyeza mu mitwe gy'empapula gyokka",
+	'wikiasearch-system-error-msg' => 'Okunoonya kwo kugaanye olwa kiremya mu sisitemu',
+	'wikiasearch-search-wikia' => 'Noonyeza mu Wikia',
 );
 
 /** Macedonian (Македонски)

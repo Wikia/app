@@ -213,6 +213,17 @@ $messages['ps'] = array(
 	'previous' => 'پخوانی',
 );
 
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'search_wikipedia' => 'Pesquisar na Wikipédia',
+	'previous' => 'anterior',
+	'research_no_results' => 'Não foi encontrada nenhuma página. Tente outra pesquisa, por favor.',
+	'research_wikipedia_title' => 'Investigue a resposta na Wikipédia',
+	'research_this' => 'Investigar isto',
+);
+
 /** Tarandíne (Tarandíne)
  * @author Joetaras
  */

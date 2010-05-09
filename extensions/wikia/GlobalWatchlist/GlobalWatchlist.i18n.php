@@ -51,20 +51,20 @@ $messages['br'] = array(
 	'globalwatchlist-digest-email-subject' => 'Diverrañ ar sizhun',
 	'globalwatchlist-digest-email-body' => '$1 ker,
 
-Setu aze roll ho pajennoù evezhiañ war Wikia zo bet kemmet abaoe ar wezh ziwezhañ hoc\'h eus graet war-dro.
+Setu aze roll ho pajennoù evezhiañ war Wikia zo bet kemmet abaoe ar wezh ziwezhañ m\'int bet gwelet ganeoc\'h
 
 $2
 
-Setu aze roll ar pajennoù blog war ho rollad evezhiañ Wikia zo bet kemmet pe zo bet skrivet evezhiadennoù warno abaoe m\'hoc\'h eus graet war o zro da ziwezhañ.
+Setu aze roll ar pajennoù blog war ho rollad evezhiañ Wikia zo bet kemmet pe zo bet skrivet evezhiadennoù warno abaoe m\'int bet gwelet ganeoc\'h da ziwezhañ.
 
-£3
+$3
 
-Kit warno ha degasit kemmoù enno alies...
+Kit warno ha gwellait anezho alies...
 
 Wikia
 
 *Evit cheñch penndibaboù kemenn ho roll evezhiañ, kit da welet http://www.wikia.com/wiki/Special:Penndibaboù
-*Evit merkañ holl bajennoù an diverradenn sizhuniek-mañ, grit gant an dibarzh zo evit se en ivinell "Roll evezhiañ" war ho pajenn penndibaboù',
+*Evit merkañ holl bajennoù an diverradenn sizhuniek-mañ evel lennet, grit gant an dibarzh zo evit se en ivinell "Roll evezhiañ" war ho pajenn penndibaboù',
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 evezhiadenn{{PLURAL:$2||}})',
 	'globalwatchlist-no-page-found' => "N'eo bet kavet pajenn ebet.",
 	'globalwatchlist-no-blog-page-found' => "N'eo bet kavet pajenn blog ebet.",
@@ -323,6 +323,9 @@ Wikia
  * @author Robby
  */
 $messages['lb'] = array(
+	'tog-watchlistdigest' => 'Schéck mir all Woch eng Lëscht vun de Säiten vu menger Iwwerwaachungslëscht déi no mengem leschte Besuch geännert goufen',
+	'globalwatchlist-see-more' => 'Kuckt w.e.g. Är lokal Iwwerwaachungslëscht fir méi Ännerungen',
+	'globalwatchlist-digest-email-subject' => 'Wëchentleche Resumé',
 	'globalwatchlist-no-page-found' => 'Keng Säit fonnt.',
 	'globalwatchlist-no-blog-page-found' => 'Keng Blogsäit fonnt.',
 );

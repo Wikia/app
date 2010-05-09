@@ -738,7 +738,9 @@ $messages['ia'] = array(
 	'swm-lang-other' => 'tote le linguas restante',
 );
 
-/** Italian (Italiano) */
+/** Italian (Italiano)
+ * @author Gifh
+ */
 $messages['it'] = array(
 	'swm-label-preview' => 'Anteprima',
 	'swm-label-edit' => 'Modifica',
@@ -750,7 +752,9 @@ $messages['it'] = array(
 	'swm-label-comment' => 'Commento',
 	'swm-label-language' => 'Lingua',
 	'swm-button-preview' => '[ Anteprima ]',
+	'swm-button-send' => '[Invio]',
 	'swm-button-save' => '[ Salva ]',
+	'swm-button-new' => '[Nuovo]',
 	'swm-list-no-messages' => 'Non vi sono nuovi messaggi.',
 	'swm-list-table-wiki' => 'Wiki',
 	'swm-list-table-recipient' => 'Destinatario',
@@ -806,6 +810,24 @@ $messages['ja'] = array(
 	'swm-error-no-such-user' => '指定された利用者が存在していません。',
 	'swm-error-empty-message' => 'メッセージを入力してください。',
 	'swm-error-empty-group' => 'グループ名を入力してください。',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'swm-label-recipient-users' => 'Benotzer',
+	'swm-label-mode-wikis-all' => 'All Wikien',
+	'swm-label-mode-users-all' => 'All Benotzer',
+	'swm-label-mode-users-active' => 'Aktiv Benotzer',
+	'swm-label-language' => 'Sprooch',
+	'swm-button-save' => '[ Späicheren ]',
+	'swm-button-new' => '[ Nei ]',
+	'swm-list-table-lang' => 'Sproochen',
+	'swm-yes' => 'Jo',
+	'swm-no' => 'Neen',
+	'swm-error-no-such-wiki' => 'Et gëtt dës Wiki net!',
+	'swm-lang-other' => 'all weider Sproochen',
 );
 
 /** Macedonian (Македонски)
@@ -1101,6 +1123,74 @@ $messages['ps'] = array(
 	'swm-list-table-lang' => 'ژبې',
 	'swm-yes' => 'هو',
 	'swm-no' => 'نه',
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'sitewidemessages' => 'Mensagens globais',
+	'swm-page-title-editor' => 'Mensagens globais :: Editor',
+	'swm-page-title-preview' => 'Mensagens globais :: Antevisão',
+	'swm-page-title-send' => 'Mensagens globais :: Enviar',
+	'swm-page-title-sent' => 'Mensagens globais :: Enviadas',
+	'swm-page-title-dismiss' => 'Mensagens globais :: Descartar',
+	'swm-page-title-list' => 'Mensagens globais :: Lista',
+	'swm-label-preview' => 'Antever',
+	'swm-label-edit' => 'Editar',
+	'swm-label-remove' => 'Remover',
+	'swm-label-sent' => 'Enviadas',
+	'swm-label-list' => 'Lista',
+	'swm-label-recipient' => 'Destinatários',
+	'swm-label-recipient-wikis' => 'Wikis',
+	'swm-label-recipient-users' => 'Utilizadores',
+	'swm-label-expiration' => 'Prazo de expiração',
+	'swm-label-mode-wikis-all' => 'Todas as wikis',
+	'swm-label-mode-wikis-hub' => 'Hub seleccionado',
+	'swm-label-mode-wikis-wiki' => 'Wiki seleccionada',
+	'swm-label-mode-users-all' => 'Todos os utilizadores',
+	'swm-label-mode-users-active' => 'Utilizadores activos',
+	'swm-label-mode-users-group' => 'Utilizadores pertencentes ao grupo',
+	'swm-label-mode-users-group-hint' => '<i>Escolha um grupo da lista ou escreva o nome do grupo para substituir a selecção da lista.</i>',
+	'swm-label-mode-users-user' => 'Utilizador seleccionado',
+	'swm-label-mode-users-user-hint' => '<i>Esta opção ignora a selecção no grupo "Wikis".</i>',
+	'swm-label-content' => 'Conteúdo',
+	'swm-label-comment' => 'Comentário',
+	'swm-label-dismissed' => 'Descartadas',
+	'swm-label-language' => 'Língua',
+	'swm-button-lang-checkall' => '[ Verificar todas ]',
+	'swm-button-lang-checknone' => '[ Não verificar nenhuma ]',
+	'swm-taskmanager-hint' => '<i>Note que algumas opções são demoradas e serão colocadas na fila do TaskManager.</i>',
+	'swm-button-preview' => '[ Antever ]',
+	'swm-button-send' => '[ Enviar ]',
+	'swm-button-save' => '[ Gravar ]',
+	'swm-button-new' => '[ Nova ]',
+	'swm-msg-sent-ok' => '<h3>A mensagem foi enviada.</h3>',
+	'swm-msg-sent-err' => '<h3>A mensagem NÃO foi enviada.</h3>Verifique o registo para mais informações.',
+	'swm-msg-remove' => 'Tem a certeza de que pretende remover esta mensagem? A operação não pode ser desfeita!',
+	'swm-days' => 'nunca,hora,horas,dia,dias',
+	'swm-expire-info' => 'Esta mensagem expira em $1.',
+	'swm-link-dismiss' => 'descartar esta mensagem',
+	'swm-dismiss-content' => '<p>A mensagem foi descartada.</p><p>%s</p>',
+	'swm-list-no-messages' => 'Não há mensagens.',
+	'swm-list-table-id' => 'ID',
+	'swm-list-table-sender' => 'Remetente',
+	'swm-list-table-wiki' => 'Wiki',
+	'swm-list-table-recipient' => 'Destinatário',
+	'swm-list-table-group' => 'Grupo',
+	'swm-list-table-expire' => 'Expiração',
+	'swm-list-table-date' => 'Data de envio',
+	'swm-list-table-removed' => 'Removidas',
+	'swm-list-table-content' => 'Conteúdo',
+	'swm-list-table-tools' => 'Ferramentas',
+	'swm-list-table-lang' => 'Línguas',
+	'swm-yes' => 'Sim',
+	'swm-no' => 'Não',
+	'swm-error-no-such-wiki' => 'Essa wiki não existe!',
+	'swm-error-no-such-user' => 'O utilizador especificado não existe.',
+	'swm-error-empty-message' => 'Introduza o conteúdo da mensagem.',
+	'swm-error-empty-group' => 'Introduza o nome do grupo.',
+	'swm-lang-other' => 'todas as línguas restantes',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
