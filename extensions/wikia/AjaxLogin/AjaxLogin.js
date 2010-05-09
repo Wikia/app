@@ -9,42 +9,52 @@ var AjaxLogin = {
 
 		// move login/password/remember fields from hidden form to AjaxLogin
 		// changes to tabindex - see RT#41245
-		var labels = this.form.find('label');
-		$('#wpName1Ajax')
-			//copy for login form
-			.clone()
-			.attr({
-				"id": "wpName2Ajax",
-				'tabindex': parseInt($('#wpName1Ajax').attr('tabindex')) + 100
-			})
-			.appendTo("#ajaxlogin_username_cell")
-			//copy for facebook connect form
-			.clone()
-			.attr({
-				"id": "wpName3Ajax",
-				'tabindex': -1 
-			})
-			.appendTo("#ajaxlogin_username_cell2");
-		$('#wpPassword1Ajax')
-			.clone()
-			.attr({
-				"id": "wpPassword2Ajax",
-				'tabindex': parseInt($('#wpPassword1Ajax').attr('tabindex')) + 100
-			})
-			.appendTo("#ajaxlogin_password_cell")
-			.clone()
-			.attr({
-				"id": "wpPassword3Ajax",
-				'tabindex': -1
-			})
-			.appendTo("#ajaxlogin_password_cell2");
-		$('#wpRemember1Ajax')
-			.clone()
-			.attr({
-				"id": "wpRemember2Ajax",
-				'tabindex': parseInt($('#wpRemember1Ajax').attr('tabindex')) + 100
-			})
-			.insertBefore(labels[2]);
+		if($('#wpName1Ajax').length == 0){
+			$("#ajaxlogin_username_cell").append('<input type="text" size="20" tabindex="201" id="wpName2Ajax" name="wpName">');
+			$("#ajaxlogin_password_cell").append('<input type="password" size="20" tabindex="202" id="wpPassword2Ajax" name="wpPassword">');
+			
+		} else {
+			$('#wpName1Ajax')
+				//copy for login form
+				.clone()
+				.attr({
+					"id": "wpName2Ajax",
+					'tabindex': parseInt($('#wpName1Ajax').attr('tabindex')) + 100
+				})
+				.appendTo("#ajaxlogin_username_cell")
+				//copy for facebook connect form
+				.clone()
+				.attr({
+					"id": "wpName3Ajax",
+					'tabindex': -1 
+				})
+				.appendTo("#ajaxlogin_username_cell2");
+			$('#wpPassword1Ajax')
+				.clone()
+				.attr({
+					"id": "wpPassword2Ajax",
+					'tabindex': parseInt($('#wpPassword1Ajax').attr('tabindex')) + 100
+				})
+				.appendTo("#ajaxlogin_password_cell")
+				.clone()
+				.attr({
+					"id": "wpPassword3Ajax",
+					'tabindex': -1
+				})
+				.appendTo("#ajaxlogin_password_cell2");
+		}
+		if($('#wpRemember1Ajax').length > 0){
+			var labels = this.form.find('label');		
+			$('#wpRemember1Ajax')
+				.clone()
+				.attr({
+					"id": "wpRemember2Ajax",
+					'tabindex': parseInt($('#wpRemember1Ajax').attr('tabindex')) + 100
+				})
+				.insertBefore(labels[2]);
+		} else {
+			$("#labelFor_wpRemember2Ajax").before('<input type="checkbox" value="1" tabindex="204" id="wpRemember2Ajax" name="wpRemember">');
+		}
 
 		// remove hidden form
 		$('#userajaxloginform').attr("id","");
