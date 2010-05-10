@@ -11,8 +11,16 @@
 </h2>
 <?php if (!empty($data)): ?>
 	<ul class="followedList followedListFirst" >
-		<?php foreach($data as $value): ?>
-			<li><a href="<?php echo $value['url']; ?>" ><?php echo $value['wl_title']; ?></a> </li>
+		<?php 
+		global $wgUser;
+		$sk = $wgUser->getSkin();
+		foreach($data as $value):
+			$title = Title::newFromText( $value['wl_title'], $value['wl_namespace'] );
+			if ( !$title->exists() ) continue;
+		?>
+			<li>
+				<?php echo $sk->link( $title, $value['wl_title'] ); ?>
+			</li>
 		<?php endforeach; ?>
 	</ul>
 	<div style="clear: both;"></div>
