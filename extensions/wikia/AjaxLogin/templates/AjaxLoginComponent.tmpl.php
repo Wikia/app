@@ -77,7 +77,3 @@
 
 	</div>
 </div><!--AjaxLoginSlider-->
-
-<div class="modalToolbar neutral">
-	<input type="button" id="wpLoginCancel" class="secondary" value="<?php print wfMsg("Cancel") ?> "onclick="AjaxLogin.close(); return false;" />
-</div>
