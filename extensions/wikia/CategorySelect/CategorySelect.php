@@ -307,6 +307,7 @@ function CategorySelectChangeFormat($categories, $from, $to) {
 		$categoriesStr = '';
 		if ( is_array($categories) && !empty($categories) ) {
 			foreach($categories as $c) {
+				if (empty($c)) continue;	//skip "null" keys created by JS
 				$catTmp = "\n[[" . $c['namespace'] . ':' . $c['category'] . ($c['sortkey'] == '' ? '' : ('|' . $c['sortkey'])) . ']]';
 				if ($c['outerTag'] != '') {
 					$catTmp = '<' . $c['outerTag'] . '>' . $catTmp . '</' . $c['outerTag'] . '>';

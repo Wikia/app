@@ -58,7 +58,7 @@ function extractSortkey(text) {
 function deleteCategory(e) {
 	var catId = e.parentNode.getAttribute('catId');
 	e.parentNode.parentNode.removeChild(e.parentNode);
-	categories.splice(catId, 1);
+	categories[catId] = null;
 }
 
 // TODO: PORT AWAY FROM YUI
@@ -270,11 +270,12 @@ function addCategory(category, params, index) {
 function generateWikitextForCategories() {
 	var categoriesStr = '';
 	for (var c=0; c < categories.length; c++) {
+		if (categories[c] === null) continue;
 		catTmp = '\n[[' + categories[c].namespace + ':' + categories[c].category + (categories[c].sortkey == '' ? '' : ('|' + categories[c].sortkey)) + ']]';
 		if (categories[c].outerTag != '') {
 			catTmp = '<' + categories[c].outerTag + '>' + catTmp + '</' + categories[c].outerTag + '>';
 		}
-		categoriesStr += catTmp;
+		categoriesStr += catTmp.replace(/^\n+/, '');
 	}
 	return categoriesStr;
 }
@@ -282,7 +283,7 @@ function generateWikitextForCategories() {
 // TODO: PORT AWAY FROM YUI
 function initializeCategories(cats) {
 	//move categories metadata from hidden field [JSON encoded] into array
-	if (cats === undefined) {
+	if (typeof cats == 'undefined') {
 		cats = $('#wpCategorySelectWikitext').length == 0 ? '' : $('#wpCategorySelectWikitext').attr('value');
 		categories = cats == '' ? [] : eval(cats);
 	} else {
