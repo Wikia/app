@@ -57,7 +57,7 @@ global $wgAutoloadClasses;
 /**
  * custom wikia classes
  */
-$wgAutoloadClasses["TyrantException"] = $GLOBALS["IP"]."/lib/Tyrant/Exception.php";
+$wgAutoloadClasses["Tyrant_Exception"] = $GLOBALS["IP"]."/lib/Tyrant/Exception.php";
 $wgAutoloadClasses["EasyTemplate"]  =  $GLOBALS["IP"]."/includes/wikia/EasyTemplate.php";
 $wgAutoloadClasses["GlobalTitle"]  =  $GLOBALS["IP"]."/includes/wikia/GlobalTitle.php";
 #$wgAutoloadClasses["Wikia"] = "includes/wikia/Wikia.php";
