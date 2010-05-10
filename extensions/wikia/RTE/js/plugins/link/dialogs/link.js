@@ -14,6 +14,8 @@ CKEDITOR.dialog.add( 'link', function( editor )
 		var data = element ? $(element.$).getData() : null;
 
 		if (data) {
+			// handle existing links
+
 			// detect pasted links (RT #47454)
 			if (typeof data.type == 'undefined') {
 				RTE.log('pasted link detected');
@@ -76,12 +78,23 @@ CKEDITOR.dialog.add( 'link', function( editor )
 			// creating new link from selection
 			var selectionContent = RTE.tools.getSelectionContent();
 
-			RTE.log('link: using selected text "' + selectionContent + '" for new link');
+			// check for external link (RT #47454)
+			if (RTE.tools.isExternalLink(selectionContent)) {
+				RTE.log('link: using selected text "' + selectionContent + '" for new external link');
 
-			this.selectPage('internal');
+				this.selectPage('external');
 
-			this.setValueOf('internal', 'name', selectionContent);
-			this.setValueOf('internal', 'label', '');
+				this.setValueOf('external', 'url', selectionContent);
+				this.setValueOf('external', 'label', '');
+			}
+			else {
+				RTE.log('link: using selected text "' + selectionContent + '" for new internal link');
+
+				this.selectPage('internal');
+
+				this.setValueOf('internal', 'name', selectionContent);
+				this.setValueOf('internal', 'label', '');
+			}
 		}
 
 		// Record down the selected element in the dialog.

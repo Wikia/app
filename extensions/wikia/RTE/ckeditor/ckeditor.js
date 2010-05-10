@@ -5,7 +5,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 if(!window.CKEDITOR)
 {window.CKEDITOR=(function()
-{var CKEDITOR={timestamp:'',version:'20100510',revision:'r22300',_:{},status:'unloaded',basePath:(function()
+{var CKEDITOR={timestamp:'',version:'20100510',revision:'r22311',_:{},status:'unloaded',basePath:(function()
 {var path=window.CKEDITOR_BASEPATH||'';if(!path)
 {var scripts=document.getElementsByTagName('script');for(var i=0;i<scripts.length;i++)
 {var match=scripts[i].src.match(/(^|.*[\\\/])ckeditor(?:_basic)?(?:_source)?.js(?:\?.*)?$/i);if(match)
@@ -4898,7 +4898,8 @@ selection.selectRanges(ranges);editor.document.$.execCommand('unlink',false,null
 RTE.log(data);var linkTextField=this.getContentElement('external','label');linkTextField.enable();switch(data.type){case'external':this.selectPage('external');this.setValueOf('external','url',data.link);if(data.linktype=='autonumber'){this.setValueOf('external','autonumber',true);linkTextField.disable();}
 else{this.setValueOf('external','label',data.text);}
 break;case'external-raw':this.selectPage('external');this.setValueOf('external','url',data.link);this.setValueOf('external','label','');break;case'internal':this.selectPage('internal');this.setValueOf('internal','name',data.link);this.setValueOf('internal','label',data.text);break;}}
-else{var selectionContent=RTE.tools.getSelectionContent();RTE.log('link: using selected text "'+selectionContent+'" for new link');this.selectPage('internal');this.setValueOf('internal','name',selectionContent);this.setValueOf('internal','label','');}
+else{var selectionContent=RTE.tools.getSelectionContent();if(RTE.tools.isExternalLink(selectionContent)){RTE.log('link: using selected text "'+selectionContent+'" for new external link');this.selectPage('external');this.setValueOf('external','url',selectionContent);this.setValueOf('external','label','');}
+else{RTE.log('link: using selected text "'+selectionContent+'" for new internal link');this.selectPage('internal');this.setValueOf('internal','name',selectionContent);this.setValueOf('internal','label','');}}
 this._.selectedElement=element;this.enableSuggesionsOn(this.getContentElement('internal','name'));};var createNewLink=function(editor){var selection=editor.getSelection(),ranges=selection.getRanges();if(ranges.length==1&&ranges[0].collapsed)
 {var text=new CKEDITOR.dom.text('',editor.document);ranges[0].insertNode(text);ranges[0].selectNodeContents(text);selection.selectRanges(ranges);}
 var style=new CKEDITOR.style({element:'a',attributes:{'_rte_new_link':true}});style.type=CKEDITOR.STYLE_INLINE;style.apply(editor.document);var node=RTE.getEditor().find('a[_rte_new_link]');node.removeAttr('_rte_new_link');var link=new CKEDITOR.dom.element(node[0]);if(CKEDITOR.env.gecko||CKEDITOR.env.webkit){var dirty=new CKEDITOR.dom.text(' ',editor.document);dirty.insertAfter(link);selection.selectElement(dirty);if(CKEDITOR.env.gecko){dirty.remove();}}
