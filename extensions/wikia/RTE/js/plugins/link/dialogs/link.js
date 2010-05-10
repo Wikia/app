@@ -305,34 +305,30 @@ CKEDITOR.dialog.add( 'link', function( editor )
 			// set / update meta data and link text
 			var data = {};
 
-			// check for full link to local wiki article (RT #47456)
-			var href = '';
-			if (currentTab == 'external') {
-				href = this.getValueOf('external', 'url');
-			}
-			else {
-				href = this.getValueOf('internal', 'name');
-			}
+			// check for full link to local wiki article pasted into 'internal link' tab ((RT #47456)
+			if (currentTab == 'internal') {
+				var href = this.getValueOf('internal', 'name');
 
-			if (href.indexOf(window.wgServer) == 0) {
-				// URL to local wiki provided - get article name from it
-				var re = new RegExp( window.wgArticlePath.replace(/\$1/, '(.*)') );
-				var matches = href.match(re);
+				if (href.indexOf(window.wgServer) == 0) {
+					// URL to local wiki provided - get article name from it
+					var re = new RegExp( window.wgArticlePath.replace(/\$1/, '(.*)') );
+					var matches = href.match(re);
 
-				if (matches) {
-					var pageName = matches[1];
+					if (matches) {
+						var pageName = matches[1];
 
-					// decode page name
-					pageName = decodeURIComponent(pageName);
-					pageName = pageName.replace(/_/g, ' ');
+						// decode page name
+						pageName = decodeURIComponent(pageName);
+						pageName = pageName.replace(/_/g, ' ');
 
-					// move values to "internal" tab
-					this.setValueOf('internal', 'name', pageName);
-					this.setValueOf('internal', 'label', this.getValueOf('external', 'label') );
+						// move values to "internal" tab
+						this.setValueOf('internal', 'name', pageName);
+						this.setValueOf('internal', 'label', this.getValueOf('external', 'label') );
 
-					currentTab = 'internal';
+						currentTab = 'internal';
 
-					RTE.log('internal full URL detected: ' + href + ' > ' + pageName);
+						RTE.log('internal full URL detected: ' + href + ' > ' + pageName);
+					}
 				}
 			}
 

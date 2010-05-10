@@ -5,7 +5,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 if(!window.CKEDITOR)
 {window.CKEDITOR=(function()
-{var CKEDITOR={timestamp:'',version:'20100510',revision:'r22314',_:{},status:'unloaded',basePath:(function()
+{var CKEDITOR={timestamp:'',version:'20100510',revision:'r22316',_:{},status:'unloaded',basePath:(function()
 {var path=window.CKEDITOR_BASEPATH||'';if(!path)
 {var scripts=document.getElementsByTagName('script');for(var i=0;i<scripts.length;i++)
 {var match=scripts[i].src.match(/(^|.*[\\\/])ckeditor(?:_basic)?(?:_source)?.js(?:\?.*)?$/i);if(match)
@@ -4914,9 +4914,7 @@ element=null;setupDialog.apply(this,[editor,element]);var self=this;var tabs=thi
 var type='';var currentTab=this.getActiveTab();if(!this._.selectedElement){RTE.log('creating new link...');var element=createNewLink.apply(this,[editor]);}
 else{var element=this._.selectedElement;}
 if(!element){return;}
-element.removeClass('external');element.removeClass('autonumber');var data={};var href='';if(currentTab=='external'){href=this.getValueOf('external','url');}
-else{href=this.getValueOf('internal','name');}
-if(href.indexOf(window.wgServer)==0){var re=new RegExp(window.wgArticlePath.replace(/\$1/,'(.*)'));var matches=href.match(re);if(matches){var pageName=matches[1];pageName=decodeURIComponent(pageName);pageName=pageName.replace(/_/g,' ');this.setValueOf('internal','name',pageName);this.setValueOf('internal','label',this.getValueOf('external','label'));currentTab='internal';RTE.log('internal full URL detected: '+href+' > '+pageName);}}
+element.removeClass('external');element.removeClass('autonumber');var data={};if(currentTab=='internal'){var href=this.getValueOf('internal','name');if(href.indexOf(window.wgServer)==0){var re=new RegExp(window.wgArticlePath.replace(/\$1/,'(.*)'));var matches=href.match(re);if(matches){var pageName=matches[1];pageName=decodeURIComponent(pageName);pageName=pageName.replace(/_/g,' ');this.setValueOf('internal','name',pageName);this.setValueOf('internal','label',this.getValueOf('external','label'));currentTab='internal';RTE.log('internal full URL detected: '+href+' > '+pageName);}}}
 switch(currentTab){case'external':data={'type':'external','link':this.getValueOf('external','url'),'text':this.getValueOf('external','label'),'wikitext':null};type='externalNamed';if(this.getValueOf('external','autonumber')){data.linktype='autonumber';data.text='[1]';element.addClass('autonumber');type='externalNumbered';}
 if(data.text==''){data.type='external-raw';type='externalSimple';}
 element.setText(data.text!=''?data.text:data.link);element.addClass('external');element.removeClass('new');break;case'internal':data={'type':'internal','link':this.getValueOf('internal','name'),'text':this.getValueOf('internal','label'),'noforce':true,'wikitext':null};if(element.getText()==element.getHtml()){element.setText(data.text!=''?data.text:data.link);}
