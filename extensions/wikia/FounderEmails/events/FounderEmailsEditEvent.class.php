@@ -96,6 +96,12 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			return true;
 		}
 
+		if ( $editor->isAllowed( 'bot' ) ) {
+			// skip bots
+			wfProfileOut( __METHOD__ );
+			return true;
+		}
+
 		$oTitle = Title::makeTitle( $oRecentChange->getAttribute('rc_namespace'), $oRecentChange->getAttribute('rc_title') );
 		$eventData = array(
 			'titleText' => $oTitle->getText(),
