@@ -219,10 +219,22 @@ CKEDITOR.plugins.add('rte-media',
 			'top': parseInt(position.top + 2) + 'px'
 		});
 
-		// don't show menu above RTE toolbar
+		// don't show [modify] / [remove] menu above RTE toolbar
+		var menu = overlay.children().eq(0);
 		if (position.top > 0) {
-			overlay.show();
+			menu.show();
 		}
+
+		// don't show caption when it's going outside RTE window (RT #46409)
+		var caption = overlay.children().eq(1);
+		var positionCaption = parseInt(position.top) + parseInt(caption.css('top')) + 16 /* caption height */;
+
+		if (positionCaption < RTE.tools.getEditorHeight()) {
+			caption.show();
+		}
+
+		// show whole media overlay
+		overlay.show();
 
 		// clear timeout used to hide preview with small delay
 		if (timeoutId = image.data('hideTimeout')) {
@@ -236,6 +248,7 @@ CKEDITOR.plugins.add('rte-media',
 
 		// hide menu 100 ms after mouse is out (this prevents flickering)
 		image.data('hideTimeout', setTimeout(function() {
+			overlay.children().hide();
 			overlay.hide().removeData('hideTimeout');
 		}, 100));
 	},

@@ -99,6 +99,11 @@ window.RTE.tools = {
 		return placeholder;
 	},
 
+	// get height of editor's iframe
+	getEditorHeight: function() {
+		return $('#cke_contents_wpTextbox1').height();
+	},
+
 	// get theme colors from .color1 CSS class
 	getThemeColors: function() {
 		// create or use existing color picker div
