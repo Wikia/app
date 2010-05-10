@@ -9,4 +9,6 @@
 $wgAutoloadClasses['WikiFactoryChangedHooks'] = dirname(__FILE__)."/WikiFactoryChangedHooks.class.php";
 
 // Alphabetical
+$wgHooks['WikiFactoryChanged'][] = 'WikiFactoryChangedHooks::achievements';
 $wgHooks['WikiFactoryChanged'][] = 'WikiFactoryChangedHooks::recipesTweaks';
+
