@@ -1,5 +1,7 @@
 <?php
 
+$wgAutoloadClasses[ 'AjaxLoginForm' ] = "$IP/extensions/wikia/AjaxLogin/ComboAjaxLogin.php";
+
 class Signup extends SpecialPage {
 	function __construct() {
 		parent::__construct('Signup');
