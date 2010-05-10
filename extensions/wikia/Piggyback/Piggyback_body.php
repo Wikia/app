@@ -12,7 +12,7 @@ class Piggyback extends SpecialPage {
 
 	function execute( $par ){
 		global $wgRequest, $wgOut, $wgUser;
-			
+
 		if( !$wgUser->isAllowed( 'piggyback' ) ) {
 			$wgOut->permissionRequired( 'piggyback' );
 			return;
@@ -30,7 +30,7 @@ class Piggyback extends SpecialPage {
 		if( $this->mAction == 'submitlogin' && $wgRequest->wasPosted() ) {
 			$LoginForm->validPiggyback();
 		} else {
-            $LoginForm->setDefaultTargetValue($wgRequest->getVal('target'));    
+            $LoginForm->setDefaultTargetValue($wgRequest->getVal('target'));
         }
 
 		$LoginForm->render();
@@ -54,13 +54,13 @@ class PBLoginForm extends LoginForm {
 		$this->exTemplate->set( 'actionlogin', $this->titleObj->getLocalUrl( 'action=submitlogin' ) );
 
 		$this->mOtherName = $request->getVal( 'wpOtherName' );
-		parent::LoginForm( &$request );
-	
+		parent::LoginForm( $request );
+
 		if ( !LoginForm::getLoginToken() ) {
 			LoginForm::setLoginToken();
 		}
 		$this->exTemplate->set("token", LoginForm::getLoginToken());
-		
+
 		$this->mType = "login";
 		/* fake to don't change remember password */
 		$this->mRemember = (bool) $wgUser->getOption( 'rememberpassword' );
@@ -91,9 +91,9 @@ class PBLoginForm extends LoginForm {
 		}
 
 		$wgRequest->setSessionData( "PgParentUser", $wgUser->getID() );
-		
+
 		wfRunHooks( 'PiggybackLogIn',array( $wgUser, $u) );
-		
+
 		$log = new LogPage( 'piggyback' );
 		$log->addEntry( 'piggyback', SpecialPage::getTitleFor( 'Piggyback') , "login ".$wgUser->getName()." to ".$u->getName(),  array() );
 
@@ -132,14 +132,14 @@ class PBLoginForm extends LoginForm {
 			$this->mainLoginForm( wfMsg( 'piggyback-wronguser', htmlspecialchars( $this->mName ) ) );
 			return ;
 		}
-		
+
 		if( $this->mName != "" && $cUserId == 0 ) {
 			$this->mainLoginForm( wfMsg( 'piggyback-nosuchuser' ) );
 		}
-		
+
 		$this->processLogin();
 	}
-    
+
     function setDefaultTargetValue($value){
         $this->plugin->set( 'otherName', $value );
     }
