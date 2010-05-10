@@ -107,6 +107,7 @@
 }
 
 .RTEMediaMenu {
+	display: none;
 	font-size: 11px;
 	height: 14px;
 	opacity: 0.9;
@@ -126,6 +127,7 @@
 	background: #f9f9f9;
 	border: solid 1px #ccc;
 	border-top: none;
+	display: none;
 	font-size: 11px;
 	left: 0;
 	line-height: 16px;
