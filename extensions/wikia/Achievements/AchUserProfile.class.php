@@ -158,7 +158,7 @@ class AchUserProfile {
 		$data = array(
 			'js_url' => "{$wgExtensionsPath}/wikia/Achievements/js/Achievements.js?{$wgStyleVersion}",
 			'badges' => $badges,
-			'title' => wfMsg('achievements-profile-title', $profileOwnerUser->getName(), count($badges)),
+			'title' => wfMsgExt('achievements-profile-title', array('parsemag'), $profileOwnerUser->getName(), count($badges)),
 			'title_no' => wfMsg('achievements-profile-title-no', $profileOwnerUser->getName()),
 			'leaderboard_url' => Skin::makeSpecialUrl("Leaderboard"),
 			'title_challenges' => wfMsg('achievements-profile-title-challenges', $profileOwnerUser->getName()),
