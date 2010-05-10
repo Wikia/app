@@ -206,38 +206,37 @@ class TokyoTyrantCache extends TokyoTyrantSession {
 		} else {
 			$exp = time() + $exp;
 		}
-		$TT = $this->connect($key);
-		if ( $TT ) {
-			if ( !is_null($value) ) {
-				$value = @serialize($value);
-				$values = array(
-					self::V_COLUMN => $value,
-					self::X_COLUMN => $exp
-				);
-				
-				try {
+		try {
+			$TT = $this->connect($key);
+			if ( $TT ) {
+				if ( !is_null($value) ) {
+					$value = @serialize($value);
+					$values = array(
+						self::V_COLUMN => $value,
+						self::X_COLUMN => $exp
+					);
 					$res = $TT->put($key, $values);
-				} catch (Tyrant_Exception $e) {
-					Wikia::log( __METHOD__, "info", "cannot put $value to TT (key: {$key}, host: ".$TT->gethost().", port: ".$TT->getport()."): " . $e->getMessage(), $this->mDebug );
-				}
-			} 
+				} 
+			}
+		} catch (Tyrant_Exception $e) {
+			Wikia::log( __METHOD__, "info", "cannot put $value to TT (key: {$key}, host: ".$TT->gethost().", port: ".$TT->getport()."): " . $e->getMessage(), $this->mDebug );
 		}
 		return $res;
 	}
 	
 	private function _get($key) {
 		$value = $exp = 0;
-		$TT = $this->connect($key);
-		if ( $TT ) {
-			try {
-				$result = $TT->get($key);
-				if ( is_array( $result ) && isset( $result[self::V_COLUMN] ) ) {
-					$value = $result[self::V_COLUMN];
-					$exp = $result[self::X_COLUMN];
-				} 
-			} catch (Tyrant_Exception $e) {
-				Wikia::log( __METHOD__, "info", "cannot read data from TT (key: {$key}, host: ".$TT->gethost().", port: ".$TT->getport()."): " . $e->getMessage(), $this->mDebug );
+		try {
+			$TT = $this->connect($key);
+			if ( $TT ) {
+					$result = $TT->get($key);
+					if ( is_array( $result ) && isset( $result[self::V_COLUMN] ) ) {
+						$value = $result[self::V_COLUMN];
+						$exp = $result[self::X_COLUMN];
+					} 
 			}
+		} catch (Tyrant_Exception $e) {
+			Wikia::log( __METHOD__, "info", "cannot read data from TT (key: {$key}, host: ".$TT->gethost().", port: ".$TT->getport()."): " . $e->getMessage(), $this->mDebug );
 		}
 		return array($value, $exp);
 	}
