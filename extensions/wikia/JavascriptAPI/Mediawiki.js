@@ -48,7 +48,7 @@
 
 var Mediawiki = {
 	// apiUrl must be on the same domain for write access
-	apiUrl		: "/api.php",
+	apiUrl		: wgScriptPath + '/api.php',
 
 	// How long to wait for request, in milliseconds
 	apiTimeout	: 30000,
