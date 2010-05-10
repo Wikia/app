@@ -77,6 +77,10 @@ class AchNotification {
 			$template->set_vars($data);
 
 			$out = $template->render('NotificationBox');
+
+			// this works only for Wikia and only in current varnish configuration
+			header('X-Pass-Cache-Control: no-store, private, no-cache, must-revalidate');
+
 		} else {
 			$out = '';
 		}
