@@ -127,7 +127,7 @@ function modifyCategory(e) {
 			$('#csInfoboxCategory').focus();
 		},
 		buttons: [
-			{id:'sortDialogSave', default:true, message:csInfoboxSave, handler:function() {
+			{id:'sortDialogSave', defaultButton:true, message:csInfoboxSave, handler:function() {
 				var category = $('#csInfoboxCategory').val();
 				var sortkey = $('#csInfoboxSortKey').val();
 				extractedParams = extractSortkey(category);

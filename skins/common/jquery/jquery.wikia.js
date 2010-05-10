@@ -143,7 +143,7 @@ jQuery.showCustomModal = function(title, content, options) {
 		if (options.buttons) {
 			buttons = $('<div class="neutral modalToolbar"></div>');
 			for (var buttonNo = 0; buttonNo < options.buttons.length; buttonNo++) {
-				var button = '<a id="' + options.buttons[buttonNo].id + '" class="wikia-button' + (options.buttons[buttonNo].default ? '' : ' secondary') + '">' + options.buttons[buttonNo].message + '</a>';
+				var button = '<a id="' + options.buttons[buttonNo].id + '" class="wikia-button' + (options.buttons[buttonNo].defaultButton ? '' : ' secondary') + '">' + options.buttons[buttonNo].message + '</a>';
 				$(button).bind('click', options.buttons[buttonNo].handler).appendTo(buttons);
 			}
 		}
