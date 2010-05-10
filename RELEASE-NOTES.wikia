@@ -1,3 +1,6 @@
+== Changes since 201005.2 ==
+* 
+
 == Changes since 201005.1 ==
 * rt#46374: Category Options box doesn't have a border anymore (Marooned)
 * rt#43190: CategorySelect has started to break badly with the EF Monaco upgrade (Marooned)
