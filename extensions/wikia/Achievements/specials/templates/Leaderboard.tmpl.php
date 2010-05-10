@@ -29,6 +29,8 @@
 
 	<div id="leaderboard-sidebar">
 <?php
+	$first = null;
+
 	foreach($recent as $level => $badges) {
 		if(count($badges) == 0) {
 			continue;
@@ -37,9 +39,10 @@
 		$sectionName = wfMsg('achievements-recent-'.AchStatic::$mLevelNames[$level]);
 
 ?>
-		<h2 class="dark_text_2<?= $level == BADGE_LEVEL_GOLD ? ' first' : '' ?>"><?= $sectionName ?></h2>
+		<h2 class="dark_text_2<?= $first == null ? ' first' : '' ?>"><?= $sectionName ?></h2>
 		<ul class="recent-badges">
 <?php
+		$first = true;
 		foreach($badges as $badge) {
 			if(isset($users[$badge['user_id']])) {
 				$badge_name = AchHelper::getBadgeName($badge['badge_type'], $badge['badge_lap']);
