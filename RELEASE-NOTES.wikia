@@ -1,4 +1,5 @@
 == Changes since 201005.2 ==
+* rt#48272: First class added to first heading on Special:Leaderboard (TOR)
 * rt#46409: RTE: image hover location issues (macbre)
 * rt#48990: Deleted pages now hidden from Followed box on user pages (TOR)
 * rt#48476: Ctrl + click on lightbox'd images does not open in new tab (macbre)
