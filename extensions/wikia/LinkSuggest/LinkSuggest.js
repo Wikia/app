@@ -489,7 +489,7 @@ function LS_realPreview(s) {
 
 addOnloadHook(function() {
 	// So far this extension works only in Firefox and Internet Explorer
-	if(YAHOO.env.ua.ie > 0 || YAHOO.env.ua.gecko > 0) {
+	if(YAHOO.env.ua.ie > 0 || YAHOO.env.ua.gecko > 0 || YAHOO.env.ua.webkit > 0) {
 		var oDS = new YAHOO.widget.DS_XHR(wgServer + wgScriptPath, ["\n"]);
 		oDS.responseType = YAHOO.widget.DS_XHR.TYPE_FLAT;
 		oDS.scriptQueryAppend = 'action=ajax&rs=getLinkSuggest';
