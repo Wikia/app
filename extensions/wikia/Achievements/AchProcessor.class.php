@@ -32,6 +32,11 @@ class AchProcessor {
 			return; // article object was not passed to hook handler, it should never happen - consider logging it into log stream
 		}
 
+		if(Wikia::isVarSet('AchDone')) {
+			return;
+		}
+		Wikia::setVar('AchDone', true);
+
 		$this->mRevision = $revision;
 		$this->mStatus = $status;
 		$this->mTitle = $this->mArticle->getTitle();
