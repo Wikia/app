@@ -1,5 +1,5 @@
 == Changes since 201005.2 ==
-* 
+* rt#48476: Ctrl + click on lightbox'd images does not open in new tab (macbre)
 
 == Changes since 201005.1 ==
 * rt#46374: Category Options box doesn't have a border anymore (Marooned)
