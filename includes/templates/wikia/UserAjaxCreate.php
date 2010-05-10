@@ -80,7 +80,7 @@ class UserAjaxCreateTemplate extends QuickTemplate {
 			<col width="350" />
 			<col width="330" />
 		</colgroup>
-		<tr class="wpAjaxLoginLine">
+		<tr class="wpAjaxLoginPreLine">
 			<td class="wpAjaxLoginInput" id="wpNameTD">
 				<label for='wpName2'><?php $this->msg('yourname') ?></label><span>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span><br/>
 				<input type='text'  name="wpName" id="wpName2"	value="<?php $this->text('name') ?>" size='20' />
