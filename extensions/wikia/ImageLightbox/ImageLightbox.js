@@ -45,6 +45,11 @@ var ImageLightbox = {
 			return;
 		}
 
+		// don't open lightbox when user do Ctrl + click (RT #48476)
+		if (ev.ctrlKey) {
+			return;
+		}
+
 		// get name of an image
 		var imageName = false;
 
