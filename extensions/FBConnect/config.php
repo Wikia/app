@@ -132,7 +132,7 @@ $fbLogo = 'http://static.ak.fbcdn.net/images/icons/favicon.gif';
  */
 //$fbScript = 'http://static.ak.fbcdn.net/connect/en_US/core.js';
 global $wgScriptPath, $wgStyleVersion;
-$fbScript = "$wgScriptPath/extensions/wikia/FBConnect/fbsdk_core.js?$wgStyleVersion"; // insulate from changes by hosting locally.  Also, one less dns lookup.
+$fbScript = "$wgScriptPath/extensions/FBConnect/fbsdk_core.js?$wgStyleVersion"; // insulate from changes by hosting locally.  Also, one less dns lookup.
 //$fbScript = ''; // NOTE: This is in StaticChute now, so don't use any URL here. (NOTE: Didn't work in StaticChute.  The re-compression broke it).
 
 /**
