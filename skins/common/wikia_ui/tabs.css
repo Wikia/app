@@ -25,7 +25,7 @@
 	border-top-right-radius: 5px;
 	cursor: pointer;
 	float: left;
-	list-style: none;
+	list-style: none !important;
 	margin: 0 0 0 2px;
 	padding: 2px 5px 0;
 	-moz-border-radius-topleft: 5px;

@@ -131,7 +131,7 @@ h1.modalTitle img {
 
 #AjaxLoginButtons
 {
-	height:20px;
+	height:26px;
 	text-align:center;
 }
 
@@ -194,3 +194,8 @@ h1.modalTitle img {
 {
 	width: 150px;
 }
+
+.wpAjaxRegisterTable span{
+	display:block;
+	height:20px;
+}	
