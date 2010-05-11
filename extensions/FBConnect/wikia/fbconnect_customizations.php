@@ -594,7 +594,7 @@ class ChooseNameTemplate extends QuickTemplate {
 							   type: "POST",
 							   dataType: "json",
 							   url: window.wgScriptPath  + "/index.php",
-							   data: $("#userajaxregisterform").serialize() + "&action=ajax&rs=createUserLogin",
+							   data: $("#userajaxregisterform").serialize() + "&action=ajax&rs=createUserLogin&ajax=1",
 							   beforeSend: function(){
 									$("#userRegisterAjax").find("input,select").attr("disabled",true);
 							   },
