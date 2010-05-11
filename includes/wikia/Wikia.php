@@ -209,7 +209,7 @@ class WikiaAssets {
 				$prefix = $wgWikiaCombinedPrefix;
 			}
 			global $wgScriptPath;
-			$url = $wgScriptPath."/{$prefix}cb={$cb}{$wgStyleVersion}&type=SiteCSS&themename={$themename}&rtl={$isRTL}";
+			$url = $wgScriptPath."/{$prefix}cb={$cb}{$wgStyleVersion}&amp;type=SiteCSS&amp;themename={$themename}&amp;rtl={$isRTL}";
 			$out .= '<link rel="stylesheet" type="text/css" href="'.$url.'" />';
 		} else {
 			$ref = WikiaAssets::GetSiteCSSReferences($themename);
@@ -223,11 +223,11 @@ class WikiaAssets {
 
 	public static function GetThemeCSS($skin) {
 		global $wgDevelEnvironment, $wgStylePath;
-		
+
 		if($skin->themename == 'custom' || $skin->themename == 'sapphire') {
 				return null;
 		}
-		
+
 		return "\n".'<!-- GetThemeCSS --><link rel="stylesheet" type="text/css" href="'. $wgStylePath .'/'. $skin->skinname .'/' . $skin->themename . '/css/main.css" />';
 	}
 
@@ -244,13 +244,13 @@ class WikiaAssets {
 				global $wgWikiaCombinedPrefix;
 				$prefix = $wgWikiaCombinedPrefix;
 			}
-			$commonPart = "http://images1.wikia.nocookie.net/{$prefix}cb={$wgStyleVersion}&type=CoreCSS&themename={$themename}&rtl={$isRTL}&StaticChute=";
+			$commonPart = "http://images1.wikia.nocookie.net/{$prefix}cb={$wgStyleVersion}&amp;type=CoreCSS&amp;themename={$themename}&amp;rtl={$isRTL}&amp;StaticChute=";
 
 			$out = "\n<!-- GetCoreCSS -->";
-			$out .= "\n".'<!--[if lt IE 7]><link rel="stylesheet" type="text/css" href="'.$commonPart.'&browser=IElt7" /><![endif]-->';
-			$out .= "\n".'<!--[if IE 7]><link rel="stylesheet" type="text/css" href="'.$commonPart.'&browser=IEeq7" /><![endif]-->';
-			$out .= "\n".'<!--[if IE 8]><link rel="stylesheet" type="text/css" href="'.$commonPart.'&browser=IEeq8" /><![endif]-->';
-			$out .= "\n".'<!--[if !IE]>--><link rel="stylesheet" type="text/css" href="'.$commonPart.'&browser=notIE" /><!--<![endif]-->';
+			$out .= "\n".'<!--[if lt IE 7]><link rel="stylesheet" type="text/css" href="'.$commonPart.'&amp;browser=IElt7" /><![endif]-->';
+			$out .= "\n".'<!--[if IE 7]><link rel="stylesheet" type="text/css" href="'.$commonPart.'&amp;browser=IEeq7" /><![endif]-->';
+			$out .= "\n".'<!--[if IE 8]><link rel="stylesheet" type="text/css" href="'.$commonPart.'&amp;browser=IEeq8" /><![endif]-->';
+			$out .= "\n".'<!--[if !IE]>--><link rel="stylesheet" type="text/css" href="'.$commonPart.'&amp;browser=notIE" /><!--<![endif]-->';
 
 			return $out;
 
@@ -1150,7 +1150,7 @@ class Wikia {
 	// todo check if it isn't reduntant
 	public static function categoryCloudMsgToArray( $key ) {
 		$data = array();
-		
+
 		$msg = wfMsg($key);
 		if (!wfEmptyMsg($msg, $key)) {
 			$data = preg_split("/[*\s,]+/", $msg, null, PREG_SPLIT_NO_EMPTY);
