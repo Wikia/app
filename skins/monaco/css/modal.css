@@ -246,3 +246,7 @@ body.rtl h1.modalTitle img {
 	right: auto;
 }
 
+.wpAjaxRegisterTable span{
+	display:block;
+	height:20px;
+}
