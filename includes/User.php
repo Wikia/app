@@ -2519,7 +2519,10 @@ class User {
 		$this->clearSharedCache();
 
 		# Wikia - bad style fix for #1531 - needs review if it is still needed
-		if( isset( $_GET['ajax'] ) && $_GET['ajax'] == 1 ) {
+		global $wgRequest;
+		$action = $wgRequest->getVal( 'action');
+		$commit = ( isset($action) && $action == 'ajax' );
+		if ( $commit === true ) {		
 			$dbw->commit();
 		}
 
