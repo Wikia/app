@@ -19,7 +19,7 @@ abstract class SpecialEditPage extends SpecialPage {
 		parent::__construct( $name, $restriction, $listed, $function, $file, $includable );
 
 		// force EditEnhancements initialisation if available
-		if(function_exists('wfEditEnhancementsInit') && !class_exists('EditEnhancements')) {
+		if(function_exists('wfEditEnhancementsInit') && class_exists('EditEnhancements')) {
 			$this->mEditEnhancementsEnabled = true;
 			wfEditEnhancementsInit(true);
 		}

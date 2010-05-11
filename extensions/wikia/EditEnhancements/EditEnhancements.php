@@ -15,6 +15,6 @@ function wfEditEnhancementsInit($forceInit = false) {
 	$action = $wgRequest->getVal('action', null);
 
 	if ($action == 'edit' || $action == 'submit' || $forceInit == true) {
-		$instance = new EditEnhancements($action);
+		$instance = EditEnhancements::getInstance($action, $forceInit);
 	}
 }
