@@ -45,6 +45,10 @@ $wgHooks['CustomArticleFooter'][] = 'ArticleCommentInit::ArticleCommentEnableMon
 $wgHooks['BeforePageDisplay'][] = 'ArticleCommentInit::ArticleCommentAddJS';
 $wgHooks['SkinTemplateTabs'][] = 'ArticleCommentInit::ArticleCommentHideTab';
 
+/* added by Moli */
+# special::movepage
+$wgHooks['SpecialMovepageAfterMove'][] = 'ArticleComment::moveComments';
+
 class ArticleCommentInit {
 	private static $enable = null;
 
@@ -939,6 +943,48 @@ class ArticleComment {
 		}
 		return true;
 	}
+
+	
+	/**
+	 * hook
+	 *
+	 * @access public
+	 * @static
+	 */
+	static public function moveComments ( /*MovePageForm*/ &$form , /*Title*/&$oOldTitle , /*Title*/ &$oNewTitle ) {
+		global $wgUser;
+		wfProfileIn( __METHOD__ );
+		
+		$page = ArticleCommentList::newFromTitle( $oOldTitle );
+		$comments = $page->getCommentPages(true, false);
+		$countComments = count($comments);
+		if ( count($comments) > 0 ) {
+			foreach ($comments as $oComment) {
+				#---
+				if ( !$oComment->mTitle instanceof Title ) continue;
+				#---
+				list ( $user, $comment ) = self::explode($oComment->mTitle->getDBkey());
+				
+				$newCommentTitle = Title::newFromText(
+					sprintf( '%s/%s', $oNewTitle->getText(), $comment ),
+					Namespace::getTalk($oNewTitle->getNamespace()) );
+
+				$error = $oComment->mTitle->moveTo( $newCommentTitle, false, $form->reason, false );
+				if ( $error !== true ) {
+					Wikia::log( __METHOD__, "movepage", 
+						"cannot move blog comments: old comment: ".$oComment->mTitle->getPrefixedText().", ".
+						"new comment: ".$newCommentTitle->getPrefixedText().", error: " . @implode(", ", $error )
+					);
+				}
+			}
+		} else {
+			Wikia::log( __METHOD__, "movepage", "cannot move article comments, because no comments: ". $oOldTitle->getPrefixedText() );
+		} 
+		
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+	
 }
 
 /**
