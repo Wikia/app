@@ -113,7 +113,11 @@ class AchUserProfile {
 		// challenges
 		$challenges = array();
 		foreach($ownerBadges as $badge_type => $badge_laps) {
-			if($badge_type != BADGE_LOVE) {
+			if($badge_type == BADGE_LOVE) {
+				if(count($ownerBadges[$badge_type]) < count(AchStatic::$mInTrackConfig[$badge_type])) {
+					$challenges[$badge_type] = count($ownerBadges[$badge_type]);
+				}
+			} else {
 				if(isset(AchStatic::$mInTrackConfig[$badge_type])) {
 					$challenges[$badge_type] = count($ownerBadges[$badge_type]);
 				}
