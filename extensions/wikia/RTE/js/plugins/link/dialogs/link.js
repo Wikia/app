@@ -8,6 +8,19 @@ CKEDITOR.dialog.add( 'link', function( editor )
 	var plugin = CKEDITOR.plugins.link;
 	var setupDialog = function( editor, element )
 	{
+		var self = this;
+
+		// set value of link dialog fields
+		function setValues(tab, link, label) {
+			// when dialog is opened for the first time tab is not properly changed (RT #47454)
+			setTimeout(function() {
+				self.selectPage(tab);
+			}, 100);
+
+			self.setValueOf(tab, (tab == 'internal' ? 'name' : 'url'), link);
+			self.setValueOf(tab, 'label', label || '');
+		}
+
 		RTE.log('opening link dialog');
 
 		// get link' meta data
@@ -42,9 +55,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 			// select tab and fill editor
 			switch (data.type) {
 				case 'external':
-					this.selectPage('external');
-
-					this.setValueOf('external', 'url', data.link);
+					setValues('external', data.link);
 
 					// handle autonumbered external links
 					if (data.linktype == 'autonumber') {
@@ -56,45 +67,30 @@ CKEDITOR.dialog.add( 'link', function( editor )
 					else {
 						this.setValueOf('external', 'label', data.text);
 					}
-
 					break;
 
 				case 'external-raw':
-					this.selectPage('external');
-
-					this.setValueOf('external', 'url', data.link);
-					this.setValueOf('external', 'label', '');
+					setValues('external', data.link);
 					break;
 
 				case 'internal':
-					this.selectPage('internal');
-
-					this.setValueOf('internal', 'name', data.link);
-					this.setValueOf('internal', 'label', data.text);
+					setValues('internal', data.link, data.text);
 					break;
 			}
 		}
 		else {
 			// creating new link from selection
 			var selectionContent = RTE.tools.getSelectionContent();
+			var tab = 'internal';
 
 			// check for external link (RT #47454)
 			if (RTE.tools.isExternalLink(selectionContent)) {
-				RTE.log('link: using selected text "' + selectionContent + '" for new external link');
-
-				this.selectPage('external');
-
-				this.setValueOf('external', 'url', selectionContent);
-				this.setValueOf('external', 'label', '');
+				var tab = 'external';
 			}
-			else {
-				RTE.log('link: using selected text "' + selectionContent + '" for new internal link');
 
-				this.selectPage('internal');
+			setValues(tab, selectionContent);
 
-				this.setValueOf('internal', 'name', selectionContent);
-				this.setValueOf('internal', 'label', '');
-			}
+			RTE.log('link: using selected text "' + selectionContent + '" for new ' + tab + ' link');
 		}
 
 		// Record down the selected element in the dialog.
