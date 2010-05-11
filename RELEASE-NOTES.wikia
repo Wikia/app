@@ -1,4 +1,5 @@
 == Changes since 201005.2 ==
+* rt#48058: Answers: no warning if blocked when editing (macbre)
 * rt#47504: URLs used in CoreCSS and SiteCSS urls are not ampencoded (macbre)
 * rt#46116: CategorySelect has doubling effect on answers wikis (Marooned)
 * rt#48274: Achievements: Change "1 Badges" to "1 Badge" (Marooned)
