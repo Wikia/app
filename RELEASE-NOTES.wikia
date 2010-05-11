@@ -1,4 +1,5 @@
 == Changes since 201005.2 ==
+* rt#49078: Navigational photo galleries have stopped working (macbre)
 * rt#48527: Bot do not trigger FounderEmails (TOR)
 * rt#48272: First class added to first heading on Special:Leaderboard (TOR)
 * rt#46409: RTE: image hover location issues (macbre)
