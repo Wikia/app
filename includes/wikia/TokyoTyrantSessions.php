@@ -29,7 +29,7 @@ class TokyoTyrantSession {
 
 	private $mDebug = false;
 
-	var $servers = null;
+	var $servers = null;	
 	var $active = 0;
 
 	var $cid = null;
@@ -95,21 +95,23 @@ class TokyoTyrantSession {
 
 		for ($tries = 0; $tries < self::NBR_CONN; $tries++ ) {
 			$this->cid = $hv % $this->active;
-			list ( $this->host, $this->port ) = explode( ":", $this->servers[$this->cid] );
-			if ( $this->host && $this->port ) {
-				try {
-					$TT = Tyrant::connect($this->host, $this->port, $this->cid);
-					if ( $TT ) {
-						$sock = $TT->socket();
-						self::$sess_conn[$sock] = array($this->host, $this->port, $this->cid);
-						#Wikia::log( __METHOD__, "info", "Connected to TTserver ({$this->host}, {$this->port}, {$this->cid})", $this->mDebug );
-						return $TT;
+			if ( isset($this->servers[$this->cid]) ) {
+				list ( $this->host, $this->port ) = explode( ":", $this->servers[$this->cid] );
+				if ( $this->host && $this->port ) {
+					try {
+						$TT = Tyrant::connect($this->host, $this->port, $this->cid);
+						if ( $TT ) {
+							$sock = $TT->socket();
+							self::$sess_conn[$sock] = array($this->host, $this->port, $this->cid);
+							#Wikia::log( __METHOD__, "info", "Connected to TTserver ({$this->host}, {$this->port}, {$this->cid})", $this->mDebug );
+							return $TT;
+						}
+					} catch (Tyrant_Exception $e) {
+						Wikia::log( __METHOD__, "info", "cannot connect to TTserver ({$this->host}, {$this->port}, {$this->cid}) - " . $e->getMessage(), $this->mDebug );
 					}
-				} catch (Tyrant_Exception $e) {
-					Wikia::log( __METHOD__, "info", "cannot connect to TTserver ({$this->host}, {$this->port}, {$this->cid}) - " . $e->getMessage(), $this->mDebug );
 				}
+				$hv = $this->hashfunc( $hv . $realkey );
 			}
-			$hv = $this->hashfunc( $hv . $realkey );
 		}
 		return false;
 	}
