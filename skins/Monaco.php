@@ -1338,7 +1338,7 @@ EOF;
 
 			$data['register'] = array(
 				'text' => wfMsg('nologinlink'),
-				'href' => $signUpHref
+				'href' => $signUpHref . "&type=signup"
 				);
 
 		} else {

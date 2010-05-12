@@ -14,12 +14,12 @@
 			AjaxLogin.init( $('#AjaxLoginLoginForm form:first') );
 			showComboAjaxForPlaceHolder.statusAjaxLogin = false;
 
-			// Select the correct tab (register by default).
+			// Select the correct tab (login by default).
 			<?php
-				if(isset($actiontype) && $actiontype == 'login'){
-					print "AjaxLogin.showLogin($('#wpGoLogin'));\n";
-				} else {
+				if(isset($actiontype) && $actiontype == 'signup'){
 					print "AjaxLogin.showRegister($('#wpGoRegister'));\n";
+				} else {
+					print "AjaxLogin.showLogin($('#wpGoLogin'));\n";
 				}
 			?>
 		});
