@@ -205,11 +205,7 @@ $.loadYUI = function(callback) {
 		};
 		$().log('YUI: rq start ');
 		
-		if (typeof wsl  == 'undefined') {
-			$.getScript(wgYUIPackageURL, YUIloadingCallBack);
-		} else {
-			wsl.loadScript(wgYUIPackageURL, YUIloadingCallBack);
-		}
+		$.getScript(wgYUIPackageURL, YUIloadingCallBack);
 	} else {
 		$().log('YUI: already loaded');
 		callback();
