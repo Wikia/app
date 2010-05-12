@@ -86,10 +86,25 @@ function curlSolrUpdate() {
 	) );
 }
 
+function testInterwikiLink() {
+	$t = Title::newFromText( "w:c:answers" );
+	echo "interwiki: " .$t->getInterwiki() . "\n";
+	echo "dbkey: " . $t->getDBkey() . "\n";
+	echo "fulltext: " . $t->getFullText() . "\n";
+	echo "external: " . (int)$t->isExternal() . "\n";
+
+	$t = Title::newFromText( "wikipedia:Manitoba" );
+	echo "interwiki: " .$t->getInterwiki() . "\n";
+	echo "dbkey: " . $t->getDBkey() . "\n";
+	echo "fulltext: " . $t->getFullText() . "\n";
+	echo "external: " . (int)$t->isExternal() . "\n";
+
+}
 #
 # main
 #
 #testDelayedEmails();
 #testStomp();
 #testWF();
-curlSolrUpdate();
+#curlSolrUpdate();
+testInterwikiLink();
