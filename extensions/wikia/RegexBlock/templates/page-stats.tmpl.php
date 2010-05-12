@@ -12,7 +12,7 @@ $blockername_link = $skin->makeKnownLinkObj( $titleObj, $blockInfo->blckby_name,
 <li><?php print wfMsg('regexblock_block_date_to')?>: <?php print ($blockInfo->blckby_expire != 'infinite') ?  ('<b>' . $lang->timeanddate( wfTimestamp( TS_MW, $blockInfo->blckby_expire ), true ) . '</b>') : ('<i>infinite</i>'); ?></li>
 </ul>
 <?php
-print "<a href=\"" . $titleObj->getFullURL( array('action'=>'delete', 'blckid'=>'6428') ) . "\">".wfMsg('regexblock_unblock')."</a><br/>\n";
+print "<a href=\"" . $titleObj->getFullURL( array('action'=>'delete', 'blckid'=> $blockInfo->blckby_id) ) . "\">".wfMsg('regexblock_unblock')."</a><br/>\n";
 ?>
 <br />
 <?php if (!empty($stats_list)) { ?>
