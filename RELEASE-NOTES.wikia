@@ -1,4 +1,5 @@
 == Changes since 201005.2 ==
+* rt#49525: anons can read comments on a private wiki (uberfuzzy)
 * rt#47705: Answers: #background_strip is blue on every theme (macbre)
 * rt#48058: Answers: no warning if blocked when editing (macbre)
 * rt#47504: URLs used in CoreCSS and SiteCSS urls are not ampencoded (macbre)

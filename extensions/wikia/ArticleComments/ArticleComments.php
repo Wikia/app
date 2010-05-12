@@ -89,6 +89,11 @@ class ArticleCommentInit {
 			if ($wgTitle->isRedirect()) {
 				self::$enable = false;
 			}
+
+			//disable on pages that cant be read (RT#49525)
+			if (!$wgTitle->userCan('read')) {
+				self::$enable = false;
+			}
 		}
 		wfProfileOut( __METHOD__ );
 		return self::$enable;
