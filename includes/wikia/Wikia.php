@@ -221,16 +221,6 @@ class WikiaAssets {
 		return $out;
 	}
 
-	public static function GetThemeCSS($skin) {
-		global $wgDevelEnvironment, $wgStylePath;
-
-		if($skin->themename == 'custom' || $skin->themename == 'sapphire') {
-				return null;
-		}
-
-		return "\n".'<!-- GetThemeCSS --><link rel="stylesheet" type="text/css" href="'. $wgStylePath .'/'. $skin->skinname .'/' . $skin->themename . '/css/main.css" />';
-	}
-
 	public static function GetCoreCSS($themename, $isRTL, $isAllInOne) {
 
 		if($isAllInOne) {

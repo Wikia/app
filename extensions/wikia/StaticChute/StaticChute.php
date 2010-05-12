@@ -342,12 +342,10 @@ class StaticChute {
 	}
 
 	private function getMoreFileList($package, $args) {
-		global $wgUser;
-		$skinname = $wgUser->getSkin()->getSkinName();
 		switch($package) {
 			case 'monaco_css':
 				if (!empty($args['usetheme'])) {
-					return array($skinname . '/' . basename($args['usetheme']) . '/css/main.css');
+					return array('monaco/' . basename($args['usetheme']) . '/css/main.css');
 				}
 				break;
 		}
