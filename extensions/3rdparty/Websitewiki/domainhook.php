@@ -120,7 +120,7 @@ function wsinfo($parser, $thetext) {
 
   $result = "";
 
-  $checksiteUrl = Title::makeTitle( NS_SPECIAL, "Checksite" )->getlLocalUrl( array( "param" => $dom ) );
+  $checksiteUrl = Title::newFromText( NS_SPECIAL, "Checksite" )->getlLocalUrl( array( "param" => $dom ) );
 
   if($day && $wswErotik)
   {
