@@ -565,8 +565,10 @@ RTE.mediaEditor = {
 		RTE.tools.parseRTE(wikitext, function(html) {
 			var newMedia = $(html).children('img');
 
+
 			// replace old one with new one
 			newMedia.insertAfter(media);
+			newMedia.setData('wikitext', wikitext);
 			media.remove();
 
 			// setup added media
