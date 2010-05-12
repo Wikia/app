@@ -93,7 +93,7 @@ class StaticChute {
 			'common/jquery/jquery.json-1.3.js',
 			'common/jquery/jquery.cookies.2.1.0.js',
 			'common/jquery/jquery.wikia.js',
-			
+
 			'common/wikibits.js',
 			'monobook/main.js',
 			'monobook/tracker.js',
@@ -169,7 +169,7 @@ class StaticChute {
 			'../extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js',
 			'../extensions/wikia/ImageLightbox/ImageLightbox.js',
 			'../extensions/wikia/IE6PhaseOut/IE6PhaseOut.js',
-			
+
 			//'../extensions/FBConnect/fbsdk_core.js',
 			'../extensions/FBConnect/fbconnect.js',
 		);
@@ -200,7 +200,7 @@ class StaticChute {
 			'../extensions/wikia/CreatePage/js/CreatePage.js',
 			'../extensions/wikia/Interstitial/Interstitial.js',
 			'../extensions/wikia/ImageLightbox/ImageLightbox.js',
-			
+
 			//'../extensions/FBConnect/fbsdk_core.js',
 			'../extensions/FBConnect/fbconnect.js',
 		);
@@ -243,9 +243,9 @@ class StaticChute {
 	private function generateConfigSkinCorporate(){
 		//JS
 		$this->config['corporate_page_js'] = array(
-			'common/wikibits.js',
 			'common/jquery/jquery-1.4.1.min.js',
 			'common/jquery/jquery.wikia.js',
+			'common/wikibits.js',
 			'corporate/js/main.js',
 			'common/jquery/jquery.wikia.tracker.js',
 			'corporate/js/tracker.js',
@@ -257,9 +257,9 @@ class StaticChute {
 		);
 
 		$this->config['corporate_specialpage_js'] = array(
-			'common/wikibits.js',
 			'common/jquery/jquery-1.4.1.min.js',
 			'common/jquery/jquery.wikia.js',
+			'common/wikibits.js',
 			'corporate/js/main.js',
 			'common/jquery/jquery.wikia.tracker.js',
 			'corporate/js/tracker.js',
