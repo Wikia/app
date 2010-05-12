@@ -96,8 +96,9 @@ class TokyoTyrantSession {
 		for ($tries = 0; $tries < self::NBR_CONN; $tries++ ) {
 			$this->cid = $hv % $this->active;
 			if ( isset($this->servers[$this->cid]) ) {
-				list ( $this->host, $this->port ) = explode( ":", $this->servers[$this->cid] );
-				if ( $this->host && $this->port ) {
+				$hostAndPort = explode( ":", $this->servers[$this->cid] );
+				if(!empty($hostAndPort) && count($hostAndPort) >= 2){
+					list ( $this->host, $this->port ) = $hostAndPort;
 					try {
 						$TT = Tyrant::connect($this->host, $this->port, $this->cid);
 						if ( $TT ) {
