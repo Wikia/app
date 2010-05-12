@@ -21,10 +21,10 @@ $messages = array(
 		'contactpagetitle' => 'Contact Wikia',
 
 		/* form */
-		'contactintro' => 'You can contact [[wikia:project:Staff|Wikia Staff]] using this form. Admins of this wiki can be found [[Special:ListAdmins|here]].
+		'contactintro' => 'You can contact [[w:project:Staff|Wikia Staff]] using this form. Admins of this wiki can be found [[Special:ListAdmins|here]].
 
-Additional information on how to report problems to Wikia can be found [[wikia:project:Report_a_problem|here]],<br/>
-or you can post on [[wikia:Forum:Index|Wikia Community Forums]] for user support.
+Additional information on how to report problems to Wikia can be found [[w:project:Report_a_problem|here]],<br/>
+or you can post on [[w:Forum:Index|Wikia Community Forums]] for user support.
 
 If you prefer to use regular email or have attachments, you can contact us at [mailto:community@wikia.com community@wikia.com]',
 		'contactusername' => 'Username',
