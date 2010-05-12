@@ -92,10 +92,18 @@ class ParserOutput
 	}
 
 	function addLink( $title, $id = null ) {
-		/* Wikia change begin - @author: eloy, copy from mediawiki repo 1.17 */
+		/* Wikia change begin - @author: eloy */
 		if ( $title->isExternal() ) {
-			// Don't record interwikis in pagelinks
-			$this->addInterwikiLink( $title );
+			/** Don't record interwikis in pagelinks (but in 1.15 do not register
+			 * interwikilinks as well since we don't have iwlinks table)
+			 *
+			 * more info:
+			 *
+			 * https://bugzilla.wikimedia.org/show_bug.cgi?id=14473
+			 *
+			 * interwiki links were added in http://www.mediawiki.org/wiki/Special:Code/MediaWiki/65104
+			 *
+			 **/
 			return;
 		}
 		/* Wikia change end */
