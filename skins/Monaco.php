@@ -2552,7 +2552,7 @@ EOF;
 				if (!empty($wgAdsForceLeaderboards)){
 					$topAdCode = AdEngine::getInstance()->getPlaceHolderIframe('TOP_LEADERBOARD');
 					if (!empty($wgEnableTandemAds) && ArticleAdLogic::isBoxAdArticle($this->data['bodytext'])) {
-						$topAdCode .= AdEngine::getInstance()->getPlaceHolderIframe('TOP_RIGHT_BOXAD', false);
+						$topAdCode .= AdEngine::getInstance()->getPlaceHolderIframe('TOP_RIGHT_BOXAD');
 					}
 				} else {
 					// Let the collision detection decide
