@@ -1,4 +1,5 @@
 == Changes since 201005.2 ==
+* rt#37765: Special:WantedPages shows interwiki links? (eloy)
 * rt#49108: "tag this question" on answers wiki caused white page on click (macbre)
 * rt#49525: anons can read comments on a private wiki (uberfuzzy)
 * rt#47705: Answers: #background_strip is blue on every theme (macbre)
