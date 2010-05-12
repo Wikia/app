@@ -181,7 +181,7 @@ class WidgetFramework {
 			}
 		}
 
-		if( @is_array( $this->config[1] ) ) {
+		if( isset($this->config[1]) && is_array( $this->config[1] ) ) {
 			array_walk_recursive( $this->config[1], 'tempFunc' );
 		}
 
