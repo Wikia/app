@@ -2180,7 +2180,7 @@ class WikiFactory {
 			$cv_description = "(unknown)";
 		}
 
-		$cv_name = trim($cv_name);
+		$cv_name = trim($cv_name, ' $');
 		$cv_variable_group = trim($cv_variable_group);
 		$dbw->begin();
 		try {
