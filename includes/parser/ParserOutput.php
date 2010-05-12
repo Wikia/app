@@ -92,6 +92,14 @@ class ParserOutput
 	}
 
 	function addLink( $title, $id = null ) {
+		/* Wikia change begin - @author: eloy, copy from mediawiki repo 1.17 */
+		if ( $title->isExternal() ) {
+			// Don't record interwikis in pagelinks
+			$this->addInterwikiLink( $title );
+			return;
+		}
+		/* Wikia change end */
+
 		$ns = $title->getNamespace();
 		$dbk = $title->getDBkey();
 		if ( $ns == NS_MEDIA ) {
