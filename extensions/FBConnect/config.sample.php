@@ -9,22 +9,27 @@
 ### FBCONNECT CONFIGURATION VARIABLES ###
 
 /**
- * To use Facebook Connect you will first need to get a Facebook API Key:
- *    1.  Visit the Facebook application creation page:
- *        http://www.facebook.com/developers/createapp.php
- *    2.  Enter a descriptive name for your wiki in the Application Name field.
+ * To use Facebook Connect you will first need to create a Facebook application:
+ *    1.  Visit the "Create an Application" setup wizard:
+ *        http://developers.facebook.com/setup/
+ *    2.  Enter a descriptive name for your wiki in the Site Name field.
  *        This will be seen by users when they sign up for your site.
- *    3.  Accept the Facebook Terms of Service.
- *    4.  Upload icon and logo images. The icon appears in News Feed stories and the
- *        logo appears in the Connect dialog when the user connects with your application.
- *    5.  Click Submit.
- *    6.  Copy the displayed API key and application secret into this config file.
- *    7.  Go to "Edit Application Profile" for your application, then "Application Settings"
- *    8.  In the "Connect" section, make sure to fill out the Connect URL (such as
- *        "http://foo.bar.com/") and the Base Domain (such as "bar.com").
+ *    3.  Enter the Site URL and Locale, then click "Create application".
+ *    4.  Copy the displayed App ID and App Secret into this config file.
+ *   *5.  UNTIL WE UPGRADE TO THE NEW PHP-SDK (http://github.com/facebook/php-sdk):
+ *        Just kidding, don't actually copy the App ID into this config file.
+ *        Instead, visit the developer dashboard and copy the API Key into the
+ *        $fbAppId variable.
+ * 
+ * Optionally, you may customize your application:
+ *    A.  Click "developer dashboard" link on the previous screen or visit:
+ *        http://www.facebook.com/developers/apps.php
+ *    B.  Select your application and click "Edit Settings".
+ *    C.  Upload icon and logo images. The icon appears in Stream stories.
+ *    D.  In the "Connect" section, set your base domain and Connect Logo.
  */
-$fbApiKey         = 'YOUR_API_KEY';    # Change this!
-$fbApiSecret      = 'YOUR_SECRET';    # Change this!
+$fbAppId          = 'YOUR_APP_ID';    # Change this!
+$fbAppSecret      = 'YOUR_SECRET';    # Change this!
 
 /**
  * Disables the creation of new accounts and prevents old accounts from being
@@ -110,14 +115,14 @@ $fbLogo = 'http://static.ak.fbcdn.net/images/icons/favicon.gif';
 
 /**
  * URL of the Facebook Connect JavaScript SDK. Because this library is currently
- * an alpha release, changes to the APIs may be made on a regular basis. If you
+ * a beta release, changes to the APIs may be made on a regular basis. If you
  * use FBConnect on your production website, you may wish to insulate yourself
- * from these changes to the alpha library by downloading and hosting your own
- * copy of the library.
+ * from these changes by downloading and hosting your own copy of the library.
  * 
- * For more info, see <http://github.com/facebook/connect-js>.
+ * For more info, see <http://developers.facebook.com/docs/reference/javascript/>
  */
-$fbScript = 'http://static.ak.fbcdn.net/connect/en_US/core.js';
+$fbScript = 'http://connect.facebook.net/en_US/all.js';
+#$fbScript = 'https://connect.facebook.net/en_US/all.js';
 
 /**
  * Path to the extension's client-side JavaScript

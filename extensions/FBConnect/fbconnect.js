@@ -46,7 +46,7 @@
 window.fbAsyncInit = function() {
 	// Initialize the library with the API key
 	FB.init({
-		apiKey : window.fbApiKey,
+		appId : window.fbAppId,
 		status : true, // Check login status
 		cookie : true, // Enable cookies to allow the server to access the session
 		xfbml  : window.fbUseMarkup // Whether XFBML should be automatically parsed

@@ -53,7 +53,6 @@ class FBConnectXFBML {
 				// Disable these tags by returning an empty string
 				break;
 			case 'fb:serverfbml':
-			case 'fb:server-fbml':
 				// TODO: Is this safe? Does it respect $fbAllowFacebookImages?
 				$attrs = self::implodeAttrs( $args );
 				return "<fb:serverfbml{$attrs}>$text</fb:serverfbml>";
@@ -145,17 +144,14 @@ class FBConnectXFBML {
 		              'fb:activity',
 		              'fb:live-stream',
 		              'fb:profile-pic',
-		              /*
-		               * Was <fb:serverFbml> renamed?
-		               * <http://wiki.developers.facebook.com/index.php/Fb:serverFbml>
-		               */
-		              'fb:server-fbml',
-		              #'fb:serverFbml',
+		              'fb:serverfbml',
 		              'fb:login-button-perms',
 		              'fb:like',
+		              'fb:like-box',
 		              'fb:name',
 		              /*
 		               * From the Facebook Developer's Wiki under the old JS library.
+		               * Currently, these must be rendered in a <fb:serverFbml> tag.
 		               * <http://wiki.developers.facebook.com/index.php/XFBML>
 		               */
 		              #'fb:connect-form',
@@ -168,7 +164,7 @@ class FBConnectXFBML {
 		              #'fb:unconnected-friends-count',
 		              #'fb:user-status'
 		              /*
-		               * 2008 - I found these in the deprecated Facebook Connect
+		               * In 2008 I found these in the deprecated Facebook Connect
 		               * JavaScript library, connect.js.pkg.php, though no documentation
 		               * was available for them on the Facebook dev wiki. Will they be
 		               * implemented in the new JS SDK?
@@ -178,8 +174,7 @@ class FBConnectXFBML {
 		              #'fb:userlink',
 		              #'fb:video',
 		);
-		              
-
+		
 		// Reject discarded tags (that return an empty string) from Special:Version
 		$tempParser = new DummyParser();
 		foreach( $tags as $i => $tag ) {
