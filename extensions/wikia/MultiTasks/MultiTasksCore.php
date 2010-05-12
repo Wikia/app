@@ -112,13 +112,19 @@ class MultiTask extends SpecialPage {
 	public function explodePages() {
 		if ( !empty($this->mPage) ) {
 			$lines = explode( "\n", $this->mPage );
-			foreach ($lines as $single_page) {
-				#-- lines with articles
-				$aTitles = explode ("|", trim ($single_page) ) ;
+			
+			foreach ($lines as $single_line) {
+				$single_page = trim($single_line);
 				
-				if ( !empty($aTitles) ) {
-					foreach ( $aTitles as $sTitle ) {
-						$this->mTaskParams['page'][] = $sTitle;
+				if(!empty($single_page)) {
+					#-- lines with articles
+					$aTitles = explode ("|", $single_page);
+					
+					foreach ( $aTitles as $token ) {
+						$sTitle = trim($token);
+						
+						if(!empty($sTitle))
+							$this->mTaskParams['page'][] = $sTitle;
 					}
 				}
 			}
