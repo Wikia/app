@@ -102,6 +102,9 @@ window.RTE = {
 		// allow <center> to be placed inside <p>
 		CKEDITOR.dtd.p.center = 1;
 
+		// allow <img> (used for placeholders) to be "direct" child of <table> (refs RT #49507)
+		CKEDITOR.dtd.table.img = 1;
+
 		// set startup mode
 		RTE.config.startupMode = mode;
 
