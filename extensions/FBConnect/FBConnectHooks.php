@@ -185,9 +185,9 @@ STYLE;
 	 * to retain backward compatability.
 	 */
 	public static function MakeGlobalVariablesScript( &$vars ) {
-		global $wgTitle, $fbApiKey, $fbUseMarkup, $fbLogo;
+		global $wgTitle, $fbAppId, $fbUseMarkup, $fbLogo;
 		$thisurl = $wgTitle->getPrefixedURL();
-		$vars['fbApiKey'] = $fbApiKey;
+		$vars['fbAppId'] = $fbAppId;
 		#$vars['fbLoggedIn'] = FBConnect::$api->user() ? true : false;
 		$vars['fbUseMarkup'] = $fbUseMarkup;
 		$vars['fbLogo'] = $fbLogo ? true : false;
