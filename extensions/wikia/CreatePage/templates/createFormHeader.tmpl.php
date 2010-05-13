@@ -7,10 +7,14 @@
 			<?php endforeach; ?>
 		</div>
 	<?php endif; ?>
-<?php endif; ?>	
+<?php endif; ?>
 
 <div id="createpage_messenger" style="display:none; color:red;" ></div>
 <b><?=wfMsg ('createpage_title_caption');?></b>
 <br/>
 <input name="postTitle" id="postTitle" value="<?=isset($formData['postTitle'])?$formData['postTitle']:"";?>" style="width: 70%" /><br/><br/>
+<?php if(!empty($editIntro)): ?>
+	<?php echo $editIntro; ?>
+	<br />
+<?php endif; ?>
 <b><?=wfMsg ('createpage_enter_text');?></b>

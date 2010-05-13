@@ -117,7 +117,8 @@ class CreatePage extends SpecialEditPage {
 			"formErrors" => $this->mFormErrors,
 			"formData" => $this->mFormData,
 			/*field with value 1 add by login form befor reload */
-			"isReload" => ($wgRequest->getVal('wpIsReload',0) == 1)
+			"isReload" => ($wgRequest->getVal('wpIsReload',0) == 1),
+			"editIntro" => $this->mEditInto
 		));
 
 		$wgOut->setPageTitle( wfMsg("createpage") );

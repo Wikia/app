@@ -10,6 +10,7 @@ abstract class SpecialEditPage extends SpecialPage {
 	protected $mFormData;
 	protected $mFormErrors;
 	protected $mPostArticle;
+	protected $mEditInto;
 
 	public function __construct( $name = '', $restriction = '', $listed = true, $function = false, $file = 'default', $includable = false ) {
 		global $wgRequest;
@@ -82,7 +83,12 @@ abstract class SpecialEditPage extends SpecialPage {
 
 		$preload = $wgRequest->getVal( 'preload', '' );
 		if( !empty( $preload ) ) {
-			 $this->mEditPage->textbox1 = $this->getPreloadedText( $preload );
+			$this->mEditPage->textbox1 = $this->getPreloadedText( $preload );
+		}
+
+		$editintro = $wgRequest->getVal( 'editintro', '' );
+		if( !empty( $editintro ) ) {
+			$this->mEditInto = $this->getPreloadedText( $editintro );
 		}
 
 		// CategorySelect compatibility (restore categories from article body)
@@ -99,7 +105,6 @@ abstract class SpecialEditPage extends SpecialPage {
 
 		//create EditPage object
 		$this->createEditPage( $this->mFormData['postBody'] );
-
 
 		if(!count($this->mFormErrors) && $wgRequest->getVal('wpPreview')) {
 			// preview mode
