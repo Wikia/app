@@ -71,7 +71,7 @@ function CategoryHubs_initParserHook(&$parser) {
 	$parser->setHook( 'answers_tabs', 'wfAnswersTabsParserHook' );
 	$parser->setHook( 'answers_subcategories', 'wfAnswersSubcategoriesParserHook' );
 
-        return true;
+	return true;
 }
 
 function wfAnswersStatsParserHook( $input, $args, $parser ) {
