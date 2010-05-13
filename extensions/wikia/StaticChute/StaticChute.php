@@ -413,7 +413,8 @@ class StaticChute {
 			// get more files (rt #18765)
 			$moreUrls = $this->getMoreFileList($package, array('usetheme' => $this->theme));
 			if (!empty($moreUrls)) {
-				$urls = array_merge($urls, $moreUrls);
+				//Don't include theme with CoreCSS request
+				//$urls = array_merge($urls, $moreUrls);
 			}
 
 			$prefix = $wgStylePath . '/';

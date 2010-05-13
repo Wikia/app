@@ -221,6 +221,15 @@ class WikiaAssets {
 		return $out;
 	}
 
+	public static function GetThemeCSS($themename) {
+		global $wgStylePath;
+		if($themename != 'custom' && $themename != 'sapphire') {
+			$out = "\n<!-- GetThemeCSS -->";
+			$out .= '<link rel="stylesheet" type="text/css" href="'. $wgStylePath .'/monaco/'. $themename .'/css/main.css" />';
+			return $out;
+		}
+	}
+
 	public static function GetCoreCSS($themename, $isRTL, $isAllInOne) {
 
 		if($isAllInOne) {
