@@ -1,9 +1,9 @@
-
 var oAutoComp;
 var categories;
 var fixCategoryRegexp = new RegExp('\\[\\[(?:' + csCategoryNamespaces + '):([^\\]]+)]]', 'i');
 var ajaxUrl = wgServer + wgScript + '?action=ajax';
 var csType = 'edit';
+var csDraggingEvent = false;
 
 // TODO: PORT AWAY FROM YUI
 function initCatSelect() {
@@ -169,7 +169,6 @@ function inputBlur() {
 	}
 }
 
-// TODO: PORT AWAY FROM YUI
 function addCategory(category, params, index) {
 	if (params === undefined) {
 		params = {'namespace': csDefaultNamespace, 'outerTag': '', 'sortkey': ''};
@@ -205,13 +204,13 @@ function addCategory(category, params, index) {
 	elementImg = document.createElement('img');
 	elementImg.src = wgBlankImgUrl;
 	elementImg.className = 'sprite-small ' + (params['sortkey'] == '' ? 'sort' : 'sorted');
-	elementImg.onclick = function(e) {WET.byStr('articleAction/sortCategory'); modifyCategory(this); return false;};
+	elementImg.onclick = function(e) {if (csDraggingEvent) return; WET.byStr('articleAction/sortCategory'); modifyCategory(this); return false;};
 	elementA.appendChild(elementImg);
 
 	elementImg = document.createElement('img');
 	elementImg.src = wgBlankImgUrl;
 	elementImg.className = 'sprite-small close';
-	elementImg.onclick = function(e) {WET.byStr('articleAction/deleteCategory'); deleteCategory(this); return false;};
+	elementImg.onclick = function(e) {if (csDraggingEvent) return; WET.byStr('articleAction/deleteCategory'); deleteCategory(this); return false;};
 	elementA.appendChild(elementImg);
 
 	$('#csItemsContainer').get(0).insertBefore(elementA, $('#csCategoryInput').get(0));
@@ -219,9 +218,6 @@ function addCategory(category, params, index) {
 		$('#csHintContainer').css('display', 'block');
 	}
 	$('#csCategoryInput').attr('value', '');
-
-	//Drag&Drop
-	new YAHOO.CategorySelect.DDList(elementA);
 }
 
 function generateWikitextForCategories() {
@@ -237,7 +233,6 @@ function generateWikitextForCategories() {
 	return categoriesStr;
 }
 
-// TODO: PORT AWAY FROM YUI
 function initializeCategories(cats) {
 	//move categories metadata from hidden field [JSON encoded] into array
 	if (typeof cats == 'undefined') {
@@ -256,104 +251,24 @@ function initializeCategories(cats) {
 	for (var c=0; c < categories.length; c++) {
 		addCategory(categories[c].category, {'namespace': categories[c].namespace, 'outerTag': categories[c].outerTag, 'sortkey': categories[c].sortkey}, c);
 	}
-
-	//Drag&Drop
-	new YAHOO.util.DDTarget('csItemsContainer');
 }
 
-// TODO: PORT AWAY FROM YUI
 function initializeDragAndDrop() {
-	initCatSelect();
-	YAHOO.CategorySelect.DDList = function(id, sGroup, config) {
-		YAHOO.CategorySelect.DDList.superclass.constructor.call(this, id, sGroup, config);
-		this.logger = this.logger || YAHOO;
-		var el = this.getDragEl();
-		$(el).css('opacity', '0.67'); // The proxy is slightly transparent
-
-		this.goingLeft = false;
-		this.lastX = 0;
-		this.useShim = true;
-	};
-
-	YAHOO.extend(YAHOO.CategorySelect.DDList, YAHOO.util.DDProxy, {
-
-		startDrag: function(x, y) {
-			$().log(this.id + ' startDrag');
-
-			// make the proxy look like the source element
-			var dragEl = this.getDragEl();
-			var clickEl = this.getEl();
-			$(clickEl).css('visibility', 'hidden');
-
-			dragEl.innerHTML = clickEl.innerHTML;
-
-			$(dragEl).css('color', $(clickEl).css('color'));
-			$(dragEl).css('backgroundColor', $(clickEl).css('backgroundColor'));
-			$(dragEl).css('font-size', $(clickEl).css('font-size'));
-			$(dragEl).css('line-height', $(clickEl).css('line-height'));
-			$(dragEl).css('border', '1px solid gray');
+	$('#csItemsContainer').sortable({
+		items: '.CSitem:not(.CSaddCategory)',
+		revert: 200,
+		start: function(event, ui) {
+			csDraggingEvent = true;
 		},
-
-		endDrag: function(e) {
-			var srcEl = this.getEl();
-			var proxy = this.getDragEl();
-
-			// Show the proxy element and animate it to the src element's location
-			$(proxy).css('visibility', '');
-			var a = new YAHOO.util.Motion(
-				proxy, {
-					points: {
-						to: Dom.getXY(srcEl)
-					}
-				},
-				0.2,
-				YAHOO.util.Easing.easeOut
-			);
-			var proxyid = proxy.id;
-			var thisid = this.id;
-
-			// Hide the proxy and show the source element when finished with the animation
-			a.onComplete.subscribe(function() {
-					$('#'+proxyid).css('visibility', 'hidden');
-					$('#'+thisid).css('visibility', '');
-				});
-			a.animate();
-
-			var prevSibId = (srcEl.previousSibling && srcEl.previousSibling.nodeType == 1 && srcEl.previousSibling.nodeName.toLowerCase() == 'a') ? srcEl.previousSibling.getAttribute('catid') : -1;
-			moveElement(srcEl.getAttribute('catid'), prevSibId);
+		stop: function(event, ui) {
+			csDraggingEvent = false;
 		},
-
-		onDrag: function(e) {
-			// Keep track of the direction of the drag for use during onDragOver
-			var x = Event.getPageX(e);
-
-			if (x < this.lastX) {
-				this.goingLeft = true;
-			} else if (x > this.lastX) {
-				this.goingLeft = false;
-			}
-
-			this.lastX = x;
-		},
-
-		onDragOver: function(e, id) {
-			var srcEl = this.getEl();
-			var destEl = Dom.get(id);
-
-			// We are only concerned with list items, we ignore the dragover
-			// notifications for the list.
-			if (destEl.nodeName.toLowerCase() == 'a') {
-				var orig_p = srcEl.parentNode;
-				var p = destEl.parentNode;
-
-				if (this.goingLeft) {
-					p.insertBefore(srcEl, destEl); // insert on left
-				} else {
-					p.insertBefore(srcEl, destEl.nextSibling); // insert on right
-				}
-
-				DDM.refreshCache();
-			}
+		update: function(event, ui) {
+			var srcEl = ui.item;
+			var prevSibId = srcEl.prev('a').attr('catid');
+			if (typeof prevSibId == 'undefined') prevSibId = -1;
+			$().log('moving ' + srcEl.attr('catid') + ' before ' + prevSibId);
+			moveElement(srcEl.attr('catid'), prevSibId);
 		}
 	});
 }
