@@ -34,6 +34,7 @@ $wgExtensionMessagesFiles['ComboAjaxLogin'] = dirname(__FILE__) . '/ComboAjaxLog
 
 	// Bind the buttons on the skin to call the ComboAjaxLogin.  This needs to be on every page when this extension is enabled.
 	$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/AjaxLogin/AjaxLoginBindings.js?$wgStyleVersion'></script>\n");
+	return true;
  } // end ajaxLoginAdditionalScripts()
 
 /**
