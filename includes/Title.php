@@ -1534,13 +1534,18 @@ class Title {
 		} else {
 			global $wgWhitelistRead;
 
+			/* Wikia change begin - @author: Uberfuzzy */
+			/* whitelist Special:Signup by default also - RT #47547 */
 			/**
 			 * Always grant access to the login page.
 			 * Even anons need to be able to log in.
 			*/
-			if( $this->isSpecial( 'Userlogin' ) || $this->isSpecial( 'Resetpass' ) ) {
+			if( $this->isSpecial( 'Userlogin' ) ||
+				$this->isSpecial( 'Resetpass' ) ||
+				$this->isSpecial( 'Signup' ) ) {
 				return true;
 			}
+			/* Wikia change end */
 
 			/**
 			 * Bail out if there isn't whitelist
