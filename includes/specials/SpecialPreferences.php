@@ -368,13 +368,6 @@ class PreferencesForm {
 					return;
 				}
 				$wgUser->setEmail( $this->mUserEmail );
-
-				/* Wikia change begin - @author: Macbre */
-				/* invalidate empty email - RT #38358 */
-				if ($newadr == '') {
-					$wgUser->invalidateEmail();
-				}
-				/* Wikia change end */
 			}
 			if( $oldadr != $newadr ) {
 				wfRunHooks( 'PrefsEmailAudit', array( $wgUser, $oldadr, $newadr ) );
