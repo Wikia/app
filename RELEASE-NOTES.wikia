@@ -1,4 +1,5 @@
 == Changes since 201005.2 ==
+* rt#49134: fix special:contact message confustion (uberfuzzy)
 * rt#45560: including social profile edits from starter in a new wiki (eloy)
 * rt#45410: User reports errors on reverting edits (eloy)
 * rt#47547: hardcode Special:Signup for read whitelist (uberfuzzy)
