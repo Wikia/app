@@ -15,13 +15,13 @@ if( !defined( 'MEDIAWIKI' ) )
  * @ingroup Skins
  */
 class SkinCorporateBase extends SkinTemplate {
-	
+
 	function initPage( OutputPage $out ) {
 		global $wgHooks;
 		$wgHooks['SkinTemplateOutputPageBeforeExec'][] = array(&$this, 'prepareData');
 		parent::initPage( $out );
 	}
-	
+
 	function outputPage( OutputPage $out ) {
 		global $wgTitle, $wgUser, $wgContLang;
 		global $wgScript, $wgContLanguageCode;
@@ -31,7 +31,7 @@ class SkinCorporateBase extends SkinTemplate {
 		$oldid = $wgRequest->getVal( 'oldid' );
 		$diff = $wgRequest->getVal( 'diff' );
 		$action = $wgRequest->getVal( 'action', 'view' );
-		
+
 		$this->initPage( $out );
 
 		$this->setMembers();
@@ -49,13 +49,13 @@ class SkinCorporateBase extends SkinTemplate {
 		unset( $query['title'] );
 		unset( $query['returnto'] );
 		unset( $query['returntoquery'] );
-		
+
 		$this->thisquery = wfUrlencode( wfArrayToCGI( $query ) );
 		$this->loggedin = $wgUser->isLoggedIn();
 		$this->username = $wgUser->getName();
 		$this->iscontent = ($this->mTitle->getNamespace() != NS_SPECIAL );
 		$this->iseditable = ($this->iscontent and !($action == 'edit' or $action == 'submit'));
-		
+
 		/* Wikia change begin - @author: Marooned */
 		/* Pass parameters to skin, see: Login friction project */
 		$tpl->set( 'thisurl', $this->thisurl );
@@ -68,7 +68,7 @@ class SkinCorporateBase extends SkinTemplate {
 			# To save time, we check for existence
 			$this->userpageUrlDetails = self::makeKnownUrlDetails( $this->userpage );
 		}
-		
+
 		$this->userjs = $this->userjsprev = false;
 		$this->setupUserCss( $out );
 		$this->setupUserJs( $out->isUserJsAllowed() );
@@ -76,7 +76,7 @@ class SkinCorporateBase extends SkinTemplate {
 		wfProfileOut( __METHOD__."-stuff" );
 
 		wfProfileIn( __METHOD__."-stuff2" );
-		$tpl->set( 'title', $out->getPageTitle() );  
+		$tpl->set( 'title', $out->getPageTitle() );
 		wfProfileIn( "parsePageTitle" );
 		$tpl->set( 'pagetitle', $out->getHTMLTitle() );
 
@@ -86,34 +86,34 @@ class SkinCorporateBase extends SkinTemplate {
 		wfProfileOut( "parsePageTitle" );
 		$tpl->set( 'displaytitle', $out->mPageLinkTitle );
 		$tpl->set( 'pageclass', $this->getPageClasses( $this->mTitle ) );
-		
+
 		$tpl->set( 'skinnameclass', ( "skin-" . Sanitizer::escapeClass( $this->getSkinName ( ) ) ) );
-	
-		if ($wgUseTrackbacks && $out->isArticleRelated()) {  
+
+		if ($wgUseTrackbacks && $out->isArticleRelated()) {
 			$tpl->set( 'trackbackhtml', $wgTitle->trackbackRDF() );
 		} else {
 			$tpl->set( 'trackbackhtml', null );
-		} 
-		
-		$tpl->setRef( 'jsmimetype', $wgJsMimeType );  
-		$tpl->setRef( 'charset', $wgOutputEncoding );  
-		$tpl->set( 'headlinks', $out->getHeadLinks() );  
-		$tpl->set( 'headscripts', $out->getScript() ); 
-		$tpl->set( 'csslinks', $out->buildCssLinks() );  
+		}
+
+		$tpl->setRef( 'jsmimetype', $wgJsMimeType );
+		$tpl->setRef( 'charset', $wgOutputEncoding );
+		$tpl->set( 'headlinks', $out->getHeadLinks() );
+		$tpl->set( 'headscripts', $out->getScript() );
+		$tpl->set( 'csslinks', $out->buildCssLinks() );
 		$tpl->setRef( 'wgScript', $wgScript );
-		$tpl->setRef( 'skinname', $this->skinname ); 
+		$tpl->setRef( 'skinname', $this->skinname );
 		$tpl->setRef( 'loggedin', $this->loggedin );
-		
+
 		$tpl->set('notspecialpage', $this->mTitle->getNamespace() != NS_SPECIAL);
 
-		$tpl->setRef( "lang", $wgContLanguageCode ); 
+		$tpl->setRef( "lang", $wgContLanguageCode );
 		$tpl->set( 'dir', $wgContLang->isRTL() ? "rtl" : "ltr" );
-		$tpl->set( 'username', $wgUser->isAnon() ? NULL : $this->username ); 
-		$tpl->set( 'pagecss', $this->setupPageCss() );  
-		$tpl->setRef( 'usercss', $this->usercss);  
-		$tpl->setRef( 'userjs', $this->userjs); 
-		$tpl->setRef( 'userjsprev', $this->userjsprev); 
-		if( $wgUseSiteJs ) {  
+		$tpl->set( 'username', $wgUser->isAnon() ? NULL : $this->username );
+		$tpl->set( 'pagecss', $this->setupPageCss() );
+		$tpl->setRef( 'usercss', $this->usercss);
+		$tpl->setRef( 'userjs', $this->userjs);
+		$tpl->setRef( 'userjsprev', $this->userjsprev);
+		if( $wgUseSiteJs ) {
 			$jsCache = $this->loggedin ? '&smaxage=0' : '';
 			$skinName = ($this->getSkinName() == 'awesome') ? 'monaco' : $this->getSkinName(); // macbre: temp fix
 			$tpl->set( 'jsvarurl',
@@ -123,17 +123,17 @@ class SkinCorporateBase extends SkinTemplate {
 		} else {
 			$tpl->set('jsvarurl', false);
 		}
-		
+
 		$printfooter = "<div class=\"printfooter\">\n" . $this->printSource() . "</div>\n";
 		$out->mBodytext .= $printfooter . $this->generateDebugHTML();
 		$tpl->setRef( 'bodytext', $out->mBodytext );
-		
+
 		$newtalks = $wgUser->getNewMessageLinks();
-		
+
 		wfProfileIn( __METHOD__."-stuff3" );
 		$tpl->setRef( 'skin', $this );
-			
-		$tpl->set('personal_urls', $this->buildPersonalUrls()); 
+
+		$tpl->set('personal_urls', $this->buildPersonalUrls());
 		$content_actions = $this->buildContentActionUrls();
 		$tpl->setRef('content_actions', $content_actions);
 
@@ -147,9 +147,9 @@ class SkinCorporateBase extends SkinTemplate {
 		}
 
 		$tpl->set( 'body_onload', false );
-			
+
 		$tpl->set( 'reporttime', wfReportTime() );
-		
+
 		// original version by hansm
 		if( !wfRunHooks( 'SkinTemplateOutputPageBeforeExec', array( &$this, &$tpl ) ) ) {
 			wfDebug( __METHOD__ . ": Hook SkinTemplateOutputPageBeforeExec broke outputPage execution!\n" );
@@ -166,12 +166,12 @@ class SkinCorporateBase extends SkinTemplate {
 		$this->printOrError( $res );
 		wfProfileOut( __METHOD__ );
 	}
-	
+
 	public function buildPersonalUrls() {
 		global $wgUser, $wgTitle;
 
 		$data = array();
-		
+
 		if(!$wgUser->isLoggedIn()) {
 			$returnto = "returnto={$this->thisurl}";
 			if( $this->thisquery != '' )
@@ -196,10 +196,10 @@ class SkinCorporateBase extends SkinTemplate {
 			'href' => Skin::makeSpecialUrl('CreateWiki'),
 			'text' => wfMsg('corporatepage-create-button')
 		);
-						
+
 		return array_merge(parent::buildPersonalUrls(),$data);
 	}
-	
+
 	public function prepareData($self,$tpl){
 		global $wgUser, $wgRequest, $wgTitle;
 		$tpl->set('footer_middlecolumn', CorporatePageHelper::parseMsgImg('corporatepage-footer-middlecolumn'));
@@ -212,9 +212,9 @@ class SkinCorporateBase extends SkinTemplate {
 	 	* Generic <body> element class attribute values for all pages.
 	 	*/
 		$tpl->set('body_class_attribute', 'mediawiki '. $tpl->textret('dir').' '. $tpl->textret('pageclass').' '. $tpl->textret('skinnameclass').(( $wgUser->isLoggedIn() ) ? ' loggedin' : ' loggedout'));
-		
+
 		$StaticChute = new StaticChute('js');
-		$StaticChute->useLocalChuteUrl();		
+		$StaticChute->useLocalChuteUrl();
 		if( NS_SPECIAL == $wgTitle->getNamespace() ) {
 			$tpl->set('static_chute_js',$StaticChute->getChuteHtmlForPackage('corporate_specialpage_js'));
 		} else {
@@ -224,17 +224,22 @@ class SkinCorporateBase extends SkinTemplate {
 		$StaticChute = new StaticChute('css');
 		$StaticChute->useLocalChuteUrl();
 		$tpl->set('static_chute_css',$StaticChute->getChuteHtmlForPackage('corporate_page_css'));
-		
+
 		$tpl->set('is_anon', $wgUser->isAnon());
 		$tpl->set('is_manager', $wgUser->isAllowed( 'corporatepagemanager' ));
-		
+
 		$searchValue = $wgRequest->getVal( 'search', '' );
 		$tpl->set('search_value', ( !empty( $searchValue ) ) ? $searchValue : wfMsg('corporatepage-find-a-wiki'));
 		return true;
 	}
-	
-	public function setupSkinUserCss() {
-		
+
+	public function setupSkinUserCss($output) {
+		global $wgTitle;
+
+		// add CSS for special pages (RT #44450)
+		if (!empty($wgTitle) && $wgTitle->getNamespace() == NS_SPECIAL) {
+			$output->addStyle('corporate/specialPages.css');
+		}
 	}
 }
 
@@ -301,8 +306,8 @@ class CorporateBaseTemplate extends QuickTemplate {
 		global $wgStylePath, $wgLangToCentralMap, $wgContLang;
 		$central_url = !empty($wgLangToCentralMap[$wgContLang->getCode()]) ? $wgLangToCentralMap[$wgContLang->getCode()] : 'http://www.wikia.com/';
 ?>
-		<?php echo $this->data['reporttime']; ?> 
-		
+		<?php echo $this->data['reporttime']; ?>
+
 		<header id="GlobalHeader">
 			<!-- DEV NOTE: This is the white gradient strip at the top. -->
 			<div class="shrinkwrap">
@@ -331,7 +336,7 @@ class CorporateBaseTemplate extends QuickTemplate {
 				</div><!-- END #wikia-tools -->
 			</div><!-- END .shrinkwrap -->
 		</header>
-		
+
 <?php
 	}
 
@@ -349,7 +354,7 @@ class CorporateBaseTemplate extends QuickTemplate {
 									<li<?php print ($key2 == 0) ? ' class="first"':'';?> <?php print ($key2 == (count($value['sub'])-1)) ? ' class="last"':'';?> >
 										<a id="nav_sub_link_<?php print $key + 1 ?>_<?php print $key2 + 1 ?>" class="nav-sub-link" href="<?php print $value2['href'] ?>">
 											<?php print $value2['title'] ?>
-										</a> 
+										</a>
 									</li>
 								<?php endforeach; ?>
 							</ul>
@@ -387,7 +392,7 @@ class CorporateBaseTemplate extends QuickTemplate {
 				<section id="wikia-in-the-know">
 					<h1><?php print wfMsg('corporatepage-in-the-know') ?></h1>
 					<ul>
-					<?php foreach($this->data['footer_middlecolumn'] as $key => $value): ?> 
+					<?php foreach($this->data['footer_middlecolumn'] as $key => $value): ?>
 						<li id="wikia-in-the-know-<?php print $key;?>">
 							<a <?php echo $value['param'] == "new-window" ? " target='_blank' ":"" ?> href="<?php echo $value['href']; ?>" style="background-image:url(<?php print $value['imagename'] ?>);"><?php echo $value['title']; ?></a>
 						</li>
