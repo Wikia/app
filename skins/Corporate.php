@@ -59,7 +59,7 @@ class CorporateTemplate extends CorporateBaseTemplate {
 			<!-- DEV NOTE: This area has the blue-striped background.  -->
 			<?php AdEngine::getInstance()->getSetupHtml(); ?>
 
-			<article id="MainArticle" class="clearfix">
+			<article id="MainArticle" class="MainArticle clearfix">
 				<div class="shrinkwrap">
 					<?php echo $this->getTopAdCode() ?>
 					<?php print $this->htmlMainArticleContents();?>
