@@ -368,6 +368,13 @@ class PreferencesForm {
 					return;
 				}
 				$wgUser->setEmail( $this->mUserEmail );
+
+				/* Wikia change begin - @author: Macbre */
+				/* invalidate empty email - RT #38358 */
+				if ($newadr == '') {
+					$wgUser->invalidateEmail();
+				}
+				/* Wikia change end */
 			}
 			if( $oldadr != $newadr ) {
 				wfRunHooks( 'PrefsEmailAudit', array( $wgUser, $oldadr, $newadr ) );
@@ -1272,7 +1279,7 @@ class PreferencesForm {
 			if( $wgUser->isAllowed( 'createpage' ) || $wgUser->isAllowed( 'createtalk' ) ) {
 				$wgOut->addHTML( $this->getToggle( 'watchcreations' ) );
 			}
-	
+
 			foreach( array( 'edit' => 'watchdefault', 'move' => 'watchmoves', 'delete' => 'watchdeletion' ) as $action => $toggle ) {
 				if( $wgUser->isAllowed( $action ) )
 					$wgOut->addHTML( $this->getToggle( $toggle ) );
@@ -1280,7 +1287,7 @@ class PreferencesForm {
 		/* Wikia change begin - @author: Tomasz Odrobny */
 		}
 		/* Wikia change end */
-		
+
 		$this->mUsedToggles['watchcreations'] = true;
 		$this->mUsedToggles['watchdefault'] = true;
 		$this->mUsedToggles['watchmoves'] = true;
