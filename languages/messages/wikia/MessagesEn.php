@@ -763,22 +763,6 @@ hu',
 'createwikisubmitcomplete' => 'Your submission is complete.  If you gave an email address, you will be contacted regarding the new Wiki.  Thank you for using {{SITENAME}}.',
 'createwikilang' => 'Default language for this wiki',
 
-#Special:Contact stuff
-
-'contact' => 'Contact Wikia',
-'contactpagetitle' => 'Contact Wikia',
-'contactproblem' => 'Subject',
-'contactproblemdesc' => 'Message',
-'createwikidesc' => 'Description of the Wiki',
-'contactmailsub' => 'Wikia Contact Mail',
-'contactmail' => 'Send',
-'contactpage-email-failed' => '<b style="color: red">Please provide a valid e-mail address.</b>',
-'yourmail' => 'Your email address',
-'contactsubmitcomplete' => 'Thank you for contacting Wikia.',
-'contactrealname' => 'Your name',
-'contactwikiname' => 'Name of the wiki',
-'contactintro' => 'Please read the <a href=http://www.wikia.com/wiki/Report_a_problem>Report a problem</a> page for information on reporting problems and using this contact form.<p />You can contact the Wikia community at the <a href=http://www.wikia.com/wiki/Community_portal>Community portal</a> and report software bugs at <a href=http://bugs.wikia.com>bugs.wikia.com</a>. <p>If you prefer your message to <a href=http://www.wikia.com/wiki/Wikia>Wikia</a> to be private, please use the contact form below. <i>All fields are optional</i>.',
-
 #Special:SharedHelp
 'shared_help_info' => 'This text is stored on the Help Wikia.  [[w:c:Help:Help_talk:$1|Suggest changes here]].',
 'shared_help_edit_info' => 'The help text within the box is stored at [[w:c:help:Help:$1|Help:$1]] on Wikia Help. See [[Help:Shared Help]] for more info.
