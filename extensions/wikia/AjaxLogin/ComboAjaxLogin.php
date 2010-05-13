@@ -21,9 +21,20 @@ $wgExtensionCredits['other'][] = array(
 $wgAjaxExportList[] = 'GetComboAjaxLogin';
 $wgHooks['MakeGlobalVariablesScript'][] = 'comboAjaxLoginVars';
 $wgHooks['GetHTMLAfterBody'][] = 'renderHiddenForm';
+$wgHooks['BeforePageDisplay'][] = 'ajaxLoginAdditionalScripts';
 
 $wgExtensionMessagesFiles['ComboAjaxLogin'] = dirname(__FILE__) . '/ComboAjaxLogin.i18n.php';
 
+
+/**
+ * Hooked to BeforePageDisplay to allow adding of required JS scripts.
+ */
+ function ajaxLoginAdditionalScripts( &$out, &$sk ){
+	global $wgExtensionsPath,$wgStyleVersion;
+
+	// Bind the buttons on the skin to call the ComboAjaxLogin.  This needs to be on every page when this extension is enabled.
+	$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/AjaxLogin/AjaxLoginBindings.js?$wgStyleVersion'></script>\n");
+ } // end ajaxLoginAdditionalScripts()
 
 /**
  * Adds a hidden form to the page so user agents may prefill with client-stored information. The pre-filled information is later copied to the Ajax Login modal window. 
