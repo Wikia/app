@@ -31,7 +31,7 @@ body {
 	background: #002F55;
 	border: none;
 	color: #EEE;
-	font: 62.5%/1.25em "Lucida Grande", Helvetica, Arial, sans-serif;
+	font: 13px/1.25em "Lucida Grande", Helvetica, Arial, sans-serif;
 	overflow-x: hidden; /* Gecko annoyingly counts outline as layout. */
 }
 
@@ -69,14 +69,6 @@ a:hover {
 h1, h2, h3, h4, h5, h6 {
 	font-weight: bold;
 	line-height: normal;
-}
-#MainArticle p, #MainArticle li, #MainArticle dt, #MainArticle dd, #MainArticle td,
-#wikia-global-hot-spots p, #CompanyInfo a, #wikia-create-wiki {
-	font-size: 1.3em;
-}
-#MainArticle p *, #MainArticle li *, #MainArticle dt *, #MainArticle dd *, #MainArticle td *,
-#wikia-global-hot-spots p *, #CompanyInfo a *, #wikia-create-wiki * {
-	font-size: 1em;
 }
 
 /* Hide headlines used only for semantics. */
@@ -165,6 +157,8 @@ header a, #CompanyInfo a, footer a {
 	text-align: right;
 }
 #wikia-account-tools {
+	font-size: 10px;
+	line-height: 12.5px;
 	padding: 5px 0 4px;
 }
 .loggedin #wikia-account-tools * {
@@ -182,7 +176,7 @@ header a, #CompanyInfo a, footer a {
 #wikia-search {
 	background: url(http://images.wikia.com/common/skins/corporate/images/misc.wikiaglobal.sprite.png) no-repeat -10px -10px;
 	border: 0;
-	font-size: 1.6em;
+	font-size: 16px;
 	height: 22px;
 	padding: 4px 40px 0 15px;
 	width: 245px;
@@ -209,7 +203,7 @@ header a, #CompanyInfo a, footer a {
 
 #GlobalNav {
 	background: #333 url(http://images.wikia.com/common/skins/corporate/images/bg.global.header-nav.sprite.png) repeat-x 0 -84px;
-	font-size: 1.7em;
+	font-size: 17px;
 	height: 34px;
 }
 
@@ -399,29 +393,40 @@ header a, #CompanyInfo a, footer a {
 	outline: 1px solid #FFF;
 }
 #MainArticle h1 {
-	font-size: 2em;
+	font-size: 20px;
 }
 #MainArticle h2 {
-	font-size: 1.9em;
+	font-size: 19px;
 }
 #MainArticle h3 {
-	font-size: 1.7em;
+	font-size: 17px;
 }
 #MainArticle h4 {
-	font-size: 1.5em;
+	font-size: 15px;
 }
 #MainArticle h5 {
-	font-size: 1.3em;
+	font-size: 13px;
 }
 #MainArticle h6 {
-	font-size: 1.1em;
+	font-size: 11px;
 }
-#MainArticle ul, #MainArticle ol { padding: 0 2em; }
-#MainArticle p, #MainArticle li, #MainArticle dt, #MainArticle dd {
+
+
+.MainArticle ul
+.MainArticle ol { 
+	padding: 0 2em; 
+}
+
+.MainArticle p, 
+.MainArticle li, 
+.MainArticle dt, 
+.MainArticle dd {
 	margin: 1em 0;
 	line-height: 1.3em;
 	list-style-type: disc;
 }
+
+
 #MainArticle ol li { list-style-type: decimal; }
 
 #MainArticle #wikia-get-involved {
@@ -470,7 +475,7 @@ header a, #CompanyInfo a, footer a {
 }
 #CompanyInfo h1 {
 	border-width: 0 0 1px 0;
-	font-size: 1.5em;
+	font-size: 15px;
 	letter-spacing: 1px;
 	padding-bottom: 5px;
 }
@@ -525,7 +530,7 @@ footer {
 }
 
 #copyright, #SupplementalNav a {
-	font-size: 1.1em;
+	font-size: 11px;
 }
 #copyright, #SupplementalNav, #SupplementalNav li {
 	display: inline;
@@ -555,7 +560,7 @@ footer {
 	list-style: none;
 }
 #MainArticle .MainArticle-sidebar h3 {
-	font-size: 1.5em;
+	font-size: 15px;
 	margin: 10px 0 0;
 }
 #MainArticle .MainArticle-sidebar p, #MainArticle .MainArticle-sidebar li {
@@ -588,7 +593,7 @@ footer {
 	}
 	#homepage-feature-sidebar h1 {
 		color: #000;
-		font-size: 2.4em;
+		font-size: 24px;
 		font-weight: 600;
 		line-height: normal;
 		margin-top: 15px;
@@ -596,7 +601,7 @@ footer {
 	#homepage-feature-sidebar div h2 {
 		background: none;
 		color: #666;
-		font-size: 2.1em;
+		font-size: 21px;
 		font-weight: normal;
 		line-height: normal;
 		margin: 0;
@@ -605,14 +610,14 @@ footer {
 	}
 	#homepage-feature-sidebar h2 {
 		background: url(/skins/corporate/images/bg.separators.sprite.png) no-repeat -10px -40px;
-		font-size: 1.8em;
+		font-size: 18px;
 		line-height: normal;
 		margin-top: 20px;
 		padding-top: 20px;
 		text-align: center;
 	}
 	#homepage-feature-sidebar p {
-		font-size: 1.3em;
+		font-size: 13px;
 		line-height: normal;
 	}
 	.create-wiki-container {
@@ -637,13 +642,13 @@ footer {
 	}
 	#spotlight-slider .description h2 {
 		display: block;
-		font-size: 2.4em;
+		font-size: 24px;
 		font-weight: normal;
 		line-height: normal;
 		text-shadow: 0 1px 1px #000;
 	}
 	#spotlight-slider .description p {
-		font-size: 1.6em;
+		font-size: 16px;
 		line-height: normal;
 		margin: 0 0 .3em;
 		text-shadow: 0 1px 1px #000;
@@ -733,7 +738,7 @@ footer {
 .isMainpage #wikia-global-stats li {
 	color: #000;
 	display: inline;
-	font-size: 1.7em;
+	font-size: 17px;
 	padding: 0 10px;
 }
 .isMainpage #wikia-global-stats span {
@@ -741,7 +746,7 @@ footer {
 	font-weight: bold;
 }
 .isMainpage #wikia-global-stats p {
-	font-size: .9em;
+	font-size: 9px;
 }
 .isMainpage #wikia-global-stats p::before,
 .isMainpage #wikia-global-stats p::after {
@@ -760,10 +765,9 @@ footer {
 		float: left;
 	}
 	#wikia-global-hot-spots h1 {
-		font-size: 1.8em;
+		font-size: 18px;
 	}
 	#wikia-global-hot-spots p {
-		margin-top: .25em;
 		margin-bottom: 1em;
 	}
 	#wikia-global-hot-spots ol {
@@ -771,7 +775,6 @@ footer {
 	}
 	#wikia-global-hot-spots ol li {
 		clear: left;
-		font-size: 1em; /* Reset font-sizing inheritance. */
 		list-style-type: none;
 	}
 	#wikia-global-hot-spots .page-activity-badge {
@@ -791,7 +794,7 @@ footer {
 	#wikia-global-hot-spots strong {
 		display: block;
 		float: left;
-		font-size: 2em;
+		font-size: 20px;
 		font-weight: normal;
 		line-height: 30px;
 		width: 50px;
@@ -805,7 +808,7 @@ footer {
 	#wikia-global-hot-spots .page-activity-badge span,
 	#wikia-global-hot-spots .page-activity-sources span,
 	#wikia-global-hot-spots .wikia-wiki-link {
-		font-size: 1.2em;
+		font-size: 12px;
 	}
 	#wikia-global-hot-spots .page-activity-sources {
 		display: block;
@@ -819,7 +822,7 @@ footer {
 		vertical-align: middle;
 	}
 	#wikia-global-hot-spots .wikia-page-link {
-		font-size: 1.6em;
+		font-size: 16px;
 		font-weight: bold;
 		padding-right: .25em;
 	}
@@ -881,11 +884,11 @@ footer {
 }
 .isMainpage #wikia-whats-up h1 {
 	background: url(http://images.wikia.com/common/skins/corporate/images/bg.whats-up.top.white.302x24.gif) no-repeat;
-	font-size: 1.5em;
+	font-size: 15px;
 	padding-top: 25px;
 }
 .isMainpage #wikia-whats-up h2, .isMainpage #wikia-whats-up p {
-	font-size: 1.2em;
+	font-size: 12px;
 }
 .isMainpage #wikia-whats-up h2 {
 	font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
@@ -951,14 +954,11 @@ footer {
 
 /* @group Modal windows */
 .modalWrapper p, .modalWrapper div {
-	font-size: 1.3em;
+	font-size: 13px;
 	line-height: normal;
 }
 .modalWrapper .modalTitle {
-	font-size: 1.5em;
-}
-.modalWrapper p *, .modalWrapper div * {
-	font-size: 1em;
+	font-size: 15px;
 }
 
 /* @end */
@@ -969,7 +969,10 @@ footer {
 
 
 /* Wil added for Hubs -- TODO: move this to proper place */
-#MainArticle p, #MainArticle li, #MainArticle dt, #MainArticle dd {
+.MainArticle p,
+.MainArticle li,
+.MainArticle dt, 
+.MainArticle dd {
   margin: 5px 0;
 }
 
@@ -981,7 +984,7 @@ footer {
   margin-bottom: 5px;
   border-bottom: 1px solid #aaa;
   width: 100%;
-  font-size: 2.8em;
+  font-size: 28px;
   color: #006cb1;
 }
 
@@ -996,7 +999,7 @@ footer {
 }
 
 #hub-top-wikis h1 {
-  font-size: 2.2em;
+  font-size: 22px;
   margin-top: 5px;
   margin-bottom: 10px;
   color: #000;
@@ -1047,7 +1050,7 @@ footer {
   -moz-background-inline-policy:continuous;
   -moz-background-origin:padding;
   background:transparent url(/skins/corporate/images/bg.top-wikis.top.white.620x25.png) no-repeat scroll 0 0;
-  font-size:1.5em;
+  font-size:15px;
   padding-top:5px;
 }
 
@@ -1079,7 +1082,7 @@ footer {
 }
 
 ul#top-wiki-meta {
-  font-size:1.1em;
+  font-size:11px;
   margin-top:5px;
 }
 
@@ -1087,7 +1090,7 @@ ul#top-wiki-meta li {
   margin: 0 0 2px;
   list-style-type: none;
   color: #333;
-  font-size: 1.3em;
+  font-size: 13px;
   float: left;
   margin-right: 10px;
 }
@@ -1095,7 +1098,7 @@ ul#top-wiki-meta li {
 ul#top-wiki-meta li span {
   color: #339900;
   font-weight: bold;
-  font-size: 1.2em;
+  font-size: 12px;
 }
 
 #top-wikis-lists-box {
@@ -1104,7 +1107,7 @@ ul#top-wiki-meta li span {
 }
 
 #top-wikis-lists-box h2 {
-  font-size: 1.4em;
+  font-size: 18px;
   line-height: 1em;
   padding: 0;
   margin-top: 1px;
@@ -1114,7 +1117,6 @@ ul#top-wiki-meta li span {
   padding: 0;
   margin: 0;
   color: #666;
-  font-size: 1em;
 }
 
 #top-wikis-lists-box span.green-box {
