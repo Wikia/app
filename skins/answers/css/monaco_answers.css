@@ -866,8 +866,7 @@ li .userInfoNoAvatar:hover a{
 	color:#00c !important;
 }
 
-/* Filter IE < 7; XML namespace isn't updated when user's lang pref changes */
-*:lang(en) .userInfo {
+.userInfo {
 	float: left;
 }
 
@@ -900,8 +899,7 @@ li .userInfoNoAvatar:hover a{
 	margin-left: 66px; /* For IE6 and 7, gets overriden. */
 }
 
-/* Filter IE < 7; XML namespace isn't updated when user's lang pref changes */
-*:lang(en) .userInfo .userEditPoints {
+.userInfo .userEditPoints {
 	margin-left: 0;
 }
 
