@@ -1514,7 +1514,7 @@ wgUploadAutoFill = {$autofill};
 		wfDebug("SpecialUpload::detectScript: checking for embedded scripts and HTML stuff\n");
 
 		#check for HTML doctype
-		if (eregi("<!DOCTYPE *X?HTML",$chunk)) return true;
+		if (preg_match("/<!DOCTYPE *X?HTML/i",$chunk)) return true;
 
 		/**
 		* Internet Explorer for Windows performs some really stupid file type
@@ -1808,11 +1808,11 @@ wgUploadAutoFill = {$autofill};
 	 */
 	function showError( $description ) {
 		global $wgOut;
-		$wgOut->setPageTitle( wfMsg( "internalerror" ) );
 		$wgOut->setRobotPolicy( "noindex,nofollow" );
 		$wgOut->setArticleRelated( false );
 		$wgOut->enableClientCache( false );
-		$wgOut->addWikiText( $description );
+		$wgOut->addHTML( '<h2>' . wfMsg( "internalerror" ) . "</h2>\n" );
+		$wgOut->addHTML( '<span class="error">' . $description . '</span>' );
 	}
 
 	/**
