@@ -43,7 +43,7 @@ class BlogLockdown {
 			$canEdit = $oComment->canEdit();
 			$isOwner = (bool) ( $canEdit && !in_array($action, array('watch', 'protect') ) );
 			$isArticle = (bool )( $namespace == NS_BLOG_ARTICLE_TALK && $isOwner );
-		} 
+		}
 		else {
 			$owner = BlogArticle::getOwner( $title );
 			$isOwner = (bool)( $username == $owner );
@@ -126,7 +126,6 @@ class BlogLockdown {
 					$return = ( isset($owner) && ($username == $owner) );
 				}
 		}
-		Wikia::log( __METHOD__, $action, "result: {$result}; return: {$return}");
 		return $return;
 	}
 }
