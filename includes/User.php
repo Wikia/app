@@ -1105,7 +1105,7 @@ class User {
 		// due to -1 !== 0. Probably session-related... Nothing should be
 		// overwriting mBlockedby, surely?
 		$this->load();
-		
+
 		$this->mBlockedby = 0;
 		$this->mHideName = 0;
 		$this->mAllowUsertalk = 0;
@@ -1903,6 +1903,14 @@ class User {
 	function setEmail( $str ) {
 		$this->load();
 		$this->mEmail = $str;
+
+		/* Wikia change begin - @author: Macbre */
+		/* invalidate empty email - RT #44046 */
+		if ($str == '') {
+			$this->invalidateEmail();
+		}
+		/* Wikia change end */
+
 		wfRunHooks( 'UserSetEmail', array( $this, &$this->mEmail ) );
 	}
 
@@ -2522,7 +2530,7 @@ class User {
 		global $wgRequest;
 		$action = $wgRequest->getVal( 'action');
 		$commit = ( isset($action) && $action == 'ajax' );
-		if ( $commit === true ) {		
+		if ( $commit === true ) {
 			$dbw->commit();
 		}
 
@@ -2646,7 +2654,7 @@ class User {
 		if ( !$userblock ) {
 			return;
 		}
-		
+
 		$userblock->doAutoblock( wfGetIp() );
 
 	}
