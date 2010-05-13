@@ -726,7 +726,7 @@ function wfMsgHTMLwithLanguage($key, $lang, $options = array(), $params = array(
 
 	//TODO: check if this ok or do we need to use $msgPlainRaw plus parsing
 	$msgPlain = wfMsgExt($key, $options, $params);
-	$msgPlainFallbacked = 0;
+	$msgPlainFallbacked = $msgRichFallbacked = 0;
 	if ($lang == $wgContLanguageCode) {
 		$fullKey = false;
 		$langKey = $key;
@@ -763,7 +763,6 @@ function wfMsgHTMLwithLanguage($key, $lang, $options = array(), $params = array(
 		//TODO: check if this ok or do we need to use $msgRichRaw plus parsing
 		$msgRich = wfMsgExt($keyHTML, $options, $params);
 
-		$msgRichFallbacked = 0;
 		if ($lang == $wgContLanguageCode) {
 			$fullKey = false;
 			$langKeyHTML = $keyHTML;
