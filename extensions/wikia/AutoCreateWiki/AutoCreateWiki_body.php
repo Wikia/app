@@ -571,17 +571,22 @@ class AutoCreateWikiPage extends SpecialPage {
 		 */
 		$starter = $this->getStarter();
 		if( $starter !== false ) {
-			/**
-			 * @fixme we should not assume that dbw in this place is to first
-			 * cluster
-			 */
+			switch( $this->mType ) {
+				case "answers":
+					$tables = "categorylinks externallinks image imagelinks langlinks page pagelinks revision templatelinks text user_profile";
+					break;
+
+				default:
+					$tables = "categorylinks externallinks image imagelinks langlinks page pagelinks revision templatelinks text";
+			}
 			$cmd = sprintf(
-				"%s -h%s -u%s -p%s %s categorylinks externallinks image imagelinks langlinks page pagelinks revision templatelinks text | %s -h%s -u%s -p%s %s",
+				"%s -h%s -u%s -p%s %s %s | %s -h%s -u%s -p%s %s",
 				$this->mMYSQLdump,
 				$starter[ "host"      ],
 				$starter[ "user"      ],
 				$starter[ "password"  ],
 				$starter[ "dbStarter" ],
+				$tables,
 				$this->mMYSQLbin,
 				$dbwTarget->getLBInfo( 'host' ),
 				$wgDBuser,
