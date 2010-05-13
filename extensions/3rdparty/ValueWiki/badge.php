@@ -34,7 +34,7 @@ function renderBadge( $input, $argv ) {
 	$output .= "var symbol = \"{$symbol}\";";
 	$output .= "symbol = symbol.replace(':', 'colon');";
 	$output .= "symbol = symbol.replace('.', 'dot');";
-	$output .= "var url = '&#104;ttp://images.wikia.com/valuewiki/images/badges/' + symbol[0] + '/' + symbol + '.png';";
+	$output .= "var url = '&#104;ttp://techteam-qa3.wikia.com/wiki/Special:BadgeImage/' + symbol;";
 	$output .= "document.write('<div id=\"badgeDiv\" style=\"float:left;\"><a href=\"javascript: badgeCode();\">');";
 	$output .= "document.write('<img src=\"'+url+'\" alt=\"$title\" title=\"$title\" width=160 height=32 border=\"0\"></a><br>');";
 	$output .= "document.write('<div class=\"badgeCodeText\" style=\"float:left;\"><a href=\"javascript: badgeCode();\">$title</a></div></div>');";
