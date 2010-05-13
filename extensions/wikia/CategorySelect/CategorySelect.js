@@ -61,49 +61,6 @@ function deleteCategory(e) {
 	categories[catId] = null;
 }
 
-// TODO: PORT AWAY FROM YUI
-function modifyCategoryDialog(data, handler) {
-	Dialog = new YAHOO.widget.SimpleDialog('csModifyCategoryDialog',
-	{
-		width: "300px",
-		zIndex: 999,
-		effect: {effect: YAHOO.widget.ContainerEffect.FADE, duration: 0.25},
-		fixedcenter: true,
-		modal: true,
-		draggable: true,
-		close: true
-	});
-
-	var buttons = [ { text: data.save, handler: function() {
-		WET.byStr('articleAction/sortSave');
-		
-		// close dialog
-		this.hide();
-
-		var returnObject = {
-			'params': data,
-			'category': document.getElementById('csInfoboxCategory').value,
-			'sortkey': document.getElementById('csInfoboxSortKey').value
-		};
-
-		// return control to handler
-		handler(returnObject);
-
-	}} ];
-
-	Dialog.setHeader(data.caption);
-	Dialog.setBody(data.content);
-	Dialog.cfg.queueProperty("buttons", buttons);
-
-	Dialog.render(document.body);
-	//fill up initial values
-	$('#csInfoboxCategory').attr('value', data['data']['category']);
-	$('#csInfoboxSortKey').attr('value', data['data']['sortkey']);
-	Dialog.show();
-	//focus input on displayed dialog
-	$('#csInfoboxCategory').focus();
-}
-
 function modifyCategory(e) {
 	var catId = e.parentNode.getAttribute('catId');
 	defaultSortkey = categories[catId].sortkey != '' ? categories[catId].sortkey : (csDefaultSort != '' ? csDefaultSort : wgTitle);
@@ -321,7 +278,7 @@ function initializeDragAndDrop() {
 	YAHOO.extend(YAHOO.CategorySelect.DDList, YAHOO.util.DDProxy, {
 
 		startDrag: function(x, y) {
-			this.logger.log(this.id + ' startDrag');
+			$().log(this.id + ' startDrag');
 
 			// make the proxy look like the source element
 			var dragEl = this.getDragEl();
