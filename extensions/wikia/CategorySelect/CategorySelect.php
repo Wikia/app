@@ -47,6 +47,9 @@ function CategorySelectInit($forceInit = false) {
 	if( (!$forceInit) && (!$wgUser->isAllowed('edit')) ){
 		return true;
 	}
+	
+	global $IP, $wgAutoloadClasses;
+	$wgAutoloadClasses['CategorySelect'] = "$IP/extensions/wikia/CategorySelect/CategorySelect_body.php";
 
 	//don't use CategorySelect for undo edits
 	$undoafter = $wgRequest->getVal('undoafter');
@@ -58,8 +61,7 @@ function CategorySelectInit($forceInit = false) {
 		return true;
 	}
 
-	global $IP, $wgHooks, $wgAutoloadClasses;
-	$wgAutoloadClasses['CategorySelect'] = "$IP/extensions/wikia/CategorySelect/CategorySelect_body.php";
+	global $wgHooks;
 	$wgHooks['MediaWikiPerformAction'][] = 'CategorySelectInitializeHooks';
 	$wgHooks['UserToggles'][] = 'CategorySelectToggleUserPreference';
 	$wgHooks['getEditingPreferencesTab'][] = 'CategorySelectToggleUserPreference';
