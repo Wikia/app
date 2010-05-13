@@ -952,8 +952,7 @@ ol.userInfoNoAvatar, ol.userInfoNoAvatar div.userPoints {
 li .userInfoNoAvatar:hover a{
 	color:#00c !important;
 }
-/* Filter IE < 7; XML namespace isn't updated when user's lang pref changes */
-*:lang(en) .userInfo {
+.userInfo {
 	float: left;
 }
 
@@ -989,8 +988,7 @@ li .userInfoNoAvatar:hover a{
 	width: 120px;
 }
 
-/* Filter IE < 7; XML namespace isn't updated when user's lang pref changes */
-*:lang(en) .userInfo .userEditPoints {
+.userInfo .userEditPoints {
 	margin-left: 0;
 }
 
