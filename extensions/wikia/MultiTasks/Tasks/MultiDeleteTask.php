@@ -79,22 +79,23 @@ class MultiDeleteTask extends BatchTask {
 
 		$this->log("Found " . count($wikiList) . " Wikis to proceed");
 		if ( !empty($wikiList) ) {
-			foreach ( $wikiList as $id => $oWiki ) {
+			foreach ( $wikiList as $city_id => $oWiki ) {
 				$retval = "";
-				$city_path = $oWiki->city_script;
-				$city_url = $oWiki->city_server;
+				$city_url = WikiFactory::getVarValueByName( "wgServer", $oWiki->city_id );
+				$city_path = WikiFactory::getVarValueByName( "wgScript", $oWiki->city_id );
+				
 				if ( empty($city_url) ) {
 					$city_url = 'wiki id in WikiFactory: ' . $oWiki->city_id;
 				}
 				# command
-				$sCommand  = "SERVER_ID=$oWiki->city_id php $IP/maintenance/wikia/deleteOn.php ";
+				$sCommand  = "SERVER_ID={$oWiki->city_id} php $IP/maintenance/wikia/deleteOn.php ";
 				$sCommand .= "-u " . $username . " ";
 				$sCommand .= "-t " . escapeshellarg($this->title) . " ";
 				$sCommand .= "-n " . $this->namespace . " ";
 				if ( $reason ) {
 					$sCommand .= "-r " . $reason . " ";
 				}
-				$sCommand .= "--conf $wgWikiaLocalSettingsPath";
+				$sCommand .= "--conf {$wgWikiaLocalSettingsPath}";
 
 				$actual_title = wfShellExec($sCommand, $retval);
 
@@ -197,84 +198,97 @@ class MultiDeleteTask extends BatchTask {
 	 */
 	private function fetchWikis($wikis = array(), $lang = '', $cat = 0, $wikiaId = 0) {
 		global $wgExternalSharedDB, $wgExternalDatawareDB ;
-		$dbr = wfGetDB (DB_SLAVE, array(), $wgExternalSharedDB);
+		$this->log("Get list of titles");
 
-		$where = array("city_public" => 1);
-		$count = 0;
-		if ( !empty($lang) ) {
-			$where['city_lang'] = $lang;
-		}
-		else if (!empty($cat)) {
-			$where['cat_id'] = $cat;
-		}
-
-		if ( !empty($wikiaId) ) {
-			$where['city_list.city_id'] = $wikiaId;
-		}
-
-		if ( empty($wikis) ) {
-			$oRes = $dbr->select(
-				array( "city_list join city_cat_mapping on city_cat_mapping.city_id = city_list.city_id" ),
-				array( "city_list.city_id, city_dbname, city_url, '' as city_server, '' as city_script" ),
-				$where,
-				__METHOD__
-			);
-		} else {
-			$where[] = "city_list.city_id = city_domains.city_id";
-			$where[] = " city_domain in ('" . implode("','", $wikis) . "') ";
-
+		$wikiList = array();
+		if ( !empty($wikis) ) {
+			$dbr = wfGetDB (DB_SLAVE, array(), $wgExternalSharedDB);
 			$oRes = $dbr->select(
 				array( "city_list", "city_domains" ),
-				array( "city_list.city_id, city_dbname, city_url, '' as city_server, '' as city_script" ),
-				$where,
+				array( "city_list.city_id" ),
+				array(
+					"city_list.city_id = city_domains.city_id",
+					"city_domain in (" . $dbr->makeList($wikis) . ") "
+				),
 				__METHOD__
 			);
+			$wikiArr = array();
+			while ( $oRow = $dbr->fetchObject($oRes) ) {
+				$wikiList[] = $oRow->city_id;
+			}
+			$dbr->freeResult ($oRes) ;
 		}
+		
+		$dbr = wfGetDB (DB_SLAVE, 'blobs', $wgExternalDatawareDB);
+		$where = array(
+			"page_title_lower"	=> strtolower($this->title),
+			"page_namespace" 	=> $this->namespace,
+			"page_status" 		=> 0
+		);
+		if ( !empty($wikiaId) ) {
+			$where["page_wikia_id"] = $wikiaId;
+		}
+		
+		$oRes = $dbr->select(
+			array( "pages" ),
+			array( "page_wikia_id as city_id" ),
+			$where,
+			__METHOD__
+		);
 
-		$wikiArr = $wikis = array();
-		$x = $y = 0;
-		while ($oRow = $dbr->fetchObject($oRes)) {
-			$oRow->city_server = WikiFactory::getVarValueByName( "wgServer", $oRow->city_id );
-			$oRow->city_script = WikiFactory::getVarValueByName( "wgScript", $oRow->city_id );
+		$wikiArr = array();
+		while ( $oRow = $dbr->fetchObject($oRes) ) {
+			# check exists in array
+			if ( !empty($wikiList) && !in_array( $oRow->city_id, $wikiList ) ) continue;
+			# add to array
 			$wikiArr[$oRow->city_id] = $oRow;
-			
-			if ( $x > 0 && ( $x % $this->records ) == 0 ) $y++;
-			$wikis[$y][] = $oRow->city_id;
-			$x++;
 		}
 		$dbr->freeResult ($oRes) ;
-		
-		$wiki_array = array();
-		if ( !empty($wikis) ) {
-			$dbext = wfGetDB (DB_SLAVE, array(), $wgExternalDatawareDB);
-			
-			foreach ($wikis as $id => $wikis) {
-				if ( !empty($wikis) ) {
-					$where = array(
-						"page_wikia_id IN (" . $dbext->makeList($wikis) . ")",
-						"page_title" => $this->title,
-						"page_namespace" => $this->namespace,
-						"page_status" => 0
-					);
-					
-					$oRes = $dbext->select(
-						array( "pages" ),
-						array( "page_id, page_wikia_id" ),
-						$where,
-						__METHOD__
-					);
 
-					while ($oRow = $dbext->fetchObject($oRes)) {
-						if ( $wikiArr[$oRow->page_wikia_id] ) { 
-							$wiki_array[] = $wikiArr[$oRow->page_wikia_id];
-						}
-					}
-					$dbext->freeResult ($oRes) ;
+		$this->log("Found: " . count($wikiArr) . " articles");
+		if ( count($wikiArr) ) {
+			if ( !empty($lang) || !empty($cat) ) {
+				$this->log("Apply filter: language: $lang, category: $cat");
+
+				$where = array("city_public" => 1);
+				$count = 0;
+				if ( !empty($lang) ) {
+					$where['city_lang'] = $lang;
 				}
+				else if (!empty($cat)) {
+					$where['cat_id'] = $cat;
+				}
+
+				$dbc = wfGetDB (DB_SLAVE, array(), $wgExternalSharedDB);
+				$oRes = $dbc->select ( 
+					array( 'city_list', 'city_cat_mapping' ),
+					array( 'city_list.city_id' ),
+					$where,
+					__METHOD__,
+					"",
+					array(
+						'city_cat_mapping' => array(
+							'JOIN', 
+							'city_cat_mapping.city_id = city_list.city_id',
+						)
+					)
+				);
+				
+				$filteredWikis = array();
+
+				while ($oRow = $dbc->fetchObject($oRes)) {
+					if ( isset($wikiArr[$oRow->city_id]) ) {
+						$filteredWikis[$oRow->city_id] = $oRow->city_id;
+					}
+				}
+				$dbc->freeResult ($oRes) ;
+
+				$wikiArr = $filteredWikis;
+				$this->log("Found (after filter applying): " . count($wikiArr) . " articles");
 			}
 		}
-		
-		return $wiki_array;
+
+		return $wikiArr;
 	}
 	
 }
