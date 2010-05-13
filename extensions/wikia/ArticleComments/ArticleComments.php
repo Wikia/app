@@ -198,7 +198,7 @@ class ArticleComment {
 		 */
 		$this->mTitle = $Title;
 		$this->mNamespace = $Title->getNamespace();
-		$this->mNamespaceTalk = Namespace::getTalk($this->mNamespace);
+		$this->mNamespaceTalk = MWNamespace::getTalk($this->mNamespace);
 	}
 
 	/**
@@ -756,7 +756,7 @@ class ArticleComment {
 		 */
 		$commentTitle = Title::newFromText(
 			sprintf( '%s/%s%s-%s', $Title->getText(), ARTICLECOMMENT_PREFIX, $User->getName(), wfTimestampNow() ),
-			Namespace::getTalk($Title->getNamespace()) );
+			MWNamespace::getTalk($Title->getNamespace()) );
 		/**
 		 * because we save different tile via Ajax request
 		 */
@@ -854,7 +854,7 @@ class ArticleComment {
 				$dbw->insert( 'watchlist',
 					array(
 					'wl_user' => $wgUser->getId(),
-					'wl_namespace' => Namespace::getTalk($comment->mTitle->getNamespace()),
+					'wl_namespace' => MWNamespace::getTalk($comment->mTitle->getNamespace()),
 					'wl_title' => $Comment->mTitle->getDBkey(),
 					'wl_notificationtimestamp' => wfTimestampNow()
 					), __METHOD__, 'IGNORE'
@@ -896,7 +896,7 @@ class ArticleComment {
 			$namespace = $oRC->getAttribute('rc_namespace');
 			$article_id = $oRC->getAttribute('rc_cur_id');
 
-			if (Namespace::isTalk($namespace) &&
+			if (MWNamespace::isTalk($namespace) &&
 				strpos(end(explode('/', $title)), ARTICLECOMMENT_PREFIX) === 0 &&
 				!empty($article_id)) {
 
@@ -907,7 +907,7 @@ class ArticleComment {
 					$mAttribs = $oRC->mAttribs;
 					#---
 					$mAttribs['rc_title'] = $oArticlePage->getDBkey();
-					$mAttribs['rc_namespace'] = Namespace::getSubject($oArticlePage->getNamespace());
+					$mAttribs['rc_namespace'] = MWNamespace::getSubject($oArticlePage->getNamespace());
 					$mAttribs['rc_log_action'] = 'article_comment';
 					#---
 					$oRC->setAttribs($mAttribs);
@@ -934,7 +934,7 @@ class ArticleComment {
 	static public function ComposeCommonMail( $Title, &$keys, &$message, $editor ) {
 		global $wgEnotifUseRealName;
 
-		if (Namespace::isTalk($Title->getNamespace()) && strpos(end(explode('/', $Title->getText())), ARTICLECOMMENT_PREFIX) === 0) {
+		if (MWNamespace::isTalk($Title->getNamespace()) && strpos(end(explode('/', $Title->getText())), ARTICLECOMMENT_PREFIX) === 0) {
 			if ( !is_array($keys) ) {
 				$keys = array();
 			}
@@ -972,7 +972,7 @@ class ArticleComment {
 				
 				$newCommentTitle = Title::newFromText(
 					sprintf( '%s/%s', $oNewTitle->getText(), $comment ),
-					Namespace::getTalk($oNewTitle->getNamespace()) );
+					MWNamespace::getTalk($oNewTitle->getNamespace()) );
 
 				$error = $oComment->mTitle->moveTo( $newCommentTitle, false, $form->reason, false );
 				if ( $error !== true ) {
@@ -1102,7 +1102,7 @@ class ArticleCommentList {
 				array( 'page' ),
 				array( 'page_id' ),
 				array(
-					'page_namespace' => Namespace::getTalk($this->getTitle()->getNamespace()),
+					'page_namespace' => MWNamespace::getTalk($this->getTitle()->getNamespace()),
 					"page_title LIKE '" . $dbr->escapeLike( $this->mText ) . "/" . ARTICLECOMMENT_PREFIX . "%'"
 				),
 				__METHOD__,
@@ -1176,7 +1176,7 @@ class ArticleCommentList {
 				array( 'archive' ),
 				array( 'ar_page_id', 'ar_title' ),
 				array(
-					'ar_namespace' => Namespace::getTalk($this->getTitle()->getNamespace()),
+					'ar_namespace' => MWNamespace::getTalk($this->getTitle()->getNamespace()),
 					"ar_title LIKE '" . $dbr->escapeLike( $oTitle->getDBkey( ) ) . "/%'"
 				),
 				__METHOD__,
@@ -1185,7 +1185,7 @@ class ArticleCommentList {
 			while( $row = $dbr->fetchObject( $res ) ) {
 				$pages[ $row->ar_page_id ] = array(
 					'title' => $row->ar_title,
-					'nspace' => Namespace::getTalk($this->getTitle()->getNamespace())
+					'nspace' => MWNamespace::getTalk($this->getTitle()->getNamespace())
 				);
 			}
 			$dbr->freeResult( $res );
@@ -1377,7 +1377,7 @@ class ArticleCommentList {
 		$this->mTitle->purgeSquid();
 
 		//purge varnish
-		$title = Title::newFromText(reset(explode('/', $this->mText)), Namespace::getSubject($this->mTitle->getNamespace()));
+		$title = Title::newFromText(reset(explode('/', $this->mText)), MWNamespace::getSubject($this->mTitle->getNamespace()));
 		$title->invalidateCache();
 		$titleURL = $title->getFullUrl();
 		$urls = array("$titleURL?order=asc", "$titleURL?order=desc");
@@ -1401,7 +1401,7 @@ class ArticleCommentList {
 		wfProfileIn( __METHOD__ );
 
 		$title = $Article->getTitle();
-		if (Namespace::isTalk($title->getNamespace()) && strpos(end(explode('/', $title->getText())), ARTICLECOMMENT_PREFIX) === 0) {
+		if (MWNamespace::isTalk($title->getNamespace()) && strpos(end(explode('/', $title->getText())), ARTICLECOMMENT_PREFIX) === 0) {
 			$listing = ArticleCommentList::newFromTitle($title);
 
 			$aComments = $listing->getCommentPages();
@@ -1490,7 +1490,7 @@ class ArticleCommentList {
 		$namespace = $oTitle->getNamespace();
 
 		$allowed = !( $wgEnableBlogArticles && in_array($oTitle->getNamespace(), array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK)) );
-		if (!is_null($oTitle) && Namespace::isTalk($oTitle->getNamespace()) && strpos(end(explode('/', $oTitle->getText())), ARTICLECOMMENT_PREFIX) === 0 && $allowed) {
+		if (!is_null($oTitle) && MWNamespace::isTalk($oTitle->getNamespace()) && strpos(end(explode('/', $oTitle->getText())), ARTICLECOMMENT_PREFIX) === 0 && $allowed) {
 			$user = $comment = '';
 			$newTitle = null;
 			list( $user, $comment ) = ArticleComment::explode( $oTitle->getDBkey() );
@@ -1533,7 +1533,7 @@ class ArticleCommentList {
 			$namespace = $oTitle->getNamespace();
 
 			$allowed = !( $wgEnableBlogArticles && in_array($oTitle->getNamespace(), array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK)) );
-			if ( !is_null($oTitle) && Namespace::isTalk($oTitle->getNamespace()) && strpos(end(explode('/', $oTitle->getText())), ARTICLECOMMENT_PREFIX) === 0 && $allowed ) {
+			if ( !is_null($oTitle) && MWNamespace::isTalk($oTitle->getNamespace()) && strpos(end(explode('/', $oTitle->getText())), ARTICLECOMMENT_PREFIX) === 0 && $allowed ) {
 				list( $user, $comment ) = ArticleComment::explode( $oTitle->getDBkey() );
 
 				if ( !empty($user) ) {
@@ -1658,14 +1658,14 @@ class ArticleCommentList {
 	 * @access public
 	 */
 	static public function ArticleFromTitle( &$Title, &$Article ) {
-		if (Namespace::isTalk($Title->getNamespace()) && strpos(end(explode('/', $Title->getText())), ARTICLECOMMENT_PREFIX) === 0) {
+		if (MWNamespace::isTalk($Title->getNamespace()) && strpos(end(explode('/', $Title->getText())), ARTICLECOMMENT_PREFIX) === 0) {
 			global $wgRequest, $wgTitle, $wgOut;
 			$redirect = $wgRequest->getText('redirect', false);
 			$diff = $wgRequest->getText('diff', '');
 			$oldid = $wgRequest->getText('oldid', '');
 			$action = $wgRequest->getText('action', '');
 			if (($redirect != 'no') && empty($diff) && empty($oldid) && ($action != 'history')) {
-				$redirect = Title::newFromText(reset(explode('/', $Title->getText())), Namespace::getSubject($Title->getNamespace()));
+				$redirect = Title::newFromText(reset(explode('/', $Title->getText())), MWNamespace::getSubject($Title->getNamespace()));
 				$wgOut->redirect($redirect->getFullUrl());
 			}
 		}
@@ -1680,7 +1680,7 @@ class ArticleCommentList {
 	 */
 	static public function onConfirmEdit(&$SimpleCaptcha, &$editPage, $newtext, $section, $merged, &$result) {
 		$title = $editPage->getArticle()->getTitle();
-		if (Namespace::isTalk($title->getNamespace()) && strpos(end(explode('/', $title->getText())), ARTICLECOMMENT_PREFIX) === 0) {
+		if (MWNamespace::isTalk($title->getNamespace()) && strpos(end(explode('/', $title->getText())), ARTICLECOMMENT_PREFIX) === 0) {
 			$result = true;	//omit captcha
 			return false;
 		}
@@ -1691,7 +1691,7 @@ class ArticleCommentList {
 		$title = $rc->getAttribute('rc_title');
 		$namespace = $rc->getAttribute('rc_namespace');
 
-		if (Namespace::isTalk($namespace) &&
+		if (MWNamespace::isTalk($namespace) &&
 			strpos(end(explode('/', $title)), ARTICLECOMMENT_PREFIX) === 0) {
 
 			wfLoadExtensionMessages('ArticleComments');
