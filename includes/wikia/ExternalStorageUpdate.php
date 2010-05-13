@@ -75,7 +75,8 @@ class ExternalStorageUpdate {
 					"rev_ip" 		=> $ip
 				),
 				array( "blob_id" => $id ),
-				__METHOD__
+				__METHOD__,
+				array( "IGNORE" )
 			);
 
 			if( $dbw->getFlag( DBO_TRX ) ) {
