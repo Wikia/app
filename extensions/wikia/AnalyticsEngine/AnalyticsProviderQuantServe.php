@@ -16,17 +16,10 @@ class AnalyticsProviderQuantServe implements iAnalyticsProvider {
 			"<script type=\"text/javascript\">/*<![CDATA[*/
 			try {
 				_qoptions = { qacct: '{$this->account}' };
-				// Hard code some hosts per Gil
-				if ((document.domain == 'answers.wikia.com') ||
-					 (Liftium.getPageVar('hub')      == 'Lifestyle') ||
-					 (Liftium.getPageVar('hub')      == 'Education')){ 
-					_qoptions.labels = 'mom';
-				} else {
 					_qoptions.labels = Liftium.getPageVar('hub');
 					for (var i = 0; i < ProviderValues.list.length; i++){
 						_qoptions.labels += ',' + Liftium.getPageVar('hub') + '.' + ProviderValues.list[i].value;
 					}
-				}
 			} catch (e){
 				// Fall back to old way.
 				_qacct=\"{$this->account}\";
