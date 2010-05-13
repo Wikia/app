@@ -1125,7 +1125,7 @@ ul#top-wiki-meta li span {
   font-weight: bold;
   float: left;
   margin: 0 10px 0 0;  
-  font-size:0.9em;
+  font-size: 12px;
   font-weight:bold;
   padding:0 2px;
   text-align:center;
@@ -1161,13 +1161,13 @@ ul#top-wiki-meta li span {
 }
 
 #hub-side-box h1 {
-  font-size: 2.2em;
+  font-size: 22px;
   margin: 10px 0 5px;
   color: #000;
 }
 
 #hub-side-box h2 {
-  font-size: 1.2em;
+  font-size: 16px;
   margin: 0;
 }
 
@@ -1195,7 +1195,6 @@ ul#hub-blog-articles li {
 }
 
 ul#hub-blog-articles li cite {
-  font-size: 1em;
   font-weight: bold;
   color: #333;
   margin: 0;
@@ -1207,13 +1206,13 @@ ul#hub-blog-articles div.clearfix {
 }
 
 ul#hub-blog-articles li p {
-  font-size: .9em;
+  font-size: 12px;
   margin: 5px 0;
 }
 
 ul#hub-blog-articles li p.blog-jump {
   float: right;
-  font-size: .9em;
+  font-size: 12px;
   margin: 5px 0 0;
 }
 
@@ -1303,7 +1302,7 @@ ul#hub-blog-articles li .blog-jump-icon {
 
 #hub-top-contributors ul li span.h2 {
   display: inline-block;
-  font-size: 1.2em;
+  font-size: 16px;
   margin: 8px 10px 0 0;
   vertical-align: top;
 }
@@ -1323,7 +1322,7 @@ ul#hub-blog-articles li .blog-jump-icon {
 }
 
 #hub-top-contributors ul li .userEditPoints span.txt {
-  font-size: .8em;
+  font-size: 10px;
   border-color:#AAAAAA #AAAAAA #AAAAAA -moz-use-text-color;
   border-style:solid solid solid none;
   border-width: 1px 1px 1px 0;
@@ -1344,7 +1343,7 @@ ul#hub-blog-articles li .blog-jump-icon {
  Êbackground: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#fcf297), to(#f6dd5d));
   border: 1px solid #0A0A0A;
   font-weight:bold;
-  font-size: .9em;
+  font-size: 10px;
   padding: 1px 5px 2px;
   line-height: 17px;
   display: inline-block;
