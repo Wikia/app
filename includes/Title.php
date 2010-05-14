@@ -1536,13 +1536,15 @@ class Title {
 
 			/* Wikia change begin - @author: Uberfuzzy */
 			/* whitelist Special:Signup by default also - RT #47547 */
+			/* whitelist Special:Captcha by default also - RT #47710 */
 			/**
 			 * Always grant access to the login page.
 			 * Even anons need to be able to log in.
 			*/
 			if( $this->isSpecial( 'Userlogin' ) ||
 				$this->isSpecial( 'Resetpass' ) ||
-				$this->isSpecial( 'Signup' ) ) {
+				$this->isSpecial( 'Signup' ) ||
+				$this->isSpecial( 'Captcha' ) ) {
 				return true;
 			}
 			/* Wikia change end */
