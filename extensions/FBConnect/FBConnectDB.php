@@ -93,8 +93,22 @@ class FBConnectDB {
 	 * If there is no user found for the given id, returns null.
 	 */
 	public static function getUser( $fbid ) {
+		$prefix = self::getPrefix();
+
+		// NOTE: Do not just pass this dbr into getUserByDB since that function prevents
+		// rewriting of the database name for shared tables.
 		$dbr = wfGetDB( DB_SLAVE, array(), self::sharedDB() );
-		return self::getUserByDB( $fbid, $dbr );
+		$id = $dbr->selectField(
+			"{$prefix}user_fbconnect",
+			'user_id',
+			array( 'user_fbid' => $fbid ),
+			__METHOD__
+		);
+		if ( $id ) {
+			return User::newFromId( $id );
+		} else {
+			return null;
+		}
 	}
 	
 	/**
@@ -105,7 +119,7 @@ class FBConnectDB {
 	public static function getUserByDB( $fbid, $dbr ){
 		$prefix = self::getPrefix();
 		$id = $dbr->selectField(
-			"{$prefix}user_fbconnect",
+			"`{$prefix}user_fbconnect`",
 			'user_id',
 			array( 'user_fbid' => $fbid ),
 			__METHOD__
