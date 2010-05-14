@@ -89,7 +89,7 @@ body.masthead-special #page_bar {
 
 #user_masthead_scorecard {
 	font-size: 60px;
-	letter-spacing: -.05em;
+	letter-spacing: -1px;
 	line-height: 100%;
 	position: absolute;
 	right: 6px;
