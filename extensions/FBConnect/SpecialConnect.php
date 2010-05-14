@@ -522,7 +522,7 @@ class SpecialConnect extends SpecialPage {
 	 */
 	private function chooseNameForm($messagekey = 'fbconnect-chooseinstructions') {
 		// Permissions restrictions.
-		global $wgUser;
+		global $wgUser, $wgOut;
 		$titleObj = SpecialPage::getTitleFor( 'Connect' );
 		if ( wfReadOnly() ) {
 			$wgOut->readOnlyPage();
