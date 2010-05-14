@@ -90,10 +90,20 @@ class FBConnectDB {
 
 	/**
 	 * Find the user by their Facebook ID.
+	 * If there is no user found for the given id, returns null.
 	 */
 	public static function getUser( $fbid ) {
-		$prefix = self::getPrefix();
 		$dbr = wfGetDB( DB_SLAVE, array(), self::sharedDB() );
+		return self::getUserByDB( $fbid, $dbr );
+	}
+	
+	/**
+	 * Given a facebook id and database connection with read permission,
+	 * finds the Facebook user by their id.
+	 * If there is no user found for the given id, returns null.
+	 */
+	public static function getUserByDB( $fbid, $dbr ){
+		$prefix = self::getPrefix();
 		$id = $dbr->selectField(
 			"{$prefix}user_fbconnect",
 			'user_id',

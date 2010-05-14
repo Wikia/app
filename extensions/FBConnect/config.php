@@ -17,7 +17,8 @@ $wgHooks['SpecialConnect::createUser::validateForm'][] = 'wikia_fbconnect_valida
 $wgHooks['SpecialConnect::createUser::postProcessForm'][] = 'wikia_fbconnect_postProcessForm';
 
 $wgHooks['FBConnectDB::addFacebookID'][] = 'wikia_fbconnect_addFacebookID';
-$wgHooks['AddNewAccount'][] = 'wikia_fbconnect_onAddNewAccount'; 
+$wgHooks['AddNewAccount'][] = 'wikia_fbconnect_onAddNewAccount';
+$wgHooks['SpecialConnect::login::notFoundLocally'][] = 'wikia_fbconnect_userNotFoundLocally';
 $wgHooks['AuthPluginAutoCreate'][] = 'wikia_fbconnect_onAuthPluginAutoCreate';
 
 

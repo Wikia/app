@@ -91,6 +91,34 @@ function wikia_fbconnect_onAddNewAccount( User $oUser, $addByEmail = false ) {
 } // end wikia_fbconnect_onAddNewAccount
 
 /**
+ * When a user tries to login, this function may copy the user over to a secondary cluster if:
+ * 1) This code is being run on a secondary cluster.
+ * 2) The user does not exist on the secondary cluster.
+ * 3) The user DOES exist on the primary cluster.
+ */
+ function wikia_fbconnect_userNotFoundLocally( User &$oUser, $fb_id ) {
+	wfProfileIn( __METHOD__ );
+
+	global $wgDBcluster;
+	if( !empty( $wgDBcluster ) ) {
+		// Since we're outside of the primary cluster, look on the primary for the id.
+		global $wgWikiaCentralAuthDatabase;
+		$dbr = wfGetDB(DB_SLAVE, array(), $wgWikiaCentralAuthDatabase);
+		$user = FBConnectDB::getUserByDB($fb_id, $dbr);
+		if ( isset($user) && $user instanceof User ) {
+			// The user was found in the main cluster.  Copy it to local.
+			FBConnectDB::addFacebookID($user, $fb_id);
+			
+			// Now that the mapping is copied, actually use it to get the user.
+			$user = FBConnectDB::getUser($fb_id);
+		}
+	}
+
+	wfProfileOut(__METHOD__);
+	return true;
+ } // end wikia_fbconnect_onUserLoadFromSession()
+
+/**
  * When the user has been auto-created locally from the global session,
  * copy over their facebook data too.
  */

@@ -151,19 +151,17 @@ class SpecialConnect extends SpecialPage {
 	 */
 	protected function login($fb_id) {
 		global $wgUser;
-		// Similar to what's done in LoginForm::authenticateUserData().
-		// Load $wgUser now. This is necessary because loading $wgUser (say by calling
-		// getName()) calls the UserLoadFromSession hook, which potentially
-		// creates the user in the database. Until we load $wgUser, checking
-		// for user existence using FBConnectDB::getUser below
-		// will effectively be using stale data.
-		$sessionUser = User::newFromSession();
-		$sessionUser->load();
 
 		// Check to see if the Connected user exists in the database
 		if ($fb_id) {
 			$user = FBConnectDB::getUser($fb_id);
 		}
+
+		// If the user doesn't exist yet locally, allow hooks to check to see if this is a clustered set up
+		if ( ! (isset($user) && $user instanceof User ) ) {
+			wfRunHooks( 'SpecialConnect::login::notFoundLocally', array( &$user, $fb_id ) );
+		}
+
 		if ( isset($user) && $user instanceof User ) {
 			$fbUser = new FBConnectUser($user);
 			// Update user from facebook (see class FBConnectUser)
@@ -174,9 +172,17 @@ class SpecialConnect extends SpecialPage {
 			if (!$wgSessionStarted) {
 				wfSetupSession();
 			}
-			
+
 			$user->setCookies();
 			$wgUser = $user;
+
+			// Similar to what's done in LoginForm::authenticateUserData().
+			// Load $wgUser now. This is necessary because loading $wgUser (say by calling
+			// getName()) calls the UserLoadFromSession hook, which potentially
+			// creates the user in the local database.
+			$sessionUser = User::newFromSession();
+			$sessionUser->load();
+
 			$this->sendPage('displaySuccessLogin');
 		} else if ($fb_id) {
 			$this->sendPage('chooseNameForm');
