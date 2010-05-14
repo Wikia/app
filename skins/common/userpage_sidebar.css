@@ -13,23 +13,25 @@
 
 #profile-sidebar #badges {
   height: 200px;
-  overflow: hidden;
 }
 
-#profile-sidebar #badges ul {
-  list-style-type: none !important;
-  list-style-image: none !important;
-  margin: 0 0 0 0;
-  padding: 0 0 0 0;
+#badge-list {
+  list-style: none !important;
+  margin: 0;
+  padding: 0;
 }
 
-#profile-sidebar #badges ul li {
-  list-style-type: none !important;
-  list-style-image: none !important;
+#badge-list li {
   float: left;
-  width: 90px;
   height: 90px;
+  list-style: none !important;
+  position: relative;
   margin: 5px;
+  width: 90px;
+}
+
+#badge-list li>img {
+	position: absolute;
 }
 
 #profile-sidebar #sub-badges {
@@ -132,19 +134,18 @@
 	margin-right: 320px;
 }
 
-div.profile-hover {
-  position: absolute;
-  top: -60px;
-  left: 430px;
-  width: 320px;
+.profile-hover {
+  background-color: #fff; /*TODO - how do I get this with the wiki's primary bg color */
+  border: 3px solid #009933; /*TODO - how do I get this with the wiki's primary color */
+  bottom: 80%;
   height: 120px;
   padding: 10px !important;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  width: 320px;
   -moz-border-radius:10px;
   -webkit-border-radius:10px;
-  text-align: center;
-  border: 3px solid #009933; /*TODO - how do I get this with the wiki's primary color */
-  background-color: #fff; /*TODO - how do I get this with the wiki's primary bg color */
-  z-index: 10;
 }
 
 div.profile-hover div.clearfix img {

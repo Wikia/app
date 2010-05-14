@@ -4,22 +4,8 @@ var Achievements = {
 		window.jQuery.tracker.byStr('Achievements/' + fakeUrl);
 	},
 
-	hoverIn: function(id) {
-		var pos = $('#'+id).position();
-		var numberID = id.split('badge-icon-')[1];
-		$('#'+id).css({position: 'absolute', left: pos.left+'px', top: pos.top + 'px', zIndex: '100'});
-		$('#hover-'+numberID).css({left: pos.left - 240 + 'px', top: pos.top - 130 + 'px', zIndex: '100'}).show();
-		$('#user_masthead').css({zIndex: '0'});
-		this.track('userprofile/hover');
-	},
-
-	hoverOut: function(id) {
-		var pos = $('#'+id).position();
-		var numberID = id.split('badge-icon-')[1];
-		$('#hover-'+numberID).hide();
-		$('#'+id).css({position: 'inherit', zIndex: '1'});
-		$('#user_masthead').css({zIndex: '50'});
-	},
+	//hover delay (in ms)
+	delay: 500,
 
 	init: function() {
 		var self = this;
@@ -58,14 +44,18 @@ var Achievements = {
 			});
 		});
 
-		$('ul#badge-list li img').mouseenter(function(){
-		  var myID = $(this).attr('id');
-		  Achievements.hoverIn(myID);
-		}).mouseleave(function(){
-		  var myID = $(this).attr('id');
-		  Achievements.hoverOut(myID);
+		//Show badge description when hovering over the badge	
+		$('#badge-list li>img').hover(function() {
+			var badge = $(this);
+			self.timer = setTimeout(function() {
+				badge.prev().show();
+				self.track('userprofile/hover');
+			}, self.delay);
+		}, function() {
+			clearTimeout(self.timer);
+			$(this).prev().hide();
 		});
-
+		
 		$('form.customize-upload').find('input').click(function(e) {
 			self.track('customize/browse');
 		});
