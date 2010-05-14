@@ -150,12 +150,21 @@ class SpecialConnect extends SpecialPage {
 	 * them to choose a wiki username.
 	 */
 	protected function login($fb_id) {
+		global $wgUser;
+		// Similar to what's done in LoginForm::authenticateUserData().
+		// Load $wgUser now. This is necessary because loading $wgUser (say by calling
+		// getName()) calls the UserLoadFromSession hook, which potentially
+		// creates the user in the database. Until we load $wgUser, checking
+		// for user existence using FBConnectDB::getUser below
+		// will effectively be using stale data.
+		$sessionUser = User::newFromSession();
+		$sessionUser->load();
+
 		// Check to see if the Connected user exists in the database
 		if ($fb_id) {
 			$user = FBConnectDB::getUser($fb_id);
 		}
 		if ( isset($user) && $user instanceof User ) {
-			global $wgUser;
 			$fbUser = new FBConnectUser($user);
 			// Update user from facebook (see class FBConnectUser)
 			$fbUser->updateFromFacebook();
