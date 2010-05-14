@@ -384,7 +384,7 @@ class AdEngine {
 		static $adnum = 0;
 		$adnum++;
 		if ($AdProvider instanceof AdProviderLiftium){
-			$slotdiv = "Liftium_" . $this->slots[$slotname]['size'] . "_" . $adnum; 
+			$slotdiv = "Liftium_" . $this->slots[$slotname]['size'] . "_" . $adnum . "_php"; 
 		} else {
 			$slotdiv = "Wikia_" . $this->slots[$slotname]['size'] . "_" . $adnum; 
 		}
