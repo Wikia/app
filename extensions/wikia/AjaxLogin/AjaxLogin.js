@@ -9,55 +9,62 @@ var AjaxLogin = {
 
 		// move login/password/remember fields from hidden form to AjaxLogin
 		// changes to tabindex - see RT#41245
-		if($('#wpName1Ajax').length == 0){
+		if(($('#wpName1Ajax').length == 0) && ($('#wpName2Ajax').length < 1) && ($('#wpName2Ajax').length < 1)  ){
 			$("#ajaxlogin_username_cell").append('<input type="text" size="20" tabindex="201" id="wpName2Ajax" name="wpName">');
 			$("#ajaxlogin_password_cell").append('<input type="password" size="20" tabindex="202" id="wpPassword2Ajax" name="wpPassword">');
 			
 		} else {
-			$('#wpName1Ajax')
+			if($('#wpName2Ajax').length < 1) {
+				console.log("dsdsssss");
+				$('#wpName1Ajax')
 				//copy for login form
 				.clone()
 				.attr({
 					"id": "wpName2Ajax",
 					'tabindex': parseInt($('#wpName1Ajax').attr('tabindex')) + 100
 				})
-				.appendTo("#ajaxlogin_username_cell")
-				//copy for facebook connect form
-				.clone()
-				.attr({
-					"id": "wpName3Ajax",
-					'tabindex': -1 
-				})
-				.appendTo("#ajaxlogin_username_cell2");
-			$('#wpPassword1Ajax')
+				.appendTo("#ajaxlogin_username_cell");
+			}
+			//copy for facebook connect form
+			$('#wpName1Ajax').clone()
+			.attr({
+				"id": "wpName3Ajax",
+				'tabindex': -1 
+			})
+			.appendTo("#ajaxlogin_username_cell2");
+			if($('#wpPassword2Ajax').length < 1) {
+				$('#wpPassword1Ajax')
 				.clone()
 				.attr({
 					"id": "wpPassword2Ajax",
 					'tabindex': parseInt($('#wpPassword1Ajax').attr('tabindex')) + 100
 				})
-				.appendTo("#ajaxlogin_password_cell")
-				.clone()
-				.attr({
-					"id": "wpPassword3Ajax",
-					'tabindex': -1
-				})
-				.appendTo("#ajaxlogin_password_cell2");
+				.appendTo("#ajaxlogin_password_cell");
+			}
+			$('#wpPassword1Ajax').clone()
+			.attr({
+				"id": "wpPassword3Ajax",
+				'tabindex': -1
+			})
+			.appendTo("#ajaxlogin_password_cell2");
 		}
-		if($('#wpRemember1Ajax').length > 0){
-			var labels = this.form.find('label');		
-			$('#wpRemember1Ajax')
-				.clone()
-				.attr({
-					"id": "wpRemember2Ajax",
-					'tabindex': parseInt($('#wpRemember1Ajax').attr('tabindex')) + 100
-				})
-				.insertBefore(labels[2]);
-		} else {
-			$("#labelFor_wpRemember2Ajax").before('<input type="checkbox" value="1" tabindex="204" id="wpRemember2Ajax" name="wpRemember">');
+		
+		if ($('#wpRemember2Ajax').length < 1) {
+			if( $('#wpRemember1Ajax').length > 0 ) {
+				var labels = this.form.find('label');		
+				$('#wpRemember1Ajax')
+					.clone()
+					.attr({
+						"id": "wpRemember2Ajax",
+						'tabindex': parseInt($('#wpRemember1Ajax').attr('tabindex')) + 100
+					})
+					.insertBefore(labels[2]);
+			} else {
+				$("#labelFor_wpRemember2Ajax").before('<input type="checkbox" value="1" tabindex="204" id="wpRemember2Ajax" name="wpRemember">');
+			}
 		}
-
 		// remove hidden form
-		$('#userajaxloginform').attr("id","");
+		//$('#userajaxloginform').attr("id","");
 
 		//this.form.attr('id', 'userajaxloginform');
 
@@ -162,6 +169,9 @@ var AjaxLogin = {
 	},
 	formSubmitHandler: function(ev) {
 		// Prevent the default action for event (submit of form)
+		if( (typeof wgEnableAPI == 'undefined') || !wgEnableAPI ) {
+			return true;
+		}
 		if(ev) {
 			ev.preventDefault();
 		}

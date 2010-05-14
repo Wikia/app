@@ -14,7 +14,16 @@ class Signup extends SpecialPage {
 		}
 		$wgHooks['MakeGlobalVariablesScript'][] = 'wfSpecialUserloginSetupVars';
 		$form = new AjaxLoginForm( $wgRequest );
-		$form->executeAsPage();
+
+		
+		
+		if($wgRequest->wasPosted()) {
+			if($form->processLogin()) {
+
+			}			
+		}
+		
+		$form->executeAsPage(false,"SSSS");
 	}
 
 	static function TrackingOnSuccess (&$out) {

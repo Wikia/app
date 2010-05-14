@@ -58,9 +58,12 @@ if( $wgUser->isAllowed('createaccount') ) {
 		} ?>
 		<img alt="status" class="sprite error" src="<?php print $wgBlankImgUrl; ?>"/>
 		<span id="userloginInnerErrorBox">
-			<?php $this->html('message'); ?>
+			
 		</span>
 </div>
+
+<?php $this->html('message'); ?>
+
 <div id="userlogin<?php if ($this->data['ajax']) { ?>Ajax<?php } ?>">
 <form name="userlogin2" id="userlogin2" method="post" action="<?php $this->text('actioncreate') ?>">
 <?php		if( $this->data['message'] && $this->data['ajax'] ) { ?>
