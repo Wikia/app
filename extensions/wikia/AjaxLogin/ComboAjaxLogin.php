@@ -171,6 +171,24 @@ class AjaxLoginForm extends LoginForm {
 	var $msg;
 	var $msgtype;
 	
+	
+	function LoginForm( &$request, $par = '' ) {
+		parent::LoginForm( $request, $par);
+		
+		if($request->getText( 'wpName2Ajax', '' ) != '') {
+			$this->mName =	$request->getText( 'wpName2Ajax', '' );
+		}
+		
+		if($request->getText( 'wpPassword2Ajax', '' ) != '') {
+			$this->mPassword = $request->getText( 'wpPassword2Ajax' );
+		}
+		
+		if($request->getText( 'wpRemember2Ajax', '' ) != '') {
+			$this->mRemember = $request->getCheck( 'wpRemember2Ajax' );
+		}
+	}
+
+		
 	public function getAjaxTemplate(){
 		return $this->ajaxTemplate;
 	}
@@ -181,7 +199,7 @@ class AjaxLoginForm extends LoginForm {
 	 * different EasyTemplates to give different results such as one view for ajax dialogs
 	 * and one view for standalone pages (such as Special:Signup). 
 	 */
-	static public function getTemplateForCombinedForms(){
+	static public function getTemplateForCombinedForms($static = false, $lastmsg){
 		global $wgRequest;
 
 		// Setup the data for the templates, similar to GetComboAjaxLogin.
@@ -203,8 +221,9 @@ class AjaxLoginForm extends LoginForm {
 			$form->execute();
 			$tmpl->set("registerAjax", $form->ajaxRender());
 		}
-
-		$tmpl->set("isReadOnly", wfReadOnly()?1:0);
+		
+		$isReadOnly =  wfReadOnly() ? 1:0;
+		$tmpl->set("isReadOnly", $isReadOnly);
 
 		if ( !LoginForm::getLoginToken() ) {
 			LoginForm::setLoginToken();
@@ -213,8 +232,34 @@ class AjaxLoginForm extends LoginForm {
 
 		// Use the existing settings to generate the login portion of the form, which will then
 		// be fed back into the bigger template in this case (it is not always fed into ComboAjaxLogin template).
+		
+		$type = $wgRequest->getVal('type', '');
+		
+		$returnto = $wgRequest->getVal("returnto",'');
+		if( !($returnto == '') ){
+			$returnto = "&returntoquery=".$returnto;
+		}
+		
+		$loginaction = Skin::makeSpecialUrl( 'Signup', "type=login".$returnto );
+		$signupaction = Skin::makeSpecialUrl( 'Signup', "type=signup".$returnto );
+		$tmpl->set("loginaction", $loginaction);
+		$tmpl->set("signupaction", $signupaction);
+		$tmpl->set("loginerror", $lastmsg);
+		$tmpl->set("actiontype", $type);
+		$tmpl->set("showRegister", false );
+		$tmpl->set("showLogin", false );
+		
+		if( $static ) {		
+			if( strtolower( $type ) == "login" ) {
+				$tmpl->set("showLogin", true );	
+			} else {
+				if( !$isReadOnly ) {
+					$tmpl->set("showRegister", true );	
+				}
+			}
+		}
+		
 		$tmpl->set("ajaxLoginComponent", $tmpl->execute('AjaxLoginComponent'));
-		$tmpl->set("actiontype", $wgRequest->getVal('type', ''));
 
 		return $tmpl;
 	}
@@ -224,7 +269,7 @@ class AjaxLoginForm extends LoginForm {
 	 * modal dialog versions of the same login/signup functionality.
 	 */
 	public function executeAsPage(){
-		global $wgOut;
+		global $wgOut ;
 
 		$wgOut->setPageTitle( wfMsg( 'userlogin' ) );
 		$wgOut->setRobotPolicy( 'noindex,nofollow' );
@@ -233,7 +278,9 @@ class AjaxLoginForm extends LoginForm {
 		
 		// Output the HTML which combines the two forms (which are already in the template) in a way that looks right for a standalone page.
 		wfLoadExtensionMessages('ComboAjaxLogin');
-		$tmpl = self::getTemplateForCombinedForms();
+		
+		$tmpl = self::getTemplateForCombinedForms( true, $this->lastmsg  );
+	
 		$wgOut->addHTML( $tmpl->execute( 'ComboAjaxLogin' ) );
 		$wgOut->addHTML( $tmpl->execute( 'ComboPageFooter' ) );
 	}
@@ -285,6 +332,7 @@ class AjaxLoginForm extends LoginForm {
 
 		$titleObj = SpecialPage::getTitleFor( 'Userlogin' );
 
+		$this->saveMessage($msg);
 		$this->msg = $msg;
 		$this->msgtype = $msgtype;
 
@@ -343,8 +391,13 @@ class AjaxLoginForm extends LoginForm {
 		
 		// Give authentication and captcha plugins a chance to modify the form
 		$wgAuth->modifyUITemplate( $template );
+		
 		wfRunHooks( 'UserCreateForm', array( &$template ) );
 
 		$this->ajaxTemplate = $template;
+	}
+	
+	function saveMessage($msg) {
+		$this->lastmsg = $msg;
 	}
 }

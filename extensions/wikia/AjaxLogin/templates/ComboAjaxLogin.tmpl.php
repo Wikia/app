@@ -20,8 +20,8 @@ global $wgAuth, $wgUser, $wgEnableEmail,$wgStylePath,$wgBlankImgUrl;
 	
 	<div class="wikia-tabs" id="AjaxLoginButtons">
 		<ul>
-			<li class="accent" id="wpGoLogin" onclick="AjaxLogin.showLogin(this); return false;"><?php print wfMsg("login") ?></li>
-			<li class="accent" id="wpGoRegister" onclick="AjaxLogin.showRegister(this); return false;"><?php print wfMsg("nologinlink") ?></li>
+			<li class="accent <?php echo ($showLogin ? 'selected':''); ?> " id="wpGoLogin" onclick="AjaxLogin.showLogin(this); return false;"><a href="<? echo $loginaction ?>" ><?php print wfMsg("login") ?></a></li>
+			<li class="accent <?php echo ($showRegister ? 'selected':''); ?> " style="<?php echo ($isReadOnly ? '':'style="display:none"'); ?>"  id="wpGoRegister" onclick="AjaxLogin.showRegister(this); return false;"><a href="<? echo $signupaction ?>"><?php print wfMsg("nologinlink") ?></a></li>
 		</ul>
 	</div>
 
@@ -35,10 +35,10 @@ global $wgAuth, $wgUser, $wgEnableEmail,$wgStylePath,$wgBlankImgUrl;
     <?php }
 	// TODO: Is there some class that could be applied to the actionmsg to give it a standard 'notice' feeling without all of this inlining? ?>
 	<div id="comboajaxlogin-actionmsg" style="margin-left:10px;margin-top:10px;margin-bottom:10px;display:none;background-color:#ff8;padding:5px"><?php print wfMsg('comboajaxlogin-actionmsg') ?></div>
-    <div id="AjaxLoginLoginForm" <?php echo ($isReadOnly ? '':'style="display:none"'); ?> title="<?php print wfMsg('login') ?>">
+    <div id="AjaxLoginLoginForm" <?php echo ($showLogin ? '':'style="display:none"'); ?> title="<?php print wfMsg('login') ?>">
 		<?php echo $ajaxLoginComponent; ?>
     </div>
-    <div id="AjaxLoginRegisterForm" style="display:none" title="<?php print wfMsg('login') ?>">
+    <div id="AjaxLoginRegisterForm" <?php echo ($showRegister ? '':'style="display:none"'); ?> title="<?php print wfMsg('login') ?>">
         <?php if (!$isReadOnly){ echo $registerAjax; } ?>
     </div>
 </div>

@@ -8,17 +8,20 @@
 
 <link rel="stylesheet" type="text/css" href="<?=$wgStylePath?>/common/wikia_ui/tabs.css?<?=$wgStyleVersion?>" />
 <link rel="stylesheet" type="text/css" href="<?=$wgExtensionsPath?>/wikia/AjaxLogin/AjaxLogin.css?<?=$wgStyleVersion?>" />
-<div id="userloginErrorBox3">
-	<div id="wpError" ></div>
+<div id="userloginErrorBox3" <?php if(strlen($loginerror) > 0): ?> style="display: block;" <?php endif;?>>
+	<div id="wpError">
+		<?php echo $loginerror; ?>
+	</div>
 </div>
+
 <div id="AjaxLoginSlider" class="clearfix">
-	<div>
-        	<form action="" method="post" name="userajaxloginform" id="userajaxloginform">
+	<div> 
+        	<form action="<? echo $loginaction ?>" method="post" name="userajaxloginform" id="userajaxloginform">
 	            <label for="wpName1" style="display: block; font-weight: bold;"><?php print wfMsg("yourname") ?></label> 
 	            <table>
 	            <tr style="width:350px" >
 	                <td id="ajaxlogin_username_cell">
-	                    
+	                	<input type="text" size="20" tabindex="201" id="wpName2Ajax" name="wpName"> </input> 
 	                </td>
 	                <td><a id="wpAjaxRegister" href="<?php print htmlspecialchars($link) ?>" style="font-size: 9pt;display:none;"><?php print wfMsg('nologinlink') ?></a></td>
 	            </tr>
@@ -27,7 +30,7 @@
 	            <table>
 	            <tr>
 	                <td id="ajaxlogin_password_cell">
-	                    
+	                    <input type="password" size="20" tabindex="202" id="wpPassword2Ajax" name="wpPassword"> </input>
 	                </td>
 	            <?php if( $wgEnableEmail && $wgAuth->allowPasswordChange() ) { ?>
 	                <td><a id="wpMailmypassword" href="#" style="font-size: 9pt;" onclick="AjaxLogin.action='password'; AjaxLogin.form.submit();"><?php print wfMsg('mailmypassword') ?></a></td>
@@ -36,9 +39,15 @@
 	            </tr>
 	            </table>
 	            <div style="margin: 15px 0;">
+	            	<input type="checkbox" value="1" tabindex="204" id="wpRemember2Ajax" name="wpRemember" > </input>
 	                <label id="labelFor_wpRemember2Ajax" for="wpRemember2Ajax" style="padding-left: 5px"><?php print wfMsg('remembermypassword') ?></label>
 	            </div>
-	        <input type="submit" id="wpLoginattempt" value="<?php print wfMsg("login") ?>" onclick="AjaxLogin.action='login'; AjaxLogin.form.submit(); return false;" />
+	         <?php global $wgEnableAPI; ?>
+	        <?php if($wgEnableAPI): ?>
+	        	<input type="submit" id="wpLoginattempt" value="<?php print wfMsg("login") ?>"  onclick="AjaxLogin.action='login'; AjaxLogin.form.submit(); return false;"  />
+	        <?php else: ?>
+	        	<input type="submit" id="wpLoginattempt" value="<?php print wfMsg("login") ?>" />
+	        <?php endif; ?>
 	        <input type="hidden" name="wpLoginToken" value="<?php echo $token; ?>" />
         	</form>
 

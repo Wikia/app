@@ -37,16 +37,14 @@ class UserAjaxCreateTemplate extends QuickTemplate {
 		// This didn't work right off the bat in the new signup forms, so the decision was made to just cut the functionality for now.
 		$this->data['createemail'] = false;
 		
-		if( $this->data['message'] && !$this->data['ajax'] ) {
-?>
-	<div class="<?php $this->text('messagetype') ?>box">
-		<?php if ( $this->data['messagetype'] == 'error' ) { ?>
-			<h2><?php $this->msg('loginerror') ?></h2>
-		<?php } ?>
-		<?php $this->html('message') ?>
+if(( $this->data['messagetype'] == 'error' ) && (strlen($this->data['message'] ) > 0)): ?>
+	<div id="userloginErrorBox3" style="display: block;">
+		<div id="wpError">
+			<?php echo $this->html('message'); ?>
+		</div>
 	</div>
-	<div class="visualClear"></div>
-<?php	} ?>
+<?php endif;?>
+
 <br/>
 <div id="userloginErrorBox">
 	<table>
