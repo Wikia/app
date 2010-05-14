@@ -224,6 +224,7 @@ $wgSkipSkins = array(
 		'monaco_old',
 		'wikiaphone',
 		'efmonaco',
+		'answers',
 );
 /**
  * @name wgSkipOldSkins
