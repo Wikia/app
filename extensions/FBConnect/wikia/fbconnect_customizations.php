@@ -152,7 +152,7 @@ function wikia_fbconnect_validateChooseNameForm( &$specialConnect ){
 	$allowDefault = true;
 	global $wgRequest;
 	$email = $wgRequest->getVal('wpEmail');
-	if(($email == "") || (0 == preg_match("/^[a-z0-9._%+-]+@(?:[a-z0-9\-]+\.)+[a-z]{2,4}\$/mi", $email))) {
+	if( ($email == "") || (!User::isValidEmailAddr( $email )) ) {
 		$specialConnect->sendPage('chooseNameForm', 'fbconnect-invalid-email');
 		$allowDefault = false;
 	}
@@ -318,7 +318,7 @@ class ChooseNameForm extends LoginForm {
 				" <i>$value</i></label></li>";
 		}
 		// Implode the update options into an unordered list
-		$updateChoices = count($updateOptions) > 0 ? "<br />\n" . wfMsgHtml('fbconnect-updateuserinfo') . "\n<ul>\n" . implode("\n", $updateOptions) . "\n</ul>\n" : '';
+		$updateChoices = count($updateOptions) > 0 ? "\n" . wfMsgHtml('fbconnect-updateuserinfo') . "\n<ul>\n" . implode("\n", $updateOptions) . "\n</ul>\n" : '';
 		$html = "<tr style='display:none'><td>$updateChoices</td></tr>";
 		$tmpl->set( 'updateOptions', $html);
 		*/
@@ -374,7 +374,6 @@ class ChooseNameTemplate extends QuickTemplate {
 	</div>
 	<div class="visualClear"></div>
 <?php	} ?>
-<br/>
 <div id="userloginErrorBox">
 	<table>
 	<tr>
@@ -410,7 +409,7 @@ class ChooseNameTemplate extends QuickTemplate {
 		</colgroup>
 		<tr class="wpAjaxLoginPreLine">
 			<td class="wpAjaxLoginInput" id="wpNameTD">
-				<label for='wpName2'><?php $this->msg('yourname') ?></label><span>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span><br/>
+				<label for='wpName2'><?php $this->msg('yourname') ?></label><span>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span>
 				<input type='text'  name="wpName2" id="wpName2"	value="<?php $this->text('name') ?>" size='20' />
 			</td>
 			<td class="mw-input" rowspan="2" style='vertical-align:top;'>
@@ -422,7 +421,7 @@ class ChooseNameTemplate extends QuickTemplate {
 		<tr class="wpAjaxLoginPreLine" >
 			<td class="wpAjaxLoginInput" id="wpEmailTD">
 				<?php if( $this->data['useemail'] ) { ?>
-					<label for='wpEmail'><?php $this->msg('signup-mail') ?></label><a id="wpEmailInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a><span>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span><br/>
+					<label for='wpEmail'><?php $this->msg('signup-mail') ?></label><a style='float:left' id="wpEmailInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a><span>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span>
 					<input type='text'  name="wpEmail" id="wpEmail" value="<?php $this->text('email') ?>" size='20' />
 				<?php } ?>
 			</td>
@@ -445,7 +444,7 @@ class ChooseNameTemplate extends QuickTemplate {
 		print "<input type='hidden' name='uselang' id='uselang' value='$uselang'/>\n";	
 	} else {
 		// If we didn't get an acceptable language from facebook, display the form.
-		?><label for='uselang'><?php $this->msg('yourlanguage') ?></label><br/>
+		?><label for='uselang'><?php $this->msg('yourlanguage') ?></label>
 		<select style="height:22px;" name="uselang" id="uselang"><?php
 		$isSelected = false;
 
@@ -537,7 +536,7 @@ class ChooseNameTemplate extends QuickTemplate {
 		if(!empty($fbEnablePushToFacebook)){
 			print "<tr id='fbConnectPushEventBar' class='wpAjaxLoginLine' style=''>\n<td colspan='2'>\n";
 			print wfMsg( 'fbconnect-prefsheader' );
-			print "<br/><em>\n";
+			print "<em>\n";
 			print wfMsg( 'fbconnect-prefs-can-be-updated', wfMsg('fbconnect-prefstext'));
 			print "</em></td></tr>";
 
