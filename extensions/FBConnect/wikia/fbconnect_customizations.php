@@ -23,6 +23,20 @@ function wikia_fbconnect_init(){
 	wfLoadExtensionMessages( 'FBConnect_wikia' );
 } // end wikia_fbconnect_init()
 
+/**
+ * Return the correct central database.
+ */
+function wikia_fbconnect_getCentralDB(){
+	global $wgDBcluster;
+	if( !empty( $wgDBcluster ) ) {
+		$dbw = WikiaCentralAuthUser::getCentralDB();
+	} else {
+		global $wgExternalSharedDB;
+		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+	}
+	return $dbw;
+} // wikia_fbconnect_getCentralDB()
+
  /**
   * Adds a user-to-facebookId mapping.  This is needed because wgSharedDB is not necessarily
   * the master (even though it's writable).  We have to use wgWikiaCentralAuth instead.
@@ -31,7 +45,7 @@ function wikia_fbconnect_addFacebookID($user, $fbid){
 	global $wgSharedPrefix;
 	wfProfileIn(__METHOD__);
 
-	$dbw = WikiaCentralAuthUser::getCentralDB();
+	$dbw = wikia_fbconnect_getCentralDB();
 	$dbw->insert(
 		"`{$wgSharedPrefix}user_fbconnect`", // grave accents to prevent re-writing of table name
 		array(
@@ -51,21 +65,24 @@ function wikia_fbconnect_addFacebookID($user, $fbid){
 function wikia_fbconnect_onAddNewAccount( User $oUser, $addByEmail = false ) {
 	wfProfileIn(__METHOD__);
 
-	// Copy over Facebook Connect info if it exists.
-	$fb_id = FBConnectDB::getFacebookIDsFromDB($oUser, WikiaCentralAuthUser::getCentralDB());
-	if (count($fb_id) > 0){
-		foreach($fb_id as $currFbId){
-			$localDbw = WikiaCentralAuthUser::getLocalDB();
-			global $wgSharedPrefix;
-			$localDbw->insert(
-				"{$wgSharedPrefix}user_fbconnect", // do not use grave-accents, DB.php has to prepend this with the appropriate wikicities db
-				array(
-					'user_id' => $oUser->getId(),
-					'user_fbid' => $currFbId
-				),
-				__METHOD__,
-				array("IGNORE")
-			);
+	global $wgDBcluster;
+	if( !empty( $wgDBcluster ) ) {
+		// Copy over Facebook Connect info if it exists.
+		$fb_id = FBConnectDB::getFacebookIDsFromDB($oUser, wikia_fbconnect_getCentralDB());
+		if (count($fb_id) > 0){
+			foreach($fb_id as $currFbId){
+				$localDbw = WikiaCentralAuthUser::getLocalDB();
+				global $wgSharedPrefix;
+				$localDbw->insert(
+					"{$wgSharedPrefix}user_fbconnect", // do not use grave-accents, DB.php has to prepend this with the appropriate wikicities db
+					array(
+						'user_id' => $oUser->getId(),
+						'user_fbid' => $currFbId
+					),
+					__METHOD__,
+					array("IGNORE")
+				);
+			}
 		}
 	}
 
@@ -80,21 +97,24 @@ function wikia_fbconnect_onAddNewAccount( User $oUser, $addByEmail = false ) {
 function wikia_fbconnect_onAuthPluginAutoCreate( $oUser ){
 	wfProfileIn(__METHOD__);
 
-	// Copy over Facebook Connect info if it exists.
-	$fb_id = FBConnectDB::getFacebookIDsFromDB($oUser, WikiaCentralAuthUser::getCentralDB());
-	if (count($fb_id) > 0){
-		foreach($fb_id as $currFbId){
-			$localDbw = WikiaCentralAuthUser::getLocalDB();
-			global $wgSharedPrefix;
-			$localDbw->insert(
-				"{$wgSharedPrefix}user_fbconnect", // do not use grave-accents, DB.php has to prepend this with the appropriate wikicities db
-				array(
-					'user_id' => $oUser->getId(),
-					'user_fbid' => $currFbId
-				),
-				__METHOD__,
-				array("IGNORE")
-			);
+	global $wgDBcluster;
+	if( !empty( $wgDBcluster ) ) {
+		// Copy over Facebook Connect info if it exists.
+		$fb_id = FBConnectDB::getFacebookIDsFromDB($oUser, wikia_fbconnect_getCentralDB());
+		if (count($fb_id) > 0){
+			foreach($fb_id as $currFbId){
+				$localDbw = WikiaCentralAuthUser::getLocalDB();
+				global $wgSharedPrefix;
+				$localDbw->insert(
+					"{$wgSharedPrefix}user_fbconnect", // do not use grave-accents, DB.php has to prepend this with the appropriate wikicities db
+					array(
+						'user_id' => $oUser->getId(),
+						'user_fbid' => $currFbId
+					),
+					__METHOD__,
+					array("IGNORE")
+				);
+			}
 		}
 	}
 
@@ -593,7 +613,7 @@ class ChooseNameTemplate extends QuickTemplate {
 							   type: "POST",
 							   dataType: "json",
 							   url: window.wgScriptPath  + "/index.php",
-							   data: $("#userajaxregisterform").serialize() + "&action=ajax&rs=createUserLogin&ajax=1",
+							   data: $("#userajaxregisterform").serialize() + "&action=ajax&rs=createUserLogin",
 							   beforeSend: function(){
 									$("#userRegisterAjax").find("input,select").attr("disabled",true);
 							   },
