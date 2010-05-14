@@ -96,7 +96,7 @@ function wikia_fbconnect_onAddNewAccount( User $oUser, $addByEmail = false ) {
  * 2) The user does not exist on the secondary cluster.
  * 3) The user DOES exist on the primary cluster.
  */
- function wikia_fbconnect_userNotFoundLocally( User &$oUser, $fb_id ) {
+ function wikia_fbconnect_userNotFoundLocally( &$specialConnect, &$oUser, $fb_id ) {
 	wfProfileIn( __METHOD__ );
 
 	global $wgDBcluster;
@@ -106,11 +106,27 @@ function wikia_fbconnect_onAddNewAccount( User $oUser, $addByEmail = false ) {
 		$dbr = wfGetDB(DB_SLAVE, array(), $wgWikiaCentralAuthDatabase);
 		$user = FBConnectDB::getUserByDB($fb_id, $dbr);
 		if ( isset($user) && $user instanceof User ) {
-			// The user was found in the main cluster.  Copy it to local.
-			FBConnectDB::addFacebookID($user, $fb_id);
+			// The user was found in the main cluster.  Copy it to local.  We don't use FBConnectDB::addFacebookID because our hook makes
+			// that function try to write to the main cluster.
+			$localDbw = WikiaCentralAuthUser::getLocalDB();
+			global $wgSharedPrefix;
+			$localDbw->insert(
+				"{$wgSharedPrefix}user_fbconnect", // do not use grave-accents, DB.php has to prepend this with the appropriate wikicities db
+				array(
+					'user_id' => $user->getId(),
+					'user_fbid' => $fb_id
+				),
+				__METHOD__,
+				array("IGNORE")
+			);
 			
-			// Now that the mapping is copied, actually use it to get the user.
-			$user = FBConnectDB::getUser($fb_id);
+			// Load the user from the central auth database, then attempt to add it to the local database.
+			if($user->loadFromDatabase()){ // will fail loading locally, but hooks will let it load from the central db.
+				WikiaCentralAuthHooks::attemptAddUser( $user, $user->getName() ); // create a local user w/all the same info as the main user.
+			}
+			
+			// Update the reference so that the code in SpecialConnect::login can pick up where it left off.
+			$oUser = $user;
 		}
 	}
 
