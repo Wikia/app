@@ -138,6 +138,10 @@ fb.'convertyourstext' => 'That is already your OpenID.',
 fb.'convertothertext' => 'That is someone else\'s OpenID.',
 */
 
+fb.'error-creating-user' => "Error creating the user in the local database.",
+fb.'error-user-creation-hook-aborted' => "A hook (extension) aborted the account creation with the message: $1",
+
+
 	'fbconnect-prefstext' => 'Facebook Connect',
 	'fbconnect-link-to-profile' => 'Facebook profile',
 	'fbconnect-prefsheader' => "To control which events will push an item to your Facebook News Feed, 
