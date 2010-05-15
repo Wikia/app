@@ -9,13 +9,12 @@ var AjaxLogin = {
 
 		// move login/password/remember fields from hidden form to AjaxLogin
 		// changes to tabindex - see RT#41245
-		if(($('#wpName1Ajax').length == 0) && ($('#wpName2Ajax').length < 1) && ($('#wpName2Ajax').length < 1)  ){
+		if(($('#wpName1Ajax').length == 0) && ($('#wpName2Ajax').length < 1) && ($('#wpPassword2Ajax').length < 1)  ){
 			$("#ajaxlogin_username_cell").append('<input type="text" size="20" tabindex="201" id="wpName2Ajax" name="wpName">');
 			$("#ajaxlogin_password_cell").append('<input type="password" size="20" tabindex="202" id="wpPassword2Ajax" name="wpPassword">');
 			
 		} else {
 			if($('#wpName2Ajax').length < 1) {
-				console.log("dsdsssss");
 				$('#wpName1Ajax')
 				//copy for login form
 				.clone()
