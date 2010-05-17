@@ -228,9 +228,9 @@ function generateWikitextForCategories() {
 		if (categories[c].outerTag != '') {
 			catTmp = '<' + categories[c].outerTag + '>' + catTmp + '</' + categories[c].outerTag + '>';
 		}
-		categoriesStr += catTmp.replace(/^\n+/, '');
+		categoriesStr += catTmp;
 	}
-	return categoriesStr;
+	return categoriesStr.replace(/^\n+/, '');
 }
 
 function initializeCategories(cats) {
