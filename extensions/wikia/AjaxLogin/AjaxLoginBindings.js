@@ -113,15 +113,10 @@ $(function(){
 
 //Attach DOM-Ready handlers
 $(function() {
-	$("#headerButtonHub").bind("click.headerMenu", openHubMenu);
-	$("#headerButtonUser").bind("click.headerMenu", openUserMenu);
 	$('.ajaxLogin').click(openLogin);
 	$('.ajaxRegister').click(openRegister);
-	$(document).ajaxSend(startAjax).ajaxComplete(stopAjax);
-	setupVoting();
 
 	if(!((typeof wgIsLogin == 'undefined') || (wgIsLogin) || (typeof wgComboAjaxLogin == 'undefined') || (!wgComboAjaxLogin) )) {
-
 		$(".wikiaPlaceholder .wikia-button").removeAttr("onclick");
 		$(".wikiaPlaceholder .wikia-button").click(function(e){
 			if( e.target.nodeName == "SPAN" ){
