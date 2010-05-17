@@ -286,7 +286,7 @@ class Masthead {
 		wfProfileIn( __METHOD__ );
 
 		$url = $this->getUrl();
-		Wikia::log( __METHOD__, 'url', $url );
+//		Wikia::log( __METHOD__, 'url', $url );
 
 		if ( ! $alt ) {
 			$alt = '[' .$this->mUser->getName() .']';
@@ -461,11 +461,11 @@ class Masthead {
 		if( !isset( $wgTmpDirectory ) || !is_dir( $wgTmpDirectory ) ) {
 			$wgTmpDirectory = '/tmp';
 		}
-		Wikia::log( __METHOD__, "tmp", "Temp directory set to {$wgTmpDirectory}" );
+//		Wikia::log( __METHOD__, "tmp", "Temp directory set to {$wgTmpDirectory}" );
 
 		$errorNo = $request->getUploadError( $input );
 		if ( $errorNo != UPLOAD_ERR_OK ) {
-			Wikia::log( __METHOD__, "error", "Upload error {$errorNo}" );
+//			Wikia::log( __METHOD__, "error", "Upload error {$errorNo}" );
 			wfProfileOut(__METHOD__);
 			return $errorNo;
 		}
@@ -475,15 +475,15 @@ class Masthead {
 			/**
 			 * file size = 0
 			 */
-			Wikia::log( __METHOD__, 'empty', "Empty file {$input} reported size {$iFileSize}" );
+//			Wikia::log( __METHOD__, 'empty', "Empty file {$input} reported size {$iFileSize}" );
 			wfProfileOut(__METHOD__);
 			return UPLOAD_ERR_NO_FILE;
 		}
 
 		$sTmpFile = $wgTmpDirectory.'/'.substr(sha1(uniqid($this->mUser->getID())), 0, 16);
-		Wikia::log( __METHOD__, 'tmp', "Temp file set to {$sTmpFile}" );
+//		Wikia::log( __METHOD__, 'tmp', "Temp file set to {$sTmpFile}" );
 		$sTmp = $request->getFileTempname($input);
-		Wikia::log( __METHOD__, 'path', "Path to uploaded file is {$sTmp}" );
+//		Wikia::log( __METHOD__, 'path', "Path to uploaded file is {$sTmp}" );
 
 		if( move_uploaded_file( $sTmp, $sTmpFile )  ) {
 			$aImgInfo = getimagesize($sTmpFile);
@@ -493,7 +493,7 @@ class Masthead {
 			 */
 			$aAllowMime = array( 'image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png', 'image/jpg' );
 			if (!in_array($aImgInfo['mime'], $aAllowMime)) {
-				Wikia::log( __METHOD__, 'mime', 'Imvalid mime type, allowed: ' . implode(',', $aAllowMime) );
+//				Wikia::log( __METHOD__, 'mime', 'Imvalid mime type, allowed: ' . implode(',', $aAllowMime) );
 				wfProfileOut(__METHOD__);
 				return $errorNo;
 			}
@@ -556,13 +556,13 @@ class Masthead {
 			 * save to new file ... but create folder for it first
 			 */
 			if ( !is_dir( dirname( $sFilePath ) ) && !wfMkdirParents( dirname( $sFilePath ) ) ) {
-				Wikia::log( __METHOD__, 'dir', sprintf('Cannot create directory %s', dirname( $sFilePath ) ) );
+//				Wikia::log( __METHOD__, 'dir', sprintf('Cannot create directory %s', dirname( $sFilePath ) ) );
 				wfProfileOut( __METHOD__ );
 				return UPLOAD_ERR_CANT_WRITE;
 			}
 
 			if( !imagepng( $oImg, $sFilePath ) ) {
-				Wikia::log( __METHOD__, 'save', sprintf('Cannot save png Avatar: %s', $sFilePath ));
+//				Wikia::log( __METHOD__, 'save', sprintf('Cannot save png Avatar: %s', $sFilePath ));
 				$errorNo = UPLOAD_ERR_CANT_WRITE;
 			}
 			else {
@@ -586,7 +586,7 @@ class Masthead {
 			}
 		}
 		else {
-			Wikia::log( __METHOD__, 'move', sprintf('Cannot move uploaded file from %s to %s', $sTmp, $sTmpFile ));
+//			Wikia::log( __METHOD__, 'move', sprintf('Cannot move uploaded file from %s to %s', $sTmp, $sTmpFile ));
 			$errorNo = UPLOAD_ERR_CANT_WRITE;
 		}
 		wfProfileOut(__METHOD__);
@@ -685,7 +685,7 @@ class Masthead {
 				} else {
 					$sUrl = $oAvatarObj->getLocalPath();
 				}
-				Wikia::log( __METHOD__, 'url', $sUrl );
+//				Wikia::log( __METHOD__, 'url', $sUrl );
 			}
 
 			if ( !empty($sUrl) ) {
@@ -693,7 +693,7 @@ class Masthead {
 				$mUser->setOption( AVATAR_USER_OPTION_NAME, $sUrl );
 			}
 		}
-		Wikia::log( __METHOD__, 'url', 'selected avatar for user '.$mUser->getID().': $sUrl' );
+//		Wikia::log( __METHOD__, 'url', 'selected avatar for user '.$mUser->getID().': $sUrl' );
 
 		wfProfileOut( __METHOD__ );
 		return $result;
