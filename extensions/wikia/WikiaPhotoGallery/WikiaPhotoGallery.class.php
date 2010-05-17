@@ -6,7 +6,6 @@
  *  - caption
  *  - captionalign
  *  - perrow
- *  - type
  *  - widths
  *
  * 'heights' attribute is ignored
@@ -14,9 +13,6 @@
  */
 
 class WikiaPhotoGallery extends ImageGallery {
-
-	const WIKIA_PHOTO_GALLERY = 1;
-	const WIKIA_PHOTO_SLIDESHOW = 2;
 
 	/**
 	 * Content of parsed <gallery> tag
@@ -38,11 +34,6 @@ class WikiaPhotoGallery extends ImageGallery {
 	 */
 	private static $galleriesCounter = 0;
 
-	/**
-	 * Gallery or slideshow?
-	 */
-	private $mType;
-
 	function __construct() {
 		parent::__construct();
 
@@ -62,6 +53,7 @@ class WikiaPhotoGallery extends ImageGallery {
 	 */
 	public function setText($text) {
 		$this->mText = $text;
+		$this->mData['hash'] = md5($text);
 	}
 
 	/**
@@ -74,17 +66,6 @@ class WikiaPhotoGallery extends ImageGallery {
 		if (!empty($params['columns'])) {
 			$this->setPerRow($params['columns']);
 		}
-
-		// set gallery type
-		if (!empty($params['type']) && $params['type'] == 'slideshow') {
-			$this->mType = self::WIKIA_PHOTO_SLIDESHOW;
-		}
-		else {
-			$this->mType = self::WIKIA_PHOTO_GALLERY;
-		}
-
-		// calculate "unique" hash of each gallery
-		$this->calculateHash();
 	}
 
 	/**
@@ -102,15 +83,6 @@ class WikiaPhotoGallery extends ImageGallery {
 	 * "height" attribute is ignored
 	 */
 	public function setHeights($num) {}
-
-	/**
-	 * Calculate and store hash of current gallery
-	 */
-	private function calculateHash() {
-		$hash = md5($this->mText . $this->mType);
-
-		$this->mData['hash'] = $hash;
-	}
 
 	/**
 	 * Add an image to the gallery.
@@ -202,7 +174,6 @@ class WikiaPhotoGallery extends ImageGallery {
 	public function getData() {
 		return array(
 			'id' => $this->mData['id'],
-			'type' => $this->mType,
 			'images' => $this->mData['images'],
 			'params' => (object) $this->mData['params'],
 			'hash' => $this->mData['hash']
