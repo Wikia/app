@@ -2970,6 +2970,7 @@ class User {
 		$url = $this->confirmationTokenUrl( $token );
 		$invalidateURL = $this->invalidationTokenUrl( $token );
 		$this->saveSettings();
+		$manualURL = SpecialPage::getTitleFor( 'ConfirmEmail/manual' )->getFullURL();
 
 		/* Wikia change begin - @author: Marooned */
 		/* HTML e-mails functionality */
@@ -2981,14 +2982,16 @@ class User {
 					$this->getName(),
 					$url,
 					$wgLang->timeanddate( $expiration, false ),
-					$invalidateURL ), null, null, 'ConfirmationMail' );
+					$invalidateURL,
+					$manualURL,
+					$token ), null, null, 'ConfirmationMail' );
 		} else {
 			$IP = wfGetIP();
 			$name = $this->getName();
 			$expDate = $wgLang->timeanddate( $expiration, false );
 			$wantHTML = $this->isAnon() || $this->getOption('htmlemails');
 
-			list($body, $bodyHTML) = wfMsgHTMLwithLanguage('confirmemail_body', $this->getOption('language'), array(), array($IP, $name, $url, $expDate, $invalidateURL), $wantHTML);
+			list($body, $bodyHTML) = wfMsgHTMLwithLanguage('confirmemail_body', $this->getOption('language'), array(), array($IP, $name, $url, $expDate, $invalidateURL, $manualURL, $token), $wantHTML);
 
 			return $this->sendMail( wfMsg( 'confirmemail_subject' ), $body, null, null, 'ConfirmationMail', $bodyHTML );
 		}
@@ -3003,6 +3006,7 @@ class User {
 		$url = $this->confirmationTokenUrl( $token );
 		$invalidateURL = $this->invalidationTokenUrl( $token );
 		$this->saveSettings();
+		$manualURL = SpecialPage::getTitleFor( 'ConfirmEmail/manual' )->getFullURL();
 
 		/* Wikia change begin - @author: Marooned */
 		/* HTML e-mails functionality */
@@ -3014,14 +3018,16 @@ class User {
 					$this->getName(),
 					$url,
 					$wgLang->timeanddate( $expiration, false ),
-					$invalidateURL ), null, null, 'ReConfirmationMail'  );
+					$invalidateURL,
+					$manualURL,
+					$token ), null, null, 'ReConfirmationMail'  );
 		} else {
 			$IP = wfGetIP();
 			$name = $this->getName();
 			$expDate = $wgLang->timeanddate( $expiration, false );
 			$wantHTML = $this->isAnon() || $this->getOption('htmlemails');
 
-			list($body, $bodyHTML) = wfMsgHTMLwithLanguage('reconfirmemail_body', $this->getOption('language'), array(), array($IP, $name, $url, $expDate, $invalidateURL), $wantHTML);
+			list($body, $bodyHTML) = wfMsgHTMLwithLanguage('reconfirmemail_body', $this->getOption('language'), array(), array($IP, $name, $url, $expDate, $invalidateURL, $manualURL, $token), $wantHTML);
 
 			return $this->sendMail( wfMsg( 'reconfirmemail_subject' ), $body, null, null, 'ReConfirmationMail', $bodyHTML );
 		}

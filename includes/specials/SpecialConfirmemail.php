@@ -26,10 +26,21 @@ class EmailConfirmation extends UnlistedSpecialPage {
 		global $wgUser, $wgOut;
 		$this->setHeaders();
 
-		/* wikia change begin, auth: uberfuzzy */
+		/* Wikia change begin - @author: Uberfuzzy */
+		/* manual confirm code entry */
 		if( empty( $code ) ) {
+			#no code passed as execute param,
+			#attempt to pull code from URL (as sent by manual form), and put where normal flow expects
 			global $wgRequest;
 			$code = $wgRequest->getText( 'code' );
+			$code = trim($code);
+		} else 
+		{
+			#execute param not empty, try to catch new state here
+			if( $code === 'manual' ) {
+				$this->showManualForm();
+				return;
+			}
 		}
 		/* wikia change end */
 
@@ -85,17 +96,25 @@ class EmailConfirmation extends UnlistedSpecialPage {
 			$form .= Xml::submitButton( wfMsg( 'confirmemail_send' ) );
 			$form .= Xml::closeElement( 'form' );
 			$wgOut->addHTML( $form );
-
-			/* wikia change start */
-			$form  = Xml::openElement( 'form', array( 'method' => 'post', 'action' => $self->getLocalUrl() ) );
-			$form .= Xml::input( 'code' );
-			$form .= Xml::submitButton( 'Confirm' );
-			$form .= Xml::closeElement( 'form' );
-			$wgOut->addHTML( Xml::fieldset( wfMsg('enterconfirmcode'), $form) );
-			/* wikia change end */
-
 		}
 	}
+
+	/* Wikia change begin - @author: Uberfuzzy */
+	/**
+	 * Show a specialized form for manual code entry
+	 */
+	function showManualForm() {
+		global $wgOut;
+
+		$self = SpecialPage::getTitleFor( 'ConfirmEmail' );
+
+		$form  = Xml::openElement( 'form', array( 'method' => 'post', 'action' => $self->getLocalUrl() ) );
+		$form .= Xml::input( 'code', 40 );
+		$form .= ' ' . Xml::submitButton( 'Confirm' );
+		$form .= Xml::closeElement( 'form' );
+		$wgOut->addHTML( Xml::fieldset( wfMsg('enterconfirmcode'), $form) );
+	}
+	/* Wikia change end */
 
 	/**
 	 * Attempt to confirm the user's email address and show success or failure
