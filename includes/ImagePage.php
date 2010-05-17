@@ -513,7 +513,7 @@ EOT
 	 * external editing (and instructions link) etc.
 	 */
 	protected function uploadLinksBox() {
-		global $wgUser, $wgOut;
+		global $wgUser, $wgOut, $wgUseExternalEditor;
 
 		$this->loadFile();
 		if( !$this->img->isLocal() )
@@ -529,9 +529,11 @@ EOT
 			$wgOut->addHTML( "<li><div class='plainlinks'>{$ulink}</div></li>" );
 		}
 
-		# External editing link
-		$elink = $sk->makeKnownLinkObj( $this->mTitle, wfMsgHtml( 'edit-externally' ), 'action=edit&externaledit=true&mode=file' );
-		$wgOut->addHTML( '<li>' . $elink . ' <small>' . wfMsgExt( 'edit-externally-help', array( 'parseinline' ) ) . '</small></li>' );
+		if( $wgUseExternalEditor ) {
+			# External editing link
+			$elink = $sk->makeKnownLinkObj( $this->mTitle, wfMsgHtml( 'edit-externally' ), 'action=edit&externaledit=true&mode=file' );
+			$wgOut->addHTML( '<li>' . $elink . ' <small>' . wfMsgExt( 'edit-externally-help', array( 'parseinline' ) ) . '</small></li>' );
+		}
 
 		$wgOut->addHTML( '</ul>' );
 	}
@@ -543,7 +545,7 @@ EOT
 	 * we follow it with an upload history of the image and its usage.
 	 */
 	protected function imageHistory() {
-		global $wgOut, $wgUseExternalEditor;
+		global $wgOut;
 
 		$this->loadFile();
 		$pager = new ImageHistoryPseudoPager( $this );
@@ -553,7 +555,7 @@ EOT
 
 		# Exist check because we don't want to show this on pages where an image
 		# doesn't exist along with the noimage message, that would suck. -ævar
-		if( $wgUseExternalEditor && $this->img->exists() ) {
+		if( $this->img->exists() ) {
 			$this->uploadLinksBox();
 		}
 	}
