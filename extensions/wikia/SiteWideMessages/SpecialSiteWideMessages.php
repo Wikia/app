@@ -131,7 +131,7 @@ function SiteWideMessagesEmptyTalkPageWithMessages(&$out, &$text) {
  * Adds content of messages to the user talk page
  *
  */
-function SiteWideMessagesGetUserMessages(&$out, &$parseroutput) {
+function SiteWideMessagesGetUserMessages(&$out, $parseroutput) {
 	global $wgUser;
 	//don't add messages when editing, previewing changes etc. AND don't even try for unlogged or bots
 #die( 'got here -- hook' );
