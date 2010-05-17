@@ -1,5 +1,5 @@
 == Changes since 201005.3 ==
-* 
+* rt#49910: Cut off leaderboard at 99 people (TOR)
 
 == Changes since 201005.2 ==
 * rt#49622: Outdated logic for quantcast on some of our pages (Nef)
