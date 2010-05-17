@@ -14,6 +14,14 @@ var $G = function(id) {
 // prevent JS errors when AJAX request for magic words is not sent
 var magicWords = {};
 
+//Attach DOM-Ready handlers
+$(function() {
+	$("#headerButtonHub").bind("click.headerMenu", openHubMenu);
+	$("#headerButtonUser").bind("click.headerMenu", openUserMenu);
+	$(document).ajaxSend(startAjax).ajaxComplete(stopAjax);
+	setupVoting();
+});
+
 // macbre: page loading times (onDOMready / window onLoad)
 $(function() {
 	if (typeof wgNow != 'undefined') {
