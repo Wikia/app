@@ -37,26 +37,27 @@ class BadgeImage extends UnlistedSpecialPage {
 	}
 
 	function getCacheURL($symbol) {
-		try {
-			$request_headers = array(); // HTTP headers to send with fetch
-			$errormsg        = 0;       // errors, if any
-			$cache_key       = 'i_'.$symbol;
+		global $wgMemc, $wgUploadPath;
 
-			$this->makeBadge($symbol);
+		$key = wfMemcKey( 'badge', $symbol );
+		$cache = $wgMemc->get( $key );
 
-			$directory	= substr($symbol, 1, 1);
-			if ($directory== FALSE) {
-				$directory = '0';
-			}
-
-			global $wgUploadPath;
-
-			$url = "$wgUploadPath/badges/$directory/$symbol.png";
-
-			return $url;
-		} catch (Exception $e) {
-			echo 'Cache Exception: ' . $e->getMessage();
+		if ( !empty( $cache ) ) {
+			return $cache;
 		}
+
+		$this->makeBadge($symbol);
+
+		$directory	= substr($symbol, 1, 1);
+		if ($directory== FALSE) {
+			$directory = '0';
+		}
+
+		$url = "$wgUploadPath/badges/$directory/$symbol.png";
+
+		$wgMemc->set( $key, $url, 60 * 60 * 24 );
+
+		return $url;
 	}
 
 	function makeBadge($symbol) {

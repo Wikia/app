@@ -12,6 +12,10 @@
 
 $wgExtensionFunctions[] = "wfBadge";
 
+// Set up entry point as special page
+$wgAutoloadClasses['BadgeImage'] = dirname( __FILE__ ) . '/badgeImage.body.php';
+$wgSpecialPages['BadgeImage'] = 'BadgeImage';
+
 function wfBadge() {
     global $wgParser;
     # registers the <Badge> extension with the WikiText parser
