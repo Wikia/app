@@ -31,7 +31,7 @@ wfMsg('wikiafollowedpages-special-showall'); ?></a>
 			</a> 
 			<?php endif; ?>
 			<span>
-				<?php echo $sk->link( Title::newFromText( $value2['wl_title'], $value2['wl_namespace'] ), $value2['wl_title'], array( 'class' => 'title-link' ) ); ?>
+				<?php echo $sk->link( Title::newFromText( $value2[1], $value2['wl_namespace'] ), $value2['wl_title'], array( 'class' => 'title-link' ) ); ?>
 				<?php if(!empty($value2['by_user'])): ?>
 					<?php echo wfMsg('wikiafollowedpages-special-blog-by', array("$1" => $value2['by_user']) ) ?>
 				<?php endif;?>		 
