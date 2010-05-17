@@ -170,7 +170,7 @@ class AjaxLoginForm extends LoginForm {
 	var $ajaxTemplate;
 	var $msg;
 	var $msgtype;
-	
+	var $lastmsg = "";
 	
 	function LoginForm( &$request, $par = '' ) {
 		parent::LoginForm( $request, $par);
@@ -186,6 +186,9 @@ class AjaxLoginForm extends LoginForm {
 		if($request->getText( 'wpRemember2Ajax', '' ) != '') {
 			$this->mRemember = $request->getCheck( 'wpRemember2Ajax' );
 		}
+		
+		$this->mReturnTo = $request->getVal( 'returnto' );
+		echo  $this->mReturnTo; 
 	}
 
 		
@@ -236,12 +239,14 @@ class AjaxLoginForm extends LoginForm {
 		$type = $wgRequest->getVal('type', '');
 		
 		$returnto = $wgRequest->getVal("returnto",'');
+		
 		if( !($returnto == '') ){
-			$returnto = "&returntoquery=".$returnto;
+			$returnto = "&returnto=".$returnto;
 		}
 		
 		$loginaction = Skin::makeSpecialUrl( 'Signup', "type=login".$returnto );
 		$signupaction = Skin::makeSpecialUrl( 'Signup', "type=signup".$returnto );
+		
 		$tmpl->set("loginaction", $loginaction);
 		$tmpl->set("signupaction", $signupaction);
 		$tmpl->set("loginerror", $lastmsg);
@@ -278,7 +283,7 @@ class AjaxLoginForm extends LoginForm {
 		
 		// Output the HTML which combines the two forms (which are already in the template) in a way that looks right for a standalone page.
 		wfLoadExtensionMessages('ComboAjaxLogin');
-		
+		  
 		$tmpl = self::getTemplateForCombinedForms( true, $this->lastmsg  );
 	
 		$wgOut->addHTML( $tmpl->execute( 'ComboAjaxLogin' ) );

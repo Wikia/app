@@ -71,6 +71,7 @@ class LoginForm {
 		$this->mRetype = $request->getText( 'wpRetype' );
 		$this->mDomain = $request->getText( 'wpDomain' );
 		$this->mReturnTo = $request->getVal( 'returnto' );
+		
 		$this->mReturnToQuery = $request->getVal( 'returntoquery' );
 		$this->mCookieCheck = $request->getVal( 'wpCookieCheck' );
 		$this->mPosted = $request->wasPosted();
@@ -814,9 +815,12 @@ class LoginForm {
 		if( $injected_html !== '' ) {
 			$this->displaySuccessfulLogin( 'loginsuccess', $injected_html );
 		} else {
+
 			$titleObj = Title::newFromText( $this->mReturnTo );
-			if ( !$titleObj instanceof Title ) {
+			if (  ( !$titleObj instanceof Title ) || ( $titleObj->isSpecial("UserLogout") )   ) {
 				$titleObj = Title::newMainPage();
+				$wgOut->redirect( $titleObj->getFullURL( ) );
+				return true;
 			}
 			$wgOut->redirect( $titleObj->getFullURL( $this->mReturnToQuery ) );
 		}
