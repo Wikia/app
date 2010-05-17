@@ -438,3 +438,8 @@ $wgBlankImgUrl = $wgCdnStylePath."/skins/common/blank.gif";
  * NOTE: Keep this in sync with the value in /wikia-ops/config/varnish/wikia.vcl
  */
 $wgWikiaCombinedPrefix = "index.php?action=ajax&rs=WikiaAssets::combined&";
+
+/**
+ * Override MW default enable of EE
+ */
+$wgUseExternalEditor = false;
