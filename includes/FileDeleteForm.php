@@ -75,7 +75,12 @@ class FileDeleteForm {
 			$status = self::doDelete( $this->title, $this->file, $this->oldimage, $reason, $suppress );
 
 			if( !$status->isGood() )
+			{
+				$wgOut->addHTML( '<h2>' . $this->prepareMessage( 'filedeleteerror-short' ) . "</h2>\n" );
+				$wgOut->addHTML( '<span class="error">' );
 				$wgOut->addWikiText( $status->getWikiText( 'filedeleteerror-short', 'filedeleteerror-long' ) );
+				$wgOut->addHTML('</span>' );
+			}
 			if( $status->ok ) {
 				$wgOut->setPagetitle( wfMsg( 'actioncomplete' ) );
 				$wgOut->addHTML( $this->prepareMessage( 'filedelete-success' ) );
