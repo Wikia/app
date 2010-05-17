@@ -15,7 +15,7 @@
 		global $wgUser;
 		$sk = $wgUser->getSkin();
 		foreach($data as $value):
-			$title = Title::newFromText( $value['wl_title'], $value['wl_namespace'] );
+			$title = Title::newFromText( $value[1], $value['wl_namespace'] );
 			if ( !$title->exists() ) continue;
 		?>
 			<li>
