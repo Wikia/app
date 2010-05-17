@@ -110,3 +110,58 @@ $(function(){
 		}
 	}
 });
+
+//Attach DOM-Ready handlers
+$(function() {
+	$("#headerButtonHub").bind("click.headerMenu", openHubMenu);
+	$("#headerButtonUser").bind("click.headerMenu", openUserMenu);
+	$('.ajaxLogin').click(openLogin);
+	$('.ajaxRegister').click(openRegister);
+	$(document).ajaxSend(startAjax).ajaxComplete(stopAjax);
+	setupVoting();
+
+	if(!((typeof wgIsLogin == 'undefined') || (wgIsLogin) || (typeof wgComboAjaxLogin == 'undefined') || (!wgComboAjaxLogin) )) {
+
+		$(".wikiaPlaceholder .wikia-button").removeAttr("onclick");
+		$(".wikiaPlaceholder .wikia-button").click(function(e){
+			if( e.target.nodeName == "SPAN" ){
+				showComboAjaxForPlaceHolder($(e.target.parentNode).attr('id'),true);
+			}
+			else
+			{
+				showComboAjaxForPlaceHolder($(e.target).attr('id'),true);
+			}
+			return false;
+		});
+
+		var editpromptable = $("#ca-viewsource").add("#te-editanon");
+
+		// add .editsection on wikis with anon editing disabled
+		if ( (typeof wgDisableAnonymousEditig !== 'undefined') && (wgDisableAnonymousEditig) ) {
+			editpromptable = editpromptable.add(".editsection");
+		}
+
+		editpromptable.click(function(e){
+			showComboAjaxForPlaceHolder(false, "", function(){
+				AjaxLogin.doSuccess = function() {
+					var target = $(e.target);
+					if( target.is('a') ){
+						window.location.href = target.attr('href');
+					} else {
+						window.location.href = target.parent().attr('href');
+					}
+				}
+			}, false, true); // show the 'login required for this action' message.
+			return false;
+		});
+
+		 $(".wikiaComboAjaxLogin").click(function(e){
+			showComboAjaxForPlaceHolder(false, "", function(){
+				AjaxLogin.doSuccess = function() {
+					CreatePage.openDialog(e, null);
+				}
+			});
+			return false;
+		});
+	}
+});
