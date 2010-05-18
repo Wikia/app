@@ -966,3 +966,14 @@ function wfMsgWithFallback( $key ) {
 
 	return $msg;
 }
+
+
+/**
+ * return default riak client instance, so far only initialized class
+ * @author Krzysztof Krzyżaniak (eloy)
+ */
+function wfGetRiakClient() {
+	global $wgRiakNodeHost, $wgRiakNodePort, $wgRiakNodePrefix;
+
+	return new RiakClient( $wgRiakNodeHost, $wgRiakNodePort, $wgRiakNodePrefix );
+}

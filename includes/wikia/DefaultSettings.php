@@ -443,3 +443,14 @@ $wgWikiaCombinedPrefix = "index.php?action=ajax&rs=WikiaAssets::combined&";
  * Override MW default enable of EE
  */
 $wgUseExternalEditor = false;
+
+/**
+ * riak section
+ * @see lib/riak/riak.php
+ * @see lib/riak/docs/index.html
+ */
+include( "$IP/lib/riak/riak.php" );
+$wgSessionsInRiak = false;
+$wgRiakNodeHost   = "127.0.0.1";
+$wgRiakNodePort   = "8098";
+$wgRiakNodePrefix = "riak";
