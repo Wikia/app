@@ -970,7 +970,12 @@ function wfMsgWithFallback( $key ) {
 
 /**
  * return default riak client instance, so far only initialized class
+ *
  * @author Krzysztof Krzyżaniak (eloy)
+ *
+ * @see lib/riak/riak.php
+ * @see lib/riak/docs/index.html
+ * @see http://riak.basho.com/edoc/raw-http-howto.txt for HTTP interface
  */
 function wfGetRiakClient() {
 	global $wgRiakNodeHost, $wgRiakNodePort, $wgRiakNodePrefix;
