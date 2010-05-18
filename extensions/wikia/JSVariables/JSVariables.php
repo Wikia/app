@@ -26,8 +26,6 @@ function wfMakeGlobalVariablesScript($vars) {
 	$vars['wgCityId'] = $wgCityId;
 	$vars['wgID'] = isset($wgCityId) ? (int) $wgCityId : -1; // this one or one above should be deleted
 	$vars['wgEnableAjaxLogin'] = (is_array($wgEnableAjaxLogin)) ? in_array($vars['skin'], $wgEnableAjaxLogin) : false;
-	$vars['wgReturnTo'] = isset($_REQUEST['returnto']) ? $_REQUEST['returnto'] : '';
-	$vars['wgReturnToQuery'] = isset($_REQUEST['returntoquery']) ? $_REQUEST['returntoquery'] : '';
 	$vars['wgDB'] = $wgDBname;
 	$vars['wgBlankImgUrl'] = $wgBlankImgUrl;
 

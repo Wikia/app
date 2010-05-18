@@ -81,11 +81,21 @@ function getRegisterJS(){
 }
 
 function comboAjaxLoginVars($vars) {
-	global $wgUser,$wgWikiaEnableConfirmEditExt;
+	global $wgUser,$wgWikiaEnableConfirmEditExt, $wgRequest;
 	if ($wgWikiaEnableConfirmEditExt){
 		wfLoadExtensionMessages('ConfirmEdit');
 	}
 	
+	$vars['wgReturnTo'] = $wgRequest->getVal('returnto', ''); 
+	$vars['wgReturnToQuery'] = $wgRequest->getVal('returntoquery', ''); 
+	
+	$titleObj = Title::newFromText( $vars['wgReturnTo'] );
+	
+	if (  ( !$titleObj instanceof Title ) || ( $titleObj->isSpecial("Userlogout") ) || ( $titleObj->isSpecial("Signup") )   ) {
+		$titleObj = Title::newMainPage();
+		$vars['wgReturnTo'] = $titleObj->getText( );
+	}
+			
 	$vars['wgComboAjaxLogin'] = true;
 	$vars['prefs_help_birthmesg'] = wfMsg('prefs-help-birthmesg');
 	$vars['prefs_help_birthinfo'] = wfMsg('prefs-help-birthinfo');
