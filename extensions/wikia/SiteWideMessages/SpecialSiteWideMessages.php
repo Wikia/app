@@ -134,7 +134,6 @@ function SiteWideMessagesEmptyTalkPageWithMessages(&$out, &$text) {
 function SiteWideMessagesGetUserMessages(&$out, $parseroutput) {
 	global $wgUser;
 	//don't add messages when editing, previewing changes etc. AND don't even try for unlogged or bots
-#die( 'got here -- hook' );
 	if (wfIsTalkPageForCurrentUserDisplayed() && !$wgUser->isAllowed('bot')) {
 		//$out->mBodytext = SiteWideMessagesGetUserMessagesContent() . $out->mBodytext;
 		$out->addHTML( SiteWideMessagesGetUserMessagesContent() ); // #2321
@@ -146,7 +145,7 @@ function SiteWideMessagesGetUserMessages(&$out, $parseroutput) {
  * Grab information about new messages and if they exist - add notification for specified wikis
  *
  */
-function SiteWideMessagesUserNewTalks (&$user, &$talks) {
+function SiteWideMessagesUserNewTalks(&$user, &$talks) {
 	global $wgExternalSharedDB, $wgMemc, $wgUser;
 
 	if ($user->isAnon() || $wgUser->isAllowed('bot')) {	//don't show information for anons and bots
@@ -199,8 +198,8 @@ function SiteWideMessagesUserNewTalks (&$user, &$talks) {
 function SiteWideMessagesDiff($oTitle, $uMessages) {
 	global $wgUser, $wgTitle, $wgRequest, $wgOut, $wgExtensionsPath, $wgStyleVersion;
 	if ($wgTitle->getNamespace() == NS_USER_TALK &&                      //user talk page?
-		$wgUser->getTitleKey() == $wgTitle->getPartialURL() &&               //*my* user talk page?
-		!$wgUser->isAllowed('bot') &&                                             //user is not a bot?
+		$wgUser->getTitleKey() == $wgTitle->getPartialURL() &&           //*my* user talk page?
+		!$wgUser->isAllowed('bot') &&                                    //user is not a bot?
 		$wgRequest->getVal('diff') != ''                                 //*diff* versions?
 	) {                                                                  //if all above == 'yes' - display user's messages
 		$swmMessages = SiteWideMessagesGetUserMessagesContent(false, false, true);
