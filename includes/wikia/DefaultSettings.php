@@ -448,6 +448,7 @@ $wgUseExternalEditor = false;
  * riak section
  * @see lib/riak/riak.php
  * @see lib/riak/docs/index.html
+ * @see http://riak.basho.com/edoc/raw-http-howto.txt for HTTP interface
  */
 include( "$IP/lib/riak/riak.php" );
 $wgSessionsInRiak = false;
