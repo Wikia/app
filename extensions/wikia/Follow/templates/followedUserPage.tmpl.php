@@ -16,7 +16,7 @@
 		$sk = $wgUser->getSkin();
 		foreach($data as $value):
 			$title = Title::newFromText( $value[1], $value['wl_namespace'] );
-			if ( !$title->exists() ) continue;
+			if ( !is_object( $title ) || !$title->exists() ) continue;
 		?>
 			<li>
 				<?php echo $sk->link( $title, $value['wl_title'] ); ?>
