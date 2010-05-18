@@ -569,4 +569,10 @@ class ArticleAdLogic {
 		// unlikely best case scenario, but good minimum floor
 		return round($imageArea / self::getArticleAreaWidth());
 	}
+
+	public static function isSearch() {
+		global $wgTitle;
+
+		return ((-1 == $wgTitle->getNamespace()) && ("Search" == SpecialPage::resolveAlias($wgTitle->getDBkey())));
+	}
 }
