@@ -815,9 +815,8 @@ class LoginForm {
 		if( $injected_html !== '' ) {
 			$this->displaySuccessfulLogin( 'loginsuccess', $injected_html );
 		} else {
-
 			$titleObj = Title::newFromText( $this->mReturnTo );
-			if (  ( !$titleObj instanceof Title ) || ( $titleObj->isSpecial("UserLogout") )   ) {
+			if (  ( !$titleObj instanceof Title ) || ( $titleObj->isSpecial("Userlogout") ) || ( $titleObj->isSpecial("Signup") )   ) {
 				$titleObj = Title::newMainPage();
 				$wgOut->redirect( $titleObj->getFullURL( ) );
 				return true;
