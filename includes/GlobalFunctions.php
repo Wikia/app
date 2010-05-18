@@ -984,7 +984,7 @@ function wfShowingResults( $offset, $limit ) {
  */
 function wfShowingResultsNum( $offset, $limit, $num ) {
 	global $wgLang;
-	return wfMsgExt( 'showingresultsnum', array( 'parseinline' ), $wgLang->formatNum( $limit ), 
+	return wfMsgExt( 'showingresultsnum', array( 'parseinline' ), $wgLang->formatNum( $limit ),
 		$wgLang->formatNum( $offset+1 ), $wgLang->formatNum( $num ) );
 }
 
@@ -1023,7 +1023,7 @@ function wfViewPrevNext( $offset, $limit, $link, $query = '', $atend = false ) {
 			$q .= '&'.$query;
 		}
 		$plink = '<a href="' . $title->escapeLocalUrl( $q ) . "\" title=\"{$pTitle}\" class=\"mw-prevlink\">{$prev}</a>";
-	} else { 
+	} else {
 		$plink = $prev;
 	}
 	# Make 'next' link
@@ -1038,7 +1038,7 @@ function wfViewPrevNext( $offset, $limit, $link, $query = '', $atend = false ) {
 		$nlink = '<a href="' . $title->escapeLocalUrl( $q ) . "\" title=\"{$nTitle}\" class=\"mw-nextlink\">{$next}</a>";
 	}
 	# Make links to set number of items per page
-	$nums = $wgLang->pipeList( array( 
+	$nums = $wgLang->pipeList( array(
 		wfNumLink( $offset, 20, $title, $query ),
 		wfNumLink( $offset, 50, $title, $query ),
 		wfNumLink( $offset, 100, $title, $query ),
@@ -1057,9 +1057,9 @@ function wfViewPrevNext( $offset, $limit, $link, $query = '', $atend = false ) {
  */
 function wfNumLink( $offset, $limit, $title, $query = '' ) {
 	global $wgLang;
-	if( $query == '' ) { 
+	if( $query == '' ) {
 		$q = '';
-	} else { 
+	} else {
 		$q = $query.'&';
 	}
 	$q .= "limit={$limit}&offset={$offset}";
@@ -2677,12 +2677,17 @@ function wfHttpOnlySafe() {
  * Initialise php session
  */
 function wfSetupSession() {
-	global $wgSessionsInMemcached, $wgCookiePath, $wgCookieDomain, $wgCookieSecure, $wgCookieHttpOnly, $wgSessionsInTokyoTyrant;
+	global $wgSessionsInMemcached, $wgCookiePath, $wgCookieDomain, $wgCookieSecure, $wgCookieHttpOnly;
+	global $wgSessionsInRiak, $wgSessionsInTokyoTyrant;
+
 	if( $wgSessionsInMemcached ) {
 		require_once( 'MemcachedSessions.php' );
 	} elseif ( $wgSessionsInTokyoTyrant ) {
 		require_once( 'wikia/TokyoTyrantSessionsHandler.php' );
-	} elseif( 'files' != ini_get( 'session.save_handler' ) ) {
+	} elseif ( $wgSessionsInRiak ) {
+		require_once( 'wikia/RiakSessionsHandler.php' );
+	}
+	elseif( 'files' != ini_get( 'session.save_handler' ) ) {
 		# If it's left on 'user' or another setting from another
 		# application, it will end up failing. Try to recover.
 		ini_set ( 'session.save_handler', 'files' );
@@ -3073,9 +3078,9 @@ function wfObjectToArray( $object, $recursive = true ) {
 		if ( is_object($value) && $recursive ) {
 			$value = wfObjectToArray( $value );
 		}
-		
+
 		$array[$key] = $value;
 	}
-	
+
 	return $array;
 }
