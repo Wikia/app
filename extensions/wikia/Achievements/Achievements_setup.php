@@ -111,7 +111,7 @@ function Ach() {
 	return $ar;
 }
 
-function Achievements_ArticleSaveComplete(&$article, &$user, $text, $summary, &$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
+function Achievements_ArticleSaveComplete(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 
 	if($status instanceof Status && $status->ok == true && count($status->errors) == 0) {
 

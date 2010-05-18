@@ -46,7 +46,9 @@ class AchProcessor {
 
 		// BADGE_LUCKYEDIT
 		if($revision->getId() % 1000 == 0) {
-			$this->giveNotInTrackBadge(BADGE_LUCKYEDIT);
+			$dbr = wfGetDB(DB_SLAVE);
+			$max = $dbr->selectField('achievements_badges', 'max(badge_lap) as cnt', 'badge_type = '.BADGE_LUCKYEDIT);
+			$this->giveNotInTrackBadge(BADGE_LUCKYEDIT, $max + 1);
 		}
 
 		// BADGE_WELCOME
@@ -270,11 +272,11 @@ class AchProcessor {
 		wfProfileOut(__METHOD__);
 	}
 
-	private function giveNotInTrackBadge($badge_type) {
+	private function giveNotInTrackBadge($badge_type, $badge_lap = null) {
 		wfProfileIn(__METHOD__);
 
 		$this->mNewBadges[] = array('badge_type' => $badge_type,
-									'badge_lap' => null,
+									'badge_lap' => $badge_lap,
 									'badge_level' => AchStatic::$mNotInTrackConfig[$badge_type]);
 
 		if(!isset($this->mBadges[$badge_type])) {
