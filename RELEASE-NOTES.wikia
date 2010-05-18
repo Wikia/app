@@ -1,4 +1,5 @@
 == Changes since 201005.3 ==
+* rt#45537: Add 728x90 and 300x250/300x600 to central (global) Search Results Pages (Nef)
 * rt#49910: Cut off leaderboard at 99 people (TOR)
 
 == Changes since 201005.2 ==

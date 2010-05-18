@@ -95,10 +95,16 @@ class CorporateTemplate extends CorporateBaseTemplate {
 	function getTopAdCode() {
 		global $wgOut;
 		$topAdCode = '';
-		if (! $wgOut->isArticle() || ArticleAdLogic::isMainPage()){
+		if (ArticleAdLogic::isMainPage()){
 			return $topAdCode;
+		} elseif (ArticleAdLogic::isSearch()) {
+			$topAdCode .= "<div id='CORP_TOP_LEADERBOARD' style='width:728px; margin-left: auto; margin-right:auto; padding-bottom: 30px; margin-top: -30px'>" . AdEngine::getInstance()->getAd('CORP_TOP_LEADERBOARD') . "</div>"; 
+			$topAdCode .= "<div id='CORP_TOP_RIGHT_BOXAD' style='margin-top:-15px; float: right'>" . AdEngine::getInstance()->getAd('CORP_TOP_RIGHT_BOXAD') . "</div>";
+		} elseif (!$wgOut->isArticle()){
+			return $topAdCode;
+		} else {
+			$topAdCode .= "<div id='CORP_TOP_LEADERBOARD' style='width:728px; margin-left: auto; margin-right:auto; padding-bottom: 10px'>" . AdEngine::getInstance()->getAd('CORP_TOP_LEADERBOARD') . "</div>"; 
 		}
-		$topAdCode .= "<div id='CORP_TOP_LEADERBOARD' style='width:728px; margin-left: auto; margin-right:auto; padding-bottom: 10px'>" . AdEngine::getInstance()->getAd('CORP_TOP_LEADERBOARD') . "</div>"; 
 		return $topAdCode;
 	}
 } // end of class
