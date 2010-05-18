@@ -975,5 +975,13 @@ function wfMsgWithFallback( $key ) {
 function wfGetRiakClient() {
 	global $wgRiakNodeHost, $wgRiakNodePort, $wgRiakNodePrefix;
 
-	return new RiakClient( $wgRiakNodeHost, $wgRiakNodePort, $wgRiakNodePrefix );
+	try {
+		$riak = new RiakClient( $wgRiakNodeHost, $wgRiakNodePort, $wgRiakNodePrefix );
+	}
+	catch ( Exception $e ) {
+		Wikia::log( __METHOD__, "error", $e->getMessage() );
+		$riak = false;
+	}
+
+	return $riak;
 }

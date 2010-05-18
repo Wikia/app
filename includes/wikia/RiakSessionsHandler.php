@@ -59,22 +59,24 @@ class RiakSessionHandler {
 	}
 
 	static public function read( $id ) {
-		$riak = wfGetRiakClient();
-		$bucket = $riak->RiakBucket( self::$mBucket );
-		print_r( $bucket->get( self::key( $id ) ) ) ;
-
+		#$riak = ;
+		$bucket = wfGetRiakClient()->bucket( self::$mBucket );
+		$object = $bucket->get( self::key( $id ) );
+		$data   = $object->getData();
+		return $data;
 	}
 
 	static public function write( $id, $data ) {
-		$riak = wfGetRiakClient();
-		$bucket = $riak->RiakBucket( self::$mBucket );
-		$bucket->newObject( self::key( $id ), $data );
+		$bucket = wfGetRiakClient()->bucket( self::$mBucket );
+		$object = $bucket->newObject( self::key( $id ), $data );
+		$object->store();
 	}
 
 	static public function destroy() {
-		$riak = wfGetRiakClient();
-		$bucket = $riak->RiakBucket( self::$mBucket );
-
+		$bucket = wfGetRiakClient()->bucket( self::$mBucket );
+		$object = $bucket->get( self::key( $id ) );
+		$object->delete();
+		$object->reload();
 	}
 
 	static public function gc( $maxlifetime ) {
