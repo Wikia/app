@@ -1,6 +1,5 @@
+<p><?= wfMsg('recipes-template-toggle-label') ?></p>
 <fieldset class="recipes-template-toggle accent reset">
-	<legend><?= wfMsg('recipes-template-toggle-label') ?></legend>
-
 	<ul>
 <?php
 	global $wgTitle;
