@@ -168,7 +168,9 @@ class FollowModel {
 					'LIMIT'		=> 10
 				)
 		);	
-		
+
+		$watchlist = array();
+	
 		while ($row = $db->fetchRow( $res ) ) {
 			$title = Title::makeTitle( $row['wl_namespace'], $row['wl_title'] );
 			$row['url'] = $title->getFullURL();
