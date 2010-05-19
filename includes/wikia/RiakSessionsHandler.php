@@ -67,6 +67,10 @@ class RiakSessionHandler {
 		if( is_array( $data ) ) {
 			$timestamp = array_shift( $data );
 			$value     = array_shift( $data );
+			if( $timestamp < time() ) {
+				self::destroy( $id );
+				$value = false;
+			}
 		}
 		return $value;
 	}
@@ -77,7 +81,7 @@ class RiakSessionHandler {
 		$object->store();
 	}
 
-	static public function destroy() {
+	static public function destroy( $id ) {
 		$bucket = wfGetRiakClient()->bucket( self::BUCKET );
 		$object = $bucket->get( self::key( $id ) );
 		$object->delete();
