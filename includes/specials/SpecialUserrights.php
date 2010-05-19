@@ -367,7 +367,11 @@ class UserrightsPage extends SpecialPage {
 	protected function showEditUserGroupsForm( $user, $groups ) {
 		global $wgOut, $wgUser, $wgLang;
 
-		wfRunHooks('UserRights::showEditUserGroupsForm', array( &$user, &$addable, &$removable ));
+		/* Wikia change begin - @author: Marooned */
+		/* This hook was invalid in this version of the code and in the current (2010-05-18) MW trunk it even doesn't exist */
+		/* We need it to alter displayed list without alter real groups */
+		wfRunHooks('UserRights::showEditUserGroupsForm', array( &$user, &$groups ));
+		/* Wikia change end */
 
 		$list = array();
 		foreach( $groups as $group )
@@ -454,6 +458,11 @@ class UserrightsPage extends SpecialPage {
 			$irreversible = !$disabled && (
 				($set && !$this->canAdd( $group )) ||
 				(!$set && !$this->canRemove( $group ) ) );
+
+			/* Wikia change begin - @author: Marooned */
+			/* Because of "return all" in changeableGroups() hook UserrightsChangeableGroups is not invoked - this hook is to fill this gap */
+			wfRunHooks('UserRights::groupCheckboxes', array( $group, &$disabled, &$irreversible ));
+			/* Wikia change end */
 
 			$attr = $disabled ? array( 'disabled' => 'disabled' ) : array();
 			$attr['title'] = $group;
