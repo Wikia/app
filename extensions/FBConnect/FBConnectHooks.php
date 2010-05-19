@@ -534,4 +534,34 @@ STYLE;
 		// Case: Logged into Facebook, logged into the wiki
 		return true;
 	}
+	
+	/**
+	 * 
+	 * 
+	 */
+	static function initPreferencesExtensionForm($self, $request, &$wgExtensionPreferences) {
+		global $wgUser;
+		
+		$id = FBConnectDB::getFacebookIDs($wgUser);
+		if( count($id) > 0 ) {
+			//action="/index.php?title=TechTeam_QA_8_Wiki&amp;action=submit" method="post"
+			$action = Title::makeTitle(NS_SPECIAL,"Connect");
+			$action  = $action->getFullURL("action=disconnect");
+			$html = Xml::openElement("div");
+			$html .= Xml::openElement( "form", array("submit" => "post", "action" => $action) );
+			$html .= Xml::element( "input", array("type" => "submit", "value" => "Disconent"), '', true );
+			$html .= Xml::closeElement( "form" );
+ 			$html .= Xml::closeElement( "div" );
+			$wgExtensionPreferences = array_merge( 
+				array( 
+					array(
+						'name' => 'ssasasas', 
+						'section' => 'fbconnect-prefstext',				
+						'html' => $html,
+						'type' => PREF_CUSTOM_HTML_T) ), $wgExtensionPreferences);			
+
+		}
+		
+		return true;
+	}
 }
