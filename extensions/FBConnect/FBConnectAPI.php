@@ -84,7 +84,7 @@ class FBConnectAPI {
 	 * then an ID of 0 is returned.
 	 */
 	public function user() {
-//		return $this->Facebook()->get_loggedin_user();
+		return $this->Facebook()->get_loggedin_user();
 	}
 	
 	/**

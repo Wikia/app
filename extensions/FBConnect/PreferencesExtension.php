@@ -24,7 +24,6 @@ define('PREF_TEXT_T', 3);
 define('PREF_PASSWORD_T', 4);
 define('PREF_INT_T', 5);
 define('PREF_DROPDOWN_T', 6);
-define('PREF_CUSTOM_HTML_T', 6);
  
 // each element of the following should be an array that can have keys:
 // name, section, type, size, validate, load, save, html, min, max, default
@@ -35,7 +34,7 @@ function wfPreferencesExtension()
 {
 	wfProfileIn(__METHOD__);
 	
-//    wfUseMW('1.7');
+    wfUseMW('1.7');
     global $wgHooks;
     $wgHooks['SpecialPage_initList'][] = 'wfOverridePreferences';
 	
@@ -80,12 +79,6 @@ function wfSpecialPreferencesExtension()
     // override the default preferences form
     class SpecialPreferencesExtension extends PreferencesForm
     {
-		// overload to add new field by hook
-    	function __construct( &$request ) {
-			global $wgExtensionPreferences;
-			parent::__construct($request);
-			wfRunHooks( 'initPreferencesExtensionForm', array( $this, $request, &$wgExtensionPreferences ) );
-		}
         // unlike parent, we don't load in posted form values in constructor
         // until savePreferences when we need it
         // we also don't need resetPrefs, instead loading the newest values when displaying the form
@@ -100,8 +93,6 @@ function wfSpecialPreferencesExtension()
             global $wgExtensionPreferences;
 			wfProfileIn(__METHOD__);
  
-
-			
             foreach ($wgExtensionPreferences as $p)
             {
                 $name = isset($p['name']) ? $p['name'] : "";
@@ -165,8 +156,8 @@ function wfSpecialPreferencesExtension()
             parent::mainPrefsForm($status, $message);
             $html = $wgOut->getHTML();
             $wgOut->clearHTML();
+ 
             $sections = array();
-
             foreach ($wgExtensionPreferences as $p)
             {
                 if (! isset($p['section']) || ! $p['section'])
@@ -208,11 +199,7 @@ function wfSpecialPreferencesExtension()
                 $pos = isset($p['pos']) ? $p['pos'] : '';
                 switch ($type)
                 {
-                    case PREF_CUSTOM_HTML_T:
-                        $addhtml = $p['html'];
-                        break;
-                        
-                	case PREF_TOGGLE_T:
+                    case PREF_TOGGLE_T:
                         $addhtml = $this->getToggle($name);
                         break;
 
@@ -270,6 +257,7 @@ function wfSpecialPreferencesExtension()
 
             // debugging
             //$wgOut->addHTML($wgUser->encodeOptions());
+			
 			wfProfileOut(__METHOD__);
         }
     }

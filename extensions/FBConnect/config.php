@@ -197,8 +197,6 @@ $fbExtendedPermissions = array(
  * This section allows controlling of whether push events are enabled, and which
  * of the push events to use.
  */
-	$wgEnableFacebookConnectPushing = true;
-	
  global $wgEnableFacebookConnectPushing;
 $fbEnablePushToFacebook = (!empty($wgEnableFacebookConnectPushing));
 if(!empty($fbEnablePushToFacebook)){

@@ -79,11 +79,6 @@ class SpecialConnect extends SpecialPage {
 	function execute( $par ) {
 		global $wgUser, $wgRequest;
 
-		
-		if ( $wgRequest->getVal("action", "") == "disconnect" ) {
-			self::disconnectAction();
-		} 
-	
 		// Check to see if the user is already logged in
 		if ( $wgUser->getID() ) {
 			$this->sendPage('alreadyLoggedIn');
@@ -661,25 +656,6 @@ class SpecialConnect extends SpecialPage {
 			<fb:login-button size="large" background="black" length="long"'.FBConnect::getPermissionsAttribute().FBConnect::getOnLoginAttribute().'></fb:login-button>
 			</div>'
 		);
-	}
-	/**
-	 * Disconnect from facebook
-	 */
-	
-	private function disconnectAction() {
-		global $wgRequest, $wgOut, $wgUser;
-		
-		if( $wgRequest->wasPosted() ) {
-			$id = FBConnectDB::getFacebookIDs($wgUser);
-			if( count($id) > 0 ) {
-				FBConnectDB::removeFacebookID( $wgUser, $id['user_fbid'] );
-			}
-		}
-		
-		$title = Title::makeTitle( NS_SPECIAL, "Preferences" );
-		$url = $title->getFullUrl("#prefsection-10");
-		$wgOut->redirect($url);
-		return true;
 	}
 	
 	/**

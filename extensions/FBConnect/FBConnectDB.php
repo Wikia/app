@@ -43,8 +43,25 @@ class FBConnectDB {
 	 * Find the Facebook IDs of the given user, if any.
 	 */
 	public static function getFacebookIDs( $user ) {
-		$dbr = wfGetDB( DB_SLAVE, array(), self::sharedDB() );
-		return self::getFacebookIDsFromDB( $user, $dbr );
+		$fbid = array();
+		if ( $user instanceof User && $user->getId() != 0 ) {
+			$prefix = self::getPrefix();
+			
+			// NOTE: Do not just pass this dbr into getFacebookIDsFromDB since that function prevents
+			// rewriting of the database name for shared tables.
+			$dbr = wfGetDB( DB_SLAVE, array(), self::sharedDB() );
+			$res = $dbr->select(
+				array( "{$prefix}user_fbconnect" ),
+				array( 'user_fbid' ),
+				array( 'user_id' => $user->getId() ),
+				__METHOD__
+			);
+			foreach( $res as $row ) {
+				$fbid[] = $row->user_fbid;
+			}
+			$res->free();
+		}
+		return $fbid;
 	}
 	
 	/**
@@ -100,8 +117,18 @@ class FBConnectDB {
 	 * If there is no user found for the given id, returns null.
 	 */
 	public static function getUserByDB( $fbid, $dbr ){
-		$dbr = wfGetDB( DB_SLAVE, array(), self::sharedDB() );
-		return self::getUser($fbid, $dbr);
+		$prefix = self::getPrefix();
+		$id = $dbr->selectField(
+			"`{$prefix}user_fbconnect`",
+			'user_id',
+			array( 'user_fbid' => $fbid ),
+			__METHOD__
+		);
+		if ( $id ) {
+			return User::newFromId( $id );
+		} else {
+			return null;
+		}
 	}
 	
 	/**

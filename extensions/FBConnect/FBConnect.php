@@ -145,11 +145,10 @@ class FBConnect {
 		
 		// Install all public static functions in class FBConnectHooks as MediaWiki hooks
 		$hooks = self::enumMethods('FBConnectHooks');
-		
 		foreach( $hooks as $hookName ) {
 			$wgHooks[$hookName][] = "FBConnectHooks::$hookName";
 		}
-		
+
 		// Allow configurable over-riding of the onLogin handler.
 		global $fbOnLoginJsOverride;
 		if(!empty($fbOnLoginJsOverride)){
