@@ -169,12 +169,6 @@ class AutoCreateWikiPage extends SpecialPage {
 			return;
 		}
 
-		if( !$wgUser->isAllowed( 'edit' ) ) {
-			$wgOut->blockedPage();
-			return;
-		}
-
-
 		/**
 		 * other AWC version changes, so far answers only
 		 */
