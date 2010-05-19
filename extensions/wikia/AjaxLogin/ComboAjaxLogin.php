@@ -139,9 +139,15 @@ function createUserLogin(){
 	}
 
 	$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+	$dbl = wfGetDB( DB_MASTER );
+	
 	$dbw->begin();	 
+	$dbw->begin();
+	
 	$form->execute();
+	
 	$dbw->commit();
+	$dbl->commit();
 	
 	if( $form->msgtype == "error" ) {
 		if( !$wgWikiaEnableConfirmEditExt ){ 
@@ -212,7 +218,7 @@ class AjaxLoginForm extends LoginForm {
 	 * different EasyTemplates to give different results such as one view for ajax dialogs
 	 * and one view for standalone pages (such as Special:Signup). 
 	 */
-	static public function getTemplateForCombinedForms($static = false, $lastmsg){
+	static public function getTemplateForCombinedForms($static = false, $lastmsg = ""){
 		global $wgRequest;
 
 		// Setup the data for the templates, similar to GetComboAjaxLogin.
