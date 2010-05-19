@@ -501,17 +501,21 @@ div.noarticletext { display: none; }
 }
 
 
-#qa_toolbox ul {
+.qa_box ul {
 	margin:0px;
 }
 
-#qa_toolbox {
+.qa_box {
 	width:249px;
 	border: 1px solid #A9C5EB;
 	background-color:#EAF1FB;
 	-moz-border-radius:8px;
 	-webkit-border-radius:8px;
 	padding:10px 10px 6px;
+}
+
+#qa_featuredbox {
+	margin-top: 15px;
 }
 
 #qa_toolbox_button {
