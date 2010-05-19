@@ -13,7 +13,8 @@
 
 class RiakSessionHandler {
 
-	static public $mBucket = "session";
+	const BUCKET = "session";
+	const EXPIRE = 3600;
 
 	/**
 	 * return proper key for session
@@ -59,21 +60,25 @@ class RiakSessionHandler {
 	}
 
 	static public function read( $id ) {
-		#$riak = ;
-		$bucket = wfGetRiakClient()->bucket( self::$mBucket );
+		$bucket = wfGetRiakClient()->bucket( self::BUCKET );
 		$object = $bucket->get( self::key( $id ) );
 		$data   = $object->getData();
-		return $data;
+		$value  = false;
+		if( is_array( $data ) ) {
+			$timestamp = array_shift( $data );
+			$value     = array_shift( $data );
+		}
+		return $value;
 	}
 
 	static public function write( $id, $data ) {
-		$bucket = wfGetRiakClient()->bucket( self::$mBucket );
-		$object = $bucket->newObject( self::key( $id ), $data );
+		$bucket = wfGetRiakClient()->bucket( self::BUCKET );
+		$object = $bucket->newObject( self::key( $id ), array( $data, time() + self::EXPIRE ) );
 		$object->store();
 	}
 
 	static public function destroy() {
-		$bucket = wfGetRiakClient()->bucket( self::$mBucket );
+		$bucket = wfGetRiakClient()->bucket( self::BUCKET );
 		$object = $bucket->get( self::key( $id ) );
 		$object->delete();
 		$object->reload();
