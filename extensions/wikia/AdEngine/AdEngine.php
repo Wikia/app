@@ -7,6 +7,15 @@ $wgExtensionCredits['other'][] = array(
 	'author' => 'Inez Korczynski, Nick Sullivan'
 );
 
+$wgHooks["MakeGlobalVariablesScript"][] = "wfAdEngineSetupJSVars";
+function wfAdEngineSetupJSVars($vars) {
+	global $wgEnableAdsInContent;
+
+	$vars["wgEnableAdsInContent"] = $wgEnableAdsInContent;
+
+	return true;
+}
+
 interface iAdProvider {
 	public static function getInstance();
 	public function getAd($slotname, $slot);
