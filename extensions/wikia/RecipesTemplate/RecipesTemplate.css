@@ -173,12 +173,7 @@ div.recipes-template-error {
 /* toggle */
 .recipes-template-toggle {
 	background: transparent;
-}
-
-.recipes-template-toggle legend {
-	font-size: 1.2em;
-	font-weight: bold;
-	padding: 5px;
+	padding: 1em;
 }
 
 .recipes-template-toggle li {
