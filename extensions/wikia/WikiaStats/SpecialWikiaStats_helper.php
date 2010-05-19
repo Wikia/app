@@ -2092,7 +2092,8 @@ class WikiaGenericStats {
 					} else {
 					    $rank = (array_key_exists($user_id, $rankUsersPrev)) ? intval($rankUsersPrev[$user_id]["rank"]) : 50;
 					    $cnt_ns = (array_key_exists($user_id, $rankUsersNamespace)) ? $rankUsersNamespace[$user_id]["cnt"] : 0;
-					    $prev_cnt_ns = (array_key_exists($user_id, $rankUsersPrevNamespace)) ? $rankUsersPrevNamespace[$user_id]["cnt"] : intval($cnt_ns);
+					    $prev_cnt_ns = (array_key_exists($user_id, $rankUsersPrevNamespace) && isset($rankUsersPrevNamespace[$user_id]["cnt"]) ) 
+					    	? intval($rankUsersPrevNamespace[$user_id]["cnt"]) : intval($cnt_ns);
 					    $cnt = (array_key_exists($user_id, $rankUsersPrev)) ? intval($rankUsersPrev[$user_id]["cnt"]) : intval($rankInfo["cnt"]);
 						$wikians_active[$rankInfo["rank"]] = array(
 							'user_id' => $rankInfo["user_id"],
