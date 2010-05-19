@@ -50,8 +50,10 @@ function neue_website( $nws ) {
 	/**
 	 * get related sites as job
 	 */
-	$job = new NeueWebsiteJob( $title, array( "domain" => $newhost, "key" => $newdom ) );
-	$job->insert();
+	if( !wfReadOnly() ) {
+		$job = new NeueWebsiteJob( $title, array( "domain" => $newhost, "key" => $newdom ) );
+		$job->insert();
+	}
 
 	/**
 	 * make_related($dbw, $newhost, $newdom);
