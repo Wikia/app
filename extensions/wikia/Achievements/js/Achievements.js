@@ -47,8 +47,14 @@ var Achievements = {
 		//Show badge description when hovering over the badge	
 		$('#badge-list li>img').hover(function() {
 			var badge = $(this);
+			var hoverPanel = badge.prev();
+			var pos = badge.position();
+
 			self.timer = setTimeout(function() {
-				badge.prev().show();
+				hoverPanel	
+					.css("left", pos.left - hoverPanel.outerWidth() + badge.outerWidth())
+					.css("top", pos.top - hoverPanel.outerHeight() + 10)
+					.show();
 				self.track('userprofile/hover');
 			}, self.delay);
 		}, function() {
