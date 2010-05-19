@@ -13,6 +13,7 @@
 
 #profile-sidebar #badges {
   height: 200px;
+  overflow: hidden;
 }
 
 #badge-list {
@@ -25,13 +26,14 @@
   float: left;
   height: 90px;
   list-style: none !important;
-  position: relative;
+  /*position: relative;*/
   margin: 5px;
   width: 90px;
 }
 
-#badge-list li>img {
+#badge-list li>img:hover {
 	position: absolute;
+	z-index: 101;
 }
 
 #profile-sidebar #sub-badges {
@@ -137,15 +139,14 @@
 .profile-hover {
   background-color: #fff; /*TODO - how do I get this with the wiki's primary bg color */
   border: 3px solid #009933; /*TODO - how do I get this with the wiki's primary color */
-  bottom: 80%;
   height: 120px;
   padding: 10px !important;
   position: absolute;
-  right: 0;
   text-align: center;
   width: 320px;
   -moz-border-radius:10px;
   -webkit-border-radius:10px;
+  z-index: 100;
 }
 
 div.profile-hover div.clearfix img {
