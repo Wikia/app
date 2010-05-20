@@ -53,6 +53,11 @@ $wgAjaxExportList[] = 'AutoHubsPagesHelper::hideFeed';
 $wgHooks["AdProviderDARTFirstChunk"][] = "wfAdProviderDARTFirstChunkForHubs";
 function wfAdProviderDARTFirstChunkForHubs($first_chunk) {
 	global $wgTitle;
+
+	if( !AutoHubsPagesHelper::isHubsPage( $wgTitle ) ) {
+		return true;
+	}
+
 	switch ($wgTitle->getText()){
 		case "Entertainment":  $first_chunk = "wka.ent/_entertainment/hub"; break;
 		case "Movies":         $first_chunk = "wka.ent/_movies/hub";        break;
