@@ -31,7 +31,7 @@ $messages['en'] = array(
 
 	'magcloud-special-collection-title' => 'Make a magazine!',
 	'magcloud-special-collection-empty' => 'You haven\'t selected any articles yet! Head back into the wiki, and select \'Add\' in the toolbar above to compile your magazine.',
-	'magcloud-special-collection-review-list-info' => 'Great, you\'ve selected $1 {{PLURAL:$1|aricle|articles}} for your magazine. If you want to add more, just browse to more pages and hit "Add" in the toolbar above!',
+	'magcloud-special-collection-review-list-info' => 'Great, you have selected $1 {{PLURAL:$1|article|articles}} for your magazine. If you want to add more, just browse to more pages and hit "Add" in the toolbar above!',
 	'magcloud-special-collection-review-list-tips' => "<big>Tips for creating a Great Magazine</big>
 
 # Try choosing articles that follow a theme, like comic villans or unique swords.
@@ -398,7 +398,7 @@ $messages['fr'] = array(
 	'magcloud-discard-magazine-save' => 'Sauvegarder et partir',
 	'magcloud-special-collection-title' => 'Faire un magazine !',
 	'magcloud-special-collection-empty' => "Vous n'avez encore sélectionné aucun article ! Allez dans le wiki, et cliquez « Ajouter » dans la boîte à outils pour compiler votre magazine.",
-	'magcloud-special-collection-review-list-info' => 'Bien, vous avez sélectionné $1 {{PLURAL:$1|aricle|articles}} pour votre magazine. Si vous voulez en ajouter plus, naviguez dans le wiki et cliquez sur le bouton « Ajouter » dans la boîte à outils ci-dessus !',
+	'magcloud-special-collection-review-list-info' => 'Bien, vous avez sélectionné $1 {{PLURAL:$1|article|articles}} pour votre magazine. Si vous voulez en ajouter plus, naviguez dans le wiki et cliquez sur le bouton « Ajouter » dans la boîte à outils ci-dessus !',
 	'magcloud-special-collection-review-list-tips' => "<big>Trucs pour créer un bon magazine</big>
 
 # Essayez de choisir les articles sur un même thème, comme les méchants de bande dessinée ou les épées particulières.
