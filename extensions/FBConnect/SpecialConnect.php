@@ -325,10 +325,6 @@ class SpecialConnect extends SpecialPage {
 			FBConnectDB::addFacebookID($user, $fb_id);
 
 			wfRunHooks( 'AddNewAccount', array( $user ) );
-
-			// TODO: Which MediaWiki versions can we call this function in?
-			$user->addNewUserLogEntryAutoCreate();
-			#$user->addNewUserLogEntry();
 			
 			// Mark that the user is a Facebook user
 			$user->addGroup('fb-user');
@@ -372,6 +368,10 @@ class SpecialConnect extends SpecialPage {
 			// Allow custom form processing to store values since this form submission was successful.
 			// This hook should not fail on invalid input, instead check the input using the SpecialConnect::createUser::validateForm hook above.
 			wfRunHooks( 'SpecialConnect::createUser::postProcessForm', array( &$this ) );
+			
+			// TODO: Which MediaWiki versions can we call this function in?
+			$user->addNewUserLogEntryAutoCreate();
+			#$user->addNewUserLogEntry();
 
 			$this->sendPage('displaySuccessLogin');
 		}
