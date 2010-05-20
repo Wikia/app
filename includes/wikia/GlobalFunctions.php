@@ -966,27 +966,3 @@ function wfMsgWithFallback( $key ) {
 
 	return $msg;
 }
-
-
-/**
- * return default riak client instance, so far only initialized class
- *
- * @author Krzysztof Krzyżaniak (eloy)
- *
- * @see lib/riak/riak.php
- * @see lib/riak/docs/index.html
- * @see http://riak.basho.com/edoc/raw-http-howto.txt for HTTP interface
- */
-function wfGetRiakClient() {
-	global $wgRiakNodeHost, $wgRiakNodePort, $wgRiakNodePrefix;
-
-	try {
-		$riak = new RiakClient( $wgRiakNodeHost, $wgRiakNodePort, $wgRiakNodePrefix );
-	}
-	catch ( Exception $e ) {
-		Wikia::log( __METHOD__, "error", $e->getMessage() );
-		$riak = false;
-	}
-
-	return $riak;
-}
