@@ -49,3 +49,28 @@ $wgHooks['CorporateBeforeRedirect'][] = 'AutoHubsPagesHelper::beforeRedirect';
 $wgHooks['CorporateBeforeMsgCacheClear'][] = 'AutoHubsPagesHelper::beforeMsgCacheClear';
 $wgAjaxExportList[] = 'AutoHubsPagesHelper::setHubsFeedsVariable';
 $wgAjaxExportList[] = 'AutoHubsPagesHelper::hideFeed';
+
+$wgHooks["AdProviderDARTFirstChunk"][] = "wfAdProviderDARTFirstChunkForHubs";
+function wfAdProviderDARTFirstChunkForHubs($first_chunk) {
+	global $wgTitle;
+	switch ($wgTitle->getText()){
+		case "Entertainment":  $first_chunk = "wka.ent/_entertainment/hub"; break;
+		case "Movies":         $first_chunk = "wka.ent/_movies/hub";        break;
+		case "Television":     $first_chunk = "wka.ent/_tv/hub";            break;
+		case "Music":          $first_chunk = "wka.ent/_music/hub";         break;
+		case "Anime":          $first_chunk = "wka.ent/_anime/hub";         break;
+		case "Sci-Fi":         $first_chunk = "wka.ent/_scifi/hub";         break;
+		case "Horror":         $first_chunk = "wka.ent/_horror/hub";        break;
+		case "Gaming":         $first_chunk = "wka.gaming/_gaming/hub";     break;
+		case "PC Games":       $first_chunk = "wka.gaming/_pcgaming/hub";   break;
+		case "Xbox 360 Games": $first_chunk = "wka.gaming/_xbox360/hub";    break;
+		case "PS3 Games":      $first_chunk = "wka.gaming/_ps3/hub";        break;
+		case "Wii Games":      $first_chunk = "wka.gaming/_wii/hub";        break;
+		case "Handheld":       $first_chunk = "wka.gaming/_handheld/hub";   break;
+		case "Lifestyle":      $first_chunk = "wka.life/_lifestyle/hub";    break;
+
+		default:               $first_chunk = "wka.wikia/_wikiaglobal/hub";
+	}
+
+	return true;
+}

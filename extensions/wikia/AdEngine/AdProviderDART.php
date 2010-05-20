@@ -135,33 +135,13 @@ EOT;
 
 
 	function getFirstChunk() {
-		global $wgDBname;
-		if ($wgDBname == 'wikiaglobal'){
-			// Special casing for www.wikia.com #47437
-			// Ewww. a hard coded list. Got a better idea?
-			global $wgTitle;
-			switch ($wgTitle->getText()){
-			  case "Entertainment": return "wka.ent/_entertainment/hub";
-			  case "Movies": return "wka.ent/_movies/hub";
-			  case "Television": return "wka.ent/_tv/hub";
-			  case "Music": return "wka.ent/_music/hub";
-			  case "Anime": return "wka.ent/_anime/hub";
-			  case "Sci-Fi": return "wka.ent/_scifi/hub";
-			  case "Horror": return "wka.ent/_horror/hub";
-			  case "Gaming": return "wka.gaming/_gaming/hub";
-			  case "PC Games": return "wka.gaming/_pcgaming/hub";
-			  case "Xbox 360 Games": return "wka.gaming/_xbox360/hub";
-			  case "PS3 Games": return "wka.gaming/_ps3/hub";
-			  case "Wii Games": return "wka.gaming/_wii/hub";
-			  case "Handheld": return "wka.gaming/_handheld/hub";
-			  case "Lifestyle": return "wka.life/_lifestyle/hub";
-			  default: return "wka.wikia/_wikiaglobal/hub";
-			}
-		} else {
-			return  $this->getDartSite($this->getHub()) . '/' .
+		$first_chunk = $this->getDartSite($this->getHub()) . '/' .
 				$this->getZone1() . '/' .
 				$this->getZone2(); 
-		}
+
+		wfRunHooks("AdProviderDARTFirstChunk", array(&$first_chunk));
+
+		return $first_chunk;
 	}
 	
 
