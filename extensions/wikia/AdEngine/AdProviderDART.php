@@ -173,6 +173,8 @@ EOT;
 	function getZone2(){
 		if($this->isMainPage) {
 			return 'home';
+		} elseif (ArticleAdLogic::isSearch()) {
+			return 'search';
 		} else {
 			return 'article';
 		}
