@@ -25,7 +25,7 @@ class UserRights {
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
 	static function getGlobalGroups($user) {
-		if (!isset(self::$globalGroup)) {
+		if (!isset(self::$globalGroup[$user->mId])) {
 			global $wgWikiaGlobalUserGroups;
 			$globalGroups = array();
 
@@ -34,17 +34,17 @@ class UserRights {
 			$res = $dbr->select(
 				'user_groups',
 				'ug_group',
-				array('ug_user' => $user->mId)
+				array('ug_user' => $user->mId),
+				__METHOD__
 			);
 
 			while ($row = $dbr->fetchObject($res)) {
 				$globalGroups[] = $row->ug_group;
 			}
 			$dbr->freeResult($res);
-			self::$globalGroup = array_intersect($globalGroups, $wgWikiaGlobalUserGroups);
+			self::$globalGroup[$user->mId] = array_intersect($globalGroups, $wgWikiaGlobalUserGroups);
 		}
-
-		return self::$globalGroup;
+		return self::$globalGroup[$user->mId];
 	}
 
 	/**
@@ -76,7 +76,7 @@ class UserRights {
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
 	static function userEffectiveGroups(&$user, &$groups) {
-		if (self::isCentralWiki()) {
+		if (!self::isCentralWiki()) {
 			$groups = array_unique(array_merge($groups, self::getGlobalGroups($user)));
 		}
 		return $groups;
@@ -90,7 +90,7 @@ class UserRights {
 	 */
 	function showEditUserGroupsForm(&$user, &$groups) {
 		//if not on central, block changing global rights
-		if (self::isCentralWiki()) {
+		if (!self::isCentralWiki()) {
 			$groups = array_unique(array_merge($groups, self::getGlobalGroups($user)));
 		}
 		return true;
