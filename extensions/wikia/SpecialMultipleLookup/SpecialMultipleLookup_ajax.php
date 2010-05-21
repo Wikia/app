@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package MediaWiki
  * @subpackage SpecialPage
@@ -12,44 +11,44 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 ) ;
 }
 
-############################## Ajax ##################################
+# ############################# Ajax ##################################
 
-function axWMultiLookupUserActivityDetails($dbname, $ip, $limit=25, $offset=0)
+function axWMultiLookupUserActivityDetails( $dbname, $ip, $limit = 25, $offset = 0 )
 {
 	global $wgRequest, $wgUser;
-	if ( empty($wgUser) ) { return ""; }
+	if ( empty( $wgUser ) ) { return ""; }
 	if ( $wgUser->isBlocked() ) { return ""; }
 	if ( !$wgUser->isLoggedIn() ) { return ""; }
 	if ( !$wgUser->isAllowed( 'lookupcontribs' ) ) {
-		return ""; #--- later change to something reasonable
+		return ""; # --- later change to something reasonable
 	}
 
-	$mLCCore = new MultipleLookupCore($ip);
+	$mLCCore = new MultipleLookupCore( $ip );
 	$aResponse = array();
-	if ($mLCCore->checkIp()) {
-		$data = $mLCCore->fetchContribs ($dbname);
+	if ( $mLCCore->checkIp() ) {
+		$data = $mLCCore->fetchContribs ( $dbname );
   		/* order by timestamp desc */
   		$nbr_records = 0;
   		$result = array();
 		$res = array();
-  		if (!empty($data) && is_array($data)) {
-			ksort($data);
-			$result = array_slice($data, $offset*$limit, $limit, true);
+		if ( !empty( $data ) && is_array( $data ) ) {
+			ksort( $data );
+			$result = array_slice( $data, $offset * $limit, $limit, true );
 			$loop = 0;
-			foreach ($result as $date => $row) {
-				$res[$loop] = $mLCCore->produceLine($row, $ip);
+			foreach ( $result as $date => $row ) {
+				$res[$loop] = $mLCCore->produceLine( $row, $ip );
 				$loop++;
 			}
-			$nbr_records = count($data);
+			$nbr_records = count( $data );
 		}
-		$aResponse = array("nbr_records" => intval($nbr_records), "limit" => $limit, "offset" => $offset, "res" => $res);
+		$aResponse = array( "nbr_records" => intval( $nbr_records ), "limit" => $limit, "offset" => $offset, "res" => $res );
 	}
 
-	if (!function_exists('json_encode')) {
+	if ( !function_exists( 'json_encode' ) ) {
 		$oJson = new Services_JSON();
-		return $oJson->encode($aResponse);
+		return $oJson->encode( $aResponse );
 	} else {
-		return json_encode($aResponse);
+		return json_encode( $aResponse );
 	}
 }
 

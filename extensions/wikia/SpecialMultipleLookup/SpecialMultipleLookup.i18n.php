@@ -1,6 +1,6 @@
 <?php
 /**
- * Internationalisation file for WikiFactory extension.
+ * Internationalisation file for SpecialMultipleLookup extension.
  *
  * @addtogroup Languages
  */
@@ -8,33 +8,25 @@
 $messages = array();
 
 $messages['en'] = array(
-	'multilookup' => 'Multiple lookup',
-	'multilookupstitle' => 'Multiple lookup',
-	'multilookupselectuser' => 'Search for accounts of the same IP on multiple wikis',
+	'specialmultiplelookup-desc' => 'Provides user information look up on multiple wikis',
+	'multilookup' => 'Multiple look up',
+	'multilookupstitle' => 'Multiple look up',
+	'multilookupselectuser' => 'Search for accounts of the same IP address on multiple wikis',
 	'multilookupgo' => 'Go',
-	'multilookupnotspecify' => 'You haven\'t specified a IP yet',
+	'multilookupnotspecify' => 'You have not specified an IP address yet.',
 	'multilookupnext' => 'next',
 	'multilookupprevious' => 'previous',
-	'multilookupnbrresult' => 'Number of result:',
+	'multilookupnbrresult' => 'Number of results:',
 	'multilookupinvalidresults' => 'Invalid results!',
-	'multilookupnoresultfound' => 'No result found!',
+	'multilookupnoresultfound' => 'No results found!',
 	'multilookupwiki' => 'Wiki',
 	'multilookuplink' => 'Contribs link',
 	'multilookupdetails' => 'See details',
-	'multilookuplistwikiainfo' => 'List of wikis where articles were edited by users from IP: <b>$1</b>',
-	'multilookupinvaliduser' => '<p class="error">IP "<b>$1</b>" does not exist. Check given IP for possible typos.</p>',
-	'multilookuplastedit' => 'Last edit from this IP:'
-);
+	'multilookuplistwikiainfo' => 'List of wikis where pages were edited by users from IP address <b>$1</b>',
+	'multilookupinvaliduser' => '<p class="error">IP address "<b>$1</b>" does not exist. Check given IP address for possible typos.</p>',
+	'multilookuplastedit' => 'Last edit from this IP address:',
 
-/** Message documentation (Message documentation)
- * @author Siebrand
- */
-$messages['qqq'] = array(
-	'multilookupselectuser' => 'IP -> IP address',
-	'multilookupnotspecify' => 'IP -> IP address',
-	'multilookuplistwikiainfo' => 'IP -> IP address',
-	'multilookupinvaliduser' => 'IP -> IP address',
-	'multilookuplastedit' => 'IP -> IP address',
+	'right-multilookup' => 'Look up information on users in multiple wikis',
 );
 
 /** Afrikaans (Afrikaans)
@@ -286,10 +278,10 @@ $messages['nl'] = array(
 	'multilookupstitle' => 'Meervoudig opzoeken',
 	'multilookupselectuser' => "Zoeken naar gebruikers met hetzelfde IP-adres op meerdere wiki's",
 	'multilookupgo' => 'OK',
-	'multilookupnotspecify' => 'U hebt nog geen IP-adres opgegeven',
+	'multilookupnotspecify' => 'U hebt nog geen IP-adres opgegeven.',
 	'multilookupnext' => 'volgende',
 	'multilookupprevious' => 'vorige',
-	'multilookupnbrresult' => 'Resultaat:',
+	'multilookupnbrresult' => 'Resultaten:',
 	'multilookupinvalidresults' => 'Ongeldige resultaten!',
 	'multilookupnoresultfound' => 'Geen resultaten gevonden!',
 	'multilookupwiki' => 'Wiki',
