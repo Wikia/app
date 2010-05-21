@@ -9,7 +9,7 @@
 }
 .color2 {
 	background: #000 repeat-x;
-	background-image: url(/skins/monaco/obsession/images/background.png);  /* $wgCdnStylePath */
+	background-image: url(../images/background.png);
 }
 .accent {
 	background-color: #2F0600;
@@ -138,7 +138,7 @@ a.new {
 }
 #bodyContent a.external, #bodyContent a[href ^="gopher://"] {
 	background: center right no-repeat;
-	background-image: url(/skins/monaco/obsession/images/external.png); /* $wgCdnStylePath */
+	background-image: url(../images/external.png);
 }
 #page_bar {
 	background-color: #780000;

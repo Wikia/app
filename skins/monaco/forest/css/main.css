@@ -9,7 +9,7 @@
 }
 .color2 {
 	background: #000 repeat-x;
-	background-image: url(/skins/monaco/forest/images/background.png); /* $wgCdnStylePath */
+	background-image: url(../images/background.png);
 }
 .accent {
 	background-color: #DBE5DA;
@@ -139,14 +139,14 @@ body.mainpage.rtl div.monaco_shrinkwrap {
         margin-right: -486px;
 }
 body.mainpage #background_accent1 {
-	background-image: url(/skins/monaco/forest/images/forest_left.png); /* $wgCdnStylePath */
+	background-image: url(../images/forest_left.png);
 	height: 431px;
 	margin-right: 390px;
 	top: -51px;
 	width: 300px;
 }
 body.mainpage #background_accent2 {
-	background-image: url(/skins/monaco/forest/images/forest_right.png); /* $wgCdnStylePath */
+	background-image: url(../images/forest_right.png);
 	background-position: 300px 0;
 	height: 433px;
 	top: -51px;

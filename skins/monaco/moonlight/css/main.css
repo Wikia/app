@@ -9,7 +9,7 @@
 }
 .color2 {
 	background: #161F30 repeat-x;
-	background-image: url(/skins/monaco/moonlight/images/stars.png); /* $wgCdnStylePath */
+	background-image: url(../images/stars.png);
 }
 .accent {
 	background-color: #D6E0F5;
