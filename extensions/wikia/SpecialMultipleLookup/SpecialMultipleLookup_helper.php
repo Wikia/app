@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package MediaWiki
  * @subpackage MultiLookup
@@ -9,55 +8,55 @@
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) {
-    echo "This is MediaWiki extension named MultiLookup.\n";
-    exit( 1 ) ;
+	echo "This is MediaWiki extension named MultiLookup.\n";
+	exit( 1 ) ;
 }
 
 class MultipleLookupCore {
-    var $mUsername, $mNumRecords;
+	var $mUsername, $mNumRecords;
 
-    public function __construct($username) {
-        $this->mUsername = $username;
-    }
+	public function __construct( $username ) {
+		$this->mUsername = $username;
+	}
 
 	/* return if such user exists */
 	public function checkIp() {
 		global $wgUser;
 
-		if (empty($this->mUsername)) {
+		if ( empty( $this->mUsername ) ) {
 			return false;
 		}
 
 		/* for all those anonymous users out there */
-		if ($wgUser->isIP($this->mUsername)) {
+		if ( $wgUser->isIP( $this->mUsername ) ) {
 			return true ;
 		}
 
 		return false;
 	}
 
-	function checkUserActivity($username) {
+	function checkUserActivity( $username ) {
 		global $wgMemc, $wgExternalSharedDB, $wgStatsDB;
 		$userActivity = "";
 		$memkey = wfForeignMemcKey( $wgExternalSharedDB, null, "MultiLookup", "UserActivity", $username );
-		$cached = $wgMemc->get($memkey);
-		if (!is_array ($cached) || MULTILOOKUP_NO_CACHE) {
-			$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
-			if (!is_null($dbs)) {
-				
+		$cached = $wgMemc->get( $memkey );
+		if ( !is_array ( $cached ) || MULTILOOKUP_NO_CACHE ) {
+			$dbs = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
+			if ( !is_null( $dbs ) ) {
+
 				$oRow = $dbs->selectRow(
 					array( "city_ip_activity" ),
 					array( "ca_latest_activity" ),
 					array( "ca_ip_text" => $username ),
 					__METHOD__
 				);
-				
-				if ( isset($oRow->ca_latest_activity) ) {
+
+				if ( isset( $oRow->ca_latest_activity ) ) {
 					$userActivity = $oRow->ca_latest_activity;
 				}
 
-				if (!MULTILOOKUP_NO_CACHE) {
-					$wgMemc->set( $memkey, $userActivity, 60*3 );
+				if ( !MULTILOOKUP_NO_CACHE ) {
+					$wgMemc->set( $memkey, $userActivity, 60 * 3 );
 				}
 			}
 		} else {
@@ -67,22 +66,22 @@ class MultipleLookupCore {
 		return $userActivity;
 	}
 
-	private function __getDBname($database) {
+	private function __getDBname( $database ) {
 		global $wgDBname;
-		return (ML_TEST) ? $wgDBname : $database;
+		return ( ML_TEST ) ? $wgDBname : $database;
 	}
 
 	/* fetch all contributions from that given database */
-	function fetchContribs ($database) {
+	function fetchContribs ( $database ) {
 		global $wgOut, $wgRequest, $wgLang, $wgMemc;
 		wfProfileIn( __METHOD__ );
 
 		/* todo since there are now TWO modes, we need TWO keys to rule them all */
-		$key = "$database:MultiLookup".$this->mUsername;
-		$cached = $wgMemc->get($key);
+		$key = "$database:MultiLookup" . $this->mUsername;
+		$cached = $wgMemc->get( $key );
 		$fetched_data = array ();
 
-		if ( !is_array($cached) || MULTILOOKUP_NO_CACHE) {
+		if ( !is_array( $cached ) || MULTILOOKUP_NO_CACHE ) {
 			/* get that data from database */
 			$dbr =& wfGetDB( DB_SLAVE, array(), $this->__getDBname( $database ) );
 			/* don't check these databases - their structure is not overly compactible */
@@ -100,8 +99,8 @@ class MultipleLookupCore {
 			);
 
 			$result_found_already = false ;
-			$wikia = WikiFactory::getWikiByDB($database);
-			if ( !empty($res) && !empty($wikia) ) {
+			$wikia = WikiFactory::getWikiByDB( $database );
+			if ( !empty( $res ) && !empty( $wikia ) ) {
 				while ( $row = $dbr->fetchObject( $res ) ) {
 					$row->rc_database = $database;
 					$row->rc_url = $wikia->city_url;
@@ -110,17 +109,17 @@ class MultipleLookupCore {
 					$fetched_data[$row->user_name] = $row;
 				}
 				$dbr->freeResult( $res );
-				$this->mNumRecords = count($fetched_data);
-				$result_found_already = ($this->mNumRecords > 	0);
-				unset($res) ;
+				$this->mNumRecords = count( $fetched_data );
+				$result_found_already = ( $this->mNumRecords > 	0 );
+				unset( $res ) ;
 
-				if (!MULTILOOKUP_NO_CACHE) {
-					$wgMemc->set($key, $fetched_data, 60*15);
+				if ( !MULTILOOKUP_NO_CACHE ) {
+					$wgMemc->set( $key, $fetched_data, 60 * 15 );
 				}
 			}
 		} else {
 			/* get that data from memcache */
-			$this->mNumRecords = count($cached) ;
+			$this->mNumRecords = count( $cached ) ;
 			$fetched_data = $cached ;
 		}
 
@@ -129,40 +128,40 @@ class MultipleLookupCore {
 	}
 
 	/* a customized version of makeKnownLinkObj - hardened'n'modified for all those non-standard wikia out there */
-	private function produceLink ($nt, $text = '', $query = '', $url = '', $sk, $wiki_meta, $namespace, $article_id) {
+	private function produceLink ( $nt, $text = '', $query = '', $url = '', $sk, $wiki_meta, $namespace, $article_id ) {
 		global $wgContLang, $wgOut, $wgMetaNamespace ;
 
-		$str = $nt->escapeLocalURL ($query) ;
+		$str = $nt->escapeLocalURL ( $query ) ;
 
 		/* replace empty namespaces, namely: "/:Something" of "title=:Something" stuff it's ugly, it's brutal, it doesn't lead anywhere */
 		$old_str = $str ;
-		$str = preg_replace ('/title=:/i', "title=ns-".$namespace.":", $str) ;
+		$str = preg_replace ( '/title=:/i', "title=ns-" . $namespace . ":", $str ) ;
 		$append = '' ;
 		/* if found and replaced, we need that curid */
-		if ($str != $old_str) {
-			$append = "&curid=".$article_id ;
+		if ( $str != $old_str ) {
+			$append = "&curid=" . $article_id ;
 		}
 		$old_str = $str ;
-		$str = preg_replace ('/\/:/i', "/ns-".$namespace.":", $str) ;
-		if ($str != $old_str) {
-			$append = "?curid=".$article_id ;
+		$str = preg_replace ( '/\/:/i', "/ns-" . $namespace . ":", $str ) ;
+		if ( $str != $old_str ) {
+			$append = "?curid=" . $article_id ;
 		}
 
 		/* replace NS_PROJECT space - it gets it from $wgMetaNamespace, which is completely wrong in this case  */
-		if (NS_PROJECT == $nt->getNamespace()) {
-			$str = preg_replace ("/$wgMetaNamespace/", "Project", $str) ;
+		if ( NS_PROJECT == $nt->getNamespace() ) {
+			$str = preg_replace ( "/$wgMetaNamespace/", "Project", $str ) ;
 		}
 
-		$part = explode ("php", $str ) ;
-		if ($part[0] == $str) {
-			$part = explode ("wiki/", $str ) ;
-			$u = $url. "wiki/". $part[1] ;
+		$part = explode ( "php", $str ) ;
+		if ( $part[0] == $str ) {
+			$part = explode ( "wiki/", $str ) ;
+			$u = $url . "wiki/" . $part[1] ;
 		} else {
-			$u = $url ."index.php". $part[1] ;
+			$u = $url . "index.php" . $part[1] ;
 		}
 
 		if ( $nt->getFragment() != '' ) {
-			if( $nt->getPrefixedDbkey() == '' ) {
+			if ( $nt->getPrefixedDbkey() == '' ) {
 				$u = '';
 				if ( '' == $text ) {
 					$text = htmlspecialchars( $nt->getFragment() );
@@ -174,51 +173,38 @@ class MultipleLookupCore {
  				'%3A' => ':',
 				 '%' => '.'
 		 	);
-			$u .= '#' . str_replace(array_keys($replacearray),array_values($replacearray),$anchor);
+			$u .= '#' . str_replace( array_keys( $replacearray ), array_values( $replacearray ), $anchor );
 		}
-		if ($text != '') {
+		if ( $text != '' ) {
 			$r = "<a href=\"{$u}{$append}\">{$text}</a>";
 		} else {
-			$r = "<a href=\"{$u}{$append}\">".urldecode($u)."</a>";
+			$r = "<a href=\"{$u}{$append}\">" . urldecode( $u ) . "</a>";
 		}
 
 		return $r;
 	}
 
-	public function produceLine($row, $ip) {
+	public function produceLine( $row, $ip ) {
 		global $wgLang, $wgOut, $wgRequest, $wgUser;
 		$sk = $wgUser->getSkin();
-		$page_user = Title::makeTitle (NS_USER, $row->user_name);
-		$page_contribs = Title::makeTitle (NS_SPECIAL, "Contributions/{$row->user_name}");
+		$page_user = Title::makeTitle ( NS_USER, $row->user_name );
+		$page_contribs = Title::makeTitle ( NS_SPECIAL, "Contributions/{$row->user_name}" );
 
-		$meta = strtr($row->rc_city_title,' ','_');
-		$contrib = $this->produceLink ($page_contribs, $row->user_name, '', $row->rc_url, $sk, $meta, 0, 0 );
-		return array('link' => $contrib, 'last_edit' => $wgLang->timeanddate( wfTimestamp( TS_MW, $row->rc_timestamp ), true ));
-
-		/*$page = Title::makeTitle ($row->rc_namespace, $row->rc_title);
-		$link = $this->produceLink ($page, '', '', $row->rc_url, $sk, $meta, $row->rc_namespace, $row->page_id) . ( $row->log_comment ? " <small>($row->log_comment)</small>" : "" );
-		$time = $wgLang->timeanddate( wfTimestamp( TS_MW, $row->timestamp ), true );
-		$diff = '('.$this->produceLink ($page, 'diff', 'diff=prev&oldid='.$row->rev_id, $row->rc_url, $sk, $meta, $row->rc_namespace, $row->page_id ).')';
-		$user = $sk->makeKnownLinkObj ($page_user, $username);
-		$hist = '('.$this->produceLink ($page, 'hist', 'action=history', $row->rc_url, $sk, $meta, $row->rc_namespace, $row->page_id) . ')';
-		$result = array("link" => $link, "diff" => $diff, "hist" => $hist, "contrib" => $contrib, "time" => $time);
-
-		return $result;*/
+		$meta = strtr( $row->rc_city_title, ' ', '_' );
+		$contrib = $this->produceLink ( $page_contribs, $row->user_name, '', $row->rc_url, $sk, $meta, 0, 0 );
+		return array( 'link' => $contrib, 'last_edit' => $wgLang->timeanddate( wfTimestamp( TS_MW, $row->rc_timestamp ), true ) );
 	}
-
 }
 
 function wfLoadMultiLookupLink( $id, $nt, &$links ) {
 	global $wgUser;
-	if( $id == 0 && $wgUser->isAllowed( 'multilookup' ) ) {
+	if ( $id == 0 && $wgUser->isAllowed( 'multilookup' ) ) {
 		wfLoadExtensionMessages( 'MultiLookup' );
 		$attribs = array(
 			'href' => 'http://community.wikia.com/wiki/Special:MultiLookup?target=' . urlencode( $nt->getText() ),
-			'title' => wfMsg('multilookupselectuser')
+			'title' => wfMsg( 'multilookupselectuser' )
 		);
 		$links[] = Xml::openElement( 'a', $attribs ) . wfMsg( 'multilookup' ) . Xml::closeElement( 'a' );
 	}
 	return true;
 }
-
-?>
