@@ -31,6 +31,7 @@ $wgExtensionCredits['other'][] = array(
 
 $wgExtensionFunctions[] = 'CategorySelectInit';
 $wgExtensionMessagesFiles['CategorySelect'] = dirname(__FILE__) . '/CategorySelect.i18n.php';
+$wgAutoloadClasses['CategorySelect'] = "$IP/extensions/wikia/CategorySelect/CategorySelect_body.php";
 $wgAjaxExportList[] = 'CategorySelectAjaxParseCategories';
 $wgAjaxExportList[] = 'CategorySelectAjaxSaveCategories';
 $wgAjaxExportList[] = 'CategorySelectGenerateHTMLforView';
@@ -48,9 +49,6 @@ function CategorySelectInit($forceInit = false) {
 		return true;
 	}
 	
-	global $IP, $wgAutoloadClasses;
-	$wgAutoloadClasses['CategorySelect'] = "$IP/extensions/wikia/CategorySelect/CategorySelect_body.php";
-
 	//don't use CategorySelect for undo edits
 	$undoafter = $wgRequest->getVal('undoafter');
 	$undo = $wgRequest->getVal('undo');
@@ -192,9 +190,6 @@ function CategorySelectGetCategories($inline = false) {
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function CategorySelectAjaxParseCategories($wikitext) {
-	if ( !class_exists('CategorySelect') ) {
-		CategorySelectInit(true);
-	}
 	$data = CategorySelect::SelectCategoryAPIgetData($wikitext);
 	if (trim($data['wikitext']) == '') {	//all categories handled
 		$result['categories'] = $data['categories'];
