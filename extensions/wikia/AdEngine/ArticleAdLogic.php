@@ -575,4 +575,16 @@ class ArticleAdLogic {
 
 		return ((-1 == $wgTitle->getNamespace()) && ("Search" == SpecialPage::resolveAlias($wgTitle->getDBkey())));
 	}
+
+	public static function getPageType() {
+		if (self::isMainPage()) {
+			$type = "home";
+		} elseif (self::isSearch()) {
+			$type = "search";
+		} else {
+			$type = "article";
+		}
+
+		return $type;
+	}
 }
