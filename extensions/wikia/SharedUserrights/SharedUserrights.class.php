@@ -26,10 +26,10 @@ class UserRights {
 	 */
 	static function getGlobalGroups($user) {
 		if (!isset(self::$globalGroup[$user->mId])) {
-			global $wgWikiaGlobalUserGroups;
+			global $wgWikiaGlobalUserGroups, $wgExternalSharedDB;
 			$globalGroups = array();
 
-			$dbr = wfGetDB(DB_SLAVE, array(), self::getSharedDBname());
+			$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 
 			$res = $dbr->select(
 				'user_groups',
@@ -48,26 +48,13 @@ class UserRights {
 	}
 
 	/**
-	 * get shared db name respecting current cluster
-	 *
-	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
-	 */
-	static function getSharedDBname() {
-		if (!isset(self::$sharedDBname)) {
-			global $wgExternalSharedDB, $wgWikiaCentralAuthDatabase;
-			self::$sharedDBname = $wgWikiaCentralAuthDatabase ? $wgWikiaCentralAuthDatabase : $wgExternalSharedDB;
-		}
-		return self::$sharedDBname;
-	}
-
-	/**
 	 * check if we are on central wiki (shared db)
 	 *
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
 	static function isCentralWiki() {
-		global $wgDBname;
-		return self::getSharedDBname() == $wgDBname;
+		global $wgDBname, $wgExternalSharedDB;
+		return $wgExternalSharedDB == $wgDBname;
 	}
 
 	/**
