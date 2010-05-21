@@ -21,7 +21,7 @@ if (!defined('MEDIAWIKI')) {
 	exit(1) ;
 }
 
-if (!empty($wgExternalSharedDB)) {
+if (!empty($wgSharedDB)) {
 	$wgHooks['UserEffectiveGroups'][] = 'UserRights::userEffectiveGroups';
 	$wgHooks['UserRights::groupCheckboxes'][] = 'UserRights::groupCheckboxes';
 	$wgHooks['UserRights::showEditUserGroupsForm'][] = 'UserRights::showEditUserGroupsForm';
