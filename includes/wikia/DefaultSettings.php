@@ -450,6 +450,7 @@ $wgUseExternalEditor = false;
  * @see lib/riak/docs/index.html
  * @see http://riak.basho.com/edoc/raw-http-howto.txt for HTTP interface
  */
+define( "CACHE_RIAK", 10 );
 $wgSessionsInRiak = false;
 $wgRiakNodeHost   = "127.0.0.1";
 $wgRiakNodePort   = "8098";
