@@ -80,18 +80,28 @@ class WScribeClient {
 		}
 		
 		$result = false;
-		try {
-			$this->connect();
-			if ( !empty($messages) ) { 
+		if ( !empty($messages) ) { 
+			try {
+				$this->connect();
+
 				$this->transport->open();
 				$result = $this->client->Log($messages);
+				
+				if ( $result == $GLOBALS['E_ResultCode']['TRY_LATER'] ) {
+					Wikia::log( __METHOD__, "scribe", "Returned 'TRY_LATER' value" );
+				}
+				
+				if ( $result != $GLOBALS['E_ResultCode']['OK'] ) {
+					Wikia::log( __METHOD__, "scribe", "Unknown result ($result)" );
+				}
+
 				$this->transport->close();
 			}
-		}
-		catch( TException $e ) {
-			// socket error 
-			Wikia::log( __METHOD__, 'scribeClient log', $e->getMessage() );
-			$this->connected = false;
+			catch( TException $e ) {
+				// socket error 
+				Wikia::log( __METHOD__, 'scribeClient log', $e->getMessage() );
+				$this->connected = false;
+			}
 		}
 		return $result;
     }
