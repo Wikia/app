@@ -2567,6 +2567,9 @@ EOF;
 					}
 				}
 			}
+		} elseif (ArticleAdLogic::isSearch()) {
+			$topAdCode .= AdEngine::getInstance()->getPlaceHolderIframe('TOP_LEADERBOARD');
+			$topAdCode .= AdEngine::getInstance()->getPlaceHolderIframe('TOP_RIGHT_BOXAD');
 		}
 		return $topAdCode;
 	}
