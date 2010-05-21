@@ -192,6 +192,9 @@ function CategorySelectGetCategories($inline = false) {
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function CategorySelectAjaxParseCategories($wikitext) {
+	if ( !class_exists('CategorySelect') ) {
+		CategorySelectInit(true);
+	}
 	$data = CategorySelect::SelectCategoryAPIgetData($wikitext);
 	if (trim($data['wikitext']) == '') {	//all categories handled
 		$result['categories'] = $data['categories'];
