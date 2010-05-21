@@ -449,6 +449,12 @@ class CorporateBaseTemplate extends QuickTemplate {
 					<?php endforeach; ?>
 				</ul>
 
+<?php
+echo AdEngine::getInstance()->getAd('INVISIBLE_1');
+echo AdEngine::getInstance()->getDelayedIframeLoadingCode();
+echo AdEngine::getInstance()->getAd('INVISIBLE_2');
+?> 
+
 			</div><!-- END .shrinkwrap -->
 
 		</footer>

@@ -51,6 +51,14 @@ class CorporateTemplate extends CorporateBaseTemplate {
 <?php if($this->data['body_onload']) { ?> onload="<?php $this->text('body_onload') ?>"<?php } ?>
  class="<?php echo $this->data['body_class_attribute'] ?>">
 
+<?php
+	global $wgEnableAdInvisibleTop, $wgOut;
+	if (!empty($wgEnableAdInvisibleTop) && $wgOut->isArticle()){
+		echo '<script type="text/javascript" src="/extensions/wikia/AdEngine/AdEngine.js"></script>' . "\n";
+		echo AdEngine::getInstance()->getAd('INVISIBLE_TOP');
+	}
+?>
+
 <?php print $this->htmlGlobalHeader(); ?>
 		<!-- DEV NOTE: This is the dark navigation strip at the top. -->
 <?php print $this->htmlGlobalNav(); ?>
