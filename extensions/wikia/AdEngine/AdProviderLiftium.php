@@ -41,6 +41,7 @@ class AdProviderLiftium implements iAdProvider {
 		$options['kv_user_lang'] = $wgLang->getCode();
 		$options['kv_cont_lang'] = $GLOBALS['wgLanguageCode'];
 		$options['kv_isMainPage'] = ArticleAdLogic::isMainPage();
+		$options['kv_page_type'] = ArticleAdLogic::getPageType();
 		$options['geoUrl'] = "http://geoiplookup.wikia.com/";
 
 		// LiftiumOptions as json
