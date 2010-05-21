@@ -74,7 +74,7 @@
 	color: #EEE;
 }
 #wikia_logo {
-	background-image: url(/skins/monaco/brick/images/wikia_logo.png); /* $wgCdnStylePath */
+	background-image: url(../images/wikia_logo.png);
 }
 .editsectionbutton {
 	background-color: #FFC;

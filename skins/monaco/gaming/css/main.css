@@ -15,7 +15,7 @@
 	color: #FFF;
 }
 .accent	{
-	background-color: #71D1EF; 
+	background-color: #71D1EF;
 	border-color: #FFCB3B;
 	color: #000;
 }
@@ -85,7 +85,7 @@
 	color: #EEE;
 }
 #wikia_logo {
-	background-image: url(/skins/monaco/gaming/images/wikia_logo.png); /* $wgCdnStylePath */
+	background-image: url(../images/wikia_logo.png);
 }
 .header-button img {
 	background-position: -72px -78px;

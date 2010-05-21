@@ -44,7 +44,7 @@
 }
 #page_bar {
 	border-bottom: 1px solid #3C3C3C;
-	overflow: visible; 
+	overflow: visible;
 }
 #page_controls a {
 	color: #FFF;
@@ -65,7 +65,7 @@
 	margin-bottom: 1px;
 }
 #wikia_logo {
-	background-image: url(/skins/monaco/carbon/images/wikia_logo.png); /* $wgCdnStylePath */
+	background-image: url(../images/wikia_logo.png);
 }
 #userData a, #wikiaBranding a {
 	color: #FFF;
@@ -223,7 +223,7 @@ body.mainpage .firstHeading {
 	background: #2D2D2D;
 	color: #FFF;
 }
-body.masthead-regular #page_bar, 
+body.masthead-regular #page_bar,
 body.masthead-special #page_bar {
 	background: #252525;
 	background-image: url(/skins/monaco/carbon/images/background.gif); /* $wgCdnStylePath */
@@ -231,19 +231,19 @@ body.masthead-special #page_bar {
 	border-top: 1px solid #555;
 	color: #FFF;
 }
-#user_masthead ul.nav_links li.selected, 
+#user_masthead ul.nav_links li.selected,
 #user_masthead ul.nav_links li.selected a {
 	background: #252525;
 	background-image: url(/skins/monaco/carbon/images/background.gif); /* $wgCdnStylePath */
 	border-color: #555;
 	color: #FFF;
 }
-#user_masthead ul.nav_links li, 
+#user_masthead ul.nav_links li,
 #user_masthead ul.nav_links li a {
 	background: #222;
 	color: #FFF;
 }
-body.masthead-regular #page_controls a, 
+body.masthead-regular #page_controls a,
 body.masthead-special #page_controls a {
 	color: #FFF;
 }
@@ -302,7 +302,7 @@ div.gallerybox div.thumb {
 	background-color: #1F1F1F;
 	border: 1px solid #777;
 }
-div.gallerybox div.thumb:hover, 
+div.gallerybox div.thumb:hover,
 div.gallerybox div.thumb div:hover {
 	background-color: #2A2A2A;
 }
@@ -322,7 +322,7 @@ div.gallerybox div.thumb div:hover {
 table.diff {
 	background: #191919;
 }
-td.diff-otitle, 
+td.diff-otitle,
 td.diff-ntitle {
 	background: transparent;
 }
@@ -382,8 +382,8 @@ div.thumb div a img {
 	color: #EEE;
 }
 
-.TablePager, 
-.TablePager td, 
+.TablePager,
+.TablePager td,
 .TablePager th {
 	background: #222 !important;
 	border: 1px solid #555;

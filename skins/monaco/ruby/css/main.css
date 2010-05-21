@@ -19,7 +19,7 @@
 	color: #8b2222;
 }
 #wikia_logo {
-	background-image: url(/skins/monaco/ruby/images/wikia_logo.png); /* $wgCdnStylePath */
+	background-image: url(../images/wikia_logo.png);
 }
 .headerMenuButton dt, .headerMenuButton dd {
 	background-image: url(http://images.wikia.com/common/skins/monaco/ruby/images/header_button.png);
