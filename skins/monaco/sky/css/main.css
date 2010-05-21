@@ -9,7 +9,7 @@
 }
 .color2 {
 	background: #FFF no-repeat;
-	background-image: url(/skins/monaco/sky/images/background.jpg); /* $wgCdnStylePath */
+	background-image: url(../images/background.jpg);
 }
 .accent {
 	background-color: #F0F7FD;

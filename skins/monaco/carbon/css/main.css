@@ -9,7 +9,7 @@
 }
 .color2 {
 	background-color: #252525;
-	background-image: url(/skins/monaco/carbon/images/background.gif); /* $wgCdnStylePath */
+	background-image: url(../images/background.gif);
 }
 .accent {
 	background-color: #003555;
@@ -40,7 +40,7 @@
 }
 #search_box, #page_bar {
 	background: #252525;
-	background-image: url(/skins/monaco/carbon/images/background.gif); /* $wgCdnStylePath */
+	background-image: url(../images/background.gif);
 }
 #page_bar {
 	border-bottom: 1px solid #3C3C3C;
@@ -226,7 +226,7 @@ body.mainpage .firstHeading {
 body.masthead-regular #page_bar,
 body.masthead-special #page_bar {
 	background: #252525;
-	background-image: url(/skins/monaco/carbon/images/background.gif); /* $wgCdnStylePath */
+	background-image: url(../images/background.gif);
 	border-bottom: 1px solid #555;
 	border-top: 1px solid #555;
 	color: #FFF;
@@ -234,7 +234,7 @@ body.masthead-special #page_bar {
 #user_masthead ul.nav_links li.selected,
 #user_masthead ul.nav_links li.selected a {
 	background: #252525;
-	background-image: url(/skins/monaco/carbon/images/background.gif); /* $wgCdnStylePath */
+	background-image: url(../images/background.gif);
 	border-color: #555;
 	color: #FFF;
 }
