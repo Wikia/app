@@ -59,7 +59,7 @@
 	color: #fec423;
 }
 #wikia_logo {
-	background-image: url(/skins/monaco/slate/images/wikia_logo.png); /* $wgCdnStylePath */
+	background-image: url(../images/wikia_logo.png);
 }
 #wikia_footer {
 	color: #FFF;

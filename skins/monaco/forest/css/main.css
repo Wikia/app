@@ -62,10 +62,10 @@
 	background: #303030;
 }
 .headerMenu a {
-	color: #FFF;	
+	color: #FFF;
 }
 #wikia_logo {
-	background-image: url(/skins/monaco/forest/images/wikia_logo.png); /* $wgCdnStylePath */
+	background-image: url(../images/wikia_logo.png);
 }
 #userData a, #wikiaBranding a {
 	color: #DDD;
@@ -165,7 +165,7 @@ body.mainpage #background_accent2 {
 }
 #user_masthead ul.nav_links li a {
 	background: transparent;
-	color: #333;	
+	color: #333;
 }
 #user_masthead ul.nav_links li.selected {
 	background: #555;
@@ -175,7 +175,7 @@ body.mainpage #background_accent2 {
 #user_masthead ul.nav_links li.selected a {
 	color: #FFF;
 }
-body.masthead-regular #page_bar, 
+body.masthead-regular #page_bar,
 body.masthead-special #page_bar {
 	background: #555;
 	border-color: #AAA;

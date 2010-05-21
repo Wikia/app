@@ -61,7 +61,7 @@
 	color: #FFF;
 }
 #wikia_logo {
-	background-image: url(/skins/monaco/sky/images/wikia_logo.png); /* $wgCdnStylePath */
+	background-image: url(../images/wikia_logo.png);
 }
 #userData a, #wikiaBranding a {
 	color: #222;
@@ -152,7 +152,7 @@ body.mainpage {
 #user_masthead ul.nav_links li.selected a {
 	color: #FFF;
 }
-body.masthead-regular #page_bar, 
+body.masthead-regular #page_bar,
 body.masthead-special #page_bar {
 	background: #4598E6;
 	background-image: -moz-linear-gradient(top, #4598E6, #A2C8F9);

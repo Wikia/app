@@ -58,7 +58,7 @@
 	background-position: -72px -98px;
 }
 #wikia_logo {
-	background-image: url(/skins/monaco/moonlight/images/wikia_logo.png); /* $wgCdnStylePath */
+	background-image: url(../images/wikia_logo.png);
 }
 #userData a, #wikiaBranding a {
 	color: #FFF;
@@ -145,7 +145,7 @@ body.mainpage {
 }
 #user_masthead ul.nav_links li a {
 	background: transparent;
-	color: #E3E3EE;	
+	color: #E3E3EE;
 }
 #user_masthead ul.nav_links li.selected {
 	background: #6180AE;
@@ -155,7 +155,7 @@ body.mainpage {
 #user_masthead ul.nav_links li.selected a {
 	color: #FFF;
 }
-body.masthead-regular #page_bar, 
+body.masthead-regular #page_bar,
 body.masthead-special #page_bar {
 	background: #6180AE;
 	border-color: #1D283E;

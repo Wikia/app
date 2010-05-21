@@ -49,7 +49,7 @@
 	margin-bottom: 1px;
 }
 #wikia_logo {
-	background-image: url(/skins/monaco/obsession/images/wikia_logo.png); /* $wgCdnStylePath */
+	background-image: url(../images/wikia_logo.png);
 }
 .header-button {
 	background-color: #720808;
@@ -235,7 +235,7 @@ body.mainpage .firstHeading {
 	border-color: #555;
 	color: #EEE;
 }
-body.masthead-regular #page_bar, body.masthead-special #page_bar, 
+body.masthead-regular #page_bar, body.masthead-special #page_bar,
 body.masthead-regular #page_bar a, body.masthead-special #page_bar a {
 	background: #8F0600;
 	border-color: #555;
@@ -335,7 +335,7 @@ div.gallerybox div.thumb {
 	border: 1px solid #777;
 	background-color: #1F1F1F;
 }
-div.gallerybox div.thumb:hover, 
+div.gallerybox div.thumb:hover,
 div.gallerybox div.thumb div:hover {
 	background-color: #2A2A2A;
 }
