@@ -222,10 +222,10 @@ class WikiaAssets {
 	}
 
 	public static function GetThemeCSS($themename) {
-		global $wgStylePath;
+		global $wgStylePath, $wgStyleVersion;
 		if($themename != 'custom' && $themename != 'sapphire') {
 			$out = "\n<!-- GetThemeCSS -->";
-			$out .= '<link rel="stylesheet" type="text/css" href="'. $wgStylePath .'/monaco/'. $themename .'/css/main.css" />';
+			$out .= '<link rel="stylesheet" type="text/css" href="'. $wgStylePath .'/monaco/'. $themename .'/css/main.css?'.$wgStyleVersion.'" />';
 			return $out;
 		}
 	}
