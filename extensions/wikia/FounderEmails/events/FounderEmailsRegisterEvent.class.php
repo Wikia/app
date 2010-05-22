@@ -1,19 +1,18 @@
 <?php
 
 class FounderEmailsRegisterEvent extends FounderEmailsEvent {
-
-	public function __construct(Array $data = array()) {
+	public function __construct( Array $data = array() ) {
 		parent::__construct( 'register' );
-		$this->setData($data);
+		$this->setData( $data );
 	}
 
 	public function process( Array $events ) {
 		global $wgEnableAnswers;
 		wfProfileIn( __METHOD__ );
 
-		if( $this->isThresholdMet(count($events)) ) {
+		if ( $this->isThresholdMet( count( $events ) ) ) {
 			// get just one event when we have more... for now, just randomly
-			$eventData = $events[rand(0,count($events)-1)];
+			$eventData = $events[rand( 0, count( $events ) -1 )];
 
 			$founderEmails = FounderEmails::getInstance();
 			$emailParams = array(
@@ -24,8 +23,8 @@ class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 				'$UNSUBSCRIBEURL' => $eventData['data']['unsubscribeUrl']
 			);
 
-			$wikiType = !empty($wgEnableAnswers) ? '-answers' : '';
-			$langCode = $founderEmails->getWikiFounder()->getOption('language');
+			$wikiType = !empty( $wgEnableAnswers ) ? '-answers' : '';
+			$langCode = $founderEmails->getWikiFounder()->getOption( 'language' );
 			$mailSubject = $this->getLocalizedMsgBody( 'founderemails' . $wikiType . '-email-user-registered-subject', $langCode, array() );
 			$mailBody = $this->getLocalizedMsgBody( 'founderemails' . $wikiType . '-email-user-registered-body', $langCode, $emailParams );
 			$mailBodyHTML = $this->getLocalizedMsgBody( 'founderemails' . $wikiType . '-email-user-registered-body-HTML', $langCode, $emailParams );
@@ -43,15 +42,14 @@ class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 
 		$eventData = array(
 			'userName' => $user->getName(),
-			'userPageUrl' => $user->getUserPage()->getFullUrl('ctc=FE01'),
-			'userTalkPageUrl' => $user->getTalkPage()->getFullUrl('ctc=FE01'),
-			'unsubscribeUrl' => Title::newFromText('Preferences', NS_SPECIAL)->getFullUrl('ctc=FE04')
+			'userPageUrl' => $user->getUserPage()->getFullUrl( 'ctc=FE01' ),
+			'userTalkPageUrl' => $user->getTalkPage()->getFullUrl( 'ctc=FE01' ),
+			'unsubscribeUrl' => Title::newFromText( 'Preferences', NS_SPECIAL )->getFullUrl( 'ctc=FE04' )
 		);
 
-		FounderEmails::getInstance()->registerEvent( new FounderEmailsRegisterEvent($eventData) );
+		FounderEmails::getInstance()->registerEvent( new FounderEmailsRegisterEvent( $eventData ) );
 
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
-
 }

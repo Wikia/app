@@ -1,7 +1,6 @@
 <?php
 
 class FounderEmails {
-
 	static private $instance = null;
 	private $mLastEvetType = null;
 
@@ -12,7 +11,7 @@ class FounderEmails {
 	 * @return FounderEmails
 	 */
 	static public function getInstance() {
-		if(self::$instance == null) {
+		if ( self::$instance == null ) {
 			self::$instance = new FounderEmails;
 		}
 		return self::$instance;
@@ -25,9 +24,9 @@ class FounderEmails {
 	public function getWikiFounder( $wikiId = 0 ) {
 		global $wgCityId, $wgFounderEmailsDebugUserId;
 
-		$wikiId = !empty($wikiId) ? $wikiId : $wgCityId;
+		$wikiId = !empty( $wikiId ) ? $wikiId : $wgCityId;
 
-		if( empty($wgFounderEmailsDebugUserId) ) {
+		if ( empty( $wgFounderEmailsDebugUserId ) ) {
 			$wikiFounder = User::newFromId( WikiFactory::getWikiById( $wikiId )->city_founding_user );
 		}
 		else {
@@ -40,7 +39,7 @@ class FounderEmails {
 	/**
 	 * send notification email to wiki founder
 	 */
-	public function notifyFounder($mailSubject, $mailBody, $mailBodyHTML, $wikiId = 0) {
+	public function notifyFounder( $mailSubject, $mailBody, $mailBodyHTML, $wikiId = 0 ) {
 		return $this->getWikiFounder( $wikiId )->sendMail( $mailSubject, $mailBody, null, null, 'FounderEmails', $mailBodyHTML );
 	}
 
@@ -49,15 +48,15 @@ class FounderEmails {
 	 * @param FounderEmailsEvent $event
 	 * @param bool $doProcess perform event processing when done
 	 */
-	public function registerEvent(FounderEmailsEvent $event, $doProcess = true) {
+	public function registerEvent( FounderEmailsEvent $event, $doProcess = true ) {
 		global $wgCityId;
 		wfProfileIn( __METHOD__ );
 
 		// Backward compatibility for opposite option ([..]disabled) prior to rt#44284 - SWC
-		if( !$this->getWikiFounder()->getOption('founderemailsdisabled', false)
-			&& $this->getWikiFounder()->getOption('founderemailsenabled', true)) {
+		if ( !$this->getWikiFounder()->getOption( 'founderemailsdisabled', false )
+			&& $this->getWikiFounder()->getOption( 'founderemailsenabled', true ) ) {
 			$event->create();
-			if( $doProcess ) {
+			if ( $doProcess ) {
 				$this->processEvents( $event->getType(), true, $wgCityId );
 			}
 			$this->mLastEvetType = $event->getType();
@@ -77,24 +76,24 @@ class FounderEmails {
 		wfProfileIn( __METHOD__ );
 		$dbs = wfGetDB( ( $useMasterDb ? DB_MASTER : DB_SLAVE ), array(), $wgExternalSharedDB );
 		$whereClause = array( 'feev_type' => $eventType );
-		if( $wikiId != null ) {
+		if ( $wikiId != null ) {
 			$whereClause['feev_wiki_id'] = $wikiId;
 		}
 		$res = $dbs->select( 'founder_emails_event', array( '*' ), $whereClause, __METHOD__, array( 'ORDER BY' => 'feev_timestamp' ) );
 
 		$aEventsData = array();
-		while($row = $dbs->fetchObject($res)) {
-			$aEventsData[] = array( 'id' => $row->feev_id, 'wikiId' => $row->feev_wiki_id, 'timestamp' => $row->feev_timestamp, 'data' => unserialize($row->feev_data) );
+		while ( $row = $dbs->fetchObject( $res ) ) {
+			$aEventsData[] = array( 'id' => $row->feev_id, 'wikiId' => $row->feev_wiki_id, 'timestamp' => $row->feev_timestamp, 'data' => unserialize( $row->feev_data ) );
 		}
 
-		if( count($aEventsData) ) {
+		if ( count( $aEventsData ) ) {
 			$oEvent = FounderEmailsEvent::newFromType( $eventType );
 			$result = $oEvent->process( $aEventsData );
 
-			if( $result && !$wgWikicitiesReadOnly && ( $wikiId != null ) ) {
+			if ( $result && !$wgWikicitiesReadOnly && ( $wikiId != null ) ) {
 				// remove processed events per wiki
 				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-				foreach($aEventsData as $event) {
+				foreach ( $aEventsData as $event ) {
 					$dbw->delete( 'founder_emails_event', array( 'feev_id' => $event['id'] ) );
 				}
 			}
@@ -108,7 +107,7 @@ class FounderEmails {
 	}
 
 	public static function userTogglesHook( $toggles, $defaults = false ) {
-		if( is_array($defaults) ) {
+		if ( is_array( $defaults ) ) {
 			$defaults[] = 'founderemailsenabled';
 		}
 		else {
@@ -120,12 +119,11 @@ class FounderEmails {
 	public static function userProfilePreferencesHook( $prefsForm, $toggleHtml ) {
 		global $wgUser;
 
-		if( FounderEmails::getInstance()->getWikiFounder()->getId() == $wgUser->getId() ) {
+		if ( FounderEmails::getInstance()->getWikiFounder()->getId() == $wgUser->getId() ) {
 			$prefsForm->mUsedToggles['founderemailsenabled'] = true;
-			$toggleHtml .= $prefsForm->getToggle('founderemailsenabled') . "<br />";
+			$toggleHtml .= $prefsForm->getToggle( 'founderemailsenabled' ) . "<br />";
 		}
 
 		return true;
 	}
-
 }

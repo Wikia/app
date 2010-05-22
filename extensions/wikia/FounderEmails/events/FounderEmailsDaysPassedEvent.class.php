@@ -1,10 +1,9 @@
 <?php
 
 class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
-
-	public function __construct(Array $data = array()) {
+	public function __construct( Array $data = array() ) {
 		parent::__construct( 'daysPassed' );
-		$this->setData($data);
+		$this->setData( $data );
 	}
 
 	public function process( Array $events ) {
@@ -12,12 +11,12 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 		wfProfileIn( __METHOD__ );
 
 		$founderEmails = FounderEmails::getInstance();
-		foreach($events as $event) {
+		foreach ( $events as $event ) {
 			$wikiId = $event['wikiId'];
 			$activateTime = $event['data']['activateTime'];
 			$activateDays = $event['data']['activateDays'];
 
-			if( time() >= $activateTime ) {
+			if ( time() >= $activateTime ) {
 
 				$emailParams = array(
 					'$FOUNDERNAME' => $event['data']['founderUsername'],
@@ -28,8 +27,8 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 					'$UNSUBSCRIBEURL' => $event['data']['unsubscribeUrl']
 				);
 
-				$wikiType = !empty($wgEnableAnswers) ? '-answers' : '';
-				$langCode = $founderEmails->getWikiFounder( $wikiId )->getOption('language');
+				$wikiType = !empty( $wgEnableAnswers ) ? '-answers' : '';
+				$langCode = $founderEmails->getWikiFounder( $wikiId )->getOption( 'language' );
 				$mailSubject = $this->getLocalizedMsgBody( 'founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-subject', $langCode, array() );
 				$mailBody = $this->getLocalizedMsgBody( 'founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-body', $langCode, $emailParams );
 				$mailBodyHTML = $this->getLocalizedMsgBody( 'founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-body-HTML', $langCode, $emailParams );
@@ -52,14 +51,14 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 
 		$founderEmails = FounderEmails::getInstance();
 		$wikiFounder = $founderEmails->getWikiFounder();
-		$mainpageTitle = Title::newFromText( wfMsgForContent('Mainpage') );
+		$mainpageTitle = Title::newFromText( wfMsgForContent( 'Mainpage' ) );
 
 		// set FounderEmails notifications enabled by default for wiki founder
-		$wikiFounder->setOption('founderemailsenabled', true);
+		$wikiFounder->setOption( 'founderemailsenabled', true );
 		$wikiFounder->saveSettings();
 
-		foreach($wgFounderEmailsExtensionConfig['events']['daysPassed']['days'] as $daysToActivate) {
-			switch($daysToActivate) {
+		foreach ( $wgFounderEmailsExtensionConfig['events']['daysPassed']['days'] as $daysToActivate ) {
+			switch( $daysToActivate ) {
 				case 0:
 					$ctcUnsubscribe = 'FE03';
 					break;
@@ -81,14 +80,14 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 				'wikiMainpageUrl' => $mainpageTitle->getFullUrl(),
 				'founderUsername' => $wikiFounder->getName(),
 				'founderUserpageEditUrl' => $wikiFounder->getUserPage()->getFullUrl( 'action=edit' ),
-				'unsubscribeUrl' => Title::newFromText('Preferences', NS_SPECIAL)->getFullUrl( 'ctc=' . $ctcUnsubscribe )
+				'unsubscribeUrl' => Title::newFromText( 'Preferences', NS_SPECIAL )->getFullUrl( 'ctc=' . $ctcUnsubscribe )
 			);
 
-			if($debugMode) {
+			if ( $debugMode ) {
 				$eventData['activateTime'] = 0;
 			}
 
-			$founderEmails->registerEvent( new FounderEmailsDaysPassedEvent($eventData), false );
+			$founderEmails->registerEvent( new FounderEmailsDaysPassedEvent( $eventData ), false );
 		}
 
 		wfProfileOut( __METHOD__ );

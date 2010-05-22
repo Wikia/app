@@ -26,7 +26,7 @@ It looks like $USERNAME has registered on your wiki! Why don\'t you drop by thei
 Now that you\'re a few days into your wiki, we thought you might want to check out a few other things you can do.
 
 -- The Wikia Team',
-	'founderemails-email-3-days-passed-body-HTML' => 'Hey there $FOUNDERNAME<br /><br />
+	'founderemails-email-3-days-passed-body-HTML' => 'Hey there $FOUNDERNAME,<br /><br />
 Now that you\'re a few days into your wiki, we thought you might want to check out a few other things you can do.<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
 	'founderemails-email-10-days-passed-subject' => 'How\'s things going with your wiki?',
@@ -86,7 +86,7 @@ It looks like $USERNAME has registered on your wiki! Why don\'t you drop by thei
 Now that you\'re a few days into your wiki, we thought you might want to check out a few other things you can do.
 
 -- The Wikia Team',
-	'founderemails-answers-email-3-days-passed-body-HTML' => 'Hey there $FOUNDERNAME<br /><br />
+	'founderemails-answers-email-3-days-passed-body-HTML' => 'Hey there $FOUNDERNAME,<br /><br />
 Now that you\'re a few days into your wiki, we thought you might want to check out a few other things you can do.<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
 	'founderemails-answers-email-10-days-passed-subject' => 'How\'s things going with your wiki?',

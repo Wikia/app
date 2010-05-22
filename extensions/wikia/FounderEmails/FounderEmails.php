@@ -5,7 +5,7 @@
  * @author Adrian 'ADi' Wieczorek <adi(at)wikia-inc.com>
  */
 
-if(!defined('MEDIAWIKI')) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	die();
 }
 
@@ -20,7 +20,7 @@ $wgExtensionCredits['specialpage'][] = array(
 /**
  * messages file
  */
-$wgExtensionMessagesFiles['FounderEmails'] = dirname(__FILE__) . '/FounderEmails.i18n.php';
+$wgExtensionMessagesFiles['FounderEmails'] = dirname( __FILE__ ) . '/FounderEmails.i18n.php';
 
 /**
  * extension config
@@ -54,12 +54,12 @@ $wgExtensionFunctions[] = 'wfFounderEmailsInit';
 function wfFounderEmailsInit() {
 	global $wgOut, $wgJsMimeType, $wgScriptPath, $wgStyleVersion, $wgHooks, $wgAutoloadClasses, $wgFounderEmailsExtensionConfig;
 
-	$dir = dirname(__FILE__) . '/';
+	$dir = dirname( __FILE__ ) . '/';
 
 	$wgOut->addScript( "<script type=\"$wgJsMimeType\" src=\"$wgScriptPath/extensions/wikia/FounderEmails/js/FounderEmails.js?$wgStyleVersion\"></script>" );
 
 	// load messages from file
-	wfLoadExtensionMessages('FounderEmails');
+	wfLoadExtensionMessages( 'FounderEmails' );
 
 	/**
 	 * classes
@@ -68,9 +68,9 @@ function wfFounderEmailsInit() {
 	$wgAutoloadClasses['FounderEmailsEvent'] = $dir . 'FounderEmailsEvent.class.php';
 
 	// add event classes & hooks
-	foreach($wgFounderEmailsExtensionConfig['events'] as $event) {
-		$wgAutoloadClasses[$event['className']] = $dir . 'events/' .$event['className'] . '.class.php';
-		if(!empty($event['hookName'])) {
+	foreach ( $wgFounderEmailsExtensionConfig['events'] as $event ) {
+		$wgAutoloadClasses[$event['className']] = $dir . 'events/' . $event['className'] . '.class.php';
+		if ( !empty( $event['hookName'] ) ) {
 			$wgHooks[$event['hookName']][] = $event['className'] . '::register';
 		}
 	}
@@ -83,9 +83,9 @@ function wfFounderEmailsInit() {
 
 	// for testing purposes only, TODO: remove when released & fully tested
 	global $wgRequest, $wgUser;
-	if( $wgRequest->getCheck('founderEmailsTest') && ( $wgRequest->getVal('eventType') != null ) ) {
-		$eventType  = $wgRequest->getVal('eventType');
-		if($eventType == 'daysPassed') {
+	if ( $wgRequest->getCheck( 'founderEmailsTest' ) && ( $wgRequest->getVal( 'eventType' ) != null ) ) {
+		$eventType  = $wgRequest->getVal( 'eventType' );
+		if ( $eventType == 'daysPassed' ) {
 			$wikiData = array(
 				'title' => 'Precelki Wiki',
 				'url' => 'http://precelki.wikia.com'
@@ -93,7 +93,7 @@ function wfFounderEmailsInit() {
 			FounderEmailsDaysPassedEvent::register( $wikiData, true );
 		}
 
-		if($eventType == 'register') {
+		if ( $eventType == 'register' ) {
 			$wikiData = array(
 				'title' => 'Precelki Wiki',
 				'url' => 'http://precelki.wikia.com'
