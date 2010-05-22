@@ -9,12 +9,12 @@
  *
  */
 
-ini_set( "include_path", dirname(__FILE__)."/../../../maintenance/" );
+ini_set( "include_path", dirname( __FILE__ ) . "/../../../maintenance/" );
 
 require_once( "commandLine.inc" );
 
-if( !function_exists( 'wfFounderEmailsInit' ) ) {
-	require_once( dirname(__FILE__) . "/FounderEmails.php" );
+if ( !function_exists( 'wfFounderEmailsInit' ) ) {
+	require_once( dirname( __FILE__ ) . "/FounderEmails.php" );
 	wfFounderEmailsInit();
 }
 

@@ -1,13 +1,12 @@
 <?php
 
 abstract class FounderEmailsEvent {
-
 	private $id = 0;
 	protected $mType = null;
 	protected $mData = array();
 	protected $mConfig = null;
 
-	protected function __construct($type) {
+	protected function __construct( $type ) {
 		global $wgFounderEmailsExtensionConfig;
 
 		$this->mConfig = $wgFounderEmailsExtensionConfig['events'][$type];
@@ -30,14 +29,14 @@ abstract class FounderEmailsEvent {
 	static public function getConfig( $eventType = null ) {
 		global $wgFounderEmailsExtensionConfig;
 
-		return is_null($eventType) ? $wgFounderEmailsExtensionConfig['events'] : ( isset( $wgFounderEmailsExtensionConfig['events'][$eventType] ) ? $wgFounderEmailsExtensionConfig['events'][$eventType] : array() );
+		return is_null( $eventType ) ? $wgFounderEmailsExtensionConfig['events'] : ( isset( $wgFounderEmailsExtensionConfig['events'][$eventType] ) ? $wgFounderEmailsExtensionConfig['events'][$eventType] : array() );
 	}
 
 	public function getID() {
 		return $this->id;
 	}
 
-	public function setID($value) {
+	public function setID( $value ) {
 		$this->id = $value;
 	}
 
@@ -53,17 +52,16 @@ abstract class FounderEmailsEvent {
 		$this->mData = $data;
 	}
 
-	abstract public function process(Array $events);
+	abstract public function process( Array $events );
 
 	public static function register() {
 		return true;
 	}
 
 	protected function isThresholdMet( $testValue ) {
-		if(isset($this->mConfig['threshold'])) {
+		if ( isset( $this->mConfig['threshold'] ) ) {
 			return ( $testValue >= $this->mConfig['threshold'] ) ? true : false;
-		}
-		else {
+		} else {
 			return true;
 		}
 	}
@@ -72,7 +70,7 @@ abstract class FounderEmailsEvent {
 		global $wgWikicitiesReadOnly, $wgExternalSharedDB, $wgCityId;
 
 		wfProfileIn( __METHOD__ );
-		if(!$wgWikicitiesReadOnly) {
+		if ( !$wgWikicitiesReadOnly ) {
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 			$dbw->insert(
 				"founder_emails_event",
@@ -93,19 +91,18 @@ abstract class FounderEmailsEvent {
 		return $this->id;
 	}
 
-	protected function getLocalizedMsgBody($sMsgKey, $sLangCode, $params = array()) {
+	protected function getLocalizedMsgBody( $sMsgKey, $sLangCode, $params = array() ) {
 		$sBody = null;
 
-		if(($sLangCode != 'en') && !empty($sLangCode)) {
+		if ( ( $sLangCode != 'en' ) && !empty( $sLangCode ) ) {
 			// custom lang translation
-			$sBody = wfMsgExt($sMsgKey, array( 'language' => $sLangCode ) );
+			$sBody = wfMsgExt( $sMsgKey, array( 'language' => $sLangCode ) );
 		}
 
-		if($sBody == null) {
+		if ( $sBody == null ) {
 			$sBody = wfMsg( $sMsgKey );
 		}
 
 		return strtr( $sBody, $params );
 	}
-
 }
