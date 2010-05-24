@@ -1,9 +1,9 @@
+<script src="<?= $js_url ?>"></script>
 <?php
 if(count($badges) == 0) {
 	echo '<h2 class="dark_text_2 first">'.$title_no.'</h2>'.wfMsg('achievements-no-badges');
 } else {
 ?>
-	<script src="<?= $js_url ?>"></script>
 	<h2 class="dark_text_2 first"><?= $title ?></h2>
 	<div id="badges" style="height: <?= count($badges) > 3 ? '200' : '100' ?>px">
 		<ul id="badge-list" class="clearfix">
@@ -13,16 +13,14 @@ if(count($badges) == 0) {
 			$counters[$badges[$i]['badge_level']]++;
 ?>
 			<li id="badge-<?= $i+1; ?>">
-				<div id="hover-<?= $i+1; ?>" class="profile-hover" style="display: none;">
+				<div id="hover-<?= $i+1; ?>" class="profile-hover">
 
-          <div class="clearfix">
 	          <img width="90" height="90" src="<?= $badges[$i]['badge_url'] ?>" alt="<?= htmlspecialchars($badges[$i]['badge_name']) ?>" />
-	          <div>
+	          <div class="profile-hover-text">
 		          <h3 class="badge-name"><?= $badges[$i]['badge_name'] ?></h3>
 		          <p><?= $badges[$i]['given_for'] ?></p>
 		          <p class="earned"><?= wfMsgExt('achievements-earned', array('parsemag'), $badges[$i]['earned_by']) ?></p>
 	          </div>
-          </div>
 
 					<?= isset($badges[$i]['to_get']) ? '<p class="to-get">'.wfMsg('achievements-you-must', $badges[$i]['to_get']).'</p>' : '' ?>
 
@@ -70,11 +68,19 @@ global $wgExtensionsPath;
 	<ul id="challenges">
 <?php
 foreach($challengesInfo as $badge) {
+	$badge_name = htmlspecialchars($badge['badge_name']);
 ?>
 		<li class="clearfix">
-			<img width="40" height="40" src="<?= $badge['badge_url'] ?>" alt="<?= htmlspecialchars($badge['badge_name']) ?>" />
+			<div class="profile-hover">
+				<img src="<?=$badge['badge_url'];?>" height="90" width="90" />
+				<div class="profile-hover-text">
+					<h3><?=$badge_name;?></h3>
+					<p><?=$badge['details'];?></p>
+				</div>
+			</div>
+			<img width="40" height="40" src="<?= $badge['badge_url'] ?>" alt="<?=$badge_name;?>" />
 			<div class="badge-text">
-				<p class="badge-title"><?= htmlspecialchars($badge['badge_name']) ?></p>
+				<p class="badge-title"><?=$badge_name;?></p>
 				<p><?= $badge['info'] ?></p>
 			</div>
 		</li>
