@@ -48,4 +48,4 @@ $wgAllInOne = false;
 require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../CommonExtensions.php' );
 
 $wgArticlePath = "/wiki/$1";
-$wgCookieDomain = ".dev.wikia-inc.com";
+$wgCookieDomain = ".wikia-dev.com";
