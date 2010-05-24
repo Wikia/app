@@ -78,6 +78,10 @@ class WikiaApiAjaxLogin extends ApiBase {
 					$result['result'] = 'EmptyPass';
 					$result['text'] = wfMsg('wrongpasswordempty');
 					break;
+				case LoginForm :: NEED_TOKEN :
+					$result['result'] = 'NeedToken';
+					$result['text'] = wfMsg('sessionfailure');
+					break;
 				default :
 					ApiBase :: dieDebug(__METHOD__, "Unhandled case value: \"$caseCode\"");
 			}
