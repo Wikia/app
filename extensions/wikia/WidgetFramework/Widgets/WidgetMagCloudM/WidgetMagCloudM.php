@@ -42,7 +42,7 @@ function WidgetMagCloudM($id, $params) {
 
 	// return placeholder for now
 	$output = <<<HTML
-	<div><a href="http://magcloud.wikia.com/"><div class="WidgetMagCloudSample WidgetMagCloudClickable"></div></a></div>
+	<div><a href="http://magcloud.wikia.com/" onclick="WET.byStr('magcloud-m');"><div class="WidgetMagCloudSample WidgetMagCloudClickable"></div></a></div>
 	<div class="WidgetMagCloudPoweredBy">Powered by</div>
 HTML;
 
