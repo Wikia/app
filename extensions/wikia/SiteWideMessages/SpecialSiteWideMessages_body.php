@@ -664,7 +664,7 @@ class SiteWideMessages extends SpecialPage {
 
 		//step 1 of 3: get all active messages sent to *all*
 		$dbResult = $DB->Query (
-			  'SELECT msg_id AS id, msg_text AS text, msg_expire AS expire, msg_lang AS lang, msg_status AS status'
+			  'SELECT msg_id AS id, msg_text AS text, msg_expire AS expire, msg_lang AS lang, msg_recipient_id AS user_id, msg_status AS status'
 			. ' FROM ' . MSG_TEXT_DB
 			. ' LEFT JOIN ' . MSG_STATUS_DB . ' USING (msg_id)'
 			. ' WHERE msg_removed = ' . MSG_REMOVED_NO
@@ -676,9 +676,14 @@ class SiteWideMessages extends SpecialPage {
 		);
 
 		$tmpMsg = array();
+		$userId = $user->getID();
 		while ($oMsg = $DB->FetchObject($dbResult)) {
 			if ( self::getLanguageConstraintsForUser( $user, $oMsg->lang ) ) {
-				$tmpMsg[$oMsg->id] = array('wiki_id' => null, 'text' => $oMsg->text, 'expire' => $oMsg->expire, 'status' => $oMsg->status);
+				$tmpMsg[$oMsg->id] = array('wiki_id' => null, 'text' => $oMsg->text, 'expire' => $oMsg->expire);
+				//fix for RT#48187
+				if ($oMsg->user_id == $userId) {
+					$tmpMsg[$oMsg->id]['status'] = $oMsg->status;
+				}
 			}
 		}
 
@@ -754,8 +759,8 @@ class SiteWideMessages extends SpecialPage {
 		$countDisplayed = count($tmpMsg);
 		//do update only for not marked before
 
-		//TODO 48187: tu jest bug, bo pierwszy select bierze status z pierwszego usera, który już widział msg i status==1
-		$tmpMsg = array_filter($tmpMsg, create_function('$row', 'return $row["status"] == 0;'));
+		//isset - fix for RT#48187
+		$tmpMsg = array_filter($tmpMsg, create_function('$row', 'return !isset($row["status"]) || $row["status"] == 0;'));
 		if (count($tmpMsg) && !wfReadOnly()) {
 
 			$DB = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
