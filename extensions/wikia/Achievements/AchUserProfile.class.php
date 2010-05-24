@@ -136,6 +136,7 @@ class AchUserProfile {
 		foreach($challenges as $badge_type => $badge_lap) {
 			if($badge_lap === null) {
 				$info = wfMsg('achievements-badge-to-get-'.AchStatic::$mBadgeNames[$badge_type]);
+				$needed = null;
 			} else {
 				if(!isset($ownerCounters[$badge_type])) {
 					$has = 0;
@@ -150,11 +151,13 @@ class AchUserProfile {
 				$needed = number_format(AchHelper::getNeededEventsFor($badge_type, $badge_lap));
 				$info = wfMsgExt('achievements-badge-to-get-'.AchStatic::$mBadgeNames[$badge_type], array('parsemag'), $needed) . " ({$has}/{$needed})";
 			}
-
+			
 			$challengesInfo[] = array(
 				'badge_name' => AchHelper::getBadgeName($badge_type, $badge_lap),
-				'badge_url' => AchHelper::getBadgeUrl($badge_type, $badge_lap, 40),
-				'info' => $info);
+				'badge_url' => AchHelper::getBadgeUrl($badge_type, $badge_lap, 90),
+				'info' => $info,
+				'details' => AchHelper::getDetailsFor($badge_type, $badge_lap)
+			);
 		}
 
 		$template = new EasyTemplate(dirname(__FILE__).'/templates');

@@ -52,7 +52,6 @@ div.rel-lb-wrapper div.user-rank {
   position: absolute;
   left: 70px;
   top: 3px;
-  z-index: 900;
   background-image: url(../images/leaderboard-cicrle.png);
   background-repeat: no-repeat;
   height: 22px;
@@ -103,16 +102,18 @@ div.rel-lb-wrapper div.bottom-marquee p.points {
 
 #leaderboard-sidebar ul.recent-badges {
   margin-left: 5px;
+  list-style-type:none;
+  list-style-image:none;
 }
 
 
 #leaderboard-sidebar ul.recent-badges li {
   height: 50px;
-  overflow: hidden;
   margin: 0 0 15px 0;
   padding: 0 0 0 0;
   font-size: 12px;
   line-height: 1.2em;
+  position: relative;
 }
 
 #leaderboard-sidebar ul.recent-badges li a {
@@ -123,10 +124,10 @@ div.rel-lb-wrapper div.bottom-marquee p.points {
 #leaderboard-sidebar ul.recent-badges li img {
   float: left;
   margin-right: 10px;
+  position: absolute;
 }
 
-#leaderboard-sidebar ul.recent-badges li div {
-  float: left;
+#leaderboard-sidebar .badge-text {
   width: 245px;
 }
 

@@ -16,7 +16,11 @@ class AchHelper {
 			}
 		}
 	}
-
+	
+	public static function getDetailsFor($type, $lap) {
+		return wfMsgExt('achievements-badge-to-get-'.AchStatic::$mBadgeNames[$type].'-details', array('parsemag'), number_format(AchHelper::getNeededEventsFor($type, $lap)));
+	}
+	
 	public static function getGivenFor($type, $lap, $hover = false) {
 		if($hover) {
 			$prefix = 'achievements-badge-hover-desc-';

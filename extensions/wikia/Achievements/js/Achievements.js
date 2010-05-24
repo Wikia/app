@@ -45,21 +45,25 @@ var Achievements = {
 		});
 
 		//Show badge description when hovering over the badge	
-		$('#badge-list li>img').hover(function() {
+		$('#challenges li>img, #badge-list li>img, .recent-badges li>img').hover(function() {
 			var badge = $(this);
-			var hoverPanel = badge.prev();
-			var pos = badge.position();
+			var hover = badge.prevAll(".profile-hover");
+			var hoverPosition = {
+				left : -hover.outerWidth() + badge.width(),
+				top : -hover.outerHeight() + 10 
+			};
 
+			badge.prev().css("right", badge.width());
 			self.timer = setTimeout(function() {
-				hoverPanel	
-					.css("left", pos.left - hoverPanel.outerWidth() + badge.outerWidth())
-					.css("top", pos.top - hoverPanel.outerHeight() + 10)
+				badge.prevAll(".profile-hover")
+					.css("left", hoverPosition.left)
+					.css("top", hoverPosition.top)
 					.show();
 				self.track('userprofile/hover');
 			}, self.delay);
 		}, function() {
 			clearTimeout(self.timer);
-			$(this).prev().hide();
+			$(this).prevAll(".profile-hover").hide();
 		});
 		
 		$('form.customize-upload').find('input').click(function(e) {

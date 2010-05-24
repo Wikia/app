@@ -57,7 +57,21 @@ $messages['en'] = array(
 	'achievements-badge-to-get-pounce' => 'make edits on $1 article pages created by other people within one hour of the page\'s creation',
 	'achievements-badge-to-get-caffeinated' => 'make $1 edits on article pages in a single day',
 	'achievements-badge-to-get-luckyedit' => 'make the Lucky $1th Edit on the wiki',
-
+	
+	'achievements-badge-to-get-edit-details' => 'Is something missing? Is there a mistake? Don\'t be shy. Click the edit button and you can add to any page!',
+	'achievements-badge-to-get-picture-details' => 'Click the edit button, and then the Add a picture button. You can add a photo from your computer, or from another page on the wiki.',
+	'achievements-badge-to-get-category-details' => 'Categories are tags that help readers find similar pages. Click the Add category button at the bottom of an article to list that page in a category.',
+	'achievements-badge-to-get-blogpost-details' => 'Write your opinions and questions! Click on Recent blog posts in the sidebar, and then the link on the left for Create a new blog post.',
+	'achievements-badge-to-get-blogcomment-details' => 'Add your two cents! Read any of the recent blog posts, and write your thoughts in the comments box.',
+	'achievements-badge-to-get-love-details' => 'The counter resets if you miss a day, so be sure to come back to the wiki every day!',
+	'achievements-badge-to-get-welcome-details' => 'Click the Create an account button at the top right to join the community. You can start earning your own badges!',
+	'achievements-badge-to-get-introduction-details' => 'Is your user page empty? Click on your user name at the top of the screen to see. Click edit to add some information about yourself!',
+	'achievements-badge-to-get-sayhi-details' => 'You can leave other people messages by clicking Leave message on their talk page. Ask for help, thank them for their work, or just say hi!',
+	'achievements-badge-to-get-creator-details' => 'This badge is given to the person who founded the wiki. Click the Create a new wiki button at the top to start a site about whatever you like most!',
+	'achievements-badge-to-get-pounce-details' => 'You\'ve got to be quick to earn this badge. Click the Activity feed button to see the new pages that people are creating!',
+	'achievements-badge-to-get-caffeinated-details' => 'It takes a busy day to earn this badge. Keep editing!',
+	'achievements-badge-to-get-luckyedit-details' => 'You\'ve got to be lucky to earn this badge. Keep editing!',
+	
 	'achievements-masthead-points' => '$1 <small>points</small>',
 
 	//

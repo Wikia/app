@@ -46,7 +46,8 @@
 		foreach($badges as $badge) {
 			if(isset($users[$badge['user_id']])) {
 				$badge_name = AchHelper::getBadgeName($badge['badge_type'], $badge['badge_lap']);
-				$badge_url = AchHelper::getBadgeUrl($badge['badge_type'], $badge['badge_lap'], 40);
+				$badge_url = AchHelper::getBadgeUrl($badge['badge_type'], $badge['badge_lap'], 90);
+				$badge_details = AchHelper::getDetailsFor($badge['badge_type'], $badge['badge_lap']);
 				$info = wfMsg('achievements-recent-info',
 					$users[$badge['user_id']]['user']->getUserPage()->getLocalURL(),
 					$users[$badge['user_id']]['user']->getName(),
@@ -54,6 +55,13 @@
 					AchHelper::getGivenFor($badge['badge_type'], $badge['badge_lap']));
 ?>
 		    <li class="clearfix">
+					<div class="profile-hover">
+						<img src="<?=$badge_url;?>" height="90" width="90" />
+						<div class="profile-hover-text">
+							<h3><?=$badge_name;?></h3>
+							<p><?=$badge_details;?></p>
+						</div>
+					</div>		    
 		      <img src="<?= $badge_url ?>" alt="<?= htmlspecialchars($badge_name) ?>" width="40" height="40" />
 		      <div class="badge-text">
 		        <p><?= $info ?></p>
