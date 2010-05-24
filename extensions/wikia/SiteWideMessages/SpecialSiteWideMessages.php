@@ -115,14 +115,9 @@ function SiteWideMessagesGetUserMessagesContent($dismissLink = true, $parse = tr
  */
 function SiteWideMessagesEmptyTalkPageWithMessages(&$out, &$text) {
 	global $wgTitle, $wgOut, $wgUser;
-	if (wfIsTalkPageForCurrentUserDisplayed() && !$wgUser->isAllowed('bot')) {
-		if(!$wgTitle->exists()) {
-			$msgContent = SiteWideMessagesGetUserMessagesContent(false, false, false, false);
-			if ($msgContent != '') {
-				//replace message about empty UserTalk only if we have a messages to display
-				$text = '';
-			}
-		}
+	if (SiteWideMessages::$hasMessages && wfIsTalkPageForCurrentUserDisplayed() && !$wgUser->isAllowed('bot') && !$wgTitle->exists()) {
+		//replace message about empty UserTalk only if we have a messages to display
+		$text = '';
 	}
 	return true;
 }
@@ -135,7 +130,6 @@ function SiteWideMessagesGetUserMessages(&$out, $parseroutput) {
 	global $wgUser;
 	//don't add messages when editing, previewing changes etc. AND don't even try for unlogged or bots
 	if (wfIsTalkPageForCurrentUserDisplayed() && !$wgUser->isAllowed('bot')) {
-		//$out->mBodytext = SiteWideMessagesGetUserMessagesContent() . $out->mBodytext;
 		$out->addHTML( SiteWideMessagesGetUserMessagesContent() ); // #2321
 	}
 	return true;
@@ -219,7 +213,7 @@ function SiteWideMessagesArticleEditor($editPage) {
 	global $wgOut, $wgTitle, $wgUser;
 	if ($wgTitle->getNamespace() == NS_USER_TALK &&                      //user talk page?
 		$wgUser->getName() == $wgTitle->getPartialURL() &&               //*my* user talk page?
-		!$wgUser->isAllowed('bot')                                                //user is not a bot?
+		!$wgUser->isAllowed('bot')                                       //user is not a bot?
 	) {                                                                  //if all above == 'yes' - display user's messages
 		$wgOut->addHTML(SiteWideMessagesGetUserMessagesContent());
 	}
