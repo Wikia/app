@@ -40,9 +40,9 @@ define('MSG_LANG_ALL', 'all');
 define('MSG_LANG_OTHER', 'other');
 
 class SiteWideMessages extends SpecialPage {
-	/**
-	 * contructor
-	 */
+
+	static $hasMessages = false;
+
 	function  __construct() {
 		parent::__construct('SiteWideMessages' /*class*/, 'MessageTool' /*restriction*/);
 	}
@@ -744,10 +744,17 @@ class SiteWideMessages extends SpecialPage {
 				"<div class=\"SWM_message\">{$tmpMsgData['text']}</div>";
 		}
 
+		//prevent double execution of all those queries
+		if (count($messages)) {
+			self::$hasMessages = true;
+		}
+
 		$userID = $user->GetID();
 		//once the messages are displayed, they must be marked as "seen" so user will not see "you have new messages" from now on
 		$countDisplayed = count($tmpMsg);
 		//do update only for not marked before
+
+		//TODO 48187: tu jest bug, bo pierwszy select bierze status z pierwszego usera, który już widział msg i status==1
 		$tmpMsg = array_filter($tmpMsg, create_function('$row', 'return $row["status"] == 0;'));
 		if (count($tmpMsg) && !wfReadOnly()) {
 
