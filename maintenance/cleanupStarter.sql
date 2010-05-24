@@ -7,4 +7,4 @@ delete from pagelinks where pl_namespace=14 and pl_title='Draft';
 
 delete from revision where rev_id not in (select page_latest from page);
 delete from text where old_id not in (select rev_text_id from revision);
-update revision set rev_comment='', rev_user=0, rev_user_text='Default';
+update revision set rev_comment='', rev_user=0, rev_user_text='Default', rev_timestamp = date_format(now(), "%Y%m%d%H%i%S");
