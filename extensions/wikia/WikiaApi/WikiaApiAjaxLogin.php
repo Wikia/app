@@ -35,7 +35,8 @@ class WikiaApiAjaxLogin extends ApiBase {
 
 			$result = array ();
 			$loginForm = new LoginForm($params);
-			switch ($loginForm->authenticateUserData()) {
+			$caseCode = $loginForm->authenticateUserData();
+			switch ($caseCode) {
 				case LoginForm :: RESET_PASS:
 					$result['result'] = 'Reset';
 					break;
@@ -78,7 +79,7 @@ class WikiaApiAjaxLogin extends ApiBase {
 					$result['text'] = wfMsg('wrongpasswordempty');
 					break;
 				default :
-					ApiBase :: dieDebug(__METHOD__, 'Unhandled case value');
+					ApiBase :: dieDebug(__METHOD__, "Unhandled case value: \"$caseCode\"");
 			}
 			$dbw = wfGetDB( DB_MASTER );
 			$dbw->commit();
