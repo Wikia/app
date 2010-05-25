@@ -1,5 +1,5 @@
 == Changes since 201005.4 ==
-* 
+* rt#51890: allow per hub (@central) adslot config (Nef) 
 
 == Changes since 201005.3 ==
 * rt#48502: magcloud2 widget aint got tracking (Nef)

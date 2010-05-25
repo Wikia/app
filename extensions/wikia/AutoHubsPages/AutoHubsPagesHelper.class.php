@@ -212,4 +212,16 @@ class AutoHubsPagesHelper{
 		$list = array_merge( $list, $values ); 			
 		return true;
 	}
+
+	// move to AdEngine, use hooks
+	static function showAds() {
+		global $wgAdslot_AutoHubsPages, $wgTitle;
+		$title = $wgTitle->getUserCaseDBKey();
+
+		if (empty($wgAdslot_AutoHubsPages)) return true;
+		if (!isset($wgAdslot_AutoHubsPages[$title])) return true;
+		if ($wgAdslot_AutoHubsPages[$title] !== false) return true;
+
+		return false;
+	}
 }
