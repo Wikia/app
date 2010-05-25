@@ -111,7 +111,10 @@ class CorporateTemplate extends CorporateBaseTemplate {
 		} elseif (!$wgOut->isArticle()){
 			return $topAdCode;
 		} else {
+			// move to AdEngine, use hooks
+			if (AutoHubsPagesHelper::showAds()) {
 			$topAdCode .= "<div id='CORP_TOP_LEADERBOARD' style='width:728px; margin-left: auto; margin-right:auto; padding-bottom: 10px'>" . AdEngine::getInstance()->getAd('CORP_TOP_LEADERBOARD') . "</div>"; 
+			}
 		}
 		return $topAdCode;
 	}
