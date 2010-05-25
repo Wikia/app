@@ -187,7 +187,7 @@ class AjaxLoginForm extends LoginForm {
 	var $msg;
 	var $msgtype;
 	var $lastmsg = "";
-	
+	var $processStatus = 0;
 	function LoginForm( &$request, $par = '' ) {
 		parent::LoginForm( $request, $par);
 		
@@ -292,6 +292,9 @@ class AjaxLoginForm extends LoginForm {
 	public function executeAsPage(){
 		global $wgOut ;
 
+		if ( $this->processStatus == parent::RESET_PASS ) {
+			return true;
+		}
 		$wgOut->setPageTitle( wfMsg( 'userlogin' ) );
 		$wgOut->setRobotPolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
@@ -301,9 +304,10 @@ class AjaxLoginForm extends LoginForm {
 		wfLoadExtensionMessages('ComboAjaxLogin');
 		  
 		$tmpl = self::getTemplateForCombinedForms( true, $this->lastmsg  );
-	
+		
 		$wgOut->addHTML( $tmpl->execute( 'ComboAjaxLogin' ) );
 		$wgOut->addHTML( $tmpl->execute( 'ComboPageFooter' ) );
+		
 	}
 
 	public static function getRegisterJS(){
@@ -327,7 +331,12 @@ class AjaxLoginForm extends LoginForm {
 
 	function processLogin() {
 		$this->mActionType = 'login';
-		return parent::processLogin();
+		return  parent::processLogin();
+	}
+	
+	function resetLoginForm( $error ) {
+		$this->processStatus = parent::RESET_PASS;
+		parent::resetLoginForm( $error );
 	}
 	
 	/* check date before execute because of redirect */
