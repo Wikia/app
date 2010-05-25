@@ -107,6 +107,16 @@ function wfGetIP() {
 		}
 	}
 
+	if( preg_match( "/^10\.(?!10\.)(?!4\.)/", $ip ) && $ip != "10.8.2.159" &&
+	    preg_match( "/Mozilla/", $_SERVER['HTTP_USER_AGENT'] ) ) {
+		if( isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
+			$xff = "XFF=$_SERVER[HTTP_X_FORWARDED_FOR]";
+		} else {
+			$xff = "no XFF";
+		}
+		Wikia::log( __METHOD__, false, "Private IP $ip from $_SERVER[REMOTE_ADDR] with $xff ($_SERVER[HTTP_USER_AGENT])", true, true );
+	}
+
 	wfDebug( "IP: $ip\n" );
 	$wgIP = $ip;
 	return $ip;
