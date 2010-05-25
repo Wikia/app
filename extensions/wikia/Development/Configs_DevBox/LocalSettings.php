@@ -30,6 +30,46 @@ require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../CommonSettings.php' );
 #
 require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../DB.sjc-dev.php' );
 
+$wgSessionsInMemcached = true;
+$wgSessionsInTokyoTyrant = !$wgSessionsInMemcached;
+
+/**
+ * Definition of global memcached servers
+ *
+ * Before altering the wgMemCachedServers array below, make sure you planned
+ * your changes. Memcached computes a hash of the data and given the hash
+ * assigns the value one of the servers.
+ * If you remove / comment / change order of the servers, the hash will miss
+ * and that can result in bad performance for the cluster!
+ */
+$wgMemCachedServers = array(
+	# ACTIVE LIST
+	# PLEASE MOVE SERVERS TO THE DOWN LIST RATHER THAN COMMENTING THEM OUT IN-PLACE
+	# If a server goes down, you must replace its slot with another server
+	# You can take a server for the spare list
+
+	# SLOT	HOST
+	0 => "10.8.36.106:11000", # dev-memcached1
+	1 => "10.8.36.107:11000", # dev-memcached2
+
+/**** DOWN *****
+
+***** SPARE ****
+	X => "10.8.2.65:11000",		# memcached6
+	X => "10.8.2.61:11000",		# memcached4
+	X => "10.8.2.182:11000",	# memcached1
+	X => "10.8.2.44:11000",		# memcached2
+	X => "10.8.2.62:11000",		# memcached5
+****************/
+);
+
+$wgSessionMemCachedServers = array(
+	# SLOT	HOST
+	0 => "10.8.36.106:11000", # dev-memcached1
+	1 => "10.8.36.107:11000", # dev-memcached2
+);
+
+
 
 # NOTE: THIS MUST BE DONE _BEFORE_ CALLING WikiFactory::execute IF WIKIFACTORY IS BEING USED.
 include("$IP/extensions/wikia/Development/SpecialDevBoxPanel/Special_DevBoxPanel.php");
