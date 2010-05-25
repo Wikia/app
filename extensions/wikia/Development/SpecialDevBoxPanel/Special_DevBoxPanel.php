@@ -148,6 +148,8 @@ function wfDevBoxApplyLocalDatabaseOverrides(&$wikiFactoryLoader){
 		$wgReadOnly = false;
 	}
 
+	// TODO: REMOVE THIS SECTION AND CREATE A WARNING WHICH APPEAR WHEN SOMEONE TRIES TO ACCESS A WIKIA THAT _DOESN'T_ USE OVERLOADS & SAYS THAT THEY SHOULD MAKE A DBDUMP FIRST (AND LINK THEM TO THAT)
+	/*
 	// Devbox database credentials (from private svn /wikia-conf/DevBoxDatabase.php).
 	global $wgDBdevboxUser,$wgDBdevboxPassword,$wgDBdevboxServer;
 
@@ -165,6 +167,7 @@ function wfDevBoxApplyLocalDatabaseOverrides(&$wikiFactoryLoader){
 	foreach($databasesToOverride as $dbName){
 		$wgLBFactoryConf['sectionsByDB'][$dbName] = DEV_BOX_CLUSTER;
 	}
+	*/
 } // end wfDevBoxApplyLocalDatabaseOverrides()
 
 /**
