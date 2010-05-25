@@ -44,7 +44,7 @@ function renderHiddenForm() {
 	global $wgUser;
 	$checked = ($wgUser->getOption('rememberpassword')) ? ' checked="checked" ' : '';
 	if ($wgUser->isAnon()) {
-		echo '<form action="" method="post" name="userajaxloginform" id="userajaxloginform" style="display: none">
+		echo '<form action="" method="post" name="userajaxloginform" id="userajaxloginformhide" style="display: none">
 			<input type="text" name="wpName" id="wpName1Ajax" tabindex="101" size="20" />
 			<input type="password" name="wpPassword" id="wpPassword1Ajax" tabindex="102" size="20" />
 			<input type="checkbox" name="wpRemember" id="wpRemember1Ajax" tabindex="104" value="1"'. $checked .' />
