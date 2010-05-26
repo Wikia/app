@@ -1075,7 +1075,10 @@ class RTEReverseParser {
 				else if ( self::startsWithListWikitext($textContent) ) {
 					$out = "{$textContent}\n";
 				}
-				else {
+				// allow UL/OL id DT (RT#52593)
+				else if(self::firstChildIs($node, array('ul', 'ol'))) {
+					$out = "{$textContent}\n";
+				} else {
 					$out = "{$this->listBullets}{$textContent}\n";
 				}
 
