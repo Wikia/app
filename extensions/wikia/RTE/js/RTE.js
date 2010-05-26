@@ -105,6 +105,12 @@ window.RTE = {
 		// allow <img> (used for placeholders) to be "direct" child of <table> (refs RT #49507)
 		CKEDITOR.dtd.table.img = 1;
 
+		// allow UL id DT (RT#52593)
+		CKEDITOR.dtd.dt.ul = 1;
+
+		// allow OL id DT (RT#52593)
+		CKEDITOR.dtd.dt.ol = 1;
+
 		// set startup mode
 		RTE.config.startupMode = mode;
 
