@@ -17,7 +17,7 @@ $fname = 'recoverUserFromC2';
 echo( "Checking for unused user accounts...\n" );
 $del = array();
 $db2 = wfGetDB( DB_SLAVE, array(), 'wikicities_c2' );
-$db3 = wfGetDB( DB_MASTER, array(), 'wikicities_c2' );
+$db3 = wfGetDB( DB_MASTER, array(), $wgStatsDB );
 $db1 = wfGetDB( DB_SLAVE, 'stats', $wgExternalSharedDB );
 $res = $db2->select( 'user', array( '*' ), 'user_id > 2080000', $fname );
 while( $row = $db2->fetchObject( $res ) ) {
@@ -48,6 +48,8 @@ while( $row = $db2->fetchObject( $res ) ) {
 				  'user_birthdate' => $row->user_birthdate,
 				)
 			);
+		} else {
+			echo " the same \n";
 		}
 	} else {
 		echo " the same \n";
