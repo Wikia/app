@@ -18,7 +18,7 @@ echo( "Checking for unused user accounts...\n" );
 $del = array();
 $db2 = wfGetDB( DB_SLAVE, array(), 'wikicities_c2' );
 $db3 = wfGetDB( DB_MASTER, array(), 'wikicities_c2' );
-$db1 = wfGetDB( DB_SLAVE, 'stats', 'wikicities' );
+$db1 = wfGetDB( DB_SLAVE, 'stats', $wgExternalSharedDB );
 $res = $db2->select( 'user', array( '*' ), 'user_id > 2080000', $fname );
 while( $row = $db2->fetchObject( $res ) ) {
 	# Check the account, but ignore it if it's within a $excludedGroups group or if it's touched within the $touchedSeconds seconds.
