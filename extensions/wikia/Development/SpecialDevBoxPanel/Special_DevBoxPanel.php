@@ -315,9 +315,16 @@ function setDevBoxOverrideDatabases($overDbs){
 function pullProdDatabaseToLocal($domainOfWikiToPull){
 	global $wgCityId,$wgDBserver,$wgDBname,$wgDBuser,$wgDBpassword;
 	global $wgExtensionsPath,$wgStyleVersion;
-	
+
 	set_time_limit(0);
-	
+
+	// NOTE: The database settings for production slaves are in DB.php, so that data has to be loaded temporarily.
+	require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../DB.php' );
+	$wgDBserver_prodSlave = $wgLBFactoryConf[ "hostsByName" ][ 1 ];
+	$wgDBuser_prodSlave = $wgDBuser;
+	$wgDBpassword_prodSlave = $wgDBpassword;
+	require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../DB.sjc-dev.php' ); // Restore actual values for DevBox connections.
+
 	// Print out a minimal header.
 	print "<html>
 	<head>
@@ -343,7 +350,7 @@ function pullProdDatabaseToLocal($domainOfWikiToPull){
 	// Everything is configured, now move the data.
 	$tmpFile = "/tmp/$wgDBname.mysql.gz";
 	print "Dumping \"$wgDBname\" from host \"$wgDBserver\"...<br/>\n";
-	$response = `mysqldump --compress --single-transaction --skip-comments --quick -h $wgDBserver -u$wgDBuser -p$wgDBpassword $wgDBname --result-file=$tmpFile 2>&1`;
+	$response = `mysqldump --compress --single-transaction --skip-comments --quick -h $wgDBserver_prodSlave -u$wgDBuser_prodSlave -p$wgDBpassword_prodSlave $wgDBname --result-file=$tmpFile 2>&1`;
 	if(trim($response) != ""){
 		print "<div class='devbox-error'>Database dump returned the following error:\n<em>$response</em></div>\n";
 	} else {
