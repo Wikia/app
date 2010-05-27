@@ -6,7 +6,7 @@ require_once( "commandLine.inc" );
 
 $dbr = wfGetDB( DB_SLAVE, 'stats', $wgExternalSharedDB );
 
-$dbw = wfGetDB( DB_MASTER, 'stats', $wgStatsDB );
+$dbw = wfGetDB( DB_MASTER, array(), $wgStatsDB );
 
 for ($i=1; $i<140000; $i++) {
 	global $wgMemc;
@@ -20,18 +20,8 @@ for ($i=1; $i<140000; $i++) {
 			: array ();
 		
 		if ( !empty($records) ) {
-			/*$rows = "";
-			foreach ( $records as $key => $value ) {
-				$rows .= "$key:$value\n";
-			}
-
-			echo count($records) . " records found \n";*/
-			
-			if ( !empty($rows) ) {
-				/*$f = fopen("/home/moli/recover/".$i.".data",'w+');
-				fwrite($f,$rows,strlen($rows));
-				fclose($f);*/
-				
+			echo count($records) . " records found \n";
+			if ( count($records) ) {
 				$dbw->insert(
 					"recover",
 					array(
