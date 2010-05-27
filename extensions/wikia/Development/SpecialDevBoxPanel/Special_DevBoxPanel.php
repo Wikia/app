@@ -157,7 +157,6 @@ function wfDevBoxApplyLocalDatabaseOverrides(&$wikiFactoryLoader){
 		
 		$pageUrl = str_replace( "$1", urlencode( $title ), $wgArticlePath );		
 		$link = "$pageUrl&".DEVBOX_ACTION."=".DEVBOX_ACTION_PULL_DB."&".DEVBOX_FIELD_DB_TO_PULL."=".urlencode($dbName);
-		$getIt = "<a href='$link'>".wfMsg("devbox-get-db")."</a>";
 		
 		//$msg = wfMsg("devbox-no-local-copy", $dbName, $link); // Too early in the execution to do this successfully.
 		$msg = "<h1>Error</h1>There is no local copy of the $dbName database.  This is a devbox server so please <a href='$link'>pull a copy</a> from production to the development database and you'll be ready to go.";
