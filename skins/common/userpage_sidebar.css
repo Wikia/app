@@ -13,6 +13,7 @@
 
 #profile-sidebar #badges {
 	height: 200px;
+	overflow: hidden;
 }
 
 #badge-list {
@@ -26,11 +27,10 @@
 	height: 90px;
 	list-style: none !important;
 	margin: 5px;
-	position: relative;
 	width: 90px;
 }
 
-#badge-list li>img {
+#badge-list li>img:hover {
 	position: absolute;
 }
 

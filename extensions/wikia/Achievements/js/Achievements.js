@@ -49,8 +49,8 @@ var Achievements = {
 			var badge = $(this);
 			var hover = badge.prevAll(".profile-hover");
 			var hoverPosition = {
-				left : -hover.outerWidth() + badge.width(),
-				top : -hover.outerHeight() + 10 
+				left : -hover.outerWidth() + badge.width() + badge.position().left,
+				top : -hover.outerHeight() + badge.position().top + 10 
 			};
 
 			badge.prev().css("right", badge.width());
