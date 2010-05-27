@@ -6,7 +6,7 @@ require_once( "commandLine.inc" );
 
 $dbr = wfGetDB( DB_SLAVE, 'stats', $wgExternalSharedDB );
 
-$dbw = wfGetDB( DB_SLAVE, 'stats', $wgStatsDB );
+$dbw = wfGetDB( DB_MASTER, 'stats', $wgStatsDB );
 
 for ($i=1; $i<140000; $i++) {
 	global $wgMemc;
