@@ -148,7 +148,7 @@ function wfDevBoxApplyLocalDatabaseOverrides(&$wikiFactoryLoader){
 		// Since the currently configured wiki is not pulled yet, show a message that indicates that it must be pulled.
 		// We are no longer doing the method where we can read from production slaves if there is no local copy.
 
-		wfLoadExtensionMessages('DevBoxPanel');
+		//wfLoadExtensionMessages('DevBoxPanel'); // This is too early in the execution to do this successfully.
 		global $wgArticlePath,$wgRequest;
 
 		// TODO: Do this more gracefully.  Since wgRequest isn't available, for now this is just being hacked in.
@@ -158,7 +158,10 @@ function wfDevBoxApplyLocalDatabaseOverrides(&$wikiFactoryLoader){
 		$pageUrl = str_replace( "$1", urlencode( $title ), $wgArticlePath );		
 		$link = "$pageUrl&".DEVBOX_ACTION."=".DEVBOX_ACTION_PULL_DB."&".DEVBOX_FIELD_DB_TO_PULL."=".urlencode($dbName);
 		$getIt = "<a href='$link'>".wfMsg("devbox-get-db")."</a>";
-		print wfMsg("devbox-no-local-copy", $dbName, $link);
+		
+		//$msg = wfMsg("devbox-no-local-copy", $dbName, $link); // Too early in the execution to do this successfully.
+		$msg = "<h1>Error</h1>There is no local copy of the $dbName database.  This is a devbox server so please <a href='$link'>pull a copy</a> from production to the development database and you'll be ready to go.";
+		print $msg;
 
 		// Nothing else is going to work without a database, so exit.
 		exit;

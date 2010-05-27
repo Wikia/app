@@ -26,6 +26,7 @@ $messages["en"] = Array(
 	"devbox-get-db"               => "Get it",
 	"devbox-reload-db"            => "Re-pull it",
 	
+	// Note: this message isn't actually used at the moment.  The place where it is needed is too early in the stack for messaging.
 	"devbox-no-local-copy"        => "<h1>Error</h1>There is no local copy of the $1 database.  This is a devbox server so please <a href='$2'>pull a copy</a> from production to the development database and you'll be ready to go.",
 
 	"devbox-heading-change-wiki"  => "Change Active Wiki",
