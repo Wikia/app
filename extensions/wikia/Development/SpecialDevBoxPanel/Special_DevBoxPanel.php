@@ -61,7 +61,6 @@ define('DEVBOX_FORCED_WIKI_KEY', "devbox_forceWiki_$serv");
 //define('DEVBOX_FORCED_WIKI_FILE', dirname(__FILE__).'/devbox_forceWiki.txt');
 define('DEVBOX_FORCED_WIKI_FILE', "/tmp/$serv"."_devbox_forceWiki.txt");
 define('DEVBOX_OVERRIDDEN_DBS_KEY', "devbox_overridden_dbs_$serv");
-define('DEVBOX_OVERRIDDEN_DBS_FILE', "/tmp/$serv"."_devbox_overridden_dbs.txt");
 define('DEVBOX_OVERRIDDEN_DBS_DELIM', '`'); // delimiter used to separate values in both memory & file (grave is used because it is not allowed in table names)
 
 define('DEVBOX_ACTION', 'panelAction');
@@ -254,13 +253,15 @@ function getDevBoxOverrideDatabases(){
 
 	$overDbsRaw = $memc->get(DEVBOX_OVERRIDDEN_DBS_KEY);
 	if(!$overDbsRaw){
-		// File won't exist at first... fail gracefully.
-		$overDbsRaw = @trim(file_get_contents(DEVBOX_OVERRIDDEN_DBS_FILE));
-		if($overDbsRaw === false){
-			$overDbs = array();
-		} else {
-			$overDbs = explode(DEVBOX_OVERRIDDEN_DBS_DELIM, $overDbsRaw);
+		global $wgDBdevboxServer, $wgDBdevboxUser, $wgDBdevboxPassword;
+		$db = mysql_connect($wgDBdevboxServer, $wgDBdevboxUser, $wgDBdevboxPassword);
+		$devbox_dbs_objs = mysql_list_dbs($db);
+		$devbox_dbs = array();
+		$IGNORE_DBS = array('information_schema', 'mysql');
+		while ($row = mysql_fetch_object($devbox_dbs_objs)) {
+			$devbox_dbs[] = $row->Database;
 		}
+		$overDbs = array_diff($devbox_dbs, $IGNORE_DBS);
 	} else {
 		$overDbs = explode(DEVBOX_OVERRIDDEN_DBS_DELIM, $overDbsRaw);
 	}
@@ -289,11 +290,11 @@ function setDevBoxOverrideDatabases($overDbs){
 	} else {
 		$overDbsRaw = implode(DEVBOX_OVERRIDDEN_DBS_DELIM, $overDbs);
 	}
-	$retVal = file_put_contents(DEVBOX_OVERRIDDEN_DBS_FILE, $overDbsRaw);
-	if($retVal !== false){
+	//$retVal = file_put_contents(DEVBOX_OVERRIDDEN_DBS_FILE, $overDbsRaw);
+	//if($retVal !== false){
 		$retVal = true; // make success boolean
-		$memc->set(DEVBOX_OVERRIDDEN_DBS_KEY, $overDbsRaw, strtotime("+5 minute"));
-	}
+		$memc->set(DEVBOX_OVERRIDDEN_DBS_KEY, $overDbsRaw, strtotime("+1 minute"));
+	//}
 	return $retVal;
 } // end setDevBoxOverrideDatabases()
 
@@ -592,10 +593,6 @@ function getHtmlForInfo(){
 		"Databases that will use devbox-mysql<br/>
 		server in read/write instead of prod<br/>
 		slaves in readOnly" => implode(", ", getDevBoxOverrideDatabases()),
-		"Hacky solution to change which databases<br/>
-		will use the devbox mysql server instead<br/>
-		of readOnly prod slaves is to <strong>edit this file:</strong>"
-							=> DEVBOX_OVERRIDDEN_DBS_FILE,
 	);
 	$html .= "<table class='devbox-settings'>\n";
 	$html .= "<tr><th>".wfMsg("devbox-setting-name")."</th><th>".wfMsg("devbox-setting-value")."</th></tr>\n";
