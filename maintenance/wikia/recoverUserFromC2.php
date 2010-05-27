@@ -23,7 +23,7 @@ $res = $db2->select( 'user', array( '*' ), 'user_id > 2080000', $fname );
 while( $row = $db2->fetchObject( $res ) ) {
 	# Check the account, but ignore it if it's within a $excludedGroups group or if it's touched within the $touchedSeconds seconds.
 	echo "check " . $row->user_name . " ";
-	$row2 = $db1->selectRow( 'user', array( '*' ), array('user_id' => $row->user_id) , $fname );
+	$row2 = $db1->selectRow( '`wikicities`.`user`', array( '*' ), array('user_id' => $row->user_id) , $fname );
 	if ( $row2 ) {
 		if ( $row2->user_name != $row->user_name ) {
 			echo "diff! \n";
