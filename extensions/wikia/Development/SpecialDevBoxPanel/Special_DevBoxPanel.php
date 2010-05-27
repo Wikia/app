@@ -21,8 +21,6 @@
  * TODO: GUI for setting which local databases will override the production slaves.
  *
  * TODO: Programmatically install a link in the User Links for the Dev Box Panel
- * TODO: Create an updateDevBox.pl script to update the 3 svns (trunk, answers, and wikia-conf and warn if Configs_DevBox/LocalSettings.php has changed since it may need the changes to be merged).
- *       NOTE: THIS IS STARTED and is in /wikia-conf/devbox/updateDevBox.sh  IT's PROBABLY A BIT EARLY TO RELEASE IT TO THE WILD THOUGH (need to handle LocalSettings.php).
  */
 
 if(!defined('MEDIAWIKI')) die("Not a valid entry point.");
@@ -146,9 +144,19 @@ function wfDevBoxApplyLocalDatabaseOverrides(&$wikiFactoryLoader){
 		// Since the currently in-use database is on the devbox server, we can safely remove the read-only setting.
 		global $wgReadOnly;
 		$wgReadOnly = false;
+	} else {
+		// Since the currently configured wiki is not pulled yet, show a message that indicates that it must be pulled.
+		// We are no longer doing the method where we can read from production slaves if there is no local copy.
+		
+		$link = "$pageUrl&".DEVBOX_ACTION."=".DEVBOX_ACTION_PULL_DB."&".DEVBOX_FIELD_DB_TO_PULL."=".urlencode($dbName);
+		$getIt = "<a href='$link'>".wfMsg("devbox-get-db")."</a>";
+		print wfMsg("devbox-no-local-copy", $dbName, $link);
+
+		// Nothing else is going to work without a database, so exit.
+		exit;
 	}
 
-	// TODO: REMOVE THIS SECTION AND CREATE A WARNING WHICH APPEAR WHEN SOMEONE TRIES TO ACCESS A WIKIA THAT _DOESN'T_ USE OVERLOADS & SAYS THAT THEY SHOULD MAKE A DBDUMP FIRST (AND LINK THEM TO THAT)
+	// TODO: THIS SECTION PROBABLY WON'T BE NEEDED ANYMORE SINCE DB.sjc-dev CONTAINS THE READABLE DATABASES.
 	/*
 	// Devbox database credentials (from private svn /wikia-conf/DevBoxDatabase.php).
 	global $wgDBdevboxUser,$wgDBdevboxPassword,$wgDBdevboxServer;
