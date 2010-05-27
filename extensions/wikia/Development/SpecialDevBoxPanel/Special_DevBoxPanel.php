@@ -148,6 +148,7 @@ function wfDevBoxApplyLocalDatabaseOverrides(&$wikiFactoryLoader){
 		// Since the currently configured wiki is not pulled yet, show a message that indicates that it must be pulled.
 		// We are no longer doing the method where we can read from production slaves if there is no local copy.
 
+		wfLoadExtensionMessages('DevBoxPanel');
 		global $wgArticlePath,$wgRequest;
 
 		// TODO: Do this more gracefully.  Since wgRequest isn't available, for now this is just being hacked in.
