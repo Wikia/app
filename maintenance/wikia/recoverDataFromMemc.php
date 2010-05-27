@@ -6,6 +6,8 @@ require_once( "commandLine.inc" );
 
 $dbr = wfGetDB( DB_SLAVE, 'stats', $wgExternalSharedDB );
 
+$dbw = wfGetDB( DB_SLAVE, 'stats', $wgStatsDB );
+
 for ($i=1; $i<140000; $i++) {
 	global $wgMemc;
 	echo "recover $i \n";
@@ -18,17 +20,25 @@ for ($i=1; $i<140000; $i++) {
 			: array ();
 		
 		if ( !empty($records) ) {
-			$rows = "";
+			/*$rows = "";
 			foreach ( $records as $key => $value ) {
 				$rows .= "$key:$value\n";
 			}
 
-			echo count($records) . " records found \n";
+			echo count($records) . " records found \n";*/
 			
 			if ( !empty($rows) ) {
-				$f = fopen("/home/moli/recover/".$i.".data",'w+');
+				/*$f = fopen("/home/moli/recover/".$i.".data",'w+');
 				fwrite($f,$rows,strlen($rows));
-				fclose($f);
+				fclose($f);*/
+				
+				$dbw->insert(
+					"recover",
+					array(
+						"id" => $i,
+						"data" => serialize($records)
+					)
+				);
 			}
 		} else {
 			echo "no data found (2) \n";
