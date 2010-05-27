@@ -25,6 +25,8 @@ $messages["en"] = Array(
 	"devbox-recommended"          => "(recommended)",
 	"devbox-get-db"               => "Get it",
 	"devbox-reload-db"            => "Re-pull it",
+	
+	"devbox-no-local-copy"        => "<h1>Error</h1>There is no local copy of the $1 database.  This is a devbox server so please <a href='$2'>pull a copy</a> from production to the development database and you'll be ready to go.",
 
 	"devbox-heading-change-wiki"  => "Change Active Wiki",
 	"devbox-change-wiki-intro"    => "Allows you to set the active wiki instead of modifying hosts files.  To use the hosts-file method, leave this field blank.",
