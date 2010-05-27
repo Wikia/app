@@ -149,7 +149,11 @@ function wfDevBoxApplyLocalDatabaseOverrides(&$wikiFactoryLoader){
 		// We are no longer doing the method where we can read from production slaves if there is no local copy.
 
 		global $wgArticlePath,$wgRequest;
-		$title = $wgRequest->getVal('title');
+
+		// TODO: Do this more gracefully.  Since wgRequest isn't available, for now this is just being hacked in.
+		//$title = $wgRequest->getVal('title');
+		$title = " Special:DevBoxPanel"; // TODO: FIXME! Don't hardcode this (for one, it won't work with internationalizations).
+		
 		$pageUrl = str_replace( "$1", urlencode( $title ), $wgArticlePath );		
 		$link = "$pageUrl&".DEVBOX_ACTION."=".DEVBOX_ACTION_PULL_DB."&".DEVBOX_FIELD_DB_TO_PULL."=".urlencode($dbName);
 		$getIt = "<a href='$link'>".wfMsg("devbox-get-db")."</a>";
