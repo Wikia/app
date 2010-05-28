@@ -99,7 +99,7 @@ $wgAllInOne = false;
 require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../CommonExtensions.php' );
 
 $wgArticlePath = "/wiki/$1";
-$wgCookieDomain = "*.wikia-dev.com";
+$wgCookieDomain = ".wikia-dev.com";
 
 // Just in case this has been reset somewhere else in here.
 error_reporting(E_ALL);
