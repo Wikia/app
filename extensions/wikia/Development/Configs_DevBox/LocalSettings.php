@@ -14,7 +14,6 @@ $wgShowExceptionDetails = true;
 $IP = '/usr/wikia/source/wiki';
 $wgWikiaLocalSettingsPath  = __FILE__;
 $wgWikiaAdminSettingsPath = dirname( $wgWikiaLocalSettingsPath ) . "/../AdminSettings.php";
-$wgDebugLogFile = "/tmp/debug.log";
 
 $wgDevelEnvironment = true;
 $wgWikicitiesReadOnly = true;
@@ -105,3 +104,4 @@ $wgCookieDomain = ".wikia-dev.com";
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 $wgShowExceptionDetails = true;
+$wgDebugLogFile = "/tmp/debug.log";
