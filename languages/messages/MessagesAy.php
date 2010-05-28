@@ -4,6 +4,7 @@
  * @ingroup Language
  * @file
  *
+ * @author Diego Grez
  * @author Erebedhel
  * @author Kanon6917
  */
@@ -195,11 +196,13 @@ $messages = array(
 'loginlanguagelabel' => 'Aru: $1',
 
 # Edit pages
-'summary'  => 'Juk’aptayawi:',
-'subject'  => 'Yatsuwi/titulu:',
-'yourdiff' => 'Jalaqtatanaka',
+'summary'   => 'Juk’aptayäwi:',
+'subject'   => 'Yatsuwi/titulu:',
+'minoredit' => 'Akax janiw taqpachäkiti',
+'yourdiff'  => 'Jalaqtatanaka',
 
 # Preferences page
+'preferences'    => 'Amtajarjama',
 'prefs-rc'       => 'Jichha kutikiptatanaka',
 'timezoneoffset' => 'Jalaqtata',
 

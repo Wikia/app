@@ -80,7 +80,7 @@ EOT;
 		return true;
 	}
 	
-	public static function markUnderReview( &$output, &$article, &$title, &$user, &$request ) {
+	public static function markUnderReview( $output, $article, $title, $user, $request ) {
 		$action = $request->getVal( 'action', 'view' );
 		$reviewing = ( $action == 'history' ); // default
 		if( $action == 'view' && ($request->getInt('reviewform') || $request->getInt('rcid')) )

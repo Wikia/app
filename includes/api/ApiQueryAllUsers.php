@@ -71,7 +71,7 @@ class ApiQueryAllUsers extends ApiQueryBase {
 		}
 
 		if ($params['witheditsonly'])
-			$this->addWhere('user_editcount > 0');
+			$this->addWhere('u1.user_editcount > 0');
 
 		if ($fld_groups) {
 			// Show the groups the given users belong to
@@ -232,6 +232,6 @@ class ApiQueryAllUsers extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryAllUsers.php 46845 2009-02-05 14:30:59Z catrope $';
+		return __CLASS__ . ': $Id: ApiQueryAllUsers.php 66948 2010-05-27 07:47:39Z tstarling $';
 	}
 }
