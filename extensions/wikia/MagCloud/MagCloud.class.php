@@ -12,7 +12,7 @@ class MagCloud {
 	 *
 	 * @author Maciej Brencz <macbre@wikia-inc.com>
 	 */
-	static public function injectToolbar(&$tpl, &$html) {
+	static public function injectToolbar($tpl, &$html) {
 		wfProfileIn(__METHOD__);
 
 		// detect current state
