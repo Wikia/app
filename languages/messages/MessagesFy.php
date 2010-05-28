@@ -1,6 +1,9 @@
 <?php
 /** Western Frisian (Frysk)
  *
+ * See MessagesQqq.php for message documentation incl. usage of parameters
+ * To improve a translation please visit http://translatewiki.net
+ *
  * @ingroup Language
  * @file
  *
@@ -257,7 +260,7 @@ $messages = array(
 'category-file-count-limited'    => 'Dizze kategory befettet {{PLURAL:$1|de folgjende triem|de folgjende $1 triemmen}}.',
 'listingcontinuesabbrev'         => '(ferfolch)',
 
-'mainpagetext'      => 'Wiki-program goed ynstallearre.',
+'mainpagetext'      => "'''MediaWiki-program goed ynstallearre.'''",
 'mainpagedocfooter' => "Rieplachtsje de [http://meta.wikimedia.org/wiki/Help:Ynhâldsopjefte hantlieding] foar ynformaasje oer it gebrûk fan 'e wikisoftware.
 
 == Mear help oer Mediawiki ==
@@ -643,7 +646,7 @@ Mûglik hawwe Jo Jo wachtwurd al feroare of in nij tydlik wachtwurd oanfrege.',
 'summary-preview'                  => 'Gearfetting sa at dy brûkt wurdt:',
 'subject-preview'                  => 'Neisjen ûnderwerp/kop:',
 'blockedtitle'                     => 'Meidogger is útsletten troch',
-'blockedtext'                      => "<big>'''Jo meidoggernamme of Ynternet-adres is útsletten.'''</big>
+'blockedtext'                      => "'''Jo meidoggernamme of Ynternet-adres is útsletten.'''
 
 De útsluting is útfierd troch $1.
 De opjûne reden is ''$2''.
@@ -1053,7 +1056,7 @@ Jo kinne ek in nammerûmte as foarheaksel brûke.",
 'mypreferences'             => 'Myn foarkarynstellings',
 'prefs-edits'               => 'Tal bewurkings:',
 'prefsnologin'              => 'Net oanmeld',
-'prefsnologintext'          => 'Jo moatte <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} oanmeld]</span> wêze om jo foarkar-ynstellings te feroarje te kinnen.',
+'prefsnologintext'          => 'Jo moatte <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} oanmeld]</span> wêze om jo foarkar-ynstellings te feroarje te kinnen.',
 'prefsreset'                => "De ynstellings binne werom set sa't se fêstlein wienen.",
 'qbsettings'                => 'Menu',
 'qbsettings-none'           => 'Ut',
@@ -1899,7 +1902,7 @@ Dit binne de rinnende ynstellings foar de side '''$1''':",
 'protect-expiring'            => 'ferrint $1 (UTC)',
 'protect-cascade'             => "Underlizzende siden - skoattelje ek alle siden dy't in ûnderdiel útmeitsje fan dizze side",
 'protect-cantedit'            => "Jo kinne it befeiligingsnivo fan dizze side net feroarje, om't jo gjin rjochten hawwe om it te bewurkjen.",
-'protect-expiry-options'      => '15 minuten:15 min,1 oere:1 hour,2 oeren:2 hours,6 oeren:6 hours,12 oeren:12 hours,1 dei:1 day,3 dagen:3 days,1 wike:1 week,2 wiken:2 weeks,1 moanne:1 month,3 moanne:3 months,6 moanne:6 months,1 jier:1 year,ûnbeheind:infinite', # display1:time1,display2:time2,...
+'protect-expiry-options'      => '1 oere:1 hour,1 dei:1 day,1 wike:1 week,2 wiken:2 weeks,1 moanne:1 month,3 moanne:3 months,6 moanne:6 months,1 jier:1 year,ûnbeheind:infinite', # display1:time1,display2:time2,...
 'restriction-type'            => 'Permisje:',
 'restriction-level'           => 'Skoattel nivo:',
 'minimum-size'                => 'Min. grutte',
@@ -2006,7 +2009,7 @@ Meld de krekte reden! Neam bygelyks de siden dy't oantaaste waarden.",
 'ipbenableautoblock'   => "Automatysk de lêste IP adressen útslute dy't troch dizze meidogger brûkt binne.",
 'ipbsubmit'            => 'Slút dizze meidogger út',
 'ipbother'             => 'In oare tiid:',
-'ipboptions'           => '15 minuten:15 min,1 oere:1 hour,2 oeren:2 hours,6 oeren:6 hours,12 oeren:12 hours,1 dei:1 day,3 dagen:3 days,1 wike:1 week,2 wiken:2 weeks,1 moanne:1 month,3 moanne:3 months,6 moanne:6 months,1 jier:1 year,ûnbeheind:infinite', # display1:time1,display2:time2,...
+'ipboptions'           => '2 oeren:2 hours,1 dei:1 day,3 dagen:3 days,1 wike:1 week,2 wiken:2 weeks,1 moanne:1 month,3 moanne:3 months,6 moanne:6 months,1 jier:1 year,ûnbeheind:infinite', # display1:time1,display2:time2,...
 'ipbotheroption'       => 'oare tiid',
 'ipbotherreason'       => 'Oare/eventuele reden:',
 'badipaddress'         => 'Gjin jildige IP-adres',
@@ -2082,7 +2085,7 @@ In dizze gefallen is it oan jo hoe't jo de oerlisside werneame of ynfoegje wolle
 'move-watch'              => 'Folch dizze side',
 'movepagebtn'             => 'Werneam side',
 'pagemovedsub'            => 'Werneamen slagge',
-'movepage-moved'          => '<big>\'\'\'"$1" hjit no "$2"\'\'\'</big>', # The two titles are passed in plain text as $3 and $4 to allow additional goodies in the message.
+'movepage-moved'          => '\'\'\'"$1" hjit no "$2"\'\'\'', # The two titles are passed in plain text as $3 and $4 to allow additional goodies in the message.
 'articleexists'           => "Der is al in side mei dy namme, of oars is de namme dy't jo oanjûn hawwe net tastien. Besykje it op 'e nij.",
 'talkexists'              => "It werneamen fan de side is slagge, mar de eardere oerlisside is net mear keppele om't der foar de side mei de nije namme al in oerlisside wie. Kopiearje de oerlisside fan de 'âlde' side mei de nije.",
 'movedto'                 => 'werneamd as',
@@ -2442,7 +2445,7 @@ Wolle jo de side wier op 'e nij skriuwe?",
 'specialpages'                   => 'Bysûndere siden',
 'specialpages-note'              => '----
 * Normale bysûndere siden.
-* <span class="mw-specialpagerestricted">Beheinde bysûndere siden.</span>',
+* <strong class="mw-specialpagerestricted">Beheinde bysûndere siden.</strong>',
 'specialpages-group-maintenance' => 'Underhâld siden',
 'specialpages-group-other'       => 'Oare bysûndere siden',
 'specialpages-group-login'       => 'Oanmelde',

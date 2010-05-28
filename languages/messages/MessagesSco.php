@@ -133,7 +133,7 @@ $messages = array(
 'category-file-count-limited'    => 'The follaein {{PLURAL:$1|file is|$1 files is}} in this category.',
 'listingcontinuesabbrev'         => 'cont.',
 
-'mainpagetext'      => "<big>'''MediaWiki haes been installit wi speed.'''</big>",
+'mainpagetext'      => "'''MediaWiki haes been installit wi speed.'''",
 'mainpagedocfooter' => "Aks the [http://meta.wikimedia.org/wiki/Help:Contents Uiser's Manual] for speirins aboot using the wiki saftware.
 
 == Gettin startit ==
@@ -509,7 +509,7 @@ Ye dinna hae tae heed this message, if this accoont wis creatit by mistak.',
 'summary-preview'                  => 'Ootline leuk ower:',
 'subject-preview'                  => 'Subject/headline leuk ower:',
 'blockedtitle'                     => 'Uiser is blockit',
-'blockedtext'                      => '<big>\'\'\'Yer uisername or IP address haes been blockit.\'\'\'</big>
+'blockedtext'                      => '\'\'\'Yer uisername or IP address haes been blockit.\'\'\'
 
 The block was made bi $1. The raeson gien is \'\'$2\'\'.
 

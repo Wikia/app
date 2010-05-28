@@ -116,7 +116,7 @@ $messages = array(
 'category-empty'         => "''Cayliib danjobam nihíl''",
 'listingcontinuesabbrev' => 'korb.',
 
-'mainpagetext' => "<big>'''MediaWiki coccebj installöx successua zo mii.'''</big>",
+'mainpagetext' => "'''MediaWiki coccebj installöx successua zo mii.'''",
 
 'about'          => 'Miixaz',
 'article'        => 'Artículo',
@@ -455,7 +455,7 @@ confirmom account zo coccebj de'me.",
 'summary-preview'           => 'Cuáxiitde abvuatl:',
 'subject-preview'           => 'Cuáxiitde subjectua/corridor:',
 'blockedtitle'              => 'Caitom blockámit',
-'blockedtext'               => "<big>'''Hexuatl jöx adressade IP cáablockom.'''</big>
+'blockedtext'               => "'''Hexuatl jöx adressade IP cáablockom.'''
 
 Block zo expondal $1. Rasonna zo coccebj: ''$2''.
 
