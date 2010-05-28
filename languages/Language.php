@@ -1755,7 +1755,7 @@ class Language {
 	}
 
 	# Fill a MagicWord object with data from here
-	function getMagic( &$mw ) {
+	function getMagic( $mw ) {
 		global $wgWikiwygEnabled ;
 		if ( !isset( $this->mMagicExtensions ) ) {
 			$this->mMagicExtensions = array();
