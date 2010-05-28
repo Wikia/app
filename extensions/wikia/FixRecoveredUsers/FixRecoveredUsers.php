@@ -57,7 +57,7 @@
 				if($result){
 					// Reset the password (this time it will be generated with the new user_id).
 					$oUser = new User();
-					$oUser->setID($userId):
+					$oUser->setID($userId);
 					$oUser->loadFromId($userId);
 					$oUser->setPassword($password);
 					$allowDefault = false;
