@@ -30,8 +30,9 @@ require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../CommonSettings.php' );
 #
 require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../DB.sjc-dev.php' );
 
-$wgSessionsInMemcached = true;
-$wgSessionsInTokyoTyrant = !$wgSessionsInMemcached;
+$wgSessionsInMemcached = false;
+//$wgSessionsInTokyoTyrant = !$wgSessionsInMemcached;
+$wgSessionsInTokyoTyrant = false;
 
 /**
  * Definition of global memcached servers
@@ -98,7 +99,7 @@ $wgAllInOne = false;
 require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../CommonExtensions.php' );
 
 $wgArticlePath = "/wiki/$1";
-$wgCookieDomain = "*.wikia-dev.com";
+$wgCookieDomain = ".wikia-dev.com";
 
 // Just in case this has been reset somewhere else in here.
 error_reporting(E_ALL);
