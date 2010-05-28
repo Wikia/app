@@ -60,6 +60,7 @@
 					$oUser->setID($userId):
 					$oUser->loadFromId($userId);
 					$oUser->setPassword($password);
+					$allowDefault = false;
 
 					// Log the successful fix in user_migrated.
 					$dbw->set($RECOVERED_TABLE_NAME, 'loggedInSuccessfully', "NOW()", 'user_id = ' . $userId);
