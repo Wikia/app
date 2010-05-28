@@ -30,7 +30,7 @@ require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../CommonSettings.php' );
 #
 require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../DB.sjc-dev.php' );
 
-$wgSessionsInMemcached = false;
+$wgSessionsInMemcached = true;
 //$wgSessionsInTokyoTyrant = !$wgSessionsInMemcached;
 $wgSessionsInTokyoTyrant = false;
 
@@ -85,6 +85,7 @@ require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../DevBoxSettings.php' );
 
 ####
 # To fake any Wiki Factory settings, put them here:
+$wgEnableUserChangesHistoryExt = false;
 
 $wgExtensionsPath = "{$wgScriptPath}/extensions";
 $wgAllInOne = false;
