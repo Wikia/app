@@ -1,4 +1,5 @@
 == Changes since 201005.4 ==
+* rt#52891: Blogs: Hide "No comments yet!" if comments are disabled
 * upgraded to MW 1.15.4 (emil)
 * rt#51890: allow per hub (@central) adslot config (Nef) 
 

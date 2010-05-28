@@ -48,9 +48,11 @@ if( count( $comments ) > 10 && isset( $props[ "commenting" ] ) && $props[ "comme
 endif;
 
 	if( ! count( $comments ) ):
-		echo "<ul id=\"blog-comments-ul\"><li>";
-		echo "<div id=\"blog-comments-zero\">" . wfMsg( "blog-zero-comments" ) . "</div>";
-		echo "</li></ul>";
+		if( isset( $props[ "commenting" ] ) && $props[ "commenting" ] == 1 ):
+			echo "<ul id=\"blog-comments-ul\"><li>";
+			echo "<div id=\"blog-comments-zero\">" . wfMsg( "blog-zero-comments" ) . "</div>";
+			echo "</li></ul>";
+		endif;
 	else:
 		echo "<ul id=\"blog-comments-ul\" >";
 		$odd = true;
