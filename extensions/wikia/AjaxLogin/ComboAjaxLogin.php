@@ -397,7 +397,6 @@ class AjaxLoginForm extends LoginForm {
 		$template->set( 'email', $this->mEmail );
 		$template->set( 'realname', $this->mRealName );
 		$template->set( 'domain', $this->mDomain );
-
 		$template->set( 'message', $msg );
 		$template->set( 'messagetype', $msgtype );
 		$template->set( 'createemail', $wgEnableEmail && $wgUser->isLoggedIn() );
@@ -418,6 +417,18 @@ class AjaxLoginForm extends LoginForm {
 			if( $this->mLanguage )
 			$template->set( 'uselang', $this->mLanguage );
 		}
+		
+		if ( $this->mType == 'signup' ) {
+			if ( !self::getCreateaccountToken() ) { 
+				self::setCreateaccountToken(); 
+			}
+			$template->set( 'token', self::getCreateaccountToken() ); 
+		} else {
+			if ( !self::getLoginToken() ) { 
+				self::setLoginToken(); 
+			}
+			$template->set( 'token', self::getLoginToken() ); 
+		}     
 		
 		// Give authentication and captcha plugins a chance to modify the form
 		$wgAuth->modifyUITemplate( $template );

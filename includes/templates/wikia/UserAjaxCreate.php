@@ -62,6 +62,7 @@ if(( $this->data['messagetype'] == 'error' ) && (strlen($this->data['message'] )
 <td width="55%" style="border:none; vertical-align: top;">
 <div id="userRegisterAjax">
 <form id="userajaxregisterform" method="post" action="<?php $this->text('actioncreate') ?>" onsubmit="return UserRegistration.checkForm()">
+<?php if( @$this->haveData( 'token' ) ) { ?><input type="hidden" name="wpCreateaccountToken" value="<?php $this->text( 'token' ); ?>" /><?php } ?> 
 <?php		if( $this->data['message'] && $this->data['ajax'] ) { ?>
 	<div class="<?php $this->text('messagetype') ?>box" style="margin:0px">
 		<?php if ( $this->data['messagetype'] == 'error' ) { ?>
