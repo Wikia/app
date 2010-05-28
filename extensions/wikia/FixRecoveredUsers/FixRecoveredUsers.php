@@ -41,7 +41,7 @@
 		# Old-style
 		// This should be the only method Wikia is using, but if it isn't then the other methods
 		// would be fine anyway without the fixes... so all fixes are done herein.
-		$result = self::oldCrypt( $password, $userId ) === $hash;
+		$result = User::oldCrypt( $password, $userId ) === $hash;
 
 		// If password check failed, check to see if user id is in list of recovered users.
 		if(!$result){
@@ -51,7 +51,7 @@
 			$id = $dbr->selectField( $RECOVERED_TABLE_NAME, 'new_user_id', array('user_id' => $userId) );
 			if( $id !== false ) {
 				// Re-check password w/old id as salt
-				$result = self::oldCrypt( $password, $userId ) === $hash;
+				$result = User::oldCrypt( $password, $userId ) === $hash;
 
 				$dbw = wfGetDB(DB_MASTER, array(), $RECOVERED_DB_NAME);
 				if($result){
