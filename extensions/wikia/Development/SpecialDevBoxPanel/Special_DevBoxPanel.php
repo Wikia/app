@@ -56,7 +56,7 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 // Definitions
-$serv = $_SERVER['SERVER_NAME'];
+$serv = (isset($_SERVER['SERVER_NAME'])?$_SERVER['SERVER_NAME']:"cli");
 define('DEVBOX_FORCED_WIKI_KEY', "devbox_forceWiki_$serv");
 //define('DEVBOX_FORCED_WIKI_FILE', dirname(__FILE__).'/devbox_forceWiki.txt');
 define('DEVBOX_FORCED_WIKI_FILE', "/tmp/$serv"."_devbox_forceWiki.txt");
