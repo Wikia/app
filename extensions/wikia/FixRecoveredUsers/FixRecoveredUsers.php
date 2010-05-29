@@ -63,6 +63,7 @@
 					$allowDefault = false;
 
 					// Log the successful fix in user_migrated.
+					// NOTE: Should generally use update() instead of set(), but this extension is temporary and has already been tested using set.
 					$dbw->set($RECOVERED_TABLE_NAME, 'loggedInSuccessfully', date("Y-m-d H:i:s"), 'new_user_id = ' . $userId);
 				} else {
 					// Log that the user tried to login but still failed.
