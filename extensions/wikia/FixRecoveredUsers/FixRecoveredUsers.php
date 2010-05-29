@@ -48,10 +48,10 @@
 			$dbr = wfGetDB(DB_SLAVE, array(), $RECOVERED_DB_NAME);
 
 			// See if this user is one of the recovered/migrated users.
-			$id = $dbr->selectField( $RECOVERED_TABLE_NAME, 'new_user_id', array('user_id' => $userId) );
-			if( $id !== false ) {
+			$oldId = $dbr->selectField( $RECOVERED_TABLE_NAME, 'user_id', array('new_user_id' => $userId) );
+			if( $oldId !== false ) {
 				// Re-check password w/old id as salt
-				$result = User::oldCrypt( $password, $userId ) === $hash;
+				$result = User::oldCrypt( $password, $oldId ) === $hash;
 
 				$dbw = wfGetDB(DB_MASTER, array(), $RECOVERED_DB_NAME);
 				if($result){
@@ -63,10 +63,10 @@
 					$allowDefault = false;
 
 					// Log the successful fix in user_migrated.
-					$dbw->set($RECOVERED_TABLE_NAME, 'loggedInSuccessfully', "NOW()", 'user_id = ' . $userId);
+					$dbw->set($RECOVERED_TABLE_NAME, 'loggedInSuccessfully', "NOW()", 'new_user_id = ' . $userId);
 				} else {
 					// Log that the user tried to login but still failed.
-					$dbw->set($RECOVERED_TABLE_NAME, 'lastLoginFailed', "NOW()", 'user_id = ' . $userId);
+					$dbw->set($RECOVERED_TABLE_NAME, 'lastLoginFailed', "NOW()", 'new_user_id = ' . $userId);
 				}
 			}
 		}
