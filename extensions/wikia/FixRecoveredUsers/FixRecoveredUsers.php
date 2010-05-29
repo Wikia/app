@@ -63,10 +63,10 @@
 					$allowDefault = false;
 
 					// Log the successful fix in user_migrated.
-					$dbw->set($RECOVERED_TABLE_NAME, 'loggedInSuccessfully', time(), 'new_user_id = ' . $userId);
+					$dbw->set($RECOVERED_TABLE_NAME, 'loggedInSuccessfully', date("Y-m-d H:i:s"), 'new_user_id = ' . $userId);
 				} else {
 					// Log that the user tried to login but still failed.
-					$dbw->set($RECOVERED_TABLE_NAME, 'lastLoginFailed', time(), 'new_user_id = ' . $userId);
+					$dbw->set($RECOVERED_TABLE_NAME, 'lastLoginFailed', date("Y-m-d H:i:s"), 'new_user_id = ' . $userId);
 				}
 			}
 		}
