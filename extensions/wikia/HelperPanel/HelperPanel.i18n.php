@@ -92,6 +92,21 @@ $messages['ia'] = array(
 	'helperPanel_widgets' => 'Mi widgets',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'helperPanel_help' => 'Widget bantuan',
+	'helperPanel_widgets' => 'Widget saya',
+);
+
+/** Japanese (日本語)
+ * @author 青子守歌
+ */
+$messages['ja'] = array(
+	'helperPanel_widgets' => '自分のウィジット',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -188,6 +203,14 @@ $messages['sr-ec'] = array(
 $messages['sv'] = array(
 	'helperPanel_help' => 'Hjälp widget',
 	'helperPanel_widgets' => 'Mina widgets',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'helperPanel_help' => 'Widyet na pantulong',
+	'helperPanel_widgets' => 'Mga widyet',
 );
 
 /** Ukrainian (Українська)

@@ -22,6 +22,16 @@ $messages['af'] = array(
 	'taskmanager_tasklist' => 'Keer terug na taaklys',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'taskmanager' => 'Паказ і кіраваньне фонавымі заданьнямі',
+	'taskmanager_title' => 'Паказ і кіраваньне фонавымі заданьнямі',
+	'taskmanager_tasklist' => 'Вярнуцца да сьпісу заданьняў',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
@@ -80,7 +90,7 @@ $messages['fr'] = array(
 $messages['gl'] = array(
 	'taskmanager' => 'Mostrar e xestionar as tarefas de fondo',
 	'taskmanager_title' => 'Mostrar e xestionar as tarefas de fondo',
-	'taskmanager_tasklist' => 'Voltar á lista de tarefas',
+	'taskmanager_tasklist' => 'Volver á lista de tarefas',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -125,7 +135,7 @@ $messages['ja'] = array(
 $messages['mk'] = array(
 	'taskmanager' => 'Прикажувај и раководи со позадински задачи',
 	'taskmanager_title' => 'Прикажувај и раководи со позадински задачи',
-	'taskmanager_tasklist' => 'Назад кон Листата на задачи',
+	'taskmanager_tasklist' => 'Назад кон Списокот на задачи',
 );
 
 /** Dutch (Nederlands)
@@ -191,10 +201,30 @@ $messages['ru'] = array(
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Charmed94
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'taskmanager_title' => 'покажи и уради нешто са позадинским задацима',
+	'taskmanager' => 'Прикажи и управљај позадинским задацима',
+	'taskmanager_title' => 'Прикажи и управљај позадинским задацима',
 	'taskmanager_tasklist' => 'Повратак на списак задатака',
+);
+
+/** Swedish (Svenska)
+ * @author Per
+ */
+$messages['sv'] = array(
+	'taskmanager' => 'Visa och hantera bakgrundsuppgifter',
+	'taskmanager_title' => 'Visa och hantera bakgrundsuppgifter',
+	'taskmanager_tasklist' => 'Återgå till uppgiftslistan',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'taskmanager' => 'Ipakita at pangasiwaan ang mga gawaing panlikuran',
+	'taskmanager_title' => 'Ipakita at pangasiwaan ang mga gawaing panlikuran',
+	'taskmanager_tasklist' => 'Bumalik sa Talaan ng Gawain',
 );
 

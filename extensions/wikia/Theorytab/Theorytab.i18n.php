@@ -108,6 +108,14 @@ $messages['ia'] = array(
 	'theorytab-parent-title' => 'Articulo principal',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'theorytab-title' => 'Teori',
+	'theorytab-parent-title' => 'Induk artikel',
+);
+
 /** Italian (Italiano) */
 $messages['it'] = array(
 	'theorytab-title' => 'Teorie',
@@ -120,6 +128,14 @@ $messages['it'] = array(
 $messages['ja'] = array(
 	'theorytab-title' => '理論',
 	'theorytab-parent-title' => '親記事',
+);
+
+/** Khmer (ភាសាខ្មែរ)
+ * @author គីមស៊្រុន
+ */
+$messages['km'] = array(
+	'theorytab-title' => 'ទ្រឹស្ដីបទ',
+	'theorytab-parent-title' => 'អត្ថបទមេ',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -192,10 +208,12 @@ $messages['ru'] = array(
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Charmed94
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'theorytab-title' => 'теорија',
+	'theorytab-title' => 'Теорија',
+	'theorytab-parent-title' => 'Сродан чланак',
 );
 
 /** Swedish (Svenska)
@@ -212,6 +230,14 @@ $messages['sv'] = array(
 $messages['te'] = array(
 	'theorytab-title' => 'సిద్ధాంతం',
 	'theorytab-parent-title' => 'మాతృ వ్యాసం',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'theorytab-title' => 'Panukala',
+	'theorytab-parent-title' => 'Magulang na artikulo',
 );
 
 /** Turkish (Türkçe)

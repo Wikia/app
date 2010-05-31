@@ -99,6 +99,7 @@ $messages['br'] = array(
 	'cathub-edit-success' => 'Enrollet eo bet ho respont',
 	'cathub-prev' => '&larr; A-raok',
 	'cathub-next' => 'Da-heul &rarr;',
+	'cathub-tags' => 'Balizennoù',
 );
 
 /** German (Deutsch)
@@ -242,7 +243,7 @@ $messages['gl'] = array(
 	'cathub-progbar-allmost-done' => '{{PLURAL:$1|Queda unha pregunta|Quedan $1 preguntas}} por responder!',
 	'cathub-no-unanswered-questions' => 'Nestes intres non hai ningunha pregunta sen responder.',
 	'cathub-no-answered-questions' => 'Nestes intres non hai ningunha pregunta respondida.',
-	'cathub-top-contributors' => 'Maior número de contribuíntes nesta categoría',
+	'cathub-top-contributors' => 'Maior número de colaboradores nesta categoría',
 	'cathub-top-contribs-all-time' => 'Sempre',
 	'cathub-top-contribs-recent' => '{{PLURAL:$1|No último día|Nos últimos $1 días}}',
 	'cathub-question-asked-ago' => 'preguntou $1 $2',
@@ -313,6 +314,7 @@ $messages['ia'] = array(
 
 /** Japanese (日本語)
  * @author Tommy6
+ * @author 青子守歌
  */
 $messages['ja'] = array(
 	'cathub-desc' => 'http://answers.wikia.com/ の編集者や閲覧者のためにデザインされた、カテゴリページを活動のハブとするための拡張機能。',
@@ -339,6 +341,19 @@ $messages['ja'] = array(
 	'cathub-edit-success' => '回答が保存されました',
 	'cathub-prev' => '&larr; 前',
 	'cathub-next' => '次 &rarr;',
+	'cathub-tags' => 'タグ',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'cathub-top-contribs-recent' => '{{PLURAL:$1|De leschten Dag|An de leschte(n) $1 Deeg}}',
+	'cathub-question-asked-by' => 'vum $1',
+	'cathub-answer-heading' => 'Äntwert',
+	'cathub-button-answer' => 'Äntwert',
+	'cathub-button-improve-answer' => 'Äntwert verbesseren',
+	'cathub-next' => 'Nächst &rarr;',
 );
 
 /** Macedonian (Македонски)
@@ -478,6 +493,7 @@ $messages['pms'] = array(
 	'cathub-edit-success' => "Toa arspòsta a l'é stàita salvà",
 	'cathub-prev' => '&larr; Prima',
 	'cathub-next' => '&rarr; dapress',
+	'cathub-tags' => 'Tichëtte',
 );
 
 /** Pashto (پښتو)
@@ -486,6 +502,44 @@ $messages['pms'] = array(
 $messages['ps'] = array(
 	'cathub-answer-heading' => 'ځواب',
 	'cathub-button-answer' => 'ځواب',
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'cathub-desc' => 'Extensão para converter as páginas de categoria numa perspectiva da categoria como centro de actividade. Desenhada para a [http://answers.wikia.com answers.wikia.com]',
+	'cathub-progbar-mouseover-answered' => '$1% respondidas ($2 respostas)',
+	'cathub-progbar-mouseover-not-answered' => '$1% ainda não respondidas ($2 perguntas)',
+	'cathub-progbar-label-answered' => 'Respondidas',
+	'cathub-progbar-label-unanswered' => 'Por responder',
+	'cathub-progbar-none-done' => 'Ainda nenhuma pergunta foi respondida',
+	'cathub-progbar-all-done' => 'Todas as perguntas foram respondidas!',
+	'cathub-progbar-allmost-done' => 'Restam $1 {{PLURAL:$1|pergunta não respondida|perguntas não respondidas}}!',
+	'cathub-no-unanswered-questions' => 'Neste momento, não existem perguntas não respondidas para apresentar.',
+	'cathub-no-answered-questions' => 'Neste momento, não existem perguntas respondidas para apresentar.',
+	'cathub-top-contributors' => 'Contribuidores de topo para esta categoria',
+	'cathub-top-contribs-all-time' => 'Desde sempre',
+	'cathub-top-contribs-recent' => '{{PLURAL:$1|No último dia|Nos últimos $1 dias}}',
+	'cathub-question-asked-ago' => 'perguntada $1 $2',
+	'cathub-question-answered-ago' => 'respondida $1 $2',
+	'cathub-question-asked-by' => 'por $1',
+	'cathub-anon-username' => 'um utilizador curioso',
+	'cathub-answer-heading' => 'Resposta',
+	'cathub-button-answer' => 'Responder',
+	'cathub-button-improve-answer' => 'Melhorar resposta',
+	'cathub-button-rephrase' => 'reformular texto',
+	'cathub-edit-success' => 'A sua resposta foi gravada',
+	'cathub-prev' => '&larr; Anterior',
+	'cathub-next' => 'Seguinte &rarr;',
+	'cathub-tags' => 'Etiquetas',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
+ */
+$messages['pt-br'] = array(
+	'cathub-tags' => 'Etiquetas',
 );
 
 /** Russian (Русский)

@@ -646,6 +646,15 @@ $messages['kn'] = array(
 	'daemonloader_daemondesc' => 'ವಿವರ',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'daemonloader_day' => 'all Dag',
+	'daemonloader_week' => 'all Woch',
+	'daemonloader_month' => 'all Mount',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -653,7 +662,7 @@ $messages['mk'] = array(
 	'daemonloader' => 'Daemon-вчитувач',
 	'daemonloader_pagetitle' => 'Вчитувач на демони',
 	'daemonloader_createtask' => 'Создај задача',
-	'daemonloader_listtask' => 'Листа на задачи',
+	'daemonloader_listtask' => 'Список на задачи',
 	'daemonloader_configure' => 'Конфигурирај демон',
 	'daemonloader_daemonname' => 'Име на демонот',
 	'daemonloader_scriptname' => 'Име на скриптата',
@@ -668,7 +677,7 @@ $messages['mk'] = array(
 	'daemonloader_alldaemons' => 'Сите демони',
 	'daemonloader_loaddaemon' => 'Одберете демон за уредување или создадете нов подолу:',
 	'daemonloader_selectdaemon' => 'Одберете демон за да добиете информации и кликнете на копчето за да прејдете на следниот чекор',
-	'daemonloader_selectlist' => 'Одберете од листата',
+	'daemonloader_selectlist' => 'Одберете од списокот',
 	'daemonloader_search' => 'Пребарај:',
 	'daemonloader_daemonchanged' => 'Вашите промени се зачувани',
 	'daemonloader_daemonnotchanged' => 'Вашите промени не се зачувани',
@@ -677,7 +686,7 @@ $messages['mk'] = array(
 	'daemonloader_date_yyyymmdd' => 'датум (ГГГГММДД)',
 	'daemonloader_date_yyyymm' => 'месеци (ГГГГММ)',
 	'daemonloader_date_yyyy' => 'години (ГГГГ)',
-	'daemonloader_wikilist' => 'Листа на викија',
+	'daemonloader_wikilist' => 'Список на викија',
 	'daemonloader_gonextstep' => 'Оди на следниот чекор',
 	'daemonloader_setparams' => 'Поставете вредности за вносните параметри на демонот:',
 	'daemonloader_1step' => 'Прв чекор (одберете демон)',
@@ -693,7 +702,7 @@ $messages['mk'] = array(
 	'daemonloader_files' => 'XLS-податотеки',
 	'daemonloader_period' => 'Период на извештаите',
 	'daemonloader_dateformat' => 'Формат на датумот: ГГГММДД',
-	'daemonloader_emails_info' => 'Листа на е-пошти (одделени со запирка) на кои ќе биде испратен резултатот од задачата',
+	'daemonloader_emails_info' => 'Список на е-пошти (одделени со запирка) на кои ќе биде испратен резултатот од задачата',
 	'daemonloader_day' => 'секој ден',
 	'daemonloader_week' => 'секоја недела',
 	'daemonloader_month' => 'секој месец',

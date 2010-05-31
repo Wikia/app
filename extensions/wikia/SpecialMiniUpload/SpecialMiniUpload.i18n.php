@@ -180,11 +180,18 @@ $messages['it'] = array(
 	'thumbnailsize' => 'Grandezza delle miniature',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'insertimage' => 'Bild drasetzen',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'widgetdashboard' => 'Табла за интерфејс-елементи',
+	'widgetdashboard' => 'Табла за направи',
 	'mu_size_your_image' => 'Определете големина на сликата',
 	'almosttheretext' => 'Со овој лизгач изберете ја големината на минијатурата, напишете опис и кликнете на „Вметни“',
 	'insertfullsize' => 'Вметни оригинална слика со полна големина',
@@ -214,10 +221,11 @@ Geef daarna een bijschrift op en klik "Invoegen".',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
  * @author Nghtwlkr
  */
 $messages['no'] = array(
-	'widgetdashboard' => 'Panelbordskjermelement',
+	'widgetdashboard' => 'Dashbord for skjermelement',
 	'mu_size_your_image' => 'Sett størrelse for ditt bilde',
 	'almosttheretext' => 'Bruk glidebryteren for å velge størrelse på miniatyrbildet, skriv inn en bildetekst og klikk Sett inn',
 	'insertfullsize' => 'Sett inn det opprinngelig bildet i full størrelse',
@@ -287,16 +295,19 @@ $messages['ru'] = array(
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Charmed94
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'widgetdashboard' => 'Табла са алаткама',
-	'mu_size_your_image' => 'Одредите величину ваше слике',
-	'insertthumbnail' => 'убаци умањену слику',
-	'thumbnailsize' => 'Величина умањеног приказа :',
+	'widgetdashboard' => 'Табла с виџетима',
+	'mu_size_your_image' => 'Одредите величину Ваше слике',
+	'almosttheretext' => 'Користите клизач да изаберете величину сличице, унесите наслов и кликните на „Убаци слику“',
+	'insertfullsize' => 'Убаци оригиналну слику',
+	'insertthumbnail' => 'Убаци сличицу',
+	'thumbnailsize' => 'Величина сличице',
 	'captionoptional' => 'Додај наслов (необавезно):',
-	'insertimage' => 'убаци слику',
-	'leftalign-tooltip' => 'Поравној налево',
+	'insertimage' => 'Убаци слику',
+	'leftalign-tooltip' => 'Поравнај налево',
 	'rightalign-tooltip' => 'Поравнај надесно',
 );
 
@@ -305,6 +316,22 @@ $messages['sr-ec'] = array(
  */
 $messages['su'] = array(
 	'rightalign-tooltip' => 'Rata katuhu',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'widgetdashboard' => 'Pisarang Pambunggo ng Widyet',
+	'mu_size_your_image' => 'Sukatin ang Larawan mo',
+	'almosttheretext' => 'Gamitin ang pampadulas upang makapili ng isang sukat ng kagyat, magpasok ng isang kapsyon at pindutin ang Isingit',
+	'insertfullsize' => 'Magisingit ng larawang orihinal na buo ang sukat',
+	'insertthumbnail' => 'Magsingit ng kagyat',
+	'thumbnailsize' => 'Sukat ng Kagyat',
+	'captionoptional' => 'Paliwanag (maaaring wala nito):',
+	'insertimage' => 'Isingit ang Larawan',
+	'leftalign-tooltip' => 'Ituwid pakaliwa',
+	'rightalign-tooltip' => 'Ituwid pakanan',
 );
 
 /** Ukrainian (Українська)

@@ -7,6 +7,14 @@ $messages['en'] = array(
 	'widgetdashboard-description' => 'This page serves as a place to test your widgets at work. To see a list of all available widgets go to [[Special:Widgets]].'
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'widgetdashboard-wrong-skin' => '<p>Панэль элемэнтаў кіраваньня лепей працуе з адной з новых тэмаў афармленьня, напрыклад, <a href="./Special:WidgetDashboard?useskin=monaco">Monaco</a>.</p><p>Калі ласка, зьмяніце <a href="./Special:Preferences">Вашыя ўстаноўкі</a> для выкарыстаньня гэтага інструмэнту.</p>',
+	'widgetdashboard-description' => 'Гэтая старонка выкарыстоўваецца для праверкі Вашых элемэнтаў панэлі кіраваньня ў працы. Каб убачыць сьпіс усіх даступных элемэнтаў, перайдзіце на [[Special:Widgets]].',
+);
+
 /** Breton (Brezhoneg)
  * @author Gwenn-Ael
  */
@@ -74,6 +82,14 @@ $messages['ia'] = array(
 	'widgetdashboard-description' => 'Iste pagina servi de loco pro testar tu widgets in action. Pro vider un lista de tote le widgets disponibile, visita [[Special:Widgets]].',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'widgetdashboard-wrong-skin' => '<p>Widget Dashboard bekerja optimal dengan salah satu kulit baru, misalnya <a href="./Special:WidgetDashboard?useskin=monaco">Monaco</a>. </p><p> Silahkan ubah <a href="./Special:Preferences">preferensi Anda</a> untuk menggunakan alat ini. </p>',
+	'widgetdashboard-description' => 'Halaman ini digunakan untuk menguji widget Anda. Untuk melihat daftar semua widget yang tersedia, kunjungi [[Special:Widgets]].',
+);
+
 /** Japanese (日本語)
  * @author Tommy6
  */
@@ -87,8 +103,8 @@ $messages['ja'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'widgetdashboard-wrong-skin' => '<p>Таблата со интерфејс-елементи најдобро работи со еден од новите изгледи, како на пр. <a href="./Special:WidgetDashboard?useskin=monaco">Монако</a>.</p><p>Изменете си ги <a href="./Special:Preferences">нагодувањата</a> за да ја користите оваа алатка.</p>',
-	'widgetdashboard-description' => 'Оваа страница служи за испробување на работата на вашите интерфејс-елементи. За да видите листа на сите расположиви елементи, одете на [[Special:Widgets]].',
+	'widgetdashboard-wrong-skin' => '<p>Таблата со направите најдобро работи со еден од новите изгледи, како на пр. <a href="./Special:WidgetDashboard?useskin=monaco">Монако</a>.</p><p>Изменете си ги <a href="./Special:Preferences">нагодувањата</a> за да можете да ја користите оваа алатка.</p>',
+	'widgetdashboard-description' => 'Оваа страница служи за испробување на работата на вашите направи. За да видите список на сите расположиви направи, одете на [[Special:Widgets]].',
 );
 
 /** Dutch (Nederlands)
@@ -102,10 +118,11 @@ Zie ook de [[Special:Widgets|lijst met alle beschikbare widgets]].',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
  * @author Nghtwlkr
  */
 $messages['no'] = array(
-	'widgetdashboard-wrong-skin' => '<p>Panelbordskjermelementet fungerer best med noen av de nye draktene, for eksempel <a href="./Special:WidgetDashboard?useskin=monaco">Monaco</a>.</p><p>Endre <a href="./Special:Preferences">innstillingene dine</a> for å bruke dette verktøyet.</p>',
+	'widgetdashboard-wrong-skin' => '<p>Dashbord for skjermelement fungerer best med noen av de nye utseendene, for eksempel <a href="./Special:WidgetDashboard?useskin=monaco">Monaco</a>.</p><p>Endre <a href="./Special:Preferences">innstillingene dine</a> for å bruke dette verktøyet.</p>',
 	'widgetdashboard-description' => 'Denne siden fungerer som et sted å teste hvordan dine skjermelement virker. For å se en liste over alle tilgjengelige skjermelement, gå til [[Special:Widgets]].',
 );
 
@@ -143,10 +160,20 @@ $messages['ru'] = array(
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Charmed94
  * @author Verlor
  */
 $messages['sr-ec'] = array(
+	'widgetdashboard-wrong-skin' => '<p>Контролна табла виџета ради најбоље с једним од новијих тема, нпр. <a href="./Special:WidgetDashboard?useskin=monaco">„Монако“</a>.</p><p>Молимо, промените <a href="./Special:Preferences">Ваше поставке</a>  да бисте користили ову алатку.</p>',
 	'widgetdashboard-description' => 'Ова страница служи да би могли да проверите како раде ваше алатке. Да би видели све расположиве алатке идите на [[Special:Widgets]].',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'widgetdashboard-wrong-skin' => '<p>Pinakamainam ang paggana ng Widget Dashboard kung may isa sa bagong mga pabalat, halimbawa na ang <a href="./Special:WidgetDashboard?useskin=monaco">Monaco</a>.</p><p>Pakibago <a href="./Special:Preferences">ang mga nais mo</a> upang magamit ang kasangkapang ito.</p>',
+	'widgetdashboard-description' => 'Nagsisilbi ang pahinang ito bilang isang pook na mapagsusubukan ng iyong mga widyet na gumagana.  Upang makita ang isang talaan ng lahat ng magagamit na mga widyet, pumunta sa [[Special:Widgets]].',
 );
 
 /** Ukrainian (Українська)

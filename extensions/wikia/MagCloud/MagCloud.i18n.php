@@ -127,6 +127,7 @@ $messages['be-tarask'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
  */
@@ -136,7 +137,7 @@ $messages['br'] = array(
 	'magcloud-intro-create-magazine' => 'Krouiñ ur gelaouenn gant pennadoù eus ar Wiki-mañ !',
 	'magcloud-intro-check-out' => "Klikit war ar gelaouenn evit kavout ur skouer eus hor c'humuniezh !",
 	'magcloud-intro-hint' => "Implijit ar voest-ostilhoù e krec'h ar bajenn ha dibabit ar pennadoù  hoc'h eus c'hoant da gempunañ en ho kelaouenn.
-Klikit war « Mont d'ho kelaouenn » pa vo echuet ganeoc'h.",
+Klikit war \"{{int:Magcloud-toolbar-go-to-magazine}}\" pa vo echuet ganeoc'h.",
 	'magcloud-intro-view-my-magazines' => "Gwelet ma c'helaouennoù",
 	'magcloud-load-magazine-title' => 'Pellgargañ ur gelaouenn',
 	'magcloud-load-magazine-load' => 'Pellgargañ ar gelaouenn-se',
@@ -154,8 +155,8 @@ Klikit war « Mont d'ho kelaouenn » pa vo echuet ganeoc'h.",
 	'magcloud-discard-magazine-discard' => 'Disteuler ha mont er-maez',
 	'magcloud-discard-magazine-save' => 'Enrollañ ha kuitaat',
 	'magcloud-special-collection-title' => 'Sevel ur gelaouenn !',
-	'magcloud-special-collection-empty' => 'Ma n\'ho peus dibabet pennad ebet c\'hoazh ! Kit er wiki, ha klikit  war "Ouzhpennañ" er voest ostilloù evit kenpunañ ho kelaouenn.',
-	'magcloud-special-collection-review-list-info' => 'Mat, dibabet ho peus $1 pennad{{PLURAL:$1||}} evit ho kelaouenn. M\'ho peus c\'hoant ouzhpenn re all, merdeit er wiki ha klikit war ar bouton "Ouzhpennañ" er boest ostilhoù amañ a-us !',
+	'magcloud-special-collection-empty' => 'Ma n\'ho peus dibabet pajenn wiki ebet c\'hoazh ! Kit er wiki, ha klikit war "{{int:Magcloud-toolbar-add}}" er voest ostilhoù evit kenpunañ ho kelaouenn.',
+	'magcloud-special-collection-review-list-info' => 'Mat, dibabet hoc\'h eus $1 pajenn{{PLURAL:$1||}} wiki evit ho kelaouenn. M\'hoc\'h eus c\'hoant ouzhpenn re all, merdeit er wiki ha klikit war ar bouton "{{int:Magcloud-toolbar-add}}" er boest ostilhoù amañ a-us !',
 	'magcloud-special-collection-review-list-tips' => "<big> Aloùigoù evit krouiñ ur gelaouenn</big>
 
 # Klaskit dibab ar pennadoù diwar-benn an hevelep dodenn,  da skouer, diwar-benn an dud drouk er bannoù-treset pe ar c'hlezeier burzhudus.
@@ -189,17 +190,18 @@ Ma n'oc'h ket awenet, gwelit ar skouerioù amañ dindan !",
 
 /** German (Deutsch)
  * @author LWChris
+ * @author The Evil IP address
  */
 $messages['de'] = array(
 	'wikiacollection' => 'Mach ein Magazin!',
 	'magcloud-intro-get-started' => 'Sammle Artikel',
 	'magcloud-intro-create-magazine' => 'Erstelle ein Magazin aus Artikeln in diesem Wiki!',
-	'magcloud-intro-check-out' => 'Klicke auf das Magazin um ein Beispiel aus unserer Community zu sehen!',
-	'magcloud-intro-hint' => 'Verwende einfach die Symbolleiste am oberen Rand der Seite um die Artikel zu wählen, die du in deinem Magazin zusammenstellen möchtest. Klicke auf "Gehe zu deinem Magazin" wenn du fertig bist!',
+	'magcloud-intro-check-out' => 'Klicke auf das Magazin um ein Beispiel aus unserer Gemeinschaft zu sehen!',
+	'magcloud-intro-hint' => 'Verwende einfach die Symbolleiste am oberen Rand der Seite um die Artikel zu wählen, die du in deinem Magazin zusammenstellen möchtest. Klicke auf „{{int:Magcloud-toolbar-go-to-magazine}}“ wenn du fertig bist!',
 	'magcloud-intro-view-my-magazines' => 'Meine Magazine anzeigen',
 	'magcloud-load-magazine-title' => 'Lade ein Magazin',
 	'magcloud-load-magazine-load' => 'Lade dieses Magazin',
-	'magcloud-load-magazine-empty' => 'Du hast noch keine Magazine gespeichert. Versuche eines zu erstellen und speicher es, um es in dieser Liste zu sehen!',
+	'magcloud-load-magazine-empty' => 'Du hast noch keine Magazine gespeichert. Versuche eines zu erstellen und speichere es, um es in dieser Liste zu sehen!',
 	'magcloud-add-article-success' => "'''$1''' wurde zu deinem Magazin hinzugefügt",
 	'magcloud-add-article-already' => "'''$1''' wurde bereits hinzugefügt",
 	'magcloud-toolbar-step' => 'Schritt $1: $2',
@@ -213,8 +215,8 @@ $messages['de'] = array(
 	'magcloud-discard-magazine-discard' => 'Verwerfen und Beenden',
 	'magcloud-discard-magazine-save' => 'Speichern und Beenden',
 	'magcloud-special-collection-title' => 'Mach ein Magazin!',
-	'magcloud-special-collection-empty' => 'Du hast noch keine Artikel ausgewählt! Kehre zurück zum Wiki, und wähle "Hinzufügen" in der Symbolleiste oben, um dein Magazin zusammenzustellen.',
-	'magcloud-special-collection-review-list-info' => 'Gut, du hast $1 {{PLURAL:$1|Artikel|Artikel}} für dein Magazin ausgewählt. Wenn du weitere hinzufügen möchtest, besuche einfach weitere Seiten und klicke oben in der Symbolleiste auf "Hinzufügen"!',
+	'magcloud-special-collection-empty' => 'Du hast noch keine Artikel ausgewählt! Kehre zurück zum Wiki, und wähle „{{int:Magcloud-toolbar-add}}“ in der Symbolleiste oben, um dein Magazin zusammenzustellen.',
+	'magcloud-special-collection-review-list-info' => 'Gut, du hast {{PLURAL:$1|eine Seite|$1 Seiten}} für dein Magazin ausgewählt. Wenn du weitere hinzufügen möchtest, besuche einfach weitere Seiten und klicke oben in der Symbolleiste auf „{{int:Magcloud-toolbar-add}}“!',
 	'magcloud-special-collection-review-list-tips' => '<big>Tipps zum Erstellen eines großartigen Magazines</big>
 
 # Versuche, Artikel zu einem bestimmen Thema zu wählen, wie Comic-Schurken oder einzigartige Schwerter.
@@ -223,7 +225,7 @@ $messages['de'] = array(
 Wenn du eine Inspiration brauchst, sieh dir die folgenden Beispiele an!',
 	'magcloud-order-your-articles' => 'Sortiere deine Artikel',
 	'magcloud-button-design-a-cover' => 'Entwirf ein Deckblatt',
-	'magcloud-design-default-title' => 'Mein $1 Magazin',
+	'magcloud-design-default-title' => 'Mein $1-Magazin',
 	'magcloud-design-default-subtitle' => 'Untertitel',
 	'magcloud-design-review-list' => 'Zurück zur Prüfliste',
 	'magcloud-design-preview' => 'Vorschau',
@@ -236,7 +238,7 @@ Wenn du eine Inspiration brauchst, sieh dir die folgenden Beispiele an!',
 	'magcloud-preview-generating-pdf' => 'Dein Magazin wird erstellt...',
 	'magcloud-publish-status-title' => 'Dein Magazin wird veröffentlicht',
 	'magcloud-publish-status' => 'Super! Wir schicken dir das Magazin zu.',
-	'magcloud-publish-error' => 'Wir stießen auf einen Fehler beim Versuch, dein Magazin zu MagCloud zu schicken - wir haben ihn aufgezeichnet um herauszufinden was passiert ist. Am besten versuchst du es später erneut - hoffentlich haben wir bis dahin das Problem gelöst. Wir bitten um Entschuldigung!',
+	'magcloud-publish-error' => 'Wir stießen auf einen Fehler beim Versuch, dein Magazin an MagCloud zu schicken - wir haben ihn aufgezeichnet um herauszufinden was passiert ist. Am besten versuchst du es später erneut - hoffentlich haben wir bis dahin das Problem gelöst. Wir bitten um Entschuldigung!',
 	'magcloud-publish-done' => '...und fertig! Weiterleitung zu MagCloud...',
 	'magcloud-publish-ajax-initialize' => 'Wir loggen uns bei MagCloud ein...',
 	'magcloud-publish-ajax-login' => '...richten die Veröffentlichung ein...',
@@ -248,13 +250,14 @@ Wenn du eine Inspiration brauchst, sieh dir die folgenden Beispiele an!',
 
 /** German (formal address) (Deutsch (Sie-Form))
  * @author LWChris
+ * @author The Evil IP address
  */
 $messages['de-formal'] = array(
 	'wikiacollection' => 'Machen Sie ein Magazin!',
 	'magcloud-intro-get-started' => 'Sammeln Sie Artikel',
 	'magcloud-intro-create-magazine' => 'Erstellen Sie ein Magazin aus Artikeln in diesem Wiki!',
-	'magcloud-intro-check-out' => 'Klicken Sie auf das Magazin um ein Beispiel aus unserer Community zu sehen!',
-	'magcloud-intro-hint' => 'Verwenden Sie einfach die Symbolleiste am oberen Rand der Seite um die Artikel zu wählen, die Sie in deinem Magazin zusammenstellen möchten. Klicken Sie auf "Gehen Sie zu Ihrem Magazin" wenn Sie fertig sind!',
+	'magcloud-intro-check-out' => 'Klicken Sie auf das Magazin um ein Beispiel aus unserer Gemeinschaft zu sehen!',
+	'magcloud-intro-hint' => 'Verwenden Sie einfach die Symbolleiste am oberen Rand der Seite um die Artikel zu wählen, die Sie in deinem Magazin zusammenstellen möchten. Klicken Sie auf „{{int:Magcloud-toolbar-go-to-magazine}}“ wenn Sie fertig sind!',
 	'magcloud-load-magazine-empty' => 'Sie haben noch keine Magazine gespeichert. Versuchen Sie eines zu erstellen und speichern Sie es, um es in dieser Liste zu sehen!',
 	'magcloud-add-article-success' => "'''$1''' wurde zu Ihrem Magazin hinzugefügt",
 	'magcloud-toolbar-article-in-collection' => "'''$1''' ist bereits in Ihrem Magazin",
@@ -263,8 +266,8 @@ $messages['de-formal'] = array(
 	'magcloud-discard-magazine-title' => 'Ihre Sammlung speichern?',
 	'magcloud-discard-magazine-msg' => 'Sie bearbeiten ein nicht gespeichertes Magazin. Möchten Sie es abspeichern? (Sie müssen angemeldet sein, um Ihre Sammlung zu speichern.)',
 	'magcloud-special-collection-title' => 'Machen Sie ein Magazin!',
-	'magcloud-special-collection-empty' => 'Sie haben noch keine Artikel ausgewählt! Kehren Sie zurück zum Wiki, und wählen Sie "Hinzufügen" in der Symbolleiste oben, um Ihr Magazin zusammenzustellen.',
-	'magcloud-special-collection-review-list-info' => 'Gut, Sie haben $1 {{PLURAL:$1|Artikel|Artikel}} für Ihr Magazin ausgewählt. Wenn Sie weitere hinzufügen möchten, besuchen Sie einfach weitere Seiten und klicken Sie oben in der Symbolleiste auf "Hinzufügen"!',
+	'magcloud-special-collection-empty' => 'Sie haben noch keine Artikel ausgewählt! Kehren Sie zurück zum Wiki, und wählen Sie „{{int:Magcloud-toolbar-add}}“ in der Symbolleiste oben, um Ihr Magazin zusammenzustellen.',
+	'magcloud-special-collection-review-list-info' => 'Gut, Sie haben {{PLURAL:$1|eine Seite|$1 Seiten}} für Ihr Magazin ausgewählt. Wenn Sie weitere hinzufügen möchten, besuchen Sie einfach weitere Seiten und klicken Sie oben in der Symbolleiste auf „{{int:Magcloud-toolbar-add}}“!',
 	'magcloud-special-collection-review-list-tips' => '<big>Tipps zum Erstellen eines großartigen Magazines</big>
 
 # Versuchen Sie, Artikel zu einem bestimmen Thema zu wählen, wie Comic-Schurken oder einzigartige Schwerter.
@@ -280,7 +283,7 @@ Wenn Sie eine Inspiration brauchen, sehen Sie sich die folgenden Beispiele an!',
 	'magcloud-preview-generating-pdf' => 'Ihr Magazin wird erstellt...',
 	'magcloud-publish-status-title' => 'Ihr Magazin wird veröffentlicht',
 	'magcloud-publish-status' => 'Klasse! Wir schicken Ihnen das Magazin zu.',
-	'magcloud-publish-error' => 'Wir stießen auf einen Fehler beim Versuch, Ihr Magazin zu MagCloud zu schicken - wir haben ihn aufgezeichnet um herauszufinden was passiert ist. Am besten versuchen Sie es später erneut - hoffentlich haben wir bis dahin das Problem gelöst. Wir bitten um Entschuldigung!',
+	'magcloud-publish-error' => 'Wir stießen auf einen Fehler beim Versuch, Ihr Magazin an MagCloud zu schicken - wir haben ihn aufgezeichnet um herauszufinden was passiert ist. Am besten versuchen Sie es später erneut - hoffentlich haben wir bis dahin das Problem gelöst. Wir bitten um Entschuldigung!',
 	'magcloud-publish-done' => '...beendet! Weiterleitung zu MagCloud...',
 	'magcloud-publish-ajax-initialize' => 'Einloggen in MagCloud...',
 	'magcloud-publish-ajax-login' => '...Veröffentlichung einrichten...',
@@ -301,7 +304,7 @@ $messages['es'] = array(
 	'magcloud-intro-get-started' => 'Coleccionar artículos',
 	'magcloud-intro-create-magazine' => 'Crear una revista de artículos de este wiki!',
 	'magcloud-intro-check-out' => 'Hacer click en la revista para verificar un ejemplo de nuestra comunidad!',
-	'magcloud-intro-hint' => 'Sólo usa la barra de herramientas de arriba de la página para seleccionar los artículos que te  gustaría compilar en tu revista. Haz click en "Ir a tu revista" cuando hayas terminado!',
+	'magcloud-intro-hint' => 'Sólo usa la barra de herramientas de arriba de la página para seleccionar los artículos que te  gustaría compilar en tu revista. Haz click en "{{int:Magcloud-toolbar-go-to-magazine}}" cuando hayas terminado!',
 	'magcloud-intro-view-my-magazines' => 'Ver mis revistas',
 	'magcloud-load-magazine-title' => 'Cargar una revista',
 	'magcloud-load-magazine-load' => 'Cargar esta revista',
@@ -319,8 +322,8 @@ $messages['es'] = array(
 	'magcloud-discard-magazine-discard' => 'Descartar y salir',
 	'magcloud-discard-magazine-save' => 'Grabar y salir',
 	'magcloud-special-collection-title' => 'Hacer una revista!',
-	'magcloud-special-collection-empty' => "¡Aún no has seleccionado ningún artículo! Devuélvete al wiki y selecciona 'Agregar' en la barra de herramientas de arriba para compilar tu revista.",
-	'magcloud-special-collection-review-list-info' => 'grandioso, has seleccionado $1 {{PLURAL:$1|artículo|artículos}} para tu revista. Si deseas agregar más, solo explorar otras páginas y presiona "Agregar" en la barra de herramientas de arriba!',
+	'magcloud-special-collection-empty' => 'Aún no has seleccionado ningún artículo! Devuélvete al wiki y selecciona "{{int:Magcloud-toolbar-add}}" en la barra de herramientas de arriba para compilar tu revista.',
+	'magcloud-special-collection-review-list-info' => 'Grandioso, has seleccionado $1 {{PLURAL:$1|página|páginas}} del wiki para tu revista. Si deseas agregar más, solo navega otras páginas y presiona "{{int:Magcloud-toolbar-add}}" en la barra de herramientas de arriba!',
 	'magcloud-special-collection-review-list-tips' => '<big>Consejos para crear una excelente revista</big>
 
 # Intenta elegir artículos que sigan un mismo tema, como villanos de cómics o espadas únicas.
@@ -373,13 +376,14 @@ $messages['fi'] = array(
 /** French (Français)
  * @author IAlex
  * @author McDutchie
+ * @author The Evil IP address
  */
 $messages['fr'] = array(
 	'wikiacollection' => 'Faire un magazine !',
 	'magcloud-intro-get-started' => 'Collecter les articles',
 	'magcloud-intro-create-magazine' => 'Créer un magazine depuis des articles de ce wiki !',
 	'magcloud-intro-check-out' => 'Cliquez sur le magazine pour voir un exemple de notre communauté !',
-	'magcloud-intro-hint' => 'Utilisez la boîte à outil en haut de la page et sélectionnez les articles que vous voudriez compiler dans votre magazine. Cliquez sur « Aller à votre magazine » quand vous aurez terminé.',
+	'magcloud-intro-hint' => 'Utilisez la boîte à outil en haut de la page et sélectionnez les articles que vous voudriez compiler dans votre magazine. Cliquez sur « {{int:Magcloud-toolbar-go-to-magazine}} » quand vous aurez terminé.',
 	'magcloud-intro-view-my-magazines' => 'Voir mes magazines',
 	'magcloud-load-magazine-title' => 'Charger un magazine',
 	'magcloud-load-magazine-load' => 'Charger ce magazine',
@@ -397,8 +401,8 @@ $messages['fr'] = array(
 	'magcloud-discard-magazine-discard' => 'Rejeter et sortir',
 	'magcloud-discard-magazine-save' => 'Sauvegarder et partir',
 	'magcloud-special-collection-title' => 'Faire un magazine !',
-	'magcloud-special-collection-empty' => "Vous n'avez encore sélectionné aucun article ! Allez dans le wiki, et cliquez « Ajouter » dans la boîte à outils pour compiler votre magazine.",
-	'magcloud-special-collection-review-list-info' => 'Bien, vous avez sélectionné $1 {{PLURAL:$1|article|articles}} pour votre magazine. Si vous voulez en ajouter plus, naviguez dans le wiki et cliquez sur le bouton « Ajouter » dans la boîte à outils ci-dessus !',
+	'magcloud-special-collection-empty' => "Vous n'avez encore sélectionné aucun article ! Allez dans le wiki, et cliquez « {{int:Magcloud-toolbar-add}} » dans la boîte à outils pour compiler votre magazine.",
+	'magcloud-special-collection-review-list-info' => 'Bien, vous avez sélectionné {{PLURAL:$1|une page|$1 pages}} pour votre magazine. Si vous voulez en ajouter plus, naviguez dans le wiki et cliquez sur le bouton « {{int:Magcloud-toolbar-add}} » dans la boîte à outils ci-dessus !',
 	'magcloud-special-collection-review-list-tips' => "<big>Trucs pour créer un bon magazine</big>
 
 # Essayez de choisir les articles sur un même thème, comme les méchants de bande dessinée ou les épées particulières.
@@ -438,7 +442,7 @@ $messages['gl'] = array(
 	'magcloud-intro-get-started' => 'Coleccionar os artigos',
 	'magcloud-intro-create-magazine' => 'Crear unha revista a partir de artigos deste wiki!',
 	'magcloud-intro-check-out' => 'Prema na revista para ollar un exemplo da nosa comunidade!',
-	'magcloud-intro-hint' => 'Simplemente use a barra de ferramentas que está no canto superior da páxina para seleccionar os artigos que desexa compilar na súa revista. Prema sobre "Ir á súa revista" cando remate!',
+	'magcloud-intro-hint' => 'Simplemente use a barra de ferramentas que está no canto superior da páxina para seleccionar os artigos que desexa compilar na súa revista. Prema sobre "{{int:Magcloud-toolbar-go-to-magazine}}" cando remate!',
 	'magcloud-intro-view-my-magazines' => 'Ver as miñas revistas',
 	'magcloud-load-magazine-title' => 'Cargar unha revista',
 	'magcloud-load-magazine-load' => 'Cargar esta revista',
@@ -456,8 +460,8 @@ $messages['gl'] = array(
 	'magcloud-discard-magazine-discard' => 'Desbotar e saír',
 	'magcloud-discard-magazine-save' => 'Gardar e saír',
 	'magcloud-special-collection-title' => 'Facer unha revista!',
-	'magcloud-special-collection-empty' => 'Aínda non seleccionou ningún artigo! Volte ao wiki e seleccione "Engadir" na barra de ferramentas superior para compilar a súa revista.',
-	'magcloud-special-collection-review-list-info' => 'Estupendo, seleccionou $1 {{PLURAL:$1|artigo|artigos}} para a súa revista. Se quere engadir máis, pode elixir máis páxinas e premer sobre "Engadir" na barra de ferramentas superior!',
+	'magcloud-special-collection-empty' => 'Aínda non seleccionou ningún artigo! Volva ao wiki e seleccione "{{int:Magcloud-toolbar-add}}" na barra de ferramentas superior para compilar a súa revista.',
+	'magcloud-special-collection-review-list-info' => 'Estupendo, seleccionou $1 {{PLURAL:$1|artigo|artigos}} para a súa revista. Se quere engadir máis, pode elixir máis páxinas e premer sobre "{{int:Magcloud-toolbar-add}}" na barra de ferramentas superior!',
 	'magcloud-special-collection-review-list-tips' => '<big>Consellos para crear unha boa revista</big>
 
 # Intente elixir artigos que sigan un tema, como viláns de cómic ou algún tipo de espada en particular.
@@ -468,12 +472,12 @@ Se está falto de inspiración, olle os exemplos de embaixo!',
 	'magcloud-button-design-a-cover' => 'Deseñar unha cuberta',
 	'magcloud-design-default-title' => 'A miña revista $1',
 	'magcloud-design-default-subtitle' => 'Subtítulo',
-	'magcloud-design-review-list' => 'Voltar á lista de revisión',
+	'magcloud-design-review-list' => 'Volver á lista de revisión',
 	'magcloud-design-preview' => 'Vista previa',
 	'magcloud-design-license-policy' => 'Cargue soamente unha imaxe da que posúa os dereitos de impresión e que cumpra as políticas deste wiki.',
 	'magcloud-design-image-selected' => '"$1" seleccionado',
 	'magcloud-preview-done' => 'Xerouse a súa revista.',
-	'magcloud-preview-back-to-cover' => 'Voltar ao deseño da cuberta',
+	'magcloud-preview-back-to-cover' => 'Volver ao deseño da cuberta',
 	'magcloud-preview-save-magazine' => 'Gardar a súa revista',
 	'magcloud-preview-publish' => 'Publicar a súa revista',
 	'magcloud-preview-generating-pdf' => 'Creando a súa revista...',
@@ -526,7 +530,7 @@ $messages['ia'] = array(
 	'magcloud-intro-get-started' => 'Colliger articulos',
 	'magcloud-intro-create-magazine' => 'Crea un revista de articulos in iste wiki!',
 	'magcloud-intro-check-out' => 'Clicca super le revista pro vider un exemplo ex nostre communitate!',
-	'magcloud-intro-hint' => 'Usa le instrumentario in alto del pagina pro seliger le articulos que tu vole compilar in tu revista. Clicca super "Ir a tu revista" quando tu es finite!',
+	'magcloud-intro-hint' => 'Simplemente usa le instrumentario in alto del pagina pro seliger le paginas wiki que tu vole compilar in tu revista. Clicca super "{{int:Magcloud-toolbar-go-to-magazine}}" quando tu es finite!',
 	'magcloud-intro-view-my-magazines' => 'Vider mi revistas',
 	'magcloud-load-magazine-title' => 'Cargar un revista',
 	'magcloud-load-magazine-load' => 'Cargar iste revista',
@@ -544,8 +548,8 @@ $messages['ia'] = array(
 	'magcloud-discard-magazine-discard' => 'Abandonar e exir',
 	'magcloud-discard-magazine-save' => 'Salveguardar e exir',
 	'magcloud-special-collection-title' => 'Face un revista!',
-	'magcloud-special-collection-empty' => "Tu non ha ancora seligite alcun articulo! Retorna al wiki e selige 'Adder' in le instrumentario in alto pro compilar tu revista.",
-	'magcloud-special-collection-review-list-info' => 'Ben, tu ha seligite $1 {{PLURAL:$1|articulo|articulos}} pro tu revista. Si tu vole adder alteres, simplemente visita lor paginas e preme "Adder" in le instrumentario in alto!',
+	'magcloud-special-collection-empty' => 'Tu non ha ancora seligite alcun pagina wiki! Retorna al wiki, e selige "{{int:Magcloud-toolbar-add}}" in le instrumentario hic supra pro compilar tu revista.',
+	'magcloud-special-collection-review-list-info' => 'Multo bon, tu ha seligite $1 {{PLURAL:$1|pagina|paginas}} wiki pro tu revista. Si tu vole adder alteres, simplemente visita altere paginas wiki e preme "{{int:Magcloud-toolbar-add}}" in le instrumentario hic supra!',
 	'magcloud-special-collection-review-list-tips' => '<big>Avisos pro crear un revista superbe</big>
 
 # Tenta seliger articulos super un mesme thema, como villanos de comics o gladios unic.
@@ -592,7 +596,7 @@ $messages['ja'] = array(
 	'magcloud-intro-get-started' => '記事を集める',
 	'magcloud-intro-create-magazine' => 'このウィキの記事からマガジンを作成',
 	'magcloud-intro-check-out' => 'コミュニティによって作成済みのマガジンをチェックしてみてください:',
-	'magcloud-intro-hint' => '上のツールバーでマガジンに収録したい記事を選択し、選び終わったら"マガジンを作成"ボタンをクリックしてください。',
+	'magcloud-intro-hint' => '上のツールバーでマガジンに収録したい記事を選択し、選び終わったら"{{int:Magcloud-toolbar-go-to-magazine}}"ボタンをクリックしてください。',
 	'magcloud-intro-view-my-magazines' => '自分のマガジンを閲覧',
 	'magcloud-load-magazine-title' => 'マガジンの読み込み',
 	'magcloud-load-magazine-load' => 'このマガジンを読み込む',
@@ -610,8 +614,8 @@ $messages['ja'] = array(
 	'magcloud-discard-magazine-discard' => '保存しないで終了',
 	'magcloud-discard-magazine-save' => '保存して終了',
 	'magcloud-special-collection-title' => 'マガジンを作成',
-	'magcloud-special-collection-empty' => '記事が1件も選択されていません。ウィキに戻り、ツールバーの"追加"ボタンをクリックして記事を集めてください。',
-	'magcloud-special-collection-review-list-info' => '$1 の記事が選択されました。さらに記事を追加したいのであれば、追加したいページを表示し上にあるツールバーの"追加"ボタンをクリックしてください。',
+	'magcloud-special-collection-empty' => '記事が1件も選択されていません。ウィキに戻り、ツールバーの"{{int:Magcloud-toolbar-add}}"ボタンをクリックして記事を集めてください。',
+	'magcloud-special-collection-review-list-info' => '$1 の記事が選択されました。さらに記事を追加したいのであれば、追加したいページを表示し上にあるツールバーの"{{int:Magcloud-toolbar-add}}"ボタンをクリックしてください。',
 	'magcloud-special-collection-review-list-tips' => "<big>よいマガジンを作成するために</big>
 # ある一つのテーマを決め、それに沿った記事を選択するようにしてください。
 # 完成したマガジンが100ページ以下に収まるように、追加する記事によりますがだいたい8から10記事を選択するようにしてください。
@@ -642,6 +646,16 @@ $messages['ja'] = array(
 	'magcloud-publish-ajax-processing' => '...大きな赤い"発行"ボタンを探しています...',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'wikiacollection' => 'Eng Zäitschrëft maachen!',
+	'magcloud-intro-get-started' => 'Artikele sammelen',
+	'magcloud-toolbar-add' => 'Derbäisetzen',
+	'magcloud-design-default-subtitle' => 'Ënnertitel',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -650,11 +664,11 @@ $messages['mk'] = array(
 	'magcloud-intro-get-started' => 'Соберете статии',
 	'magcloud-intro-create-magazine' => 'Создајте списание од статии на ова вики!',
 	'magcloud-intro-check-out' => 'Кликнете на списанието за да видите пример од нашата заедница!',
-	'magcloud-intro-hint' => 'Со алатникот на врвот од страницата изберете ги статиите кои сакате да ги составите во вашето списание.',
+	'magcloud-intro-hint' => 'Со алатникот најгоре изберете страниците од викито што сакате да ги составите во списанието. Кликнете на „{{int:Magcloud-toolbar-go-to-magazine}}“ кога сте готови!',
 	'magcloud-intro-view-my-magazines' => 'Преглед на моите списанија',
 	'magcloud-load-magazine-title' => 'Вчитај списание',
 	'magcloud-load-magazine-load' => 'Вчитај го списаниево',
-	'magcloud-load-magazine-empty' => 'Досега немате зачувано ниедно списание. Создајте списание и зачувајте го за да го видите на листата.',
+	'magcloud-load-magazine-empty' => 'Досега немате зачувано ниедно списание. Создајте списание и зачувајте го за да го видите на списокот.',
 	'magcloud-add-article-success' => "'''$1''' е додадена во вашето списание",
 	'magcloud-add-article-already' => "'''$1''' е веќе додадена",
 	'magcloud-toolbar-step' => 'Чекор $1: $2',
@@ -668,8 +682,8 @@ $messages['mk'] = array(
 	'magcloud-discard-magazine-discard' => 'Поништи и излези',
 	'magcloud-discard-magazine-save' => 'Зачувај и излези',
 	'magcloud-special-collection-title' => 'Направете списание!',
-	'magcloud-special-collection-empty' => 'Сè уште немате одбрано ниедна статија! Вратете се на викито и одберете „Додај“ во алатникот погоре за да го составите вашето списание.',
-	'magcloud-special-collection-review-list-info' => 'Супер, одбравте $1 {{PLURAL:$1|статија|статии}} за во списанието. Ако сакате да додадете уште, едноставно прелистајте, пронајдете други страници и притиснете „Додај“ во алатникот погоре!',
+	'magcloud-special-collection-empty' => 'Сè уште немате одбрано ниедна страница! Вратете се на викито и од алатникот погоре одберете „{{int:Magcloud-toolbar-add}}“ за да го составите вашето списание.',
+	'magcloud-special-collection-review-list-info' => 'Одлично, одбравте $1 {{PLURAL:$1|страница|страници}} за во списанието. Ако сакате да додадете уште, едноставно прелистајте, пронајдете други страници и притиснете на „{{int:Magcloud-toolbar-add}}“ во алатникот погоре!',
 	'magcloud-special-collection-review-list-tips' => '<big>Совети за изработка на одлично списание</big>
 
 # Одбирајте статии што следат некоја тема, како на пример негативци од стрипови или уникатни мечови.
@@ -680,7 +694,7 @@ $messages['mk'] = array(
 	'magcloud-button-design-a-cover' => 'Дизајнирајте насловна страница',
 	'magcloud-design-default-title' => 'Моето списание $1',
 	'magcloud-design-default-subtitle' => 'Поднаслов',
-	'magcloud-design-review-list' => 'Назад кон преглед на листата',
+	'magcloud-design-review-list' => 'Назад кон преглед на списокот',
 	'magcloud-design-preview' => 'Преглед',
 	'magcloud-design-license-policy' => 'Подигајте само слики кои имате право да ги печатите и кои се придржуваат до правилата на ова вики.',
 	'magcloud-design-image-selected' => 'Одбрана - $1',
@@ -710,7 +724,7 @@ $messages['nl'] = array(
 	'magcloud-intro-create-magazine' => "Maak een tijdschrift uit pagina's van deze wiki!",
 	'magcloud-intro-check-out' => 'Klik op het tijdschrift om een voorbeeld uit de gemeenschap te bekijken!',
 	'magcloud-intro-hint' => 'Gebruik de werkbalk bovenaan de pagina om pagina\'s te selecteren die u in uw tijdschrift wilt opnemen.
-Klik op "Naar uw tijdschrift" als u klaar bent.',
+Klik op "{{int:Magcloud-toolbar-go-to-magazine}}" als u klaar bent.',
 	'magcloud-intro-view-my-magazines' => 'Mijn tijdschriften bekijken',
 	'magcloud-load-magazine-title' => 'Tijdschrift laden',
 	'magcloud-load-magazine-load' => 'Dit tijdschrift laden',
@@ -732,10 +746,10 @@ U moet aangemeld zijn om uw verzameling op te kunnen slaan.',
 	'magcloud-discard-magazine-save' => 'Ja en sluiten',
 	'magcloud-special-collection-title' => 'Maak een tijdschrift!',
 	'magcloud-special-collection-empty' => 'U hebt nog geen pagina\'s geselecteerd.
-Ga terug naar de wiki en selecteer "Toevoegen" in de werkbalk om uw tijdschrift samen te stellen.',
+Ga terug naar de wiki en selecteer "{{int:Magcloud-toolbar-add}}" in de werkbalk om uw tijdschrift samen te stellen.',
 	'magcloud-special-collection-review-list-info' => 'Mooi!
 U hebt $1 {{PLURAL:$1|pagina|pagina\'s}} geselecteerd voor uw tijdschrift.
-Als u meer pagina\'s wilt toevoegen, ga dan naar die pagina\'s en klik "Toevoegen" in de werkbalk.',
+Als u meer pagina\'s wilt toevoegen, ga dan naar die pagina\'s en klik "{{int:Magcloud-toolbar-add}}" in de werkbalk.',
 	'magcloud-special-collection-review-list-tips' => "<big>Tips voor het maken van een Supertijdschrift</big>
 
 # volg een thema bij de pagina's die u opneemt, zoals unieke zwaarden of modellocomotieven.
@@ -780,7 +794,7 @@ $messages['no'] = array(
 	'magcloud-intro-get-started' => 'Samle artikler',
 	'magcloud-intro-create-magazine' => 'Opprett et magasin med artikler fra denne wikien!',
 	'magcloud-intro-check-out' => 'Klikk på magasinet for å se på et eksempel fra felleskapet vårt!',
-	'magcloud-intro-hint' => 'Bare bruk verktøylinjen øverst på siden for å velge artikler du vil ha med i magasinet ditt. Klikk på «Gå til ditt magasin» når du er ferdig!',
+	'magcloud-intro-hint' => 'Bare bruk verktøylinjen øverst på siden for å velge wiki-artiklene du vil ha med i magasinet ditt. Klikk på «{{int:Magcloud-toolbar-go-to-magazine}}» når du er ferdig!',
 	'magcloud-intro-view-my-magazines' => 'Se mine magasin',
 	'magcloud-load-magazine-title' => 'Last et magasin',
 	'magcloud-load-magazine-load' => 'Last dette magasinet',
@@ -798,8 +812,8 @@ $messages['no'] = array(
 	'magcloud-discard-magazine-discard' => 'Kast og avslutt',
 	'magcloud-discard-magazine-save' => 'Lagre og avslutt',
 	'magcloud-special-collection-title' => 'Lag et magasin!',
-	'magcloud-special-collection-empty' => "Du har ikke valgt noen artikler ennå! Gå tilbake til wikien og velg 'Legg til' i verktøylinjen ovenfor for å lage magasinet ditt.",
-	'magcloud-special-collection-review-list-info' => 'Flott, du har valgt {{PLURAL:$1|én artikkel|$1 artikler}} til magasinet ditt. Om du vil legge til flere, bare gå til flere sider og klikk «Legg til» i verktøylinken ovenfor!',
+	'magcloud-special-collection-empty' => 'Du har ikke valgt noen wiki-artikler ennå! Gå tilbake til wikien og velg «{{int:Magcloud-toolbar-add}}» i verktøylinjen ovenfor for å lage magasinet ditt.',
+	'magcloud-special-collection-review-list-info' => 'Flott, du har valgt $1 wiki-{{PLURAL:$1|artikkel|artikler}} til magasinet ditt. Om du vil legge til flere, bare gå til flere sider og klikk «{{int:Magcloud-toolbar-add}}» i verktøylinken ovenfor!',
 	'magcloud-special-collection-review-list-tips' => '<big>Tips for å opprette et bra magasin</big>
 
 # Prøv å velge artikler som følger et tema, som for eksempel tegneseriekjeltringer eller unike sverd.
@@ -840,7 +854,7 @@ $messages['pms'] = array(
 	'magcloud-intro-get-started' => 'Colession-a artìcoj',
 	'magcloud-intro-create-magazine' => 'Crea un giornal da artìcoj an sta Wiki-sì|',
 	'magcloud-intro-check-out' => "Selession-a ël giornal për controlé n'esempi da nòsta comunità!",
-	'magcloud-intro-hint' => "Dovré pura la bara dj'utiss an cò dla pàgina për selessioné l'artìcol ch'a veul ëscrive an sò giornal. Ch'a sgnaca \"Andé a sò giornal\" quand ch'a l'ha finì!",
+	'magcloud-intro-hint' => "Dovré pura la bara dj'utiss an cò dla pàgina për selessioné l'artìcol ch'a veul ëscrive an sò giornal. Ch'a sgnaca \"{{int:Magcloud-toolbar-go-to-magazine}}\" quand ch'a l'ha finì!",
 	'magcloud-intro-view-my-magazines' => 'Varda mè Giornaj',
 	'magcloud-load-magazine-title' => 'Caria un Giornal',
 	'magcloud-load-magazine-load' => 'Caria sto giornal-sì',
@@ -858,8 +872,8 @@ $messages['pms'] = array(
 	'magcloud-discard-magazine-discard' => 'Scarta e seurt',
 	'magcloud-discard-magazine-save' => 'Salva e seurt',
 	'magcloud-special-collection-title' => 'Fà un giornal!',
-	'magcloud-special-collection-empty' => "A l'ha pa ancor selessionà gnun artìcol! Ch'a torna andré ant la wiki, e ch'a selession-a 'Gionté' ant la bara dj'utiss dëdzora për compilé sò giornal.",
-	'magcloud-special-collection-review-list-info' => "Bin, a l'ha selessionà \$1 {{PLURAL:\$1|artìcol|artìcoj}} për sò giornal. S'a veul giontene ëd pi, ch'a nàviga an d'àutre pàgine e ch'a sgnaca \"Gionté\" ant la bara dj'utiss dëdzora!",
+	'magcloud-special-collection-empty' => "A l'ha pa ancor selessionà dj'artìcoj! Ch'a torna andré ant la wiki, e ch'a selession-a \"{{int:Magcloud-toolbar-add}}\" ant la bara dj'utiss dëdzora për compilé sò giornal.",
+	'magcloud-special-collection-review-list-info' => "Bin, a l'ha selessionà \$1 {{PLURAL:\$1|artìcol|artìcoj}} wiki për sò giornal. S'a veul giontene ëd pi, ch'a nàviga an d'àutre pàgine e ch'a sgnaca \"{{int:Magcloud-toolbar-add}}\" ant la bara dj'utiss dëdzora!",
 	'magcloud-special-collection-review-list-tips' => "<big>Sugeriment për creé un Gran Giornal</big>
 
 # Ch'a preuva a serne dj'artìcoj ch'a l'abio un tema, parèj dij gram ant ij fumet o le spa da antenditor.
@@ -923,7 +937,7 @@ $messages['ru'] = array(
 	'magcloud-intro-get-started' => 'Собрать статьи',
 	'magcloud-intro-create-magazine' => 'Создайте журнал из статей этой вики!',
 	'magcloud-intro-check-out' => 'Нажмите на журнал, чтобы увидеть пример из нашего сообщества!',
-	'magcloud-intro-hint' => 'Используйте панель инструментов в верхней части страницы, чтобы выбрать статьи, которые вы хотите объединить в журнал. Нажмите кнопку «Перейти в ваш журнал», когда закончите!',
+	'magcloud-intro-hint' => 'Используйте панель инструментов в верхней части страницы, чтобы выбрать статьи, которые вы хотите объединить в ваш журнал. Нажмите «{{int:Magcloud-toolbar-go-to-magazine}}», когда закончите!',
 	'magcloud-intro-view-my-magazines' => 'Посмотреть мои журналы',
 	'magcloud-load-magazine-title' => 'Загрузить журнал',
 	'magcloud-load-magazine-load' => 'Загрузить этот журнал',
@@ -941,8 +955,8 @@ $messages['ru'] = array(
 	'magcloud-discard-magazine-discard' => 'Отменить и выйти',
 	'magcloud-discard-magazine-save' => 'Сохранить и выйти',
 	'magcloud-special-collection-title' => 'Сделать журнал!',
-	'magcloud-special-collection-empty' => 'Вы ещё не выбрали ни одной статьи! Вернитесь в вики и выберите пункт «Добавить» на панели инструментов, чтобы  составить ваш журнал.',
-	'magcloud-special-collection-review-list-info' => 'Замечательно, вы выбрали $1 {{PLURAL:$1|статью|статьи|статей}} для своего журнала. Если вы хотите добавить ещё, просто посетите другие страницы и нажмите «Добавить» на панели вверху!',
+	'magcloud-special-collection-empty' => 'Вы ещё не выбрали ни одной статьи! Вернитесь в вики и выберите «{{int:Magcloud-toolbar-add}}» на панели инструментов, чтобы составить ваш журнал.',
+	'magcloud-special-collection-review-list-info' => 'Замечательно, вы выбрали $1 {{PLURAL:$1|статью|статьи|статей}} для своего журнала. Если вы хотите добавить ещё, просто посетите другие страницы и нажмите «{{int:Magcloud-toolbar-add}}» на панели вверху!',
 	'magcloud-special-collection-review-list-tips' => '<big>Советы по созданию хорошего журнала</big>
 
 # Попробуйте выбрать статьи, следующие одной теме, например, про комических злодеев или уникальные мечи.

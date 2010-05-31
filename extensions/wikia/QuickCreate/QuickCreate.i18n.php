@@ -94,6 +94,14 @@ $messages['id'] = array(
 	'quickcreate' => 'kirimkan resep Anda',
 );
 
+/** Japanese (日本語)
+ * @author 青子守歌
+ */
+$messages['ja'] = array(
+	'quickcreate-desc' => '匿名利用者のログインとともに、ページの新規作成ボタンを追加する',
+	'quickcreate' => 'レシピを送信',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -160,9 +168,19 @@ $messages['ru'] = array(
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Charmed94
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'quickcreate' => 'пошаљите ваш рецепт',
+	'quickcreate-desc' => 'Додаје дугме „Направи нову страницу“ с могућношћу да се пријавите за анонимне кориснике',
+	'quickcreate' => 'пошаљите свој рецепт',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'quickcreate-desc' => 'Nagdaragdag ng isang pindutang panlikha ng bagong pahina na may kakayahang lumagdang papasok para sa mga tagagamit na hindi nakikilala',
+	'quickcreate' => 'ipasa ang iyong reseta',
 );
 

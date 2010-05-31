@@ -53,6 +53,13 @@ $messages['af'] = array(
 	'whereisextension-name-contains' => 'veranderlike-naam bevat',
 );
 
+/** Aragonese (Aragonés)
+ * @author Juanpabl
+ */
+$messages['an'] = array(
+	'whereisextension-filter' => 'Filtrar',
+);
+
 /** Arabic (العربية)
  * @author OsamaK
  */
@@ -198,6 +205,11 @@ $messages['ia'] = array(
 	'whereisextension-name-contains' => 'nomine de variabile contine',
 );
 
+/** Igbo (Igbo) */
+$messages['ig'] = array(
+	'whereisextension-submit' => 'Chöwá',
+);
+
 /** Italian (Italiano) */
 $messages['it'] = array(
 	'whereisextension-submit' => 'Ricerca',
@@ -223,9 +235,9 @@ $messages['kn'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'whereisextension' => 'Проширување Where is',
+	'whereisextension' => 'Каде е додатокот',
 	'whereisextension-submit' => 'Пребарај',
-	'whereisextension-list' => 'Листа на викија со совпаднати критериуми',
+	'whereisextension-list' => 'Список на викија со совпаднати критериуми',
 	'whereisextension-isset' => 'е наместено на',
 	'whereisextension-filter' => 'Филтрирање',
 	'whereisextension-all-groups' => 'Сите групи',
@@ -256,6 +268,19 @@ $messages['no'] = array(
 	'whereisextension-filter' => 'Filter',
 	'whereisextension-all-groups' => 'Alle grupper',
 	'whereisextension-name-contains' => 'variabelnavn inneholder',
+);
+
+/** Occitan (Occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'whereisextension' => "Ont se tròba l'extension",
+	'whereisextension-submit' => 'Recercar',
+	'whereisextension-list' => 'Lista dels wikis que correspondon als critèris',
+	'whereisextension-isset' => 'es definida a',
+	'whereisextension-filter' => 'Filtrar',
+	'whereisextension-all-groups' => 'Totes los gropes',
+	'whereisextension-name-contains' => 'lo nom de la variabla conten',
 );
 
 /** Piedmontese (Piemontèis)
@@ -323,13 +348,17 @@ $messages['ru'] = array(
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Charmed94
  * @author Verlor
  */
 $messages['sr-ec'] = array(
+	'whereisextension' => 'Где је екстензија',
 	'whereisextension-submit' => 'Претрага',
 	'whereisextension-list' => 'Листа викија са траженим критеријима',
+	'whereisextension-isset' => 'је подешена на',
 	'whereisextension-filter' => 'Филтар',
 	'whereisextension-all-groups' => 'Све групе',
+	'whereisextension-name-contains' => 'име променљиве садржи',
 );
 
 /** Telugu (తెలుగు)
@@ -338,5 +367,18 @@ $messages['sr-ec'] = array(
 $messages['te'] = array(
 	'whereisextension-submit' => 'వెతుకు',
 	'whereisextension-all-groups' => 'అన్ని గుంపులు',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'whereisextension' => 'Dugtong na nasaan',
+	'whereisextension-submit' => 'Hanapin',
+	'whereisextension-list' => 'Talaan ng mga wiking may magkakatugmang pamantayan',
+	'whereisextension-isset' => 'ay nakatakda sa',
+	'whereisextension-filter' => 'Pansala',
+	'whereisextension-all-groups' => 'Lahat ng mga pangkat',
+	'whereisextension-name-contains' => 'naglalaman ang pangalang nababago ng',
 );
 

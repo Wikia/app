@@ -482,7 +482,9 @@ Lascia un messaggio sulla [[$2|pagina delle mie discussioni]], se posso esserti 
 	'welcome-message-log' => 'Benvenuto a un nuovo collaboratore',
 );
 
-/** Japanese (日本語) */
+/** Japanese (日本語)
+ * @author Tommy6
+ */
 $messages['ja'] = array(
 	'welcome-user-page' => "== 自己紹介 ==
 '''ここは、「{{PAGENAME}}」さんの利用者ページです。'''
@@ -497,6 +499,14 @@ $messages['ja'] = array(
 
 また、何か困ったことがありましたら、お気軽に[[$2|私の会話ページ]]までメッセージをお寄せください。$3',
 	'welcome-message-log' => 'ウィキアへようこそ！',
+	'welcome-message-user-staff' => 'こんにちは、{{SITENAME}}へようこそ！ [[:$1]]への編集ありがとうございます。
+
+もし、何か困ったことがあり、このウィキローカルの管理者が見当たらない場合には、[[w:ja:Forum:Index|セントラルウィキアのフォーラム]]までメッセージをお寄せください。$3',
+	'welcome-message-anon-staff' => 'こんにちは、{{SITENAME}}へようこそ！ [[:$1]]への編集ありがとうございます。
+
+もし、まだアカウントをお持ちでなければ、[[Special:Userlogin|ぜひアカウントを取得してみてください]]。他の方とコミュニケーションがとりやすくなりますし、アカウントユーザーだけが利用できる機能も多くあります。
+
+もし、何か困ったことがあり、このウィキローカルの管理者が見当たらない場合には、[[w:ja:Forum:Index|セントラルウィキアのフォーラム]]までメッセージをお寄せください。$3',
 );
 
 /** Macedonian (Македонски)
@@ -645,6 +655,16 @@ Podètz daissar un messatge sus ma pagina de [[$2|discussion]] se vos pòdi ajud
 
 Trantalhetz pas a daissar un messatge sus [[$2|ma pagina de discussion]] se vos pòdi ajudar per qué que siá ! $3",
 	'welcome-message-log' => 'Aculhir un novèl utilizaire',
+	'welcome-message-user-staff' => "== Benvenguda ==
+Bonjorn e benvenguda sus {{SITENAME}} ! Mercés d'aver modificada la pagina [[:$1]].
+
+S'avètz besonh d'ajuda e qu'i a pas d'administrator aicí, podètz visitar los [[wikia:Forum:Community Central Forum|forums del Wiki Central de la Comunautat]] $3",
+	'welcome-message-anon-staff' => "== Benvenguda ==
+Bonjorn e benvenguda sus {{SITENAME}}. Mercés d'aver modificada la pagina [[:$1]].
+
+'''[[Special:Userlogin|Mercés de vos enregistrar e de crear un nom d'utilizaire]]'''. Es un mejan simple per gardar la traça de vòstras contribucions e que vos ajudarà a comunicar amb la rèsta de la comunautat.
+
+S'avètz besonh d'ajuda e qu'i a pas d'administrator aicí, podètz visitar los [[wikia:Forum:Community Central Forum|forums del Wiki Central de la Comunautat]] $3",
 );
 
 /** Polish (Polski)
@@ -730,6 +750,7 @@ S'a l'has dabzògn d'agiut, e a-i é gnun aministrator locaj ambelessì, a peul 
 );
 
 /** Portuguese (Português)
+ * @author Avatar
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
@@ -757,7 +778,7 @@ Por favor, deixe uma mensagem na [[$2|minha página de discussão]] se eu puder 
 	'welcome-message-log' => 'boas-vindas a novo colaborador',
 	'welcome-message-user-staff' => '==Bem-vindo(a)==
 
-Olá, bem-vindo(a) à translatewiki.net! Obrigado pela sua edição da página [[:$1]].
+Olá, bem-vindo(a) à {{SITENAME}}! Obrigado pela sua edição da página [[:$1]].
 
 Se necessita de ajuda e não encontra administradores locais, talvez
 queira visitar os [[wikia:Forum:Community Central Forum|fóruns na
@@ -842,10 +863,44 @@ $messages['ru'] = array(
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Charmed94
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'welcome-message-log' => 'Поздрав за новог корисника',
+	'welcome-user-page' => "==О мени==
+
+''Ово је Ваша корисничка страница. Молимо, промените је да бисте рекли заједници нешто о себи!''
+
+==Моји доприноси==
+
+* [[Special:Contributions/{{PAGENAME}}|Доприноси корисника]]
+
+==Моје омиљене странице==
+
+* Додаје везе ка твојим омиљеним страницама на викију!
+* Омиљена страница #2
+* Омиљена страница #3",
+	'welcome-message-user' => 'Здраво и добро дошли у {{SITENAME}}! Хвала Вам на измени на [[:$1]] страници.
+
+Молимо, оставите коментар на [[$2|мојој страници за разговор]] ако Вам икако могу помоћи! $3',
+	'welcome-message-anon' => "Здраво и добро дошли у {{SITENAME}}! Хвала Вам на измени на [[:$1]] страници.
+
+'''[[Special:Userlogin|Молимо, пријавите се и направите корисничко име]]'''. То је најлакши начин да приступите Вашим доприносима и комуницирате с остатком заједнице.
+
+Молимо, оставите коментар на [[$2|мојој страници за разговор]] ако Вам икако могу помоћи! $3",
+	'welcome-message-log' => 'поздрав за новог корисника',
+	'welcome-message-user-staff' => '==Добродошлица==
+
+Здраво и добро дошли у {{SITENAME}}! Хвала Вам на измени на [[:$1]] страници.
+
+Ако Вам буде затребала помоћ а не нађете локалног администратора, посетите [[wikia:Forum:Community Central Forum|форум на Централној вики заједници]] $3',
+	'welcome-message-anon-staff' => "==Добродошлица==
+
+Здраво и добро дошли у {{SITENAME}}. Хвала Вам на измени на [[:$1]] страници.
+
+'''[[Special:Userlogin|Молимо, пријавите се и направите корисничко име]]'''. То је најлакши начин да приступите Вашим доприносима и комуницирате с остатком заједнице.
+
+Ако Вам буде затребала помоћ а не нађете локалног администратора, посетите [[wikia:Forum:Community Central Forum|форум на Централној вики заједници]] $3",
 );
 
 /** Swedish (Svenska) */
@@ -874,6 +929,48 @@ Hej, välkommen till {{SITENAME}}. Tack för din ändring till [[:$1]] sidan.
 
 Lämna ett meddelande på [[$2|min diskussionssida]] om jag kan hjälpa till med något! $3",
 	'welcome-message-log' => 'välkomna nya bidragsgivare',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'welcome-user-page' => "==Tungkol sa akin==
+
+''Ito ang iyong pahina ng tagagamit. Pakibago ang pahinang ito upang makapagsabi sa pamayanan ng hinggil sa sarili mo!''
+
+==Mga ambag ko==
+
+* [[Special:Contributions/{{PAGENAME}}|Mga ambag ng tagagamit]]
+
+==Mga paborito kong pahina==
+
+* Nagdaragdag dito ng mga kawing sa iyong paboritong mga pahina sa wiki!
+* Paboritong pahina #2
+* Paboritong pahina #3",
+	'welcome-message-user' => 'Kumusta, maligayang pagdating sa {{SITENAME}}! Salamat sa pamamatnugot mo sa pahinang [[:$1]].
+
+Mangyaring mag-iwan ng isang mensahe sa [[$2|pahina ko ng usapan]] kung makakatulong ako sa anumang bagay! $3',
+	'welcome-message-anon' => "Kumusta, maligayang pagdating sa {{SITENAME}}! Salamat sa pamamatnugot mo sa pahinang [[:$1]].
+
+'''[[Special:Userlogin|Mangyaring lumagda at lumikha ng isang pangalan ng tagagamit]]'''. Isa itong madaling paraan upang masubaybay ang mga ambag mo at makatutulong sa iyong makipag-ugnayan sa iba pang nasa pamayanan.
+
+Mangyaring mag-iwan ng isang mensahe sa [[$2|pahina ko ng talakayan]] kung makakatulong ako sa anumang bagay! $3",
+	'welcome-message-log' => 'maligayang binabati ang bagong tagaambag',
+	'welcome-message-user-staff' => '==Maligayang pagdating==
+
+Kumusta, maligayang pagdating sa {{SITENAME}}! Salamat sa pamamatnugot mo sa pahinang [[:$1]].
+
+Kung kailangan mo ng tulong, at walang katutubong mga tagapangasiwa dito, maaaring naisin mong
+dalawin ang [[wikia:Forum:Community Central Forum|mga poro sa Wiki ng Pangunahing Pamayanan]] $3',
+	'welcome-message-anon-staff' => "==Maligayang pagdating==
+
+Kumusta, maligayang pagdating sa {{SITENAME}}! Salamat sa pamamatnugot mo sa pahinang [[:$1]].
+
+'''[[Special:Userlogin|Mangyaring lumagda o lumikha ng isang pangalan ng tagagamit]]'''. Isa itong maginhawang paraan upang masubaybayan ang mga ambag mo at makakatulong sa pakikipag-ugnayan mo sa iba pang mga nasa pamayanan.
+
+Kung kailangan mo ng tulong, at walang katutubong mga tagapangasiwa dito, maaaring naisin mong
+dalawin ang [[wikia:Forum:Community Central Forum|mga poro sa Wiki ng Pangunahing Pamayanan]] $3",
 );
 
 /** Ukrainian (Українська)

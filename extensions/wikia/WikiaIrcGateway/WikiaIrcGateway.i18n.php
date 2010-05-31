@@ -146,6 +146,14 @@ $messages['ia'] = array(
 	'ircgate-channel' => 'Canal:',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'ircgate-username' => 'Nama pengguna:',
+	'ircgate-channel' => 'Saluran:',
+);
+
 /** Italian (Italiano)
  * @author Civvì
  */
@@ -262,6 +270,14 @@ $messages['sr-ec'] = array(
  */
 $messages['te'] = array(
 	'ircgate-username' => 'వాడుకరిపేరు:',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'ircgate-username' => 'Pangalan ng tagagamit:',
+	'ircgate-channel' => 'Bangbang:',
 );
 
 /** Turkish (Türkçe)

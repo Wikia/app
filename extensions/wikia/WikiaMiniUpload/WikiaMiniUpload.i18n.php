@@ -91,6 +91,7 @@ $messages['qqq'] = array(
 	'wmu-license' => '{{Identical|License}}',
 	'wmu-size' => '{{Identical|Size}}',
 	'wmu-width' => '{{Identical|Width}}',
+	'wmu-layout' => '{{Identical|Layout}}',
 	'wmu-caption' => '{{Identical|Caption}}',
 	'wmu-link' => '{{Identical|Link}}',
 	'wmu-optional' => '{{Identical|Optional}}',
@@ -830,8 +831,8 @@ $messages['gl'] = array(
 	'wmu-thiswiki2' => 'Imaxes deste wiki ($1 {{PLURAL:$1|resultado|resultados}})',
 	'wmu-success' => '<h1>Feito</h1>Engadiuse a súa imaxe.',
 	'wmu-success-placeholder' => '<h1>Feito</h1>',
-	'wmu-return' => 'Voltar ao modo de edición',
-	'wmu-back' => 'voltar',
+	'wmu-return' => 'Volver ao modo de edición',
+	'wmu-back' => 'volver',
 	'wmu-close' => 'pechar',
 	'wmu-warn1' => 'Ten que especificar a pescuda primeiro!',
 	'wmu-warn2' => 'Ten que seleccionar o ficheiro primeiro!',
@@ -982,6 +983,15 @@ $messages['ia'] = array(
 	'wmu-no-preview' => 'Tu non pote adder un imagine ex un articulo in modo de previsualisation',
 	'wmu-no-protect' => 'Iste pagina es protegite, tu non pote adder imagines a illo',
 	'wmu-no-rights' => 'Tu non ha le permission de adder imagines a iste pagina',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Kenrick95
+ */
+$messages['id'] = array(
+	'wmu-width' => 'Lebar',
+	'wmu-layout' => 'Tampilan',
+	'wmu-gallery' => 'Galeri',
 );
 
 /** Italian (Italiano) */
@@ -1159,7 +1169,7 @@ $messages['mk'] = array(
 	'wmu-filetype-incorrect' => 'Оваа подигната податотека има неправилна наставка',
 	'wmu-uploadtext' => "'''Овој образец служи за брзо подигање и поставање на податотеки во статии.'''
 
-''Погледајте го и [[Special:Log/upload|дневникот на подигања]] и [[Special:ImageList|листата на сите подигнати податотеки]].''",
+''Погледајте го и [[Special:Log/upload|дневникот на подигања]] и [[Special:ImageList|списокот на сите подигнати податотеки]].''",
 	'wmu-show-message' => 'прикажи порака',
 	'wmu-hide-message' => 'сокриј порака',
 	'wmu-hide-license-msg' => 'сокриј текст на лиценцата',
@@ -1345,6 +1355,8 @@ $messages['no'] = array(
  */
 $messages['pdc'] = array(
 	'wmu-link' => 'Gleecher',
+	'wmu-next' => 'Neegscht 8',
+	'wmu-back' => 'zerrick',
 );
 
 /** Polish (Polski) */

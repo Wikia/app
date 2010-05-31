@@ -278,13 +278,16 @@ $messages['ru'] = array(
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Charmed94
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'iwedit-title' => 'Међувики Уређивач',
-	'iwedit-language-interwikis' => 'само језички међувики',
-	'iwedit-all-interwikis' => 'сви међувикији',
-	'iwedit-error' => '<p>Догодила се грешка.</p>',
+	'iwedit-title' => 'Интервики уредник',
+	'iwedit-language-interwikis' => 'само језички интервики',
+	'iwedit-all-interwikis' => 'сви интервикији',
+	'iwedit-update' => 'Ажурирај',
+	'iwedit-error' => '<p>Дошло је до грешке</p>.',
+	'iwedit-success' => '<p>Прављење везе је успешно завршено.</p>',
 );
 
 /** Swedish (Svenska)
@@ -304,5 +307,17 @@ $messages['sv'] = array(
  */
 $messages['te'] = array(
 	'iwedit-all-interwikis' => 'అన్ని అంతర్వికీలు',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'iwedit-title' => 'Pamatnugot na Interwiki',
+	'iwedit-language-interwikis' => 'mga interwiking pangwika lang',
+	'iwedit-all-interwikis' => 'lahat ng mga interwiki',
+	'iwedit-update' => 'Isapanahon',
+	'iwedit-error' => '<p>Naganap ang isang kamalian.</p>',
+	'iwedit-success' => '<p>Matagumpay ang paglikha ng kawing.</p>',
 );
 

@@ -179,11 +179,43 @@ $messages['ia'] = array(
 Guarda in consideration que le resultatos non es registrate in alcun loco e non pote esser facilemente revertite sin adjuta del equipa technic. (On labora al solution de iste problema.)',
 );
 
+/** Igbo (Igbo) */
+$messages['ig'] = array(
+	'cntool-button-save' => 'Donyéré',
+);
+
 /** Italian (Italiano) */
 $messages['it'] = array(
 	'cntool-button-preview' => 'Anteprima',
 	'cntool-button-save' => 'Salva',
 	'cntool-label-preview' => 'Anteprima:',
+);
+
+/** Japanese (日本語)
+ * @author Aotake
+ * @author Joe Elkins
+ * @author 青子守歌
+ */
+$messages['ja'] = array(
+	'cntool-page-title-editor' => 'ContestTool::エディタ',
+	'cntool-page-title-preview' => 'ContestTool ::プレビュー',
+	'cntool-page-title-select' => 'ContestTool',
+	'cntool-label-select' => '有効なページのタイトルを入力してください',
+	'cntool-button-preview' => 'プレビュー',
+	'cntool-button-save' => '保存',
+	'cntool-label-content' => '以下の記事内容を変更：',
+	'cntool-label-preview' => 'プレビュー:',
+	'cntool-label-caveat' => '警告',
+	'cntool-caveat' => 'この拡張機能を利用することを、よく考慮してください。
+
+この機能が働いている間、結果はどこにもログに残らず、Tech help（作業中）なしに元に戻すことができないということを、心にとどめて置いてください。',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'cntool-button-save' => 'Späicheren',
 );
 
 /** Macedonian (Македонски)
@@ -199,9 +231,9 @@ $messages['mk'] = array(
 	'cntool-label-content' => 'Изменете ја содржината на статијата подолу:',
 	'cntool-label-preview' => 'Преглед:',
 	'cntool-label-caveat' => 'Внимание - На ваш ризик!',
-	'cntool-caveat' => 'Ова проширување не смее да се користи без добра причина.
+	'cntool-caveat' => 'Овој додаток не смее да се користи лекомислено и без добра причина.
 
-Имајте на ум дека резултатите не се заведуваат никаде и засега не се лесно повратливи без техничка поддршка (ова сè уште е во изработка).',
+Имајте на ум дека резултатите не се заведуваат никаде и засега не се лесно повратливи без техничка поддршка (ова е сè уште во изработка).',
 );
 
 /** Dutch (Nederlands)
@@ -340,5 +372,23 @@ $messages['sr-ec'] = array(
  */
 $messages['te'] = array(
 	'cntool-button-save' => 'భద్రపరచు',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'cntool-page-title-editor' => 'Kasangkapan ng Paligsahan :: Patnugot',
+	'cntool-page-title-preview' => 'Kasangkapan ng Paligsahan :: Paunang Tingin',
+	'cntool-page-title-select' => 'Kasangkapan ng Paligsahan',
+	'cntool-label-select' => 'Magmakinilya ng isang tanggap na pamagat ng pahina',
+	'cntool-button-preview' => 'Paunang tingin',
+	'cntool-button-save' => 'Sagipin',
+	'cntool-label-content' => 'Baguhin ang nasa ibabang nilalaman ng artikulo:',
+	'cntool-label-preview' => 'Paunang tingin:',
+	'cntool-label-caveat' => 'Paunawa',
+	'cntool-caveat' => 'Ang karugtong na ito ay hindi dapat gamitin nang basta-basta.
+
+Ilagay sa isip na ang mga resulta ay hindi nakatala sa kahit saan man at hindi kaagad mababaligtad sa panahong ito nang walang tulong ng Tek (ginagawan ito ng paraan).',
 );
 

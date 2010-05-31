@@ -53,6 +53,14 @@ $messages['cs'] = array(
 	'wikifactoryreporter' => 'WikiFactory hlásič',
 );
 
+/** Danish (Dansk)
+ * @author Emilkris33
+ */
+$messages['da'] = array(
+	'wikifactoryreporter' => '
+WikiFactory Reporter',
+);
+
 /** German (Deutsch)
  * @author MtaÄ
  */
@@ -137,6 +145,13 @@ $messages['id'] = array(
 	'wikifactoryreporter' => 'WikiFactory Reporter',
 );
 
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'wikifactoryreporter' => 'Ogwá ihe WikiFactory',
+);
+
 /** Italian (Italiano)
  * @author Civvì
  */
@@ -207,6 +222,20 @@ $messages['pms'] = array(
 	'wikifactoryreporter' => 'Rapòrt ëd la WikiFactory',
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'wikifactoryreporter' => 'د ويکي فابريکې راپورتر',
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'wikifactoryreporter' => 'Assistente da Fábrica de Wikis',
+);
+
 /** Brazilian Portuguese (Português do Brasil)
  * @author Daemorris
  */
@@ -228,6 +257,13 @@ $messages['ru'] = array(
 	'wikifactoryreporter' => 'Репортёр WikiFactory',
 );
 
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Charmed94
+ */
+$messages['sr-ec'] = array(
+	'wikifactoryreporter' => 'WikiFactory репортер',
+);
+
 /** Sundanese (Basa Sunda)
  * @author Kandar
  */
@@ -247,6 +283,13 @@ $messages['sv'] = array(
  */
 $messages['te'] = array(
 	'wikifactoryreporter' => 'వికీకార్మాగారపు నివేదకుడు',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'wikifactoryreporter' => 'Tagapag-ulat ng WikiFactory',
 );
 
 /** Vèneto (Vèneto)

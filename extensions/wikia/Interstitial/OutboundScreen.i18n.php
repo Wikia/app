@@ -173,6 +173,10 @@ Vil du gå til [[{{MediaWiki:Mainpage}}|Hovedsiden]] eller kanskje en [[Special:
  */
 $messages['oc'] = array(
 	'outbound-screen-login-text' => "[[Special:UserLogin/signup|Creatz un compte]] o [[Special:UserLogin|identificatz-vos sus vòstre compte existent]] per evitar aquesta pagina a l'avenidor",
+	'outbound-screen-already-logged-in-no-link' => "I a pas de cibla.
+I a pas res a veire aicí !
+
+Anatz a la [[{{MediaWiki:Mainpage}}|pagina d'acuèlh]] o benlèu a [[Special:Random|una pagina a l'azard]] ?",
 	'outbound-screen-you-are-leaving' => 'Ara, sètz a quitar Wikia.',
 );
 
@@ -187,6 +191,18 @@ A-i é pa gnente da vardé ambelessì!
 
 Veul-lo andé a la [[{{MediaWiki:Mainpage}}|Pàgina prinsipal]] o miraco a na [[Special:Random|pàgina a asar]]?',
 	'outbound-screen-you-are-leaving' => "A l'é an camin ch'a chita Wikia.",
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'outbound-screen-login-text' => '[[Special:UserLogin/signup|Crie uma conta nova]] ou [[Special:UserLogin|entre com a sua conta existente]] para saltar esta página de futuro.',
+	'outbound-screen-already-logged-in-no-link' => 'Não foi definido nenhum destino.
+Não há nada para ver aqui!
+
+Deseja ir para a [[{{MediaWiki:Mainpage}}|Página principal]] ou talvez para uma [[Special:Random|página aleatória]]?',
+	'outbound-screen-you-are-leaving' => 'Está agora a sair da Wikia.',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -209,10 +225,28 @@ $messages['ru'] = array(
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Charmed94
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'outbound-screen-you-are-leaving' => 'Ви сада напуштате викију',
+	'outbound-screen-login-text' => '[[Special:UserLogin/signup|Направите нови налог]] или се [[Special:UserLogin|пријавите на већ постојећи]] да бисте прескочили ову страницу у будућности.',
+	'outbound-screen-already-logged-in-no-link' => 'Одредиште није постављено.
+Овде нема ништа да се види!
+
+Да ли бисте желели да одете на [[{{MediaWiki:Mainpage}}|главну страницу]] или можда на [[Special:Random|насумичну]]?',
+	'outbound-screen-you-are-leaving' => 'Сада напуштате Викију.',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'outbound-screen-login-text' => '[[Special:UserLogin/signup|Lumikha ng bagong akawnt]] o [[Special:UserLogin|lumagda sa ummiral mong akawnt]] upang laktawan ang pahinang ito sa hinaharap.',
+	'outbound-screen-already-logged-in-no-link' => 'Walang pangkat na pupuntahan.
+Walang makikita rito!
+
+Nais mo bang pumunta sa [[{{MediaWiki:Mainpage}}|Unang pahina]] o kaya sa [[Special:Random|alin mang pahina]]?',
+	'outbound-screen-you-are-leaving' => 'Umaalis ka na sa Wikia.',
 );
 
 /** Ukrainian (Українська)

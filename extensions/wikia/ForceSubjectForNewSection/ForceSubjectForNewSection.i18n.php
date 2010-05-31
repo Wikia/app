@@ -171,10 +171,11 @@ $messages['nl'] = array(
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
  * @author Jon Harald Søby
  */
 $messages['no'] = array(
-	'force-subject-for-new-section-message' => 'Skriv inn en overskrift for avsnittet',
+	'force-subject-for-new-section-message' => 'Skriv inn en overskrift for seksjonen',
 );
 
 /** Occitan (Occitan)
@@ -236,6 +237,13 @@ $messages['sr-ec'] = array(
  */
 $messages['sv'] = array(
 	'force-subject-for-new-section-message' => 'Vänligen skriv en rubrik för avsnittet',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'force-subject-for-new-section-message' => 'Pakipasok ang isang ulo ng balita para sa seksyon',
 );
 
 /** Ukrainian (Українська)

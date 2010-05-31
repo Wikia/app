@@ -57,6 +57,13 @@ $messages['es'] = array(
 	'mostpopulararticles' => 'Páginas más populares',
 );
 
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'mostpopulararticles' => 'Artikulu ezagunenak (datu-basetik)',
+);
+
 /** Finnish (Suomi)
  * @author Centerlink
  */
@@ -111,6 +118,13 @@ $messages['ia'] = array(
  */
 $messages['id'] = array(
 	'mostpopulararticles' => 'Artikel paling populer (dari basis data)',
+);
+
+/** Italian (Italiano)
+ * @author Gifh
+ */
+$messages['it'] = array(
+	'mostpopulararticles' => 'Articoli più popolari (da database)',
 );
 
 /** Japanese (日本語)
@@ -244,6 +258,13 @@ $messages['su'] = array(
  */
 $messages['sv'] = array(
 	'mostpopulararticles' => 'Populäraste artiklarna (från databasen)',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'mostpopulararticles' => 'Pinakasikat na mga artikulo (mula sa talaan ng dato)',
 );
 
 /** Ukrainian (Українська)

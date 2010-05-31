@@ -172,6 +172,14 @@ Dit kan nie ongedaan gemaak word nie!',
 	'swm-lang-other' => 'alle oorblywende tale',
 );
 
+/** Aragonese (Aragonés)
+ * @author Juanpabl
+ */
+$messages['an'] = array(
+	'swm-yes' => 'Sí',
+	'swm-no' => 'No',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  */
@@ -738,6 +746,11 @@ $messages['ia'] = array(
 	'swm-lang-other' => 'tote le linguas restante',
 );
 
+/** Igbo (Igbo) */
+$messages['ig'] = array(
+	'swm-button-save' => '[ Donyéré ]',
+);
+
 /** Italian (Italiano)
  * @author Gifh
  */
@@ -812,6 +825,13 @@ $messages['ja'] = array(
 	'swm-error-empty-group' => 'グループ名を入力してください。',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'swm-list-table-lang' => 'ಭಾಷೆಗಳು',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -840,12 +860,12 @@ $messages['mk'] = array(
 	'swm-page-title-send' => 'Пораки низ целата веб-страница :: Испрати',
 	'swm-page-title-sent' => 'Пораки низ целата веб-страница :: Испратено',
 	'swm-page-title-dismiss' => 'Пораки низ целата веб-страница :: Отфрли',
-	'swm-page-title-list' => 'Пораки низ целата веб-страница :: Листа',
+	'swm-page-title-list' => 'Пораки низ целата веб-страница :: Список',
 	'swm-label-preview' => 'Преглед',
 	'swm-label-edit' => 'Уреди',
 	'swm-label-remove' => 'Отстрани',
 	'swm-label-sent' => 'Испратено',
-	'swm-label-list' => 'Листа',
+	'swm-label-list' => 'Список',
 	'swm-label-recipient' => 'Примачи',
 	'swm-label-recipient-wikis' => 'Викија',
 	'swm-label-recipient-users' => 'Корисници',
@@ -856,7 +876,7 @@ $messages['mk'] = array(
 	'swm-label-mode-users-all' => 'Сите корисници',
 	'swm-label-mode-users-active' => 'Активни корисници',
 	'swm-label-mode-users-group' => 'Корисници кои членуваат во групата',
-	'swm-label-mode-users-group-hint' => '<i>Одберете група од расклопната листа или напишете го името рачно, што ќе го замени избораното на листата.</i>',
+	'swm-label-mode-users-group-hint' => '<i>Одберете група од расклопната списокот или напишете го името рачно, што ќе го замени избораното на списокот.</i>',
 	'swm-label-mode-users-user' => 'Избран корисник',
 	'swm-label-mode-users-user-hint' => '<i>Оваа можност го занемарува избраното во групата „Викија“.</i>',
 	'swm-label-content' => 'Содржина',
@@ -1035,6 +1055,16 @@ $messages['no'] = array(
 	'swm-error-empty-message' => 'Skriv inn innholdet i meldingen.',
 	'swm-error-empty-group' => 'Skriv inn navnet på gruppen.',
 	'swm-lang-other' => 'alle gjenværende språk',
+);
+
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'swm-label-comment' => 'Anmaerricking',
+	'swm-label-language' => 'Schprooch',
+	'swm-list-table-lang' => 'Schprooche',
+	'swm-yes' => 'Ya',
 );
 
 /** Piedmontese (Piemontèis)

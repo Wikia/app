@@ -247,6 +247,7 @@ $messages['pms'] = array(
 $messages['ps'] = array(
 	'wikiasearch-titles-only' => 'يوازې د مخ په سرليکونو کې پلټل',
 	'wikiasearch-system-error-msg' => 'د غونډال د ستونزو له امله، ستاسې پلټنه نه شي بشپړه کېدای.',
+	'wikiasearch-search-this-wiki' => 'يوازې مرکزي ويکي يا پلټل',
 	'wikiasearch-search-wikia' => 'ويکيا پلټل',
 );
 
@@ -288,6 +289,24 @@ $messages['sr-ec'] = array(
 	'wikiasearch-system-error-msg' => 'Због системске грешке ваша претрага не може да се изврши',
 	'wikiasearch-search-this-wiki' => 'Претражи само централну викију',
 	'wikiasearch-search-wikia' => 'Претражи викију',
+);
+
+/** Swedish (Svenska)
+ * @author Dafer45
+ */
+$messages['sv'] = array(
+	'wikiasearch-titles-only' => 'Sök endast i sidtitlar',
+	'wikiasearch-system-error-msg' => 'På grund av ett systemfel kunde sökningen inte slutföras',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'wikiasearch-titles-only' => 'Maghanap lamang sa loob ng mga pamagat ng pahina',
+	'wikiasearch-system-error-msg' => 'Dahila sa isang kamalian ng sistema, hindi makukumpleto ang paghahanap mo',
+	'wikiasearch-search-this-wiki' => 'Maghanap lamang sa Wikia Central',
+	'wikiasearch-search-wikia' => 'Maghanap sa Wikia',
 );
 
 /** Ukrainian (Українська)

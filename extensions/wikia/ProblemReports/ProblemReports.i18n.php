@@ -839,6 +839,12 @@ Defectos in le software pote esser reportate in le foros. Le reportos facite hic
 	'right-problemreports_global' => 'Cambiar le stato e typo de reportos de problemas trans wikis',
 );
 
+/** Igbo (Igbo) */
+$messages['ig'] = array(
+	'pr_describe_problem' => 'Ozi',
+	'pr_table_actions' => 'Mmèmé',
+);
+
 /** Italian (Italiano) */
 $messages['it'] = array(
 	'pr_what_problem' => 'Oggetto',
@@ -953,10 +959,10 @@ $messages['lb'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'problemreports' => 'Листа на пријавени проблеми',
+	'problemreports' => 'Список на пријавени проблеми',
 	'reportproblem' => 'Пријави проблем',
 	'prlogtext' => 'Пријавени проблеми',
-	'prlogheader' => 'Листа на пријавени проблеми и промени во нивниот статус',
+	'prlogheader' => 'Список на пријавени проблеми и промени во нивниот статус',
 	'prlog_reportedentry' => 'пријавен проблем на $1 ($2)',
 	'prlog_changedentry' => 'означен проблемот $1 како „$2“',
 	'prlog_typeentry' => 'променет типот на проблемот $1 во „$2“',
@@ -1096,7 +1102,7 @@ Wijzig de tekst van de samenvatting alstublieft.',
 	'pr_table_page_link' => 'Pagina',
 	'pr_table_date_submitted' => 'Datum gemeld',
 	'pr_table_reporter_name' => 'Naam van de melder',
-	'pr_table_description' => 'Omschrijving',
+	'pr_table_description' => 'Beschrijving',
 	'pr_table_comments' => 'Opmerkingen',
 	'pr_table_status' => 'Status',
 	'pr_table_actions' => 'Acties',
@@ -1201,6 +1207,13 @@ Skriv meldingen din på nytt.',
 	'pr_msg_exchead' => 'Meldingen er for lang',
 	'right-problemreports_action' => 'Endre tilstand og type på problemrapporter',
 	'right-problemreports_global' => 'Endre tilstand og type på problemrapporter på tvers av wikier',
+);
+
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'pr_table_comments' => 'Anmaerrickinge',
 );
 
 /** Polish (Polski)
@@ -1377,6 +1390,91 @@ $messages['ps'] = array(
 	'pr_table_description' => 'څرګندونه',
 	'pr_table_status' => 'دريځ',
 	'pr_status_2' => 'تړل شوی',
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'problemreports' => 'Lista de problemas reportados',
+	'reportproblem' => 'Reportar um problema',
+	'prlogtext' => 'Relatórios de problemas',
+	'prlogheader' => 'Lista dos problemas reportados e das alterações do seu estado',
+	'prlog_reportedentry' => 'reportou um problema em $1 ($2)',
+	'prlog_changedentry' => 'marcou o problema $1 como "$2"',
+	'prlog_typeentry' => 'alterou o tipo do problema $1 para "$2"',
+	'prlog_removedentry' => 'removeu o problema $1',
+	'prlog_emailedentry' => 'enviou mensagem de correio para $2 ($3)',
+	'pr_introductory_text' => 'A maioria das páginas nesta wiki são editáveis; pode editar a página e corrigir os erros que existam!
+Se precisa de ajuda, consulte [[help:editing|como editar]] e [[help:revert|como reverter vandalismo]].
+
+Para contactar a equipa ou reportar problemas relacionados com direitos de autor, consulte [[w:contact us|a página "contactos" da Wikia]].
+
+Problemas do software podem ser reportados nos fóruns.
+Os problemas reportados aqui serão [[Special:ProblemReports|apresentados na wiki]].',
+	'pr_what_problem' => 'Assunto',
+	'pr_what_problem_spam' => 'existe aqui um link de spam',
+	'pr_what_problem_vandalised' => 'esta página foi vandalizada',
+	'pr_what_problem_incorrect_content' => 'este conteúdo está incorrecto',
+	'pr_what_problem_software_bug' => 'há um problema no software da wiki',
+	'pr_what_problem_other' => 'outro',
+	'pr_what_problem_select' => 'Seleccione o tipo de problema, por favor',
+	'pr_what_problem_unselect' => 'todos',
+	'pr_what_problem_spam_short' => 'spam',
+	'pr_what_problem_vandalised_short' => 'vandalismo',
+	'pr_what_problem_incorrect_content_short' => 'conteúdo',
+	'pr_what_problem_software_bug_short' => 'software',
+	'pr_what_problem_other_short' => 'outro',
+	'pr_what_problem_change' => 'Alterar o tipo do problema',
+	'pr_describe_problem' => 'Mensagem',
+	'pr_what_page' => 'Título da página',
+	'pr_email_visible_only_to_staff' => 'só visível para a equipa',
+	'pr_thank_you' => 'Obrigado por reportar o problema!
+
+[[Special:ProblemReports/$1|Pode acompanhar o progresso da resolução]].',
+	'pr_thank_you_error' => 'Ocorreu um erro ao enviar o relatório do problema; tente novamente mais tarde, por favor...',
+	'pr_spam_found' => 'Foi identificado spam no seu relatório do problema.
+Altere o conteúdo do resumo, por favor',
+	'pr_empty_summary' => 'Introduza uma descrição breve do problema, por favor',
+	'pr_empty_email' => 'Introduza o seu correio electrónico, por favor',
+	'pr_mailer_notice' => 'O endereço de correio electrónico que introduziu nas suas preferências irá aparecer como endereço de origem da mensagem, por isso o destinatário poderá responder-lhe.',
+	'pr_mailer_subject' => 'Reportou o problema em',
+	'pr_mailer_tmp_info' => 'Pode [[MediaWiki:ProblemReportsResponses|editar os modelos de respostas]]',
+	'pr_mailer_to_default' => 'Utilizador da Wikia',
+	'pr_mailer_go_to_wiki' => 'Para enviar uma mensagem electrónica visite a [$1 wiki de onde o problema foi reportado], por favor',
+	'pr_total_number' => 'Número total de problemas',
+	'pr_view_archive' => 'Ver problemas arquivados',
+	'pr_view_all' => 'Mostrar todos os problemas',
+	'pr_view_staff' => 'Mostrar problemas que necessitam de ajuda da equipa',
+	'pr_raports_from_this_wikia' => 'Ver somente os problemas desta Wikia',
+	'pr_reports_from' => 'Só problemas de',
+	'pr_no_reports' => 'Não existem problemas para os critérios fornecidos',
+	'pr_sysops_notice' => 'Pode <a href="$1">alterar o estado dos problemas reportados</a> a partir da sua wiki...',
+	'pr_table_problem_id' => 'ID do problema',
+	'pr_table_wiki_name' => 'Nome da wiki',
+	'pr_table_problem_type' => 'Tipo do problema',
+	'pr_table_page_link' => 'Página',
+	'pr_table_date_submitted' => 'Data de envio',
+	'pr_table_reporter_name' => 'Nome do autor',
+	'pr_table_description' => 'Descrição',
+	'pr_table_comments' => 'Comentários',
+	'pr_table_status' => 'Estado',
+	'pr_table_actions' => 'Acções',
+	'pr_status_0' => 'pendente',
+	'pr_status_1' => 'corrigido',
+	'pr_status_2' => 'fechado',
+	'pr_status_3' => 'é necessária ajuda da equipa',
+	'pr_status_10' => 'remover problema',
+	'pr_status_undo' => 'Desfazer a alteração do estado',
+	'pr_status_ask' => 'Alterar o estado do problema?',
+	'pr_remove_ask' => 'Remover o problema de forma definitiva?',
+	'pr_status_wait' => 'aguarde...',
+	'pr_read_only' => 'Não podem ser criados relatórios novos neste momento; tente novamente mais tarde, por favor',
+	'pr_msg_exceeded' => 'O número máximo de caracteres permitidos no campo da mensagem é 512.
+Altere a mensagem, por favor.',
+	'pr_msg_exchead' => 'A mensagem é demasiado longa',
+	'right-problemreports_action' => 'Alterar o estado e tipo dos problemas reportados',
+	'right-problemreports_global' => 'Alterar o estado e tipo dos problemas reportados em todas as wikis',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

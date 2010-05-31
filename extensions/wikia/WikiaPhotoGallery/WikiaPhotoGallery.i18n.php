@@ -154,16 +154,27 @@ $messages['be-tarask'] = array(
 	'wikiaPhotoGallery-preview-captions-right' => 'Справа',
 	'wikiaPhotoGallery-conflict-title' => 'Узьнік канфлікт рэдагаваньня',
 	'wikiaPhotoGallery-conflict-intro' => 'На жаль, мы не змаглі захаваць Ваша рэдагаваньне, з-за таго, што іншы ўдзельнік адрэдагаваў старонку да таго, як Вы націснулі «Захаваць».',
+	'wikiaPhotoGallery-conflict-help' => 'Гэта вікі-тэкст, створаны Вашым рэдагаваньнем.
+Калі Вы жадаеце аднавіць Вашыя зьмены, Вы можаце капіраваць гэты тэкст, націснуць «$1» і уставіць яго ў патрэбнае месца.
+Акрамя гэтага, Вы можаце націснуць «$2», каб убачыць старонку ў яе абноўленым выглядзе.',
 	'wikiaPhotoGallery-conflict-edit' => 'Наведаць рэжым рэдагаваньня',
 	'wikiaPhotoGallery-conflict-view' => 'Паказаць цяперашнюю старонку',
 	'wikiaPhotoGallery-preview-delete-title' => 'Выдаліць гэтае фота?',
 	'wikiaPhotoGallery-preview-delete' => 'Вы ўпэўнены, што жадаеце выдаліць фота з галерэі?',
+	'wikiaPhotoGallery-preview-saving-title' => 'Ідзе захаваньне',
+	'wikiaPhotoGallery-preview-saving-intro' => 'Калі ласка, пачакайце пакуль Ваша галерэя захоўваецца.',
+	'wikiaPhotoGallery-quit-title' => 'Выйсьці з рэдактара галерэі',
+	'wikiaPhotoGallery-quit-intro' => 'Вы ўпэўнены, што жадаеце выйсьці з рэдактара галерэі?',
+	'wikiaPhotoGallery-quit-savequit' => 'Захаваць і выйсьці',
+	'wikiaPhotoGallery-quit-quitonly' => 'Адмяніць зьмены і выйсьці',
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Y-M D
  */
 $messages['br'] = array(
+	'wikiaphotogallery-desc' => 'Reiñ a ra un etrefas evit merañ ar skeudennaouegoù er pajennoù',
 	'wikiaPhotoGallery-add-gallery' => "Ensoc'hañ ur skeudennaoueg",
 	'wikiaPhotoGallery-viewmode-addphoto' => "Ouzhpennañ ur skeudenn d'ar skeudennaoueg-mañ",
 	'wikiaPhotoGallery-edit-abort' => "Ar c'hemm e oac'h o klask ober a zo bet harzhet gant ur sonnell eus un astenn",
@@ -207,6 +218,7 @@ Deskrivit ar skeudenn-mañ.",
 	'wikiaPhotoGallery-photooptions-linksub' => "'''Diret.''' Pa vez kliket war ar skeudenn-mañ, mont war ar bajenn-se.",
 	'wikiaPhotoGallery-photooptions-done' => 'Graet',
 	'wikiaPhotoGallery-preview-title' => 'Kemmañ ar skeudennaoueg',
+	'wikiaPhotoGallery-preview-intro' => "Homañ a zo pajenn rakwelet ar skeudennaouegoù. Gellout a reoc'h ouzhpennañ skeudennoù nevez, dilerc'hiañ hag admentañ ar skeudennoù a zo outo dija.",
 	'wikiaPhotoGallery-preview-hover-modify' => 'kemmañ',
 	'wikiaPhotoGallery-preview-hover-delete' => 'diverkañ',
 	'wikiaPhotoGallery-preview-add-photo' => 'Ouzhpennañ ur skeudenn',
@@ -217,13 +229,21 @@ Deskrivit ar skeudenn-mañ.",
 	'wikiaPhotoGallery-preview-captions-left' => 'Kleiz',
 	'wikiaPhotoGallery-preview-captions-center' => 'Kreiz',
 	'wikiaPhotoGallery-preview-captions-right' => 'Dehou',
+	'wikiaPhotoGallery-conflict-title' => 'Un tabut kemmañ a zo bet',
 	'wikiaPhotoGallery-conflict-intro' => "Alas ne c'hellomp ket enrollañ ho kemm, un implijer all en deus kemmet ar bajenn a-raok ma pouezfer evit enrollañ.",
+	'wikiaPhotoGallery-conflict-help' => "Dindan emañ diskouezet an destenn bet krouet diwar ar c'hemmoù degaset ganeoc'h.
+Eilañ an destenn-mañ a c'hallit en ur glikañ war \"\$1\" ha pegañ anezhi el lec'h mat evit assevel ar c'hemmoù graet ganeoc'h.
+A-hend-all e c'hallit klikañ war \"\$2\" evit gwelet ar bajenn evel m'emañ bremañ.",
 	'wikiaPhotoGallery-conflict-edit' => 'Gweladenniñ ar mod embann',
 	'wikiaPhotoGallery-conflict-view' => 'Gwelet ar pennad a-vremañ',
 	'wikiaPhotoGallery-preview-delete-title' => 'Dilemel ar skeudenn-mañ ?',
+	'wikiaPhotoGallery-preview-delete' => "Ha sur oc'h hoc'h eus c'hoant dilemel ar skeudenn-mañ eus ar skeudennaoueg ?",
 	'wikiaPhotoGallery-preview-saving-title' => "Oc'h enrollañ...",
+	'wikiaPhotoGallery-preview-saving-intro' => 'Mar plij gortozit pa vez enrollet ho skeudennaoueg.',
 	'wikiaPhotoGallery-quit-title' => 'Kuitaat embanner ar skeudennaoueg',
+	'wikiaPhotoGallery-quit-intro' => "Ha c'hoant hoc'h eus kuitaat embanner ar skeudennaoueg da vat ?",
 	'wikiaPhotoGallery-quit-savequit' => 'Enrollañ ha kuitaat',
+	'wikiaPhotoGallery-quit-quitonly' => "Ober van eus ar c'hemmoù ha kuitaat",
 );
 
 /** German (Deutsch)
@@ -565,18 +585,36 @@ Como alternativa, pode premer en "$2" para ollar a páxina actualizada.',
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
+	'wikiaPhotoGallery-viewmode-addphoto' => 'Egy fotó hozzáadása a galériához',
+	'wikiaPhotoGallery-edit-summary' => 'Galéria szerkesztése',
+	'wikiaPhotoGallery-error-caption' => 'Hiba',
 	'wikiaPhotoGallery-upload-uploadtitle' => 'Feltöltés',
 	'wikiaPhotoGallery-upload-uploadbutton' => 'Feltöltés',
 	'wikiaPhotoGallery-upload-findtitle' => 'Keresés',
 	'wikiaPhotoGallery-upload-findbutton' => 'Keresés',
 	'wikiaPhotoGallery-upload-page-next' => 'Következő 8',
 	'wikiaPhotoGallery-upload-page-prev' => 'Előző 8',
+	'wikiaPhotoGallery-upload-filesinsert' => 'Fotó beillesztése',
+	'wikiaPhotoGallery-upload-error-bad-extension' => 'Ezt a fájltípust nem lehet használni.',
+	'wikiaPhotoGallery-upload-error-conflict-insert' => 'Beszúrás',
+	'wikiaPhotoGallery-photooptions-title' => 'Fotó beállításai',
+	'wikiaPhotoGallery-photooptions-changepicture' => 'fotó megváltoztatása',
+	'wikiaPhotoGallery-photooptions-linktitle' => 'Lap hivatkozása',
+	'wikiaPhotoGallery-photooptions-done' => 'Kész',
+	'wikiaPhotoGallery-preview-title' => 'Galéria szerkesztése',
 	'wikiaPhotoGallery-preview-hover-modify' => 'módosítás',
 	'wikiaPhotoGallery-preview-hover-delete' => 'törlés',
+	'wikiaPhotoGallery-preview-add-photo' => 'Fotó hozzáadása',
 	'wikiaPhotoGallery-preview-size' => 'Kép mérete',
 	'wikiaPhotoGallery-preview-captions-left' => 'balra',
 	'wikiaPhotoGallery-preview-captions-center' => 'középre',
 	'wikiaPhotoGallery-preview-captions-right' => 'jobbra',
+	'wikiaPhotoGallery-conflict-title' => 'Szerkesztési ütközés történt',
+	'wikiaPhotoGallery-preview-saving-title' => 'Mentés folyamatban',
+	'wikiaPhotoGallery-quit-title' => 'Kilépés a galéria-szerkesztőből',
+	'wikiaPhotoGallery-quit-intro' => 'Biztos vagy benne, hogy ki szeretnél lépni a galéria-szerkesztőből?',
+	'wikiaPhotoGallery-quit-savequit' => 'Mentés és kilépés',
+	'wikiaPhotoGallery-quit-quitonly' => 'Változtatások eldobása és kilépés',
 );
 
 /** Interlingua (Interlingua)
@@ -653,6 +691,26 @@ Alternativemente, tu pote cliccar super "$2" pro vider le pagina in su forma act
 	'wikiaPhotoGallery-quit-intro' => 'Es tu secur de voler quitar le editor de galerias?',
 	'wikiaPhotoGallery-quit-savequit' => 'Salveguardar e quitar',
 	'wikiaPhotoGallery-quit-quitonly' => 'Abandonar modificationes e quitar',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Kenrick95
+ */
+$messages['id'] = array(
+	'wikiaPhotoGallery-upload-findtitle' => 'Cari',
+	'wikiaPhotoGallery-upload-findbutton' => 'Cari',
+	'wikiaPhotoGallery-upload-filestitle-pre' => 'Berkas yang baru diunggah',
+	'wikiaPhotoGallery-preview-captions-left' => 'Kiri',
+	'wikiaPhotoGallery-preview-captions-center' => 'Tengah',
+	'wikiaPhotoGallery-preview-captions-right' => 'Kanan',
+	'wikiaPhotoGallery-conflict-title' => 'Sebuah konflik suntingan telah terjadi',
+	'wikiaPhotoGallery-conflict-intro' => 'Sayangnya, kami tidak dapat menyimpan suntingan Anda, karena pengguna lain menyunting halaman ini sebelum Anda klik simpan.',
+);
+
+/** Igbo (Igbo) */
+$messages['ig'] = array(
+	'wikiaPhotoGallery-error-caption' => 'Nsogbú',
+	'wikiaPhotoGallery-preview-hover-delete' => 'gbakashia',
 );
 
 /** Italian (Italiano)
@@ -798,11 +856,33 @@ $messages['ja'] = array(
 	'wikiaPhotoGallery-quit-quitonly' => '保存せずに終了',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'wikiaPhotoGallery-error-caption' => 'Feeler',
+	'wikiaPhotoGallery-upload-uploadtitle' => 'Eroplueden',
+	'wikiaPhotoGallery-upload-uploadbutton' => 'Eroplueden',
+	'wikiaPhotoGallery-upload-findtitle' => 'Sichen',
+	'wikiaPhotoGallery-upload-findbutton' => 'Sichen',
+	'wikiaPhotoGallery-upload-page-next' => 'Nächst 8',
+	'wikiaPhotoGallery-upload-page-prev' => 'Vireg 8',
+	'wikiaPhotoGallery-photooptions-linktitle' => 'Eng Säit verlinken',
+	'wikiaPhotoGallery-photooptions-done' => 'Fäerdeg',
+	'wikiaPhotoGallery-preview-title' => 'Galerie änneren',
+	'wikiaPhotoGallery-preview-hover-modify' => 'änneren',
+	'wikiaPhotoGallery-preview-hover-delete' => 'läschen',
+	'wikiaPhotoGallery-preview-add-photo' => 'Eng Foto derbäisetzen',
+	'wikiaPhotoGallery-preview-captions-left' => 'Lenks',
+	'wikiaPhotoGallery-preview-captions-right' => 'Riets',
+	'wikiaPhotoGallery-quit-savequit' => 'Späicheren an erausgoen',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'wikiaphotogallery-desc' => 'Дава интерфејс за раководење со галерии на страници',
+	'wikiaphotogallery-desc' => 'Дава посредник за раководење со галерии во страници',
 	'wikiaPhotoGallery-add-gallery' => 'Вметни галерија со слики',
 	'wikiaPhotoGallery-viewmode-addphoto' => 'Додај слика во галеријава',
 	'wikiaPhotoGallery-edit-abort' => 'Измените што сакате да ги направите беа откажани од кука на додатокот',
@@ -1029,6 +1109,30 @@ Alternativt kan du trykke «$2» for å se siden i sin oppdaterte form.',
 	'wikiaPhotoGallery-quit-intro' => 'Er du sikker på at du ønsker å avslutte galleriredaktøren?',
 	'wikiaPhotoGallery-quit-savequit' => 'Lagre og avslutt',
 	'wikiaPhotoGallery-quit-quitonly' => 'Forkast endringer og avslutt',
+);
+
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'wikiaPhotoGallery-upload-page-next' => 'Neegscht 8',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'wikiaPhotoGallery-error-caption' => 'ستونزه',
+	'wikiaPhotoGallery-upload-title' => 'انځور ټاکل',
+	'wikiaPhotoGallery-upload-uploadtitle' => 'پورته کول',
+	'wikiaPhotoGallery-upload-uploadbutton' => 'پورته کول',
+	'wikiaPhotoGallery-upload-findtitle' => 'موندل',
+	'wikiaPhotoGallery-upload-findbutton' => 'موندل',
+	'wikiaPhotoGallery-photooptions-done' => 'ترسره شو',
+	'wikiaPhotoGallery-preview-hover-delete' => 'ړنګول',
+	'wikiaPhotoGallery-preview-add-photo' => 'يو انځور ورګډول',
+	'wikiaPhotoGallery-preview-captions-left' => 'کيڼ',
+	'wikiaPhotoGallery-preview-captions-right' => 'ښي',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
