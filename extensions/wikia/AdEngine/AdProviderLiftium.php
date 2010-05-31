@@ -84,6 +84,19 @@ class AdProviderLiftium implements iAdProvider {
         }
 
 	public function getIframeFillHtml($slotname, $slot) {
+		global $wgEnableTandemAds, $wgEnableTandemAds_slave, $wgEnableTandemAds_delay;
+
+		if (!empty($wgEnableTandemAds) && !empty($wgEnableTandemAds_slave) && ((is_array($wgEnableTandemAds_slave) && in_array($slotname, $wgEnableTandemAds_slave)) || ($wgEnableTandemAds_slave == $slotname)) && !empty($wgEnableTandemAds_delay)) {
+		// FIXME get rid of c&p
+		return '<script type="text/javascript">' .
+			'window.setTimeout(\'' .
+			'LiftiumOptions.placement = "' . $slotname . '";' . 
+			'Liftium.callInjectedIframeAd("' . addslashes($slot['size']) . 
+			'", document.getElementById("' . addslashes($slotname) .'_iframe"))' .
+			'\', ' . $wgEnableTandemAds_delay . ')' .
+			';</script>';
+		}
+
 		return '<script type="text/javascript">' .
 			'LiftiumOptions.placement = "' . $slotname . '";' . "\n" .
 			'Liftium.callInjectedIframeAd("' . addslashes($slot['size']) . 
