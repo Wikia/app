@@ -40,6 +40,14 @@ class WScribeClient {
 		} else {
 		}
 		
+		if ( empty($wgScribeHost) ) {
+			$wgScribeHost = '127.0.0.1';
+		}
+		
+		if ( empty($wgScribePort) ) {
+			$wgScribePort = 1463;
+		}
+		
 		$this->connected = true;
 		try {
 			$this->socket = new TSocket($wgScribeHost, $wgScribePort, true);
