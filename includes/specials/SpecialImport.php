@@ -113,6 +113,16 @@ class SpecialImport extends SpecialPage {
 			}
 			$reporter = new ImportReporter( $importer, $isUpload, $this->interwiki , $this->logcomment);
 
+			/* wikia change begin - author: uberfuzzy */
+			/* if var=true (not empty)-> turn off irc feed, so imports dont go to feed
+			   if var=false (empty)-> no touch, use what ever was already */
+			global $wgWikiaHideImportsFromIrc;
+			if( !empty($wgWikiaHideImportsFromIrc) ) {
+				global $wgRC2UDPEnabled;
+				$wgRC2UDPEnabled = false;
+			}
+			/* end wikia change */
+
 			$reporter->open();
 			$result = $importer->doImport();
 			$resultCount = $reporter->close();
