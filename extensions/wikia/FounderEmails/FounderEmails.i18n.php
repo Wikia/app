@@ -41,7 +41,7 @@ It\'s been a little while since you started a wiki on Wikia - we hope it\'s goin
 	'founderemails-email-page-edited-reg-user-first-edit-subject' => 'Registered user changed your wiki for the first time!',
 	'founderemails-email-page-edited-reg-user-first-edit-body' => 'Hey $FOUNDERNAME,
 
-It looks like registerd user $USERNAME has edited your wiki for the first time! Why don\'t you drop by their talkpage ($USERTALKPAGEURL) to say hello?
+It looks like registered user $USERNAME has edited your wiki for the first time! Why don\'t you drop by their talkpage ($USERTALKPAGEURL) to say hello?
 
 -- The Wikia Team',
 	'founderemails-email-page-edited-reg-user-first-edit-body-HTML' => 'Hey $FOUNDERNAME,<br /><br />
@@ -50,7 +50,7 @@ It looks like registered user $USERNAME has edited your wiki for the first time!
 	'founderemails-email-page-edited-reg-user-subject' => 'Registered user changed your wiki!',
 	'founderemails-email-page-edited-reg-user-body' => 'Hey $FOUNDERNAME,
 
-It looks like registerd user $USERNAME has edited your wiki! Why don\'t you drop by their talkpage ($USERTALKPAGEURL) to say hello?
+It looks like registered user $USERNAME has edited your wiki! Why don\'t you drop by their talkpage ($USERTALKPAGEURL) to say hello?
 
 -- The Wikia Team',
 	'founderemails-email-page-edited-reg-user-body-HTML' => 'Hey $FOUNDERNAME,<br /><br />
@@ -101,7 +101,7 @@ It\'s been a little while since you started a wiki on Wikia - we hope it\'s goin
 	'founderemails-answers-email-page-edited-reg-user-first-edit-subject' => 'Registered user changed your wiki for the first time!',
 	'founderemails-answers-email-page-edited-reg-user-first-edit-body' => 'Hey $FOUNDERNAME,
 
-It looks like registerd user $USERNAME has edited your wiki for the first time! Why don\'t you drop by their talkpage ($USERTALKPAGEURL) to say hello?
+It looks like registered user $USERNAME has edited your wiki for the first time! Why don\'t you drop by their talkpage ($USERTALKPAGEURL) to say hello?
 
 -- The Wikia Team',
 	'founderemails-answers-email-page-edited-reg-user-first-edit-body-HTML' => 'Hey $FOUNDERNAME,<br /><br />
@@ -110,7 +110,7 @@ It looks like registered user $USERNAME has edited your wiki for the first time!
 	'founderemails-answers-email-page-edited-reg-user-subject' => 'Registered user changed your QA wiki!',
 	'founderemails-answers-email-page-edited-reg-user-body' => 'Hey $FOUNDERNAME,
 
-It looks like registerd user $USERNAME has edited your wiki! Why don\'t you drop by their talkpage ($USERTALKPAGEURL) to say hello?
+It looks like registered user $USERNAME has edited your wiki! Why don\'t you drop by their talkpage ($USERTALKPAGEURL) to say hello?
 
 -- The Wikia Team',
 	'founderemails-answers-email-page-edited-reg-user-body-HTML' => 'Hey $FOUNDERNAME,<br /><br />
