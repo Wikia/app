@@ -86,7 +86,7 @@ class AdProviderLiftium implements iAdProvider {
 	public function getIframeFillHtml($slotname, $slot) {
 		global $wgEnableTandemAds, $wgEnableTandemAds_slave, $wgEnableTandemAds_delay;
 
-		if (!empty($wgEnableTandemAds) && !empty($wgEnableTandemAds_slave) && ((is_array($wgEnableTandemAds_slave) && in_array($slotname, $wgEnableTandemAds_slave)) || ($wgEnableTandemAds_slave == $slotname)) && !empty($wgEnableTandemAds_delay)) {
+		if (!empty($wgEnableTandemAds) && !empty($wgEnableTandemAds_slave) && in_array($slotname, explode(",", str_replace(" ", "", $wgEnableTandemAds_slave))) && !empty($wgEnableTandemAds_delay)) {
 		// FIXME get rid of c&p
 		return '<script type="text/javascript">' .
 			'window.setTimeout(\'' .
