@@ -1,5 +1,5 @@
 == Changes since 201006.1 ==
-*
+* rt#50545: Ad slot calling order (Nef)
 
 == Changes since 201005.4 ==
 * rt#52891: Blogs: Hide "No comments yet!" if comments are disabled
