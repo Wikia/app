@@ -105,6 +105,14 @@ $messages['ia'] = array(
 	'interwikidispatcher-desc' => 'Resolve ligamines interwiki pro reducer redirectiones de Apache',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'interwikidispatcher' => 'Operator interwiki',
+	'interwikidispatcher-desc' => 'Mampu membenahi pranala interwiki link untuk mengurangi pengalihan Apache',
+);
+
 /** Japanese (日本語)
  * @author Naohiro19
  */
@@ -186,9 +194,19 @@ $messages['ru'] = array(
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Charmed94
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'interwikidispatcher-desc' => 'Решава међувики везе, да би смањило Апаш преусмерења',
+	'interwikidispatcher' => 'Међувики диспечер',
+	'interwikidispatcher-desc' => 'Решава међувики везе да би смањило Апаш преусмерења',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'interwikidispatcher' => 'Tagadispatsa ng interwiki',
+	'interwikidispatcher-desc' => 'Naglulutas ng mga kawing na pang-interwiki upang mabawasan ang mga panlipat na Apache',
 );
 

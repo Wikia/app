@@ -36,9 +36,18 @@ $messages['af'] = array(
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
+ * @author Jim-by
+ * @author Wizardist
  */
 $messages['be-tarask'] = array(
+	'privatedomains_nomanageaccess' => "Выбачайце, Вы ня маеце правоў для кіраваньня дазволенымі ўласнымі дамэнамі ў {{GRAMMAR:месны|{{SITENAME}}}}. Маюць доступ толькі бюракраты і супрацоўнікі.</p><p>Калі вы не ўвайшлі ў сыстэму, Вам, магчыма, <a href='/wiki/Special:Userlogin'>трэба ўвайсьці</a>.",
+	'privatedomains' => 'Кіраваньне ўласнымі дамэнамі',
+	'privatedomains_ifemailcontact' => 'У іншым выпадку, калі ласка, зьвярніцеся да [[Special:Emailuser/$1|$1]], калі Вы маеце якія-небудзь пытаньні.',
+	'saveprivatedomains_success' => 'Зьмены ў прыватных дамэнах захаваныя.',
+	'privatedomains_invalidemail' => 'Прабачце, доступ да {{GRAMMAR:родны|{{SITENAME}}}} забаронены для ўдзельнікаў $1. Калі Вы маеце адрас электроннай пошты зьвязаны з $1, Вы можаце ўвесьці альбо перапацьвердзіць Ваш адрас электроннай пошты на старонцы Вашых установак <a href=/wiki/Special:Preferences>тут</a>. Вы можаце праглядаць старонкі {{GRAMMAR:родны|{{SITENAME}}}}, але ня можаце іх рэдагаваць.',
 	'privatedomains_affiliatenamelabel' => 'Назва арганізацыі:',
+	'privatedomains_emailadminlabel' => 'Кантактнае імя ўдзельніка для праблемаў уваходу альбо запытаў:',
+	'privatedomainsinstructions' => 'Ніжэй пададзены сьпіс паштовых дамэнаў дазволеных для рэдактараў {{GRAMMAR:родны|{{SITENAME}}}}. Кожны радок вызначае суфікс адрасу электроннай пошты, які дазваляе доступ да рэдагаваньня. Ён павінен мець выгляд: адзін суфікс на радок. Напрыклад: </p><p style="width: 20%; padding:5px; border: 1px solid grey;">cs.stanford.edu<br /> stanfordalumni.org</p><p>Гэта дазволіць рэдагаваньне толькі удзельнікам з адрасам электроннай пошты whatever@cs.stanford.edu альбо whatever@stanfordalumni.org</p><p><b>Увядзіце дазволеныя дамэны ў тэкставае поле ніжэй і націсьніце «Захаваць».</b>',
 );
 
 /** Breton (Brezhoneg)
@@ -173,7 +182,7 @@ $messages['mk'] = array(
 	'privatedomains_invalidemail' => 'Жалиме, но само членови на $1 имаат пристап на ова вики. Ако имате е-поштенска адреса здружена со $1, можете да ја внесете или препотврдите на страницата за нагодување на сметката <a href=/wiki/Special:Preferences>тука</a>. Ќе можете и понатаму да ги гледате страниците на ова вики, но нема да можете да уредувате.',
 	'privatedomains_affiliatenamelabel' => 'Име на организација:',
 	'privatedomains_emailadminlabel' => 'Корисничко име за контакт при проблеми или прашања за пристап:',
-	'privatedomainsinstructions' => 'Подолу е наведена листа од е-поштенски домени дозволени за уредниците на ова вики. Во секој ред е назначена е-поштенска наставка што добива право на уредување. Ова треба да се форматира со по една наставка за секој ред. На пример:</p><p style="width: 20%; padding:5px; border: 1px solid grey;">cs.stanford.edu<br /> stanfordalumni.org</p><p>Ова дозволува уредувања од секој со адреса нешто@cs.stanford.edu или нешто@stanfordalumni.org</p><p><b>Во полето подолу внесете ги дозволените домени, и кликнете на „зачувај“.</b>',
+	'privatedomainsinstructions' => 'Подолу е наведен список на е-поштенски домени дозволени за уредниците на ова вики. Во секој ред е назначена е-поштенска наставка што добива право на уредување. Ова треба да се форматира со по една наставка за секој ред. На пример:</p><p style="width: 20%; padding:5px; border: 1px solid grey;">cs.stanford.edu<br /> stanfordalumni.org</p><p>Ова дозволува уредувања од секој со адреса нешто@cs.stanford.edu или нешто@stanfordalumni.org</p><p><b>Во полето подолу внесете ги дозволените домени, и кликнете на „зачувај“.</b>',
 );
 
 /** Dutch (Nederlands)
@@ -269,5 +278,19 @@ $messages['sr-ec'] = array(
  */
 $messages['te'] = array(
 	'privatedomains_affiliatenamelabel' => 'సంస్థ యొక్క పేరు:',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'privatedomains_nomanageaccess' => "Paumanhin, walang kang sapat na mga karapatang upang pamahalaan ang mga dominyong pribado para sa wiking ito.  Tanging mga burokrato at mga kasaping tauhan ng wiki lamang ang makakapunta..</p><p>Kung hindi ka nakalagda, maaaring <a href='/wiki/Special:Userlogin'>dapat</a> kang lumagda.",
+	'privatedomains' => 'Pamahalaan ang mga Dominyong Pribado',
+	'privatedomains_ifemailcontact' => 'O kaya, mangyaring makipag-ugnayan kay [[Special:Emailuser/$1|$1]] kung mayroon kang anumang mga katanungan.',
+	'saveprivatedomains_success' => 'Sinagip ang mga pagbabago sa Mga Dominyong Pribado.',
+	'privatedomains_invalidemail' => 'Paumahin, nakalaan lamang ang pagpasok sa wiking para sa mga kasapi ng $1.  Kung mayroon kang adres ng e-liham na may kaugnayan sa $1, maipapasok mo o muling patunayan ang adres mo ng e-liham sa pahina ng mga nais mo sa iyong akawnt <a href=/wiki/Special:Preferences>dito</a>. Maaari mo pa ring tingnan ang mga pahina sa wiking ito, subalit hindi ka makapamamatnugot.',
+	'privatedomains_affiliatenamelabel' => 'Pangalan ng organisasyon:',
+	'privatedomains_emailadminlabel' => 'Makipag-ugnayan sa pangalan ng tagagamit para sa mga suliranin sa pagpunta o mga tanong:',
+	'privatedomainsinstructions' => 'Nasa ibaba ang talaan ng mga dominyo ng e-liham na ipinapahintulot para sa mga patnugot ng wiking ito.  Bawat guhit ay nagtatalaga ng isang hulaping makakapunta para sa pamamatnugot.  Dapat itong anyuhang may isang hulapi bawat guhit.  Bilang halimbawa:</p><p style="width: 20%; padding:5px; border: 1px solid grey;">cs.stanford.edu<br /> stanfordalumni.org</p><p>Magpapahintulot ito ng mga pagbabago mula kaninuman na may adres ng e-liham na anuman@cs.stanford.edu o anuman@stanfordalumni.org</p><p><b>Ipasok ang pinapayagang mga dominyo sa loob ng kahon ng tekstong nasa ibaba, at pindutin ang "sagipin".</b>',
 );
 

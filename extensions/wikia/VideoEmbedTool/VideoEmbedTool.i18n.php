@@ -91,6 +91,7 @@ $messages['qqq'] = array(
 	'vet-license' => '{{Identical|License}}',
 	'vet-size' => '{{Identical|Size}}',
 	'vet-width' => '{{Identical|Width}}',
+	'vet-layout' => '{{Identical|Layout}}',
 	'vet-caption' => '{{Identical|Caption}}',
 	'vet-optional' => '{{Identical|Optional}}',
 	'vet-prev' => '{{Identical|Previous}}',
@@ -692,8 +693,8 @@ $messages['gl'] = array(
 	'vet-recent-inf' => 'Vídeos inseridos recentemente',
 	'vet-thiswiki2' => 'Vídeos deste wiki ($1 resultados)',
 	'vet-success' => '<h1>Feito</h1>',
-	'vet-return' => 'Voltar ao modo de edición',
-	'vet-back' => 'voltar',
+	'vet-return' => 'Volver ao modo de edición',
+	'vet-back' => 'volver',
 	'vet-close' => 'pechar',
 	'vet-warn1' => 'Ten que especificar a pescuda primeiro!',
 	'vet-warn2' => 'Proporcione o enderezo URL do vídeo que lle gustaría engadir',
@@ -858,6 +859,21 @@ $messages['ia'] = array(
 	'vet-protected' => 'Iste video es protegite',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Kenrick95
+ */
+$messages['id'] = array(
+	'vet-left' => 'Kiri',
+	'vet-right' => 'Kanan',
+	'vet-gallery' => 'Galeri',
+	'vet-protected' => 'Video ini dilindungi',
+);
+
+/** Igbo (Igbo) */
+$messages['ig'] = array(
+	'vet-find-btn' => 'Chöwá',
+);
+
 /** Italian (Italiano) */
 $messages['it'] = array(
 	'vet-flickr' => 'Flickr',
@@ -970,6 +986,20 @@ $messages['kn'] = array(
 	'vet-right' => 'ಬಲ',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'vet-upload' => 'Komplett URL',
+	'vet-license' => 'Lizenz',
+	'vet-prev' => 'Vireg 8',
+	'vet-next' => 'Nächst 8',
+	'vet-show-message' => 'Message weisen',
+	'vet-left' => 'Lenks',
+	'vet-right' => 'Riets',
+	'vet-gallery' => 'Gallerie',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -1020,7 +1050,7 @@ $messages['mk'] = array(
 	'vet-name-incorrect' => 'Името на оваа видеоснимка содржи неважечки знаци',
 	'vet-uploadtext' => "'''Овој образец служи за брзо подигање и поставување на податотеки во статии.'''
 
-''Погледајте го и [[Special:Log/upload|дневникот на подигања]] и [[Special:ImageList|листата на сите подигнати податотеки]].''",
+''Погледајте го и [[Special:Log/upload|дневникот на подигања]] и [[Special:ImageList|списокот на сите подигнати податотеки]].''",
 	'vet-show-message' => 'прикажи порака',
 	'vet-hide-message' => 'сокриј порака',
 	'vet-hide-license-msg' => 'сокриј текст на лиценцата',
@@ -1046,6 +1076,13 @@ $messages['mk'] = array(
 	'vet-right' => 'Десно',
 	'vet-gallery' => 'Галерија',
 	'vet-protected' => 'Оваа видеоснимка е заштитена',
+);
+
+/** Maltese (Malti)
+ * @author Chrisportelli
+ */
+$messages['mt'] = array(
+	'vet-upload-btn' => 'MUR',
 );
 
 /** Dutch (Nederlands)
@@ -1206,6 +1243,38 @@ $messages['no'] = array(
 	'vet-right' => 'Høyre',
 	'vet-gallery' => 'Galleri',
 	'vet-protected' => 'Denne videoen er beskyttet',
+);
+
+/** Occitan (Occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'vet-upload' => 'URL completa',
+	'vet-find' => 'Cercar una vidèo',
+	'vet-thiswiki' => 'Aqueste wiki',
+	'vet-flickr' => 'Flickr',
+	'vet-upload-btn' => 'Apondre',
+	'vet-find-btn' => 'Cercar',
+	'vet-conflict-inf' => '<h1>Ops, existís ja una vidèo amb aqueste nom.</h1>Qué volètz far amb <b>$1</b>?',
+	'vet-rename' => 'Tornar nomenar la vidèo',
+	'vet-insert' => 'Inserir',
+	'vet-name' => 'Nom',
+	'vet-license' => 'Licéncia',
+	'vet-details-inf2' => "<h1>Las opcions d'afichatge vidèo</h1>",
+	'vet-size' => 'Talha',
+	'vet-thumbnail' => 'Apercebut',
+	'vet-width' => 'largor',
+	'vet-layout' => 'Orientacion',
+	'vet-caption' => 'Descripcion',
+	'vet-optional' => '(Opcional)',
+);
+
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'vet-next' => 'Neegscht 8',
+	'vet-back' => 'zerrick',
 );
 
 /** Polish (Polski) */

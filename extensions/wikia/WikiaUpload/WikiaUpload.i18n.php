@@ -92,6 +92,13 @@ $messages['es'] = array(
 	'wikiaupload' => 'Cargas Wikia',
 );
 
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'wikiaupload' => 'Wikia igoera',
+);
+
 /** Finnish (Suomi)
  * @author Crt
  */
@@ -140,6 +147,20 @@ $messages['hu'] = array(
  */
 $messages['ia'] = array(
 	'wikiaupload' => 'Incargamento in Wikia',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'wikiaupload' => 'Pemuatan Wikia',
+);
+
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'wikiaupload' => 'Ntinye ihe na élú Wikia',
 );
 
 /** Italian (Italiano)
@@ -255,10 +276,24 @@ $messages['te'] = array(
 	'wikiaupload' => 'వికియా ఎగుమతి',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'wikiaupload' => 'Pagkarga ng Wikia',
+);
+
 /** Turkish (Türkçe)
  * @author Joseph
  */
 $messages['tr'] = array(
 	'wikiaupload' => 'WikiaYükleme',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Horacewai2
+ */
+$messages['zh-hant'] = array(
+	'wikiaupload' => 'Wikia上傳',
 );
 

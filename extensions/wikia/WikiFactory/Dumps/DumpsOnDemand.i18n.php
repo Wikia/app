@@ -109,6 +109,23 @@ $messages['cs'] = array(
 	'dump-database-info-more' => 'Prosím vizte <a href="http://community.wikia.com/wiki/Help:Database_download">zde</a> pro více informací',
 );
 
+/** Danish (Dansk)
+ * @author Emilkris33
+ */
+$messages['da'] = array(
+	'dump-database' => 'Database dumps',
+	'dump-database-info' => 'Database dumps kan bruges som en personlig backup (Wikia laver separate backups af alle wikier automatisk) eller til vedligeholdelses bots',
+	'dump-database-curr-pages' => 'Nuværende sider',
+	'dump-database-curr-pages-info' => '(Denne version er normalt bedst til bot brug)',
+	'dump-database-full-pages' => ' Nuværende sider og historie',
+	'dump-database-full-pages-info' => '(Advarsel: Denne fil kan være meget stor)',
+	'dump-database-request' => 'Anmod om en opdatering',
+	'dump-database-request-info' => '(Dumps genereres normalt ugentligt)',
+	'dump-database-request-submit' => 'Send forespørgsel',
+	'dump-database-request-requested' => 'Anmodning om database dump sendt',
+	'dump-database-info-more' => '<a href="http://community.wikia.com/wiki/Help:Database_download">Se</a> venligst for mere info',
+);
+
 /** German (Deutsch)
  * @author LWChris
  * @author MtaÄ
@@ -444,12 +461,21 @@ $messages['ru'] = array(
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Charmed94
  * @author Verlor
  */
 $messages['sr-ec'] = array(
+	'dump-database' => 'Похрањена база података',
+	'dump-database-info' => 'Похрањена база података се може користити као лична резерва (Wikia аутоматски ствара одвојене копије свих викија) или за роботе за одржавање',
 	'dump-database-curr-pages' => 'Садашње странице',
-	'dump-database-full-pages' => 'Садашња страница и историја',
+	'dump-database-curr-pages-info' => '(ово издање је обично најбоље за сврху робота)',
+	'dump-database-full-pages' => 'Тренутне странице и историјат',
+	'dump-database-full-pages-info' => '(Упозорење: ова датотека је веома велика)',
+	'dump-database-request' => 'Затражи доградњу',
+	'dump-database-request-info' => '(Ђубриште се обично производи сваке недеље)',
 	'dump-database-request-submit' => 'Пошаљи захтев',
+	'dump-database-request-requested' => 'Захтев за похрањивање базе података је послат',
+	'dump-database-info-more' => 'Молимо Вас, <a href="http://community.wikia.com/wiki/Help:Database_download">погледајте ово</a> за више информација',
 );
 
 /** Swedish (Svenska)
@@ -467,6 +493,23 @@ $messages['te'] = array(
 	'dump-database-curr-pages' => 'ప్రస్తుర పుటలు',
 	'dump-database-full-pages' => 'ప్రస్తుత పుటలు మరియు చరిత్ర',
 	'dump-database-info-more' => 'మరింత సమాచారం కోసం దయచేసి <a href="http://community.wikia.com/wiki/Help:Database_download">దీన్ని చూడండి</a>',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'dump-database' => 'Tapunan ng talaan ng mga dato',
+	'dump-database-info' => 'Magagamit ang tapunan ng talaan ng mga dato bilang isang reserbang pansarili (kusang gumagawa ang Wikia ng nakahiwalay na mga reserba ng lahat ng mga wiki)',
+	'dump-database-curr-pages' => 'Kasalukuyang mga pahina',
+	'dump-database-curr-pages-info' => '(Ang bersyon na ito ay kadalasang pinakamahusay para sa paggamit ng bot)',
+	'dump-database-full-pages' => 'Kasalukuyang mga pahina at kasaysayan',
+	'dump-database-full-pages-info' => '(Babala: maaaring napakalaki ng talaksang ito)',
+	'dump-database-request' => 'Humiling ng isang pagsasapanahon',
+	'dump-database-request-info' => '(Karaniwang linggo-linggong nililikha ang mga tapunan)',
+	'dump-database-request-submit' => 'Ipadala ang hiling',
+	'dump-database-request-requested' => 'Hilingin ang ipinadalang tapunan ng talaan ng mga dato',
+	'dump-database-info-more' => 'Paki <a href="http://community.wikia.com/wiki/Help:Database_download">tingnan</a> para sa iba pang kabatiran',
 );
 
 /** Ukrainian (Українська)

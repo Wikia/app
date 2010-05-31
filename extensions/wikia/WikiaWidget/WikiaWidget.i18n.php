@@ -120,6 +120,20 @@ $messages['ia'] = array(
 	'wikiawidget' => 'Widgets de Wikia',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'wikiawidget' => 'Widget-widget Wikia',
+);
+
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'wikiawidget' => 'Wijet Wikia',
+);
+
 /** Italian (Italiano)
  * @author Civvì
  */
@@ -153,7 +167,7 @@ $messages['lb'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'wikiawidget' => 'Интерфејс-елементи на Викија',
+	'wikiawidget' => 'Направи на Викија',
 );
 
 /** Dutch (Nederlands)
@@ -239,5 +253,19 @@ $messages['sv'] = array(
  */
 $messages['te'] = array(
 	'wikiawidget' => 'వికియా విడ్జెట్లు',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'wikiawidget' => 'Mga widyet ng Wikia',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Horacewai2
+ */
+$messages['zh-hant'] = array(
+	'wikiawidget' => 'Wikia部件',
 );
 

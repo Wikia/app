@@ -298,11 +298,14 @@ $messages['ru'] = array(
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Charmed94
  * @author Verlor
  */
 $messages['sr-ec'] = array(
 	'imgplc-create' => 'Додај слику',
+	'imgplc-placeholder' => 'Чувар места',
 	'imgplc-image' => 'Слика',
+	'imgplc-notinhistory' => 'Не можете додати слику у режиму историјата.',
 );
 
 /** Swedish (Svenska)
@@ -313,6 +316,16 @@ $messages['sv'] = array(
 	'imgplc-placeholder' => 'Platshållare',
 	'imgplc-image' => 'Bild',
 	'imgplc-notinhistory' => 'Du kan inte lägga till bilder i historik-läget.',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'imgplc-create' => 'Idagdag ang Larawan',
+	'imgplc-placeholder' => 'Tagahawak ng lugar',
+	'imgplc-image' => 'Larawan',
+	'imgplc-notinhistory' => 'Hindi ka makapagdaragdag ng larawan habang nasa modalidad na pangkasaysayan.',
 );
 
 /** Ukrainian (Українська)

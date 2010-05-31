@@ -131,21 +131,39 @@ $messages['de-formal'] = array(
 );
 
 /** British English (British English)
+ * @author Bruce89
  * @author Lcawte
  */
 $messages['en-gb'] = array(
+	'user-badge-title' => 'User badge',
+	'user-badge-invalid-color' => 'Illegal hex value entered',
 	'user-badge-show-color' => 'Show colour details',
 	'user-badge-hide-color' => 'Hide colour details',
 	'user-badge-selected-color' => 'Currently selected colour {rgb}',
 	'user-badge-web-color' => 'Closest websafe colour: {rgb} Click to select!',
 	'user-badge-dialog-title' => 'Please choose a colour',
+	'user-badge-current' => 'Current badge',
 	'user-badge-configure' => 'Configure your badge',
+	'user-badge-not-found' => 'No badge found!',
+	'user-badge-use-configurator' => 'Use the configurator to create a new badge!',
+	'user-badge-create' => 'Create badge:',
+	'user-badge-overwrite-msg' => 'Overwrite existing badge',
+	'user-badge-header-body-box' => 'Header and body:',
 	'user-badge-header-text' => 'Header text colour:',
 	'user-badge-header-bgcolor' => 'Header background colour:',
 	'user-badge-body-bgcolor' => 'Body background colour:',
+	'user-badge-text-align' => 'Header text align:',
+	'user-badge-logo-opt' => 'Image options:',
+	'user-badge-wikia-logo-pos' => 'Wikia logo position:',
+	'user-badge-small-wikia-logo-pos' => 'Small Wikia logo position:',
 	'user-badge-label-color' => 'Label colour (username, edits):',
 	'user-badge-small-wikia-logo-color' => 'Wikia logo colour:',
 	'user-badge-data-color' => 'Data colour:',
+	'user-badge-edits-txt' => 'Edits',
+	'user-bagde-copypaste-ext-code' => 'Copy & paste (external sites)',
+	'user-bagde-copypaste-int-code' => 'Copy & paste (this Wikia)',
+	'user-bagde-copypaste-int-other-code' => 'Copy & paste (other Wikia)',
+	'user-badge-save-info' => 'If you want to save changes, scroll to the page end and press the "Save" button',
 );
 
 /** Spanish (Español)
@@ -377,6 +395,7 @@ $messages['ja'] = array(
 $messages['lb'] = array(
 	'user-badge-logo-opt' => 'Bild-Optiounen:',
 	'user-badge-edits-txt' => 'Ännerungen',
+	'user-badge-save-info' => 'Wann Dir d\'Ännerunge späichere wëllt, da scrollt op d\'Ënn vun der Säit a klickt op de Knäppchen "Späicheren"',
 );
 
 /** Macedonian (Македонски)
@@ -396,7 +415,7 @@ $messages['mk'] = array(
 	'user-badge-use-configurator' => 'Употребете го конфигураторот за да создадете нова значка!',
 	'user-badge-create' => 'Создај значка:',
 	'user-badge-overwrite-msg' => 'Замени ја постоечката значка',
-	'user-badge-header-body-box' => 'Заглавје и содржина:',
+	'user-badge-header-body-box' => 'Заглавие и содржина:',
 	'user-badge-header-text' => 'Боја на текстот на заглавјето:',
 	'user-badge-header-bgcolor' => 'Позадинска боја на заглавјето:',
 	'user-badge-body-bgcolor' => 'Позадинска боја на содржината:',
@@ -586,5 +605,40 @@ $messages['te'] = array(
 	'user-badge-dialog-title' => 'దయచేసి ఒక రంగును ఎన్నుకోండి',
 	'user-badge-edits-txt' => 'దిద్దుబాట్లు',
 	'user-badge-save-info' => 'మార్పులను భద్రపరచాలంటే, పుట అడుగుభాగానికి జారి "భద్రపరుచు" బొత్తాము నొక్కండి',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'user-badge-title' => 'Tsapa ng tagagamit',
+	'user-badge-invalid-color' => 'Nagpasok ng ilegal na halaga ng hex',
+	'user-badge-show-color' => 'Ipakita ang mga detalye ng kulay',
+	'user-badge-hide-color' => 'Itago ang mga detalye ng kulay',
+	'user-badge-selected-color' => 'Kasalukuyang napiling kulay {rgb}',
+	'user-badge-web-color' => 'Pinakamalapit na kulay na ligtas para sa web: {rgb}.  Pindutin upang piliin!',
+	'user-badge-dialog-title' => 'Mangyaring pumili ng isang kulay',
+	'user-badge-current' => 'Kasalukuyang tsapa',
+	'user-badge-configure' => 'Iayos ang tsapa Mo',
+	'user-badge-not-found' => 'Walang natagpuang tsapa!',
+	'user-badge-use-configurator' => 'Gamitin ang pang-ayos upang makalikha ng isang bagong tsapa!',
+	'user-badge-create' => 'Likhain ang tsapa:',
+	'user-badge-overwrite-msg' => 'Patungan ang umiiral na tsapa',
+	'user-badge-header-body-box' => 'Paulo at katawan:',
+	'user-badge-header-text' => 'Kulay ng teksto ng paulo:',
+	'user-badge-header-bgcolor' => 'Panglikod na kulay ng paulo:',
+	'user-badge-body-bgcolor' => 'Panglikod na kulay ng katawan:',
+	'user-badge-text-align' => 'Pagtutuwid ng tekstong paulo:',
+	'user-badge-logo-opt' => 'Mga pagpipilian na pang-larawan:',
+	'user-badge-wikia-logo-pos' => 'Posisyon ng logo ng Wikia:',
+	'user-badge-small-wikia-logo-pos' => 'Posisyon ng maliit na logo ng Wikia:',
+	'user-badge-label-color' => 'Kulay ng tatak (tagagamit, mga binago):',
+	'user-badge-small-wikia-logo-color' => 'Kulay ng logo ng Wikia:',
+	'user-badge-data-color' => 'Kulay ng dato:',
+	'user-badge-edits-txt' => 'Mga pagbabago',
+	'user-bagde-copypaste-ext-code' => 'Kopyahin at idikat (mga sityong panlabas)',
+	'user-bagde-copypaste-int-code' => 'Kopyahin at idikit (ang Wikiang ito)',
+	'user-bagde-copypaste-int-other-code' => 'Kopyahin at idikit (ibang Wikia)',
+	'user-badge-save-info' => 'Kung nais mong sagipin ang mga pagbabago, umikid papunta sa wakas ng pahina at pindutin ang pindutang "Sagipin"',
 );
 

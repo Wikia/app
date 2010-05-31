@@ -279,6 +279,15 @@ $messages['ar'] = array(
 	'autocreatewiki-subname-answers' => 'إجابات',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author Wizardist
+ */
+$messages['be-tarask'] = array(
+	'autocreatewiki' => 'Стварыць новую вікі',
+	'autocreatewiki-page-title-default' => 'Стварыць новую вікі',
+	'autocreatewiki-language-all' => 'Усе мовы',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  * @author Spiritia
@@ -1642,6 +1651,25 @@ $3
 	'autocreatewiki-subname-answers' => 'Answers',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'autocreatewiki-language-all' => 'All Sproochen',
+	'autocreatewiki-birthdate' => 'Gebuertsdatum:',
+	'autocreatewiki-done' => 'fäerdeg',
+	'autocreatewiki-error' => 'Feeler',
+	'autocreatewiki-success-get-started' => 'Ufänken',
+	'autocreatewiki-invalid-username' => 'Dëse Benotzernumm ass net valabel.',
+	'autocreatewiki-empty-username' => 'De Benotzernumm kann net eidel sinn.',
+	'autocreatewiki-empty-password' => "D'Passwuert kann net eidel sinn.",
+	'autocreatewiki-congratulation' => 'Gratulatioun!',
+	'autocreatewiki-welcometalk-log' => 'Wëllkommensmessage',
+	'autocreatewiki-step2-error' => "D'Datebank gëtt et!",
+	'newwikis' => 'Nei Wikien',
+	'autocreatewiki-subname-answers' => 'Äntwerten',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -1703,8 +1731,8 @@ $messages['mk'] = array(
 	'autocreatewiki-empty-retype-password' => 'Превнесувањето на лозинката не може да стои празно.',
 	'autocreatewiki-category-other' => 'Друго',
 	'autocreatewiki-set-username' => 'Најпрвин постави корисничко име.',
-	'autocreatewiki-invalid-category' => 'Неважечка вредност на категоријата. Одберете правилна категорија од расклопната листа.',
-	'autocreatewiki-invalid-language' => 'Неважечка вредност за јазик. Одберете правилна вредност од расклопната листа.',
+	'autocreatewiki-invalid-category' => 'Неважечка вредност на категоријата. Одберете правилна категорија од паѓачкиот список.',
+	'autocreatewiki-invalid-language' => 'Неважечка вредност за јазик. Одберете правилна вредност од паѓачкиот список.',
 	'autocreatewiki-invalid-retype-passwd' => 'Превнесете ја истата лозинка од погоре',
 	'autocreatewiki-invalid-birthday' => 'Неважечки датум на раѓање',
 	'autocreatewiki-limit-birthday' => 'Не можам да ја создадам регистрацијата.',
@@ -1731,7 +1759,7 @@ $messages['mk'] = array(
 	'autocreatewiki-step3-error' => 'Неможам да поставам основно-зададени информации во базата на податоци!',
 	'autocreatewiki-step6-error' => 'Не можам да поставам основно-зададени табели во базата на податоци!',
 	'autocreatewiki-step7-error' => 'Не можам да ја ископирам почетната база на податоци за јазик!',
-	'autocreatewiki-protect-reason' => 'Дел од официјалниот интерфејс',
+	'autocreatewiki-protect-reason' => 'Дел од официјалниот посредник',
 	'autocreatewiki-welcomesubject' => '$1 е создадено!',
 	'autocreatewiki-welcomebody' => 'Здраво, $2,
 
@@ -2534,34 +2562,34 @@ Esse é um projeto novo, então, por favor, nos escreva caso você tenha alguma 
 $messages['ro'] = array(
 	'autocreatewiki' => 'Creează o nouă wiki',
 	'autocreatewiki-desc' => 'Creează wiki în Wikifactory la cererea unui utilizator',
-	'autocreatewiki-page-title-default' => 'Creaţi un wiki nou',
-	'autocreatewiki-page-title-answers' => 'Creaţi un nou wiki Answers',
+	'autocreatewiki-page-title-default' => 'Creați un wiki nou',
+	'autocreatewiki-page-title-answers' => 'Creați un nou wiki Answers',
 	'createwiki' => 'Creează o nouă wiki',
 	'autocreatewiki-chooseone' => 'Alege una',
 	'autocreatewiki-required' => '$1 = Solicitat',
 	'autocreatewiki-web-address' => 'Adresă web',
-	'autocreatewiki-category-select' => 'Selecţionaţi unul',
+	'autocreatewiki-category-select' => 'Selecționați unul',
 	'autocreatewiki-language-top' => 'Top $1 de limbi',
 	'autocreatewiki-language-all' => 'Toate limbile',
-	'autocreatewiki-birthdate' => 'Data de naştere',
+	'autocreatewiki-birthdate' => 'Data de naștere',
 	'autocreatewiki-blurry-word' => 'Cuvânt neclar:',
 	'autocreatewiki-remember' => 'Ţine-mă minte',
-	'autocreatewiki-create-account' => 'Creaţi-vă un cont',
+	'autocreatewiki-create-account' => 'Creați-vă un cont',
 	'autocreatewiki-done' => 'Rezolvat',
 	'autocreatewiki-error' => 'Eroare',
-	'autocreatewiki-haveaccount-question' => 'Aveţi deja un cont Wikia?',
+	'autocreatewiki-haveaccount-question' => 'Aveți deja un cont Wikia?',
 	'autocreatewiki-success-title-default' => 'Wiki-ul dvs. a fost creat cu succes!',
 	'autocreatewiki-success-title-answers' => 'Site-ul tău de answer a fost creat!',
-	'autocreatewiki-success-subtitle' => 'Puteţi începe acum lucrul pe acest wiki vizitând:',
+	'autocreatewiki-success-subtitle' => 'Puteți începe acum lucrul pe acest wiki vizitând:',
 	'autocreatewiki-success-has-been-created' => 'a fost creat!',
-	'autocreatewiki-success-get-started' => 'Începeţi',
-	'autocreatewiki-info-domain' => 'Cel mai bun mod de a căuta subiectul tău este să cauţi cu cucinte cheie.',
-	'autocreatewiki-info-topic' => 'Adăugaţi o scurtă descriere, cum ar fi "Star Wars" sau manifestarea "TV"',
+	'autocreatewiki-success-get-started' => 'Începeți',
+	'autocreatewiki-info-domain' => 'Cel mai bun mod de a căuta subiectul tău este să cauți cu cucinte cheie.',
+	'autocreatewiki-info-topic' => 'Adăugați o scurtă descriere, cum ar fi "Star Wars" sau manifestarea "TV"',
 	'autocreatewiki-info-category-default' => 'Aces lucru îi va ajuta pe vizitatori să vă găsească wiki-ul',
 	'autocreatewiki-info-category-answers' => 'Acest lucru îi va ajuta pe vizitatori să că găsească site-ul dvs. answers.',
-	'autocreatewiki-info-language' => 'Acest lucru îi va ajuta pe vizitatori să-şi vadă limba implicită.',
+	'autocreatewiki-info-language' => 'Acest lucru îi va ajuta pe vizitatori să-și vadă limba implicită.',
 	'autocreatewiki-info-email-address' => 'Adresa dvs. de email nu va fi niciodată văzută pe vreun proiect Wikia.',
-	'autocreatewiki-limit-creation' => 'Aţi trecut de limita maximă a wiki-urilor create în 24 ore ($1)',
+	'autocreatewiki-limit-creation' => 'Ați trecut de limita maximă a wiki-urilor create în 24 ore ($1)',
 );
 
 /** Tarandíne (Tarandíne)
@@ -2789,6 +2817,68 @@ $messages['te'] = array(
 	'autocreatewiki-birthdate' => 'పుట్టిన రోజు:',
 	'autocreatewiki-category-other' => 'ఇతర',
 	'autocreatewiki-congratulation' => 'అభినందనలు!',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'autocreatewiki' => 'Lumikha ng isang bagong wiki',
+	'autocreatewiki-desc' => 'Lumikha ng wiki sa WikiPabrika ayon sa mga kahilingan ng tagagamit',
+	'autocreatewiki-page-title-default' => 'Lumikha ng isang bagong wiki',
+	'autocreatewiki-page-title-answers' => 'Lumikha ng isang bagong sityo ng Mga Sagot',
+	'createwiki' => 'Lumikha ng isang bagong wiki',
+	'autocreatewiki-chooseone' => 'Pumili ng isa',
+	'autocreatewiki-required' => '$1 = kailangan',
+	'autocreatewiki-web-address' => 'Tirahan ng web:',
+	'autocreatewiki-category-select' => 'Pumili ng isa',
+	'autocreatewiki-language-top' => 'Pinakamataas na $1 na mga wika',
+	'autocreatewiki-language-all' => 'Lahat ng mga wika',
+	'autocreatewiki-birthdate' => 'Kaarawan:',
+	'autocreatewiki-blurry-word' => 'Malabong salita:',
+	'autocreatewiki-remember' => 'Tandaan ako',
+	'autocreatewiki-create-account' => 'Lumikha ng isang akawnt',
+	'autocreatewiki-done' => 'nagawa na',
+	'autocreatewiki-error' => 'kamalian',
+	'autocreatewiki-haveaccount-question' => 'Mayroon ka na bang isang akawnt sa Wikia',
+	'autocreatewiki-success-title-default' => 'Nalikha na ang wiki mo!',
+	'autocreatewiki-success-title-answers' => 'Nalikha na ang iyong sityo ng mga sagot!',
+	'autocreatewiki-success-subtitle' => 'Makapagsisimula ka nang gumawa sa iyong wiki sa pamamagitan ng pagdalaw sa:',
+	'autocreatewiki-success-has-been-created' => 'ay nalikha na!',
+	'autocreatewiki-success-get-started' => 'Magsimula',
+	'autocreatewiki-info-domain' => 'Pinakamainam na gamitin ang isang salitang mas malamang na isang susing-salita ng paghahanap para sa iyong paksa.',
+	'autocreatewiki-info-topic' => 'Magdagdag ng isang maikling paglalarawan na katulad ng "Star Wars" o "mga palabas sa TV".',
+	'autocreatewiki-info-category-default' => 'Makakatulong ito sa mga panauhin na matagpuan ang wiki mo.',
+	'autocreatewiki-info-category-answers' => 'Makakatulong ito sa mga panauhin na matagpuan ang sityo mo ng Mga Sagot.',
+	'autocreatewiki-info-language' => 'Ito ang magiging likas na nakatakdang wika para sa mga panauhin ng wiki mo.',
+	'autocreatewiki-info-email-address' => 'Hindi ipapakita kailanman ng Wikia sa sinuman ang tirahan mo ng e-liham.',
+	'autocreatewiki-empty-field' => 'Pakikumpleto ang lugar na ito.',
+	'autocreatewiki-invalid-username' => 'Hindi tanggap ang pangalang pangtagagamit na ito.',
+	'autocreatewiki-busy-username' => 'May nakakuha na ng pangalang pangtagagamit na ito.',
+	'autocreatewiki-blocked-username' => 'Hindi mo malilikha ang akawnt.',
+	'autocreatewiki-user-notloggedin' => 'Nalikha ang akawnt mo pero hindi nakalagda!',
+	'autocreatewiki-empty-language' => 'Pakipili ang wika na para sa wiki.',
+	'autocreatewiki-empty-category' => 'Paki pumili ng isang kategorya.',
+	'autocreatewiki-empty-wikiname' => 'Hindi maaaring walang laman ang pangalan ng wiki.',
+	'autocreatewiki-empty-username' => 'Hindi maaaring walang laman ang pangalang pangtagagamit.',
+	'autocreatewiki-empty-password' => 'Hindi maaaring walang laman ang hudyat.',
+	'autocreatewiki-empty-retype-password' => 'Hindi maaaring walang laman ang muling imakinilya ang hudyat.',
+	'autocreatewiki-category-other' => 'Iba pa',
+	'autocreatewiki-set-username' => 'Itakda muna ang pangalan ng tagagamit.',
+	'autocreatewiki-invalid-birthday' => 'Hindi tanggap na petsa ng kaarawan',
+	'autocreatewiki-limit-birthday' => 'Hindi nagawang likhain ang pagpapatala.',
+	'autocreatewiki-log-title' => 'Nililikha na ang wiki mo',
+	'autocreatewiki-step0' => 'Sinisimulan ang pagsasagawa ...',
+	'autocreatewiki-stepdefault' => 'Tumatakbo ang pagsasagawa, pakihintay ...',
+	'autocreatewiki-errordefault' => 'Hindi tapos ang pagsasagawa ...',
+	'autocreatewiki-step1' => 'Nililikha ang sisidlan ng mga larawan ...',
+	'autocreatewiki-step2' => 'Nililikha ang kalipunan ng dato ...',
+	'autocreatewiki-step3' => 'Itinatalaga ang likas na nakatakdang kabatiran sa loob ng kalipunan ng dato ...',
+	'autocreatewiki-step4' => 'Kinokopya ang likas na nakatakdang mga larawan at logo ...',
+	'autocreatewiki-step5' => 'Itinatalaga ang likas na nakatakdang mga nagbabago sa loob ng kalipunan ng dato ...',
+	'autocreatewiki-congratulation' => 'Maligayang bati!',
+	'autocreatewiki-welcometalk-log' => 'Pambati sa Pagdating',
+	'autocreatewiki-step2-error' => 'Umiiral ang kalipunan ng dato!',
 );
 
 /** Ukrainian (Українська)

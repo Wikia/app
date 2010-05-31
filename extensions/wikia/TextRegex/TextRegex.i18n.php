@@ -42,10 +42,14 @@ Try once again.',
 );
 
 /** Message documentation (Message documentation)
+ * @author EugeneZelenko
  * @author Siebrand
  */
 $messages['qqq'] = array(
 	'textregex-addedby-user' => 'If $2 is a time stamp, split date and time',
+	'textregex-remove-url' => '{{Identical|Remove}}',
+	'textregex-stats-url' => '{{Identical|Statistics}}',
+	'textregex-select-default' => '{{Identical|Select}}',
 	'textregex-phrase-statistics' => 'Parameters:
 * $1 is the regular expression text
 * $2 is the number of records (can be used for plural support)',
@@ -83,6 +87,42 @@ Probeer asseblief weer.",
 	'textregex-invalid-regexid' => 'Ongeldige ID of regex.',
 	'textregex-phrase-statistics' => "Statistieke vir die frase '''$1''' (aantal rekords: $2)",
 	'textregex-return-mainpage' => '[{{SERVER}}$1 terug na die lys]',
+);
+
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ * @author Wizardist
+ */
+$messages['be-tarask'] = array(
+	'textregex' => 'Тэкставыя рэгулярныя выразы',
+	'textregex-desc' => '[[Special:textregex/XXXX|Фільтар]] непажаданых фразаў на рэдагуемых старонках, заснаваны на рэгулярных выразах',
+	'textregex-page-title' => 'Сьпіс непажаданых выразаў',
+	'textregex-error-unblocking' => 'Памылка разблякаваньня ($1).
+Паспрабуйце яшчэ раз.',
+	'textregex-currently-blocked' => "'''Заблякаваныя цяпер фразы:'''",
+	'textregex_nocurrently-blocked' => 'Заблякаваныя фразы ня знойдзеныя',
+	'textregex-addedby-user' => 'дададзены $1 у $2',
+	'textregex-remove-url' => '[{{SERVER}}$1&id=$2 выдаліць]',
+	'textregex-stats-url' => '[{{SERVER}}$1&id=$2 статыстыка]',
+	'textregex-unblock-succ' => 'Разблякаваньне пасьпяховае',
+	'textregex-block-succ' => 'Блякаваньне пасьпяховае',
+	'textregex-unblock-message' => "Фраза '''$1''' была выдаленая са сьпісу непажаданых выразаў.",
+	'textregex-block-message' => "Фраза '''$1''' была дададзеная да сьпісу непажаданых выразаў.",
+	'textregex-regex-block' => 'Фраза да блякаваньня:',
+	'textregex-submit-regex' => 'Дадаць фразу',
+	'textregex-empty-regex' => 'Падайце слушную фразу для блякаваньня.',
+	'textregex-invalid-regex' => 'Няслушны рэгулярны выраз.',
+	'textregex-already-added' => '«$1» ужо дададзеная',
+	'textregex-nodata-found' => 'Нічога ня знойдзена',
+	'textregex-stats-record' => "слова ''$1'' было выкарыстанае $2 у $3 (''камэнтар: $4'')",
+	'textregex-select-subpage' => 'Выберыце са сьпісу фразаў:',
+	'textregex-select-default' => '-- выбраць --',
+	'textregex-create-subpage' => 'ці стварыце новы сьпіс:',
+	'textregex-select-regexlist' => 'перайсьці да сьпісу',
+	'textregex-invalid-regexid' => 'Няслушная фраза.',
+	'textregex-phrase-statistics' => "Статыстыка для фразы «'''$1'''» (колькасьць запісаў: $2)",
+	'textregex-return-mainpage' => '[{{SERVER}}$1 вярнуцца да сьпісу]',
 );
 
 /** Breton (Brezhoneg)
@@ -285,7 +325,7 @@ $messages['gl'] = array(
 	'textregex-select-regexlist' => 'ir á lista',
 	'textregex-invalid-regexid' => 'O identificador da expresión regular non é válido.',
 	'textregex-phrase-statistics' => "Estatísticas para a frase \"'''\$1'''\" (número de rexistros: \$2)",
-	'textregex-return-mainpage' => '[{{SERVER}}$1 voltar á lista]',
+	'textregex-return-mainpage' => '[{{SERVER}}$1 volver á lista]',
 );
 
 /** Hungarian (Magyar)
@@ -350,7 +390,7 @@ $messages['ia'] = array(
 $messages['mk'] = array(
 	'textregex' => 'Регуларен израз за текст',
 	'textregex-desc' => '[[Special:textregex/XXXX|Филтрирање]] на непожелни изрази во уредуваните страници, на основа на регуларни изрази',
-	'textregex-page-title' => 'Листа на непожелни изрази',
+	'textregex-page-title' => 'Список на непожелни изрази',
 	'textregex-error-unblocking' => 'Грешка при одблокирањето ($1). Обидете се повторно.',
 	'textregex-currently-blocked' => "'''Моментално блокирани изрази:'''",
 	'textregex_nocurrently-blocked' => 'Нема пронајдено блокирани изрази',
@@ -359,8 +399,8 @@ $messages['mk'] = array(
 	'textregex-stats-url' => '[{{SERVER}}$1&id=$2 статистики]',
 	'textregex-unblock-succ' => 'Одблокирањето успеа',
 	'textregex-block-succ' => 'Блокирањето успеа',
-	'textregex-unblock-message' => "Изразот '''$1''' е отстранет од листата на непожелни изрази.",
-	'textregex-block-message' => "Изразот '''$1''' е додаден во листата на непожелни изрази.",
+	'textregex-unblock-message' => "Изразот '''$1''' е отстранет од списокот на непожелни изрази.",
+	'textregex-block-message' => "Изразот '''$1''' е додаден во списокот на непожелни изрази.",
 	'textregex-regex-block' => 'Регуларен израз за блокирање:',
 	'textregex-submit-regex' => 'Додај регуларен израз',
 	'textregex-empty-regex' => 'Назначете правилен регуларен израз за блокирање.',
@@ -368,13 +408,13 @@ $messages['mk'] = array(
 	'textregex-already-added' => '„$1“ е веќе додадено',
 	'textregex-nodata-found' => 'Нема пронајдено податоци',
 	'textregex-stats-record' => "зборот ''$1'' е употребен од $2 на $3 (''коментар: $4'')",
-	'textregex-select-subpage' => 'Одберете еден регуларен израз од листата:',
+	'textregex-select-subpage' => 'Одберете еден регуларен израз од списокот:',
 	'textregex-select-default' => '-- одберете --',
-	'textregex-create-subpage' => 'или создајте нова листа:',
-	'textregex-select-regexlist' => 'оди на листата',
+	'textregex-create-subpage' => 'или создајте нов список:',
+	'textregex-select-regexlist' => 'оди на списокот',
 	'textregex-invalid-regexid' => 'Неважечки идентификатор на регуларниот израз.',
 	'textregex-phrase-statistics' => "Статистики за изразот '''$1''' (број на записи: $2)",
-	'textregex-return-mainpage' => '[{{SERVER}}$1 назад кон листата]',
+	'textregex-return-mainpage' => '[{{SERVER}}$1 назад кон списокот]',
 );
 
 /** Dutch (Nederlands)

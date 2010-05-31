@@ -31,6 +31,22 @@ $messages['af'] = array(
 	'our404handler' => 'Fout 404: bladsy nie gevind nie!',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Wizardist
+ */
+$messages['be-tarask'] = array(
+	'our404handler' => 'Памылка 404: старонка ня знойдзеная!',
+	'our404handler-oops' => 'Падобнай старонкі не існуе. Шукайце далей, калі ласка.',
+	'message404' => "'''Прабачце, але старонка, да якой вы зьвяртаецеся, чамусьці не існуе.'''
+
+Артыкул '''$1''' ня можа быць знойдзены. Вы можаце:
+
+* паглядзець артыкул [[$2]].
+* скарыстацца пошукам.
+* перайсьці да галоўнай старонкі сайту: [{{SERVER}} {{SITENAME}}].",
+);
+
 /** Breton (Brezhoneg)
  * @author Gwenn-Ael
  * @author Y-M D
@@ -454,11 +470,20 @@ $messages['sl'] = array(
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Charmed94
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'our404handler' => 'Грешка 404: Није нађена страница',
-	'our404handler-oops' => 'Нема страница које тражите. Идите даље.',
+	'our404handler' => 'Грешка 404: Страница није пронађена!',
+	'our404handler-oops' => 'Ово нису странице које тражите. Наставите даље с претрагом.',
+	'message404' => "
+'''Заиста нам је жао, али због непознатог разлога страница коју сте тражили не постоји.'''
+
+Чланак '''$1''' није пронађен.
+
+* Пробајте чланак [[$2]]
+* Пробајте претрагу с леве стране
+* Да бисте отишли на главну страницу сајта, кликните на везу: [{{SERVER}} {{SITENAME}}]",
 );
 
 /** Swedish (Svenska)
@@ -481,6 +506,21 @@ Artikeln '''$1''' kunde inte hittas.
  */
 $messages['te'] = array(
 	'our404handler' => '404 పొరపాటు: పేజీ కనబడలేదు!',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'our404handler' => 'Kamaliang 404: Hindi natagpuan ang pahina!',
+	'our404handler-oops' => 'Hindi ito ang mga pahinang hinahanap mo. Magpatuloy po lamang.',
+	'message404' => "'''Paumanhin po talaga, ngunit dahil sa ilang kadahilanan hindi umiiral ang hinihingi mong pahina.'''
+
+Hindi matagpuan ang artikulong '''$1'''.
+
+* Maaari mong subukan ang artikulong [[$2]]
+* Maaari mong gamitin ang kahong panghanap na nasa kaliwa ng pahina
+* Upang makapunta sa pangunahing pahina ng sityong ito, pindutin ang kawing na: [{{SERVER}} {{SITENAME}}]",
 );
 
 /** Vietnamese (Tiếng Việt)

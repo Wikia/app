@@ -61,6 +61,13 @@ $messages['af'] = array(
 	'categoryselect-error-db-locked' => 'Databasis is gesluit.',
 );
 
+/** Aragonese (Aragonés)
+ * @author Juanpabl
+ */
+$messages['an'] = array(
+	'categoryselect-button-cancel' => 'Cancelar',
+);
+
 /** Arabic (العربية)
  * @author Achraf94
  */
@@ -261,7 +268,7 @@ $messages['gl'] = array(
 	'categoryselect-addcategory-button' => 'Engadir a categoría',
 	'categoryselect-suggest-hint' => 'Prema a tecla Intro cando remate',
 	'categoryselect-tooltip' => "'''Novo!''' Barra de ferramentas de selección de categoría. Próbaa ou olle a [[Help:CategorySelect|axuda]] para saber máis",
-	'categoryselect-unhandled-syntax' => 'Detectouse unha sintaxe descoñecida; non é posible voltar ao modo visual.',
+	'categoryselect-unhandled-syntax' => 'Detectouse unha sintaxe descoñecida; non é posible volver ao modo visual.',
 	'categoryselect-edit-summary' => 'Inserción de categorías',
 	'categoryselect-empty-name' => 'Dea o nome da categoría (o que se escribe antes de |)',
 	'categoryselect-button-save' => 'Gardar',
@@ -314,6 +321,12 @@ $messages['ia'] = array(
 	'tog-disablecategoryselect' => 'Disactivar selection de categorias',
 );
 
+/** Igbo (Igbo) */
+$messages['ig'] = array(
+	'categoryselect-button-save' => 'Donyéré',
+	'categoryselect-button-cancel' => 'Emekwàlà',
+);
+
 /** Italian (Italiano) */
 $messages['it'] = array(
 	'categoryselect-addcategory-button' => 'Aggiungi categoria',
@@ -347,6 +360,18 @@ $messages['ja'] = array(
 	'tog-disablecategoryselect' => 'カテゴリタグ付け機能を無効にする',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'categoryselect-addcategory-button' => 'Kategorie derbäisetzen',
+	'categoryselect-edit-summary' => 'Kategorien derbäisetzen',
+	'categoryselect-button-save' => 'Späicheren',
+	'categoryselect-button-cancel' => 'Ofbriechen',
+	'categoryselect-error-not-exist' => 'Den Artikel [id=$1] gëtt et net.',
+	'categoryselect-error-db-locked' => "D'Datebank ass gespaart.",
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -367,8 +392,8 @@ $messages['mk'] = array(
 	'categoryselect-error-not-exist' => 'Статијата [id=$1] не постои.',
 	'categoryselect-error-user-rights' => 'Грешка со корисничките права.',
 	'categoryselect-error-db-locked' => 'Базата на податоци е заклучена.',
-	'categoryselect-desc' => 'Дава интерфејс за раководење со категориите во една статија без да треба да се уредува целата статија.',
-	'categoryselect-edit-abort' => 'Измените кои се обидовте да ги направите се откажани од кука на проширување',
+	'categoryselect-desc' => 'Дава посредник за раководење со категориите во една статија без да треба да се уредува целата статија.',
+	'categoryselect-edit-abort' => 'Измените кои се обидовте да ги направите се откажани од кука за додатоци',
 	'tog-disablecategoryselect' => 'Оневозможи означување на категории',
 );
 
@@ -557,6 +582,31 @@ $messages['sr-ec'] = array(
 $messages['te'] = array(
 	'categoryselect-button-save' => 'భద్రపరచు',
 	'categoryselect-button-cancel' => 'రద్దుచేయి',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'categoryselect-code-view' => 'Tingin sa kodigo',
+	'categoryselect-visual-view' => 'Tanawing nakikita',
+	'categoryselect-infobox-caption' => 'Mga mapagpipilian ng kategorya',
+	'categoryselect-infobox-category' => 'Ibigay ang pangalan ng kategorya',
+	'categoryselect-infobox-sortkey' => 'Gawing naka-abakada ang artikulong ito sa pahina ng kategoryang "$1" sa ilalim ng pangalang:',
+	'categoryselect-addcategory-button' => 'Idagdag ang kategorya',
+	'categoryselect-suggest-hint' => 'Pindutin ang Ipasok pagkatapos',
+	'categoryselect-tooltip' => "'''Bago!''' Kahon ng kasangkapan na pantatak ng Kategorya. Subukan ito o tingnan ang [[Help:CategorySelect|tulong]] upang makaalam pa ng marami",
+	'categoryselect-unhandled-syntax' => 'Nakapuna ng hindi nahahawakang sintaks - hindi maaari ang pagbabalik sa modalidad na natatanaw.',
+	'categoryselect-edit-summary' => 'Idinaragdag ang mga kategorya',
+	'categoryselect-empty-name' => 'Ibigay ang pangalan ng kategorya (bahagi bago ang |)',
+	'categoryselect-button-save' => 'Sagipin',
+	'categoryselect-button-cancel' => 'Huwag ituloy',
+	'categoryselect-error-not-exist' => 'Hindi umiiral ang artikulong [id=$1].',
+	'categoryselect-error-user-rights' => 'Kamalian sa mga karapatan ng tagagamit.',
+	'categoryselect-error-db-locked' => 'Nakakandado ang kalipunan ng dato',
+	'categoryselect-desc' => 'Nagbibigay ng isang hangganang-mukha para sa pamamahala ng mga kategorya sa loob ng artikulo na hindi binabago ang buong artikulo.',
+	'categoryselect-edit-abort' => 'Ang pagbabagong sinubok mong gawin ay pinigil ng isang kawil ng dugtong',
+	'tog-disablecategoryselect' => 'Huwag Paganahin ang Pagtatatak ng Kategorya',
 );
 
 /** Ukrainian (Українська)

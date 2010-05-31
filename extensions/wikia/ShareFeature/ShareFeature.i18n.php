@@ -17,6 +17,17 @@ $messages['af'] = array(
 	'sf-link-tooltip' => 'Deel hierdie artikel met u vriende',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ * @author Wizardist
+ */
+$messages['be-tarask'] = array(
+	'sf-link' => 'Падзяліцца гэтым артыкулам',
+	'sf-link-popup' => 'Падзяліцца артыкулам',
+	'sf-link-tooltip' => 'Падзяліцца спасылкай на артыкул са сваімі сябрамі',
+);
+
 /** Breton (Brezhoneg)
  * @author Gwenn-Ael
  */
@@ -225,6 +236,15 @@ $messages['sv'] = array(
 	'sf-link-tooltip' => 'Dela den här artikeln med dina vänner',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'sf-link' => 'Ipamahagi ang artikulong ito',
+	'sf-link-popup' => 'Ipamahagi ang artikulong ito',
+	'sf-link-tooltip' => 'Ipamahagi sa mga kaibigan mo ang artikulong ito',
+);
+
 /** Turkish (Türkçe)
  * @author Joseph
  */
@@ -232,5 +252,14 @@ $messages['tr'] = array(
 	'sf-link' => 'Bu maddeyi paylaş',
 	'sf-link-popup' => 'Bu maddeyi paylaş',
 	'sf-link-tooltip' => 'Bu maddeyi arkadaşlarınızla paylaşın',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Horacewai2
+ */
+$messages['zh-hant'] = array(
+	'sf-link' => '分享這篇文章',
+	'sf-link-popup' => '分享這篇文章',
+	'sf-link-tooltip' => '與您的朋友分享這篇文章',
 );
 

@@ -29,6 +29,14 @@ $messages['en'] = array(
 	'right-multilookup' => 'Look up information on users in multiple wikis',
 );
 
+/** Message documentation (Message documentation)
+ * @author EugeneZelenko
+ */
+$messages['qqq'] = array(
+	'multilookupnext' => '{{Identical|Next}}',
+	'multilookupprevious' => '{{Identical|Previous}}',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -51,11 +59,38 @@ Kontroleer die gegewe IP-adres; u met moontlik \'n invoerfout gemaak.</p>',
 	'multilookuplastedit' => 'Laste wysiging vanaf die IP:',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'specialmultiplelookup-desc' => 'Дазваляе праглядаць інфармацыю пра ўдзельніка з некалькіх вікі',
+	'multilookup' => 'Шматлікі пошук',
+	'multilookupstitle' => 'Шматлікі пошук',
+	'multilookupselectuser' => 'Пошук рахункаў з адным IP-адрасам у некалькіх вікі',
+	'multilookupgo' => 'Паказаць',
+	'multilookupnotspecify' => 'Пакуль што Вы не пазначылі IP-адрас.',
+	'multilookupnext' => 'наступныя',
+	'multilookupprevious' => 'папярэднія',
+	'multilookupnbrresult' => 'Колькасьць вынікаў:',
+	'multilookupinvalidresults' => 'Няслушныя вынікі!',
+	'multilookupnoresultfound' => 'Нічога ня знойдзена!',
+	'multilookupwiki' => 'Вікі',
+	'multilookuplink' => 'Спасылка на ўнёскі',
+	'multilookupdetails' => 'Глядзець падрабязнасьці',
+	'multilookuplistwikiainfo' => 'Сьпіс вікі, старонкі якіх рэдагаваліся ўдзельнікамі з IP-адрасу <b>$1</b>',
+	'multilookupinvaliduser' => '<p class="error">IP-адрас «<b>$1</b>» не існуе. Праверце паданы IP-адрас на верагодную памылку.</p>',
+	'multilookuplastedit' => 'Апошняе рэдагаваньне з гэтага IP-адрасу:',
+	'right-multilookup' => 'Прагляд інфармацыі пра ўдзельнікаў у некалькіх вікі',
+);
+
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
  */
 $messages['br'] = array(
+	'specialmultiplelookup-desc' => 'Pouchas a ra titouroù diwar-benn an implijerien war meur a wiki',
 	'multilookup' => 'Lookup liesseurt',
 	'multilookupstitle' => 'Lookup liesseurt',
 	'multilookupselectuser' => "Klask kontoù gant ar memes chomlec'h IP war wikioù liesseurt",
@@ -72,14 +107,17 @@ $messages['br'] = array(
 	'multilookuplistwikiainfo' => "roll ar wikioù zo bet kemmet pennadoù warno gant an implierien o deus ur chomlec'h IP :<b>$1</b>",
 	'multilookupinvaliduser' => '<p class="error">IP "<b>$1</b>" n\'eus ket anezhañ.  Gwiriit ar chomlec\'h IP abalamour da fazioù a c\'\'hallfe bezañ ennañ. C</p>',
 	'multilookuplastedit' => "Kemm diwezhañ ar chomlec'h IP-mañ :",
+	'right-multilookup' => 'Klask titouroù diwar-benn implijerien e meur a wiki.',
 );
 
 /** German (Deutsch)
  * @author LWChris
+ * @author The Evil IP address
  */
 $messages['de'] = array(
-	'multilookup' => 'Multiaccount Suche',
-	'multilookupstitle' => 'Multiaccount Suche',
+	'specialmultiplelookup-desc' => 'Ermöglicht Multiaccount-Suche auf mehreren Wikis',
+	'multilookup' => 'Multiaccount-Suche',
+	'multilookupstitle' => 'Multiaccount-Suche',
 	'multilookupselectuser' => 'Suche nach Konten von derselben IP-Adresse in mehreren Wikis',
 	'multilookupgo' => 'Suchen',
 	'multilookupnotspecify' => 'Du hast noch keine IP angegeben',
@@ -87,27 +125,31 @@ $messages['de'] = array(
 	'multilookupprevious' => 'Vorherige',
 	'multilookupnbrresult' => 'Anzahl der Ergebnisse:',
 	'multilookupinvalidresults' => 'Ungültige Ergebnisse!',
-	'multilookupnoresultfound' => 'Kein Ergebnis gefunden!',
+	'multilookupnoresultfound' => 'Keine Ergebnisse gefunden!',
 	'multilookupwiki' => 'Wiki',
 	'multilookuplink' => 'Beiträge-Link',
 	'multilookupdetails' => 'Details anzeigen',
-	'multilookuplistwikiainfo' => 'Liste von Wikis, in denen Artikel bearbeitet wurden von Benutzer mit der IP-Adresse: <b>$1</b>',
-	'multilookupinvaliduser' => '<p class="error">IP-Adresse "<b>$1</b>" existiert nicht. Überprüfe die angegebene IP-Adresse auf mögliche Tippfehler.</p>',
+	'multilookuplistwikiainfo' => 'Liste von Wikis, in denen Artikel von Benutzern mit der IP-Adresse <b>$1</b> bearbeitet wurden',
+	'multilookupinvaliduser' => '<p class="error">IP-Adresse „<b>$1</b>“ existiert nicht. Überprüfe die angegebene IP-Adresse auf mögliche Tippfehler.</p>',
 	'multilookuplastedit' => 'Letzte Bearbeitung mit dieser IP-Adresse:',
+	'right-multilookup' => 'Multiaccount-Suche auf mehreren Wikis',
 );
 
 /** German (formal address) (Deutsch (Sie-Form))
  * @author LWChris
+ * @author The Evil IP address
  */
 $messages['de-formal'] = array(
 	'multilookupnotspecify' => 'Sie haben noch keine IP angegeben',
-	'multilookupinvaliduser' => '<p class="error">IP-Adresse "<b>$1</b>" existiert nicht. Überprüfen Sie die angegebene IP-Adresse auf mögliche Tippfehler.</p>',
+	'multilookupinvaliduser' => '<p class="error">IP-Adresse „<b>$1</b>“ existiert nicht. Überprüfen Sie die angegebene IP-Adresse auf mögliche Tippfehler.</p>',
 );
 
 /** Spanish (Español)
+ * @author Crazymadlover
  * @author Translationista
  */
 $messages['es'] = array(
+	'specialmultiplelookup-desc' => 'Proporciona búsqueda de información de usuario en múltiples wikis',
 	'multilookup' => 'Búsqueda múltiple',
 	'multilookupstitle' => 'Búsqueda múltiple',
 	'multilookupselectuser' => 'Búsqueda de cuentas de la misma IP en múltiples wikis',
@@ -115,7 +157,7 @@ $messages['es'] = array(
 	'multilookupnotspecify' => 'Aún no has especificado una IP',
 	'multilookupnext' => 'próximo',
 	'multilookupprevious' => 'anterior',
-	'multilookupnbrresult' => 'Número del resultado:',
+	'multilookupnbrresult' => 'Número de resultados:',
 	'multilookupinvalidresults' => '¡Resultados inválidos!',
 	'multilookupnoresultfound' => '¡No se ha encontrado resultados!',
 	'multilookupwiki' => 'Wiki',
@@ -124,6 +166,7 @@ $messages['es'] = array(
 	'multilookuplistwikiainfo' => 'Lista de wikis cuyos artículos fueron editados por usuarios de IP: <b>$1</b>',
 	'multilookupinvaliduser' => '<p class="error">IP "<b>$1</b>" no existe. Revisa si hay posible errores ortográficos en la IP dada.</p>',
 	'multilookuplastedit' => 'Última edición desde esta IP:',
+	'right-multilookup' => 'Información de búsqueda de usuarios en múltiples wikis',
 );
 
 /** Finnish (Suomi)
@@ -147,6 +190,7 @@ $messages['fi'] = array(
  * @author IAlex
  */
 $messages['fr'] = array(
+	'specialmultiplelookup-desc' => 'Donne des informations sur les utilisateurs sur plusieurs wikis',
 	'multilookup' => 'Lookup multiple',
 	'multilookupstitle' => 'Lookup multiple',
 	'multilookupselectuser' => 'Rechercher des compte qui ont la même adresse IP sur de multiples wikis',
@@ -163,12 +207,14 @@ $messages['fr'] = array(
 	'multilookuplistwikiainfo' => 'Liste des wikis dont les articles ont été modifiés par des utilisateurs ayant cette adresse IP : <b>$1</b>',
 	'multilookupinvaliduser' => '<p class="error">L\'adresse IP « <b>$1</b> » n\'existe pas. Vérifiez l\'adresse IP pour de possibles erreurs.</p>',
 	'multilookuplastedit' => 'Dernière modification de cette adresse IP :',
+	'right-multilookup' => 'Rechercher des informations sur les utilisateurs dans plusieurs wikis',
 );
 
 /** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(
+	'specialmultiplelookup-desc' => 'Ofrece información sobre un usuario en varios wikis',
 	'multilookup' => 'Procura múltiple',
 	'multilookupstitle' => 'Procura múltiple',
 	'multilookupselectuser' => 'Buscar contas do mesmo enderezo IP en varios wikis',
@@ -182,9 +228,10 @@ $messages['gl'] = array(
 	'multilookupwiki' => 'Wiki',
 	'multilookuplink' => 'Ligazón cara ás contribucións',
 	'multilookupdetails' => 'Olle os detalles',
-	'multilookuplistwikiainfo' => 'Lista de wikis onde hai artigos editados por usuarios co enderezo IP: <b>$1</b>',
-	'multilookupinvaliduser' => '<p class="error">O enderezo IP "<b>$1</b>" non existe. Comprobe o enderezo IP dado por posibles erros de escritura.</p>',
+	'multilookuplistwikiainfo' => 'Lista de wikis onde hai artigos editados por usuarios co enderezo IP <b>$1</b>',
+	'multilookupinvaliduser' => '<p class="error">O enderezo IP "<b>$1</b>" non existe. Comprobe que o enderezo está ben escrito.</p>',
 	'multilookuplastedit' => 'Última edición deste enderezo IP:',
+	'right-multilookup' => 'Procurar información sobre usuarios en varios wikis',
 );
 
 /** Hungarian (Magyar)
@@ -204,6 +251,7 @@ $messages['hu'] = array(
  * @author McDutchie
  */
 $messages['ia'] = array(
+	'specialmultiplelookup-desc' => 'Provide recerca de information de usator in multiple wikis',
 	'multilookup' => 'Cerca multiple',
 	'multilookupstitle' => 'Cerca multiple',
 	'multilookupselectuser' => 'Cerca contos usate desde le mesme adresse IP in multiple wikis',
@@ -220,6 +268,7 @@ $messages['ia'] = array(
 	'multilookuplistwikiainfo' => 'Lista de wikis ubi articulos ha essite modificate per usatores con le adresse IP: <b>$1</b>',
 	'multilookupinvaliduser' => '<p class="error">Le adresse IP "<b>$1</b>" non existe. Verifica que le adresse IP date non ha errores.</p>',
 	'multilookuplastedit' => 'Ultime modification desde iste adresse IP:',
+	'right-multilookup' => 'Cercar information super usatores in multiple wikis',
 );
 
 /** Italian (Italiano) */
@@ -234,6 +283,7 @@ $messages['it'] = array(
  * @author Tommy6
  */
 $messages['ja'] = array(
+	'specialmultiplelookup-desc' => '複数ウィキにおける利用者の情報を提供する',
 	'multilookup' => 'IPアドレスの全体の投稿記録を見る',
 	'multilookupstitle' => 'IPアドレスの全体の投稿記録を見る',
 	'multilookupselectuser' => '同じIPアドレスのアカウントをウィキ全体で検索する:',
@@ -245,13 +295,16 @@ $messages['ja'] = array(
 	'multilookupnoresultfound' => '1件も見つかりませんでした',
 	'multilookupdetails' => '詳細を見る',
 	'multilookuplistwikiainfo' => 'IPアドレスが <b>$1</b> のユーザーが記事の編集を行ったことのあるウィキ',
+	'multilookupinvaliduser' => '<p class="error">IPアドレス"<b>$1</b>"は存在しません。入力したIPアドレスに誤りがないか確認してください。</p>',
 	'multilookuplastedit' => 'このIPアドレスからの最後の編集:',
+	'right-multilookup' => '複数ウィキにおけるユーザの情報を閲覧',
 );
 
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'specialmultiplelookup-desc' => 'Дава проверка на информации за корисници од повеќе викија',
 	'multilookup' => 'Повеќекратна проверка',
 	'multilookupstitle' => 'Повеќекратна проверка',
 	'multilookupselectuser' => 'Пребарување на сметки од една иста IP-адреса на повеќе викија',
@@ -259,29 +312,31 @@ $messages['mk'] = array(
 	'multilookupnotspecify' => 'Немате назначено IP-адреса',
 	'multilookupnext' => 'следно',
 	'multilookupprevious' => 'претходно',
-	'multilookupnbrresult' => 'Број на резултатот:',
+	'multilookupnbrresult' => 'Број на резултати:',
 	'multilookupinvalidresults' => 'Неважечки резултати!',
 	'multilookupnoresultfound' => 'Нема пронајдено резултат!',
 	'multilookupwiki' => 'Вики',
 	'multilookuplink' => 'Придонеси-врска',
 	'multilookupdetails' => 'Подробности',
-	'multilookuplistwikiainfo' => 'Листа на сите вики кадешто има статии уредувани од корисници од IP-адресата: <b>$1</b>',
+	'multilookuplistwikiainfo' => 'Список на сите вики кадешто има статии уредувани од корисници од IP-адресата: <b>$1</b>',
 	'multilookupinvaliduser' => '<p class="error">IP-адресата „<b>$1</b>“ не постои. Проверете дали е точно напишана.</p>',
 	'multilookuplastedit' => 'Последно уредување од оваа IP-адреса:',
+	'right-multilookup' => 'Преглед на информации за корисници во повеќе викија',
 );
 
 /** Dutch (Nederlands)
  * @author Siebrand
  */
 $messages['nl'] = array(
-	'multilookup' => 'Meervoudig opzoeken',
-	'multilookupstitle' => 'Meervoudig opzoeken',
+	'specialmultiplelookup-desc' => "Maakt het mogelijk gebruikersinformatie op te zoeken in meerdere wiki's",
+	'multilookup' => "Gebruikersinformatie in wiki's opzoeken",
+	'multilookupstitle' => "Gebruikersinformatie in wiki's opzoeken",
 	'multilookupselectuser' => "Zoeken naar gebruikers met hetzelfde IP-adres op meerdere wiki's",
 	'multilookupgo' => 'OK',
-	'multilookupnotspecify' => 'U hebt nog geen IP-adres opgegeven.',
+	'multilookupnotspecify' => 'U hebt nog geen IP-adres opgegeven',
 	'multilookupnext' => 'volgende',
 	'multilookupprevious' => 'vorige',
-	'multilookupnbrresult' => 'Resultaten:',
+	'multilookupnbrresult' => 'Aantal resultaten:',
 	'multilookupinvalidresults' => 'Ongeldige resultaten!',
 	'multilookupnoresultfound' => 'Geen resultaten gevonden!',
 	'multilookupwiki' => 'Wiki',
@@ -291,6 +346,7 @@ $messages['nl'] = array(
 	'multilookupinvaliduser' => '<p class="error">Het IP-adres "<b>$1</b>" bestaat niet.
 Controleer het opgegeven IP-adres; mogelijk hebt u een invoerfout gemaakt.</p>',
 	'multilookuplastedit' => 'Laatste bewerking van dit IP-adres:',
+	'right-multilookup' => "Gebruikersinformatie in meerdere wiki's opzoeken",
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -298,6 +354,7 @@ Controleer het opgegeven IP-adres; mogelijk hebt u een invoerfout gemaakt.</p>',
  * @author Nghtwlkr
  */
 $messages['no'] = array(
+	'specialmultiplelookup-desc' => 'Gir brukerinformasjonsoppslag på flere wikier',
 	'multilookup' => 'Slå opp flere',
 	'multilookupstitle' => 'Slå opp flere',
 	'multilookupselectuser' => 'Søk etter kontoer med samme IP på flere wikier',
@@ -305,7 +362,7 @@ $messages['no'] = array(
 	'multilookupnotspecify' => 'Du har ikke oppgitt en IP ennå',
 	'multilookupnext' => 'neste',
 	'multilookupprevious' => 'forrige',
-	'multilookupnbrresult' => 'Antall resultat:',
+	'multilookupnbrresult' => 'Antall resultater:',
 	'multilookupinvalidresults' => 'Ugyldige resultat!',
 	'multilookupnoresultfound' => 'Ingen resultat funnet!',
 	'multilookupwiki' => 'Wiki',
@@ -314,6 +371,7 @@ $messages['no'] = array(
 	'multilookuplistwikiainfo' => 'Liste over wikier der artikler har blitt redigert av brukere fra IP: <b>$1</b>',
 	'multilookupinvaliduser' => '<p class="error">IP <b>«$1»</b> finnes ikke. Sjekk oppgitt IP for mulige skrivefeil.</p>',
 	'multilookuplastedit' => 'Sist redigert fra denne IP-en:',
+	'right-multilookup' => 'Slå opp informasjon om brukere på flere wikier',
 );
 
 /** Piedmontese (Piemontèis)
@@ -321,6 +379,7 @@ $messages['no'] = array(
  * @author Dragonòt
  */
 $messages['pms'] = array(
+	'specialmultiplelookup-desc' => "A dà na vista an sj'anformassion dj'utent dzora a vàire wiki",
 	'multilookup' => 'Arserche mùltiple',
 	'multilookupstitle' => 'Arserche mùltiple',
 	'multilookupselectuser' => 'Sërché dij cont con ël midem IP ansima a wiki mùltiple',
@@ -337,6 +396,7 @@ $messages['pms'] = array(
 	'multilookuplistwikiainfo' => "Lista ëd wiki anté che dj'artìcoj a j'ero stàit modificà da utent con IP :<b>$1</b>",
 	'multilookupinvaliduser' => '<p class="error">IP "<b>$1</b>" a esist pa. Ch\'a contròla l\'IP dàit për possìbij eror ëd batidura.</p>',
 	'multilookuplastedit' => 'Ultima modìfica da sto IP-sì:',
+	'right-multilookup' => "Arserca dj'anformassion an sj'utent su vàire wiki",
 );
 
 /** Pashto (پښتو)
@@ -347,6 +407,30 @@ $messages['ps'] = array(
 	'multilookupnext' => 'راتلونکی',
 	'multilookupprevious' => 'پخوانی',
 	'multilookupwiki' => 'ويکي',
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'specialmultiplelookup-desc' => 'Permite procurar informação de utilizadores em várias wikis',
+	'multilookup' => 'Procura múltipla',
+	'multilookupstitle' => 'Procura múltipla',
+	'multilookupselectuser' => 'Procurar contas vindas do mesmo endereço IP em várias wikis',
+	'multilookupgo' => 'Procurar',
+	'multilookupnotspecify' => 'Ainda não especificou um endereço IP.',
+	'multilookupnext' => 'seguinte',
+	'multilookupprevious' => 'anterior',
+	'multilookupnbrresult' => 'Número de resultados:',
+	'multilookupinvalidresults' => 'Resultados inválidos!',
+	'multilookupnoresultfound' => 'Não foi encontrado nenhum resultado!',
+	'multilookupwiki' => 'Wiki',
+	'multilookuplink' => 'Link para contribuições',
+	'multilookupdetails' => 'Ver detalhes',
+	'multilookuplistwikiainfo' => 'Lista das wikis com artigos editados por utilizadores com o IP: <b>$1</b>',
+	'multilookupinvaliduser' => '<p class="error">O IP "<b>$1</b>" não existe. Verifique se se enganou ao escrever o endereço.</p>',
+	'multilookuplastedit' => 'Última edição por este IP:',
+	'right-multilookup' => 'Procure informação de utilizadores em várias wikis',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -366,6 +450,7 @@ $messages['pt-br'] = array(
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
+	'specialmultiplelookup-desc' => 'Позволяет просматривать сведения об участниках из нескольких вики',
 	'multilookup' => 'Множественный поиск',
 	'multilookupstitle' => 'Множественный поиск',
 	'multilookupselectuser' => 'Поиск учётных записей, относящихся к одному IP, сразу в нескольких вики.',
@@ -382,6 +467,7 @@ $messages['ru'] = array(
 	'multilookuplistwikiainfo' => 'Список вики, статьи которых были отредактированы участниками с IP: <b>$1</b>',
 	'multilookupinvaliduser' => '<p class="error">IP «<b>$1</b>» не существует. Проверьте указанный IP на возможные опечатки.</p>',
 	'multilookuplastedit' => 'Последняя правка с этого IP-адреса:',
+	'right-multilookup' => 'просмотр сведений об участниках в нескольких вики',
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
@@ -403,5 +489,29 @@ $messages['sr-ec'] = array(
 $messages['te'] = array(
 	'multilookupgo' => 'వెళ్ళు',
 	'multilookupdetails' => 'వివరాలను చూడండి',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'specialmultiplelookup-desc' => 'Nagbibigay ng pagpapatanaw ng kabatirang pangtagagamit sa maramihang mga wiki',
+	'multilookup' => 'Maramihang paghahanap',
+	'multilookupstitle' => 'Maramihang paghahanap',
+	'multilookupselectuser' => 'Maghanap ng mga akawnt na may katulad na tirahan ng IP sa maramihang mga wiki',
+	'multilookupgo' => 'Gawin',
+	'multilookupnotspecify' => 'Wala kapang tinutukoy na tirahan ng IP.',
+	'multilookupnext' => 'susunod',
+	'multilookupprevious' => 'nakaraan',
+	'multilookupnbrresult' => 'Bilang ng mga kinalabasan:',
+	'multilookupinvalidresults' => 'Hindi tanggap na mga resulta!',
+	'multilookupnoresultfound' => 'Walang natagpuang mga kinalabasan!',
+	'multilookupwiki' => 'Wiki',
+	'multilookuplink' => 'Kawing sa mga ambag',
+	'multilookupdetails' => 'Tingnan ang mga detalye',
+	'multilookuplistwikiainfo' => 'Talaan ng mga wiki kung saan ang mga pahina ay binago ng mga tagagamit mula sa tirahan ng IP na <b>$1</b>',
+	'multilookupinvaliduser' => 'Hindi umiiral ang <p class="error">Tirahan ng IP"<b>$1</b>".  Suriin ang ibinigay na tirahan ng IP para sa maaaring mga kamalian sa pagmamakinilya.</p>',
+	'multilookuplastedit' => 'Huling pagbabago mula sa ganitong tirahan ng IP:',
+	'right-multilookup' => 'Kabatirang panghanap sa mga tagagamit na nasa maramihang mga wiki',
 );
 

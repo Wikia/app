@@ -33,6 +33,13 @@ $messages['af'] = array(
 	'mostvisitedpagessearchbtn' => 'soek',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author Wizardist
+ */
+$messages['be-tarask'] = array(
+	'mostvisitedpagessearchtext' => 'Назва артыкула:',
+);
+
 /** Breton (Brezhoneg)
  * @author Gwenn-Ael
  * @author Y-M D
@@ -42,6 +49,8 @@ $messages['br'] = array(
 	'mostvisitedpagessearchtext' => 'Anv ar pennad :',
 	'mostvisitedpagessearchbtn' => 'klask',
 	'mostvisitedpageslatest' => 'e kerzh ar $1 minutenn ziwezhañ',
+	'mostvisitedpageslatestlink' => 'Gwelet ar pajennoù bet gweladennet da ziwezhañ',
+	'mostvisitedpagesalllink' => 'Gwelet ar pajennoù bet gweladennet ar muiañ',
 );
 
 /** Czech (Česky)
@@ -64,7 +73,20 @@ $messages['de'] = array(
 	'mostvisitedpagesalllink' => 'Meistbesuchte Seiten anschauen',
 );
 
+/** Lower Sorbian (Dolnoserbski)
+ * @author Michawiki
+ */
+$messages['dsb'] = array(
+	'mostvisitedpages' => 'Nejcesćej woglědane boki',
+	'mostvisitedpagessearchtext' => 'Mě nastawka:',
+	'mostvisitedpagessearchbtn' => 'pytaś',
+	'mostvisitedpageslatest' => 'w {{PLURAL:$1|slědnej $1 minuśe|slědnyma $1 minutoma|slědnych $1 minutach|slědnych $1 minutach}}',
+	'mostvisitedpageslatestlink' => 'Ako  slědne woglědane boki se woglědaś',
+	'mostvisitedpagesalllink' => 'Nejcesćej woglědane boki se woglědaś',
+);
+
 /** Spanish (Español)
+ * @author Locos epraix
  * @author McDutchie
  * @author Translationista
  */
@@ -73,6 +95,8 @@ $messages['es'] = array(
 	'mostvisitedpagessearchtext' => 'Nombre del artículo:',
 	'mostvisitedpagessearchbtn' => 'buscar',
 	'mostvisitedpageslatest' => 'En los últimos $1 minutos',
+	'mostvisitedpageslatestlink' => 'Ver últimas páginas visitadas',
+	'mostvisitedpagesalllink' => 'Ver páginas más visitadas',
 );
 
 /** Finnish (Suomi)
@@ -95,6 +119,8 @@ $messages['fr'] = array(
 	'mostvisitedpagessearchtext' => "Nom de l'article :",
 	'mostvisitedpagessearchbtn' => 'chercher',
 	'mostvisitedpageslatest' => 'dans les $1 dernières minutes',
+	'mostvisitedpageslatestlink' => 'Voir les dernières pages consultées',
+	'mostvisitedpagesalllink' => 'Voir pages les plus consultées',
 );
 
 /** Galician (Galego)
@@ -105,6 +131,8 @@ $messages['gl'] = array(
 	'mostvisitedpagessearchtext' => 'Nome do artigo:',
 	'mostvisitedpagessearchbtn' => 'procurar',
 	'mostvisitedpageslatest' => 'nos últimos $1 minutos',
+	'mostvisitedpageslatestlink' => 'Ollar as últimas páxinas visitadas',
+	'mostvisitedpagesalllink' => 'Ollar as páxinas máis visitadas',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -115,6 +143,8 @@ $messages['hsb'] = array(
 	'mostvisitedpagessearchtext' => 'Mjeno nastawka:',
 	'mostvisitedpagessearchbtn' => 'pytać',
 	'mostvisitedpageslatest' => 'w běhu {{PLURAL:$1|poslednjeje $1 mjeńšiny|poslednjeje $1 mjeńšinow|poslednich $1 mjeńšin|poslednich $1 mjeńšin}}',
+	'mostvisitedpageslatestlink' => 'Jako poslednje wopytane  strony sej wobhladać',
+	'mostvisitedpagesalllink' => 'Najhusćišo wopytane strony sej wobhladać',
 );
 
 /** Hungarian (Magyar)
@@ -125,6 +155,8 @@ $messages['hu'] = array(
 	'mostvisitedpagessearchtext' => 'Szócikk neve:',
 	'mostvisitedpagessearchbtn' => 'keresés',
 	'mostvisitedpageslatest' => 'az utóbbi $1 percben',
+	'mostvisitedpageslatestlink' => 'Legutóbb látogatott lapok',
+	'mostvisitedpagesalllink' => 'Leglátogatottabb lapok',
 );
 
 /** Interlingua (Interlingua)
@@ -135,6 +167,8 @@ $messages['ia'] = array(
 	'mostvisitedpagessearchtext' => 'Nomine del articulo:',
 	'mostvisitedpagessearchbtn' => 'cercar',
 	'mostvisitedpageslatest' => 'in le ultime $1 minutas',
+	'mostvisitedpageslatestlink' => 'Vider le paginas recentemente visitate',
+	'mostvisitedpagesalllink' => 'Vider le paginas le plus visitate',
 );
 
 /** Italian (Italiano) */
@@ -150,6 +184,8 @@ $messages['ja'] = array(
 	'mostvisitedpagessearchtext' => '記事名:',
 	'mostvisitedpagessearchbtn' => '検索',
 	'mostvisitedpageslatest' => '直近$1分間',
+	'mostvisitedpageslatestlink' => '最新の結果を見る',
+	'mostvisitedpagesalllink' => '全期間の結果を見る',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -170,6 +206,8 @@ $messages['mk'] = array(
 	'mostvisitedpagessearchtext' => 'Име на статијата:',
 	'mostvisitedpagessearchbtn' => 'пребарај',
 	'mostvisitedpageslatest' => 'во последните $1 минути',
+	'mostvisitedpageslatestlink' => 'Најскоро посетени страници',
+	'mostvisitedpagesalllink' => 'Најпосетени страници',
 );
 
 /** Dutch (Nederlands)
@@ -214,6 +252,8 @@ $messages['oc'] = array(
 	'mostvisitedpagessearchtext' => "Nom de l'article :",
 	'mostvisitedpagessearchbtn' => 'Recercar',
 	'mostvisitedpageslatest' => 'dins las $1 darrièras minutas',
+	'mostvisitedpageslatestlink' => 'Veire de darrièras paginas visitadas',
+	'mostvisitedpagesalllink' => 'Veire las paginas mai visitadas',
 );
 
 /** Polish (Polski)
@@ -234,6 +274,8 @@ $messages['pms'] = array(
 	'mostvisitedpagessearchtext' => "Nòm ëd l'artìcol:",
 	'mostvisitedpagessearchbtn' => 'serca',
 	'mostvisitedpageslatest' => "ant j'ùltime $1 minute",
+	'mostvisitedpageslatestlink' => "Varda j'ùltime pàgine visità",
+	'mostvisitedpagesalllink' => 'Varda le pàgine pi visità',
 );
 
 /** Pashto (پښتو)
@@ -252,6 +294,8 @@ $messages['pt'] = array(
 	'mostvisitedpagessearchtext' => 'Nome da página:',
 	'mostvisitedpagessearchbtn' => 'pesquisar',
 	'mostvisitedpageslatest' => 'nos últimos $1 minutos',
+	'mostvisitedpageslatestlink' => 'Ver as últimas páginas visitadas',
+	'mostvisitedpagesalllink' => 'Ver as páginas mais visitadas',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -274,6 +318,8 @@ $messages['ru'] = array(
 	'mostvisitedpagessearchtext' => 'Название статьи:',
 	'mostvisitedpagessearchbtn' => 'найти',
 	'mostvisitedpageslatest' => 'за последние $1 минут',
+	'mostvisitedpageslatestlink' => 'Просмотреть последние посещённые страницы',
+	'mostvisitedpagesalllink' => 'Просмотреть наиболее посещаемые страницы',
 );
 
 /** Slovenian (Slovenščina)
@@ -284,16 +330,21 @@ $messages['sl'] = array(
 	'mostvisitedpagessearchtext' => 'Naslov članka:',
 	'mostvisitedpagessearchbtn' => 'išči',
 	'mostvisitedpageslatest' => 'v zadnjih $1 minutah',
+	'mostvisitedpageslatestlink' => 'Ogled zadnjih obiskanih strani',
+	'mostvisitedpagesalllink' => 'Ogled najbolj obiskanih strani',
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Charmed94
  * @author Verlor
  */
 $messages['sr-ec'] = array(
 	'mostvisitedpages' => 'Најпосећеније стране',
-	'mostvisitedpagessearchtext' => 'Име чланака:',
+	'mostvisitedpagessearchtext' => 'Име чланка:',
 	'mostvisitedpagessearchbtn' => 'претрага',
 	'mostvisitedpageslatest' => 'последњих $1 минута',
+	'mostvisitedpageslatestlink' => 'Погледај последње посећене странице',
+	'mostvisitedpagesalllink' => 'Погледај најпосећеније странице',
 );
 
 /** Swedish (Svenska)
@@ -314,6 +365,18 @@ $messages['te'] = array(
 	'mostvisitedpagessearchtext' => 'వ్యాసపు పేరు:',
 	'mostvisitedpagessearchbtn' => 'వెతుకు',
 	'mostvisitedpageslatest' => 'గత $1 నిమిషాలలో',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'mostvisitedpages' => 'Pinakadinadalaw na mga pahina',
+	'mostvisitedpagessearchtext' => 'Pangalan ng artikulo:',
+	'mostvisitedpagessearchbtn' => 'maghanap',
+	'mostvisitedpageslatest' => 'sa loob ng huling $1 na mga minuto',
+	'mostvisitedpageslatestlink' => 'Tingnan ang pinakahuling dinalaw na mga pahina',
+	'mostvisitedpagesalllink' => 'Tingnan ang pinakadinadalaw na mga pahina',
 );
 
 /** Tuvinian (Тыва дыл)

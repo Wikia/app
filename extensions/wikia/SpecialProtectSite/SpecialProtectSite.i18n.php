@@ -30,6 +30,8 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'protectsite-comment' => '{{Identical|Comment}}',
+	'protectsite-protect' => '{{Identical|Protect}}',
+	'protectsite-unprotect' => '{{Identical|Unprotect}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -51,9 +53,30 @@ $messages['af'] = array(
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
+ * @author Jim-by
+ * @author Wizardist
  */
 $messages['be-tarask'] = array(
+	'protectsite' => 'Абарона сайту',
+	'protectsite-text-protect' => '<!-- Інструкцыі/Камэнтары/Правілы выкарыстаньня -->',
+	'protectsite-text-unprotect' => '<!-- Інструкцыі/Камэнтары, калі працуе абарона -->',
+	'protectsite-title' => 'Устаноўкі абароны сайту',
+	'protectsite-allowall' => 'Усім удзельнікам',
+	'protectsite-allowusersysop' => 'Зарэгістраваным удзельнікам і адміністратарам',
+	'protectsite-allowsysop' => 'Толькі адміністратарам',
+	'protectsite-createaccount' => 'Дазволіць стварэньне новых рахункаў',
+	'protectsite-createpage' => 'Дазволіць стварэньне старонак',
+	'protectsite-edit' => 'Дазволіць рэдагаваньне старонак',
+	'protectsite-move' => 'Дазволіць перанос старонак',
+	'protectsite-upload' => 'Дазволіць загрузку файлаў',
+	'protectsite-timeout' => 'Час дзеяньня абароны:',
+	'protectsite-timeout-error' => "'''Няслушны час дзеяньня абароны.'''",
+	'protectsite-maxtimeout' => 'Максымум:',
 	'protectsite-comment' => 'Камэнтар:',
+	'protectsite-ucomment' => 'Камэнтар зьняцьця абароны:',
+	'protectsite-until' => 'Абаронены да:',
+	'protectsite-protect' => 'Абараніць',
+	'protectsite-unprotect' => 'Зьняць абарону',
 );
 
 /** Breton (Brezhoneg)
@@ -252,6 +275,14 @@ $messages['ia'] = array(
 	'protectsite-unprotect' => 'Disproteger',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Kenrick95
+ */
+$messages['id'] = array(
+	'protectsite-comment' => 'Komentar:',
+	'protectsite-protect' => 'Lindungi',
+);
+
 /** Italian (Italiano) */
 $messages['it'] = array(
 	'protectsite-allowall' => 'Tutti gli utenti',
@@ -261,9 +292,12 @@ $messages['it'] = array(
 
 /** Japanese (日本語)
  * @author Tommy6
+ * @author 青子守歌
  */
 $messages['ja'] = array(
 	'protectsite' => 'サイトの保護',
+	'protectsite-text-protect' => '<!-- 利用時の方針/コメント/指示 -->',
+	'protectsite-text-unprotect' => '<!-- 保護された時のコメント/指示 -->',
 	'protectsite-title' => 'サイト保護の設定',
 	'protectsite-allowall' => '全利用者',
 	'protectsite-allowusersysop' => '登録利用者および管理者',
@@ -278,6 +312,7 @@ $messages['ja'] = array(
 	'protectsite-maxtimeout' => '最大:',
 	'protectsite-comment' => '保護の理由:',
 	'protectsite-ucomment' => '保護解除の理由:',
+	'protectsite-until' => '保護期限：',
 	'protectsite-protect' => '保護',
 	'protectsite-unprotect' => '保護解除',
 );
@@ -382,6 +417,13 @@ $messages['no'] = array(
 	'protectsite-until' => 'Beskyttet til:',
 	'protectsite-protect' => 'Beskytt',
 	'protectsite-unprotect' => 'Opphev beskyttelse',
+);
+
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'protectsite-comment' => 'Grund:',
 );
 
 /** Piedmontese (Piemontèis)
@@ -513,6 +555,32 @@ $messages['te'] = array(
 	'protectsite-maxtimeout' => 'గరిష్ఠం:',
 	'protectsite-comment' => 'వ్యాఖ్య:',
 	'protectsite-protect' => 'సంరక్షించు',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'protectsite' => 'Prutektahan ang sayt',
+	'protectsite-text-protect' => '<!-- Magagamit na mga tagubilin/Mga puna/Patakaran -->',
+	'protectsite-text-unprotect' => '<!-- Mga tagubilin/Mga puna kapag nakasanggalang -->',
+	'protectsite-title' => 'Mga katakdaang pamprutekta ng sityo',
+	'protectsite-allowall' => 'Lahat ng mga tagagamit',
+	'protectsite-allowusersysop' => 'Nakatalang mga tagagamit at mga tagapagpaandar ng sistema',
+	'protectsite-allowsysop' => 'Mga tagapagpaandar lang ng sistema',
+	'protectsite-createaccount' => 'Ipahintulot ang paglikha ng bagong mga akawnt sa pamamagitan ng',
+	'protectsite-createpage' => 'Ipahintulot ang paglikha ng pahina sa pamamagitan ng',
+	'protectsite-edit' => 'Pahintulutan ang pamamatnugot ng mga pahina sa pamamagitan ng',
+	'protectsite-move' => 'Ipahintulot ang paglipat ng mga pahina sa pamamagitan ng',
+	'protectsite-upload' => 'Ipahintulot ang paitaas na pagkakarga ng mga talaksan sa pamamagitan ng',
+	'protectsite-timeout' => 'Pamamahinga:',
+	'protectsite-timeout-error' => "'''Hindi Tanggap na Pamamahinga.'''",
+	'protectsite-maxtimeout' => 'Pinakamataas:',
+	'protectsite-comment' => 'Puna:',
+	'protectsite-ucomment' => 'Huwag prutektahan ang puna:',
+	'protectsite-until' => 'Isanggalang hanggang:',
+	'protectsite-protect' => 'Isanggalang',
+	'protectsite-unprotect' => 'Huwag isanggalang',
 );
 
 /** Ukrainian (Українська)

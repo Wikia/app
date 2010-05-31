@@ -91,6 +91,13 @@ $messages['ia'] = array(
 	'tog-disablelinksuggest' => 'Non monstrar suggestiones de ligamines',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'tog-disablelinksuggest' => 'Jangan menampilkan saran pranala',
+);
+
 /** Italian (Italiano)
  * @author Civvì
  */
@@ -204,5 +211,12 @@ $messages['su'] = array(
  */
 $messages['sv'] = array(
 	'tog-disablelinksuggest' => 'Visa inte länkförslag',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'tog-disablelinksuggest' => 'Huwag ipakita ang mungkahing kawing',
 );
 

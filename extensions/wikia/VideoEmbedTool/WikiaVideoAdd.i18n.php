@@ -222,8 +222,12 @@ $messages['ia'] = array(
 	'wva-notallowed' => 'Non es possibile inserer videos in iste wiki.',
 );
 
-/** Indonesian (Bahasa Indonesia) */
+/** Indonesian (Bahasa Indonesia)
+ * @author Kenrick95
+ */
 $messages['id'] = array(
+	'wva-name' => 'Masukkan nama:',
+	'wva-url' => 'Masukkan URL:',
 	'wva-add' => 'Tambahkan',
 );
 
@@ -260,6 +264,13 @@ $messages['km'] = array(
 	'wva-title' => 'បន្ថែមវីដេអូពីURLតាមរបៀបរហ័ស',
 	'wva-notlogged' => 'អ្នកត្រូវតែកត់ឈ្មោះចូលឬចុះឈ្មោះថ្មីដើម្បីមានសិទ្ធិបញ្ចូលវីដេអូ។',
 	'wva-notallowed' => 'អ្នកមិនអាចបញ្ចូលវីដេអូនៅក្នុងវិគីនេះទេ។',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'wva-add' => 'Derbäisetzen',
 );
 
 /** Macedonian (Македонски)
@@ -307,6 +318,14 @@ $messages['no'] = array(
 	'wva-notallowed' => 'Du kan ikke legge til videoer på denne wikien.',
 );
 
+/** Occitan (Occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'wva-add' => 'Apondre',
+	'wva-title' => 'Apondre una vidèo rapidament a partir de son URL',
+);
+
 /** Polish (Polski)
  * @author Marcin Łukasz Kiejzik
  * @author Sp5uhe
@@ -345,6 +364,8 @@ $messages['ps'] = array(
 	'wva-name' => 'نوم يې وليکۍ:',
 	'wva-url' => 'URL يې وليکۍ:',
 	'wva-add' => 'ورګډول',
+	'wva-notlogged' => 'د ويډيو د ورننوېستلو لپاره پکار ته چې تاسې غونډال ته ننوځۍ او يا هم ځان ثبت کړی.',
+	'wva-notallowed' => 'تاسې په دې ويکي کې ويډيو نه شی ورننوېستلی.',
 );
 
 /** Portuguese (Português)
@@ -386,7 +407,7 @@ $messages['ro'] = array(
 	'wva-url' => 'Înserează adres URL a video-ului',
 	'wva-add' => 'Adaugă video',
 	'wva-notlogged' => 'Trebuie să fii logat sau înregistrat pentru a adăuga video-uri',
-	'wva-notallowed' => 'Nu poţi însera video-uri în acest wiki',
+	'wva-notallowed' => 'Nu poți însera video-uri în acest wiki',
 );
 
 /** Russian (Русский)
@@ -406,12 +427,19 @@ $messages['ru'] = array(
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Charmed94
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'wva-name' => 'Унеси име',
-	'wva-url' => 'Унеси УРЛ',
+	'wva-success' => '$1 видео страница је успешно додата.',
+	'wva-success-replaced' => '$1 видео страница је успешно замењена.',
+	'wva-failure' => 'Молимо, унесите исправне параметре.',
+	'wva-name' => 'Унесите име:',
+	'wva-url' => 'Унесите адресу:',
 	'wva-add' => 'Додај',
+	'wva-title' => 'Брзо додај видео снимак с адресе',
+	'wva-notlogged' => 'Морате да се пријавите или региструјете како бисте убацивали снимке.',
+	'wva-notallowed' => 'Не можете да убаците снимак на овом викију.',
 );
 
 /** Telugu (తెలుగు)
@@ -419,6 +447,21 @@ $messages['sr-ec'] = array(
  */
 $messages['te'] = array(
 	'wva-add' => 'చేర్చు',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'wva-success' => 'Matagumpay na naidagdag ang pahinang pambidyo na $1.',
+	'wva-success-replaced' => 'Matagumpay na napalitan ang pahinang pambidyo na $1.',
+	'wva-failure' => 'Pakibigay ang tanggap na mga parametro.',
+	'wva-name' => 'Ipasok ang pangalan:',
+	'wva-url' => 'Ipasok ang URL:',
+	'wva-add' => 'Idagdag',
+	'wva-title' => 'Mabilisang Idagdag ang Bidyo Mula sa URL',
+	'wva-notlogged' => 'Kailangan mong lumagda o magpatala upang makapagsingit ng mga bidyo.',
+	'wva-notallowed' => 'Hindi ka makapagsisingit ng mga bidyo sa wiking ito.',
 );
 
 /** Ukrainian (Українська)

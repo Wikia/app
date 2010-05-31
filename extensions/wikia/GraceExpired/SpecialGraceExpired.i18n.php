@@ -190,10 +190,25 @@ $messages['ru'] = array(
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Charmed94
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'graceexpired' => 'Истекао период одгоде',
-	'graceexpired-row' => '$1 (у $2, зади пут уређивано у $3)',
+	'graceexpired' => 'Период одгоде је истекао',
+	'graceexpired-row' => '$1 (у $2, задњи пут измењено у $3)',
+	'graceexpired-header' => "Ова страница поседује све израде које су [[:Category:Abandoned|напуштене]], [[:Category:Trash_builds|одбачене]], [[:Category:Build stubs|клице]] или [[:Category:Trial Builds|пробна издања]], а које нису измењене најмање две недеље.
+
+Активност на страницама за оцењивање ''није'' урачунато у налог.",
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'graceexpired' => 'Natapos na ang pataan',
+	'graceexpired-row' => '$1 (sa $2, huling binago noong $3)',
+	'graceexpired-header' => "Itinatala ng pahinang ito ang lahat ng pagtatayo sa [[:Category:Abandoned|iniwanan]], [[:Category:Trash_builds|basura]], [[:Category:Build stubs|usbong]] o [[:Category:Trial Builds|pagsubok]], at hindi nabago pinakamababa na ang sa loob ng dalawang mga linggo.
+
+Activity on rating pages is ''not'' taken into account here.",
 );
 

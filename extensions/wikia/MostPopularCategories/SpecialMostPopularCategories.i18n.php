@@ -64,6 +64,13 @@ $messages['es'] = array(
 	'mostpopularcategories' => 'Categorías más populares',
 );
 
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'mostpopularcategories' => 'Kategoria ezagunenak',
+);
+
 /** Persian (فارسی) */
 $messages['fa'] = array(
 	'mostpopularcategories' => 'رده‌های محبوب',
@@ -249,6 +256,13 @@ $messages['sv'] = array(
  */
 $messages['tk'] = array(
 	'mostpopularcategories' => 'Iň ýörgünli kategoriýalar',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'mostpopularcategories' => 'Pinakasikat na mga kategorya',
 );
 
 /** Ukrainian (Українська)

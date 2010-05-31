@@ -41,9 +41,19 @@ $messages['af'] = array(
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
+ * @author Jim-by
  */
 $messages['be-tarask'] = array(
+	'tagsreport' => 'Справаздача пра тэгі',
+	'tagsreporttitle' => 'Справаздача пра тэгі',
+	'tagsreportselecttag' => 'Выбраць тэг:',
 	'tagsreportgo' => 'Паказаць',
+	'tagsreportnotspecify' => 'Вы яшчэ ня выбралі ніводнага спэцыяльнага тэга',
+	'tagsreportnoresults' => 'Нічога ня знойдзена',
+	'tagsreportmainnspace' => 'Галоўная',
+	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|старонка|старонкі|старонак}})',
+	'tagsreportpagesfound' => '{{PLURAL:$1|Знойдзеная <strong>$1</strong> старонка, якая ўтрымлівае|Знойдзеныя <strong>$1</strong> старонкі, якія ўтрымліваюць|Знойдзеныя <strong>$1</strong> старонак, якія ўтрымліваюць}} спэцыяльныя тэгі (dpl, youtube, і г.д.)',
+	'tagsreportgenerated' => 'Створаная $1',
 );
 
 /** Breton (Brezhoneg)
@@ -180,6 +190,11 @@ $messages['ia'] = array(
 	'tagsreportgenerated' => 'Generate a $1',
 );
 
+/** Igbo (Igbo) */
+$messages['ig'] = array(
+	'tagsreportgo' => 'Zi',
+);
+
 /** Italian (Italiano) */
 $messages['it'] = array(
 	'tagsreportgo' => 'Mostra',
@@ -200,6 +215,15 @@ $messages['ja'] = array(
 	'tagsreportpages' => '<strong>$1</strong> のページ',
 	'tagsreportpagesfound' => '特別なタグ（dpl・youtube など）を含むページが <strong>$1</strong> 見つかりました',
 	'tagsreportgenerated' => '$1 に生成',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'tagsreportgo' => 'Weisen',
+	'tagsreportnoresults' => 'Näischt fonnt',
+	'tagsreportpages' => '(<strong>$1</strong>  {{PLURAL:$1|Säit|Säiten}})',
 );
 
 /** Macedonian (Македонски)
@@ -300,12 +324,36 @@ $messages['ru'] = array(
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Charmed94
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'tagsreportgo' => 'покажи',
+	'tagsreport' => 'Извештај ознака',
+	'tagsreporttitle' => 'Извештај ознака',
+	'tagsreportselecttag' => 'Изаберите ознаку:',
+	'tagsreportgo' => 'Прикажи',
+	'tagsreportnotspecify' => 'Још увек нисте изабрали ниједну посебну ознаку',
 	'tagsreportnoresults' => 'Нема резултата претраге',
 	'tagsreportmainnspace' => 'Главно',
+	'tagsreportpages' => '(<strong>$1</strong>  {{PLURAL:$1|page|странице}})',
+	'tagsreportpagesfound' => 'Пронађено је <strong>$1</strong> страница које садрже посебне ознаке (dpl, youtube, итд.)',
+	'tagsreportgenerated' => 'Направљено на $1',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'tagsreport' => 'Ulat ng mga pagtatatak',
+	'tagsreporttitle' => 'Ulat ng mga pagtatatak',
+	'tagsreportselecttag' => 'Piliin ang tatak:',
+	'tagsreportgo' => 'Ipakita',
+	'tagsreportnotspecify' => 'Wala kang napipili na anumang natatanging tatak',
+	'tagsreportnoresults' => 'Walang natagpuang mga resulta',
+	'tagsreportmainnspace' => 'Pangunahin',
+	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|pahina|mga pahina}})',
+	'tagsreportpagesfound' => 'Nakatagpo ng <strong>$1</strong> mga pahina, na naglalaman ng natatanging tatak (dpl, youtube, atbp.)',
+	'tagsreportgenerated' => 'Nilikha noong $1',
 );
 
 /** Ukrainian (Українська)
@@ -322,5 +370,12 @@ $messages['uk'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|сторінка|сторінки|сторінок}})',
 	'tagsreportpagesfound' => 'Знайдено <strong>$1</strong> {{PLURAL:$1|сторінку|сторінки|сторінок}}, що містять спеціальні теги (dpl, youtube, і т.д.)',
 	'tagsreportgenerated' => 'Створено $1',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Horacewai2
+ */
+$messages['zh-hant'] = array(
+	'tagsreport' => '問題報告',
 );
 

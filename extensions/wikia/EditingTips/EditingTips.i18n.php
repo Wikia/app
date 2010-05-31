@@ -315,6 +315,18 @@ $messages['no'] = array(
 	'editingTips' => 'Legg til dine tips [[MediaWiki:EditingTips|her]]',
 );
 
+/** Occitan (Occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'tog-disableeditingtips' => "Afichar pas las astúcias d'edicion",
+	'tog-widescreeneditingtips' => "Utilizar una larga fenèstra d'edicion",
+	'editingtips_enter_widescreen' => "Afichar la granda fenèstra d'edicion",
+	'editingtips_exit_widescreen' => "Amagar la granda fenèstra d'edicion",
+	'editingtips_hide' => "Amagar l'ajuda",
+	'editingtips_show' => "Afichar l'ajuda",
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  */
@@ -374,6 +386,19 @@ $messages['sr-ec'] = array(
 	'tog-disableeditingtips' => 'Не показуј савете за уређивање',
 	'editingtips_hide' => 'Сакријте уређивачке напомене',
 	'editingtips_show' => 'Покажите уређивачке напомене',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'tog-disableeditingtips' => 'Huwag ipakita ang mga balatong pampatnugot',
+	'tog-widescreeneditingtips' => 'Gamitin ang pamamatnugot na may maluwang na tinginan',
+	'editingtips_enter_widescreen' => 'Ipasok ang Malawak na Tanawan',
+	'editingtips_exit_widescreen' => 'Lumasa mula sa Maluwang na Tanawan',
+	'editingtips_hide' => 'Itago ang Mga Balatong Pampatnugot',
+	'editingtips_show' => 'Ipakita ang Mga Balatong Pampatnugot',
+	'editingTips' => 'Idagdag ang mga pambalato mo [[MediaWiki:EditingTips|rito]]',
 );
 
 /** Chinese (中文) */

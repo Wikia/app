@@ -108,6 +108,14 @@ $messages['ia'] = array(
 	'templatesused-toggle' => 'Revelar/celar {{PLURAL:$1|$1 elemento|$1 elementos}}',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'new-edit-page-preview-notice' => 'Moda pratayang: perubahan belum tersimpan! Gulir ke bawah untuk melanjutkan penyuntingan.',
+	'templatesused-toggle' => 'Tampilkan/sembunyikan {{plural:$1||}} item',
+);
+
 /** Japanese (日本語)
  * @author Tommy6
  */
@@ -214,10 +222,20 @@ $messages['ru'] = array(
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Charmed94
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'new-edit-page-preview-notice' => 'Претпреглед: још увек промена није сачувана! Доле можете да наставите са уређивањем.',
+	'new-edit-page-preview-notice' => 'Претпреглед: промене нису сачуване! Померите клизач надоле да наставите с уређивањем.',
+	'templatesused-toggle' => 'Прикажи/сакриј {{PLURAL:$1|$1 ставка|$1 ставки}}',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'new-edit-page-preview-notice' => 'Anyo ng paunang tanaw: wala pang nasasagip na mga pagbabago! Kumidkid pababa upang magpatuloy sa pamamatnugot.',
+	'templatesused-toggle' => 'Ipakita/itago {{PLURAL:$1|$1 bagay|$1 mga bagay}}',
 );
 
 /** Ukrainian (Українська)

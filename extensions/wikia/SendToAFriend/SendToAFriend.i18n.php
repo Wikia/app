@@ -141,6 +141,7 @@ Probeer asseblief weer.',
  * @author Juanpabl
  */
 $messages['an'] = array(
+	'stf_frm4_cancel' => 'Cancelar',
 	'stf_message' => 'Mensache',
 );
 
@@ -148,6 +149,7 @@ $messages['an'] = array(
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
+	'invitespecialpage' => 'Запрасіць сяброў у Wikia',
 	'stf_name_label' => 'Ваша імя',
 	'stf_frm4_cancel' => 'Адмяніць',
 	'stf_sending' => 'Калі ласка, пачакайце…',
@@ -621,7 +623,7 @@ Se pensa que lle chegou por erro, por favor, fáganolo saber en support@wikia.co
 	'stf_ctx_invalid' => 'O nome de usuario ou o contrasinal que inseriu é inválido. Por favor, inténteo de novo.',
 	'stf_sending' => 'Por favor, agarde...',
 	'stf_email_sent' => 'Enviar unha confirmación',
-	'stf_back_to_article' => 'Voltar ao artigo',
+	'stf_back_to_article' => 'Volver ao artigo',
 	'stf_most_emailed' => 'Artigos máis enviados por correo electrónico hoxe en $1:',
 	'stf_most_popular' => 'Artigos máis populares en $1:',
 	'stf_choose_from_existing' => 'Elixir de entre os seus contactos xa existentes:',
@@ -731,6 +733,12 @@ Si tu pensa que isto ha essite inviate in error, per favor face nos lo saper a s
 	'stf_instructions' => '1. Selige amicos.|2. Clicca super "$1"',
 	'stf_select_all' => 'Seliger totes',
 	'stf_select_friends' => 'Selige amicos:',
+);
+
+/** Igbo (Igbo) */
+$messages['ig'] = array(
+	'stf_frm4_cancel' => 'Emekwàlà',
+	'stf_message' => 'Ozi',
 );
 
 /** Italian (Italiano) */
@@ -1019,6 +1027,16 @@ Hvis du tror den ble sendt ved en feil, vennligst si ifra til support@wikia.com.
 	'stf_instructions' => '|. Velg venner.|2. Klikk på «$1»',
 	'stf_select_all' => 'Velg alle',
 	'stf_select_friends' => 'Velg Venner:',
+);
+
+/** Occitan (Occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'stf_message' => 'Messatge',
+	'stf_instructions' => "1. Seleccionatz d'amics.|2. Clicatz sus « $1 »",
+	'stf_select_all' => 'Seleccionar tot',
+	'stf_select_friends' => "Seleccionar d'amics :",
 );
 
 /** Polish (Polski)

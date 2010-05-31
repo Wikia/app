@@ -133,7 +133,7 @@ $messages['mk'] = array(
 	'searchranktracker' => 'Пребарај го пронаоѓачот на ранг',
 	'searchranktracker-add-new-entry' => 'Додај нов запис',
 	'searchranktracker-edit-entry' => 'Уреди запис',
-	'searchranktracker-entry-list' => 'Листа на следени вики-страници',
+	'searchranktracker-entry-list' => 'Список на следени вики-страници',
 	'searchranktracker-page-name-required' => 'Потребно е име на страницата',
 	'searchranktracker-serach-phrase-required' => 'Потребен е израз за пребарување',
 	'searchranktracker-empty-list' => 'Моментално нема изрази за следење.',
@@ -166,6 +166,19 @@ $messages['no'] = array(
 	'searchranktracker-empty-list' => 'For øyeblikket er det ingen søkefraser å spore.',
 );
 
+/** Occitan (Occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'searchranktracker' => 'Tracador de reng de recèrca',
+	'searchranktracker-add-new-entry' => 'Apondre una entrada',
+	'searchranktracker-edit-entry' => "Modificar l'entrada",
+	'searchranktracker-entry-list' => 'Lista de las paginas de tracatge wiki',
+	'searchranktracker-page-name-required' => 'Nom de la pagina obligatòri',
+	'searchranktracker-serach-phrase-required' => 'Tèrmes de recercar obligatòris',
+	'searchranktracker-empty-list' => "A l'ora d'ara, i a pas cap de frasas de recèrca de seguir.",
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
@@ -178,6 +191,19 @@ $messages['pms'] = array(
 	'searchranktracker-page-name-required' => 'Nòm ëd la pàgina obligatòri',
 	'searchranktracker-serach-phrase-required' => "Fras d'arserca obligatòria",
 	'searchranktracker-empty-list' => "Al moment a-i é gnun-e fras d'arserca da marché.",
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'searchranktracker' => 'Monitorizador de posicionamento nos motores de busca',
+	'searchranktracker-add-new-entry' => 'Adicionar entrada nova',
+	'searchranktracker-edit-entry' => 'Editar entrada',
+	'searchranktracker-entry-list' => 'Lista das páginas wiki posicionadas',
+	'searchranktracker-page-name-required' => 'Nome de página obrigatório',
+	'searchranktracker-serach-phrase-required' => 'Termo de pesquisa obrigatório',
+	'searchranktracker-empty-list' => 'Neste momento não existem termos de pesquisa para monitorizar.',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -207,10 +233,29 @@ $messages['ru'] = array(
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Charmed94
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'searchranktracker-page-name-required' => 'Тражи се име стране',
-	'searchranktracker-serach-phrase-required' => 'Тражи се претрага фразе',
+	'searchranktracker' => 'Претражи ранг трагач',
+	'searchranktracker-add-new-entry' => 'Додај нови унос',
+	'searchranktracker-edit-entry' => 'Измени унос',
+	'searchranktracker-entry-list' => 'Списак праћених вики страница',
+	'searchranktracker-page-name-required' => 'Потребно је име стране',
+	'searchranktracker-serach-phrase-required' => 'Потребна је фраза претраге',
+	'searchranktracker-empty-list' => 'Тренутно нема фраза претраге за праћење.',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'searchranktracker' => 'Maghanap sa tagasubaybay ng ranggo',
+	'searchranktracker-add-new-entry' => 'Idagdag ang bagong ipapasok',
+	'searchranktracker-edit-entry' => 'Baguhin ang ipinasok',
+	'searchranktracker-entry-list' => 'Talaan ng mga pahinang pangsubaybay ng wiki',
+	'searchranktracker-page-name-required' => 'Kailangan ang pangalan ng pahina',
+	'searchranktracker-serach-phrase-required' => 'Kailangan ang pariralang panghanap',
+	'searchranktracker-empty-list' => 'Kasalukuyang walang masusubaybayang mga pariralang panghanap.',
 );
 

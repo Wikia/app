@@ -469,6 +469,28 @@ $messages['it'] = array(
 	'editaccount-label-pass' => 'Riscrivi la nuova password',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'editaccount' => 'Kont änneren',
+	'editaccount-title' => 'Spezial:Kont änneren',
+	'editaccount-frame-manage' => 'E Kont änneren',
+	'editaccount-frame-usage' => 'Notiz',
+	'editaccount-label-select' => 'E Benotzerkont eraussichen',
+	'editaccount-label-email' => 'Nei E-Mailadress festleeën',
+	'editaccount-label-pass' => 'Neit Passwuert festleeën',
+	'editaccount-submit-email' => 'E-Mailadress späicheren',
+	'editaccount-submit-pass' => 'Passwuert späicheren',
+	'editaccount-submit-realname' => 'Richtegen Numm späicheren',
+	'editaccount-submit-close' => 'Kont zoumaachen',
+	'editaccount-invalid-email' => '"$1" ass keng valabel E-Mailadress!',
+	'editaccount-nouser' => 'De Kont "$1" gëtt et net!',
+	'editaccount-log' => 'Logbuch vun de Benotzerkonten',
+	'editaccount-log-entry-realname' => 'huet de richtegen Numm vum Benotzer $2 geännert',
+	'right-editaccount' => 'Aner Benotzerastellungen änneren',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -692,7 +714,7 @@ $messages['pt'] = array(
 	'editaccount-invalid-email' => '"$1" não é um endereço electrónico válido!',
 	'editaccount-nouser' => 'A conta "$1" não existe!',
 	'editaccount-log' => 'Registo de contas de utilizador',
-	'editaccount-log-header' => 'Esta página lista as alterações feitas às suas preferências pela Equipa Wikia.',
+	'editaccount-log-header' => 'Esta página lista as alterações feitas às suas preferências pela Equipa da Wikia.',
 	'editaccount-log-entry-email' => 'alterou o endereço electrónico do utilizador $2',
 	'editaccount-log-entry-pass' => 'alterou a palavra-chave do utilizador $2',
 	'editaccount-log-entry-realname' => 'alterou o nome verdadeiro do utilizador $2',
@@ -811,6 +833,50 @@ $messages['sr-ec'] = array(
 	'editaccount-log-entry-pass' => ' промењена лозинка за корисника $2',
 	'editaccount-log-entry-realname' => ' промењено право име за корисника $2',
 	'editaccount-log-entry-close' => ' угашен налог $2',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'editaccount' => 'Baguhin ang Akawnt',
+	'editaccount-title' => 'Natatangi:BaguhinangAkawnt',
+	'editaccount-frame-manage' => 'Baguhin ang isang akawnt',
+	'editaccount-frame-usage' => 'Tala',
+	'editaccount-usage' => 'Nakahiwalay ang pagkakatago ng dato ng tagagamit para sa bawat wiki.  Kapag muli mong itinakda ang hudyat o e-liham, masisira ang taguan para sa wiking ito lamang.  Mangyari ituro ang tagagamit sa wiking ito upang lumagda na may isang bagong takdang hudyat upang maiwasan ang mga paksa na pangtaguan.',
+	'editaccount-label-select' => 'Pumili ng isang akawnt ng tagagamit',
+	'editaccount-submit-account' => 'Pamahalaan ang Akawnt',
+	'editaccount-frame-account' => 'Binabago ang akawnt ng tagagamit na: $1',
+	'editaccount-frame-close' => 'Huwag nang paganahin ang akawnt ng tagagamit na: $1',
+	'editaccount-label-email' => 'Itakda ang bagong tirahan ng e-liham',
+	'editaccount-label-pass' => 'Magtakda ng bagong hudyat',
+	'editaccount-label-realname' => 'Itakda ang bagong tunay na pangalan',
+	'editaccount-submit-email' => 'Sagipin ang E-Liham',
+	'editaccount-submit-pass' => 'Sagipin ang Hudyat',
+	'editaccount-submit-realname' => 'Sagipin ang Tunay na Pangalan',
+	'editaccount-submit-close' => 'Isara ang Akawnt',
+	'editaccount-usage-close' => 'Maaari mo ring huwag paandarin ang isang akawnt ng tagagamit sa pamamagitan ng paggulo sa hudyat at pagtanggal ng tirahan ng e-liham.  Unawaing mawawala na ang datong ito at hindi na maibabalik pa.',
+	'editaccount-warning-close' => '<b>Mag-ingat!</b> Pananatilihin mo nang hindi pagaganahin ang akawnt ng tagagamit na si <b>$1</b>.  Hindi na ito maibabalik pa.  Talaga bang ito ang nais mong gawin?',
+	'editaccount-status' => 'Mensahe ng katayuan',
+	'editaccount-success-email' => 'Matagumpay na nabago ang e-liham para sa akawnt na $1 papuntang $2.',
+	'editaccount-success-email-blank' => 'Matagumpay na natanggal ang e-liham mula sa akawnt na $1.',
+	'editaccount-success-pass' => 'Matagumpay na nabago ang hudyat para sa akawnt na $1.',
+	'editaccount-success-realname' => 'Matagumpay na nabago ang tunay na pangalan para sa akawnt na $1.',
+	'editaccount-success-close' => 'Matagumpay na hindi pinagana ang akawnt na $1.',
+	'editaccount-error-email' => 'Hindi binago ang e-liham.  Subukan uli o makipag-ugnayan sa Pangkat ng Tek.',
+	'editaccount-error-pass' => 'Hindi nabago ang hudyat. Subukan uli o makipag-ugnayan sa Pangkat ng Tek.',
+	'editaccount-error-realname' => 'Hindi nabago ang tunay na pangalan.  Subukan uli o makipag-ugnayan sa Pangkat ng Tek.',
+	'editaccount-error-close' => 'Naganap ang isang suliranin habang sinasara ang akawnt.  Subukan uli o makipag-ugnayan sa Pangkat ng Tek.',
+	'editaccount-invalid-email' => 'Ang "$1" ay hindi isang tanggap na tirahan ng e-liham!',
+	'editaccount-nouser' => 'Hindi umiiral ang akawnt na "$1"!',
+	'editaccount-log' => 'Talaan ng mga akawnt ng tagagamit',
+	'editaccount-log-header' => 'Nagtatala ang pahinang ito ng mga pagbabagong ginawa ng Mga Tauhan ng Wikia sa mga nais ng tagagamit.',
+	'editaccount-log-entry-email' => 'binago ang e-liham para sa tagagamit na $2',
+	'editaccount-log-entry-pass' => 'binago ang hudyat para sa tagagamit na $2',
+	'editaccount-log-entry-realname' => 'binago ang tunay na pangalan para sa tagagamit na $2',
+	'editaccount-log-entry-close' => 'hindi pinagana ang akawnt na $2',
+	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Hindi na pinagagana ang akawnt na ito.</div>',
+	'right-editaccount' => 'Baguhin ang mga nais ng iba pang mga tagagamit',
 );
 
 /** Ukrainian (Українська)

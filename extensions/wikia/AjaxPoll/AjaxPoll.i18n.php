@@ -222,6 +222,13 @@ $messages['ja'] = array(
 	'ajaxpoll-submitting' => 'あなたの投票を送信しています。お待ちください・・・',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'ajaxpoll-submit' => 'Ofstëmmen!',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -361,5 +368,18 @@ $messages['sr-ec'] = array(
 	'ajaxpoll-submit' => 'Гласај!',
 	'ajaxpoll-closed' => 'Гласање је завршено. ПОгледајте резултате.',
 	'ajaxpoll-submitting' => 'Сачекајте, шаљемо ваш глас...',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp;ng lahat ng mga boto',
+	'ajaxpoll-thankyou' => 'Salamat sa pagboto mo!',
+	'ajaxpoll-error' => 'Nagkaroon ng isang suliranin sa pagsasagawa ng boto mo, pakisubukang muli.',
+	'ajaxpoll-summary' => 'Ang pagtaya ay nalikha sa $1 noong $2, at mayroon na sa ngayong $3 na mga taong bumoto.',
+	'ajaxpoll-submit' => 'Bumoto!',
+	'ajaxpoll-closed' => 'Nakasara na ang botohan.  Kasiyahan ang mga kinalabasan.',
+	'ajaxpoll-submitting' => 'Pakihintay, ipinapasa ang boto mo...',
 );
 

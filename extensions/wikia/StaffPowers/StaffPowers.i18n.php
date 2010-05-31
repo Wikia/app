@@ -79,6 +79,13 @@ $messages['gl'] = array(
 	'staffpowers-ipblock-aborted' => 'Non é posible bloquear o persoal de Wikia. Por favor, use [[Special:Contact]] para informar de calquera problema co noso persoal.',
 );
 
+/** Hebrew (עברית)
+ * @author Rotemliss
+ */
+$messages['he'] = array(
+	'staffpowers-ipblock-aborted' => 'לא ניתן לחסום את הצוות של ויקיה. נא להשתמש בדף [[Special:Contact]] כדי לדווח על נושאים או בעיות כלשהן עם הצוות שלנו.',
+);
+
 /** Croatian (Hrvatski)
  * @author Ex13
  */
@@ -108,10 +115,18 @@ $messages['ia'] = array(
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
  * @author Kenrick95
  */
 $messages['id'] = array(
-	'staffpowers-ipblock-aborted' => 'Pemblokiran staf Wikia adalah tidak mungkin. Tolong gunakan [[Special:Contact]] untuk melaporkan isu atau masalah apapun dengan staf kami.',
+	'staffpowers-ipblock-aborted' => 'Pemblokiran staf Wikia adalah tidak mungkin. Tolong gunakan [[Special:Contact]] untuk melaporkan isu atau masalah apa pun dengan staf kami.',
+);
+
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'staffpowers-ipblock-aborted' => 'I gbáchi ndi orü Wikia uzor énwéríkí mé. Biko jí [[Special:Contact]] ikọsárá ihe nsogbu maka ndi orü.',
 );
 
 /** Italian (Italiano)
@@ -182,7 +197,7 @@ $messages['pms'] = array(
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
-	'staffpowers-ipblock-aborted' => 'Não é possível bloquear a equipa Wikia. Por favor, use [[Special:Contact]] para nos comunicar quaisquer problemas com a nossa equipa.',
+	'staffpowers-ipblock-aborted' => 'Não é possível bloquear a equipa da Wikia. Use [[Special:Contact]] para comunicar-nos quaisquer problemas com a nossa equipa, por favor.',
 );
 
 /** Tarandíne (Tarandíne)
@@ -197,6 +212,13 @@ $messages['roa-tara'] = array(
  */
 $messages['ru'] = array(
 	'staffpowers-ipblock-aborted' => 'Невозможно заблокировать сотрудника Wikia. Пожалуйста, воспользуйтесь [[Special:Contact]], чтобы сообщить о проблемах, связанных с нашими сотрудниками.',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Charmed94
+ */
+$messages['sr-ec'] = array(
+	'staffpowers-ipblock-aborted' => 'Блокирање Викија уредника није могуће. Молимо, користите [[Special:Contact]] да бисте пријавили било какве проблеме с нашим тимом.',
 );
 
 /** Sundanese (Basa Sunda)
@@ -218,5 +240,12 @@ $messages['sv'] = array(
  */
 $messages['te'] = array(
 	'staffpowers-ipblock-aborted' => 'వికియా సిబ్బందిని నిరోధించడం సాధ్యం కాదు.మా సిబ్బందితో సమస్యలను నివేదించడానికి దయచేసి  [[Special:Contact]] ను వాడండి.',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'staffpowers-ipblock-aborted' => 'Hindi magagawa ang pagharang sa mga tauhan ng Wikia.  Pakigamit ang [[Special:Contact]] upang iulat ang anumang mga paksa o mga suliranin sa iyong mga tauhan.',
 );
 

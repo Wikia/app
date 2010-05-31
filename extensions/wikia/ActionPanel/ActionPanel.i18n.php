@@ -34,6 +34,23 @@ $messages['af'] = array(
 	'action_panel_categorize_success' => 'U kategorieë is bygevoeg.',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ * @author Wizardist
+ */
+$messages['be-tarask'] = array(
+	'action_panel_edit_title' => 'Адказ',
+	'action_panel_title' => 'Панэль хуткіх дзеяньняў',
+	'action_panel_categorize' => 'Катэгарызаваць',
+	'action_panel_categorize_help' => 'Адна катэгорыя на радок',
+	'action_panel_categories_summary' => 'Дадаць катэгорыі',
+	'action_panel_save_success' => 'Ваш артыкул быў захаваны.',
+	'action_panel_rename_success' => 'Назва Вашага артыкула была зьменена.',
+	'action_panel_categorize_success' => 'Вашыя катэгорыі былі дададзеныя.',
+	'actionpanel-desc' => 'Усплываючае акно, якое дазваляе Вам катэгарызаваць, зьмяняць назву і рэдагаваць старонкі',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
@@ -220,6 +237,15 @@ $messages['ja'] = array(
 	'actionpanel-desc' => 'カテゴライズ、改名、およびページの編集のハンディポップアップ',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'action_panel_edit_title' => 'Äntwert',
+	'action_panel_categories_summary' => 'Kategorien derbäisetzen',
+	'action_panel_save_success' => 'Ären Artikel gouf gespäichert.',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -356,6 +382,30 @@ $messages['sv'] = array(
 	'action_panel_save_success' => 'Din artikel har sparats.',
 	'action_panel_rename_success' => 'Din artikel har blivit omdöpt',
 	'action_panel_categorize_success' => 'Dina kategorier har lagts till',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'action_panel_categorize' => 'వర్గీకరించు',
+	'action_panel_categorize_help' => 'పంక్తికి ఒక వర్గం',
+	'action_panel_categories_summary' => 'వర్గాలను చేర్చండి',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'action_panel_edit_title' => 'Kasagutan',
+	'action_panel_title' => 'Panig ng Mabilisang Kilos',
+	'action_panel_categorize' => 'Ikategorya',
+	'action_panel_categorize_help' => 'Isang kategorya bawat guhit',
+	'action_panel_categories_summary' => 'Magdagdag ng mga Kategorya',
+	'action_panel_save_success' => 'Nasagip na ang artikulo mo.',
+	'action_panel_rename_success' => 'Pinalitan na ng pangalan ang artikulo mo.',
+	'action_panel_categorize_success' => 'Naidagdag na ang mga kategorya mo.',
+	'actionpanel-desc' => 'Isang magagamit na biglang-litaw na nagpapahintulot sa iyong magkategorya, muling magpangalan at magbago ng mga pahina',
 );
 
 /** Turkish (Türkçe)

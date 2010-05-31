@@ -149,6 +149,17 @@ $messages['ja'] = array(
 	'research_this' => 'この質問について調べる',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'search_wikipedia' => 'Op Wikipedia sichen',
+	'previous' => 'vireg',
+	'research_no_results' => 'Keng Säite fonnt. Sicht w.e.g. nach eng Kéier.',
+	'research_wikipedia_title' => 'Sicht Är Äntwert op Wikipedia',
+	'research_this' => 'Dëst nosichen',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -253,5 +264,16 @@ $messages['ru'] = array(
 $messages['sr-ec'] = array(
 	'search_wikipedia' => 'Претражи Википедију',
 	'previous' => 'Претходно',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'search_wikipedia' => 'Maghanap sa Wikipedia',
+	'previous' => 'nakaraan',
+	'research_no_results' => 'Walang natagpuang pahina.  Paki maghanap uli.',
+	'research_wikipedia_title' => 'Saliksikin ang sagot mo sa Wikipedia',
+	'research_this' => 'Saliksikin ito',
 );
 

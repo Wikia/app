@@ -86,6 +86,49 @@ Skryf die eerste afdeling van u bladsy hier.
 Skryf die tweede afdeling van u bladsy hier.',
 );
 
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'createpage-sp-title' => 'أنشأ مقالة جديدة',
+	'createpage_title' => 'أنشئ مقالة جديدة',
+	'createpage_title_caption' => 'العنوان',
+	'createpage_enter_text' => 'النص:',
+	'createpage_empty_title_error' => 'العنوان مطلوب',
+	'createpage_empty_article_body_error' => 'نص المقالة مطلوب',
+	'createpage_invalid_title_error' => 'عنوان غير صالح',
+	'createpage_article_already_exists' => 'هناك مقالة بذلك الاسم.
+الرجاء إختيار اسم آخر.',
+	'createpage_spam' => 'عذرا، تحريرك لا يمكن تسجيله',
+	'createpage_cant_edit' => 'لا يمكن إجراء التعديل',
+	'createpage-dialog-title' => 'إنشاء مقالة جديدة',
+	'createpage-dialog-message1' => 'مرحى! أنت تنشئ صفحة جديدة!',
+	'createpage-dialog-message2' => 'ماذا تريد تمسيتها؟',
+	'createpage-dialog-choose' => 'إختر تخطيط الصفحة:',
+	'createpage-dialog-format' => 'تخطيط عادي',
+	'createpage-dialog-blank' => 'صفحة فارغة',
+	'createpage-error-empty-title' => 'الرجاء كتابة عنوان لمقالك',
+	'createpage-error-invalid-title' => 'عذرا، المقالة غير صالحة.
+الرجاء استخدام عنوان مختلف.',
+	'createpage-error-article-exists' => 'مقالة بذلك العنوان موجودة.
+يمكنك أن تزور <a href="$1">$2</a>، أو إعادة تسميتها',
+	'createpage-error-article-spam' => 'عذرا، عنوان المقالة تم رفضه من قبل فلتر الإزعاج لدينا.
+الرجاء اختيار عنوان آخر.',
+	'createpage-error-article-blocked' => 'آسف، أنت غير قادر على إنشاء ذلك المقال حاليا.',
+	'tog-createpagedefaultblank' => 'إستخدم الصفحة الفارغة إفتراضيا لإنشاء مقالة جديدة',
+	'tog-createpagepopupdisabled' => 'تعطيل إنبثاق منشئ الصفحات',
+	'newpagelayout' => '[[ملف:Placeholder|يسار|300بك]]
+قم بكتابة الفقرة الأولى من المقالة هنا.
+
+==عنوان القسم==
+
+كتابة عنوان المقطع الأول من مقالك هنا.
+
+==عنوان القسم==
+
+كتابة عنوان المقطع الثاني من مقالك هنا.',
+);
+
 /** Bashkir (Башҡорт)
  * @author Рустам Нурыев
  */
@@ -960,6 +1003,49 @@ $messages['te'] = array(
 	'createpage_empty_article_body_error' => 'వ్యాసపు పాఠ్యం తప్పనిసరి',
 	'createpage_invalid_title_error' => 'తప్పుడు శీర్షిక',
 	'createpage-dialog-blank' => 'ఖాళీ పేజీ',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'createpage-sp-title' => 'Lumikha ng isang bagong artikulo',
+	'createpage_title' => 'Lumikha ng isang bagong artikulo',
+	'createpage_title_caption' => 'Pamagat:',
+	'createpage_enter_text' => 'Teksto:',
+	'createpage_empty_title_error' => 'Kailangan ang pamagat',
+	'createpage_empty_article_body_error' => 'Kailangan ang teksto ng artikulo',
+	'createpage_invalid_title_error' => 'Hindi tanggap na pamagat',
+	'createpage_article_already_exists' => 'Umiiral na ang artikulong may ganyang pangalan.
+Mangyaring pumili ng ibang pangalan.',
+	'createpage_spam' => 'Paumanhin, hindi masasagip ang pagbabago mo',
+	'createpage_cant_edit' => 'Hindi magampanan ang pamamatnugot',
+	'createpage-dialog-title' => 'Lumikha ng Isang Bagong Artikulo',
+	'createpage-dialog-message1' => 'Yehey, lumilikha ka ng isang bagong pahina!',
+	'createpage-dialog-message2' => 'Ano katawagan ang nais mo para rito?',
+	'createpage-dialog-choose' => 'Pumili ng isang ayos ng pahina:',
+	'createpage-dialog-format' => 'Karaniwang ayos',
+	'createpage-dialog-blank' => 'Pahinang walang laman',
+	'createpage-error-empty-title' => 'Mangyaring magsulat ng isang pamagat para sa iyong artikulo',
+	'createpage-error-invalid-title' => 'Paumanhin, hindi tanggap ang pamagat ng artikulo.
+Mangyaring gumamit ng ibang pamagat.',
+	'createpage-error-article-exists' => 'Umiiral na ang isang artikulong may ganyang pamagat.
+Maaari kang pumunta sa <a href="$1">$2</a>, o palitan ang pangalan ng pahina mo.',
+	'createpage-error-article-spam' => 'Paumahin, tinanggihan ng aming pansala ng manlulusob ang pamagat ng artikulo mo.
+Mangyaring gumamit ng ibang pamagat.',
+	'createpage-error-article-blocked' => 'Paumanhin, hindi mo nagawang likhaing artikulong iyan sa ngayon.',
+	'tog-createpagedefaultblank' => 'Gamitin ang pahinang walang laman para sa paglikha ng isang bagong pahina',
+	'tog-createpagepopupdisabled' => 'Huwag Paganahin ang biglaang-pampalitaw na Gumawa ng Pahina',
+	'newpagelayout' => '[[File:Placeholder|right|300px]]
+Isulat ang unang talata ng iyong artikulo dito.
+
+==Ulo ng seksyon==
+
+Isulat ang unang sekyon ng artikulo mo rito.
+
+==Ulo ng seksyon==
+
+Isulat ang pangalawang ulo ng sekyon mo rito.',
 );
 
 /** Ukrainian (Українська)

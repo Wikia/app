@@ -44,6 +44,7 @@ $messages['ace'] = array(
  * @author Naudefj
  */
 $messages['af'] = array(
+	'titleedit-desc' => 'Voeg knoppie om titel te wysig bo aan bladsye',
 	'titleedit' => 'wysig',
 );
 
@@ -323,8 +324,11 @@ $messages['eml'] = array(
 	'titleedit' => 'Mudifichèr',
 );
 
-/** Esperanto (Esperanto) */
+/** Esperanto (Esperanto)
+ * @author Ianmcorvidae
+ */
 $messages['eo'] = array(
+	'titleedit-desc' => 'Aldonas "redakti titolon" butonon al la komencoj de paĝoj',
 	'titleedit' => 'Redakti',
 );
 
@@ -488,8 +492,11 @@ $messages['haw'] = array(
 	'titleedit' => 'E ho‘opololei',
 );
 
-/** Hebrew (עברית) */
+/** Hebrew (עברית)
+ * @author Rotemliss
+ */
 $messages['he'] = array(
+	'titleedit-desc' => 'הוספת כפתור לעריכת הכותרת בראש הדפים',
 	'titleedit' => 'עריכה',
 );
 
@@ -777,9 +784,11 @@ $messages['mdf'] = array(
 	'titleedit' => 'Петнеме',
 );
 
-/** Malagasy (Malagasy) */
+/** Malagasy (Malagasy)
+ * @author Jagwar
+ */
 $messages['mg'] = array(
-	'titleedit' => 'Ovao',
+	'titleedit' => 'Hanova',
 );
 
 /** Eastern Mari (Олык Марий) */
@@ -1001,8 +1010,11 @@ $messages['pnt'] = array(
 	'titleedit' => 'Άλλαξον',
 );
 
-/** Pashto (پښتو) */
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
 $messages['ps'] = array(
+	'titleedit-desc' => 'د مخونو سر کې د سرليک د سمولو تڼۍ ورګډوي',
 	'titleedit' => 'سمون',
 );
 
@@ -1066,8 +1078,11 @@ $messages['sah'] = array(
 	'titleedit' => 'Уларыт',
 );
 
-/** Sardinian (Sardu) */
+/** Sardinian (Sardu)
+ * @author Andria
+ */
 $messages['sc'] = array(
+	'titleedit-desc' => 'Ponet in pitzu de sa pàgina unu butone pro acontzare su tìtulu',
 	'titleedit' => 'Acontza',
 );
 
@@ -1126,8 +1141,11 @@ $messages['sk'] = array(
 	'titleedit' => 'upraviť',
 );
 
-/** Slovenian (Slovenščina) */
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
 $messages['sl'] = array(
+	'titleedit-desc' => 'Doda gumb za urejanje naslova na vrh strani',
 	'titleedit' => 'Uredite stran',
 );
 
@@ -1241,8 +1259,11 @@ $messages['tk'] = array(
 	'titleedit' => 'Redaktirle',
 );
 
-/** Tagalog (Tagalog) */
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
 $messages['tl'] = array(
+	'titleedit-desc' => 'Nagdaragdag ng pindutan na pambago ng pamagat sa itaas ng mga pahina',
 	'titleedit' => 'Baguhin',
 );
 
@@ -1379,8 +1400,11 @@ $messages['xmf'] = array(
 	'titleedit' => 'რედაქტირაფა',
 );
 
-/** Yiddish (ייִדיש) */
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
 $messages['yi'] = array(
+	'titleedit-desc' => 'לייגט צו קנעפל צו רעדאַקטירן קעפל אין דער הייך פֿון בלעטער',
 	'titleedit' => 'ענדערן',
 );
 

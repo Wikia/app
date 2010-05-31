@@ -129,6 +129,16 @@ Per favor cambia [[Special:Preferences#prefsection-1|tu preferentias]] pro usar 
 	'widgets-specialpage-try-dashboard' => 'Iste pagina contine un lista de tote le widgets disponibile. Pro vider tu widgets in action, visita [[Special:WidgetDashboard]].',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'widgets-specialpage-info' => 'Widget bekerja optimal dengan salah satu kulit baru, misalnya [((SERVER))/index.php?title=Special:Widget&useskin=monaco Monaco]. 
+
+Silahkan ubah [[Special:Preferences#prefsection-1|preferensi Anda]] untuk menggunakan alat ini.',
+	'widgets-specialpage-try-dashboard' => 'Halaman ini berisi daftar semua widget yang tersedia. Untuk melihat widget Anda kunjungi [[Special:WidgetDashboard]].',
+);
+
 /** Japanese (日本語)
  * @author Tommy6
  * @author 青子守歌
@@ -144,10 +154,10 @@ $messages['ja'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'widgets-specialpage-info' => 'Интерфејс-елементите најдобро работат со еден од новите изгледи, како на пр. [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Монако].
+	'widgets-specialpage-info' => 'Направите најдобро работат со еден од новите изгледи, како на пр. [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Монако].
 
-Променете си ги [[Special:Preferences#prefsection-1|нагодувањата]] за да ја користите оваа алатка.',
-	'widgets-specialpage-try-dashboard' => 'Оваа страница содржи листа на сите расположиви интерфејс-елементи. За да видите како работат вашите елементи, одете на [[Special:WidgetDashboard]].',
+Променете си ги [[Special:Preferences#prefsection-1|нагодувањата]] за да можете да ја користите оваа алатка.',
+	'widgets-specialpage-try-dashboard' => 'Оваа страница содржи список на сите расположиви направи. За да видите како работат вашите направи, одете на [[Special:WidgetDashboard]].',
 );
 
 /** Dutch (Nederlands)
@@ -251,6 +261,16 @@ $messages['sr-ec'] = array(
 
 Промените [[Special:Preferences#prefsection-1|your preferences]] да би користили ову алатку.',
 	'widgets-specialpage-try-dashboard' => 'ова страница садржи списак свих потребних алатки. Да би видели како раде идите на [[Special:WidgetDashboard]].',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'widgets-specialpage-info' => 'Pinakamainam ang pag-andar ng mga wikdyet kung may isa sa bagong mga pabalat, halimbawa na ang [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco].
+
+Pakibago ang [[Special:Preferences#prefsection-1|mga nais mo]] upang magamit ang kasangkapang ito.',
+	'widgets-specialpage-try-dashboard' => 'Naglalaman ang pahinang ito ng isang talaan ng lahat ng magagamit na mga widyet.  Upang makita ang iyong mga widyet habang umaandar, pumunta sa [[Special:WidgetDashboard]].',
 );
 
 /** Ukrainian (Українська)

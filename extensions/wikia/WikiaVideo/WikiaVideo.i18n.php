@@ -284,10 +284,10 @@ $messages['fr'] = array(
  * @author Toliño
  */
 $messages['gl'] = array(
-	'wikiavideo-reverted' => 'Reverteuse con éxito o vídeo $1. Voltar a $2.',
+	'wikiavideo-reverted' => 'Reverteuse con éxito o vídeo $1. Volver a $2.',
 	'wikiavideo-unreverted' => 'Non ten os permisos necesarios para reverter $1.',
 	'wikiavideo-added' => 'engadiu o vídeo $1',
-	'wikiavideo-back' => 'voltar',
+	'wikiavideo-back' => 'volver',
 	'wikiavideo-create' => 'Engadir un vídeo',
 	'wikiavideo-replace' => 'Substituír o vídeo',
 	'wikiavideo-category' => 'Vídeos',
@@ -335,9 +335,12 @@ $messages['ia'] = array(
 	'wikiavideo-intro-old' => "Tu es al puncto de deler le version de '''[$1 $5]''' del [$4 $3 a $2].",
 );
 
-/** Indonesian (Bahasa Indonesia) */
+/** Indonesian (Bahasa Indonesia)
+ * @author Kenrick95
+ */
 $messages['id'] = array(
 	'wikiavideo-back' => 'kembali',
+	'wikiavideo-pixel' => ' piksel',
 );
 
 /** Italian (Italiano) */
@@ -418,6 +421,7 @@ $messages['nl'] = array(
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
  * @author Nghtwlkr
  */
 $messages['no'] = array(
@@ -431,10 +435,17 @@ $messages['no'] = array(
 	'wikiavideo-links' => 'Lenker',
 	'wikiavideo-placeholder' => 'Plassholder',
 	'wikiavideo-gallery-template' => 'Dette videogalleriet er innenfor en mal og er kan ikke redigeres fra visningsmodusen. Vennligst rediger den gjeldende malen.',
-	'wikiavideo-not-supported' => 'Denne drakten støtter ikke innsetting av videoer i gallerier fra visningsmodus.',
+	'wikiavideo-not-supported' => 'Dette utseendet støtter ikke innsetting av videoer i gallerier fra visningsmodus.',
 	'wikiavideo-pixel' => '  piksel',
 	'wikiavideo-deleted-old' => "Versjonen av '''[$1 $2]''' fra $4, $3 har blitt slettet.",
 	'wikiavideo-intro-old' => "Du sletter versjonen av '''[$1 $5]''' fra [$4 $3, $2].",
+);
+
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'wikiavideo-back' => 'zerrick',
 );
 
 /** Polish (Polski)
@@ -483,9 +494,12 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'wikiavideo-added' => 'ورګډه شوې ويډيو $1',
+	'wikiavideo-back' => 'پر شا کېدل',
 	'wikiavideo-create' => 'ويډيو ورګډول',
 	'wikiavideo-category' => 'ويډيوګانې',
 	'wikiavideo-links' => 'تړنې',
+	'wikiavideo-pixel' => 'پېکسل',
 );
 
 /** Portuguese (Português)
@@ -552,14 +566,24 @@ $messages['ru'] = array(
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Charmed94
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'wikiavideo-added' => 'додан видео $1',
+	'wikiavideo-reverted' => '$1 снимак је успешно враћен. Вратите се на $2.',
+	'wikiavideo-unreverted' => 'Немате дозволу да вратите $1.',
+	'wikiavideo-added' => '$1 снимак је додат.',
+	'wikiavideo-back' => 'назад',
 	'wikiavideo-create' => 'Додај видео',
-	'wikiavideo-replace' => 'замени видео',
-	'wikiavideo-links' => 'Видео везе',
+	'wikiavideo-replace' => 'Замени снимак',
+	'wikiavideo-category' => 'Снимци',
+	'wikiavideo-links' => 'Везе',
+	'wikiavideo-placeholder' => 'Чувар места',
+	'wikiavideo-gallery-template' => 'Ова видео галерија је у шаблону, тако да се не може уредити из режима приказа. Молимо, измените одређени шаблон.',
+	'wikiavideo-not-supported' => 'Ова тема не подржава убацивање снимака из режима приказа у галерије.',
 	'wikiavideo-pixel' => 'пиксел',
+	'wikiavideo-deleted-old' => "Издање '''[$1 $2]''', као и $4, $3 је обрисано.",
+	'wikiavideo-intro-old' => "Управо ћете да обришете '''[$1 $5]''' издање, као и [$4 $3, $2].",
 );
 
 /** Telugu (తెలుగు)
@@ -568,6 +592,26 @@ $messages['sr-ec'] = array(
 $messages['te'] = array(
 	'wikiavideo-back' => 'వెనక్కి',
 	'wikiavideo-links' => 'లంకెలు',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'wikiavideo-reverted' => 'Matagumpay na naiuli ang bidyong $1. Magbalik sa $2.',
+	'wikiavideo-unreverted' => 'Hindi ka pinapayagang iuli ang $1.',
+	'wikiavideo-added' => 'idinagdag ang bidyong $1',
+	'wikiavideo-back' => 'magbalik',
+	'wikiavideo-create' => 'Idagdag ang bidyo',
+	'wikiavideo-replace' => 'Palitan ang bidyo',
+	'wikiavideo-category' => 'Mga bidyo',
+	'wikiavideo-links' => 'Mga kawing',
+	'wikiavideo-placeholder' => 'Tagahawak ng lugar',
+	'wikiavideo-gallery-template' => 'Nasa loob ng isang suleras ang tanghalang ng bidyong ito, at hindi mababago mula sa modalidad na pagtanaw.  Pakibago ang naaangkop na suleras.',
+	'wikiavideo-not-supported' => 'Hindi tinatangkilik ng pabalat na ito ang pagsisingit ng mga bidyo mula sa modalidad na napapanood papunta sa mga galerya.',
+	'wikiavideo-pixel' => 'piksel',
+	'wikiavideo-deleted-old' => "Nabura na ang bersyon ng '''[$1 $2]''' noon pang  $4, $3.",
+	'wikiavideo-intro-old' => "Binubura mo ang bersyong '''[$1 $5]''' noon pang [$4 $3, $2].",
 );
 
 /** Ukrainian (Українська)

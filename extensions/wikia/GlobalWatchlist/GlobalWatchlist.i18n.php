@@ -324,8 +324,10 @@ Wikia
  */
 $messages['lb'] = array(
 	'tog-watchlistdigest' => 'Schéck mir all Woch eng Lëscht vun de Säiten vu menger Iwwerwaachungslëscht déi no mengem leschte Besuch geännert goufen',
+	'tog-watchlistdigestclear' => 'All Säiten déi op dem wëchentleche Resumé vu menger Iwwerwaachungslëscht stinn als besicht markéieren',
 	'globalwatchlist-see-more' => 'Kuckt w.e.g. Är lokal Iwwerwaachungslëscht fir méi Ännerungen',
 	'globalwatchlist-digest-email-subject' => 'Wëchentleche Resumé',
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2{{PLURAL:$2|Bemierkung|Bemierkungen}})',
 	'globalwatchlist-no-page-found' => 'Keng Säit fonnt.',
 	'globalwatchlist-no-blog-page-found' => 'Keng Blogsäit fonnt.',
 );
@@ -336,16 +338,16 @@ $messages['lb'] = array(
 $messages['mk'] = array(
 	'tog-watchlistdigest' => 'Испраќај ми Неделен преглед на набљудувани страници',
 	'tog-watchlistdigestclear' => 'Означи ги сите страници од мојот Неделен преглед како посетени',
-	'globalwatchlist-see-more' => 'Проверете ги вашите локални листи на набљудувања за повеќе промени',
+	'globalwatchlist-see-more' => 'Проверете ги вашите локални списоци на набљудувања за повеќе промени',
 	'globalwatchlist-digest-email-subject' => 'Неделен преглед',
 	'globalwatchlist-digest-email-body' => 'Почитуван $1,
 
-Ова е листа на страници на вашата листа на набљудувања на Викија коишто се имаат изменето од вашата последна посета.
+Ова е попис на страници на вашиот список на набљудувања на Викија коишто се имаат изменето од последната ваша посета.
 
 $2
 
 
-Ова е листа на блог-страници на вашата листа на набљудувања на Викија коишто имаат измени или коментари од вашата последна посета.
+Ова е попис на блог-страници на вашиот список на набљудувања на Викија коишто имаат измени или коментари од последната ваша посета.
 
 $3
 
@@ -353,8 +355,8 @@ $3
 
 Викија
 
-* За да ги промените вашите нагодувања за известувања за листа на набљудувања, посетете ја страницата http://www.wikia.com/wiki/Special:Preferences
-* За да ги означите сите страници од овој Неделен преглед како посетени, одберете ја таа можност во јазичето „Листа на набљудувања“ на вашата страница за нагодувања',
+* За да ги промените вашите нагодувања за известувања за списокот на набљудувања, посетете ја страницата http://www.wikia.com/wiki/Special:Preferences
+* За да ги означите сите страници од овој Неделен преглед како посетени, одберете ја таа можност во јазичето „Список на набљудувања“ на вашата страница за нагодувања',
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|коментар|коментари}})',
 	'globalwatchlist-no-page-found' => 'Нема пронајдено страница.',
 	'globalwatchlist-no-blog-page-found' => 'Нема пронајдено блог-страница.',
@@ -542,11 +544,63 @@ Wikia
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Charmed94
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'globalwatchlist-digest-email-subject' => 'Седмични преглед',
-	'globalwatchlist-no-page-found' => 'Није нађена страница',
-	'globalwatchlist-no-blog-page-found' => 'Није нађена блог страница',
+	'tog-watchlistdigest' => 'Пошаљи ми поруку с недељним прегледом',
+	'tog-watchlistdigestclear' => 'Означи све странице с недељног прегледа као посећене',
+	'globalwatchlist-see-more' => 'Молимо, проверите локални списак надгледања за више измена',
+	'globalwatchlist-digest-email-subject' => 'Недељни преглед',
+	'globalwatchlist-digest-email-body' => 'Драги $1,
+
+Ово је списак страница на Вашем Викија списку надгледања које су измењене од Ваше последње посете.
+
+$2
+
+
+Ово је списак блог страница на Вашем Викија списку надгледања које су измењене или прокоментарисане од Ваше последње посете.
+
+$3
+
+Молимо Вас да их посећујете и уређујете чешће...
+
+Викија
+
+* Да бисте променили своје поставке у вези с обавештењима о надгледањима, посетите http://www.wikia.com/wiki/Special:Preferences
+* Да бисте означили све странице с овог недељног прегледа као посећене, видите опцију у језичку „Списак надгледања“ странице за подешавање',
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|comment|коментари}})',
+	'globalwatchlist-no-page-found' => 'Страница није пронађена.',
+	'globalwatchlist-no-blog-page-found' => 'Блог страница није пронађена.',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'tog-watchlistdigest' => 'Padalhan ako ng e-liham ng isang Lingguhang Katipunan ng Mga Binabantayan',
+	'tog-watchlistdigestclear' => 'Markahan ang lahat ng mga pahina mula sa aking Lingguhang Katipunan ng Mga Binabantayan bilang nadalaw na',
+	'globalwatchlist-see-more' => 'Pakisuri ang iyong katutubong mga talaan ng mga binabantayan para sa marami pang mga pagbabago',
+	'globalwatchlist-digest-email-subject' => 'Lingguhan Katipunan',
+	'globalwatchlist-digest-email-body' => 'Mahal na $1,
+
+Isa itong talaan ng mga pahina ng iyong bantayan sa Wikia na nabago magmula noong huling dalawin mo sila.
+
+$2
+
+
+Isa itong talaan ng mga pahina ng blog sa iyong bantayan sa Wikia na nabago o pinuna magmula noong huling pagdalaw mo sa kanila.
+
+$3
+
+Mangyaring dumalaw at mamatnugot ng madalas...
+
+Wikia
+
+* Upang baguhin ang mga nais mo para sa mga pabatid na pangbantayan, pakidalaw ang http://www.wikia.com/wiki/Special:Preferences
+* Upang markahan ang lahat ng mga pahina mula sa Lingguhang Katipunan bilang nadalaw, tingnan ang pagpipilian sa panglaylay na pahina ng Mga Nais sa "Talaan ng mga Binabantayan"',
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|puna|mga puna}})',
+	'globalwatchlist-no-page-found' => 'Walang natagpuang pahina.',
+	'globalwatchlist-no-blog-page-found' => 'Walang natagpuang pahina ng blog.',
 );
 

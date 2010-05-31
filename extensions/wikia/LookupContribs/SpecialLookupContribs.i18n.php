@@ -337,7 +337,7 @@ $messages['gl'] = array(
 	'lookupcontribsfullurls' => 'enderezos URL completos',
 	'lookupcontribslinks' => 'ligazóns cara ás contribucións',
 	'lookupcontribsgo' => 'Ir',
-	'lookupcontribsinvaliduser' => '<p class="error">O usuario "<b>$1</b>" non existe. Comprobe o nome de usuario dado por posibles erros de escritura.</p>',
+	'lookupcontribsinvaliduser' => '<p class="error">O usuario "<b>$1</b>" non existe. Comprobe que o nome está ben escrito.</p>',
 	'lookupcontribsinvalidviewmode' => '<p class="error">"<b>$1</b>" non é un modo de visualización válido.</p>',
 	'lookupcontribsinvalidmode' => '<p class="error">"<b>$1</b>" non é un modo válido.</p>',
 	'lookupcontribsselectwikis' => 'Seleccionar os wikis:',
@@ -420,7 +420,7 @@ $messages['ia'] = array(
 	'lookupcontribscontribslink' => 'Ligamine al contributiones',
 	'lookupcontribsdetails' => 'Vider detalios pro:',
 	'lookupcontribscontribs' => 'contributiones',
-	'lookupcontribsnbrresult' => 'Numero de resultatos:',
+	'lookupcontribsnbrresult' => 'Numero del resultato:',
 	'lookupcontribsnext' => 'sequente',
 	'lookupcontribsprevious' => 'precedente',
 	'lookupcontribspageremoved' => 'Removite:',
@@ -471,6 +471,8 @@ $messages['ja'] = array(
 	'lookupcontribshist' => '履歴',
 	'lookupcontribsdiff' => '差分',
 	'right-lookupcontribs' => '利用者のプロジェクト全体における投稿記録を見る',
+	'lookupcontribsshowpages' => '全ページ（$1名前空間）',
+	'lookupcontribscontent' => 'コンテンツ',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -480,6 +482,9 @@ $messages['lb'] = array(
 	'lookupcontribusernotspecify' => 'Dir hutt nach kee Benotzer spezifizéiert',
 	'lookupcontribsselectuser' => 'Benotzer eraussichen:',
 	'lookupcontribsgo' => 'Lass',
+	'lookupcontribsinvaliduser' => '<p class="error">De Benotzer "<b>$1</b>" gëtt et net.
+Vergewëssert Iech datt Dir Iech beim Benotzernumm net vertippt hutt.</p>',
+	'lookupcontribsselectwikis' => 'Wikien eraussichen:',
 	'lookupcontribsnoresultfound' => 'Kee Resultat fonnt!',
 	'lookupcontribswiki' => 'Wiki',
 	'lookupcontribswikiurl' => 'URL',
@@ -497,7 +502,7 @@ $messages['mk'] = array(
 	'lookupcontribstitle' => 'Проверка на придонеси',
 	'lookupcontribsrecentcontributions' => 'Скорешни придонеси за $1',
 	'lookupcontribsfinalcontributions' => 'Конечни придонеси за $1',
-	'lookupcontribshelp' => 'Оваа специјална страница служи за прикажување на придонесите на некој корисник на повеќе викии. За да се прикаже листа, наведете корисничко име подолу.',
+	'lookupcontribshelp' => 'Оваа специјална страница служи за прикажување на придонесите на некој корисник на повеќе викии. За да се прикаже список, наведете корисничко име подолу.',
 	'lookupcontribusernotspecify' => 'Немате назначено корисник',
 	'lookupcontribsselectuser' => 'Одберете корисник:',
 	'lookupcontribsselectfor' => 'Одберете за:',
@@ -512,7 +517,7 @@ $messages['mk'] = array(
 	'lookupcontribsinvalidviewmode' => '<p class="error">„<b>$1</b>“ не е важечки режим на преглед.</p>',
 	'lookupcontribsinvalidmode' => '<p class="error">„<b>$1</b>“ не е важечки режим.</p>',
 	'lookupcontribsselectwikis' => 'Одберете викија:',
-	'lookupcontribslistwikiainfo' => 'Листа на викија со статии уредувани од <b>$1</b>',
+	'lookupcontribslistwikiainfo' => 'Список на викија со статии уредувани од <b>$1</b>',
 	'lookupcontribsnoresultfound' => 'Нема пронајдено резултати!',
 	'lookupcontribsinvalidresults' => 'Неважечки резултати!',
 	'lookupcontribswiki' => 'Вики',
@@ -632,6 +637,37 @@ Sjekk oppgitt brukernavn for mulige skrivefeil.</p>',
 	'lookupcontribscontent' => 'innhold',
 );
 
+/** Occitan (Occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'lookupcontribswiki' => 'Wiki',
+	'lookupcontribswikidbname' => 'Nom de la Banca de Donadas',
+	'lookupcontribswikiurl' => 'URL',
+	'lookupcontribswikititle' => 'Títol',
+	'lookupcontribscontribslink' => 'Ligams cap a las contribucions',
+	'lookupcontribsdetails' => 'Veire de detalhs per:',
+	'lookupcontribscontribs' => 'contribucions',
+	'lookupcontribsnbrresult' => 'Nombre de resultats:',
+	'lookupcontribsnext' => 'seguent',
+	'lookupcontribsprevious' => 'precedent',
+	'lookupcontribspageremoved' => 'Suprimit :',
+	'lookupcontribsrestore' => 'restablir',
+	'lookupcontribslog' => 'jornal',
+	'lookupcontribshist' => 'ist',
+	'lookupcontribsdiff' => 'dif',
+	'right-lookupcontribs' => "Veire las edicions globalas de l'utilizaire",
+	'lookupcontribsshowpages' => 'Totas las paginas ($1 espacis de nom)',
+	'lookupcontribscontent' => 'contengut',
+);
+
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'lookupcontribsgo' => 'Zeige',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
@@ -691,6 +727,54 @@ $messages['ps'] = array(
 	'lookupcontribslog' => 'يادښتونه',
 	'lookupcontribshist' => 'پېښليک',
 	'lookupcontribsdiff' => 'توپير',
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'lookupcontribs' => 'Procurar Contribuições',
+	'lookupcontribstitle' => 'Procurar Contribuições',
+	'lookupcontribsrecentcontributions' => 'Contribuições recentes de $1',
+	'lookupcontribsfinalcontributions' => 'Contribuições finais de $1',
+	'lookupcontribshelp' => 'Esta página especial pode ser usada para apresentar as contribuições de um utilizador em várias Wikias.
+Para apresentar a lista, forneça abaixo o nome do utilizador.',
+	'lookupcontribusernotspecify' => 'Ainda não especificou um utilizador',
+	'lookupcontribsselectuser' => 'Seleccionar o utilizador:',
+	'lookupcontribsselectfor' => 'Seleccionar:',
+	'lookupcontribsdisplaymode' => 'Modo de visionamento:',
+	'lookupcontribsselectmodenormal' => 'contribuições recentes do utilizador',
+	'lookupcontribsselectmodefinal' => 'contribuições finais do utilizador',
+	'lookupcontribsselectmodeall' => 'todas as contribuições do utilizador',
+	'lookupcontribsfullurls' => 'URLs completas',
+	'lookupcontribslinks' => 'links para as contribuições',
+	'lookupcontribsgo' => 'Mostrar',
+	'lookupcontribsinvaliduser' => '<p class="error">O utilizador "<b>$1</b>" não existe.
+Verifique se se enganou no nome do utilizador.</p>',
+	'lookupcontribsinvalidviewmode' => '<p class="error">"<b>$1</b>" não é um modo de visionamento válido.</p>',
+	'lookupcontribsinvalidmode' => '<p class="error">"<b>$1</b>" não é um modo válido.</p>',
+	'lookupcontribsselectwikis' => 'Seleccionar wikis:',
+	'lookupcontribslistwikiainfo' => 'Lista de wikis com páginas editadas por <b>$1</b>',
+	'lookupcontribsnoresultfound' => 'Não foi encontrado nenhum resultado!',
+	'lookupcontribsinvalidresults' => 'Resultados são inválidos!',
+	'lookupcontribswiki' => 'Wiki',
+	'lookupcontribswikidbname' => 'Base de Dados',
+	'lookupcontribswikiurl' => 'URL',
+	'lookupcontribswikititle' => 'Título',
+	'lookupcontribscontribslink' => 'Link para contribuições',
+	'lookupcontribsdetails' => 'Ver detalhes de:',
+	'lookupcontribscontribs' => 'contribuições',
+	'lookupcontribsnbrresult' => 'Nº do resultado:',
+	'lookupcontribsnext' => 'seguintes',
+	'lookupcontribsprevious' => 'anteriores',
+	'lookupcontribspageremoved' => 'Removidas:',
+	'lookupcontribsrestore' => 'recuperar',
+	'lookupcontribslog' => 'registo',
+	'lookupcontribshist' => 'histórico',
+	'lookupcontribsdiff' => 'diferenças',
+	'right-lookupcontribs' => 'Ver as edições globais do utilizador',
+	'lookupcontribsshowpages' => 'Todas as páginas ($1 espaços nominais)',
+	'lookupcontribscontent' => 'conteúdo',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -793,6 +877,54 @@ $messages['sv'] = array(
 	'lookupcontribsnext' => 'nästa',
 	'lookupcontribsprevious' => 'föregående',
 	'lookupcontribsrestore' => 'återställ',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'lookupcontribs' => 'Maghanap ng Mga Ambag',
+	'lookupcontribstitle' => 'Maghanap ng Mga Ambag',
+	'lookupcontribsrecentcontributions' => 'Kamakailang mga ambag para sa $1',
+	'lookupcontribsfinalcontributions' => 'Huling mga ambag para sa $1',
+	'lookupcontribshelp' => 'Magagamit ang natatanging pahinang ito upang ipakit ang mga ambag ng tagagamit sa maramihang mga Wikia.
+Para ipakita ang talaan, ibigay ang pangalan ng tagagamit sa ibaba.',
+	'lookupcontribusernotspecify' => 'Walang ka pang tinutukoy na tagagamit',
+	'lookupcontribsselectuser' => 'Pumili ng tagagamit:',
+	'lookupcontribsselectfor' => 'Pumili para sa:',
+	'lookupcontribsdisplaymode' => 'Modalidad ng pagpapakita:',
+	'lookupcontribsselectmodenormal' => 'kamakailang mga ambag para sa tagagamit na iyan',
+	'lookupcontribsselectmodefinal' => 'huling mga ambag para sa tagagamit na iyan',
+	'lookupcontribsselectmodeall' => 'lahat ng mga ambag para sa tagagamit na iyan',
+	'lookupcontribsfullurls' => 'buong mga URL',
+	'lookupcontribslinks' => 'mga kawing sa mga ambag',
+	'lookupcontribsgo' => 'Gawin',
+	'lookupcontribsinvaliduser' => 'Hindi umiiral ang <p class="error">Tagagamit "<b>$1</b>".
+Suriin ang ibinigay na pangalan ng tagagamit para sa maaaring mga kamalian.</p>',
+	'lookupcontribsinvalidviewmode' => 'Ang <p class="error">"<b>$1</b>" ay isang hindi tanggap na modalidad ng pagtanaw.</p>',
+	'lookupcontribsinvalidmode' => 'Ang <p class="error">"<b>$1</b>" ay isang hindi tanggap na modalidad.</p>',
+	'lookupcontribsselectwikis' => 'Piliin ang mga wiki:',
+	'lookupcontribslistwikiainfo' => 'Talaan ng mga wiki kung saan ang mga artikulo ay binago ni <b>$1</b>',
+	'lookupcontribsnoresultfound' => 'Walang natagpuang resulta!',
+	'lookupcontribsinvalidresults' => 'Hindi tanggap na mga resulta!',
+	'lookupcontribswiki' => 'Wiki',
+	'lookupcontribswikidbname' => 'Pangalan ng Kalipunan ng Dato',
+	'lookupcontribswikiurl' => 'URL',
+	'lookupcontribswikititle' => 'Pamagat',
+	'lookupcontribscontribslink' => 'Kawing sa mga ambag',
+	'lookupcontribsdetails' => 'Tingnan ang mga detalye para sa:',
+	'lookupcontribscontribs' => 'mga ambag',
+	'lookupcontribsnbrresult' => 'Bilang ng mga resulta:',
+	'lookupcontribsnext' => 'susunod',
+	'lookupcontribsprevious' => 'nakaraan',
+	'lookupcontribspageremoved' => 'Tinanggal:',
+	'lookupcontribsrestore' => 'ibalik',
+	'lookupcontribslog' => 'talaan',
+	'lookupcontribshist' => 'kasaysayan',
+	'lookupcontribsdiff' => 'pagkakaiba',
+	'right-lookupcontribs' => 'Tingnan ang pandaigdigang pamamatnugot ng tagagamit',
+	'lookupcontribsshowpages' => 'Lahat ng mga pahina ($1 mga puwang na pampangalan)',
+	'lookupcontribscontent' => 'nilalaman',
 );
 
 /** Ukrainian (Українська)

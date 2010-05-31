@@ -560,8 +560,10 @@ $messages['af'] = array(
  */
 $messages['an'] = array(
 	'wikiastats_other' => 'Atros',
+	'wikiastats_date' => 'Calendata',
 	'wikiastats_namespace' => 'Espacio de nombres',
 	'wikiastats_hide' => 'Amagar',
+	'wikiastats_xls_cancel' => 'Cancelar',
 );
 
 /** Arabic (العربية)
@@ -2309,7 +2311,7 @@ $messages['gl'] = array(
 	'wikiastats_comparisons_table_16' => 'Ligazóns externas',
 	'wikiastats_comparisons_table_17' => 'Imaxes cargadas',
 	'wikiastats_back_to_mainpage' => 'Ir á páxina principal de estatísticas',
-	'wikiastats_back_to_prevpage' => 'Voltar',
+	'wikiastats_back_to_prevpage' => 'Volver',
 	'wikiastats_trend_mean_info' => 'Media = media de contas nos meses mostrados',
 	'wikiastats_trend_growth_info' => 'Crecemento = media de crecemento mensual nos meses mostrados',
 	'wikiastats_trend_value' => 'valor',
@@ -2380,6 +2382,7 @@ $messages['he'] = array(
 );
 
 /** Hungarian (Magyar)
+ * @author Enbéká
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
@@ -2395,6 +2398,7 @@ $messages['hu'] = array(
 	'wikiastats_panel_close_btn' => 'Bezárás',
 	'wikiastats_daterange_from' => 'Feladó:',
 	'wikiastats_daterange_to' => 'Címzett:',
+	'wikiastats_nostats_found' => 'Nem találhatók statisztikák a kiválasztott Wikiához',
 	'wikiaststs_invalid_date' => 'Érvénytelen dátumtartomány',
 	'wikiastats_active_day' => 'nap',
 	'wikiastats_active_month' => 'hónap',
@@ -2733,8 +2737,13 @@ $messages['ia'] = array(
 	'wikiastats_pageviews_month' => 'Statisticas mensual',
 );
 
-/** Indonesian (Bahasa Indonesia) */
+/** Indonesian (Bahasa Indonesia)
+ * @author Kenrick95
+ */
 $messages['id'] = array(
+	'wikiastats_wikia' => 'Wikia',
+	'wikiastats_pagetitle' => 'Statistik Wikia',
+	'wikiastats_showstats_btn' => 'Tampilkan statistik',
 	'wikiastats_panel_close_btn' => 'Tutup',
 	'wikiastats_daterange_from' => 'Dari:',
 	'wikiastats_daterange_to' => 'Untuk:',
@@ -2752,9 +2761,14 @@ $messages['id'] = array(
 	'wikiastats_wikicategory' => 'Kategori:',
 	'wikiastats_username' => 'Pengguna',
 	'wikiastats_usernames' => 'Pengguna',
+	'wikiastats_edits' => 'suntingan',
 	'wikiastats_bytes' => 'bytes',
 	'wikiastats_size' => 'ukuran',
+	'wikiastats_words' => 'kata',
+	'wikiastats_internal' => 'internal',
 	'wikiastats_image' => 'gambar',
+	'wikiastats_last_edit' => 'Suntingan terakhir',
+	'wikiastats_rank' => 'peringkat',
 	'wikiastats_wikicreated' => 'Telah dibuat:',
 	'wikiastats_wikilang' => 'Bahasa:',
 	'wikiastats_mainstats_short_column_M' => 'Gambar',
@@ -2778,7 +2792,12 @@ $messages['ig'] = array(
 	'wikiastats_active_day' => 'ubochi',
 	'wikiastats_active_month' => 'önwa',
 	'wikiastats_active_year' => 'Afọ',
+	'wikiastats_show' => 'Zi',
+	'wikiastats_hide' => 'Zonari',
 	'wikiastats_wikiname' => 'Áhà:',
+	'wikiastats_more_txt' => 'dikarírí',
+	'wikiastats_xls_cancel' => 'Emekwàlà',
+	'wikiastats_search_text' => 'Chöwá:',
 );
 
 /** Italian (Italiano) */
@@ -3288,9 +3307,9 @@ $messages['mk'] = array(
 	'wikiastats' => 'Статистики за Викија',
 	'wikiastats_wikia' => 'Викија',
 	'wikiastats_pagetitle' => 'Статистики за Викија',
-	'wikiastats_info' => 'Одберете вики од листата и притиснете на „Прикажи статистики“',
-	'wikiastats_mainstats_info' => 'Одберете вики од листата и притиснет ена „Создај“',
-	'wikiastats_xls_generate_info' => 'Можете да одберете највеќе {{PLURAL:$1|едно вики|$1 викија}} од листата',
+	'wikiastats_info' => 'Одберете вики од списокот и притиснете на „Прикажи статистики“',
+	'wikiastats_mainstats_info' => 'Одберете вики од списокот и притиснете на „Создај“',
+	'wikiastats_xls_generate_info' => 'Можете да одберете највеќе {{PLURAL:$1|едно вики|$1 викија}} од списокот',
 	'wikiastats_comparision' => 'Споредби',
 	'wikiastats_showstats_btn' => 'Прикажи статистики',
 	'wikiastats_wikia_information' => 'Информации за Викија',
@@ -3483,8 +3502,8 @@ $messages['mk'] = array(
 	'wikiastats_statistics_legend' => 'Определенија за колони',
 	'wikiastats_date_of_generate' => 'Создадено на $1',
 	'wikiastats_search_text' => 'Пребарај:',
-	'wikiastats_sort_list_size' => 'Сортирај листа по големина',
-	'wikiastats_sort_list_alphabet' => 'Сортирај листа азбучно',
+	'wikiastats_sort_list_size' => 'Подреди го списокот по големина',
+	'wikiastats_sort_list_alphabet' => 'Подреди го списокот азбучно',
 	'wikiastats_see_old_statistics_page' => 'Погледајте ја страницата за помош со ВикијаСтатистики',
 	'wikiastats_show_new_window' => 'прикажи го резултатот во нов прозорец',
 	'wikiastats_show_nbr_wikis_check' => 'Макс. број на викија за обележување: $1',
@@ -3963,11 +3982,110 @@ Vennligst [[Special:UserLogin|logg inn eller opprett en konto]] dersom du ikke a
 	'wikiastats_pageviews_month' => 'Månedlig statistikk',
 );
 
+/** Occitan (Occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'wikiastats_active_wikians_date' => 'Afichar los cambiaments del darrièr',
+	'wikiastats_active_day' => 'jorn',
+	'wikiastats_active_month' => 'mes',
+	'wikiastats_active_year' => 'annada',
+	'wikiastats_active_months' => 'meses',
+	'wikiastats_wikians' => 'Editors enregistrats',
+	'wikiastats_articles' => 'Articles (en exclusent redireccions)',
+	'wikiastats_articles_text' => 'Articles',
+	'wikiastats_archived' => 'Archivat',
+	'wikiastats_other' => 'Autre',
+	'wikiastats_database' => 'Banca de donadas',
+	'wikiastats_links' => 'Ligams',
+	'wikiastats_reg_users' => 'Editors enregistrats unics',
+	'wikiastats_images' => 'Imatges',
+	'wikiastats_uploaded_images' => 'importat',
+	'wikiastats_with_links' => 'amb de ligams',
+	'wikiastats_connection_error' => 'Error de connexion',
+	'wikiastats_distrib_edits' => 'Modificions >=',
+	'wikiastats_distrib_wikians' => 'Editors enregistrats',
+	'wikiastats_distrib_edits_total' => 'Total de modificacions',
+	'wikiastats_date' => 'Data',
+	'wikiastats_namespace' => 'Espaci de noms',
+	'wikiastats_show' => 'Afichar',
+	'wikiastats_stats' => 'Afichar las estatisticas %s',
+	'wikiastats_hide' => 'Amagar',
+	'wikiastats_wikiname' => 'Nom :',
+	'wikiastats_wikidbname' => 'Nom de la banca de donadas :',
+	'wikiastats_wikicategory' => 'Categoria :',
+	'wikiastats_wikiid' => 'ID :',
+	'wikiastats_mean' => 'mejana',
+	'wikiastats_largerthan' => 'mai grand que',
+	'wikiastats_username' => 'Utilizaire',
+	'wikiastats_usernames' => 'Utilizaires',
+	'wikiastats_edits' => 'modificacions',
+	'wikiastats_bytes' => 'octets',
+	'wikiastats_size' => 'talha',
+	'wikiastats_words' => 'mots',
+	'wikiastats_internal' => 'intèrne',
+	'wikiastats_interwiki' => 'interwiki',
+	'wikiastats_image' => 'imatge',
+	'wikiastats_external' => 'extèrne',
+	'wikiastats_redirects' => 'redireccions',
+	'wikistats_edited_in_namespace' => "modificat dins l'espaci de noms",
+	'wikistats_main_namespace' => 'principal',
+	'wikistats_image_namespace' => 'imatge',
+	'wikiastats_page_requests' => 'requèstas de paginas',
+	'wikiastats_visits' => 'visitas',
+	'wikiastats_new_per_day' => 'novèl<br />per jorn',
+	'wikiastats_official' => 'oficial',
+	'wikiastats_count' => 'compte',
+	'wikiastats_unique_users' => 'Utilizaires unics',
+	'wikiastats_first_edit' => 'Primièra modificacion',
+	'wikiastats_last_edit' => 'Darrièra edicion',
+	'wikiastats_rank' => 'reng',
+	'wikiastats_previous_month' => 'mes<br />precedent',
+	'wikiastats_total' => 'total',
+	'wikiastats_new' => 'novèl',
+	'wikiastats_register' => 'Enreg.',
+	'wikiastats_unregister' => 'Anon.',
+	'wikiastats_mainstats_short_column_G' => "Compte d'article",
+	'wikiastats_mainstats_short_column_H' => 'Articles novèls per jorn',
+	'wikiastats_mainstats_short_column_I' => 'Articles de mai de 0.5 Kb',
+	'wikiastats_mainstats_short_column_J' => 'Modificacions per mes',
+	'wikiastats_mainstats_short_column_K' => 'Talha de la banca de donadas',
+	'wikiastats_mainstats_short_column_L' => 'Mots',
+	'wikiastats_mainstats_short_column_M' => 'Imatges',
+	'wikiastats_mainstats_short_column_N' => 'Ligams extèrnes',
+	'wikiastats_mainstats_short_column_O' => 'Imatges importats',
+	'wikiastats_website' => 'Site web',
+	'wikiastats_tables' => 'Tablèus',
+	'wikiastats_charts' => 'Grafics',
+	'wikiastats_comparisons_table_1' => "Vista d'ensemble",
+	'wikiastats_comparisons_table_2' => 'Istoric de creacion',
+	'wikiastats_comparisons_table_4' => 'Editors enregistrats actius (espacis de nom de contengut)',
+	'wikiastats_comparisons_table_5' => 'Editors enregistrats fòrça actius (espacis de nom de contengut)',
+	'wikiastats_comparisons_table_6' => "Editors enregistrats unics (espaci de nom d'utilizaire)",
+	'wikiastats_comparisons_table_7' => "Editors enregistrats unics (espaci de nom d'imatge)",
+	'wikiastats_comparisons_table_8' => "Nombre total d'editors enregistrats qu'an modificat una pagina al mens un còp en quin espaci de noms que siá",
+	'wikiastats_comparisons_table_9' => "Compte d'articles",
+	'wikiastats_comparisons_table_10' => 'Articles novèls per jorn',
+	'wikiastats_comparisons_table_11' => 'Articles de mai de 0.5 Ko',
+	'wikiastats_comparisons_table_12' => 'Edicions per mes / jorn',
+	'wikiastats_comparisons_table_13' => 'Talha de la banca de donadas',
+	'wikiastats_comparisons_table_14' => 'Mots',
+	'wikiastats_comparisons_table_15' => 'Imatges',
+	'wikiastats_comparisons_table_16' => 'Ligams extèrnes',
+	'wikiastats_comparisons_table_17' => 'Imatges importats',
+);
+
 /** Deitsch (Deitsch)
  * @author Xqt
  */
 $messages['pdc'] = array(
+	'wikiastats_active_year' => 'Yaahr',
+	'wikiastats_namespace' => 'Blatznaame',
 	'wikiastats_wikicategory' => 'Abdeeling:',
+	'wikiastats_wikilang' => 'Schprooch:',
+	'wikiastats_mainstats_short_column_N' => 'Gewebbgleecher',
+	'wikiastats_comparisons_table_16' => 'Gewebbgleecher',
+	'wikiastats_back_to_prevpage' => 'Zerrick',
 );
 
 /** Polish (Polski)
@@ -4249,8 +4367,11 @@ $messages['ps'] = array(
 /** Portuguese (Português)
  * @author Crazymadlover
  * @author Hamilton Abreu
+ * @author Luckas Blade
  */
 $messages['pt'] = array(
+	'wikiastats_wikia' => 'Wikia',
+	'wikiastats_showstats_btn' => 'Mostrar estatísticas',
 	'wikiastats_panel_close_btn' => 'Fechar',
 	'wikiastats_daterange_from' => 'Desde:',
 	'wikiastats_daterange_to' => 'Até:',
@@ -4269,6 +4390,15 @@ $messages['pt'] = array(
 	'wikiastats_distrib_edits' => 'Edições >=',
 	'wikiastats_distrib_wikians' => 'Editores registados',
 	'wikiastats_date' => 'Data',
+	'wikiastats_wikicategory' => 'Categoria:',
+	'wikiastats_bytes' => 'bytes',
+	'wikiastats_size' => 'tamanho',
+	'wikiastats_words' => 'palavras',
+	'wikiastats_interwiki' => 'interwikis',
+	'wikiastats_total' => 'total',
+	'wikiastats_now' => 'agora',
+	'wikiastats_mainstats_short_column_L' => 'Palavras',
+	'wikiastats_xls_cancel' => 'Cancelar',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
