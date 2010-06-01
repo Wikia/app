@@ -12,7 +12,8 @@ CKEDITOR.plugins.add('rte-temporary-save',
 				var content = $('#RTETemporarySaveContent').attr('value');
 
 				// force to set mode with given content
-				editor.forceSetMode(mode, content);
+				editor.setMode(mode);
+				editor.setData(content)
 
 				RTE.track('temporarySave', 'restore');
 			}
