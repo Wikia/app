@@ -2294,6 +2294,57 @@ class WikiFactory {
 
 		return true;
 	}
+
+	/**
+	 * LangCodeToId
+	 *
+	 * replaces wfWikiFactoryDBtoID
+	 *
+	 * @access public
+	 * @author moli@wikia
+	 * @static
+	 *
+	 * @param string $lang_code	language code ('en', 'de' ... )
+	 *
+	 * @return id from coty_lang
+	 */
+	static public function LangCodeToId( $lang_code ) {
+		if( ! self::isUsed() ) {
+			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
+			return false;
+		}
+		global $wgMemc;
+ 		wfProfileIn( __METHOD__ );
+
+		$lang_id = 0;
+		if ( !empty( $lang_code ) ) {
+			$key = sprintf( "wikifactory:languages" );
+			$languages = $wgMemc->get( $key );
+			
+			if ( !isset( $languages[$lang_code] ) ) {
+				$dbr = self::db( DB_SLAVE );
+				$oRes = $dbr->select(
+					array( "city_lang" ),
+					array( "lang_id", "lang_code" ),
+					false,
+					__METHOD__
+				);
+
+				while( $oRow = $dbr->fetchObject( $oRes ) ) {
+					$languages[$oRow->lang_code] = intval($oRow->lang_id);
+				}
+				$dbr->freeResult( $oRes );
+
+				$wgMemc->set( $key, $languages, 60 * 60 * 24 );
+			}
+			
+			$lang_id = $languages[$lang_code];
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return isset( $lang_id ) && $lang_id > 0 ? $lang_id : false;
+	}
 };
 
 /**
