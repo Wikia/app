@@ -321,7 +321,9 @@ function pullProdDatabaseToLocal($domainOfWikiToPull){
 
 	// NOTE: The database settings for production slaves are in DB.php, so that data has to be loaded temporarily.
 	require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../DB.php' );
-	$wgDBserver_prodSlave = $wgLBFactoryConf[ "hostsByName" ][ 1 ];
+	$dbr = wfGetDB( DB_SLAVE, "dump", $wgDBname );
+	$dbr_lbinfo = $dbr->getLBInfo();
+	$wgDBserver_prodSlave = $dbr_lbinfo['host'];
 	$wgDBuser_prodSlave = $wgDBuser;
 	$wgDBpassword_prodSlave = $wgDBpassword;
 	require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../DB.sjc-dev.php' ); // Restore actual values for DevBox connections.
