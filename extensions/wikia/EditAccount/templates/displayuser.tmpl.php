@@ -7,6 +7,21 @@
 <?php } ?>
 <fieldset>
 	<legend><?= wfMsg('editaccount-frame-account', $user) ?></legend>
+	<?
+	print urlencode($user) . "<br/>\n";
+	
+	print "<span style=\"font-size: normal;\">\n";
+	foreach( range(0, mb_strlen($user)-1 ) as $i )
+	{
+		$letter = mb_substr($user, $i ,1);
+		if( ord($letter) > 127 ) {
+			print "<code style=\"background-color: red; color: white;\">". $letter ."</code>";
+		} else {
+			print "<code>". $letter ."</code>";
+		}
+	}
+	print "</span>\n";
+	?>
 	<table>
 	<tr>
 		<form method="post" action="">
