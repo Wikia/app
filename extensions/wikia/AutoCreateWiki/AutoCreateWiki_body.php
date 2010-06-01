@@ -525,7 +525,6 @@ class AutoCreateWikiPage extends SpecialPage {
 		$sqlfiles = array(
 			"{$IP}/maintenance/tables.sql",
 			"{$IP}/maintenance/interwiki.sql",
-			"{$IP}/maintenance/wikia/default_userrights.sql",
 			"{$IP}/maintenance/wikia/city_interwiki_links.sql",
 			"{$IP}/maintenance/wikia-additional-tables.sql",
 			"{$IP}/extensions/CheckUser/cu_changes.sql",
