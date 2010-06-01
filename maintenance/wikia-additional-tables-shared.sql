@@ -592,3 +592,15 @@ CREATE TABLE IF NOT EXISTS `garbage_collector` (
   PRIMARY KEY  (`gc_id`),
   KEY `gc_timestamp` (`gc_timestamp`)
 );
+
+-- language id 
+-- run script maintenance/wikia/migrateLangNameToId.php to fill `city_lang` table
+
+CREATE TABLE IF NOT EXISTS `city_lang` (
+  `lang_id` mediumint(2) unsigned NOT NULL auto_increment,
+  `lang_code` char(8) NOT NULL,
+  `lang_name` varchar(255) NOT NULL,
+  PRIMARY KEY  (`lang_id`),
+  KEY `lang_code_idx` (`lang_code`)
+) ENGINE=InnoDB;
+
