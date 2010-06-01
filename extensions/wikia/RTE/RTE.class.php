@@ -51,7 +51,7 @@ class RTE {
 		return true;
 	}
 
-	public static function notifySave(&$article, &$user, &$text, &$summary, &$minoredit, &$watchthis, &$sectionanchor, &$flags, $revision) {
+	public static function notifySave(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision) {
 		global $wgTitle;
 
 		wfProfileIn(__METHOD__);
