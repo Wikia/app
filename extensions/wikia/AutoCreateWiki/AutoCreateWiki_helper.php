@@ -429,44 +429,6 @@ class AutoCreateWiki {
 	}
 
 	/**
-	 * check "bad" words (include in MediaWiki message)
-	 */
-	public static function checkBadWordsInMsg($sText, $where, $split = false) {
-		wfProfileIn(__METHOD__);
-		$allowed = true;
-		$sBadWords = wfMsgForContent(self::BAD_WORDS_MSG);
-
-		if ( !empty($sBadWords) && !empty($sText) ) {
-			#-- check only a-z and 0-9
-			$newText = preg_replace("/[^a-z0-9]/i", "", $sText);
-			#--
-			if ($split == true) {
-				$aWordsInText = preg_split("/[\s,]+/", $newText);
-			} else {
-				$aWordsInText = array($newText);
-			}
-			$sBadWords = str_replace("\n", " ", $sBadWords);
-			$aBadWords = explode(" ", $sBadWords);
-			if ( !empty($aBadWords) && !empty($aWordsInText) ) {
-				foreach ($aWordsInText as $sWord) {
-					$sWord = trim($sWord);
-					foreach ($aBadWords as $badWord) {
-						$badWord = trim($badWord);
-						if ( empty($badWord) ) continue;
-						if ( @preg_match("/$badWord/i", $sWord, $m) ) {
-							$allowed = false;
-							break;
-						}
-					}
-				}
-			}
-		}
-		#---
-		wfProfileOut(__METHOD__);
-		return $allowed;
-	}
-
-	/**
 	 * check "bad" words by TextRegex extension
 	 */
 	public static function checkBadWords($sText, $where, $split = false) {
