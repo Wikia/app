@@ -149,7 +149,6 @@ class ScribeProducer {
 					'totalWords'	=> $this->mTotalWords,
 				) 
 			);
-			error_log(print_r($data, true));
 			WScribeClient::singleton( $catLog )->send( $data );
 		}
 		catch( TException $e ) {
@@ -172,7 +171,6 @@ class ScribeProducer {
 	 */
 	static public function saveComplete( &$oArticle, &$oUser, $text, $summary, $minor, $undef1, $undef2, &$flags, $oRevision, &$status, $baseRevId ) {
 		wfProfileIn( __METHOD__ );
-		error_log("saveComplete");
 		
 		if ( ( $oArticle instanceof Article ) && ( $oUser instanceof User ) ) {
 			$revid = ( $oRevision instanceof Revision ) ? $oRevision->getId() : 0;
