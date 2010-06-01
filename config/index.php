@@ -1484,15 +1484,6 @@ if( count( $errs ) ) {
 	</p>
 
 	<?php database_switcher('mysql'); ?>
-	<div class="config-input"><?php aField( $conf, "DBprefix", "Database table prefix:" ); ?></div>
-	<div class="config-desc">
-		<p>If you need to share one database between multiple wikis, or
-		between MediaWiki and another web application, you may choose to
-		add a prefix to all the table names to avoid conflicts.</p>
-
-		<p>Avoid exotic characters; something like <tt>mw_</tt> is good.</p>
-	</div>
-
 	<div class="config-input"><label class="column">Storage Engine</label>
 		<div>Select one:</div>
 		<ul class="plain">
