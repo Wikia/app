@@ -115,6 +115,9 @@ class EditAccount extends SpecialPage {
 				'user'	  => $userName,
 				'userEmail' => is_object($this->mUser) ? $this->mUser->getEmail() : null,
 				'userRealName' => is_object($this->mUser) ? $this->mUser->getRealName() : null,
+				'userEncoded' => urlencode($userName),
+				'userId'  => is_object($this->mUser) ? $this->mUser->getID() : null,
+				'userReg' => is_object($this->mUser) ? date('r', strtotime($this->mUser->getRegistration())) : null,
 			));
 		// HTML output
 		$wgOut->addHTML( $oTmpl->execute( $template ) );
