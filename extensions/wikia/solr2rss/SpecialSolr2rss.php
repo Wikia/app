@@ -1,6 +1,6 @@
 <?php
 
-class solr2rss extends SpecialPage {
+class solr2rss extends UnlistedSpecialPage {
 
 	public function __construct() {
 		parent::__construct( 'solr2rss'  /*class*/, '' /*restriction*/, true);
