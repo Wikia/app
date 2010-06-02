@@ -252,7 +252,7 @@ body.masthead-special #page_controls a {
 
 /* @group Preferences */
 
-#preferences {
+.ns-special #preferences {
 	background-color: #202020;
 	border-color: #606060;
 	color: #FFF;
