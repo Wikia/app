@@ -356,7 +356,13 @@ class SkinChooser {
 				if($theme != 'custom') {
 					$wgOut->addHTML(wfMsg('defaultskin1', wfMsg($skin.'_skins').' '.wfMsg($wgAdminSkin)));
 				} else {
-					$wgOut->addHTML(wfMsgForContent('defaultskin2', wfMsg($skin.'_skins').' '.wfMsg($wgAdminSkin), Skin::makeNSUrl(ucfirst($skin).'.css','',NS_MEDIAWIKI)));
+					global $wgEnableAnswers;
+					if( !empty($wgEnableAnswers) ) {
+						$skinname = 'Answers';
+					} else {
+						$skinname = ucfirst($skin);
+					}
+					$wgOut->addHTML(wfMsgForContent('defaultskin2', wfMsg($skin.'_skins').' '.wfMsg($wgAdminSkin), Skin::makeNSUrl($skinname.'.css','',NS_MEDIAWIKI)));
 				}
 			} else {
 				if(empty($wgDefaultTheme)) {
