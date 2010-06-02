@@ -297,7 +297,7 @@ td.diff-addedline {
 
 /* @group Preferences */
 
-#preferences, .prefsection table, .prefsection legend {
+.ns-special #preferences, .prefsection table, .prefsection legend {
 	background-color: #202020;
 	border-color: #606060;
 	color: #FFF;
