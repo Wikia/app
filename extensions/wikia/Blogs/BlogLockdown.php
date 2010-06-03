@@ -58,8 +58,11 @@ class BlogLockdown {
 
 		switch( $action ) {
 			case "move":
-				$result = array();
-				$return = true;
+			case "move-target":
+				if( $isArticle && ( $user->isAllowed( "blog-articles-move" ) || $isOwner ) ) {
+					$result = true;
+					$return = true;
+				}
 				break;
 
 			case "read":
