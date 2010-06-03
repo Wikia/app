@@ -146,6 +146,7 @@ class UsercreateTemplate extends QuickTemplate {
 </div>
 <div id="userlogin<?php if ($this->data['ajax']) { ?>Ajax<?php } ?>">
 <form name="userlogin2" id="userlogin2" method="post" action="<?php $this->text('actioncreate') ?>" onsubmit="return UserRegistration.checkForm()">
+<?php if( @$this->haveData( 'token' ) ) { ?><input type="hidden" name="wpCreateaccountToken" value="<?php $this->text( 'token' ); ?>" /><?php } ?>
 <?php		if( $this->data['message'] && $this->data['ajax'] ) { ?>
 	<div class="<?php $this->text('messagetype') ?>box" style="margin:0px">
 		<?php if ( $this->data['messagetype'] == 'error' ) { ?>
