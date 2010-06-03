@@ -647,7 +647,7 @@ class EmailNotification {
 		}
 		$pagetitle = $this->title->getPrefixedText();
 		$keys['$PAGETITLE']          = $pagetitle;
-		$keys['$PAGETITLE_URL']      = $this->title->escapeFullURL('s=wl'); // watchlist tracking, rt#33913
+		$keys['$PAGETITLE_URL']      = $this->title->getFullUrl('s=wl'); // watchlist tracking, rt#33913
 
 		$keys['$PAGEMINOREDIT']      = $medit;
 		$keys['$PAGESUMMARY']        = $summary;
