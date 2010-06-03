@@ -803,14 +803,11 @@ class BlogArticle extends Article {
 				$newTitleOwner = self::getOwner($oNewTitle);
 
 				$groups = $wgUser->getGroups();
-				$isAllowed = 
-					in_array( 'staff', $groups ) || 
-					in_array( 'sysop', $groups ) || 
-					$oldTitleOwner == $wgUser->getName();
+				$isAllowed = $wgUser->isAllowed( "blog-articles-move" ) || $oldTitleOwner == $wgUser->getName();
 				
-				if ( !( $isAllowed && $newTitleOwner == $oldTitleOwner ) ) {
+				if ( !$isAllowed ) {
 					Wikia::log( __METHOD__, "movepage", 
-						"invalid blog owner: oldpage: ".$oOldTitle->getPrefixedText().", newPage: ".$oNewTitle->getPrefixedText() 
+						"invalid permissions: oldpage: ".$oOldTitle->getPrefixedText().", newPage: ".$oNewTitle->getPrefixedText()
 					);
 					$return = false;
 				}
@@ -846,12 +843,9 @@ class BlogArticle extends Article {
 				$newTitleOwner = self::getOwner($oNewTitle);
 
 				$groups = $wgUser->getGroups();
-				$isAllowed = 
-					in_array( 'staff', $groups ) || 
-					in_array( 'sysop', $groups ) || 
-					$oldTitleOwner == $wgUser->getName();
+				$isAllowed = $wgUser->isAllowed( "blog-articles-move" ) || $oldTitleOwner == $wgUser->getName();
 				
-				if ( ( $isAllowed ) && ( $newTitleOwner == $oldTitleOwner ) ) {
+				if ( ( $isAllowed ) ) {
 					$clist = BlogCommentList::newFromTitle( $oOldTitle );
 					$comments = $clist->getCommentPages();
 					if ( count($comments) > 0 ) {

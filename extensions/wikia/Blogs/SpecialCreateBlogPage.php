@@ -173,10 +173,10 @@ class CreateBlogPage extends SpecialBlogPage {
 			}
 		}
 		else { // we have an article id
-			$isSysop = ( in_array('sysop', $wgUser->getGroups()) || in_array('staff', $wgUser->getGroups() ) );
+			$isAllowed = $wgUser->isAllowed( "blog-articles-edit" );
 			$oPostTitle = Title::newFromID($this->mFormData['postId']);
 			$this->mPostArticle = new BlogArticle($oPostTitle, 0);
-			if((strtolower($wgUser->getName()) != strtolower( BlogArticle::getOwner($oPostTitle))) && !$isSysop) {
+			if((strtolower($wgUser->getName()) != strtolower( BlogArticle::getOwner($oPostTitle))) && !$isAllowed) {
 				$this->mFormErrors[] = wfMsg('create-blog-permission-denied');
 			}
 		}

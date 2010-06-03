@@ -105,6 +105,8 @@ $wgExtensionAliasesFiles['Blogs'] = dirname(__FILE__) . '/Blogs.alias.php';
  */
 $wgAvailableRights[] = 'blog-comments-toggle';
 $wgAvailableRights[] = 'blog-comments-delete';
+$wgAvailableRights[] = 'blog-articles-edit';
+$wgAvailableRights[] = 'blog-articles-move';
 
 $wgGroupPermissions['*'][ 'blog-comments-toggle' ] = false;
 $wgGroupPermissions['sysop'][ 'blog-comments-toggle' ] = true;
@@ -120,6 +122,11 @@ $wgGroupPermissions['*'][ "blog-articles-edit" ] = false;
 $wgGroupPermissions['sysop'][ "blog-articles-edit" ] = true;
 $wgGroupPermissions['staff'][ "blog-articles-edit" ] = true;
 $wgGroupPermissions['helper'][ "blog-articles-edit" ] = true;
+
+$wgGroupPermissions['*'][ "blog-articles-move" ] = false;
+$wgGroupPermissions['sysop'][ "blog-articles-move" ] = true;
+$wgGroupPermissions['staff'][ "blog-articles-move" ] = true;
+$wgGroupPermissions['helper'][ "blog-articles-move" ] = true;
 
 /**
  * Special pages
