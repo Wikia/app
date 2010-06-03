@@ -46,6 +46,7 @@ class InviteEmail extends UnlistedSpecialPage {
 		}else{
 			$this->from = wfMsgForContent( 'invite_email_from');
 		}
+		$this->from = new MailAddress( $this->from );
 		
 		if($wgRequest->wasPosted() && $_SESSION["alreadysubmitted"] == false){
 			$_SESSION["alreadysubmitted"] = true;
