@@ -99,6 +99,7 @@ $wgAllInOne = false;
 #
 require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../CommonExtensions.php' );
 
+$wgStylePath = "/skins";			// make css and image references local
 $wgArticlePath = "/wiki/$1";
 $wgCookieDomain = ".wikia-dev.com";
 
