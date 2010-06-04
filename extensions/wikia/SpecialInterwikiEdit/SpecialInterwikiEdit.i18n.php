@@ -19,7 +19,7 @@ $messages['en'] = array(
 	'iwedit-all-interwikis' 	=> 'all interwikis',
 	'iwedit-update' 		=> 'Update',
 	'iwedit-error' 			=> '<p>An error occured.</p>',
-	'iwedit-success' 		=> '<p>Link creation succesfull.</p>',
+	'iwedit-success' 		=> '<p>Link creation successful.</p>',
 );
 
 /** Message documentation (Message documentation)

@@ -435,11 +435,11 @@ function wfSIWELinkWikis(){
 
 	if ($wikiaID == $ext_wikiaID) return "<p>Same wiki specified in primary and secondary fields. Refusing to link wiki to self.</p>";
 
-	if ($wikiaUmbrella != $ext_wikiaUmbrella) {
-		$ret .= ("<p><b>Warning!</b> Umbrellas for $wikiaURL [<a href='". $_SERVER['PHP_SELF'].
-		"?action=change_umbrella&amp;wikia_id=$wikiaID'>edit</a>] and $ext_wikiaURL [<a href='".
-		$_SERVER['PHP_SELF']. "?action=change_umbrella&amp;wikia_id=$ext_wikiaID'>edit</a>] <b>do not match</b>.");
-	}
+	#if ($wikiaUmbrella != $ext_wikiaUmbrella) {
+	#	$ret .= ("<p><b>Warning!</b> Umbrellas for $wikiaURL [<a href='". $_SERVER['PHP_SELF'].
+	#	"?action=change_umbrella&amp;wikia_id=$wikiaID'>edit</a>] and $ext_wikiaURL [<a href='".
+	#	$_SERVER['PHP_SELF']. "?action=change_umbrella&amp;wikia_id=$ext_wikiaID'>edit</a>] <b>do not match</b>.");
+	#}
 
 	$ret .= "<p>The following interwiki links will be added:</p>\n
     <table class='wikitable'>
