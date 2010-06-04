@@ -398,7 +398,7 @@ while( $request->Accept() >= 0 || $test ) {
 #							print "X-LIGHTTPD-send-file: $thumbnail\r\n";
 							print "Cache-control: max-age=30\r\n";
 							print "Content-type: $mimetype\r\n\r\n";
-							$image->Write( "filename" => $thumbnail, file => \*STDOUT );
+							$image->Write( lc($imgtype) . ":-" );
 							print STDERR "File $thumbnail created\n" if $debug;
 						}
 						else {
