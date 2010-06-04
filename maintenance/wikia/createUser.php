@@ -9,9 +9,10 @@
  * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
  */
 
-ini_set( "include_path", dirname(__FILE__)."/../" );
 $options = array( 'help' );
-require_once( '/../commandLine.inc' );
+
+ini_set( "include_path", dirname(__FILE__)."/../" );
+require_once( 'commandLine.inc' );
 
 if( isset( $options['help'] ) ) {
 	showHelp();
