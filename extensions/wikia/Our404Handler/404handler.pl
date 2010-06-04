@@ -22,6 +22,7 @@ use Data::Types qw(:all);
 use Math::Round qw(round);
 use Getopt::Long;
 use Cwd;
+use File::Slurp;
 
 #
 # constant
@@ -180,7 +181,7 @@ my( $socket, $request, $manager, $request_uri, $referer, $test_uri );
 
 unless( $test ) {
 	$socket     = FCGI::OpenSocket( $listen, 100 ) or die "failed to open FastCGI socket; $!";
-	$request    = FCGI::Request( \*STDIN, \*STDOUT, \*STDOUT, \%env, $socket, ( &FCGI::FAIL_ACCEPT_ON_INTR ) );
+	$request    = FCGI::Request( \*STDIN, \*STDOUT, \*STDERR, \%env, $socket, ( &FCGI::FAIL_ACCEPT_ON_INTR ) );
 	$manager    = FCGI::ProcManager->new({ n_processes => $clients });
 
 	$manager->pm_write_pid_file( $pidfile );
@@ -393,13 +394,11 @@ while( $request->Accept() >= 0 || $test ) {
 							#
 							# serve file if is ready to serve
 							#
-							chmod 0664, $thumbnail;
 							print "HTTP/1.1 200 OK\r\n";
-#							print "X-LIGHTTPD-send-file: $thumbnail\r\n";
 							print "Cache-control: max-age=30\r\n";
 							print "Content-type: $mimetype\r\n\r\n";
-							$image->Write( lc($imgtype) . ":-" );
-							print STDERR "File $thumbnail created\n" if $debug;
+							print $image->ImageToBlob();
+							print STDERR "File $thumbnail served\n" if $debug;
 						}
 						else {
 							print STDERR "Thumbnailer from $original to $thumbnail failed\n" if $debug;
