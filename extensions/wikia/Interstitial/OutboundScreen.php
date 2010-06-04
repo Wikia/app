@@ -68,7 +68,9 @@ function efOutboundScreen ( $url, $text, $link, $attribs, $linktype, $linker ) {
 				}
 			}
 			$wikiDomains = WikiFactory::getDomains($wgCityId);
-			$whiteList = array_merge($wikiDomains, $whiteList);
+			if ($wikiDomains !== false) {
+				$whiteList = array_merge($wikiDomains, $whiteList);
+			}
 		}
 
 		$isWhitelisted = false;
