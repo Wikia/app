@@ -374,7 +374,7 @@ while( $request->Accept() >= 0 || $test ) {
 				}
 				else {
 					#
-					# for other else use Imager
+					# for other else use Image::Magick
 					#
 					my $image = new Image::Magick;
 					$image->Read( $original );
@@ -388,17 +388,17 @@ while( $request->Accept() >= 0 || $test ) {
 					if( $origw && $origh ) {
 						my $height = scaleHeight( $origw, $origh, $width, $test );
 						$image->Resize( "geometry" => "${width}x${height}!", "blur" => 0.9 );
-						$image->Write( "filename" => $thumbnail );
 						$transformed = 1;
-						if( -f $thumbnail ) {
+						if( $transformed ) { #-f $thumbnail
 							#
 							# serve file if is ready to serve
 							#
 							chmod 0664, $thumbnail;
 							print "HTTP/1.1 200 OK\r\n";
-							print "X-LIGHTTPD-send-file: $thumbnail\r\n";
+#							print "X-LIGHTTPD-send-file: $thumbnail\r\n";
 							print "Cache-control: max-age=30\r\n";
 							print "Content-type: $mimetype\r\n\r\n";
+							$image->Write( "filename" => $thumbnail, file => \*STDOUT );
 							print STDERR "File $thumbnail created\n" if $debug;
 						}
 						else {
