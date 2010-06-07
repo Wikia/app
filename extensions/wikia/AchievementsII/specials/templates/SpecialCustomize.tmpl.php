@@ -68,7 +68,7 @@ foreach($config->getInTrackStatic() as $badgeTypeId => $trackData){
 								</a>
 							</span>
 						</p>
-						<form method="POST" enctype="multipart/form-data" class="customize-upload" action="<?= $wgScriptPath ?>/index.php?action=ajax&amp;rs=AchAjax&amp;method=uploadBadgeImage&amp;type_id=<?=$badgeTypeId?>&amp;lap=<?=$lap?>&amp;level=<?=$badge->getLevel();?>">
+						<form method="POST" enctype="multipart/form-data" class="customize-upload" action="<?= $wgScriptPath ?>/index.php?action=ajax&amp;rs=AchAjax&amp;method=uploadBadgeImage&amp;type_id=<?=$badgeTypeId?>&amp;lap=<?=$lap?>&amp;level=<?=$badge->getLevel();?>" onsubmit="return Achievements.submitPicture(this);">
 							<p class="input">
 								<input name="wpUploadFile" type="file"/>
 								<button type="submit"><?=wfMsg('achievements-send');?></button>
@@ -129,7 +129,7 @@ foreach($config->getNotInTrackStatic() as $badgeTypeId => $badgeData) {
 
 					<div class="image-form">
 						<p><img width="90" height="90" src="<?=$badge->getPictureUrl(90);?>" /><br /><span class="custom-text"><?= wfMsg('achievements-customize') ?><br /><a href="#" onclick="Achievements.revert(this, <?=$badge->getTypeId();?>); return false;"><?= wfMsg('achievements-revert') ?></a></span></p>
-						<form method="POST" enctype="multipart/form-data" class="customize-upload" action="<?= $wgScriptPath ?>/index.php?action=ajax&amp;rs=AchAjax&amp;method=uploadBadgeImage&amp;type_id=<?=$badge->getTypeId();?>&amp;level=<?=$badge->getLevel();?>">
+						<form method="POST" enctype="multipart/form-data" class="customize-upload" action="<?= $wgScriptPath ?>/index.php?action=ajax&amp;rs=AchAjax&amp;method=uploadBadgeImage&amp;type_id=<?=$badge->getTypeId();?>&amp;level=<?=$badge->getLevel();?>" onsubmit="return Achievements.submitPicture(this);">
 							<p class="input">
 								<input name="wpUploadFile" type="file"/>
 								<button><?= wfMsg('achievements-send') ?></button>

@@ -28,20 +28,6 @@ var Achievements = {
 
 			self.track('userprofile/viewless');
 		});
-		
-		$('.customize-upload').submit(function() {
-			var img = $(this).prev().children().eq(0);
-			self.track('customize/savepicture');
-			$.AIM.submit(this, {
-				onComplete: function(response) {
-					if(typeof response.error != 'undefined') {
-						alert(response.error);
-					} else {
-						img.attr('src', response.output + '?' + Math.random(0,1));
-					}
-				}
-			});
-		});
 
 		//Show badge description when hovering over the badge	
 		$('#challenges li>img, #badge-list li>img, .recent-badges li>img').hover(function() {
@@ -104,8 +90,42 @@ var Achievements = {
 			self.track('leaderboard/revert');
 		});
 	},
-
+	
+	submitPicture:function(form){
+		var inputs = $(form).find('button, input[type=file]');
+		var img = $(form).prev().children().eq(0);
+		var handler = form.onsubmit;
+		
+		Achievements.track('customize/savepicture');
+		
+		$.AIM.submit(form, {onComplete: function(response){
+			$("#body").removeClass("ajax");
+			inputs.attr('disabled', '');
+			form.onsubmit = handler;
+			form.reset();
+			
+			if(typeof response.error != 'undefined') {
+				alert(response.error);
+			} else {
+				img.attr('src', response.output + '?' + Math.random(0,1));
+			}
+		}});
+		
+		//unbind original html element handler to avoid loops
+		form.onsubmit = null;
+		
+		$(form).submit();
+		
+		$("#body").addClass("ajax");
+		inputs.attr('disabled', 'disabled');
+		
+		return false;
+	},
+	
 	revert: function(o, badge_type, badge_lap) {
+		var inputs = $(o).parent().parent().next().find('button, input[type=file]');
+		$("#body").addClass("ajax");
+		inputs.attr('disabled', 'disabled');
 		
 		if (badge_lap == null && typeof(badge_lap) == "undefined") {
 			badge_lap = '';
@@ -116,6 +136,8 @@ var Achievements = {
 		$.get(window.wgServer+wgScript+'?action=ajax&rs=AchAjax&method=resetBadge&type_id='+badge_type+'&lap='+badge_lap, function(response) {
 			var response = $.evalJSON(response);
 			img.attr('src', response.output);
+			$("#body").removeClass("ajax");
+			inputs.attr('disabled', '');
 			alert(response.message);
 		});
 	},
