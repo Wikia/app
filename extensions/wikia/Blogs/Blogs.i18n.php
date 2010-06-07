@@ -40,7 +40,7 @@ $messages['en'] = array(
 	'create-blog-listing-title' => 'Create a new blog listing page',
 	'create-blog-listing-form-title' => 'What is a blog listing page?',
 	'create-blog-listing-form-info' => 'Blog listing pages are used to aggregate blog listings from different authors together onto a single page.
-Create blog listing pages for categories such as "Barrack Obama", "Fan Fiction", or even combine multiple categories.',
+Create blog listing pages for categories such as "Barack Obama", "Fan Fiction", or even combine multiple categories.',
 	'create-blog-listing-page-title' => 'Blog listing page title',
 	'create-blog-listing-preview' => 'Preview',
 	'create-blog-listing-authors' => 'Get blog posts created by these authors (separated by commas)',
