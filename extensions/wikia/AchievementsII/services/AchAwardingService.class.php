@@ -252,7 +252,7 @@ class AchAwardingService {
 			$cat1 = strtolower($wgContLang->getNSText(NS_CATEGORY));
 			foreach($editPlusCategory as $badge_type_id => $badge_config) {
 				if($badge_config['enabled']) {
-					$cat2 = strtolower($badge_config['category']);
+					$cat2 = str_replace(' ', '_', strtolower($badge_config['category']));
 					if(isset($insertedCategories[$cat2]) || isset($articleCategories[$cat1.':'.$cat2])) {
 						if(empty($this->mCounters[$badge_type_id])) {
 							$this->mCounters[$badge_type_id] = 0;
