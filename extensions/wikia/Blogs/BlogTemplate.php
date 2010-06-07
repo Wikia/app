@@ -323,7 +323,12 @@ class BlogTemplateClass {
 				$aResult = array(
 					"userpage" => ($oUserPage instanceof Title) ? $sk->link($oUserPage, $oUser->getName(), $attribs) : "",
 					"talkpage" => ($oUserTalkPage instanceof Title) ? $sk->link($oUserTalkPage, wfMsg('blog-avatar-talk'), $attribs) : "",
-					"contribs" => $sk->link(Title::newFromText('Contributions', NS_SPECIAL), wfMsg('blog-avatar-contrib'), $attribs, array('target' => $oUser->getName())),
+					"contribs" => $sk->link(
+						SpecialPage::getTitleFor( 'Contributions' ),
+						wfMsg( 'blog-avatar-contrib' ),
+						$attribs,
+						array( 'target' => $oUser->getName() )
+					),
 				);
 			}
 		}
