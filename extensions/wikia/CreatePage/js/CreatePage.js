@@ -142,7 +142,7 @@ $(function() {
 			}
 		}
 
-		$(".new").bind('click', function(e) { CreatePage.redLinkClick(e, CreatePage.getTitleFromUrl(this.href)) } );
+		$("a.new").bind('click', function(e) { CreatePage.redLinkClick(e, CreatePage.getTitleFromUrl(this.href)) } );
 		$(".createboxButton").bind('click', function(e) {
 			var form = $(e.target).parent();
 

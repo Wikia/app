@@ -14,6 +14,8 @@ class AchUserProfile {
 			return;
 		}
 
+		wfLoadExtensionMessages('AchievementsII');
+
 		if($profileViewerUser->isLoggedIn() && $profileViewerUser->getId() != $profileOwnerUser->getId()) {
 			$dbr = wfGetDB(DB_SLAVE);
 			$res = $dbr->select('achievements_badges', 'badge_type, badge_lap', array('user_id' => $profileViewerUser->getID()), __METHOD__, array('ORDER BY' => 'badge_type, badge_lap'));
@@ -138,6 +140,8 @@ class AchUserProfile {
 				$info = wfMsg('achievements-badge-to-get-'.AchStatic::$mBadgeNames[$badge_type]);
 				$needed = null;
 			} else {
+				
+				
 				if(!isset($ownerCounters[$badge_type])) {
 					$has = 0;
 				} else if($badge_type == BADGE_LOVE) {
@@ -150,8 +154,10 @@ class AchUserProfile {
 				$has = number_format($has);
 				$needed = number_format(AchHelper::getNeededEventsFor($badge_type, $badge_lap));
 				$info = wfMsgExt('achievements-badge-to-get-'.AchStatic::$mBadgeNames[$badge_type], array('parsemag'), $needed) . " ({$has}/{$needed})";
+				
+				
 			}
-			
+
 			$challengesInfo[] = array(
 				'badge_name' => AchHelper::getBadgeName($badge_type, $badge_lap),
 				'badge_url' => AchHelper::getBadgeUrl($badge_type, $badge_lap, 90),

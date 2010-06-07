@@ -158,3 +158,40 @@ button.secondary:active {
 	background-image: -moz-linear-gradient(top, #AAA 20%, #CCC 70%);
 	background-image: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#AAA), to(#CCC));
 }
+
+/* Disabled styling */
+a.wikia-button[disabled],
+span.wikia-button a[disabled],
+input[type="submit"][disabled],
+input[type="reset"][disabled],
+input[type="button"][disabled],
+button[disabled] {
+	cursor: default;
+	opacity: .5;
+}
+a.wikia-button[disabled]:hover,
+span.wikia-button a[disabled]:hover,
+input[type="submit"][disabled]:hover,
+input[type="reset"][disabled]:hover,
+input[type="button"][disabled]:hover,
+button[disabled]:hover {
+	text-shadow: none;
+}
+a.wikia-button[disabled]:active,
+span.wikia-button a[disabled]:active,
+input[type="submit"][disabled]:active,
+input[type="reset"][disabled]:active,
+input[type="button"][disabled]:active,
+button[disabled]:active {
+	background-image: -moz-linear-gradient(top, #093 20%, #006722 70%);
+	background-image: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#093), to(#006722));
+}
+a.wikia-button.secondary[disabled]:active,
+span.wikia-button.secondary a[disabled]:active,
+input.secondary[type="submit"][disabled]:active,
+input.secondary[type="reset"][disabled]:active,
+input.secondary[type="button"][disabled]:active,
+button.secondary[disabled]:active {
+	background-image: -moz-linear-gradient(top, #CCC 20%, #AAA 70%);
+	background-image: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#CCC), to(#AAA));
+}

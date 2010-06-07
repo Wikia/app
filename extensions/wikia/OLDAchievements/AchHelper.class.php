@@ -6,7 +6,7 @@ class AchHelper {
 	}
 
 	public static function getBadgeMessageName($type, $lap) {
-		if($lap === null || isset(AchStatic::$mNotInTrackConfig[$type])) {
+		if($lap === null) {
 			return 'achievements-badge-name-'.AchStatic::$mBadgeNames[$type];
 		} else {
 			if($lap >= count(AchStatic::$mInTrackConfig[$type])) {
@@ -35,7 +35,7 @@ class AchHelper {
 	}
 
 	public static function getNeededEventsFor($type, $lap) {
-		if($lap !== null && !isset(AchStatic::$mNotInTrackConfig[$type])) {
+		if($lap !== null) {
 			$lapsCount = count(AchStatic::$mInTrackConfig[$type]);
 			if($lap >= $lapsCount) {
 				$max = AchStatic::$mInTrackConfig[$type][$lapsCount-1]['events'];
@@ -43,8 +43,6 @@ class AchHelper {
 			} else {
 				$events = AchStatic::$mInTrackConfig[$type][$lap]['events'];
 			}
-		} else if($type == BADGE_LUCKYEDIT) {
-			$events = $lap * 1000;
 		} else {
 			$events = null;
 		}
@@ -54,7 +52,7 @@ class AchHelper {
 	public static function getBadgeUrl($type, $lap, $width, $forceOriginal = false) {
 		global $wgExtensionsPath;
 
-		if($lap === null || isset(AchStatic::$mNotInTrackConfig[$type])) {
+		if($lap === null) {
 			$postfix = '';
 		} else if($lap >= count(AchStatic::$mInTrackConfig[$type])) {
 			$postfix = '-'.(count(AchStatic::$mInTrackConfig[$type])-1);
