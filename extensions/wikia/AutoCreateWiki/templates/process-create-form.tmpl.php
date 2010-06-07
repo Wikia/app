@@ -22,8 +22,8 @@ YE.onDOMReady(function () {
 	var titleUrl = '<?php echo $mTitle->getLocalURL()."/Processing?" . $mQuery ?>';
 	var wgAjaxPath = wgScriptPath + wgScript;
 	var redirServer = '<?=$subdomain?>';
-	var waitMsg = '<?=wfMsg('autocreatewiki-stepdefault')?>';
-	var errorMsg = '<?=wfMsg('autocreatewiki-errordefault')?>';
+	var waitMsg = '<?=addslashes(wfMsg('autocreatewiki-stepdefault'))?>';
+	var errorMsg = '<?=addslashes(wfMsg('autocreatewiki-errordefault'))?>';
 	//var usedMsg = new Array();
 
 	var setLog = function (inx, text, resType)	{
