@@ -30,9 +30,6 @@ define('BADGE_LEVEL_SILVER', 2);
 define('BADGE_LEVEL_GOLD', 3);
 define('BADGE_LEVEL_PLATINUM', 4);
 
-// ranking user display limit
-define('BADGE_RANKING_LIMIT', 99);
-
 $dir = dirname(__FILE__).'/';
 
 // special pages
@@ -111,7 +108,7 @@ function Ach() {
 	return $ar;
 }
 
-function Achievements_ArticleSaveComplete(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
+function Achievements_ArticleSaveComplete(&$article, &$user, $text, $summary, &$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 
 	if($status instanceof Status && $status->ok == true && count($status->errors) == 0) {
 

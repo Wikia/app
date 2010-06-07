@@ -1,0 +1,105 @@
+.CustomizePlatinum {
+	font-size: 14px;
+}
+
+.customize-platinum-badge {
+	float: left;
+	line-height: normal;
+	min-width: 725px;
+	padding: 0;
+}
+
+.customize-platinum-badge label {
+	font-weight: bold;
+}
+
+.customize-platinum-badge legend {
+	margin-left: 5px;
+	padding: 10px 5px;
+}
+.customize-platinum-badge legend input[type="text"], 
+.customize-platinum-badge legend span {
+	font-size: 16px;
+	font-weight: bold;
+}
+.customize-platinum-badge legend label {
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.customize-platinum-badge .column {
+	float: left;
+	padding-left: 10px;
+	width: 230px;
+}
+.customize-platinum-badge textarea {
+	display: block;
+	height: 50px;
+	margin-bottom: 10px;
+	width: 220px;
+}
+
+.customize-platinum-badge .badge-preview {
+	border-style: dashed;
+	border-width: 1px;
+	display: block;
+	height: 90px;
+	margin-bottom: 10px;
+	padding: 5px;
+	width: 90px;
+	-moz-border-radius: 5px;
+}
+
+.customize-platinum-badge .commands {
+	background-image: -moz-linear-gradient(top, rgba(0,0,0,.1), rgba(0,0,0,0) 50%);
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 50%, from(rgba(0,0,0,.1)), to(rgba(0,0,0,0)));
+	border-top-width: 1px;
+	border-top-style: solid;
+	clear: both;
+	padding: 5px 10px;
+}
+.customize-platinum-badge .button-save {
+	display: none;
+}
+
+/*** Grouped to stay DRY ***/
+.customize-platinum-badge, .commands {
+	border-color: #AAA;
+}
+
+/*** New box ***/
+.customize-platinum-badge.new {
+	background-image: -moz-linear-gradient(top, rgba(255,255,153,0), rgb(255,255,153));
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(255,255,153,0)), to(rgb(255,255,153)));
+}
+.customize-platinum-badge.new .awarded-to,
+.customize-platinum-badge.new legend input[type="checkbox"],
+.customize-platinum-badge.new legend label {
+	display: none;
+}
+
+/*** Edit mode ***/
+.customize-platinum-badge.editable legend span,
+.customize-platinum-badge.editable p {
+	display: none;
+}
+
+/*** Readonly mode ***/
+.customize-platinum-badge.readonly input[type="file"],
+.customize-platinum-badge.readonly .award-to,
+.customize-platinum-badge.readonly input[type="text"],
+.customize-platinum-badge.readonly textarea {
+	display: none;
+}
+.customize-platinum-badge [readonly="readonly"] {
+	background: transparent;
+	border: 0;
+}
+
+span.input-suggestion {
+	font-size:9px;
+}
+
+fieldset.readonly span.input-suggestion {
+	display:none;
+}

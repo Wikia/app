@@ -23,12 +23,10 @@ class SpecialLeaderboard extends SpecialPage {
 		// ranking
 		$ranking = array();
 		$res = $dbr->select('achievements_counters', 'user_id, score', null, __METHOD__, array('ORDER BY' => 'score desc'));
-		$i = 0;
-		while( ( $row = $dbr->fetchObject($res) ) && $i < BADGE_RANKING_LIMIT ) {
+		while($row = $dbr->fetchObject($res)) {
 			$user = User::newFromId($row->user_id);
 			if($user && !$user->isBlocked() && !in_array( $user->getName(), $wgWikiaBotLikeUsers ) ) {
 				$ranking[] = array('score' => number_format($row->score), 'name' => htmlspecialchars($user->getName()), 'url' => Masthead::newFromUser($user)->getUrl(), 'userpage_url' => $user->getUserPage()->getLocalURL());
-				$i++;
 			}
 		}
 

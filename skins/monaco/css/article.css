@@ -44,7 +44,6 @@
 	margin-left: 2px;
 	position: relative;
 	text-decoration: none;
-	z-index: 2;
 }
 #page_controls a:hover {
 	text-decoration: underline;
