@@ -42,12 +42,7 @@
 	            	<input type="checkbox" value="1" tabindex="204" id="wpRemember2Ajax" name="wpRemember" > </input>
 	                <label id="labelFor_wpRemember2Ajax" for="wpRemember2Ajax" style="padding-left: 5px"><?php print wfMsg('remembermypassword') ?></label>
 	            </div>
-	         <?php global $wgEnableAPI; ?>
-	        <?php if($wgEnableAPI): ?>
-	        	<input type="submit" id="wpLoginattempt" value="<?php print wfMsg("login") ?>"  onclick="AjaxLogin.action='login'; AjaxLogin.form.submit(); return false;"  />
-	        <?php else: ?>
 	        	<input type="submit" id="wpLoginattempt" value="<?php print wfMsg("login") ?>" />
-	        <?php endif; ?>
 	        <input type="hidden" name="wpLoginToken" value="<?php echo $token; ?>" />
         	</form>
 

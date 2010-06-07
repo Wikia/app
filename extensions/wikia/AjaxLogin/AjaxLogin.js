@@ -168,7 +168,7 @@ var AjaxLogin = {
 	},
 	formSubmitHandler: function(ev) {
 		// Prevent the default action for event (submit of form)
-		if( (typeof wgEnableAPI == 'undefined') || !wgEnableAPI ) {
+		if( (typeof wgEnableLoginAPI == 'undefined') || !wgEnableLoginAPI ) {
 			return true;
 		}
 		if(ev) {
