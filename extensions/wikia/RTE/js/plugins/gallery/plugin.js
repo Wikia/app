@@ -37,7 +37,6 @@ CKEDITOR.plugins.add('rte-gallery',
 
 	setupGallery: function(gallery) {
 		gallery.
-			attr('title', RTE.instance.lang.photoGallery.tooltip).
 			unbind('.gallery').
 			bind('edit.gallery', function(ev) {
 				var gallery = $(this);
@@ -47,6 +46,13 @@ CKEDITOR.plugins.add('rte-gallery',
 					from: 'wysiwyg',
 					gallery: gallery
 				});
+			}).
+			// tooltips
+			attr('title', function() {
+				var data = $(this).getData();
+				var key = (data.type == 1) ? 'tooltip' : 'tooltipSlideshow';
+
+				return RTE.instance.lang.photoGallery[key];
 			});
 	}
 });

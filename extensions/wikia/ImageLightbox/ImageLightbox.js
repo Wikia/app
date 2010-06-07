@@ -74,7 +74,11 @@ var ImageLightbox = {
 			// find caption node and use it in lightbox popup
 			var caption = false;
 
-			if (target.hasClass('lightbox')) {
+			if (target.hasClass('slideshow')) {
+				// <gallery type="slideshow"> lightboxes
+				caption = target.prev('label').html();
+			}
+			else if (target.hasClass('lightbox')) {
 				// <gallery> lightboxes
 				caption = target.closest('.thumb').next('.lightbox-caption').html();
 			}

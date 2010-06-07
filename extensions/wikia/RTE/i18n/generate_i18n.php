@@ -106,7 +106,7 @@ foreach($files as $file) {
 
 	// JSON cleanup
 	// add double quotes to keys and values
-	$content = preg_replace_callback('#\s*([A-Za-z0-9\'_]+)\s*:(.*)#', parse_json_line, $content);
+	$content = preg_replace_callback('#\s*([A-Za-z0-9\'_]+)\s*:(.*)#', 'parse_json_line', $content);
 	$content = preg_replace('#\s\s+#s', '', $content);
 
 	// parse JSON to array

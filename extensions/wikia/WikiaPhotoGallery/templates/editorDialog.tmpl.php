@@ -1,61 +1,81 @@
+<?php
+	global $wgExtensionsPath, $wgScript, $wgStylePath;
+?>
 <div id="WikiaPhotoGalleryEditorLoader" style="height: 460px">&nbsp;</div>
 
-<!-- Upload / Find -->
+<!-- Type chooser (gallery or slideshow) -->
 <div class="WikiaPhotoGalleryEditorPage">
-	<div class="WikiaPhotoGalleryEditorPageIntro accent"><?= wfMsg('wikiaPhotoGallery-upload-intro-first') ?></div>
+	<div class="WikiaPhotoGalleryEditorPageInner WikiaPhotoGalleryEditorChooseType">
+		<p><?= wfMsg('wikiaPhotoGallery-choice-intro') ?></p>
 
-	<div class="WikiaPhotoGalleryEditorPageInner">
-		<table id="WikiaPhotoGalleryEditorUploadTable" cellspacing="0" width="100%">
+		<table align="center" width="600">
 			<colgroup>
-				<col width="150" />
-				<col width="*" />
+				<col width="50%" />
+				<col width="50%" />
 			</colgroup>
-<?php
-	if ($showUpload) {
-?>
 			<tr>
-				<td><h1><?= wfMsg('wikiaPhotoGallery-upload-uploadtitle') ?></h1></td>
+				<td class="border">
+					<a class="wikia-button" type="<?= WikiaPhotoGallery::WIKIA_PHOTO_SLIDESHOW ?>">
+						<?= wfMsg('wikiaPhotoGallery-choice-slideshow') ?>
+					</a>
+				</td>
 				<td>
-					<form action="<?= $wgScript ?>?action=ajax&rs=WikiaPhotoGalleryAjax&method=upload" id="WikiaPhotoGalleryImageUploadForm" method="POST" enctype="multipart/form-data">
-						<input id="WikiaPhotoGalleryImageUpload" name="wpUploadFile" type="file" size="32" />
-						<input id="WikiaPhotoGalleryImageUploadButton" type="submit" value="<?= wfMsg('wikiaPhotoGallery-upload-uploadbutton') ?>" />
-					</form>
-
-					<img id="WikiaPhotoGalleryUploadProgress" class="WikiaPhotoGalleryProgress" src="<?= $wgStylePath ?>/common/images/ajax.gif" width="16" height="16" alt="" />
+					<a class="wikia-button" type="<?= WikiaPhotoGallery::WIKIA_PHOTO_GALLERY ?>">
+						<?= wfMsg('wikiaPhotoGallery-choice-gallery') ?>
+					</a>
 				</td>
 			</tr>
-<?php
-	}
-?>
 			<tr>
-				<td><h1><?= wfMsg('wikiaPhotoGallery-upload-findtitle') ?></h1></td>
+				<td class="border">
+					<a href="#" type="<?= WikiaPhotoGallery::WIKIA_PHOTO_SLIDESHOW ?>">
+						<img src="<?= $wgExtensionsPath ?>/wikia/WikiaPhotoGallery/images/slideshow-example.png" alt="<?= wfMsg('wikiaPhotoGallery-choice-slideshow') ?>" width="187" height="169" />
+					</a>
+				</td>
 				<td>
-					<form id="WikiaPhotoGallerySearchForm">
-						<input id="WikiaPhotoGallerySearchQuery" type="text" />
-						<input id="WikiaPhotoGallerySearchButton" type="submit" value="<?= wfMsg('wikiaPhotoGallery-upload-findbutton') ?>" />
-					</form>
-
-					<img id="WikiaPhotoGallerySearchProgress" class="WikiaPhotoGalleryProgress" src="<?= $wgStylePath ?>/common/images/ajax.gif" width="16" height="16" alt="" />
+					<a href="#" type="<?= WikiaPhotoGallery::WIKIA_PHOTO_GALLERY ?>">
+						<img src="<?= $wgExtensionsPath ?>/wikia/WikiaPhotoGallery/images/gallery-example.png" alt="<?= wfMsg('wikiaPhotoGallery-choice-gallery') ?>" width="212" height="238" />
+					</a>
 				</td>
 			</tr>
 		</table>
+	</div>
+</div>
 
-		<div id="WikiaPhotoGallerySearchHeadline" class="clearfix">
-			<span id="WikiaPhotoGallerySearchHeader"><?= wfMsg('wikiaPhotoGallery-upload-filestitle-pre') ?></span>
-			<span id="WikiaPhotoGallerySearchPagination" style="display: none">
-				<a href="#"><?= wfMsg('wikiaPhotoGallery-upload-page-prev') ?></a>
-				<a href="#"><?= wfMsg('wikiaPhotoGallery-upload-page-next') ?></a>
-			</span>
+<!-- Upload / Find -->
+<div class="WikiaPhotoGalleryEditorPage">
+	<div class="WikiaPhotoGalleryEditorPageInner">
+		<h1><?= wfMsg('wikiaPhotoGallery-upload-uploadtitle') ?></h1>
+<?php
+	if ($showUpload) {
+?>
+		<?= wfMsgExt('wikiaPhotoGallery-upload-uploadtext', array('parse')) ?>
+
+		<form action="<?= $wgScript ?>?action=ajax&rs=WikiaPhotoGalleryAjax&method=upload" id="WikiaPhotoGalleryImageUploadForm" method="POST" enctype="multipart/form-data">
+			<input id="WikiaPhotoGalleryImageUpload" name="wpUploadFile" type="file" size="1" />
+			<input id="WikiaPhotoGalleryImageUploadButton" type="submit" value="<?= wfMsg('wikiaPhotoGallery-upload-uploadbutton') ?>" />
+			<img id="WikiaPhotoGalleryUploadProgress" class="WikiaPhotoGalleryProgress" src="<?= $wgStylePath ?>/common/images/ajax.gif" width="16" height="16" alt="" />
+		</form>
+<?php
+	}
+?>
+		<p id="WikiaPhotoGallerySearchResultsChooser">
+			<?= wfMsgExt('wikiaPhotoGallery-upload-existingtext', array('parseinline')) ?>
+			<span type="<?= WikiaPhotoGallery::RESULTS_IMAGES_FROM_THIS_PAGE ?>"><?= wfMsg('wikiaPhotoGallery-upload-existingtext-onarticle') ?></span>
+			|
+			<span type="<?= WikiaPhotoGallery::RESULTS_RECENT_UPLOADS ?>"><?= wfMsg('wikiaPhotoGallery-upload-existingtext-recentupload') ?></span>
+		</p>
+
+		<div id="WikiaPhotoGallerySearchResults">
+			<?= $recentlyUploaded ?>
+			<?= $imagesOnPage ?>
 		</div>
 
-		<div id="WikiaPhotoGallerySearchResults"></div>
+		<a id="WikiaPhotoGallerySearchResultsSelect" class="wikia-button"><?= wfMsg('wikiaPhotoGallery-upload-selectbutton') ?></a>
 	</div>
 </div>
 
 <!-- Upload conflict -->
 <div class="WikiaPhotoGalleryEditorPage">
-	<div class="WikiaPhotoGalleryEditorPageIntro accent"><?= wfMsg('wikiaPhotoGallery-upload-error-conflict-intro') ?></div>
-
 	<div class="WikiaPhotoGalleryEditorPageInner">
 		<table id="WikiaPhotoGalleryEditorConflictTable">
 			<colgroup>
@@ -91,56 +111,76 @@
 
 <!-- Caption / link -->
 <div class="WikiaPhotoGalleryEditorPage">
-	<div class="WikiaPhotoGalleryEditorPageIntro accent"><?= wfMsg('wikiaPhotoGallery-photooptions-intro') ?></div>
-
 	<div class="WikiaPhotoGalleryEditorPageInner clearfix">
-		<table id="WikiaPhotoGalleryEditorCaptionLinkTable">
-			<colgroup>
-				<col width="150" />
-				<col width="*" />
-			</colgroup>
-			<tr id="WikiaPhotoGalleryEditorCaptionRow">
-				<td><h1><?= wfMsg('wikiaPhotoGallery-photooptions-captiontitle') ?></h1></td>
-				<td>
-					<div id="WikiaPhotoGalleryEditorCaptionToolbar"></div>
-					<textarea id="WikiaPhotoGalleryEditorCaption" rows="2"></textarea>
-					<small><?= wfMsgExt('wikiaPhotoGallery-photooptions-captionsub', array('parseinline')) ?></small>
-				</td>
-			</tr>
-			<tr>
-				<td><h1><?= wfMsg('wikiaPhotoGallery-photooptions-linktitle') ?></h1></td>
-				<td>
-					<input id="WikiaPhotoGalleryLink" type="text" />
-					<div id="WikiaPhotoGalleryLinkSuggestWrapper"></div>
-					<small><?= wfMsgExt('wikiaPhotoGallery-photooptions-linksub', array('parseinline')) ?></small>
-				</td>
-			</tr>
-		</table>
+		<!-- Image preview -->
+		<div id="WikiaPhotoGalleryEditorCaptionImagePreview"></div>
 
-		<table id="WikiaPhotoGalleryEditorCaptionImagePreview">
-			<tr><td>
-				<span></span>
-			</td></tr>
-			<tr><td style="height: auto">
-				<a id="WikiaPhotoGalleryEditorCaptionChangeImage" href="#"><?= wfMsg('wikiaPhotoGallery-photooptions-changepicture') ?></a>
-			</td></tr>
-		</table>
+		<!-- Caption -->
+		<h1><?= wfMsg('wikiaPhotoGallery-photooptions-captiontitle') ?></h1>
+		<p><?= wfMsg('wikiaPhotoGallery-photooptions-captionsub') ?></p>
+		<div class="WikiaPhotoGalleryEditorCaptionWrapper">
+			<div id="WikiaPhotoGalleryEditorCaptionToolbar"></div>
+			<textarea id="WikiaPhotoGalleryEditorCaption" rows="2"></textarea>
+		</div>
+
+		<!-- Link editor for galleries -->
+		<div id="WikiaPhotoGalleryLinkEditor">
+			<h1><?= wfMsg('wikiaPhotoGallery-photooptions-linktitle') ?></h1>
+
+			<p><?= wfMsg('wikiaPhotoGallery-photooptions-linksub') ?></p>
+			<input id="WikiaPhotoGalleryLink" type="text" />
+			<div id="WikiaPhotoGalleryLinkSuggestWrapper" class="suggestWrapper"></div>
+		</div>
+
+		<!-- Link editor for slideshows -->
+		<div id="WikiaPhotoSlideshowLinkEditor">
+			<h1><?= wfMsg('wikiaPhotoGallery-photooptions-linktitle') ?></h1>
+
+			<p><?= wfMsg('wikiaPhotoGallery-photooptions-linktext') ?></p>
+			<input id="WikiaPhotoSlideshowLinkText" type="text" />
+
+			<p><?= wfMsg('wikiaPhotoGallery-photooptions-linkurl') ?></p>
+			<input id="WikiaPhotoSlideshowLink" type="text" />
+			<div id="WikiaPhotoSlideshowLinkSuggestWrapper" class="suggestWrapper"></div>
+		</div>
 	</div>
 </div>
 
 <!-- Gallery preview -->
 <div class="WikiaPhotoGalleryEditorPage">
-	<div class="WikiaPhotoGalleryEditorPageIntro accent"><?= wfMsg('wikiaPhotoGallery-preview-intro') ?></div>
-	<div id="WikiaPhotoGalleryEditorPreview"></div>
+	<div id="WikiaPhotoGalleryEditorPreview" class="preview"></div>
+</div>
+
+<!-- Slideshow preview -->
+<div class="WikiaPhotoGalleryEditorPage">
+	<div class="WikiaPhotoGalleryEditorPageInner">
+		<h1><?= wfMsg('wikiaPhotoGallery-slideshowpreview-optionstitle') ?></h1>
+
+		<p>
+			<label for="WikiaPhotoGallerySlideshowWidth"><?= wfMsg('wikiaPhotoGallery-slideshowpreview-size') ?></label>
+			<input id="WikiaPhotoGallerySlideshowWidth" type="text" />
+
+			<span id="WikiaPhotoGallerySlideshowWidthSlider">
+				<small style="left: 0"><?= wfMsg('wikiaPhotoGallery-slideshowpreview-size-smaller') ?></small>
+				<small style="right: 0"><?= wfMsg('wikiaPhotoGallery-slideshowpreview-size-larger') ?></small>
+			</span>
+		</p>
+
+		<p style="padding-top: 10px">
+			<input id="WikiaPhotoGallerySlideshowCrop" type="checkbox" />
+			<label for="WikiaPhotoGallerySlideshowCrop"><?= wfMsg('wikiaPhotoGallery-slideshowpreview-crop') ?></label>
+		</p>
+
+		<h1><?= wfMsg('wikiaPhotoGallery-slideshowpreview-photostitle') ?></h1>
+
+		<div id="WikiaPhotoGallerySlideshowEditorPreview" class="preview"></div>
+
+		<a id="WikiaPhotoGallerySlideshowAddImage" class="wikia-button"><?= wfMsg('wikiaPhotoGallery-slideshowpreview-addphoto') ?></a>
+	</div>
 </div>
 
 <!-- Edit conflict -->
 <div class="WikiaPhotoGalleryEditorPage">
-	<div id="WikiaPhotoGalleryEditConflictIntro" class="WikiaPhotoGalleryEditorPageIntro accent">
-		<img src="http://images1.wikia.nocookie.net/common/skins/common/blank.gif/cb1" class="sprite error" />
-		<?= wfMsg('wikiaPhotoGallery-conflict-intro') ?>
-	</div>
-
 	<div id="WikiaPhotoGalleryEditConflict" class="WikiaPhotoGalleryEditorPageInner clearfix">
 		<p><?= wfMsg('wikiaPhotoGallery-conflict-help',
 			wfMsg('wikiaPhotoGallery-conflict-edit'),
@@ -155,7 +195,7 @@
 <!-- Editor toolbar -->
 <div class="neutral modalToolbar">
 	<a id="WikiaPhotoGalleryEditorSave" class="wikia-button"></a>
-	<a id="WikiaPhotoGalleryEditorCancel" class="wikia-button secondary"><?= wfMsg('cancel') ?></a>
+	<a id="WikiaPhotoGalleryEditorCancel" class="wikia-button secondary"><?= wfMsg('wikiaPhotoGallery-back') ?></a>
 
 	<div id="WikiaPhotoGalleryEditConflictButtons" style="display: block">
 		<a class="wikia-button"><?= wfMsg('wikiaPhotoGallery-conflict-edit') ?></a>
@@ -166,7 +206,7 @@
 		<td><?= wfMsg('wikiaPhotoGallery-preview-size') ?></td>
 		<td>
 			<span id="WikiaPhotoGalleryEditorPreviewSlider">
-				<span id="WikiaPhotoGalleryEditorPreviewSliderTooltip" class="accent"></span>
+				<span class="accent ui-slider-tooltip"></span>
 			</span>
 		</td>
 		<td><?= wfMsg('wikiaPhotoGallery-preview-captions') ?></td>
@@ -183,11 +223,6 @@
 			</select>
 		</td>
 	</tr></table>
-</div>
-
-<!-- Recently uploaded images (to be shown on every editor init) -->
-<div id="WikiaPhotoGalleryRecentlyUploadedImages">
-	<?= $recentlyUploaded ?>
 </div>
 
 <!-- Fake form for MW suggest -->

@@ -57,7 +57,7 @@ jQuery.showModal = function(title, content, options) {
 	$.loadModalJS(function() {
 		$().log('showModal: plugin loaded');
 
-		var dialog = $(document.createElement('div')).html(content).attr('title', title);
+		var dialog = $('<div class="modalContent">').html(content).attr('title', title);
 
 		$("#positioned_elements").append(dialog);
 
@@ -190,13 +190,13 @@ $.loadYUI = function(callback) {
 			loadYUICallBackFIFO.push(callback);
 			return true;
 		}
-		
+
 		isYUIloading = true;
-		loadYUICallBackFIFO = new Array(); 
+		loadYUICallBackFIFO = new Array();
 		loadYUICallBackFIFO.push(callback)
-		
+
 		$().log('YUI: loading on-demand');
-		
+
 		var YUIloadingCallBack = function(){
 			for (var i = 0; i < loadYUICallBackFIFO.length; i++ ){
 				loadYUICallBackFIFO[i]();
@@ -204,7 +204,7 @@ $.loadYUI = function(callback) {
 			loadYUICallBackFIFO = null;
 		};
 		$().log('YUI: rq start ');
-		
+
 		$.getScript(wgYUIPackageURL, YUIloadingCallBack);
 	} else {
 		$().log('YUI: already loaded');

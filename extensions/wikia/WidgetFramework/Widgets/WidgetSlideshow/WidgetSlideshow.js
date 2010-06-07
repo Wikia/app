@@ -1,6 +1,6 @@
 // widget init (on add / on load)
 function WidgetSlideshow_init(id, widget) {
-	$.getScript(wgExtensionsPath + '/wikia/WidgetFramework/Widgets/WidgetSlideshow/jquery-slideshow-0.4.js?' + wgStyleVersion, function() {
+	$.getScript(stylepath + '/common/jquery/jquery-slideshow-0.4.js?' + wgStyleVersion, function() {
 		// preload images
 		$('#widget_' + id + '-images').find('li').each( function() {
 			$(this).css('backgroundImage', 'url(' + $(this).attr('title') + ')');
@@ -18,6 +18,8 @@ function WidgetSlideshow_init(id, widget) {
 			blockedClass:	'blocked',
 			slideWidth:	'186px'
 		});
+
+		$().log('#widget_' + id + ' initialized', 'Slideshow');
 	});
 }
 

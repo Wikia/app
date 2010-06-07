@@ -6,6 +6,7 @@
  *  - caption
  *  - captionalign
  *  - perrow
+ *  - type
  *  - widths
  *
  * 'heights' attribute is ignored
@@ -13,6 +14,12 @@
  */
 
 class WikiaPhotoGallery extends ImageGallery {
+
+	const WIKIA_PHOTO_GALLERY = 1;
+	const WIKIA_PHOTO_SLIDESHOW = 2;
+
+	const RESULTS_RECENT_UPLOADS = 0;
+        const RESULTS_IMAGES_FROM_THIS_PAGE = 1;
 
 	/**
 	 * Content of parsed <gallery> tag
@@ -34,6 +41,16 @@ class WikiaPhotoGallery extends ImageGallery {
 	 */
 	private static $galleriesCounter = 0;
 
+	/**
+	 * Gallery or slideshow?
+	 */
+	private $mType;
+
+	/**
+	 * Is slideshow using "crop" attribute
+	 */
+	private $mCrop = false;
+
 	function __construct() {
 		parent::__construct();
 
@@ -53,7 +70,6 @@ class WikiaPhotoGallery extends ImageGallery {
 	 */
 	public function setText($text) {
 		$this->mText = $text;
-		$this->mData['hash'] = md5($text);
 	}
 
 	/**
@@ -66,6 +82,27 @@ class WikiaPhotoGallery extends ImageGallery {
 		if (!empty($params['columns'])) {
 			$this->setPerRow($params['columns']);
 		}
+
+		// set gallery type
+		if (!empty($params['type']) && $params['type'] == 'slideshow') {
+			$this->mType = self::WIKIA_PHOTO_SLIDESHOW;
+
+			// use default slideshow width if "widths" attribute is not provided
+			if (!isset($params['widths'])) {
+				$this->setWidths(300);
+			}
+
+			// support "crop" attribute
+			if (isset($params['crop']) && $params['crop'] == 'true') {
+				$this->mCrop = true;
+			}
+		}
+		else {
+			$this->mType = self::WIKIA_PHOTO_GALLERY;
+		}
+
+		// calculate "unique" hash of each gallery
+		$this->calculateHash();
 	}
 
 	/**
@@ -83,6 +120,13 @@ class WikiaPhotoGallery extends ImageGallery {
 	 * "height" attribute is ignored
 	 */
 	public function setHeights($num) {}
+
+	/**
+	 * Calculate and store hash of current gallery / slideshow
+	 */
+	private function calculateHash() {
+		$this->mData['hash'] = md5($this->mText);
+	}
 
 	/**
 	 * Add an image to the gallery.
@@ -129,10 +173,13 @@ class WikiaPhotoGallery extends ImageGallery {
 
 			// search for caption and link= param
 			$captionParts = array();
-			$link = '';
+			$link = $linktext = '';
 			foreach($parts as $part) {
 				if (substr($part, 0, 5) == 'link=') {
 					$link = substr($part, 5);
+				}
+				else if (substr($part, 0, 9) == 'linktext=') {
+					$linktext = substr($part, 9);
 				}
 				else {
 					$captionParts[] = trim($part);
@@ -147,6 +194,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				'name' => $imageName,
 				'caption' => $caption,
 				'link' => $link,
+				'linktext' => $linktext,
 			);
 
 			// use global instance of parser (RT #44689 / RT #44712)
@@ -174,6 +222,7 @@ class WikiaPhotoGallery extends ImageGallery {
 	public function getData() {
 		return array(
 			'id' => $this->mData['id'],
+			'type' => $this->mType,
 			'images' => $this->mData['images'],
 			'params' => (object) $this->mData['params'],
 			'hash' => $this->mData['hash']
@@ -181,22 +230,61 @@ class WikiaPhotoGallery extends ImageGallery {
 	}
 
 	/**
-	 * Return a HTML representation of the image gallery
-	 *
-	 * The new gallery disables the old perrow control, and automatically fit the gallery to the available space in the browser.
+	 * Parse given link and return link tag attributes
+	 */
+	private function parseLink($nt, $link) {
+		return WikiaPhotoGalleryHelper::parseLink($this->mParser, $nt, $link);
+	}
+
+	/**
+	 * Return a HTML representation of the image gallery / slideshow
 	 */
 	public function toHTML() {
-		global $wgLang, $wgRTEParserEnabled, $wgBlankImgUrl;
+		global $wgRTEParserEnabled;
 
 		wfProfileIn(__METHOD__);
 
 		// render as placeholder in RTE
 		if (!empty($wgRTEParserEnabled)) {
-			$out = WikiaPhotoGalleryHelper::renderGalleryPlaceholder($this->getData(), 200, 200);
+			if ($this->mType == self::WIKIA_PHOTO_GALLERY) {
+				// gallery: 200x200px placeholder
+				$width = $height = 200;
+			}
+			else {
+				// slideshow: use user specified size
+				$width = $this->mWidths;
+				$height = round($this->mWidths * 3 / 4);
+			}
+
+			$out = WikiaPhotoGalleryHelper::renderGalleryPlaceholder($this->getData(), $width, $height);
 
 			wfProfileOut(__METHOD__);
 			return $out;
 		}
+
+		switch($this->mType) {
+			case self::WIKIA_PHOTO_GALLERY:
+				$out = $this->renderGallery();
+				break;
+
+			case self::WIKIA_PHOTO_SLIDESHOW:
+				$out = $this->renderSlideshow();
+				break;
+		}
+
+		wfProfileOut(__METHOD__);
+		return $out;
+	}
+
+	/**
+ 	 * Return a HTML representation of the image gallery
+	 *
+	 * The new gallery disables the old perrow control, and automatically fit the gallery to the available space in the browser.
+	 */
+	private function renderGallery() {
+		global $wgLang, $wgBlankImgUrl;
+
+		wfProfileIn(__METHOD__);
 
 		$sk = $this->getSkin();
 
@@ -205,6 +293,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		if (!empty($this->mCaptionsAlign)) {
 			$class .= " wikia-gallery-captions-{$this->mCaptionsAlign}";
 		}
+
 		// do not add button for galleries from templates
 		if (isset($this->mData['params']['source']) && $this->mData['params']['source'] == "template\x7f") {
 			$class .= ' template';
@@ -240,7 +329,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		// render each image
 		$i = 0;
-		foreach ( $this->mImages as $pair ) {
+		foreach ($this->mImages as $pair) {
 			$nt = $pair[0];
 			$text = $pair[1];
 			$link = $pair[2];
@@ -261,8 +350,20 @@ class WikiaPhotoGallery extends ImageGallery {
 
 			if( $nt->getNamespace() != NS_FILE || !$img ) {
 				# We're dealing with a non-image, spit out the name and be done with it.
-				$thumbhtml = "\n\t\t\t".'<div style="height: '.($this->mHeights*1.25+2).'px;">'
-					. htmlspecialchars( $nt->getText() ) . '</div>';
+
+				// let's render redlink for not existing image
+				$height = floor( 1.25*$this->mHeights ) - 4;
+
+				$thumbhtml = "\n\t\t\t".
+					Xml::openElement('div', array(
+						'class' => 'thumb broken-image neutral',
+						'style' => "height: {$height}px; width: " . ($this->mWidths+30) . 'px'
+					))
+					. Xml::openElement('span', array('style' => "line-height: {$height}px"))
+					. $sk->link($nt)
+					. Xml::closeElement('span')
+					. Xml::closeElement('div');
+
 			} elseif( $this->mHideBadImages && wfIsBadImage( $nt->getDBkey(), $this->getContextTitle() ) ) {
 				# The image is blacklisted, just show it as a text link.
 				$thumbhtml = "\n\t\t\t".'<div style="height: '.($this->mHeights*1.25+2).'px;">'
@@ -274,43 +375,12 @@ class WikiaPhotoGallery extends ImageGallery {
 			} else {
 				$vpad = floor( ( 1.25*$this->mHeights - $thumb->height ) /2 ) - 2;
 
-				// fallback: link to image page + lightbox
-				$linkParams = array(
-					'class' => 'image lightbox',
-					'href' => $nt->getLocalUrl(),
-					'title' => $nt->getText(),
-				);
-
-				// detect internal / external links (|links= param)
-				if ($link != '') {
-					$chars = Parser::EXT_LINK_URL_CLASS;
-					$prots = $this->mParser->mUrlProtocols;
-
-					if (preg_match( "/^$prots/", $link)) {
-						if (preg_match( "/^($prots)$chars+$/", $link, $m)) {
-							// external link found
-							$this->mParser->mOutput->addExternalLink($link);
-
-							$linkParams['class'] = 'image link-external';
-							$linkParams['href'] = $link;
-							$linkParams['title'] = $link;
-						}
-					} else {
-						$linkTitle = Title::newFromText($link);
-						if ($linkTitle) {
-							// internal link found
-							$this->mParser->mOutput->addLink( $linkTitle );
-
-							$linkParams['class'] = 'image link-internal';
-							$linkParams['href'] = $linkTitle->getLocalUrl();
-							$linkParams['title'] = $link;
-						}
-					}
-				}
+				// parse link
+				$linkAttribs = $this->parseLink($nt, $link);
 
 				// generate thumbnail
 				$imgTag = Xml::element('img', array(
-					'alt' => $linkParams['title'],
+					'alt' => $linkAttribs['title'],
 					'height' => $thumb->getHeight(),
 					'src' => $thumb->url,
 					'width' => $thumb->getWidth(),
@@ -329,7 +399,7 @@ class WikiaPhotoGallery extends ImageGallery {
 					))
 
 					# Add links for images (from |link= param) or link them to image page (and use JS lightbox)
-					. Xml::openElement('a', $linkParams)
+					. Xml::openElement('a', $linkAttribs)
 					. $imgTag
 					. '</a></div></div>';
 
@@ -411,7 +481,237 @@ class WikiaPhotoGallery extends ImageGallery {
 		$s .= Xml::closeElement('div');
 
 		wfProfileOut(__METHOD__);
+		return $s;
+	}
 
+	/**
+ 	 * Return a HTML representation of the image slideshow
+	 */
+	private function renderSlideshow() {
+		global $wgLang, $wgBlankImgUrl, $wgStylePath;
+
+		wfProfileIn(__METHOD__);
+		$sk = $this->getSkin();
+
+		// slideshow wrapper CSS class
+		$class = 'wikia-slideshow clearfix';
+
+		$id = "slideshow-{$this->mData['id']}";
+
+		// do not add button for galleries from templates
+		if (isset($this->mData['params']['source']) && $this->mData['params']['source'] == "template\x7f") {
+			$class .= ' template';
+		}
+
+		// wrap image slideshow inside div.slideshow
+		$attribs = Sanitizer::mergeAttributes(
+			array(
+				'class' => $class,
+				'hash' => $this->mData['hash'],
+				'id' => $id,
+				'style' => 'width: ' . ($this->mWidths + 10) . 'px',
+			),
+			$this->mAttribs );
+		$s = Xml::openElement('div', $attribs);
+
+		// render slideshow caption
+		if ($this->mCaption) {
+			$s .= '<div class="wikia-slideshow-caption">' . $this->mCaption . '</div>';
+		}
+
+		// fit images inside width:height = 4:3 box
+		$this->mHeights = round($this->mWidths * 3 / 4);
+		$params = array('width' => $this->mWidths, 'height' => $this->mHeights);
+
+		wfDebug(__METHOD__ . ": slideshow {$params['width']}x{$params['height']}\n");
+
+		$s .= Xml::openElement('div', array('class' => 'wikia-slideshow-wrapper'));
+
+		// wrap images inside <div> and <ul>
+		$s .= Xml::openElement('div', array('class' => 'wikia-slideshow-images-wrapper accent'));
+		$s .= Xml::openElement('ul', array(
+			'class' => 'wikia-slideshow-images neutral',
+			'style' => "height: {$params['height']}px; width: {$params['width']}px",
+		));
+
+		wfLoadExtensionMessages('WikiaPhotoGallery');
+
+		$i = 0;
+		foreach ($this->mImages as $p => $pair) {
+			$nt = $pair[0];
+			$text = $pair[1];
+			$link = $pair[2];
+
+			# Give extensions a chance to select the file revision for us
+			$time = $descQuery = false;
+			wfRunHooks( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time, &$descQuery ) );
+
+			$img = wfFindFile( $nt, $time );
+
+			// let's properly scale image (don't make it bigger than original size) and handle "crop" attribute
+			if (is_object($img) && ($nt->getNamespace() == NS_FILE)) {
+				$thumbParams = WikiaPhotoGalleryHelper::getThumbnailDimensions($img, $params['width'], $params['height'], $this->mCrop);
+			}
+
+			if( $nt->getNamespace() != NS_FILE || !$img ) {
+				# We're dealing with a non-image, spit out the name and be done with it.
+				$thumbhtml = "\n\t\t\t".'<div style="height: '.($this->mHeights*1.25+2).'px;">'
+					. htmlspecialchars( $nt->getText() ) . '</div>';
+			} elseif( $this->mHideBadImages && wfIsBadImage( $nt->getDBkey(), $this->getContextTitle() ) ) {
+				# The image is blacklisted, just show it as a text link.
+				$thumbhtml = "\n\t\t\t".'<div style="height: '.($this->mHeights*1.25+2).'px;">'
+					. $sk->makeKnownLinkObj( $nt, htmlspecialchars( $nt->getText() ) ) . '</div>';
+			} elseif( !( $thumb = $img->transform( $thumbParams ) ) ) {
+				# Error generating thumbnail.
+				$thumbhtml = "\n\t\t\t".'<div style="height: '.($this->mHeights*1.25+2).'px;">'
+					. htmlspecialchars( $img->getLastError() ) . '</div>';
+			} else {
+				$caption = $linkOverlay = '';
+
+				// render caption overlay
+				if ($text != '') {
+					$caption = Xml::openElement('span', array('class' => 'wikia-slideshow-image-caption'))
+						. Xml::openElement('span', array('class' => 'wikia-slideshow-image-caption-inner'))
+						. $text
+						. Xml::closeElement('span')
+						. Xml::closeElement('span');
+				}
+
+				// parse link
+				$linkAttribs = $this->parseLink($nt, $link);
+
+				// extra link tag attributes
+				$linkAttribs['id'] = "{$id}-{$i}";
+				$linkAttribs['style'] = 'width: ' . ($params['width'] - 80) . 'px';
+
+				if ($link == '') {
+					// tooltip to be used for not-linked images
+					$linkAttribs['title'] = wfMsg('wikiaPhotoGallery-slideshow-view-popout-tooltip');
+					$linkAttribs['class'] = 'wikia-slideshow-image';
+					unset($linkAttribs['href']);
+				}
+				else {
+					// linked images
+					$linkAttribs['class'] .= ' wikia-slideshow-image';
+
+					// support |linktext= syntax
+					if ($this->mData['images'][$p]['linktext'] != '') {
+						$linkText = $this->mData['images'][$p]['linktext'];
+					}
+					else {
+						$linkText = $link;
+					}
+
+					// add link overlay
+					$linkOverlay = Xml::openElement('span', array('class' => 'wikia-slideshow-link-overlay'))
+						. wfMsg('wikiaPhotoGallery-slideshow-view-link-overlay', $linkText)
+						. Xml::closeElement('span');
+				}
+
+				// generate HTML for a single slideshow image
+				$liAttribs = array(
+					'title' => $thumb->url,
+				);
+
+				// add CSS class so we can show first slideshow image before JS is loaded
+				if ($i == 0) {
+					$liAttribs['class'] = 'wikia-slideshow-first-image';
+				}
+
+				$s .= Xml::openElement('li', $liAttribs)
+					. Xml::element('a', $linkAttribs, ' ')
+					. $caption
+					. $linkOverlay
+					. '</li>';
+
+				$i++;
+
+				// Call parser transform hook
+				if ( $this->mParser && $img->getHandler() ) {
+					$img->getHandler()->parserTransformHook( $this->mParser, $img );
+				}
+
+				wfDebug(__METHOD__ . ": image '" . $nt->getText() . "' {$thumb->width}x{$thumb->height}\n");
+			}
+		}
+
+		$s .= Xml::closeElement('ul');
+		$s .= Xml::closeElement('div');
+
+		// render prev/next buttons
+		$top = ($params['height'] >> 1) - 30 /* button height / 2 */ + 5 /* top border of slideshow area */;
+		$s .= Xml::openElement('div', array('class' => 'wikia-slideshow-prev-next'));
+		$s .= Xml::element('a',
+			array('class' => 'wikia-slideshow-sprite wikia-slideshow-prev', 'style' => "top: {$top}px", 'title' => wfMsg('wikiaPhotoGallery-slideshow-view-prev-tooltip')),
+			' ');
+		$s .= Xml::element('a',
+			array('class' => 'wikia-slideshow-sprite wikia-slideshow-next', 'style' => "top: {$top}px", 'title' =>  wfMsg('wikiaPhotoGallery-slideshow-view-next-tooltip')),
+			' ');
+		$s .= Xml::closeElement('div');
+
+		// render slideshow toolbar
+		$s .= Xml::openElement('div', array('class' => 'wikia-slideshow-toolbar clearfix', 'style' => 'display: none'));
+
+		// Pop-out icon, "X of X" counter
+		$counterValue = wfMsg('wikiaPhotoGallery-slideshow-view-number', '$1', $i);
+
+		$s .= Xml::openElement('div', array('style' => 'float: left'));
+			$s .= Xml::element('img',
+				array(
+					'class' => 'wikia-slideshow-popout',
+					'height' => 11,
+					'src' => "{$wgStylePath}/common/images/magnify-clip.png",
+					'title' => wfMsg('wikiaPhotoGallery-slideshow-view-popout-tooltip'),
+					'width' => 15,
+				));
+			$s .= Xml::element('span',
+				array('class' => 'wikia-slideshow-toolbar-counter', 'value' => $counterValue),
+				str_replace('$1', '1', $counterValue));
+		$s .= Xml::closeElement('div');
+
+		// "Add Image"
+		$s .= Xml::element('a',
+			array('class' => 'wikia-slideshow-addimage wikia-button secondary', 'style' => 'float: right'),
+			wfMsg('wikiaPhotoGallery-slideshow-view-addphoto'));
+		$s .= Xml::closeElement('div');
+
+		// close slideshow wrapper
+		$s .= Xml::closeElement('div');
+		$s .= Xml::closeElement('div');
+
+		// output JS to init slideshow
+		$width = "{$params['width']}px";
+
+		$js = <<<JS
+wgAfterContentAndJS.push(function() {
+	$.getScript(stylepath + '/common/jquery/jquery-slideshow-0.4.js?' + wgStyleVersion, function() {
+		var slideshow = $('#$id');
+
+		slideshow.find('li').each(function() {
+			var item = $(this);
+
+			item.css('backgroundImage', 'url(' + item.attr('title') + ')');
+			item.removeAttr('title');
+		});
+
+		slideshow.slideshow({
+			buttonsClass:	'wikia-button',
+			nextClass:	'wikia-slideshow-next',
+			prevClass:	'wikia-slideshow-prev',
+			slideWidth:	'$width',
+			slidesClass:	'wikia-slideshow-images'
+		});
+
+		$().log('#$id initialized', 'Slideshow');
+	});
+});
+JS;
+
+		// remove whitespaces from inline JS code
+		$js = preg_replace("#[\n\t]+#", '', $js);
+		$s .= '<script type="text/javascript">/*<![CDATA[*/' . $js . '/*]]>*/</script>';
+
+		wfProfileOut(__METHOD__);
 		return $s;
 	}
 }
