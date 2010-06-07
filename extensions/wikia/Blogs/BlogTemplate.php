@@ -322,10 +322,10 @@ class BlogTemplateClass {
 				$oUserTalkPage = $oUser->getTalkPage();
 				$aResult = array(
 					"userpage" => ($oUserPage instanceof Title) ? $sk->link($oUserPage, $oUser->getName(), $attribs) : "",
-					"talkpage" => ($oUserTalkPage instanceof Title) ? $sk->link($oUserTalkPage, wfMsg('blog-avatar-talk'), $attribs) : "",
+					"talkpage" => ($oUserTalkPage instanceof Title) ? $sk->link($oUserTalkPage, wfMsg( 'sp-contributions-talk' ), $attribs) : "",
 					"contribs" => $sk->link(
 						SpecialPage::getTitleFor( 'Contributions' ),
-						wfMsg( 'blog-avatar-contrib' ),
+						wfMsg( 'contribslink' ),
 						$attribs,
 						array( 'target' => $oUser->getName() )
 					),
