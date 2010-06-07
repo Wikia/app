@@ -1,23 +1,15 @@
-<table class="WikiaPhotoGalleryResults" style="display: none" type="<?= $type ?>">
-	<tr>
+<ul class="WikiaPhotoGalleryResults" type="<?= $type ?>" style="display: none">
 <?php
-	foreach($images as $i => $image) {
+	if (!empty($images)) {
+		foreach($images as $i => $image) {
+			$id = "WikiaPhotoGalleryResults-{$type}-{$i}";
 ?>
-			<td>
-				<table style="width: 100%"><tr><td class="WikiaPhotoGallerySearchResultsCell">
-					<a title="<?= htmlspecialchars($image['name']) ?>" num="<?= intval($i+1) ?>" href="#"><?= $image['thumb'] ?></a>
-				</td></tr></table>
-				<a class="WikiaPhotoGalleryResultsInsertLink" title="<?= htmlspecialchars($image['name']) ?>" num=<?= intval($i) ?>" href="#"><?= wfMsg('wikiaPhotoGallery-upload-filesinsert') ?></a>
-			</td>
-<?php
-		// add new row every $perRow images
-		if ( ($i % $perRow) == ($perRow - 1) ) {
-?>
-	</tr>
-	<tr>
+	<li title="<?= htmlspecialchars($image['name']) ?>">
+		<label for="<?= $id ?>" style="background-image: url(<?= $image['thumb'] ?>)"></label>
+		<input id="<?= $id ?>" type="checkbox" value="<?= htmlspecialchars($image['name']) ?>" />
+	</li>
 <?php
 		}
 	}
 ?>
-	</tr>
-</table>
+</ul>

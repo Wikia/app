@@ -115,8 +115,12 @@ img.video-placeholder {
 	background-image: url(../images/imagePlaceholderEn.png);
 }
 
-/* Wikia Image Gallery placeholder */
+/* Wikia Image Gallery placeholders */
 img.image-gallery {
-	background-image: url(../../WikiaPhotoGallery/images/photos.png);
+	background-image: url(../../WikiaPhotoGallery/images/gallery-placeholder.png?2);
 	display: block;
+}
+
+img.image-slideshow {
+	background-image: url(../../WikiaPhotoGallery/images/slideshow-placeholder.png?2);
 }

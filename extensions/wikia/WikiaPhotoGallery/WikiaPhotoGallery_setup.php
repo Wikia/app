@@ -21,6 +21,7 @@
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'Photo Gallery',
+	'version' => '2.0',
 	'url' => 'http://www.wikia.com/wiki/c:help:Help:Gallery',
 	'author' => array( '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]', 'Maciej Brencz' ),
 	'descriptionmsg' => 'wikiaphotogallery-desc',

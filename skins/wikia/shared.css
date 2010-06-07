@@ -42,3 +42,154 @@
 .wikia-gallery-captions-right .wikia-gallery-item {
 	text-align: right;
 }
+
+/* WikiaImageGallery: CSS for image slideshow */
+.wikia-slideshow-wrapper {
+	position: relative;
+	z-index: 1;
+}
+
+.wikia-slideshow-caption {
+	font-weight: bold;
+	text-align: center;
+}
+
+.wikia-slideshow-images-wrapper {
+	padding: 5px;
+}
+
+.wikia-slideshow-images {
+	list-style: none;
+	margin: 0;
+	overflow: hidden;
+	position: relative;
+}
+
+.wikia-slideshow-images li {
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	display: none;
+	height: 100%;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+}
+
+.wikia-slideshow-images li.wikia-slideshow-first-image {
+	display: block;
+}
+
+.wikia-slideshow-images label {
+	display: none;
+}
+
+.wikia-slideshow-link-overlay {
+	display: none;
+}
+
+.wikia-slideshow-wrapper .hover .wikia-slideshow-link-overlay {
+	background-color: #000;
+	color: #fff;
+	display: block;
+	left: 0;
+	opacity: 0.8;
+	padding: 6px 10px;
+	position: absolute;
+	top: 0;
+}
+
+/* hide image links (pop-out / link) on skins different then Monaco */
+.wikia-slideshow-images .wikia-slideshow-image {
+	display: none;
+}
+
+/* show on Monaco */
+body.wikiaSkinMonaco .wikia-slideshow-images .wikia-slideshow-image {
+	cursor: pointer;
+	display: block;
+	height: 100%;
+	left: 40px;
+	position: absolute;
+	top: 0;
+}
+
+.wikia-slideshow-image-caption {
+	background: #000;
+	bottom: 0;
+	color: #fff;
+	left: 0;
+	max-height: 50px;
+	opacity: 0.75;
+	position: absolute;
+	width: 100%;
+}
+
+.wikia-slideshow-image-caption-inner {
+	display: block;
+	font-size: 0.95em;
+	margin: 8px;
+	opacity: 1;
+}
+
+.wikia-slideshow .wikia-slideshow-image-caption-inner a {
+	color: #fff !important;
+}
+
+/* Prev / next toolbar */
+.wikia-slideshow-sprite {
+	/* TODO: replace this one with URL to images.wikia.com */
+	background-image: url(http://techteam-qa20.wikia.com/extensions/wikia/WikiaPhotoGallery/images/slideshow-sprite.png?3);
+	background-repeat: no-repeat;
+}
+
+.wikia-slideshow-prev-next a {
+	cursor: pointer;
+	display: block;
+	height: 60px;
+	width: 40px;
+	z-index: 100;
+}
+
+.wikia-slideshow-prev {
+	background-position: -160px 15px;
+	left: 0;
+	position: absolute;
+}
+
+.wikia-slideshow-next {
+	background-position: -187px 15px;
+	position: absolute;
+	right: 0;
+}
+
+/* glow effect */
+.wikia-slideshow-prev:hover {
+	background-position: -240px 15px;
+}
+
+.wikia-slideshow-next:hover {
+	background-position: -267px 15px;
+}
+
+.wikia-slideshow-toolbar {
+	height: 20px;
+	padding: 5px 0;
+}
+
+.wikia-slideshow-toolbar .wikia-slideshow-toolbar-counter {
+	background-color: transparent;
+	border-left-style: solid;
+	border-left-width: 1px;
+	font-size: 0.9em;
+	margin: 0 6px;
+	padding: 2px 6px;
+}
+
+.wikia-slideshow-toolbar .wikia-slideshow-popout {
+	cursor: pointer;
+}
+
+.wikia-slideshow-toolbar a {
+	margin: 0 3px !important;
+}

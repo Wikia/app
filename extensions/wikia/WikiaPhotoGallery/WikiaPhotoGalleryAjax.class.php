@@ -54,7 +54,7 @@ class WikiaPhotoGalleryAjax {
 	 * Return HTML and messages for gallery editor
 	 */
 	static public function getEditorDialog() {
-		global $wgScript, $wgStylePath, $wgExtensionMessagesFiles, $wgEnableUploads, $wgUser;
+		global $wgExtensionMessagesFiles, $wgEnableUploads, $wgUser, $wgTitle;
 
 		wfProfileIn(__METHOD__);
 
@@ -64,13 +64,15 @@ class WikiaPhotoGalleryAjax {
 		// list of recently uploaded images
 		$recentlyUploaded = WikiaPhotoGalleryHelper::getRecentlyUploaded();
 
+		// list of images on current article
+		$imagesOnPage = WikiaPhotoGalleryHelper::getImagesFromPage($wgTitle);
+
 		// render dialog
 		$template = new EasyTemplate(dirname(__FILE__) . '/templates');
 		$template->set_vars(array(
+			'imagesOnPage' => WikiaPhotoGalleryHelper::renderImagesList('images', $imagesOnPage),
 			'recentlyUploaded' => WikiaPhotoGalleryHelper::renderImagesList('uploaded', $recentlyUploaded),
 			'showUpload' => $showUpload,
-			'wgScript' => $wgScript,
-			'wgStylePath' => $wgStylePath,
 		));
 		$html = $template->render('editorDialog');
 
@@ -165,6 +167,46 @@ class WikiaPhotoGalleryAjax {
 		return array(
 			'html' => $html,
 		);
+	}
+
+	/**
+	 * Render slideshow preview
+	 */
+	static public function renderSlideshowPreview() {
+		global $wgRequest;
+		wfProfileIn(__METHOD__);
+
+		// decode JSON-encoded slideshow data
+		$slideshow = Wikia::json_decode($wgRequest->getVal('gallery'), true);
+
+		$html = WikiaPhotoGalleryHelper::renderSlideshowPreview($slideshow);
+
+		wfProfileOut(__METHOD__);
+		return array(
+			'html' => $html,
+		);
+	}
+
+	/**
+	 * Return HTML for slideshow pop out dialog
+	 */
+	static public function getSlideshowPopOut() {
+		wfProfileIn(__METHOD__);
+		global $wgRequest;
+
+		$hash = $wgRequest->getVal('hash');
+		$maxWidth = $wgRequest->getInt('maxwidth', 650) - 20;
+		$maxHeight = $wgRequest->getInt('maxheight', 1200) - 320;
+
+		// used on pages with oldid URL param
+		$revisionId = $wgRequest->getInt('revid', 0);
+
+		$slideshow = WikiaPhotoGalleryHelper::getGalleryDataByHash($hash, $revisionId);
+
+		$ret = WikiaPhotoGalleryHelper::renderSlideshowPopOut($slideshow['gallery'], $maxWidth, $maxHeight);
+
+		wfProfileOut(__METHOD__);
+		return $ret;
 	}
 
 	/**
