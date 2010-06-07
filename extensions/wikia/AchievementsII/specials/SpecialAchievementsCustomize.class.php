@@ -18,7 +18,7 @@ class SpecialAchievementsCustomize extends SpecialPage {
 
 		$wgSupressPageTitle = true;
 		$errorMsg = null;
-		
+
 		if($wgRequest->wasPosted()) {
 
 			$jsonObj = Wikia::json_decode($wgRequest->getVal('json-data'));
@@ -54,13 +54,13 @@ class SpecialAchievementsCustomize extends SpecialPage {
 			if($wgRequest->getVal('add_edit_plus_category_track') == '1') {
 				$catName = $wgRequest->getVal('edit_plus_category_name');
 				$category = Category::newFromName($catName);
-				
+
 				if(!$category || !$category->getID())
 					$errorMsg = wfMsg('achievements-non-existing-category');
 				else {
-					$safeCatName = $category->getName();
+					$safeCatName = str_replace('_', ' ', $category->getName());
 					$existingTrack = AchConfig::getInstance()->trackForCategoryExists($safeCatName);
-					
+
 					if($existingTrack !== false)
 						$errorMsg = wfMsg('achievements-edit-plus-category-track-exists', $existingTrack);
 					else {
