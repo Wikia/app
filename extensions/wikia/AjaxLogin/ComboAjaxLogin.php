@@ -81,7 +81,7 @@ function getRegisterJS(){
 }
 
 function comboAjaxLoginVars($vars) {
-	global $wgUser,$wgWikiaEnableConfirmEditExt, $wgRequest;
+	global $wgUser,$wgWikiaEnableConfirmEditExt, $wgRequest, $wgEnableAPI, $wgHideAPI;
 	if ($wgWikiaEnableConfirmEditExt){
 		wfLoadExtensionMessages('ConfirmEdit');
 	}
@@ -95,7 +95,13 @@ function comboAjaxLoginVars($vars) {
 		$titleObj = Title::newMainPage();
 		$vars['wgReturnTo'] = $titleObj->getText( );
 	}
-			
+ 
+	if ( (empty($wgEnableAPI)) || (!$wgUser->isAllowed('read')) || (!empty($wgHideAPI)) ) {
+		$vars['wgEnableLoginAPI'] = false;	
+	} else {
+		$vars['wgEnableLoginAPI'] = true;
+	}
+	
 	$vars['wgComboAjaxLogin'] = true;
 	$vars['prefs_help_birthmesg'] = wfMsg('prefs-help-birthmesg');
 	$vars['prefs_help_birthinfo'] = wfMsg('prefs-help-birthinfo');
@@ -104,6 +110,7 @@ function comboAjaxLoginVars($vars) {
 	$vars['prefs_help_blurmesg'] = wfMsg('prefs-help-blurmesg');
 	$vars['prefs_help_blurinfo'] = wfMsgExt( 'captchahelp-text', array( 'parse' ) );
 	$vars['wgIsLogin'] = $wgUser->isLoggedIn();
+	
 	return true;
 };
 
