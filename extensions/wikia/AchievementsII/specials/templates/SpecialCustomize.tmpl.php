@@ -12,12 +12,10 @@ foreach($config->getInTrackStatic() as $badgeTypeId => $trackData){
 	else {
 		$tracks[$badgeTypeId] = $trackData;
 		$editPlusCategoryTracks = $config->getInTrackEditPlusCategory();
-		
+
 		if($editPlusCategoryTracks) {
 			foreach($editPlusCategoryTracks as $editPlusCategoryTypeId => $editPlusCategoryData) {
-			
-				$categoryTitle = Title::newFromDBkey($editPlusCategoryData['category']);
-				$tracks[$editPlusCategoryTypeId] = array('category' => $categoryTitle->getText(), 'enabled' => $editPlusCategoryData['enabled'], 'laps' => $tracks[$badgeTypeId]['laps'], 'infinite' => $tracks[$badgeTypeId]['infinite']);
+				$tracks[$editPlusCategoryTypeId] = array('category' => $editPlusCategoryData['category'], 'enabled' => $editPlusCategoryData['enabled'], 'laps' => $tracks[$badgeTypeId]['laps'], 'infinite' => $tracks[$badgeTypeId]['infinite']);
 			}
 		}
 	}
