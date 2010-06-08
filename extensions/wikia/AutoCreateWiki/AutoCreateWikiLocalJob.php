@@ -317,7 +317,8 @@ class AutoCreateWikiLocalJob extends Job {
 		$restrictions[ "move"   ] = 'sysop';
 		$restrictions[ "create" ] = 'sysop';
 		$titleRestrictions = 'sysop';
-		$expiry = Block::infinity();
+		$expiry_string = Block::infinity();
+		$expiry_array = array('edit' => $expiry_string, 'move' => $expiry_string);
 
 		/**
 		 *  define reason msg and fetch it
@@ -333,10 +334,10 @@ class AutoCreateWikiLocalJob extends Job {
 
 			if ( $article->exists() ) {
 				$cascade = 0;
-				$ok = $article->updateRestrictions( $restrictions, $reason, $cascade, $expiry );
+				$ok = $article->updateRestrictions( $restrictions, $reason, $cascade, $expiry_array );
 			}
 			else {
-				$ok = $title->updateTitleProtection( $titleRestrictions, $reason, $expiry );
+				$ok = $title->updateTitleProtection( $titleRestrictions, $reason, $expiry_string );
 			}
 
 			if ( $ok ) {
