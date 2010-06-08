@@ -24,7 +24,7 @@ class SpecialAchievementsCustomize extends SpecialPage {
 			$jsonObj = Wikia::json_decode($wgRequest->getVal('json-data'));
 			$dbw = null;
 
-			$wgOut->wrapWikiMsg( '<div class="successbox"><strong>$1</strong></div>', 'achievements-special-saved' );
+			$wgOut->wrapWikiMsg( '<div class="clearfix"><div class="successbox"><strong>$1</strong></div></div>', 'achievements-special-saved' );
 
 			foreach($jsonObj->messages as $mKey => $mVal) {
 				$tokens = explode('_', $mKey);

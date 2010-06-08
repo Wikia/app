@@ -129,3 +129,7 @@ span.enabled-flag label {
 form.save-all {
 	display:inline-block;
 }
+
+.customize-section h2 {
+	padding-right:200px;
+}
