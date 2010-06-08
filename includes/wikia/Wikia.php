@@ -12,6 +12,37 @@ $wgAjaxExportList[] = 'WikiaAssets::combined';
 
 class WikiaAssets {
 
+	private static function get($url) {
+
+		global $wgRequest;
+
+		if(!$wgRequest->getBool('nia')) {
+
+			$out = "\n/* Version: nginx Call to: {$url} */\n";
+			$out .= '<!--# include virtual="'.$url.'" -->';
+
+			return $out;
+
+		} else {
+
+			global $wgServer;
+
+			$url = str_replace('&amp;', '&', $url);
+
+			if(stripos($url, '/') === 0) {
+				$url = $wgServer.$url;
+			} else {
+				$url = $wgServer.'/'.$url;
+			}
+
+			$out = "\n/* Version: not-nginx Call to: {$url} */\n";
+			$out .= Http::get($url);
+
+			return $out;
+
+		}
+	}
+
 	private static function GetBrowserSpecificCSS() {
 		global $wgStylePath;
 
@@ -71,8 +102,9 @@ class WikiaAssets {
 				} else {
 					$reference['url'] .= '&'.$wgStyleVersion;
 				}
-				$out .= '/* Call to: '.$reference['url'].' */'."\n\n";
-				$out .= '<!--# include virtual="'.$reference['url'].'" -->';
+				//$out .= '/* Call to: '.$reference['url'].' */'."\n\n";
+				//$out .= '<!--# include virtual="'.$reference['url'].'" -->';
+				$out .= self::get($reference['url']);
 			}
 		} else if($type == 'SiteCSS') {
 			$out = '';
@@ -80,8 +112,9 @@ class WikiaAssets {
 			$cb = $wgRequest->getVal('cb');
 			$ref = WikiaAssets::GetSiteCSSReferences($themename, $cb);
 			foreach($ref as $reference) {
-				$out .= '/* Call to: '.$reference['url'].' */'."\n\n";
-				$out .= '<!--# include virtual="'.$reference['url'].'" -->';
+				//$out .= '/* Call to: '.$reference['url'].' */'."\n\n";
+				//$out .= '<!--# include virtual="'.$reference['url'].'" -->';
+				$out .= self::get($reference['url']);
 			}
 		} else if($type == 'CoreJS') {
 			header('Content-type: text/javascript');
@@ -112,7 +145,8 @@ class WikiaAssets {
 
 			$out = '';
 			foreach($references as $reference) {
-				$out .= '<!--# include virtual="'.$reference.'" -->';
+				//$out .= '<!--# include virtual="'.$reference.'" -->';
+				$out .= self::get($reference);
 			}
 			echo $out;
 			exit();
