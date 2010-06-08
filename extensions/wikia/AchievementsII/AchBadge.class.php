@@ -62,7 +62,7 @@ class AchBadge {
 		$badge_type_id = $this->mBadgeTypeId;
 
 		//check for infinite laps in tracks
-		if($realLap !== null) {
+		if($realLap !== null && $this->mBadgeTypeId != BADGE_LUCKYEDIT) {
 
 			if(AchConfig::getInstance()->getBadgeType($this->mBadgeTypeId) == BADGE_TYPE_INTRACKEDITPLUSCATEGORY)
 				$badge_type_id = BADGE_EDIT;
