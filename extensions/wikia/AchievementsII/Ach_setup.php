@@ -167,8 +167,9 @@ function AchAjax() {
 ##
 ## TESTING ONLY
 ##
-$wgAjaxExportList[] = 'AchTest';
+//$wgAjaxExportList[] = 'AchTest';
 function AchTest() {
+
 	global $wgUser, $wgExternalSharedDB;
 
 	set_time_limit(5000);
