@@ -33,7 +33,9 @@
 	                    <input type="password" size="20" tabindex="202" id="wpPassword2Ajax" name="wpPassword"> </input>
 	                </td>
 	            <?php if( $wgEnableEmail && $wgAuth->allowPasswordChange() ) { ?>
-	                <td><a id="wpMailmypassword" href="#" style="font-size: 9pt;" onclick="AjaxLogin.action='password'; AjaxLogin.form.submit();"><?php print wfMsg('mailmypassword') ?></a></td>
+	                <td>
+						<input type='submit' name="wpMailmypassword" id="wpMailmypassword" onclick="AjaxLogin.action='password'; AjaxLogin.form.submit();" value="<?php print wfMsg('mailmypassword') ?>" />
+					</td>
 	                </td>
 	            <?php } ?>
 	            </tr>
