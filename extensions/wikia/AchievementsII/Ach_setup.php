@@ -170,7 +170,62 @@ function AchAjax() {
 $wgAjaxExportList[] = 'AchTest';
 function AchTest() {
 	global $wgUser, $wgExternalSharedDB;
-	$article = Article::newFromID(113969);
+
+	set_time_limit(5000);
+
+		// test 1
+		// Expect: badges for edits, categoris, pictues, at least one lucky edit and eventually welcome
+
+		// 2000 edits
+		for($i = 0; $i < 500; $i++) {
+
+			$content = date('H:i:s');
+
+			// 2000 category edits
+			$content .= '[[Category:cat'.$i.']]';
+			$content .= '[[Category:Moja testowa]]';
+
+			// 1000 picture uploads
+			if($i % 2 == 0) {
+				$content .= '[[Image:Wiki.png]]';
+			}
+
+			$title = Title::newFromText('CArticle_'.$i);
+			$article = new Article($title);
+			$article->doEdit($content, 'test summary');
+		}
+
+		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+		$dbw->commit();
+
+		$dbw = wfGetDB(DB_MASTER);
+		$dbw->commit();
+
+
+/*
+		// test 2
+		// Expect: badges for blogposts
+
+		// 2000 edits
+		for($i = 0; $i < 2000; $i++) {
+			$content = date('H:i:s');
+
+			$title = Title::newFromText('AArticle_'.$i);
+			$article = new Article($title);
+			$article->doEdit($content, 'test summary');
+		}
+
+		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+		$dbw->commit();
+
+		$dbw = wfGetDB(DB_MASTER);
+		$dbw->commit();
+*/
+
+
+	//
+	//
+	/*
 	$flags = false;
 	$revision = Revision::newFromId($article->getRevIdFetched());
 	$status = new Status();
@@ -178,4 +233,5 @@ function AchTest() {
 	$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
 	$dbw->commit();
 	exit('exit');
+	*/
 }
