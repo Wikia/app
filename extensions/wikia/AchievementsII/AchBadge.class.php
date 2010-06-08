@@ -23,10 +23,24 @@ class AchBadge {
 
 	public function getName() {
 		wfProfileIn(__METHOD__);
-		$key = AchConfig::getInstance()->getBadgeNameKey($this->mBadgeTypeId, $this->mBadgeLap);
 
+		$lap = $this->mBadgeLap;
+
+		if($lap != null && $this->mBadgeTypeId != BADGE_LUCKYEDIT) {
+			$virtualType = $this->mBadgeTypeId;
+
+			if(AchConfig::getInstance()->getBadgeType($virtualType) == BADGE_TYPE_INTRACKEDITPLUSCATEGORY) {
+				$virtualType = BADGE_EDIT;
+			}
+
+			$inTrackStaticBadges = AchConfig::getInstance()->getInTrackStatic();
+			$lapsCount = count($inTrackStaticBadges[$virtualType]['laps']);
+			$lap = ($lap >= $lapsCount) ? --$lapsCount : $lap;
+		}
+
+		$key = AchConfig::getInstance()->getBadgeNameKey($this->mBadgeTypeId, $lap);
 		if(AchConfig::getInstance()->getBadgeType($this->mBadgeTypeId) == BADGE_TYPE_INTRACKEDITPLUSCATEGORY && isMsgEmpty($key)) {
-			$key = AchConfig::getInstance()->getBadgeNameKey(BADGE_EDIT, $this->mBadgeLap);
+			$key = AchConfig::getInstance()->getBadgeNameKey(BADGE_EDIT, $lap);
 		}
 
 		return wfMsgForContent($key);
