@@ -1,7 +1,6 @@
 <?if($errorMsg != null):?>
-	<div class="errorbox"><strong><?= $errorMsg ?></strong></div>
+	<div class="clearfix"><div class="errorbox"><strong><?= $errorMsg ?></strong></div></div>
 <?endif;?>
-<div class="clearfix"></div>
 <?
 global $wgCityId, $wgScriptPath, $wgExternalSharedDB, $wgJsMimeType;
 $tracks = array();
