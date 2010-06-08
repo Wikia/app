@@ -2549,6 +2549,8 @@ class Title {
 		global $wgUseSiteJs, $wgUseSiteCss, $wgAllowUserJs;
 		global $wgSquidMaxage, $wgJsMimeType;
 		if( $wgUseSiteCss && $this->getNamespace() == NS_MEDIAWIKI ) {
+			global $wgServer;
+			$urls[] = $wgServer.'/__wikia_combined/';
 			$query = array(
 				'usemsgcache' => 'yes',
 				'ctype' => 'text/css',
