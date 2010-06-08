@@ -1,5 +1,5 @@
 == Changes since 201006.2 ==
-* 
+* rt#54166: AWC: pass correct parameters to protection functions (uberfuzzy)
 
 == Changes since 201006.1 ==
 * rt#48490: RTE breaking formatting 2 (macbre)
