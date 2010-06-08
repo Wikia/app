@@ -89,6 +89,17 @@ var Achievements = {
 		$('span.custom-text').find('a').click(function(e) {
 			self.track('leaderboard/revert');
 		});
+		
+		$('input.c-enabled-flags').click(function(e) {
+			if($(this).attr('checked'))
+				self.track('customize/enabled');
+			else
+				self.track('customize/disabled');
+		});
+		
+		$('#customize-sidebar form.customize-edit-plus-category button').click(function(e) {
+			self.track('customize/createtrack');
+		});
 	},
 	
 	submitPicture:function(form){
