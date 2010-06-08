@@ -157,6 +157,7 @@ my @tests = qw(
 	/h/half-life/en/images/thumb/d/d6/Black_Mesa_logo.svg/250px-Black_Mesa_logo.svg.png
 	/m/memoryalpha/en/images/thumb/8/88/2390s_Starfleet.svg/300px-2390s_Starfleet.svg.png
 	/h/half-life/en/images/thumb/d/d6/Black_Mesa_logo.svg/250px-Black_Mesa_logo.svg.png
+	/de/images/thumb/3/35/Information_icon.svg/120px-Information_icon.svg.png
 );
 my @done = ();
 
