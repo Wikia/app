@@ -50,7 +50,7 @@ foreach($config->getInTrackStatic() as $badgeTypeId => $trackData){
 						<p class="input">
 							<input class="c-message" type="text" name="msg_<?=$badgeTypeId;?>_<?=$lap;?>" value="<?=htmlspecialchars($badge->getName());?>">
 						</p>
-						<p><?=$config->getLevelName($badge->getLevel());?> (<?=wfMsg( 'achievements-points', $config->getLevelScore( $badge->getLevel() );?>)</p>
+						<p><?=$config->getLevelName($badge->getLevel());?> (<?=wfMsg( 'achievements-points', $config->getLevelScore( $badge->getLevel() ) );?>)</p>
 						<p><?=$badge->getGiveFor();?></p>
 					</div>
 
