@@ -225,7 +225,7 @@ class AjaxLoginForm extends LoginForm {
 	 * different EasyTemplates to give different results such as one view for ajax dialogs
 	 * and one view for standalone pages (such as Special:Signup). 
 	 */
-	static public function getTemplateForCombinedForms($static = false, $lastmsg = ""){
+	static public function getTemplateForCombinedForms($static = false, $lastmsg = "", &$ajaxLoginForm = ""){
 		global $wgRequest;
 
 		// Setup the data for the templates, similar to GetComboAjaxLogin.
@@ -243,9 +243,16 @@ class AjaxLoginForm extends LoginForm {
 		$response = new AjaxResponse();
 
 		if (!wfReadOnly()){
-			$form = new AjaxLoginForm($wgRequest,'signup');
-			$form->execute();
-			$tmpl->set("registerAjax", $form->ajaxRender());
+			if(empty($ajaxLoginForm)){
+				$ajaxLoginForm = new AjaxLoginForm($wgRequest,'signup');
+			}
+			$ajaxLoginForm->execute();
+			if ( $ajaxLoginForm->processStatus == parent::RESET_PASS ) {
+					$lastmsg = $ajaxLoginForm->ajaxTemplate->data['message'];  
+					$tmpl->set('message', $ajaxLoginForm->ajaxTemplate->data['message']);
+					$tmpl->set('messagetype', $ajaxLoginForm->ajaxTemplate->data['messagetype']);
+			}
+			$tmpl->set("registerAjax", $ajaxLoginForm->ajaxRender());
 		}
 		
 		$isReadOnly =  wfReadOnly() ? 1:0;
@@ -310,7 +317,7 @@ class AjaxLoginForm extends LoginForm {
 		// Output the HTML which combines the two forms (which are already in the template) in a way that looks right for a standalone page.
 		wfLoadExtensionMessages('ComboAjaxLogin');
 		  
-		$tmpl = self::getTemplateForCombinedForms( true, $this->lastmsg  );
+		$tmpl = self::getTemplateForCombinedForms( true, $this->lastmsg, $this );
 		
 		$wgOut->addHTML( $tmpl->execute( 'ComboAjaxLogin' ) );
 		$wgOut->addHTML( $tmpl->execute( 'ComboPageFooter' ) );
@@ -372,6 +379,11 @@ class AjaxLoginForm extends LoginForm {
 		$this->saveMessage($msg);
 		$this->msg = $msg;
 		$this->msgtype = $msgtype;
+		
+		 // Seems to be the only way to get the form to remember that the password was reset.  Would be nice to refactor this to not be so cludgy.
+		if($this->msg == wfMsg( 'passwordsent', $this->mName )){
+			$this->processStatus = parent::RESET_PASS;
+		}
 
 		if ( '' == $this->mName ) {
 			if ( $wgUser->isLoggedIn() ) {
