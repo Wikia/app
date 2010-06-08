@@ -31,12 +31,12 @@ $messages['en'] = array(
 	'leaderboard-button' => 'Achievements Leaderboard',
  	'achievements-masthead-points' => '$1 <small>points</small>',
 
-	'achievements-track-name-edit' => 'Edit Track',
-	'achievements-track-name-picture' => 'Picture Track',
-	'achievements-track-name-category' => 'Category Track',
-	'achievements-track-name-blogpost' => 'Blog Post Track',
-	'achievements-track-name-blogcomment' => 'Blog Comment Track',
-	'achievements-track-name-love' => 'Wiki Love Track',
+	'achievements-track-name-edit' => 'Edit track',
+	'achievements-track-name-picture' => 'Pictures track',
+	'achievements-track-name-category' => 'Category track',
+	'achievements-track-name-blogpost' => 'Blog Post track',
+	'achievements-track-name-blogcomment' => 'Blog Comment track',
+	'achievements-track-name-love' => 'Wiki Love track',
 
 	/*
 	 * User notifications
@@ -85,7 +85,7 @@ $messages['en'] = array(
 	'achievements-about-title' => 'About this page...',
 	'achievements-about-content' => 'Admins on this wiki can customize the names and pictures of the achievement badges. <br /><br />You can upload any .jpg or .png picture, and your picture will automatically fit inside the frame. It works best when your picture is square, and when the most important part of the picture is right in the middle.<br /><br />You can use rectangular pictures, but you might find that a bit gets cropped out by the frame. If you have a graphics program, then you can crop your picture to put the important part of the image in the center. If you don\'t, then just experiment with different pictures until you find the ones that work for you! If you don\'t like the picture that you\'ve chosen, click "Revert to default" to go back to the original graphic.<br /><br />You can also give the badges new names that reflect the topic of the wiki. When you\'ve changed badge names, click "Save changes" to save what you\'ve done. Have fun!',
 
-	'achievements-edit-plus-category-track-name' => 'Edit in $1 category track',
+	'achievements-edit-plus-category-track-name' => '$1 edit track',
 	'achievements-create-edit-plus-category-title' => 'Create a new Edit track',
 	'achievements-create-edit-plus-category-content' => 'You can create a new set of badges that reward people for editing articles in a particular category, to highlight a particular area of the site that people would enjoy working on. You can set up more than one category track, so try choosing two categories that would help people show off their specialty! Ignite a rivalry between the people who edit Vampires pages and the people who edit Werewolves pages, or Wizards and Muggles, or Autobots and Decepticons.<br /><br />To create a new "Edit in category" track, type the name of the category in the field below. The regular Edit track will still exist; this will create a separate track that you can customize separately.<br /><br />When the track is created, the new badges will appear in the list on the left, under the regular Edit track. Customize the names and images for the new track, so that people can see the difference!<br /><br />Once you\'ve done the customization, click the "enabled" checkbox to turn on the new track, and then click "Save changes". People will see the new track appear on their user profiles, and they\'ll start earning badges when they edit pages in that category. You can also disable the track later, if you decide you don\'t want to highlight that category anymore. People who have earned badges in that track will always keep their badges, even if the track is disabled.<br /><br />This can help to bring another level of fun to the achievements. Try it out!',
 	'achievements-create-edit-plus-category' => 'Create this track',
@@ -199,20 +199,20 @@ $messages['en'] = array(
 	/*
 	 * Badges' details for badges list hovers on user profile
 	 */
-	'achievements-badge-hover-desc-edit' => 'for making $1 {{PLURAL:$1|edit|edits}}<br />on {{PLURAL:$1|an article page|article pages}}',
+	'achievements-badge-hover-desc-edit' => 'for making $1 {{PLURAL:$1|edit|edits}}<br />on {{PLURAL:$1|an article page|article pages}}!',
 	'achievements-badge-hover-desc-edit-plus-category' => 'for making $1 {{PLURAL:$1|edit|edits}}<br />on {{PLURAL:$1|a|}} $2 {{PLURAL:$1|page| pages}}!',
-	'achievements-badge-hover-desc-picture' => 'for adding $1 {{PLURAL:$1|picture|pictures}}<br />to {{PLURAL:$1|an article page|article pages}}',
-	'achievements-badge-hover-desc-category' => 'for adding $1 {{PLURAL:$1|article page|article pages}}<br />to {{PLURAL:$1|a category|categories}}',
-	'achievements-badge-hover-desc-blogpost' => 'for writing $1 {{PLURAL:$1|blog post|blog posts}}',
-	'achievements-badge-hover-desc-blogcomment' => 'for writing a comment<br />on $1 different blog posts',
-	'achievements-badge-hover-desc-love' => 'for contributing to the wiki every day for $1 days',
-	'achievements-badge-hover-desc-welcome' => 'for joining the wiki',
-	'achievements-badge-hover-desc-introduction' => 'for adding to<br />your own user page',
-	'achievements-badge-hover-desc-sayhi' => 'for leaving a message<br />on someone else\'s talk page',
-	'achievements-badge-hover-desc-creator' => 'for creating the wiki',
-	'achievements-badge-hover-desc-pounce' => 'for making edits on 100 article pages within an hour of the page\'s creation',
-	'achievements-badge-hover-desc-caffeinated' => 'for making 100 edits on article pages in a single day',
-	'achievements-badge-hover-desc-luckyedit' => 'for making the Lucky $1th Edit on the wiki',
+	'achievements-badge-hover-desc-picture' => 'for adding $1 {{PLURAL:$1|picture|pictures}}<br />to {{PLURAL:$1|an article page|article pages}}!',
+	'achievements-badge-hover-desc-category' => 'for adding $1 {{PLURAL:$1|article page|article pages}}<br />to {{PLURAL:$1|a category|categories}}!',
+	'achievements-badge-hover-desc-blogpost' => 'for writing $1 {{PLURAL:$1|blog post|blog posts}}!',
+	'achievements-badge-hover-desc-blogcomment' => 'for writing a comment<br />on $1 different blog posts!',
+	'achievements-badge-hover-desc-love' => 'for contributing to the wiki every day for $1 days!',
+	'achievements-badge-hover-desc-welcome' => 'for joining the wiki!',
+	'achievements-badge-hover-desc-introduction' => 'for adding to<br />your own user page!',
+	'achievements-badge-hover-desc-sayhi' => 'for leaving a message<br />on someone else\'s talk page!',
+	'achievements-badge-hover-desc-creator' => 'for creating the wiki!',
+	'achievements-badge-hover-desc-pounce' => 'for making edits on 100 article pages within an hour of the page\'s creation!',
+	'achievements-badge-hover-desc-caffeinated' => 'for making 100 edits on article pages in a single day!',
+	'achievements-badge-hover-desc-luckyedit' => 'for making the Lucky $1th Edit on the wiki!',
 	'achievements-badge-hover-desc-community-platinum' => 'This is a special Platinum badge that\'s only available for a limited time!',
 
 	/*
@@ -236,18 +236,18 @@ $messages['en'] = array(
 	/*
 	 * Badges' details for recent badges list on leaderboard
 	 */
-	'achievements-badge-desc-edit' => 'for making $1 {{PLURAL:$1|edit|edits}} on {{PLURAL:$1|an article page|article pages}}',
+	'achievements-badge-desc-edit' => 'for making $1 {{PLURAL:$1|edit|edits}} on {{PLURAL:$1|an article page|article pages}}!',
 	'achievements-badge-desc-edit-plus-category' => 'for making $1 {{PLURAL:$1|edit|edits}} on {{PLURAL:$1|a|}} $2 {{PLURAL:$1|page| pages}}!',
-	'achievements-badge-desc-picture' => 'for adding $1 {{PLURAL:$1|picture|pictures}} to {{PLURAL:$1|an article page|article pages}}',
-	'achievements-badge-desc-category' => 'for adding $1 {{PLURAL:$1|article page|article pages}} to {{PLURAL:$1|a category|categories}}',
-	'achievements-badge-desc-blogpost' => 'for writing $1 {{PLURAL:$1|blog post|blog posts}}',
-	'achievements-badge-desc-blogcomment' => 'for writing a comment on $1 different blog posts',
-	'achievements-badge-desc-love' => 'for contributing to the wiki every day for $1 days',
-	'achievements-badge-desc-welcome' => 'for joining the wiki',
-	'achievements-badge-desc-introduction' => 'for adding to your own user page',
-	'achievements-badge-desc-sayhi' => 'for leaving a message on someone else\'s talk page',
-	'achievements-badge-desc-creator' => 'for creating the wiki',
-	'achievements-badge-desc-pounce' => 'for making edits on 100 article pages within an hour of the page\'s creation',
-	'achievements-badge-desc-caffeinated' => 'for making 100 edits on article pages in a single day',
-	'achievements-badge-desc-luckyedit' => 'for making the Lucky $1th Edit on the wiki',
+	'achievements-badge-desc-picture' => 'for adding $1 {{PLURAL:$1|picture|pictures}} to {{PLURAL:$1|an article page|article pages}}!',
+	'achievements-badge-desc-category' => 'for adding $1 {{PLURAL:$1|article page|article pages}} to {{PLURAL:$1|a category|categories}}!',
+	'achievements-badge-desc-blogpost' => 'for writing $1 {{PLURAL:$1|blog post|blog posts}}!',
+	'achievements-badge-desc-blogcomment' => 'for writing a comment on $1 different blog posts!',
+	'achievements-badge-desc-love' => 'for contributing to the wiki every day for $1 days!',
+	'achievements-badge-desc-welcome' => 'for joining the wiki!',
+	'achievements-badge-desc-introduction' => 'for adding to your own user page!',
+	'achievements-badge-desc-sayhi' => 'for leaving a message on someone else\'s talk page!',
+	'achievements-badge-desc-creator' => 'for creating the wiki!',
+	'achievements-badge-desc-pounce' => 'for making edits on 100 article pages within an hour of the page\'s creation!',
+	'achievements-badge-desc-caffeinated' => 'for making 100 edits on article pages in a single day!',
+	'achievements-badge-desc-luckyedit' => 'for making the Lucky $1th Edit on the wiki!',
 );
