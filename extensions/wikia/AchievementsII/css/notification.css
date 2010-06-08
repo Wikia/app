@@ -12,7 +12,8 @@
 
 #wikia-alert {
   width: 800px;
-  height: 100px;
+  /*height: 100px;*/
+  height: 110px;
   border-style: solid;
   border-width: 4px;
   position: fixed;
@@ -41,15 +42,19 @@
 }
 
 #wikia-alert h1 {
-  font-size: 20px;
+  /*font-size: 19px;*/
+  font-size: 17px;
   font-weight: bold;
-  margin-bottom: 4px;
+  /*margin-bottom: 4px;*/
+  margin-bottom: 1px;
 }
 
 #wikia-alert h2 {
-  font-size: 16px;
+  /*font-size: 16px;*/
+  font-size: 13px;
   font-weight: bold;
-  margin-bottom: 2px;
+  /*margin-bottom: 2px;*/
+  line-height:1.3em;
 }
 
 #wikia-alert h3 {
@@ -105,4 +110,8 @@
 #wikia-alert dl dd input {
   font-size: 16px;
   padding: 4px;
+}
+
+#wikia-alert big {
+	font-size: 12px;
 }
