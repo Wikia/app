@@ -128,7 +128,9 @@ var Achievements = {
 		$(form).submit();
 		
 		$("#body").addClass("ajax");
-		inputs.attr('disabled', 'disabled');
+		
+		if(!$.browser.webkit)
+			inputs.attr('disabled', 'disabled');
 		
 		return false;
 	},
@@ -136,7 +138,9 @@ var Achievements = {
 	revert: function(o, badge_type, badge_lap) {
 		var inputs = $(o).parent().parent().next().find('button, input[type=file]');
 		$("#body").addClass("ajax");
-		inputs.attr('disabled', 'disabled');
+		
+		if(!$.browser.webkit)
+			inputs.attr('disabled', 'disabled');
 		
 		if (badge_lap == null && typeof(badge_lap) == "undefined") {
 			badge_lap = '';

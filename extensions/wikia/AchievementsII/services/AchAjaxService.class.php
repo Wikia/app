@@ -5,7 +5,7 @@ class AchAjaxService {
 	public static function editPlatinumBadge() {
 		global $wgCityId, $wgRequest, $wgSitename, $wgServer, $wgScriptPath, $wgExternalSharedDB;
 		wfLoadExtensionMessages('AchievementsII');
-
+		
 		$badge_type_id = $wgRequest->getVal('type_id');
 
 		$ret = array('errors' => null, 'typeId' => $badge_type_id);

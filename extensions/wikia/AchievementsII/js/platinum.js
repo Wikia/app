@@ -51,7 +51,9 @@ var SpecialCustomizePlatinum = {
 			
 			$(form).submit();
 			//block user input
-			badge.find('textarea, input').attr('disabled', 'disabled');
+			if(!$.browser.webkit)
+				badge.find('textarea, input').attr('disabled', 'disabled');
+			
 			$("#body").addClass("ajax");
 		}
 		return false;
@@ -102,7 +104,9 @@ var SpecialCustomizePlatinum = {
 			
 			$(form).submit();
 			//block user input
-			badge.find('textarea, input, checkbox').attr('disabled', 'disabled');
+			if(!$.browser.webkit)
+				badge.find('textarea, input, checkbox').attr('disabled', 'disabled');
+			
 			$("#body").addClass("ajax");
 		}
 		
