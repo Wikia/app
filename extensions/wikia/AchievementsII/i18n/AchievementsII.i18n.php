@@ -3,6 +3,8 @@
 $messages = array();
 
 $messages['en'] = array(
+	'achievementsii-desc' => 'An achievement badges system for wiki users',
+
 	/*
 	 * Error messages
 	 */
@@ -11,7 +13,7 @@ That picture does not work.
 Make sure that it is a .jpg or .png file.
 If it still does not work, then the picture may be too big.
 Please try another one!',
-	'achievements-upload-not-allowed' => 'Administrators can change the names and pictures of Achievements badges by visiting [[Special:AchievementsCustomize|the Customize achievements]] page.',
+	'achievements-upload-not-allowed' => 'Administrators can change the names and pictures of Achievement badges by visiting [[Special:AchievementsCustomize|the Customize achievements]] page.',
 	'achievements-non-existing-category' => 'The specified category does not exist.',
 	'achievements-edit-plus-category-track-exists' => 'The specified category already has an <a href="#" onclick="$(window).scrollTo(\'#section$1\', 2500); return false;" title="Go to the track">associated track</a>.',
 	/*

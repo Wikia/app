@@ -25,6 +25,14 @@ define('BADGE_TYPE_NOTINTRACKCOMMUNITYPLATINUM', 2); // COMMUNITY CUSTOM
 define('BADGE_TYPE_NOTINTRACKSTATIC', 3); // STATIC IN TRACK
 define('BADGE_TYPE_INTRACKSTATIC', 4); // STATIC NOT IN TRACK
 
+$wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
+	'name'           => 'AchievementsII',
+	'author'         => 'Wikia',
+	'descriptionmsg' => 'achievementsii-desc',
+	'url'            => 'http://www.mediawiki.org/wiki/Extension:AchievementsII',
+);
+
 $dir = dirname(__FILE__).'/';
 
 // SPECIAL PAGES
