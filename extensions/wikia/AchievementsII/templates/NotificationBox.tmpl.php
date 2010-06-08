@@ -13,9 +13,7 @@ $badgeName = htmlspecialchars($badge->getName());
 		<p><?=wfMsgExt('achievements-notification-link', array('parse'), $user->getName());?></p>
 	</div>
 	<h3 class="<?=AchConfig::getInstance()->getLevelMsgKeyPart($badge->getLevel());?>">
-		<span id="points"><?=AchConfig::getInstance()->getLevelScore($badge->getLevel());?></span>
-		<br />
-		<span id="shift"><?=wfMsg('achievements-points');?></span>
+		<span id="points"><?=wfMsg( 'achievements-points-with-break', AchConfig::getInstance()->getLevelScore( $badge->getLevel() ) );?></span>
 	</h3>
 </div>
 

@@ -51,7 +51,8 @@ Please try another one!',
 	'achievements-notification-title' => 'Way to go, $1!',
 	'achievements-notification-subtitle' => 'You just earned the "$1" badge $2',
 	'achievements-notification-link' => '<strong><big>[[Special:MyPage|Click here to see more badges you can earn]]!</big></strong>',
-	'achievements-points' => 'points',
+	'achievements-points' => '$1 {{PLURAL:$1|point|points}}',
+	'achievements-points-with-break' => '$1<br />{{PLURAL:$1|point|points}}',
 
 	/*
 	 * User profile
