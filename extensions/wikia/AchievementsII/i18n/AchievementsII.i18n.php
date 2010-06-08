@@ -36,7 +36,7 @@ Please try another one!',
 	 */
 	'achievements-you-must' => 'You need to $1 to earn this badge.',
 	'leaderboard-button' => 'Achievements leaderboard',
- 	'achievements-masthead-points' => '$1 <small>points</small>',
+ 	'achievements-masthead-points' => '$1 <small>{{PLURAL:$1|point|points}}</small>',
 
 	'achievements-track-name-edit' => 'Edit track',
 	'achievements-track-name-picture' => 'Pictures track',
