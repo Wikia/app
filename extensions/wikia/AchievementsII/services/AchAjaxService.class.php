@@ -12,14 +12,16 @@ class AchAjaxService {
 
 		$usernamesToAward = $wgRequest->getArray('award_user');
 		$usersToAward = array();
-
-		foreach($usernamesToAward as $usernameToAward) {
-			if($usernameToAward != '') {
-				$user = User::newFromName($usernameToAward);
-				if($user && $user->isLoggedIn()) {
-					$usersToAward[] = $user;
-				} else {
-					$ret['errors'][] = "User '{$usernameToAward}' does not exists";
+		
+		if(is_array($usernamesToAward)) {//Webklit browsers don't send an empty array of inputs in a POST request
+			foreach($usernamesToAward as $usernameToAward) {
+				if($usernameToAward != '') {
+					$user = User::newFromName($usernameToAward);
+					if($user && $user->isLoggedIn()) {
+						$usersToAward[] = $user;
+					} else {
+						$ret['errors'][] = "User '{$usernameToAward}' does not exists";
+					}
 				}
 			}
 		}

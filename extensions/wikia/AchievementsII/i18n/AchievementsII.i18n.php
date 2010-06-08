@@ -117,7 +117,7 @@ You have just been awarded with the '$2' Platinum badge on $4 ($3). This adds 25
 Check out your fancy new badge on your user profile page:
 
 $5",
-	'achievements-community-platinum-awarded-email-body-html' => "<strong>Congratulations $1</strong><br/><br/>
+	'achievements-community-platinum-awarded-email-body-html' => "<strong>Congratulations $1!</strong><br/><br/>
 You have just been awarded with the '<strong>$2</strong>' Platinum badge on <a href=\"$3\">$4</a>. This adds 250 points to your score!<br/><br/>
 Check out your fancy new badge on your <a href=\"$5\">user profile page</a>.",
 
