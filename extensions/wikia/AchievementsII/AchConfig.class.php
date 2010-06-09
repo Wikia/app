@@ -432,11 +432,11 @@ class AchConfig {
 		return "achievements-badge-to-get-{$msgKeyPart}-details";
 	}
 
-	public function getBadgePictureName($badgeTypeId, $badge_lap = null, $postfix = null) {
+	public function getBadgePictureName($badgeTypeId, $badge_lap = null, $postfix = null, $withPrefix = true) {
 		if($badgeTypeId == BADGE_LUCKYEDIT) {
 			$badge_lap = null;
 		}
-		return (($badgeTypeId > 0) ? 'badge-' : null) . $this->getBadgeMsgKeyPart($badgeTypeId). (($badge_lap !== null) ? "-{$badge_lap}" : null) . (($postfix !== null) ? "-{$postfix}" : null) . '.png';
+		return (($withPrefix) ? 'badge-' : null) . $this->getBadgeMsgKeyPart($badgeTypeId). (($badge_lap !== null) ? "-{$badge_lap}" : null) . (($postfix !== null) ? "-{$postfix}" : null) . '.png';
 	}
 
 	public function getRequiredEvents($badgeTypeId, $badge_lap = null) {
