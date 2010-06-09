@@ -137,7 +137,7 @@ $messages['en'] = array(
 	'fbconnect-prefsheader' => "By default, some events will push items to your Facebook feed. You can customise these now, or later at any time in your preferences.",
 	'fbconnect-prefs-show' => "Show feed preferences >>",
     'fbconnect-prefs-hide' => "Hide feed preferences >>",
-	'fbconnect-prefs-post' => 'Post to my Facebook News Feed when I',
+	'fbconnect-prefs-post' => 'Post to my Facebook News Feed when I:',
     'fbconnect-nameform-error' => 'This username is already taken. If it\'s your username, please <a href="$1">log in first</a> and then connect your account to Facebook.' ,          
 	'fbconnect-disconnect-link' => "You can also <a id='fbConnectDisconnect' href='#'> disconnect your Wikia account from Faccebook.</a> You'll able continue using your Wikia account as normal, with your history (edits, points, achievements ) intact.",
 	'fbconnect-disconnect-done' => "Disconnecting <span id='fbConnectDisconnectDone'>... done! </span>",

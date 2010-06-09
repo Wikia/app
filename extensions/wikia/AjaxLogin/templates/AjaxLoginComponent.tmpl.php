@@ -34,7 +34,7 @@
 	                </td>
 	            <?php if( $wgEnableEmail && $wgAuth->allowPasswordChange() ) { ?>
 	                <td>
-						<a href="#" onclick="AjaxLogin.action='password'; AjaxLogin.form.submit();" ><?php print wfMsg('mailmypassword') ?></a>
+						<a href="#" id="wpMailmypassword" onclick="AjaxLogin.action='password'; AjaxLogin.form.submit();" ><?php print wfMsg('mailmypassword') ?></a>
 					</td>
 	                </td>
 	            <?php } ?>
