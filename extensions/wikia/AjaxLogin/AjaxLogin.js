@@ -280,6 +280,9 @@ var AjaxLogin = {
 	blockLoginForm: function(block) {
 		AjaxLogin.form.find('input').attr('disabled', (block ? true : false));
 	},
+	injectMailMyPassword: function(el) {
+		$(el).parents('form').prepend('<input type="hidden" name="wpMailmypassword" value="1"/>');
+	},
 	ajaxRegisterConfirm: function(ev) {
 		AjaxLogin.form.log('AjaxLogin: ajaxRegisterConfirm()');
 
