@@ -19,7 +19,7 @@ class AchUserProfileService {
 
     	$this->mUserOwner = User::newFromName($wgTitle->getText());
 
-    	if($this->mUserOwner->isLoggedIn()) {
+    	if($this->mUserOwner && $this->mUserOwner->isLoggedIn()) {
 
     		wfLoadExtensionMessages('AchievementsII');
 
