@@ -27,7 +27,7 @@
 			var returning = [];
 			var regexp = /[\@]+([A-Za-z0-9-_]+)/gi;
 			this.each(function() {
-				returning.pus(this.replace(regexp,"<a href=\"http://twitter.com/$1\" target=\"_blank\">@$1</a>"));
+				returning.push(this.replace(regexp,"<a href=\"http://twitter.com/$1\" target=\"_blank\">@$1</a>"));
 			});
 			return $(returning);
 		},
