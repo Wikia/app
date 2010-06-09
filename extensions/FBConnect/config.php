@@ -8,19 +8,12 @@
 $currDir = dirname( __FILE__ ) . '/';
 include $currDir.'wikia/fbconnect_customizations.php';
 
-$wgExtensionMessagesFiles['FBConnect_wikia'] =	$currDir . 'wikia/FBConnect_wikia.i18n.php';
 $wgExtensionFunctions[] = 'wikia_fbconnect_init';
 
 // Set up this deployment to use our custom account-creation form instead of the one built into the extension.
 $wgHooks['SpecialConnect::chooseNameForm'][] = 'wikia_fbconnect_chooseNameForm'; // callbacks are in wikia/fbconnect_customizations.php
 $wgHooks['SpecialConnect::createUser::validateForm'][] = 'wikia_fbconnect_validateChooseNameForm';
 $wgHooks['SpecialConnect::createUser::postProcessForm'][] = 'wikia_fbconnect_postProcessForm';
-
-$wgHooks['FBConnectDB::addFacebookID'][] = 'wikia_fbconnect_addFacebookID';
-$wgHooks['AddNewAccount'][] = 'wikia_fbconnect_onAddNewAccount';
-$wgHooks['SpecialConnect::login::notFoundLocally'][] = 'wikia_fbconnect_userNotFoundLocally';
-$wgHooks['AuthPluginAutoCreate'][] = 'wikia_fbconnect_onAuthPluginAutoCreate';
-
 
 ### FBCONNECT CONFIGURATION VARIABLES ###
 
@@ -107,9 +100,9 @@ $fbUserRightsFromGroup = false;  # Or a group ID
  * For more information, see <http://www.mediawiki.org/wiki/Manual:$wgShowIPinHeader>.
  */
 $fbPersonalUrls = array(
-	'hide_connect_button'   => true,
+	'hide_connect_button'   => false,
 	'hide_convert_button'   => true,
-	'hide_logout_of_fb'     => true,
+	'hide_logout_of_fb'     => false,
 	'link_back_to_facebook' => false,
 	'remove_user_talk_link' => false,
 	'use_real_name_from_fb' => false, # or true or false
@@ -161,43 +154,14 @@ $fbIncludeJquery = false;
 $fbOnLoginJsOverride = "sendToConnectOnLogin();";
 
 /**
- * Optionally turn off the inclusion of the PreferencesExtension.  Since this
- * is an extension that you may already have installed in your instance of
- * MediaWiki, there is the option to turn off FBConnect's inclusion of it (which
- * will require you to already have PreferencesExtension enabled elsewhere).
- *
- * When running on MediaWiki v1.16 and above, the extension won't be included anyway.
- */
-$fbIncludePreferencesExtension = true;
-
-/**
- * An array of extended permissions to request from the user while they are
- * signing up.
- *
- * NOTE: If fbEnablePushToFacebook is true, then publish_stream will automatically be
- * added to this array.
- *
- * For more details see: http://wiki.developers.facebook.com/index.php/Extended_permissions
- */
-$fbExtendedPermissions = array(
-	//'publish_stream',
-	//'read_stream',
-	//'email',
-	//'read_mailbox',
-	//'offline_access',
-	//'create_event',
-	//'rsvp_event',
-	//'sms',
-	//'xmpp_login',
-);
-
-/**
  * PUSH EVENTS
  *
  * This section allows controlling of whether push events are enabled, and which
  * of the push events to use.
  */
- global $wgEnableFacebookConnectPushing;
+	$wgEnableFacebookConnectPushing = true; // TODO: REMEMBER TO MOVE INTO CommonSettings.php BEFORE RELEASE
+
+global $wgEnableFacebookConnectPushing;
 $fbEnablePushToFacebook = (!empty($wgEnableFacebookConnectPushing));
 if(!empty($fbEnablePushToFacebook)){
 	$fbPushDir = dirname(__FILE__) . '/pushEvents/';

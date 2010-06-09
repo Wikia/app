@@ -239,4 +239,39 @@ class FBConnectAPI {
 		$email = trim(strtolower($email));
 		return crc32($email) . '_' . md5($email);
 	}
+	
+	/*
+	 * Publish message on facebook wall 
+	 */
+	public function publishStream($message_name, $params = array()) {
+		$msg = wfMsg( $message_name ) ;
+		
+		foreach ($params as $key => $value) {
+		 	$msg = str_replace($key, $value, $msg);
+		}
+		
+		$msg = str_replace('$FB_NAME', '', $msg);
+
+		try {		
+			$result = $this->Facebook()->api_client->stream_publish( $msg );
+		} catch ( FacebookRestClientException $e ) {			
+			if( $e->getCode() != 506 ){ 
+				//unknow error http://forum.developers.facebook.com/viewtopic.php?pid=230061
+				return $e->getCode();
+			}
+		}
+		
+		return 0;
+	}
+	
+	/*
+	 * 
+	 */
+	function verifyAccountReclamation($fb_user_id,$hash) {
+		if (!$this->Facebook()->verify_account_reclamation($fb_user_id,$hash) ) {
+			 return false;
+		}
+
+		return FBConnectDB::getUser($fb_user_id);
+	}
 }

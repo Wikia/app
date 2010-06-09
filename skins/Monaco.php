@@ -1658,12 +1658,13 @@ if( $custom_user_data ) {
 	// Output the facebook connect links that were added with PersonalUrls.
 	// @author Sean Colombo
 	foreach($this->data['userlinks'] as $linkName => $linkData){
+		// 
 		if(strpos($linkName, "fb") === 0){
 			$activeClass = ((isset($linkData['active']) && $linkData['active'])?" class=\"active\"":"");
 			print "				<span id='$linkName'$activeClass><a href=\"".htmlspecialchars($linkData['href']).'"'.$skin->tooltipAndAccesskey('pt-'.$linkName);
 			print (isset($linkData['class'])?' class="'.$linkData['class'].'"':"");
 			print ">";
-			print htmlspecialchars($linkData['text'])."</a></span>\n";
+			print $linkData['text']."</a></span>\n";
 		}
 	}
 

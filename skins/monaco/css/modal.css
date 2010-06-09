@@ -226,6 +226,10 @@ h1.modalTitle img {
 	border:1px solid #3366CC;
 }
 
+#fbConnectPushEventToggles .toggle label {
+	margin-left:5px;
+}	
+
 .yui-overlay,
 .yui-panel-container {
     visibility:hidden;

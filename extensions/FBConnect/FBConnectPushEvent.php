@@ -11,15 +11,15 @@
 $wgExtensionFunctions[] = 'FBConnectPushEvent::initExtension';
 
 // PreferencesExtension is needed up until 1.16, then the needed functionality is built in.
-if (version_compare($wgVersion, '1.16', '>=')) {
-	$wgHooks['GetPreferences'][] = 'FBConnectPushEvent::addPreferencesToggles';
-}
+$wgHooks['GetPreferences'][] = 'FBConnectPushEvent::addPreferencesToggles';
+$wgHooks['initPreferencesExtensionForm'][] = 'FBConnectPushEvent::addPreferencesToggles';
 
 class FBConnectPushEvent {
 	protected $isAllowedUserPreferenceName = ''; // implementing classes MUST override this with their own value.
 
 	// This must correspond to the name of the message for the text on the tab itself.
 	static protected $PREFERENCES_TAB_NAME = "fbconnect-prefstext";
+	static public $PREF_TO_DISABLE_ALL = "fbconnect-push-allow-never";
 
 	/**
 	 * Accessor for the user preference to which (if set to 1) allows this type of event
@@ -53,63 +53,40 @@ class FBConnectPushEvent {
 
 		// TODO: Can we detect if this is Special:Preferences and only add the checkboxes if that is the case?  Can't think of anything else that would break.
 		// TODO: Can we detect if this is Special:Preferences and only add the checkboxes if that is the case?  Can't think of anything else that would break.
-
-
-		// Only add the preferences using PreferencesExtension for versions prior to 1.16.
-		// The code for 1.16+ will be done in FBConnectPushEvent::addPreferencesToggles
-		global $wgVersion;
-		if (version_compare($wgVersion, '1.16', '<')) {
-			global $fbPushEventClasses;
-			if(!empty($fbPushEventClasses)){
- 				foreach($fbPushEventClasses as $pushEventClassName){
-					$pushObj = new $pushEventClassName;
-					$className = get_class();
-					$prefName = $pushObj->getUserPreferenceName();
-
-					// Adds the user-preferences (making use of the "PreferencesExtension" extension).
-					wfAddPreferences(array(
-						array(
-							"name" => $prefName,
-							"section" => self::$PREFERENCES_TAB_NAME,
-							"type" => PREF_TOGGLE_T,
-							//"size" => "", // Not relevant to this type.
-							//"html" => "",
-							//"min" => "",
-							//"max" => "",
-							//"validate" => "",
-							//"save" => "",
-							//"load" => "",
-							"default" => "1",
-						)
-					));
-				}
-			}
-		}
-
+        
 		wfProfileOut(__METHOD__);
 	} // end initExtension()
 
 	/**
 	 * Adds enable/disable toggles to the Preferences form for controlling all push events.
 	 *
-	 * NOTE: This is only for v1.16+ of MW.  For prior versions, the toggles are added in initExtension().
 	 */
 	static public function addPreferencesToggles( $user, &$preferences ){
-		global $fbPushEventClasses;
-		if(!empty($fbPushEventClasses)){
-			foreach($fbPushEventClasses as $pushEventClassName){
-				$pushObj = new $pushEventClassName;
-				$className = get_class();
-				$prefName = $pushObj->getUserPreferenceName();
+		global $fbPushEventClasses, $wgUser;
+		wfLoadExtensionMessages('FBConnect');
+		$id = FBConnectDB::getFacebookIDs($wgUser);
+		if( count($id) > 0 ) {			
+			if(!empty($fbPushEventClasses)){
+				foreach($fbPushEventClasses as $pushEventClassName){
+					$pushObj = new $pushEventClassName;
+					$className = get_class();
+					$prefName = $pushObj->getUserPreferenceName();
 
-				$preferences[$prefName] = array(
-					'type' => 'toggle',
-					'label-message' => $prefName,
-					'section' => self::$PREFERENCES_TAB_NAME,
-				);
+					$preferences[$prefName] = array(
+						'type' => 'toggle',
+						'label-message' => $prefName,
+						'section' => self::$PREFERENCES_TAB_NAME,
+						"default" => "1",
+					);
+					
+					/* < v1.16 */ 
+					if( defined('PREF_TOGGLE_T') ) {
+						$preferences[$prefName]['int-type'] = PREF_TOGGLE_T;
+						$preferences[$prefName]['name'] = $prefName;
+					}	
+				}
 			}
 		}
-
 		return true;
 	} // end addPreferencesToggles()
 	
@@ -121,34 +98,50 @@ class FBConnectPushEvent {
 	 *
 	 * If firstTime is set to true, the checkboxes will default to being checked, otherwise
 	 * they will default to the current user-option setting for the user.
+	 *
+	 * There is also an option which will disable all push events.
 	 */
-	static public function createPreferencesToggles($firstTime = false){
+	static public function getPreferencesToggles($firstTime = false){
 		global $wgUser, $wgLang;
 		global $fbPushEventClasses;
 		wfProfileIn(__METHOD__);
-
-		$html = "";
+		$results = array();
 		if(!empty($fbPushEventClasses)){
 			foreach($fbPushEventClasses as $pushEventClassName){
 				$pushObj = new $pushEventClassName;
-				$className = get_class();
 				$prefName = $pushObj->getUserPreferenceName();
-
+				
 				$prefText = $wgLang->getUserToggle( $prefName );
-				if($firstTime){
-					$checked = ' checked="checked"';
-				} else {
-					$checked = $wgUser->getOption( $prefName ) == 1 ? ' checked="checked"' : '';
-				}
-				$html .= "<div class='toggle'>";
-				$html .= "<input type='checkbox' value='1' id=\"$prefName\" name=\"$prefName\"$checked />";
-				$html .= " <span class='toggletext'><label for=\"$prefName\">$prefText</label></span>";
-				$html .= "</div>\n";
+				$prefTextShort = $wgLang->getUserToggle($prefName.'-short');
+				
+				$result = array(
+					'id' => $prefName,
+					'name' => $prefName,
+					'text' => $prefText,
+					'shortText' => $prefTextShort,
+					'checked' => true
+				);
+				
+				$results[] = $result;
 			}
+
+			// Create an option to opt out of all current and future push-events.
+			$prefName = self::$PREF_TO_DISABLE_ALL;
+			$prefText = wfMsg('tog-' . self::$PREF_TO_DISABLE_ALL);
+			
+			$result = array(
+					'fullLine' => true,
+					'id' => $prefName,
+					'name' => $prefName,
+					'text' => $prefText,
+					'shortText' => $prefText 
+			);
+				
+			$results[] = $result;
 		}
 
 		wfProfileOut(__METHOD__);
-		return $html;
+		return $results;
 	} // end createPreferencesToggles()
 
 	/**
@@ -156,7 +149,7 @@ class FBConnectPushEvent {
 	 * to make sure that the configured push-events are valid and then gives them each a chance to initialize.
 	 */
 	static public function initAll(){
-		global $fbPushEventClasses;
+		global $fbPushEventClasses, $wgUser;
 		wfProfileIn(__METHOD__);
 
 		if(!empty($fbPushEventClasses)){
@@ -177,7 +170,12 @@ class FBConnectPushEvent {
 				}
 
 				// The push event is valid, let it initialize itself if needed.
-				$pushObj->init();
+				$pushObj->loadMsg();
+				if( !$wgUser->getOption(self::$PREF_TO_DISABLE_ALL) ) {
+					if( $wgUser->getOption($prefName) ) {
+						$pushObj->init();	
+					}
+				}
 			}
 		}
 
@@ -191,6 +189,39 @@ class FBConnectPushEvent {
 	 * and the getUserPreferenceName() call checks out (the result must be non-empty).
 	 */
 	public function init(){}
-
+	
+	
+	public function loadMsg() {}
+	
+	
+	/**
+	 * put facebook message
+	 */
+	
+	static public function pushEvent($message, $params, $class){
+		$fb = new FBConnectAPI();
+		$status = $fb->publishStream($message, $params);
+		self::addEventStat($status, $class);
+		return $status;
+	} 
+	
+	/*
+	 * put stats for facebook 
+	 */
+	
+	static public function addEventStat($status, $class){
+		global $wgStatsDB, $wgUser, $wgCityId;
+		$class = str_replace('FBPush_', '', $class);
+		$dbs = wfGetDB( DB_MASTER, array(), $wgStatsDB);  
+		$dbs->begin();
+		$dbs->insert('fbconnect_event_stats',
+			array(
+				 'user_id' => $wgUser->getId(),
+				 'status' => $status,
+				 'city_id' => $wgCityId,
+  				 'event_type' =>  $class ,
+			),__METHOD__);
+		$dbs->commit();
+	}
 
 } // end FBConnectPushEvent class

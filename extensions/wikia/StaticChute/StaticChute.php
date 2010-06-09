@@ -227,6 +227,7 @@ class StaticChute {
 			'monaco/css/ny.css',
 		 	'common/yui_2.5.2/tabview/assets/tabview.css',
 			'../extensions/wikia/Blogs/css/Blogs.css',
+			'../extensions/FBConnect/css/fbModal.css',
 			'../extensions/wikia/Masthead/css/Masthead.css',
 			'../extensions/wikia/ShareFeature/css/ShareFeature.css',
 			'../extensions/wikia/CreatePage/css/CreatePage.css',
@@ -280,6 +281,7 @@ class StaticChute {
 			'common/shared.css',
 			'corporate/css/modal.css',
 			'corporate/css/main.css',
+			'../extensions/FBConnect/css/fbModal.css',
 		);
 
 	}

@@ -185,14 +185,24 @@ STYLE;
 	 * to retain backward compatability.
 	 */
 	public static function MakeGlobalVariablesScript( &$vars ) {
-		global $wgTitle, $fbAppId, $fbUseMarkup, $fbLogo;
+		global $wgTitle, $fbAppId, $fbUseMarkup, $fbLogo, $wgRequest;
+		
 		$thisurl = $wgTitle->getPrefixedURL();
 		$vars['fbAppId'] = $fbAppId;
 		#$vars['fbLoggedIn'] = FBConnect::$api->user() ? true : false;
 		$vars['fbUseMarkup'] = $fbUseMarkup;
 		$vars['fbLogo'] = $fbLogo ? true : false;
+		
+		$query = $wgRequest->getValues();
+		if (isset($query['title'])) {
+			unset($query['title']);
+		}
+		
+		$vars['wgPagequery'] = wfUrlencode( wfArrayToCGI( $query ) );
+		
 		$vars['fbLogoutURL'] = Skin::makeSpecialUrl('Userlogout',
-						$wgTitle->isSpecial('Preferences') ? '' : "returnto={$thisurl}");
+						$wgTitle->isSpecial('Preferences') ? '' : "returnto={$thisurl}");	
+	
 		return true;
 	}
 	
@@ -239,12 +249,14 @@ STYLE;
 	 * TODO: Better 'returnto' code
 	 */
 	public static function PersonalUrls( &$personal_urls, &$wgTitle ) {
-		global $wgUser, $wgLang, $wgShowIPinHeader, $fbPersonalUrls, $fbConnectOnly;
+		global $wgUser, $wgLang, $wgShowIPinHeader, $fbPersonalUrls, $fbConnectOnly,$wgBlankImgUrl;
+		$skinName = get_class($wgUser->getSkin());
+		
 		wfLoadExtensionMessages('FBConnect');
 		// Get the logged-in user from the Facebook API
 		$fb = new FBConnectAPI();
 		$fb_user = $fb->user();
-
+		$ids = FBConnectDB::getFacebookIDs($wgUser);
 		/*
 		 * Personal URLs option: remove_user_talk_link
 		 */
@@ -254,7 +266,7 @@ STYLE;
 		}
 		
 		// If the user is logged in and connected
-		if ($wgUser->isLoggedIn() && $fb_user) {
+		if ($wgUser->isLoggedIn() && $fb_user && count($ids) > 0 ) {
 			/*
 			 * Personal URLs option: use_real_name_from_fb
 			 */
@@ -272,12 +284,15 @@ STYLE;
 				}
 			}
 			// Replace logout link with a button to disconnect from Facebook Connect
+		
 			if(empty($fbPersonalUrls['hide_logout_of_fb'])){
-				unset( $personal_urls['logout'] );
-				$personal_urls['fblogout'] = array(
-					'text'   => wfMsg( 'fbconnect-logout' ),
-					'href'   => '#',
-					'active' => false );
+				if( $skinName == "SkinMonaco" ) {
+					$personal_urls['fblogout'] = array(
+						'text'   => '&nbsp;',
+						'href'   => $personal_urls['userpage']['href'],
+						'class' => 'fb_button fb_button_small fb_usermenu_button',
+						'active' => false );
+				}
 			}
 
 			/*
@@ -294,7 +309,7 @@ STYLE;
 		else if ($wgUser->isLoggedIn()) {
 			/*
 			 * Personal URLs option: hide_convert_button
-			 */
+			 */	
 			if (!$fbPersonalUrls['hide_convert_button']) {
 				$personal_urls['fbconvert'] = array(
 					'text'   => wfMsg( 'fbconnect-convert' ),
@@ -309,14 +324,22 @@ STYLE;
 			/*
 			 * Personal URLs option: hide_connect_button
 			 */
+			
 			if (!$fbPersonalUrls['hide_connect_button']) {
 				// Add an option to connect via Facebook Connect
 				$personal_urls['fbconnect'] = array(
 					'text'   => wfMsg( 'fbconnect-connect' ),
-					'href'   => SpecialPage::getTitleFor( 'Connect' )->
-					              getLocalUrl( 'returnto=' . $wgTitle->getPrefixedURL() ),
+					'class' => 'fb_button fb_button_small',
+					'href'   => '#', // SpecialPage::getTitleFor( 'Connect' )->getLocalUrl( 'returnto=' . $wgTitle->getPrefixedURL() ),
 					'active' => $wgTitle->isSpecial('Connect')
 				);
+				if( $skinName == "SkinMonaco" ) {
+					$html = Xml::openElement("span",array("class" => "fb_button_text" ));
+					$html .= wfMsg( 'fbconnect-connect-simple' );
+					$html .= Xml::closeElement( "span" );
+		
+					$personal_urls['fbconnect']['text'] = $html;
+				}
 			}
 			
 			// Remove other personal toolbar links
@@ -351,7 +374,7 @@ STYLE;
 				// Replace the old output with the new output
 				$html =  substr( $html, 0, $i ) . preg_replace( "/$name/",
 					"$name (<a href=\"http://www.facebook.com/profile.php?id=$fb_user\" " .
-					"class='mw-userlink mw-fbconnectuser'>".wfMsg('fbconnect-link-to-profile')."</a>", substr( $html, $i ), 1 );
+					"class='mw-userlink mw-fbconnectuser'>".wfMsg('fbconnect-link-to-profile')."</a>)", substr( $html, $i ), 1 );
 				$output->clearHTML();
 				$output->addHTML( $html );
 			}
@@ -532,6 +555,59 @@ STYLE;
 		}
 		// Case: Not logged into Facebook or the wiki
 		// Case: Logged into Facebook, logged into the wiki
+		return true;
+	}
+	
+	/**
+	 * Create disconnect button and other things in pref 
+	 * 
+	 */
+	static function initPreferencesExtensionForm($user, &$wgExtensionPreferences) {
+		global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgBlankImgUrl;
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/FBConnect/prefs.js?{$wgStyleVersion}\"></script>\n");
+		wfLoadExtensionMessages('FBConnect');
+		$prefsection = 'fbconnect-prefstext';
+
+		$id = FBConnectDB::getFacebookIDs($user);
+		if( count($id) > 0 ) {
+			$html = Xml::openElement("div",array("id" => "fbDisconnectLink" ));
+				$html .= '<br/>'.wfMsg('fbconnect-disconnect-link');
+			$html .= Xml::closeElement( "div" );
+			
+			$html .= Xml::openElement("div",array("style" => "display:none","id" => "fbDisconnectProgress" ));
+				$html .= '<br/>'.wfMsg('fbconnect-disconnect-done');
+				$html .= Xml::openElement("img",array("id" => "fbDisconnectProgressImg", 'src' => $wgBlankImgUrl, "class" => "sprite progress" ),true);
+			$html .= Xml::closeElement( "div" );
+			
+			$html .= Xml::openElement("div",array("style" => "display:none","id" => "fbDisconnectDone" ));
+				$html .= '<br/>'.wfMsg('fbconnect-disconnect-info');
+			$html .= Xml::closeElement( "div" );
+			
+			$wgExtensionPreferences[] = array(
+					'html' => "<br>",
+					'type' => PREF_USER_T,
+					'section' => 'fbconnect-prefstext' );
+			
+			$wgExtensionPreferences[] = array(	
+					'name' => 'fbconnect-push-allow-never',
+					'type' => PREF_TOGGLE_T,
+					'section' => 'fbconnect-prefstext',
+					'default' => 1);
+			
+			$wgExtensionPreferences[] = array(	
+					'html' => $html,
+					'type' => PREF_USER_T,
+					'section' => 'fbconnect-prefstext' );
+		} else {
+			// User is a MediaWiki user but isn't connected yet.  Display a message and button to connect.
+			$loginButton = '<fb:login-button'.FBConnect::getPermissionsAttribute().FBConnect::getOnLoginAttribute().'></fb:login-button>';
+			$html = wfMsg('fbconnect-convert') . ' ' . $loginButton;
+			$html .= "<!-- Convert button -->\n";
+			$wgExtensionPreferences[] = array(	
+					'html' => $html,
+					'type' => PREF_USER_T,
+					'section' => 'fbconnect-prefstext' );
+		}
 		return true;
 	}
 }

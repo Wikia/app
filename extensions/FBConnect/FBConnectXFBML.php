@@ -123,6 +123,8 @@ class FBConnectXFBML {
 	 * 
 	 * After switching to the new JavaScript SDK, these will be the only tags
 	 * implemented for a while: <http://github.com/facebook/connect-js/xfbml>.
+	 *
+	 * Newer documentation: http://developers.facebook.com/docs/reference/fbml/
 	 */
 	static function availableTags() {
 		if (!self::isEnabled()) {

@@ -17,7 +17,7 @@
 <div id="AjaxLoginSlider" class="clearfix">
 	<div> 
         	<form action="<? echo $loginaction ?>" method="post" name="userajaxloginform" id="userajaxloginform">
-	            <label for="wpName1" style="display: block; font-weight: bold;"><?php print wfMsg("yourname") ?></label> 
+	            <label for="wpName2Ajax" style="display: block; font-weight: bold;"><?php print wfMsg("yourname") ?></label> 
 	            <table>
 	            <tr style="width:350px" >
 	                <td id="ajaxlogin_username_cell">
@@ -26,7 +26,7 @@
 	                <td><a id="wpAjaxRegister" href="<?php print htmlspecialchars($link) ?>" style="font-size: 9pt;display:none;"><?php print wfMsg('nologinlink') ?></a></td>
 	            </tr>
 	            </table>
-	            <label for="wpPassword1" style="display: block; font-weight: bold; margin-top: 8px"><?php print wfMsg("yourpassword") ?></label>
+	            <label for="wpPassword2Ajax" style="display: block; font-weight: bold; margin-top: 8px"><?php print wfMsg("yourpassword") ?></label>
 	            <table>
 	            <tr>
 	                <td id="ajaxlogin_password_cell">
@@ -34,7 +34,7 @@
 	                </td>
 	            <?php if( $wgEnableEmail && $wgAuth->allowPasswordChange() ) { ?>
 	                <td>
-						<input type='submit' name="wpMailmypassword" id="wpMailmypassword" onclick="AjaxLogin.action='password'; AjaxLogin.form.submit();" value="<?php print wfMsg('mailmypassword') ?>" />
+						<a href="#" onclick="AjaxLogin.action='password'; AjaxLogin.form.submit();" ><?php print wfMsg('mailmypassword') ?></a>
 					</td>
 	                </td>
 	            <?php } ?>
@@ -48,38 +48,44 @@
 	        <input type="hidden" name="wpLoginToken" value="<?php echo $token; ?>" />
         	</form>
 
-	</div>
-	<div id="AjaxLoginConnectMarketing" style='display:none'><!-- TODO: UNHIDE AND IMPLEMENT! -->
+	</div><?php
+	// FIXME: Try to gracefully de-couple this interweaving w/FBConnect extension.  Just use hooks instead.
+	global $wgEnableFacebookConnectExt;
+	if(!empty($wgEnableFacebookConnectExt)){
+		$style = "";
+	} else {
+		$style = " style='display:none'";
+	}
+	?>
+	<div id="AjaxLoginConnectMarketing"<?php print $style; ?>>
 		<div class="neutral clearfix">
 			<? echo wfMsg("comboajaxlogin-connectmarketing") ?>
 			<a href="#" class="back"><? echo wfMsg("comboajaxlogin-connectmarketing-back") ?></a>
 			<a href="#" class="forward"><? echo wfMsg("comboajaxlogin-connectmarketing-forward") ?></a>
 		</div>
 	</div>
-	<div style='display:none'><!-- TODO: UNHIDE AND IMPLEMENT! -->
+	<div<?php print $style; ?>>
 		<? echo wfMsg("comboajaxlogin-connectdirections") ?>
 
-
-        	<form action="" method="post" name="userajaxconnectform" id="userajaxconnectform">
-	            <label for="wpName1" style="display: block; font-weight: bold;"><?php print wfMsg("yourname") ?></label> 
-	            <table>
-	            <tr style="width:350px" >
-	                <td id="ajaxlogin_username_cell2">
-	                    
-	                </td>
-	            </tr>
-	            </table>
-	            <label for="wpPassword1" style="display: block; font-weight: bold; margin-top: 8px"><?php print wfMsg("yourpassword") ?></label>
-	            <table>
-	            <tr>
-	                <td id="ajaxlogin_password_cell2">
-	                    
-	                </td>
-	            </tr>
-	            </table>
-	        <input type="submit" id="wpLoginCombo" value="<?php print wfMsg("login") ?>" onclick="AjaxLogin.action='login'; AjaxLogin.form.submit(); return false;" />
-	        <input type="hidden" name="wpLoginToken" value="<?php echo $token; ?>" />
-        	</form>
-
+		<form action="" method="post" name="userajaxconnectform" id="userajaxconnectform">
+			<label for="wpName3Ajax" style="display: block; font-weight: bold;"><?php print wfMsg("yourname") ?></label> 
+			<table>
+			<tr style="width:350px" >
+				<td id="ajaxlogin_username_cell2">
+					
+				</td>
+			</tr>
+			</table>
+			<label for="wpPassword3Ajax" style="display: block; font-weight: bold; margin-top: 8px"><?php print wfMsg("yourpassword") ?></label>
+			<table>
+			<tr>
+				<td id="ajaxlogin_password_cell2">
+					
+				</td>
+			</tr>
+			</table>
+		<input type="hidden" name="wpLoginToken" value="<?php echo $token; ?>"/>
+		<input type="submit" id="wpLoginAndConnectCombo" value="<?php print wfMsg("login") ?>" onclick="loginAndConnectExistingUser();" />
+		</form>
 	</div>
 </div><!--AjaxLoginSlider-->

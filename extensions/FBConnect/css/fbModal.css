@@ -1,0 +1,20 @@
+	
+#wpFBNameError {
+	color: green;
+	display: none;
+}
+
+.fbConnectPushEventBar {
+	padding-right:30px;
+}
+
+.fbConnectPushEventBarlink{
+	text-align:right;
+	padding-right:30px;
+}
+
+.fbConnectCblable {
+	margin-left:16px;
+	width:200px;
+}
+
