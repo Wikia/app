@@ -42,6 +42,7 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 	public function execute() {
 		$params = $this->extractRequestParams();
 		$done = array();
+		$fit = "";
 		foreach( $params['prop'] as $p )
 		{
 			switch ( $p )
