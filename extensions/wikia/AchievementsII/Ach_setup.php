@@ -91,7 +91,7 @@ function Ach_MastheadEditCounter(&$editCounter, $user) {
 		global $wgCityId, $wgExternalSharedDB;
 		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 		$editCounter = $dbr->selectField('ach_user_score', 'score', array('wiki_id' => $wgCityId, 'user_id' => $user->getId()), __METHOD__);
-		$editCounter = '<div id="masthead-achievements">' . wfMsg('achievements-masthead-points', $editCounter) . '</div>';
+		$editCounter = '<div id="masthead-achievements">' . wfMsg('achievements-masthead-points', number_format($editCounter)) . '</div>';
 	} else {
 		$editCounter = '';
 	}
