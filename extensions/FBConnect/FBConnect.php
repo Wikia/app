@@ -64,16 +64,8 @@ $wgExtensionCredits['specialpage'][] = array(
 $dir = dirname(__FILE__) . '/';
 require_once $dir . 'config.php';
 require_once $dir . 'facebook-client/facebook.php';
-if(!empty($fbIncludePreferencesExtension)){
-	// TODO: This inclusion isn't needed at the moment unless fbEnablePushToFacebook is also true.
-	// If we never need non-push preferences, just add an additional conditional.
-	// TODO: This extension is obsolete in v1.16... do a version-compare and skip this extension
-	// for >= 1.16 and use this hook instead: http://www.mediawiki.org/wiki/Manual:Hooks/GetPreferences
-	require_once $dir . 'PreferencesExtension.php';
-}
 
 $wgExtensionFunctions[] = 'FBConnect::init';
-
 if(!empty($fbEnablePushToFacebook)){
 	// Need to include it explicitly instead of autoload since it has initialization code of its own.
 	// This should be done after FBConnect::init is added to wgExtensionFunctions so that FBConnect
@@ -87,9 +79,11 @@ $wgExtensionAliasesFiles['FBConnect'] =		$dir . 'FBConnect.alias.php';
 $wgAutoloadClasses['FBConnectAPI'] =		$dir . 'FBConnectAPI.php';
 $wgAutoloadClasses['FBConnectDB'] =			$dir . 'FBConnectDB.php';
 $wgAutoloadClasses['FBConnectHooks'] =		$dir . 'FBConnectHooks.php';
+$wgAutoloadClasses['FBConnectProfilePic'] =	$dir . 'FBConnectProfilePic.php';
 $wgAutoloadClasses['FBConnectUser'] =		$dir . 'FBConnectUser.php';
 $wgAutoloadClasses['FBConnectXFBML'] =		$dir . 'FBConnectXFBML.php';
 $wgAutoloadClasses['SpecialConnect'] =		$dir . 'SpecialConnect.php';
+$wgAutoloadClasses['ChooseNameTemplate'] =	$dir . 'wikia/template/ChooseNameTemplate.class.php';
 
 $wgSpecialPages['Connect'] = 'SpecialConnect';
 
@@ -115,11 +109,9 @@ if ($fbUserRightsFromGroup) {
 	$wgAutopromote['fb-admin']   = APCOND_FB_ISADMIN;
 }
 
-/**
-$wgAutopromote['autoconfirmed'] = array( '&', array( APCOND_EDITCOUNT, &$wgAutoConfirmCount ),
-                                  array( APCOND_AGE, &$wgAutoConfirmAge ),
-                                  array( APCOND_FB_INGROUP ));
-/**/
+$wgAjaxExportList[] = "FBConnect::disconnectFromFB";
+$wgAjaxExportList[] = "SpecialConnect::ajaxModalChooseName";
+$wgAjaxExportList[] = "SpecialConnect::checkCreateAccount";
 
 
 /**
@@ -140,15 +132,13 @@ class FBConnect {
 		// The xmlns:fb attribute is required for proper rendering on IE
 		$wgXhtmlNamespaces['fb'] = 'http://www.facebook.com/2008/fbml';
 		
-		// Facebook/username associations should be shared when $wgSharedDB is enabled
-		$wgSharedTables[] = 'user_fbconnect';
-		
 		// Install all public static functions in class FBConnectHooks as MediaWiki hooks
 		$hooks = self::enumMethods('FBConnectHooks');
+		
 		foreach( $hooks as $hookName ) {
 			$wgHooks[$hookName][] = "FBConnectHooks::$hookName";
 		}
-
+		
 		// Allow configurable over-riding of the onLogin handler.
 		global $fbOnLoginJsOverride;
 		if(!empty($fbOnLoginJsOverride)){
@@ -214,4 +204,60 @@ class FBConnect {
 		}
 		return $attr;
 	} // end getOnLoginAttribute()
+	
+	/*
+	 * Ajax function to disconect from facebook   
+	 */
+	public static function disconnectFromFB($user = null){
+		$response = new AjaxResponse();
+		$response->addText(json_encode(self::coreDisconnectFromFB($user)));
+		return $response;
+	}
+	
+	/*
+	 * Fb disconect function and send mail with temp password 
+	 */
+	public static function coreDisconnectFromFB($user = null){
+		global $wgRequest, $wgUser, $wgAuth;
+		
+		wfLoadExtensionMessages('FBConnect');
+		
+		if($user == null) {
+			$user = $wgUser;	
+		}
+		
+		
+		$statusError = array('status' => "error", "msg" => wfMsg('fbconnect-unknown-error') );
+		if($user->getId() == 0) {
+			return $statusError;
+		}
+		
+		$dbw = wfGetDB( DB_MASTER, array(), FBConnectDB::sharedDB() );
+		$dbw->begin();
+		$rows = FBConnectDB::removeFacebookID($user);
+		if($rows == 1) {
+			// Remind password attemp
+			$params = new FauxRequest(array (
+				'wpName' => $user->getName()
+			));
+			
+			if( !$wgAuth->allowPasswordChange() ) {
+				return $statusError;
+			}
+			
+			$result = array ();
+			$loginForm = new LoginForm($params);
+			
+			$res = $loginForm->mailPasswordInternal( $wgUser, true, 'fbconnect-passwordremindertitle', 'fbconnect-passwordremindertext' );
+			if( WikiError::isError( $res ) ) {
+				return $statusError;
+			}
+					
+			return array('status' => "ok" );
+			$dbw->commit();
+			return $response;	
+		} else {
+			return $statusError;
+		}
+	}
 }

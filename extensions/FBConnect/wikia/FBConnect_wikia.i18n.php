@@ -13,11 +13,8 @@ $messages = array();
 
 /** English */
 $messages['en'] = array(
+	'fbconnect-msg-for-existing-users' => "<strong>Already a Wikia user?</strong><br/>If you would like to connect this facebook account to an existing Wikia account, please <a href='#' onclick='$1'>login</a> first.",
 
-	// TODO: Swap in the real message once connecting to existing accounts works.
-	//'fbconnect-msg-for-existing-users' => "<strong>Already a Wikia user?</strong><br/>If you would like to connect this facebook account to an existing Wikia account, please <a href='#' class='ajaxLogin'>login</a> first.",
-	'fbconnect-msg-for-existing-users' => "&nbsp;",
-	
 	'fbconnect-invalid-email' => "Please provide a valid email address.",
 	'fbconnect-wikia-login-w-facebook' => 'Log in / Sign Up with Facebook Connect',
 	'fbconnect-wikia-login-bullets' => '<ul><li>Sign up in just a few clicks</li><li>You have control of what goes to your feed</li></ul>',

@@ -24,14 +24,6 @@ global $wgAuth, $wgUser, $wgEnableEmail,$wgStylePath,$wgBlankImgUrl;
 			<li class="accent <?php echo ($showRegister ? 'selected':''); ?> " style="<?php echo ($isReadOnly ? '':'style="display:none"'); ?>"  id="wpGoRegister" onclick="AjaxLogin.showRegister(this); return false;"><a href="<? echo $signupaction ?>"><?php print wfMsg("nologinlink") ?></a></li>
 		</ul>
 	</div>
-
-<? /*
-// TODO: Just for reference - Remove once the tabbed method is pretty stable
-        <div id="AjaxLoginButtons" title="<?php print wfMsg('login') ?>">
-        	<input type="submit" id="wpGoLogin" value="<?php print wfMsg("login") ?>" onclick="AjaxLogin.showLogin(this); return false;" />
-        	<input type="submit" id="wpGoRegister" value="<?php print wfMsg("nologinlink") ?>" onclick="AjaxLogin.showRegister(this); return false;" />
-        </div>
-*/ ?>
     <?php }
 	// TODO: Is there some class that could be applied to the actionmsg to give it a standard 'notice' feeling without all of this inlining? ?>
 	<div id="comboajaxlogin-actionmsg" style="margin-left:10px;margin-top:10px;margin-bottom:10px;display:none;background-color:#ff8;padding:5px"><?php print wfMsg('comboajaxlogin-actionmsg') ?></div>

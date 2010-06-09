@@ -125,6 +125,13 @@ a.greyButton big {
 	margin-right: 5px;
 }
 
+#userData #fbconnect { 
+	margin-right: 12px;
+}
+
+#userData span .fb_button_text {
+	margin-right: 0px;
+}
 #header_username a {
 	color: #36C;
 	font-weight: bold;
@@ -439,4 +446,12 @@ ul.jq-ui-autocomplete li {
 ul.jq-ui-autocomplete li.active {
   background-color: #3875d7;
   color: #fff;
+}
+
+.fb_usermenu_button {
+	height:18px;
+	left:-26px;
+	position:absolute;
+	top:7px;
+	width:17px;
 }

@@ -3370,7 +3370,7 @@ function toggleDisplay(id, type) {
       $data = $this->post_request($method, $params, $server_addr);
       $this->rawData = $data;
       $result = $this->convert_result($data, $method, $params);
-      if (is_array($result) && isset($result['error_code'])) {
+      if (is_array($result) && isset($result['error_code']) ) {
         throw new FacebookRestClientException($result['error_msg'],
                                               $result['error_code']);
       }

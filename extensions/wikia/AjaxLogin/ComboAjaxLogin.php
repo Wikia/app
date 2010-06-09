@@ -73,7 +73,21 @@ $wgAjaxExportList[] = 'getRegisterJS';
 function getRegisterJS(){
 	$response = new AjaxResponse();
 	$response->addText( AjaxLoginForm::getRegisterJS() );
-	$response->addText( file_get_contents(dirname( __FILE__ ) . '/AjaxLogin.js') );
+	$response->addText( file_get_contents(dirname( __FILE__ ) . '/AjaxLogin.js')."\n\n" );
+	
+	$vars = array(
+		'prefs_help_birthmesg' => wfMsg('prefs-help-birthmesg'),
+		'prefs_help_birthinfo' => wfMsg('prefs-help-birthinfo'),
+		'prefs_help_mailmesg' => wfMsg('prefs-help-mailmesg'),
+		'prefs_help_email' => wfMsg('prefs-help-email'),
+		'prefs_help_blurmesg' => wfMsg('prefs-help-blurmesg'),
+		'prefs_help_blurinfo' => wfMsgExt( 'captchahelp-text', array( 'parse' ) )
+	
+	);
+	
+	foreach ($vars as $key => $value) {
+		$response->addText( "var ".$key." = ".Xml::encodeJsVar($value).";\n" );	
+	}
 	
 	header("X-Pass-Cache-Control: s-maxage=315360000, max-age=315360000");	
 	$response->setCacheDuration( 3600 * 24 * 365);
@@ -103,12 +117,6 @@ function comboAjaxLoginVars($vars) {
 	}
 	
 	$vars['wgComboAjaxLogin'] = true;
-	$vars['prefs_help_birthmesg'] = wfMsg('prefs-help-birthmesg');
-	$vars['prefs_help_birthinfo'] = wfMsg('prefs-help-birthinfo');
-	$vars['prefs_help_mailmesg'] = wfMsg('prefs-help-mailmesg');
-	$vars['prefs_help_email'] = wfMsg('prefs-help-email');
-	$vars['prefs_help_blurmesg'] = wfMsg('prefs-help-blurmesg');
-	$vars['prefs_help_blurinfo'] = wfMsgExt( 'captchahelp-text', array( 'parse' ) );
 	$vars['wgIsLogin'] = $wgUser->isLoggedIn();
 	
 	return true;

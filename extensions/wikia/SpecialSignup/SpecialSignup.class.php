@@ -12,10 +12,7 @@ class Signup extends SpecialPage {
 		if( session_id() == '' ) {
 			wfSetupSession();
 		}
-		$wgHooks['MakeGlobalVariablesScript'][] = 'wfSpecialUserloginSetupVars';
 		$form = new AjaxLoginForm( $wgRequest );
-
-		
 		
 		if($wgRequest->wasPosted()) {
 			if($form->processLogin()) {
@@ -23,7 +20,7 @@ class Signup extends SpecialPage {
 			}			
 		}
 		
-		$form->executeAsPage(false,"SSSS");
+		$form->executeAsPage(false,"");
 	}
 
 	static function TrackingOnSuccess (&$out) {

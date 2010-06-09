@@ -36,7 +36,6 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
      */
 	public function execute() {
 		global $wgUser;
-
 		switch ($this->getActionName()) {
 			case parent::INSERT : $this->addVoteArticle(); break;
 			case parent::UPDATE : $this->changeVoteArticle(); break;
@@ -282,7 +281,6 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 	private function addVoteArticle()
 	{
 		global $wgDBname;
-
         $page = $vote = null;
 
         #--- initial parameters (dbname, limit, offset ...)
@@ -368,6 +366,8 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 
 		$this->getResult()->setIndexedTagName($data, $this->getIndexTagName());
 		$this->getResult()->addValue('item', $this->getModuleName(), $data);
+
+		wfRunHooks( 'ArticleAfterVote', array( &$user_id, &$page, $vote ) );
 	}
 
 	#---
@@ -476,9 +476,11 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 			$this->setIndexTagName('fault');
 			$data = $e->getText();
 		}
-
+		
 		$this->getResult()->setIndexedTagName($data, $this->getIndexTagName());
 		$this->getResult()->addValue('item', $this->getModuleName(), $data);
+		
+		wfRunHooks( 'ArticleAfterVote', array( $user_id, &$page, $vote ) );
 	}
 
 	#---

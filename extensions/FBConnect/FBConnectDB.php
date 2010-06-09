@@ -40,16 +40,22 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  */
 class FBConnectDB {
 	/**
-	 * Find the Facebook IDs of the given user, if any.
+	 * Find the Facebook IDs of the given user, if any, using the database connection provided.
+	 *
 	 */
-	public static function getFacebookIDs( $user ) {
+	public static function getFacebookIDs( $user, $db = DB_SLAVE  ) {
+		global $wgMemc;
+		
+		$dbr = wfGetDB( $db, array(), self::sharedDB() );
 		$fbid = array();
 		if ( $user instanceof User && $user->getId() != 0 ) {
-			$prefix = self::getPrefix();
+			$memkey = wfMemcKey( "fb_user_id", $user->getId() );
+			$val = $wgMemc->get($memkey);
+			if ( ( is_array($val) ) &&  ( $db == DB_SLAVE ) ){
+				return $val;
+			}
 			
-			// NOTE: Do not just pass this dbr into getFacebookIDsFromDB since that function prevents
-			// rewriting of the database name for shared tables.
-			$dbr = wfGetDB( DB_SLAVE, array(), self::sharedDB() );
+			$prefix = self::getPrefix();
 			$res = $dbr->select(
 				array( "{$prefix}user_fbconnect" ),
 				array( 'user_fbid' ),
@@ -60,30 +66,7 @@ class FBConnectDB {
 				$fbid[] = $row->user_fbid;
 			}
 			$res->free();
-		}
-		return $fbid;
-	}
-	
-	/**
-	 * Find the Facebook IDs of the given user, if any, using the database connection provided.
-	 *
-	 * This function will use the dbr provided and will use grave-accents around the table-name
-	 * which will prevent the DB class from rewriting the database name.
-	 */
-	public static function getFacebookIDsFromDB( $user, $dbr ){
-		$fbid = array();
-		if ( $user instanceof User && $user->getId() != 0 ) {
-			$prefix = self::getPrefix();
-			$res = $dbr->select(
-				array( "`{$prefix}user_fbconnect`" ),
-				array( 'user_fbid' ),
-				array( 'user_id' => $user->getId() ),
-				__METHOD__
-			);
-			foreach( $res as $row ) {
-				$fbid[] = $row->user_fbid;
-			}
-			$res->free();
+			$wgMemc->set($memkey,$fbid);
 		}
 		return $fbid;
 	}
@@ -98,12 +81,14 @@ class FBConnectDB {
 		// NOTE: Do not just pass this dbr into getUserByDB since that function prevents
 		// rewriting of the database name for shared tables.
 		$dbr = wfGetDB( DB_SLAVE, array(), self::sharedDB() );
+
 		$id = $dbr->selectField(
-			"{$prefix}user_fbconnect",
-			'user_id',
+			array( "{$prefix}user_fbconnect" ),
+			array( 'user_id' ),
 			array( 'user_fbid' => $fbid ),
 			__METHOD__
 		);
+
 		if ( $id ) {
 			return User::newFromId( $id );
 		} else {
@@ -135,38 +120,52 @@ class FBConnectDB {
 	 * Add a User <-> Facebook ID association to the database.
 	 */
 	public static function addFacebookID( $user, $fbid ) {
+		global $wgMemc;
 		wfProfileIn(__METHOD__);
-		if( !wfRunHooks( 'FBConnectDB::addFacebookID', array( $user, $fbid ) ) ){
-			return;
+		
+		$memkey = wfMemcKey( "fb_user_id", $user->getId() );
+			
+		if($user->getId() == 0){
+			wfDebug("FBConnect: tried to store a mapping from fbid \"$fbid\" to a user with no id (ie: not logged in).\n");
+		} else {
+			$prefix = self::getPrefix();
+			$dbw = wfGetDB( DB_MASTER, array(), self::sharedDB() );
+			$dbw->insert(
+				"{$prefix}user_fbconnect",
+				array(
+					'user_id' => $user->getId(),
+					'user_fbid' => $fbid
+				),
+				__METHOD__
+			);
 		}
-
-		$prefix = self::getPrefix();
-		$dbw = wfGetDB( DB_MASTER, array(), self::sharedDB() );
-		$dbw->insert(
-			"{$prefix}user_fbconnect",
-			array(
-				'user_id' => $user->getId(),
-				'user_fbid' => $fbid
-			),
-			__METHOD__
-		);
+		
+		$dbw->commit();
+		$wgMemc->set($memkey, self::getFacebookIDs($user, DB_MASTER )  );
+		
 		wfProfileOut(__METHOD__);
 	}
 	
 	/**
 	 * Remove a User <-> Facebook ID association from the database.
 	 */
-	public static function removeFacebookID( $user, $fbid ) {
+	public static function removeFacebookID( $user ) {
+		global $wgMemc; 
 		$prefix = self::getPrefix();
-		$dbw = wfGetDB( DB_MASTER, array(), self::sharedDB() );
-		$dbw->delete(
-			"{$prefix}user_fbconnect",
-			array(
-				'user_id' => $user->getId(),
-				'user_fbid' => $fbid
-			),
-			__METHOD__
-		);
+		if ( $user instanceof User && $user->getId() != 0 ) {
+			$dbw = wfGetDB( DB_MASTER, array(), self::sharedDB() );
+			$memkey = wfMemcKey( "fb_user_id", $user->getId() );
+			$dbw->delete(
+				"{$prefix}user_fbconnect",
+				array(
+					'user_id' => $user->getId()
+				),
+				__METHOD__
+			); 
+			$dbw->commit();
+	 		$wgMemc->set($memkey, self::getFacebookIDs($user, DB_MASTER )  );
+		}
+
 		return (bool) $dbw->affectedRows();
 	}
 	
@@ -192,19 +191,12 @@ class FBConnectDB {
 	 * 
 	 * See also: <http://www.mediawiki.org/wiki/Manual:Shared_database>
 	 */
-	private static function sharedDB() {
-		global $wgSharedDB;
-		// If a shared DB is not configured, return false
-		if (!empty($wgSharedDB)) {
-			// Test to see if the table 'user_fbconnect' is shared
-			global $wgSharedTables, $wgSharedPrefix;
-			// Include 'user_fbconnect' in case someone forgot to set the shared prefix
-			if (in_array('user_fbconnect', $wgSharedTables) ||
-			    in_array("{$wgSharedPrefix}user_fbconnect", $wgSharedTables)) {
-				return $wgSharedDB;
-			}
+	public static function sharedDB() {
+		global $wgExternalSharedDB;
+		if (!empty($wgExternalSharedDB)) {
+			return $wgExternalSharedDB;	
 		}
-		return false;
+		return false;	
 	}
 	
 	/**

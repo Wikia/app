@@ -86,16 +86,120 @@ $(document).ready(function() {
 			});
 		}
 	});
+	
+	//window.fbAsyncInit ();
+	$("#fbconnect a").click( function(){
+		loginByFBConnect();
+		return false;
+	});
 });
+
+
+/**
+ * check for api is init (FB.init)
+ * @return bool
+ */
+
+function isFbApiInit() {
+	return !(typeof FB._apiKey == 'undefined' ||  FB._apiKey == null);
+}
+
 
 /**
  * An optional handler to use in fbOnLoginJsOverride for when a user logs in via facebook connect.
  *
  * This will redirect to Special:Connect with the returnto variables configured properly.
- *
- * TODO: Also set the value for 'returntoquery'!!
  */
 function sendToConnectOnLogin(){
-	var destUrl = wgServer + wgScript + "?title=Special:Connect&returnto=" + wgPageName;
-	window.location.href = destUrl;
+	sendToConnectOnLoginForSpecificForm("");
+}
+// Allows optional specification of a form to force on Special:Connect (such as ChooseName, ConnectExisting, or Convert).
+function sendToConnectOnLoginForSpecificForm(formName){
+    if(formName != ""){
+        formName = "/"+formName;
+    }
+	var destUrl = wgServer + wgScript + "?title=Special:Connect" + formName + "&returnto=" + wgPageName + "&returntoquery=" + wgPagequery;
+	
+	if (formName == "/ConnectExisting") {
+		window.location.href = destUrl;
+		return 
+	}
+	$('#fbConnectModalWrapper').remove();
+	$.postJSON(window.wgScript + '?action=ajax&rs=SpecialConnect::checkCreateAccount&cb='+wgStyleVersion, function(data) {
+		if(data.status == "ok") {
+			$().getModal(window.wgScript + '?action=ajax&rs=SpecialConnect::ajaxModalChooseName&returnto=' + wgPageName + '&returntoquery=' + wgPagequery,  "#fbConnectModal", {
+		        id: "fbConnectModalWrapper",
+		        width: "600px",
+		        callback: function() {}
+			});    
+		} else {
+			window.location.href = destUrl;
+		}	
+	});	
+	return
+}
+
+
+function openFbLogin() {
+	if (!isFbApiInit()) {
+		setTimeout(openFbLogin,300);
+		return true;
+	}
+	FB.login(FB.bind(sendToConnectOnLogin, null), { perms : "publish_stream" });
+}
+
+/**
+ * only for user header button
+ */
+function loginByFBConnect() {
+	if (!isFbApiInit()) {
+		window.fbAsyncInit();
+	}
+	openFbLogin();
+	return false;
+}
+
+/**
+ * When user wants to log in using a Wikia account and connect
+ * it to a Facebook account at the same time.
+ */
+function loginAndConnectExistingUser(){
+	AjaxLogin.action = 'loginAndConnect'; // for clicktracking
+	AjaxLogin.form.unbind('submit'); // unbind the hander for previous form
+	AjaxLogin.form = $('#userajaxconnectform');
+
+	window.wgAjaxLoginOnSuccess = loggedInNowNeedToConnect;
+
+	// Make sure the default even doesn't happen.
+	AjaxLogin.form.submit(function(ev){
+			AjaxLogin.formSubmitHandler(ev);
+			return false;
+	});
+}
+
+/**
+ * Called after the AJAX has logged the user in on a request to login and connect.
+ * Now that they are logged in, we will prompt them to FBConnect, then drop them on
+ * the Special:Connect page to finish the process.
+ */
+function loggedInNowNeedToConnect(){
+	loginByFBConnect();
+	sendToConnectOnLoginForSpecificForm("ConnectExisting");
+}
+
+/**
+ * When the page is loaded, always init the FB code if it has not been initialized.  This
+ * will allow FBML tags in content (if configured to do this).
+ */
+$(document).ready(function(){
+	initFbWhenReady();
+});
+function initFbWhenReady(){
+	if(typeof FB == 'undefined'){
+		// The fbsdk code hasn't been loaded yet. Give it more time.
+		setTimeout("initFbWhenReady()", 500);
+	} else if (!isFbApiInit()) {
+		// The fbsdk has loaded but didn't initialize. Force it to init. 
+		window.fbAsyncInit();
+	}
 }

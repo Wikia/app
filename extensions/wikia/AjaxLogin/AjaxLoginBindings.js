@@ -12,6 +12,15 @@ function openLogin(event) {
 		return false;
 	}
 }
+function openLoginAndConnect(event) {
+	if( (typeof wgComboAjaxLogin == 'undefined') || (!wgComboAjaxLogin) ) {
+		return true;
+	} else {
+		showComboAjaxForPlaceHolder(false, "", AjaxLogin.slideToLoginAndConnect);
+		return false;
+	}
+}
+
 
 // Open the same dialog as openLogin, but activate the registration tab
 // If ComboAjaxLogin is disabled, will return true so that the link to the registration page is followed.

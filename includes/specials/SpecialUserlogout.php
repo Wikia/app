@@ -8,7 +8,7 @@
  * constructor
  */
 function wfSpecialUserlogout() {
-	global $wgUser, $wgOut;
+	global $wgUser, $wgOut, $wgRequest;
 
 	$oldName = $wgUser->getName();
 	$wgUser->logout();
@@ -19,5 +19,22 @@ function wfSpecialUserlogout() {
 	wfRunHooks( 'UserLogoutComplete', array(&$wgUser, &$injected_html, $oldName) );
 
 	$wgOut->addHTML( wfMsgExt( 'logouttext', array( 'parse' ) ) . $injected_html );
-	$wgOut->returnToMain();
+	
+	$mReturnTo = $wgRequest->getVal( 'returnto' );		
+	$mReturnToQuery = $wgRequest->getVal( 'returntoquery' );
+		
+	$title = Title::newFromText($mReturnTo);
+	if (!empty($title))
+	{
+		$mResolvedReturnTo = strtolower(SpecialPage::resolveAlias($title->getDBKey()));
+		if(in_array($mResolvedReturnTo,array('userlogout','signup','connect')))
+		{
+			$titleObj = Title::newMainPage();
+			$mReturnTo = $titleObj->getText( );
+			$mReturnToQuery = '';
+		}			
+	}
+		
+		
+	$wgOut->returnToMain(false, $mReturnTo, $mReturnToQuery);
 }
