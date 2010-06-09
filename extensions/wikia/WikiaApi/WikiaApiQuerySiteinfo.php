@@ -41,8 +41,17 @@ class WikiaApiQuerySiteinfo extends ApiQuerySiteinfo {
 	}
 
 	protected function appendWikidesc($property) {
+		global $wgLanguageCode;
 		$result = $this->getResult();
-		$data = array( "pagetitle" => wfMsg( 'pagetitle' ) );
+		$lang_id = WikiFactory::LangCodeToId($wgLanguageCode);
+		$cats = WikiFactory::getCategory($this->cityId);
+		$cat_id = ( !emptY($cats) ) ? $cats->cat_id : 0;
+		$data = array( 
+			"langid" => $lang_id,
+			"id" => $this->cityId,
+			"catid" => $cat_id,
+			"pagetitle" => wfMsg( 'pagetitle' )
+		);
 		$result->setIndexedTagName($data, $property);
 		$result->addValue('query', $property, $data);
 	}
@@ -78,7 +87,7 @@ class WikiaApiQuerySiteinfo extends ApiQuerySiteinfo {
 		$result->addValue('query', $property, $data);
 
 	}
-
+	
 	public function getAllowedParams() {
 		$params = parent::getAllowedParams();
 		array_push($params['prop'][ApiBase::PARAM_TYPE],'category');
