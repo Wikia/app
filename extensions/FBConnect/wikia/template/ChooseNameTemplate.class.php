@@ -232,7 +232,7 @@ class ChooseNameTemplate extends QuickTemplate {
 				<?php endif;?>
 					<td <?php if( !empty( $value['fullLine'] )):?> colspan=2 <?php endif;?>>	
 						<input <?php if( !empty( $value['checked'] )):?>  checked="checked" <?php endif;?> type='checkbox' value='1' id="<?php echo $value['id']; ?>" name="<?php echo $value['name']; ?>"/> 
-						<label for="<?php echo $value['id']; ?>"><?php echo $value['shortText']; ?></label> <br>				
+						<label for="<?php echo $value['id']; ?>"><?php echo $value['shortText']; ?></label> 
 					</td>	
 			<?php if( ($key % 2) == 1 || ( (count($prefs) - 1) ==  $key )):?> 
 				</tr>
