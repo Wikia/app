@@ -1,4 +1,5 @@
 == Changes since 201006.2 ==
+* rt#54270: TitleEdit's linking process conflicts with .wikia-button's styling (Nef)
 * rt#54166: AWC: pass correct parameters to protection functions (uberfuzzy)
 
 == Changes since 201006.1 ==
