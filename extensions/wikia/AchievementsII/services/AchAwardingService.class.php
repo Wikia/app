@@ -25,7 +25,7 @@ class AchAwardingService {
 	public function awardCustomNotInTrackBadge($user, $badge_type_id) {
 		wfProfileIn(__METHOD__);
 
-		global $wgWikiaBotLikeUsers, $wgExternalSharedDB;
+		global $wgWikiaBotLikeUsers, $wgExternalSharedDB, $wgCityId;
 
 		$this->mUser = $user;
 
@@ -37,7 +37,7 @@ class AchAwardingService {
 			$badge = $dbr->selectField(
 				'ach_user_badges',
 				'badge_type_id',
-				array('badge_type_id' => $badge_type_id, 'user_id' => $this->mUser->getId()),
+				array('badge_type_id' => $badge_type_id, 'user_id' => $this->mUser->getId(), 'wiki_id' => $wgCityId),
 				__METHOD__);
 
 			if($badge === false) {
