@@ -30,27 +30,12 @@ $wgWidgets['WidgetNewPages'] = array(
 function WidgetNewPages($id, $params) {
 	wfProfileIn(__METHOD__);
 
-	$dbr = wfGetDB(DB_SLAVE);
-
-	$res = $dbr->select('recentchanges',						// table name
-		array('rc_title'),										// fields to get
-		array('rc_type = 1', 'rc_namespace' => NS_MAIN),		// WHERE conditions [only new articles in main namespace]
-		__METHOD__,												// for profiling
-		array('ORDER BY' => 'rc_cur_time DESC', 'LIMIT' => 5)	// ORDER BY creation timestamp
-	);
-
 	$items = array();
 
-	while ($row = $dbr->fetchObject($res)) {
-		$title = Title::makeTitleSafe(NS_MAIN, $row->rc_title);
-		if(is_object($title)) {
-			$items[] = array('href' => $title->getLocalUrl(), 'name' => $title->getPrefixedText());
-		}
+	if ( class_exists( 'DataProvider' ) ) {
+		$items = DataProvider::singleton()->GetNewlyCreatedArticles();
 	}
 
-	$dbr->freeResult($res);
-
 	wfProfileOut(__METHOD__);
-
 	return (count($items) > 0 ? WidgetFrameworkWrapLinks($items) . WidgetFrameworkMoreLink(Title::newFromText('Newpages', NS_SPECIAL)->getLocalURL()) : wfMsg('widget-empty-list'));
 }
