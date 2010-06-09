@@ -317,24 +317,60 @@ class DataProvider
 	}
 
 	/*
+	 * Return array newly created articles
+	 * Author: Adrian 'ADi' Wieczorek (adi(at)wikia.com)
+	 */
+	public static function GetNewlyCreatedArticles( $limit = 5, $ns = array( NS_MAIN ) ) {
+		wfProfileIn( __METHOD__ );
+
+		$dbr = wfGetDB(DB_SLAVE);
+
+		$res = $dbr->select('recentchanges', // table name
+			array('rc_title', 'rc_namespace'), // fields to get
+			array('rc_type = 1', 'rc_namespace' => $ns), // WHERE conditions [only new articles in main namespace]
+			__METHOD__, // for profiling
+			array('ORDER BY' => 'rc_cur_time DESC', 'LIMIT' => $limit) // ORDER BY creation timestamp
+		);
+
+		$items = array();
+		while ($row = $dbr->fetchObject($res)) {
+			$title = Title::makeTitleSafe($row->rc_namespace, $row->rc_title);
+			if(is_object($title)) {
+				$items[] = array('href' => $title->getLocalUrl(), 'name' => $title->getPrefixedText());
+			}
+		}
+
+		$dbr->freeResult($res);
+
+		wfProfileOut( __METHOD__ );
+		return $items;
+	}
+
+	/*
 	 * Return array of most visited articles
 	 * Author: Inez Korczynski (inez at wikia.com)
+	 * Author: Adrian 'ADi' Wieczorek (adi(at)wikia.com)
 	 */
-	final public static function /* array */ GetMostVisitedArticles($limit = 7) {
+	final public static function /* array */ GetMostVisitedArticles( $limit = 7, $ns = array( NS_MAIN ), $fillUpMostPopular = true ) {
 		wfProfileIn( __METHOD__ );
 		global $wgDBname, $wgMemc;
 
-		$memckey = wfMemcKey("MostVisited", $limit);
-
+		$memckey = wfMemcKey("MostVisited", $limit, implode(",",$ns), $fillUpMostPopular);
 		$results = $wgMemc->get( $memckey );
 
 		if ( !is_array( $results ) ) {
+            $nsClause = '';
+            $dbr = wfGetDB( DB_SLAVE );
+            if( count( $ns) ) {
+            	$nsClause = "page_namespace IN (" . $dbr->makeList( $ns ) . ")";
+            }
+
             /* take data from 'page_visited' table */
-            $query = "SELECT page_namespace, page_title, page_id, count as cnt FROM page, page_visited WHERE page_namespace = 0 and article_id = page_id ORDER BY cnt DESC";
+            $query = "SELECT page_namespace, page_title, page_id, count as cnt FROM page, page_visited WHERE " . ( !empty($nsClause) ? $nsClause . " AND" : "" ) . " article_id = page_id ORDER BY cnt DESC";
             self::GetTopContentQuery($results, $query, $limit, 'page_visited');
 
-			if ( count( $results ) < $limit ) {
-			    if ( function_exists("wfGetMostPopularArticlesFromCache") ) {
+			if ( ( count( $results ) < $limit ) && $fillUpMostPopular ) {
+				if ( function_exists("wfGetMostPopularArticlesFromCache") ) {
                     $most_popular = wfGetMostPopularArticlesFromCache($limit, 0);
                     if ( is_array($most_popular) && (!empty($most_popular)) ) {
                         foreach ($most_popular as $row_title => $cnt) {
@@ -349,7 +385,7 @@ class DataProvider
                             }
                         }
                     }
-                }
+				}
 			}
 
             self::removeAdultPages($results);
@@ -377,15 +413,15 @@ class DataProvider
 		$results = $wgMemc->get( $memckey );
 
 		if ( !is_array( $results ) ) {
-			$dbr = wfGetDB( DB_SLAVE, 'blobs', $wgExternalDatawareDB ); 
+			$dbr = wfGetDB( DB_SLAVE, 'blobs', $wgExternalDatawareDB );
 			$res = $dbr->select(
 				'pages',
 				array( 'page_namespace, page_title' ),
-				array( 
+				array(
 					'page_wikia_id'		=> $wgCityId,
 					'page_namespace' 	=> 0
 				),
-				__METHOD__, 
+				__METHOD__,
 				array(
 					'ORDER BY' => 'page_latest desc',
 					'LIMIT'    => $limit * 2
@@ -706,4 +742,66 @@ class DataProvider
 		wfProfileOut( __METHOD__ );
 		return array('nodes' => $nodes, 'cat' => $cat);
 	}
+
+	public static function GetRecentlyUploadedImages( $limit = 50, $includeThumbnails = true ) {
+		wfProfileIn(__METHOD__);
+
+		$ret = false;
+
+		// get list of recent log entries (type = 'upload')
+		$params = array(
+			'action' => 'query',
+			'list' => 'logevents',
+			'letype' => 'upload',
+			'leprop' => 'title',
+			'lelimit' => $limit,
+		);
+
+		try {
+			wfProfileIn(__METHOD__ . '::apiCall');
+
+			$api = new ApiMain(new FauxRequest($params));
+			$api->execute();
+			$res = $api->getResultData();
+
+			wfProfileOut(__METHOD__ . '::apiCall');
+
+			if( !empty($res['query']['logevents']) ) {
+				foreach( $res['query']['logevents'] as $entry ) {
+
+					// ignore Video:foo entries from VET
+					if(  $entry['ns'] == NS_IMAGE ) {
+						$image = Title::newFromText($entry['title']);
+
+						$imageFile = wfFindFile( $image->getText() );
+						if( is_object( $imageFile ) ) {
+
+							$imageType = $imageFile->minor_mime;
+							$imageSize = $imageFile->size;
+
+							// don't show PNG files / files smaller than 2 kB
+							if( ($imageType == 'png') || ($imageSize < 2048) ) {
+								continue;
+							}
+						}
+
+						// use keys to remove duplicates
+						$ret[$image->getDBkey()] = array(
+							'name' => $image->getText(),
+							'url' => $image->getFullUrl()
+						);
+
+					}
+				}
+
+				// use numeric keys
+				$ret = array_values($ret);
+			}
+		}
+		catch(Exception $e) {};
+
+		wfProfileOut(__METHOD__);
+		return $ret;
+	}
+
 }

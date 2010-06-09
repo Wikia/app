@@ -141,6 +141,8 @@ function wfSpecialNewimages( $par, $specialPage ) {
 		$lastTimestamp = $timestamp;
 	}
 
+	wfRunHooks( 'SpecialNewImages::beforeDisplay', array( &$images, &$gallery, &$limit ) );
+
 	$titleObj = SpecialPage::getTitleFor( 'Newimages' );
 	$action = $titleObj->getLocalURL( $hidebots ? '' : 'hidebots=0' );
 	if ( $shownav && !$wgMiserMode ) {
@@ -174,10 +176,10 @@ function wfSpecialNewimages( $par, $specialPage ) {
 	$now = wfTimestampNow();
 	$d = $wgLang->date( $now, true );
 	$t = $wgLang->time( $now, true );
-	$dateLink = $sk->makeKnownLinkObj( $titleObj, wfMsgHtml( 'sp-newimages-showfrom', $d, $t ), 
+	$dateLink = $sk->makeKnownLinkObj( $titleObj, wfMsgHtml( 'sp-newimages-showfrom', $d, $t ),
 		'from='.$now.$botpar.$searchpar );
 
-	$botLink = $sk->makeKnownLinkObj($titleObj, wfMsgHtml( 'showhidebots', 
+	$botLink = $sk->makeKnownLinkObj($titleObj, wfMsgHtml( 'showhidebots',
 		($hidebots ? wfMsgHtml('show') : wfMsgHtml('hide'))),'hidebots='.($hidebots ? '0' : '1').$searchpar);
 
 
