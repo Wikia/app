@@ -236,8 +236,14 @@ class SpecialConnect extends SpecialPage {
 			// Attempt to store the facebook profile pic as the Wikia avatar.
 			if($fb_id == "24403391"){ // CURRENTLY IN TESTING... ONLY WORKS FOR Sean's FACEBOOK ACCOUNT
 				$picUrl = FBConnectProfilePic::getImgUrlById($fb_id);
-				print "PIC URL FROM THE FUNCTION: $picUrl<br/>\n";
-				exit;
+				if($picUrl != ""){
+					// TODO: detect if the user already has a masthead avatar
+					
+					// TODO: if the user doesn't have a masthead avatar, then use the URL to get it.
+					
+					print "PIC URL FROM THE FUNCTION: $picUrl<br/>\n";
+					exit;
+				}
 			}
 
 			$this->sendPage('displaySuccessAttaching');
