@@ -133,9 +133,9 @@ print "Found pic: $picUrl<br/>\n";
 
 				// TODO: Apply this as the user's new avatar.
 
-				print "PIC URL FROM THE FUNCTION: $picUrl<br/>\n";
-				exit;
 			}
+		} else {
+print "Avatar URL: ".$masthead->getUrl()."<br/>\n";
 		}
 print "Done with profile pic meddling.<br/>\n";
 }
