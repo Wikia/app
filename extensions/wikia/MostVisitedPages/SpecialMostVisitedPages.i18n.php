@@ -108,6 +108,8 @@ $messages['fi'] = array(
 	'mostvisitedpagessearchtext' => 'Artikkelin nimi:',
 	'mostvisitedpagessearchbtn' => 'haku',
 	'mostvisitedpageslatest' => 'viimeisessä $1 minuutissa',
+	'mostvisitedpageslatestlink' => 'Katso viimeksi vierailtuja sivuja',
+	'mostvisitedpagesalllink' => 'Katso useimmin vierailtuja sivuja',
 );
 
 /** French (Français)
@@ -264,6 +266,8 @@ $messages['pl'] = array(
 	'mostvisitedpagessearchtext' => 'Nazwa artykułu',
 	'mostvisitedpagessearchbtn' => 'szukaj',
 	'mostvisitedpageslatest' => 'w ostatnich $1 minut',
+	'mostvisitedpageslatestlink' => 'Zobacz ostatnio odwiedzane strony',
+	'mostvisitedpagesalllink' => 'Zobacz najczęściej odwiedzane strony',
 );
 
 /** Piedmontese (Piemontèis)

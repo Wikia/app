@@ -45,9 +45,15 @@ $messages['af'] = array(
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
+ * @author Jim-by
  */
 $messages['be-tarask'] = array(
+	'iwedit-title' => 'Рэдактар інтэрвікі',
+	'iwedit-language-interwikis' => 'толькі моўныя інтэрвікі',
+	'iwedit-all-interwikis' => 'усе інтэрвікі',
 	'iwedit-update' => 'Абнавіць',
+	'iwedit-error' => '<p>Узьнікла памылка.</p>',
+	'iwedit-success' => '<p>Спасылка створаная пасьпяхова.</p>',
 );
 
 /** Breton (Brezhoneg)
@@ -275,6 +281,13 @@ $messages['ru'] = array(
 	'iwedit-update' => 'Обновить',
 	'iwedit-error' => '<p>Произошла ошибка.</p>',
 	'iwedit-success' => '<p>Ссылка успешно создана.</p>',
+);
+
+/** Sinhala (සිංහල)
+ * @author බිඟුවා
+ */
+$messages['si'] = array(
+	'iwedit-update' => 'යාවත්කාලීන',
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))

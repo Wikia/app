@@ -48,6 +48,14 @@ $messages['ca'] = array(
 	'theorytab-title' => 'Teoria',
 );
 
+/** Chechen (Нохчийн)
+ * @author Sasan700
+ */
+$messages['ce'] = array(
+	'theorytab-title' => 'Тlеораме',
+	'theorytab-parent-title' => 'Коьртехь йолу яззам',
+);
+
 /** German (Deutsch)
  * @author LWChris
  */
@@ -177,6 +185,14 @@ $messages['oc'] = array(
 	'theorytab-parent-title' => 'Article Principal',
 );
 
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'theorytab-title' => 'Teoria',
+	'theorytab-parent-title' => 'Artykuł nadrzędny',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Dragonòt
  */
@@ -205,6 +221,14 @@ $messages['pt-br'] = array(
 $messages['ru'] = array(
 	'theorytab-title' => 'Теория',
 	'theorytab-parent-title' => 'Родительская статья',
+);
+
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'theorytab-title' => 'Teorija',
+	'theorytab-parent-title' => 'Starševski članek',
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))

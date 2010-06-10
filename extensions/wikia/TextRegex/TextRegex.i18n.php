@@ -44,8 +44,10 @@ Try once again.',
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
  * @author Siebrand
+ * @author Umherirrender
  */
 $messages['qqq'] = array(
+	'textregex-desc' => '{{desc}}',
 	'textregex-addedby-user' => 'If $2 is a time stamp, split date and time',
 	'textregex-remove-url' => '{{Identical|Remove}}',
 	'textregex-stats-url' => '{{Identical|Statistics}}',
@@ -171,6 +173,7 @@ $messages['ca'] = array(
 
 /** German (Deutsch)
  * @author LWChris
+ * @author The Evil IP address
  */
 $messages['de'] = array(
 	'textregex' => 'Text RegEx',
@@ -191,7 +194,7 @@ Versuche es noch einmal.',
 	'textregex-submit-regex' => 'Phrase hinzufügen',
 	'textregex-empty-regex' => 'Gib eine korrekte Phrase zum Sperren an.',
 	'textregex-invalid-regex' => 'Ungültiger regulärer Ausdruck.',
-	'textregex-already-added' => '"$1" wurde bereits hinzugefügt',
+	'textregex-already-added' => '„$1“ wurde bereits hinzugefügt',
 	'textregex-nodata-found' => 'Keine Daten gefunden',
 	'textregex-stats-record' => "Wort ''$1'' wurde von $2 auf $3 verwendet (''Kommentar: $4'')",
 	'textregex-select-subpage' => 'Wähle eine Liste von Phrasen:',
@@ -199,7 +202,7 @@ Versuche es noch einmal.',
 	'textregex-create-subpage' => 'oder neue Liste erstellen:',
 	'textregex-select-regexlist' => 'gehe zur Liste',
 	'textregex-invalid-regexid' => 'Ungültige Phrase.',
-	'textregex-phrase-statistics' => "Statistiken für \"'''\$1'''\" Phrase (Anzahl von Aufzeichnungen: \$2)",
+	'textregex-phrase-statistics' => "Statistiken für „'''$1'''“ Phrase (Anzahl von Aufzeichnungen: $2)",
 	'textregex-return-mainpage' => '[{{SERVER}}$1 zurück zur Liste]',
 );
 
@@ -384,6 +387,24 @@ $messages['ia'] = array(
 	'textregex-return-mainpage' => '[{{SERVER}}$1 retornar al lista]',
 );
 
+/** Japanese (日本語)
+ * @author Naohiro19
+ */
+$messages['ja'] = array(
+	'textregex' => 'テキストの正規表現',
+	'textregex-currently-blocked' => '’’’現在投稿ブロックされているフレーズ:’’’',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'textregex-page-title' => 'Lëscht vun den onerwënschten Ausdréck',
+	'textregex_nocurrently-blocked' => 'Keng gespaarte Phrase fonnt',
+	'textregex-nodata-found' => 'Keng Date fonnt',
+	'textregex-select-default' => '-- eraussichen --',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -482,7 +503,7 @@ Prøv igjen.',
 	'textregex-create-subpage' => 'eller opprett en ny liste:',
 	'textregex-select-regexlist' => 'gå til listen',
 	'textregex-invalid-regexid' => 'Ugyldig frase.',
-	'textregex-phrase-statistics' => "Statistikk for \"'''\$1'''\"-frasen (antall treff: \$2)",
+	'textregex-phrase-statistics' => "Statistikk for «'''$1'''»-frasen (antall treff: $2)",
 	'textregex-return-mainpage' => '[{{SERVER}}$1 gå tilbake til listen]',
 );
 
@@ -619,5 +640,39 @@ $messages['sr-ec'] = array(
 	'textregex-invalid-regexid' => 'неважећа фраза',
 	'textregex-phrase-statistics' => "Статистика за \"'''\$1'''\"  фразу (број појављивања: \$2)",
 	'textregex-return-mainpage' => '[{{SERVER}}$1 повратак на списак]',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'textregex' => 'Iteks ang regex',
+	'textregex-desc' => '[[Special:textregex/XXXX|Salain]] palabas ang mga pariralang hindi nais na nasa loob ng mga pahinang binago, batay sa pangkaraniwang mga pagsasaad.',
+	'textregex-page-title' => 'Talaan ng hindi nais na mga pagsasaad',
+	'textregex-error-unblocking' => 'Hindi paghaharang ng kamalian  ($1).
+Subukan uli.',
+	'textregex-currently-blocked' => "'''Pangkasalukuyang hinahadlangang mga parirala:'''",
+	'textregex_nocurrently-blocked' => 'Walang natagpuang hinadlangang mga parirala',
+	'textregex-addedby-user' => 'idinagdag ni $1 noong $2',
+	'textregex-remove-url' => '[{{SERVER}}$1&id=$2 tanggalin]',
+	'textregex-stats-url' => '[{{SERVER}}$1&id=$2 estadistika]',
+	'textregex-unblock-succ' => 'Nagtagumpay ang pagtanggal ng paghadlang',
+	'textregex-block-succ' => 'Nagtagumpay ang paghadlang',
+	'textregex-unblock-message' => "Tinanggal ang pariralang '''$1''' mula sa hindi nais na mga pagsasaad.",
+	'textregex-block-message' => "Idinagdag ang pariralang '''$1''' sa hindi nais na mga pagsasaad.",
+	'textregex-regex-block' => 'Pariralang hahadlangan:',
+	'textregex-submit-regex' => 'Idagdag ang parirala',
+	'textregex-empty-regex' => 'Magbigay ng isang angkop na pariralang hahadlangan.',
+	'textregex-invalid-regex' => 'Hindi tanggap na regex.',
+	'textregex-already-added' => 'Naidagdag na ang "$1"',
+	'textregex-nodata-found' => 'Walang natagpuang dato',
+	'textregex-stats-record' => "ang salitang ''$1'' ay ginamit ni $2 noong $3 (''puna: $4'')",
+	'textregex-select-subpage' => 'Pumili ng isa sa talaan ng mga parirala:',
+	'textregex-select-default' => '-- pumili --',
+	'textregex-create-subpage' => 'o lumikha ng bagong talaan:',
+	'textregex-select-regexlist' => 'pumunta sa talaan',
+	'textregex-invalid-regexid' => 'Hindi tanggap na parirala.',
+	'textregex-phrase-statistics' => "Estadistika para sa pariralang \"'''\$1'''\" (bilang ng mga talaan: \$2)",
+	'textregex-return-mainpage' => '[{{SERVER}}$1 bumalik sa talaan]',
 );
 

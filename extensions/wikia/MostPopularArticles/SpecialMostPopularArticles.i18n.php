@@ -40,6 +40,13 @@ $messages['br'] = array(
 	'mostpopulararticles' => 'Pennadoù ar poblekañ (eus an diaz roadennoù)',
 );
 
+/** Chechen (Нохчийн)
+ * @author Sasan700
+ */
+$messages['ce'] = array(
+	'mostpopulararticles' => 'Массарел гlарайойла яззамаш (хlокху чохь йолучарел)',
+);
+
 /** German (Deutsch) */
 $messages['de'] = array(
 	'mostpopulararticles' => 'Häufig geänderte Artikel',
@@ -258,6 +265,13 @@ $messages['su'] = array(
  */
 $messages['sv'] = array(
 	'mostpopulararticles' => 'Populäraste artiklarna (från databasen)',
+);
+
+/** Tamil (தமிழ்)
+ * @author Mahir78
+ */
+$messages['ta'] = array(
+	'mostpopulararticles' => 'மிகவும் பிரபலமான கட்டுரைகள் (தரவுத்தளத்திலிருந்து)',
 );
 
 /** Tagalog (Tagalog)

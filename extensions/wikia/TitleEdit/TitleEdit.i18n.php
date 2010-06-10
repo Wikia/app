@@ -17,8 +17,10 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
+ * @author Umherirrender
  */
 $messages['qqq'] = array(
+	'titleedit-desc' => '{{desc}}',
 	'titleedit' => 'This is shown next to the H1 element (article title) and opens the edit form (full article edit) when clicked
 {{Identical|Edit}}',
 );
@@ -218,8 +220,11 @@ $messages['cdo'] = array(
 	'titleedit' => 'Siŭ-gāi',
 );
 
-/** Chechen (Нохчийн) */
+/** Chechen (Нохчийн)
+ * @author Sasan700
+ */
 $messages['ce'] = array(
+	'titleedit-desc' => 'Кхин цхьа цlер хийцам бо тlетаlйо нуьйда тlетуха лакххьа декъа агlон',
 	'titleedit' => 'Xийца',
 );
 
@@ -552,8 +557,11 @@ $messages['ia'] = array(
 	'titleedit' => 'modificar',
 );
 
-/** Indonesian (Bahasa Indonesia) */
+/** Indonesian (Bahasa Indonesia)
+ * @author Irwangatot
+ */
 $messages['id'] = array(
+	'titleedit-desc' => 'Menambahkan tombol sunting judul di atas halaman',
 	'titleedit' => 'Sunting',
 );
 
@@ -1035,8 +1043,11 @@ $messages['pt-br'] = array(
 	'titleedit' => 'editar',
 );
 
-/** Quechua (Runa Simi) */
+/** Quechua (Runa Simi)
+ * @author AlimanRuna
+ */
 $messages['qu'] = array(
+	'titleedit-desc' => "Sutita llamk'apuy ñit'inata p'anqap hawanman yapan",
 	'titleedit' => 'qillqay',
 );
 

@@ -57,8 +57,10 @@ Check given username for possible typos.</p>',
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
  * @author Siebrand
+ * @author Umherirrender
  */
 $messages['qqq'] = array(
+	'right-lookupcontribs' => '{{doc-right|lookupcontribs}}',
 	'lookupcontribsshowpages' => 'If $1 is a number, this should support plural.',
 	'lookupcontribscontent' => '{{Identical|Content}}',
 );
@@ -151,6 +153,7 @@ $messages['br'] = array(
 
 /** German (Deutsch)
  * @author LWChris
+ * @author The Evil IP address
  */
 $messages['de'] = array(
 	'lookupcontribs' => 'Beiträge ansehen',
@@ -169,10 +172,10 @@ Gib zur Anzeige der Liste den Benutzernamen unten ein.',
 	'lookupcontribsfullurls' => 'vollständige URLs',
 	'lookupcontribslinks' => 'Links zu Beiträgen',
 	'lookupcontribsgo' => 'Anzeigen',
-	'lookupcontribsinvaliduser' => '<p class="error">Der Benutzer "<b>$1</b>" existiert nicht.
+	'lookupcontribsinvaliduser' => '<p class="error">Der Benutzer „<b>$1</b>“ existiert nicht.
 Bitte überprüfe den angegebenen Benutzernamen auf mögliche Tippfehler.</p>',
-	'lookupcontribsinvalidviewmode' => '<p class="error">"<b>$1</b>" ist kein gültiger Anzeigemodus.</p>',
-	'lookupcontribsinvalidmode' => '<p class="error">"<b>$1</b>" ist kein gültiger Modus.</p>',
+	'lookupcontribsinvalidviewmode' => '<p class="error">„<b>$1</b>“ ist kein gültiger Anzeigemodus.</p>',
+	'lookupcontribsinvalidmode' => '<p class="error">„<b>$1</b>“ ist kein gültiger Modus.</p>',
 	'lookupcontribsselectwikis' => 'Wikis auswählen:',
 	'lookupcontribslistwikiainfo' => 'Liste von Wikis in denen Artikel von <b>$1</b> bearbeitet wurden',
 	'lookupcontribsnoresultfound' => 'Kein Ergebnis gefunden!',

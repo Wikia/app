@@ -1277,7 +1277,7 @@ $messages['mk'] = array(
 	'multiwikiedit_reason' => 'Причина за уредување',
 	'multiwikiedit_list_caption' => 'Список на викија',
 	'multiwikiedit_minoredit_caption' => 'Ситно уредување',
-	'multiwikiedit_botedit_caption' => 'Бот-уредување (скриено)',
+	'multiwikiedit_botedit_caption' => 'Ботовско уредување (скриено)',
 	'multiwikiedit_autosummary_caption' => 'Овозможи автоопис',
 	'multiwikiedit_norecentchanges_caption' => 'Не ја прикажувај промената во скорешните промени',
 	'multiwikiedit_newonly_caption' => 'Прескокни постоечки статии',
@@ -1718,11 +1718,18 @@ $messages['pms'] = array(
 $messages['ps'] = array(
 	'multitasks-link-back-label' => 'دلته',
 	'multiwikiedit_button' => 'سمول',
+	'multiwikiedit_caption' => 'د مخ لړليک',
+	'multiwikiedit_this_wiki' => 'همدا ويکي',
 	'multiwikiedit_all_wikis' => 'ټولې ويکي ګانې',
+	'multiwikiedit_selected_wikis' => 'ټاکلې ويکي ګانې',
 	'multiwikiedit_select_yourself' => 'تاسې',
 	'multidelete_button' => 'ړنګول',
+	'multidelete_caption' => 'د مخ لړليک',
+	'multidelete_reason' => 'د ړنګولو سبب',
 	'multidelete_select_all' => 'ټول ټاکل',
+	'multidelete_this_wiki' => 'همدا ويکي',
 	'multidelete_all_wikis' => 'ټولې ويکي ګانې',
+	'multidelete_selected_wikis' => 'ټاکلې ويکي ګانې',
 );
 
 /** Portuguese (Português)

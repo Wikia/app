@@ -46,6 +46,13 @@ $messages['bs'] = array(
 	'wikifactoryreporter' => 'WikiFactory Reporter',
 );
 
+/** Chechen (Нохчийн)
+ * @author Sasan700
+ */
+$messages['ce'] = array(
+	'wikifactoryreporter' => 'Хааманча WikiFactory',
+);
+
 /** Czech (Česky)
  * @author Mr. Richard Bolla
  */

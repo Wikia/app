@@ -249,6 +249,13 @@ $messages['id'] = array(
 	'our404handler-oops' => 'Ini bukan halaman yang Anda cari. Mohon pergi.',
 );
 
+/** Italian (Italiano)
+ * @author HalphaZ
+ */
+$messages['it'] = array(
+	'our404handler' => 'Errore 404: Pagina non trovata!',
+);
+
 /** Japanese (日本語)
  * @author Tommy6
  */
@@ -467,6 +474,7 @@ $messages['ru'] = array(
  */
 $messages['sl'] = array(
 	'our404handler' => 'Napaka 404: Strani ni mogoče najti!',
+	'our404handler-oops' => 'To niso strani, ki ste jih iskali. Pojdite naprej, prosim.',
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))

@@ -19,9 +19,11 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author Siebrand
+ * @author Umherirrender
  */
 $messages['qqq'] = array(
 	'interwikidispatcher' => 'Special page name as displayed on Special:SpecialPages and page title of special page.',
+	'interwikidispatcher-desc' => '{{desc}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -159,6 +161,14 @@ $messages['no'] = array(
 $messages['oc'] = array(
 	'interwikidispatcher' => 'Repartidor interwiki',
 	'interwikidispatcher-desc' => 'Resòlv los ligams interwiki per redusir las redireccions Apache',
+);
+
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'interwikidispatcher' => 'Dyspozytor interwiki',
+	'interwikidispatcher-desc' => 'Rozwija linki interwiki aby zredukować liczbę przekierowań serwera Apache',
 );
 
 /** Piedmontese (Piemontèis)

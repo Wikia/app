@@ -299,6 +299,13 @@ $messages['sv'] = array(
 	'wikiasearch-system-error-msg' => 'På grund av ett systemfel kunde sökningen inte slutföras',
 );
 
+/** Tamil (தமிழ்)
+ * @author Mahir78
+ */
+$messages['ta'] = array(
+	'wikiasearch-titles-only' => 'பக்க தலைப்புகளில் மட்டும் தேடுக',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */

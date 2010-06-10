@@ -116,6 +116,7 @@ Please rewrite your message.',
  * @author EugeneZelenko
  * @author LWChris
  * @author Translationista
+ * @author Umherirrender
  */
 $messages['qqq'] = array(
 	'pr_what_problem_incorrect_content_short' => '{{Identical|Content}}',
@@ -125,6 +126,8 @@ $messages['qqq'] = array(
 	'pr_table_comments' => '{{Identical|Comment}}',
 	'pr_table_status' => '{{Identical|Status}}',
 	'pr_table_actions' => '{{Identical|Action}}',
+	'right-problemreports_action' => '{{doc-right|problemreports action}}',
+	'right-problemreports_global' => '{{doc-right|problemreports global}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -198,8 +201,11 @@ $messages['ar'] = array(
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
+ * @author Wizardist
  */
 $messages['be-tarask'] = array(
+	'reportproblem' => 'Паведаміць пра праблему',
+	'prlogtext' => 'Паведамленьні пра праблемы',
 	'pr_what_problem_incorrect_content_short' => 'зьмест',
 	'pr_describe_problem' => 'Паведамленьне',
 	'pr_table_description' => 'Апісаньне',
@@ -1384,8 +1390,10 @@ Ij difet dël programa a peulo esse arportà an sle piasse ëd discussion. Ij ra
  */
 $messages['ps'] = array(
 	'pr_what_problem' => 'سکالو',
+	'pr_what_problem_other' => 'بل',
 	'pr_what_problem_unselect' => 'ټول',
 	'pr_describe_problem' => 'پيغام',
+	'pr_mailer_to_default' => 'د ويکي يا کارن',
 	'pr_table_page_link' => 'مخ',
 	'pr_table_description' => 'څرګندونه',
 	'pr_table_status' => 'دريځ',
@@ -1741,6 +1749,90 @@ $messages['sv'] = array(
 	'pr_status_10' => 'ta bort rapport',
 	'pr_status_wait' => 'vänta...',
 	'pr_msg_exchead' => 'Meddelandet är för långt',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'problemreports' => 'Talaan ng mga ulat ng suliranin',
+	'reportproblem' => 'Mag-ulat ng suliranin',
+	'prlogtext' => 'Mga ulat ng suliranin',
+	'prlogheader' => 'Talaan ng naiulat na mga suliranin at mga pagbabago sa kanilang katayuan',
+	'prlog_reportedentry' => 'nag-ulat ng isang suliranin noong $1 ($2)',
+	'prlog_changedentry' => 'minarkahan ang suliraning $1 bilang "$2"',
+	'prlog_typeentry' => 'binago ang uri ng suliranin na $1 na naging "$2"',
+	'prlog_removedentry' => 'inalis ang suliraning $1',
+	'prlog_emailedentry' => 'nagpadala ng mensaheng e-liham kay $2 ($3)',
+	'pr_introductory_text' => 'Karamihan sa mga pahinang nasa wiking ito ang mababago, at malugod kang makapagbabago ng pahina at makapagtatama ka ng mga kamalian!  Kung kailangan mo ng tulong sa pagsasagawa niyan, tingnan ang [[help:editing|paano magbago]] at [[help:revert|paano magbalik sa dati ng pambababoy]].
+
+Upang makapag-ugnayan sa tauhan o upang makapag-ulat ng mga suliraning pangkarapatang-ari, pakitingnan ang [[w:contact us|pahinang "makipag-ugnayan sa amin" ng Wikia]].
+
+Maaaring iulat ang mga depekto ng sopwer sa mga poro.
+Ang mga pag-uulat na ginawa rito ay [[Special:ProblemReports|ipapakita sa wiki]].',
+	'pr_what_problem' => 'Paksa',
+	'pr_what_problem_spam' => 'may isang kawing ng manlulusob dito',
+	'pr_what_problem_vandalised' => 'nababoy ang pahinang ito',
+	'pr_what_problem_incorrect_content' => 'hindi tama ang nilalamang ito',
+	'pr_what_problem_software_bug' => 'may isang depekto sa loob ng sopwer ng wiki',
+	'pr_what_problem_other' => 'iba pa',
+	'pr_what_problem_select' => 'Pumili po ng uri ng suliranin',
+	'pr_what_problem_unselect' => 'lahat',
+	'pr_what_problem_spam_short' => 'manlulusob',
+	'pr_what_problem_vandalised_short' => 'taong mapanira',
+	'pr_what_problem_incorrect_content_short' => 'nilalaman',
+	'pr_what_problem_software_bug_short' => 'surot',
+	'pr_what_problem_other_short' => 'iba pa',
+	'pr_what_problem_change' => 'Baguhin ang uri ng problema',
+	'pr_describe_problem' => 'Mensahe',
+	'pr_what_page' => 'Pamagat ng pahina',
+	'pr_email_visible_only_to_staff' => 'makikita lamang ng tauhan',
+	'pr_thank_you' => 'Salamat sa pag-uulat mo ng isang suliranin!
+
+[[Special:ProblemReports/$1|Maaari mong panoorin ang pagsulong ng pag-aayos nito]].',
+	'pr_thank_you_error' => 'Naganap ang isang kamalian habang ipinapadala ang ulat ng suliranin, sumubok ulit mamaya...',
+	'pr_spam_found' => 'May natagpuang manlulusob sa loob ng buod ng iyong ulat.
+Pakibago ang nilalaman ng buod',
+	'pr_empty_summary' => 'Mangyaring magbigay ng maikling paglalarawan ng suliranin',
+	'pr_empty_email' => 'Pakibigay ang tirahan mo ng e-liham',
+	'pr_mailer_notice' => 'Ang ipinasok mong tirahan ng e-liham sa iyong mga nais ng tagagamit ay lilitaw bilang ang tirahang "Mula kay" ng liham, upang makapagbigay ng tugon ang tatanggap.',
+	'pr_mailer_subject' => 'Nag-ulat ng suliranin sa',
+	'pr_mailer_tmp_info' => 'Maaari mong [[MediaWiki:ProblemReportsResponses|baguhin ang mga katugunang may suleras]]',
+	'pr_mailer_to_default' => 'Tagagamit ng Wikia',
+	'pr_mailer_go_to_wiki' => 'Upang makapagpadala ng e-liham mangyaring pumunta sa [$1 wiking pinagsumbungan ng suliranin]',
+	'pr_total_number' => 'Kabuuang bilang ng mga ulat',
+	'pr_view_archive' => 'Tingnan ang mga suliraning nasinop',
+	'pr_view_all' => 'Ipakita ang lahat ng mga ulat',
+	'pr_view_staff' => 'Ipakita ang mga ulat na nangangailangan ng tulong ng tauhan',
+	'pr_raports_from_this_wikia' => 'Tingnan ang mga ulat na nagmula lamang sa Wikiang ito',
+	'pr_reports_from' => 'Mga ulat na mula lamang sa',
+	'pr_no_reports' => 'Walang mga ulat na tumutugma sa iyong pamantayan',
+	'pr_sysops_notice' => 'Maaari mong <a href="$1">baguhin ang katayuan ng mga ulat ng problema</a> mula sa iyong wiki...',
+	'pr_table_problem_id' => 'ID ng suliranin',
+	'pr_table_wiki_name' => 'Pangalan ng wiki',
+	'pr_table_problem_type' => 'Uri ng suliranin',
+	'pr_table_page_link' => 'Pahina',
+	'pr_table_date_submitted' => 'Petsa ng pagpasa',
+	'pr_table_reporter_name' => 'Pangalan ng tagapag-ulat',
+	'pr_table_description' => 'Paglalarawan',
+	'pr_table_comments' => 'Mga puna',
+	'pr_table_status' => 'Katayuan',
+	'pr_table_actions' => 'Mga galaw',
+	'pr_status_0' => 'nakabinbin',
+	'pr_status_1' => 'naayos na',
+	'pr_status_2' => 'nakasara na',
+	'pr_status_3' => 'kailangan ang tulong ng tauhan',
+	'pr_status_10' => 'tanggalin ang ulat',
+	'pr_status_undo' => 'Bawiin ang pagbabago sa ulat ng kalagayan',
+	'pr_status_ask' => 'Baguhin ang kalagayan ng ulat?',
+	'pr_remove_ask' => 'Panatilihing tanggal na ang ulat?',
+	'pr_status_wait' => 'maghintay...',
+	'pr_read_only' => 'Hindi mapupuno ang bagong mga ulat sa ngayon, sumubok uli mamaya.',
+	'pr_msg_exceeded' => 'Ang pinakamataas na bilang ng mga panitik sa loob ng lugar ng mensahe ay 512.
+Mangyaring pakisulat uli ang mensahe mo.',
+	'pr_msg_exchead' => 'Napakahaba ng mensahe',
+	'right-problemreports_action' => 'Baguhin ang katayuan at uri ng Mga Ulat ng Suliranin',
+	'right-problemreports_global' => 'Baguhin ang katayuan at uri ng Mga Ulat ng Suliranin sa kahabaan ng mga wiki',
 );
 
 /** Ukrainian (Українська)

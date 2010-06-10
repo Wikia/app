@@ -15,10 +15,14 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author EugeneZelenko
  * @author Siebrand
+ * @author Umherirrender
  */
 $messages['qqq'] = array(
-	'action_panel_edit_title' => 'Translate as verb.',
+	'action_panel_edit_title' => 'Translate as verb.
+{{Identical|Answer}}',
+	'actionpanel-desc' => '{{desc}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -313,6 +317,8 @@ $messages['pms'] = array(
  */
 $messages['ps'] = array(
 	'action_panel_edit_title' => 'ځواب',
+	'action_panel_categorize' => 'په وېشنيزو وېشل',
+	'action_panel_categories_summary' => 'وېشنيزې ورګډول',
 );
 
 /** Portuguese (Português)

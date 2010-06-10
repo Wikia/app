@@ -215,6 +215,7 @@ $messages['ja'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'cntool-button-preview' => 'Kucken ouni ofzespäicheren',
 	'cntool-button-save' => 'Späicheren',
 );
 

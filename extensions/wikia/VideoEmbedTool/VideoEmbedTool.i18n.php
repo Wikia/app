@@ -860,9 +860,17 @@ $messages['ia'] = array(
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Irwangatot
  * @author Kenrick95
  */
 $messages['id'] = array(
+	'vet-add-button' => 'Tambah Video',
+	'vet-added-from-gallery' => 'menambah video dari galeri video',
+	'vet-see-all' => 'lihat semua',
+	'vet-no-preview' => 'Anda tidak dapat menambahkan video dalam artikel dengan modus pratayang',
+	'vet-single-success' => 'Video berhasil disisipkan dalam artikel ini',
+	'vet-gallery-create-success' => 'Sebuah galeri video telah ditambahkan ke artikel ini',
+	'vet-gallery-add-success' => 'Video telah ditambahkan ke galeri video dalam artikel ini',
 	'vet-left' => 'Kiri',
 	'vet-right' => 'Kanan',
 	'vet-gallery' => 'Galeri',
@@ -1391,12 +1399,14 @@ $messages['pms'] = array(
 $messages['ps'] = array(
 	'vet-find' => 'يوه ويډيو موندل',
 	'vet-thiswiki' => 'همدا ويکي',
+	'vet-flickr' => 'فلېکر',
 	'vet-upload-btn' => 'ورځه',
 	'vet-find-btn' => 'پلټل',
 	'vet-name' => 'نوم',
 	'vet-thumbnail' => 'بټنوک',
 	'vet-layout' => 'ليدنمخ',
 	'vet-close' => 'تړل',
+	'vet-add-button' => 'ويډيو ورګډول',
 	'vet-see-all' => 'ټول کتل',
 	'vet-left' => 'کيڼ',
 	'vet-right' => 'ښي',

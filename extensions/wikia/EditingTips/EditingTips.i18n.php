@@ -340,6 +340,14 @@ $messages['pms'] = array(
 	'editingTips' => "Ch'a gionta ij sò consèj [[MediaWiki:EditingTips|ambelessì]]",
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'editingtips_enter_widescreen' => 'د سمون-کړکۍ سور لويول',
+	'editingtips_exit_widescreen' => 'د سمون-کړکۍ سور وړوکی کول',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  */

@@ -103,8 +103,8 @@ $messages['ja'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'widgetdashboard-wrong-skin' => '<p>Таблата со направите најдобро работи со еден од новите изгледи, како на пр. <a href="./Special:WidgetDashboard?useskin=monaco">Монако</a>.</p><p>Изменете си ги <a href="./Special:Preferences">нагодувањата</a> за да можете да ја користите оваа алатка.</p>',
-	'widgetdashboard-description' => 'Оваа страница служи за испробување на работата на вашите направи. За да видите список на сите расположиви направи, одете на [[Special:Widgets]].',
+	'widgetdashboard-wrong-skin' => '<p>Таблата со посреднички елементи најдобро работи со еден од новите изгледи, како на пр. <a href="./Special:WidgetDashboard?useskin=monaco">Монако</a>.</p><p>Изменете си ги <a href="./Special:Preferences">нагодувањата</a> за да можете да ја користите оваа алатка.</p>',
+	'widgetdashboard-description' => 'Оваа страница служи за испробување на работата на вашите посреднички елементи. За да видите список на сите расположиви елементи, одете на [[Special:Widgets]].',
 );
 
 /** Dutch (Nederlands)
@@ -122,8 +122,8 @@ Zie ook de [[Special:Widgets|lijst met alle beschikbare widgets]].',
  * @author Nghtwlkr
  */
 $messages['no'] = array(
-	'widgetdashboard-wrong-skin' => '<p>Dashbord for skjermelement fungerer best med noen av de nye utseendene, for eksempel <a href="./Special:WidgetDashboard?useskin=monaco">Monaco</a>.</p><p>Endre <a href="./Special:Preferences">innstillingene dine</a> for å bruke dette verktøyet.</p>',
-	'widgetdashboard-description' => 'Denne siden fungerer som et sted å teste hvordan dine skjermelement virker. For å se en liste over alle tilgjengelige skjermelement, gå til [[Special:Widgets]].',
+	'widgetdashboard-wrong-skin' => '<p>Dashbordet for skjermelementer fungerer best med noen av de nye utseendene, for eksempel <a href="./Spesial:WidgetDashboard?useskin=monaco">Monaco</a>.</p><p>Endre <a href="./Spesial:Preferences">innstillingene dine</a> for å bruke dette verktøyet.</p>',
+	'widgetdashboard-description' => 'Denne siden fungerer som et sted å teste hvordan dine skjermelementer virker. For å se en liste over alle tilgjengelige skjermelementer, gå til [[Special:Widgets]].',
 );
 
 /** Occitan (Occitan)

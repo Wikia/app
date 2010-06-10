@@ -978,6 +978,85 @@ Si tu es le fundator o un administrator de iste wiki, tu pote cambiar iste messa
 	'activityfeed' => 'Summario de activitate',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Irwangatot
+ */
+$messages['id'] = array(
+	'myhome' => 'Rumah saya',
+	'myhome-activity-more' => 'Lihat aktivitas terbaru',
+	'myhome-activity-feed' => 'Asupan kegiatan',
+	'myhome-activity-feed-empty' => "Wiki ini menunggu anda untuk ikut terlibat. 
+Klik '''[[Special:CreatePage|Halaman Baru]]''' untuk mulai menulis!",
+	'myhome-watchlist-feed' => 'Daftar pantauan',
+	'myhome-watchlist-feed-empty' => 'Anda dapat menambahkan halaman ke daftar pantauan Anda dengan mengklik pranala "Pantau" di bagian atas halaman. 
+Anda dapat menggunakan daftar pantauan Anda untuk melacak perubahan terbaru pada halaman yang anda pantau.',
+	'myhome-user-contributions-feed' => 'Kontribusi',
+	'myhome-hot-spots-feed' => 'Pojok terbaru',
+	'myhome-hot-spots-feed-empty' => "Wiki ini menunggu anda untuk ikut terlibat. 
+Klik '''[[Special:CreatePage|Halaman Baru]]''' untuk mulai menulis!",
+	'myhome-hot-spots-newest' => 'Halaman baru di wiki',
+	'myhome-hot-spots-brandnew' => 'Ini adalah wiki baru. Klik pada [[Special:CreatePage|Baru Halaman]] untuk mulai menulis!',
+	'tog-myhomedisableredirect' => 'Nonaktifkan pengarah saya ke Rumah Saya',
+	'myhome-feed-newpage' => 'halaman baru',
+	'myhome-feed-edit' => 'sunting',
+	'myhome-feed-move' => 'pemindahan halaman',
+	'myhome-feed-talkpage' => 'Halaman pembicaraan',
+	'myhome-feed-blogcomment' => 'komentar blog',
+	'myhome-feed-delete' => 'penghapusan',
+	'myhome-feed-image' => 'menambahkan gambar',
+	'myhome-feed-video' => 'menambahkan video',
+	'myhome-feed-created-by' => 'dibuat oleh $1',
+	'myhome-feed-added-by' => 'ditambah oleh $1',
+	'myhome-feed-edited-by' => 'disunting oleh $1',
+	'myhome-feed-posted-by' => 'diposting oleh $1',
+	'myhome-feed-comment-by' => 'komentar oleh $1',
+	'myhome-feed-deleted-by' => 'dihapus oleh $1',
+	'myhome-feed-moved-by' => 'dipindahkan oleh $1',
+	'myhome-feed-article-comment-created-by' => 'komentar baru oleh $1',
+	'myhome-feed-article-comment-edited-by' => 'komentar disunting oleh $1',
+	'myhome-feed-by' => 'oleh $1',
+	'myhome-feed-diff-alt' => 'tunjukkan perubahan pada halaman ini',
+	'myhome-feed-new-page-details' => 'halaman baru',
+	'myhome-feed-summary-details' => 'Ringkasan',
+	'myhome-feed-section-edit-details' => 'Sunting bagian',
+	'myhome-feed-new-blog-post-details' => 'Blog baru',
+	'myhome-feed-new-blog-comment-details' => 'Komentar',
+	'myhome-feed-new-article-comment-details' => 'Komentar',
+	'myhome-feed-move-details' => 'Ubah nama',
+	'myhome-feed-redirect-details' => 'Pengalihan',
+	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Tambahkan foto|Tambahkan foto}}',
+	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Tambahkan video|Tambahkan video}}',
+	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|tambahkan kategori|tambahkan kategori}}',
+	'myhome-user-contributions-empty' => 'Anda dapat terlibat di wiki ini dengan mengklik "sunting halaman" pada setiap artikel, dan menambahkan apa yang Anda ketahui.
+Setiap orang dapat membuat perubahan, menambahkan informasi atau memperbaiki kesalahan.
+Wiki dibangun oleh komunitas, dan setiap anda klik tombol sunting, Anda merupakan bagian dari komunitas. 
+Cobalah!',
+	'myhome-hot-spots-number-of-editors' => 'penyunting',
+	'myhome-log-in' => "<center>Fitur Rumah Saya hanya tersedia jika Anda masuk log.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Harap masuk log untuk melihat halaman ini!]'''</big></center>",
+	'myhome-switch-to-monaco' => "Fitur Rumah Saya  hanya tersedia jika Anda menggunakan kulit ''Monaco''. 
+Jika Anda ingin melihat Rumah Saya, gunakan '''[[Special:Preferences|Preferensi Anda]]''' untuk mengubah tampilan kulit Anda.",
+	'myhome-namespace-blog' => 'Blog',
+	'myhome-community-corner-header' => 'Pojok komunitas',
+	'myhome-community-corner-edit' => 'sunting pesan',
+	'community-corner' => "'''Selamat Datang di Rumah Saya!'''
+
+Ini Halaman membantu Anda tetap up-to-date dengan apa yang terjadi pada wiki. 
+
+Jika Anda pendiri atau pengurus di wiki ini, Anda dapat mengubah pesan ini untuk berbicara dengan komunitas tentang hal penting yang terjadi di situs. 
+Sebagai contoh, Anda bisa: 
+
+* Mengatur sebuah proyek untuk membangun suatu bagian wiki 
+* Tampilkan beberapa halaman baru yang setiap orang harus melihat 
+* Dapatkan orang yang terlibat dalam diskusi yang terjadi di situs 
+* Berikan sambutan untuk kontributor yang menambahkan sesuatu yang khusus pada wiki 
+* Atau hanya posting beberapa kata dorongan!",
+	'myhome-hot-spots-definition' => 'Artikel dengan paling banyak penyunting pada $1 hari terakhir .',
+	'myhome-default-view-checkbox' => 'Buat $1 tampilan baku saya',
+	'myhome-default-view-success' => 'Baiklah, sekarang ini baku Anda',
+	'tooltip-pt-myhome' => 'Tuju ke Halaman Depan Saya',
+	'activityfeed' => 'Asupan kegiatan',
+);
+
 /** Italian (Italiano)
  * @author McDutchie
  */
@@ -1305,7 +1384,7 @@ Klikk på '''[[Special:CreatePage|Ny side]]''' for å begynne å skrive.",
 	'myhome-hot-spots-brandnew' => 'Dette er en helt ny wiki. Klikk på [[Special:CreatePage|Ny side]] for å begynne å skrive.',
 	'tog-myhomedisableredirect' => 'Deaktiver omdirigeringen min til Mitt hjem',
 	'myhome-feed-newpage' => 'ny side',
-	'myhome-feed-edit' => 'rediger',
+	'myhome-feed-edit' => 'redigert',
 	'myhome-feed-move' => 'side fjernet',
 	'myhome-feed-talkpage' => 'diskusjonsside',
 	'myhome-feed-blogcomment' => 'bloggkommentar',
@@ -1343,7 +1422,7 @@ Prøv det.',
 	'myhome-switch-to-monaco' => "Mitt hjem-funksjonen er kun tilgjengelig om du bruker utseendet Monaco.
 Om du vil se Mitt hjem, gå til '''[[Special:Preferences|innstillingene dine]]''' for å endre drakt.",
 	'myhome-namespace-blog' => 'Blogg',
-	'myhome-community-corner-header' => 'Felleskapshjørne',
+	'myhome-community-corner-header' => 'Fellesskapshjørne',
 	'myhome-community-corner-edit' => 'rediger melding',
 	'community-corner' => "'''Velkommen til Mitt hjem.'''
 
@@ -1957,8 +2036,8 @@ Pindutin ang '''[[Special:CreatePage|Bagong pahina]]''' upang magsimulang magsul
 	'myhome-feed-summary-details' => 'Buod',
 	'myhome-feed-section-edit-details' => 'Binago ang seksyon',
 	'myhome-feed-new-blog-post-details' => 'Bagong blog',
-	'myhome-feed-new-blog-comment-details' => 'Puna',
-	'myhome-feed-new-article-comment-details' => 'Pagpuna',
+	'myhome-feed-new-blog-comment-details' => 'Puna/Kumento',
+	'myhome-feed-new-article-comment-details' => 'Puna/Kumento',
 	'myhome-feed-move-details' => 'Pinangalanang muli',
 	'myhome-feed-redirect-details' => 'Palitan ang pupuntahan',
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Idinagdag na larawan|Idinagdagdag na mga larawan}}',

@@ -793,7 +793,7 @@ $messages['no'] = array(
 	'wikiacollection' => 'Lag et magasin!',
 	'magcloud-intro-get-started' => 'Samle artikler',
 	'magcloud-intro-create-magazine' => 'Opprett et magasin med artikler fra denne wikien!',
-	'magcloud-intro-check-out' => 'Klikk på magasinet for å se på et eksempel fra felleskapet vårt!',
+	'magcloud-intro-check-out' => 'Klikk på magasinet for å se på et eksempel fra fellesskapet vårt!',
 	'magcloud-intro-hint' => 'Bare bruk verktøylinjen øverst på siden for å velge wiki-artiklene du vil ha med i magasinet ditt. Klikk på «{{int:Magcloud-toolbar-go-to-magazine}}» når du er ferdig!',
 	'magcloud-intro-view-my-magazines' => 'Se mine magasin',
 	'magcloud-load-magazine-title' => 'Last et magasin',
@@ -1009,6 +1009,65 @@ $messages['sr-ec'] = array(
 	'magcloud-design-default-subtitle' => 'Поднаслов',
 	'magcloud-design-preview' => 'Претпреглед',
 	'magcloud-design-image-selected' => '$1 је одабрано',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'wikiacollection' => 'Gumawa ng isang magasin!',
+	'magcloud-intro-get-started' => 'Mag-ipon ng mga pahina ng wiki',
+	'magcloud-intro-create-magazine' => 'Lumikha ng isang magasin mula sa mga pahina ng wiking ito!',
+	'magcloud-intro-check-out' => 'Pindutin ang magasin upang masuri ang isang halimbawa mula sa aming pamayanan!',
+	'magcloud-intro-hint' => 'Gamitin lamang ang kahon ng kasangkapang nasa itaas ng pahina upang makapili ng mga pahina ng wiking nais mong tipunin papunta sa magasin mo. Pindutin ang "{{int:Magcloud-toolbar-go-to-magazine}}" kapag nagawa mo na!',
+	'magcloud-intro-view-my-magazines' => 'Tingnan ang mga magasin ko',
+	'magcloud-load-magazine-title' => 'Markarga ng isang magasin',
+	'magcloud-load-magazine-load' => 'Ikarga ang magasing ito',
+	'magcloud-load-magazine-empty' => 'Walang ka pang nasasagip na anumang magasin.  Subukang lumikha ng isa at sagipin ito upang makita sila sa talaang ito!',
+	'magcloud-add-article-success' => "Naidagdag ang '''$1''' sa magasin mo",
+	'magcloud-add-article-already' => "Naidagdag na ang '''$1'''",
+	'magcloud-toolbar-step' => 'Hakbang $1: $2',
+	'magcloud-toolbar-article-in-collection' => "Nasa magasin mo na ang '''$1'''",
+	'magcloud-toolbar-article-add' => "Idaragdag ang '''$1''' sa magasin mo?",
+	'magcloud-toolbar-add' => 'Idagdag',
+	'magcloud-toolbar-articles-count' => '<big>$1</big> {{PLURAL:$1|pahina|mga pahina}} ng wiki',
+	'magcloud-toolbar-go-to-magazine' => 'Pumunta sa magasin mo',
+	'magcloud-discard-magazine-title' => 'Sagipin ang lipumpon mo?',
+	'magcloud-discard-magazine-msg' => 'Ginagawa mo ang isang hindi pa nasasagip na magasin.  Nais mong sagipin ito?  (Kailangang mong lumagda upang masagip ang nakulekta mo.)',
+	'magcloud-discard-magazine-discard' => 'Itapon at lumabas',
+	'magcloud-discard-magazine-save' => 'Sagipin at lumabas',
+	'magcloud-special-collection-title' => 'Gumawa ng isang magasin!',
+	'magcloud-special-collection-empty' => 'Wala kang pang napipiling anumang mga pahina ng wiki!  Magbalik sa wiki, at piliin ang "{{int:Magcloud-toolbar-add}}" na nasa kahon ng kasangkapang nasa ibabaw upang makalap ang magasin mo.',
+	'magcloud-special-collection-review-list-info' => 'Mahusay, nakapili ka na ng $1 {{PLURAL:$1|pahina|mga pahina}} ng wiki para sa magasin mo.  Kung gusto mong magdagdag pa, tumingin-tingin lang sa iba pang mga pahina ng wiki at pindutin ang "{{int:Magcloud-toolbar-add}}" na nasa kahon ng kasangkapang nasa itaas!',
+	'magcloud-special-collection-review-list-tips' => '<big>Mga balato para sa paglikha ng isang Mahusay na Magasin</big>
+
+# Subuking pumili ng mga artikulong sumusunod sa isang tema, katulad ng mga kontrabida sa komiks o natatanging mga espada.
+# Kailangang hindi lalampas sa 100 mga pahina ang tunay mong magasin, na maaaring nasa bandang 8 hanggang 10 mga pahina ng wiki, ayon sa kung ano ang idinaragdag mong mga pahina ng wiki.
+
+Kung hindi ka masulong dahil kailangan mo ng inspirasyon, suriin ang mga halimbawang nasa ibaba!',
+	'magcloud-order-your-articles' => 'Pagsunud-sunurin ang mga artikulo mo',
+	'magcloud-button-design-a-cover' => 'Magdisenyo ng isang pabalat',
+	'magcloud-design-default-title' => 'Ang magasin kong $1',
+	'magcloud-design-default-subtitle' => 'Kabahaging pamagat',
+	'magcloud-design-review-list' => 'Talaan ng Ibalik sa Pagsusuri',
+	'magcloud-design-preview' => 'Paunang tingin',
+	'magcloud-design-license-policy' => 'Magkarga lamang ng mga larawan na may karapatan kang ilimbag at sumusunod sa mga patakaran ng wiking ito.',
+	'magcloud-design-image-selected' => '$1 napili',
+	'magcloud-preview-done' => 'Nagawa na ang magasin mo.',
+	'magcloud-preview-back-to-cover' => 'Pabalat na Ibabalik sa Pagdidisenyo',
+	'magcloud-preview-save-magazine' => 'Sagipin ang magasin mo',
+	'magcloud-preview-publish' => 'Ilathala ang magasin mo',
+	'magcloud-preview-generating-pdf' => 'Nililikha ang magasin mo...',
+	'magcloud-publish-status-title' => 'Nilalathala na ang magasin mo',
+	'magcloud-publish-status' => 'Magaling! Ipapadala na namin ang magasin mo.',
+	'magcloud-publish-error' => 'Nakaranas kami ng isang kamalian habang sinusubok naming ipadala ang magasin mo sa MagCloud - tinala namin iyon upang subukan at alamin kung ano ang nangyari.  Pinakamainam na sumubok uli mamaya - mangyari sanang malaman namin ang suliranin.  Pakitanggap ang aming mga paumanhin!',
+	'magcloud-publish-done' => '... at tapos na tayo!  Tinuturong papunta na sa MagCloud...',
+	'magcloud-publish-ajax-initialize' => 'Lumalagda na tayo sa MagCloud...',
+	'magcloud-publish-ajax-login' => '...itinatakda na ngayon ang paglalathala...',
+	'magcloud-publish-ajax-publication' => '...itinatakda na ang labas...',
+	'magcloud-publish-ajax-issue' => '... tinatapos na lamang ang pagkakarga...',
+	'magcloud-publish-ajax-upload' => '... at naglilinis, katulad ng sinabi sa atin ng mga magulang natin...',
+	'magcloud-publish-ajax-processing' => '... ngayon nasaan na ba ang malaking pulang pindutan ng ILATHALA...',
 );
 
 /** Ukrainian (Українська)
