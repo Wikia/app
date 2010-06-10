@@ -81,7 +81,7 @@ $messages['es'] = array(
  * @author Centerlink
  */
 $messages['fi'] = array(
-	'wikiawidget' => 'Wikia-käyttöliittymäelementti',
+	'wikiawidget' => 'Wikia-käyttöliittymäelementit',
 );
 
 /** French (Français)
@@ -167,7 +167,7 @@ $messages['lb'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'wikiawidget' => 'Направи на Викија',
+	'wikiawidget' => 'Посреднички елементи на Викија',
 );
 
 /** Dutch (Nederlands)
@@ -178,11 +178,12 @@ $messages['nl'] = array(
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
  * @author Jon Harald Søby
  * @author Nghtwlkr
  */
 $messages['no'] = array(
-	'wikiawidget' => 'Skjermelement for Wikia',
+	'wikiawidget' => 'Skjermelementer for Wikia',
 );
 
 /** Occitan (Occitan)

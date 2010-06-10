@@ -56,6 +56,13 @@ $messages['ca'] = array(
 	'wikiaupload' => 'Carrega a Wikia',
 );
 
+/** Chechen (Нохчийн)
+ * @author Sasan700
+ */
+$messages['ce'] = array(
+	'wikiaupload' => 'Чуйаьхарш Wikia',
+);
+
 /** Czech (Česky)
  * @author Mr. Richard Bolla
  */

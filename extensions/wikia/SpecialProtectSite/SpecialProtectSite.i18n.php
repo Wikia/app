@@ -457,6 +457,7 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'protectsite-allowall' => 'ټول کارنان',
 	'protectsite-protect' => 'ژغورل',
 	'protectsite-unprotect' => 'نه ژغورل',
 );

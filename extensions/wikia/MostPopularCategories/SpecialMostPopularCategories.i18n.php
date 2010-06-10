@@ -47,6 +47,13 @@ $messages['br'] = array(
 	'mostpopularcategories' => 'Rummadoù ar poblekañ',
 );
 
+/** Chechen (Нохчийн)
+ * @author Sasan700
+ */
+$messages['ce'] = array(
+	'mostpopularcategories' => 'Массарел гlарайаьлла кадегарш',
+);
+
 /** German (Deutsch) */
 $messages['de'] = array(
 	'mostpopularcategories' => 'Beliebteste Kategorien',
@@ -123,6 +130,13 @@ $messages['ia'] = array(
  */
 $messages['id'] = array(
 	'mostpopularcategories' => 'Kategori paling populer',
+);
+
+/** Italian (Italiano)
+ * @author HalphaZ
+ */
+$messages['it'] = array(
+	'mostpopularcategories' => 'Categorie più popolari',
 );
 
 /** Japanese (日本語)
@@ -223,6 +237,13 @@ $messages['ru'] = array(
 	'mostpopularcategories' => 'Самые популярные категории',
 );
 
+/** Sinhala (සිංහල)
+ * @author බිඟුවා
+ */
+$messages['si'] = array(
+	'mostpopularcategories' => 'වඩාත් ප්‍රචලිත ප්‍රවර්ගයන්',
+);
+
 /** Slovenian (Slovenščina)
  * @author Dbc334
  */
@@ -249,6 +270,13 @@ $messages['su'] = array(
  */
 $messages['sv'] = array(
 	'mostpopularcategories' => 'Populäraste kategorierna',
+);
+
+/** Tamil (தமிழ்)
+ * @author Mahir78
+ */
+$messages['ta'] = array(
+	'mostpopularcategories' => 'மிகப் பிரபலமான பகுப்புகள்',
 );
 
 /** Turkmen (Türkmençe)

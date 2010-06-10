@@ -38,6 +38,23 @@ Verskaf daarna \'n byskrif en kliek op "Voeg in".',
 	'rightalign-tooltip' => 'Regs uitlyn',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'widgetdashboard' => 'Панэль кіраваньня віджэтамі',
+	'mu_size_your_image' => 'Памер Вашай выявы',
+	'almosttheretext' => 'Карыстайцеся пракруткай для выбару памеру мініятуры, увядзіце загаловак і націсьніце «Уставіць»',
+	'insertfullsize' => 'Уставіць выяву поўнага памеру',
+	'insertthumbnail' => 'Уставіць мініятуру',
+	'thumbnailsize' => 'Памер мініятуры',
+	'captionoptional' => 'Подпіс (неабавязковы):',
+	'insertimage' => 'Уставіць выяву',
+	'leftalign-tooltip' => 'Зьлева',
+	'rightalign-tooltip' => 'Справа',
+);
+
 /** Breton (Brezhoneg)
  * @author Gwenn-Ael
  * @author Y-M D
@@ -225,7 +242,7 @@ Geef daarna een bijschrift op en klik "Invoegen".',
  * @author Nghtwlkr
  */
 $messages['no'] = array(
-	'widgetdashboard' => 'Dashbord for skjermelement',
+	'widgetdashboard' => 'Dashbord for skjermelementer',
 	'mu_size_your_image' => 'Sett størrelse for ditt bilde',
 	'almosttheretext' => 'Bruk glidebryteren for å velge størrelse på miniatyrbildet, skriv inn en bildetekst og klikk Sett inn',
 	'insertfullsize' => 'Sett inn det opprinngelig bildet i full størrelse',

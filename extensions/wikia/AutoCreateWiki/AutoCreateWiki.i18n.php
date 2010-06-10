@@ -165,8 +165,10 @@ This is a brand-new project, so please write to us if you have any questions!
 /** Message documentation (Message documentation)
  * @author Prima klasy4na
  * @author Siebrand
+ * @author Umherirrender
  */
 $messages['qqq'] = array(
+	'autocreatewiki-desc' => '{{desc}}',
 	'autocreatewiki-create-account' => '{{Identical|Create an account}}',
 	'autocreatewiki-success-has-been-created' => 'Used as a subtitle to complete the page title, which displays the domain name of the created wiki.',
 );
@@ -457,6 +459,7 @@ Ur raktres nevez-flamm an hini eo. Skrivit dimp, mar plij, m'hoc'h eus tra goule
 
 /** German (Deutsch)
  * @author LWChris
+ * @author The Evil IP address
  */
 $messages['de'] = array(
 	'autocreatewiki' => 'Erstelle ein neues Wiki',
@@ -483,7 +486,7 @@ $messages['de'] = array(
 	'autocreatewiki-success-has-been-created' => 'wurde erstellt!',
 	'autocreatewiki-success-get-started' => 'Auf gehts!',
 	'autocreatewiki-info-domain' => 'Verwende am besten ein Wort, das vermutlich als Suchbegriff für dieses Thema verwendet wird.',
-	'autocreatewiki-info-topic' => 'Wähle am besten einen kurzen, beschreibenden Namen (z. B. "Star Wars" oder "Fernsehserien").',
+	'autocreatewiki-info-topic' => 'Wähle am besten einen kurzen, beschreibenden Namen (z. B. „Star Wars“ oder „Fernsehserien“).',
 	'autocreatewiki-info-category-default' => 'Besucher können so dein Wiki einfacher finden.',
 	'autocreatewiki-info-category-answers' => 'Besucher können so deine Answers Seite einfacher finden.',
 	'autocreatewiki-info-language' => 'Dies wird die Standard-Sprache für Besucher deines Wikis.',
@@ -601,6 +604,7 @@ indem du <a href="$2">$2</a> besuchst.</p>
 
 /** German (formal address) (Deutsch (Sie-Form))
  * @author LWChris
+ * @author The Evil IP address
  */
 $messages['de-formal'] = array(
 	'autocreatewiki' => 'Ein neues Wiki erstellen',
@@ -610,7 +614,7 @@ $messages['de-formal'] = array(
 	'autocreatewiki-success-title-answers' => 'Ihre Answers Seite wurde erstellt!',
 	'autocreatewiki-success-subtitle' => 'Sie können sofort in Ihrem Wiki loslegen - besuchen Sie einfach:',
 	'autocreatewiki-info-domain' => 'Verwenden Sie am besten ein Wort, das vermutlich als Suchbegriff für dieses Thema verwendet wird.',
-	'autocreatewiki-info-topic' => 'Wählen Sie am besten einen kurzen, beschreibenden Namen (z. B. "Star Wars" oder "Fernsehserien").',
+	'autocreatewiki-info-topic' => 'Wählen Sie am besten einen kurzen, beschreibenden Namen (z. B. „Star Wars“ oder „Fernsehserien“).',
 	'autocreatewiki-info-category-default' => 'Besucher können so Ihr Wiki einfacher finden.',
 	'autocreatewiki-info-category-answers' => 'Besucher können so Ihre Answers Seite einfacher finden.',
 	'autocreatewiki-info-language' => 'Dies wird die Standard-Sprache für Besucher Ihres Wikis.',
@@ -870,7 +874,9 @@ Esto es un nuevo proyecto de wiki, así que por favor, ¡escríbenos si tienes c
 	'autocreatewiki-subname-answers' => 'Respuestas',
 );
 
-/** Persian (فارسی) */
+/** Persian (فارسی)
+ * @author Huji
+ */
 $messages['fa'] = array(
 	'autocreatewiki' => 'ایجاد ویکی جدید',
 	'autocreatewiki-page-title-default' => 'ایجاد ویکی جدید',
@@ -897,7 +903,7 @@ $messages['fa'] = array(
 	'autocreatewiki-violate-policy' => 'نام این ویکی شامل لغتی است که ناقض سیاست‌ نام‌گذاری ما است',
 	'autocreatewiki-busy-username' => 'این نام کاربری از قبل انتخاب شده‌است.',
 	'autocreatewiki-blocked-username' => 'شما اجازۀ ایجاد حساب کاربری ندارید.',
-	'autocreatewiki-user-notloggedin' => 'حساب کاربری شما ساخته‌شد ولی هنوز وارد سیستم نشده‌اید!',
+	'autocreatewiki-user-notloggedin' => 'حساب کاربری شما ساخته‌شد ولی هنوز به سامانه وارد نشده‌اید!',
 	'autocreatewiki-empty-language' => 'لطفا زبان ویکی را انتخاب کنید.',
 	'autocreatewiki-empty-category' => 'لطفا یکی از رده‌ها را انتخاب کنید.',
 	'autocreatewiki-empty-wikiname' => 'نام ویکی نمی‌تواند خالی باشد.',
@@ -917,12 +923,13 @@ $messages['fa'] = array(
 
 ویکیایی که شما درخواست کرده‌بودید در <$1> قابل دسترسی است. ما امیدواریم به زودی شاهد ویرایش شما در آن‌جا باشیم!
 
-ما یکسری اطلاعات و نکته‌هایی در صحفه بحثتان (<$5>) اضافه کرده‌ایم تا به شما برای شروع ویکیتان کمک کند. اگر سوالی دارید، به این ایمیل پاسخ دهید یا در صفحات راهنمای ویکیا در <http://help.wikia.com> جستجو کنید.
+ما یک سری اطلاعات و نکته‌هایی در صفحهٔ بحثتان (<$5>) اضافه کرده‌ایم تا به شما برای شروع ویکی‌تان کمک کند. اگر سوالی دارید، به این ایمیل پاسخ دهید یا در صفحات راهنمای ویکیا در <http://help.wikia.com> جستجو کنید.
 
 
 $3
 
-تیم محله ویکیا
+تیم جامعه ویکیا
+
 <http://www.wikia.com/wiki/User:$4>',
 	'autocreatewiki-welcometalk' => '<div align="right" dir="rtl" style="font-family: Tahoma;">
 سلام $1، ما از داشتن \'\'\'$4\'\'\' در بین دیگر ویکیاهای ویکیا بسیار خوشحالیم!
@@ -2288,10 +2295,28 @@ Cost-sì a l'é un proget neuv, antlora për piasì ch'a na scriva s'a l'ha qual
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'autocreatewiki' => 'یو نوی ويکي جوړول',
+	'autocreatewiki-page-title-default' => 'یو نوی ويکي جوړول',
+	'createwiki' => 'یو نوی ويکي جوړول',
+	'autocreatewiki-chooseone' => 'يو وټاکۍ',
+	'autocreatewiki-web-address' => 'د جال پته:',
 	'autocreatewiki-language-all' => 'ټولې ژبې',
 	'autocreatewiki-birthdate' => 'د زېږون نېټه:',
+	'autocreatewiki-remember' => 'ما په ياد لره',
 	'autocreatewiki-create-account' => 'يو کارن-حساب جوړول',
+	'autocreatewiki-done' => 'ترسره شو',
 	'autocreatewiki-error' => 'تېروتنه',
+	'autocreatewiki-success-title-default' => 'ستاسې ويکي جوړ شو!',
+	'autocreatewiki-success-has-been-created' => 'جوړ شو!',
+	'autocreatewiki-success-get-started' => 'پېلول',
+	'autocreatewiki-invalid-username' => 'دا کارن نوم سم نه دی.',
+	'autocreatewiki-busy-username' => 'دا کارن نوم بل چا ځانته ټاکلی.',
+	'autocreatewiki-blocked-username' => 'تاسې کارن حساب نه شی جوړولای.',
+	'autocreatewiki-category-other' => 'بل',
+	'autocreatewiki-set-username' => 'لومړی مو کارن نوم وټاکۍ.',
+	'autocreatewiki-invalid-birthday' => 'ناسمه زېږون نېټه',
+	'autocreatewiki-congratulation' => 'مبارک مو شه!',
+	'autocreatewiki-welcometalk-log' => 'د ښه راغلاست پيغام',
 	'newwikis' => 'نوې ويکي ګانې',
 	'autocreatewiki-subname-answers' => 'ځوابونه',
 );

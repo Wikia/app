@@ -39,6 +39,13 @@ $messages['en'] = array(
 	'cathub-tags'				=> 'Tags',
 );
 
+/** Message documentation (Message documentation)
+ * @author Umherirrender
+ */
+$messages['qqq'] = array(
+	'cathub-desc' => '{{desc}}',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -588,6 +595,37 @@ $messages['sr-ec'] = array(
 	'cathub-button-answer' => 'Одговор',
 	'cathub-button-improve-answer' => 'Неправилан одговор',
 	'cathub-edit-success' => 'Ваш одговор је сачуван',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'cathub-desc' => 'Karugtong para sa pagpapalit ng mga pahina ng kategorya upang maging isang tanawin ng kategorya bilang isang sentro ng aktibidad.  Idinisenyo para sa [http://answers.wikia.com answers.wikia.com]',
+	'cathub-progbar-mouseover-answered' => '$1% nasagot ($2 mga sagot)',
+	'cathub-progbar-mouseover-not-answered' => '$1% hindi pa nasasagot ($2 mga tanong)',
+	'cathub-progbar-label-answered' => 'Nasagot na',
+	'cathub-progbar-label-unanswered' => 'Hindi pa nasasagot',
+	'cathub-progbar-none-done' => 'Wala pang nasasagot na mga tanong',
+	'cathub-progbar-all-done' => 'Nasagot na  ang lahat ng mga tanong!',
+	'cathub-progbar-allmost-done' => '$1 hindi pa nasasagot na {{PLURAL:$1|tanong|mga tanong}} ang natitira!',
+	'cathub-no-unanswered-questions' => 'Walang makikitang mga tanong na hindi pa nasasagot sa ngayon.',
+	'cathub-no-answered-questions' => 'Walang makikitang nasagot nang mga tanong sa ngayon.',
+	'cathub-top-contributors' => 'Nangungunang mga taga-ambag sa kategoryang ito',
+	'cathub-top-contribs-all-time' => 'Sa lahat ng panahon',
+	'cathub-top-contribs-recent' => 'Sa loob ng huling $1 {{PLURAL:$1|araw|mga araw}}',
+	'cathub-question-asked-ago' => 'tanong ni $1 $2',
+	'cathub-question-answered-ago' => 'sagot ni $1 $2',
+	'cathub-question-asked-by' => 'ni $1',
+	'cathub-anon-username' => 'isang mausisang tagagamit',
+	'cathub-answer-heading' => 'Kasagutan',
+	'cathub-button-answer' => 'Kasagutan',
+	'cathub-button-improve-answer' => 'Painamin ang kasagutan',
+	'cathub-button-rephrase' => 'sabihin sa ibang paraan',
+	'cathub-edit-success' => 'Nasagip na ang sagot mo',
+	'cathub-prev' => '&larr; Nakaraan',
+	'cathub-next' => 'Kasunod &rarr;',
+	'cathub-tags' => 'Mga tatak',
 );
 
 /** Ukrainian (Українська)

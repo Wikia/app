@@ -154,10 +154,10 @@ $messages['ja'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'widgets-specialpage-info' => 'Направите најдобро работат со еден од новите изгледи, како на пр. [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Монако].
+	'widgets-specialpage-info' => 'Посредничките елементи најдобро работат со еден од новите изгледи, како на пр. [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Монако].
 
 Променете си ги [[Special:Preferences#prefsection-1|нагодувањата]] за да можете да ја користите оваа алатка.',
-	'widgets-specialpage-try-dashboard' => 'Оваа страница содржи список на сите расположиви направи. За да видите како работат вашите направи, одете на [[Special:WidgetDashboard]].',
+	'widgets-specialpage-try-dashboard' => 'Оваа страница содржи список на сите расположиви посреднички елементи. За да видите како работат вашите елементи, одете на [[Special:WidgetDashboard]].',
 );
 
 /** Dutch (Nederlands)
@@ -176,10 +176,10 @@ Wijzig alstublieft uw [[Special:Preferences#prefsection-1|voorkeuren]] om dit hu
  * @author Nghtwlkr
  */
 $messages['no'] = array(
-	'widgets-specialpage-info' => 'Skjermelement fungerer best med noen av de nye utseendene, for eksempel [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco].
+	'widgets-specialpage-info' => 'Skjermelementer fungerer best med noen av de nye utseendene, for eksempel [{{SERVER}}/index.php?title=Spesial:Widgets&useskin=monaco Monaco].
 
 Endre [[Special:Preferences#prefsection-1|innstillingene dine]] for å bruke dette verktøyet.',
-	'widgets-specialpage-try-dashboard' => 'Denne siden inneholder en liste over alle tilgjengelige skjermelement. For å se dem i bruk, gå til [[Special:WidgetDashboard]].',
+	'widgets-specialpage-try-dashboard' => 'Denne siden inneholder en liste over alle tilgjengelige skjermelementer. For å se dem i bruk, gå til [[Special:WidgetDashboard]].',
 );
 
 /** Occitan (Occitan)

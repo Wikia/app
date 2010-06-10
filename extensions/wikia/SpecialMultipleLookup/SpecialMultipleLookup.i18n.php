@@ -31,10 +31,13 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
+ * @author Umherirrender
  */
 $messages['qqq'] = array(
+	'specialmultiplelookup-desc' => '{{desc}}',
 	'multilookupnext' => '{{Identical|Next}}',
 	'multilookupprevious' => '{{Identical|Previous}}',
+	'right-multilookup' => '{{doc-right|multilookup}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -76,12 +79,12 @@ $messages['be-tarask'] = array(
 	'multilookupinvalidresults' => 'Няслушныя вынікі!',
 	'multilookupnoresultfound' => 'Нічога ня знойдзена!',
 	'multilookupwiki' => 'Вікі',
-	'multilookuplink' => 'Спасылка на ўнёскі',
-	'multilookupdetails' => 'Глядзець падрабязнасьці',
+	'multilookuplink' => 'Спасылка на ўнёсак',
+	'multilookupdetails' => 'Паказаць падрабязнасьці',
 	'multilookuplistwikiainfo' => 'Сьпіс вікі, старонкі якіх рэдагаваліся ўдзельнікамі з IP-адрасу <b>$1</b>',
-	'multilookupinvaliduser' => '<p class="error">IP-адрас «<b>$1</b>» не існуе. Праверце паданы IP-адрас на верагодную памылку.</p>',
+	'multilookupinvaliduser' => '<p class="error">IP-адрас «<b>$1</b>» не існуе. Праверце пададзены IP-адрас на верагодную памылку.</p>',
 	'multilookuplastedit' => 'Апошняе рэдагаваньне з гэтага IP-адрасу:',
-	'right-multilookup' => 'Прагляд інфармацыі пра ўдзельнікаў у некалькіх вікі',
+	'right-multilookup' => 'прагляд інфармацыі пра ўдзельнікаў у некалькіх вікі',
 );
 
 /** Breton (Brezhoneg)

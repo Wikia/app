@@ -43,10 +43,12 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
+ * @author Umherirrender
  */
 $messages['qqq'] = array(
 	'categoryselect-button-save' => '{{Identical|Save}}',
 	'categoryselect-button-cancel' => '{{Identical|Cancel}}',
+	'categoryselect-desc' => '{{desc}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -321,6 +323,31 @@ $messages['ia'] = array(
 	'tog-disablecategoryselect' => 'Disactivar selection de categorias',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Irwangatot
+ */
+$messages['id'] = array(
+	'categoryselect-code-view' => 'Tampilan kode',
+	'categoryselect-visual-view' => 'Tampilan visual',
+	'categoryselect-infobox-caption' => 'Pilihan kategori',
+	'categoryselect-infobox-category' => 'Memberikan nama kategori:',
+	'categoryselect-infobox-sortkey' => 'Penyusunan artikel ini menurut abjad pada kategori "$1" dengan nama:',
+	'categoryselect-addcategory-button' => 'Menambah kategori',
+	'categoryselect-suggest-hint' => 'Tekan Enter jika sudah selesai',
+	'categoryselect-tooltip' => "'''Baru!''' Peralatan tag Kategori. Cobalah atau lihat [[Help:CategorySelect|Bantuan]] untuk mempelajari lebih lanjut",
+	'categoryselect-unhandled-syntax' => 'terdeteksi sintaks tidak tertangani - beralih kembali ke modus visual tidak memungkinkan.',
+	'categoryselect-edit-summary' => 'Menambahkan kategori',
+	'categoryselect-empty-name' => 'Membutuhkan nama kategori (bagian sebelum |)',
+	'categoryselect-button-save' => 'Simpan',
+	'categoryselect-button-cancel' => 'Batalkan',
+	'categoryselect-error-not-exist' => 'Artikel [id=$1] tidak ada.',
+	'categoryselect-error-user-rights' => 'Kesalahan hak pengguna.',
+	'categoryselect-error-db-locked' => 'Basis data dikunci.',
+	'categoryselect-desc' => 'Menyediakan sebuah antarmuka untuk mengelola kategori dalam artikel tanpa mengedit seluruh artikel.',
+	'categoryselect-edit-abort' => 'Perubahan yang coba Anda lakukan dibatalkan oleh suatu ekstensi kaitan.',
+	'tog-disablecategoryselect' => 'Nonaktifkan Kategori Tagging',
+);
+
 /** Igbo (Igbo) */
 $messages['ig'] = array(
 	'categoryselect-button-save' => 'Donyéré',
@@ -482,6 +509,7 @@ $messages['pms'] = array(
 $messages['ps'] = array(
 	'categoryselect-addcategory-button' => 'وېشنيزه ورګډول',
 	'categoryselect-button-save' => 'خوندي کول',
+	'categoryselect-button-cancel' => 'ناګارل',
 );
 
 /** Portuguese (Português)

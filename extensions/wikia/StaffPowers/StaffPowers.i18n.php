@@ -44,6 +44,13 @@ $messages['ca'] = array(
 	'staffpowers-ipblock-aborted' => 'No es pot bloquejar el personal de Wikia. Si us plau, utilitzeu [[Special:Contact]] per a informar sobre qualsevol assumpte o problema amb el nostre personal.',
 );
 
+/** Chechen (Нохчийн)
+ * @author Sasan700
+ */
+$messages['ce'] = array(
+	'staffpowers-ipblock-aborted' => 'Саца цавало Wikia декъашхо. Дехар до, лелайе [[Special:Contact]], тхан декъашхох хьакхалуш долу гlалатах хаам ба.',
+);
+
 /** German (Deutsch)
  * @author LWChris
  */
@@ -191,6 +198,13 @@ $messages['pl'] = array(
  */
 $messages['pms'] = array(
 	'staffpowers-ipblock-aborted' => "A l'é pa possìbil bloché l'echip ëd Wikia. Për piasì ch'a deuvra [[Special:Contact]] për signalé tut problema con nòsta echip.",
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'staffpowers-ipblock-aborted' => 'د ويکي يا په املې بنديزلګول شونی نه دی. لطفاً د املې د غړو سره د ستونزو د رامنځ ته کېدلو په وخت کې [[Special:Contact]] وکاروۍ.',
 );
 
 /** Portuguese (Português)

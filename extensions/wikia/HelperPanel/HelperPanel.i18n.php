@@ -52,6 +52,15 @@ $messages['es'] = array(
 	'helperPanel_widgets' => 'Mis widgets',
 );
 
+/** Finnish (Suomi)
+ * @author Centerlink
+ * @author Crt
+ */
+$messages['fi'] = array(
+	'helperPanel_help' => 'Opastekäyttöliittymäelementti',
+	'helperPanel_widgets' => 'Omat käyttöliittymäelementit',
+);
+
 /** French (Français)
  * @author IAlex
  */
@@ -101,9 +110,11 @@ $messages['id'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Naohiro19
  * @author 青子守歌
  */
 $messages['ja'] = array(
+	'helperPanel_help' => 'ヘルプウィジェット',
 	'helperPanel_widgets' => '自分のウィジット',
 );
 
@@ -125,11 +136,12 @@ $messages['nl'] = array(
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
  * @author Nghtwlkr
  */
 $messages['no'] = array(
-	'helperPanel_help' => 'Skjermelement for hjelp',
-	'helperPanel_widgets' => 'Mine skjermelement',
+	'helperPanel_help' => 'Skjermelementer for hjelp',
+	'helperPanel_widgets' => 'Mine skjermelementer',
 );
 
 /** Occitan (Occitan)

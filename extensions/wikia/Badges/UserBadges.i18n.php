@@ -502,7 +502,7 @@ $messages['no'] = array(
 	'user-bagde-copypaste-ext-code' => 'Kopier og lim inn (eksterne nettsteder)',
 	'user-bagde-copypaste-int-code' => 'Kopier og lim inn (denne Wikiaen)',
 	'user-bagde-copypaste-int-other-code' => 'Kopier og lim inn (andre Wikiaer)',
-	'user-badge-save-info' => 'Hvis du vil lagre endringene, bla ned til sidens slutt og trykk på "Lagre"-knappen',
+	'user-badge-save-info' => 'Hvis du vil lagre endringene, bla ned til sidens slutt og trykk på «Lagre»-knappen',
 );
 
 /** Piedmontese (Piemontèis)

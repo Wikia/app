@@ -223,17 +223,32 @@ $messages['ia'] = array(
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Irwangatot
  * @author Kenrick95
  */
 $messages['id'] = array(
+	'wva-success' => 'halaman Video $1 berhasil ditambahkan.',
+	'wva-success-replaced' => 'halaman Video $1 berhasil diganti.',
+	'wva-failure' => 'Harap berikan parameter yang benar.',
 	'wva-name' => 'Masukkan nama:',
 	'wva-url' => 'Masukkan URL:',
 	'wva-add' => 'Tambahkan',
+	'wva-title' => 'Cara cepat menambah Video dari URL',
+	'wva-notlogged' => 'Anda harus login atau daftar untuk memasukkan video.',
+	'wva-notallowed' => 'Anda tidak dapat menyisipkan video di wiki ini.',
 );
 
-/** Italian (Italiano) */
+/** Italian (Italiano)
+ * @author HalphaZ
+ */
 $messages['it'] = array(
+	'wva-failure' => 'Prego inserisci parametri validi.',
+	'wva-name' => 'Inserisci il nome:',
+	'wva-url' => "Inserisci l'URL:",
 	'wva-add' => 'Aggiungi',
+	'wva-title' => 'Aggiungi rapidamente video da URL',
+	'wva-notlogged' => 'Devi accedere o registrati per inserire video.',
+	'wva-notallowed' => 'Non puoi inserire video su questo wiki.',
 );
 
 /** Japanese (日本語)
@@ -332,6 +347,8 @@ $messages['oc'] = array(
  */
 $messages['pl'] = array(
 	'wva-success' => 'Strona video „$1” została pomyślnie dodana.',
+	'wva-success-replaced' => 'Strona wideo „$1” została zastąpiona.',
+	'wva-failure' => 'Podaj prawidłowe parametry.',
 	'wva-name' => 'Wpisz nazwę:',
 	'wva-url' => 'Podaj URL:',
 	'wva-add' => 'Dodaj',

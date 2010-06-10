@@ -125,6 +125,7 @@ $messages['en'] = array(
  * @author LWChris
  * @author McDutchie
  * @author Siebrand
+ * @author Umherirrender
  */
 $messages['qqq'] = array(
 	'wf_city_url' => '{{Identical|Address}}',
@@ -137,6 +138,7 @@ $messages['qqq'] = array(
 	'wikifactory-label-actions' => '{{Identical|Action}}',
 	'wikifactory-label-close' => '{{Identical|Close}}',
 	'wikifactory-label-tags' => '{{Identical|Tag}}',
+	'right-wikifactory' => '{{doc-right|wikifactory}}',
 	'closewiki-nbr-wiki' => 'What is $1? If it is a number it should support PLURAL',
 	'closewiki-unknown' => '{{Identical|Unknown}}',
 	'awc-metrics-wikis-found' => "Needs plural support. Cannot currently be done, because there is no plural support in Wikia's version of MediaWiki.",
@@ -269,6 +271,7 @@ Kom asseblief later terug.",
  * @author Juanpabl
  */
 $messages['an'] = array(
+	'wikifactory-label-variables' => 'Variables',
 	'wikifactory-label-actions' => 'Accions',
 	'closed-reason' => 'Razón:',
 );
@@ -612,6 +615,11 @@ $messages['ca'] = array(
 	'awc-metrics-by-language' => 'per llengua:',
 	'awc-metrics-all' => 'tots els Wikis',
 	'awc-metrics-all-languages' => 'totes les llengües',
+);
+
+/** Chechen (Нохчийн) */
+$messages['ce'] = array(
+	'closed-reason' => 'Бахьан:',
 );
 
 /** Czech (Česky)
@@ -1605,6 +1613,7 @@ $messages['ia'] = array(
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Irwangatot
  * @author Kenrick95
  */
 $messages['id'] = array(
@@ -1612,10 +1621,13 @@ $messages['id'] = array(
 	'wf_city_title' => 'Judul',
 	'wf_city_created' => 'Telah dibuat',
 	'wf_city_public' => 'Status',
+	'wf_city_lang' => 'Bahasa',
+	'wf_cc_name' => 'Kategori',
 	'wikifactory-label-variables' => 'Variabel',
 	'wikifactory-label-actions' => 'Tindakan',
 	'wikifactory-label-close' => 'Tutup',
 	'wikifactory-label-tags' => 'Tag',
+	'closewiki-redirect-to' => 'Dialihkan ke',
 	'closewiki-unknown' => 'Tidak diketahui',
 	'awc-metrics-nbr-result' => 'Hasil:',
 	'awc-metrics-articles' => 'Artikel',
@@ -2383,12 +2395,13 @@ $messages['ps'] = array(
 	'awc-metrics-edits' => 'سمونونه',
 	'awc-metrics-images' => 'انځورونه',
 	'awc-metrics-close' => 'تړل',
+	'awc-metrics-active' => 'فعال',
 	'awc-metrics-closed' => 'تړل شوی',
 	'awc-metrics-this-month' => 'همدا مياشت',
 	'awc-metrics-close-listed' => 'په لړليک کې ټول تړل',
 	'awc-metrics-close-checked' => 'په نښه شوي تړل',
 	'closed-wiki' => 'تړل شوې ويکي',
-	'closed-wiki-create-wiki' => 'يوه نوې ويکي جوړول',
+	'closed-wiki-create-wiki' => 'یو نوی ويکي جوړول',
 	'closed-delete-images' => 'انځورونه ړنګول',
 	'closed-reason' => 'سبب:',
 );
@@ -2720,6 +2733,15 @@ $messages['ru'] = array(
 	'closed-reason' => 'Причина:',
 );
 
+/** Sinhala (සිංහල)
+ * @author බිඟුවා
+ */
+$messages['si'] = array(
+	'wf_city_url' => 'ලිපිනය:',
+	'wikifactory-label-variables' => 'විචල්‍යයන්',
+	'wikifactory-label-close' => 'වසන්න',
+);
+
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Charmed94
  * @author Verlor
@@ -2816,6 +2838,7 @@ $messages['sr-ec'] = array(
 	'awc-metrics-exact-match' => 'тачно слагање',
 	'closed-wiki' => 'Затвори Вики',
 	'closed-wiki-info' => 'Ова викија је затворена',
+	'disabled-wiki-info' => 'Ова викија је затворена',
 	'closed-wiki-create-wiki' => 'Направите нову вики',
 	'closed-delete-images' => 'Обриши слике',
 	'closed-free-url' => 'Ослободи УРЛ за новог оснивача',
@@ -2879,6 +2902,71 @@ $messages['te'] = array(
 	'awc-metrics-this-month' => 'ఈ నెల',
 	'awc-metrics-last-month' => 'గత {{PLURAL:$1|నెల|$1 నెలలు}}',
 	'closed-reason' => 'కారణం:',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'wikifactorypagetitle' => 'Tagapag-ayos ng Pabrika ng Wiki',
+	'wikifactory' => 'Tagapag-ayos ng Pabrika ng Wiki',
+	'closewiki' => 'Isara ang Wiki',
+	'wf_city_url' => 'Tirahan',
+	'wf_city_id' => 'id',
+	'wf_city_title' => 'Pamagat',
+	'wf_city_created' => 'Nilikha na',
+	'wf_city_founding_user' => 'Tagapagtatag',
+	'wf_city_founding_email' => 'E-liham ng tagapagtatag',
+	'wf_city_public' => 'Kalagayan',
+	'wf_city_lang' => 'Wika',
+	'wf_cc_name' => 'Kategorya',
+	'wikifactory_removevariable' => 'Tanggalin ang dato ng wiki mula sa taguan',
+	'wikifactory_removeconfirm' => 'Naalis na ang dato ng wiki mula sa taguan!',
+	'wikifactory-label-variables' => 'Mga pabagu-bago',
+	'wikifactory-label-variables2' => 'Pangkalahatan',
+	'wikifactory-label-hubs' => 'Mga sentro ng aktibidad',
+	'wikifactory-label-domains' => 'Mga nasasakupan',
+	'wikifactory-label-return' => 'Bumalik sa talaan',
+	'wikifactory-label-clog' => 'Talaan ng pagbabago',
+	'wikifactory-label-actions' => 'Mga galaw',
+	'wikifactory-label-close' => 'Isara',
+	'wikifactory-label-tags' => 'Mga tatak',
+	'wikifactory-label-ezsharedupload' => 'Kargang EZShare',
+	'right-wikifactory' => 'Baguhin ang mga katakdang panloob para sa mga wiki',
+	'closewiki-check-and-confirm' => 'Suriin ang mga wiki at tiyakin ang pagsasagawa',
+	'closewiki-redirect-to' => 'Papuntahin sa',
+	'closewiki-message' => 'pangalan ng nasasakupan $1',
+	'closewiki-confirm-button' => "Tiyakin ang '$1' ng $2",
+	'closewiki-nbr-wiki' => '$1 Mga wiki',
+	'closewiki-wiki-closed' => "Isinara na ang '''$1''' ($2)",
+	'closewiki-wiki-closed_removed' => "Nakasara na ang '''$1''' at nakatakdang burahin ($2)",
+	'closewiki-wiki-closed_redirect' => "Nakasara na ($2) ang '''$1''' at pinapupunta na ngayon sa: $3",
+	'closewiki-dump-url' => 'Tapunan ng kalipunan ng dato: $1',
+	'closewiki-images-url' => 'Sinupan ng larawan: $1',
+	'closewiki-unknown' => 'Hindi alam',
+	'closewiki-return' => 'Bumalik sa $1',
+	'awc-metrics-wikis' => 'Ipakita ang mga wiki',
+	'awc-metrics-select' => 'Ipakita ang mga wiki:',
+	'awc-metrics-by-language' => 'ayon sa wika:',
+	'awc-metrics-category' => 'at kategorya:',
+	'awc-metrics-all' => 'lahat ng mga wiki',
+	'awc-metrics-all-languages' => 'lahat ng mga wika',
+	'awc-metrics-search' => 'Mga pagpipilian para sa paghahanap:',
+	'awc-metrics-one-week' => 'nalikha < 1 linggo ang nakalipas',
+	'awc-metrics-two-weeks' => 'nalikha < 2 mga linggo ang nakalipas',
+	'awc-metrics-three-weeks' => 'nalikha < 3 mga linggo ang nakalipas',
+	'awc-metrics-one-months' => 'nalikha < 1 buwan ang nakalipas',
+	'awc-metrics-two-months' => 'nalikha < 2 mga buwan ang nakalipas',
+	'awc-metrics-three-months' => 'nalikha < 3 mga buwan ang nakalipas',
+	'awc-metrics-half-year' => 'nalikha < 6 mga buwan ang nakalipas',
+	'awc-metrics-wikis-found' => 'Nakatagpo ng $1 mga wiki',
+	'awc-metrics-by-email' => 'o (e-liham ng tagagamit):',
+	'awc-metrics-by-user' => 'natagpuan ni (pangalan ng tagagamit):',
+	'awc-metrics-by-dbname' => 'kung saan ang mga pangalan ng kalipunan ng dato ay naglalaman ng:',
+	'awc-metrics-by-title' => 'at mga pamagat na nagsisimula sa:',
+	'awc-metrics-by-domains' => 'at mga nasasakupang naglalaman ng:',
+	'awc-metrics-not-found' => 'Walang natagpuang mga wiki',
+	'awc-metrics-nbr-result' => 'Mga resulta:',
 );
 
 /** Ukrainian (Українська)

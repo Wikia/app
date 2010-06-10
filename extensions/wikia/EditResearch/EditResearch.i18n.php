@@ -221,6 +221,7 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'search_wikipedia' => 'ويکيپېډيا پلټل',
 	'previous' => 'پخوانی',
 );
 

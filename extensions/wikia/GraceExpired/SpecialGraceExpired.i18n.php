@@ -105,7 +105,7 @@ Isto ''non'' prende in conto le activitate del evalutation de paginas.",
  */
 $messages['mk'] = array(
 	'graceexpired' => 'Резервниот период е истечен',
-	'graceexpired-row' => '$1 (во $2, последно уредено во $3)',
+	'graceexpired-row' => '$1 (во $2, последно уредено во $3 ч.)',
 	'graceexpired-header' => "На оваа страница се наведени сите состави кои се сметаат за [[:Category:Abandoned|напуштени]], [[:Category:Trash_builds|ѓубре]], [[:Category:Build stubs|никулци]] или [[:Category:Trial Builds|пробни]], и никој ги нема уредувано барем две недели.
 
 Activity on rating pages is ''not'' taken into account here.",

@@ -347,6 +347,19 @@ $messages['ru'] = array(
 	'whereisextension-name-contains' => 'имя переменной содержит',
 );
 
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'whereisextension' => 'Kje je razširitev',
+	'whereisextension-submit' => 'Išči',
+	'whereisextension-list' => 'Seznam wikijev, ki ustrezajo merilu',
+	'whereisextension-isset' => 'je nastavljen na',
+	'whereisextension-filter' => 'Filter',
+	'whereisextension-all-groups' => 'Vse skupine',
+	'whereisextension-name-contains' => 'ime spremenljivke vsebuje',
+);
+
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Charmed94
  * @author Verlor

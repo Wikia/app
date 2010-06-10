@@ -316,6 +316,7 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'ajaxpoll-thankyou' => 'ستاسې د رايې نه مننه!',
 	'ajaxpoll-submit' => 'رايه ورکول!',
 );
 

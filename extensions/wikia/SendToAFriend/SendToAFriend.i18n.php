@@ -58,8 +58,11 @@ $messages['en'] = array(
  * @author EugeneZelenko
  * @author Lloffiwr
  * @author Siebrand
+ * @author Umherirrender
  */
 $messages['qqq'] = array(
+	'sendtoafriend-desc' => '{{desc}}',
+	'sendtoafriend-button-desc' => '{{desc}}',
 	'stf_name_label' => '{{Identical|Name}}',
 	'stf_frm4_cancel' => '{{Identical|Cancel}}',
 	'stf_frm4_invite' => 'Button text',
@@ -295,11 +298,12 @@ Os ydych yn credu mai drwy gamgymeriad y cafodd ei anfon, rhowch wybod i ni yn s
 
 /** German (Deutsch)
  * @author LWChris
+ * @author The Evil IP address
  */
 $messages['de'] = array(
 	'invitespecialpage' => 'Lade Freunde zu Wikia ein',
 	'sendtoafriend-desc' => '[[Special:InviteSpecialPage|Freunde einladen Wikia beizutreten]]',
-	'sendtoafriend-button-desc' => 'Zeigt einen "Weiterempfehlen"-Button auf den Seiten',
+	'sendtoafriend-button-desc' => 'Zeigt einen „Weiterempfehlen“-Button auf den Seiten',
 	'stf_button' => 'Artikel an einen Freund versenden',
 	'stf_after_reg' => '[[Special:InviteSpecialPage|Lade einen Freund zu Wikia ein!]].',
 	'stf_subject' => '$2 hat dir einen Artikel von $1 geschickt!',
@@ -354,7 +358,7 @@ Wenn du glaubst, dass sie irrtümlicherweise gesendet wurde, teile uns dies bitt
 	'stf_we_dont_keep' => 'Diese E-Mail-Adresse und das Passwort werden nicht gespeichert',
 	'stf_need_approval' => 'Es werden keine E-Mails ohne deine Zustimmung verschickt',
 	'stf_message' => 'Nachricht',
-	'stf_instructions' => '1. Freunde auswählen.|2. "$1" klicken',
+	'stf_instructions' => '1. Freunde auswählen.|2. „$1“ klicken',
 	'stf_select_all' => 'Alle auswählen',
 	'stf_select_friends' => 'Freunde auswählen:',
 );
@@ -827,6 +831,21 @@ $messages['kn'] = array(
 	'stf_message' => 'ಸಂದೇಶ',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'stf_error_name' => 'Dir hutt Ären Numm net uginn.',
+	'stf_frm1' => 'Är E-Mailadress:',
+	'stf_name_label' => 'Ären Numm',
+	'stf_email_label' => 'Är E-Mailadress',
+	'stf_frm6' => 'Dës Fënster zoumaachen',
+	'stf_back_to_article' => 'Zréck op den Artikel',
+	'stf_your_login' => 'Äre Benotzernumm',
+	'stf_your_password' => 'Äert Passwuert',
+	'stf_your_name' => 'Ären Numm',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -1045,6 +1064,8 @@ $messages['oc'] = array(
  */
 $messages['pl'] = array(
 	'invitespecialpage' => 'Zaproś znajomych do Wikii!',
+	'sendtoafriend-desc' => '[[Special:InviteSpecialPage|Zapraszanie znajomych do przyłączenia się do społeczności Wikii]]',
+	'sendtoafriend-button-desc' => 'Wyświetla na stronie przycisk „Wyślij do znajomego“',
 	'stf_button' => 'Wyślij ten artykuł do znajomego',
 	'stf_after_reg' => '[[Special:InviteSpecialPage|Zaproś znajomego do przyłączenia się do Wikii!]].',
 	'stf_subject' => '$2 wysłał(a) Ci artykuł z $1!',
@@ -1175,11 +1196,16 @@ S'a pensa ch'a sia stàit mandà për eror, për piasì ch'an lo fasa savèj a s
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'stf_frm1' => 'ستاسې برېښليک پته:',
 	'stf_name_label' => 'ستاسې نوم',
 	'stf_email_label' => 'ستاسې برېښليک',
 	'stf_frm4_send' => 'لېږل',
+	'stf_frm4_cancel' => 'ناګارل',
+	'stf_your_password' => 'ستاسې پټنوم',
 	'stf_your_name' => 'ستاسې نوم',
 	'stf_message' => 'پيغام',
+	'stf_select_all' => 'ټول ټاکل',
+	'stf_select_friends' => 'ملګري ټاکل:',
 );
 
 /** Portuguese (Português)
@@ -1423,6 +1449,13 @@ $2
  */
 $messages['te'] = array(
 	'stf_name_label' => 'మీ పేరు',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'invitespecialpage' => 'Mag-anyaya ng mga kaibigan upang sumali sa Wikia',
 );
 
 /** Chinese (中文) */

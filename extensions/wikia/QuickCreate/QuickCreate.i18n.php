@@ -15,6 +15,13 @@ $messages['en'] = array(
 	'quickcreate' => 'submit your recipe',
 );
 
+/** Message documentation (Message documentation)
+ * @author Umherirrender
+ */
+$messages['qqq'] = array(
+	'quickcreate-desc' => '{{desc}}',
+);
+
 /** Arabic (العربية)
  * @author OsamaK
  */
@@ -28,6 +35,14 @@ $messages['ar'] = array(
 $messages['br'] = array(
 	'quickcreate-desc' => 'Ouzhpennañ ur bouton krouiñ pajennoù nevez gant ar barregezh kevreañ evit an implijerien dianv',
 	'quickcreate' => 'kinnigit ho rekipe',
+);
+
+/** Chechen (Нохчийн)
+ * @author Sasan700
+ */
+$messages['ce'] = array(
+	'quickcreate-desc' => 'Чуйоккху тlетаlайо нуьйда агlо кхолла атту беш а гlирсан чу волуш къайлах болучу декъашхошна',
+	'quickcreate' => 'дlадахьийта хьай дарб',
 );
 
 /** German (Deutsch)
@@ -68,6 +83,14 @@ $messages['fr'] = array(
 $messages['gl'] = array(
 	'quickcreate-desc' => 'Engade un botón para crear unha nova páxina coa capacidade de acceder ao sistema para os usuarios anónimos',
 	'quickcreate' => 'enviar a súa receita',
+);
+
+/** Upper Sorbian (Hornjoserbsce)
+ * @author Michawiki
+ */
+$messages['hsb'] = array(
+	'quickcreate-desc' => 'Přidawa tłóčatko "Nowu stronu wutworić" z móžnosću za anonymnych wužiwarjow so přizjewić',
+	'quickcreate' => 'pósćel swój recept',
 );
 
 /** Hungarian (Magyar)
@@ -132,6 +155,14 @@ $messages['no'] = array(
 $messages['oc'] = array(
 	'quickcreate-desc' => 'Apond un boton de creacion de pagina novèla amb la capacitat de connexion pels utilizaires anonims',
 	'quickcreate' => 'Prepausatz vòstra recèpta',
+);
+
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'quickcreate-desc' => 'Dodaje przycisk tworzenia nowej strony z możliwością zalogowania dla użytkowników anonimowych',
+	'quickcreate' => 'prześlij swoją receptę',
 );
 
 /** Piedmontese (Piemontèis)

@@ -208,7 +208,9 @@ Hola, bienvenido a {{SITENAME}}. Gracias por editar la página [[:$1]].
 Si necesita ayuda y no hay administradores locales aquí, quizás quiera visitar los $3 [[wikia:Forum:Community Central Forum|foros de la Comunidad Central Wiki]] $3",
 );
 
-/** Persian (فارسی) */
+/** Persian (فارسی)
+ * @author Huji
+ */
 $messages['fa'] = array(
 	'welcome-user-page' => "[[File:Placeholder|thumb|300px]]
 ==دربارۀ من==
@@ -224,11 +226,11 @@ $messages['fa'] = array(
 سلام، به {{SITENAME}} خوش‌آمدید! متشکر از ویرایش شما در صفحۀ [[:$1]].
 
 اگر کمکی نیاز داشتید می‌توانید در [[$2|صفحۀ بحثم]] از من بپرسید.  $3',
-	'welcome-message-anon' => "سلام، به {{SITENAME}} خوش‌آمدید. متشکر از ویرایش شما در صفحۀ [[:$1]].
+	'welcome-message-anon' => "سلام، به {{SITENAME}} خوش‌آمدید. از ویرایش شما در صفحهٔ [[:$1]] متشکریم.
 
-لطفا '''[[Special:Userlogin|حساب کاربری ایجاد کنید و وارد سیستم شوید]]'''. این کار به شما کمک می‌کند که ویرایش‌های خود را نگهداری کنید و به راحتی با دیگر کاربران در ارتباط باشید.
+لطفا '''[[Special:Userlogin|حساب کاربری ایجاد کنید و به سامانه وارد شوید]]'''. این کار به شما کمک می‌کند که ویرایش‌های خود را نگهداری کنید و به راحتی با دیگر کاربران در ارتباط باشید.
 
-اگر سوالی داشتید می‌توانید از من در [[$2|صفحۀ بحثم]] بپرسید! $3",
+اگر سوالی داشتید می‌توانید از من در [[$2|صفحهٔ بحثم]] بپرسید! $3",
 	'welcome-message-log' => 'خوش‌آمدگویی کاربر جدید',
 );
 
@@ -589,6 +591,7 @@ Als u hulp zoekt en er zijn geen lokale beheerders, ga dan naar de [[wikia:Forum
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
  * @author Nghtwlkr
  */
 $messages['no'] = array(
@@ -613,7 +616,7 @@ Vennligst legg igjen en melding på [[$2|diskusjonssiden min]] om du trenger hje
 '''[[Special:Userlogin|Vennligst logg inn og opprett et brukernavn]]'''. Det er en enkel måte å holde oversikt over dine bidrag og hjelper deg med å kommunisere med resten av fellesskapet.
 
 Vennligst legg igjen en melding på [[$2|diskusjonssiden min]] om du trenger hjelp til noe! $3",
-	'welcome-message-log' => 'ønsk ny bidragsyter velkommen',
+	'welcome-message-log' => 'ønsker ny bidragsyter velkommen',
 	'welcome-message-user-staff' => '
 == Velkommen ==
 
@@ -626,7 +629,7 @@ Central Wiki]] $3',
 
 Hei, velkommen til {{SITENAME}}. Takk for at du har redigert [[:$1]]-siden.
 
-'''[[Special:Userlogin|Registrer deg og opprett et brukernavn]]'''. Det er en enkel måte å holde styring på bidragene dine og hjelper deg med å kommunisere med resten av felleskapet.
+'''[[Special:Userlogin|Registrer deg og opprett et brukernavn]]'''. Det er en enkel måte å holde styring på bidragene dine og hjelper deg med å kommunisere med resten av fellesskapet.
 
 Hvis du trenger hjelp og det ikke er noen lokale administratorer her vil du kanskje besøke [[wikia:Forum:Community Central Forum|forumene på Community Central Wiki]] $3",
 );

@@ -281,6 +281,13 @@ $messages['ia'] = array(
 	'dump-database-info-more' => 'Vide <a href="http://community.wikia.com/wiki/Help:Database_download">ulterior informationes</a>',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Irwangatot
+ */
+$messages['id'] = array(
+	'dump-database-curr-pages' => 'Halaman sekarang',
+);
+
 /** Japanese (日本語)
  * @author Hosiryuhosi
  * @author Tommy6
@@ -405,6 +412,13 @@ $messages['pms'] = array(
 	'dump-database-request-submit' => 'Manda arcesta',
 	'dump-database-request-requested' => 'Arcesta për dump dla base ëd dàit mandà',
 	'dump-database-info-more' => 'Për piasì <a href="http://community.wikia.com/wiki/Help:Database_download">varda</a> për savèjne ëd pi',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'dump-database-request-submit' => 'غوښتنه ورلېږل',
 );
 
 /** Portuguese (Português)

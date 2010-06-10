@@ -54,6 +54,13 @@ $messages['en'] = array(
 	'right-editaccount' => "Edit other users' preferences",
 );
 
+/** Message documentation (Message documentation)
+ * @author Umherirrender
+ */
+$messages['qqq'] = array(
+	'right-editaccount' => '{{doc-right|editaccount}}',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -140,6 +147,7 @@ $messages['br'] = array(
 
 /** German (Deutsch)
  * @author LWChris
+ * @author The Evil IP address
  */
 $messages['de'] = array(
 	'editaccount' => 'Konto bearbeiten',
@@ -170,8 +178,8 @@ $messages['de'] = array(
 	'editaccount-error-pass' => 'Das Passwort wurde nicht geändert. Versuche es erneut oder kontaktiere das Tech Team.',
 	'editaccount-error-realname' => 'Der tatsächliche Name wurde nicht geändert. Versuche es erneut oder kontaktiere das Tech Team.',
 	'editaccount-error-close' => 'Beim Schließen des Kontos trat ein Fehler auf. Versuche es erneut oder kontaktiere das Tech Team.',
-	'editaccount-invalid-email' => '"$1" ist keine gültige E-Mail-Adresse!',
-	'editaccount-nouser' => 'Konto "$1" existiert nicht!',
+	'editaccount-invalid-email' => '„$1“ ist keine gültige E-Mail-Adresse!',
+	'editaccount-nouser' => 'Konto „$1“ existiert nicht!',
 	'editaccount-log' => 'Benutzerkonten-Logbuch',
 	'editaccount-log-header' => 'Diese Seite listet Änderungen von Benutzereinstellungen durch das Wikia Personal.',
 	'editaccount-log-entry-email' => 'änderte die E-Mail-Adresse von Benutzer $2',
@@ -463,10 +471,43 @@ $messages['ia'] = array(
 	'right-editaccount' => 'Modificar le preferentias de altere usatores',
 );
 
-/** Italian (Italiano) */
+/** Italian (Italiano)
+ * @author HalphaZ
+ */
 $messages['it'] = array(
 	'editaccount' => 'Modifica account',
+	'editaccount-frame-manage' => 'Modifica account',
+	'editaccount-frame-usage' => 'Nota',
+	'editaccount-label-select' => 'Selezionare un account utente',
+	'editaccount-submit-account' => 'Gestisci account',
+	'editaccount-frame-account' => "Modifica dell'account utente $1",
+	'editaccount-frame-close' => "Disattiva l'account utente $1",
+	'editaccount-label-email' => 'Imposta un nuovo indirizzo e-mail',
 	'editaccount-label-pass' => 'Riscrivi la nuova password',
+	'editaccount-label-realname' => 'Imposta il nuovo nome reale',
+	'editaccount-submit-email' => 'Salva e-mail',
+	'editaccount-submit-pass' => 'Salva password',
+	'editaccount-submit-realname' => 'Salva il nome reale',
+	'editaccount-submit-close' => 'Chiudi account',
+	'editaccount-warning-close' => "<b>Attenzione:</b> Si sta per disabilitare permanentemente l'account dell'utente <b>$1.</b> Ciò non può essere annullato. Sicuro che sia quello che vuoi fare?",
+	'editaccount-status' => 'Messaggio di stato',
+	'editaccount-success-email-blank' => "E-mail rimossa con successo dall'account $1.",
+	'editaccount-success-pass' => "Password per l'account $1 cambiata con successo.",
+	'editaccount-success-realname' => "Nome reale per l'account $1 cambiato con successo.",
+	'editaccount-success-close' => 'Account $1 disabilitato con successo.',
+	'editaccount-error-email' => "L'e-mail non è stata cambiata. Riprova o contatta il Team Tecnico.",
+	'editaccount-error-pass' => 'La password non è stata cambiata. Riprova o contatta il Team Tecnico.',
+	'editaccount-error-realname' => 'Nome reale non cambiato. Riprova o contatta il Team Tecnico.',
+	'editaccount-error-close' => "Si è verificato un problema alla chiusura dell'account. Riprova o contatta il Team Tecnico.",
+	'editaccount-invalid-email' => '"$1" non è un indirizzo e-mail valido!',
+	'editaccount-nouser' => 'L\'account "$1" non esiste!',
+	'editaccount-log' => 'Registro account utente',
+	'editaccount-log-header' => 'Questa pagina elenca le modifiche alle preferenze utente effettuate dallo Staff Wikia.',
+	'editaccount-log-entry-email' => "E-mail dell'utente $2 cambiata",
+	'editaccount-log-entry-pass' => "Password dell'utente $2 cambiata",
+	'editaccount-log-entry-realname' => "Nome reale dell'utente $2 cambiato",
+	'editaccount-log-entry-close' => 'Account $2 disabilitato',
+	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em"> Questo account è stato disattivato. </div>',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -679,6 +720,15 @@ $messages['pms'] = array(
 	'right-editaccount' => "Modifiché ij gust ëd j'àutri utent",
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'editaccount-frame-usage' => 'يادښت',
+	'editaccount-submit-email' => 'برېښليک خوندي کول',
+	'editaccount-submit-pass' => 'پټنوم خوندي کول',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  */
@@ -833,6 +883,41 @@ $messages['sr-ec'] = array(
 	'editaccount-log-entry-pass' => ' промењена лозинка за корисника $2',
 	'editaccount-log-entry-realname' => ' промењено право име за корисника $2',
 	'editaccount-log-entry-close' => ' угашен налог $2',
+);
+
+/** Tamil (தமிழ்)
+ * @author Mahir78
+ */
+$messages['ta'] = array(
+	'editaccount-frame-manage' => 'ஒரு கணக்கை தொகு',
+	'editaccount-frame-usage' => 'குறிப்பு',
+	'editaccount-label-select' => 'ஒரு பயனர் கணக்கை தேர்ந்தெடு',
+	'editaccount-submit-account' => 'கணக்கை நிர்வகி',
+	'editaccount-frame-account' => 'பயனர் கணக்கு தொகுக்கப்படுகிறது: $1',
+	'editaccount-frame-close' => 'பயனர் கணக்கை நிறுத்திவை: $1',
+	'editaccount-label-email' => 'புதிய மின்னஞ்சல் முகவரியை செலுத்து',
+	'editaccount-label-pass' => 'புதிய கடவுச்சொல்லை செலுத்து',
+	'editaccount-label-realname' => 'புதிய சரியான பெயரை உள்ளிடு',
+	'editaccount-submit-email' => 'மின்னஞ்சலை சேமி',
+	'editaccount-submit-pass' => 'கடவுச்சொல்லை சேமி',
+	'editaccount-submit-realname' => 'உண்மையான பெயரை சேமி',
+	'editaccount-submit-close' => 'கணக்கை முடுக',
+	'editaccount-success-email' => 'கணக்கு $1 லிருந்து $2 க்கு மின்னஞ்சல் வெற்றிகரமாக மாற்றப்பட்டது.',
+	'editaccount-success-email-blank' => 'கணக்கு $1 க்கான மின்னஞ்சல் வெற்றிகரமாக நீக்கப்பட்டது',
+	'editaccount-success-pass' => 'கணக்கு $1க்கான கடவுச்சொல் வெற்றிகரமாக மாற்றப்பட்டது',
+	'editaccount-success-realname' => 'கணக்கு $1க்கான உண்மையான பெயர் வெற்றிகரமாக மாற்றப்பட்டது',
+	'editaccount-error-email' => 'மின்னஞ்சல் மாற்றப்படவில்லை. மீண்டும் முயற்சிக்கவும் அல்லது தொழில்நுட்ப குழுவை அனுகவும்.',
+	'editaccount-error-pass' => 'கடவுச்சொல் மாற்றப்படவில்லை. மீண்டும் முயற்சிக்கவும் அல்லது தொழில்நுட்ப குழுவை அனுகவும்.',
+	'editaccount-error-realname' => 'உண்மையான பெயர் மாற்றப்படவில்லை. மீண்டும் முயற்சிக்கவும் அல்லது தொழில்நுட்ப குழுவை அனுகவும்.',
+	'editaccount-error-close' => 'கணக்கு மூடும்போது ஒரு பிரச்சினை உள்ளது. மீண்டும் முயற்சிக்கவும் அல்லது தொழில்நுட்ப குழுவை அனுகவும்',
+	'editaccount-invalid-email' => '"$1" சரியான மின்னஞ்சல் இல்லை!',
+	'editaccount-nouser' => '"$1" - அப்படியொரு கணக்கு இல்லை!',
+	'editaccount-log' => 'பயனர் கணக்கு log',
+	'editaccount-log-header' => 'இந்தப் பக்கம் விக்கியா அலுவலரால் மாற்றப்பட்ட பயனர் விருப்பத்தேர்வுகள் பட்டியல்கள்.',
+	'editaccount-log-entry-email' => 'பயனர் $2 க்கான மின்னஞ்சல் மாற்றப்பட்டது',
+	'editaccount-log-entry-pass' => 'பயனர் $2 க்கான கடவுச்சொல் மாற்றப்பட்டது',
+	'editaccount-log-entry-realname' => 'பயனர் $2க்கான உண்மையான பெயர் மாற்றப்பட்டது',
+	'right-editaccount' => 'ஏனைய பயனர் விருப்பத்தேர்வுகளை தொகு',
 );
 
 /** Tagalog (Tagalog)
