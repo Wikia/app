@@ -102,9 +102,10 @@ var AjaxLogin = {
 		$("#AjaxLoginConnectMarketing a.forward").show();
 		firstSliderCell.animate({
 			marginLeft: slideto
-		});
+		}, function(){$('#fbLoginAndConnect').hide();});
 	},
 	slideToLoginAndConnect: function(el){
+		$('#fbLoginAndConnect').show();
 		var firstSliderCell = $("#AjaxLoginSlider div:first");
 		var slideto = -351;
 		$(el).hide();
