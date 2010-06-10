@@ -101,6 +101,44 @@ function wikia_fbconnect_postProcessForm( &$specialConnect ){
 	return true;
 } // end wikia_fbconnect_postProcessForm()
 
+/**
+ * Called when a user was just created or attached (safe to call at any time later as well).  This
+ * function will check to see if the user has a Wikia Avatar and if they don't, it will attempt to
+ * use this Facebook-connected user's profile picture as their Wikia Avatar.
+ */
+function wikia_fbconnect_considerProfilePic( &$specialConnect ){
+	wfProfileIn(__METHOD__);
+	global $wgUser;
+
+	// We need the facebook id to have any chance of getting a profile pic.
+	$fb_ids = FBConnectDB::getFacebookIDs($wgUser);
+	if(count($fb_ids) > 0){
+		$fb_id = array_shift($fb_ids);
+
+// CURRENTLY IN TESTING... ONLY WORKS FOR Sean's FACEBOOK ACCOUNT - TODO: REMOVE THIS BEFORE PUTTING LIVE (EVEN FOR TESTING).
+if($fb_id == "24403391"){
+		// TODO: detect if the user already has a masthead avatar
+		// Attempt to store the facebook profile pic as the Wikia avatar.
+
+
+			
+		// TODO: if the user doesn't have a masthead avatar, then use the URL to get it.
+		$picUrl = FBConnectProfilePic::getImgUrlById($fb_id);
+		if($picUrl != ""){
+		
+			// TODO: Pull the image from the URL and save it to the upload directory.
+
+			// TODO: Apply this as the user's new avatar.
+			
+			print "PIC URL FROM THE FUNCTION: $picUrl<br/>\n";
+			exit;
+		}
+}
+	}
+
+	wfProfileOut(__METHOD__);
+	return true;
+} // end wikia_fbconnect_considerProfilePic()
 
 class ChooseNameForm extends LoginForm {
 	var $mActionType;
