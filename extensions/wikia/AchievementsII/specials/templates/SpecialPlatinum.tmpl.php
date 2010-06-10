@@ -11,23 +11,23 @@ global $wgScriptPath, $wgStylePath;
 				<input name="badge_name" type="text" class="dark_text_2" />
 			</legend>
 			<div class="column">
-				<label>Awarded for:</label><span class="input-suggestion">&nbsp;(e.g. &quot;for doing...&quot;)</span>
+				<label><?=wfMsg('achievements-community-platinum-awarded-for');?>:</label><span class="input-suggestion">&nbsp;(<?=wfMsg('achievements-community-platinum-awarded-for-example');?>)</span>
 				<textarea name="awarded_for"></textarea>
-				<label>How to earn:</label><span class="input-suggestion">&nbsp;(e.g. &quot;make 3 edits...&quot;)</span>
+				<label><?=wfMsg('achievements-community-platinum-how-to-earn');?>:</label><span class="input-suggestion">&nbsp;(<?=wfMsg('achievements-community-platinum-how-to-earn-example');?>)</span>
 				<textarea name="how_to"></textarea>
 			</div>
 			<div class="column">
-				<label>Badge image:</label>
+				<label><?=wfMsg('achievements-community-platinum-badge-image');?>:</label>
 				<img src="<?= $wgStylePath ?>/common/blank.gif" class="badge-preview neutral" />
 				<input type="file" name="wpUploadFile" />
 			</div>
 			<div class="commands accent">
-				<input type="submit" value="Create Badge"/>
+				<input type="submit" value="<?=wfMsg('achievements-community-platinum-create-badge');?>"/>
 			</div>
 		</fieldset>
 	</form>
 
-	<h2>Current Platinum Badges</h2>
+	<h2><?=wfMsg('achievements-community-platinum-current-badges');?></h2>
 
 	<?php
 	foreach($badges as $badge) {

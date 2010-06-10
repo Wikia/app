@@ -13,19 +13,19 @@ $badgeHowToEarn = wfMsgForContent(AchConfig::getInstance()->getBadgeToGetKey($ty
 			<span class="dark_text_2"><?= $badgeName; ?></span>
 
 			<!-- toggle group -->
-			<input name="status" type="checkbox" <?= $enabled ? 'checked="checked" ' : ''?>value="1" disabled="disabled" /><label>enabled</label>
-			<input name="show_recents" type="checkbox" <?= $show_recents ? 'checked="checked" ' : ''?>value="1" disabled="disabled" /><label>show in recents</label>
+			<input name="status" type="checkbox" <?= $enabled ? 'checked="checked" ' : ''?>value="1" disabled="disabled" /><label><?=wfMsg('achievements-community-platinum-enabled');?></label>
+			<input name="show_recents" type="checkbox" <?= $show_recents ? 'checked="checked" ' : ''?>value="1" disabled="disabled" /><label><?=wfMsg('achievements-community-platinum-show-recents');?></label>
 		</legend>
 
 		<div class="column">
-			<label>Awarded for:</label><span class="input-suggestion">&nbsp;(e.g. &quot;for doing...&quot;)</span>
+			<label><?=wfMsg('achievements-community-platinum-awarded-for');?>:</label><span class="input-suggestion">&nbsp;(<?=wfMsg('achievements-community-platinum-awarded-for-example');?>)</span>
 
 			<!-- toggle group -->
 			<textarea name="awarded_for"><?= $badgeAwardedFor; ?></textarea>
 			<p><?= $badgeAwardedFor; ?></p>
 
 			<!-- toggle group -->
-			<label>How to earn:</label><span class="input-suggestion">&nbsp;(e.g. &quot;make 3 edits...&quot;)</span>
+			<label><?=wfMsg('achievements-community-platinum-how-to-earn');?>:</label><span class="input-suggestion">&nbsp;(<?=wfMsg('achievements-community-platinum-how-to-earn-example');?>)</span>
 
 			<!-- toggle group -->
 			<textarea name="how_to"><?= $badgeHowToEarn; ?></textarea>
@@ -35,13 +35,13 @@ $badgeHowToEarn = wfMsgForContent(AchConfig::getInstance()->getBadgeToGetKey($ty
 		</div>
 
 		<div class="column">
-			<label>Badge image:</label>
+			<label><?=wfMsg('achievements-community-platinum-badge-image');?>:</label>
 			<img src="<?= $thumb_url ?>" class="badge-preview neutral" />
 			<input type="file" name="wpUploadFile"/>
 		</div>
 
 		<div class="column awarded-to">
-			<label>Awarded to:</label>
+			<label><?=wfMsg('achievements-community-platinum-awarded-to');?>:</label>
 			<ul>
 			<?php
 			if(is_array($awarded_users)) {
@@ -59,8 +59,8 @@ $badgeHowToEarn = wfMsgForContent(AchConfig::getInstance()->getBadgeToGetKey($ty
 		</div>
 
 		<div class="commands accent">
-			<input type="button" value="Edit" onclick="SpecialCustomizePlatinum.edit(this)" class="button-edit secondary" />
-			<input type="submit" value="Save" class="button-save" />
+			<input type="button" value="<?=wfMsg('achievements-community-platinum-edit');?>" onclick="SpecialCustomizePlatinum.edit(this)" class="button-edit secondary" />
+			<input type="submit" value="<?=wfMsg('achievements-community-platinum-save');?>" class="button-save" />
 		</div>
 	</fieldset>
 </form>
