@@ -108,3 +108,4 @@ error_reporting(E_ALL);
 ini_set('display_errors', '1');
 $wgShowExceptionDetails = true;
 $wgDebugLogFile = "/tmp/debug.log";
+$wgDefaultExternalStore = array( "DB://dev-archive");
