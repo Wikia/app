@@ -25,7 +25,7 @@ foreach($config->getInTrackStatic() as $badgeTypeId => $trackData){
 		<div class="save-title-button">
 			<span class="enabled-flag">
 				<?= (isset($trackData['category'])) ?
-					"<input class=\"c-enabled-flags\" type=\"checkbox\" name=\"ec_{$badgeTypeId}\" value=\"1\"". (($trackData['enabled']) ? ' checked' : null) . '/><label>enabled</label> '
+					"<input class=\"c-enabled-flags\" type=\"checkbox\" name=\"ec_{$badgeTypeId}\" value=\"1\"". (($trackData['enabled']) ? ' checked' : null) . '/><label>' . wfMsg('achievements-enable-track') . '</label> '
 				:
 					null?>
 			</span>
@@ -143,14 +143,14 @@ foreach($config->getNotInTrackStatic() as $badgeTypeId => $badgeData) {
 	<h2 class="first"><?= wfMsg('achievements-about-title') ?></h2>
 	<?= wfMsgExt( 'achievements-about-content', 'parse' ) ?>
 
-	<form method="POST" class="customize-edit-plus-category">
+	<form method="POST" class="customize-edit-plus-category" onsubmit="Achievements.AchPrepareData(true);">
 		<input type="hidden" name="add_edit_plus_category_track" value="1"/>
 		<input type="hidden" name="json-data" class="c-messages-ec" />
 		<h2><?=wfMsg('achievements-create-edit-plus-category-title');?></h2>
 		<?=wfMsgExt( 'achievements-create-edit-plus-category-content', 'parse' );?>
 		<p class="input">
 			<label>Create new track for category:</label><input name="edit_plus_category_name" type="text"/>
-			<button type="submit" onclick="Achievements.AchPrepareData(true);"><?=wfMsg('achievements-create-edit-plus-category');?></button>
+			<button type="submit"><?=wfMsg('achievements-create-edit-plus-category');?></button>
 		</p>
 	</form>
 </div>
