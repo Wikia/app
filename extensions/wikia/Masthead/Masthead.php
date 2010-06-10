@@ -268,6 +268,25 @@ class Masthead {
 			return wfReplaceImageServer( $url, $this->mUser->getTouched() );
 		}
 	}
+	
+	/**
+	 * Returns true if the user whose masthead this is, has an avatar set.
+	 * Returns false if they do not (and would end up using the default avatar).
+	 */
+	public function hasAvatar(){
+		$hasAvatar = false;
+		if (!empty($this->avatarUrl)) {
+			$hasAvatar = true;
+		} else {
+			global $wgBlogAvatarPath;
+			$url = $this->mUser->getOption( AVATAR_USER_OPTION_NAME );
+			if( ( $url ) && ( strpos( $url, '/' ) !== false ) ){
+				// uploaded file
+				$hasAvatar = true;
+			}
+		}
+		return $hasAvatar;
+	} // end hasAvatar()
 
 	/**
 	 * getImageTag -- return HTML <img> tag

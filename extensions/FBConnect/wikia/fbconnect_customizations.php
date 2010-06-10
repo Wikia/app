@@ -105,6 +105,8 @@ function wikia_fbconnect_postProcessForm( &$specialConnect ){
  * Called when a user was just created or attached (safe to call at any time later as well).  This
  * function will check to see if the user has a Wikia Avatar and if they don't, it will attempt to
  * use this Facebook-connected user's profile picture as their Wikia Avatar.
+ *
+ * FIXME: Is there a way to make this fail gracefully if we ever un-include the Masthead extension?
  */
 function wikia_fbconnect_considerProfilePic( &$specialConnect ){
 	wfProfileIn(__METHOD__);
@@ -114,25 +116,28 @@ function wikia_fbconnect_considerProfilePic( &$specialConnect ){
 	$fb_ids = FBConnectDB::getFacebookIDs($wgUser);
 	if(count($fb_ids) > 0){
 		$fb_id = array_shift($fb_ids);
-
 // CURRENTLY IN TESTING... ONLY WORKS FOR Sean's FACEBOOK ACCOUNT - TODO: REMOVE THIS BEFORE PUTTING LIVE (EVEN FOR TESTING).
 if($fb_id == "24403391"){
-		// TODO: detect if the user already has a masthead avatar
-		// Attempt to store the facebook profile pic as the Wikia avatar.
+print "Considering facebook profile pics<br/>\n";
 
+		// If the useralready has a masthead avatar, don't overwrite it, this function shouldn't alter anything in that case.
+		$masthead = Masthead::newFromUser($wgUser);
+		if( ! $masthead->hasAvatar() ){
+print "User does not have an avatar yet.  Let's get them one!<br/>\n";
+			// Attempt to store the facebook profile pic as the Wikia avatar.
+			$picUrl = FBConnectProfilePic::getImgUrlById($fb_id);
+			if($picUrl != ""){
+print "Found pic: $picUrl<br/>\n";
 
-			
-		// TODO: if the user doesn't have a masthead avatar, then use the URL to get it.
-		$picUrl = FBConnectProfilePic::getImgUrlById($fb_id);
-		if($picUrl != ""){
-		
-			// TODO: Pull the image from the URL and save it to the upload directory.
+				// TODO: Pull the image from the URL and save it to the upload directory.
 
-			// TODO: Apply this as the user's new avatar.
-			
-			print "PIC URL FROM THE FUNCTION: $picUrl<br/>\n";
-			exit;
+				// TODO: Apply this as the user's new avatar.
+
+				print "PIC URL FROM THE FUNCTION: $picUrl<br/>\n";
+				exit;
+			}
 		}
+print "Done with profile pic meddling.<br/>\n";
 }
 	}
 
