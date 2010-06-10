@@ -31,6 +31,7 @@ var Achievements = {
 
 		//Show badge description when hovering over the badge	
 		$('#challenges li>img, #badge-list li>img, .recent-badges li>img').hover(function() {
+			$(this).css('position', 'absolute');
 			var badge = $(this);
 			var hover = badge.prevAll(".profile-hover");
 			var hoverPosition = {
@@ -47,6 +48,7 @@ var Achievements = {
 				self.track('userprofile/hover');
 			}, self.delay);
 		}, function() {
+			$(this).css('position', 'static');
 			clearTimeout(self.timer);
 			$(this).prevAll(".profile-hover").hide();
 		});

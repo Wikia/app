@@ -127,7 +127,7 @@ span.enabled-flag label {
 }
 
 form.save-all {
-	display:inline-block;
+	display:inline;
 }
 
 .customize-section h2 {
