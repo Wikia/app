@@ -475,7 +475,7 @@ class Masthead {
 		global $wgTmpDirectory;
 		wfProfileIn(__METHOD__);
 		
-		$errNo = UPLOAD_ERR_OK; // start by presuming there is no error.
+		$errorNo = UPLOAD_ERR_OK; // start by presuming there is no error.
 		
 		if( !isset( $wgTmpDirectory ) || !is_dir( $wgTmpDirectory ) ) {
 			$wgTmpDirectory = '/tmp';
