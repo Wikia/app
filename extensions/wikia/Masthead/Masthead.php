@@ -461,6 +461,42 @@ class Masthead {
 		}
 		wfProfileOut(__METHOD__);
 	}
+	
+	/**
+	 * While this is technically downloading the URL, the function's purpose is to be similar
+	 * to uploadFile, but instead of having the file come from the user's computer, it comes
+	 * from the supplied URL.
+	 *
+	 * @param String $url -- the full URL of an image to download and apply as the user's Avatar.
+	 *
+	 * @return Integer -- error code of operation
+	 */
+	public function uploadByUrl($url){
+		global $wgTmpDirectory;
+		wfProfileIn(__METHOD__);
+		
+		$errNo = UPLOAD_ERR_OK; // start by presuming there is no error.
+		
+		if( !isset( $wgTmpDirectory ) || !is_dir( $wgTmpDirectory ) ) {
+			$wgTmpDirectory = '/tmp';
+		}
+		
+	// TODO: Pull the image from the URL and save it to a temporary file.
+		$sTmpFile = $wgTmpDirectory.'/'.substr(sha1(uniqid($this->mUser->getID())), 0, 16);
+// NOTE: No idea if this is going to work, so there is some extra output for now.
+print "Saving profile pic to: $sTmpFile<br/>\n";
+		$imgContent = Http::get($url);
+		if( !file_put_contents($sTmpFile, $imgContent)){
+print "Could not put the contents of the image into the file!!!!!! Returning early<br/>\n";
+			wfProfileOut( __METHOD__ );
+			return UPLOAD_ERR_CANT_WRITE;
+		}
+print "Done saving.<br/>\n";
+		$errorNo = postProcessImageInternal($sTmpFile, $errorNo);
+
+		wfProfileOut(__METHOD__);
+		return $errorNo;
+	} // end uploadByUrl()
 
 	/**
 	 * uploadFile -- save file when is in proper format, do resize and
@@ -505,104 +541,7 @@ class Masthead {
 //		Wikia::log( __METHOD__, 'path', "Path to uploaded file is {$sTmp}" );
 
 		if( move_uploaded_file( $sTmp, $sTmpFile )  ) {
-			$aImgInfo = getimagesize($sTmpFile);
-
-			/**
-			 * check if mimetype is allowed
-			 */
-			$aAllowMime = array( 'image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png', 'image/jpg' );
-			if (!in_array($aImgInfo['mime'], $aAllowMime)) {
-//				Wikia::log( __METHOD__, 'mime', 'Imvalid mime type, allowed: ' . implode(',', $aAllowMime) );
-				wfProfileOut(__METHOD__);
-				return $errorNo;
-			}
-
-			switch ($aImgInfo['mime']) {
-				case 'image/gif':
-					$oImgOrig = @imagecreatefromgif($sTmpFile);
-					break;
-				case 'image/pjpeg':
-				case 'image/jpeg':
-				case 'image/jpg':
-					$oImgOrig = @imagecreatefromjpeg($sTmpFile);
-					break;
-				case 'image/x-png':
-				case 'image/png':
-					$oImgOrig = @imagecreatefrompng($sTmpFile);
-					break;
-			}
-			$aOrigSize = array('width' => $aImgInfo[0], 'height' => $aImgInfo[1]);
-
-			/**
-			 * generate new image to png format
-			 */
-			$addedAvatars = array();
-			$sFilePath = $this->getFullPath();
-
-			/**
-			 * calculate new image size - should be 100 x 100
-			 */
-			$iImgW = AVATAR_DEFAULT_WIDTH;
-			$iImgH = AVATAR_DEFAULT_HEIGHT;
-			/* WIDTH > HEIGHT */
-			if ( $aOrigSize['width'] > $aOrigSize['height'] ) {
-				$iImgH = $iImgW * ( $aOrigSize['height'] / $aOrigSize['width'] );
-			}
-			/* HEIGHT > WIDTH */
-			if ( $aOrigSize['width'] < $aOrigSize['height'] ) {
-				$iImgW = $iImgH * ( $aOrigSize['width'] / $aOrigSize['height'] );
-			}
-
-			/* empty image with thumb size on white background */
-			$oImg = @imagecreatetruecolor($iImgW, $iImgH);
-			$white = imagecolorallocate($oImg, 255, 255, 255);
-			imagefill($oImg, 0, 0, $white);
-
-			imagecopyresampled(
-				$oImg,
-				$oImgOrig,
-				floor ( ( AVATAR_DEFAULT_WIDTH - $iImgW ) / 2 ) /*dx*/,
-				floor ( ( AVATAR_DEFAULT_HEIGHT - $iImgH ) / 2 ) /*dy*/,
-				0 /*sx*/,
-				0 /*sy*/,
-				$iImgW /*dw*/,
-				$iImgH /*dh*/,
-				$aOrigSize['width']/*sw*/,
-				$aOrigSize['height']/*sh*/
-			);
-
-			/**
-			 * save to new file ... but create folder for it first
-			 */
-			if ( !is_dir( dirname( $sFilePath ) ) && !wfMkdirParents( dirname( $sFilePath ) ) ) {
-//				Wikia::log( __METHOD__, 'dir', sprintf('Cannot create directory %s', dirname( $sFilePath ) ) );
-				wfProfileOut( __METHOD__ );
-				return UPLOAD_ERR_CANT_WRITE;
-			}
-
-			if( !imagepng( $oImg, $sFilePath ) ) {
-//				Wikia::log( __METHOD__, 'save', sprintf('Cannot save png Avatar: %s', $sFilePath ));
-				$errorNo = UPLOAD_ERR_CANT_WRITE;
-			}
-			else {
-				/* remove tmp file */
-				imagedestroy($oImg);
-
-				$sUserText =  $this->mUser->getName();
-				$mUserPage = Title::newFromText( $sUserText, NS_USER );
-				$oLogPage = new LogPage( AVATAR_LOG_NAME );
-				$oLogPage->addEntry( 'avatar_chn', $mUserPage, '');
-				unlink($sTmpFile);
-
-				/**
-				 * notify image replication system
-				 */
-				global $wgEnableUploadInfoExt;
-				if( $wgEnableUploadInfoExt ) {
-					UploadInfo::log( $mUserPage, $sFilePath, $this->getLocalPath() );
-				}
-				$errorNo = UPLOAD_ERR_OK;
-			}
+			$errorNo = postProcessImageInternal($sTmpFile, $errorNo);
 		}
 		else {
 //			Wikia::log( __METHOD__, 'move', sprintf('Cannot move uploaded file from %s to %s', $sTmp, $sTmpFile ));
@@ -611,6 +550,118 @@ class Masthead {
 		wfProfileOut(__METHOD__);
 		return $errorNo;
 	}
+	
+	/**
+	 * Given the filename of the temporary image, post-process the image to be the right size, format, etc.
+	 *
+	 * Returns an error code if there is an error or UPLOAD_ERR_OK if there were no errors.
+	 *
+	 * @param String $sTmpFile -- the full path to the temporary image file (will be deleted after processing).
+	 * @param $errorNo -- optional initial error-code state.
+	 */
+	private function postProcessImageInternal($sTmpFile, $errorNo = UPLOAD_ERR_OK){
+		wfProfileIn(__METHOD__);
+		$aImgInfo = getimagesize($sTmpFile);
+
+		/**
+		 * check if mimetype is allowed
+		 */
+		$aAllowMime = array( 'image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png', 'image/jpg' );
+		if (!in_array($aImgInfo['mime'], $aAllowMime)) {
+//				Wikia::log( __METHOD__, 'mime', 'Imvalid mime type, allowed: ' . implode(',', $aAllowMime) );
+			wfProfileOut(__METHOD__);
+			return $errorNo;
+		}
+
+		switch ($aImgInfo['mime']) {
+			case 'image/gif':
+				$oImgOrig = @imagecreatefromgif($sTmpFile);
+				break;
+			case 'image/pjpeg':
+			case 'image/jpeg':
+			case 'image/jpg':
+				$oImgOrig = @imagecreatefromjpeg($sTmpFile);
+				break;
+			case 'image/x-png':
+			case 'image/png':
+				$oImgOrig = @imagecreatefrompng($sTmpFile);
+				break;
+		}
+		$aOrigSize = array('width' => $aImgInfo[0], 'height' => $aImgInfo[1]);
+
+		/**
+		 * generate new image to png format
+		 */
+		$addedAvatars = array();
+		$sFilePath = $this->getFullPath();
+
+		/**
+		 * calculate new image size - should be 100 x 100
+		 */
+		$iImgW = AVATAR_DEFAULT_WIDTH;
+		$iImgH = AVATAR_DEFAULT_HEIGHT;
+		/* WIDTH > HEIGHT */
+		if ( $aOrigSize['width'] > $aOrigSize['height'] ) {
+			$iImgH = $iImgW * ( $aOrigSize['height'] / $aOrigSize['width'] );
+		}
+		/* HEIGHT > WIDTH */
+		if ( $aOrigSize['width'] < $aOrigSize['height'] ) {
+			$iImgW = $iImgH * ( $aOrigSize['width'] / $aOrigSize['height'] );
+		}
+
+		/* empty image with thumb size on white background */
+		$oImg = @imagecreatetruecolor($iImgW, $iImgH);
+		$white = imagecolorallocate($oImg, 255, 255, 255);
+		imagefill($oImg, 0, 0, $white);
+
+		imagecopyresampled(
+			$oImg,
+			$oImgOrig,
+			floor ( ( AVATAR_DEFAULT_WIDTH - $iImgW ) / 2 ) /*dx*/,
+			floor ( ( AVATAR_DEFAULT_HEIGHT - $iImgH ) / 2 ) /*dy*/,
+			0 /*sx*/,
+			0 /*sy*/,
+			$iImgW /*dw*/,
+			$iImgH /*dh*/,
+			$aOrigSize['width']/*sw*/,
+			$aOrigSize['height']/*sh*/
+		);
+
+		/**
+		 * save to new file ... but create folder for it first
+		 */
+		if ( !is_dir( dirname( $sFilePath ) ) && !wfMkdirParents( dirname( $sFilePath ) ) ) {
+//				Wikia::log( __METHOD__, 'dir', sprintf('Cannot create directory %s', dirname( $sFilePath ) ) );
+			wfProfileOut( __METHOD__ );
+			return UPLOAD_ERR_CANT_WRITE;
+		}
+
+		if( !imagepng( $oImg, $sFilePath ) ) {
+//				Wikia::log( __METHOD__, 'save', sprintf('Cannot save png Avatar: %s', $sFilePath ));
+			$errorNo = UPLOAD_ERR_CANT_WRITE;
+		}
+		else {
+			/* remove tmp file */
+			imagedestroy($oImg);
+
+			$sUserText =  $this->mUser->getName();
+			$mUserPage = Title::newFromText( $sUserText, NS_USER );
+			$oLogPage = new LogPage( AVATAR_LOG_NAME );
+			$oLogPage->addEntry( 'avatar_chn', $mUserPage, '');
+			unlink($sTmpFile);
+
+			/**
+			 * notify image replication system
+			 */
+			global $wgEnableUploadInfoExt;
+			if( $wgEnableUploadInfoExt ) {
+				UploadInfo::log( $mUserPage, $sFilePath, $this->getLocalPath() );
+			}
+			$errorNo = UPLOAD_ERR_OK;
+		}
+
+		return $errorNo;
+	} // end postProcessImageInternal()
 
 	/**
 	 * additionalUserProfilePreferences -- Hook handler
