@@ -33,9 +33,9 @@
 	                    <input type="password" size="20" tabindex="202" id="wpPassword2Ajax" name="wpPassword"> </input>
 	                </td>
 	            <?php if( $wgEnableEmail && $wgAuth->allowPasswordChange() ) { ?>
-	                <td>
-						<a href="#" id="wpMailmypassword" onclick="AjaxLogin.injectMailMyPassword(this); AjaxLogin.action='password'; AjaxLogin.form.submit();" ><?php print wfMsg('mailmypassword') ?></a>
-					</td>
+						<td>
+							<a href="#" id="wpMailmypassword" onclick="AjaxLogin.injectMailMyPassword(this); AjaxLogin.action='password'; AjaxLogin.form.submit();" ><?php print wfMsg('mailmypassword') ?></a>
+						</td>
 	                </td>
 	            <?php } ?>
 	            </tr>
@@ -64,7 +64,7 @@
 			<a href="#" class="forward"><? echo wfMsg("comboajaxlogin-connectmarketing-forward") ?></a>
 		</div>
 	</div>
-	<div<?php print $style; ?>>
+	<div id='fbLoginAndConnect' style='display:none'>
 		<? echo wfMsg("comboajaxlogin-connectdirections") ?>
 
 		<form action="" method="post" name="userajaxconnectform" id="userajaxconnectform">
