@@ -121,7 +121,7 @@ function wikia_fbconnect_considerProfilePic( &$specialConnect ){
 		$masthead = Masthead::newFromUser($wgUser);
 		if( ! $masthead->hasAvatar() ){
 			// Attempt to store the facebook profile pic as the Wikia avatar.
-			$picUrl = FBConnectProfilePic::getImgUrlById($fb_id);
+			$picUrl = FBConnectProfilePic::getImgUrlById($fb_id, FB_PIC_SQUARE);
 			if($picUrl != ""){
 				$errorNo = $masthead->uploadByUrl($picUrl);
 
