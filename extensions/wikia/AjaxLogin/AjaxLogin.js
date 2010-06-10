@@ -15,8 +15,8 @@ var AjaxLogin = {
 			$("#ajaxlogin_password_cell").append('<input type="password" size="20" tabindex="202" id="wpPassword2Ajax" name="wpPassword">');
 
 			// Copy for (login & facebook connect) form
-			$("#ajaxlogin_username_cell").append('<input type="text" size="20" tabindex="201" id="wpName3Ajax" name="wpName">');
-			$("#ajaxlogin_password_cell").append('<input type="password" size="20" tabindex="202" id="wpPassword3Ajax" name="wpPassword">');
+			$("#ajaxlogin_username_cell").append('<input type="text" size="20" tabindex="301" id="wpName3Ajax" name="wpName">');
+			$("#ajaxlogin_password_cell").append('<input type="password" size="20" tabindex="302" id="wpPassword3Ajax" name="wpPassword">');
 		} else {
 			if($('#wpName2Ajax').length < 1) {
 				$('#wpName1Ajax')
@@ -32,7 +32,7 @@ var AjaxLogin = {
 			$('#wpName1Ajax').clone()
 			.attr({
 				"id": "wpName3Ajax",
-				'tabindex': -1 
+				'tabindex': 301
 			})
 			.appendTo("#ajaxlogin_username_cell2");
 			if($('#wpPassword2Ajax').length < 1) {
@@ -47,7 +47,7 @@ var AjaxLogin = {
 			$('#wpPassword1Ajax').clone()
 			.attr({
 				"id": "wpPassword3Ajax",
-				'tabindex': -1
+				'tabindex': 302
 			})
 			.appendTo("#ajaxlogin_password_cell2");
 		}
@@ -84,6 +84,22 @@ var AjaxLogin = {
 
 		//setup slider
 		$("#AjaxLoginConnectMarketing a").click(this.slider);
+		
+		$('#fbAjaxLoginConnect').click(function() {
+			WET.byStr( 'FBconnect/login_dialog/connect' );	
+		});
+		
+		$("#AjaxLoginConnectMarketing .forward").click(function() {
+			WET.byStr( 'FBconnect/login_dialog/slider/forward' );	
+		});
+		
+		$("#AjaxLoginConnectMarketing .back").click(function() {
+			WET.byStr( 'FBconnect/login_dialog/slider/back' );	
+		});
+
+		$("#wpLoginAndConnectCombo").click(function() {
+			WET.byStr( 'FBconnect/login_dialog/login_and_connect' );	
+		});
 	},
 	slider: function(e) {
 		e.preventDefault();

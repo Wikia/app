@@ -8,7 +8,7 @@ global $wgAuth, $wgUser, $wgEnableEmail,$wgStylePath,$wgBlankImgUrl;
 			?><h1><?php print wfMsg("fbconnect-wikia-login-w-facebook") ?></h1>
 			<div id="AjaxLoginFBStart">
 				<?php print wfMsg("fbconnect-wikia-login-bullets") ?>
-				<?php print '<fb:login-button size="large" length="short"'.FBConnect::getPermissionsAttribute().FBConnect::getOnLoginAttribute().'></fb:login-button>'; ?>
+				<?php print '<fb:login-button id="fbAjaxLoginConnect" size="large" length="short"'.FBConnect::getPermissionsAttribute().FBConnect::getOnLoginAttribute().'></fb:login-button>'; ?>
 			</div>
 			<div class="segmented-rule">
 				<span>OR</span>

@@ -24,7 +24,6 @@ class ChooseNameTemplate extends QuickTemplate {
 		}
 ?> 
 <div id="fbConnectModal" title="<?php $this->msg('fbconnect-modal-title') ?>" >
-
 <?php if( $this->data['message'] && !$this->data['ajax'] ) { ?>
 	<div class="<?php $this->text('messagetype') ?>box">
 		<?php if ( $this->data['messagetype'] == 'error' ) { ?>
@@ -267,11 +266,11 @@ class ChooseNameTemplate extends QuickTemplate {
 	$(document).ready(function(){
 		//override submitForm
 		UserRegistration = {};
-
+		
 		UserRegistration.errorMessages = {
 				main: '<?= addslashes(wfMsg('userlogin-form-error')) ?>',
 				username: '<?= addslashes(wfMsg('noname')) ?>',
-				email: '<?= addslashes(wfMsg('userlogin-bad-email')) ?>',
+				email: '<?= addslashes(wfMsg('userlogin-bad-email')) ?>'
 			};
 		
 		UserRegistration.checkEmail = function() {
@@ -301,6 +300,7 @@ class ChooseNameTemplate extends QuickTemplate {
 					callback(true);
 				} else {
 					UserRegistration.toggleError('wpFBNameTD', 'err');
+					WET.byStr( 'FBconnect/ChooseName/exists' );
 					$("#wpFBNameError").show();
 					callback(false);
 				}
@@ -322,7 +322,7 @@ class ChooseNameTemplate extends QuickTemplate {
 		UserRegistration.submitForm_fb = function() {
 			var errors = [];
 			var errorsHTML = '';
-			
+			WET.byStr( 'FBconnect/ChooseName/Create_account');
 			UserRegistration.checkUsername(
 			function(username_status) {
 				if( username_status && UserRegistration.checkEmail() ) {
@@ -365,13 +365,23 @@ class ChooseNameTemplate extends QuickTemplate {
 			$('#fbConnectPushEventBar_show').hide();
 			$('.fbConnectPushEventToggles').show();
 			$('#fbConnectPushEventBar_hide').show();
+			WET.byStr( 'FBconnect/ChooseName/show_prefs' );
 			return false;
 		});
 		$('#fbConnectPushEventBar_hide').click(function(){
 			$('#fbConnectPushEventBar_hide').hide();
 			$('.fbConnectPushEventToggles').hide();
 			$('#fbConnectPushEventBar_show').show();
+			WET.byStr( 'FBconnect/ChooseName/hide_prefs' );
 			return false;
+		});
+		
+		$('#fbGoLogin').click(function(){
+			WET.byStr( 'FBconnect/ChooseName/login_first' );
+		});
+
+		$('#fbconnect-push-allow-never').click(function(){
+			WET.byStr( 'FBconnect/ChooseName/nofeed' );
 		});
 	});
 </script>

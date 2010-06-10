@@ -37,7 +37,7 @@ class FBPush_OnAchBadge extends FBConnectPushEvent {
 		$desc =  $badg->getDetails();
 		
 		$title = Title::makeTitle( NS_USER  , $row->challenge_username1  );
-		
+		//"ref=fbfeed"
 		$params = array(
 			'$NAME' => $name,
 			'$USERPAGE' => "http://no.no"

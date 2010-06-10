@@ -13,6 +13,7 @@ class FBPush_OnLargeEdit extends FBConnectPushEvent {
 	protected $isAllowedUserPreferenceName = 'fbconnect-push-allow-OnLargeEdit'; // must correspond to an i18n message that is 'tog-[the value of the string on this line]'.
 	static private $MIN_CHARS_TO_PUSH = 300; // number of chars that need to be changed
 	static $messageName = 'fbconnect-msg-OnLargeEdit';
+	static $eventImage = 'edits.png';
 	
 	static public function getMinCharsToPush(){
 		return self::$MIN_CHARS_TO_PUSH;
@@ -22,7 +23,7 @@ class FBPush_OnLargeEdit extends FBConnectPushEvent {
 		global $wgHooks;
 		wfProfileIn(__METHOD__);
 		
-		$wgHooks['ArticleSave'][] = 'FBPush_OnLargeEdit::articleCountWordDiff';
+		$wgHooks['ArticleSaveComplete'][] = 'FBPush_OnLargeEdit::articleCountWordDiff';
 
 		wfProfileOut(__METHOD__);
 	}
@@ -40,8 +41,7 @@ class FBPush_OnLargeEdit extends FBConnectPushEvent {
 	 * Author: Tomek Odrobny
 	 * hook 
 	 */
-	
-	public static function articleCountWordDiff(&$article,&$user,&$newText){
+	public static function articleCountWordDiff(&$article,&$user,&$newText, $summary,$flag, $fake1, $fake2, &$flags, $revision, &$status, $baseRevId){
 		global $wgContentNamespaces, $wgSitename;
 		wfProfileIn(__METHOD__);
 		
@@ -53,14 +53,16 @@ class FBPush_OnLargeEdit extends FBConnectPushEvent {
 		$wNewCount = strlen( $newText );
 		$wOldCount = strlen( $article->getRawText() );
 		$countDiff = $wNewCount - $wOldCount;
-					
+
 		if ($countDiff > self::$MIN_CHARS_TO_PUSH){
 			$params = array(
 				'$ARTICLENAME' => $article->getTitle()->getText(),
 				'$WIKINAME' => $wgSitename,
-				'$ARTICLE_URL' => $article->getTitle()->getFullURL(),
+				'$ARTICLE_URL' => $article->getTitle()->getFullURL("ref=fbfeed"),
+				'$EVENTIMG' => self::$eventImage,
+				'$SUMMART' => $summary,
+				'$TEXT' => self::shortenText(self::parseArticle($article, $newText))			
 			);
-			
 			self::pushEvent(self::$messageName, $params, __CLASS__ );
 		}
 

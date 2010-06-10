@@ -18,3 +18,21 @@
 	width:200px;
 }
 
+.fbConnectPushEventToggles td {
+	padding-bottom:8px;
+	padding-top:0;
+}
+
+#fbConnectPushEventBar_show,#fbConnectPushEventBar_hide {
+	font-size:80%;
+}
+
+#fbConnectModalWrapper #userloginErrorBox {
+	margin-bottom:0;
+	margin-left:10px;
+	width:565px;
+}
+
+#wpLoginAndConnectCombo {
+	margin-top:5px;
+}
