@@ -476,22 +476,18 @@ class Masthead {
 		wfProfileIn(__METHOD__);
 		
 		$errorNo = UPLOAD_ERR_OK; // start by presuming there is no error.
-		
+
 		if( !isset( $wgTmpDirectory ) || !is_dir( $wgTmpDirectory ) ) {
 			$wgTmpDirectory = '/tmp';
 		}
-		
-	// TODO: Pull the image from the URL and save it to a temporary file.
+
+		// Pull the image from the URL and save it to a temporary file.
 		$sTmpFile = $wgTmpDirectory.'/'.substr(sha1(uniqid($this->mUser->getID())), 0, 16);
-// NOTE: No idea if this is going to work, so there is some extra output for now.
-print "Saving profile pic to: $sTmpFile<br/>\n";
 		$imgContent = Http::get($url);
 		if( !file_put_contents($sTmpFile, $imgContent)){
-print "Could not put the contents of the image into the file!!!!!! Returning early<br/>\n";
 			wfProfileOut( __METHOD__ );
 			return UPLOAD_ERR_CANT_WRITE;
 		}
-print "Done saving.<br/>\n";
 		$errorNo = $this->postProcessImageInternal($sTmpFile, $errorNo);
 
 		wfProfileOut(__METHOD__);
