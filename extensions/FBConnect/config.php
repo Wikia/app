@@ -15,6 +15,10 @@ $wgHooks['SpecialConnect::chooseNameForm'][] = 'wikia_fbconnect_chooseNameForm';
 $wgHooks['SpecialConnect::createUser::validateForm'][] = 'wikia_fbconnect_validateChooseNameForm';
 $wgHooks['SpecialConnect::createUser::postProcessForm'][] = 'wikia_fbconnect_postProcessForm';
 
+// If the user is created or attached, apply their Facebook Profile Pic as their Wikia Avatar (unless they already have one).
+$wgHooks['SpecialConnect::createUser::postProcessForm'][] = 'wikia_fbconnect_considerProfilePic';
+$wgHooks['SpecialConnect::userAttached'][] = 'wikia_fbconnect_considerProfilePic';
+
 ### FBCONNECT CONFIGURATION VARIABLES ###
 
 /**

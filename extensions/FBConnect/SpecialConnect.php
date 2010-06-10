@@ -232,19 +232,8 @@ class SpecialConnect extends SpecialPage {
 				}
 			}
 			$wgUser->saveSettings();
-			
-			// Attempt to store the facebook profile pic as the Wikia avatar.
-			if($fb_id == "24403391"){ // CURRENTLY IN TESTING... ONLY WORKS FOR Sean's FACEBOOK ACCOUNT
-				$picUrl = FBConnectProfilePic::getImgUrlById($fb_id);
-				if($picUrl != ""){
-					// TODO: detect if the user already has a masthead avatar
-					
-					// TODO: if the user doesn't have a masthead avatar, then use the URL to get it.
-					
-					print "PIC URL FROM THE FUNCTION: $picUrl<br/>\n";
-					exit;
-				}
-			}
+
+			wfRunHooks( 'SpecialConnect::userAttached', array( &$this ) );
 
 			$this->sendPage('displaySuccessAttaching');
 		}
@@ -559,6 +548,8 @@ class SpecialConnect extends SpecialPage {
 		$user->updateFromFacebook();
 		// Store the user in the global user object
 		$wgUser = $user;
+
+		wfRunHooks( 'SpecialConnect::userAttached', array( &$this ) );
 
 		$this->sendPage('displaySuccessAttaching');
 		
