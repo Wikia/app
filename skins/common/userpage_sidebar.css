@@ -138,6 +138,7 @@
 .profile-hover {
   background-color: #fff; /*TODO - how do I get this with the wiki's primary bg color */
   border: 3px solid #009933; /*TODO - how do I get this with the wiki's primary color */
+  color: #000;
   display: none;
   padding: 10px !important;
   position: absolute;
