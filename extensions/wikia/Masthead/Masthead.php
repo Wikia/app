@@ -492,7 +492,7 @@ print "Could not put the contents of the image into the file!!!!!! Returning ear
 			return UPLOAD_ERR_CANT_WRITE;
 		}
 print "Done saving.<br/>\n";
-		$errorNo = postProcessImageInternal($sTmpFile, $errorNo);
+		$errorNo = $this->postProcessImageInternal($sTmpFile, $errorNo);
 
 		wfProfileOut(__METHOD__);
 		return $errorNo;
@@ -541,7 +541,7 @@ print "Done saving.<br/>\n";
 //		Wikia::log( __METHOD__, 'path', "Path to uploaded file is {$sTmp}" );
 
 		if( move_uploaded_file( $sTmp, $sTmpFile )  ) {
-			$errorNo = postProcessImageInternal($sTmpFile, $errorNo);
+			$errorNo = $this->postProcessImageInternal($sTmpFile, $errorNo);
 		}
 		else {
 //			Wikia::log( __METHOD__, 'move', sprintf('Cannot move uploaded file from %s to %s', $sTmp, $sTmpFile ));
