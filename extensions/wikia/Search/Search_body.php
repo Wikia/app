@@ -509,8 +509,11 @@ class SolrResultTitle extends Title {
 	}
 
 	private function sanitizeUrl($url) {
-		// RT #25474 - not an issue anymore? (removed due to RT #46891)
-		//$url = str_replace( '?', '%3F', $url );
-		return wfUrlEncodeExt( $url );
+		$url = wfUrlEncodeExt( $url );
+
+		// RT #25474, #46891, #52759 ..damn you question marks!
+		$url = str_replace( '?', '%3F', $url );
+
+		return $url;
 	}
 }
