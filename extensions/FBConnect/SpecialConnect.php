@@ -610,12 +610,16 @@ class SpecialConnect extends SpecialPage {
 		}
 	}
 	
+	// NOTE: Actually for when you're both already logged in AND connected.
 	private function alreadyLoggedIn() {
 		global $wgOut, $wgUser, $wgRequest, $wgSitename;
 		$wgOut->setPageTitle(wfMsg('fbconnect-alreadyloggedin-title'));
 		$wgOut->addWikiMsg('fbconnect-alreadyloggedin', $wgUser->getName());
-		$wgOut->addWikiMsg('fbconnect-click-to-connect-existing', $wgSitename);
-		$wgOut->addHTML('<fb:login-button'.FBConnect::getPermissionsAttribute().FBConnect::getOnLoginAttribute().'></fb:login-button>');
+		
+		// Note: it seems this only gets called when you're already connected, so these buttons aren't needed.
+		//$wgOut->addWikiMsg('fbconnect-click-to-connect-existing', $wgSitename);
+		//$wgOut->addHTML('<fb:login-button'.FBConnect::getPermissionsAttribute().FBConnect::getOnLoginAttribute().'></fb:login-button>');
+
 		// Render the "Return to" text retrieved from the URL
 		$wgOut->returnToMain(false, $this->mReturnTo, $this->mReturnToQuery);
 	}
