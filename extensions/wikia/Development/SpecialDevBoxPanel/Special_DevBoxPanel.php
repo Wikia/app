@@ -77,8 +77,8 @@ define('DEV_BOX_SERVER_NAME', "devbox-server");
 // Doing it as its own cluster didn't work because of some details of how wikicities_[cluster] works.
 // Instead, we will try to use the main cluster, but override what server that means.
 // TODO: SWAP ME!  This probably is the solution, but there needs to be some testing (and I can't login at the moment).
-define('DEV_BOX_CLUSTER', "devbox_section");
-//define('DEV_BOX_CLUSTER', "DEFAULT");
+//define('DEV_BOX_CLUSTER', "devbox_section");
+define('DEV_BOX_CLUSTER', "DEFAULT");
 
 function wfSetupDevBoxPanel() {
 	global $IP, $wgMessageCache;
@@ -138,7 +138,7 @@ function wfDevBoxApplyLocalDatabaseOverrides(&$wikiFactoryLoader){
 	// If the current db is overridden, make sure to override the cluster setting from the database.
 	$dbName = WikiFactory::DomainToDB($wikiFactoryLoader->mServerName);
 	if(in_array($dbName, $databasesToOverride)){
-		$wikiFactoryLoader->mVariables["wgDBcluster"] = DEV_BOX_CLUSTER;
+		//$wikiFactoryLoader->mVariables["wgDBcluster"] = DEV_BOX_CLUSTER;
 
 		// Since the currently in-use database is on the devbox server, we can safely remove the read-only setting.
 		global $wgReadOnly;
@@ -188,29 +188,18 @@ function wfDevBoxApplyLocalDatabaseOverrides(&$wikiFactoryLoader){
 } // end wfDevBoxApplyLocalDatabaseOverrides()
 
 /**
- * @return String domain of wiki which this dev-box should behave as. Empty
- *                string if no wiki is forced in which case the domain of
- *                request will be used by WikiFactory to determine what wiki
- *                is being used.
+ * @return String full domain of wiki which this dev-box should behave as.
+ *
+ * Hostname scheme: override.developer.wikia-dev.com
+ * Example: muppet.owen.wikia-dev.com -> muppet.wikia.com
  */
 function getForcedWikiValue(){
-	global $wgMemc;
-	if(!$wgMemc){
-		$memc = wfGetCache( CACHE_MEMCACHED );
-	} else {
-		$memc = $wgMemc;
+	if (count (explode(".", $_SERVER['HTTP_HOST'])) == 4) {
+		list($override, $developer, $wikia_dev, $com) = explode(".", $_SERVER['HTTP_HOST']);
+		//$_SERVER['HTTP_HOST'] == "$developer.wikia-dev.com";
+		return "$override.wikia.com";
 	}
-
-	$forcedWiki = $memc->get(DEVBOX_FORCED_WIKI_KEY);
-	if(!$forcedWiki){
-		// File won't exist at first... fail gracefully.
-		$forcedWiki = @trim(file_get_contents(DEVBOX_FORCED_WIKI_FILE));
-		if($forcedWiki === false){
-			$forcedWiki = "";
-		}
-	}
-
-	return $forcedWiki;
+	return "";
 } // end getForcedWikiValue()
 
 /**
@@ -315,7 +304,7 @@ function setDevBoxOverrideDatabases($overDbs){
  */
 function pullProdDatabaseToLocal($domainOfWikiToPull){
 	global $wgCityId,$wgDBserver,$wgDBname,$wgDBuser,$wgDBpassword;
-	global $wgExtensionsPath,$wgStyleVersion;
+	global $wgExtensionsPath,$wgStyleVersion, $wgWikiaLocalSettingsPath;
 
 	set_time_limit(0);
 
@@ -352,7 +341,8 @@ function pullProdDatabaseToLocal($domainOfWikiToPull){
 
 	// Everything is configured, now move the data.
 	$tmpFile = "/tmp/$wgDBname.mysql.gz";
-	print "Dumping \"$wgDBname\" from host \"$wgDBserver\"...<br/>\n";
+	print "Dumping \"$wgDBname\" from host \"$wgDBserver_prodSlave\"...<br/>\n";
+	print "mysqldump --compress --single-transaction --skip-comments --quick -h $wgDBserver_prodSlave -u$wgDBuser_prodSlave -p$wgDBpassword_prodSlave $wgDBname --result-file=$tmpFile 2>&1";
 	$response = `mysqldump --compress --single-transaction --skip-comments --quick -h $wgDBserver_prodSlave -u$wgDBuser_prodSlave -p$wgDBpassword_prodSlave $wgDBname --result-file=$tmpFile 2>&1`;
 	if(trim($response) != ""){
 		print "<div class='devbox-error'>Database dump returned the following error:\n<em>$response</em></div>\n";
@@ -364,6 +354,7 @@ function pullProdDatabaseToLocal($domainOfWikiToPull){
 	print "Creating database...<br/>\n";
 	global $wgDBdevboxUser,$wgDBdevboxPassword,$wgDBdevboxServer;
 	$response = `mysql -u $wgDBdevboxUser -p$wgDBdevboxPassword -h $wgDBdevboxServer -e "CREATE DATABASE IF NOT EXISTS $wgDBname" 2>&1`;
+	print "mysql -u $wgDBdevboxUser -p$wgDBdevboxPassword -h $wgDBdevboxServer -e \"CREATE DATABASE IF NOT EXISTS $wgDBname\" 2>&1";
 	if(trim($response) != ""){
 		print "<div class='devbox-error'>CREATE DATABASE attempt returned the error:\n<em>$response</em></div>\n";
 	} else {
@@ -373,6 +364,7 @@ function pullProdDatabaseToLocal($domainOfWikiToPull){
 	
 	print "Loading \"$wgDBname\" into \"$wgDBdevboxServer\"...<br/>\n";
 	$response = `cat $tmpFile | mysql -u $wgDBdevboxUser -p$wgDBdevboxPassword -h $wgDBdevboxServer $wgDBname 2>&1`;
+	print "cat $tmpFile | mysql -u $wgDBdevboxUser -p$wgDBdevboxPassword -h $wgDBdevboxServer $wgDBname 2>&1";
 	if(trim($response) != ""){
 		print "<div class='devbox-error'>Error loading the database dump into $wgDBdevboxServer:\n<em>$response</em></div>\n";
 	} else {
@@ -447,7 +439,7 @@ function wfDevBoxPanel() {
 		// TODO: Divide these sections into tabs (possibly using jQuery UI).
 
 		// Display section which lets the developer force which wiki to act as.
-		$wgOut->addHTML(getHtmlForChangingCurrentWiki());
+		//$wgOut->addHTML(getHtmlForChangingCurrentWiki());
 
 		// Display section with vital stats on the server (where the LocalSettings are, the error logs, databases, etc.) with a link to phpinfo.
 		$wgOut->addHTML(getHtmlForInfo());
