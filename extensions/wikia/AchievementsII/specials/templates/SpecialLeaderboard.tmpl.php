@@ -1,5 +1,5 @@
 <div id="about-achievements" class="accent">
-	<p><?= wfMsgExt('leaderboard-intro', array('parse'), $username) ?></p>
+	<?= wfMsgExt( 'leaderboard-intro', array( 'parse' ), $username ) ?>
 </div>
 
 <h1 id="acheivements-title"><?= wfMsg('leaderboard') ?></h1>
