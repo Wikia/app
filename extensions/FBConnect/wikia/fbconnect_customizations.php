@@ -132,7 +132,7 @@ if($fb_id == "24403391"){
 					if ( !empty($sUrl) ) {
 						/* set user option */
 						$wgUser->setOption( AVATAR_USER_OPTION_NAME, $sUrl );
-						$wgUser->saveOptions();
+						$wgUser->saveSettings();
 					}
 				}
 			}
