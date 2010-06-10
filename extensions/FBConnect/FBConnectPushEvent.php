@@ -196,17 +196,35 @@ class FBConnectPushEvent {
 	
 	/**
 	 * put facebook message
+	 * @author Tomasz Odrobny 
 	 */
 	
 	static public function pushEvent($message, $params, $class){
+		global $wgServer;
+		
 		$fb = new FBConnectAPI();
-		$status = $fb->publishStream($message, $params);
+		
+		$image = $wgServer.'/skins/common/fbconnect/'.$params['$EVENTIMG'];
+		$href = $params['$ARTICLE_URL'];		
+		$description = wfMsg( $message ) ;
+		$link = wfMsg( $message.'-link' ) ;
+		$short = wfMsg( $message.'-short' ) ;
+		
+		$params['$FB_NAME'] = "";
+		foreach ($params as $key => $value) {
+		 	$description = str_replace($key, $value, $description);
+		 	$link = str_replace($key, $value, $link);
+		 	$short = str_replace($key, $value, $short);
+		}
+		
+		$status = $fb->publishStream( $href, $description, $short, $link, $image);
 		self::addEventStat($status, $class);
 		return $status;
 	} 
 	
-	/*
-	 * put stats for facebook 
+	/**
+	 * put stats for facebook
+	 * @author Tomasz Odrobny  
 	 */
 	
 	static public function addEventStat($status, $class){
@@ -223,5 +241,62 @@ class FBConnectPushEvent {
 			),__METHOD__);
 		$dbs->commit();
 	}
+	
+	/**
+	 * short text for blog
+	 *
+	 * @author Tomasz Odrobny 
+	 * @access private
+	 *
+	 */	
+	
+	static public function shortenText($source_text, $char_count = 100) 
+	{
+		$source_text = strip_tags($source_text);
+	    $source_text = trim($source_text); 
+	    $source_text_no_endline = str_replace("\n", " ", $source_text);
+    	
+	    if ($source_text == "" ){
+	    	return "";
+	    }
+	    
+	    if (strlen($source_text) <= $char_count ) {
+    		return $source_text;
+    	}
+   
+    	$source_text_out = substr($source_text, 0, strrpos(substr($source_text_no_endline, 0, $char_count), ' '));
 
+    	if ($source_text_out == "" ){
+    		$source_text_out = substr($source_text, 0, $char_count);
+    	}
+    	
+    	if ($source_text_out != $source_text) {
+    		$source_text = $source_text_out.'...';
+    	}
+	    
+    	return $source_text; 
+	}
+
+	
+	/**
+	 * easy parse of article text
+	 *
+	 * @author Tomasz Odrobny 
+	 * @access private
+	 *
+	 */	
+		
+	static public function parseArticle(&$qArticle, $text = null) {
+		$articleText = $qArticle->getRawText();
+		if ( $text != null ) {
+			$articleText = $text;
+		}
+		$title = $qArticle->getTitle();
+		$tmpParser = new Parser();
+		$tmpParser->setOutputType(OT_HTML);
+		$tmpParserOptions = new ParserOptions();
+		$html = $tmpParser->parse( $articleText, $title, $tmpParserOptions, false)->getText();
+		return $html;
+	}
+	
 } // end FBConnectPushEvent class

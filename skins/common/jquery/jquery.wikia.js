@@ -277,6 +277,25 @@ $.getViewportWidth = function() {
 };
 
 /**
+ * Returns the value of param from url.
+ * @method getUrlVal
+ * @return mixed or "".
+ */
+
+
+$.getUrlVal = function ( name )
+{
+	name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+	var regexS = "[\\?&]"+name+"=([^&#]*)";
+	var regex = new RegExp( regexS );
+	var results = regex.exec( window.location.href );
+	if( results == null )
+		return "";
+	else
+		return results[1];
+}
+
+/**
 * Finds the event in the window object, the caller's arguments, or
 * in the arguments of another method in the callstack.  This is
 * executed automatically for events registered through the event

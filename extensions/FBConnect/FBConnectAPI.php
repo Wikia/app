@@ -242,18 +242,19 @@ class FBConnectAPI {
 	
 	/*
 	 * Publish message on facebook wall 
-	 */
-	public function publishStream($message_name, $params = array()) {
-		$msg = wfMsg( $message_name ) ;
+	 */	
+	public function publishStream($href, $description, $short, $link, $img) {
+		$attachment = array(
+		      'name' => $link,
+		      'href' => $href,
+		      'description' => $description,
+		      'media' => array(array('type' => 'image',
+		                             'src' => $img,
+		                             'href' => $href)));
+		$attachment = json_encode($attachment);
 		
-		foreach ($params as $key => $value) {
-		 	$msg = str_replace($key, $value, $msg);
-		}
-		
-		$msg = str_replace('$FB_NAME', '', $msg);
-
 		try {		
-			$result = $this->Facebook()->api_client->stream_publish( $msg );
+			$this->Facebook()->api_client->stream_publish($short, $attachment, null);
 		} catch ( FacebookRestClientException $e ) {			
 			if( $e->getCode() != 506 ){ 
 				//unknow error http://forum.developers.facebook.com/viewtopic.php?pid=230061

@@ -214,7 +214,7 @@ class ChooseNameForm extends LoginForm {
 		$fb = new FBConnectAPI();
 		$fb_user = $fb->user();
 		$userinfo = $fb->getUserInfo($fb_user);
-
+		
 		// If no email was set yet, then use the value from facebook (which is quite likely also empty, but probably not always).
 		if(!$this->mEmail){
 			$this->mEmail = FBConnectUser::getOptionFromInfo('email', $userinfo);
@@ -242,10 +242,9 @@ class ChooseNameForm extends LoginForm {
 					if(self::userNameOK($fullname)){
 						$this->mName = $fullname;
 					} else {
-						if(($nickname == "") && isset( $_COOKIE[$wgCookiePrefix.'UserName'] )){
-							$nickname = $_COOKIE[$wgCookiePrefix.'UserName'];
+						if( empty($nickname) ){
+							$nickname = $fullname;
 						}
-
 						// Their nickname and full name were taken, so generate a username based on the nickname.
 						$specialConnect->setUserNamePrefix( $nickname );
 						$this->mName = $specialConnect->generateUserName();

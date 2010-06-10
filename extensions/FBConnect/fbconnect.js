@@ -89,9 +89,14 @@ $(document).ready(function() {
 	
 	//window.fbAsyncInit ();
 	$("#fbconnect a").click( function(){
+		WET.byStr( 'FBconnect/userlinks/connect' ); 
 		loginByFBConnect();
 		return false;
 	});
+	
+	if( $.getUrlVal( "ref" ) == "fbfeed" ) {
+		WET.byStr( 'FBconnect/userfromfb' );
+	}
 });
 
 
@@ -130,7 +135,11 @@ function sendToConnectOnLoginForSpecificForm(formName){
 			$().getModal(window.wgScript + '?action=ajax&rs=SpecialConnect::ajaxModalChooseName&returnto=' + wgPageName + '&returntoquery=' + wgPagequery,  "#fbConnectModal", {
 		        id: "fbConnectModalWrapper",
 		        width: "600px",
-		        callback: function() {}
+		        callback: function() {
+					$('#fbConnectModalWrapper .close').click(function(){
+						WET.byStr( 'FBconnect/ChooseName/X' );
+					});
+				}
 			});    
 		} else {
 			window.location.href = destUrl;

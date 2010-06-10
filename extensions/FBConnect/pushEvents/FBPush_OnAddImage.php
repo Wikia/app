@@ -12,6 +12,7 @@ $wgExtensionMessagesFiles['FBPush_OnAddImage'] = $pushDir . "FBPush_OnAddImage.i
 class FBPush_OnAddImage extends FBConnectPushEvent {
 	protected $isAllowedUserPreferenceName = 'fbconnect-push-allow-OnAddImage'; // must correspond to an i18n message that is 'tog-[the value of the string on this line]'.
 	static $messageName = 'fbconnect-msg-OnAddImage';
+	static $eventImage = 'image.png';
 	public function init(){
 		global $wgHooks;
 		wfProfileIn(__METHOD__);
@@ -35,8 +36,10 @@ class FBPush_OnAddImage extends FBConnectPushEvent {
 		if ($image->mLocalFile->media_type == 'BITMAP' ) {
 			$params = array(
 				'$IMGNAME' => $image->mLocalFile->getTitle(),
+				'$ARTICLE_URL' => $wgServer.'/'.$image->mLocalFile->getTitle(), //inside use  
 				'$WIKINAME' => $wgSitename,
-				'$IMG_URL' => $wgServer.'/'.$image->mLocalFile->getTitle(),
+				'$IMG_URL' => $wgServer.'/'.$image->mLocalFile->getTitle()."?ref=fbfeed",
+				'$EVENTIMG' => self::$eventImage
 			);
 			
 			self::pushEvent(self::$messageName, $params, __CLASS__ );

@@ -600,7 +600,7 @@ STYLE;
 					'section' => 'fbconnect-prefstext' );
 		} else {
 			// User is a MediaWiki user but isn't connected yet.  Display a message and button to connect.
-			$loginButton = '<fb:login-button'.FBConnect::getPermissionsAttribute().FBConnect::getOnLoginAttribute().'></fb:login-button>';
+			$loginButton = '<fb:login-button id="fbPrefsConnect" '.FBConnect::getPermissionsAttribute().FBConnect::getOnLoginAttribute().'></fb:login-button>';
 			$html = wfMsg('fbconnect-convert') . '<br/>' . $loginButton;
 			$html .= "<!-- Convert button -->\n";
 			$wgExtensionPreferences[] = array(	

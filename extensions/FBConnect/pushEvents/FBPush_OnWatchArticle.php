@@ -12,7 +12,7 @@ $wgExtensionMessagesFiles['FBPush_OnWatchArticle'] = $pushDir . "FBPush_OnWatchA
 class FBPush_OnWatchArticle extends FBConnectPushEvent {
 	protected $isAllowedUserPreferenceName = 'fbconnect-push-allow-OnWatchArticle'; // must correspond to an i18n message that is 'tog-[the value of the string on this line]'.
 	static $messageName = 'fbconnect-msg-OnWatchArticle';
-	
+	static $eventImage = 'following.png';
 	public function init(){
 		global $wgHooks;
 		wfProfileIn(__METHOD__);
@@ -31,9 +31,13 @@ class FBPush_OnWatchArticle extends FBConnectPushEvent {
 	}
 	
 	public static function onWatchArticleComplete(&$user, &$article ){
-		global $wgContentNamespaces, $wgSitename;
+		global $wgContentNamespaces, $wgSitename, $wgRequest;
 		wfProfileIn(__METHOD__); 
 
+		if ( $wgRequest->getVal('action','') == 'submit' ) {
+			return true;
+		}
+		
 		if( $article->getTitle()->getFirstRevision() == null ) {
 			return true;
 		}
@@ -41,7 +45,9 @@ class FBPush_OnWatchArticle extends FBConnectPushEvent {
 		$params = array(
 			'$ARTICLENAME' => $article->getTitle()->getText(),
 			'$WIKINAME' => $wgSitename,
-			'$ARTICLE_URL' => $article->getTitle()->getFullURL()
+			'$ARTICLE_URL' => $article->getTitle()->getFullURL("ref=fbfeed"),
+			'$EVENTIMG' => self::$eventImage,
+			'$TEXT' => self::shortenText(self::parseArticle($article))	
 		);
 		
 		self::pushEvent(self::$messageName, $params, __CLASS__ );

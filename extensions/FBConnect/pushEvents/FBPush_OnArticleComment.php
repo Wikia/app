@@ -12,6 +12,7 @@ $wgExtensionMessagesFiles['FBPush_OnArticleComment'] = $pushDir . "FBPush_OnArti
 class FBPush_OnArticleComment extends FBConnectPushEvent {
 	protected $isAllowedUserPreferenceName = 'fbconnect-push-allow-OnArticleComment'; // must correspond to an i18n message that is 'tog-[the value of the string on this line]'.
 	static $messageName = 'fbconnect-msg-OnArticleComment';
+	static $eventImage = 'comment.png';
 	public function init(){
 		global $wgHooks;
 		wfProfileIn(__METHOD__);
@@ -47,7 +48,9 @@ class FBPush_OnArticleComment extends FBConnectPushEvent {
 			$params = array(
 				'$ARTICLENAME' => $title->getText(),
 				'$WIKINAME' => $wgSitename,
-				'$ARTICLE_URL' => $title->getFullURL(),
+				'$ARTICLE_URL' => $title->getFullURL("ref=fbfeed"),
+				'$EVENTIMG' => self::$eventImage,
+				'$TEXT' => self::shortenText(self::parseArticle($article))
 			);
 			
 			self::pushEvent(self::$messageName, $params, __CLASS__ );
