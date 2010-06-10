@@ -388,7 +388,7 @@ class SpecialConnect extends SpecialPage {
 					$wgMemc->set( $key, 0, 86400 );
 				}
 				if ( $value >= $wgAccountCreationThrottle ) {
-					$this->throttleHit( $wgAccountCreationThrottle );
+					$wgOut->showErrorPage(wfMsgExt( 'acct_creation_throttle_hit', array( 'parseinline' ), $wgAccountCreationThrottle ) );
 					return false;
 				}
 				$wgMemc->incr( $key );
