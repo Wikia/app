@@ -131,7 +131,8 @@ if($fb_id == "24403391"){
 					$sUrl = $masthead->getLocalPath();
 					if ( !empty($sUrl) ) {
 						/* set user option */
-						$mUser->setOption( AVATAR_USER_OPTION_NAME, $sUrl );
+						$wgUser->setOption( AVATAR_USER_OPTION_NAME, $sUrl );
+						$wgUser->saveOptions();
 					}
 				}
 			}
