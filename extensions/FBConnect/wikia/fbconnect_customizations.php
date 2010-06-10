@@ -118,26 +118,24 @@ function wikia_fbconnect_considerProfilePic( &$specialConnect ){
 		$fb_id = array_shift($fb_ids);
 // CURRENTLY IN TESTING... ONLY WORKS FOR Sean's FACEBOOK ACCOUNT - TODO: REMOVE THIS BEFORE PUTTING LIVE (EVEN FOR TESTING).
 if($fb_id == "24403391"){
-print "Considering facebook profile pics<br/>\n";
-
 		// If the useralready has a masthead avatar, don't overwrite it, this function shouldn't alter anything in that case.
 		$masthead = Masthead::newFromUser($wgUser);
 		if( ! $masthead->hasAvatar() ){
-print "User does not have an avatar yet.  Let's get them one!<br/>\n";
 			// Attempt to store the facebook profile pic as the Wikia avatar.
 			$picUrl = FBConnectProfilePic::getImgUrlById($fb_id);
 			if($picUrl != ""){
-print "Found pic: $picUrl<br/>\n";
+				$errorNo = $masthead->uploadByUrl($picUrl);
 
-				// TODO: Pull the image from the URL and save it to the upload directory.
-
-				// TODO: Apply this as the user's new avatar.
-
+				// Apply this as the user's new avatar if the image-pull went okay.
+				if($errorNo == UPLOAD_ERR_OK){
+					$sUrl = $masthead->getLocalPath();
+					if ( !empty($sUrl) ) {
+						/* set user option */
+						$mUser->setOption( AVATAR_USER_OPTION_NAME, $sUrl );
+					}
+				}
 			}
-		} else {
-print "Avatar URL: ".$masthead->getUrl()."<br/>\n";
 		}
-print "Done with profile pic meddling.<br/>\n";
 }
 	}
 
