@@ -31,7 +31,7 @@ Please try another one!',
 	'achievements-you-must' => 'You need to $1 to earn this badge.',
 	'leaderboard-button' => 'Achievements leaderboard',
  	'achievements-masthead-points' => '$1 <small>{{PLURAL:$1|point|points}}</small>',
-	
+
 	/*
 	 * Track names
 	 */
@@ -39,8 +39,8 @@ Please try another one!',
 	'achievements-track-name-picture' => 'Pictures track',
 	'achievements-track-name-category' => 'Category track',
 	'achievements-track-name-blogpost' => 'Blog Post track',
-	'achievements-track-name-blogcomment' => 'Blog Comment track',
-	'achievements-track-name-love' => 'Wiki Love track',
+	'achievements-track-name-blogcomment' => 'Blog comment track',
+	'achievements-track-name-love' => 'Wiki love track',
 
 	/*
 	 * User notifications
@@ -55,9 +55,9 @@ Please try another one!',
 	 * User profile
 	 */
 	'achievements-earned' => 'This badge has been earned by {{PLURAL:$1|1 user|$1 users}}.',
-	'achievements-profile-title' => '$1\'s $2 Earned {{PLURAL:$2|Badge|Badges}}',
-	'achievements-profile-title-no' => '$1\'s Badges',
-	'achievements-profile-title-challenges' => 'More Badges You Can Earn!',
+	'achievements-profile-title' => '$1\'s $2 earned {{PLURAL:$2|badge|badges}}',
+	'achievements-profile-title-no' => '$1\'s badges',
+	'achievements-profile-title-challenges' => 'More badges you can earn!',
 	'achievements-profile-customize' => 'Customize badges',
 	'achievements-ranked' => 'Ranked #$1 on this wiki',
 	'achievements-no-badges' => 'Check out the list below to see the badges that you can earn on this wiki!',
@@ -75,10 +75,10 @@ Bronze badges are worth 10 points, Silver badges are worth 50 points, and Gold b
 When you join the wiki, your user profile displays the badges that you have earned, and shows you a list of the challenges that are available for you.
 [[Special:MyPage|Go to your user profile to check it out]]!",
 	'leaderboard' => 'Achievements leaderboard',
-	'achievements-recent-platinum' => 'Recent Platinum Badges',
-	'achievements-recent-gold' => 'Recent Gold Badges',
-	'achievements-recent-silver' => 'Recent Silver Badges',
-	'achievements-recent-bronze' => 'Recent Bronze Badges',
+	'achievements-recent-platinum' => 'Recent Platinum badges',
+	'achievements-recent-gold' => 'Recent Gold badges',
+	'achievements-recent-silver' => 'Recent Silver badges',
+	'achievements-recent-bronze' => 'Recent Bronze badges',
 	'achievements-recent-info' => '<a href="$1">$2</a> earned the &ldquo;$3&rdquo; badge $4',
 
 	/*
@@ -91,12 +91,12 @@ When you join the wiki, your user profile displays the badges that you have earn
 	'achievements-enable-track' => 'enabled',
 	'achievements-revert' => 'Revert to default',
 	'achievements-special-saved' => 'Changes saved.',
-	'achievements-special' => 'Special Achievements',
-	'achievements-secret' => 'Secret Achievements',
-	'achievementscustomize' => 'Customize Badges',
+	'achievements-special' => 'Special achievements',
+	'achievements-secret' => 'Secret achievements',
+	'achievementscustomize' => 'Customize badges',
 	'achievements-about-title' => 'About this page...',
 	'achievements-about-content' => 'Administrators on this wiki can customize the names and pictures of the achievement badges.
-	
+
 You can upload any .jpg or .png picture, and your picture will automatically fit inside the frame.
 It works best when your picture is square, and when the most important part of the picture is right in the middle.
 
@@ -129,14 +129,14 @@ Users who have earned badges in that track will always keep their badges, even i
 This can help to bring another level of fun to the achievements.
 Try it out!',
 	'achievements-create-edit-plus-category' => 'Create this track',
-	
+
 	/*
 	 * Platinum
 	 */
 	'platinum' => 'Platinum',
 	'achievements-community-platinum-awarded-email-subject' => 'You have been awarded a new Platinum badge!',
 	'achievements-community-platinum-awarded-email-body-text' => "Congratulations $1!
-	
+
 You have just been awarded with the '$2' Platinum badge on $4 ($3). This adds 250 points to your score!
 
 Check out your fancy new badge on your user profile page:
@@ -163,14 +163,14 @@ Check out your fancy new badge on your <a href=\"$5\">user profile page</a>.",
 	 */
 
 	// edit track
-	'achievements-badge-name-edit-0' => 'Making a Difference',
-	'achievements-badge-name-edit-1' => 'Just the Beginning',
-	'achievements-badge-name-edit-2' => 'Making Your Mark',
-	'achievements-badge-name-edit-3' => 'Friend of the Wiki',
+	'achievements-badge-name-edit-0' => 'Making a difference',
+	'achievements-badge-name-edit-1' => 'Just the beginning',
+	'achievements-badge-name-edit-2' => 'Making your mark',
+	'achievements-badge-name-edit-3' => 'Friend of the wiki',
 	'achievements-badge-name-edit-4' => 'Collaborator',
-	'achievements-badge-name-edit-5' => 'Wiki Builder',
-	'achievements-badge-name-edit-6' => 'Wiki Leader',
-	'achievements-badge-name-edit-7' => 'Wiki Expert',
+	'achievements-badge-name-edit-5' => 'Wiki builder',
+	'achievements-badge-name-edit-6' => 'Wiki leader',
+	'achievements-badge-name-edit-7' => 'Wiki expert',
 
 	// picture track
 	'achievements-badge-name-picture-0' => 'Snapshot',
@@ -183,42 +183,42 @@ Check out your fancy new badge on your <a href=\"$5\">user profile page</a>.",
 	'achievements-badge-name-picture-7' => 'Curator',
 
 	// category track
-	'achievements-badge-name-category-0' => 'Make a Connection',
-	'achievements-badge-name-category-1' => 'Trail Blazer',
+	'achievements-badge-name-category-0' => 'Make a connection',
+	'achievements-badge-name-category-1' => 'Trail blazer',
 	'achievements-badge-name-category-2' => 'Explorer',
-	'achievements-badge-name-category-3' => 'Tour Guide',
+	'achievements-badge-name-category-3' => 'Tour guide',
 	'achievements-badge-name-category-4' => 'Navigator',
-	'achievements-badge-name-category-5' => 'Bridge Builder',
-	'achievements-badge-name-category-6' => 'Wiki Planner',
+	'achievements-badge-name-category-5' => 'Bridge builder',
+	'achievements-badge-name-category-6' => 'Wiki planner',
 
 	// blogpost track
-	'achievements-badge-name-blogpost-0' => 'Something to Say',
-	'achievements-badge-name-blogpost-1' => 'Five Things to Say',
-	'achievements-badge-name-blogpost-2' => 'Talk Show',
-	'achievements-badge-name-blogpost-3' => 'Life of the Party',
-	'achievements-badge-name-blogpost-4' => 'Public Speaker',
+	'achievements-badge-name-blogpost-0' => 'Something to say',
+	'achievements-badge-name-blogpost-1' => 'Five Things to say',
+	'achievements-badge-name-blogpost-2' => 'Talk show',
+	'achievements-badge-name-blogpost-3' => 'Life of the party',
+	'achievements-badge-name-blogpost-4' => 'Public speaker',
 
 	// blogcomment track
 	'achievements-badge-name-blogcomment-0' => 'Opinionator',
-	'achievements-badge-name-blogcomment-1' => 'And One More Thing',
+	'achievements-badge-name-blogcomment-1' => 'And one more thing',
 
 	// love track
-	'achievements-badge-name-love-0' => 'Key to the Wiki!',
-	'achievements-badge-name-love-1' => 'Two Weeks on the Wiki',
+	'achievements-badge-name-love-0' => 'Key to the wiki!',
+	'achievements-badge-name-love-1' => 'Two weeks on the wiki',
 	'achievements-badge-name-love-2' => 'Devoted',
 	'achievements-badge-name-love-3' => 'Dedicated',
 	'achievements-badge-name-love-4' => 'Addicted',
-	'achievements-badge-name-love-5' => 'A Wiki Life',
-	'achievements-badge-name-love-6' => 'Wiki Hero!',
+	'achievements-badge-name-love-5' => 'A wiki life',
+	'achievements-badge-name-love-6' => 'Wiki hero!',
 
 	// not in track
-	'achievements-badge-name-welcome' => 'Welcome to the Wiki',
+	'achievements-badge-name-welcome' => 'Welcome to the wiki',
 	'achievements-badge-name-introduction' => 'Introduction',
-	'achievements-badge-name-sayhi' => 'Stopping By to Say Hi',
-	'achievements-badge-name-creator' => 'The Creator',
+	'achievements-badge-name-sayhi' => 'Stopping by to say hi',
+	'achievements-badge-name-creator' => 'The creator',
 	'achievements-badge-name-pounce' => 'Pounce!',
 	'achievements-badge-name-caffeinated' => 'Caffeinated',
-	'achievements-badge-name-luckyedit' => 'Lucky Edit',
+	'achievements-badge-name-luckyedit' => 'Lucky edit',
 
 	/*
 	 * Badges' details for challenges list on user profile
@@ -250,9 +250,9 @@ Check out your fancy new badge on your <a href=\"$5\">user profile page</a>.",
 	'achievements-badge-to-get-love-details' => 'The counter resets if you miss a day, so be sure to come back to the wiki every day!',
 	'achievements-badge-to-get-welcome-details' => 'Click the Create an account button at the top right to join the community. You can start earning your own badges!',
 	'achievements-badge-to-get-introduction-details' => 'Is your user page empty? Click on your user name at the top of the screen to see. Click edit to add some information about yourself!',
-	'achievements-badge-to-get-sayhi-details' => 'You can leave other people messages by clicking "Leave message" on their talk page. Ask for help, thank them for their work, or just say hi!',
+	'achievements-badge-to-get-sayhi-details' => 'You can leave other users messages by clicking "Leave message" on their talk page. Ask for help, thank them for their work, or just say hi!',
 	'achievements-badge-to-get-creator-details' => 'This badge is given to the person who founded the wiki. Click the Create a new wiki button at the top to start a site about whatever you like most!',
-	'achievements-badge-to-get-pounce-details' => 'You have got to be quick to earn this badge. Click the Activity feed button to see the new pages that people are creating!',
+	'achievements-badge-to-get-pounce-details' => 'You have to be quick to earn this badge. Click the Activity feed button to see the new pages that users are creating!',
 	'achievements-badge-to-get-caffeinated-details' => 'It takes a busy day to earn this badge. Keep editing!',
 	'achievements-badge-to-get-luckyedit-details' => 'You have got to be lucky to earn this badge. Keep editing!',
 	'achievements-badge-to-get-community-platinum-details' => 'This is a special Platinum badge that is only available for a limited time!',
@@ -320,6 +320,11 @@ on someone else\'s talk page!',
 	'achievements-badge-desc-luckyedit' => 'for making the Lucky $1th edit on the wiki!',
 );
 
+/** Message documentation (Message documentation)
+ * @author Avatar
+ * @autor Federico
+ * @author Siebrand
+ */
 $messages['qqq'] = array(
 	'achievements-track-name-edit' => 'Capitalization has been requested by Product Management, please don\'t changeit',
 	'achievements-track-name-picture' => 'Capitalization has been requested by Product Management, please don\'t changeit',
@@ -327,16 +332,16 @@ $messages['qqq'] = array(
 	'achievements-track-name-blogpost' => 'Capitalization has been requested by Product Management, please don\'t changeit',
 	'achievements-track-name-blogcomment' => 'Capitalization has been requested by Product Management, please don\'t changeit',
 	'achievements-track-name-love' => 'Capitalization has been requested by Product Management, please don\'t changeit',
-	
+
 	'achievements-profile-title' => 'Capitalization has been requested by Product Management, please don\'t changeit',
 	'achievements-profile-title-no' => 'Capitalization has been requested by Product Management, please don\'t changeit',
 	'achievements-profile-title-challenges' => 'Capitalization has been requested by Product Management, please don\'t changeit',
-	
+
 	'achievements-recent-platinum' => 'Capitalization has been requested by Product Management, please don\'t changeit',
 	'achievements-recent-gold' => 'Capitalization has been requested by Product Management, please don\'t changeit',
 	'achievements-recent-silver' => 'Capitalization has been requested by Product Management, please don\'t changeit',
 	'achievements-recent-bronze' => 'Capitalization has been requested by Product Management, please don\'t changeit',
-	
+
 	'achievements-badge-name-edit-0' => 'Capitalization has been requested by Product Management, please don\'t changeit',
 	'achievements-badge-name-edit-1' => 'Capitalization has been requested by Product Management, please don\'t changeit',
 	'achievements-badge-name-edit-2' => 'Capitalization has been requested by Product Management, please don\'t changeit',
@@ -345,31 +350,31 @@ $messages['qqq'] = array(
 	'achievements-badge-name-edit-5' => 'Capitalization has been requested by Product Management, please don\'t changeit',
 	'achievements-badge-name-edit-6' => 'Capitalization has been requested by Product Management, please don\'t changeit',
 	'achievements-badge-name-edit-7' => 'Capitalization has been requested by Product Management, please don\'t changeit',
-	
+
 	'achievements-badge-name-category-0' => 'Capitalization has been requested by Product Management, please don\'t changeit',
 	'achievements-badge-name-category-1' => 'Capitalization has been requested by Product Management, please don\'t changeit',
 	'achievements-badge-name-category-3' => 'Capitalization has been requested by Product Management, please don\'t changeit',
 	'achievements-badge-name-category-5' => 'Capitalization has been requested by Product Management, please don\'t changeit',
 	'achievements-badge-name-category-6' => 'Capitalization has been requested by Product Management, please don\'t changeit',
-	
+
 	'achievements-badge-name-blogpost-0' => 'Capitalization has been requested by Product Management, please don\'t changeit',
 	'achievements-badge-name-blogpost-1' => 'Capitalization has been requested by Product Management, please don\'t changeit',
 	'achievements-badge-name-blogpost-2' => 'Capitalization has been requested by Product Management, please don\'t changeit',
 	'achievements-badge-name-blogpost-3' => 'Capitalization has been requested by Product Management, please don\'t changeit',
 	'achievements-badge-name-blogpost-4' => 'Capitalization has been requested by Product Management, please don\'t changeit',
-	
+
 	'achievements-badge-name-blogcomment-1' => 'Capitalization has been requested by Product Management, please don\'t changeit',
-	
+
 	'achievements-badge-name-love-0' => 'Capitalization has been requested by Product Management, please don\'t changeit',
 	'achievements-badge-name-love-1' => 'Capitalization has been requested by Product Management, please don\'t changeit',
 	'achievements-badge-name-love-5' => 'Capitalization has been requested by Product Management, please don\'t changeit',
 	'achievements-badge-name-love-6' => 'Capitalization has been requested by Product Management, please don\'t changeit',
-	
+
 	'achievements-badge-name-welcome' => 'Capitalization has been requested by Product Management, please don\'t changeit',
 	'achievements-badge-name-sayhi' => 'Capitalization has been requested by Product Management, please don\'t changeit',
 	'achievements-badge-name-creator' => 'Capitalization has been requested by Product Management, please don\'t changeit',
 	'achievements-badge-name-luckyedit' => 'Capitalization has been requested by Product Management, please don\'t changeit',
-	
+
 	'achievements-badge-to-get-sayhi-details' => 'The word "people" has been requested by Product Management, please don\'t changeit',
 
 	'achievements-notification-title' => 'Parameters:
@@ -1007,7 +1012,7 @@ Du kan også gi utmerkelsene nye navn som reflekterer wikiens tema. Når du har 
 	'achievements-create-edit-plus-category-content' => 'Du kan opprette et nytt sett utmerkelser som belønner brukere for å redigere sider i en bestemt kategori, for å markere et bestemt område av siden brukerne vil sette pris på. Du kan sette opp fler enn et kategorispor, så prøv å velge to kategorier som lar brukerne vise frem sine spesialiteter! Sett i gang en rivalisering mellom brukerne som redigerer vampyrsider og brukerne som redigerer varulvsider, eller trollmenn og gomper, eller Autoboter og Decepticoner.<br /><br />
 For å lage et nytt «Rediger-i-kategori»-spor, skriv inn navnet på kategorien i feltet nedenfor. Den vanlige Rediger spor vil fremdeles eksistere; dette vil opprette et separat spor som du kan tilpasse separat.<br /><br />
 Når sporet er opprettet, vil den nye utmerkelsen vises i lista til venstre, under den vanlige Rediger spor. Tilpass navnene og bildene for det nye sporet, slik at brukerne kan se forskjellen!<br /><br />
-Så fort du er ferdig med tilpasningen, trykk på «påskrudd»-boksen for å skru på det nye sporet, og trykk deretter «Lagre endringer». Brukere vil se det nye sporet på brukerprofilene sine, og du vil begynne å motta utmerkelser når de redigerer sider i den kategorien. Du kan også skru av sporet senere, hvis du beslutter at du ikke vil markere kategorien lenger. Brukere som har mottatt utmerkelser i det sporet vil alltid beholde utmerkelsene, selv om sporet er deaktivert.<br /><br /> 
+Så fort du er ferdig med tilpasningen, trykk på «påskrudd»-boksen for å skru på det nye sporet, og trykk deretter «Lagre endringer». Brukere vil se det nye sporet på brukerprofilene sine, og du vil begynne å motta utmerkelser når de redigerer sider i den kategorien. Du kan også skru av sporet senere, hvis du beslutter at du ikke vil markere kategorien lenger. Brukere som har mottatt utmerkelser i det sporet vil alltid beholde utmerkelsene, selv om sporet er deaktivert.<br /><br />
 Dette kan skape et helt nytt nivå av moro for utmerkelsene. Prøv det ut!',
 	'achievements-create-edit-plus-category' => 'Opprett dette sporet',
 	'platinum' => 'Platina',
