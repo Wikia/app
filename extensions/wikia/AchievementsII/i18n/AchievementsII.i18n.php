@@ -70,8 +70,13 @@ Please try another one!',
 	/*
 	 * Leaderboard
 	 */
-	'leaderboard-intro' => '<b>&ldquo;What are Achievements?&rdquo;</b> You can earn special badges by participating on this wiki! Each badge that you earn adds points to your total score: Bronze badges are worth 10 points, Silver badges are worth 50 points, and Gold badges are worth 100 points.<br /><br />
-When you join the wiki, your user profile displays the badges that you have earned, and shows you a list of the challenges that are available for you. [[Special:MyPage|Go to your user profile to check it out!]]',
+	'leaderboard-intro' => "'''&ldquo;What are Achievements?&rdquo;'''
+You can earn special badges by participating on this wiki!
+Each badge that you earn adds points to your total score:
+Bronze badges are worth 10 points, Silver badges are worth 50 points, and Gold badges are worth 100 points.
+
+When you join the wiki, your user profile displays the badges that you have earned, and shows you a list of the challenges that are available for you.
+[[Special:MyPage|Go to your user profile to check it out]]!",
 	'leaderboard' => 'Achievements leaderboard',
 	'achievements-recent-platinum' => 'Recent Platinum badges',
 	'achievements-recent-gold' => 'Recent Gold badges',
@@ -92,18 +97,39 @@ When you join the wiki, your user profile displays the badges that you have earn
 	'achievements-secret' => 'Secret achievements',
 	'achievementscustomize' => 'Customize badges',
 	'achievements-about-title' => 'About this page...',
-	'achievements-about-content' => 'Administrators on this wiki can customize the names and pictures of the achievement badges.<br /><br />
-You can upload any .jpg or .png picture, and your picture will automatically fit inside the frame. It works best when your picture is square, and when the most important part of the picture is right in the middle.<br /><br />
-You can use rectangular pictures, but you might find that a bit gets cropped out by the frame. If you have a graphics program, then you can crop your picture to put the important part of the image in the center. If you don\'t, then just experiment with different pictures until you find the ones that work for you! If you do not like the picture that you have chosen, click "Revert to default" to go back to the original graphic.<br /><br />
-You can also give the badges new names that reflect the topic of the wiki. When you have changed badge names, click "Save changes" to save your changes. Have fun!',
+	'achievements-about-content' => 'Administrators on this wiki can customize the names and pictures of the achievement badges.
+	
+You can upload any .jpg or .png picture, and your picture will automatically fit inside the frame.
+It works best when your picture is square, and when the most important part of the picture is right in the middle.
+
+You can use rectangular pictures, but you might find that a bit gets cropped out by the frame.
+If you have a graphics program, then you can crop your picture to put the important part of the image in the center.
+If you do no have a graphics program, then just experiment with different pictures until you find the ones that work for you!
+If you do not like the picture that you have chosen, click "{{int:achievements-revert}}" to go back to the original graphic.
+
+You can also give the badges new names that reflect the topic of the wiki. When you have changed badge names, click "{{int:achievements-save}}" to save your changes.
+Have fun!',
 
 	'achievements-edit-plus-category-track-name' => '$1 edit track',
 	'achievements-create-edit-plus-category-title' => 'Create a new Edit track',
-	'achievements-create-edit-plus-category-content' => 'You can create a new set of badges that reward users for editing pages in a particular category, to highlight a particular area of the site that users would enjoy working on. You can set up more than one category track, so try choosing two categories that would help users show off their specialty! Ignite a rivalry between the users who edit Vampires pages and the users who edit Werewolves pages, or Wizards and Muggles, or Autobots and Decepticons.<br /><br />
-To create a new "Edit in category" track, type the name of the category in the field below. The regular Edit track will still exist; this will create a separate track that you can customize separately.<br /><br />
-When the track is created, the new badges will appear in the list on the left, under the regular Edit track. Customize the names and images for the new track, so that users can see the difference!<br /><br />
-Once you have done the customization, click the "enabled" checkbox to turn on the new track, and then click "Save changes". Users will see the new track appear on their user profiles, and they will start earning badges when they edit pages in that category. You can also disable the track later, if you decide you do not want to highlight that category anymore. Users who have earned badges in that track will always keep their badges, even if the track is disabled.<br /><br />
-This can help to bring another level of fun to the achievements. Try it out!',
+	'achievements-create-edit-plus-category-content' => 'You can create a new set of badges that reward users for editing pages in a particular category, to highlight a particular area of the site that users would enjoy working on.
+You can set up more than one category track, so try choosing two categories that would help users show off their specialty!
+Ignite a rivalry between the users who edit Vampires pages and the users who edit Werewolves pages, or Wizards and Muggles, or Autobots and Decepticons.
+
+To create a new "Edit in category" track, type the name of the category in the field below.
+The regular Edit track will still exist;
+this will create a separate track that you can customize separately.
+
+When the track is created, the new badges will appear in the list on the left, under the regular Edit track.
+Customize the names and images for the new track, so that users can see the difference!
+
+Once you have done the customization, click the "enabled" checkbox to turn on the new track, and then click "{{int:achievements-save}}".
+Users will see the new track appear on their user profiles, and they will start earning badges when they edit pages in that category.
+You can also disable the track later, if you decide you do not want to highlight that category anymore.
+Users who have earned badges in that track will always keep their badges, even if the track is disabled.
+
+This can help to bring another level of fun to the achievements.
+Try it out!',
 	'achievements-create-edit-plus-category' => 'Create this track',
 	/*
 	 * Platinum
