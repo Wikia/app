@@ -116,8 +116,7 @@ function wikia_fbconnect_considerProfilePic( &$specialConnect ){
 	$fb_ids = FBConnectDB::getFacebookIDs($wgUser);
 	if(count($fb_ids) > 0){
 		$fb_id = array_shift($fb_ids);
-// CURRENTLY IN TESTING... ONLY WORKS FOR Sean's FACEBOOK ACCOUNT - TODO: REMOVE THIS BEFORE PUTTING LIVE (EVEN FOR TESTING).
-if($fb_id == "24403391"){
+
 		// If the useralready has a masthead avatar, don't overwrite it, this function shouldn't alter anything in that case.
 		$masthead = Masthead::newFromUser($wgUser);
 		if( ! $masthead->hasAvatar() ){
@@ -137,7 +136,6 @@ if($fb_id == "24403391"){
 				}
 			}
 		}
-}
 	}
 
 	wfProfileOut(__METHOD__);
