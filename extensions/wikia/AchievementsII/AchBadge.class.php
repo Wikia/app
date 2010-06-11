@@ -97,7 +97,17 @@ class AchBadge {
 
 		wfProfileOut(__METHOD__);
 
-		return "{$wgExtensionsPath}/wikia/AchievementsII/images/badges/".AchConfig::getInstance()->getBadgePictureName($badge_type_id, $realLap, "128px", false);
+		$pictureName = AchConfig::getInstance()->getBadgePictureName($badge_type_id, $realLap, null, false);
+
+		if($width == 40) {
+			$subdir = '40';
+		} else if($width == 90) {
+			$subdir = '90';
+		} else {
+			$subdir = '128';
+		}
+
+		return "{$wgExtensionsPath}/wikia/AchievementsII/images/badges/{$subdir}/{$pictureName}";
 	}
 
 	public function getEarnedBy() {
