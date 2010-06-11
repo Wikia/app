@@ -272,7 +272,9 @@ class AchAwardingService {
 				}
 				foreach($insertedImages as $inserted_image) {
 					if($inserted_image['il_to']{0} != ':') {
-						$this->mCounters[BADGE_PICTURE]++;
+						if(wfFindFile($inserted_image['il_to'])) {
+							$this->mCounters[BADGE_PICTURE]++;
+						}
 					}
 				}
 			}
