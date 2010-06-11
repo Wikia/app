@@ -14,7 +14,7 @@ $messages['en'] = array(
 	'wikiafollowedpages-special-heading-media' => 'Images and videos ($1)',
 	'wikiafollowedpages-special-namespace' => "($1 page) ",
 	'wikiafollowedpages-special-empty' => "This user's followed pages list is empty. (Add pages to this list by clicking \"Follow\" at the top of an article). ",
-	'wikiafollowedpages-special-anon' => 'Please log in to create or view your followed pages list.', 
+	'wikiafollowedpages-special-anon' => 'Please [[Special:Signup|log in]] to create or view your followed pages list.',
 
 	'wikiafollowedpages-special-showall' => 'Show All',
 	'wikiafollowedpages-special-title' => 'Followed pages',
