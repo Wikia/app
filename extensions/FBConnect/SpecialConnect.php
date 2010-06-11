@@ -651,7 +651,6 @@ class SpecialConnect extends SpecialPage {
 			$foundUser = FBConnectDB::getUser( $fb_user );
 			if($foundUser){
 				$connectedToUser = $foundUser->getName();
-				$wgOut->addHTML("<br/>\n");
 				$wgOut->addWikiMsg('fbconnect-fbid-connected-to', $connectedToUser);
 			}
 		}
