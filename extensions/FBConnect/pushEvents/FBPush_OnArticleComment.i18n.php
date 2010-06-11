@@ -5,6 +5,6 @@ $messages['en'] = array(
 	'tog-fbconnect-push-allow-OnArticleComment-short' => "Make an article comment",
 
 	'fbconnect-msg-OnArticleComment-link' => '$ARTICLENAME',
-	'fbconnect-msg-OnArticleComment-short' => 'Make an article comment',
+	'fbconnect-msg-OnArticleComment-short' => 'has added a comment on $WIKINAME!',
 	'fbconnect-msg-OnArticleComment' => '$TEXT'
 );
