@@ -120,6 +120,7 @@ class SpecialConnect extends SpecialPage {
 			$foundUser = FBConnectDB::getUser( $fbid );
 			if($foundUser && ($foundUser->getId() != $wgUser->getId())){
 				$this->sendPage('fbIdAlreadyConnected');
+				return;
 			}
 		}
 
