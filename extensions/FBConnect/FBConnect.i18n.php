@@ -164,13 +164,16 @@ The replacement password has been sent only to you at this email address.
 Thanks,
 
 The Wikia Community Team',
-              
-	// TODO: Swap in the real message once connecting to existing accounts works.
+
 	'fbconnect-msg-for-existing-users' => "<strong>Already a Wikia user?</strong><br/>If you would like to connect this facebook account to an existing Wikia account, please <a id='fbGoLogin' href='$1'>login</a> first.",
 	
 	'fbconnect-invalid-email' => "Please provide a valid email address.",
 	'fbconnect-wikia-login-w-facebook' => 'Log in / Sign Up with Facebook Connect',
 	'fbconnect-wikia-login-bullets' => '<ul><li>Sign up in just a few clicks</li><li>You have control of what goes to your feed</li></ul>',
+	
+	'fbconnect-fbid-is-already-connected-title' => 'Facebook account is already in use',
+	'fbconnect-fbid-is-already-connected' => 'The Facebook account you are attempting to connect to your Wikia account is already connected to a different Wikia account. If you would like to connect your current Wikia account to that Facebook id, please disconnect the Facebook account from your other username first by visiting the "Facebook Connect" tab of your Preferences page.',
+	'fbconnect-fbid-connected-to' => 'The Wikia username that is currently connected to this Facebook id is <strong>$1</strong>.',
 );
 
 /**
