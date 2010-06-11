@@ -117,7 +117,7 @@ class SpecialConnect extends SpecialPage {
 		// facebook id, but the FB-id is already connected to a DIFFERENT Wikia account... display an error message.
 		global $wgUser;
 		if($wgUser->isLoggedIn() && $fb_user){
-			$foundUser = FBConnectDB::getUser( $fbid );
+			$foundUser = FBConnectDB::getUser( $fb_user );
 			if($foundUser && ($foundUser->getId() != $wgUser->getId())){
 				$this->sendPage('fbIdAlreadyConnected');
 				return;
@@ -648,7 +648,7 @@ class SpecialConnect extends SpecialPage {
 		$fb = new FBConnectAPI();
 		$fb_user = $fb->user(); // fb id or 0 if none is found.
 		if($fb_user){
-			$foundUser = FBConnectDB::getUser( $fbid );
+			$foundUser = FBConnectDB::getUser( $fb_user );
 			if($foundUser){
 				$connectedToUser = $foundUser->getName();
 				$wgOut->addHTML("<br/>\n");
