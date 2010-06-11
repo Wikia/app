@@ -49,7 +49,7 @@ class FBConnectDB {
 		$dbr = wfGetDB( $db, array(), self::sharedDB() );
 		$fbid = array();
 		if ( $user instanceof User && $user->getId() != 0 ) {
-			$memkey = wfMemcKey( "fb_user_id", $user->getId() );
+			$memkey = wfSharedMemcKey( "fb_user_id", $user->getId() );
 			$val = $wgMemc->get($memkey);
 			if ( ( is_array($val) ) &&  ( $db == DB_SLAVE ) ){
 				return $val;
@@ -123,7 +123,7 @@ class FBConnectDB {
 		global $wgMemc;
 		wfProfileIn(__METHOD__);
 		
-		$memkey = wfMemcKey( "fb_user_id", $user->getId() );
+		$memkey = wfSharedMemcKey( "fb_user_id", $user->getId() );
 			
 		if($user->getId() == 0){
 			wfDebug("FBConnect: tried to store a mapping from fbid \"$fbid\" to a user with no id (ie: not logged in).\n");
@@ -154,7 +154,7 @@ class FBConnectDB {
 		$prefix = self::getPrefix();
 		if ( $user instanceof User && $user->getId() != 0 ) {
 			$dbw = wfGetDB( DB_MASTER, array(), self::sharedDB() );
-			$memkey = wfMemcKey( "fb_user_id", $user->getId() );
+			$memkey = wfSharedMemcKey( "fb_user_id", $user->getId() );
 			$dbw->delete(
 				"{$prefix}user_fbconnect",
 				array(

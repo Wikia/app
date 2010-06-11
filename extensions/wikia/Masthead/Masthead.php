@@ -12,8 +12,8 @@ if( !defined( 'MEDIAWIKI' ) ) {
 	die( 1 );
 }
 
-define ('AVATAR_DEFAULT_WIDTH', 100);
-define ('AVATAR_DEFAULT_HEIGHT', 100);
+define ('AVATAR_DEFAULT_WIDTH', 50);
+define ('AVATAR_DEFAULT_HEIGHT', 50);
 define ('AVATAR_LOG_NAME', 'useravatar');
 define ('AVATAR_USER_OPTION_NAME', 'avatar');
 define ('AVATAR_MAX_SIZE', 512000 );

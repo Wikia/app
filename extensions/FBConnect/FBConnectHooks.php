@@ -568,7 +568,7 @@ STYLE;
 		wfLoadExtensionMessages('FBConnect');
 		$prefsection = 'fbconnect-prefstext';
 
-		$id = FBConnectDB::getFacebookIDs($user);
+		$id = FBConnectDB::getFacebookIDs($user, DB_MASTER);
 		if( count($id) > 0 ) {
 			$html = Xml::openElement("div",array("id" => "fbDisconnectLink" ));
 				$html .= '<br/>'.wfMsg('fbconnect-disconnect-link');

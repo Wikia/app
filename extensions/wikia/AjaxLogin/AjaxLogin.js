@@ -149,7 +149,10 @@ var AjaxLogin = {
 			}
 
 			// close AjaxLogin form
-			$('#AjaxLoginBoxWrapper').closeModal();
+			var ajax_Wrapper = $('#AjaxLoginBoxWrapper');
+			if( ajax_Wrapper.length > 0 ) {
+				ajax_Wrapper.closeModal();
+			}
 
 			$().log('AjaxLogin: calling custom function');
 			window.wgAjaxLoginOnSuccess();
