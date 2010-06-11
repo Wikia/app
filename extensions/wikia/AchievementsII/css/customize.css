@@ -3,11 +3,9 @@
   width: 300px;
   padding: 0 10px;
   border-left: 1px solid #AAAAAA;
-  position:absolute;
-  right:0px;
-  top:0px;
   margin-left: 5px;
-  margin-top: 7px;
+  float:right;
+  margin-right:-330px;
 }
 
 #customize-sidebar h2.first {
@@ -15,19 +13,18 @@
 }
 
 .customize-section {
-  padding-right: 320px;
   margin-bottom: 20px;
   position: relative;
+  clear:left;
 }
 
 .save-title-button {
   position: absolute;
   top: 5px;
-  right: 325px;
+  right:0px;
 }
 
 ul.custom-badges {
-  /*width: 450px;*/
   list-style-type: none !important;
   list-style-image: none !important;
   margin: 10px 0 25px 10px;
