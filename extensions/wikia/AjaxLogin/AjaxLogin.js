@@ -253,7 +253,9 @@ var AjaxLogin = {
 			case 'Success':
 				// Bartek: tracking
 				if( AjaxLogin.action == 'password'  ) {
+					// FIXME: Should we delete this? It seems password only returns 'OK', not 'Success'. Do we ever end up here?
 					WET.byStr(AjaxLogin.WET_str + '/emailpassword/success');
+					AjaxLogin.removeMailMyPassword();
 				} else {
 					WET.byStr(AjaxLogin.WET_str + '/login/success');
 				}
@@ -274,6 +276,7 @@ var AjaxLogin = {
 				if( AjaxLogin.action == 'password'  ) {
 					if( responseResult == 'OK' ) {
 						WET.byStr(AjaxLogin.WET_str + '/emailpassword/success');
+						AjaxLogin.removeMailMyPassword();
 					} else {
 						WET.byStr(AjaxLogin.WET_str + '/emailpassword/failure');
 					}
@@ -298,9 +301,16 @@ var AjaxLogin = {
 		AjaxLogin.form.find('input').attr('disabled', (block ? true : false));
 	},
 	injectMailMyPassword: function(el) {
+		AjaxLogin.form.log('AjaxLogin: injectMailMyPassword().');
 		$(el).parents('form').prepend('<input type="hidden" name="wpMailmypassword" value="1"/>');
 	},
+	removeMailMyPassword: function(el){
+		AjaxLogin.form.log('AjaxLogin: removeMailMyPassword().  Reinitializing form.');
+		$('#wpMailmypassword').remove();
+		AjaxLogin.action = 'login';
+	},
 	mailNewPassword: function(el) {
+		AjaxLogin.form.log('AjaxLogin: mailNewPassword().');
 		if( (typeof wgEnableLoginAPI == 'undefined') || !wgEnableLoginAPI ) {
 			AjaxLogin.injectMailMyPassword(el);
 		}
