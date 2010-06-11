@@ -21,9 +21,17 @@ $badgeName = htmlspecialchars($badge->getName());
 	wgAfterContentAndJS.push(
 		function() {
 			$(function() {
-				$('#alert').find('a').click(function(e) {
+				var trackFunc = function(e) {
 					window.jQuery.tracker.byStr('Achievements/notification/yourprofile');
+				};
+				
+				$('#alert').find('a').click(trackFunc);
+
+				$('#wikia-alert').click(function(e) {
+					trackFunc();
+					window.location.href = $('#alert').find('a').attr('href');
 				});
+				
 				$('#wikia-alert').slideDown('slow');
 				setTimeout(function() {$('#wikia-alert').slideUp('slow');}, 10000);
 				window.jQuery.tracker.byStr('Achievements/notification/appears');
