@@ -1,5 +1,26 @@
+
+<div style="padding-right:320px;">
+
+<div id="customize-sidebar">
+	<h2 class="first"><?= wfMsg('achievements-about-title') ?></h2>
+	<?= wfMsgExt( 'achievements-about-content', 'parse' ) ?>
+
+	<form method="POST" class="customize-edit-plus-category" onsubmit="Achievements.AchPrepareData(true);">
+		<input type="hidden" name="add_edit_plus_category_track" value="1"/>
+		<input type="hidden" name="json-data" class="c-messages-ec" />
+		<h2><?=wfMsg('achievements-create-edit-plus-category-title');?></h2>
+		<?=wfMsgExt( 'achievements-create-edit-plus-category-content', 'parse' );?>
+		<p class="input">
+			<label>Create new track for category:</label><input name="edit_plus_category_name" type="text"/>
+			<button type="submit"><?=wfMsg('achievements-create-edit-plus-category');?></button>
+		</p>
+	</form>
+</div>
+<?if($successMsg != null):?>
+	<div class="successbox"><strong><?= $successMsg ?></strong></div>
+<?endif;?>
 <?if($errorMsg != null):?>
-	<div class="clearfix"><div class="errorbox"><strong><?= $errorMsg ?></strong></div></div>
+	<div class="errorbox"><strong><?= $errorMsg ?></strong></div>
 <?endif;?>
 <?
 global $wgCityId, $wgScriptPath, $wgExternalSharedDB, $wgJsMimeType;
@@ -98,7 +119,6 @@ foreach($config->getNotInTrackStatic() as $badgeTypeId => $badgeData) {
 	$sections[$section][] = new AchBadge($badgeTypeId, null, $badgeData['level']);
 }
 ?>
-
 <?foreach($sections as $section => $badges):?>
 	<div class="customize-section" id="section<?= $section; ?>">
 
@@ -138,23 +158,7 @@ foreach($config->getNotInTrackStatic() as $badgeTypeId => $badgeData) {
 		</ul>
 	</div>
 <?endforeach;?>
-
-<div id="customize-sidebar">
-	<h2 class="first"><?= wfMsg('achievements-about-title') ?></h2>
-	<?= wfMsgExt( 'achievements-about-content', 'parse' ) ?>
-
-	<form method="POST" class="customize-edit-plus-category" onsubmit="Achievements.AchPrepareData(true);">
-		<input type="hidden" name="add_edit_plus_category_track" value="1"/>
-		<input type="hidden" name="json-data" class="c-messages-ec" />
-		<h2><?=wfMsg('achievements-create-edit-plus-category-title');?></h2>
-		<?=wfMsgExt( 'achievements-create-edit-plus-category-content', 'parse' );?>
-		<p class="input">
-			<label>Create new track for category:</label><input name="edit_plus_category_name" type="text"/>
-			<button type="submit"><?=wfMsg('achievements-create-edit-plus-category');?></button>
-		</p>
-	</form>
 </div>
-
 <?if($scrollTo):?>
 	<script type="<?= $wgJsMimeType; ?>">
 		setTimeout(function(){$(window).scrollTo('#section<?= $scrollTo ?>', 2000);}, '3000');

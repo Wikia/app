@@ -18,13 +18,12 @@ class SpecialAchievementsCustomize extends SpecialPage {
 
 		$wgSupressPageTitle = true;
 		$errorMsg = null;
+		$successMsg = null;
 
 		if($wgRequest->wasPosted()) {
 
 			$jsonObj = Wikia::json_decode($wgRequest->getVal('json-data'));
 			$dbw = null;
-
-			$wgOut->wrapWikiMsg( '<div class="clearfix"><div class="successbox"><strong>$1</strong></div></div>', 'achievements-special-saved' );
 
 			foreach($jsonObj->messages as $mKey => $mVal) {
 				$tokens = explode('_', $mKey);
@@ -50,6 +49,8 @@ class SpecialAchievementsCustomize extends SpecialPage {
 					$dbw->update('ach_custom_badges', array('enabled' => (int)$mVal), array('wiki_id' => $wgCityId, 'id' => $tokens[1]));
 				}
 			}
+			
+			$successMsg = wfMsg('achievements-special-saved');
 
 			if($wgRequest->getVal('add_edit_plus_category_track') == '1') {
 				$catName = $wgRequest->getVal('edit_plus_category_name');
@@ -81,6 +82,7 @@ class SpecialAchievementsCustomize extends SpecialPage {
 		$template->set_vars(array(
 			'config' => AchConfig::getInstance(),
 			'scrollTo' => (isset($jsonObj->sectionId)) ? $jsonObj->sectionId : null,
+			'successMsg' => $successMsg,
 			'errorMsg' => $errorMsg
 		));
 
