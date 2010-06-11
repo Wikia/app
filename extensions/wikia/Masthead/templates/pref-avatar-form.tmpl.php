@@ -6,7 +6,7 @@
 <tr>
 	<td valign="top">
 		<table style="border:1px solid #DFDFDF;margin:8px 2px;width:<?=$imgW?>px;height:<?=$imgH?>px;">
-		    <tr><td valign="middle" align="center"><img src="<?=$sUserImg?>" border="0" /></td></tr>
+		    <tr><td valign="middle" align="center"><img height="<?=$imgH?>" width="<?=$imgW?>" src="<?=$sUserImg?>" border="0" /></td></tr>
 		</table>
 	</td>
 	<td><div style="text-align:left;padding:3px;">

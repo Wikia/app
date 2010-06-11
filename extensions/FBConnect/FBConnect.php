@@ -235,29 +235,25 @@ class FBConnect {
 		$dbw = wfGetDB( DB_MASTER, array(), FBConnectDB::sharedDB() );
 		$dbw->begin();
 		$rows = FBConnectDB::removeFacebookID($user);
-		if($rows == 1) {
-			// Remind password attemp
-			$params = new FauxRequest(array (
-				'wpName' => $user->getName()
-			));
-			
-			if( !$wgAuth->allowPasswordChange() ) {
-				return $statusError;
-			}
-			
-			$result = array ();
-			$loginForm = new LoginForm($params);
-			
-			$res = $loginForm->mailPasswordInternal( $wgUser, true, 'fbconnect-passwordremindertitle', 'fbconnect-passwordremindertext' );
-			if( WikiError::isError( $res ) ) {
-				return $statusError;
-			}
-					
-			return array('status' => "ok" );
-			$dbw->commit();
-			return $response;	
-		} else {
+		// Remind password attemp
+		$params = new FauxRequest(array (
+			'wpName' => $user->getName()
+		));
+		
+		if( !$wgAuth->allowPasswordChange() ) {
 			return $statusError;
 		}
+		
+		$result = array ();
+		$loginForm = new LoginForm($params);
+		
+		$res = $loginForm->mailPasswordInternal( $wgUser, true, 'fbconnect-passwordremindertitle', 'fbconnect-passwordremindertext' );
+		if( WikiError::isError( $res ) ) {
+			return $statusError;
+		}
+				
+		return array('status' => "ok" );
+		$dbw->commit();
+		return $response;	
 	}
 }
