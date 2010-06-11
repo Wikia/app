@@ -52,7 +52,7 @@ class AutoCreateWikiPage extends SpecialPage {
 	const CREATEWIKI_ICON   = "/images/c/central/images/6/64/Favicon.ico";
 	const SESSION_TIME      = 60;
 	const DAILY_LIMIT       = 1000;
-	const DAILY_USER_LIMIT  = 2;
+	const DAILY_USER_LIMIT  = 5; /** 2->5 vs rt#54707 **/
 	const DEFAULT_STAFF     = "Angela";
 	const DEFAULT_USER      = 'Default';
 	const DEFAULT_DOMAIN    = "wikia.com";
