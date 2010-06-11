@@ -119,7 +119,7 @@ class SpecialConnect extends SpecialPage {
 		if($wgUser->isLoggedIn() && $fb_user){
 			$foundUser = FBConnectDB::getUser( $fbid );
 			if($foundUser && ($foundUser->getId() != $wgUser->getId())){
-				
+				$this->sendPage('fbIdAlreadyConnected');
 			}
 		}
 
@@ -637,7 +637,7 @@ class SpecialConnect extends SpecialPage {
 	 * This error-page is shown when the user is attempting to connect a Wikia account with a facebook id which is
 	 * already connected to a different Wikia account.
 	 */
-	private function alreadyLoggedIn() {
+	private function fbIdAlreadyConnected() {
 		global $wgOut, $wgUser, $wgRequest, $wgSitename;
 		$wgOut->setPageTitle(wfMsg('fbconnect-fbid-is-already-connected-title'));
 
