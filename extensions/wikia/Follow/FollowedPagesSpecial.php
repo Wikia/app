@@ -16,7 +16,7 @@ class FollowedPages extends SpecialPage {
 
 	function execute( $par ) {
 		global $wgRequest, $wgOut, $wgUser,$wgTitle, $wgExtensionsPath, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
-		
+
 		if ($wgRequest->wasPosted()) {
 			if( ($wgUser->getId() != 0) && ($wgRequest->getVal( "show_followed", 0) == 1) ) {
 				$wgUser->setOption( "hidefollowedpages", false ); 
@@ -30,12 +30,13 @@ class FollowedPages extends SpecialPage {
 		$wgOut->setPageTitle( wfMsg( 'wikiafollowedpages-special-title' ) );
 
 		$reqTitle = $wgRequest->getText('title', false);
-
-		list ( , $userspace ) = explode( '/', $reqTitle, 2 );
+		$userspace = "";
+		if (strpos('/', $reqTitle) !== false)
+			list ( , $userspace ) = explode( '/', $reqTitle, 2 );
 
 		if (strlen($userspace) == 0 ){
 			if ( $wgUser->getId() == 0) {
-				$wgOut->addHTML( wfMsg('wikiafollowedpages-special-anon') );
+				$wgOut->addHTML( wfMsgExt('wikiafollowedpages-special-anon', array('parse')) );
 				return true;				
 			}
 			$user = $wgUser;
@@ -44,7 +45,7 @@ class FollowedPages extends SpecialPage {
 		}
 		
 		if ( empty($user) ) {
-			$wgOut->addHTML( wfMsg('wikiafollowedpages-special-anon') );
+			$wgOut->addHTML( wfMsgExt('wikiafollowedpages-special-anon', array('parse')) );
 			return true;
 		}
 		
@@ -52,7 +53,7 @@ class FollowedPages extends SpecialPage {
 		if ( $user->getOption('hidefollowedpages') ) {
 			$is_hide = true;	
 			if( $user->getId() != $wgUser->getId() ) {
-				$wgOut->addHTML( wfMsg('wikiafollowedpages-special-hidden') );
+				$wgOut->addHTML( wfMsgExt('wikiafollowedpages-special-hidden', array('parse')) );
 				return true;				
 			}	
 		}
@@ -60,7 +61,7 @@ class FollowedPages extends SpecialPage {
 		$data = FollowModel::getWatchList( $user->getId() ); 
 		
 		if ( ( empty($data) ) || ( $user->getId() == 0) ) {
-			$wgOut->addHTML( wfMsg('wikiafollowedpages-special-empty') );
+			$wgOut->addHTML( wfMsgExt('wikiafollowedpages-special-empty', array('parse')) );
 			return true;
 		}
 
