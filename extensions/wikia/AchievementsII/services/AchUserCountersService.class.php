@@ -51,6 +51,7 @@ class AchUserCountersService {
 		global $wgExternalSharedDB;
 		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
 		$dbw->replace('ach_user_counters', null, array('user_id' => $this->mUserId, 'data' => serialize($this->mCounters)), __METHOD__);
+		$dbw->commit();
 		wfProfileOut(__METHOD__);
 	}
 
