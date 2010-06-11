@@ -6,5 +6,5 @@ $messages['en'] = array(
 
 	'fbconnect-msg-OnAddVideo-link' => '$ARTICLENAME',
 	'fbconnect-msg-OnAddVideo-short' => 'has added a video on $WIKINAME!',
-	'fbconnect-msg-OnAddVideo' => 'Check out the rest of the article at $ARTICLE_URL'
+	'fbconnect-msg-OnAddVideo' => 'Check out the rest of the wiki!'
 );
