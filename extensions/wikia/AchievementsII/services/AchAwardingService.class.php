@@ -153,6 +153,7 @@ class AchAwardingService {
 			global $wgExternalSharedDB;
 			$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
 			$dbw->replace('ach_user_score', null, array('user_id' => $this->mUser->getId(), 'wiki_id' => $wgCityId, 'score' => $score), __METHOD__);
+			$dbw->commit();
 		}
 
 		wfProfileOut(__METHOD__);
@@ -171,7 +172,8 @@ class AchAwardingService {
 
 			$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
 			$dbw->insert('ach_user_badges', $this->mNewBadges, __METHOD__);
-
+			$dbw->commit();
+			
 			$_SESSION['achievementsNewBadges'] = true;
 
 			//touch user when badges are given
