@@ -300,6 +300,13 @@ var AjaxLogin = {
 	injectMailMyPassword: function(el) {
 		$(el).parents('form').prepend('<input type="hidden" name="wpMailmypassword" value="1"/>');
 	},
+	mailNewPassword: function(el) {
+		if( (typeof wgEnableLoginAPI == 'undefined') || !wgEnableLoginAPI ) {
+			AjaxLogin.injectMailMyPassword(el);
+		}
+		AjaxLogin.action='password';
+		AjaxLogin.form.submit();
+	},
 	ajaxRegisterConfirm: function(ev) {
 		AjaxLogin.form.log('AjaxLogin: ajaxRegisterConfirm()');
 
