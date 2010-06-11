@@ -5,7 +5,7 @@ $messages['en'] = array(
 	'tog-fbconnect-push-allow-OnRateArticle-short' => "Rate an article",
 
 	'fbconnect-msg-OnRateArticle-link' => '$ARTICLENAME',
-	'fbconnect-msg-OnRateArticle-short' =>  "has rated an article on $WIKINAME!",
+	'fbconnect-msg-OnRateArticle-short' =>  'has rated an article on $WIKINAME!',
 	'fbconnect-msg-OnRateArticle' => '$TEXT'
 
 );
