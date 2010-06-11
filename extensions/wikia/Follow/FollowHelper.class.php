@@ -401,6 +401,11 @@ class FollowHelper {
 		
 		if ( strlen($key) > 0 ) {
 			$user = User::newFromName($key);
+
+			if($user->getId() == 0) {
+				//not a real user
+				return true;
+			}
 		} else {
 			$user = $wgUser;
 		}
