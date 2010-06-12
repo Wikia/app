@@ -18,14 +18,14 @@ $badgeHowToEarn = wfMsgForContent(AchConfig::getInstance()->getBadgeToGetKey($ty
 		</legend>
 
 		<div class="column">
-			<label><?=wfMsg('achievements-community-platinum-awarded-for');?>:</label><span class="input-suggestion">&nbsp;(<?=wfMsg('achievements-community-platinum-awarded-for-example');?>)</span>
+			<label><?=wfMsg('achievements-community-platinum-awarded-for');?></label><span class="input-suggestion">&nbsp;(<?=wfMsg('achievements-community-platinum-awarded-for-example');?>)</span>
 
 			<!-- toggle group -->
 			<textarea name="awarded_for"><?= $badgeAwardedFor; ?></textarea>
 			<p><?= $badgeAwardedFor; ?></p>
 
 			<!-- toggle group -->
-			<label><?=wfMsg('achievements-community-platinum-how-to-earn');?>:</label><span class="input-suggestion">&nbsp;(<?=wfMsg('achievements-community-platinum-how-to-earn-example');?>)</span>
+			<label><?=wfMsg('achievements-community-platinum-how-to-earn');?></label><span class="input-suggestion">&nbsp;(<?=wfMsg('achievements-community-platinum-how-to-earn-example');?>)</span>
 
 			<!-- toggle group -->
 			<textarea name="how_to"><?= $badgeHowToEarn; ?></textarea>
@@ -35,13 +35,13 @@ $badgeHowToEarn = wfMsgForContent(AchConfig::getInstance()->getBadgeToGetKey($ty
 		</div>
 
 		<div class="column">
-			<label><?=wfMsg('achievements-community-platinum-badge-image');?>:</label>
+			<label><?=wfMsg('achievements-community-platinum-badge-image');?></label>
 			<img src="<?= $thumb_url ?>" class="badge-preview neutral" />
 			<input type="file" name="wpUploadFile"/>
 		</div>
 
 		<div class="column awarded-to">
-			<label><?=wfMsg('achievements-community-platinum-awarded-to');?>:</label>
+			<label><?=wfMsg('achievements-community-platinum-awarded-to');?></label>
 			<ul>
 			<?php
 			if(is_array($awarded_users)) {
