@@ -45,6 +45,7 @@ YAHOO.namespace("Wikia.Statistics");
                     var checklist = document.XLSCompareForm.wscid;
                     var is_checked = 0; var checked_list = "";
                     for (i = 0; i < checklist.length; i++) { if (checklist[i].checked) { checked_list += checklist[i].value + ";"; is_checked++; } }
+                    // FIXME: wikiastats_xls_generate_info requires plural support in JavaScipt.
                     if (is_checked > <?= ($MAX_NBR + 1)?>) { alert(YAHOO.tools.printf("<?=addslashes(wfMsg('wikiastats_xls_generate_info'))?>", (<?=$MAX_NBR + 1?>))); return false; }
 
                     if (document.getElementById('showXLS').value == 1) {
