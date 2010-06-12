@@ -138,7 +138,7 @@ $messages['en'] = array(
 	'fbconnect-prefs-show' => "Show feed preferences >>",
     'fbconnect-prefs-hide' => "Hide feed preferences >>",
 	'fbconnect-prefs-post' => 'Post to my Facebook News Feed when I:',
-    'fbconnect-nameform-error' => 'This username is already taken. If it\'s your username, please <a id="fbGoLogin" href="$1">log in first</a> and then connect your account to Facebook.' ,          
+    'fbconnect-nameform-error' => 'This username is already taken. If it\'s your username, please <a class="loginAndConnect" href="$1">log in first</a> and then connect your account to Facebook.' ,          
 	'fbconnect-disconnect-link' => "You can also <a id='fbConnectDisconnect' href='#'> disconnect your Wikia account from Facebook.</a> You will able continue using your Wikia account as normal, with your history (edits, points, achievements ) intact.",
 	'fbconnect-disconnect-done' => "Disconnecting <span id='fbConnectDisconnectDone'>... done! </span>",
 	'fbconnect-disconnect-info' => "We have emailed a new password to use with your account - you can log in with the same username as before. Hooray !",
@@ -165,7 +165,7 @@ Thanks,
 
 The Wikia Community Team',
 
-	'fbconnect-msg-for-existing-users' => "<strong>Already a Wikia user?</strong><br/>If you would like to connect this facebook account to an existing Wikia account, please <a id='fbGoLogin' href='$1'>login</a> first.",
+	'fbconnect-msg-for-existing-users' => "<strong>Already a Wikia user?</strong><br/>If you would like to connect this facebook account to an existing Wikia account, please <a class='loginAndConnect' href='$1'>login</a> first.",
 	
 	'fbconnect-invalid-email' => "Please provide a valid email address.",
 	'fbconnect-wikia-login-w-facebook' => 'Log in / Sign Up with Facebook Connect',

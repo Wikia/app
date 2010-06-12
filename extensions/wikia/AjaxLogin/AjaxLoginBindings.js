@@ -168,4 +168,12 @@ $(function() {
 			return false;
 		});
 	}
+
+	// Bind the login-and-connect links (they show up async sometimes, so we use live()).
+	$('.loginAndConnect').live('click', function(ev){
+		if(ev) {
+			ev.preventDefault();
+		}
+		openLoginAndConnect(ev);
+	});
 });
