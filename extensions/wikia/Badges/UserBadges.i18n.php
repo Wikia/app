@@ -34,7 +34,7 @@ $messages['en'] = array(
 		'user-bagde-copypaste-ext-code' => 'Copy & paste (external sites)',
 		'user-bagde-copypaste-int-code' => 'Copy & paste (this Wikia)',
 		'user-bagde-copypaste-int-other-code' => 'Copy & paste (other Wikia)',
-		'user-badge-save-info' => 'If you want to save changes, scroll to the page end and press the "Save" button',
+		'user-badge-save-info' => 'If you want to save changes, scroll to the page end and press the "{{int:saveprefs}}" button',
 );
 
 /** Afrikaans (Afrikaans)
