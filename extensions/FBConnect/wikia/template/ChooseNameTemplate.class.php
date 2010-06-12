@@ -148,7 +148,7 @@ class ChooseNameTemplate extends QuickTemplate {
 		</tr>
 		<tr class="wpAjaxLoginPreLine" >
 			<td colspan="2">
-				<?php echo wfMsg('fbconnect-msg-for-existing-users', array( "$1" => Title::makeTitle( NS_SPECIAL  , "Signup"  )->getFullUrl() ) ) ?>
+				<?php echo wfMsg('fbconnect-msg-for-existing-users', array( "$1" => Title::makeTitle( NS_SPECIAL  , "Signup"  )->getFullUrl(array( "showLoginAndConnect" => "true")) ) ) ?>
 			</td>
 		</tr>
 		<tr class="wpAjaxLoginPreLine" >

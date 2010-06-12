@@ -16,7 +16,14 @@ function openLoginAndConnect(event) {
 	if( (typeof wgComboAjaxLogin == 'undefined') || (!wgComboAjaxLogin) ) {
 		return true;
 	} else {
-		showComboAjaxForPlaceHolder(false, "", AjaxLogin.slideToLoginAndConnect);
+		// If this was called from somewhere other than the login form, first load the AjaxLogin code.
+		if(typeof AjaxLogin == 'undefined'){
+			$.getScript(window.wgScript + '?action=ajax&rs=getRegisterJS&uselang=' + window.wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion, function() {
+				openLoginAndConnect();
+			});
+		} else {
+			showComboAjaxForPlaceHolder(false, "", AjaxLogin.slideToLoginAndConnect);
+		}
 		return false;
 	}
 }
@@ -168,12 +175,4 @@ $(function() {
 			return false;
 		});
 	}
-
-	// Bind the login-and-connect links (they show up async sometimes, so we use live()).
-	$('.loginAndConnect').live('click', function(ev){
-		if(ev) {
-			ev.preventDefault();
-		}
-		openLoginAndConnect(ev);
-	});
 });
