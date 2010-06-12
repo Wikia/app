@@ -43,7 +43,7 @@ Add pages to this list by clicking \"{{int:watch}}\" at the top of a page.",
 	'wikiafollowedpages-userpage-more' => 'More',
 	'wikiafollowedpages-userpage-hide' => 'hide',
 	'wikiafollowedpages-userpage-empty' => "This user's followed pages list is empty.
-Add pages to this list by clicking \"Follow\" at the top of a page.",
+Add pages to this list by clicking \"{{int:watch}}\" at the top of a page.",
 
 	'enotif_subject_categoryadd' => '{{SITENAME}} page $PAGETITLE has been added to $CATEGORYNAME by $PAGEEDITOR',
 	'enotif_body_categoryadd' => 'Dear $WATCHINGUSERNAME,
