@@ -149,6 +149,7 @@ YAHOO.namespace("Wikia.Statistics");
                     }
                     if (is_checked > <?= ($MAX_NBR + 1)?>)
                     {
+                        // FIXME: wikiastats_xls_generate_info requires plural support in JavaScript.
                         alert(YAHOO.tools.printf("<?=addslashes(wfMsg('wikiastats_xls_generate_info'))?>", (<?=$MAX_NBR + 1?>)));
                         return false;
                     }
