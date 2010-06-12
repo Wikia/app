@@ -8,14 +8,14 @@
 $messages = array();
 
 $messages['en'] = array(
-	'privatedomains_nomanageaccess' => "Sorry, you do not have enough rights to manage the allowed private domains for this wiki. Only wiki bureaucrats and staff members have access.</p><p>If you aren't logged in, you probably <a href='/wiki/Special:Userlogin'>should</a>.",
+	'privatedomains_nomanageaccess' => "Sorry, you do not have enough rights to manage the allowed private domains for this wiki. Only wiki bureaucrats and staff members have access.</p><p>If you are not logged in, you probably <a href='/wiki/Special:Userlogin'>should</a>.",
 	'privatedomains' =>  'Manage Private Domains',
-	'privatedomains_ifemailcontact' => "Otherwise, please contact [[Special:Emailuser/$1|$1]] if you have any questions.",
+	'privatedomains_ifemailcontact' => "Otherwise, please contact [[Special:EmailUser/$1|$1]] if you have any questions.",
 	'saveprivatedomains_success' => "Private Domains changes saved.",
-	'privatedomains_invalidemail' => "Sorry, access to this wiki is restricted to members of $1. If you have an email address affiliated with $1, you can enter or reconfirm your email address on your account preference page <a href=/wiki/Special:Preferences>here</a>. You can still view pages on this wiki, but you will be unable to edit.",
+	'privatedomains_invalidemail' => "Sorry, access to this wiki is restricted to members of $1. If you have an e-mail address affiliated with $1, you can enter or reconfirm your e-mail address on your account preference page <a href=/wiki/Special:Preferences>here</a>. You can still view pages on this wiki, but you will be unable to edit.",
 	'privatedomains_affiliatenamelabel' => "Name of organization:",
 	'privatedomains_emailadminlabel' => "Contact username for access problems or queries:",
-	'privatedomainsinstructions' => "Below is the list of email domains allowed for editors of this wiki. Each line designates an email suffix that is given access for editing. This should be formatted with one suffix per line. For example:</p><p style=\"width: 20%; padding:5px; border: 1px solid grey;\">cs.stanford.edu<br /> stanfordalumni.org</p><p>This would allow edits from anyone with the email address whatever@cs.stanford.edu or whatever@stanfordalumni.org</p><p><b>Enter the allowed domains in the text box below, and click \"save\".</b>"
+	'privatedomainsinstructions' => "Below is the list of e-mail domains allowed for editors of this wiki. Each line designates an e-mail suffix that is given access for editing. This should be formatted with one suffix per line. For example:</p><p style=\"width: 20%; padding:5px; border: 1px solid grey;\">cs.stanford.edu<br /> stanfordalumni.org</p><p>This would allow edits from anyone with the e-mail address whatever@cs.stanford.edu or whatever@stanfordalumni.org</p><p><b>Enter the allowed domains in the text box below, and click \"{{int:saveprefs}}\".</b>"
 );
 
 /** Message documentation (Message documentation)
@@ -42,7 +42,7 @@ $messages['af'] = array(
 $messages['be-tarask'] = array(
 	'privatedomains_nomanageaccess' => "Выбачайце, Вы ня маеце правоў для кіраваньня дазволенымі ўласнымі дамэнамі ў {{GRAMMAR:месны|{{SITENAME}}}}. Маюць доступ толькі бюракраты і супрацоўнікі.</p><p>Калі вы не ўвайшлі ў сыстэму, Вам, магчыма, <a href='/wiki/Special:Userlogin'>трэба ўвайсьці</a>.",
 	'privatedomains' => 'Кіраваньне ўласнымі дамэнамі',
-	'privatedomains_ifemailcontact' => 'У іншым выпадку, калі ласка, зьвярніцеся да [[Special:Emailuser/$1|$1]], калі Вы маеце якія-небудзь пытаньні.',
+	'privatedomains_ifemailcontact' => 'У іншым выпадку, калі ласка, зьвярніцеся да [[Special:EmailUser/$1|$1]], калі Вы маеце якія-небудзь пытаньні.',
 	'saveprivatedomains_success' => 'Зьмены ў прыватных дамэнах захаваныя.',
 	'privatedomains_invalidemail' => 'Прабачце, доступ да {{GRAMMAR:родны|{{SITENAME}}}} забаронены для ўдзельнікаў $1. Калі Вы маеце адрас электроннай пошты зьвязаны з $1, Вы можаце ўвесьці альбо перапацьвердзіць Ваш адрас электроннай пошты на старонцы Вашых установак <a href=/wiki/Special:Preferences>тут</a>. Вы можаце праглядаць старонкі {{GRAMMAR:родны|{{SITENAME}}}}, але ня можаце іх рэдагаваць.',
 	'privatedomains_affiliatenamelabel' => 'Назва арганізацыі:',
@@ -56,7 +56,7 @@ $messages['be-tarask'] = array(
 $messages['br'] = array(
 	'privatedomains_nomanageaccess' => "Ma digarezit,  n'ho peus ket gwirioù a-walc'h evit merañ domanioù prevez ar wiki-mañ. N'eus nemet ar vurevourien hag izili ar c'hoskor a c'hall mont warnañ.</p><p> Ma n'oc'h ket kevreet, ret e vefe deoc'h <a href='/wiki/Special:Userlogin'>kevreañ</a> marteze.",
 	'privatedomains' => 'Merañ an domanioù prevez',
-	'privatedomains_ifemailcontact' => "Anez, kit e darempred gant [[Special:Emailuser/$1|$1]]  m'ho peus goulenn pe c'houlenn.",
+	'privatedomains_ifemailcontact' => "Anez, kit e darempred gant [[Special:EmailUser/$1|$1]]  m'ho peus goulenn pe c'houlenn.",
 	'saveprivatedomains_success' => 'Kemmoù en domanioù prevez saveteet.',
 	'privatedomains_invalidemail' => "Ma digarezit, Miret eo ar moned d'ar wiki-mañ evit izili $1.  M'ho peus ur chomlec'h postel emezelet ouzh $1 e challit mont e-barzh pe adkarnaat ho chomlec'h postel war pajenn zibaboù ar gont <a href=/wiki/Special:Dibaboù>amañ</a>. Gallout a rit gwelet pajennoù ar wiki-mañ, met ne c'hallit ket kemmañ anezho.",
 	'privatedomains_affiliatenamelabel' => 'Anv an aozadur :',
@@ -70,7 +70,7 @@ $messages['br'] = array(
 $messages['de'] = array(
 	'privatedomains_nomanageaccess' => "Sorry, du hast nicht genügend Rechte, um die erlaubten privaten Domains für dieses Wiki zu verwalten. Nur Wiki Bürokraten und Mitarbeiter haben Zugang.</p><p>Wenn du nicht eingeloggt bist, solltest du das wahrscheinlich <a href='/wiki/Special:Userlogin'>machen</a>.",
 	'privatedomains' => 'Private Domains verwalten',
-	'privatedomains_ifemailcontact' => 'Andernfalls wende dich bitte an [[Special:Emailuser/$1|$1]] falls du Fragen hast.',
+	'privatedomains_ifemailcontact' => 'Andernfalls wende dich bitte an [[Special:EmailUser/$1|$1]] falls du Fragen hast.',
 	'saveprivatedomains_success' => 'Änderungen an privaten Domains gespeichert.',
 	'privatedomains_invalidemail' => 'Tut uns leid, aber der Zugang zu diesem Wiki ist auf Mitglieder von $1 beschränkt. Wenn du eine E-Mail-Adresse von $1 besitzt, kannst du es betreten, oder bestätige deine E-Mail Adresse in deinen Konteneinstellungen <a href=/wiki/Special:Preferences>hier</a>. Du kannst weiterhin Seiten in diesem Wiki ansehen, wirst sie aber nicht bearbeiten können.',
 	'privatedomains_affiliatenamelabel' => 'Name der Organisation:',
@@ -83,7 +83,7 @@ $messages['de'] = array(
  */
 $messages['de-formal'] = array(
 	'privatedomains_nomanageaccess' => "Entschuldigung, Sie haben nicht genügend Rechte, um die erlaubten privaten Domains für dieses Wiki zu verwalten. Nur Wiki Bürokraten und Mitarbeiter haben Zugang.</p><p>Wenn Sie nicht eingeloggt sind, sollten Sie dies wahrscheinlich <a href='/wiki/Special:Userlogin'>machen</a>.",
-	'privatedomains_ifemailcontact' => 'Andernfalls wenden Sie sich bitte an [[Special:Emailuser/$1|$1]] falls Sie Fragen haben.',
+	'privatedomains_ifemailcontact' => 'Andernfalls wenden Sie sich bitte an [[Special:EmailUser/$1|$1]] falls Sie Fragen haben.',
 	'privatedomains_invalidemail' => 'Tut uns leid, aber der Zugang zu diesem Wiki ist auf Mitglieder von $1 beschränkt. Wenn Sie eine E-Mail-Adresse von $1 besitzen, können Sie es betreten, oder bestätigen Sie Ihre E-Mail Adresse in Ihren Konteneinstellungen <a href=/wiki/Special:Preferences>hier</a>. Sie können weiterhin Seiten in diesem Wiki ansehen, werden sie aber nicht bearbeiten können.',
 	'privatedomainsinstructions' => 'Unten ist die Liste der erlaubten E-Mail-Domains für Editoren dieses Wikis. Jede Zeile bezeichnet einen E-Mail-Suffix, dem Bearbeitungen erlaubt werden. Dies sollte mit einem Suffix pro Zeile formatiert werden. Zum Beispiel:</p><p style="width: 20%; padding:5px; border: 1px solid grey;"> cs.stanford.edu<br /> stanfordalumni.org</p><p>Dies würde Bearbeitungen von jedem mit der E-Mail-Adresse whatever@cs.stanford.edu oder whatever@stanfordalumni.org erlauben.</p><p><b>Geben Sie die erlaubten Domains in das Textfeld unterhalb ein und klicken Sie auf "Speichern".</b>',
 );
@@ -94,7 +94,7 @@ $messages['de-formal'] = array(
 $messages['es'] = array(
 	'privatedomains_nomanageaccess' => "Lo sentimos, no tiene los privilegios suficientes para administrar los dominios privados permitidos para esta wiki. Solamente los burócratas wiki y los miembros del personal tienen acceso.</p><p>Si no accedió al sistema, probablemente <a href='/wiki/Special:Userlogin'>debería hacerlo</a>.",
 	'privatedomains' => 'Administrar Dominios Privados',
-	'privatedomains_ifemailcontact' => 'En caso contrario, póngase en contacto con [[Special:Emailuser/$1|$1]] por cualquier consulta.',
+	'privatedomains_ifemailcontact' => 'En caso contrario, póngase en contacto con [[Special:EmailUser/$1|$1]] por cualquier consulta.',
 	'saveprivatedomains_success' => 'Se guardaron los cambios en los Dominios Privados.',
 	'privatedomains_invalidemail' => 'Lo sentimos, el acceso a esta wiki está restringido a los miembros de $1. Si posee una cuenta de correo electrónico afiliada a $1, puede ingresarla o volver a confirmar su dirección de correo electrónico en la página de preferencias de su cuenta <a href=/wiki/Special:Preferences>aquí</a>. Todavía puede ver las páginas en esta wiki, pero no podrá editarlas.',
 	'privatedomains_affiliatenamelabel' => 'Nombre de la organización:',
@@ -107,7 +107,7 @@ $messages['es'] = array(
  */
 $messages['fi'] = array(
 	'privatedomains' => 'Hallinnoi yksityisiä verkkoalueita',
-	'privatedomains_ifemailcontact' => 'Muussa tapauksessa, ota yhteys [[Special:Emailuser/$1|$1]], jos sinulla on kysyttävää.',
+	'privatedomains_ifemailcontact' => 'Muussa tapauksessa, ota yhteys [[Special:EmailUser/$1|$1]], jos sinulla on kysyttävää.',
 	'saveprivatedomains_success' => 'Yksityisen verkkoalueen muutokset on tallennettu.',
 	'privatedomains_affiliatenamelabel' => 'Organisaation nimi:',
 	'privatedomains_emailadminlabel' => 'Yhteystietokäyttäjänimi pääsypulmissa tai kyselyissä:',
@@ -119,7 +119,7 @@ $messages['fi'] = array(
 $messages['fr'] = array(
 	'privatedomains_nomanageaccess' => "Désolé, vous n'avez les droits suffisants pour gérer les domaines privés de ce wiki. Seuls les bureaucrates et les membres du personnel y ont accès.</p><p>Si vous n'êtes pas connecté, vous devriez probablement <a href='/wiki/Special:Userlogin'>vous connecter</a>.",
 	'privatedomains' => 'Gérer les domaines privés',
-	'privatedomains_ifemailcontact' => 'Sinon, veuillez contacter [[Special:Emailuser/$1|$1]] si vous avec une question.',
+	'privatedomains_ifemailcontact' => 'Sinon, veuillez contacter [[Special:EmailUser/$1|$1]] si vous avec une question.',
 	'saveprivatedomains_success' => 'Modifications dans les domaines privés sauvegardés.',
 	'privatedomains_invalidemail' => "Désolé, l'accès à ce wiki est réservé aux membre de $1. Si vos avez une adresse de courriel affiliée avec $1, vous pouvez entrer ou reconfirmer votre adresse de courriel dans sur la page de préférences du compte <a href=/wiki/Special:Preferences>ici</a>. Vous pouvez toujours voir les pages de ce wiki, mais vous ne pouvez pas le modifier.",
 	'privatedomains_affiliatenamelabel' => "Nom de l'organisation :",
@@ -133,7 +133,7 @@ $messages['fr'] = array(
 $messages['gl'] = array(
 	'privatedomains_nomanageaccess' => "Sentímolo, non ten os dereitos necesarios para xestionar os dominios privados deste wiki. Só os burócratas do wiki e os membros do persoal teñen acceso.</p><p>Se non accedeu ao sistema, probabelmente <a href='/wiki/Special:Userlogin'>debería</a> facelo.",
 	'privatedomains' => 'Xestionar os dominios privados',
-	'privatedomains_ifemailcontact' => 'Se non, póñase en contacto con [[Special:Emailuser/$1|$1]] se ten algunha dúbida.',
+	'privatedomains_ifemailcontact' => 'Se non, póñase en contacto con [[Special:EmailUser/$1|$1]] se ten algunha dúbida.',
 	'saveprivatedomains_success' => 'Gardáronse os cambios feitos nos dominios privados.',
 	'privatedomains_invalidemail' => 'Sentímolo, o acceso a este wiki está restrinxido aos membros de $1. Se ten un enderezo de correo electrónico afiliado con $1, pode entrar ou volver confirmar o seu enderezo de correo electrónico na páxina de preferencias da súa conta <a href=/wiki/Special:Preferences>aquí</a>. Aínda pode ver páxinas neste wiki, pero non será capaz de editalas.',
 	'privatedomains_affiliatenamelabel' => 'Nome da organización:',
@@ -156,7 +156,7 @@ $messages['hu'] = array(
 $messages['ia'] = array(
 	'privatedomains_nomanageaccess' => "Pardono, tu non ha le derectos necessari pro gerer le dominios private de iste wiki. Solmente le bureaucrates del wiki e le personal ha accesso.</p><p>Si tu non ha aperite un session, tu deberea probabilemente <a href='/wiki/Special:Userlogin'>facer lo</a>.",
 	'privatedomains' => 'Gerer dominios private',
-	'privatedomains_ifemailcontact' => 'Si non, contacta [[Special:Emailuser/$1|$1]] si tu ha alcun questiones.',
+	'privatedomains_ifemailcontact' => 'Si non, contacta [[Special:EmailUser/$1|$1]] si tu ha alcun questiones.',
 	'saveprivatedomains_success' => 'Le alterationes in le dominios private ha essite salveguardate.',
 	'privatedomains_invalidemail' => 'Pardono, le accesso a iste wiki es restringite al membros de $1. Si tu ha un adresse de e-mail affiliate con $1, tu pote entrar o reconfirmar tu adresse de e-mail in <a href=/wiki/Special:Preferences>le pagina de preferentias de tu conto</a>. Tu pote vider paginas in iste wiki, ma non modificar los.',
 	'privatedomains_affiliatenamelabel' => 'Nomine del organisation:',
@@ -177,7 +177,7 @@ $messages['lb'] = array(
 $messages['mk'] = array(
 	'privatedomains_nomanageaccess' => "Жалиме, немате доволно права за да раководите со дозволените приватни домени за ова вики. Само вики-бирократи и членови на персоналот имаат таков пристап.</p><p>Ако не сте најавени, веројатно ќе <a href='/wiki/Special:Userlogin'>треба да се најавите</a>.",
 	'privatedomains' => 'Раководење со приватни домени',
-	'privatedomains_ifemailcontact' => 'Во спротивно, обратете се на [[Special:Emailuser/$1|$1]] ако имате било какви прашања.',
+	'privatedomains_ifemailcontact' => 'Во спротивно, обратете се на [[Special:EmailUser/$1|$1]] ако имате било какви прашања.',
 	'saveprivatedomains_success' => 'Промените во приватните домени се зачувани.',
 	'privatedomains_invalidemail' => 'Жалиме, но само членови на $1 имаат пристап на ова вики. Ако имате е-поштенска адреса здружена со $1, можете да ја внесете или препотврдите на страницата за нагодување на сметката <a href=/wiki/Special:Preferences>тука</a>. Ќе можете и понатаму да ги гледате страниците на ова вики, но нема да можете да уредувате.',
 	'privatedomains_affiliatenamelabel' => 'Име на организација:',
@@ -193,7 +193,7 @@ $messages['nl'] = array(
 Alle bureaucraten van deze wiki en stafleden hebben deze rechten.</p>
 <p>Als u niet bent aangemeld, <a href='/wiki/Special:Userlogin'>doe dat dan</a>.",
 	'privatedomains' => 'Privédomeinen beheren',
-	'privatedomains_ifemailcontact' => 'Neem anders contact op met [[Special:Emailuser/$1|$1]] voor antwoord op uw vragen.',
+	'privatedomains_ifemailcontact' => 'Neem anders contact op met [[Special:EmailUser/$1|$1]] voor antwoord op uw vragen.',
 	'saveprivatedomains_success' => 'De wijzigingen in de privédomeinen zijn opgeslagen.',
 	'privatedomains_invalidemail' => 'Alleen leden van de groep $1 hebben schrijftoegang voor deze wiki.
 Als u een e-mailadres hebt dat is verbonden met "$1", voer dat dan in bij <a href=/wiki/Special:Preferences>uw voorkeuren</a> of bevestig uw e-mailadres.
@@ -215,7 +215,7 @@ Bijvoorbeeld:</p>
 $messages['no'] = array(
 	'privatedomains_nomanageaccess' => 'Beklager, du har ikke nok rettigheter til å håndtere tillatte private domener for denne wikien. Kun wikibyråkrater og stabsmedlemmer har tilgang.</p><p>Du bør <a href="/wiki/Special:Userlogin">logge inn</a> om du ikke alt har gjort det.',
 	'privatedomains' => 'Håndter private domener',
-	'privatedomains_ifemailcontact' => 'Hvis ikke, kontakt [[Special:Emailuser/$1|$1]] om du har spørsmål.',
+	'privatedomains_ifemailcontact' => 'Hvis ikke, kontakt [[Special:EmailUser/$1|$1]] om du har spørsmål.',
 	'saveprivatedomains_success' => 'Endringer for private domener lagret.',
 	'privatedomains_invalidemail' => 'Beklager, tilgang til denne wikien er begrenset til medlemmer av $1. Om du har en e-postadresse tilknyttet $1 kan du skrive den inn eller bekrefte den på din side for <a href="/wiki/Special:Preferences>kontoinnstillinger</a>. Du kan fortsatt se sidene på denne wikien, men du kan ikke redigere dem.',
 	'privatedomains_affiliatenamelabel' => 'Navn på organisasjon:',
@@ -230,7 +230,7 @@ $messages['no'] = array(
 $messages['pms'] = array(
 	'privatedomains_nomanageaccess' => "Belavans a l'ha pa basta drit për gestì ël domini privà për sta wiki-sì. Mach mangiapapé dla wiki e mèmber ëd l'echip a l'han acess.</p><p>S'a l'é pa rintrà ant ël sistema, a peul esse <a href='/wiki/Special:Userlogin'>ch'a deva felo</a>.",
 	'privatedomains' => 'Gestiss Domini Privà',
-	'privatedomains_ifemailcontact' => "Dësnò, për piasì ch'a contata [[Special:Emailuser/$1|$1]] s'a l'has chèich chestion.",
+	'privatedomains_ifemailcontact' => "Dësnò, për piasì ch'a contata [[Special:EmailUser/$1|$1]] s'a l'has chèich chestion.",
 	'saveprivatedomains_success' => 'Salvà ij cangiament ai Domini Privà.',
 	'privatedomains_invalidemail' => "Belavans l'acess a sta wiki-sì a l'é arstrenzù ai mèmber ëd $1. S'a l'ha n'adrëssa ëd pòsta eletrònica afilià con $1, a peul anserì o riconfirmé soa adrëssa an soa pàgina dle preferense ëd sò cont <a href=/wiki/Special:Preferences>ambelessì</a>. A peul ancó visualisé pàgine an sta wiki-sì, ma a podrà pa fé 'd modìfiche.",
 	'privatedomains_affiliatenamelabel' => "Nòm ëd l'organisassion:",
@@ -244,7 +244,7 @@ $messages['pms'] = array(
 $messages['pt'] = array(
 	'privatedomains_nomanageaccess' => "Desculpe, mas não tem privilégios para administrar os domínios privados permitidos nesta wiki. Só os burocratas e os membros da equipa têm acesso.</p><p>Se não se autenticou, provavelmente <a href='/wiki/Special:Userlogin'>devia</a>.",
 	'privatedomains' => 'Administrar Domínios Privados',
-	'privatedomains_ifemailcontact' => 'Caso contrário, contacte [[Special:Emailuser/$1|$1]] se tiver dúvidas, por favor.',
+	'privatedomains_ifemailcontact' => 'Caso contrário, contacte [[Special:EmailUser/$1|$1]] se tiver dúvidas, por favor.',
 	'saveprivatedomains_success' => 'As alterações aos Domínios Privados foram gravadas.',
 	'privatedomains_invalidemail' => 'Desculpe, mas o acesso a esta wiki está restrito aos membros de $1. Se tem um correio electrónico afiliado com $1 pode introduzir ou reconfirmar o endereço de correio electrónico na página de preferências da sua conta <a href=/wiki/Special:Preferences>aqui</a>. Pode continuar a ver as páginas da wiki, mas não pode editá-las.',
 	'privatedomains_affiliatenamelabel' => 'Nome da organização:',
@@ -258,7 +258,7 @@ $messages['pt'] = array(
 $messages['ru'] = array(
 	'privatedomains_nomanageaccess' => "Извините, у вас недостаточно полномочий для управления частными доменами этой вики. Только вики-бюрократы и сотрудники имеют подобный доступ.</p><p>Если вы не вошли в систему, то вам, вероятно, <a href='/wiki/Special:Userlogin'>следует это сделать</a>.",
 	'privatedomains' => 'Управление частными доменами',
-	'privatedomains_ifemailcontact' => 'В противном случае, просим обращаться к [[Special:Emailuser/$1|$1]], если у вас есть какие-либо вопросы.',
+	'privatedomains_ifemailcontact' => 'В противном случае, просим обращаться к [[Special:EmailUser/$1|$1]], если у вас есть какие-либо вопросы.',
 	'saveprivatedomains_success' => 'Изменения в частных доменах сохранены.',
 	'privatedomains_invalidemail' => 'Извините, доступ к этой вики доступен только для членов $1. Если у вас есть адрес электронной почты, связанный с $1, вы можете ввести или подтвердить ваш адрес электронной почты на вашей <a href=/wiki/Special:Preferences>странице настроек</a>. Вы можете просматривать страницы этой вики, но вы не сможете их править.',
 	'privatedomains_affiliatenamelabel' => 'Название организации:',
@@ -286,7 +286,7 @@ $messages['te'] = array(
 $messages['tl'] = array(
 	'privatedomains_nomanageaccess' => "Paumanhin, walang kang sapat na mga karapatang upang pamahalaan ang mga dominyong pribado para sa wiking ito.  Tanging mga burokrato at mga kasaping tauhan ng wiki lamang ang makakapunta..</p><p>Kung hindi ka nakalagda, maaaring <a href='/wiki/Special:Userlogin'>dapat</a> kang lumagda.",
 	'privatedomains' => 'Pamahalaan ang mga Dominyong Pribado',
-	'privatedomains_ifemailcontact' => 'O kaya, mangyaring makipag-ugnayan kay [[Special:Emailuser/$1|$1]] kung mayroon kang anumang mga katanungan.',
+	'privatedomains_ifemailcontact' => 'O kaya, mangyaring makipag-ugnayan kay [[Special:EmailUser/$1|$1]] kung mayroon kang anumang mga katanungan.',
 	'saveprivatedomains_success' => 'Sinagip ang mga pagbabago sa Mga Dominyong Pribado.',
 	'privatedomains_invalidemail' => 'Paumahin, nakalaan lamang ang pagpasok sa wiking para sa mga kasapi ng $1.  Kung mayroon kang adres ng e-liham na may kaugnayan sa $1, maipapasok mo o muling patunayan ang adres mo ng e-liham sa pahina ng mga nais mo sa iyong akawnt <a href=/wiki/Special:Preferences>dito</a>. Maaari mo pa ring tingnan ang mga pahina sa wiking ito, subalit hindi ka makapamamatnugot.',
 	'privatedomains_affiliatenamelabel' => 'Pangalan ng organisasyon:',
