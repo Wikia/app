@@ -36,7 +36,6 @@
 						<td>
 							<a href="#" id="wpMailmypassword" onclick="AjaxLogin.mailNewPassword(this);" ><?php print wfMsg('mailmypassword') ?></a>
 						</td>
-	                </td>
 	            <?php } ?>
 	            </tr>
 	            </table>
