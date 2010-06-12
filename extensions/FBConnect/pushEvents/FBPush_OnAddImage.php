@@ -18,7 +18,8 @@ class FBPush_OnAddImage extends FBConnectPushEvent {
 		wfProfileIn(__METHOD__);
 
 		wfLoadExtensionMessages('FBPush_OnAddImage');
-		$wgHooks['UploadComplete'][] = 'FBPush_OnAddImage::onUploadComplet'; 	
+		$wgHooks['ArticleSaveComplete'][] = 'FBPush_OnAddImage::onArticleSaveComplete'; 	
+		$wgHooks['UploadComplete'][] = 'FBPush_OnAddImage::onUploadComplet';   
 		wfProfileOut(__METHOD__);
 	}
 
@@ -30,20 +31,36 @@ class FBPush_OnAddImage extends FBConnectPushEvent {
 		wfProfileOut(__METHOD__);
 	}
 	
-	public function onUploadComplet(&$image) {
-		global $wgServer, $wgSitename;
-		
-		if ($image->mLocalFile->media_type == 'BITMAP' ) {
-			$params = array(
-				'$IMGNAME' => $image->mLocalFile->getTitle(),
-				'$ARTICLE_URL' => $wgServer.'/'.$image->mLocalFile->getTitle(), //inside use  
-				'$WIKINAME' => $wgSitename,
-				'$IMG_URL' => $wgServer.'/'.$image->mLocalFile->getTitle()."?ref=fbfeed",
-				'$EVENTIMG' => self::$eventImage
-			);
-			
-			self::pushEvent(self::$messageName, $params, __CLASS__ );
-		}	
+	public static function onArticleSaveComplete(&$article, &$user, $text, $summary,$flag, $fake1, $fake2, &$flags, $revision, &$status, $baseRevId){ 
+		$img = wfFindFile( $article->getTitle() );
+	
+		if ($img->media_type == 'BITMAP' ) {
+			FBPush_OnAddImage::uploadNews($img->title->getText(), $img->title->getFullUrl("?ref=fbfeed")) ;	
+		}
 		return true;
 	}
+	
+    public static function  onUploadComplet(&$image) {
+        global $wgServer, $wgSitename;
+       
+        if ($image->mLocalFile->media_type == 'BITMAP' ) {
+        	FBPush_OnAddImage::uploadNews( $image->mLocalFile->getTitle(), $wgServer.'/'.$image->mLocalFile->getTitle()."?ref=fbfeed" );
+        }   
+        return true;
+    }
+    
+	
+	public static function uploadNews($name, $url) {
+		global $wgSitename;
+		$params = array(
+			'$IMGNAME' => $name,
+			'$ARTICLE_URL' =>$url, //inside use  
+			'$WIKINAME' => $wgSitename,
+			'$IMG_URL' => $url,
+			'$EVENTIMG' => self::$eventImage
+		);
+		
+		self::pushEvent(self::$messageName, $params, __CLASS__ );	
+	}
+	
 }
