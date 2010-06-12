@@ -88,6 +88,7 @@ When you join the wiki, your user profile displays the badges that you have earn
 	'achievements-save' => 'Save changes',
 	'achievements-reverted' => 'Badge reverted to original.',
 	'achievements-customize' => 'Customize picture',
+	'achievements-customize-new-category-track' => 'Create new track for category:',
 	'achievements-enable-track' => 'enabled',
 	'achievements-revert' => 'Revert to default',
 	'achievements-special-saved' => 'Changes saved.',
