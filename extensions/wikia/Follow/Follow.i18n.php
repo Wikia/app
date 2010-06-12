@@ -4,7 +4,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'follow-desc' => 'Improvements for the watchlist functionality',
-	'wikiafollowedpages-special-heading-category' => "Categories ($1) ",
+	'wikiafollowedpages-special-heading-category' => "Categories ($1)",
 	'wikiafollowedpages-special-heading-article' => "Articles ($1)",
 	'wikiafollowedpages-special-heading-blogs' => "Blogs and posts ($1)",
 	'wikiafollowedpages-special-heading-forum' => 'Forum threads ($1)',
