@@ -114,8 +114,8 @@ var AjaxLogin = {
 	slideToNormalLogin: function(el){
 		var firstSliderCell = $("#AjaxLoginSlider div:first");
 		var slideto = 0;
-		$(el).hide();
 		$("#AjaxLoginConnectMarketing a.forward").show();
+		$("#AjaxLoginConnectMarketing a.back").hide();
 		firstSliderCell.animate({
 			marginLeft: slideto
 		}, function(){$('#fbLoginAndConnect').hide();});
@@ -124,7 +124,7 @@ var AjaxLogin = {
 		$('#fbLoginAndConnect').show();
 		var firstSliderCell = $("#AjaxLoginSlider div:first");
 		var slideto = -351;
-		$(el).hide();
+		$("#AjaxLoginConnectMarketing a.forward").hide();
 		$("#AjaxLoginConnectMarketing a.back").show();
 		firstSliderCell.animate({
 			marginLeft: slideto
