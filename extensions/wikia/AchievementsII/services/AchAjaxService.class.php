@@ -20,7 +20,8 @@ class AchAjaxService {
 					if($user && $user->isLoggedIn()) {
 						$usersToAward[] = $user;
 					} else {
-						$ret['errors'][] = "User '{$usernameToAward}' does not exists";
+						// FIXME: needs i18n.
+						$ret['errors'][] = "User '{$usernameToAward}' does not exist";
 					}
 				}
 			}
