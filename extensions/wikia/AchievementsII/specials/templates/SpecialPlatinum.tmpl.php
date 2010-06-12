@@ -11,13 +11,13 @@ global $wgScriptPath, $wgStylePath;
 				<input name="badge_name" type="text" class="dark_text_2" />
 			</legend>
 			<div class="column">
-				<label><?=wfMsg('achievements-community-platinum-awarded-for');?>:</label><span class="input-suggestion">&nbsp;(<?=wfMsg('achievements-community-platinum-awarded-for-example');?>)</span>
+				<label><?=wfMsg('achievements-community-platinum-awarded-for');?></label><span class="input-suggestion">&nbsp;(<?=wfMsg('achievements-community-platinum-awarded-for-example');?>)</span>
 				<textarea name="awarded_for"></textarea>
-				<label><?=wfMsg('achievements-community-platinum-how-to-earn');?>:</label><span class="input-suggestion">&nbsp;(<?=wfMsg('achievements-community-platinum-how-to-earn-example');?>)</span>
+				<label><?=wfMsg('achievements-community-platinum-how-to-earn');?></label><span class="input-suggestion">&nbsp;(<?=wfMsg('achievements-community-platinum-how-to-earn-example');?>)</span>
 				<textarea name="how_to"></textarea>
 			</div>
 			<div class="column">
-				<label><?=wfMsg('achievements-community-platinum-badge-image');?>:</label>
+				<label><?=wfMsg('achievements-community-platinum-badge-image');?></label>
 				<img src="<?= $wgStylePath ?>/common/blank.gif" class="badge-preview neutral" />
 				<input type="file" name="wpUploadFile" />
 			</div>
