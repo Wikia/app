@@ -11,7 +11,7 @@
 		<h2><?=wfMsg('achievements-create-edit-plus-category-title');?></h2>
 		<?=wfMsgExt( 'achievements-create-edit-plus-category-content', 'parse' );?>
 		<p class="input">
-			<label>Create new track for category:</label><input name="edit_plus_category_name" type="text"/>
+			<label><?=wfMsg('achievements-customize-new-category-track');?></label><input name="edit_plus_category_name" type="text"/>
 			<button type="submit"><?=wfMsg('achievements-create-edit-plus-category');?></button>
 		</p>
 	</form>
