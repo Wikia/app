@@ -43,7 +43,7 @@ class FBPush_OnAddVideo extends FBConnectPushEvent {
 		$wOldCount = preg_match_all($expr,  $article->getRawText(), $matches);
 		
 		$countDiff = $wNewCount - $wOldCount; 			
-		if ($countDiff > 1) {
+		if ($countDiff > 0) {
 			$params = array(
 				'$ARTICLENAME' => $article->getTitle()->getText(),
 				'$WIKINAME' => $wgSitename,
