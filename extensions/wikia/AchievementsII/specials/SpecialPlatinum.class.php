@@ -4,8 +4,7 @@ class SpecialPlatinum extends SpecialPage {
 
 	function __construct() {
 		wfLoadExtensionMessages('AchievementsII');
-		// TODO: limit page to staff people only (not sysop)
-		parent::__construct('Platinum', 'editinterface', true /* listed */);
+		parent::__construct('Platinum', 'platinum', true /* listed */);
 	}
 
 	function execute($par) {
