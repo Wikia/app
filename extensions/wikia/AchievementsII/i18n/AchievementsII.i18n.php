@@ -246,7 +246,7 @@ Check out your fancy new badge on your <a href=\"$5\">user profile page</a>.",
 Don\'t be shy. Click the "{{int:edit}}" button and you can add to any page!',
 	'achievements-badge-to-get-edit-plus-category-details' => 'The <strong>$1</strong> pages need your help! Click the "{{int:edit}}" button on any page in that category to help out.
 Show your support for the $1 pages!',
-	'achievements-badge-to-get-picture-details' => 'Click the "{{int:edit}}" button, and then the Add a picture button.
+	'achievements-badge-to-get-picture-details' => 'Click the "{{int:edit}}" button, and then the "{{int:rte-ck-image-add}}" button.
 	You can add a photo from your computer, or from another page on the wiki.',
 	'achievements-badge-to-get-category-details' => 'Categories are tags that help readers find similar pages.
 Click the "{{int:categoryselect-addcategory-button}}" button at the bottom of a page to list that page in a category.',
