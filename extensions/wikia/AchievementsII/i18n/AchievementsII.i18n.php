@@ -242,20 +242,34 @@ Check out your fancy new badge on your <a href=\"$5\">user profile page</a>.",
 	/*
 	 * Badges' details for challenges list hovers on user profile
 	 */
-	'achievements-badge-to-get-edit-details' => 'Is something missing? Is there a mistake? Don\'t be shy. Click the edit button and you can add to any page!',
-	'achievements-badge-to-get-edit-plus-category-details' => 'The <strong>$1</strong> pages need your help! Click the edit button on any page in that category to help out. Show your support for the $1 pages!',
-	'achievements-badge-to-get-picture-details' => 'Click the edit button, and then the Add a picture button. You can add a photo from your computer, or from another page on the wiki.',
-	'achievements-badge-to-get-category-details' => 'Categories are tags that help readers find similar pages. Click the Add category button at the bottom of a page to list that page in a category.',
-	'achievements-badge-to-get-blogpost-details' => 'Write your opinions and questions! Click on Recent blog posts in the sidebar, and then the link on the left for Create a new blog post.',
-	'achievements-badge-to-get-blogcomment-details' => 'Add your two cents! Read any of the recent blog posts, and write your thoughts in the comments box.',
+	'achievements-badge-to-get-edit-details' => 'Is something missing? Is there a mistake?
+Don\'t be shy. Click the "{{int:edit}}" button and you can add to any page!',
+	'achievements-badge-to-get-edit-plus-category-details' => 'The <strong>$1</strong> pages need your help! Click the "{{int:edit}}" button on any page in that category to help out.
+Show your support for the $1 pages!',
+	'achievements-badge-to-get-picture-details' => 'Click the "{{int:edit}}" button, and then the Add a picture button.
+	You can add a photo from your computer, or from another page on the wiki.',
+	'achievements-badge-to-get-category-details' => 'Categories are tags that help readers find similar pages.
+Click the "{{int:categoryselect-addcategory-button}}" button at the bottom of a page to list that page in a category.',
+	'achievements-badge-to-get-blogpost-details' => 'Write your opinions and questions!
+Click on "{{int:blogs-recent-url-text}}" in the sidebar, and then the link on the left for "{{int:create-blog-post-title}}".',
+	'achievements-badge-to-get-blogcomment-details' => 'Add your two cents!
+Read any of the recent blog posts, and write your thoughts in the comments box.',
 	'achievements-badge-to-get-love-details' => 'The counter resets if you miss a day, so be sure to come back to the wiki every day!',
-	'achievements-badge-to-get-welcome-details' => 'Click the Create an account button at the top right to join the community. You can start earning your own badges!',
-	'achievements-badge-to-get-introduction-details' => 'Is your user page empty? Click on your user name at the top of the screen to see. Click edit to add some information about yourself!',
-	'achievements-badge-to-get-sayhi-details' => 'You can leave other users messages by clicking "Leave message" on their talk page. Ask for help, thank them for their work, or just say hi!',
-	'achievements-badge-to-get-creator-details' => 'This badge is given to the person who founded the wiki. Click the Create a new wiki button at the top to start a site about whatever you like most!',
-	'achievements-badge-to-get-pounce-details' => 'You have to be quick to earn this badge. Click the Activity feed button to see the new pages that users are creating!',
-	'achievements-badge-to-get-caffeinated-details' => 'It takes a busy day to earn this badge. Keep editing!',
-	'achievements-badge-to-get-luckyedit-details' => 'You have got to be lucky to earn this badge. Keep editing!',
+	'achievements-badge-to-get-welcome-details' => 'Click the "{{int:autocreatewiki-create-account}}" button at the top right to join the community.
+You can start earning your own badges!',
+	'achievements-badge-to-get-introduction-details' => 'Is your user page empty?
+Click on your user name at the top of the screen to see.
+Click "{{int:edit}}" to add some information about yourself!',
+	'achievements-badge-to-get-sayhi-details' => 'You can leave other users messages by clicking "{{int:tooltip-ca-addsection}}" on their talk page.
+Ask for help, thank them for their work, or just say hi!',
+	'achievements-badge-to-get-creator-details' => 'This badge is given to the person who founded the wiki.
+Click the "{{int:createwiki}}" button at the top to start a site about whatever you like most!',
+	'achievements-badge-to-get-pounce-details' => 'You have to be quick to earn this badge.
+Click the "{{int:activityfeed}}" feed button to see the new pages that users are creating!',
+	'achievements-badge-to-get-caffeinated-details' => 'It takes a busy day to earn this badge.
+Keep editing!',
+	'achievements-badge-to-get-luckyedit-details' => 'You have got to be lucky to earn this badge.
+Keep editing!',
 	'achievements-badge-to-get-community-platinum-details' => 'This is a special Platinum badge that is only available for a limited time!',
 
 	/*
