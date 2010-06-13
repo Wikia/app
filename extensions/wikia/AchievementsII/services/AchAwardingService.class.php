@@ -448,7 +448,8 @@ class AchAwardingService {
 				if($userPageTitle) {
 					$userPageArticle = new Article($userPageTitle, 0);
 					if(!$userPageArticle->exists()) {
-						$userPageArticle->doEdit(wfMsg("welcome-user-page"), '', $this->mUser->isAllowed('bot') ? EDIT_FORCE_BOT : 0, false, User::newFromName('Wikia'));
+						$userWikia = User::newFromName('Wikia');
+						$userPageArticle->doEdit(wfMsg("welcome-user-page"), '', $userWikia->isAllowed('bot') ? EDIT_FORCE_BOT : 0, false, $UserWikia);
 					}
 				}
 			}

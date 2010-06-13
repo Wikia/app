@@ -1,5 +1,6 @@
 == Changes since 201006.2 ==
-* rt#54716: Achievments2: only staff/helpers (uberfuzzy)
+* rt#54718: Achievments2: User:Wikia creates user pages not flagged as a bot (uberfuzzy)
+* rt#54716: Achievments2: Platinum for only staff/helpers only (uberfuzzy)
 * rt#51920: Follow: non-users should not have a watchlist (uberfuzzy)
 * rt#54270: TitleEdit's linking process conflicts with .wikia-button's styling (Nef)
 * rt#54166: AWC: pass correct parameters to protection functions (uberfuzzy)
