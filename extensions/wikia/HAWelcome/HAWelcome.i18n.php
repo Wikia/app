@@ -44,6 +44,7 @@ Hi, welcome to {{SITENAME}}. Thanks for your edit to the [[:$1]] page.
 '''[[Special:Userlogin|Please sign in and create a user name]]'''. It's an easy way to keep track of your contributions and helps you communicate with the rest of the community.
 
 If you need help, and there are no local admins here, you may want to visit the [[wikia:Forum:Community Central Forum|forums on the Community Central Wiki]] $3",
+	"staffsig-text" => "$1<staff /> <small>([[w:forums|help forum]] | [[w:sblog|blog]])</small>";
 );
 
 /** Breton (Brezhoneg)
