@@ -32,11 +32,11 @@ $wgExtensionFunctions[] = 'wfSetupProtectsite';
 
 /* Extension Credits.  Splarka wants me to be so UN:VAIN!  Haet haet hat! */
 $wgExtensionCredits['specialpage'][] = array(
-  'name'        => 'Protect Site',
-  'version'     => '0.2',
-  'description' => 'allows a site administrator to temporarily block various site modifications',
-  'author'      => '[http://uncyclopedia.wikia.com/wiki/User:Dawg Eric Johnston (Dawg)]' .
-                   '<br/>C. \'Uberfuzzy\' Stafford',
+	'name'           => 'Protect Site',
+	'version'        => '0.2',
+	'description'    => 'Allows a site administrator to temporarily block various site modifications',
+	'author'         => array( '[http://uncyclopedia.wikia.com/wiki/User:Dawg Eric Johnston (Dawg)]', 'C. \'Uberfuzzy\' Stafford' ),
+	'descriptionmsg' => 'specialprotectsite-desc',
 );
 
 $wgExtensionMessagesFiles['SpecialProtectSite'] = $dir . '/SpecialProtectSite.i18n.php';
