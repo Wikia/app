@@ -115,7 +115,13 @@ var AjaxLogin = {
 	},
 	slideToNormalLogin: function(el){
 		$().log('AjaxLogin: slideToNormalLogin()');
-		var firstSliderCell = $("#AjaxLoginSlider div:first");
+		var firstSliderCell;
+		if($().isChrome()){
+			// div:first isn't working in the current version of Chrome.
+			firstSliderCell = $($("#AjaxLoginSlider div").get(0));
+		} else {
+			firstSliderCell = $("#AjaxLoginSlider div:first");
+		}
 		var slideto = 0;
 		$("#AjaxLoginConnectMarketing a.forward").show();
 		$("#AjaxLoginConnectMarketing a.back").hide();
@@ -126,7 +132,13 @@ var AjaxLogin = {
 	slideToLoginAndConnect: function(el){
 		$().log('AjaxLogin: slideToLoginAndConnect()');
 		$('#fbLoginAndConnect').show();
-		var firstSliderCell = $("#AjaxLoginSlider div:first");
+		var firstSliderCell;
+		if($().isChrome()){
+			// div:first isn't working in the current version of Chrome.
+			firstSliderCell = $($("#AjaxLoginSlider div").get(0));
+		} else {
+			firstSliderCell = $("#AjaxLoginSlider div:first");
+		}
 		var slideto = -351;
 		$("#AjaxLoginConnectMarketing a.forward").hide();
 		$("#AjaxLoginConnectMarketing a.back").show();
