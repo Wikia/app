@@ -18,6 +18,7 @@ class FBConnectPushEvent {
 	protected $isAllowedUserPreferenceName = ''; // implementing classes MUST override this with their own value.
 
 	// This must correspond to the name of the message for the text on the tab itself.
+	static private $eventCounter = 0;
 	static protected $PREFERENCES_TAB_NAME = "fbconnect-prefstext";
 	static public $PREF_TO_DISABLE_ALL = "fbconnect-push-allow-never";
 
@@ -201,6 +202,13 @@ class FBConnectPushEvent {
 	
 	static public function pushEvent($message, $params, $class){
 		global $wgServer;
+		
+		/* only one event par request */
+		if( self::$eventCounter > 0 ) {
+			return 1000; //status for out of limit  
+		}
+		
+		self::$eventCounter++ ;
 		
 		$fb = new FBConnectAPI();
 		

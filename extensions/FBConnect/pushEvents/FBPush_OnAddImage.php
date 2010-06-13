@@ -32,6 +32,11 @@ class FBPush_OnAddImage extends FBConnectPushEvent {
 	}
 	
 	public static function onArticleSaveComplete(&$article, &$user, $text, $summary,$flag, $fake1, $fake2, &$flags, $revision, &$status, $baseRevId){ 
+		
+		if( $article->getTitle()->getNamespace() != NS_FILE ) {
+			return true;
+		}
+		
 		$img = wfFindFile( $article->getTitle() );
 	
 		if ($img->media_type == 'BITMAP' ) {
