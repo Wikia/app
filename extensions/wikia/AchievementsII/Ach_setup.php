@@ -40,6 +40,12 @@ $wgSpecialPages['Platinum'] = 'SpecialPlatinum';
 $wgSpecialPages['Leaderboard'] = 'SpecialLeaderboard';
 $wgSpecialPages['AchievementsCustomize'] = 'SpecialAchievementsCustomize';
 
+// RIGHTS
+$wgAvailableRights[] = 'platinum';
+$wgGroupPermissions['*']['platinum'] = false;
+$wgGroupPermissions['staff']['platinum'] = true;
+$wgGroupPermissions['helper']['platinum'] = true;
+
 // AUTOLOADS
 
 // config
