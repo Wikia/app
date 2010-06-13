@@ -977,7 +977,7 @@ class Masthead {
 						);
 					}
 
-					if ( !$Avatar->isDefault() && ( $isUserOnOwnPage || $wgUser->isAllowed( 'removeavatar' ) ) ) {
+					if ( !$Avatar->isDefault() && $wgUser->isAllowed( 'removeavatar' ) ) {
 						$avatarActions[] = array(
 							'tracker' => 'removeavatar',
 							'href' => Title::newFromText('RemoveUserAvatar', NS_SPECIAL)->getLocalUrl('action=search_user&amp;av_user=' . $Avatar->getUserName()),
