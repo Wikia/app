@@ -346,3 +346,13 @@ $.extend({
 jQuery.fn.reverse = function() {
 	return this.pushStack(this.get().reverse(), arguments);
 };
+
+jQuery.fn.isChrome = function() {
+	if ( $.browser.webkit && !$.browser.opera && !$.browser.msie && !$.browser.mozilla ) {
+		var userAgent = navigator.userAgent.toLowerCase();
+		if ( userAgent.indexOf("chrome") >  -1 ) { 
+			return true;
+		}
+	}
+	return false;
+};
