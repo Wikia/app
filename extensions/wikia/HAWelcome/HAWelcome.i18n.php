@@ -553,6 +553,7 @@ $messages['mk'] = array(
 '''[[Special:Userlogin|Најавете се и создајте корисничко име]]'''. Вака лесно ќе можеме да ги следиме вашите придонеси, а воедно ја олеснува и вашата комуникација со останатите членови на заедницата.
 
 Ако ви треба помош, а нема локални администратори, ви препорачуваме да ги посетите [[wikia:Forum:Community Central Forum|форумите на Центарот на Заедницата]] $3",
+	'staffsig-text' => '$1<staff /> <small>([[w:forums|форум за помош]] | [[w:sblog|блог]])</small>',
 );
 
 /** Dutch (Nederlands)
@@ -592,6 +593,7 @@ Hallo! Welkom bij {{SITENAME}}. Dank u wel voor uw bewerking aan de pagina [[:$1
 '''[[Special:Userlogin|Meld u zich alstublieft aan of maak een gebruiker aan]]'''. Zo kunt u eenvoudig uw bewerkingen bijhouden en contact houden met de andere leden van de gemeenschap.
 
 Als u hulp zoekt en er zijn geen lokale beheerders, ga dan naar de [[wikia:Forum:Community Central Forum|forums op de Centrale Gemeenschapswiki]] $3",
+	'staffsig-text' => '$1<staff /> <small>([[w:forums|forum voor hulp]] | [[w:sblog|blog]])</small>',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -636,6 +638,7 @@ Hei, velkommen til {{SITENAME}}. Takk for at du har redigert [[:$1]]-siden.
 '''[[Special:Userlogin|Registrer deg og opprett et brukernavn]]'''. Det er en enkel måte å holde styring på bidragene dine og hjelper deg med å kommunisere med resten av fellesskapet.
 
 Hvis du trenger hjelp og det ikke er noen lokale administratorer her vil du kanskje besøke [[wikia:Forum:Community Central Forum|forumene på Community Central Wiki]] $3",
+	'staffsig-text' => '$1<staff /> <small>([[w:forums|hjelpeforum]] | [[w:sblog|blogg]])</small>',
 );
 
 /** Occitan (Occitan)
@@ -754,6 +757,25 @@ Cerea, bin ëvnù su {{SITENAME}}! Mersì për soa modìfica a la pàgina [[:$1]
 '''[[Special:Userlogin|Për piasì ch'a intra e ch'a crea un nòm utent]]'''. A l'é na manera bel fé ëd ten-e trassa ëd soe contribussion e a-j giuta a comuniché con ël rest ëd la comunità.
 
 S'a l'has dabzògn d'agiut, e a-i é gnun aministrator locaj ambelessì, a peul visité le [[wikia:Forum:Community Central Forum|piasse ëd la Wiki Sentral ëd la Comunità]] $3",
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'welcome-user-page' => "==زما په اړه==
+
+''دا مخ ستاسې لپاره ځانګړی شوی. لطفاً په دې مخ کې خپلې ټولنې ته د ځان په اړه مالومات وړاندې کړۍ!''
+
+==زما ونډې==
+
+* [[Special:Contributions/{{PAGENAME}}|د کارن ونډې]]
+
+==زما پزړه پوري مخونه==
+
+* دلته په همدې ويکي کې د خپلو پزړه پورو مخونو تړنې ورګډې کړی!
+* پزړه پوری مخ #2
+* پزړه پوری مخ #3",
 );
 
 /** Portuguese (Português)

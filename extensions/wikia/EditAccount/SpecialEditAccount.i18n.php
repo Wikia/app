@@ -471,6 +471,13 @@ $messages['ia'] = array(
 	'right-editaccount' => 'Modificar le preferentias de altere usatores',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Irwangatot
+ */
+$messages['id'] = array(
+	'editaccount-frame-usage' => 'Catatan',
+);
+
 /** Italian (Italiano)
  * @author HalphaZ
  */
@@ -725,8 +732,12 @@ $messages['pms'] = array(
  */
 $messages['ps'] = array(
 	'editaccount-frame-usage' => 'يادښت',
+	'editaccount-label-email' => 'نوې برېښليک پته ټاکل',
+	'editaccount-label-pass' => 'نوی پټنوم ټاکل',
+	'editaccount-label-realname' => 'نوی اصلي نوم ټاکل',
 	'editaccount-submit-email' => 'برېښليک خوندي کول',
 	'editaccount-submit-pass' => 'پټنوم خوندي کول',
+	'editaccount-submit-close' => 'کارن حساب تړل',
 );
 
 /** Portuguese (Português)

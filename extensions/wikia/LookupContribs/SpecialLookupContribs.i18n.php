@@ -436,6 +436,17 @@ $messages['ia'] = array(
 	'lookupcontribscontent' => 'contento',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Irwangatot
+ */
+$messages['id'] = array(
+	'lookupcontribswiki' => 'Wiki',
+	'lookupcontribswikititle' => 'Judul',
+	'lookupcontribsnext' => 'selanjutnya',
+	'lookupcontribsdiff' => 'beda',
+	'lookupcontribscontent' => 'isi',
+);
+
 /** Italian (Italiano) */
 $messages['it'] = array(
 	'lookupcontribsgo' => 'Vai',
@@ -722,6 +733,7 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'lookupcontribsselectuser' => 'کارن ټاکل:',
 	'lookupcontribsgo' => 'ورځه',
 	'lookupcontribswiki' => 'ويکي',
 	'lookupcontribswikititle' => 'سرليک',

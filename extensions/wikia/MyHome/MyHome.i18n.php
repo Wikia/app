@@ -244,8 +244,8 @@ $messages['br'] = array(
 	'myhome-activity-feed-empty' => "Emañ ar wiki-mañ o gortoz e kemerfer perzh ennañ.
 Klikit war '''[[Special:CreatePage|Pajenn nevez]]''' evit kregiñ da skrivañ !",
 	'myhome-watchlist-feed' => 'Roll evezhiañ',
-	'myhome-watchlist-feed-empty' => "Gallout a rit ouzhpennañ pajennoù d'ho roll heuliañ en ur glikañ war al liamm « Heuliañ » zo er varrenn e krec'h ar bajenn.
-Gallout a rit implijout ho roll heuliañ evit mirout ur roud eus eus ar cheñchamañtoù diwezhañ ho peus graet er pajennoù a zedenn ac'hanoc'h.",
+	'myhome-watchlist-feed-empty' => "Gallout a rit ouzhpennañ pajennoù d'ho roll heuliañ en ur glikañ war al liamm \"{{int:watch}}\" zo er varrenn e krec'h ar bajenn.
+Gallout a rit implijout ho roll heuliañ evit mirout ur roud eus eus ar cheñchamantoù diwezhañ ho peus graet er pajennoù a zedenn ac'hanoc'h.",
 	'myhome-user-contributions-feed' => 'Degasadennoù',
 	'myhome-hot-spots-feed' => 'Pajennoù ar muiañ oberiant',
 	'myhome-hot-spots-feed-empty' => "Emañ ar wiki-mañ o gortoz e kemerfer perzh ennañ.
@@ -283,29 +283,29 @@ Klikit war '''[[Special:CreatePage|Pajenn nevez]]''' evit kregiñ da skrivañ !"
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Poltred bet ouzhpennet|Poltriji bet ouzhpennet}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Video bet ouzhpennet|Videoioù bet ouzhpennet}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Rummad bet ouzhpennet|Rummadoù bet ouzhpennet}}',
-	'myhome-user-contributions-empty' => "Gallout a rit implijout ar wiki-mañ en ur glikañ war \"kemmañ e n'eus forzh peseurt pajenn eus ur pennad, hag en ur ouzhpennañ ar pezh ho peus c'hoant.
-Ne vern piv a c'hall degas cheñchamañtoù, ouzhpennañ titouroù pe reizhañ ur fazi. Savet eo ar wki gant ar gumuniezh. Ur wech m'ho po kliket war ar bouton kemmañ e viot ezel eus ar gumuniezh. Klakskit eta !",
+	'myhome-user-contributions-empty' => "Gallout a rit implijout ar wiki-mañ en ur glikañ war \"{{int:editthispage}}\" e n'eus forzh peseurt pajenn, hag en ur ouzhpennañ ar pezh ho peus c'hoant.
+Ne vern piv a c'hall degas cheñchamantoù, ouzhpennañ titouroù pe reizhañ ur fazi.
+Savet eo ar wiki gant ar gumuniezh. Ur wech m'ho po kliket war ar bouton kemmañ e viot ezel eus ar gumuniezh.
+Klaskit eta !",
 	'myhome-hot-spots-number-of-editors' => 'kenlabourerien',
 	'myhome-log-in' => "<center>An arc'hwel Ma Degemer a c'hallit kaout nemet e vefec'h kevreet.<br /><br /><big>'''<span class=\"plainlinks\">[{{fullurl:Special:Signup|\$1}} Kevreit, mar plij, evit gwelet ar  bajenn-mañ]</span>'''</big></center>",
 	'myhome-switch-to-monaco' => "Ne c'haller kaout an Arc'hwel Ma Degemer nemet e vefe implijet ar fichadenn Monaco ganeoc'h. M'ho peus c'hoant da vont war Ma Degemer, gweladennit'''[[Special:Preferences|ho Tibaboù gwellañ]]''', mar plij, evit kemmañ ho fichadenn.",
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'Korn ar gumuniezh',
 	'myhome-community-corner-edit' => 'kemmañ ar gemennadenn',
-	'community-corner' => "'''Degemer mat war Ma Degemer!'''
+	'community-corner' => "'''Degemer mat war Ma Degemer !'''
 
 Gant ar bajenn-mañ e c'hallit bezañ kelaouet diwar-benn darvoudoù nevez ar wiki
 
 Ma'z oc'h diazezer ar wiki-mañ pe unan eus merourien anezhañ e c'hallit kemmañ ar gemennadenn-mañ reiñ da c'houzout d'an implijerien ez eus  traoù nevez a bouez war al lec'hienn-mañ. Evel-se e c'hallit, da skouer :
 
-
 * Aozañ ur raktres evit lakaat war-sav ul lodenn nevez eus ar wiki
 
 * Diskwel pajennoù zo a c'hallfe bezañ gwelet gant an holl dud
 
-* Lakaat an dud da gemer perzh en ur gaozeadeg war al lelc'hienn
+* Lakaat an dud da gemer perzh en ur gaozeadeg war al lec'hienn
 
 * Trugarekaat un den degaset gantañ un dra bennak dedennus evit ar wiki
-
 
 * Pe postañ un nebeud gerioù evit kalonekaat unan bennak hepken !",
 	'myhome-hot-spots-definition' => 'Ar pajennoù gant ar muiañ a genlabourer e kerzh an $1 devezh ziwezhañ.',
@@ -328,6 +328,7 @@ $messages['cy'] = array(
 /** German (Deutsch)
  * @author Kghbln
  * @author LWChris
+ * @author The Evil IP address
  */
 $messages['de'] = array(
 	'myhome' => 'Startseite',
@@ -336,7 +337,7 @@ $messages['de'] = array(
 	'myhome-activity-feed-empty' => "Dieses Wiki wartet auf deine Beteiligung.
 Klicke auf '''[[Special:CreatePage|Neue Seite]]''' um mit dem Schreiben zu beginnen!",
 	'myhome-watchlist-feed' => 'Beobachtungsliste',
-	'myhome-watchlist-feed-empty' => 'Du kannst Seiten zu deiner Beobachtungsliste hinzufügen, indem du den Link "Beobachten" klickst, der oben in der Leiste auf der Seite ist.
+	'myhome-watchlist-feed-empty' => 'Du kannst Seiten zu deiner Beobachtungsliste hinzufügen, indem du den Link „{{int:watch}}“ klickst, der oben in der Leiste auf der Seite ist.
 Mit deiner Beobachtungsliste kannst du die letzten Änderungen an Seiten verfolgen, die dich interessieren.',
 	'myhome-user-contributions-feed' => 'Beiträge',
 	'myhome-hot-spots-feed' => 'Angesagte Seiten',
@@ -375,7 +376,7 @@ Klicke auf '''[[Special:CreatePage|Neue Seite]]''' um mit dem Schreiben zu begin
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Bild hinzugefügt|Bilder hinzugefügt}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Video hinzugefügt|Videos hinzugefügt}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Kategorie hinzugefügt|Kategorien hinzugefügt}}',
-	'myhome-user-contributions-empty' => 'Du kannst dich an diesem Wiki beteiligen, indem du auf einer beliebigen Seite den Link "Bearbeiten" anklickst und hinzufügst was du weißt.
+	'myhome-user-contributions-empty' => 'Du kannst dich an diesem Wiki beteiligen, indem du auf einer beliebigen Seite den Link „{{int:editthispage}}“ anklickst und hinzufügst was du weißt.
 Jeder kann Seiten ändern, Informationen hinzufügen oder Fehler berichtigen.
 Das Wiki wird durch die Gemeinschaft der Nutzer erstellt, und durch den Klick auf den Bearbeiten-Link wirst du selbst zum Teil dieser Gemeinschaft.
 Probier es einfach aus!',
@@ -410,16 +411,17 @@ Wenn du der Gründer oder ein Admin dieses Wikis bist, kannst du diese Nachricht
 
 /** German (formal address) (Deutsch (Sie-Form))
  * @author LWChris
+ * @author The Evil IP address
  */
 $messages['de-formal'] = array(
 	'myhome-activity-feed-empty' => "Dieses Wiki wartet auf Ihre Beteiligung.
 Klicken Sie auf '''[[Special:CreatePage|Neue Seite]]''' um mit dem Schreiben zu beginnen!",
-	'myhome-watchlist-feed-empty' => 'Sie können Seiten zu Ihrer Beobachtungsliste hinzufügen, indem Sie den Link "Beobachten" klicken, der oben in der Leiste auf der Seite ist.
+	'myhome-watchlist-feed-empty' => 'Sie können Seiten zu Ihrer Beobachtungsliste hinzufügen, indem Sie den Link „{{int:watch}}“ klicken, der oben in der Leiste auf der Seite ist.
 Mit Ihrer Beobachtungsliste können Sie die letzten Änderungen an Seiten verfolgen, die Sie interessieren.',
 	'myhome-hot-spots-feed-empty' => "Dieses Wiki wartet auf Ihre Beteiligung.
 Klicken Sie auf '''[[Special:CreatePage|Neue Seite]]''' um mit dem Schreiben zu beginnen!",
 	'myhome-hot-spots-brandnew' => 'Dies ist ein nagelneues Wiki. Klicken Sie auf [[Special:CreatePage|Neue Seite]] um mit dem Schreiben zu beginnen!',
-	'myhome-user-contributions-empty' => 'Sie können sich an diesem Wiki beteiligen, indem Sie auf einer beliebigen Seite den Link "Bearbeiten" anklicken und hinzufügen was Sie wissen.
+	'myhome-user-contributions-empty' => 'Sie können sich an diesem Wiki beteiligen, indem Sie auf einer beliebigen Seite den Link „{{int:editthispage}}“ anklicken und hinzufügen was Sie wissen.
 Jeder kann Seiten ändern, Informationen hinzufügen oder Fehler berichtigen.
 Das Wiki wird durch die Gemeinschaft der Nutzer erstellt, und durch den Klick auf den Bearbeiten-Link werden Sie selbst zum Teil dieser Gemeinschaft.
 Probieren Sie es einfach aus!',
@@ -518,7 +520,7 @@ $messages['es'] = array(
 	'myhome-activity-feed' => 'Lista de actividad',
 	'myhome-activity-feed-empty' => "Este wiki está esperando a que te unas. ¡Haz clic en '''[[Special:CreatePage|nueva página]]''' para comenzar a escribir!",
 	'myhome-watchlist-feed' => 'Lista de seguimiento',
-	'myhome-watchlist-feed-empty' => 'Puedes agregar páginas a tu lista de seguimiento si haces clic en el enlace "Seguimiento" en la barra que aparece en la parte superior de la página. Puedes usar tu lista de seguimiento para mantenerte informado de los últimos cambios en las páginas que te interesan.',
+	'myhome-watchlist-feed-empty' => 'Puedes agregar páginas a tu lista de seguimiento si haces clic en el enlace "{{int:watch}}" en la barra que aparece en la parte superior de la página. Puedes usar tu lista de seguimiento para mantenerte informado de los últimos cambios en las páginas que te interesan.',
 	'myhome-user-contributions-feed' => 'Contribuciones del usuario',
 	'myhome-hot-spots-feed' => 'Más populares',
 	'myhome-hot-spots-feed-empty' => "Este wiki está esperando a que te unas. ¡Haz clic en '''[[Special:CreatePage|nueva página]]''' para comenzar a escribir!",
@@ -555,7 +557,7 @@ $messages['es'] = array(
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Imagen añadida|Imágenes añadidas}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Vídeo añadido|Vídeos añadidos}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Categoría añadida|Categorías añadidas}}',
-	'myhome-user-contributions-empty' => 'Puedes participar en este wiki haciendo clic en el botón "Editar" de cualquier artículo, y añadiendo lo que sepas acerca del mismo. Todos podemos hacer cambios, añadir información o corregir un error. El wiki se construye gracias a la comunidad, y una vez hagas clic en el botón de editar, serás parte de la comunidad. ¡Anímate a intentarlo!',
+	'myhome-user-contributions-empty' => 'Puedes participar en este wiki haciendo clic en el botón "{{int:editthispage}}" de cualquier artículo, y añadiendo lo que sepas acerca del mismo. Todos podemos hacer cambios, añadir información o corregir un error. El wiki se construye gracias a la comunidad, y una vez hagas clic en el botón de editar, serás parte de la comunidad. ¡Anímate a intentarlo!',
 	'myhome-hot-spots-number-of-editors' => 'editores',
 	'myhome-log-in' => "<center>La página de inicio solo está disponible si estás idenfiticado<br /><br /><big>'''<span class=\"plainlinks\">[{{fullurl:Special:UserLogin|\$1}} Por favor, ¡identifícate para ver esta página!]</span>'''</big></center>",
 	'myhome-switch-to-monaco' => "\"Mi página de inicio\" solo está disponible si usas la apariencia Monaco. Si quieres ver \"Mi página de inicio\", por favor, entra en tus '''[[Special:Preferences|tus preferencias]]''' para cambiar la apariencia.",
@@ -653,6 +655,7 @@ Jos olet tämän wikin perustaja tai olet ylläpitäjänä tässä wikissä, voi
 
 /** French (Français)
  * @author Crochet.david
+ * @author IAlex
  * @author Peter17
  */
 $messages['fr'] = array(
@@ -661,7 +664,8 @@ $messages['fr'] = array(
 	'myhome-activity-feed' => "Flux d'activité",
 	'myhome-activity-feed-empty' => "Vous n'avez pas encore participé à ce wiki. Cliquez sur '''[[Special:CreatePage|Nouvelle page]]''' pour commencer à écrire!",
 	'myhome-watchlist-feed' => 'Liste de suivi',
-	'myhome-watchlist-feed-empty' => 'Vous pouvez ajouter des pages à votre liste de suivi en cliquant sur le lien « Suivre » situé dans la barre en haut de la page. Vous pouvez vous servir de votre liste de suivi pour garder une trace des derniers changements effectués sur les pages qui vous intéressent.',
+	'myhome-watchlist-feed-empty' => 'Vous pouvez ajouter des pages à votre liste de suivi en cliquant sur le lien « {{int:watch}} » situé dans la barre en haut de la page.
+Vous pouvez vous servir de votre liste de suivi pour garder une trace des derniers changements effectués sur les pages qui vous intéressent.',
 	'myhome-user-contributions-feed' => 'Contributions',
 	'myhome-hot-spots-feed' => 'Pages les plus actives',
 	'myhome-hot-spots-feed-empty' => "Ce wiki nécessite votre participation. Cliquez sur '''[[Special:CreatePage|Nouvelle page]]''' pour commencer à écrire!",
@@ -698,7 +702,10 @@ $messages['fr'] = array(
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Photo ajoutée|Photos ajoutées}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Vidéo ajoutée|Vidéos ajoutées}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Catégorie ajoutée|Catégories ajoutées}}',
-	'myhome-user-contributions-empty' => "Vous pouvez participer à ce wiki en cliquant sur « modifier » sur n'importe quelle page d'un article, et en ajoutant ce que vous souhaitez. Tout le monde peut faire des modifications, ajouter des informations ou corriger une erreur. Le wiki est construit par la communauté, et une fois que vous aurez cliqué sur le bouton de modification, vous ferez partie de la communauté. Essayez donc!",
+	'myhome-user-contributions-empty' => "Vous pouvez participer à ce wiki en cliquant sur « {{int:editthispage}} » sur n'importe quelle page d'un article, et en ajoutant ce que vous souhaitez.
+Tout le monde peut faire des modifications, ajouter des informations ou corriger une erreur.
+Le wiki est construit par la communauté, et une fois que vous aurez cliqué sur le bouton de modification, vous ferez partie de la communauté.
+Essayez donc !",
 	'myhome-hot-spots-number-of-editors' => 'contributeurs',
 	'myhome-log-in' => "<center>La fonction Mon Accueil n'est disponible que si vous êtes connecté(e).<br /><br /><big>'''<span class=\"plainlinks\">[{{fullurl:Special:Signup|\$1}} Veuillez vous connecter pour voir cette page !]</span>'''</big></center>",
 	'myhome-switch-to-monaco' => "La fonction Mon Accueil n'est disponible que si vous utilisez l'habillage Monaco. Si vous voulez accéder à Mon Accueil, veuillez modifier '''[[Special:Preferences|vos Préférences]]''' pour changer votre habillage.",
@@ -736,7 +743,8 @@ $messages['gl'] = array(
 	'myhome-activity-feed' => 'Fonte de novas da actividade',
 	'myhome-activity-feed-empty' => "Este wiki está agardando a que se involucre. Prema sobre '''[[Special:CreatePage|páxina nova]]''' para comezar a escribir!",
 	'myhome-watchlist-feed' => 'Lista de vixilancia',
-	'myhome-watchlist-feed-empty' => 'Pode engadir páxinas á súa lista de vixilancia premendo na ligazón "Vixiar" da barra superior da páxina. Pode usar a súa lista de vixilancia para seguir as modificacións recentes nas páxinas que lle interesan.',
+	'myhome-watchlist-feed-empty' => 'Pode engadir páxinas á súa lista de vixilancia premendo na ligazón "{{int:watch}}" da barra superior da páxina.
+Pode usar a súa lista de vixilancia para seguir as modificacións recentes nas páxinas que lle interesan.',
 	'myhome-user-contributions-feed' => 'Contribucións',
 	'myhome-hot-spots-feed' => 'Páxinas máis populares',
 	'myhome-hot-spots-feed-empty' => "Este wiki está agardando a que se involucre. Prema sobre '''[[Special:CreatePage|páxina nova]]''' para comezar a escribir!",
@@ -773,7 +781,10 @@ $messages['gl'] = array(
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Engadiu unha foto|Engadiu fotos}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Engadiu un vídeo|Engadiu vídeos}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Engadiu unha categoría|Engadiu categorías}}',
-	'myhome-user-contributions-empty' => 'Pode involucrarse neste wiki premendo sobre "editar esta páxina" en calquera artigo e engadindo o que saiba. Todos poden facer cambios, engadir información ou corrixir un erro. O wiki está construído pola comunidade, e unha vez que faga clic no botón de edición converterase en parte dela. Anímese a intentalo!',
+	'myhome-user-contributions-empty' => 'Pode involucrarse neste wiki premendo sobre "{{int:editthispage}}" en calquera artigo e engadindo o que saiba.
+Todos poden facer cambios, engadir información ou corrixir un erro.
+O wiki está construído pola comunidade, e unha vez que faga clic no botón de edición converterase en parte dela.
+Anímese a intentalo!',
 	'myhome-hot-spots-number-of-editors' => 'editores',
 	'myhome-log-in' => "<center>A función \"a miña páxina de inicio\" só está dispoñible se antes accedeu ao sistema.<br /><br /><big>'''[{{fullurl:Special:Signup|\$1}} Por favor, conéctese para ollar esta páxina!]'''</big></center>",
 	'myhome-switch-to-monaco' => "A función \"a miña páxina de inicio\" só está dispoñible se emprega a aparencia Mónaco. Se quere ver a miña páxina de inicio, por favor, visite as '''[[Special:Preferences|súas preferencias]]''' para cambiar a súa aparencia.",
@@ -912,7 +923,7 @@ $messages['ia'] = array(
 	'myhome-activity-feed' => 'Summario de activitate',
 	'myhome-activity-feed-empty' => "Iste wiki attende tu participation. Clicca super '''[[Special:CreatePage|Nove pagina]]''' pro comenciar a scriber!",
 	'myhome-watchlist-feed' => 'Observatorio',
-	'myhome-watchlist-feed-empty' => 'Tu pote adder paginas a tu observatorio per cliccar super le ligamine "Observar" in le barra in alto del pagina. Con le observatorio tu pote sequer le ultime modificationes in paginas de tu interesse.',
+	'myhome-watchlist-feed-empty' => 'Tu pote adder paginas a tu observatorio per cliccar super le ligamine "{{int:watch}}" in le barra in alto del pagina. Con le observatorio tu pote sequer le ultime modificationes in paginas de tu interesse.',
 	'myhome-user-contributions-feed' => 'Contributiones',
 	'myhome-hot-spots-feed' => 'Paginas popular',
 	'myhome-hot-spots-feed-empty' => "Iste wiki attende tu participation. Clicca super '''[[Special:CreatePage|Nove pagina]]''' pro comenciar a scriber!",
@@ -949,7 +960,7 @@ $messages['ia'] = array(
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Photo|Photos}} addite',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Video|Videos}} addite',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Categoria|Categorias}} addite',
-	'myhome-user-contributions-empty' => 'Tu pote participar in iste wiki per cliccar super "modificar iste pagina" in omne pagina de articulo, e adder lo que tu sape. Tote le mundo pote facer modificationes, adder informationes o corriger errores. Le wiki es construite per le communitate, e un vice que tu clicca super le button de modification, tu face parte del communitate. Proba lo!',
+	'myhome-user-contributions-empty' => 'Tu pote participar in iste wiki per cliccar super "{{int:editthispage}}" in omne pagina de articulo, e adder lo que tu sape. Tote le mundo pote facer modificationes, adder informationes o corriger errores. Le wiki es construite per le communitate, e un vice que tu clicca super le button de modification, tu face parte del communitate. Proba lo!',
 	'myhome-hot-spots-number-of-editors' => 'contributores',
 	'myhome-log-in' => "<center>Tu pagina initial es solmente disponibile si tu es identificate.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Aperi un session pro vider iste pagina!]'''</big></center>",
 	'myhome-switch-to-monaco' => "Le pagina initial es solmente disponibile si tu usa le apparentia Monaco. Si tu vole vider tu pagina initial, visita le '''[[Special:Preferences|preferentias]]''' pro cambiar de apparentia.",
@@ -988,7 +999,7 @@ $messages['id'] = array(
 	'myhome-activity-feed-empty' => "Wiki ini menunggu anda untuk ikut terlibat.
 Klik '''[[Special:CreatePage|Halaman Baru]]''' untuk mulai menulis!",
 	'myhome-watchlist-feed' => 'Daftar pantauan',
-	'myhome-watchlist-feed-empty' => 'Anda dapat menambahkan halaman ke daftar pantauan Anda dengan mengklik pranala "Pantau" di bagian atas halaman.
+	'myhome-watchlist-feed-empty' => 'Anda dapat menambahkan halaman ke daftar pantauan Anda dengan mengklik pranala "{{int:watch}}" di bagian atas halaman.
 Anda dapat menggunakan daftar pantauan Anda untuk melacak perubahan terbaru pada halaman yang anda pantau.',
 	'myhome-user-contributions-feed' => 'Kontribusi',
 	'myhome-hot-spots-feed' => 'Pojok terbaru',
@@ -1213,7 +1224,8 @@ $messages['mk'] = array(
 	'myhome-activity-feed' => 'Канал со најнови активности',
 	'myhome-activity-feed-empty' => "Ова вики чека на вашето учество. Кликнете на '''[[Special:CreatePage|Нова страница]]''' за да почнете да пишувате!",
 	'myhome-watchlist-feed' => 'Список на набљудувања',
-	'myhome-watchlist-feed-empty' => 'Можете да додавате страници во списокот на набљудувања со притискање на врската „Набљудувај“ во лентата на врвот од страницата. Со списокот можете да ги следите најновите промени во страниците за кои сте заинтересирани.',
+	'myhome-watchlist-feed-empty' => 'Можете да додавате страници во списокот на набљудувања со притискање на врската „{{int:watch}}“ во лентата на врвот од страницата. 
+Со списокот можете да ги следите најновите промени во страниците за кои сте заинтересирани.',
 	'myhome-user-contributions-feed' => 'Придонеси',
 	'myhome-hot-spots-feed' => 'Најактивни места',
 	'myhome-hot-spots-feed-empty' => "Ова вики чека на вашето учество. Кликнете на '''[[Special:CreatePage|Нова страница]]''' за да почнете да пишувате!",
@@ -1250,7 +1262,9 @@ $messages['mk'] = array(
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Додадена фотографија|Додадени фотографии}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Додадена видеоснимка|Додадени видеоснимки}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Додадена категорија|Додадени категории}}',
-	'myhome-user-contributions-empty' => 'Можете да се приклучите на ова вики со тоа што ќе кликнете на „уреди“ не било која статија, и ќе го додадете она од коешто имате познавања. Секој може да прави измени, да додава информации и да поправа грешки. Викито го гради заедницата, и штом еднаш ќе го стиснете копчето за уредување, веќе станувате дел од таа заедница. Испробајте!',
+	'myhome-user-contributions-empty' => 'Можете да се приклучите на ова вики со тоа што ќе кликнете на „{{int:editthispage}}“ не било која статија, и ќе го додадете она од коешто имате познавања. 
+Секој може да прави измени, да додава информации и да поправа грешки. 
+Викито го гради заедницата, и штом еднаш ќе го стиснете копчето за уредување, веќе станувате дел од таа заедница. Испробајте!',
 	'myhome-hot-spots-number-of-editors' => 'уредници',
 	'myhome-log-in' => "<center>Функцијата „Мојата домашна страница“ е достапна само ако сте најавени.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Најавете се за да ја видите страницата!]'''</big></center>",
 	'myhome-switch-to-monaco' => "Функцијата „Мојата домашна страница“ е достапна само ако го користите изгледот „Монако“. Ако сакате да ја видите „Мојата домашна страница“, одете на '''[[Special:Preferences|вашите нагодувања]]''' и променете го изгледот.",
@@ -1289,7 +1303,7 @@ $messages['nl'] = array(
 	'myhome-activity-feed-empty' => "Werk nu mee aan deze wiki.
 Klik op '''[[Special:CreatePage|Nieuwe pagina]]''' om te beginnen met schrijven!",
 	'myhome-watchlist-feed' => 'Volglijst',
-	'myhome-watchlist-feed-empty' => 'U kunt pagina\'s toevoegen aan uw volglijst door op de verwijzing "Volgen" te klikken in de balk bovenaan de pagina.
+	'myhome-watchlist-feed-empty' => 'U kunt pagina\'s toevoegen aan uw volglijst door op de verwijzing "{{int:watch}}" te klikken in de balk bovenaan de pagina.
 U kunt uw volglijst gebruiken om de laatste wijzigingen aan pagina\'s waar u bij betrokken bent te bekijken.',
 	'myhome-user-contributions-feed' => 'Bijdragen',
 	'myhome-hot-spots-feed' => "Feed populaire pagina's",
@@ -1374,7 +1388,7 @@ $messages['no'] = array(
 	'myhome-activity-feed-empty' => "Denne wikien venter på at du skal bli involvert.
 Klikk på '''[[Special:CreatePage|Ny side]]''' for å begynne å skrive.",
 	'myhome-watchlist-feed' => 'Overvåkningsliste',
-	'myhome-watchlist-feed-empty' => 'Du kan legge sider til overvåkningslisten din ved å klikke på «Overvåk»-lenken i linjen på toppen av siden.
+	'myhome-watchlist-feed-empty' => 'Du kan legge sider til overvåkningslisten din ved å klikke på «{{int:watch}}»-lenken i linjen på toppen av siden.
 Du kan bruke overvåkningslisten for å holde styr på siste endringer på sider du bryr deg om.',
 	'myhome-user-contributions-feed' => 'Bidrag',
 	'myhome-hot-spots-feed' => 'Hot Spots',
@@ -1413,10 +1427,10 @@ Klikk på '''[[Special:CreatePage|Ny side]]''' for å begynne å skrive.",
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|La til bilde|La til bilder}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|La til video|La til videoer}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|La til kategori|La til kategorier}}',
-	'myhome-user-contributions-empty' => 'Du kan bli involvert i denne wikien ved å klikke på «rediger denne siden» på en hvilken som helst artikkelside og legge til det du vet.
+	'myhome-user-contributions-empty' => 'Du kan bli involvert i denne wikien ved å klikke på «{{int:editthispage}}» på en hvilken som helst artikkelside og legge til det du vet.
 Alle kan gjøre endringer, legge til informasjon eller korrigere en feil.
 Wikien er bygd av fellesskapet og når du klikker på redigeringsknappen er du medlem av dette fellesskapet.
-Prøv det.',
+Prøv det!',
 	'myhome-hot-spots-number-of-editors' => 'bidragsytere',
 	'myhome-log-in' => "<center>Mitt hjem-funksjonen er kun tilgjengelig om du er logget inn.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Logg inn for å se denne siden.]'''</big></center>",
 	'myhome-switch-to-monaco' => "Mitt hjem-funksjonen er kun tilgjengelig om du bruker utseendet Monaco.
@@ -1589,11 +1603,30 @@ $messages['ps'] = array(
 	'myhome-feed-newpage' => 'نوی مخ',
 	'myhome-feed-edit' => 'سمول',
 	'myhome-feed-delete' => 'ړنګ شو',
+	'myhome-feed-image' => 'انځور ورګډ شو',
 	'myhome-feed-new-page-details' => 'نوی مخ',
 	'myhome-feed-summary-details' => 'لنډيز',
 	'myhome-feed-new-blog-post-details' => 'نوی بلاګ',
+	'myhome-feed-new-blog-comment-details' => 'تبصره',
+	'myhome-feed-new-article-comment-details' => 'تبصره',
 	'myhome-namespace-blog' => 'بلاګ',
 	'myhome-community-corner-edit' => 'پيغام سمول',
+	'community-corner' => "'''زما کور ته ښه راغلاست!'''
+
+دا مخ په همدې ويکي باندې د هغو پېښو په اړه چې تازه پېښې شوي، له تاسې سره مرسته کوي.
+
+که تاسې د دې ويکي بنسټګر او يا هم پازوال ياست، نو تاسې د دې ويکي د ټولنې سره د اهمو شيانو او پېښو اړوند د خبرو اترو په تکل  دا پيغام بدلولی شی. 
+د بېلګې په توګه، تاسې کولای شی چې:
+
+* يوه داسې پروژه ترتيب کړی چې د دې ويکي د بېلابېلو برخو د جوړ سبب شي
+
+* هغه نوي مخونه چې هر څوک يې بايد وکتلای شي دلته ښکاره کړۍ
+
+* نور خلک د دې وېبځي د پېښو په اړه د خبرو اترو ګردي مېز او يا بحثونو کې ښکېل کړۍ
+
+* د دې ويکي پر کارن چې دې وېبځي سره يې په ځانګړې ونډه کې ګډون کړی وي وستايل شي
+
+* او يا هم يوازې د تشويق او د نورو د لېواله کولو لپاره خوږې خبرې وليکۍ!",
 	'tooltip-pt-myhome' => 'زما کورپاڼې ته ورتلل',
 );
 
@@ -1766,6 +1799,7 @@ $messages['roa-tara'] = array(
 );
 
 /** Russian (Русский)
+ * @author G0rn
  * @author Lockal
  * @author Prima klasy4na
  * @author Александр Сигачёв
@@ -1776,7 +1810,7 @@ $messages['ru'] = array(
 	'myhome-activity-feed' => 'Последние изменения',
 	'myhome-activity-feed-empty' => "Эта вики ждёт от вас участия! Нажмите на ссылку '''[[Special:CreatePage|Новая страница]]''' и начните писать!",
 	'myhome-watchlist-feed' => 'Список наблюдения',
-	'myhome-watchlist-feed-empty' => 'Вы можете добавить страницы в список наблюдения, нажав на ссылку «Следить», расположенную вверху страницы. Вы также можете использовать ваш список наблюдения для слежения за изменениями контролируемых вами страниц.',
+	'myhome-watchlist-feed-empty' => 'Вы можете добавить страницы в список наблюдения, нажав на ссылку «{{int:watch}}», расположенную вверху страницы. Вы также можете использовать ваш список наблюдения для слежения за изменениями контролируемых вами страниц.',
 	'myhome-user-contributions-feed' => 'Вклад',
 	'myhome-hot-spots-feed' => '«Горячие точки»',
 	'myhome-hot-spots-feed-empty' => "Эта вики ждёт от вас участия! Нажмите на ссылку '''[[Special:CreatePage|Новая страница]]''' и начните писать!",
@@ -1813,7 +1847,7 @@ $messages['ru'] = array(
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Добавлено изображение|Добавлены изображения}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Добавлено видео|Добавлены видео}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Добавлена категория|Добавлены категории}}',
-	'myhome-user-contributions-empty' => 'Вы можете принять участие в редактировании вики, если нажмёте ссылку «Править» на любой странице. Любой может делать изменения, добавлять информацию и исправлять ошибки. Вики создана сообществом участников, и вы станете частью этого сообщества, единожды нажав на ссылку редактирования. Попробуйте сами!',
+	'myhome-user-contributions-empty' => 'Вы можете принять участие в редактировании вики, если нажмёте ссылку «{{int:editthispage}}» на любой странице. Любой может делать изменения, добавлять информацию и исправлять ошибки. Вики создана сообществом участников, и вы станете частью этого сообщества, единожды нажав на ссылку редактирования. Попробуйте сами!',
 	'myhome-hot-spots-number-of-editors' => 'правки',
 	'myhome-log-in' => "<center>Функционал «Личный кабинет» будет доступен, только если вы представитесь системе.<br /><br /><big>'''[{{fullurl:Special:UserLogin|$1}} Для просмотра этой страницы необходимо представиться системе!]'''</big></center>",
 	'myhome-switch-to-monaco' => "Функционал «Личный кабинет» доступен только при использовании оформления «Monaco». Если вы желаете видеть этот функционал, то откройте '''[[Special:Preferences|ваши настройки]]''' и измените стиль оформления.",

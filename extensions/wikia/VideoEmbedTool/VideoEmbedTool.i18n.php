@@ -864,6 +864,10 @@ $messages['ia'] = array(
  * @author Kenrick95
  */
 $messages['id'] = array(
+	'vet-size' => 'Ukuran',
+	'vet-thumbnail' => 'Miniatur',
+	'vet-prev' => '8 Sebelumnya',
+	'vet-next' => '8 Berikutnya',
 	'vet-add-button' => 'Tambah Video',
 	'vet-added-from-gallery' => 'menambah video dari galeri video',
 	'vet-see-all' => 'lihat semua',
@@ -882,24 +886,48 @@ $messages['ig'] = array(
 	'vet-find-btn' => 'Chöwá',
 );
 
-/** Italian (Italiano) */
+/** Italian (Italiano)
+ * @author HalphaZ
+ */
 $messages['it'] = array(
+	'vet-find' => 'Trova un video',
 	'vet-flickr' => 'Flickr',
+	'vet-upload-btn' => 'VAI',
 	'vet-find-btn' => 'Ricerca',
+	'vet-flickr-inf' => 'Cerca foto da Flickr con regolare licenza libera e importale nel tuo wiki.',
+	'vet-rename' => 'Rinomina video',
+	'vet-existing' => 'Usa un video esistente',
 	'vet-insert' => 'Inserisci',
 	'vet-name' => 'Nome',
 	'vet-license' => 'Licenza',
 	'vet-size' => 'Dimensione',
 	'vet-thumbnail' => 'Miniatura',
 	'vet-width' => 'Larghezza',
+	'vet-layout' => 'Formattazione',
 	'vet-caption' => 'Didascalia',
 	'vet-optional' => ' (opzionale)',
+	'vet-insert2' => 'Inserisci video',
+	'vet-update' => 'Aggiorna video',
 	'vet-prev' => 'Precedenti 8',
 	'vet-next' => 'Succ 8',
+	'vet-insert3' => 'Inserisci questo video',
+	'vet-recent-inf' => 'Video inseriti recentemente',
 	'vet-back' => 'indietro',
 	'vet-close' => 'chiudi',
+	'vet-imagebutton' => 'Inserisci video',
+	'vet-show-message' => 'mostra messaggio',
+	'vet-hide-message' => 'nascondi messaggio',
+	'vet-hide-license-msg' => 'Nascondi il testo della licenza',
+	'vet-show-license-msg' => 'Mostra il testo della licenza',
+	'vet-title' => 'Aggiungi un video al tuo articolo',
+	'vet-bad-url' => "L'URL fornito non è valido",
+	'vet-non-existing' => 'Il video fornito non esiste',
+	'vet-add-button' => 'Aggiungi video',
+	'vet-see-all' => 'vedi tutti',
 	'vet-left' => 'Sinistra',
 	'vet-right' => 'Giusto',
+	'vet-gallery' => 'Galleria',
+	'vet-protected' => 'Questo video è protetto',
 );
 
 /** Japanese (日本語)
@@ -1644,6 +1672,14 @@ $messages['sr-ec'] = array(
 	'vet-right' => 'десно',
 	'vet-gallery' => 'галерија',
 	'vet-protected' => 'овај видео је заштићен',
+);
+
+/** Swahili (Kiswahili)
+ * @author Lloffiwr
+ */
+$messages['sw'] = array(
+	'vet-left' => 'Kushoto',
+	'vet-right' => 'Kulia',
 );
 
 /** Telugu (తెలుగు)

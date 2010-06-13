@@ -29,6 +29,14 @@ Article '''$1''' could not be found.
  */
 $messages['af'] = array(
 	'our404handler' => 'Fout 404: bladsy nie gevind nie!',
+	'our404handler-oops' => 'Dit is nie die bladsye waarna u soek nie. Beweeg asseblief aan.',
+	'message404' => "'''Dit spyt ons, maar die bladsy waarvoor u gevra het bestaan vir een of ander rede nie.'''
+
+Artikel '''$1''' kon nie gevind word nie.
+
+* U kan artikel [[$2]] probeer
+* U kan die soekveld op die linkerkant van die bladsy gebruik
+* Om na die tuisblad van hierdie webwerf te gaan: [{{SERVER}} {{SITENAME}}]",
 );
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
@@ -242,11 +250,19 @@ Le articulo '''$1''' non poteva esser trovate.
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Irwangatot
  * @author Kenrick95
  */
 $messages['id'] = array(
 	'our404handler' => 'Kesalahan 404: Halaman tidak ditemukan!',
-	'our404handler-oops' => 'Ini bukan halaman yang Anda cari. Mohon pergi.',
+	'our404handler-oops' => 'Ini bukanlah halaman yang anda cari. Silahkan untuk pergi.',
+	'message404' => "'''Kami benar-benar minta maaf, tapi untuk beberapa alasan halaman yang Anda minta tidak ada'''. 
+
+Artikel '''$1''' tidak dapat ditemukan. 
+
+* Anda dapat mencoba artikel [[$2]] 
+* Anda dapat menggunakan kotak pencarian di sisi kiri halaman 
+* Untuk kembali ke halaman utama situs ini, klik pranala: [{{SERVER}} {{SITENAME}}]",
 );
 
 /** Italian (Italiano)

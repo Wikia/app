@@ -745,12 +745,15 @@ $messages['ig'] = array(
 	'stf_message' => 'Ozi',
 );
 
-/** Italian (Italiano) */
+/** Italian (Italiano)
+ * @author HalphaZ
+ */
 $messages['it'] = array(
 	'stf_name_label' => 'Tuo nome',
 	'stf_email_label' => 'Tuo indirizzo e-mail',
 	'stf_frm4_send' => 'Invia',
 	'stf_frm4_cancel' => 'Annulla',
+	'stf_frm4_invite' => "Invia l'invito!",
 	'stf_your_password' => 'Password',
 	'stf_your_name' => 'Password',
 	'stf_message' => 'Messaggio',

@@ -115,6 +115,14 @@ $messages['id'] = array(
 	'interwikidispatcher-desc' => 'Mampu membenahi pranala interwiki link untuk mengurangi pengalihan Apache',
 );
 
+/** Italian (Italiano)
+ * @author HalphaZ
+ */
+$messages['it'] = array(
+	'interwikidispatcher' => 'Dispatcher Interwiki',
+	'interwikidispatcher-desc' => 'Risolve i collegamenti interwiki per ridurre i redirect di Apache',
+);
+
 /** Japanese (日本語)
  * @author Naohiro19
  */

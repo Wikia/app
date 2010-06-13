@@ -120,6 +120,15 @@ $messages['ia'] = array(
 	'taskmanager_tasklist' => 'Retornar al lista de processos',
 );
 
+/** Italian (Italiano)
+ * @author HalphaZ
+ */
+$messages['it'] = array(
+	'taskmanager' => 'Visualizza e gestisci i task in background',
+	'taskmanager_title' => 'Visualizza e gestisci i task in background',
+	'taskmanager_tasklist' => 'Ritorna alla lista dei task',
+);
+
 /** Japanese (日本語)
  * @author Naohiro19
  */

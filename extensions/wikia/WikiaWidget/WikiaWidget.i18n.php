@@ -216,9 +216,10 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Daemorris
+ * @author Giro720
  */
 $messages['pt-br'] = array(
-	'wikiawidget' => 'WikiaWidget',
+	'wikiawidget' => 'Widgets Wikia',
 );
 
 /** Tarandíne (Tarandíne)
