@@ -225,18 +225,18 @@ Check out your fancy new badge on your <a href=\"$5\">user profile page</a>.",
 	 * Badges' details for challenges list on user profile
 	 */
 	'achievements-badge-to-get-edit' => 'make $1 {{PLURAL:$1|edit|edits}} on {{PLURAL:$1|a page|pages}}',
-	'achievements-badge-to-get-edit-plus-category' => 'make $1 {{PLURAL:$1|edit|edits}} on {{PLURAL:$1|a|}} $2 {{PLURAL:$1|page| pages}}',
+	'achievements-badge-to-get-edit-plus-category' => 'make {{PLURAL:$1|one edit|$1 edits}} on {{PLURAL:$1|a page|$2 pages}}',
 	'achievements-badge-to-get-picture' => 'add $1 {{PLURAL:$1|picture|pictures}} to {{PLURAL:$1|a page|pages}}',
 	'achievements-badge-to-get-category' => 'add $1 {{PLURAL:$1|page|pages}} to {{PLURAL:$1|a category|categories}}',
 	'achievements-badge-to-get-blogpost' => 'write $1 {{PLURAL:$1|blog post|blog posts}}',
-	'achievements-badge-to-get-blogcomment' => 'write a comment on $1 different blog posts',
-	'achievements-badge-to-get-love' => 'contribute to the wiki every day for $1 days',
+	'achievements-badge-to-get-blogcomment' => 'write a comment on {{PLURAL:$1|a blog post|$1 different blog posts}}',
+	'achievements-badge-to-get-love' => 'contribute to the wiki every day for {{PLURAL:$1|one day|$1 days}}',
 	'achievements-badge-to-get-welcome' => 'join the wiki',
 	'achievements-badge-to-get-introduction' => 'add to your own user page',
 	'achievements-badge-to-get-sayhi' => 'leave someone a message on their talk page',
 	'achievements-badge-to-get-creator' => 'be the creator of this wiki',
 	'achievements-badge-to-get-pounce' => 'be quick',
-	'achievements-badge-to-get-caffeinated' => 'make $1 edits on pages in a single day',
+	'achievements-badge-to-get-caffeinated' => 'make {{PLURAL:$1|one edit|$1 edits}} on pages in a single day',
 	'achievements-badge-to-get-luckyedit' => 'be lucky',
 
 	/*
