@@ -15,7 +15,9 @@ $messages['en'] = array(
 	'blog-avatar-upload-avatar' => 'Upload a new avatar',
 	'blog-avatar-nouser' => 'Cannot find this user!',
 	'blog-avatar-cannot-remove' => 'Cannot remove avatars for selected user!',
-	'blog-avatar-remove-info' => "This page allows you to remove a user's avatar. Type the exact username in the box provided, and press \"Search\".<br />Please remember, avatars are global - removing a user's avatar removes it across all Wikia.",
+	'blog-avatar-remove-info' => "This page allows you to remove a user's avatar.
+Type the exact username in the box provided, and press \"{{int:blog-avatar-getuser}}\".<br />
+Please remember, avatars are global - removing a user's avatar removes it across all Wikia.",
 	'blog-avatar-getuser' => 'Search',
 	'blog-avatar-remove-confirm' => 'Are you sure you want to remove avatar?',
 	'blog-avatar-error-nofile' => 'Please pick up file from disk',
@@ -23,12 +25,12 @@ $messages['en'] = array(
 	'blog-avatar-error-cantwrite' => 'Unable to save file',
 	'blog-avatar-changed-log' => "Added or changed avatar",
 	'blog-avatar-removed-log' => "Removed $1's avatars",
-	'blog-avatar-save-info' => 'If you want to save changes <a href="#prefcontrol">go to bottom</a> and press "Save" button',
+	'blog-avatar-save-info' => 'If you want to save changes <a href="#prefcontrol">go to bottom</a> and press the "{{int:saveprefs}}" button',
 	'masthead-edits-since' => 'edits since',
 	'useravatar-log' => "User avatar log",
 	'blog-avatar-alt' => "Logs of user avatar additions or removals",
 	'removeuseravatar' => "Remove user's avatar",
-	'right-removeavatar' => 'Remove user\'s avatar',
+	'right-removeavatar' => 'Remove user avatars',
 );
 
 $messages['fi'] = array(
@@ -49,7 +51,7 @@ $messages['fi'] = array(
 	'blog-avatar-error-cantwrite' => 'Jotain tapahtui ja se estää levylle kirjoituksen.',
 	'blog-avatar-changed-log' => 'Avatarin on lisännyt tai vahtanut $1',
 	'blog-avatar-save-info' => 'Mikäli haluat tallentaa asetukset <a href="#prefcontrol">meme alas</a> ja paina "Tallenna asetukset"-nappia',
-	'removeavatar' => 'Poista käyttäjän avatar',
+	'removeuseravatar' => 'Poista käyttäjän avatar',
 	'blog-avatar-alt' => "Avatar",
 );
 
@@ -71,7 +73,6 @@ $messages['de'] = array(
 	'blog-avatar-changed-log' => 'hat einen Avatar hinzugefügt oder geändert',
 	'blog-avatar-removed-log' => 'Entfernte den Avatar von $1',
 	'blog-avatar-save-info' => 'Um Änderungen zu speichern, gehe <a href="#prefcontrol">zum Ende der Seite</a> und wähle „Einstellungen speichern“.',
-	'removeavatar' => 'Entferne Avatar des Benutzers',
 	'masthead-edits-since' => 'Bearbeitungen seit',
 	'useravatar-log' => 'Avatar-Logbuch',
 	'removeuseravatar' => 'Entferne den Avatar eines Benutzers',
@@ -96,7 +97,7 @@ Por favor, recuerda que los avatares son globales - borrando el avatar de un usu
 	'blog-avatar-error-cantwrite' => 'Ha ocurrido un error y no puedes almacenar el archivo.',
 	'blog-avatar-changed-log' => '(Avatar añadido o cambiado)',
 	'blog-avatar-save-info' => 'Si quieres guardar los cambios <a href="#prefcontrol">ve al final</a> y presiona el botón de "Guardar"',
-	'removeavatar' => 'Borrar avatar de usuario',
+	'removeuseravatar' => 'Borrar avatar de usuario',
 	'masthead-edits-since' => 'ediciones desde el',
 );
 
@@ -163,7 +164,7 @@ $messages['ja'] = array(
 	'blog-avatar-changed-log' => 'アバターが追加・変更されました',
 	'blog-avatar-removed-log' => '$1 のアバターを削除しました',
 	'blog-avatar-save-info' => 'ここで行った変更は<a href="#prefcontrol">設定を保存</a>しないと反映されません。',
-	'removeavatar' => 'アバターの削除',
+	'removeuseravatar' => 'アバターの削除',
 	'masthead-edits-since' => '回の編集 | 初回編集',
 	'useravatar-log' => 'アバター記録',
 	'blog-avatar-alt' => 'アバター',
@@ -206,10 +207,6 @@ $messages['ru'] = array(
 	'blog-avatar-save-info' => 'Если хотите сохранить измения, то надо <a href="#prefcontrol">перейти ниже</a> и нажать на кнопку \'\'Записать\'\'',
 	'masthead-edits-since' => 'правок с',
 	'blog-avatar-alt' => 'аватар',
-);
-
-$messages['de&action=edit&redlink=1'] = array(
-	'removeavatar' => 'Entferne Avatar des Benutzers',
 );
 
 $messages['sv'] = array(
