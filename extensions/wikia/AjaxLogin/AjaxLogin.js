@@ -102,7 +102,9 @@ var AjaxLogin = {
 		});
 	},
 	slider: function(e) {
-		e.preventDefault();
+		if(typeof e != 'undefined'){
+			e.preventDefault();
+		}
 
 		// Split into diff functions so that they can be called from elsewhere.
 		if ($(this).hasClass("forward")) {
@@ -112,6 +114,7 @@ var AjaxLogin = {
 		}
 	},
 	slideToNormalLogin: function(el){
+		$().log('AjaxLogin: slideToNormalLogin()');
 		var firstSliderCell = $("#AjaxLoginSlider div:first");
 		var slideto = 0;
 		$("#AjaxLoginConnectMarketing a.forward").show();
@@ -121,6 +124,7 @@ var AjaxLogin = {
 		}, function(){$('#fbLoginAndConnect').hide();});
 	},
 	slideToLoginAndConnect: function(el){
+		$().log('AjaxLogin: slideToLoginAndConnect()');
 		$('#fbLoginAndConnect').show();
 		var firstSliderCell = $("#AjaxLoginSlider div:first");
 		var slideto = -351;
