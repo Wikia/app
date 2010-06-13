@@ -123,7 +123,7 @@ this will create a separate track that you can customize separately.
 When the track is created, the new badges will appear in the list on the left, under the regular Edit track.
 Customize the names and images for the new track, so that users can see the difference!
 
-Once you have done the customization, click the "enabled" checkbox to turn on the new track, and then click "{{int:achievements-save}}".
+Once you have done the customization, click the "{{int:achievements-enable-track}}" checkbox to turn on the new track, and then click "{{int:achievements-save}}".
 Users will see the new track appear on their user profiles, and they will start earning badges when they edit pages in that category.
 You can also disable the track later, if you decide you do not want to highlight that category anymore.
 Users who have earned badges in that track will always keep their badges, even if the track is disabled.
