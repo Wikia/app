@@ -497,7 +497,7 @@ class HAWelcomeJob extends Job {
 		} else {
 			// $1 = wiki link to user's user: page
 			// $2 = plain version of user's name (for future use)
-			$signature = wfMsgExt('staffsig-text', array('parseinline','parsemag'), $userLink, $SysopName);
+			$signature = wfMsg('staffsig-text', $userLink, $SysopName);
 		}
 
 		// restore from backup
