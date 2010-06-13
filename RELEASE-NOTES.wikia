@@ -1,4 +1,5 @@
 == Changes since 201006.2 ==
+* rt#53380: HAweclome: rewrite expandsig to use different format for staff (uberfuzzy)
 * rt#54718: Achievments2: User:Wikia creates user pages not flagged as a bot (uberfuzzy)
 * rt#54716: Achievments2: Platinum for only staff/helpers only (uberfuzzy)
 * rt#51920: Follow: non-users should not have a watchlist (uberfuzzy)
@@ -11,7 +12,7 @@
 * rt#51982: helpers can edit and rename blogs (Owen)
 
 == Changes since 201005.4 ==
-* rt#52891: Blogs: Hide "No comments yet!" if comments are disabled
+* rt#52891: Blogs: Hide "No comments yet!" if comments are disabled (uberfuzzy)
 * upgraded to MW 1.15.4 (emil)
 * rt#51890: allow per hub (@central) adslot config (Nef)
 

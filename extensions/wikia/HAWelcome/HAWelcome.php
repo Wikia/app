@@ -462,22 +462,45 @@ class HAWelcomeJob extends Job {
 
 		wfProfileIn( __METHOD__ );
 
+		// get the welcomer
 		$this->mSysop = $this->getLastSysop();
+
+		// backup the current
 		$tmpUser = $wgUser;
+		// swap in the welcomer (why do we need to do this?)
 		$wgUser = $this->mSysop;
-		$staffTag = ( in_array('staff', $this->mSysop->getEffectiveGroups()) )?'<staff /> ':'';
+
+		// figure out who/what this welcomer is
+		$gEG = $this->mSysop->getEffectiveGroups();
+		$isStaff = in_array('staff', $gEG);
+		$isSysop = in_array('sysop', $gEG);
+
+		// only build these once, since its used both cases
 		$SysopName = wfEscapeWikiText( $this->mSysop->getName() );
-		$signature = sprintf(
-			"-- [[%s:%s|%s]]%s ([[%s:%s|%s]]) %s",
+		$userLink = sprintf(
+			'[[%s:%s|%s]]',
 			$wgContLang->getNsText(NS_USER),
 			$SysopName,
-			$SysopName,
-			$staffTag,
-			$wgContLang->getNsText(NS_USER_TALK),
-			$SysopName,
-			wfMsg( "talkpagelinktext" ),
-			$wgContLang->timeanddate( wfTimestampNow( TS_MW ) )
-		);
+			$SysopName
+			);
+
+		// in cases where user is both staff and sysop, use sysop mode
+		if(!$isStaff || $isSysop) {
+			$signature = sprintf(
+				"-- %s ([[%s:%s|%s]]) %s",
+				$userLink,
+				$wgContLang->getNsText(NS_USER_TALK),
+				$SysopName,
+				wfMsg( "talkpagelinktext" ),
+				$wgContLang->timeanddate( wfTimestampNow( TS_MW ) )
+				);
+		} else {
+			// $1 = wiki link to user's user: page
+			// $2 = plain version of user's name (for future use)
+			$signature = wfMsgExt('staffsig-text', array('parseinline','parsemag'), $userLink, $SysopName);
+		}
+
+		// restore from backup
 		$wgUser = $tmpUser;
 
 		wfProfileOut( __METHOD__ );
