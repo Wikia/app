@@ -228,7 +228,7 @@ Check out your fancy new badge on your <a href=\"$5\">user profile page</a>.",
 	 * Badges' details for challenges list on user profile
 	 */
 	'achievements-badge-to-get-edit' => 'make $1 {{PLURAL:$1|edit|edits}} on {{PLURAL:$1|a page|pages}}',
-	'achievements-badge-to-get-edit-plus-category' => 'make {{PLURAL:$1|one edit|$1 edits}} on {{PLURAL:$1|a page|$2 pages}}',
+	'achievements-badge-to-get-edit-plus-category' => 'make {{PLURAL:$1|one edit|$1 edits}} on {{PLURAL:$1|a $2 page|$2 pages}}',
 	'achievements-badge-to-get-picture' => 'add $1 {{PLURAL:$1|picture|pictures}} to {{PLURAL:$1|a page|pages}}',
 	'achievements-badge-to-get-category' => 'add $1 {{PLURAL:$1|page|pages}} to {{PLURAL:$1|a category|categories}}',
 	'achievements-badge-to-get-blogpost' => 'write $1 {{PLURAL:$1|blog post|blog posts}}',
@@ -245,10 +245,12 @@ Check out your fancy new badge on your <a href=\"$5\">user profile page</a>.",
 	/*
 	 * Badges' details for challenges list hovers on user profile
 	 */
-	'achievements-badge-to-get-edit-details' => 'Is something missing? Is there a mistake?
+	'achievements-badge-to-get-edit-details' => 'Is something missing?
+Is there a mistake?
 Don\'t be shy.
 Click the "{{int:edit}}" button and you can add to any page!',
-	'achievements-badge-to-get-edit-plus-category-details' => 'The <strong>$1</strong> pages need your help! Click the "{{int:edit}}" button on any page in that category to help out.
+	'achievements-badge-to-get-edit-plus-category-details' => 'The <strong>$1</strong> pages need your help!
+Click the "{{int:edit}}" button on any page in that category to help out.
 Show your support for the $1 pages!',
 	'achievements-badge-to-get-picture-details' => 'Click the "{{int:edit}}" button, and then the "{{int:rte-ck-image-add}}" button.
 	You can add a photo from your computer, or from another page on the wiki.',
@@ -282,7 +284,7 @@ Keep editing!',
 	'achievements-badge-hover-desc-edit' => 'for making $1 {{PLURAL:$1|edit|edits}}<br />
 on {{PLURAL:$1|a page|pages}}!',
 	'achievements-badge-hover-desc-edit-plus-category' => 'for making $1 {{PLURAL:$1|edit|edits}}<br />
-on {{PLURAL:$1|a|}} $2 {{PLURAL:$1|page| pages}}!',
+on {{PLURAL:$1|a $2 page|$2 pages}}!',
 	'achievements-badge-hover-desc-picture' => 'for adding $1 {{PLURAL:$1|picture|pictures}}<br />
 to {{PLURAL:$1|a page|pages}}!',
 	'achievements-badge-hover-desc-category' => 'for adding $1 {{PLURAL:$1|page|pages}}<br />
@@ -306,7 +308,7 @@ on someone else\'s talk page!',
 	 * Badges' details for info in notification
 	 */
 	'achievements-badge-your-desc-edit' => 'for making {{PLURAL:$1|your first|$1}} {{PLURAL:$1|edit|edits}} on {{PLURAL:$1|a page|pages}}!',
-	'achievements-badge-your-desc-edit-plus-category' => 'for making {{PLURAL:$1|your first|$1}} {{PLURAL:$1|edit|edits}} on {{PLURAL:$1|a|}} $2 {{PLURAL:$1|page| pages}}!',
+	'achievements-badge-your-desc-edit-plus-category' => 'for making {{PLURAL:$1|your first|$1}} {{PLURAL:$1|edit|edits}} on {{PLURAL:$1|a $2 page|$2 pages}}!',
 	'achievements-badge-your-desc-picture' => 'for adding {{PLURAL:$1|your first|$1}} {{PLURAL:$1|picture|pictures}} to {{PLURAL:$1|a page|pages}}!',
 	'achievements-badge-your-desc-category' => 'for adding {{PLURAL:$1|your first|$1}} {{PLURAL:$1|page|pages}} to {{PLURAL:$1|a category|categories}}!',
 	'achievements-badge-your-desc-blogpost' => 'for writing {{PLURAL:$1|your first|$1}} {{PLURAL:$1|blog post|blog posts}}!',
@@ -324,7 +326,7 @@ on someone else\'s talk page!',
 	 * Badges' details for recent badges list on leaderboard
 	 */
 	'achievements-badge-desc-edit' => 'for making $1 {{PLURAL:$1|edit|edits}} on {{PLURAL:$1|a page|pages}}!',
-	'achievements-badge-desc-edit-plus-category' => 'for making $1 {{PLURAL:$1|edit|edits}} on {{PLURAL:$1|a|}} $2 {{PLURAL:$1|page| pages}}!',
+	'achievements-badge-desc-edit-plus-category' => 'for making $1 {{PLURAL:$1|edit|edits}} on {{PLURAL:$1|a $2 page|$2 pages}}!',
 	'achievements-badge-desc-picture' => 'for adding $1 {{PLURAL:$1|picture|pictures}} to {{PLURAL:$1|a page|pages}}!',
 	'achievements-badge-desc-category' => 'for adding $1 {{PLURAL:$1|page|pages}} to {{PLURAL:$1|a category|categories}}!',
 	'achievements-badge-desc-blogpost' => 'for writing $1 {{PLURAL:$1|blog post|blog posts}}!',
