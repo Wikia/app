@@ -47,7 +47,7 @@ Please try another one!',
 	 */
 	'achievements-notification-title' => 'Way to go, $1!',
 	'achievements-notification-subtitle' => 'You just earned the "$1" badge $2',
-	'achievements-notification-link' => '<strong><big>[[Special:MyPage|Click here to see more badges you can earn]]!</big></strong>',
+	'achievements-notification-link' => '<strong><big>[[Special:MyPage|See more badges you can earn]]!</big></strong>',
 	'achievements-points' => '$1 {{PLURAL:$1|point|points}}',
 	'achievements-points-with-break' => '$1<br />{{PLURAL:$1|point|points}}',
 
@@ -106,7 +106,8 @@ If you have a graphics program, then you can crop your picture to put the import
 If you do no have a graphics program, then just experiment with different pictures until you find the ones that work for you!
 If you do not like the picture that you have chosen, click "{{int:achievements-revert}}" to go back to the original graphic.
 
-You can also give the badges new names that reflect the topic of the wiki. When you have changed badge names, click "{{int:achievements-save}}" to save your changes.
+You can also give the badges new names that reflect the topic of the wiki.
+When you have changed badge names, click "{{int:achievements-save}}" to save your changes.
 Have fun!',
 
 	'achievements-edit-plus-category-track-name' => '$1 edit track',
@@ -138,13 +139,15 @@ Try it out!',
 	'achievements-community-platinum-awarded-email-subject' => 'You have been awarded a new Platinum badge!',
 	'achievements-community-platinum-awarded-email-body-text' => "Congratulations $1!
 
-You have just been awarded with the '$2' Platinum badge on $4 ($3). This adds 250 points to your score!
+You have just been awarded with the '$2' Platinum badge on $4 ($3).
+This adds 250 points to your score!
 
 Check out your fancy new badge on your user profile page:
 
 $5",
 	'achievements-community-platinum-awarded-email-body-html' => "<strong>Congratulations $1!</strong><br/><br/>
-You have just been awarded with the '<strong>$2</strong>' Platinum badge on <a href=\"$3\">$4</a>. This adds 250 points to your score!<br/><br/>
+You have just been awarded with the '<strong>$2</strong>' Platinum badge on <a href=\"$3\">$4</a>.
+This adds 250 points to your score!<br/><br/>
 Check out your fancy new badge on your <a href=\"$5\">user profile page</a>.",
 	'achievements-community-platinum-awarded-for' => 'Awarded for:',
 	'achievements-community-platinum-how-to-earn' => 'How to earn:',
@@ -243,7 +246,8 @@ Check out your fancy new badge on your <a href=\"$5\">user profile page</a>.",
 	 * Badges' details for challenges list hovers on user profile
 	 */
 	'achievements-badge-to-get-edit-details' => 'Is something missing? Is there a mistake?
-Don\'t be shy. Click the "{{int:edit}}" button and you can add to any page!',
+Don\'t be shy.
+Click the "{{int:edit}}" button and you can add to any page!',
 	'achievements-badge-to-get-edit-plus-category-details' => 'The <strong>$1</strong> pages need your help! Click the "{{int:edit}}" button on any page in that category to help out.
 Show your support for the $1 pages!',
 	'achievements-badge-to-get-picture-details' => 'Click the "{{int:edit}}" button, and then the "{{int:rte-ck-image-add}}" button.
@@ -265,7 +269,7 @@ Ask for help, thank them for their work, or just say hi!',
 	'achievements-badge-to-get-creator-details' => 'This badge is given to the person who founded the wiki.
 Click the "{{int:createwiki}}" button at the top to start a site about whatever you like most!',
 	'achievements-badge-to-get-pounce-details' => 'You have to be quick to earn this badge.
-Click the "{{int:activityfeed}}" feed button to see the new pages that users are creating!',
+Click the "{{int:activityfeed}}" button to see the new pages that users are creating!',
 	'achievements-badge-to-get-caffeinated-details' => 'It takes a busy day to earn this badge.
 Keep editing!',
 	'achievements-badge-to-get-luckyedit-details' => 'You have got to be lucky to earn this badge.
