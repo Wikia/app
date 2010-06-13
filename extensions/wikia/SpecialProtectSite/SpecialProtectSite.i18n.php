@@ -3,6 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'specialprotectsite-desc' => 'Allows a site administrator to [[Special:ProtectSite|temporarily block various site modifications]]',
 	'protectsite' => 'Protect site',
 	'protectsite-text-protect' => '<!-- Instructions/Comments/Policy for use -->',
 	'protectsite-text-unprotect' => '<!-- Instructions/Comments when protected -->',
