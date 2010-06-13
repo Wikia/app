@@ -544,6 +544,13 @@ $messages['sr-ec'] = array(
 	'protectsite-unprotect' => 'Скини заштиту',
 );
 
+/** Swahili (Kiswahili)
+ * @author Lloffiwr
+ */
+$messages['sw'] = array(
+	'protectsite-allowall' => 'Watumiaji wote',
+);
+
 /** Telugu (తెలుగు)
  * @author Veeven
  */

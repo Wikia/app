@@ -298,6 +298,23 @@ $messages['ps'] = array(
 	'tagsreportgo' => 'ښکاره کول',
 );
 
+/** Portuguese (Português)
+ * @author Giro720
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'tagsreport' => "Relatório de elementos ''(tags)''",
+	'tagsreporttitle' => "Relatório de elementos ''(tags)''",
+	'tagsreportselecttag' => 'Seleccione o elemento:',
+	'tagsreportgo' => 'Apresentar',
+	'tagsreportnotspecify' => 'Ainda não seleccionou nenhum elemento especial',
+	'tagsreportnoresults' => 'Não foi encontrado nenhum resultado',
+	'tagsreportmainnspace' => 'Principal',
+	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|página|páginas}})',
+	'tagsreportpagesfound' => 'Foram encontradas <strong>$1</strong> páginas que contêm um elemento especial (dpl, youtube, etc)',
+	'tagsreportgenerated' => 'Gerado em $1',
+);
+
 /** Brazilian Portuguese (Português do Brasil)
  * @author Luckas Blade
  */
@@ -338,6 +355,15 @@ $messages['sr-ec'] = array(
 	'tagsreportpages' => '(<strong>$1</strong>  {{PLURAL:$1|page|странице}})',
 	'tagsreportpagesfound' => 'Пронађено је <strong>$1</strong> страница које садрже посебне ознаке (dpl, youtube, итд.)',
 	'tagsreportgenerated' => 'Направљено на $1',
+);
+
+/** Swahili (Kiswahili)
+ * @author Lloffiwr
+ */
+$messages['sw'] = array(
+	'tagsreportgo' => 'Onyesha',
+	'tagsreportmainnspace' => 'Kuu',
+	'tagsreportpages' => '({{PLURAL:$1|ukurasa|kurasa}} <strong>$1</strong>)',
 );
 
 /** Tagalog (Tagalog)

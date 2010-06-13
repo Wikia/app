@@ -116,6 +116,14 @@ $messages['id'] = array(
 	'templatesused-toggle' => 'Tampilkan/sembunyikan {{plural:$1||}} item',
 );
 
+/** Italian (Italiano)
+ * @author HalphaZ
+ */
+$messages['it'] = array(
+	'new-edit-page-preview-notice' => 'Modalità anteprima: nessuna modifica è stata salvata ancora! Scorri giù per continuare ad apportare modifiche.',
+	'templatesused-toggle' => 'Mostra/nascondi {{PLURAL:$1|$1 oggetto|$1 oggetti}}',
+);
+
 /** Japanese (日本語)
  * @author Tommy6
  */
@@ -228,6 +236,14 @@ $messages['ru'] = array(
 $messages['sr-ec'] = array(
 	'new-edit-page-preview-notice' => 'Претпреглед: промене нису сачуване! Померите клизач надоле да наставите с уређивањем.',
 	'templatesused-toggle' => 'Прикажи/сакриј {{PLURAL:$1|$1 ставка|$1 ставки}}',
+);
+
+/** Swahili (Kiswahili)
+ * @author Lloffiwr
+ */
+$messages['sw'] = array(
+	'new-edit-page-preview-notice' => 'Unahakikisha tu: mabadiliko hayajahifadhika bado! Biringiza chini ili uendelee kuhariri.',
+	'templatesused-toggle' => 'Fichua/ficha {{PLURAL:$1|kitu $1|vitu $1}}',
 );
 
 /** Tagalog (Tagalog)

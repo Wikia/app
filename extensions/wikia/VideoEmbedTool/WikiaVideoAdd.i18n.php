@@ -242,6 +242,8 @@ $messages['id'] = array(
  * @author HalphaZ
  */
 $messages['it'] = array(
+	'wva-success' => 'La pagina video $1 è stata aggiunta con successo.',
+	'wva-success-replaced' => 'La pagina video $1 è stata sostituita con successo.',
 	'wva-failure' => 'Prego inserisci parametri validi.',
 	'wva-name' => 'Inserisci il nome:',
 	'wva-url' => "Inserisci l'URL:",

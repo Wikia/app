@@ -905,7 +905,13 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'daemonloader_selectlist' => 'له لړليک نه ټاکل',
 	'daemonloader_search' => 'پلټنه:',
+	'daemonloader_daemonchanged' => 'ستاسې بدلونونه خوندي شول',
+	'daemonloader_daemonnotchanged' => 'ستاسې بدلونونه خوندي نه شول',
+	'daemonloader_date_yyyymmdd' => 'نېټه (ک.ک.ک.ک.م.م.و.و)',
+	'daemonloader_date_yyyymm' => 'مياشتې (ک.ک.ک.ک.م.م)',
+	'daemonloader_date_yyyy' => 'کالونه (ک.ک.ک.ک)',
 	'daemonloader_wikilist' => 'ويکي لړليک',
 	'daemonloader_gonextstep' => 'بل پړاو ته ورتلل',
 	'daemonloader_startdate' => 'د پيل نېټه',

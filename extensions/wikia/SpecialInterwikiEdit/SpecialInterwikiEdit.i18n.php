@@ -151,6 +151,13 @@ $messages['ia'] = array(
 	'iwedit-success' => '<p>Creation de ligamine succedite.</p>',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Irwangatot
+ */
+$messages['id'] = array(
+	'iwedit-all-interwikis' => 'semua interwiki',
+);
+
 /** Italian (Italiano) */
 $messages['it'] = array(
 	'iwedit-update' => 'Aggiorna',

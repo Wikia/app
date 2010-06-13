@@ -319,6 +319,13 @@ $messages['ia'] = array(
 	'cathub-tags' => 'Etiquettas',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Irwangatot
+ */
+$messages['id'] = array(
+	'cathub-question-asked-by' => 'oleh $1',
+);
+
 /** Japanese (日本語)
  * @author Tommy6
  * @author 青子守歌

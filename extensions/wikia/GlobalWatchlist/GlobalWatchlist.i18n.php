@@ -392,6 +392,7 @@ Groet, Wikia
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
  * @author Nghtwlkr
  */
 $messages['no'] = array(
@@ -410,7 +411,7 @@ Dette er en liste over bloggsider på din Wikiaovervåkningsliste som har blitt 
 
 $3
 
-Besøk dem og rediger ofte...
+Vennligst kom på besøk og rediger ofte...
 
 Wikia
 

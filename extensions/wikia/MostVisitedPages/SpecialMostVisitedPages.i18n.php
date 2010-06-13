@@ -173,6 +173,18 @@ $messages['ia'] = array(
 	'mostvisitedpagesalllink' => 'Vider le paginas le plus visitate',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Irwangatot
+ */
+$messages['id'] = array(
+	'mostvisitedpages' => 'Halaman paling banyak dikunjungi',
+	'mostvisitedpagessearchtext' => 'Nama artikel:',
+	'mostvisitedpagessearchbtn' => 'cari',
+	'mostvisitedpageslatest' => 'dalam $1 menit  terakhir',
+	'mostvisitedpageslatestlink' => 'Lihat halaman terakhir dikunjungi',
+	'mostvisitedpagesalllink' => 'Lihat halaman yang tersering dikunjungi',
+);
+
 /** Italian (Italiano) */
 $messages['it'] = array(
 	'mostvisitedpagessearchbtn' => 'ricerca',

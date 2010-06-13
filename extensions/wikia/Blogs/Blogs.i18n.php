@@ -124,10 +124,14 @@ Create blog listing pages for categories such as "Barack Obama", "Fan Fiction", 
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
+ * @author Lloffiwr
  * @author Siebrand
  * @author Umherirrender
  */
 $messages['qqq'] = array(
+	'create-blog-post-recent-listing-log' => 'Edit summary, maybe.',
+	'create-blog-empty-article-log' => 'Edit summary',
+	'create-blog-listing-preview' => 'This is an H2 level header above a preview.',
 	'create-blog-listing-matches-info' => 'Looks like this message may have a leading number. Please check. If so, integrate in message.',
 	'blog-last-edited' => 'If $1 is a time stamp, split date and time to $2 and $3.',
 	'blog-comments' => '{{Identical|Comment}}',
@@ -842,7 +846,7 @@ Créez des pages de listage de blogs pour des catégories comme « Barack Obama 
 	'blog-comments-asc' => 'Nouveaux messages en dernier',
 	'blog-comments-anonymous' => 'Utilisateur anonyme',
 	'blog-comment-delete' => 'Supprimer',
-	'blog-comment-hide' => 'Masquer',
+	'blog-comment-hide' => 'masquer',
 	'blog-comment-unhide' => 'Afficher',
 	'blog-comment-history' => 'historique',
 	'blog-comment-edit' => 'modifier',
@@ -1207,14 +1211,19 @@ $messages['id'] = array(
 	'blog-subheader' => '{{PLURAL:$1|Ada satu posting blog|berikut $1 artikel blog}} dalam kategori ini.',
 	'blog-subheader-all' => '{{PLURAL:$1|Ada satu artikel blog dalam kategori ini|Berikut $1 artikel dalam kategori blog ini, dari total sebesar $2.}}',
 	'blog-defaulttitle' => 'Blog',
+	'blog-nbrcomments' => '{{PLURAL:$1|Satu komentar|$1 komentar}}',
 	'blog-added' => 'ditambahkan',
 	'blog-edited' => 'disunting',
 	'blog-page' => 'Blog',
+	'blog-zero-comments' => 'Belum ada komentar!',
+	'blog-comments' => 'Komentar',
+	'blog-comments-label' => 'Mengomentari',
 	'blog-comment-delete' => 'hapus',
 	'blog-comment-hide' => 'sembunyikan',
 	'blog-comment-unhide' => 'Jangan sembunyikan',
 	'blog-comment-history' => 'Versi terdahulu',
 	'blog-fromsitename' => 'Dari $1',
+	'blog-desc' => 'Artikel blog',
 );
 
 /** Igbo (Igbo) */
@@ -1383,9 +1392,10 @@ $messages['ja'] = array(
 	'blog-fromsitename' => '$1 より',
 	'blogs-reportproblem' => '問題の報告',
 	'blogs-comment-hidden' => 'このコメントは非表示になっています',
-	'right-blog-comments-toggle' => 'ブログのコメントの有効無効を切り替え',
-	'right-blog-comments-delete' => 'ブログのコメントの削除',
+	'right-blog-comments-toggle' => 'ブログの記事につけられたコメントの表示非表示を切り替え',
+	'right-blog-comments-delete' => 'ブログの記事につけられたコメントの削除',
 	'right-blog-articles-edit' => 'ブログの記事の編集',
+	'right-blog-articles-move' => 'ブログの記事の移動',
 	'blogs-undeleted-comment' => 'ブログの記事 $1 へのコメントを復帰',
 	'blogs-recent-url-text' => '最近のブログの投稿',
 	'blog-desc' => 'ブログスタイルの記事',
@@ -2354,6 +2364,67 @@ $messages['sr-ec'] = array(
 	'blog-widgets-label' => 'Табла са алаткама',
 	'blog-fromsitename' => 'од $1',
 	'blogs-reportproblem' => 'Пријави проблем',
+);
+
+/** Swahili (Kiswahili)
+ * @author Lloffiwr
+ * @author Muddyb Blast Producer
+ */
+$messages['sw'] = array(
+	'createblogpage' => 'Anzisha blogu',
+	'createbloglistingpage' => 'Anzisha orodha ya blogu',
+	'create-blog-spam' => 'Inaonekana kama spamu',
+	'create-blog-cant-edit' => 'Imeshindikana kutekeleza haririo',
+	'create-blog-post-category' => 'Michango ya blogu',
+	'create-blog-post-category-body' => 'Hii ni orodha ya michango ya blogu inayotayarishwa na tarakilishi',
+	'create-blog-post-category-log' => 'Makala ya jamii ilianzishwa kwa ajili ya michango ya blogu',
+	'create-blog-post-recent-listing' => 'Michango ya blogu ya karibuni',
+	'create-blog-post-recent-listing-title' => 'Michango ya blogu ya karibuni',
+	'create-blog-post-recent-listing-log' => 'Makala ilianzishwa kwa ajili ya michango ya blogu ya karibuni',
+	'create-blog-post-title' => 'Anzisha mchango mpya wa blogu',
+	'create-blog-form-title' => 'Ni nini mchango wa blogu?',
+	'create-blog-form-post-text' => 'Maandishi ya blogu',
+	'create-blog-form-post-title' => 'Kichwa cha mchango wa blogu',
+	'create-blog-empty-title-error' => 'Kichwa cha mchango kinahitajika',
+	'create-blog-empty-post-error' => 'Mchango huu wa blogu ni tupu',
+	'create-blog-empty-article-log' => 'Makala ilianzishwa kwa ajili ya orodha ya blogu',
+	'create-blog-invalid-title-error' => 'Jina batili',
+	'create-listing-confirm-info' => 'Unakilishe ukabandike kodi zifuatazo:',
+	'create-blog-no-login' => 'Hujaingia',
+	'create-blog-categories-textinput' => 'Ongeza jamii mpya',
+	'create-blog-categories-submit' => 'Wasilisha',
+	'create-blog-save' => 'Hifadhi ukurasa',
+	'create-blog-preview' => 'Onyesha hakikisho la mabadiliko',
+	'create-blog-permission-denied' => 'Ilitokea hitilafu wakati wa kuhifadhi ukurasa wa blogu: Ruhusa imekataliwa',
+	'create-blog-listing-preview' => 'Hakiki',
+	'create-blog-listing-sortby' => 'Panga kwa',
+	'create-blog-listing-sortby-date' => 'Hivi karibuni',
+	'create-blog-listing-sortby-author' => 'Mwandishi',
+	'blog-defaulttitle' => 'Blogu',
+	'blog-continuereading' => 'Endelea kusoma &raquo;',
+	'blog-readfullpost' => 'Soma mchango mzima wa blogu',
+	'blog-writeone' => 'Andika blogu!',
+	'blog-page' => 'Blogu',
+	'blog-zero-comments' => 'Bado hakuna maoni!',
+	'blog-comment-post' => 'Changa maoni',
+	'blog-comments' => 'Maoni',
+	'blog-rc-comments' => 'Maoni juu ya blogu',
+	'blog-comments-new' => 'Mchango mpya wa maoni katika blogu',
+	'blog-comments-save' => 'Uhifadhi mchango wa maoni katika blogu',
+	'blog-comment-delete' => 'futa',
+	'blog-comment-hide' => 'ficha',
+	'blog-comment-unhide' => 'fichua',
+	'blog-comment-history' => 'historia',
+	'blog-comment-edit' => 'hariri',
+	'blog-create-post-label' => 'Anzisha mchango wa blogu',
+	'blog-create-label' => 'Anzisha makala ya blogu',
+	'blog-create-next-label' => 'Anzisha makala mpya ya blogu',
+	'blog-userblog' => 'Blogu ya $1',
+	'blog-fromsitename' => 'Kutoka kwa $1',
+	'blogs-reportproblem' => 'Ripoti tatizo',
+	'right-blog-articles-edit' => 'Kuhariri makala za blogu',
+	'right-blog-articles-move' => 'Kusogeza makala za blogu',
+	'blog-desc' => 'Makala za blogu',
 );
 
 /** Telugu (తెలుగు)

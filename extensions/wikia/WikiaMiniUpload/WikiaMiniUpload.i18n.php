@@ -1688,6 +1688,20 @@ $messages['sv'] = array(
 	'wmu-added-from-plc' => 'Arkiv tillsätts med hjälp av bild platshållare',
 );
 
+/** Swahili (Kiswahili)
+ * @author Lloffiwr
+ */
+$messages['sw'] = array(
+	'wmu-name' => 'Jina',
+	'wmu-license' => 'Hatimiliki',
+	'wmu-size' => 'Ukubwa',
+	'wmu-thumbnail' => 'Picha ndogo',
+	'wmu-fullsize' => 'Ukubwa wa kweli ($1x$2ps)',
+	'wmu-width' => 'Upana',
+	'wmu-caption' => 'Kichwa cha picha',
+	'wmu-link' => 'Kiungo',
+);
+
 /** Telugu (తెలుగు)
  * @author Veeven
  */

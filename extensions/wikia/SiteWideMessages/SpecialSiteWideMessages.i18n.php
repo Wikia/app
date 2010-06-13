@@ -88,16 +88,23 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
+ * @author Lloffiwr
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'swm-page-title-sent' => 'Page title after message is sent out.',
+	'swm-page-title-list' => 'List is a noun here',
 	'swm-label-preview' => '{{Identical|Preview}}',
 	'swm-label-edit' => '{{Identical|Edit}}',
 	'swm-label-remove' => '{{Identical|Remove}}',
-	'swm-label-list' => '{{Identical|List}}',
+	'swm-label-sent' => 'Page title after message is sent out.',
+	'swm-label-list' => 'List is a noun here.
+
+{{Identical|List}}',
 	'swm-label-recipient-users' => '{{Identical|User}}',
 	'swm-label-content' => '{{Identical|Content}}',
 	'swm-label-comment' => '{{Identical|Comment}}',
+	'swm-label-dismissed' => 'Page title after message is sent out.',
 	'swm-label-language' => '{{Identical|Language}}',
 	'swm-button-preview' => '{{Identical|Preview}}',
 	'swm-button-send' => '{{Identical|Send}}',
@@ -105,6 +112,7 @@ $messages['qqq'] = array(
 	'swm-button-new' => '{{Identical|New}}',
 	'swm-expire-info' => 'If $1 is a time stamp, split date and time.',
 	'swm-list-table-group' => '{{Identical|Group}}',
+	'swm-list-table-removed' => 'Column heading of a table with one message per line. The column contains either yes or no if the message was removed or not.',
 	'swm-list-table-content' => '{{Identical|Content}}',
 	'swm-list-table-lang' => '{{Identical|Language}}',
 	'swm-yes' => '{{Identical|Yes}}',
@@ -1435,6 +1443,19 @@ $messages['sr-ec'] = array(
 	'swm-error-empty-message' => 'Унесите садржај поруке',
 	'swm-error-empty-group' => 'Унесите име за групу:',
 	'swm-lang-other' => 'сви преостали језици',
+);
+
+/** Swahili (Kiswahili)
+ * @author Lloffiwr
+ */
+$messages['sw'] = array(
+	'swm-label-preview' => 'Hakikisha',
+	'swm-label-edit' => 'Hariri',
+	'swm-label-remove' => 'Ondoa',
+	'swm-label-list' => 'Orodha',
+	'swm-label-recipient-wikis' => 'Wiki',
+	'swm-label-recipient-users' => 'Watumiaji',
+	'swm-label-mode-wikis-all' => 'Wiki zote',
 );
 
 /** Telugu (తెలుగు)

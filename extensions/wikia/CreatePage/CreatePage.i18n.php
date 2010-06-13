@@ -552,12 +552,54 @@ Scribe hic le prime section de tu articulo.
 Scribe hic le secunde section de tu articulo.',
 );
 
-/** Italian (Italiano) */
+/** Indonesian (Bahasa Indonesia)
+ * @author Irwangatot
+ */
+$messages['id'] = array(
+	'createpage_title_caption' => 'Judul:',
+);
+
+/** Italian (Italiano)
+ * @author HalphaZ
+ */
 $messages['it'] = array(
+	'createpage-sp-title' => 'Crea un nuovo articolo',
+	'createpage_title' => 'Crea un nuovo articolo',
 	'createpage_title_caption' => 'Titolo:',
 	'createpage_enter_text' => 'Testo:',
+	'createpage_empty_title_error' => 'Titolo necessario',
+	'createpage_empty_article_body_error' => "Testo dell'articolo richiesto",
 	'createpage_invalid_title_error' => 'Titolo non valido',
+	'createpage_article_already_exists' => 'Un articolo con questo nome esiste già.
+Seleziona un nome diverso.',
+	'createpage_spam' => 'Spiacente, la tua modifica non può essere salvata',
+	'createpage_cant_edit' => 'Impossibile effettuare la modifica',
+	'createpage-dialog-title' => 'Crea un nuovo articolo',
+	'createpage-dialog-message1' => 'Evviva, stai creando una nuova pagina!',
+	'createpage-dialog-message2' => 'Come la vuoi chiamare?',
+	'createpage-dialog-choose' => 'Scegli una formattazione per la pagina:',
+	'createpage-dialog-format' => 'Formattazione standard',
 	'createpage-dialog-blank' => 'Pagina vuota',
+	'createpage-error-empty-title' => 'Scrivi un titolo per il tuo articolo',
+	'createpage-error-invalid-title' => "Spiacente, il titolo dell'articolo non era valido.
+Utilizza un titolo diverso.",
+	'createpage-error-article-exists' => 'Un articolo con questo titolo esiste già. 
+Puoi andare a <a href="$1">$2</a> , o rinominare la tua pagina',
+	'createpage-error-article-spam' => "Spiacente, il titolo dell'articolo è stata respinto dal nostro filtro anti-spam.
+Usa un titolo diverso.",
+	'createpage-error-article-blocked' => 'Spiacente, non puoi creare questo articolo in questo momento.',
+	'tog-createpagedefaultblank' => 'Utilizza una pagina vuota come default per la creazione di una nuova pagina',
+	'tog-createpagepopupdisabled' => 'Disattiva il pop-up Crea pagina',
+	'newpagelayout' => '[[File:Placeholder|right|300px]]
+Scrivi qui il primo paragrafo del tuo articolo.
+
+==Titolo della sezione==
+
+Scrivi qui la prima sezione del tuo articolo.
+
+==Titolo della sezione==
+
+Scrivi qui la seconda sezione del tuo articolo.',
 );
 
 /** Japanese (日本語)

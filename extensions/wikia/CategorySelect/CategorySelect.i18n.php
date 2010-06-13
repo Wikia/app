@@ -453,6 +453,7 @@ Terugschakelen naar visuele weergave is niet mogelijk.',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
  * @author Nghtwlkr
  */
 $messages['no'] = array(
@@ -463,9 +464,9 @@ $messages['no'] = array(
 	'categoryselect-infobox-sortkey' => 'Alfabetiser denne artikkelen under kategorisiden «$1» under navnet:',
 	'categoryselect-addcategory-button' => 'Legg til kategori',
 	'categoryselect-suggest-hint' => 'Trykk Enter når du er ferdig',
-	'categoryselect-tooltip' => "'''Ny.''' Verktøylinje for kategorimerking. Prøv den eller se [[Help:CategorySelect|her]] for å lære mer",
+	'categoryselect-tooltip' => "'''Nyhet!''' Verktøylinje for kategorimerking. Prøv den eller se [[Help:CategorySelect|her]] for å lære mer",
 	'categoryselect-unhandled-syntax' => 'Uhåndtert syntaks oppdaget - umulig å bytte tilbake til visuell modus.',
-	'categoryselect-edit-summary' => 'Legg til kategorier',
+	'categoryselect-edit-summary' => 'Legger til kategorier',
 	'categoryselect-empty-name' => 'Oppgi kategorinavn (del før |)',
 	'categoryselect-button-save' => 'Lagre',
 	'categoryselect-button-cancel' => 'Avbryt',

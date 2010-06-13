@@ -1065,6 +1065,17 @@ $messages['ia'] = array(
 	'multiwikirecords' => '$1 wikis trovate',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Irwangatot
+ */
+$messages['id'] = array(
+	'multitasks-link-back-label' => 'di sini',
+	'multiwikiedit_caption' => 'Daftar halaman',
+	'multiwikiedit_or' => '<b>ATAU</b>',
+	'multiwikiedit_success_subtitle' => 'untuk $1',
+	'multidelete_button' => 'HAPUS',
+);
+
 /** Igbo (Igbo) */
 $messages['ig'] = array(
 	'multidelete_button' => 'Gbakashia',

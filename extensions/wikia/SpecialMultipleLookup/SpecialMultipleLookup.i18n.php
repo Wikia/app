@@ -486,6 +486,14 @@ $messages['sr-ec'] = array(
 	'multilookupdetails' => 'погледај детаље',
 );
 
+/** Swahili (Kiswahili)
+ * @author Lloffiwr
+ */
+$messages['sw'] = array(
+	'multilookupgo' => 'Nenda',
+	'multilookupwiki' => 'Wiki',
+);
+
 /** Telugu (తెలుగు)
  * @author Veeven
  */

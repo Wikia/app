@@ -79,11 +79,12 @@ $messages['br'] = array(
 	'user-bagde-copypaste-ext-code' => "Eilañ ha pegañ (e lec'hiennoù diavaez)",
 	'user-bagde-copypaste-int-code' => 'Eilañ & pegañ (ar Wikia-añ)',
 	'user-bagde-copypaste-int-other-code' => 'Eilañ ha pegañ (en ur Wikia all)',
-	'user-badge-save-info' => "M'ho peus c'hoant enrollañ ar c'hemmoù, kit e traoñ ar bajenn ha klikit war ar bouton \"Enrollañ\".",
+	'user-badge-save-info' => "M'ho peus c'hoant enrollañ ar c'hemmoù, kit e traoñ ar bajenn ha klikit war ar bouton \"{{int:saveprefs}}\".",
 );
 
 /** German (Deutsch)
  * @author LWChris
+ * @author The Evil IP address
  */
 $messages['de'] = array(
 	'user-badge-title' => 'Benutzer-Sticker',
@@ -117,17 +118,18 @@ $messages['de'] = array(
 	'user-bagde-copypaste-ext-code' => 'Copy & Paste (externe Seiten)',
 	'user-bagde-copypaste-int-code' => 'Copy & Paste (in diesem Wiki)',
 	'user-bagde-copypaste-int-other-code' => 'Copy & Paste (anderes Wikia)',
-	'user-badge-save-info' => 'Wenn du die Änderungen speichern möchtest, scrolle bitte zum Ende der Seite und klicke auf "Speichern".',
+	'user-badge-save-info' => 'Wenn du die Änderungen speichern möchtest, scrolle bitte zum Ende der Seite und klicke auf „{{int:saveprefs}}“.',
 );
 
 /** German (formal address) (Deutsch (Sie-Form))
  * @author LWChris
+ * @author The Evil IP address
  */
 $messages['de-formal'] = array(
 	'user-badge-dialog-title' => 'Bitte wählen Sie eine Farbe',
 	'user-badge-configure' => 'Richten Sie Ihren Sticker ein',
 	'user-badge-use-configurator' => 'Benutzen Sie den Konfigurator um einen neuen Sticker zu erstellen!',
-	'user-badge-save-info' => 'Wenn Sie die Änderungen speichern möchten, scrollen Sie bitte zum Ende der Seite und klicken Sie auf "Speichern".',
+	'user-badge-save-info' => 'Wenn Sie die Änderungen speichern möchten, scrollen Sie bitte zum Ende der Seite und klicken Sie auf „{{int:saveprefs}}“.',
 );
 
 /** British English (British English)
@@ -167,6 +169,7 @@ $messages['en-gb'] = array(
 );
 
 /** Spanish (Español)
+ * @author Crazymadlover
  * @author Locos epraix
  * @author Pertile
  * @author Translationista
@@ -200,7 +203,7 @@ $messages['es'] = array(
 	'user-bagde-copypaste-ext-code' => 'copiar y pegar (sitios externos):',
 	'user-bagde-copypaste-int-code' => 'Copiar y pegar (esta Wikia)',
 	'user-bagde-copypaste-int-other-code' => 'Copiar y pegar (otra Wikia)',
-	'user-badge-save-info' => 'Si deseas guardar los cambios, ve al final de la página y haz clic sobre el botón "Guardar"',
+	'user-badge-save-info' => 'Si deseas guardar los cambios, ve al final de la página y haz clic sobre el botón "{{int:saveprefs}}"',
 );
 
 /** Finnish (Suomi)
@@ -214,6 +217,7 @@ $messages['fi'] = array(
 );
 
 /** French (Français)
+ * @author IAlex
  * @author Peter17
  */
 $messages['fr'] = array(
@@ -245,7 +249,7 @@ $messages['fr'] = array(
 	'user-bagde-copypaste-ext-code' => 'Copier et coller (dans des sites externes)',
 	'user-bagde-copypaste-int-code' => 'Copier et coller (dans ce Wikia)',
 	'user-bagde-copypaste-int-other-code' => 'Copier et coller (dans un autre Wikia)',
-	'user-badge-save-info' => 'Si vous voulez enregistrer les changements, rendez-vous en bas de la page et cliquez sur le bouton « Enregistrer ».',
+	'user-badge-save-info' => 'Si vous voulez enregistrer les changements, rendez-vous en bas de la page et cliquez sur le bouton « {{int:saveprefs}} ».',
 );
 
 /** Galician (Galego)
@@ -280,7 +284,7 @@ $messages['gl'] = array(
 	'user-bagde-copypaste-ext-code' => 'Copiar e pegar (en sitios externos)',
 	'user-bagde-copypaste-int-code' => 'Copiar e pegar (neste Wikia)',
 	'user-bagde-copypaste-int-other-code' => 'Copiar e pegar (noutros Wikia)',
-	'user-badge-save-info' => 'Se quere gardar os cambios, vaia ata o final da páxina e prema sobre o botón "Gardar"',
+	'user-badge-save-info' => 'Se quere gardar os cambios, vaia ata o final da páxina e prema sobre o botón "{{int:saveprefs}}"',
 );
 
 /** Hungarian (Magyar)
@@ -350,10 +354,12 @@ $messages['ia'] = array(
 	'user-bagde-copypaste-ext-code' => 'Copiar & collar (sitos externe)',
 	'user-bagde-copypaste-int-code' => 'Copiar & collar (iste Wikia)',
 	'user-bagde-copypaste-int-other-code' => 'Copiar & collar (altere Wikia)',
-	'user-badge-save-info' => 'Si tu vole salveguardar le cambiamentos, rola al fin del pagina e preme le button "Salveguardar"',
+	'user-badge-save-info' => 'Si tu vole salveguardar le cambiamentos, rola al fin del pagina e preme le button "{{int:saveprefs}}"',
 );
 
-/** Japanese (日本語) */
+/** Japanese (日本語)
+ * @author Tommy6
+ */
 $messages['ja'] = array(
 	'user-badge-title' => '利用者バッジ',
 	'user-badge-invalid-color' => '不正な16進値が入力されました',
@@ -386,7 +392,7 @@ $messages['ja'] = array(
 	'user-bagde-copypaste-ext-code' => 'コピーするソース（外部のサイト上）',
 	'user-bagde-copypaste-int-code' => 'コピーするソース（このウィキ上）',
 	'user-bagde-copypaste-int-other-code' => 'コピーするソース（他のウィキアのウィキ上）',
-	'user-badge-save-info' => '変更を保存するには、ページの最後までスクロールし"設定を保存"ボタンをクリックしてください。',
+	'user-badge-save-info' => '変更を保存するには、ページの最後までスクロールし"{{int:saveprefs}}"ボタンをクリックしてください。',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -395,7 +401,7 @@ $messages['ja'] = array(
 $messages['lb'] = array(
 	'user-badge-logo-opt' => 'Bild-Optiounen:',
 	'user-badge-edits-txt' => 'Ännerungen',
-	'user-badge-save-info' => 'Wann Dir d\'Ännerunge späichere wëllt, da scrollt op d\'Ënn vun der Säit a klickt op de Knäppchen "Späicheren"',
+	'user-badge-save-info' => 'Wann Dir d\'Ännerunge späichere wëllt, da scrollt op d\'Ënn vun der Säit a klickt op de Knäppchen "{{int:saveprefs}}"',
 );
 
 /** Macedonian (Македонски)
@@ -430,7 +436,7 @@ $messages['mk'] = array(
 	'user-bagde-copypaste-ext-code' => 'Копирај и залепи (надворешни веб-страници)',
 	'user-bagde-copypaste-int-code' => 'Копирај и залепи (оваа Викија)',
 	'user-bagde-copypaste-int-other-code' => 'Копирај и залепи (друга Викија)',
-	'user-badge-save-info' => 'Ако сакате да ги зачувате промените, одете на крајот на страницата и притиснете го копчето „Зачувај“',
+	'user-badge-save-info' => 'Ако сакате да ги зачувате промените, одете на крајот на страницата и притиснете го копчето „{{int:saveprefs}}“',
 );
 
 /** Dutch (Nederlands)
@@ -466,7 +472,7 @@ Klik om te selecteren!',
 	'user-bagde-copypaste-ext-code' => 'Kopiëren en plakken (externe sites)',
 	'user-bagde-copypaste-int-code' => 'Kopiëren en plakken (deze Wikia)',
 	'user-bagde-copypaste-int-other-code' => 'Kopiëren en plakken (andere Wikia)',
-	'user-badge-save-info' => 'Scroll naar beneden en klik op "Opslaan" om uw wijzigingen op te slaan',
+	'user-badge-save-info' => 'Scroll naar beneden en klik op "{{int:saveprefs}}" om uw wijzigingen op te slaan',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -502,7 +508,7 @@ $messages['no'] = array(
 	'user-bagde-copypaste-ext-code' => 'Kopier og lim inn (eksterne nettsteder)',
 	'user-bagde-copypaste-int-code' => 'Kopier og lim inn (denne Wikiaen)',
 	'user-bagde-copypaste-int-other-code' => 'Kopier og lim inn (andre Wikiaer)',
-	'user-badge-save-info' => 'Hvis du vil lagre endringene, bla ned til sidens slutt og trykk på «Lagre»-knappen',
+	'user-badge-save-info' => 'Hvis du vil lagre endringene, bla ned til sidens slutt og trykk på «{{int:saveprefs}}»-knappen',
 );
 
 /** Piedmontese (Piemontèis)
@@ -552,6 +558,7 @@ $messages['pt-br'] = array(
 );
 
 /** Russian (Русский)
+ * @author G0rn
  * @author Lockal
  * @author Александр Сигачёв
  */
@@ -584,7 +591,7 @@ $messages['ru'] = array(
 	'user-bagde-copypaste-ext-code' => 'Копирование и вставка (внешние сайты)',
 	'user-bagde-copypaste-int-code' => 'Копирование и вставка (эта Wikia)',
 	'user-bagde-copypaste-int-other-code' => 'Копирование и вставка (другая Wikia)',
-	'user-badge-save-info' => 'Если вы хотите сохранить изменения, перейдите в конец страницы и нажмите кнопку «Сохранить».',
+	'user-badge-save-info' => 'Если вы хотите сохранить изменения, перейдите в конец страницы и нажмите кнопку «{{int:saveprefs}}».',
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))

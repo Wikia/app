@@ -343,10 +343,17 @@ $messages['id'] = array(
 	'wikiavideo-pixel' => ' piksel',
 );
 
-/** Italian (Italiano) */
+/** Italian (Italiano)
+ * @author HalphaZ
+ */
 $messages['it'] = array(
+	'wikiavideo-added' => 'aggiunto il video $1',
 	'wikiavideo-back' => 'indietro',
+	'wikiavideo-create' => 'Aggiungi video',
+	'wikiavideo-replace' => 'Sostituisci video',
+	'wikiavideo-category' => 'Video',
 	'wikiavideo-links' => 'Collegamenti',
+	'wikiavideo-pixel' => ' pixel',
 );
 
 /** Japanese (日本語)

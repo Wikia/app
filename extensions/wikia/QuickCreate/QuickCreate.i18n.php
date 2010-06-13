@@ -117,6 +117,14 @@ $messages['id'] = array(
 	'quickcreate' => 'kirimkan resep Anda',
 );
 
+/** Italian (Italiano)
+ * @author HalphaZ
+ */
+$messages['it'] = array(
+	'quickcreate-desc' => 'Aggiunge un pulsante Crea nuova pagina con la possibilità di accedere per gli utenti anonimi',
+	'quickcreate' => 'invia la tua ricetta',
+);
+
 /** Japanese (日本語)
  * @author 青子守歌
  */

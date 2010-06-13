@@ -285,7 +285,16 @@ $messages['ia'] = array(
  * @author Irwangatot
  */
 $messages['id'] = array(
+	'dump-database' => 'Limpahan basisdata',
+	'dump-database-info' => 'Limpahan basisdata dapat digunakan sebagai cadangan pribadi (Wikia menghasilkan cadangan terpisah dari semua wiki secara otomatis) atau untuk bot pemeliharaan',
 	'dump-database-curr-pages' => 'Halaman sekarang',
+	'dump-database-curr-pages-info' => '(Versi ini biasanya terbaik untuk menggunakan bot)',
+	'dump-database-full-pages' => 'Halaman saat ini dan sejarah',
+	'dump-database-full-pages-info' => '(Peringatan: Berkas ini mungkin sangat besar)',
+	'dump-database-request' => 'Meminta pembaruan',
+	'dump-database-request-info' => '(pelimpahan biasanya dibuat mingguan)',
+	'dump-database-request-submit' => 'Kirim permintaan',
+	'dump-database-info-more' => 'Silakan <a href="http://community.wikia.com/wiki/Help:Database_download">lihat ini</a> untuk informasi lebih lanjut',
 );
 
 /** Japanese (日本語)
