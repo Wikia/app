@@ -4,6 +4,7 @@
  */
 
 $messages = array();
+
 $messages['en'] = array(
 	'blog-avatar-removeavatar' => 'Remove avatar',
 	'blog-avatar-goto-userpage' => 'Go to user page',
@@ -23,11 +24,11 @@ $messages['en'] = array(
 	'blog-avatar-changed-log' => "Added or changed avatar",
 	'blog-avatar-removed-log' => "Removed $1's avatars",
 	'blog-avatar-save-info' => 'If you want to save changes <a href="#prefcontrol">go to bottom</a> and press "Save" button',
-	'removeavatar' => "Remove user's avatar",
 	'masthead-edits-since' => 'edits since',
 	'useravatar-log' => "User avatar log",
-	'blog-avatar-alt' => "Logs of useravatar additions or removals",
+	'blog-avatar-alt' => "Logs of user avatar additions or removals",
 	'removeuseravatar' => "Remove user's avatar",
+	'right-removeavatar' => 'Remove user\'s avatar',
 );
 
 $messages['fi'] = array(
@@ -51,7 +52,6 @@ $messages['fi'] = array(
 	'removeavatar' => 'Poista käyttäjän avatar',
 	'blog-avatar-alt' => "Avatar",
 );
-
 
 $messages['de'] = array(
 	'blog-avatar-removeavatar' => 'Avatar entfernen',
@@ -77,7 +77,6 @@ $messages['de'] = array(
 	'removeuseravatar' => 'Entferne den Avatar eines Benutzers',
 );
 
-
 $messages['es'] = array(
 	'blog-avatar-removeavatar' => 'Borrar avatar',
 	'blog-avatar-goto-userpage' => 'Ir a la página de usuario',
@@ -101,7 +100,6 @@ Por favor, recuerda que los avatares son globales - borrando el avatar de un usu
 	'masthead-edits-since' => 'ediciones desde el',
 );
 
-
 $messages['fr'] = array(
 	'blog-avatar-removeavatar' => 'Supprimer l\'avatar',
 	'blog-avatar-goto-userpage' => 'Aller à la page utilisateur',
@@ -123,7 +121,6 @@ Attention, les avatars sont globaux. Retirer l\'avatar d\'un utilisateur prend e
 	'masthead-edits-since' => 'éditions depuis le',
 );
 
-
 $messages['it'] = array(
 	'blog-avatar-removeavatar' => 'Rimuovi l\'avatar',
 	'blog-avatar-goto-userpage' => 'Vai alla pagina utente',
@@ -144,7 +141,6 @@ Non dimenticare che gli avatar sono globali: rimuovere un avatar da questa wiki 
 	'blog-avatar-save-info' => 'Per salvare le modifiche vai a <a href="#prefcontrol">piè di pagina</a> e premi "Salva"',
 	'masthead-edits-since' => 'modifiche dal',
 );
-
 
 $messages['ja'] = array(
 	'blog-avatar-removeavatar' => 'アバターの削除',
@@ -173,7 +169,6 @@ $messages['ja'] = array(
 	'blog-avatar-alt' => 'アバター',
 );
 
-
 $messages['pl'] = array(
 	'blog-avatar-removeavatar' => 'Usuń avatar',
 	'blog-avatar-goto-userpage' => 'Idź do strony użytkownika',
@@ -195,7 +190,6 @@ $messages['pl'] = array(
 	'blog-avatar-alt' => 'Avatar',
 );
 
-
 $messages['fa'] = array(
 	'blog-avatar-edit' => 'تغییر',
 	'blog-avatar-delete' => 'حذف',
@@ -203,7 +197,6 @@ $messages['fa'] = array(
 	'blog-avatar-save-info' => 'اگر مایل به ذخیره تغییرات انجام‌شده هستید <a href="#prefcontrol">به پایین بروید</a> و روی دکمه \'\'ذخیره ترجیحات\'\' کلیک کنید.',
 	'masthead-edits-since' => 'ویرایش از',
 );
-
 
 $messages['ru'] = array(
 	'blog-avatar-edit' => 'изменить',
@@ -215,11 +208,9 @@ $messages['ru'] = array(
 	'blog-avatar-alt' => 'аватар',
 );
 
-
 $messages['de&action=edit&redlink=1'] = array(
 	'removeavatar' => 'Entferne Avatar des Benutzers',
 );
-
 
 $messages['sv'] = array(
 	'masthead-edits-since' => 'redigeringar sedan',
