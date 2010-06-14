@@ -75,6 +75,7 @@ class RiakSessionHandler {
 	}
 
 	static public function gc( $maxlifetime ) {
+		return true;
 	}
 
 }
