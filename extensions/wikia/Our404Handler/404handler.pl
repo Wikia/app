@@ -22,7 +22,6 @@ use Data::Types qw(:all);
 use Math::Round qw(round);
 use Getopt::Long;
 use Cwd;
-use File::Slurp;
 
 #
 # constant
