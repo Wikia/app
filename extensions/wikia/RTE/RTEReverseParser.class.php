@@ -1201,6 +1201,11 @@ class RTEReverseParser {
 					}
 				}
 
+				// add \n if previous node is <div> (RT #54113)
+				if (self::previousSiblingIs($node, 'div')) {
+					$out = "\n{$out}";
+				}
+
 				break;
 
 			case 'caption':
