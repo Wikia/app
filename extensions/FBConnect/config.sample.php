@@ -15,34 +15,25 @@
  *    2.  Enter a descriptive name for your wiki in the Site Name field.
  *        This will be seen by users when they sign up for your site.
  *    3.  Enter the Site URL and Locale, then click "Create application".
- *    4.  Copy the displayed App ID and App Secret into this config file.
- *   *5.  UNTIL WE UPGRADE TO THE NEW PHP-SDK (http://github.com/facebook/php-sdk):
- *        Just kidding, don't actually copy the App ID into this config file.
- *        Instead, visit the developer dashboard and copy the API Key into the
- *        $fbAppId variable.
+ *    4.  Copy the displayed App ID and Secret into this config file.
  * 
  * Optionally, you may customize your application:
  *    A.  Click "developer dashboard" link on the previous screen or visit:
  *        http://www.facebook.com/developers/apps.php
  *    B.  Select your application and click "Edit Settings".
  *    C.  Upload icon and logo images. The icon appears in Stream stories.
- *    D.  In the "Connect" section, set your base domain and Connect Logo.
+ *    D.  In the "Connect" section, set your Connect Logo and base domain
+ *        (which should also be copied into this config file).
  */
 $fbAppId          = 'YOUR_APP_ID';    # Change this!
-$fbAppSecret      = 'YOUR_SECRET';    # Change this!
+$fbSecret         = 'YOUR_SECRET';    # Change this!
+#$fbDomain         = 'BASE_DOMAIN';    # Optional
 
 /**
  * Disables the creation of new accounts and prevents old accounts from being
  * used to log in if they aren't associated with a Facebook Connect account.
  */
 $fbConnectOnly = false;
-
-/**
- * The prefix to be used for the auto-generated username suggestion when the
- * user connects for the first time. A number will be appended onto this prefix
- * to prevent duplicate usernames.
- */
-$fbUserName = 'FacebookUser';
 
 /**
  * Allow the use of XFBML in wiki text.
@@ -56,7 +47,7 @@ $fbUseMarkup = true;
  * against Facebook's Code of Conduct <http://www.facebook.com/codeofconduct.php>
  * and subject to dynamic privacy. To disable just <fb:photo> tags, set this to false.
  * 
- * Disabled until the alpha JS SDK supports <fb:photo> tags.
+ * Disabled until the JavaScript SDK supports <fb:photo> tags.
  */
 #$fbAllowFacebookImages = true;
 
@@ -91,8 +82,7 @@ $fbUserRightsFromGroup = false;  # Or a group ID
  *                        users. This helps enforce the idea that this wiki is
  *                        "in front" of Facebook.
  * remove_user_talk_link  Remove link to user's talk page
- * use_real_name_from_fb  $fbUserName to show the real name for auto-usernames,
- *                        true to show the real name for all Connected users
+ * use_real_name_from_fb  Show the real name for all Connected users
  * 
  * Additionally, use $wgShowIPinHeader to hide the IP and its talk link.
  * For more information, see <http://www.mediawiki.org/wiki/Manual:$wgShowIPinHeader>.
@@ -103,7 +93,7 @@ $fbPersonalUrls = array(
 	'hide_logout_of_fb'     => false,
 	'link_back_to_facebook' => true,
 	'remove_user_talk_link' => false,
-	'use_real_name_from_fb' => $fbUserName, # or true or false
+	'use_real_name_from_fb' => false,
 );
 #$wgShowIPinHeader = false;
 
@@ -128,7 +118,7 @@ $fbScript = 'http://connect.facebook.net/en_US/all.js';
  * Path to the extension's client-side JavaScript
  */
 global $wgScriptPath;
-//$fbExtensionScript = "$wgScriptPath/extensions/FBConnect/fbconnect.js"; // only recommended if you are changing this extension.
+#$fbExtensionScript = "$wgScriptPath/extensions/FBConnect/fbconnect.js"; // for development
 $fbExtensionScript = "$wgScriptPath/extensions/FBConnect/fbconnect.min.js";
 
 /**
@@ -165,7 +155,7 @@ $fbIncludePreferencesExtension = true;
  * NOTE: If fbEnablePushToFacebook is true, then publish_stream will automatically be
  * added to this array.
  *
- * For more details see: http://wiki.developers.facebook.com/index.php/Extended_permissions
+ * For more details see: http://developers.facebook.com/docs/authentication/permissions
  */
 $fbExtendedPermissions = array(
 	//'publish_stream',
