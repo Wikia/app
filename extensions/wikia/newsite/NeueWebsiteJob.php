@@ -60,7 +60,7 @@ class NeueWebsiteJob extends Job {
 		wfMkdirParents( $basePath );
 
 		// create a PDF
-		$cmd = "/opt/wikia/bin/wkhtmltopdf --page-size Letter -B 0 -T 0 -L 0 -R 0 \"http://{$domain}\" {$pdfPath}";
+		$cmd = Wikia::binWkhtmltopdf() . " --page-size Letter -B 0 -T 0 -L 0 -R 0 \"http://{$domain}\" {$pdfPath}";
 
 		wfShellExec( $cmd, $result );
 		if ( $result !== 0 ) {
