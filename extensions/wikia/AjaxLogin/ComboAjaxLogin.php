@@ -15,7 +15,8 @@
 $wgExtensionCredits['other'][] = array(
 	'name' => 'ComboAjaxLogin',
 	'description' => 'Dynamic box which allow users to login and remind password and register users',
-	'author' => 'Tomasz Odrobny'
+	'author' => 'Tomasz Odrobny',
+	'descriptionmsg' => 'comboajaxlogin-desc',
 );
 
 $wgAjaxExportList[] = 'GetComboAjaxLogin';
