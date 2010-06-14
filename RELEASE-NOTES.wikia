@@ -1,4 +1,5 @@
 == Changes since 201006.3 ==
+* rt#54467: RTE: update to CKEditor 3.3.1 (macbre)
 * rt#54113: ReverseParser: table open marker not put on new line (macbre)
 * rt#53087: no/improper sql escaping in special:newwikis (eloy)
 * rt#54649: Slideshow: layout broken on a specific page (macbre)
