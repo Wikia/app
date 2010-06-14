@@ -48,6 +48,10 @@ class AnswersSudoAd {
 
 		global $wgContLang, $wgAnswersURLs;
 		$domain = Wikia::langToSomethingMap($wgAnswersURLs, $wgContLang->getCode(), "{$wgContLang->getCode()}.answers.wikia.com");
+
+		global $wgWidgetAnswersForceDomain;
+		if (!empty($wgWidgetAnswersForceDomain)) $domain = $wgWidgetAnswersForceDomain;
+
 		$dbname = WikiFactory::DomainToDB($domain);
 
 		global $wgMemc;
