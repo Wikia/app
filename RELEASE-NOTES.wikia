@@ -1,5 +1,5 @@
 == Changes since 201006.3 ==
-* 
+* rt#54649: Slideshow: layout broken on a specific page (macbre)
 
 == Changes since 201006.2 ==
 * rt#54096: wkhtmltopdf binary link change (Nef)
