@@ -1,4 +1,5 @@
 == Changes since 201006.2 ==
+* rt#54096: wkhtmltopdf binary link change (Nef)
 * rt#53380: HAweclome: rewrite expandsig to use different format for staff (uberfuzzy)
 * rt#54718: Achievments2: User:Wikia creates user pages not flagged as a bot (uberfuzzy)
 * rt#54716: Achievments2: Platinum for only staff/helpers only (uberfuzzy)
