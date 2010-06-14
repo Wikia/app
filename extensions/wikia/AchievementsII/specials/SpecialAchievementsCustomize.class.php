@@ -4,7 +4,7 @@ class SpecialAchievementsCustomize extends SpecialPage {
 
 	function __construct() {
 		wfLoadExtensionMessages('AchievementsII');
-		parent::__construct('AchievementsCustomize', 'editinterface' /* no restriction */, false /* listed */);
+		parent::__construct('AchievementsCustomize', 'editinterface', false /* listed */);
 	}
 
 	function execute($user_id) {
