@@ -142,6 +142,8 @@ sub videoThumbnail {
 #
 
 my @tests = qw(
+	/c/carnivores/images/thumb/5/59/Padlock.svg/120px-Padlock.svg.png
+	/y/yugioh/images/thumb/a/ae/Flag_of_the_United_Kingdom.svg/700px-Flag_of_the_United_Kingdom.svg.png
 	/a/answers/images/thumb/8/84/Play_fight_of_polar_bears_edit_1.avi.OGG/mid-Play_fight_of_polar_bears_edit_1.avi.OGG.jpg
 	/g/gw/images/thumb/archive/7/78/20090811221502!Nicholas_the_Traveler_location_20090810_2.PNG/120px-Nicholas_the_Traveler_location_20090810_2.PNG
 	/m/meerundmehr/images/thumb/1/17/Mr._Icognito.svg/150px-Mr._Icognito.svg.png
@@ -311,7 +313,11 @@ while( $request->Accept() >= 0 || $test ) {
 				# file2 has old mimetype database, it thinks that svg file is just
 				# xml file
 				#
-				if( $mimetype =~ m!^image/svg\+xml! || $mimetype =~ m!text/xml! ) {
+				# some svg are completely broken so we check extension file as well
+				#
+				my ( $filext ) = $original =~ /\.(\w+)$/;
+				$filext = lc( $filext );
+				if( $mimetype =~ m!^image/svg\+xml! || $mimetype =~ m!text/xml! || $filext eq "svg" ) {
 					#
 					# read width & height of SVG file
 					#
@@ -327,6 +333,12 @@ while( $request->Accept() >= 0 || $test ) {
 					#
 					my $rsvg = new Image::LibRSVG;
 					$rsvg->convertAtSize( $original, $thumbnail, $width, $height );
+
+# @todo -- handle transparency in Image::Magick SVG library
+#					my $rsvg = new Image::Magick;
+#					$rsvg->Read( $original );
+#					$rsvg->Resize( "geometry" => "${width}x${height}!", "blur" => 0.9 );
+#					print $rsvg->ImageToBlob();
 
 					if( -f $thumbnail ) {
 						$mimetype = $flm->checktype_filename( $thumbnail );
