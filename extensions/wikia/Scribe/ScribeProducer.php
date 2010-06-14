@@ -19,8 +19,8 @@ class ScribeProducer {
 	private
 		$mCityId,
 		$mPageId,
+		$mLogId,
 		$mRevId,
-		$mUserIP,
 		$mServerName;
 
 	const 
@@ -34,14 +34,14 @@ class ScribeProducer {
 	 *
 	 * @author Piotr Molski (MoLi)
 	 */
-	function __construct( $page_id, $rev_id = 0 ) {
+	function __construct( $page_id, $rev_id = 0, $log_id = 0 ) {
 		global $wgCityId, $wgServer, $wgUser;
 
 		$this->mCityId		= $wgCityId;
 		$this->mPageId		= $page_id;
 		$this->mRevId 		= $rev_id;
+		$this->mLogId		= $log_id;
 		$this->mServerName 	= $wgServer;
-		$this->mUserIp 		= wfGetIP();
 	}
 
 	/**
@@ -68,7 +68,7 @@ class ScribeProducer {
 					'cityId'		=> $this->mCityId,
 					'pageId'		=> $this->mPageId,
 					'revId'			=> $this->mRevId,
-					'ip'			=> $this->mUserIP,
+					'logId'			=> $this->mLogId,
 					'serverName'	=> $this->mServerName,
 				) 
 			);
@@ -101,7 +101,7 @@ class ScribeProducer {
 			if ( $revid > 0 && $pageId > 0 ) { 
 				$oScribeProducer = new ScribeProducer( $pageId, $revid );
 				if ( is_object( $oScribeProducer ) ) {
-					$is_new = ( isset($status['value']['new']) ) ? 'create' : 'edit';
+					$is_new = ( isset($status->value['new']) ) ? 'create' : 'edit';
 					$oScribeProducer->send_log( $is_new );
 				}
 			}
@@ -129,9 +129,35 @@ class ScribeProducer {
 		wfProfileIn( __METHOD__ );
 
 		if ( ( $oArticle instanceof Article ) && ( $oUser instanceof User ) ) {
-			$pageId = ( !empty($articleId) ) ? $oArticle->getID() : $articleId;
+			$pageId = ( !empty($articleId) ) ? $articleId : $oArticle->getID();
 			if ( $pageId > 0 ) {
-				$oScribeProducer = new ScribeProducer( $pageId );
+				#action=query&list=logevents&letype=delete&letitle=TestDel2
+				$oFauxRequest = new FauxRequest(array(
+					'action' 	=> 'query',
+					'list' 		=> 'logevents',
+					'letype' 	=> 'delete',
+					'letitle'	=> $oArticle->mTitle->getPrefixedText(),
+					'lelimit'	=> 1
+				));
+				$logid = 0;
+				$oApi = new ApiMain($oFauxRequest);
+				try { 
+					#---
+					$oApi->execute();
+					$aResult = $oApi->GetResultData();
+					if ( isset( $aResult['query']['logevents'] ) && !empty( $aResult['query']['logevents'] ) ) {
+						list ($row) = $aResult['query']['logevents'];
+						if ( isset($row['logid']) ) {
+							$logid = $row['logid'];
+						}
+					}
+				} 
+				catch (Exception $e) {
+					Wikia::log( __METHOD__, 'cannot fetch data from logging table via API request', $e->getMessage() );
+				};
+
+				#---
+				$oScribeProducer = new ScribeProducer( $pageId, 0, $logid );
 				if ( is_object( $oScribeProducer ) ) {
 					$oScribeProducer->send_log( 'delete' );
 				}
