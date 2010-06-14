@@ -59,7 +59,8 @@ class SpecialAchievementsCustomize extends SpecialPage {
 				if(!$category || !$category->getID())
 					$errorMsg = wfMsg('achievements-non-existing-category');
 				else {
-					$safeCatName = str_replace('_', ' ', $category->getName());
+					//$safeCatName = str_replace('_', ' ', $category->getName());
+					$safeCatName = $category->getTitle()->getText();
 					$existingTrack = AchConfig::getInstance()->trackForCategoryExists($safeCatName);
 
 					if($existingTrack !== false)
