@@ -101,7 +101,8 @@ class ScribeProducer {
 			if ( $revid > 0 && $pageId > 0 ) { 
 				$oScribeProducer = new ScribeProducer( $pageId, $revid );
 				if ( is_object( $oScribeProducer ) ) {
-					$is_new = ( isset($status->value['new']) ) ? 'create' : 'edit';
+					error_log(print_r($status, true), 3, "/tmp/moli.log");
+					$is_new = ( isset($status->value['new']) && $status->value['new'] == 1 ) ? 'create' : 'edit';
 					$oScribeProducer->send_log( $is_new );
 				}
 			}
