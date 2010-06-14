@@ -126,7 +126,7 @@ class NewWikisPage extends AlphabeticPager {
 		// Don't show hidden names
 		$conds[] = 'city_public = 1';
 		if ( $this->firstChar != "" ) {
-			$conds[] = "upper(city_title) like upper('{$this->firstChar}%')";
+			$conds[] = sprintf( "upper(city_title) like upper('%s%%')", $this->mDb->escapeLike( $this->firstChar ) );
 		}
 		if( $this->lang != "" ) {
 			$conds[] = 'city_lang = ' . $this->mDb->addQuotes( $this->lang );
