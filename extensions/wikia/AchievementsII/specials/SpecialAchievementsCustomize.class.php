@@ -59,19 +59,29 @@ class SpecialAchievementsCustomize extends SpecialPage {
 				if(!$category || !$category->getID())
 					$errorMsg = wfMsg('achievements-non-existing-category');
 				else {
-					//$safeCatName = str_replace('_', ' ', $category->getName());
 					$safeCatName = $category->getTitle()->getText();
-					$existingTrack = AchConfig::getInstance()->trackForCategoryExists($safeCatName);
-
-					if($existingTrack !== false)
-						$errorMsg = wfMsg('achievements-edit-plus-category-track-exists', $existingTrack);
+					
+					if(
+						strtolower($safeCatName) == 'stub' ||
+						stripos($safeCatName, 'stub ') === 0 ||
+						stripos($safeCatName, ' stub ') !== false ||
+						strripos($safeCatName, ' stub') === (strlen($safeCatName) - 5)
+					) {
+						$errorMsg = wfMsg('achievements-no-stub-category');
+					}
 					else {
-						$dbw->insert(
-							'ach_custom_badges',
-							array('wiki_id' => $wgCityId, 'type' => BADGE_TYPE_INTRACKEDITPLUSCATEGORY, 'cat' => $safeCatName)
-						);
-
-						$jsonObj->sectionId = $badge_type_id = $dbw->insertId();
+						$existingTrack = AchConfig::getInstance()->trackForCategoryExists($safeCatName);
+	
+						if($existingTrack !== false)
+							$errorMsg = wfMsg('achievements-edit-plus-category-track-exists', $existingTrack);
+						else {
+							$dbw->insert(
+								'ach_custom_badges',
+								array('wiki_id' => $wgCityId, 'type' => BADGE_TYPE_INTRACKEDITPLUSCATEGORY, 'cat' => $safeCatName)
+							);
+	
+							$jsonObj->sectionId = $badge_type_id = $dbw->insertId();
+						}
 					}
 				}
 			}

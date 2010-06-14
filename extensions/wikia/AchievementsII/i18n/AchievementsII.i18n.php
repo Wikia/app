@@ -16,6 +16,7 @@ Please try another one!',
 	'achievements-upload-not-allowed' => 'Administrators can change the names and pictures of Achievement badges by visiting [[Special:AchievementsCustomize|the Customize achievements]] page.',
 	'achievements-non-existing-category' => 'The specified category does not exist.',
 	'achievements-edit-plus-category-track-exists' => 'The specified category already has an <a href="#" onclick="$(window).scrollTo(\'#section$1\', 2500); return false;" title="Go to the track">associated track</a>.',
+	'achievements-no-stub-category' => 'Please do not create tracks for stubs.',
 
 	/*
 	 * Badges' levels
@@ -39,8 +40,8 @@ Please try another one!',
 	'achievements-track-name-picture' => 'Pictures track',
 	'achievements-track-name-category' => 'Category track',
 	'achievements-track-name-blogpost' => 'Blog Post track',
-	'achievements-track-name-blogcomment' => 'Blog comment track',
-	'achievements-track-name-love' => 'Wiki love track',
+	'achievements-track-name-blogcomment' => 'Blog Comment track',
+	'achievements-track-name-love' => 'Wiki Love track',
 
 	/*
 	 * User notifications
@@ -167,14 +168,14 @@ Check out your fancy new badge on your <a href=\"$5\">user profile page</a>.",
 	 */
 
 	// edit track
-	'achievements-badge-name-edit-0' => 'Making a difference',
-	'achievements-badge-name-edit-1' => 'Just the beginning',
-	'achievements-badge-name-edit-2' => 'Making your mark',
-	'achievements-badge-name-edit-3' => 'Friend of the wiki',
+	'achievements-badge-name-edit-0' => 'Making a Difference',
+	'achievements-badge-name-edit-1' => 'Just the Beginning',
+	'achievements-badge-name-edit-2' => 'Making Your Mark',
+	'achievements-badge-name-edit-3' => 'Friend of the Wiki',
 	'achievements-badge-name-edit-4' => 'Collaborator',
-	'achievements-badge-name-edit-5' => 'Wiki builder',
-	'achievements-badge-name-edit-6' => 'Wiki leader',
-	'achievements-badge-name-edit-7' => 'Wiki expert',
+	'achievements-badge-name-edit-5' => 'Wiki Builder',
+	'achievements-badge-name-edit-6' => 'Wiki Leader',
+	'achievements-badge-name-edit-7' => 'Wiki Expert',
 
 	// picture track
 	'achievements-badge-name-picture-0' => 'Snapshot',
@@ -187,39 +188,39 @@ Check out your fancy new badge on your <a href=\"$5\">user profile page</a>.",
 	'achievements-badge-name-picture-7' => 'Curator',
 
 	// category track
-	'achievements-badge-name-category-0' => 'Make a connection',
-	'achievements-badge-name-category-1' => 'Trail blazer',
+	'achievements-badge-name-category-0' => 'Make a Connection',
+	'achievements-badge-name-category-1' => 'Trail Blazer',
 	'achievements-badge-name-category-2' => 'Explorer',
-	'achievements-badge-name-category-3' => 'Tour guide',
+	'achievements-badge-name-category-3' => 'Tour Guide',
 	'achievements-badge-name-category-4' => 'Navigator',
-	'achievements-badge-name-category-5' => 'Bridge builder',
-	'achievements-badge-name-category-6' => 'Wiki planner',
+	'achievements-badge-name-category-5' => 'Bridge Builder',
+	'achievements-badge-name-category-6' => 'Wiki Planner',
 
 	// blogpost track
 	'achievements-badge-name-blogpost-0' => 'Something to say',
 	'achievements-badge-name-blogpost-1' => 'Five Things to say',
-	'achievements-badge-name-blogpost-2' => 'Talk show',
+	'achievements-badge-name-blogpost-2' => 'Talk Show',
 	'achievements-badge-name-blogpost-3' => 'Life of the party',
-	'achievements-badge-name-blogpost-4' => 'Public speaker',
+	'achievements-badge-name-blogpost-4' => 'Public Speaker',
 
 	// blogcomment track
 	'achievements-badge-name-blogcomment-0' => 'Opinionator',
 	'achievements-badge-name-blogcomment-1' => 'And one more thing',
 
 	// love track
-	'achievements-badge-name-love-0' => 'Key to the wiki!',
+	'achievements-badge-name-love-0' => 'Key to the Wiki!',
 	'achievements-badge-name-love-1' => 'Two weeks on the wiki',
 	'achievements-badge-name-love-2' => 'Devoted',
 	'achievements-badge-name-love-3' => 'Dedicated',
 	'achievements-badge-name-love-4' => 'Addicted',
-	'achievements-badge-name-love-5' => 'A wiki life',
-	'achievements-badge-name-love-6' => 'Wiki hero!',
+	'achievements-badge-name-love-5' => 'A Wiki life',
+	'achievements-badge-name-love-6' => 'Wiki Hero!',
 
 	// not in track
-	'achievements-badge-name-welcome' => 'Welcome to the wiki',
+	'achievements-badge-name-welcome' => 'Welcome to the Wiki',
 	'achievements-badge-name-introduction' => 'Introduction',
 	'achievements-badge-name-sayhi' => 'Stopping by to say hi',
-	'achievements-badge-name-creator' => 'The creator',
+	'achievements-badge-name-creator' => 'The Creator',
 	'achievements-badge-name-pounce' => 'Pounce!',
 	'achievements-badge-name-caffeinated' => 'Caffeinated',
 	'achievements-badge-name-luckyedit' => 'Lucky edit',
