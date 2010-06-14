@@ -1,112 +1,111 @@
-#wikia-alert h1, #wikia-alert h2,
-#wikia-alert h3, #wikia-alert p {
-	background:none;
-	border-bottom:0px;
-	font-weight:normal;
-	margin:0;
-	overflow:hidden;
-	padding-bottom:0;
-	padding-top:0;
-	padding: 0;
+.AchievementsNotification {
+	-moz-border-radius-bottomleft: 12px;
+	-moz-border-radius-bottomright: 12px;
+	-webkit-border-bottom-left-radius: 12px;
+	-webkit-border-bottom-right-radius: 12px;
+	border-bottom-left-radius: 12px;
+	border-bottom-right-radius: 12px;
+	border-style: solid;
+	border-width: 0 4px 4px;
+	height: 110px;
+	left: 50%;
+	margin-left: -400px;
+	overflow: hidden;
+	position: fixed;
+	top: 0;
+	width: 800px;
+	z-index: 9000;
 }
 
-#wikia-alert {
-  width: 800px;
-  height: 110px;
-  border-style: solid;
-  border-width: 4px;
-  position: fixed;
-  left: 150px;
-  top: -35px;
-  -moz-border-radius: 12px;
-  -webkit-border-radius: 12px;
-  overflow: hidden;
-  padding-top: 30px;
-  z-index: 9000;
+.AchievementsNotification img {
+	float: left;
+	height: 90px;
+	margin: 10px 15px 0 10px;
+	width: 90px;
 }
 
-#wikia-alert img {
-  float: left;
-  width: 90px;
-  height: 90px;
-  margin-top: 5px;
-  margin-right: 15px;
-  margin-left: 10px;
+.AchievementsNotification .text {
+	float: left;
+	margin-top: 15px;
+	width: 480px;
 }
 
-#wikia-alert #alert {
-  float: left;
-  width: 480px;
-  margin-top: 17px;
+.AchievementsNotification h1 {
+	font-size: 18px;
+	font-weight: bold;
+	/* override #bodyContent h1 :( */
+	margin: 0 0 4px !important;
 }
 
-#wikia-alert h1 {
-  font-size: 17px;
-  font-weight: bold;
-  margin-bottom: 1px;
+.AchievementsNotification p {
+	font-size: 13px;
+	margin: 0 0 8px 0;
 }
 
-#wikia-alert h2 {
-  font-size: 13px;
-  font-weight: bold;
-  line-height:1.3em;
-}
-
-#wikia-alert h3 {
-  float: right;
-  width: 195px;
-  height: 90px;
-  padding: 25px 0 0 10px;
-  line-height: 30px;
-  font-size: 50px;
-  text-align: center;
-  font-weight: bold;
-}
-
-#wikia-alert h3.bronze {
-  background-image: url(../images/bronze-circle-bg.png);
-}
-
-#wikia-alert h3.silver {
-  background-image: url(../images/silver-circle-bg.png);
-}
-
-#wikia-alert h3.gold {
-  background-image: url(../images/gold-circle-bg.png);
-}
-
-#wikia-alert h3.platinum {
-  background-image: url(../images/platinum-circle-bg.png);
-}
-
-#wikia-alert h3 span#shift {
-  font-size: 24px;
-}
-
-#wikia-alert p {
-  font-size: 12px;
-  margin-left: 2px;
-}
-
-#wikia-alert dl dt {
-  float: left;
-  width: 240px;
-  text-align: right;
-  font-size: 16px;
-  margin-right: 10px;
-}
-
-#wikia-alert dl dd {
-  float: left;
-  width: 300px;
-  text-align: left;
-}
-
-#wikia-alert dl dd input {
-  font-size: 16px;
-  padding: 4px;
-}
-
-#wikia-alert big {
+.AchievementsNotification a {
 	font-size: 15px;
 }
+
+.AchievementsNotification .points {
+	background-repeat: no-repeat;
+	float: right;
+	font-size: 32px;
+	font-weight: bold;
+	height: 90px;
+	line-height: 26px;
+	padding: 25px 0 0 10px;
+	text-align: center;
+	width: 195px;
+}
+
+.AchievementsNotification .points span {
+	left: 5px;
+	position: relative;
+}
+
+.AchievementsNotification .bronze {
+	background-image: url(../images/bronze-circle-bg.png);
+}
+
+.AchievementsNotification .silver {
+	background-image: url(../images/silver-circle-bg.png);
+}
+
+.AchievementsNotification .gold {
+	background-image: url(../images/gold-circle-bg.png);
+}
+
+.AchievementsNotification .platinum {
+	background-image: url(../images/platinum-circle-bg.png);
+}
+
+
+/*** What's all this stuff? ***/
+/*
+.AchievementsNotification .points span#shift {
+	font-size: 24px;
+}
+
+.AchievementsNotification dl dt {
+	float: left;
+	font-size: 16px;
+	margin-right: 10px;
+	text-align: right;
+	width: 240px;
+}
+
+.AchievementsNotification dl dd {
+	float: left;
+	text-align: left;
+	width: 300px;
+}
+
+.AchievementsNotification dl dd input {
+	font-size: 16px;
+	padding: 4px;
+}
+
+.AchievementsNotification big {
+	font-size: 15px;
+}
+*/
