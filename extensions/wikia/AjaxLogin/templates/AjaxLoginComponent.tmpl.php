@@ -64,7 +64,7 @@
 		</div>
 	</div>
 	<div id='fbLoginAndConnect' style='display:none'>
-		<? echo wfMsg("comboajaxlogin-connectdirections") ?>
+		<? echo wfMsgExt( 'comboajaxlogin-connectdirections', 'parse' ) ?>
 
 		<form action="" method="post" name="userajaxconnectform" id="userajaxconnectform">
 			<label for="wpName3Ajax" style="display: block; font-weight: bold;"><?php print wfMsg("yourname") ?></label> 
