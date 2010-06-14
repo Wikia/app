@@ -104,6 +104,8 @@ class InterwikiDispatcher extends UnlistedSpecialPage {
 						for($i = 3; $i < count($aLinkParts); $i++) {
 							$sArticleTitle .= (!empty($sArticleTitle)?":":"") . $aLinkParts[$i];
 						}
+						//RT#54264
+						$sArticleTitle = str_replace(' ', '_', $sArticleTitle);
 
 						$sCityUrl = self::getCityUrl($iCityId);
 						if(!empty($sCityUrl)) {
