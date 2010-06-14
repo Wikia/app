@@ -380,6 +380,8 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 			$vals['timestamp'] = wfTimestamp( TS_DB, $oRevision->getTimestamp() );
 			# size
 			$vals['size'] = intval($oRevision->getSize());
+			#words
+			$vals['words'] = str_word_count( $content );
 			# revision is redirect
 			$vals['isredirect'] = intval( $this->_revision_is_redirect( $content ) );
 			# revision is content
@@ -390,7 +392,6 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 			$links = $this->_make_links( $content );
 			$vals['imagelinks'] = $links['image'];
 			$vals['video'] = $links['video'];
-			$text = $oTitle->getText();
 		} else {
 			$oTitle = Title::makeTitle( $oRow->page_namespace, $oRow->page_title );
 			# revision id
@@ -409,6 +410,8 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 			$vals['timestamp'] = wfTimestamp( TS_DB, $oRow->rev_timestamp );
 			# size
 			$vals['size'] = intval( $oRow->rev_len );
+			# words
+			$vals['words'] = 0;
 			# revision is redirect
 			$vals['isredirect'] = 0;
 			# revision is content
