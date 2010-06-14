@@ -66,7 +66,7 @@ class WidgetFramework {
 
 		// handle via ReorderWidgets hook... one day
 		global $wgEnableAnswers;
-		if (!empty($wgEnableAnswers)) $this->config = array();
+		if (!empty($wgEnableAnswers)) $this->config = null;
 
 		if(empty($this->config) && !is_array($this->config)) {
 			if($this->skinname == "monaco") {
