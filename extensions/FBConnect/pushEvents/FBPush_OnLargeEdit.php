@@ -58,7 +58,7 @@ class FBPush_OnLargeEdit extends FBConnectPushEvent {
 			$params = array(
 				'$ARTICLENAME' => $article->getTitle()->getText(),
 				'$WIKINAME' => $wgSitename,
-				'$ARTICLE_URL' => $article->getTitle()->getFullURL("ref=fbfeed"),
+				'$ARTICLE_URL' => $article->getTitle()->getFullURL("ref=fbfeed&fbtype=largeedit"),
 				'$EVENTIMG' => self::$eventImage,
 				'$SUMMART' => $summary,
 				'$TEXT' => self::shortenText(self::parseArticle($article, $newText))			

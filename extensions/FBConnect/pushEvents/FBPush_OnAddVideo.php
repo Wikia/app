@@ -47,7 +47,7 @@ class FBPush_OnAddVideo extends FBConnectPushEvent {
 			$params = array(
 				'$ARTICLENAME' => $article->getTitle()->getText(),
 				'$WIKINAME' => $wgSitename,
-				'$ARTICLE_URL' => $article->getTitle()->getFullURL("ref=fbfeed"),
+				'$ARTICLE_URL' => $article->getTitle()->getFullURL("ref=fbfeed&fbtype=addvideo"),
 				'$EVENTIMG' => self::$eventImage
 			);
 			

@@ -48,7 +48,7 @@ class FBPush_OnBlogComment extends FBConnectPushEvent {
 				'$WIKINAME' => $wgSitename,
 				'$BLOG_POST_URL' => $title->getFullURL(),
 				'$BLOG_PAGENAME' =>	$title_explode[0]."/".$title_explode[1],
-				'$ARTICLE_URL' => $title->getFullURL("ref=fbfeed"), //inside use  
+				'$ARTICLE_URL' => $title->getFullURL("ref=fbfeed&fbtype=blogcomment"), //inside use  
 				'$EVENTIMG' => self::$eventImage,
 				'$TEXT' => self::shortenText(self::parseArticle($article))	
 			);

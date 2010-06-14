@@ -40,7 +40,7 @@ class FBPush_OnAddImage extends FBConnectPushEvent {
 		$img = wfFindFile( $article->getTitle() );
 	
 		if ($img->media_type == 'BITMAP' ) {
-			FBPush_OnAddImage::uploadNews($img->title->getText(), $img->title->getFullUrl("?ref=fbfeed")) ;	
+			FBPush_OnAddImage::uploadNews($img->title->getText(), $img->title->getFullUrl("?ref=fbfeed&fbtype=addimage")) ;	
 		}
 		return true;
 	}
@@ -49,7 +49,7 @@ class FBPush_OnAddImage extends FBConnectPushEvent {
         global $wgServer, $wgSitename;
        
         if ($image->mLocalFile->media_type == 'BITMAP' ) {
-        	FBPush_OnAddImage::uploadNews( $image->mLocalFile->getTitle(), $wgServer.'/'.$image->mLocalFile->getTitle()."?ref=fbfeed" );
+        	FBPush_OnAddImage::uploadNews( $image->mLocalFile->getTitle(), $wgServer.'/'.$image->mLocalFile->getTitle()."?ref=fbfeed&fbtype=addimage" );
         }   
         return true;
     }

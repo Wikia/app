@@ -93,9 +93,13 @@ $(document).ready(function() {
 		loginByFBConnect();
 		return false;
 	});
-	
+
 	if( $.getUrlVal( "ref" ) == "fbfeed" ) {
-		WET.byStr( 'FBconnect/userfromfb' );
+		var suffix = "";
+		if( $.getUrlVal( "fbtype" ) != "" ) {
+			suffix = "/" + $.getUrlVal("fbtype");
+		}
+		WET.byStr( 'FBconnect/userfromfb' + suffix );
 	}
 });
 
