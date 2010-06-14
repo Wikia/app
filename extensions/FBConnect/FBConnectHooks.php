@@ -366,7 +366,8 @@ STYLE;
 		// If the user has a valid Facebook ID, link to the Facebook profile
 		$fb = new FBConnectAPI();
 		$fb_user = $fb->user();
-		if( $fb_user ) {
+		$ids = FBConnectDB::getFacebookIDs($wgUser);
+		if( $fb_user && (count($ids) > 0) && (in_array($fb_user, $ids)) ) {
 			$html = $output->getHTML();
 			$name = $wgUser->getName();
 			$i = strpos( $html, $name );
