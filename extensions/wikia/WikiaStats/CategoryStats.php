@@ -120,7 +120,7 @@ class CategoryTrigger {
 						'ce_date'		=> $this->mDate
 					);
 
-					$Row = $dbr->selectRow ( 'category_edits', array('ce_count'), $conditions, __METHOD__ );
+					$Row = $dbw->selectRow ( 'category_edits', array('ce_count'), $conditions, __METHOD__ );
 					if ( $Row ) {
 						# update edits count
 						$count = $Row->ce_count + $inc;
@@ -128,11 +128,11 @@ class CategoryTrigger {
 					} else {
 						# insert edits count
 						$conditions['ce_count'] = $inc;
-						$dbw->insert( 'category_edits', $conditions, __METHOD__ );
+						$dbw->insert( 'category_edits', $conditions, __METHOD__, array('IGNORE') );
 					}
 
 					$user_conditions = array( 'cue_user_id' => $this->mUserId, 'cue_cat_id' => $oRow->cat_id );
-					$Row = $dbr->selectRow ( 'category_user_edits', array('cue_count'), $user_conditions, __METHOD__ );
+					$Row = $dbw->selectRow ( 'category_user_edits', array('cue_count'), $user_conditions, __METHOD__ );
 					if ( $Row ) {
 						# update edits count
 						$count = $Row->cue_count + $inc;
@@ -140,7 +140,7 @@ class CategoryTrigger {
 					} else {
 						# insert edits count
 						$user_conditions['cue_count'] = $inc;
-						$dbw->insert( 'category_user_edits', $user_conditions, __METHOD__ );
+						$dbw->insert( 'category_user_edits', $user_conditions, __METHOD__, array('IGNORE') );
 					}
 					
 					$return++;
