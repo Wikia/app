@@ -194,7 +194,7 @@ CKEDITOR.ui.button.prototype =
 		}
 
 		output.push(
-					'></span>' +
+					'>&nbsp;</span>' +
 					'<span id="', id, '_label" class="cke_label">', this.label, '</span>' );
 
 		if ( this.hasArrow )
@@ -202,7 +202,7 @@ CKEDITOR.ui.button.prototype =
 			output.push(
 					'<span class="cke_buttonarrow">'
 					// BLACK DOWN-POINTING TRIANGLE
-					+ ( CKEDITOR.env.hc ? '&#9660;' : '' )
+					+ ( CKEDITOR.env.hc ? '&#9660;' : '&nbsp;' )
 					+ '</span>' );
 		}
 
@@ -292,3 +292,8 @@ CKEDITOR.ui.prototype.addButton = function( name, definition )
 {
 	this.add( name, CKEDITOR.UI_BUTTON, definition );
 };
+
+CKEDITOR.on( 'reset', function()
+	{
+		CKEDITOR.ui.button._.instances = [];
+	});
