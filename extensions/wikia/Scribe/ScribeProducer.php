@@ -199,7 +199,7 @@ class ScribeProducer {
 	}
 
 	/**
-	 * articleUndeleted -- hook 
+	 * articleUndelete -- hook 
 	 *
 	 * @static
 	 * @access public
@@ -211,7 +211,7 @@ class ScribeProducer {
 	 * @author Piotr Molski (MoLi)
 	 * @return true
 	 */
-	static public function articleUndeleted( &$oTitle, $is_new = false ) {
+	static public function articleUndelete( &$oTitle, $is_new = false ) {
 		wfProfileIn( __METHOD__ );
 		if ( $oTitle instanceof Title ) {
 			$oRevision = Revision::newFromTitle( $oTitle );
