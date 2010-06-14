@@ -48,7 +48,7 @@ class FBPush_OnArticleComment extends FBConnectPushEvent {
 			$params = array(
 				'$ARTICLENAME' => $title->getText(),
 				'$WIKINAME' => $wgSitename,
-				'$ARTICLE_URL' => $title->getFullURL("ref=fbfeed"),
+				'$ARTICLE_URL' => $title->getFullURL("ref=fbfeed&fbtype=articlecomment"),
 				'$EVENTIMG' => self::$eventImage,
 				'$TEXT' => self::shortenText(self::parseArticle($article))
 			);
