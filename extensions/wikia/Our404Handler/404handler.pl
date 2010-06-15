@@ -234,6 +234,12 @@ while( $request->Accept() >= 0 || $test ) {
 	}
 
 	my $thumbnail = $basepath . '/' . $path;
+
+	#
+	# remove varnish/apache marker
+	#
+	$thumbnail =~ s/__thumbnail_gen//;
+
 	my @parts = split( "/", $path );
 	my $last = pop @parts;
 
