@@ -46,7 +46,7 @@
 	<div class="WikiaPhotoGalleryEditorPageInner">
 		<h1><?= wfMsg('wikiaPhotoGallery-upload-uploadtitle') ?></h1>
 <?php
-	if ($showUpload) {
+	if ($showUploadForm) {
 ?>
 		<?= wfMsgExt('wikiaPhotoGallery-upload-uploadtext', array('parse')) ?>
 

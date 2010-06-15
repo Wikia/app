@@ -54,12 +54,12 @@ class WikiaPhotoGalleryAjax {
 	 * Return HTML and messages for gallery editor
 	 */
 	static public function getEditorDialog() {
-		global $wgExtensionMessagesFiles, $wgEnableUploads, $wgUser, $wgTitle;
+		global $wgExtensionMessagesFiles, $wgTitle;
 
 		wfProfileIn(__METHOD__);
 
 		// show upload form?
-		$showUpload = $wgUser->isLoggedIn() && $wgUser->isAllowed('upload') && $wgEnableUploads && !wfReadOnly();
+		$showUploadForm = WikiaPhotoGalleryHelper::isUploadAllowed();
 
 		// list of recently uploaded images
 		$recentlyUploaded = WikiaPhotoGalleryHelper::getRecentlyUploaded();
@@ -72,7 +72,7 @@ class WikiaPhotoGalleryAjax {
 		$template->set_vars(array(
 			'imagesOnPage' => WikiaPhotoGalleryHelper::renderImagesList('images', $imagesOnPage),
 			'recentlyUploaded' => WikiaPhotoGalleryHelper::renderImagesList('uploaded', $recentlyUploaded),
-			'showUpload' => $showUpload,
+			'showUploadForm' => $showUploadForm,
 		));
 		$html = $template->render('editorDialog');
 

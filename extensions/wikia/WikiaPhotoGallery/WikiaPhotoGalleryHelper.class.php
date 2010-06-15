@@ -866,4 +866,23 @@ class WikiaPhotoGalleryHelper {
 		}
 		return true;
 	}
+
+	/**
+	 * Check whether upload is allowed for current user and with current config
+	 * @author Macbre
+	 */
+	static public function isUploadAllowed() {
+		global $wgEnableUploads, $wgDisableUploads, $wgUser;
+
+		$result = $wgUser->isLoggedIn() &&
+			$wgUser->isAllowed('upload') &&
+			$wgEnableUploads && empty($wgDisableUploads) &&
+			!wfReadOnly();
+
+		if ($result == false) {
+			wfDebug(__METHOD__ . ": upload is disabled\n");
+		}
+
+		return $result;
+	}
 }
