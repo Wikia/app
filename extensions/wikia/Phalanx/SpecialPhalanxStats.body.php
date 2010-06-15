@@ -53,7 +53,7 @@ class PhalanxStats extends UnlistedSpecialPage {
 		$html .= $pager->getNavigationBar();
 		$html .= $pager->getBody();
 		$html .= $pager->getNavigationBar();
-	
+
 		$wgOut->addHTML( $html );
 	}
 }
@@ -83,7 +83,7 @@ class PhalanxStatsPager extends ReverseChronologicalPager {
 	}
 
 	function getStartBody() {
-		return '<ul>';
+		return '<ul id="phalanx-block-' . $this->mBlockId . '-stats">';
 	}
 
 	function getEndBody() {
@@ -94,7 +94,7 @@ class PhalanxStatsPager extends ReverseChronologicalPager {
 		global $wgLang;
 
 		$html = '<li>';
-		$html .= implode( Phalanx::getTypeNames( $row->ps_blocker_type ) ); 
+		$html .= implode( Phalanx::getTypeNames( $row->ps_blocker_type ) );
 		$html .= ' blocked user ' . User::newFromId( $row->ps_blocked_user )->getName();
 		$html .= ' on ' . $wgLang->timeanddate( $row->ps_timestamp );
 		$html .= ' at wiki ' . $row->ps_wiki_id;
