@@ -1,4 +1,5 @@
 == Changes since 201006.3 ==
+* rt#53714: WikiaMiniUpload, PhotoGallery: user was able to upload an image during no_uploads time today (macbre)
 * rt#54264: Interwiki dispatcher is creating bad urls (Marooned)
 * rt#54467: RTE: update to CKEditor 3.3.1 (macbre)
 * rt#54113: ReverseParser: table open marker not put on new line (macbre)
