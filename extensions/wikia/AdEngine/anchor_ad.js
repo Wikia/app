@@ -88,6 +88,7 @@ var AnchorAd = {
 			$(".wikia_anchor_ad").animate({"margin-bottom": 0 - AnchorAd.settings.background.height}, AnchorAd.settings.speed);
 		});
 				
+		WET.byStr("anchor_ad/started");
 		$(".wikia_anchor_ad").animate({"margin-bottom": 0}, AnchorAd.settings.speed);		
 	}
 
