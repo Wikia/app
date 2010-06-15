@@ -676,10 +676,10 @@ class SpecialConnect extends SpecialPage {
 			$titleObj = Title::newFromText( $this->mReturnTo );
 			if (  ( !$titleObj instanceof Title ) || ( $titleObj->isSpecial("Userlogout") ) || ( $titleObj->isSpecial("Signup") ) || ( $titleObj->isSpecial("Connect") )  ) {
 				$titleObj = Title::newMainPage();
-				$wgOut->redirect( $titleObj->getFullURL( ) );
+				$wgOut->redirect( $titleObj->getFullURL( "cb=".rand(1,10000) ) );
 				return true;
 			}
-			$wgOut->redirect( $titleObj->getFullURL( $this->mReturnToQuery ) );
+			$wgOut->redirect( $titleObj->getFullURL( $this->mReturnToQuery . "&cb=".rand(1,10000) ) );
 		}
 	}
 
