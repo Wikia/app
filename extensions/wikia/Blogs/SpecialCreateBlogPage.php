@@ -16,7 +16,7 @@ class CreateBlogPage extends SpecialBlogPage {
 		parent::__construct( 'CreateBlogPage'  /*class*/, '' /*restriction*/, true);
 
 		// force EditEnhancements initialisation if available
-		if(function_exists('wfEditEnhancementsInit') && class_exists('EditEnhancements')) {
+		if(function_exists('wfEditEnhancementsInit') && !class_exists('EditEnhancements')) {
 			wfEditEnhancementsInit(true);
 		}
 	}

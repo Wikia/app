@@ -8,21 +8,12 @@ class EditEnhancements {
 	private $action;
 	private $undo;
 	private $tmpl;
-	private $forceInt = false;
-	function &getInstance($action, $force = false)
-	{
-		static $instance;
-		if(!isset($instance)) { 
-			$instance = new EditEnhancements($action, $force);
-		}
-		return $instance;
-	}
-	
-	function __construct($action, $force = false) {
+
+	function __construct($action) {
 		global $wgHooks, $wgRequest;
+
 		$this->action = $action;
 		$this->undo = intval($wgRequest->getVal('undo', 0)) != 0;
-		$this->forceInt = true;
 		$wgHooks['EditPageSummaryBox'][] = array(&$this, 'summaryBox');
 		$this->tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 	}
@@ -33,9 +24,9 @@ class EditEnhancements {
 		$valid_skins = array('SkinMonaco', 'SkinAnswers');
 		if(in_array(get_class($wgUser->getSkin()), $valid_skins)) {
 			$wgHooks['EditPage::showEditForm:checkboxes'][] = array(&$this, 'showCheckboxes');
-			if(($this->action == 'edit' && !$this->undo) || $this->forceInt ) { 
-				$wgHooks['GetHTMLAfterBody'][] = array(&$this, 'editPageJS'); 
-			} else if (($this->action == 'submit' || $this->undo) ) {
+			if($this->action == 'edit' && !$this->undo) {
+				$wgHooks['GetHTMLAfterBody'][] = array(&$this, 'editPageJS');
+			} else if ($this->action == 'submit' || $this->undo) {
 				$wgHooks['GetHTMLAfterBody'][] = array(&$this, 'previewJS');
 			}
 			$wgHooks['EditForm::MultiEdit:Form'][] = array(&$this, 'showToolbar');
@@ -44,15 +35,6 @@ class EditEnhancements {
 			$summary = '<div>';
 		}
 		return true;
-	}
-	
-	public function checkSkin() {
-		global $wgUser; 
-		$valid_skins = array('SkinMonaco', 'SkinAnswers');
-		if(in_array(get_class($wgUser->getSkin()), $valid_skins)) {
-			return true;
-		}
-		return false;
 	}
 
 	public function editPageJS() {
