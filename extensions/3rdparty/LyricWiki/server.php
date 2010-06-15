@@ -823,20 +823,16 @@ function getSong($artist, $song="", $doHyphens=true){
 				$origSongSql = str_replace("'", "\'", $origSong);
 				$lookedForSql = str_replace("'", "\'", trim($lookedFor)); // \n-delimited list of titles looked for by the API which weren't found.
 
-				if( !wfReadOnly() ) { // rt#27684 eloy
-					$db = lw_connect();
-					
-					// This section doesn't appear to do anything at the moment.  The artist and title still have bad-encoding even though lookedFor is encoded properly (lookedFor is a blob - does that matter?).
-					if(!utf8_compliant("$origArtistSql")){
-						$origArtistSql = utf8_encode($origArtistSql);
-					}
-					if(!utf8_compliant("$origSongSql")){
-						$origSongSql = utf8_encode($origSongSql);
-					}
-
-					$queryString = "INSERT INTO lw_soap_failures (request_artist,request_song, lookedFor) VALUES ('$origArtistSql', '$origSongSql', '$lookedForSql') ON DUPLICATE KEY UPDATE numRequests=numRequests+1";
-					mysql_query($queryString, $db);
+				// This section doesn't appear to do anything at the moment.  The artist and title still have bad-encoding even though lookedFor is encoded properly (lookedFor is a blob - does that matter?).
+				if(!utf8_compliant("$origArtistSql")){
+					$origArtistSql = utf8_encode($origArtistSql);
 				}
+				if(!utf8_compliant("$origSongSql")){
+					$origSongSql = utf8_encode($origSongSql);
+				}
+
+				logSoapFailure($origArtistSql, $origSongSql, $lookedForSql);
+
 				$resultFound = false;
 			} else {
 				$resultFound = true;
@@ -2111,6 +2107,32 @@ function utf8_compliant($str){
     // some valid sequences
     return (preg_match('/^.{1}/us',$str,$ar) == 1);
 } // end utf8_compliant(...)
+
+////
+// Given the artist, song, and titles that were looked-for, stores a record of
+// the failure so that we can know what songs (or redirects) are desired that we don't have yet.
+////
+function logSoapFailure($origArtistSql, $origSongSql, $lookedForSql){
+	global $wgReadOnly;
+	if( !wfReadOnly() ) {
+		GLOBAL $wgMemc;
+		$NUM_FAILS_TO_SPOOL = 10;
+		
+		// Spool a certain number of updates in memcache before writing to db.
+		$memkey = wfMemcKey( 'lw_soap_failure', $origArtistSql, $origSongSql );
+		$numFails = $wgMemc->get( $memkey );
+		if(empty($numFails)){
+			$wgMemc->set($memkey, 1);
+		} else if(($numFails + 1) >= $NUM_FAILS_TO_SPOOL){
+			$numFails += 1;
+			$db = lw_connect();
+			$queryString = "INSERT INTO lw_soap_failures (request_artist,request_song, lookedFor, numRequests) VALUES ('$origArtistSql', '$origSongSql', '$lookedForSql', '$numFails') ON DUPLICATE KEY UPDATE numRequests=numRequests+$numFails";
+			mysql_query($queryString, $db);
+		} else {
+			$wgMemc->set($memkey, $numFails + 1);
+		}
+	}
+} // end logSoapFailure()
 
 ////
 // If request-tracking is enabled, this function will record some stats about the request and return
