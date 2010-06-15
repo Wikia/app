@@ -57,6 +57,12 @@
 		</form>
 <?php
 	}
+	else {
+?>
+		<?= wfMsgExt('wikiaPhotoGallery-upload-uploadtext', array('parse')) ?>
+		<p><?= wfMsg('uploaddisabledtext') ?></p>
+<?php
+	}
 ?>
 		<p id="WikiaPhotoGallerySearchResultsChooser">
 			<?= wfMsgExt('wikiaPhotoGallery-upload-existingtext', array('parseinline')) ?>
