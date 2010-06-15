@@ -22,6 +22,17 @@ class WikiaPhotoGalleryUpload {
 
 		$ret = false;
 
+		// check whether upload is enabled (RT #53714)
+		if (!WikiaPhotoGalleryHelper::isUploadAllowed()) {
+			$ret = array(
+				'error' => true,
+				'message' => wfMsg('uploaddisabled'),
+			);
+
+			wfProfileOut(__METHOD__);
+			return $ret;
+		}
+
 		$imageName = stripslashes($wgRequest->getFileName(self::uploadFieldName));
 
 		// validate name and content of uploaded photo
