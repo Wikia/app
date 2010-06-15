@@ -552,11 +552,11 @@ var WikiaPhotoGallery = {
 					this.editor.gallery = params.gallery;
 
 					if (this.isSlideshow()) {
-						firstPage = this.SLIDESHOW_PREVIEW_PAGE;
+						firstPage = this.UPLOAD_FIND_PAGE;
 						this.track('/init/edit/view/slideshow');
 					}
 					else {
-						firstPage = this.GALLERY_PREVIEW_PAGE;
+						firstPage = this.UPLOAD_FIND_PAGE;
 						this.track('/init/edit/view/gallery');
 					}
 				}
