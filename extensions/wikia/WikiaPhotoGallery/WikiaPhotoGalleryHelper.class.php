@@ -807,7 +807,7 @@ class WikiaPhotoGalleryHelper {
 	 * @author Marooned
 	 */
 	static public function getGalleryDataByHash($hash, $revisionId = 0) {
-		global $wgHooks, $wgTitle;
+		global $wgHooks, $wgTitle, $wgUser, $wgOut;
 
 		wfProfileIn(__METHOD__);
 
@@ -825,7 +825,13 @@ class WikiaPhotoGalleryHelper {
 			$parser->parse($wikitext, $wgTitle, $parserOptions)->getText();
 		}
 
-		if (empty(self::$mGalleryData)) {
+
+		$permissionErrors = $wgTitle->getUserPermissionsErrors('edit', $wgUser);
+		if (count($permissionErrors)) {
+			$result['error'] = $wgOut->parse($wgOut->formatPermissionsErrorMessage($permissionErrors));
+			$result['errorCaption'] = wfMsg('wikiaPhotoGallery-error-caption');
+		}
+		elseif (empty(self::$mGalleryData)) {
 			$result['error'] = wfMsg('wikiaPhotoGallery-error-outdated');
 			$result['errorCaption'] = wfMsg('wikiaPhotoGallery-error-caption');
 		} else {
