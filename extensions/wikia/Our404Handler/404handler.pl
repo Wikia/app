@@ -173,7 +173,7 @@ my $clients     = $ENV{ "CHILDREN" } || 4;
 my $listen      = $ENV{ "SOCKET"   } || "0.0.0.0:39393";
 my $debug       = $ENV{ "DEBUG"    } || 1;
 my $test        = $ENV{ "TEST"     } || 0;
-my $pidfile     = $ENV{ "PIDFILE"  } || "/var/run/404handler.pid";
+my $pidfile     = $ENV{ "PIDFILE"  } || "/var/run/404handler/404handler.pid";
 
 #
 # fastcgi request
