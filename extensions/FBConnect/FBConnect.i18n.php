@@ -55,8 +55,6 @@ $messages['en'] = array(
 	'group-fb-admin'          => 'Group admins',
 	'group-fb-admin-member'   => 'Group administrator',
 	'grouppage-fb-admin'      => '{{ns:project}}:Group admins',
-	// Incredibly good looking people
-	'right-goodlooking'       => 'Really, really, ridiculously good looking',
 	// Personal toolbar
 	'fbconnect-connect'  => 'Log in with Facebook Connect',
 	'fbconnect-connect-simple'  => 'Connect',
