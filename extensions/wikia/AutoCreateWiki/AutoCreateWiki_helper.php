@@ -433,6 +433,11 @@ class AutoCreateWiki {
 	 */
 	public static function checkBadWords($sText, $where, $split = false) {
 		wfProfileIn(__METHOD__);
+
+		if( !wfRunHooks( 'AutoCreateWiki::checkBadWords', array( $sText, $where, $split ) ) ) {
+			return false;
+		}
+
 		$allowed = true;
 		$oRegexCore = new TextRegexCore( "creation", 0 );
 		if ($oRegexCore instanceof TextRegexCore) {
