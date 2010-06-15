@@ -197,11 +197,9 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype,
 
 			if ( toStart )
 				this.$.insertBefore( node.$, this.$.firstChild );
-			else {
-				alert(node.$.toString());
-				alert(this.$.toString());
+			else
 				this.$.appendChild( node.$ );
-			}
+			
 			return node;
 		},
 
