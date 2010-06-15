@@ -518,22 +518,32 @@ class AutoCreateWikiLocalJob extends Job {
 		if ( !empty($wgEnableUserBoard) ) {
 			$message = "autocreatewiki-welcomeuserboard";
 			if ( !wfEmptyMsg( $message, wfMsg($message) ) ) {
-				if ( !$wgUser instanceof User ) {
-					$wgUser = Wikia::staffForLang( $this->wikiaLang );
-					$wgUser = ( $wgUser instanceof User ) ? $wgUser : User::newFromName( "Angela" );
-				}
+				# staff
+				$oUser = Wikia::staffForLang( $this->wikiaLang );
+				$oUser = ( $oUser instanceof User ) ? $oUser : User::newFromName( "Angela" );
+				# staff page
+				$staffPage = $oUser->getUserPage();
 
 				$message = wfMsgExt(
 					$message,
 					array( 'language' => $this->wikiaLang ),
 					array(
 						$this->mFounder->getName(),
+						$staffPage->getFullURL(),
 						$wgUser->getName(),
 						$wgUser->getRealName(),
 						$this->wikiaName
 					)
 				);
-				wfSendBoardMessage($this->mFounder->getName(), $message, 0, 1);
+				
+				$oUserBoard = new UserBoard();
+				$m = $oUserBoard->sendBoardMessage(
+					$oUser->getId(),
+					$oUser->getName(),
+					$this->mFounder->getId(), 
+					$this->mFounder->getName(), 
+					$message
+				);
 			}
 		}
 		wfProfileOut( __METHOD__ );
