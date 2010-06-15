@@ -667,7 +667,7 @@ class SpecialConnect extends SpecialPage {
 		$inject_html = '';
 		wfRunHooks( 'UserLoginComplete', array( &$wgUser, &$inject_html ) );
 		
-		if( $injected_html !== '' ) {
+		if( $inject_html !== '' ) {
 			$wgOut->addHtml( $inject_html );
 			// Render the "return to" text retrieved from the URL
 			$wgOut->returnToMain(false, $this->mReturnTo, $this->mReturnToQuery);
