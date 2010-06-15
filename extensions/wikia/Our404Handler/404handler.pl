@@ -409,7 +409,7 @@ while( $request->Accept() >= 0 || $test ) {
 							print "HTTP/1.1 200 OK\r\n";
 							print "Cache-control: max-age=30\r\n";
 							print "Content-type: $mimetype\r\n\r\n";
-							print $image->ImageToBlob();
+							print $image->ImageToBlob() unless $test;
 							print STDERR "File $thumbnail served\n" if $debug;
 						}
 						else {
