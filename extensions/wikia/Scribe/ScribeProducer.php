@@ -24,10 +24,10 @@ class ScribeProducer {
 		$mServerName;
 
 	const 
-		EDIT_CATEGORY 		= 'edit_log',
-		CREATEPAGE_CATEGORY	= 'create_log',
-		UNDELETE_CATEGORY	= 'undelete_log',
-		DELETE_CATEGORY		= 'delete_log';
+		EDIT_CATEGORY 		= 'log_edit',
+		CREATEPAGE_CATEGORY	= 'log_create',
+		UNDELETE_CATEGORY	= 'log_undelete',
+		DELETE_CATEGORY		= 'log_delete';
 
 	/**
 	 * constructor
@@ -101,7 +101,6 @@ class ScribeProducer {
 			if ( $revid > 0 && $pageId > 0 ) { 
 				$oScribeProducer = new ScribeProducer( $pageId, $revid );
 				if ( is_object( $oScribeProducer ) ) {
-					error_log(print_r($status, true), 3, "/tmp/moli.log");
 					$is_new = ( isset($status->value['new']) && $status->value['new'] == 1 ) ? 'create' : 'edit';
 					$oScribeProducer->send_log( $is_new );
 				}
