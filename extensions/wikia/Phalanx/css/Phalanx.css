@@ -1,0 +1,81 @@
+#phalanx-input-filter .blue {
+	margin: 4px 0px 4px 4px;
+}
+
+#phalanx-feedback-msg .error {
+	color: red;
+}
+
+#phalanx-feedback-msg {
+	color: green;
+}
+
+#phalanx-block-texts .left,
+#phalanx-input-filter .left-spacer,
+#phalanx-block-optionals .left {
+	display: block;
+	float: left;
+	font-weight: bold;
+	margin: 6px;
+	text-align: right;
+}
+
+#phalanx-input-filter .left-spacer {
+	clear: both;
+}
+
+#phalanx-mainframe .clear {
+	clear: both;
+}
+
+#phalanx-help {
+	font-size: 0.9em;
+	margin-left: 400px;
+	position: relative;
+}
+
+#phalanx-help div {
+	position: absolute;
+	display: none;
+	padding: 5px;
+}
+
+#phalanx-check-area {
+	clear: both;
+}
+
+#wpPhalanxSubmit {
+	margin: 6px 0 0 6px;
+}
+
+#phalanx-block-types {
+	float: left;
+}
+
+#phalanx-block-types label {
+	display: inline-block;
+	margin: 6px 0px 0px 10px;
+	text-align: left;
+	width: 130px;
+}
+
+#phalanx-check-label {
+	font-size: 110%;
+	font-weight: bold;
+}
+
+#phalanx-check-results li {
+	border-bottom: 1px dashed #778899;
+	font-size: 11px;
+	margin-bottom: 0.1em;
+	padding-bottom: 2px;
+}
+
+#phalanx-test-tab-content {
+	display: none;
+}
+
+.phalanx-target {
+	color:#3B7F07;
+	font-size:12px;
+}
