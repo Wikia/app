@@ -273,7 +273,35 @@ class AchAwardingService {
 				foreach($insertedImages as $inserted_image) {
 					if($inserted_image['il_to']{0} != ':') {
 						if(wfFindFile($inserted_image['il_to'])) {
-							$this->mCounters[BADGE_PICTURE]++;
+							//check if the image has been used less than 10 times
+							//(to avoid awarding after template based bulk insertion)
+							//calls api.php?action=query&list=imageusage&iulimit=10&iutitle=File:File_mame.ext
+							$imageUsageCount = 0;
+							$imageUsageLimit = 10;
+							$params = array(
+							        'action' => 'query',
+							        'list' => 'imageusage',
+							        'iutitle' => "File:{$inserted_image['il_to']}",
+							        'iulimit' => $imageUsageLimit,
+							);
+							
+							try {
+							        wfProfileIn(__METHOD__ . '::apiCall');
+								
+							        $api = new ApiMain(new FauxRequest($params));
+							        $api->execute();
+							        $res = $api->getResultData();
+								
+							        wfProfileOut(__METHOD__ . '::apiCall');
+								
+							        if (is_array($res['query']['imageusage'])) {
+							              $imageUsageCount = count($res['query']['imageusage']);
+							        }
+							}
+							catch(Exception $e) {};
+							
+							if($imageUsageCount < $imageUsageLimit)
+								$this->mCounters[BADGE_PICTURE]++;
 						}
 					}
 				}
