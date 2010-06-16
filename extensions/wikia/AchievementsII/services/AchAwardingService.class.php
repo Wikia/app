@@ -174,10 +174,13 @@ class AchAwardingService {
 			$dbw->insert('ach_user_badges', $this->mNewBadges, __METHOD__);
 			$dbw->commit();
 			
-			$_SESSION['achievementsNewBadges'] = true;
-
-			//touch user when badges are given
-			$this->mUser->invalidateCache();
+			//notify the user only if he wants to be notified
+			if(!($this->mUser->getOption('hidepersonalachievements'))) {
+				$_SESSION['achievementsNewBadges'] = true;
+	
+				//touch user when badges are given
+				$this->mUser->invalidateCache();
+			}
 		}
 
 		wfProfileOut(__METHOD__);

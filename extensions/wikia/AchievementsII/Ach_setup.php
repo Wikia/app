@@ -88,16 +88,24 @@ function Ach_Setup() {
 	$wgHooks['AddToUserProfile'][] = 'Ach_AddToUserProfile';
 	$wgHooks['UploadVerification'][] = 'Ach_UploadVerification';
 	$wgHooks['Masthead::editCounter'][] = 'Ach_MastheadEditCounter';
-
+	
+	//hooks for user preferences
+	$wgHooks['UserToggles'][] = 'Ach_UserToggles';
+	
 	wfProfileOut(__METHOD__);
 }
 
 function Ach_MastheadEditCounter(&$editCounter, $user) {
 	if ($user instanceof User) {
-		global $wgCityId, $wgExternalSharedDB;
-		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
-		$editCounter = $dbr->selectField('ach_user_score', 'score', array('wiki_id' => $wgCityId, 'user_id' => $user->getId()), __METHOD__);
-		$editCounter = '<div id="masthead-achievements">' . wfMsg('achievements-masthead-points', number_format($editCounter)) . '</div>';
+		global $wgUser;
+		
+		if(!($wgUser->getId() == $user->getId() && $wgUser->getOption('hidepersonalachievements'))) {
+			global $wgCityId, $wgExternalSharedDB;
+			
+			$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+			$editCounter = $dbr->selectField('ach_user_score', 'score', array('wiki_id' => $wgCityId, 'user_id' => $user->getId()), __METHOD__);
+			$editCounter = '<div id="masthead-achievements">' . wfMsg('achievements-masthead-points', number_format($editCounter)) . '</div>';
+		}
 	} else {
 		$editCounter = '';
 	}
@@ -134,7 +142,7 @@ function Ach_GetHTMLAfterBody($skin, &$html) {
 
 	global $wgOut, $wgTitle, $wgUser;
 
-	if($wgUser->isLoggedIn()) {
+	if($wgUser->isLoggedIn() && !($wgUser->getOption('hidepersonalachievements'))) {
 		if ($wgTitle->getNamespace() == NS_SPECIAL && SpecialPage::resolveAlias($wgTitle->getDBkey()) == 'MyHome') {
 			$awardingService = new AchAwardingService();
 			$awardingService->awardCustomNotInTrackBadge($wgUser, BADGE_WELCOME);
@@ -176,6 +184,11 @@ function AchAjax() {
 		return $response;
 	}
 
+}
+
+function Ach_UserToggles(&$toggles) {
+	$toggles[] = 'hidepersonalachievements';
+	return true;
 }
 
 ##
