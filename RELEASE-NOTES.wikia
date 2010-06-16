@@ -1,4 +1,5 @@
 == Changes since 201006.3 ==
+* rt#55203: WikiaPhotoGallery: dialogs should use full vertical space available (macbre)
 * rt#55210: WikiaPhotoGallery: dialogs should use the current browser viewport size (macbre)
 * rt#55179: RTE: styling code in link caption is broken by editor (macbre)
 * rt#55200: WikiaMiniUpload: view mode add image button goes to preview, should go to find image dialog (macbre)
