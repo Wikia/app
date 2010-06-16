@@ -404,10 +404,14 @@ img.WikiaPhotoGalleryProgress {
 	vertical-align: middle;
 }
 
+#WikiaPhotoGallerySlideshowEditorPreviewWrapper {
+	position: relative;
+}
+
 #WikiaPhotoGallerySlideshowAddImage {
 	left: 15px;
-	position: relative;
-	top: -230px;
+	position: absolute;
+	top: 15px;
 	z-index: 1;
 }
 

@@ -14,6 +14,8 @@ var WikiaPhotoGallery = {
 		},
 		msg: {},
 		source: false,
+		// dimensions of editor's popup (RT #55203, RT #55210)
+		height: false,
 		width: false
 	},
 
@@ -1088,6 +1090,9 @@ var WikiaPhotoGallery = {
 
 		// unblock upload form
 		$('#WikiaPhotoGalleryImageUploadButton').attr('disabled', false);
+
+		// resize images list (RT #55203)
+		$('#WikiaPhotoGallerySearchResults').height(this.editor.height - 200);
 	},
 
 	// setup upload conflict page
@@ -1431,6 +1436,9 @@ var WikiaPhotoGallery = {
 		// select proper alignment option
 		$('#WikiaPhotoGalleryEditorPreviewAlign').val( params.captionalign || 'left' );
 
+		// resize preview area (RT #55203)
+		$('#WikiaPhotoGalleryEditorPreview').height(this.editor.height);
+
 		// render preview
 		this.renderGalleryPreview();
 	},
@@ -1539,6 +1547,9 @@ var WikiaPhotoGallery = {
 
 			self.selectPage(self.UPLOAD_FIND_PAGE, {});
 		});
+
+		// resize preview area (RT #55203)
+		$('#WikiaPhotoGallerySlideshowEditorPreview').height(this.editor.height - 200);
 
 		// render preview
 		this.renderSlideshowPreview();
@@ -1716,13 +1727,19 @@ var WikiaPhotoGallery = {
 
 		// get width of article to be used for editor
 		var width = parseInt($('#article').width());
+		width = Math.min($.getViewportWidth() - 75, width);
 		width = Math.max(670, width);
 		width = Math.min(1300, width);
 
-		self.log('showEditor() - ' + width + 'px');
+		// get full height available (RT #55203)
+		var height = parseInt($.getViewportHeight() - 125);
+		height = Math.max(460, height);
+
+		self.log('showEditor() - ' + width + 'x' + height + 'px');
 		self.log(params);
 
 		self.editor.width = width;
+		self.editor.height = height;
 
 		var editorPopup = $('#WikiaPhotoGalleryEditor');
 		if (!editorPopup.exists()) {
@@ -1732,6 +1749,10 @@ var WikiaPhotoGallery = {
 
 				// render editor popup
 				$.showModal('', data.html, {
+					callbackBefore: function() {
+						// change height of the editor popup before it's shown (RT #55203)
+						$('#WikiaPhotoGalleryEditorPagesWrapper').height(height);
+					},
 					callback: function() {
 						// remove loading indicator
 						$('#WikiaPhotoGalleryEditorLoader').remove();
@@ -1785,6 +1806,9 @@ var WikiaPhotoGallery = {
 		}
 		else {
 			self.setupEditor(params);
+
+			// change height of the editor popup before it's shown (RT #55203)
+			$('#WikiaPhotoGalleryEditorPagesWrapper').height(height);
 
 			// resize dialog (RT #55210)
 			editorPopup.resizeModal(width);
