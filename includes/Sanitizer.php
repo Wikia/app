@@ -778,7 +778,7 @@ class Sanitizer {
 			if(strpos($text, "\x7f") !== false) {
 				RTE::$edgeCases[] = 'COMPLEX.08';
 			}
-			$attribs[] = RTEReverseParser::encodeAttributesStr($text);
+			$attribs[] = RTEParser::encodeAttributesStr($text);
 		}
 		# RTE - end
 
