@@ -397,11 +397,15 @@ class FollowHelper {
 			$wgUser->saveSettings();
 		}
 		
-		$key = $wgTitle->getDBKey(); 
+		$key = $wgTitle->getDBKey(); 	
 		
 		if ( strlen($key) > 0 ) {
 			$user = User::newFromName($key);
 
+			if ($user == null) {
+				return true;
+			}
+		
 			if($user->getId() == 0) {
 				//not a real user
 				return true;
@@ -410,10 +414,6 @@ class FollowHelper {
 			$user = $wgUser;
 		}
 		
-		if ($user == null) {
-			return true;
-		}
-
 		// do not show Followed box on diffs
 		if ( $wgRequest->getVal( 'diff', null ) != null ) {
 			return true;
