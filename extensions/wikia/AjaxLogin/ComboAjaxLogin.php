@@ -158,7 +158,7 @@ function createUserLogin(){
 	$dbl = wfGetDB( DB_MASTER );
 	
 	$dbw->begin();	 
-	$dbw->begin();
+	$dbl->begin();
 	
 	$form->execute();
 	
@@ -270,7 +270,12 @@ class AjaxLoginForm extends LoginForm {
 		if ( !LoginForm::getLoginToken() ) {
 			LoginForm::setLoginToken();
 		}
-		$tmpl->set( "token", LoginForm::getLoginToken() );
+		$tmpl->set( "loginToken", LoginForm::getLoginToken() );
+
+		if ( !LoginForm::getCreateaccountToken() ) {
+			LoginForm::setCreateaccountToken();
+		}
+		$tmpl->set( "createToken", LoginForm::getCreateaccountToken() );
 
 		// Use the existing settings to generate the login portion of the form, which will then
 		// be fed back into the bigger template in this case (it is not always fed into ComboAjaxLogin template).
@@ -446,18 +451,16 @@ class AjaxLoginForm extends LoginForm {
 			$template->set( 'uselang', $this->mLanguage );
 		}
 		
-		if ( $this->mType == 'signup' ) {
-			if ( !self::getCreateaccountToken() ) { 
-				self::setCreateaccountToken(); 
-			}
-			$template->set( 'token', self::getCreateaccountToken() ); 
-		} else {
-			if ( !self::getLoginToken() ) { 
-				self::setLoginToken(); 
-			}
-			$template->set( 'token', self::getLoginToken() ); 
-		}     
+		if ( !self::getLoginToken() ) { 
+			self::setLoginToken(); 
+		}
+		$template->set( 'loginToken', self::getLoginToken() ); 
 		
+		if ( !self::getCreateaccountToken() ) { 
+			self::setCreateaccountToken(); 
+		}
+		$template->set( 'createToken', self::getCreateaccountToken() ); 
+
 		// Give authentication and captcha plugins a chance to modify the form
 		$wgAuth->modifyUITemplate( $template );
 		

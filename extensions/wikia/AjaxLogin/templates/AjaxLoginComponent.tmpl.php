@@ -44,7 +44,7 @@
 	                <label id="labelFor_wpRemember2Ajax" for="wpRemember2Ajax" style="padding-left: 5px"><?php print wfMsg('remembermypassword') ?></label>
 	            </div>
 	        	<input type="submit" id="wpLoginattempt" value="<?php print wfMsg("login") ?>" />
-	        <input type="hidden" name="wpLoginToken" value="<?php echo $token; ?>" />
+	        <input type="hidden" name="wpLoginToken" value="<?php echo $loginToken; ?>" />
         	</form>
 
 	</div><?php
@@ -65,7 +65,6 @@
 	</div>
 	<div id='fbLoginAndConnect' style='display:none'>
 		<? echo wfMsgExt( 'comboajaxlogin-connectdirections', 'parse' ) ?>
-
 		<form action="" method="post" name="userajaxconnectform" id="userajaxconnectform">
 			<label for="wpName3Ajax" style="display: block; font-weight: bold;"><?php print wfMsg("yourname") ?></label> 
 			<table>
@@ -83,7 +82,7 @@
 				</td>
 			</tr>
 			</table>
-		<input type="hidden" name="wpLoginToken" value="<?php echo $token; ?>"/>
+                <input type="hidden" name="wpLoginToken" value="<?php echo $loginToken; ?>" />
 		<input type="submit" id="wpLoginAndConnectCombo" value="<?php print wfMsg("login") ?>" onclick="loginAndConnectExistingUser();" />
 		</form>
 	</div>
