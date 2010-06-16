@@ -3,6 +3,8 @@
 ?>
 <div id="WikiaPhotoGalleryEditorLoader" style="height: 460px">&nbsp;</div>
 
+<div id="WikiaPhotoGalleryEditorPagesWrapper">
+
 <!-- Type chooser (gallery or slideshow) -->
 <div class="WikiaPhotoGalleryEditorPage">
 	<div class="WikiaPhotoGalleryEditorPageInner WikiaPhotoGalleryEditorChooseType">
@@ -179,9 +181,10 @@
 
 		<h1><?= wfMsg('wikiaPhotoGallery-slideshowpreview-photostitle') ?></h1>
 
-		<div id="WikiaPhotoGallerySlideshowEditorPreview" class="preview"></div>
-
-		<a id="WikiaPhotoGallerySlideshowAddImage" class="wikia-button"><?= wfMsg('wikiaPhotoGallery-slideshowpreview-addphoto') ?></a>
+		<div id="WikiaPhotoGallerySlideshowEditorPreviewWrapper">
+			<a id="WikiaPhotoGallerySlideshowAddImage" class="wikia-button"><?= wfMsg('wikiaPhotoGallery-slideshowpreview-addphoto') ?></a>
+			<div id="WikiaPhotoGallerySlideshowEditorPreview" class="preview"></div>
+		</div>
 	</div>
 </div>
 
@@ -197,6 +200,8 @@
 	</div>
 </div>
 
+<!-- close pages wrapper -->
+</div>
 
 <!-- Editor toolbar -->
 <div class="neutral modalToolbar">
