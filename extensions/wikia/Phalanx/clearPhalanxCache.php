@@ -4,7 +4,7 @@ include( '../../../maintenance/commandLine.inc' );
 
 foreach( Phalanx::$typeNames as $module => $modName ) {
 	foreach( $wgPhalanxSupportedLanguages as $lang => $langName ) {
-		$key = 'phalanx:' . $moduleId . ':' . $lang;
+		$key = 'phalanx:' . $module . ':' . $lang;
 
 		echo "Deleting $key...";
 
