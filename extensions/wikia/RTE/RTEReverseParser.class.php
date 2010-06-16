@@ -1635,24 +1635,6 @@ class RTEReverseParser {
 	}
 
 	/**
-	 * Generate _rte_attribs attribute storing original list of HTML node attributes
-	 */
-	public static function encodeAttributesStr($attribs) {
-		wfProfileIn(__METHOD__);
-
-		$encoded = Sanitizer::encodeAttribute($attribs);
-
-		// encode &quot; entity (fix for IE)
-		$encoded = str_replace('&quot;', "\x7f", $encoded);
-
-		$ret = "_rte_attribs=\"{$encoded}\"";
-
-		wfProfileOut(__METHOD__);
-
-		return $ret;
-	}
-
-	/**
 	 * Decode and return data stored in _rte_data attribute
 	 */
 	private static function getRTEData($node) {
