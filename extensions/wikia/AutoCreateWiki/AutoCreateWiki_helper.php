@@ -103,13 +103,13 @@ class AutoCreateWiki {
 						$tmp_array['similar'][] = "city_domain like '%{$n}%'";
 					} else {
 						switch ( $type ) {
-							case "answers" : 
+							case "answers" :
 								$__domains = Wikia::getAnswersDomains();
 								if ( $__domains && $language && isset($__domains[$language]) ) {
 									$likeName = $__domains[$language];
 								} elseif ( $__domains && isset($__domains["default"]) ) {
 									$likeName = $__domains["default"];
-								} 
+								}
 								if ( $likeName ) {
 									$tmp_array['similar'][] = "city_domain like '%{$n}.{$likeName}%'";
 								}
@@ -437,6 +437,12 @@ class AutoCreateWiki {
 		if( !wfRunHooks( 'AutoCreateWiki::checkBadWords', array( $sText, $where, $split ) ) ) {
 			return false;
 		}
+
+		// TODO: temporary check for Phalanx (don't perform additional filtering when enabled)
+                global $wgEnablePhalanxExt;
+                if (!empty($wgEnablePhalanxExt)) {
+                        return true;
+                }
 
 		$allowed = true;
 		$oRegexCore = new TextRegexCore( "creation", 0 );
