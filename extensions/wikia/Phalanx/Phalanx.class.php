@@ -57,7 +57,7 @@ class Phalanx {
 		wfProfileIn( __METHOD__ );
 
 		$timestampNow = wfTimestampNow();
-		$key = wfMemcKey('phalanx', $moduleId, $lang ? $lang : 'all');
+		$key = 'phalanx:' . $moduleId . ':' . ($lang ? $lang : 'all');
 		$blocksData = $wgMemc->get($key);
 
 		//cache miss (or we have expired blocks in cache), get from DB

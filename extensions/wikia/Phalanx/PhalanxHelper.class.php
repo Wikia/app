@@ -47,7 +47,7 @@ class PhalanxHelper {
 			//iterate for each module for which block is saved
 			for ($bit = $modulesId&1, $moduleId=1; $modulesId; $modulesId>>=1, $bit = $modulesId&1, $moduleId<<=1) {
 				if (!$bit) continue;	//skip not used modules
-				$key = wfMemcKey('phalanx', $moduleId, $lang ? $lang : 'all');
+				$key = 'phalanx:' . $moduleId . ':' . ($lang ? $lang : 'all');
 				$blocksData = $wgMemc->get($key);
 				//cache miss, fill it from DB (getFromFilter() will update the cache)
 				if (empty($blocksData)) {
@@ -93,7 +93,7 @@ class PhalanxHelper {
 			//iterate for each module for which block is saved
 			for ($bit = $modulesId&1, $moduleId=1; $modulesId; $modulesId>>=1, $bit = $modulesId&1, $moduleId<<=1) {
 				if (!$bit) continue;	//skip not used modules
-				$key = wfMemcKey('phalanx', $moduleId, $lang ? $lang : 'all');
+				$key = 'phalanx:' . $moduleId . ':' . ($lang ? $lang : 'all');
 				$blocksData = $wgMemc->get($key);
 				//cache miss, fill it from DB (getFromFilter() will update the cache)
 				if (empty($blocksData)) {
@@ -242,7 +242,7 @@ class PhalanxHelper {
 		//iterate for each module for which block is saved
 		for ($bit = $modulesId&1, $moduleId=1; $modulesId; $modulesId>>=1, $bit = $modulesId&1, $moduleId<<=1) {
 			if (!$bit) continue;	//skip not used modules
-			$key = wfMemcKey('phalanx', $moduleId, $lang ? $lang : 'all');
+			$key = 'phalanx:' . $moduleId . ':' . ($lang ? $lang : 'all');
 			$blocksData = $wgMemc->get($key);
 
 			//cache miss, fill it from DB (getFromFilter() will update the cache)
