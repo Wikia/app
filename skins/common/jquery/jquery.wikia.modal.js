@@ -12,11 +12,11 @@ $.fn.extend({
 		} else {
 			var id = $(this).attr('id') + 'Wrapper';
 		}
-	
+
 		this.wrap('<div class="modalWrapper" id="'+id+'"></div>');
 
 		var wrapper = this.closest(".modalWrapper");
-		
+
 		// macbre: addcustom CSS class to popup wrapper
 		if (options.className) {
 			wrapper.addClass(options.className);
@@ -55,22 +55,22 @@ $.fn.extend({
 			.fadeIn("fast")
 			.data('options', options)
 			.log('makeModal: #' + id);
-		
+
 		$("[id$='TOP_LEADERBOARD']").add("[id$='TOP_RIGHT_BOXAD']").css("visibility", "hidden");
 
 		// get rid of tooltip - remove title attr
 		this.removeAttr('title');
-		
+
 		// add event handlers
 		var persistent = (typeof options.persistent == 'boolean') ? options.persistent : false;
-		
+
 		// macbre: function called when modal is closed
 		var onClose = (typeof options.onClose == 'function') ? options.onClose : false;
-		
+
 		wrapper.find('h1.modalTitle').children('.close').bind("click", function() {
 			var wrapper = $(this).closest('.modalWrapper');
 			var options = wrapper.data('options');
-			
+
 			if (typeof options.onClose == 'function') {
 				// let extension decide what to do
 				// close can be prevented by onClose() returning false
@@ -96,7 +96,7 @@ $.fn.extend({
 							return;
 						}
 					}
-		
+
 					if (persistent) {
 						wrapper.hideModal();
 					} else {
@@ -125,14 +125,14 @@ $.fn.extend({
 						return;
 					}
 				}
-		
+
 			if (persistent) {
 				wrapper.hideModal();
 			} else {
 				wrapper.closeModal();
 			}
 		});
-		
+
 		wrapper.data('blackout', blackout);
 	},
 
@@ -145,41 +145,41 @@ $.fn.extend({
 		}, "fast", function() {
 			$(this).remove();
 		});
-		
+
 		// removed associated blackout
 		var blackout = $(this).data('blackout');
 		blackout.fadeOut("fast", function() {
 			$(this).remove();
 		});
-		
+
 		//hide ads when a modal is present
 		$("[id$='TOP_LEADERBOARD']").add("[id$='TOP_RIGHT_BOXAD']").css("visibility", "visible");
 	},
 
-	
-	hideModal: function() { // just hide the modal - don't remove DOM node
+	// just hide the modal - don't remove DOM node
+	hideModal: function() {
 		// hide associated blackout
 		var blackout = $(this).data('blackout');
 		blackout.fadeOut("fast").addClass('blackoutHidden');
-		
+
 		this.animate({
 			top: this.offset()["top"] + 100,
 			opacity: 0
 		}, "fast", function() {
 			$(this).css("display", "none");
 		});
-		
+
 		//show ads again
 		$("[id$='TOP_LEADERBOARD']").add("[id$='TOP_RIGHT_BOXAD']").css("visibility", "visible");
 	},
 
-
-	showModal: function() { // show previously hidden modal
+	// show previously hidden modal
+	showModal: function() {
 		var wrapper = this.closest(".modalWrapper");
-	
+
 		// let's have it dynamically generated, so every newly created modal will be on the top
 		var zIndex = ($('#positioned_elements').children('.blackout').length+1) * 1000;
-	
+
 		// show associated blackout
 		var blackout = $(this).data('blackout');
 		blackout
@@ -190,7 +190,7 @@ $.fn.extend({
 				zIndex: zIndex
 			})
 			.removeClass('blackoutHidden');
-	
+
 		wrapper
 			.css({
 				top: getModalTop(),
@@ -199,9 +199,9 @@ $.fn.extend({
 				display: "block"
 			})
 			.log('showModal: #' + this.attr('id'));
-	
+
 		$("[id$='TOP_LEADERBOARD']").add("[id$='TOP_RIGHT_BOXAD']").css("visibility", "hidden");
-	
+
 		//Defined twice in different scopes. This is bad. Figure out how to define just once.
 		function getModalTop() {
 			var modalTop = (($(window).height() - wrapper.outerHeight()) / 2) + $(window).scrollTop();
@@ -211,6 +211,16 @@ $.fn.extend({
 				return modalTop;
 			}
 		}
+	},
+
+	// change the width of modal and reposition it (refs RT #55210)
+	resizeModal: function(width) {
+		width = parseInt(width);
+		var wrapper = this.closest(".modalWrapper");
+
+		wrapper
+			.width(width)
+			.css('marginLeft', -wrapper.outerWidth() >> 1)
+			.log('resizeModal: #' + this.attr('id') + ' resized to ' + width + 'px');
 	}
-	
 });
