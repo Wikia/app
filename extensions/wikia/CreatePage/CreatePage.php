@@ -138,8 +138,8 @@ function wfCreatePageAjaxCheckTitle() {
 				$result['msg'] = wfMsg( 'createpage-error-article-exists', array( $oTitle->getFullUrl(), $oTitle->getText() ) );
 			}
 			else { // title not exists
-				// compressed spam filter - other have no sense since it's only title here at this point
-				if( !wfSpamBlacklistTitleGenericTitleCheck( $oTitle ) ) {
+				// macbre: maybe create dedicated hook for this check? (change related to release of Phalanx)
+				if ( !wfRunHooks('CreateDefaultQuestionPageFilter', array($oTitle)) ) {
 					$result['result'] = 'error';
 					$result['msg'] = wfMsg( 'createpage-error-article-spam' );
 				}
