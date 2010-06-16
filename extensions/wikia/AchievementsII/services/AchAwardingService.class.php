@@ -177,10 +177,10 @@ class AchAwardingService {
 			//notify the user only if he wants to be notified
 			if(!($this->mUser->getOption('hidepersonalachievements'))) {
 				$_SESSION['achievementsNewBadges'] = true;
-	
-				//touch user when badges are given
-				$this->mUser->invalidateCache();
 			}
+			
+			//touch user when badges are given
+			$this->mUser->invalidateCache();
 		}
 
 		wfProfileOut(__METHOD__);
