@@ -46,7 +46,13 @@ class PhalanxStats extends UnlistedSpecialPage {
 
 		$html = '';
 
-		$html .=  Xml::buildTable( array( $block ), array(), $headers );
+		$tableAttribs = array(
+			'border' => 1,
+			'cellpadding' => 4,
+			'cellspacing' => 0,
+		);
+		$html .=  Xml::buildTable( array( $block ), $tableAttribs, $headers );
+		$html .=  Xml::element( 'br', null, '', true );
 
 		$pager = new PhalanxStatsPager( $par );
 
