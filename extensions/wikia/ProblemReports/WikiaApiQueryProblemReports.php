@@ -745,6 +745,12 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 			return false;
 		}
 
+		// TODO: temporary check for Phalanx (don't perform additional filtering when enabled)
+		global $wgEnablePhalanxExt;
+		if (!empty($wgEnablePhalanxExt)) {
+			return true;
+		}
+
 		wfProfileIn(__METHOD__);
 
 		$spamObj = wfSpamBlacklistObject();
@@ -771,7 +777,7 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
     // user can do actions: fix, reopen, close problem reports (only local wiki)
     static function userCanDoActions() {
         global $wgUser;
-		
+
 		return $wgUser->isAllowed('problemreports_action') || self::userCanDoCrossWikiActions();
     }
 
