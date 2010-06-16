@@ -1785,6 +1785,9 @@ var WikiaPhotoGallery = {
 		}
 		else {
 			self.setupEditor(params);
+
+			// resize dialog (RT #55210)
+			editorPopup.resizeModal(width);
 			editorPopup.showModal();
 		}
 	},
