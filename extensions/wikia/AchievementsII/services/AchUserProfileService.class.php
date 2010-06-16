@@ -19,7 +19,7 @@ class AchUserProfileService {
 
     	$this->mUserOwner = User::newFromName($wgTitle->getText());
 
-    	if($this->mUserOwner && $this->mUserOwner->isLoggedIn()) {
+    	if($this->mUserOwner && $this->mUserOwner->isLoggedIn() && !($wgUser->getId() == $this->mUserOwner->getId() && $wgUser->getOption('hidepersonalachievements'))) {
 
     		wfLoadExtensionMessages('AchievementsII');
 
