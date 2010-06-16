@@ -664,11 +664,11 @@ class SpecialConnect extends SpecialPage {
 		$wgOut->setPageTitle(wfMsg('fbconnect-success'));
 		$wgOut->addWikiMsg('fbconnect-successtext');
 		// Run any hooks for UserLoginComplete
-		$inject_html = '';
-		wfRunHooks( 'UserLoginComplete', array( &$wgUser, &$inject_html ) );
+		$injected_html = '';
+		wfRunHooks( 'UserLoginComplete', array( &$wgUser, &$injected_html ) );
 		
-		if( $inject_html !== '' ) {
-			$wgOut->addHtml( $inject_html );
+		if( $injected_html !== '' ) {
+			$wgOut->addHtml( $injected_html );
 			// Render the "return to" text retrieved from the URL
 			$wgOut->returnToMain(false, $this->mReturnTo, $this->mReturnToQuery);
 		} else {
