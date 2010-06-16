@@ -41,6 +41,10 @@ $data = $dbr->select(
 
 while ($row = $dbr->fetchObject($data)) {
 	$expire = $row->blckby_expire == 'infinite' ? 'NULL' : $dbr->AddQuotes($row->blckby_expire);
+	if (!mb_check_encoding($row->blckby_name, 'UTF-8')) {
+		print_r($row);
+		continue;
+	}
 	$inserts[] = sprintf($insert,
 		$dbr->AddQuotes($row->user_id),				//author_id
 		$dbr->AddQuotes($row->blckby_name),			//text
@@ -79,6 +83,10 @@ while ($row = $dbr->fetchObject($data)) {
 	if ($row->spam_summary) {
 		$type |= TYPE_SUMMARY;
 	}
+	if (!mb_check_encoding($row->spam_text, 'UTF-8')) {
+		print_r($row);
+		continue;
+	}
 	$inserts[] = sprintf($insert,
 		$dbr->AddQuotes($row->user_id),				//author_id
 		$dbr->AddQuotes($row->spam_text),			//text
@@ -109,6 +117,10 @@ $data = $dbrs->select(
 );
 
 while ($row = $dbrs->fetchObject($data)) {
+	if (!mb_check_encoding($row->tr_text, 'UTF-8')) {
+		print_r($row);
+		continue;
+	}
 	$inserts[] = sprintf($insert,
 		$dbr->AddQuotes($row->tr_user),				//author_id
 		$dbr->AddQuotes($row->tr_text),				//text
