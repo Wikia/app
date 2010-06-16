@@ -628,8 +628,11 @@ class RTEParser extends Parser {
 
 		$encoded = Sanitizer::encodeAttribute($attribs);
 
-		// encode &quot; entity (fix for IE)
-		$encoded = str_replace('&quot;', "\x7f", $encoded);
+		// encode &quot; entity (fix for IE) and &#039; entity (RT #55179)
+		$encoded = strtr($encoded, array(
+			'&quot;' => "\x7f",
+			'&#039;' => '\'',
+		));
 
 		$ret = "_rte_attribs=\"{$encoded}\"";
 
