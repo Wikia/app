@@ -226,7 +226,15 @@ class Phalanx {
 			if (!$blockData['case']) {
 				$blockText .= 'i';
 			}
-			if (preg_match($blockText, $text, $matches)) {
+			//QuickFix™ for bad regexes
+			//TODO: validate regexes on save/edit
+			wfSuppressWarnings();
+			$matched = preg_match($blockText, $text, $matches);
+			if ($matched === false) {
+				Wikia::log(__METHOD__, __LINE__, "Bad regex found: $blockText");
+			}
+			wfRestoreWarnings();
+			if ($matched) {
 				self::addStats($blockData['id'], $blockData['type']);
 				$result['blocked'] = true;
 				$result['msg'] = $matches[0];
