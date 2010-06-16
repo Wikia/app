@@ -1,4 +1,6 @@
 == Changes since 201006.3 ==
+* rt#55210: WikiaPhotoGallery: dialogs should use the current browser viewport size (macbre)
+* rt#55179: RTE: styling code in link caption is broken by editor (macbre)
 * rt#55200: WikiaMiniUpload: view mode add image button goes to preview, should go to find image dialog (macbre)
 * rt#53714: WikiaMiniUpload, PhotoGallery: user was able to upload an image during no_uploads time today (macbre)
 * rt#54264: Interwiki dispatcher is creating bad urls (Marooned)
