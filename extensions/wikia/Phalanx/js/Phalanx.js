@@ -107,7 +107,6 @@ Phalanx.loadBlockData = function( response ) {
 
 	$( '#phalanx-expire-old' ).html( response.time );
 
-
 	if( type & 1  ) {
 		$( '#wpPhalanxTypeContent' ).attr( 'checked', 'checked' );
 	}
@@ -118,19 +117,16 @@ Phalanx.loadBlockData = function( response ) {
 		$( '#wpPhalanxTypeTitle' ).attr( 'checked', 'checked' );
 	}
 	if( type & 8  ) {
-		$( '#wpPhalanxTypeUrl' ).attr( 'checked', 'checked' );
-	}
-	if( type & 16  ) {
 		$( '#wpPhalanxTypeUser' ).attr( 'checked', 'checked' );
 	}
-	if( type & 32  ) {
-		$( '#wpPhalanxTypeCreation' ).attr( 'checked', 'checked' );
-	}
-	if( type & 64  ) {
+	if( type & 16  ) {
 		$( '#wpPhalanxTypeQuestion' ).attr( 'checked', 'checked' );
 	}
-	if( type & 128  ) {
+	if( type & 32  ) {
 		$( '#wpPhalanxTypeFilterWords' ).attr( 'checked', 'checked' );
+	}
+	if( type & 64  ) {
+		$( '#wpPhalanxTypeCreation' ).attr( 'checked', 'checked' );
 	}
 
 	if( 'add'  == Phalanx.mode ) {
