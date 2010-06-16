@@ -351,9 +351,9 @@ while( $request->Accept() >= 0 || $test ) {
 					if( $transformed ) {
 						print "HTTP/1.1 200 OK\r\n";
 						print "Cache-control: max-age=30\r\n";
-						print "Content-type: $mimetype\r\n\r\n";
+						print "Content-type: image/png\r\n\r\n";
 						print $rsvg->getImageBitmap() unless $test;
-						print STDERR "File $thumbnail created\n" if $debug;
+						print STDERR "File $thumbnail served\n" if $debug;
 					}
 					else {
 						print STDERR "SVG conversion from $original to $thumbnail failed\n";
