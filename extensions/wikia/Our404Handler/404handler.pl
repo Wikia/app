@@ -173,7 +173,7 @@ my $clients     = $ENV{ "CHILDREN" } || 4;
 my $listen      = $ENV{ "SOCKET"   } || "0.0.0.0:39393";
 my $debug       = $ENV{ "DEBUG"    } || 1;
 my $test        = $ENV{ "TEST"     } || 0;
-my $pidfile     = $ENV{ "PIDFILE"  } || "/var/run/404handler/404handler.pid";
+my $pidfile     = $ENV{ "PIDFILE"  } || "/var/run/404handler.pid";
 
 #
 # fastcgi request
@@ -338,22 +338,21 @@ while( $request->Accept() >= 0 || $test ) {
 					# RSVG thumbnailer
 					#
 					my $rsvg = new Image::LibRSVG;
-					$rsvg->convertAtSize( $original, $thumbnail, $width, $height );
 
-# @todo -- handle transparency in Image::Magick SVG library
-#					my $rsvg = new Image::Magick;
-#					$rsvg->Read( $original );
-#					$rsvg->Resize( "geometry" => "${width}x${height}!", "blur" => 0.9 );
-#					print $rsvg->ImageToBlob();
+					#
+					# there is stupid bug (typo) in Image::LibRSVG so we have to
+					# define hash with dimension and dimesion
+					#
 
-					if( -f $thumbnail ) {
-						$mimetype = $flm->checktype_filename( $thumbnail );
-						chmod 0664, $thumbnail;
-						$transformed = 1;
+					my $args = { "dimension" => [$width, $height], "dimesion" => [$width, $height] };
+					$rsvg->loadImage( $original, 0, $args );
+					$transformed = 1;
+
+					if( $transformed ) {
 						print "HTTP/1.1 200 OK\r\n";
-						print "X-LIGHTTPD-send-file: $thumbnail\r\n";
 						print "Cache-control: max-age=30\r\n";
 						print "Content-type: $mimetype\r\n\r\n";
+						print $rsvg->getImageBitmap() unless $test;
 						print STDERR "File $thumbnail created\n" if $debug;
 					}
 					else {
