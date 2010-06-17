@@ -79,6 +79,7 @@ class WikiaApiAjaxLogin extends ApiBase {
 					$result['text'] = wfMsg('wrongpasswordempty');
 					break;
 				case LoginForm :: NEED_TOKEN :
+				case LoginForm :: WRONG_TOKEN :
 					$result['result'] = 'NeedToken';
 					$result['text'] = wfMsg('sessionfailure');
 					break;
