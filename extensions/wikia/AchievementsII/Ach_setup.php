@@ -91,8 +91,24 @@ function Ach_Setup() {
 	
 	//hooks for user preferences
 	$wgHooks['UserToggles'][] = 'Ach_UserToggles';
-	
+	$wgHooks['MonacoSidebarGetMenu'][] = 'Ach_GetMenu';
 	wfProfileOut(__METHOD__);
+}
+
+function Ach_GetMenu(&$nodes) {
+	global $wgScript;
+	wfLoadExtensionMessages('AchievementsII');
+	
+	$nodes[0]['children'][] = count($nodes);
+	$nodes[] = array(
+		//'original' => 'achievementsleaderboard',
+		'text' => wfMsg('achievements-leaderboard-navigation-item'),
+		'href' => "{$wgScript}/Special:Leaderboard",
+  		//'depth' => 1,
+		//'parentIndex' => 0
+	);
+		
+	return true;
 }
 
 function Ach_MastheadEditCounter(&$editCounter, $user) {

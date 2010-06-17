@@ -97,6 +97,9 @@ class MonacoSidebar {
 		$nodes = $this->parse($lines);
 
 		if(count($nodes) > 0) {
+			
+			wfRunHooks('MonacoSidebarGetMenu', array(&$nodes));
+			
 			$menu = '<div id="navigation"'.($userMenu ? ' class="userMenu"' : '').'>';
 			$mainMenu = array();
 			foreach($nodes[0]['children'] as $key => $val) {
