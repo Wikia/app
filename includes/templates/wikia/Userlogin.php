@@ -5,7 +5,6 @@
  * @ingroup Templates
  */
 if( !defined( 'MEDIAWIKI' ) ) die( -1 );
-
 /**
  * HTML template for Special:Userlogin form
  * @ingroup Templates
@@ -75,7 +74,11 @@ class UserloginTemplate extends QuickTemplate {
 		<?php } ?>
 		<tr>
 			<td>
-			<?php if( $this->haveData( 'loginToken' ) ) { ?><input type="hidden" name="wpLoginToken" value="<?php $this->text( 'loginToken' ); ?>" /><?php } ?> 
+			<?php if( $this->haveData( 'loginToken' ) ): ?> 
+				<input type="hidden" name="wpLoginToken" value="<?php $this->text( 'loginToken' ); ?>" />
+			<?php elseif($this->haveData( 'token' )): ?>  
+				<input type="hidden" name="wpLoginToken" value="<?php $this->text( 'token' ); ?>" />
+			<?php endif; ?>
 			</td>
 			<td class="mw-submit">
 				<input type='submit' name="wpLoginattempt" id="wpLoginattempt" value="<?php $this->msg('login') ?>" />&nbsp;<?php if( $this->data['useemail'] && $this->data['canreset']) { ?><input type='submit' name="wpMailmypassword" id="wpMailmypassword" value="<?php $this->msg('mailmypassword') ?>" />
