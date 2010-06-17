@@ -230,7 +230,7 @@ class FBConnect {
 		$body += "<br/>\n";
 		$body += '<fb:login-button id="fbPrefsConnect" '.FBConnect::getPermissionsAttribute().FBConnect::getOnLoginAttribute().'></fb:login-button>';
 		
-		$response->addText('<div id="fbNowConnectBox" title="' + $title + '"><div style="padding: 5px">' + body + '</div></div>');
+		$response->addText('<div id="fbNowConnectBox" title="' + $title + '"><div style="padding: 5px">' + $body + '</div></div>');
 		return $response;
 	}
 	
