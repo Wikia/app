@@ -17,7 +17,7 @@
 
 
 /*
- * Not a valid entry point, skip unless MEDIAWIKI is defined.
+ * Not a valid entry pointx, skip unless MEDIAWIKI is defined.
  */
 if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 'This file is a MediaWiki extension, it is not a valid entry point' );
@@ -123,8 +123,8 @@ $messages['en'] = array(
 	'fbconnect-updateuserinfo' => 'Update the following personal information:',
 	'fbconnect-alreadyloggedin-title' => 'Already connected',
 	'fbconnect-alreadyloggedin' => "'''You are already logged in and facebook-connected, $1!'''",
-	'fbconnect-logged-in-now-connect' => "You have been logged in to your account, please click the button below to connect it with Facebook.",
-	
+	'fbconnect-logged-in-now-connect' => "You have been logged in to your account, please click the login button to connect it with Facebook.",
+	'fbconnect-logged-in-now-connect-title' =>  "Almost done!",
 	'fbconnect-modal-title' => 'Finish your account setup',
     'fbconnect-modal-headmsg' => 'Almost done!',
 
