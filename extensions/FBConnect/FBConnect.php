@@ -219,7 +219,7 @@ class FBConnect {
 	 * Ajax function to return a modal dialog with a login button.  This is needed
 	 * after a login-and-connect because of popup blockers in IE and webkit.
 	 */
-	function getLoginButtonModal(){
+	public static function getLoginButtonModal(){
 		$response = new AjaxResponse();
 		
 		$title = "Almost done!";
