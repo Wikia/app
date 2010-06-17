@@ -123,7 +123,7 @@ $messages['en'] = array(
 	'fbconnect-updateuserinfo' => 'Update the following personal information:',
 	'fbconnect-alreadyloggedin-title' => 'Already connected',
 	'fbconnect-alreadyloggedin' => "'''You are already logged in and facebook-connected, $1!'''",
-	'fbconnect-logged-in-now-connect' => "You have been logged in to your account, please click the button below to connect it with Facebook.";
+	'fbconnect-logged-in-now-connect' => "You have been logged in to your account, please click the button below to connect it with Facebook.",
 	
 	'fbconnect-modal-title' => 'Finish your account setup',
     'fbconnect-modal-headmsg' => 'Almost done!',
