@@ -1162,7 +1162,6 @@ li:hover .hideUntilHover {
 #navigation,
 #headerButtonHub,
 #navigation .Monaco-sidebar_edit,
-#control_edit,
 #control_watch,
 #control_sharefeature,
 #profile-actions-wikiuserpage,
@@ -1194,3 +1193,12 @@ div.noarticletext,
 .WidgetAnswers { 
 	display: none; 
 }
+
+body.ns-0 #control_edit {
+	display: none; 
+}
+
+body.mainpage #control_edit {
+	display: block;
+}
+
