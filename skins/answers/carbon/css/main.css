@@ -1,35 +1,29 @@
-/*
- * The crazy overuse of !important is becuse this theme CSS is loaded before monaco_answers.css. 
- * When the order is fixed, the !importants can be removed
- * Author: Christian Williams
-*/
-
 .color1 {
-	background: #0075C0 !important;
-	color: #FFF !important;
+	background: #0075C0;
+	color: #FFF;
 }
 .color1, .color1 a {
-	color: #FFF !important;
+	color: #FFF;
 }
 .color2 {
-	background: #252525 center top !important;
-	background-image: url(/skins/answers/carbon/images/background.gif) !important; /* $wgCdnStylePath */
+	background: #252525 center top;
+	background-image: url(/skins/answers/carbon/images/background.gif); /* $wgCdnStylePath */
 }
 .accent {
-	background: #003555 !important;
+	background: #003555;
 	color: #FFF;
 }
 .accent a {
 	color: #70B8FF;
 }
 .neutral {
-	background: #2F2F2F !important;
+	background: #2F2F2F;
 }
 .dark_text_1 {
-	color: #70B8FF !important;
+	color: #70B8FF;
 }
 .dark_text_2 {
-	color: #32C032 !important;
+	color: #32C032;
 }
 
 #wikia_logo {
@@ -37,21 +31,24 @@
 }
 
 #wikia_page {
-	background: #333 !important;
-	color: #EEE !important;
+	background: #333;
+	color: #EEE;
 }
 
 /* @group category select */
 
 /* synthesize .accent */
 	#mw-normal-catlinks span a:link, #mw-normal-catlinks span a:visited {
-		background: #003555 !important;
+		background: #003555;
 	}
 
 	/* synthesize .color1 */
-	#mw-normal-catlinks span a:hover, #csAddCategorySwitch, #csAddCategorySwitch a, #CSitemOuterAddCategory {
+	#mw-normal-catlinks span a:hover, 
+	#csAddCategorySwitch, 
+	#csAddCategorySwitch a, 
+	#CSitemOuterAddCategory {
 		background: #0075C0 !important;
-		color: #FFF !important;
+		color: #FFF;
 	}
 		
 /* @end */
@@ -74,11 +71,28 @@
 
 /* @group misc */
 
+	#question_heading {
+		color: #70B8FF;
+	}
+
+	#qa_toolbox a { 
+		color: #EEE;
+	}
+	#qa_toolbox a:visited { 
+		color: #EEE; 
+	}
+	#qa_toolbox a:active { 
+		color: #EEE; 
+	}
+	#qa_button a {
+		color: #514833;
+	}
+
 	#answer_edit_link a:link, 
 	#question_edit_link a:link, 
 	#answer_edit_link a:visited, 
 	#question_edit_link a:visited {
-		color: #CCC !important;
+		color: #CCC;
 	}
 
 	.userEditPoints {

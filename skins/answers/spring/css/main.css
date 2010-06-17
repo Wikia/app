@@ -1,30 +1,25 @@
-/*
- * The crazy overuse of !important is becuse this theme CSS is loaded before monaco_answers.css. 
- * When the order is fixed, the !importants can be removed
- * Author: Christian Williams
-*/
-
 .color1 {
-	background: #74B58A !important;
+	background: #74B58A;
 }
 .color1, .color1 a {
-	color: #FFF !important;
+	color: #FFF;
 }
 .color2 {
-	background: #8DC7A0 center top no-repeat !important;
-	background-image: url(/skins/answers/spring/images/background.jpg) !important; /* $wgCdnStylePath */
+	background: #8DC7A0 center top no-repeat;
+	background-image: url(/skins/answers/spring/images/background.jpg); /* $wgCdnStylePath */
 }
 .accent {
-	background: #DAE6DE !important;
+	background: #DAE6DE;
+	border-color: #A9EBBF;
 }
 .neutral {
-	background: #F5F5F5 !important;
+	background: #F5F5F5;
 }
 .dark_text_1 {
-	color: #74B58A !important;
+	color: #74B58A;
 }
 .dark_text_2 {
-	color: #333 !important;
+	color: #333;
 }
 
 #wikia_logo {
@@ -34,14 +29,21 @@
 /* @group category select */
 
 	/* synthesize .accent */
-	#mw-normal-catlinks span a:link, #mw-normal-catlinks span a:visited {
-		background: #DAE6DE !important;
+	#mw-normal-catlinks span a:link, 
+	#mw-normal-catlinks span a:visited {
+		background: #DAE6DE;
 	}
 
 	/* synthesize .color1 */
-	#mw-normal-catlinks span a:hover, #csAddCategorySwitch, #csAddCategorySwitch a, #CSitemOuterAddCategory {
-		background: #74B58A !important;
-		color: #FFF !important;
+	#csAddCategorySwitch {
+		border-color: #A9EBBF !important; /* using important to override inline styline */
+	}
+	#mw-normal-catlinks span a:hover, 
+	#csAddCategorySwitch, 
+	#csAddCategorySwitch a, 
+	#CSitemOuterAddCategory {
+		background: #74B58A !important; /* using important to override inline styline */
+		color: #FFF;
 	}
 		
 /* @end */
@@ -63,7 +65,10 @@
 /* @end */
 
 /* @group misc */
+.article_count {
+	color: #000;
+}
 .WidgetCommunity .widgetfeed li {
-	color: #666 !important;
+	color: #666;
 }
 /* @end */
