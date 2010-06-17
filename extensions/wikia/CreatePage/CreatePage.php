@@ -138,8 +138,8 @@ function wfCreatePageAjaxCheckTitle() {
 				$result['msg'] = wfMsg( 'createpage-error-article-exists', array( $oTitle->getFullUrl(), $oTitle->getText() ) );
 			}
 			else { // title not exists
-				// macbre: maybe create dedicated hook for this check? (change related to release of Phalanx)
-				if ( !wfRunHooks('CreateDefaultQuestionPageFilter', array($oTitle)) ) {
+				// macbre: use dedicated hook for this check (change related to release of Phalanx)
+				if ( !wfRunHooks('CreatePageTitleCheck', array($oTitle)) ) {
 					$result['result'] = 'error';
 					$result['msg'] = wfMsg( 'createpage-error-article-spam' );
 				}
@@ -159,7 +159,7 @@ function wfCreatePageAjaxCheckTitle() {
 	$response = new AjaxResponse( $json );
 	$response->setCacheDuration( 3600 );
 
-	$response->setContentType('text/plain; charset=utf-8');
+	$response->setContentType('application/json; charset=utf-8');
 
 	return $response;
 }
