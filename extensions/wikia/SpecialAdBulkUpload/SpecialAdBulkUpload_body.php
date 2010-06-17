@@ -94,7 +94,7 @@ class SpecialAdBulkUpload extends UnlistedSpecialPage {
 				if(count($entry)>0){
 					$ad = new Advertisement();
 					foreach($entry as $colnum=>$val){
-						$fname = $headers[$colnum];
+						$fname = trim( $headers[$colnum] );
 						if(is_numeric($val)) $val=$val+0;
 						$ad->$fname = $val;
 					}
