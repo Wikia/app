@@ -22,6 +22,7 @@ $wgExtensionMessagesFiles['SponsorPage'] = $dir . 'Sponsor.i18n.php';
 
 //enable the advertisements
 $wgAutoloadClasses['Advertisement'] = $dir . 'Advertisements.php';
+$wgAutoloadClasses['AdDisplay'] = $dir . 'AdDisplay.php';
 $wgHooks['OutputPageBeforeHTML'][] = 'AdDisplay::OutputAdvertisementOutputHook';
 //$wgHooks['ParserAfterTidy'][] = 'AdDisplay::OutputAdvertisementParserAfterTidy';
 //$wgHooks['OutputPageParserOutput'][] = 'AdDisplay::OutputAdvertisementOutputPageParserOutput';
