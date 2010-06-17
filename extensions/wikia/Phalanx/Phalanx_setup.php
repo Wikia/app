@@ -51,6 +51,7 @@ function efPhalanxInit() {
 	$wgHooks['EditFilter'][] = 'TitleBlock::listCallback';
 	$wgHooks['ApiCreateMultiplePagesBeforeCreation'][] = 'TitleBlock::newWikiBuilder';
 	$wgHooks['CreateDefaultQuestionPageFilter'][] = 'TitleBlock::genericTitleCheck';
+	$wgHooks['CreatePageTitleCheck'][] = 'TitleBlock::genericTitleCheck';
 
 	// former BadWords list (TYPE_ANSWERS_QUESTION)
 	$wgHooks['CreateDefaultQuestionPageFilter'][] = 'BadWordsBlock::badWordsTest';
