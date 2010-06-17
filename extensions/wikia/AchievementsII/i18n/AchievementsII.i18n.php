@@ -32,6 +32,7 @@ Please try another one!',
 	'achievements-you-must' => 'You need to $1 to earn this badge.',
 	'leaderboard-button' => 'Achievements leaderboard',
  	'achievements-masthead-points' => '$1 <small>{{PLURAL:$1|point|points}}</small>',
+	'achievements-leaderboard-navigation-item' => 'Wiki Leaderboard',
 
 	/*
 	 * Track names
