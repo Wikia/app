@@ -928,7 +928,13 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'tog-showAds' => '<b>Show all advertisements</b><br/>Select this option to see article pages as logged-out users see them.<br/><br/>',
 'fast-adv' => 'Advertisement',
 'tog-enablerichtext' => 'Enable Rich Text Editing',
+
+/*
+ * Achievements
+ */
 'tog-hidepersonalachievements' => "Hide my achievements on my user page when I visit it and don't notify me of earned badges",
+'achievements-leaderboard-navigation-item' => 'Wiki Leaderboard',
+
 'atom' => 'Wikia Atom',
 'feed-watom' => 'Wikia Atom',
 'nodiff' => 'No changes',

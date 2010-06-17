@@ -97,13 +97,13 @@ function Ach_Setup() {
 
 function Ach_GetMenu(&$nodes) {
 	global $wgScript;
-	wfLoadExtensionMessages('AchievementsII');
 	
 	$nodes[0]['children'][] = count($nodes);
 	$nodes[] = array(
 		//'original' => 'achievementsleaderboard',
+		//the message is stored in /languages/messages/wikia/MessagesEn.php to avoid loading the i18n for the extension
 		'text' => wfMsg('achievements-leaderboard-navigation-item'),
-		'href' => "{$wgScript}/Special:Leaderboard",
+		'href' => Skin::makeSpecialUrl("Leaderboard"),
   		//'depth' => 1,
 		//'parentIndex' => 0
 	);
