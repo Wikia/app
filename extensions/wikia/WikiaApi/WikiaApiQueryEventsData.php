@@ -201,7 +201,7 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		$this->mIsNew = ( isset( $oRow->rev_id ) ) ? false : true; 
 		
 		wfProfileOut( __METHOD__ );
-		return $this->mIsNew;
+		return intval($this->mIsNew);
 	}
 
 	public function execute() {
