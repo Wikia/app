@@ -18,7 +18,6 @@ $wgExtensionCredits['SpecialAdBulkUpload'][] = array(
  
 $dir = dirname(__FILE__) . '/';
  
+$wgAutoloadClasses['Advertisement'] = $dir . '../SpecialSponsorPage/Advertisements.php';
 $wgAutoloadClasses['SpecialAdBulkUpload'] = $dir . 'SpecialAdBulkUpload_body.php'; 
-$wgSpecialPages['AdBulkUpload'] = 'SpecialAdBulkUpload'; 
-
-?>
+$wgSpecialPages['AdBulkUpload'] = 'SpecialAdBulkUpload';
