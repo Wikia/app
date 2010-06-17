@@ -36,3 +36,9 @@
 #wpLoginAndConnectCombo {
 	margin-top:5px;
 }
+
+#fbNowConnectBox div {
+	height:110px;
+	padding:5px;
+	text-align:center;
+}
