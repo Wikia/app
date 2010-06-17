@@ -214,7 +214,7 @@ function loggedInNowNeedToConnect(){
 								},100);
 					WET.byStr(fb_loginAndConnect_WET_str + '/open');
 				}
-			);
+			});
 		}
 	});
 }
