@@ -21,7 +21,7 @@ $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['SponsorPage'] = $dir . 'Sponsor.i18n.php';
 
 //enable the advertisements
-include_once($dir.'Advertisements.php');
+$wgAutoloadClasses['Advertisement'] = $dir . 'Advertisements.php';
 $wgHooks['OutputPageBeforeHTML'][] = 'AdDisplay::OutputAdvertisementOutputHook';
 //$wgHooks['ParserAfterTidy'][] = 'AdDisplay::OutputAdvertisementParserAfterTidy';
 //$wgHooks['OutputPageParserOutput'][] = 'AdDisplay::OutputAdvertisementOutputPageParserOutput';

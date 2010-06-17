@@ -13,9 +13,6 @@ class SpecialAdminAds extends SpecialPage {
 	public function __construct() {
 		global $IP;
 
-		// TODO: include this in a more sane way maybe?
-		include( "$IP/extensions/wikia/SpecialSponsorPage/Advertisements.php" );
-
 		if($this->HandlePayPal()){
 			$this->ispaypal = 1;
 			parent::__construct( 'AdminAds');
