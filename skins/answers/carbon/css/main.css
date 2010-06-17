@@ -1,0 +1,87 @@
+/*
+ * The crazy overuse of !important is becuse this theme CSS is loaded before monaco_answers.css. 
+ * When the order is fixed, the !importants can be removed
+ * Author: Christian Williams
+*/
+
+.color1 {
+	background: #0075C0 !important;
+	color: #FFF !important;
+}
+.color1, .color1 a {
+	color: #FFF !important;
+}
+.color2 {
+	background: #252525 center top !important;
+	background-image: url(/skins/answers/carbon/images/background.gif) !important; /* $wgCdnStylePath */
+}
+.accent {
+	background: #003555 !important;
+	color: #FFF;
+}
+.accent a {
+	color: #70B8FF;
+}
+.neutral {
+	background: #2F2F2F !important;
+}
+.dark_text_1 {
+	color: #70B8FF !important;
+}
+.dark_text_2 {
+	color: #32C032 !important;
+}
+
+#wikia_logo {
+	background-image: url(/skins/answers/carbon/images/wikia_logo.png); /* $wgCdnStylePath */
+}
+
+#wikia_page {
+	background: #333 !important;
+	color: #EEE !important;
+}
+
+/* @group category select */
+
+/* synthesize .accent */
+	#mw-normal-catlinks span a:link, #mw-normal-catlinks span a:visited {
+		background: #003555 !important;
+	}
+
+	/* synthesize .color1 */
+	#mw-normal-catlinks span a:hover, #csAddCategorySwitch, #csAddCategorySwitch a, #CSitemOuterAddCategory {
+		background: #0075C0 !important;
+		color: #FFF !important;
+	}
+		
+/* @end */
+
+/* @group borders */
+
+	#answers_ask input.header_field, 
+	#tabAsk input.header_field, 
+	#tabSearch input.header_field,
+	#question_box,
+	#catlinks {
+		border-color: #003555 /* .accent */
+	}
+
+	#searchform {
+		border-color: #0075C0; /* .color1 */
+	}
+
+/* @end */
+
+/* @group misc */
+
+	#answer_edit_link a:link, 
+	#question_edit_link a:link, 
+	#answer_edit_link a:visited, 
+	#question_edit_link a:visited {
+		color: #CCC !important;
+	}
+
+	.userEditPoints {
+		color: #514833;
+	}
+/* @end */
