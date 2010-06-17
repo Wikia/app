@@ -1,31 +1,3 @@
-/* !Colors */
-
-.color1 {
-	background-color: #EAF1FB;
-	color: #666;
-}
-
-.color1 a {
-	color: #333;
-}
-
-.color2 {
-	background-color: #EAF1FB;
-}
-
-.accent {
-	background-color: #EAF1FB;
-	border-color: #FFF;
-	color: #666;
-}
-
-.neutral {
-	background-color: transparent;
-	border-color: #FFF;
-	color: #000;
-}
-
-
 /* !Simple high-level element selectors */
 body {
 	color: #514833;
@@ -52,9 +24,9 @@ a.new {
 }
 
 #wikia_page {
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
 	border:none;
-	-moz-border-radius:10px 10px 10px 10px;
-	-webkit-border-radius:10px 10px 10px 10px;
 	font-family:"Helvetica Neue",Helvetica,Arial,default;
 	margin-top:4px;
 }
@@ -73,10 +45,6 @@ a.new {
 }
 
 
-#link_box_dynamic img {
-	background: transparent url(http://images1.wikia.nocookie.net/test123/images/d/d7/Sprite.png?20091113)
-}
-
 .activityfeed img.sprite {
 	display: none;
 }
@@ -88,15 +56,14 @@ a.new {
 
 /* This only appears for registered users */
 #page_bar {
-	background-image: none;
-	font-size: 9pt;
-	color: #555;
-	font-family:"Helvetica Neue",Helvetica,Arial,default;
-	margin: 8px 8px 5px 8px;
-	background-color:#fff;
-	display: inline-block;
 	-moz-border-radius: 10px 10px 10px 10px;
 	-webkit-border-radius: 10px 10px 10px 10px;
+	background-image: none;
+	color: #555;
+	display: inline-block;
+	font-family: "Helvetica Neue", Helvetica, Arial, default;
+	font-size: 9pt;
+	margin: 8px 8px 5px 8px;
 }
 
 /* hide page bar on main namespace except of mainpage (RT #47700) */
@@ -192,16 +159,16 @@ body.mainpage #page_bar {
 /* Category field */
 
 #catlinks {
-	-moz-border-radius:0px 0px 10px 10px;
-	-webkit-border-radius:0px 0px 10px 10px;
-	background-color: #fff;
-	border-bottom:2px solid #E0EAF8;
-	border-left:2px solid #E0EAF8;
-	border-right:2px solid #E0EAF8;
-	border-top:none;
-	margin-bottom:30px;
+	-moz-border-radius: 0px 0px 10px 10px;
+	-webkit-border-radius: 0px 0px 10px 10px;
+	background-color: transparent;
+	border-bottom: 2px solid #E0EAF8;
+	border-left: 2px solid #E0EAF8;
+	border-right: 2px solid #E0EAF8;
+	border-top: none;
+	margin-bottom: 30px;
 	margin-top: 0px;
-	padding:0 5px 10px;
+	padding: 0 5px 10px;
 }
 
 .sprite-small.add {
@@ -246,28 +213,27 @@ body.mainpage #page_bar {
 
 /* using !important because of the inline styling */
 #csAddCategorySwitch a, #CSitemOuterAddCategory {
-	-moz-border-radius: 3px 3px 3px 3px;
-	-webkit-border-radius: 3px 3px 3px 3px;
-	background: #8EB4E6 !important;
-	color: #fff !important;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	color: #FFF !important;
 }
 
 #csAddCategorySwitch, #csAddCategoryButton {
-	-moz-border-radius: 3px 3px 3px 3px;
-	-webkit-border-radius: 3px 3px 3px 3px;
-	background: #8EB4E6 !important;
-	border:1px solid #2966B8 !important;
-	line-height:16px !important;
-	padding:0px 4px !important;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-style: solid;
+	border-width: 1px;
+	line-height: 16px !important;
+	padding: 0px 4px !important;
 }
 
 /* this is the "enter when done" box */
 #csHintContainer  {
-	-moz-border-radius: 3px 3px 3px 3px;
-	-webkit-border-radius: 3px 3px 3px 3px;
-	background:none repeat scroll 0 0 #8EB4E6 !important;
-	border:none !important;
-	color: #fff !important;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	background: none repeat scroll 0 0 #8EB4E6 !important;
+	border: none !important;
+	color: #FFF !important;
 }
 
 
@@ -296,18 +262,18 @@ body.mainpage #page_bar {
 }
 
 #answer_heading {
-	color:firebrick;
+	color: firebrick;
 	font-size: 15pt;
-	font-weight:bold;
-	letter-spacing:-1px;
+	font-weight: bold;
+	letter-spacing: -1px;
 }
 
 #question_box {
-	-moz-border-radius:10px 10px 0px 0px;
-	-webkit-border-radius:10px 10px 0px 0px;
-	border-left:2px solid #E0EAF8;
-	border-right:2px solid #E0EAF8;
-	border-top:2px solid #E0EAF8;
+	-moz-border-radius: 10px 10px 0px 0px;
+	-webkit-border-radius: 10px 10px 0px 0px;
+	border-left: 2px solid #E0EAF8;
+	border-right: 2px solid #E0EAF8;
+	border-top: 2px solid #E0EAF8;
 	padding: 10px;
 }
 
@@ -316,12 +282,11 @@ body.mainpage #page_bar {
 }
 
 #answer_box {
-	padding: 12px;
-	padding-bottom: 35px; /* overcome float:right" in save button */
-	background-color: #E0EAF8;
-	-moz-border-radius:10px 10px 10px 10px;
-	-webkit-border-radius:10px 10px 10px 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
 	margin-bottom: 20px;
+	padding-bottom: 35px; /* overcome float:right" in save button */
+	padding: 12px;
 }
 
 #answer_content {
@@ -396,8 +361,8 @@ body.mainpage #page_bar {
 .qa_box {
 	-moz-border-radius: 8px;
 	-webkit-border-radius: 8px;
-	background-color: #EAF1FB;
-	border: 1px solid #A9C5EB;
+	border-style: solid;
+	border-width: 1px;
 	padding: 10px 10px 6px;
 	width: 249px;
 }
@@ -450,7 +415,8 @@ body.mainpage #page_bar {
 }
 
 #qa_toolbox_advancedtools_bottom {
-	border-top: 2px dotted #A9C5EB;
+	border-top-style: dotted;
+	border-top-width: 2px;
 	padding-top: 10px;
 }
 
@@ -480,7 +446,7 @@ body.mainpage #page_bar {
 	font-size: 80%;
 }
 
-#qa_toolbox a:link { 
+#qa_toolbox a { 
 	color: #514833;
 	text-decoration: none; 
 }
@@ -663,12 +629,8 @@ div.article-comm-input-text textarea {
 	margin-right: 10px;
 }
 
-#search_button {
-	background: transparent url(http://images3.wikia.nocookie.net/test123/images/9/95/Search.png?201001.1);
-}
-
 .widget {
-	background-color: #EAF1FB;
+	background-color: transparent;
 	border: 0;
 }
 
@@ -677,6 +639,7 @@ div.article-comm-input-text textarea {
 }
 
 .WidgetCommunity .community_header {
+	background: transparent;
 	border: none;
 	padding: 0 0 20px;
 }

@@ -1,42 +1,43 @@
-/*
- * The crazy overuse of !important is becuse this theme CSS is loaded before monaco_answers.css. 
- * When the order is fixed, the !importants can be removed
- * Author: Christian Williams
-*/
-
 .color1 {
-	background: #bbfbbb !important;
+	background: #BBFBBB;
 }
 .color1, .color1 a {
-	color: #000 !important;
+	color: #000;
 }
 .color2 {
-	background: #eafbea !important;
+	background: #EAFBEA;
 }
 .accent {
-	background: #eafbea !important;
+	background: #EAFBEA;
+	border-color: #A9EBA9;
 }
 .neutral {
-	background: #F5F5F5 !important;
+	background: #F5F5F5;
 }
 .dark_text_1 {
-	color: #22B222 !important;
+	color: #22B222;
 }
 .dark_text_2 {
-	color: #997399 !important;
+	color: #997399;
 }
 
 /* @group category select */
 
 /* synthesize .accent */
 	#mw-normal-catlinks span a:link, #mw-normal-catlinks span a:visited {
-		background: #eafbea !important;
+		background: #EAFBEA;
 	}
 
 	/* synthesize .color1 */
-	#mw-normal-catlinks span a:hover, #csAddCategorySwitch, #csAddCategorySwitch a, #CSitemOuterAddCategory {
-		background: #bbfbbb !important;
-		color: #000 !important;
+	#csAddCategorySwitch {
+		border-color: #A9EBA9 !important; /* using important to override inline styline */
+	}
+	#mw-normal-catlinks span a:hover, 
+	#csAddCategorySwitch, 
+	#csAddCategorySwitch a, 
+	#CSitemOuterAddCategory {
+		background: #BBFBBB !important; /* using important to override inline styline */
+		color: #000;
 	}
 		
 /* @end */
@@ -48,11 +49,11 @@
 	#tabSearch input.header_field,
 	#question_box,
 	#catlinks {
-		border-color: #eafbea /* .accent */
+		border-color: #EAFBEA /* .accent */
 	}
 
 	#searchform {
-		border-color: #bbfbbb; /* .color1 */
+		border-color: #BBFBBB; /* .color1 */
 	}
 
 /* @end */

@@ -1,44 +1,45 @@
-/*
- * The crazy overuse of !important is becuse this theme CSS is loaded before monaco_answers.css. 
- * When the order is fixed, the !importants can be removed
- * Author: Christian Williams
-*/
-
 .color1 {
-	background: #fbbbbb !important;
+	background: #FBBBBB;
 }
 .color1, .color1 a {
-	color: #000 !important;
+	color: #000;
 }
 .color2 {
-	background: #fbeaea !important;
+	background: #FBEAEA;
 }
 .accent {
-	background: #fbeaea !important;
+	background: #FBEAEA;
+	border-color: #EBA9A9;
 }
 .neutral {
-	background: #F5F5F5 !important;
+	background: #F5F5F5;
 }
 .dark_text_1 {
-	color: #B22222 !important;
+	color: #B22222;
 }
 .dark_text_2 {
-	color: #729898 !important;
+	color: #729898;
 }
 
 /* @group category select */
 
 /* synthesize .accent */
 	#mw-normal-catlinks span a:link, #mw-normal-catlinks span a:visited {
-		background: #fbeaea !important;
+		background: #FBEAEA;
 	}
 
 	/* synthesize .color1 */
-	#mw-normal-catlinks span a:hover, #csAddCategorySwitch, #csAddCategorySwitch a, #CSitemOuterAddCategory {
-		background: #fbbbbb !important;
-		color: #000 !important;
+	#csAddCategorySwitch {
+		border-color: #EBA9A9 !important; /* using important to override inline styline */
 	}
-		
+	#mw-normal-catlinks span a:hover, 
+	#csAddCategorySwitch, 
+	#csAddCategorySwitch a, 
+	#CSitemOuterAddCategory {
+		background: #FBBBBB !important; /* using important to override inline styline */
+		color: #000;
+	}
+				
 /* @end */
 
 /* @group borders */
@@ -52,7 +53,7 @@
 	}
 
 	#searchform {
-		border-color: #fbbbbb; /* .color1 */
+		border-color: #FBBBBB; /* .color1 */
 	}
 
 /* @end */
