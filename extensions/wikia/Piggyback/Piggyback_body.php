@@ -55,12 +55,14 @@ class PBLoginForm extends LoginForm {
 
 		$this->mOtherName = $request->getVal( 'wpOtherName' );
 		parent::LoginForm( $request );
-
-		if ( !LoginForm::getLoginToken() ) {
-			LoginForm::setLoginToken();
-		}
-		$this->exTemplate->set("token", LoginForm::getLoginToken());
-
+		
+		$this->exTemplate->set("link", "");
+		$this->exTemplate->set("usedomain", "");
+		$this->exTemplate->set("canremember", "");
+		$this->exTemplate->set("name", "");
+		$this->exTemplate->set("useemail", "");
+		$this->exTemplate->set( 'message', "" );
+		
 		$this->mType = "login";
 		/* fake to don't change remember password */
 		$this->mRemember = (bool) $wgUser->getOption( 'rememberpassword' );
@@ -72,6 +74,12 @@ class PBLoginForm extends LoginForm {
 		$this->exTemplate->set( 'name', $this->mName );
 		$this->exTemplate->set( 'password', $this->mPassword );
 		$this->plugin->set( 'otherName', $this->mOtherName );
+		
+		if ( !LoginForm::getLoginToken() ) {
+			LoginForm::setLoginToken();
+		}
+		
+		$this->exTemplate->set("loginToken", LoginForm::getLoginToken());
 	}
 
 	function successfulLogin() {
@@ -80,6 +88,15 @@ class PBLoginForm extends LoginForm {
 		/* post valid */
 		$u = User::newFromName( $this->mOtherName );
 
+		if (!$cu->checkPassword( $this->mPassword )) {
+			if( $retval = '' == $this->mPassword ) {
+				$this->mainLoginForm( wfMsg( 'wrongpasswordempty' ) );
+			} else {
+				$this->mainLoginForm( wfMsg( 'wrongpassword' ) );
+			}
+			return ;
+		}
+		
 		if (  $u->getId()  == 0 ) {
 			$this->mainLoginForm( wfMsg( 'piggyback-nosuchuser', htmlspecialchars( $this->mOtherName ) ) );
 			return ;
