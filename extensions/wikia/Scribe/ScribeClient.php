@@ -33,7 +33,7 @@ class WScribeClient {
 	 * Initialize socket connection
 	 */
 	protected function connect () {
-		global $wgScribeHost, $wgScribePort;
+		global $wgScribeHost, $wgScribePort, $wgScribeSendTimeout;
 		
 		if ( $this->connected ) { 
 			return true;
@@ -48,9 +48,14 @@ class WScribeClient {
 			$wgScribePort = 1463;
 		}
 		
+		if ( empty($wgScribeSendTimeout) ) {
+			$wgScribeSendTimeout = 5000;
+		}
+		
 		$this->connected = true;
 		try {
 			$this->socket = new TSocket($wgScribeHost, $wgScribePort, true);
+			$this->socket->setSendTimeout($wgScribeSendTimeout);
 			$this->transport = new TFramedTransport($this->socket);
 			$this->protocol = new TBinaryProtocol($this->transport, false, false);
 			$this->client = new scribeClient($this->protocol, $this->protocol);
