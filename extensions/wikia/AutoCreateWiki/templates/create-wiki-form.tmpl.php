@@ -6,9 +6,10 @@
 /*<![CDATA[*/
 var divErrors = new Array();
 var isAutoCreateWiki = true;
-var formViewAction = "<?=$mTitle->getLocalURL(( $mLanguage != 'en' ) ? 'action=view&uselang=' . $mLanguage : 'action=reload')?>";
-var msgError = "<?php echo addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 var createType = "<?php echo $mType ?>";
+var formViewAction = "<?=$mTitle->getLocalURL(( $mLanguage != 'en' ) ? 'action=view&uselang=' . $mLanguage  : 'action=reload')?>";
+formViewAction += ( createType ) ? '&type=' + createType : '';
+var msgError = "<?php echo addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 var defaultDomain = "<?php echo $defaultDomain ?>";
 var definedDomains = YAHOO.Tools.JSONParse('<?php echo Wikia::json_encode($mDomains); ?>');
 var definedSitename = YAHOO.Tools.JSONParse('<?php echo Wikia::json_encode($mSitenames); ?>');
