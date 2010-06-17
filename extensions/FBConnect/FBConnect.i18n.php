@@ -123,6 +123,7 @@ $messages['en'] = array(
 	'fbconnect-updateuserinfo' => 'Update the following personal information:',
 	'fbconnect-alreadyloggedin-title' => 'Already connected',
 	'fbconnect-alreadyloggedin' => "'''You are already logged in and facebook-connected, $1!'''",
+	'fbconnect-logged-in-now-connect' => "You have been logged in to your account, please click the button below to connect it with Facebook.";
 	
 	'fbconnect-modal-title' => 'Finish your account setup',
     'fbconnect-modal-headmsg' => 'Almost done!',
@@ -187,6 +188,7 @@ $messages['qqq'] = array(
 	'fbconnect-timezone' => '{{Identical|Time zone}}',
 	'fbconnect-choosepassword' => '{{Identical|Password}}',
 	'fbconnect-alreadyloggedin' => '$1 is a user name.',
+	'fbconnect-logged-in-now-connect' => 'This message is shown in a modal dialog along with an fbconnect button when the user is trying to login and connect. This is a workaround for popup blockers.',
 	'fbconnect-autosubmit' => '{{doc-important|"Continue" will never be localised. It is hardcoded in a PHP extension. Translations could be made like ""Continue" (translation)"}}',
 	'fbconnect-delete-button' => '{{Identical|Confirm}}',
 	'prefs-fbconnect' => '{{optional}}
