@@ -1,11 +1,11 @@
 <?php
 /**
- * Remove unused user accounts from the database
- * An unused account is one which has made no edits
+ * take old revisions and put events in events table via scribe
+ * 
  *
  * @file
  * @ingroup Maintenance
- * @author Rob Church <robchur@gmail.com>
+ * @author Piotr Molski <moli@wikia-inc.com>
  */
 
 ini_set( "include_path", dirname(__FILE__)."/.." );
