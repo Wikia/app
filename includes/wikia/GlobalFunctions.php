@@ -115,7 +115,7 @@ function print_pre($param, $return = 0)
  * @return String -- new url
  */
 function wfReplaceImageServer( $url, $timestamp = false ) {
-	global $wgImagesServers, $wgDevelEnvironment;
+	global $wgImagesServers, $wgDevelEnvironment, $wgAkamaiLocalVersion,  $wgAkamaiGlobalVersion;
 
 	if(substr(strtolower($url), -4) != '.ogg' && isset($wgImagesServers) && is_int($wgImagesServers)) {
 		if(strlen($url) > 7 && substr($url,0,7) == 'http://') {
@@ -137,6 +137,7 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 					$timestamp = rand(0, 1000);
 				}
 			}
+			$timestamp += $wgAkamaiGlobalVersion + $wgAkamaiLocalVersion;
 
 			// macbre: don't add CB value on dev machines
 			// NOTE: This should be the only use of the cache-buster which does not use $wgCdnStylePath.
