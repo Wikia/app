@@ -220,6 +220,7 @@ class FBConnect {
 	 * after a login-and-connect because of popup blockers in IE and webkit.
 	 */
 	public static function getLoginButtonModal(){
+		wfProfileIn(__METHOD__);
 		$response = new AjaxResponse();
 		
 		wfLoadExtensionMessages('FBConnect');		
@@ -232,6 +233,7 @@ class FBConnect {
 		$body += '<fb:login-button id="fbPrefsConnect" '.FBConnect::getPermissionsAttribute().FBConnect::getOnLoginAttribute().'></fb:login-button>';
 		
 		$response->addText('<div id="fbNowConnectBox" title="' + $title + '"><div style="padding: 5px">' + $body + '</div></div>');
+		wfProfileOut(__METHOD__);
 		return $response;
 	}
 	
