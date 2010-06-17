@@ -7,7 +7,7 @@
  */
 class SpecialAdminAds extends SpecialPage {
 	
-	private $adlimit = 100;//number of ads to show on page
+	private $adlimit = 100;//number of ads to show on page - NOTE: Not used.  There is a local var w/the same name below... probably not intentional.
 	private $ispaypal;
 	
 	public function __construct() {
@@ -77,7 +77,7 @@ class SpecialAdminAds extends SpecialPage {
 		global $wgUser, $wgRequest;
 		$self = $this->getTitle();
 		$form = "";
-		$adlimit = 10;
+		$adlimit = 100;
 		$startlimit = 0;
 		$selectParams = array('ad_status'=>'0');
 		$ads = Advertisement::LoadAdsFromDB($selectParams,$adlimit+1,$startlimit);
