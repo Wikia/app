@@ -252,7 +252,7 @@ class SkinChooser {
 				$wgOut->addHTML('<td><input type="radio" value="'.$skinkey.'" id="wpSkin'.$skinkey.'" name="wpSkin"'.($skinkey == $pref->mSkin.'-'.$pref->mTheme ? ' checked="checked" ' : '').'/><label for="wpSkin'.$skinkey.'">'.wfMsg($skinkey).'</label> '.$previewlink.'</td>');
 				// show theme previews
 				if (in_array($skinKey, array('monaco', 'answers'))) {
-					$wgOut->addHTML('<td><label for="wpSkin'.$skinkey.'"><img src="'.$wgStylePath.'/monaco/'.$themeKey.'/images/preview.png" width="100" height="70" /></label>'.($skinkey == $defaultSkinKey ? ' (' . wfMsg( 'default' ) . ')' : '').'</td>');
+					$wgOut->addHTML('<td><label for="wpSkin'.$skinkey.'"><img src="'.$wgStylePath.'/'.$skinKey.'/'.$themeKey.'/images/preview.png" width="100" height="70" /></label>'.($skinkey == $defaultSkinKey ? ' (' . wfMsg( 'default' ) . ')' : '').'</td>');
 				}
 				$wgOut->addHTML('</tr>');
 			}

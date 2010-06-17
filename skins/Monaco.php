@@ -1523,7 +1523,7 @@ class MonacoTemplate extends QuickTemplate {
 $allinone = $wgRequest->getBool('allinone', $wgAllInOne);
 echo WikiaAssets::GetCoreCSS($skin->themename, $wgContLang->isRTL(), $allinone); // StaticChute + browser specific
 echo WikiaAssets::GetExtensionsCSS($this->data['csslinks-urls']);
-echo WikiaAssets::GetThemeCSS($skin->themename); 
+echo WikiaAssets::GetThemeCSS($skin->themename, $skin->skinname); 
 echo WikiaAssets::GetSiteCSS($skin->themename, $wgContLang->isRTL(), $allinone); // Common.css, Monaco.css, -
 echo WikiaAssets::GetUserCSS($this->data['csslinks-urls']);
 ?>

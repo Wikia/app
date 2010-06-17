@@ -255,11 +255,11 @@ class WikiaAssets {
 		return $out;
 	}
 
-	public static function GetThemeCSS($themename) {
+	public static function GetThemeCSS($themename, $skinname = 'monaco') {
 		global $wgStylePath, $wgStyleVersion;
 		if($themename != 'custom' && $themename != 'sapphire') {
 			$out = "\n<!-- GetThemeCSS -->";
-			$out .= '<link rel="stylesheet" type="text/css" href="'. $wgStylePath .'/monaco/'. $themename .'/css/main.css?'.$wgStyleVersion.'" />';
+			$out .= '<link rel="stylesheet" type="text/css" href="'. $wgStylePath .'/'.$skinname.'/'. $themename .'/css/main.css?'.$wgStyleVersion.'" />';
 			return $out;
 		}
 	}
