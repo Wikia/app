@@ -79,7 +79,7 @@ $(document).ready(function() {
 	$('#pt-fblogout').click(function() {
 		// TODO: Where did the fancy DHTML window go? Maybe consider jQuery Alert Dialogs:
 		// http://abeautifulsite.net/2008/12/jquery-alert-dialogs/
-		var logout = confirm("You are loggin out of both this site and Facebook.");
+		var logout = confirm("You are logging out of both this site and Facebook.");
 		if (logout) {
 			FB.logout(function(response) {
 				window.location = window.fbLogoutURL;
@@ -196,8 +196,27 @@ function loginAndConnectExistingUser(){
  * the Special:Connect page to finish the process.
  */
 function loggedInNowNeedToConnect(){
-	loginByFBConnect();
-	sendToConnectOnLoginForSpecificForm("ConnectExisting");
+	FB.getLoginStatus(function(response) {
+		if (response.session) {
+			// already logged-in/connected via facebook
+			sendToConnectOnLoginForSpecificForm("ConnectExisting");
+		} else {
+			// Not logged/connected w/Facebook. Show dialog w/a button (to get around popup blockers in IE/webkit).
+			$().getModal(window.wgScript + '?action=ajax&rs=FBConnect::getLoginButtonModal&uselang=' + window.wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion,  false, {
+				callback: function() {
+					window.fbAsyncInit(); // need to init again so that the button that comes from the ajax request works
+
+					var fb_loginAndConnect_WET_str = 'signupActions/fbloginandconnect';
+					var topPos = "130px";
+					$('#fbNowConnectBox').makeModal({width: 400, persistent: false, onClose: function(){ WET.byStr(fb_loginAndConnect_WET_str + '/close'); } });
+					setTimeout(function() {
+									$('#FbNowConnectBoxWrapper').css({ 'top' : topPos});
+								},100);
+					WET.byStr(fb_loginAndConnect_WET_str + '/open');
+				}
+			);
+		}
+	});
 }
 
 /**

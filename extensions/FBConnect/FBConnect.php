@@ -110,6 +110,7 @@ if ($fbUserRightsFromGroup) {
 }
 
 $wgAjaxExportList[] = "FBConnect::disconnectFromFB";
+$wgAjaxExportList[] = "FBConnect::getLoginButtonModal";
 $wgAjaxExportList[] = "SpecialConnect::ajaxModalChooseName";
 $wgAjaxExportList[] = "SpecialConnect::checkCreateAccount";
 
@@ -211,6 +212,25 @@ class FBConnect {
 	public static function disconnectFromFB($user = null){
 		$response = new AjaxResponse();
 		$response->addText(json_encode(self::coreDisconnectFromFB($user)));
+		return $response;
+	}
+
+	/**
+	 * Ajax function to return a modal dialog with a login button.  This is needed
+	 * after a login-and-connect because of popup blockers in IE and webkit.
+	 */
+	function getLoginButtonModal(){
+		$response = new AjaxResponse();
+		
+		$title = "Almost done!";
+		$body = wfMsg('fbconnect-logged-in-now-connect');
+
+		// Add fbconnect button.
+		self::$fbOnLoginJs = 'sendToConnectOnLoginForSpecificForm("ConnectExisting");'; // special onlogin handler for this case.
+		$body += "<br/>\n";
+		$body += '<fb:login-button id="fbPrefsConnect" '.FBConnect::getPermissionsAttribute().FBConnect::getOnLoginAttribute().'></fb:login-button>';
+		
+		$response->addText('<div id="fbNowConnectBox" title="' + $title + '"><div style="padding: 5px">' + body + '</div></div>');
 		return $response;
 	}
 	
