@@ -62,7 +62,7 @@ class PBLoginForm extends LoginForm {
 		$this->exTemplate->set("name", "");
 		$this->exTemplate->set("useemail", "");
 		$this->exTemplate->set( 'message', "" );
-		
+
 		$this->mType = "login";
 		/* fake to don't change remember password */
 		$this->mRemember = (bool) $wgUser->getOption( 'rememberpassword' );
@@ -74,12 +74,6 @@ class PBLoginForm extends LoginForm {
 		$this->exTemplate->set( 'name', $this->mName );
 		$this->exTemplate->set( 'password', $this->mPassword );
 		$this->plugin->set( 'otherName', $this->mOtherName );
-		
-		if ( !LoginForm::getLoginToken() ) {
-			LoginForm::setLoginToken();
-		}
-		
-		$this->exTemplate->set("loginToken", LoginForm::getLoginToken());
 	}
 
 	function successfulLogin() {
@@ -88,6 +82,8 @@ class PBLoginForm extends LoginForm {
 		/* post valid */
 		$u = User::newFromName( $this->mOtherName );
 
+		$cu = User::newFromName( $this->mName );
+		
 		if (!$cu->checkPassword( $this->mPassword )) {
 			if( $retval = '' == $this->mPassword ) {
 				$this->mainLoginForm( wfMsg( 'wrongpasswordempty' ) );
@@ -163,6 +159,12 @@ class PBLoginForm extends LoginForm {
 
 	function render() {
 		global $wgOut, $wgExtensionsPath;
+		
+		if ( !LoginForm::getLoginToken() ) {
+			LoginForm::setLoginToken();
+		}
+		$this->exTemplate->set("loginToken", LoginForm::getLoginToken());
+		
 		$this->exTemplate->set( "header", $this->plugin );
 		$wgOut->addStyle( "$wgExtensionsPath/wikia/Piggyback/Piggyback.css" );
 		$wgOut->addTemplate( $this->exTemplate );
