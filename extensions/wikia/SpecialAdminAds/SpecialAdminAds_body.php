@@ -7,7 +7,7 @@
  */
 class SpecialAdminAds extends SpecialPage {
 	
-	private $adlimit = 10;//number of ads to show on page
+	private $adlimit = 100;//number of ads to show on page
 	private $ispaypal;
 	
 	public function __construct() {
