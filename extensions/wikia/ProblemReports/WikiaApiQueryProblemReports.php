@@ -737,12 +737,17 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 	}
 
 	// check whether provided problem description contains spam
-	// using SpamBlacklist extension (which should be enabled sitewide)
 	static function checkForSpam($content)
 	{
 		// empty content cannot contain spam
 		if ( empty($content) ) {
 			return false;
+		}
+
+		// macbre: use dedicated hook for this check (change related to release of Phalanx)
+		if ( !wfRunHooks('ProblemReportsContentCheck', array($content)) ) {
+			wfDebug(__METHOD__ . ": spam found in report description\n");
+			return true;
 		}
 
 		// TODO: temporary check for Phalanx (don't perform additional filtering when enabled)
