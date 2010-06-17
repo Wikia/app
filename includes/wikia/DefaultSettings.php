@@ -23,6 +23,24 @@ if( !defined( 'MEDIAWIKI' ) ) {
 $wgStyleVersion = $wgMergeStyleVersionJS = $wgMergeStyleVersionCSS = '23617';
 
 /**
+ * @name wgAkamaiGlobalVersion
+ *
+ * this variable is used for purging all images on akamai. increasing this value
+ * will expire (change all image links) on all wikis
+ */
+$wgAkamaiGlobalVersion = 1;
+
+/**
+ * @name wgAkamaiLocalVersion
+ *
+ * this variable is used for purging all images on akamai for one particular
+ * wiki. Here is just initialization, if you want to change value of this variable
+ * you should use WikiFactory interface. By default it is equal global version
+ */
+$wgAkamaiLocalVersion = $wgAkamaiGlobalVersion;
+
+
+/**
  * @name $wgCityId
  *
  * contains wiki identifier from city_list table. If wiki is not from wiki.factory
@@ -466,4 +484,3 @@ $wgAutoloadClasses[ "RiakCache"  ] = "{$IP}/includes/wikia/RiakCache.php";
  * @see rt#43025
  */
 $wgWikiaHideImportsFromIrc = true;
-
