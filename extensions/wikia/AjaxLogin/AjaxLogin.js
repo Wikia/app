@@ -207,7 +207,14 @@ var AjaxLogin = {
 		}
 	},
 	doReload: function() {
-		window.location.reload(true);
+		// Result was still being cached with .reload(true).  Need to use explicit cachebuster.
+		//window.location.reload(true);
+		var location = window.location.href;
+		var delim = "?";
+		if(location.indexOf("?") > 0){
+			delim = "&";
+		}
+		window.location.href = location + delim + "cb=" + Math.floor(Math.random()*10000);
 	},
 	clickLogIn: function( ev ) {
 		// Prevent the default action for event (click)
@@ -440,7 +447,14 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 					if( AjaxLogin.placeholderID !== null){
 						params = "placeholder=" + AjaxLogin.placeholderID;
 					} else {
-        	                                 window.location.reload(true);
+						// Result was still being cached with .reload(true).  Need to use explicit cachebuster.
+						//window.location.reload(true);
+						var location = window.location.href;
+						var delim = "?";
+						if(location.indexOf("?") > 0){
+							delim = "&";
+						}
+						window.location.href = location + delim + "cb=" + Math.floor(Math.random()*10000);
 						return;
 					}
 
