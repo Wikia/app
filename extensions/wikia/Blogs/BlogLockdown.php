@@ -26,7 +26,6 @@ class BlogLockdown {
 	public static function userCan( $title, $user, $action, &$result ) {
 
 		$namespace = $title->getNamespace();
-
 		/**
 		 * here we only handle Blog articles, everyone can read it
 		 */
@@ -103,6 +102,13 @@ class BlogLockdown {
 					$return = true;
 				}
 				if( $user->isAllowed( 'delete' ) ) {
+					$result = true;
+					$return = true;
+				}
+				break;
+
+			case "protect":
+				if( $isArticle && $user->isAllowed( "blog-articles-protect" ) ) {
 					$result = true;
 					$return = true;
 				}
