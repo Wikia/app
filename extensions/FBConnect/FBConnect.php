@@ -222,6 +222,7 @@ class FBConnect {
 	public static function getLoginButtonModal(){
 		$response = new AjaxResponse();
 		
+		wfLoadExtensionMessages('FBConnect');		
 		$title = "Almost done!";
 		$body = wfMsg('fbconnect-logged-in-now-connect');
 
