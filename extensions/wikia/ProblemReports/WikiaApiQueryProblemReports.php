@@ -748,7 +748,7 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 		// TODO: temporary check for Phalanx (don't perform additional filtering when enabled)
 		global $wgEnablePhalanxExt;
 		if (!empty($wgEnablePhalanxExt)) {
-			return true;
+			return false;
 		}
 
 		wfProfileIn(__METHOD__);
