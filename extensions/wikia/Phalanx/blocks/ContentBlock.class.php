@@ -101,6 +101,33 @@ class ContentBlock {
 	}
 
 	/*
+	 * genericContentCheck
+	 *
+	 * @author Macbre
+	 *
+	 * Generic content checking to be used by extensions
+	 */
+	static public function genericContentCheck( $content ) {
+		wfProfileIn( __METHOD__ );
+
+		$blocksData = Phalanx::getFromFilter( Phalanx::TYPE_CONTENT );
+		if ( !empty($blocksData) && $content != '' ) {
+			$content = self::applyWhitelist($content);
+			foreach( $blocksData as $blockData ) {
+				$result = Phalanx::isBlocked($content, $blockData);
+				if ( $result['blocked'] ) {
+					Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$content'.");
+					wfProfileOut( __METHOD__ );
+					return false;
+				}
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
+	/*
 	 * applyWhitelist
 	 *
 	 * @author Marooned <marooned at wikia-inc.com>

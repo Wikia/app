@@ -45,6 +45,7 @@ function efPhalanxInit() {
 	// former SpamRegex (TYPE_SUMMARY and TYPE_CONTENT)
 	$wgHooks['EditFilter'][] = 'ContentBlock::onEditFilter';
 	$wgHooks['AbortMove'][] = 'ContentBlock::onAbortMove';
+	$wgHooks['ProblemReportsContentCheck'][] = 'ContentBlock::genericContentCheck';
 
 	// former TitleBlackList (TYPE_TITLE)
 	$wgHooks['SpecialMovepageBeforeMove'][] = 'TitleBlock::beforeMove';
