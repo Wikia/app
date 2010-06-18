@@ -68,6 +68,7 @@ class StaticChute {
 			'common/jquery/jquery-1.3.2.js',
 			'common/jquery/jquery.json-1.3.js',
 			'common/jquery/jquery.cookies.2.1.0.js',
+			'common/jquery/jquery.dump.js',
 			'common/jquery/jquery.wikia.js',
 		);
 
@@ -92,6 +93,7 @@ class StaticChute {
 			'common/jquery/jquery-1.3.2.js',
 			'common/jquery/jquery.json-1.3.js',
 			'common/jquery/jquery.cookies.2.1.0.js',
+			'common/jquery/jquery.dump.js',
 			'common/jquery/jquery.wikia.js',
 
 			'common/wikibits.js',
@@ -114,6 +116,7 @@ class StaticChute {
 			'common/jquery/jquery-1.4.2.js',
 			'common/jquery/jquery.json-1.3.js',
 			'common/jquery/jquery.cookies.2.1.0.js',
+			'common/jquery/jquery.dump.js',
 			'common/jquery/jquery.wikia.js',
 			'common/jquery/jquery-ui-1.7.2.custom.js',
 			'common/jquery/jquery.timeago.js',
@@ -148,6 +151,7 @@ class StaticChute {
 			'common/jquery/jquery-1.4.2.js',
 			'common/jquery/jquery.json-1.3.js',
 			'common/jquery/jquery.cookies.2.1.0.js',
+			'common/jquery/jquery.dump.js',
 			'common/jquery/jquery.wikia.js',
 			'common/jquery/jquery-ui-1.7.2.custom.js',
 			'common/jquery/jquery.timeago.js',
@@ -181,6 +185,7 @@ class StaticChute {
 			'common/jquery/jquery-1.4.2.js',
 			'common/jquery/jquery.json-1.3.js',
 			'common/jquery/jquery.cookies.2.1.0.js',
+			'common/jquery/jquery.dump.js',
 			'common/jquery/jquery.wikia.js',
 			'common/jquery/jquery-ui-1.7.2.custom.js',
 			'common/jquery/jquery.timeago.js',
