@@ -1,4 +1,5 @@
 == Changes since 201006.3 ==
+* rt#55201: Slideshow: add recent uploads feed option (macbre)
 * rt#54717: edit link missing on answers pages (Nef)
 * rt#55203: WikiaPhotoGallery: dialogs should use full vertical space available (macbre)
 * rt#55210: WikiaPhotoGallery: dialogs should use the current browser viewport size (macbre)
