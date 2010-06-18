@@ -21,6 +21,8 @@ class WikiaPhotoGallery extends ImageGallery {
 	const RESULTS_RECENT_UPLOADS = 0;
         const RESULTS_IMAGES_FROM_THIS_PAGE = 1;
 
+	const RECENT_UPLOADS_IMAGES = 20;
+
 	/**
 	 * Content of parsed <gallery> tag
 	 */
@@ -50,6 +52,11 @@ class WikiaPhotoGallery extends ImageGallery {
 	 * Is slideshow using "crop" attribute
 	 */
 	private $mCrop = false;
+
+	/**
+	 * Is slideshow using "showrecentuploads" attribute (RT #55201)
+	 */
+	private $mShowRecentUploads = false;
 
 	function __construct() {
 		parent::__construct();
@@ -95,6 +102,11 @@ class WikiaPhotoGallery extends ImageGallery {
 			// support "crop" attribute
 			if (isset($params['crop']) && $params['crop'] == 'true') {
 				$this->mCrop = true;
+			}
+
+			// support "showrecentuploads" attribute
+			if (isset($params['showrecentuploads']) && $params['showrecentuploads'] == 'true') {
+				$this->mShowRecentUploads = true;
 			}
 		}
 		else {
@@ -208,6 +220,11 @@ class WikiaPhotoGallery extends ImageGallery {
 			}
 		}
 
+		// support "showrecentuploads" attribute (add 20 recently uploaded images at the end of slideshow)
+		if (!empty($this->mShowRecentUploads)) {
+			$this->addRecentlyUploaded(self::RECENT_UPLOADS_IMAGES);
+		}
+
 		// store ID of gallery
 		$this->mData['id'] = self::$galleriesCounter++;
 
@@ -234,6 +251,36 @@ class WikiaPhotoGallery extends ImageGallery {
 	 */
 	private function parseLink($nt, $link) {
 		return WikiaPhotoGalleryHelper::parseLink($this->mParser, $nt, $link);
+	}
+
+	/**
+	 * Add given number of recently uploaded images to slideshow
+	 */
+	private function addRecentlyUploaded($limit) {
+		wfProfileIn(__METHOD__);
+
+		$uploadedImages = WikiaPhotoGalleryHelper::getRecentlyUploaded($limit);
+
+		// add recently uploaded images to slideshow
+		foreach($uploadedImages as $image) {
+			$this->add($image);
+
+			// store list of images (to be used by front-end)
+			$this->mData['images'][] = array(
+				'name' => $image->getText(),
+				'caption' => '',
+				'link' => '',
+				'linktext' => '',
+				'recentlyUploaded' => true,
+			);
+
+			// Only add real images (bug #5586)
+			if ($image->getNamespace() == NS_FILE) {
+				$this->mParser->mOutput->addImage($image->getDBkey());
+			}
+		}
+
+		wfProfileOut(__METHOD__);
 	}
 
 	/**
@@ -490,12 +537,14 @@ class WikiaPhotoGallery extends ImageGallery {
 	private function renderSlideshow() {
 		global $wgLang, $wgBlankImgUrl, $wgStylePath;
 
+		wfProfileIn(__METHOD__);
+
 		// don't render empty slideshows
 		if (empty($this->mImages)) {
+			wfProfileOut(__METHOD__);
 			return '';
 		}
 
-		wfProfileIn(__METHOD__);
 		$sk = $this->getSkin();
 
 		// slideshow wrapper CSS class
