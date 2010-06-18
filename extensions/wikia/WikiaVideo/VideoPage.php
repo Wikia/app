@@ -616,7 +616,7 @@ EOD;
 				$id = explode("&",$id);
 				$id = $id[0];
 			}
-			
+
 			$this->mProvider = $provider;
 			$this->mId = $id;
 			$this->mData = array();
@@ -969,9 +969,9 @@ EOD;
 				break;
 			case self::V_GAMETRAILERS: // todo verify if exists
 				$url = $this->getUrl(self::V_GAMETRAILERS.",".$this->mId);
-				$file = @file_get_contents($url); // if 404 file is empty 
+				$file = @file_get_contents($url); // if 404 file is empty
 				if( strlen($file) < 100 ){
-					return false;	
+					return false;
 				}
 				return true;
 				break;
@@ -1121,8 +1121,8 @@ EOD;
 
 		$desc = wfMsg( 'wikiavideo-added', $this->mTitle->getText() );
 
-                $dbw = wfGetDB( DB_MASTER );
-                $now = $dbw->timestamp();
+		$dbw = wfGetDB( DB_MASTER );
+		$now = $dbw->timestamp();
 
 		switch( $this->mProvider ) {
 			case self::V_METACAFE:
@@ -1150,60 +1150,60 @@ EOD;
 			$this->doCleanup(); // if the article was previously deleted, and we're inserting a new one
 		}
 
-                $dbw->insert( 'image',
-                        array(
-                                'img_name' => self::getNameFromTitle( $this->mTitle ),
-                                'img_size' => 300,
-                                'img_description' => '',
-                                'img_user' => $wgUser->getID(),
-                                'img_user_text' => $wgUser->getName(),
-                                'img_timestamp' => $now,
+		$dbw->insert( 'image',
+			array(
+				'img_name' => self::getNameFromTitle( $this->mTitle ),
+				'img_size' => 300,
+				'img_description' => '',
+				'img_user' => $wgUser->getID(),
+				'img_user_text' => $wgUser->getName(),
+				'img_timestamp' => $now,
 				'img_metadata'	=> $metadata,
-                                'img_media_type' => 'VIDEO',
+				'img_media_type' => 'VIDEO',
 				'img_major_mime' => 'video',
 				'img_minor_mime' => 'swf',
-                        ),
-                        __METHOD__,
-                        'IGNORE'
-                );
+			),
+			__METHOD__,
+			'IGNORE'
+		);
 
 		$cat = $wgContLang->getFormattedNsText( NS_CATEGORY );
 		$saved_text = '[[' . $cat . ':' . wfMsgForContent( 'wikiavideo-category' ) . ']]';
 
-                if( $dbw->affectedRows() == 0 ) {
+		if( $dbw->affectedRows() == 0 ) {
 			// we are updating
-                        $desc = "updated video [[" . self::getNameFromTitle( $this->mTitle ) . "]]";
-			                        $dbw->insertSelect( 'oldimage', 'image',
-                                array(
-                                        'oi_name' => 'img_name',
-                                        'oi_archive_name' => 'img_name',
-                                        'oi_size' => 'img_size',
-                                        'oi_width' => 'img_width',
-                                        'oi_height' => 'img_height',
-                                        'oi_bits' => 'img_bits',
-                                        'oi_timestamp' => 'img_timestamp',
-                                        'oi_description' => 'img_description',
-                                        'oi_user' => 'img_user',
-                                        'oi_user_text' => 'img_user_text',
-                                        'oi_metadata' => 'img_metadata',
-                                        'oi_media_type' => 'img_media_type',
-                                        'oi_major_mime' => 'img_major_mime',
-                                        'oi_minor_mime' => 'img_minor_mime',
-                                        'oi_sha1' => 'img_sha1'
-                                ), array( 'img_name' => self::getNameFromTitle( $this->mTitle ) ), __METHOD__
-                        );
+			$desc = "updated video [[" . self::getNameFromTitle( $this->mTitle ) . "]]";
+			$dbw->insertSelect( 'oldimage', 'image',
+				array(
+					'oi_name' => 'img_name',
+					'oi_archive_name' => 'img_name',
+					'oi_size' => 'img_size',
+					'oi_width' => 'img_width',
+					'oi_height' => 'img_height',
+					'oi_bits' => 'img_bits',
+					'oi_timestamp' => 'img_timestamp',
+					'oi_description' => 'img_description',
+					'oi_user' => 'img_user',
+					'oi_user_text' => 'img_user_text',
+					'oi_metadata' => 'img_metadata',
+					'oi_media_type' => 'img_media_type',
+					'oi_major_mime' => 'img_major_mime',
+					'oi_minor_mime' => 'img_minor_mime',
+					'oi_sha1' => 'img_sha1'
+				), array( 'img_name' => self::getNameFromTitle( $this->mTitle ) ), __METHOD__
+			);
 
-		        // update the current image row
-                        $dbw->update( 'image',
-                                array( /* SET */
-                                        'img_timestamp' => $now,
-                                        'img_user' => $wgUser->getID(),
-                                        'img_user_text' => $wgUser->getName(),
-                                        'img_metadata' => $metadata,
-                                ), array( /* WHERE */
-                                        'img_name' => self::getNameFromTitle( $this->mTitle )
-                                ), __METHOD__
-                        );
+			// update the current image row
+			$dbw->update( 'image',
+				array( /* SET */
+					'img_timestamp' => $now,
+					'img_user' => $wgUser->getID(),
+					'img_user_text' => $wgUser->getName(),
+					'img_metadata' => $metadata,
+				), array( /* WHERE */
+					'img_name' => self::getNameFromTitle( $this->mTitle )
+					), __METHOD__
+			);
 			$log = new LogPage( 'upload' );
 			$log->addEntry( 'overwrite', $this->mTitle, 'updated video' );
 			$saved_text = $this->getContent();
@@ -1515,12 +1515,12 @@ EOD;
 				break;
 			case self::V_GAMETRAILERS:
 				$code = 'custom';
-				$embed = 
-				'<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" id="gtembed" width="'.$width.'" height="'.$height.'">	
-					<param name="allowScriptAccess" value="sameDomain" /> 
+				$embed =
+				'<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" id="gtembed" width="'.$width.'" height="'.$height.'">
+					<param name="allowScriptAccess" value="sameDomain" />
 					<param name="allowFullScreen" value="true" />
 					<param name="movie" value="http://www.gametrailers.com/remote_wrap.php?mid='.$this->mId.'"/>
-					<param name="quality" value="high" /> 
+					<param name="quality" value="high" />
 					<embed src="http://www.gametrailers.com/remote_wrap.php?mid='.$this->mId.'" swLiveConnect="true" name="gtembed" align="middle" allowScriptAccess="sameDomain" allowFullScreen="true" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" width="'.$width.'" height="'.$height.'"></embed> ]
 				</object>' ;
 				break;
