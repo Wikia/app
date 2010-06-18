@@ -865,6 +865,7 @@ class WikiaPhotoGalleryHelper {
 		$parser = new Parser();
 		$parserOptions = new ParserOptions();
 
+		// let's parse current version of wikitext and store data of gallery with provided hash in self::$mGalleryData
 		$rev = Revision::newFromTitle($wgTitle, $revisionId);
 		//should never happen
 		if (!is_null($rev)) {
@@ -872,7 +873,7 @@ class WikiaPhotoGalleryHelper {
 			$parser->parse($wikitext, $wgTitle, $parserOptions)->getText();
 		}
 
-
+		// Marooned: check block state of user (RT #55274)
 		$permissionErrors = $wgTitle->getUserPermissionsErrors('edit', $wgUser);
 		if (count($permissionErrors)) {
 			$result['error'] = $wgOut->parse($wgOut->formatPermissionsErrorMessage($permissionErrors));
@@ -898,8 +899,11 @@ class WikiaPhotoGalleryHelper {
 	static public function beforeParserrenderImageGallery($parser, $ig) {
 		wfProfileIn(__METHOD__);
 
+		// parse each gallery / slideshow and get its data
 		$ig->parse();
 		$data = $ig->getData();
+
+		// get data of gallery / slideshow we're interested in
 		if ($data['hash'] == self::$mGalleryHash) {
 			self::$mGalleryData = $data;
 		}
