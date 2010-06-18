@@ -93,6 +93,7 @@ Alternatively, you can click "$2" to see the page in its updated form.',
 	'wikiaPhotoGallery-slideshowpreview-size-smaller' => 'smaller',
 	'wikiaPhotoGallery-slideshowpreview-size-larger' => 'larger',
 	'wikiaPhotoGallery-slideshowpreview-crop' => 'Use smart cropping to eliminate white space',
+	'wikiaPhotoGallery-slideshowpreview-recentuploads' => 'Add recent uploads to the slideshow',
 	'wikiaPhotoGallery-slideshowpreview-photostitle' => 'Slideshow photos',
 	'wikiaPhotoGallery-slideshowpreview-addphoto' => 'Add a photo',
 
@@ -477,7 +478,7 @@ $messages['es'] = array(
 	'wikiaPhotoGallery-edit-abort' => 'La modificación que intentaste hacer fue abortada por un gancho de extensión',
 	'wikiaPhotoGallery-edit-summary' => 'Edición de una galería',
 	'wikiaPhotoGallery-error-caption' => 'Error',
-	'wikiaPhotoGallery-error-outdated' => 'Esta galería ha sido editada mientras veías la página. 
+	'wikiaPhotoGallery-error-outdated' => 'Esta galería ha sido editada mientras veías la página.
 Por favor actualiza la página y reinténtalo.',
 	'wikiaPhotoGallery-error-user-rights' => 'Error en los permisos de usuario',
 	'wikiaPhotoGallery-upload-title' => 'Encontrar & Subir Imagen',
@@ -1074,8 +1075,8 @@ $messages['it'] = array(
 	'wikiaPhotoGallery-preview-captions-center' => 'Centro',
 	'wikiaPhotoGallery-preview-captions-right' => 'Destra',
 	'wikiaPhotoGallery-conflict-title' => 'Si è verificato un conflitto di modifica',
-	'wikiaPhotoGallery-conflict-help' => 'Abbiamo fornito il codice wiki per la tua ultima modifica, in basso. 
-È possibile copiare questo testo, fare clic su "$1" e incollarlo nella posizione corretta al fine di ripristinare le modifiche. 
+	'wikiaPhotoGallery-conflict-help' => 'Abbiamo fornito il codice wiki per la tua ultima modifica, in basso.
+È possibile copiare questo testo, fare clic su "$1" e incollarlo nella posizione corretta al fine di ripristinare le modifiche.
 In alternativa, è possibile fare clic su "$2" per vedere la pagina nella sua forma attuale.',
 	'wikiaPhotoGallery-conflict-edit' => 'Visita la modalità di modifica',
 	'wikiaPhotoGallery-conflict-view' => 'Visualizza la pagina corrente',
