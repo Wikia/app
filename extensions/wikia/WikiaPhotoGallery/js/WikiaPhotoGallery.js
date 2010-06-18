@@ -1538,6 +1538,20 @@ var WikiaPhotoGallery = {
 				self.renderSlideshowPreview();
 		});
 
+		// "recentuploads" checkbox
+		$('#WikiaPhotoGallerySlideshowRecentUploads').
+			attr('checked', (params.showrecentuploads == 'true')).
+			unbind('.recentuploads').bind('change.recentuploads', function(ev) {
+				if ($(this).attr('checked')) {
+					self.editor.gallery.params.showrecentuploads = 'true';
+				}
+				else {
+					delete self.editor.gallery.params.showrecentuploads;
+				}
+
+				self.renderSlideshowPreview();
+		});
+
 		// "Add an Image" button
 		$('#WikiaPhotoGallerySlideshowAddImage').unbind('.addimage').bind('click.addimage', function(ev) {
 			ev.preventDefault();
@@ -1549,7 +1563,7 @@ var WikiaPhotoGallery = {
 		});
 
 		// resize preview area (RT #55203)
-		$('#WikiaPhotoGallerySlideshowEditorPreview').height(this.editor.height - 200);
+		$('#WikiaPhotoGallerySlideshowEditorPreview').height(this.editor.height - 230);
 
 		// render preview
 		this.renderSlideshowPreview();
