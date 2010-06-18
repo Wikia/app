@@ -8,159 +8,145 @@
  *
  */
 (function($) {
+	$.fn.dump = function() {
+		return $.dump(this);
+	}
 
-$.fn.dump = function() {
-   return $.dump(this);
-}
+	$.dump = function(object) {
+		var recursion = function(obj, level) {
+			if(!level) level = 0;
+			var dump = '', p = '';
+			for(i = 0; i < level; i++) p += "\t";
 
-$.dump = function(object) {
-   var recursion = function(obj, level) {
-      if(!level) level = 0;
-      var dump = '', p = '';
-      for(i = 0; i < level; i++) p += "\t";
+			t = type(obj);
+			switch(t) {
+				case "string":
+					return '"' + obj + '"';
+				case "number":
+					return obj.toString();
+				case "boolean":
+					return obj ? 'true' : 'false';
+				case "date":
+					return "Date: " + obj.toLocaleString();
+				case "array":
+					dump += 'Array ( \n';
+					$.each(obj, function(k,v) {
+						dump += p +'\t' + k + ' => ' + recursion(v, level + 1) + '\n';
+					});
+					dump += p + ')';
+					break;
+				case "object":
+					dump += 'Object { \n';
+					$.each(obj, function(k,v) {
+						dump += p + '\t' + k + ': ' + recursion(v, level + 1) + '\n';
+					});
+					dump += p + '}';
+					break;
+				case "jquery":
+					dump += 'jQuery Object { \n';
+					$.each(obj, function(k,v) {
+						dump += p + '\t' + k + ' = ' + recursion(v, level + 1) + '\n';
+					});
+					dump += p + '}';
+					break;
+				case "regexp":
+					return "RegExp: " + obj.toString();
+				case "error":
+					return obj.toString();
+				case "document":
+				case "domelement":
+					dump += 'DOMElement [ \n'
+						+ p + '\tnodeName: ' + obj.nodeName + '\n'
+						+ p + '\tnodeValue: ' + obj.nodeValue + '\n'
+						+ p + '\tinnerHTML: [ \n';
+					$.each(obj.childNodes, function(k,v) {
+						if(k < 1) var r = 0;
+						if(type(v) == "string") {
+							var txt = v.nodeValue;
+							if(txt.match(/[^\s]/)) {
+								dump += p + '\t\t' + (k - (r||0)) + ' = String: ' + trim(txt) + '\n';
+							} else {
+								r--;
+							}
+						} else {
+							dump += p + '\t\t' + (k - (r||0)) + ' = ' + recursion(v, level + 2) + '\n';
+						}
+					});
+					dump += p + '\t]\n'
+						+ p + ']';
+					break;
+				case "function":
+					var match = obj.toString().match(/^(.*)\(([^\)]*)\)/im);
+					match[1] = trim(match[1].replace(new RegExp("[\\s]+", "g"), " "));
+					match[2] = trim(match[2].replace(new RegExp("[\\s]+", "g"), " "));
+					return match[1] + "(" + match[2] + ")";
+				case "window":
+				default:
+					dump += 'N/A: ' + t;
+			}
+			return dump;
+		}
 
-      t = type(obj);
-      switch(t) {
-         case "string":
-            return '"' + obj + '"';
-            break;
-         case "number":
-            return obj.toString();
-            break;
-         case "boolean":
-            return obj ? 'true' : 'false';
-         case "date":
-            return "Date: " + obj.toLocaleString();
-         case "array":
-            dump += 'Array ( \n';
-            $.each(obj, function(k,v) {
-               dump += p +'\t' + k + ' => ' + recursion(v, level + 1) + '\n';
-            });
-            dump += p + ')';
-            break;
-         case "object":
-            dump += 'Object { \n';
-            $.each(obj, function(k,v) {
-               dump += p + '\t' + k + ': ' + recursion(v, level + 1) + '\n';
-            });
-            dump += p + '}';
-            break;
-         case "jquery":
-            dump += 'jQuery Object { \n';
-            $.each(obj, function(k,v) {
-               dump += p + '\t' + k + ' = ' + recursion(v, level + 1) + '\n';
-            });
-            dump += p + '}';
-            break;
-         case "regexp":
-            return "RegExp: " + obj.toString();
-         case "error":
-            return obj.toString();
-         case "document":
-         case "domelement":
-            dump += 'DOMElement [ \n'
-                  + p + '\tnodeName: ' + obj.nodeName + '\n'
-                  + p + '\tnodeValue: ' + obj.nodeValue + '\n'
-                  + p + '\tinnerHTML: [ \n';
-            $.each(obj.childNodes, function(k,v) {
-               if(k < 1) var r = 0;
-               if(type(v) == "string") {
-				  var txt = v.nodeValue;
-                  if(txt.match(/[^\s]/)) {
-                     dump += p + '\t\t' + (k - (r||0)) + ' = String: ' + trim(txt) + '\n';
-                  } else {
-                     r--;
-                  }
-               } else {
-                  dump += p + '\t\t' + (k - (r||0)) + ' = ' + recursion(v, level + 2) + '\n';
-               }
-            });
-            dump += p + '\t]\n'
-                  + p + ']';
-            break;
-         case "function":
-            var match = obj.toString().match(/^(.*)\(([^\)]*)\)/im);
-            match[1] = trim(match[1].replace(new RegExp("[\\s]+", "g"), " "));
-            match[2] = trim(match[2].replace(new RegExp("[\\s]+", "g"), " "));
-            return match[1] + "(" + match[2] + ")";
-         case "window":
-         default:
-            dump += 'N/A: ' + t;
-            break;
-      }
+		var type = function(obj) {
+			var type = typeof(obj);
 
-      return dump;
-   }
+			if(type != "object") {
+				return type;
+			}
 
-   var type = function(obj) {
-      var type = typeof(obj);
+			switch(obj) {
+				case null:
+					return 'null';
+				case window:
+					return 'window';
+				case document:
+					return 'document';
+				case window.event:
+					return 'event';
+			}
 
-      if(type != "object") {
-         return type;
-      }
+			if(obj.jquery) {
+				return 'jquery';
+			}
 
-      switch(obj) {
-         case null:
-            return 'null';
-         case window:
-            return 'window';
-         case document:
-            return 'document';
-         case window.event:
-            return 'event';
-         default:
-            break;
-      }
+			switch(obj.constructor) {
+				case Array:
+					return 'array';
+				case Boolean:
+					return 'boolean';
+				case Date:
+					return 'date';
+				case Object:
+					return 'object';
+				case RegExp:
+					return 'regexp';
+				case ReferenceError:
+				case Error:
+					return 'error';
+			}
 
-      if(obj.jquery) {
-         return 'jquery';
-      }
+			switch(obj.nodeType) {
+				case 1:
+					return 'domelement';
+				case 3:
+					return 'string';
+			}
 
-      switch(obj.constructor) {
-         case Array:
-            return 'array';
-         case Boolean:
-            return 'boolean';
-         case Date:
-            return 'date';
-         case Object:
-            return 'object';
-         case RegExp:
-            return 'regexp';
-         case ReferenceError:
-         case Error:
-            return 'error';
-         case null:
-         default:
-            break;
-      }
+			return 'Unknown';
+		}
 
-      switch(obj.nodeType) {
-         case 1:
-            return 'domelement';
-         case 3:
-            return 'string';
-         case null:
-         default:
-            break;
-      }
+		return recursion(object);
+	}
 
-      return 'Unknown';
-   }
+	function trim(str) {
+		return ltrim(rtrim(str));
+	}
 
-   return recursion(object);
-}
+	function ltrim(str) {
+		return str.replace(new RegExp("^[\\s]+", "g"), "");
+	}
 
-function trim(str) {
-   return ltrim(rtrim(str));
-}
-
-function ltrim(str) {
-   return str.replace(new RegExp("^[\\s]+", "g"), "");
-}
-
-function rtrim(str) {
-   return str.replace(new RegExp("[\\s]+$", "g"), "");
-}
-
+	function rtrim(str) {
+		return str.replace(new RegExp("[\\s]+$", "g"), "");
+	}
 })(jQuery);
