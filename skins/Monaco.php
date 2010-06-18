@@ -12,6 +12,8 @@ if(!defined('MEDIAWIKI')) {
 	die(-1);
 }
 
+define('STAR_RATINGS_WIDTH_MULTIPLIER', 20);
+
 ############################## MonacoSidebar ##############################
 global $wgHooks;
 $wgHooks['MessageCacheReplace'][] = 'MonacoSidebar::invalidateCache';
@@ -2620,11 +2622,10 @@ EOF;
 			}
 
 			$hidden_star = $voted ? ' style="display: none;"' : '';
-			$rating = round($rating * 2)/2;
-			$ratingPx = round($rating * 17);
+			$ratingPx = round($rating * STAR_RATINGS_WIDTH_MULTIPLIER);
 		  ?>
 		  <div id="star-rating-wrapper">
-		    <ul id="star-rating" class="star-rating">
+		    <ul id="star-rating" class="star-rating" rel="<?=STAR_RATINGS_WIDTH_MULTIPLIER;?>">
 			<li style="width: <?= $ratingPx ?>px;" id="current-rating" class="current-rating"><span><?= $rating ?>/5</span></li>
 			<li><a rel="nofollow" class="one-star" id="star1" title="1/5"<?=$hidden_star?>><span>1</span></a></li>
 			<li><a rel="nofollow" class="two-stars" id="star2" title="2/5"<?=$hidden_star?>><span>2</span></a></li>

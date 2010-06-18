@@ -16,6 +16,8 @@ global $IP;
 require_once("$IP/includes/SkinTemplate.php");
 require_once("$IP/extensions/wikia/AnalyticsEngine/AnalyticsEngine.php");
 
+define('STAR_RATINGS_WIDTH_MULTIPLIER', 17);
+
 class SkinQuartz extends SkinTemplate {
 
 	var $themename;
@@ -697,12 +699,10 @@ if($displayArticleFooter) {
 				}
 
 				$hidden_star = $voted ? ' style="display: none;"' : '';
-
-				$rating = round($rating * 2)/2;
-				$ratingPx = round($rating * 17);
+				$ratingPx = round($rating * STAR_RATINGS_WIDTH_MULTIPLIER);
 			?>
 			<div id="star-rating-wrapper">
-				<ul id="star-rating" class="star-rating">
+				<ul id="star-rating" class="star-rating" rel="<?=STAR_RATINGS_WIDTH_MULTIPLIER;?>">
 					<li style="width: <?= $ratingPx ?>px;" id="current-rating" class="current-rating"><?= $rating ?>/5</li>
 					<li><a class="one-star" id="star1" title="1/5"<?=$hidden_star?>>1</a></li>
 					<li><a class="two-stars" id="star2" title="2/5"<?=$hidden_star?>>2</a></li>

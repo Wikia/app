@@ -275,7 +275,7 @@ function setupVoting() {
 		$('#star-rating').removeClass('star-rating-progress');
 
 		// show current rating
-		$('#current-rating').css('width', Math.round(data.item.wkvoteart[0].avgvote * 20) + 'px');
+		$('#current-rating').css('width', Math.round(data.item.wkvoteart[0].avgvote * $('#star-rating').attr('rel')) + 'px');
 		$('#star-rating a').css('display', data.item.wkvoteart[0].remove ? '' : 'none');
 		$('#unrateLink').css('display', data.item.wkvoteart[0].remove ? 'none' : '');
 

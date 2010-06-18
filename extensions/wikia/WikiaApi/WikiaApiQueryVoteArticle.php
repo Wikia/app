@@ -70,7 +70,7 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 			# get votes for selected article
 			try {
 				$this->addTables( array("page_vote") );
-				$add_fields = array('AVG(vote) as votesavg, max(time) as max_time');
+				$add_fields = array('max(time) as max_time');
 				$this->addFields( $add_fields );
 				if ( !$this->isInt($page) ) {
 					throw new WikiaApiQueryError(1);
@@ -111,7 +111,7 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 							$data[$page] = array(
 								"id"			=> $page,
 								"title"			=> $oTitle->getText(),
-								"votesavg"		=> $row->votesavg,
+								"votesavg"		=> $this->getAvgPageVoteFromDB($db, $page),
 							);
 							if (isset($row->uservote)) {
 								$data[$page]["uservote"] = $row->uservote;
@@ -125,6 +125,7 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 					// ... cached
 					$data = $cached;
 				}
+				
 			} catch (WikiaApiQueryError $e) {
 				// getText();
 			} catch (DBQueryError $e) {
@@ -140,7 +141,7 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 				$wgTopVoted = ( !empty($topvoted) ) ? true : false;
 
 				$this->addTables( array("`page_vote` p1", "page") );
-				$add_fields = array('page_id', 'page_title', 'AVG(vote) as votesavg, max(time) as max_time');
+				$add_fields = array('page_id', 'page_title', 'max(time) as max_time');
 				$this->addFields( $add_fields );
 				$this->addWhere ( "page_id = article_id" );
 
@@ -223,7 +224,7 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 						$data[$row->page_id] = array(
 							"id"			=> $row->page_id,
 							"title"			=> $row->page_title,
-							"votesavg"		=> $row->votesavg,
+							"votesavg"		=> $this->getAvgPageVoteFromDB($db, $page),
 						);
 						if ( isset($select_user_vote) && !empty($select_user_vote) ) {
 							$data[$row->page_id]["uservote"] = 0;
@@ -677,22 +678,22 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 	#---
 	private function getAvgPageVoteFromDB($db, $page) {
 		global $wgDBname;
-        #--- database instance - DB_SLAVE
-        $this->initQueryParams();
+		$clonedInstance = clone $this;
+		$clonedInstance->resetQueryParams();
+		$clonedInstance->initQueryParams();
 
-		#---
-        if (!$db) {
+		if (!$db) {
 			$db =& $this->getDB();
-	        $db->selectDB( (!defined(WIKIA_API_QUERY_DBNAME))?WIKIA_API_QUERY_DBNAME:$wgDBname );
-        }
+			$db->selectDB( (!defined(WIKIA_API_QUERY_DBNAME))?WIKIA_API_QUERY_DBNAME:$wgDBname );
+		}
 
-		$this->addTables( "page_vote" );
-		$this->addFields( array("AVG(vote) as votesavg") );
-		$this->addWhere( "article_id > 0");
+		$clonedInstance->addTables( "page_vote" );
+		$clonedInstance->addFields( array("AVG(vote) as votesavg") );
+		$clonedInstance->addWhere( "article_id > 0");
 
-		$this->addWhere( "article_id = $page" );
+		$clonedInstance->addWhere( "article_id = $page" );
 
-		$res = $this->select(__METHOD__);
+		$res = $clonedInstance->select(__METHOD__);
 
 		$row = $db->fetchObject($res);
 		if (empty($row))
@@ -700,7 +701,7 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 			return 0;
 		}
 		$db->freeResult($res);
-		return (empty($row->votesavg))?0:$row->votesavg;
+		return (empty($row->votesavg)) ? 0 : $row->votesavg;
 	}
 
 	/*

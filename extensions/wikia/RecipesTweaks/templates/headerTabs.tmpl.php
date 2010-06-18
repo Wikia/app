@@ -17,7 +17,7 @@
 				<li id="rate_recipe_tab" class="recipe_tab">
 					<span class="recipe_tab_wrapper">
 						<strong><?= wfMsg('recipes-rating') ?></strong>
-						<ul id="star-rating" class="star-rating<?= ($rating['voted'] ? ' star-rating-voted' : '') ?>">
+						<ul id="star-rating" class="star-rating<?= ($rating['voted'] ? ' star-rating-voted' : '') ?>" rel="<?=STAR_RATINGS_WIDTH_MULTIPLIER;?>">
 							<li style="width: <?= $rating['pixels'] ?>px;" id="current-rating" class="current-rating"><span><?= $rating['stars'] ?>/5</span></li>
 							<li><a rel="nofollow" class="star one-star" id="star1" title="1/5"><span>1</span></a></li>
 							<li><a rel="nofollow" class="star two-stars" id="star2" title="2/5"><span>2</span></a></li>
