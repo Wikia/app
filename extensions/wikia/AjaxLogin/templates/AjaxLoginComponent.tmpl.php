@@ -15,7 +15,7 @@
 </div>
 
 <div id="AjaxLoginSlider" class="clearfix">
-	<div> 
+	<div class="ajax-login-slider-panel"> 
         	<form action="<? echo $loginaction ?>" method="post" name="userajaxloginform" id="userajaxloginform">
 	            <label for="wpName2Ajax" style="display: block; font-weight: bold;"><?php print wfMsg("yourname") ?></label> 
 	            <table>
@@ -56,14 +56,14 @@
 		$style = " style='display:none'";
 	}
 	?>
-	<div id="AjaxLoginConnectMarketing"<?php print $style; ?>>
+	<div class="ajax-login-slider-panel" id="AjaxLoginConnectMarketing"<?php print $style; ?>>
 		<div class="neutral clearfix">
 			<? echo wfMsg("comboajaxlogin-connectmarketing") ?>
 			<a href="#" class="back"><? echo wfMsg("comboajaxlogin-connectmarketing-back") ?></a>
 			<a href="#" class="forward"><? echo wfMsg("comboajaxlogin-connectmarketing-forward") ?></a>
 		</div>
 	</div>
-	<div id='fbLoginAndConnect' style='display:none'>
+	<div class="ajax-login-slider-panel" id='fbLoginAndConnect' style='display:none'>
 		<? echo wfMsgExt( 'comboajaxlogin-connectdirections', 'parse' ) ?>
 		<form action="" method="post" name="userajaxconnectform" id="userajaxconnectform">
 			<label for="wpName3Ajax" style="display: block; font-weight: bold;"><?php print wfMsg("yourname") ?></label> 

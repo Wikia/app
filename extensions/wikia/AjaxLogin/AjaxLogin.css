@@ -11,7 +11,7 @@
 	position: relative;
 	top: -7px;
 }
-#AjaxLoginBox > h1 {
+#AjaxLoginBox h1 {
 	font-size: 11pt;
 	font-weight: bold;
 	padding: 10px 0;
@@ -37,8 +37,7 @@
 	margin: 10px 0;
 	width: 1500px;
 }
-#AjaxLoginSlider > div {
-	border-right: 1px solid #AAA;
+#AjaxLoginSlider .ajax-login-slider-panel {
 	float: left;
 	min-height: 150px;
 	padding: 10px;
@@ -47,7 +46,11 @@
 #AjaxLoginSlider p {
 	margin-bottom: .5em;
 }
-#AjaxLoginConnectMarketing > div {
+#AjaxLoginConnectMarketing {
+	border-left: 1px solid #AAA;
+	border-right: 1px solid #AAA;
+}
+#AjaxLoginConnectMarketing div {
 	border-style: solid;
 	border-width: 1px;
 	padding: 10px;
@@ -55,6 +58,7 @@
 #AjaxLoginConnectMarketing h1 {
 	font-size: 12pt;
 	font-weight: bold;
+	text-align: left;
 }
 #AjaxLoginConnectMarketing ul {
 	margin: 10px 15px;
