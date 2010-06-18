@@ -28,10 +28,19 @@ class SkinChooser {
 	 * Get given option from user preferences
 	 */
 	private static function getUserOption($option) {
-		global $wgUser;
+		global $wgUser, $wgEnableAnswers;
 		wfProfileIn(__METHOD__);
 
 		$val = $wgUser->getOption(self::getUserOptionKey($option));
+
+		// fallback to non-answers option (RT #54087)
+		if (!empty($wgEnableAnswers) &&  $val == '') {
+			wfDebug(__METHOD__ . ": '{$option}' fallbacked\n");
+
+			$val = $wgUser->getOption($option);
+		}
+
+		wfDebug(__METHOD__ . ": '{$option}' = {$val}\n");
 
 		wfProfileOut(__METHOD__);
 		return $val;
