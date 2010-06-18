@@ -171,15 +171,15 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		$this->profileDBIn();
 		$oRow = $db->selectRow( 
 			'revision', 
-			'count(rev_id) as cnt', 
+			'rev_id', 
 			array( 
-				'rev_id'		=> $this->mRevId,
-				'rev_page'		=> $this->mPageId,
+				"rev_id < '{$this->mRevId}'",
+				'rev_page' => $this->mPageId,
 			),
 			__METHOD__
 		);
 		$this->profileDBOut();
-		$this->mIsNew = ( isset( $oRow->cnt ) && ( $oRow->cnt == 1) ) ? true : false; 
+		$this->mIsNew = ( isset( $oRow->rev_id ) ) ? false : true; 
 		
 		wfProfileOut( __METHOD__ );
 		return intval($this->mIsNew);
