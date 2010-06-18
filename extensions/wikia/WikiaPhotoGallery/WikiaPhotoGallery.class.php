@@ -490,6 +490,11 @@ class WikiaPhotoGallery extends ImageGallery {
 	private function renderSlideshow() {
 		global $wgLang, $wgBlankImgUrl, $wgStylePath;
 
+		// don't render empty slideshows
+		if (empty($this->mImages)) {
+			return '';
+		}
+
 		wfProfileIn(__METHOD__);
 		$sk = $this->getSkin();
 
