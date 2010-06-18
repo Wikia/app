@@ -65,8 +65,9 @@ $.dump = function(object) {
             $.each(obj.childNodes, function(k,v) {
                if(k < 1) var r = 0;
                if(type(v) == "string") {
-                  if(v.textContent.match(/[^\s]/)) {
-                     dump += p + '\t\t' + (k - (r||0)) + ' = String: ' + trim(v.textContent) + '\n';
+				  var txt = v.nodeValue;
+                  if(txt.match(/[^\s]/)) {
+                     dump += p + '\t\t' + (k - (r||0)) + ' = String: ' + trim(txt) + '\n';
                   } else {
                      r--;
                   }
