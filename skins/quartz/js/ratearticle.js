@@ -9,7 +9,7 @@ YAHOO.util.Event.onDOMReady(function() {
 var rateArticle_callback = {
     success: function(o) {
 		o = eval("("+o.responseText+")");
-		YAHOO.util.Dom.setStyle('current-rating', 'width', Math.round(o.item.wkvoteart[0].avgvote * 17)+'px');
+		YAHOO.util.Dom.setStyle('current-rating', 'width', Math.round(o.item.wkvoteart[0].avgvote * $('#star-rating').attr('rel'))+'px');
 		YAHOO.util.Dom.setStyle(['star1','star2','star3','star4','star5'], 'display', o.item.wkvoteart[0].remove ? '' : 'none');
 		YAHOO.util.Dom.setStyle('unrateLink', 'display', o.item.wkvoteart[0].remove ? 'none' : '');
 		YAHOO.util.Dom.removeClass('star-rating', 'star-rating-progress');

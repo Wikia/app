@@ -355,8 +355,7 @@ class RecipesTweaks {
 			$rating = 0;
 		}
 
-		$rating = round($rating * 2)/2;
-		$ratingPx = round($rating * 17);
+		$ratingPx = round($rating * STAR_RATINGS_WIDTH_MULTIPLIER);
 
 		wfProfileOut(__METHOD__);
 

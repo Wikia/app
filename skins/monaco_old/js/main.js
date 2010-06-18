@@ -158,7 +158,7 @@ Event.onDOMReady(function() {
 	var callback = {
 		success: function(o) {
 			o = YAHOO.Tools.JSONParse(o.responseText);
-			Dom.setStyle('current-rating', 'width', Math.round(o.item.wkvoteart[0].avgvote * 17)+'px');
+			Dom.setStyle('current-rating', 'width', Math.round(o.item.wkvoteart[0].avgvote * $('#star-rating').attr('rel'))+'px');
 			Dom.setStyle(['star1','star2','star3','star4','star5'], 'display', o.item.wkvoteart[0].remove ? '' : 'none');
 			Dom.setStyle('unrateLink', 'display', o.item.wkvoteart[0].remove ? 'none' : '');
 			YAHOO.util.Dom.removeClass('star-rating', 'star-rating-progress');
