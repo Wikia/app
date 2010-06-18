@@ -178,6 +178,10 @@
 			<input id="WikiaPhotoGallerySlideshowCrop" type="checkbox" />
 			<label for="WikiaPhotoGallerySlideshowCrop"><?= wfMsg('wikiaPhotoGallery-slideshowpreview-crop') ?></label>
 		</p>
+		<p>
+			<input id="WikiaPhotoGallerySlideshowRecentUploads" type="checkbox" />
+			<label for="WikiaPhotoGallerySlideshowRecentUploads"><?= wfMsg('wikiaPhotoGallery-slideshowpreview-recentuploads') ?></label>
+		</p>
 
 		<h1><?= wfMsg('wikiaPhotoGallery-slideshowpreview-photostitle') ?></h1>
 
