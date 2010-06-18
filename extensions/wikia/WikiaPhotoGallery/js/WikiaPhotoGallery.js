@@ -330,6 +330,10 @@ var WikiaPhotoGallery = {
 					if (gallery.params.crop && gallery.params.crop == 'true') {
 						this.track('/dialog/slideshow/preview/crop');
 					}
+
+					if (gallery.params.showrecentuploads && gallery.params.showrecentuploads == 'true') {
+						this.track('/dialog/slideshow/preview/recentUploads');
+					}
 				}
 
 				// update / save gallery
