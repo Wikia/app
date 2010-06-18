@@ -302,10 +302,10 @@ class PhalanxHelper {
 					$phalanxUrl = Title::newFromText( 'Phalanx', NS_SPECIAL )->getFullUrl( array( 'id' => $match['id'] ) );
 					$statsUrl = Title::newFromText( 'PhalanxStats', NS_SPECIAL )->getFullUrl() . '/' . $match['id'];
 
-					$line = htmlspecialchars( $match['text'] ) .
-						Xml::element( 'a', array( 'href' => $statsUrl ), '[stats]' ) .
-						Xml::element( 'a', array( 'href' => $phalanxUrl, 'class' => 'unblock' ), '[unblock]' ) .
-						Xml::element( 'a', array( 'href' => $phalanxUrl, 'class' => 'modify' ), '[modify]' );
+					$line = htmlspecialchars( $match['text'] ) . ' &bull; ' .
+						Xml::element( 'a', array( 'href' => $phalanxUrl, 'class' => 'unblock' ), 'unblock' ) . ' &bull; ' .
+						Xml::element( 'a', array( 'href' => $phalanxUrl, 'class' => 'modify' ), 'modify' ) . ' &bull; ' .
+						Xml::element( 'a', array( 'href' => $statsUrl ), 'stats' );
 					$output .= Xml::tags( 'li', null, $line );
 				}
 
