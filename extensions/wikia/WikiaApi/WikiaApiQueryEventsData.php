@@ -25,22 +25,6 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		parent :: __construct($query, $moduleName, "");
 	}
 
-	protected function getTokenFunctions() {
-		wfProfileIn( __METHOD__ );
-		
-		if ( !isset($this->tokenFunctions) ) {
-			/*// If we're in JSON callback mode, no tokens can be obtained
-			if ( !is_null( $this->getMain()->getRequest()->getVal('callback') ) ) {
-				return array();
-			}*/
-			$this->tokenFunctions = array();
-			wfRunHooks('WikiaApiQueryEventsDataTokens', array( &$this->tokenFunctions ) );
-		}
-		
-		wfProfileOut( __METHOD__ );
-		return $this->tokenFunctions;
-	}
-
 	private function getRevisionCount() {
 		wfProfileIn( __METHOD__ );
 		$this->mRevId = 0;
@@ -149,10 +133,7 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		}
 		$db->freeResult($res);
 		
-		error_log("oRC = " . print_r($oRC, true), 3, "/tmp/moli.log");
-
 		$res = ( is_object($oRC) ) ? $this->getArchivePage($oRC) : false;
-		error_log("res = " . print_r($res, true), 3, "/tmp/moli.log");
 		
 		wfProfileOut( __METHOD__ );
 		return $res;
@@ -190,7 +171,7 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		$this->profileDBIn();
 		$oRow = $db->selectRow( 
 			'revision', 
-			'rev_id', 
+			'count(rev_id) as cnt', 
 			array( 
 				'rev_id'		=> $this->mRevId,
 				'rev_page'		=> $this->mPageId,
@@ -198,7 +179,7 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 			__METHOD__
 		);
 		$this->profileDBOut();
-		$this->mIsNew = ( isset( $oRow->rev_id ) ) ? false : true; 
+		$this->mIsNew = ( isset( $oRow->cnt ) && ( $oRow->cnt == 1) ) ? true : false; 
 		
 		wfProfileOut( __METHOD__ );
 		return intval($this->mIsNew);
@@ -211,7 +192,6 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		# extract request params
 		$this->mCityId = $wgCityId;
 		$this->params = $this->extractRequestParams(false);
-		error_log ( "params1 = " .print_r($this->params, true) . " \n", 3, "/tmp/moli.log");
 
 		# check "pageid" param
 		$pageCount = $this->getPageCount();
@@ -221,11 +201,6 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 
 		# check "logid" param
 		$logCount = $this->getLoggingCount();
-
-		error_log ("params = " . print_r($this->params, true) . " \n", 3, "/tmp/moli.log");
-		error_log ("revCount = $revCount \n", 3, "/tmp/moli.log");
-		error_log ("pageCount = $pageCount \n", 3, "/tmp/moli.log");
-		error_log ("logCount = $logCount \n", 3, "/tmp/moli.log");
 
 		if ( $revCount === 0 && $pageCount === 0 && $logCount == 0 ) {
 			wfProfileOut( __METHOD__ );
