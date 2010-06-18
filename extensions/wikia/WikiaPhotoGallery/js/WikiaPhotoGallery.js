@@ -2058,6 +2058,11 @@ var WikiaPhotoGallery = {
 		for (img in data.images) {
 			var imageData = data.images[img];
 
+			// skip images "generated" by showrecentuploads
+			if (imageData.recentlyUploaded) {
+				continue;
+			}
+
 			HTML += imageData.name;
 			if (imageData.caption != '') {
 				HTML += '|' + imageData.caption;
