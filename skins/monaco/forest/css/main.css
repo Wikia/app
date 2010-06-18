@@ -180,6 +180,10 @@ body.masthead-special #page_bar {
 	background: #555;
 	border-color: #AAA;
 }
+body.masthead-regular #page_controls a, 
+body.masthead-special #page_controls a {
+	color: #FFF;
+}
 
 /* @end */
 

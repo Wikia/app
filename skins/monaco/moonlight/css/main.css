@@ -160,6 +160,10 @@ body.masthead-special #page_bar {
 	background: #6180AE;
 	border-color: #1D283E;
 }
+body.masthead-regular #page_controls a, 
+body.masthead-special #page_controls a {
+	color: #FFF;
+}
 
 /* @end */
 
