@@ -18,6 +18,11 @@
 			var dump = '', p = '';
 			for(i = 0; i < level; i++) p += "\t";
 
+			// limit recursion
+			if (level > 5) {
+				return "[Too deep]";
+			}
+
 			t = type(obj);
 			switch(t) {
 				case "string":
