@@ -60,7 +60,7 @@ $messages['en'] = array(
 	'swm-msg-sent-ok'			=> '<h3>The message has been sent.</h3>',
 	'swm-msg-sent-err'			=> '<h3>The message has NOT been sent.</h3>See error log for more informations.',
 	'swm-msg-remove'			=> 'Are you sure you want to remove this message? This can not be undone!',
-	'swm-days'					=> 'never,hour,hours,day,days',	//[0] => never expire, [1] => 1 hour, [2] => 2 hours and more, [3] => 1 day, [4] => 2 days and more
+	'swm-days'					=> 'never,hour,hours,day,days',	//[0] => never expire, [1] => 1 hour, [2] => 2 hours and more, [3] => 1 day, [4] => 2 days and more. FIXME: bad i18n
 	'swm-expire-options'		=> '0,1h,6h,12h,1,3,7,14,30,60',	//0 = never
 	'swm-expire-info'			=> 'This message will expire on $1.',
 	'swm-link-dismiss'			=> 'dismiss this message',
