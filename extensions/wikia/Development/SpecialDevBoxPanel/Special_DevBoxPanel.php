@@ -131,9 +131,9 @@ function wfDevBoxForceWiki(&$wikiFactoryLoader){
 			$db2 = wfGetDB( DB_MASTER, "dump", $wgWikiFactoryDB . '_c2'); // lame
 
 			$devbox_dbs = array_merge(getDevBoxOverrideDatabases($db1), getDevBoxOverrideDatabases($db2));
-			if (! array_search($dbname, $devbox_dbs)) {
-				echo wfMsg('database-no-local-copy', $dbname);
-				exit();  // fatal error
+			if (array_search($dbname, $devbox_dbs) === false) {
+				echo "<pre>Fatal Error: No local copy of database [$dbname] was found.</pre>";
+				exit(); // fatal error
 			}
 		}
 
