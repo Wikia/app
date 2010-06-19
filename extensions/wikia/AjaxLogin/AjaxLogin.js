@@ -298,9 +298,9 @@ var AjaxLogin = {
 			default:
 				// Bartek: tracking
 				if( AjaxLogin.action == 'password'  ) {
+					AjaxLogin.removeMailMyPassword();
 					if( responseResult == 'OK' ) {
 						WET.byStr(AjaxLogin.WET_str + '/emailpassword/success');
-						AjaxLogin.removeMailMyPassword();
 					} else {
 						WET.byStr(AjaxLogin.WET_str + '/emailpassword/failure');
 					}
