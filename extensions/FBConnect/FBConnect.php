@@ -42,6 +42,9 @@ if ( !defined( 'MEDIAWIKI' )) {
 	die( 'This file is a MediaWiki extension, it is not a valid entry point' );
 }
 
+// Make it so that the code will survive the push until the config gets updated.
+$wgEnablePreferencesExt = true;
+
 /*
  * FBConnect version. Note: this is not necessarily the most recent SVN revision number.
  */
@@ -209,10 +212,8 @@ class FBConnect {
 	
 	public static function getFBButton($onload = "", $id = "") {
 		global $fbExtendedPermissions;
-		return Xml::openElement("fb:login-button",
-			array("onlogin" => $onload,
-				  "id" => $id,
-				  "perms" => implode(",", $fbExtendedPermissions)), true);
+		return '<fb:login-button onlogin="'.$onload.'" perms="'.implode(",", $fbExtendedPermissions).'" id="'.$id.'"> 
+                </fb:login-button>';
 	}  
 	
 	/*
