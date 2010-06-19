@@ -214,7 +214,7 @@ var AjaxLogin = {
 		if(location.indexOf("?") > 0){
 			delim = "&";
 		}
-		window.location.href = location + delim + "cb=" + Math.floor(Math.random()*10000);
+		window.location.href = location.split("#")[0] + delim + "cb=" + Math.floor(Math.random()*10000);
 	},
 	clickLogIn: function( ev ) {
 		// Prevent the default action for event (click)
@@ -257,23 +257,21 @@ var AjaxLogin = {
 			switch(responseResult) {
 			case 'Reset':
 				// password reset
-
 				// we're on edit page
 				if($('#wpPreview').exists() && $('#wpLogin').exists()) {
 					if(typeof(ajaxLogin1)!="undefined" && !confirm(ajaxLogin1)) {
 						break;
 					}
 				}
-
 				// change the action of the AjaxLogin form
-				$('#'+ formId).attr('action', wgServer + wgScriptPath + '/index.php?title=Special:Userlogin&action=submitlogin&type=login');
+				AjaxLogin.form.attr('action', wgServer + wgScriptPath + '/index.php?title=Special:Userlogin&action=submitlogin&type=login');
 
 				// remove AJAX functionality from login form
-				AjaxLogin.form.unbind('submit', this.formSubmitHandler);
+				AjaxLogin.form.unbind('submit');
 
 				// unblock and submit the form
 				AjaxLogin.blockLoginForm(false);
-				$('#' + formId).submit();
+				AjaxLogin.form.submit();
 				break;
 
 			case 'Success':
@@ -454,7 +452,7 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 						if(location.indexOf("?") > 0){
 							delim = "&";
 						}
-						window.location.href = location + delim + "cb=" + Math.floor(Math.random()*10000);
+						window.location.href = location.split("#")[0] + delim + "cb=" + Math.floor(Math.random()*10000);
 						return;
 					}
 
@@ -490,7 +488,7 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 	//override submitForm for submitForm
 	if (typeof UserRegistration != 'undefined')
 	{
-		UserRegistration.submitForm2 = function() {
+		UserRegistration.submitForm2 = function(type) {
 			if( typeof UserRegistration.submitForm.statusAjax == 'undefined' ) { // java script static var
 				UserRegistration.submitForm.statusAjax = false;
 		    }
@@ -500,13 +498,24 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 				return false;
 			}
 			UserRegistration.submitForm.statusAjax = true;
-			if (UserRegistration.checkForm()) {
+			
+			var check = false;
+			var addparam = "";
+			if (type == "mail") {
+				check = UserRegistration.checkFormForMail();
+				addparam = "&wpCreateaccountMail=1";
+			} else {
+				check = UserRegistration.checkForm();
+				addparam = "&wpCreateaccount=1";
+			}
+			
+			if (check) {
 				$("#userloginErrorBox").hide();
 				$.ajax({
 					type: "POST",
 					dataType: "json",
 					url: window.wgScriptPath  + "/index.php",
-					data: $("#userajaxregisterform").serialize() + "&action=ajax&rs=createUserLogin&ajax=1",
+					data: $("#userajaxregisterform").serialize() + "&action=ajax&rs=createUserLogin&ajax=1"+addparam,
 					beforeSend: function(){
 						$("#userRegisterAjax").find("input,select").attr("disabled",true);
 					},

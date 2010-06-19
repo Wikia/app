@@ -562,6 +562,18 @@ class UsercreateTemplate extends QuickTemplate {
 			return !(UserRegistration.errorNick || UserRegistration.errorEmail || UserRegistration.errorPass || UserRegistration.errorRetype || UserRegistration.errorDate);
 		}
 
+		UserRegistration.checkFormForMail = function() {
+			UserRegistration.errorPass = false;
+			UserRegistration.toggleError('wpPasswordTD', 'clear');
+			UserRegistration.dateAccessed = 2;	//check date on submit
+			UserRegistration.checkUsername();
+			UserRegistration.checkDate();
+			UserRegistration.checkEmail();
+			UserRegistration.checkRetype();
+			UserRegistration.fillErrors();
+			return !(UserRegistration.errorNick || UserRegistration.errorEmail || UserRegistration.errorRetype || UserRegistration.errorDate);
+		}
+		
 		UserRegistration.update_day_field = function() {
 			var year = $('#wpBirthYear').attr('value');
 			var month = $('#wpBirthMonth').attr('value');

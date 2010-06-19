@@ -14,11 +14,11 @@ class Signup extends SpecialPage {
 		}
 		$form = new AjaxLoginForm( $wgRequest );
 		
-		if($wgRequest->wasPosted()) {
+/*		if($wgRequest->wasPosted()) {
 			if($form->processLogin()) {
 
 			}			
-		}
+		} */
 		
 		$form->executeAsPage(false,"");
 	}
