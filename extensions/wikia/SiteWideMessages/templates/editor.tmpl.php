@@ -140,6 +140,8 @@
 						if ($expireOption === '0') {
 							$expireText = $days[0];
 						} else {
+							// FIXME: Bad i18n. Only works if 1 is singular and all others are exactly one and the same plural.
+							//        Have a look at phase3/languages/classes on how things really work.
 							$expireText = "$expireOption " . ($days[min($expireOption, 2)+2]);
 						}
 					} elseif (preg_match('/^\d+h$/', $expireOption)) {
