@@ -35,7 +35,6 @@ class UserAjaxCreateTemplate extends QuickTemplate {
 		}
 		
 		// This didn't work right off the bat in the new signup forms, so the decision was made to just cut the functionality for now.
-		$this->data['createemail'] = false;
 		
 if(( $this->data['messagetype'] == 'error' ) && (strlen($this->data['message'] ) > 0)): ?>
 	<div id="userloginErrorBox3" style="display: block;">
@@ -57,11 +56,12 @@ if(( $this->data['messagetype'] == 'error' ) && (strlen($this->data['message'] )
 	</td>
 	</table>
 </div>
+<form id="userajaxregisterform" method="post" action="<?php $this->text('actioncreate') ?>" onsubmit="return UserRegistration.checkForm()">
 <table id="userloginSpecial" width="100%">
 <tr>
 <td width="55%" style="border:none; vertical-align: top;">
+
 <div id="userRegisterAjax">
-<form id="userajaxregisterform" method="post" action="<?php $this->text('actioncreate') ?>" onsubmit="return UserRegistration.checkForm()">
 <?php if( @$this->haveData( 'createToken' ) ) { ?><input type="hidden" name="wpCreateaccountToken" value="<?php $this->text( 'createToken' ); ?>" /><?php } ?> 
 <?php		if( $this->data['message'] && $this->data['ajax'] ) { ?>
 	<div class="<?php $this->text('messagetype') ?>box" style="margin:0px">
@@ -244,17 +244,9 @@ if(( $this->data['messagetype'] == 'error' ) && (strlen($this->data['message'] )
 			}
 		}
 ?>	
-		
+
 	</table>
-
-	<input type="submit" value="Register" style="position: absolute; left: -10000px; width: 0" />
-<?php if( @$this->haveData( 'uselang' ) ) { ?><input type="hidden" name="uselang" value="<?php $this->text( 'uselang' ); ?>" /><?php } ?>
-
-<?php if(!$this->data['createemail']) { ?>
-	<input type="hidden" id="wpCreateaccount" name="wpCreateaccount" value="true" />
-<?php } ?>
-
-
+	<?php if( @$this->haveData( 'uselang' ) ) { ?><input type="hidden" name="uselang" value="<?php $this->text( 'uselang' ); ?>" /><?php } ?>
 </div>
 </td>
 </tr>
@@ -264,9 +256,9 @@ if(( $this->data['messagetype'] == 'error' ) && (strlen($this->data['message'] )
 
 <div class="modalToolbar neutral">
 
-	<input type="submit" id="wpCreateaccountXSteer" name="wpCreateaccountButton" onclick="UserRegistration.submitForm2(); return false;" value="<?php print wfMsg("createaccount") ?>" />	
+	<input name="wpCreateaccount" type="submit" id="wpCreateaccountXSteer" onclick="UserRegistration.submitForm2( 'normal' ); return false;" value="<?php print wfMsg("createaccount") ?>" />	
 <?php if($this->data['createemail']) { ?>
-	<input type="submit" id="wpCreateaccountX" href="#" onclick="$('#wpCreateaccountXSteer').value = false; $('#wpCreateaccountYSteer').value = true; UserRegistration.submitForm2(); return false;" value="<?php print wfMsg("createaccountmail") ?>" />
+	<input name="wpCreateaccountMail" type="submit" id="wpCreateaccountX" href="#" onclick="$('#wpCreateaccountXSteer').value = false; $('#wpCreateaccountYSteer').value = true; UserRegistration.submitForm2( 'mail' ); return false;" value="<?php print wfMsg("createaccountmail") ?>" />
 <?php } ?>
 	<input type="submit" name="wpCreateaccountClose" id="wpCreateaccountClose" class="secondary" onclick="AjaxLogin.close(); return false;" value="<?php print wfMsg("Cancel") ?>" />
 </div>

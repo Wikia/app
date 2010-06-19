@@ -133,7 +133,8 @@ function createUserLogin(){
 	
 	$response = new AjaxResponse();
 	$response->setCacheDuration( 3600 * 24 * 365);
-	if (!($wgRequest->getCheck("wpCreateaccount") && ($wgRequest->wasPosted()))) {
+	
+	if (!(($wgRequest->getCheck("wpCreateaccountMail") || $wgRequest->getCheck("wpCreateaccount") )&& ($wgRequest->wasPosted()))) {
 		$response->addText(json_encode(
 			array(
 					'status' => "ERROR",
@@ -203,7 +204,8 @@ class AjaxLoginForm extends LoginForm {
 	var $msg;
 	var $msgtype;
 	var $lastmsg = "";
-	var $processStatus = 0;
+	var $authenticateStatus = null;
+	var $successfulCreation = false;
 	function LoginForm( &$request, $par = '' ) {
 		parent::LoginForm( $request, $par);
 		
@@ -220,7 +222,6 @@ class AjaxLoginForm extends LoginForm {
 		}
 		
 		$this->mReturnTo = $request->getVal( 'returnto' );
-		echo  $this->mReturnTo; 
 	}
 
 		
@@ -256,10 +257,12 @@ class AjaxLoginForm extends LoginForm {
 				$ajaxLoginForm = new AjaxLoginForm($wgRequest,'signup');
 			}
 			$ajaxLoginForm->execute();
-			if ( $ajaxLoginForm->processStatus == parent::RESET_PASS ) {
-					$lastmsg = $ajaxLoginForm->ajaxTemplate->data['message'];  
-					$tmpl->set('message', $ajaxLoginForm->ajaxTemplate->data['message']);
-					$tmpl->set('messagetype', $ajaxLoginForm->ajaxTemplate->data['messagetype']);
+			$type = $wgRequest->getVal('type', '');
+			
+			if (!empty($ajaxLoginForm->ajaxTemplate)) {
+				$lastmsg = $ajaxLoginForm->ajaxTemplate->data['message'];  
+				$tmpl->set('message', $ajaxLoginForm->ajaxTemplate->data['message']);
+				$tmpl->set('messagetype', $ajaxLoginForm->ajaxTemplate->data['messagetype']);				
 			}
 			$tmpl->set("registerAjax", $ajaxLoginForm->ajaxRender());
 		}
@@ -280,15 +283,13 @@ class AjaxLoginForm extends LoginForm {
 		// Use the existing settings to generate the login portion of the form, which will then
 		// be fed back into the bigger template in this case (it is not always fed into ComboAjaxLogin template).
 		
-		$type = $wgRequest->getVal('type', '');
-		
 		$returnto = $wgRequest->getVal("returnto",'');
 		
 		if( !($returnto == '') ){
 			$returnto = "&returnto=".$returnto;
 		}
 		
-		$loginaction = Skin::makeSpecialUrl( 'Signup', "type=login".$returnto );
+		$loginaction = Skin::makeSpecialUrl( 'Signup', "type=login&action=submitlogin".$returnto );
 		$signupaction = Skin::makeSpecialUrl( 'Signup', "type=signup".$returnto );
 		
 		$tmpl->set("loginaction", $loginaction);
@@ -298,7 +299,7 @@ class AjaxLoginForm extends LoginForm {
 		$tmpl->set("showRegister", false );
 		$tmpl->set("showLogin", false );
 		
-		if( $static ) {		
+		if( $static ) {
 			if( strtolower( $type ) == "login" ) {
 				$tmpl->set("showLogin", true );	
 			} else {
@@ -320,9 +321,6 @@ class AjaxLoginForm extends LoginForm {
 	public function executeAsPage(){
 		global $wgOut ;
 
-		if ( $this->processStatus == parent::RESET_PASS ) {
-			return true;
-		}
 		$wgOut->setPageTitle( wfMsg( 'userlogin' ) );
 		$wgOut->setRobotPolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
@@ -330,12 +328,13 @@ class AjaxLoginForm extends LoginForm {
 		
 		// Output the HTML which combines the two forms (which are already in the template) in a way that looks right for a standalone page.
 		wfLoadExtensionMessages('ComboAjaxLogin');
-		  
+
 		$tmpl = self::getTemplateForCombinedForms( true, $this->lastmsg, $this );
-		
+		if( $this->authenticateStatus == self::RESET_PASS ) {
+			return ;
+		}  
 		$wgOut->addHTML( $tmpl->execute( 'ComboAjaxLogin' ) );
-		$wgOut->addHTML( $tmpl->execute( 'ComboPageFooter' ) );
-		
+		$wgOut->addHTML( $tmpl->execute( 'ComboPageFooter' ) );			
 	}
 
 	public static function getRegisterJS(){
@@ -349,10 +348,9 @@ class AjaxLoginForm extends LoginForm {
 
 	function ajaxRender(){
 		ob_start();
-		if(!isset($this->ajaxTemplate)){
-			$this->mainLoginForm( '' ); // fallback if nothing has rendered the form yet rt#48451
+		if(isset($this->ajaxTemplate)){
+			$this->ajaxTemplate->execute();
 		}
-		$this->ajaxTemplate->execute();
 		$out = ob_get_clean();
 		return $out;
 	}
@@ -362,10 +360,10 @@ class AjaxLoginForm extends LoginForm {
 		return  parent::processLogin();
 	}
 	
-	function resetLoginForm( $error ) {
-		$this->processStatus = parent::RESET_PASS;
-		parent::resetLoginForm( $error );
-	}
+	function authenticateUserData() {
+		$this->authenticateStatus = parent::authenticateUserData();
+		return $this->authenticateStatus; 
+	} 
 	
 	/* check date before execute because of redirect */
 	function  checkDate(){
@@ -383,6 +381,7 @@ class AjaxLoginForm extends LoginForm {
 		}
 	}
 
+	
 	function mainLoginForm( $msg, $msgtype = 'error' ) {
 		global $wgUser, $wgOut, $wgAllowRealName, $wgEnableEmail;
 		global $wgCookiePrefix, $wgLoginLanguageSelector;
@@ -393,11 +392,6 @@ class AjaxLoginForm extends LoginForm {
 		$this->saveMessage($msg);
 		$this->msg = $msg;
 		$this->msgtype = $msgtype;
-		
-		 // Seems to be the only way to get the form to remember that the password was reset.  Would be nice to refactor this to not be so cludgy.
-		if($this->msg == wfMsg( 'passwordsent', $this->mName )){
-			$this->processStatus = parent::RESET_PASS;
-		}
 
 		if ( '' == $this->mName ) {
 			if ( $wgUser->isLoggedIn() ) {
