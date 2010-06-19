@@ -24,10 +24,6 @@ var AnchorAd = {
 	},
 
 	getCreative: function() {
-		if (AnchorAd.settings.html) {
-			return AnchorAd.settings.html;
-		}
-
 		var bg = AnchorAd.settings.background;
 		var fg = AnchorAd.settings.creative;
 		var cl = AnchorAd.settings.close;
