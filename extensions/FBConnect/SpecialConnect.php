@@ -950,14 +950,15 @@ class SpecialConnect extends SpecialPage {
 	public static function getLoginButtonModal(){
 		wfProfileIn(__METHOD__);
 		$response = new AjaxResponse();
-		
+	
 		wfLoadExtensionMessages('FBConnect');		
 		$title = wfMsg('fbconnect-logged-in-now-connect-title');
-		$body = "<br/>".wfMsg('fbconnect-logged-in-now-connect');
-	  	$body .= "<br/><br/>\n";
-		$body .= FBConnect::getFBButton('sendToConnectOnLoginForSpecificForm("ConnectExisting");', "fbPrefsConnect");
+		$body = "<br/>".wfMsg('fbconnect-logged-in-now-connect'); 
+		$body .= "<br/><br/>\n"; 
+		$body .= FBConnect::getFBButton("sendToConnectOnLoginForSpecificForm('ConnectExisting');", "fbPrefsConnect"); 
 
-		$response->addText('<div id="fbNowConnectBox" title="'.$title.'"><div>'.$body.'</div></div>');
+		$response->addText('<div id="fbNowConnectBox" title="'.$title.'"><div>'.$body.'</div></div>'); 
+
 		wfProfileOut(__METHOD__);
 		return $response;
 	}
