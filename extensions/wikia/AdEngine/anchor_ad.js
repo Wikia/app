@@ -2,16 +2,23 @@ var AnchorAd = {
 	settings: {
 		background: {
 			color: "",
+			url: "",
 			height: 120,
 			left: 0,
-			url: "http://images4.wikia.nocookie.net/__cb20100606044158/techteamtest/images/e/ee/Anchor-ad-background.png",
 		},
-		close: "right",
+		close: {
+			url: "http://images1.wikia.nocookie.net/__cb21710/common/skins/monaco/images/monaco-sprite.png",
+			url_params: "-64px -106px",
+			width: 16,
+			height: 16,
+			h: 5,
+			v: 10,
+		},
 		creative: {
+			url: "",
+			width: 800,
 			height: 100,
 			margin: "10px auto",
-			url: "http://images1.wikia.nocookie.net/__cb21710/common/skins/common/blank.gif",
-			width: 800,
 		},
 		speed: 500,
 	},
@@ -23,14 +30,9 @@ var AnchorAd = {
 
 		var bg = AnchorAd.settings.background;
 		var fg = AnchorAd.settings.creative;
+		var cl = AnchorAd.settings.close;
 
-		if (AnchorAd.settings.close == "right") {
-			var close = "5px 0 0 " + (  Math.round(fg.width/2) + 5) + "px";
-		} else if (AnchorAd.settings.close == "left") {
-			var close = "5px 0 0 " + ( -Math.round(fg.width/2) - 5 - 16) + "px";
-		} else {
-			var close = AnchorAd.settings.close;
-		}
+		var close = cl.v + "px 0 0 " + (  Math.round(fg.width/2) + cl.h) + "px";
 		
 		var html = '<style type="text/css">\
 			.wikia_anchor_ad {\
@@ -51,14 +53,13 @@ var AnchorAd = {
 				width: ' + fg.width + 'px;\
 			}\
 			.sprite.close {\
-				background: url(http://images1.wikia.nocookie.net/__cb21710/common/skins/monaco/images/monaco-sprite.png) -64px -106px;\
+				background: url(' + cl.url + ') ' + cl.url_params + ';\
 				cursor: pointer;\
-				height: 16px;\
+				height: ' + cl.height + 'px;\
 				left: 50%;\
 				margin: ' + close + ';\
 				position: absolute;\
-				/* top: 5px; */\
-				width: 16px;\
+				width: ' + cl.width + 'px;\
 			}\
 		</style>\
 		<div class="wikia_anchor_ad">\
@@ -72,6 +73,11 @@ var AnchorAd = {
 	init: function() {
 		if (typeof AnchorAd_settings != "undefined") {
 			$.extend(true, AnchorAd.settings, AnchorAd_settings);
+		}
+
+		if (!AnchorAd.settings.creative.url) {
+			WET.byStr("anchor_ad/no_creative");
+			return;
 		}
 
 		$("body").append(this.getCreative());
