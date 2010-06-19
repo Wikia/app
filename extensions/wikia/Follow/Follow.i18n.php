@@ -22,7 +22,7 @@ Add pages to this list by clicking \"{{int:watch}}\" at the top of a page.",
 	'wikiafollowedpages-special-title' => 'Followed pages',
 	'wikiafollowedpages-special-delete-tooltip' => 'Remove this page',
 
-	'wikiafollowedpages-special-hidden' => 'This user has chosen to hide their followed pages list from public view.',
+	'wikiafollowedpages-special-hidden' => 'This user has chosen to hide {{GENDER:$1|his|her|their}} followed pages list from public view.',
 	'wikiafollowedpages-special-hidden-unhide' => 'Unhide this list.',
 	'wikiafollowedpages-special-blog-by' => 'by $1',
 	'wikiafollowedpages-masthead' => 'Followed pages',

@@ -48,18 +48,18 @@ class FollowedPages extends SpecialPage {
 			$wgOut->addHTML( wfMsgExt('wikiafollowedpages-special-anon', array('parse')) );
 			return true;
 		}
-		
+
 		$is_hide = false;
 		if ( $user->getOption('hidefollowedpages') ) {
-			$is_hide = true;	
+			$is_hide = true;
 			if( $user->getId() != $wgUser->getId() ) {
-				$wgOut->addHTML( wfMsgExt('wikiafollowedpages-special-hidden', array('parse')) );
-				return true;				
-			}	
+				$wgOut->addHTML( wfMsgExt( 'wikiafollowedpages-special-hidden', array( 'parse' ), $user->getName ) );
+				return true;
+			}
 		}
-		
+
 		$data = FollowModel::getWatchList( $user->getId() ); 
-		
+
 		if ( ( empty($data) ) || ( $user->getId() == 0) ) {
 			$wgOut->addHTML( wfMsgExt('wikiafollowedpages-special-empty', array('parse')) );
 			return true;
