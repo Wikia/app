@@ -113,19 +113,6 @@ class WidgetFramework {
 					}
 				}
 
-				// Add MagCloud widget (immediately after WidgetCommunity) if extension is enabled
-				global $wgEnableMagCloudExt;
-				if (!empty($wgEnableMagCloudExt) && !$isRecipesWiki) {
-					$config1 = array();
-					foreach ($this->config[1] as $widget) {
-						$config1[] = $widget;
-						if ("WidgetCommunity" == $widget["type"]) {
-							$config1[] = array('type' => 'WidgetMagCloudM', 'id' => 143);
-						}
-					}
-					$this->config[1] = $config1;
-				}
-
 				/* simplify widget config array from config[1][](name, id) to (name, name, name) */
 				$widgets = array();
 				foreach ($this->config[1] as $c) {
