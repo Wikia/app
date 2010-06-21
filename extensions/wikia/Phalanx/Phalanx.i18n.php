@@ -75,4 +75,6 @@ $messages['en'] = array(
 	'phalanx-user-block-reason-similar' => 'This username is prevented from editing due to vandalism or other disruption by a user with a similar name. Please create an alternate user name or [[Special:Contact|contact Wikia]] about the problem.',
 
 	'phalanx-title-move-summary' => 'The reason you entered contained a blocked phrase.',
+
+	'phalanx-stats-row' => '<b>$4</b> filter type <b>$1</b> blocked user <b>$2</b> on <a href="$3">$3</a>',
 );
