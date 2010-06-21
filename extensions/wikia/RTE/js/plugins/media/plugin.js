@@ -541,12 +541,13 @@ RTE.mediaEditor = {
 
 		// render an image and replace old one
 		RTE.tools.parseRTE(wikitext, function(html) {
-			var newMedia = $(html).children('img');
+			//RT#52431 - proper context
+			var newMedia = $(html, RTE.instance.document.$).children('img');
 			
 			//fix for IE7, the above line of code is returning an empty element
 			//since $(html) strips the enclosing <p> tag out for some reason
-			if(newMedia.html() == ''){
-				newMedia = $(html);
+			if(!newMedia.exists()){
+				newMedia = $(html, RTE.instance.document.$);
 			}
 			
 			// set meta-data
