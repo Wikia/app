@@ -71,7 +71,7 @@ function pd_AlternateEdit(&$editpage) {
 		global $wgOut;
 		$privatedomains_affiliatename = PrivateDomains::getParam("privatedomains_affiliatename");
 		$wgOut->addHTML('<div class="errorbox" style="width:92%;"><strong>');
-		$wgOut->addHTML( "<p>" . wfMsg( 'privatedomains_invalidemail', $privatedomains_affiliatename ) . "</p>" );
+		$wgOut->addWikiMsg( 'privatedomains_invalidemail', $privatedomains_affiliatename );
 		$wgOut->addHTML('</strong></div><br><br><br>');
 		return false;
 	}
