@@ -132,11 +132,12 @@ class ScribeProducer {
 			$pageId = ( !empty($articleId) ) ? $articleId : $oArticle->getID();
 			if ( $pageId > 0 ) {
 				#action=query&list=logevents&letype=delete&letitle=TestDel2
+				$pageName = Title::makeName($oArticle->mTitle->getNamespace, $oArticle->mTitle->getDBkey());
 				$oFauxRequest = new FauxRequest(array(
 					'action' 	=> 'query',
 					'list' 		=> 'logevents',
 					'letype' 	=> 'delete',
-					'letitle'	=> $oArticle->mTitle->getPrefixedText(),
+					'letitle'	=> $pageName,
 					'lelimit'	=> 1
 				));
 				$logid = 0;
@@ -279,5 +280,6 @@ class ScribeProducer {
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
+	
 }
 
