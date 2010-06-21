@@ -75,77 +75,15 @@ var AjaxLogin = {
 		this.form.bind('submit', this.formSubmitHandler);
 		$('#wpLoginattemptAjax').attr('tabindex', parseInt($('#wpRemember1Ajax').attr('tabindex')) + 101).click( this.clickLogIn );
 
-		$().log('AjaxLogin: init()');
-
 		// ask before going to register form from edit page
 		$('#wpAjaxRegister').click(this.ajaxRegisterConfirm);
 		// get proper returnto/returntoquery param
 		$('#wpAjaxRegister').attr('href', $('#register').attr('href'));
-
-		//setup slider
-		$("#AjaxLoginConnectMarketing a").click(this.slider);
-		
-		$('#fbAjaxLoginConnect').click(function() {
-			WET.byStr( 'FBconnect/login_dialog/connect' );	
-		});
-		
-		$("#AjaxLoginConnectMarketing .forward").click(function() {
-			WET.byStr( 'FBconnect/login_dialog/slider/forward' );	
-		});
-		
-		$("#AjaxLoginConnectMarketing .back").click(function() {
-			WET.byStr( 'FBconnect/login_dialog/slider/back' );	
-		});
-
-		$("#wpLoginAndConnectCombo").click(function() {
-			WET.byStr( 'FBconnect/login_dialog/login_and_connect' );	
-		});
-	},
-	slider: function(e) {
-		if(typeof e != 'undefined'){
-			e.preventDefault();
+		if (typeof window.wgAjaxLoginOnInit == 'function') {
+			window.wgAjaxLoginOnInit();
 		}
-
-		// Split into diff functions so that they can be called from elsewhere.
-		if ($(this).hasClass("forward")) {
-			AjaxLogin.slideToLoginAndConnect(this);
-		} else {
-			AjaxLogin.slideToNormalLogin(this);
-		}
-	},
-	slideToNormalLogin: function(el){
-		$().log('AjaxLogin: slideToNormalLogin()');
-		var firstSliderCell;
-		if($().isChrome()){
-			// div:first isn't working in the current version of Chrome.
-			firstSliderCell = $($("#AjaxLoginSlider div").get(0));
-		} else {
-			firstSliderCell = $("#AjaxLoginSlider div:first");
-		}
-		var slideto = 0;
-		$("#AjaxLoginConnectMarketing a.forward").show();
-		$("#AjaxLoginConnectMarketing a.back").hide();
-		firstSliderCell.animate({
-			marginLeft: slideto
-		}, function(){$('#fbLoginAndConnect').hide();});
-	},
-	slideToLoginAndConnect: function(el){
-		$().log('AjaxLogin: slideToLoginAndConnect()');
-		$('#fbLoginAndConnect').show();
-		var firstSliderCell;
-		if($().isChrome()){
-			// div:first isn't working in the current version of Chrome.
-			firstSliderCell = $($("#AjaxLoginSlider div").get(0));
-		} else {
-			firstSliderCell = $("#AjaxLoginSlider div:first");
-		}
-		var slideto = -351;
-		$("#AjaxLoginConnectMarketing a.forward").hide();
-		$("#AjaxLoginConnectMarketing a.back").show();
-		firstSliderCell.animate({
-			marginLeft: slideto
-		});
-	},
+		$().log('AjaxLogin: init()');
+	},	
 	close: function()
 	{
 		$('#AjaxLoginBoxWrapper').closeModal();
@@ -283,7 +221,9 @@ var AjaxLogin = {
 				} else {
 					WET.byStr(AjaxLogin.WET_str + '/login/success');
 				}
-				AjaxLogin.doSuccess();
+				if (AjaxLogin.beforeDoSuccess()) {
+					AjaxLogin.doSuccess();
+				}
 				break;
 
 			case 'NotExists':
@@ -313,6 +253,9 @@ var AjaxLogin = {
 				break;
 			}
 		});
+	},
+	beforeDoSuccess: function() {
+		return true;
 	},
 	handleFailure: function() {
 		AjaxLogin.form.log('AjaxLogin: handleFailure was called');

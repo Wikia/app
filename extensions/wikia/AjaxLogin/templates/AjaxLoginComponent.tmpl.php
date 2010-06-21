@@ -15,7 +15,7 @@
 </div>
 
 <div id="AjaxLoginSlider" class="clearfix">
-	<div class="ajax-login-slider-panel"> 
+	<div class="ajax-login-slider-panel" id="AjaxLoginSliderNormal" > 
         	<form action="<? echo $loginaction ?>" method="post" name="userajaxloginform" id="userajaxloginform">
 	            <label for="wpName2Ajax" style="display: block; font-weight: bold;"><?php print wfMsg("yourname") ?></label> 
 	            <table>
@@ -47,43 +47,10 @@
 	        <input type="hidden" name="wpLoginToken" value="<?php echo $loginToken; ?>" />
         	</form>
 
-	</div><?php
-	// FIXME: Try to gracefully de-couple this interweaving w/FBConnect extension.  Just use hooks instead.
-	global $wgEnableFacebookConnectExt;
-	if(!empty($wgEnableFacebookConnectExt)){
-		$style = "";
-	} else {
-		$style = " style='display:none'";
-	}
-	?>
-	<div class="ajax-login-slider-panel" id="AjaxLoginConnectMarketing"<?php print $style; ?>>
-		<div class="neutral clearfix">
-			<? echo wfMsg("comboajaxlogin-connectmarketing") ?>
-			<a href="#" class="back"><? echo wfMsg("comboajaxlogin-connectmarketing-back") ?></a>
-			<a href="#" class="forward"><? echo wfMsg("comboajaxlogin-connectmarketing-forward") ?></a>
-		</div>
 	</div>
-	<div class="ajax-login-slider-panel" id='fbLoginAndConnect' style='display:none'>
-		<? echo wfMsgExt( 'comboajaxlogin-connectdirections', 'parse' ) ?>
-		<form action="" method="post" name="userajaxconnectform" id="userajaxconnectform">
-			<label for="wpName3Ajax" style="display: block; font-weight: bold;"><?php print wfMsg("yourname") ?></label> 
-			<table>
-			<tr style="width:350px" >
-				<td id="ajaxlogin_username_cell2">
-					
-				</td>
-			</tr>
-			</table>
-			<label for="wpPassword3Ajax" style="display: block; font-weight: bold; margin-top: 8px"><?php print wfMsg("yourpassword") ?></label>
-			<table>
-			<tr>
-				<td id="ajaxlogin_password_cell2">
-					
-				</td>
-			</tr>
-			</table>
-                <input type="hidden" name="wpLoginToken" value="<?php echo $loginToken; ?>" />
-		<input type="submit" id="wpLoginAndConnectCombo" value="<?php print wfMsg("login") ?>" onclick="loginAndConnectExistingUser();" />
-		</form>
-	</div>
+<?php 
+	$addhtml = "";
+	wfRunHooks("afterAjaxLoginHTML", array(&$addhtml)); 
+	echo $addhtml;
+?>
 </div><!--AjaxLoginSlider-->
