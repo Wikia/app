@@ -144,12 +144,12 @@
 		<div id="WikiaPhotoSlideshowLinkEditor">
 			<h1><?= wfMsg('wikiaPhotoGallery-photooptions-linktitle') ?></h1>
 
-			<p><?= wfMsg('wikiaPhotoGallery-photooptions-linktext') ?></p>
-			<input id="WikiaPhotoSlideshowLinkText" type="text" />
-
 			<p><?= wfMsg('wikiaPhotoGallery-photooptions-linkurl') ?></p>
 			<input id="WikiaPhotoSlideshowLink" type="text" />
 			<div id="WikiaPhotoSlideshowLinkSuggestWrapper" class="suggestWrapper"></div>
+
+			<p><?= wfMsg('wikiaPhotoGallery-photooptions-linktext') ?></p>
+			<input id="WikiaPhotoSlideshowLinkText" type="text" />
 		</div>
 	</div>
 </div>
