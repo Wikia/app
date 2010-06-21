@@ -17,6 +17,9 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		$mSize 			= false,
 		$mIsNew			= false,
 		$mCityId		= 0;
+		
+	private 
+		$mediaNS = array(NS_VIDEO, NS_IMAGE, NS_FILE);
 
 	/**
 	 * constructor
@@ -397,9 +400,56 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 			$vals['imagelinks'] = 0;
 			$vals['video'] = 0;
 		}
+		$vals['media_type'] = $this->getMediaType($oTitle, $oRow->page_namespace);
 
 		wfProfileOut( __METHOD__ );
 		return $vals;
+	}
+
+	private function getMediaType($oTitle, $ns) {
+		global $wgEnableNYCSocialTools, $wgEnableVideoNY, $wgEnableVideoToolExt;
+		wfProfileIn( __METHOD__ );
+		$result = 0;
+		
+		if ( in_array($ns, $this->mediaNS) ) {
+			# NS_VIDEO 
+			if ( $ns == NS_VIDEO ) {
+				if ( !empty($wgEnableVideoToolExt) && class_exists('VideoPage') ) {
+					$videoName = VideoPage::getNameFromTitle($oTitle);
+					if ( $videoName ) {
+						$oTitle = Title::makeTitle($ns, $videoName);
+					}
+				} elseif ( ( !empty($wgEnableNYCSocialTools) || !empty($wgEnableVideoNY) ) && class_exists('Video') ) {
+					// NY code
+					$oVideo = Video::newFromName( $oTitle->getDBkey() );
+					if ( is_object($oVideo) && $oVideo->exists() ) {
+						$result = 4;
+					}
+				}
+			}
+			
+			if ( empty($result) ) { 
+				$oLocalFile = LocalFile::newFromTitle( $oTitle, RepoGroup::singleton()->getLocalRepo() );
+				if ( $oLocalFile instanceof LocalFile ) {
+					$mediaType = $oLocalFile->getMediaType();
+					switch ( $mediaType ) {
+						case MEDIATYPE_BITMAP		: $result = 1; break;
+						case MEDIATYPE_DRAWING		: $result = 2; break;
+						case MEDIATYPE_AUDIO		: $result = 3; break;
+						case MEDIATYPE_VIDEO		: $result = 4; break;
+						case MEDIATYPE_MULTIMEDIA	: $result = 5; break;
+						case MEDIATYPE_OFFICE		: $result = 6; break;
+						case MEDIATYPE_TEXT			: $result = 7; break;
+						case MEDIATYPE_EXECUTABLE	: $result = 8; break;
+						case MEDIATYPE_ARCHIVE		: $result = 9; break;
+						default 					: $result = 0; break;
+					}
+				}
+			}
+		}
+		wfProfileOut( __METHOD__ );
+		
+		return $result;
 	}
 
 	public function getAllowedParams() {
