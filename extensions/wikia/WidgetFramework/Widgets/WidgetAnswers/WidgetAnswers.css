@@ -1,5 +1,5 @@
 .WidgetAnswers dt.widget_title {
-	background: #252525 url(http://images.wikia.com/extensions/wikia/WidgetFramework/Widgets/WidgetAnswers/wikianswers.png) 0px -1px no-repeat;
+	background: #252525 url(http://images.wikia.com/common/extensions/wikia/WidgetFramework/Widgets/WidgetAnswers/wikianswers.png) 0px -1px no-repeat;
 	color: #252525;
 	font-size: 0.01em;
 	height: 15px;
@@ -21,7 +21,7 @@
 	color: #002BB8 !important;
 }
 .answers_ask_field {
-	background: #FFF url(http://images.wikia.com/extensions/wikia/WidgetFramework/Widgets/WidgetAnswers/field_bg.png) repeat-x;
+	background: #FFF url(http://images.wikia.com/common/extensions/wikia/WidgetFramework/Widgets/WidgetAnswers/field_bg.png) repeat-x;
 	border: 1px solid #093;
 	color: #999;
 	margin: 0 !important;
