@@ -148,7 +148,8 @@ $messages['en'] = array(
 	'fbconnect-reclamation-body-error' => 'There was some error during disconnecting from Facebook or you account is already disconnected. 
 											<br><br> To login go to: $1',
     'fbconnect-unknown-error' => 'Unknown error, try again or contact with us.',          
-	'fbconnect-passwordremindertitle'      => 'Your Wikia account is now disconnected from Facebook!', 
+	'fbconnect-passwordremindertitle'      	=> 'Your Wikia account is now disconnected from Facebook!',
+    'fbconnect-passwordremindertitle-exist' => 'Your Wikia account is now disconnected from Facebook!',
 	'fbconnect-passwordremindertext'       => 'Hi,
 It looks like you\'ve just disconnected your Wikia account from Facebook. We\'ve kept all of your history, edit points and achievements intact, so don\'t worry!
 
@@ -158,6 +159,14 @@ Username: $2
 Password: $3
 
 The replacement password has been sent only to you at this email address.
+
+Thanks,
+
+The Wikia Community Team',
+	'fbconnect-passwordremindertext-exist'	=> 'Hi,
+It looks like you\'ve just disconnected your Wikia account from Facebook. We\'ve kept all of your history, edit points and achievements intact, so don\'t worry!
+
+You can use the same username and password as you did before you connected.
 
 Thanks,
 
@@ -172,6 +181,7 @@ The Wikia Community Team',
 	'fbconnect-fbid-is-already-connected-title' => 'Facebook account is already in use',
 	'fbconnect-fbid-is-already-connected' => 'The Facebook account you are attempting to connect to your Wikia account is already connected to a different Wikia account. If you would like to connect your current Wikia account to that Facebook id, please disconnect the Facebook account from your other username first by visiting the "Facebook Connect" tab of your Preferences page.',
 	'fbconnect-fbid-connected-to' => 'The Wikia username that is currently connected to this Facebook id is <strong>$1</strong>.',
+    'fbconnect-connect-next' => 'Next >>' ,
 );
 
 /**

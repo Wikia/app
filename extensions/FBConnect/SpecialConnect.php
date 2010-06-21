@@ -242,6 +242,7 @@ class SpecialConnect extends SpecialPage {
 					}
 				}
 			}
+			$wgUser->setOption("fbFromExist", "1");
 			$wgUser->saveSettings();
 
 			wfRunHooks( 'SpecialConnect::userAttached', array( &$this ) );
@@ -375,7 +376,6 @@ class SpecialConnect extends SpecialPage {
 				$wgOut->showErrorPage('fbconnect-error', 'fbconnect-error-creating-user');
 				return;
 			}
-
 			// Let extensions abort the account creation.  If you have extensions which are expecting a Real Name or Email, you may need to disable
 			// them since these are not requirements of Facebook Connect (so users will not have them).
 			// NOTE: Currently this is commented out because it seems that most wikis might have a handful of restrictions that won't be needed on
@@ -940,26 +940,5 @@ class SpecialConnect extends SpecialPage {
 			
 		$response->addText( $html );
 		return $response;	
-	}
-	
-
-	/**
-	 * Ajax function to return a modal dialog with a login button.  This is needed
-	 * after a login-and-connect because of popup blockers in IE and webkit.
-	 */
-	public static function getLoginButtonModal(){
-		wfProfileIn(__METHOD__);
-		$response = new AjaxResponse();
-	
-		wfLoadExtensionMessages('FBConnect');		
-		$title = wfMsg('fbconnect-logged-in-now-connect-title');
-		$body = "<br/>".wfMsg('fbconnect-logged-in-now-connect'); 
-		$body .= "<br/><br/>\n"; 
-		$body .= FBConnect::getFBButton("sendToConnectOnLoginForSpecificForm('ConnectExisting');", "fbPrefsConnect"); 
-
-		$response->addText('<div id="fbNowConnectBox" title="'.$title.'"><div>'.$body.'</div></div>'); 
-
-		wfProfileOut(__METHOD__);
-		return $response;
 	}
 }
