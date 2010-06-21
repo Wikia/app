@@ -24,5 +24,8 @@ $wgExtensionAliasesFiles['Signup'] = $dir . 'SpecialSignup.alias.php';
 
 $wgExtensionMessagesFiles['Signup'] = $dir . 'Signup.i18n.php';
 
+// redirect all Special:Userlogin requests to the new page
+$wgSpecialPages['Userlogin'] = array( 'SpecialRedirectToSpecial', 'Userlogin', 'Signup' );
+
 // hooks
 $wgHooks ['OutputPageBeforeHTML'][] = 'Signup::TrackingOnSuccess';
