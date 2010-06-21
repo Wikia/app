@@ -67,6 +67,8 @@ if(!$SHUT_DOWN_API){
 	function wfReadOnly(){return true;}
 }
 
+wfDebug("LWSOAP: Done initializing MediaWiki.  Proceeding to SOAP-specific initialization.\n");
+
 GLOBAL $wgUser;
 GLOBAL $server; // so that the functions can get the headers to log in.
 
@@ -384,10 +386,14 @@ if(!$funcsOnly){
 	);
 	///////// UPDATING METHODS - END /////////
 	//////////////////////////////////////////////////////////////////////////////
+	
+	wfDebug("LWSOAP: Done setting up SOAP functions, about to process...\n");
 
 	// Use the request to (try to) invoke the service
 	$HTTP_RAW_POST_DATA = isset($HTTP_RAW_POST_DATA) ? $HTTP_RAW_POST_DATA : '';
+	wfDebug("LWSOAP: Dispatching to the ->service().\n");
 	$server->service($HTTP_RAW_POST_DATA);
+	wfDebug("LWSOAP: Returned from ->service().");
 
 	// If the script took a long time to run, log it here.
 	if($ENABLE_LOGGING_SLOW_SOAP){
@@ -600,6 +606,7 @@ function getSongResult($artist, $song){
 	return getSong($artist,$song);
 }
 function getSong($artist, $song="", $doHyphens=true){
+	wfDebug("LWSOAP: inside " . __METHOD__ . "\n");
 	$id = requestStarted(__METHOD__, "$artist|$song");
 	$debug = false;$debugSuffix = "_debug";
 	$artist = rawurldecode($artist);
@@ -2010,6 +2017,8 @@ function lw_initAdvanced(&$title='', &$action=''){
 	$mediaWiki->setVal( 'CommandLineMode', $wgCommandLineMode );
 	$mediaWiki->setVal( 'UseExternalEditor', $wgUseExternalEditor );
 	$mediaWiki->setVal( 'DisabledActions', $wgDisabledActions );
+
+	wfDebug('Done with ' . __METHOD__ ."\n");
 } // end lw_initAdvanced()
 
 ////
@@ -2118,17 +2127,28 @@ function logSoapFailure($origArtistSql, $origSongSql, $lookedForSql){
 		GLOBAL $wgMemc;
 		$NUM_FAILS_TO_SPOOL = 10;
 		
+		wfDebug("LWSOAP: Recording failure for \"$origArtistSql:$origSongSql\"\n");
+		
 		// Spool a certain number of updates in memcache before writing to db.
 		$memkey = wfMemcKey( 'lw_soap_failure', $origArtistSql, $origSongSql );
 		$numFails = $wgMemc->get( $memkey );
 		if(empty($numFails)){
+			wfDebug("LWSOAP: Setting $memkey to 1\n");
 			$wgMemc->set($memkey, 1);
 		} else if(($numFails + 1) >= $NUM_FAILS_TO_SPOOL){
+			wfDebug("LWSOAP: Storing the failure in the database.\n");
 			$numFails += 1;
-			$db = lw_connect();
 			$queryString = "INSERT INTO lw_soap_failures (request_artist,request_song, lookedFor, numRequests) VALUES ('$origArtistSql', '$origSongSql', '$lookedForSql', '$numFails') ON DUPLICATE KEY UPDATE numRequests=numRequests+$numFails";
-			mysql_query($queryString, $db);
+			$dbw = wfGetDB(DB_MASTER);
+			if($dbw->query($queryString)){
+				$dbw->commit();
+				wfDebug("LWSOAP: Stored in the database successfully.\n");
+				$wgMemc->delete($memkey);
+			} else {
+				wfDebug("LWSOAP: Error storing SOAP failure!! - " . mysql_error() . "\n");
+			}
 		} else {
+			wfDebug("LWSOAP: Updating $memkey to " . ($numFails + 1) . "\n");
 			$wgMemc->set($memkey, $numFails + 1);
 		}
 	}
