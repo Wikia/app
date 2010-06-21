@@ -86,7 +86,7 @@ $wgAutoloadClasses['FBConnectProfilePic'] =	$dir . 'FBConnectProfilePic.php';
 $wgAutoloadClasses['FBConnectUser'] =		$dir . 'FBConnectUser.php';
 $wgAutoloadClasses['FBConnectXFBML'] =		$dir . 'FBConnectXFBML.php';
 $wgAutoloadClasses['SpecialConnect'] =		$dir . 'SpecialConnect.php';
-$wgAutoloadClasses['ChooseNameTemplate'] =	$dir . 'wikia/template/ChooseNameTemplate.class.php';
+$wgAutoloadClasses['ChooseNameTemplate'] =	$dir . 'templates/ChooseNameTemplate.class.php';
 
 $wgSpecialPages['Connect'] = 'SpecialConnect';
 
@@ -212,7 +212,7 @@ class FBConnect {
 	
 	public static function getFBButton($onload = "", $id = "") {
 		global $fbExtendedPermissions;
-		return '<fb:login-button onlogin="'.$onload.'" perms="'.implode(",", $fbExtendedPermissions).'" id="'.$id.'"> 
+		return '<fb:login-button length="short" size="large" onlogin="'.$onload.'" perms="'.implode(",", $fbExtendedPermissions).'" id="'.$id.'"> 
                 </fb:login-button>';
 	}  
 	
@@ -258,7 +258,11 @@ class FBConnect {
 		$result = array ();
 		$loginForm = new LoginForm($params);
 		
-		$res = $loginForm->mailPasswordInternal( $wgUser, true, 'fbconnect-passwordremindertitle', 'fbconnect-passwordremindertext' );
+		if ($wgUser->getOption("fbFromExist")) {
+			$res = $loginForm->mailPasswordInternal( $wgUser, true, 'fbconnect-passwordremindertitle-exist', 'fbconnect-passwordremindertext-exist' );
+		} else {
+			$res = $loginForm->mailPasswordInternal( $wgUser, true, 'fbconnect-passwordremindertitle', 'fbconnect-passwordremindertext' );	
+		}
 		if( WikiError::isError( $res ) ) {
 			return $statusError;
 		}

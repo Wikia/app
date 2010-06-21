@@ -611,4 +611,20 @@ STYLE;
 		}
 		return true;
 	}
+	
+	/*
+	 * Add facebook connect html to ajax script 
+	 */
+	
+	public static function afterAjaxLoginHTML( &$html ) {
+		$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
+		wfLoadExtensionMessages('FBConnect');
+		if ( !LoginForm::getLoginToken() ) {
+			LoginForm::setLoginToken();
+		}
+		$tmpl->set( "loginToken", LoginForm::getLoginToken() );
+		$tmpl->set( "fbButtton", FBConnect::getFBButton("sendToConnectOnLoginForSpecificForm('ConnectExisting');", "fbPrefsConnect"));
+		$html = $tmpl->execute('ajaxLoginMerge');
+		return true;
+	}
 }
