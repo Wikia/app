@@ -23,7 +23,11 @@ class PhalanxStats extends UnlistedSpecialPage {
 		// process block data for display
 		$block['author_id'] = User::newFromId( $block['author_id'] )->getName();
 		$block['timestamp'] = $wgLang->timeanddate( $block['timestamp'] );
-		$block['expire'] = $wgLang->timeanddate( $block['expire'] );
+		if ( $block['expire'] == null ) {
+			$block['expire'] = 'infinte';
+		} else {
+			$block['expire'] = $wgLang->timeanddate( $block['expire'] );
+		}
 		$block['exact'] = $block['exact'] ? 'Yes' : 'No';
 		$block['regex'] = $block['exact'] ? 'Yes' : 'No';
 		$block['case'] = $block['case'] ? 'Yes' : 'No';
@@ -72,6 +76,7 @@ class PhalanxStatsPager extends ReverseChronologicalPager {
 		$this->mDb = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
 		$this->mBlockId = (int) $id;
+
 	}
 
 	function getQueryInfo() {
@@ -99,11 +104,19 @@ class PhalanxStatsPager extends ReverseChronologicalPager {
 	function formatRow( $row ) {
 		global $wgLang;
 
+		wfLoadExtensionMessages( 'Phalanx' );
+
+		$type = implode( Phalanx::getTypeNames( $row->ps_blocker_type ) );
+		
+		$username = $row->ps_blocked_user;
+
+		$timestamp = $wgLang->timeanddate( $row->ps_timestamp );
+
+		$oWiki = WikiFactory::getWikiById( $row->ps_wiki_id );
+		$url = $oWiki->city_url;
+
 		$html = '<li>';
-		$html .= implode( Phalanx::getTypeNames( $row->ps_blocker_type ) );
-		$html .= ' blocked user ' . User::newFromId( $row->ps_blocked_user )->getName();
-		$html .= ' on ' . $wgLang->timeanddate( $row->ps_timestamp );
-		$html .= ' at wiki ' . $row->ps_wiki_id;
+		$html .= wfMsg( 'phalanx-stats-row', $type, $username, $url, $timestamp );
 		$html .= '</li>';
 
 		return $html;
