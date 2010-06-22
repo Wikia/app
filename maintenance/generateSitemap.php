@@ -392,6 +392,8 @@ class GenerateSitemap {
 	 * @return string
 	 */
 	function indexEntry( $filename ) {
+		global $wgServer;
+		$filename = sprintf( "%s/%s", $wgServer, $filename );
 		return
 			"\t<sitemap>\n" .
 			"\t\t<loc>$filename</loc>\n" .
@@ -497,4 +499,3 @@ if ( isset( $options['server'] ) ) {
 
 $gs = new GenerateSitemap( @$options['fspath'], @$options['compress'] !== 'no' );
 $gs->main();
-
