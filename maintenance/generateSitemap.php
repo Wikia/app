@@ -70,26 +70,26 @@ class GenerateSitemap {
 	 */
 	var $priorities = array(
 		// Custom main namespaces
-		GS_MAIN			=> '1.0',
+		GS_MAIN			=> '0.5',
 		// Custom talk namesspaces
-		GS_TALK			=> '1.0',
+		GS_TALK			=> '0.1',
 		// MediaWiki standard namespaces
 		NS_MAIN			=> '1.0',
-		NS_TALK			=> '1.0',
-		NS_USER			=> '1.0',
-		NS_USER_TALK		=> '1.0',
-		NS_PROJECT		=> '1.0',
-		NS_PROJECT_TALK		=> '1.0',
-		NS_FILE			=> '1.0',
-		NS_FILE_TALK		=> '1.0',
-		NS_MEDIAWIKI		=> '0.5',
-		NS_MEDIAWIKI_TALK	=> '0.5',
-		NS_TEMPLATE		=> '0.5',
-		NS_TEMPLATE_TALK	=> '0.5',
+		NS_TALK			=> '0.1',
+		NS_USER			=> '0.5',
+		NS_USER_TALK		=> '0.1',
+		NS_PROJECT		=> '0.5',
+		NS_PROJECT_TALK		=> '0.1',
+		NS_FILE			=> '0.5',
+		NS_FILE_TALK		=> '0.1',
+		NS_MEDIAWIKI		=> '0.0',
+		NS_MEDIAWIKI_TALK	=> '0.1',
+		NS_TEMPLATE		=> '0.0',
+		NS_TEMPLATE_TALK	=> '0.1',
 		NS_HELP			=> '0.5',
-		NS_HELP_TALK		=> '0.5',
-		NS_CATEGORY		=> '1.0',
-		NS_CATEGORY_TALK	=> '1.0',
+		NS_HELP_TALK		=> '0.1',
+		NS_CATEGORY		=> '0.5',
+		NS_CATEGORY_TALK	=> '0.1',
 	);
 
 	/**
@@ -158,7 +158,7 @@ class GenerateSitemap {
 		$this->timestamp = wfTimestamp( TS_ISO_8601, wfTimestampNow() );
 
 
-		$this->findex = fopen( "{$this->fspath}sitemap-index-" . id_by_andrew() . ".xml", 'wb' );
+		$this->findex = fopen( "{$this->fspath}sitemap-index-" . wfWikiID() . ".xml", 'wb' );
 	}
 
 	/**
@@ -348,7 +348,7 @@ class GenerateSitemap {
 	 */
 	function sitemapFilename( $namespace, $count ) {
 		$ext = $this->compress ? '.gz' : '';
-		return "sitemap-".id_by_andrew()."-NS_$namespace-$count.xml$ext";
+		return "sitemap-".wfWikiID()."-NS_$namespace-$count.xml$ext";
 	}
 
 	/**
@@ -392,13 +392,9 @@ class GenerateSitemap {
 	 * @return string
 	 */
 	function indexEntry( $filename ) {
-		global $wgServer;
-		if (!empty($wgServer)) {
-			$filename = "{$wgServer}/{$filename}";
-		}
 		return
 			"\t<sitemap>\n" .
-			"\t\t<loc>{$filename}</loc>\n" .
+			"\t\t<loc>$filename</loc>\n" .
 			"\t\t<lastmod>{$this->timestamp}</lastmod>\n" .
 			"\t</sitemap>\n";
 	}
@@ -435,7 +431,6 @@ class GenerateSitemap {
 	 * @return string
 	 */
 	function fileEntry( $url, $date, $priority ) {
-		$url = str_replace('&', '&amp;', $url);
 		return
 			"\t<url>\n" .
 			"\t\t<loc>$url</loc>\n" .
@@ -502,21 +497,4 @@ if ( isset( $options['server'] ) ) {
 
 $gs = new GenerateSitemap( @$options['fspath'], @$options['compress'] !== 'no' );
 $gs->main();
-
-/**
- * c&p from getSitemapUrl() in redirect-robots.php
- */
-function id_by_andrew() {
-	global $wgServer;
-	$_SERVER_SERVER_NAME = preg_replace('/^http:\/\//', '', $wgServer);
-
-	$hostel = explode('.',$_SERVER_SERVER_NAME);
-	//delete tdlportion
-	unset($hostel[count($hostel)-1]);
-	unset($hostel[count($hostel)-1]);
-
-	$r = implode('',$hostel);
-
-	return $r;
-}
 
