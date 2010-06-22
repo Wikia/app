@@ -21,6 +21,7 @@ class ScribeProducer {
 		$mPageId,
 		$mLogId,
 		$mRevId,
+		$mKey,
 		$mServerName;
 
 	const 
@@ -34,8 +35,15 @@ class ScribeProducer {
 	 *
 	 * @author Piotr Molski (MoLi)
 	 */
-	function __construct( $page_id, $rev_id = 0, $log_id = 0 ) {
-		global $wgCityId, $wgServer, $wgUser;
+	function __construct( $key, $page_id, $rev_id = 0, $log_id = 0 ) {
+		global $wgCityId, $wgServer;
+
+		switch ( $key ) {
+			case 'edit' 		: $this->mKey = self::EDIT_CATEGORY; break;
+			case 'create' 		: $this->mKey = self::CREATEPAGE_CATEGORY; break;
+			case 'delete' 		: $this->mKey = self::DELETE_CATEGORY; break;
+			case 'undelete'		: $this->mKey = self::UNDELETE_CATEGORY; break;
+		}
 
 		$this->mCityId		= $wgCityId;
 		$this->mPageId		= $page_id;
@@ -52,18 +60,9 @@ class ScribeProducer {
 	 * @access private
 	 *
 	 */
-	private function send_log( $category = 'edit' ) {
-		global $wgCityId;
+	private function send_log() {
 		wfProfileIn( __METHOD__ );
 		try {
-			$catLog = '';
-			switch ( $category ) {
-				case 'edit' 		: $catLog = self::EDIT_CATEGORY; break;
-				case 'create' 		: $catLog = self::CREATEPAGE_CATEGORY; break;
-				case 'delete' 		: $catLog = self::DELETE_CATEGORY; break;
-				case 'undelete'		: $catLog = self::UNDELETE_CATEGORY; break;
-			}
-
 			$data = Wikia::json_encode( array(
 					'cityId'		=> $this->mCityId,
 					'pageId'		=> $this->mPageId,
@@ -72,7 +71,7 @@ class ScribeProducer {
 					'serverName'	=> $this->mServerName,
 				) 
 			);
-			WScribeClient::singleton( $catLog )->send( $data );
+			WScribeClient::singleton( $this->mKey )->send( $data );
 		}
 		catch( TException $e ) {
 			Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
@@ -99,10 +98,10 @@ class ScribeProducer {
 			$revid = ( $oRevision instanceof Revision ) ? $oRevision->getId() : 0;
 			$pageId = ( $oArticle instanceof Article ) ? $oArticle->getID() : 0;
 			if ( $revid > 0 && $pageId > 0 ) { 
-				$oScribeProducer = new ScribeProducer( $pageId, $revid );
+				$key = ( isset($status->value['new']) && $status->value['new'] == 1 ) ? 'create' : 'edit';
+				$oScribeProducer = new ScribeProducer( $key, $pageId, $revid );
 				if ( is_object( $oScribeProducer ) ) {
-					$is_new = ( isset($status->value['new']) && $status->value['new'] == 1 ) ? 'create' : 'edit';
-					$oScribeProducer->send_log( $is_new );
+					$oScribeProducer->send_log();
 				}
 			}
 		}
@@ -151,17 +150,16 @@ class ScribeProducer {
 						if ( isset($row['logid']) ) {
 							$logid = $row['logid'];
 						}
+						#---
+						$oScribeProducer = new ScribeProducer( 'delete', $pageId, 0, $logid );
+						if ( is_object( $oScribeProducer ) ) {
+							$oScribeProducer->send_log();
+						}
 					}
 				} 
 				catch (Exception $e) {
 					Wikia::log( __METHOD__, 'cannot fetch data from logging table via API request', $e->getMessage() );
 				};
-
-				#---
-				$oScribeProducer = new ScribeProducer( $pageId, 0, $logid );
-				if ( is_object( $oScribeProducer ) ) {
-					$oScribeProducer->send_log( 'delete' );
-				}
 			}
 		}
 
@@ -188,9 +186,9 @@ class ScribeProducer {
 			$pageId = $oRevision->getPage();
 			$revId = $oRevision->getId();
 			if ( $revId > 0 && $pageId > 0 ) {
-				$oScribeProducer = new ScribeProducer( $pageId, $revId );
+				$oScribeProducer = new ScribeProducer( 'edit', $pageId, $revId );
 				if ( is_object( $oScribeProducer ) ) {
-					$oScribeProducer->send_log( 'edit' );
+					$oScribeProducer->send_log();
 				}
 			}
 		}
@@ -219,9 +217,9 @@ class ScribeProducer {
 				$pageId = $oRevision->getPage();
 				$revId = $oRevision->getId();
 				if ( $revId > 0 && $pageId > 0 ) {
-					$oScribeProducer = new ScribeProducer( $pageId, $revId );
+					$oScribeProducer = new ScribeProducer( 'undelete', $pageId, $revId );
 					if ( is_object( $oScribeProducer ) ) {
-						$oScribeProducer->send_log( 'undelete' );
+						$oScribeProducer->send_log();
 					}
 				}
 			}
@@ -253,9 +251,9 @@ class ScribeProducer {
 			if ( $oRevision instanceof Revision ) {
 				$revId = $oRevision->getId();
 				if ( $revId > 0 && $pageId > 0 ) {
-					$oScribeProducer = new ScribeProducer( $pageId, $revId );
+					$oScribeProducer = new ScribeProducer( 'edit', $pageId, $revId );
 					if ( is_object( $oScribeProducer ) ) {
-						$oScribeProducer->send_log( 'edit' );
+						$oScribeProducer->send_log();
 					}
 				}
 			}
@@ -269,9 +267,9 @@ class ScribeProducer {
 					$revId = $oRevision->getId();
 					$newPageId = $oOldTitle->getArticleId();
 					if ( $revId > 0 && $newPageId > 0 ) {
-						$oScribeProducer = new ScribeProducer( $newPageId, $revId );
+						$oScribeProducer = new ScribeProducer( 'edit', $newPageId, $revId );
 						if ( is_object( $oScribeProducer ) ) {
-							$oScribeProducer->send_log( 'edit' );
+							$oScribeProducer->send_log();
 						}
 					}
 				}
