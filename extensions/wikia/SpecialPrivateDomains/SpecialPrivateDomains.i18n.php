@@ -8,14 +8,22 @@
 $messages = array();
 
 $messages['en'] = array(
-	'privatedomains_nomanageaccess' => "Sorry, you do not have enough rights to manage the allowed private domains for this wiki. Only wiki bureaucrats and staff members have access.</p><p>If you are not logged in, you probably [[Special:Userlogin|should]].",
-	'privatedomains' =>  'Manage Private Domains',
+	'privatedomains_nomanageaccess' => "Sorry, you do not have enough rights to manage the allowed private domains for this wiki.
+Only wiki bureaucrats and staff members have access.
+
+If you are not logged in, you probably [[Special:UserLogin|should]].",
+	'privatedomains' => 'Manage Private Domains',
 	'privatedomains_ifemailcontact' => "Otherwise, please contact [[Special:EmailUser/$1|$1]] if you have any questions.",
 	'saveprivatedomains_success' => "Private Domains changes saved.",
-	'privatedomains_invalidemail' => "Sorry, access to this wiki is restricted to members of $1. If you have an e-mail address affiliated with $1, you can enter or reconfirm your e-mail address on your account preference page [[Special:Preferences|here]]. You can still view pages on this wiki, but you will be unable to edit.",
+	'privatedomains_invalidemail' => "Sorry, access to this wiki is restricted to members of $1.
+If you have an e-mail address affiliated with $1, you can enter or reconfirm your e-mail address on your account preference page [[Special:Preferences|here]].
+You can still view pages on this wiki, but you will be unable to edit.",
 	'privatedomains_affiliatenamelabel' => "Name of organization:",
 	'privatedomains_emailadminlabel' => "Contact username for access problems or queries:",
-	'privatedomainsinstructions' => "Below is the list of e-mail domains allowed for editors of this wiki. Each line designates an e-mail suffix that is given access for editing. This should be formatted with one suffix per line. For example:</p><p style=\"width: 20%; padding:5px; border: 1px solid grey;\">cs.stanford.edu<br /> stanfordalumni.org</p><p>This would allow edits from anyone with the e-mail address whatever@cs.stanford.edu or whatever@stanfordalumni.org</p><p><b>Enter the allowed domains in the text box below, and click \"{{int:saveprefs}}\".</b>"
+	'privatedomainsinstructions' => "Below is the list of e-mail domains allowed for editors of this wiki. Each line designates an e-mail suffix that is given access for editing. This should be formatted with one suffix per line. For example:</p>
+<p style=\"width: 20%; padding:5px; border: 1px solid grey;\">cs.stanford.edu<br /> stanfordalumni.org</p>
+<p>This would allow edits from anyone with the e-mail address whatever@cs.stanford.edu or whatever@stanfordalumni.org</p>
+<p><b>Enter the allowed domains in the text box below, and click \"{{int:saveprefs}}\".</b>"
 );
 
 /** Message documentation (Message documentation)
