@@ -62,10 +62,10 @@ class WikiaPhotoGalleryAjax {
 		$showUploadForm = WikiaPhotoGalleryHelper::isUploadAllowed();
 
 		// list of recently uploaded images
-		$recentlyUploaded = WikiaPhotoGalleryHelper::getRecentlyUploadedThumbs();
+		$recentlyUploaded = WikiaPhotoGalleryHelper::getRecentlyUploaded();
 
 		// list of images on current article
-		$imagesOnPage = WikiaPhotoGalleryHelper::getImagesFromPageThumbs($wgTitle);
+		$imagesOnPage = WikiaPhotoGalleryHelper::getImagesFromPage($wgTitle);
 
 		// render dialog
 		$template = new EasyTemplate(dirname(__FILE__) . '/templates');
@@ -113,7 +113,7 @@ class WikiaPhotoGalleryAjax {
 		global $wgRequest, $wgContentNamespaces;
 
 		$query = $wgRequest->getVal('query');
-		$results = WikiaPhotoGalleryHelper::getSearchResultThumbs($query);
+		$results = WikiaPhotoGalleryHelper::getSearchResult($query);
 
 		if (!empty($results)) {
 			$html = WikiaPhotoGalleryHelper::renderImagesList('results', $results);

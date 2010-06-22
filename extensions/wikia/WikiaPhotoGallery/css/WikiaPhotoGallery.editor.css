@@ -430,10 +430,6 @@ img.WikiaPhotoGalleryProgress {
 	padding: 0;
 }
 
-#WikiaPhotoGallerySlideshowEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewRecentlyUploaded {
-	opacity: 0.5;
-}
-
 #WikiaPhotoGallerySlideshowEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewItemHover {
 	background-color: transparent;
 	border-style: none;
