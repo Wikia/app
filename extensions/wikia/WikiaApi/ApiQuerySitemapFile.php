@@ -25,9 +25,10 @@ class ApiQuerySitemapFile extends ApiQueryBase {
 
 		global $wgDBname, $wgSitemapBaseDirectory, $wgSitemapBasePath;
 
-		$params = $this->extractRequestParams();
+		$params = array();
 		$file   = sprintf( "sitemap-index-%s.xml", $wgDBname );
-		$result = array(
+		$result = array();
+		$result[] = array(
 			"path" => sprintf( "%s/%s/%s/%s/%s", $wgSitemapBasePath, substr( $wgDBname, 0, 1 ), substr( $wgDBname, 0, 2 ), $wgDBname, $file ),
 			"file"  => sprintf( "%s/%s/%s/%s/%s", $wgSitemapBaseDirectory, substr( $wgDBname, 0, 1 ), substr( $wgDBname, 0, 2 ), $wgDBname, $file )
 		);
