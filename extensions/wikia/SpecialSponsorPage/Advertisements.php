@@ -87,10 +87,9 @@ class Advertisement
 	 * @return Advertisement Array
 	 * @public
 	 */
-	public static function GetAdsForCurrentPage($limit=2){
-		global $wgTitle;
-		global $wgDBname;
-		global $wgMemc;
+	public static function GetAdsForCurrentPage(){
+		global $wgTitle, $wgDBname, $wgMemc, $wgSponsorAdsLimit;
+
 		$pageid = $wgTitle->getArticleID();
 		//check for cached results
 		$key = wfMemcKey( 'advertisements:'.$wgDBname.':'.$pageid);
@@ -99,10 +98,10 @@ class Advertisement
 			$adlist = self::FlushAdCache($wgDBname,$pageid);
 		}
 		if(is_array($adlist)){
-			if($limit == 0 || count($adlist)<= $limit){
+			if ( $wgSponsorAdsLimit == 0 || count($adlist) <= $wgSponsorAdsLimit ){
 				return $adlist;
 			}
-			return array_slice($adlist,0,$limit);
+			return array_slice( $adlist, 0, $wgSponsorAdsLimit );
 		}
 	}
 	
