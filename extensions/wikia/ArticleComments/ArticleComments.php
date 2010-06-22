@@ -703,7 +703,6 @@ class ArticleComment {
 		if ($title->getNamespace() == NS_USER_TALK && $response[0] == EditPage::AS_SUCCESS_NEW_ARTICLE) {
 			$user = User::newFromName($title->getText());
 			if ($user) {
-				Wikia::log(__FUNCTION__, __LINE__, 'new talk = true');
 				$user->setNewtalk(true);
 			}
 		}
