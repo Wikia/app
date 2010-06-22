@@ -700,7 +700,7 @@ class ArticleComment {
 
 		$response = self::doPost( $wgRequest, $wgUser, $title );
 		//RT#44830
-		if ($title->getNamespace() == NS_USER_TALK && $response[0] == EditPage::AS_SUCCESS_NEW_ARTICLE) {
+		if ($title->getNamespace() == NS_USER_TALK && $response[0] == EditPage::AS_SUCCESS_NEW_ARTICLE && $title->getText() != $wgUser->getName()) {
 			$user = User::newFromName($title->getText());
 			if ($user) {
 				$user->setNewtalk(true);
