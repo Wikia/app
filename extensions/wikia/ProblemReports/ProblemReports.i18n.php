@@ -568,6 +568,7 @@ Ohjelmistovirheistä voi ilmoittaa foorumeilla. Tämän lomakkeen kautta tehdyt 
 
 /** French (Français)
  * @author IAlex
+ * @author Zetud
  */
 $messages['fr'] = array(
 	'problemreports' => 'Liste des rapports de problème',
@@ -605,7 +606,7 @@ Les bogues du logiciel peuvent être rapportés sur les forums. Les rapports fai
 
 [[Special:ProblemReports/$1|Vous pouvez suivre de progrès de sa résolution]].",
 	'pr_thank_you_error' => "Une erreur est survenue lors de l'envoi du rapport de problème, veuillez réessayer plus tard...",
-	'pr_spam_found' => 'Du spam a été trouvé de le résumé de votre rapport. Veuillez change le contenu du résumé.',
+	'pr_spam_found' => 'Du spam a été trouvé dans le résumé de votre rapport. Veuillez changer le contenu du résumé.',
 	'pr_empty_summary' => "Merci d'écrire un court déscripion du problème",
 	'pr_empty_email' => 'Veuillez fournir votre adresse de courriel',
 	'pr_mailer_notice' => "L'adresse de courriel que vous avez entrée dans vos préférences utilisateur apparaîtra and le champ « De » du courriel, ce qui permettra aux destinataires de vous répondre.",
@@ -951,13 +952,20 @@ $messages['kn'] = array(
  */
 $messages['lb'] = array(
 	'pr_what_problem' => 'Sujet',
+	'pr_what_problem_other' => 'anerer',
 	'pr_what_problem_spam_short' => 'Spam',
 	'pr_what_problem_vandalised_short' => 'Vandal',
 	'pr_what_problem_software_bug_short' => 'Bug',
+	'pr_what_problem_other_short' => 'anerer',
+	'pr_describe_problem' => 'Message',
+	'pr_what_page' => 'Titel vun der Säit',
 	'pr_mailer_to_default' => 'Wikia Benotzer',
+	'pr_table_wiki_name' => 'Numm vun der Wiki',
 	'pr_table_page_link' => 'Säit',
 	'pr_table_description' => 'Beschreiwung',
 	'pr_table_actions' => 'Aktiounen',
+	'pr_status_1' => 'geléist',
+	'pr_status_2' => 'zougemaach',
 	'pr_status_wait' => 'waart w.e.g. ...',
 );
 
@@ -1488,6 +1496,7 @@ Altere a mensagem, por favor.',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
  * @author Jesielt
  * @author Luckas Blade
  */
@@ -1498,6 +1507,7 @@ $messages['pt-br'] = array(
 	'prlogheader' => 'Lista de problemas reportados e mudanças em seus estados',
 	'prlog_reportedentry' => 'reportado um problema em $1 ($2)',
 	'prlog_changedentry' => 'problema $1 marcado como "$2"',
+	'prlog_typeentry' => 'alterou o tipo do problema $1 para "$2"',
 	'prlog_removedentry' => 'removido problema $1',
 	'prlog_emailedentry' => 'mensagem de email enviada a $2 ($3)',
 	'pr_introductory_text' => 'A maioria das páginas nessa wiki são editáveis e você é bem-vindo para editá-las e corrigir erros você mesmo! Se você está procurando por ajuda, veja [[help:editing|como editar]] e [[help:revert|como reverter vandalismos]].
@@ -1566,6 +1576,8 @@ Por favor, mude o conteúdo do sumário.',
 	'pr_msg_exceeded' => 'O número máximo de caracteres da mesnagem é te 512. 
 Por favor, reescreva a sua mensagem.',
 	'pr_msg_exchead' => 'A mensagem está muito grande.',
+	'right-problemreports_action' => 'Alterar o estado e tipo dos problemas reportados',
+	'right-problemreports_global' => 'Alterar o estado e tipo dos problemas reportados em todas as wikis',
 );
 
 /** Russian (Русский)

@@ -274,7 +274,7 @@ $messages['ar'] = array(
 
 ثم واصل إلى الأمام! الناس يحبون دائما زيارة الويكيات لأنهم لديهم الكثير من الوقت للقراءة و التصفح، لذلك دائما أضف أشياء، و سوف تجلب قراء و محررين. هناك الكثير من الأشياء التي يجب القيام بها لكن لا تقلق -- اليوم هو يومك الأول، و لديك الكثير من الوقت. كل ويكي تبدأ بنفس الطريقة -- مع بعض الوقت، وبداية صفحات جديدة، حتى تنمو و تصبح كبيرة، و موقعا رائعا.
 
-أيضا لا تنسى زيارة موقع ويكيا العربية للمزيد من المعلومات و المساعدة.
+أيضا لا تنسى زيارة موقع [[w:c:ar|ويكيا العربية]] للمزيد من المعلومات و المساعدة.
 
 -- [[مستخدم:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'ويكيات جديدة',
@@ -1580,8 +1580,33 @@ Silakan pilih yang benar dari daftar pilihan.',
 	'autocreatewiki-step7-error' => 'Tidak dapat menyalin basisdata pemulai untuk bahasa!',
 	'autocreatewiki-protect-reason' => 'Bagian dari antarmuka resmi',
 	'autocreatewiki-welcomesubject' => '$1 telah dibuat!',
+	'autocreatewiki-welcomebody' => 'Halo, $2, 
+
+Permintaan Wikia Anda sekarang tersedia di <$1> Kami berharap dapat melihat Anda meyunting disana segera! 
+
+Kami telah menambahkan beberapa Informasi dan Tips pada halaman Pembicaraan Pengguna Anda (<$5>) untuk membantu Anda memulai. 
+
+Jika Anda memiliki masalah, Anda dapat meminta bantuan komunitas di wiki di <http://www.wikia.com/wiki/Forum:Help_desk> , Atau melalui surel ke community@wikia.com. Anda juga dapat mengunjungi kami ruang obrolan IRC #wikia <http://irc.wikia.com> . 
+
+Saya dapat dihubungi langsung melalui email atau di halaman pembicaraan saya, jika Anda memiliki pertanyaan atau masalah. 
+
+Semoga berhasil dengan proyek ini! 
+
+$3 
+
+Tim Komunitas Wikia 
+
+<http://www.wikia.com/wiki/User:$4>',
 	'newwikis' => 'Wiki baru',
 	'newwikisstart' => 'Tampilkan wiki diawali dengan:',
+	'autocreatewiki-reminder-body-HTML' => '<p>Wahai $1:</p>
+
+<p>Selamat atas dimulainya wiki, {{SITENAME}} baru Anda! Anda dapat kembali dan menambahkan lagi ke wiki Anda dengan mengunjungi
+<a href="$2">$2</a>.</p>
+
+<p>Ini adalah proyek baru, jadi silahkan menulis kepada kami jika Anda memiliki pertanyaan!</p>
+
+<p>-- Tim Komunitas Wikia</p>',
 	'autocreatewiki-subname-answers' => 'Answers',
 );
 
@@ -1760,14 +1785,21 @@ $3
  * @author Robby
  */
 $messages['lb'] = array(
+	'autocreatewiki' => 'Eng nei Wiki uleeën',
+	'autocreatewiki-page-title-default' => 'Eng nei Wiki uleeën',
+	'createwiki' => 'Eng nei Wiki uleeën',
+	'autocreatewiki-chooseone' => 'Eng eraussichen',
+	'autocreatewiki-category-select' => 'Eng eraussichen',
 	'autocreatewiki-language-all' => 'All Sproochen',
 	'autocreatewiki-birthdate' => 'Gebuertsdatum:',
+	'autocreatewiki-remember' => 'Sech u mech erënneren',
 	'autocreatewiki-done' => 'fäerdeg',
 	'autocreatewiki-error' => 'Feeler',
 	'autocreatewiki-success-get-started' => 'Ufänken',
 	'autocreatewiki-invalid-username' => 'Dëse Benotzernumm ass net valabel.',
 	'autocreatewiki-empty-username' => 'De Benotzernumm kann net eidel sinn.',
 	'autocreatewiki-empty-password' => "D'Passwuert kann net eidel sinn.",
+	'autocreatewiki-log-title' => 'Är Wiki gëtt ugeluecht',
 	'autocreatewiki-congratulation' => 'Gratulatioun!',
 	'autocreatewiki-welcometalk-log' => 'Wëllkommensmessage',
 	'autocreatewiki-step2-error' => "D'Datebank gëtt et!",
@@ -1786,7 +1818,7 @@ $messages['mk'] = array(
 	'createwiki' => 'Создај ново вики',
 	'autocreatewiki-chooseone' => 'Изберете',
 	'autocreatewiki-required' => '$1 = задолжително',
-	'autocreatewiki-web-address' => 'Веб-адреса:',
+	'autocreatewiki-web-address' => 'Мреж. адреса:',
 	'autocreatewiki-category-select' => 'Одберете',
 	'autocreatewiki-language-top' => 'Најуспешни $1 јазици',
 	'autocreatewiki-language-all' => 'Сите јазици',
@@ -1810,7 +1842,7 @@ $messages['mk'] = array(
 	'autocreatewiki-info-language' => 'Ова ќе биде автоматски-зададениот јазик за посетителите на вашето вики.',
 	'autocreatewiki-info-email-address' => 'Вашата е-поштенска адреса никогаш не се покажува никому на Викија.',
 	'autocreatewiki-info-realname' => 'Доколку изберете да го наведете вашето име, истото ќе се користи за оддавање на заслуги за вашата работа.',
-	'autocreatewiki-info-birthdate' => 'Викија бара сите корисници да го наведат нивниот датум на раѓање како безбедносна мерка, но и каконачин на зачувување на интегритетот на оваа веб-страница, истовремено придржувајќи се до федералните регулативи.',
+	'autocreatewiki-info-birthdate' => 'Викија бара сите корисници да го наведат нивниот датум на раѓање како безбедносна мерка, но и каконачин на зачувување на интегритетот на ова мрежно место, истовремено придржувајќи се до федералните регулативи.',
 	'autocreatewiki-info-blurry-word' => 'За да ни помогнете да се заштитиме од автоматизирано создавање на сметки, внесете го заматениот збор прикажан во ова поле.',
 	'autocreatewiki-info-terms-agree' => 'Со тоа што го создавате ова вики и корисничка сметка, вие се согласувате со <a href="http://www.wikia.com/wiki/Terms_of_use">Условите на употреба на Викија</a>',
 	'autocreatewiki-info-staff-username' => '<b>Само за персонал:</b> Назначениот корисник ќе биде заведен како основач.',
@@ -1886,13 +1918,13 @@ $3
 	'autocreatewiki-welcometalk' => "== Добредојдовте! ==
 <div style=\"font-size:120%; line-height:1.2em;\">Здраво \$1 -- баш ни е драго што го имаме викито '''\$4''' како дел од заедницата на Викија!
 
-Сега имате една цела веб-страница за пополнување со информации, слики и видеоснимки на вашите омилени теми. Но засега има само страници што зјаат во вас празни... Застрашувачки, нели? Еве како можете да започнете.
+Сега имате една цело мрежното место за пополнување со информации, слики и видеоснимки на вашите омилени теми. Но засега има само страници што зјаат во вас празни... Застрашувачки, нели? Еве како можете да започнете.
 
 * '''Напишете вовед за вашата тема''' на насловната страница. Ова е прилика да им објасните на читателите за какво вики се работи и која е темата. Пишувајте колку што сакате! Во писот може да се поврзат сите важни страници на викито.
 
 * '''Започнете некои нови страници''' -- за почеток доволни се реченица-две. Не дозволувајте празнотијата да ве уплаши! Секое вики служи за додавање и менување на разни нешта како што тече времето. Можете да додавате и слики и видеоснимки за да ја пополните страницата и да ја направите поинтересна.
 
-И само терајте! Луѓето многу сакаат да посетуваат викија кајшто има многу што да се прочита и разгледа, па затоа постојано додавајте разни нешта, и така ќе привлечете читатели и уредници. Има многу што да се работи, но не грижете се -- денес ви е прв ден, и имате многу време. Секое вики започнува исто -- малку по малку, почнувајќи со првите неколку страници, па со време нараснува во огромна, посетена и активна веб-страница.
+И само терајте! Луѓето многу сакаат да посетуваат викија кајшто има многу што да се прочита и разгледа, па затоа постојано додавајте разни нешта, и така ќе привлечете читатели и уредници. Има многу што да се работи, но не грижете се -- денес ви е прв ден, и имате многу време. Секое вики започнува исто -- малку по малку, почнувајќи со првите неколку страници, па со време нараснува во огромно, посетено и активно мрежно место.
 
 Ако имате било какви прашања, обратете ни се по е-пошта преку вашиот [[Special:Contact|контактен образец]]. Забавувајте се!
 

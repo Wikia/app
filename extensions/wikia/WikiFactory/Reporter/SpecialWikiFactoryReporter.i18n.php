@@ -18,6 +18,13 @@ $messages['af'] = array(
 	'wikifactoryreporter' => 'Wikifactory rapportering',
 );
 
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'wikifactoryreporter' => 'مراسل WikiFactory',
+);
+
 /** Araucanian (Mapudungun)
  * @author Kaniw
  */

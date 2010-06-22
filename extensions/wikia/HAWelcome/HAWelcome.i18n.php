@@ -93,6 +93,7 @@ M'ho peus ezhomm skoazell ha ma n'eus merour ebet amañ e c'hallit gweladenniñ 
 
 /** German (Deutsch)
  * @author LWChris
+ * @author The Evil IP address
  */
 $messages['de'] = array(
 	'welcome-user-page' => "== Über mich ==
@@ -130,6 +131,7 @@ Hi, Willkommen bei {{SITENAME}}! Danke für deine Bearbeitung auf der [[:$1]] Se
 '''[[Special:Userlogin|Bitte lege dir ein Benutzerkonto an]]'''. So kannst du ganz einfach deine Beiträge im Überblick behalten und dich besser mit dem Rest der Community verständigen.
 
 Wenn du Hilfe brauchst, und kein Admin von hier in der Nähe ist, möchtest du vielleicht die [[wikia:Forum:Community Central Forum|Foren des Community Zentralwikis]] besuchen $3",
+	'staffsig-text' => '$1<staff /> <small>([[w:forums|Hilfe]] | [[w:sblog|Blog]])</small>',
 );
 
 /** German (formal address) (Deutsch (Sie-Form))
@@ -173,6 +175,8 @@ Wenn Sie Hilfe brauchen, und kein Admin von hier in der Nähe ist, möchten Sie 
 );
 
 /** Spanish (Español)
+ * @author Bola
+ * @author Crazymadlover
  * @author Pertile
  */
 $messages['es'] = array(
@@ -202,7 +206,7 @@ Por favor, si tienes alguna duda, no seas tímido, deja un mensaje en [[$2|mi di
 
 Hola, ¡bienvenido a {{SITENAME}}! Gracias por editar la página [[:$1]].
 
-Si necesita ayuda y no hay administradores locales aquí, quizás quiera visitar los $3 [[wikia:Forum:Community Central Forum|foros de la Comunidad Wiki Central]] $3',
+Si necesitas ayuda y no hay administradores locales aquí, quizás quieras visitar los [[wikia:Forum:Community Central Forum|foros de la Central de Wikia en español]]. $3',
 	'welcome-message-anon-staff' => "==Bienvenido==
 
 Hola, bienvenido a {{SITENAME}}. Gracias por editar la página [[:$1]].
@@ -210,6 +214,7 @@ Hola, bienvenido a {{SITENAME}}. Gracias por editar la página [[:$1]].
 '''[[Special:Userlogin|Por favor regístrese y cree un nombre de usuario]]'''. Es una forma sencilla de mantener un registro de sus contribuciones y para ayudar a comunicarnos con el resto de la comunidad.
 
 Si necesita ayuda y no hay administradores locales aquí, quizás quiera visitar los $3 [[wikia:Forum:Community Central Forum|foros de la Comunidad Central Wiki]] $3",
+	'staffsig-text' => '$1<staff /> <small>([[w:forums|foro de ayuda]] | [[w:sblog|blog]])</small>',
 );
 
 /** Persian (فارسی)
@@ -306,6 +311,7 @@ Bonjour et bienvenue sur {{SITENAME}}. Merci d'avoir modifié la page [[:$1]].
 '''[[Special:Userlogin|Merci de bien vouloir vous enregistrer et créer un nom d'utilisateur]]'''. C'est un moyen simple pour garder la trace de vos contributions et qui vous aidera à communiquer avec le reste de la communauté.
 
 Si vous avez besoin d'aide et qu'il n'y a pas d'administrateur ici, vous pouvez visiter les [[wikia:Forum:Community Central Forum|forums du Wiki Central de la Communauté]] $3",
+	'staffsig-text' => '$1<staff /> <small>([[w:forums|forum d’aide]] | [[w:sblog|blog]])</small>',
 );
 
 /** Galician (Galego)
@@ -349,6 +355,7 @@ Ola, benvido(a) a {{SITENAME}}. Grazas pola súa edición na páxina \"[[:\$1]]\
 '''Por favor, [[Special:Userlogin|rexístrese e cree unha conta de usuario]]'''. É un xeito doado de manter baixo control as súas achegas e axuda á comunicación co resto da comunidade.
 
 Se necesita axuda e non hai administradores locais aquí, quizais queira visitar os [[wikia:Forum:Community Central Forum|foros no wiki central da comunidade]] \$3",
+	'staffsig-text' => '$1<staff /> <small>([[w:forums|foro de axuda]] | [[w:sblog|blogue]])</small>',
 );
 
 /** Hebrew (עברית)
@@ -458,6 +465,7 @@ Salute, benvenite a {{SITENAME}}. Gratias pro tu modification del pagina [[:$1]]
 '''[[Special:Userlogin|Per favor crea un conto e aperi un session]]'''. Es un modo facile de tener tracia de tu contributiones e te adjuta a communicar con le resto del communitate.
 
 Si tu ha besonio de adjuta, e il ha nulle administratores local hic, nos suggere visitar le [[wikia:Forum:Community Central Forum|foros in le wiki Community Central]] $3",
+	'staffsig-text' => '$1<staff /> <small>([[w:forums|foro de adjuta]] | [[w:sblog|blog]])</small>',
 );
 
 /** Italian (Italiano) */
@@ -715,6 +723,7 @@ Serdecznie witamy w {{GRAMMAR:MS.lp|{{SITENAME}}}}. Dziękujemy za to, że popra
 '''[[Special:Userlogin|Możesz się teraz zarejestrować i utworzyć konto]]'''.  Ułatwi Ci to śledzenie własnego wkładu oraz pomoże w komunikacji z resztą społeczności.
 
 Jeśli potrzebujesz pomocy, a nie ma tutaj lokalnych administratorów, możesz odwiedzić [[wikia:Forum:Community Central Forum|forum dyskusyjne centralnej wiki społeczności]] $3",
+	'staffsig-text' => '$1<staff /> <small>([[w:forums|forum pomocy]] | [[w:sblog|blog]])</small>',
 );
 
 /** Piedmontese (Piemontèis)
@@ -757,6 +766,7 @@ Cerea, bin ëvnù su {{SITENAME}}! Mersì për soa modìfica a la pàgina [[:$1]
 '''[[Special:Userlogin|Për piasì ch'a intra e ch'a crea un nòm utent]]'''. A l'é na manera bel fé ëd ten-e trassa ëd soe contribussion e a-j giuta a comuniché con ël rest ëd la comunità.
 
 S'a l'has dabzògn d'agiut, e a-i é gnun aministrator locaj ambelessì, a peul visité le [[wikia:Forum:Community Central Forum|piasse ëd la Wiki Sentral ëd la Comunità]] $3",
+	'staffsig-text' => "↓ $1<staff /> <small>([[w:forums|piassa d'agiut]] | [[w:sblog|blog]])</small>",
 );
 
 /** Pashto (پښتو)
@@ -819,10 +829,12 @@ Olá, bem-vindo(a) à {{SITENAME}}! Obrigado pela sua edição da página [[:$1]
 '''[[Special:Userlogin|Por favor, registe-se e crie um utilizador]]'''. É uma forma fácil de registar as suas contribuições e facilita a comunicação com os restantes utilizadores.
 
 Se necessita de ajuda e não encontra administradores locais, talvez queira visitar os [[wikia:Forum:Community Central Forum|fóruns na Wiki Community Central]] $3",
+	'staffsig-text' => '$1<staff /> <small>([[w:forums|fórum de ajuda]] | [[w:sblog|blogue]])</small>',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Daemorris
+ * @author Giro720
  * @author Jesielt
  */
 $messages['pt-br'] = array(
@@ -848,6 +860,21 @@ Por favor deixe uma mensagem na minha [[$2|página de discussão]] se eu puder a
 
 Por favor deixe uma mensagem na minha [[$2|página de discussão]] se eu puder ajudar com qualquer coisar! $3",
 	'welcome-message-log' => 'recebendo um novo contribuidor',
+	'welcome-message-user-staff' => '==Bem-vindo(a)==
+
+Olá, bem-vindo(a) à {{SITENAME}}! Obrigado pela sua edição da página [[:$1]].
+
+Se você necessita de ajuda e não encontra administradores locais, talvez
+queira visitar os [[wikia:Forum:Community Central Forum|fóruns na
+Wiki Community Central]] $3',
+	'welcome-message-anon-staff' => "==Bem-vindo(a)==
+
+Olá, bem-vindo(a) à {{SITENAME}}! Obrigado pela sua edição da página [[:$1]].
+
+'''[[Special:Userlogin|Por favor, registe-se e crie uma conta de usuário]]'''. É uma forma fácil de registar as suas contribuições e facilita a comunicação com os restantes usuários.
+
+Se necessita de ajuda e não encontra administradores locais, talvez queira visitar os [[wikia:Forum:Community Central Forum|fóruns na Wiki Community Central]] $3",
+	'staffsig-text' => '$1<staff /> <small>([[w:forums|fórum de ajuda]] | [[w:sblog|blogue]])</small>',
 );
 
 /** Russian (Русский)
@@ -889,6 +916,7 @@ $messages['ru'] = array(
 '''[[Special:Userlogin|Пожалуйста создайте учётную запись и представьтесь системе]]'''. Это поможет вам следить за своими исправлениями и общаться с остальными членами сообщества.
 
 Если вам нужна помощь, а локальные администраторы отсутствуют, вы можете посетить [[wikia:Forum:Community Central Forum|форумы Центральной вики сообщества]] $3",
+	'staffsig-text' => '$1<staff /> <small>([[w:forums|справочный форум]] | [[w:sblog|блог]])</small>',
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))

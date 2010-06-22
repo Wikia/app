@@ -77,6 +77,13 @@ Ontwerp vir [http://answers.wikia.com answers.wikia.com]',
 	'cathub-next' => 'Volgende →',
 );
 
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'cathub-progbar-mouseover-answered' => '$1% مجاب عنه ($2 إجابة)',
+);
+
 /** Breton (Brezhoneg)
  * @author Gwenn-Ael
  * @author Y-M D

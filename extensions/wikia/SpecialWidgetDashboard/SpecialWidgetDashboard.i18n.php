@@ -151,6 +151,14 @@ $messages['pt'] = array(
 	'widgetdashboard-description' => 'Esta página serve para testar os seus widgets em acção. Para ver uma lista de todos os widgets disponíveis, visite [[Special:Widgets]].',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
+ */
+$messages['pt-br'] = array(
+	'widgetdashboard-wrong-skin' => '<p>O Painel dos Widgets funciona melhor com um dos temas novos, por exemplo, o <a href="./Special:WidgetDashboard?useskin=monaco">Mónaco</a>.</p><p>Por favor, altere as <a href="./Special:Preferences">suas preferências</a> para usar esta ferramenta.</p>',
+	'widgetdashboard-description' => 'Esta página serve para testar os seus widgets em ação. Para ver uma lista de todos os widgets disponíveis, visite [[Special:Widgets]].',
+);
+
 /** Russian (Русский)
  * @author Александр Сигачёв
  */

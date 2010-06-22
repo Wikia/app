@@ -194,6 +194,19 @@ $messages['ia'] = array(
 	'ajaxpoll-submitting' => 'Un momento, submission de tu voto…',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Irwangatot
+ */
+$messages['id'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp;dari semua suara',
+	'ajaxpoll-thankyou' => 'Terima kasih atas suara anda!',
+	'ajaxpoll-error' => 'Ada masalah dengan pengolahan suara anda, silahkan coba lagi.',
+	'ajaxpoll-summary' => 'Jajak pendapat telah dibuat sejak $1 pada $2, dan sejauh ini  $3 orang memilih.',
+	'ajaxpoll-submit' => 'Pilih!',
+	'ajaxpoll-closed' => 'Jajak pendapat telah ditutup. Nikmati hasilnya.',
+	'ajaxpoll-submitting' => 'Silakan tunggu, pengiriman suara Anda ...',
+);
+
 /** Italian (Italiano)
  * @author Beta16
  * @author Gifh

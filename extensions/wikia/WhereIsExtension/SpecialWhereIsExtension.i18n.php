@@ -231,6 +231,14 @@ $messages['kn'] = array(
 	'whereisextension-submit' => 'ಹುಡುಕು',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'whereisextension-filter' => 'Filter',
+	'whereisextension-all-groups' => 'All Gruppen',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */

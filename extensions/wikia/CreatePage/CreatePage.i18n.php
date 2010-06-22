@@ -913,6 +913,7 @@ Escreva aqui a segunda secção da sua página.',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
  * @author Jesielt
  */
 $messages['pt-br'] = array(
@@ -942,6 +943,7 @@ Você pode ir a <a href="$1">$2</a>, ou renomear a sua página.',
 Por favor, use um título diferente.',
 	'createpage-error-article-blocked' => 'Desculpe-nos, você está impossibilitado de criar aquele artigo agora.',
 	'tog-createpagedefaultblank' => 'Usar uma página em branco como padrão para criar uma nova página',
+	'tog-createpagepopupdisabled' => 'Desativar a janela flutuante Criar Página',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
 Escreva o primeiro parágrafo do seu artigo aqui.
 

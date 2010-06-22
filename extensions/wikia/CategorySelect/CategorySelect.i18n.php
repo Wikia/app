@@ -539,6 +539,7 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
  * @author Jesielt
  */
 $messages['pt-br'] = array(
@@ -559,6 +560,7 @@ $messages['pt-br'] = array(
 	'categoryselect-error-user-rights' => 'Erro nos direitos de usuário.',
 	'categoryselect-error-db-locked' => 'O banco de dados está bloqueado.',
 	'categoryselect-desc' => 'Disponibiliza uma interface para a administração de categorias em um artigo sem necessitar editar o artigo todo.',
+	'categoryselect-edit-abort' => "A alteração que você tentou fazer foi abortada pelo ''hook'' de uma extensão",
 	'tog-disablecategoryselect' => 'Desabilitar os botões de aplicação de categoria',
 );
 

@@ -150,9 +150,20 @@ $messages['an'] = array(
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
+ * @author Jim-by
  */
 $messages['be-tarask'] = array(
 	'invitespecialpage' => 'Запрасіць сяброў у Wikia',
+	'sendtoafriend-desc' => '[[Special:InviteSpecialPage|Запрасіце сяброў далучыцца да Wikia]]',
+	'sendtoafriend-button-desc' => 'Паказвае на старонках кнопкі «Даслаць сябру»',
+	'stf_button' => 'Даслаць гэты артыкул сябру',
+	'stf_after_reg' => '[[Special:InviteSpecialPage|Запрасіць сябра далучыцца да Wikia!]]',
+	'stf_subject' => '$2 {{GENDER:$2|даслаў|даслала}} Вам артыкул з $1!',
+	'stf_confirm' => 'Паведамленьне дасланае! Запрасіць іншых?',
+	'stf_error' => 'Памылка адпраўкі электроннага ліста.',
+	'stf_error_name' => 'Вы не падалі свайго імя.',
+	'stf_error_from' => 'Вы не падалі адрасу сваёй электроннай пошты.',
+	'stf_error_to' => 'Вы не падалі адрас электроннай пошты свайго сябра.',
 	'stf_name_label' => 'Ваша імя',
 	'stf_frm4_cancel' => 'Адмяніць',
 	'stf_sending' => 'Калі ласка, пачакайце…',
@@ -885,7 +896,7 @@ $2
 	'stf_frm4_cancel' => 'Откажи',
 	'stf_frm4_invite' => 'Испрати покана!',
 	'stf_multiemail' => 'Да испратам на повеќе од еден примач?',
-	'stf_frm5' => '(URL-адресата на оваа веб-страница ќе биде приложена кон вашата порака)',
+	'stf_frm5' => '(URL-адресата на ова мрежното место ќе биде приложена кон вашата порака)',
 	'stf_frm6' => 'Затвори го прозорецов',
 	'stf_throttle' => 'Од безбедносни причини можете да испратите највеќе до $1 {{PLURAL:$1|покана|покани}} дневно.',
 	'stf_abuse' => 'Ова писмо го испрати $1 преку Викија.

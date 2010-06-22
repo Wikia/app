@@ -240,6 +240,7 @@ $messages['sr-ec'] = array(
 
 /** Swahili (Kiswahili)
  * @author Lloffiwr
+ * @author Muddyb Blast Producer
  */
 $messages['sw'] = array(
 	'new-edit-page-preview-notice' => 'Unahakikisha tu: mabadiliko hayajahifadhika bado! Biringiza chini ili uendelee kuhariri.',

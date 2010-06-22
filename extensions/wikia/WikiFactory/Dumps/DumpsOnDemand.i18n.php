@@ -39,6 +39,14 @@ Wikia maak outomaties rugsteunkopieë van alle wiki's.",
 	'dump-database-info-more' => '<a href="http://community.wikia.com/wiki/Help:Database_download">Meer inligting</a>.',
 );
 
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'dump-database' => 'مقالب قاعدة البيانات',
+	'dump-database-info' => 'يمكن استخدام مقالب قاعدة البيانات على سبيل الإحتياط الشخصي (ويكيا تنتج نسخا احطياطية منفصلة لكل الويكيات تلقائيا) أو للصيانة عبر البوتات.',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  * @author Jim-by
@@ -294,6 +302,7 @@ $messages['id'] = array(
 	'dump-database-request' => 'Meminta pembaruan',
 	'dump-database-request-info' => '(pelimpahan biasanya dibuat mingguan)',
 	'dump-database-request-submit' => 'Kirim permintaan',
+	'dump-database-request-requested' => 'Permintaan untuk pelimpahan basis data dikirim',
 	'dump-database-info-more' => 'Silakan <a href="http://community.wikia.com/wiki/Help:Database_download">lihat ini</a> untuk informasi lebih lanjut',
 );
 
@@ -323,6 +332,13 @@ $messages['kn'] = array(
 	'dump-database-full-pages' => 'ಪ್ರಸ್ತುತ ಪುಟಗಳು ಮತ್ತು ಇತಿಹಾಸ',
 	'dump-database-request-submit' => 'ಕೋರಿಕೆಯನ್ನು ಕಳುಹಿಸು',
 	'dump-database-info-more' => 'ಹೆಚ್ಚಿನ ಮಾಹಿತಿಗಾಗಿ <a href="http://community.wikia.com/wiki/Help:Database_download">ನೋಡಿ</a>',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'dump-database-curr-pages' => 'Aktuell Säiten',
 );
 
 /** Macedonian (Македонски)

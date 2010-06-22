@@ -225,6 +225,13 @@ $messages['ru'] = array(
 	'force-subject-for-new-section-message' => 'Пожалуйста, введите заголовок для раздела',
 );
 
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'force-subject-for-new-section-message' => 'Prosimo, vnesite naslov razdelka',
+);
+
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Verlor
  */

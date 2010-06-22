@@ -316,6 +316,7 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Daemorris
+ * @author Giro720
  * @author Jesielt
  */
 $messages['pt-br'] = array(
@@ -323,6 +324,8 @@ $messages['pt-br'] = array(
 	'mostvisitedpagessearchtext' => 'Nome do artigo:',
 	'mostvisitedpagessearchbtn' => 'pesquisa',
 	'mostvisitedpageslatest' => 'nos últimos $1 minutos',
+	'mostvisitedpageslatestlink' => 'Ver as últimas páginas visitadas',
+	'mostvisitedpagesalllink' => 'Ver as páginas mais visitadas',
 );
 
 /** Russian (Русский)

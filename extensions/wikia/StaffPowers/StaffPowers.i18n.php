@@ -23,6 +23,13 @@ $messages['af'] = array(
 Gebruik asseblief die [[Special:Contact|kontakblad]] om enige probleme rakende ons personeel te rapporteer.',
 );
 
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'staffpowers-ipblock-aborted' => 'منع موظفي ويكيا غير ممكن. الرجاء إستعمال [[خاص:Contact]] للإبلاغ عن أي قضايا أو مشاكل مع الموظفين لدينا.',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  */
@@ -212,6 +219,13 @@ $messages['ps'] = array(
  */
 $messages['pt'] = array(
 	'staffpowers-ipblock-aborted' => 'Não é possível bloquear a equipa da Wikia. Use [[Special:Contact]] para comunicar-nos quaisquer problemas com a nossa equipa, por favor.',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
+ */
+$messages['pt-br'] = array(
+	'staffpowers-ipblock-aborted' => 'Não é possível bloquear a equipe da Wikia. Por favor, use [[Special:Contact]] para comunicar qualquer dificuldade ou problema com a nossa equipe.',
 );
 
 /** Tarandíne (Tarandíne)

@@ -226,6 +226,21 @@ $messages['ia'] = array(
 	'actionpanel-desc' => 'Un fenestra pop-up practic que permitte categorisar, renominar e modificar paginas',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Irwangatot
+ */
+$messages['id'] = array(
+	'action_panel_edit_title' => 'Jawaban',
+	'action_panel_title' => 'Panel  Aksi Cepat',
+	'action_panel_categorize' => 'Mengkategorikan',
+	'action_panel_categorize_help' => 'Satu kategori per baris',
+	'action_panel_categories_summary' => 'Menambahkan kategori',
+	'action_panel_save_success' => 'Artikel Anda telah disimpan.',
+	'action_panel_rename_success' => 'Artikel Anda telah diubah namanya.',
+	'action_panel_categorize_success' => 'kategori Anda telah ditambahkan.',
+	'actionpanel-desc' => 'Sebuah popup berguna yang memungkinkan Anda mengelompokkan, mengubah nama dan menyunting halaman',
+);
+
 /** Japanese (日本語)
  * @author Naohiro19
  */

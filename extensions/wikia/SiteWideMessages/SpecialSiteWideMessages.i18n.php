@@ -114,6 +114,7 @@ $messages['qqq'] = array(
 	'swm-list-table-group' => '{{Identical|Group}}',
 	'swm-list-table-removed' => 'Column heading of a table with one message per line. The column contains either yes or no if the message was removed or not.',
 	'swm-list-table-content' => '{{Identical|Content}}',
+	'swm-list-table-tools' => '{{Identical|Tools}}',
 	'swm-list-table-lang' => '{{Identical|Language}}',
 	'swm-yes' => '{{Identical|Yes}}',
 	'swm-no' => '{{Identical|No}}',
@@ -239,14 +240,32 @@ $messages['be-tarask'] = array(
 	'swm-button-send' => '[ Даслаць ]',
 	'swm-button-save' => '[ Захаваць ]',
 	'swm-button-new' => '[ Новае ]',
+	'swm-msg-sent-ok' => '<h3>Паведамленьне дасланае.</h3>',
+	'swm-msg-sent-err' => '<h3>Паведамленьне НЕ дасланае.</h3>Глядзіце падрабязнасьці ў журнале памылак.',
+	'swm-msg-remove' => 'Вы ўпэўненыя, што жадаеце выдаліць гэтае паведамленьне? Гэтае дзеяньне ня можа быць адмененае!',
+	'swm-days' => 'ніколі,гадзіна,гадзіны,дзень,дні',
+	'swm-expire-info' => 'Гэтае паведамленьне дзейнічае да $1.',
+	'swm-link-dismiss' => 'адхіліць гэтае паведамленьне',
+	'swm-dismiss-content' => '<p>Паведамленьне было адхіленае.</p><p>%s</p>',
 	'swm-list-no-messages' => 'Няма паведамленьняў.',
+	'swm-list-table-id' => 'Ідэнтыфікатар',
+	'swm-list-table-sender' => 'Адпраўшчык',
+	'swm-list-table-wiki' => 'Вікі',
+	'swm-list-table-recipient' => 'Атрымальнік',
 	'swm-list-table-group' => 'Група',
+	'swm-list-table-expire' => 'Тэрмін',
+	'swm-list-table-date' => 'Дата адпраўкі',
+	'swm-list-table-removed' => 'Выдаленае',
 	'swm-list-table-content' => 'Зьмест',
+	'swm-list-table-tools' => 'Інструмэнты',
 	'swm-list-table-lang' => 'Мовы',
 	'swm-yes' => 'Так',
 	'swm-no' => 'Не',
+	'swm-error-no-such-wiki' => 'Не існуе такой вікі!',
+	'swm-error-no-such-user' => 'Пазначаны ўдзельнік не існуе.',
 	'swm-error-empty-message' => 'Увядзіце зьмест паведамленьня.',
 	'swm-error-empty-group' => 'Увядзіце назву групы.',
+	'swm-lang-other' => 'усе астатнія мовы',
 );
 
 /** Breton (Brezhoneg)
@@ -906,13 +925,13 @@ $messages['lb'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'sitewidemessages' => 'Пораки низ целата веб-страница',
-	'swm-page-title-editor' => 'Пораки низ целата веб-страница :: Уредник',
-	'swm-page-title-preview' => 'Пораки низ целата веб-страница :: Преглед',
-	'swm-page-title-send' => 'Пораки низ целата веб-страница :: Испрати',
-	'swm-page-title-sent' => 'Пораки низ целата веб-страница :: Испратено',
-	'swm-page-title-dismiss' => 'Пораки низ целата веб-страница :: Отфрли',
-	'swm-page-title-list' => 'Пораки низ целата веб-страница :: Список',
+	'sitewidemessages' => 'Пораки низ целото мрежно место',
+	'swm-page-title-editor' => 'Пораки низ целото мрежно место :: Уредник',
+	'swm-page-title-preview' => 'Пораки низ целото мрежно место :: Преглед',
+	'swm-page-title-send' => 'Пораки низ целото мрежно место :: Испрати',
+	'swm-page-title-sent' => 'Пораки низ целото мрежно место :: Испратено',
+	'swm-page-title-dismiss' => 'Пораки низ целото мрежно место :: Отфрли',
+	'swm-page-title-list' => 'Пораки низ целото мрежно место :: Список',
 	'swm-label-preview' => 'Преглед',
 	'swm-label-edit' => 'Уреди',
 	'swm-label-remove' => 'Отстрани',
@@ -937,7 +956,7 @@ $messages['mk'] = array(
 	'swm-label-language' => 'Јазик',
 	'swm-button-lang-checkall' => '[ Штиклирај сè ]',
 	'swm-button-lang-checknone' => '[ Без избор ]',
-	'swm-taskmanager-hint' => '<i>Имајте во предвид дека на некои можности им треба повеќе време, и затоа ќе бидат ставени во ред на чекање во Раководителот со задачи.</i>',
+	'swm-taskmanager-hint' => '<i>Имајте предвид дека на некои можности им треба повеќе време, и затоа ќе бидат ставени во ред на чекање во Раководителот со задачи.</i>',
 	'swm-button-preview' => '[ Преглед ]',
 	'swm-button-send' => '[ Испрати ]',
 	'swm-button-save' => '[ Зачувај ]',
@@ -1541,5 +1560,12 @@ $messages['tl'] = array(
 	'swm-error-empty-message' => 'Ipasok ang nilalaman ng mensahe.',
 	'swm-error-empty-group' => 'Ipasok ang pangalan ng pangkat.',
 	'swm-lang-other' => 'lahat ng natitirang mga wika',
+);
+
+/** Volapük (Volapük)
+ * @author Malafaya
+ */
+$messages['vo'] = array(
+	'swm-no' => 'Nö!',
 );
 

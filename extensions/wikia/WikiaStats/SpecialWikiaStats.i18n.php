@@ -595,8 +595,8 @@ $messages['be-tarask'] = array(
 	'wikiastats' => 'Статыстыка Wikia',
 	'wikiastats_wikia' => 'Wikia',
 	'wikiastats_pagetitle' => 'Статыстыка Wikia',
-	'wikiastats_info' => 'Выберыце вікі са сьпісу і націсьніце «Паказаць статыстыку»',
-	'wikiastats_mainstats_info' => 'Выберыце вікі са сьпісу і націсьніце «Стварыць»',
+	'wikiastats_info' => 'Выберыце вікі са сьпісу і націсьніце «{{int:wikiastats_showstats_btn}}»',
+	'wikiastats_mainstats_info' => 'Выберыце вікі са сьпісу і націсьніце «{{int:wikiastats_xls_generate}}»',
 	'wikiastats_xls_generate_info' => 'Вы можаце выбраць максымум $1 вікі са сьпісу',
 	'wikiastats_comparision' => 'Параўнаньні',
 	'wikiastats_showstats_btn' => 'Паказаць статыстыку',
@@ -621,7 +621,7 @@ $messages['be-tarask'] = array(
 	'wikiastats_article_size_subtitle' => 'Выберыце адзін ці болей памераў артыкулаў для паказу і націсьніце кнопку для прагляду статыстыкі',
 	'wikiastats_recently_active_wikians' => '$1 {{PLURAL:$1|актыўны ў апошні час зарэгістраваны рэдактар, адсартаваны па ўнёску|актыўныя ў апошні час зарэгістраваныя рэдактары, адсартаваныя па ўнёску|актыўных у апошні час зарэгістраваных рэдактараў, адсартаваных па ўнёску}}',
 	'wikiastats_recently_absent_wikians' => '$1 {{PLURAL:$1|адсутнічаючы ў апошні час зарэгістраваны рэдактар, адсартаваны па ўнёску|адсутнічаючыя ў апошні час зарэгістраваныя рэдактары, адсартаваныя па ўнёску|адсутнічаючых у апошні час зарэгістраваных рэдактараў, адсартаваных па ўнёску}}',
-	'wikiastats_active_wikians_subtitle' => 'улічваюцца толькі рэдагаваньні ў прасторах назваў са зьместам, за выключэньнем слупка «Іншыя»',
+	'wikiastats_active_wikians_subtitle' => 'улічваюцца толькі рэдагаваньні ў прасторах назваў са зьместам, за выключэньнем слупка «{{int:wikiastats_other}}»',
 	'wikiastats_anon_wikians_subtitle' => 'улічваюцца толькі рэдагаваньні ў прасторах назваў са зьместам',
 	'wikiastats_active_wikians_subtitle_info' => 'Δ = зьмена ў папулярнасьці за 30 дзён',
 	'wikiastats_pageviews_subtext' => 'праглядаў старонак у гэтым месяцы (к = × 1000, М = к × 1000, Г = М × 1000, Т = Г × 1000)',
@@ -761,7 +761,7 @@ $messages['be-tarask'] = array(
 	'wikiastats_trend_all_wikia_text' => 'Усе вікі',
 	'wikiastats_always_selected' => '(заўсёды выбраны)',
 	'wikiastats_creation_wikia_text' => 'Гісторыя стварэньня / Дасягненьні',
-	'wikiastats_creation_panel_header' => 'Створаная статыстыка «Гісторыі стварэньня»',
+	'wikiastats_creation_panel_header' => 'Створаная статыстыка «{{int:wikiastats_creation_wikia_filename}}»',
 	'wikiastats_creation_legend' => 'Сярэдняе павелічэньне за месяц:',
 	'wikiastats_select_statistics' => 'Выберыце статыстыку',
 	'wikiastats_select_wikia_statistics' => 'Выберыце статыстыку для Wikia $1',
@@ -1292,7 +1292,7 @@ $messages['de'] = array(
 	'wikiastats_trend_all_wikia_text' => 'Alle Wikis',
 	'wikiastats_always_selected' => '(immer ausgewählt)',
 	'wikiastats_creation_wikia_text' => 'Entstehungsgeschichte / Erfolge',
-	'wikiastats_creation_panel_header' => 'Statistik der „Entstehungsgeschichte“ wird generiert',
+	'wikiastats_creation_panel_header' => 'Statistik der „{{int:wikiastats_creation_wikia_filename}}“ wird generiert',
 	'wikiastats_creation_legend' => 'Durchschnittliche Zunahme pro Monat:',
 	'wikiastats_select_statistics' => 'Statistiken wählen',
 	'wikiastats_select_wikia_statistics' => 'Wähle Statistiken für $1 Wikia',
@@ -1348,6 +1348,7 @@ Bitte [[Special:UserLogin|anmelden oder ein Konto anlegen]] falls du noch keins 
 /** German (formal address) (Deutsch (Sie-Form))
  * @author LWChris
  * @author The Evil IP address
+ * @author Umherirrender
  */
 $messages['de-formal'] = array(
 	'wikiastats' => 'Wikia Statistiken',
@@ -2754,6 +2755,7 @@ $messages['id'] = array(
 	'wikiastats_comparision' => 'Perbandingan',
 	'wikiastats_showstats_btn' => 'Tampilkan statistik',
 	'wikiastats_wikia_information' => 'Informasi Wikia',
+	'wikiastast_refresh_data' => 'Perbaharui data',
 	'wikiastats_showcharts' => 'Tampilkan grafik',
 	'wikiastats_export_xls' => 'Ekspor ke XLS',
 	'wikiastats_panel_close_btn' => 'Tutup',
@@ -2762,6 +2764,14 @@ $messages['id'] = array(
 	'wikiastats_nostats_found' => 'Tidak ditemukan statistik di Wikia yang dipilih',
 	'wikiaststs_invalid_date' => 'Rentang tanggal tidak benar',
 	'wikiastats_distrib_article' => 'Distribusi kegiatan penyunting',
+	'wikiastats_active_absent_wikians' => 'Rincian kegiatan penyunting terdaftar',
+	'wikiastats_anon_wikians' => 'rincian kegiatan penyunting anon',
+	'wikiastats_anon_wikians_count' => '$1 {{PLURAL:$1|pengguna|pengguna}} anon ditemukan',
+	'wikiastats_reg_wikians_count' => '$1 mendaftar $2 ditemukan',
+	'wikiastats_unreg_wikians_count' => '$1 mendaftar $2 ditemukan',
+	'wikiastats_pageviews' => 'Halaman di lihat  per ruang nama per bulan',
+	'wikiastats_article_size' => 'Artikel yang berisi setidaknya satu pranala internal dan .. karakter teks yang terbaca, mengabaikan wiki- dan kode HTML, pranala tersembunyi, dll; <br /> Juga catatan tidak dihitung (tidak termasuk pengalihan)',
+	'wikiastats_article_one_link' => 'Artikel yang berisi setidaknya satu pranala internal',
 	'wikiastats_active_day' => 'hari',
 	'wikiastats_active_month' => 'bulan',
 	'wikiastats_active_year' => 'tahun',
@@ -3637,7 +3647,7 @@ $messages['mk'] = array(
 	'wikiastats_mainstats_column_K' => 'Збирна големина на сите статии (вклучувајќи пренасочувања)',
 	'wikiastats_mainstats_column_L' => 'Вкупен број на зборови (без пренасочувања, html/вики-кодови и скриени врски)',
 	'wikiastats_mainstats_column_M' => 'Вкупен број на претставени слики',
-	'wikiastats_mainstats_column_N' => 'Вкупен број на врски со други веб-страници',
+	'wikiastats_mainstats_column_N' => 'Вкупен број на врски до други мрежни места',
 	'wikiastats_mainstats_column_O' => 'Вкупен број на подигнати слики',
 	'wikiastats_mainstats_short_column_A' => 'Засебни регистрирани уредници (именски простори за содржина)',
 	'wikiastats_mainstats_short_column_B' => 'Активни регистрирани уредници',
@@ -3654,7 +3664,7 @@ $messages['mk'] = array(
 	'wikiastats_mainstats_short_column_M' => 'Слики',
 	'wikiastats_mainstats_short_column_N' => 'Надворешни врски',
 	'wikiastats_mainstats_short_column_O' => 'Подигнати слики',
-	'wikiastats_website' => 'Веб-страница',
+	'wikiastats_website' => 'Мреж. место',
 	'wikiastats_tables' => 'Табели',
 	'wikiastats_charts' => 'Графикони',
 	'wikiastats_comparisons_table_1' => 'Преглед',
@@ -3734,6 +3744,13 @@ $messages['mk'] = array(
 	'wikiastats_nbr_format' => 'Формат на бројките:',
 	'wikiastats_pageviews_daily' => 'Дневни статистики (овој месец)',
 	'wikiastats_pageviews_month' => 'Месечни статистики',
+);
+
+/** Maltese (Malti)
+ * @author Chrisportelli
+ */
+$messages['mt'] = array(
+	'wikiastats_hide' => 'Aħbi',
 );
 
 /** Dutch (Nederlands)
@@ -4588,11 +4605,14 @@ $messages['ps'] = array(
 
 /** Portuguese (Português)
  * @author Crazymadlover
+ * @author Giro720
  * @author Hamilton Abreu
  * @author Luckas Blade
  */
 $messages['pt'] = array(
+	'wikiastats' => 'Estatísticas da Wikia',
 	'wikiastats_wikia' => 'Wikia',
+	'wikiastats_pagetitle' => 'Estatísticas da Wikia',
 	'wikiastats_showstats_btn' => 'Mostrar estatísticas',
 	'wikiastats_panel_close_btn' => 'Fechar',
 	'wikiastats_daterange_from' => 'Desde:',
@@ -4607,16 +4627,21 @@ $messages['pt'] = array(
 	'wikiastats_archived' => 'Arquivado',
 	'wikiastats_other' => 'Outro',
 	'wikiastats_database' => 'Base de dados',
+	'wikiastats_links' => 'Links',
 	'wikiastats_images' => 'Imagens',
 	'wikiastats_connection_error' => 'Erro de ligação',
 	'wikiastats_distrib_edits' => 'Edições >=',
 	'wikiastats_distrib_wikians' => 'Editores registados',
 	'wikiastats_date' => 'Data',
+	'wikiastats_wikiname' => 'Nome:',
 	'wikiastats_wikicategory' => 'Categoria:',
+	'wikiastats_wikiid' => 'ID:',
 	'wikiastats_bytes' => 'bytes',
 	'wikiastats_size' => 'tamanho',
 	'wikiastats_words' => 'palavras',
 	'wikiastats_interwiki' => 'interwikis',
+	'wikistats_main_namespace' => 'principal',
+	'wikistats_image_namespace' => 'imagem',
 	'wikiastats_total' => 'total',
 	'wikiastats_now' => 'agora',
 	'wikiastats_mainstats_short_column_L' => 'Palavras',
@@ -5479,5 +5504,14 @@ $messages['uk'] = array(
 	'wikiastats_sort_list_alphabet' => 'Сортувати список за алфавітом',
 	'wikiastats_lifetime_editors' => 'Всього редакторів',
 	'wikiastats_nbr_format' => 'Формат чисел:',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Horacewai2
+ */
+$messages['zh-hant'] = array(
+	'wikiastats' => 'Wikia統計',
+	'wikiastats_wikia' => 'Wikia',
+	'wikiastats_pagetitle' => 'Wikia統計',
 );
 

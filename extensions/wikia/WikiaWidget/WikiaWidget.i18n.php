@@ -264,6 +264,13 @@ $messages['tl'] = array(
 	'wikiawidget' => 'Mga widyet ng Wikia',
 );
 
+/** Ukrainian (Українська)
+ * @author Ast
+ */
+$messages['uk'] = array(
+	'wikiawidget' => 'Віджети Wikia',
+);
+
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Horacewai2
  */

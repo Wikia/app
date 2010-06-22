@@ -190,6 +190,14 @@ $messages['pt'] = array(
 	'quickcreate' => 'envie a sua receita',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
+ */
+$messages['pt-br'] = array(
+	'quickcreate-desc' => 'Adiciona um botão "Criar página nova" com capacidade de autenticação para usuários anônimos',
+	'quickcreate' => 'envie a sua receita',
+);
+
 /** Tarandíne (Tarandíne)
  * @author Joetaras
  */

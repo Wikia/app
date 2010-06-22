@@ -200,6 +200,15 @@ $messages['pt'] = array(
 	'taskmanager_tasklist' => 'Voltar à Lista de Tarefas',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
+ */
+$messages['pt-br'] = array(
+	'taskmanager' => 'Ver e administrar as tarefas de segundo plano',
+	'taskmanager_title' => 'Ver e administrar as tarefas de segundo plano',
+	'taskmanager_tasklist' => 'Voltar à Lista de Tarefas',
+);
+
 /** Russian (Русский)
  * @author Александр Сигачёв
  */

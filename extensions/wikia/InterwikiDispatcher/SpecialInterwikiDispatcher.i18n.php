@@ -197,10 +197,12 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Daemorris
+ * @author Giro720
  * @author Jesielt
  */
 $messages['pt-br'] = array(
 	'interwikidispatcher' => 'Despachador Interwiki',
+	'interwikidispatcher-desc' => 'Resolve os links interwikis para reduzir os reencaminhamentos do servidor Apache',
 );
 
 /** Russian (Русский)
