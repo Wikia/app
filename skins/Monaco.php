@@ -2641,9 +2641,12 @@ EOF;
 
 	/* Often times the request wiki is overridden by sub skins of monaco */
 	function printRequestWikiLink(){
-		global $wgUser;
+		global $wgUser, $wgLang;
+		//RT#53420
+		$userlang = $wgLang->getCode();
+		$userlang = $userlang == 'en' ? '' : "?uselang=$userlang";
 		echo '<div id="requestWikiData">';
-			echo '<a rel="nofollow" href="http://www.wikia.com/Special:CreateWiki" id="request_wiki" class="wikia-button">'. wfMsg('createwikipagetitle') .'</a>&nbsp;';
+			echo '<a rel="nofollow" href="http://www.wikia.com/Special:CreateWiki' . $userlang . '" id="request_wiki" class="wikia-button">'. wfMsg('createwikipagetitle') .'</a>&nbsp;';
 			if (!$wgUser->isLoggedIn()) {
 				echo '<span id="request_wiki_ad">' . wfMsgExt('monaco-request-wiki-ad-text', array( "parseinline" )) . '</span>';
 			}
