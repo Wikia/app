@@ -1,7 +1,7 @@
 <?php
 /**
  * @package MediaWiki
- * @author: Sean Colombo
+ * @author: Sean Colombo, Owen Davis
  * @date: 20100107
  *
  * This panel will help developers administer their dev-boxes
@@ -14,9 +14,6 @@
  * Prerequisite: need to have the 'devbox' user on your editable (usually localhost) database.
  * Look in the private svn's wikia-conf/DevBoxDatabase.php for the query to use.
  *
- *
- * TODO: Since "local" isn't technically a requirement, make sure to update the comments here to make that clear.  It
- * is quite likely that all of the devbox dbs will be moved to some other server for space reasons relatively soon.
  *
  * TODO: GUI for setting which local databases will override the production slaves.
  *
@@ -52,29 +49,7 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 // Definitions
-//$serv = (isset($_SERVER['SERVER_NAME'])?$_SERVER['SERVER_NAME']:"cli");
-//define('DEVBOX_FORCED_WIKI_KEY', "devbox_forceWiki_$serv");
-//define('DEVBOX_FORCED_WIKI_FILE', dirname(__FILE__).'/devbox_forceWiki.txt');
-//define('DEVBOX_FORCED_WIKI_FILE', "/tmp/$serv"."_devbox_forceWiki.txt");
-//define('DEVBOX_OVERRIDDEN_DBS_KEY', "devbox_overridden_dbs_$serv");
-//define('DEVBOX_OVERRIDDEN_DBS_DELIM', '`'); // delimiter used to separate values in both memory & file (grave is used because it is not allowed in table names)
-
-//define('DEVBOX_ACTION', 'panelAction');
-//define('DEVBOX_ACTION_CHANGE_WIKI', 'devbox-change-wiki');
-//define('DEVBOX_FIELD_FORCE_WIKI', 'devbox-field-force-wiki');
-//define('DEVBOX_ACTION_PULL_DB', 'devbox-pull-database');
-//define('DEVBOX_FIELD_DB_TO_PULL', 'dbToPull');
-//define('DEVBOX_ACTION_PULL_DOMAIN', 'devbox-pull-domain');
-//define('DEVBOX_FIELD_DOMAIN_TO_PULL', 'domainToPull');
-
 define('DEVBOX_DEFAULT_WIKI_DOMAIN', 'devbox.wikia.com');
-//define('DEV_BOX_SERVER_NAME', "devbox-server");
-
-// Doing it as its own cluster didn't work because of some details of how wikicities_[cluster] works.
-// Instead, we will try to use the main cluster, but override what server that means.
-// TODO: SWAP ME!  This probably is the solution, but there needs to be some testing (and I can't login at the moment).
-//define('DEV_BOX_CLUSTER', "devbox_section");
-define('DEV_BOX_CLUSTER', "DEFAULT");
 
 function wfSetupDevBoxPanel() {
 	global $IP, $wgMessageCache;
@@ -168,7 +143,7 @@ function getForcedWikiValue(){
  */
 function getDevBoxOverrideDatabases($db){
 
-	$IGNORE_DBS = array('information_schema', 'mysql', 'messaging', 'help', 'devbox', 'wikicities', 'wikicities_c2');
+	$IGNORE_DBS = array('information_schema', 'mysql', '#mysql50#lost+found', 'messaging', 'help', 'devbox', 'wikicities', 'wikicities_c2');
 	$retval = array();
 
 	$info = $db->getLBInfo();
@@ -189,101 +164,11 @@ function getDevBoxOverrideDatabases($db){
  * Given the domain name of a wiki, finds its server then creates a dump
  * of the content & loads it into a database of the same name locally.
  *
- * If the database already exists locally, it will be dropped and completely
- * replaced by whatever is available from the production slaves.
+ * REMOVED BY OWEN: this functionality has been replaced by maintenance/wikia/getDatabase.php
  *
- * NOTE: This function makes the assumption that it is the primary purpose
- * of the current page-load and therefore it completely messes with the
- * configuration settings for this run.  Due to these side-effects, it is
- * recommended that this function be called on a page that's either inside
- * of an iframe or is just an AJAX request.
- *
- * Based largely on Nick's pullDB.bash.
+ *	function pullProdDatabaseToLocal($domainOfWikiToPull){
+ *  }
  */
-
-/*
-function pullProdDatabaseToLocal($domainOfWikiToPull){
-	global $wgCityId,$wgDBserver,$wgDBname,$wgDBuser,$wgDBpassword;
-	global $wgExtensionsPath,$wgStyleVersion, $wgWikiaLocalSettingsPath;
-
-	set_time_limit(0);
-
-	// NOTE: The database settings for production slaves are in DB.php, so that data has to be loaded temporarily.
-	require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../DB.php' );
-	$dbr = wfGetDB( DB_SLAVE, "dump", $wgDBname );
-	$dbr_lbinfo = $dbr->getLBInfo();
-	$wgDBserver_prodSlave = $dbr_lbinfo['host'];
-	$wgDBuser_prodSlave = $wgDBuser;
-	$wgDBpassword_prodSlave = $wgDBpassword;
-	require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../DB.sjc-dev.php' ); // Restore actual values for DevBox connections.
-
-	// Print out a minimal header.
-	print "<html>
-	<head>
-		<title>Pulling $domainOfWikiToPull</title>
-		<link rel='stylesheet' type='text/css' href='$wgExtensionsPath/wikia/Development/SpecialDevBoxPanel/DevBoxPanel.css?$wgStyleVersion'/>
-	</head>
-	<body><div style='font-family:courier,\"courier new\",monospaced'>";
-	
-	// Set the wiki, but with overrides turned off (we're trying to find the production slave
-	// for the database).
-	$originalOverrides = getDevBoxOverrideDatabases(); // restore these later
-	$originalWikiValue = getForcedWikiValue();
-	setDevBoxOverrideDatabases(array());
-	//setForcedWikiValue($domainOfWikiToPull);
-
-	$wikiFactoryLoader = new WikiFactoryLoader();
-	$wgCityId = $wikiFactoryLoader->execute();
-	
-	// Restore the dev-box overrides because they're persistent and we only wanted to temporarily ignore them.
-	setDevBoxOverrideDatabases($originalOverrides);
-	//setForcedWikiValue($originalWikiValue);
-
-	// Everything is configured, now move the data.
-	$tmpFile = "/tmp/$wgDBname.mysql.gz";
-	print "Dumping \"$wgDBname\" from host \"$wgDBserver_prodSlave\"...<br/>\n";
-	print "mysqldump --compress --single-transaction --skip-comments --quick -h $wgDBserver_prodSlave -u$wgDBuser_prodSlave -p$wgDBpassword_prodSlave $wgDBname --result-file=$tmpFile 2>&1";
-	$response = `mysqldump --compress --single-transaction --skip-comments --quick -h $wgDBserver_prodSlave -u$wgDBuser_prodSlave -p$wgDBpassword_prodSlave $wgDBname --result-file=$tmpFile 2>&1`;
-	if(trim($response) != ""){
-		print "<div class='devbox-error'>Database dump returned the following error:\n<em>$response</em></div>\n";
-	} else {
-		print "Backup created.<br/>\n";
-	}
-	print "<br/>\n";
-
-	print "Creating database...<br/>\n";
-	global $wgDBdevboxUser,$wgDBdevboxPassword,$wgDBdevboxServer;
-	$response = `mysql -u $wgDBdevboxUser -p$wgDBdevboxPassword -h $wgDBdevboxServer -e "CREATE DATABASE IF NOT EXISTS $wgDBname" 2>&1`;
-	print "mysql -u $wgDBdevboxUser -p$wgDBdevboxPassword -h $wgDBdevboxServer -e \"CREATE DATABASE IF NOT EXISTS $wgDBname\" 2>&1";
-	if(trim($response) != ""){
-		print "<div class='devbox-error'>CREATE DATABASE attempt returned the error:\n<em>$response</em></div>\n";
-	} else {
-		print "\"$wgDBname\" created on \"$wgDBdevboxServer\".<br/>\n";
-	}
-	print "<br/>";
-	
-	print "Loading \"$wgDBname\" into \"$wgDBdevboxServer\"...<br/>\n";
-	$response = `cat $tmpFile | mysql -u $wgDBdevboxUser -p$wgDBdevboxPassword -h $wgDBdevboxServer $wgDBname 2>&1`;
-	print "cat $tmpFile | mysql -u $wgDBdevboxUser -p$wgDBdevboxPassword -h $wgDBdevboxServer $wgDBname 2>&1";
-	if(trim($response) != ""){
-		print "<div class='devbox-error'>Error loading the database dump into $wgDBdevboxServer:\n<em>$response</em></div>\n";
-	} else {
-		print "<div class='devbox-success'>Database loaded successfully!</div>\n";
-	}
-	print "<br/>\n";
-	
-	print "Removing dumpfile...<br/>\n";
-	$response = `rm -f $tmpFile 2>&1`;
-	if(trim($response) != ""){
-		print "<div class='devbox-error'>WARNING: Problem deleting the dump-file:\n<em>$response</em></div>\n";
-	}
-	print "Done.<br/>\n";
-
-	print "</div></body></html>\n";
-
-	exit; // This is not a normal page!  See function-comment.
-} // end pullProdDatabaseToLocal()
-*/
 
 /**
  * The main function of the SpecialPage.  Adds the content for the page
