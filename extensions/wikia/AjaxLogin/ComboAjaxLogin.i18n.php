@@ -2,7 +2,7 @@
 
 $messages = array();
 
-$messages["en"] = array(
+$messages['en'] = array(
 	'comboajaxlogin-desc' => 'Dynamic box which allow users to login, remind password and register users',
 	"comboajaxlogin-createlog" => "Log in or create an account",
 	"comboajaxlogin-actionmsg" => "To perform this action you first need to log in or create an account",
