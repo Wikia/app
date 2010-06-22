@@ -12,9 +12,24 @@ function UserProfile_handler(&$skin, &$tpl) {
 		return true;
 	}
 
+	// construct object for the user whose page were' on
+	$user = User::newFromName( $wgTitle->getDBKey() );
+
+	// sanity check
+	if ( !is_object( $user ) ) {
+		return true;
+	}
+
+	$user->load();
+
+	// abort if user has been disabled
+	if ( defined( 'CLOSED_ACCOUNT_FLAG' ) && $user->mRealName == CLOSED_ACCOUNT_FLAG ) {
+		return true;
+	}
+
 	$html = '';
 
-	wfRunHooks('AddToUserProfile', array(&$out));
+	wfRunHooks( 'AddToUserProfile', array(&$out, $user) );
 
 	if(count($out) > 0) {
 
