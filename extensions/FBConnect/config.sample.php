@@ -112,7 +112,34 @@ $fbLogo = 'http://static.ak.fbcdn.net/images/icons/favicon.gif';
  * For more info, see <http://developers.facebook.com/docs/reference/javascript/>
  */
 $fbScript = 'http://connect.facebook.net/en_US/all.js';
-#$fbScript = 'https://connect.facebook.net/en_US/all.js';
+
+/**
+ * If this is set to true, and the user's language is anything other than fbScriptLangCode, then
+ * the fbScriptByLocale URL will be used to load the correspondingly-localized version of the
+ * Facebook JS SDK.
+ */
+$fbScriptEnableLocales = true;
+
+/**
+ * The MEDIAWIKI language code which corresponds to the file in $fbScript.  If the user
+ * is in a language other than fbScriptLangCode, then the fbScriptByLocale will be used
+ * if fbScriptEnableLocales is set to true.
+ */
+$fbScriptLangCode = 'en';
+
+/**
+ * If fbScriptEnableLocales is true and the user's language is anything except for the
+ * fbScriptLangCode, we assume that instead of using the file in fbScript (which is quite likely a
+ * locally-cached version of the JS SDK), that we should instead take the risk and use the
+ * Facebook-hosted version for the corresponding language.
+ *
+ * NOTE: URL should include "%LOCALE%" which will be replaced with the correct Facebook Locale based
+ * on the user's configured language.
+ *
+ * WARNING: It is highly-unlikely that you'll need to change this fallback-URL. If you're not sure that
+ * you need to change it, it's best to leave it alone.
+ */
+$fbScriptByLocale = 'http://connect.facebook.net/%LOCALE%/all.js';
 
 /**
  * Path to the extension's client-side JavaScript

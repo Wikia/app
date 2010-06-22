@@ -28,8 +28,8 @@
  * Limited support is available at  http://www.mediawiki.org/wiki/Extension_talk:FBConnect
  * and at http://wiki.developers.facebook.com/index.php/Talk:MediaWiki
  * 
- * @author Garrett Bruin
- * @copyright Copyright © 2008 Garrett Brown
+ * @author Garrett Bruin, Sean Colombo
+ * @copyright Copyright © 2008 Garrett Brown, Sean Colombo
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  * @addtogroup Extensions
  */
@@ -49,13 +49,14 @@ $wgEnablePreferencesExt = true;
  * FBConnect version. Note: this is not necessarily the most recent SVN revision number.
  */
 define( 'MEDIAWIKI_FBCONNECT_VERSION', 'r152, April 14, 2010' );
+define( 'FBCONNECT_LOCALE', '%LOCALE%'); // magic-string to use in substitution (must be defined prior to including config.php).
 
 /*
  * Add information about this extension to Special:Version.
  */
 $wgExtensionCredits['specialpage'][] = array(
 	'name'           => 'Facebook Connect Plugin',
-	'author'         => 'Garrett Brown',
+	'author'         => 'Garrett Brown, Sean Colombo, Tomek Odrobny',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:FBConnect',
 	'descriptionmsg' => 'fbconnect-desc',
 	'version'        => MEDIAWIKI_FBCONNECT_VERSION,
@@ -77,12 +78,14 @@ if(!empty($fbEnablePushToFacebook)){
 }
 
 $wgExtensionMessagesFiles['FBConnect'] =	$dir . 'FBConnect.i18n.php';
+$wgExtensionMessagesFiles['FBConnectLanguage'] = $dir . 'FBConnectLanguage.i18n.php';
 $wgExtensionAliasesFiles['FBConnect'] =		$dir . 'FBConnect.alias.php';
 
 $wgAutoloadClasses['FBConnectAPI'] =		$dir . 'FBConnectAPI.php';
 $wgAutoloadClasses['FBConnectDB'] =			$dir . 'FBConnectDB.php';
 $wgAutoloadClasses['FBConnectHooks'] =		$dir . 'FBConnectHooks.php';
 $wgAutoloadClasses['FBConnectProfilePic'] =	$dir . 'FBConnectProfilePic.php';
+$wgAutoloadClasses['FBConnectLanguage'] =   $dir . 'FBConnectLanguage.php';
 $wgAutoloadClasses['FBConnectUser'] =		$dir . 'FBConnectUser.php';
 $wgAutoloadClasses['FBConnectXFBML'] =		$dir . 'FBConnectXFBML.php';
 $wgAutoloadClasses['SpecialConnect'] =		$dir . 'SpecialConnect.php';
