@@ -37,8 +37,7 @@ class WScribeClient {
 		
 		if ( $this->connected ) { 
 			return true;
-		} else {
-		}
+		} 
 		
 		if ( empty($wgScribeHost) ) {
 			$wgScribeHost = '127.0.0.1';
