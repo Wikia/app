@@ -31,11 +31,10 @@ if (array_key_exists( 'f', $opts )) {
 	$dbname = $opts['f'];
 	echo "Fetching $dbname...\n";
 	// first check to make sure s3cmd is available
-	$response = shell_exec("s3cmd ls s3://database/fulldump*");
+	$response = shell_exec("s3cmd ls s3://database/fulldump* 2>&1");
 	if (preg_match('/ERROR/', $response) || preg_match ('/command not found/', $response)) {
 		// some kind of error, print and die
-		echo $response;
-		die();
+		exit($response);
 	}
 	// otherwise, find out if we got some directories that look like database dumps
 	$dir_list = explode("\n", $response);
@@ -47,8 +46,7 @@ if (array_key_exists( 'f', $opts )) {
 		//print_r("dir = $dir \n");
 		preg_match('/.*fulldump_(\d+)\.(\d+)\.(\d+).*/', $dir, $matches);
 		if (count($matches) != 4) {
-			echo "this does not look like a database directory: $dir\n";
-			die();
+			exit ("this does not look like a database directory: $dir\n");
 		}
 		list($unused, $day, $month, $year) = $matches;
 		$day_of_year = date('z', mktime('0','0','0', $month, $day, $year));
@@ -66,7 +64,7 @@ if (array_key_exists( 'f', $opts )) {
 			echo "Searching $dirname...\n";
 			$filename = null;
 			$response = shell_exec("s3cmd ls s3://database/$dirname/");
-			//print_r($response);
+//			print_r($response);
 			$file_list = explode("\n", $response);
 			echo "Found " . count($file_list) . " items...\n";
 			foreach ($file_list as $file) {
@@ -87,34 +85,46 @@ if (array_key_exists( 'f', $opts )) {
 
 if (array_key_exists( 'i', $opts )) {
 
-	$filename = $opts['f'];
+	if (! file_exists($opts['i'])) { die ("file not found\n"); }
+	$fullpath = basename($opts['i']);
+	$filename = basename($opts['i']);
 	preg_match("/^(.*)_.*.sql.gz/", $filename, $matches);
 	if (count($matches) == 2) {
 		$dbname = $matches[1];
 	}
-	if (! file_exists($dbname)) { echo "file not found\n"; exit(); }
 
-	/*
-	print "mysql -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxServer -e \"SELECT city_cluster from wikicities.city_list where city_id = ' . $cityId;
-\" 2>&1";
-
-	print "mysql -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxServer -e \"CREATE DATABASE IF NOT EXISTS $dbname\" 2>&1";
-	if(trim($response) != ""){
-		print "<div class='devbox-error'>CREATE DATABASE attempt returned the error:\n<em>$response</em></div>\n";
+	// Figure out which cluster we need to load this into
+	$response =  `mysql -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxServer1 -s -N -e "SELECT city_cluster from wikicities.city_list where city_dbname = '$dbname';" 2>&1`;
+	if (trim($response) != "" && substr($response, 0, 5) != 'ERROR') {
+		$cluster_name = trim($response);
 	} else {
-		print "\"$wgDBname\" created on \"$wgDBdevboxServer\".<br/>\n";
+		die ("Database error: " . $response);
 	}
-	print "<br/>";
-
-	print "Loading \"$wgDBname\" into \"$wgDBdevboxServer\"...<br/>\n";
-	//$response = `cat $tmpFile | mysql -u $wgDBdevboxUser -p$wgDBdevboxPassword -h $wgDBdevboxServer $wgDBname 2>&1`;
-	print "cat $tmpFile | mysql -u $wgDBdevboxUser -p$wgDBdevboxPassword -h $wgDBdevboxServer $wgDBname 2>&1";
-	if(trim($response) != ""){
-		print "<div class='devbox-error'>Error loading the database dump into $wgDBdevboxServer:\n<em>$response</em></div>\n";
+	if ($cluster_name == "NULL") $cluster_name = null;  // whee!
+	if ($cluster_name == null) {
+		$wgDBdevboxServer = $wgDBdevboxServer1;
 	} else {
-		print "<div class='devbox-success'>Database loaded successfully!</div>\n";
+		$wgDBdevboxServer = $wgDBdevboxServer2;
 	}
-*/
+
+	echo "That database is supposed to live on server:" . $wgDBdevboxServer . "\n";
+
+	// Now we create the database on the relevant server
+
+	$response = `mysql -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxServer -e "CREATE DATABASE IF NOT EXISTS $dbname" 2>&1`;
+	if(trim($response) != ""){
+		print "CREATE DATABASE attempt returned the error:\n$response\n";
+	} else {
+		print "\"$dbname\" created on \"$wgDBdevboxServer\".<br/>\n";
+	}
+
+	print "Loading \"$fullpath\" into \"$wgDBdevboxServer\"...<br/>\n";
+	$response = `zcat $fullpath | mysql -u $wgDBdevboxUser -p$wgDBdevboxPassword -h $wgDBdevboxServer $dbname 2>&1`;
+	if(trim($response) != ""){
+		print "Error loading the database dump into $wgDBdevboxServer:\n$response\n";
+	} else {
+		print "Database loaded successfully!\n";
+	}
 
 }
 
