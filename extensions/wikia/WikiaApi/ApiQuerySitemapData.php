@@ -1,33 +1,14 @@
 <?php
 
 /**
- * generate data for sitemaps redirector
+ * very simple method, it just returns path to sitemap file
  *
- * @author Przemek Piotrowski <nef@wikia-inc.com>
+ * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
+ *
  */
 
-class GenerateSitemapForApi extends GenerateSitemap {
 
-	/**
-	 * @access public
-	 */
-	public function __construct() {
-		global $wgScriptPath;
-
-		$this->url_limit = 50000;
-		$this->size_limit = pow( 2, 20 ) * 10;
-		$this->fspath = '';
-
-		$this->compress = false;
-
-		$this->stderr = fopen( 'php://stderr', 'wt' );
-		$this->dbr = wfGetDB( DB_SLAVE );
-		$this->generateNamespaces();
-		$this->timestamp = wfTimestamp( TS_ISO_8601, wfTimestampNow() );
-	}
-}
-
-class ApiQuerySitemapData extends ApiQueryBase {
+class ApiQuerySitemapFile extends ApiQueryBase {
 
 	public function __construct( $query, $moduleName) {
 		parent :: __construct( $query, $moduleName, 'sm');
@@ -42,12 +23,36 @@ class ApiQuerySitemapData extends ApiQueryBase {
 	 */
 	public function execute() {
 
-		$sitemap = new GenerateSitemapForApi();
-
 		$params = $this->extractRequestParams();
 		$result = array();
-
 		$this->getResult()->setIndexedTagName($result, 'page');
 		$this->getResult()->addValue(null, $this->getModuleName(), $result );
 	}
+
+	public function getVersion() {
+		return __CLASS__ . ': $Id: WikiaApiCreatorReminderEmail.php 18310 2010-02-10 12:10:30Z eloy $';
+	}
+
+    /**
+     * standard api function
+     *
+     * @access public
+
+     */
+	public function getExamples() {
+        return array (
+            "api.php?action=sitemapdata"
+        );
+    }
+
+	/**
+	 * method demands writing rights
+	 */
+    public function isWriteMode() {
+        return false;
+    }
+
+	public function getDescription() {
+        return "Collect data for generating SiteMaps";
+    }
 }
