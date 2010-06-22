@@ -336,11 +336,24 @@ $messages['ia'] = array(
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Irwangatot
  * @author Kenrick95
  */
 $messages['id'] = array(
+	'wikiavideo-reverted' => 'Video $1 telah berhasil dikembalikan. Kembali ke $2.',
+	'wikiavideo-unreverted' => 'Anda tidak memiliki hak akses untuk mengembalikan $1.',
+	'wikiavideo-added' => 'menambahkan video $1',
 	'wikiavideo-back' => 'kembali',
+	'wikiavideo-create' => 'Tambah Video',
+	'wikiavideo-replace' => 'Ganti Video',
+	'wikiavideo-category' => 'Video',
+	'wikiavideo-links' => 'Pranala',
+	'wikiavideo-placeholder' => 'Penyangga',
+	'wikiavideo-gallery-template' => 'Galeri video ini dalam template, dan tidak dapat disunting dari modus tampilan. Silahkan menunting template yang sesuai.',
+	'wikiavideo-not-supported' => 'kulit ini tidak mendukung untuk memasukkan video dalam modus tampilan ke dalam galeri.',
 	'wikiavideo-pixel' => ' piksel',
+	'wikiavideo-deleted-old' => "Versi dari  '''[$1 $2]''' hingga $4, $3 telah di hapus.",
+	'wikiavideo-intro-old' => "Anda menghapus versi '''[$1 $5]''' hingga [$4 $3, $2].",
 );
 
 /** Italian (Italiano)

@@ -1690,13 +1690,14 @@ $messages['sv'] = array(
 
 /** Swahili (Kiswahili)
  * @author Lloffiwr
+ * @author Muddyb Blast Producer
  */
 $messages['sw'] = array(
 	'wmu-name' => 'Jina',
 	'wmu-license' => 'Hatimiliki',
 	'wmu-size' => 'Ukubwa',
 	'wmu-thumbnail' => 'Picha ndogo',
-	'wmu-fullsize' => 'Ukubwa wa kweli ($1x$2ps)',
+	'wmu-fullsize' => 'Ukubwa-wote ($1x$2px)',
 	'wmu-width' => 'Upana',
 	'wmu-caption' => 'Kichwa cha picha',
 	'wmu-link' => 'Kiungo',

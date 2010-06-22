@@ -339,10 +339,10 @@ $messages['ia'] = array(
 	'user-badge-use-configurator' => 'Usa le configurator pro crear un nove insignia!',
 	'user-badge-create' => 'Crear insignia:',
 	'user-badge-overwrite-msg' => 'Superscriber insignia existente',
-	'user-badge-header-body-box' => 'Capite e corpore:',
+	'user-badge-header-body-box' => 'Titulo e texto:',
 	'user-badge-header-text' => 'Color de texto de capite:',
-	'user-badge-header-bgcolor' => 'Color de fundo de capite:',
-	'user-badge-body-bgcolor' => 'Color de fundo de corpore:',
+	'user-badge-header-bgcolor' => 'Color de fundo del titulo:',
+	'user-badge-body-bgcolor' => 'Color de fundo del texto:',
 	'user-badge-text-align' => 'Alineamento del texto de capite:',
 	'user-badge-logo-opt' => 'Optiones de imagine:',
 	'user-badge-wikia-logo-pos' => 'Position del logotypo de Wikia:',
@@ -399,6 +399,8 @@ $messages['ja'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'user-badge-title' => 'Benotzer-Badge',
+	'user-badge-not-found' => 'Kee Badge fonnt!',
 	'user-badge-logo-opt' => 'Bild-Optiounen:',
 	'user-badge-edits-txt' => 'Ännerungen',
 	'user-badge-save-info' => 'Wann Dir d\'Ännerunge späichere wëllt, da scrollt op d\'Ënn vun der Säit a klickt op de Knäppchen "{{int:saveprefs}}"',
@@ -413,7 +415,7 @@ $messages['mk'] = array(
 	'user-badge-show-color' => 'Прикажи податоци за боја',
 	'user-badge-hide-color' => 'Сокриј податоци за боја',
 	'user-badge-selected-color' => 'Моментално одбрана боја  {rgb}',
-	'user-badge-web-color' => 'Најприближна веб-боја: {rgb}. Кликнете за да одберете!',
+	'user-badge-web-color' => 'Најприближна мрежна боја: {rgb}. Кликнете за да одберете!',
 	'user-badge-dialog-title' => 'Одберете боја',
 	'user-badge-current' => 'Тековна значка',
 	'user-badge-configure' => 'Конфигурирајте ја вашата значка',
@@ -433,7 +435,7 @@ $messages['mk'] = array(
 	'user-badge-small-wikia-logo-color' => 'Боја на логото на Викија:',
 	'user-badge-data-color' => 'Боја на податоците:',
 	'user-badge-edits-txt' => 'Уредувања',
-	'user-bagde-copypaste-ext-code' => 'Копирај и залепи (надворешни веб-страници)',
+	'user-bagde-copypaste-ext-code' => 'Копирај и залепи (надворешни мрежни места)',
 	'user-bagde-copypaste-int-code' => 'Копирај и залепи (оваа Викија)',
 	'user-bagde-copypaste-int-other-code' => 'Копирај и залепи (друга Викија)',
 	'user-badge-save-info' => 'Ако сакате да ги зачувате промените, одете на крајот на страницата и притиснете го копчето „{{int:saveprefs}}“',
@@ -544,7 +546,42 @@ $messages['pms'] = array(
 	'user-bagde-copypaste-ext-code' => 'Còpia e ancòla (sit estern)',
 	'user-bagde-copypaste-int-code' => 'Còpia e ancòla (sta Wikia-sì)',
 	'user-bagde-copypaste-int-other-code' => 'Còpia e ancòla (àutra Wikia)',
-	'user-badge-save-info' => "S'a veul salvé ij cangiament, ch'a scora a fin pàgina e ch'a sgnaca ël boton \"Salvé\"",
+	'user-badge-save-info' => "↓ S'a veul salvé ij cangiament, ch'a scora a fin pàgina e ch'a sgnaca ël boton \"{{int:saveprefs}}\"",
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'user-badge-title' => 'Distintivo do utilizador',
+	'user-badge-invalid-color' => 'Foi introduzido um valor hexadecimal não permitido',
+	'user-badge-show-color' => 'Mostrar detalhes de cor',
+	'user-badge-hide-color' => 'Esconder detalhes de cor',
+	'user-badge-selected-color' => 'Cor seleccionada {rgb}',
+	'user-badge-web-color' => 'Cor mais aproximada, apropriada para uso na internet: {rgb}. Clique para seleccionar!',
+	'user-badge-dialog-title' => 'Seleccione uma cor',
+	'user-badge-current' => 'Distintivo actual',
+	'user-badge-configure' => 'Configurar o seu distintivo',
+	'user-badge-not-found' => 'Não foi encontrado nenhum distintivo',
+	'user-badge-use-configurator' => 'Use a ferramenta de configuração para criar um distintivo novo!',
+	'user-badge-create' => 'Criar distintivo:',
+	'user-badge-overwrite-msg' => 'Sobrepor ao distintivo actual',
+	'user-badge-header-body-box' => 'Cabeçalho e conteúdo',
+	'user-badge-header-text' => 'Cor do texto do cabeçalho:',
+	'user-badge-header-bgcolor' => 'Cor de fundo do cabeçalho:',
+	'user-badge-body-bgcolor' => 'Cor de fundo do conteúdo:',
+	'user-badge-text-align' => 'Alinhamento do texto do cabeçalho:',
+	'user-badge-logo-opt' => 'Opções da imagem:',
+	'user-badge-wikia-logo-pos' => 'Posição do logótipo da Wikia:',
+	'user-badge-small-wikia-logo-pos' => 'Posição do logótipo pequeno da Wikia:',
+	'user-badge-label-color' => 'Cor da legenda (nome do utilizador, edições):',
+	'user-badge-small-wikia-logo-color' => 'Cor do logótipo da Wikia:',
+	'user-badge-data-color' => 'Cor dos dados:',
+	'user-badge-edits-txt' => 'Edições',
+	'user-bagde-copypaste-ext-code' => 'Copiar e inserir (sites externos)',
+	'user-bagde-copypaste-int-code' => 'Copiar e inserir (esta Wikia)',
+	'user-bagde-copypaste-int-other-code' => 'Copiar e inserir (outra Wikia)',
+	'user-badge-save-info' => 'Se pretende gravar as alterações, vá até ao fundo da página e clique o botão "{{int:saveprefs}}"',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

@@ -244,6 +244,18 @@ $messages['oc'] = array(
 	'iwedit-success' => '<p>Lo ligam es estat creat amb succès.</p>',
 );
 
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'iwedit-title' => 'Edytor interwiki',
+	'iwedit-language-interwikis' => 'tylko interwiki języków',
+	'iwedit-all-interwikis' => 'wszystkie interwiki',
+	'iwedit-update' => 'Aktualizacja',
+	'iwedit-error' => '<p>Wystąpił błąd.</p>',
+	'iwedit-success' => '<p>Utworzono link.</p>',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt

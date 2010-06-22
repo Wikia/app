@@ -209,6 +209,24 @@ $messages['an'] = array(
  * @author Achraf94
  */
 $messages['ar'] = array(
+	'createblogpage' => 'إنشاء مدونة',
+	'createbloglistingpage' => 'إنشاء قائمة مدونات',
+	'create-blog-spam' => 'يبدو أن ما أدخلته غير مرغوب فيه',
+	'create-blog-cant-edit' => 'لا يمكن إجراء تعديل',
+	'create-blog-post-category' => 'المشاركات في المدونة',
+	'create-blog-post-category-body' => 'هذه قائمة مدونات منشئة أوتوماتيتكيا',
+	'create-blog-post-category-log' => 'أنشأ مقالا تصنيفيا لمشاركات المدونة',
+	'create-blog-post-recent-listing' => 'المشاركات الأخيرة',
+	'create-blog-post-recent-listing-title' => 'المشاركات الأخيرة',
+	'create-blog-post-recent-listing-log' => 'أنشأ مقالة فيها أحدث المشاركات في المدونة',
+	'create-blog-post-title' => 'أنشأ مشاركة جديدة في المدونة',
+	'create-blog-form-title' => 'كيف تشارك في المدونة؟',
+	'create-blog-form-post-text' => 'نص المدونة',
+	'create-blog-form-info' => 'المشاركة في المدونة هي طريقة جيدة لتبادل الآراء و الأخبار و الأشياء المبدعة مع مجتمع الويكي.',
+	'create-blog-form-post-title' => 'عنوان معلقة المدونة',
+	'create-blog-empty-title-error' => 'العنوان مطلوب',
+	'create-blog-empty-post-error' => 'نص المدونة فارغ',
+	'create-blog-empty-article-log' => 'أنشأ مقالة فيها قائمة المدونات',
 	'blog-page' => 'مدونة',
 );
 
@@ -1468,7 +1486,7 @@ $messages['mk'] = array(
 	'create-blog-categories-textinput' => 'Додај нова категорија',
 	'create-blog-categories-submit' => 'Поднеси',
 	'create-blog-save' => 'Зачувај',
-	'create-blog-preview' => 'Прикажи преглед',
+	'create-blog-preview' => 'Преглед',
 	'create-blog-updated' => 'Блог-записот е создаден или подновен.',
 	'create-blog-permission-denied' => 'Грешка при зачувувањето на блог-страницата: Дозволата е одбиена',
 	'create-blog-article-already-exists' => 'Веќе постои блог-запис со тоа име. Одберете друго име.',
@@ -2008,6 +2026,7 @@ $messages['ps'] = array(
 
 /** Portuguese (Português)
  * @author Crazymadlover
+ * @author Giro720
  * @author Hamilton Abreu
  * @author Luckas Blade
  */
@@ -2064,6 +2083,7 @@ Crie páginas de listagem de blogues para categorias, tais como "Barack Obama" o
 	'blog-comments-label' => 'A comentar',
 	'blog-voting-label' => 'A votar',
 	'blog-comments-info' => 'Esta caixa aceita texto wiki',
+	'blog-comments-login' => '<a href="$1">Autentique-se</a> para comentar',
 	'blog-comments-dsc' => 'Primeiro o mais recente',
 	'blog-comments-asc' => 'Primeiro o mais antigo',
 	'blog-comments-anonymous' => 'Utilizador anónimo',
@@ -2093,6 +2113,7 @@ Crie páginas de listagem de blogues para categorias, tais como "Barack Obama" o
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Jesielt
+ * @author 555
  */
 $messages['pt-br'] = array(
 	'createblogpage' => 'Criar blog',
@@ -2160,6 +2181,7 @@ Crie uma lista de blogs para categorias como "Barack Obama", "Humor" ou, até me
 	'blog-empty-user-blog' => 'Este usuário ainda não escreveu nenhum post no blog.',
 	'blog-last-edited' => '<strong>Última edição:</strong> $1',
 	'blog-added' => 'adicionado',
+	'blog-edited' => 'editou',
 	'blog-page' => 'Blog',
 	'blog-zero-comments' => 'Nenhum comentário ainda!',
 	'blog-comment-post' => 'Comentar post',
@@ -2409,8 +2431,8 @@ $messages['sw'] = array(
 	'blog-comment-post' => 'Changa maoni',
 	'blog-comments' => 'Maoni',
 	'blog-rc-comments' => 'Maoni juu ya blogu',
-	'blog-comments-new' => 'Mchango mpya wa maoni katika blogu',
-	'blog-comments-save' => 'Uhifadhi mchango wa maoni katika blogu',
+	'blog-comments-new' => 'Maoni mapya katika blogu',
+	'blog-comments-save' => 'Weka maoni katika blogu',
 	'blog-comment-delete' => 'futa',
 	'blog-comment-hide' => 'ficha',
 	'blog-comment-unhide' => 'fichua',

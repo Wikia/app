@@ -255,6 +255,13 @@ $messages['pt'] = array(
 	'wikiaupload' => 'Upload na Wikia',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
+ */
+$messages['pt-br'] = array(
+	'wikiaupload' => 'Upload na Wikia',
+);
+
 /** Tarandíne (Tarandíne)
  * @author Joetaras
  */

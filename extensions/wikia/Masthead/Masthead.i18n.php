@@ -33,38 +33,50 @@ Please remember, avatars are global - removing a user's avatar removes it across
 	'right-removeavatar' => 'Remove user avatars',
 );
 
-$messages['fi'] = array(
-	'blog-avatar-removeavatar' => 'Poista avatar',
-	'blog-avatar-goto-userpage' => 'Mene käyttäjäsivulle',
-	'blog-avatar-edit' => 'Valitse',
-	'blog-avatar-delete' => 'Poista',
-	'masthead-blog-avatar-preferences-title' => 'Avatar',
-	'blog-avatar-choose-avatar' => 'Valitse uusi avatar',
-	'blog-avatar-upload-avatar' => 'Lataa uusi avatar',
-	'blog-avatar-nouser' => 'Käyttäjää ei löytynyt!',
-	'blog-avatar-cannot-remove' => 'Ei voida poistaa valitun käyttäjän avatareja!',
-	'blog-avatar-remove-info' => 'Tämän sivun avulla voit poistaa käyttäjän avatarin. Kirjoita tarkka käyttäjänimi kenttään ja paina "Hae".<br />Muista, että avatarit ovat jaettuja - poistamalla käyttäjän avatarin poistat sen kaikista Wikian wikeistä.',
-	'blog-avatar-getuser' => 'Hae',
-	'blog-avatar-remove-confirm' => 'Oletko varma, että haluat poistaa avatarin?',
-	'blog-avatar-error-nofile' => 'Ole hyvä ja hae tiedosto levyltä.',
-	'blog-avatar-error-size' => 'Ladattu tiedosto on liian iso. Suurin sallittu koko on enintään $1 KB:tä.',
-	'blog-avatar-error-cantwrite' => 'Jotain tapahtui ja se estää levylle kirjoituksen.',
-	'blog-avatar-changed-log' => 'Avatarin on lisännyt tai vahtanut $1',
-	'blog-avatar-save-info' => 'Mikäli haluat tallentaa asetukset <a href="#prefcontrol">meme alas</a> ja paina "Tallenna asetukset"-nappia',
-	'removeuseravatar' => 'Poista käyttäjän avatar',
-	'blog-avatar-alt' => "Avatar",
+/** Message documentation (Message documentation)
+ * @author Umherirrender
+ */
+$messages['qqq'] = array(
+	'right-removeavatar' => '{{doc-right|removeavatar}}',
 );
 
+/** Afrikaans (Afrikaans) */
+$messages['af'] = array(
+	'masthead-blog-avatar-preferences-title' => 'Avatar',
+);
+
+/** Bulgarian (Български) */
+$messages['bg'] = array(
+	'masthead-blog-avatar-preferences-title' => 'Аватар',
+);
+
+/** Breton (Brezhoneg)
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'blog-avatar-goto-userpage' => "Mont d'ar bajenn implijer",
+	'blog-avatar-edit' => 'Kemmañ',
+	'blog-avatar-delete' => 'Diverkañ',
+	'masthead-blog-avatar-preferences-title' => 'Avatar',
+	'blog-avatar-choose-avatar' => 'Dibab un avatar nevez',
+	'blog-avatar-upload-avatar' => 'Enporzhiañ un avatar nevez',
+	'blog-avatar-getuser' => 'Klask',
+);
+
+/** German (Deutsch)
+ * @author The Evil IP address
+ */
 $messages['de'] = array(
 	'blog-avatar-removeavatar' => 'Avatar entfernen',
 	'blog-avatar-goto-userpage' => 'Zur Benutzerseite',
 	'blog-avatar-edit' => 'Ändern',
 	'blog-avatar-delete' => 'Löschen',
+	'masthead-blog-avatar-preferences-title' => 'Avatar',
 	'blog-avatar-choose-avatar' => 'Wähle neuen Avatar',
 	'blog-avatar-upload-avatar' => 'Neuen Avatar hochladen',
 	'blog-avatar-nouser' => 'Kann diesen Benutzer nicht finden!',
 	'blog-avatar-cannot-remove' => 'Entfernung von Avataren des ausgewählten Benutzers nicht möglich!',
-	'blog-avatar-remove-info' => 'Auf dieser Seite kannst du den Avatar eines Benutzer entfernen. Gib den exakten Namen des Benutzer in die folgende Box ein und klicke auf "Suchen".<br />Bitte beachte, dass Avatare global genutzt werden! Wenn du den Avatar eines Benutzers entfernst, so wird er in allen Wikis von Wikia entfernt.',
+	'blog-avatar-remove-info' => 'Auf dieser Seite kannst du den Avatar eines Benutzer entfernen. Gib den exakten Namen des Benutzer in die folgende Box ein und klicke auf „{{int:blog-avatar-getuser}}“.<br />Bitte beachte, dass Avatare global genutzt werden! Wenn du den Avatar eines Benutzers entfernst, so wird er in allen Wikis von Wikia entfernt.',
 	'blog-avatar-getuser' => 'Suchen',
 	'blog-avatar-remove-confirm' => 'Bist du sicher, dass du den Avatar entfernen möchtest?',
 	'blog-avatar-error-nofile' => 'Bitte wähle eine Datei von deiner Platte.',
@@ -72,12 +84,25 @@ $messages['de'] = array(
 	'blog-avatar-error-cantwrite' => 'Fehler aufgetreten: Kann Datei nicht auf Medium speichern.',
 	'blog-avatar-changed-log' => 'hat einen Avatar hinzugefügt oder geändert',
 	'blog-avatar-removed-log' => 'Entfernte den Avatar von $1',
-	'blog-avatar-save-info' => 'Um Änderungen zu speichern, gehe <a href="#prefcontrol">zum Ende der Seite</a> und wähle „Einstellungen speichern“.',
+	'blog-avatar-save-info' => 'Um Änderungen zu speichern, gehe <a href="#prefcontrol">zum Ende der Seite</a> und wähle „{{int:saveprefs}}“.',
 	'masthead-edits-since' => 'Bearbeitungen seit',
 	'useravatar-log' => 'Avatar-Logbuch',
+	'blog-avatar-alt' => 'Dies ist das Logbuch der Hinzufügungen ud Entfernungen von Avataren.',
 	'removeuseravatar' => 'Entferne den Avatar eines Benutzers',
+	'right-removeavatar' => 'Avatar eines Benutzers entfernen',
 );
 
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author The Evil IP address
+ */
+$messages['de-formal'] = array(
+	'blog-avatar-remove-info' => 'Auf dieser Seite können Sie den Avatar eines Benutzer entfernen. Geben Sie den exakten Namen des Benutzer in die folgende Box ein und klicken Sie auf „{{int:blog-avatar-getuser}}“.<br />Bitte beachten Sie, dass Avatare global genutzt werden! Wenn Sie den Avatar eines Benutzers entfernen, so wird er in allen Wikis von Wikia entfernt.',
+	'blog-avatar-save-info' => 'Um Änderungen zu speichern, gehen Sie <a href="#prefcontrol">zum Ende der Seite</a> und wählen Sie „{{int:saveprefs}}“.',
+);
+
+/** Spanish (Español)
+ * @author Crazymadlover
+ */
 $messages['es'] = array(
 	'blog-avatar-removeavatar' => 'Borrar avatar',
 	'blog-avatar-goto-userpage' => 'Ir a la página de usuario',
@@ -96,41 +121,153 @@ Por favor, recuerda que los avatares son globales - borrando el avatar de un usu
 	'blog-avatar-error-size' => 'El archivo subido es demasiado grande, el tamaño máximo permitido es de $1 KB.',
 	'blog-avatar-error-cantwrite' => 'Ha ocurrido un error y no puedes almacenar el archivo.',
 	'blog-avatar-changed-log' => '(Avatar añadido o cambiado)',
+	'blog-avatar-removed-log' => 'Removido avatares de $1',
 	'blog-avatar-save-info' => 'Si quieres guardar los cambios <a href="#prefcontrol">ve al final</a> y presiona el botón de "Guardar"',
-	'removeuseravatar' => 'Borrar avatar de usuario',
 	'masthead-edits-since' => 'ediciones desde el',
+	'useravatar-log' => 'Registro de avatares de usuario',
+	'blog-avatar-alt' => 'Registros de adiciones o remociones de avatar de usuario',
+	'removeuseravatar' => 'Borrar avatar de usuario',
+	'right-removeavatar' => 'Remover avatares de usuario',
 );
 
+/** Persian (فارسی) */
+$messages['fa'] = array(
+	'blog-avatar-edit' => 'تغییر',
+	'blog-avatar-delete' => 'حذف',
+	'blog-avatar-getuser' => 'جستجو',
+	'blog-avatar-save-info' => "اگر مایل به ذخیره تغییرات انجام‌شده هستید <a href=\"#prefcontrol\">به پایین بروید</a> و روی دکمه ''ذخیره ترجیحات'' کلیک کنید.",
+	'masthead-edits-since' => 'ویرایش از',
+);
+
+/** Finnish (Suomi)
+ * @author Crt
+ */
+$messages['fi'] = array(
+	'blog-avatar-removeavatar' => 'Poista avatar',
+	'blog-avatar-goto-userpage' => 'Siirry käyttäjäsivulle',
+	'blog-avatar-edit' => 'Valitse',
+	'blog-avatar-delete' => 'Poista',
+	'masthead-blog-avatar-preferences-title' => 'Avatar',
+	'blog-avatar-choose-avatar' => 'Valitse uusi avatar',
+	'blog-avatar-upload-avatar' => 'Lataa uusi avatar',
+	'blog-avatar-nouser' => 'Käyttäjää ei löytynyt!',
+	'blog-avatar-cannot-remove' => 'Ei voida poistaa valitun käyttäjän avatareja!',
+	'blog-avatar-remove-info' => 'Tämä sivun mahdollistaa käyttäjän avatarin poistamisen.
+Kirjoita kenttään tarkka käyttäjänimi ja napsauta {{int:blog-avatar-getuser}}.<br />
+Muista, että avatarit ovat jaettuja – poistamalla käyttäjän avatarin poistat sen kaikista Wikian wikeistä.',
+	'blog-avatar-getuser' => 'Hae',
+	'blog-avatar-remove-confirm' => 'Oletko varma, että haluat poistaa avatarin?',
+	'blog-avatar-error-nofile' => 'Ole hyvä ja hae tiedosto levyltä.',
+	'blog-avatar-error-size' => 'Lähetetty tiedosto on liian iso. Suurin sallittu koko on $1 KB.',
+	'blog-avatar-error-cantwrite' => 'Tiedoston tallennus ei onnistu.',
+	'blog-avatar-changed-log' => 'Avatarin on lisännyt tai vahtanut $1',
+	'blog-avatar-save-info' => 'Jos haluat tallentaa asetukset – <a href="#prefcontrol">siirry alas</a> ja napsauta painiketta ”{{int:saveprefs}}”.',
+	'blog-avatar-alt' => 'Avatar',
+	'removeuseravatar' => 'Poista käyttäjän avatar',
+);
+
+/** French (Français)
+ * @author Peter17
+ */
 $messages['fr'] = array(
-	'blog-avatar-removeavatar' => 'Supprimer l\'avatar',
+	'blog-avatar-removeavatar' => "Supprimer l'avatar",
 	'blog-avatar-goto-userpage' => 'Aller à la page utilisateur',
 	'blog-avatar-edit' => 'Changer',
 	'blog-avatar-delete' => 'Supprimer',
+	'masthead-blog-avatar-preferences-title' => 'Avatar',
 	'blog-avatar-choose-avatar' => 'Choisir un avatar',
 	'blog-avatar-upload-avatar' => 'Téléverser un nouvel avatar',
-	'blog-avatar-nouser' => 'Impossible de trouver l\'utilisateur !',
-	'blog-avatar-cannot-remove' => 'Impossible de retirer l\'avater à l\'utilisateur sélectionné !',
-	'blog-avatar-remove-info' => 'Cette page permet de retirer l\'avatar d\'un utilisateur. Entrez le nom d\'utilisateur exact dans la boîte prévue et cliquez le bouton « Recherche ».
-Attention, les avatars sont globaux. Retirer l\'avatar d\'un utilisateur prend effet sur tout Wikia.',
+	'blog-avatar-nouser' => "Impossible de trouver l'utilisateur !",
+	'blog-avatar-cannot-remove' => "Impossible de retirer l'avater à l'utilisateur sélectionné !",
+	'blog-avatar-remove-info' => "Cette page permet de retirer l'avatar d'un utilisateur. Entrez le nom d'utilisateur exact dans la boîte prévue et cliquez le bouton « Recherche ».
+Attention, les avatars sont globaux. Retirer l'avatar d'un utilisateur prend effet sur tout Wikia.",
 	'blog-avatar-getuser' => 'Rechercher',
-	'blog-avatar-remove-confirm' => 'Êtes-vous sûr de vouloir retirer l\'avatar ?',
+	'blog-avatar-remove-confirm' => "Êtes-vous sûr de vouloir retirer l'avatar ?",
 	'blog-avatar-error-nofile' => 'Choisisez un fichier sur votre disque dur.',
 	'blog-avatar-error-size' => 'Le fichier téléversé est trop gros. La taille permise est $1 Kio maximum.',
-	'blog-avatar-error-cantwrite' => 'Une erreur s\'est produite; impossible d\'enregistrer le fichier.',
+	'blog-avatar-error-cantwrite' => "Une erreur s'est produite; impossible d'enregistrer le fichier.",
 	'blog-avatar-changed-log' => 'a modifié son avatar',
+	'blog-avatar-removed-log' => 'a retiré l’avatar de $1',
 	'blog-avatar-save-info' => 'Pour enregistrer l\'avatar <a href="#prefcontrol">allez au bas de cette page</a> et cliquez sur le bouton « Enregistrer les préférences ».',
 	'masthead-edits-since' => 'éditions depuis le',
+	'useravatar-log' => 'Journal des avatars des utilisateurs',
+	'blog-avatar-alt' => 'Journaux des ajouts et retraits d’avatars des utilisateurs',
+	'removeuseravatar' => 'Retirer l’avatar de l’utilisateur',
+	'right-removeavatar' => 'Retirer des avatars d’utilisateurs',
 );
 
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'blog-avatar-removeavatar' => 'Eliminar o avatar',
+	'blog-avatar-goto-userpage' => 'Ir á páxina de usuario',
+	'blog-avatar-edit' => 'Cambiar',
+	'blog-avatar-delete' => 'Borrar',
+	'masthead-blog-avatar-preferences-title' => 'Avatar',
+	'blog-avatar-choose-avatar' => 'Elixir un novo avatar',
+	'blog-avatar-upload-avatar' => 'Cargar un novo avatar',
+	'blog-avatar-nouser' => 'Non se pode atopar o usuario!',
+	'blog-avatar-cannot-remove' => 'Non se poden eliminar os avatares do usuario seleccionado!',
+	'blog-avatar-remove-info' => 'Esta páxina permite eliminar o avatar dun usuario.
+Escriba o nome exacto na caixa e prema sobre "{{int:blog-avatar-getuser}}".<br />
+Lembre que os avatares son globais, é dicir, a eliminación do avatar dun usuario elimínao de toda Wikia.',
+	'blog-avatar-getuser' => 'Procurar',
+	'blog-avatar-remove-confirm' => 'Está seguro de querer eliminar o avatar?',
+	'blog-avatar-error-nofile' => 'Escolla un ficheiro do disco',
+	'blog-avatar-error-size' => 'O ficheiro cargado é grande de máis. O tamaño máximo para os ficheiros é de $1KB.',
+	'blog-avatar-error-cantwrite' => 'Non se pode gardar o ficheiro',
+	'blog-avatar-changed-log' => 'Engadiu ou cambiou o avatar',
+	'blog-avatar-removed-log' => 'Eliminou o avatar de $1',
+	'blog-avatar-save-info' => 'Se quere gardar os cambios <a href="#prefcontrol">vaia ao final</a> e prema sobre o botón "{{int:saveprefs}}"',
+	'masthead-edits-since' => 'edicións desde o',
+	'useravatar-log' => 'Rexistro de avatares de usuario',
+	'blog-avatar-alt' => 'Rexistros das adicións e eliminacións de avatares de usuario',
+	'removeuseravatar' => 'Eliminar o avatar do usuario',
+	'right-removeavatar' => 'Eliminar avatares de usuario',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'blog-avatar-removeavatar' => 'Remover avatar',
+	'blog-avatar-goto-userpage' => 'Ir al pagina de usator',
+	'blog-avatar-edit' => 'Cambiar',
+	'blog-avatar-delete' => 'Deler',
+	'masthead-blog-avatar-preferences-title' => 'Avatar',
+	'blog-avatar-choose-avatar' => 'Selige un nove avatar',
+	'blog-avatar-upload-avatar' => 'Incargar un nove avatar',
+	'blog-avatar-nouser' => 'Non pote trovar iste usator!',
+	'blog-avatar-cannot-remove' => 'Non pote remover le avatares del usator seligite!',
+	'blog-avatar-remove-info' => 'Iste pagina permitte remover le avatar de un usator.
+Entra le nomine de usator exacte in le quadro, e preme "{{int:blog-avatar-getuser}}".<br />
+Per favor memora que le avatares es global; remover le avatar de un usator lo remove in tote le wikis de Wikia.',
+	'blog-avatar-getuser' => 'Cercar',
+	'blog-avatar-remove-confirm' => 'Es tu secur de voler remover le avatar?',
+	'blog-avatar-error-nofile' => 'Per favor selige un file del disco',
+	'blog-avatar-error-size' => 'Le file incargate es troppo grande; le maximo permittite es $1 KB.',
+	'blog-avatar-error-cantwrite' => 'Impossibile salveguardar le file',
+	'blog-avatar-changed-log' => 'Addeva o cambiava avatar',
+	'blog-avatar-removed-log' => 'Removeva le avatares de $1',
+	'blog-avatar-save-info' => 'Pro salveguardar le modificationes, <a href="#prefcontrol">va al basso</a> e preme e button "{{int:saveprefs}}"',
+	'masthead-edits-since' => 'modificationes depost le',
+	'useravatar-log' => 'Registro de avatar de usator',
+	'blog-avatar-alt' => 'Registro de additiones o remotiones de avatares de usatores',
+	'removeuseravatar' => 'Remover le avatar del usator',
+	'right-removeavatar' => 'Remover avatares de usatores',
+);
+
+/** Italian (Italiano) */
 $messages['it'] = array(
-	'blog-avatar-removeavatar' => 'Rimuovi l\'avatar',
+	'blog-avatar-removeavatar' => "Rimuovi l'avatar",
 	'blog-avatar-goto-userpage' => 'Vai alla pagina utente',
 	'blog-avatar-edit' => 'Cambia',
 	'blog-avatar-delete' => 'Cancella',
 	'blog-avatar-choose-avatar' => 'Scegli un nuovo avatar',
 	'blog-avatar-upload-avatar' => 'Carica un nuovo avatar',
 	'blog-avatar-nouser' => 'Utente non trovato',
-	'blog-avatar-cannot-remove' => 'Non è possibile rimuovere l\'avatar di questo utente!',
+	'blog-avatar-cannot-remove' => "Non è possibile rimuovere l'avatar di questo utente!",
 	'blog-avatar-remove-info' => 'Questa pagina ti consente di eliminare l\'avatar di un utente. Scrivi il nome dell\'utente nella casella e premi "Cerca". <br />
 Non dimenticare che gli avatar sono globali: rimuovere un avatar da questa wiki equivale a cancellarlo da ogni wiki.',
 	'blog-avatar-getuser' => 'Cerca',
@@ -143,6 +280,7 @@ Non dimenticare che gli avatar sono globali: rimuovere un avatar da questa wiki 
 	'masthead-edits-since' => 'modifiche dal',
 );
 
+/** Japanese (日本語) */
 $messages['ja'] = array(
 	'blog-avatar-removeavatar' => 'アバターの削除',
 	'blog-avatar-goto-userpage' => '利用者ページを表示',
@@ -164,12 +302,114 @@ $messages['ja'] = array(
 	'blog-avatar-changed-log' => 'アバターが追加・変更されました',
 	'blog-avatar-removed-log' => '$1 のアバターを削除しました',
 	'blog-avatar-save-info' => 'ここで行った変更は<a href="#prefcontrol">設定を保存</a>しないと反映されません。',
-	'removeuseravatar' => 'アバターの削除',
 	'masthead-edits-since' => '回の編集 | 初回編集',
 	'useravatar-log' => 'アバター記録',
 	'blog-avatar-alt' => 'アバター',
+	'removeuseravatar' => 'アバターの削除',
 );
 
+/** Luxembourgish (Lëtzebuergesch) */
+$messages['lb'] = array(
+	'masthead-blog-avatar-preferences-title' => 'Avatar',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'blog-avatar-removeavatar' => 'Отстрани аватар',
+	'blog-avatar-goto-userpage' => 'Оди на корисничка страница',
+	'blog-avatar-edit' => 'Измени',
+	'blog-avatar-delete' => 'Избриши',
+	'masthead-blog-avatar-preferences-title' => 'Аватар',
+	'blog-avatar-choose-avatar' => 'Одберете нов аватар',
+	'blog-avatar-upload-avatar' => 'Подигни нов аватар',
+	'blog-avatar-nouser' => 'Не можам да го пронајдам корисникот!',
+	'blog-avatar-cannot-remove' => 'Не можам да ги отстранам аватарите за назначениот корисник!',
+	'blog-avatar-remove-info' => 'Оваа страница ви овозможува да отстраните аватар на извесен корисник.
+Впишете го точното корисничко име во предвиденото поле, и притиснете на „{{int:blog-avatar-getuser}}“.<br />
+Запомнете дека аватарите се глобални - ова ќе го отстрани аватарот насекаде, низ велата Викија.',
+	'blog-avatar-getuser' => 'Пребарај',
+	'blog-avatar-remove-confirm' => 'Дали сте сигурни дека сакате да го отстраните аватарот?',
+	'blog-avatar-error-nofile' => 'Одберете податотека од дискот',
+	'blog-avatar-error-size' => 'Подигнатата податотека е преголема. Максималната дозволена големина изнесува $1 KB.',
+	'blog-avatar-error-cantwrite' => 'Не можам да ја зачувам податотеката',
+	'blog-avatar-changed-log' => 'Додаден или изменет аватар',
+	'blog-avatar-removed-log' => 'Отстранети аватарите на $1',
+	'blog-avatar-save-info' => 'Ако сакате да ги зачувате промените, <a href="#prefcontrol">одете најдолу</a> и притиснете на копчето „{{int:saveprefs}}“',
+	'masthead-edits-since' => 'оттогашни уредувања',
+	'useravatar-log' => 'Дневник на кориснички аватар(и)',
+	'blog-avatar-alt' => 'Дневници на додавања и отстранувања на кориснички аватари',
+	'removeuseravatar' => 'Отстрани кориснички аватар',
+	'right-removeavatar' => 'Отстранување на аватари на корисници',
+);
+
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'blog-avatar-removeavatar' => 'Avatar verwijderen',
+	'blog-avatar-goto-userpage' => 'Ga naar gebruikerspagina',
+	'blog-avatar-edit' => 'Wijzigen',
+	'blog-avatar-delete' => 'Verwijderen',
+	'masthead-blog-avatar-preferences-title' => 'Avatar',
+	'blog-avatar-choose-avatar' => 'Kies een nieuwe avatar',
+	'blog-avatar-upload-avatar' => 'Nieuwe avatar uploaden',
+	'blog-avatar-nouser' => 'Deze gebruiker is niet te vinden!',
+	'blog-avatar-cannot-remove' => 'De avatars voor de geselecteerde gebruiker kunnen niet verwijderd worden!',
+	'blog-avatar-remove-info' => 'Via deze pagina kunt u de avatars van gebruikers verwijderen.
+Voer de precieze gebruikersnaam in in het invoerveld en klik "{{int:blog-avatar-getuser}}".
+
+Denk eraan dat avatars globaal zijn.
+Avatars voor een gebruiker worden in alle Wikia verwijderd.',
+	'blog-avatar-getuser' => 'Zoeken',
+	'blog-avatar-remove-confirm' => 'Weet u zeker dat u de avatar wilt verwijderen?',
+	'blog-avatar-error-nofile' => 'Kies een bestand van uw computer',
+	'blog-avatar-error-size' => 'Het geüploade bestand is te groot.
+De maximale toegestane grootte is $1 KB.',
+	'blog-avatar-error-cantwrite' => 'Kan bestand niet opslaan',
+	'blog-avatar-changed-log' => 'Avatar gewijzigd of toegevoegd',
+	'blog-avatar-removed-log' => 'heeft de avatars van $1 verwijderd',
+	'blog-avatar-save-info' => 'Als u de wijzigingen wilt opslaan, klik dan <a href="#prefcontrol">go to bottom</a> op de knop "{{int:saveprefs}}"',
+	'masthead-edits-since' => 'bewerkingen gemaakt sinds',
+	'useravatar-log' => 'Logboek gebruikersavatars',
+	'blog-avatar-alt' => 'Logboek van toegevoegde en verwijderde avatars',
+	'removeuseravatar' => 'Avatars van gebruiker verwijderen',
+	'right-removeavatar' => 'Avatars van gebruikers verwijderen',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['no'] = array(
+	'blog-avatar-removeavatar' => 'Fjern avatar',
+	'blog-avatar-goto-userpage' => 'Gå til brukerside',
+	'blog-avatar-edit' => 'Endre',
+	'blog-avatar-delete' => 'Slett',
+	'masthead-blog-avatar-preferences-title' => 'Avatar',
+	'blog-avatar-choose-avatar' => 'Velg en ny avatar',
+	'blog-avatar-upload-avatar' => 'Last opp en ny avatar',
+	'blog-avatar-nouser' => 'Kan ikke finne denne brukeren!',
+	'blog-avatar-cannot-remove' => 'Kan ikke fjerne avatarer for utvalgte bruker!',
+	'blog-avatar-remove-info' => 'Denne siden lar deg fjerne en brukers avatar-
+Skriv det eksakte brukernavnet i den oppgitte boksen, og trykk «{{int:blog-avatar-getuser}}».<br />
+Vennligst husk at avatarer er globale - å fjerne en brukers avatar fjerner den over hele Wikia.',
+	'blog-avatar-getuser' => 'Søk',
+	'blog-avatar-remove-confirm' => 'Er du sikker på at du vil fjerne avataren?',
+	'blog-avatar-error-nofile' => 'Vennligst velg en fil fra harddisken',
+	'blog-avatar-error-size' => 'Opplastet fil er for stor, tillatt størrelse er opp til $1 KB.',
+	'blog-avatar-error-cantwrite' => 'Kunne ikke lagre filen',
+	'blog-avatar-changed-log' => 'La til eller endret avatar',
+	'blog-avatar-removed-log' => 'Fjernet $1s avatarer',
+	'blog-avatar-save-info' => 'Hvis du vil lagre endringene <a href="#prefcontrol">gå til bunnen</a> og trykk på "{{int:saveprefs}}"-knappen',
+	'masthead-edits-since' => 'redigeringer siden',
+	'useravatar-log' => 'Brukers avatarlogg',
+	'blog-avatar-alt' => 'Logger over brukeravatar-tillegg eller -fjerninger',
+	'removeuseravatar' => 'Fjern brukers avatar',
+	'right-removeavatar' => 'Fjern brukers avatarer',
+);
+
+/** Polish (Polski) */
 $messages['pl'] = array(
 	'blog-avatar-removeavatar' => 'Usuń avatar',
 	'blog-avatar-goto-userpage' => 'Idź do strony użytkownika',
@@ -191,24 +431,74 @@ $messages['pl'] = array(
 	'blog-avatar-alt' => 'Avatar',
 );
 
-$messages['fa'] = array(
-	'blog-avatar-edit' => 'تغییر',
-	'blog-avatar-delete' => 'حذف',
-	'blog-avatar-getuser' => 'جستجو',
-	'blog-avatar-save-info' => 'اگر مایل به ذخیره تغییرات انجام‌شده هستید <a href="#prefcontrol">به پایین بروید</a> و روی دکمه \'\'ذخیره ترجیحات\'\' کلیک کنید.',
-	'masthead-edits-since' => 'ویرایش از',
+/** Piedmontese (Piemontèis) */
+$messages['pms'] = array(
+	'masthead-blog-avatar-preferences-title' => 'Avatar',
 );
 
+/** Portuguese (Português) */
+$messages['pt'] = array(
+	'masthead-blog-avatar-preferences-title' => 'Avatar',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Jesielt
+ */
+$messages['pt-br'] = array(
+	'masthead-blog-avatar-preferences-title' => 'Avatar',
+	'masthead-edits-since' => 'edições desde',
+);
+
+/** Russian (Русский)
+ * @author Eleferen
+ * @author Lockal
+ * @author Александр Сигачёв
+ */
 $messages['ru'] = array(
-	'blog-avatar-edit' => 'изменить',
-	'blog-avatar-delete' => 'удалить',
-	'blog-avatar-choose-avatar' => 'Выберите новые аватар',
-	'blog-avatar-upload-avatar' => 'Загрузка нового аватара',
-	'blog-avatar-save-info' => 'Если хотите сохранить измения, то надо <a href="#prefcontrol">перейти ниже</a> и нажать на кнопку \'\'Записать\'\'',
+	'blog-avatar-removeavatar' => 'Удалить аватару',
+	'blog-avatar-goto-userpage' => 'Перейти на страницу участника',
+	'blog-avatar-edit' => 'Изменить',
+	'blog-avatar-delete' => 'Удалить',
+	'masthead-blog-avatar-preferences-title' => 'Аватара',
+	'blog-avatar-choose-avatar' => 'Выберите новую аватару',
+	'blog-avatar-upload-avatar' => 'Загрузка новой аватары',
+	'blog-avatar-nouser' => 'Не удаётся найти этого участника!',
+	'blog-avatar-cannot-remove' => 'Не удаётся удалить аватары для выбранного участника!',
+	'blog-avatar-remove-info' => 'На этой странице можно удалить аватар участника. 
+Введите точное имя участника в соответствующем поле и нажмите «{{int:blog-avatar-getuser}}».<br />
+Пожалуйста, помните, аватары глобальны — удаление аватара участника удаляет его из всех проектов Викиа.',
+	'blog-avatar-getuser' => 'Поиск',
+	'blog-avatar-remove-confirm' => 'Вы действительно хотите удалить аватару?',
+	'blog-avatar-error-nofile' => 'Пожалуйста, укажите файл на диске',
+	'blog-avatar-error-size' => 'Загруженный файл слишком велик, размер не должен превышать $1 КБ.',
+	'blog-avatar-error-cantwrite' => 'Не удаётся сохранить файл',
+	'blog-avatar-changed-log' => 'добавил или изменил аватару',
+	'blog-avatar-removed-log' => 'Удалённые аватары $1',
+	'blog-avatar-save-info' => 'Если хотите сохранить изменения, <a href="#prefcontrol">перейдите вниз</a> и нажмите на кнопку «{{int:saveprefs}}»',
 	'masthead-edits-since' => 'правок с',
-	'blog-avatar-alt' => 'аватар',
+	'useravatar-log' => 'Журнал аватар участников',
+	'blog-avatar-alt' => 'Журналы добавлений или удалений аватар участников',
+	'removeuseravatar' => 'Удаление аватаров участников',
+	'right-removeavatar' => 'удаление аватаров участников',
 );
 
+/** Serbian Cyrillic ekavian (Српски (ћирилица)) */
+$messages['sr-ec'] = array(
+	'masthead-blog-avatar-preferences-title' => 'аватар',
+);
+
+/** Swedish (Svenska) */
 $messages['sv'] = array(
 	'masthead-edits-since' => 'redigeringar sedan',
 );
+
+/** Telugu (తెలుగు) */
+$messages['te'] = array(
+	'masthead-blog-avatar-preferences-title' => 'అవతారం',
+);
+
+/** Tagalog (Tagalog) */
+$messages['tl'] = array(
+	'masthead-blog-avatar-preferences-title' => 'Huwaran',
+);
+

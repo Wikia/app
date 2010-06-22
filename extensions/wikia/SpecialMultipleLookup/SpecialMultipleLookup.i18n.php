@@ -303,6 +303,19 @@ $messages['ja'] = array(
 	'right-multilookup' => '複数ウィキにおけるユーザの情報を閲覧',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'multilookupgo' => 'Lass',
+	'multilookupnext' => 'nächst',
+	'multilookupprevious' => 'vireg',
+	'multilookupnoresultfound' => 'Kee Resultat fonnt!',
+	'multilookupwiki' => 'Wiki',
+	'multilookuplistwikiainfo' => 'Lëscht vu Wikien op däer Säite vu Benotzer mat der IP-Adress <b>$1</b> geännert goufen',
+	'multilookuplastedit' => 'Lescht Ännerung vun dëser IP-Adress:',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -375,6 +388,30 @@ $messages['no'] = array(
 	'multilookupinvaliduser' => '<p class="error">IP <b>«$1»</b> finnes ikke. Sjekk oppgitt IP for mulige skrivefeil.</p>',
 	'multilookuplastedit' => 'Sist redigert fra denne IP-en:',
 	'right-multilookup' => 'Slå opp informasjon om brukere på flere wikier',
+);
+
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'specialmultiplelookup-desc' => 'Jednoczesne wyszukiwanie użytkownika w wielu wiki',
+	'multilookup' => 'Wyszukaj w wielu wiki',
+	'multilookupstitle' => 'Wyszukiwanie w wielu wiki',
+	'multilookupselectuser' => 'Wyszukaj konta o tym samym adresie IP na wielu wiki',
+	'multilookupgo' => 'Dalej',
+	'multilookupnotspecify' => 'Nie podano jeszcze adresu IP.',
+	'multilookupnext' => 'nast.',
+	'multilookupprevious' => 'poprz.',
+	'multilookupnbrresult' => 'Liczba wyników',
+	'multilookupinvalidresults' => 'Nieprawidłowe wyniki!',
+	'multilookupnoresultfound' => 'Nie znaleziono żadnych wyników!',
+	'multilookupwiki' => 'Wiki',
+	'multilookuplink' => 'Link do wkładu',
+	'multilookupdetails' => 'Pokaż szczegóły',
+	'multilookuplistwikiainfo' => 'Lista stron Wiki, na których były wykonywane edycje przez użytkowników z adresu IP <b>$1</b>',
+	'multilookupinvaliduser' => '<p class="error">Adres IP „<b>$1</b>“ nie istnieje. Sprawdź czy w podanym adresie IP nie ma literówki.</p>',
+	'multilookuplastedit' => 'Ostatnia edycja z tego adresu IP',
+	'right-multilookup' => 'Wyszukiwanie informacji o użytkowniku na wielu wiki',
 );
 
 /** Piedmontese (Piemontèis)

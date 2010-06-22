@@ -254,6 +254,22 @@ $messages['no'] = array(
 	'rightalign-tooltip' => 'Høyrejuster',
 );
 
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'widgetdashboard' => 'Belka narzędziowa widżetów',
+	'mu_size_your_image' => 'Rozmiar grafiki',
+	'almosttheretext' => 'Użyj suwaka, aby wybrać rozmiar miniatur, dodaj podpis, a następnie kliknij przycisk „Wstaw“',
+	'insertfullsize' => 'Wstaw pierwotny rozmiar grafiki',
+	'insertthumbnail' => 'Wstaw miniaturkę',
+	'thumbnailsize' => 'Rozmiar miniaturki',
+	'captionoptional' => 'Podpis (opcjonalnie)',
+	'insertimage' => 'Wstaw grafikę',
+	'leftalign-tooltip' => 'Wyrównanie do lewej',
+	'rightalign-tooltip' => 'Wyrównanie do prawej',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt

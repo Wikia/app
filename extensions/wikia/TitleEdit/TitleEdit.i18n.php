@@ -70,8 +70,11 @@ $messages['ang'] = array(
 	'titleedit' => 'Ādihtan',
 );
 
-/** Arabic (العربية) */
+/** Arabic (العربية)
+ * @author ترجمان05
+ */
 $messages['ar'] = array(
+	'titleedit-desc' => 'أضف زر تعديل العنوان إلى أعلى الصفحات',
 	'titleedit' => 'عدل',
 );
 
@@ -1437,6 +1440,14 @@ $messages['za'] = array(
 /** Zeeuws (Zeêuws) */
 $messages['zea'] = array(
 	'titleedit' => 'Bewerken',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Horacewai2
+ */
+$messages['zh-hant'] = array(
+	'titleedit-desc' => '新增「編輯標題」按鈕到每一頁的頂部',
+	'titleedit' => '編輯',
 );
 
 /** Zulu (isiZulu) */

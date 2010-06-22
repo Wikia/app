@@ -28,8 +28,10 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
+ * @author Umherirrender
  */
 $messages['qqq'] = array(
+	'specialprotectsite-desc' => '{{desc}}',
 	'protectsite-comment' => '{{Identical|Comment}}',
 	'protectsite-protect' => '{{Identical|Protect}}',
 	'protectsite-unprotect' => '{{Identical|Unprotect}}',
@@ -58,6 +60,7 @@ $messages['af'] = array(
  * @author Wizardist
  */
 $messages['be-tarask'] = array(
+	'specialprotectsite-desc' => 'Дазваляе адміністратару сайта [[Special:ProtectSite|часова блякаваць розныя зьмены сайту]]',
 	'protectsite' => 'Абарона сайту',
 	'protectsite-text-protect' => '<!-- Інструкцыі/Камэнтары/Правілы выкарыстаньня -->',
 	'protectsite-text-unprotect' => '<!-- Інструкцыі/Камэнтары, калі працуе абарона -->',
@@ -109,8 +112,10 @@ $messages['br'] = array(
 
 /** German (Deutsch)
  * @author LWChris
+ * @author The Evil IP address
  */
 $messages['de'] = array(
+	'specialprotectsite-desc' => '[[Special:ProtectSite|Spezialseite]] zum Blocken diverser Seitenänderungen',
 	'protectsite' => 'Seite schützen',
 	'protectsite-text-protect' => '<!-- Anweisungen/Kommentare/Richtlinie zur Verwendung -->',
 	'protectsite-text-unprotect' => '<!-- Anweisungen/Kommentare wenn geschützt -->',
@@ -139,6 +144,7 @@ $messages['de'] = array(
  * @author Translationista
  */
 $messages['es'] = array(
+	'specialprotectsite-desc' => 'Permite un administrador de sitio [[Special:ProtectSite|bloquear temporalmente varias modificaciones de sitio]]',
 	'protectsite' => 'Proteger el sitio',
 	'protectsite-text-protect' => '<!-- Instrucciones/Comentario/Políticas de uso -->',
 	'protectsite-text-unprotect' => '<!-- Instrucciones/Comentarios al estar protegidos-->',
@@ -184,8 +190,10 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author IAlex
+ * @author Peter17
  */
 $messages['fr'] = array(
+	'specialprotectsite-desc' => 'Permet à un administrateur de site de [[Special:ProtectSite|bloquer temporairement de nombreuses modifications du site]]',
 	'protectsite' => 'Protéger le site',
 	'protectsite-text-protect' => "<!-- Instructions / Commentaires / Règles d'utilisation -->",
 	'protectsite-text-unprotect' => '<!-- Instructions / Commentaires lorsque protégé -->',
@@ -212,6 +220,7 @@ $messages['fr'] = array(
  * @author Toliño
  */
 $messages['gl'] = array(
+	'specialprotectsite-desc' => 'Permite que un administrador do sitio [[Special:ProtectSite|bloquee temporalmente varias modificacións do mesmo]]',
 	'protectsite' => 'Protexer o sitio',
 	'protectsite-text-protect' => '<!-- Instrucións/Comentarios/Política de uso -->',
 	'protectsite-text-unprotect' => '<!-- Instrucións/Comentarios durante a protección -->',
@@ -254,6 +263,7 @@ $messages['hu'] = array(
  * @author McDutchie
  */
 $messages['ia'] = array(
+	'specialprotectsite-desc' => 'Permitte a un administrator del sito de [[Special:ProtectSite|blocar temporarimente varie modificationes del sito]]',
 	'protectsite' => 'Proteger sito',
 	'protectsite-text-protect' => '<!-- Instructiones/Commentos/Politica pro uso -->',
 	'protectsite-text-unprotect' => '<!-- Instructiones/Commentos quando protegite -->',
@@ -346,10 +356,11 @@ $messages['lb'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'protectsite' => 'Заштити веб-страница',
+	'specialprotectsite-desc' => 'Му овозможува на администраторот [[Special:ProtectSite|привремено да блокира разни измени на мреж-то место]]',
+	'protectsite' => 'Заштити мреж. место',
 	'protectsite-text-protect' => '<!-- Инструкции/Коментари/Правила на употреба -->',
 	'protectsite-text-unprotect' => '<!-- Инструкции/Коментари кога е заштитено -->',
-	'protectsite-title' => 'Нагодувања на заштитата на веб-страната',
+	'protectsite-title' => 'Нагодувања на заштитата на мрежното место',
 	'protectsite-allowall' => 'Сите корисници',
 	'protectsite-allowusersysop' => 'Регистрирани корисници и систем-оператори',
 	'protectsite-allowsysop' => 'Само систем-оператори',
@@ -372,6 +383,7 @@ $messages['mk'] = array(
  * @author Siebrand
  */
 $messages['nl'] = array(
+	'specialprotectsite-desc' => 'Maakt het voor sitebeheerders mogelijk [[Special:ProtectSite|tijdelijke verschillende wijzigingen aan te site tegen te gaan]]',
 	'protectsite' => 'Site beveiligen',
 	'protectsite-text-protect' => '<!-- Instructies/opmerkingen/beleid voor gebruik -->',
 	'protectsite-text-unprotect' => '<!-- Instructies/opmerkingen als beveiligd -->',
@@ -395,9 +407,11 @@ $messages['nl'] = array(
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
  * @author Nghtwlkr
  */
 $messages['no'] = array(
+	'specialprotectsite-desc' => 'Lar en sideadministrator [[Special:ProtectSite|midlertidig blokkere ulike sidemodifikasjoner]]',
 	'protectsite' => 'Beskytt side',
 	'protectsite-text-protect' => '<!-- Instruksjoner/kommentarer/fremgangsmåte for bruk -->',
 	'protectsite-text-unprotect' => '<!-- Instruksjoner/kommentarer når beskyttet -->',
@@ -427,11 +441,28 @@ $messages['pdc'] = array(
 	'protectsite-comment' => 'Grund:',
 );
 
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'specialprotectsite-desc' => 'Umożliwia administratorowi witryny [[Special:ProtectSite|tymczasowe blokowanie różnych zmian]]',
+	'protectsite' => 'Zabezpiecz witrynę',
+	'protectsite-text-protect' => '<!-- Wskazówki/Komentarze/Zasady wykorzystania -->',
+	'protectsite-text-unprotect' => '<!-- Wskazówki/Powód odblokowania -->',
+	'protectsite-title' => 'Ustawienia blokady witryny',
+	'protectsite-allowall' => 'Wszyscy użytkownicy',
+	'protectsite-allowusersysop' => 'Zarejestrowani użytkownicy i administratorzy',
+	'protectsite-allowsysop' => 'Tylko administratorzy',
+	'protectsite-createaccount' => 'Pozwól na tworzenie nowych kont przez',
+	'protectsite-createpage' => 'Umożliwia tworzenie stron przez',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
+	'specialprotectsite-desc' => "↓ A përmët a n'aministrator d'un sit ëd [[Special:ProtectSite|bloché temporaneament vàire modìfiche dël sit]]",
 	'protectsite' => 'Sit protet',
 	'protectsite-text-protect' => '<!-- Istrussion/Coment/Polìtica për dovragi -->',
 	'protectsite-text-unprotect' => '<!-- Istrussion/Coment quand protet -->',
@@ -467,6 +498,7 @@ $messages['ps'] = array(
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
+	'specialprotectsite-desc' => 'Permite que um administrador [[Special:ProtectSite|bloqueie temporariamente várias modificações do site]]',
 	'protectsite' => 'Proteger o site',
 	'protectsite-text-protect' => '<!-- Instruções/Comentários/Normas de utilização -->',
 	'protectsite-text-unprotect' => '<!-- Instruções/Comentários quando sob protecção -->',
@@ -490,21 +522,39 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
+	'specialprotectsite-desc' => 'Permite que um administrador [[Special:ProtectSite|bloqueie temporariamente várias modificações do site]]',
+	'protectsite' => 'Proteger o site',
+	'protectsite-text-protect' => '<!-- Instruções/Comentários/Normas de utilização -->',
+	'protectsite-text-unprotect' => '<!-- Instruções/Comentários quando sob proteção -->',
+	'protectsite-title' => 'Configurações de proteção do site',
 	'protectsite-allowall' => 'Todos os usuários',
 	'protectsite-allowusersysop' => 'Usuários registrados e administradores',
 	'protectsite-allowsysop' => 'Somente administradores',
+	'protectsite-createaccount' => 'Permitir a criação de contas novas por',
+	'protectsite-createpage' => 'Permitir a criação de páginas por',
+	'protectsite-edit' => 'Permitir a edição de páginas por',
+	'protectsite-move' => 'Permitir a movimentação de páginas por',
+	'protectsite-upload' => 'Permitir o upload de arquivos por',
+	'protectsite-timeout' => 'Prazo de expiração:',
+	'protectsite-timeout-error' => "'''Prazo de expiração inválido.'''",
 	'protectsite-maxtimeout' => 'Máximo:',
+	'protectsite-comment' => 'Comentário:',
+	'protectsite-ucomment' => 'Comentário de desproteção:',
+	'protectsite-until' => 'Sob proteção até:',
 	'protectsite-protect' => 'Proteger',
 	'protectsite-unprotect' => 'Desproteger',
 );
 
 /** Russian (Русский)
  * @author Lockal
+ * @author Александр Сигачёв
  */
 $messages['ru'] = array(
+	'specialprotectsite-desc' => 'Позволяет администратору сайта [[Special:ProtectSite|временно блокировать различные изменения сайта]]',
 	'protectsite' => 'Защита сайта',
 	'protectsite-text-protect' => '<!-- Инструкции/Комментарии/Правила для использования -->',
 	'protectsite-text-unprotect' => '<!-- Инструкции/Комментарии при установленной защите -->',

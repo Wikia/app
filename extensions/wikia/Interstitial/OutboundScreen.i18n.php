@@ -207,9 +207,15 @@ Deseja ir para a [[{{MediaWiki:Mainpage}}|Página principal]] ou talvez para uma
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Daemorris
+ * @author Giro720
  */
 $messages['pt-br'] = array(
-	'outbound-screen-login-text' => '<a href="$1">Crie uma conta</a> ou <a href="$2">autentique-se com uma conta existente</a> para evitar esta página no futuro',
+	'outbound-screen-login-text' => '[[Special:UserLogin/signup|Crie uma conta nova]] ou [[Special:UserLogin|entre com a sua conta existente]] para pular esta página no futuro.',
+	'outbound-screen-already-logged-in-no-link' => 'Não foi definido nenhum destino.
+Não há nada para ver aqui!
+
+Você deseja ir para a [[{{MediaWiki:Mainpage}}|Página principal]] ou talvez para uma [[Special:Random|página aleatória]]?',
+	'outbound-screen-you-are-leaving' => 'Você está agora saindo da Wikia.',
 );
 
 /** Russian (Русский)
