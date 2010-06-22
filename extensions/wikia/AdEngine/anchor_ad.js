@@ -1,42 +1,20 @@
 var AnchorAd = {
 	settings: {
-		background: {
-			color: "",
-			url: "",
-			height: 120,
-			left: 0,
-		},
 		close: {
-			url: "http://images1.wikia.nocookie.net/__cb21710/common/skins/monaco/images/monaco-sprite.png",
-			url_params: "-64px -106px",
-			width: 16,
-			height: 16,
-			h: 5,
-			v: 10,
-		},
-		creative: {
-			url: "",
-			width: 800,
-			height: 100,
-			margin: "10px auto",
+			xoffset: 0,
+			yoffset: 0
 		},
 		speed: 500,
 	},
 
 	getCreative: function() {
-		var bg = AnchorAd.settings.background;
-		var fg = AnchorAd.settings.creative;
-		var cl = AnchorAd.settings.close;
-
-		var close = cl.v + "px 0 0 " + (  Math.round(fg.width/2) + cl.h) + "px";
-		
 		var html = '<style type="text/css">\
 			.wikia_anchor_ad {\
-				background: url(' + bg.url + ') ' + bg.color + ' top center;\
+				background: url(' + AnchorAd.settings.background + ') center center;\
 				bottom: 0;\
-				height: ' + bg.height + 'px;\
-				left: ' + bg.left + 'px;\
-				margin-bottom: -' + bg.height + 'px;\
+				height: 120px;\
+				left: 0;\
+				margin-bottom: -120px;\
 				position: fixed;\
 				text-align: center;\
 				width: 100%;\
@@ -44,23 +22,19 @@ var AnchorAd = {
 			}\
 			.wikia_anchor_ad .creative {\
 				cursor: pointer;\
-				height: ' + fg.height + 'px;\
-				margin: ' + fg.margin + ';\
-				width: ' + fg.width + 'px;\
+				margin: 10px auto;\
 			}\
 			.sprite.close {\
-				background: url(' + cl.url + ') ' + cl.url_params + ';\
 				cursor: pointer;\
-				height: ' + cl.height + 'px;\
 				left: 50%;\
-				margin: ' + close + ';\
+				margin-left: ' + parseInt(415 + AnchorAd.settings.close.xoffset) + 'px;\
+				margin-top: ' + parseInt(10 + AnchorAd.settings.close.yoffset) + 'px;\
 				position: absolute;\
-				width: ' + cl.width + 'px;\
 			}\
 		</style>\
 		<div class="wikia_anchor_ad">\
 			<img src="http://images1.wikia.nocookie.net/__cb21710/common/skins/common/blank.gif" class="sprite close" />\
-			<img src="' + fg.url + '" class="creative" />\
+			<img src="' + AnchorAd.settings.creative + '" class="creative" />\
 		</div>';
 
 		return html;
@@ -71,8 +45,8 @@ var AnchorAd = {
 			$.extend(true, AnchorAd.settings, AnchorAd_settings);
 		}
 
-		if (!AnchorAd.settings.creative.url) {
-			WET.byStr("anchor_ad/no_creative");
+		if (!AnchorAd.settings.background || !AnchorAd.settings.creative || !AnchorAd.settings.url) {
+			WET.byStr("anchor_ad/no_background_creative_or_url_set");
 			return;
 		}
 
@@ -87,11 +61,11 @@ var AnchorAd = {
 
 		$(".wikia_anchor_ad .close").click(function() {
 			WET.byStr("anchor_ad/closed");
-			$(".wikia_anchor_ad").animate({"margin-bottom": 0 - AnchorAd.settings.background.height}, AnchorAd.settings.speed);
+			$(".wikia_anchor_ad").animate({"margin-bottom": -120}, AnchorAd.settings.speed);
 		});
 				
 		WET.byStr("anchor_ad/started");
-		$(".wikia_anchor_ad").animate({"margin-bottom": 0}, AnchorAd.settings.speed);		
+		$(".wikia_anchor_ad").animate({"margin-bottom": 0}, AnchorAd.settings.speed);
 	}
 
 }
