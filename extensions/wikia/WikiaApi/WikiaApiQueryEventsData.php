@@ -258,22 +258,29 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 	}
 	
 	private function _get_user_ip($user_id) {
+		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 		$db = $this->getDB();
 
-		$this->profileDBIn();
-		$oRow = $db->selectRow( 
-			'cu_changes', 
-			'cuc_user, cuc_ip, cuc_timestamp', 
-			array( 
-				'cuc_user'	=> $user_id 
-			),
-			__METHOD__, 
-			array( 
-				'ORDER BY' => 'cuc_user desc, cuc_ip desc, cuc_timestamp desc' 
-			)
-		);
-		$this->profileDBOut();
+		$key = __METHOD__ . ":" . intval($user_id);
+		$oRow = $wgMemc->get(md5($key));
+
+		if ( empty($oRow) ) {
+			$this->profileDBIn();
+			$oRow = $db->selectRow( 
+				'cu_changes', 
+				'cuc_user, cuc_ip, cuc_timestamp', 
+				array( 
+					'cuc_user'	=> $user_id 
+				),
+				__METHOD__, 
+				array( 
+					'ORDER BY' => 'cuc_user desc, cuc_ip desc, cuc_timestamp desc' 
+				)
+			);
+			$this->profileDBOut();
+			$wgMemc->set($key, $oRow, 60*60);
+		}
 
 		$ip = '';
 		if ( is_object($oRow) && isset($oRow->cuc_ip) ) {
@@ -473,7 +480,7 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		return array (
 			'pageid' 	=> 'Identifier of page',
 			'revid' 	=> 'Identifier of revision',
-			'logid' 	=> 'Identifier of logs (from logging)'
+			'logid' 	=> 'Identifier of log (from logging)'
 		);
 	}
 
@@ -485,10 +492,10 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 
 	protected function getExamples() {
 		return array (
-			'Get first 5 revisions of the "Main Page" that were not made made by anonymous user "127.0.0.1"',
-			'  api.php?action=query&prop=wkevinfo&titles=Main%20Page&rvlimit=5&rvprop=timestamp|user|comment&rvexcludeuser=127.0.0.1',
-			'Get first 5 revisions of the "Main Page" that were made by the user "MediaWiki default"',
-			'  api.php?action=query&prop=wkevinfo&titles=Main%20Page&rvlimit=5&rvprop=timestamp|user|comment&rvuser=MediaWiki%20default',
+			'Get information about page and revision for page_id and rev_id',
+			'  api.php?action=query&prop=wkevinfo&pageid=28734&revid=120844&meta=siteinfo&siprop=wikidesc',
+			'Get information for removed page (page_id and log_id needed)',
+			'  api.php?action=query&prop=wkevinfo&pageid=28712&logid=14235&meta=siteinfo&siprop=wikidesc',
 		);
 	}
 
