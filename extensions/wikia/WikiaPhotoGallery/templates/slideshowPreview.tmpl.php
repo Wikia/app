@@ -2,8 +2,6 @@
 <?php
 	// render images
 	foreach($slideshow['images'] as $i => $image) {
-
-		if (empty($image['recentlyUploaded'])) {
 ?>
 	<span class="WikiaPhotoGalleryPreviewItem WikiaPhotoGalleryPreviewDraggable" imageid="<?= $i ?>" style="background-image: url(<?= $image['thumbnailBg'] ?>); width: <?= $width?>px; height: <?= $height ?>px">
 		<span class="WikiaPhotoGalleryPreviewItemMenu color1">
@@ -32,14 +30,6 @@
 		</span>
 	</span>
 <?php
-		}
-		else {
-			// recently uploaded images: render 50% transparent, non-interactable (no moving, no menu).
-?>
-	<span class="WikiaPhotoGalleryPreviewItem WikiaPhotoGalleryPreviewRecentlyUploaded" imageid="<?= $i ?>" style="background-image: url(<?= $image['thumbnailBg'] ?>); width: <?= $width?>px; height: <?= $height ?>px">
-	</span>
-<?php
-		}
 	}
 ?>
 </div>
