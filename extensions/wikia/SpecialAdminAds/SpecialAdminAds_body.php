@@ -65,6 +65,16 @@ class SpecialAdminAds extends SpecialPage {
 				}else{
 					$wgOut->addHTML('<p>Could not load ad:'.$wgRequest->getText('approve').'</p>');
 				}
+			}else if ( $wgRequest->getText('remove') > 0 ) {
+				// hide from interface
+				$ad = new Advertisement();
+				if ( $ad->LoadFromDB( $wgRequest->getText('remove') ) ) {
+					$ad->ad_status = 2;
+					$ad->Save();
+					$wgOut->addHTML( Wikia::successbox( "Ad #{$ad->ad_id} has been removed." ) );
+				} else {
+					$wgOut->addHTML('<p>Could not load ad:'.$wgRequest->getText('remove').'</p>');
+				}
 			}
 		}
 		$wgOut->addHTML($this->ModerationForm());
@@ -99,6 +109,7 @@ class SpecialAdminAds extends SpecialPage {
 				$form .= '</td><td>'.$ads[$i]->last_pay_date;
 				$form .= '</td><td><button type="submit" name="edit" value="'.$ads[$i]->ad_id.'">edit</button>';
 				$form .= '<button type="submit" name="approve" value="'.$ads[$i]->ad_id.'">approve</button>';
+				$form .= '<button type="submit" name="remove" value="'.$ads[$i]->ad_id.'">remove</button>';
 				$form .= '</td></tr>';
 			}
 			$form .= '</table>';
