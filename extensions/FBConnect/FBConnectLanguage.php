@@ -24,16 +24,50 @@ class FBConnectLanguage{
 		wfProfileIn(__METHOD__);
 		$locale = 'en_US'; // default facebook locale to use
 
-		// TODO: Load the wfMsg in, parse it into an associative array, store that array in Memcached for a couple of hours.
-		// TODO: Load the wfMsg in, parse it into an associative array, store that array in Memcached for a couple of hours.
-		//wfLoadExtensionMessages('FBConnectLanguage');
-		//$rawMappingText = wfMsg('fbconnect-mediawiki-lang-to-fb-locale');
-		
-		// TODO: Use the array to find if there is a mapping from mediaWikiLangCode to a Facebook locale.
-		// TODO: Use the array to find if there is a mapping from mediaWikiLangCode to a Facebook locale.
+		// See if the mapping is in memcache already.  If not, figure out the mapping from the mediawiki message.
+		global $wgMemc;
+		$messageKey = 'fbconnect-mediawiki-lang-to-fb-locale';
+		$memkey = wfMemcKey( 'FBConnectLanguage', $messageKey);
+		$langMapping = $wgMemc->get($memkey);
+		if(!$langMapping){
+			wfLoadExtensionMessages('FBConnectLanguage');
+			$rawMappingText = wfMsg( $messageKey );
+
+			// Split the message by line.
+			$lines = explode("\n", $rawMappingText);
+			foreach($lines as $line){
+				// Split the line into two pieces (if present) for the mapping.
+				$tokens = explode(',', $line, 2);
+				if(count($tokens) == 2){
+					// Trim off comments and whitespace
+					$mwLang = trim($tokens[0]);
+					$fbLocale = $tokens[1];
+					$index = strpos($fbLocale, "#");
+					if($index !== false){
+						$fbLocale = substr(0, $index); // keep only the text before the comment
+					}
+					$fbLocale = trim($fbLocale);
+					if(($mwLang != "") && ($fbLocale != "")){
+						$langMapping[$mwLang] = $fbLocale;
+					}
+				}
+			}
+
+			$wgMemc->set($memkey, $langMapping, 60 * 60 * 3); // cache for a while since this is expensive to compute
+		}
+
+		// Use the array to find if there is a mapping from mediaWikiLangCode to a Facebook locale.
+		if(isset($langMapping[$mediaWikiLangCode])){
+			$locale = $langMapping[$mediaWikiLangCode];
+
+	// TODO: Verify that this is a valid FBLocale! (otherwise a typo in the message could break FBConnect javascript)
+	// TODO: Verify that this is a valid FBLocale! (otherwise a typo in the message could break FBConnect javascript)
+		}
 
 		wfProfileOut(__METHOD__);
 		return $locale;
 	} // end getFbLocaleForLangCode()
+	
+	
 
 }
