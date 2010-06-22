@@ -52,7 +52,8 @@ class AdDisplay {
 	//Note that some hooks may or may not render wikitext, so plan accordingly
 	public static function OutputAdvertisement() {
 		global $wgParser;
-		global $wgTitle;
+		global $wgTitle, $wgSponsorAdsLimit;
+
 		$ads = Advertisement::GetAdsForCurrentPage();
 		$adtext = wfMsg('sponsor-header');
 		$adtext .= '<div class="sponsormsg">';
@@ -62,7 +63,7 @@ class AdDisplay {
 				$adtext .= $ad->OutPutWikiText();
 			}
 		}
-		if(!is_array($ads) || count($ads) < 2 ){
+		if(!is_array($ads) || count($ads) < $wgSponsorAdsLimit ){
 			$adtext .= self::ShowSponsorMessage();
 		}
 		$adtext .= '</ul>';

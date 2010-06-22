@@ -20,6 +20,13 @@ $dir = dirname(__FILE__) . '/';
 
 $wgExtensionMessagesFiles['SponsorPage'] = $dir . 'Sponsor.i18n.php';
 
+
+// per-page ad limit
+// override possible via WikiFactory
+if ( !isset( $wgSponsorAdsLimit ) ) {
+	$wgSponsorAdsLimit = 2;
+}
+
 //enable the advertisements
 $wgAutoloadClasses['Advertisement'] = $dir . 'Advertisements.php';
 $wgAutoloadClasses['AdDisplay'] = $dir . 'AdDisplay.php';
