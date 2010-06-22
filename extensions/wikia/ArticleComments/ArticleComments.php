@@ -522,7 +522,7 @@ class ArticleComment {
 	}
 
 	/**
-	 * editPage -- show edit form
+	 * doSaveComment -- save comment
 	 *
 	 * @access public
 	 *
@@ -556,7 +556,7 @@ class ArticleComment {
 			$commentTitle = ( $this->mTitle ) ? $this->mTitle : Title::newFromId($commentId);
 
 			/**
-			 * because we save different tile via Ajax request
+			 * because we save different title via Ajax request
 			 */
 			$wgTitle = $commentTitle;
 
@@ -693,25 +693,34 @@ class ArticleComment {
 
 		$articleId = $wgRequest->getVal( 'article', false );
 
-		$Title = Title::newFromID( $articleId );
-		if( ! $Title ) {
+		$title = Title::newFromID( $articleId );
+		if( ! $title ) {
 			return Wikia::json_encode( array( 'error' => 1 ) );
 		}
 
-		$response = self::doPost( $wgRequest, $wgUser, $Title );
+		$response = self::doPost( $wgRequest, $wgUser, $title );
+		//RT#44830
+		if ($title->getNamespace() == NS_USER_TALK && $response[0] == EditPage::AS_SUCCESS_NEW_ARTICLE) {
+			$user = User::newFromName($title->getText());
+			if ($user) {
+				Wikia::log(__FUNCTION__, __LINE__, 'new talk = true');
+				$user->setNewtalk(true);
+			}
+		}
+
 		$res = array();
 		if ( $response !== false ) {
 			$status = $response[0]; $article = $response[1];
 			$res = self::doAfterPost($status, $article);
 
-			$listing = ArticleCommentList::newFromTitle($Title);
+			$listing = ArticleCommentList::newFromTitle($title);
 			$comments = $listing->getCommentPages(true, false);
 			$countComments = count($comments);
 			$countPages = ceil($countComments / $wgArticleCommentsMaxPerPage);
 			$page = $listing->getOrder() == 'desc' ? 0 : $countPages-1;
 			$comments = array_slice($comments, $page * $wgArticleCommentsMaxPerPage, $wgArticleCommentsMaxPerPage, true);
 			$comments = ArticleCommentList::formatList($comments);
-			$pagination = ArticleCommentList::doPagination($countComments, count($comments), $page,$Title);
+			$pagination = ArticleCommentList::doPagination($countComments, count($comments), $page, $title);
 
 			$res = array('text' => $comments, 'pagination' => $pagination);
 		}
