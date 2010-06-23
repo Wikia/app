@@ -3618,6 +3618,8 @@ function toggleDisplay(id, type) {
    * @param resource $ch a curl handle
    */
   protected function curl_exec($ch) {
+      global $wgHTTPProxy;
+      curl_setopt($ch, CURLOPT_PROXY, $wgHTTPProxy);
       $result = curl_exec($ch);
       return $result;
   }

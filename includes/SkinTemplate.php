@@ -346,6 +346,9 @@ class SkinTemplate extends Skin {
 		} else {
 			$ntl = '';
 		}
+		
+		wfRunHooks( 'SkinTemplatePageBeforeUserMsg', array( &$ntl ) ); 
+		
 		wfProfileOut( __METHOD__."-stuff2" );
 
 		wfProfileIn( __METHOD__."-stuff3" );

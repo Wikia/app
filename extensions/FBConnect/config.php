@@ -212,6 +212,7 @@ if(!empty($fbEnablePushToFacebook)){
 		'FBPush_OnLargeEdit',
 		'FBPush_OnRateArticle',
 		'FBPush_OnWatchArticle',
+		'FBPush_OnAchBadge'
 	);
 	foreach($pushEventClassNames as $pClassName){
 		$fbPushEventClasses[] = $pClassName;

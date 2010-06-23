@@ -212,7 +212,11 @@ class FBConnectPushEvent {
 		
 		$fb = new FBConnectAPI();
 		
-		$image = $wgServer.'/skins/common/fbconnect/'.$params['$EVENTIMG'];
+		$image = $params['$EVENTIMG'];
+		if( strpos( $params['$EVENTIMG'], 'http://' ) === false ) {
+			$image = $wgServer.'/skins/common/fbconnect/'.$params['$EVENTIMG'];	
+		}
+		
 		$href = $params['$ARTICLE_URL'];		
 		$description = wfMsg( $message ) ;
 		$link = wfMsg( $message.'-link' ) ;

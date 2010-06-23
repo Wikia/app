@@ -46,3 +46,9 @@
 #fbLoginLastStep {
 	margin-left:178px;
 }	
+
+#fbMsgImage {
+	float:left;
+	margin-top:3px;
+	padding-right:10px;
+}
