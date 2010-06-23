@@ -116,12 +116,10 @@ function renderXML( $input, $argv, &$parser )
 	{
 		// Uses Http::get which is the prefered method to make requests from MediaWiki since it handles going through proxies, etc.
 		$timeout = 5; // set to zero for no timeout
-		Http::get($feedURL);
 		$source = Http::get(
 			$feedURL,
 			$timeout, // 'default' as a string to use the default
 			array(
-				CURLOPT_RETURNTRANSFER      => 1,
 				CURLOPT_FOLLOWLOCATION => 1,
 			)
 		);
