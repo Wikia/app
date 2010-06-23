@@ -4,7 +4,7 @@
 #awc-log { text-align: center; }
 </style>
 <div style="text-align:center">
-	<div><img src="<?=$wgExtensionsPath?>/wikia/AutoCreateWiki/images/Installation_animation.gif?<?=$wgStyleVersion?>" width="700" height="142" /></div>
+	<div><img id="awc-main-img" src="<?=$wgExtensionsPath?>/wikia/AutoCreateWiki/images/Installation_animation.gif?<?=$wgStyleVersion?>" width="700" height="142" /></div>
 	<div id="awc-log" class="note"></div>
 </div>
 <br />
