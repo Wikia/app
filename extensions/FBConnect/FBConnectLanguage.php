@@ -141,7 +141,7 @@ class FBConnectLanguage{
 		}
 
 		// Look through each of the MediaWiki langauges.
-		foreach($wgLanguageNames as $lang){
+		foreach(array_keys($wgLanguageNames) as $lang){
 			if( !isset($langMapping[$lang]) ){
 				$passed = false;
 				error_log("FBConnect: MediaWiki language \"$lang\" does not have a row for mapping it to a Facebook Locale. Add it to the MediaWiki message!\n");
