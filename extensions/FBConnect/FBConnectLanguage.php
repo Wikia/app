@@ -57,7 +57,7 @@ class FBConnectLanguage{
 				// Remove comments
 				$index = strpos($line, "#");
 				if($index !== false){
-					$line = substr(0, $line); // keep only the text before the comment
+					$line = substr($line, 0, $index); // keep only the text before the comment
 				}
 			
 				// Split the line into two pieces (if present) for the mapping.
@@ -98,7 +98,7 @@ class FBConnectLanguage{
 	 * we will most likely be out of sync until someone brings this to our attention).
 	 */ 
 	public static function isValidFacebookLocale($locale){
-		return in_array($locale, $allFbLocales);
+		return in_array($locale, self::$allFbLocales);
 	}
 	
 	/**
@@ -118,7 +118,7 @@ class FBConnectLanguage{
 			// Remove comments
 			$index = strpos($line, "#");
 			if($index !== false){
-				$line = substr(0, $line); // keep only the text before the comment
+				$line = substr($line, 0, $index); // keep only the text before the comment
 			}
 		
 			// Split the line into two pieces (if present) for the mapping.
@@ -131,9 +131,8 @@ class FBConnectLanguage{
 				// NOTE: THIS DIFFERS FROM NORMAL LOADING BECAUSE WE WANT EVEN THE MAPPINGS WITH NO DESTINATION.
 				if($mwLang != ""){
 					// Verify that this is a valid fb locale before storing (otherwise a typo in the message could break FBConnect javascript by including an invalid fbScript URL).
-					if(isValidFacebookLocale($fbLocale)){
-						$langMapping[$mwLang] = $fbLocale;
-					} else {
+					$langMapping[$mwLang] = $fbLocale;
+					if(($fbLocale != "") && (!self::isValidFacebookLocale($fbLocale))){
 						error_log("FBConnect: WARNING: Facebook Locale was found in the wiki-message but does not appear to be a Facebook Locale that we know about: \"$fbLocale\".\n");
 						error_log("FBConnect: Skipping locale for now.  If you want this locale to be permitted, please add it to FBConnectLanguage::\$allFbLocales.\n");
 					}
