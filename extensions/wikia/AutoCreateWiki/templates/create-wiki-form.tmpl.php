@@ -1,6 +1,17 @@
 <!-- s:<?= __FILE__ ?> -->
 <style type="text/css">
 .infoline {float:left; width:auto;font-size:105%;}
+#type-selector { margin-bottom: 1em; margin-top: 1em; }
+#options {
+	text-align: right;
+	margin-bottom: 1em;
+}
+#options-form {
+	display: inline;
+}
+#uselang {
+	width: 150px;
+}
 </style>
 <script type="text/javascript">
 /*<![CDATA[*/
@@ -26,7 +37,33 @@ if( !empty( $mType ) ) {
 	$type = $mType;
 }
 ?>
-<form class="highlightform" id="highlightform" method="post" action="<?php echo $mTitle->escapeLocalURL( $cgiArgs ) ?>">
+<div id="type-selector" class="wikia-tabs">
+	<ul>
+		<li class="<?= ( $type == 'default' ) ? 'selected' : 'accent' ?>">
+			<a href="<?= $mTitle->escapeLocalURL() ?>"><?= wfMsg( 'autocreatewiki-page-title-default' ) ?></a>
+		</li>
+		<li class="<?= ( $type == 'answers' ) ? 'selected' : 'accent' ?>">
+			<a href="<?= $mTitle->escapeLocalURL( array( 'type' => 'answers' ) ) ?>"><?=wfMsg('autocreatewiki-page-title-answers')?></a>
+		</li>
+	</ul>
+</div>
+<div id="options">
+	<?php if ( $wgUser->isAnon() ) { ?>
+	<form id="options-form" method="post" action="<?= $mTitle->escapeLocalURL( $cgiArgs ) ?>">
+		<label for="uselang"><?= wfMsg( 'yourlanguage' ) ?></label>
+		<select id="uselang" name="uselang" onchange="$('#options-form').submit()">
+		<?php
+		$selected = !empty( $uselang ) ? $uselang : $wgUser->getOption('language');
+		$languages = Language::getLanguageNames();
+		foreach( $languages as $code => $name ) {
+			echo Xml::option( "$code - $name", $code, ($code == $selected) ) . "\n";
+		}
+		?>
+		</select>
+	</form>
+	<?php } ?>
+</div>
+<form class="highlightform" id="highlightform" method="post" action="<?= $mTitle->escapeLocalURL( $cgiArgs ) ?>">
 <div id="monobook_font">
 	<div class="legend"><?=wfMsg("autocreatewiki-required", "<img src='{$wgStylePath}/common/required.png?{$wgStyleVersion}' />")?></div>
 	<div id="moving" class="formhighlight"></div>
