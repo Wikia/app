@@ -263,10 +263,19 @@ class ChooseNameTemplate extends QuickTemplate {
 </div>
 
 <script type='text/javascript'>
+	var prefs_help_mailmesg = "<?php echo wfMsg('prefs-help-mailmesg') ?>";
+	var prefs_help_email = "<?php echo wfMsg('prefs-help-email') ?>";
 	$(document).ready(function(){
 		//override submitForm
 		UserRegistration = {};
-		
+		$('#wpEmailInfo').bind('click', function(){
+			$.showModal(prefs_help_mailmesg, prefs_help_email, 
+				{	'id': 'wpEmailInfoModal', 
+					'onClose': function() {
+						WET.byStr( 'FBconnect/ChooseName/moreinfo/email/close' );
+				}});
+		 	WET.byStr( 'FBconnect/ChooseName/moreinfo/email/open' ); 
+		 });
 		UserRegistration.errorMessages = {
 				main: '<?= addslashes(wfMsg('userlogin-form-error')) ?>',
 				username: '<?= addslashes(wfMsg('noname')) ?>',
@@ -352,7 +361,7 @@ class ChooseNameTemplate extends QuickTemplate {
 						$('#userloginErrorBox').show();
 					}
 				}
-				WET.byStr(UserRegistration.WET_str + '/createaccount/failure');
+				WET.byStr( 'FBconnect/ChooseName/createaccount/failure');
 			}
 			); 
 		}

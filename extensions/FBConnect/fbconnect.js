@@ -124,31 +124,37 @@ function sendToConnectOnLogin(){
 }
 // Allows optional specification of a form to force on Special:Connect (such as ChooseName, ConnectExisting, or Convert).
 function sendToConnectOnLoginForSpecificForm(formName){
-    if(formName != ""){
-        formName = "/"+formName;
-    }
-	var destUrl = wgServer + wgScript + "?title=Special:Connect" + formName + "&returnto=" + wgPageName + "&returntoquery=" + wgPagequery;
-	
-	if (formName == "/ConnectExisting") {
-		window.location.href = destUrl;
-		return 
-	}
-	$('#fbConnectModalWrapper').remove();
-	$.postJSON(window.wgScript + '?action=ajax&rs=SpecialConnect::checkCreateAccount&cb='+wgStyleVersion, function(data) {
-		if(data.status == "ok") {
-			$().getModal(window.wgScript + '?action=ajax&rs=SpecialConnect::ajaxModalChooseName&returnto=' + wgPageName + '&returntoquery=' + wgPagequery,  "#fbConnectModal", {
-		        id: "fbConnectModalWrapper",
-		        width: "600px",
-		        callback: function() {
-					$('#fbConnectModalWrapper .close').click(function(){
-						WET.byStr( 'FBconnect/ChooseName/X' );
-					});
-				}
-			});    
-		} else {
+	FB.getLoginStatus(function(response) {
+		if (!response.session) {
+			alert("sdsdsdsdsdsdsds");
+			return ;
+		}
+		if(formName != ""){
+	        formName = "/"+formName;
+	    }
+		var destUrl = wgServer + wgScript + "?title=Special:Connect" + formName + "&returnto=" + wgPageName + "&returntoquery=" + wgPagequery;
+		
+		if (formName == "/ConnectExisting") {
 			window.location.href = destUrl;
-		}	
-	});	
+			return 
+		}
+		$('#fbConnectModalWrapper').remove();
+		$.postJSON(window.wgScript + '?action=ajax&rs=SpecialConnect::checkCreateAccount&cb='+wgStyleVersion, function(data) {
+			if(data.status == "ok") {
+				$().getModal(window.wgScript + '?action=ajax&rs=SpecialConnect::ajaxModalChooseName&returnto=' + wgPageName + '&returntoquery=' + wgPagequery,  "#fbConnectModal", {
+			        id: "fbConnectModalWrapper",
+			        width: "600px",
+			        callback: function() {
+						$('#fbConnectModalWrapper .close').click(function(){
+							WET.byStr( 'FBconnect/ChooseName/X' );
+						});
+					}
+				});    
+			} else {
+				window.location.href = destUrl;
+			}	
+		});	
+	});
 	return
 }
 
