@@ -69,7 +69,7 @@ class FBConnectLanguage{
 
 					if(($mwLang != "") && ($fbLocale != "")){
 						// Verify that this is a valid fb locale before storing (otherwise a typo in the message could break FBConnect javascript by including an invalid fbScript URL).
-						if(isValidFacebookLocale($fbLocale)){
+						if(self::isValidFacebookLocale($fbLocale)){
 							$langMapping[$mwLang] = $fbLocale;
 						} else {
 							error_log("FBConnect: WARNING: Facebook Locale was found in the wiki-message but does not appear to be a Facebook Locale that we know about: \"$fbLocale\".\n");
