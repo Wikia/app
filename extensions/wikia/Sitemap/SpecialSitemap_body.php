@@ -65,19 +65,19 @@ class SitemapPage extends UnlistedSpecialPage {
 		 * subpage works as type param, param has precedence, default is "index"
 		 */
 		$this->mType = "index";
-		if( !empty( $subpage ) ) {
+		if ( !empty( $subpage ) ) {
 			$this->mType = $subpage;
 		}
 
 		$t = $wgRequest->getText( "type", "" );
-		if( $t != "" ) {
+		if ( $t != "" ) {
 			$this->mType = $t;
 		}
 
 		$this->mTitle = SpecialPage::getTitleFor( "Sitemap", $subpage );
 		$this->parseType();
 		$this->getNamespacesList();
-		if( $this->mType == "namespace" ) {
+		if ( $this->mType == "namespace" ) {
 			$this->generateNamespace();
 		}
 		else {
@@ -91,28 +91,30 @@ class SitemapPage extends UnlistedSpecialPage {
 	 */
 	private function getNamespacesList() {
 		global $wgSitemapNamespaces;
-        if( is_array( $wgSitemapNamespaces ) ) {
-            $this->mNamespaces = $wgSitemapNamespaces;
-            return;
-        }
+
+		if ( is_array( $wgSitemapNamespaces ) ) {
+			$this->mNamespaces = $wgSitemapNamespaces;
+			return;
+		}
 
 		wfProfileIn( __METHOD__ );
 		$dbr = wfGetDB( DB_SLAVE );
-        $res = $dbr->select( 'page',
-            array( 'page_namespace' ),
+		$res = $dbr->select(
+			'page',
+			array( 'page_namespace' ),
 			array(),
-            __METHOD__,
-            array(
-                'GROUP BY' => 'page_namespace',
-                'ORDER BY' => 'page_namespace',
-            )
-        );
+			__METHOD__,
+			array(
+				'GROUP BY' => 'page_namespace',
+				'ORDER BY' => 'page_namespace',
+			)
+		);
 
-        while ( $row = $dbr->fetchObject( $res ) ) {
-            $this->mNamespaces[] = $row->page_namespace;
-        }
+		while ( $row = $dbr->fetchObject( $res ) ) {
+			$this->mNamespaces[] = $row->page_namespace;
+		}
 		wfProfileOut( __METHOD__ );
-    }
+	}
 
 	/**
 	 * parse type and set mType and mNamespace
@@ -122,7 +124,7 @@ class SitemapPage extends UnlistedSpecialPage {
 		 * requested files are named like sitemap-wikicities-NS_150-0.xml.gz
 		 * index is named like sitemap-index-wikicities.xml
 		 */
-		if( preg_match( "/^sitemap\-.+NS_(\d+)\-(\d+)/", $this->mType, $match ) ) {
+		if ( preg_match( "/^sitemap\-.+NS_(\d+)\-(\d+)/", $this->mType, $match ) ) {
 			$this->mType = "namespace";
 			$this->mNamespace = $match[ 1 ];
 		}
@@ -146,7 +148,7 @@ class SitemapPage extends UnlistedSpecialPage {
 		$out = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 		$out .= sprintf( "<!-- generated on fly by %s -->\n", $this->mTitle->getFullURL() );
 		$out .= "<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
-		foreach( $this->mNamespaces as $namespace ) {
+		foreach ( $this->mNamespaces as $namespace ) {
 			$out .= "\t<sitemap>\n";
 			$out .= "\t\t<loc>{$wgServer}/sitemap-{$id}-NS_{$namespace}-0.xml.gz</loc>\n";
 			$out .= "\t\t<lastmod>{$timestamp}</lastmod>\n";
@@ -171,20 +173,21 @@ class SitemapPage extends UnlistedSpecialPage {
 		header( "Cache-control: max-age=30", true );
 
 		$out = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-		$out .= sprintf( "<!-- generated on fly by %s -->\n", $this->mTitle->getFullURL() );
+		$out .= sprintf( "<!-- generated on the fly by %s -->\n", $this->mTitle->getFullURL() );
+
 		$sth = $dbr->select(
 			'page',
-            array(
-                'page_namespace',
-                'page_title',
-                'page_touched',
-            ),
-            array( 'page_namespace' => $this->mNamespace ),
+			array(
+				'page_namespace',
+				'page_title',
+				'page_touched',
+			),
+			array( 'page_namespace' => $this->mNamespace ),
 			__METHOD__
-        );
+		);
 
 		$out .= "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
-		while( $row = $dbr->fetchObject( $sth ) ) {
+		while ( $row = $dbr->fetchObject( $sth ) ) {
 			$size = strlen( $out );
 			$title = Title::makeTitle( $row->page_namespace, $row->page_title );
 			$stamp = wfTimestamp( TS_ISO_8601, $row->page_touched );
@@ -197,9 +200,10 @@ class SitemapPage extends UnlistedSpecialPage {
 			/**
 			 * break if it's to big
 			 */
-			if( strlen( $entry ) + $size > $this->mSizeLimit ) {
+			if ( strlen( $entry ) + $size > $this->mSizeLimit ) {
 				continue;
 			}
+
 			$out .= $entry;
 		}
 		$out .= "</urlset>\n";

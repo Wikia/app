@@ -20,17 +20,18 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  */
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Sitemap',
-	'version' => '1.0',
-	'author' => array( 'Krzysztof Krzyżaniak' ),
+	'version' => '1.1',
+	'author' => 'Krzysztof Krzyżaniak',
 	'description' => 'Generate Sitemaps for wiki on fly',
-	'description-msg' => 'special-sitemap-desc',
+	'description-msg' => 'sitemap-desc',
 );
 
 /**
  * Set up the new special page
  */
-$dir = dirname(__FILE__) . '/';
-$wgExtensionMessagesFiles[ "Sitemap" ] = $dir . "SpecialSitemap.i18n.php";
-$wgAutoloadClasses[ "SitemapPage" ] = $dir. "SpecialSitemap_body.php";
+$dir = dirname( __FILE__ ) . '/';
+$wgExtensionMessagesFiles['Sitemap'] = $dir . 'Sitemap.i18n.php';
+$wgExtensionAliasesFiles['Sitemap'] = $dir . 'Sitemap.alias.php';
+$wgAutoloadClasses['SitemapPage'] = $dir . 'SpecialSitemap_body.php';
 $wgSpecialPages['Sitemap'] = 'SitemapPage';
 $wgSpecialPageGroups['Sitemap'] = 'wikia';
