@@ -62,6 +62,7 @@ if( !empty( $mType ) ) {
 </div>
 <form class="highlightform" id="highlightform" method="post" action="<?= $mTitle->escapeLocalURL( $cgiArgs ) ?>">
 <div id="monobook_font">
+	<div id="tagline"><? echo wfMsgExt('autocreatewiki-tagline', array('parse') ); ?></div>
 	<div class="legend"><?=wfMsg("autocreatewiki-required", "<img src='{$wgStylePath}/common/required.png?{$wgStyleVersion}' />")?></div>
 	<div id="moving" class="formhighlight"></div>
 	<div class="formblock">
