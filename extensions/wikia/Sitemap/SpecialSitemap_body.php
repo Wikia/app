@@ -116,11 +116,6 @@ class SitemapPage extends UnlistedSpecialPage {
 	 * parse type and set mType and mNamespace
 	 */
 	private function parseType() {
-		if( $this->mType === "index" || $this->mType === false ) {
-			$this->mType = "index";
-			$this->mNamespace = 0; // it's not used though
-			return;
-		}
 		/**
 		 * requested files are named like sitemap-wikicities-NS_150-0.xml.gz
 		 * index is named like sitemap-index-wikicities.xml
@@ -128,6 +123,10 @@ class SitemapPage extends UnlistedSpecialPage {
 		if( preg_match( "/^sitemap\-.+NS_(\d+)\-(\d+)/", $this->mType, $match ) ) {
 			$this->mType = "namespace";
 			$this->mNamespace = $match[ 1 ];
+		}
+		else {
+			$this->mType = "index";
+			$this->mNamespace = false;
 		}
 	}
 
@@ -146,7 +145,7 @@ class SitemapPage extends UnlistedSpecialPage {
 		$out .= "<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
 		foreach( $this->mNamespaces as $namespace ) {
 			$out .= "\t<sitemap>\n";
-			$out .= "\t\t<loc>{$wgServer}/sitemap-{$id}-NS_{$namespace}_0.xml.gz</loc>\n";
+			$out .= "\t\t<loc>{$wgServer}/sitemap-{$id}-NS_{$namespace}-0.xml.gz</loc>\n";
 			$out .= "\t\t<lastmod>{$timestamp}</lastmod>\n";
 			$out .= "\t</sitemap>\n";
 		}
