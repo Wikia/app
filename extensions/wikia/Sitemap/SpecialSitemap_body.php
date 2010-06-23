@@ -208,12 +208,11 @@ class SitemapPage extends UnlistedSpecialPage {
 	}
 
 	private function titleEntry( $url, $date, $priority ) {
-        return
-	        "\t<url>\n" .
-            "\t\t<loc>$url</loc>\n" .
-            "\t\t<lastmod>$date</lastmod>\n" .
+		return
+			"\t<url>\n" .
+			"\t\t<loc>$url</loc>\n" .
+			"\t\t<lastmod>$date</lastmod>\n" .
 			"\t\t<priority>$priority</priority>\n" .
-            "\t</url>\n";
-
+			"\t</url>\n";
 	}
 }
