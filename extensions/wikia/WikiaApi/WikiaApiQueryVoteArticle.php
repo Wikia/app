@@ -141,7 +141,7 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 				$wgTopVoted = ( !empty($topvoted) ) ? true : false;
 
 				$this->addTables( array("`page_vote` p1", "page") );
-				$add_fields = array('page_id', 'page_title', 'max(time) as max_time');
+				$add_fields = array('page_id', 'page_title', 'AVG(vote) as votesavg, max(time) as max_time');
 				$this->addFields( $add_fields );
 				$this->addWhere ( "page_id = article_id" );
 
@@ -224,7 +224,7 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 						$data[$row->page_id] = array(
 							"id"			=> $row->page_id,
 							"title"			=> $row->page_title,
-							"votesavg"		=> $this->getAvgPageVoteFromDB($db, $page),
+							"votesavg"		=> $row->votesavg,
 						);
 						if ( isset($select_user_vote) && !empty($select_user_vote) ) {
 							$data[$row->page_id]["uservote"] = 0;
