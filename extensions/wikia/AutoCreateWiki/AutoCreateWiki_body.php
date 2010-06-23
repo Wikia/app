@@ -1509,8 +1509,6 @@ class AutoCreateWikiPage extends SpecialPage {
 
 		$WFSettingsVars = array(
 			'wgSitename'                => $this->mWikiData[ "title" ],
-			'wgScriptPath'              => '',
-			'wgScript'                  => '/index.php',
 			'wgArticlePath'             => '/wiki/$1',
 			'wgLogo'                    => '$wgUploadPath/b/bc/Wiki.png',
 			'wgUploadPath'              => $this->mWikiData[ "images_url" ],
@@ -1520,8 +1518,6 @@ class AutoCreateWikiPage extends SpecialPage {
 			'wgLanguageCode'            => $this->mWikiData[ "language" ],
 			'wgServer'                  => rtrim( $this->mWikiData[ "url" ], "/" ),
 			'wgFavicon'                 => '$wgUploadPath/6/64/Favicon.ico',
-			'wgDefaultSkin'             => 'monaco',
-			'wgDefaultTheme'            => 'sapphire',
 			'wgEnableNewParser'         => true,
 			'wgEnableEditEnhancements'  => true,
 			'wgEnableSectionEdit'	    => true,
