@@ -18,7 +18,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 class SitemapPage extends UnlistedSpecialPage {
 
-	private $mType, $mTitle, $mNamespaces, $mNamespace;
+	private $mType, $mTitle, $mNamespaces, $mNamespace, $mPriorities;
 
 	/**
 	 * standard constructor
@@ -26,6 +26,30 @@ class SitemapPage extends UnlistedSpecialPage {
 	 */
 	public function __construct( $name = "Sitemap" ) {
 		parent::__construct( $name );
+
+		$this->mPriorities = array(
+			// Custom main namespaces
+			GS_MAIN                 => '1.0',
+			// Custom talk namesspaces
+			GS_TALK                 => '1.0',
+			// MediaWiki standard namespaces
+			NS_MAIN                 => '1.0',
+			NS_TALK                 => '1.0',
+			NS_USER                 => '1.0',
+			NS_USER_TALK            => '1.0',
+			NS_PROJECT              => '1.0',
+			NS_PROJECT_TALK         => '1.0',
+			NS_FILE                 => '1.0',
+			NS_FILE_TALK            => '1.0',
+			NS_MEDIAWIKI            => '0.5',
+			NS_MEDIAWIKI_TALK       => '0.5',
+			NS_TEMPLATE             => '0.5',
+			NS_TEMPLATE_TALK        => '0.5',
+			NS_HELP                 => '0.5',
+			NS_HELP_TALK            => '0.5',
+			NS_CATEGORY             => '1.0',
+			NS_CATEGORY_TALK        => '1.0',
+        );
 	}
 
 
@@ -165,7 +189,11 @@ class SitemapPage extends UnlistedSpecialPage {
 		while( $row = $dbr->fetchObject( $sth ) ) {
 			$title = Title::makeTitle( $row->page_namespace, $row->page_title );
 			$stamp = wfTimestamp( TS_ISO_8601, $row->page_touched );
-			$out .= $this->titleEntry( $title->getFullURL(), $stamp, "1.0" );
+			$prior = isset( $this->mPriorities[ $row->page_namespace ] )
+				? $this->mPriorities[ $row->page_namespace ]
+				: "0.5";
+
+			$out .= $this->titleEntry( $title->getFullURL(), $stamp, $prior );
 		}
 		$out .= "</urlset>\n";
 
