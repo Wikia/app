@@ -18,7 +18,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 class SitemapPage extends UnlistedSpecialPage {
 
-	private $mType, $mTitle, $mNamespaces, $mNamespace, $mPriorities;
+	private $mType, $mTitle, $mNamespaces, $mNamespace, $mPriorities, $mSizeLimit;
 
 	/**
 	 * standard constructor
@@ -46,6 +46,8 @@ class SitemapPage extends UnlistedSpecialPage {
 			NS_CATEGORY             => '1.0',
 			NS_CATEGORY_TALK        => '1.0',
         );
+
+		$this->mSizeLimit = pow( 2, 20 ) * 10;
 	}
 
 
@@ -183,13 +185,22 @@ class SitemapPage extends UnlistedSpecialPage {
 
 		$out .= "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
 		while( $row = $dbr->fetchObject( $sth ) ) {
+			$size = strlen( $out );
 			$title = Title::makeTitle( $row->page_namespace, $row->page_title );
 			$stamp = wfTimestamp( TS_ISO_8601, $row->page_touched );
 			$prior = isset( $this->mPriorities[ $row->page_namespace ] )
 				? $this->mPriorities[ $row->page_namespace ]
 				: "0.5";
 
-			$out .= $this->titleEntry( $title->getFullURL(), $stamp, $prior );
+			$entry = $this->titleEntry( $title->getFullURL(), $stamp, $prior );
+
+			/**
+			 * break if it's to big
+			 */
+			if( strlen( $entry ) + $size > $this->mSizeLimit ) {
+				continue;
+			}
+			$out .= $entry;
 		}
 		$out .= "</urlset>\n";
 
