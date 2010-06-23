@@ -9,9 +9,6 @@
 #options-form {
 	display: inline;
 }
-#uselang {
-	width: 150px;
-}
 </style>
 <script type="text/javascript">
 /*<![CDATA[*/
