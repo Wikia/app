@@ -6,6 +6,10 @@
  * Since MediaWiki has a custom list of languages that differs from the Facebook languages, this class
  * will help with the conversion.
  *
+ * No automated conversions are attempted because that could result in much stranger results than just defaulting to english.  For instance,
+ * if we just searched for a facebook locale which started with the MediaWiki language code, we could attempt to deliver en_PI (Pirate English)
+ * and there would be false-negatives in the other direction also (such as chr -> ck_US being missed).
+ *
  * Relevant documentaion:
  *	- Tutorial in making the FBConnect popups from Facebook be internationalized: http://developers.facebook.com/blog/post/264
  *	- XML of Facebook's languages: http://www.facebook.com/translations/FacebookLocales.xml
@@ -18,7 +22,7 @@
 class FBConnectLanguage{
 
 	// All of the Facebook Locales according to http://www.facebook.com/translations/FacebookLocales.xml as of 20100622
-	private $allFbLocales = array(
+	private static $allFbLocales = array(
 		'ca_ES', 'cs_CZ', 'cy_GB', 'da_DK', 'de_DE', 'eu_ES', 'en_PI', 'en_UD', 'ck_US', 'en_US', 'es_LA', 'es_CL', 'es_CO', 'es_ES', 'es_MX',
 		'es_VE', 'fb_FI', 'fi_FI', 'fr_FR', 'gl_ES', 'hu_HU', 'it_IT', 'ja_JP', 'ko_KR', 'nb_NO', 'nn_NO', 'nl_NL', 'pl_PL', 'pt_BR', 'pt_PT',
 		'ro_RO', 'ru_RU', 'sk_SK', 'sl_SI', 'sv_SE', 'th_TH', 'tr_TR', 'ku_TR', 'zh_CN', 'zh_HK', 'zh_TW', 'fb_LT', 'af_ZA', 'sq_AL', 'hy_AM',
@@ -42,23 +46,26 @@ class FBConnectLanguage{
 		$memkey = wfMemcKey( 'FBConnectLanguage', $messageKey);
 		$langMapping = $wgMemc->get($memkey);
 		if(!$langMapping){
+			$langMapping = array();
 			wfLoadExtensionMessages('FBConnectLanguage');
 			$rawMappingText = wfMsg( $messageKey );
 
 			// Split the message by line.
 			$lines = explode("\n", $rawMappingText);
 			foreach($lines as $line){
+				// Remove comments
+				$index = strpos($line, "#");
+				if($index !== false){
+					$line = substr(0, $line); // keep only the text before the comment
+				}
+			
 				// Split the line into two pieces (if present) for the mapping.
 				$tokens = explode(',', $line, 2);
 				if(count($tokens) == 2){
-					// Trim off comments and whitespace
+					// Trim off whitespace
 					$mwLang = trim($tokens[0]);
-					$fbLocale = $tokens[1];
-					$index = strpos($fbLocale, "#");
-					if($index !== false){
-						$fbLocale = substr(0, $index); // keep only the text before the comment
-					}
-					$fbLocale = trim($fbLocale);
+					$fbLocale = trim($tokens[1]);
+
 					if(($mwLang != "") && ($fbLocale != "")){
 						// Verify that this is a valid fb locale before storing (otherwise a typo in the message could break FBConnect javascript by including an invalid fbScript URL).
 						if(isValidFacebookLocale($fbLocale)){
@@ -92,5 +99,54 @@ class FBConnectLanguage{
 	public static function isValidFacebookLocale($locale){
 		return in_array($locale, $allFbLocales);
 	}
+	
+	/**
+	 * This function can be run as a unit-test to test the coverage of the mapping (to make sure that there is at least a row in
+	 * the MediaWiki message to potentially map to a Facebook locale.
+	 */
+	public static function testCoverage(){
+		global $wgLanguageNames;
+		$passed = true;
+		
+		// Split the message by line.
+		$langMapping = array();
+		$lines = explode("\n", $rawMappingText);
+		foreach($lines as $line){
+			// Remove comments
+			$index = strpos($line, "#");
+			if($index !== false){
+				$line = substr(0, $line); // keep only the text before the comment
+			}
+		
+			// Split the line into two pieces (if present) for the mapping.
+			$tokens = explode(',', $line, 2);
+			if(count($tokens) == 2){
+				// Trim off whitespace
+				$mwLang = trim($tokens[0]);
+				$fbLocale = trim($tokens[1]);
+
+				// NOTE: THIS DIFFERS FROM NORMAL LOADING BECAUSE WE WANT EVEN THE MAPPINGS WITH NO DESTINATION.
+				if($mwLang != ""){
+					// Verify that this is a valid fb locale before storing (otherwise a typo in the message could break FBConnect javascript by including an invalid fbScript URL).
+					if(isValidFacebookLocale($fbLocale)){
+						$langMapping[$mwLang] = $fbLocale;
+					} else {
+						error_log("FBConnect: WARNING: Facebook Locale was found in the wiki-message but does not appear to be a Facebook Locale that we know about: \"$fbLocale\".\n");
+						error_log("FBConnect: Skipping locale for now.  If you want this locale to be permitted, please add it to FBConnectLanguage::\$allFbLocales.\n");
+					}
+				}
+			}
+		}
+
+		// Look through each of the MediaWiki langauges.
+		foreach($wgLanguageNames as $lang){
+			if( !isset($langMapping[$lang]) ){
+				$passed = false;
+				error_log("FBConnect: MediaWiki language \"$lang\" does not have a row for mapping it to a Facebook Locale. Add it to the MediaWiki message!\n");
+			}
+		}
+
+		return $passed;
+	} // end testCoverage()
 
 }
