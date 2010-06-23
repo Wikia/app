@@ -98,12 +98,6 @@ function renderXML( $input, $argv, &$parser )
 	$localParser = new Parser();
 	wfLoadExtensionMessages('XMLParser');
 	
-	// make sure that php-curl is installed
-	if( !function_exists("curl_init") )
-	{
-		return wfMsg("xml-nocurl");
-	}
-	
 	// parameters
 	$feedURL = $argv["feed"];
 	$escapedFeedURL = urlencode($argv["feed"]);
@@ -120,24 +114,20 @@ function renderXML( $input, $argv, &$parser )
 	}
 	if( !$cachedSource )
 	{
-		// Uses cURL library since DreamHost has file_get_contents() disabled for remote URLs.
-		$ch = curl_init();
+		// Uses Http::get which is the prefered method to make requests from MediaWiki since it handles going through proxies, etc.
 		$timeout = 5; // set to zero for no timeout
-		curl_setopt ($ch, CURLOPT_URL, $feedURL);
-		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt ($ch, CURLOPT_FOLLOWLOCATION,1);
-		curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-		$source = curl_exec($ch);
+		Http::get($feedURL);
+		$source = Http::get(
+			$feedURL,
+			$timeout, // 'default' as a string to use the default
+			array(
+				CURLOPT_RETURNTRANSFER      => 1,
+				CURLOPT_FOLLOWLOCATION => 1,
+			)
+		);
 
-		// NOTE: If CURLOPT_RETURNTRANSER is true (it is) and the document returned is size 0, curl_exec returns a boolean true instead of an empty string.
-		if($source === true){
-			$source = "";
-			curl_close($ch);
-			return wfMsg("xml-emptyresult");
-		} else if($source === FALSE){
-			return wfMsg("xml-feedfailed");
-		} else {
-			curl_close($ch);
+		if( !$source ){
+			return wfMsgExt("xml-feedfailed", array());
 		}
 
 		// only cache newly fetched sources
