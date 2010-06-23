@@ -119,6 +119,8 @@ class SitemapPage extends UnlistedSpecialPage {
 		$id = wfWikiID();
 
 		$wgOut->disable();
+		$wgOut->sendCacheControl();
+
 		header( "Content-type: application/xml; charset=UTF-8" );
 		$out = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 		$out .= "<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
@@ -139,13 +141,14 @@ class SitemapPage extends UnlistedSpecialPage {
 	private function generateNamespace() {
 		global $wgServer, $wgOut;
 
-		$timestamp = wfTimestamp( TS_ISO_8601, wfTimestampNow() );
-		$wgOut->disable();
-
 		$dbr = wfGetDB( DB_SLAVE );
 
-		header( "Content-type: application/xml; charset=UTF-8" );
-		$out = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+		$wgOut->disable();
+		$wgOut->sendCacheControl();
+
+		header( "Content-type: application/x-gzip" );
+
+		$out = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 
 		$sth = $dbr->select(
 			'page',
@@ -158,7 +161,7 @@ class SitemapPage extends UnlistedSpecialPage {
 			__METHOD__
         );
 
-		$out .= "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">";
+		$out .= "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
 		while( $row = $dbr->fetchObject( $sth ) ) {
 			$title = Title::makeTitle( $row->page_namespace, $row->page_title );
 			$stamp = wfTimestamp( TS_ISO_8601, $row->page_touched );
@@ -166,7 +169,7 @@ class SitemapPage extends UnlistedSpecialPage {
 		}
 		$out .= "</urlset>\n";
 
-		print gzdeflate( $out );
+		print gzencode( $out );
 	}
 
 	private function titleEntry( $url, $date, $priority ) {
