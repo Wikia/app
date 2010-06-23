@@ -52,6 +52,7 @@ YE.onDOMReady(function () {
 				}
 
 				if (isEnd > 0) {
+					$('#awc-main-img').attr('src', wgExtensionsPath + '/wikia/AutoCreateWiki/images/Installation_still.gif?' + wgStyleVersion);
 					//window.location.href = 'http://'+redirServer+'.<?=$domain?>';
 				} else if ( !(isError > 0) ) {
 					if (loop < 100) {
