@@ -137,6 +137,7 @@ $messages['en'] = array(
 	'fbconnect-prefs-show' => "Show feed preferences >>",
     'fbconnect-prefs-hide' => "Hide feed preferences >>",
 	'fbconnect-prefs-post' => 'Post to my Facebook News Feed when I:',
+    'fbconnect-connect-msg' => "Congratulations! Your Wikia and Facebook accounts connected. <br> Check your <a href='$1'>preferences</a> to control which events appear in Facebook feed.",
 	'fbconnect-disconnect-link' => "You can also <a id='fbConnectDisconnect' href='#'> disconnect your Wikia account from Facebook.</a> You will able continue using your Wikia account as normal, with your history (edits, points, achievements ) intact.",
 	'fbconnect-disconnect-done' => "Disconnecting <span id='fbConnectDisconnectDone'>... done! </span>",
 	'fbconnect-disconnect-info' => "We have emailed a new password to use with your account - you can log in with the same username as before. Hooray !",

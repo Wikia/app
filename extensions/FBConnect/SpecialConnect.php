@@ -677,7 +677,7 @@ class SpecialConnect extends SpecialPage {
 			$titleObj = Title::newFromText( $this->mReturnTo );
 			if (  ( !$titleObj instanceof Title ) || ( $titleObj->isSpecial("Userlogout") ) || ( $titleObj->isSpecial("Signup") ) || ( $titleObj->isSpecial("Connect") )  ) {
 				$titleObj = Title::newMainPage();
-				$wgOut->redirect( $titleObj->getFullURL( "cb=".rand(1,10000) ) );
+				$wgOut->redirect( $titleObj->getFullURL( "&cb=".rand(1,10000) ) );
 				return true;
 			}
 			$wgOut->redirect( $titleObj->getFullURL( $this->mReturnToQuery . "&cb=".rand(1,10000) ) );
@@ -702,9 +702,9 @@ class SpecialConnect extends SpecialPage {
 		wfRunHooks( 'UserLoginComplete', array( &$wgUser, &$inject_html ) );
 		$wgOut->addHtml( $inject_html );
 
-		// Render the "return to" text retrieved from the URL
-		$wgOut->returnToMain(false, $wgRequest->getText('returnto'), $wgRequest->getVal('returntoquery'));
-
+		$titleObj = Title::newFromText( $this->mReturnTo );
+		$wgOut->redirect( $titleObj->getFullURL( $this->mReturnToQuery . "&fbconnected=1&cb=".rand(1,10000) ) );
+		
 		wfProfileOut(__METHOD__);
 	}
 

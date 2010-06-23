@@ -644,4 +644,18 @@ STYLE;
 		$html = $tmpl->execute('ajaxLoginMerge');
 		return true;
 	}
+	
+	public static function SkinTemplatePageBeforeUserMsg(&$msg) {
+		global $wgRequest, $wgUser, $wgServer;
+		wfLoadExtensionMessages('FBConnect');
+		$pref = Title::newFromText("Preferences",NS_SPECIAL);
+		if ($wgRequest->getVal("fbconnected","") == 1) {
+			$id = FBConnectDB::getFacebookIDs($wgUser, DB_MASTER);
+			if( count($id) > 0 ) {
+				$msg =  Xml::element("img", array("id" => "fbMsgImage", "src" => $wgServer.'/skins/common/fbconnect/fbiconbig.png' )); 
+				$msg .= "<p>".wfMsg('fbconnect-connect-msg', array("$1" => $pref->getFullUrl() ))."</p>";
+			}
+		}
+		return true;
+	}
 }
