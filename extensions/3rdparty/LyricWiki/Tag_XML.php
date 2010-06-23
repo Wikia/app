@@ -127,7 +127,7 @@ function renderXML( $input, $argv, &$parser )
 		);
 
 		if( !$source ){
-			return wfMsgExt("xml-feedfailed", array());
+			return wfMsgExt("xml-feedfailed", array('parseinline'));
 		}
 
 		// only cache newly fetched sources
