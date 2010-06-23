@@ -56,7 +56,10 @@ function renderRss( $input ) {
 	global $wgOutputEncoding, $wgParser;
 
 	// Kill parser cache
-	$wgParser->disableCache();
+	#$wgParser->disableCache();
+	global $wgParserCacheExpireTime;
+	$wgParserCacheExpireTime = 600;
+	wfDebug( "soft disable Cache (rss)\n" );
 
 	if ( !$input ) return ''; #if <rss>-section is empty, return nothing
 
@@ -226,11 +229,6 @@ function renderRss( $input ) {
 		$output.= '</ul>';
 	}
 
-	if ( $DisableCache ) {
-		global $wgParserCacheExpireTime;
-		$wgParserCacheExpireTime = 600;
-		wfDebug( "soft disable Cache (rss)\n" );
-	}
 	return $output;
 }
 
