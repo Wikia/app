@@ -28,10 +28,6 @@ class SitemapPage extends UnlistedSpecialPage {
 		parent::__construct( $name );
 
 		$this->mPriorities = array(
-			// Custom main namespaces
-			GS_MAIN                 => '1.0',
-			// Custom talk namesspaces
-			GS_TALK                 => '1.0',
 			// MediaWiki standard namespaces
 			NS_MAIN                 => '1.0',
 			NS_TALK                 => '1.0',
