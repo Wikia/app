@@ -75,9 +75,8 @@ class SitemapPage extends UnlistedSpecialPage {
 		if( $t != "" ) {
 			$this->mType = $t;
 		}
-		wfLoadExtensionMessages( "Sitemap" );
 
-
+		$this->mTitle = SpecialPage::getTitleFor( "Sitemap", $subpage );
 		$this->parseType();
 		$this->getNamespacesList();
 		if( $this->mType == "namespace" ) {
@@ -147,6 +146,7 @@ class SitemapPage extends UnlistedSpecialPage {
 
 		header( "Content-type: application/xml; charset=UTF-8" );
 		$out = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+		$out .= sprintf( "<!-- generated on fly by %s -->", $this->mTitle->getFullURL() );
 		$out .= "<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
 		foreach( $this->mNamespaces as $namespace ) {
 			$out .= "\t<sitemap>\n";
@@ -173,7 +173,7 @@ class SitemapPage extends UnlistedSpecialPage {
 		header( "Content-type: application/x-gzip" );
 
 		$out = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-
+		$out .= sprintf( "<!-- generated on fly by %s -->", $this->mTitle->getFullURL() );
 		$sth = $dbr->select(
 			'page',
             array(
