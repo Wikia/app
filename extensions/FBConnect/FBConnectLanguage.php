@@ -32,6 +32,8 @@ class FBConnectLanguage{
 		'uz_UZ', 'vi_VN', 'xh_ZA', 'zu_ZA', 'km_KH', 'tg_TJ', 'ar_AR', 'he_IL', 'ur_PK', 'fa_IR', 'sy_SY', 'yi_DE', 'gn_PY', 'qu_PE', 'ay_BO',
 		'se_NO', 'ps_AF', 'tl_ST'
 	);
+	
+	private static $messageKey = 'fbconnect-mediawiki-lang-to-fb-locale';
 
 	/**
 	 * Given a MediaWiki language code, gets a corresponding Facebook locale.
@@ -42,13 +44,12 @@ class FBConnectLanguage{
 
 		// See if the mapping is in memcache already.  If not, figure out the mapping from the mediawiki message.
 		global $wgMemc;
-		$messageKey = 'fbconnect-mediawiki-lang-to-fb-locale';
-		$memkey = wfMemcKey( 'FBConnectLanguage', $messageKey);
+		$memkey = wfMemcKey( 'FBConnectLanguage', self::$messageKey);
 		$langMapping = $wgMemc->get($memkey);
 		if(!$langMapping){
 			$langMapping = array();
 			wfLoadExtensionMessages('FBConnectLanguage');
-			$rawMappingText = wfMsg( $messageKey );
+			$rawMappingText = wfMsg( self::$messageKey );
 
 			// Split the message by line.
 			$lines = explode("\n", $rawMappingText);
@@ -111,7 +112,7 @@ class FBConnectLanguage{
 		// Split the message by line.
 		$langMapping = array();
 		wfLoadExtensionMessages('FBConnectLanguage');
-		$rawMappingText = wfMsg( $messageKey );
+		$rawMappingText = wfMsg( self::$messageKey );
 		$lines = explode("\n", $rawMappingText);
 		foreach($lines as $line){
 			// Remove comments
