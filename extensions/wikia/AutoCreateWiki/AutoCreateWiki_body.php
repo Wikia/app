@@ -904,6 +904,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		}
 		$f = new FancyCaptcha();
 		$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgStylePath}/common/form.css?{$wgStyleVersion}\" />" );
+		$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgStylePath}/common/wikia_ui/tabs.css?{$wgStyleVersion}\" />" );
 		$wgOut->addScript( "<!--[if IE 7]><link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgStylePath}/common/form.ie7.css?{$wgStyleVersion}\" /><![endif]-->" ); // RT #19245
 		$wgOut->addScript( "<script type=\"text/javascript\" src=\"{$wgStylePath}/common/form.js?{$wgStyleVersion}\"></script>" );
 
