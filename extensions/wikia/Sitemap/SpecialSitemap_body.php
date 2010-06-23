@@ -137,9 +137,10 @@ class SitemapPage extends UnlistedSpecialPage {
 		$id = wfWikiID();
 
 		$wgOut->disable();
-		$wgOut->sendCacheControl();
 
 		header( "Content-type: application/xml; charset=UTF-8" );
+		header( "Cache-control: max-age=30", true );
+
 		$out = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 		$out .= sprintf( "<!-- generated on fly by %s -->\n", $this->mTitle->getFullURL() );
 		$out .= "<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
@@ -163,9 +164,9 @@ class SitemapPage extends UnlistedSpecialPage {
 		$dbr = wfGetDB( DB_SLAVE );
 
 		$wgOut->disable();
-		$wgOut->sendCacheControl();
 
 		header( "Content-type: application/x-gzip" );
+		header( "Cache-control: max-age=30", true );
 
 		$out = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 		$out .= sprintf( "<!-- generated on fly by %s -->\n", $this->mTitle->getFullURL() );
