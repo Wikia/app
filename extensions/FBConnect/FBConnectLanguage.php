@@ -17,6 +17,18 @@
 
 class FBConnectLanguage{
 
+	// All of the Facebook Locales according to http://www.facebook.com/translations/FacebookLocales.xml as of 20100622
+	private $allFbLocales = array(
+		'ca_ES', 'cs_CZ', 'cy_GB', 'da_DK', 'de_DE', 'eu_ES', 'en_PI', 'en_UD', 'ck_US', 'en_US', 'es_LA', 'es_CL', 'es_CO', 'es_ES', 'es_MX',
+		'es_VE', 'fb_FI', 'fi_FI', 'fr_FR', 'gl_ES', 'hu_HU', 'it_IT', 'ja_JP', 'ko_KR', 'nb_NO', 'nn_NO', 'nl_NL', 'pl_PL', 'pt_BR', 'pt_PT',
+		'ro_RO', 'ru_RU', 'sk_SK', 'sl_SI', 'sv_SE', 'th_TH', 'tr_TR', 'ku_TR', 'zh_CN', 'zh_HK', 'zh_TW', 'fb_LT', 'af_ZA', 'sq_AL', 'hy_AM',
+		'az_AZ', 'be_BY', 'bn_IN', 'bs_BA', 'bg_BG', 'hr_HR', 'nl_BE', 'en_GB', 'eo_EO', 'et_EE', 'fo_FO', 'fr_CA', 'ka_GE', 'el_GR', 'gu_IN',
+		'hi_IN', 'is_IS', 'id_ID', 'ga_IE', 'jv_ID', 'kn_IN', 'kk_KZ', 'la_VA', 'lv_LV', 'li_NL', 'lt_LT', 'mk_MK', 'mg_MG', 'ms_MY', 'mt_MT',
+		'mr_IN', 'mn_MN', 'ne_NP', 'pa_IN', 'rm_CH', 'sa_IN', 'sr_RS', 'so_SO', 'sw_KE', 'tl_PH', 'ta_IN', 'tt_RU', 'te_IN', 'ml_IN', 'uk_UA',
+		'uz_UZ', 'vi_VN', 'xh_ZA', 'zu_ZA', 'km_KH', 'tg_TJ', 'ar_AR', 'he_IL', 'ur_PK', 'fa_IR', 'sy_SY', 'yi_DE', 'gn_PY', 'qu_PE', 'ay_BO',
+		'se_NO', 'ps_AF', 'tl_ST'
+	);
+
 	/**
 	 * Given a MediaWiki language code, gets a corresponding Facebook locale.
 	 */
@@ -48,26 +60,37 @@ class FBConnectLanguage{
 					}
 					$fbLocale = trim($fbLocale);
 					if(($mwLang != "") && ($fbLocale != "")){
-						$langMapping[$mwLang] = $fbLocale;
+						// Verify that this is a valid fb locale before storing (otherwise a typo in the message could break FBConnect javascript by including an invalid fbScript URL).
+						if(isValidFacebookLocale($fbLocale)){
+							$langMapping[$mwLang] = $fbLocale;
+						} else {
+							error_log("FBConnect: WARNING: Facebook Locale was found in the wiki-message but does not appear to be a Facebook Locale that we know about: \"$fbLocale\".\n");
+							error_log("FBConnect: Skipping locale for now.  If you want this locale to be permitted, please add it to FBConnectLanguage::\$allFbLocales.\n");
+						}
 					}
 				}
 			}
 
-			$wgMemc->set($memkey, $langMapping, 60 * 60 * 3); // cache for a while since this is expensive to compute
+			$wgMemc->set($memkey, $langMapping, 60 * 60 * 3); // cache for a while since this is fairly expensive to compute & shouldn't change often
 		}
 
 		// Use the array to find if there is a mapping from mediaWikiLangCode to a Facebook locale.
 		if(isset($langMapping[$mediaWikiLangCode])){
 			$locale = $langMapping[$mediaWikiLangCode];
-
-	// TODO: Verify that this is a valid FBLocale! (otherwise a typo in the message could break FBConnect javascript)
-	// TODO: Verify that this is a valid FBLocale! (otherwise a typo in the message could break FBConnect javascript)
 		}
 
 		wfProfileOut(__METHOD__);
 		return $locale;
 	} // end getFbLocaleForLangCode()
 	
-	
+	/**
+	 * Returns true if the value provided is one of the Facebook Locales that was supported according to
+	 * http://www.facebook.com/translations/FacebookLocales.xml
+	 * at the last time that this code was updated.  This is a manual process, so if FacebookLocales.xml changes,
+	 * we will most likely be out of sync until someone brings this to our attention).
+	 */ 
+	public static function isValidFacebookLocale($locale){
+		return in_array($locale, $allFbLocales);
+	}
 
 }
