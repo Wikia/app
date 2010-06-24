@@ -8,6 +8,13 @@
  * @copyright © 2010, Wikia Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  * @version 1.0
+ *
+ * @example lighttpd configuration:
+ * url.rewrite += ( "^/(sitemap.+\.xml[.gz]*)$" => "/index.php?title=Special:Sitemap/$1" )
+ *
+ * @example apache configuration
+ * RewriteRule ^/(sitemap.+\.xml[.gz]*)$ /index.php?title=Special:Sitemap/$1 [L,QSA]
+ *
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) {
@@ -22,7 +29,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Sitemap',
 	'version' => '1.1',
 	'author' => 'Krzysztof Krzyżaniak',
-	'description' => 'Generate Sitemaps for wiki on fly',
+	'description' => 'Generate Sitemaps for the wiki on the fly',
 	'description-msg' => 'sitemap-desc',
 );
 
