@@ -47,7 +47,7 @@ class SitemapPage extends UnlistedSpecialPage {
 			NS_CATEGORY_TALK        => '1.0',
         );
 
-		$this->mSizeLimit = pow( 2, 20 ) * 10;
+		$this->mSizeLimit = ( pow( 2, 20 ) * 10 ) - 20; // safe margin
 	}
 
 
