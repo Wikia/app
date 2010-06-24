@@ -34,19 +34,53 @@ class SpecialPhalanx extends SpecialPage {
                 $listing .= $pager->getBody();
                 $listing .= $pager->getNavigationBar();
 
-		// todo fill that with meaningful data taken from parameters
+		$data = $this->prefillForm();
+
 		$template->set_vars(array(
 			'expiries' => Phalanx::getExpireValues(),
-			'default_expire' => $this->mDefaultExpire,
 			'languages' => $wgPhalanxSupportedLanguages,
-			'listing' => $listing
+			'listing' => $listing,
+			'data' => $data,
 		));
 
 		$wgOut->addHTML($template->render('phalanx'));
 
 		wfProfileOut(__METHOD__);
+
 	}
 
+	function prefillForm() {
+		global $wgRequest;
+
+		$data = array();
+		
+		$data['text'] = $wgRequest->getText( 'ip' );
+		$data['text'] = $wgRequest->getText( 'target', $data['text'] );
+		$data['text'] = $wgRequest->getText( 'text', $data['text'] );
+
+		$data['text'] = self::decodeValue( $data['text'] ) ;
+
+		$data['case'] = $wgRequest->getCheck( 'case' );
+		$data['regex'] = $wgRequest->getCheck( 'regex' );
+		$data['exact'] = $wgRequest->getCheck( 'exact' );
+
+		$data['expire'] = $wgRequest->getText( 'expire', $this->defaultExpire );
+
+		$data['type'] = array_fill_keys( $wgRequest->getArray( 'type', array() ), true );
+
+		$data['lang'] = $wgRequest->getText( 'lang', 'all' );
+
+		$data['reason'] = self::decodeValue( $wgRequest->getText( 'reason' ) );
+
+		// test form input
+		$data['test'] = self::decodeValue( $wgRequest->getText( 'test' ) );
+
+		return $data;
+	}
+
+	static function decodeValue( $input ) {
+		return htmlspecialchars( str_replace( '_', ' ', urldecode( $input ) ) );
+	}
 }
 
 class PhalanxPager extends ReverseChronologicalPager {
