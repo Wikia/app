@@ -27,6 +27,7 @@ Click on '''[[Special:CreatePage|New page]]''' to start writing!",
 	'myhome-feed-delete' => 'deleted',
 	'myhome-feed-image' => 'image added',
 	'myhome-feed-video' => 'video added',
+	'myhome-feed-categorization' => 'categorization',
 
 	'myhome-feed-created-by' => 'created by $1',
 	'myhome-feed-added-by' => 'added by $1',
