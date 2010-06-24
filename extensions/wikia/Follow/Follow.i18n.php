@@ -33,7 +33,7 @@ Add pages to this list by clicking \"{{int:watch}}\" at the top of a page.",
 	'tog-enotiffollowedminoredits' => 'E-mail me for minor edits to pages I am following',
 
 	'wikiafollowedpages-prefs-advanced' => 'Advanced options',
-	'wikiafollowedpages-prefs-watchlist' => '[[Special:Watchlist|Watchlist]] only',
+	'wikiafollowedpages-prefs-watchlist' => 'Watchlist only',
 
 	'tog-hidefollowedpages' => 'Make my followed pages lists private',
 	'follow-categoryadd-summary' => "Page added to category", //TODO check this
