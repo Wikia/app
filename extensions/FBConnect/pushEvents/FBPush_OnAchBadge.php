@@ -42,10 +42,9 @@ class FBPush_OnAchBadge extends FBConnectPushEvent {
 			'$ACHIE_NAME' => $name,
 			'$ARTICLE_URL' => $title->getFullUrl(),
 			'$WIKINAME' => $wgSitename,
-			'$EVENTIMG' => $wgServer.$img,
+			'$EVENTIMG' => $img,
 			'$DESC' => $desc
 		);
-
 		self::pushEvent(self::$messageName, $params, __CLASS__ );
 		
 		wfProfileOut(__METHOD__);
