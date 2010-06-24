@@ -6,7 +6,13 @@ class PhalanxStats extends UnlistedSpecialPage {
 	}
 
 	function execute( $par ) {
-		global $wgOut, $wgLang;
+		global $wgOut, $wgLang, $wgUser;
+
+		// check restrictions
+		if ( !$this->userCanExecute( $wgUser ) ) {
+			$this->displayRestrictionError();
+			return;
+		}
 
 		if ( empty( $par ) ) {
 			return true;
