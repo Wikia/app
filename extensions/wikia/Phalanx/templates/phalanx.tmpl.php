@@ -17,19 +17,24 @@
 							<div id="phalanx-feedback-msg" class="clearfix"></div>
 							<div class="clearfix">
 								<label for="wpPhalanxFilter" class="left"><?= wfMsg( 'phalanx-label-filter' ) ?></label>
-								<input type="text" id="wpPhalanxFilter" name="wpPhalanxFilter" class="blue" size="40" />
+								<input type="text" id="wpPhalanxFilter" name="wpPhalanxFilter" class="blue" size="40" value="<?= $data['text'] ?>" />
 							</div>
 							<div class="clearfix">
 								<div class="left-spacer">&nbsp;</div>
-								<input type="checkbox" id="wpPhalanxFormatRegex" name="wpPhalanxFormat" value="1" /><label for="wpPhalanxFormatRegex"><?= wfMsg( 'phalanx-format-regex' ) ?></label>
-								<input type="checkbox" id="wpPhalanxFormatCase" name="wpPhalanxFormatCase" value="1" /><label for="wpPhalanxFormatCase"><?= wfMsg( 'phalanx-format-case' ) ?></label>
-								<input type="checkbox" id="wpPhalanxFormatExact" name="wpPhalanxFormatExact" value="1" /><label for="wpPhalanxFormatExact"><?= wfMsg( 'phalanx-format-exact' ) ?></label>
+								<?= Xml::check( 'wpPhalanxFormatRegex', !empty( $data['regex'] ), array( 'id' => 'wpPhalanxFormatRegex' ) ) ?>
+								<label for="wpPhalanxFormatRegex"><?= wfMsg( 'phalanx-format-regex' ) ?></label>
+								
+								<?= Xml::check( 'wpPhalanxFormatCase', !empty( $data['case'] ), array( 'id' => 'wpPhalanxFormatCase' ) ) ?>
+								<label for="wpPhalanxFormatCase"><?= wfMsg( 'phalanx-format-case' ) ?></label>
+								
+								<?= Xml::check( 'wpPhalanxFormatExact', !empty( $data['exact'] ), array( 'id' => 'wpPhalanxFormatExact' ) ) ?>
+								<label for="wpPhalanxFormatExact"><?= wfMsg( 'phalanx-format-exact' ) ?></label>
 							</div>
 							<div class="clearfix">
 								<label for="wpPhalanxExpire" class="left"><?= wfMsg( 'phalanx-label-expiry' ) ?></label>
 								<select name="wpPhalanxExpire" id="wpPhalanxExpire" class="blue" >
 									<? foreach ($expiries as $k => $v) { ?>
-										<option <?=($k == $default_expire) ? "selected" : ""?> value="<?=$k?>"><?=$v?></option>
+										<option <?=($k == $data['expire']) ? "selected" : ""?> value="<?=$k?>"><?=$v?></option>
 									<? } ?>
 								</select>
 								<span id="phalanx-expire-old"></span>
@@ -40,19 +45,29 @@
 							<div class="left-spacer"><?= wfMsg( 'phalanx-label-type' ) ?></div>
 							<div id="phalanx-block-types">
 								<div>
-									<input type="checkbox" id="wpPhalanxTypeContent" name="wpPhalanxType[]" value="1" /><label for="wpPhalanxTypeContent"><?= wfMsg( 'phalanx-type-content' ) ?></label>
-									<input type="checkbox" id="wpPhalanxTypeSummary" name="wpPhalanxType[]" value="2" /><label for="wpPhalanxTypeSummary"><?= wfMsg( 'phalanx-type-summary' ) ?></label>
+									<?= Xml::check( 'wpPhalanxType[]', !empty( $data['type'][1] ), array( 'id' => 'wpPhalanxTypeContent' ) ) ?>
+									<label for="wpPhalanxTypeContent"><?= wfMsg( 'phalanx-type-content' ) ?></label>
+									
+									<?= Xml::check( 'wpPhalanxType[]', !empty( $data['type'][2] ), array( 'id' => 'wpPhalanxTypeSummary' ) ) ?>
+									<label for="wpPhalanxTypeSummary"><?= wfMsg( 'phalanx-type-summary' ) ?></label>
 								</div>
 								<div>
-									<input type="checkbox" id="wpPhalanxTypeTitle" name="wpPhalanxType[]" value="4" /><label for="wpPhalanxTypeTitle"><?= wfMsg( 'phalanx-type-title' ) ?></label>
+									<?= Xml::check( 'wpPhalanxType[]', !empty( $data['type'][4] ), array( 'id' => 'wpPhalanxTypeTitle' ) ) ?>
+									<label for="wpPhalanxTypeTitle"><?= wfMsg( 'phalanx-type-title' ) ?></label>
 								</div>
 								<div>
-									<input type="checkbox" id="wpPhalanxTypeUser" name="wpPhalanxType[]" value="8" /><label for="wpPhalanxTypeUser"><?= wfMsg( 'phalanx-type-user' ) ?></label>
-									<input type="checkbox" id="wpPhalanxTypeCreation" name="wpPhalanxType[]" value="64" /><label for="wpPhalanxTypeCreation"><?= wfMsg( 'phalanx-type-wiki-creation' ) ?></label>
+									<?= Xml::check( 'wpPhalanxType[]', !empty( $data['type'][8] ), array( 'id' => 'wpPhalanxTypeUser' ) ) ?>
+									<label for="wpPhalanxTypeUser"><?= wfMsg( 'phalanx-type-user' ) ?></label>
+									
+									<?= Xml::check( 'wpPhalanxType[]', !empty( $data['type'][64] ), array( 'id' => 'wpPhalanxTypeCreation' ) ) ?>
+									<label for="wpPhalanxTypeCreation"><?= wfMsg( 'phalanx-type-wiki-creation' ) ?></label>
 								</div>
 								<div>
-									<input type="checkbox" id="wpPhalanxTypeQuestion" name="wpPhalanxType[]" value="16" /><label for="wpPhalanxTypeQuestion"><?= wfMsg( 'phalanx-type-answers-question' ) ?></label>
-									<input type="checkbox" id="wpPhalanxTypeFilterWords" name="wpPhalanxType[]" value="32" /><label for="wpPhalanxTypeFilterWords"><?= wfMsg( 'phalanx-type-answers-words' ) ?></label>
+									<?= Xml::check( 'wpPhalanxType[]', !empty( $data['type'][16] ), array( 'id' => 'wpPhalanxTypeQuestion' ) ) ?>
+									<label for="wpPhalanxTypeQuestion"><?= wfMsg( 'phalanx-type-answers-question' ) ?></label>
+									
+									<?= Xml::check( 'wpPhalanxType[]', !empty( $data['type'][32] ), array( 'id' => 'wpPhalanxTypeFilterWords' ) ) ?>
+									<label for="wpPhalanxTypeFilterWords"><?= wfMsg( 'phalanx-type-answers-words' ) ?></label>
 								</div>
 							</div>
 							<div id="phalanx-help">
@@ -69,13 +84,13 @@
 						<div id="phalanx-block-optionals" class="clearfix">
 							<div class="clearfix">
 								<label for="wpPhalanxReason" class="left"><?= wfMsg( 'phalanx-label-reason' ) ?></label>
-								<input type="text" id="wpPhalanxReason" name="wpPhalanxReason" class="blue" size="40" />
+								<input type="text" id="wpPhalanxReason" name="wpPhalanxReason" class="blue" size="40" value="<?= $data['reason'] ?>" />
 							</div>
 							<div class="clearfix">
 								<label for="wpPhalanxLanguages" class="left"><?= wfMsg( 'phalanx-label-lang' ) ?></label>
                                                                 <select name="wpPhalanxLanguages" id="wpPhalanxLanguages" class="blue" >
                                                                         <? foreach ($languages as $k => $v) { ?>
-                                                                                <option <?=($k == 'all') ? "selected" : ""?> value="<?=$k?>"><?=$v?></option>
+                                                                                <option <?=($k == $data['lang']) ? "selected" : ""?> value="<?=$k?>"><?=$v?></option>
                                                                         <? } ?>
                                                                 </select>
 							</div>
@@ -112,7 +127,7 @@
 			<fieldset>
 				<form id="phalanx-block-test" action="#test">
 					<label for="phalanx-block-text"><?= wfMsg( 'phalanx-test-description' ) ?></label>
-					<input type="textarea" id="phalanx-block-text" /><br />
+					<input type="textarea" id="phalanx-block-text" value="<?= $data['test'] ?>" /><br />
 					<input type="submit" value="<?= wfMsg( 'phalanx-test-submit' ) ?>" />
 				</form>
 			</fieldset>
