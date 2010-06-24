@@ -12,6 +12,9 @@
 				<fieldset id="phalanx-input-filter">
 					<legend><?= wfMsg( 'phalanx-legend-input' ) ?></legend>
 					<form id="phalanx-block" method="post" action="">
+						<?php if ( !empty( $data['id'] ) ) { ?>
+						<input type="hidden" name="id" value="<?= $data['id'] ?>"/>
+						<?php } ?>
 						<!-- Filter -->
 						<div id="phalanx-block-texts">
 							<div id="phalanx-feedback-msg" class="clearfix"></div>

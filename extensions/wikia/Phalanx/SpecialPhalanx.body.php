@@ -53,7 +53,14 @@ class SpecialPhalanx extends SpecialPage {
 		global $wgRequest;
 
 		$data = array();
-		
+
+		$id = $wgRequest->getInt( 'id' );
+		if ( $id ) {
+			$data = Phalanx::getFromId( $id );
+			$data['type'] = Phalanx::getTypeNames( $data['type'] );
+			return $data;
+		}
+
 		$data['text'] = $wgRequest->getText( 'ip' );
 		$data['text'] = $wgRequest->getText( 'target', $data['text'] );
 		$data['text'] = $wgRequest->getText( 'text', $data['text'] );
