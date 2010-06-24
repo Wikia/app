@@ -82,22 +82,13 @@ function wfValidateUserName($uName){
 		if ($uName == '') {
 			$result = 'INVALID';
 		} else {
-
-			// TODO: Is it any faster just to test 0 == User::idFromName($uName)?  It appears that first we're checking the current wiki, then the external.
-
-			$oRow = $dbr->selectRow( 'user', 'user_name', array('user_name' => $uName), __METHOD__);
-			if ($oRow !== false) {
-				$result = 'EXISTS';#wfMsg ('username-exists');
-			} else {
-				$dbExt = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
-				if ($dbExt->NumRows ($dbResults = $dbExt->Query ("SELECT User_Name FROM `user` WHERE User_Name = '$uName';"))) {
-					$result = 'EXISTS';#wfMsg ('username-exists');
-				} else {
-					global $wgReservedUsernames;
-					if(in_array($uName, $wgReservedUsernames)){
-						$result = 'EXISTS'; // if we returned 'invalid', that would be confusing once a user checked and found that the name already met the naming requirements.
-					}
-				}
+			if(User::idFromName($uName) != 0) {
+				$result = 'EXISTS';
+			}
+			
+			global $wgReservedUsernames;
+			if(in_array($uName, $wgReservedUsernames)){
+				$result = 'EXISTS'; // if we returned 'invalid', that would be confusing once a user checked and found that the name already met the naming requirements.
 			}
 		}
 	}
