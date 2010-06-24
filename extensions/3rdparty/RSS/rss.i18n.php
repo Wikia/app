@@ -14,7 +14,7 @@ $messages = array();
 $messages['en'] = array(
 	'rss-error' => '<div>Failed to load RSS feed from $1: $2</div>',
 	'rss-empty' => '<div>Failed to load RSS feed from $1!</div>',
-	'rss-date-format' => 'd M Y H:i'
+	'rss-date-format' => 'd M'
 );
 
 /** Polish
@@ -23,5 +23,5 @@ $messages['en'] = array(
 $messages['pl'] = array(
 	'rss-error' => '<div>Nie udało się odczytać kanału $1: $2</div>',
 	'rss-empty' => '<div>Nie udało się odczytać kanału $1!</div>',
-	'rss-date-format' => 'd M Y H:i'
+	'rss-date-format' => 'd M'
 );
