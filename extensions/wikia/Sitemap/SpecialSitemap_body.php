@@ -143,7 +143,7 @@ class SitemapPage extends UnlistedSpecialPage {
 		$wgOut->disable();
 
 		header( "Content-type: application/xml; charset=UTF-8" );
-		header( "Cache-control: max-age=30", true );
+		header( "Cache-control: max-age=86400", true );
 
 		$out = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 		$out .= sprintf( "<!-- generated on fly by %s -->\n", $this->mTitle->getFullURL() );
@@ -170,7 +170,7 @@ class SitemapPage extends UnlistedSpecialPage {
 		$wgOut->disable();
 
 		header( "Content-type: application/x-gzip" );
-		header( "Cache-control: max-age=30", true );
+		header( "Cache-control: max-age=86400", true );
 
 		$out = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 		$out .= sprintf( "<!-- generated on the fly by %s -->\n", $this->mTitle->getFullURL() );
