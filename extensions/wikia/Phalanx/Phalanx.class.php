@@ -46,7 +46,7 @@ class Phalanx {
 		//iterate for each module for which block is saved
 		for ($bit = $typemask&1, $type=1; $typemask; $typemask>>=1, $bit = $typemask&1, $type<<=1) {
 			if (!$bit) continue; //skip not used modules
-			$types[] = self::$typeNames[$type];
+			$types[$type] = self::$typeNames[$type];
 		}
 
 		return $types;
