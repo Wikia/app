@@ -114,10 +114,14 @@
 				<form id="phalanx-filters" method="get" action="/wiki/Special:Phalanx">
 					<div id="phalanx-check-options">
 						<label for="wpPhalanxCheckBlocker"><?= wfMsg( 'phalanx-view-blocker' ) ?></label>
-						<input type="text" id="wpPhalanxCheckBlocker" name="wpPhalanxCheckBlocker" class="blue" size="40" value="" />
+						<input type="text" id="wpPhalanxCheckBlocker" name="wpPhalanxCheckBlocker" class="blue" size="30" value="" />
 						<input type="submit" value="<?= wfMsg( 'phalanx-view-blocks' ) ?>"  />
-					</div>
 
+						<label for="wpPhalanxCheckId"><?= wfMsg( 'phalanx-view-id' ) ?></label>
+						<input type="text" id="wpPhalanxCheckId" name="id" class="blue" size="5" value="" />
+
+						<input type="submit" value="<?= wfMsg( 'phalanx-view-id-submit' ) ?>"  />
+					</div>
 					<div id="phalanx-check-results">
 						<?= $listing ?>
 					</div>
