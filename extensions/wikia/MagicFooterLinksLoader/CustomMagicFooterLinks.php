@@ -20,6 +20,7 @@ function wfAnswersMagicFooterLinks($results) {
 	$links = array(
 		"de" => "Besuche das [[w:c:websitewiki|WebsiteWiki]] und [[w:c:frag|Wikianswers: Frag Wikia!]]",
 		"es" => "[[w:c:respuestas|WikiRespuestas]]",
+		"fr" => "[http://www.wikia.com/Hiring/French-speaking_helpers Helper Team]", /* it's not really answers... */
 	);
 
 	global $wgContLang;
