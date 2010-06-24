@@ -70,7 +70,7 @@ Current value:
 
 <?php elseif( $variable->cv_variable_type == "string"): ?>
 
-	<textarea name="varValue" id="varValue"><?php if( isset( $variable->cv_value ) ) echo unserialize( $variable->cv_value ) ?></textarea><br />
+	<input type="text" name="varValue" id="varValue" value="<?php echo unserialize( $variable->cv_value ) ?>" size="160" class="input-string" /><br />
 
 <?php elseif ($variable->cv_variable_type == "array" && !empty($wgDevelEnvironment)): ?>
 
