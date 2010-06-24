@@ -437,7 +437,7 @@ YAHOO.util.Event.addListener("wf-clear-cache", "click", $Factory.Variable.clear)
 			<tr>
 				<td><?php echo $wiki->city_id ?></td>
 				<td><?php echo $wiki->city_dbname ?></td>
-				<td><?php echo empty( $cluster ) ? "c1 (DEFAULT)" : $cluster ?></td>
+				<td><?php echo empty( $cluster ) ? "c1<acronym title='default'>*</acronym>" : $cluster ?></td>
 				<td><?php echo $wiki->city_lang ?></td>
 				<td><?php
 					$cats = $hub->getBreadCrumb( $wiki->city_id );
