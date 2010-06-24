@@ -142,7 +142,7 @@ class SitemapPage extends UnlistedSpecialPage {
 
 		$wgOut->disable();
 
-		header( "Content-type: application/xml; charset=UTF-8" );sitemap limit
+		header( "Content-type: application/xml; charset=UTF-8" );
 		header( "Cache-control: max-age=86400", true );
 
 		$out = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
