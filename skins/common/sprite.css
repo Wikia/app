@@ -34,6 +34,7 @@
 .sprite.new { background-position: -16px -106px; }
 .sprite.photo { background-position: -32px -106px; }
 .sprite.video { background-position: -48px -106px; }
+.sprite.categorization { background-position: -16px -122px; }
 .sprite.close { background-position: -64px -106px; }
 
 .sprite.history { background-position: 0 -122px; }
