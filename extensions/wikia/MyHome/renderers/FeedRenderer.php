@@ -11,6 +11,7 @@ class FeedRenderer {
 	const FEED_COMMENT_ICON = 'talk';
 	const FEED_MOVE_ICON = 'move';
 	const FEED_DELETE_ICON = 'delete';
+	const FEED_CATEGORY_ICON = 'categorization';
 
 	protected $template;
 	protected $type;
@@ -347,15 +348,19 @@ class FeedRenderer {
 				// edit from view mode
 				else {
 					// category added
-					if (!empty($row['new_categories'])) {
+					if (!empty($row['CategorySelect'])) {
+						$type = self::FEED_CATEGORY_ICON;
+					}
+					// category added
+					elseif (!empty($row['new_categories'])) {
 						$type = self::FEED_PENCIL_ICON;
 					}
 					// image(s) added
-					else if (!empty($row['new_images'])) {
-						$type =self::FEED_PHOTO_ICON;
+					elseif (!empty($row['new_images'])) {
+						$type = self::FEED_PHOTO_ICON;
 					}
 					// video(s) added
-					// TODO: uncomment when video cpde is fixed
+					// TODO: uncomment when video code is fixed
 					else /*if (!empty($row['new_videos'])) */{
 						$type = self::FEED_FILM_ICON;
 					}
@@ -427,6 +432,10 @@ class FeedRenderer {
 			case self::FEED_FILM_ICON:
 				$msg = 'video';
 				break;
+
+			case self::FEED_CATEGORY_ICON:
+				$msg = 'categorization';
+				break;
 		}
 
 		$alt = wfMsg("myhome-feed-{$msg}");
@@ -444,12 +453,12 @@ class FeedRenderer {
 	 * @param $src string The src of the sprite <img> element.
 	 * @return string HTML for an appropriate sprite, based on $row.
 	 */
-	public static function getSprite ( $row, $src = '' ) {
+	public static function getSprite( $row, $src = '' ) {
 		$r = '';
 		$r .= '<img'.
-			' class="' . FeedRenderer::getIconType( $row ) . ' sprite"'.
+			' class="' . self::getIconType( $row ) . ' sprite"'.
 			' src="'. $src .'"'.
-			' '. FeedRenderer::getIconAltText( $row ).
+			' '. self::getIconAltText( $row ).
 			' width="16" height="16" />';
 		return $r;
 	}

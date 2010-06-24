@@ -43,6 +43,9 @@ class MyHome {
 				// edit from view mode
 				if (Wikia::isVarSet('EditFromViewMode')) {
 					$data['viewMode'] = 1;
+					if (Wikia::isVarSet('EditFromViewMode') == 'CategorySelect') {
+						$data['CategorySelect'] = 1;
+					}
 				}
 
 				// section edit: store section name and modified summary

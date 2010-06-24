@@ -200,6 +200,9 @@ class DataFeedProvider {
 					$item['viewMode'] = $res['rc_params']['viewMode'];
 				}
 
+				if(isset($res['rc_params']['CategorySelect'])) {
+					$item['CategorySelect'] = $res['rc_params']['CategorySelect'];
+				}
 			}
 
 			$item['ns'] = $res['ns'];

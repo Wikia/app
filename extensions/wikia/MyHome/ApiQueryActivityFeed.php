@@ -40,7 +40,7 @@ $feedData = $feedProvider->get($parameters['maxElements']);
 	}
 
 	private function rewriteRow($row) {
-		foreach (array("url", "intro", "diff", "viewMode", "autosummaryType") as $key) {
+		foreach (array("url", "intro", "diff", "viewMode", "autosummaryType", 'CategorySelect') as $key) {
 			if (isset($row[$key])) unset($row[$key]);
 		}
 
