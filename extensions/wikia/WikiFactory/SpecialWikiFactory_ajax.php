@@ -456,6 +456,7 @@ function axWFactorySaveVariable() {
 		$cv_name			= $wgRequest->getVal( 'varName' );
 		$cv_value			= $wgRequest->getVal( 'varValue' );
 		$cv_variable_type	= $wgRequest->getVal( 'varType' );
+		$reason				= $wgRequest->getVal( 'reason', null );
 		$tag_name = $wgRequest->getVal( 'tagName' );
 		$tag_wiki_count = 0;
 		$form_id = $wgRequest->getVal("formId", null);
@@ -518,7 +519,7 @@ function axWFactorySaveVariable() {
 
 		# Save to DB, but only if no errors occurred
 		if ( empty( $error ) ) {
-			if( ! WikiFactory::setVarByID( $cv_id, $city_id, $cv_value ) ) {
+			if( ! WikiFactory::setVarByID( $cv_id, $city_id, $cv_value, $reason ) ) {
 				$error++;
 				$return = Wikia::errormsg( "Variable not saved because of problems with database. Try again." );
 			} else {
@@ -532,7 +533,7 @@ function axWFactorySaveVariable() {
 					// apply changes to all wikis with given tag
 					$tagsQuery = new WikiFactoryTagsQuery( $tag_name );
 					foreach ( $tagsQuery->doQuery() as $tagged_wiki_id ) {
-						if ( WikiFactory::setVarByID( $cv_id, $tagged_wiki_id, $cv_value ) ) {
+						if ( WikiFactory::setVarByID( $cv_id, $tagged_wiki_id, $cv_value, $reason ) ) {
 							$tag_wiki_count++;
 						}
 					}

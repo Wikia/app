@@ -462,10 +462,11 @@ class WikiFactory {
 	 * @param integer $cv_variable_id		variable id in city_variables_pool
 	 * @param integer $city_id		wiki id in city list
 	 * @param mixed $value			new value for variable
+	 * @param string $summary		optional extra reason text
 	 *
 	 * @return boolean: transaction status
 	 */
-	static public function setVarById( $cv_variable_id, $city_id, $value ) {
+	static public function setVarById( $cv_variable_id, $city_id, $value, $summary=null ) {
 		global $wgWikicitiesReadOnly;
 
 		if( ! self::isUsed() ) {
@@ -524,13 +525,17 @@ class WikiFactory {
 
 			wfProfileIn( __METHOD__."-changelog" );
 
+			# if summary was passed non-null, prepare a string for sprintf, else a zero-len string
+			$summary_extra = !empty($summary) ? " (reason: {$summary})" : '';
+
 			if( isset( $variable->cv_value ) ) {
 				self::log(
 					self::LOG_VARIABLE,
-					sprintf("Variable %s changed value from %s to %s",
+					sprintf("Variable %s changed value from %s to %s%s",
 						$variable->cv_name,
 						var_export( unserialize( $variable->cv_value ), true ),
-						var_export( $value, true )
+						var_export( $value, true ),
+						$summary_extra
 					),
 					$city_id
 				);
@@ -538,9 +543,10 @@ class WikiFactory {
 			else {
 				self::log(
 					self::LOG_VARIABLE,
-					sprintf("Variable %s set value: %s",
+					sprintf("Variable %s set value: %s%s",
 						$variable->cv_name,
-						var_export( $value, true )
+						var_export( $value, true ),
+						$summary_extra
 					),
 					$city_id
 				);
@@ -724,12 +730,13 @@ class WikiFactory {
 	 * @param string $variable: variable name in city_variables_pool
 	 * @param integer $wiki: wiki id in city list
 	 * @param mixed $value: new value for variable
+	 * @param string $summary: optional reason reason text
 	 *
 	 * @return boolean: transaction status
 	 */
-	static public function setVarByName( $variable, $wiki, $value ) {
+	static public function setVarByName( $variable, $wiki, $value, $summary=null ) {
 		$oVariable = self::getVarByName( $variable, $wiki );
-		return WikiFactory::setVarByID( $oVariable->cv_variable_id, $wiki, $value );
+		return WikiFactory::setVarByID( $oVariable->cv_variable_id, $wiki, $value, $summary );
 	}
 
 	/**
