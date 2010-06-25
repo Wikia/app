@@ -37,8 +37,7 @@ $messages = array();
 $messages['en'] = array(
 	// Extension name
 	'fbconnect'   => 'Facebook Connect',
-	'fbconnect-desc'     => 'Enables users to [[Special:Connect|Connect]] with their [http://www.facebook.com Facebook] ' .
-                 'accounts. Offers authentification based on Facebook groups and the use of FBML in wiki text.',
+	'fbconnect-desc'     => 'Enables users to [[Special:Connect|Connect]] with their [http://www.facebook.com Facebook] accounts. Offers authentification based on Facebook groups and the use of FBML in wiki text.',
 	// Group containing Facebook Connect users
 	'group-fb-user'           => 'Facebook Connect users',
 	'group-fb-user-member'    => 'Facebook Connect user',
@@ -64,32 +63,22 @@ $messages['en'] = array(
 
 // Special:Connect
 	'fbconnect-title'    => 'Connect account with Facebook',
-	'fbconnect-intro'    => 'This wiki is enabled with Facebook Connect, the next evolution of Facebook Platform. This means ' .
-	                 'that when you are Connected, in addition to the normal [[Wikipedia:Help:Logging in#Why log in?' .
-	                 '|benefits]] you see when logging in, you will be able to take advantage of some extra features...',
+	'fbconnect-intro'    => 'This wiki is enabled with Facebook Connect, the next evolution of Facebook Platform. This means that when you are Connected, in addition to the normal [[Wikipedia:Help:Logging in#Why log in?|benefits]] you see when logging in, you will be able to take advantage of some extra features...',
 	'fbconnect-click-to-login' => 'Click this button to login to this site via facebook',
 	'fbconnect-click-to-connect-existing' => 'Click this button to connect your facebook account to $1',
 	'fbconnect-conv'     => 'Convenience',
-	'fbconnect-convdesc' => 'Connected users are automatically logged you in. If permission is given, then this wiki can even ' .
-                 'use Facebook as an email proxy so you can continue to receive important notifications without ' .
-                 'revealing your email address.',
+	'fbconnect-convdesc' => 'Connected users are automatically logged you in. If permission is given, then this wiki can even use Facebook as an email proxy so you can continue to receive important notifications without revealing your email address.',
 	'fbconnect-fbml'     => 'Facebook Markup Language',
-	'fbconnect-fbmldesc' => 'Facebook has provided a bunch of built-in tags that will render dynamic data. Many of these tags ' .
-                 'can be included in wiki text, and will be rendered differently depending on which Connected user ' .
-                 'they are being viewed by.',
+	'fbconnect-fbmldesc' => 'Facebook has provided a bunch of built-in tags that will render dynamic data. Many of these tags can be included in wiki text, and will be rendered differently depending on which Connected user they are being viewed by.',
 	'fbconnect-comm'     => 'Communication',
-	'fbconnect-commdesc' => 'Facebook Connect ushers in a whole new level of networking. See which of your friends are using ' .
-                 'the wiki, and optionally share your actions with your friends through the Facebook News Feed.',
+	'fbconnect-commdesc' => 'Facebook Connect ushers in a whole new level of networking. See which of your friends are using the wiki, and optionally share your actions with your friends through the Facebook News Feed.',
 	'fbconnect-welcome'  => 'Welcome, Facebook Connect user!',
 	'fbconnect-loginbox' => "Or '''login''' with Facebook:\n\n$1",
 	'fbconnect-merge'    => 'Merge your wiki account with your Facebook ID',
-	'fbconnect-mergebox' => 'This feature has not yet been implemented. Accounts can be merged manually with [[Special:' .
-                 'Renameuser]] if it is installed. For more information, please visit [[MediaWikiWiki:Extension:' .
-                 "Renameuser|Extension:Renameuser]].\n\n\n$1\n\n\nNote: This can be undone by a sysop.",
+	'fbconnect-mergebox' => 'This feature has not yet been implemented. Accounts can be merged manually with [[Special:Renameuser]] if it is installed. For more information, please visit [[MediaWikiWiki:Extension:Renameuser|Extension:Renameuser]].\n\n\n$1\n\n\nNote: This can be undone by a sysop.',
 	'fbconnect-logoutbox'=> "$1\n\nThis will also log you out of Facebook and all Connected sites, including this wiki.",
 	'fbconnect-listusers-header'
-              => '$1 and $2 privileges are automatically transfered from the Officer and Admin titles of the ' .
-                 "Facebook group $3.\n\nFor more info, please contact the group creator $4.",
+              => '$1 and $2 privileges are automatically transfered from the Officer and Admin titles of the Facebook group $3.\n\nFor more info, please contact the group creator $4.',
 // Prefix to use for automatically-generated usernames
 	'fbconnect-usernameprefix' => 'FacebookUser',
 // Special:Connect
