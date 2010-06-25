@@ -22,6 +22,9 @@ use Data::Types qw(:all);
 use Math::Round qw(round);
 use Getopt::Long;
 use Cwd;
+use Time::HiRes qw(gettimeofday tv_interval);
+
+use Data::Dump;
 
 #
 # constant
@@ -205,6 +208,7 @@ my $mimetype    = "text/plain";
 my $imgtype     = undef;
 
 while( $request->Accept() >= 0 || $test ) {
+	my $t_start = [ gettimeofday() ];
 	$manager->pm_pre_dispatch() unless $test;
 
 	$request_uri = "";
@@ -295,10 +299,12 @@ while( $request->Accept() >= 0 || $test ) {
 			# then find proper thumbnailer for file, first check if this is svg
 			# thumbnail request. mimetype will be used later in header
 			#
+			my $t_elapsed = tv_interval( $t_start, [ gettimeofday() ] ) ;
 			if( -f $original ) {
 				$mimetype = $flm->checktype_filename( $original );
 				( $imgtype ) = $mimetype =~ m![^/+]/(\w+)!;
-				print STDERR "$original $thumbnail $mimetype $imgtype $request_uri $referer\n" if $debug;
+				$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
+				print STDERR "$original $thumbnail $mimetype $imgtype $request_uri $referer, time: $t_elapsed\n" if $debug;
 
 				#
 				# create folder for thumbnail if doesn't exists
@@ -312,6 +318,8 @@ while( $request->Accept() >= 0 || $test ) {
 					else {
 						print STDERR "Folder $thumbdir created\n" if $debug;
 					}
+					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
+					print STDERR "creating folder $thumbdir, time: $t_elapsed\n" if $debug;
 				}
 
 				#
@@ -327,12 +335,15 @@ while( $request->Accept() >= 0 || $test ) {
 					#
 					# read width & height of SVG file
 					#
+					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
 					my $xmlp = XMLin( $original );
 					my $origw = $xmlp->{ 'width' };
 					my $origh = $xmlp->{ 'height' };
 					$origw = to_float( $origw ) unless is_float( $origw );
 					$origh = to_float( $origh ) unless is_float( $origh );
 					my $height = scaleHeight( $origw, $origh, $width, $test );
+					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
+					print STDERR "reading svg as xml file (for size checking), time: $t_elapsed\n" if $debug;
 
 					#
 					# RSVG thumbnailer
@@ -347,16 +358,20 @@ while( $request->Accept() >= 0 || $test ) {
 					my $args = { "dimension" => [$width, $height], "dimesion" => [$width, $height] };
 					$rsvg->loadImage( $original, 0, $args );
 					$transformed = 1;
+					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
+					print STDERR "reading svg as image file (for transforming), time: $t_elapsed\n" if $debug;
 
 					if( $transformed ) {
 						print "HTTP/1.1 200 OK\r\n";
 						print "Cache-control: max-age=30\r\n";
 						print "Content-type: image/png\r\n\r\n";
 						print $rsvg->getImageBitmap() unless $test;
-						print STDERR "File $thumbnail served\n" if $debug;
+						$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
+						print STDERR "File $thumbnail served, time: $t_elapsed\n" if $debug;
 					}
 					else {
-						print STDERR "SVG conversion from $original to $thumbnail failed\n";
+						$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
+						print STDERR "SVG conversion from $original to $thumbnail failed, time: $t_elapsed\n";
 					}
 					undef $rsvg;
 					undef $xmlp;
@@ -368,6 +383,8 @@ while( $request->Accept() >= 0 || $test ) {
 					my $seek = ( $width eq "mid" ) ? 1 : $width;
 
 					videoThumbnail( $original, $thumbnail, $seek );
+					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
+					print STDERR "Creating thumbnail for video file $original, time: $t_elapsed\n";
 
 					$transformed = 1;
 					if( -f $thumbnail ) {
@@ -377,7 +394,8 @@ while( $request->Accept() >= 0 || $test ) {
 						print "X-LIGHTTPD-send-file: $thumbnail\r\n";
 						print "Cache-control: max-age=30\r\n";
 						print "Content-type: $mimetype\r\n\r\n";
-						print STDERR "File $thumbnail created\n" if $debug;
+						$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
+						print STDERR "File $thumbnail created, time: $t_elapsed\n" if $debug;
 					}
 					else {
 						print STDERR "Thumbnailer from $original to $thumbnail failed\n" if $debug;
@@ -396,6 +414,8 @@ while( $request->Accept() >= 0 || $test ) {
 					#
 					my $image = new Image::Magick;
 					$image->Read( $original );
+					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
+					print STDERR "Reading $original for transforming, time: $t_elapsed\n" if $debug;
 
 					#
 					# use only first frame in animated gifs
@@ -406,6 +426,8 @@ while( $request->Accept() >= 0 || $test ) {
 					if( $origw && $origh ) {
 						my $height = scaleHeight( $origw, $origh, $width, $test );
 						$image->Resize( "geometry" => "${width}x${height}!", "blur" => 0.9 );
+						$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
+						print STDERR "Resizing into $thumbnail, time: $t_elapsed\n" if $debug;
 						$transformed = 1;
 						if( $transformed ) { #-f $thumbnail
 							#
@@ -415,7 +437,8 @@ while( $request->Accept() >= 0 || $test ) {
 							print "Cache-control: max-age=30\r\n";
 							print "Content-type: $mimetype\r\n\r\n";
 							print $image->ImageToBlob() unless $test;
-							print STDERR "File $thumbnail served\n" if $debug;
+							$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
+							print STDERR "File $thumbnail served, time: $t_elapsed\n" if $debug;
 						}
 						else {
 							print STDERR "Thumbnailer from $original to $thumbnail failed\n" if $debug;
