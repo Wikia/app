@@ -63,6 +63,7 @@ class FBConnectPushEvent {
 	 *
 	 */
 	static public function addPreferencesToggles( $user, &$preferences ){
+		wfProfileIn(__METHOD__);
 		global $fbPushEventClasses, $wgUser;
 		wfLoadExtensionMessages('FBConnect');
 		$id = FBConnectDB::getFacebookIDs($wgUser);
@@ -88,6 +89,7 @@ class FBConnectPushEvent {
 				}
 			}
 		}
+		wfProfileOut(__METHOD__);
 		return true;
 	} // end addPreferencesToggles()
 	
