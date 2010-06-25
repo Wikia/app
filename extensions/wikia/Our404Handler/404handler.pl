@@ -395,7 +395,8 @@ while( $request->Accept() >= 0 || $test ) {
 						print STDERR "File $thumbnail created, time: $t_elapsed\n" if $debug;
 					}
 					else {
-						print STDERR "Thumbnailer from $original to $thumbnail failed\n" if $debug;
+						$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
+						print STDERR "Thumbnailer from $original to $thumbnail failed, time: $t_elapsed\n" if $debug;
 						#
 						# serve original file
 						#
@@ -438,7 +439,9 @@ while( $request->Accept() >= 0 || $test ) {
 							print STDERR "File $thumbnail served, time: $t_elapsed\n" if $debug;
 						}
 						else {
-							print STDERR "Thumbnailer from $original to $thumbnail failed\n" if $debug;
+							$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
+							print STDERR "Thumbnailer from $original to $thumbnail failed, time: $t_elapsed\n" if $debug;
+
 							#
 							# serve original file
 							#
