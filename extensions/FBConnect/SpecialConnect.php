@@ -95,7 +95,7 @@ class SpecialConnect extends SpecialPage {
 				unset($this->mReturnToQuery['fbconnected']);
 			}
 		}
-		$this->mReturnToQuery = http_build_query($this->mReturnToQuery); 
+		$this->mReturnToQuery = urlencode($this->mReturnToQuery); 
 		
 		$title = Title::newFromText($this->mReturnTo);
 		if (!empty($title))
