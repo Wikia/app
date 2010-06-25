@@ -127,39 +127,62 @@ class ScribeProducer {
 	static public function deleteComplete( &$oArticle, &$oUser, $reason, $articleId ) {
 		wfProfileIn( __METHOD__ );
 
+		$use_api = 0;
 		if ( ( $oArticle instanceof Article ) && ( $oUser instanceof User ) ) {
 			$pageId = ( !empty($articleId) ) ? $articleId : $oArticle->getID();
+			$logid = 0;
 			if ( $pageId > 0 ) {
-				#action=query&list=logevents&letype=delete&letitle=TestDel2
-				$pageName = Title::makeName($oArticle->mTitle->getNamespace, $oArticle->mTitle->getDBkey());
-				$oFauxRequest = new FauxRequest(array(
-					'action' 	=> 'query',
-					'list' 		=> 'logevents',
-					'letype' 	=> 'delete',
-					'letitle'	=> $pageName,
-					'lelimit'	=> 1
-				));
-				$logid = 0;
-				$oApi = new ApiMain($oFauxRequest);
-				try { 
-					#---
-					$oApi->execute();
-					$aResult = $oApi->GetResultData();
-					if ( isset( $aResult['query']['logevents'] ) && !empty( $aResult['query']['logevents'] ) ) {
-						list ($row) = $aResult['query']['logevents'];
-						if ( isset($row['logid']) ) {
-							$logid = $row['logid'];
-						}
+				if ( $use_api == 1 ) {
+					$pageName = Title::makeName($oArticle->mTitle->getNamespace, $oArticle->mTitle->getDBkey());
+					$oFauxRequest = new FauxRequest(array(
+						'action' 	=> 'query',
+						'list' 		=> 'logevents',
+						'letype' 	=> 'delete',
+						'letitle'	=> $pageName,
+						'lelimit'	=> 1
+					));
+					$oApi = new ApiMain($oFauxRequest);
+					try { 
 						#---
-						$oScribeProducer = new ScribeProducer( 'delete', $pageId, 0, $logid );
-						if ( is_object( $oScribeProducer ) ) {
-							$oScribeProducer->send_log();
+						$oApi->execute();
+						$aResult = $oApi->GetResultData();
+						if ( isset( $aResult['query']['logevents'] ) && !empty( $aResult['query']['logevents'] ) ) {
+							list ($row) = $aResult['query']['logevents'];
+							if ( isset($row['logid']) ) {
+								$logid = $row['logid'];
+							}
 						}
+					} 
+					catch (Exception $e) {
+						Wikia::log( __METHOD__, 'cannot fetch data from logging table via API request', $e->getMessage() );
+					};
+				} else {
+					$table = 'recentchanges';
+					$what = array('rc_logid');
+					$cond = array(
+						'rc_title'		=> $oArticle->mTitle->getDBkey(),
+						'rc_namespace'	=> $oArticle->mTitle->getNamespace(),
+						'rc_log_action'	=> 'delete',
+						'rc_user' 		=> $oUser->getID()
+					);
+					$options = array(
+						'ORDER BY' => 'rc_id DESC'
+					);
+
+					$dbr = wfGetDB( DB_MASTER );
+					$oRow = $dbr->selectRow( $table, $what, $cond, __METHOD__, $options );
+					if ( $oRow ) {
+						$logid = $oRow->rc_logid;
 					}
-				} 
-				catch (Exception $e) {
-					Wikia::log( __METHOD__, 'cannot fetch data from logging table via API request', $e->getMessage() );
-				};
+				}
+				
+				if ( $logid > 0 ) {
+					#---
+					$oScribeProducer = new ScribeProducer( 'delete', $pageId, 0, $logid );
+					if ( is_object( $oScribeProducer ) ) {
+						$oScribeProducer->send_log();
+					}
+				}
 			}
 		}
 
@@ -212,10 +235,10 @@ class ScribeProducer {
 	static public function articleUndelete( &$oTitle, $is_new = false ) {
 		wfProfileIn( __METHOD__ );
 		if ( $oTitle instanceof Title ) {
-			$oRevision = Revision::newFromTitle( $oTitle );
-			if ( $oRevision instanceof Revision ) {
-				$pageId = $oRevision->getPage();
-				$revId = $oRevision->getId();
+			$oArticle = new Article( $oTitle, 0 );
+			if ( $oArticle instanceof Article ) {
+				$pageId = $oArticle->getID();
+				$revId = $oTitle->getLatestRevID(GAID_FOR_UPDATE);
 				if ( $revId > 0 && $pageId > 0 ) {
 					$oScribeProducer = new ScribeProducer( 'undelete', $pageId, $revId );
 					if ( is_object( $oScribeProducer ) ) {
