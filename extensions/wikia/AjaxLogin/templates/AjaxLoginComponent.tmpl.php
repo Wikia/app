@@ -43,8 +43,8 @@
 	            	<input type="checkbox" value="1" tabindex="204" id="wpRemember2Ajax" name="wpRemember" > </input>
 	                <label id="labelFor_wpRemember2Ajax" for="wpRemember2Ajax" style="padding-left: 5px"><?php print wfMsg('remembermypassword') ?></label>
 	            </div>
-	        	<input type="submit" id="wpLoginattempt" value="<?php print wfMsg("login") ?>" />
-	        <input type="hidden" name="wpLoginToken" value="<?php echo $loginToken; ?>" />
+	        	<input tabindex="203" type="submit" id="wpLoginattempt" value="<?php print wfMsg("login") ?>" />
+	        <input  type="hidden" name="wpLoginToken" value="<?php echo $loginToken; ?>" />
         	</form>
 
 	</div>

@@ -125,10 +125,6 @@ function sendToConnectOnLogin(){
 // Allows optional specification of a form to force on Special:Connect (such as ChooseName, ConnectExisting, or Convert).
 function sendToConnectOnLoginForSpecificForm(formName){
 	FB.getLoginStatus(function(response) {
-		if (!response.session) {
-			alert("sdsdsdsdsdsdsds");
-			return ;
-		}
 		if(formName != ""){
 	        formName = "/"+formName;
 	    }
@@ -248,6 +244,9 @@ window.wgAjaxLoginOnInit = function() {
 		firstSliderCell.animate({
 			marginLeft: slideto
 		});
+	};
+	AjaxLogin.LoginAndConnectHideBack = function() {
+		$("#AjaxLoginConnectMarketing a.back").hide();
 	};
 
 	AjaxLogin.slider = function(e) {
