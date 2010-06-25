@@ -10,6 +10,8 @@ if( !defined( 'MEDIAWIKI' ) )
  */
 class ImagePage extends Article {
 
+        const FILE_LINKS_SECTION_ID = 'File_links';
+
 	/* private */ var $img;  // Image object
 	/* private */ var $displayImg;
 	/* private */ var $repo;
@@ -121,7 +123,8 @@ class ImagePage extends Article {
 		$this->closeShowImage();
 		$this->imageHistory();
 		// TODO: Cleanup the following
-		
+
+                $wgOut->addHTML('<a id="'.self::FILE_LINKS_SECTION_ID.'" name="'.self::FILE_LINKS_SECTION_ID.'" rel="nofollow"></a>'."\n");
 		$wgOut->addHTML( Xml::element( 'h2',
 			array( 'id' => 'filelinks' ),
 			wfMsg( 'imagelinks' ) ) . "\n" );
@@ -337,25 +340,52 @@ class ImagePage extends Article {
 						# because of rounding.
 					}
 					$msgbig  = wfMsgHtml( 'show-big-image' );
-					$msgsmall = wfMsgExt( 'show-big-image-thumb', 'parseinline',
-						$wgLang->formatNum( $width ),
-						$wgLang->formatNum( $height )
-					);
+//					//RT#55755 $msgsmall = wfMsgExt( 'show-big-image-thumb', 'parseinline',
+//						$wgLang->formatNum( $width ),
+//						$wgLang->formatNum( $height )
+//					);
 				} else {
 					# Image is small enough to show full size on image page
 					$msgbig = htmlspecialchars( $this->displayImg->getName() );
-					$msgsmall = wfMsgExt( 'file-nohires', array( 'parseinline' ) );
+					//RT#55755 $msgsmall = wfMsgExt( 'file-nohires', array( 'parseinline' ) );
 				}
 
 				$params['width'] = $width;
 				$thumbnail = $this->displayImg->transform( $params );
 
-				$anchorclose = "<br />";
+                                # Image links. RT #55755
+                                $limit = 5;
+                                $dbr = wfGetDB( DB_SLAVE );
+                                $res = $this->getImageLinksRes($dbr, $limit);
+                                $num_imagelinks = $dbr->numRows( $res );
+                                $links = array();
+                                $count = 0;
+                                while ( $s = $res->fetchObject() ) {
+                                        $count++;
+                                        if( $count <= $limit ) {
+                                                // We have not yet reached the extra one that tells us there is more to fetch
+                                                $name = Title::makeTitle( $s->page_namespace, $s->page_title );
+                                                $link = $sk->makeKnownLinkObj( $name, "" );
+                                                $links[] = $link;
+                                        }
+                                }
+                                # "more" link
+                                if ($num_imagelinks > $limit) {
+                                    $links[] = '<a href="#'.self::FILE_LINKS_SECTION_ID.'">more&hellip;</a>';
+                                }
+
+                                $anchorclose = "<br />";
 				if( $this->displayImg->mustRender() ) {
 					$showLink = true;
 				} else {
+                                        $imagelinks_str = '';
+                                        if ($num_imagelinks) {
+                                            $imagelinks_str = 'Featured on: ';
+                                            $imagelinks_str .= implode(', ', $links);
+                                        }
 					$anchorclose .=
-						$msgsmall .
+                                                $imagelinks_str .
+						//RT#55755 '<br />' . $msgsmall .
 						'<br />' . Xml::tags( 'a', $linkAttribs,  $msgbig ) . "$dirmark " . $longDesc;
 				}
 
@@ -560,20 +590,25 @@ EOT
 		}
 	}
 
+        private function getImageLinksRes($dbr, $limit) {
+            $res = $dbr->select(
+                    array( 'imagelinks', 'page' ),
+                    array( 'page_namespace', 'page_title' ),
+                    array( 'il_to' => $this->mTitle->getDBkey(), 'il_from = page_id' ),
+                    __METHOD__,
+                    array( 'LIMIT' => $limit + 1)
+            );
+
+            return $res;
+        }
+
 	protected function imageLinks() {
 		global $wgUser, $wgOut, $wgLang;
 
 		$limit = 100;
 
 		$dbr = wfGetDB( DB_SLAVE );
-
-		$res = $dbr->select(
-			array( 'imagelinks', 'page' ),
-			array( 'page_namespace', 'page_title' ),
-			array( 'il_to' => $this->mTitle->getDBkey(), 'il_from = page_id' ),
-			__METHOD__,
-			array( 'LIMIT' => $limit + 1)	
-		);
+                $res = $this->getImageLinksRes($dbr, $limit);
 		$count = $dbr->numRows( $res );
 		if( $count == 0 ) {
 			$wgOut->addHTML( "<div id='mw-imagepage-nolinkstoimage'>\n" );
