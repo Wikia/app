@@ -24,8 +24,6 @@ use Getopt::Long;
 use Cwd;
 use Time::HiRes qw(gettimeofday tv_interval);
 
-use Data::Dump;
-
 #
 # constant
 #
@@ -176,7 +174,7 @@ my $clients     = $ENV{ "CHILDREN" } || 4;
 my $listen      = $ENV{ "SOCKET"   } || "0.0.0.0:39393";
 my $debug       = $ENV{ "DEBUG"    } || 1;
 my $test        = $ENV{ "TEST"     } || 0;
-my $pidfile     = $ENV{ "PIDFILE"  } || "/var/run/404handler.pid";
+my $pidfile     = $ENV{ "PIDFILE"  } || "/var/run/thumbnailer/404handler.pid";
 
 #
 # fastcgi request
@@ -186,7 +184,7 @@ my( $socket, $request, $manager, $request_uri, $referer, $test_uri );
 
 unless( $test ) {
 	$socket     = FCGI::OpenSocket( $listen, 100 ) or die "failed to open FastCGI socket; $!";
-	$request    = FCGI::Request( \*STDIN, \*STDOUT, \*STDERR, \%env, $socket, ( &FCGI::FAIL_ACCEPT_ON_INTR ) );
+	$request    = FCGI::Request( \*STDIN, \*STDOUT, \*STDOUT, \%env, $socket, ( &FCGI::FAIL_ACCEPT_ON_INTR ) );
 	$manager    = FCGI::ProcManager->new({ n_processes => $clients });
 
 	$manager->pm_write_pid_file( $pidfile );
