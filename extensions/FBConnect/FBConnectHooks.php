@@ -656,6 +656,14 @@ STYLE;
 				$msg .= "<p>".wfMsg('fbconnect-connect-msg', array("$1" => $pref->getFullUrl() ))."</p>";
 			}
 		}
+		
+		if ($wgRequest->getVal("fbconnected","") == 2) {
+			$fb = new FBConnectAPI();
+			if( strlen($fb->user()) < 1 ) {
+				$msg =  Xml::element("img", array("id" => "fbMsgImage", "src" => $wgServer.'/skins/common/fbconnect/fbiconbig.png' )); 
+				$msg .= "<p>".wfMsg('fbconnect-connect-error-msg', array("$1" => $pref->getFullUrl() ))."</p>";				
+			}
+		}
 		return true;
 	}
 }

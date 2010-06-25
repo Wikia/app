@@ -33,6 +33,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  */
 class SpecialConnect extends SpecialPage {
 	private $userNamePrefix;
+	private $isNewUser = false;
 	static private $fbOnLoginJs;
 	static private $availableUserUpdateOptions = array('fullname', 'nickname', 'email', 'language', 'timecorrection');
 	
@@ -88,6 +89,14 @@ class SpecialConnect extends SpecialPage {
 		$this->mReturnTo = $wgRequest->getVal( 'returnto' );
 		$this->mReturnToQuery = $wgRequest->getVal( 'returntoquery' );
 			
+		if( empty($this->mReturnToQuery) ) {
+			$this->mReturnToQuery = parse_str($this->mReturnToQuery);
+			if (!empty($this->mReturnToQuery['fbconnected'])) {
+				unset($this->mReturnToQuery['fbconnected']);
+			}
+		}
+		$this->mReturnToQuery = http_build_query($this->mReturnToQuery); 
+		
 		$title = Title::newFromText($this->mReturnTo);
 		if (!empty($title))
 		{
@@ -481,7 +490,7 @@ class SpecialConnect extends SpecialPage {
 			// TODO: Which MediaWiki versions can we call this function in?
 			$user->addNewUserLogEntryAutoCreate();
 			#$user->addNewUserLogEntry();
-
+			$this->isNewUser = true;
 			$this->sendPage('displaySuccessLogin');
 		}
 
@@ -667,20 +676,24 @@ class SpecialConnect extends SpecialPage {
 		// Run any hooks for UserLoginComplete
 		$injected_html = '';
 		wfRunHooks( 'UserLoginComplete', array( &$wgUser, &$injected_html ) );
-		
+	
 		if( $injected_html !== '' ) {
 			$wgOut->addHtml( $injected_html );
 			// Render the "return to" text retrieved from the URL
 			$wgOut->returnToMain(false, $this->mReturnTo, $this->mReturnToQuery);
 		} else {
+			$addParam = "";
+			if($this->isNewUser) {
+				$addParam = "&fbconnected=1";
+			} 
 			// Since there was no additional message for the user, we can just redirect them back to where they came from.
 			$titleObj = Title::newFromText( $this->mReturnTo );
 			if (  ( !$titleObj instanceof Title ) || ( $titleObj->isSpecial("Userlogout") ) || ( $titleObj->isSpecial("Signup") ) || ( $titleObj->isSpecial("Connect") )  ) {
 				$titleObj = Title::newMainPage();
-				$wgOut->redirect( $titleObj->getFullURL( "&cb=".rand(1,10000) ) );
+				$wgOut->redirect( $titleObj->getFullURL( "cb=".rand(1,10000).$addParam ) );
 				return true;
 			}
-			$wgOut->redirect( $titleObj->getFullURL( $this->mReturnToQuery . "&cb=".rand(1,10000) ) );
+			$wgOut->redirect( $titleObj->getFullURL( $this->mReturnToQuery . "&cb=".rand(1,10000).$addParam ) );
 		}
 	}
 
@@ -826,16 +839,9 @@ class SpecialConnect extends SpecialPage {
 		global $wgOut, $wgUser, $wgSitename;
 		$fb = new FBConnectAPI();
 		$fb_user = $fb->user();
-
-		// Outputs the canonical name of the special page at the top of the page
-		$this->outputHeader();
-
-		// Render a humble Facebook Connect button
-		$wgOut->addHTML('<h2>' . wfMsg( 'fbconnect' ) . '</h2>
-			<div>'.wfMsgExt( 'fbconnect-intro', array('parse', 'content')) . '<br/>' . wfMsg( 'fbconnect-click-to-login', $wgSitename ) .'
-			<fb:login-button size="large" background="black" length="long"'.FBConnect::getPermissionsAttribute().FBConnect::getOnLoginAttribute().'></fb:login-button>
-			</div>'
-		);
+		
+		$titleObj = Title::newFromText( $this->mReturnTo );
+		$wgOut->redirect( $titleObj->getFullURL( $this->mReturnToQuery . "&fbconnected=2&cb=".rand(1,10000) ) );
 	}
 	/**
 	 * Disconnect from facebook
