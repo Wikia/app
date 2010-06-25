@@ -71,7 +71,7 @@ class SpecialPhalanx extends SpecialPage {
 		$data['regex'] = $wgRequest->getCheck( 'regex' );
 		$data['exact'] = $wgRequest->getCheck( 'exact' );
 
-		$data['expire'] = $wgRequest->getText( 'expire', $this->defaultExpire );
+		$data['expire'] = $wgRequest->getText( 'expire', $this->mDefaultExpire );
 
 		$data['type'] = array_fill_keys( $wgRequest->getArray( 'type', array() ), true );
 
