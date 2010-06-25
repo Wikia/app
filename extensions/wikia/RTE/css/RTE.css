@@ -20,7 +20,11 @@
 }
 
 /* hide textarea */
-.RTEloading .cke_contents iframe,
+.RTEloading .cke_contents iframe {
+	/* RT #56006 */
+	display: none;
+}
+
 .RTEloading .cke_contents textarea {
 	position: absolute !important;
 	left: -10000px;
