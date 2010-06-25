@@ -31,7 +31,7 @@ class UserBlock {
 			//no user name matched - check IP address
 			$userIP = wfGetIP();
 			foreach ($blocksData as $blockData) {
-				if (!($isBlockIP = $user->isIP($blockData['text']))) {
+				if (!$user->isIP($blockData['text'])) {
 					continue;
 				}
 				$result = Phalanx::isBlocked( $userIP, $blockData );
