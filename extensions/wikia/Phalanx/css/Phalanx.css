@@ -52,7 +52,7 @@
 	float: left;
 }
 
-#phalanx-block-types label {
+.phalanx-block-types label {
 	display: inline-block;
 	margin: 6px 0px 0px 10px;
 	text-align: left;

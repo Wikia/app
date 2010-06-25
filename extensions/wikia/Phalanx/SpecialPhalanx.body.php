@@ -13,7 +13,7 @@ class SpecialPhalanx extends SpecialPage {
 	function execute( $par ) {
 		wfProfileIn(__METHOD__);
 		global $wgOut, $wgRequest, $wgExtensionsPath, $wgStyleVersion, $wgStylePath;
-		global $wgPhalanxSupportedLanguages, $wgUser;
+		global $wgPhalanxSupportedLanguages, $wgUser, $wgTitle;
 
 		// check restrictions
 		if ( !$this->userCanExecute( $wgUser ) ) {
@@ -30,9 +30,9 @@ class SpecialPhalanx extends SpecialPage {
 
 		$pager = new PhalanxPager();
 
-                $listing = $pager->getNavigationBar();
-                $listing .= $pager->getBody();
-                $listing .= $pager->getNavigationBar();
+		$listing = $pager->getNavigationBar();
+		$listing .= $pager->getBody();
+		$listing .= $pager->getNavigationBar();
 
 		$data = $this->prefillForm();
 
@@ -41,6 +41,7 @@ class SpecialPhalanx extends SpecialPage {
 			'languages' => $wgPhalanxSupportedLanguages,
 			'listing' => $listing,
 			'data' => $data,
+			'action' => $wgTitle->getFullURL()
 		));
 
 		$wgOut->addHTML($template->render('phalanx'));
@@ -58,8 +59,15 @@ class SpecialPhalanx extends SpecialPage {
 		if ( $id ) {
 			$data = Phalanx::getFromId( $id );
 			$data['type'] = Phalanx::getTypeNames( $data['type'] );
-			return $data;
+			$data['checkBlocker'] = '';
+			$data['typeFilter'] = array();;
+		} else {
+			$data['type'] = array_fill_keys( $wgRequest->getArray( 'type', array() ), true );
+			$data['checkBlocker'] = $wgRequest->getText( 'wpPhalanxCheckBlocker', '' );
+			$data['typeFilter'] = array_fill_keys( $wgRequest->getArray( 'wpPhalanxTypeFilter', array() ), true );
 		}
+
+		$data['checkId'] = $id;
 
 		$data['text'] = $wgRequest->getText( 'ip' );
 		$data['text'] = $wgRequest->getText( 'target', $data['text'] );
@@ -72,8 +80,6 @@ class SpecialPhalanx extends SpecialPage {
 		$data['exact'] = $wgRequest->getCheck( 'exact' );
 
 		$data['expire'] = $wgRequest->getText( 'expire', $this->mDefaultExpire );
-
-		$data['type'] = array_fill_keys( $wgRequest->getArray( 'type', array() ), true );
 
 		$data['lang'] = $wgRequest->getText( 'lang', 'all' );
 
@@ -91,45 +97,55 @@ class SpecialPhalanx extends SpecialPage {
 }
 
 class PhalanxPager extends ReverseChronologicalPager {
-        public function __construct() {
-                global $wgExternalSharedDB, $wgRequest;
+	public function __construct() {
+		global $wgExternalSharedDB, $wgRequest;
 
-                parent::__construct();
-                $this->mDb = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+		parent::__construct();
+		$this->mDb = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
 		$this->mSearchText = $wgRequest->getText( 'wpPhalanxCheckBlocker', null );
-		$this->mSearchType = $wgRequest->getInt( 'typesearch', null );
+		$this->mSearchFilter = $wgRequest->getArray( 'wpPhalanxTypeFilter' );
+		$this->mSearchId = $wgRequest->getInt( 'id' );
 	}
 
-        function getQueryInfo() {
-                $query['tables'] = 'phalanx';
-                $query['fields'] = '*';
+	function getQueryInfo() {
+		$query['tables'] = 'phalanx';
+		$query['fields'] = '*';
 
-		if ( !empty( $this->mSearchText ) ) {
-			$query['conds'][] = '(p_text like "%' . $this->mDb->escapeLike( $this->mSearchText ) . '%")';
+		if ($this->mSearchId) {
+			$query['conds'][] = "p_id = {$this->mSearchId}";
+		} else {
+			if ( !empty( $this->mSearchText ) ) {
+				$query['conds'][] = '(p_text like "%' . $this->mDb->escapeLike( $this->mSearchText ) . '%")';
+			}
+
+			if ( !empty( $this->mSearchFilter ) ) {
+				$typemask = 0;
+				foreach ($this->mSearchFilter as $type ) {
+					$typemask |= $type;
+				}
+
+				$query['conds'][] = "p_type & $typemask <> 0";
+			}
 		}
 
-		if ( !empty( $this->mSearchType ) ) {
-			$query['conds'][] = "p_type = {$this->mSearchType}";
-		}
+		return $query;
+	}
 
-                return $query;
-        }
+	function getIndexField() {
+		return 'p_timestamp';
+	}
 
-        function getIndexField() {
-                return 'p_timestamp';
-        }
+	function getStartBody() {
+		return '<ul>';
+	}
 
-        function getStartBody() {
-                return '<ul>';
-        }
+	function getEndBody() {
+		return '</ul>';
+	}
 
-        function getEndBody() {
-                return '</ul>';
-        }
-
-        function formatRow( $row ) {
-                global $wgLang;
+	function formatRow( $row ) {
+		global $wgLang;
 
 		$author = User::newFromId( $row->p_author_id );
 		$authorName = $author->getName();
@@ -138,16 +154,16 @@ class PhalanxPager extends ReverseChronologicalPager {
 		$phalanxUrl = Title::newFromText( 'Phalanx', NS_SPECIAL )->getFullUrl( array( 'id' => $row->p_id ) );
 		$statsUrl = Title::newFromText( 'PhalanxStats', NS_SPECIAL )->getFullUrl() . '/' . $row->p_id;
 
-                $html = '<li id="phalanx-block-' . $row->p_id . '">';
+		$html = '<li id="phalanx-block-' . $row->p_id . '">';
 
 		$html .= '<b>' . htmlspecialchars( $row->p_text ) . '</b> (' ;
 		$html .= $row->p_regex ? 'regex' : 'plain text';
 		$html .= ') ';
 
 		// control links
-                $html .= " &bull; <a class='unblock' href='{$phalanxUrl}'>" . wfMsg('phalanx-link-unblock') . '</a>';
-                $html .= " &bull; <a class='modify' href='{$phalanxUrl}'>" . wfMsg('phalanx-link-modify') . '</a>';
-                $html .= " &bull; <a href='{$statsUrl}'>" . wfMsg('phalanx-link-stats') . '</a>';
+		$html .= " &bull; <a class='unblock' href='{$phalanxUrl}'>" . wfMsg('phalanx-link-unblock') . '</a>';
+		$html .= " &bull; <a class='modify' href='{$phalanxUrl}'>" . wfMsg('phalanx-link-modify') . '</a>';
+		$html .= " &bull; <a href='{$statsUrl}'>" . wfMsg('phalanx-link-stats') . '</a>';
 
 		// types
 		$html .= '<br /> blocks: ' . implode( ', ', Phalanx::getTypeNames( $row->p_type ) );
@@ -155,8 +171,8 @@ class PhalanxPager extends ReverseChronologicalPager {
 		$html .= ' &bull; created by <a href="' . $authorUrl . '">' . $authorName . '</a>';
 		$html .= ' on ' . $wgLang->timeanddate( $row->p_timestamp );
 
-                $html .= '</li>';
+		$html .= '</li>';
 
-                return $html;
-        }
+		return $html;
+	}
 }
