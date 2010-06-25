@@ -22,7 +22,7 @@ class UserBlock {
 				$result = Phalanx::isBlocked( $text, $blockData );
 				if ( $result['blocked'] ) {
 					Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$text'.");
-					self::setUserData( $user, $blockData );
+					self::setUserData( $user, $blockData, $text );
 					wfProfileOut( __METHOD__ );
 					return false;
 				}
@@ -37,7 +37,7 @@ class UserBlock {
 				$result = Phalanx::isBlocked( $userIP, $blockData );
 				if ( $result['blocked'] ) {
 					Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$text'.");
-					self::setUserData( $user, $blockData, true );
+					self::setUserData( $user, $blockData, $userIP, true );
 					wfProfileOut( __METHOD__ );
 					return false;
 				}
@@ -50,7 +50,7 @@ class UserBlock {
 	}
 
 	//moved from RegexBlockCore.php
-	private static function setUserData(&$user, $blockData, $isBlockIP = false) {
+	private static function setUserData(&$user, $blockData, $address, $isBlockIP = false) {
 		wfProfileIn( __METHOD__ );
 
 		wfLoadExtensionMessages( 'Phalanx' );
@@ -76,7 +76,7 @@ class UserBlock {
 			$user->mBlock->mId = $blockData['id'];
 			$user->mBlock->mExpiry = is_null($blockData['expire']) ? 'infinity' : $blockData['expire'];
 			$user->mBlock->mTimestamp = $blockData['timestamp'];
-			$user->mBlock->mAddress = $isBlockIP ? wfGetIP() : $user->getName();
+			$user->mBlock->mAddress = $address;
 
 			// account creation check goes through the same hook...
 			if ($isBlockIP) {
