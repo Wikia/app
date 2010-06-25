@@ -11,7 +11,7 @@
 			<div id="phalanx-filter-area">
 				<fieldset id="phalanx-input-filter">
 					<legend><?= wfMsg( 'phalanx-legend-input' ) ?></legend>
-					<form id="phalanx-block" method="post" action="">
+					<form id="phalanx-block" method="post" action="<?= $action ?>">
 						<?php if ( !empty( $data['id'] ) ) { ?>
 						<input type="hidden" name="id" value="<?= $data['id'] ?>"/>
 						<?php } ?>
@@ -46,7 +46,7 @@
 						<!-- Type -->
 						<div class="clearfix">
 							<div class="left-spacer"><?= wfMsg( 'phalanx-label-type' ) ?></div>
-							<div id="phalanx-block-types">
+							<div id="phalanx-block-types" class="phalanx-block-types">
 								<div>
 									<?= Xml::check( 'wpPhalanxType[]', !empty( $data['type'][1] ), array( 'id' => 'wpPhalanxTypeContent' ) ) ?>
 									<label for="wpPhalanxTypeContent"><?= wfMsg( 'phalanx-type-content' ) ?></label>
@@ -111,16 +111,45 @@
 			<div id="phalanx-check-area">
 				<fieldset>
 				<legend><?= wfMsg( 'phalanx-legend-listing' ) ?></legend>
-				<form id="phalanx-filters" method="get" action="/wiki/Special:Phalanx">
+				<form id="phalanx-filters" method="get" action="<?= $action ?>">
 					<div id="phalanx-check-options">
 						<label for="wpPhalanxCheckBlocker"><?= wfMsg( 'phalanx-view-blocker' ) ?></label>
-						<input type="text" id="wpPhalanxCheckBlocker" name="wpPhalanxCheckBlocker" class="blue" size="30" value="" />
+						<input type="text" id="wpPhalanxCheckBlocker" name="wpPhalanxCheckBlocker" class="blue" size="30" value="<?= $data['checkBlocker'] ?>" />
 						<input type="submit" value="<?= wfMsg( 'phalanx-view-blocks' ) ?>"  />
 
 						<label for="wpPhalanxCheckId"><?= wfMsg( 'phalanx-view-id' ) ?></label>
-						<input type="text" id="wpPhalanxCheckId" name="id" class="blue" size="5" value="" />
+						<input type="text" id="wpPhalanxCheckId" name="id" class="blue" size="5" value="<?= $data['checkId'] ?>" />
 
 						<input type="submit" value="<?= wfMsg( 'phalanx-view-id-submit' ) ?>"  />
+
+						<div id="phalanx-block-types-filter" class="phalanx-block-types">
+							<div>
+								<?= Xml::check( 'wpPhalanxTypeFilter[]', !empty( $data['typeFilter'][1] ), array( 'id' => 'wpPhalanxTypeContentFilter', 'value' => 1 ) ) ?>
+								<label for="wpPhalanxTypeContentFilter"><?= wfMsg( 'phalanx-type-content' ) ?></label>
+								
+								<?= Xml::check( 'wpPhalanxTypeFilter[]', !empty( $data['typeFilter'][2] ), array( 'id' => 'wpPhalanxTypeSummaryFilter', 'value' => 2 ) ) ?>
+								<label for="wpPhalanxTypeSummaryFilter"><?= wfMsg( 'phalanx-type-summary' ) ?></label>
+							</div>
+							<div>
+								<?= Xml::check( 'wpPhalanxTypeFilter[]', !empty( $data['typeFilter'][4] ), array( 'id' => 'wpPhalanxTypeTitleFilter', 'value' => 4 ) ) ?>
+								<label for="wpPhalanxTypeTitleFilter"><?= wfMsg( 'phalanx-type-title' ) ?></label>
+							</div>
+							<div>
+								<?= Xml::check( 'wpPhalanxTypeFilter[]', !empty( $data['typeFilter'][8] ), array( 'id' => 'wpPhalanxTypeUserFilter', 'value' => 8 ) ) ?>
+								<label for="wpPhalanxTypeUserFilter"><?= wfMsg( 'phalanx-type-user' ) ?></label>
+								
+								<?= Xml::check( 'wpPhalanxTypeFilter[]', !empty( $data['typeFilter'][64] ), array( 'id' => 'wpPhalanxTypeCreationFilter', 'value' => 64 ) ) ?>
+								<label for="wpPhalanxTypeCreationFilter"><?= wfMsg( 'phalanx-type-wiki-creation' ) ?></label>
+							</div>
+							<div>
+								<?= Xml::check( 'wpPhalanxTypeFilter[]', !empty( $data['typeFilter'][16] ), array( 'id' => 'wpPhalanxTypeQuestionFilter', 'value' => 16 ) ) ?>
+								<label for="wpPhalanxTypeQuestionFilter"><?= wfMsg( 'phalanx-type-answers-question' ) ?></label>
+								
+								<?= Xml::check( 'wpPhalanxTypeFilter[]', !empty( $data['typeFilter'][32] ), array( 'id' => 'wpPhalanxTypeFilterWordsFilter', 'value' => 32 ) ) ?>
+								<label for="wpPhalanxTypeFilterWordsFilter"><?= wfMsg( 'phalanx-type-answers-words' ) ?></label>
+							</div>
+						</div>
+
 					</div>
 					<div id="phalanx-check-results">
 						<?= $listing ?>
