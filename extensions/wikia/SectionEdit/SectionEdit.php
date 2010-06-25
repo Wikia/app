@@ -38,6 +38,10 @@ if (skin == "monaco") {
 		//add elements and styling
 		$(this).parent().prepend("<span class=\"editsection\"><a href=\"'.$editUrl.'\" onclick=\"WET.byStr(\'articleAction/editSection\')\">'.$editMsg.'</a></span>").find(".editsection a").addClass("wikia-button").end().parent().css("position", "relative").css("top", "-3px").css("margin-bottom", "-2px");
 	});
+}
+
+if (typeof(SectionEditLeftAlign) == "function") {
+	SectionEditLeftAlign();
 }';
 	}
 	else {
