@@ -87,6 +87,7 @@ Current value:
 	&nbsp;&nbsp;Apply change to all wikis by tag:
 	<input type="text" name="tagName" id="tagName" value="" style="width: 100px;" />
 	&nbsp;<span id="wf-tag-parse">&nbsp;</span>
+	<br/>Reason: <input type="text" id="wk-reason" name="reason" value="" /> (optional, reason text or ticket number)
 </form>
 <?php else: ?>
 <em>read only</em>
