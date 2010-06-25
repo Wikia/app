@@ -310,14 +310,13 @@ while( $request->Accept() >= 0 || $test ) {
 				my $thumbdir = dirname( $thumbnail );
 				unless( -d $thumbdir ) {
 					eval { mkpath( $thumbdir, { mode => 0775 } ) };
+					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
 					if( $@ ) {
-						print STDERR "Creating of $thumbdir folder failed\n" if $debug;
+						print STDERR "Creating of $thumbdir folder failed, time: $t_elapsed\n" if $debug;
 					}
 					else {
-						print STDERR "Folder $thumbdir created\n" if $debug;
+						print STDERR "Folder $thumbdir created, time: $t_elapsed\n" if $debug;
 					}
-					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-					print STDERR "creating folder $thumbdir, time: $t_elapsed\n" if $debug;
 				}
 
 				#
