@@ -76,14 +76,12 @@ var AjaxLogin = {
 		
 		$("#wpPassword2Ajax").keypress(
 		function(e) {
-			AjaxLogin.tabOrderHack(e, '#wpLoginattempt');
-			return false;
+			return AjaxLogin.tabOrderHack(e, '#wpLoginattempt');
 		}); 
 		
 		$("#wpPassword3Ajax").keypress(
 		function(e) {
-			AjaxLogin.tabOrderHack(e, '#wpLoginAndConnectCombo');
-			return false;
+			return AjaxLogin.tabOrderHack(e, '#wpLoginAndConnectCombo');
 		}); 
 		
 		$('#wpLoginattemptAjax').attr('tabindex', parseInt($('#wpRemember1Ajax').attr('tabindex')) + 101).click( this.clickLogIn );
@@ -315,7 +313,9 @@ var AjaxLogin = {
 	tabOrderHack: function(event,name) {
 		if( event.keyCode == 9 ){
 			$(name).focus();
+			return false;
 		}
+		return true;
 	}
 };
 
