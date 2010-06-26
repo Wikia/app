@@ -525,8 +525,8 @@ class WikiFactory {
 
 			wfProfileIn( __METHOD__."-changelog" );
 
-			# if summary was passed non-null, prepare a string for sprintf, else a zero-len string
-			$reason_extra = !empty($reason) ? " (reason: ". (string)$summary .")" : '';
+			# if reason was passed non-null, prepare a string for sprintf, else a zero-len string
+			$reason_extra = !empty($reason) ? " (reason: ". (string)$reason .")" : '';
 
 			if( isset( $variable->cv_value ) ) {
 				self::log(
