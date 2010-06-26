@@ -37,7 +37,7 @@ function wfInitStats( $options=array() ) {
 			$wgMemc = wfGetMainCache();
 		}
 		$users = $wgMemc->get( wfSharedMemcKey( "registered-users-number" ) );
-		if( empty( $users ) ) {
+		if( empty( $users ) || $wgDBname !== $wgExternalSharedDB ) {
 			$users = $dbc->selectField( '`user`', 'COUNT(*)', '', __METHOD__ );
 			$wgMemc->set( wfSharedMemcKey( "registered-users-number" ), $users, 86400 );
 			wfOut( " (from db) ");
@@ -47,10 +47,10 @@ function wfInitStats( $options=array() ) {
 		}
 		wfOut( "{$users}\nCounting number of active users..." );
 
-		$active_users_conds = array( 
-			'rc_user != 0', 
-			'rc_bot' => 0, 
-			"rc_log_type != 'newusers' OR rc_log_type IS NULL" 
+		$active_users_conds = array(
+			'rc_user != 0',
+			'rc_bot' => 0,
+			"rc_log_type != 'newusers' OR rc_log_type IS NULL"
 		);
 		if ( !empty($wgRCMaxAge) ) {
 			$active_users_conds[] = sprintf("rc_timestamp >= '%s'", date( 'YmdHis', time()- $wgRCMaxAge ));
