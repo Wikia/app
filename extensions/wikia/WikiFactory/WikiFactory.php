@@ -462,11 +462,11 @@ class WikiFactory {
 	 * @param integer $cv_variable_id		variable id in city_variables_pool
 	 * @param integer $city_id		wiki id in city list
 	 * @param mixed $value			new value for variable
-	 * @param string $summary		optional extra reason text
+	 * @param string $reason		optional extra reason text
 	 *
 	 * @return boolean: transaction status
 	 */
-	static public function setVarById( $cv_variable_id, $city_id, $value, $summary=null ) {
+	static public function setVarById( $cv_variable_id, $city_id, $value, $reason=null ) {
 		global $wgWikicitiesReadOnly;
 
 		if( ! self::isUsed() ) {
@@ -526,7 +526,7 @@ class WikiFactory {
 			wfProfileIn( __METHOD__."-changelog" );
 
 			# if summary was passed non-null, prepare a string for sprintf, else a zero-len string
-			$summary_extra = !empty($summary) ? " (reason: {$summary})" : '';
+			$reason_extra = !empty($reason) ? " (reason: ". (string)$summary .")" : '';
 
 			if( isset( $variable->cv_value ) ) {
 				self::log(
@@ -535,7 +535,7 @@ class WikiFactory {
 						$variable->cv_name,
 						var_export( unserialize( $variable->cv_value ), true ),
 						var_export( $value, true ),
-						$summary_extra
+						$reason_extra
 					),
 					$city_id
 				);
@@ -546,7 +546,7 @@ class WikiFactory {
 					sprintf("Variable %s set value: %s%s",
 						$variable->cv_name,
 						var_export( $value, true ),
-						$summary_extra
+						$reason_extra
 					),
 					$city_id
 				);
@@ -662,12 +662,13 @@ class WikiFactory {
 	 *
 	 * @param string $variable: variable name in city_variables_pool
 	 * @param integer $wiki: wiki id in city list
+	 * @param string $reason: optional reason text
 	 *
 	 * @return boolean: transaction status
 	 */
-	static public function removeVarByName( $variable, $wiki ) {
+	static public function removeVarByName( $variable, $wiki, $reason=null ) {
 		$oVariable = self::getVarByName( $variable, $wiki );
-		return WikiFactory::removeVarById( $oVariable->cv_variable_id, $wiki );
+		return WikiFactory::removeVarById( $oVariable->cv_variable_id, $wiki, $reason );
 	}
 
 
@@ -682,11 +683,12 @@ class WikiFactory {
 	 *
 	 * @param string $variable_id: variable id in city_variables_pool
 	 * @param integer $wiki: wiki id in city list
+	 * @param string $reason: optional reason text
 	 *
 	 * @throws a DBQueryError if there is an error with the deletion.
 	 * @return boolean true on success, false on failure
 	 */
-	static public function removeVarById( $variable_id, $wiki ) {
+	static public function removeVarById( $variable_id, $wiki, $reason=null ) {
 		$bStatus = false;
 		wfProfileIn( __METHOD__ );
 		$dbw = self::db( DB_MASTER );
@@ -702,7 +704,8 @@ class WikiFactory {
 					),
 					__METHOD__
 				);
-				self::log(self::LOG_VARIABLE, sprintf("Variable %s removed", self::getVarById($variable_id, $wiki)->cv_name), $wiki);
+				$reason2 = ( !empty($reason) ) ? " (reason: ". (string)$reason .")" : '';
+				self::log(self::LOG_VARIABLE, sprintf("Variable %s removed%s", self::getVarById($variable_id, $wiki)->cv_name, $reason2), $wiki);
 				$dbw->commit();
 				$bStatus = true;
 			}
@@ -730,13 +733,13 @@ class WikiFactory {
 	 * @param string $variable: variable name in city_variables_pool
 	 * @param integer $wiki: wiki id in city list
 	 * @param mixed $value: new value for variable
-	 * @param string $summary: optional reason reason text
+	 * @param string $reason: optional reason text
 	 *
 	 * @return boolean: transaction status
 	 */
-	static public function setVarByName( $variable, $wiki, $value, $summary=null ) {
+	static public function setVarByName( $variable, $wiki, $value, $reason=null ) {
 		$oVariable = self::getVarByName( $variable, $wiki );
-		return WikiFactory::setVarByID( $oVariable->cv_variable_id, $wiki, $value, $summary );
+		return WikiFactory::setVarByID( $oVariable->cv_variable_id, $wiki, $value, $reason );
 	}
 
 	/**
