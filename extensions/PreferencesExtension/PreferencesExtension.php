@@ -16,7 +16,10 @@ $wgExtensionCredits['specialpage'][] = array(
     'url' => 'http://openwetware.org/wiki/User:Austin_J._Che/Extensions/PreferencesExtension',
     'description' => 'Enables extending user preferences',
 );
- 
+
+// This has to be done before wfPreferencesExtension() because the hook is sometimes run before extensions initialize.
+$wgHooks['SpecialPage_initList'][] = 'wfOverridePreferences';
+
 // constants for pref types
 define('PREF_USER_T', 1);
 define('PREF_TOGGLE_T', 2);
@@ -36,8 +39,6 @@ function wfPreferencesExtension()
 	wfProfileIn(__METHOD__);
 	
 //    wfUseMW('1.7');
-    global $wgHooks;
-    $wgHooks['SpecialPage_initList'][] = 'wfOverridePreferences';
 	
 	wfProfileOut(__METHOD__);
 }
