@@ -120,6 +120,12 @@ $wgAjaxExportList[] = "SpecialConnect::getLoginButtonModal";
 $wgAjaxExportList[] = "SpecialConnect::ajaxModalChooseName";
 $wgAjaxExportList[] = "SpecialConnect::checkCreateAccount";
 
+// These hooks need to be hooked up prior to init() because runhooks may be called for them before init is run.
+$fbHooksToAddImmediately = array( 'SpecialPage_initList' );
+foreach( $fbHooksToAddImmediately as $hookName ) {
+	$wgHooks[$hookName][] = "FBConnectHooks::$hookName";
+}
+
 
 /**
  * Class FBConnect
@@ -142,8 +148,11 @@ class FBConnect {
 		// Install all public static functions in class FBConnectHooks as MediaWiki hooks
 		$hooks = self::enumMethods('FBConnectHooks');
 		
+		global $fbHooksToAddImmediately;
 		foreach( $hooks as $hookName ) {
-			$wgHooks[$hookName][] = "FBConnectHooks::$hookName";
+			if(!in_array($hookName, $fbHooksToAddImmediately)){
+				$wgHooks[$hookName][] = "FBConnectHooks::$hookName";
+			}
 		}
 		
 		// Allow configurable over-riding of the onLogin handler.
