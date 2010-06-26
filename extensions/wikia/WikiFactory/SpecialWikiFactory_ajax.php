@@ -674,8 +674,9 @@ function axWFactoryRemoveVariable( ) {
 		$tag_name = $wgRequest->getVal( 'tagName' );
 		$tag_wiki_count = 0;
 		$form_id = $wgRequest->getVal("formId", null);
+		$reason = $wgRequest->getVal("reason", null);
 
-		if( ! WikiFactory::removeVarById( $cv_id, $city_id ) ) {
+		if( ! WikiFactory::removeVarById( $cv_id, $city_id, $reason ) ) {
 			$error++;
 			$return = Wikia::errormsg( "Variable not removed because of problems with database. Try again." );
 		} else {
