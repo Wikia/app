@@ -656,7 +656,7 @@ function getSong($artist, $song="", $doHyphens=true){
 		// WARNING: This may cause some unexpected results if these artists ever become actual pages.
 		// These are "artists" which are very commonly accuring non-artists.  IE: Baby Einstein is a collection of classical music, Apple Inc. is just apple's (video?) podcasts
 		$nonArtists = array(
-			"Baby Einstein", "Apple Inc.", "Soundtrack", "Various", "Various Artists", "The Howard Stern Show"
+			"baby einstein", "apple inc.", "soundtrack", "various", "various artists", "the howard stern show", "frequence3.fr", "frequence3"
 		);
 
 		// The vast majority of failures come from players passing clearly-invalid requests - skip those.
@@ -672,13 +672,15 @@ function getSong($artist, $song="", $doHyphens=true){
 			}
 		}
 
+		$lowerSong = strtolower($song);
+		$lowerArtist = strtolower($artist);
 		if((($artist=="") || ($song=="") || (0 < preg_match("/^\?+$/", $artist))) && (strpos("$artist$song", ":") === false)){
 			// NOTE: For now we leave the 'defaultLyrics' message for players that handle this explicitly as not being a match.
-		} else if(($song == "unknown") || (((strtolower($artist) == "unknown") || (strtolower($artist) == "artist")) && (strtolower($song) == "unknown")) || (0<preg_match("/^Track [0-9]+$/i", $song)) || (strtolower($song) == "favicon.png")){
+		} else if(($song == "unknown") || ((($lowerArtist == "unknown") || ($lowerArtist == "artist")) && ($lowerSong == "unknown")) || (0<preg_match("/^Track [0-9]+$/i", $song)) || (strtolower($song) == "favicon.png")){
 			// If the song is "unkown" (all lowercase) this is usually just a default failure.  If they are looking for a song named "Unknown", and they use the caps, it will get through (unless the band name also happens to be "Unknown")
 
 			// NOTE: For now we leave the 'defaultLyrics' message for players that handle this explicitly as not being a match.
-		} else if(in_array($artist, $nonArtists)){
+		} else if(in_array($lowerArtist, $nonArtists)){
 			// These are "artists" which are very commonly accuring non-artists.  IE: Baby Einstein is a collection of classical music, Apple Inc. is just apple's (video?) podcasts
 			// NOTE: For now we leave the 'defaultLyrics' message for players that handle this explicitly as not being a match.
 		} else {
