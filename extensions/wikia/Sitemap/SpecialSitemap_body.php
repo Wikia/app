@@ -239,11 +239,10 @@ class SitemapPage extends UnlistedSpecialPage {
 		$pCounter = 0; // counter for pages in index
 		$rCounter = 0; // counter for rows (titles)
 		$index = array();
+		$index[ $pCounter ] = array( );
 		$last  = 0;
 		while( $row = $dbr->fetchObject( $sth ) ) {
-			$index[ $pCounter ] = array( );
 			if( empty( $index[ $pCounter ][ "start" ] )  ) {
-				$sPage = $row->page_id;
 				$index[ $pCounter ][ "start" ] = $row->page_id;
 			}
 			$rCounter++;
@@ -251,6 +250,7 @@ class SitemapPage extends UnlistedSpecialPage {
 				$index[ $pCounter ][ "end" ] = $row->page_id;
 				$pCounter++;
 				$rCounter = 0;
+				$index[ $pCounter ] = array( );
 			}
 			$last = $row->page_id;
 		}
