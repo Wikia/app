@@ -239,6 +239,7 @@ class SitemapPage extends UnlistedSpecialPage {
 		$pCounter = 0; // counter for pages in index
 		$rCounter = 0; // counter for rows (titles)
 		$index = array();
+		$last  = 0;
 		while( $row = $dbr->fetchObject( $sth ) ) {
 			$index[ $pCounter ] = array( );
 			if( empty( $index[ $pCounter ][ "start" ] )  ) {
@@ -251,8 +252,11 @@ class SitemapPage extends UnlistedSpecialPage {
 				$pCounter++;
 				$rCounter = 0;
 			}
+			$last = $row->page_id;
 		}
-
+		if( empty( $index[ $pCounter ][ "end" ] ) ) {
+			$index[ $pCounter ][ "end" ] = $last;
+		}
 		wfProfileOut( __METHOD__ );
 
 		return $index;
