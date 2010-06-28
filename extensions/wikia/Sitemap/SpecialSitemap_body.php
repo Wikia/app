@@ -239,20 +239,18 @@ class SitemapPage extends UnlistedSpecialPage {
 		$pCounter = 0; // counter for pages in index
 		$rCounter = 0; // counter for rows (titles)
 		$index = array();
-		$sPage = false; // lowest page_id for page
-		$ePage = false; // highest page_id for page
 		while( $row = $dbr->fetchObject( $sth ) ) {
 			$index[ $pCounter ] = array( );
-			if( $sPage === false ) {
+			if( empty( $index[ $pCounter ][ "start" ] )  ) {
 				$sPage = $row->page_id;
-				$index[ $pCounter ][ "start" ] = $sPage;
+				$index[ $pCounter ][ "start" ] = $row->page_id;
 			}
+			$rCounter++;
 			if( $rCounter >= $this->mLinkLimit ) {
 				$index[ $pCounter ][ "end" ] = $row->page_id;
 				$pCounter++;
 				$rCounter = 0;
 			}
-			$rCounter++;
 		}
 
 		wfProfileOut( __METHOD__ );
