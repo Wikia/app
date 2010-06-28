@@ -124,6 +124,8 @@ class SpecialAdminAds extends SpecialPage {
 	private function HandlePayPal(){
 		global $wgRequest;
 		global $wgEmergencyContact;
+		global $wgHTTPProxy;
+
 		//address to send error messages to 			
 		$defaultemail = $wgEmergencyContact;
 		//NOTE: sending to https may require further configuration
@@ -151,6 +153,7 @@ class SpecialAdminAds extends SpecialPage {
 			curl_setopt($ch, CURLOPT_TIMEOUT, 3); // Sets a time limit for curl in seconds (do not set too low)
 			curl_setopt($ch, CURLOPT_POST, 1); // Set curl to send data using post
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $req); // Add the request parameters to the post
+			curl_setopt($ch, CURLOPT_PROXY, $wgHTTPProxy); // set HTTP proxy
 			$result = curl_exec($ch); // run the curl process (and return the result to $result
 			curl_close($ch); 
 
