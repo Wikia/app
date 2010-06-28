@@ -165,8 +165,8 @@ class SpecialAdminAds extends SpecialPage {
 
 				//mail($defaultemail, "Live-VERIFIED IPN x", print_r($_POST,1) . "\n\n" . $req); 
 				//post the payment info to the database - should be local database
-				global $wgDBname;
-				$dbw = wfGetDB( DB_MASTER, array(), $wgDBname );
+				global $wgExternalSharedDB;
+				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 				$adID = $wgRequest->getText('item_number');
 				$email = $wgRequest->getText('payer_email');
 				$amt = $wgRequest->getText('payment_gross');
@@ -190,8 +190,8 @@ class SpecialAdminAds extends SpecialPage {
 					}else{
 						mail($defaultemail, "Invalid Payment Amount or Currency", print_r($_POST,1) . "\n\n" . $req);
 					}
-				}
 				//we could trap for some other statuses here... worry about that later
+				}
 			} else if (strcmp ($result, "INVALID") == 0) { 
 			// If 'INVALID', send an email. TODO: Log for manual investigation. 
 				mail($defaultemail, "Invalid PayPal Payment IPN Verfication", print_r($_POST,1) . "\n\n" . $req); 
