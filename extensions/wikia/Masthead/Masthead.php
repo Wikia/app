@@ -911,7 +911,10 @@ class Masthead {
 				
 				global $wgEnableWikiaFollowedPages;
 				if ( !empty($wgEnableWikiaFollowedPages) && $wgEnableWikiaFollowedPages) {
-					$out['nav_links'][] = FollowHelper::getMasthead($userspace);
+					$follow = FollowHelper::getMasthead($userspace);
+					if (!empty($follow)) {
+						$out['nav_links'][] = FollowHelper::getMasthead($userspace);	
+					}
 				}
 
 				// macbre: hide "Contributions" tab on Recipes Wiki
