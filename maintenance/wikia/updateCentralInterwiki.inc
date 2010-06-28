@@ -43,11 +43,11 @@ function getRebuildInterwikiSQL() {
 	}
 
 	# Extract the intermap from Central Wikia
-	$intermap = wfGetHTTP( 'http://community.wikia.com/index.php?title=Interwiki_map&action=raw', 30 );
+	$intermap = wfGetHTTP( 'http://community.wikia.com/index.php?title=MediaWiki:Interwiki_map&action=raw', 30 );
 	$lines = array_map( 'trim', explode( "\n", trim( $intermap ) ) );
 
 	if ( !$lines || count( $lines ) < 2 ) {
-		wfDie( "w:Interwiki_map not found" );
+		wfDie( "w:MediaWiki:Interwiki_map not found" );
 	}
 
 	// new format (FCK?), Feb 2010
