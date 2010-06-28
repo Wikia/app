@@ -6,17 +6,21 @@ class AchRankedUser {
 	private $mUserName;
 	private $mAvatarURL;
 	private $mUserPageUrl;
+	private $mCurrentRanking;
+	private $mPreviousRanking;
 	
-	function __construct($userObj, $score) {
-		wfProfileIn(__METHOD__);
-		
-		$this->mUserId = $userObj->getID();
-		$this->mUsername = $userObj->getName();
-		$this->mScore = $score;
-		$this->mAvatarURL = Masthead::newFromUser($userObj)->getUrl();
-		$this->mUserPageUrl = $userObj->getUserPage()->getLocalURL();
-		
-		wfProfileOut(__METHOD__);
+	function __construct($userObj, $score, $currentRanking = null, $previousRanking = null) {
+	    wfProfileIn(__METHOD__);
+
+	    $this->mUserId = $userObj->getID();
+	    $this->mUsername = $userObj->getName();
+	    $this->mScore = $score;
+	    $this->mAvatarURL = Masthead::newFromUser($userObj)->getUrl();
+	    $this->mUserPageUrl = $userObj->getUserPage()->getLocalURL();
+	    $this->mCurrentRanking = $currentRanking;
+	    $this->mPreviousRanking = $previousRanking;
+
+	    wfProfileOut(__METHOD__);
 	}
 	
 	public function getId() {
@@ -37,5 +41,13 @@ class AchRankedUser {
 	
 	public function getUserPageUrl() {
 		return $this->mUserPageUrl;
+	}
+
+	public function getCurrentRanking() {
+	    return $this->mCurrentRanking;
+	}
+
+	public function getPreviousRanking() {
+	    return $this->mPreviousRanking;
 	}
 }

@@ -99,9 +99,11 @@ class AchBadge {
 
 		$pictureName = AchConfig::getInstance()->getBadgePictureName($badge_type_id, $realLap, null, false);
 
-		if($width == 40) {
+		if($width <= 40) {
 			$subdir = '40';
-		} else if($width == 90) {
+		} else if($width <= 82) {
+			$subdir = '82';
+		} else if($width <= 90) {
 			$subdir = '90';
 		} else {
 			$subdir = '128';

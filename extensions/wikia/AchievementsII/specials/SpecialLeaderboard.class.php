@@ -21,17 +21,28 @@ class SpecialLeaderboard extends SpecialPage {
 		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AchievementsII/css/leaderboard.css?{$wgStyleVersion}");
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/AchievementsII/js/achievements.js?{$wgStyleVersion}\"></script>\n");
 		// ranking
-		$ranking = $rankingService->getUsersRanking();
+		$ranking = $rankingService->getUsersRanking(20);
 
 		// recent
 		$levels = array(BADGE_LEVEL_PLATINUM, BADGE_LEVEL_GOLD, BADGE_LEVEL_SILVER, BADGE_LEVEL_BRONZE);
 		$recents = array();
+		$maxEntries = 9;
 
 		foreach($levels as $level) {
-			$awardedBadges = $rankingService->getRecentAwardedBadges($level);
+			$limit = 3;
+			$blackList = null;
+			
+			if($level == BADGE_LEVEL_BRONZE) {
+				$limit = $maxEntries;
+				$blackList = array(BADGE_WELCOME);
+			}
 
-			if(count($awardedBadges))
+			$awardedBadges = $rankingService->getRecentAwardedBadges($level, $limit, 3, $blackList);
+
+			if($total = count($awardedBadges)) {
 				$recents[$level] = $awardedBadges;
+				$maxEntries -= $total;
+			}
 		}
 
 		$template = new EasyTemplate(dirname(__FILE__).'/templates');
