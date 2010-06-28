@@ -1,143 +1,159 @@
-h1#acheivements-title {
-  border-bottom: 0px;
-  margin-left:20px;
+.achievements-title {
+	border-bottom: 0px;
+	font-size: 23px;
+	margin: 0 0 13px 0 !important;
 }
 
 #about-achievements {
-  padding: 5px;
-  margin-bottom: 15px;
+	padding: 5px;
+	margin-bottom: 15px;
 }
 
 #about-achievements p {
-  padding: 0 0 0 0;
-  margin: 0 0 0 0;
-  font-size: 13px;
+	padding: 0 0 0 0;
+	margin: 0 0 0 0;
+	font-size: 13px;
+}
+
+#leaderboard-body {
+	float:left;
+	min-height: 300px;
+	margin: 0 25px 30px 5px;
+	padding-right:25px;
+	background: transparent;
+	border-right-style: solid;
+	border-right-width: 1px;
 }
 
 ul#leaderboard {
-  float: left;
-  width: 390px;
-  margin-right: 5px;
+	margin: 0 !important;
+	width: 380px;
 }
 
 ul#leaderboard li {
-  float: left;
-  width: 100px;
-  height: 120px;
-  padding: 5px !important;
-  overflow: hidden;
-  background-color: #fff;
-  margin-right: 15px;
-  margin-bottom: 15px !important;
+	list-style: none !important;
+	height: 38px;
+	padding: 3px 20px 3px 5px !important;
+	margin: 0 !important;
+	background: transparent;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
 }
-#leaderboard li {
+
+ul#leaderboard li.list-heading {
+	padding: 0;
+	height: 16px;
+	font-size: 11px;
+}
+
+ul#leaderboard #rank-label {
+	float: left;
+	margin-left: 10px;
+}
+
+ul#leaderboard #member-label {
+	float: left;
+	margin-left: 30px;
+}
+
+ul#leaderboard #points-label {
+	float: right;
+}
+
+#leaderboard li a:hover {
+	text-decoration: none;
+}
+
+#leaderboard .user-avatar, #leaderboard .user-rank, #leaderboard .user-name, #leaderboard .user-score {
+	float: left;
+	line-height: 38px;
+	vertical-align: middle;
+	margin-left: 20px;
+}
+
+#leaderboard .user-avatar {
+	padding-top:6px;
+}
+
+#leaderboard .user-score {
+	float: right;
+	margin-left: 5px;
+	font-weight: bold;
+}
+
+#leaderboard .user-rank {
+	font-size: 14px;
+	font-weight: bold;
+	width: 45px;
+	height: 38px;
+	margin-left: 0;
 	position: relative;
 }
-#leaderboard li a {
-	top: 5px;
-	left: 5px;
-	position: absolute;
-}
-#leaderboard li a:hover {
-	text-decoration:none;
-}
-div.rel-lb-wrapper {
-  position: relative;
-  background-repeat: no-repeat;
-  width: 100px;
-  height: 125px;
+
+#leaderboard .user-rank > span {
+	display:block;
+	text-align: right;
+	width: 27px;
 }
 
-div.rel-lb-wrapper div.user-rank {
-  position: absolute;
-  left: 70px;
-  top: 3px;
-  background-image: url(../images/leaderboard-cicrle.png);
-  background-repeat: no-repeat;
-  height: 22px;
-  width: 28px;
-  text-align: center;
-  font-size: 16px;
-  font-weight: bold;
-  color: #000;
-  padding-top: 6px;
+#leaderboard .user-rank > img {
+	position:absolute;
+	top:14px;
+	right: 4px;
 }
 
-div.rel-lb-wrapper div.bottom-marquee {
-  background-image: url(../images/semi-trans.png);
-  height: 30px;
-  width: 94px;
-  padding: 2px 3px;
-  color: #fff;
-  position: absolute;
-  top: 86px;
-  text-align: center;
-}
-
-div.rel-lb-wrapper div.bottom-marquee p {
-  font-size: 9px;
-  font-weight: bold;
-  color: #fff;
-  margin: 0 0 0 0;
-  padding: 0 0 0 0;
-}
-
-div.rel-lb-wrapper div.bottom-marquee p.points {
-  margin-top: -3px;
-  font-size: 16px;
+#leaderboard-body #legend {
+	margin-top: 10px;
+	font-style: italic;
 }
 
 #leaderboard-sidebar {
-  min-height: 300px;
-  width: 300px;
-  padding: 0 5px;
-  float: left;
-  margin-left: 5px;
-  margin-top: 7px;
-}
-
-#leaderboard-sidebar h2.first {
-  margin-top: 0px;
+	min-height: 300px;
+	float: left;
 }
 
 #leaderboard-sidebar .recent-badges {
-  margin-left: 5px;
-  list-style-type:none;
-  list-style-image:none;
+	margin: 18px 0 5px 0;
+	list-style-type:none;
+	list-style-image:none;
 }
 
+#leaderboard-sidebar ul.recent-badges {
+	width: 325px;
+}
 
 #leaderboard-sidebar .recent-badges li {
-  height: 50px;
-  margin: 0 0 15px 0;
-  padding: 0 0 0 0;
-  font-size: 12px;
-  line-height: 1.2em;
-  position: relative;
-}
-
-#leaderboard-sidebar .recent-badges li a {
-  font-weight: bold;
-  font-size: 14px;
+	margin: 0 0 23px 0;
+	padding: 0 0 0 0;
+	font-size: 12px;
+	line-height: 1.2em;
+	position: relative;
 }
 
 #leaderboard-sidebar .recent-badges li > img {
-  float: left;
-  margin-right: 10px;
-  position: absolute;
+	float: left;
+	margin-bottom:-7px;/*small fix for avoiding hovers side-effect in WebKit*/
 }
 
 #leaderboard-sidebar .badge-text {
-  width: 245px;
+	margin-left:92px;
+}
+
+#leaderboard-sidebar .badge-text p {
+	font-size:12px;
+	line-height: 20px;
+}
+
+#leaderboard-sidebar .badge-text strong{
+	font-size:14px;
 }
 
 #leaderboard-sidebar .recent-badges p {
-  margin: 0 0 0 0;
-  padding: 0 0 0 0;
-  font-size: 11px;
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
 }
 
 #leaderboard-sidebar .badge-title {
-  font-weight: bold;
-  margin-top: 2px;
+	font-weight: bold;
+	margin-top: 2px;
 }

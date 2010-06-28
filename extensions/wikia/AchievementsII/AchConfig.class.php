@@ -103,12 +103,13 @@ class AchConfig {
 			BADGE_BLOGPOST => array(
 				'laps' => array(
 					array('level' => BADGE_LEVEL_BRONZE, 'events' => 1),
-					array('level' => BADGE_LEVEL_SILVER, 'events' => 5),
+					//disabling higher levels for the blog track as requested in #56280
+					/*array('level' => BADGE_LEVEL_SILVER, 'events' => 5),
 					array('level' => BADGE_LEVEL_SILVER, 'events' => 10),
 					array('level' => BADGE_LEVEL_SILVER, 'events' => 25),
-					array('level' => BADGE_LEVEL_SILVER, 'events' => 50)
+					array('level' => BADGE_LEVEL_SILVER, 'events' => 50)*/
 				),
-				'infinite' => true
+				'infinite' => false
 			),
 			BADGE_BLOGCOMMENT => array(
 				'laps' => array(
