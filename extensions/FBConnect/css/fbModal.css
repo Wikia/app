@@ -15,7 +15,6 @@
 
 .fbConnectCblable {
 	margin-left:16px;
-	width:200px;
 }
 
 .fbConnectPushEventToggles td {
@@ -51,4 +50,27 @@
 	float:left;
 	margin-top:3px;
 	padding-right:10px;
+}
+
+#wpFBLoginInfo {
+	vertical-align: top;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border-left: 1px;
+} 
+
+#wpFBLoginInfo div{
+	border-color:gray;
+	border-left:1px solid gray;
+	border-width:1px;
+	height:170px;
+	padding-left:5px;
+}
+
+#wpFBLoginInfo div p{
+	display:block;
+	float:left;
+	font-family:arial,sans-serif;
+	font-size:10pt;
+	font-weight:bold;
 }
