@@ -69,9 +69,9 @@ $messages = array_merge( $messages , array(
 'corporatepage-go-to-wiki' => 'Go to $1',
 'corporatepage-wikia-whats-up' => "<hgroup><h1>Community Buzz</h1>
 <h2>Check out these buzzworthy Wikia communities</h2></hgroup>
-<p><a href='http://masseffect.wikia.com/wiki/Mass_Effect_2'>Mass Effect 2</a>, one of the most anticipated titles of the year was just released! From <a href='http://masseffect.wikia.com/wiki/Classes'>classes</a> to quests, the Mass Effect Wiki has your guide to the game.</p>
-<p><a href='http://glee.wikia.com'>Glee</a> was picked up for a second season. Check out our <a href='http://glee.wikia.com/wiki/Category:Music'>top songs</a> from last season</p>
-<p><a href='http://recipes.wikia.com'>Recipes Wiki</a> is highlighting the best <a href='http://recipes.wikia.com/wiki/Category:Superbowl_Recipes'>Superbowl favorites</a>. Browse over 100 Superbowl recipes to score the perfect game day party food.</p>",
+<p>Visit the<a href='http://trueblood.wikia.com/wiki/True_Blood_Wiki'>True Blood Wiki</a> and share your thoughts on<a href='http://trueblood.wikia.com/wiki/Season_3'> Season 3</a> </p>
+<p>Stop by the <a href='http://naughtybear.wikia.com/wiki/Naughty_Bear_Wiki'>Naughty Bear Wiki</a> and watch some videos that showcase a few of the misdeeds from <a href='http://naughtybear.wikia.com/wiki/The_Book_of_Naughty'>The Book of Naughty</a>.</p>
+<p>Eat your way to a summer beach body! Visit <a href='http://healthyrecipes.wikia.com'> Healthy Recipes Wiki </a> for nutritious food ideas!</p>",
 'corporatepage-global-nav-headline' => 'Wikia Global Navigation',
 'corporatepage-watchlist' => 'Watchlist',
 'corporatepage-homepage-feature-headline' => 'Featured at Wikia',
