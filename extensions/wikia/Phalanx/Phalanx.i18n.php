@@ -59,16 +59,16 @@ $messages['en'] = array(
 	'phalanx-unblock-message' => 'Block ID #$1 was successfully removed',
 
 	'phalanx-help-type-content' => 'This filter prevents an edit from being saved, if its content matches any of the blacklisted phrases.',
-	'phalanx-help-type-summary' => 'This filter prevents an edit from being saved, if the summary given matches any of the blacklisted phrase.',
+	'phalanx-help-type-summary' => 'This filter prevents an edit from being saved, if the summary given matches any of the blacklisted phrases.',
 	'phalanx-help-type-title' => 'This filter prevents a page from being created, if its title matches any of the blacklisted phrases.
 	 
 	 It does not prevent a pre-existing page from being edited.',
-	'phalanx-help-type-user' => ' This filter blocks a user (exactly the same as a local MediaWiki block), if the uses\'s name matches one of the blacklisted phrases or IPs.',
-	'phalanx-help-type-wiki-creation' => 'This filter prevents a wiki from being created, if its name contains any blacklisted phrase.',
+	'phalanx-help-type-user' => 'This filter blocks a user (exactly the same as a local MediaWiki block), if the name or IP matches one of the blacklisted names or IPs.',
+	'phalanx-help-type-wiki-creation' => 'This filter prevents a wiki from being created, if its name or URL matches any blacklisted phrase.',
 	'phalanx-help-type-answers-question' => 'This filter blocks a question (page) from being created, if its title matches any of the blacklisted phrases. 
 	 
 	 Note: only works on Answers-type wikis',
-	'phalanx-help-type-answers-words' => ' This filter prevents questions (pages) from being displayed in a number of outputs (widgets, lists, tag-generated listings). It does not prevent those articles from being created.
+	'phalanx-help-type-answers-words' => 'This filter prevents questions (pages) from being displayed in a number of outputs (widgets, lists, tag-generated listings). It does not prevent those articles from being created.
 	
 	Note: works only on Answers-type wiks',
 
