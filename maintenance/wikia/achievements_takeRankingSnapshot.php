@@ -19,7 +19,7 @@ global $IP, $wgCityId;
 echo( "Update Achievements users ranking snapshots\n\n" );
 
 if( isset( $options['help'] ) && $options['help'] ) {
-	echo( "Usage: php takeAchievementsRankingSnapshot.php\n\n" );
+	echo( "Usage: php achievements_takeRankingSnapshot.php\n\n" );
 	exit( 0 );
 }
 
