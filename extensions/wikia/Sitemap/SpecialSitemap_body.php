@@ -48,6 +48,7 @@ class SitemapPage extends UnlistedSpecialPage {
         );
 
 		$this->mSizeLimit = ( pow( 2, 20 ) * 10 ) - 20; // safe margin
+		$this->mLinkLimit = 50000;
 	}
 
 
@@ -88,8 +89,10 @@ class SitemapPage extends UnlistedSpecialPage {
 	/**
 	 * get all namespaces, take them from article so will only have
 	 * pages for existed namespaces
+	 *
+	 * @access public
 	 */
-	private function getNamespacesList() {
+	public function getNamespacesList() {
 		global $wgSitemapNamespaces;
 
 		if ( is_array( $wgSitemapNamespaces ) ) {
@@ -114,6 +117,8 @@ class SitemapPage extends UnlistedSpecialPage {
 			$this->mNamespaces[] = $row->page_namespace;
 		}
 		wfProfileOut( __METHOD__ );
+
+		return $this->mNamespaces;
 	}
 
 	/**
@@ -218,5 +223,40 @@ class SitemapPage extends UnlistedSpecialPage {
 			"\t\t<lastmod>$date</lastmod>\n" .
 			"\t\t<priority>$priority</priority>\n" .
 			"\t</url>\n";
+	}
+
+	public function cachePages( $namespace ) {
+		wfProfileIn( __METHOD__ );
+
+		$dbr = wfGetDB( DB_SLAVE, "vslow" );
+		$sth = $dbr->select(
+			array( "page" ),
+			array( "page_title, page_id, page_namespace" ),
+			array( "page_namespace" => $namespace ),
+			__METHOD__,
+			array( "ORDER BY" => "page_id" )
+		);
+		$pCounter = 0; // counter for pages in index
+		$rCounter = 0; // counter for rows (titles)
+		$index = array();
+		$sPage = false; // lowest page_id for page
+		$ePage = false; // highest page_id for page
+		while( $row = $dbr->fetchObject( $sth ) ) {
+			$index[ $pCounter ] = array( );
+			if( $sPage === false ) {
+				$sPage = $row->page_id;
+				$index[ $pCounter ][ "start" ] = $sPage;
+			}
+			if( $rCounter >= $this->mLinkLimit ) {
+				$index[ $pCounter ][ "end" ] = $row->page_id;
+				$pCounter++;
+				$rCounter = 0;
+			}
+			$rCounter++;
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $index;
 	}
 }
