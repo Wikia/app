@@ -172,26 +172,16 @@ em.reportProblemStatus3 {
 .problemreportsmailer {
 	border: solid 1px #0080C0;
 	margin: -10px 0 5px;
-	background: #BAE5FF;
+	background-color: #BAE5FF;
+	color: #000;
 }
 #mailer .actionBar {
-	background: #F9F9F9 none repeat scroll 0%;
 	border-bottom: 1px solid #CCC;
 	border-top: 1px solid #CCC;
 	clear: both;
 	margin-top: 20px;
 	padding: 4px 8px;
 	text-align: right
-}
-#mailer .actionBar input {
-	background: #3366CC none repeat scroll 0%;
-	border: 4px double #FFF;
-	color: #FFF;
-	cursor: pointer;
-	font-family: "Lucida Grande",sans-serif;
-	font-size: 9pt;
-	font-weight: bold;
-	padding: 2px 5px;
 }
 #problem_type_chooser {
 	width: 120px;
