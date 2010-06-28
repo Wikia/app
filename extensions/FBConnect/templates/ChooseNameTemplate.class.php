@@ -64,22 +64,21 @@ class ChooseNameTemplate extends QuickTemplate {
 	<?php /* LoginLanguageSelector used to be here, moved downward and modified as part of rt#16889 */ ?>
 	<table class="wpAjaxRegisterTable" style="width: 573px;" >
 		<colgroup>
-			<col width="350" />
+			<col width="275" />
 			<col width="330" />
 		</colgroup>
-		<?php if(!empty($this->data['isajax'])): ?>
-			<tr>
-				<td  colspan="2">
-					<br>
-					<?php $this->msg('fbconnect-modal-headmsg') ?>
-				</td>
-			</tr>
-		<?php endif;?>
-		<tr class="wpAjaxLoginPreLine">
+		<tr class="wpAjaxLoginPreLine" >
 			<td class="wpAjaxLoginInput" id="wpFBNameTD">
 				<label for='wpName2'><?php $this->msg('yourname') ?></label><span>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span>
 				<input type='text'  name="wpName2" id="wpFBName"	value="<?php $this->text('name') ?>" size='20' />
 			</td>
+			<td rowspan="3" id="wpFBLoginInfo" >
+				<div>
+					<?php echo wfMsg('fbconnect-msg-for-existing-users', array( "$1" => Title::makeTitle( NS_SPECIAL  , "Signup"  )->getFullUrl(array( "showLoginAndConnect" => "true")) ) ) ?>
+				</div>
+			</td>
+		</tr>
+		<tr class="wpAjaxLoginPreLine" >
 			<td class="wpAjaxLoginInput" id="wplangTD">
 			<?php
 				global $wgLanguageCode;
@@ -147,18 +146,14 @@ class ChooseNameTemplate extends QuickTemplate {
 			</td>
 		</tr>
 		<tr class="wpAjaxLoginPreLine" >
-			<td colspan="2">
-				<?php echo wfMsg('fbconnect-msg-for-existing-users', array( "$1" => Title::makeTitle( NS_SPECIAL  , "Signup"  )->getFullUrl(array( "showLoginAndConnect" => "true")) ) ) ?>
-			</td>
-		</tr>
-		<tr class="wpAjaxLoginPreLine" >
 			<td class="wpAjaxLoginInput" id="wpFBEmailTD">
 				<?php if( $this->data['useemail'] ) { ?>
 					<label for='wpEmail'><?php $this->msg('signup-mail') ?></label><a style='float:left' id="wpEmailInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a><span>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span>
 					<input type='text'  name="wpEmail" id="wpFBEmail" value="<?php $this->text('email') ?>" size='20' />
 				<?php } ?>
-			
-			<td class="mw-input" style="padding-top:30px;" > 
+		</tr>
+		<tr class="wpAjaxLoginPreLine"  >	
+			<td class="mw-input" style="padding-top:5px;" colspan="2" > 
 				<?php
 				$tabIndex = 8;
 				if ( isset( $this->data['extraInput'] ) && is_array( $this->data['extraInput'] ) ) {
