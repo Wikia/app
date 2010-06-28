@@ -17,12 +17,6 @@ global $IP, $wgCityId;
 require_once("$IP/extensions/wikia/AchievementsII/Ach_setup.php");
 
 echo( "Remove awarded badges from the Blog Post track with lap higher than 1\n\n" );
-
-if( isset( $options['help'] ) && $options['help'] ) {
-	echo( "Usage: php removeBlogPostBadges.php\n\n" );
-	exit( 0 );
-}
-
 echo( "Loading list of users to process" );
 
 $dbw = WikiFactory::db( DB_MASTER );
