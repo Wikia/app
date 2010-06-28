@@ -79,4 +79,5 @@ $messages['en'] = array(
 	'phalanx-title-move-summary' => 'The reason you entered contained a blocked phrase.',
 
 	'phalanx-stats-row' => '<b>$4</b> filter type <b>$1</b> blocked user <b>$2</b> on <a href="$3">$3</a>',
+	'phalanx-stats-block-notfound' => 'block id not found',
 );
