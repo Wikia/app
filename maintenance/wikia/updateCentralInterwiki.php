@@ -38,7 +38,7 @@ $key = "ciw_timestamp";
 $ciw_timestamp = $wgMemc->get($key);
 if ($force || empty($ciw_timestamp)) {
 	$dbr = wfGetDB( DB_SLAVE, array(), 'wikicities');
-	$ciw_timestamp = $dbr->selectField('page', 'page_latest', "page_title = 'Interwiki_map' && page_namespace = 0");
+	$ciw_timestamp = $dbr->selectField('page', 'page_latest', "page_title = 'Interwiki_map' && page_namespace = 8");
 	$wgMemc->set($key, $ciw_timestamp, 3600);
 	if ($verbose) echo "ciw_timestamp not from cache\n";
 }
