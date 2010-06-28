@@ -76,7 +76,7 @@ function wfTitleEditPrintFirstHeading() {
 	// quick hack @see rt#54270
 	$link = str_replace("class=\"new wikia-button\"", "class=\"wikia-button\"", $link);
 
-	$result = "<span class=\"editsection-upper\">$link</span>";
+	$result = "<span class=\"editsection-upper noprint\">$link</span>";
 
 	echo $result;
 	return true;
