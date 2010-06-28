@@ -17,6 +17,15 @@ class FollowedPages extends SpecialPage {
 	function execute( $par ) {
 		global $wgRequest, $wgOut, $wgUser,$wgTitle, $wgExtensionsPath, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
 
+		$reqTitle = $wgRequest->getText('title', false);
+		$userspace = "";
+		$list = explode( '/', $reqTitle, 2 );
+		
+		if(!empty($list[1])) {
+			$t = Title::newFromText('Following', NS_SPECIAL);
+			$wgOut->redirect( $t->getFullURL() );
+		}
+
 		if ($wgRequest->wasPosted()) {
 			if( ($wgUser->getId() != 0) && ($wgRequest->getVal( "show_followed", 0) == 1) ) {
 				$wgUser->setOption( "hidefollowedpages", false ); 
@@ -28,27 +37,13 @@ class FollowedPages extends SpecialPage {
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/Follow/js/ajax.js?{$wgStyleVersion}\"></script>\n");
 
 		$wgOut->setPageTitle( wfMsg( 'wikiafollowedpages-special-title' ) );
-
-		$reqTitle = $wgRequest->getText('title', false);
-		$userspace = "";
-		if (strpos('/', $reqTitle) !== false)
-			list ( , $userspace ) = explode( '/', $reqTitle, 2 );
-
-		if (strlen($userspace) == 0 ){
-			if ( $wgUser->getId() == 0) {
-				$wgOut->addHTML( wfMsgExt('wikiafollowedpages-special-anon', array('parse')) );
-				return true;				
-			}
-			$user = $wgUser;
-		} else {
-			$user = User::newFromName( $userspace );	
-		}
-		
-		if ( empty($user) ) {
+	
+		if (  $wgUser->getId() == 0 ) {
 			$wgOut->addHTML( wfMsgExt('wikiafollowedpages-special-anon', array('parse')) );
 			return true;
 		}
-
+		
+		$user = $wgUser;
 		$is_hide = false;
 		if ( $user->getOption('hidefollowedpages') ) {
 			$is_hide = true;
