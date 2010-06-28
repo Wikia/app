@@ -105,15 +105,11 @@ body {
 	float: right;
 }
 
-#search_field {
-	left: auto;
-	right: 5px;
-}
-#search_button {
-	clip: rect(22px 20px 44px 0px);
-	left: auto;
-	right: 87%;
-	top: -20px;
+#search-button {
+	right: auto;
+	left: 8px;
+	border-left: 0;
+	border-right: 1px solid #CCCCCC;
 }
 
 #navigation em {
