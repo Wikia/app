@@ -22,7 +22,7 @@ class PhalanxStats extends UnlistedSpecialPage {
 		$block = Phalanx::getFromId( intval($par) );
 
 		if ( empty( $block ) ) {
-			// give some message
+			$wgOut->addWikiMsg( 'phalanx-stats-block-notfound' );
 			return true;
 		}
 
