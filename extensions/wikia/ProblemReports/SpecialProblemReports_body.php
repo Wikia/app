@@ -207,6 +207,7 @@ class SpecialProblemReports extends SpecialPage
 
 		$msg =  wfMsg('defemailsubject');
 		$citySitename = WikiaApiQueryProblemReports::getCitySitename($city);
+		$citySitename = str_replace('"', "'", $citySitename);
 		return str_replace($wgSitename, $citySitename, $msg);
 	}
 	
