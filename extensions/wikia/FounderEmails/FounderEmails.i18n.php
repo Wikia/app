@@ -98,7 +98,7 @@ It\'s been a little while since you started a wiki on Wikia - we hope it\'s goin
 	'founderemails-answers-email-10-days-passed-body-HTML' => 'Hey $FOUNDERNAME,<br /><br />
 It\'s been a little while since you started a wiki on Wikia - we hope it\'s going great! We wanted to share a few final tidbits to help make your wiki more like home.<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
-	'founderemails-answers-email-page-edited-reg-user-first-edit-subject' => 'Registered user changed your wiki for the first time!',
+	'founderemails-answers-email-page-edited-reg-user-first-edit-subject' => 'Registered user changed your site for the first time!',
 	'founderemails-answers-email-page-edited-reg-user-first-edit-body' => 'Hey $FOUNDERNAME,
 
 It looks like registered user $USERNAME has edited your wiki for the first time! Why don\'t you drop by their talkpage ($USERTALKPAGEURL) to say hello?
@@ -107,7 +107,7 @@ It looks like registered user $USERNAME has edited your wiki for the first time!
 	'founderemails-answers-email-page-edited-reg-user-first-edit-body-HTML' => 'Hey $FOUNDERNAME,<br /><br />
 It looks like registered user $USERNAME has edited your wiki for the first time! Why don\'t you drop by their <a href="$USERTALKPAGEURL">talkpage</a> to say hello?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
-	'founderemails-answers-email-page-edited-reg-user-subject' => 'Registered user changed your QA wiki!',
+	'founderemails-answers-email-page-edited-reg-user-subject' => 'Registered user changed your site!',
 	'founderemails-answers-email-page-edited-reg-user-body' => 'Hey $FOUNDERNAME,
 
 It looks like registered user $USERNAME has edited your wiki! Why don\'t you drop by their talkpage ($USERTALKPAGEURL) to say hello?
@@ -116,7 +116,7 @@ It looks like registered user $USERNAME has edited your wiki! Why don\'t you dro
 	'founderemails-answers-email-page-edited-reg-user-body-HTML' => 'Hey $FOUNDERNAME,<br /><br />
 It looks like registered user $USERNAME has edited your wiki! Why don\'t you drop by their <a href="$USERTALKPAGEURL">talkpage</a> to say hello?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
-	'founderemails-answers-email-page-edited-anon-subject' => 'Someone changed your QA wiki!',
+	'founderemails-answers-email-page-edited-anon-subject' => 'Someone changed your site!',
 	'founderemails-answers-email-page-edited-anon-body' => 'Hey $FOUNDERNAME,
 
 It looks like someone has edited your wiki! Why don\'t you check it out $MYHOMEURL to see what changed?

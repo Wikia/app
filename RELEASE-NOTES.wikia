@@ -1,5 +1,5 @@
 == Changes since 201007.1 ==
-* 
+* rt#56847: error in answers founder message (Nef) 
 
 == Changes since 201006.4 ==
 * rt#53706: move interwiki_map to mediawiki: (uberfuzzy)
