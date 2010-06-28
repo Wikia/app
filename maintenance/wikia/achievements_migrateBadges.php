@@ -3,7 +3,7 @@ require_once("../commandLine.inc");
 require_once("/usr/wikia/source/AchievementsII/extensions/wikia/AchievementsII/Ach_setup.php");
 
 /*
- * SERVER_ID=11765 php migrateBadges.php --conf=/usr/wikia/conf/current/wiki.factory/LocalSettings.php
+ * SERVER_ID=11765 php achievements_migrateBadges.php --conf=/usr/wikia/conf/current/wiki.factory/LocalSettings.php
  * http://community.wikia.com/wiki/Special:WhereIsExtension?var=909&val=0
  */
 
