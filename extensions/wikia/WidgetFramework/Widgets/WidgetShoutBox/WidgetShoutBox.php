@@ -20,6 +20,7 @@ CREATE INDEX city_idx ON shout_box_messages (city);
 
 This is SHARED table (wikicities DB)
 
+TODO: if WhosOnline is never coming back, remove traces from widget, make logic simpler
  */
 if(!defined('MEDIAWIKI')) {
 	die(1);
@@ -97,8 +98,9 @@ function WidgetShoutBox($id, $params) {
 	// generate HTML for "chat" part of widget
 	$ret .= '<div id="'.$id.'_chat" class="WidgetShoutBoxChat"' . (!$showChat ? ' style="display:none"' : '') . '>';
 
-	$ret .= '<h5>Chat' . ($online !== false ? ' (<a onclick="WidgetShoutboxTabToogle(\''.$id.'\', 1)" style="cursor: pointer">'.
-		wfMsg('monaco-whos-online').'? &raquo;</a>)' : '') . '</h5>';
+	#temp disable header. (remove hardcoded 'Chat' text + WhosOnline has been disabled forever, and not coming back?)
+	#$ret .= '<h5>Chat' . ($online !== false ? ' (<a onclick="WidgetShoutboxTabToogle(\''.$id.'\', 1)" style="cursor: pointer">'.
+	#	wfMsg('monaco-whos-online').'? &raquo;</a>)' : '') . '</h5>';
 
 	$msgs = WidgetShoutBoxGetMessages();
 
