@@ -38,7 +38,7 @@ class PhalanxStats extends UnlistedSpecialPage {
 		$block['regex'] = $block['exact'] ? 'Yes' : 'No';
 		$block['case'] = $block['case'] ? 'Yes' : 'No';
 		$block['type'] = implode( ', ', Phalanx::getTypeNames( $block['type'] ) );
-		$block['lang'] = empty($block['case']) ? '*' : $block['lang'];
+		$block['lang'] = empty($block['lang']) ? '*' : $block['lang'];
 
 		//TODO: add i18n
 		$headers = array(
