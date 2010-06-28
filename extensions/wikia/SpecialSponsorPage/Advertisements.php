@@ -51,6 +51,9 @@ class Advertisement
 			$dbw->Insert('advert_ads',$saveArray,__METHOD__);
 			$this->ad_id = $dbw->insertId();
 		}
+
+		$dbw->immediateCommit();
+
 		self::FlushAdCache($this->wiki_db,$this->page_id);
 	}
 	
