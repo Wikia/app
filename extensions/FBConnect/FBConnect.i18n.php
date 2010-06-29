@@ -75,7 +75,6 @@ $messages['en'] = array(
 	'fbconnect-welcome'  => 'Welcome, Facebook Connect user!',
 	'fbconnect-loginbox' => "Or '''login''' with Facebook:\n\n$1",
 	'fbconnect-merge'    => 'Merge your wiki account with your Facebook ID',
-	'fbconnect-mergebox' => 'This feature has not yet been implemented. Accounts can be merged manually with [[Special:Renameuser]] if it is installed. For more information, please visit [[MediaWikiWiki:Extension:Renameuser|Extension:Renameuser]].\n\n\n$1\n\n\nNote: This can be undone by a sysop.',
 	'fbconnect-logoutbox'=> "$1\n\nThis will also log you out of Facebook and all Connected sites, including this wiki.",
 	'fbconnect-listusers-header'
               => '$1 and $2 privileges are automatically transfered from the Officer and Admin titles of the Facebook group $3.\n\nFor more info, please contact the group creator $4.',
@@ -126,19 +125,19 @@ $messages['en'] = array(
 	'fbconnect-prefs-show' => "Show feed preferences >>",
     'fbconnect-prefs-hide' => "Hide feed preferences >>",
 	'fbconnect-prefs-post' => 'Post to my Facebook News Feed when I:',
-    'fbconnect-connect-msg' => "Congratulations! Your Wikia and Facebook accounts are now connected. <br> Check your <a href='$1'>preferences</a> to control which events appear in Facebook feed.",
-    'fbconnect-connect-error-msg' => "Verification error <br> An error occured during verification with Facebook Connect.",          
+    'fbconnect-connect-msg' => "Congratulations! Your Wikia and Facebook accounts are now connected. <br/> Check your <a href='$1'>preferences</a> to control which events appear in Facebook feed.",
+    'fbconnect-connect-error-msg' => "Verification error <br/> An error occured during verification with Facebook Connect.",          
               
 	'fbconnect-disconnect-link' => "You can also <a id='fbConnectDisconnect' href='#'> disconnect your Wikia account from Facebook.</a> You will able continue using your Wikia account as normal, with your history (edits, points, achievements ) intact.",
 	'fbconnect-disconnect-done' => "Disconnecting <span id='fbConnectDisconnectDone'>... done! </span>",
-	'fbconnect-disconnect-info' => "We have emailed a new password to use with your account - you can log in with the same username as before. Hooray !",
+	'fbconnect-disconnect-info' => "We have emailed a new password to use with your account - you can log in with the same username as before. Hooray!",
 	'tog-fbconnect-push-allow-never' => "Never send anything to my news feed (overrides other options)",
 	'fbconnect-reclamation-title' => 'Disconnecting from Facebook',
-	'fbconnect-reclamation-body' => 'Your account is now disconnected fron Facebook ! <br><br>  We have emailed a new password to use with you account - you can log in with the same username as before. Hooray !
-											<br><br> To login go to: $1',
+	'fbconnect-reclamation-body' => 'Your account is now disconnected from Facebook! <br/><br/>  We have emailed a new password to use with you account - you can log in with the same username as before. Hooray!
+											<br/><br/> To login go to: $1',
     'fbconnect-reclamation-title-error' => 'Disconnecting from Facebook',
 	'fbconnect-reclamation-body-error' => 'There was some error during disconnecting from Facebook or you account is already disconnected. 
-											<br><br> To login go to: $1',
+											<br/><br/> To login go to: $1',
     'fbconnect-unknown-error' => 'Unknown error, try again or contact with us.',          
 	'fbconnect-passwordremindertitle'      	=> 'Your Wikia account is now disconnected from Facebook!',
     'fbconnect-passwordremindertitle-exist' => 'Your Wikia account is now disconnected from Facebook!',
@@ -183,7 +182,7 @@ The Wikia Community Team',
  */
 $messages['qqq'] = array(
 	'fbconnect-desc' => 'Short description of the FBConnect extension, shown in [[Special:Version]]. Do not translate or change links.',
-	'fbconnect-trustinstructions' => '* $1 is a trust root. A trust root looks much like a normal URL, but is used to describe a set of URLs. Trust roots are used by OpenID to verify that a user has approved the OpenID enabled website.',
+	'fbconnect-listusers-header' => '$1 is the name of the Bureaucrat group, $2 is the name of the Sysop group.',
 	'fbconnect-optional' => '{{Identical|Optional}}',
 	'fbconnect-email' => '{{Identical|E-mail address}}',
 	'fbconnect-language' => '{{Identical|Language}}',
@@ -203,7 +202,8 @@ OpenID preferences tab title',
 	'fbconnect-link-to-profile' => 'Appears next to the user\s name in their Preferences page and this text is made into link to the profile of that user if they are connected.',
 	'fbconnect-msg-for-existing-users' => 'This is displayed next to the username field in the choose-name form.  If a user comes to the site and facebook connects,
 										   the purpose of this message is to let them know how to procede if they are actually trying to connect their facebook account
-										   to an existing account.'
+										   to an existing account.',
+	'fbconnect-connect-next' => 'This text appears on the button in the login-and-connect dialog.  After a user enters their username/password, this will slide them over to the next screen which is the Facebook Connect button.'
 );
 /**/
 
