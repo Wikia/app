@@ -35,12 +35,12 @@ class WikiaReplicateImages {
 			$this->mDatacenter = "i";
 			$this->mServers = array(
 				"file3" => array(
-					"address" => "10.8.2.133",
+					"address" => "10.8.44.133",
 					"directory" => "/raid/images/by_id/",
 					"flag" => 1
 				),
-				"file2" => array(
-					"address" => "10.8.2.190",
+				"file-s2" => array(
+					"address" => "10.8.46.25",
 					"directory" => "/raid/images/by_id/",
 					"flag" => 2
 				)
@@ -55,7 +55,7 @@ class WikiaReplicateImages {
 					"flag" => 1
 				),
 				"file3" => array(
-					"address" => "10.8.2.133",
+					"address" => "10.8.44.133",
 					"directory" => "/raid/images/by_id/",
 					"flag" => 2
 				)
