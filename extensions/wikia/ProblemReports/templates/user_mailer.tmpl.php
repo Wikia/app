@@ -56,7 +56,7 @@
     <input type="checkbox" name="mailer-ccme" id="mailer-ccme" /><label for="mailer-ccme"><?= wfMsg('emailccme') ?></label><br />
     
     <div class="actionBar">
-		<input id="mailer-send" type="submit" value="<?= wfMsg('emailsend') ?>" />
+		<input id="mailer-send" class="wikia-button" type="submit" value="<?= wfMsg('emailsend') ?>" />
     </div>
     
     <script type="text/javascript">/*<![CDATA[*/
