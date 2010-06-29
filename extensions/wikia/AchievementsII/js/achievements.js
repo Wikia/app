@@ -12,18 +12,18 @@ var Achievements = {
 
 		$('#view-all').click(function() {
 			var badgesTotal = $("#badge-list").children().length;
-			var badgeHeight = Math.round(badgesTotal/3)*100;			
+			var badgeHeight = Math.ceil(badgesTotal/3)*100;			
 
-			$('#view-all').fadeOut('fast');
-			$('#view-less').fadeIn('fast');
+			$('#view-all').hide();
+			$('#view-less').show();
 			$("#profile-sidebar #badges").animate({height: badgeHeight +'px'}, 'slow');
 
 			self.track('userprofile/viewall');
 		});
 
 		$('#view-less').click(function() {
-			$('#view-less').fadeOut('fast');
-			$('#view-all').fadeIn('fast');
+			$('#view-less').hide();
+			$('#view-all').show();
 			$("#profile-sidebar #badges").animate({height: '200px'}, 'slow');
 
 			self.track('userprofile/viewless');
