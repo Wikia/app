@@ -170,6 +170,7 @@ class SitemapPage extends UnlistedSpecialPage {
 			foreach( $index as $namespace => $pages ) {
 				$cnt = 0;
 				foreach( $pages as $page ) {
+					$out .= sprintf( "\t<!-- page %d -->\n", $cnt );
 					$out .= "\t<sitemap>\n";
 					$out .= "\t\t<loc>{$wgServer}/sitemap-{$id}-NS_{$namespace}-{$cnt}.xml.gz</loc>\n";
 					$out .= "\t\t<lastmod>{$timestamp}</lastmod>\n";
