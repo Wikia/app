@@ -13,7 +13,7 @@
 	<?php if(empty($more)): ?>	
 		<h2 class="firstHeading"><?php echo wfMsg($value['ns'] , array("$1" => $value['count']) ) ?>
 			<?php if($value['show_more']): ?>
-				<a  id="more-<? echo $value['ns']; ?>" style="display:none;" class="ajax-show-more" href="<?php echo 
+				<a  id="more-<? echo $value['ns']; ?>" style="display:none;" class="ajax-show-more" href="#<?php echo
 $wgServer.$wgScript."?action=ajax&rs=FollowHelper::showAll&head=".$value['ns']."&user_id=".$user_id ?>"><?php echo 
 wfMsg('wikiafollowedpages-special-showall'); ?></a> 
 			<?php endif;?>
