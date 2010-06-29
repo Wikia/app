@@ -212,12 +212,15 @@ class SitemapPage extends UnlistedSpecialPage {
 
 		$scope = array( 'page_namespace' => $this->mNamespace );
 		$index = $wgMemc->get( wfMemcKey( "sitemap-index") );
-		if( is_array( $index ) && isset( $index[ $this->mPage ] ) ) {
+		if( isset( $index[ $this->mNamespace ] [ $this->mPage ] ) ) {
 			$scope[] = sprintf( "page_id BETWEEN %d AND %d",
-				$index[ $this->mPage ][ "start" ],
-				$index[ $this->mPage ][ "end" ]
+				$index[ $this->mNamespace ] [ $this->mPage ][ "start" ],
+				$index[ $this->mNamespace ] [ $this->mPage ][ "end" ]
 			);
-			$out .= sprintf( "<!-- pages from %d to %d -->\n", $index[ $this->mPage ][ "start" ], $index[ $this->mPage ][ "end" ] );
+			$out .= sprintf( "<!-- pages from %d to %d -->\n",
+				$index[ $this->mNamespace ] [ $this->mPage ][ "start" ],
+				$index[ $this->mNamespace ] [ $this->mPage ][ "end" ]
+			);
 		}
 		$sth = $dbr->select(
 			'page',
