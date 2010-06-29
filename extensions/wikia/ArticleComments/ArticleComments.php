@@ -44,6 +44,8 @@ $wgHooks['SkinAfterContent'][] = 'ArticleCommentInit::ArticleCommentEnable';
 $wgHooks['CustomArticleFooter'][] = 'ArticleCommentInit::ArticleCommentEnableMonaco';
 $wgHooks['BeforePageDisplay'][] = 'ArticleCommentInit::ArticleCommentAddJS';
 $wgHooks['SkinTemplateTabs'][] = 'ArticleCommentInit::ArticleCommentHideTab';
+# user talk comment and notify
+$wgHooks['UserMailer::NotifyUser'][] = 'ArticleCommentInit::ArticleCommentNotifyUser';
 
 /* added by Moli */
 # special::movepage
@@ -171,6 +173,31 @@ class ArticleCommentInit {
 			wfLoadExtensionMessages('ArticleComments');
 			$tocnumber = ++$sublevelCount[1];
 			$toc .= $sk->tocLine('article-comment-header', wfMsg('article-comments-toc-item'), $tocnumber, 1);
+		}
+		return true;
+	}
+
+	/**
+	 * Hook handler
+	 *
+	 * @param Title $title
+	 * @param User $fakeUser
+	 *
+	 * @static
+	 * @access public
+	 *
+	 * @return true -- because it's a hook
+	 */
+	static function ArticleCommentNotifyUser($title, &$fakeUser) {
+		global $wgTitle;
+		if ($wgTitle->getNamespace() == NS_USER_TALK && strpos(end(explode('/', $title->getText())), ARTICLECOMMENT_PREFIX) === 0) {
+			$newUser = reset(explode('/', $title->getText()));
+			if ($newUser != '') {
+				$newUser = User::newFromName($newUser);
+				if ($newUser instanceof User) {
+					$fakeUser = $newUser;
+				}
+			}
 		}
 		return true;
 	}
@@ -896,7 +923,7 @@ class ArticleComment {
 	 * @return true -- because it's a hook
 	 */
 	static public function watchlistNotify(RecentChange &$oRC) {
-		global $wgEnableGroupedArticleCommentsRC;
+		global $wgEnableGroupedArticleCommentsRC, $wgTitle;
 		wfProfileIn( __METHOD__ );
 
 		if ( !empty($wgEnableGroupedArticleCommentsRC) && ( $oRC instanceof RecentChange ) ) {
@@ -905,6 +932,7 @@ class ArticleComment {
 			$article_id = $oRC->getAttribute('rc_cur_id');
 
 			if (MWNamespace::isTalk($namespace) &&
+				!MWNamespace::isTalk($wgTitle->getNamespace()) &&
 				strpos(end(explode('/', $title)), ARTICLECOMMENT_PREFIX) === 0 &&
 				!empty($article_id)) {
 
@@ -1571,7 +1599,7 @@ class ArticleCommentList {
 					$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 					$template->set_vars(
 						array (
-							'hdrtitle' 		=> wfMsgExt('article-comments-rc-comments', array('parseinline'), reset(explode('/', $oTitle->getText()))),
+							'hdrtitle' 		=> wfMsgExt('article-comments-rc-comments', array('parseinline'), reset(explode('/', $oTitle->getFullText()))),
 							'inx'			=> $oChangeList->rcCacheIndex,
 							'cntChanges'	=> $cntChanges,
 							'users'			=> $users,

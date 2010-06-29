@@ -551,6 +551,16 @@ class EmailNotification {
 				} else {
 					wfDebug( __METHOD__.": talk page owner doesn't want notifications\n" );
 				}
+
+				/* Wikia change begin - @author: Marooned */
+				/* Send mail to user when comment on his user talk has been added - see RT#44830 */
+				$fakeUser = null;
+				wfRunHooks('UserMailer::NotifyUser', array( $title, &$fakeUser ));
+				if ( $fakeUser instanceof User && $fakeUser->getOption( 'enotifusertalkpages' ) && $fakeUser->isEmailConfirmed() ) {
+					wfDebug( __METHOD__.": sending talk page update notification\n" );
+					$this->compose( $fakeUser );
+				}
+				/* Wikia change end */
 			}
 
 			if ( $wgEnotifWatchlist ) {
