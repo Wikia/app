@@ -217,6 +217,7 @@ class SitemapPage extends UnlistedSpecialPage {
 				$index[ $this->mPage ][ "start" ],
 				$index[ $this->mPage ][ "end" ]
 			);
+			$out .= sprintf( "<!-- pages from %d to %d -->\n", $index[ $this->mPage ][ "start" ], $index[ $this->mPage ][ "end" ] );
 		}
 		$sth = $dbr->select(
 			'page',

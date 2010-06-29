@@ -17,7 +17,8 @@ $indexes = array();
 foreach( $namespaces as $namespace ) {
 	echo "Caching namespace $namespace...";
 	$indexes[ $namespace ] = $sitemap->cachePages( $namespace );
-	echo "done\n";
+	echo " pages " . count( $indexes[ $namespace ] );
+	echo " done\n";
 }
 
 /**
