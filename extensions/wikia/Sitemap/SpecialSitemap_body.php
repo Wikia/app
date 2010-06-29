@@ -198,7 +198,7 @@ class SitemapPage extends UnlistedSpecialPage {
 	 * @access private
 	 */
 	private function generateNamespace() {
-		global $wgServer, $wgOut;
+		global $wgServer, $wgOut, $wgMemc;
 
 		$dbr = wfGetDB( DB_SLAVE );
 
