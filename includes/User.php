@@ -2963,7 +2963,7 @@ class User {
 	 *
 	 * @return \types{\bool,\type{WikiError}} True on success, a WikiError object on failure.
 	 */
-	function sendConfirmationMail() {
+	function sendConfirmationMail($mailtype = "ConfirmationMail", $mailmsg = 'confirmemail', $ip_arg = true) {
 		global $wgLang;
 		$expiration = null; // gets passed-by-ref and defined in next line.
 		$token = $this->confirmationToken( $expiration );
@@ -2972,68 +2972,57 @@ class User {
 		$this->saveSettings();
 		$manualURL = SpecialPage::getTitleFor( 'ConfirmEmail/manual' )->getFullURL();
 
+		$IP = wfGetIP();
+		$name = $this->getName();
+		$expDate = $wgLang->timeanddate( $expiration, false );
+
+		if(!$ip_arg) {
+			$args = array($name, $url, $expDate, $invalidateURL, $manualURL, $token);
+		} else {
+			$args = array($IP, $name, $url, $expDate, $invalidateURL, $manualURL, $token);
+		}
+		
 		/* Wikia change begin - @author: Marooned */
 		/* HTML e-mails functionality */
 		global $wgEnableRichEmails;
 		if (empty($wgEnableRichEmails)) {
-			return $this->sendMail( wfMsg( 'confirmemail_subject' ),
-				wfMsg( 'confirmemail_body',
-					wfGetIP(),
-					$this->getName(),
-					$url,
-					$wgLang->timeanddate( $expiration, false ),
-					$invalidateURL,
-					$manualURL,
-					$token ), null, null, 'ConfirmationMail' );
+			return $this->sendMail( wfMsg( $mailmsg.'_subject' ),
+				wfMsg( $mailmsg.'_body', $args), null, null, $mailtype );
 		} else {
-			$IP = wfGetIP();
-			$name = $this->getName();
-			$expDate = $wgLang->timeanddate( $expiration, false );
 			$wantHTML = $this->isAnon() || $this->getOption('htmlemails');
 
-			list($body, $bodyHTML) = wfMsgHTMLwithLanguage('confirmemail_body', $this->getOption('language'), array(), array($IP, $name, $url, $expDate, $invalidateURL, $manualURL, $token), $wantHTML);
+			list($body, $bodyHTML) = wfMsgHTMLwithLanguage( $mailmsg.'_body', $this->getOption('language'), array(), $args, $wantHTML);
 
-			return $this->sendMail( wfMsg( 'confirmemail_subject' ), $body, null, null, 'ConfirmationMail', $bodyHTML );
+			return $this->sendMail( wfMsg( $mailmsg.'_subject' ), $body, null, null, $mailtype, $bodyHTML );
 		}
 		/* Wikia change end */
 	}
 
-	/* c&p quick hack for re-confirmation */
+	/**
+	 * Confirmation after change the emial 
+	 *
+	 * @return \types{\bool,\type{WikiError}} True on success, a WikiError object on failure.
+	 */
 	function sendReConfirmationMail() {
-		global $wgLang;
-		$expiration = null; // gets passed-by-ref and defined in next line.
-		$token = $this->confirmationToken( $expiration );
-		$url = $this->confirmationTokenUrl( $token );
-		$invalidateURL = $this->invalidationTokenUrl( $token );
+		$this->setOption("mail_edited","1");
 		$this->saveSettings();
-		$manualURL = SpecialPage::getTitleFor( 'ConfirmEmail/manual' )->getFullURL();
-
-		/* Wikia change begin - @author: Marooned */
-		/* HTML e-mails functionality */
-		global $wgEnableRichEmails;
-		if (empty($wgEnableRichEmails)) {
-			return $this->sendMail( wfMsg( 'reconfirmemail_subject' ),
-				wfMsg( 'reconfirmemail_body',
-					wfGetIP(),
-					$this->getName(),
-					$url,
-					$wgLang->timeanddate( $expiration, false ),
-					$invalidateURL,
-					$manualURL,
-					$token ), null, null, 'ReConfirmationMail'  );
-		} else {
-			$IP = wfGetIP();
-			$name = $this->getName();
-			$expDate = $wgLang->timeanddate( $expiration, false );
-			$wantHTML = $this->isAnon() || $this->getOption('htmlemails');
-
-			list($body, $bodyHTML) = wfMsgHTMLwithLanguage('reconfirmemail_body', $this->getOption('language'), array(), array($IP, $name, $url, $expDate, $invalidateURL, $manualURL, $token), $wantHTML);
-
-			return $this->sendMail( wfMsg( 'reconfirmemail_subject' ), $body, null, null, 'ReConfirmationMail', $bodyHTML );
-		}
-		/* Wikia change end */
+		return $this->sendConfirmationMail( 'ReConfirmationMail', 'reconfirmemail' );
 	}
-
+	
+	/**
+	 * Confirmation reminder after 7 day 
+	 *
+	 * @return \types{\bool,\type{WikiError}} True on success, a WikiError object on failure.
+	 */
+	function sendConfirmationReminderMail() {				
+		if( ($this->getOption("cr_mailed", 0) == 1) || ($this->getOption("mail_edited", 0) == 1) ) {
+			return false;
+		}
+		$this->setOption("cr_mailed","1");
+		$this->saveSettings();
+		return $this->sendConfirmationMail( 'ConfirmationReminder', 'confirmemailreminder', false );
+	}
+	
 	/**
 	 * Send an e-mail to this user's account. Does not check for
 	 * confirmed status or validity.
@@ -3051,7 +3040,7 @@ class User {
 			global $wgPasswordSender;
 			$from = $wgPasswordSender;
 		}
-
+		
 		$to = new MailAddress( $this );
 		$sender = new MailAddress( $from );
 
