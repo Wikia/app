@@ -98,9 +98,10 @@
 #navigation .menu-item {
 	border-color: #FFF;
 }
-#link_box, #link_box_dynamic {
+#link_box_table {
 	background: #333;
 }
+#link_box_table,
 #link_box_table a {
 	color: #FFF;
 }
