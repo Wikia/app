@@ -214,7 +214,7 @@ function CategorySelectAjaxSaveCategories($articleId, $categories) {
 		return Wikia::json_encode($result);
 	}
 
-	Wikia::setVar('EditFromViewMode', true);
+	Wikia::setVar('EditFromViewMode', 'CategorySelect');
 
 	$categories = CategorySelectChangeFormat($categories, 'json', 'wiki');
 	if ($categories == '') {
