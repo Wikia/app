@@ -18,7 +18,8 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 class SitemapPage extends UnlistedSpecialPage {
 
-	private $mType, $mTitle, $mNamespaces, $mNamespace, $mPriorities, $mSizeLimit;
+	private $mType, $mTitle, $mNamespaces, $mNamespace, $mPriorities,
+		$mSizeLimit, $mPage;
 
 	/**
 	 * standard constructor
@@ -49,6 +50,7 @@ class SitemapPage extends UnlistedSpecialPage {
 
 		$this->mSizeLimit = ( pow( 2, 20 ) * 10 ) - 20; // safe margin
 		$this->mLinkLimit = 50000;
+		$this->mPage = 0;
 	}
 
 
@@ -132,6 +134,7 @@ class SitemapPage extends UnlistedSpecialPage {
 		if ( preg_match( "/^sitemap\-.+NS_(\d+)\-(\d+)/", $this->mType, $match ) ) {
 			$this->mType = "namespace";
 			$this->mNamespace = $match[ 1 ];
+			$this->mPage = $match[ 2 ];
 		}
 		else {
 			$this->mType = "index";
@@ -207,6 +210,14 @@ class SitemapPage extends UnlistedSpecialPage {
 		$out = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 		$out .= sprintf( "<!-- generated on the fly by %s -->\n", $this->mTitle->getFullURL() );
 
+		$scope = array( 'page_namespace' => $this->mNamespace );
+		$index = $wgMemc->get( wfMemcKey( "sitemap-index") );
+		if( is_array( $index ) && isset( $index[ $this->mPage ] ) ) {
+			$scope[] = sprintf( "page_id BETWEEN %d AND %d",
+				$index[ $this->mPage ][ "start" ],
+				$index[ $this->mPage ][ "end" ]
+			);
+		}
 		$sth = $dbr->select(
 			'page',
 			array(
@@ -214,8 +225,9 @@ class SitemapPage extends UnlistedSpecialPage {
 				'page_title',
 				'page_touched',
 			),
-			array( 'page_namespace' => $this->mNamespace ),
-			__METHOD__
+			$scope,
+			__METHOD__,
+			array( "ORDER BY" => "page_id" )
 		);
 
 		$out .= "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
