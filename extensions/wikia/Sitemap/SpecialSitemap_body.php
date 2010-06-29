@@ -139,27 +139,54 @@ class SitemapPage extends UnlistedSpecialPage {
 		}
 	}
 
+	/**
+	 * generate xml with index file
+	 *
+	 * @access private
+	 */
 	private function generateIndex() {
-		global $wgServer, $wgOut;
+		global $wgServer, $wgOut, $wgMemc;
+
+		wfProfileIn( __METHOD__ );
 
 		$timestamp = wfTimestamp( TS_ISO_8601, wfTimestampNow() );
 		$id = wfWikiID();
 
 		$wgOut->disable();
 
+		$out = "";
+		$out .= "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+		$out .= sprintf( "<!-- generated on fly by %s -->\n", $this->mTitle->getFullURL() );
+		$out .= "<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
+
 		header( "Content-type: application/xml; charset=UTF-8" );
 		header( "Cache-control: max-age=86400", true );
 
-		$out = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-		$out .= sprintf( "<!-- generated on fly by %s -->\n", $this->mTitle->getFullURL() );
-		$out .= "<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
-		foreach ( $this->mNamespaces as $namespace ) {
-			$out .= "\t<sitemap>\n";
-			$out .= "\t\t<loc>{$wgServer}/sitemap-{$id}-NS_{$namespace}-0.xml.gz</loc>\n";
-			$out .= "\t\t<lastmod>{$timestamp}</lastmod>\n";
-			$out .= "\t</sitemap>\n";
+		$index = $wgMemc->get( wfMemcKey( "sitemap-index") );
+		if( is_array( $index ) ) {
+			foreach( $index as $namespace => $pages ) {
+				$cnt = 0;
+				foreach( $pages as $page ) {
+					$out .= "\t<sitemap>\n";
+					$out .= "\t\t<loc>{$wgServer}/sitemap-{$id}-NS_{$namespace}-{$cnt}.xml.gz</loc>\n";
+					$out .= "\t\t<lastmod>{$timestamp}</lastmod>\n";
+					$out .= "\t</sitemap>\n";
+					$cnt++;
+				}
+			}
 		}
+		else {
+			foreach ( $this->mNamespaces as $namespace ) {
+				$out .= "\t<sitemap>\n";
+				$out .= "\t\t<loc>{$wgServer}/sitemap-{$id}-NS_{$namespace}-0.xml.gz</loc>\n";
+				$out .= "\t\t<lastmod>{$timestamp}</lastmod>\n";
+				$out .= "\t</sitemap>\n";
+			}
+		}
+
 		$out .= "</sitemapindex>\n";
+
+		wfProfileOut( __METHOD__ );
 
 		print $out;
 	}
