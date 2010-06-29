@@ -894,7 +894,7 @@ EOD;
 		$exists = false;
 		switch( $this->mProvider ) {
 			case self::V_METACAFE:
-				$file = @file_get_contents( "http://www.metacafe.com/api/item/" . $this->mId, FALSE );
+				$file = @Http::get( "http://www.metacafe.com/api/item/" . $this->mId, FALSE );
 				if ($file) {
 					$doc = new DOMDocument( '1.0', 'UTF-8' );
 					@$doc->loadHTML( $file );
@@ -905,7 +905,7 @@ EOD;
 				}
 				break;
 			case self::V_YOUTUBE:
-				$file = @file_get_contents( "http://gdata.youtube.com/feeds/api/videos/" . $this->mId, FILE_TEXT );
+				$file = @Http::get( "http://gdata.youtube.com/feeds/api/videos/" . $this->mId, FILE_TEXT );
 				if ($file) {
 					$doc = new DOMDocument( '1.0', 'UTF-8' );
 					@$doc->loadXML( $file );
@@ -928,7 +928,7 @@ EOD;
 				$exists = true;
 				break;
 			case self::V_5MIN:
-				$file = @file_get_contents( "http://api.5min.com/video/" . $this->mId . '/info.xml', FALSE );
+				$file = @Http::get( "http://api.5min.com/video/" . $this->mId . '/info.xml', FALSE );
 				if ($file) {
 					$doc = new DOMDocument( '1.0', 'UTF-8' );
 					@$doc->loadXML( $file );
@@ -939,7 +939,7 @@ EOD;
 				}
 				break;
 			case self::V_VIMEO:
-				$file = @file_get_contents( "http://vimeo.com/api/clip/" . $this->mId . '.php', FALSE );
+				$file = @Http::get( "http://vimeo.com/api/clip/" . $this->mId . '.php', FALSE );
 				if ($file) {
 					$data = unserialize( $file );
 					$this->mVideoName = trim( $data[0]["title"] );
@@ -957,7 +957,7 @@ EOD;
 				$exists = $this->getBlipTVData() != false ;
 				break;
 			case self::V_DAILYMOTION:
-				$file = @file_get_contents( 'http://www.dailymotion.com/video/' . $this->mId );
+				$file = @Http::get( 'http://www.dailymotion.com/video/' . $this->mId );
 				if (strpos($file,$this->mId) > -1)
 				{
 					return true;
@@ -969,7 +969,7 @@ EOD;
 				break;
 			case self::V_GAMETRAILERS: // todo verify if exists
 				$url = $this->getUrl(self::V_GAMETRAILERS.",".$this->mId);
-				$file = @file_get_contents($url); // if 404 file is empty
+				$file = @Http::get($url); // if 404 file is empty
 				if( strlen($file) < 100 ){
 					return false;
 				}
@@ -1393,7 +1393,7 @@ EOD;
 		}
 		$url =  "http://api.viddler.com/rest/v1/?method=viddler.videos.getDetailsByUrl&api_key=".
 					self::K_VIDDLER . "&url=http://www.viddler.com/explore/" . $this->mId;
-		$file = @file_get_contents($url );
+		$file = @Http::get($url );
 		$doc = new DOMDocument( '1.0', 'UTF-8' );
 		@$doc->loadXML( $file );
 		$mTrueID = trim( $doc->getElementsByTagName('id')->item(0)->textContent );
@@ -1418,7 +1418,7 @@ EOD;
 
 		$url = "http://blip.tv/file/" . $this->mId . "?skin=rss&version=3";
 
-		$file = @file_get_contents($url );
+		$file = @Http::get($url );
 	 	if (empty($file))
 	 	{
 	 		return false;
@@ -1544,7 +1544,7 @@ EOD;
 				$thumb = 'http://img.youtube.com/vi/' . $this->mId . '/0.jpg';
 				break;
 			case self::V_VIMEO:
-				$file = @file_get_contents( "http://vimeo.com/api/clip/" . $this->mId . '.php', FALSE );
+				$file = @Http::get( "http://vimeo.com/api/clip/" . $this->mId . '.php', FALSE );
 				if ($file) {
 					$data = unserialize( $file );
 					$thumb = trim( $data[0]["thumbnail_large"] );
@@ -1553,7 +1553,7 @@ EOD;
 			case self::V_5MIN:
 				break;
 				/* todo test
-				$file = @file_get_contents( "http://api.5min.com/video/" . $this->mId . '/info.xml', FALSE );
+				$file = @Http::get( "http://api.5min.com/video/" . $this->mId . '/info.xml', FALSE );
 					if ($file) {
 						$doc = new DOMDocument;
 						@$doc->loadHTML( $file );
