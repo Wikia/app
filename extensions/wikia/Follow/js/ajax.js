@@ -78,6 +78,9 @@ Follow.showMore = function(e) {
     WET.byStr( 'WikiaFollowedPages/specialpage/viewall/' + msg[4] );   
     
 	var url = $(e.target).attr("href");
+        if (url.charAt(0) == '#') {
+            url = url.substr(1);
+        }
 	$(e.target).hide();
 	var head = Follow.getUrlParam( url, "head" );
 	$.ajax({
