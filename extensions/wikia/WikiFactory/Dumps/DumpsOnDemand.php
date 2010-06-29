@@ -17,7 +17,7 @@ class DumpsOnDemand {
 	 * @static
 	 */
 	static public function customSpecialStatistics( &$specialpage, &$text ) {
-		global $wgOut, $wgDBname, $wgContLang, $wgRequest, $wgTitle, $wgUser,
+		global $wgOut, $wgDBname, $wgLang, $wgRequest, $wgTitle, $wgUser,
 			$wgCityId;
 
 		wfLoadExtensionMessages( "DumpsOnDemand" );
@@ -60,14 +60,14 @@ class DumpsOnDemand {
 		$tmpl->set( "curr", array(
 			"url" => self::getUrl( $wgDBname, "pages_current.xml.gz" ),
 			"timestamp" => !empty( $index["pages_current.xml.gz"]->mwtimestamp )
-				? $wgContLang->timeanddate( $index[ "pages_current.xml.gz"]->mwtimestamp )
+				? $wgLang->timeanddate( $index[ "pages_current.xml.gz"]->mwtimestamp )
 				: "unknown"
 		));
 
 		$tmpl->set( "full", array(
 			"url" => self::getUrl( $wgDBname, "pages_full.xml.gz" ),
 			"timestamp" => !empty( $index[ "pages_full.xml.gz" ]->mwtimestamp )
-				? $wgContLang->timeanddate( $index[ "pages_full.xml.gz" ]->mwtimestamp )
+				? $wgLang->timeanddate( $index[ "pages_full.xml.gz" ]->mwtimestamp )
 				: "unknown"
 		));
 		$tmpl->set( "index", $index );
