@@ -913,7 +913,7 @@ class Masthead {
 				if ( !empty($wgEnableWikiaFollowedPages) && $wgEnableWikiaFollowedPages) {
 					$follow = FollowHelper::getMasthead($userspace);
 					if (!empty($follow)) {
-						$out['nav_links'][] = FollowHelper::getMasthead($userspace);	
+						$out['nav_links'][] = $follow;	
 					}
 				}
 
