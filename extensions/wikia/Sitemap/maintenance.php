@@ -13,9 +13,14 @@ require_once( "commandLine.inc" );
 
 $sitemap = new SitemapPage();
 $namespaces = $sitemap->getNamespacesList();
+$indexes = array();
 foreach( $namespaces as $namespace ) {
 	echo "Caching namespace $namespace...";
-	$out = $sitemap->cachePages( $namespace );
+	$indexes[ $namespace ] = $sitemap->cachePages( $namespace );
 	echo "done\n";
-	print_r( $out );
 }
+
+/**
+ * cache for week
+ */
+$wgMemc->set( wfMemcKey( "sitemap-index"), $indexes, 86400*7 );
