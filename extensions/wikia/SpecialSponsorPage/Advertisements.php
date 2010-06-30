@@ -23,8 +23,13 @@ class Advertisement
 	public $user_email = "";
 	public $ad_price = 0;
 	public $ad_months = 1;
-	public $ad_status = 0;
+	public $ad_status = 0;// 0: unmoderated, 1: approved, 2: declined, 3: declined after being approved at a point in time
 	public $last_pay_date ='0000-00-00';
+	
+	//substitute for static variable or enum
+	public static function GetStatuses(){
+		return array("unmoderated"=>0, "approved"=>1,"declined"=>2,"declined after approval"=>3);
+	}
  
 	public function Save(){
 		global $wgExternalSharedDB;
