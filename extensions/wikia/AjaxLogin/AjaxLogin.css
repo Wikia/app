@@ -70,3 +70,8 @@
 #AjaxLoginConnectMarketing .forward {
 	float: right;
 }
+.neutral_ajaxLogin{
+	background-color:#EEEEEE;
+	border-color:#AAAAAA;
+	color:#000000;
+}
