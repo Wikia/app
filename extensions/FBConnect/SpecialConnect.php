@@ -837,12 +837,23 @@ class SpecialConnect extends SpecialPage {
 	 */
 	private function connectForm() {
 		global $wgOut, $wgUser, $wgSitename;
-		$fb = new FBConnectAPI();
-		$fb_user = $fb->user();
-		
+
 		$titleObj = Title::newFromText( $this->mReturnTo );
-		$wgOut->redirect( $titleObj->getFullURL( $this->mReturnToQuery . "&fbconnected=2&cb=".rand(1,10000) ) );
+		if($titleObj){
+			$wgOut->redirect( $titleObj->getFullURL( $this->mReturnToQuery . "&fbconnected=2&cb=".rand(1,10000) ) );
+		} else {
+			// Outputs the canonical name of the special page at the top of the page
+			$this->outputHeader();
+
+			// Render a humble Facebook Connect button
+			$wgOut->addHTML('<h2>' . wfMsg( 'fbconnect' ) . '</h2>
+				<div>'.wfMsgExt( 'fbconnect-intro', array('parse', 'content')) . '<br/>' . wfMsg( 'fbconnect-click-to-login', $wgSitename ) .'
+				<fb:login-button size="large" background="black" length="long"'.FBConnect::getPermissionsAttribute().FBConnect::getOnLoginAttribute().'></fb:login-button>
+				</div>'
+			);
+		}
 	}
+
 	/**
 	 * Disconnect from facebook
 	 */
