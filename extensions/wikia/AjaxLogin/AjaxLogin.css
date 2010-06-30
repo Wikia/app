@@ -20,6 +20,9 @@
 #AjaxLoginBox .accent{
 	background-color: #D6E0F5;
 }
+#AjaxLoginBox .accent .selected{
+	background-color: #000;
+}
 #AjaxLoginBox .accent a{
 	color:#000;
 }
