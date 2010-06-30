@@ -18,7 +18,7 @@ class DumpsOnDemand {
 	 */
 	static public function customSpecialStatistics( &$specialpage, &$text ) {
 		global $wgOut, $wgDBname, $wgLang, $wgRequest, $wgTitle, $wgUser,
-			$wgCityId;
+			$wgCityId, $wgHTTPProxy;
 
 		wfLoadExtensionMessages( "DumpsOnDemand" );
 
@@ -35,8 +35,9 @@ class DumpsOnDemand {
 		 */
 		$context = stream_context_create( array(
 			"http" => array(
-				"method" => "GET",
-				"timeout" => 1.0
+				"method"  => "GET",
+				"timeout" => 1.0,
+				"proxy"   => "tcp://" . $wgHTTPProxy
 		) ) );
 		$json = @file_get_contents( self::getUrl( $wgDBname, "index.json" ), 0, $context );
 		if( $json ) {
