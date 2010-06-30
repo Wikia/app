@@ -83,7 +83,7 @@ $messages['en'] = array(
 	'fbconnect-usernameprefix' => 'FacebookUser',
 // Special:Connect
 	'fbconnect-error' => 'Verification error',
-	'fbconnect-errortext' => 'An error occured during verification with Facebook Connect.',
+	'fbconnect-errortext' => 'Yikes! It looks like that didn\'t work out. Please try again.',
 	'fbconnect-cancel' => 'Action cancelled',
 	'fbconnect-canceltext' => 'The previous action was cancelled by the user.',
 	'fbconnect-invalid' => 'Invalid option',
