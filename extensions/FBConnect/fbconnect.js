@@ -215,7 +215,7 @@ window.wgAjaxLoginOnInit = function() {
 		$().log('AjaxLogin: slideToLoginAndConnect()');
 		$('#fbLoginAndConnect').show();
 		var firstSliderCell = $("#AjaxLoginSliderNormal");
-		var slideto = -354;
+		var slideto = -351;
 		$("#AjaxLoginConnectMarketing a.forward").hide();
 		$("#AjaxLoginConnectMarketing a.back").show();
 
