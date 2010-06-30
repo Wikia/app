@@ -44,6 +44,7 @@ class SpecialAdminAds extends SpecialPage {
 			//edit
 			if($wgRequest->getText('edit') > 0){
 				$wgOut->addHTML($this->makeEditAddForm($wgRequest->getText('edit')));
+			//save an edited ad
 			}else if($wgRequest->getText('save') == 'save' && $wgRequest->getText('ad_id') > 0){
 				//save
 				$ad = new Advertisement();
@@ -51,11 +52,15 @@ class SpecialAdminAds extends SpecialPage {
 					$ad->ad_link_url = $wgRequest->getText('ad_link_url');
 					$ad->ad_link_text = $wgRequest->getText('ad_link_text');
 					$ad->ad_text = $wgRequest->getText('ad_text');
+					//should validate this input?
+					$ad->last_pay_date = $wgRequest->getText('last_pay_date');
+					$ad->ad_months = $wgRequest->getText('ad_months');
 					$ad->Save();
 					$wgOut->addHTML('<p>Saved updated ad</p>');
 				}else{
 					$wgOut->addHTML('<p>Could not load ad:'.$wgRequest->getText('ad_id').'</p>');
 				}
+			//handle other moderation buttons
 			}else if($wgRequest->getText('approve') > 0){
 				//approve
 				$ad = new Advertisement();
@@ -69,12 +74,19 @@ class SpecialAdminAds extends SpecialPage {
 				// hide from interface
 				$ad = new Advertisement();
 				if ( $ad->LoadFromDB( $wgRequest->getText('remove') ) ) {
-					$ad->ad_status = 2;
+					if($ad->ad_status == 1){
+						$ad->ad_status = 3;
+					} else {
+						$ad->ad_status = 2;
+					}
 					$ad->Save();
 					$wgOut->addHTML( Wikia::successbox( "Ad #{$ad->ad_id} has been removed." ) );
 				} else {
 					$wgOut->addHTML('<p>Could not load ad:'.$wgRequest->getText('remove').'</p>');
 				}
+			//handle other actions
+			}else if($wgRequest->getText('formaction') == "download" ){
+				$this->DownloadToExcel();
 			}
 		}
 		$wgOut->addHTML($this->ModerationForm());
@@ -84,37 +96,101 @@ class SpecialAdminAds extends SpecialPage {
 		global $wgUser, $wgRequest;
 		$self = $this->getTitle();
 		$form = "";
-		$adlimit = 100;
+		$selectParams = "";
 		$startlimit = 0;
-		$selectParams = array('ad_status'=>'0');
-		$ads = Advertisement::LoadAdsFromDB($selectParams,$adlimit+1,$startlimit);
+		$adstatuses = Advertisement::GetStatuses();
+		$viewstatus = $wgRequest->getText('adstoview');
+		if($viewstatus == "") $viewstatus = 0;
+		if(in_array($viewstatus,$adstatuses)){
+			$selectParams = array('ad_status'=>$viewstatus);
+		}
+		$ads = Advertisement::LoadAdsFromDB($selectParams,$this->adlimit+1,$startlimit);
+		$form .= Xml::openElement( 'form', array( 'method' => 'post', 'action' => $self->getLocalUrl() ) );
+		$form .= Xml::hidden( 'token', $wgUser->editToken( 'moderate' ) );
+		//view unmoderated, moderated, declined ads...?
+		$form .= '<select name="formaction">';
+		$form .= '<option value ="view">View</option>';
+		$form .= '<option value ="download">Download</option>';
+		$form .= '</select>';
+		$form .= '<select name="adstoview">';
+		$form .= '<option value ="-1">All</option>';
+		foreach(Advertisement::GetStatuses() as $statusname=>$number){
+			$form .= '<option value ="'.$number.'">'.$statusname.'</option>';
+		}
+		$form .= '</select>';
+		$form .= ' Ads ';
+		$form .= '<button type="submit" name="refresh" value="refresh">Refresh</button>';
 		if(is_array($ads)){
-			$form .= Xml::openElement( 'form', array( 'method' => 'post', 'action' => $self->getLocalUrl() ) );
-			$form .= Xml::hidden( 'token', $wgUser->editToken( 'moderate' ) );
-			$form .=  '<table border="1">';
-			$form .= '<tr><th>Wiki</th><th>Original Page</th><th>Sponsor URL</th><th>Sponsor Link</th><th>Sponsor HTML</th><th>Last Payment</th><th>Moderate</th></tr>';
-			$pagesize = $adlimit;
+			$pagesize = $this->adlimit;
 			$nextpage = false;
-			if(count($ads) < $adlimit){
+			if(count($ads) < $this->adlimit){
 				$pagesize = count($ads);
 			}else{
 				$nextpage = true;
 			}
-			for($i = 0; $i<$pagesize; $i++){
-				$form .= '<tr><td>'.$ads[$i]->wiki_db;
-				$form .= '</td><td><a href="'.$ads[$i]->page_original_url.'">'.$ads[$i]->page_original_url.'</a>';
-				$form .= '</td><td>'.$ads[$i]->ad_link_url;
-				$form .= '</td><td>'.$ads[$i]->ad_link_text;
-				$form .= '</td><td>'.$ads[$i]->ad_text;
-				$form .= '</td><td>'.$ads[$i]->last_pay_date;
+			$form .= $this->MakeAdTable($ads,$pagesize, true);
+		}
+		$form .= Xml::closeElement( 'form' );
+		return $form;
+	}
+	
+	private function DownloadToExcel(){
+		global $wgUser, $wgRequest;
+		$self = $this->getTitle();
+		$form = "";
+		$selectParams = "";
+		$startlimit = 0;
+		$adstatuses = Advertisement::GetStatuses();
+		$viewstatus = $wgRequest->getText('adstoview');
+		if($viewstatus == "") $viewstatus = 0;
+		if(in_array($viewstatus,$adstatuses)){
+			$selectParams = array('ad_status'=>$viewstatus);
+		}
+		$ads = Advertisement::LoadAdsFromDB($selectParams,$this->adlimit+1,$startlimit);
+		if(is_array($ads)){
+			$pagesize = $this->adlimit;
+			$nextpage = false;
+			if(count($ads) < $this->adlimit){
+				$pagesize = count($ads);
+			}else{
+				$nextpage = true;
+			}
+			header("Content-Type: application/vnd.ms-excel");
+			header("Expires: 0");
+			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+			print($this->MakeAdTable($ads,$pagesize, false));
+			exit();
+		}
+	}
+	
+	//$ads is array of Advertisement objects
+	//$pagesize is how many ads to show
+	//$showBtns is boolean for whether or not to include moderation buttons
+	private function MakeAdTable($ads,$pagesize, $showBtns){
+		$adstatuses = Advertisement::GetStatuses();
+		$form =  '<table border="1">';
+		$form .= '<tr><th>Wiki</th><th>Ad ID</th><th>Original Page</th><th>Sponsor URL</th><th>Sponsor Link</th><th>Sponsor HTML</th><th>Last Payment</th><th>Email</th><th>Status</th>';
+		if($showBtns) $form .= '<th>Moderate</th>';
+		$form .= '</tr>';
+		for($i = 0; $i<$pagesize; $i++){
+			$form .= '<tr><td>'.$ads[$i]->wiki_db;
+			$form .= '</td><td>'.$ads[$i]->ad_id;
+			$form .= '</td><td><a href="'.$ads[$i]->page_original_url.'">'.$ads[$i]->page_original_url.'</a>';
+			$form .= '</td><td>'.$ads[$i]->ad_link_url;
+			$form .= '</td><td>'.$ads[$i]->ad_link_text;
+			$form .= '</td><td>'.$ads[$i]->ad_text;
+			$form .= '</td><td>'.$ads[$i]->last_pay_date;
+			$form .= '</td><td>'.$ads[$i]->user_email;
+			$form .= '</td><td>'.array_search($ads[$i]->ad_status,$adstatuses);
+			if($showBtns){
 				$form .= '</td><td><button type="submit" name="edit" value="'.$ads[$i]->ad_id.'">edit</button>';
 				$form .= '<button type="submit" name="approve" value="'.$ads[$i]->ad_id.'">approve</button>';
 				$form .= '<button type="submit" name="remove" value="'.$ads[$i]->ad_id.'">remove</button>';
-				$form .= '</td></tr>';
+				$form .= '</td>';
 			}
-			$form .= '</table>';
-			$form .= Xml::closeElement( 'form' );
+			$form .= '</tr>';
 		}
+		$form .= '</table>';
 		return $form;
 	}
 	
@@ -190,8 +266,8 @@ class SpecialAdminAds extends SpecialPage {
 					}else{
 						mail($defaultemail, "Invalid Payment Amount or Currency", print_r($_POST,1) . "\n\n" . $req);
 					}
-				//we could trap for some other statuses here... worry about that later
 				}
+				//we could trap for some other statuses here... worry about that later
 			} else if (strcmp ($result, "INVALID") == 0) { 
 			// If 'INVALID', send an email. TODO: Log for manual investigation. 
 				mail($defaultemail, "Invalid PayPal Payment IPN Verfication", print_r($_POST,1) . "\n\n" . $req); 
@@ -219,6 +295,10 @@ class SpecialAdminAds extends SpecialPage {
 					<td><input type="text" name="ad_link_text" size="30" value="'.htmlentities($ad->ad_link_text).'" /></td></tr>
 				<tr><td>HTML to be displayed:</td>
 					<td><textarea name="ad_text" cols="30">'.htmlentities($ad->ad_text).'</textarea></td></tr>
+				<tr><td>Payment Info: Last payment date</td>
+					<td><input type="text" name="last_pay_date" size="20" value="'.htmlentities($ad->last_pay_date).'" /></td></tr>
+				<tr><td>Payment Info: Months paid for</td>
+					<td><input type="text" name="ad_months" size="20" value="'.htmlentities($ad->ad_months).'" /></td></tr>
 				<tr><td><input type="submit" name="save" value="save" /></td></tr>
 					</table>'."\n";
 			$form .= Xml::closeElement( 'form' );
