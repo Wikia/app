@@ -108,8 +108,60 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 
 		$result = false;
 		if ( is_object($oRow) && isset($oRow) && ( $oRow->page_id == $this->mPageId ) ) {
+			$rc_user_id = $oRC->getAttribute('rc_user');
+			$rc_user_text = $oRC->getAttribute('rc_user_text');
+			if ( isset($rc_user_id) ) {
+				$oRow->rev_user = $rc_user_id;
+			}
+			if ( isset($rc_user_text) ) {
+				$oRow->rev_user_text = $rc_user_text;
+			}
 			$result = $oRow;
 		} 
+		
+		wfProfileOut( __METHOD__ );
+		return $result;
+	}
+
+	private function getRevisionFromArchive() {
+		wfProfileIn( __METHOD__ );
+
+		$result = false;
+		$db = $this->getDB();
+
+		$fields = array(
+			'ar_namespace as page_namespace',
+			'ar_title as page_title',
+			'ar_comment as rev_comment',
+			'ar_user as rev_user',
+			'ar_user_text as rev_user_text',
+			'ar_timestamp as rev_timestamp',
+			'ar_minor_edit as rev_minor_edit',
+			'ar_rev_id as rev_id',
+			'ar_text_id as rev_text_id',
+			'ar_len as rev_len',
+			'ar_page_id as page_id',
+			'ar_page_id as rev_page',
+			'ar_deleted as rev_deleted',
+			'0 as rev_parent_id'
+		);
+
+		$conditions = array( 
+			'ar_page_id'	=> $this->mPageId , 
+			'ar_rev_id'		=> $this->mRevId
+		);
+
+		$this->profileDBIn();
+		$oRow = $db->selectRow( 
+			'archive', 
+			$fields, 
+			$conditions,
+			__METHOD__
+		);
+		$this->profileDBOut();
+		if ( is_object($oRow) ) {
+			$result = $oRow;
+		}
 		
 		wfProfileOut( __METHOD__ );
 		return $result;
@@ -167,20 +219,32 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		return $result;
 	}
 
-	private function checkIsNew() {
+	private function checkIsNew($archive = 0) {
 		wfProfileIn( __METHOD__ );
 
 		$db = $this->getDB();
 		$this->profileDBIn();
-		$oRow = $db->selectRow( 
-			'revision', 
-			'rev_id', 
-			array( 
-				"rev_id < '{$this->mRevId}'",
-				'rev_page' => $this->mPageId,
-			),
-			__METHOD__
-		);
+		if ( empty($archive) ) {
+			$oRow = $db->selectRow( 
+				'revision', 
+				'rev_id', 
+				array( 
+					"rev_id < '{$this->mRevId}'",
+					'rev_page' => $this->mPageId,
+				),
+				__METHOD__
+			);
+		} else {
+			$oRow = $db->selectRow( 
+				'archive', 
+				'ar_rev_id as rev_id', 
+				array( 
+					"ar_rev_id < '{$this->mRevId}'",
+					'ar_page_id' => $this->mPageId,
+				),
+				__METHOD__
+			);
+		}
 		$this->profileDBOut();
 		$this->mIsNew = ( isset( $oRow->rev_id ) ) ? false : true; 
 		
@@ -237,8 +301,12 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		} else {
 			$oRow = $this->getRevisionFromPage();
 			if ( $oRow === false ) {
-				wfProfileOut( __METHOD__ );
-				return false;
+				$oRow = $this->getRevisionFromArchive();
+				if ( $oRow === false ) {
+					wfProfileOut( __METHOD__ );
+					return false;
+				}
+				$oRow->is_archive = 1;
 			}
 		}
 		
@@ -261,6 +329,7 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 		$db = $this->getDB();
+
 
 		$key = __METHOD__ . ":" . intval($user_id);
 		$oRow = $wgMemc->get(md5($key));
@@ -360,7 +429,8 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 			# user is bot
 			$vals['userisbot'] = intval( $this->_user_is_bot( $vals['username'] ) );
 			# is new
-			$vals['isnew'] = $this->checkIsNew();
+			$is_archive = isset($oRow->is_archive);
+			$vals['isnew'] = $this->checkIsNew($is_archive);
 			# timestamp
 			$vals['timestamp'] = wfTimestamp( TS_DB, $oRevision->getTimestamp() );
 			# size
