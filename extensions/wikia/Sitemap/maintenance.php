@@ -11,6 +11,7 @@ ini_set( "include_path", dirname(__FILE__)."/../../../maintenance/" );
 
 require_once( "commandLine.inc" );
 
+wfOut( "Caching {$wgDBname} ({$wgCityId}) for {$sitemap->mCacheTime} sec.\n");
 $sitemap = new SitemapPage();
 $namespaces = $sitemap->getNamespacesList();
 $indexes = array();
@@ -24,4 +25,4 @@ foreach( $namespaces as $namespace ) {
 /**
  * cache for week
  */
-$wgMemc->set( wfMemcKey( "sitemap-index"), $indexes, 86400*7 );
+$wgMemc->set( wfMemcKey( "sitemap-index"), $indexes, $sitemap->mCacheTime );
