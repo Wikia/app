@@ -22,7 +22,7 @@ class ChooseNameTemplate extends QuickTemplate {
 		if (!array_key_exists('ajax', $this->data)) {
 			$this->data['ajax'] = "";
 		}
-?> 
+?>
 <div id="fbConnectModal" title="<?php $this->msg('fbconnect-modal-title') ?>" >
 <?php if( $this->data['message'] && !$this->data['ajax'] ) { ?>
 	<div class="<?php $this->text('messagetype') ?>box">
@@ -199,10 +199,10 @@ class ChooseNameTemplate extends QuickTemplate {
 					<?php $this->msgWiki('prefs-help-terms'); ?>
 				</div>
 			</td>
-		</tr>		
-					
+		</tr>
+
 <?php global $fbEnablePushToFacebook; if(!empty($fbEnablePushToFacebook)){ ?>
-		<tr id='fbConnectPushEventBar'  >
+		<tr id='fbConnectPushEventBar'>
 			<td colspan='2' class="fbConnectPushEventBar" >
 				<?php print wfMsg( 'fbconnect-prefsheader' ); ?>
 			</td>
@@ -212,11 +212,11 @@ class ChooseNameTemplate extends QuickTemplate {
 				<a id='fbConnectPushEventBar_show' href='#'><?php echo wfMsg("fbconnect-prefs-show"); ?></a>
 				<a id='fbConnectPushEventBar_hide' href='#' style='display:none'><?php echo wfMsg("fbconnect-prefs-hide"); ?></a>
 			</td>
-		</tr>			
+		</tr>
 		<tr>
 			<td class="fbConnectPushEventToggles" style='display:none' >
 				<?php echo wfMsg('fbconnect-prefs-post'); ?>
-				<br><br>
+				<br/><br/>
 			</td>
 		</tr>
 			<?php $prefs = FBConnectPushEvent::getPreferencesToggles(true); ?>
@@ -258,8 +258,8 @@ class ChooseNameTemplate extends QuickTemplate {
 </div>
 
 <script type='text/javascript'>
-	var prefs_help_mailmesg = "<?php echo wfMsg('prefs-help-mailmesg') ?>";
-	var prefs_help_email = "<?php echo wfMsg('prefs-help-email') ?>";
+	var prefs_help_mailmesg = "<?php echo str_replace("\n", " ", wfMsg('prefs-help-mailmesg')) ?>";
+	var prefs_help_email = "<?php echo str_replace("\n", " ", wfMsg('prefs-help-email')) ?>";
 	$(document).ready(function(){
 		//override submitForm
 		UserRegistration = {};
