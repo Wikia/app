@@ -1,6 +1,6 @@
 <?php
 # Flickr MediaWiki extension 0.2.1
-# 
+#
 # Tag :
 #   <flickr>photoid</flickr>
 # Ex :
@@ -9,7 +9,7 @@
 #
 # This code is licensed under the Creative Commons Attribution-ShareAlike 3.0 License
 # For more information or the latest version visit
-# http://wiki.edsimpson.co.uk/index.php/Flickr_Extension 
+# http://wiki.edsimpson.co.uk/index.php/Flickr_Extension
 #
 
 $wgExtensionFunctions[] = 'wfFlickr';
@@ -19,12 +19,12 @@ $wgExtensionCredits['parserhook'][] = array(
         'author' => 'Edward Simpson',
         'url' => 'http://wiki.edsimpson.co.uk/index.php/Flickr_Extension'
 );
- 
+
 function wfFlickr() {
         global $wgParser;
         $wgParser->setHook('flickr', 'renderFlickr');
 }
- 
+
 # The callback function for converting the input text to HTML output
 function renderFlickr($input) {
 	global $wgFlickrAPIKey;
@@ -33,20 +33,20 @@ function renderFlickr($input) {
 
 	# Start off by splitting $input
 	$inp = explode("|", $input, 5);
- 
+
 	# Now check we have SOMEthing
 	if (sizeof($inp) == 0) {
 		                $output = "<strong class='error'>Flickr Error ( No ID ): Enter at least a PhotoID</strong>";
                 return $output;
 	}
- 
+
 	if (! is_numeric($inp[0])) {
 		$output = "<strong class='error'>Flickr Error ( Not a valid ID ): PhotoID not numeric</strong>";
 		return $output;
 	}
- 
+
 	# Okay now deal with parameters
-	$id = $inp[0]; 
+	$id = $inp[0];
 	$inp = array_slice($inp, 1);
 	if (sizeof($inp) > 0) {
 	foreach($inp as $test) {
@@ -61,7 +61,7 @@ function renderFlickr($input) {
 		} else {
 			$caption .= "|".$test;
 		}
- 
+
 	}
 	}
 	if ($type == "thumbnail") {$type = "thumb";}
@@ -69,7 +69,7 @@ function renderFlickr($input) {
 	if ($location == "") {$location = "right";}
 	if ($size == "-") {$size = "";}
 	if ($size != "") {$size = "_".$size;}
- 
+
 	#First get image sizes
 
         $params = array(
@@ -84,22 +84,9 @@ function renderFlickr($input) {
         }
         # Call API
         $url = "http://api.flickr.com/services/rest/?".implode('&', $encoded_params);
- 
-        #  use cURL if we can't use file_get_contents
-        if(ini_get('allow_url_fopen')) {
-                $rsp = file_get_contents($url);
-        }
-        else
-        {
-                $ch = curl_init();
-                $timeout = 5; // set to zero for no timeout
-                curl_setopt ($ch, CURLOPT_URL, $url);
-                curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
-                curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-                $rsp = curl_exec($ch);
-                curl_close($ch);
-        }
- 
+
+        $rsp = Http::get( $url );
+
         $rsp_obj = unserialize($rsp);
         # display the formated HTML and photo link or return an error
         if ($rsp_obj['stat'] != 'ok'){
@@ -115,7 +102,7 @@ function renderFlickr($input) {
                 if ($size == "_b" && $size_obj['label'] == "Large") { $width = $size_obj['width']; $height = $size_obj['height']; }
                 if ($size == "" && $size_obj['label'] == "Medium") { $width = $size_obj['width']; $height = $size_obj['height']; }
 	}
- 
+
 	#Now get full info
 
         $params = array(
@@ -130,20 +117,7 @@ function renderFlickr($input) {
 	}
 	# Call API
 	$url = "http://api.flickr.com/services/rest/?".implode('&', $encoded_params);
-        #  use cURL if we can't use file_get_contents
-        if(ini_get('allow_url_fopen')) {
-                $rsp = file_get_contents($url);
-        }
-        else
-        {
-                $ch = curl_init();
-                $timeout = 5; // set to zero for no timeout
-                curl_setopt ($ch, CURLOPT_URL, $url);
-                curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
-                curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-                $rsp = curl_exec($ch);
-                curl_close($ch);
-        }
+	$rsp = Http::get( $url );
 	$rsp_obj = unserialize($rsp);
 	# display the formated HTML and photo link or return an error
 	if ($rsp_obj['stat'] == 'ok'){
