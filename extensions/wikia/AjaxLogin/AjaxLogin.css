@@ -82,11 +82,11 @@
 #AjaxLoginConnectMarketing .forward {
 	float: right;
 }
-.neutral_ajaxLogin{
+#AjaxLoginBox .neutral_ajaxLogin{
 	background-color:#EEEEEE;
 	border-color:#AAAAAA;
 	color:#000000;
 }
-.neutral_ajaxLogin h1 {
+#AjaxLoginBox .neutral_ajaxLogin h1 {
 	padding:0px;
 }
