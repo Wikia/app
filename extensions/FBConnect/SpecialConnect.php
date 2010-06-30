@@ -846,8 +846,7 @@ class SpecialConnect extends SpecialPage {
 			$this->outputHeader();
 
 			// Render a humble Facebook Connect button
-			$wgOut->addHTML('<h2>' . wfMsg( 'fbconnect' ) . '</h2>
-				<div>'.wfMsgExt( 'fbconnect-intro', array('parse', 'content')) . '<br/>' . wfMsg( 'fbconnect-click-to-login', $wgSitename ) .'
+			$wgOut->addHTML('<div>'.wfMsgExt( 'fbconnect-intro', array('parse', 'content')) . '<br/>' . wfMsg( 'fbconnect-click-to-login', $wgSitename ) .'
 				<fb:login-button size="large" background="black" length="long"'.FBConnect::getPermissionsAttribute().FBConnect::getOnLoginAttribute().'></fb:login-button>
 				</div>'
 			);
