@@ -17,6 +17,12 @@
 #AjaxLoginBox a{
 	color:#00f;
 }
+#AjaxLoginBox .accent{
+	background-color: #D6E0F5;
+}
+#AjaxLoginBox .accent a{
+	color:#000;
+}
 #AjaxLoginFBStart {
 	position: relative;
 	text-align: center;
