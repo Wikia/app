@@ -14,6 +14,9 @@
 	padding: 10px 0;
 	text-align: center;
 }
+#AjaxLoginBox a{
+	color:#00f;
+}
 #AjaxLoginFBStart {
 	position: relative;
 	text-align: center;
