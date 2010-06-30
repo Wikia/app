@@ -99,7 +99,7 @@ class SpecialAdminAds extends SpecialPage {
 		$selectParams = "";
 		$startlimit = 0;
 		$adstatuses = Advertisement::GetStatuses();
-		$viewstatus = $wgRequest->getText('adstoview');
+		$viewstatus = $wgRequest->getInt('adstoview', -1);
 		if($viewstatus == "") $viewstatus = 0;
 		if(in_array($viewstatus,$adstatuses)){
 			$selectParams = array('ad_status'=>$viewstatus);
