@@ -180,12 +180,14 @@ function Ach_GetHTMLAfterBody($skin, &$html) {
 }
 
 function Ach_AddToUserProfile(&$out) {
+	global $wgOut, $wgScriptPath;
 
 	$userProfileService = new AchUserProfileService();
 	$html = $userProfileService->getHTML();
 
 	if($html) {
-		$out['UserProfile1'] = $html;
+		$out['achievementsII'] = $html;
+		$wgOut->addStyle('../..' . $wgScriptPath . '/extensions/wikia/AchievementsII/css/achievements_sidebar.css');
 	}
 
 	return true;

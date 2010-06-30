@@ -45,6 +45,9 @@ function UserProfile_handler(&$skin, &$tpl) {
 		if(isset($out['UserProfile1'])) {
 			$html .= $out['UserProfile1'];
 		}
+		if(isset($out['achievementsII'])) {
+			$html .= $out['achievementsII'];
+		}
 		if(isset($out['followedPages'])) {
 			$html .= $out['followedPages'];
 		}

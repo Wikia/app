@@ -394,7 +394,7 @@ class FollowHelper {
 	
 	
 	static public function renderUserProfile(&$out) {
-		global $wgTitle, $wgRequest, $wgOut, $wgStyleVersion, $wgExtensionsPath, $wgJsMimeType, $wgStyleVersion, $wgUser;
+		global $wgTitle, $wgRequest, $wgOut, $wgStyleVersion, $wgExtensionsPath, $wgScriptPath, $wgJsMimeType, $wgStyleVersion, $wgUser;
 		wfProfileIn(__METHOD__);
 		if( ($wgUser->getId() != 0) && ($wgRequest->getVal( "hide_followed", 0) == 1) ) {
 			$wgUser->setOption( "hidefollowedpages", true ); 
@@ -451,6 +451,7 @@ class FollowHelper {
 		);
 		wfProfileOut(__METHOD__);
 		$out['followedPages'] = $template->render( "followedUserPage" );
+		$wgOut->addStyle('../..' . $wgScriptPath . '/extensions/wikia/Follow/css/follow_sidebar.css');
 		return true;
 	}
 	
