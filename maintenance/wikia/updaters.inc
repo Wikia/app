@@ -16,6 +16,7 @@ $wgMysqlUpdates[] = array( "do_page_vote_unique_update" );
 
 $wgUpdates[ "mysql" ][] = array( "add_field", "watchlist", "wl_wikia_addedtimestamp", "wikia/patch-watchlist-improvements.sql" );
 $wgUpdates[ "mysql" ][] = array( "add_table", "blog_listing_relation",  "wikia/patch-create-blog_listing_relation.sql" );
+$wgUpdates[ "mysql" ][] = array( "add_index", "archive", "page_revision", "wikia/patch-index-archive-page_revision.sql" );
 
 
 function do_page_vote_unique_update() {
@@ -29,4 +30,3 @@ function do_page_vote_unique_update() {
 		wfOut( "ok\n" );
 	}
 }
-
