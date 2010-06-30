@@ -1,4 +1,5 @@
 == Changes since 201007.1 ==
+* rt#57081: Can't get images from Flickr (eloy)
 * rt#56780: Corporatepages i18n bug (Nef)
 * rt#56847: error in answers founder message (Nef) 
 
