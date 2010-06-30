@@ -6,8 +6,8 @@
 	$link = $titleObj->getLocalUrl('type=signup');
 ?>
 
-<link rel="stylesheet" type="text/css" href="<?=$wgStylePath?>/common/wikia_ui/tabs.css?<?=$wgStyleVersion?>" />
-<link rel="stylesheet" type="text/css" href="<?=$wgExtensionsPath?>/wikia/AjaxLogin/AjaxLogin.css?<?=$wgStyleVersion?>" />
+<link rel="stylesheet" type="text/css" href="<?php print $wgStylePath; ?>/common/wikia_ui/tabs.css?<?php print $wgStyleVersion; ?>" />
+<link rel="stylesheet" type="text/css" href="<?php print $wgExtensionsPath; ?>/wikia/AjaxLogin/AjaxLogin.css?<?php print $wgStyleVersion; ?>" />
 <div id="userloginErrorBox3" <?php if(strlen($loginerror) > 0): ?> style="display: block;" <?php endif;?>>
 	<div id="wpError">
 		<?php echo $loginerror; ?>

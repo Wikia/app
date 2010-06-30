@@ -60,6 +60,7 @@ $messages['en'] = array(
 	'fbconnect-convert'  => 'Connect this account with Facebook',
 	'fbconnect-logout'   => 'Logout of Facebook',
 	'fbconnect-link'     => 'Back to facebook.com',
+	'fbconnect-or'       => 'OR',
 
 // Special:Connect
 	'fbconnect-title'    => 'Connect account with Facebook',
@@ -183,6 +184,7 @@ The Wikia Community Team',
 $messages['qqq'] = array(
 	'fbconnect-desc' => 'Short description of the FBConnect extension, shown in [[Special:Version]]. Do not translate or change links.',
 	'fbconnect-listusers-header' => '$1 is the name of the Bureaucrat group, $2 is the name of the Sysop group.',
+	'fbconnect-or' => 'This is just the word "OR" in English, used to separate the Facebook Connect login option from the normal Wikia login options on the ajaxed login dialog box.',
 	'fbconnect-optional' => '{{Identical|Optional}}',
 	'fbconnect-email' => '{{Identical|E-mail address}}',
 	'fbconnect-language' => '{{Identical|Language}}',
