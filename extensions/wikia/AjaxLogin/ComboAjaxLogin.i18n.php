@@ -8,7 +8,7 @@ $messages['en'] = array(
 	"comboajaxlogin-actionmsg" => "To perform this action you first need to log in or create an account",
 	"comboajaxlogin-connectmarketing" => "<h1>Connect your accounts</h1>
 <ul>
-<li>Keep your current username, history, edits... Nothing changes except how you log in</li>
+<li>Keep your current username, history, edits... nothing changes except how you log in</li>
 <li>Share your activity on Wikia with your friends on Facebook</li>
 <li>Complete control of what is published</li>
 </ul>",

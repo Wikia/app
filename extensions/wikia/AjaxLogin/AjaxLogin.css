@@ -1,13 +1,10 @@
-.segmented-rule {
-	background-image: -moz-linear-gradient(left, #AAA 0%, #AAA 45%, rgba(0,0,0,0) 45%, rgba(0,0,0,0) 55%, #AAA 55%, #AAA 100%);		
-	background-image: -webkit-gradient(linear, left top, right top, color-stop(0.0, #AAA), color-stop(0.45, #AAA), color-stop(0.45, rgba(0,0,0,0)), color-stop(0.55, rgba(0,0,0,0)), color-stop(0.55, #AAA), color-stop(1.0, #AAA));
+.or-div {
 	clear: both;
 	font-weight: bold;
-	height: 1px;
 	margin: 20px 0 10px !important;
 	text-align: center;
 }
-.segmented-rule span {
+.or-div span {
 	position: relative;
 	top: -7px;
 }
