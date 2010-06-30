@@ -21,6 +21,8 @@ class SitemapPage extends UnlistedSpecialPage {
 	private $mType, $mTitle, $mNamespaces, $mNamespace, $mPriorities,
 		$mSizeLimit, $mPage;
 
+	public $mCacheTime;
+
 	/**
 	 * standard constructor
 	 * @access public
@@ -51,6 +53,7 @@ class SitemapPage extends UnlistedSpecialPage {
 		$this->mSizeLimit = ( pow( 2, 20 ) * 10 ) - 20; // safe margin
 		$this->mLinkLimit = 50000;
 		$this->mPage = 0;
+		$this->mCacheTime = 86400*8; // cron is run every week
 	}
 
 
