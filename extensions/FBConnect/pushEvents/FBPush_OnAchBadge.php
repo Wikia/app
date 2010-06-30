@@ -40,7 +40,7 @@ class FBPush_OnAchBadge extends FBConnectPushEvent {
 		
 		$params = array(
 			'$ACHIE_NAME' => $name,
-			'$ARTICLE_URL' => $title->getFullUrl(),
+			'$ARTICLE_URL' => $title->getFullUrl("ref=fbfeed&fbtype=achbadge"),
 			'$WIKINAME' => $wgSitename,
 			'$EVENTIMG' => $img,
 			'$DESC' => $desc
