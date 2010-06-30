@@ -72,6 +72,7 @@ class MyHomeTest extends PHPUnit_Framework_TestCase {
 
 		$out = array(
 			'viewMode' => 1,
+			'CategorySelect' => 1
 		);
 
 		$this->assertEquals(
