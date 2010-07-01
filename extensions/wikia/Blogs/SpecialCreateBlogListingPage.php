@@ -196,7 +196,7 @@ class CreateBlogListingPage extends SpecialBlogPage {
 		$this->mTagBody.= "</bloglist>\n";
 	}
 
-	private function parseTag($sTitle) {
+        public function parseTag($sTitle) {
 		global $wgParser;
 		$oTitle = Title::newFromText($sTitle, NS_BLOG_LISTING);
 		$oArticle = new Article($oTitle, 0);
