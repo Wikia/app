@@ -35,7 +35,7 @@ class PhalanxStats extends UnlistedSpecialPage {
 			$block['expire'] = $wgLang->timeanddate( $block['expire'] );
 		}
 		$block['exact'] = $block['exact'] ? 'Yes' : 'No';
-		$block['regex'] = $block['exact'] ? 'Yes' : 'No';
+		$block['regex'] = $block['regex'] ? 'Yes' : 'No';
 		$block['case'] = $block['case'] ? 'Yes' : 'No';
 		$block['type'] = implode( ', ', Phalanx::getTypeNames( $block['type'] ) );
 		$block['lang'] = empty($block['lang']) ? '*' : $block['lang'];
