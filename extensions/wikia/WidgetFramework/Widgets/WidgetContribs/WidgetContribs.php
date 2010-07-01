@@ -47,13 +47,18 @@ function WidgetContribs($id, $params) {
 	    $list = array();
 	
 	    foreach($results['query']['usercontribs'] as $contrib) {
-		$title = Title::newFromText( $contrib['title'], $contrib['ns'] );
+			$title = Title::newFromText( $contrib['title'], $contrib['ns'] );
+			if( empty($title) ) {
+				//bad title returned, cant use it, dont display it
+				//note: how did the api return an unusable/bad pagename?
+				continue;
+			}
 
-		$list[] = array
-		(
-		    'href'  => $title->getLocalURL(), 
-		    'name'  => $contrib['title']
-		);
+			$list[] = array
+			(
+				'href'  => $title->getLocalURL(), 
+				'name'  => $contrib['title']
+			);
 	    }
 	    
 		$ret = WidgetFrameworkWrapLinks($list);
