@@ -328,12 +328,14 @@ STYLE;
 			 * Personal URLs option: hide_convert_button
 			 */	
 			if (!$fbPersonalUrls['hide_convert_button']) {
-				$personal_urls['fbconvert'] = array(
-					'text'   => wfMsg( 'fbconnect-convert' ),
-					'href'   => SpecialConnect::getTitleFor('Connect', 'Convert')->getLocalURL(
-					                          'returnto=' . $wgTitle->getPrefixedURL()),
-					'active' => $wgTitle->isSpecial( 'Connect' )
-				);
+				if( $skinName == "SkinMonaco" ) {
+					$personal_urls['fbconvert'] = array(
+						'text'   => wfMsg( 'fbconnect-convert' ),
+						'href'   => SpecialConnect::getTitleFor('Connect', 'Convert')->getLocalURL(
+												  'returnto=' . $wgTitle->getPrefixedURL()),
+						'active' => $wgTitle->isSpecial( 'Connect' )
+					);
+				}
 			}
 		}
 		// User is not logged in
@@ -344,12 +346,15 @@ STYLE;
 			
 			if (!$fbPersonalUrls['hide_connect_button']) {
 				// Add an option to connect via Facebook Connect
-				$personal_urls['fbconnect'] = array(
-					'text'   => wfMsg( 'fbconnect-connect' ),
-					'class' => 'fb_button fb_button_small',
-					'href'   => '#', // SpecialPage::getTitleFor( 'Connect' )->getLocalUrl( 'returnto=' . $wgTitle->getPrefixedURL() ),
-					'active' => $wgTitle->isSpecial('Connect')
-				);
+				// RT#57141 - only show the connect link on monaco and answers.
+				if( $skinName == "SkinAnswers" ) {
+					$personal_urls['fbconnect'] = array(
+						'text'   => wfMsg( 'fbconnect-connect' ),
+						'class' => 'fb_button fb_button_small',
+						'href'   => '#', // SpecialPage::getTitleFor( 'Connect' )->getLocalUrl( 'returnto=' . $wgTitle->getPrefixedURL() ),
+						'active' => $wgTitle->isSpecial('Connect')
+					);
+				}
 				if( $skinName == "SkinMonaco" ) {
 					$html = Xml::openElement("span",array("class" => "fb_button_text" ));
 					$html .= wfMsg( 'fbconnect-connect-simple' );
@@ -358,7 +363,7 @@ STYLE;
 					$personal_urls['fbconnect']['text'] = $html;
 				}
 			}
-			
+
 			// Remove other personal toolbar links
 			if ($fbConnectOnly) {
 				foreach (array('login', 'anonlogin') as $k) {
