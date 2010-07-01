@@ -56,6 +56,7 @@ class Http {
 
 			curl_setopt( $c, CURLOPT_TIMEOUT, $timeout );
 			curl_setopt( $c, CURLOPT_USERAGENT, self :: userAgent() );
+			curl_setopt( $c, CURLOPT_FOLLOWLOCATION, TRUE);
 			if ( $method == 'POST' ) {
 				curl_setopt( $c, CURLOPT_POST, true );
 				curl_setopt( $c, CURLOPT_POSTFIELDS, '' );

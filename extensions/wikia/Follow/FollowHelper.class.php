@@ -63,7 +63,7 @@ class FollowHelper {
 		$dbw = wfGetDB( DB_SLAVE );
 		$queryIn = "";
 		foreach ($list as $value) {
-			$queryIn[] = $dbw->addQuotes( $value ) ;
+                    $queryIn[] = $dbw->addQuotes( $value ) ;
 		}
 
 		$con =
@@ -120,7 +120,7 @@ class FollowHelper {
 	static public function blogListingBuildRelation($title, $cat, $users){
 		wfProfileIn( __METHOD__ );
 		$dbw = wfGetDB( DB_MASTER );
-		
+                
 		$dbw->begin();
 		$dbw->delete( 'blog_listing_relation', array( "blr_title = ". $dbw->addQuotes( $title ) ) );
 
@@ -192,10 +192,15 @@ class FollowHelper {
 					array( 'blr_title' ),
 					$con,
 					__METHOD__ );
-
 			$related = array();
 			while ($row = $dbw->fetchObject( $res ) ) {
-				$related[] = $row->blr_title;
+                                //Bug fix  //
+                                $exploded = explode(":", $row->blr_title);
+                                if(count($exploded) > 1) {
+                                    $related[] =  $exploded[1];
+                                } else {
+                                    $related[] = $row->blr_title;
+                                }
 			}
 			self::emailNotification($article->getTitle(), $related, NS_BLOG_LISTING, $user, "blogpost", wfMsg('follow-bloglisting-summary'));
 		}
@@ -375,7 +380,7 @@ class FollowHelper {
 	static public function getMasthead($userspace) {
 		global $wgUser;
 		wfLoadExtensionMessages( 'Follow' );
-		if($wgUser->getName() == $userspace) {
+		if(($wgUser->getId() > 0) && ($wgUser->getName() == $userspace)) {
 			return array('text' => wfMsg('wikiafollowedpages-masthead'), 'href' => Title::newFromText("Following", NS_SPECIAL )->getLocalUrl(), 'dbkey' => 'Following', 'tracker' => 'following');	
 		}
 		return null;	
@@ -490,6 +495,31 @@ class FollowHelper {
 		
 		return true;
 	}
-	
-}
 
+
+	/**
+	 * categoryIndexer --  indexer for blog listing page used only one time by indexing script
+	 *
+	 * @static
+	 * @access public
+	 *
+	 *
+	 * @return  bool
+	 */
+
+        static public function categoryIndexer(&$self, $article) {
+            global $wgRequest;
+            if( $wgRequest->getVal("makeindex", 0) != 1 ) {
+                return true;
+            }
+
+            if($article != null) {
+                $self->parseTag(urldecode( $article ));
+                $cats = BlogTemplateClass::getCategoryNames();
+                if(count($cats) > 0) {
+                    self::blogListingBuildRelation($article, $cats, array());
+                }
+            }
+            return true;
+        }
+}
