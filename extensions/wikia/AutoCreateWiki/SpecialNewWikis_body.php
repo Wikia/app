@@ -103,6 +103,7 @@ class NewWikisPage extends AlphabeticPager {
 		}
 		$this->lang = ( $this->lang != '' ) ? $this->lang : $wgRequest->getVal( 'language' );
 		$this->firstChar = ( $this->firstChar != '' ) ? $this->firstChar : $wgRequest->getText( 'start' );
+		$this->hub = $wgRequest->getText( 'hub' );
 
 		parent::__construct();
 
@@ -122,22 +123,28 @@ class NewWikisPage extends AlphabeticPager {
 	}
 
 	function getQueryInfo() {
-		$conds = array();
+		$query = array(
+			'tables' => array( 'city_list' ),
+			'fields' => array('city_list.city_id', 'city_dbname', 'city_url', 'city_title', 'city_lang', 'city_created'),
+			'options' => array(),
+			'conds' => array(),
+			'join_conds' => array(),
+		);
+
 		// Don't show hidden names
-		$conds[] = 'city_public = 1';
+		$query['conds'][] = 'city_public = 1';
+
 		if ( $this->firstChar != "" ) {
-			$conds[] = sprintf( "upper(city_title) like upper('%s%%')", $this->mDb->escapeLike( $this->firstChar ) );
+			$query['conds'][] = sprintf( "upper(city_title) like upper('%s%%')", $this->mDb->escapeLike( $this->firstChar ) );
 		}
 		if( $this->lang != "" ) {
-			$conds[] = 'city_lang = ' . $this->mDb->addQuotes( $this->lang );
+			$query['conds'][] = 'city_lang = ' . $this->mDb->addQuotes( $this->lang );
 		}
-
-		$query = array(
-			'tables' => WikiFactory::table('city_list'),
-			'fields' => array('city_id', 'city_dbname', 'city_url', 'city_title', 'city_lang', 'city_created'),
-			'options' => array(),
-			'conds' => $conds
-		);
+		if( !empty( $this->hub ) ) {
+			$query['tables'][] = 'city_cat_mapping';
+			$query['conds'][] = 'cat_id = ' . $this->hub;
+			$query['join_conds']['city_cat_mapping'] = array( 'LEFT JOIN', 'city_cat_mapping.city_id = city_list.city_id' );
+		}
 
 		return $query;
 	}
@@ -163,6 +170,10 @@ class NewWikisPage extends AlphabeticPager {
 		$self = $this->getTitle();
 		$this->getLangs();
 
+		$hubs = WikiFactoryHub::getInstance();
+		$this->hubs = $hubs->getCategories();
+		$this->hubs = array_merge( array( 0 => 'All' ), $this->hubs );
+
 		# Form tag
 		$out  = Xml::openElement( 'form', array( 'method' => 'get', 'action' => $wgScript ) ) .
 			'<fieldset>' .
@@ -186,8 +197,19 @@ class NewWikisPage extends AlphabeticPager {
 		foreach( $this->mLanguages as $sLang => $sLangName )
 			$out .= Xml::option( $sLangName, $sLang, $sLang == $this->lang );
 
-		$out .= Xml::closeElement( 'select' ) . '<br/>';
+		$out .= Xml::closeElement( 'select' );
 		$out .= '&nbsp;';
+
+		$out .= Xml::label( wfMsg( 'autocreatewiki-category-label' ), 'hub' ) . ' ';
+		$out .= Xml::openElement( 'select', array( 'name' => 'hub', 'id' => 'hub' ) );
+
+		foreach( $this->hubs as $sHub => $sHubName ) {
+			$out .= Xml::option( $sHubName, $sHub, $sHub == $this->hub );
+		}
+		
+		$out .= Xml::closeElement( 'select' );
+
+		$out .= '<br />';
 
 		# Submit button and form bottom
 		if( $this->mLimit )
