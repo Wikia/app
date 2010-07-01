@@ -14,6 +14,8 @@ $messages['en'] = array(
  */
 $messages['af'] = array(
 	'wikiasearch-titles-only' => 'Soek slegs in bladsyname',
+	'wikiasearch-system-error-msg' => "Weens 'n stelselfout, kan u soektog nie voltooi word nie",
+	'wikiasearch-search-this-wiki' => 'Soek slegs deur Wikia Central',
 	'wikiasearch-search-wikia' => 'Deursoek Wikia',
 );
 
@@ -129,6 +131,16 @@ $messages['ia'] = array(
 	'wikiasearch-system-error-msg' => 'A causa de un error de systema, le recerca non poteva esser completate',
 	'wikiasearch-search-this-wiki' => 'Cercar solmente in Wikia Central',
 	'wikiasearch-search-wikia' => 'Cercar in Wikia',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Irwangatot
+ */
+$messages['id'] = array(
+	'wikiasearch-titles-only' => 'Cari hanya dalam judul halaman',
+	'wikiasearch-system-error-msg' => 'Karena kesalahan sistem, pencarian anda tidak dapat diselesaikan',
+	'wikiasearch-search-this-wiki' => 'Cari hanya Wikia Central',
+	'wikiasearch-search-wikia' => 'Pencarian Wikia',
 );
 
 /** Igbo (Igbo)

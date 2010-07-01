@@ -120,6 +120,13 @@ Vole tu ir al [[{{MediaWiki:Mainpage}}|pagina principal]] o forsan a un [[Specia
 	'outbound-screen-you-are-leaving' => 'Tu quita ora Wikia.',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Irwangatot
+ */
+$messages['id'] = array(
+	'outbound-screen-you-are-leaving' => 'Anda sekarang meninggalkan Wikia.',
+);
+
 /** Japanese (日本語)
  * @author Tommy6
  */

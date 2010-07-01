@@ -26,6 +26,7 @@ $messages['ang'] = array(
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
+	'new-edit-page-preview-notice' => 'Рэжым папярэдняга прагляду: зьмены яшчэ не былі захаваныя! Апусьціцеся ніжэй для працягу рэдагаваньня.',
 	'templatesused-toggle' => 'Паказаць/схаваць $1 {{PLURAL:$1|элемэнт|элемэнты|элемэнтаў}}',
 );
 
@@ -253,6 +254,14 @@ $messages['sw'] = array(
 $messages['tl'] = array(
 	'new-edit-page-preview-notice' => 'Anyo ng paunang tanaw: wala pang nasasagip na mga pagbabago! Kumidkid pababa upang magpatuloy sa pamamatnugot.',
 	'templatesused-toggle' => 'Ipakita/itago {{PLURAL:$1|$1 bagay|$1 mga bagay}}',
+);
+
+/** Turkish (Türkçe)
+ * @author Manco Capac
+ */
+$messages['tr'] = array(
+	'new-edit-page-preview-notice' => 'Önizleme modu: henüz hiç bir değişiklik kaydedilmedi! Yazıma devam etmek için aşağıya gidin.',
+	'templatesused-toggle' => 'Gözter/gizle {{PLURAL:$1|$1 öğe|$1 öğe}}',
 );
 
 /** Ukrainian (Українська)

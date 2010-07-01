@@ -211,6 +211,13 @@ $messages['pms'] = array(
 	'mostpopulararticles' => 'Artìcoj pi popolar (da la base ëd dàit)',
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'mostpopulararticles' => 'تر ټولو نامتو ليکنې (د توکبنسټ)',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  */

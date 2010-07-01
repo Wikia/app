@@ -357,6 +357,16 @@ $messages['ia'] = array(
 	'user-badge-save-info' => 'Si tu vole salveguardar le cambiamentos, rola al fin del pagina e preme le button "{{int:saveprefs}}"',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Irwangatot
+ */
+$messages['id'] = array(
+	'user-badge-title' => 'Lencana pengguna',
+	'user-badge-invalid-color' => 'isian nilai hex tidak sah',
+	'user-badge-show-color' => 'Tampilkan rincian warna',
+	'user-badge-hide-color' => 'Sembunyikan rincian warna',
+);
+
 /** Japanese (日本語)
  * @author Tommy6
  */

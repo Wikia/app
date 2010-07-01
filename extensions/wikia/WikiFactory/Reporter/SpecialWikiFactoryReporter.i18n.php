@@ -11,6 +11,13 @@ $messages['en'] = array(
 	 'wikifactoryreporter' => 'WikiFactory Reporter',
 );
 
+/** Bahasa Banjar (Bahasa Banjar)
+ * @author Ezagren
+ */
+$messages['bjn'] = array(
+	'wikifactoryreporter' => 'WikiFactory Reporter',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -304,6 +311,13 @@ $messages['te'] = array(
  */
 $messages['tl'] = array(
 	'wikifactoryreporter' => 'Tagapag-ulat ng WikiFactory',
+);
+
+/** Turkish (Türkçe)
+ * @author Manco Capac
+ */
+$messages['tr'] = array(
+	'wikifactoryreporter' => 'VikiFabrika Raporlayıcısı',
 );
 
 /** Vèneto (Vèneto)

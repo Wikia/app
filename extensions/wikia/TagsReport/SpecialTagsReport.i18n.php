@@ -190,6 +190,22 @@ $messages['ia'] = array(
 	'tagsreportgenerated' => 'Generate a $1',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Irwangatot
+ */
+$messages['id'] = array(
+	'tagsreport' => 'Tag laporan',
+	'tagsreporttitle' => 'Tag laporan',
+	'tagsreportselecttag' => 'Pilih tag:',
+	'tagsreportgo' => 'Tampilkan',
+	'tagsreportnotspecify' => 'Anda belum memilih tag khusus',
+	'tagsreportnoresults' => 'Tidak ada hasil ditemukan',
+	'tagsreportmainnspace' => 'Utama',
+	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|halaman|halaman}})',
+	'tagsreportpagesfound' => 'Ditemukan <strong>$1</strong> halaman, yang berisi tag khusus  (dpl, youtube, etc.)',
+	'tagsreportgenerated' => 'Dihasilkan pada $1',
+);
+
 /** Igbo (Igbo) */
 $messages['ig'] = array(
 	'tagsreportgo' => 'Zi',
@@ -364,6 +380,15 @@ $messages['sw'] = array(
 	'tagsreportgo' => 'Onyesha',
 	'tagsreportmainnspace' => 'Kuu',
 	'tagsreportpages' => '({{PLURAL:$1|ukurasa|kurasa}} <strong>$1</strong>)',
+);
+
+/** Telugu (తెలుగు)
+ * @author RanjithSutari
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'tagsreportnotspecify' => 'మీరు ఎలాంటి ప్రత్యేకమైన టాగునీ ఏంచుకోలేదు',
+	'tagsreportnoresults' => 'ఫలితాలేమీ లభించలేదు',
 );
 
 /** Tagalog (Tagalog)

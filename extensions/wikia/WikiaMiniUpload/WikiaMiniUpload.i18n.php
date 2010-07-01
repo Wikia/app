@@ -1027,17 +1027,30 @@ $messages['id'] = array(
 	'wmu-return' => 'Kembali menyunting',
 	'wmu-back' => 'kembali',
 	'wmu-close' => 'tutup',
+	'wmu-warn1' => 'Anda perlu menentukan permintaan terlebih dahulu!',
+	'wmu-warn2' => 'Anda perlu memilih berkas terlebih dahulu!',
+	'wmu-warn3' => 'Anda perlu menentukan nama berkas terlebih dahulu!',
 	'wmu-imagelink' => '<b>Baru!</b> Tambah gambar',
 	'wmu-imagebutton' => 'Tambah gambar',
 	'wmu-license-cc' => 'dilisensikan dibawah Creative Commons Attribution-Share Alike 3,0',
+	'wmu-bad-extension' => 'Anda mencoba untuk meng-unggah jenis file yang tidak diperbolehkan. Silakan coba lagi.',
+	'wmu-filetype-missing' => 'Unggahan ini hilang nama extensi berkasnya',
+	'wmu-filetype-incorrect' => 'Unggahan ini memiliki extensi berkas yang salah',
+	'wmu-uploadtext' => "'''Formulir ini memungkinkan anda untuk mengunduh cepat dan menampilkan berkas di halaman.'''
+
+''Lihat juga [[Special:Log/upload|log pengunggahan]] dan [[Special:ImageList|daftar semua berkas]].''",
 	'wmu-show-message' => 'tunjukkan pesan',
 	'wmu-hide-message' => 'sembunyikan pesan',
 	'wmu-hide-license-msg' => 'sembunyikan teks lisensi',
 	'wmu-show-license-msg' => 'tampilkan teks lisensi',
+	'wmu-max-thumb' => 'ukuran thumbnail maksimum terlampaui, kembali ke ukuran aslinya',
 	'wmu-notallowed' => 'Anda tidak dapat meng-unggah gambar pada wiki ini',
+	'wmu-readonly' => 'Anda tidak dapat meng-unggah gambar, wiki ini pada tahap hanya membaca',
+	'wmu-placeholder' => 'Penyangga',
 	'wmu-gallery' => 'Galeri',
 	'wmu-columns' => '$1 {{PLURAL:$1|kolom|kolom}}',
 	'wmu-column' => 'Kolom',
+	'wmu-added-from-plc' => 'Berkas ditambahkan melaluai penyangga gambar',
 	'wmu-uploaddisabled' => 'mengunggah berkas dinonaktifkan pada wiki ini',
 	'wmu-gallery-success' => 'Anda harus menambahkan gambar ke galeri baru. Klik di bawah untuk menambahkan gambar lagi atau untuk menambah galeri',
 	'wmu-gallery-btn1' => 'Tambahkan gambar lain',
@@ -1517,6 +1530,28 @@ $messages['ps'] = array(
 	'wmu-show-message' => 'پيغام ښکاره کول',
 	'wmu-hide-message' => 'پيغام پټول',
 	'wmu-gallery' => 'نندارتون',
+);
+
+/** Portuguese (Português)
+ * @author Giro720
+ */
+$messages['pt'] = array(
+	'wmu-thiswiki' => 'Esta wiki',
+	'wmu-flickr' => 'Flickr',
+	'wmu-insert' => 'Inserir',
+	'wmu-name' => 'Nome',
+	'wmu-license' => 'Licença',
+	'wmu-size' => 'Tamanho',
+	'wmu-thumbnail' => 'Miniatura',
+	'wmu-width' => 'Largura',
+	'wmu-caption' => 'Legenda',
+	'wmu-link' => 'Link',
+	'wmu-optional' => '(opcional)',
+	'wmu-prev' => '8 anteriores',
+	'wmu-next' => '8 seguintes',
+	'wmu-gallery' => 'Galeria',
+	'wmu-columns' => '$1 {{PLURAL:$1|coluna|colunas}}',
+	'wmu-column' => 'Colunas',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

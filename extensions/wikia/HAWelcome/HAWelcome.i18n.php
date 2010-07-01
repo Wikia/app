@@ -468,6 +468,28 @@ Si tu ha besonio de adjuta, e il ha nulle administratores local hic, nos suggere
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|foro de adjuta]] | [[w:sblog|blog]])</small>',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Irwangatot
+ */
+$messages['id'] = array(
+	'welcome-user-page' => "== Tentang saya == 
+
+''Ini adalah halaman pengguna Anda. Silahkan sunting halaman ini untuk memberitahu komunitas tentang diri Anda!'' 
+
+== Kontribusi saya ==
+
+* [[Special:Contributions/{{PAGENAME}}|Kontribusi pengguna]] 
+
+== Halaman kesukaan saya == 
+
+* Tambahkan pranala ke halaman kesukaan anda pada wiki di sini! 
+* Halaman kesukaan # 2 
+* Halaman kesukaan # 3",
+	'welcome-message-user' => 'Hi, selamat datang di {{SITENAME}}! Terima kasih untuk suntingan anda dihalaman [[:$1]]. 
+
+Silakan tinggalkan pesan di [[$2|Pembicaraan halaman saya]] jika saya dapat membantu! $3',
+);
+
 /** Italian (Italiano) */
 $messages['it'] = array(
 	'welcome-user-page' => "==Qualcosa su di me==
@@ -521,6 +543,13 @@ $messages['ja'] = array(
 もし、まだアカウントをお持ちでなければ、[[Special:Userlogin|ぜひアカウントを取得してみてください]]。他の方とコミュニケーションがとりやすくなりますし、アカウントユーザーだけが利用できる機能も多くあります。
 
 もし、何か困ったことがあり、このウィキローカルの管理者が見当たらない場合には、[[w:ja:Forum:Index|セントラルウィキアのフォーラム]]までメッセージをお寄せください。$3',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'welcome-message-log' => 'Begréissung vun engem neien Auteur',
 );
 
 /** Macedonian (Македонски)
@@ -826,7 +855,7 @@ Wiki Community Central]] $3',
 
 Olá, bem-vindo(a) à {{SITENAME}}! Obrigado pela sua edição da página [[:$1]].
 
-'''[[Special:Userlogin|Por favor, registe-se e crie um utilizador]]'''. É uma forma fácil de registar as suas contribuições e facilita a comunicação com os restantes utilizadores.
+'''[[Special:UserLogin|Por favor, registe-se e crie uma conta de utilizador]]'''. É uma forma fácil de registar as suas contribuições e facilita a comunicação com os outros utilizadores.
 
 Se necessita de ajuda e não encontra administradores locais, talvez queira visitar os [[wikia:Forum:Community Central Forum|fóruns na Wiki Community Central]] $3",
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|fórum de ajuda]] | [[w:sblog|blogue]])</small>',
@@ -871,9 +900,9 @@ Wiki Community Central]] $3',
 
 Olá, bem-vindo(a) à {{SITENAME}}! Obrigado pela sua edição da página [[:$1]].
 
-'''[[Special:Userlogin|Por favor, registe-se e crie uma conta de usuário]]'''. É uma forma fácil de registar as suas contribuições e facilita a comunicação com os restantes usuários.
+'''[[Special:Userlogin|Por favor, registe-se e crie uma conta de usuário]]'''. É uma forma fácil de registar as suas contribuições e facilita a comunicação com os demais usuários.
 
-Se necessita de ajuda e não encontra administradores locais, talvez queira visitar os [[wikia:Forum:Community Central Forum|fóruns na Wiki Community Central]] $3",
+Se você necessita de ajuda e não encontra administradores locais, talvez queira visitar os [[wikia:Forum:Community Central Forum|fóruns na Wiki Community Central]] $3",
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|fórum de ajuda]] | [[w:sblog|blogue]])</small>',
 );
 

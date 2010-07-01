@@ -650,9 +650,11 @@ $messages['kn'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'daemonloader_paramremove' => 'Ewechhuelen?',
 	'daemonloader_day' => 'all Dag',
 	'daemonloader_week' => 'all Woch',
 	'daemonloader_month' => 'all Mount',
+	'daemonloader_options' => 'Optiounen',
 );
 
 /** Macedonian (Македонски)
@@ -924,6 +926,34 @@ $messages['ps'] = array(
 	'daemonloader_created' => 'جوړ شو',
 	'daemonloader_options' => 'خوښنې',
 	'daemonloader_removejobconfirm' => 'آيا تاسې ډاډه ياست؟',
+);
+
+/** Portuguese (Português)
+ * @author Giro720
+ * @author Hamilton Abreu
+ * @author Luckas Blade
+ */
+$messages['pt'] = array(
+	'daemonloader_daemondesc' => 'Descrição',
+	'daemonloader_paramremove' => 'Remover?',
+	'daemonloader_paramdefvalue' => 'Valor padrão',
+	'daemonloader_search' => 'Pesquisar:',
+	'daemonloader_number' => 'número',
+	'daemonloader_date_yyyymmdd' => 'data (AAAAAMMDD)',
+	'daemonloader_date_yyyymm' => 'meses (AAAAMM)',
+	'daemonloader_date_yyyy' => 'anos (AAAA)',
+	'daemonloader_gonextstep' => 'Próximo passo',
+	'daemonloader_startdate' => 'Data de início',
+	'daemonloader_day' => 'todos os dias',
+	'daemonloader_week' => 'todas as semanas',
+	'daemonloader_month' => 'todos os meses',
+	'daemonloader_taskid' => 'Id',
+	'daemonloader_newtask' => 'Tarefa nova',
+	'daemonloader_createdby' => 'Criada por',
+	'daemonloader_created' => 'Criada',
+	'daemonloader_options' => 'Opções',
+	'daemonloader_nojobsfound' => 'Não foi encontrada nenhuma tarefa',
+	'daemonloader_removejobconfirm' => 'Tem a Certeza?',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

@@ -81,7 +81,31 @@ Ontwerp vir [http://answers.wikia.com answers.wikia.com]',
  * @author Achraf94
  */
 $messages['ar'] = array(
+	'cathub-desc' => 'قائمة رسائل مستعملة في تحويل صفحات التصنيف إلى طريقة عرض نشطة. مصممة خصيصا ل [http://answers.wikia.com answers.wikia.com]',
 	'cathub-progbar-mouseover-answered' => '$1% مجاب عنه ($2 إجابة)',
+	'cathub-progbar-mouseover-not-answered' => '$1% غير مجاب عنه ($2 سؤال)',
+	'cathub-progbar-label-answered' => 'أسئلة مجاب عنها',
+	'cathub-progbar-label-unanswered' => 'أسئلة غير مجاب عنها',
+	'cathub-progbar-none-done' => 'لم تتم الإجابة عن أي أسئلة',
+	'cathub-progbar-all-done' => 'تم الإجابة على جميع السؤالات',
+	'cathub-progbar-allmost-done' => '$1 {{PLURAL:$1|!سؤال|أسئلة}} غير مجاب عنها تركت',
+	'cathub-no-unanswered-questions' => 'ليست هناك أسئلة غير مجاب عنها لكي تراها حاليا.',
+	'cathub-no-answered-questions' => 'ليست هناك أسئلة مجاب عنها لي تراها حاليا.',
+	'cathub-top-contributors' => 'كبار المساهمين لهذا التصنيف',
+	'cathub-top-contribs-all-time' => 'في كل الأوقات',
+	'cathub-top-contribs-recent' => 'في $1 {{PLURAL:$1|يوم|أيام}} الآخيرين',
+	'cathub-question-asked-ago' => 'سئل $1 $2',
+	'cathub-question-answered-ago' => 'أجاب $1 $2',
+	'cathub-question-asked-by' => 'من قبل $1',
+	'cathub-anon-username' => 'مستخدم غريب عنا',
+	'cathub-answer-heading' => 'الإجابة',
+	'cathub-button-answer' => 'إجابة',
+	'cathub-button-improve-answer' => 'تحسين الإجابة',
+	'cathub-button-rephrase' => 'إعادة صياغة',
+	'cathub-edit-success' => 'تم حفظ إجابتك',
+	'cathub-prev' => '&larr; السابق',
+	'cathub-next' => 'اللاحق &rarr;',
+	'cathub-tags' => 'الوسوم',
 );
 
 /** Breton (Brezhoneg)

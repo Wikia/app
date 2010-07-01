@@ -144,6 +144,17 @@ $messages['oc'] = array(
 Aquesta pagina prend ''pas'' en compte l'activitat sus las paginas d'avaloracion.",
 );
 
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'graceexpired' => 'Przestarzałe',
+	'graceexpired-row' => '$1 (w $2, ostatnia zmiana $3)',
+	'graceexpired-header' => "Na tej stronie znajdziesz wszystkie wersje, które zostały [[:Category:Abandoned|porzucone]], są [[:Category:Trash_builds|bezwartościowe]], są [[:Category:Build stubs|zalążkami]] lub są [[:Category:Trial Builds|próbami]], oraz nie były edytowane przez co najmniej dwa tygodnie. 
+
+Aktywność dla tych stron ''nie'' ma wpływu na to zestawienie.",
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt

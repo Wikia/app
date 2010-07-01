@@ -113,6 +113,24 @@ $messages['br'] = array(
 	'right-multilookup' => 'Klask titouroù diwar-benn implijerien e meur a wiki.',
 );
 
+/** Bosnian (Bosanski)
+ * @author Palapa
+ */
+$messages['bs'] = array(
+	'multilookupgo' => 'Idi',
+	'multilookupnotspecify' => 'Još niste naznačili IP adresu.',
+	'multilookupnext' => 'Slijedeći',
+	'multilookupprevious' => 'prethodno',
+	'multilookupnbrresult' => 'Broj rezultata:',
+	'multilookupinvalidresults' => 'Neispravni rezultati!',
+	'multilookupnoresultfound' => 'Nema pronađenih rezultata!',
+	'multilookupwiki' => 'Wiki',
+	'multilookupdetails' => 'Pgledajte detalje',
+	'multilookuplistwikiainfo' => 'Lista wikija koje su uređivane od korisnika sa IP adresom <b>$1</b>',
+	'multilookuplastedit' => 'Posljednje uređivanje sa ove IP adrese:',
+	'right-multilookup' => 'Potraži informacije o korisnicima na više wikija',
+);
+
 /** German (Deutsch)
  * @author LWChris
  * @author The Evil IP address

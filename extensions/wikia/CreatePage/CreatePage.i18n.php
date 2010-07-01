@@ -495,6 +495,7 @@ $messages['he'] = array(
 );
 
 /** Hungarian (Magyar)
+ * @author Enbéká
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
@@ -506,6 +507,7 @@ $messages['hu'] = array(
 	'createpage_empty_article_body_error' => 'A szócikk nem lehet üres',
 	'createpage_invalid_title_error' => 'Érvénytelen cím',
 	'createpage-dialog-title' => 'Új szócikk létrehozása',
+	'createpage-dialog-choose' => 'Válaszd ki az oldal elrendezését:',
 	'createpage-dialog-blank' => 'Üres lap',
 );
 

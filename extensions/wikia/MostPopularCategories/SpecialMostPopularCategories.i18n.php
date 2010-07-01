@@ -209,6 +209,13 @@ $messages['pms'] = array(
 	'mostpopularcategories' => 'Categorìe pi popolar',
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'mostpopularcategories' => 'تر ټولو نامتو وېشنيزې',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  */

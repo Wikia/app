@@ -276,6 +276,10 @@ Jeśli nie jesteś zalogowany możliwe, że powinieneś najpierw [[Special:UserL
 	'privatedomains_invalidemail' => 'Dostęp do tej wiki został ograniczony do członków $1. Jeśli masz adres e‐mail powiązany z $1, możesz wprowadzić lub potwierdzić swój adres e‐mail na [[Special:Preferences|stronie preferencji]]. Nadal możesz przeglądać strony, ale edycja nie będzie możliwa.',
 	'privatedomains_affiliatenamelabel' => 'Nazwa organizacji',
 	'privatedomains_emailadminlabel' => 'Użytkownik kontaktowy w sprawie pytań lub problemów z dostępem',
+	'privatedomainsinstructions' => 'Poniżej znajduje się lista domen poczty elektronicznej dostępnych dla redaktorów tej wiki. Każdy wiersz określa sufiks adresu e-mail, którego posiadanie umożliwia edycję. Należy umieścić jedną końcówkę w jednej linii. Na przykład:</p>
+<p style="width: 20%; padding:5px; border: 1px solid grey;">cs.stanford.edu<br /> stanfordalumni.org</p>
+<p>Pozwoli to edytować np posiadaczom adresów whatever@cs.stanford.edu lub whatever@stanfordalumni.org</p>
+<p><b>Wprowadź dozwolone domeny w polu tekstowym i kliknij przycisk „{{int:saveprefs}}“.</b>',
 );
 
 /** Piedmontese (Piemontèis)

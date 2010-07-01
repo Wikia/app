@@ -193,6 +193,13 @@ $messages['oc'] = array(
 	'wikiawidget' => 'Widgets wikia',
 );
 
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'wikiawidget' => 'Wikia Widgets',
+);
+
 /** Polish (Polski)
  * @author Sp5uhe
  */

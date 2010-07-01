@@ -817,6 +817,48 @@ $messages['ia'] = array(
 	'swm-lang-other' => 'tote le linguas restante',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Irwangatot
+ */
+$messages['id'] = array(
+	'swm-label-preview' => 'Pratayang',
+	'swm-label-edit' => 'Sunting',
+	'swm-label-remove' => 'Hapus',
+	'swm-label-sent' => 'Kirim',
+	'swm-label-list' => 'Daftar',
+	'swm-label-recipient' => 'Penerima',
+	'swm-label-recipient-wikis' => 'Wiki',
+	'swm-label-recipient-users' => 'Pengguna',
+	'swm-label-expiration' => 'Waktu kadaluwarsa',
+	'swm-label-mode-wikis-all' => 'Semua wiki',
+	'swm-label-mode-wikis-hub' => 'Hub Dipilih',
+	'swm-label-mode-wikis-wiki' => 'Wiki dipilih',
+	'swm-label-mode-users-all' => 'Semua pengguna',
+	'swm-label-mode-users-active' => 'Pengguna aktif',
+	'swm-label-mode-users-group' => 'Pengguna bagian dari kelompok',
+	'swm-label-mode-users-user' => 'Pengguna terpilih',
+	'swm-label-content' => 'Isi',
+	'swm-label-comment' => 'Komentar',
+	'swm-label-dismissed' => 'Dikeluarkan',
+	'swm-label-language' => 'Bahasa',
+	'swm-button-lang-checkall' => '[ Pilih semua ]',
+	'swm-button-lang-checknone' => '[ Tidak dimilih ]',
+	'swm-button-preview' => '[ Pratayang ]',
+	'swm-button-send' => '[ Kirim ]',
+	'swm-button-save' => '[ Simpan ]',
+	'swm-button-new' => '[ Baru ]',
+	'swm-msg-sent-ok' => '<h3>Pesan telah dikirim.</h3>',
+	'swm-msg-sent-err' => '<h3>Pesan Belum di kirim.</h3>Lihat log kesalahan untuk keterangan lebih lanjut.',
+	'swm-msg-remove' => 'Apakah Anda yakin ingin menghapus pesan ini? Ini tidak dapat dibatalkan!',
+	'swm-days' => 'tak pernah, jam, jam, hari, hari',
+	'swm-expire-info' => 'Pesan ini akan berakhir pada $1.',
+	'swm-link-dismiss' => 'abaikan pesan ini',
+	'swm-list-no-messages' => 'Tidak ada pesan.',
+	'swm-list-table-id' => 'ID',
+	'swm-list-table-sender' => 'Pengirim',
+	'swm-list-table-wiki' => 'Wiki',
+);
+
 /** Igbo (Igbo) */
 $messages['ig'] = array(
 	'swm-button-save' => '[ Donyéré ]',
@@ -1136,6 +1178,7 @@ $messages['pdc'] = array(
 	'swm-label-language' => 'Schprooch',
 	'swm-list-table-lang' => 'Schprooche',
 	'swm-yes' => 'Ya',
+	'swm-no' => 'Nee',
 );
 
 /** Piedmontese (Piemontèis)

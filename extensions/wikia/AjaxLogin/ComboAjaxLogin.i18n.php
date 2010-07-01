@@ -140,6 +140,20 @@ Quando tu ha finite, tu pote aperir un session facilemente usante qualcunque but
 Per favor tenta lo de novo o [[Special:Contact|reporta isto]].',
 );
 
+/** Japanese (日本語)
+ * @author Tommy6
+ */
+$messages['ja'] = array(
+	'comboajaxlogin-connectmarketing' => '<h1>アカウントを接続する</h1>
+<ul>
+<li>現在の利用者名や履歴、編集機能などは維持され、ログイン方法以外に変更されるものはありません。</li>
+<li>ウィキア上でのあなたの活動を Facebook 上の友達と共有できます</li>
+<li>どの情報を表示させるかは設定により指定できます</li>
+</ul>',
+	'comboajaxlogin-connectmarketing-back' => '&laquo; 戻る',
+	'comboajaxlogin-connectmarketing-forward' => '次へ &raquo;',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -214,10 +228,25 @@ $messages['pl'] = array(
 
 /** Portuguese (Português)
  * @author Giro720
+ * @author Hamilton Abreu
  */
 $messages['pt'] = array(
+	'comboajaxlogin-desc' => 'Caixa dinâmica que permite a autenticação e registo de utilizadores e relembrar a palavra-chave',
 	'comboajaxlogin-createlog' => 'Entrar ou criar uma conta',
+	'comboajaxlogin-actionmsg' => 'Para realizar esta operação, antes tem de autenticar-se ou registar uma conta',
+	'comboajaxlogin-connectmarketing' => '<h1>Ligue as suas contas</h1>
+<ul>
+<li>Mantenha o seu nome de utilizador, historial e edições... Nada muda, excepto a forma como se autentica</li>
+<li>Partilhe a sua actividade na Wikia com os seus amigos no Facebook</li>
+<li>Controlo total do que é publicado</li>
+</ul>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Voltar',
+	'comboajaxlogin-connectmarketing-forward' => 'Começar &raquo;',
+	'comboajaxlogin-connectdirections' => 'Introduza aqui o seu nome de utilizador e palavra-chave - por artes mágicas, ligaremos as suas contas Wikia e Facebook nos bastidores.
+
+Quando acabar, poderá autenticar-se usando qualquer botão Ligação Facebook.',
+	'comboajaxlogin-post-not-understood' => 'Foi detectado um erro na forma como este formulário foi construído.
+Tente novamente ou [[Special:Contact|reporte este erro]], por favor.',
 );
 
 /** Russian (Русский)
