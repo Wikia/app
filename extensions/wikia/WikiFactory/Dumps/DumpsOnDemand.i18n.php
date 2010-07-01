@@ -21,6 +21,16 @@ $messages['en'] = array(
 	'dump-database-info-more' => 'Please <a href="http://community.wikia.com/wiki/Help:Database_download">see</a> for more info'
 );
 
+/** Bahasa Banjar (Bahasa Banjar)
+ * @author Ezagren
+ */
+$messages['bjn'] = array(
+	'dump-database-curr-pages' => 'Tungkaran wayahini',
+	'dump-database-full-pages' => 'Tungkaran wayahini wan sajarah',
+	'dump-database-request' => 'Maminta pamugaan',
+	'dump-database-request-submit' => 'Kirim parmintaan',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -45,6 +55,15 @@ Wikia maak outomaties rugsteunkopieë van alle wiki's.",
 $messages['ar'] = array(
 	'dump-database' => 'مقالب قاعدة البيانات',
 	'dump-database-info' => 'يمكن استخدام مقالب قاعدة البيانات على سبيل الإحتياط الشخصي (ويكيا تنتج نسخا احطياطية منفصلة لكل الويكيات تلقائيا) أو للصيانة عبر البوتات.',
+	'dump-database-curr-pages' => 'الصفحات الحالية',
+	'dump-database-curr-pages-info' => '(من الأفضل إستعمال بوت لهذه النسخة)',
+	'dump-database-full-pages' => 'الصفحات الحالية و التاريخ',
+	'dump-database-full-pages-info' => '(تحذير: هذا الملف كبير جدا)',
+	'dump-database-request' => 'طلب تحديث',
+	'dump-database-request-info' => '(يتم التحديث أسبوعيا عادة)',
+	'dump-database-request-submit' => 'إرسال طلب',
+	'dump-database-request-requested' => 'طلب بعث قاعدة البيانات',
+	'dump-database-info-more' => 'الرجاء <a href="http://community.wikia.com/wiki/Help:Database_download">قراءة هذا</a> لمزيد من المعلومات',
 );
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
@@ -339,6 +358,7 @@ $messages['kn'] = array(
  */
 $messages['lb'] = array(
 	'dump-database-curr-pages' => 'Aktuell Säiten',
+	'dump-database-request' => 'Eng Aktualisatioun ufroen',
 );
 
 /** Macedonian (Македонски)

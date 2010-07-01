@@ -205,6 +205,19 @@ $messages['ia'] = array(
 	'whereisextension-name-contains' => 'nomine de variabile contine',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Irwangatot
+ */
+$messages['id'] = array(
+	'whereisextension' => 'Dimana ekstensi',
+	'whereisextension-submit' => 'Cari',
+	'whereisextension-list' => 'Daftar wiki dengan kriteria yang cocok',
+	'whereisextension-isset' => 'diatur ke',
+	'whereisextension-filter' => 'Penyaring',
+	'whereisextension-all-groups' => 'Semua kelompok',
+	'whereisextension-name-contains' => 'nama variabel berisi',
+);
+
 /** Igbo (Igbo) */
 $messages['ig'] = array(
 	'whereisextension-submit' => 'Chöwá',
@@ -289,6 +302,19 @@ $messages['oc'] = array(
 	'whereisextension-filter' => 'Filtrar',
 	'whereisextension-all-groups' => 'Totes los gropes',
 	'whereisextension-name-contains' => 'lo nom de la variabla conten',
+);
+
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'whereisextension' => 'Rozszerzenie do wyszukiwania',
+	'whereisextension-submit' => 'Szukaj',
+	'whereisextension-list' => 'Lista wiki, które odpowiadają kryteriom',
+	'whereisextension-isset' => 'jest ustawiona na',
+	'whereisextension-filter' => 'Filtr',
+	'whereisextension-all-groups' => 'Wszystkie grupy',
+	'whereisextension-name-contains' => 'zawiera zmienną o takiej nazwie',
 );
 
 /** Piedmontese (Piemontèis)

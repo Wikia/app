@@ -263,7 +263,7 @@ Mar plij kemmit danvez an diverradenn.',
 	'pr_empty_email' => "Mar plij roit ho chomlec'h postel",
 	'pr_mailer_notice' => "Ar chomlec'h postel hoc'h eus lakaet en ho penndibaboù implijer a vo lakaet e zonenn \"Eus\" ar postel, ar pezh a servijo d'ar reseverien da respont dit.",
 	'pr_mailer_subject' => 'Danevell diwar-benn',
-	'pr_mailer_tmp_info' => "Posubl eo deoc'h kemmañ ho patromoù er respont [[MediaWiki:ProblemReportsResponses|amañ]].",
+	'pr_mailer_tmp_info' => "Posupl eo deoc'h kemmañ ho patromoù er respont [[MediaWiki:ProblemReportsResponses|amañ]].",
 	'pr_mailer_to_default' => 'Implijer Wikia',
 	'pr_mailer_go_to_wiki' => "Evit kas ur postel mar plij kit er [$1 ar wiki e lec'h ma 'z eus bet kaoz eus ar gudenn]",
 	'pr_total_number' => 'Niver hollek a danevelloù',
@@ -844,6 +844,21 @@ Defectos in le software pote esser reportate in le foros. Le reportos facite hic
 	'pr_msg_exchead' => 'Le message es troppo longe',
 	'right-problemreports_action' => 'Modificar le stato e typo de reportos de problemas',
 	'right-problemreports_global' => 'Cambiar le stato e typo de reportos de problemas trans wikis',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Irwangatot
+ */
+$messages['id'] = array(
+	'pr_what_problem_unselect' => 'semua',
+	'pr_what_problem_vandalised_short' => 'perusak',
+	'pr_describe_problem' => 'Pesan',
+	'pr_table_wiki_name' => 'Nama wiki',
+	'pr_table_problem_type' => 'Jenis masalah',
+	'pr_table_page_link' => 'Halaman',
+	'pr_table_date_submitted' => 'Tanggal ditambahkan',
+	'pr_table_reporter_name' => 'Nama pelapor',
+	'pr_msg_exchead' => 'Pesan terlalu panjang',
 );
 
 /** Igbo (Igbo) */

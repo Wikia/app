@@ -1599,8 +1599,29 @@ $3
 Tim Komunitas Wikia 
 
 <http://www.wikia.com/wiki/User:$4>',
+	'autocreatewiki-welcometalk' => "== Selamat Datang! ==
+<div style=\"font-size:120%; line-height:1.2em;\">Hi \$1 -- kami sangat gembira untuk memiliki '''\$4''' sebagai bagian dari komunitas Wikia! 
+
+Sekarang Anda punya website secara utuh untuk diisi dengan informasi, gambar dan video tentang topik kesukaan Anda. Tapi sekarang, itu hanya halaman kosong mengunggu anda ... Menyeramkan, bukan? Berikut adalah beberapa cara untuk memulai. 
+
+*'''Mengenalkan topik Anda''' di halaman depan. Ini adalah kesempatan Anda untuk menjelaskan kepada pembaca tentang topik Anda. Menulis sebanyak yang Anda inginkan! deskripsi Anda dapat menghubungkan ke semua halaman yang penting di situs Anda. 
+
+*'''Mulai beberapa halaman baru''' - hanya satu atau dua kalimat baik untuk memulai. Jangan biarkan halaman kosong menunggu! Wiki adalah semua tentang menambah dan mengubah hal-hal selama Anda pergi. Anda juga dapat menambahkan gambar dan video, untuk mengisi halaman dan membuatnya lebih menarik. 
+
+Dan kemudian teruskan! Orang-orang senang mengunjungi wiki ketika ada banyak hal untuk dibaca dan dilihat, sehingga terus menambahkan hal-hal lain, dan Anda akan menarik pembaca dan penyunting. Ada banyak yang harus dilakukan, tapi jangan khawatir - hari ini hari pertama Anda, dan Anda punya banyak waktu. Setiap wiki dimulai dengan cara yang sama - sedikit demi sedikit, dimulai dengan beberapa halaman pertama, sampai tumbuh menjadi situs yang besar dan sibuk. 
+
+Jika Anda punya pertanyaan, Anda dapat mengirim kami sur-el melalui [[Special:Contact|formulir]]. Selamat bersenang-senang! 
+
+-- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Wiki baru',
 	'newwikisstart' => 'Tampilkan wiki diawali dengan:',
+	'autocreatewiki-reminder-body' => 'Wahai $1:
+
+Selamat atas dimulainya wiki, {{SITENAME}} baru Anda! Anda dapat kembali dan menambahkan lagi ke wiki Anda dengan mengunjungi $2.
+
+Ini adalah proyek baru, jadi silahkan menulis kepada kami jika Anda memiliki pertanyaan!
+
+-- Tim Komunitas Wikia',
 	'autocreatewiki-reminder-body-HTML' => '<p>Wahai $1:</p>
 
 <p>Selamat atas dimulainya wiki, {{SITENAME}} baru Anda! Anda dapat kembali dan menambahkan lagi ke wiki Anda dengan mengunjungi
@@ -2024,6 +2045,7 @@ We raden u aan aan een van wiki's te gaan werken.",
 	'autocreatewiki-empty-username' => 'Gebruikersnaam kan niet leeg zijn.',
 	'autocreatewiki-empty-password' => 'Wachtwoord kan niet leeg zijn.',
 	'autocreatewiki-empty-retype-password' => 'Herhaling wachtwoord kan niet leeg zijn.',
+	'autocreatewiki-category-label' => 'Categorie:',
 	'autocreatewiki-category-other' => 'Overige',
 	'autocreatewiki-set-username' => 'Plaats eerst gebruikersnaam.',
 	'autocreatewiki-invalid-category' => 'Ongeldige keuze van categorie.
@@ -2260,8 +2282,8 @@ Dette er et helt nytt prosjekt, så vennligst skriv til oss om du har noen spør
  * @author Sp5uhe
  */
 $messages['pl'] = array(
-	'autocreatewiki-page-title-default' => 'Utwórz nową Wikię',
-	'createwiki' => 'Utwórz nową Wikię',
+	'autocreatewiki-page-title-default' => 'Utwórz nową wiki',
+	'createwiki' => 'Utwórz nową wiki',
 	'autocreatewiki-welcomebody' => 'Witaj, $2!
 
 Wikia, którą utworzyłeś, jest aktualnie dostępna jako <$1>. Mamy nadzieję, że dzięki Tobie wkrótce powstanie kolejny dobry projekt.
@@ -2429,15 +2451,20 @@ Cost-sì a l'é un proget neuv, antlora për piasì ch'a na scriva s'a l'ha qual
 $messages['ps'] = array(
 	'autocreatewiki' => 'یو نوی ويکي جوړول',
 	'autocreatewiki-page-title-default' => 'یو نوی ويکي جوړول',
+	'autocreatewiki-page-title-answers' => 'د ځوابونو يو نوی وېبځی جوړول',
 	'createwiki' => 'یو نوی ويکي جوړول',
 	'autocreatewiki-chooseone' => 'يو وټاکۍ',
 	'autocreatewiki-web-address' => 'د جال پته:',
+	'autocreatewiki-category-select' => 'يو وټاکۍ',
+	'autocreatewiki-language-top' => 'د سر $1 ژبې',
 	'autocreatewiki-language-all' => 'ټولې ژبې',
 	'autocreatewiki-birthdate' => 'د زېږون نېټه:',
+	'autocreatewiki-blurry-word' => 'تته ويکه:',
 	'autocreatewiki-remember' => 'ما په ياد لره',
 	'autocreatewiki-create-account' => 'يو کارن-حساب جوړول',
 	'autocreatewiki-done' => 'ترسره شو',
 	'autocreatewiki-error' => 'تېروتنه',
+	'autocreatewiki-haveaccount-question' => 'آيا تاسې له پخوا نه په ويکييا کې يو کارن-حساب لرۍ؟',
 	'autocreatewiki-success-title-default' => 'ستاسې ويکي جوړ شو!',
 	'autocreatewiki-success-has-been-created' => 'جوړ شو!',
 	'autocreatewiki-success-get-started' => 'پېلول',
@@ -2449,6 +2476,7 @@ $messages['ps'] = array(
 	'autocreatewiki-invalid-birthday' => 'ناسمه زېږون نېټه',
 	'autocreatewiki-congratulation' => 'مبارک مو شه!',
 	'autocreatewiki-welcometalk-log' => 'د ښه راغلاست پيغام',
+	'autocreatewiki-welcomesubject' => '$1 جوړ شو!',
 	'newwikis' => 'نوې ويکي ګانې',
 	'autocreatewiki-subname-answers' => 'ځوابونه',
 );

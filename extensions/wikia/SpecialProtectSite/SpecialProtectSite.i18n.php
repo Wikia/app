@@ -84,10 +84,12 @@ $messages['be-tarask'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
  */
 $messages['br'] = array(
+	'specialprotectsite-desc' => "Aotren a ra merour ul lechienn da [[Special:ProtectSite|stankañ kemmoù niverus bet degaset war al lec'hienn, evit ur prantad bennak]]",
 	'protectsite' => "Gwareziñ al lec'hienn",
 	'protectsite-text-protect' => '<!-- Kemennoù / Displegadennoù / Reolennoù implijout -->',
 	'protectsite-text-unprotect' => '<!-- Kemennoù / Displegadennoù pa vez gwarezet -->',

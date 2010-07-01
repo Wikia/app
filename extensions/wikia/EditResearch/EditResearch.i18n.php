@@ -133,6 +133,13 @@ $messages['ia'] = array(
 	'research_this' => 'Recercar isto',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Irwangatot
+ */
+$messages['id'] = array(
+	'research_no_results' => 'Tidak ada halaman yang ditemukan. Silahkan mencari lagi.',
+);
+
 /** Italian (Italiano) */
 $messages['it'] = array(
 	'previous' => 'precedenti',

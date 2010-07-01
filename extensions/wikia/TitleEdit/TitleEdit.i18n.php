@@ -203,8 +203,11 @@ $messages['br'] = array(
 	'titleedit' => 'kemmañ',
 );
 
-/** Bosnian (Bosanski) */
+/** Bosnian (Bosanski)
+ * @author Palapa
+ */
 $messages['bs'] = array(
+	'titleedit-desc' => 'Dodaje dugme za uređivanje na vrh stranica.',
 	'titleedit' => 'Uredi',
 );
 
@@ -439,8 +442,11 @@ $messages['gan'] = array(
 	'titleedit' => '編寫',
 );
 
-/** Scottish Gaelic (Gàidhlig) */
+/** Scottish Gaelic (Gàidhlig)
+ * @author Akerbeltz
+ */
 $messages['gd'] = array(
+	'titleedit-desc' => 'Cuiridh seo putain airson deasachadh tiotail aig barr gach duilleag',
 	'titleedit' => 'Deasaich',
 );
 
@@ -1145,8 +1151,11 @@ $messages['shi'] = array(
 	'titleedit' => 'bddl',
 );
 
-/** Sinhala (සිංහල) */
+/** Sinhala (සිංහල)
+ * @author Singhalawap
+ */
 $messages['si'] = array(
+	'titleedit-desc' => 'මාතෘකව සංශෝධනය බොත්තම පිටුවේ ඉහලට එක්කරන්න',
 	'titleedit' => 'සංස්කරණය කරන්න',
 );
 

@@ -234,6 +234,13 @@ $messages['oc'] = array(
 	'wikiaupload' => 'Impòrt wikia',
 );
 
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'wikiaupload' => 'Wikia-Upload',
+);
+
 /** Polish (Polski)
  * @author Sp5uhe
  */
@@ -246,6 +253,13 @@ $messages['pl'] = array(
  */
 $messages['pms'] = array(
 	'wikiaupload' => 'Carié Wikia',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'wikiaupload' => 'د ويکي يا پورته کول',
 );
 
 /** Portuguese (Português)
@@ -276,6 +290,13 @@ $messages['ru'] = array(
 	'wikiaupload' => 'Загрузки Wikia',
 );
 
+/** Sinhala (සිංහල)
+ * @author Singhalawap
+ */
+$messages['si'] = array(
+	'wikiaupload' => 'Wikia උඩුගත',
+);
+
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Verlor
  */
@@ -299,9 +320,10 @@ $messages['tl'] = array(
 
 /** Turkish (Türkçe)
  * @author Joseph
+ * @author Manco Capac
  */
 $messages['tr'] = array(
-	'wikiaupload' => 'WikiaYükleme',
+	'wikiaupload' => 'Wikia yükleme',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)

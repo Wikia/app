@@ -166,6 +166,13 @@ $messages['pms'] = array(
 	'tog-disablelinksuggest' => "Mostra pa ij sugeriment ëd j'anliure",
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'tog-disablelinksuggest' => 'د تړنې وړانديز مه ښکاره کوه',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  */

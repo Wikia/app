@@ -44,6 +44,13 @@ $messages['br'] = array(
 	'staffpowers-ipblock-aborted' => "N'eo ket posupl stankañ izili skipailh Wikia. Gallout a reot implijout [[Special:Contact]] evit reiñ da c'houzout  kudenn pe gudenn d'hor skipailh",
 );
 
+/** Bosnian (Bosanski)
+ * @author Palapa
+ */
+$messages['bs'] = array(
+	'staffpowers-ipblock-aborted' => 'Blokiranje Wikia osoblja nije moguće. Molim da koristite [[Specijalno:Kontakt]] da prijavite bilo koja pitanja ili probleme sa našim osobljem.',
+);
+
 /** Catalan (Català)
  * @author Paucabot
  */
@@ -56,6 +63,13 @@ $messages['ca'] = array(
  */
 $messages['ce'] = array(
 	'staffpowers-ipblock-aborted' => 'Саца цавало Wikia декъашхо. Дехар до, лелайе [[Special:Contact]], тхан декъашхох хьакхалуш долу гlалатах хаам ба.',
+);
+
+/** Welsh (Cymraeg)
+ * @author Xxglennxx
+ */
+$messages['cy'] = array(
+	'staffpowers-ipblock-aborted' => "Nid oes dim modd rhwystro staff Wikia. Defnyddiwch [[Arbennig:Cysylltu]] i gwyno am unrhyw broblemau gyda'n staff.",
 );
 
 /** German (Deutsch)
@@ -275,5 +289,12 @@ $messages['te'] = array(
  */
 $messages['tl'] = array(
 	'staffpowers-ipblock-aborted' => 'Hindi magagawa ang pagharang sa mga tauhan ng Wikia.  Pakigamit ang [[Special:Contact]] upang iulat ang anumang mga paksa o mga suliranin sa iyong mga tauhan.',
+);
+
+/** Turkish (Türkçe)
+ * @author Manco Capac
+ */
+$messages['tr'] = array(
+	'staffpowers-ipblock-aborted' => 'Wikia personelini engellemek olası değildir. [[Special:Contact]] sayfasını kullanarak personelimiz hakkındaki problemlerinizi iletebilirsiniz.',
 );
 

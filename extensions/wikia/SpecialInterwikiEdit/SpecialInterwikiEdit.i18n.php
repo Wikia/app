@@ -155,7 +155,12 @@ $messages['ia'] = array(
  * @author Irwangatot
  */
 $messages['id'] = array(
+	'iwedit-title' => 'Penyunting interwiki',
+	'iwedit-language-interwikis' => 'hanya interwiki bahasa',
 	'iwedit-all-interwikis' => 'semua interwiki',
+	'iwedit-update' => 'Perbarui',
+	'iwedit-error' => '<p>Sebuah kesalahan terjadi.</p>',
+	'iwedit-success' => '<p>Membuat pranala berhasil. </p>',
 );
 
 /** Italian (Italiano) */
@@ -303,9 +308,12 @@ $messages['ru'] = array(
 );
 
 /** Sinhala (සිංහල)
+ * @author Singhalawap
  * @author බිඟුවා
  */
 $messages['si'] = array(
+	'iwedit-title' => 'අනතර්විකි සංස්කාරක',
+	'iwedit-language-interwikis' => 'භාෂා අන්තර්විකි පමණක්',
 	'iwedit-update' => 'යාවත්කාලීන',
 );
 
@@ -351,5 +359,17 @@ $messages['tl'] = array(
 	'iwedit-update' => 'Isapanahon',
 	'iwedit-error' => '<p>Naganap ang isang kamalian.</p>',
 	'iwedit-success' => '<p>Matagumpay ang paglikha ng kawing.</p>',
+);
+
+/** Turkish (Türkçe)
+ * @author Manco Capac
+ */
+$messages['tr'] = array(
+	'iwedit-title' => 'İnterviki Editörü',
+	'iwedit-language-interwikis' => 'sadece dil intervikileri',
+	'iwedit-all-interwikis' => 'tüm intervikiler',
+	'iwedit-update' => 'Güncelle',
+	'iwedit-error' => '<p>Bir hata oluştu.</p>',
+	'iwedit-success' => '<p>Bağlantı yaratımı başarılı</p>',
 );
 

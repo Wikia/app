@@ -64,6 +64,7 @@ $messages['qqq'] = array(
 	'sendtoafriend-desc' => '{{desc}}',
 	'sendtoafriend-button-desc' => '{{desc}}',
 	'stf_name_label' => '{{Identical|Name}}',
+	'stf_frm4_send' => '{{Identical|Send}}',
 	'stf_frm4_cancel' => '{{Identical|Cancel}}',
 	'stf_frm4_invite' => 'Button text',
 	'stf_throttle' => 'Needs plural support',
@@ -151,6 +152,7 @@ $messages['an'] = array(
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  * @author Jim-by
+ * @author Wizardist
  */
 $messages['be-tarask'] = array(
 	'invitespecialpage' => 'Запрасіць сяброў у Wikia',
@@ -164,14 +166,55 @@ $messages['be-tarask'] = array(
 	'stf_error_name' => 'Вы не падалі свайго імя.',
 	'stf_error_from' => 'Вы не падалі адрасу сваёй электроннай пошты.',
 	'stf_error_to' => 'Вы не падалі адрас электроннай пошты свайго сябра.',
+	'stf_frm1' => 'Ваш адрас электроннай пошты:',
+	'stf_frm2' => 'Адрасы электроннай пошты (Болей аднаго? Падзяляйце коскамі)',
+	'stf_msg_label' => 'Паведамленьне для адпраўкі',
 	'stf_name_label' => 'Ваша імя',
+	'stf_email_label' => 'Ваш адрас электроннай пошты',
+	'stf_frm3_send' => 'Прывітаньне!
+
+$1 лічыць, што Вам спадабаецца гэтая старонка з Wikia!
+
+$2
+
+Заходзьце паглядзець!',
+	'stf_frm3_invite' => 'Прывітаньне!
+
+Я толькі што далучыўся да {{GRAMMAR:родны|{{SITENAME}}}} на Wikia...  $1
+
+Заходзьце паглядзець!',
+	'stf_frm4_send' => 'Даслаць',
 	'stf_frm4_cancel' => 'Адмяніць',
+	'stf_frm4_invite' => 'Даслаць запрашэньне!',
+	'stf_multiemail' => 'Даслаць болей чым аднаму атрымальніку?',
+	'stf_frm5' => '(URL-адрас гэтага сайту будзе дададзены да Вашага паведамленьня)',
+	'stf_frm6' => 'Зачыніць гэтае акно',
+	'stf_throttle' => 'Па прычынах бясьпекі, Вы можаце дасылаць толькі $1 {{PLURAL:$1|запрашэньне|запрашэньні|запрашэньняў}} штодзень.',
+	'stf_abuse' => 'Гэты электронны ліст быў дасланы $1 з Wikia.
+Калі Вы лічыце, што ён быў дасланы з-за памылкі, калі ласка, паведаміце нам на support@wikia.com.',
+	'stf_ctx_invite' => 'Болей чым адзін? Падзяляйце коскамі — толькі да $1!',
+	'stf_ctx_check' => 'Праверыць кантакты',
+	'stf_ctx_empty' => 'Гэты рахунак ня мае кантактаў.',
+	'stf_ctx_invalid' => 'Уведзены няслушны рахунак ці пароль. Калі ласка, паспрабуйце зноў.',
 	'stf_sending' => 'Калі ласка, пачакайце…',
+	'stf_email_sent' => 'Даслаць пацьверджаньне',
+	'stf_back_to_article' => 'Вярнуцца да артыкула',
+	'stf_most_emailed' => 'Найчасьцей дасылаемыя артыкулы ў $1 сёньня:',
+	'stf_most_popular' => 'Самыя папулярныя артыкулы на $1:',
+	'stf_choose_from_existing' => 'Выберыце з Вашых існуючых кантактаў:',
+	'stf_add_emails' => 'Дадаць адрасы электроннай пошты:',
 	'stf_your_email' => 'Ваш паштовы сэрвіс',
 	'stf_your_login' => 'Назва Вашага рахунку',
 	'stf_your_password' => 'Ваш пароль',
 	'stf_your_name' => 'Ваша імя',
+	'stf_your_address' => 'Ваш адрас электроннай пошты',
+	'stf_your_friends' => 'Адрасы электроннай пошты|вашых сяброў',
+	'stf_we_dont_keep' => 'Мы не захоўваем гэты адрас электроннай пошты і пароль',
+	'stf_need_approval' => 'Без Вашай згоды электронныя лісты дасылацца ня будуць',
 	'stf_message' => 'Паведамленьне',
+	'stf_instructions' => '1. Выберыце сяброў.|2. Націсьніце «$1»',
+	'stf_select_all' => 'Выбраць усіх',
+	'stf_select_friends' => 'Выбраць сяброў:',
 );
 
 /** Breton (Brezhoneg)

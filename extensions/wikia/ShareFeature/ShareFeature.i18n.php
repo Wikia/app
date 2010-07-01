@@ -123,6 +123,15 @@ $messages['ia'] = array(
 	'sf-link-tooltip' => 'Condivider iste articulo con tu amicos',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Irwangatot
+ */
+$messages['id'] = array(
+	'sf-link' => 'Berbagi artikel ini',
+	'sf-link-popup' => 'Berbagi artikel ini',
+	'sf-link-tooltip' => 'Berbagi artikel ini dengan teman anda',
+);
+
 /** Japanese (日本語) */
 $messages['ja'] = array(
 	'sf-link' => 'この記事を共有',
@@ -189,6 +198,15 @@ $messages['pms'] = array(
 	'sf-link' => "Condivide st'artìcol-sì",
 	'sf-link-popup' => "Condivide st'artìcol-sì",
 	'sf-link-tooltip' => "Condivide st'artìcol-sì con ij sò amis",
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'sf-link' => 'دا ليکنه شريکول',
+	'sf-link-popup' => 'دا ليکنه شريکول',
+	'sf-link-tooltip' => 'دا ليکنه د خپلو ملګرو سره شريکول',
 );
 
 /** Portuguese (Português)

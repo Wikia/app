@@ -334,6 +334,9 @@ $messages['ps'] = array(
 	'action_panel_edit_title' => 'ځواب',
 	'action_panel_categorize' => 'په وېشنيزو وېشل',
 	'action_panel_categories_summary' => 'وېشنيزې ورګډول',
+	'action_panel_save_success' => 'ستاسې ليکنه خوندي شوه.',
+	'action_panel_rename_success' => 'ستاسې د ليکنې نوم بدل شو.',
+	'action_panel_categorize_success' => 'ستاسې وېشنيزې ورګډې شوې.',
 );
 
 /** Portuguese (Português)

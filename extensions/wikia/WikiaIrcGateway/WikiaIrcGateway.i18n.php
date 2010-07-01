@@ -202,6 +202,14 @@ $messages['oc'] = array(
 	'ircgate-channel' => 'Canal :',
 );
 
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'ircgate-username' => 'Yuuser-Naame:',
+	'ircgate-channel' => 'Channel:',
+);
+
 /** Polish (Polski)
  * @author Sp5uhe
  */

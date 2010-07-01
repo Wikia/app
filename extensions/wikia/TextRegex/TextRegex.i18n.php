@@ -387,6 +387,17 @@ $messages['ia'] = array(
 	'textregex-return-mainpage' => '[{{SERVER}}$1 retornar al lista]',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Irwangatot
+ */
+$messages['id'] = array(
+	'textregex-remove-url' => '[{{SERVER}}$1&id=$2 hapus]',
+	'textregex-stats-url' => '[{{SERVER}}$1&id=$2 statistik]',
+	'textregex-unblock-succ' => 'Pembukaan blokir berhasil',
+	'textregex-block-succ' => 'Pemblokiran berhasil',
+	'textregex-select-default' => '-- pilih --',
+);
+
 /** Japanese (日本語)
  * @author Naohiro19
  */

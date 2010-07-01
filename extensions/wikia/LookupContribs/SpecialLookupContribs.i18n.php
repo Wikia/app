@@ -737,6 +737,7 @@ $messages['ps'] = array(
 	'lookupcontribsgo' => 'ورځه',
 	'lookupcontribswiki' => 'ويکي',
 	'lookupcontribswikititle' => 'سرليک',
+	'lookupcontribscontribs' => 'ونډې',
 	'lookupcontribsnext' => 'راتلونکی',
 	'lookupcontribsprevious' => 'پخوانی',
 	'lookupcontribslog' => 'يادښتونه',

@@ -197,6 +197,13 @@ $messages['pms'] = array(
 	'force-subject-for-new-section-message' => "Për piasì ch'a anserissa un tìtol për la session",
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'force-subject-for-new-section-message' => 'لطفاً د ټاکلې برخې لپاره يو سرليک ورکړۍ',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  */

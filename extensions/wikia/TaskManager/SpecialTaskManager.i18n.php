@@ -218,6 +218,15 @@ $messages['ru'] = array(
 	'taskmanager_tasklist' => 'Вернуться к списку заданий',
 );
 
+/** Sinhala (සිංහල)
+ * @author Singhalawap
+ */
+$messages['si'] = array(
+	'taskmanager' => 'පසුබිම් කාර්යයන් දැක්වීම සහ හැසිරවීම',
+	'taskmanager_title' => 'පසුබිම් කාර්යයන් දැක්වීම සහ හැසිරවීම',
+	'taskmanager_tasklist' => 'කාර්යයන් නාමාවලිය වෙත නැවත යන්න',
+);
+
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Charmed94
  * @author Verlor
@@ -244,5 +253,14 @@ $messages['tl'] = array(
 	'taskmanager' => 'Ipakita at pangasiwaan ang mga gawaing panlikuran',
 	'taskmanager_title' => 'Ipakita at pangasiwaan ang mga gawaing panlikuran',
 	'taskmanager_tasklist' => 'Bumalik sa Talaan ng Gawain',
+);
+
+/** Turkish (Türkçe)
+ * @author Manco Capac
+ */
+$messages['tr'] = array(
+	'taskmanager' => 'Geri plandaki işlemleri göster ve yönet',
+	'taskmanager_title' => 'Geri plandaki işlemleri göster ve yönet',
+	'taskmanager_tasklist' => 'İşlem Listesine geri dön',
 );
 
