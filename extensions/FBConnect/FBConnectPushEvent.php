@@ -203,8 +203,12 @@ class FBConnectPushEvent {
 	 */
 	
 	static public function pushEvent($message, $params, $class){
-		global $wgServer;
-		
+		global $wgServer, $wgUser;
+                
+                $id = FBConnectDB::getFacebookIDs($wgUser);
+		if( count($id) < 1 ) {
+                    return 1001; //status for disconnected 
+                }
 		/* only one event par request */
 		if( self::$eventCounter > 0 ) {
 			return 1000; //status for out of limit  
@@ -276,19 +280,19 @@ class FBConnectPushEvent {
 	    
 	    if (strlen($source_text) <= $char_count ) {
     		return $source_text;
-    	}
-   
-    	$source_text_out = substr($source_text, 0, strrpos(substr($source_text_no_endline, 0, $char_count), ' '));
+            }
 
-    	if ($source_text_out == "" ){
-    		$source_text_out = substr($source_text, 0, $char_count);
-    	}
-    	
-    	if ($source_text_out != $source_text) {
-    		$source_text = $source_text_out.'...';
-    	}
-	    
-    	return $source_text; 
+            $source_text_out = substr($source_text, 0, strrpos(substr($source_text_no_endline, 0, $char_count), ' '));
+
+            if ($source_text_out == "" ){
+                    $source_text_out = substr($source_text, 0, $char_count);
+            }
+
+            if ($source_text_out != $source_text) {
+                    $source_text = $source_text_out.'...';
+            }
+
+            return $source_text;
 	}
 
 	
