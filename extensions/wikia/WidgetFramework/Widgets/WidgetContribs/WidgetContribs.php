@@ -17,7 +17,7 @@ $wgWidgets['WidgetContribs'] = array(
 			'default' => 10,
 			'msg' => 'widget-contribs-limit'
 		)
-        ),
+		),
 	'closeable' => true,
 	'editable' => true,
 );
@@ -44,9 +44,9 @@ function WidgetContribs($id, $params) {
 
 	if ( !empty($results['query']['usercontribs']) ) {
 	
-	    $list = array();
+		$list = array();
 	
-	    foreach($results['query']['usercontribs'] as $contrib) {
+		foreach($results['query']['usercontribs'] as $contrib) {
 			$title = Title::newFromText( $contrib['title'], $contrib['ns'] );
 			if( empty($title) ) {
 				//bad title returned, cant use it, dont display it
@@ -59,8 +59,8 @@ function WidgetContribs($id, $params) {
 				'href'  => $title->getLocalURL(), 
 				'name'  => $contrib['title']
 			);
-	    }
-	    
+		}
+
 		$ret = WidgetFrameworkWrapLinks($list);
 
 		// 'more' link...
@@ -68,7 +68,7 @@ function WidgetContribs($id, $params) {
 		$ret .= WidgetFrameworkMoreLink($more);
 	}
 	else {
-	    $ret = wfMsg('widget-contribs-empty');
+		$ret = wfMsg('widget-contribs-empty');
 	}
 
 	wfProfileOut(__METHOD__);
