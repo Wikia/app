@@ -90,7 +90,7 @@ if (!empty($aCategories) && is_array($aCategories) && ( $mType != "answers" ) ):
 ?>
 	<div class="formblock">
 		<ul>
-			<li class="label"><label class="required" id="wiki-category-label"><?=wfMsg('nstab-category')?>:</label></li>
+			<li class="label"><label class="required" id="wiki-category-label"><?=wfMsg('autocreatewiki-category-label')?></label></li>
 			<li class="data1"><select name="wiki-category" id="wiki-category">
 				<option value=""><?=wfMsg('autocreatewiki-category-select')?></option>
 <?php
