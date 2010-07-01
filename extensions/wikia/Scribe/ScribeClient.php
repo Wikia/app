@@ -48,7 +48,7 @@ class WScribeClient {
 		}
 		
 		if ( empty($wgScribeSendTimeout) ) {
-			$wgScribeSendTimeout = 5000;
+			$wgScribeSendTimeout = 100000;
 		}
 		
 		$this->connected = true;
