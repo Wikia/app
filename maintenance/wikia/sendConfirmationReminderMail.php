@@ -27,7 +27,6 @@ $con = '1
 		and user_email_token_expires >= '.$from.' 
 		and user_email_token_expires < '.$to;  
 
-$con = '1 and user_name like "Tomek Ogrodny%" ';
 $db = WikiFactory::db( DB_SLAVE );
 $res = $db->select(array( 'user' ), array( 'user_id'), $con);
 $countAll = $countNoEmpty = 0;

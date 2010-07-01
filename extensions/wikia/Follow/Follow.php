@@ -32,5 +32,7 @@ if ( !empty($wgEnableWikiaFollowedPages) && $wgEnableWikiaFollowedPages ) {
 	$wgHooks['MailNotifyBuildKeys'][] = 'FollowHelper::mailNotifyBuildKeys';
 }
 
+$wgHooks['beforeBlogListingForm'][] = 'FollowHelper::categoryIndexer';
+
 $wgHooks['UserToggles'][] = 'FollowHelper::addExtraToggles';
 $wgHooks['beforeRenderPrefsWatchlist'][] = 'FollowHelper::renderFollowPrefs';
