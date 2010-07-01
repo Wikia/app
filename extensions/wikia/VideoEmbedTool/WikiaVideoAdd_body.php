@@ -59,14 +59,14 @@ class WikiaVideoAddForm extends SpecialPage {
 						"out"		=> 	$wgOut,
 						"action"	=>	$action,
 						"name"		=> 	$name,
-					       ) );
+						) );
 			$wgOut->addHTML( $oTmpl->execute("quickform") );
 		}
 	}
 
 	public function doSubmit() {
 		global $wgOut, $wgRequest, $IP, $wgUser;
-		require_once( "$IP/extensions/wikia/WikiaVideo/VideoPage.php" );	
+		require_once( "$IP/extensions/wikia/WikiaVideo/VideoPage.php" );
 		$replaced = false;
 		if( '' == $wgRequest->getVal( 'wpWikiaVideoAddName' ) ) {
 			if( '' != $wgRequest->getVal( 'wpWikiaVideoAddPrefilled' ) ) {
@@ -83,21 +83,27 @@ class WikiaVideoAddForm extends SpecialPage {
 
 		if ( ( '' != $this->mName ) && ( '' != $this->mUrl ) ) {
 			$this->mName = ucfirst($this->mName);
-			$title = Title::makeTitle( NS_VIDEO, $this->mName );
+			$title = Title::makeTitleSafe( NS_VIDEO, $this->mName );
 			if ( $title instanceof Title ) {
-				$video = new VideoPage( $title );	
+				$video = new VideoPage( $title );
 				$video->parseUrl( $this->mUrl );
 				$video->setName( $this->mName );
-				$video->save();				
-			}
-			$sk = $wgUser->getSkin();
-	                $link_back = $sk->makeKnownLinkObj( $title );
-			if ($replaced) {
-				$wgOut->addHTML( wfMsg( 'wva-success-replaced', $link_back ) );
+				$video->save();
+
+				$sk = $wgUser->getSkin();
+				$link_back = $sk->makeKnownLinkObj( $title );
+
+				if ($replaced) {
+					$wgOut->addHTML( wfMsg( 'wva-success-replaced', $link_back ) );
+				} else {
+					$wgOut->addHTML( wfMsg( 'wva-success', $link_back ) );
+				}
 			} else {
-				$wgOut->addHTML( wfMsg( 'wva-success', $link_back ) );
+				//bad title returned
+				$wgOut->addHTML( wfMsg( 'wva-failure' ) );
 			}
 		} else {
+			//one of two params blank
 			$wgOut->addHTML( wfMsg( 'wva-failure' ) );
 		}
 	}
