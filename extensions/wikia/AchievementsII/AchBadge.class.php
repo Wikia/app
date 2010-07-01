@@ -49,15 +49,18 @@ class AchBadge {
 	}
 
 	public function getGiveFor() {
-		return wfMsgExt(AchConfig::getInstance()->getBadgeDescKey($this->mBadgeTypeId), array('parsemag', 'content'), number_format(AchConfig::getInstance()->getRequiredEvents($this->mBadgeTypeId, $this->mBadgeLap)), $this->getCategory());
+		global $wgLang;
+		return wfMsgExt(AchConfig::getInstance()->getBadgeDescKey($this->mBadgeTypeId), array('parsemag', 'content'), $wgLang->formatNum(AchConfig::getInstance()->getRequiredEvents($this->mBadgeTypeId, $this->mBadgeLap)), $this->getCategory());
 	}
 
 	public function getPersonalGivenFor() {
-		return wfMsgExt(AchConfig::getInstance()->getBadgePersonalDescKey($this->mBadgeTypeId), array('parsemag', 'content'), number_format(AchConfig::getInstance()->getRequiredEvents($this->mBadgeTypeId, $this->mBadgeLap)), $this->getCategory());
+		global $wgLang;
+		return wfMsgExt(AchConfig::getInstance()->getBadgePersonalDescKey($this->mBadgeTypeId), array('parsemag', 'content'), $wgLang->formatNum(AchConfig::getInstance()->getRequiredEvents($this->mBadgeTypeId, $this->mBadgeLap)), $this->getCategory());
 	}
 
 	public function getGiveHoverFor() {
-		return wfMsgExt(AchConfig::getInstance()->getBadgeDescHoverKey($this->mBadgeTypeId), array('parsemag', 'content'), number_format(AchConfig::getInstance()->getRequiredEvents($this->mBadgeTypeId, $this->mBadgeLap)), $this->getCategory());
+		global $wgLang;
+		return wfMsgExt(AchConfig::getInstance()->getBadgeDescHoverKey($this->mBadgeTypeId), array('parsemag', 'content'), $wgLang->formatNum(AchConfig::getInstance()->getRequiredEvents($this->mBadgeTypeId, $this->mBadgeLap)), $this->getCategory());
 	}
 
 	public function getDetails() {
@@ -65,7 +68,8 @@ class AchBadge {
 	}
 
 	public function getToGet($i = null) {
-		return wfMsgExt(AchConfig::getInstance()->getBadgeToGetKey($this->mBadgeTypeId), array('parsemag', 'content'), number_format($i), $this->getCategory());
+		global $wgLang;
+		return wfMsgExt(AchConfig::getInstance()->getBadgeToGetKey($this->mBadgeTypeId), array('parsemag', 'content'), $wgLang->formatNum($i), $this->getCategory());
 	}
 
 	public function getPictureUrl($width = 128, $forceOriginal = false) {
