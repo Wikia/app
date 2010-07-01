@@ -10,7 +10,7 @@ abstract class SpecialEditPage extends SpecialPage {
 	protected $mFormData;
 	protected $mFormErrors;
 	protected $mPostArticle;
-	protected $mEditInto;
+	protected $mEditIntro;
 
 	public function __construct( $name = '', $restriction = '', $listed = true, $function = false, $file = 'default', $includable = false ) {
 		global $wgRequest;
@@ -88,7 +88,7 @@ abstract class SpecialEditPage extends SpecialPage {
 
 		$editintro = $wgRequest->getVal( 'editintro', '' );
 		if( !empty( $editintro ) ) {
-			$this->mEditInto = $this->getPreloadedText( $editintro );
+			$this->mEditIntro = $this->getPreloadedText( $editintro );
 		}
 
 		// CategorySelect compatibility (restore categories from article body)
