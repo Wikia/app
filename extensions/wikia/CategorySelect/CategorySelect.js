@@ -5,16 +5,11 @@ var ajaxUrl = wgServer + wgScript + '?action=ajax';
 var csType = 'edit';
 var csDraggingEvent = false;
 
-// TODO: PORT AWAY FROM YUI
 function initCatSelect() {
 	if ( (typeof(initCatSelect.isint) != "undefined") && (initCatSelect.isint) ) {
 		return true;
 	}
 	initCatSelect.isint = true;
-	YAHOO.namespace('CategorySelect');
-	Event = YAHOO.util.Event;
-	Dom = YAHOO.util.Dom;
-	DDM = YAHOO.util.DragDropMgr;
 }
 
 function positionSuggestBox() {
@@ -368,8 +363,8 @@ function inputKeyPress(e) {
 	positionSuggestBox();
 }
 
-function submitAutoComplete(comp, resultListItem) {
-	addCategory(resultListItem[2][0]);
+function submitAutoComplete(resultListItem) {
+	addCategory(resultListItem);
 	positionSuggestBox();
 }
 
@@ -409,23 +404,13 @@ function getCategories(sQuery) {
 	return resultsFirst.concat(resultsSecond).slice(0,10);
 }
 
-// TODO: PORT AWAY FROM YUI
 function initAutoComplete() {
-	// Init datasource
-	var oDataSource = new YAHOO.widget.DS_JSFunction(getCategories);
-	//oDataSource.queryMatchCase = true;
-
-	// Init AutoComplete object and assign datasource object to it
-	oAutoComp = new YAHOO.widget.AutoComplete('csCategoryInput', 'csSuggestContainer', oDataSource);
-	oAutoComp.autoHighlight = false;
-	oAutoComp.queryDelay = 0;
-	oAutoComp.highlightClassName = 'CSsuggestHover';
-	oAutoComp.queryMatchContains = true;
-	oAutoComp.itemSelectEvent.subscribe(submitAutoComplete);
-	oAutoComp.containerCollapseEvent.subscribe(collapseAutoComplete);
-	oAutoComp.containerExpandEvent.subscribe(expandAutoComplete);
-	//do not show delayed ajax suggestion when user already added the category
-	oAutoComp.doBeforeExpandContainer = function (elTextbox, elContainer, sQuery, aResults) {return elTextbox.value != '';};
+	$.getScript(stylepath+'/common/jquery/jquery.autocomplete.js', function() {
+		$('#csCategoryInput').autocomplete({
+			onSelect: submitAutoComplete,
+			lookup: categoryArray
+		});
+	});
 }
 
 function initHandlers() {
@@ -439,37 +424,35 @@ function initHandlers() {
 
 //`view article` mode
 function showCSpanel() {
-	$.loadYUI(function() {
-		initCatSelect();
-		csType = 'view';
-		$.post(ajaxUrl, {rs: 'CategorySelectGenerateHTMLforView'}, function(result){
-			//prevent multiple instances when user click very fast
-			if ($('#csMainContainer').length > 0) {
-				return;
-			}
-			var el = document.createElement('div');
-			el.innerHTML = result;
-			$('#catlinks').get(0).appendChild(el);
-			initHandlers();
-			initAutoComplete();
-			initializeDragAndDrop();
-			initializeCategories();
+	initCatSelect();
+	csType = 'view';
+	$.post(ajaxUrl, {rs: 'CategorySelectGenerateHTMLforView'}, function(result){
+		//prevent multiple instances when user click very fast
+		if ($('#csMainContainer').length > 0) {
+			return;
+		}
+		var el = document.createElement('div');
+		el.innerHTML = result;
+		$('#catlinks').get(0).appendChild(el);
+		initHandlers();
+		initAutoComplete();
+		initializeDragAndDrop();
+		initializeCategories();
 
-			// Dynamically load & apply the CSS.
-			$("head").append("<link>");
-			css = $("head").children(":last");
-			css.attr({
-				rel:  "stylesheet",
-				type: "text/css",
-				href: wgExtensionsPath+'/wikia/CategorySelect/CategorySelect.css?'+wgStyleVersion
-			});
-			setTimeout(replaceAddToInput, 60);
-			setTimeout(positionSuggestBox, 666); //sometimes it can take more time to parse downloaded CSS - be sure to position hint in proper place
-			$('#catlinks').removeClass('csLoading');
-		}, "html");
+		// Dynamically load & apply the CSS.
+		$("head").append("<link>");
+		css = $("head").children(":last");
+		css.attr({
+			rel:  "stylesheet",
+			type: "text/css",
+			href: wgExtensionsPath+'/wikia/CategorySelect/CategorySelect.css?'+wgStyleVersion
+		});
+		setTimeout(replaceAddToInput, 60);
+		setTimeout(positionSuggestBox, 666); //sometimes it can take more time to parse downloaded CSS - be sure to position hint in proper place
+		$('#catlinks').removeClass('csLoading');
+	}, "html");
 
-		$('#csAddCategorySwitch').css('display', 'none');
-	});
+	$('#csAddCategorySwitch').css('display', 'none');
 }
 
 function csSave() {
