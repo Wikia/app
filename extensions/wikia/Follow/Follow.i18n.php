@@ -40,6 +40,7 @@ Add pages to this list by clicking \"{{int:watch}}\" at the top of a page.",
 	'follow-bloglisting-summary' => "Blog posted on blog page",
 
 	'wikiafollowedpages-userpage-heading' => "Pages I am following",
+        'wikiafollowedpages-userpage-hide-tooltip' => "Hide your followed pages lists from public view",
 	'wikiafollowedpages-userpage-more' => 'More',
 	'wikiafollowedpages-userpage-hide' => 'hide',
 	'wikiafollowedpages-userpage-empty' => "This user's followed pages list is empty.
