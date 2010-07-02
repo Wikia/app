@@ -186,9 +186,9 @@ STYLE;
 
 		$base = dirname( __FILE__ );
 		if ( $wgDBtype == 'mysql' ) {
-			$wgExtNewTables[] = array("{$wgDBprefix}user_fbconnect", "$base/fbconnect_table.sql");
+			$wgExtNewTables[] = array("{$wgDBprefix}user_fbconnect", "$base/sql/fbconnect_table.sql");
 		} else if ( $wgDBtype == 'postgres' ) {
-			$wgExtNewTables[] = array("{$wgDBprefix}user_fbconnect", "$base/fbconnect_table.pg.sql");
+			$wgExtNewTables[] = array("{$wgDBprefix}user_fbconnect", "$base/sql/fbconnect_table.pg.sql");
 		}
 		return true;
 	}
