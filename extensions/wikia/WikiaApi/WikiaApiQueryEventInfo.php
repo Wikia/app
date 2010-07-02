@@ -15,6 +15,7 @@ class WikiaApiQueryEventInfo extends ApiQueryBase {
 
 	public function __construct($query, $moduleName) {
 		parent :: __construct($query, $moduleName, "");
+		$this->mLogId = $this->mRevId = $tihs->mPageId = 0;
 	}
 
 	private function getRevisionCount() {
@@ -85,7 +86,7 @@ class WikiaApiQueryEventInfo extends ApiQueryBase {
 				'media_type'
 			),	 
 			array( 
-				'city_id' 	=> intval($this->mCityId),
+				'wiki_id' 	=> intval($this->mCityId),
 				'page_id' 	=> intval($this->mPageId),
 				'rev_id' 	=> intval($this->mRevId),
 				'log_id' 	=> intval($this->mLogId),
@@ -93,8 +94,6 @@ class WikiaApiQueryEventInfo extends ApiQueryBase {
 			__METHOD__
 		);
 		$this->profileDBOut();
-
-		error_log ( __METHOD__ . " => " . print_r($oRow, true), 3, "/tmp/moli.log");
 
 		wfProfileOut( __METHOD__ );
 		return $oRow;
@@ -107,7 +106,6 @@ class WikiaApiQueryEventInfo extends ApiQueryBase {
 		# extract request params
 		$this->mCityId = $wgCityId;
 		$this->params = $this->extractRequestParams(false);
-		error_log(print_r($this->params, true), 3, "/tmp/moli.log");
 
 		# check "pageid" param
 		$pageCount = $this->getPageCount();
@@ -118,8 +116,6 @@ class WikiaApiQueryEventInfo extends ApiQueryBase {
 		# check "logid" param
 		$logCount = $this->getLoggingCount();
 	
-		error_log ( " $revCount === 0 && $pageCount === 0 && $logCount == 0  \n", 3, "/tmp/moli.log" );
-
 		if ( $revCount === 0 && $pageCount === 0 && $logCount == 0 ) {
 			wfProfileOut( __METHOD__ );
 			return;
@@ -147,9 +143,9 @@ class WikiaApiQueryEventInfo extends ApiQueryBase {
 				$vals[$key] = $value;				
 			}
 		}
-		error_log ("vals = " . print_r($vals, true), 3, "/tmp/moli.log");
-		$this->getResult()->setIndexedTagName($vals, 'evennat');
-		#$this->getResult()->addValue('query', 'event', $vals);
+		
+		$this->getResult()->setIndexedTagName($vals, 'event');
+		$this->getResult()->addValue('query', 'event', $vals);
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -198,6 +194,6 @@ class WikiaApiQueryEventInfo extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: WikiaApiQueryEventInfo.php 48642 2010-06-09 16:21:38Z moli $';
+		return __CLASS__ . ': $Id: WikiaApiQueryEventInfo.php 4840 2010-06-09 16:21:38Z moli $';
 	}
 }
