@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -26,7 +26,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 /**
  * Class FBConnectHooks
- * 
+ *
  * This class contains all the hooks used in this extension. HOOKS DO NOT NEED
  * TO BE EXPLICITLY ADDED TO $wgHooks. Simply write a public static function
  * with the same name as the hook that provokes it, place it inside this class
@@ -57,7 +57,7 @@ class FBConnectHooks {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Checks the autopromote condition for a user.
 	 */
@@ -84,7 +84,7 @@ class FBConnectHooks {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Injects some important CSS and Javascript into the <head> of the page.
 	 */
@@ -120,12 +120,12 @@ class FBConnectHooks {
 				</script>' . "\n"
 			);
 		}
-		
+
 		// Inserts list of global JavaScript variables if necessary
 		if (self::MGVS_hack( $mgvs_script )) {
 			$out->addInlineScript( $mgvs_script );
 		}
-		
+
 		// Add a Facebook logo to the class .mw-fblink
 		$style = empty($fbLogo) ? '' : <<<STYLE
 		/* Add a pretty logo to Facebook links */
@@ -141,12 +141,12 @@ STYLE;
 			if ($fbLogo) {
 				$out->addInlineStyle($style);
 			}
-			
+
 			// Don't include jQuery if it's already in use on the site
 			#$out->includeJQuery();
 			// Temporary workaround until until MW is bundled with jQuery 1.4.2:
 			$out->addScriptFile('http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js');
-			
+
 			// Add the script file specified by $url
 			if(!empty($fbExtensionScript)){
 				$out->addScriptFile($fbExtensionScript);
@@ -156,12 +156,12 @@ STYLE;
 			if ($fbLogo) {
 				$out->addScript('<style type="text/css">' . $style . '</style>');
 			}
-			
+
 			// Don't include jQuery if it's already in use on the site
 			if (!empty($fbIncludeJquery)){
 				$out->addScriptFile("http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js");
 			}
-			
+
 			// Add the script file specified by $url
 			if(!empty($fbExtensionScript)){
 				$out->addScript("<script type=\"$wgJsMimeType\" src=\"$fbExtensionScript?$wgStyleVersion\"></script>\n");
@@ -169,7 +169,7 @@ STYLE;
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Fired when MediaWiki is updated to allow FBConnect to update the database.
 	 * If the database type is supported, then a new tabled named 'user_fbconnect'
@@ -178,7 +178,12 @@ STYLE;
 	 * sure that fbconnect_table.sql is updated with the database prefix beforehand.
 	 */
 	static function LoadExtensionSchemaUpdates() {
-		global $wgDBtype, $wgDBprefix, $wgExtNewTables;
+		global $wgDBtype, $wgDBprefix, $wgExtNewTables, $wgSharedDB, $wgDBname;
+
+		if( !empty( $wgSharedDB ) && $wgSharedDB == $wgDBname ) {
+			return true;
+		}
+
 		$base = dirname( __FILE__ );
 		if ( $wgDBtype == 'mysql' ) {
 			$wgExtNewTables[] = array("{$wgDBprefix}user_fbconnect", "$base/fbconnect_table.sql");
@@ -187,15 +192,15 @@ STYLE;
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Adds several Facebook Connect variables to the page:
-	 * 
+	 *
 	 * fbAPIKey			The application's API key (see $fbAPIKey in config.php)
 	 * fbUseMarkup		Should XFBML tags be rendered? (see $fbUseMarkup in config.php)
 	 * fbLoggedIn		(deprecated) Whether the PHP client reports the user being Connected
 	 * fbLogoutURL		(deprecated) The URL to be redirected to on a disconnect
-	 * 
+	 *
 	 * This hook was added in MediaWiki version 1.14. See:
 	 * http://svn.wikimedia.org/viewvc/mediawiki/trunk/phase3/includes/Skin.php?view=log&pathrev=38397
 	 * If we are not at revision 38397 or later, this function is called from BeforePageDisplay
@@ -203,26 +208,26 @@ STYLE;
 	 */
 	public static function MakeGlobalVariablesScript( &$vars ) {
 		global $wgTitle, $fbAppId, $fbUseMarkup, $fbLogo, $wgRequest;
-		
+
 		$thisurl = $wgTitle->getPrefixedURL();
 		$vars['fbAppId'] = $fbAppId;
 		#$vars['fbLoggedIn'] = FBConnect::$api->user() ? true : false;
 		$vars['fbUseMarkup'] = $fbUseMarkup;
 		$vars['fbLogo'] = $fbLogo ? true : false;
-		
+
 		$query = $wgRequest->getValues();
 		if (isset($query['title'])) {
 			unset($query['title']);
 		}
-		
+
 		$vars['wgPagequery'] = wfUrlencode( wfArrayToCGI( $query ) );
-		
+
 		$vars['fbLogoutURL'] = Skin::makeSpecialUrl('Userlogout',
-						$wgTitle->isSpecial('Preferences') ? '' : "returnto={$thisurl}");	
-	
+						$wgTitle->isSpecial('Preferences') ? '' : "returnto={$thisurl}");
+
 		return true;
 	}
-	
+
 	/**
 	 * Hack: Run MakeGlobalVariablesScript for backwards compatability.
 	 * The MakeGlobalVariablesScript hook was added to MediaWiki 1.14 in revision 38397:
@@ -246,7 +251,7 @@ STYLE;
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Installs a parser hook for every tag reported by FBConnectXFBML::availableTags().
 	 * Accomplishes this by asking FBConnectXFBML to create a hook function that then
@@ -259,16 +264,16 @@ STYLE;
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Modify the user's persinal toolbar (in the upper right).
-	 * 
+	 *
 	 * TODO: Better 'returnto' code
 	 */
 	public static function PersonalUrls( &$personal_urls, &$wgTitle ) {
 		global $wgUser, $wgLang, $wgShowIPinHeader, $fbPersonalUrls, $fbConnectOnly,$wgBlankImgUrl;
 		$skinName = get_class($wgUser->getSkin());
-		
+
 		wfLoadExtensionMessages('FBConnect');
 		// Get the logged-in user from the Facebook API
 		$fb = new FBConnectAPI();
@@ -281,7 +286,7 @@ STYLE;
 				array_key_exists('mytalk', $personal_urls)) {
 			unset($personal_urls['mytalk']);
 		}
-		
+
 		// If the user is logged in and connected
 		if ($wgUser->isLoggedIn() && $fb_user && count($ids) > 0 ) {
 			/*
@@ -301,7 +306,7 @@ STYLE;
 				}
 			}
 			// Replace logout link with a button to disconnect from Facebook Connect
-		
+
 			if(empty($fbPersonalUrls['hide_logout_of_fb'])){
 				if( $skinName == "SkinMonaco" ) {
 					$personal_urls['fblogout'] = array(
@@ -326,7 +331,7 @@ STYLE;
 		else if ($wgUser->isLoggedIn()) {
 			/*
 			 * Personal URLs option: hide_convert_button
-			 */	
+			 */
 			if (!$fbPersonalUrls['hide_convert_button']) {
 				if( $skinName == "SkinMonaco" ) {
 					$personal_urls['fbconvert'] = array(
@@ -343,7 +348,7 @@ STYLE;
 			/*
 			 * Personal URLs option: hide_connect_button
 			 */
-			
+
 			if (!$fbPersonalUrls['hide_connect_button']) {
 				// Add an option to connect via Facebook Connect
 				// RT#57141 - only show the connect link on monaco and answers.
@@ -359,7 +364,7 @@ STYLE;
 					$html = Xml::openElement("span",array("class" => "fb_button_text" ));
 					$html .= wfMsg( 'fbconnect-connect-simple' );
 					$html .= Xml::closeElement( "span" );
-		
+
 					$personal_urls['fbconnect']['text'] = $html;
 				}
 			}
@@ -375,16 +380,16 @@ STYLE;
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Modify the preferences form. At the moment, we simply turn the user name
 	 * into a link to the user's facebook profile.
-	 * 
+	 *
 	 * TODO!
 	 */
 	public static function RenderPreferencesForm( $form, $output ) {
 		global $wgUser;
-		
+
 		// If the user has a valid Facebook ID, link to the Facebook profile
 		$fb = new FBConnectAPI();
 		$fb_user = $fb->user();
@@ -411,13 +416,13 @@ STYLE;
 	 */
 	static function SpecialListusersFormatRow( &$item, $row ) {
 		global $fbSpecialUsers;
-		
+
 		// Only modify Facebook Connect users
 		if (!$fbSpecialUsers ||
 				!count(FBConnectDB::getFacebookIDs(User::newFromName($row->user_name)))) {
 			return true;
 		}
-		
+
 		// Look to see if class="..." appears in the link
 		$regs = array();
 		preg_match( '/^([^>]*?)class=(["\'])([^"]*)\2(.*)/', $item, $regs );
@@ -431,7 +436,7 @@ STYLE;
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Adds some info about the governing Facebook group to the header form of Special:ListUsers.
 	 */
@@ -464,7 +469,7 @@ STYLE;
 	        </table>';
 		return true;
 	}
-	
+
 	/**
 	 * Removes Special:UserLogin and Special:CreateAccount from the list of
 	 * special pages if $fbConnectOnly is set to true.
@@ -480,13 +485,13 @@ STYLE;
 		}
 		return true;
 	}
-	
+
 	/**
 	 * HACK: Please someone fix me or explain why this is necessary!
-	 * 
+	 *
 	 * Unstub $wgUser to avoid race conditions and stop returning stupid false
 	 * negatives!
-	 * 
+	 *
 	 * This might be due to a bug in User::getRights() [called from
 	 * User::isAllowed('read'), called from Title::userCanRead()], where mRights
 	 * is retrieved from an uninitialized user. From my probing, it seems that
@@ -502,7 +507,7 @@ STYLE;
 		$user->getId();
 		return true;
 	}
-	
+
 	/**
 	 * Removes the 'createaccount' right from users if $fbConnectOnly is true.
 	 */
@@ -518,22 +523,22 @@ STYLE;
 		}
 		return true;
 	}
-	
+
 	/**
 	 * If the user isn't logged in, try to auto-authenticate via Facebook
 	 * Connect. The Single Sign On magic of FBConnect happens in this function.
 	 */
 	static function UserLoadFromSession( $user, &$result ) {
 		global $wgCookiePrefix, $wgTitle, $wgOut, $wgUser;
-		
+
 		// Check to see if the user can be logged in from Facebook
 		$fb = new FBConnectAPI();
 		$fbId = $fb->user();
 		// Check to see if the user can be loaded from the session
-		$localId = isset($_COOKIE["{$wgCookiePrefix}UserID"]) ? 
+		$localId = isset($_COOKIE["{$wgCookiePrefix}UserID"]) ?
 				intval($_COOKIE["{$wgCookiePrefix}UserID"]) :
 				(isset($_SESSION['wsUserID']) ? $_SESSION['wsUserID'] : 0);
-		
+
 		// Case: Not logged into Facebook, but logged into the wiki
 		/*if (!$fbId && $localId) {
 			$mwUser = User::newFromId($localId);
@@ -582,10 +587,10 @@ STYLE;
 		// Case: Logged into Facebook, logged into the wiki
 		return true;
 	}
-	
+
 	/**
-	 * Create disconnect button and other things in pref 
-	 * 
+	 * Create disconnect button and other things in pref
+	 *
 	 */
 	static function initPreferencesExtensionForm($user, &$wgExtensionPreferences) {
 		global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgBlankImgUrl;
@@ -598,28 +603,28 @@ STYLE;
 			$html = Xml::openElement("div",array("id" => "fbDisconnectLink" ));
 				$html .= '<br/>'.wfMsg('fbconnect-disconnect-link');
 			$html .= Xml::closeElement( "div" );
-			
+
 			$html .= Xml::openElement("div",array("style" => "display:none","id" => "fbDisconnectProgress" ));
 				$html .= '<br/>'.wfMsg('fbconnect-disconnect-done');
 				$html .= Xml::openElement("img",array("id" => "fbDisconnectProgressImg", 'src' => $wgBlankImgUrl, "class" => "sprite progress" ),true);
 			$html .= Xml::closeElement( "div" );
-			
+
 			$html .= Xml::openElement("div",array("style" => "display:none","id" => "fbDisconnectDone" ));
 				$html .= '<br/>'.wfMsg('fbconnect-disconnect-info');
 			$html .= Xml::closeElement( "div" );
-			
+
 			$wgExtensionPreferences[] = array(
 					'html' => "<br>",
 					'type' => PREF_USER_T,
 					'section' => 'fbconnect-prefstext' );
-			
-			$wgExtensionPreferences[] = array(	
+
+			$wgExtensionPreferences[] = array(
 					'name' => 'fbconnect-push-allow-never',
 					'type' => PREF_TOGGLE_T,
 					'section' => 'fbconnect-prefstext',
 					'default' => 1);
-			
-			$wgExtensionPreferences[] = array(	
+
+			$wgExtensionPreferences[] = array(
 					'html' => $html,
 					'type' => PREF_USER_T,
 					'section' => 'fbconnect-prefstext' );
@@ -628,18 +633,18 @@ STYLE;
 			$loginButton = '<fb:login-button id="fbPrefsConnect" '.FBConnect::getPermissionsAttribute().FBConnect::getOnLoginAttribute().'></fb:login-button>';
 			$html = wfMsg('fbconnect-convert') . '<br/>' . $loginButton;
 			$html .= "<!-- Convert button -->\n";
-			$wgExtensionPreferences[] = array(	
+			$wgExtensionPreferences[] = array(
 					'html' => $html,
 					'type' => PREF_USER_T,
 					'section' => 'fbconnect-prefstext' );
 		}
 		return true;
 	}
-	
+
 	/*
-	 * Add facebook connect html to ajax script 
+	 * Add facebook connect html to ajax script
 	 */
-	
+
 	public static function afterAjaxLoginHTML( &$html ) {
 		$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 		wfLoadExtensionMessages('FBConnect');
@@ -651,7 +656,7 @@ STYLE;
 		$html = $tmpl->execute('ajaxLoginMerge');
 		return true;
 	}
-	
+
 	public static function SkinTemplatePageBeforeUserMsg(&$msg) {
 		global $wgRequest, $wgUser, $wgServer;
 		wfLoadExtensionMessages('FBConnect');
@@ -659,16 +664,16 @@ STYLE;
 		if ($wgRequest->getVal("fbconnected","") == 1) {
 			$id = FBConnectDB::getFacebookIDs($wgUser, DB_MASTER);
 			if( count($id) > 0 ) {
-				$msg =  Xml::element("img", array("id" => "fbMsgImage", "src" => $wgServer.'/skins/common/fbconnect/fbiconbig.png' )); 
+				$msg =  Xml::element("img", array("id" => "fbMsgImage", "src" => $wgServer.'/skins/common/fbconnect/fbiconbig.png' ));
 				$msg .= "<p>".wfMsg('fbconnect-connect-msg', array("$1" => $pref->getFullUrl() ))."</p>";
 			}
 		}
-		
+
 		if ($wgRequest->getVal("fbconnected","") == 2) {
 			$fb = new FBConnectAPI();
 			if( strlen($fb->user()) < 1 ) {
-				$msg =  Xml::element("img", array("id" => "fbMsgImage", "src" => $wgServer.'/skins/common/fbconnect/fbiconbig.png' )); 
-				$msg .= "<p>".wfMsg('fbconnect-connect-error-msg', array("$1" => $pref->getFullUrl() ))."</p>";				
+				$msg =  Xml::element("img", array("id" => "fbMsgImage", "src" => $wgServer.'/skins/common/fbconnect/fbiconbig.png' ));
+				$msg .= "<p>".wfMsg('fbconnect-connect-error-msg', array("$1" => $pref->getFullUrl() ))."</p>";
 			}
 		}
 		return true;
