@@ -673,7 +673,7 @@ STYLE;
 			$fb = new FBConnectAPI();
 			if( strlen($fb->user()) < 1 ) {
 				$msg =  Xml::element("img", array("id" => "fbMsgImage", "src" => $wgServer.'/skins/common/fbconnect/fbiconbig.png' ));
-				$msg .= "<p>".wfMsg('fbconnect-connect-error-msg', array("$1" => $pref->getFullUrl() ))."</p>";
+				$msg .= "<p>".wfMsgExt('fbconnect-connect-error-msg', 'parse', array("$1" => $pref->getFullUrl() ))."</p>";
 			}
 		}
 		return true;
