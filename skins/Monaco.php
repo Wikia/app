@@ -1409,7 +1409,7 @@ EOF;
 			if(strpos($urlName, "fb") === 0){
 				$data[$urlName] = array(
 					'text' => $urlData['text'],
-					'href' => $urlData['href']
+					'href' => isset($urlData['href'])?$urlData['href']:"#"
 				);
 				if(isset($urlData['active'])){
 					$data[$urlName]['active'] = $urlData['active'];
