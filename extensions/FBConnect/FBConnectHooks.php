@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright © 2008-2010 Garrett Brown <http://www.mediawiki.org/wiki/User:Gbruin>
+ * Copyright ï¿½ 2008-2010 Garrett Brown <http://www.mediawiki.org/wiki/User:Gbruin>
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -535,7 +535,7 @@ STYLE;
 				(isset($_SESSION['wsUserID']) ? $_SESSION['wsUserID'] : 0);
 		
 		// Case: Not logged into Facebook, but logged into the wiki
-		if (!$fbId && $localId) {
+		/*if (!$fbId && $localId) {
 			$mwUser = User::newFromId($localId);
 			// If the user was Connected, the JS should have logged them out...
 			// TODO: test to see if they logged in normally (with a password)
@@ -548,7 +548,9 @@ STYLE;
 			}
 		}
 		// Case: Logged into Facebook, not logged into the wiki
-		else if ($fbId && !$localId) {
+		else
+                */
+                if ($fbId && !$localId) {
 			// Look up the MW ID of the Facebook user
 			$mwUser = FBConnectDB::getUser($fbId);
 			$id = $mwUser ? $mwUser->getId() : 0;
