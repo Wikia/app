@@ -9,7 +9,6 @@
 class WikiaApiQueryEventsData extends ApiQueryBase {
 
 	private 
-		$mParams 		= false,
 		$mPageId		= false,
 		$mLogid			= false,
 		$mRevId 		= false,
@@ -415,7 +414,11 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		$vals = array ();
 		if ( $deleted == 0 ) {
 			$oRevision = new Revision($oRow);
-			$oTitle = $oRevision->getTitle();
+			if ( $oRow->is_archive == 1 ) {
+				$oTitle = Title::makeTitle( $oRow->page_namespace, $oRow->page_title );
+			} else {
+				$oTitle = $oRevision->getTitle();
+			}
 			$content = $oRevision->revText();
 
 			# revision id
