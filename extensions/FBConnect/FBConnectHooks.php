@@ -180,7 +180,7 @@ STYLE;
 	static function LoadExtensionSchemaUpdates() {
 		global $wgDBtype, $wgDBprefix, $wgExtNewTables, $wgSharedDB, $wgDBname;
 
-		if( !empty( $wgSharedDB ) && $wgSharedDB == $wgDBname ) {
+		if( !empty( $wgSharedDB ) && $wgSharedDB !== $wgDBname ) {
 			return true;
 		}
 
