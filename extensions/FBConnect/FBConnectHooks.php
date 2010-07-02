@@ -352,7 +352,7 @@ STYLE;
 			if (!$fbPersonalUrls['hide_connect_button']) {
 				// Add an option to connect via Facebook Connect
 				// RT#57141 - only show the connect link on monaco and answers.
-				if( $skinName == "SkinAnswers" ) { // answers skin might actually get caught under SkinMonaco below.  Regardless, all other skins shouldn't get this link.
+				if(( $skinName == "SkinMonaco" ) || ( $skinName == "SkinAnswers" )) { // answers skin might actually get caught under SkinMonaco below.  Regardless, all other skins shouldn't get this link.
 					$personal_urls['fbconnect'] = array(
 						'text'   => wfMsg( 'fbconnect-connect' ),
 						'class' => 'fb_button fb_button_small',
