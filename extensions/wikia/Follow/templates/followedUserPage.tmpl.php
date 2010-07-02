@@ -2,7 +2,7 @@
 
 <span>
 	<?php if($isLogin): ?>
-		<a id="follow_hide_link" href="<?php echo $hideUrl; ?>">(<?php echo wfMsg('wikiafollowedpages-userpage-hide'); ?>)</a>
+		<a title="<?php echo wfMsg('wikiafollowedpages-userpage-hide-tooltip'); ?>" id="follow_hide_link" href="<?php echo $hideUrl; ?>">(<?php echo wfMsg('wikiafollowedpages-userpage-hide'); ?>)</a>
 	<?php endif; ?>
 </span> 
 
