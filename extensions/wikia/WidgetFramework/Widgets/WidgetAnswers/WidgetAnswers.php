@@ -53,15 +53,7 @@ function WidgetAnswers($id, $params) {
 </form>
 EOD;
 
-	if($wgUser->isLoggedIn()) {
-		if(in_array('sysop', $wgUser->getGroups())) {
-			$output = '<div class="widget_answers_note">'.wfMsgForContent('answers_widget_admin_note').'</div>';
-		} else {
 			$output = '<div class="widget_answers_note">'.wfMsgForContent('answers_widget_user_note').'</div>';
-		}
-	} else {
-		$output = $askform;
-	}
 
 	$output .= '<div style="padding: 7px;"><b>'.wfMsgForContent('recent_asked_questions').'</b></div>';
 
@@ -103,9 +95,6 @@ EOD;
 	$url = 'http://'.$domain.'/api.php?'.http_build_query($apiparams);
 
 	$no_questions = wfMsgForContent("answers_widget_no_questions");
-	if ( in_array( $wgTitle->getNamespace(), $wgContentNamespaces ) ) {
-		$no_questions .= wfMsgForContent( 'answers_widget_no_questions_askabout' );
-	}
 
 	$no_questions = Xml::encodeJsVar($no_questions);
 
@@ -136,11 +125,7 @@ if(WidgetAnswers_html == '') {
 /*]]>*/</script>
 EOD;
 
-	if($wgUser->isLoggedIn()) {
 		$output .= $askform;
-	} else {
-		$output .= '<div class="widget_answers_note">'.wfMsgForContent('answers_widget_anon_note').'</div>';
-	}
 
 	wfProfileOut(__METHOD__);
 	return $output;
