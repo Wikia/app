@@ -81,10 +81,6 @@ class WidgetFramework {
 					),
 				);
 
-				// RT #28807
-				global $wgCityId;
-				$isRecipesWiki = ($wgCityId == 3355);
-
 				// Turn this widget on for anons if the wiki factory variable is on
 				global $wgEnableAnswersMonacoWidget;
 				if ($wgEnableAnswersMonacoWidget){
