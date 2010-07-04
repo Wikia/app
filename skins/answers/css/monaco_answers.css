@@ -933,7 +933,8 @@ div.userInfoNoAvatar .userPoints {
 /* activity feed for new questions only */
 .ActivityFeedNewOnly .activity-type-edit,
 .ActivityFeedNewOnly .activity-type-move,
-.ActivityFeedNewOnly .activity-type-talk { 
+.ActivityFeedNewOnly .activity-type-talk,
+.ActivityFeedNewOnly .activity-type-categorization {
 	display:none; 
 }
 
