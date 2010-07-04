@@ -17,6 +17,7 @@ $wgExtensionAliasesFiles['MyHome'] = $dir . 'SpecialMyHome.alias.php';
 // Special:ActivityFeed
 $wgAutoloadClasses['SpecialActivityFeed'] = $dir.'SpecialActivityFeed.class.php';
 $wgSpecialPages['ActivityFeed'] = 'SpecialActivityFeed';
+$wgSpecialPageGroups['ActivityFeed'] = 'changes';
 
 // hooks
 $wgHooks['CustomUserData'][] = 'MyHome::addToUserMenu';
