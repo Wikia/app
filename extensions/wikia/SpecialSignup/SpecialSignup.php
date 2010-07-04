@@ -19,7 +19,7 @@ $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['Signup'] = $dir.'SpecialSignup.class.php';
 
 $wgSpecialPages['Signup'] = 'Signup';
-$wgSpecialPageGroups['Signup'] = 'users';
+$wgSpecialPageGroups['Signup'] = 'login';
 $wgExtensionAliasesFiles['Signup'] = $dir . 'SpecialSignup.alias.php';
 
 $wgExtensionMessagesFiles['Signup'] = $dir . 'Signup.i18n.php';
