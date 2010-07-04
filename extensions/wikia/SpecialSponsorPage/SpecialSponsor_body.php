@@ -21,7 +21,7 @@
 class SpecialSponsor extends SpecialPage {
 	
 	private $priceAry=array();//price points for sponsorships
-	
+
 	public function __construct() {
 		parent::__construct( 'Sponsor' );
 		
@@ -29,12 +29,12 @@ class SpecialSponsor extends SpecialPage {
 		// $5 per month
 		$this->priceAry['5mo']['price'] = 5;
 		$this->priceAry['5mo']['months']=1;
-		$this->priceAry['5mo']['text'] = "$5 per month";
+		$this->priceAry['5mo']['text'] = "sponsor-price-5mo";
 		
 		// $45 per year
 		$this->priceAry['45yr']['price']=45;
 		$this->priceAry['45yr']['months']=12;
-		$this->priceAry['45yr']['text']="$45 per year";
+		$this->priceAry['45yr']['text']="sponsor-price-45yr";
 	}
 	
 	public function execute( $par ) {
@@ -55,11 +55,12 @@ class SpecialSponsor extends SpecialPage {
 					$this->loadAdPrices($ad);
 					$check = $ad->validate();
 					if($check === true){
-						$wgOut->addHTML('<p>Here is what your sponsorship will look like - click "edit" to go back and make changes, or "save" to save it and go to Paypal</p>');
+						$wgOut->addWikiMsg('sponsor-preview-prompt');
 						$wgOut->addHTML($ad->OutPutHTML());
 						$wgOut->addHTML($this->makeHiddenForm($ad));
 					}else{
-						$wgOut->addHTML('<div><p>There are errors in your submission:</p>');
+						$wgOut->addHTML('<div>');
+						$wgOut->addWikiMsg('sponsor-preview-errors');
 						if(count($check) > 0){
 							foreach($check as $err){
 								$wgOut->addHTML('<p>'.$err.'</p>');
@@ -78,7 +79,8 @@ class SpecialSponsor extends SpecialPage {
 						$ad->Save();
 						$wgOut->addHTML($this->makePayPalForm($ad));
 					}else{
-						$wgOut->addHTML('<div><p>There are errors in your submission:</p>');
+						$wgOut->addHTML('<div>');
+						$wgOut->addWikiMsg('sponsor-preview-errors');
 						if(count($check) > 0){
 							foreach($check as $err){
 								$wgOut->addHTML('<p>'.$err.'</p>');
@@ -148,28 +150,28 @@ class SpecialSponsor extends SpecialPage {
 		$form  = Xml::openElement( 'form', array( 'method' => 'post', 'action' => $self->getLocalUrl() ) );
 		$form .= Xml::hidden( 'token', $wgUser->editToken( 'sponsor' ) );
 		$form .= '<table>
-			<tr><td>URL of sponsoring website (your website): </td>
+			<tr><td>' . wfMsg('sponsor-form-url') . '</td>
 				<td><input type="text" name="ad_link_url" size="30" value="'.htmlentities($ad->ad_link_url).'" /></td></tr>
-			<tr><td>Text you want displayed in the link:</td>
+			<tr><td>' . wfMsg('sponsor-form-linktext') . '</td>
 				<td><input type="text" name="ad_link_text" size="30" value="'.htmlentities($ad->ad_link_text).'" /></td></tr>
 			
-			<tr><td>Text to be displayed under your link:</td>
+			<tr><td>' . wfMsg('sponsor-form-additionaltext') . '</td>
 				<td><textarea name="ad_text" cols="30">'.htmlentities($ad->ad_text).'</textarea></td></tr>
-			<tr><td>Page to sponsor:</td>
+			<tr><td>' . wfMsg('sponsor-form-page') . '</td>
 				<td><input type="text" name="page_name"'.$pageclass.' size="30" value="'.htmlentities($pageName).'" /></td></tr>
-			<tr><td>Sponsorship amount: </td>
+			<tr><td>' . wfMsg('sponsor-form-price') . '</td>
 				<td><select name="price_duration"/>'."\n";
 		foreach($this->priceAry as $key=>$opt){
 			$selected='';
 			if($key == $price_duration){
 				$selected=' selected="selected" ';
 			};
-			$form .= '	<option value="'.$key.'"'.$selected.'>'.$opt['text'].'</option>'."\n";
+			$form .= '	<option value="'.$key.'"'.$selected.'>'. wfMsg( $opt['text'] ) . '</option>'."\n";
 		}
 				$form .= '</select>
 				
 				(USD)</td></tr>
-			<tr><td>Your email:</td><td><input type="text" name="user_email" value="'.htmlentities($ad->user_email).'" /></td></tr>
+			<tr><td>' . wfMsg('sponsor-form-email') . '</td><td><input type="text" name="user_email" value="'.htmlentities($ad->user_email).'" /></td></tr>
 			<tr><td></td><td><input type="submit" name="submit" value="preview" /></td></tr>
 				</table>'."\n";
 		$form .= Xml::closeElement( 'form' );
@@ -194,7 +196,7 @@ class SpecialSponsor extends SpecialPage {
 		$item_name = "Wikia Sponsorship for ". $ad->page_original_url;
 		$price = $ad->ad_price;
 		$duration = $ad->ad_months;
-		$form = '<p>Thank You for your Sponsorship!</p>
+		$form = '<p>' . wfMsg('sponsor-form-thanks') . '</p>
 		<form name="paypalform" id="paypalform" action="https://www.paypal.com/cgi-bin/webscr" method="post">
 			<input type="image" src="https://www.paypal.com/en_US/i/btn/btn_subscribe_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
 			<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1"><br />
