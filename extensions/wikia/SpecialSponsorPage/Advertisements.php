@@ -136,7 +136,6 @@ class Advertisement
 		$fields = '*';
 		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 		//$dbr = wfGetDB( DB_SLAVE,$wgExternalSharedDB );
-
 		$res = $dbr->select(
 			'advert_ads',
 			$fields,

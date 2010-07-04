@@ -76,7 +76,6 @@ class AdDisplay {
 
 	/**
 	 * Shows the sponsorship message
-	 * Later, use a wfmsg for the actual message
 	 *
 	 * @return string
 	 * @public
@@ -88,17 +87,6 @@ class AdDisplay {
 		$specUrl = $specPage->getLocalURL("page_name=".$page);
 		$fullUrl = $specPage->getFullUrl(array("page_name"=>$page));
 		$text = wfMsg( 'sponsor-msg', $fullUrl );
-		return $text;
-	}
-
-	public static function ShowSponsorMessageOld(){
-		global $wgTitle, $wgParser;
-		$page = $wgTitle->getText();
-		$specPage = Title::newFromText("Special:Sponsor");
-		$specUrl = $specPage->getLocalURL("page_name=".$page);
-		$text = "\n".'<div class="sponsormsg" style="border:1px black solid; padding:2em;">';
-		$text .= '<p><a href="'.$specUrl.'">Sponsor this page</a></p>';
-		$text .= "</div>\n";
 		return $text;
 	}
 
