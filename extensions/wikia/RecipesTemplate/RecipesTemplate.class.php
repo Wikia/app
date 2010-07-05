@@ -22,23 +22,12 @@ abstract class RecipesTemplate extends SpecialPage {
 	private $mErrorMessage = null;
 
 	// create forms toggles
-	protected static $mToggles = array(
-		array(
-			'name' => 'recipe',
-			'specialPage' => 'CreateRecipe',
-		),
-		array(
-			'name' => 'ingredient',
-			'specialPage' => 'CreateIngredient',
-		),
-		array(
-			'name' => 'blank',
-			'specialPage' => 'CreatePage',
-		),
-	);
+	private $mToggles = array();
 
 	public function __construct( $name = '', $restriction = '', $listed = true, $function = false, $file = 'default', $includable = false ) {
 		wfLoadExtensionMessages('RecipesTemplate');
+
+		$this->mToggles = self::getToggles();
 
 		parent::__construct( $name, $restriction, $listed, $function, $file, $includable );
 	}
@@ -63,6 +52,33 @@ abstract class RecipesTemplate extends SpecialPage {
 	 */
 	protected function isFormValidated() {
 		return $this->mValidated !== false;
+	}
+
+	/**
+	 * Get list of available form types
+	 */
+	static function getToggles() {
+		$aToggles = array();
+
+		$togglesRaw = explode( "\n", wfMsgForContent( 'recipes-template-toggles' ) );
+
+		foreach ( $togglesRaw as $item ) {
+			$item = trim( $item, '* ' );
+			$a = explode( '|', $item );
+
+			$toggle = array(
+				'name' => $a[0],
+				'specialPage' => $a[1],
+			);
+
+			if ( !empty( $a[2] ) ) {
+				$toggle['type'] = $a[2];
+			}
+
+			$aToggles[] = $toggle;
+		}
+
+		return $aToggles;
 	}
 
 	/**
@@ -437,7 +453,8 @@ abstract class RecipesTemplate extends SpecialPage {
 				'link_tip' => wfMsg('link_tip'),
 			),
 			'preview' => $this->mPreview,
-			'toggles' => self::$mToggles,
+			'toggles' => $this->mToggles,
+			'type' => $this->mType,
 		));
                 $html = $tpl->render('renderForm');
 
@@ -459,7 +476,7 @@ abstract class RecipesTemplate extends SpecialPage {
 		// render toggle
 		$tpl = new EasyTemplate(dirname(__FILE__).'/templates');
 		$tpl->set_vars(array(
-			'toggles' => self::$mToggles,
+			'toggles' => self::getToggles(),
 		));
 		$html = $tpl->render('toggleForms');
 

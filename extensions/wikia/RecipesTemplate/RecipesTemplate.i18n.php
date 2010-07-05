@@ -5,6 +5,10 @@ $messages = array();
 $messages['en'] = array(
 	'createingredient' => 'Create an ingredient page',
 	'createrecipe' => 'Create a recipe page',
+	'createfromtemplate' => 'Create a page from a template',
+	'recipes-template-toggles' => '* ingredient|CreateIngredient
+* recipe|CreateRecipe
+* blank|CreatePage',
 	'recipes-template-browse' => 'Browse',
 	'recipes-template-buying-hint' => 'Where can you buy it? How do you choose it? Does it have a season?',
 	'recipes-template-buying-label' => 'Buying:',
@@ -39,6 +43,7 @@ $messages['en'] = array(
 	'recipes-template-production-label' => 'Production:',
 	'recipes-template-publish-ingredient-value' => 'Publish Ingredient Page',
 	'recipes-template-publish-recipe-value' => 'Publish Recipe',
+	'recipes-template-publish-fromtemplate-value' => 'Publish',
 	'recipes-template-recipe-edit-summary' => 'Creating a recipe',
 	'recipes-template-time-format' => '{{#ifexpr: $1>0 | $1 {{PLURAL:$1|hour|hours}} | }}, {{#ifexpr: $2>0 | $2 {{PLURAL:$2|minute|minutes}} | }}',
 	'recipes-template-title-format' => '$1 by $2',

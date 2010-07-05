@@ -21,8 +21,10 @@ $wgAutoloadClasses['RecipesTemplateAjax'] = $dir.'RecipesTemplateAjax.class.php'
 // register special pages
 $wgAutoloadClasses['SpecialCreateIngredient'] = $dir.'SpecialCreateIngredient.class.php';
 $wgAutoloadClasses['SpecialCreateRecipe'] = $dir.'SpecialCreateRecipe.class.php';
+$wgAutoloadClasses['SpecialCreateFromTemplate'] = $dir.'SpecialCreateFromTemplate.class.php';
 $wgSpecialPages['CreateIngredient'] = 'SpecialCreateIngredient';
 $wgSpecialPages['CreateRecipe'] = 'SpecialCreateRecipe';
+$wgSpecialPages['CreateFromTemplate'] = 'SpecialCreateFromTemplate';
 
 // hooks
 $wgHooks['EditPage::showEditForm:initial'][] = 'RecipesTemplate::showCreatePageToggle';
