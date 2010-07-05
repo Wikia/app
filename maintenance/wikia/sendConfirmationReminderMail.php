@@ -18,8 +18,8 @@ if (isset($options['help'])) {
 	die( "send Confirmation Reminder Mail");
 }
 
-$from = wfTimestamp( TS_MW, mktime(0, 0, 0, date("m")  , date("d"), date("Y")) );
-$to = wfTimestamp( TS_MW,  mktime(0, 0, 0, date("m")  , date("d")+1, date("Y")) );		
+$from = wfTimestamp( TS_MW, mktime(0, 0, 0, date("m")  , date("d")-7, date("Y")) );
+$to = wfTimestamp( TS_MW,  mktime(0, 0, 0, date("m")  , date("d")-6, date("Y")) );
 
 $con = '1
 		and user_email is not null 
