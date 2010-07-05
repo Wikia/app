@@ -47,7 +47,8 @@ function WidgetCategoryCloud($id, $params) {
 	return $output;
 }
 
-function WidgetCategoryCloudGetData() {
+/* old version, not used anymore */
+function REMOVE_WidgetCategoryCloudGetData() {
 	$data = array();
 
 	wfProfileIn( __METHOD__ );
@@ -65,6 +66,28 @@ function WidgetCategoryCloudGetData() {
 
 		$data[$row->cat_title] = $row->cat_pages + $row->cat_files;
 	}
+
+	wfProfileOut(__METHOD__);
+	return $data;
+}
+
+function WidgetCategoryCloudGetData() {
+	$LIMIT = 40; // rt#56586
+
+	$data = array();
+
+	wfProfileIn( __METHOD__ );
+
+	$class = new MostpopularcategoriesSpecialPage();
+	$class->execute($LIMIT * 2, 0, false);
+	foreach ($class->getResult() as $name => $value) {
+		if (WidgetCategoryCloudSkipRow($name)) continue;
+
+		$data[$name] = $value;
+	}
+
+	$data = array_slice($data, 0, $LIMIT, true);
+	ksort($data);
 
 	wfProfileOut(__METHOD__);
 	return $data;
