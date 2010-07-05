@@ -1,3 +1,6 @@
+== Changes since 201007.2 ==
+* rt#57393: Fixed some Special:Signup CSS problems (TOR)
+
 == Changes since 201007.1 ==
 * rt#51380: Remove Special:Following from public view (Tomek)
 * rt#48343: Special:Following - change "Show All" link to "Show More" type (Tomek)

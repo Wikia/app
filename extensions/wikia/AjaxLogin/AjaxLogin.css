@@ -14,17 +14,8 @@
 	padding: 10px 0;
 	text-align: center;
 }
-#AjaxLoginBox a{
-	color:#00f;
-}
-#AjaxLoginBox .accent{
-	background-color: #D6E0F5;
-}
 #AjaxLoginBox .wikia-tabs .selected{
 	background-color: #fff;
-}
-#AjaxLoginBox .accent a{
-	color:#000;
 }
 #AjaxLoginFBStart {
 	position: relative;
