@@ -65,6 +65,16 @@ while ( $dbw->selectField( 'job', 'job_id', $conds, 'runJobs.php' ) ) {
 		} else {
 			runJobsLog( $job->toString() . " t=$timeMs good" );
 		}
+
+		/**
+		 * free memory, start of wikia change, 2010-07-05
+		 */
+		$job->__destroy();
+		unset( $job );
+		/**
+		 * end of wikia change
+		 */
+
 		if ( $maxJobs && ++$n > $maxJobs ) {
 			break 2;
 		}
@@ -76,5 +86,3 @@ function runJobsLog( $msg ) {
 	print wfTimestamp( TS_DB ) . " $msg\n";
 	wfDebugLog( 'runJobs', $msg );
 }
-
-
