@@ -104,7 +104,6 @@ class SpecialAdminAds extends SpecialPage {
 		if(in_array($viewstatus,$adstatuses)){
 			$selectParams = array('ad_status'=>$viewstatus);
 		}
-		$ads = Advertisement::LoadAdsFromDB($selectParams,$this->adlimit+1,$startlimit);
 		$form .= Xml::openElement( 'form', array( 'method' => 'post', 'action' => $self->getLocalUrl() ) );
 		$form .= Xml::hidden( 'token', $wgUser->editToken( 'moderate' ) );
 		//view unmoderated, moderated, declined ads...?
@@ -120,17 +119,15 @@ class SpecialAdminAds extends SpecialPage {
 		$form .= '</select>';
 		$form .= ' Ads ';
 		$form .= '<button type="submit" name="refresh" value="refresh">Refresh</button>';
-		if(is_array($ads)){
-			$pagesize = $this->adlimit;
-			$nextpage = false;
-			if(count($ads) < $this->adlimit){
-				$pagesize = count($ads);
-			}else{
-				$nextpage = true;
-			}
-			$form .= $this->MakeAdTable($ads,$pagesize, true);
-		}
+
+		$pager = new AdminAdsPager();
+
+		$form .= $pager->getNavigationBar();
+		$form .= $pager->getBody();
+		$form .= $pager->getNavigationBar();
+
 		$form .= Xml::closeElement( 'form' );
+
 		return $form;
 	}
 	
@@ -306,8 +303,99 @@ class SpecialAdminAds extends SpecialPage {
 			$form = "Invalid Ad ID";
 		}
 		return $form;
+	}	
+}
+
+class AdminAdsPager extends TablePager {
+
+	function __construct() {
+		global $wgExternalSharedDB;
+
+		parent::__construct();
+		$this->mDb = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 	}
 
-	
-	
+	function getQueryInfo() {
+		global $wgRequest;
+
+		$query = array();
+
+		$query['tables'] = 'advert_ads';
+		$query['fields'] = '*';
+		$query['cpnds'] = '';
+		$query['options'] = '';
+
+		$status = $wgRequest->getInt( 'adstoview', -1 );
+
+		if ( $status !== -1 ) {
+			$query['conds'] = array( 'ad_status' => $status );
+		
+		}
+
+		return $query;
+	}
+
+	function isFieldSortable( $field ) {
+		if ( $field == 'ad_id' || $field == 'last_pay_date' ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	function formatValue( $name, $value ) {
+		if ( $value === '' ) {
+			return $value;
+		}
+
+		switch ( $name ) {
+			case 'user_email':
+				return Xml::element( 'a', array( 'href' => "mailto:" . $value ), $value );
+			case 'ad_link_url':
+				return Xml::element( 'a', array( 'href' => "http://" . $value, 'class' => 'external' ), $value );
+			case 'page_original_url':
+				$pageName = str_replace( '_', ' ', array_pop( explode( '/', $value ) ) );
+				return Xml::element( 'a', array( 'href' => $value ), $pageName );
+		}
+
+		return $value;
+	}
+
+	function getDefaultSort() {
+		return 'last_pay_date';
+	}
+
+	function formatRow( $row ) {
+		$html = '<button type="submit" name="edit" value="'.$row->ad_id.'">edit</button>';
+		$html .= '<button type="submit" name="approve" value="'.$row->ad_id.'">approve</button>';
+		$html .= '<button type="submit" name="remove" value="'.$row->ad_id.'">remove</button>';
+
+		$row->buttons = $html;
+
+		return parent::formatRow( $row );
+	}
+
+	function getFieldNames() {
+		return array(
+				'ad_id' => 'ID',
+				'wiki_db' => 'wiki',
+				'page_original_url' => 'Original page',
+				'ad_link_url' => 'Sponsor URL',
+				'ad_link_text' => 'Sponsor link',
+				'ad_text' => 'Sponsor HTML',
+				'last_pay_date' => 'Last payment',
+				'user_email' => 'Email',
+				'ad_status' => 'Status',
+				'buttons' => 'Controls',
+			    );
+	}
+
+/*
+		$html .= '<button type="submit" name="edit" value="'.$row->ad_id.'">edit</button>';
+		$html .= '<button type="submit" name="approve" value="'.$row->ad_id.'">approve</button>';
+		$html .= '<button type="submit" name="remove" value="'.$row->ad_id.'">remove</button>';
+
+		return $html;
+*/
+
 }
