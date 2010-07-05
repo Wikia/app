@@ -69,7 +69,6 @@ while ( $dbw->selectField( 'job', 'job_id', $conds, 'runJobs.php' ) ) {
 		/**
 		 * free memory, start of wikia change, 2010-07-05
 		 */
-		$job->__destroy();
 		unset( $job );
 		/**
 		 * end of wikia change
