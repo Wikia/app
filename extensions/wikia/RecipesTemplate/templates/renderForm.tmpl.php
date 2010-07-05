@@ -20,6 +20,13 @@
 	}
 ?>
 <form action="<?= htmlspecialchars($formAction) ?>" method="post">
+<?php
+	if ( !empty( $type ) ) {
+?>
+	<input type="hidden" name="type" value="<?= $type ?>"/>
+<?php
+	}
+?>
 <table class="recipes-template-form reset">
 	<colgroup>
 		<col width="150" />
