@@ -1,8 +1,8 @@
 == Changes since 201007.1 ==
-* rt#51380: Remove Special:Following from public view
-* rt#48343: Special:Following - change "Show All" link to "Show More" type
-* rt#48234: Followed pages - user page box hide link needs a tooltip
-* rt#39024: create delayed reminder email for email verification
+* rt#51380: Remove Special:Following from public view (Tomek)
+* rt#48343: Special:Following - change "Show All" link to "Show More" type (Tomek)
+* rt#48234: Followed pages - user page box hide link needs a tooltip (Tomek)
+* rt#39024: create delayed reminder email for email verification (Tomek)
 * rt#56586: WidgetCategoryCloud shows all categories - fix (Nef)
 * rt#48450: move answers widget text to top (Nef)
 * rt#57081: Can't get images from Flickr (eloy)
