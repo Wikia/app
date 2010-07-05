@@ -307,6 +307,10 @@ class SpecialAdminAds extends SpecialPage {
 }
 
 class AdminAdsPager extends TablePager {
+	var $mSortableFields = array(
+		'ad_id',
+		'last_pay_date'
+		);
 
 	function __construct() {
 		global $wgExternalSharedDB;
@@ -336,11 +340,7 @@ class AdminAdsPager extends TablePager {
 	}
 
 	function isFieldSortable( $field ) {
-		if ( $field == 'ad_id' || $field == 'last_pay_date' ) {
-			return true;
-		}
-
-		return false;
+		return in_array( $field, $this->mSortableFields );
 	}
 
 	function formatValue( $name, $value ) {
@@ -356,9 +356,9 @@ class AdminAdsPager extends TablePager {
 			case 'page_original_url':
 				$pageName = str_replace( '_', ' ', array_pop( explode( '/', $value ) ) );
 				return Xml::element( 'a', array( 'href' => $value ), $pageName );
+			default:
+				return $value;
 		}
-
-		return $value;
 	}
 
 	function getDefaultSort() {
@@ -389,13 +389,4 @@ class AdminAdsPager extends TablePager {
 				'buttons' => 'Controls',
 			    );
 	}
-
-/*
-		$html .= '<button type="submit" name="edit" value="'.$row->ad_id.'">edit</button>';
-		$html .= '<button type="submit" name="approve" value="'.$row->ad_id.'">approve</button>';
-		$html .= '<button type="submit" name="remove" value="'.$row->ad_id.'">remove</button>';
-
-		return $html;
-*/
-
 }
