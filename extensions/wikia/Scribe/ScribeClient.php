@@ -48,13 +48,18 @@ class WScribeClient {
 		}
 		
 		if ( empty($wgScribeSendTimeout) ) {
-			$wgScribeSendTimeout = 100000;
+			$wgScribeSendTimeout = 60000;
+		}
+		
+		if ( empty($wgScribeRecvTimeout) ) {
+			$wgScribeRecvTimeout = 60000;
 		}
 		
 		$this->connected = true;
 		try {
 			$this->socket = new TSocket($wgScribeHost, $wgScribePort, true);
 			$this->socket->setSendTimeout($wgScribeSendTimeout);
+			$this->socket->setRecvTimeout($wgScribeRecvTimeout);
 			$this->transport = new TFramedTransport($this->socket);
 			$this->protocol = new TBinaryProtocol($this->transport, false, false);
 			$this->client = new scribeClient($this->protocol, $this->protocol);
