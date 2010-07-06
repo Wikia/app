@@ -252,8 +252,9 @@ class FollowHelper {
 		
 		$user_id = $wgRequest->getVal( 'user_id' );
 		$head = $wgRequest->getVal( 'head' );
-
-		$response = new AjaxResponse();
+                $from = $wgRequest->getVal( 'from' );
+                
+                $response = new AjaxResponse();
 		
 		$user = User::newFromId($user_id);
 		if ( empty($user) || $user->getOption('hidefollowedpages') ) {
@@ -266,7 +267,7 @@ class FollowHelper {
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 		$template->set_vars(
 			array (
-				"data" 	=> FollowModel::getWatchList( $user_id, 99999, $head ),
+				"data" 	=> FollowModel::getWatchList( $user_id, $from, FollowModel::$ajaxListLimit ,$head ),
 				"owner" => $wgUser->getId() == $user_id,
 				"user_id" =>  $user_id,
 				"more" => true,
@@ -356,7 +357,9 @@ class FollowHelper {
 	 */
 	
 	static public function jsVars($vars) {
-		$vars[ 'wgEnableWikiaFollowedPages' ] = true; 
+		$vars[ 'wgEnableWikiaFollowedPages' ] = true;
+                $vars[ 'wgFollowedPagesPagerLimit' ] = FollowModel::$specialPageListLimit;
+                $vars[ 'wgFollowedPagesPagerLimitAjax' ] = FollowModel::$ajaxListLimit;
 		return true;	
 	} 
 	
@@ -399,7 +402,7 @@ class FollowHelper {
 	
 	
 	static public function renderUserProfile(&$out) {
-		global $wgTitle, $wgRequest, $wgOut, $wgStyleVersion, $wgExtensionsPath, $wgScriptPath, $wgJsMimeType, $wgStyleVersion, $wgUser;
+		global $wgTitle, $wgRequest, $wgOut, $wgStyleVersion, $wgExtensionsPath, $wgJsMimeType, $wgStyleVersion, $wgUser;
 		wfProfileIn(__METHOD__);
 		if( ($wgUser->getId() != 0) && ($wgRequest->getVal( "hide_followed", 0) == 1) ) {
 			$wgUser->setOption( "hidefollowedpages", true ); 
@@ -456,7 +459,6 @@ class FollowHelper {
 		);
 		wfProfileOut(__METHOD__);
 		$out['followedPages'] = $template->render( "followedUserPage" );
-		$wgOut->addStyle('../..' . $wgScriptPath . '/extensions/wikia/Follow/css/follow_sidebar.css');
 		return true;
 	}
 	

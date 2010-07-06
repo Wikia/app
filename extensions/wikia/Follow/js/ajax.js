@@ -1,121 +1,101 @@
 $(function(){
-	$('.ajax-unwatch').click(Follow.uwatch);
-	$('.ajax-show-more').click(Follow.showMore);
-	$('.ajax-show-more').show();
-	$('#enotiffollowedminoredits,#enotiffollowedpages,#enotifminoredits,#enotifwatchlistpages').click(Follow.syncUserPrefs);
-	
-	$('.watched-list li').hover( Follow.hover,Follow.unhover );
-	$('.title-link').click(Follow.tracklick);
-	
-	$('#unhide_list').click( function() {
-	    WET.byStr( 'WikiaFollowedPages/specialpage/unhide' );   
-	});
+    $('.ajax-unwatch').click(Follow.uwatch);
+    $('.ajax-show-more').click(Follow.showMore);
+    $('.ajax-show-more').show();
+    $('#enotiffollowedminoredits,#enotiffollowedpages,#enotifminoredits,#enotifwatchlistpages').click(Follow.syncUserPrefs);
+
+    $('.watched-list li').hover( Follow.hover,Follow.unhover );
+    $('.title-link').click(Follow.tracklick);
+
+    $('#unhide_list').click( function() {
+        WET.byStr( 'WikiaFollowedPages/specialpage/unhide' );
+    });
 });
 
 
 Follow = {};
 
 Follow.tracklick = function(e) {
-	var index = 0;
-	var ul = null;
-	var msg = "";
-	ul = $( $(e.target).parent().parent().parent() );
-	index = $(e.target).parent().parent().index() + 1;
-    msg = ul.attr("id").split("-"); 
-    WET.byStr( 'WikiaFollowedPages/specialpage/links/' + msg[3] + '/' + index );    	
+    var index = 0;
+    var ul = null;
+    var msg = "";
+    ul =  $(e.target).closest("UL");
+    index = $(e.target).closest("LI").index() + 1;
+    msg = ul.attr("id").split("-");
+    WET.byStr( 'WikiaFollowedPages/specialpage/links/' + msg[3] + '/' + index );
 }
 
 Follow.hover = function(e) {
-	if (e.target.tagName == "SPAN" ) {
-		$(e.target.parentNode).find(".otherNs,.ajax-unwatch").css('visibility', 'visible');
-		return true;
-	}
-	
-	if (e.target.tagName == "A" ) {
-		$(e.target.parentNode.parentNode).find(".otherNs,.ajax-unwatch").css('visibility', 'visible');
-		return true;
-	}	
-	
-    $(e.target).find(".otherNs,.ajax-unwatch").css('visibility', 'visible');	
+    $(e.target).closest("LI").find(".otherNs,.ajax-unwatch").css('visibility', 'visible');
 }
 
 
 Follow.unhover = function(e) {
-	$(".otherNs,.ajax-unwatch").css('visibility', 'hidden');
+    $(".otherNs,.ajax-unwatch").css('visibility', 'hidden');
 }
 
 
 Follow.uwatch = function(e) {
-	var url = "";
-	var index = 0;
-	var ul = null;
-	var msg = "";
-	if (e.target.tagName == "IMG") {
-		url = $(e.target.parentNode).attr("href");
-		ul = $( $(e.target).parent().parent().parent() );
-		index = $(e.target).parent().parent().index() + 1;
-	} else {
-		url = $(e.target).attr("href");
-		index = $(e.target).parent().index() + 1;
-		ul = $( $(e.target).parent().parent() );
-	}	
-	
-    msg = ul.attr("id").split("-"); 
-    WET.byStr( 'WikiaFollowedPages/specialpage/delete/' + msg[3] + '/' + index);    
-    
-	$.ajax({
-		  url: url,
-		  success: function() {
-			window.location.reload();
-		  }
-		});	
-	return false;
+    var msg = "";
+    var target = $(e.target);
+
+    var url = target.closest("A").attr("href");
+    var ul = target.closest("UL");
+    var li = target.closest("LI");
+    var index = li.index() + 1;
+
+    msg = ul.attr("id").split("-");
+    WET.byStr( 'WikiaFollowedPages/specialpage/delete/' + msg[3] + '/' + index);
+
+    $.ajax({
+              url: url,
+              success: function() {
+                    li.remove();
+              }
+            });
+    return false;
 }
 
+Follow.loadStatus = new Array();
 
-Follow.showMore = function(e) {	
-    msg = $(e.target).attr("id").split("-"); 
+Follow.showMore = function(e) {
+    var eid = $(e.target).attr("id");
+    var msg = eid.split("-");
+    var key = msg[4];
+    var head = eid.replace('more-', '');
     WET.byStr( 'WikiaFollowedPages/specialpage/viewall/' + msg[4] );   
-    
-	var url = $(e.target).attr("href");
-        if (url.charAt(0) == '#') {
-            url = url.substr(1);
-        }
-	$(e.target).hide();
-	var head = Follow.getUrlParam( url, "head" );
-	$.ajax({
-		  url: url,
-		  success: function(data) {
-			$( "#" + head ).html(data);
-			setTimeout(function() {
-				$( "#" + head ).find('li').hover( Follow.hover,Follow.unhover );
-				$( "#" + head ).find('.title-link').click(Follow.tracklick);
-				$( "#" + head ).find('.ajax-unwatch').click(Follow.uwatch);
-			}, 500);
-		  }
-		});	
-	return false;
-}
 
+    if(typeof(Follow.loadStatus[key]) == 'undefined' || Follow.loadStatus[key] === null ) {
+        var valueKey = 'count-' + head;
+        Follow.loadStatus[key] = {'loaded' : wgFollowedPagesPagerLimit,'toload' : $('#'+valueKey).val()};
+    }
+    var cTime = new Date();
+    var url = $(e.target).attr("href") + '&from=' + Follow.loadStatus[key].loaded + '&cb=' + cTime.getTime();
+    $.ajax({
+              url: url,
+              success: function(data) {
+                    Follow.loadStatus[key].loaded += wgFollowedPagesPagerLimitAjax;
+                    if (Follow.loadStatus[key].loaded >= Follow.loadStatus[key].toload) {
+                        $(e.target).hide();
+                    }
 
-Follow.getUrlParam = function ( url,name ) {
-  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
-  var regexS = "[\\?&]"+name+"=([^&#]*)";
-  var regex = new RegExp( regexS );
-  var results = regex.exec( url);
-  if( results == null )
-    return "";
-  else
-    return results[1];
+                    $( "#" + head ).append(data);
+                    var lis = $( "#wikiafollowedpages-special-heading-article" ).find('li')
+                    lis.unbind().hover( Follow.hover,Follow.unhover );
+                    lis.find('.title-link').unbind().click(Follow.tracklick);
+                    lis.find('.ajax-unwatch').click(Follow.uwatch);
+              }
+            });
+    return false;
 }
 
 Follow.syncUserPrefs = function(e) {
-	var syncArray  = new Array();
-	syncArray[ 'enotifminoredits' ] = 'enotiffollowedminoredits';
-	syncArray[ 'enotifwatchlistpages' ] = 'enotiffollowedpages';
-	syncArray[ 'enotiffollowedminoredits' ] = 'enotifminoredits';
-	syncArray[ 'enotiffollowedpages' ] =  'enotifwatchlistpages';
-	var target = $(e.target);
-	var dst = $( '#' + syncArray[target.attr('id')] );
-	dst.attr('checked', target.attr('checked'));
+    var syncArray  = new Array();
+    syncArray[ 'enotifminoredits' ] = 'enotiffollowedminoredits';
+    syncArray[ 'enotifwatchlistpages' ] = 'enotiffollowedpages';
+    syncArray[ 'enotiffollowedminoredits' ] = 'enotifminoredits';
+    syncArray[ 'enotiffollowedpages' ] =  'enotifwatchlistpages';
+    var target = $(e.target);
+    var dst = $( '#' + syncArray[target.attr('id')] );
+    dst.attr('checked', target.attr('checked'));
 }
