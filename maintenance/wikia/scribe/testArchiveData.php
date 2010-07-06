@@ -164,6 +164,38 @@ function loadFromDB($dbname, $page_id, $rev_id) {
 		__METHOD__
 	);
 
+	if ( empty($oRow) ) {
+		$fields = array(
+			'ar_namespace as page_namespace',
+			'ar_title as page_title',
+			'ar_comment as rev_comment',
+			'ar_user as rev_user',
+			'ar_user_text as rev_user_text',
+			'ar_timestamp as rev_timestamp',
+			'ar_minor_edit as rev_minor_edit',
+			'ar_rev_id as rev_id',
+			'ar_text_id as rev_text_id',
+			'ar_len as rev_len',
+			'ar_page_id as page_id',
+			'ar_page_id as rev_page',
+			'ar_deleted as rev_deleted',
+			'0 as rev_parent_id',
+			'date_format(ar_timestamp, \'%Y-%m-%d %H:%i:%s\') as ts'
+		);
+
+		$conditions = array( 
+			'ar_page_id'	=> $page_id , 
+			'ar_rev_id'		=> $rev_id
+		);
+
+		$oRow = $db->selectRow( 
+			'archive', 
+			$fields, 
+			$conditions,
+			__METHOD__
+		);
+	}
+
 	return $oRow;
 }
 
