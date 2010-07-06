@@ -2090,7 +2090,7 @@ if ( $wgRequest->getVal('action') != 'edit' ) {
 		$signupTitle = Title::makeTitle(NS_SPECIAL, 'Signup');
 	}
 
-	global $wgRequest;
+	global $wgRequest, $wgEnableAnswers;
 	if ( $wgRequest->getText( 'action' ) == 'edit' || $wgRequest->getText( 'action' ) == 'submit' ) {
 		$showDynamicLinks = false;
 	}
@@ -2119,15 +2119,12 @@ if ( $wgRequest->getVal('action') != 'edit' ) {
 		);
 	}
 	//all other namespaces
-	elseif ( $showDynamicLinks ) {
+	elseif ( $showDynamicLinks && empty( $wgEnableAnswers ) ) {
 
 		global $wgMonacoDynamicCreateOverride;
-		if( !empty($wgMonacoDynamicCreateOverride) )
-		{
+		if( !empty($wgMonacoDynamicCreateOverride) ) {
 			$sp = Title::newFromText($wgMonacoDynamicCreateOverride);
-		}
-		else
-		{
+		} else {
 			$sp = Title::makeTitle(NS_SPECIAL, 'CreatePage');
 		}
 		/* Redirect to login page instead of showing error, see Login friction project */
