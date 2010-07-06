@@ -981,11 +981,15 @@ footer {
 }
 
 #MainArticle h1#hub-name {
-  margin-bottom: 5px;
-  border-bottom: 1px solid #aaa;
-  width: 100%;
-  font-size: 28px;
-  color: #006cb1;
+	margin-bottom: 5px;
+	border-bottom: 1px solid #aaa;
+	width: 100%;
+	font-size: 28px;
+	color: #006cb1;
+	margin-top:45px;
+}
+#MainArticle #CORP_TOP_LEADERBOARD{
+	margin-top:-45px;
 }
 
 #MainArticle #hub-featured-box {
