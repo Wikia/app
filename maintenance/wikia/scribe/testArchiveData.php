@@ -232,7 +232,11 @@ video links: {$links['video']} == {$oRow->video_links}
 TEXT;
 				}
 			}
+		} else {
+			echo "Not local data found for: page: {$oRow->page_id} && revision: {$oRow->rev_id}  \n";
 		}
+	} else {
+		echo "Not events data found for: page: {$oRow->page_id} && revision: {$oRow->rev_id}  \n";
 	}
 	
 	return $result;
