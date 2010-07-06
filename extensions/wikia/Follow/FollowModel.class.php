@@ -6,8 +6,10 @@
 
 
 class FollowModel {
-	
-	/**
+        static public $ajaxListLimit = 600;
+        static public $specialPageListLimit = 15;
+
+    /**
 	 * getWatchList -- get data for followe pages include see all 
 	 *
 	 * @static
@@ -17,7 +19,7 @@ class FollowModel {
 	 * @return bool
 	 */
 	
-	static function getWatchList($user_id, $limit = 15, $namespace_head = null) {
+	static function getWatchList($user_id, $from = 0, $limit = 15, $namespace_head = null) {
 		global $wgServer, $wgScript, $wgContentNamespaces, $wgEnableBlogArticles;
 		wfProfileIn( __METHOD__ );
 		$db = wfGetDB( DB_SLAVE );
@@ -66,7 +68,7 @@ class FollowModel {
 		
 		$queryArray = array();
 		foreach ($namespaces_keys as $value) {
-			$queryArray[] = "(select wl_namespace, wl_title from watchlist where wl_user = ".intval($user_id)." and wl_namespace = ".intval($value)." ORDER BY wl_wikia_addedtimestamp desc limit ".intval($limit).")";
+			$queryArray[] = "(select wl_namespace, wl_title from watchlist where wl_user = ".intval($user_id)." and wl_namespace = ".intval($value)." ORDER BY wl_wikia_addedtimestamp desc limit ".intval($from).",".intval($limit).")";
 		}
 
 		$res = $db->query( implode(" union ",$queryArray) );
