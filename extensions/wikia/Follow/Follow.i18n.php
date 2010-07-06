@@ -18,7 +18,8 @@ $messages['en'] = array(
 Add pages to this list by clicking \"{{int:watch}}\" at the top of a page.",
 	'wikiafollowedpages-special-anon' => 'Please [[Special:Signup|log in]] to create or view your followed pages list.',
 
-	'wikiafollowedpages-special-showall' => 'Show all',
+        'wikiafollowedpages-special-showall' => 'Show all',
+        'wikiafollowedpages-special-showmore' => 'Show more',
 	'wikiafollowedpages-special-title' => 'Followed pages',
 	'wikiafollowedpages-special-delete-tooltip' => 'Remove this page',
 

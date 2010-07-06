@@ -12,15 +12,12 @@
 <?php foreach ($data as $key => $value): ?> 
 	<?php if(empty($more)): ?>	
 		<h2 class="firstHeading"><?php echo wfMsg($value['ns'] , array("$1" => $value['count']) ) ?>
-			<?php if($value['show_more']): ?>
-				<a  id="more-<? echo $value['ns']; ?>" style="display:none;" class="ajax-show-more" href="#<?php echo
-$wgServer.$wgScript."?action=ajax&rs=FollowHelper::showAll&head=".$value['ns']."&user_id=".$user_id ?>"><?php echo 
-wfMsg('wikiafollowedpages-special-showall'); ?></a> 
-			<?php endif;?>
-		</h2> 
+
+		</h2>
+                <input type="hidden" id="count-<? echo $value['ns']; ?>" value="<?php echo $value['count'] ?>" />
 		<ul id="<? echo $value['ns']; ?>" style="margin-top: 5px;" class="clearfix watched-list">
 	<?php endif; ?>
-	<?php foreach ($value['data'] as $value2): ?>
+	<?php foreach ($value['data'] as $key => $value2): ?>
 		<li>
 			<?php if ($owner): ?>
 			<a  class="ajax-unwatch" href="<?php echo $value2['hideurl'] ?>" >
@@ -41,10 +38,16 @@ wfMsg('wikiafollowedpages-special-showall'); ?></a>
 					<?php echo wfMsg('wikiafollowedpages-special-namespace', array("$1" => $value2['other_namespace']) ) ?>
 			</span>
 			<?php endif;?>		
-		</li>
+                </li>
 	<?php endforeach;?>	
 	<?php if(empty($more)): ?>	
 		</ul>
-		<div style="clear: both; height:30px;"></div>
+		<div style="clear: both; height:30px;text-align: right">
+                    	<?php if($value['show_more']): ?>
+				<a  id="more-<? echo $value['ns']; ?>" style="display:none;" class="ajax-show-more" href="<?php echo 
+$wgServer.$wgScript."?action=ajax&rs=FollowHelper::showAll&head=".$value['ns']."&user_id=".$user_id ?>"><?php echo 
+wfMsg('wikiafollowedpages-special-showmore'); ?></a>
+			<?php endif;?>
+                </div>
 	<?php endif; ?>
 <?php endforeach; ?>
