@@ -454,7 +454,8 @@ class FollowHelper {
 				"isLogin" => ($wgUser->getId() == $user->getId() ),
 				"hideUrl" => $wgTitle->getFullUrl( "hide_followed=1" ),
 				"data" 	=> $data,
-				"moreUrl" => Skin::makeSpecialUrlSubpage('following', $user->getName()),
+				// show "more" only if wathing own user page 
+				"moreUrl" => $wgUser->getId() == $user->getId() ? Skin::makeSpecialUrlSubpage('following', $user->getName()) : null,
 			)
 		);
 		wfProfileOut(__METHOD__);
