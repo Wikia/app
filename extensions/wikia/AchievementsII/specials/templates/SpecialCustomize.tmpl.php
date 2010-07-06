@@ -1,7 +1,5 @@
 
-<div style="padding-right:320px;">
-
-<div id="customize-sidebar">
+<div class="article-sidebar">
 	<h2 class="first"><?= wfMsg('achievements-about-title') ?></h2>
 	<?= wfMsgExt( 'achievements-about-content', 'parse' ) ?>
 
@@ -16,6 +14,9 @@
 		</p>
 	</form>
 </div>
+
+<div style="padding-right:320px;">
+
 <?if($successMsg != null):?>
 	<div class="successbox"><strong><?= $successMsg ?></strong></div>
 <?endif;?>

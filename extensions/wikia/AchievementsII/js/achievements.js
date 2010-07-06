@@ -16,7 +16,7 @@ var Achievements = {
 
 			$('#view-all').hide();
 			$('#view-less').show();
-			$("#profile-sidebar #badges").animate({height: badgeHeight +'px'}, 'slow');
+			$(".article-sidebar #badges").animate({height: badgeHeight +'px'}, 'slow');
 
 			self.track('userprofile/viewall');
 		});
@@ -24,7 +24,7 @@ var Achievements = {
 		$('#view-less').click(function() {
 			$('#view-less').hide();
 			$('#view-all').show();
-			$("#profile-sidebar #badges").animate({height: '200px'}, 'slow');
+			$(".article-sidebar #badges").animate({height: '200px'}, 'slow');
 
 			self.track('userprofile/viewless');
 		});
@@ -99,7 +99,7 @@ var Achievements = {
 				self.track('customize/disabled');
 		});
 		
-		$('#customize-sidebar form.customize-edit-plus-category button').click(function(e) {
+		$('.article-sidebar form.customize-edit-plus-category button').click(function(e) {
 			self.track('customize/createtrack');
 		});
 	},

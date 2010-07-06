@@ -17,9 +17,10 @@ class SpecialLeaderboard extends SpecialPage {
 
 		$this->setHeaders();
 
-		$wgOut->addStyle( "common/userpage_sidebar.css" );
+		$wgOut->addStyle( "common/article_sidebar.css" );
 		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AchievementsII/css/leaderboard.css?{$wgStyleVersion}");
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/AchievementsII/js/achievements.js?{$wgStyleVersion}\"></script>\n");
+		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AchievementsII/css/achievements_sidebar.css?{$wgStyleVersion}");
+				$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/AchievementsII/js/achievements.js?{$wgStyleVersion}\"></script>\n");
 		// ranking
 		$ranking = $rankingService->getUsersRanking(20);
 

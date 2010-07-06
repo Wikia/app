@@ -1,6 +1,6 @@
 <div id="myhome-wrapper">
 	<!-- right sidebar -->
-	<div id="myhome-sidebar">
+	<div class="article-sidebar">
 
 		<!-- additional stuff, governed by myHomeSidebarBeforeContent hook -->
 		<?=$sidebarBeforeContent?>			

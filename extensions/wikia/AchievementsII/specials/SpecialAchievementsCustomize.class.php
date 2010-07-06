@@ -9,7 +9,7 @@ class SpecialAchievementsCustomize extends SpecialPage {
 
 	function execute($user_id) {
 		wfProfileIn(__METHOD__);
-		global $wgUser, $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgSupressPageTitle, $wgRequest, $wgJsMimeType, $wgCityId, $wgExternalSharedDB;
+		global $wgUser, $wgOut, $wgExtensionsPath, $wgStylePath, $wgStyleVersion, $wgSupressPageTitle, $wgRequest, $wgJsMimeType, $wgCityId, $wgExternalSharedDB;
 
 		if(!$this->userCanExecute($wgUser)) {
 			$this->displayRestrictionError();
@@ -98,7 +98,9 @@ class SpecialAchievementsCustomize extends SpecialPage {
 		));
 
 		$wgOut->addHTML($template->render('SpecialCustomize'));
+		$wgOut->addStyle("common/article_sidebar.css");
 		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AchievementsII/css/customize.css?{$wgStyleVersion}");
+
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/AchievementsII/js/jquery.aim.js?{$wgStyleVersion}\"></script>\n");
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/AchievementsII/js/jquery.scrollTo-1.4.2.js?{$wgStyleVersion}\"></script>\n");
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/AchievementsII/js/achievements.js?{$wgStyleVersion}\"></script>\n");

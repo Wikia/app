@@ -1,0 +1,11 @@
+#profile-content {
+	float: left;
+	margin-right: -320px;
+	min-height: 400px;
+	position: relative;
+	width: 100%;
+}
+
+#profile-content-inner {
+	margin-right: 320px;
+}
