@@ -1,17 +1,3 @@
-#customize-sidebar {
-  min-height: 300px;
-  width: 300px;
-  padding: 0 10px;
-  border-left: 1px solid #AAAAAA;
-  margin-left: 5px;
-  float:right;
-  margin-right:-330px;
-}
-
-#customize-sidebar h2.first {
-  margin-top: 0px;
-}
-
 .customize-section {
   margin-bottom: 20px;
   position: relative;

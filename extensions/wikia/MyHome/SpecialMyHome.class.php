@@ -11,7 +11,7 @@ class SpecialMyHome extends SpecialPage {
 		wfProfileIn(__METHOD__);
 		global $wgOut, $wgUser, $wgTitle;
 		$this->setHeaders();
-
+		
 		if( isset( $_SESSION['Signup_AccountCreated'] ) || !empty($_GET['accountcreated']) ) {
 			$wgOut->addScript('<script type="text/javascript">WET.byStr(\'signupActions/signup/createaccount/success\');</script>');
 			unset( $_SESSION['Signup_AccountCreated'] );
@@ -45,6 +45,7 @@ JS
 
 		// load dependencies (CSS and JS)
 		global $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType, $wgStylePath;
+		$wgOut->addStyle("common/article_sidebar.css");
 		$wgOut->addExtensionStyle("{$wgStylePath}/common/wikia_ui/tabs.css?{$wgStyleVersion}");
 		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/MyHome/MyHome.css?{$wgStyleVersion}");
 

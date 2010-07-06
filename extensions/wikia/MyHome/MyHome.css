@@ -138,19 +138,7 @@ td.activityfeed-details-label {
 }
 
 #myhome-main {
-	margin-right: 300px;
-}
-
-/* Sidebar */
-#myhome-sidebar {
-	border-left: solid 1px #aaa;
-	float: right;
-	padding-left: 10px;
-	width: 280px;
-}
-
-#myhome-sidebar ul {
-	margin-bottom: 30px;
+	margin-right: 320px;
 }
 
 /* User contributions */

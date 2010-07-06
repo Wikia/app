@@ -5,7 +5,7 @@ $wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'UserProfile_handler';
 function UserProfile_handler(&$skin, &$tpl) {
 	wfProfileIn(__METHOD__);
 
-	global $wgTitle, $wgOut, $wgRequest;
+	global $wgTitle, $wgOut, $wgRequest, $wgScriptPath;
 
 	$action = $wgRequest->getVal('action', 'view');
 	if ($wgTitle->getNamespace() != NS_USER || ($action != 'view' && $action != 'purge')) {
@@ -33,7 +33,7 @@ function UserProfile_handler(&$skin, &$tpl) {
 
 	if(count($out) > 0) {
 
-		$wgOut->addStyle( "common/userpage_sidebar.css" );
+    $wgOut->addStyle( '../..' . $wgScriptPath . '/extensions/wikia/UserProfile/userprofile.css' );
 
 		$html .= "<div id='profile-content'>";
 		$html .= "<div id='profile-content-inner'>";
@@ -41,7 +41,9 @@ function UserProfile_handler(&$skin, &$tpl) {
 		$html .= "</div>";
 		$html .= "</div>";
 
-		$html .= '<div id="profile-sidebar">';
+		$wgOut->addStyle( "common/article_sidebar.css" );
+
+		$html .= '<div class="article-sidebar">';
 		if(isset($out['UserProfile1'])) {
 			$html .= $out['UserProfile1'];
 		}

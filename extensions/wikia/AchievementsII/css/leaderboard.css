@@ -18,16 +18,17 @@
 #leaderboard-body {
 	float:left;
 	min-height: 300px;
-	margin: 0 25px 30px 5px;
-	padding-right:25px;
+	margin-right: -320px;
 	background: transparent;
-	border-right-style: solid;
-	border-right-width: 1px;
+	width: 100%;
+	position: relative;
+}
+.leaderboard-body-inner{
+  margin-right: 320px;
 }
 
 ul#leaderboard {
 	margin: 0 !important;
-	width: 380px;
 }
 
 ul#leaderboard li {
@@ -107,22 +108,18 @@ ul#leaderboard #points-label {
 	font-style: italic;
 }
 
-#leaderboard-sidebar {
-	min-height: 300px;
-	float: left;
+/*#leaderboard-sidebar {
+  min-height: 300px;
+  float: left;
 }
-
-#leaderboard-sidebar .recent-badges {
+*/
+.article-sidebar .recent-badges {
 	margin: 18px 0 5px 0;
 	list-style-type:none;
 	list-style-image:none;
 }
 
-#leaderboard-sidebar ul.recent-badges {
-	width: 325px;
-}
-
-#leaderboard-sidebar .recent-badges li {
+.article-sidebar .recent-badges li {
 	margin: 0 0 23px 0;
 	padding: 0 0 0 0;
 	font-size: 12px;
@@ -130,30 +127,31 @@ ul#leaderboard #points-label {
 	position: relative;
 }
 
-#leaderboard-sidebar .recent-badges li > img {
+.article-sidebar .recent-badges li > img {
 	float: left;
 	margin-bottom:-7px;/*small fix for avoiding hovers side-effect in WebKit*/
 }
 
-#leaderboard-sidebar .badge-text {
+.article-sidebar .badge-text {
 	margin-left:92px;
+	width: auto;
 }
 
-#leaderboard-sidebar .badge-text p {
+.article-sidebar .badge-text p {
 	font-size:12px;
 	line-height: 20px;
 }
 
-#leaderboard-sidebar .badge-text strong{
+.article-sidebar .badge-text strong{
 	font-size:14px;
 }
 
-#leaderboard-sidebar .recent-badges p {
-	margin: 0 0 0 0;
-	padding: 0 0 0 0;
+.article-sidebar .recent-badges p {
+	margin: 0;
+	padding: 0;
 }
 
-#leaderboard-sidebar .badge-title {
+.article-sidebar .badge-title {
 	font-weight: bold;
 	margin-top: 2px;
 }
