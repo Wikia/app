@@ -23,8 +23,10 @@
 			</li>
 		<?php endforeach; ?>
 	</ul>
+	<?php if(!empty($moreUrl)) { ?>
 	<div style="clear: both;"></div>
 	<a id="follow_more_link" class="wikia-button" id="ShowMoreFollowed" href="<?php echo $moreUrl; ?>" rel="nofollow"><?php echo wfMsg('wikiafollowedpages-userpage-more'); ?></a>
+	<?php } ?>
 <?php else: ?>
 	<?php echo wfMsg( 'wikiafollowedpages-userpage-empty' );?>
 <?php endif; ?>
