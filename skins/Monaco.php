@@ -75,17 +75,20 @@ class MonacoSidebar {
 	public function getMenuLines() {
 		global $wgCat;
 
+		# if a local copy exists, try to use that first
 		$revision = Revision::newFromTitle(Title::newFromText('Monaco-sidebar', NS_MEDIAWIKI));
 		if(is_object($revision) && trim($revision->getText()) != '') {
 			$lines = getMessageAsArray('Monaco-sidebar');
 		}
 
+		# if we have no lines from the local, try to find an use a global per-hub default (wut? did this ever work?)
 		if(empty($lines)) {
 			if(isset($wgCat['id'])) {
 				$lines = getMessageAsArray('shared-Monaco-sidebar-' . $wgCat['id']);
 			}
 		}
 
+		# if we STILL have no menu lines, fall back to just loading the default from the message system
 		if(empty($lines)) {
 			$lines = getMessageAsArray('Monaco-sidebar');
 		}
@@ -2499,7 +2502,7 @@ EOF;
 			foreach($wikiafooterlinks as $key => $val) {
 				// Very primitive way to actually have copyright WF variable, not MediaWiki:msg constant.
 				// This is only shown when there is copyright data available. It is not shown on special pages for example.
-				if ( 'GFDL' == $val['text'] ) {
+				if ( 'GFDL' == $val['text'] || '_LICENSE_' == $val['text']) {
 					if (!empty($this->data['copyright'])) {
 						$wikiafooterlinksA[] = str_replace("<a href", "<a rel=\"nofollow\" href", $this->data['copyright']);
 					}
