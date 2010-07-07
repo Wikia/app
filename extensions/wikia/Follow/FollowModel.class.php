@@ -76,7 +76,7 @@ class FollowModel {
 		while ($row =  $db->fetchRow( $res ) ) {
 			$title = Title::makeTitle( $row['wl_namespace'], $row['wl_title'] );
 			$row['url'] = $title->getFullURL();
-			$row['hideurl'] = $wgServer.$wgScript."?action=ajax&rs=wfAjaxWatch&rsargs[]=".$title->getFullText()."&rsargs[]=u";
+			$row['hideurl'] = $wgServer.$wgScript."?action=ajax&rs=wfAjaxWatch&rsargs[]=".$title->getPrefixedURL()."&rsargs[]=u";
 			$row['wl_title'] = str_replace("_"," ",$row['wl_title'] );
 			if ($row['wl_namespace'] == NS_BLOG_ARTICLE) {
 				$explode = explode("/", $row['wl_title']);
