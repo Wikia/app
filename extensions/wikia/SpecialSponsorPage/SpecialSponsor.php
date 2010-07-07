@@ -9,10 +9,8 @@ EOT;
  
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'SpecialSponsor',
-	'author' => 'Aerik Sylvan',
-	//'url' => 'http://www.mediawiki.org/wiki/Extension:MyExtension',
+	'author' => array( 'Aerik Sylvan', "[http://community.wikia.com/wiki/User:TOR Lucas 'TOR' Garczewski]" ),
 	'description' => 'Extension to allow users to buy sponsorships',
-	//'descriptionmsg' => 'myextension-desc',
 	'version' => '0.0.1',
 );
  
@@ -20,6 +18,22 @@ $dir = dirname(__FILE__) . '/';
 
 $wgExtensionMessagesFiles['SponsorPage'] = $dir . 'Sponsor.i18n.php';
 
+// pricing array
+// override possible via WikiFactory
+if ( !isset( $wgSponsorshipPrices ) ) {
+	$wgSponsorshipPrices = array(
+		'5mo' => array(
+			'price' => 5,
+			'months' => 1,
+			'text' => 'sponsor-price-5mo',
+		),
+		'45yr' => array(
+			'price' => 45,
+			'months' => 12,
+			'text' => 'sponsor-price-45yr',
+		),
+	);
+}
 
 // per-page ad limit
 // override possible via WikiFactory

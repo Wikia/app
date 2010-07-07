@@ -20,21 +20,8 @@
  */
 class SpecialSponsor extends SpecialPage {
 	
-	private $priceAry=array();//price points for sponsorships
-
 	public function __construct() {
 		parent::__construct( 'Sponsor' );
-		
-		//set up the price points
-		// $5 per month
-		$this->priceAry['5mo']['price'] = 5;
-		$this->priceAry['5mo']['months']=1;
-		$this->priceAry['5mo']['text'] = "sponsor-price-5mo";
-		
-		// $45 per year
-		$this->priceAry['45yr']['price']=45;
-		$this->priceAry['45yr']['months']=12;
-		$this->priceAry['45yr']['text']="sponsor-price-45yr";
 	}
 	
 	public function execute( $par ) {
@@ -128,7 +115,8 @@ class SpecialSponsor extends SpecialPage {
 	//						Ad preview is shown with SUBCSCRIBE and EDIT buttons
 	//						EDIT takes you back, SUBSCRIBE takes you to PayPal
 	private function makeInputForm() {
-		global $wgUser, $wgRequest;
+		global $wgUser, $wgRequest, $wgSponsorshipPrices;
+
 		$self = $this->getTitle();
 		$ad = new Advertisement();
 		$pageName = "";
@@ -161,7 +149,7 @@ class SpecialSponsor extends SpecialPage {
 				<td><input type="text" name="page_name"'.$pageclass.' size="30" value="'.htmlentities($pageName).'" /></td></tr>
 			<tr><td>' . wfMsg('sponsor-form-price') . '</td>
 				<td><select name="price_duration"/>'."\n";
-		foreach($this->priceAry as $key=>$opt){
+		foreach($wgSponsorshipPrices as $key=>$opt){
 			$selected='';
 			if($key == $price_duration){
 				$selected=' selected="selected" ';
@@ -179,12 +167,13 @@ class SpecialSponsor extends SpecialPage {
 	}
 	
 	private function loadAdPrices($ad){
-		global $wgRequest; 
+		global $wgRequest, $wgSponsorshipPrices;
+
 		if($wgRequest->wasPosted() ){
 			$pricedur = $wgRequest->getText('price_duration');
-			if(isset($this->priceAry[$pricedur])){
-				$ad->ad_price = $this->priceAry[$pricedur]['price'];
-				$ad->ad_months = $this->priceAry[$pricedur]['months'];
+			if(isset($wgSponsorshipPrices[$pricedur])){
+				$ad->ad_price = $wgSponsorshipPrices[$pricedur]['price'];
+				$ad->ad_months = $wgSponsorshipPrices[$pricedur]['months'];
 			}
 		}
 	}
