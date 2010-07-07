@@ -355,6 +355,8 @@ class AdEngine {
         }
 
 	public function getPlaceHolderIframe($slotname, $reserveSpace=true){
+                global $wgEnableAdsLazyLoad, $wgAdslotsLazyLoad;
+                
 		$html = null;
 		wfRunHooks("fillInAdPlaceholder", array("iframe", $slotname, &$this, &$html));
 		if (!empty($html)) return $html;
@@ -397,9 +399,16 @@ class AdEngine {
 		} else {
 			$slotdiv = "Wikia_" . $this->slots[$slotname]['size'] . "_" . $adnum; 
 		}
+
+                $slotdiv_class = '';
+                if ($wgEnableAdsLazyLoad) {
+                    if (!empty($wgAdslotsLazyLoad[$slotname])) {
+                        $slotdiv_class = 'lazyload';
+                    }
+                }
 	
 		return '<div id="' . htmlspecialchars($slotname) . '" class="noprint">' . 
-			'<div id="' . htmlspecialchars($slotdiv) . '">' . 
+			'<div id="' . htmlspecialchars($slotdiv) . '" class="' . $slotdiv_class . '">' .
 			'<iframe width="' . intval($w) . '" height="' . intval($h) . '" ' . 
 			'id="' . htmlspecialchars($slotname) . '_iframe" ' .
                 	'noresize="true" scrolling="no" frameborder="0" marginheight="0" ' . 
