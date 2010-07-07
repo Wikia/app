@@ -259,6 +259,9 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		$this->mCityId = $wgCityId;
 		$this->params = $this->extractRequestParams(false);
 
+		// Error results should not be cached
+		$this->getMain()->setCacheMaxAge(0);
+
 		# check "pageid" param
 		$pageCount = $this->getPageCount();
 
