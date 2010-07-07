@@ -273,6 +273,15 @@ li.wk_star_list {
 padding:0 100px 0 0!important;
 }
 
+li.wk_star_list span:after {
+content:".";
+visibility:hidden;
+width:0;
+padding:0;
+margin:0;
+display:inline-block;
+}
+
 #control_listing-refresh-tab div {
 clip:rect(0px,336px,16px,320px);
 left:-320px;
