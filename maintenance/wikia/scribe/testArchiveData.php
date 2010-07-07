@@ -246,20 +246,20 @@ function compareEventRecordWithRevision($dbname, $oRow, $debug) {
 			} else {
 				if ( $debug ) {
 					echo <<<TEXT
-page: {$data->rev_page} == {$oRow->page_id}
-namespage: {$data->page_namespace}	== {$oRow->page_ns}
-revision: {$data->rev_id}	== {$oRow->rev_id}
-timestamp: {$timestamp} == {$oRow->rev_timestamp}
-user: {$data->rev_user} == {$oRow->user_id}
-is_bot: {$is_bot} == {$oRow->user_is_bot}
-is_content: {$is_content} == {$oRow->is_content}
-is_redirect: {$is_redirect} == {$oRow->is_redirect}
-size: {$size} == {$oRow->rev_size}
-words: {$words} == {$oRow->total_words}
-category: {$cat_id} == {$oRow->wiki_cat_id}
-language: {$lang_id} == {$oRow->wiki_lang_id}
-image links:{$links['image']} == {$oRow->image_links}
-video links: {$links['video']} == {$oRow->video_links}
+	page: {$data->rev_page} == {$oRow->page_id}
+	namespage: {$data->page_namespace}	== {$oRow->page_ns}
+	revision: {$data->rev_id}	== {$oRow->rev_id}
+	timestamp: {$timestamp} == {$oRow->rev_timestamp}
+	user: {$data->rev_user} == {$oRow->user_id}
+	is_bot: {$is_bot} == {$oRow->user_is_bot}
+	is_content: {$is_content} == {$oRow->is_content}
+	is_redirect: {$is_redirect} == {$oRow->is_redirect}
+	size: {$size} == {$oRow->rev_size}
+	words: {$words} == {$oRow->total_words}
+	category: {$cat_id} == {$oRow->wiki_cat_id}
+	language: {$lang_id} == {$oRow->wiki_lang_id}
+	image links:{$links['image']} == {$oRow->image_links}
+	video links: {$links['video']} == {$oRow->video_links}
 
 TEXT;
 				}
