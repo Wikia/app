@@ -10,31 +10,6 @@ $wgExtensionCredits['specialpage'][] = array(
 	'descriptionmsg' => 'myextension-desc',
 	'version' => '1.0.0',
 );
-$wgHubsPages = array(   
-	'handheld_games' => 'handheld',
-	'pc_games' => 'pc',
-	'xbox_360_games' => 'xbox360',
-	'ps3_games' => 'ps3',
-	'mobile_games' => 'mobile',
-	'movie' => 'movie',
-	'tv' => 'tv',
-	'entertainment' => 'entertainment',
-	'music' => 'music',                                          
-	'animation' => 'anime',
-	'anime' => 'anime',
-	'music' => 'music',
-	'sci-fi' => 'sci_fi',
-	'horror' => 'horror',
-	'gaming' => 'gaming',
-	'lifestyle' => 'lifestyle', 
-	'wii_games' => 'wii',
-	'pl' => 'pl',
-);
-
-if ( !empty($wgAutoHubTestTag) ) {
-	$wgHubsPages['test_tag'] = 'test_tag';	
-}
-
 
 $dir = dirname(__FILE__) . '/';
 
