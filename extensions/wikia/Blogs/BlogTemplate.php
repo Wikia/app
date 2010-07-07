@@ -241,7 +241,7 @@ class BlogTemplateClass {
 	);
 
 	private static $skipStrinBeforeParse	= "<p><div><a><b><del><i><ins><u><font><big><small><sub><sup><cite><code><em><s><strike><strong><tt><var><center><blockquote><ol><ul><dl><u><q><abbr><acronym><li><dt><dd><span>";
-	private static $skipStrinAfterParse		= "<p><a><b><del><i><ins><u><font><big><small><sub><sup><cite><code><em><s><strike><strong><tt><var><center><blockquote><ol><ul><dl><u><q><abbr><acronym><li><dt><dd><span>";
+	private static $skipStrinAfterParse		= "<p><b><del><i><ins><u><font><big><small><sub><sup><cite><code><em><s><strike><strong><tt><var><center><blockquote><ol><ul><dl><u><q><abbr><acronym><li><dt><dd><span>";
 	private static $parseTagTruncateText	= "/<(p|a(.*))>(.*)<\/(p|a)>/siU";
 
 	private static $pageOffsetName 			= "page";
