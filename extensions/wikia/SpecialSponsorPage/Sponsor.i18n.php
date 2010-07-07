@@ -18,6 +18,6 @@ $messages['en'] = array(
 	'sponsor-form-email' => 'Your email:',
 	'sponsor-form-thanks' => 'Thank You for your Sponsorship!',
 
-	'sponsor-price-45yr' => '$45 per year',
-	'sponsor-price-5mo' => '$5 per month',
+	'sponsor-price-45yr' => '$$1 per year - Sponsor #$2',
+	'sponsor-price-5mo' => '$$1 per month',
 );
