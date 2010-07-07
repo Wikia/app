@@ -149,12 +149,34 @@ class SpecialSponsor extends SpecialPage {
 				<td><input type="text" name="page_name"'.$pageclass.' size="30" value="'.htmlentities($pageName).'" /></td></tr>
 			<tr><td>' . wfMsg('sponsor-form-price') . '</td>
 				<td><select name="price_duration"/>'."\n";
+
+		global $wgSponsorshipYearDiscount, $wgSponsorshipYearDiscountTiers, $wgDBname;
+
 		foreach($wgSponsorshipPrices as $key=>$opt){
-			$selected='';
-			if($key == $price_duration){
-				$selected=' selected="selected" ';
-			};
-			$form .= '	<option value="'.$key.'"'.$selected.'>'. wfMsg( $opt['text'] ) . '</option>'."\n";
+			$selected = false;
+
+			if ( $key == 'yr' && !empty( $wgSponsorshipYearDiscount ) ) {
+				// FIXME: this is BAD. But we don't have any other way to get the full number per page :(
+				$adsOnPage = empty( $ad->page_id ) ? 0 : count( Advertisement::FlushAdCache( $wgDBname, $ad->page_id ) );
+
+				for ( $i = 1; $i <= $wgSponsorshipYearDiscountTiers; $i++ ) {
+					$selected = false;
+					$attribs = array( 'disabled' => 'disabled' );
+					$price = $opt['price'] - ( $wgSponsorshipYearDiscountTiers - $i ) * $wgSponsorshipYearDiscount;
+					$value = $price . 'yr';
+					if ( $adsOnPage + 1 == $i ) {
+						$attribs = array();
+					}
+					if( ( $price . $key ) == $price_duration ){
+						$selected = true;
+					}
+					$form .= Xml::option( wfMsg( $opt['text'], $price, $i ), $value, $selected, $attribs );
+				}
+			} else {
+				$selected = ( ( $opt['price'] . $key ) == $price_duration ) ? true : false;
+
+				$form .= Xml::option( wfMsg( $opt['text'], $opt['price'] ), $opt['price'], $selected );
+			}
 		}
 				$form .= '</select>
 				
@@ -167,13 +189,21 @@ class SpecialSponsor extends SpecialPage {
 	}
 	
 	private function loadAdPrices($ad){
-		global $wgRequest, $wgSponsorshipPrices;
+		global $wgRequest, $wgDBname, $wgSponsorshipPrices, $wgSponsorshipYearDiscount, $wgSponsorshipYearDiscountTiers;
 
 		if($wgRequest->wasPosted() ){
 			$pricedur = $wgRequest->getText('price_duration');
-			if(isset($wgSponsorshipPrices[$pricedur])){
-				$ad->ad_price = $wgSponsorshipPrices[$pricedur]['price'];
-				$ad->ad_months = $wgSponsorshipPrices[$pricedur]['months'];
+			$dur = substr( $pricedur, -2 );
+			if(isset($wgSponsorshipPrices[$dur])){
+				if ( $dur == 'yr' && !empty( $wgSponsorshipYearDiscount ) ) {
+					// FIXME: for whatever reason, FlushAdCache returns mixed, should return empty array instead
+					$adsOnPage = empty( $ad->page_id ) ? array() : Advertisement::FlushAdCache( $wgDBname, $ad->page_id );
+					$adsOnPage = empty( $adsOnPage ) ? 0 : count( $adsOnPage );
+					$ad->ad_price = $wgSponsorshipPrices[$dur]['price'] - ( ( $wgSponsorshipYearDiscountTiers - $adsOnPage - 1 ) * $wgSponsorshipYearDiscount );
+				} else {
+					$ad->ad_price = $wgSponsorshipPrices[$dur]['price'];
+				}
+				$ad->ad_months = $wgSponsorshipPrices[$dur]['months'];
 			}
 		}
 	}

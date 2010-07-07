@@ -22,18 +22,21 @@ $wgExtensionMessagesFiles['SponsorPage'] = $dir . 'Sponsor.i18n.php';
 // override possible via WikiFactory
 if ( !isset( $wgSponsorshipPrices ) ) {
 	$wgSponsorshipPrices = array(
-		'5mo' => array(
+		'mo' => array(
 			'price' => 5,
 			'months' => 1,
 			'text' => 'sponsor-price-5mo',
 		),
-		'45yr' => array(
+		'yr' => array(
 			'price' => 45,
 			'months' => 12,
 			'text' => 'sponsor-price-45yr',
 		),
 	);
 }
+
+$wgSponsorshipYearDiscount = 5;
+$wgSponsorshipYearDiscountTiers = 4;
 
 // per-page ad limit
 // override possible via WikiFactory
