@@ -193,7 +193,7 @@ elseif ( $events ) {
 		}
 	}
 	$wiki_end = time();
-	echo "Script finished for Wikia ({$wgDBname}, {$row->city_id}) after " . time_duration($wiki_end - $wiki_start) . " \n";
+	echo "Script finished for Wikia ({$wgDBname}, $wgCityId) after " . time_duration($wiki_end - $wiki_start) . " \n";
 } 
 elseif ( $scribe ) {
 	$page_id = isset($options['page_id']) ? $options['page_id'] : '';
