@@ -389,13 +389,15 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		return (int) $is_content_ns;
 	}
 	
-	private function _make_links($content) {
+	private function _make_links($content, $oTitle) {
 		$links = array(
 			'image' => 0,
 			'video' => 0			
 		);
+
 		$oArticle = Article::newFromId($this->mPageId);
 		if ( $oArticle instanceof Article ) {
+			$content = str_replace("{{", "", $content);
 			$editInfo = $oArticle->prepareTextForEdit( $content, $this->mRevId );
 			$images = $editInfo->output->getImages();
 			if ( !empty($images) ) {
@@ -417,7 +419,7 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		$vals = array ();
 		if ( $deleted == 0 ) {
 			$oRevision = new Revision($oRow);
-			if ( $oRow->is_archive == 1 ) {
+			if ( isset($oRow->is_archive) && ($oRow->is_archive == 1) ) {
 				$oTitle = Title::makeTitle( $oRow->page_namespace, $oRow->page_title );
 			} else {
 				$oTitle = $oRevision->getTitle();
@@ -450,7 +452,7 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 			# is deleted
 			$vals['isdeleted'] = $deleted;
 			# links
-			$links = $this->_make_links( $content );
+			$links = $this->_make_links( $content, $oTitle );
 			$vals['imagelinks'] = $links['image'];
 			$vals['video'] = $links['video'];
 		} else {
