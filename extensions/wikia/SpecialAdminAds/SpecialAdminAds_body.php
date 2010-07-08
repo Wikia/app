@@ -116,7 +116,8 @@ class SpecialAdminAds extends SpecialPage {
 		$form .= '<select name="adstoview">';
 		$form .= '<option value ="-1">All</option>';
 		foreach(Advertisement::GetStatuses() as $statusname=>$number){
-			$form .= '<option value ="'.$number.'">'.$statusname.'</option>';
+			$selected = ( $viewstatus == $number ) ? true : false;
+			$form .= Xml::option( $statusname, $number, $selected );
 		}
 		$form .= '</select>';
 		$form .= ' Ads ';
@@ -335,6 +336,21 @@ class AdminAdsPager extends TablePager {
 		}
 
 		return $query;
+	}
+
+	function getPagingQueries() {
+		global $wgRequest;
+
+		$status = $wgRequest->getInt( 'adstoview', -1 );
+
+		$queries = parent::getPagingQueries();
+
+		foreach ( $queries as $type => $query ) {
+			if ( !empty( $query ) ) {
+				$queries[$type]['adstoview'] = $status;
+			}
+		}
+		return $queries;
 	}
 
 	function isFieldSortable( $field ) {
