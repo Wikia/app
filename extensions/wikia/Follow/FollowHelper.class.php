@@ -59,11 +59,11 @@ class FollowHelper {
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
-	
+
 		$dbw = wfGetDB( DB_SLAVE );
-		$queryIn = "";
+		$queryIn = array();
 		foreach ($list as $value) {
-                    $queryIn[] = $dbw->addQuotes( $value ) ;
+			$queryIn[] = $dbw->addQuotes( $value ) ;
 		}
 
 		$con =
@@ -120,17 +120,27 @@ class FollowHelper {
 	static public function blogListingBuildRelation($title, $cat, $users){
 		wfProfileIn( __METHOD__ );
 		$dbw = wfGetDB( DB_MASTER );
-                
+		
+		$exploded = explode(":", $title);
+		if(count($exploded) > 1) {
+			$title =  $exploded[1];
+		}
+			
+		$title = Title::makeTitle( NS_BLOG_LISTING, $title );
+		$title =  $title->getDBKey();
+			
 		$dbw->begin();
 		$dbw->delete( 'blog_listing_relation', array( "blr_title = ". $dbw->addQuotes( $title ) ) );
 
 		if ((!empty($cat)) && (is_array($cat)) ) {
 			foreach ($cat as $value) {
+				$value = Title::makeTitle( NS_CATEGORY, $value );
+				$value = $value->getDBKey();	
 				if( strlen($value) < 1 ) continue;
 				$dbw->insert('blog_listing_relation',
 					array(
 						 'blr_relation' => $value,
-						 'blr_title' => $title,
+						 'blr_title' => $title ,
 		  				 'blr_type' => 'cat',
 				), __METHOD__);			
 			}			
@@ -187,20 +197,22 @@ class FollowHelper {
 				$con .= '(blr_relation in('.implode(",",$catIn).') AND blr_type = "cat" ) OR ';	
 			}
 			$con .= '(blr_relation = "'. $dbw->addQuotes( $username ).'"  AND blr_type = "user" ) ';	
-
+			
 			$res = $dbw->select( array( 'blog_listing_relation' ),
 					array( 'blr_title' ),
 					$con,
 					__METHOD__ );
 			$related = array();
 			while ($row = $dbw->fetchObject( $res ) ) {
-                                //Bug fix  //
-                                $exploded = explode(":", $row->blr_title);
-                                if(count($exploded) > 1) {
-                                    $related[] =  $exploded[1];
-                                } else {
-                                    $related[] = $row->blr_title;
-                                }
+                //Bug fix  //
+				$exploded = explode(":", $row->blr_title);
+				if(count($exploded) > 1) {
+					$title =  $exploded[1];
+				} else {
+					$title = $row->blr_title;
+				}
+				$title = Title::makeTitle( NS_BLOG_LISTING, $title );
+				$related[] = ucfirst($title->getDBKey());
 			}
 			self::emailNotification($article->getTitle(), $related, NS_BLOG_LISTING, $user, "blogpost", wfMsg('follow-bloglisting-summary'));
 		}
