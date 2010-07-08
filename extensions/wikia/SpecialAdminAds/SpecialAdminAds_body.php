@@ -9,7 +9,9 @@ class SpecialAdminAds extends SpecialPage {
 	
 	private $adlimit = 100;//number of ads to show on page - NOTE: Not used.  There is a local var w/the same name below... probably not intentional.
 	private $ispaypal;
-	
+
+	var $emergencyEmail = 'ad-ops@wikia-inc.com';
+
 	public function __construct() {
 		global $IP;
 
@@ -195,12 +197,8 @@ class SpecialAdminAds extends SpecialPage {
 	//use the full URL, fully expanded with index.php?title=Special:AdminAds 
 	//when registering with Paypal
 	private function HandlePayPal(){
-		global $wgRequest;
-		global $wgEmergencyContact;
-		global $wgHTTPProxy;
+		global $wgRequest, $wgHTTPProxy;
 
-		//address to send error messages to 			
-		$defaultemail = $wgEmergencyContact;
 		//NOTE: sending to https may require further configuration
 		//an empty $result variable may be an indicator of this problem
 		//may need to do other stuff to enable https
@@ -261,15 +259,15 @@ class SpecialAdminAds extends SpecialPage {
 						$ad->last_pay_date = date('Y-m-d');
 						$ad->Save();
 					}else{
-						mail($defaultemail, "Invalid Payment Amount or Currency", print_r($_POST,1) . "\n\n" . $req);
+						mail($this->emergencyEmail, "Invalid Payment Amount or Currency", "AD ID: " . $ad->ad_id . "\n\n" . print_r($_POST,1) . "\n\n" . $req);
 					}
 				}
 				//we could trap for some other statuses here... worry about that later
 			} else if (strcmp ($result, "INVALID") == 0) { 
 			// If 'INVALID', send an email. TODO: Log for manual investigation. 
-				mail($defaultemail, "Invalid PayPal Payment IPN Verfication", print_r($_POST,1) . "\n\n" . $req); 
+				mail($this->emergencyEmail, "Invalid PayPal Payment IPN Verfication", "AD ID: " . $ad->ad_id . "\n\n" . print_r($_POST,1) . "\n\n" . $req); 
 			} else {
-				mail($defaultemail,"Error in IPN", "result=".$result."\n\n".print_r($_POST,1)."\n\n".$req);
+				mail($this->emergencyEmail,"Error in IPN", "AD ID: " . $ad->ad_id . "\n\n" . "result=".$result."\n\n".print_r($_POST,1)."\n\n".$req);
 			}
 			return true;
 		}
