@@ -1367,6 +1367,9 @@ class BlogCommentList {
 
 			$aComments = $listing->getCommentPages();
 			if ( !empty($aComments) ) {
+				global $wgRC2UDPEnabled; 
+				$irc_backup = $wgRC2UDPEnabled;	//backup
+				$wgRC2UDPEnabled = false; //turn off
 				foreach ($aComments as $page_id => $oComment) {
 					$oCommentTitle = $oComment->getTitle();
 					if ( $oCommentTitle instanceof Title ) {
@@ -1374,6 +1377,8 @@ class BlogCommentList {
 						$oArticle->doDeleteArticle($reason);
 					}
 				}
+				$wgRC2UDPEnabled = $irc_backup; //restore to whatever it was
+				unset($irc_backup);	//cleanup
 			}
 			$listing->purge();
 		}
