@@ -570,8 +570,11 @@ class GlobalWatchlistBot {
 		list($sEmailBody, $sEmailBodyHTML) = $this->composeMail($oUser, $aDigestData, $isDigestLimited);
 
 		$sFrom = 'Wikia <community@wikia.com>';
+		//yes this needs to be a MA object, not string (the docs for sendMail are wrong)
+		$oReply = new MailAddress( 'noreply@wikia.com' );
+
 		if ( empty($this->mDebugMailTo) ) {
-			$oUser->sendMail( $sEmailSubject, $sEmailBody, $sFrom, null, 'GlobalWatchlist', $sEmailBodyHTML );
+			$oUser->sendMail( $sEmailSubject, $sEmailBody, $sFrom, $oReply, 'GlobalWatchlist', $sEmailBodyHTML );
 			$this->printDebug("Digest email sent to user: " . $oUser->getName());
 		}
 		else {
