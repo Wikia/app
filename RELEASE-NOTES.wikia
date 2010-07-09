@@ -3,6 +3,7 @@
 * rt#57600: hide create and upload links on Answers (TOR)
 * rt#57393: Fixed some Special:Signup CSS problems (TOR)
 * rt#57228: Article comments: recentchanges list has broken links for namespace'd articles (Marooned)
+* rt#58089: Change XHR GET to POST for watch/unwatch actions (Emil)
 
 == Changes since 201007.1 ==
 * rt#51380: Remove Special:Following from public view (Tomek)

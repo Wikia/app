@@ -63,11 +63,14 @@ wgAjaxWatch.ajaxCall = function() {
 	wgAjaxWatch.inprogress = true;
 	wgAjaxWatch.setLinkText( wgAjaxWatch.watching
 		? wgAjaxWatch.unwatchingMsg : wgAjaxWatch.watchingMsg);
+	var old_sajax_request_type = sajax_request_type;
+	sajax_request_type = "POST";
 	sajax_do_call(
 		"wfAjaxWatch",
 		[wgPageName, (wgAjaxWatch.watching ? "u" : "w")], 
 		wgAjaxWatch.processResult
 	);
+	sajax_request_type = old_sajax_request_type;
 	// if the request isn't done in 10 seconds, allow user to try again
 	wgAjaxWatch.timeoutID = window.setTimeout(
 		function() { wgAjaxWatch.inprogress = false; },
