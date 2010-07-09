@@ -47,17 +47,21 @@ class XmlTypeCheck {
 
 		xml_set_element_handler( $parser, array( $this, 'rootElementOpen' ), false );
 
-		$file = fopen( $fname, "rb" );
-		do {
-			$chunk = fread( $file, 32768 );
-			$ret = xml_parse( $parser, $chunk, feof( $file ) );
-			if( $ret == 0 ) {
-				// XML isn't well-formed!
-				fclose( $file );
-				xml_parser_free( $parser );
-				return;
+		if ( file_exists($fname) ) {
+			$file = fopen( $fname, "rb" );
+			if ( $file ) {
+				do {
+					$chunk = fread( $file, 32768 );
+					$ret = xml_parse( $parser, $chunk, feof( $file ) );
+					if( $ret == 0 ) {
+						// XML isn't well-formed!
+						fclose( $file );
+						xml_parser_free( $parser );
+						return;
+					}
+				} while( !feof( $file ) );
 			}
-		} while( !feof( $file ) );
+		}
 
 		$this->wellFormed = true;
 
