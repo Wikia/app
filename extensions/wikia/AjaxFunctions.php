@@ -31,7 +31,11 @@ function cxValidateUserName () {
 	
 	$result = wfValidateUserName($uName);
 
-	$data = array('result' => $result);
+	if( $result === true ) {
+		$data = array('result' => 'OK' );	
+	} else {
+		$data = array('result' => 'INVALID', 'msg' => wfMsg($result), 'msgname' => $result );
+	}
 
 	$json = Wikia::json_encode($data);
 	$response = new AjaxResponse($json);
@@ -57,38 +61,29 @@ function wfValidateUserName($uName){
 	global $wgWikiaMaxNameChars, $wgExternalSharedDB;
 	wfProfileIn(__METHOD__);
 
-//	global $IP;
-//	require_once ($IP . '/includes/User.php');
-	if( empty($wgWikiaMaxNameChars) ) {
-		//emergency fallback
-		global $wgMaxNameChars;
-		$wgWikiaMaxNameChars = $wgMaxNameChars;
-	}
-
-	$result = 'OK';#wfMsg ('username-valid');
+	$result = true;#wfMsg ('username-valid');
 
 	$nt = Title::newFromText( $uName );
-	if( is_null( $nt ) ) {
-		# Illegal name
-		$result = 'INVALID';
-	} elseif ( mb_strlen($uName) > $wgWikiaMaxNameChars ) {
-		# Too long (for wikia)
-		$result = 'INVALID';
+	if( !User::isNotMaxNameChars($uName) ) {
+		$result = 'userlogin-bad-username-length';
+
+	} elseif ( is_null( $nt ) || !User::isInvalidUsernameCharacters( $uName )  ) {
+		$result = 'userlogin-bad-username-character';
 	} else {
 		$uName = $nt->getText();
 
 		$dbr = wfGetDB (DB_SLAVE);
 		$uName = $dbr->strencode($uName);
 		if ($uName == '') {
-			$result = 'INVALID';
+			$result = 'userlogin-bad-username-character';
 		} else {
 			if(User::idFromName($uName) != 0) {
-				$result = 'EXISTS';
+				$result = 'userlogin-bad-username-taken';
 			}
 			
 			global $wgReservedUsernames;
 			if(in_array($uName, $wgReservedUsernames)){
-				$result = 'EXISTS'; // if we returned 'invalid', that would be confusing once a user checked and found that the name already met the naming requirements.
+				$result = 'userlogin-bad-username-taken'; // if we returned 'invalid', that would be confusing once a user checked and found that the name already met the naming requirements.
 			}
 		}
 	}

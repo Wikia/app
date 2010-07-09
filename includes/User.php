@@ -620,10 +620,37 @@ class User {
 	static function isCreatableName( $name ) {
 		global $wgInvalidUsernameCharacters;
 		return
-			self::isUsableName( $name ) &&
-
-			// Registration-time character blacklisting...
-			!preg_match( '/[' . preg_quote( $wgInvalidUsernameCharacters, '/' ) . ']/', $name );
+			self::isUsableName( $name ) && self::isInvalidUsernameCharacters( $name ) && self::isNotMaxNameChars( $name );
+	}
+	
+	
+	/**
+	 * Check for Invalid Characters inside user name 
+	 * * @param $name \string String to match
+	 * @return \bool True or false
+	 */
+	
+	static function isInvalidUsernameCharacters($name) {
+		global $wgInvalidUsernameCharacters;
+		return !preg_match( '/[' . preg_quote( $wgInvalidUsernameCharacters, '/' ) . ']/', $name );
+	}
+	
+	/**
+	 * Check for max name length
+	 * * @param $name \string String to match
+	 * @return \bool True or false
+	 */
+	
+	static function isNotMaxNameChars($name) {
+		global $wgWikiaMaxNameChars;
+		
+		if( empty($wgWikiaMaxNameChars) ) {
+			//emergency fallback
+			global $wgMaxNameChars;
+			$wgWikiaMaxNameChars = $wgMaxNameChars;
+		}
+		
+		return !( mb_strlen($name) > $wgWikiaMaxNameChars );
 	}
 
 	/**

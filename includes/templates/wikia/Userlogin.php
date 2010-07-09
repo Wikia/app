@@ -553,12 +553,11 @@ class UsercreateTemplate extends QuickTemplate {
 
 		UserRegistration.checkForm = function() {
 			UserRegistration.dateAccessed = 2;	//check date on submit
-			UserRegistration.checkUsername();
 			UserRegistration.checkDate();
 			UserRegistration.checkEmail();
 			UserRegistration.checkPass();
 			UserRegistration.checkRetype();
-			UserRegistration.fillErrors();
+			UserRegistration.checkUsername(UserRegistration.fillErrors);
 			return !(UserRegistration.errorNick || UserRegistration.errorEmail || UserRegistration.errorPass || UserRegistration.errorRetype || UserRegistration.errorDate);
 		}
 
@@ -566,11 +565,10 @@ class UsercreateTemplate extends QuickTemplate {
 			UserRegistration.errorPass = false;
 			UserRegistration.toggleError('wpPasswordTD', 'clear');
 			UserRegistration.dateAccessed = 2;	//check date on submit
-			UserRegistration.checkUsername();
 			UserRegistration.checkDate();
 			UserRegistration.checkEmail();
 			UserRegistration.checkRetype();
-			UserRegistration.fillErrors();
+			UserRegistration.checkUsername(UserRegistration.fillErrors);
 			return !(UserRegistration.errorNick || UserRegistration.errorEmail || UserRegistration.errorRetype || UserRegistration.errorDate);
 		}
 		
@@ -604,14 +602,19 @@ class UsercreateTemplate extends QuickTemplate {
 			}
 		}
 
-		UserRegistration.checkUsername = function() {
+		UserRegistration.checkUsername = function(success) {
 			$.getJSON(wgScript + '?action=ajax&rs=cxValidateUserName', {uName: $('#wpName2').attr('value')}, function(json){
 				if (json.result == 'OK') {
 					UserRegistration.toggleError('wpNameTD', 'ok');
 					UserRegistration.errorNick = false;
 				} else {
 					UserRegistration.toggleError('wpNameTD', 'err');
+					UserRegistration.errorMessages['username'] = json.msg;
 					UserRegistration.errorNick = true;
+				}
+
+				if (typeof success == 'function') {
+					success();
 				}
 			});
 		}
