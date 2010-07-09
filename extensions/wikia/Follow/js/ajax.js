@@ -48,11 +48,12 @@ Follow.uwatch = function(e) {
     WET.byStr( 'WikiaFollowedPages/specialpage/delete/' + msg[3] + '/' + index);
 
     $.ajax({
-              url: url,
-              success: function() {
-                    li.remove();
-              }
-            });
+    	type: 'POST',
+    	url: url,
+    	success: function() {
+    		li.remove();
+    	}
+    });
     return false;
 }
 
