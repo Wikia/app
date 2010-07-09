@@ -258,9 +258,9 @@ class ChooseNameTemplate extends QuickTemplate {
 </div>
 
 <script type='text/javascript'>
-	var prefs_help_mailmesg = "<?php echo wfMsg('prefs-help-mailmesg') ?>";
-	var prefs_help_email = "<?php echo wfMsg('prefs-help-email') ?>";
-	$(document).ready(function(){
+    var prefs_help_mailmesg = "<?php echo str_replace("\n", " ", wfMsg('prefs-help-mailmesg')) ?>"; 
+    var prefs_help_email = "<?php echo str_replace("\n", " ", wfMsg('prefs-help-email')) ?>"; 
+    $(document).ready(function(){
 		//override submitForm
 		UserRegistration = {};
 		$('#wpEmailInfo').bind('click', function(){
