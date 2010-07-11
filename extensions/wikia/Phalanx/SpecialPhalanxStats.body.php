@@ -8,6 +8,8 @@ class PhalanxStats extends UnlistedSpecialPage {
 	function execute( $par ) {
 		global $wgOut, $wgLang, $wgUser;
 
+		wfLoadExtensionMessages( 'Phalanx' );
+
 		// check restrictions
 		if ( !$this->userCanExecute( $wgUser ) ) {
 			$this->displayRestrictionError();
