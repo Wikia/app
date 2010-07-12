@@ -200,6 +200,48 @@ class ScribeeventsPage {
 		return $num;
 	}
 	
+	private function getRevisionFromArchive($page_id, $rev_id) {
+		wfProfileIn( __METHOD__ );
+
+		$result = false;
+		$dbr = wfGetDB( DB_SLAVE );
+
+		$fields = array(
+			'ar_namespace as page_namespace',
+			'ar_title as page_title',
+			'ar_comment as rev_comment',
+			'ar_user as rev_user',
+			'ar_user_text as rev_user_text',
+			'ar_timestamp as rev_timestamp',
+			'ar_minor_edit as rev_minor_edit',
+			'ar_rev_id as rev_id',
+			'ar_text_id as rev_text_id',
+			'ar_len as rev_len',
+			'ar_page_id as page_id',
+			'ar_page_id as rev_page',
+			'ar_deleted as rev_deleted',
+			'0 as rev_parent_id'
+		);
+
+		$conditions = array( 
+			'ar_page_id'	=> $this->mPageId , 
+			'ar_rev_id'		=> $this->mRevId
+		);
+
+		$oRow = $dbr->selectRow( 
+			'archive', 
+			$fields, 
+			$conditions,
+			__METHOD__
+		);
+		if ( is_object($oRow) ) {
+			$result = $oRow;
+		}
+		
+		wfProfileOut( __METHOD__ );
+		return $result;
+	}	
+	
 	public function outputResults( $skin, $data ) {
 		global $wgContLang, $wgOut;
 
@@ -247,6 +289,12 @@ class ScribeeventsPage {
 				$page_url = "";
 				if ( is_object($oTitle) ) {
 					$page_url = $oTitle->getLocalURL();
+				} else {
+					$archive = $this->getRevisionFromArchive($page_id, $rev_id);
+					if ( is_object($archive) ) {
+						$oTitle = Title::makeTitle( $archive->page_namespace, $archive->page_title );
+						$page_url = $oTitle->getLocalURL();
+					}
 				}
 				if (empty($this->mShow)) {
 					$res = "";
