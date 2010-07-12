@@ -9,7 +9,7 @@ class ScribeeventsSpecialPage extends SpecialPage {
 		parent::__construct( $this->mName, $this->mRights );
 	}
 
-	function execute($type = null, $limit = 20, $offset = "", $show = true) {
+	function execute($type = null, $limit = 0, $offset = "", $show = true) {
 		global $wgRequest, $wgUser, $wgOut;
 
 		if( $wgUser->isBlocked() ) {
@@ -31,7 +31,7 @@ class ScribeeventsSpecialPage extends SpecialPage {
 			$type = $wgRequest->getVal('type', $type);
 		}
 		if (empty($limit) && empty($offset)) { 
-            list( $limit, $offset ) = wfCheckLimits();
+            list( $limit, $offset ) = wfCheckLimits(20);
         }
         $this->sep = new ScribeeventsPage($this->mName, $type, $limit, $offset);
         
@@ -221,92 +221,90 @@ class ScribeeventsPage {
 			$loop = 0; $skip = 0;
 			foreach ( $data['order'] as $key => $ordered ) {
 				# check loop
-				if ( $loop >= $this->offset && $loop < $this->limit + $this->offset ) {
-					list( 
-						$page_id, 
-						$rev_id, 
-						$log_id, 
-						$user_id, 
-						$user_is_bot, 
-						$page_ns, 
-						$is_content, 
-						$is_redirect,
-						$ip, 
-						$rev_timestamp, 
-						$image_links, 
-						$video_links, 
-						$total_words,
-						$rev_size,
-						$wiki_lang_id,
-						$wiki_cat_id,
-						$event_type,
-						$event_date,
-						$media_type
-					) = $data['rows'][$key];	
-						
-					$oTitle = Title::newFromId( $page_id );
-					$page_url = "";
-					if ( is_object($oTitle) ) {
-						$page_url = $oTitle->getLocalURL();
-					}
-					if (empty($this->mShow)) {
-						$res = "";
-						$this->data[$key] = array();
-					} else {
-						$addInfo = array();
-						if ( $page_url ) {
-							$res = wfSpecialList( Xml::openElement( 'a', array('href' => $page_url) ) . $page_url . Xml::closeElement( 'a' ), "" );
-						} else {
-							$res = "Page not found ( page_id: " .  $page_id . ", log_id: $log_id ) ";
-						}
-						if ( $rev_id > 0 ) 
-							$addInfo[] = "Revision: $rev_id";
-						if ( $log_id > 0 ) 
-							$addInfo[] = "Log ID from RC: $log_id";
-						$oUser = User::newFromID($user_id);
-						if ( $oUser ) {
-							$addInfo[] = "User: " . $oUser->getName() . " (uid: $user_id)";
-						} else {
-							$addInfo[] = "Uid: $user_id";
-						}
-						$addInfo[] = "user is bot: $user_is_bot";
-						$addInfo[] = "page is content: $is_content";
-						$addInfo[] = "page is redirect: $is_redirect";
-						$addInfo[] = "user IP: $ip"; 
-						$addInfo[] = "revision TS: $rev_timestamp"; 
-						$addInfo[] = "number of image links: $image_links";
-						$addInfo[] = "number of video: $video_links";
-						$addInfo[] = "words: $total_words";
-						$addInfo[] = "size: $rev_size";
-						$addInfo[] = "lang ID: $wiki_lang_id";
-						$addInfo[] = "cat ID: $wiki_cat_id";
-						$addInfo[] = "event date: $event_date";
-						
-						$type = "";
-						switch ( $event_type ) {
-							case ScribeProducer::EDIT_CATEGORY_INT			: $type = ScribeProducer::EDIT_CATEGORY; break;
-							case ScribeProducer::CREATEPAGE_CATEGORY_INT 	: $type = ScribeProducer::CREATEPAGE_CATEGORY; break;
-							case ScribeProducer::DELETE_CATEGORY_INT 		: $type = ScribeProducer::DELETE_CATEGORY; break;
-							case ScribeProducer::UNDELETE_CATEGORY_INT		: $type = ScribeProducer::UNDELETE_CATEGORY; break;
-						}
-						$addInfo[] = "event type: $type";
-
-						$mtype = ' - ';
-						switch ( $media_type ) {
-							case 1 : $mtype = MEDIATYPE_BITMAP; break;
-							case 2 : $mtype = MEDIATYPE_DRAWING; break;
-							case 3 : $mtype = MEDIATYPE_AUDIO; break;
-							case 4 : $mtype = MEDIATYPE_VIDEO; break;
-							case 5 : $mtype = MEDIATYPE_MULTIMEDIA; break;
-							case 6 : $mtype = MEDIATYPE_OFFICE; break;
-							case 7 : $mtype = MEDIATYPE_TEXT; break;
-							case 8 : $mtype = MEDIATYPE_EXECUTABLE; break;
-							case 9 : $mtype = MEDIATYPE_ARCHIVE; break;
-						}
-						$addInfo[] = "media type (for NS_FILE): $mtype ($media_type)";						
-					}
+				list( 
+					$page_id, 
+					$rev_id, 
+					$log_id, 
+					$user_id, 
+					$user_is_bot, 
+					$page_ns, 
+					$is_content, 
+					$is_redirect,
+					$ip, 
+					$rev_timestamp, 
+					$image_links, 
+					$video_links, 
+					$total_words,
+					$rev_size,
+					$wiki_lang_id,
+					$wiki_cat_id,
+					$event_type,
+					$event_date,
+					$media_type
+				) = $data['rows'][$key];	
 					
-					$html[] = $this->mShow ? Xml::openElement( 'li' ) . $res . " <br />" . implode("<br />", $addInfo) . Xml::closeElement( 'li' ) : "";
+				$oTitle = Title::newFromId( $page_id );
+				$page_url = "";
+				if ( is_object($oTitle) ) {
+					$page_url = $oTitle->getLocalURL();
+				}
+				if (empty($this->mShow)) {
+					$res = "";
+					$this->data[$key] = array();
+				} else {
+					$addInfo = array();
+					if ( $page_url ) {
+						$res = wfSpecialList( Xml::openElement( 'a', array('href' => $page_url) ) . $page_url . Xml::closeElement( 'a' ), "" );
+					} else {
+						$res = "Page not found ( page_id: " .  $page_id . ", log_id: $log_id ) ";
+					}
+					if ( $rev_id > 0 ) 
+						$addInfo[] = "Revision: $rev_id";
+					if ( $log_id > 0 ) 
+						$addInfo[] = "Log ID from RC: $log_id";
+					$oUser = User::newFromID($user_id);
+					if ( $oUser ) {
+						$addInfo[] = "User: " . $oUser->getName() . " (uid: $user_id)";
+					} else {
+						$addInfo[] = "Uid: $user_id";
+					}
+					$addInfo[] = "user is bot: $user_is_bot";
+					$addInfo[] = "page is content: $is_content";
+					$addInfo[] = "page is redirect: $is_redirect";
+					$addInfo[] = "user IP: $ip"; 
+					$addInfo[] = "revision TS: $rev_timestamp"; 
+					$addInfo[] = "number of image links: $image_links";
+					$addInfo[] = "number of video: $video_links";
+					$addInfo[] = "words: $total_words";
+					$addInfo[] = "size: $rev_size";
+					$addInfo[] = "lang ID: $wiki_lang_id";
+					$addInfo[] = "cat ID: $wiki_cat_id";
+					$addInfo[] = "event date: $event_date";
+					
+					$type = "";
+					switch ( $event_type ) {
+						case ScribeProducer::EDIT_CATEGORY_INT			: $type = ScribeProducer::EDIT_CATEGORY; break;
+						case ScribeProducer::CREATEPAGE_CATEGORY_INT 	: $type = ScribeProducer::CREATEPAGE_CATEGORY; break;
+						case ScribeProducer::DELETE_CATEGORY_INT 		: $type = ScribeProducer::DELETE_CATEGORY; break;
+						case ScribeProducer::UNDELETE_CATEGORY_INT		: $type = ScribeProducer::UNDELETE_CATEGORY; break;
+					}
+					$addInfo[] = "event type: $type";
+
+					$mtype = ' - ';
+					switch ( $media_type ) {
+						case 1 : $mtype = MEDIATYPE_BITMAP; break;
+						case 2 : $mtype = MEDIATYPE_DRAWING; break;
+						case 3 : $mtype = MEDIATYPE_AUDIO; break;
+						case 4 : $mtype = MEDIATYPE_VIDEO; break;
+						case 5 : $mtype = MEDIATYPE_MULTIMEDIA; break;
+						case 6 : $mtype = MEDIATYPE_OFFICE; break;
+						case 7 : $mtype = MEDIATYPE_TEXT; break;
+						case 8 : $mtype = MEDIATYPE_EXECUTABLE; break;
+						case 9 : $mtype = MEDIATYPE_ARCHIVE; break;
+					}
+					$addInfo[] = "media type (for NS_FILE): $mtype ($media_type)";						
+					
+					$html[] = $this->mShow ? Xml::openElement( 'li' ) . $res . "<br />" . implode("<br />", $addInfo) . Xml::closeElement( 'li' ) : "";
 				}
 				$loop++;
 			}
