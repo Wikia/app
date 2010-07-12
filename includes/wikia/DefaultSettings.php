@@ -196,6 +196,7 @@ include_once( "$IP/extensions/wikia/TagCloud/TagCloudClass.php" );
 include_once( "$IP/extensions/wikia/MostPopularCategories/SpecialMostPopularCategories.php" );
 include_once( "$IP/extensions/wikia/MostPopularArticles/SpecialMostPopularArticles.php" );
 include_once( "$IP/extensions/wikia/WidgetSpecialPage/WidgetsSpecialPage.php" );
+include_once( "$IP/extensions/wikia/Scribe/SpecialScribeEvents.php" );
 
 /**
  * onedot is switched off for while
