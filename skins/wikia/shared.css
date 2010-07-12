@@ -152,7 +152,7 @@ body.wikiaSkinMonaco .wikia-slideshow-images .wikia-slideshow-image {
 	display: block;
 	height: 60px;
 	width: 40px;
-	z-index: 100;
+	z-index: 1000;
 }
 
 .wikia-slideshow-prev {
