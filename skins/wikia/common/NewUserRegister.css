@@ -47,7 +47,7 @@
         font-weight: bold;
 }
 
-#userloginErrorBox, #userloginErrorBox2,
+#userloginErrorBox, #userloginErrorBox2, #userloginErrorBox3,
 #userloginMessageBox {
 	background-color: #FFFFCC;
 	border: 1px solid #AAA;
