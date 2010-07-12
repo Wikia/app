@@ -257,6 +257,10 @@ if (jQuery.browser.msie)
 		num_slides = obj.find('.'+ options.slidesClass).eq(0).children('li').length;
 		slide_width = obj.find('.'+ options.slidesClass).eq(0).children('li').eq(0).outerWidth();
 
+		// Wikia
+		// RT #55247
+		options.topZIndex = num_slides;
+
 		var button_selector = '.'+options.buttonsClass+' li a:not(".prevClass.nextClass")';
 		num_buttons = obj.find(button_selector).length;
 
