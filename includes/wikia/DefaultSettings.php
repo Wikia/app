@@ -109,6 +109,8 @@ $wgAutoloadClasses[ "WikiaApiCreatorReminderEmail" ] = "{$IP}/extensions/wikia/A
 $wgAutoloadClasses[ "TokyoTyrantSession"           ] = "{$IP}/includes/wikia/TokyoTyrantSessions.php";
 $wgAutoloadClasses[ "WikiFactoryTags"              ] = "{$IP}/extensions/wikia/WikiFactory/Tags/WikiFactoryTags.php";
 $wgAutoloadClasses[ "WikiaApiQueryEventsData"      ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryEventsData.php";
+$wgAutoloadClasses[ "WikiaApiQueryEventInfo"       ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryEventInfo.php";
+$wgAutoloadClasses[ "WikiaApiQueryScribeEvents"    ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryScribeEvents.php";
 
 /**
  * registered API methods
@@ -140,6 +142,8 @@ global $wgAjaxExportList;
 global $wgAPIPropModules;
 $wgAPIPropModules[ "info"         ] = "WikiaApiQueryPageinfo";
 $wgAPIPropModules[ "wkevinfo"     ] = "WikiaApiQueryEventsData";
+$wgAPIPropModules[ "wkevent"      ] = "WikiaApiQueryEventInfo";
+$wgAPIPropModules[ "wkevents"     ] = "WikiaApiQueryScribeEvents";
 
 /**
  * registered Format names
