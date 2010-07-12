@@ -252,13 +252,17 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 	}
 
 	public function execute() {
-		global $wgCityId;
+		global $wgCityId, $wgUser;
 		wfProfileIn( __METHOD__ );
 
 		# extract request params
 		$this->mCityId = $wgCityId;
 		$this->params = $this->extractRequestParams(false);
 
+		if (!$wgUser->isAllowed('scribeevents')) {
+			$this->dieUsageMsg(array('readrequired'));
+		}
+		
 		// Error results should not be cached
 		$this->getMain()->setCacheMaxAge(0);
 

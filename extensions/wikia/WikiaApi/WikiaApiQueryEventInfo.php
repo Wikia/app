@@ -100,13 +100,17 @@ class WikiaApiQueryEventInfo extends ApiQueryBase {
 	}
 
 	public function execute() {
-		global $wgCityId;
+		global $wgCityId, $wgUser;
 		wfProfileIn( __METHOD__ );
 
 		# extract request params
 		$this->mCityId = $wgCityId;
 		$this->params = $this->extractRequestParams(false);
 
+		if (!$wgUser->isAllowed('scribeevents')) {
+			$this->dieUsageMsg(array('readrequired'));
+		}
+			
 		# check "pageid" param
 		$pageCount = $this->getPageCount();
 
