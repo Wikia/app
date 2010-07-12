@@ -38,4 +38,4 @@ if ( !function_exists( 'extAddSpecialPage' ) ) {
 
 extAddSpecialPage( dirname(__FILE__) . '/SpecialMultiWikiFinder_body.php', 'Multiwikifinder', 'MultiwikifinderSpecialPage' );
 
-$wgSpecialPageGroups['wfGetMultiWikiFinder'] = 'highuse';
+$wgSpecialPageGroups['Multiwikifinder'] = 'pagetools';
