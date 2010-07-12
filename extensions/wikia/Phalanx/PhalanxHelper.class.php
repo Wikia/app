@@ -119,7 +119,7 @@ class PhalanxHelper {
 
 		$id = $wgRequest->getVal( 'id', false ); // only set for update
 		$filter = $wgRequest->getText( 'wpPhalanxFilter' );
-		$format = $wgRequest->getCheck( 'wpPhalanxFormat' ) ? 1 : 0;
+		$regex = $wgRequest->getCheck( 'wpPhalanxFormatRegex' ) ? 1 : 0;
 		$exact = $wgRequest->getCheck( 'wpPhalanxFormatExact' ) ? 1 : 0;
 		$case = $wgRequest->getCheck( 'wpPhalanxFormatCase' ) ? 1 : 0;
 		$expiry = $wgRequest->getText( 'wpPhalanxExpire' );
@@ -157,7 +157,7 @@ class PhalanxHelper {
 			'text' => $filter,
 			'exact' => $exact,
 			'case' => $case,
-			'regex' => $format,
+			'regex' => $regex,
 			'timestamp' => wfTimestampNow(),
 			'expire' => $expire,
 			'author_id' => $wgUser->getId(),
