@@ -30,6 +30,12 @@ class ScribeProducer {
 		UNDELETE_CATEGORY	= 'log_undelete',
 		DELETE_CATEGORY		= 'log_delete';
 
+	const 
+		EDIT_CATEGORY_INT 		= 1,
+		CREATEPAGE_CATEGORY_INT	= 2,
+		UNDELETE_CATEGORY_INT	= 3,
+		DELETE_CATEGORY_INT		= 4;
+
 	/**
 	 * constructor
 	 *
