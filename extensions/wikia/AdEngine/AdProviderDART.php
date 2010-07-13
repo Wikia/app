@@ -1,6 +1,6 @@
 <?php
 
-class AdProviderDART implements iAdProvider {
+class AdProviderDART extends AdProviderIframeFiller implements iAdProvider {
 
 	private $isMainPage, $useIframe = false;
 
@@ -353,11 +353,14 @@ EOT;
 		return 'dmn=' . $this->sanitizeKeyValue($match1[0]) . ';';
 	}
 
-
-        public function getIframeFillHtml($slotname, $slot) {
+        protected function getIframeFillFunctionDefinition($function_name, $slotname, $slot) {
 		$this->useIframe = true;
-                return '<script type="text/javascript">' .
-			'document.getElementById("' . addslashes($slotname) .'_iframe").src = "' . addslashes($this->getUrl($slotname, $slot)) . '";</script>';
+
+                $out = '<script type="text/javascript">' .
+                        $function_name . ' = function() { ' .
+			'document.getElementById("' . addslashes($slotname) .'_iframe").src = "' . addslashes($this->getUrl($slotname, $slot)) . '"; }</script>';
+
+                return $out;
         }
 
 }
