@@ -108,7 +108,7 @@ class ScribeProducer {
 			$pageId = ( $oArticle instanceof Article ) ? $oArticle->getID() : 0;
 			if ( $revid > 0 && $pageId > 0 ) { 
 				$key = ( isset($status->value['new']) && $status->value['new'] == 1 ) ? 'create' : 'edit';
-				$oScribeProducer = new ScribeProducer( $key, $pageId, $revid, (!empty($undef1)) ? 1 : 0 );
+				$oScribeProducer = new ScribeProducer( $key, $pageId, $revid, 0, (!empty($undef1)) ? 1 : 0 );
 				if ( is_object( $oScribeProducer ) ) {
 					$oScribeProducer->send_log();
 				}
@@ -187,7 +187,7 @@ class ScribeProducer {
 				
 				if ( $logid > 0 ) {
 					#---
-					$oScribeProducer = new ScribeProducer( 'delete', $pageId, 0, $logid );
+					$oScribeProducer = new ScribeProducer( 'delete', $pageId, 0, $logid, 0 );
 					if ( is_object( $oScribeProducer ) ) {
 						$oScribeProducer->send_log();
 					}
@@ -218,7 +218,7 @@ class ScribeProducer {
 			$pageId = $oRevision->getPage();
 			$revId = $oRevision->getId();
 			if ( $revId > 0 && $pageId > 0 ) {
-				$oScribeProducer = new ScribeProducer( 'edit', $pageId, $revId );
+				$oScribeProducer = new ScribeProducer( 'edit', $pageId, $revId, 0, 0 );
 				if ( is_object( $oScribeProducer ) ) {
 					$oScribeProducer->send_log();
 				}
