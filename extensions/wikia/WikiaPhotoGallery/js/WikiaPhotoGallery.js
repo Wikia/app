@@ -13,6 +13,7 @@ var WikiaPhotoGallery = {
 			id: 0
 		},
 		msg: {},
+		defaultParamValues: {},
 		source: false,
 		// dimensions of editor's popup (RT #55203, RT #55210)
 		height: false,
@@ -49,6 +50,16 @@ var WikiaPhotoGallery = {
 	// track pop-out events
 	trackForView: function(fakeUrl) {
 		window.jQuery.tracker.byStr('articleAction/photogallery' + fakeUrl);
+	},
+
+	// tracking of parameter values
+	trackParam: function(paramName, fakeUrl) {
+		var params = this.editor.gallery.params;
+		var defaultParams = this.editor.defaultParamValues;
+
+		var value = (typeof params[paramName] != 'undefined') ? params[paramName] : defaultParams[paramName];
+
+		this.track('/dialog/gallery/preview' + fakeUrl + '/' + value);
 	},
 
 	// get current page related suffix for tracker fake URLs
@@ -133,9 +144,6 @@ var WikiaPhotoGallery = {
 		// buttons
 		var saveButton = $('#WikiaPhotoGalleryEditorSave');
 		var cancelButton = $('#WikiaPhotoGalleryEditorCancel');
-
-		// hide gallery options (slider, alignment option) in modal toolbar
-		$('#WikiaPhotoGalleryEditorPreviewOptions').hide();
 
 		// hide edit conflict buttons
 		$('#WikiaPhotoGalleryEditConflictButtons').hide();
@@ -316,23 +324,46 @@ var WikiaPhotoGallery = {
 
 				// get widths / alignment from sliders
 				if (this.isSlideshow()) {
-					gallery.params.widths = $('#WikiaPhotoGallerySlideshowWidthSlider').slider('value');
+					gallery.params.widths = $('#WikiaPhotoGallerySliderSlideshow').find('.slider').slider('value');
 				}
 				else {
-					gallery.params.captionalign = $('#WikiaPhotoGalleryEditorPreviewAlign').val();
-					gallery.params.widths = $('#WikiaPhotoGalleryEditorPreviewSlider').slider('value');
+					gallery.params.captionalign = $('#WikiaPhotoGalleryEditorGalleryCaptionAlignment').val();
+					gallery.params.widths = $('#WikiaPhotoGallerySliderGallery').find('.slider').slider('value');
 				}
 
 				gallery.wikitext = this.JSONtoWikiText(gallery);
 
-				// track usage of slideshow "smart" cropping
+				// slideshow / gallery parameters tracking
 				if (this.isSlideshow()) {
+					// track usage of slideshow "smart" cropping
 					if (gallery.params.crop && gallery.params.crop == 'true') {
 						this.track('/dialog/slideshow/preview/crop');
 					}
 
 					if (gallery.params.showrecentuploads && gallery.params.showrecentuploads == 'true') {
 						this.track('/dialog/slideshow/preview/recentUploads');
+					}
+
+					var position = gallery.params.position || 'right';
+					this.track('/dialog/slideshow/position/' + position);
+				}
+				else {
+					this.trackParam('widths', '/layoutTab/size');
+					this.trackParam('columns', '/layoutTab/columns');
+					this.trackParam('position', '/layoutTab/position');
+					this.trackParam('spacing', '/layoutTab/photoSpacing');
+					this.trackParam('orientation', '/layoutTab/photoOrientation');
+
+					this.trackParam('captionposition', '/themeTab/captionPosition');
+					this.trackParam('captionalign', '/themeTab/captionAlignment');
+					this.trackParam('captionsize', '/themeTab/captionSize');
+					this.trackParam('captiontextcolor', '/themeTab/captionColor');
+					this.trackParam('bordersize', '/themeTab/borderSize');
+					this.trackParam('bordercolor', '/themeTab/borderColor');
+
+					// track usage of gallery "smart" cropping
+					if (gallery.params.crop && gallery.params.crop == 'true') {
+						this.track('/dialog/gallery/preview/layoutTab/crop');
 					}
 				}
 
@@ -350,7 +381,7 @@ var WikiaPhotoGallery = {
 						// from RTE (wysiwyg mode)
 						if (gallery.node) {
 							// update existing gallery
-							this.log('updating existing gallery');
+							this.log('updating existing gallery/slideshow');
 
 							// clear metadata
 							gallery.node.setData({
@@ -360,26 +391,44 @@ var WikiaPhotoGallery = {
 
 							// update metadata
 							gallery.node.setData(data);
+
+							var position = gallery.params.position || 'right';
+							gallery.node.removeClass('alignLeft alignRight alignCenter');
+							gallery.node.addClass('align' + position.substr(0,1).toUpperCase() + position.substr(1));
 						}
 						else {
 							// add new gallery
-							this.log('adding new gallery');
+							this.log('adding new gallery/slideshow');
 
-							var node = RTE.tools.createPlaceholder('image-gallery', data);
+							//the type property of data gets overwritten in createPlaceholder, we should use another name
+							//this code is a temporary fix since it screws RTE tracking
+							var node = RTE.tools.createPlaceholder(gallery.type/*'image-gallery'*/, data);
+							var dimensions = {};
 
-							node.
-								removeClass('placeholder placeholder-ext').
-								addClass('media-placeholder image-gallery').
-								attr({
-									height: '200',
-									width: '200'
-								});
+							node.removeClass('placeholder placeholder-ext').addClass('media-placeholder image-gallery');
+
+							if(this.isSlideshow()) {
+								var position = gallery.params.position || 'right';
+
+								node.addClass('image-slideshow');
+								node.addClass('align' + position.substr(0,1).toUpperCase() + position.substr(1));
+
+								dimensions.width = '300';
+								dimensions.height = '225';
+							}
+							else {
+								dimensions.width = '200';
+								dimensions.height = '200';
+							}
+
+							node.attr(dimensions);
 
 							RTE.tools.insertElement(node);
 						}
 
+						//Autosaving the page without notifying the user is BAD UX! Commenting out. (by Lox)
 						// show "Save in progress" popup
-						var messages = this.editor.msg;
+						/*var messages = this.editor.msg;
 						$.showModal(
 							messages['wikiaPhotoGallery-preview-saving-title'],
 							'<p>' + messages['wikiaPhotoGallery-preview-saving-intro'] + '</p>',
@@ -388,7 +437,7 @@ var WikiaPhotoGallery = {
 						hideModal = false;
 
 						// save the whole page
-						$('#wpSave').click();
+						$('#wpSave').click();*/
 						break;
 
 					case 'source':
@@ -558,11 +607,11 @@ var WikiaPhotoGallery = {
 					this.editor.gallery = params.gallery;
 
 					if (this.isSlideshow()) {
-						firstPage = this.UPLOAD_FIND_PAGE;
+						firstPage = this.SLIDESHOW_PREVIEW_PAGE;
 						this.track('/init/edit/view/slideshow');
 					}
 					else {
-						firstPage = this.UPLOAD_FIND_PAGE;
+						firstPage = this.GALLERY_PREVIEW_PAGE;
 						this.track('/init/edit/view/gallery');
 					}
 				}
@@ -581,7 +630,7 @@ var WikiaPhotoGallery = {
 		this.setupUpload();
 
 		// setup search results (by default show recent uploads)
-		this.setupSearchResults(self.RESULTS_RECENT_UPLOADS);
+		this.setupSearchResults(this.RESULTS_RECENT_UPLOADS);
 
 		// setup caption editor toolbar
 		this.setupCaptionToolbar();
@@ -589,12 +638,6 @@ var WikiaPhotoGallery = {
 		// setup MW suggest for link editor
 		this.setupLinkSuggest('WikiaPhotoGalleryLink');
 		this.setupLinkSuggest('WikiaPhotoSlideshowLink');
-
-		// setup slider and alignment dropdown (gallery)
-		this.setupSliderAndDropDown();
-
-		// setup slideshow slider (slideshow)
-		this.setupSlideshowSlider();
 
 		// add handlers to buttons
 		$('#WikiaPhotoGalleryEditorSave').unbind('.save').bind('click.save', function() {self.onSave.apply(self)});
@@ -965,65 +1008,6 @@ var WikiaPhotoGallery = {
 		this.log('MW suggest set up for #' + fieldId);
 	},
 
-	// setup width slider and alignment dropdown
-	setupSliderAndDropDown: function() {
-		var tooltip = $('#WikiaPhotoGalleryEditorPreviewSlider').children('.ui-slider-tooltip').hide();
-		var timeoutId = false;
-
-		var self = this;
-
-		// @see http://docs.jquery.com/UI/API/1.8/Slider
-		$('#WikiaPhotoGalleryEditorPreviewSlider').slider({
-			animate: true,
-			min: 50,
-			max: 300,
-
-			// fired during sliding
-			slide: function(ev, ui) {
-				var value = ui.value;
-
-				tooltip.show().text(value);
-
-				// hide tooltip when sliding is done
-				if (timeoutId) {
-					clearTimeout(timeoutId);
-				}
-
-				timeoutId = setTimeout(function() {
-					tooltip.fadeOut();
-				}, 750);
-			},
-
-			// fired when sliding is done
-			stop: function(ev, ui) {
-				var value = ui.value;
-
-				// change value of "widths" gallery parameter
-				self.editor.gallery.params.widths = value;
-
-				// refresh gallery preview
-				self.renderGalleryPreview();
-
-				self.track('/dialog/gallery/preview/changeSize');
-			}
-		});
-
-		// setup alignment dropdown
-		$('#WikiaPhotoGalleryEditorPreviewAlign').
-			unbind('.dropdown').
-			bind('change.dropdown', function() {
-				var value = $(this).val();
-
-				// change value of "captionalign" gallery parameter
-				self.editor.gallery.params.captionalign = value;
-
-				// refresh gallery preview
-				self.renderGalleryPreview();
-
-				self.track('/dialog/gallery/preview/captionAlignment/' + value);
-			});
-	},
-
 	// image search event handler
 	onImageSearch: function(ev) {
 		ev.preventDefault();
@@ -1077,7 +1061,7 @@ var WikiaPhotoGallery = {
 				self.log('choosen type is #' + type);
 
 				if (self.isSlideshow()) {
-					self.selectPage(self.UPLOAD_FIND_PAGE);
+					self.selectPage(self.SLIDESHOW_PREVIEW_PAGE);
 					self.track('/dialog/choice/slideshow');
 				}
 				else {
@@ -1249,6 +1233,9 @@ var WikiaPhotoGallery = {
 		var self = this;
 		var gallery = this.editor.gallery;
 
+		// debug
+		this.log(this.JSONtoWikiText(gallery));
+
 		// show loading indicator
 		var preview = $(node);
 		preview.html('').addClass('WikiaPhotoGalleryProgress');
@@ -1316,7 +1303,7 @@ var WikiaPhotoGallery = {
 				ev.preventDefault();
 
 				self.log('adding next picture...');
-				self.track('/dialog/gallery/preview/addPhoto');
+				self.track('/dialog/gallery/preview/placeholder');
 
 				self.selectPage(self.UPLOAD_FIND_PAGE, {});
 			});
@@ -1360,10 +1347,10 @@ var WikiaPhotoGallery = {
 			var gallery = preview.find('.WikiaPhotoGalleryPreview');
 
 			gallery.sortable({
-				containment: 'document',
+				containment: '.WikiaPhotoGalleryPreview',
 				delay: 100,
 				forcePlaceholderSize: true,
-				items: '> .WikiaPhotoGalleryPreviewDraggable',
+				items: '.WikiaPhotoGalleryPreviewDraggable',
 				opacity: 0.5,
 				placeholder: 'WikiaPhotoGalleryPreviewDDPlaceholder',
 				revert: 200, // smooth animation
@@ -1423,25 +1410,67 @@ var WikiaPhotoGallery = {
 					self.renderGalleryPreview();
 				}
 			});
+			gallery.disableSelection();
 		});
 	},
 
 	// setup gallery preview page
 	setupGalleryPreviewPage: function(params) {
-		// show slider and alignment dropdown menu
-		$('#WikiaPhotoGalleryEditorPreviewOptions').show();
+		var self = this;
 
-		var params = this.editor.gallery.params;
+		// setup option tabs
+		this.setupTabs($('#WikiaPhotoGalleryOptionsTabs'), function(index) {
+			// track tabs switching
+			self.track('/dialog/gallery/preview/tab/' + (index == 0 ? 'theme2layout' : 'layout2theme'));
+		});
 
-		// set slider value
-		var widths = parseInt(params.widths) || 120 /* default value */;
-		$('#WikiaPhotoGalleryEditorPreviewSlider').slider('value', widths);
+		// setup gallery width slider
+		var values = {
+			min: 50,
+			max: 310,
+			ratio: 2,
+			"default": 200
+		};
 
-		// select proper alignment option
-		$('#WikiaPhotoGalleryEditorPreviewAlign').val( params.captionalign || 'left' );
+		this.setupSlider($('#WikiaPhotoGallerySliderGallery'), 'widths', values, function(slider, value) {
+			// tracking
+			self.track('/dialog/gallery/preview/layoutTab/changeSize');
+
+			// regenerate gallery preview with updated width
+			self.renderGalleryPreview();
+		});
+
+		// setup dropdowns
+		this.setupDropdown($('#WikiaPhotoGalleryEditorGalleryColumns'), 'columns', self.renderGalleryPreview);
+		this.setupDropdown($('#WikiaPhotoGalleryEditorGalleryPosition'), 'position', self.renderGalleryPreview);
+		this.setupDropdown($('#WikiaPhotoGalleryEditorGalleryImageSpacing'), 'spacing', self.renderGalleryPreview);
+
+		this.setupDropdown($('#WikiaPhotoGalleryEditorGalleryCaptionPosition'), 'captionposition', self.renderGalleryPreview);
+		this.setupDropdown($('#WikiaPhotoGalleryEditorGalleryCaptionAlignment'), 'captionalign', self.renderGalleryPreview);
+		this.setupDropdown($('#WikiaPhotoGalleryEditorGalleryCaptionSize'), 'captionsize', self.renderGalleryPreview);
+		this.setupDropdown($('#WikiaPhotoGalleryEditorGalleryBorderSize'), 'bordersize', self.renderGalleryPreview);
+
+		// setup color pickers
+		this.setupColorPicker($('#WikiaPhotoGalleryEditorGalleryBorderColor'), 'bordercolor', self.renderGalleryPreview);
+		this.setupColorPicker($('#WikiaPhotoGalleryEditorGalleryCaptionColor'), 'captiontextcolor', self.renderGalleryPreview);
+
+		//setup image option widgets
+		this.setupImageOption($('#WikiaPhotoGalleryOrientation'), 'orientation', self.renderGalleryPreview);
+
+		// "Add an Image" button
+		$('#WikiaPhotoGalleryAddImage').unbind('.addimage').bind('click.addimage', function(ev) {
+			var button = $(this);
+
+			ev.preventDefault();
+
+			self.log('adding next picture...');
+			self.track('/dialog/gallery/preview/addPhoto');
+
+			self.selectPage(self.UPLOAD_FIND_PAGE, {});
+		});
 
 		// resize preview area (RT #55203)
-		$('#WikiaPhotoGalleryEditorPreview').height(this.editor.height);
+		$('#WikiaPhotoGalleryEditorPreview').height(this.editor.height - 280);
 
 		// render preview
 		this.renderGalleryPreview();
@@ -1452,98 +1481,41 @@ var WikiaPhotoGallery = {
 		this.renderPreview('#WikiaPhotoGalleryEditorPreview', 'renderGalleryPreview', 'gallery');
 	},
 
-	// setup slideshow width slider
-	setupSlideshowSlider: function() {
-		var self = this;
-		var field = $('#WikiaPhotoGallerySlideshowWidth');
-		var slider = $('#WikiaPhotoGallerySlideshowWidthSlider');
-
-		var sliderValues = {
-			min: 200,
-			max: 500
-		};
-
-		// set proper slider width
-		slider.css('width', (sliderValues.max - sliderValues.min) + 'px')
-
-		// @see http://docs.jquery.com/UI/API/1.8/Slider
-		slider.slider({
-			animate: true,
-			min: sliderValues.min,
-			max: sliderValues.max,
-
-			// fired during sliding
-			slide: function(ev, ui) {
-				var value = ui.value;
-
-				field.val(value);
-			},
-
-			// fired when sliding is done
-			stop: function(ev, ui) {
-				var value = ui.value;
-
-				// change value of "widths" gallery parameter
-				self.editor.gallery.params.widths = value;
-
-				self.track('/dialog/slideshow/preview/changeSize');
-
-				// regenerate slideshow preview with updated width
-				self.renderSlideshowPreview();
-			}
-		});
-
-		// changes made in field should be shown on slider
-		field.bind('keyup blur', function(ev) {
-			var value = parseInt($(this).val());
-
-			// correct value when user leaves the field
-			if (ev.type == 'blur' && isNaN(value)) {
-				value = sliderValues.min;
-				$(this).val(value);
-			}
-
-			// update the slider
-			if (value > 0) {
-				slider.slider('value', value);
-				self.editor.gallery.params.widths = value;
-			}
-
-			// update preview when user leaves the field
-			if (ev.type == 'blur') {
-				self.renderSlideshowPreview();
-			}
-		});
-	},
-
 	// setup slideshow preview page
 	setupSlideshowPreviewPage: function(params) {
 		var self = this;
 		var params = this.editor.gallery.params;
 
-		// set slider value
-		var widths = parseInt(params.widths) || 300 /* default value */;
-		$('#WikiaPhotoGallerySlideshowWidthSlider').slider('value', widths);
+		// setup slideshow width slider
+		var values = {
+			min: 200,
+			max: 500,
+			ratio: 2,
+			"default": 300
+		};
 
-		// "width" field
-		$('#WikiaPhotoGallerySlideshowWidth').val(widths);
+		this.setupSlider($('#WikiaPhotoGallerySliderSlideshow'), 'widths', values, function(slider, value) {
+			// tracking
+			self.track('/dialog/slideshow/preview/changeSize');
 
-		// "crop" checkbox
-		$('#WikiaPhotoGallerySlideshowCrop').
-			attr('checked', (params.crop == 'true')).
-			unbind('.crop').bind('change.crop', function(ev) {
-				if ($(this).attr('checked')) {
-					self.editor.gallery.params.crop = 'true';
-				}
-				else {
-					delete self.editor.gallery.params.crop;
-				}
-
-				self.renderSlideshowPreview();
+			// regenerate slideshow preview with updated width
+			self.renderSlideshowPreview();
 		});
+
+		// "crop" / "recentuploads" checkboxes (update preview on change)
+		this.setupCheckbox($('#WikiaPhotoGallerySlideshowCrop'), 'crop', self.renderSlideshowPreview);
+		this.setupCheckbox($('#WikiaPhotoGallerySlideshowRecentUploads'), 'showrecentuploads', function() {
+			self.updateAddAPhotoButton();
+			self.renderSlideshowPreview();
+		});
+
+		// "position" dropdown
+		this.setupDropdown($('#WikiaPhotoGalleryEditorSlideshowAlign'), 'position');
 
 		// "Add an Image" button
 		$('#WikiaPhotoGallerySlideshowAddImage').unbind('.addimage').bind('click.addimage', function(ev) {
+			var button = $(this);
+
 			ev.preventDefault();
 
 			self.log('adding next picture...');
@@ -1552,20 +1524,30 @@ var WikiaPhotoGallery = {
 			self.selectPage(self.UPLOAD_FIND_PAGE, {});
 		});
 
+		this.updateAddAPhotoButton();
+
 		// resize preview area (RT #55203)
-		$('#WikiaPhotoGallerySlideshowEditorPreview').height(this.editor.height - 200);
+		$('#WikiaPhotoGallerySlideshowEditorPreview').height(this.editor.height - 250);
 
 		// render preview
 		this.renderSlideshowPreview();
 	},
 
+	// updates style of "Add a photo" (using showrecentuploads parameter)
+	updateAddAPhotoButton: function() {
+		var button = $('#WikiaPhotoGallerySlideshowAddImage');
+		var params = this.editor.gallery.params;
+
+		if (typeof params.showrecentuploads != 'undefined' && params.showrecentuploads == 'true') {
+			button.attr('disabled', true).addClass('secondary');
+		}
+		else {
+			button.attr('disabled', false).removeClass('secondary');
+		}
+	},
+
 	// render slideshow preview
 	renderSlideshowPreview: function() {
-		var gallery = this.editor.gallery;
-
-		// debug
-		this.log( this.JSONtoWikiText(gallery) );
-
 		// show loading indicator
 		this.renderPreview('#WikiaPhotoGallerySlideshowEditorPreview', 'renderSlideshowPreview', 'slideshow');
 	},
@@ -1637,6 +1619,476 @@ var WikiaPhotoGallery = {
 			},
 			okMsg: messages['ok'],
 			cancelMsg: messages['cancel']
+		});
+	},
+
+	// setup tabbed section
+	setupTabs: function(tabsWrapper, switchCallback) {
+		var tabs = tabsWrapper.find('.wikia-tabs').find('a');
+		var tabsContent = tabsWrapper.find('.WikiaPhotoGalleryOptionsTab');
+
+		var selectTab = function(index, dontCallback) {
+			// highlight selected tab
+			tabs.parent().
+				removeClass('selected').
+				eq(index).addClass('selected');
+
+			// show selected tab content
+			tabsContent.
+				hide().
+				eq(index).show();
+
+			if (typeof switchCallback == 'function' && !dontCallback) {
+				switchCallback(index);
+			}
+		};
+
+		// select first tab
+		selectTab(0, true /* don't run callback now */);
+
+		// setup click handlers
+		tabs.unbind('.tabs').bind('click.tabs', function(ev) {
+			ev.preventDefault();
+
+			var index = $(this).index(tabs);
+			selectTab(index);
+		});
+	},
+
+	// adds click handler on given checkbox
+	setupCheckbox: function(checkbox, paramName, callback) {
+		var self = this;
+		var params = this.editor.gallery.params;
+
+		// set initial value
+		checkbox.attr('checked', params[paramName] == 'true');
+
+		// event setup
+		checkbox.unbind('.checkbox').bind('change.checkbox', function(ev) {
+			if ($(this).attr('checked')) {
+				params[paramName] = 'true';
+			}
+			else {
+				delete params[paramName];
+			}
+
+			if (typeof callback == 'function') {
+				callback.call(self);
+			}
+		});
+	},
+
+	// adds click handler on given dropdown menu (select)
+	setupDropdown: function(dropdown, paramName, callback) {
+		var self = this;
+		var params = this.editor.gallery.params;
+
+		// set initial value
+		if (typeof params[paramName] != 'undefined' && params[paramName] != 'undefined') {
+			dropdown.val(params[paramName]);
+		}
+
+		// event setup
+		dropdown.unbind('.dropdown').bind('change.dropdown', function(ev) {
+			var value = $(this).val();
+
+			// update value
+			params[paramName] = value;
+
+			if (typeof callback == 'function') {
+				callback.call(self, value);
+			}
+		});
+	},
+
+	/**
+	 * setup given image option widget
+	 *
+	 * @author Lox
+	 */
+	setupImageOption: function(widget, paramName, callback) {
+
+		function resetStatus() {
+			widget.find('li').each(function(index){
+				var elm = $(this);
+				var elmWidth = parseInt(widget.attr('rel'), 10);
+				elm.css('background-position', '-' + (elmWidth * ((2 * index) + 1)) + 'px 0px');
+			});
+		}
+
+		function selectOption(elm) {
+			resetStatus();
+
+			elm = $(elm);
+			var curBkgPosition = elm.css('background-position');
+
+			//Internet Explorer doesn't handle JS access to background-position as a single value
+			if(!curBkgPosition)
+				curBkgPosition = elm.css('backgroundPositionX') + ' ' + elm.css('backgroundPositionY')
+
+			var curBkgPosition = parseInt(curBkgPosition.split(' ')[0], 10);
+			var optionWidth = parseInt(widget.attr('rel'), 10);
+
+			elm.css('background-position', (curBkgPosition + optionWidth) + 'px 0px');
+			$('#' + widget.attr('id') + '_option_label').html(elm.attr('title'));
+		}
+
+		var self = this;
+		var params = this.editor.gallery.params;
+
+		// set initial value
+		if (typeof params[paramName] != 'undefined') {
+			selectOption(widget.find('#' + widget.attr('id') + '_' + params[paramName]))
+		}
+		else{
+			selectOption(widget.children().first());
+		}
+
+		// event setup
+
+		widget.undelegate('li', 'click.imageOption').delegate('li', 'click.imageOption', function(ev) {
+			var elm = $(this);
+			var value = elm.attr('rel');
+
+			//run callback and assignment only if new value is different (no n-click)
+			if(value != params[paramName]) {
+				selectOption(elm);
+				// update value
+				params[paramName] = value;
+
+				if (typeof callback == 'function') {
+					callback.call(self, value);
+				}
+			}
+		});
+	},
+
+	// setup given slider
+	setupSlider: function(sliderWrapper, paramName, values, onChangeCallback) {
+		var params = this.editor.gallery.params;
+
+		var sliderInput = sliderWrapper.find('input');
+		var slider = sliderWrapper.find('.slider');
+
+		// set slider width
+		slider.css('width', Math.round((values.max - values.min) / values.ratio));
+
+		// @see http://docs.jquery.com/UI/API/1.8/Slider
+		slider.slider({
+			animate: true,
+			min: values.min,
+			max: values.max,
+
+			// fired during sliding
+			slide: function(ev, ui) {
+				var value = ui.value;
+
+				sliderInput.val(value);
+			},
+
+			// fired when sliding is done
+			stop: function(ev, ui) {
+				var value = ui.value;
+
+				// update parameter value
+				params[paramName] = value;
+
+				if (typeof onChangeCallback == 'function') {
+					onChangeCallback(slider, value);
+				}
+			}
+		});
+
+		// changes made in field should be shown on slider
+		sliderInput.unbind('.slider').bind('keyup.slider blur.slider', function(ev) {
+			var value = parseInt($(this).val());
+
+			// correct value when user leaves the field
+			if (ev.type == 'blur' && isNaN(value)) {
+				value = sliderValues.min;
+				$(this).val(value);
+			}
+
+			// update the slider
+			if (value > 0) {
+				slider.slider('value', value);
+				params[paramName] = value;
+			}
+
+			// value is updated - run callback
+			if (ev.type == 'blur') {
+				if (typeof onChangeCallback == 'function') {
+					onChangeCallback(slider, value);
+				}
+			}
+		});
+
+		// set slider initial value
+		var initialValue = parseInt(params[paramName]) || values['default'];
+
+		sliderInput.val(initialValue);
+		slider.slider('value', initialValue);
+	},
+
+	// setup given color picker
+	setupColorPicker: function(colorPicker, paramName, callback) {
+		var params = this.editor.gallery.params;
+
+		function hex(x) {
+			return ("0" + parseInt(x).toString(16)).slice(-2);
+		}
+
+		function rgb2hex(rgb) {
+			components = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+
+			if(components) {
+				return "#" + hex(components[1]) + hex(components[2]) + hex(components[3]);
+			}
+			//not an rgb color, probably an hex value has been passed, return it
+			else
+				return rgb;
+		}
+
+		/**
+		 * Fetches the border color for the CSS class to use as a background color
+		 * using a simple statistical algorithm (at least 1 element with the class attached must exist in the DOM
+		 * unfortunately using the same method used in getClassBackgroundColor proved to be unconsistend and not reliable
+		 * for internal browser quirks with computed border properties
+		 *
+		 * @author Lox
+		 * @param string cssClass the class selector, e.g. '.className'
+		 */
+		function getClassBorderColor(className) {
+			var cleanName = className.substr(1);
+			var tmpId = 'dummy_' + cleanName;
+			var tmpElem = $('<div id="' + tmpId + '">').addClass(cleanName).appendTo(document.body).hide();
+			var bkgColors = {};
+
+			var colors = new Array();
+
+			colors.push(tmpElem.css('border-top-color'));
+			colors.push(tmpElem.css('border-right-color'));
+			colors.push(tmpElem.css('border-bottom-color'));
+			colors.push(tmpElem.css('border-left-color'));
+
+			jQuery.each(colors, function(index, value){
+				if(value != '') bkgColors[value] = (typeof bkgColors[value] != 'undefined') ? bkgColors[value] + 1 : 1;
+			});
+
+			var maxCount = 0;
+			var bkgColor = 'rgb(0,0,0)';
+
+			for(color in  bkgColors) {
+				if(bkgColors[color] > maxCount) {
+					bkgColor = color;
+					maxCount = bkgColors[color];
+				}
+			}
+
+			tmpElem.remove();
+			return rgb2hex(bkgColor);
+		}
+
+		function getClassBackgroundColor(className) {
+			var cleanName = className.substr(1);
+			var tmpId = 'dummy_' + cleanName;
+			var tmpElem = $('<div id="' + tmpId + '">').addClass(cleanName).appendTo(document.body).hide();
+			var color = tmpElem.css('background-color');
+			tmpElem.remove();
+			return color;
+		}
+
+		var colorPickerPopup = colorPicker.next('.WikiaPhotoGalleryColorPickerPopUp');
+		colorPickerPopup.appendTo(colorPicker.closest('.WikiaPhotoGalleryEditorPageInner'));
+
+		
+		//prevent showing popups not closed before dismissing the editor
+		colorPickerPopup.hide();
+
+		var colorPickerTrigger = colorPicker.find('#' + colorPicker.attr('id') + '_trigger');
+		var colorInput = colorPickerPopup.find('input');
+
+		// set initial color for picker
+		var title = null;
+		var color = '#000000';
+		
+		if (typeof params[paramName] != 'undefined') {
+			if(params[paramName].indexOf('#') == 0 || (params[paramName] != 'accent' && params[paramName] != 'color1')) {
+				color =  params[paramName];
+				title = params[paramName];
+			}
+			else {
+				var className = '.' + params[paramName];
+				color = getClassBorderColor(className);
+				title = className;
+			}
+		}
+		else if(colorPickerTrigger.attr('title') != ''){//if there is default enforced by PHP
+			if(colorPickerTrigger.attr('title').indexOf('--') > 0) {
+				var tokens = colorPickerTrigger.attr('title').split('--');
+				
+				switch(tokens[1]) {
+					case 'border':
+						color = getClassBorderColor('.' + tokens[0]);
+						break;
+					case 'background':
+					default:
+						color = getClassBackgroundColor('.' + tokens[0]);
+				}
+
+				color = rgb2hex(color);
+				title = '.' + tokens[0];
+			}
+			//the thing is already set up in the HTML markup for other cases
+		}
+
+		if(color == 'transparent') {
+			colorPickerTrigger.addClass('transparent-color');
+		}
+		else {
+			colorPickerTrigger.removeClass('transparent-color');
+		}
+
+		colorPickerTrigger.attr('title', title);
+		colorPickerTrigger.css('background-color', color);
+		colorInput.val(title);
+		
+		var colorBoxes = colorPickerPopup.find('ul').find('span');
+
+		// get hex codes of colors in the picker
+		colorBoxes.each(function(index) {
+			var colorBox = $(this);
+			var value = null;
+			var title = colorBox.attr('title');
+			//handle CSS classes
+			if(title.indexOf('.') == 0){
+				value = title.substr(1);
+
+				switch(colorBox.attr('rel')) {
+					case 'border':
+						color = getClassBorderColor(title);
+						break;
+					case 'background':
+					default:
+						color = getClassBackgroundColor(title);
+				}
+
+				colorBox.css('background-color', color);
+			}
+			else if(title == 'transparent') {
+				value = title;
+			}
+			//handle rgb colors
+			else {
+				value = rgb2hex(colorBox.css('background-color'));
+			}
+
+
+
+			colorBox.attr('value', value);
+		});
+
+		// update picker and color parameter value when clicked
+		colorBoxes.unbind('.colorpicker').bind('click.colorpicker', {caller: this}, function(event) {
+			var value = null;
+			var param = null
+
+			if($(this).attr('title').indexOf('.') == 0) {
+				colorPickerTrigger.removeClass('transparent-color');
+				value = rgb2hex($(this).css('background-color'));
+				param = $(this).attr('title').substr(1);
+			}
+			else {
+				param = value = rgb2hex($(this).attr('value'));
+
+				if(param == 'transparent') {
+					colorPickerTrigger.addClass('transparent-color');
+				}
+				else {
+					colorPickerTrigger.removeClass('transparent-color');
+				}
+			}
+
+			// update parameter value and picker
+			params[paramName] = param;
+			colorPickerTrigger.css('background-color', value);
+			colorPickerTrigger.attr('title', $(this).attr('title'));
+			colorInput.val($(this).attr('title'));
+
+			$(document.body).unbind('.colorPicker');
+			colorPickerPopup.hide();
+
+			if (typeof callback == 'function') {
+				callback.call(event.data.caller, value);
+			}
+		});
+
+		// open color picker popup
+		colorPicker.unbind('.colorpicker').bind('click.colorpicker', function(event) {
+			//prevents event bubbling to avoid triggering click.colorPicker on body, see further
+			event.stopPropagation();
+
+			var position = $(this).position();
+
+			//hide other opened pickers
+			$('.WikiaPhotoGalleryColorPickerPopUp').hide();
+
+			colorPickerPopup.css({
+				'left': parseInt(position.left) + 30,
+				'top': parseInt(position['top']) + 5
+			});
+
+			colorPickerPopup.show();
+		       
+			//make the popup disappear if the user clicks outside
+			$(document.body).unbind('.colorPicker').bind('click.colorPicker', function(event){
+				if(!$(event.target).hasClass('WikiaPhotoGalleryColorPickerPopUp') && $(event.target).closest('.WikiaPhotoGalleryColorPickerPopUp').length == 0) {
+					$(document.body).unbind('.colorPicker');
+					$('.WikiaPhotoGalleryColorPickerPopUp').hide();
+				}
+			});
+		});
+
+		// close color picker popup when "Ok" is clicked
+		colorPickerPopup.find('button').unbind('.colorpicker').bind('click.colorpicker', {caller: this}, function(event) {
+			var inputValue = jQuery.trim(colorInput.val());
+
+			var value = null;
+			var param = null
+			if(inputValue.indexOf('.') == 0) {
+				colorPickerTrigger.removeClass('transparent-color');
+				var color = null;
+				
+				if(inputValue == '.accent')
+					color = getClassBorderColor(inputValue);
+				else
+					color = getClassBackgroundColor(inputValue);
+
+				value = color;
+				param = inputValue.substr(1);
+			}
+			else {
+				param = value = rgb2hex(inputValue);
+
+				if(param == 'transparent') {
+					colorPickerTrigger.addClass('transparent-color');
+				}
+				else {
+					colorPickerTrigger.removeClass('transparent-color');
+				}
+			}
+
+			// update parameter value and picker
+			params[paramName] = param;
+			colorPickerTrigger.css('background-color', value);
+			colorPickerTrigger.attr('title', inputValue);
+
+			$(document.body).unbind('.colorPicker');
+			colorPickerPopup.hide();
+
+			if (typeof callback == 'function') {
+				callback.call(event.data.caller, value);
+			}
 		});
 	},
 
@@ -1745,11 +2197,19 @@ var WikiaPhotoGallery = {
 		self.editor.width = width;
 		self.editor.height = height;
 
-		var editorPopup = $('#WikiaPhotoGalleryEditor');
-		if (!editorPopup.exists()) {
+		//forcing creation of a new instance to display default settings and let the slider do its' work after cancelling previous dialog
+		//done here since the dialog closes in many different ways and some of them use animation fx
+		$('#WikiaPhotoGalleryEditor').remove();
+
+		/*var editorPopup = $('#WikiaPhotoGalleryEditor');
+
+		if (!editorPopup.exists()) {*/
 			self.ajax('getEditorDialog', {title: wgPageName}, function(data) {
 				// store messages
 				self.editor.msg = data.msg;
+
+				// store default values
+				self.editor.defaultParamValues = data.defaultParamValues;
 
 				// render editor popup
 				$.showModal('', data.html, {
@@ -1800,14 +2260,17 @@ var WikiaPhotoGallery = {
 						}
 					},
 					id: 'WikiaPhotoGalleryEditor',
-					persistent: true, // don't remove popup when user clicks X
+					persistent: false, // don't remove popup when user clicks X
 					width: self.editor.width
 				});
 
 				// load CSS for editor popup
 				importStylesheetURI(wgExtensionsPath + '/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.editor.css?' + wgStyleVersion);
+
+				// load CSS for wikia-tabs
+				importStylesheetURI(stylepath + '/common/wikia_ui/tabs.css?' + wgStyleVersion);
 			});
-		}
+		/*}
 		else {
 			self.setupEditor(params);
 
@@ -1817,7 +2280,7 @@ var WikiaPhotoGallery = {
 			// resize dialog (RT #55210)
 			editorPopup.resizeModal(width);
 			editorPopup.showModal();
-		}
+		}*/
 	},
 
 	// fetch and show pop out dialog for given slideshow
@@ -2048,8 +2511,11 @@ var WikiaPhotoGallery = {
 
 		// handle <gallery> tag attributes
 		for (param in data.params) {
-			//ignore default value
-			if (param == 'captionalign' && data.params[param] == 'left') {
+			//ignore default values
+			if (
+				(param == 'widths' && data.params[param] == '200') ||
+				(param == 'position' && data.params[param] == 'left')
+			) {
 				continue;
 			}
 			if (data.params[param] != '') {
@@ -2061,6 +2527,11 @@ var WikiaPhotoGallery = {
 		// add images
 		for (img in data.images) {
 			var imageData = data.images[img];
+
+			// skip images "generated" by showrecentuploads
+			if (imageData.recentlyUploaded) {
+				continue;
+			}
 
 			HTML += imageData.name;
 			if (imageData.caption != '') {
@@ -2257,7 +2728,9 @@ jQuery.AIM = {
 		}
 
 		if (typeof(i.onComplete) == 'function') {
-			i.onComplete(d.body.innerHTML);
+			//in Chrome/safari an empty div is appended to the JSON data in case of upload issues (e.g. already existing image)
+			//the solution was to append a new line at the end of the JSON string and split it here.
+			i.onComplete(d.body.innerHTML.split("\n")[0]);
 		}
 	}
 }

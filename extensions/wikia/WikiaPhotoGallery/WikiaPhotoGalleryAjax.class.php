@@ -62,14 +62,15 @@ class WikiaPhotoGalleryAjax {
 		$showUploadForm = WikiaPhotoGalleryHelper::isUploadAllowed();
 
 		// list of recently uploaded images
-		$recentlyUploaded = WikiaPhotoGalleryHelper::getRecentlyUploaded();
+		$recentlyUploaded = WikiaPhotoGalleryHelper::getRecentlyUploadedThumbs();
 
 		// list of images on current article
-		$imagesOnPage = WikiaPhotoGalleryHelper::getImagesFromPage($wgTitle);
+		$imagesOnPage = WikiaPhotoGalleryHelper::getImagesFromPageThumbs($wgTitle);
 
 		// render dialog
 		$template = new EasyTemplate(dirname(__FILE__) . '/templates');
 		$template->set_vars(array(
+			'alignments' => array('left', 'center', 'right'),
 			'imagesOnPage' => WikiaPhotoGalleryHelper::renderImagesList('images', $imagesOnPage),
 			'recentlyUploaded' => WikiaPhotoGalleryHelper::renderImagesList('uploaded', $recentlyUploaded),
 			'showUploadForm' => $showUploadForm,
@@ -95,9 +96,14 @@ class WikiaPhotoGalleryAjax {
 			$msg[$key] = wfMsg($key);
 		}
 
+		// get list of gallery parameters default values
+		$ig = new WikiaPhotoGallery();
+		$defaultParamValues = $ig->getDefaultParamValues();
+
 		$res = array(
 			'html' => $html,
 			'msg' => $msg,
+			'defaultParamValues' => $defaultParamValues,
 		);
 
 		wfProfileOut(__METHOD__);
@@ -113,7 +119,7 @@ class WikiaPhotoGalleryAjax {
 		global $wgRequest, $wgContentNamespaces;
 
 		$query = $wgRequest->getVal('query');
-		$results = WikiaPhotoGalleryHelper::getSearchResult($query);
+		$results = WikiaPhotoGalleryHelper::getSearchResultThumbs($query);
 
 		if (!empty($results)) {
 			$html = WikiaPhotoGalleryHelper::renderImagesList('results', $results);
@@ -223,7 +229,9 @@ class WikiaPhotoGalleryAjax {
 		wfProfileOut(__METHOD__);
 
 		// return JSON as HTML - decode it JS-side
-		return Wikia::json_encode($result);
+		//in Chrome/safari an empty div is appended to the JSON data in case of upload issues (e.g. already existing image)
+		//the solution was to append a new line at the end of the JSON string and split it in Javascript.
+		return Wikia::json_encode($result) . "\n";
 	}
 
 	/**

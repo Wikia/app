@@ -143,6 +143,7 @@
 
 .wikia-slideshow-popout-carousel ul li.wikia-slideshow-popout-carousel-current {
 	-moz-box-shadow: 0 0 10px 1px #aaa;
+	-webkit-box-shadow: 0 0 10px 1px #aaa;
 	border: solid 5px #fff;
 	cursor: default;
 	height: 87px;

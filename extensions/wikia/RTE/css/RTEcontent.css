@@ -117,10 +117,23 @@ img.video-placeholder {
 
 /* Wikia Image Gallery placeholders */
 img.image-gallery {
-	background-image: url(../../WikiaPhotoGallery/images/gallery-placeholder.png?2);
+	background-image: url(../../WikiaPhotoGallery/images/gallery-placeholder.png);
 	display: block;
 }
 
 img.image-slideshow {
-	background-image: url(../../WikiaPhotoGallery/images/slideshow-placeholder.png?2);
+	background-image: url(../../WikiaPhotoGallery/images/slideshow-placeholder.png);
+}
+
+img.image-slideshow.alignLeft {
+	float: left;
+	margin-right: 18px;
+}
+
+img.image-slideshow.alignCenter {
+	margin: 0 auto;
+}
+
+img.image-slideshow.alignRight {
+	float: right;
 }

@@ -1,82 +1,63 @@
 <?php
-	// handle parameters
-	$perRow = !empty($gallery['params']['perrow']) ? intval($gallery['params']['perrow']): false;
+if(in_array($borderColor, array('accent', 'color1'))) {
+	$borderColorClass = " {$borderColor}";
+}
+else {
+	$borderColorCSS = " border-color: {$borderColor};";
 
-	$captionsAlign = !empty($gallery['params']['captionalign']) ? $gallery['params']['captionalign'] : 'left';
+	if($captionsPosition == 'within') $captionsBackgroundColor = $borderColor;
+}
+?>
+<div class="wikia-gallery clearfix wikia-gallery-position-<?= $position ;?> wikia-gallery-spacing-<?= $spacing ;?> wikia-gallery-border-<?= $borderSize ;?> wikia-gallery-captions-<?= $captionsAlign ;?> wikia-gallery-caption-size-<?= $captionsSize ;?> WikiaPhotoGalleryPreview">
+	<?foreach($gallery['images'] as $index => $image):?>
 
-	if (in_array($captionsAlign, array('center', 'right'))) {
-		$galleryClass = ' WikiaPhotoGalleryPreviewCaptions' . ucfirst($captionsAlign);
-	}
-	else {
-		$galleryClass = '';
-	}
+		<?if($perRow != 'dynamic' && ($index % $perRow) == 0):?>
+			<div class="wikia-gallery-row">
+		<?endif;?>
 
-	// style attributes
-	$imageStyleAttrib = ' style="height: ' . ($thumbSize + 30) . 'px; width: ' . ($thumbSize + 30) . 'px"';
+		<span class="wikia-gallery-item WikiaPhotoGalleryPreviewItem<?= ($image['placeholder']) ? ' WikiaPhotoGalleryPreviewItemPlaceholder' : ' WikiaPhotoGalleryPreviewDraggable' ;?>" style="width: <?= $width ;?>px;" imageid="<?= $index ;?>">
+			<div class="thumb" style="height: <?= $maxHeight ;?>px;">
+				<div class="gallery-image-wrapper<?= (!empty($borderColorClass)) ? $borderColorClass : null;?>" style="position: relative; height: <?= $image['height'] ;?>px; width:<?= $image['width'] ;?>px;<?= (!empty($image['heightCompensation'])) ? " top:{$image['heightCompensation']}px;" : null ;?><?= (!empty($image['widthCompensation'])) ? " left:{$image['widthCompensation']}px;" : null ;?><?= (!empty($borderColorCSS)) ? $borderColorCSS : null;?>">
+					<a class="image<?= (!$image['thumbnail']) ? ' broken-image accent new' : null ;?>"
+						style="<?= ($image['thumbnail']) ? " background-image: url({$image['thumbnail']});" : null ;?>; line-height:<?= $image['height'] ;?>px; height:<?= $image['height'] ;?>px; width:<?= $image['width'] ;?>px;"
+						title="<?= ($image['placeholder']) ? wfMsg('wikiaPhotoGallery-preview-add-photo') : null ;?>">
+						<?= (!empty($image['titleText'])) ? $image['titleText'] : null ;?>
+						<?if(!empty($image['link'])):?>
+							<?
+							$msg = htmlspecialchars(wfMsg('wikiaPhotoGallery-preview-link-tooltip', $image['link']));
+							?>
+							<span class="WikiaPhotoGalleryPreviewItemLink" title="<?= $msg ?>"></span>
+						<?endif;?>
+					</a>
+		<?if($captionsPosition == 'below'):?>
+				</div>
+			</div>
+		<?endif;?>
 
-?>
-<div class="WikiaPhotoGalleryPreview<?= $galleryClass ?>">
-<?php
-	// render caption
-	if (isset($gallery['params']['caption'])) {
-?>
-	<div class="WikiaPhotoGalleryPreviewCaption"><?= $gallery['params']['caption'] /* HTML encoding done by MW Parser */ ?></div>
-<?
-	}
-?>
-<?php
-	// render images
-	foreach($gallery['images'] as $i => $image) {
-?>
-	<span class="WikiaPhotoGalleryPreviewItem WikiaPhotoGalleryPreviewDraggable" imageid="<?= $i ?>">
-		<table class="WikiaPhotoGalleryPreviewItemImage"><tr><td class="WikiaPhotoGalleryPreviewItemImageCell"<?= $imageStyleAttrib ?>>
-			<?= $image['thumbnail'] ?>
-<?php
-	if ($image['link'] != '') {
-		$msg = htmlspecialchars(wfMsg('wikiaPhotoGallery-preview-link-tooltip', $image['link']));
-?>
-			<a href="#" class="WikiaPhotoGalleryPreviewItemLink" title="<?= $msg ?>" style="top: <?= intval($thumbSize + 17) ?>px"></a>
-<?php
-	}
-?>
-		</td></tr></table>
-		<span class="WikiaPhotoGalleryPreviewItemCaption<?= ($image['caption'] == '') ? ' WikiaPhotoGalleryPreviewItemAddCaption' : ''  ?>" style="width: <?= ($thumbSize + 30) ?>px"><?php
+					<span class="<?= ($image['placeholder']) ? 'WikiaPhotoGalleryPreviewPlaceholderCaption' : 'WikiaPhotoGalleryPreviewItemCaption' ;?><?= (empty($image['caption'])) ? ' WikiaPhotoGalleryPreviewItemAddCaption' : null ;?><?= (!empty($borderColorClass) && $captionsPosition == 'within') ? $borderColorClass : null ;?> lightbox-caption"
+					     style="<?if($captionsPosition == 'below'):?>width: <?= $width ;?>px;<?endif;?><?= (!empty($captionsColor)) ? " color: {$captionsColor};" : null ;?><?if(!empty($captionsBackgroundColor)):?> background-color:<?= $captionsBackgroundColor ;?>;<?endif;?>">
+						<?if(!empty($image['caption'])):?>
+							<?= $image['caption'] ;?>
+						<?else:?>
+							<span class="WikiaPhotoGalleryPreviewItemAddCaption"><?= wfMsg('wikiaPhotoGallery-preview-add-caption') ?></span>
+						<?endif;?>
+					</span>
 
-	if ($image['caption'] != '') {
-		echo $image['caption'];
-	}
-	else {
-?>
-			<a href="#" class="WikiaPhotoGalleryPreviewItemAddCaption"><?= wfMsg('wikiaPhotoGallery-preview-add-caption') ?></a>
-<?php
-	}
+		<?if($captionsPosition == 'within'):?>
+				</div>
+			</div>
+		<?endif;?>
 
-?></span>
-
-		<span class="WikiaPhotoGalleryPreviewItemMenu color1">
-			<a href="#"><?= wfMsg('WikiaPhotoGallery-preview-hover-modify') ?></a>
-			<a href="#"><?= wfMsg('WikiaPhotoGallery-preview-hover-delete')?></a>
+			<?if(!$image['placeholder']):?>
+				<span class="WikiaPhotoGalleryPreviewItemMenu color1">
+					<a href="#"><?= wfMsg('WikiaPhotoGallery-preview-hover-modify') ?></a>
+					<a href="#"><?= wfMsg('WikiaPhotoGallery-preview-hover-delete')?></a>
+				</span>
+			<?endif;?>
 		</span>
-	</span>
-<?php
-		if ($perRow) {
-			if ($i % $perRow == $perRow-1) {
-				echo '<br />';
-			}
-		}
-	}
 
-	// show at least four items:
- 	// - if we don't have enough images - show "Add a picture" placeholders
-	// - if we have four and more images - show just one "Add a picture" placeholder
-	$placeholdersCount = max(4-count($gallery['images']), 1);
-
-	for ($p=0; $p < $placeholdersCount; $p++) {
-?>
-		<span class="WikiaPhotoGalleryPreviewItem WikiaPhotoGalleryPreviewItemPlaceholder">
-			<a class="WikiaPhotoGalleryPreviewItemImage"<?= $imageStyleAttrib ?> title="<?= wfMsg('wikiaPhotoGallery-preview-add-photo') ?>" href="#"></a>
-		</span>
-<?php
-	}
-?>
+		<?if($perRow != 'dynamic' && (($index % $perRow) == ($perRow - 1) || $index == (count($gallery['images']) - 1))):?>
+			</div>
+		<?endif;?>
+	<?endforeach;?>
 </div>

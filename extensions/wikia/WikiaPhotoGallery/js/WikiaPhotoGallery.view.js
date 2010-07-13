@@ -127,6 +127,7 @@ var WikiaPhotoGalleryView = {
 
 				var node = $(this);
 
+				// if user clicked on slideshow image, open popout on this image (index)
 				var nodeId = node.attr('id');
 				var index = nodeId ? parseInt(nodeId.split('-').pop()) : 0;
 
