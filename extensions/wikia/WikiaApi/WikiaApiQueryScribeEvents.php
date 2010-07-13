@@ -61,7 +61,7 @@ class WikiaApiQueryScribeEvents extends ApiQueryBase {
 			$where,
 			__METHOD__,
 			array(
-				'ORDER BY' => 'event_date DESC',
+				'ORDER BY' => 'rev_timestamp DESC',
 				'LIMIT'	=> $this->params['limit'],
 				'OFFSET' => $this->params['offset']
 			)
