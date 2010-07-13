@@ -186,7 +186,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 	        $frame = true;
 	}
 	if( isset( $fp['align'] ) ) {
-		if( ( 'left' == $fp['align']) || ('right' == $fp['align'] ) ) {
+		if( ( 'left' == $fp['align']) || ('right' == $fp['align'] ) || ('center' == $fp['align'] ) ) {
 			$align = $fp['align'];
 			('left' == $fp['align']) ? $isalign = 1 : $isalign = 2;
 		}
@@ -199,6 +199,8 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 	if( isset( $align ) ) {
 		if ( $align == 'right' ) {
 			$margin = 'margin: 0.5em 0 1.2em 1.4em;';
+		} else if ( $align == 'center' ) {
+			$margin = 'margin: 0.5em auto 1.2em;';
 		} else {
 			$margin = 'margin: 0.5em 1.4em 1.2em 0;';
 		}
@@ -219,22 +221,26 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 	$lmarg = ceil( ( $width - 90 ) / 2 );
 	$tmarg = ceil( ( $height - 30 ) / 2 );
 
-        // macbre: Wysiwyg support for video placeholder
-        if (!empty($wgWysiwygParserEnabled)) {
+	// macbre: Wysiwyg support for video placeholder
+	if (!empty($wgWysiwygParserEnabled)) {
 		$refid = Wysiwyg_SetRefId('image_add', array( 'width' => $iswidth, 'height' => $height, 'isAlign' => $isalign, 'isThumb' => $isthumb, 'original' => $wikitext, 'caption' => $caption, 'link' => $link ), false, true);
-        } else {
-			if( ($wgRequest->getVal('diff',0) == 0) && ($wgRequest->getVal('oldid',0) == 0) ) {
-				$onclick = 'WET.byStr(\'articleAction/imageplaceholder\');$.loadYUI( function() {$.getScript(wgExtensionsPath+\'/wikia/WikiaMiniUpload/js/WMU.js?\'+wgStyleVersion, function() { WMU_show( $.getEvent(), ' . -2  . ', ' . $wgWikiaImagePlaceholderId . ','. $isalign .','. $isthumb .' ,'. $iswidth .', \''. htmlspecialchars($caption) .'\' , \'' . htmlspecialchars($link) . '\' ); importStylesheetURI( wgExtensionsPath+\'/wikia/WikiaMiniUpload/css/WMU.css?\'+wgStyleVersion ) } ) } )';
-			} else {
-				$onclick = 'alert('.escapeshellarg(wfMsg('imgplc-notinhistory')).'); return false;';
-			}
-        }
+	} else {
+		if( ($wgRequest->getVal('diff',0) == 0) && ($wgRequest->getVal('oldid',0) == 0) ) {
+			$onclick = 'WET.byStr(\'articleAction/imageplaceholder\');$.loadYUI( function() {$.getScript(wgExtensionsPath+\'/wikia/WikiaMiniUpload/js/WMU.js?\'+wgStyleVersion, function() { WMU_show( $.getEvent(), ' . -2  . ', ' . $wgWikiaImagePlaceholderId . ','. $isalign .','. $isthumb .' ,'. $iswidth .', \''. htmlspecialchars($caption) .'\' , \'' . htmlspecialchars($link) . '\' ); importStylesheetURI( wgExtensionsPath+\'/wikia/WikiaMiniUpload/css/WMU.css?\'+wgStyleVersion ) } ) } )';
+		} else {
+			$onclick = 'alert('.escapeshellarg(wfMsg('imgplc-notinhistory')).'); return false;';
+		}
+	}
 
 	// FIXME: argh! inline styles! Move to classes someday... --TOR
 	$margin = '';
+	$additionalClass = '';
 	if( isset( $align ) ) {
 		if ( $align == 'right' ) {
 			$margin = 'margin: 0.5em 0 1.2em 1.4em;';
+		} else if ( $align == 'center' ) {
+			$margin = 'margin: 0.5em auto 1.2em;';
+			$additionalClass = ' center';
 		} else {
 			$margin = 'margin: 0.5em 1.4em 1.2em 0;';
 		}
@@ -245,7 +251,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 
 	$wrapperAttribs = array(
 		'id' => "WikiaImagePlaceholder{$wgWikiaImagePlaceholderId}",
-		'class' => 'gallerybox wikiaPlaceholder',
+		'class' => 'gallerybox wikiaPlaceholder{$additionalClass}',
 		'style' => 'clear:both; vertical-align: bottom', // TODO: move to static CSS file
 	);
 
