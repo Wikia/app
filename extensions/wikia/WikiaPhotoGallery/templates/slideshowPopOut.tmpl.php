@@ -39,7 +39,7 @@
 </div>
 
 <div class="wikia-slideshow-popout-toolbar accent">
-	<div class="wikia-slideshow-popout-counter" value="<?= wfMsg('wikiaPhotoGallery-slideshow-view-number', '$1', count($slideshow['images'])) ?>"></div>
+	<div class="wikia-slideshow-popout-counter" value="<?= wfMsg('wikiaPhotoGallery-slideshow-view-number', '$1', count($slideshow['images'])) ?>">&nbsp;</div>
 
 	<div class="wikia-slideshow-popout-carousel">
 		<ul class="clearfix">

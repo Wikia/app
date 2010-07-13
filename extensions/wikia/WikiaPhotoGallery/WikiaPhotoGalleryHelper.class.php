@@ -34,13 +34,11 @@ class WikiaPhotoGalleryHelper {
 		// store content of <gallery> tag
 		$ig->setText($text);
 
-		// store attributes of <gallery> tag
-		$ig->setParams($params);
+		// parse attributes of <gallery> tag
+		$ig->parseParams($params);
 
-		// set captions alignment
-		if (isset($params['captionalign'])) {
-			$ig->setCaptionsAlign($params['captionalign']);
-		}
+		// calculate "unique" hash of each gallery
+		$ig->calculateHash();
 
 		wfProfileOut(__METHOD__);
 
@@ -109,13 +107,27 @@ class WikiaPhotoGalleryHelper {
 	/**
 	 * Render gallery placeholder for RTE
 	 */
-	static public function renderGalleryPlaceholder($data, $width, $height) {
+	static public function renderGalleryPlaceholder($gallery, $width, $height) {
 		wfProfileIn(__METHOD__);
 
+		$data = $gallery->getData();
 		$class = 'media-placeholder image-gallery';
 
 		if ($data['type'] == WikiaPhotoGallery::WIKIA_PHOTO_SLIDESHOW) {
 			$class .= ' image-slideshow';
+
+			// support "position" attribute (slideshow alignment)
+			switch ($gallery->getParam('position')) {
+				case 'left':
+					$class .= ' alignLeft';
+					break;
+				case 'center':
+					$class .= ' alignCenter';
+					break;
+				case 'right':
+					$class .= ' alignRight';
+					break;
+			}
 		}
 
 		$attribs = array(
@@ -293,43 +305,154 @@ class WikiaPhotoGalleryHelper {
 
 	/**
 	 * Render gallery preview
+	 *
+	 * @author Macbre, Lox
 	 */
 	static public function renderGalleryPreview($gallery) {
-		global $wgTitle, $wgParser;
+		global $wgTitle, $wgParser, $wgExtensionsPath;
 		wfProfileIn(__METHOD__);
 
 		//wfDebug(__METHOD__ . "\n" . print_r($gallery, true));
 
 		// use global instance of parser (RT #44689 / RT #44712)
 		$parserOptions = new ParserOptions();
+		
+		// render thumbnail and parse caption for each image (default "box" is 200x200)
+		$thumbSize = !empty($gallery['params']['widths']) ? $gallery['params']['widths'] : 200;
+		$borderSize = (!empty($gallery['params']['bordersize'])) ? $gallery['params']['bordersize'] : 'small';
+		$orientation = !empty($gallery['params']['orientation']) ? $gallery['params']['orientation'] : 'none';
+		$ratio = self::getRatioFromOption($orientation);
+		$crop = true;
+		
+		//calculate height of the biggest image
+		$maxHeight = 0;
+		$imageTitlesCache = array();
+		$fileObjectsCache = array();
+		$heights = array();
+		$widths = array();
 
-		// render thumbnail and parse caption for each image (default "box" is 120x120)
-		$thumbSize = !empty($gallery['params']['widths']) ? $gallery['params']['widths'] : 120;
+		// loop throught the images and get height of the tallest one
+		foreach ($gallery['images'] as $index => $image) {
+			$imageTitlesCache[$index] = Title::newFromText($image['name'], NS_FILE);
+			$fileObjectsCache[$index] = wfFindFile($imageTitlesCache[$index]);
 
-		foreach($gallery['images'] as &$image) {
-			$imageTitle = Title::newFromText($image['name'], NS_FILE);
+			if(!$fileObjectsCache[$index]) continue;
 
-			$image['thumbnail'] = self::renderThumbnail($imageTitle, $thumbSize, $thumbSize);
-			if (empty($image['thumbnail'])) {
-				$image = false;
+			// get thumbnail limited only by given width
+			if ($fileObjectsCache[$index]->width > $thumbSize) {
+				$imageHeight = round( $fileObjectsCache[$index]->height * ($thumbSize / $fileObjectsCache[$index]->width) );
+				$imageWidth = $thumbSize;
+			}
+			else {
+				$imageHeight = $fileObjectsCache[$index]->height;
+				$imageWidth = $fileObjectsCache[$index]->width;
+			}
+
+			$heights[$index] = $imageHeight;
+			$widths[$index] = $imageWidth;
+
+			if ($imageHeight > $maxHeight) {
+				$maxHeight = $imageHeight;
+			}
+		}
+
+		// calculate height based on gallery width
+		$height = round($thumbSize / $ratio);
+
+		if ($orientation == 'none') {
+			$crop = false;
+
+			// use the biggest height found
+			if ($maxHeight > 0) {
+				$height = $maxHeight;
+			}
+		}
+
+		foreach($gallery['images'] as $index => &$image) {
+			$image['placeholder'] = false;
+			
+			$imageTitle = (!empty($imageTitlesCache[$index])) ? $imageTitlesCache[$index] : Title::newFromText($image['name'], NS_FILE);
+			$fileObject = (!empty($fileObjectsCache[$index])) ? $fileObjectsCache[$index] : wfFindFile($imageTitle);
+
+			$image['height'] = $height;
+			$image['width'] = $thumbSize;
+			
+			if (!is_object($fileObject) || ($imageTitle->getNamespace() != NS_FILE)) {
+				$image['titleText'] = $imageTitle->getText();
+				$image['thumbnail'] = false;
 				continue;
 			}
 
+			$thumbParams = self::getThumbnailDimensions($fileObject, $thumbSize, $height, $crop);
+			$image['thumbnail'] = self::getThumbnailUrl($imageTitle, $thumbParams['width'], $thumbParams['height']);
+			
+			$image['height'] = ($orientation == 'none') ? $heights[$index] : min($thumbParams['height'], $height);
+			$imgHeightCompensation = ($height - $image['height']) / 2;
+			if($imgHeightCompensation > 0) $image['heightCompensation'] = $imgHeightCompensation;
+			
+			$image['width'] = min($widths[$index], $thumbSize);
+			$imgWidthCompensation = ($thumbSize - $image['width']) / 2;
+			if($imgHeightCompensation > 0) $image['widthCompensation'] = $imgWidthCompensation;
+			
+
 			//need to use parse() - see RT#44270
-			$image['caption'] = $wgParser->parse($image['caption'], $wgTitle, $parserOptions)->getText();
+			//need to remove wapping p coming from caption editor to match view
+			$image['caption'] = str_replace(array('<p>', '</p>'), array(null, '<br />'), $wgParser->parse($image['caption'], $wgTitle, $parserOptions)->getText());
 		}
 
 		// filter out skipped images
-		$gallery['images'] = array_filter($gallery['images']);
+		//$gallery['images'] = array_filter($gallery['images']);
 
+		// show at least four placeholders:
+		// - if we don't have enough images - show "Add a picture" placeholders
+		// - if we have four and more images - show just one "Add a picture" placeholder
+		$placeholdersCount = max(4 - count($gallery['images']), 1);
+
+		for ($p = 0; $p < $placeholdersCount; $p++) {
+			$gallery['images'][] = array(
+				'placeholder' => true,
+				'height' => $height,
+				'width' => $thumbSize,
+				'thumbnail' => "{$wgExtensionsPath}/wikia/WikiaPhotoGallery/images/gallery_addimage.png",
+				'caption' => wfMsg('wikiaPhotoGallery-preview-placeholder-caption'),
+			);
+		}
+
+		//compensate image wrapper width depending on the border size
+		switch($borderSize) {
+			case 'large':
+				$thumbSize += 10; //5px * 2
+				$height += 10;
+				break;
+			case 'medium':
+				$thumbSize += 4; //2px * 2
+				$height += 4;
+				break;
+			case 'small':
+				$thumbSize += 2; //1px * 2
+				$height += 2;
+				break;
+		}
+		
 		//wfDebug(__METHOD__.'::after' . "\n" . print_r($gallery, true));
 
 		// render gallery HTML preview
 		$template = new EasyTemplate(dirname(__FILE__) . '/templates');
 		$template->set_vars(array(
 			'gallery' => $gallery,
-			'thumbSize' => $thumbSize,
+			'width' => $thumbSize,
+			'perRow' => (!empty($gallery['params']['columns'])) ? intval($gallery['params']['columns']): 'dynamic',
+			'position' => (!empty($gallery['params']['position'])) ? $gallery['params']['position'] : 'left',
+			'captionsPosition' => (!empty($gallery['params']['captionposition'])) ? $gallery['params']['captionposition'] : 'below',
+			'captionsAlign' => (!empty($gallery['params']['captionalign'])) ? $gallery['params']['captionalign'] : 'left',
+			'captionsSize' => (!empty($gallery['params']['captionsize'])) ? $gallery['params']['captionsize'] : 'medium',
+			'captionsColor' => (!empty($gallery['params']['captiontextcolor'])) ? $gallery['params']['captiontextcolor'] : null,
+			'spacing' => (!empty($gallery['params']['spacing'])) ? $gallery['params']['spacing'] : 'medium',
+			'borderSize' => $borderSize,
+			'borderColor' => (!empty($gallery['params']['bordercolor'])) ? $gallery['params']['bordercolor'] : 'accent',
+			'maxHeight' => $height
 		));
+		
 		$html = $template->render('galleryPreview');
 
 		wfProfileOut(__METHOD__);
@@ -346,7 +469,7 @@ class WikiaPhotoGalleryHelper {
 		// use global instance of parser (RT #44689 / RT #44712)
 		$parserOptions = new ParserOptions();
 
-		//wfDebug(__METHOD__ . "\n" . print_r($slideshow, true));
+		wfDebug(__METHOD__ . "\n" . print_r($slideshow, true));
 
 		// handle "crop" attribute
 		$crop = isset($slideshow['params']['crop']) ? ($slideshow['params']['crop'] == 'true') : false;
@@ -357,37 +480,68 @@ class WikiaPhotoGalleryHelper {
 
 		wfDebug(__METHOD__ . " - {$maxWidth}x{$maxHeight}\n");
 
-		foreach($slideshow['images'] as &$image) {
-			$imageTitle = Title::newFromText($image['name'], NS_FILE);
-			if (empty($imageTitle)) {
-				$image = false;
-				continue;
-			}
+		if (!empty($slideshow['params']['showrecentuploads'])) {
+			// add recently uploaded images only
+			$uploadedImages = WikiaPhotoGalleryHelper::getRecentlyUploaded(WikiaPhotoGallery::RECENT_UPLOADS_IMAGES);
 
-			$img = wfFindFile($imageTitle);
-			if (empty($img)) {
-				$image = false;
-				continue;
-			}
+			$slideshow['images'] = array();
 
-			// render thumbnail
-			$dimensions = self::getThumbnailDimensions($img, $maxWidth, $maxHeight, $crop);
+			foreach($uploadedImages as $imageTitle) {
+				$img = wfFindFile($imageTitle);
+				if (empty($img)) {
+					continue;
+				}
 
-			$image['thumbnailBg'] = self::getThumbnailUrl($imageTitle, $dimensions['width'], $dimensions['height']);
+				// render thumbnail
+				$dimensions = self::getThumbnailDimensions($img, $maxWidth, $maxHeight, $crop);
 
-			//need to use parse() - see RT#44270
-			$image['caption'] = $wgParser->parse($image['caption'], $wgTitle, $parserOptions)->getText();
-
-			// remove <p> tags from parser caption
-			if (preg_match('/^<p>(.*)\n?<\/p>\n?$/sU', $image['caption'], $m)) {
-				$image['caption'] = $m[1];
+				$slideshow['images'][] = array(
+					'name' => $imageTitle->getText(),
+					'thumbnailBg' => self::getThumbnailUrl($imageTitle, $dimensions['width'], $dimensions['height']),
+					'recentlyUploaded' => true,
+				);
 			}
 		}
+		else {
+			// render slideshow images
+			foreach($slideshow['images'] as &$image) {
+				// don't render recently uploaded images now, render them after "regular" images
+				if (!empty($image['recentlyUploaded'])) {
+					$image = false;
+					continue;
+				}
 
-		// filter out skipped images
-		$slideshow['images'] = array_filter($slideshow['images']);
+				$imageTitle = Title::newFromText($image['name'], NS_FILE);
+				if (empty($imageTitle)) {
+					$image = false;
+					continue;
+				}
 
-		//wfDebug(__METHOD__.'::after' . "\n" . print_r($slideshow, true));
+				$img = wfFindFile($imageTitle);
+				if (empty($img)) {
+					$image = false;
+					continue;
+				}
+
+				// render thumbnail
+				$dimensions = self::getThumbnailDimensions($img, $maxWidth, $maxHeight, $crop);
+
+				$image['thumbnailBg'] = self::getThumbnailUrl($imageTitle, $dimensions['width'], $dimensions['height']);
+
+				//need to use parse() - see RT#44270
+				$image['caption'] = $wgParser->parse($image['caption'], $wgTitle, $parserOptions)->getText();
+
+				// remove <p> tags from parser caption
+				if (preg_match('/^<p>(.*)\n?<\/p>\n?$/sU', $image['caption'], $m)) {
+					$image['caption'] = $m[1];
+				}
+			}
+
+			// filter out skipped images
+			$slideshow['images'] = array_filter($slideshow['images']);
+		}
+
+		wfDebug(__METHOD__.'::after' . "\n" . print_r($slideshow, true));
 
 		// render gallery HTML preview
 		$template = new EasyTemplate(dirname(__FILE__) . '/templates');
@@ -420,6 +574,9 @@ class WikiaPhotoGalleryHelper {
 		// let's calculate size of slideshow area
 		$width = 0;
 		$height = 0;
+
+		// let's use images actually shown for end user
+		$slideshow['images'] = $slideshow['imagesShown'];
 
 		// go through the list of images and calculate width and height of slideshow
 		foreach($slideshow['images'] as &$image) {
@@ -528,7 +685,7 @@ class WikiaPhotoGalleryHelper {
 	/**
 	 * Get list of recently uploaded files
 	 */
-	static public function getRecentlyUploaded($limit = 50) {
+	static public function getRecentlyUploaded($limit) {
 		wfProfileIn(__METHOD__);
 
 		$ret = false;
@@ -557,14 +714,9 @@ class WikiaPhotoGalleryHelper {
 					// ignore Video:foo entries from VET
 					if ($entry['ns'] == NS_IMAGE) {
 						$image = Title::newFromText($entry['title']);
-
-						$thumb = self::getResultsThumbnailUrl($image);
-						if ($thumb) {
+						if (!empty($image)) {
 							// use keys to remove duplicates
-							$ret[$image->getDBkey()] = array(
-								'name' => $image->getText(),
-								'thumb' => $thumb,
-							);
+							$ret[$image->getDBkey()] = $image;
 
 							// limit number of results
 							if (count($ret) == $limit) {
@@ -588,12 +740,39 @@ class WikiaPhotoGalleryHelper {
 	}
 
 	/**
-	 * Get list of images from given page
+	 * Get thumbs of recently uploaded files
 	 */
-	static public function getImagesFromPage($title, $limit = 50) {
+	static public function getRecentlyUploadedThumbs($limit = 50) {
+		wfProfileIn(__METHOD__);
+		$ret = array();
+
+		// get list of recenlty uploaded images
+		$uploadedImages = self::getRecentlyUploaded($limit);
+
+		if(is_array($uploadedImages)) {
+			foreach($uploadedImages as $image) {
+				$thumb = self::getResultsThumbnailUrl($image);
+				if ($thumb) {
+					// use keys to remove duplicates
+					$ret[] = array(
+						'name' => $image->getText(),
+						'thumb' => $thumb,
+					);
+				}
+			}
+		}
+
+		wfProfileOut(__METHOD__);
+		return $ret;
+	}
+
+	/**
+	 * Get thumbs of images from given page
+	 */
+	static public function getImagesFromPageThumbs($title, $limit = 50) {
 		wfProfileIn(__METHOD__);
 
-		$ret = false;
+		$ret = array();
 
 		// get list of images linked with given article
 		$params = array(
@@ -648,9 +827,9 @@ class WikiaPhotoGalleryHelper {
 
 
 	/**
-	 * Return array of HTML with images search result
+	 * Return thumbs of images search result
 	 */
-	static public function getSearchResult($query) {
+	static public function getSearchResultThumbs($query) {
 		wfProfileIn(__METHOD__);
 		global $wgRequest, $wgContentNamespaces;
 
@@ -894,5 +1073,223 @@ class WikiaPhotoGalleryHelper {
 		}
 
 		return $result;
+	}
+
+	/**
+	 * Cleanup provided string to contain characters allowed for CSS color definition
+	 *
+	 * Syntax allowed: #fff, white
+	 *
+	 * @author Macbre
+	 */
+	static public function sanitizeCssColor($color) {
+		$color = preg_replace('@[^a-z0-9#]@i', '', $color);
+		return $color;
+	}
+
+	/**
+	 * Render dropdown for given option
+	 *
+	 * @author Macbre
+	 */
+	 static public function renderOptionDropdown($id, $message, $values, $defaultIndex = 0, $renderLabel = true) {
+		wfProfileIn(__METHOD__);
+
+		$ret = '';
+
+		// render label
+		if($renderLabel)
+			$ret .= Xml::element('label', array('for' => $id), wfMsg($message));
+
+		// render dropdown
+		$ret .= Xml::openElement('select', array('id' => $id));
+
+		foreach($values as $i => $value) {
+			$msg = is_numeric($value) ? $value : wfMsg("{$message}-{$value}");
+			$ret .= Xml::option($msg, $value, $i == $defaultIndex);
+		}
+
+		$ret .= Xml::closeElement('select');
+
+		wfProfileOut(__METHOD__);
+		return $ret;
+	 }
+
+	 /**
+	 * Render image based option widget for given option
+	 *
+	 * @author Lox
+	 */
+	 static public function renderImageOptionWidget($id, $message, $values, $optionWidth, $defaultIndex = 0, $renderLabel = true) {
+		wfProfileIn(__METHOD__);
+		$ret = '';
+
+		// render label
+		if($renderLabel)
+			$ret .= Xml::element('label', array('for' => $id), wfMsg($message));
+
+		// render dropdown
+		$ret .= Xml::openElement('ul', array('id' => $id, 'class' => 'clearfix', 'rel' => $optionWidth));
+
+		foreach($values as $index => $value) {
+			$ret .= Xml::Element('li', array('id' => "{$id}_{$value}", 'rel' => $value, 'title' => wfMsg("{$message}-{$value}-tooltip"), 'style' => 'background-position: -' . (($optionWidth * 2 * $index) + (($index != $defaultIndex) ? $optionWidth : 0)) . 'px 0px;'), '');
+		}
+
+		$ret .= Xml::closeElement('ul');
+		$ret .= Xml::element('label', array('id' => "{$id}_option_label", 'class' => 'ImageOptionTip'), wfMsg("{$message}-{$values[0]}-tooltip"));
+
+		wfProfileOut(__METHOD__);
+		return $ret;
+	 }
+
+	/**
+	 * Render checkbox for given option
+	 *
+	 * @author Macbre
+	 */
+	 static public function renderOptionCheckbox($id, $message, $renderLabel = true) {
+		wfProfileIn(__METHOD__);
+
+		// render checkbox
+		$ret = Xml::check($id, false, array('id' => $id));
+
+		// render label
+		if($renderLabel)
+			$ret .= Xml::element('label', array('for' => $id), wfMsg($message));
+
+		wfProfileOut(__METHOD__);
+		return $ret;
+	 }
+
+	/**
+	 * Render color picker
+	 *
+	 * @author Macbre
+	 * @param Array $colors A list of the colors to show,
+	 * a multidimensional array with 'class' or 'color' sub-elements, false results in a hr separator
+	 * <code>
+	 * array(
+	 *	#CSS classes
+	 *	array('class' => 'accent', property => 'border'),
+	 *	array('class' => 'color1', property => 'background'),
+	 *	#horizontal line
+	 *	false,
+	 *	#defined colors
+	 *	array('color' => '2daccd')
+	 * )
+	 * </code>
+	 */
+	 static public function renderColorPicker($id, $message, $colors, $default = null, $renderLabel = true) {
+		wfProfileIn(__METHOD__);
+		$ret = '';
+
+		// render label
+		if($renderLabel)
+			$ret .= Xml::element('label', array('for' => $id), wfMsg($message));
+
+		// render color picker box
+		$ret .= Xml::openElement('span', array('id' => $id, 'class' => 'WikiaPhotoGalleryColorPicker'), '');
+
+		$options = array('id' => "{$id}_trigger");
+		
+		if(!empty($default) && is_string($default) && strpos($default, '#') === 0) {
+			$options['style'] = "background-color:{$default}";
+			$options['title'] = $default;
+		}
+		elseif(!empty($default) && is_array($default)){
+			$options['title'] = "{$default[0]}--{$default[1]}";
+		}
+		
+		$ret .= Xml::element('span', $options, '');
+		$ret .= Xml::closeElement('span');
+
+		// render color picker popup box
+		$ret .= Xml::openElement('div', array('class' =>'WikiaPhotoGalleryColorPickerPopUp'));
+		$ret .= Xml::element('label', array(), wfMsg('wikiaPhotoGallery-preview-colorpicker-title'));
+		
+		foreach($colors as $row) {
+			if($row == 'hr') {
+				$ret .= Xml::element('hr');
+			}
+			else{
+				$ret .= Xml::openElement('ul', array('style' => 'clear: both;'));
+
+				foreach($row as $entry) {
+					$attribs = array();
+
+					if (isset($entry['class'])) {
+						$attribs['class'] = $entry['class'];
+						$attribs['title'] = ".{$entry['class']}";
+						$attribs['rel'] = $entry['property'];
+					}
+					else {
+						if($entry['color'] == 'transparent') {
+							$attribs['class'] = "transparent-color";
+						}
+						else {
+							$attribs['style'] = "background-color: {$entry['color']}";
+						}
+						
+						$attribs['title'] = "{$entry['color']}";
+					}
+
+					$ret .= Xml::openElement('li');
+					$ret .= Xml::Element('span', $attribs, '');
+					$ret .= Xml::closeElement('li');
+				}
+
+				$ret .= Xml::closeElement('ul');
+			}
+		}
+
+		// hex code input field
+		$ret .= Xml::element('hr');
+		$ret .= Xml::element('label', array('for' => "{$id}HexCode"), wfMsg('wikiaPhotoGallery-preview-colorpicker-hex'));
+		$ret .= Xml::element('input', array('id' => "{$id}HexCode", 'type' => 'text'));
+
+		// Ok button
+		$ret .= Xml::element('button', array(), wfMsg('ok'));
+
+		$ret .= Xml::closeElement('div');
+
+		wfProfileOut(__METHOD__);
+		return $ret;
+	}
+
+	/**
+	 * Renders a label for a form control
+	 *
+	 * @author Lox
+	 */
+	static public function renderLabel($msgKey, $forID = null) {
+		$options = array();
+		
+		if(!empty($forID))
+			$options['for'] = $forID;
+
+		return Xml::element('label', $options, wfMsg($msgKey));
+	}
+
+	/**
+	 * Returns the correct aspect ratio given the option name
+	 *
+	 * @author Lox
+	 */
+	static public function getRatioFromOption($optionName) {
+		switch($optionName) {
+			case 'portrait':
+				return 3/4;
+				break;
+
+			case 'landscape':
+				return 4/3;
+				break;
+
+			case 'none':
+			case 'square':
+			default:
+				return 1;
+				break;
+		}
 	}
 }

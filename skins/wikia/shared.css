@@ -20,21 +20,63 @@
 
 .wikia-gallery-item {
 	display: inline-block;
-	padding: 5px;
+	padding: 1em;
 	vertical-align: top;
 	white-space: normal;
+	margin:1px;
+	text-align:left;
 }
 
 .wikia-gallery-item .thumb {
-	border-style: solid;
-	border-width: 1px;
+	margin: 0;
+	overflow: visible;
+	position: relative;
 	text-align: center;
+}
+
+.wikia-gallery-item .thumb a.image {
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	display: block;
+	height: 100%;
+	width: 100%;
+	text-decoration: none;
+	overflow: hidden;
+	vertical-align: middle;
 }
 
 .wikia-gallery-item .thumb div {
 	margin: 0 auto;
 }
 
+.wikia-gallery-item .thumb .gallery-image-wrapper {
+	border-style: solid;
+}
+
+/* bordersize  */
+.wikia-gallery-border-none .thumb .gallery-image-wrapper {
+	border: none;
+}
+
+.wikia-gallery-border-small .thumb .gallery-image-wrapper {
+	border-width: 1px;
+}
+
+.wikia-gallery-border-medium .thumb .gallery-image-wrapper {
+	border-width: 2px;
+}
+
+.wikia-gallery-border-large .thumb .gallery-image-wrapper{
+	border-width: 5px;
+}
+
+/* transparent border */
+.wikia-gallery-border-transparent .wikia-gallery-item .thumb {
+	background: transparent;
+	border-width: 0;
+}
+
+/* captionalign  */
 .wikia-gallery-captions-center .wikia-gallery-item {
 	text-align: center;
 }
@@ -42,6 +84,78 @@
 .wikia-gallery-captions-right .wikia-gallery-item {
 	text-align: right;
 }
+
+/* captionsize  */
+.wikia-gallery-caption-size-small .lightbox-caption {
+	font-size: 9px;
+}
+
+.wikia-gallery-caption-size-medium .lightbox-caption {
+	font-size: 12px;
+}
+
+.wikia-gallery-caption-size-large .lightbox-caption {
+	font-size: 16px;
+}
+
+/* position  */
+.wikia-gallery-position-center {
+	text-align: center;
+}
+
+.wikia-gallery-position-right {
+	text-align: right;
+}
+
+/* spacing */
+.wikia-gallery-spacing-small .wikia-gallery-item {
+	padding: 5px;
+}
+
+.wikia-gallery-spacing-medium .wikia-gallery-item {
+	padding: 15px;
+}
+
+
+.wikia-gallery-spacing-large .wikia-gallery-item {
+	padding: 25px;
+}
+
+.wikia-gallery-captions-left .wikia-gallery-item .lightbox-caption,
+.wikia-gallery-captions-right .wikia-gallery-item .lightbox-caption {
+	padding: 3px;
+}
+
+.wikia-gallery-captions-center .wikia-gallery-item .lightbox-caption {
+	padding: 3px 0 3px 0;
+}
+
+/* captions within images */
+.wikia-gallery-item .thumb .lightbox-caption {
+	bottom: 0;
+	left: 0;
+	position: absolute;
+	text-align: left;
+}
+
+/* captions below images */
+.wikia-gallery-item > .lightbox-caption {
+	margin-top: 10px;
+	display:block;
+}
+
+.wikia-gallery-captions-center .thumb .lightbox-caption {
+	text-align: center;
+	width: 100%;
+}
+
+.wikia-gallery-captions-right .thumb .lightbox-caption {
+	left: auto;
+	right: 0;
+	text-align: right;
+}
+
+
 
 /* WikiaImageGallery: CSS for image slideshow */
 .wikia-slideshow {
@@ -51,6 +165,10 @@
 .wikia-slideshow-wrapper {
 	position: relative;
 	z-index: 1;
+}
+
+.slideshow-center .wikia-slideshow-wrapper {
+	margin: 0 auto;
 }
 
 .wikia-slideshow-caption {
@@ -143,7 +261,7 @@ body.wikiaSkinMonaco .wikia-slideshow-images .wikia-slideshow-image {
 /* Prev / next toolbar */
 .wikia-slideshow-sprite {
 	/* TODO: replace this one with URL to images.wikia.com */
-	background-image: url(http://techteam-qa20.wikia.com/extensions/wikia/WikiaPhotoGallery/images/slideshow-sprite.png?3);
+	background-image: url(../../extensions/wikia/WikiaPhotoGallery/images/slideshow-sprite.png);
 	background-repeat: no-repeat;
 }
 
@@ -173,7 +291,7 @@ body.wikiaSkinMonaco .wikia-slideshow-images .wikia-slideshow-image {
 }
 
 .wikia-slideshow-next:hover {
-	background-position: -267px 15px;
+	background-position: -268px 15px;
 }
 
 .wikia-slideshow-toolbar {
