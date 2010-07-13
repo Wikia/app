@@ -1,6 +1,6 @@
 <?php
 
-class AdProviderLiftium implements iAdProvider {
+class AdProviderLiftium extends AdProviderIframeFiller implements iAdProvider {
 
 	protected static $instance = false;
 
@@ -83,23 +83,29 @@ class AdProviderLiftium implements iAdProvider {
 		return $out;
         }
 
-	public function getIframeFillHtml($slotname, $slot) {
+	protected function getIframeFillFunctionDefinition($function_name, $slotname, $slot) {
 		global $wgEnableTandemAds, $wgEnableTandemAds_slave, $wgEnableTandemAds_delay;
 
+                $out = '';
 		if (!empty($wgEnableTandemAds) && !empty($wgEnableTandemAds_slave) && in_array($slotname, explode(",", str_replace(" ", "", $wgEnableTandemAds_slave))) && !empty($wgEnableTandemAds_delay)) {
-		// FIXME get rid of c&p
-		return '<script type="text/javascript">' .
-			'window.setTimeout(\'' .
-			'LiftiumOptions.placement = "' . $slotname . '";' . 
-			'Liftium.callInjectedIframeAd("' . addslashes($slot['size']) . 
-			'", document.getElementById("' . addslashes($slotname) .'_iframe"))' .
-			'\', ' . $wgEnableTandemAds_delay . ')' .
-			';</script>';
+                    // FIXME get rid of c&p
+                    $out .= '<script type="text/javascript">' .
+                            'function ' . $function_name . '() { ' .
+                            'window.setTimeout(\'' .
+                            'LiftiumOptions.placement = "' . $slotname . '";' .
+                            'Liftium.callInjectedIframeAd("' . addslashes($slot['size']) .
+                            '", document.getElementById("' . addslashes($slotname) .'_iframe"))' .
+                            '\', ' . $wgEnableTandemAds_delay . ')' .
+                            '; }</script>';
 		}
+                else {
+                    $out .= '<script type="text/javascript">' .
+                            'function ' . $function_name . '() { ' .
+                            'LiftiumOptions.placement = "' . $slotname . '";' . "\n" .
+                            'Liftium.callInjectedIframeAd("' . addslashes($slot['size']) .
+                            '", document.getElementById("' . addslashes($slotname) .'_iframe")); }</script>';
+                }
 
-		return '<script type="text/javascript">' .
-			'LiftiumOptions.placement = "' . $slotname . '";' . "\n" .
-			'Liftium.callInjectedIframeAd("' . addslashes($slot['size']) . 
-			'", document.getElementById("' . addslashes($slotname) .'_iframe"));</script>';
+                return $out;
 	}
 }

@@ -7,6 +7,7 @@ $wgExtensionCredits['other'][] = array(
 	'author' => 'Inez Korczynski, Nick Sullivan'
 );
 
+$wgHooks['BeforePageDisplay'][] = 'adEngineAdditionalScripts';
 $wgHooks["MakeGlobalVariablesScript"][] = "wfAdEngineSetupJSVars";
 function wfAdEngineSetupJSVars($vars) {
 	global $wgEnableAdsInContent;
@@ -15,6 +16,16 @@ function wfAdEngineSetupJSVars($vars) {
 
 	return true;
 }
+
+/**
+ * Before the page is rendered this gives us a chance to cram some Javascript in.
+ */
+function adEngineAdditionalScripts( &$out, &$sk ){
+	global $wgExtensionsPath,$wgStyleVersion;
+
+	$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/AdEngine/LazyLoadAds.js?$wgStyleVersion'></script>\n");
+	return true;
+} // end adEngineAdditionalScripts()
 
 interface iAdProvider {
 	public static function getInstance();
@@ -25,10 +36,29 @@ interface iAdProvider {
 	public function getBatchCallHtml();
 }
 
+abstract class AdProviderIframeFiller {
+        public function getIframeFillHtml($slotname, $slot) {
+                global $wgEnableAdsLazyLoad, $wgAdslotsLazyLoad;
+
+                $function_name = AdEngine::fillIframeFunctionPrefix . $slotname;
+                $out = $this->getIframeFillFunctionDefinition($function_name, $slotname, $slot);
+                if (!$wgEnableAdsLazyLoad || empty($wgAdslotsLazyLoad[$slotname])) {
+                    $out .= "\n".'<script type="text/javascript">' . "$function_name();" . '</script>';
+                }
+
+                return $out;
+        }
+
+        abstract protected function getIframeFillFunctionDefinition($function_name, $slotname, $slot);
+
+}
+
 class AdEngine {
 
 	const cacheKeyVersion = "2.01a";
 	const cacheTimeout = 1800;
+        const lazyLoadAdClass = 'LazyLoadAd';
+        const fillIframeFunctionPrefix = 'fillIframe_';
 
 	// TODO: pull these from wikicities.provider
 	private $providers = array(
@@ -100,8 +130,11 @@ class AdEngine {
 		if ($this->loadType == 'inline'){
 			// for loadType set to inline we have to load AdEngine.js here
 			// for loadType set to delayed AdEngine.js should be inside of allinone.js
-			global $wgExtensionsPath;
+			global $wgExtensionsPath, $wgEnableAdsLazyLoad, $wgAdslotsLazyLoad;
 			$out .= '<script type="text/javascript" src="' . $wgExtensionsPath . '/wikia/AdEngine/AdEngine.js?' . self::cacheKeyVersion . '"></script>'. "\n";
+                        if ($wgEnableAdsLazyLoad && sizeof($wgAdslotsLazyLoad)) {
+                            $out .= '<script type="text/javascript" src="' . $wgExtensionsPath . '/wikia/AdEngine/LazyLoadAds.js?' . self::cacheKeyVersion . '"></script>'. "\n";
+                        }
 
 			foreach($this->slots as $slotname => $slot) {
                         	$AdProvider = $this->getAdProvider($slotname);
@@ -400,17 +433,17 @@ class AdEngine {
 			$slotdiv = "Wikia_" . $this->slots[$slotname]['size'] . "_" . $adnum; 
 		}
 
-                $slotdiv_class = '';
+                $slotiframe_class = '';
                 if ($wgEnableAdsLazyLoad) {
                     if (!empty($wgAdslotsLazyLoad[$slotname])) {
-                        $slotdiv_class = 'lazyload';
+                        $slotiframe_class = self::lazyLoadAdClass;
                     }
                 }
 	
 		return '<div id="' . htmlspecialchars($slotname) . '" class="noprint">' . 
-			'<div id="' . htmlspecialchars($slotdiv) . '" class="' . $slotdiv_class . '">' .
+			'<div id="' . htmlspecialchars($slotdiv) . '">' .
 			'<iframe width="' . intval($w) . '" height="' . intval($h) . '" ' . 
-			'id="' . htmlspecialchars($slotname) . '_iframe" ' .
+			'id="' . htmlspecialchars($slotname) . '_iframe" class="' . $slotiframe_class . '" ' .
                 	'noresize="true" scrolling="no" frameborder="0" marginheight="0" ' . 
 			'marginwidth="0" style="border:none" target="_blank"></iframe></div></div>';
 	}
@@ -502,7 +535,7 @@ class AdEngine {
 
 
 	public function getDelayedIframeLoadingCode(){
-		global $wgExtensionsPath;
+		global $wgExtensionsPath, $wgEnableAdsLazyLoad;
 
 		if (empty($this->placeholders)){
 			// No delayed ads on this page

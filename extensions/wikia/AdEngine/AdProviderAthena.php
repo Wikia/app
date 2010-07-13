@@ -9,7 +9,7 @@
 
 
 
-class AdProviderAthena implements iAdProvider {
+class AdProviderAthena extends AdProviderIframeFiller implements iAdProvider {
 
 	protected static $instance = false;
 
@@ -100,9 +100,13 @@ class AdProviderAthena implements iAdProvider {
 		return $out;
         }
 
-	public function getIframeFillHtml($slotname) {
+	protected function getIframeFillFunctionDefinition($function_name, $slotname, $slot) {
+                global $wgEnableAdsLazyLoad, $wgAdslotsLazyLoad;
+
 		$sl = addslashes($slotname);
-		return "<script type=\"text/javascript\">Athena.callIframeAdDirect(\"$sl\");</script>\n";
+		$out = "<script type=\"text/javascript\">$function_name = function() { Athena.callIframeAdDirect(\"$sl\"); }</script>\n";
+
+                return $out;
 	}
 
 }
