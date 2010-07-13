@@ -129,7 +129,8 @@ function callEditHook($page_id, $rev_id, $page_ns, $user_id, $serverName) {
 	# check is new
 	$status->value['new'] = checkIsNew($page_id, $rev_id);
 	# call function
-	$res = ScribeProducer::saveComplete( $oArticle, $oUser, null, null, null, null, null, $flags, $oRevision, $status, 0 );
+	$archive = 1;
+	$res = ScribeProducer::saveComplete( $oArticle, $oUser, null, null, null, $archive, null, $flags, $oRevision, $status, 0 );
 	#
 	$oArticle = $oUser = $oRevision = $status = $res = null;
 }
