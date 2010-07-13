@@ -103,96 +103,89 @@ class ScribeeventsPage {
 	}
 	
 	function showResults( ) {
-		global $wgUser, $wgOut, $wgCityId, $wgLang, $wgContLang, $wgMemc, $wgStatsDB;
+		global $wgUser, $wgOut, $wgCityId, $wgLang, $wgContLang, $wgStatsDB;
 
         wfProfileIn( __METHOD__ );
 		$wgOut->setSyndicated( false );
 
 		$num = 0;
-		$key = wfMemcKey( "Scribeevents", intval($this->mType), $this->limit, $this->offset );
-		$data = $wgMemc->get( $key );
 		
-		if ( empty($data) || 
-			( isset($data) && ( 0 == intval($data['numrec'] ) ) ) 
-		) {
-			$where = array( 
-				'wiki_id' 	=> $wgCityId,
-			);
-			if ( $this->mValidType && $this->mType > 0 ) {
-				$where['event_type'] = $this->mType;
-			}
-						
-			$dbr = wfGetDB( DB_SLAVE, array(), $wgStatsDB ); 
-			$oRes = $dbr->select(
-				'events',
-				array( 
-					'wiki_id', 
-					'page_id', 
-					'rev_id', 
-					'log_id', 
-					'user_id', 
-					'user_is_bot', 
-					'page_ns', 
-					'is_content', 
-					'is_redirect', 
-					'ip', 
-					'rev_timestamp',
-					'image_links',
-					'video_links',
-					'total_words',
-					'rev_size',
-					'wiki_lang_id',
-					'wiki_cat_id',
-					'event_type',
-					'event_date',
-					'media_type' 
-				),
-				$where,
-				__METHOD__, 
-				array(
-					'SQL_CALC_FOUND_ROWS',
-					'ORDER BY' => 'event_date DESC',
-					'LIMIT' => $this->limit,
-					'OFFSET' => $this->offset
-				)
-			);
+		$where = array( 
+			'wiki_id' 	=> $wgCityId,
+		);
+		if ( $this->mValidType && $this->mType > 0 ) {
+			$where['event_type'] = $this->mType;
+		}
+					
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgStatsDB ); 
+		$oRes = $dbr->select(
+			'events',
+			array( 
+				'wiki_id', 
+				'page_id', 
+				'rev_id', 
+				'log_id', 
+				'user_id', 
+				'user_is_bot', 
+				'page_ns', 
+				'is_content', 
+				'is_redirect', 
+				'ip', 
+				'rev_timestamp',
+				'image_links',
+				'video_links',
+				'total_words',
+				'rev_size',
+				'wiki_lang_id',
+				'wiki_cat_id',
+				'event_type',
+				'event_date',
+				'media_type' 
+			),
+			$where,
+			__METHOD__, 
+			array(
+				'SQL_CALC_FOUND_ROWS',
+				'ORDER BY' => 'rev_timestamp DESC',
+				'LIMIT' => $this->limit,
+				'OFFSET' => $this->offset
+			)
+		);
 
-			# nbr all records 
-			$res = $dbr->query('SELECT FOUND_ROWS() as rowcount');
-			$oRow = $dbr->fetchObject ( $res );
-			$num = $oRow->rowcount;
+		# nbr all records 
+		$res = $dbr->query('SELECT FOUND_ROWS() as rowcount');
+		$oRow = $dbr->fetchObject ( $res );
+		$num = $oRow->rowcount;
 
-			$data = array( 'numrec' => 0, 'rows' => array() );
-			$loop = 0;
-			while ( $oRow = $dbr->fetchObject( $oRes ) ) {
-				$data['rows'][ ] = array( 
-					$oRow->page_id,
-					$oRow->rev_id,
-					$oRow->log_id, 
-					$oRow->user_id, 
-					$oRow->user_is_bot, 
-					$oRow->page_ns, 
-					$oRow->is_content, 
-					$oRow->is_redirect, 
-					$oRow->ip, 
-					$oRow->rev_timestamp,
-					$oRow->image_links,
-					$oRow->video_links,
-					$oRow->total_words,
-					$oRow->rev_size,
-					$oRow->wiki_lang_id,
-					$oRow->wiki_cat_id,
-					$oRow->event_type,
-					$oRow->event_date,
-					$oRow->media_type 
-				);
-				$data['order'][ ] = $oRow->rev_timestamp;
-				$data['numrec']++;
-			}
-			
-			$dbr->freeResult( $oRes );
-			$wgMemc->set( $key, $data, 30 );
-		} 
+		$data = array( 'numrec' => 0, 'rows' => array() );
+		$loop = 0;
+		while ( $oRow = $dbr->fetchObject( $oRes ) ) {
+			$data['rows'][ ] = array( 
+				$oRow->page_id,
+				$oRow->rev_id,
+				$oRow->log_id, 
+				$oRow->user_id, 
+				$oRow->user_is_bot, 
+				$oRow->page_ns, 
+				$oRow->is_content, 
+				$oRow->is_redirect, 
+				$oRow->ip, 
+				$oRow->rev_timestamp,
+				$oRow->image_links,
+				$oRow->video_links,
+				$oRow->total_words,
+				$oRow->rev_size,
+				$oRow->wiki_lang_id,
+				$oRow->wiki_cat_id,
+				$oRow->event_type,
+				$oRow->event_date,
+				$oRow->media_type 
+			);
+			$data['order'][ ] = $oRow->rev_timestamp;
+			$data['numrec']++;
+		}
+		
+		$dbr->freeResult( $oRes );
 
 		$num = $this->outputResults( $wgUser->getSkin(), $data );
 
