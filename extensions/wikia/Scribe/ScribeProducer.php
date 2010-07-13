@@ -22,7 +22,8 @@ class ScribeProducer {
 		$mLogId,
 		$mRevId,
 		$mKey,
-		$mServerName;
+		$mServerName,
+		$mArchive;
 
 	const 
 		EDIT_CATEGORY 		= 'log_edit',
@@ -41,7 +42,7 @@ class ScribeProducer {
 	 *
 	 * @author Piotr Molski (MoLi)
 	 */
-	function __construct( $key, $page_id, $rev_id = 0, $log_id = 0 ) {
+	function __construct( $key, $page_id, $rev_id = 0, $log_id = 0, $archive = 0 ) {
 		global $wgCityId, $wgServer;
 
 		switch ( $key ) {
@@ -56,6 +57,7 @@ class ScribeProducer {
 		$this->mRevId 		= $rev_id;
 		$this->mLogId		= $log_id;
 		$this->mServerName 	= $wgServer;
+		$this->mArchive		= $archive;
 	}
 
 	/**
@@ -75,6 +77,7 @@ class ScribeProducer {
 					'revId'			=> $this->mRevId,
 					'logId'			=> $this->mLogId,
 					'serverName'	=> $this->mServerName,
+					'archive'		=> $this->mArchive
 				) 
 			);
 			WScribeClient::singleton( $this->mKey )->send( $data );
@@ -105,7 +108,7 @@ class ScribeProducer {
 			$pageId = ( $oArticle instanceof Article ) ? $oArticle->getID() : 0;
 			if ( $revid > 0 && $pageId > 0 ) { 
 				$key = ( isset($status->value['new']) && $status->value['new'] == 1 ) ? 'create' : 'edit';
-				$oScribeProducer = new ScribeProducer( $key, $pageId, $revid );
+				$oScribeProducer = new ScribeProducer( $key, $pageId, $revid, (!empty($undef1)) ? 1 : 0 );
 				if ( is_object( $oScribeProducer ) ) {
 					$oScribeProducer->send_log();
 				}
