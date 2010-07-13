@@ -10,7 +10,7 @@ use strict;
 use URI;
 use FCGI;
 use FCGI::ProcManager;
-use Image::Magick;
+use Graphics::Magick;
 use Image::LibRSVG;
 use File::LibMagic;
 use IO::File;
@@ -408,9 +408,9 @@ while( $request->Accept() >= 0 || $test ) {
 				}
 				else {
 					#
-					# for other else use Image::Magick
+					# for other else use Graphics::Magick
 					#
-					my $image = new Image::Magick;
+					my $image = new Graphics::Magick;
 					$image->Read( $original );
 					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
 					print STDERR "Reading $original for transforming, time: $t_elapsed\n" if $debug;
