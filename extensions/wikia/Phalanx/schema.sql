@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS `phalanx` (
 -- last author of block (editing the block will change the author)
   `p_author_id` int(6) NOT NULL,
 -- block content (plain text or regex)
-  `p_text` tinyblob NOT NULL,
+  `p_text` blob NOT NULL,
 -- block type (mask of 16 bits determining which module will use that block)
   `p_type` smallint(1) unsigned NOT NULL,
 -- date of creation or last edit of this block
