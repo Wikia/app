@@ -18,7 +18,7 @@ var magicWords = {};
 $(function() {
 	$("#headerButtonHub").bind("click.headerMenu", openHubMenu);
 	$("#headerButtonUser").bind("click.headerMenu", openUserMenu);
-	$(document).ajaxSend(startAjax).ajaxComplete(stopAjax);
+	$(document).ajaxStart(startAjax).ajaxStop(stopAjax);
 	setupVoting();
 });
 
