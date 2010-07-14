@@ -252,15 +252,18 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 	}
 
 	public function execute() {
-		global $wgCityId, $wgUser;
+		global $wgCityId, $wgUser, $wgTheSchwartzSecretToken;
 		wfProfileIn( __METHOD__ );
 
 		# extract request params
 		$this->mCityId = $wgCityId;
 		$this->params = $this->extractRequestParams(false);
 
-		if (!$wgUser->isAllowed('scribeevents')) {
-			$this->dieUsageMsg(array('readrequired'));
+		
+		if( ! ( isset($this->params[ "token" ] ) && $this->params[ "token" ] === $wgTheSchwartzSecretToken ) ) {
+			if (!$wgUser->isAllowed('scribeevents')) {
+				$this->dieUsageMsg(array('readrequired'));
+			}
 		}
 		
 		// Error results should not be cached
@@ -554,7 +557,11 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 			'logid' => array (
 				ApiBase :: PARAM_TYPE => 'integer',
 				ApiBase :: PARAM_ISMULTI => false
-			)
+			),
+			'token'	=> array (
+				ApiBase :: PARAM_TYPE => 'string',
+				ApiBase :: PARAM_ISMULTI => false
+			),
 		);
 	}
 
@@ -562,7 +569,8 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		return array (
 			'pageid' 	=> 'Identifier of page',
 			'revid' 	=> 'Identifier of revision',
-			'logid' 	=> 'Identifier of log (from logging)'
+			'logid' 	=> 'Identifier of log (from logging)',
+			'token'		=> 'Used for internal communication',
 		);
 	}
 
