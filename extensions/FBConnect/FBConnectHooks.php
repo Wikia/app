@@ -215,13 +215,6 @@ STYLE;
 		$vars['fbUseMarkup'] = $fbUseMarkup;
 		$vars['fbLogo'] = $fbLogo ? true : false;
 
-		$query = $wgRequest->getValues();
-		if (isset($query['title'])) {
-			unset($query['title']);
-		}
-
-		$vars['wgPagequery'] = wfUrlencode( wfArrayToCGI( $query ) );
-
 		$vars['fbLogoutURL'] = Skin::makeSpecialUrl('Userlogout',
 						$wgTitle->isSpecial('Preferences') ? '' : "returnto={$thisurl}");
 

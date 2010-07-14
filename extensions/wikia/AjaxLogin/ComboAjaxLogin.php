@@ -117,6 +117,13 @@ function comboAjaxLoginVars($vars) {
 		$vars['wgEnableLoginAPI'] = true;
 	}
 	
+	$query = $wgRequest->getValues();
+	if (isset($query['title'])) {
+		unset($query['title']);
+	}
+
+	$vars['wgPageQuery'] = wfUrlencode( wfArrayToCGI( $query ) );
+		
 	$vars['wgComboAjaxLogin'] = true;
 	$vars['wgIsLogin'] = $wgUser->isLoggedIn();
 	
@@ -283,14 +290,20 @@ class AjaxLoginForm extends LoginForm {
 		// Use the existing settings to generate the login portion of the form, which will then
 		// be fed back into the bigger template in this case (it is not always fed into ComboAjaxLogin template).
 		
-		$returnto = $wgRequest->getVal("returnto",'');
+		$returnto = $wgRequest->getVal( 'returnto', '');
 		
 		if( !($returnto == '') ){
 			$returnto = "&returnto=".$returnto;
 		}
+
+		$returntoquery = $wgRequest->getVal( 'returntoquery', '');
 		
-		$loginaction = Skin::makeSpecialUrl( 'Signup', "type=login&action=submitlogin".$returnto );
-		$signupaction = Skin::makeSpecialUrl( 'Signup', "type=signup".$returnto );
+		if( !($returntoquery == '') ){
+			$returntoquery = "&returntoquery=" . wfUrlencode( $returntoquery );
+		}
+		
+		$loginaction = Skin::makeSpecialUrl( 'Signup', "type=login&action=submitlogin".$returnto.$returntoquery );
+		$signupaction = Skin::makeSpecialUrl( 'Signup', "type=signup".$returnto.$returntoquery );
 		
 		$tmpl->set("loginaction", $loginaction);
 		$tmpl->set("signupaction", $signupaction);

@@ -81,7 +81,7 @@ function showComboAjaxForPlaceHolder(element, isPlaceholder, callback, showRegis
 	// scroll top
 	window.scrollTo(0,0);
 
-	$().getModal(window.wgScript + '?action=ajax&rs=GetComboAjaxLogin&uselang=' + window.wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion,  false, {
+	$().getModal(window.wgScript + '?action=ajax&rs=GetComboAjaxLogin&uselang=' + window.wgUserLanguage + "&returnto=" + wgPageName + "&returntoquery=" + wgPageQuery + '&cb=' + wgMWrevId + '-' + wgStyleVersion,  false, {
 			callback: function() {
 				$.getScript(window.wgScript + '?action=ajax&rs=getRegisterJS&uselang=' + window.wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion, function() {
 						//$("#loadmask").remove();
