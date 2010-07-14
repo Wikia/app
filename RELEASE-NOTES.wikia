@@ -1,5 +1,6 @@
 == Changes since 201007.3 ==
-* 
+* rt#57894: RTE: color chooser broken (macbre)
+* rt#53351: RTE does not "escape" + sign at the beginning of table cell (macbre)
 
 == Changes since 201007.2 ==
 * rt#57095: Special:Following - articles with "&" in the name cannot be removed (uberfuzzy)
@@ -17,7 +18,7 @@
 * rt#48450: move answers widget text to top (Nef)
 * rt#57081: Can't get images from Flickr (eloy)
 * rt#56780: Corporatepages i18n bug (Nef)
-* rt#56847: error in answers founder message (Nef) 
+* rt#56847: error in answers founder message (Nef)
 
 == Changes since 201006.4 ==
 * rt#53706: move interwiki_map to mediawiki: (uberfuzzy)
