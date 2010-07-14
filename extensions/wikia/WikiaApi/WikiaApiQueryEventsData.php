@@ -390,7 +390,7 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		if ( $oTitle instanceof Title ) {
 			$is_content_ns = $oTitle->isContentPage();
 			if ( empty($is_content_ns) && $wgEnableBlogArticles ) { 
-				$is_content_ns = (!in_array($oTitle->getNamespace(), array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK, NS_BLOG_LISTING, NS_BLOG_LISTING_TALK)));
+				$is_content_ns = (in_array($oTitle->getNamespace(), array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK, NS_BLOG_LISTING, NS_BLOG_LISTING_TALK)));
 			}
 		}
 		return (int) $is_content_ns;
