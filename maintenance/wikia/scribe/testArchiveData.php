@@ -118,7 +118,7 @@ function _revision_is_content() {
 	if ( $wgTitle instanceof Title ) {
 		$is_content_ns = $wgTitle->isContentPage();
 		if ( empty($is_content_ns) && $wgEnableBlogArticles ) { 
-			$is_content_ns = (!in_array($wgTitle->getNamespace(), array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK, NS_BLOG_LISTING, NS_BLOG_LISTING_TALK)));
+			$is_content_ns = (in_array($wgTitle->getNamespace(), array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK, NS_BLOG_LISTING, NS_BLOG_LISTING_TALK)));
 		}
 	}
 	return $is_content_ns ? 'Y' : 'N';
