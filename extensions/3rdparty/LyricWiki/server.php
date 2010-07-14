@@ -386,7 +386,7 @@ if(!$funcsOnly){
 	);
 	///////// UPDATING METHODS - END /////////
 	//////////////////////////////////////////////////////////////////////////////
-	
+
 	wfDebug("LWSOAP: Done setting up SOAP functions, about to process...\n");
 
 	// Use the request to (try to) invoke the service
@@ -524,13 +524,13 @@ function searchAlbums($artist, $album, $year){
 	$retVal = array();
 	$retVal[] = array('artist' => 'Pink Floyd', 'album' => 'Dark Side Of The Moon', 'year' => 1973);
 	$retVal[] = array('artist' => 'P1Nk F10yd', 'album' => 'D4rk S1d3 0f T3h M00n', 'year' => 2006);
-	
+
 	GLOBAL $SHUT_DOWN_API;
 	if(!$SHUT_DOWN_API){
 		// TODO: IMPLEMENT
 		// TODO: IMPLEMENT
 	}
-	
+
 	requestFinished($id);
 	return $retVal;
 }
@@ -538,13 +538,13 @@ function searchAlbums($artist, $album, $year){
 function searchSongs($artist, $song){ // TODO: IMPLEMENT
 	$id = requestStarted(__METHOD__, "$artist|$song");
 	$retVal = array('artist' => 'Beethoven', 'song' => 'Moonlight Sonata');
-	
+
 	GLOBAL $SHUT_DOWN_API;
 	if(!$SHUT_DOWN_API){
-	
+
 		// TODO: IMPLEMENT
 		// TODO: IMPLEMENT
-	
+
 	}
 
 	requestFinished($id);
@@ -1160,7 +1160,7 @@ function getAlbum($artist){ // TODO: IMPLEMENT - UM... THIS DOESN'T LOOK LIKE IT
 	// TODO: If album page doesn't exist, search the artist page for that album.
 
 	$retVal = array('artist' => 'Staind', 'album' => 'Chapter V', 'year' => 2005, 'amazonLink' => $link, 'songs' => $songs);
-	
+
 	GLOBAL $SHUT_DOWN_API;
 	if(!$SHUT_DOWN_API){
 		// TODO: IMPLEMENT
@@ -1439,7 +1439,7 @@ function postAlbum($overwriteIfExists, $artist, $album, $year, $asin, $songs){
 
 	$retVal = array('artist' => $artist, 'album' => $album, 'year' => $year, 'dataUsed' => false,
 					'message' => 'Default message.  There must have been an error during processing.  Please report this.');
-	
+
 	global $SHUT_DOWN_API;
 	if($SHUT_DOWN_API){
 		global $SHUT_DOWN_API_REASON;
@@ -2129,11 +2129,12 @@ function logSoapFailure($origArtistSql, $origSongSql, $lookedForSql){
 	if( !wfReadOnly() ) {
 		GLOBAL $wgMemc;
 		$NUM_FAILS_TO_SPOOL = 10;
-		
+
 		wfDebug("LWSOAP: Recording failure for \"$origArtistSql:$origSongSql\"\n");
-		
+
 		// Spool a certain number of updates in memcache before writing to db.
-		$memkey = wfMemcKey( 'lw_soap_failure', $origArtistSql, $origSongSql );
+		// macbre: added str_replace (RT #59011)
+		$memkey = wfMemcKey( 'lw_soap_failure', str_replace(' ', '_', $origArtistSql), str_replace(' ', '_', $origSongSql) );
 		$numFails = $wgMemc->get( $memkey );
 		if(empty($numFails)){
 			wfDebug("LWSOAP: Setting $memkey to 1\n");
