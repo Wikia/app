@@ -27,6 +27,8 @@ function adEngineAdditionalScripts( &$out, &$sk ){
 	return true;
 } // end adEngineAdditionalScripts()
 
+$wgHooks["WikiFactoryChanged"][] = "AdEngine::clearSlotCache";
+
 interface iAdProvider {
 	public static function getInstance();
 	public function getAd($slotname, $slot);
@@ -146,6 +148,16 @@ class AdEngine {
 		$out .= "<!-- #### END " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
 
 		return $out;
+	}
+
+	public static function clearSlotCache($cv_name , $city_id, $value) {
+		if (!preg_match("/^wgAdslot/", $cv_name)) return true;
+
+		global $wgMemc;
+		$cacheKey = wfForeignMemcKey(WikiFactory::IDtoDB($city_id), false, __CLASS__ . 'slots', 'monaco', AdEngine::cacheKeyVersion);
+		$wgMemc->delete($cacheKey);
+
+		return true;
 	}
 
 	public function loadConfig() {
