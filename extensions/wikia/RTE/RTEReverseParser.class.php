@@ -1280,6 +1280,15 @@ class RTEReverseParser {
 				// remove trailing line breaks
 				$textContent = rtrim(self::addSpaces($node, $textContent), "\n");
 
+				// add space before + and - (RT #53351)
+				if (in_array($textContent{0}, array('-', '+'))) {
+					$textContent = " {$textContent}";
+				}
+				// encode pipe (RT #53351)
+				else if ($textContent{0} == '|') {
+					$textContent = RTEParser::markEntities('&#124;') . substr($textContent, 1);
+				}
+
 				$out .= "{$attributes}{$textContent}";
 				break;
 		}
