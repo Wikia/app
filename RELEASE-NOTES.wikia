@@ -1,4 +1,5 @@
 == Changes since 201007.3 ==
+* rt#59011: LyricWiki: tons of memcache errors - space character found (macbre)
 * rt#57894: RTE: color chooser broken (macbre)
 * rt#53351: RTE does not "escape" + sign at the beginning of table cell (macbre)
 
