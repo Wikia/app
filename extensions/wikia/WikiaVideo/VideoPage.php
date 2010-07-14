@@ -1264,7 +1264,7 @@ EOD;
 			$fname
 		);
 		if ($row) {
-			$metadata = split( ",", $row->img_metadata );
+			$metadata = explode( ",", $row->img_metadata );
 			if ( is_array( $metadata ) ) {
 				$this->mProvider = $metadata[0];
 				$this->mId = $metadata[1];
