@@ -32,13 +32,10 @@ class FBPush_OnAddImage extends FBConnectPushEvent {
 	}
 	
 	public static function onArticleSaveComplete(&$article, &$user, $text, $summary,$flag, $fake1, $fake2, &$flags, $revision, &$status, $baseRevId){ 
-		
 		if( $article->getTitle()->getNamespace() != NS_FILE ) {
 			return true;
 		}
-		
 		$img = wfFindFile( $article->getTitle() );
-	
 		if ($img->media_type == 'BITMAP' ) {
 			FBPush_OnAddImage::uploadNews($img->title->getText(), $img->title->getFullUrl("?ref=fbfeed&fbtype=addimage")) ;	
 		}
@@ -49,7 +46,7 @@ class FBPush_OnAddImage extends FBConnectPushEvent {
         global $wgServer, $wgSitename;
        
         if ($image->mLocalFile->media_type == 'BITMAP' ) {
-        	FBPush_OnAddImage::uploadNews( $image->mLocalFile->getTitle(), $wgServer.'/'.$image->mLocalFile->getTitle()."?ref=fbfeed&fbtype=addimage" );
+        	FBPush_OnAddImage::uploadNews( $image->mLocalFile->getTitle(), $image->mLocalFile->getTitle()->getFullUrl( "?ref=fbfeed&fbtype=addimage" ) );
         }   
         return true;
     }
