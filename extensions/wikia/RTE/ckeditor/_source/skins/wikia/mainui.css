@@ -131,3 +131,23 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 .cke_skin_wikia .cke_browser_webkit iframe {
 	white-space: normal;
 }
+
+/* All voice labels are not displayed. (RT #57894) */
+.cke_skin_wikia .cke_voice_label
+{
+	display: none;
+}
+
+.cke_skin_wikia legend.cke_voice_label
+{
+	display: none;
+}
+
+.cke_skin_wikia .cke_browser_ie legend.cke_voice_label
+{
+	position: absolute;
+	display: block;
+	width: 0;
+	height: 0;
+	overflow: hidden;
+}
