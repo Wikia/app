@@ -224,7 +224,11 @@ else {
 	}
 	$dbr->freeResult( $res );
 	$end = time();
-	echo "Script finished after: " . time_duration($end - $start) . " \n";
+	$time = time_duration($end - $start);
+	if ( empty($time) ) {
+		$time = '0 sec';
+	}
+	echo "Script finished after: " . $time . " \n";
 }
 
 echo "end \n";
