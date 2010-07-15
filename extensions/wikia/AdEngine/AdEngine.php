@@ -329,8 +329,7 @@ class AdEngine {
 
 		// As long as they are enabled via config, spotlights are always displayed...
 		} else if ( AdEngine::getInstance()->getAdType($slotname) == 'spotlight' ){
-			// ... and we always use Google Ad Manager
-			return AdProviderGAM::getInstance();
+			return $this->getProviderFromId($this->slots[$slotname]['provider_id']);
 
 		// Now some toggles based on preferences and logged in/out
 		} else if (! ArticleAdLogic::isMandatoryAd($slotname) &&
@@ -376,6 +375,7 @@ class AdEngine {
 			case 'contextweb': return AdProviderContextWeb::getInstance();
 			case 'dartmobile': return AdProviderDARTMobile::getInstance();
 			case 'liftium': return AdProviderLiftium::getInstance();
+			case 'null': return new AdProviderNull('Slot disabled in WF', false);
 			default: return new AdProviderNull('Unrecognized provider id', true);
 		}
 	}
