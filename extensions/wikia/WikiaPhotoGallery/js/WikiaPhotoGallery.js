@@ -1418,10 +1418,18 @@ var WikiaPhotoGallery = {
 	setupGalleryPreviewPage: function(params) {
 		var self = this;
 
+ 		// resize preview area (RT #55203 / RT #59134)
+		var resizePreview = function() {
+			var preview = $('#WikiaPhotoGalleryEditorPreview');
+			preview.height(self.editor.height - preview.position().top - 20);
+		};
+
 		// setup option tabs
 		this.setupTabs($('#WikiaPhotoGalleryOptionsTabs'), function(index) {
 			// track tabs switching
 			self.track('/dialog/gallery/preview/tab/' + (index == 0 ? 'theme2layout' : 'layout2theme'));
+
+			resizePreview();
 		});
 
 		// setup gallery width slider
@@ -1469,8 +1477,8 @@ var WikiaPhotoGallery = {
 			self.selectPage(self.UPLOAD_FIND_PAGE, {});
 		});
 
-		// resize preview area (RT #55203)
-		$('#WikiaPhotoGalleryEditorPreview').height(this.editor.height - 280);
+ 		// resize preview area (RT #55203 / RT #59134)
+		setTimeout(resizePreview, 50);
 
 		// render preview
 		this.renderGalleryPreview();
@@ -1901,7 +1909,7 @@ var WikiaPhotoGallery = {
 		var colorPickerPopup = colorPicker.next('.WikiaPhotoGalleryColorPickerPopUp');
 		colorPickerPopup.appendTo(colorPicker.closest('.WikiaPhotoGalleryEditorPageInner'));
 
-		
+
 		//prevent showing popups not closed before dismissing the editor
 		colorPickerPopup.hide();
 
@@ -1911,7 +1919,7 @@ var WikiaPhotoGallery = {
 		// set initial color for picker
 		var title = null;
 		var color = '#000000';
-		
+
 		if (typeof params[paramName] != 'undefined') {
 			if(params[paramName].indexOf('#') == 0 || (params[paramName] != 'accent' && params[paramName] != 'color1')) {
 				color =  params[paramName];
@@ -1926,7 +1934,7 @@ var WikiaPhotoGallery = {
 		else if(colorPickerTrigger.attr('title') != ''){//if there is default enforced by PHP
 			if(colorPickerTrigger.attr('title').indexOf('--') > 0) {
 				var tokens = colorPickerTrigger.attr('title').split('--');
-				
+
 				switch(tokens[1]) {
 					case 'border':
 						color = getClassBorderColor('.' + tokens[0]);
@@ -1952,7 +1960,7 @@ var WikiaPhotoGallery = {
 		colorPickerTrigger.attr('title', title);
 		colorPickerTrigger.css('background-color', color);
 		colorInput.val(title);
-		
+
 		var colorBoxes = colorPickerPopup.find('ul').find('span');
 
 		// get hex codes of colors in the picker
@@ -2039,7 +2047,7 @@ var WikiaPhotoGallery = {
 			});
 
 			colorPickerPopup.show();
-		       
+
 			//make the popup disappear if the user clicks outside
 			$(document.body).unbind('.colorPicker').bind('click.colorPicker', function(event){
 				if(!$(event.target).hasClass('WikiaPhotoGalleryColorPickerPopUp') && $(event.target).closest('.WikiaPhotoGalleryColorPickerPopUp').length == 0) {
@@ -2058,7 +2066,7 @@ var WikiaPhotoGallery = {
 			if(inputValue.indexOf('.') == 0) {
 				colorPickerTrigger.removeClass('transparent-color');
 				var color = null;
-				
+
 				if(inputValue == '.accent')
 					color = getClassBorderColor(inputValue);
 				else
