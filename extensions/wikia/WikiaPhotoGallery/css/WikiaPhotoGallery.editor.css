@@ -274,8 +274,8 @@ img.WikiaPhotoGalleryProgress {
 
 /* tabs */
 #WikiaPhotoGalleryOptionsTabs {
-	height: 150px;
 	margin: 10px 0;
+	min-height: 150px;
 }
 
 #WikiaPhotoGalleryOptionsTabs .WikiaPhotoGalleryOptionsTab {
