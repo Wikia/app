@@ -209,7 +209,12 @@ else {
 	$dbr = wfGetDB( DB_SLAVE, 'stats', $wgExternalSharedDB );
 	$where = array( 'city_public' => 1 );
 	if ( !empty($wikia) ) {
-		$where['city_dbname'] = $wikia;
+		$pos = strpos($wikia, '+');
+		if ( $pos !== false ) {
+			$where[] = "city_id >= '".str_replace('+', '', $wikia)."'";
+		} else {
+			$where['city_dbname'] = $wikia;
+		}
 	}
 	$start = time();
 	$res = $dbr->select( 'city_list', array( '*' ), $where, 'archiveStatsData' );
