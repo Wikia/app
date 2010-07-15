@@ -1,4 +1,5 @@
 == Changes since 201007.3 ==
+* rt#59138: Photo Gallery: "add photo" button removes page from your watchlist (macbre)
 * rt#58035: make WF clear AdEngine slot cache on wgAdslot changes (Nef)
 * rt#59011: LyricWiki: tons of memcache errors - space character found (macbre)
 * rt#57894: RTE: color chooser broken (macbre)
