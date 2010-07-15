@@ -665,7 +665,7 @@ class Masthead {
 	 * @param PreferencesForm $oPrefs  -- preferences form instance
 	 * @param String $html -- generated html
 	 */
-	static public function additionalUserProfilePreferences( &$oPrefs, &$html) {
+	static public function additionalUserProfilePreferences($oPrefs, &$html) {
 		global $wgUser, $wgCityId;
 		wfProfileIn( __METHOD__ );
 		$oAvatarObj = Masthead::newFromUser( $wgUser );
