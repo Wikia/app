@@ -24,7 +24,7 @@ class WikiaCentralAuthHooks {
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
-	
+
 	static function onAbortNewAccount( User $oUser, &$abortError ) {
 		wfProfileIn( __METHOD__ );
 		$centralUserId = WikiaCentralAuthUser::idFromUser( $oUser );
@@ -37,7 +37,7 @@ class WikiaCentralAuthHooks {
 		wfProfileOut( __METHOD__ );
 		return $res;
 	}
-	
+
 	static function onUserLoadFromSession_old( User $oUser, &$result ) {
 		global $wgWikiaCentralAuthCookies, $wgWikiaCentralAuthCookiePrefix;
 		wfProfileIn( __METHOD__ );
@@ -55,7 +55,7 @@ class WikiaCentralAuthHooks {
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
-		
+
 		if (isset($_COOKIE["{$prefix}UserID"]) && isset($_COOKIE["{$prefix}Token"])) {
 			$userName = $_COOKIE["{$prefix}UserID"];
 			$token = $_COOKIE["{$prefix}Token"];
@@ -70,7 +70,7 @@ class WikiaCentralAuthHooks {
 
 		$oCUser = new WikiaCentralAuthUser( $userName );
 		$localId = User::idFromName( $userName );
-		
+
 		if ( $oCUser->authenticateWithToken( $token ) != 'ok' ) {
 			wfDebug( __METHOD__ .": token mismatch\n \n" );
 		} elseif ( !$oCUser->isAttached() && $localId ) {
@@ -92,7 +92,7 @@ class WikiaCentralAuthHooks {
 			self::initSession( $oUser, $token );
 			$oUser->centralAuth = $oCUser;
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
@@ -103,9 +103,9 @@ class WikiaCentralAuthHooks {
 			wfDebug( __METHOD__ . ": Cannot load from session - DB is running with the --read-only option " );
             return true;
         }
-		
+
 		wfProfileIn( __METHOD__ );
-		
+
 		if( $oUser->isLoggedIn() ) {
 			// Already logged in; don't worry about the global session.
 			wfDebug( __METHOD__ . ": user is logged in \n" );
@@ -139,21 +139,21 @@ class WikiaCentralAuthHooks {
 		} else if ( isset( $_COOKIE["{$wgCookiePrefix}UserName"] ) ) {
 			$sName = $_COOKIE["{$wgCookiePrefix}UserName"];
 			$_SESSION['wsUserName'] = $sName;
-		} 
+		}
 
 		if ( empty( $sName ) ) {
 			wfDebug( __METHOD__ .": username doesn't exists \n" );
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
-		
+
 		$oCUser = new WikiaCentralAuthUser( $sName );
 		$localId = User::idFromName( $sName );
-		
+
 		if ( empty($localId) ) {
 			$localId = $oCUser->idFromName();
 		}
-		
+
 		if ( !$oCUser->isAttached() && $localId ) {
 			wfDebug( __METHOD__ .": exists, and not attached \n" );
 			wfProfileOut( __METHOD__ );
@@ -166,21 +166,21 @@ class WikiaCentralAuthHooks {
 					wfProfileOut( __METHOD__ );
 					return true;
 				}
-			} 
+			}
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
 	static function onUserLogout( User &$oUser ) {
 		global $wgWikiaCentralAuthCookies;
-		
+
         if ( wfReadOnly() ) {
 			wfDebug( __METHOD__ . ": DB is running with the --read-only option " );
             return true;
         }
-		
+
 		wfProfileIn( __METHOD__ );
 		if( !$wgWikiaCentralAuthCookies ) {
 			// Use local sessions only.
@@ -189,7 +189,7 @@ class WikiaCentralAuthHooks {
 			return true;
 		}
 		$oCUser = WikiaCentralAuthUser::getInstance( $oUser );
-		
+
 		if ($oCUser->exists()) {
 			$oCUser->deleteGlobalCookies();
 			$oCUser->resetAuthToken();
@@ -198,7 +198,7 @@ class WikiaCentralAuthHooks {
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
-	
+
 	static function onGetCacheVaryCookies( $out, &$cookies ) {
 		global $wgWikiaCentralAuthCookiePrefix;
 		wfProfileIn( __METHOD__ );
@@ -208,14 +208,14 @@ class WikiaCentralAuthHooks {
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
-	
+
 	static function onUserArrayFromResult( &$userArray, $res ) {
 		wfProfileIn( __METHOD__ );
 		$userArray = WikiaCentralAuthUserArray::newFromResult( $res );
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
-	
+
 	/**
 	 * Helper function for onUserLoadFromSession
 	 */
@@ -259,7 +259,7 @@ class WikiaCentralAuthHooks {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
-		
+
 		if ( !$wgWikiaCentralAuthCreateOnView ) {
 			// Only create local accounts when we perform an active login...
 			// Don't freak people out on every page view
@@ -269,8 +269,8 @@ class WikiaCentralAuthHooks {
 		}
 
 		// Is the user blacklisted by the session?
-		// This is just a cache to avoid expensive DB queries in $oUser->isAllowedToCreateAccount(). 
-		// The user can log in via Special:UserLogin to bypass the blacklist and get a proper 
+		// This is just a cache to avoid expensive DB queries in $oUser->isAllowedToCreateAccount().
+		// The user can log in via Special:UserLogin to bypass the blacklist and get a proper
 		// error message.
 		/*$session = WikiaCentralAuthUser::getSession();
 		if ( isset( $session['auto-create-blacklist'] ) && in_array( wfWikiID(), (array)$session['auto-create-blacklist'] ) ) {
@@ -363,7 +363,7 @@ class WikiaCentralAuthHooks {
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
-	
+
 	/**
 	 * Destroy local login cookies so that remote logout works
 	 */
@@ -397,13 +397,13 @@ class WikiaCentralAuthHooks {
 	/**
 	 * Use the central LoggedOut cookie just like the local one
 	 */
-	static function onUserLoadDefaults( User &$oUser, $name ) {
+	static function onUserLoadDefaults( $oUser, $name ) {
 		global $wgWikiaCentralAuthCookiePrefix;
 		wfProfileIn( __METHOD__ );
 		if ( !empty($name) ) {
 			$oCUser = WikiaCentralAuthUser::getInstance( $oUser );
 			if ( $oCUser->exists() && $oCUser->isAttached() ) {
-				$oCUser->invalidateLocalUser($oUser, true); 
+				$oCUser->invalidateLocalUser($oUser, true);
 			}
 		}
 		if ( isset( $_COOKIE[$wgWikiaCentralAuthCookiePrefix.'LoggedOut'] ) ) {
@@ -422,7 +422,7 @@ class WikiaCentralAuthHooks {
 			wfProfileOut( __METHOD__ );
             return false;
         }
-		
+
 		if( $action == 'read' || $oUser->isAnon() ) {
 			wfProfileOut( __METHOD__ );
 			return true;
@@ -440,7 +440,7 @@ class WikiaCentralAuthHooks {
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
-	
+
 	static function onUserLoadFromSessionInfo( &$oUser, $from ) {
 		wfDebug( __METHOD__ . " load from session data for user: {$oUser->getName()} \n");
 
@@ -458,7 +458,7 @@ class WikiaCentralAuthHooks {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
-		
+
 		wfDebug( __METHOD__ . " central user exists: {$oUser->getName()} \n");
 		$userName = $oUser->getName();
 		/*$localId = User::idFromName( $userName );
@@ -481,11 +481,11 @@ class WikiaCentralAuthHooks {
 		wfDebug( __METHOD__ . ": Update session if needed \n" );
 		self::initSession( $oUser, $oUser->getToken() );
 		$oUser->centralAuth = $oCUser;
-		
+
 		wfProfileOut( __METHOD__ );
-		return true;		
+		return true;
 	}
-	
+
 	static function onUserLoadGroups ( User &$oUser ) {
 		wfProfileIn( __METHOD__ );
 		wfDebug( __METHOD__ . " load central user groups: {$oUser->getName()} \n");
@@ -501,8 +501,8 @@ class WikiaCentralAuthHooks {
 		wfProfileOut( __METHOD__ );
 		return $res;
 	}
-	
-	
+
+
 	static function onUserLoadFromDatabase ( User &$oUser, &$oRow ) {
 
         if ( wfReadOnly() ) {
@@ -513,36 +513,36 @@ class WikiaCentralAuthHooks {
 		if ( !$oUser instanceof User ) {
 			return true;
 		}
-		wfDebug( __METHOD__ . ": Load from central database user: {$oUser->getName()} \n" );		
+		wfDebug( __METHOD__ . ": Load from central database user: {$oUser->getName()} \n" );
 		$userName = $oUser->mName;
 		if ( User::isValidUserName($userName) ) {
 			$oRow2 = WikiaCentralAuthUser::loadFromDatabaseByName($userName);
-			if ( $oRow2 ) { 
+			if ( $oRow2 ) {
 				$oRow = $oRow2;
 			}
 		} else {
 			$userId = intval($oUser->mId);
 			$oRow2 = WikiaCentralAuthUser::loadFromDatabaseById($userId);
-			if ( $oRow2 ) { 
+			if ( $oRow2 ) {
 				$oRow = $oRow2;
 			}
 		}
 		return true;
 	}
-	
+
 	static function onUserNameLoadFromId ( $user_name, $oRow ) {
         if ( wfReadOnly() ) {
 			wfDebug( __METHOD__ . ": DB is running with the --read-only option " );
             return true;
         }
-		
+
 		if ( User::isValidUserName($user_name) ) {
 			$oRow2 = WikiaCentralAuthUser::loadFromDatabaseByName($user_name);
-			if ( $oRow2 ) { 
+			if ( $oRow2 ) {
 				$oRow = $oRow2;
 			}
-		} 
-		
+		}
+
 		return true;
 	}
 
