@@ -388,6 +388,11 @@ img.WikiaPhotoGalleryProgress {
 	width: 250px;
 }
 
+/* RT #59234 */
+.WikiaPhotoGalleryPreviewPage h1 {
+	margin-top: -20px;
+}
+
 /* gallery/slideshow preview */
 #WikiaPhotoGalleryEditor .preview {
 	overflow: auto;
