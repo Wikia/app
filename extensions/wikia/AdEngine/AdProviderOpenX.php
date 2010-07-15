@@ -53,6 +53,9 @@ class AdProviderOpenX implements iAdProvider {
 		$cat=AdEngine::getCachedCategory();
 		$zoneId = $this->getZoneId($slotname, $cat['id']);
 
+$cat = array("id" => 1);
+$zoneId = 3;
+
 		if(empty($zoneId)){
 			$nullAd = new AdProviderNull("Invalid slotname, no zoneid for $slotname in " . __CLASS__);
 			return $nullAd->getAd($slotname, $slot);
@@ -68,7 +71,7 @@ class AdProviderOpenX implements iAdProvider {
 	source.push('lang=' + wgContentLanguage);
 
 	document.write('<scr'+'ipt type="text/javascript">');
-	document.write('var base_url = "http://wikia-ads.wikia.com/www/delivery/ajs.php";');
+	document.write('var base_url = "http://spotlights.wikia.com/ajs.php";');
 	document.write('base_url += "?loc=" + escape(window.location);');
 	document.write('if(typeof document.referrer != "undefined") base_url += "&referer=" + escape(document.referrer);');
 	document.write('if(typeof document.context != "undefined") base_url += "&context=" + escape(document.context);');
