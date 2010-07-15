@@ -156,7 +156,7 @@
 
 <!-- Gallery preview -->
 <div class="WikiaPhotoGalleryEditorPage">
-	<div class="WikiaPhotoGalleryEditorPageInner">
+	<div class="WikiaPhotoGalleryEditorPageInner WikiaPhotoGalleryPreviewPage">
 
 		<!-- options tabs -->
 		<div id="WikiaPhotoGalleryOptionsTabs">
