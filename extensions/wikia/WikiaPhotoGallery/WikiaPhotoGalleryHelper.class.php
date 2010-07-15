@@ -316,14 +316,14 @@ class WikiaPhotoGalleryHelper {
 
 		// use global instance of parser (RT #44689 / RT #44712)
 		$parserOptions = new ParserOptions();
-		
+
 		// render thumbnail and parse caption for each image (default "box" is 200x200)
 		$thumbSize = !empty($gallery['params']['widths']) ? $gallery['params']['widths'] : 200;
 		$borderSize = (!empty($gallery['params']['bordersize'])) ? $gallery['params']['bordersize'] : 'small';
 		$orientation = !empty($gallery['params']['orientation']) ? $gallery['params']['orientation'] : 'none';
 		$ratio = self::getRatioFromOption($orientation);
 		$crop = true;
-		
+
 		//calculate height of the biggest image
 		$maxHeight = 0;
 		$imageTitlesCache = array();
@@ -370,13 +370,13 @@ class WikiaPhotoGalleryHelper {
 
 		foreach($gallery['images'] as $index => &$image) {
 			$image['placeholder'] = false;
-			
+
 			$imageTitle = (!empty($imageTitlesCache[$index])) ? $imageTitlesCache[$index] : Title::newFromText($image['name'], NS_FILE);
 			$fileObject = (!empty($fileObjectsCache[$index])) ? $fileObjectsCache[$index] : wfFindFile($imageTitle);
 
 			$image['height'] = $height;
 			$image['width'] = $thumbSize;
-			
+
 			if (!is_object($fileObject) || ($imageTitle->getNamespace() != NS_FILE)) {
 				$image['titleText'] = $imageTitle->getText();
 				$image['thumbnail'] = false;
@@ -385,15 +385,15 @@ class WikiaPhotoGalleryHelper {
 
 			$thumbParams = self::getThumbnailDimensions($fileObject, $thumbSize, $height, $crop);
 			$image['thumbnail'] = self::getThumbnailUrl($imageTitle, $thumbParams['width'], $thumbParams['height']);
-			
+
 			$image['height'] = ($orientation == 'none') ? $heights[$index] : min($thumbParams['height'], $height);
 			$imgHeightCompensation = ($height - $image['height']) / 2;
 			if($imgHeightCompensation > 0) $image['heightCompensation'] = $imgHeightCompensation;
-			
+
 			$image['width'] = min($widths[$index], $thumbSize);
 			$imgWidthCompensation = ($thumbSize - $image['width']) / 2;
 			if($imgHeightCompensation > 0) $image['widthCompensation'] = $imgWidthCompensation;
-			
+
 
 			//need to use parse() - see RT#44270
 			//need to remove wapping p coming from caption editor to match view
@@ -433,7 +433,7 @@ class WikiaPhotoGalleryHelper {
 				$height += 2;
 				break;
 		}
-		
+
 		//wfDebug(__METHOD__.'::after' . "\n" . print_r($gallery, true));
 
 		// render gallery HTML preview
@@ -452,7 +452,7 @@ class WikiaPhotoGalleryHelper {
 			'borderColor' => (!empty($gallery['params']['bordercolor'])) ? $gallery['params']['bordercolor'] : 'accent',
 			'maxHeight' => $height
 		));
-		
+
 		$html = $template->render('galleryPreview');
 
 		wfProfileOut(__METHOD__);
@@ -949,6 +949,15 @@ class WikiaPhotoGalleryHelper {
 				$editPage->starttime = $starttime;
 				$editPage->textbox1 = $articleWikitext;
 				$editPage->summary = wfMsgForContent('wikiaPhotoGallery-edit-summary');
+
+				// watch all my edits / preserve watchlist (RT #59138)
+				if ($wgUser->getOption('watchdefault')) {
+					$editPage->watchthis = true;
+				}
+				else {
+					$editPage->watchthis = $editPage->mTitle->userIsWatching();
+				}
+
 				$bot = $wgUser->isAllowed('bot');
 				$retval = $editPage->internalAttemptSave( $result, $bot );
 				Wikia::log( __METHOD__, "editpage", "Returned value {$retval}" );
@@ -1191,7 +1200,7 @@ class WikiaPhotoGalleryHelper {
 		$ret .= Xml::openElement('span', array('id' => $id, 'class' => 'WikiaPhotoGalleryColorPicker'), '');
 
 		$options = array('id' => "{$id}_trigger");
-		
+
 		if(!empty($default) && is_string($default) && strpos($default, '#') === 0) {
 			$options['style'] = "background-color:{$default}";
 			$options['title'] = $default;
@@ -1199,14 +1208,14 @@ class WikiaPhotoGalleryHelper {
 		elseif(!empty($default) && is_array($default)){
 			$options['title'] = "{$default[0]}--{$default[1]}";
 		}
-		
+
 		$ret .= Xml::element('span', $options, '');
 		$ret .= Xml::closeElement('span');
 
 		// render color picker popup box
 		$ret .= Xml::openElement('div', array('class' =>'WikiaPhotoGalleryColorPickerPopUp'));
 		$ret .= Xml::element('label', array(), wfMsg('wikiaPhotoGallery-preview-colorpicker-title'));
-		
+
 		foreach($colors as $row) {
 			if($row == 'hr') {
 				$ret .= Xml::element('hr');
@@ -1229,7 +1238,7 @@ class WikiaPhotoGalleryHelper {
 						else {
 							$attribs['style'] = "background-color: {$entry['color']}";
 						}
-						
+
 						$attribs['title'] = "{$entry['color']}";
 					}
 
@@ -1263,7 +1272,7 @@ class WikiaPhotoGalleryHelper {
 	 */
 	static public function renderLabel($msgKey, $forID = null) {
 		$options = array();
-		
+
 		if(!empty($forID))
 			$options['for'] = $forID;
 
