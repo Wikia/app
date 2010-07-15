@@ -634,7 +634,7 @@ class WikiaMiniUpload {
 			preg_match_all( '/' . $transl_v_t . '|' . $transl_i_t . '/si', $text, $matches, PREG_OFFSET_CAPTURE );
 			if( is_array( $matches ) ) {
 				$our_gallery = $matches[0][$box][0];
-				$gallery_split = split( ':', $our_gallery );
+				$gallery_split = explode( ':', $our_gallery );
 				$thumb = false;
 
 				$tag = $gallery_split[0] . ":" . $name;
