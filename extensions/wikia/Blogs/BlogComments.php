@@ -1348,7 +1348,8 @@ class BlogCommentList {
 			"isReadOnly" => $isReadOnly,
 			"page"       => $pageIndex ? $pageIndex : 1,
 			"lastPage"   => $lastPage,
-			"commCount"  => $commCount
+			"commCount"  => $commCount,
+			"pageSize"   => $this->mPageSize
 		) );
 
 		$text = $template->execute( "comment-list" );

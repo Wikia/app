@@ -70,6 +70,8 @@ endif;
 	$prev_txt = wfMsg('blog-comments-prev');
 	$next_url = $page >= $lastPage ? null : $title->getFullURL().'?page='.($page + 1).$order_param;
 	$next_txt = wfMsg('blog-comments-next');
+	
+	if ($commCount > $pageSize):
 ?>
 <p>
 	<?= wfMsg('blog-comments-summary', $page, $lastPage) ?> :
@@ -80,6 +82,8 @@ endif;
 		<?php else: ?><span style="color: #CCCCCC"><?= $next_txt ?></span><?php endif; ?>
 </p>
 <?php
+	endif;
+
 	if( isset( $props[ "commenting" ] ) && $props[ "commenting" ] == 1 ):
 		if( $canEdit && !$isBlocked && !$isReadOnly ):
 ?>
