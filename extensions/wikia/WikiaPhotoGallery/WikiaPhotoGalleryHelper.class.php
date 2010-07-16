@@ -420,7 +420,7 @@ class WikiaPhotoGalleryHelper {
 		for ($p = 0; $p < $placeholdersCount; $p++) {
 			$gallery['images'][] = array(
 				'placeholder' => true,
-				'height' => $height,
+				'height' => ($orientation == 'none') ? $thumbSize : $height /* RT #59355 */,
 				'width' => $thumbSize,
 				'thumbnail' => "{$wgExtensionsPath}/wikia/WikiaPhotoGallery/images/gallery_addimage.png",
 				'caption' => wfMsg('wikiaPhotoGallery-preview-placeholder-caption'),
@@ -1304,9 +1304,6 @@ class WikiaPhotoGalleryHelper {
 				break;
 
 			case 'none':
-				return 1/2;
-				break;
-
 			case 'square':
 			default:
 				return 1;
