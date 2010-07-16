@@ -1222,3 +1222,10 @@ li:hover .hideUntilHover{
 .sprite, .sprite-small {
 	background-image:url('../../monaco/images/monaco-sprite.png');
 }
+
+/* FBConnect header button fix by Joeyaa (commited by wladek) */
+#userData .fb_button {
+padding: 0 3px 0 20px !important;
+color:#FFFFFF !important;
+line-height:18px !important;
+}
