@@ -541,6 +541,15 @@ class WikiaPhotoGallery extends ImageGallery {
 			if ($maxHeight > 0) {
 				$height = $maxHeight;
 			}
+
+			// limit height (RT #59355)
+			$height = min($height, $thumbSize * 2);
+
+			// recalculate dimensions (RT #59355)
+			foreach($this->mImages as $index => $image) {
+				$widths[$index] = round($widths[$index] * ($height / $heights[$index]));
+				$heights[$index] = min($height, $heights[$index]);
+			}
 		}
 
 		$captionColor = $this->getParam('captiontextcolor');

@@ -366,6 +366,15 @@ class WikiaPhotoGalleryHelper {
 			if ($maxHeight > 0) {
 				$height = $maxHeight;
 			}
+
+			// limit height (RT #59355)
+			$height = min($height, $thumbSize * 2);
+
+			// recalculate dimensions (RT #59355)
+			foreach($gallery['images'] as $index => $image) {
+				$widths[$index] = round($widths[$index] * ($height / $heights[$index]));
+				$heights[$index] = min($height, $heights[$index]);
+			}
 		}
 
 		foreach($gallery['images'] as $index => &$image) {
@@ -1295,6 +1304,9 @@ class WikiaPhotoGalleryHelper {
 				break;
 
 			case 'none':
+				return 1/2;
+				break;
+
 			case 'square':
 			default:
 				return 1;
