@@ -1273,12 +1273,7 @@ class BlogCommentList {
 	 * @return integer
 	 */
 	public function count() {
-		$comments = $this->getCommentPages();
-		if( is_array( $comments ) ) {
-			return count( $comments );
-		}
-
-		return 0;
+		return $this->cachedCount();
 	}
 
 	/**
