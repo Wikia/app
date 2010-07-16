@@ -2134,7 +2134,8 @@ function logSoapFailure($origArtistSql, $origSongSql, $lookedForSql){
 
 		// Spool a certain number of updates in memcache before writing to db.
 		// macbre: added str_replace (RT #59011)
-		$memkey = wfMemcKey( 'lw_soap_failure', str_replace(' ', '_', $origArtistSql), str_replace(' ', '_', $origSongSql) );
+		// eloy, changed to md4 (faster hash algorithm)
+		$memkey = wfMemcKey( 'lw_soap_failure', md4( sprintf( "%s:%s", $origArtistSql, $origSongSql ) ) );
 		$numFails = $wgMemc->get( $memkey );
 		if(empty($numFails)){
 			wfDebug("LWSOAP: Setting $memkey to 1\n");
