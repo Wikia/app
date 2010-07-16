@@ -29,7 +29,7 @@ var AjaxLogin = {
 				.appendTo("#ajaxlogin_username_cell");
 			}
 			//copy for facebook connect form
-			$('#wpName1Ajax').clone()
+			$('#wpName2Ajax').clone()
 			.attr({
 				"id": "wpName3Ajax",
 				'tabindex': 301
@@ -44,7 +44,7 @@ var AjaxLogin = {
 				})
 				.appendTo("#ajaxlogin_password_cell");
 			}
-			$('#wpPassword1Ajax').clone()
+			$('#wpPassword2Ajax').clone()
 			.attr({
 				"id": "wpPassword3Ajax",
 				'tabindex': 302
