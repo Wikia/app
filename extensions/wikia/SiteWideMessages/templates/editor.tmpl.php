@@ -169,13 +169,20 @@
 #							}
 
 							echo "<input type='checkbox' name='mLang[]' id='swm-lang-$lang' class='swm-lang-checkbox' value='$lang'";
+							if ( in_array( $lang, $formData['mLang'] ) ) {
+								echo " checked='checked'";
+							}
 #							if ( $selectedLang ) {
 #								echo " checked='checked'";
 #							}
 							echo " />";
 							echo "<label for='swm-lang-$lang'>$lang</label>";
 						}
-						echo "<input type='checkbox' name='mLang[]' id='swm-lang-other' class='swm-lang-checkbox' value='other' />";
+						echo "<input type='checkbox' name='mLang[]' id='swm-lang-other' class='swm-lang-checkbox' value='other'";
+						if ( in_array( "other", $formData['mLang'] ) ) {
+							echo " checked='checked'";
+						}
+						echo " />";
 						echo "<label for='swm-lang-other'>" . wfMsg( 'swm-lang-other' ) . "</label>";
 					}
 				?>
