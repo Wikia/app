@@ -583,6 +583,13 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		));
 
+		// render gallery caption (RT #59241)
+		if ($this->mCaption !== false) {
+			$html .= Xml::openElement('div', array('class' => 'wikia-gallery-caption')) .
+				$this->mCaption .
+				Xml::closeElement('div');
+		}
+
 		$itemWrapperWidth = $thumbSize;
 		$thumbWrapperHeight = $height;
 
@@ -621,7 +628,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			$image['height'] = $height;
 			$image['width'] = $thumbSize;
 			$image['caption'] = $imageData[1];
-			
+
 			if (!is_object($fileObject) || ($imageTitle->getNamespace() != NS_FILE)) {
 				$image['linkTitle'] = $image['titleText'] = $imageTitle->getText();
 				$image['thumbnail'] = false;
@@ -681,7 +688,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				$html .= $image['titleText'];
 
 			$html .= Xml::closeElement('a');
-			
+
 			if($captionsPosition == 'below') {
 				$html .= Xml::closeElement('div');
 				$html .= Xml::closeElement('div');
