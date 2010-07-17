@@ -188,9 +188,6 @@ $messages['qqq'] = array(
 	'wikiaPhotoGallery-upload-error-conflict-insert' => '{{Identical|Insert}}',
 	'wikiaPhotoGallery-upload-select-images' => '{{Identical|Select}}',
 	'wikiaPhotoGallery-preview-hover-delete' => '{{Identical|Delete}}',
-	'wikiaPhotoGallery-preview-borderwidth-none' => 'New, needs translastions',
-	'wikiaPhotoGallery-preview-placeholder-caption' => 'New, needs translastions',
-	'wikiaPhotoGallery-preview-position' => 'Changed "Slideshow" in "Gallery"',
 	'wikiaPhotoGallery-upload-selectbutton' => '{{Identical|Select}}'
 );
 
