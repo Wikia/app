@@ -1,4 +1,5 @@
 == Changes since 201007.3 ==
+* rt#59919: calculating image sizes for broken file in gallery gives errors (federico)
 * rt#59355: Photo Gallery: add height limit for mixed orientation (macbre)
 * rt#59241: Photo Gallery: Galleries no longer show overall captions (macbre)
 * rt#59234: Photo Gallery: Gallery preview heading should start higher (macbre)

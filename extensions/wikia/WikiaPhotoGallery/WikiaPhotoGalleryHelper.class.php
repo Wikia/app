@@ -372,8 +372,14 @@ class WikiaPhotoGalleryHelper {
 
 			// recalculate dimensions (RT #59355)
 			foreach($gallery['images'] as $index => $image) {
-				$widths[$index] = round($widths[$index] * ($height / $heights[$index]));
-				$heights[$index] = min($height, $heights[$index]);
+				if(!empty($heights[$index]) && !empty($widths[$index])) {
+					$widths[$index] = round($widths[$index] * ($height / $heights[$index]));
+					$heights[$index] = min($height, $heights[$index]);
+				}
+				else {
+					$widths[$index] = $thumbSize;
+					$heights[$index] = $height;
+				}
 			}
 		}
 
