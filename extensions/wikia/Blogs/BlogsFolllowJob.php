@@ -70,17 +70,19 @@ class BlogsFolllowJob extends Job {
 			),
 			__METHOD__
 		);
+
 		while( $row = $dbr->fetchObject( $sth ) ) {
-			$watcher = User::newFromId( $row->wl_user );
+			$watchingUser = User::newFromId( $row->wl_user );
 
 			/**
 			 * check if user want to be emailed
 			 */
-
-
-			/**
-			 * send info about creating new post
-			 */
+			if( $watchingUser->getOption('enotifminoredits') && $watchingUser->isEmailConfirmed() ) {
+				/**
+				 * send info about creating new post, compose mail
+				 */
+				// $watchingUser->sendMail();
+			}
 		}
 
 
