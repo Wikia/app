@@ -406,8 +406,9 @@ class WikiaPhotoGalleryHelper {
 			if($imgHeightCompensation > 0) $image['heightCompensation'] = $imgHeightCompensation;
 
 			$image['width'] = min($widths[$index], $thumbSize);
-			$imgWidthCompensation = ($thumbSize - $image['width']) / 2;
-			if($imgHeightCompensation > 0) $image['widthCompensation'] = $imgWidthCompensation;
+			//Fix #59914, shared.css has auto-alignment rules
+			/*$imgWidthCompensation = ($thumbSize - $image['width']) / 2;
+			if($imgHeightCompensation > 0) $image['widthCompensation'] = $imgWidthCompensation;*/
 
 
 			//need to use parse() - see RT#44270
