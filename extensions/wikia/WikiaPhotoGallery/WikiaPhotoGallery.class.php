@@ -548,7 +548,8 @@ class WikiaPhotoGallery extends ImageGallery {
 			// recalculate dimensions (RT #59355)
 			foreach($this->mImages as $index => $image) {
 				if(!empty($heights[$index]) && !empty($widths[$index])) {
-					$widths[$index] = round($widths[$index] * ($height / $heights[$index]));
+					//fix #59355, min() added to let borders wrap images with smaller width
+					$widths[$index] = min($widths[$index], round($widths[$index] * ($height / $heights[$index])));
 					$heights[$index] = min($height, $heights[$index]);
 				}
 				else {
@@ -684,7 +685,8 @@ class WikiaPhotoGallery extends ImageGallery {
 					" height:{$image['height']}px;".
 					" width:{$image['width']}px;".
 					((!empty($image['heightCompensation'])) ? " top:{$image['heightCompensation']}px;" : null).
-					//((!empty($image['widthCompensation'])) ? " left:{$image['widthCompensation']}px;" : null).//Fix #59914, shared.css has auto-alignment rules
+					//Fix #59914, shared.css has auto-alignment rules
+					//((!empty($image['widthCompensation'])) ? " left:{$image['widthCompensation']}px;" : null).
 					((!empty($borderColorCSS)) ? $borderColorCSS : null)
 			));
 

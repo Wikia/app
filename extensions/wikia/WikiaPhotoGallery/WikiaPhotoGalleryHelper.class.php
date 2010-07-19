@@ -373,7 +373,8 @@ class WikiaPhotoGalleryHelper {
 			// recalculate dimensions (RT #59355)
 			foreach($gallery['images'] as $index => $image) {
 				if(!empty($heights[$index]) && !empty($widths[$index])) {
-					$widths[$index] = round($widths[$index] * ($height / $heights[$index]));
+					//fix #59355, min() added to let borders wrap images with smaller width
+					$widths[$index] = min($widths[$index], round($widths[$index] * ($height / $heights[$index])));
 					$heights[$index] = min($height, $heights[$index]);
 				}
 				else {
