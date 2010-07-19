@@ -489,3 +489,9 @@ $wgAutoloadClasses[ "RiakCache"  ] = "{$IP}/includes/wikia/RiakCache.php";
  * @see rt#43025
  */
 $wgWikiaHideImportsFromIrc = true;
+
+
+/**
+ * disable autofollow blogs by default
+ */
+$wgBlogsEnableStaffAutoFollo = false;
