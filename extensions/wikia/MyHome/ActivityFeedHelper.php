@@ -157,7 +157,9 @@ class ActivityFeedHelper {
 		$feedHTML = $wgMemc->get($key);
 		if (empty($feedHTML)) {
 			$feedHTML = ActivityFeedHelper::getList($parameters);
-			$wgMemc->set($key, $feedHTML, $userLangEqContent ? 60*60*24 : 60*5);
+            /* RT#50042: Don't show deleted pages in last activity widget */
+            /* Probably content is not getting refreshed often enough */
+            $wgMemc->set($key, $feedHTML, /*$userLangEqContent ? 60*60*24 : 60*5*/ 60*5);
 		}
 
 		wfProfileOut(__METHOD__);
