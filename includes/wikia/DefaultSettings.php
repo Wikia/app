@@ -494,4 +494,4 @@ $wgWikiaHideImportsFromIrc = true;
 /**
  * disable autofollow blogs by default
  */
-$wgBlogsEnableStaffAutoFollo = false;
+$wgBlogsEnableStaffAutoFollow = false;
