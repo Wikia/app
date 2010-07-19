@@ -150,7 +150,7 @@ class BlogArticle extends Article {
 				"offset" => $offset
 			);
 			$listing = BlogTemplateClass::parseTag( "<author>$user</author>", $params, $wgParser );
-			$wgMemc->set( wfMemcKey( "blog", "listing", $userMem, $page ), $page, 3600 );
+			$wgMemc->set( wfMemcKey( "blog", "listing", $userMem, $page ), $listing, 3600 );
 		}
 
 		$wgOut->addHTML( $listing );
