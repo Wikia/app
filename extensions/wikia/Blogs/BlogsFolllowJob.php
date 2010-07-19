@@ -48,5 +48,44 @@ class BlogsFolllowJob extends Job {
 	 * @access public
 	 */
 	public function run() {
+
+		wfProfileIn( __METHOD__ );
+
+		/**
+		 * get title of page, take main part from this title which will be
+		 * main page for user blogs (listing)
+		 */
+		$ownerTitle = BlogArticle::getOwnerTitle( $this->title );
+
+		/**
+		 * check who watches this page
+		 */
+		$dbr = wfGetDB( DB_SLAVE );
+		$sth = $dbr->select(
+			array( "watchlist" ),
+			array( "wl_user" ),
+			array(
+				"wl_namespace" => $ownerTitle->getNamespace(),
+				"wl_title" => $ownerTitle->getDBKey()
+			),
+			__METHOD__
+		);
+		while( $row = $dbr->fetchObject( $sth ) ) {
+			$watcher = User::newFromId( $row->wl_user );
+
+			/**
+			 * check if user want to be emailed
+			 */
+
+
+			/**
+			 * send info about creating new post
+			 */
+		}
+
+
+		wfProfileOut( __METHOD__ );
+
+		return true;
 	}
 };
