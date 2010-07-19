@@ -100,7 +100,7 @@ class BadgeImage extends UnlistedSpecialPage {
 			curl_setopt($c, CURLOPT_PROXY, $wgHTTPProxy); // set HTTP proxy
 			$info = curl_exec($c); // run the curl process (and return the result to $result
 			curl_close($ch);
-die( var_dump( $info ));
+
 			$info		= str_ireplace('"', '', $info);
 			$info 		= explode(',', $info);
 
