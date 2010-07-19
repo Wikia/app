@@ -109,7 +109,7 @@ class BlogArticle extends Article {
 
 		$page = BlogCommentList::newFromTitle( $this->mTitle );
 		$page->setProps( $this->mProps );
-	    $wgOut->addHTML( $page->render( true ) );
+		$wgOut->addHTML( $page->render( true ) );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -248,7 +248,7 @@ class BlogArticle extends Article {
 	 */
 	static public function ArticleFromTitle( &$Title, &$Article ) {
 		global $wgRequest;
-		
+
 		if( $Title->getNamespace() === NS_BLOG_ARTICLE_TALK ) {
 			/**
 			 * redirect to proper comment in NS_BLOG_ARTICLE namespace
@@ -447,7 +447,7 @@ class BlogArticle extends Article {
 					$allowedTabs = array();
 					$tabs = array();
 					break;
-				} 
+				}
 			case NS_BLOG_LISTING:
 				if (empty($wgEnableSemanticMediaWikiExt)) {
 					$row["listing-refresh-tab"] = array(
@@ -719,7 +719,7 @@ class BlogArticle extends Article {
 		}
 		return $oUBlogTitle;
 	}
-	
+
 	/**
 	 * auto-unwatch all comments if blog post was unwatched
 	 *
@@ -749,7 +749,7 @@ class BlogArticle extends Article {
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
-		
+
 		$list = array();
 		$dbr = wfGetDB( DB_SLAVE );
 		$res = $dbr->select(
@@ -778,7 +778,7 @@ class BlogArticle extends Article {
 			}
 			$oUser->invalidateCache();
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
@@ -793,7 +793,7 @@ class BlogArticle extends Article {
 		global $wgUser;
 		wfProfileIn( __METHOD__ );
 		$return = true;
-		
+
 		$oOldTitle = $form->oldTitle;
 		$oNewTitle = $form->newTitle;
 
@@ -804,20 +804,20 @@ class BlogArticle extends Article {
 
 				$groups = $wgUser->getGroups();
 				$isAllowed = $wgUser->isAllowed( "blog-articles-move" ) || $oldTitleOwner == $wgUser->getName();
-				
+
 				if ( !$isAllowed ) {
-					Wikia::log( __METHOD__, "movepage", 
+					Wikia::log( __METHOD__, "movepage",
 						"invalid permissions: oldpage: ".$oOldTitle->getPrefixedText().", newPage: ".$oNewTitle->getPrefixedText()
 					);
 					$return = false;
 				}
 			} else {
-				Wikia::log( __METHOD__, "movepage", 
-					"cannot move blog: oldpage: ".$oOldTitle->getPrefixedText().", newPage: ".$oNewTitle->getPrefixedText() 
+				Wikia::log( __METHOD__, "movepage",
+					"cannot move blog: oldpage: ".$oOldTitle->getPrefixedText().", newPage: ".$oNewTitle->getPrefixedText()
 				);
 				$return = false;
 			}
-			
+
 			if ( $return == false ) {
 				$form->showForm( 'blog-movepage-badtitle' );
 			}
@@ -826,7 +826,7 @@ class BlogArticle extends Article {
 		wfProfileOut( __METHOD__ );
 		return $return;
 	}
-	
+
 	/**
 	 * hook
 	 *
@@ -836,7 +836,7 @@ class BlogArticle extends Article {
 	static public function checkAfterMove ( /*MovePageForm*/ &$form , /*Title*/&$oOldTitle , /*Title*/ &$oNewTitle ) {
 		global $wgUser;
 		wfProfileIn( __METHOD__ );
-		
+
 		if ( ( $oOldTitle instanceof Title ) && ( NS_BLOG_ARTICLE == $oOldTitle->getNamespace() ) ) {
 			if ( ( $oNewTitle instanceof Title ) && ( NS_BLOG_ARTICLE == $oNewTitle->getNamespace() ) ) {
 				$oldTitleOwner = self::getOwner($oOldTitle);
@@ -844,7 +844,7 @@ class BlogArticle extends Article {
 
 				$groups = $wgUser->getGroups();
 				$isAllowed = $wgUser->isAllowed( "blog-articles-move" ) || $oldTitleOwner == $wgUser->getName();
-				
+
 				if ( ( $isAllowed ) ) {
 					$clist = BlogCommentList::newFromTitle( $oOldTitle );
 					$comments = $clist->getCommentPages();
@@ -856,14 +856,14 @@ class BlogArticle extends Article {
 							if ( !$oComment->mTitle instanceof Title ) continue;
 							#---
 							list ( $user, $page_title, $comment ) = BlogComment::explode($oComment->mTitle->getDBkey());
-							
+
 							$newCommentTitle = Title::newFromText(
 								sprintf( "%s/%s/%s", $newTitleOwner, $newTitleText, $comment ),
 								NS_BLOG_ARTICLE_TALK );
-							
+
 							$error = $oComment->mTitle->moveTo( $newCommentTitle, false, $form->reason, false );
 							if ( $error !== true ) {
-								Wikia::log( __METHOD__, "movepage", 
+								Wikia::log( __METHOD__, "movepage",
 									"cannot move blog comments: old comment: ".$oComment->mTitle->getPrefixedText().", ".
 									"new comment: ".$newCommentTitle->getPrefixedText().", error: " . @implode(", ", $error )
 								);
@@ -871,13 +871,12 @@ class BlogArticle extends Article {
 						}
 					} else {
 						Wikia::log( __METHOD__, "movepage", "cannot move blog comments, because no comments: ". $oOldTitle->getPrefixedText() );
-					} 
+					}
 				}
 			}
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
 }
-
