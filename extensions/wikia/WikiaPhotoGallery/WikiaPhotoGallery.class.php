@@ -659,8 +659,10 @@ class WikiaPhotoGallery extends ImageGallery {
 				if($imgHeightCompensation > 0) $image['heightCompensation'] = $imgHeightCompensation;
 
 				$image['width'] = min($widths[$index], $thumbSize);
-				$imgWidthCompensation = ($thumbSize - $image['width']) / 2;
-				if($imgHeightCompensation > 0) $image['widthCompensation'] = $imgWidthCompensation;
+
+				//Fix #59914, shared.css has auto-alignment rules
+				/*$imgWidthCompensation = ($thumbSize - $image['width']) / 2;
+				if($imgHeightCompensation > 0) $image['widthCompensation'] = $imgWidthCompensation;*/
 
 				$image['link'] = $imageData[2];
 				$linkAttribs = $this->parseLink($imageTitle, $image['link']);
@@ -682,7 +684,7 @@ class WikiaPhotoGallery extends ImageGallery {
 					" height:{$image['height']}px;".
 					" width:{$image['width']}px;".
 					((!empty($image['heightCompensation'])) ? " top:{$image['heightCompensation']}px;" : null).
-					((!empty($image['widthCompensation'])) ? " left:{$image['widthCompensation']}px;" : null).
+					//((!empty($image['widthCompensation'])) ? " left:{$image['widthCompensation']}px;" : null).//Fix #59914, shared.css has auto-alignment rules
 					((!empty($borderColorCSS)) ? $borderColorCSS : null)
 			));
 
