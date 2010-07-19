@@ -1,7 +1,7 @@
 <?php
 	// Template for the login compontent of the ComboAjaxLogin form(s).
 	global $wgBlankImgUrl, $wgEnableEmail, $wgAuth, $wgExtensionsPath, $wgStyleVersion, $wgStylePath;
-	
+
 	$titleObj = SpecialPage::getTitleFor( 'Userlogin' );
 	$link = $titleObj->getLocalUrl('type=signup');
 ?>
@@ -15,13 +15,13 @@
 </div>
 
 <div id="AjaxLoginSlider" class="clearfix">
-	<div class="ajax-login-slider-panel" id="AjaxLoginSliderNormal" > 
+	<div class="ajax-login-slider-panel" id="AjaxLoginSliderNormal" >
         	<form action="<? echo $loginaction ?>" method="post" name="userajaxloginform" id="userajaxloginform">
-	            <label for="wpName2Ajax" style="display: block; font-weight: bold;"><?php print wfMsg("yourname") ?></label> 
+	            <label for="wpName2Ajax" style="display: block; font-weight: bold;"><?php print wfMsg("yourname") ?></label>
 	            <table>
 	            <tr style="width:350px" >
 	                <td id="ajaxlogin_username_cell">
-	                	<input type="text" size="20" tabindex="201" id="wpName2Ajax" name="wpName"> </input> 
+	                	<input type="text" size="20" tabindex="201" id="wpName2Ajax" name="wpName"> </input>
 	                </td>
 	                <td><a id="wpAjaxRegister" href="<?php print htmlspecialchars($link) ?>" style="font-size: 9pt;display:none;"><?php print wfMsg('nologinlink') ?></a></td>
 	            </tr>
@@ -40,17 +40,17 @@
 	            </tr>
 	            </table>
 	            <div style="margin: 15px 0;">
-	            	<input type="checkbox" value="1" tabindex="204" id="wpRemember2Ajax" name="wpRemember" > </input>
+	            	<input type="checkbox" value="1" tabindex="203" id="wpRemember2Ajax" name="wpRemember" > </input>
 	                <label id="labelFor_wpRemember2Ajax" for="wpRemember2Ajax" style="padding-left: 5px"><?php print wfMsg('remembermypassword') ?></label>
 	            </div>
-	        	<input tabindex="203" type="submit" id="wpLoginattempt" value="<?php print wfMsg("login") ?>" />
+	        	<input tabindex="204" type="submit" id="wpLoginattempt" value="<?php print wfMsg("login") ?>" />
 	        <input  type="hidden" name="wpLoginToken" value="<?php echo $loginToken; ?>" />
         	</form>
 
 	</div>
-<?php 
+<?php
 	$addhtml = "";
-	wfRunHooks("afterAjaxLoginHTML", array(&$addhtml)); 
+	wfRunHooks("afterAjaxLoginHTML", array(&$addhtml));
 	echo $addhtml;
 ?>
 </div><!--AjaxLoginSlider-->
