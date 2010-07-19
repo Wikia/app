@@ -543,7 +543,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			}
 
 			// limit height (RT #59355)
-			$height = min($height, $thumbSize * 2);
+			$height = min($height, $thumbSize * 1.75);
 
 			// recalculate dimensions (RT #59355)
 			foreach($this->mImages as $index => $image) {
