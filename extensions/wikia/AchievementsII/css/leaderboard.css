@@ -17,6 +17,7 @@
 
 #leaderboard-body {
 	float:left;
+	max-width: 700px;
 	min-height: 300px;
 	margin-right: -320px;
 	background: transparent;
