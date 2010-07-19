@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.1.32, for unknown-linux-gnu (x86_64)
 --
--- Host: db-archive2    Database: dataware
+-- Host: 10.8.2.198    Database: dataware
 -- ------------------------------------------------------
 -- Server version	5.0.56sp1-enterprise-gpl-log
 
@@ -25,7 +25,7 @@
 
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `_ext_changes_xml` (
+CREATE TABLE IF NOT EXISTS `_ext_changes_xml` (
   `id` bigint(20) NOT NULL auto_increment,
   `title` varchar(100) default NULL,
   `url` varchar(200) default NULL,
@@ -40,7 +40,7 @@ SET character_set_client = @saved_cs_client;
 
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `blobs` (
+CREATE TABLE IF NOT EXISTS `blobs` (
   `blob_id` int(10) NOT NULL auto_increment,
   `rev_wikia_id` int(8) unsigned NOT NULL,
   `rev_id` int(10) unsigned default NULL,
@@ -59,93 +59,8 @@ CREATE TABLE `blobs` (
   KEY `rev_user_text` (`rev_wikia_id`,`rev_user_text`,`rev_timestamp`),
   KEY `blobs_rev_timestamp` (`rev_timestamp`),
   KEY `rev_ip` (`rev_ip`)
-) ENGINE=InnoDB AUTO_INCREMENT=69108220 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=97929383 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
---
--- WARNING: old server version. The following dump may be incomplete.
---
-DELIMITER ;;
-/*!50003 SET SESSION SQL_MODE="" */;;
-/*!50003 CREATE */ /*!50017 DEFINER=`wikia_dba`@`10.8.2.%` */ /*!50003 DEFINER = 'root'@'localhost' TRIGGER `user_summary_update` BEFORE UPDATE ON `blobs` FOR EACH ROW BEGIN 
-	DECLARE global_row_cnt INT DEFAULT -1;
-	DECLARE wikia_row_cnt INT DEFAULT -1;
-
-	DECLARE edits_ns INT DEFAULT -1;
-
-	DECLARE global_first_rev INT DEFAULT 0;
-	DECLARE wikia_first_rev INT DEFAULT 0;
-	DECLARE global_page_first INT DEFAULT 0;
-	DECLARE wikia_page_first INT DEFAULT 0;
-	DECLARE global_ns_first INT DEFAULT 0;
-	DECLARE wikia_ns_first INT DEFAULT 0;
-
-	DECLARE wikia_ts_edit_first TIMESTAMP DEFAULT NULL;
-	DECLARE global_ts_edit_first TIMESTAMP DEFAULT NULL;
-	
-	DECLARE page_status_value INT DEFAULT 1;
-
-	/* user edits by ns */
-	SELECT /* TRIGGER user_summary_update */ edit_count INTO edits_ns 
-	FROM user_edits_summary WHERE city_id = NEW.rev_wikia_id and edit_ns = NEW.rev_namespace and user_id = NEW.rev_user;
-	/* user data per Wikia */
-	SELECT /* TRIGGER user_summary_update */ edit_count, rev_first, page_first, ns_first, ts_edit_first 
-	INTO wikia_row_cnt, wikia_first_rev, wikia_page_first, wikia_ns_first, wikia_ts_edit_first
-	FROM user_summary WHERE user_id = NEW.rev_user and city_id = NEW.rev_wikia_id;
-	/* global user data */
-	SELECT /* TRIGGER user_summary_update */ edit_count, rev_first, page_first, ns_first, ts_edit_first  
-	INTO global_row_cnt, global_first_rev, global_page_first, global_ns_first, global_ts_edit_first 
-	FROM user_summary WHERE user_id = NEW.rev_user and city_id = 0;
-	/* check page status */
-	SELECT /* TRIGGER user_summary_update */ page_status INTO page_status_value FROM pages WHERE page_wikia_id = NEW.rev_wikia_id and page_id = NEW.rev_page_id;
-	IF page_status_value = 0 THEN 
-		/* WIKIA */
-		IF wikia_row_cnt >= 0 THEN
-			/* some rows exist */
-			UPDATE /* TRIGGER user_summary_update */ user_summary SET 
-			edit_count = wikia_row_cnt + 1, 
-			rev_last = NEW.rev_id,
-			page_last = NEW.rev_page_id,
-			ns_last = NEW.rev_namespace,
-			ts_edit_last = NEW.rev_timestamp,
-			rev_first = if(wikia_first_rev=0, NEW.rev_id, wikia_first_rev),
-			page_first = if(wikia_first_rev=0, NEW.rev_page_id, wikia_page_first),
-			ns_first = if(wikia_first_rev=0, NEW.rev_namespace, wikia_ns_first),
-			ts_edit_first = if(wikia_first_rev=0, NEW.rev_timestamp, wikia_ts_edit_first)
-			WHERE user_id = NEW.rev_user and city_id = NEW.rev_wikia_id;
-		ELSE
-			INSERT INTO /* TRIGGER user_summary_update */ user_summary (city_id, user_id, edit_count, rev_first, rev_last, page_first, page_last, ns_first, ns_last, ts_edit_first, ts_edit_last)
-			VALUES (NEW.rev_wikia_id, NEW.rev_user, 1, NEW.rev_id, NEW.rev_id, NEW.rev_page_id, NEW.rev_page_id, NEW.rev_namespace, NEW.rev_namespace, NEW.rev_timestamp, NEW.rev_timestamp);
-		END IF;
-		/* EDITS BY NS */
-		if edits_ns >= 0 THEN
-			UPDATE /* TRIGGER user_summary_update */ user_edits_summary SET 
-			edit_count = edits_ns + 1 
-			WHERE user_id = NEW.rev_user and city_id = NEW.rev_wikia_id and edit_ns = NEW.rev_namespace;
-		ELSE
-			INSERT INTO /* TRIGGER user_summary_update */ user_edits_summary (city_id, user_id, edit_ns, edit_count)
-			VALUES (NEW.rev_wikia_id, NEW.rev_user, NEW.rev_namespace, 1);
-		END IF;
-		/* GLOBAL */
-		IF global_row_cnt >= 0 THEN
-			/* some rows exist */
-			UPDATE /* TRIGGER user_summary_update */ user_summary SET 
-			edit_count = global_row_cnt + 1, 
-			rev_last = NEW.rev_id,
-			page_last = NEW.rev_page_id,
-			ns_last = NEW.rev_namespace,
-			ts_edit_last = NEW.rev_timestamp,
-			rev_first = if(global_first_rev=0, NEW.rev_id, global_first_rev),
-			page_first = if(global_first_rev=0, NEW.rev_page_id, global_page_first),
-			ns_first = if(global_first_rev=0, NEW.rev_namespace, global_ns_first),
-			ts_edit_first = if(global_first_rev=0, NEW.rev_timestamp, global_ts_edit_first)
-			WHERE user_id = NEW.rev_user and city_id = 0;
-		ELSE
-			INSERT INTO /* TRIGGER user_summary_update */ user_summary (city_id, user_id, edit_count, rev_first, rev_last, page_first, page_last, ns_first, ns_last, ts_edit_first, ts_edit_last)
-			VALUES (0, NEW.rev_user, 1, NEW.rev_id, NEW.rev_id, NEW.rev_page_id, NEW.rev_page_id, NEW.rev_namespace, NEW.rev_namespace, NEW.rev_timestamp, NEW.rev_timestamp);
-		END IF;
-	END IF;	
-END */;;
-DELIMITER ;
 
 --
 -- Table structure for table `city_local_users`
@@ -153,7 +68,7 @@ DELIMITER ;
 
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `city_local_users` (
+CREATE TABLE IF NOT EXISTS `city_local_users` (
   `lu_wikia_id` int(8) unsigned NOT NULL,
   `lu_user_id` int(10) unsigned NOT NULL,
   `lu_user_name` varchar(255) NOT NULL default '',
@@ -173,7 +88,8 @@ CREATE TABLE `city_local_users` (
   KEY `lu_singlegroup` (`lu_wikia_id`,`lu_singlegroup`),
   KEY `lu_allgroups` (`lu_allgroups`(200)),
   KEY `lu_wikia_rev_cnt` (`lu_wikia_id`,`lu_rev_cnt`,`lu_user_id`),
-  KEY `lu_user_id` (`lu_wikia_id`,`lu_user_id`)
+  KEY `lu_user_id` (`lu_wikia_id`,`lu_user_id`),
+  KEY `lu_user_cnt` (`lu_user_id`,`lu_rev_cnt`,`lu_wikia_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 SET character_set_client = @saved_cs_client;
 
@@ -183,7 +99,7 @@ SET character_set_client = @saved_cs_client;
 
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `daemon_tasks` (
+CREATE TABLE IF NOT EXISTS `daemon_tasks` (
   `dt_id` int(10) unsigned NOT NULL auto_increment,
   `dt_name` varbinary(100) NOT NULL,
   `dt_script` varbinary(100) NOT NULL,
@@ -204,7 +120,7 @@ SET character_set_client = @saved_cs_client;
 
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `daemon_tasks_jobs` (
+CREATE TABLE IF NOT EXISTS `daemon_tasks_jobs` (
   `dj_id` int(10) unsigned NOT NULL auto_increment,
   `dj_dt_id` int(10) unsigned NOT NULL,
   `dj_start` char(14) NOT NULL default '',
@@ -221,7 +137,7 @@ CREATE TABLE `daemon_tasks_jobs` (
   KEY `visible` (`dj_visible`),
   KEY `period` (`dj_start`,`dj_end`),
   KEY `frequency` (`dj_frequency`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -230,7 +146,7 @@ SET character_set_client = @saved_cs_client;
 
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `email_types` (
+CREATE TABLE IF NOT EXISTS `email_types` (
   `id` tinyint(3) unsigned NOT NULL,
   `type` varchar(64) NOT NULL,
   PRIMARY KEY  (`id`)
@@ -243,7 +159,7 @@ SET character_set_client = @saved_cs_client;
 
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `emails` (
+CREATE TABLE IF NOT EXISTS `emails` (
   `send_date` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `send_from` tinytext NOT NULL,
   `send_to` tinytext NOT NULL,
@@ -259,12 +175,31 @@ CREATE TABLE `emails` (
 SET character_set_client = @saved_cs_client;
 
 --
+-- Table structure for table `eye2`
+--
+
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE IF NOT EXISTS `eye2` (
+  `cookie` varchar(32) default NULL,
+  `city_id` int(11) default NULL,
+  `id` varchar(32) default NULL,
+  `page` varchar(255) default NULL,
+  `timestamp` varchar(14) default NULL,
+  `user` int(11) default NULL,
+  `user_text` varchar(255) default NULL,
+  KEY `eye2_cookie` (`cookie`),
+  KEY `eye2_all` (`cookie`,`city_id`,`id`,`page`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Table structure for table `global_watchlist`
 --
 
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `global_watchlist` (
+CREATE TABLE IF NOT EXISTS `global_watchlist` (
   `gwa_id` int(11) NOT NULL auto_increment,
   `gwa_user_id` int(11) default NULL,
   `gwa_city_id` int(11) default NULL,
@@ -274,7 +209,7 @@ CREATE TABLE `global_watchlist` (
   `gwa_timestamp` varchar(14) default NULL,
   PRIMARY KEY  (`gwa_id`),
   KEY `user_id` (`gwa_user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11616502 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=20813231 DEFAULT CHARSET=latin1;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -283,7 +218,7 @@ SET character_set_client = @saved_cs_client;
 
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `magcloud_collection` (
+CREATE TABLE IF NOT EXISTS `magcloud_collection` (
   `mco_hash` varchar(32) NOT NULL,
   `mco_user_id` int(11) default '0',
   `mco_wiki_id` int(11) default '0',
@@ -301,7 +236,7 @@ SET character_set_client = @saved_cs_client;
 
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `magcloud_collection_log` (
+CREATE TABLE IF NOT EXISTS `magcloud_collection_log` (
   `mcl_publish_hash` varchar(32) default NULL,
   `mcl_publish_timestamp` int(11) default NULL,
   `mcl_publish_token` text,
@@ -318,7 +253,7 @@ SET character_set_client = @saved_cs_client;
 
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `notify_log` (
+CREATE TABLE IF NOT EXISTS `notify_log` (
   `nl_id` int(11) NOT NULL auto_increment,
   `nl_city` int(11) NOT NULL,
   `nl_type` char(32) NOT NULL,
@@ -333,7 +268,77 @@ CREATE TABLE `notify_log` (
   KEY `nl_title` (`nl_title`,`nl_namespace`),
   KEY `nl_type` (`nl_type`,`nl_timestamp`),
   KEY `nl_city` (`nl_city`)
-) ENGINE=InnoDB AUTO_INCREMENT=3531248 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7436840 DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Table structure for table `page_editors`
+--
+
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE IF NOT EXISTS `page_editors` (
+  `pc_wikia_id` int(10) unsigned NOT NULL,
+  `pc_page_id` int(10) unsigned NOT NULL,
+  `pc_page_ns` int(6) unsigned NOT NULL,
+  `pc_is_content` int(1) unsigned NOT NULL,
+  `pc_date` date NOT NULL,
+  `pc_user_id` int(10) unsigned NOT NULL,
+  `pc_all_count` int(10) unsigned NOT NULL,
+  PRIMARY KEY  (`pc_wikia_id`,`pc_page_id`,`pc_page_ns`,`pc_date`,`pc_user_id`),
+  KEY `pc_count_users` (`pc_is_content`,`pc_wikia_id`,`pc_page_id`,`pc_user_id`),
+  KEY `pc_count_date` (`pc_is_content`,`pc_wikia_id`,`pc_page_id`,`pc_user_id`,`pc_all_count`),
+  KEY `pc_count` (`pc_wikia_id`,`pc_page_id`,`pc_user_id`,`pc_all_count`),
+  KEY `pc_date` (`pc_date`,`pc_user_id`,`pc_all_count`),
+  KEY `pc_wikia_date` (`pc_wikia_id`,`pc_date`,`pc_user_id`,`pc_all_count`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Table structure for table `page_edits`
+--
+
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE IF NOT EXISTS `page_edits` (
+  `pe_wikia_id` int(10) unsigned NOT NULL,
+  `pe_page_id` int(10) unsigned NOT NULL,
+  `pe_page_ns` int(6) unsigned NOT NULL,
+  `pe_is_content` int(1) unsigned NOT NULL,
+  `pe_date` date NOT NULL,
+  `pe_anon_count` int(10) unsigned NOT NULL,
+  `pe_all_count` int(10) unsigned NOT NULL,
+  `pe_words` int(10) unsigned NOT NULL default '0',
+  `pe_diff_words` int(10) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`pe_wikia_id`,`pe_page_id`,`pe_page_ns`,`pe_date`),
+  KEY `pe_count_date` (`pe_is_content`,`pe_wikia_id`,`pe_page_id`,`pe_all_count`,`pe_anon_count`),
+  KEY `pe_count` (`pe_wikia_id`,`pe_page_id`,`pe_all_count`,`pe_anon_count`),
+  KEY `pe_date` (`pe_date`,`pe_all_count`,`pe_anon_count`),
+  KEY `pe_wikia_date` (`pe_wikia_id`,`pe_date`,`pe_all_count`),
+  KEY `pe_wikia_anon_date` (`pe_wikia_id`,`pe_date`,`pe_anon_count`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Table structure for table `page_edits_month`
+--
+
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE IF NOT EXISTS `page_edits_month` (
+  `pe_date` date NOT NULL,
+  `pe_edits` int(10) unsigned NOT NULL default '0',
+  `pe_content_edits` int(10) unsigned NOT NULL default '0',
+  `pe_editors` int(10) unsigned NOT NULL default '0',
+  `pe_content_editors` int(10) unsigned NOT NULL default '0',
+  `pe_anon_editors` int(10) unsigned NOT NULL default '0',
+  `pe_anon_content_editors` int(10) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`pe_date`),
+  KEY `pe_editors_date` (`pe_date`,`pe_editors`,`pe_anon_editors`),
+  KEY `pe_content_editors_date` (`pe_date`,`pe_content_editors`,`pe_anon_content_editors`),
+  KEY `pe_edits_date` (`pe_date`,`pe_edits`),
+  KEY `pe_content_edits_date` (`pe_date`,`pe_content_edits`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -342,7 +347,7 @@ SET character_set_client = @saved_cs_client;
 
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `pages` (
+CREATE TABLE IF NOT EXISTS `pages` (
   `page_wikia_id` int(8) unsigned NOT NULL,
   `page_id` int(10) unsigned NOT NULL,
   `page_namespace` int(10) unsigned NOT NULL default '0',
@@ -365,7 +370,7 @@ SET character_set_client = @saved_cs_client;
 
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `text_regex` (
+CREATE TABLE IF NOT EXISTS `text_regex` (
   `tr_id` int(8) NOT NULL auto_increment,
   `tr_text` varchar(255) NOT NULL,
   `tr_timestamp` char(14) NOT NULL,
@@ -376,7 +381,7 @@ CREATE TABLE `text_regex` (
   KEY `tr_subpage` (`tr_subpage`),
   KEY `tr_timestamp` (`tr_timestamp`),
   KEY `tr_user` (`tr_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=202 DEFAULT CHARSET=latin1;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -385,7 +390,7 @@ SET character_set_client = @saved_cs_client;
 
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `text_regex_stats` (
+CREATE TABLE IF NOT EXISTS `text_regex_stats` (
   `trs_id` int(5) NOT NULL auto_increment,
   `trs_tr_id` int(8) NOT NULL,
   `trs_timestamp` char(14) NOT NULL,
@@ -396,7 +401,7 @@ CREATE TABLE `text_regex_stats` (
   KEY `trs_tr_id` (`trs_tr_id`),
   KEY `trs_timestamp` (`trs_timestamp`),
   KEY `trs_user` (`trs_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=10416 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=113042 DEFAULT CHARSET=latin1;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -405,7 +410,7 @@ SET character_set_client = @saved_cs_client;
 
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `upload_log` (
+CREATE TABLE IF NOT EXISTS `upload_log` (
   `up_page_id` int(8) unsigned NOT NULL default '0',
   `up_title` varchar(255) NOT NULL,
   `up_path` varchar(255) NOT NULL,
@@ -424,7 +429,7 @@ CREATE TABLE `upload_log` (
   KEY `up_city_id` (`up_city_id`),
   KEY `up_flags_idx` (`up_flags`),
   KEY `up_datacenter_idx` (`up_datacenter`)
-) ENGINE=InnoDB AUTO_INCREMENT=1278159 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2823291 DEFAULT CHARSET=latin1;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -433,7 +438,7 @@ SET character_set_client = @saved_cs_client;
 
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `user_edits_summary` (
+CREATE TABLE IF NOT EXISTS `user_edits_summary` (
   `city_id` int(9) unsigned NOT NULL,
   `user_id` int(9) unsigned NOT NULL,
   `edit_ns` int(9) unsigned NOT NULL,
@@ -450,7 +455,7 @@ SET character_set_client = @saved_cs_client;
 
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `user_history` (
+CREATE TABLE IF NOT EXISTS `user_history` (
   `user_id` int(5) unsigned NOT NULL,
   `user_name` varchar(255) character set latin1 collate latin1_bin NOT NULL default '',
   `user_real_name` varchar(255) character set latin1 collate latin1_bin NOT NULL default '',
@@ -466,28 +471,6 @@ CREATE TABLE `user_history` (
   KEY `idx_user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
---
--- WARNING: old server version. The following dump may be incomplete.
---
-DELIMITER ;;
-/*!50003 SET SESSION SQL_MODE="" */;;
-/*!50003 CREATE */ /*!50017 DEFINER=`wikia_dba`@`10.8.2.%` */ /*!50003 DEFINER = 'root'@'localhost' TRIGGER `user_summary_options_update` AFTER INSERT ON `user_history` FOR EACH ROW BEGIN 
-	DECLARE global_row_cnt INT DEFAULT -1;
-	/* global user data */
-	SELECT /* TRIGGER user_summary_options_update */ edit_count INTO global_row_cnt 
-	FROM user_summary WHERE user_id = NEW.user_id and city_id = 0;
-	/* GLOBAL */
-	IF global_row_cnt >= 0 THEN
-		/* some rows exist */
-		UPDATE /* TRIGGER user_summary_options_update */ user_summary SET 
-		ts_options_changed = NEW.uh_timestamp
-		WHERE user_id = NEW.user_id and city_id = 0;
-	ELSE
-		INSERT INTO /* TRIGGER user_summary_login_update */ user_summary (city_id, user_id, edit_count, rev_first, rev_last, page_first, page_last, ns_first, ns_last, ts_options_changed)
-		VALUES (0, NEW.user_id, 0, 0, 0, 0, 0, 0, 0, NEW.uh_timestamp);
-	END IF;
-END */;;
-DELIMITER ;
 
 --
 -- Table structure for table `user_login_history`
@@ -495,7 +478,7 @@ DELIMITER ;
 
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `user_login_history` (
+CREATE TABLE IF NOT EXISTS `user_login_history` (
   `user_id` int(5) unsigned NOT NULL,
   `city_id` int(9) unsigned default '0',
   `ulh_timestamp` timestamp NOT NULL default CURRENT_TIMESTAMP,
@@ -505,42 +488,6 @@ CREATE TABLE `user_login_history` (
   KEY `idx_user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
---
--- WARNING: old server version. The following dump may be incomplete.
---
-DELIMITER ;;
-/*!50003 SET SESSION SQL_MODE="" */;;
-/*!50003 CREATE */ /*!50017 DEFINER=`wikia_dba`@`10.8.2.%` */ /*!50003 DEFINER = 'root'@'localhost' TRIGGER `user_summary_login_update` AFTER INSERT ON `user_login_history` FOR EACH ROW BEGIN 
-	DECLARE global_row_cnt INT DEFAULT -1;
-	DECLARE wikia_row_cnt INT DEFAULT -1;
-	/* user data per Wikia */
-	SELECT /* TRIGGER user_summary_login_update */ edit_count INTO wikia_row_cnt 
-	FROM user_summary WHERE user_id = NEW.user_id and city_id = NEW.city_id;
-	/* global user data */
-	SELECT /* TRIGGER user_summary_login_update */ edit_count INTO global_row_cnt 
-	FROM user_summary WHERE user_id = NEW.user_id and city_id = 0;
-	/* WIKIA */
-	IF wikia_row_cnt >= 0 THEN
-		/* some rows exist */
-		UPDATE /* TRIGGER user_summary_login_update */ user_summary SET 
-		last_logged_in = NEW.ulh_timestamp
-		WHERE user_id = NEW.user_id and city_id = NEW.city_id;
-	ELSE
-		INSERT INTO /* TRIGGER user_summary_login_update */ user_summary (city_id, user_id, edit_count, rev_first, rev_last, page_first, page_last, ns_first, ns_last, first_logged_in, last_logged_in)
-		VALUES (NEW.city_id, NEW.user_id, 0, 0, 0, 0, 0, 0, 0, NEW.ulh_timestamp, NEW.ulh_timestamp);
-	END IF;
-	/* GLOBAL */
-	IF global_row_cnt >= 0 THEN
-		/* some rows exist */
-		UPDATE /* TRIGGER user_summary_login_update */ user_summary SET 
-		last_logged_in = NEW.ulh_timestamp
-		WHERE user_id = NEW.user_id and city_id = 0;
-	ELSE
-		INSERT INTO /* TRIGGER user_summary_login_update */ user_summary (city_id, user_id, edit_count, rev_first, rev_last, page_first, page_last, ns_first, ns_last, first_logged_in, last_logged_in)
-		VALUES (0, NEW.user_id, 0, 0, 0, 0, 0, 0, 0, NEW.ulh_timestamp, NEW.ulh_timestamp);
-	END IF;
-END */;;
-DELIMITER ;
 
 --
 -- Table structure for table `user_login_history_summary`
@@ -548,7 +495,7 @@ DELIMITER ;
 
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `user_login_history_summary` (
+CREATE TABLE IF NOT EXISTS `user_login_history_summary` (
   `user_id` int(8) unsigned NOT NULL,
   `ulh_timestamp` timestamp NOT NULL default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`user_id`)
@@ -561,7 +508,7 @@ SET character_set_client = @saved_cs_client;
 
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `user_summary` (
+CREATE TABLE IF NOT EXISTS `user_summary` (
   `city_id` int(9) unsigned NOT NULL,
   `user_id` int(9) unsigned NOT NULL,
   `edit_count` int(9) unsigned NOT NULL,
@@ -593,7 +540,7 @@ SET character_set_client = @saved_cs_client;
 
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `wikiastaff_log` (
+CREATE TABLE IF NOT EXISTS `wikiastaff_log` (
   `slog_id` int(10) unsigned NOT NULL auto_increment,
   `slog_type` varbinary(10) NOT NULL default '',
   `slog_action` varbinary(10) NOT NULL default '',
@@ -609,7 +556,7 @@ CREATE TABLE `wikiastaff_log` (
   `slog_city` int(11) default NULL,
   PRIMARY KEY  (`slog_id`),
   KEY `slog_time` (`slog_timestamp`)
-) ENGINE=InnoDB DEFAULT CHARSET=binary;
+) ENGINE=InnoDB AUTO_INCREMENT=651 DEFAULT CHARSET=binary;
 SET character_set_client = @saved_cs_client;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -621,51 +568,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2009-11-25 11:46:49
-
-CREATE TABLE `page_editors` (
-  `pc_wikia_id` int(10) unsigned NOT NULL,
-  `pc_page_id` int(10) unsigned NOT NULL,
-  `pc_page_ns` int(6) unsigned NOT NULL,
-  `pc_is_content` int(1) unsigned NOT NULL,
-  `pc_date` date NOT NULL,
-  `pc_user_id` int(10) unsigned NOT NULL default 0,
-  `pc_all_count` int(10) unsigned NOT NULL default 0,
-  PRIMARY KEY  (`pc_wikia_id`,`pc_page_id`,`pc_page_ns`,`pc_date`,`pc_user_id`),
-  KEY `pc_count_users` (`pc_is_content`,`pc_wikia_id`,`pc_page_id`,`pc_user_id`),
-  KEY `pc_count_date` (`pc_is_content`,`pc_wikia_id`,`pc_page_id`,`pc_user_id`,`pc_all_count`),
-  KEY `pc_count` (`pc_wikia_id`,`pc_page_id`,`pc_user_id`,`pc_all_count`),
-  KEY `pc_date` (`pc_date`,`pc_user_id`,`pc_all_count`),
-  KEY `pc_wikia_date` (`pc_wikia_id`,`pc_date`,`pc_user_id`,`pc_all_count`)
-) ENGINE=InnoDB;
-
-CREATE TABLE `page_edits` (
-  `pe_wikia_id` int(10) unsigned NOT NULL,
-  `pe_page_id` int(10) unsigned NOT NULL,
-  `pe_page_ns` int(6) unsigned NOT NULL,
-  `pe_is_content` int(1) unsigned NOT NULL,
-  `pe_date` date NOT NULL,
-  `pe_anon_count` int(10) unsigned NOT NULL default 0,
-  `pe_all_count` int(10) unsigned NOT NULL default 0,
-  PRIMARY KEY  (`pe_wikia_id`,`pe_page_id`,`pe_page_ns`,`pe_date`),
-  KEY `pe_count_date` (`pe_is_content`,`pe_wikia_id`,`pe_page_id`,`pe_all_count`,`pe_anon_count`),
-  KEY `pe_count` (`pe_wikia_id`,`pe_page_id`,`pe_all_count`,`pe_anon_count`),
-  KEY `pe_date` (`pe_date`,`pe_all_count`,`pe_anon_count`),
-  KEY `pe_wikia_date` (`pe_wikia_id`,`pe_date`,`pe_all_count`),
-  KEY `pe_wikia_anon_date` (`pe_wikia_id`,`pe_date`,`pe_anon_count`)
-) ENGINE=InnoDB;
-
-CREATE TABLE `page_edits_month` (
-  `pe_date` date NOT NULL,
-  `pe_edits` int(10) unsigned NOT NULL default 0,
-  `pe_content_edits` int(10) unsigned NOT NULL default 0,
-  `pe_editors` int(10) unsigned NOT NULL default 0,
-  `pe_content_editors` int(10) unsigned NOT NULL default 0,
-  `pe_anon_editors` int(10) unsigned NOT NULL default 0,
-  `pe_anon_content_editors` int(10) unsigned NOT NULL default 0,
-  PRIMARY KEY  (`pe_date`),
-  KEY `pe_editors_date` (`pe_date`,`pe_editors`,`pe_anon_editors`),
-  KEY `pe_content_editors_date` (`pe_date`,`pe_content_editors`,`pe_anon_content_editors`),
-  KEY `pe_edits_date` (`pe_date`,`pe_edits`),
-  KEY `pe_content_edits_date` (`pe_date`,`pe_content_edits`)
-) ENGINE=InnoDB;
+-- Dump completed on 2010-07-19 13:51:42
