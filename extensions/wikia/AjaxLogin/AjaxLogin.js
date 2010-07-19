@@ -74,6 +74,21 @@ var AjaxLogin = {
 		// add submit event handler for login form
 		this.form.bind('submit', this.formSubmitHandler);
 
+		$("#wpPassword2Ajax").keypress(
+		function(e) {
+			return AjaxLogin.tabOrderHack(e, '#wpRemember2Ajax');
+		}); 
+
+		$("#wpRemember2Ajax").keypress(
+		function(e) {
+			return AjaxLogin.tabOrderHack(e, '#wpLoginattempt');
+		});
+
+		$("#wpPassword3Ajax").keypress(
+		function(e) {
+			return AjaxLogin.tabOrderHack(e, '#wpLoginAndConnectCombo');
+		});
+
 		$('#wpLoginattemptAjax').attr('tabindex', parseInt($('#wpRemember1Ajax').attr('tabindex')) + 101).click( this.clickLogIn );
 
 		// ask before going to register form from edit page
@@ -299,6 +314,13 @@ var AjaxLogin = {
 		$('#AjaxLoginBoxWrapper').showModal();
 		$('#wpName1Ajax').focus();
 		return true
+	},
+	tabOrderHack: function(event,name) {
+		if( event.keyCode == 9 ){
+			$(name).focus();
+			return false;
+		}
+		return true;
 	}
 };
 
