@@ -148,7 +148,7 @@
 <?php
 					foreach($values as $value) {
 ?>
-					<div class="recipes-template-textarea-wrapper">
+					<div class="<?= empty($field['noToolbar']) ? 'recipes-template-textarea-wrapper' : 'recipes-template-simple-input' ?>">
 						<input type="text" name="<?= $id ?>[]" value="<?= $value ?>" />
 					</div>
 <?php
