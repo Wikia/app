@@ -136,14 +136,14 @@ echo "//" . $url . chr(10);
 
 global $wgHTTPProxy;
 
-$ch = curl_init();    // Starts the curl handler
+$c = curl_init();    // Starts the curl handler
 curl_setopt($c, CURLOPT_URL, $url); // Sets the paypal address for curl
 curl_setopt($c, CURLOPT_FAILONERROR, 1);
 curl_setopt($c, CURLOPT_RETURNTRANSFER, 1); // Returns result to a variable instead of echoing
 curl_setopt($c, CURLOPT_TIMEOUT, 3); // Sets a time limit for curl in seconds (do not set too low)
 curl_setopt($c, CURLOPT_PROXY, $wgHTTPProxy); // set HTTP proxy
 $info = curl_exec($c); // run the curl process (and return the result to $result
-curl_close($ch);
+curl_close($c);
 
 
 $info	= str_ireplace('"', '', $info);
