@@ -193,21 +193,21 @@ if($bot == 'goog'){
 function getSitemapUrl(){
 	$r = '';
 	$hostel = explode('.',$_SERVER['SERVER_NAME']);
-	
+
 	if(count($hostel) > 1)
 	{
 		//delete tdlportion
 		unset($hostel[count($hostel)-1]);
-		
+
 		//remove the 2nd level wikia if needed
 		if($hostel[count($hostel)-1] == 'wikia')
 			unset($hostel[count($hostel)-1]);
-		
-		//if domain name starts with www or wiki then remove it, 
+
+		//if domain name starts with www or wiki then remove it,
 		if(in_array($hostel[0], array('www', 'wiki')))
 			unset($hostel[0]);
 	}
-	
+
 	$r .= "# sitemap\n";
 	$r .= 'Sitemap: http://' . $_SERVER['SERVER_NAME'] . '/' . "sitemap-index-" . implode('',$hostel) . ".xml";
 
@@ -222,38 +222,46 @@ function getLangSpecificNamespace( &$lang, $code, $bot='' ){
    $rs = $lang->getLocalisationArray( $code );
    $ns = $rs['namespaceNames'];
 
-  if($bot == 'goog'){
-   $r .= "# " . $code . "\n" ;
-   $r .= 'Disallow: /wiki/' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
-   $r .= 'Disallow: /' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
-   $r .= 'Disallow: /*title=' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
-   $r .= 'Disallow: /wiki/' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";
-   $r .= 'Disallow: /*title=' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";
-   $r .= "# " . $code . "\n" ;
-   $r .= 'Noindex: /wiki/' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
-   $r .= 'Noindex: /' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
-   $r .= 'Noindex: /*title=' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
-   $r .= 'Noindex: /wiki/' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";
-   $r .= 'Noindex: /' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";
-   $r .= 'Noindex: /*title=' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";
-   if ( $code == "en" && !empty( $wgArticleRobotPolicies['Special:WhatLinksHere'] ) ) {
-	$r .= "Allow: /Special:WhatLinksHere\n";
-	$r .= "Allow: /wiki/Special:WhatLinksHere\n";
-   }
-   if ( $code == "en" && !empty( $wgArticleRobotPolicies['Special:Newwikis'] ) ) {
-	$r .= "Allow: /Special:Newwikis\n";
-	$r .= "Allow: /wiki/Special:Newwikis\n";
-   }
- }else{
-   $r .= "# " . $code . "\n" ;
-   $r .= 'Disallow: /wiki/' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
-   $r .= 'Disallow: /' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
-   $r .= 'Disallow: /*title=' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
-   $r .= 'Disallow: /wiki/' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";
-   $r .= 'Disallow: /' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";
-   $r .= 'Disallow: /*title=' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";
- }
-  return $r;
+	if($bot == 'goog'){
+		$r .= "# " . $code . "\n" ;
+		$r .= 'Disallow: /wiki/' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
+		$r .= 'Disallow: /' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
+		$r .= 'Disallow: /*title=' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
+		$r .= 'Disallow: /wiki/' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";
+		$r .= 'Disallow: /*title=' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";
+		$r .= "# " . $code . "\n" ;
+		$r .= 'Noindex: /wiki/' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
+		$r .= 'Noindex: /' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
+		$r .= 'Noindex: /*title=' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
+		$r .= 'Noindex: /wiki/' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";
+		$r .= 'Noindex: /' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";
+		$r .= 'Noindex: /*title=' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";
+		if ( $code == "en" && !empty( $wgArticleRobotPolicies['Special:WhatLinksHere'] ) ) {
+			$r .= "Allow: /Special:WhatLinksHere\n";
+			$r .= "Allow: /wiki/Special:WhatLinksHere\n";
+		}
+		if ( $code == "en" && !empty( $wgArticleRobotPolicies['Special:Newwikis'] ) ) {
+			$r .= "Allow: /Special:Newwikis\n";
+			$r .= "Allow: /wiki/Special:Newwikis\n";
+		}
+		/**
+		 * always allow Special:Sitemap
+		 */
+		$r .= "Allow: /Special:Sitemap*\n";
+		$r .= "Allow: /wiki/Special:Sitemap*\n";
+	}
+	else {
+		$r .= "# " . $code . "\n" ;
+		$r .= 'Disallow: /wiki/' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
+		$r .= 'Disallow: /' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
+		$r .= 'Disallow: /*title=' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
+		$r .= 'Disallow: /wiki/' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";
+		$r .= 'Disallow: /' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";
+		$r .= 'Disallow: /*title=' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";
+		$r .= sprintf( "Allow: /%s:Sitemap*\n", urlencode( $ns[NS_SPECIAL] ) );
+		$r .= sprintf( "Allow: /wiki/%s:Sitemap*\n", urlencode( $ns[NS_SPECIAL] ) );
+	}
+	return $r;
 }
 
 function oldrobots(){
