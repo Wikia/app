@@ -1,5 +1,5 @@
 == Changes since 201007.4 ==
-* 
+* rt#56250 #56250: monaco-$theme getting stored in wgAdminSkin (federico)
 
 == Changes since 201007.3 ==
 * rt#59922: borders aren't collapsed around the image horizontally in galleries (federico)

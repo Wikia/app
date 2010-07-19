@@ -1,4 +1,7 @@
-<?php global $wgAdminSkin, $wgContLang, $NWBmessages, $wgSkinTheme; ?>
+<?php
+global $wgAdminSkin, $wgContLang, $NWBmessages, $wgSkinTheme, $wgCdnStylePath;
+$skinName = 'monaco';
+?>
 
 <div id="wikistickies-admintools">
 <h2 class="bigger"><?= wfMsg('wikistickies-admins-hd'); ?></h2>
@@ -52,44 +55,24 @@
 <li id="step3" class="step">
 <div class="wrapper clearfix">
 <h2><?php echo wfMsg("wikistickies-theme-hd")?></h2>
-        <div id="theme_template" style="display:none" class="theme_selekction">
-                <label for="theme_radio_$theme"><img id="theme_preview_image_$theme" /></label>
-                <input onclick="NWB.changeTheme('monaco-$theme', false)" type="radio" name="theme" value="monaco-$theme" id="theme_radio_$theme"> <label for="theme_radio_$theme">$Theme</label>
-        </div>
-        <div id="theme_scroller" class="accent">
-                <table><tr></tr></table>
-        </div>
-
-
-<script type="text/javascript">
-
-var wgAdminSkin = '<?php echo $wgAdminSkin?>';
-
-var themes = <?php echo Wikia::json_encode($wgSkinTheme['monaco']) ?>;
-for (var i = 0; i < themes.length; i++){
-        // Copy the template, search and replace the values
-        var ltheme = themes[i];
-
-	if (ltheme == 'custom') {
-		continue;
-	}
-
-        var thtml = $("#theme_template").html();
-        thtml = thtml.replace(/\$Theme/g, themes[i]);
-        thtml = thtml.replace(/\$theme/g, ltheme);
-
-        // Create element with that preview and append it
-        $("#theme_scroller tr").append("<td>" + thtml + "</td>");
-        $("#theme_preview_image_" + ltheme).attr("src", "http://images.wikia.com/common/skins/monaco/" + ltheme + "/images/preview.png");
-
-        // Check the box with the current theme ($wgAdminSkin)
-        if (wgAdminSkin.replace(/monaco-/, '')  == ltheme) {
-                // Check the box and change the theme
-                $("#theme_radio_" + ltheme).attr("checked", true);
-                NWB.changeTheme(ltheme, false);
-        }
-}
-</script>
+        <?if(is_array($wgSkinTheme[$skinName])):?>
+		<div id="theme_scroller" class="accent">
+			<table>
+				<tr>
+					<?foreach($wgSkinTheme[$skinName] as $theme):?>
+						<?if($theme == 'custom') continue;?>
+						<td>
+							<label for="theme_radio_<?= $theme ;?>">
+								<img id="theme_preview_image_<?= $theme ;?>" src="<?= $wgCdnStylePath ;?>/skins/<?= $skinName ;?>/<?= $theme ;?>/images/preview.png"/>
+							</label>
+							<input onclick="NWB.changeTheme('<?= $skinName ;?>-<?= $theme ;?>', false)" type="radio" name="theme" value="<?= $skinName ;?>-<?= $theme ;?>" id="theme_radio_<?= $theme ;?>"<?= ($wgAdminSkin == "{$skinName}-{$theme}") ? 'checked' : null ;?>>
+							<label for="theme_radio_<?= $theme ;?>"><?= ucfirst($theme) ;?></label>
+						</td>
+					<?endforeach;?>
+				</tr>
+			</table>
+		</div>
+	<?endif;?>
 	<div id="wikistickies_save_all">
 		<input type="submit" id="WikistickiesToolsSubmit" onclick="WIKIA.WikiStickies.track( '/admin/save' ); NWB.changeTheme($('input[name=theme]:checked').val(), true); NWB.uploadLogo();" value="<?= wfMsg("wikistickies-save-changes") ?>" />
 	</div>
