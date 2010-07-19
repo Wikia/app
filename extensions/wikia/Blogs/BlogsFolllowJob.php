@@ -24,11 +24,6 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 include_once( $GLOBALS[ "IP" ] . "/includes/JobQueue.php" );
 $wgJobClasses[ "BlogsFollow" ] = "BlogsFolllowJob";
 
-/**
- * rights and permissions -- will be moved to CommonSettings
- */
-$wgAvailableRights[] = "autofollowblog";
-$wgGroupPermissions[ "staff" ][ "autofollowblog" ] = true;
 
 class BlogsFolllowJob extends Job {
 

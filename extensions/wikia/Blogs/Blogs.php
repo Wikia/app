@@ -108,6 +108,7 @@ $wgAvailableRights[] = 'blog-comments-delete';
 $wgAvailableRights[] = 'blog-articles-edit';
 $wgAvailableRights[] = 'blog-articles-move';
 $wgAvailableRights[] = 'blog-articles-protect';
+$wgAvailableRights[] = "blog-auto-follow";
 
 $wgGroupPermissions['*'][ 'blog-comments-toggle' ] = false;
 $wgGroupPermissions['sysop'][ 'blog-comments-toggle' ] = true;
@@ -133,6 +134,11 @@ $wgGroupPermissions['*'][ "blog-articles-protect" ] = false;
 $wgGroupPermissions['sysop'][ "blog-articles-protect" ] = true;
 $wgGroupPermissions['staff'][ "blog-articles-protect" ] = true;
 $wgGroupPermissions['helper'][ "blog-articles-protect" ] = true;
+
+$wgGroupPermissions['*'][ "blog-auto-follow" ] = false;
+$wgGroupPermissions['sysop'][ "blog-auto-follow" ] = false;
+$wgGroupPermissions['staff'][ "blog-auto-follow" ] = true;
+$wgGroupPermissions['helper'][ "blog-auto-follow" ] = false;
 
 /**
  * Special pages
