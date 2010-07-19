@@ -516,9 +516,16 @@ class BlogComment {
 
 			$key = $Title->getPrefixedDBkey();
 			$wgMemc->delete( wfMemcKey( "blog", "listing", $key, 0 ) );
-			BlogCommentList::purgeCountCache($Title->getArticleID());
+			$wgMemc->delete( wfMemcKey( "blog", "comm", $Title->getArticleID() ) );
 
 			$res = array( $retval, $article );
+
+			/**
+			 * update cache from master
+			 */
+			$clist = BlogCommentList::newFromTitle( $Title );
+			$clist->getCommentPages( true );
+
 		} else {
 			$res = false;
 		}
@@ -1001,7 +1008,6 @@ class BlogCommentList {
 	private $mComments = false;
 	private $mProps = false;
 	private $mOrder = false;
-	private $mPageSize = 10;
 
 	static public function newFromTitle( Title $title ) {
 		$comments = new BlogCommentList();
@@ -1082,7 +1088,7 @@ class BlogCommentList {
 	 *
 	 * @return array
 	 */
-	public function getCommentPages( $master = false ) {
+	public function getCommentPages( $master = true ) {
 		global $wgRequest, $wgMemc;
 
 		wfProfileIn( __METHOD__ );
@@ -1091,43 +1097,20 @@ class BlogCommentList {
 		$action = $wgRequest->getText( "action", false );
 
 		$this->handleBlogCommentOrderCookie( $order ); // it's &$order...
-		$this->mOrder = ( $order == "asc" ) ? "asc" : "desc";
-
-		// This is confusing; this code refers to 'pages' since comments are
-		// represented as regular articles which have a 'page'.  This pageIndex
-		// however refers to the pagination of the comments and which page of
-		// comments to show.
-		$pageIndex = $wgRequest->getText( "page", false );
-
-		// Get the current page index.  Default it to 1 and make sure its not
-		// a page that doesn't have comments
-		$commCount = $this->cachedCount($master);
-		$pageIndex = $pageIndex ? $pageIndex : 1;
-		if ($commCount <= (($pageIndex-1) * $this->mPageSize)) {
-			$pageIndex = floor($commCount / $this->mPageSize) + 1;
-		}
-
-		// Create key based on the article_id, number of comments, the sort order
-		// and the current page.  This means that we can purge all pages of
-		// memcached comment whenever the comment count increases, without
-		// having to purge each individual page of comments.
-		$article_id = $this->getTitle()->getArticleId();
-		$comment_key = wfMemcKey('blog', 'comm', $article_id, $commCount, $pageIndex, $order);
+		$this->mOrder = ( $order == "desc" ) ? "desc" : "asc";
 
 		/**
 		 * skip cache if purging or using master connection
-		*/
+		 */
 		if( $action != "purge" && ! $master ) {
-			$this->mComments = $wgMemc->get( $comment_key );
+			$this->mComments = $wgMemc->get( wfMemcKey( "blog", "comm", $this->getTitle()->getArticleId() ) );
 		}
 
 		if( ! is_array( $this->mComments ) ) {
-			// error_log("Loading comments for page $pageIndex from DB");
-
+			/**
+			 * cache it! but with what key?
+			 */
 			$pages = array();
-
-			$offset = ($pageIndex-1) * $this->mPageSize;
-			$limit  = $this->mPageSize;
 
 			$dbr = ( $master ) ? wfGetDB( DB_MASTER ) : wfGetDB( DB_SLAVE );
 			$res = $dbr->select(
@@ -1138,24 +1121,18 @@ class BlogCommentList {
 					"page_title LIKE '" . $dbr->escapeLike( $this->mText ) . "/%'"
 				),
 				__METHOD__,
-				array( "ORDER BY" => "page_id {$this->mOrder}",
-					   "OFFSET" => $offset,
-					   "LIMIT"  => $limit,
-					 )
+				array( "ORDER BY" => "page_id {$this->mOrder}" )
 			);
-
 			while( $row = $dbr->fetchObject( $res ) ) {
 				$pages[ $row->page_id ] = BlogComment::newFromId( $row->page_id );
 			}
 			$dbr->freeResult( $res );
 			$this->mComments = $pages;
-			$wgMemc->set( $comment_key, $this->mComments, 3600 );
-		} else {
-			// error_log("Using cached comments for page $pageIndex");
+			$wgMemc->set( wfMemcKey( "blog", "comm", $this->getTitle()->getArticleId() ), $this->mComments, 3600 );
 		}
 
 		wfProfileOut( __METHOD__ );
-		return $this->mComments;
+		return $this->sort();
 	}
 
 	/**
@@ -1225,55 +1202,18 @@ class BlogCommentList {
 		return $pages;
 	}
 
-	public function cachedCount($master = false) {
-		global $wgRequest, $wgMemc;
-
-		$article_id = $this->getTitle()->getArticleId();
-		$count_key = BlogCommentList::cachedCountKey($article_id);
-		
-		// See if we have the count cached
-		$action = $wgRequest->getText( "action", false );
-		if( $action != "purge" && ! $master ) {
-			$count = $wgMemc->get($count_key);	
-			if (isset($count)) {
-				// error_log("Using cached count of $count for article $article_id");
-				return $count;
-			}
-		}
-
-		// error_log("Selecting count of comments for $article_id from DB");
-
-		// If its not cached get it from a count(*)
-		$dbr = ( $master ) ? wfGetDB( DB_MASTER ) : wfGetDB( DB_SLAVE );
-		$res = $dbr->select(
-				array( "page" ),
-				array( "count(*) as cnt" ),
-				array(
-					"page_namespace" => NS_BLOG_ARTICLE_TALK,
-					"page_title LIKE '" . $dbr->escapeLike( $this->mText ) . "/%'"
-				),
-				__METHOD__
-			);
-
-		$count = 0;
-		while( $row = $dbr->fetchObject( $res ) ) {
-			$count = $row->cnt;
-		}
-		$dbr->freeResult( $res );
-
-		$wgMemc->set( $count_key, $count, 3600 );
-		// error_log("Found $count comments for $article_id");
-
-		return $count;
-	}
-
 	/**
 	 * count -- just return number of comments
 	 *
 	 * @return integer
 	 */
 	public function count() {
-		return $this->cachedCount();
+		$comments = $this->getCommentPages();
+		if( is_array( $comments ) ) {
+			return count( $comments );
+		}
+
+		return 0;
 	}
 
 	/**
@@ -1309,42 +1249,34 @@ class BlogCommentList {
 		/**
 		 * $pages is array of comment articles
 		 */
-		$owner      = $this->mTitle->getBaseText();
-		$avatar     = Masthead::newFromUser( $wgUser );
-		$isSysop    = ( in_array('sysop', $wgUser->getGroups()) || in_array('staff', $wgUser->getGroups() ) );
-		$isOwner    = ( $owner == $wgUser->getName() );
-		$canEdit    = $wgUser->isAllowed( "edit" );
-		$isBlocked  = $wgUser->isBlocked();
+		$owner     = $this->mTitle->getBaseText();
+		$avatar    = Masthead::newFromUser( $wgUser );
+		$isSysop   = ( in_array('sysop', $wgUser->getGroups()) || in_array('staff', $wgUser->getGroups() ) );
+		$isOwner   = ( $owner == $wgUser->getName() );
+		$canEdit   = $wgUser->isAllowed( "edit" );
+		$isBlocked = $wgUser->isBlocked();
 
-		$comments   = $this->getCommentPages();
-		$canDelete  = $wgUser->isAllowed( "delete" );
+		$comments  = $this->getCommentPages();
+		$canDelete = $wgUser->isAllowed( "delete" );
 		$isReadOnly = wfReadOnly();
-
-		$pageIndex  = $wgRequest->getVal( "page", false );
-		$commCount  = $this->cachedCount();
-		$lastPage   = ceil($commCount / $this->mPageSize);
 
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 
 		$template->set_vars( array(
-			"order"      => $this->mOrder,
-			"title"      => $wgTitle,
-			"props"      => $this->mProps,
-			"avatar"     => $avatar,
-			"wgUser"     => $wgUser,
-			"isSysop"    => $isSysop,
-			"isOwner"    => $isOwner,
-			"canEdit"    => $canEdit,
-			"isBlocked"  => $isBlocked,
-			"reason"	 => $isBlocked ? $this->blockedPage() : "",
-			"output"	 => $wgOut,
-			"comments"   => $comments,
-			"canDelete"  => $canDelete,
+			"order"     => $this->mOrder,
+			"title"     => $wgTitle,
+			"props"     => $this->mProps,
+			"avatar"    => $avatar,
+			"wgUser"    => $wgUser,
+			"isSysop"   => $isSysop,
+			"isOwner"   => $isOwner,
+			"canEdit"   => $canEdit,
+			"isBlocked" => $isBlocked,
+			"reason"	=> $isBlocked ? $this->blockedPage() : "",
+			"output"	=> $wgOut,
+			"comments"  => $comments,
+			"canDelete" => $canDelete,
 			"isReadOnly" => $isReadOnly,
-			"page"       => $pageIndex ? $pageIndex : 1,
-			"lastPage"   => $lastPage,
-			"commCount"  => $commCount,
-			"pageSize"   => $this->mPageSize
 		) );
 
 		$text = $template->execute( "comment-list" );
@@ -1401,9 +1333,9 @@ class BlogCommentList {
 	 * remove lising from cache and mark title for squid as invalid
 	 */
 	public function purge() {
+		global $wgMemc;
 
-		$article_id = $this->mTitle->getArticleID();
-		BlogCommentList::purgeCountCache($article_id);
+		$wgMemc->delete( wfMemcKey( "blog", "comm", $this->mTitle->getArticleID() ) );
 
 		$this->mTitle->invalidateCache();
 		$this->mTitle->purgeSquid();
@@ -1412,17 +1344,6 @@ class BlogCommentList {
 			$listing->invalidateCache();
 			$listing->purgeSquid();
 		}
-	}
-
-	public function cachedCountKey($article_id) {
-		return wfMemcKey( 'blog', 'comm', 'count', $article_id );
-	}
-
-	public function purgeCountCache($article_id) {
-		global $wgMemc;
-		
-		$key = BlogCommentList::cachedCountKey($article_id);
-		$wgMemc->delete($key);
 	}
 
 	/**
@@ -1444,7 +1365,7 @@ class BlogCommentList {
 		if ( NS_BLOG_ARTICLE == $Article->getTitle()->getNamespace() ) {
 			$listing = BlogCommentList::newFromTitle( $Article->getTitle() );
 
-			$aComments = $listing->getCommentPages(true);
+			$aComments = $listing->getCommentPages();
 			if ( !empty($aComments) ) {
 				global $wgRC2UDPEnabled; 
 				$irc_backup = $wgRC2UDPEnabled;	//backup

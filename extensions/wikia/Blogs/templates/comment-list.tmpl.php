@@ -1,7 +1,7 @@
 <!-- s:<?= __FILE__ ?> -->
 <a name="comments"></a>
 <h2 class="wikia_header">
-<?php echo wfMsg("blog-comments")." ($commCount)" ?>
+<?php echo wfMsgExt("blog-comments", array('parse') ) ?>
 </h2>
 <?php
 if( isset( $props[ "commenting" ] ) && $props[ "commenting" ] == 1  && count( $comments ) > 1 ):
@@ -63,25 +63,6 @@ endif;
 			echo "\n</li>\n";
 		endforeach;
 		echo "</ul>";
-	endif;
-
-	$order_param = $order == 'asc' ? '&order=asc' : '';
-	$prev_url = $page - 1 ? $title->getFullURL().'?page='.($page - 1).$order_param : null;
-	$prev_txt = wfMsg('blog-comments-prev');
-	$next_url = $page >= $lastPage ? null : $title->getFullURL().'?page='.($page + 1).$order_param;
-	$next_txt = wfMsg('blog-comments-next');
-	
-	if ($commCount > $pageSize):
-?>
-<p>
-	<?= wfMsg('blog-comments-summary', $page, $lastPage) ?> :
-	<?php if ($prev_url): ?><a href="<?= $prev_url ?>"><?= $prev_txt ?></a>
-		<?php else: ?><span style="color: #CCCCCC"><?= $prev_txt ?></span><?php endif; ?>
-	|
-	<?php if ($next_url): ?><a href="<?= $next_url ?>"><?= $next_txt ?></a>
-		<?php else: ?><span style="color: #CCCCCC"><?= $next_txt ?></span><?php endif; ?>
-</p>
-<?php
 	endif;
 
 	if( isset( $props[ "commenting" ] ) && $props[ "commenting" ] == 1 ):
