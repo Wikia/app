@@ -219,11 +219,17 @@ function SharedHelpHook(&$out, &$text) {
 			$skipNamespaces = array();
 			$skipNamespaces[] = $wgContLang->getNsText(NS_CATEGORY);
 			$skipNamespaces[] = $wgContLang->getNsText(NS_IMAGE);
-			$skinNamespaces[] = $wgContLang->getNsText(NS_FILE);
+			$skipNamespaces[] = $wgContLang->getNsText(NS_FILE);
+			if ( defined( NS_VIDEO ) ) {
+				$skipNamespaces[] = $wgContLang->getNsText(NS_VIDEO);
+			);
 			$skipNamespaces[] = "Advice";
 			if ($wgLanguageCode != 'en') {
 				$skipNamespaces[] = MWNamespace::getCanonicalName(NS_CATEGORY);
 				$skipNamespaces[] = MWNamespace::getCanonicalName(NS_IMAGE);
+				if ( defined( NS_VIDEO ) ) {
+					$skipNamespaces[] = MWNamespace::getCanonicalName(NS_VIDEO);
+				}
 			}
 
 			# replace help wiki links with local links, except for special namespaces defined above
