@@ -18,7 +18,7 @@ else {
 		<span class="wikia-gallery-item WikiaPhotoGalleryPreviewItem<?= ($image['placeholder']) ? ' WikiaPhotoGalleryPreviewItemPlaceholder' : ' WikiaPhotoGalleryPreviewDraggable' ;?>" style="width: <?= $width ;?>px;" imageid="<?= $index ;?>">
 			<div class="thumb" style="height: <?= $maxHeight ;?>px;">
 				<div class="gallery-image-wrapper<?= (!empty($borderColorClass)) ? $borderColorClass : null;?>"
-				     style="position: relative; height: <?= $image['height'] ;?>px; width:<?= $image['width'] ;?>px;<?= (!empty($image['heightCompensation'])) ? " top:{$image['heightCompensation']}px;" : null ;?><?/*= (!empty($image['widthCompensation'])) ? " left:{$image['widthCompensation']}px;" : null ;?><?= (!empty($borderColorCSS)) ? $borderColorCSS : null;*/?>">
+				     style="position: relative; height: <?= $image['height'] ;?>px; width:<?= $image['width'] ;?>px;<?= (!empty($image['heightCompensation'])) ? " top:{$image['heightCompensation']}px;" : null ;?><?/*= (!empty($image['widthCompensation'])) ? " left:{$image['widthCompensation']}px;" : null ;*/?><?= (!empty($borderColorCSS)) ? $borderColorCSS : null;?>">
 					<a class="image<?= (!$image['thumbnail']) ? ' broken-image accent new' : null ;?>"
 						style="<?= ($image['thumbnail']) ? " background-image: url({$image['thumbnail']});" : null ;?>; line-height:<?= $image['height'] ;?>px; height:<?= $image['height'] ;?>px; width:<?= $image['width'] ;?>px;"
 						title="<?= ($image['placeholder']) ? wfMsg('wikiaPhotoGallery-preview-add-photo') : null ;?>">
