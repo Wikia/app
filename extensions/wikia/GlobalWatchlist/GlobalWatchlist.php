@@ -46,20 +46,25 @@ function wfGlobalWatchlistToggle($extraToggles) {
 function wfGlobalWatchlistPrefsCustomHtml($prefsForm) {
 	global $wgOut, $wgUser, $wgExternalSharedDB;
 
+	/* Now extension is enabled for all users so I think the check is not necessary --- wladek
+	// RT#48350: Spec:Prefs - Move two watchlist/followed pages options from "misc" to "followed pages"
 	$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 	$oResource = $dbr->query("SELECT count(*) AS count FROM global_watchlist WHERE gwa_user_id='" . $wgUser->getID() . "'");
 	$oResultRow = $dbr->fetchObject($oResource);
 
 	if($oResultRow->count) {
 		// only for staff members at the moment
+	*/
 		wfLoadExtensionMessages('GlobalWatchlist');
 
 		$tname = 'watchlistdigestclear';
 		$prefsForm->mUsedToggles[$tname] = true;
 
 		$wgOut->addHtml( $prefsForm->getToggle($tname) );
+	/*
 	}
-
+	*/
+		
 	return true;
 }
 
