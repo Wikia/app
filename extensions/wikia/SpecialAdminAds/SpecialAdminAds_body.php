@@ -82,6 +82,7 @@ class SpecialAdminAds extends SpecialPage {
 						$ad->ad_status = 2;
 					}
 					$ad->Save();
+					Advertisement::FlushAdCache( $ad->wiki_db, $ad->page_id );
 					$wgOut->addHTML( Wikia::successbox( "Ad #{$ad->ad_id} has been removed." ) );
 				} else {
 					$wgOut->addHTML('<p>Could not load ad:'.$wgRequest->getText('remove').'</p>');
