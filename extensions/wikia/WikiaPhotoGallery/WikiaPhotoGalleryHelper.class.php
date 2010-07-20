@@ -198,7 +198,6 @@ class WikiaPhotoGalleryHelper {
 	 */
 	static public function getThumbnailDimensions($img, $maxWidth, $maxHeight, $crop = false) {
 		wfProfileIn(__METHOD__);
-		$imageRatio = $img->getWidth() / $img->getHeight();
 
 		// image has to fit width x height box
 		$thumbParams = array(
@@ -208,9 +207,10 @@ class WikiaPhotoGalleryHelper {
 
 		// support "crop" attribute
 		if (!empty($crop)) {
-			$widthResize = $img->getWidth() / $maxWidth;
-			$heightResize = $img->getHeight() / $maxHeight;
-
+			//avoid division by zero #59972
+			$widthResize = (!empty($maxWidth)) ? $img->getWidth() / $maxWidth : 1;
+			$heightResize = (!empty($maxHeight)) ? $img->getHeight() / $maxHeight : 1;
+			
 			$resizeRatio = min($widthResize, $heightResize);
 
 			$thumbParams = array(
