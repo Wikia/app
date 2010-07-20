@@ -4,8 +4,8 @@ $messages = array();
 
 $messages['en'] = array(
 	'sponsor-header' => '<h2>External Sponsor Links</h2>',
-	'sponsor-msg' => '<li><a href="$1">Sponsor this page</a></li>',
-	'sponsor-template' => '<li><a href="http://$1">$2</a><br />$3</li>',
+	'sponsor-msg' => '<li><a href="$1" rel="nofollow">Sponsor this page</a></li>',
+	'sponsor-template' => '<li><a href="http://$1" rel="nofollow">$2</a><br />$3</li>',
 
 	'sponsor-preview-prompt' => '<p>Here is what your sponsorship will look like - click "edit" to go back and make changes, or "save" to save it and go to Paypal</p>',
 	'sponsor-preview-errors' => 'There are errors in your submission:',
