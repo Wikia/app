@@ -426,7 +426,7 @@ class DPL2Include
         // in that case we won´t invoke template2 but will directly return the extracted parameters
         // as a sequence of table columns;
         if (strlen($template2)>strlen($template1) && ($template2[strlen($template1)]==':')) {
-            $extractParm = split(':',substr($template2,strlen($template1)+1));
+            $extractParm = explode(':',substr($template2,strlen($template1)+1));
         }
 
         if (count($tCalls) <= 1) {
