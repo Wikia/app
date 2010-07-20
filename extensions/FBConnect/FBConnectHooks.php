@@ -504,7 +504,7 @@ STYLE;
 	/**
 	 * Removes the 'createaccount' right from users if $fbConnectOnly is true.
 	 */
-	static function UserGetRights( &$user, &$aRights ) {
+	static function UserGetRights( $user, &$aRights ) {
 		global $fbConnectOnly;
 		if ( $fbConnectOnly ) {
 			foreach ( $aRights as $i => $right ) {
