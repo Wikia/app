@@ -452,7 +452,7 @@ class Linker {
 			$iwclass = strtolower($nt->getInterwiki());
 			if(in_array($iwclass, array('w', 'wikia', 'wikicities'))) {
 				$iwclass = 'w';
-				$iw_temp = split(':', strtolower($nt->getText()));
+				$iw_temp = explode(':', strtolower($nt->getText()));
 				if(!empty($iw_temp[0])) {
 					if ('c' == $iw_temp[0]) {
 						if (!empty($iw_temp[1])) {

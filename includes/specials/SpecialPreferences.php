@@ -51,7 +51,7 @@ class PreferencesForm {
 
 		/* Wikia change begin - @author: Inez */
 		/* Skin chooser related */
-		$_temp = split('-', $this->mSkin);
+		$_temp = explode('-', $this->mSkin);
 		$this->mSkin = isset($_temp[0]) ? $_temp[0] : null;
 		$this->mTheme = isset($_temp[1]) ? $_temp[1] : null;
 		/* Related to GameSpot integration (and another where Skin tab is not visible) */
