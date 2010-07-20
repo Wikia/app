@@ -426,23 +426,13 @@ class WikiaPhotoGalleryHelper {
 		$placeholdersCount = max(4 - count($gallery['images']), 1);
 
 		for ($p = 0; $p < $placeholdersCount; $p++) {
-			// RT #59355
-			if ($orientation == 'none') {
-				$heightCompensation = ($height - $thumbSize) >> 1;
-				$placeholderHeight = $thumbSize;
-			}
-			else {
-				$heightCompensation = false;
-				$placeholderHeight = $height;
-			}
-
 			$gallery['images'][] = array(
 				'placeholder' => true,
-				'height' => $placeholderHeight,
+				'height' => $height,
 				'width' => $thumbSize,
 				'thumbnail' => "{$wgExtensionsPath}/wikia/WikiaPhotoGallery/images/gallery_addimage.png",
 				'caption' => wfMsg('wikiaPhotoGallery-preview-placeholder-caption'),
-				'heightCompensation' => $heightCompensation,
+				'heightCompensation' => false,
 			);
 		}
 
