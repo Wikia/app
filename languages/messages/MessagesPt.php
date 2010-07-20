@@ -43,8 +43,8 @@ $namespaceNames = array(
 	NS_MEDIA            => 'Media',
 	NS_SPECIAL          => 'Especial',
 	NS_TALK             => 'Discussão',
-	NS_USER             => 'Usuário',
-	NS_USER_TALK        => 'Usuário_Discussão',
+	NS_USER             => 'Utilizador',
+	NS_USER_TALK        => 'Utilizador_Discussão',
 	NS_PROJECT_TALK     => '$1_Discussão',
 	NS_FILE             => 'Ficheiro',
 	NS_FILE_TALK        => 'Ficheiro_Discussão',
@@ -63,6 +63,8 @@ $namespaceAliases = array(
 	'Imagem_Discussão' => NS_FILE_TALK,
 	'Arquivo' => NS_FILE,
 	'Arquivo_Discussão' => NS_FILE_TALK,
+	'Usuário' => NS_USER,
+	'Usuário_Discussão' => NS_USER_TALK,
 );
 
 
