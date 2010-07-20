@@ -249,6 +249,8 @@ function getLangSpecificNamespace( &$lang, $code, $bot='' ){
 		 */
 		$r .= "Allow: /Special:Sitemap*\n";
 		$r .= "Allow: /wiki/Special:Sitemap*\n";
+		$r .= sprintf( "Allow: /%s:Sitemap*\n", urlencode( $ns[NS_SPECIAL] ) );
+		$r .= sprintf( "Allow: /wiki/%s:Sitemap*\n", urlencode( $ns[NS_SPECIAL] ) );
 	}
 	else {
 		$r .= "# " . $code . "\n" ;
@@ -258,6 +260,8 @@ function getLangSpecificNamespace( &$lang, $code, $bot='' ){
 		$r .= 'Disallow: /wiki/' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";
 		$r .= 'Disallow: /' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";
 		$r .= 'Disallow: /*title=' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";
+		$r .= "Allow: /Special:Sitemap*\n";
+		$r .= "Allow: /wiki/Special:Sitemap*\n";
 		$r .= sprintf( "Allow: /%s:Sitemap*\n", urlencode( $ns[NS_SPECIAL] ) );
 		$r .= sprintf( "Allow: /wiki/%s:Sitemap*\n", urlencode( $ns[NS_SPECIAL] ) );
 	}
