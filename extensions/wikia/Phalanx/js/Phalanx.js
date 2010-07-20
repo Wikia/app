@@ -105,7 +105,13 @@ Phalanx.loadBlockData = function( response ) {
 	// todo for timestamp - show current, give option for 'don't change', then all normal ones
 	var type = response.data['type'];
 
-	$( '#phalanx-expire-old' ).html( response.time );
+	if( null == response.data['expire'] ) {
+		$( '#wpPhalanxExpire' ).attr( 'value', 'infinite' );
+		$( '#phalanx-expire-old' ).html( 'Infinite' );
+	}
+	else {
+		$( '#phalanx-expire-old' ).html( response.time );
+	}
 
 	if( type & 1  ) {
 		$( '#wpPhalanxTypeContent' ).attr( 'checked', 'checked' );
@@ -140,6 +146,11 @@ Phalanx.loadBlockData = function( response ) {
 	if( '' != response.data['reason'] ) {
 		$( '#wpPhalanxReason' ).attr( 'value', response.data['reason'] );
 	}
+
+	if( null != response.data['lang'] ) {
+		$( '#wpPhalanxLanguages' ).attr( 'value', response.data['lang'] );
+	}
+
 }
 
 Phalanx.postForm = function( e ) {
