@@ -1,6 +1,6 @@
 == Changes since 201007.4 ==
-* rt#60020: Photo Gallery - change default aspect ratio to 1:1
-* rt#59972: Division by zero in WikiaPhotoGallery
+* rt#60020: Photo Gallery - change default aspect ratio to 1:1 (federico)
+* rt#59972: Division by zero in WikiaPhotoGallery (federico)
 * rt#56415: Send "other" to "entertainment" (federico)
 * rt#56250: monaco-$theme getting stored in wgAdminSkin (federico)
 
