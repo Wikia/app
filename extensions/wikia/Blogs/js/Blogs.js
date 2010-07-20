@@ -3,6 +3,8 @@ var Blogs = {};
 var clicked = false;
 Blogs.callback = function( data ) {
 	Blogs.submit.clicked = false;
+	Blogs.submit.controlButton(true);
+	
 	document.body.style.cursor = "default";
 	
 	if (!( stopAjax == 'undefined' )) { //hack
@@ -61,8 +63,8 @@ Blogs.callback.add = function( data ) {
 
 	document.body.style.cursor = "default";
 	
-	$("#blog-comm-bottom").attr('readonly', false).val("").css('cursor', 'default')
-	$("#blog-comm-top").attr('readonly', false).val("").css('cursor', 'default')
+	$("#blog-comm-bottom").attr('readonly', false).val("");//.css('cursor', 'default')
+	$("#blog-comm-top").attr('readonly', false).val("");//.css('cursor', 'default')
 	
 	Blogs.render();
 };
@@ -110,7 +112,8 @@ Blogs.submit = function( event ) {
 	if( oForm.attr( "id" ) == "blog-comm-form-select" ) {
 		oForm.submit();
 	} else {
-		oForm = $( event.target.parentNode.parentNode  ); 
+		oForm = $( event.target.parentNode.parentNode  );
+		Blogs.submit.controlButton(false,$(event.target));
 		WET.byStr('articleAction/postComment');
 		postData = oForm.serialize() + "&action=ajax&rs=BlogComment::axPost&article=" + wgArticleId ;
 		$.getJSON(wgServer + wgScript, postData , Blogs.callback);
@@ -118,6 +121,16 @@ Blogs.submit = function( event ) {
 	}
 };
 
+Blogs.submit.controlButton = function( state, button ) {
+	if (button) Blogs.submit.lastButton = button;
+	else button = Blogs.submit.lastButton;
+	
+	$("#blog-comm-bottom-sending")[state?"hide":"show"]();
+	if (button) {
+		if (state) button.removeAttr('disabled');
+		else button.attr('disabled','disabled');
+	}
+};
 
 Blogs.save = function( event ) {
 	var id = event.data.id;

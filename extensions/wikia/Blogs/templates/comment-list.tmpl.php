@@ -88,6 +88,7 @@ endif;
 		<noscript>
 		<input type="submit" name="wpBlogSubmit" id="blog-comm-submit-bottom" value="<? echo wfMsg("blog-comment-post") ?>" />
 		</noscript>
+		<span id="blog-comm-bottom-sending" style="display:none"><?= wfMsg("blog-comment-sending") ?></span>
 		<div class="right" style="font-style: italic;"><?php echo wfMsg("blog-comments-info") ?></div>
 		</div>
 	</form>
