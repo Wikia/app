@@ -210,7 +210,7 @@ class WikiaPhotoGalleryHelper {
 			//avoid division by zero #59972
 			$widthResize = (!empty($maxWidth)) ? $img->getWidth() / $maxWidth : 1;
 			$heightResize = (!empty($maxHeight)) ? $img->getHeight() / $maxHeight : 1;
-			
+
 			$resizeRatio = min($widthResize, $heightResize);
 
 			$thumbParams = array(
@@ -1231,7 +1231,7 @@ class WikiaPhotoGalleryHelper {
 		$ret .= Xml::closeElement('span');
 
 		// render color picker popup box
-		$ret .= Xml::openElement('div', array('class' =>'WikiaPhotoGalleryColorPickerPopUp'));
+		$ret .= Xml::openElement('div', array('class' =>'WikiaPhotoGalleryColorPickerPopUp', 'id' =>"{$id}_popup"));
 		$ret .= Xml::element('label', array(), wfMsg('wikiaPhotoGallery-preview-colorpicker-title'));
 
 		foreach($colors as $row) {

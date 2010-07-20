@@ -1906,8 +1906,13 @@ var WikiaPhotoGallery = {
 			return color;
 		}
 
-		var colorPickerPopup = colorPicker.next('.WikiaPhotoGalleryColorPickerPopUp');
-		colorPickerPopup.appendTo(colorPicker.closest('.WikiaPhotoGalleryEditorPageInner'));
+		var colorPickerPopup = $('#' + colorPicker.attr('id') + '_popup');
+		
+		if(colorPickerPopup.data('moved') !== true) {
+			//avoid z-index problems due to IE7 bad handling of stacks
+			colorPickerPopup.appendTo(colorPicker.closest('.WikiaPhotoGalleryEditorPageInner'));
+			colorPickerPopup.data('moved', true);
+		}
 
 
 		//prevent showing popups not closed before dismissing the editor
