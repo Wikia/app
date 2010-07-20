@@ -194,7 +194,7 @@ function getSitemapUrl(){
 	$r = '';
 
 	$r .= "# sitemap\n";
-	$r .= sprintf( "Sitemap: http://%s/sitemap-index.xml",  $_SERVER['SERVER_NAME'] );
+	$r .= sprintf( "Sitemap: http://%s/sitemap-index.xml\n",  $_SERVER['SERVER_NAME'] );
 
 	return $r;
 }
