@@ -1734,6 +1734,20 @@ class AutoCreateWikiPage extends SpecialPage {
 	}
 
 	/**
+	 * get load balancer data which will be used later for connecting to
+	 * database
+	 *
+	 * @param string $name -- name of database/key in load balancer configuration
+	 *
+	 * @return Mixed -- information for database connection
+	 */
+	private function getLBData( $name ) {
+		global $wgLBFactoryConf;
+		$lb = new LBFactory_Wikia( $wgLBFactoryConf );
+		return $lb->getSectionForWiki( $name );
+	}
+
+	/**
 	 * set subdomain name
 	 *
 	 * @access private
