@@ -101,9 +101,10 @@
 #navigation .menu-item {
 	border-color: #DDD;
 }
-#link_box, #link_box_dynamic {
-	background: #74B58A;
+#link_box_table {
+	background-color: #74B58A;
 }
+#link_box_table,
 #link_box_table a {
 	color: #fff;
 }
