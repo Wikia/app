@@ -57,7 +57,7 @@ class AutoCreateWikiPage extends SpecialPage {
 	const DEFAULT_USER      = 'Default';
 	const DEFAULT_DOMAIN    = "wikia.com";
 	const CACHE_LOGIN_KEY   = 'awc_beforelog';
-	const ACTIVE_CLUSTER    = "c3";
+	const ACTIVE_CLUSTER    = "c2";
 	const DEFAULT_NAME      = "Wiki";
 	const DEFAULT_WIKI_TYPE = "default";
 
