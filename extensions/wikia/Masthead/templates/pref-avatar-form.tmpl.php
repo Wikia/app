@@ -2,9 +2,9 @@
 <tr><td class="pref-label" colspan="2"><h2><?=wfMsg( 'masthead-blog-avatar-preferences-title' )?></h2></td></tr>
 <tr>
 <td class="pref-input" colspan="2">
-<table border="0" width="50" valign="top">
+<table border="0" width="100%" valign="top">
 <tr>
-	<td valign="top">
+	<td valign="top" width="<?=$imgW + 10?>px">
 		<table style="border:1px solid #DFDFDF;margin:8px 2px;width:<?=$imgW?>px;height:<?=$imgH?>px;">
 		    <tr><td valign="middle" align="center"><img height="<?=$imgH?>" width="<?=$imgW?>" src="<?=$sUserImg?>" border="0" /></td></tr>
 		</table>
@@ -93,8 +93,10 @@
 		</script>
 		</div>
 		<div style="padding:3px;" id="wkDefaultAvatarList"></div>
+		<?php if ($bUploadsPossible) { ?>
 		<div style="text-align:left;padding:3px;" id="wkUserUploadDivText"></div>
 		<div style="text-align:left;padding:3px;" id="wkUserUploadDiv"></div>
+		<?php } ?>
 	</td>
 </tr>
 </table>
