@@ -666,7 +666,7 @@ class Masthead {
 	 * @param String $html -- generated html
 	 */
 	static public function additionalUserProfilePreferences($oPrefs, &$html) {
-		global $wgUser, $wgCityId;
+		global $wgUser, $wgCityId, $wgEnableUploads, $wgUploadDirectory;
 		wfProfileIn( __METHOD__ );
 		$oAvatarObj = Masthead::newFromUser( $wgUser );
 		$aDefAvatars = $oAvatarObj->getDefaultAvatars();
@@ -675,20 +675,28 @@ class Masthead {
 			# if user is blocked - don't show avatar form
 			return true;
 		}
+		
+		// List of conditions taken from 
+		// extensions/wikia/UserProfile_NY/SpecialUploadAvatar.php */
+		// RT#53727: Avatar uploads not disabled
+		$bUploadsPossible = $wgEnableUploads && $wgUser->isAllowed( 'upload' ) && is_writeable( $wgUploadDirectory );
+//		var_dump($wgEnableUploads,$wgUser->isAllowed( 'upload' ),is_writeable( $wgUploadDirectory ));
+		
 		/**
 		 * run template
 		 */
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 		$oTmpl->set_vars( array(
-			'wgUser'		=> $wgUser,
-			'sUserAvatar'	=> $wgUser->getOption(AVATAR_USER_OPTION_NAME),
-			'cityId'		=> $wgCityId,
-			'aDefAvatars'	=> $aDefAvatars,
-			'oAvatarObj'	=> $oAvatarObj,
-			'sUserImg'		=> $oAvatarObj->getURL(),
-			'imgH'			=> AVATAR_DEFAULT_HEIGHT,
-			'imgW'			=> AVATAR_DEFAULT_WIDTH,
-			'sFieldName'	=> AVATAR_UPLOAD_FIELD,
+			'wgUser'           => $wgUser,
+			'sUserAvatar'      => $wgUser->getOption(AVATAR_USER_OPTION_NAME),
+			'cityId'           => $wgCityId,
+			'aDefAvatars'      => $aDefAvatars,
+			'oAvatarObj'       => $oAvatarObj,
+			'sUserImg'         => $oAvatarObj->getURL(),
+			'imgH'             => AVATAR_DEFAULT_HEIGHT,
+			'imgW'             => AVATAR_DEFAULT_WIDTH,
+			'sFieldName'       => AVATAR_UPLOAD_FIELD,
+			'bUploadsPossible' => $bUploadsPossible,
 		) );
 
 		$html .= wfHidden( 'MAX_FILE_SIZE', AVATAR_MAX_SIZE );

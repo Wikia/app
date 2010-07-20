@@ -191,3 +191,7 @@ div.blog-comment .avatar {
 	width: 54px;
 	z-index: 200;
 }
+
+#wkUserChooseDivText {
+	width: auto;
+}
