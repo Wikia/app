@@ -1,5 +1,5 @@
 == Changes since 201007.4 ==
-* rt#60027: Placeholer overlays on caption in gallery editor preview with orientation none
+* rt#60027: Placeholer overlays on caption in gallery editor preview with orientation none (federico)
 * rt#60020: Photo Gallery - change default aspect ratio to 1:1 (federico)
 * rt#59972: Division by zero in WikiaPhotoGallery (federico)
 * rt#56415: Send "other" to "entertainment" (federico)
