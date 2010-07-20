@@ -107,7 +107,7 @@ if (!empty($aCategories) && is_array($aCategories) && ( $mType != "answers" ) ):
 <?php
 	endforeach
 ?>
-				<option value="9"><?=wfMsg('autocreatewiki-category-other')?></option>
+				<option value="3"><?=wfMsg('autocreatewiki-category-other')?></option>
 				</select>
 				<div class="error" style="display: <?= (!empty($mPostedErrors['wiki-category'])) ? 'block' : 'none'?>;" id="wiki-category-error"><?=@$mPostedErrors['wiki-category']?></div>				
 			</li>
