@@ -1216,6 +1216,11 @@ EOF;
 		wfProfileIn( __METHOD__ );
 		$links = array();
 
+		// rarely ever happens, but it does
+		if ( empty( $tpl->data['content_actions'] ) ) {
+			return $links;
+		}
+
 		# @todo: might actually be useful to move this to a global var and handle this in extension files --TOR
 		$force_right = array( 'userprofile', 'talk', 'TheoryTab' );
 		foreach($tpl->data['content_actions'] as $key => $val) {
