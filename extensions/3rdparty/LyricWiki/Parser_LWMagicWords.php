@@ -155,7 +155,7 @@ function getLyricWikiVariables()
 }
  
 $wgHooks['LanguageGetMagic'][] = 'wfLyricWikiMagicWords';
-function wfLyricWikiMagicWords(&$aWikiWords, &$langID)
+function wfLyricWikiMagicWords(&$aWikiWords, $langID)
 {
 	$lwVars = LyricWikiVariableDefaults();
 	foreach($lwVars as $key=>$value)
