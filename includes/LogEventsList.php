@@ -205,6 +205,7 @@ class LogEventsList {
 	public function logLine( $row ) {
 		global $wgLang, $wgUser, $wgContLang;
 
+		$row->user_name = $this->fixUserName($row->user_name, $row->log_user);
 		$title = Title::makeTitle( $row->log_namespace, $row->log_title );
 		$classes = array( "mw-logline-{$row->log_type}" );
 		$time = $wgLang->timeanddate( wfTimestamp(TS_MW, $row->log_timestamp), true );
@@ -478,6 +479,23 @@ class LogEventsList {
 		}
 		return false;
 	}
+	
+	/**
+	 * if user_name is empty - use User class to get his name
+	 * @param $user_name string
+	 * @param $user_id integer
+	 * @return string
+	 */
+	public function fixUserName($user_name, $user_id) {
+		if ( empty($user_name) ) {
+			$oUser = User::newFromID($user_id);
+			if ( $oUser instanceof User ) {
+				$user_name = $oUser->getName();
+			}
+		}
+		
+		return $user_name;
+	}	
 }
 
 /**
@@ -636,7 +654,7 @@ class LogPager extends ReverseChronologicalPager {
 	}
 
 	public function getQueryInfo() {
-		$this->mConds[] = 'user_id = log_user';
+		#$this->mConds[] = 'user_id = log_user';
 		# Don't use the wrong logging index
 		if( $this->title || $this->pattern || $this->user ) {
 			$index = array( 'USE INDEX' => array( 'logging' => array('page_time','user_time') ) );
@@ -651,7 +669,7 @@ class LogPager extends ReverseChronologicalPager {
 				'log_comment', 'log_id', 'log_deleted', 'log_timestamp', 'user_name', 'user_editcount' ),
 			'conds' => $this->mConds,
 			'options' => $index,
-			'join_conds' => array( 'user' => array( 'INNER JOIN', 'user_id=log_user' ) ),
+			'join_conds' => array( 'user' => array( 'LEFT JOIN', 'user_id=log_user' ) ),
 		);
 
 		ChangeTags::modifyDisplayQuery( $info['tables'], $info['fields'], $info['conds'],
@@ -670,6 +688,10 @@ class LogPager extends ReverseChronologicalPager {
 		if( $this->getNumRows() > 0 ) {
 			$lb = new LinkBatch;
 			while( $row = $this->mResult->fetchObject() ) {
+				$row->user_name = $this->mLogEventsList->fixUserName($row->user_name, $row->log_user);
+				if ( empty($row->user_name) ) {
+					continue;
+				}
 				$lb->add( $row->log_namespace, $row->log_title );
 				$lb->addObj( Title::makeTitleSafe( NS_USER, $row->user_name ) );
 				$lb->addObj( Title::makeTitleSafe( NS_USER_TALK, $row->user_name ) );
