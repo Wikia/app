@@ -136,6 +136,7 @@ ul#leaderboard #points-label {
 .article-sidebar .badge-text {
 	margin-left:92px;
 	width: auto;
+	min-height: 82px;
 }
 
 .article-sidebar .badge-text p {

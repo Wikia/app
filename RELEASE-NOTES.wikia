@@ -1,4 +1,5 @@
 == Changes since 201007.4 ==
+* rt#57106: Badges jumps if messages are short since last update (federico)
 * rt#59236: Photo Gallery: color picker popup is unreliable (federico)
 * rt#60027: Placeholer overlays on caption in gallery editor preview with orientation none (federico)
 * rt#60020: Photo Gallery - change default aspect ratio to 1:1 (federico)
