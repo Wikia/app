@@ -1,16 +1,9 @@
 <?php
 
 set_include_path(get_include_path().PATH_SEPARATOR.dirname( __FILE__ )."/lib".PATH_SEPARATOR.dirname( __FILE__ )."/lib/Stomp".PATH_SEPARATOR.dirname( __FILE__ )."/lib/JSON");
+require "./includes/api/ApiFormatJson_json.php";
 require_once "Stomp.php";
 
-if ( !function_exists('json_encode') ) {
-	require_once "JSON.php";
-
-	function json_encode($content) {
-		$json = new Services_JSON;
-		return $json->encode($content);
-	}
-}
 
 $key = "wikia.apache.stats.";
 $params = $_GET;
@@ -20,12 +13,13 @@ if ( empty($_GET['c']) || empty($_GET['x']) ) {
 $queue = (empty($_GET['db_test'])) ? $key : "";
 $queue .= "www-stats";
 try {
+	$json = new Services_JSON;
 	$stomp = new Stomp( (!empty($_GET['db_test'])) ? 'tcp://10.10.10.150:61613' : 'tcp://10.8.2.221:61613' );
 	$stomp->connect( 'guest', 'guest' );
 	$stomp->sync = false;
 	$stomp->send(
 		$queue,
-		json_encode( $params ),
+		$json->encode( $params ),
 		array( 'exchange' => 'amq.topic', 'bytes_message' => 1 )
 	);
 }
