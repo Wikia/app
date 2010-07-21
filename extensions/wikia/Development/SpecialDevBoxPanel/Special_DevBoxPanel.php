@@ -128,6 +128,7 @@ function wfDevBoxForceWiki(&$wikiFactoryLoader){
  * Example: muppet.owen.wikia-dev.com -> muppet.wikia.com
  */
 function getForcedWikiValue(){
+	if (!isset($_SERVER['HTTP_HOST'])) return "";
 	if (count (explode(".", $_SERVER['HTTP_HOST'])) == 4) {
 		list($override, $developer, $wikia_dev, $com) = explode(".", $_SERVER['HTTP_HOST']);
 		//$_SERVER['HTTP_HOST'] == "$developer.wikia-dev.com";
