@@ -52,8 +52,9 @@ if ($wgCreatePageCoverRedLinks) {
 }
 
 /* special page init */
-$wgSpecialPages ['createpage'] = array('SpecialPage', 'Createpage', 'createpage', true, 'wfCreatePageSpecial', false) ;
+$wgSpecialPages ['Createpage'] = array('SpecialPage', 'Createpage', 'createpage', true, 'wfCreatePageSpecial', false) ;
 $wgSpecialPageGroups['Createpage'] = 'pagetools';
+$wgExtensionAliasesFiles['Createpage'] = dirname(__FILE__) . '/SpecialCreatePage.alias.php';
 
 // handle ConfirmEdit captcha, only for CreatePage, which will be treated a bit differently (edits in special page)
 function wfCreatePageConfirmEdit( &$captcha, &$editPage, $newtext, $section, $merged, &$result ) {
