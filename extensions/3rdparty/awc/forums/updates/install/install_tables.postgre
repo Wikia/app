@@ -1,0 +1,587 @@
+CREATE OR REPLACE FUNCTION awc_f_member_titles()
+RETURNS void
+LANGUAGE plpgsql AS
+$mw$
+BEGIN
+IF NOT exists(select relname FROM pg_class WHERE relname = 'awc_f_member_titles') THEN
+CREATE TABLE awc_f_member_titles (
+  memtitle_id SERIAL,
+  memtitle_title varchar(255) DEFAULT NULL,
+  memtitle_img varchar(255) DEFAULT NULL,
+  memtitle_postcount INTEGER default '0',
+  memtitle_css varchar(255) DEFAULT NULL,
+  PRIMARY KEY (memtitle_id));
+END IF;
+END;
+$mw$;
+select awc_f_member_titles();
+drop function awc_f_member_titles();
+
+
+CREATE OR REPLACE FUNCTION awc_f_watchthreads()
+RETURNS void
+LANGUAGE plpgsql AS
+$mw$
+BEGIN
+IF NOT exists(select relname FROM pg_class WHERE relname = 'awc_f_watchthreads') THEN
+CREATE TABLE awc_f_watchthreads (
+  wtcht_thread_id INTEGER default '0',
+  wtcht_mem_id INTEGER default '0',
+  wtcht_todo varchar(255) DEFAULT NULL,
+  wtcht_sent INTEGER default '0');
+END IF;
+END;
+$mw$;
+select awc_f_watchthreads();
+drop function awc_f_watchthreads();
+
+
+CREATE OR REPLACE FUNCTION awc_f_watchforums()
+RETURNS void
+LANGUAGE plpgsql AS
+$mw$
+BEGIN
+IF NOT exists(select relname FROM pg_class WHERE relname = 'awc_f_watchforums') THEN
+CREATE TABLE awc_f_watchforums (
+  wtchf_forum_id INTEGER default '0',
+  wtchf_mem_id INTEGER default '0',
+  wtchf_todo varchar(255) DEFAULT NULL,
+  wtchf_sent INTEGER default '0');
+END IF;
+END;
+$mw$;
+select awc_f_watchforums();
+drop function awc_f_watchforums();
+
+
+CREATE OR REPLACE FUNCTION awc_f_threads()
+RETURNS void
+LANGUAGE plpgsql AS
+$mw$
+BEGIN
+IF NOT exists(select relname FROM pg_class WHERE relname = 'awc_f_threads') THEN
+CREATE TABLE awc_f_threads (
+  t_id SERIAL,
+  t_forumid INTEGER DEFAULT NULL,
+  t_postid INTEGER DEFAULT NULL,
+  t_ann INTEGER default '0',
+  t_pin INTEGER default '0',
+  t_status INTEGER default '0',
+  t_name varchar(255) default '',
+  t_topics INTEGER default '0',
+  t_hits INTEGER default '0',
+  t_starter varchar(255) default '',
+  t_starterid INTEGER DEFAULT NULL,
+  t_lastdate TIMESTAMP default NULL,
+  t_lastuser varchar(255) default '',
+  t_lastuserid INTEGER DEFAULT NULL,
+  t_lasttitle varchar(255) default '',
+  t_date TIMESTAMP default NULL,
+  t_perm INTEGER default '0',
+  t_poll INTEGER DEFAULT '0',
+  t_wikipageid INTEGER DEFAULT NULL,
+  t_wiki_pageid INTEGER DEFAULT NULL,
+  t_pollopen INTEGER DEFAULT NULL,
+  PRIMARY KEY (t_id));
+END IF;
+END;
+$mw$;
+select awc_f_threads();
+drop function awc_f_threads();
+
+
+CREATE OR REPLACE FUNCTION awc_f_theme_tplt_history()
+RETURNS void
+LANGUAGE plpgsql AS
+$mw$
+BEGIN
+IF NOT exists(select relname FROM pg_class WHERE relname = 'awc_f_theme_tplt_history') THEN
+CREATE TABLE awc_f_theme_tplt_history (
+  tplth_id SERIAL,
+  tplth_tplt_id INTEGER default '0',
+  tplth_ver varchar(255) DEFAULT NULL,
+  tplth_code TEXT,
+  tplth_forum_ver varchar(255) DEFAULT NULL,
+  tplth_date TIMESTAMP default NULL,
+  tplth_find TEXT,
+  tplth_replace TEXT,
+  tplth_thmn_id INTEGER default '0',
+  PRIMARY KEY (tplth_id));
+END IF;
+END;
+$mw$;
+select awc_f_theme_tplt_history();
+drop function awc_f_theme_tplt_history();
+
+
+CREATE OR REPLACE FUNCTION awc_f_theme_tplt()
+RETURNS void
+LANGUAGE plpgsql AS
+$mw$
+BEGIN
+IF NOT exists(select relname FROM pg_class WHERE relname = 'awc_f_theme_tplt') THEN
+CREATE TABLE awc_f_theme_tplt (
+  tplt_id SERIAL,
+  tplt_thmn_id INTEGER default '0',
+  tplt_section varchar(255) default '',
+  tplt_custom INTEGER DEFAULT '0',
+  tplt_function varchar(255) default '',
+  tplt_code TEXT NOT NULL,
+  tplt_ver varchar(100) DEFAULT '1.0.0',
+  tplt_forum_ver varchar(100) DEFAULT '2.5.x',
+  PRIMARY KEY (tplt_id));
+END IF;
+END;
+$mw$;
+select awc_f_theme_tplt();
+drop function awc_f_theme_tplt();
+
+
+CREATE OR REPLACE FUNCTION awc_f_theme_names()
+RETURNS void
+LANGUAGE plpgsql AS
+$mw$
+BEGIN
+IF NOT exists(select relname FROM pg_class WHERE relname = 'awc_f_theme_names') THEN
+CREATE TABLE awc_f_theme_names (
+  thmn_id SERIAL,
+  thmn_title varchar(255) DEFAULT NULL,
+  thmn_when TIMESTAMP default NULL,
+  thmn_who varchar(255) DEFAULT NULL,
+  thmn_where varchar(255) DEFAULT NULL,
+  thmn_what varchar(255) DEFAULT NULL,
+  thmn_item_count INTEGER default '0',
+  PRIMARY KEY (thmn_id));
+END IF;
+END;
+$mw$;
+select awc_f_theme_names();
+drop function awc_f_theme_names();
+
+
+CREATE OR REPLACE FUNCTION awc_f_theme_css()
+RETURNS void
+LANGUAGE plpgsql AS
+$mw$
+BEGIN
+IF NOT exists(select relname FROM pg_class WHERE relname = 'awc_f_theme_css') THEN
+CREATE TABLE awc_f_theme_css (
+  css_id SERIAL,
+  css_thm_id INTEGER default '0',
+  css_thmn_id INTEGER default '0',
+  css_section varchar(255) DEFAULT NULL,
+  css_ver varchar(255) DEFAULT NULL,
+  css_att TEXT,
+  css_code TEXT,
+  css_custom INTEGER default '0',
+  css_forumver varchar(255) DEFAULT NULL,
+  css_date TIMESTAMP DEFAULT NULL,
+  PRIMARY KEY (css_id));
+END IF;
+END;
+$mw$;
+select awc_f_theme_css();
+drop function awc_f_theme_css();
+
+
+CREATE OR REPLACE FUNCTION awc_f_stats()
+RETURNS void
+LANGUAGE plpgsql AS
+$mw$
+BEGIN
+IF NOT exists(select relname FROM pg_class WHERE relname = 'awc_f_stats') THEN
+CREATE TABLE awc_f_stats (
+  stats_id SERIAL,
+  stat_mems INTEGER default '0',
+  stat_threads INTEGER default '0',
+  stat_posts INTEGER default '0',
+  stat_maxusers INTEGER default '0',
+  PRIMARY KEY (stats_id));
+END IF;
+END;
+$mw$;
+select awc_f_stats();
+drop function awc_f_stats();
+
+
+CREATE OR REPLACE FUNCTION awc_f_sessions()
+RETURNS void
+LANGUAGE plpgsql AS
+$mw$
+BEGIN
+IF NOT exists(select relname FROM pg_class WHERE relname = 'awc_f_sessions') THEN
+CREATE TABLE awc_f_sessions (
+  ses_name varchar(255) default '0',
+  ses_id INTEGER DEFAULT '0',
+  ses_where varchar(255) DEFAULT NULL,
+  ses_guest INTEGER default '1',
+  ses_when INTEGER  default '0',
+  ses_browser varchar(255) DEFAULT NULL,
+  ses_bot INTEGER DEFAULT '1',
+  ses_type varchar(255) DEFAULT NULL,
+  ses_perm varchar(255) DEFAULT NULL,
+  PRIMARY KEY (ses_name));
+END IF;
+END;
+$mw$;
+select awc_f_sessions();
+drop function awc_f_sessions();
+
+
+CREATE OR REPLACE FUNCTION awc_f_posts()
+RETURNS void
+LANGUAGE plpgsql AS
+$mw$
+BEGIN
+IF NOT exists(select relname FROM pg_class WHERE relname = 'awc_f_posts') THEN
+CREATE TABLE awc_f_posts (
+  p_id SERIAL,
+  p_threadid INTEGER DEFAULT NULL,
+  p_forumid INTEGER DEFAULT NULL,
+  p_thread_start INTEGER default '0',
+  p_title varchar(255) default '',
+  p_post TEXT NOT NULL,
+  p_user varchar(255) default '',
+  p_userid INTEGER DEFAULT NULL,
+  p_editwhy varchar(255) default '',
+  p_editwho varchar(255) default '',
+  p_editdate TIMESTAMP default NULL,
+  p_date TIMESTAMP default NULL,
+  t_wikipage_id varchar(10) DEFAULT NULL,
+  p_wikipage_id INTEGER DEFAULT NULL,
+  p_wiki_ver_id INTEGER DEFAULT NULL,
+  p_wiki_hidden BYTEA default '',
+  PRIMARY KEY (p_id));
+END IF;
+END;
+$mw$;
+select awc_f_posts();
+drop function awc_f_posts();
+
+
+CREATE OR REPLACE FUNCTION awc_f_post_edits()
+RETURNS void
+LANGUAGE plpgsql AS
+$mw$
+BEGIN
+IF NOT exists(select relname FROM pg_class WHERE relname = 'awc_f_post_edits') THEN
+CREATE TABLE awc_f_post_edits (
+  pe_id SERIAL,
+  pe_pid INTEGER DEFAULT NULL,
+  pe_post TEXT NOT NULL,
+  pe_title varchar(255) DEFAULT NULL,
+  pe_who varchar(255) DEFAULT NULL,
+  pe_whoid INTEGER DEFAULT NULL,
+  pe_when TIMESTAMP default NULL,
+  PRIMARY KEY (pe_id));
+END IF;
+END;
+$mw$;
+select awc_f_post_edits();
+drop function awc_f_post_edits();
+
+
+CREATE OR REPLACE FUNCTION awc_f_polls()
+RETURNS void
+LANGUAGE plpgsql AS
+$mw$
+BEGIN
+IF NOT exists(select relname FROM pg_class WHERE relname = 'awc_f_polls') THEN
+CREATE TABLE awc_f_polls (
+  poll_id SERIAL,
+  poll_threadid INTEGER DEFAULT NULL,
+  poll_forumid INTEGER DEFAULT NULL,
+  poll_q varchar(255) DEFAULT NULL,
+  poll_num_options INTEGER default '0',
+  poll_choice TEXT,
+  poll_whovoted TEXT,
+  poll_a varchar(255) DEFAULT NULL,
+  poll_open INTEGER default '0',
+  poll_start_date TIMESTAMP default NULL,
+  poll_close_date TIMESTAMP default NULL,
+  poll_perm INTEGER default '0',
+  PRIMARY KEY (poll_id));
+END IF;
+END;
+$mw$;
+select awc_f_polls();
+drop function awc_f_polls();
+
+
+CREATE OR REPLACE FUNCTION awc_f_pms_info()
+RETURNS void
+LANGUAGE plpgsql AS
+$mw$
+BEGIN
+IF NOT exists(select relname FROM pg_class WHERE relname = 'awc_f_pms_info') THEN
+CREATE TABLE awc_f_pms_info (
+  pmi_id SERIAL,
+  pmi_pmid INTEGER default '0',
+  pmi_sender varchar(255) default '',
+  pmi_sender_id INTEGER default '0',
+  pmi_receipt varchar(255) DEFAULT NULL,
+  pmi_receipt_id INTEGER default '0',
+  pmi_send_date TIMESTAMP default NULL,
+  pmi_read_date TIMESTAMP default NULL,
+  pmi_read INTEGER default '0',
+  pmi_folder_id INTEGER default '0',
+  PRIMARY KEY (pmi_id));
+END IF;
+END;
+$mw$;
+select awc_f_pms_info();
+drop function awc_f_pms_info();
+
+
+CREATE OR REPLACE FUNCTION awc_f_pms()
+RETURNS void
+LANGUAGE plpgsql AS
+$mw$
+BEGIN
+IF NOT exists(select relname FROM pg_class WHERE relname = 'awc_f_pms') THEN
+CREATE TABLE awc_f_pms (
+  pm_id SERIAL,
+  pm_title varchar(255) DEFAULT NULL,
+  pm_text TEXT,
+  PRIMARY KEY (pm_id));
+END IF;
+END;
+$mw$;
+select awc_f_pms();
+drop function awc_f_pms();
+
+
+CREATE OR REPLACE FUNCTION awc_f_mems()
+RETURNS void
+LANGUAGE plpgsql AS
+$mw$
+BEGIN
+IF NOT exists(select relname FROM pg_class WHERE relname = 'awc_f_mems') THEN
+CREATE TABLE awc_f_mems (
+  m_id INTEGER default '0',
+  m_idname varchar(255) DEFAULT NULL,
+  m_sig TEXT,
+  m_displaysig INTEGER DEFAULT '1',
+  m_displaysigonce INTEGER DEFAULT '0',
+  m_topics INTEGER DEFAULT '0',
+  m_posts INTEGER DEFAULT '0',
+  m_viewaadv INTEGER DEFAULT '1',
+  m_adv_size varchar(255) default '',
+  m_advtag varchar(255) DEFAULT NULL,
+  m_adv TEXT,
+  m_pmtotal INTEGER DEFAULT '0',
+  m_pmunread INTEGER DEFAULT '0',
+  m_pmsave INTEGER DEFAULT '0',
+  m_pmsent INTEGER DEFAULT '0',
+  m_pminbox INTEGER DEFAULT '0',
+  m_pmoptions TEXT,
+  m_pmpop INTEGER DEFAULT '0',
+  m_nickname varchar(255) DEFAULT NULL,
+  m_forumoptions TEXT,
+  m_forum_subsrib TEXT,
+  m_thread_subsrib TEXT,
+  m_lasthere TIMESTAMP DEFAULT NULL,
+  m_lasttouch TIMESTAMP DEFAULT NULL,
+  m_where varchar(255) default '',
+  m_sessions varchar(255) DEFAULT NULL,
+  m_menu_options TEXT,
+  m_customtitle varchar(255) DEFAULT NULL,
+  m_title varchar(255) DEFAULT '',
+  PRIMARY KEY (m_id));
+END IF;
+END;
+$mw$;
+select awc_f_mems();
+drop function awc_f_mems();
+
+
+CREATE OR REPLACE FUNCTION awc_f_theme_css_history()
+RETURNS void
+LANGUAGE plpgsql AS
+$mw$
+BEGIN
+IF NOT exists(select relname FROM pg_class WHERE relname = 'awc_f_theme_css_history') THEN
+CREATE TABLE awc_f_theme_css_history (
+  cssh_id SERIAL,
+  cssh_cssid INTEGER default '0',
+  cssh_ver varchar(255) DEFAULT NULL,
+  cssh_code TEXT,
+  cssh_forum_ver varchar(255) DEFAULT NULL,
+  cssh_date TIMESTAMP default NULL,
+  PRIMARY KEY (cssh_id));
+END IF;
+END;
+$mw$;
+select awc_f_theme_css_history();
+drop function awc_f_theme_css_history();
+
+
+CREATE OR REPLACE FUNCTION awc_f_langs()
+RETURNS void
+LANGUAGE plpgsql AS
+$mw$
+BEGIN
+IF NOT exists(select relname FROM pg_class WHERE relname = 'awc_f_langs') THEN
+CREATE TABLE awc_f_langs (
+  lang_id SERIAL,
+  lang_code varchar(255) default '',
+  lang_name varchar(255) DEFAULT NULL,
+  lang_owner_info TEXT,
+  lang_char varchar(255) DEFAULT NULL,
+  lang_txt_forum TEXT,
+  lang_txt_thread TEXT,
+  lang_txt_admin TEXT,
+  lang_txt_mem TEXT,
+  lang_txt_tag TEXT,
+  lang_txt_search TEXT,
+  lang_update TEXT,
+  lang_txt_errormsg TEXT,
+  lang_txt_forum_raw TEXT,
+  lang_txt_admin_raw TEXT,
+  lang_txt_mem_raw TEXT,
+  lang_txt_tag_raw TEXT,
+  lang_txt_search_raw TEXT,
+  lang_txt_errormsg_raw TEXT,
+  lang_txt_thread_raw TEXT,
+  lang_update_raw TEXT,
+  lang_txt_redirects TEXT,
+  lang_txt_redirects_raw TEXT,
+  PRIMARY KEY (lang_id));
+END IF;
+END;
+$mw$;
+select awc_f_langs();
+drop function awc_f_langs();
+
+
+CREATE OR REPLACE FUNCTION awc_f_forums()
+RETURNS void
+LANGUAGE plpgsql AS
+$mw$
+BEGIN
+IF NOT exists(select relname FROM pg_class WHERE relname = 'awc_f_forums') THEN
+CREATE TABLE awc_f_forums (
+  f_id SERIAL,
+  f_parentid INTEGER DEFAULT NULL,
+  f_name varchar(255) default '',
+  f_desc varchar(255) default '',
+  f_threads INTEGER default '0',
+  f_replies INTEGER default '0',
+  f_lastdate TIMESTAMP default NULL,
+  f_lastuser varchar(255) default '',
+  f_lastuserid INTEGER DEFAULT NULL,
+  f_lasttitle varchar(255) default '',
+  f_threadid INTEGER DEFAULT NULL,
+  f_order INTEGER default '0',
+  f_perm varchar(255) default '0',
+  f_top_tmplt varchar(255) DEFAULT NULL,
+  f_posting_mesage_tmpt varchar(255) DEFAULT NULL,
+  f_wiki_read_perm TEXT,
+  f_wiki_write_perm TEXT,
+  f_passworded INTEGER DEFAULT '0',
+  f_password BYTEA DEFAULT NULL,
+  PRIMARY KEY (f_id));
+END IF;
+END;
+$mw$;
+select awc_f_forums();
+drop function awc_f_forums();
+
+
+CREATE OR REPLACE FUNCTION awc_f_emotions()
+RETURNS void
+LANGUAGE plpgsql AS
+$mw$
+BEGIN
+IF NOT exists(select relname FROM pg_class WHERE relname = 'awc_f_emotions') THEN
+CREATE TABLE awc_f_emotions (
+  e_id SERIAL,
+  e_code varchar(255) DEFAULT '',
+  e_pic varchar(255) DEFAULT '',
+  PRIMARY KEY (e_id));
+END IF;
+END;
+$mw$;
+select awc_f_emotions();
+drop function awc_f_emotions();
+
+
+CREATE OR REPLACE FUNCTION awc_f_config()
+RETURNS void
+LANGUAGE plpgsql AS
+$mw$
+BEGIN
+IF NOT exists(select relname FROM pg_class WHERE relname = 'awc_f_config') THEN
+CREATE TABLE awc_f_config (
+  id_configforum SERIAL,
+  q varchar(255) default '',
+  a varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL,
+  section varchar(255) default '',
+  typeis varchar(255) DEFAULT NULL,
+  PRIMARY KEY (id_configforum));
+END IF;
+END;
+$mw$;
+select awc_f_config();
+drop function awc_f_config();
+
+
+CREATE OR REPLACE FUNCTION awc_f_anns()
+RETURNS void
+LANGUAGE plpgsql AS
+$mw$
+BEGIN
+IF NOT exists(select relname FROM pg_class WHERE relname = 'awc_f_anns') THEN
+CREATE TABLE awc_f_anns (
+  ann_id INTEGER default '0');
+END IF;
+END;
+$mw$;
+select awc_f_anns();
+drop function awc_f_anns();
+
+
+CREATE OR REPLACE FUNCTION awc_f_cats()
+RETURNS void
+LANGUAGE plpgsql AS
+$mw$
+BEGIN
+IF NOT exists(select relname FROM pg_class WHERE relname = 'awc_f_cats') THEN
+CREATE TABLE awc_f_cats (
+  cat_id SERIAL,
+  cat_name varchar(255) default '',
+  cat_desc varchar(255) default '',
+  cat_order INTEGER default '0',
+  cat_perm varchar(255) default '0',
+  c_canread TEXT,
+  c_wiki_perm TEXT,
+  PRIMARY KEY (cat_id));
+END IF;
+END;
+$mw$;
+select awc_f_cats();
+drop function awc_f_cats();
+
+
+CREATE OR REPLACE FUNCTION awc_f_theme()
+RETURNS void
+LANGUAGE plpgsql AS
+$mw$
+BEGIN
+IF NOT exists(select relname FROM pg_class WHERE relname = 'awc_f_theme') THEN
+CREATE TABLE awc_f_theme (
+  thm_id SERIAL,
+  thm_title varchar(255) DEFAULT NULL,
+  thm_css_id INTEGER default '0',
+  thm_tplt_id INTEGER default '0',
+  thm_who varchar(255) DEFAULT NULL,
+  thm_where varchar(255) DEFAULT NULL,
+  thm_when TIMESTAMP default NULL,
+  PRIMARY KEY (thm_id));
+END IF;
+END;
+$mw$;
+select awc_f_theme();
+drop function awc_f_theme();
+
+

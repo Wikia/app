@@ -1,0 +1,968 @@
+/*  Wiki Changes */
+
+/*  get rid of the little arrows by exturnal links - Firefox */
+#bodyContent a[href ^="http://"] {
+    background: none;
+    padding-right: 0px;
+}
+
+/*  get rid of the little arrows by exturnal links - IE & Opera */
+#bodyContent a.external {
+	background: none;
+	padding-right: 0px;
+}
+
+
+/* bypass/change wiki's top tabs so they the first letter is Capital */
+#p-cactions li a {
+    text-transform: capitalize;
+}
+
+#contentSub{
+margin: 0;
+padding: 2px;
+padding-bottom: 6px;
+}
+
+
+pre{
+    margin:0px; 
+    padding:5px;
+    padding-bottom:20px;  
+    
+    width: 650px;
+    overflow:auto;
+    overflow-y: visible;
+    line-height: 100%;
+    
+    
+}
+/* END Wiki Changes */
+
+
+
+/*    */
+.page_jumps_top{
+
+    white-space: nowrap;
+    display: inline;
+    margin-top: 0px; 
+    margin-bottom: 0px; 
+    margin-right: 1px;
+    border: 1px solid #aaa;
+    border-bottom: 0px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 3px;
+    color: #000; 
+}
+
+/*    */
+.page_jumps_top:hover {
+    background: #ccc ;
+}
+
+/*    */
+.page_jumps_bot{ 
+    border: 1px solid #aaa;
+    border-top: 0px;
+    padding-top: 2px;
+    margin-left: 1px;
+    font-size: 100%;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 2px;
+}
+
+/*    */
+.page_jumps_bot:hover {
+    background: #ccc ;
+}
+
+/*    */
+.top_page_jumps_666{
+margin-top: -10px;
+        /* float: right; */
+        
+}
+
+/*    */
+.page_jumps_holder_thread_bot{
+    border-bottom: 1px solid #aaa;
+}
+
+/*    */
+.page_jumps_holderBot{
+
+}
+
+/*    */
+.page_jumpsForthreadInforumListing{
+    float: right;
+    margin: 0 0 0 0;
+        
+}
+
+
+/*    */
+.pagejumps_PostOnForumPage{
+    border: 1px solid #aaa;
+    margin-left: 3px;
+    font-size: 100%;
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-bottom: 0px; 
+}
+
+/*    */
+.pagejumps_PostOnForumPage:hover {
+    background: #ccc ;
+}
+
+
+
+
+
+/* Control... TD's ... Thread Title -Replies- Views - Started By - Last Action
+id tag is placed in the TR's */
+/*    */
+.thread_col_head{
+    border: 1px solid #aaa;
+    margin: 0px;
+    padding: 5px;
+    white-space: nowrap;
+}
+
+/*    */
+.forum_posts {
+    border: 1px solid #aaa;
+    margin: 0em;
+    padding: 0em;
+}
+
+/*    */
+.thread_lastaction{
+    font-size: 84%;
+    text-align: right;
+    white-space: nowrap;
+    display: inline;
+}
+
+
+
+/* threads */
+
+/*    */
+.group_text {
+    font-size: 84%;
+    width: auto;
+    padding: 0px;
+}
+
+/*    */
+.edited_on{
+    border-top: 1px solid #aaa;
+    margin: 0px;
+    margin-bottom: 0px;
+    padding-left: 5px;
+    font-size: 12px;
+}
+
+/*    */
+.post_title {
+   
+}
+ 
+ /*    */
+.post_date {
+    border-bottom: 1px solid #aaa;
+    font-size: 90%;
+    padding-left: 2px;
+}
+
+/*    */
+.post_td{
+    background-color: #f9f9f9;
+    border-left: 1px solid #aaa;
+    margin: .0em;
+    padding: .0em;
+}
+
+/*    */
+.post_body{
+    padding: .5em;
+    padding-top: 0px;
+}
+
+/*    */
+.post{
+    background-color: #f9f9f9;
+    border-left: 1px solid #aaa;
+    padding: .0em;
+} 
+
+/*    */
+.post0{
+    background-color: #E5E5E5;
+    border-left: 1px solid #aaa;
+    padding: .0em;
+}
+
+/*    */
+.post1{
+    background-color: #f9f9f9;
+    border-left: 1px solid #aaa;
+    padding-bottom: .0em;
+}  
+
+/*    */
+.post_footer{ /* post, quote, edit buttons */
+    margin: 0.em;
+    padding: .7em;
+    padding-bottom: 0em;
+}
+
+/*    */
+.mem_name{
+    border-bottom: 1px solid #aaa;
+    margin: 0.em;
+    padding: .4em;
+}
+
+/*    */
+#user_options{
+    position: absolute;
+    margin: 0em;
+    width:150px;
+    left: 2.0em;
+    padding: .0em;
+    z-index: 2;
+}
+
+/*    */
+.user_options_row{
+    border: 1px solid #aaa;
+    background: #fff ;
+    padding: .3em;
+}
+
+
+/*    */
+.t_userinfo{
+    white-space:nowrap;
+    text-align: left;
+    margin: 0.em;
+    padding: .7em;
+    padding-bottom: 0em;
+}
+
+/*    */
+.adv{
+    border: 0px;
+    margin: 0em;
+    padding: 0em;
+}
+
+/*    */
+.thread_sig{
+    border-top: 2px solid #aaa;
+    margin: 3px;
+    padding-left: 5px;
+}
+
+/*    */
+.sticky{
+    font-style: italic;
+    border: 1px solid #aaa;
+    border-top: 0px;
+    background-color:  #ffa; /* #ffa; e2ffe2 */
+    padding: 2px;
+    font-size: 95%;
+}
+
+/*    */
+#options_menu{
+    margin: 0em;
+    position: absolute;
+    border: 1px solid #aaa;
+    right: 1.0em;
+    z-index: 2;
+    background-color:  #fff;
+}
+
+
+
+/*    */
+#subscribe_menu{
+    position: absolute;
+    background: #ccc ;
+    border: 1px solid #aaa;
+    border-top: 0px;
+    margin: 0em;
+    padding: 5px;
+    padding-top: 0px;
+    top:auto;
+    right:65px;
+    z-index: 2;
+}
+
+#memcp{
+    position:absolute;
+    top:auto;
+    width: 65px;
+    right:65px;
+    z-index: 2;
+}
+
+#memcp TD{
+    margin: 0em;
+    border: 1px solid #aaa;
+    border-top: 0px;
+    padding: 3px;
+    background-color:  #fff;
+    right:65px;
+}
+
+
+
+
+/*    */
+.drop_down_buttons:hover {
+    background: #ccc ;
+}
+
+/*    */
+.drop_down_buttons {
+    margin: 0em;
+    white-space: nowrap;
+    border-bottom: 1px solid #aaa;
+    border-top: 0px;
+    padding: 5px;
+    color: #000;
+    text-align: center;
+    background: #fff ;
+}
+
+/*    */
+.mod_menu_row{
+    text-align: left;
+}
+
+/* END threads */
+
+
+
+/*    */
+#row_info td{
+	border: 1px solid #aaa;
+	border-top: 0px;
+	background-color: #f9f9f9;
+	padding: 5px;
+	font-size: 95%;
+}
+
+
+
+/*    */
+.cat_forumrows {
+    border: 1px solid #aaa;
+    background-color: #f9f9f9;
+    padding: 5px;
+    font-size: 95%;
+}
+
+
+ 
+
+/*  Announcement headers on forums page  */
+#annc{
+	border: 1px solid #000;
+	background-color: red;
+	padding: 0px;
+}
+
+
+/* forums description for main listing under the categorys */
+#cat_forumdisc {
+    font-size: 84%;
+    color: #7d7d7d;
+    margin-left: 10px;
+    width: auto;
+}
+
+
+
+
+/*  text for forums description
+and for the 'Last Action' cols  */
+#small_desc {
+    font-size: 84%;
+    color: #7d7d7d;
+	margin-left: 10px;
+    width: auto;
+}
+
+/*    */
+#cat_list_lastaction_title__OLD {
+    font-size: 90%;
+    color: #7d7d7d;
+    text-align: right;
+    margin: -8px;
+    margin-right: 10px;
+    padding: .1em;
+}
+
+#cat_list_lastaction_title {
+    font-size: 90%;
+    color: #7d7d7d;
+    text-align: right;
+    margin-right: 10px;
+    line-height: 105%;
+}
+
+#cat_list_lastaction_date_OLD {
+    font-size: 90%;
+    color: #7d7d7d;
+    text-align: right;
+    margin: -8px;
+    margin-right: 10px;
+    padding: .1em;
+}
+
+
+#cat_list_lastaction_date {
+    font-size: 90%;
+    color: #7d7d7d;
+    text-align: right;
+    margin-right: 10px;
+    line-height: 105%;
+}
+
+#cat_list_lastaction_user_OLD {
+    font-size: 90%;
+    color: #7d7d7d;
+    text-align: right;
+    margin: -8px;
+    margin-right: 10px;
+    padding: .1em;
+}
+
+#cat_list_lastaction_user {
+    font-size: 90%;
+    color: #7d7d7d;
+    text-align: right;
+    margin-right: 10px;
+    line-height: 100%;
+}
+
+
+
+/*    */
+.t_header{
+padding: .3em;
+padding-bottom: 0em;
+}
+
+/*    */
+.dl_maintable {
+    border: 1px solid #aaa;
+    margin: 1px;
+    padding: 1px;
+}
+
+/*    */
+.dl_maintable_head {
+    border-right: 1px solid #aaa;
+    border-bottom: 1px solid #aaa;
+    background-color: #fff;
+    padding: 2px;
+}
+
+/*    */
+.post_box {
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-right: 2px;
+    width: auto;
+}
+
+/*    */
+.bread_crumbs {
+    border-bottom: 1px solid #aaa;
+    border-top: 0px;
+    padding: 2px;
+    text-align: left;
+}
+
+/*    */
+.new_thread_button:hover {
+background: #ccc ;
+}
+
+/*    */
+.new_thread_button {
+
+    white-space: nowrap;
+    float: right;
+    display: inline; /*fixes IE float bug*/
+    margin-top: 0px; 
+    margin-bottom: 0px; 
+    margin-left: 10px;
+   /* margin-left: -4px; */
+    border: 1px solid #aaa;
+    border-bottom: 0px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 3px;
+    color: #000;
+}
+
+/*    */
+.post_buttons {
+    
+    white-space: nowrap;
+    float: right;
+    margin-top: .5em;
+    margin-right: 5px;
+    border: 1px solid #aaa;
+    border-bottom: 0em;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 0px;
+    color: #000;
+}
+
+/*    */
+.post_buttons:hover {
+background: #fff ;
+}
+
+
+
+
+
+
+.right {
+	float: right;
+	padding-left: 5px;
+	padding-right: 5px;
+	margin-right: 10px;
+	margin-left: 10px;
+}
+
+
+
+.right_float {
+	float: right;
+	margin-top: 8px;
+	padding-left: 5px;
+	padding-right: 5px;
+	margin-right: 10px;
+	margin-left: 10px;
+}
+
+.spacer {
+	background-color: #aaa;
+}
+
+.quote {
+	border-top: 1px solid #000;
+	background-color: #fff;
+	padding: 10px;
+	font-size: 95%;
+}
+.quote_title {
+	border: 1px dashed #aaa;
+	padding: 5px;
+	background-color: #f9f9f9;
+	font-family:"Courier New", Courier, mono;
+	
+}
+
+/* forum's */
+
+.thread_rows{
+    background-color: #f9f9f9;
+    border: 1px solid #aaa;
+    border-top: 0px ;
+    padding: 2px;
+    font-size: 95%;
+}
+
+
+.thread_rows0{
+    background-color: #E5E5E5;
+    border: 1px solid #aaa;
+    border-top: 0px ;
+    padding: 2px;
+    font-size: 95%;
+}
+
+.thread_rows1{
+    background-color: #f3f3f3;
+    border: 1px solid #aaa;
+    border-top: 0px ;
+    padding: 2px;
+    font-size: 95%;
+}
+
+
+/* END - forum's */  
+
+
+
+/* Member Section */
+
+.main_memtable{
+    border: 1px solid #aaa;
+}
+
+.main_leftmenu{
+    border-right: 1px solid #aaa;
+     background-color: #f9f9f9;
+     width: 175px;
+}
+
+.leftmenu{
+    background-color: #f9f9f9;
+}
+
+.leftmenuheaders {
+    border: 1px dashed #aaa;
+    padding: 2px;
+    font-family:"Courier New", Courier, mono;
+    
+}
+
+.right_body{
+padding: 2px;
+}
+
+
+.mem_pm_table {
+    border: 1px solid #aaa;
+    padding: 2px;
+    margin: 7px;  
+    
+}
+
+
+
+.pm_header_new{
+    background-color: #aaa;
+    border: 1px solid #000;
+    padding: 2px;
+    width:5%;
+}
+
+.pm_header_title{
+    background-color: #aaa;
+    border: 1px solid #000;
+    padding: 2px;
+    width:85%;
+}
+
+.pm_header_sender{
+    background-color: #aaa;
+    border: 1px solid #000;
+    padding: 2px;
+    width:5%;
+}
+
+.pm_header_date{
+    background-color: #aaa;
+    border: 1px solid #000;
+    padding: 2px;
+    width:5%;
+}
+
+
+
+
+
+.pm_row{
+    background-color: #f9f9f9;
+    border: 1px solid #000;
+    padding: 3px;
+}
+
+
+
+
+/* END - Member Section */
+
+
+#search_box{
+    white-space:nowrap;
+    text-align: right; 
+    margin: .0em;
+    padding: 0px;
+}
+
+.search_box {
+    float: right;
+    font-size: 97%;
+    margin: .0em;
+    color: #000;
+    background: #fff;
+    border: 1px solid #000;
+    margin-left: 5px;
+    padding: 0px;
+    
+}
+
+.highlightsearchword {
+color: #FF0000;
+}
+
+
+
+
+
+/*
+
+From here down is used for the drop down menus.
+This is something i snagged from online because i do not have the time right now to make up my own. 
+
+*/
+
+.top_user_links{
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid #aaa;
+    text-align: right;
+}
+
+#TopMenuLinksHolder {
+    margin: 0;
+    padding: 0;
+    z-index: 3;
+}
+
+#TopMenuLinksHolder li{ 
+    margin-top: 4px;   
+    margin-left: 4px;
+    margin-bottom: 0px;
+    
+    padding: 2px;
+    
+    list-style: none;
+    float: right;
+    display: block;
+    
+    width: auto;
+    white-space: nowrap;
+    
+    border: 1px solid #aaa;
+    border-bottom: 0px;
+    
+    color: #000;
+    text-align: center;
+    text-decoration: none;
+    font: 11px Verdana;
+    z-index: 3;
+}
+
+#TopMenuLinksHolder li a{
+
+}
+
+#TopMenuLinksHolder li a:hover{
+    
+}
+
+#TopMenuLinksHolder a:visited{
+
+}
+
+
+#TopMenuLinksHolder div{
+    position: absolute;
+    visibility: hidden;
+    margin: 0;
+    padding: 0;
+    background: #DDDDDD;
+    border: 1px solid #AAAAAA;
+}
+
+#TopMenuLinksHolder div a{
+        position: relative;
+        display: block;
+        margin: 0;
+        padding: 5px;
+        width: auto;
+        white-space: nowrap;
+        text-align: left;
+        text-decoration: none;
+        font: 11px arial;
+}
+
+
+
+#TopMenuLinksHolder div a:hover{
+    background: #FFF;
+    color: #000;
+}
+
+
+
+
+
+
+
+
+
+.UserNameOptions{
+
+}
+
+#UserNameOptions {
+    margin: 0;
+    padding: 0;
+    z-index: 2;
+}
+
+#UserNameOptions li{ 
+    
+    list-style: none;
+    display: block;
+    white-space: nowrap;
+    border: 0px;
+    color: #000;
+    text-align: left;
+    text-decoration: none;
+}
+
+#UserNameOptions li a{
+    font: 11px Verdana;
+}
+
+#UserNameOptions li a:hover{
+    
+}
+
+#UserNameOptions a:visited{
+
+}
+
+
+#UserNameOptions div{
+    position: absolute;
+    display: block;
+    visibility: hidden;
+    margin: 0;
+    padding: 5px;
+    background: #DDDDDD;
+    border: 1px solid #AAAAAA;
+    white-space: nowrap; 
+    font: 12px arial;
+    line-height: 100%;
+}
+
+/*
+#UserNameOptions div a{
+        position: relative;
+        display: block;
+        margin: 0;
+        padding: 5px;
+        
+        width: 500px;
+        
+        white-space: nowrap; 
+        text-align: left;
+        text-decoration: none;
+        font: 11px arial;
+}
+*/
+
+
+#UserNameOptions div a:hover{
+    color: #FFF;
+}
+
+
+
+
+
+.ThreadOtions{
+    margin: 0;
+    padding: 0;
+    text-align: right;
+    
+}
+
+#ThreadOtions {
+    margin-top: 3px;
+    padding: 0;
+    z-index: 3;
+}
+
+#ThreadOtions li{ 
+    
+    list-style: none;
+    display: block;
+    white-space: nowrap;
+    
+    border: 0px;
+    color: #000;
+    
+    text-decoration: none;
+    z-index: 3;
+}
+
+#ThreadOtions li a{
+    border: 1px solid #aaa;
+    border-bottom: 0em;
+    padding: 4px;
+}
+
+#ThreadOtions li a:hover{
+    
+}
+
+#ThreadOtions a:visited{
+
+}
+
+
+#ThreadOtions div{
+    position: absolute; 
+    right: 50px;
+    visibility: hidden;
+    margin: 0;
+    padding: 5px;
+    background: #DDDDDD;
+    border: 1px solid #AAAAAA;
+    white-space: nowrap; 
+    text-align: left;
+}
+    
+
+#ThreadOtions div a{
+        position: relative;
+        display: block;
+        margin: 0;
+        padding: 2px;
+        border: 0em;
+        
+        white-space: nowrap; 
+        text-align: left;
+        text-decoration: none;
+        font: 11px arial;
+}
+
+
+
+#ThreadOtions div a:hover{
+    background: #FFF;
+    color: #000;
+}
+
+
+
+
+
+
+
+
+

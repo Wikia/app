@@ -1,0 +1,1355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<skin_tplts>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.3">
+
+						<tplt_section>all</tplt_section>
+
+						<tplt_function>top_menu_todays_posts_link</tplt_function>
+
+						<tplt_code><![CDATA[<li><a href="{$awc_url}search/todate">$word[word_todays_posts]</a></li>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.1.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>all</tplt_section>
+
+						<tplt_function>top_menu_top</tplt_function>
+
+						<tplt_code><![CDATA[<table width="100%" cellpadding="0" cellspacing="0">
+	<tr>
+		<td class="top_user_links">
+                	<ul id="TopMenuLinksHolder">
+                               <li><a href="{$awc_url}credits">$word[word_credits]</a></li>
+        			$info[search_link]
+            $info[todays_posts]
+        			$info[mem_links]
+        			$info[admin_link]
+    			</ul>
+		</td>
+	</tr>
+</table>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>all</tplt_section>
+
+						<tplt_function>top_menu_admin_link</tplt_function>
+
+						<tplt_code><![CDATA[<li><a href="{$awc_url}admin">$word[word_AdminCP]</a></li>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>all</tplt_section>
+
+						<tplt_function>breadcrumbs</tplt_function>
+
+						<tplt_code><![CDATA[<table width="100%" cellpadding="0" cellspacing="0" class="bread_crumbs">
+	<tr>
+		<td width="99%" valign="bottom">$info[bc_links]</td>
+	</tr>
+</table>
+<br />]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>all</tplt_section>
+
+						<tplt_function>top_menu_user_links</tplt_function>
+
+						<tplt_code><![CDATA[            <li><a href="$info[url]search/recent">$word[word_recent_posts]</a></li>
+            
+            <li>
+		<a href="$info[url]member_options" onmouseover="mopen('m2')" onmouseout="mclosetime()">$info[user_title]</a>
+            
+            	<div id="m2" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
+                	<a href="{$awc_url}member_options">$word[word_gotomempc]</a>
+                	<a href="{$awc_url}member_options/pminbox">$word[word_gotopms]</a>
+                	<a href="{$awc_url}member_options/editsig">$word[word_gotosig]</a>
+                	<a href="{$awc_url}member_options/editava">$word[word_gotoavatar]</a>
+                	<a href="{$awc_url}member_options/threadsubscribe_email">$word[word_subscribe_email]</a>
+                	<a href="{$awc_url}member_options/threadsubscribe_list">$word[word_subscribe_memcp]</a>
+                	<a href="{$awc_url}search/memtopics/$info[user_name]">$word[word_threads]</a>
+                	<a href="{$awc_url}search/memposts/$info[user_name]">$word[word_posts]</a>
+                	<a href="{$awc_url}member_options/clearIndicators">$word[word_MemClearIndicators]</a>
+                
+            	</div>
+            </li>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>all</tplt_section>
+
+						<tplt_function>top_search_box</tplt_function>
+
+						<tplt_code><![CDATA[<form id="search_box" action="{$awc_url}search/s" method="post"  enctype="multipart/form-data">
+	<input class="search_box" type="submit" value="$word[search_search]">
+        $info[hidden_tID]
+        $info[hidden_fID]
+        $info[hidden_cID]
+        <select class="search_box" name="search_what"> <option value="all">$word[search_whatAll]</option>
+        $info[drop_cID]
+        $info[drop_fID]
+        $info[drop_tID]
+        </select>
+	<input class="search_box" name="kw" type="text" size="20">
+</form>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>all</tplt_section>
+
+						<tplt_function>top_menu_search_link</tplt_function>
+
+						<tplt_code><![CDATA[<li><a href="{$awc_url}search">$word[search]</a></li>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>all</tplt_section>
+
+						<tplt_function>close_table</tplt_function>
+
+						<tplt_code><![CDATA[</table>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>all</tplt_section>
+
+						<tplt_function>footer_whoshere</tplt_function>
+
+						<tplt_code><![CDATA[      <br />
+        	<table class="whos_here" width="100%" cellpadding="0" cellspacing="0">
+        			<tr>
+                  <td width="100%" class="whos_here_header">
+                        <a href="{$awc_url}whoshere">$word[word_forum_stats_whos_here]</a> 
+                        $word[members] $info[num_mems]
+                        $word[guests] $info[num_guests]
+                        $word[word_forum_stats_bots] $info[num_bots]
+                   </td>
+         				</tr>
+        				<tr>
+        					<td class="whos_here_row">$info[names]</td>
+        				</tr>
+        </table>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>buttons</tplt_section>
+
+						<tplt_function>post:delete_thread</tplt_function>
+
+						<tplt_code><![CDATA[<div class="post_buttons">
+	<a href="javascript:void(0);" onclick="javascript:msgcheck('$info[url]','$info[msg]')">$word[thread_deletethread]</a>
+</div>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>buttons</tplt_section>
+
+						<tplt_function>post:edit_button</tplt_function>
+
+						<tplt_code><![CDATA[<div class="post_buttons"><a href="$info[url]"  rel="nofollow">$word[edit]</a></div>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>buttons</tplt_section>
+
+						<tplt_function>post:spltmerge_button</tplt_function>
+
+						<tplt_code><![CDATA[<div class="post_buttons"><a href="$info[url]" rel="nofollow">$word[word_split_merge]</a></div>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>buttons</tplt_section>
+
+						<tplt_function>post:quote_button</tplt_function>
+
+						<tplt_code><![CDATA[<div class="post_buttons"><a href="$info[url]" rel="nofollow">$word[quote]</a></div>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>buttons</tplt_section>
+
+						<tplt_function>post:delete_post</tplt_function>
+
+						<tplt_code><![CDATA[<div class="post_buttons"><a href="javascript:void(0);" onclick="javascript:msgcheck('$info[url]','$info[msg]')" rel="nofollow">$word[delete]</a></div>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>buttons</tplt_section>
+
+						<tplt_function>forum:start_new_thread</tplt_function>
+
+						<tplt_code><![CDATA[<span class="new_thread_button"><a href="$info[url]">$word[start_new_thread]</a></span>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>buttons</tplt_section>
+
+						<tplt_function>forum:subscrib_to_forum</tplt_function>
+
+						<tplt_code><![CDATA[<span class="new_thread_button"><a href="$info[url]">$word[subscrib]</span></a>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>buttons</tplt_section>
+
+						<tplt_function>post:poll</tplt_function>
+
+						<tplt_code><![CDATA[<div class="post_buttons"><a href="$info[url]" rel="nofollow">$word[poll]</a></div>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.1">
+
+						<tplt_section>buttons</tplt_section>
+
+						<tplt_function>pm:save_pm</tplt_function>
+
+						<tplt_code><![CDATA[<div class="post_buttons"><a href="$info[url]"  rel="nofollow">$word[save]</a></div>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.8">
+
+						<tplt_section>buttons</tplt_section>
+
+						<tplt_function>post:close_poll</tplt_function>
+
+						<tplt_code><![CDATA[<div class="post_buttons"><a href="$info[url]" rel="nofollow">$word[close_poll]</a></div>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.8">
+
+						<tplt_section>buttons</tplt_section>
+
+						<tplt_function>post:delete_poll</tplt_function>
+
+						<tplt_code><![CDATA[<div class="post_buttons"><a href="$info[url]" rel="nofollow">$word[delete_poll]</a></div>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.8">
+
+						<tplt_section>buttons</tplt_section>
+
+						<tplt_function>post:open_poll</tplt_function>
+
+						<tplt_code><![CDATA[<div class="post_buttons"><a href="$info[url]" rel="nofollow">$word[open_poll]</a></div>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>cat</tplt_section>
+
+						<tplt_function>cat_close_table</tplt_function>
+
+						<tplt_code><![CDATA[</table><br />]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>cat</tplt_section>
+
+						<tplt_function>cat_header</tplt_function>
+
+						<tplt_code><![CDATA[        <tr id="col_head">
+        	<td width="70%" class="thread_col_head" align="left" nowrap="nowrap">$info[AdminEdit] $info[title]</td>
+        	<td width="5%" class="thread_col_head" align="left" nowrap="nowrap">$word[topics]</td>
+        	<td width="5%" class="thread_col_head" align="left" nowrap="nowrap">$word[replies]</td>
+        	<td width="20%" class="thread_col_head" align="left" nowrap="nowrap">$word[forum_last_post]</td>
+        </tr>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>cat</tplt_section>
+
+						<tplt_function>cat_list_forums_rows</tplt_function>
+
+						<tplt_code><![CDATA[<tr>
+		<td class="cat_forumrows" align="left">
+				$info[AdminEditLink] <a href="$info[forum_link]">$info[f_name]</a><br />
+				<div id="cat_forumdisc">$info[f_desc]</div>
+		</td>
+		<td class="cat_forumrows" align="center">$info[f_threads]</td>
+		<td class="cat_forumrows" align="center">$info[f_replies]</td>
+		<td class="cat_forumrows" align="right">
+			<div id="cat_list_lastaction_title"><a href="$info[last_thread_link]">$info[last_title]</a></div>
+			<div id="cat_list_lastaction_date">$info[last_date]</div>
+			<div id="cat_list_lastaction_user"><a href="$info[mem_link]">$info[f_lastuser]</a></div>
+		</td>
+</tr>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>cat</tplt_section>
+
+						<tplt_function>cat_open_table</tplt_function>
+
+						<tplt_code><![CDATA[<br /><table width="100%" cellpadding="0" cellspacing="0">]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>forms</tplt_section>
+
+						<tplt_function>mod_chks</tplt_function>
+
+						<tplt_code><![CDATA[$info[ann]
+<INPUT TYPE=CHECKBOX NAME="sticky" $info[pin_chk]> $word[pinned_word]
+<INPUT TYPE=CHECKBOX NAME="lock" $info[lock_chk]> $word[lockThread_word]
+<br />]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>forms</tplt_section>
+
+						<tplt_function>forum_tool_bar_tags</tplt_function>
+
+						<tplt_code><![CDATA[&nbsp;<a href="$info[java_script]"><img src="{$button_path}$info[img]" /></a>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>forms</tplt_section>
+
+						<tplt_function>thread_listing_mod_drop</tplt_function>
+
+						<tplt_code><![CDATA[<select class="search_box" name="do_what" onChange="return check_mod()">
+<option value="null">$word[mod_options]</option>
+<option value="null">----</option>
+$info[ann]
+<option value="pin">$word[pinn]</option>
+<option value="unpin">$word[unpinn]</option>
+<option value="null">----</option>
+<option value="lock">$word[lock]</option>
+<option value="unlock">$word[unlock]</option>
+<option value="null">----</option>
+<option value="move">$word[move]</option>
+<option value="null">----</option>
+<option value="delete">$word[delete]</option>
+</select>
+]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>forms</tplt_section>
+
+						<tplt_function>split_and_merge</tplt_function>
+
+						<tplt_code><![CDATA[<table width="100%" cellpadding="0" cellspacing="0">
+	<tr>
+		<td>
+				<form id="spltform" name="spltform" action="{$awc_url}mod/" method="post" enctype="multipart/form-data" onsubmit="return check_NewThreadTitle()" >
+				
+			<input name="tID" type="hidden" value="$info[pID]">
+			<input name="todo" type="hidden" value="mod_thread">
+			<input name="do_what" type="hidden" value="do_split">
+		        
+		        $word[word_create_new_thread] <br />
+		        $word[word_thread_title_for_new_thread]<br />
+			<input name="t_title" type="text" value="" size="50"><br />
+		        
+		        $info[forums_dropdown]
+		        
+		 			<input type="submit" value="$word[submit]">
+ 			</form>
+ 			
+ 			<hr><br />  
+ 			  
+			<form id="mergeform" name="mergeform" action="{$awc_url}mod/" method="post" enctype="multipart/form-data" onsubmit="return check_MergeID()">
+			<input name="todo" type="hidden" value="mod_thread">
+			<input name="do_what" type="hidden" value="do_merge">
+				<input name="pID" type="hidden" value="$info[pID]">
+				
+	      $word[word_merge_this_post_to_this_thread] <input name="tID" type="text" value="" size="7"> 
+	        
+				<input type="submit" value="$word[submit]">
+			</form>
+<br />
+</td>
+</tr>
+</table>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>forms</tplt_section>
+
+						<tplt_function>forum_tool_bar</tplt_function>
+
+						<tplt_code><![CDATA[<table width="99%" cellpadding="0" cellspacing="0">
+	<tr>
+	   <td width="99%" valign="bottom" class="forumtoolbar">$info[tags]</td>
+         </tr>
+</table>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>forms</tplt_section>
+
+						<tplt_function>subscrib_chk</tplt_function>
+
+						<tplt_code><![CDATA[$word[subscribed_word] 
+<SELECT NAME="subsribe">
+	<OPTION value="no" $info[subscribed_no]>$word[subscribed_no]</OPTION>
+	<OPTION value="email" $info[subscribed_email]>$word[subscribed_email]</OPTION>
+	<OPTION value="list" $info[subscribed_list]>$word[subscribed_list]</OPTION>
+</SELECT>
+ ]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>forms</tplt_section>
+
+						<tplt_function>thread_listing_mod_drop_ann</tplt_function>
+
+						<tplt_code><![CDATA[<option value="ann">$word[ann]</option>
+<option value="unann">$word[unann]</option>
+<option value="null">----</option>
+]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>forms</tplt_section>
+
+						<tplt_function>spam_fields</tplt_function>
+
+						<tplt_code><![CDATA[<input name="name" class="nothing" type="text" value="" size="0" maxlength="255">]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>forms</tplt_section>
+
+						<tplt_function>options_dropdown</tplt_function>
+
+						<tplt_code><![CDATA[	<form id="editform2" name="editform2" action="{$awc_url}mod/" method="post">
+<input name="todo" type="hidden" value="single_thread_mod">
+	    <ul id="ThreadOtions">
+		<li>$info[options_menu]
+			<a href="javascript:void(0);" onmouseover="mopen('subsribe')" onmouseout="mclosetime()">$word[word_thread_options_button]</a>
+			 <div id="subsribe" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
+				$info[subscrib_links]
+				$info[mod_buttons]
+			  </div>
+		</li>
+	 </ul>
+     </form>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>forms</tplt_section>
+
+						<tplt_function>move_threads</tplt_function>
+
+						<tplt_code><![CDATA[<form id="id" name="name" action="{$awc_url}mod/" method="post">
+<input name="todo" type="hidden" value="mod_thread">
+<input name="do_what" type="hidden" value="do_movethread">
+<table class="dl_maintable" width="100%" cellpadding="0" cellspacing="0">
+	<tr>
+		<td width="100%" align="left">$word[MoveThreadTitle]</td></tr>
+	        
+		<td width="100%" align="left">
+		$info[thread_ids]
+		$info[forums_select]
+		<input type="submit" value="$word[submit]">
+		</td>
+	</tr> 
+</table>
+</form>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>forms</tplt_section>
+
+						<tplt_function>button:preview</tplt_function>
+
+						<tplt_code><![CDATA[  <input type="submit" value="$word[posting_Preview_word]" name="preview"> ]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.1">
+
+						<tplt_section>forms</tplt_section>
+
+						<tplt_function>post_box</tplt_function>
+
+						<tplt_code><![CDATA[<a name="postbox"></a>
+<table class="dl_maintable" cellpadding="0" cellspacing="0">
+	<tr>
+		<td width="99%" align="left">$info[posting_message]</td>
+	</tr>
+	<tr>
+		<td width="99%" align="left">
+				
+				<form id="editform" name="editform" action="$info[url]" method="post"  enctype="multipart/form-data" $info[javaCheck]>
+				$info[hidden_input]
+				
+				$info[pm_send_to_box]
+				$info[ExtraWikiToolBar]
+				$info[WikiToolBar]
+				$info[SimlieButtons]
+				$info[ForumBar]
+
+<hr />
+				$word[title] <input name="t_title" type="text" value="$info[title]" size="70" maxlength="$info[max_chr]"><br />
+				
+				<textarea name="wpTextbox1" id="wpTextbox1" cols="$info[cols]" rows="$info[rows]" wrap="virtual" class="post_box">$info[post]</textarea>
+        <br />
+        
+        $info[mod_options]
+        $info[user_options]
+        $info[submit_buttons]
+        $word[posting_as]
+        </form>
+		</td>
+	</tr>
+</table>
+<br /><br />]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>forms</tplt_section>
+
+						<tplt_function>mod_chks_ann</tplt_function>
+
+						<tplt_code><![CDATA[<INPUT TYPE=CHECKBOX NAME="ann" $info[ann_chk]> $word[thread_makeAnnouncement]]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>forms</tplt_section>
+
+						<tplt_function>button:submit</tplt_function>
+
+						<tplt_code><![CDATA[ <input type="submit" value="$word[submit]"> ]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>index</tplt_section>
+
+						<tplt_function>footer_forum_stats</tplt_function>
+
+						<tplt_code><![CDATA[<table class="forum_stats" width="100%" cellpadding="0" cellspacing="0">
+	<tr>
+		<td width="100%" nowrap="nowrap" class="forum_stats_header">
+			$word[forum_stats]
+		</td>
+	</tr>
+        	<tr>
+        		<td class="forum_stats_leftcol">
+                    		$word[forum_stats_users] $info[mems]
+                    		$word[forum_stats_threads] $info[threads]
+                   		$word[forum_stats_topics] $info[topics]
+                   		$word[forum_stats_maxusers] $info[maxusers]
+               	</td>
+	</tr>
+</table>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.1">
+
+						<tplt_section>memcp</tplt_section>
+
+						<tplt_function>memcp_recent_close</tplt_function>
+
+						<tplt_code><![CDATA[	<tr>
+		<td colspan="4"><input class="" type="submit" value="$word[delete]"></td>
+	</tr>
+</table>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.1">
+
+						<tplt_section>memcp</tplt_section>
+
+						<tplt_function>memcp_recent_row</tplt_function>
+
+						<tplt_code><![CDATA[	<tr>
+		<td class="$info[row_class]">
+			$info[wtcht_todo] <INPUT TYPE=CHECKBOX name="tid[]" value="$info[t_id]">$info[NewPost] <a href="$info[url]">$info[t_name]</a>$info[t_jump]<br />
+			<SPAN align="left">$word[thread_title_started_by]: <a href="{$awc_url}mem_profile/$info[t_starter]/$info[t_starterID]">"$info[t_starter]</a>
+			</SPAN>
+		</td>
+    <td class="$info[row_class]" align="center">$info[t_topics]</td>
+    <td class="$info[row_class]" align="right"><SPAN class="thread_lastaction">$info[last]</SPAN></td>
+	</tr>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.1.0" tplt_forum_ver="2.5.1">
+
+						<tplt_section>memcp</tplt_section>
+
+						<tplt_function>memcp_main_body</tplt_function>
+
+						<tplt_code><![CDATA[<table width="100%" class="main_memtable" cellpadding="0" cellspacing="0">
+	<tr>
+			<td valign="top" class="main_leftmenu" nowrap>
+	        
+				<table width="100%" class="leftmenu">
+					<tr>
+						<td><a href="http://wiki.anotherwebcom.com/User_Instruction_Manual">$word[word_help]</a><br />$info[adv]</td>
+					</tr>
+					<tr>
+						<td class="leftmenuheaders"><a href="{$awc_url}member_options/getPMoptions">$word[mem_pm_option]</a></td>
+					</tr>
+					<tr>
+						<td>$word[mem_pm_totalpms] $info[total_count]</td>
+					</tr>
+					<tr>
+						<td><a href="{$awc_url}member_options/pmnew">$word[mem_pm_sendnew]</a></td>
+					</tr>
+					<tr>
+						<td>($info[inbox_count]) <a href="{$awc_url}member_options/pminbox">$word[mem_pm_inbox]</a></td>
+					</tr>
+					<tr>
+						<td>($info[sent_count]) <a href="{$awc_url}member_options/pmsent">$word[mem_pm_sent]</a></td>
+					</tr>
+					<tr>
+						<td>($info[save_count]) <a href="{$awc_url}member_options/pmsaved">$word[mem_pm_saved]</a></td>
+					</tr>         
+					<tr>	
+						<td class="leftmenuheaders">$word[mem_general_options]</td>
+					</tr>
+					<tr>
+						<td><a href="{$awc_url}member_options/editsig">$word[mem_edit_sig_option]</a></td>
+					</tr>
+					<tr>
+						<td><a href="{$awc_url}member_options/editava">$word[mem_edit_avatar_option]</a></td>
+					</tr>
+					<tr>
+						<td><a href="{$awc_url}member_options/editgen">$word[mem_edit_gen_option]</a></td>
+                    </tr>
+                    
+                    <tr>
+                        <td><a href="{$awc_url}member_options/menu_options">$word[mem_edit_menu_options]</a></td>
+                    </tr>
+                    
+					<tr>
+						<td><a href="{$wiki_url}Special:Preferences">$word[mem_edit_wiki_option]</a></td>
+					</tr>
+					<tr>	            
+						<td class="leftmenuheaders">$word[mem_subscription]</td>
+					</tr>
+					<tr>
+						<td><a href="{$awc_url}member_options/threadsubscribe">$word[word_threads]</a></td>
+					</tr>        
+					<tr>
+						<td>&nbsp;&nbsp;-&nbsp; <a href="{$awc_url}member_options/threadsubscribe_email">$word[word_subscribe_email]</a></td>
+					</tr>
+					<tr>
+						<td>&nbsp;&nbsp;-&nbsp; <a href="{$awc_url}member_options/threadsubscribe_list">$word[word_subscribe_memcp]</a></td>
+					</tr>
+			</table>
+		</td>
+		<td valign="top" class="right_body">$info[body_info]</td>
+	</tr>
+</table>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.1">
+
+						<tplt_section>memcp</tplt_section>
+
+						<tplt_function>memcp_recent_header</tplt_function>
+
+						<tplt_code><![CDATA[<table width="100%" cellpadding="0" cellspacing="0">
+	<tr>
+		<td class="thread_col_head" width="80%" align="left" nowrap="nowrap">$word[thread_title]</td>
+		<td class="thread_col_head" width="1%" align="center" nowrap="nowrap">$word[word_replies]</td>
+    <td class="thread_col_head" width="20%" align="center" nowrap="nowrap">$word[last_action]</td>
+	</tr>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.3">
+
+						<tplt_section>mem_profile</tplt_section>
+
+						<tplt_function>mem_profile_table</tplt_function>
+
+						<tplt_code><![CDATA[<br />
+<table width="100%" class="main_memtable" cellpadding="0" cellspacing="0">
+	<tr>
+		<td valign="top" class="main_leftmenu" nowrap>
+        
+				<table width="100%" class="leftmenu" width="$info[avatarwidth]">
+    			<tr>
+    				<td>$info[m_adv]</td>
+    			</tr>
+            
+	    		<tr>
+	    			<td>$info[wikiedits]</td>
+	    		</tr>
+	            
+			    <tr>
+			    	<td>$info[m_topics]</td>
+			    </tr>
+	            
+			    <tr>
+			    	<td>$info[m_posts]</td>
+			    </tr>
+	            
+	         <tr>
+	         	<td>$info[m_pm]</td>
+	         </tr>
+				</table>
+        
+				</td>
+					<td valign="top" class="right_body">
+							$info[body_info]
+							<hr>
+							<br>
+							$info[sig]
+							<br>
+					</td>
+				</tr>
+</table>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>page_jumps</tplt_section>
+
+						<tplt_function>top_page_jumps</tplt_function>
+
+						<tplt_code><![CDATA[]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>page_jumps</tplt_section>
+
+						<tplt_function>bottom_page_jumps</tplt_function>
+
+						<tplt_code><![CDATA[<br />
+<table width="100%" cellpadding="0" cellspacing="0" class="bot_breadcrumbs_and_pagejump">
+	<tr>
+		<td width="100%" class="bot_breadcrumbs">$info[BreadCrumb]</td>
+	</tr>
+	<tr>
+		<td width="100%" class="bot_pagejumps">$info[page_jumps]</td>
+	</tr>
+</table>
+<br /><br />]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>page_jumps</tplt_section>
+
+						<tplt_function>bottom_blocks</tplt_function>
+
+						<tplt_code><![CDATA[<font class="page_jumps_bot">$word[jump_to]<a href="$info[url]">$info[click]</a></font>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>page_jumps</tplt_section>
+
+						<tplt_function>postblocks_threadlisting</tplt_function>
+
+						<tplt_code><![CDATA[<font class="pagejumps_PostOnForumPage"><a href="$info[url]">$info[click]</a></font>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>page_jumps</tplt_section>
+
+						<tplt_function>top_blocks</tplt_function>
+
+						<tplt_code><![CDATA[<font class="page_jumps_top">$word[jump_to]<a href="$info[url]">$info[click]</a></font>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>poll</tplt_section>
+
+						<tplt_function>poll_display_results</tplt_function>
+
+						<tplt_code><![CDATA[<table class="poll_display_results" width="100%" cellpadding="0" cellspacing="0">     
+	<tr> 
+		<td width="5%" align="center" class="poll_display_vote_numbers_header">$word[word_votes]<td>
+		<td width="35%" align="center" class="poll_display_vote_percent_header">$word[word_total_percent]<td>
+		<td width="60%"class="poll_display_vote_option_header">$word[word_poll_option]<td>
+	</tr>
+	$info[results]       
+	<tr> 
+		<td colspan="5" width="100%" class="poll_display_vote_total">$info[total] $word[word_total_votes]<td>
+	</tr>
+</table>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.5">
+
+						<tplt_section>poll</tplt_section>
+
+						<tplt_function>poll_display_options</tplt_function>
+
+						<tplt_code><![CDATA[<br />
+   <form id="editform" name="editform" action="$info[url]" method="post"  enctype="multipart/form-data">
+$info[select_options]
+            <input name="id" type="hidden" value="$info[pollID]">
+            <input name="tID" type="hidden" value="$info[tID]">
+            <input name="name" class="nothing" type="text" value="" size="0" maxlength="255">
+<br />
+<input type="submit" value="$word[submit]">
+</form>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>poll</tplt_section>
+
+						<tplt_function>poll_display_result_bars</tplt_function>
+
+						<tplt_code><![CDATA[<tr>
+	<td width="5%" align="center" class="poll_display_vote_numbers" nowrap>$info[poll_results]<td>
+	<td width="35%" align="left" class="poll_display_vote_percent" nowrap><span style="padding: 0pt $info[percent]px;" class="poll_percent_color_op$info[c]">&nbsp;</span>&nbsp;  $info[percent]%<td>
+	<td width="60%" class="poll_display_vote_option" nowrap>$info[option]<td>
+</tr>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>poll</tplt_section>
+
+						<tplt_function>poll_opt_options</tplt_function>
+
+						<tplt_code><![CDATA[<input type="radio" name="polloption" value="$info[value]" id="$info[id]" /> $word[option] <br />]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>poll</tplt_section>
+
+						<tplt_function>poll_form</tplt_function>
+
+						<tplt_code><![CDATA[<hr /><br />
+<form id="editform" name="editform" action="{$awc_url}post/submit_poll" method="post"  enctype="multipart/form-data">
+<input name="tID" type="hidden" value="$info[tID]">
+<input name="fID" type="hidden" value="$info[fID]">
+<table width="100%" class="poll_posting_table" cellpadding="0" cellspacing="0">        
+<tr> 
+		<td width="10%" class="poll_posting_left_col" nowrap>$word[word_poll_question]</td> 
+		<td width="90%" class="poll_posting_right_col" nowrap> 
+					<input name="pollq" type="text" value="$info[pollq]" size="40" maxlength="$info[max_chr]"><br />
+		</td>
+</tr>
+<tr>
+<td colspan="2" width="100%" nowrap><hr /></td> 
+</tr>
+
+
+$info[poll_options]
+
+
+<tr>
+<td width="100%" colspan="2" class="poll_posting_left_col" nowrap>$info[submit_buttons]</td>
+</tr>
+
+</table>
+<br />
+</form>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>poll</tplt_section>
+
+						<tplt_function>poll_display</tplt_function>
+
+						<tplt_code><![CDATA[<table class="poll_display_table" width="100%" cellpadding="0" cellspacing="0">  
+	<tr>
+		<td width="99%" class="poll_displayheader" nowrap>$word[word_poll_question]:  $info[poll_q] ?</td>
+	</tr>
+        
+	<tr>
+		<td width="100%" nowrap>$info[options]</td>
+	</tr>    
+</table>
+<br /><br />]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>poll</tplt_section>
+
+						<tplt_function>poll_form_options</tplt_function>
+
+						<tplt_code><![CDATA[<tr> 
+		<td width="10%" class="poll_posting_left_col" nowrap>$word[word_poll_option]</td> 
+		<td width="90%" class="poll_posting_right_col" nowrap> 
+					<input name="$info[name]" type="text" value="$info[value]" size="40" maxlength="$info[max_chr]">
+		</td> 
+</tr>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.1">
+
+						<tplt_section>search</tplt_section>
+
+						<tplt_function>col_5_isSearch_forum_name</tplt_function>
+
+						<tplt_code><![CDATA[<td class="$info[row_class]" align="center" nowrap="nowrap">$info[forum_name]</td>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.4.3" tplt_forum_ver="2.5.1">
+
+						<tplt_section>search</tplt_section>
+
+						<tplt_function>main_search_form</tplt_function>
+
+						<tplt_code><![CDATA[<form name="search" action="{$awc_url}search/s_form" method="post"  enctype="multipart/form-data">
+	<table width="100%" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>$word[search_refine]<hr>
+        
+ <SELECT class="" name="full">
+<option value="full">$word[search_full]</option>
+<option value="title">$word[search_title]</option>
+</select>
+        
+<SELECT class="" name="Sis_like">
+<option value="is">$word[word_is]</option>
+<option value="like" SELECTED>$word[word_like]</option>
+</select>
+        
+ <input class="" name="kw" type="text" size="50"><br /><br />  
+        
+<INPUT TYPE=CHECKBOX NAME="s_memposts">$word[search_membersname]
+        
+<SELECT class="" name="is_like">
+<option value="is">$word[word_is]</option>
+<option value="like">$word[word_like]</option>
+</select>
+        
+<input class="" name="memname" type="text" size="20"> <br /><br /> 
+        
+ 	<SELECT size=7 class="" name="fID[]" multiple="multiple">
+ 		<option value="all" SELECTED>$word[search_whatAll]</option>
+ 			$info[search_forums]
+	</select>
+	<br /><br />
+        
+ 	<input class="" type="submit" value="$word[search_search]"><br /><br />
+</td>
+</tr>
+</table>  
+</form>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.1">
+
+						<tplt_section>search</tplt_section>
+
+						<tplt_function>main_seach_form_forum_drop</tplt_function>
+
+						<tplt_code><![CDATA[<option value="$info[f_id]">$info[f_name]</option>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>special</tplt_section>
+
+						<tplt_function>redirect</tplt_function>
+
+						<tplt_code><![CDATA[<br /><br />
+<table class="forum_posts" cellpadding="6" cellspacing="1" border="0" width="80%" align="center">
+<tr>
+	<td class="post0">$word[redirecting]...</td>
+</tr>
+<tr>
+	<td class="post1" align="center">
+		<blockquote>
+			<p><strong>$word[msg]</strong></p>
+				<a href="$info[url_redirect]">$word[click_here]</a>
+		</blockquote>
+	</td>
+</tr>
+</table>
+
+$info[redirect]]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>special</tplt_section>
+
+						<tplt_function>forum_closed</tplt_function>
+
+						<tplt_code><![CDATA[]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>special</tplt_section>
+
+						<tplt_function>error_table</tplt_function>
+
+						<tplt_code><![CDATA[<br />
+			<table width="99%" align="center" class="forum_posts" cellpadding="10" cellspacing="0">
+      	<tr>
+        	<td class="post0"><center><b>$word[word_Error]</b></center></td>
+       </tr>   
+       <tr>
+      		<td class="post1"><center>$info[error]</center></td>
+       </tr>
+     </table>
+<br />
+<br />
+<br />
+<br />]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>special</tplt_section>
+
+						<tplt_function>maintenance</tplt_function>
+
+						<tplt_code><![CDATA[]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>thread</tplt_section>
+
+						<tplt_function>mod_thread_dropdown</tplt_function>
+
+						<tplt_code><![CDATA[$word[mod_post]<br />
+<input name="tID" type="hidden" value="$info[tID]">
+<input name="fID" type="hidden" value="$info[fID]">
+<input name="pID" type="hidden" value="$info[pID]">
+<input name="num_topics" type="hidden" value="$info[num_topics]">
+<input name="threadname" type="hidden" value="$info[threadname]">
+
+
+$info[ann]
+<INPUT TYPE=CHECKBOX NAME="sticky" $info[sticky]>$word[pinned_word]<br />
+<INPUT TYPE=CHECKBOX NAME="lock" $info[lock]>$word[lockThread_word]<br />
+<INPUT TYPE=CHECKBOX NAME="move">$word[mod_movethread]<br />
+<input type="submit" value="$word[mod_post]">]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>thread</tplt_section>
+
+						<tplt_function>mod_thread_dropdown_ann</tplt_function>
+
+						<tplt_code><![CDATA[<INPUT TYPE=CHECKBOX NAME="ann" $info[ann]>$word[thread_makeAnnouncement]<br />]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>thread</tplt_section>
+
+						<tplt_function>poll:vote_form_close</tplt_function>
+
+						<tplt_code><![CDATA[		<input type="submit" value="$word[submit]">
+	</form> ]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>thread</tplt_section>
+
+						<tplt_function>poll:results_footer</tplt_function>
+
+						<tplt_code><![CDATA[            <tr>
+                <td colspan="5" width="100%" class="poll_display_vote_total">($info[total]) $word[word_total_votes]<td>
+            </tr>
+       </table>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>thread</tplt_section>
+
+						<tplt_function>post_title_row</tplt_function>
+
+						<tplt_code><![CDATA[<tr><td valign="top" height="1px" colspan="2">$info[post_title]<hr /></td></tr>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>thread</tplt_section>
+
+						<tplt_function>subscrib_links</tplt_function>
+
+						<tplt_code><![CDATA[<a href="$info[url_email]">$word[subscribe] $word[word_subscribe_email]</a>
+<a href="$info[url_list]">$word[subscribe] $word[word_subscribe_memcp]</a>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>thread</tplt_section>
+
+						<tplt_function>edit_buttons_row</tplt_function>
+
+						<tplt_code><![CDATA[<td class="post_date" valign="bottom" height="1px" width="100%" nowrap>$info[edit_buttons]</td>
+]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>thread</tplt_section>
+
+						<tplt_function>thread_header</tplt_function>
+
+						<tplt_code><![CDATA[    <table width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+            <td width="65%" align="left" nowrap="nowrap">$info[page_jumps]</td>                                         
+            <td width="35%" class='ThreadOtions' nowrap>$info[thread_options]</td>    
+        </tr>
+    </table>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>thread</tplt_section>
+
+						<tplt_function>sig_display</tplt_function>
+
+						<tplt_code><![CDATA[<tr><td class="thread_sig" align="left" colspan="2">$info[m_sig]</td></tr>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.3.2" tplt_forum_ver="2.5.0">
+
+						<tplt_section>thread</tplt_section>
+
+						<tplt_function>post_table</tplt_function>
+
+						<tplt_code><![CDATA[       <a name="post_$info[p_id]"></a>       
+        <table class="forum_posts" cellpadding="0" cellspacing="0" id="fullheight">
+            <tr>
+                <td width="100%" align="left" colspan="2" valign="top" class="mem_name" id="name_$info[p_id]" nowrap>
+                    <table width="100%" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td class="UserNameOptions" width="100%">
+                                <ul id="UserNameOptions">
+                                  <li>
+                                    $info[admin_lookup] $info[user_name]  <font class="group_text">$info[group]</font>
+                                    <div id="mem$info[mem_drop_num]" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
+                                        $info[profile_link]
+                                        $info[user_options]
+                                        $info[m_pm]
+                                    </div>
+                                  </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td align="left" nowrap valign="top" width="$info[avatarwidth]">
+                    <table cellpadding="0" cellspacing="0" width="$info[avatarwidth]">
+                        <tr>
+                            <td class="t_userinfo" width="$info[avatarwidth]" nowrap>
+                <!-- member_title --><div class="$info[member_title_css]">$info[member_title]</div><!-- /member_title -->
+                $info[post_avatar]
+                                $info[wikiedits_count_link]
+                                $info[topics_count_link]
+                                $info[post_count_link]                              
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                        
+            		<td align="left" width="100%" valign="top" id="fullheight">
+		                <table width="100%" cellpadding="0" cellspacing="0" class="$info[row_class]" height="$info[table_height]">
+		                    <tr>
+		                        <td class="post_date" valign="bottom" height="1px" $info[colspan] nowrap>$info[date]</td>
+		                            $info[edit_buttons]
+		                    </tr>
+		                    $info[post_title]                 
+		                    <tr>
+		                        <td valign="top" class="post_body" height="$info[post_height]" colspan="2">$info[post]</td>
+		                    </tr>
+		                                
+		                    $info[post_edited_on]
+		                    
+		                </table>
+		            </td>
+        </tr> 
+           
+        $info[sig_display]
+        	
+        </table>
+<br />]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>thread</tplt_section>
+
+						<tplt_function>post_avatar</tplt_function>
+
+						<tplt_code><![CDATA[<DIV align="center"><img class="adv" src="$info[m_adv]" border="0" height="$info[m_advh]" width="$info[m_advw]" align="middle"/></div>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>thread</tplt_section>
+
+						<tplt_function>post_edited_on</tplt_function>
+
+						<tplt_code><![CDATA[<tr>
+	<td class="edited_on" align="left" colspan="2">
+		<b><a href="{$awc_url}post/edithistory/$info[pID]">$word[editedon]</a></b> $info[p_editdate] <b>$word[by]</b> $info[p_editwho]
+	</td>
+</tr>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>thread</tplt_section>
+
+						<tplt_function>link_profile</tplt_function>
+
+						<tplt_code><![CDATA[<a href="$info[url]"><b>$word[word_profile]</b></a><br />]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>thread</tplt_section>
+
+						<tplt_function>link_threads</tplt_function>
+
+						<tplt_code><![CDATA[$word[threads] <a href="$info[url]">$info[m_topics]</a><br />]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>thread</tplt_section>
+
+						<tplt_function>link_send_pm_to</tplt_function>
+
+						<tplt_code><![CDATA[$word[word_send] <a href="$info[url]">$word[word_pm]</a>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>thread</tplt_section>
+
+						<tplt_function>link_wikiedits</tplt_function>
+
+						<tplt_code><![CDATA[$word[wiki_edits] <a target="blank" href="$info[url]">$info[edit_count]</a><br />]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>thread</tplt_section>
+
+						<tplt_function>link_posts</tplt_function>
+
+						<tplt_code><![CDATA[$word[posts] <a href="$info[url]">$info[m_posts]</a>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.1">
+
+						<tplt_section>thread</tplt_section>
+
+						<tplt_function>post_date_link</tplt_function>
+
+						<tplt_code><![CDATA[<a target="blank" href="{$awc_url}sp/id$info[pID]">$info[date]</a>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>thread_listing</tplt_section>
+
+						<tplt_function>empty_forum</tplt_function>
+
+						<tplt_code><![CDATA[<hr>
+                <table width="100%">
+                    <tr>
+                        <td class="page_jumps_holder_thread_bot" width="100%">
+                            <br /><br />
+                            $info[subscrib_button] $info[new_thread_button]
+				$word[empty_forum]
+                        </td>
+                    </tr>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>thread_listing</tplt_section>
+
+						<tplt_function>thread_list_rows</tplt_function>
+
+						<tplt_code><![CDATA[        <tr>
+            <td align="left" class="$info[row_class]">$info[mod] $info[NewPost] $info[indicator_lock_sticky_ann] <a href="$info[thread_url]">$info[thread_title]</a>$info[jump]<br />
+                <SPAN align="left"> $word[started_by] : <a href="$info[mem_url]">$info[t_starter]</a></SPAN>
+            </td>
+            <td class="$info[row_class]" align="center">$info[t_topics]</td>
+            <td class="$info[row_class]" align="center">$info[t_hits]</td>
+            <td class="$info[row_class]" align="right"><SPAN class="thread_lastaction">$info[last] <br /> $info[user]</SPAN></td>
+            $info[col_5_isSearch_forum_name]
+        </tr>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>thread_listing</tplt_section>
+
+						<tplt_function>thread_list_header</tplt_function>
+
+						<tplt_code><![CDATA[<table width="100%" cellpadding="0" cellspacing="0"> 
+	<tr $info[tr_id]>
+        	<td class="thread_col_head" width="80%" align="left" nowrap="nowrap">$info[first_col_name]</td>
+            	<td class="thread_col_head" width="1%" align="center" nowrap="nowrap">$word[replies]</td>
+            	<td class="thread_col_head" width="1%" align="center" nowrap="nowrap">$word[views]</td>
+            	<td class="thread_col_head" width="20%" align="center" nowrap="nowrap">$word[last_action]</td>
+           	$info[col_5_isSearch_forum_name]
+   	</tr>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.0">
+
+						<tplt_section>thread_listing</tplt_section>
+
+						<tplt_function>thread_list_header_menu</tplt_function>
+
+						<tplt_code><![CDATA[    <table width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+            <td width="100%" align="left" nowrap="nowrap">$info[jump]</td>                                         
+            <td width="100%" align="right" nowrap="nowrap">$info[new_thread_button]</td>
+            <td width="100%" align="right" nowrap="nowrap">$info[subscrib_button]</td>    
+        </tr>
+    </table>]]></tplt_code>
+
+				</tplt>
+		<tplt thmn_title="awc_default" thmn_who="AWC" thmn_where="wiki.anotherwebcom.com" thmn_when="0000.00.00" tplt_ver="1.0.0" tplt_forum_ver="2.5.8">
+
+						<tplt_section>poll</tplt_section>
+
+						<tplt_function>post:reopen_poll</tplt_function>
+
+						<tplt_code><![CDATA[<div class="post_buttons"><a href="$info[url]" rel="nofollow">$word[reopen_poll]</a></div>]]></tplt_code>
+
+				</tplt>
+</skin_tplts>
