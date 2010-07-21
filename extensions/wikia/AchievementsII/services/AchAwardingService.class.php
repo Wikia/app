@@ -453,6 +453,7 @@ class AchAwardingService {
 
 	private function awardNotInTrackBadge($badge_type_id, $badge_lap = null) {
 		wfProfileIn(__METHOD__);
+		global $wgIP;
 
 		// can be platinum or static
 
@@ -480,7 +481,15 @@ class AchAwardingService {
 					$userPageArticle = new Article($userPageTitle, 0);
 					if(!$userPageArticle->exists()) {
 						$userWikia = User::newFromName('Wikia');
+
+						//#60032: forcing IP for bot since this code is run in a real user session and not from a maintenance script
+						$origIP = $wgIP;
+						$wgIP = '127.0.0.1';
+
 						$userPageArticle->doEdit(wfMsg("welcome-user-page"), '', $userWikia->isAllowed('bot') ? EDIT_FORCE_BOT : 0, false, $userWikia);
+						
+						//restore original IP from user session
+						$wgIP = $origIP;
 					}
 				}
 			}
