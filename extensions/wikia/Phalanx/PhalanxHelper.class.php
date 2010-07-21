@@ -304,7 +304,8 @@ class PhalanxHelper {
 					$line = htmlspecialchars( $match['text'] ) . ' &bull; ' .
 						Xml::element( 'a', array( 'href' => $phalanxUrl, 'class' => 'unblock' ), 'unblock' ) . ' &bull; ' .
 						Xml::element( 'a', array( 'href' => $phalanxUrl, 'class' => 'modify' ), 'modify' ) . ' &bull; ' .
-						Xml::element( 'a', array( 'href' => $statsUrl ), 'stats' );
+						Xml::element( 'a', array( 'href' => $statsUrl, 'class' => 'stats' ), 'stats' ) . ' &bull; ' .
+						'#' . $match['id'];
 					$output .= Xml::tags( 'li', null, $line );
 				}
 
