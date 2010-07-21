@@ -1,0 +1,17 @@
+All of Another Web Company's (AWC) MediaWiki Extensions are licensed under the Creative Commons Attribution-Share Alike 3.0 United States License.
+http://creativecommons.org/licenses/by-sa/3.0/us/
+
+All of AWC's MediaWiki extension's can be freely-distribute, no profit of any kind is allowed to be made off of, or because of, the extension itself, this includes Donations.
+
+
+All of AWC's MediaWiki extension's can be edited or modified and freely re-distribute but these changes must be made public and viewable - noting the changes are not original AWC code.
+If you re-distribute any Another Web Company (AWC) script with changes you must include a visable link at all location which the Another Web Company (AWC) name or link appears to a source of your changes or at minimum stating that the code has been change and is not the original AWC code.
+
+Any source code change must have a "link" to http://anotherwebcom.com weather the script current has this info or not.
+
+You are not allowed to remove the Another Web Company's (AWC) logo, link or name from any source code or rendered code. You are not allowed to create your own code which will remove or hide Another Web Company's (AWC) logo, link or name.
+
+This License can and will be change with-out notice.
+
+
+All of Another Web Company's (AWC) software/code/programs are distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
