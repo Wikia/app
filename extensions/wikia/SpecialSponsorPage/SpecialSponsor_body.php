@@ -20,8 +20,21 @@
  */
 class SpecialSponsor extends SpecialPage {
 	
+	private $priceAry=array();//price points for sponsorships
+
 	public function __construct() {
 		parent::__construct( 'Sponsor' );
+		
+		//set up the price points
+		// $5 per month
+		$this->priceAry['5mo']['price'] = 5;
+		$this->priceAry['5mo']['months']=1;
+		$this->priceAry['5mo']['text'] = "sponsor-price-5mo";
+		
+		// $45 per year
+		$this->priceAry['45yr']['price']=45;
+		$this->priceAry['45yr']['months']=12;
+		$this->priceAry['45yr']['text']="sponsor-price-45yr";
 	}
 	
 	public function execute( $par ) {
@@ -115,8 +128,7 @@ class SpecialSponsor extends SpecialPage {
 	//						Ad preview is shown with SUBCSCRIBE and EDIT buttons
 	//						EDIT takes you back, SUBSCRIBE takes you to PayPal
 	private function makeInputForm() {
-		global $wgUser, $wgRequest, $wgSponsorshipPrices;
-
+		global $wgUser, $wgRequest;
 		$self = $this->getTitle();
 		$ad = new Advertisement();
 		$pageName = "";
@@ -149,34 +161,12 @@ class SpecialSponsor extends SpecialPage {
 				<td><input type="text" name="page_name"'.$pageclass.' size="30" value="'.htmlentities($pageName).'" /></td></tr>
 			<tr><td>' . wfMsg('sponsor-form-price') . '</td>
 				<td><select name="price_duration"/>'."\n";
-
-		global $wgSponsorshipYearDiscount, $wgSponsorshipYearDiscountTiers, $wgDBname;
-
-		foreach($wgSponsorshipPrices as $key=>$opt){
-			$selected = false;
-
-			if ( $key == 'yr' && !empty( $wgSponsorshipYearDiscount ) ) {
-				// FIXME: this is BAD. But we don't have any other way to get the full number per page :(
-				$adsOnPage = empty( $ad->page_id ) ? 0 : count( Advertisement::FlushAdCache( $wgDBname, $ad->page_id ) );
-
-				for ( $i = 1; $i <= $wgSponsorshipYearDiscountTiers; $i++ ) {
-					$selected = false;
-					$attribs = array( 'disabled' => 'disabled' );
-					$price = $opt['price'] - ( $wgSponsorshipYearDiscountTiers - $i ) * $wgSponsorshipYearDiscount;
-					$value = $price . 'yr';
-					if ( $adsOnPage + 1 == $i ) {
-						$attribs = array();
-					}
-					if( ( $price . $key ) == $price_duration ){
-						$selected = true;
-					}
-					$form .= Xml::option( wfMsg( $opt['text'], $price, $i ), $value, $selected, $attribs );
-				}
-			} else {
-				$selected = ( ( $opt['price'] . $key ) == $price_duration ) ? true : false;
-
-				$form .= Xml::option( wfMsg( $opt['text'], $opt['price'] ), $opt['price'], $selected );
-			}
+		foreach($this->priceAry as $key=>$opt){
+			$selected='';
+			if($key == $price_duration){
+				$selected=' selected="selected" ';
+			};
+			$form .= '	<option value="'.$key.'"'.$selected.'>'. wfMsg( $opt['text'] ) . '</option>'."\n";
 		}
 				$form .= '</select>
 				
@@ -189,21 +179,12 @@ class SpecialSponsor extends SpecialPage {
 	}
 	
 	private function loadAdPrices($ad){
-		global $wgRequest, $wgDBname, $wgSponsorshipPrices, $wgSponsorshipYearDiscount, $wgSponsorshipYearDiscountTiers;
-
+		global $wgRequest; 
 		if($wgRequest->wasPosted() ){
 			$pricedur = $wgRequest->getText('price_duration');
-			$dur = substr( $pricedur, -2 );
-			if(isset($wgSponsorshipPrices[$dur])){
-				if ( $dur == 'yr' && !empty( $wgSponsorshipYearDiscount ) ) {
-					// FIXME: for whatever reason, FlushAdCache returns mixed, should return empty array instead
-					$adsOnPage = empty( $ad->page_id ) ? array() : Advertisement::FlushAdCache( $wgDBname, $ad->page_id );
-					$adsOnPage = empty( $adsOnPage ) ? 0 : count( $adsOnPage );
-					$ad->ad_price = $wgSponsorshipPrices[$dur]['price'] - ( ( $wgSponsorshipYearDiscountTiers - $adsOnPage - 1 ) * $wgSponsorshipYearDiscount );
-				} else {
-					$ad->ad_price = $wgSponsorshipPrices[$dur]['price'];
-				}
-				$ad->ad_months = $wgSponsorshipPrices[$dur]['months'];
+			if(isset($this->priceAry[$pricedur])){
+				$ad->ad_price = $this->priceAry[$pricedur]['price'];
+				$ad->ad_months = $this->priceAry[$pricedur]['months'];
 			}
 		}
 	}
