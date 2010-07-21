@@ -222,7 +222,7 @@ function SharedHelpHook(&$out, &$text) {
 			$skipNamespaces[] = $wgContLang->getNsText(NS_FILE);
 			if ( defined( NS_VIDEO ) ) {
 				$skipNamespaces[] = $wgContLang->getNsText(NS_VIDEO);
-			);
+			};
 			$skipNamespaces[] = "Advice";
 			if ($wgLanguageCode != 'en') {
 				$skipNamespaces[] = MWNamespace::getCanonicalName(NS_CATEGORY);
