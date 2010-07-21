@@ -42,6 +42,7 @@ switch( $wgLanguageCode ) {
 		$wgNamespaceAliases["Video_talk"] = 401;
 		break;
 	case "no":
+	case "nn":
 		$wgExtraNamespaces[400] = "Video";
 		$wgExtraNamespaces[401] = "Videodiskusjon";
 		$wgNamespaceAliases["Video"] = 400;

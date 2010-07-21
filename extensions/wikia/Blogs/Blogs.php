@@ -73,6 +73,7 @@ if (in_array($wgLanguageCode, array("de", "ru"))) {
 
 			break;
 		case "no":
+		case "nn":
 			$wgExtraNamespaces[500] = 'Brukerblogg';
 			$wgExtraNamespaces[501] = 'Brukerbloggkommentar';
 			$wgExtraNamespaces[502] = 'Blogg';
