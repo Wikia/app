@@ -17,6 +17,8 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 );
 }
 
+global $wgWikiaAdminSettingsPath;
+require( $wgWikiaAdminSettingsPath );
 class AutoCreateWikiPage extends SpecialPage {
 
 	private
@@ -333,7 +335,7 @@ class AutoCreateWikiPage extends SpecialPage {
 	 *
 	 */
 	private function createWiki() {
-		global $wgOut, $wgUser, $IP, $wgDBname, $wgDevelDomains;
+		global $wgOut, $wgUser, $IP, $wgDBname, $wgDevelDomains, $wgDBadminuser, $wgDBadminpassword;
 		global $wgSharedDB, $wgExternalSharedDB, $wgDBcluster, $wgDevelEnvironment;
 		global $wgDBserver, $wgDBuser,	$wgDBpassword, $wgWikiaLocalSettingsPath;
 		global $wgHubCreationVariables, $wgLangCreationVariables, $wgUniversalCreationVariables;
@@ -582,8 +584,8 @@ class AutoCreateWikiPage extends SpecialPage {
 				$tables,
 				$this->mMYSQLbin,
 				$dbwTarget->getLBInfo( 'host' ),
-				$wgDBuser,
-				$wgDBpassword,
+				$wgDBadminuser,
+				$wgDBadminpassword,
 				$this->mWikiData[ "dbname"]
 			);
 			$this->log($cmd);
