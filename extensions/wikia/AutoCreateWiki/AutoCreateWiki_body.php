@@ -17,8 +17,6 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 );
 }
 
-global $wgWikiaAdminSettingsPath;
-require( $wgWikiaAdminSettingsPath );
 class AutoCreateWikiPage extends SpecialPage {
 
 	private
@@ -584,8 +582,8 @@ class AutoCreateWikiPage extends SpecialPage {
 				$tables,
 				$this->mMYSQLbin,
 				$dbwTarget->getLBInfo( 'host' ),
-				$wgDBadminuser,
-				$wgDBadminpassword,
+				$dbwTarget->getLBInfo( 'user' ),
+				$dbwTarget->getLBInfo( 'password' ),
 				$this->mWikiData[ "dbname"]
 			);
 			$this->log($cmd);
