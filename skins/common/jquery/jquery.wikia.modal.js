@@ -1,6 +1,14 @@
 //Modal
 $.fn.extend({
 
+	getModalTopOffset: function() {
+		var top = Math.max((($(window).height() - this.outerHeight()) / 2), 20);
+		var opts = this.data('options');
+		if (opts && typeof opts.topMaximum == "number")
+			top = Math.min(top,opts.topMaximum);
+		return $(window).scrollTop() + top;
+	},
+	
 	makeModal: function(options) {
 		var settings = { width: 400 };
 		if (options) {
@@ -34,7 +42,7 @@ $.fn.extend({
 
 			zIndex += 1000;
 		}
-
+		/*
 		function getModalTop() {
 			var modalTop = (($(window).height() - wrapper.outerHeight()) / 2) + $(window).scrollTop();
 			if (modalTop < $(window).scrollTop() + 20) {
@@ -43,17 +51,20 @@ $.fn.extend({
 			return modalTop;
 			}
 		}
-
+		*/
+		wrapper
+			// needed here for getModalTopOffset()
+			.data('options', options);
 		wrapper
 			.prepend('<h1 class="modalTitle color1"><img src="'+wgBlankImgUrl+'" class="sprite close" />' + this.attr('title') + '</h1>')
-			.width(settings.width)
+			.width(settings.width);
+		wrapper
 			.css({
 				marginLeft: -wrapper.outerWidth() / 2,
-				top: getModalTop(),
+				top: wrapper.getModalTopOffset(),
 				zIndex: zIndex + 1
 			})
 			.fadeIn("fast")
-			.data('options', options)
 			.log('makeModal: #' + id);
 
 		$("[id$='TOP_LEADERBOARD']").add("[id$='TOP_RIGHT_BOXAD']").css("visibility", "hidden");
@@ -105,7 +116,7 @@ $.fn.extend({
 				}
 			})
 			.bind("resize.modal", function() {
-				wrapper.css("top", getModalTop());
+				wrapper.css("top", wrapper.getModalTopOffset());
 				$(".blackout:last").height($(document).height());
 			});
 
@@ -193,7 +204,7 @@ $.fn.extend({
 
 		wrapper
 			.css({
-				top: getModalTop(),
+				top: wrapper.getModalTopOffset(),
 				zIndex:  zIndex+1,
 				opacity: 1,
 				display: "block"
@@ -202,6 +213,7 @@ $.fn.extend({
 
 		$("[id$='TOP_LEADERBOARD']").add("[id$='TOP_RIGHT_BOXAD']").css("visibility", "hidden");
 
+		/*
 		//Defined twice in different scopes. This is bad. Figure out how to define just once.
 		function getModalTop() {
 			var modalTop = (($(window).height() - wrapper.outerHeight()) / 2) + $(window).scrollTop();
@@ -211,6 +223,7 @@ $.fn.extend({
 				return modalTop;
 			}
 		}
+		*/
 	},
 
 	// change the width of modal and reposition it (refs RT #55210)
