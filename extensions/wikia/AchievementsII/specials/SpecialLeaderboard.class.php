@@ -22,7 +22,7 @@ class SpecialLeaderboard extends SpecialPage {
 		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AchievementsII/css/achievements_sidebar.css?{$wgStyleVersion}");
 				$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/AchievementsII/js/achievements.js?{$wgStyleVersion}\"></script>\n");
 		// ranking
-		$ranking = $rankingService->getUsersRanking(20);
+		$ranking = $rankingService->getUsersRanking(20, true);
 
 		// recent
 		$levels = array(BADGE_LEVEL_PLATINUM, BADGE_LEVEL_GOLD, BADGE_LEVEL_SILVER, BADGE_LEVEL_BRONZE);

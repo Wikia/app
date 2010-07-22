@@ -15,11 +15,18 @@ class AchUserProfileService {
     public function getHTML() {
     	wfProfileIn(__METHOD__);
 
-    	global $wgTitle, $wgUser;
+    	global $wgTitle, $wgUser, $wgWikiaBotLikeUsers;
 
     	$this->mUserOwner = User::newFromName($wgTitle->getText());
 
-    	if($this->mUserOwner && $this->mUserOwner->isLoggedIn() && !($wgUser->getId() == $this->mUserOwner->getId() && $wgUser->getOption('hidepersonalachievements'))) {
+    	if(
+		$this->mUserOwner &&
+		
+		//check for blocked users/bots
+		(!$this->mUserOwner->isBlocked() && !in_array( $this->mUserOwner->getName(), $wgWikiaBotLikeUsers )) &&
+
+		$this->mUserOwner->isLoggedIn() &&
+		!($wgUser->getId() == $this->mUserOwner->getId() && $wgUser->getOption('hidepersonalachievements'))) {
 
     		wfLoadExtensionMessages('AchievementsII');
 
@@ -43,13 +50,8 @@ class AchUserProfileService {
 			$tmplData['leaderboard_url'] = Skin::makeSpecialUrl("Leaderboard");
 
 			if(count($this->mOwnerBadgesExtended) > 0) {
-				global $wgCityId, $wgExternalSharedDB;
-
-				$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
-				$dbr->query('SET @rownum := 0');
-				$res = $dbr->query('SELECT rank, user_id FROM (SELECT @rownum := @rownum + 1 AS rank, user_id, score FROM ach_user_score WHERE wiki_id = '.$wgCityId.' ORDER BY score DESC) AS c WHERE user_id='.$this->mUserOwner->getID());
-
-				$tmplData['user_rank'] = $res->fetchObject()->rank;
+				$rankingService = new AchRankingService();
+				$tmplData['user_rank'] = $rankingService->getUserRankingPosition($this->mUserOwner);
 			}
 
 			if($this->mUserViewer->isAllowed('editinterface')) {
