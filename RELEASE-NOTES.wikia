@@ -1,4 +1,5 @@
 == Changes since 201007.4 ==
+* rt#57044: Banned users' badges should be removed (federico)
 * rt#60032: Achievements: User:Wikia (falsely) uses users IP and browser agent when creating userpage (federico)
 * rt#57106: Badges jumps if messages are short since last update (federico)
 * rt#59236: Photo Gallery: color picker popup is unreliable (federico)
