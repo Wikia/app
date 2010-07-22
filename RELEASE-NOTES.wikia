@@ -1,4 +1,5 @@
 == Changes since 201007.4 ==
+* rt#60289: Remove MagCloud widget from list of available widgets (federico)
 * rt#57005: answers widget still appears in widget chooser (federico)
 * rt#57044: Banned users' badges should be removed (federico)
 * rt#60032: Achievements: User:Wikia (falsely) uses users IP and browser agent when creating userpage (federico)

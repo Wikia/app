@@ -1,4 +1,4 @@
-var WidgetMagCloudLoading = false;
+/*var WidgetMagCloudLoading = false;
 
 function WidgetMagCloud_init(id, widget) {
 	$().log('widget init', 'MagCloud');
@@ -23,4 +23,4 @@ function WidgetMagCloud_init(id, widget) {
 			MagCloud.openIntroPopup();
 		});
 	});
-}
+}*/
