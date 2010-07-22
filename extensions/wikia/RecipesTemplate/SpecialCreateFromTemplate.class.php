@@ -3,11 +3,16 @@
 class SpecialCreateFromTemplate extends RecipesTemplate {
 
 	function __construct() {
-		global $wgRequest;
+		global $wgRequest, $wgTitle;
 
 		parent::__construct('CreateFromTemplate', '' /* no restriction */, true /* listed */);
 
-		$this->mType = $wgRequest->getText( 'type' );
+		$bits = explode( '/', $wgTitle->getDBkey(), 2 );
+		if ( !empty( $bits[1] ) ) {
+			$this->mType = $bits[1];
+		} else {
+			$this->mType = $wgRequest->getText( 'type' );
+		}
 
 		// setup list of fields for recipe form
 		$key = "recipes-template-{$this->mType}-fields";
