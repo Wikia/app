@@ -7,14 +7,15 @@ if(!defined('MEDIAWIKI')) {
 	die(1);
 }
 
-global $wgWidgets, $wgAvailableAnswersLang;
+global $wgWidgets, $wgAvailableAnswersLang, $wgLanguageCode;
 $wgWidgets['WidgetAnswers'] = array(
 	'callback' => 'WidgetAnswers',
 	'title' => 'widget-title-answers',
 	'desc' => 'widget-desc-answers',
     'closeable' => true,
     'editable' => false,
-    'listable' => true,
+    //#57005, do not list for non-french wikis
+    'listable' => ($wgLanguageCode == 'fr') ? true : false,
     'languages' => $wgAvailableAnswersLang,
     'contentlang' => true,
 );
