@@ -38,12 +38,17 @@ class FBPush_OnAddBlogPost extends FBConnectPushEvent {
 		if( strlen($article->getId()) == 0 ) {
 			return true;
 		}
-			
+		
+		// only push if it's a newly created article
+		if ( !$article->getTitle()->isNewPage() ) {
+			return true;
+		}
+
 		if( $article->getTitle()->getNamespace() == NS_BLOG_ARTICLE ) {
 			$params = array(
 				'$WIKINAME' => $wgSitename,
 				'$BLOG_POST_URL' => $article->getTitle()->getFullURL("ref=fbfeed&fbtype=blogpost"),
-				'$BLOG_PAGENAME' =>	$article->getTitle()->getText(),
+				'$BLOG_PAGENAME' => $article->getTitle()->getText(),
 				'$ARTICLE_URL' => $article->getTitle()->getFullURL("ref=fbfeed&fbtype=blogpost"), //inside use
 				'$EVENTIMG' => self::$eventImage,
 				'$TEXT' => self::shortenText(self::parseArticle($article))			
