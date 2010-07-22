@@ -335,7 +335,7 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 				clicked : 0,
 				placeholderID : null,
 				isShow : false,
-				topPos : "130px",
+//				topPos : "130px",
 				getNewTop: function(newHeight){
 					var modalTop = (($(window).height() - newHeight) / 2) + $(window).scrollTop();
 					if (modalTop < $(window).scrollTop() + 20) {
@@ -396,7 +396,7 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 					{
 						$('#AjaxLoginBoxWrapper').showModal();
 						$('#wpName1Ajax').focus();
-						$('#AjaxLoginBoxWrapper').css({'top' : AjaxLogin.topPos});
+//						$('#AjaxLoginBoxWrapper').css({'top' : AjaxLogin.topPos});
 						return true;
 					}
 					/* remove normal ajax login to show combo (id)*/
@@ -443,9 +443,9 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 					if (typeof UserRegistration != 'undefined'){
 						UserRegistration.WET_str = AjaxLogin.WET_str;
 					}
-					$('#AjaxLoginBox').makeModal({width: 700, persistent: true, onClose: function(){ WET.byStr(AjaxLogin.WET_str + '/close'); } });
+					$('#AjaxLoginBox').makeModal({width: 700, topMaximum: 130, persistent: true, onClose: function(){ WET.byStr(AjaxLogin.WET_str + '/close'); } });
 					setTimeout(function() {
-									$('#AjaxLoginBoxWrapper').css({ 'top' : AjaxLogin.topPos});
+//									$('#AjaxLoginBoxWrapper').css({ 'top' : AjaxLogin.topPos});
 									$('#wpName2Ajax').focus();
 								},100);
 					WET.byStr(AjaxLogin.WET_str + '/open');
