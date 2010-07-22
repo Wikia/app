@@ -1,4 +1,4 @@
-var WidgetMagCloudLoading = false;
+/*var WidgetMagCloudLoading = false;
 
 function WidgetMagCloudM_init(id, widget) {
 	$().log('widget init', 'MagCloudM');
@@ -8,4 +8,4 @@ return;
 	$(widget).find('.WidgetMagCloudClickable').click(function(ev) {
 		window.location = 'http://magcloud.wikia.com/';
 	});
-}
+}*/

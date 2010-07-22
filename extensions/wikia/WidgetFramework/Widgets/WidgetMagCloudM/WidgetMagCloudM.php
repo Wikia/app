@@ -14,13 +14,13 @@ $wgWidgets['WidgetMagCloudM'] = array(
 	'desc' => 'magcloudm-widget-desc',
 	'closeable' => true,
 	'editable' => false,
-	'listable' => true,
+	'listable' => false,
 	'languages' => $wgAvailableMagCloudLang,
 	'contentlang' => true,
 );
 
 function WidgetMagCloudM($id, $params) {
-	global $wgLanguageCode, $wgEnableMagCloudExt;
+	/*global $wgLanguageCode, $wgEnableMagCloudExt;
 	global $wgSitename, $wgUser;
 
 	wfProfileIn(__METHOD__);
@@ -47,5 +47,6 @@ function WidgetMagCloudM($id, $params) {
 HTML;
 
 	wfProfileOut(__METHOD__);
-	return $output;
+	return $output;*/
+	return null;
 }
