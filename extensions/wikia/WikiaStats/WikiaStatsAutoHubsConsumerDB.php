@@ -692,6 +692,7 @@ $tag_id, $lang, $limit );
 		
 	    $out = $wgMemc->get($mcKey,null);
 		if( !empty($out) ) {
+			wfProfileOut( __METHOD__ );
 			return $out;
 		}
 		
@@ -699,6 +700,7 @@ $tag_id, $lang, $limit );
 		$wikis = json_decode($html_out, true);
 
 		if ( empty($wikis['blogpage'][$page_id]) ){
+			wfProfileOut( __METHOD__ );
 			return array();
 		}
 
