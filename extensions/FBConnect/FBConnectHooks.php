@@ -264,7 +264,7 @@ STYLE;
 	 * TODO: Better 'returnto' code
 	 */
 	public static function PersonalUrls( &$personal_urls, &$wgTitle ) {
-		global $wgUser, $wgLang, $wgShowIPinHeader, $fbPersonalUrls, $fbConnectOnly,$wgBlankImgUrl;
+		global $wgUser, $wgLang, $wgShowIPinHeader, $fbPersonalUrls, $fbConnectOnly, $wgBlankImgUrl, $wgSkin;
 		$skinName = get_class($wgUser->getSkin());
 
 		wfLoadExtensionMessages('FBConnect');
@@ -301,13 +301,11 @@ STYLE;
 			// Replace logout link with a button to disconnect from Facebook Connect
 
 			if(empty($fbPersonalUrls['hide_logout_of_fb'])){
-				if( $skinName == "SkinMonaco" ) {
-					$personal_urls['fblogout'] = array(
-						'text'   => '&nbsp;',
-						'href'   => $personal_urls['userpage']['href'],
-						'class' => 'fb_button fb_button_small fb_usermenu_button',
-						'active' => false );
-				}
+				$html = Xml::openElement("span",array("id" => 'fbuser' ));
+					$html .= Xml::openElement("a",array("href" => $personal_urls['userpage']['href'], 'class' => 'fb_button fb_button_small fb_usermenu_button' ));
+					$html .= Xml::closeElement( "a" );
+				$html .= Xml::closeElement( "span" );
+				$personal_urls['fbuser']['html'] = $html;
 			}
 
 			/*
@@ -353,12 +351,16 @@ STYLE;
 						'active' => $wgTitle->isSpecial('Connect')
 					);
 				}
-				if( $skinName == "SkinMonaco" ) {
-					$html = Xml::openElement("span",array("class" => "fb_button_text" ));
-					$html .= wfMsg( 'fbconnect-connect-simple' );
+				
+				if( $skinName == "SkinMonaco" ) { 					
+					$html = Xml::openElement("span",array("id" => 'fbconnect' ));
+						$html .= Xml::openElement("a",array("href" => '#', 'class' => 'fb_button fb_button_small' ));
+							$html .= Xml::openElement("span",array("class" => "fb_button_text" ));
+								$html .= wfMsg( 'fbconnect-connect-simple' );
+							$html .= Xml::closeElement( "span" );
+						$html .= Xml::closeElement( "a" );
 					$html .= Xml::closeElement( "span" );
-
-					$personal_urls['fbconnect']['text'] = $html;
+					$personal_urls['fbconnect']['html'] = $html;
 				}
 			}
 
