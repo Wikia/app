@@ -440,26 +440,13 @@ class EmailNotification {
 		$watchers = array();
 		if ($wgEnotifWatchlist || $wgShowUpdatedMarker) {
 			$dbw = wfGetDB( DB_MASTER );
-			/* Wikia change begin - @author: wladek */
-			/* RT#55604: Add a timeout to the watchlist email block */
-			global $wgWatchlistNotificationTimeout;
-			$notificationTimeoutSql = "wl_notificationtimestamp IS NULL";
-			if ( isset($wgWatchlistNotificationTimeout) ) { // not using !empty() to allow setting integer value 0
-				$blockTimeout = wfTimestamp(TS_MW,wfTimestamp(TS_UNIX,$timestamp) - intval($wgWatchlistNotificationTimeout) );
-				$notificationTimeoutSql = "$notificationTimeoutSql OR wl_notificationtimestamp < '$blockTimeout'";
-			}
-			/* Wikia change end */
 			$res = $dbw->select( array( 'watchlist' ),
 				array( 'wl_user' ),
 				array(
 					'wl_title' => $title->getDBkey(),
 					'wl_namespace' => $title->getNamespace(),
 					'wl_user != ' . intval( $editor->getID() ),
-			/* Wikia change begin - @author: wladek */
-			/* RT#55604: Add a timeout to the watchlist email block */
-				//	'wl_notificationtimestamp IS NULL', /* <- this is original MediaWiki code */
-					$notificationTimeoutSql,
-			/* Wikia change end */
+					'wl_notificationtimestamp IS NULL',
 				), __METHOD__
 			);
 			while ($row = $dbw->fetchObject( $res ) ) {
