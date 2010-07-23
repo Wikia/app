@@ -117,13 +117,17 @@ if(mwCustomEditButtons) {
 	}
 }
 
-if(skin == 'monaco') {
-	addOnloadHook(function () {
-		if(document.forms.editform) {
-			WMU_addHandler();
+$(function() {
+	$.loadYUI(function(){
+		if(skin == 'monaco' || skin == 'answers' ) {
+			addOnloadHook(function () {
+				if(document.forms.editform) {
+					WMU_addHandler();
+				}
+			});
 		}
 	});
-}
+});
 
 function WMU_addHandler() {
 	var btn = $G('mw-editbutton-wmu');
@@ -132,7 +136,7 @@ function WMU_addHandler() {
 		return;
 	}
 	$.loadYUI(function(){ 	
-		YAHOO.util.Event.addListener(['wmuLink', 'wmuHelpLink', $G('mw-editbutton-wmu')], 'click',  WMU_show);
+		YAHOO.util.Event.addListener(['wmuLink', 'wmuHelpLink', btn], 'click',  WMU_show);
 	});
 }
 
