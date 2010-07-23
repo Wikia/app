@@ -7,25 +7,31 @@ $wgExtensionMessagesFiles['wsinfo'] = dirname( __FILE__ ) . '/domainhook.i18n.ph
 
 define( 'WSINFO_PLACEHOLDER', '__wsinfo_here__' );
 
-function fnDomainHook(&$article, &$text)
-{ 
-  global $action;
-  global $exDomainList;
-  global $wgTitle;
-  global $wgParser;
 
-  if( 
-      !$wgTitle->exists() ||
-      $wgTitle->getNamespace() != NS_MAIN ||
-      $wgTitle->isRedirect() ||
-      !ereg($exDomainList, $wgTitle->getText() ))
-    return true;
+/**
+ * @author Unknown
+ *
+ * add WSINFO_PLACEHOLDER to every article in main namespace
+ */
+function fnDomainHook( &$article, &$text ) {
+	global $action;
+	global $exDomainList;
+	global $wgTitle;
+	global $wgParser;
 
-  if ( strpos( $text, WSINFO_PLACEHOLDER ) === false ) {
-	$text = WSINFO_PLACEHOLDER . "\n" . $text;
-  }
+	if( !$wgTitle->exists() ||
+		$wgTitle->getNamespace() != NS_MAIN ||
+		$wgTitle->isRedirect() ||
+		!ereg($exDomainList, $wgTitle->getText() )
+	) {
+		return true;
+	}
 
-  return true;
+	if( strpos( $text, WSINFO_PLACEHOLDER ) === false ) {
+		$text = WSINFO_PLACEHOLDER . "\n" . $text;
+	}
+
+	return true;
 }
 
 $wswErotik = 0;
@@ -71,7 +77,7 @@ function wsinfo($parser, $thetext) {
 
   if(array_key_exists("Erotik", $parser->mOutput->mCategories) ||
      array_key_exists("Adult", $parser->mOutput->mCategories) ||
-     array_key_exists("Pornografie", $parser->mOutput->mCategories) 
+     array_key_exists("Pornografie", $parser->mOutput->mCategories)
      )
   {
     $wswErotik = 1;
@@ -87,7 +93,7 @@ function wsinfo($parser, $thetext) {
 
   if(array_key_exists("Geparkt", $parser->mOutput->mCategories) ||
      array_key_exists("Baustelle", $parser->mOutput->mCategories) ||
-     array_key_exists("Fehlerseiten", $parser->mOutput->mCategories) 
+     array_key_exists("Fehlerseiten", $parser->mOutput->mCategories)
      )
   {
     $forsale = "<a href=\"http://www.sedo.de/checkdomainoffer.php4?partnerid=13318&domain=$dom\" class=\"external text\" target=\"_new\">" . wfMsgForContent( 'websiteinfo-buy' ) . "</a><br>\n";
@@ -99,9 +105,9 @@ function wsinfo($parser, $thetext) {
     $issex = "no";
 
   $armor = substr(md5($dom), 0,16) . 'WsWImG=' . $dom . "=$issex=Ws3ik1Ju5ch=" . substr(md5($dom), 16);
-  $crypt = strtr(trim(base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, 'WsImgS33CCrret', $armor, MCRYPT_MODE_ECB, 
+  $crypt = strtr(trim(base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, 'WsImgS33CCrret', $armor, MCRYPT_MODE_ECB,
                 mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB), MCRYPT_RAND)))), '+/', '-!');
-  
+
   $img = "http://thumbs.websitewiki.de/$crypt";
 
   if(substr_count($dom, ".") > 1)
@@ -205,9 +211,9 @@ EOI;
     <a href=\"$erolink\" rel=\"nofollow\" target=\"_new\"><img
     src=\"http://www.sexnutz.de/images/soft_200x200.jpg\" alt=\"" . wfMsgForContent( 'websiteinfo-erotik-alt' ) . "\" width=\"200\" height=\"200\" border=\"0\">
     </td></tr>\n";
-  } 
+  }
 
-/**** no wellness and bilder 
+/**** no wellness and bilder
   else if(stristr($thetext, "wellness"))
   {
     $result .= <<<EOI
@@ -284,7 +290,7 @@ function wfWsWParserFuncHotLink_Render( &$parser, $param1 = '0') {
         # The output should be wikitext too
         global $wgOut;
         global $wgUser;
-        
+
        $result = "<a onclick=\"alert('Einfach diesen Link auf den Toolbar des Browsers ziehen (Linke Maustaste halten, ziehen und loslassen)'); return false;\" href=\"javascript:d=document;d.location.href='http://www.websitewiki.de/Spezial:NeueWebsite?param='+escape(d.location.href);\"><b>Ins WebsiteWiki!</b></a>";
 
        return array($result, 'noparse' => true, 'isHTML' => true);
@@ -297,7 +303,7 @@ function wfWsWParserFuncLegal_Render( &$parser, $param1 = '0') {
         # The output should be wikitext too
         global $wgOut;
         global $wgUser;
-        
+
        $result =<<< EOLEGAL
 <img src="http://legal.netznutz.net/legal.png"><br>
 E-Mail-Kontakt Betreiber: info@websitewiki.de<p>
