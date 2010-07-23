@@ -118,7 +118,7 @@ class Advertisement
 		//check for cached results
 		$key = wfMemcKey( 'advertisements:'.$dbname.':'.$pageid);
 		$fields = array('ad_id','ad_link_url','ad_link_text', 'ad_text','wiki_db','page_id');
-		$params = array('wiki_db' => $dbname,	'page_id'=> $pageid,'ad_status > 0','`last_pay_date` >= DATE_SUB(NOW(), INTERVAL `ad_months` MONTH) ');
+		$params = array('wiki_db' => $dbname,	'page_id'=> $pageid,'ad_status = 1','`last_pay_date` >= DATE_SUB(NOW(), INTERVAL `ad_months` MONTH) ');
 		$adcache = self::LoadAdsFromDB($params);
 		$wgMemc->set( $key, $adcache, 60*60*24 );
 		return $adcache;
