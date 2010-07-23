@@ -284,6 +284,7 @@ class StaticChute {
 			'common/yui300css-reset-min.css',
 			'common/wikia_ui/buttons.css',
 			'common/shared.css',
+			'common/sprite.css',
 			'corporate/css/modal.css',
 			'corporate/css/main.css',
 			'../extensions/FBConnect/css/fbModal.css',
