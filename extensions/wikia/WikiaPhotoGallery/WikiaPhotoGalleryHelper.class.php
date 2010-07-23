@@ -1012,7 +1012,7 @@ class WikiaPhotoGalleryHelper {
 	 * AJAX helper called from view mode to get gallery data
 	 * @author Marooned
 	 */
-	static public function getGalleryDataByHash($hash, $revisionId = 0) {
+	static public function getGalleryDataByHash($hash, $revisionId = 0, $type = WikiaPhotoGallery::WIKIA_PHOTO_GALLERY) {
 		global $wgHooks, $wgTitle, $wgUser, $wgOut;
 
 		wfProfileIn(__METHOD__);
@@ -1034,7 +1034,7 @@ class WikiaPhotoGalleryHelper {
 
 		// Marooned: check block state of user (RT #55274)
 		$permissionErrors = $wgTitle->getUserPermissionsErrors('edit', $wgUser);
-		if (count($permissionErrors)) {
+		if (count($permissionErrors) && $type == WikiaPhotoGallery::WIKIA_PHOTO_GALLERY) {
 			$result['error'] = $wgOut->parse($wgOut->formatPermissionsErrorMessage($permissionErrors));
 			$result['errorCaption'] = wfMsg('wikiaPhotoGallery-error-caption');
 		}
