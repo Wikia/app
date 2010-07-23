@@ -495,11 +495,3 @@ $wgWikiaHideImportsFromIrc = true;
  * disable autofollow blogs by default
  */
 $wgBlogsEnableStaffAutoFollow = false;
-
-/**
- * @name $wgWatchlistNotificationTimeout
- * Watchlist notification block timeout (in seconds)
- * Default is: 24 hours
- * @see rt#55604
- */
-$wgWatchlistNotificationTimeout = 24 * 60 * 60;
