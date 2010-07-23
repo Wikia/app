@@ -36,60 +36,73 @@ function fnDomainHook( &$article, &$text ) {
 
 $wswErotik = 0;
 
-function wsinfo($parser, $thetext) {
-  global $wgOut, $wgTitle, $wswErotik, $wgRTEParserEnabled;
+/**
+ * @author UNKNOWN
+ * @author Krzysztof Krzyżaniak (eloy)
+ *
+ * replace PLACEHOLDER with domain data
+ */
+function wsinfo( $parser, $thetext ) {
+	global $wgOut, $wgTitle, $wswErotik, $wgRTEParserEnabled;
 
-  $forsale = "";
+	$forsale = "";
 
-  # do not touch placeholder in RTE
-  if ( $wgRTEParserEnabled ) {
-	return true;
-  }
+	/**
+	 * do not touch placeholder in RTE
+	 */
+	if ( $wgRTEParserEnabled ) {
+		return true;
+	}
 
-  if(strpos($thetext, WSINFO_PLACEHOLDER) === false ) {
-	return true;
-  } else {
-	$thetext = str_replace( WSINFO_PLACEHOLDER, '', $thetext );
-  }
+	/**
+	 * back off when there's no placeholder in article
+	 */
+	if( strpos($thetext, WSINFO_PLACEHOLDER) === false ) {
+		return true;
+	}
+	else {
+		$thetext = str_replace( WSINFO_PLACEHOLDER, '', $thetext );
+	}
 
-  wfLoadExtensionMessages( 'wsinfo' );
+	wfLoadExtensionMessages( 'wsinfo' );
 
-  $title = $wgTitle->getText();
+	$title = $wgTitle->getText();
 
-  $wswErotik = 0;
+	/**
+	 * debug message per rt#46876
+	 */
+	Wikia::log( __METHOD__, "info", "Title of article: $title", true );
+	$wswErotik = 0;
 
-  $hour = date("H");
-  $day = 0;
+	$hour = date("H");
+	$day = 0;
 
-  $erolink = "http://www.privatelivecams.de/?WMID=5143&CTRLID=Jlc9Mg%3D%3D7&WMEC=5&PID=1";
+	$erolink = "http://www.privatelivecams.de/?WMID=5143&CTRLID=Jlc9Mg%3D%3D7&WMEC=5&PID=1";
 
-  if($hour > 6 && $hour < 22)
-  {
-    $day = 1;
-    // $erolink = "http://www.affaire.com/?WMID=5143&CTRLID=&PID=1&WMEC=5&pop=0";
-    $erolink = "http://www.dates4you.net/?WMID=5143&CTRLID=&PID=1&WMEC=5&pop=0";
-  }
+	if($hour > 6 && $hour < 22) {
+		$day = 1;
+		// $erolink = "http://www.affaire.com/?WMID=5143&CTRLID=&PID=1&WMEC=5&pop=0";
+		$erolink = "http://www.dates4you.net/?WMID=5143&CTRLID=&PID=1&WMEC=5&pop=0";
+	}
 
-  if(strstr($thetext, "Die Website dieses Artikels entspricht nicht den Bedingungen der deutschen Jugendschutzbestimmungen."))
-  {
-    $wswErotik = 1;
-  }
+	if(strstr($thetext, "Die Website dieses Artikels entspricht nicht den Bedingungen der deutschen Jugendschutzbestimmungen.")) {
+		$wswErotik = 1;
+	}
 
-  if(array_key_exists("Erotik", $parser->mOutput->mCategories) ||
-     array_key_exists("Adult", $parser->mOutput->mCategories) ||
-     array_key_exists("Pornografie", $parser->mOutput->mCategories)
-     )
-  {
-    $wswErotik = 1;
-  }
+	if( array_key_exists("Erotik", $parser->mOutput->mCategories) ||
+		array_key_exists("Adult", $parser->mOutput->mCategories) ||
+		array_key_exists("Pornografie", $parser->mOutput->mCategories)
+     ) {
+		$wswErotik = 1;
+	}
 
 
-//  $wgOut->addScript("<link rel=\"stylesheet\" type=\"text/css\" href=\"/skins/rating/rating.css\" />\n");
+	$dom = strtolower($title);
 
-  $dom = strtolower($title);
+	if( !Wikia::isValidDomain( $dom ) ) {
+		return true;
+	}
 
-  if(ereg("[^-0-9.a-z]", $dom))
-    return true;
 
   if(array_key_exists("Geparkt", $parser->mOutput->mCategories) ||
      array_key_exists("Baustelle", $parser->mOutput->mCategories) ||
