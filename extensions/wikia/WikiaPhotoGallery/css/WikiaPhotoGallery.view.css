@@ -4,18 +4,38 @@
 }
 
 /* CSS for "Add an image to this gallery" button in view mode (shown only in Monaco) */
-.wikia-gallery-add {
+div.wikia-gallery-add {/*legacy version, still here to not break non-updated pages*/
 	background: #DDD;
 	border:  1px solid #BBB;
 	line-height:  16px;
-	float: left;
+	padding: 0 5px;
+	position: relative;
+	top: 9px;
+	float:left;
 	left: 5px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+
+span.wikia-gallery-add {
+	background: #DDD;
+	border:  1px solid #BBB;
+	line-height:  16px;
 	padding: 0 5px;
 	position: relative;
 	top: 9px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 }
+
+.wikia-gallery-position-left span.wikia-gallery-add {
+	left:5px;
+}
+
+.wikia-gallery-position-right span.wikia-gallery-add {
+	right:5px;
+}
+
 
 .wikia-gallery-add a {
 	color: #000;

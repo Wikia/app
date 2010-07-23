@@ -750,10 +750,10 @@ class WikiaPhotoGallery extends ImageGallery {
 				$html .= Xml::element('br');
 			}
 
-			$html .= Xml::openElement('div', array('class' => 'wikia-gallery-add noprint', 'style' => 'display: none'));
+			$html .= Xml::openElement('span', array('class' => 'wikia-gallery-add noprint', 'style' => 'display: none'));
 			$html .= Xml::element('img', array('src' => $wgBlankImgUrl, 'class' => 'sprite-small add'));
 			$html .= Xml::element('a', array('href' => '#'), wfMsgForContent('wikiaPhotoGallery-viewmode-addphoto'));
-			$html .= Xml::closeElement('div');
+			$html .= Xml::closeElement('span');
 		}
 
 		$html .= Xml::closeElement('div');
