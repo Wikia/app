@@ -14,6 +14,7 @@ class WantedPagesPage extends QueryPage {
 	function WantedPagesPage( $inc = false, $nlinks = true ) {
 		$this->setListoutput( $inc );
 		$this->nlinks = $nlinks;
+		$this->excludetitles = '';
 	}
 
 	function getName() {
