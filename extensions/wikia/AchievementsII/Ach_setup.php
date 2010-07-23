@@ -42,6 +42,8 @@ $wgSpecialPages['Platinum'] = 'SpecialPlatinum';
 $wgSpecialPages['Leaderboard'] = 'SpecialLeaderboard';
 $wgSpecialPages['AchievementsCustomize'] = 'SpecialAchievementsCustomize';
 
+$wgExtensionAliasesFiles ['AchievementsII'] = $dir.'AchievementsII.alias.php' ;
+
 // RIGHTS
 $wgAvailableRights[] = 'platinum';
 $wgGroupPermissions['*']['platinum'] = false;
