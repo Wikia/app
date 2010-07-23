@@ -648,7 +648,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			if (!is_object($fileObject) || ($imageTitle->getNamespace() != NS_FILE)) {
 				$image['linkTitle'] = $image['titleText'] = $imageTitle->getText();
 				$image['thumbnail'] = false;
-				$image['link'] = Skin::makeSpecialUrl("Upload");
+				$image['link'] = Skin::makeSpecialUrl("Upload", array( 'wpDestFile' => $image['linkTitle'] ) );
 				$image['classes'] = 'image broken-image accent new';
 			}
 			else {
