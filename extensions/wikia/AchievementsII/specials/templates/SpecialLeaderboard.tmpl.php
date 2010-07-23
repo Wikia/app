@@ -13,7 +13,7 @@
   		</li>
   		<?foreach($ranking as $rank => $rankedUser):?>
   			<?php
-  			global $wgExtensionsPath;
+  			global $wgExtensionsPath, $wgLang;
   			$curRanking = $rankedUser->getCurrentRanking();
   			$prevRanking = $rankedUser->getPreviousRanking();
   			?>
@@ -28,7 +28,7 @@
   				</div>
   				<img class="user-avatar" src="<?=$rankedUser->getAvatarUrl();?>" width="25" height="25" />
   				<div class="user-name"><a href="<?=$rankedUser->getUserPageUrl();?>"><?=htmlspecialchars($rankedUser->getName());?></a></div>
-  				<div class="user-score"><?=number_format($rankedUser->getScore());?></div>
+  				<div class="user-score"><?=$wgLang->formatNum($rankedUser->getScore());?></div>
   			</li>
   		<?endforeach;?>
   	</ul>
