@@ -119,7 +119,7 @@ if(mwCustomEditButtons) {
 
 $(function() {
 	$.loadYUI(function(){
-		if(skin == 'monaco' || skin == 'answers' ) {
+		if(skin == 'monaco') {
 			addOnloadHook(function () {
 				if(document.forms.editform) {
 					WMU_addHandler();
