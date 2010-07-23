@@ -207,9 +207,12 @@ class WikiaPhotoGalleryAjax {
 		// used on pages with oldid URL param
 		$revisionId = $wgRequest->getInt('revid', 0);
 
-		$slideshow = WikiaPhotoGalleryHelper::getGalleryDataByHash($hash, $revisionId);
+		$slideshow = WikiaPhotoGalleryHelper::getGalleryDataByHash($hash, $revisionId, WikiaPhotoGallery::WIKIA_PHOTO_SLIDESHOW);
 
-		$ret = WikiaPhotoGalleryHelper::renderSlideshowPopOut($slideshow['gallery'], $maxWidth, $maxHeight);
+		if(isset($slideshow['info']) && $slideshow['info'] == 'ok')
+			$ret = WikiaPhotoGalleryHelper::renderSlideshowPopOut($slideshow['gallery'], $maxWidth, $maxHeight);
+		else
+			$ret = $slideshow;
 
 		wfProfileOut(__METHOD__);
 		return $ret;

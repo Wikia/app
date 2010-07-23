@@ -2311,174 +2311,183 @@ var WikiaPhotoGallery = {
 		};
 
 		WikiaPhotoGallery.ajax('getSlideshowPopOut', params, function(slideshow) {
-			var dialogId = 'wikia-slideshow-popout-' + (new Date().getTime());
 
-			$.showModal(slideshow.title, slideshow.html, {
-				id: dialogId,
-				className: 'wikia-slideshow-popout',
-				width: parseInt(slideshow.width),
-				onClose: function() {
-					self.trackForView('/slideshow/popout/close');
-				},
-				callback: function() {
-					var dialog = $('#' + dialogId);
+			if(typeof slideshow.error == 'undefined'){
+				var dialogId = 'wikia-slideshow-popout-' + (new Date().getTime());
 
-					var addImageButton = dialog.find('.wikia-slideshow-popout-add-image');
+				$.showModal(slideshow.title, slideshow.html, {
+					id: dialogId,
+					className: 'wikia-slideshow-popout',
+					width: parseInt(slideshow.width),
+					onClose: function() {
+						self.trackForView('/slideshow/popout/close');
+					},
+					callback: function() {
+						var dialog = $('#' + dialogId);
 
-					if (isPageView) {
-						// handle clicks on "Add Image" button
-						addImageButton.click(function(ev) {
-							ev.preventDefault();
+						var addImageButton = dialog.find('.wikia-slideshow-popout-add-image');
 
-							self.trackForView('/slideshow/popout/addImage');
+						if (isPageView) {
+							// handle clicks on "Add Image" button
+							addImageButton.click(function(ev) {
+								ev.preventDefault();
 
-							// close slideshow pop-out
-							dialog.closeModal();
+								self.trackForView('/slideshow/popout/addImage');
 
-							WikiaPhotoGallery.ajax('getGalleryData', {hash:hash, title:wgPageName}, function(data) {
-								if (data && data.info == 'ok') {
-									data.gallery.id = slideshowId;
-									WikiaPhotoGallery.showEditor({
-										from: 'view',
-										gallery: data.gallery
-									});
-								} else {
-									WikiaPhotoGallery.showAlert(
-										data.errorCaption,
-										data.error
-									);
+								// close slideshow pop-out
+								dialog.closeModal();
+
+								WikiaPhotoGallery.ajax('getGalleryData', {hash:hash, title:wgPageName}, function(data) {
+									if (data && data.info == 'ok') {
+										data.gallery.id = slideshowId;
+										WikiaPhotoGallery.showEditor({
+											from: 'view',
+											gallery: data.gallery
+										});
+									} else {
+										WikiaPhotoGallery.showAlert(
+											data.errorCaption,
+											data.error
+										);
+									}
+								});
+							});
+						}
+						else {
+							// hide "Add Image" button when not in view mode
+							addImageButton.hide();
+						}
+
+						var carouselItems = dialog.find('.wikia-slideshow-popout-carousel').find('li');
+
+						// modify carousel and caption when prev/next image is shown
+						dialog.bind('slide', function(ev, data) {
+							var slides = dialog.find('.wikia-slideshow-popout-images').children('li');
+
+							// update caption
+							var caption = dialog.find('.wikia-slideshow-popout-caption');
+							caption.html( slides.eq(data.currentSlideId).attr('caption') );
+
+							// update counter (n of X)
+							var counter = dialog.find('.wikia-slideshow-popout-counter');
+							counter.text( counter.attr('value').replace(/\$1/, 1 + data.currentSlideId) );
+
+							// update carousel
+							carouselItems.each(function(i) {
+								var carouselItem = $(this);
+								var index = (data.currentSlideId + (i-2)) % data.totalSlides;
+
+								if (index < 0) {
+									index += data.totalSlides;
 								}
+
+								var image = slideshow.carousel[index][ (i == 2) ? 'current' : 'small' ];
+
+								carouselItem.
+									attr('index', index).
+									css('background-image', 'url(' + image + ')');
 							});
 						});
-					}
-					else {
-						// hide "Add Image" button when not in view mode
-						addImageButton.hide();
-					}
 
-					var carouselItems = dialog.find('.wikia-slideshow-popout-carousel').find('li');
-
-					// modify carousel and caption when prev/next image is shown
-					dialog.bind('slide', function(ev, data) {
-						var slides = dialog.find('.wikia-slideshow-popout-images').children('li');
-
-						// update caption
-						var caption = dialog.find('.wikia-slideshow-popout-caption');
-						caption.html( slides.eq(data.currentSlideId).attr('caption') );
-
-						// update counter (n of X)
-						var counter = dialog.find('.wikia-slideshow-popout-counter');
-						counter.text( counter.attr('value').replace(/\$1/, 1 + data.currentSlideId) );
-
-						// update carousel
-						carouselItems.each(function(i) {
-							var carouselItem = $(this);
-							var index = (data.currentSlideId + (i-2)) % data.totalSlides;
-
-							if (index < 0) {
-								index += data.totalSlides;
-							}
-
-							var image = slideshow.carousel[index][ (i == 2) ? 'current' : 'small' ];
-
-							carouselItem.
-								attr('index', index).
-								css('background-image', 'url(' + image + ')');
-						});
-					});
-
-					// track clicks on prev / next
-					dialog.bind('onPrev', function() {
-						self.trackForView('/slideshow/popout/previous');
-					});
-
-					dialog.bind('onNext', function() {
-						self.trackForView('/slideshow/popout/next');
-					});
-
-					// handle clicks on slideshow images
-					dialog.find('.wikia-slideshow-image-link').click(function(ev) {
-						self.trackForView('/slideshow/popout/imageClick/link');
-					});
-
-					// start/stop animation
-					var startStopLinks = dialog.find('.wikia-slideshow-popout-start-stop').children('a');
-
-					dialog.bind('onStart', function(ev) {
-						startStopLinks.hide();
-						startStopLinks.eq(1).show();
-
-						dialog.attr('state', 'playing');
-					});
-
-					dialog.bind('onStop', function(ev) {
-						startStopLinks.hide();
-						startStopLinks.eq(0).show();
-
-						dialog.attr('state', 'stopped');
-					});
-
-					// start animation
-					// move to the next slide after 1 sec, then slide every 5 sec
-					startStopLinks.eq(0).click(function(ev) {
-						var currentSlide = parseInt(dialog.data('currentSlide'));
-						var slides = parseInt(dialog.data('slides'));
-
-						var nextSlide = (currentSlide + 1) % slides;
-
-						setTimeout(function() {
-							dialog.trigger('selectSlide', {slideId: nextSlide});
-						}, 1000);
-
-						dialog.trigger('start');
-
-						self.trackForView('/slideshow/popout/play');
-					});
-
-					// stop animation
-					startStopLinks.eq(1).click(function(ev) {
-						dialog.trigger('stop');
-
-						self.trackForView('/slideshow/popout/stop');
-					});
-
-					// setup slideshow
-					dialog.slideshow({
-						buttonsClass: 'wikia-button',
-						nextClass: 'wikia-slideshow-popout-next',
-						prevClass: 'wikia-slideshow-popout-prev',
-						slideWidth: slideshow.width + 'px',
-						slidesClass: 'wikia-slideshow-popout-images'
-					});
-
-					// select slide (if function was called with "index" parameter)
-					if (index > 0) {
-						dialog.trigger('selectSlide', {slideId: index});
-						self.log('slide #' + index + ' selected');
-					}
-
-					// setup prev/next toolbar
-					dialog.find('.wikia-slideshow-popout-images-wrapper').
-						mouseover(function(ev) {
-							$(this).addClass('hover');
-						}).
-						mouseout(function(ev) {
-							$(this).removeClass('hover');
+						// track clicks on prev / next
+						dialog.bind('onPrev', function() {
+							self.trackForView('/slideshow/popout/previous');
 						});
 
-					self.log('slideshow pop out initialized');
+						dialog.bind('onNext', function() {
+							self.trackForView('/slideshow/popout/next');
+						});
 
-					// setup clicks on carousel
-					carouselItems.not('.wikia-slideshow-popout-carousel-current').
-						click(function(ev) {
-							var index = $(this).attr('index');
-							dialog.trigger('selectSlide', {slideId: index});
+						// handle clicks on slideshow images
+						dialog.find('.wikia-slideshow-image-link').click(function(ev) {
+							self.trackForView('/slideshow/popout/imageClick/link');
+						});
 
-							// and stop animation
+						// start/stop animation
+						var startStopLinks = dialog.find('.wikia-slideshow-popout-start-stop').children('a');
+
+						dialog.bind('onStart', function(ev) {
+							startStopLinks.hide();
+							startStopLinks.eq(1).show();
+
+							dialog.attr('state', 'playing');
+						});
+
+						dialog.bind('onStop', function(ev) {
+							startStopLinks.hide();
+							startStopLinks.eq(0).show();
+
+							dialog.attr('state', 'stopped');
+						});
+
+						// start animation
+						// move to the next slide after 1 sec, then slide every 5 sec
+						startStopLinks.eq(0).click(function(ev) {
+							var currentSlide = parseInt(dialog.data('currentSlide'));
+							var slides = parseInt(dialog.data('slides'));
+
+							var nextSlide = (currentSlide + 1) % slides;
+
+							setTimeout(function() {
+								dialog.trigger('selectSlide', {slideId: nextSlide});
+							}, 1000);
+
+							dialog.trigger('start');
+
+							self.trackForView('/slideshow/popout/play');
+						});
+
+						// stop animation
+						startStopLinks.eq(1).click(function(ev) {
 							dialog.trigger('stop');
+
+							self.trackForView('/slideshow/popout/stop');
 						});
-				}
-			});
+
+						// setup slideshow
+						dialog.slideshow({
+							buttonsClass: 'wikia-button',
+							nextClass: 'wikia-slideshow-popout-next',
+							prevClass: 'wikia-slideshow-popout-prev',
+							slideWidth: slideshow.width + 'px',
+							slidesClass: 'wikia-slideshow-popout-images'
+						});
+
+						// select slide (if function was called with "index" parameter)
+						if (index > 0) {
+							dialog.trigger('selectSlide', {slideId: index});
+							self.log('slide #' + index + ' selected');
+						}
+
+						// setup prev/next toolbar
+						dialog.find('.wikia-slideshow-popout-images-wrapper').
+							mouseover(function(ev) {
+								$(this).addClass('hover');
+							}).
+							mouseout(function(ev) {
+								$(this).removeClass('hover');
+							});
+
+						self.log('slideshow pop out initialized');
+
+						// setup clicks on carousel
+						carouselItems.not('.wikia-slideshow-popout-carousel-current').
+							click(function(ev) {
+								var index = $(this).attr('index');
+								dialog.trigger('selectSlide', {slideId: index});
+
+								// and stop animation
+								dialog.trigger('stop');
+							});
+					}
+				});
+			}
+			else {
+				WikiaPhotoGallery.showAlert(
+					slideshow.errorCaption,
+					slideshow.error
+				);
+			}
 		});
 
 		// load CSS for slideshow popout
