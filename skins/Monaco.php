@@ -1413,18 +1413,10 @@ EOF;
 		// loops lets it expect anything starting with "fb*" (because we need that for facebook connect).
 		// Perhaps we should have some system to let PersonalUrls hook work again on its own?
 		// - Sean Colombo
+		
 		foreach($tpl->data['personal_urls'] as $urlName => $urlData){
 			if(strpos($urlName, "fb") === 0){
-				$data[$urlName] = array(
-					'text' => $urlData['text'],
-					'href' => isset($urlData['href'])?$urlData['href']:"#"
-				);
-				if(isset($urlData['active'])){
-					$data[$urlName]['active'] = $urlData['active'];
-				}
-				if(isset($urlData['class'])){
-					$data[$urlName]['class'] = $urlData['class'];
-				}
+				$data[$urlName] = $urlData;
 			}
 		}
 
@@ -1672,12 +1664,8 @@ if( $custom_user_data ) {
 	// @author Sean Colombo
 	foreach($this->data['userlinks'] as $linkName => $linkData){
 		// 
-		if(strpos($linkName, "fb") === 0){
-			$activeClass = ((isset($linkData['active']) && $linkData['active'])?" class=\"active\"":"");
-			print "				<span id='$linkName'$activeClass><a href=\"".htmlspecialchars($linkData['href']).'"'.$skin->tooltipAndAccesskey('pt-'.$linkName);
-			print (isset($linkData['class'])?' class="'.$linkData['class'].'"':"");
-			print ">";
-			print $linkData['text']."</a></span>\n";
+		if( !empty($linkData['html']) ){
+			echo $linkData['html']; 
 		}
 	}
 
