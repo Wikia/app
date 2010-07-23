@@ -66,16 +66,24 @@ class FollowHelper {
 			$queryIn[] = $dbw->addQuotes( $value ) ;
 		}
 
-		$con =
-				'wl_namespace = '.$namespace.' '
-				.' and wl_title in('.implode(",",$queryIn).') '
-				.' and wl_user != ' . intval( $user->getID()  )
-				.' and wl_notificationtimestamp IS NULL';
-
+		/* Wikia change begin - @author: wladek */ 
+		/* RT#55604: Add a timeout to the watchlist email block */ 
+		global $wgWatchlistNotificationTimeout; 
+		$notificationTimeoutSql = "wl_notificationtimestamp IS NULL"; 
+		if ( isset($wgWatchlistNotificationTimeout) ) { // not using !empty() to allow setting integer value 0 
+			$blockTimeout = wfTimestamp(TS_MW,wfTimestamp(TS_UNIX,$timestamp) - intval($wgWatchlistNotificationTimeout) ); 
+			$notificationTimeoutSql = "($notificationTimeoutSql OR wl_notificationtimestamp < '$blockTimeout')"; 
+		} 
+		 
 		$res = $dbw->select( array( 'watchlist' ),
 				array( 'wl_user, wl_title' ),
-				$con,
-				__METHOD__ );
+				array(
+					'wl_user != ' . intval( $user->getID() ),
+					'wl_namespace' => $namespace ,
+					'wl_title in('.implode(",",$queryIn).') ',
+					$notificationTimeoutSql
+				),
+		__METHOD__ );
 
 		$watchers = array();
 		while ($row = $dbw->fetchObject( $res ) ) {
