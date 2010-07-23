@@ -14,7 +14,13 @@
   width: 30%;
   margin: 0;
   padding: 0;
+  position: relative;
 } 
+
+.watched-list li span {
+	display: block;
+	margin-left: 25px;
+}
 
 .watched-list .unwatch {
 	width: 25px;
@@ -27,6 +33,11 @@
 }
 
 .ajax-unwatch {
+	margin-top: 3px;
+	margin-left: 2px;
+	position: relative;
+	xleft: -28px;
+	float: left;
 	visibility: hidden;
 }
 
