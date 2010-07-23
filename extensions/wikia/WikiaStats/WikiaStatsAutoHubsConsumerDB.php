@@ -176,6 +176,7 @@ class WikiaStatsAutoHubsConsumerDB {
 		if( !$force_reload ) {
 			$out = $wgTTCache->get($mcKey,null);
 			if( !empty($out) ) {
+				wfProfileOut( __METHOD__ );
 				return $out;
 			}
 		}
@@ -242,6 +243,7 @@ class WikiaStatsAutoHubsConsumerDB {
 		if( !$force_reload ) {
 			$out = $wgTTCache->get($mcKey,null);
 			if( !empty($out) ) {
+				wfProfileOut( __METHOD__ );
 				return $out;
 			}
 		}
@@ -302,11 +304,11 @@ class WikiaStatsAutoHubsConsumerDB {
 		global $wgTTCache;
 		
 		wfProfileIn( __METHOD__ );
-		$mcKey = wfSharedMemcKey( "auto_hubs", "wikis_top", 
-$tag_id, $lang, $limit );
+		$mcKey = wfSharedMemcKey( "auto_hubs", "wikis_top", $tag_id, $lang, $limit );
 		if( !$force_reload ) {
 			$out = $wgTTCache->get($mcKey,null);
 			if( !empty($out) ) {
+				wfProfileOut( __METHOD__ );
 				return $out;
 			}
 		}
