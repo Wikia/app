@@ -169,7 +169,13 @@ class WikiFactoryHub {
     public function getCategoryName( $city_id ) {
 		$cat_id = $this->getCategoryId( $city_id );
 		return isset( self::$mCategories[ $cat_id ] )
-			? self::$mCategories[ $cat_id ]
+			? self::$mCategories[ $cat_id ]["name"]
+			: null;
+    }
+    public function getCategoryShort( $city_id ) {
+		$cat_id = $this->getCategoryId( $city_id );
+		return isset( self::$mCategories[ $cat_id ] )
+			? self::$mCategories[ $cat_id ]["short"]
 			: null;
     }
     /**
@@ -199,7 +205,7 @@ class WikiFactoryHub {
 		);
 
 		while ( $oRow = $dbr->fetchObject( $oRes ) ) {
-			$tmp[ $oRow->cat_id ] = $oRow->cat_name;
+			$tmp[ $oRow->cat_id ] = array( "name" => $oRow->cat_name, "short" => $oRow->cat_short );
 		}
 
 		$dbr->freeResult( $oRes );
@@ -254,7 +260,7 @@ class WikiFactoryHub {
         $dbw->insert( "city_cat_mapping", array( "city_id" => $city_id, "cat_id" => $cat_id ), __METHOD__  );
 
 		$categories = $this->getCategories();
-		WikiFactory::log( WikiFactory::LOG_CATEGORY, "Category changed to {$categories[$cat_id]}", $city_id );
+		WikiFactory::log( WikiFactory::LOG_CATEGORY, "Category changed to {$categories[$cat_id]['name']}", $city_id );
 
         $dbw->commit();
 

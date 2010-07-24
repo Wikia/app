@@ -292,7 +292,8 @@ class AdEngine {
 		$hub = WikiFactoryHub::getInstance();
 		$cat = array(
 			'id'=>$hub->getCategoryId($wgCityId),
-			'name'=>$hub->getCategoryName($wgCityId)
+			'name'=>$hub->getCategoryName($wgCityId),
+			'short'=>$hub->getCategoryShort($wgCityId),
 		);
 
 		$wgMemc->set($cacheKey, $cat, self::cacheTimeout);

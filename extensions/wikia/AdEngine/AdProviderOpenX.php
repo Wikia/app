@@ -52,7 +52,7 @@ class AdProviderOpenX implements iAdProvider {
 	document.write('base_url += "&zoneid=$zoneId";');
 	document.write('base_url += "&cb=" + AdsCB;');
 	document.write('if(typeof document.MAX_used != "undefined" && document.MAX_used != ",") base_url += "&exclude=" + document.MAX_used;');
-	document.write('base_url += "&hub={$cat['name']}";');
+	document.write('base_url += "&hub={$cat['short']}";');
 	document.write('base_url += "&skin_name=" + skin;');
 	document.write('base_url += "&cont_lang=" + wgContentLanguage;');
 	document.write('base_url += "&user_lang=" + wgUserLanguage;');
