@@ -27,25 +27,6 @@ class AdProviderGAM implements iAdProvider {
 		return self::$instance;
 	}
 
-	private $sites = array(	'Auto' => 'auto',
-				'Creative' => 'crea',
-				'Education' => 'edu',
-				'Entertainment' => 'ent',
-				'Finance' => 'fin',
-				'Gaming' => 'gaming',
-				'Green' => 'green',
-				'Humor' => 'humor',
-				'Lifestyle' => 'life',
-				'Music' => 'music',
-				'Philosophy' => 'phil',
-				'Politics' => 'poli',
-				'Science' => 'sci',
-				'Sports' => 'sports',
-				'Technology' => 'tech',
-				'Test Site' => 'test',
-				'Toys' => 'toys',
-				'Travel' => 'travel');
-
 	// TODO : Make this an assoc array with the bucket name
 	private $channels = array(	'1089383293', // Control
 					'7297263620', // Unused
@@ -224,12 +205,7 @@ class AdProviderGAM implements iAdProvider {
 
 	private function getHub(){
 		$cat=AdEngine::getCachedCategory();
-		if(!empty($cat['name'])) {
-			if(!empty($this->sites[$cat['name']])) {
-				return $this->sites[$cat['name']];
-			}
-		}
-		return 'wikia';
+				return $cat['short'];
 	}
 
 

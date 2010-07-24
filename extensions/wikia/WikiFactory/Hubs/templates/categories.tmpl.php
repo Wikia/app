@@ -16,8 +16,8 @@
             <div>
 <?php endif ?>
 				<select name="wpWikiCategory">
-				<?php foreach( $categories as $id => $name ): ?>
-					<option value="<?php echo $id ?>" <?php if( $id == $cat_id ) echo "selected=\"selected\"" ?>><?php echo $name ?></option>
+				<?php foreach( $categories as $id => $data ): ?>
+					<option value="<?php echo $id ?>" <?php if( $id == $cat_id ) echo "selected=\"selected\"" ?>><?php echo $data["name"] ?></option>
 				<?php endforeach ?>
 				</select>
 <?php if( !is_null( $title ) ): ?>

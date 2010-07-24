@@ -17,25 +17,6 @@ class AdProviderDART extends AdProviderIframeFiller implements iAdProvider {
 		return self::$instance;
 	}
 
-	private $sites = array(	'Auto' => 'wka.auto',
-				'Creative' => 'wka.crea',
-				'Education' => 'wka.edu',
-				'Entertainment' => 'wka.ent',
-				'Finance' => 'wka.fin',
-				'Gaming' => 'wka.gaming',
-				'Green' => 'wka.green',
-				'Humor' => 'wka.humor',
-				'Lifestyle' => 'wka.life',
-				'Music' => 'wka.music',
-				'Philosophy' => 'wka.phil',
-				'Politics' => 'wka.poli',
-				'Science' => 'wka.sci',
-				'Sports' => 'wka.sports',
-				'Technology' => 'wka.tech',
-				'Test Site' => 'wka.test',
-				'Toys' => 'wka.toys',
-				'Travel' => 'wka.travel');
-
         private $slotsToCall = array();
         public function addSlotToCall($slotname){
                 $this->slotsToCall[]=$slotname;
@@ -146,16 +127,12 @@ EOT;
 	
 
 	function getDartSite($hub){
-		if(!empty($this->sites[$hub])) {
-			return $this->sites[$hub];
-		} else {
-			return 'wka.wikia';
-		}
+			return 'wka.' . $hub;
 	}
 
 	function getHub() {
 		$cat = AdEngine::getCachedCategory();
-		return $cat['name'];
+		return $cat['short'];
 	}
 
 	// Effectively the dbname, defaulting to wikia.
