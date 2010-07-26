@@ -132,7 +132,7 @@ function comboAjaxLoginVars($vars) {
 
 $wgAjaxExportList[] = 'createUserLogin';
 function createUserLogin(){
-	global $wgRequest,$wgUser,$wgExternalSharedDB,$wgWikiaEnableConfirmEditExt;
+	global $wgRequest,$wgUser,$wgExternalSharedDB,$wgWikiaEnableConfirmEditExt, $wgEnableCOPPA;
 	// Init session if necessary
 	if ( session_id() == '' ) {
 		wfSetupSession();
@@ -152,7 +152,7 @@ function createUserLogin(){
 
 	$form = new AjaxLoginForm($wgRequest,'signup');
 
-	if ( !$form->checkDate() ) {
+	if ( $wgEnableCOPPA && !$form->checkDate() ) {
 		// If the users is too young to legally register.
 		$response->addText(json_encode(
 			array(
@@ -398,7 +398,7 @@ class AjaxLoginForm extends LoginForm {
 	function mainLoginForm( $msg, $msgtype = 'error' ) {
 		global $wgUser, $wgOut, $wgAllowRealName, $wgEnableEmail;
 		global $wgCookiePrefix, $wgLoginLanguageSelector;
-		global $wgAuth, $wgEmailConfirmToEdit, $wgCookieExpiration;
+		global $wgAuth, $wgEmailConfirmToEdit, $wgCookieExpiration, $wgEnableCOPPA;
 
 		$titleObj = SpecialPage::getTitleFor( 'Userlogin' );
 
@@ -426,6 +426,8 @@ class AjaxLoginForm extends LoginForm {
 		$q2 = 'action=submitlogin&type=login';
 		$template->set( 'actioncreate', $titleObj->getLocalUrl( $q ) );
 		$template->set( 'actionlogin', $titleObj->getLocalUrl( $q2 ) );
+
+		$template->set( 'coppa', $wgEnableCOPPA );
 
 		$template->set( 'link', '' );
 
