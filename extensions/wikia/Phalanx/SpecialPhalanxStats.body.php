@@ -107,7 +107,10 @@ class PhalanxStatsPager extends ReverseChronologicalPager {
 		$queries = parent::getPagingQueries();
 
 		foreach ( $queries as $type => $query ) {
-			$query[$type]['blockId'] = $this->mBlockId;
+			if ( $query === false ) {
+				continue;
+			}
+			$query['blockId'] = $this->mBlockId;
 			$queries[$type] = $query;
 		}
 
