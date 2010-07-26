@@ -387,7 +387,7 @@ class WikiFactoryPage extends SpecialPage {
 			$hub = WikiFactoryHub::getInstance();
 			$hub->setCategory( $this->mWiki->city_id, $cat_id );
 			$categories = $hub->getCategories();
-			return Wikia::successmsg( "Hub is now set to: ". $categories[ $cat_id ] );
+			return Wikia::successmsg( "Hub is now set to: ". $categories[ $cat_id ]['name'] );
 		}
 		else {
 			return Wikia::errormsg( "Hub was not changed.");
