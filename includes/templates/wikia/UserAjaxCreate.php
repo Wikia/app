@@ -154,6 +154,7 @@ if(( $this->data['messagetype'] == 'error' ) && (strlen($this->data['message'] )
 			</td>
 		</tr>
 		<tr class="wpAjaxLoginPreLine">
+		<?php if ( !empty( $this->data['coppa'] ) ) { ?>
 			<td class="wpAjaxLoginInput wpAjaxLoginData" id="wpBirthDateTD">
 				<label for='wpBirthYear'><?php $this->msg('yourbirthdate') ?></label>
 				<span><a id="wpBirthDateInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span>
@@ -189,6 +190,7 @@ if(( $this->data['messagetype'] == 'error' ) && (strlen($this->data['message'] )
 					?>
 				</select>
 			</td>
+		<?php } ?>
 		</tr>
 		<tr class="wpAjaxLoginLine" >
 	<?php if( $this->data['canremember'] ) { ?>

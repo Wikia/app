@@ -490,8 +490,13 @@ $wgAutoloadClasses[ "RiakCache"  ] = "{$IP}/includes/wikia/RiakCache.php";
  */
 $wgWikiaHideImportsFromIrc = true;
 
-
 /**
  * disable autofollow blogs by default
  */
 $wgBlogsEnableStaffAutoFollow = false;
+
+/**
+ * @name wgEnableCOPPA
+ * toggles COPPA birthyear check on user creation
+ */
+$wgEnableCOPPA = true;
