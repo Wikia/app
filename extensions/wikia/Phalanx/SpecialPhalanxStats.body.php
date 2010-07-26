@@ -6,7 +6,7 @@ class PhalanxStats extends UnlistedSpecialPage {
 	}
 
 	function execute( $par ) {
-		global $wgOut, $wgLang, $wgUser;
+		global $wgOut, $wgLang, $wgUser, $wgRequest;
 
 		wfLoadExtensionMessages( 'Phalanx' );
 
@@ -16,6 +16,11 @@ class PhalanxStats extends UnlistedSpecialPage {
 			return;
 		}
 
+		if ( empty( $par ) ) {
+			$par = $wgRequest->getInt( 'blockId' );
+		}
+
+		// give up if no block ID is given
 		if ( empty( $par ) ) {
 			return true;
 		}
@@ -96,6 +101,17 @@ class PhalanxStatsPager extends ReverseChronologicalPager {
 		);
 
 		return $query;
+	}
+
+	function getPagingQueries() {
+		$queries = parent::getPagingQueries();
+
+		foreach ( $queries as $type => $query ) {
+			$query[$type]['blockId'] = $this->mBlockId;
+			$queries[$type] = $query;
+		}
+
+		return $queries;
 	}
 
 	function getIndexField() {
