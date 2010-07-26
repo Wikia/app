@@ -94,7 +94,8 @@ if (!empty($aCategories) && is_array($aCategories) && ( $mType != "answers" ) ):
 			<li class="data1"><select name="wiki-category" id="wiki-category">
 				<option value=""><?=wfMsg('autocreatewiki-category-select')?></option>
 <?php
-	foreach ($aCategories as $iCat => $sCatName) :
+	foreach ($aCategories as $iCat => $catData) :
+		$sCatName = $catData["name"];
 		if( in_array( $sCatName, array( 'Wikia', 'Wikianswers' ) ) )
 			continue;
 
