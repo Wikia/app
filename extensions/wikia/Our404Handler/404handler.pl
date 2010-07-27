@@ -438,6 +438,8 @@ while( $request->Accept() >= 0 || $test ) {
 						my $h = $y2 - $y1;
 						my $geometry = sprintf( "%dx%d+%d+%d", $w, $h, $x1, $y1 );
 						$image->Crop( $geometry );
+						$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
+						print STDERR "Cropping into $geometry, time: $t_elapsed\n" if $debug;
 					}
 
 					my $origw  = $image->Get( 'width' );
