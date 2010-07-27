@@ -12,7 +12,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 );
 }
 
-$wgMysqlUpdates[] = array( "do_page_vote_unique_update" );
+$wgMysqlUpdates[] = array( "do_page_vote_unique_update", "do_drop_imagetags" );
 
 $wgUpdates[ "mysql" ][] = array( "add_field", "watchlist", "wl_wikia_addedtimestamp", "wikia/patch-watchlist-improvements.sql" );
 $wgUpdates[ "mysql" ][] = array( "add_table", "blog_listing_relation",  "wikia/patch-create-blog_listing_relation.sql" );
@@ -27,6 +27,16 @@ function do_page_vote_unique_update() {
 	} else {
 		wfOut( "Making page_vote unique key... " );
 		dbsource( archive("wikia/patch-page_vote_unique_vote.sql"), $wgDatabase );
+		wfOut( "ok\n" );
+	}
+}
+
+function do_drop_imagetags() {
+	global $wgDatabase;
+
+	if( $wgDatabase->tableExists( "imagetags" ) ) {
+		wfOut( "Removing imagetags table... " );
+		dbsource( archive("wikia/patch-drop-imagetags.sql"), $wgDatabase );
 		wfOut( "ok\n" );
 	}
 }
