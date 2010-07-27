@@ -73,7 +73,7 @@ Please change summary content',
 	'pr_view_all'           => 'Show all reports',
 	'pr_view_staff'         => 'Show reports that needs staff help',
 	'pr_raports_from_this_wikia' => 'View reports from this Wikia only',
-	'pr_reports_from'       => 'Reports only from',
+	'pr_reports_from'       => 'Reports only from: $1',
 	'pr_no_reports' => 'No reports matching your criteria',
 
 	'pr_sysops_notice' => 'You can <a href="$1">change status of problem reports</a> from your wiki...',
