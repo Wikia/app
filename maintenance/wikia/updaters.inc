@@ -35,7 +35,7 @@ function do_drop_imagetags() {
 	global $wgDatabase;
 	wfOut( "Checking wikia imagetags table...\n" );
 	if( $wgDatabase->tableExists( "imagetags" ) ) {
-		wfOut( "...removing imagetags table... " );
+		wfOut( "...dropping imagetags table... " );
 		dbsource( archive("wikia/patch-drop-imagetags.sql"), $wgDatabase );
 		wfOut( "ok\n" );
 	}
