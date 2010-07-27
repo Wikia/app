@@ -444,9 +444,11 @@ while( $request->Accept() >= 0 || $test ) {
 
 					my $origw  = $image->Get( 'width' );
 					my $origh  = $image->Get( 'height' );
+					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
+					print STDERR "Original size $origw x $origh, time: $t_elapsed\n" if $debug;
 					if( $origw && $origh ) {
 						my $height = scaleHeight( $origw, $origh, $width, $test );
-						$image->Resize( "geometry" => "${width}x${height}!", "blur" => 0.9 );
+						$image->Resize( "geometry" => "${width}x${height}!>", "blur" => 0.9 );
 						$image->Set( quality => 95 );
 						$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
 						print STDERR "Resizing into $thumbnail, time: $t_elapsed\n" if $debug;
