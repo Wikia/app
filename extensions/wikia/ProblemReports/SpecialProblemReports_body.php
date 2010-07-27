@@ -222,7 +222,7 @@ class SpecialProblemReports extends SpecialPage {
 			$localUrl  .= '&city=' . $params['wkwikia'];
 		}
 		else {
-			$sitenameUrl = '<a href="' . $title->escapeLocalURL( 'city=' . $cityId ) . '" title="' . wfMsg( 'pr_raports_from_this_wikia' ) . '">' . $wgSitename . '</a>'
+			$sitenameUrl = '<a href="' . $title->escapeLocalURL( 'city=' . $cityId ) . '" title="' . wfMsg( 'pr_raports_from_this_wikia' ) . '">' . $wgSitename . '</a>';
 			$subtitle .= wfMsg( 'pr_reports_from', $sitenameUrl );
 			$localUrl  .= '&city=' . $cityId;
 		}
