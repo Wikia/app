@@ -40,6 +40,7 @@ ul#leaderboard li {
 	background: transparent;
 	border-bottom-style: solid;
 	border-bottom-width: 1px;
+	overflow: auto;
 }
 
 ul#leaderboard li.list-heading {
@@ -71,6 +72,10 @@ ul#leaderboard #points-label {
 	line-height: 38px;
 	vertical-align: middle;
 	margin-left: 20px;
+}
+#leaderboard .user-name{
+	width:62%; /* kinda hacky */
+	overflow:hidden;
 }
 
 #leaderboard .user-avatar {
