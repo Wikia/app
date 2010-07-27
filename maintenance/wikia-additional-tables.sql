@@ -4,16 +4,6 @@
 
 -- Note that this file is subject to move to /wikia subdirectory.
 
-CREATE TABLE IF NOT EXISTS `imagetags` (
-  `unique_id` int(10) unsigned NOT NULL auto_increment,
-  `img_page_id` int(10) unsigned NOT NULL,
-  `img_name` varchar(255) character set utf8 collate utf8_unicode_ci NOT NULL,
-  `article_tag` varchar(255) character set utf8 collate utf8_unicode_ci NOT NULL,
-  `tag_rect` varchar(30) character set ascii collate ascii_bin NOT NULL,
-  `user_text` varchar(255) character set utf8 collate utf8_unicode_ci NOT NULL,
-  PRIMARY KEY  (`unique_id`)
-) ENGINE=InnoDB;
-
 CREATE TABLE IF NOT EXISTS `page_vote` (
   `article_id` int(8) unsigned NOT NULL,
   `user_id` int(5) unsigned NOT NULL,
@@ -51,21 +41,3 @@ CREATE TABLE `page_visited` (
 	KEY `page_visited_cnt_inx` (`count`), 
 	KEY `pv_changes` (`prev_diff`,`article_id`)
 ) ENGINE=InnoDB;
-
-CREATE TABLE IF NOT EXISTS `poll_info` (
-		`poll_id` VARCHAR(32),
-		`poll_txt` TEXT,
-		`poll_date` DATETIME,
-		`poll_title` VARCHAR(255),
-		`poll_domain` VARCHAR(10),
-		PRIMARY KEY  (`poll_id`)
-) Engine=InnoDB;
-
-CREATE TABLE IF NOT EXISTS `poll_vote` (
-		`poll_id` VARCHAR(32),
-		`poll_user` VARCHAR(255),
-		`poll_ip` VARCHAR(255),
-		`poll_answer` INTEGER(3),
-		`poll_date` DATETIME,
-			PRIMARY KEY  (`poll_id`,`poll_user`)
-) Engine=InnoDB;
