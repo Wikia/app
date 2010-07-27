@@ -142,6 +142,7 @@ sub videoThumbnail {
 # do not make zombies
 #
 
+no warnings; # avoid "Possible attempt to separate words with commas"
 my @tests = qw(
 	/c/carnivores/images/thumb/5/59/Padlock.svg/120px-Padlock.svg.png
 	/y/yugioh/images/thumb/a/ae/Flag_of_the_United_Kingdom.svg/700px-Flag_of_the_United_Kingdom.svg.png
@@ -159,8 +160,10 @@ my @tests = qw(
 	/h/half-life/en/images/thumb/d/d6/Black_Mesa_logo.svg/250px-Black_Mesa_logo.svg.png
 	/m/memoryalpha/en/images/thumb/8/88/2390s_Starfleet.svg/300px-2390s_Starfleet.svg.png
 	/h/half-life/en/images/thumb/d/d6/Black_Mesa_logo.svg/250px-Black_Mesa_logo.svg.png
-	/de/images/thumb/3/35/Information_icon.svg/120px-Information_icon.svg.png
+	/d//de/images/thumb/3/35/Information_icon.svg/120px-Information_icon.svg.png
+	/w/wowwiki/images/thumb/b/b0/Tauren_shaman.jpg/430px-0,100,0,300-Tauren_shaman.jpg
 );
+use warnings;
 my @done = ();
 
 #
@@ -189,7 +192,6 @@ unless( $test ) {
 
 	$manager->pm_write_pid_file( $pidfile );
 	$manager->pm_manage();
-
 }
 else {
 	$request    = FCGI::Request();
@@ -250,6 +252,17 @@ while( $request->Accept() >= 0 || $test ) {
 	# if last part of $request_uri is \d+px-\. it is probably thumbnail
 	#
 	my( $width ) = $last =~ /^(\d+)px\-.+\w$/;
+
+	#
+	# for image service x1,y1,x2,y2
+	#
+	use Data::Dump;
+	my( $x1, $x2, $y1, $y2 ) = undef;
+	if( $last =~ /^\d+px\-(\d+),(\d+),(\d+),(\d+)/ ) {
+		( $x1, $x2, $y1, $y2 ) = ( $1, $2, $3, $4 );
+		dd( $x1, $x2, $y1, $y2 );
+		exit;
+	}
 
 	#
 	# but ogghandler thumbnails can have seek=\d+ or mid
