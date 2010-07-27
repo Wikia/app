@@ -32,7 +32,6 @@ $wgExtensionCredits['other'][] = array(
 	'name'           => 'AchievementsII',
 	'author'         => 'Wikia',
 	'descriptionmsg' => 'achievementsii-desc',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:AchievementsII',
 );
 
 $dir = dirname(__FILE__).'/';
