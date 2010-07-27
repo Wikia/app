@@ -256,12 +256,9 @@ while( $request->Accept() >= 0 || $test ) {
 	#
 	# for image service x1,y1,x2,y2
 	#
-	use Data::Dump;
 	my( $x1, $x2, $y1, $y2 ) = undef;
 	if( $last =~ /^\d+px\-(\d+),(\d+),(\d+),(\d+)/ ) {
 		( $x1, $x2, $y1, $y2 ) = ( $1, $2, $3, $4 );
-		dd( $x1, $x2, $y1, $y2 );
-		exit;
 	}
 
 	#
@@ -432,6 +429,17 @@ while( $request->Accept() >= 0 || $test ) {
 					# use only first frame in animated gifs
 					#
 					$image = $image->[ 0 ] if $image->[ 0 ]->Get('magick') eq 'GIF';
+
+					if( is_int( $x1 ) && is_int( $x2 ) && is_int( $y1 ) && is_int( $y2 ) ) {
+						#
+						# cut rectangle from original, do some checkups first
+						#
+						my $w = $x2 - $x1;
+						my $h = $y2 - $y1;
+						my $geometry = sprintf( "%dx%d+%d+%d", $w, $h, $x1, $y1 );
+						$image->Crop( $geometry );
+					}
+
 					my $origw  = $image->Get( 'width' );
 					my $origh  = $image->Get( 'height' );
 					if( $origw && $origh ) {
