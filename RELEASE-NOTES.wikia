@@ -1,3 +1,6 @@
+== Changes since 201007.5 ==
+* rt#60332: Phalanx: fixed user account creation block (TOR)
+
 == Changes since 201007.4 ==
 * rt#59924: synchronize hub names across ad providers (Nef)
 * rt#57152: Slideshow popup is broken (federico)

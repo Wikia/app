@@ -16,33 +16,40 @@ class UserBlock {
 
 		$text = $user->getName();
 		$blocksData = Phalanx::getFromFilter( Phalanx::TYPE_USER );
+		$ret = true;
 
 		if ( !empty($blocksData) && !empty($text) ) {
-			foreach ($blocksData as $blockData) {
-				$result = Phalanx::isBlocked( $text, $blockData );
-				if ( $result['blocked'] ) {
-					Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$text'.");
-					self::setUserData( $user, $blockData, $text );
-					wfProfileOut( __METHOD__ );
-					return false;
+			if ( $user->isAnon() ) {
+				$ret =  self::blockCheckInternal( $user, $blocksData, $text, true );
+			} else {
+				$ret = self::blockCheckInternal( $user, $blocksData, $text, false );
+				if ( $ret ) {
+					// if the user name was not blocked, check for an IP block
+					$ret = self::blockCheckInternal( $user, $blocksData, wfGetIP(), true );	
 				}
 			}
+		}
 
-			//no user name matched - check IP address
-			$userIP = wfGetIP();
-			foreach ($blocksData as $blockData) {
-				if (!$user->isIP($blockData['text'])) {
-					continue;
-				}
-				$result = Phalanx::isBlocked( $userIP, $blockData );
-				if ( $result['blocked'] ) {
-					Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$text'.");
-					self::setUserData( $user, $blockData, $userIP, true );
-					wfProfileOut( __METHOD__ );
-					return false;
-				}
+		wfProfileOut( __METHOD__ );
+		return $ret;
+	}
+
+	private static function blockCheckInternal( &$user, $blocksData, $text, $isBlockIP = false ) {
+		wfProfileIn( __METHOD__ );
+
+		foreach ($blocksData as $blockData) {
+			if ( $isBlockIP && !$user->isIP($blockData['text'])) {
+				continue;
 			}
 
+			$result = Phalanx::isBlocked( $text, $blockData );
+
+			if ( $result['blocked'] ) {
+				Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$text'.");
+				self::setUserData( $user, $blockData, $text, $isBlockIP );
+				wfProfileOut( __METHOD__ );
+				return false;
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
