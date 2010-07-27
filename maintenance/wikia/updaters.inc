@@ -12,11 +12,11 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 );
 }
 
-$wgMysqlUpdates[] = array( "do_page_vote_unique_update", "do_drop_imagetags" );
-
 $wgUpdates[ "mysql" ][] = array( "add_field", "watchlist", "wl_wikia_addedtimestamp", "wikia/patch-watchlist-improvements.sql" );
 $wgUpdates[ "mysql" ][] = array( "add_table", "blog_listing_relation",  "wikia/patch-create-blog_listing_relation.sql" );
 $wgUpdates[ "mysql" ][] = array( "add_index", "archive", "page_revision", "wikia/patch-index-archive-page_revision.sql" );
+$wgUpdates[ "mysql" ][] = array( "do_page_vote_unique_update" );
+$wgUpdates[ "mysql" ][] = array( "do_drop_imagetags" );
 
 
 function do_page_vote_unique_update() {
@@ -33,9 +33,9 @@ function do_page_vote_unique_update() {
 
 function do_drop_imagetags() {
 	global $wgDatabase;
-
+	wfOut( "Checking wikia imagetags table...\n" );
 	if( $wgDatabase->tableExists( "imagetags" ) ) {
-		wfOut( "Removing imagetags table... " );
+		wfOut( "...removing imagetags table... " );
 		dbsource( archive("wikia/patch-drop-imagetags.sql"), $wgDatabase );
 		wfOut( "ok\n" );
 	}
