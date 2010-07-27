@@ -217,7 +217,8 @@ class SpecialProblemReports extends SpecialPage {
 		// show from this wikia only
 		if ( isset( $params['wkwikia'] ) &&  $params['wkwikia'] > 0 && !isset( $params['wkshowall'] ) ) {
 			$sitename = WikiaApiQueryProblemReports::getCitySitename( $params['wkwikia'] );
-			$subtitle .= wfMsg( 'pr_reports_from' ) . ': <a href="' . $title->escapeLocalURL( 'city=' . $params['wkwikia'] ) . '">' . $sitename . '</a>';
+			$sitenameUrl = '<a href="' . $title->escapeLocalURL( 'city=' . $params['wkwikia'] ) . '">' . $sitename . '</a>';
+			$subtitle .= wfMsg( 'pr_reports_from', $sitenameUrl );
 			$localUrl  .= '&city=' . $params['wkwikia'];
 		}
 		else {
