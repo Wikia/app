@@ -58,6 +58,7 @@ class AdProviderOpenX implements iAdProvider {
 	document.write('base_url += "&user_lang=" + wgUserLanguage;');
 	document.write('base_url += "&dbname=" + wgDB;');
 	document.write('base_url += "&slotname={$slotname}";');
+	document.write('base_url += "&tags=" + wgWikiFactoryTagNames.join(",");');
 	document.write('base_url += "&block=1";');
 	document.write('</scr'+'ipt>');
 	document.write('<scr'+'ipt type="text/javascript" src="'+base_url+'"></scr'+'ipt>');
