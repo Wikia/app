@@ -30,6 +30,7 @@ if ( !isset( $wgSponsorAdsLimit ) ) {
 $wgAutoloadClasses['Advertisement'] = $dir . 'Advertisements.php';
 $wgAutoloadClasses['AdDisplay'] = $dir . 'AdDisplay.php';
 $wgHooks['OutputPageBeforeHTML'][] = 'AdDisplay::OutputAdvertisementOutputHook';
+$wgHooks['ArticlePurge'][] = 'Advertisement::onArticlePurge';
 //$wgHooks['ParserAfterTidy'][] = 'AdDisplay::OutputAdvertisementParserAfterTidy';
 //$wgHooks['OutputPageParserOutput'][] = 'AdDisplay::OutputAdvertisementOutputPageParserOutput';
 //$wgHooks['ArticleAfterFetchContent'][] = 'AdDisplay::OutputAdvertisementAfterArticleFetch';
