@@ -1,4 +1,5 @@
 == Changes since 201007.5 ==
+* rt#59932: WF tags arent part of ad call (Nef)
 * rt#60358: Create a new ad slot for Leaderboard Stats pages (Nef)
 * rt#60332: Phalanx: fixed user account creation block (TOR)
 
