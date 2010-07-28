@@ -20,6 +20,8 @@ class Phalanx {
 		64 => 'wiki-creation'
 	);
 
+	public static $moduleData = array();
+
 	/*
 		get the values for the expire select
 	*/
@@ -58,7 +60,11 @@ class Phalanx {
 
 		$timestampNow = wfTimestampNow();
 		$key = 'phalanx:' . $moduleId . ':' . ($lang ? $lang : 'all');
-		$blocksData = $wgMemc->get($key);
+		if (isset(self::$moduleData[$moduleId])) {
+			$blocksData = self::$moduleData[$moduleId];
+		} else {
+			$blocksData = $wgMemc->get($key);
+		}
 
 		//cache miss (or we have expired blocks in cache), get from DB
 		if (empty($blocksData) || (!is_null($blocksData['closestExpire']) && $blocksData['closestExpire'] < $timestampNow && $blocksData['closestExpire'])) {
@@ -108,6 +114,7 @@ class Phalanx {
 			$blocksData['blocks'] = $blocks;
 			$blocksData['closestExpire'] = $closestTimestamp;
 			$wgMemc->set($key, $blocksData);
+			self::$moduleData[$moduleId] = $blocksData;
 		}
 
 		wfProfileOut( __METHOD__ );
