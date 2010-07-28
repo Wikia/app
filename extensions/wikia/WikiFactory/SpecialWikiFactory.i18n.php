@@ -124,6 +124,7 @@ $messages['en'] = array(
  * @author EugeneZelenko
  * @author LWChris
  * @author McDutchie
+ * @author Purodha
  * @author Siebrand
  * @author Umherirrender
  */
@@ -150,6 +151,7 @@ $messages['qqq'] = array(
 	'awc-metrics-edits-label' => 'Lego, unknown paramters.',
 	'awc-metrics-pageviews-label' => 'Needs plural support for $1 and $2',
 	'awc-metrics-exact-match' => '{{Identical|Exact match}}',
+	'closed-hide-dumps' => 'The exact meaning is: "Hide database dump and hide image dump", i.e. both are dumps.',
 	'closed-reason' => '{{Identical|Reason}}',
 );
 
@@ -317,6 +319,76 @@ $messages['ar'] = array(
 	'closewiki-dump-url' => 'مكب قاعدة البيانات: $1',
 	'closewiki-images-url' => 'أرشيف الصور: $1',
 	'closewiki-unknown' => 'غير معروف',
+	'closewiki-return' => 'العودة إلأى $1',
+	'awc-metrics-wikis' => 'عرض الويكي',
+	'awc-metrics-select' => 'عرض الويكي:',
+	'awc-metrics-by-language' => 'حسب اللغة:',
+	'awc-metrics-category' => 'و التصنيف:',
+	'awc-metrics-all' => 'كل الويكيات',
+	'awc-metrics-all-languages' => 'كل اللغات',
+	'awc-metrics-search' => 'خيارات البحث:',
+	'awc-metrics-one-week' => 'أنشأت < منذ أسبوع',
+	'awc-metrics-two-weeks' => 'أنشأت < منذ أسبوعين',
+	'awc-metrics-three-weeks' => 'أنشأت < منذ 3 أسابيع',
+	'awc-metrics-one-months' => 'أنشأت < منذ شهر',
+	'awc-metrics-two-months' => 'أنشأت < منذ شهرين',
+	'awc-metrics-three-months' => 'أنشأت < منذ 3 أشهر',
+	'awc-metrics-half-year' => 'أنشأت < منذ 6 أشهر',
+	'awc-metrics-wikis-found' => 'تم العثور على $1 ويكي',
+	'awc-metrics-by-email' => 'أو (البريد الإلكتروني للمستخدم):',
+	'awc-metrics-by-user' => 'أسست من قبل (إسم المستخدم):',
+	'awc-metrics-by-dbname' => 'أين تحتوي أسماء DB:',
+	'awc-metrics-by-title' => 'و العناوين تبدأ من:',
+	'awc-metrics-by-domains' => 'و تتضمن المجالات:',
+	'awc-metrics-not-found' => 'لم يتم العثور أية ويكي',
+	'awc-metrics-nbr-result' => 'النتائج:',
+	'awc-metrics-created-between' => 'أنشأت بين $1 (السنة/الشهر/اليوم) و $2 (السنة/الشهر/اليوم)',
+	'awc-metrics-wikians' => 'ويكيون <br />(>10 تعديلات)',
+	'awc-metrics-articles' => 'االمقالات',
+	'awc-metrics-articles-per-day' => 'المقالات <br />(المعدل حسب اليوم)',
+	'awc-metrics-revisions-per-page' => 'المراجعات <br />(المعدل حسب الصفحة)',
+	'awc-metrics-article-avg-size' => 'معدل <br />الحجم',
+	'awc-metrics-edits' => 'التعديلات',
+	'awc-metrics-db-size' => 'حجم DB',
+	'awc-metrics-images' => 'الصور',
+	'awc-metrics-all-users' => 'التسجيل  <br />المسخدمون',
+	'awc-metrics-all-users-edit-main-ns' => 'تجيلات المستخدمين <br />(NS_MAIN)',
+	'awc-metrics-pageviews' => 'الصفحة <br />المشاهدات',
+	'awc-metrics-statistics' => '  الإحصائات (معدل كل الأشهر)',
+	'awc-metrics-close' => 'إغلاق',
+	'awc-metrics-active' => 'نشط',
+	'awc-metrics-closed' => 'مغلق',
+	'awc-metrics-redirected' => 'مغلق و معاد توجيهه',
+	'awc-metrics-removed' => 'محذوف',
+	'awc-metrics-hubs' => 'ويكيات جديدة (شهريا)',
+	'awc-metrics-news-day' => 'ويكيات جديدة (يوميا)',
+	'awc-metrics-sum-month' => 'العدد (شهريا)',
+	'awc-metrics-sum-day' => 'العدد (يوميا)',
+	'awc-metrics-fewer-than' => 'تلك لديها أقل من {{PLURAL:$1|$1 مقالة|$1 مقالات}}',
+	'awc-metrics-edits-label' => '{{PLURAL:$1|$1 تعديل|$1 تعديلات}} في $2,',
+	'awc-metrics-this-month' => 'هذا الشهر',
+	'awc-metrics-last-month' => 'آخر {{PLURAL:$1|شهر|$1 أشهر}}',
+	'awc-metrics-pageviews-label' => 'و {{PLURAL:$1|مشاهدة واحد|$1 مشاهدة}} في اليوم  {{PLURAL:$2|الأخير|$2 السابقين}}',
+	'awc-metrics-close-listed' => 'إغلاق كافة القائمة',
+	'awc-metrics-close-checked' => 'إغلاق الممضى عليهم',
+	'awc-metrics-exact-match' => 'مطابقة تامة',
+	'closed-wiki' => 'ويكي مغلقة',
+	'closed-wiki-info' => 'تم إغلاق هذه الويكي',
+	'disabled-wiki-info' => 'هذه الويكي تم غلقها',
+	'closed-wiki-dump-exists' => 'الرجاء النقر [$1 هنا] إذا أردت إسترداد المحتويات التي وضعتها.',
+	'closed-wiki-dump-noexists' => 'تم إغلاق هذه الويكي. ما بقي من المحتوى سيكون متاحا في غضون 24 ساعة. يرجى العودة.',
+	'closed-wiki-create-wiki' => 'إنشاء ويكي جديدة',
+	'closed-wiki-policy' => 'أنظر سياسة ويكيا حول الإغلاق',
+	'closed-create-dump' => 'إنشاء تفريغ قاعدة بيانات',
+	'closed-create-image-archive' => ' إنشاء أرشيف للصور',
+	'closed-delete-database-images' => 'حذف قاعدة البيانات و الصور',
+	'closed-delete-images' => 'حذف الصور',
+	'closed-free-url' => 'ترك العنوان الإلكتروني صالحا لويكي جديدة',
+	'closed-hide-dumps' => 'إخفاء تفريغ قاعدة البيانات و الصور',
+	'closed-redirect-url' => 'إعادة توجيه العنوان الإلكتروني (URL)',
+	'closed-confirm-btn' => 'تأكيد الإغلاق',
+	'closed-redirect-alert' => 'يرجى وضع عنوان إلكتروني جديد للتوجيه',
+	'closed-reason' => 'السبب:',
 );
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
@@ -495,6 +567,15 @@ $messages['bg'] = array(
 	'closed-reason' => 'Причина:',
 );
 
+/** Bahasa Banjar (Bahasa Banjar)
+ * @author Ezagren
+ */
+$messages['bjn'] = array(
+	'wf_city_created' => 'Sudah diulah',
+	'wf_city_lang' => 'Bahasa',
+	'wikifactory-label-actions' => 'Tindakan',
+);
+
 /** Breton (Brezhoneg)
  * @author Gwenn-Ael
  * @author Y-M D
@@ -535,7 +616,7 @@ $messages['br'] = array(
 	'closewiki-wiki-closed_redirect' => "Klozet e oa '''$1''' ($2) ha kaset eo bremañ war-du : $3",
 	'closewiki-dump-url' => 'Dump an diaz titouroù : $1',
 	'closewiki-images-url' => 'Diell ar skeudennoù : $1',
-	'closewiki-unknown' => 'Dianv',
+	'closewiki-unknown' => 'Dianav',
 	'closewiki-return' => 'Distreiñ da $1',
 	'awc-metrics-wikis' => 'Diskouez ar Wikioù',
 	'awc-metrics-select' => 'Diskouez ar Wikioù :',
@@ -1543,6 +1624,21 @@ $messages['hu'] = array(
 	'closed-reason' => 'Indoklás:',
 );
 
+/** Armenian (Հայերեն)
+ * @author Pandukht
+ */
+$messages['hy'] = array(
+	'awc-metrics-two-weeks' => 'Ստեղծված է < 2 շաբաթ առաջ',
+	'awc-metrics-three-weeks' => 'Ստեղծված է < 3 շաբաթ առաջ',
+	'awc-metrics-one-months' => 'Ստեղծված է < 1 ամիս առաջ',
+	'awc-metrics-two-months' => 'Ստեղծված է < 2 ամիս առաջ',
+	'awc-metrics-three-months' => 'Ստեղծված է < 3 ամիս առաջ',
+	'awc-metrics-half-year' => 'Ստեղծված է < 6 ամիս առաջ',
+	'awc-metrics-by-email' => 'կամ (մասնակցի էլ. փոստը)՝',
+	'awc-metrics-by-user' => 'հիմնված (մասնակցի անուն) մասնակցի կողմից՝',
+	'awc-metrics-by-domains' => 'և դոմենը բովանդակում է՝',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -1656,10 +1752,13 @@ $messages['ia'] = array(
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Farras
  * @author Irwangatot
  * @author Kenrick95
  */
 $messages['id'] = array(
+	'wikifactorypagetitle' => 'Penyesuai Wiki Factory',
+	'wikifactory' => 'Penyesuai Wiki Factory',
 	'closewiki' => 'Menutup Wiki',
 	'wf_city_url' => 'Alamat',
 	'wf_city_id' => 'id',
@@ -1770,11 +1869,17 @@ $messages['id'] = array(
  * @author Ukabia
  */
 $messages['ig'] = array(
+	'wf_cc_name' => 'Ébéonọr',
 	'wikifactory-label-actions' => 'Mmèmé',
+	'wikifactory-label-close' => 'Mèchié',
+	'closewiki-unknown' => 'Nke námaghi',
+	'awc-metrics-category' => 'na ébéonọr:',
+	'awc-metrics-all' => 'Wiki níle',
+	'awc-metrics-all-languages' => 'asụsụ níle',
 	'awc-metrics-hubs' => 'Wiki ohúrù (na önwa)',
 	'awc-metrics-news-day' => 'Wiki ohúrù (na ubochi)',
 	'awc-metrics-this-month' => 'önwa nke',
-	'awc-metrics-last-month' => 'önwa gafere $1',
+	'awc-metrics-last-month' => '{{PLURAL:$1|önwa|$1 önwa}} gafere',
 	'closed-wiki' => 'Wiki mechịrị',
 	'closed-reason' => 'Mgbaghaputa:',
 );
@@ -1911,15 +2016,134 @@ $messages['kn'] = array(
 
 /** Karachay-Balkar (Къарачай-Малкъар)
  * @author Iltever
+ * @author Къарачайлы
  */
 $messages['krc'] = array(
+	'wikifactorypagetitle' => 'Wiki Factory конфигуратор',
+	'wikifactory' => 'Wiki Factory конфигуратор',
+	'closewiki' => 'Викини джаб',
 	'wf_city_url' => 'Адрес',
+	'wf_city_id' => 'ID',
+	'wf_city_title' => 'Башлыкъ',
+	'wf_city_created' => 'Къуралгъанды',
+	'wf_city_founding_user' => 'Тамаллагъан',
 	'wf_city_founding_email' => 'Къурагъанны эл. почтасы',
 	'wf_city_public' => 'Статус',
 	'wf_city_lang' => 'Тил',
 	'wf_cc_name' => 'Категория',
+	'wikifactory_removevariable' => 'Кешден викини билгилерин къорат',
+	'wikifactory_removeconfirm' => 'Викини билгилери кешден къоратылгъанды!',
+	'wikifactory-label-variables' => 'Тюрленнгенле',
+	'wikifactory-label-variables2' => 'Баш',
+	'wikifactory-label-hubs' => 'Хабла',
 	'wikifactory-label-domains' => 'Доменле',
+	'wikifactory-label-return' => 'Списокга къайт',
 	'wikifactory-label-clog' => 'Тюрлениулени журналы',
+	'wikifactory-label-actions' => 'Этимле',
+	'wikifactory-label-close' => 'Джаб',
+	'wikifactory-label-tags' => 'Тегле',
+	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
+	'right-wikifactory' => 'Викини ич джарашдырыулары',
+	'closewiki-check-and-confirm' => 'Викилени сына эмда операцияны мюкюл эт',
+	'closewiki-redirect-to' => 'Джангыдан джибериу',
+	'closewiki-message' => '$1 домен ат',
+	'closewiki-confirm-button' => " '$1' бла $2 бегит",
+	'closewiki-nbr-wiki' => '$1 вики',
+	'closewiki-wiki-closed' => "'''$1''' джабылгъанды  ($2)",
+	'closewiki-wiki-closed_removed' => "'''$1'''  бусагъатда джабылыбды эмда къоратылыр пландады ($2)",
+	'closewiki-wiki-closed_redirect' => "'''$1''' джабылгъанды ($2) эмда бусагъатда  $3 бетге джибериледи",
+	'closewiki-dump-url' => 'Билги базаланы дамплары:$1',
+	'closewiki-images-url' => 'Суратланы архиви: $1',
+	'closewiki-unknown' => 'Билинмеген',
+	'closewiki-return' => 'Ызына  $1-ге',
+	'awc-metrics-wikis' => 'Викини кёргюз',
+	'awc-metrics-select' => 'Викини кёргюз:',
+	'awc-metrics-by-language' => 'тилге кёре:',
+	'awc-metrics-category' => 'эмда категориягъа:',
+	'awc-metrics-all' => 'бютеу Викиле',
+	'awc-metrics-all-languages' => 'Бютеу тилле',
+	'awc-metrics-search' => 'Излеуню джарашдырыулары:',
+	'awc-metrics-one-week' => ' < 1 ыйыкъ мындан алгъа къуралгъанды',
+	'awc-metrics-two-weeks' => '< 2 ыйыкъ мындан алгъа къуралгъанды',
+	'awc-metrics-three-weeks' => ' < 3 ыйыкъ мындан алгъа къуралгъанды',
+	'awc-metrics-one-months' => ' < 1 ай мындан алгъа къуралгъанды',
+	'awc-metrics-two-months' => '< 2 ай мындан алгъа къуралгъанды',
+	'awc-metrics-three-months' => ' < 3 ай мындан алгъа къуралгъанды',
+	'awc-metrics-half-year' => '< 6 ай мындан алгъа къуралгъанды',
+	'awc-metrics-wikis-found' => ' $1 вики табылгъанды',
+	'awc-metrics-by-email' => ' неда  (кошулуучуну эл. почтасы):',
+	'awc-metrics-by-user' => 'къуралгъынды (къошулуучуну аты):',
+	'awc-metrics-by-dbname' => 'Анда БД атда бу барды:',
+	'awc-metrics-by-title' => 'эмда атла мындан башланадыла:',
+	'awc-metrics-by-domains' => 'домен да буну тутады:',
+	'awc-metrics-not-found' => 'Викиле табылмагъандыла',
+	'awc-metrics-nbr-result' => 'Эсебле:',
+	'awc-metrics-created-between' => ' $1 (ДЖДЖДЖДЖ/АА/КК) бла $2-ни (ДЖДЖДЖДЖ/АА/КК) арасында къуралгъанды',
+	'awc-metrics-wikians' => 'Викичиле<br />(>10 тюзетиу)',
+	'awc-metrics-articles' => 'Статьяла',
+	'awc-metrics-articles-per-day' => 'Статьяла<br />(кюннге орталама)',
+	'awc-metrics-revisions-per-page' => 'Версияла<br />(кюннге орталама)',
+	'awc-metrics-article-avg-size' => 'Статьяланы арта ёлчемм.<br />',
+	'awc-metrics-edits' => 'Тюзетиуле',
+	'awc-metrics-db-size' => 'ББ-ни ёлчеми',
+	'awc-metrics-images' => 'Суратла',
+	'awc-metrics-all-users' => '.<br />къошулуучуну рег.',
+	'awc-metrics-all-users-edit-main-ns' => 'Къошулуучуну регистрация эт<br />(NS_MAIN)',
+	'awc-metrics-pageviews' => '<br />кере бетлеге къаралгъанды',
+	'awc-metrics-statistics' => 'Статистика (айлагъа орталама)',
+	'awc-metrics-close' => 'Джаб',
+	'awc-metrics-active' => 'активди',
+	'awc-metrics-closed' => 'джабылыбды',
+	'awc-metrics-redirected' => 'джабылгъанды эмда джангыдан джиберилгенди',
+	'awc-metrics-removed' => 'къорталыгъанды',
+	'awc-metrics-hubs' => 'Джангы викиле (айгъа)',
+	'awc-metrics-news-day' => 'Джангы викиле (хар кюн сайын)',
+	'awc-metrics-sum-month' => 'Счан (айда)',
+	'awc-metrics-sum-day' => 'Саны (кюнде)',
+	'awc-metrics-fewer-than' => ' $1-ден аз {{PLURAL:$1|статья|статясы}} болгъан,',
+	'awc-metrics-edits-label' => '$2 ичинде {{PLURAL:$1|$1 тюзетиу}} ,',
+	'awc-metrics-this-month' => 'бу ай',
+	'awc-metrics-last-month' => '{{PLURAL:$1|айхыр $1 ай|ахыр $1 айла|ахыр $1 айны}}',
+	'awc-metrics-pageviews-label' => 'эм {{PLURAL:$1|$1 бетге къарау}}  {{PLURAL:$2|ахыр $2 кюнде}}',
+	'awc-metrics-close-listed' => 'Бютеу белгиленнгенлени джаб',
+	'awc-metrics-close-checked' => 'Белгиленнгенлени джаб',
+	'awc-metrics-exact-match' => 'бютеулей келишген',
+	'closed-wiki' => 'Джабыкъ вики',
+	'closed-wiki-info' => 'Бу вики джабылыбды',
+	'disabled-wiki-info' => 'Бу вики джукъланыбды',
+	'closed-wiki-dump-exists' => ' Ичиндегини кёрюр ючюн, тилейбиз  [$1 былайын] басыгъыз',
+	'closed-wiki-dump-noexists' => 'Бу вики джабылгъан этгенди. Ичиндегилени списогу 24 сагъатны ичинде кёрюннюкдю. Кечирек киригиз.',
+	'closed-wiki-create-wiki' => 'Джангы вики къура',
+	'closed-wiki-policy' => 'Викини джабыууну джорукъларына къара',
+	'closed-create-dump' => 'Билгилени базасыны дампын къура',
+	'closed-create-image-archive' => 'Суратланы архивлерин къура',
+	'closed-delete-database-images' => 'Билгилени базасы бла суратланы къорат',
+	'closed-delete-images' => 'Суратланы кетер',
+	'closed-free-url' => 'Джангы тамаллаучула ючюн URL адресни бошалт',
+	'closed-hide-dumps' => 'Билгилени базасы бла суратланы алыуларын джашыр',
+	'closed-redirect-url' => 'URL-ни джангыдан джибер',
+	'closed-confirm-btn' => 'Джабыуну къабыл эт',
+	'closed-redirect-alert' => 'Джангыдан джибериуню джангы URL адресин джазыгъыз!',
+	'closed-reason' => 'Чурум:',
+);
+
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'closed-wiki-dump-noexists' => 'Dat Wiki heh es zohjemaat woode. Däm singe Enhalld sullt innerhallf vun 24 Shtunde als e Aschiiv paraat shtonn. Bes esu joot, un loor spääder noch end donoh.',
+	'closed-wiki-create-wiki' => 'E neu Wiki opmaache',
+	'closed-wiki-policy' => 'Donn Wikia sing Reschlinnije för et Zohmaache aanzeije',
+	'closed-create-dump' => 'Donn de Daatebangk en e Aschiiv ußlaarere',
+	'closed-create-image-archive' => 'Donn de Bellder en a Aschiiv ußlaarere',
+	'closed-delete-database-images' => 'Donn de Bellder un de Daatebangk fottschmiiße',
+	'closed-delete-images' => 'Donn de Bellder fottschmiiße',
+	'closed-free-url' => 'Donn dä URl för en Neujröndung freijävve',
+	'closed-hide-dumps' => 'Donn de ußjelaarerte Datebangk un de ußjelaarerte Bellder vershteishe',
+	'closed-redirect-url' => 'Donn dä URL ömleide',
+	'closed-confirm-btn' => 'Zohmaache!',
+	'closed-redirect-alert' => 'Jif de neu URL för noh ömzeleide aan!',
+	'closed-reason' => 'Jrond:',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -2427,35 +2651,35 @@ $messages['pl'] = array(
 	'awc-metrics-wikis' => 'Wyświetlaj wiki',
 	'awc-metrics-select' => 'Pokaż wiki:',
 	'awc-metrics-by-language' => 'w języku:',
-	'awc-metrics-category' => 'i kategorię:',
+	'awc-metrics-category' => 'i kategorię',
 	'awc-metrics-all' => 'wszystkie wiki',
 	'awc-metrics-all-languages' => 'wszystkie języki',
 	'awc-metrics-search' => 'Opcje wyszukiwania:',
-	'awc-metrics-one-week' => 'utworzone <1 tydzień temu',
-	'awc-metrics-two-weeks' => 'utworzone <2 tygodnie temu',
-	'awc-metrics-three-weeks' => 'utworzone <3 tygodnie temu',
-	'awc-metrics-one-months' => 'utworzone <1 miesiąc temu',
-	'awc-metrics-two-months' => 'utworzone <2 miesiące temu',
-	'awc-metrics-three-months' => 'utworzone <3 miesiące temu',
-	'awc-metrics-half-year' => 'utworzone <6 miesięcy temu',
+	'awc-metrics-one-week' => 'utworzone < 1 tydzień temu',
+	'awc-metrics-two-weeks' => 'utworzone < 2 tygodnie temu',
+	'awc-metrics-three-weeks' => 'utworzone < 3 tygodnie temu',
+	'awc-metrics-one-months' => 'utworzone < 1 miesiąc temu',
+	'awc-metrics-two-months' => 'utworzone < 2 miesiące temu',
+	'awc-metrics-three-months' => 'utworzone < 3 miesiące temu',
+	'awc-metrics-half-year' => 'utworzone < 6 miesięcy temu',
 	'awc-metrics-wikis-found' => 'Znaleziono $1 wiki',
-	'awc-metrics-by-email' => 'lub (e-mail użytkownika):',
-	'awc-metrics-by-user' => 'znalezione przez (nazwa użytkownika):',
-	'awc-metrics-by-dbname' => 'gdzie nazwy baz danych zawierają:',
-	'awc-metrics-by-title' => 'i tytuły zaczynające się na:',
+	'awc-metrics-by-email' => 'lub (e‐mail użytkownika)',
+	'awc-metrics-by-user' => 'znalezione przez (nazwa użytkownika)',
+	'awc-metrics-by-dbname' => 'gdzie nazwy baz danych zawierają',
+	'awc-metrics-by-title' => 'i tytuły zaczynające się od',
 	'awc-metrics-by-domains' => 'i domeny zawierające',
 	'awc-metrics-not-found' => 'Nie znaleziono takich wiki',
 	'awc-metrics-nbr-result' => 'Wyniki:',
-	'awc-metrics-created-between' => 'utworzone pomiędzy $1 (RRRR/MM/DD) i $2 (RRR/MM/DD)',
+	'awc-metrics-created-between' => 'utworzone pomiędzy $1 (RRRR/MM/DD) a $2 (RRRR/MM/DD)',
 	'awc-metrics-wikians' => 'Użytkowników<br />(>10 edycji)',
 	'awc-metrics-articles' => 'Artykuły',
-	'awc-metrics-articles-per-day' => 'Artykuły <br /> (średnio na dzień)',
-	'awc-metrics-revisions-per-page' => 'Zmiany <br /> (średnio na stronę)',
-	'awc-metrics-article-avg-size' => 'Średni rozmiar<br />artykułów',
+	'awc-metrics-articles-per-day' => 'Artykuły<br />(średnio na dzień)',
+	'awc-metrics-revisions-per-page' => 'Zmiany<br />(średnio na stronę)',
+	'awc-metrics-article-avg-size' => 'Średni rozmiar<br />artykułu',
 	'awc-metrics-edits' => 'Edycje',
-	'awc-metrics-db-size' => 'Rozmiar bazy danych',
+	'awc-metrics-db-size' => 'Wielkość bazy danych',
 	'awc-metrics-images' => 'Zdjęć',
-	'awc-metrics-all-users' => 'Zarejestrowanych<br /> użytkowników',
+	'awc-metrics-all-users' => 'Zarejestrowanych<br />użytkowników',
 	'awc-metrics-all-users-edit-main-ns' => 'Zarejestr.<br />użytk. (NS_MAIN)',
 	'awc-metrics-pageviews' => 'Odsłon<br />stron',
 	'awc-metrics-statistics' => 'Statystyki (średnia dla wszystkich miesięcy)',
@@ -2467,8 +2691,8 @@ $messages['pl'] = array(
 	'awc-metrics-hubs' => 'Nowych wiki (miesięcznie)',
 	'awc-metrics-news-day' => 'Nowych wiki (na dobę)',
 	'awc-metrics-sum-month' => 'Liczba (miesięcznie)',
-	'awc-metrics-sum-day' => 'Liczba (na dobę)',
-	'awc-metrics-fewer-than' => 'ma mniej niż $1 {{PLURAL:$1|artykuł|artykuły|artykułów}}',
+	'awc-metrics-sum-day' => 'Liczba (w dobie)',
+	'awc-metrics-fewer-than' => 'ma mniej niż $1 {{PLURAL:$1|artykuł|artykuły|artykułów}},',
 	'awc-metrics-edits-label' => '$1 {{PLURAL:$1|edycja|edycje|edycji}}, w ciągu $2,',
 	'awc-metrics-this-month' => 'w tym miesiącu',
 	'awc-metrics-last-month' => '{{PLURAL:$1|ostatni miesiąc|ostatnie $1 miesiące|ostatnich $1 miesięcy}}',
@@ -2626,12 +2850,16 @@ $messages['ps'] = array(
 	'wf_cc_name' => 'وېشنيزه',
 	'wikifactory-label-close' => 'تړل',
 	'closewiki-nbr-wiki' => '$1 ويکي ګانې',
+	'closewiki-images-url' => 'د انځورونو خونديځ: $1',
 	'closewiki-unknown' => 'ناجوت',
+	'awc-metrics-wikis' => 'ويکي ګانې ښکاره کول',
 	'awc-metrics-select' => 'ويکي ګانې ښکاره کول:',
 	'awc-metrics-by-language' => 'د ژبې له مخې:',
+	'awc-metrics-category' => 'او وېشنيزه:',
 	'awc-metrics-all' => 'ټولې ويکي ګانې',
 	'awc-metrics-all-languages' => 'ټولې ژبې',
 	'awc-metrics-search' => 'د پلټلو خوښنې:',
+	'awc-metrics-by-email' => ' يا (د کارن برېښليک):',
 	'awc-metrics-nbr-result' => 'پايلې:',
 	'awc-metrics-articles' => 'ليکنې',
 	'awc-metrics-edits' => 'سمونونه',
@@ -2639,11 +2867,15 @@ $messages['ps'] = array(
 	'awc-metrics-close' => 'تړل',
 	'awc-metrics-active' => 'فعال',
 	'awc-metrics-closed' => 'تړل شوی',
+	'awc-metrics-hubs' => 'نوې ويکي ګانې (هره مياشت)',
+	'awc-metrics-news-day' => 'نوې ويکي ګانې (هره ورځ)',
 	'awc-metrics-this-month' => 'همدا مياشت',
 	'awc-metrics-close-listed' => 'په لړليک کې ټول تړل',
 	'awc-metrics-close-checked' => 'په نښه شوي تړل',
 	'closed-wiki' => 'تړل شوې ويکي',
+	'closed-wiki-info' => 'دا ويکي تړل شوې',
 	'closed-wiki-create-wiki' => 'یو نوی ويکي جوړول',
+	'closed-create-image-archive' => 'د انځورونو يو خونديځ جوړول',
 	'closed-delete-images' => 'انځورونه ړنګول',
 	'closed-reason' => 'سبب:',
 );
@@ -2766,17 +2998,36 @@ regist.',
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Daemorris
+ * @author Giro720
  * @author Jesielt
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
+	'wikifactorypagetitle' => 'Configurador da Fábrica de Wikis',
+	'wikifactory' => 'Configurador da Fábrica de Wikis',
+	'closewiki' => 'Fechar wiki',
 	'wf_city_url' => 'Endereço',
+	'wf_city_id' => 'id',
 	'wf_city_title' => 'Título',
+	'wf_city_created' => 'Criado',
+	'wf_city_founding_user' => 'Fundador',
+	'wf_city_founding_email' => 'Endereço de e-mail do fundador',
+	'wf_city_public' => 'Estado',
 	'wf_city_lang' => 'Língua',
 	'wf_cc_name' => 'Categoria',
+	'wikifactory_removevariable' => 'Remover do cache os dados da wiki',
+	'wikifactory_removeconfirm' => 'Dados da wiki removidos do cache!',
+	'wikifactory-label-variables' => 'Variáveis',
+	'wikifactory-label-variables2' => 'Geral',
+	'wikifactory-label-hubs' => 'Centrais',
 	'wikifactory-label-domains' => 'Domínios',
+	'wikifactory-label-return' => 'Voltar à lista',
+	'wikifactory-label-clog' => 'Registro de mudanças',
 	'wikifactory-label-actions' => 'Ações',
 	'wikifactory-label-close' => 'Fechar',
+	'wikifactory-label-tags' => 'Etiquetas',
+	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
+	'right-wikifactory' => 'Alterar configurações internas das wikis',
 	'closewiki-check-and-confirm' => 'Cheque as wikis e confirme a operação',
 	'closewiki-redirect-to' => 'Redirecionar para',
 	'closewiki-message' => 'nome do domínio $1',
@@ -2833,11 +3084,11 @@ $messages['pt-br'] = array(
 	'awc-metrics-news-day' => 'Novas wikis (diariamente)',
 	'awc-metrics-sum-month' => 'Contagem (por mês)',
 	'awc-metrics-sum-day' => 'Contagem (por dia)',
-	'awc-metrics-fewer-than' => 'que tenha menos de $1 artigos,',
+	'awc-metrics-fewer-than' => 'com menos de $1 {{PLURAL:$1|página|páginas}},',
 	'awc-metrics-edits-label' => '{{PLURAL:$1|$1 edição|$1 edições}} em $2,',
 	'awc-metrics-this-month' => 'esse mês',
-	'awc-metrics-last-month' => 'nos últimos $1 mêses',
-	'awc-metrics-pageviews-label' => 'e $1 visitas nos últimos $2 dias',
+	'awc-metrics-last-month' => '{{PLURAL: $1|último mês|últimos $1 meses}}',
+	'awc-metrics-pageviews-label' => 'e $1 {{PLURAL:$1|página visitada|páginas visitadas}} {{PLURAL:$2|no último dia|nos últimos $2 dias}}',
 	'awc-metrics-close-listed' => 'Fechar tudo listado',
 	'awc-metrics-close-checked' => 'Fechar revisados',
 	'awc-metrics-exact-match' => 'coincidência exata',
@@ -3006,6 +3257,7 @@ $messages['si'] = array(
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Charmed94
  * @author Verlor
+ * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
 	'wikifactorypagetitle' => 'Wiki Factory конфигуратор',
@@ -3100,10 +3352,19 @@ $messages['sr-ec'] = array(
 	'closed-wiki' => 'Затвори Вики',
 	'closed-wiki-info' => 'Ова викија је затворена',
 	'disabled-wiki-info' => 'Ова викија је затворена',
+	'closed-wiki-dump-exists' => 'Молимо, кликните [$1 овде] ако желите да повратите Ваш садржај',
+	'closed-wiki-dump-noexists' => 'Овај Вики је затворен. Дамп садржаја ће бити доступан у року од 24 сата. Молимо Вас, свратите касније.',
 	'closed-wiki-create-wiki' => 'Направите нову вики',
+	'closed-wiki-policy' => 'Види Викијину политику затварања',
+	'closed-create-dump' => 'Прављење дампа базе података',
+	'closed-create-image-archive' => 'Прављење архиве слика',
+	'closed-delete-database-images' => 'Брисање базе података и слика',
 	'closed-delete-images' => 'Обриши слике',
 	'closed-free-url' => 'Ослободи УРЛ за новог оснивача',
+	'closed-hide-dumps' => 'Сакривање дампова базе података и слика',
+	'closed-redirect-url' => 'Преусмери URL',
 	'closed-confirm-btn' => 'Потврди затварање',
+	'closed-redirect-alert' => 'Треба да се на веде нови URL преусмерења!',
 	'closed-reason' => 'Разлог:',
 );
 
@@ -3268,5 +3529,17 @@ $messages['uk'] = array(
 	'closed-delete-images' => 'Вилучити зображення',
 	'closed-confirm-btn' => 'Підтвердити закриття',
 	'closed-reason' => 'Причина:',
+);
+
+/** Wu (吴语) */
+$messages['wuu'] = array(
+	'closed-reason' => '理由：',
+);
+
+/** Chinese (Taiwan) (‪中文(台灣)‬)
+ * @author Ffaarr
+ */
+$messages['zh-tw'] = array(
+	'closed-wiki' => '關閉的圍紀',
 );
 

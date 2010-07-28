@@ -318,7 +318,7 @@ $messages['dz'] = array(
 
 /** Ewe (Eʋegbe) */
 $messages['ee'] = array(
-	'titleedit' => 'Trɔ asi le eŋu',
+	'titleedit' => 'trɔ asi le eŋu',
 );
 
 /** Greek (Ελληνικά)
@@ -553,8 +553,11 @@ $messages['hu'] = array(
 	'titleedit' => 'Szerkesztés',
 );
 
-/** Armenian (Հայերեն) */
+/** Armenian (Հայերեն)
+ * @author Pandukht
+ */
 $messages['hy'] = array(
+	'titleedit-desc' => 'Էջի վերևի մասում ագելացնում է անվանման ձևափոխման կոճակը',
 	'titleedit' => 'Խմբագրել',
 );
 
@@ -630,8 +633,11 @@ $messages['jv'] = array(
 	'titleedit' => 'Sunting',
 );
 
-/** Georgian (ქართული) */
+/** Georgian (ქართული)
+ * @author David1010
+ */
 $messages['ka'] = array(
+	'titleedit-desc' => 'ამატებს სათაურის რედაქტირების ღილაკს გვერდის ზედა ნაწილში',
 	'titleedit' => 'რედაქტირება',
 );
 
@@ -680,8 +686,11 @@ $messages['krj'] = array(
 	'titleedit' => 'Iislan',
 );
 
-/** Colognian (Ripoarisch) */
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
 $messages['ksh'] = array(
+	'titleedit-desc' => 'Deiht ene Knopp för Sigge_Tittelle ze ändere bovve op jeede Sigg.',
 	'titleedit' => 'Ändere',
 );
 
@@ -740,8 +749,11 @@ $messages['lg'] = array(
 	'titleedit' => 'Kyusa',
 );
 
-/** Limburgish (Limburgs) */
+/** Limburgish (Limburgs)
+ * @author Ooswesthoesbes
+ */
 $messages['li'] = array(
+	'titleedit-desc' => "Voog 'ne knoep veur verplaatse aan bie paazjes",
 	'titleedit' => 'Bewirk',
 );
 
@@ -851,8 +863,11 @@ $messages['ms'] = array(
 	'titleedit' => 'Sunting',
 );
 
-/** Maltese (Malti) */
+/** Maltese (Malti)
+ * @author Chrisportelli
+ */
 $messages['mt'] = array(
+	'titleedit-desc' => 'Iżżid fuq nett buttuna sabiex timmodifika t-titlu',
 	'titleedit' => 'Editja',
 );
 
@@ -1340,6 +1355,14 @@ $messages['udm'] = array(
 	'titleedit' => 'тупатыны',
 );
 
+/** ئۇيغۇرچە (ئۇيغۇرچە)
+ * @author Sahran
+ */
+$messages['ug-arab'] = array(
+	'titleedit-desc' => 'ماۋزۇ تەھرىر توپچىسىنى بەتنىڭ ئۈستىگە قوش',
+	'titleedit' => 'تەھرىر',
+);
+
 /** Ukrainian (Українська)
  * @author Prima klasy4na
  */
@@ -1368,8 +1391,11 @@ $messages['vep'] = array(
 	'titleedit' => 'Redaktiruida',
 );
 
-/** Vietnamese (Tiếng Việt) */
+/** Vietnamese (Tiếng Việt)
+ * @author Minh Nguyen
+ */
 $messages['vi'] = array(
+	'titleedit-desc' => 'Thêm nút để sửa đổi tên trang vào trên các trang',
 	'titleedit' => 'Sửa đổi',
 );
 

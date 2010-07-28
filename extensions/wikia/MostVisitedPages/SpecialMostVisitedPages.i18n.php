@@ -210,6 +210,8 @@ $messages['lb'] = array(
 	'mostvisitedpagessearchtext' => 'Numm vum Artikel:',
 	'mostvisitedpagessearchbtn' => 'sichen',
 	'mostvisitedpageslatest' => 'an de leschten $1 Minutten',
+	'mostvisitedpageslatestlink' => 'Déi lescht besichte Säite kucken',
+	'mostvisitedpagesalllink' => 'Déi am dackste besichte Säite kucken',
 );
 
 /** Macedonian (Македонски)
@@ -396,6 +398,18 @@ $messages['tl'] = array(
 	'mostvisitedpageslatest' => 'sa loob ng huling $1 na mga minuto',
 	'mostvisitedpageslatestlink' => 'Tingnan ang pinakahuling dinalaw na mga pahina',
 	'mostvisitedpagesalllink' => 'Tingnan ang pinakadinadalaw na mga pahina',
+);
+
+/** Turkish (Türkçe)
+ * @author Manco Capac
+ */
+$messages['tr'] = array(
+	'mostvisitedpages' => 'En çok ziyaret edilen sayfalar',
+	'mostvisitedpagessearchtext' => 'Sayfanın adı:',
+	'mostvisitedpagessearchbtn' => 'ara',
+	'mostvisitedpageslatest' => 'son $1 dakikadaki',
+	'mostvisitedpageslatestlink' => 'Son ziyaret edilen sayfaları gör',
+	'mostvisitedpagesalllink' => 'En çok ziyaret edilen sayfaları gör',
 );
 
 /** Tuvinian (Тыва дыл)

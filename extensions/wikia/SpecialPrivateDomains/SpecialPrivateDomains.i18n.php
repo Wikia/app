@@ -27,9 +27,11 @@ You can still view pages on this wiki, but you will be unable to edit.",
 );
 
 /** Message documentation (Message documentation)
+ * @author Hamilton Abreu
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'privatedomains_nomanageaccess' => 'Special pages mentioned: {{msg-mw|Userlogin}}',
 	'privatedomains_affiliatenamelabel' => 'Leading newline does not make sense. Consider hardcoding it.',
 );
 
@@ -64,6 +66,7 @@ $messages['be-tarask'] = array(
 
 /** Breton (Brezhoneg)
  * @author Gwenn-Ael
+ * @author Y-M D
  */
 $messages['br'] = array(
 	'privatedomains_nomanageaccess' => "Ma digarezit,  n'ho peus ket gwirioù a-walc'h evit merañ domanioù prevez ar wiki-mañ. N'eus nemet ar vurevourien hag izili ar c'hoskor a c'hall mont warnañ.
@@ -77,7 +80,7 @@ M'ho peus ur chomlec'h postel emezelet ouzh $1 e challit mont e-barzh pe adkarna
 Gallout a rit gwelet pajennoù ar wiki-mañ, met ne c'hallit ket kemmañ anezho.",
 	'privatedomains_affiliatenamelabel' => 'Anv an aozadur :',
 	'privatedomains_emailadminlabel' => "Anv implijer an darempred m'ho peus kudennoù mont pe rekedoù :",
-	'privatedomainsinstructions' => 'Diskwelet eo roll domanioù ar chomlec\'hioù postel zo aotreet evit embannerien ar wiki-mañ. Pep linenn a ziskouez ur rakverk postel a ro tro d\'an embannerien da vont warno. Furmadet e tle ar roll  bezañ gant ur rakverk dre linenn. Da skouer,  :</p><p style="width: 20%; padding:5px; border: 1px solid grey;">cs.stanford.edu<br /> stanfordalumni.org</p><p>p>This would allow edits from anyone with the email address whatever@cs.stanford.edu or whatever@stanfordalumni.org</p><p><b>Ebarzhit roll an domanioù aotreet er voest amañ amañ dindan ha klikit war « saveteiñ».</b>',
+	'privatedomainsinstructions' => 'Diskwelet eo roll domanioù ar chomlec\'hioù postel zo aotreet evit embannerien ar wiki-mañ. Pep linenn a ziskouez ur rakverk postel a ro tro d\'an embannerien da vont warno. Furmadet e tle ar roll  bezañ gant ur rakverk dre linenn. Da skouer,  :</p><p style="width: 20%; padding:5px; border: 1px solid grey;">cs.stanford.edu<br /> stanfordalumni.org</p><p>p>This would allow edits from anyone with the email address whatever@cs.stanford.edu or whatever@stanfordalumni.org</p><p><b>Ebarzhit roll an domanioù aotreet er voest amañ amañ dindan ha klikit war "{{int:saveprefs}}".</b>',
 );
 
 /** German (Deutsch)
@@ -313,6 +316,25 @@ Se não se autenticou, provavelmente [[Special:UserLogin|devia]].',
 	'privatedomains_affiliatenamelabel' => 'Nome da organização:',
 	'privatedomains_emailadminlabel' => 'Nome do utilizador de contacto para problemas e questões:',
 	'privatedomainsinstructions' => 'É apresentada abaixo a lista de domínios de correio electrónico permitidos para os editores desta wiki. Cada linha designa um sufixo de correio electrónico com permissões de edição. Deve existir um sufixo por linha. Por exemplo:</p><p style="width: 20%; padding:5px; border: 1px solid grey;">uma.pt<br /> unl.pt</p><p>Isto permite edições a todos aqueles com um endereço de correio electrónico nome@uma.pt ou nome@unl.pt</p><p><b>Introduza os domínios permitidos na caixa de texto abaixo e clique "{{int:saveprefs}}".</b>',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
+ */
+$messages['pt-br'] = array(
+	'privatedomains_nomanageaccess' => 'Desculpe, mas você não tem privilégios para administrar os domínios privados permitidos nesta wiki.
+Só os burocratas e os membros da equipe têm acesso.
+
+Se você não está autenticado, você provavelmente [[Special:UserLogin|deveria fazê-lo]].',
+	'privatedomains' => 'Administrar Domínios Privados',
+	'privatedomains_ifemailcontact' => 'Caso contrário, contate [[Special:EmailUser/$1|$1]] se tiver dúvidas, por favor.',
+	'saveprivatedomains_success' => 'As alterações aos Domínios Privados foram salvas.',
+	'privatedomains_invalidemail' => 'Desculpe, mas o acesso a esta wiki está restrito aos membros de $1.
+Se você tem um e-mail afiliado a $1, você pode introduzir ou reconfirmar o endereço de e-mail na página de preferências da sua conta [[Special:Preferences|aqui]].
+Você poderá ainda continuar a ver as páginas desta wiki, mas não conseguirá editá-las.',
+	'privatedomains_affiliatenamelabel' => 'Nome da organização:',
+	'privatedomains_emailadminlabel' => 'Nome do usuário para contato sobre problemas ou questões:',
+	'privatedomainsinstructions' => 'É apresentada abaixo a lista de domínios de e-mails permitidos para os editores desta wiki. Cada linha designa um sufixo de correio eletrônico com permissões de edição. Deve existir um sufixo por linha. Por exemplo:</p><p style="width: 20%; padding:5px; border: 1px solid grey;">uma.pt<br /> unl.pt</p><p>Isto permite edições a todos aqueles com um endereço de e-mail nome@uma.pt ou nome@unl.pt</p><p><b>Introduza os domínios permitidos na caixa de texto abaixo e clique "{{int:saveprefs}}".</b>',
 );
 
 /** Russian (Русский)

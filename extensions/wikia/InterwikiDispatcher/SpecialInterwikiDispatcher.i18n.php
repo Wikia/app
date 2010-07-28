@@ -31,6 +31,7 @@ $messages['qqq'] = array(
  */
 $messages['af'] = array(
 	'interwikidispatcher' => 'Interwikiverdeler',
+	'interwikidispatcher-desc' => 'Los interwikiskakels op om Apache-aansture te verminder',
 );
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))

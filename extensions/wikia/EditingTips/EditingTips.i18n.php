@@ -115,6 +115,19 @@ $messages['hu'] = array(
 	'editingTips' => 'Add hozzá a tippjeidet [[MediaWiki:EditingTips|itt]]',
 );
 
+/** Armenian (Հայերեն)
+ * @author Pandukht
+ */
+$messages['hy'] = array(
+	'tog-disableeditingtips' => 'Ցույց չտալ հուշվածքները խմբագրման ժամանակ',
+	'tog-widescreeneditingtips' => 'դաշտ էկրանի ամբողջ լայնությամբ խմբագրման համար',
+	'editingtips_enter_widescreen' => 'Անցնել լայնաէկրանային ռեժիմին',
+	'editingtips_exit_widescreen' => 'Լքել լայնաէկրանային ռեժիմը',
+	'editingtips_hide' => 'Թաքցնել խմբագրման մասին խորհուրդները',
+	'editingtips_show' => 'Ցույց տալ խմբագրման մասին խորհուրդները',
+	'editingTips' => 'Ավելացրեք ձեր խորհուրդները [[MediaWiki:EditingTips|այստեղ]]',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -126,6 +139,19 @@ $messages['ia'] = array(
 	'editingtips_hide' => 'Celar consilios de modification',
 	'editingtips_show' => 'Monstrar consilios de modification',
 	'editingTips' => 'Adde tu avisos [[MediaWiki:EditingTips|hic]]',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Farras
+ */
+$messages['id'] = array(
+	'tog-disableeditingtips' => 'Jangan tampilkan saran penyuntingan',
+	'tog-widescreeneditingtips' => 'Gunakan penyuntingan layar lebar',
+	'editingtips_enter_widescreen' => 'Masuk Layar Lebar',
+	'editingtips_exit_widescreen' => 'Keluar Layar Lebar',
+	'editingtips_hide' => 'Sembunyikan Saran Penyuntingan',
+	'editingtips_show' => 'Tampilkan Saran Penyuntingan',
+	'editingTips' => 'Tambahkan saran Anda [[MediaWiki:EditingTips|di sini]]',
 );
 
 /** Japanese (日本語)
@@ -327,6 +353,19 @@ $messages['oc'] = array(
 	'editingtips_show' => "Afichar l'ajuda",
 );
 
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'tog-disableeditingtips' => 'Nie pokazuj porad dotyczących edycji',
+	'tog-widescreeneditingtips' => 'Użyj edytora szerokiego na cały ekran',
+	'editingtips_enter_widescreen' => 'Przełącz do szerokości pełnoekranowej',
+	'editingtips_exit_widescreen' => 'Wyłącz szerokość pełnoekranową',
+	'editingtips_hide' => 'Ukryj porady na temat edycji',
+	'editingtips_show' => 'Pokaż porady dotyczące edycji',
+	'editingTips' => 'Dodaj swoje porady [[MediaWiki:EditingTips|tutaj]]',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  */
@@ -354,7 +393,7 @@ $messages['ps'] = array(
 $messages['pt'] = array(
 	'tog-disableeditingtips' => 'Não mostrar dicas de edição',
 	'tog-widescreeneditingtips' => 'Editar em formato largo',
-	'editingtips_enter_widescreen' => 'Iniciar Formato Largo',
+	'editingtips_enter_widescreen' => 'Mudar para Formato Largo',
 	'editingtips_exit_widescreen' => 'Terminar Formato Largo',
 	'editingtips_hide' => 'Ocultar Dicas de Edição',
 	'editingtips_show' => 'Mostrar Dicas de Edição',
@@ -394,6 +433,13 @@ $messages['sr-ec'] = array(
 	'tog-disableeditingtips' => 'Не показуј савете за уређивање',
 	'editingtips_hide' => 'Сакријте уређивачке напомене',
 	'editingtips_show' => 'Покажите уређивачке напомене',
+);
+
+/** Tamil (தமிழ்)
+ * @author Surya Prakash.S.A.
+ */
+$messages['ta'] = array(
+	'tog-disableeditingtips' => 'தொகுத்தல் உதவிகளைக் காட்ட வேண்டாம்!',
 );
 
 /** Tagalog (Tagalog)

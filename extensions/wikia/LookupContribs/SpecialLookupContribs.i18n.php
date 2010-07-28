@@ -493,19 +493,24 @@ $messages['ja'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'lookupcontribsfinalcontributions' => 'Lescht Ännerung vum $1',
 	'lookupcontribusernotspecify' => 'Dir hutt nach kee Benotzer spezifizéiert',
 	'lookupcontribsselectuser' => 'Benotzer eraussichen:',
 	'lookupcontribsgo' => 'Lass',
 	'lookupcontribsinvaliduser' => '<p class="error">De Benotzer "<b>$1</b>" gëtt et net.
 Vergewëssert Iech datt Dir Iech beim Benotzernumm net vertippt hutt.</p>',
 	'lookupcontribsselectwikis' => 'Wikien eraussichen:',
+	'lookupcontribslistwikiainfo' => 'Lëscht vun de Wikien wou Artikele vum <b>$1</b> geännert goufen',
 	'lookupcontribsnoresultfound' => 'Kee Resultat fonnt!',
 	'lookupcontribswiki' => 'Wiki',
+	'lookupcontribswikidbname' => 'Numm vun der Datebank',
 	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Titel',
 	'lookupcontribsnext' => 'nächst',
 	'lookupcontribsprevious' => 'vireg',
+	'right-lookupcontribs' => 'Déi global Ännerunge vu Benotzer weisen',
 	'lookupcontribsshowpages' => 'All Säiten ($1 Nummraim)',
+	'lookupcontribscontent' => 'Inhalt',
 );
 
 /** Macedonian (Македонски)

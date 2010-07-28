@@ -97,6 +97,14 @@ $messages['bg'] = array(
 	'wikiavideo-create' => 'Добавяне на видео',
 );
 
+/** Bahasa Banjar (Bahasa Banjar)
+ * @author Ezagren
+ */
+$messages['bjn'] = array(
+	'wikiavideo-back' => 'mantuk',
+	'wikiavideo-links' => 'Tautan',
+);
+
 /** Breton (Brezhoneg)
  * @author Gwenn-Ael
  * @author Y-M D
@@ -116,6 +124,20 @@ $messages['br'] = array(
 	'wikiavideo-pixel' => ' piksel',
 	'wikiavideo-deleted-old' => "Dilamet eo bet an doare '''[$1 $2]''' eus $4, $3",
 	'wikiavideo-intro-old' => "!Emaoc'h o tilemel an doare '''[$1 $5]''' eus ($4 $3, $2).",
+);
+
+/** Bosnian (Bosanski)
+ * @author Palapa
+ */
+$messages['bs'] = array(
+	'wikiavideo-added' => 'dodan video $1',
+	'wikiavideo-back' => 'nazad',
+	'wikiavideo-create' => 'Dodaj video',
+	'wikiavideo-replace' => 'Zamijeni video',
+	'wikiavideo-category' => 'Videa',
+	'wikiavideo-links' => 'Linkovi',
+	'wikiavideo-placeholder' => 'Rezervirano mjesto',
+	'wikiavideo-pixel' => 'piksel',
 );
 
 /** Catalan (Català)
@@ -315,6 +337,15 @@ $messages['hu'] = array(
 	'wikiavideo-pixel' => '  képpont',
 );
 
+/** Armenian (Հայերեն)
+ * @author Pandukht
+ */
+$messages['hy'] = array(
+	'wikiavideo-category' => 'Տեսանյութեր',
+	'wikiavideo-links' => 'Հղումներ',
+	'wikiavideo-placeholder' => 'Լցնիչ',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -356,6 +387,14 @@ $messages['id'] = array(
 	'wikiavideo-intro-old' => "Anda menghapus versi '''[$1 $5]''' hingga [$4 $3, $2].",
 );
 
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'wikiavideo-back' => 'azú',
+	'wikiavideo-links' => 'Jikodo',
+);
+
 /** Italian (Italiano)
  * @author HalphaZ
  */
@@ -387,6 +426,41 @@ $messages['ja'] = array(
 	'wikiavideo-pixel' => ' ピクセル',
 	'wikiavideo-deleted-old' => "'''[$1 $2]'''の $3 $4 の版は削除されました。",
 	'wikiavideo-intro-old' => "あなたは'''[$1 $5]'''の[$4 $2 $3]の版を削除しようとしています。",
+);
+
+/** Georgian (ქართული)
+ * @author David1010
+ */
+$messages['ka'] = array(
+	'wikiavideo-reverted' => 'ვიდეო $1 წარმატებით იქნა დაბრუნებული. დაბრუნება $2-ზე',
+	'wikiavideo-unreverted' => 'თქვენ არ გაქვთ საკმარისი უფლება $1 გასაუქმებლად',
+	'wikiavideo-added' => 'დამატებული ვიდეო $1',
+	'wikiavideo-back' => 'უკან',
+	'wikiavideo-create' => 'ვიდეოს დამატება',
+	'wikiavideo-replace' => 'ვიდეოს შეცვლა',
+	'wikiavideo-category' => 'ვიდეოები',
+	'wikiavideo-links' => 'ბმულები',
+	'wikiavideo-pixel' => 'პიქსელი',
+);
+
+/** Karachay-Balkar (Къарачай-Малкъар)
+ * @author Къарачайлы
+ */
+$messages['krc'] = array(
+	'wikiavideo-reverted' => '$1 видео джетишимли орнуна къайтарылгъанды. $2 видеогъа къайтыргъа.',
+	'wikiavideo-unreverted' => '$1 ызына  къайтарыргъа эркинлигигиз джокъду.',
+	'wikiavideo-added' => '$1 видеону къошду',
+	'wikiavideo-back' => 'Ызына',
+	'wikiavideo-create' => 'Видео къош',
+	'wikiavideo-replace' => 'Видеону ауушдур',
+	'wikiavideo-category' => 'Видеола',
+	'wikiavideo-links' => 'Джибериуле',
+	'wikiavideo-placeholder' => 'Толтур',
+	'wikiavideo-gallery-template' => 'Бу видео галлерея шаблонда барды, ол себебден къарау режимде тюрлендирилмейди. Тилейбиз, алгъын шаблонну тюрлендиригиз.',
+	'wikiavideo-not-supported' => 'Бу скин къарау режимде видеону къошуллуун джакъламайды.',
+	'wikiavideo-pixel' => 'пиксель',
+	'wikiavideo-deleted-old' => "$4 $3 тамалы болгъан  '''[$1 $2]'''  версия кетерилгенди.",
+	'wikiavideo-intro-old' => "Сиз [$4 $3, $2] тамалы болгъан  '''[$1 $5]''' версияны кетересиз .",
 );
 
 /** Luxembourgish (Lëtzebuergesch)

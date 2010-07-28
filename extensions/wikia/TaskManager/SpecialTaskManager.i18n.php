@@ -246,6 +246,13 @@ $messages['sv'] = array(
 	'taskmanager_tasklist' => 'Återgå till uppgiftslistan',
 );
 
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'taskmanager_tasklist' => 'తిరిగి పనుల జాబితాకి',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */

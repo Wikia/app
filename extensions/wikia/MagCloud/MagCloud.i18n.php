@@ -544,7 +544,7 @@ $messages['ia'] = array(
 	'magcloud-toolbar-articles-count' => '<big>$1</big> {{PLURAL:$1|articulo|articulos}}',
 	'magcloud-toolbar-go-to-magazine' => 'Ir a tu revista',
 	'magcloud-discard-magazine-title' => 'Salveguardar tu collection?',
-	'magcloud-discard-magazine-msg' => 'Il ha labor in progresso a un revista non salveguardate. Vole tu salveguardar lo? (Tu debe esser identificate pro salveguardar tu collection.)',
+	'magcloud-discard-magazine-msg' => 'Il ha labor in progresso a un revista non salveguardate. Vole tu salveguardar lo? (Tu debe esser authenticate pro salveguardar tu collection.)',
 	'magcloud-discard-magazine-discard' => 'Abandonar e exir',
 	'magcloud-discard-magazine-save' => 'Salveguardar e exir',
 	'magcloud-special-collection-title' => 'Face un revista!',
@@ -913,12 +913,82 @@ $messages['ps'] = array(
 	'magcloud-design-preview' => 'مخليدنه',
 );
 
+/** Portuguese (Português)
+ * @author Giro720
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'magcloud-load-magazine-title' => 'Carregar uma revista',
+	'magcloud-load-magazine-load' => 'Carregar esta revista',
+	'magcloud-toolbar-add' => 'Adicionar',
+	'magcloud-toolbar-go-to-magazine' => 'Ir para a sua revista',
+	'magcloud-design-default-subtitle' => 'Subtítulo',
+	'magcloud-design-preview' => 'Antever',
+	'magcloud-preview-done' => 'A sua revista foi gerada.',
+	'magcloud-preview-save-magazine' => 'Gravar a sua revista',
+	'magcloud-preview-publish' => 'Publicar a sua revista',
+	'magcloud-preview-generating-pdf' => 'A criar a sua revista...',
+	'magcloud-publish-status-title' => 'A publicar a sua revista',
+);
+
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
+	'wikiacollection' => 'Fazer uma revista!',
+	'magcloud-intro-get-started' => 'Coletar artigos',
+	'magcloud-intro-create-magazine' => 'Criar uma revista a partir dos artigos desta wiki!',
+	'magcloud-intro-check-out' => 'Clique sobre a revista para ver um exemplo de nossa comunidade!',
+	'magcloud-intro-hint' => 'Use a barra de ferramentas no topo da página para selecionar as páginas wiki que você gostaria de compilar em sua revista. Clique "{{int:Magcloud-toolbar-go-to-magazine}}" quando você tiver terminado!',
+	'magcloud-intro-view-my-magazines' => 'Ver minhas revistas',
+	'magcloud-load-magazine-title' => 'Carregar uma revista',
+	'magcloud-load-magazine-load' => 'Carregar esta revista',
+	'magcloud-load-magazine-empty' => 'Você não tem nenhuma revista salva ainda. Tente criar uma e salve-a para vê-la nesta lista!',
+	'magcloud-add-article-success' => "'''$1''' foi adicionado a sua revista",
+	'magcloud-add-article-already' => "'''$1''' já foi adicionado",
+	'magcloud-toolbar-step' => 'Passo $1: $2',
+	'magcloud-toolbar-article-in-collection' => "'''$1''' já está em sua revista",
+	'magcloud-toolbar-article-add' => "Adicionar '''$1''' a sua revista?",
 	'magcloud-toolbar-add' => 'Adicionar',
+	'magcloud-toolbar-articles-count' => '<big>$1</big> {{PLURAL:$1|artigo|artigos}}',
+	'magcloud-toolbar-go-to-magazine' => 'Ir para a sua revista',
+	'magcloud-discard-magazine-title' => 'Salvar tua coleção?',
+	'magcloud-discard-magazine-msg' => 'Você está trabalhando em uma revista que ainda não foi salva. Você gostaria de salvá-la? (Você precisa estar autenticado para salvar sua coleção.)',
+	'magcloud-discard-magazine-discard' => 'Descartar e sair',
 	'magcloud-discard-magazine-save' => 'Salvar e sair',
+	'magcloud-special-collection-title' => 'Fazer uma revista!',
+	'magcloud-special-collection-empty' => 'Você não selecionou nenhuma página wiki ainda! Vá até a wiki e selecione "{{int:Magcloud-toolbar-add}}" na barra de ferramentas para compilar sua revista.',
+	'magcloud-special-collection-review-list-info' => 'Ótimo, você selecionou {{PLURAL:$1|página|páginas}} $1 wiki para sua revista. Se você quer adicionar mais páginas, basta navegar em outras páginas wiki e clicar em  "{{int:Magcloud-toolbar-add}}" na barra de ferramentas acima!',
+	'magcloud-special-collection-review-list-tips' => '<big>Conselhos para criar uma revista excelente</big>
+
+# Tente escolher artigos que sigam um mesmo tema, como vilões de histórias em quadrinhos ou espadas únicas.
+# Sua revista final deve ter menos de 100 páginas, que é aproximadamente 8 a 10 artigos, dependendo do tipo de artigos que você selecionou.
+
+Se você precisar de um pouco de inspiração, olhe os exemplos apresentados abaixo!',
+	'magcloud-order-your-articles' => 'Ordenar seus artigos',
+	'magcloud-button-design-a-cover' => 'Criar uma capa',
+	'magcloud-design-default-title' => 'Minha revista $1',
+	'magcloud-design-default-subtitle' => 'Subtítulo',
+	'magcloud-design-review-list' => 'Voltar à lista de revisões',
+	'magcloud-design-preview' => 'Previsualizar',
+	'magcloud-design-license-policy' => 'Só carregue uma imagem que você tenha o direito de imprimir e que atenda as políticas desta wiki.',
+	'magcloud-design-image-selected' => '$1 selecionado',
+	'magcloud-preview-done' => 'A sua revista foi gerada.',
+	'magcloud-preview-back-to-cover' => 'Voltar para a criação de capa',
+	'magcloud-preview-save-magazine' => 'Salvar sua revista',
+	'magcloud-preview-publish' => 'Publicar a sua revista',
+	'magcloud-preview-generating-pdf' => 'Criando a sua revista...',
+	'magcloud-publish-status-title' => 'Publicando a sua revista',
+	'magcloud-publish-status' => 'Excelente! Nós enviaremos sua revista.',
+	'magcloud-publish-error' => 'Encontramos um problema enquanto tentávamos enviar a sua revista para o MagCloud - nós registramos o erro para tentar descobrir o que aconteceu. Melhor tentar novamente mais tarde - esperamos ter descoberto o problema até lá. Por favor, aceite nossas desculpas!',
+	'magcloud-publish-done' => '...e nós terminamos! Redirecionando ao MagCloud...',
+	'magcloud-publish-ajax-initialize' => 'Estamos logando no MagCloud...',
+	'magcloud-publish-ajax-login' => '... preparando a publicação...',
+	'magcloud-publish-ajax-publication' => '... gerando a edição...',
+	'magcloud-publish-ajax-issue' => '... quase terminando o carregamento...',
+	'magcloud-publish-ajax-upload' => '... e organizando, tal como nos aconselham nossos pais...',
+	'magcloud-publish-ajax-processing' => '... e agora onde está o grande botão vermelho para PUBLICAR...?',
 );
 
 /** Tarandíne (Tarandíne)

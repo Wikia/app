@@ -15,6 +15,13 @@ $messages['en'] = array(
 	'staffpowers-ipblock-aborted' => 'Blocking Wikia staff is not possible. Please use [[Special:Contact]] to report any issues or problems with our staff.'
 );
 
+/** Message documentation (Message documentation)
+ * @author Lloffiwr
+ */
+$messages['qqq'] = array(
+	'staffpowers-ipblock-aborted' => "Do not translate (but do add additional text if you like) <nowiki>[[Special:Contact</nowiki>'''|optional additional text'''<nowiki>]]</nowiki>.",
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -66,10 +73,11 @@ $messages['ce'] = array(
 );
 
 /** Welsh (Cymraeg)
+ * @author Lloffiwr
  * @author Xxglennxx
  */
 $messages['cy'] = array(
-	'staffpowers-ipblock-aborted' => "Nid oes dim modd rhwystro staff Wikia. Defnyddiwch [[Arbennig:Cysylltu]] i gwyno am unrhyw broblemau gyda'n staff.",
+	'staffpowers-ipblock-aborted' => "Nid oes modd rhwystro staff Wikia rhag gweithredu. [[Special:Contact|Cysylltwch â ni]] i gwyno am unrhyw broblemau gyda'n staff.",
 );
 
 /** German (Deutsch)
@@ -176,6 +184,13 @@ $messages['ja'] = array(
  */
 $messages['lb'] = array(
 	'staffpowers-ipblock-aborted' => 'Et ass net méiglech déi bezuelt Mataarbechter vun der Wikia Equipe ze spären. Benotzt w.e.g. [[Special:Contact]] fir all Froen a Problemer mat eise bezuelte Mataarbechter.',
+);
+
+/** Latvian (Latviešu)
+ * @author Xil
+ */
+$messages['lv'] = array(
+	'staffpowers-ipblock-aborted' => 'Wiki darbinieku bloķēšana nav iespējama. Lūdzu, izmantojiet [[Special:Contact]], lai ziņotu par nesaprašanos ar mūsu darbiniekiem!',
 );
 
 /** Macedonian (Македонски)

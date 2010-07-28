@@ -243,6 +243,17 @@ $messages['pt'] = array(
 	'research_this' => 'Investigar isto',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
+ */
+$messages['pt-br'] = array(
+	'search_wikipedia' => 'Pesquisar na Wikipédia',
+	'previous' => 'anterior',
+	'research_no_results' => 'Não foi encontrada nenhuma página. Tente outra pesquisa, por favor.',
+	'research_wikipedia_title' => 'Pesquise sua resposta na Wikipédia',
+	'research_this' => 'Pesquisar isto',
+);
+
 /** Tarandíne (Tarandíne)
  * @author Joetaras
  */
@@ -283,5 +294,16 @@ $messages['tl'] = array(
 	'research_no_results' => 'Walang natagpuang pahina.  Paki maghanap uli.',
 	'research_wikipedia_title' => 'Saliksikin ang sagot mo sa Wikipedia',
 	'research_this' => 'Saliksikin ito',
+);
+
+/** Ukrainian (Українська)
+ * @author Ast
+ */
+$messages['uk'] = array(
+	'search_wikipedia' => 'Пошук у Вікіпедії',
+	'previous' => 'попередня',
+	'research_no_results' => 'Сторінок не знайдено. Будь ласка, повторіть пошук.',
+	'research_wikipedia_title' => 'Дослідження вашої відповіді у Вікіпедії',
+	'research_this' => 'Дослідити',
 );
 

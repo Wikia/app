@@ -11,13 +11,6 @@ $messages['en'] = array(
 	 'wikifactoryreporter' => 'WikiFactory Reporter',
 );
 
-/** Bahasa Banjar (Bahasa Banjar)
- * @author Ezagren
- */
-$messages['bjn'] = array(
-	'wikifactoryreporter' => 'WikiFactory Reporter',
-);
-
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -44,6 +37,13 @@ $messages['arn'] = array(
  */
 $messages['be-tarask'] = array(
 	'wikifactoryreporter' => 'Справаздачы WikiFactory',
+);
+
+/** Bahasa Banjar (Bahasa Banjar)
+ * @author Ezagren
+ */
+$messages['bjn'] = array(
+	'wikifactoryreporter' => 'WikiFactory Reporter',
 );
 
 /** Breton (Brezhoneg)
@@ -152,6 +152,13 @@ $messages['hu'] = array(
 	'wikifactoryreporter' => 'Wikigyár tudósító',
 );
 
+/** Armenian (Հայերեն)
+ * @author Pandukht
+ */
+$messages['hy'] = array(
+	'wikifactoryreporter' => 'WikiFactory ռեպորտյոր',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -187,6 +194,13 @@ $messages['ja'] = array(
 	'wikifactoryreporter' => 'ウィキファクトリー・レポーター',
 );
 
+/** Georgian (ქართული)
+ * @author David1010
+ */
+$messages['ka'] = array(
+	'wikifactoryreporter' => 'WikiFactory-ს რეპორტიორი',
+);
+
 /** Kannada (ಕನ್ನಡ)
  * @author Nayvik
  */
@@ -194,11 +208,25 @@ $messages['kn'] = array(
 	'wikifactoryreporter' => 'ವಿಕಿಫ಼್ಯಾಕ್ಟರಿ ವರದಿಗಾರ',
 );
 
+/** Karachay-Balkar (Къарачай-Малкъар)
+ * @author Къарачайлы
+ */
+$messages['krc'] = array(
+	'wikifactoryreporter' => 'WikiFactory репортер',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
 $messages['lb'] = array(
 	'wikifactoryreporter' => 'WikiFactory-Reporter',
+);
+
+/** Limburgish (Limburgs)
+ * @author Ooswesthoesbes
+ */
+$messages['li'] = array(
+	'wikifactoryreporter' => 'Wikifactoryrapportage',
 );
 
 /** Macedonian (Македонски)
@@ -262,6 +290,13 @@ $messages['pt'] = array(
  */
 $messages['pt-br'] = array(
 	'wikifactoryreporter' => 'Relator do WikiFactory',
+);
+
+/** Romanian (Română)
+ * @author Minisarm
+ */
+$messages['ro'] = array(
+	'wikifactoryreporter' => 'Raportor WikiFactory',
 );
 
 /** Tarandíne (Tarandíne)

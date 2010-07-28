@@ -542,6 +542,11 @@ $messages['de-formal'] = array(
 	'multiwikienterpagename' => 'Geben Sie einen Seitennamen an:',
 );
 
+/** Ewe (Eʋegbe) */
+$messages['ee'] = array(
+	'multidelete_button' => 'Tutui',
+);
+
 /** Spanish (Español)
  * @author Bola
  * @author Crazymadlover
@@ -1002,7 +1007,7 @@ $messages['ia'] = array(
 	'multiwikiedit_select_yourself' => 'tu',
 	'multiwikiedit_no_page' => 'Per favor, o specifica al minus un pagina a modificar, o selige un file continente un lista de paginas.',
 	'multiwikiedit_split_results' => "Le numero de articulos es troppo grande pro esser tractate in un singule carga. Illo ha essite separate in '''$1''' cargas, con un maximo de '''$2''' articulos per carga.",
-	'multiwikiedit_max_display_size' => "Le gestor de modification multi-wiki ha actualmente un numero maximal de articulos in le phase de confirmation. Tu requesta ha essite limitate a '''$1''' articulos. Selige le articulos e salveguarda le carga. Postea, tu pote re-executar lo pro tractar tote le articulos restante.",
+	'multiwikiedit_max_display_size' => "Le gestor de modification multi-wiki ha actualmente un numero maxime de articulos in le phase de confirmation. Tu requesta ha essite limitate a '''$1''' articulos. Selige le articulos e salveguarda le carga. Postea, tu pote re-executar lo pro tractar tote le articulos restante.",
 	'multiwikiedit_add_text' => 'Specifica primo le texto del articulo',
 	'multiwikiedit_supply_wikis' => 'Per favor forni le lista de wikis seligite',
 	'multiwikiedit_tasks_list' => 'Lista de cargas a executar',
@@ -1042,7 +1047,7 @@ $messages['ia'] = array(
 	'multidelete_select_script' => 'conto de script designate',
 	'multidelete_no_page' => 'Per favor, o specifica al minus un pagina a deler, o selige un file continente un lista de paginas.',
 	'multidelete_split_results' => "Le numero de articulos es troppo grande pro esser tractate in un singule carga. Illo ha essite separate in '''$1''' cargas, con un maximo de '''$2''' articulos per carga.",
-	'multidelete_max_display_size' => "Le gestor de deletion multiple ha actualmente un numero maximal de articulos in le phase de confirmation. Tu requesta ha essite limitate a '''$1''' articulos. Selige tu articulos e salveguarda le carga. Postea, tu pote re-executar lo pro tractar tote le articulos remanente.",
+	'multidelete_max_display_size' => "Le gestor de deletion multiple ha actualmente un numero maxime de articulos in le phase de confirmation. Tu requesta ha essite limitate a '''$1''' articulos. Selige tu articulos e salveguarda le carga. Postea, tu pote re-executar lo pro tractar tote le articulos remanente.",
 	'multidelete_brazilian_portuguese_wikis' => 'tote le wikis in portugese brasilian',
 	'multidelete_hebrew_wikis' => 'tote le wikis in hebreo',
 	'multidelete_chinese_wikis' => 'tote le wikis in chinese',

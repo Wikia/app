@@ -117,6 +117,11 @@ $messages['de'] = array(
 	'whereisextension-name-contains' => 'Variablenname enthält',
 );
 
+/** Ewe (Eʋegbe) */
+$messages['ee'] = array(
+	'whereisextension-submit' => 'Dii',
+);
+
 /** Spanish (Español)
  * @author Crazymadlover
  * @author Pertile
@@ -248,6 +253,7 @@ $messages['kn'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'whereisextension-submit' => 'Sichen',
 	'whereisextension-filter' => 'Filter',
 	'whereisextension-all-groups' => 'All Gruppen',
 );
@@ -302,6 +308,13 @@ $messages['oc'] = array(
 	'whereisextension-filter' => 'Filtrar',
 	'whereisextension-all-groups' => 'Totes los gropes',
 	'whereisextension-name-contains' => 'lo nom de la variabla conten',
+);
+
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'whereisextension-submit' => 'Uffgucke',
 );
 
 /** Polish (Polski)

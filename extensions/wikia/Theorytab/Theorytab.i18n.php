@@ -146,12 +146,28 @@ $messages['km'] = array(
 	'theorytab-parent-title' => 'អត្ថបទមេ',
 );
 
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'theorytab-title' => 'Tejorih',
+	'theorytab-parent-title' => 'De Sigg drövver',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
 $messages['lb'] = array(
 	'theorytab-title' => 'Theorie',
 	'theorytab-parent-title' => 'Haaptartikel',
+);
+
+/** Latvian (Latviešu)
+ * @author Xil
+ */
+$messages['lv'] = array(
+	'theorytab-title' => 'Teorija',
+	'theorytab-parent-title' => 'Galvenais raksts',
 );
 
 /** Macedonian (Македонски)
@@ -270,5 +286,13 @@ $messages['tl'] = array(
 $messages['tr'] = array(
 	'theorytab-title' => 'Teori',
 	'theorytab-parent-title' => 'Ana madde',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Frankou
+ */
+$messages['zh-hant'] = array(
+	'theorytab-title' => '理論',
+	'theorytab-parent-title' => '家長的文章',
 );
 

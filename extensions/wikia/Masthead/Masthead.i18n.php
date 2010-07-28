@@ -45,6 +45,14 @@ $messages['af'] = array(
 	'masthead-blog-avatar-preferences-title' => 'Avatar',
 );
 
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'blog-avatar-changed-log' => 'أضاف أو غير الصورة الرمزية',
+	'useravatar-log' => 'سجل تغييرات الصور الرمزية',
+);
+
 /** Bulgarian (Български) */
 $messages['bg'] = array(
 	'masthead-blog-avatar-preferences-title' => 'Аватар',
@@ -54,13 +62,31 @@ $messages['bg'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
+	'blog-avatar-removeavatar' => 'Lemel an avatar',
 	'blog-avatar-goto-userpage' => "Mont d'ar bajenn implijer",
 	'blog-avatar-edit' => 'Kemmañ',
 	'blog-avatar-delete' => 'Diverkañ',
 	'masthead-blog-avatar-preferences-title' => 'Avatar',
 	'blog-avatar-choose-avatar' => 'Dibab un avatar nevez',
 	'blog-avatar-upload-avatar' => 'Enporzhiañ un avatar nevez',
+	'blog-avatar-nouser' => 'Dibosupl eo kavout an implijer !',
+	'blog-avatar-cannot-remove' => "Dibosupl eo lemel an avatar d'an implijer diuzet !",
+	'blog-avatar-remove-info' => 'Ar bajenn-mañ a servij da lemel avatar un implijer.
+Skrivit an anv implijer resis er voest graet evit-se ha klikit war ar bouton "{{int:blog-avatar-getuser}}".<br />
+Diwallit, hollek eo an avataroù. Lemel avatar un implijer en deus un efed war Wikia a-bezh.',
 	'blog-avatar-getuser' => 'Klask',
+	'blog-avatar-remove-confirm' => "Ha sur oc'h hoc'h eus c'hoant lemel an avatar ?",
+	'blog-avatar-error-nofile' => 'Dibabit ur restr war ho pladenn galet.',
+	'blog-avatar-error-size' => "Re vras eo ar restr enporzhiet. Ar ment aotreet a zo eus $1 Ko d'ar muiañ.",
+	'blog-avatar-error-cantwrite' => 'Dibosupl eo enrollañ ar restr.',
+	'blog-avatar-changed-log' => 'en deus ouzhpennet pe kemmet e avatar',
+	'blog-avatar-removed-log' => 'En deus dilamet avatarioù $1',
+	'blog-avatar-save-info' => 'Ma fell deoc\'h enrollañ an avatar <a href="#prefcontrol">kit e traoñ ar bajenn-mañ</a> ha klikit war ar bouton "Enrollañ ar penndibaboù".',
+	'masthead-edits-since' => 'kemmoù abaoe an',
+	'useravatar-log' => 'Marilh avatarioù an implijerien',
+	'blog-avatar-alt' => 'Marilh ouzhpennadennoù pe dilammadennoù avataroù an implijerien',
+	'removeuseravatar' => 'Lemel avatar an implijer',
+	'right-removeavatar' => 'Lemel avatarioù implijerien',
 );
 
 /** German (Deutsch)
@@ -168,6 +194,7 @@ Muista, että avatarit ovat jaettuja – poistamalla käyttäjän avatarin poist
 
 /** French (Français)
  * @author Peter17
+ * @author Y-M D
  */
 $messages['fr'] = array(
 	'blog-avatar-removeavatar' => "Supprimer l'avatar",
@@ -184,7 +211,7 @@ Attention, les avatars sont globaux. Retirer l'avatar d'un utilisateur prend eff
 	'blog-avatar-getuser' => 'Rechercher',
 	'blog-avatar-remove-confirm' => "Êtes-vous sûr de vouloir retirer l'avatar ?",
 	'blog-avatar-error-nofile' => 'Choisisez un fichier sur votre disque dur.',
-	'blog-avatar-error-size' => 'Le fichier téléversé est trop gros. La taille permise est $1 Kio maximum.',
+	'blog-avatar-error-size' => 'Le fichier téléversé est trop gros. La taille permise est $1 Ko maximum.',
 	'blog-avatar-error-cantwrite' => "Une erreur s'est produite; impossible d'enregistrer le fichier.",
 	'blog-avatar-changed-log' => 'a modifié son avatar',
 	'blog-avatar-removed-log' => 'a retiré l’avatar de $1',
@@ -225,6 +252,27 @@ Lembre que os avatares son globais, é dicir, a eliminación do avatar dun usuar
 	'blog-avatar-alt' => 'Rexistros das adicións e eliminacións de avatares de usuario',
 	'removeuseravatar' => 'Eliminar o avatar do usuario',
 	'right-removeavatar' => 'Eliminar avatares de usuario',
+);
+
+/** Armenian (Հայերեն)
+ * @author Pandukht
+ */
+$messages['hy'] = array(
+	'blog-avatar-removeavatar' => 'Ջմջել ավատարը',
+	'blog-avatar-goto-userpage' => 'Անցնել մասնակցի էջին',
+	'blog-avatar-edit' => 'Փոխել',
+	'blog-avatar-delete' => 'Ջնջել',
+	'masthead-blog-avatar-preferences-title' => 'Ավատար',
+	'blog-avatar-choose-avatar' => 'Ընտրեք նոր ավատար',
+	'blog-avatar-upload-avatar' => 'Նոր ավատարի բեռնում',
+	'blog-avatar-nouser' => 'Չի ստացվում գտնել այդ մասնակցին:',
+	'blog-avatar-cannot-remove' => 'Չի ստացվում ջնջել ավատարները ընտրված մասնակցի համար:',
+	'blog-avatar-getuser' => 'Որոնում',
+	'blog-avatar-error-nofile' => 'Խնդրում ենք, նշեք ֆայլը սկավառակի վրա',
+	'blog-avatar-error-cantwrite' => 'Չի ստացվում հիշել ֆայլը',
+	'blog-avatar-changed-log' => 'ավելացրել է կամ փոխել է ավատարը',
+	'removeuseravatar' => 'Մասնակիցների ավատարների ջնջում',
+	'right-removeavatar' => 'մասնակիցների ավատարների ջնջում',
 );
 
 /** Interlingua (Interlingua)
@@ -495,10 +543,16 @@ Lembre-se, por favor, que os avatares são globais - removendo-o aqui remove-o d
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
  * @author Jesielt
  */
 $messages['pt-br'] = array(
+	'blog-avatar-removeavatar' => 'Remover avatar',
+	'blog-avatar-goto-userpage' => 'Ir para a página de usuário',
+	'blog-avatar-edit' => 'Alterar',
+	'blog-avatar-delete' => 'Apagar',
 	'masthead-blog-avatar-preferences-title' => 'Avatar',
+	'blog-avatar-choose-avatar' => 'Escolher um novo avatar',
 	'masthead-edits-since' => 'edições desde',
 );
 
@@ -553,5 +607,12 @@ $messages['te'] = array(
 /** Tagalog (Tagalog) */
 $messages['tl'] = array(
 	'masthead-blog-avatar-preferences-title' => 'Huwaran',
+);
+
+/** Ukrainian (Українська)
+ * @author Тест
+ */
+$messages['uk'] = array(
+	'masthead-edits-since' => 'редагувань з',
 );
 

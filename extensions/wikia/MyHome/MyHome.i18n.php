@@ -245,8 +245,8 @@ $messages['br'] = array(
 	'myhome-activity-feed-empty' => "Emañ ar wiki-mañ o gortoz e kemerfer perzh ennañ.
 Klikit war '''[[Special:CreatePage|Pajenn nevez]]''' evit kregiñ da skrivañ !",
 	'myhome-watchlist-feed' => 'Roll evezhiañ',
-	'myhome-watchlist-feed-empty' => "Gallout a rit ouzhpennañ pajennoù d'ho roll heuliañ en ur glikañ war al liamm \"{{int:watch}}\" zo er varrenn e krec'h ar bajenn.
-Gallout a rit implijout ho roll heuliañ evit mirout ur roud eus eus ar cheñchamantoù diwezhañ ho peus graet er pajennoù a zedenn ac'hanoc'h.",
+	'myhome-watchlist-feed-empty' => "Gallout a rit ouzhpennañ pajennoù d'ho roll evezhiañ en ur glikañ war al liamm \"{{int:watch}}\" zo er varrenn e krec'h ar bajenn.
+Gallout a rit implijout ho roll evezhiañ evit mirout ur roud eus eus ar cheñchamantoù diwezhañ ho peus graet er pajennoù a zedenn ac'hanoc'h.",
 	'myhome-user-contributions-feed' => 'Degasadennoù',
 	'myhome-hot-spots-feed' => 'Pajennoù ar muiañ oberiant',
 	'myhome-hot-spots-feed-empty' => "Emañ ar wiki-mañ o gortoz e kemerfer perzh ennañ.
@@ -262,6 +262,7 @@ Klikit war '''[[Special:CreatePage|Pajenn nevez]]''' evit kregiñ da skrivañ !"
 	'myhome-feed-delete' => 'dilamet',
 	'myhome-feed-image' => 'skeudenn bet ouzhpennet',
 	'myhome-feed-video' => 'video bet ouzhpennet',
+	'myhome-feed-categorization' => 'Rummata',
 	'myhome-feed-created-by' => 'krouet gant $1',
 	'myhome-feed-added-by' => 'ouzhpennet gant $1',
 	'myhome-feed-edited-by' => 'embannet gant $1',
@@ -450,6 +451,7 @@ Wenn Sie der Gründer oder ein Admin dieses Wikis sind, können Sie diese Nachri
 );
 
 /** Greek (Ελληνικά)
+ * @author Crazymadlover
  * @author Περίεργος
  */
 $messages['el'] = array(
@@ -470,6 +472,7 @@ $messages['el'] = array(
 	'myhome-feed-delete' => 'διαγραφή',
 	'myhome-feed-image' => 'προστέθηκε εικόνα',
 	'myhome-feed-video' => 'προστέθηκε βίντεο',
+	'myhome-feed-categorization' => 'κατηγοριοποίηση',
 	'myhome-feed-created-by' => 'δημιουργήθηκε από $1',
 	'myhome-feed-added-by' => 'προστέθηκε από $1',
 	'myhome-feed-edited-by' => 'επεξεργάστηκε από $1',
@@ -485,6 +488,7 @@ $messages['el'] = array(
 	'myhome-feed-section-edit-details' => 'Επεξεργάστηκε το τμήμα',
 	'myhome-feed-new-blog-post-details' => 'Νέο μπλογκ',
 	'myhome-feed-new-blog-comment-details' => 'Σχόλιο',
+	'myhome-feed-new-article-comment-details' => 'Σχόλιο',
 	'myhome-feed-move-details' => 'Μετονομάστηκε',
 	'myhome-feed-redirect-details' => 'Ανακατεύθυνση',
 	'myhome-user-contributions-empty' => 'Μπορείς να συμετάσχεις σε αυτό το wiki πατώντας στο κουμπί "επεξεργασία" σε οποιοδήποτε άρθρο, προσθέτωντας ό,τι ξέρεις. Όλοι μπορούν να κάνουν αλλαγές, να προσθέσουν πληροφορίες ή να διορθώσουν λάθη. Το wiki χτίζεται από την κοινώτητα και γίνεσαι μέλος της μόλις πατήσεις το κουμπί "επεξεργασία".',
@@ -969,7 +973,7 @@ $messages['ia'] = array(
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Categoria|Categorias}} addite',
 	'myhome-user-contributions-empty' => 'Tu pote participar in iste wiki per cliccar super "{{int:editthispage}}" in omne pagina de articulo, e adder lo que tu sape. Tote le mundo pote facer modificationes, adder informationes o corriger errores. Le wiki es construite per le communitate, e un vice que tu clicca super le button de modification, tu face parte del communitate. Proba lo!',
 	'myhome-hot-spots-number-of-editors' => 'contributores',
-	'myhome-log-in' => "<center>Tu pagina initial es solmente disponibile si tu es identificate.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Aperi un session pro vider iste pagina!]'''</big></center>",
+	'myhome-log-in' => "<center>Tu pagina initial es solmente disponibile si tu es authenticate.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Aperi un session pro vider iste pagina!]'''</big></center>",
 	'myhome-switch-to-monaco' => "Le pagina initial es solmente disponibile si tu usa le apparentia Monaco. Si tu vole vider tu pagina initial, visita le '''[[Special:Preferences|preferentias]]''' pro cambiar de apparentia.",
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'Taverna del communitate',
@@ -1023,6 +1027,7 @@ Klik '''[[Special:CreatePage|Halaman Baru]]''' untuk mulai menulis!",
 	'myhome-feed-delete' => 'penghapusan',
 	'myhome-feed-image' => 'menambahkan gambar',
 	'myhome-feed-video' => 'menambahkan video',
+	'myhome-feed-categorization' => 'kategorisasi',
 	'myhome-feed-created-by' => 'dibuat oleh $1',
 	'myhome-feed-added-by' => 'ditambah oleh $1',
 	'myhome-feed-edited-by' => 'disunting oleh $1',
@@ -1073,6 +1078,14 @@ Sebagai contoh, Anda bisa:
 	'myhome-default-view-success' => 'Baiklah, sekarang ini baku Anda',
 	'tooltip-pt-myhome' => 'Tuju ke Halaman Depan Saya',
 	'activityfeed' => 'Asupan kegiatan',
+);
+
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'myhome-feed-categorization' => 'Ndósé ébé ihe nọr',
+	'myhome-feed-created-by' => 'onyé kéré ya bu $1',
 );
 
 /** Italian (Italiano)
@@ -1150,7 +1163,7 @@ $messages['ja'] = array(
 	'myhome-activity-feed' => 'アクティビティフィード',
 	'myhome-activity-feed-empty' => "このウィキには編集者が必要です。あなたも'''[[Special:CreatePage|編集に参加]]'''してみませんか？",
 	'myhome-watchlist-feed' => 'ウォッチリスト',
-	'myhome-watchlist-feed-empty' => '各ページのトップにある"ウォッチリストに追加"のリンクをクリックすることで、そのページをウォッチリストに追加できます。ウォッチリストでは、気になるページに対して行われる最新の変更を追跡できます。',
+	'myhome-watchlist-feed-empty' => '各ページのトップにある"{{int:watch}}"のリンクをクリックすることで、そのページをウォッチリストに追加できます。ウォッチリストでは、気になるページに対して行われる最新の変更を追跡できます。',
 	'myhome-user-contributions-feed' => '投稿記録',
 	'myhome-hot-spots-feed' => 'ホットスポット',
 	'myhome-hot-spots-feed-empty' => "このウィキはあなたの参加者を待っています。'''[[Special:CreatePage|編集に参加]]'''してみませんか？",
@@ -1165,6 +1178,7 @@ $messages['ja'] = array(
 	'myhome-feed-delete' => '削除',
 	'myhome-feed-image' => '画像の追加',
 	'myhome-feed-video' => '動画の追加',
+	'myhome-feed-categorization' => 'カテゴリ分け',
 	'myhome-feed-created-by' => '$1 による作成',
 	'myhome-feed-added-by' => '$1 による追加',
 	'myhome-feed-edited-by' => '$1 による編集',
@@ -1187,7 +1201,7 @@ $messages['ja'] = array(
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|画像の追加}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|動画の追加}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|カテゴリの追加}}',
-	'myhome-user-contributions-empty' => '各ページにある"編集"をクリックして記述を追加することで、あなたもこのウィキに参加できます。だれでも、記述の変更・情報の追加や誤りの修正ができます。ウィキはコミュニティによって作られ、編集ボタンをクリックするとあなたもその一員となります。',
+	'myhome-user-contributions-empty' => '各ページにある"{{int:editthispage}}"をクリックして記述を追加することで、あなたもこのウィキに参加できます。だれでも、記述の変更・情報の追加や誤りの修正ができます。ウィキはコミュニティによって作られ、編集ボタンをクリックするとあなたもその一員となります。',
 	'myhome-hot-spots-number-of-editors' => 'editors',
 	'myhome-log-in' => "<center>My Home を利用するにはログインする必要があります。<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} このページを閲覧するためにログインしてください！]'''</big></center>",
 	'myhome-switch-to-monaco' => 'My Home は Monaco スキンでのみ利用できます。もし My Home を閲覧したいのであれば、[[Special:Preferences|スキンの設定を変更]]してください。',
@@ -1540,7 +1554,7 @@ $messages['pms'] = array(
 	'myhome-activity-feed' => "Fluss dj'atività",
 	'myhome-activity-feed-empty' => "Sta wiki-sì a speta che chiel a-i partìssipa. Ch'a sgnaca ansima a '''[[Special:CreatePage|Pàgina neuva]]''' për ancaminé a scrive!",
 	'myhome-watchlist-feed' => 'Ròba che as ten sot euj',
-	'myhome-watchlist-feed-empty' => "A peul gionté ëd pàgine a lòn ch'a ten sot euj an sgnacand ël colegament \"Ten-e sot euj\" ant la bara an cò dla pàgina. A peul dovré la lista ëd lòn ch'a ten sot euj për ten-e cont ëd j'ùltim cangiament a le pàgine che chiel a veul soagné.",
+	'myhome-watchlist-feed-empty' => "A peul gionté ëd pàgine a lòn ch'a ten sot euj an sgnacand ël colegament \"{{int:watch}}\" ant la bara an cò dla pàgina. A peul dovré la lista ëd lòn ch'a ten sot euj për ten-e cont ëd j'ùltim cangiament a le pàgine che chiel a veul soagné.",
 	'myhome-user-contributions-feed' => 'Contribussion',
 	'myhome-hot-spots-feed' => 'Ròba Càuda',
 	'myhome-hot-spots-feed-empty' => "Sta wiki-sì a speta che chiel a ancamin-a. Ch'a sgnaca dzora a '''[[Special:CreatePage|Pàgina neuva]]''' për ancaminé a scrive!",
@@ -1555,6 +1569,7 @@ $messages['pms'] = array(
 	'myhome-feed-delete' => 'scancelà',
 	'myhome-feed-image' => 'figura giontà',
 	'myhome-feed-video' => 'filmà giontà',
+	'myhome-feed-categorization' => 'categorisassion',
 	'myhome-feed-created-by' => 'creà da $1',
 	'myhome-feed-added-by' => 'giontà da $1',
 	'myhome-feed-edited-by' => 'modificà da $1',
@@ -1577,7 +1592,8 @@ $messages['pms'] = array(
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Fòto giontà|Fòto giontà}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Filmà giontà|Filmà giontà}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Categorìa giontà|Categorìe giontà}}',
-	'myhome-user-contributions-empty' => "A peul anserisse an sta wiki-sì an sgnacand \"modifiché sta pàgina-sì\" su minca pàgina d'artìcol, e giontand lòn ch'a sa. Tuti a peulo fé 'd modìfiche, gionté dj'anformassion o corege dj'eror. La wiki a l'é fàita da la comunità, e na vira ch'a sgnaca ël boton ëd modìfica, chiel a l'é part ëd la comunità. Ch'a fasa la preuva!",
+	'myhome-user-contributions-empty' => "A peul anserisse an sta wiki-sì an sgnacand \"{{int:editthispage}}\" su qualsëssìa pàgina, e giontand lòn ch'a sa. Tuti a peulo fé 'd modìfiche, gionté dj'anformassion o corege dj'eror. 
+La wiki a l'é fàita da la comunità, e na vira ch'a sgnaca ël boton ëd modìfica, chiel a l'é part ëd la comunità. Ch'a fasa la preuva!",
 	'myhome-hot-spots-number-of-editors' => 'editor',
 	'myhome-log-in' => "<center>La funsion Mia Intrada a l'é disponìbil mach s'a l'é intrà ant ël sistema.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Ch'a intra ant ël sistema për vëdde sta pàgina-sì!]'''</big></center>",
 	'myhome-switch-to-monaco' => "La funsion Mia Intrada a l'é mach disponìbil s'a deuvra la pel Monaco. S'a vorèissa vardé Mia Intrada, për piasì ch'a vìsita '''[[Special:Preferences|sò Gust]]''' për cangé soa pel.",
@@ -1648,7 +1664,7 @@ $messages['ps'] = array(
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
-	'myhome' => 'A Minha Casa',
+	'myhome' => 'A minha casa',
 	'myhome-activity-more' => 'ver as mudanças mais recentes',
 	'myhome-activity-feed' => 'Mudanças recentes',
 	'myhome-activity-feed-empty' => "Esta wiki está a aguardar a sua participação.
@@ -1754,6 +1770,7 @@ Use a lista de páginas vigiadas para monitorar alterações das páginas pelas 
 	'myhome-feed-delete' => 'deletado',
 	'myhome-feed-image' => 'imagem adicionada',
 	'myhome-feed-video' => 'vídeo adicionado',
+	'myhome-feed-categorization' => 'categorização',
 	'myhome-feed-created-by' => 'criado por $1',
 	'myhome-feed-added-by' => 'adicionado por $1',
 	'myhome-feed-edited-by' => 'editado por $1',
@@ -1904,6 +1921,24 @@ $messages['rue'] = array(
 	'myhome' => 'Моя домашня сторінка',
 	'myhome-watchlist-feed' => 'Слїдованы сторінкы',
 	'myhome-user-contributions-feed' => 'Мої приспевкы',
+);
+
+/** Sinhala (සිංහල)
+ * @author තඹරු විජේසේකර
+ */
+$messages['si'] = array(
+	'myhome' => 'මගේ නිවස',
+	'myhome-activity-more' => 'අළුත් ම ක්‍රියාවන් නරඹන්න',
+	'myhome-activity-feed' => 'කාර්ය පෝෂණය',
+	'myhome-watchlist-feed' => 'මුර-ලැයිස්තුව',
+	'myhome-user-contributions-feed' => 'දායකත්‍වයන්',
+	'myhome-hot-spots-newest' => 'විකියේ නව පිටු',
+	'tog-myhomedisableredirect' => 'නිවසට ආපසු හරවා යැවීම අහෝසි කරන්න',
+	'myhome-feed-newpage' => 'නව පිටුව',
+	'myhome-feed-edit' => 'සංස්කරණය කරන්න',
+	'myhome-feed-move' => 'පිටුව ගෙනයන ලදී.',
+	'myhome-feed-talkpage' => 'සාකච්ඡා පිටුව',
+	'myhome-feed-delete' => 'මකාදමන ලදී.',
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
@@ -2217,5 +2252,19 @@ $messages['uk'] = array(
 	'myhome-community-corner-edit' => 'редагувати повідомлення',
 	'myhome-hot-spots-definition' => 'Сторінки з найбільшою кількістю редакторів за {{PLURAL:$1|останній день|останні $1 дні|останніх $1 днів}}.',
 	'tooltip-pt-myhome' => 'На мою домашню сторінку',
+);
+
+/** Chinese (中文)
+ * @author Yyaootw
+ */
+$messages['zh'] = array(
+	'myhome' => '我的首页',
+);
+
+/** Chinese (Taiwan) (‪中文(台灣)‬)
+ * @author Yyaootw
+ */
+$messages['zh-tw'] = array(
+	'myhome' => '我的首頁',
 );
 

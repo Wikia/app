@@ -302,6 +302,7 @@ $messages['it'] = array(
 
 /** Japanese (日本語)
  * @author Tommy6
+ * @author 青子守歌
  */
 $messages['ja'] = array(
 	'specialmultiplelookup-desc' => '複数ウィキにおける利用者の情報を提供する',
@@ -313,7 +314,10 @@ $messages['ja'] = array(
 	'multilookupnext' => '次',
 	'multilookupprevious' => '前',
 	'multilookupnbrresult' => '表示件数:',
+	'multilookupinvalidresults' => '不正な結果！',
 	'multilookupnoresultfound' => '1件も見つかりませんでした',
+	'multilookupwiki' => 'ウィキ',
+	'multilookuplink' => '投稿リンク',
 	'multilookupdetails' => '詳細を見る',
 	'multilookuplistwikiainfo' => 'IPアドレスが <b>$1</b> のユーザーが記事の編集を行ったことのあるウィキ',
 	'multilookupinvaliduser' => '<p class="error">IPアドレス"<b>$1</b>"は存在しません。入力したIPアドレスに誤りがないか確認してください。</p>',
@@ -464,6 +468,7 @@ $messages['ps'] = array(
 	'multilookupgo' => 'ورځه',
 	'multilookupnext' => 'راتلونکی',
 	'multilookupprevious' => 'پخوانی',
+	'multilookupnbrresult' => 'د پايلو شمېر:',
 	'multilookupwiki' => 'ويکي',
 );
 
@@ -492,15 +497,28 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
+	'specialmultiplelookup-desc' => 'Permite procurar informação de usuários em várias wikis',
+	'multilookup' => 'Procura múltipla',
+	'multilookupstitle' => 'Procura múltipla',
+	'multilookupselectuser' => 'Procurar contas vindas do mesmo endereço IP em várias wikis',
 	'multilookupgo' => 'Ir',
+	'multilookupnotspecify' => 'Você ainda não especificou um endereço IP.',
+	'multilookupnext' => 'seguinte',
+	'multilookupprevious' => 'anterior',
+	'multilookupnbrresult' => 'Número de resultados:',
 	'multilookupinvalidresults' => 'Resultados inválidos!',
 	'multilookupnoresultfound' => 'Nenhum resultado encontrado!',
 	'multilookupwiki' => 'Wiki',
+	'multilookuplink' => 'Link para contribuições',
 	'multilookupdetails' => 'Ver detalhes',
+	'multilookuplistwikiainfo' => 'Lista das wikis com artigos editados por usuários com o IP: <b>$1</b>',
+	'multilookupinvaliduser' => '<p class="error">O IP "<b>$1</b>" não existe. Verifique se você se enganou ao escrever o endereço.</p>',
 	'multilookuplastedit' => 'Última edição deste IP:',
+	'right-multilookup' => 'Procure informação de usuários em várias wikis',
 );
 
 /** Russian (Русский)

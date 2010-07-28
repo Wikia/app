@@ -110,11 +110,25 @@ $messages['ja'] = array(
 	'tog-disablelinksuggest' => '編集時のリンク補完を使わない',
 );
 
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'tog-disablelinksuggest' => 'Donn kein Vörschlääsch för Lenks aanzeije',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
 $messages['lb'] = array(
 	'tog-disablelinksuggest' => 'Déi proposéiert Linken net weisen',
+);
+
+/** Latvian (Latviešu)
+ * @author Xil
+ */
+$messages['lv'] = array(
+	'tog-disablelinksuggest' => 'Neradīt saišu ieteikumus',
 );
 
 /** Macedonian (Македонски)
@@ -225,5 +239,19 @@ $messages['sv'] = array(
  */
 $messages['tl'] = array(
 	'tog-disablelinksuggest' => 'Huwag ipakita ang mungkahing kawing',
+);
+
+/** Turkish (Türkçe)
+ * @author Manco Capac
+ */
+$messages['tr'] = array(
+	'tog-disablelinksuggest' => 'Bağlantı önermesini gösterme',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Frankou
+ */
+$messages['zh-hant'] = array(
+	'tog-disablelinksuggest' => '不顯示鏈接建議',
 );
 

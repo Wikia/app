@@ -199,6 +199,13 @@ $messages['an'] = array(
 	'swm-no' => 'No',
 );
 
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'swm-list-table-lang' => 'اللغات',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  * @author Jim-by
@@ -426,6 +433,11 @@ $messages['de-formal'] = array(
 	'swm-msg-remove' => 'Wollen Sie diese Nachricht wirklich entfernen? Dies kann nicht rückgängig gemacht werden!',
 	'swm-error-empty-message' => 'Geben Sie den Inhalt der Nachricht ein.',
 	'swm-error-empty-group' => 'Geben Sie den Namen der Gruppe ein.',
+);
+
+/** Ewe (Eʋegbe) */
+$messages['ee'] = array(
+	'swm-label-edit' => 'Trɔ asi le eŋu',
 );
 
 /** Spanish (Español)
@@ -949,17 +961,28 @@ $messages['kn'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'swm-label-edit' => 'Änneren',
+	'swm-label-remove' => 'Ewechhuelen',
+	'swm-label-list' => 'Lëscht',
+	'swm-label-recipient-wikis' => 'Wikien:',
 	'swm-label-recipient-users' => 'Benotzer',
 	'swm-label-mode-wikis-all' => 'All Wikien',
 	'swm-label-mode-users-all' => 'All Benotzer',
 	'swm-label-mode-users-active' => 'Aktiv Benotzer',
+	'swm-label-mode-users-user' => 'Erausgesichte Benotzer',
+	'swm-label-content' => 'Inhalt',
+	'swm-label-comment' => 'Bemierkung',
 	'swm-label-language' => 'Sprooch',
 	'swm-button-save' => '[ Späicheren ]',
 	'swm-button-new' => '[ Nei ]',
+	'swm-days' => 'ni,Stonn,Stonnen,Dag,Deeg',
+	'swm-list-table-group' => 'Grupp',
 	'swm-list-table-lang' => 'Sproochen',
 	'swm-yes' => 'Jo',
 	'swm-no' => 'Neen',
 	'swm-error-no-such-wiki' => 'Et gëtt dës Wiki net!',
+	'swm-error-no-such-user' => 'De spezifizéierte Benotzer gëtt et net.',
+	'swm-error-empty-group' => 'Gitt den Numm vum Grupp an.',
 	'swm-lang-other' => 'all weider Sproochen',
 );
 
@@ -1260,9 +1283,11 @@ $messages['ps'] = array(
 	'swm-label-recipient-wikis' => 'ويکي ګانې',
 	'swm-label-recipient-users' => 'کارنان',
 	'swm-label-mode-wikis-all' => 'ټولې ويکي ګانې',
+	'swm-label-mode-wikis-wiki' => 'ټاکلې ويکي',
 	'swm-label-mode-users-all' => 'ټول کارنان',
 	'swm-label-mode-users-active' => 'فعاله کارنان',
 	'swm-label-mode-users-user' => 'ټاکلی کارن',
+	'swm-label-comment' => 'تبصره',
 	'swm-label-language' => 'ژبه',
 	'swm-button-preview' => '[ مخليدنه]',
 	'swm-button-send' => '[ لېږل]',
@@ -1349,11 +1374,12 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
  * @author Jesielt
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
-	'swm-label-preview' => 'Prever',
+	'swm-label-preview' => 'Previsualizar',
 	'swm-label-edit' => 'Editar',
 	'swm-label-remove' => 'Remover',
 	'swm-label-recipient-users' => 'Usuários',

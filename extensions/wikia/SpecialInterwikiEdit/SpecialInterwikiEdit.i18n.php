@@ -139,6 +139,18 @@ $messages['hu'] = array(
 	'iwedit-success' => '<p>A hivatkozás létrehozása sikerült.</p>',
 );
 
+/** Armenian (Հայերեն)
+ * @author Pandukht
+ */
+$messages['hy'] = array(
+	'iwedit-title' => 'Ինտերվիքիի խմբագիր',
+	'iwedit-language-interwikis' => 'միայն լեզվային ինտերվիքիներ',
+	'iwedit-all-interwikis' => 'բոլոր ինտերվիքիները',
+	'iwedit-update' => 'Թարմացնել',
+	'iwedit-error' => '<p>Սխալ է տեղի ունեցել:</p>',
+	'iwedit-success' => '<p>Հղումը հաջողությամբ ստեղծված է</p>',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -274,6 +286,13 @@ $messages['pms'] = array(
 	'iwedit-success' => '<p>Creassion dël colegament andàit bin.</p>',
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'iwedit-update' => 'اوسمهالول',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  */
@@ -287,12 +306,16 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
+	'iwedit-title' => 'Editor de Interwikis',
+	'iwedit-language-interwikis' => 'só interwikis de língua',
 	'iwedit-all-interwikis' => 'todos os interwikis',
 	'iwedit-update' => 'Atualizar',
 	'iwedit-error' => '<p>Ocorreu um erro.</p>',
+	'iwedit-success' => '<p>Criação de link com sucesso.</p>',
 );
 
 /** Russian (Русский)

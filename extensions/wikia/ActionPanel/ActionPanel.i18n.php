@@ -120,6 +120,15 @@ $messages['es'] = array(
 	'actionpanel-desc' => 'Una ventana emergente que te permite categorizar, renombrar y editar páginas.',
 );
 
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'action_panel_edit_title' => 'Erantzuna',
+	'action_panel_categorize' => 'Kategorizatu',
+	'action_panel_categories_summary' => 'Kategoriak gehitu',
+);
+
 /** Finnish (Suomi)
  * @author Crt
  * @author Ilkea

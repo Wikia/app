@@ -785,10 +785,12 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
  * @author Jesielt
  */
 $messages['pt-br'] = array(
 	'editaccount' => 'Editar conta',
+	'editaccount-title' => 'Special:EditAccount',
 	'editaccount-frame-manage' => 'Editar uma conta',
 	'editaccount-frame-usage' => 'Nota',
 	'editaccount-usage' => 'Os dados de usuário estão em caches separados para cada wiki. Quando você redefine uma senha ou email, o cache será modificado apenas para essa wiki. Por favor, direcione o usuário de modo a realizar login nessa wiki com a nova senha, para evitar problemas de cache.',
@@ -807,6 +809,7 @@ $messages['pt-br'] = array(
 	'editaccount-warning-close' => '<b>Atenção!</b> Você está prestes a desativar permanentemente a conta de usuário <b>$1</b>. Essa ação não poderá ser revertida. Estando ciente disto, você tem certeza de que é isso que deseja fazer?',
 	'editaccount-status' => 'Mensagem de status',
 	'editaccount-success-email' => 'Email alterado com sucesso para a conta de $1 para $2.',
+	'editaccount-success-email-blank' => 'Removeu com sucesso o e-mail da conta $1.',
 	'editaccount-success-pass' => 'Senha alterada com sucesso para a conta $1.',
 	'editaccount-success-realname' => 'Nome real alterado com sucesso para a conta $1.',
 	'editaccount-success-close' => 'Conta $1 desabilitada com sucesso.',
@@ -980,5 +983,12 @@ $messages['tl'] = array(
  */
 $messages['uk'] = array(
 	'editaccount-log' => 'Журнал облікових записів',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Minh Nguyen
+ */
+$messages['vi'] = array(
+	'editaccount' => 'Sửa đổi tài khoản',
 );
 
