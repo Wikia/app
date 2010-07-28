@@ -259,6 +259,7 @@ class SpecialAdminAds extends SpecialPage {
 					$ad->LoadFromDB($adID);
 					if($wgRequest->getText('mc_currency') == 'USD' && $amt == $ad->ad_price){
 						$ad->last_pay_date = date('Y-m-d');
+						$ad->user_email = $email;
 						$ad->Save();
 					}else{
 						mail($this->emergencyEmail, "Invalid Payment Amount or Currency", "AD ID: " . $ad->ad_id . "\n\n" . print_r($_POST,1) . "\n\n" . $req);
