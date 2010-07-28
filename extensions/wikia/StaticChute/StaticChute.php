@@ -15,7 +15,7 @@ class StaticChute {
 	public $cdnStylePath = "http://images1.wikia.nocookie.net/__cb21711/common"; // NOTE: ALSO CHANGE VALUE IN /wikia-conf/CommonSettings.php!
 
 	// RT #23935 - one value to purge'em all
-	const cacheBuster = '000';
+	const cacheBuster = '201007.5';
 
 	public $config = array();
 
