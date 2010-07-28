@@ -91,8 +91,11 @@ class ApiLogin extends ApiBase {
 				break;
 			
 			case LoginForm::NEED_TOKEN:
+				global $wgCookiePrefix;
 				$result['result'] = 'NeedToken';
 				$result['token'] = $loginForm->getLoginToken();
+				$result['cookieprefix'] = $wgCookiePrefix;
+				$result['sessionid'] = session_id();
 				break;
 			
 			case LoginForm::WRONG_TOKEN:
@@ -174,6 +177,6 @@ class ApiLogin extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiLogin.php 64680 2010-04-07 00:13:46Z tstarling $';
+		return __CLASS__ . ': $Id: ApiLogin.php 69990 2010-07-27 08:44:08Z tstarling $';
 	}
 }

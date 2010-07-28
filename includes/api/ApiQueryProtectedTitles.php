@@ -118,6 +118,10 @@ class ApiQueryProtectedTitles extends ApiQueryGeneratorBase {
 			$resultPageSet->populateFromTitles($titles);
 	}
 
+	public function getCacheMode( $params ) {
+		return 'public';
+	}
+
 	public function getAllowedParams() {
 		global $wgRestrictionLevels;
 		return array (
@@ -186,6 +190,6 @@ class ApiQueryProtectedTitles extends ApiQueryGeneratorBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryProtectedTitles.php 47235 2009-02-13 21:53:08Z catrope $';
+		return __CLASS__ . ': $Id: ApiQueryProtectedTitles.php 69986 2010-07-27 03:57:39Z tstarling $';
 	}
 }

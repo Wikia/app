@@ -358,6 +358,20 @@ class ApiQueryRecentChanges extends ApiQueryBase {
 			}
 	}
 
+	public function getCacheMode( $params ) {
+		if ( isset( $params['show'] ) ) {
+			foreach ( $params['show'] as $show ) {
+				if ( $show === 'patrolled' || $show === '!patrolled' ) {
+					return 'private';
+				}
+			}
+		}
+		if ( isset( $params['token'] ) ) {
+			return 'private';
+		}
+		return 'public';
+	}
+
 	public function getAllowedParams() {
 		return array (
 			'start' => array (
@@ -459,6 +473,6 @@ class ApiQueryRecentChanges extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryRecentChanges.php 50094 2009-05-01 06:24:09Z tstarling $';
+		return __CLASS__ . ': $Id: ApiQueryRecentChanges.php 69986 2010-07-27 03:57:39Z tstarling $';
 	}
 }

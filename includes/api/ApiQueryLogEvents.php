@@ -251,6 +251,10 @@ class ApiQueryLogEvents extends ApiQueryBase {
 	}
 
 
+	public function getCacheMode( $params ) {
+		return 'public';
+	}
+
 	public function getAllowedParams() {
 		global $wgLogTypes;
 		return array (
@@ -320,6 +324,6 @@ class ApiQueryLogEvents extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryLogEvents.php 47904 2009-03-01 11:02:49Z catrope $';
+		return __CLASS__ . ': $Id: ApiQueryLogEvents.php 69986 2010-07-27 03:57:39Z tstarling $';
 	}
 }

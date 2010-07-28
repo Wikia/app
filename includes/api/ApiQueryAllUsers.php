@@ -181,6 +181,10 @@ class ApiQueryAllUsers extends ApiQueryBase {
 		$result->setIndexedTagName_internal(array('query', $this->getModuleName()), 'u');
 	}
 
+	public function getCacheMode( $params ) {
+		return 'public';
+	}
+
 	public function getAllowedParams() {
 		return array (
 			'from' => null,
@@ -232,6 +236,6 @@ class ApiQueryAllUsers extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryAllUsers.php 66948 2010-05-27 07:47:39Z tstarling $';
+		return __CLASS__ . ': $Id: ApiQueryAllUsers.php 69986 2010-07-27 03:57:39Z tstarling $';
 	}
 }

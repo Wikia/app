@@ -239,6 +239,10 @@ class ApiQueryImageInfo extends ApiQueryBase {
 		return $retval;
 	}
 
+	public function getCacheMode( $params ) {
+		return 'public';
+	}
+
 	private function getContinueStr($img)
 	{
 		return $img->getOriginalTitle()->getText() .
@@ -315,6 +319,6 @@ class ApiQueryImageInfo extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryImageInfo.php 50097 2009-05-01 06:35:57Z tstarling $';
+		return __CLASS__ . ': $Id: ApiQueryImageInfo.php 69986 2010-07-27 03:57:39Z tstarling $';
 	}
 }

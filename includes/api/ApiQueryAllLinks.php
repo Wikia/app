@@ -43,6 +43,10 @@ class ApiQueryAllLinks extends ApiQueryGeneratorBase {
 		$this->run();
 	}
 
+	public function getCacheMode( $params ) {
+		return 'public';
+	}
+
 	public function executeGenerator($resultPageSet) {
 		$this->run($resultPageSet);
 	}
@@ -196,6 +200,6 @@ class ApiQueryAllLinks extends ApiQueryGeneratorBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryAllLinks.php 47865 2009-02-27 16:03:01Z catrope $';
+		return __CLASS__ . ': $Id: ApiQueryAllLinks.php 69986 2010-07-27 03:57:39Z tstarling $';
 	}
 }

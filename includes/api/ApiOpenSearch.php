@@ -53,6 +53,7 @@ class ApiOpenSearch extends ApiBase {
 		
 		// Open search results may be stored for a very long time
 		$this->getMain()->setCacheMaxAge(1200);
+		$this->getMain()->setCacheMode( 'public' );
 
 		$srchres = PrefixSearch::titleSearch( $search, $limit, $namespaces );
 
@@ -101,6 +102,6 @@ class ApiOpenSearch extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiOpenSearch.php 47188 2009-02-12 17:27:05Z catrope $';
+		return __CLASS__ . ': $Id: ApiOpenSearch.php 69986 2010-07-27 03:57:39Z tstarling $';
 	}
 }

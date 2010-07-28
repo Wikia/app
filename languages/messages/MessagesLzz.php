@@ -7,6 +7,7 @@
  * @author Bombola
  * @author Dato deutschland
  * @author Ibero-kolxi
+ * @author The Evil IP address
  */
 
 $messages = array(
@@ -488,7 +489,7 @@ Am dulyaşen na yeçkindasen zararepe giçkinna do am dulya [[{{MediaWiki:Policy
 Xolosi oras jileri na renanpe oz*iru şeni: $2.',
 'deletedarticle'        => '"[[$1]]" aya nijilu',
 'dellogpage'            => 'Ojiluşi kʼayitʼepe',
-'deletecomment'         => 'Ojiluşi sebebi:',
+'deletecomment'         => 'Muşen:',
 'deleteotherreason'     => 'Majurani/ilave sebebi:',
 'deletereasonotherlist' => 'Majurani sebebepe',
 

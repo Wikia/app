@@ -44,6 +44,10 @@ class ApiQueryAllimages extends ApiQueryGeneratorBase {
 		$this->run();
 	}
 
+	public function getCacheMode( $params ) {
+		return 'public';
+	}
+
 	public function executeGenerator($resultPageSet) {
 		if ($resultPageSet->isResolvingRedirects())
 			$this->dieUsage('Use "gaifilterredir=nonredirects" option instead of "redirects" when using allimages as a generator', 'params');
@@ -205,6 +209,6 @@ class ApiQueryAllimages extends ApiQueryGeneratorBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryAllimages.php 46845 2009-02-05 14:30:59Z catrope $';
+		return __CLASS__ . ': $Id: ApiQueryAllimages.php 69986 2010-07-27 03:57:39Z tstarling $';
 	}
 }

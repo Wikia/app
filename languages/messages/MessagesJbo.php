@@ -4,9 +4,11 @@
  * @ingroup Language
  * @file
  *
+ * @author (vinny)
  * @author Homo logos
  * @author Malafaya
  * @author OldakQuill
+ * @author PierreAbbat
  */
 
 $messages = array(
@@ -21,17 +23,18 @@ $messages = array(
 'thursday'      => 'la vodjed.',
 'friday'        => 'la mudjed.',
 'saturday'      => 'la xadjed.',
-'january'       => "pavma'i",
-'february'      => "relma'i",
-'march'         => "cibma'i",
-'april'         => 'la vomast.',
-'june'          => "xavma'i",
-'july'          => "zelma'i",
-'august'        => "bivma'i",
-'september'     => "sozma'i",
-'october'       => "pavnonma'i",
-'november'      => "pavypavma'i",
-'december'      => "pavrelma'i",
+'january'       => 'ianvari',
+'february'      => 'frebruari',
+'march'         => 'martio',
+'april'         => 'prilio',
+'may_long'      => 'madjio',
+'june'          => 'djunio',
+'july'          => 'djulio',
+'august'        => 'avgusto',
+'september'     => 'septembero',
+'october'       => 'oktobero',
+'november'      => 'novmbero',
+'december'      => 'decmbero',
 'january-gen'   => 'la pamast.',
 'february-gen'  => 'la remast.',
 'march-gen'     => 'la cimast.',
@@ -44,26 +47,33 @@ $messages = array(
 'october-gen'   => 'la daumast.',
 'november-gen'  => 'la feimast.',
 'december-gen'  => 'la gaimast.',
-'mar'           => "cibma'i",
-'apr'           => "vonma'i",
-'may'           => "mumyma'i",
-'jun'           => "xavma'i",
-'jul'           => "zelma'i",
-'aug'           => "bivma'i",
-'sep'           => "sozma'i",
-'oct'           => "pavnonma'i",
-'nov'           => "pavypavma'i",
+'jan'           => 'ian',
+'feb'           => 'fre',
+'mar'           => 'mar',
+'apr'           => 'pri',
+'may'           => 'mad',
+'jun'           => 'jun',
+'jul'           => 'jul',
+'aug'           => 'avg',
+'sep'           => 'sep',
+'oct'           => 'okt',
+'nov'           => 'nov',
+'dec'           => 'dec',
 
 # Categories related messages
-'pagecategories'  => '{{PLURAL:$1|klesi|klesi}}',
-'category_header' => 'fe le kibypapri cu klesi "$1"',
-'subcategories'   => "le'a ti",
+'pagecategories'         => '{{PLURAL:$1|klesi|klesi}}',
+'category_header'        => 'fe le kibypapri cu klesi "$1"',
+'subcategories'          => "le'a ti",
+'category-subcat-count'  => "$2 klesi cu vipsi le vi klesi .i $1 vipkle cu ni'a se jarco",
+'category-article-count' => "$2 kibypapri cu cmima le vi klesi .i $1 kibypapri cu ni'a se jarco",
 
 'qbedit'        => 'stika',
 'qbpageoptions' => 'ti ckupau',
 'mytalk'        => 'casnu mi',
+'navigation'    => 'ckupau',
 
 'errorpagetitle'   => 'fliba',
+'tagline'          => "ra'i {{SITENAME}}",
 'help'             => 'sidju ckupau',
 'search'           => 'sisku',
 'searchbutton'     => 'sisku',
@@ -114,11 +124,18 @@ $messages = array(
 'nstab-mediawiki' => 'notci',
 'nstab-category'  => 'klesi',
 
+# General errors
+'viewsource' => 'catlu le mifra',
+
 # Login and logout pages
-'login'          => "co'a se jaspu",
-'logout'         => "co'u se jaspu",
-'userlogout'     => "co'u se jaspu",
-'gotaccountlink' => "co'a se jaspu",
+'login'                   => "co'a se jaspu",
+'nav-login-createaccount' => 'jaspu nerkla / vreji lo cnino pilno',
+'logout'                  => "co'u se jaspu",
+'userlogout'              => "co'u se jaspu",
+'gotaccountlink'          => "co'a se jaspu",
+
+# Edit page toolbar
+'extlink_sample' => 'http://www.example.com link title',
 
 # Edit pages
 'minoredit'      => "ti nu na'evajni galfi",
@@ -132,12 +149,25 @@ $messages = array(
 'editingcomment' => 'ca galfi le selcmene be zoi $1 (comment)',
 
 # History pages
+'cur'        => 'cab',
 'last'       => "prula'i",
 'page_first' => 'pamoi',
 'page_last'  => 'fanmo',
 
+# Revision deletion
+'rev-delundel' => 'jarco/mipri',
+
+# Diffs
+'lineno'   => 'Linji $1',
+'editundo' => 'fatstika',
+
 # Search results
-'searchresults' => "tu'a le se sisku",
+'searchresults'             => "tu'a le se sisku",
+'searchresults-title'       => 'Sisku pruce for "$1"',
+'search-result-size'        => '$1 .i $2 valsi',
+'search-suggest'            => "xu do sisydji lu $1 li'u",
+'search-mwsuggest-enabled'  => 'kansa stidiiyobunysy',
+'search-mwsuggest-disabled' => 'no stidiiyobunysy',
 
 # Preferences page
 'textboxsize'       => 'ca galfi',
@@ -146,8 +176,15 @@ $messages = array(
 # Recent changes
 'recentchanges'     => 'puzi nunstika',
 'recentchangestext' => 'liste loi nu puzi galfi la .uikis.',
+'rcshowhidebots'    => '$1 lo zmiku',
+'rcshowhideliu'     => '$1 lo samyzva',
 'diff'              => 'te frica',
 'hist'              => 'galfi plivei',
+'hide'              => 'Toljarco',
+'show'              => 'Jarco',
+'minoreditletter'   => 'm',
+'newpageletter'     => 'n',
+'boteditletter'     => 'z',
 
 # Recent changes linked
 'recentchangeslinked' => "srana nunga'i",
@@ -156,6 +193,10 @@ $messages = array(
 'upload'    => 'benji lo datnyvei',
 'uploadbtn' => 'benji lo datnyvei',
 
+# File description page
+'filehist-current'  => 'cabna',
+'filehist-datetime' => 'detytcika',
+
 # Random page
 'randompage' => 'cunso ckupau',
 
@@ -163,7 +204,8 @@ $messages = array(
 'move' => 'stika lo cmene',
 
 # Special:AllPages
-'allarticles' => 'ro notci',
+'allarticles'    => 'ro notci',
+'allpagessubmit' => 'jarco',
 
 # Special:Categories
 'categories' => 'klesi',

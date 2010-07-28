@@ -81,6 +81,10 @@ class ApiQueryExternalLinks extends ApiQueryBase {
 		$db->freeResult($res);
 	}
 
+	public function getCacheMode( $params ) {
+		return 'public';
+	}
+
 	public function getAllowedParams() {
 		return array(
 				'limit' => array(
@@ -113,6 +117,6 @@ class ApiQueryExternalLinks extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryExternalLinks.php 46845 2009-02-05 14:30:59Z catrope $';
+		return __CLASS__ . ': $Id: ApiQueryExternalLinks.php 69986 2010-07-27 03:57:39Z tstarling $';
 	}
 }
