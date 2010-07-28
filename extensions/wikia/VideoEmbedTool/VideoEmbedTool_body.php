@@ -276,7 +276,7 @@ class VideoEmbedTool {
 			if($name == '') {
 				header('X-screen-type: error');
 				// todo messagize
-				return 'You need to specify file name first!';
+				return 'You need to specify file name first!'; // FIXME: missing i18n
 			} else {
 
 				$title = Title::makeTitleSafe(NS_VIDEO, $name);
@@ -517,4 +517,3 @@ class VideoEmbedTool {
 	   	} 
 	} 
 }
-

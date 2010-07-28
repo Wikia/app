@@ -9,7 +9,7 @@ $messages['en'] = array(
 	'wva-name' => 'Enter the name:',
 	'wva-url' => 'Enter the URL:',
 	'wva-add' => 'Add',
-	'wva-title' => 'Quickly Add Video From URL',
+	'wva-title' => 'Quickly add video From URL',
 	'wva-notlogged' => 'You need to log in or register to insert videos.',
 	'wva-notallowed' => 'You cannot insert videos on this wiki.',
 );
