@@ -11,8 +11,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'SpecialSponsor',
 	'author' => 'Aerik Sylvan',
 	//'url' => 'http://www.mediawiki.org/wiki/Extension:MyExtension',
-	'description' => 'Extension to allow users to buy sponsorships',
-	//'descriptionmsg' => 'myextension-desc',
+	'descriptionmsg' => 'sponsorpage-desc',
 	'version' => '0.0.1',
 );
  
