@@ -34,6 +34,8 @@ class SpecialLeaderboard extends SpecialPage {
 			$blackList = null;
 			
 			if($level == BADGE_LEVEL_BRONZE) {
+				if($maxEntries <= 0) break;
+				
 				$limit = $maxEntries;
 				$blackList = array(BADGE_WELCOME);
 			}
