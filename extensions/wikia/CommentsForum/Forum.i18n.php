@@ -19,7 +19,7 @@ $messages['en'] = array(
 	'forum_inthenews' => 'In the news'
 );
 
-$messages['en'] = array(
+$messages['qqq'] = array(
 	'commentsforum-desc' => '{{desc}}',
 	'forum_by_user_category' => 'Parameters:
 * $1 is a page category (for example "Blogs").',
