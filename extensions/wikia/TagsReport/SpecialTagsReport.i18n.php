@@ -312,6 +312,7 @@ $messages['pms'] = array(
  */
 $messages['ps'] = array(
 	'tagsreportgo' => 'ښکاره کول',
+	'tagsreportmainnspace' => 'آرنی',
 );
 
 /** Portuguese (Português)
@@ -332,11 +333,20 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
+	'tagsreport' => 'Relatório de etiquetas',
+	'tagsreporttitle' => 'Relatório de etiquetas',
+	'tagsreportselecttag' => 'Selecionar etiqueta:',
+	'tagsreportgo' => 'Mostrar',
+	'tagsreportnotspecify' => 'Você ainda não selecionou nenhum etiqueta especial',
 	'tagsreportnoresults' => 'Nenhum resultado encontrado',
+	'tagsreportmainnspace' => 'Principal',
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|página|páginas}})',
+	'tagsreportpagesfound' => 'Foram encontradas <strong>$1</strong> páginas que contêm uma etiqueta especial (dpl, youtube, etc)',
+	'tagsreportgenerated' => 'Gerado em $1',
 );
 
 /** Russian (Русский)

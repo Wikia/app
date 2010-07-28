@@ -17,6 +17,15 @@ $messages['af'] = array(
 	'sf-link-tooltip' => 'Deel hierdie artikel met u vriende',
 );
 
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'sf-link' => 'شارك هذه المقالة',
+	'sf-link-popup' => 'شارك هذه المقالة',
+	'sf-link-tooltip' => 'شارك هذه المقالة مع أصدقائك',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  * @author Jim-by

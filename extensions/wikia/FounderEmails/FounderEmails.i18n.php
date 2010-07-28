@@ -363,7 +363,7 @@ Es ist nun eine Weile her seit du mit deinem Wiki auf Wikia angefangen hast - wi
 	'founderemails-answers-email-10-days-passed-body-HTML' => 'Hey $FOUNDERNAME,<br /><br />
 Es ist nun eine Weile her seit du mit deinem Wiki auf Wikia angefangen hast - wir hoffen es läuft gut! Wir möchten zum Abschluss ein paar kleine Leckerbissen mit dir teilen, damit du dich in deinem Wiki noch mehr wie zu Hause fühlen kannst.<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Das Wikia Team</div>',
-	'founderemails-answers-email-page-edited-reg-user-first-edit-subject' => 'Registrierter Benutzer hat dein Wiki zum ersten Mal geändert!',
+	'founderemails-answers-email-page-edited-reg-user-first-edit-subject' => 'Registrierter Benutzer hat deine Seite zum ersten Mal geändert!',
 	'founderemails-answers-email-page-edited-reg-user-first-edit-body' => 'Hey $FOUNDERNAME,
 
 Es sieht so aus als ob der registrierte Benutzer $USERNAME zum ersten Mal dein Wiki verändert hat! Warum besuchst du nicht seine Diskussionsseite $USERTALKPAGEURL um Hallo zu sagen?
@@ -372,7 +372,7 @@ Es sieht so aus als ob der registrierte Benutzer $USERNAME zum ersten Mal dein W
 	'founderemails-answers-email-page-edited-reg-user-first-edit-body-HTML' => 'Hey $FOUNDERNAME,<br /><br />
 Es sieht so aus als ob der registrierte Benutzer $USERNAME zum ersten Mal dein Wiki verändert hat! Warum besuchst du nicht seine <a href="$USERTALKPAGEURL">Diskussionsseite</a> um Hallo zu sagen?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Das Wikia Team</div>',
-	'founderemails-answers-email-page-edited-reg-user-subject' => 'Registrierter Benutzer hat dein QA Wiki verändert!',
+	'founderemails-answers-email-page-edited-reg-user-subject' => 'Registrierter Benutzer hat deine Seite verändert!',
 	'founderemails-answers-email-page-edited-reg-user-body' => 'Hey $FOUNDERNAME,
 
 Es sieht so aus als ob der registrierte Benutzer $USERNAME dein Wiki verändert hat! Warum besuchst du nicht seine Diskussionsseite $USERTALKPAGEURL um Hallo zu sagen?
@@ -381,7 +381,7 @@ Es sieht so aus als ob der registrierte Benutzer $USERNAME dein Wiki verändert 
 	'founderemails-answers-email-page-edited-reg-user-body-HTML' => 'Hey $FOUNDERNAME,<br /><br />
 Es sieht so aus als ob der registrierte Benutzer $USERNAME dein Wiki verändert hat! Warum besuchst du nicht seine <a href="$USERTALKPAGEURL">Diskussionsseite</a> um Hallo zu sagen?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Das Wikia Team</div>',
-	'founderemails-answers-email-page-edited-anon-subject' => 'Jemand hat dein QA Wiki verändert!',
+	'founderemails-answers-email-page-edited-anon-subject' => 'Jemand hat deine Seite verändert!',
 	'founderemails-answers-email-page-edited-anon-body' => 'Hey $FOUNDERNAME,
 
 Es sieht so aus als ob jemand dein Wiki verändert hat! Warum besuchst du nicht mal $MYHOMEURL um zu sehen was sich verändert hat?
@@ -979,7 +979,7 @@ Pare que le usator registrate $USERNAME ha modificate tu wiki! Proque non visita
 	'founderemails-email-page-edited-reg-user-body-HTML' => 'Salute $FOUNDERNAME,<br /><br />
 Pare que le usator registrate $USERNAME ha modificate tu wiki! Proque non visitar su pagina de discussion ($USERTALKPAGEURL) pro salutar le?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Le equipa de Wikia</div>',
-	'founderemails-email-page-edited-anon-subject' => 'Alcuno ha cambiate tu wiki!',
+	'founderemails-email-page-edited-anon-subject' => 'Alcuno ha modificate tu wiki!',
 	'founderemails-email-page-edited-anon-body' => 'Salute $FOUNDERNAME,
 
 Il pare que alcuno ha modificate tu wiki! Proque non visitar $MYHOMEURL pro vider lo que ha cambiate?
@@ -1021,7 +1021,7 @@ Il es alcun tempore retro que tu ha comenciate un wiki in Wikia; nos spera que i
 	'founderemails-answers-email-10-days-passed-body-HTML' => 'Salute $FOUNDERNAME,<br /><br />
 Il es alcun tempore retro que tu ha comenciate un wiki in Wikia; nos spera que illo va ben! Nos volerea dar te alcun avisos final pro adjutar te a facer tu wiki plus como a casa.<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Le equipa de Wikia</div>',
-	'founderemails-answers-email-page-edited-reg-user-first-edit-subject' => 'Un usator registrate ha cambiate tu wiki pro le prime vice!',
+	'founderemails-answers-email-page-edited-reg-user-first-edit-subject' => 'Un usator registrate ha modificate tu sito pro le prime vice!',
 	'founderemails-answers-email-page-edited-reg-user-first-edit-body' => 'Salute $FOUNDERNAME,
 
 Il pare que le usator registrate $USERNAME ha modificate tu wiki pro le prime vice! Proque non visitar su pagina de discussion ($USERTALKPAGEURL) pro salutar le?
@@ -1030,7 +1030,7 @@ Il pare que le usator registrate $USERNAME ha modificate tu wiki pro le prime vi
 	'founderemails-answers-email-page-edited-reg-user-first-edit-body-HTML' => 'Salute $FOUNDERNAME,<br /><br />
 Il pare que le usator registrate $USERNAME ha modificate tu wiki pro le prime vice! Proque non visitar su pagina de discussion ($USERTALKPAGEURL) pro salutar le?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Le equipa de Wikia</div>',
-	'founderemails-answers-email-page-edited-reg-user-subject' => 'Un usator registrate ha cambiate tu wiki Q&R!',
+	'founderemails-answers-email-page-edited-reg-user-subject' => 'Un usator registrate ha modificate tu sito!',
 	'founderemails-answers-email-page-edited-reg-user-body' => 'Salute $FOUNDERNAME,
 
 Il pare que le usator registrate $USERNAME ha modificate tu wiki! Proque non visitar su pagina de discussion ($USERTALKPAGEURL) pro salutar le?
@@ -1039,7 +1039,7 @@ Il pare que le usator registrate $USERNAME ha modificate tu wiki! Proque non vis
 	'founderemails-answers-email-page-edited-reg-user-body-HTML' => 'Salute $FOUNDERNAME,<br /><br />
 Il pare que le usator registrate $USERNAME ha modificate tu wiki! Proque non visitar su pagina de discussion ($USERTALKPAGEURL) pro salutar le?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Le equipa de Wikia</div>',
-	'founderemails-answers-email-page-edited-anon-subject' => 'Alcuno ha cambiate tu wiki Q&R!',
+	'founderemails-answers-email-page-edited-anon-subject' => 'Alcuno ha modificate tu sito!',
 	'founderemails-answers-email-page-edited-anon-body' => 'Salute $FOUNDERNAME,
 
 Il pare que alcuno ha modificate tu wiki! Proque non visitar $MYHOMEURL pro vider lo que ha cambiate?

@@ -23,17 +23,27 @@ $messages['qqq'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Loya
  * @author OsamaK
  */
 $messages['ar'] = array(
+	'quickcreate-desc' => 'يضيف زر "إنشاء صفحة جديدة" مع القدرة على تسجيل الدخول للمستخدمين المجهولين',
 	'quickcreate' => 'أرسل وصفتك',
+);
+
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'quickcreate-desc' => 'Дадае кнопку стварэньня новай старонкі з магчымасьцю ўваходу ў сыстэму для ананімных удзельнікаў',
+	'quickcreate' => 'даслаць свой рэцэпт',
 );
 
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
 $messages['br'] = array(
-	'quickcreate-desc' => 'Ouzhpennañ ur bouton krouiñ pajennoù nevez gant ar barregezh kevreañ evit an implijerien dianv',
+	'quickcreate-desc' => 'Ouzhpennañ ur bouton krouiñ pajennoù nevez gant ar barregezh kevreañ evit an implijerien dizanv',
 	'quickcreate' => 'kinnigit ho rekipe',
 );
 
@@ -105,7 +115,7 @@ $messages['hu'] = array(
  * @author McDutchie
  */
 $messages['ia'] = array(
-	'quickcreate-desc' => 'Adde un button con le qual usatores anonyme pote identificar se e crear un nove pagina',
+	'quickcreate-desc' => 'Adde un button pro crear un nove pagina con le possibilitate de aperir un session pro usatores anonyme',
 	'quickcreate' => 'submitter tu recepta',
 );
 

@@ -11,6 +11,8 @@ $messages['en'] = array(
  * @author Naudefj
  */
 $messages['af'] = array(
+	'new-edit-page-preview-notice' => "Die is 'n voorskou. U veranderinge is nog nie gestoor nie!
+Blaai na benede om met u wysiging voort te gaan.",
 	'templatesused-toggle' => 'Wys/versteek {{PLURAL:$1|$1 item|$1 items}}',
 );
 
@@ -141,6 +143,13 @@ $messages['lb'] = array(
 	'templatesused-toggle' => '{{PLURAL:$1|$1 Objet|$1 Objete}} weisen/verstoppen',
 );
 
+/** Latvian (Latviešu)
+ * @author Xil
+ */
+$messages['lv'] = array(
+	'new-edit-page-preview-notice' => 'Priekšskatījums: Nekas vel nav saglabāts! Turpini rediģēšanu zemāk',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -196,6 +205,13 @@ $messages['pl'] = array(
 $messages['pms'] = array(
 	'new-edit-page-preview-notice' => "Manera previsualisassion: gnun cangiament a l'é stàit ancó salvà! Andé an bass për continué a modifiché.",
 	'templatesused-toggle' => 'Mostra/stërma {{PLURAL:$1|$1 element|$1 element}}',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'templatesused-toggle' => '{{PLURAL:$1|$1 توکی|$1 توکي}} ښکاره کول/پټول',
 );
 
 /** Portuguese (Português)

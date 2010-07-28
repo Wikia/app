@@ -1515,6 +1515,11 @@ $messages['tl'] = array(
 	'invitespecialpage' => 'Mag-anyaya ng mga kaibigan upang sumali sa Wikia',
 );
 
+/** Wu (吴语) */
+$messages['wuu'] = array(
+	'stf_frm4_cancel' => '取消',
+);
+
 /** Chinese (中文) */
 $messages['zh'] = array(
 	'invitespecialpage' => '邀請朋友加入Wikia',
@@ -1533,8 +1538,11 @@ $messages['zh-hans'] = array(
 	'stf_back_to_article' => '返回文章',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬) */
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author 用戶
+ */
 $messages['zh-hant'] = array(
+	'sendtoafriend-desc' => '[[Special:InviteSpecialPage|邀請朋友加入Wikia]]',
 	'stf_frm4_cancel' => '取消',
 	'stf_back_to_article' => '返回文章',
 );

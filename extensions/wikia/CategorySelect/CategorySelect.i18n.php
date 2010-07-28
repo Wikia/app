@@ -81,7 +81,7 @@ $messages['ar'] = array(
 	'categoryselect-infobox-sortkey' => 'يرتب أبجديا هذا المقال في صفحة تصنيف "$1" تحت الاسم',
 	'categoryselect-addcategory-button' => 'أضف تصنيفا',
 	'categoryselect-suggest-hint' => 'إظغط على Enter اذا انتهيت',
-	'categoryselect-tooltip' => "'''جديد!''' شريط أدوات علامات التصنيف. جربه أو أنظر [[مساعدة:CategorySelect|المساعدة]] لتعرف المزيد",
+	'categoryselect-tooltip' => "'''جديد!''' شريط أدوات علامات التصنيف. جربه أو أنظر [[مساعدة:إختيار التصنيف|المساعدة]] لتعرف المزيد",
 	'categoryselect-unhandled-syntax' => 'تم الكشف عن بناء جملة غير معالج - يتم التحويل إلى العرض المرئي',
 	'categoryselect-edit-summary' => 'إضافة التصانيف',
 	'categoryselect-empty-name' => 'يوفر إسم التصنيف (الجزء قبل |)',
@@ -657,6 +657,11 @@ $messages['uk'] = array(
 	'categoryselect-error-not-exist' => 'Статті [id=$1] не існує.',
 	'categoryselect-error-user-rights' => 'Помилка прав користувача.',
 	'categoryselect-desc' => 'Забезпечує інтерфейс для управління категоріями у статті без редагування всієї статті.',
+);
+
+/** Wu (吴语) */
+$messages['wuu'] = array(
+	'categoryselect-button-cancel' => '取消',
 );
 
 /** Chinese (中文) */

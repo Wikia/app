@@ -194,6 +194,7 @@ $messages['it'] = array(
 /** Japanese (日本語)
  * @author Aotake
  * @author Joe Elkins
+ * @author Kanon und wikipedia
  * @author 青子守歌
  */
 $messages['ja'] = array(
@@ -323,13 +324,14 @@ Tenha em conta que os resultados não ficam registados e que ainda não podem se
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Daemorris
+ * @author Giro720
  */
 $messages['pt-br'] = array(
 	'cntool-page-title-editor' => 'Ferramenta de Disputa  ::  Editor',
 	'cntool-page-title-preview' => 'Prever',
 	'cntool-page-title-select' => 'Ferramenta de Disputa',
 	'cntool-label-select' => 'Especifique um título de página válido',
-	'cntool-button-preview' => 'Prever',
+	'cntool-button-preview' => 'Previsualizar',
 	'cntool-button-save' => 'Salvar',
 	'cntool-label-content' => 'Modificar conteúdo do artigo abaixo',
 	'cntool-label-preview' => 'Previsão:',

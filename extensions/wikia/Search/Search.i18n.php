@@ -19,6 +19,16 @@ $messages['af'] = array(
 	'wikiasearch-search-wikia' => 'Deursoek Wikia',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'wikiasearch-titles-only' => 'Шукаць толькі ў назвах старонак',
+	'wikiasearch-system-error-msg' => 'У выніку сыстэмнай памылкі Ваш пошук ня можа быць выкананы',
+	'wikiasearch-search-this-wiki' => 'Пошук выключна ў Wikia Central',
+	'wikiasearch-search-wikia' => 'Знайсьці ў Wikia',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
@@ -93,6 +103,16 @@ $messages['fr'] = array(
 	'wikiasearch-search-wikia' => 'Chercher dans Wikia',
 );
 
+/** Scottish Gaelic (Gàidhlig)
+ * @author Akerbeltz
+ */
+$messages['gd'] = array(
+	'wikiasearch-titles-only' => 'Lorg am broinn tiotalan nan duilleagan a-mhàin',
+	'wikiasearch-system-error-msg' => "Cha b' urrainn dhuinn an lorg agad a thoirt gu buil air sgàth mearachd an t-siostaim",
+	'wikiasearch-search-this-wiki' => 'Lorg air Wikia Central a-mhàin',
+	'wikiasearch-search-wikia' => 'Lorg air Wikia',
+);
+
 /** Galician (Galego)
  * @author Toliño
  */
@@ -121,6 +141,16 @@ $messages['hu'] = array(
 	'wikiasearch-system-error-msg' => 'A keresés nem teljesíthető rendszerhiba miatt',
 	'wikiasearch-search-this-wiki' => 'Keresés csak a Wikia Centralon',
 	'wikiasearch-search-wikia' => 'Keresés a Wikián',
+);
+
+/** Armenian (Հայերեն)
+ * @author Pandukht
+ */
+$messages['hy'] = array(
+	'wikiasearch-titles-only' => 'Որոնել միայն էջերի վերնագրերում',
+	'wikiasearch-system-error-msg' => 'Որոնումը հնարավոր չե կատարել համակարգային սխալի պատճառով',
+	'wikiasearch-search-this-wiki' => 'Որոնում միայն Wikia Central-ով',
+	'wikiasearch-search-wikia' => 'Որոնել Wikia-ում',
 );
 
 /** Interlingua (Interlingua)
@@ -329,9 +359,11 @@ $messages['tl'] = array(
 );
 
 /** Ukrainian (Українська)
+ * @author Ast
  * @author Prima klasy4na
  */
 $messages['uk'] = array(
 	'wikiasearch-titles-only' => 'Шукати тільки в заголовках сторінок',
+	'wikiasearch-system-error-msg' => 'Ваш пошук не може бути виконаним через системну помилку',
 );
 

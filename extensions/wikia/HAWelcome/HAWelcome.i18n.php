@@ -51,6 +51,7 @@ If you need help, and there are no local admins here, you may want to visit the 
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
  */
@@ -89,6 +90,7 @@ Demat, Degemer mat war {{SITENAME}}; Trugarez da vezañ kemmet ar bajenn [[:$1]]
 '''[[Special:Userlogin|Please sign in and create a user name]]'''. Un doare aes eo evit mirout roudoù eus ho labourioù hag evel-se e c'hallot mont e darempred gant ar peurrest eus ar gumuniezh.
 
 M'ho peus ezhomm skoazell ha ma n'eus merour ebet amañ e c'hallit gweladenniñ ar [[wikia:Forum:Community Central Forum|foromoù Kreiz ar Gumuniezh]] $3",
+	'staffsig-text' => '$1<staff /> <small>([[w:forums|forom skoazellañ]] | [[w:sblog|blog]])</small>',
 );
 
 /** German (Deutsch)
@@ -900,7 +902,7 @@ Wiki Community Central]] $3',
 
 Olá, bem-vindo(a) à {{SITENAME}}! Obrigado pela sua edição da página [[:$1]].
 
-'''[[Special:Userlogin|Por favor, registe-se e crie uma conta de usuário]]'''. É uma forma fácil de registar as suas contribuições e facilita a comunicação com os demais usuários.
+'''[[Special:UserLogin|Por favor, registe-se e crie uma conta de usuário]]'''. É uma forma fácil de registar as suas contribuições e facilita a comunicação com os demais usuários.
 
 Se você necessita de ajuda e não encontra administradores locais, talvez queira visitar os [[wikia:Forum:Community Central Forum|fóruns na Wiki Community Central]] $3",
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|fórum de ajuda]] | [[w:sblog|blogue]])</small>',
@@ -1060,11 +1062,31 @@ dalawin ang [[wikia:Forum:Community Central Forum|mga poro sa Wiki ng Pangunahin
 );
 
 /** Ukrainian (Українська)
+ * @author Ast
  * @author Prima klasy4na
  */
 $messages['uk'] = array(
+	'welcome-user-page' => "==Про мене==
+
+''Це ваша сторінка користувача. Будь ласка, відредагуйте її, розповівши про себе.''
+
+==Мій внесок==
+
+* [[Special:Contributions/{{PAGENAME}}|Внесок користувача]]
+
+==Мої улюблені сторінки==
+
+* Додайте посилання на свої обрані сторінки у вікі тут!
+* Обрана сторінка #2
+* Обрана сторінка #3",
 	'welcome-message-user' => 'Привіт, ласкаво просимо до {{SITENAME}}! Дякуємо за редагування сторінки [[:$1]].
 
 Будь-ласка, залиште повідомлення на [[$2|моїй сторінці обговорення]], якщо я можу чим-небудь допомогти! $3',
+	'welcome-message-log' => 'привітання нового учасника',
+	'welcome-message-user-staff' => '==Вітаємо==
+
+Привіт, ласкаво просимо на {{SITENAME}}! Дякуємо за ваші зміни на сторінці [[:$1]].
+
+Якщо вам потрібна допомога, а локальні адміністратори відсутні, ви можете відвідати [[wikia:Forum:Community Central Forum|форуми спільноти Central Wiki]] $3',
 );
 

@@ -36,6 +36,21 @@ $messages['af'] = array(
 	'wva-notallowed' => "U kan nie video's op hierdie wiki byvoeg nie.",
 );
 
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'wva-success' => 'صفحة الفيديو $1 تم إضافتها بنجاح',
+	'wva-success-replaced' => 'صفحة الفيديو $1 تم تعويضها بنجاح',
+	'wva-failure' => 'يرجى تزويد المعلومات الصحيحة',
+	'wva-name' => 'أدخل الإسم:',
+	'wva-url' => 'أدخل العنوان الإلكتروني (URL):',
+	'wva-add' => 'أضف',
+	'wva-title' => 'إضافة فيديو بسرعة من العنوان (URL)',
+	'wva-notlogged' => 'يجب أن تكون مسجلا إذا أرد إضافة فيديو',
+	'wva-notallowed' => 'لا يمكنك إضافة فيديو في هذه الويكي',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  * @author Jim-by
@@ -50,6 +65,13 @@ $messages['be-tarask'] = array(
 	'wva-title' => 'Хуткае даданьне відэа па URL-адрасу',
 	'wva-notlogged' => 'Каб дадаць відэа, Вам неабходна ўвайсьці ў сыстэму альбо зарэгістравацца.',
 	'wva-notallowed' => 'Вы ня можаце устаўляць відэа ў {{GRAMMAR:месны|{{SITENAME}}}}.',
+);
+
+/** Bahasa Banjar (Bahasa Banjar)
+ * @author Ezagren
+ */
+$messages['bjn'] = array(
+	'wva-add' => 'Tambahakan',
 );
 
 /** Breton (Brezhoneg)
@@ -238,6 +260,13 @@ $messages['id'] = array(
 	'wva-notallowed' => 'Anda tidak dapat menyisipkan video di wiki ini.',
 );
 
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'wva-add' => 'Tinyé',
+);
+
 /** Italian (Italiano)
  * @author HalphaZ
  */
@@ -281,6 +310,21 @@ $messages['km'] = array(
 	'wva-title' => 'បន្ថែមវីដេអូពីURLតាមរបៀបរហ័ស',
 	'wva-notlogged' => 'អ្នកត្រូវតែកត់ឈ្មោះចូលឬចុះឈ្មោះថ្មីដើម្បីមានសិទ្ធិបញ្ចូលវីដេអូ។',
 	'wva-notallowed' => 'អ្នកមិនអាចបញ្ចូលវីដេអូនៅក្នុងវិគីនេះទេ។',
+);
+
+/** Karachay-Balkar (Къарачай-Малкъар)
+ * @author Къарачайлы
+ */
+$messages['krc'] = array(
+	'wva-success' => '$1 видео бет джетишимли къошулгъанды.',
+	'wva-success-replaced' => '$1 видео бет джетишимли ауушдурулгъанды.',
+	'wva-failure' => 'Тилейбиз, джараулу параметрлени кёргюзтюгюз.',
+	'wva-name' => 'Атын джазыгъыз:',
+	'wva-url' => 'URL адресни джазыгъыз:',
+	'wva-add' => 'Къош',
+	'wva-title' => 'URL-ден видеоны дженгил къошууу',
+	'wva-notlogged' => 'Видеоны къошар ючюн системагъа кесигизни танытыгъыз неда регистрацияны ётюгюз.',
+	'wva-notallowed' => 'Бу викиде видео салаллыкъ тюлсюз.',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -419,14 +463,15 @@ $messages['pt-br'] = array(
 );
 
 /** Romanian (Română)
+ * @author Minisarm
  * @author Misterr
  */
 $messages['ro'] = array(
-	'wva-success' => 'Video-ul $1 a fost adăugat cu succes',
-	'wva-url' => 'Înserează adres URL a video-ului',
-	'wva-add' => 'Adaugă video',
-	'wva-notlogged' => 'Trebuie să fii logat sau înregistrat pentru a adăuga video-uri',
-	'wva-notallowed' => 'Nu poți însera video-uri în acest wiki',
+	'wva-success' => 'Clipul video $1 a fost adăugat cu succes.',
+	'wva-url' => 'Introduceți adresa URL:',
+	'wva-add' => 'Adaugă',
+	'wva-notlogged' => 'Trebuie să vă autentificați sau să vă înregistrați pentru a putea adăuga clipuri video.',
+	'wva-notallowed' => 'Nu puteți adăuga clipuri video pe acest wiki.',
 );
 
 /** Russian (Русский)

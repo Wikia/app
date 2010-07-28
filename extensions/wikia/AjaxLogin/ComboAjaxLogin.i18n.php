@@ -21,13 +21,37 @@ Once you are done, you can log in easily using any Facebook Connect button.",
 Please try again or [[Special:Contact|report this]].",
 );
 
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'comboajaxlogin-desc' => 'صندوق ديناميكي يسمح للمستخدمين بتسجيل الدخول كما يذكرهم بكلمة السر و المستخدمين المسجلين.',
+	'comboajaxlogin-createlog' => 'تسجيل الدخول أو إنشاء حساب',
+	'comboajaxlogin-actionmsg' => 'لكي تقوم بهذه العملية يجب عليك أولا تسجيل الدخول أو إنشاء حساب',
+	'comboajaxlogin-connectmarketing' => 'h1>أربط حساباتك</h1>
+<ul>
+<li>حافظ على إسم المستخدم الحالي, التاريخ, التعديلات... لا شيئ يتغير إلا كيفية تسجيل الدخول</li>
+<li>شارك أنشتطك في ويكيا مع أصدقائك في الفيسبوك</li>
+<li>و إختر مالذي تريد عرضه على الفيسبوك الخاص بك</li>
+</ul>',
+	'comboajaxlogin-connectmarketing-back' => '&laquo; العودة',
+	'comboajaxlogin-connectmarketing-forward' => 'إبذأ &raquo',
+);
+
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Y-M D
  */
 $messages['br'] = array(
 	'comboajaxlogin-createlog' => 'Krouiñ ur gont pe kevreañ',
+	'comboajaxlogin-actionmsg' => 'Evit ober kement-mañ e rankit bezañ kevreet pe krouiñ ur gont a-raok',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Distreiñ',
 	'comboajaxlogin-connectmarketing-forward' => 'A-raok kregiñ &raquo;',
+	'comboajaxlogin-connectdirections' => "Merkit hoc'h anv implijer hag ho ker-tremen evit Wikia amañ - gant un taol strobinellerezh e vo kevreet ho kontoù Facebook ha Wikia ganeomp en drekleur.
+
+Ur wezh graet e c'hallot kevreañ aes en ur ober gant ne vern pe vouton Facebook Connect.",
+	'comboajaxlogin-post-not-understood' => 'Ur fazi zo bet en doare ma oa bet savet ar furmskrid-mañ.
+Klaskit en-dro pe [[Special:Contact|kasit keloù]].',
 );
 
 /** German (Deutsch)
@@ -140,10 +164,24 @@ Quando tu ha finite, tu pote aperir un session facilemente usante qualcunque but
 Per favor tenta lo de novo o [[Special:Contact|reporta isto]].',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Irwangatot
+ */
+$messages['id'] = array(
+	'comboajaxlogin-desc' => 'kotak dinamis yang memungkinkan pengguna untuk masuk log, mengingatkan password dan pengguna mendaftar',
+	'comboajaxlogin-createlog' => 'Masuk log atau buat akun',
+	'comboajaxlogin-actionmsg' => 'Untuk melakukan tindakan ini pertama Anda harus masuk log atau membuat account',
+	'comboajaxlogin-connectmarketing-back' => '&laquo; Kembali',
+	'comboajaxlogin-connectmarketing-forward' => 'Persiapan &raquo;',
+);
+
 /** Japanese (日本語)
  * @author Tommy6
  */
 $messages['ja'] = array(
+	'comboajaxlogin-desc' => 'ログインと利用者登録が行えるダイナミックボックス',
+	'comboajaxlogin-createlog' => 'ログインもしくはアカウントの作成',
+	'comboajaxlogin-actionmsg' => 'この操作を行うには、ログインするかアカウントを作成する必要があります。',
 	'comboajaxlogin-connectmarketing' => '<h1>アカウントを接続する</h1>
 <ul>
 <li>現在の利用者名や履歴、編集機能などは維持され、ログイン方法以外に変更されるものはありません。</li>
@@ -152,6 +190,22 @@ $messages['ja'] = array(
 </ul>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; 戻る',
 	'comboajaxlogin-connectmarketing-forward' => '次へ &raquo;',
+	'comboajaxlogin-connectdirections' => 'こちらにウィキアの利用者名とパスワードを入力してください。ウィキアと Facebook のアカウントが接続処理が行われます。
+
+一度接続すれば、Facebookコネクトボタンを使って簡単にログインできるようになります。',
+	'comboajaxlogin-post-not-understood' => 'フォームの構築でエラーが発生しました。
+
+やり直すか、[[Special:Contact|このエラーを報告]]してください。',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'comboajaxlogin-createlog' => 'Loggt Iech an oder Maacht en neie Benotzerkont op',
+	'comboajaxlogin-actionmsg' => "Fir dës Aktioun ze maache musst Dir Iech d'éischt aloggen oder e Benotzerkont opmaachen",
+	'comboajaxlogin-connectmarketing-back' => '&laquo; Zréck',
+	'comboajaxlogin-connectmarketing-forward' => 'Ufänken &raquo;',
 );
 
 /** Macedonian (Македонски)
@@ -226,6 +280,29 @@ $messages['pl'] = array(
 	'comboajaxlogin-actionmsg' => 'Aby wykonać tę akcję musisz się najpierw zalogować lub utworzyć konto.',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'comboajaxlogin-desc' => "Fnestra dinàmica che a përmët a j'utent d'intré, d'arcòrdé soa ciav e ëd registré dj'utent",
+	'comboajaxlogin-createlog' => 'Intra o crea un cont',
+	'comboajaxlogin-actionmsg' => "Për fé st'assion-si a dev prima intré ant ël sistema o creé un cont",
+	'comboajaxlogin-connectmarketing' => "<h1>Ch'a colega ij sò cont</h1>
+<ul>
+<li>A manten sò nòm utent corent, stòria, modìfiche... a cangia gnente, gavà la fasson d'intré ant ël sistema</li>
+<li>A partagia soa atività su Wikia con ij sò amis su Facebook</li>
+<li>Contròl complet ëd lòn ch'a l'é publicà</li>
+</ul>",
+	'comboajaxlogin-connectmarketing-back' => '&laquo; André',
+	'comboajaxlogin-connectmarketing-forward' => 'Ancamin-a &raquo;',
+	'comboajaxlogin-connectdirections' => "Ch'a anserissa sò nòm utent e soa ciav Wikia ambelessì - i colegheroma magicament ij sò cont Wikia e Facebook an slë sfond.
+
+Na vira ch'a l'abia fàit, a peule intré facilment ant ël sistema an dovrand un boton Facebook Connect qualsëssìa.",
+	'comboajaxlogin-post-not-understood' => "A-i é stàje n'eror ant la manera che cont formolari a l'é stàit fabricà.
+Për piasì, ch'a preuva torna o [[Special:Contact|ch'a lo signala]].",
+);
+
 /** Portuguese (Português)
  * @author Giro720
  * @author Hamilton Abreu
@@ -243,6 +320,28 @@ $messages['pt'] = array(
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Voltar',
 	'comboajaxlogin-connectmarketing-forward' => 'Começar &raquo;',
 	'comboajaxlogin-connectdirections' => 'Introduza aqui o seu nome de utilizador e palavra-chave - por artes mágicas, ligaremos as suas contas Wikia e Facebook nos bastidores.
+
+Quando acabar, poderá autenticar-se usando qualquer botão Ligação Facebook.',
+	'comboajaxlogin-post-not-understood' => 'Foi detectado um erro na forma como este formulário foi construído.
+Tente novamente ou [[Special:Contact|reporte este erro]], por favor.',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
+ */
+$messages['pt-br'] = array(
+	'comboajaxlogin-desc' => 'Caixa dinâmica que permite a autenticação e registo de usuários e relembrar a senha',
+	'comboajaxlogin-createlog' => 'Entrar ou criar uma conta',
+	'comboajaxlogin-actionmsg' => 'Para realizar esta operação, você deve antes autenticar-se ou registrar uma conta',
+	'comboajaxlogin-connectmarketing' => '<h1>Ligue as suas contas</h1>
+<ul>
+<li>Mantenha o seu nome de usuário, histórico e edições... Nada muda, exceto a forma como se autentica</li>
+<li>Partilhe a sua atividade na Wikia com os seus amigos no Facebook</li>
+<li>Controle total do que é publicado</li>
+</ul>',
+	'comboajaxlogin-connectmarketing-back' => '&laquo; Voltar',
+	'comboajaxlogin-connectmarketing-forward' => 'Começar &raquo;',
+	'comboajaxlogin-connectdirections' => 'Introduza aqui o seu nome de usuário e senha - nós magicamente conectaremos as suas contas Wikia e Facebook nos bastidores.
 
 Quando acabar, poderá autenticar-se usando qualquer botão Ligação Facebook.',
 	'comboajaxlogin-post-not-understood' => 'Foi detectado um erro na forma como este formulário foi construído.
@@ -270,5 +369,18 @@ $messages['ru'] = array(
 После завершения вы сможете легко представляться системе с помощью любой из кнопок Facebook Connect.',
 	'comboajaxlogin-post-not-understood' => 'Произошла ошибка при построении этой формы.
 Пожалуйста, попробуйте снова или [[Special:Contact|сообщите об этом]].',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Minh Nguyen
+ */
+$messages['vi'] = array(
+	'comboajaxlogin-createlog' => 'Đăng nhập hay mở tài khoản mới',
+	'comboajaxlogin-connectmarketing-back' => '« Trở về',
+	'comboajaxlogin-connectmarketing-forward' => 'Bắt đầu »',
+	'comboajaxlogin-connectdirections' => 'Hãy nhập tên người dùng và mật khẩu vào đây. Các tài khoản Wikia và Facebook của bạn sẽ được nối với nhau ở hậu trường.
+
+Sau đó, bạn có thể đặng nhập dễ dàng dùng bất cứ nút Facebook Connect nào.',
+	'comboajaxlogin-post-not-understood' => 'Có lỗi khi xây dựng biểu mẫu này. Xin vui lòng thử lần nữa hay [[Special:Contact|báo cáo lỗi này]].',
 );
 

@@ -255,10 +255,12 @@ Por favor intente nuevamente.',
 
 /** Finnish (Suomi)
  * @author Centerlink
+ * @author Silvonen
  */
 $messages['fi'] = array(
 	'textregex-page-title' => 'Luettelo ei-toivotuista lausekkeista',
 	'textregex-submit-regex' => 'Lisää fraasi',
+	'textregex-invalid-regex' => 'Virheellinen säännöllinen lauseke.',
 	'textregex-select-default' => '-- valitse --',
 	'textregex-create-subpage' => 'tai luo uusi luettelo:',
 	'textregex-select-regexlist' => 'siirry luetteloon',
@@ -557,6 +559,40 @@ $messages['pms'] = array(
  */
 $messages['ps'] = array(
 	'textregex-select-default' => '-- ټاکل --',
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'textregex' => 'Expressões regulares em textos',
+	'textregex-desc' => "[[Special:textregex/XXXX|Filtrar]] expressões indesejadas nas edições de páginas, usando expressões regulares ''(regex)''",
+	'textregex-page-title' => 'Lista das expressões indesejadas',
+	'textregex-error-unblocking' => 'Ocorreu um erro no desbloqueio de ($1).
+Tente outra vez.',
+	'textregex-currently-blocked' => "'''Expressões bloqueadas nesta altura:'''",
+	'textregex_nocurrently-blocked' => 'Não foram encontradas expressões bloqueadas',
+	'textregex-addedby-user' => 'adicionada por $1 a $2',
+	'textregex-remove-url' => '[{{SERVER}}$1&id=$2 remover]',
+	'textregex-stats-url' => '[{{SERVER}}$1&id=$2 estatísticas]',
+	'textregex-unblock-succ' => 'Desbloqueada',
+	'textregex-block-succ' => 'Bloqueada',
+	'textregex-unblock-message' => "A expressão '''$1''' foi removida das expressões indesejadas.",
+	'textregex-block-message' => "A expressão '''$1''' foi adicionada às expressões indesejadas.",
+	'textregex-regex-block' => 'Expressão a bloquear:',
+	'textregex-submit-regex' => 'Adicionar expressão',
+	'textregex-empty-regex' => 'Introduza uma expressão correcta para bloquear:',
+	'textregex-invalid-regex' => 'Expressão regular inválida.',
+	'textregex-already-added' => '"$1" já foi adicionada',
+	'textregex-nodata-found' => 'Não foram encontrados dados',
+	'textregex-stats-record' => "a palavra ''$1'' foi usada por $2 a $3 (''comentário: $4'')",
+	'textregex-select-subpage' => 'Seleccionar uma lista de expressões:',
+	'textregex-select-default' => '-- seleccionar --',
+	'textregex-create-subpage' => 'ou criar uma lista nova:',
+	'textregex-select-regexlist' => 'ir para a lista',
+	'textregex-invalid-regexid' => 'Expressão inválida.',
+	'textregex-phrase-statistics' => "Estatísticas para a expressão \"'''\$1'''\" (número de registos: \$2)",
+	'textregex-return-mainpage' => '[{{SERVER}}$1 voltar à lista]',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

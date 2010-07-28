@@ -367,6 +367,13 @@ $messages['id'] = array(
 	'user-badge-hide-color' => 'Sembunyikan rincian warna',
 );
 
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'user-badge-edits-txt' => 'Orürü',
+);
+
 /** Japanese (日本語)
  * @author Tommy6
  */
@@ -559,6 +566,13 @@ $messages['pms'] = array(
 	'user-badge-save-info' => "↓ S'a veul salvé ij cangiament, ch'a scora a fin pàgina e ch'a sgnaca ël boton \"{{int:saveprefs}}\"",
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'user-badge-create' => 'نښان جوړول:',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  */
@@ -650,6 +664,7 @@ $messages['sr-ec'] = array(
 
 /** Telugu (తెలుగు)
  * @author Ravichandra
+ * @author Veeven
  */
 $messages['te'] = array(
 	'user-badge-title' => 'వాడుకరి చిహ్నం',
@@ -657,8 +672,11 @@ $messages['te'] = array(
 	'user-badge-show-color' => 'వర్ణాల వివరాలు చూపండి',
 	'user-badge-hide-color' => 'వర్ణాల వివరాలు దాచండి',
 	'user-badge-dialog-title' => 'దయచేసి ఒక రంగును ఎన్నుకోండి',
+	'user-badge-logo-opt' => 'బొమ్మ ఎంపికలు:',
+	'user-badge-wikia-logo-pos' => 'వికియా చిహ్నపు స్థానము:',
+	'user-badge-small-wikia-logo-color' => 'వికియా చిహ్నపు రంగు:',
 	'user-badge-edits-txt' => 'దిద్దుబాట్లు',
-	'user-badge-save-info' => 'మార్పులను భద్రపరచాలంటే, పుట అడుగుభాగానికి జారి "భద్రపరుచు" బొత్తాము నొక్కండి',
+	'user-badge-save-info' => 'మార్పులను భద్రపరచాలంటే, పుట అడుగు భాగానికి వెళ్ళి "{{int:saveprefs}}" బొత్తాన్ని నొక్కండి',
 );
 
 /** Tagalog (Tagalog)

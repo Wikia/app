@@ -162,7 +162,7 @@ Mar plij dibabit un anv disheñvel',
 	'createpage-error-invalid-title' => 'Digarezit, ne oa ket mat titl ar pennad.
 Mar plij dibabit un titl disheñvel.',
 	'createpage-error-article-exists' => 'Bez ez eus dija eus ur pennad gant an anv-se.
-Tu \'zo deoc\'h mont da <a href="$1">$2,</a> pe adenvel ho pajenn',
+Gellout a rit mont da <a href="$1">$2,</a> pe adenvel ho pajenn',
 	'createpage-error-article-spam' => "Digarezit, nac'het eo bet titl ar pennad gant hon sil ar stroboù.
 Mar plij implijit un titl disheñvel.",
 	'createpage-error-article-blocked' => "Digarezit, ne c'helloc'h ket krouiñ ar pennad-se er mare-mañ.",

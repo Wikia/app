@@ -100,6 +100,14 @@ $messages['ia'] = array(
 Isto ''non'' prende in conto le activitate del evalutation de paginas.",
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'graceexpired' => 'Grace ofgelaf',
+	'graceexpired-row' => '$1 (an $2, lescht Ännerung de(n) $3)',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */

@@ -66,8 +66,8 @@ $messages['br'] = array(
 
 N'eo ket bet kavet ar pennad '''$1'''.
 
-* Gellout a reoc'h klask ar pennad [[$2]]
-* Gellout a reoc'h implijout ar boest klask e lodenn kleiz ar bajenn
+* Gellout a rit klask ar pennad [[$2]]
+* Gellout a rit implijout ar boest klask e lodenn kleiz ar bajenn
 * Evit distreiñ da bajenn degemer al lec'hienn, klikit amañ : [{{SERVER}} {{SITENAME}}]",
 );
 
@@ -307,6 +307,13 @@ Den Artikel '''$1''' konnt net fonnt ginn.
 * Dir kënnt et mam Artikel [[$2]] versichen.
 * Dir kënnt d'Sichkëscht lénks op der Säit benotzen.
 * Fir op d'haaptsäit vun dësem Site ze goen, klickt op de Link:  [{{SERVER}} {{SITENAME}}]",
+);
+
+/** Latvian (Latviešu)
+ * @author Xil
+ */
+$messages['lv'] = array(
+	'our404handler' => 'Kļūda 404: Lapa nav atrasta!',
 );
 
 /** Macedonian (Македонски)

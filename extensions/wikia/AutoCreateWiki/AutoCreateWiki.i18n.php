@@ -344,7 +344,7 @@ $messages['br'] = array(
 	'autocreatewiki-haveaccount-question' => 'Hag ur gont Wikia ho peus dija ?',
 	'autocreatewiki-success-title-default' => 'Krouet eo bet ho wiki !',
 	'autocreatewiki-success-title-answers' => "Krouet eo bet ho lec'hienn respontoù.",
-	'autocreatewiki-success-subtitle' => "Tu 'zo deoc'h kregiñ da labourat war ho wiki en ur weladenniñ :",
+	'autocreatewiki-success-subtitle' => 'Gellout a rit kregiñ da labourat war ho wiki en ur weladenniñ :',
 	'autocreatewiki-success-has-been-created' => 'a zo bet krouet !',
 	'autocreatewiki-success-get-started' => 'Kregiñ',
 	'autocreatewiki-info-domain' => "Ar gwellañ zo implijout ur ger a vo, evit doare, ur ger-alc'hwez evit klask diwar-benn ho tanvez.",
@@ -378,6 +378,7 @@ $messages['br'] = array(
 	'autocreatewiki-empty-username' => "Goullo ne c'hall ket bezañ an anv implijer.",
 	'autocreatewiki-empty-password' => "Ne c'hell ket bezañ goullo ar ger tremen",
 	'autocreatewiki-empty-retype-password' => "Goullo ne c'hall ket ar ger-tremen adlakaet bezañ",
+	'autocreatewiki-category-label' => 'Rummad :',
 	'autocreatewiki-category-other' => 'All',
 	'autocreatewiki-set-username' => 'Termenit an anv implijer da gentañ.',
 	'autocreatewiki-invalid-category' => 'Talvoud direizh evit ar rummad. Dibabit un talvoud er roll, mar plij.',
@@ -518,6 +519,7 @@ $messages['de'] = array(
 	'autocreatewiki-empty-username' => 'Bitte gib einen Benutzernamen an.',
 	'autocreatewiki-empty-password' => 'Das Passwort darf nicht leer sein.',
 	'autocreatewiki-empty-retype-password' => 'Das Passwort darf nicht leer sein.',
+	'autocreatewiki-category-label' => 'Kategorie:',
 	'autocreatewiki-category-other' => 'Andere',
 	'autocreatewiki-set-username' => 'Wähle zuerst einen Benutzernamen.',
 	'autocreatewiki-invalid-category' => 'Ungültige Kategorie-Auswahl.
@@ -692,6 +694,11 @@ indem Sie <a href="$2">$2</a> besuchen.</p>
 <p>-- Ihr Wikia Community Team</p>',
 );
 
+/** Ewe (Eʋegbe) */
+$messages['ee'] = array(
+	'autocreatewiki-create-account' => 'Ŋlɔ ŋkɔ daɖi',
+);
+
 /** Greek (Ελληνικά)
  * @author Crazymadlover
  * @author Περίεργος
@@ -732,6 +739,7 @@ $messages['el'] = array(
 
 /** Spanish (Español)
  * @author Bola
+ * @author Crazymadlover
  * @author Locos epraix
  * @author Pertile
  * @author Peter17
@@ -793,6 +801,7 @@ $messages['es'] = array(
 	'autocreatewiki-empty-username' => 'El campo del nombre de usuario no puede estar vacío.',
 	'autocreatewiki-empty-password' => 'El campo de la contraseña no puede estar vacío.',
 	'autocreatewiki-empty-retype-password' => 'El campo para repetir la contraseña no puede estar vacío.',
+	'autocreatewiki-category-label' => 'Categoría:',
 	'autocreatewiki-category-other' => 'Otro',
 	'autocreatewiki-set-username' => 'Pon el nombre de usuario primero.',
 	'autocreatewiki-invalid-category' => 'Valor inválido para la categoría. Por favor, selecciona el apropiado desde la lista desplegable de abajo.',
@@ -1048,6 +1057,7 @@ $messages['fr'] = array(
 	'autocreatewiki-empty-username' => "Le nom d'utilisateur ne peut pas être vide.",
 	'autocreatewiki-empty-password' => 'Le mot de passe ne peut pas être vide.',
 	'autocreatewiki-empty-retype-password' => 'Le mot de passe ré-entré ne peut pas être vide.',
+	'autocreatewiki-category-label' => 'Catégorie :',
 	'autocreatewiki-category-other' => 'Autre',
 	'autocreatewiki-set-username' => "Définissez le nom d'utilisateur d'abord.",
 	'autocreatewiki-invalid-category' => 'Valeur invalide pour la catégorie. Veuillez sélectionner une valeur de la liste.',
@@ -1188,6 +1198,7 @@ $messages['gl'] = array(
 	'autocreatewiki-empty-username' => 'O nome de usuario non pode estar baleiro.',
 	'autocreatewiki-empty-password' => 'O contrasinal non pode estar baleiro.',
 	'autocreatewiki-empty-retype-password' => 'O campo para repetir o contrasinal non pode estar baleiro.',
+	'autocreatewiki-category-label' => 'Categoría:',
 	'autocreatewiki-category-other' => 'Outro',
 	'autocreatewiki-set-username' => 'Defina o nome de usuario primeiro.',
 	'autocreatewiki-invalid-category' => 'Valor inválido para a categoría. Por favor, escolla o valor axeitado da lista despregable.',
@@ -1406,6 +1417,7 @@ $messages['ia'] = array(
 	'autocreatewiki-empty-username' => 'Le nomine de usator non pote esser vacue.',
 	'autocreatewiki-empty-password' => 'Le contrasigno non pote esser vacue.',
 	'autocreatewiki-empty-retype-password' => 'Le contrasigno repetite non pote esser vacue.',
+	'autocreatewiki-category-label' => 'Categoria:',
 	'autocreatewiki-category-other' => 'Altere',
 	'autocreatewiki-set-username' => 'Defini primo le nomine de usator.',
 	'autocreatewiki-invalid-category' => 'Valor invalide de categoria. Per favor selige un categoria del lista disrolante.',
@@ -1548,6 +1560,7 @@ $messages['id'] = array(
 	'autocreatewiki-empty-username' => 'Nama pengguna tidak boleh kosong.',
 	'autocreatewiki-empty-password' => 'Kata sandi tidak boleh kosong.',
 	'autocreatewiki-empty-retype-password' => 'Kata sandi ulang tidak boleh kosong.',
+	'autocreatewiki-category-label' => 'Kategori:',
 	'autocreatewiki-category-other' => 'Lainnya',
 	'autocreatewiki-set-username' => 'Atur nama pengguna lebih dulu.',
 	'autocreatewiki-invalid-category' => 'Nilai tidak sah dari kategori. 
@@ -1633,6 +1646,16 @@ Ini adalah proyek baru, jadi silahkan menulis kepada kami jika Anda memiliki per
 	'autocreatewiki-subname-answers' => 'Answers',
 );
 
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'autocreatewiki-category-select' => 'Kpàtá otụ',
+	'autocreatewiki-category-label' => 'Ébéonọr:',
+	'newwikis' => 'Wiki ne ohụru',
+	'autocreatewiki-subname-answers' => 'Nza oku',
+);
+
 /** Italian (Italiano)
  * @author Gifh
  */
@@ -1680,6 +1703,7 @@ Buona fortuna, [[User:\$2|\$3]] <staff />",
 /** Japanese (日本語)
  * @author Naohiro19
  * @author Tommy6
+ * @author 青子守歌
  */
 $messages['ja'] = array(
 	'autocreatewiki' => '新しいWikiを作成する',
@@ -1736,6 +1760,7 @@ $messages['ja'] = array(
 	'autocreatewiki-empty-username' => '利用者名は空にはできません。',
 	'autocreatewiki-empty-password' => 'パスワードは空にはできません。',
 	'autocreatewiki-empty-retype-password' => 'パスワードの再入力が空です。',
+	'autocreatewiki-category-label' => 'カテゴリ：',
 	'autocreatewiki-category-other' => 'その他',
 	'autocreatewiki-set-username' => 'まず利用者名を設定してください。',
 	'autocreatewiki-invalid-category' => 'カテゴリの値が不適切です。ドロップダウンリストから適切なものを選んでください。',
@@ -1889,6 +1914,7 @@ $messages['mk'] = array(
 	'autocreatewiki-empty-username' => 'Корисничкото име не може да стои празно.',
 	'autocreatewiki-empty-password' => 'Лозинката не може да стои празна.',
 	'autocreatewiki-empty-retype-password' => 'Превнесувањето на лозинката не може да стои празно.',
+	'autocreatewiki-category-label' => 'Категорија:',
 	'autocreatewiki-category-other' => 'Друго',
 	'autocreatewiki-set-username' => 'Најпрвин постави корисничко име.',
 	'autocreatewiki-invalid-category' => 'Неважечка вредност на категоријата. Одберете правилна категорија од паѓачкиот список.',
@@ -2000,7 +2026,7 @@ $messages['nl'] = array(
 	'autocreatewiki-birthdate' => 'Geboortedatum:',
 	'autocreatewiki-blurry-word' => 'Wazige woord:',
 	'autocreatewiki-remember' => 'Aanmeldgegevens onthouden',
-	'autocreatewiki-create-account' => 'Gebruiker aanmaken',
+	'autocreatewiki-create-account' => 'Registreren',
 	'autocreatewiki-done' => 'volbracht',
 	'autocreatewiki-error' => 'error',
 	'autocreatewiki-language-top-list' => 'de,en,es,he,fr,it,ja,nl,no,pl,pt,pt-br,zh',
@@ -2190,6 +2216,7 @@ $messages['no'] = array(
 	'autocreatewiki-empty-username' => 'Brukernavn kan ikke være tomt.',
 	'autocreatewiki-empty-password' => 'Passord kan ikke være tomt.',
 	'autocreatewiki-empty-retype-password' => 'Gjenta passord kan ikke være tomt.',
+	'autocreatewiki-category-label' => 'Kategori:',
 	'autocreatewiki-category-other' => 'Andre',
 	'autocreatewiki-set-username' => 'Angi brukernavn først.',
 	'autocreatewiki-invalid-category' => 'Ugyldig kategoriverdi.
@@ -2362,6 +2389,7 @@ $messages['pms'] = array(
 	'autocreatewiki-empty-username' => 'Ël nòm utent a peul pa esse veuid.',
 	'autocreatewiki-empty-password' => 'La ciav a peul pa esse veuida.',
 	'autocreatewiki-empty-retype-password' => 'La ciav torna scrivùa a peul pa esse veuida.',
+	'autocreatewiki-category-label' => 'Categorìa:',
 	'autocreatewiki-category-other' => 'Àutr',
 	'autocreatewiki-set-username' => 'Ampòsta nòm utent prima.',
 	'autocreatewiki-invalid-category' => "Valor ëd categorìa pa bon. Për piasì, ch'a selession-a col giust da la lista a ridò.",
@@ -2471,6 +2499,8 @@ $messages['ps'] = array(
 	'autocreatewiki-invalid-username' => 'دا کارن نوم سم نه دی.',
 	'autocreatewiki-busy-username' => 'دا کارن نوم بل چا ځانته ټاکلی.',
 	'autocreatewiki-blocked-username' => 'تاسې کارن حساب نه شی جوړولای.',
+	'autocreatewiki-empty-category' => 'لطفاً د وېشنيزو نه يوه وټاکۍ.',
+	'autocreatewiki-category-label' => 'وېشنيزه:',
 	'autocreatewiki-category-other' => 'بل',
 	'autocreatewiki-set-username' => 'لومړی مو کارن نوم وټاکۍ.',
 	'autocreatewiki-invalid-birthday' => 'ناسمه زېږون نېټه',
@@ -2539,6 +2569,7 @@ $messages['pt'] = array(
 	'autocreatewiki-empty-username' => 'O nome do utilizador não pode ficar vazio.',
 	'autocreatewiki-empty-password' => 'A palavra-chave não pode ficar vazia.',
 	'autocreatewiki-empty-retype-password' => 'A repetição da palavra-chave não pode ficar vazia.',
+	'autocreatewiki-category-label' => 'Categoria:',
 	'autocreatewiki-category-other' => 'Outro',
 	'autocreatewiki-set-username' => 'Primeiro defina o nome de utilizador.',
 	'autocreatewiki-invalid-category' => 'Categoria inválida.
@@ -2742,39 +2773,40 @@ Esse é um projeto novo, então, por favor, nos escreva caso você tenha alguma 
 );
 
 /** Romanian (Română)
+ * @author Minisarm
  * @author Misterr
  */
 $messages['ro'] = array(
-	'autocreatewiki' => 'Creează o nouă wiki',
+	'autocreatewiki' => 'Creează un site de tip wiki',
 	'autocreatewiki-desc' => 'Creează wiki în Wikifactory la cererea unui utilizator',
-	'autocreatewiki-page-title-default' => 'Creați un wiki nou',
-	'autocreatewiki-page-title-answers' => 'Creați un nou wiki Answers',
-	'createwiki' => 'Creează o nouă wiki',
-	'autocreatewiki-chooseone' => 'Alege una',
-	'autocreatewiki-required' => '$1 = Solicitat',
-	'autocreatewiki-web-address' => 'Adresă web',
-	'autocreatewiki-category-select' => 'Selecționați unul',
-	'autocreatewiki-language-top' => 'Top $1 de limbi',
+	'autocreatewiki-page-title-default' => 'Creează un nou site de tip wiki',
+	'autocreatewiki-page-title-answers' => 'Creează un nou site de răspunsuri',
+	'createwiki' => 'Creează un nou site de tip wiki',
+	'autocreatewiki-chooseone' => 'Alegeți una',
+	'autocreatewiki-required' => '$1 = solicitat',
+	'autocreatewiki-web-address' => 'Adresă web:',
+	'autocreatewiki-category-select' => 'Selectați unul',
+	'autocreatewiki-language-top' => 'Clasamentul primelor $1 (de) limbi',
 	'autocreatewiki-language-all' => 'Toate limbile',
-	'autocreatewiki-birthdate' => 'Data de naștere',
+	'autocreatewiki-birthdate' => 'Data nașterii:',
 	'autocreatewiki-blurry-word' => 'Cuvânt neclar:',
-	'autocreatewiki-remember' => 'Ţine-mă minte',
+	'autocreatewiki-remember' => 'Ține-mă minte',
 	'autocreatewiki-create-account' => 'Creați-vă un cont',
-	'autocreatewiki-done' => 'Rezolvat',
-	'autocreatewiki-error' => 'Eroare',
+	'autocreatewiki-done' => 'rezolvat',
+	'autocreatewiki-error' => 'eroare',
 	'autocreatewiki-haveaccount-question' => 'Aveți deja un cont Wikia?',
-	'autocreatewiki-success-title-default' => 'Wiki-ul dvs. a fost creat cu succes!',
-	'autocreatewiki-success-title-answers' => 'Site-ul tău de answer a fost creat!',
+	'autocreatewiki-success-title-default' => 'Site-ul dumneavoastră de tip wiki a fost creat cu succes!',
+	'autocreatewiki-success-title-answers' => 'Site-ul dumneavoastră de răspunsuri a fost creat!',
 	'autocreatewiki-success-subtitle' => 'Puteți începe acum lucrul pe acest wiki vizitând:',
 	'autocreatewiki-success-has-been-created' => 'a fost creat!',
 	'autocreatewiki-success-get-started' => 'Începeți',
-	'autocreatewiki-info-domain' => 'Cel mai bun mod de a căuta subiectul tău este să cauți cu cucinte cheie.',
-	'autocreatewiki-info-topic' => 'Adăugați o scurtă descriere, cum ar fi "Star Wars" sau manifestarea "TV"',
-	'autocreatewiki-info-category-default' => 'Aces lucru îi va ajuta pe vizitatori să vă găsească wiki-ul',
-	'autocreatewiki-info-category-answers' => 'Acest lucru îi va ajuta pe vizitatori să că găsească site-ul dvs. answers.',
-	'autocreatewiki-info-language' => 'Acest lucru îi va ajuta pe vizitatori să-și vadă limba implicită.',
+	'autocreatewiki-info-domain' => 'Cel mai bun mod de a căuta un subiect este să utilizați cuvinte cheie.',
+	'autocreatewiki-info-topic' => 'Adăugați o scurtă descriere, cum ar fi „Star Wars” sau „emisiuni TV”.',
+	'autocreatewiki-info-category-default' => 'Acest lucru îi va ajuta pe vizitatori să găsească site-ul dumneavoastră de tip wiki.',
+	'autocreatewiki-info-category-answers' => 'Acest lucru îi va ajuta pe vizitatori să găsească site-ul dumneavoastră de răspunsuri.',
+	'autocreatewiki-info-language' => 'Aceasta va fi limba implicită a interfeței pentru vizitatorii site-ului dumneavoastră de tip wiki.',
 	'autocreatewiki-info-email-address' => 'Adresa dvs. de email nu va fi niciodată văzută pe vreun proiect Wikia.',
-	'autocreatewiki-limit-creation' => 'Ați trecut de limita maximă a wiki-urilor create în 24 ore ($1)',
+	'autocreatewiki-limit-creation' => 'Ați depășit numărul maxim de site-uri wiki create în 24 de ore ($1).',
 );
 
 /** Tarandíne (Tarandíne)
@@ -2788,6 +2820,7 @@ $messages['roa-tara'] = array(
 
 /** Russian (Русский)
  * @author DCamer
+ * @author Grigol
  * @author Lockal
  * @author Александр Сигачёв
  */
@@ -2847,6 +2880,7 @@ $messages['ru'] = array(
 	'autocreatewiki-empty-username' => 'Имя участника не может быть пустым.',
 	'autocreatewiki-empty-password' => 'Пароль не может быть пустым.',
 	'autocreatewiki-empty-retype-password' => 'Повтор пароля не может быть пустым.',
+	'autocreatewiki-category-label' => 'Категория:',
 	'autocreatewiki-category-other' => 'Другое',
 	'autocreatewiki-set-username' => 'Сначала выберите имя участника.',
 	'autocreatewiki-invalid-category' => 'Неправильное значение категории.

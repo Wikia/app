@@ -146,6 +146,13 @@ $messages['ja'] = array(
 	'mostpopularcategories' => '人気のあるカテゴリ',
 );
 
+/** Georgian (ქართული)
+ * @author David1010
+ */
+$messages['ka'] = array(
+	'mostpopularcategories' => 'ყველაზე პოპულარული კატეგორიები',
+);
+
 /** Kannada (ಕನ್ನಡ)
  * @author Nayvik
  */
@@ -158,6 +165,13 @@ $messages['kn'] = array(
  */
 $messages['lb'] = array(
 	'mostpopularcategories' => 'Beléiwste Kategorien',
+);
+
+/** Latvian (Latviešu)
+ * @author Xil
+ */
+$messages['lv'] = array(
+	'mostpopularcategories' => 'Vispopulārākās kategorijas',
 );
 
 /** Macedonian (Македонски)
@@ -298,6 +312,13 @@ $messages['tk'] = array(
  */
 $messages['tl'] = array(
 	'mostpopularcategories' => 'Pinakasikat na mga kategorya',
+);
+
+/** Turkish (Türkçe)
+ * @author Manco Capac
+ */
+$messages['tr'] = array(
+	'mostpopularcategories' => 'En popüler kategoriler',
 );
 
 /** Ukrainian (Українська)

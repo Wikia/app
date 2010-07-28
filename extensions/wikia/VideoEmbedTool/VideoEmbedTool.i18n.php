@@ -100,6 +100,8 @@ $messages['qqq'] = array(
 	'vet-thiswiki2' => 'Needs plural support',
 	'vet-back' => '{{Identical|Back}}',
 	'vet-close' => '{{Identical|Close}}',
+	'vet-left' => '{{Identical|Left}}',
+	'vet-right' => '{{Identical|Right}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -461,6 +463,12 @@ $messages['de-formal'] = array(
 	'vet-main-info' => '<i>Suchen Sie nach einem Video oder geben Sie die Video-URL einer der unterstützten Seiten an</i>',
 	'vet-page-success' => 'Die Video-Seite wurde aktualisiert. Sie müssen ggf. den Server-Cache per purge leeren um die Änderung zu sehen.',
 	'vet-no-preview' => 'Sie können aus dem Vorschaumodus kein Video hinzufügen',
+);
+
+/** Ewe (Eʋegbe) */
+$messages['ee'] = array(
+	'vet-upload-btn' => 'Yi',
+	'vet-find-btn' => 'Dii',
 );
 
 /** Spanish (Español)
@@ -1348,6 +1356,7 @@ $messages['oc'] = array(
  * @author Xqt
  */
 $messages['pdc'] = array(
+	'vet-find-btn' => 'Uffgucke',
 	'vet-next' => 'Neegscht 8',
 	'vet-back' => 'zerrick',
 );
@@ -1473,11 +1482,14 @@ $messages['ps'] = array(
 	'vet-thumbnail' => 'بټنوک',
 	'vet-layout' => 'ليدنمخ',
 	'vet-close' => 'تړل',
+	'vet-show-message' => 'پيغام ښکاره کول',
+	'vet-hide-message' => 'پيغام پټول',
 	'vet-add-button' => 'ويډيو ورګډول',
 	'vet-see-all' => 'ټول کتل',
 	'vet-left' => 'کيڼ',
 	'vet-right' => 'ښي',
 	'vet-gallery' => 'نندارتون',
+	'vet-protected' => 'دا ويډيو ژغورل شوې',
 );
 
 /** Portuguese (Português)
@@ -1711,6 +1723,17 @@ $messages['sr-ec'] = array(
 	'vet-right' => 'десно',
 	'vet-gallery' => 'галерија',
 	'vet-protected' => 'овај видео је заштићен',
+);
+
+/** Swedish (Svenska)
+ * @author Jopparn
+ */
+$messages['sv'] = array(
+	'vet-upload' => 'Fullständig URL',
+	'vet-notlogged' => 'Logga in eller registrera dig för att lägga till videos',
+	'vet-find' => 'Finn igen en video',
+	'vet-thiswiki' => 'Denna Wiki',
+	'vet-flickr' => 'Flickr',
 );
 
 /** Swahili (Kiswahili)

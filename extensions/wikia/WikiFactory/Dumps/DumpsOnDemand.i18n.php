@@ -21,16 +21,6 @@ $messages['en'] = array(
 	'dump-database-info-more' => 'Please <a href="http://community.wikia.com/wiki/Help:Database_download">see</a> for more info'
 );
 
-/** Bahasa Banjar (Bahasa Banjar)
- * @author Ezagren
- */
-$messages['bjn'] = array(
-	'dump-database-curr-pages' => 'Tungkaran wayahini',
-	'dump-database-full-pages' => 'Tungkaran wayahini wan sajarah',
-	'dump-database-request' => 'Maminta pamugaan',
-	'dump-database-request-submit' => 'Kirim parmintaan',
-);
-
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -92,6 +82,16 @@ $messages['bg'] = array(
 	'dump-database-curr-pages' => 'Текущи страници',
 );
 
+/** Bahasa Banjar (Bahasa Banjar)
+ * @author Ezagren
+ */
+$messages['bjn'] = array(
+	'dump-database-curr-pages' => 'Tungkaran wayahini',
+	'dump-database-full-pages' => 'Tungkaran wayahini wan sajarah',
+	'dump-database-request' => 'Maminta pamugaan',
+	'dump-database-request-submit' => 'Kirim parmintaan',
+);
+
 /** Breton (Brezhoneg)
  * @author Fulup
  * @author Y-M D
@@ -99,7 +99,7 @@ $messages['bg'] = array(
 $messages['br'] = array(
 	'dump-database' => 'Tumpoù an diaz roadennoù',
 	'dump-database-info' => "Gallout a ra dilerc'hioù ar bank roadennoù bezañ implijet da eilenn savete personel (ent emgefre e sav Wikia eilennoù savete diforc'h evit an holl wikioù) pe evit ar botoù trezalc'h",
-	'dump-database-curr-pages' => 'Pajennoù a-vremañ',
+	'dump-database-curr-pages' => 'Pajennoù red',
 	'dump-database-curr-pages-info' => "(Gwelloc'h eo ar stumm-se evit implijoù ur bot)",
 	'dump-database-full-pages' => 'Pajennoù a-vremañ hag istor',
 	'dump-database-full-pages-info' => '(Diwallit : marteze eo bras-tre ar restr-mañ)',
@@ -325,6 +325,23 @@ $messages['id'] = array(
 	'dump-database-info-more' => 'Silakan <a href="http://community.wikia.com/wiki/Help:Database_download">lihat ini</a> untuk informasi lebih lanjut',
 );
 
+/** Italian (Italiano)
+ * @author OrbiliusMagister
+ */
+$messages['it'] = array(
+	'dump-database' => 'i dump del database',
+	'dump-database-info' => 'i dump del database possono essere utilizzati come backup personale (Wikia prodice copie di backup separatedi tutte le wiki automaticamente) o per i bot di manutenzione',
+	'dump-database-curr-pages' => 'pagine attuali',
+	'dump-database-curr-pages-info' => '(Questa versione è normalmente la migliore da far usare ai bot)',
+	'dump-database-full-pages' => 'Pagine e cronologia attuali',
+	'dump-database-full-pages-info' => '(Attenzione: questo file potrebbe essere molto grande)',
+	'dump-database-request' => 'Richiesta di aggiornamento',
+	'dump-database-request-info' => '(di solito i dump sono generati con cadenza settimanale)',
+	'dump-database-request-submit' => 'Invia una richiesta',
+	'dump-database-request-requested' => 'Richiesta di dump del database inviata',
+	'dump-database-info-more' => 'Si prega di consultare <a href="http://community.wikia.com/wiki/Help:Database_download">questa pagina</a> per maggiori informazioni',
+);
+
 /** Japanese (日本語)
  * @author Hosiryuhosi
  * @author Tommy6
@@ -351,6 +368,23 @@ $messages['kn'] = array(
 	'dump-database-full-pages' => 'ಪ್ರಸ್ತುತ ಪುಟಗಳು ಮತ್ತು ಇತಿಹಾಸ',
 	'dump-database-request-submit' => 'ಕೋರಿಕೆಯನ್ನು ಕಳುಹಿಸು',
 	'dump-database-info-more' => 'ಹೆಚ್ಚಿನ ಮಾಹಿತಿಗಾಗಿ <a href="http://community.wikia.com/wiki/Help:Database_download">ನೋಡಿ</a>',
+);
+
+/** Karachay-Balkar (Къарачай-Малкъар)
+ * @author Къарачайлы
+ */
+$messages['krc'] = array(
+	'dump-database' => 'Билги базаланы дамплары',
+	'dump-database-info' => 'Билги базаланы дамплары энчи резерв копия кибик хайырландылыргъа боллукъдула (Версия бютеу викилеге айры резеврв копияланы автомат халда къурайды) неда ботланы баджарыр ючюн хайырландырыр мадар барды',
+	'dump-database-curr-pages' => 'Бара тургъан бетле',
+	'dump-database-curr-pages-info' => '(Бу версия, бот ючюн эм таб келишеди)',
+	'dump-database-full-pages' => 'Бара тургъан бетле бла тарих',
+	'dump-database-full-pages-info' => '(Эс бёлюгюз: бу файл асыры бек уллу болургъа болур)',
+	'dump-database-request' => 'Джангыртыуланы  изле',
+	'dump-database-request-info' => '(Асламысы бла дампла хар кюн къураладыла)',
+	'dump-database-request-submit' => 'Соруу джибер',
+	'dump-database-request-requested' => 'Билгиле базаны дампына соруу джиберилгенди',
+	'dump-database-info-more' => 'Тилейбиз, <a href="http://community.wikia.com/wiki/Help:Database_download"> къошакъ билгилеге къарагъыз</a>',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -463,6 +497,7 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'dump-database-curr-pages' => 'تازه مخونه',
 	'dump-database-request-submit' => 'غوښتنه ورلېږل',
 );
 

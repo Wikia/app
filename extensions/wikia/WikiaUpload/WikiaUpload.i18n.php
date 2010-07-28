@@ -20,6 +20,7 @@ $messages['af'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author OsamaK
  */
 $messages['ar'] = array(
@@ -149,6 +150,13 @@ $messages['hu'] = array(
 	'wikiaupload' => 'Wikia feltöltés',
 );
 
+/** Armenian (Հայերեն)
+ * @author Pandukht
+ */
+$messages['hy'] = array(
+	'wikiaupload' => 'Wikia բեռնումներ',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -184,6 +192,13 @@ $messages['ja'] = array(
 	'wikiaupload' => 'ウィキアアップロード',
 );
 
+/** Georgian (ქართული)
+ * @author David1010
+ */
+$messages['ka'] = array(
+	'wikiaupload' => 'Wikia-ს ატვირთვა',
+);
+
 /** Kannada (ಕನ್ನಡ)
  * @author Nayvik
  */
@@ -191,11 +206,39 @@ $messages['kn'] = array(
 	'wikiaupload' => 'ವಿಕಿಯಾ ಅಪ್ಲೋಡ್',
 );
 
+/** Karachay-Balkar (Къарачай-Малкъар)
+ * @author Къарачайлы
+ */
+$messages['krc'] = array(
+	'wikiaupload' => 'Wikia джюклеуле',
+);
+
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'wikiaupload' => 'Huhlade noh Wikia',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
 $messages['lb'] = array(
 	'wikiaupload' => 'Wikia eroplueden',
+);
+
+/** Limburgish (Limburgs)
+ * @author Ooswesthoesbes
+ */
+$messages['li'] = array(
+	'wikiaupload' => 'Wikia-upload',
+);
+
+/** Latvian (Latviešu)
+ * @author Xil
+ */
+$messages['lv'] = array(
+	'wikiaupload' => 'Wikia augšuplāde',
 );
 
 /** Macedonian (Македонски)

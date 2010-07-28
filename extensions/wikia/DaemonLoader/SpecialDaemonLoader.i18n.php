@@ -65,9 +65,11 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
+ * @author Hamilton Abreu
  */
 $messages['qqq'] = array(
 	'daemonloader_daemondesc' => '{{Identical|Description}}',
+	'daemonloader_taskid' => '{{Identical|ID}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -934,25 +936,60 @@ $messages['ps'] = array(
  * @author Luckas Blade
  */
 $messages['pt'] = array(
+	'daemonloader' => 'Preparador de deamons',
+	'daemonloader_pagetitle' => 'Preparador de deamons',
+	'daemonloader_createtask' => 'Criar tarefa',
+	'daemonloader_listtask' => 'Lista de tarefas',
+	'daemonloader_configure' => 'Configurar o daemon',
+	'daemonloader_daemonname' => 'Nome do deamon',
+	'daemonloader_scriptname' => 'Nome do script',
 	'daemonloader_daemondesc' => 'Descrição',
+	'daemonloader_inputparams' => 'Parâmetros de entrada',
+	'daemonloader_paramname' => 'Nome do parâmetro',
+	'daemonloader_paramdesc' => 'Descrição do parâmetro',
+	'daemonloader_paramtype' => 'Tipo do parâmetro',
 	'daemonloader_paramremove' => 'Remover?',
-	'daemonloader_paramdefvalue' => 'Valor padrão',
+	'daemonloader_removedaemon' => 'Remover o daemon',
+	'daemonloader_paramdefvalue' => 'Valor por omissão',
+	'daemonloader_alldaemons' => 'Todos os daemons',
+	'daemonloader_loaddaemon' => 'Seleccione o daemon para editar ou crie um novo abaixo:',
+	'daemonloader_selectdaemon' => 'Seleccione o daemon para obter informações e clique o botão para passar ao próximo passo',
+	'daemonloader_selectlist' => 'Seleccione da lista',
 	'daemonloader_search' => 'Pesquisar:',
+	'daemonloader_daemonchanged' => 'As suas alterações foram gravadas',
+	'daemonloader_daemonnotchanged' => 'As suas alterações não foram gravadas',
+	'daemonloader_string' => 'texto',
 	'daemonloader_number' => 'número',
 	'daemonloader_date_yyyymmdd' => 'data (AAAAAMMDD)',
 	'daemonloader_date_yyyymm' => 'meses (AAAAMM)',
 	'daemonloader_date_yyyy' => 'anos (AAAA)',
+	'daemonloader_wikilist' => 'Lista de wikis',
 	'daemonloader_gonextstep' => 'Próximo passo',
+	'daemonloader_setparams' => 'Definir valores para os parâmetros de entrada do daemon:',
+	'daemonloader_1step' => 'Primeiro passo (seleccionar daemon)',
+	'daemonloader_2step' => 'Segundo passo (opções do deamon)',
+	'daemonloader_3step' => 'Terceiro passo (opções da tarefa)',
+	'daemonloader_steps' => 'Passo actual:',
+	'daemonloader_daemoninfo' => 'Descrição do daemon',
+	'daemonloader_configtaskparams' => 'Configurar os parâmetros da tarefa:',
 	'daemonloader_startdate' => 'Data de início',
+	'daemonloader_enddate' => 'Data de fim',
+	'daemonloader_frequency' => 'Frequência dos relatórios',
+	'daemonloader_emails' => 'Endereços de correio electrónico',
+	'daemonloader_files' => 'Ficheiros XLS',
+	'daemonloader_period' => 'Período dos relatórios',
+	'daemonloader_dateformat' => 'Formato da data: AAAAMMDD',
+	'daemonloader_emails_info' => 'Lista de correios electrónicos separados por vírgulas, aos quais será enviado o resultado da tarefa',
 	'daemonloader_day' => 'todos os dias',
 	'daemonloader_week' => 'todas as semanas',
 	'daemonloader_month' => 'todos os meses',
 	'daemonloader_taskid' => 'Id',
 	'daemonloader_newtask' => 'Tarefa nova',
-	'daemonloader_createdby' => 'Criada por',
-	'daemonloader_created' => 'Criada',
+	'daemonloader_daemonparams' => 'Parâmetros do daemon',
+	'daemonloader_createdby' => 'Criado por',
+	'daemonloader_created' => 'Criado',
 	'daemonloader_options' => 'Opções',
-	'daemonloader_nojobsfound' => 'Não foi encontrada nenhuma tarefa',
+	'daemonloader_nojobsfound' => 'Não foi encontrado nenhum processo',
 	'daemonloader_removejobconfirm' => 'Tem a Certeza?',
 );
 

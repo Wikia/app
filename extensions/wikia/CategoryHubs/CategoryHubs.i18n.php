@@ -327,7 +327,7 @@ $messages['ia'] = array(
 	'cathub-progbar-mouseover-answered' => '$1% respondite ($2 responsas)',
 	'cathub-progbar-mouseover-not-answered' => '$1% non ancora respondite ($2 questiones)',
 	'cathub-progbar-label-answered' => 'Respondite',
-	'cathub-progbar-label-unanswered' => 'Non respondite',
+	'cathub-progbar-label-unanswered' => 'Sin responsa',
 	'cathub-progbar-none-done' => 'Nulle question ancora respondite',
 	'cathub-progbar-all-done' => 'Tote le questiones respondite!',
 	'cathub-progbar-allmost-done' => 'Il resta $1 {{PLURAL:$1|question|questiones}} a responder!',
@@ -545,6 +545,8 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'cathub-progbar-label-answered' => 'ځوب شوي',
+	'cathub-progbar-all-done' => 'ټولې پوښتنې ځواب شوي!',
 	'cathub-answer-heading' => 'ځواب',
 	'cathub-button-answer' => 'ځواب',
 );

@@ -308,6 +308,7 @@ $messages['it'] = array(
  * @author 青子守歌
  */
 $messages['ja'] = array(
+	'specialprotectsite-desc' => 'サイト管理者が、[[Special:ProtectSite|サイトの様々な修正を一時的に制限]]することを許可する',
 	'protectsite' => 'サイトの保護',
 	'protectsite-text-protect' => '<!-- 利用時の方針/コメント/指示 -->',
 	'protectsite-text-unprotect' => '<!-- 保護された時のコメント/指示 -->',
@@ -441,6 +442,7 @@ $messages['no'] = array(
  */
 $messages['pdc'] = array(
 	'protectsite-comment' => 'Grund:',
+	'protectsite-protect' => 'Schitze',
 );
 
 /** Polish (Polski)
@@ -492,6 +494,8 @@ $messages['pms'] = array(
  */
 $messages['ps'] = array(
 	'protectsite-allowall' => 'ټول کارنان',
+	'protectsite-allowsysop' => 'يوازې پازوالان',
+	'protectsite-comment' => 'تبصره:',
 	'protectsite-protect' => 'ژغورل',
 	'protectsite-unprotect' => 'نه ژغورل',
 );

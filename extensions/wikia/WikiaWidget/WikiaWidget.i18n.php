@@ -19,6 +19,13 @@ $messages['af'] = array(
 	'wikiawidget' => 'Wikia-widgets',
 );
 
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'wikiawidget' => 'خاصيات ويكيا',
+);
+
 /** Araucanian (Mapudungun)
  * @author Kaniw
  */
@@ -39,6 +46,13 @@ $messages['be-tarask'] = array(
  */
 $messages['br'] = array(
 	'wikiawidget' => 'Widgetoù wikia',
+);
+
+/** Bosnian (Bosanski)
+ * @author Palapa
+ */
+$messages['bs'] = array(
+	'wikiawidget' => 'Wikia kontrole',
 );
 
 /** Catalan (Català)
@@ -149,6 +163,13 @@ $messages['ja'] = array(
 	'wikiawidget' => 'ウィキアウィジェット',
 );
 
+/** Georgian (ქართული)
+ * @author David1010
+ */
+$messages['ka'] = array(
+	'wikiawidget' => 'Wikia-ს ვიჯეტები',
+);
+
 /** Kannada (ಕನ್ನಡ)
  * @author Nayvik
  */
@@ -156,11 +177,32 @@ $messages['kn'] = array(
 	'wikiawidget' => 'ವಿಕಿಯಾ ವಿಡ್ಜೆಟ್‍ಗಳು',
 );
 
+/** Karachay-Balkar (Къарачай-Малкъар)
+ * @author Къарачайлы
+ */
+$messages['krc'] = array(
+	'wikiawidget' => 'Wikia виджетле',
+);
+
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'wikiawidget' => '<i lang="en">Wikia Widgets</i>',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
 $messages['lb'] = array(
 	'wikiawidget' => 'Wikia Widgeten',
+);
+
+/** Limburgish (Limburgs)
+ * @author Ooswesthoesbes
+ */
+$messages['li'] = array(
+	'wikiawidget' => 'Wikia-widgets',
 );
 
 /** Macedonian (Македонски)
@@ -227,6 +269,13 @@ $messages['pt'] = array(
  */
 $messages['pt-br'] = array(
 	'wikiawidget' => 'Widgets Wikia',
+);
+
+/** Romanian (Română)
+ * @author Minisarm
+ */
+$messages['ro'] = array(
+	'wikiawidget' => 'Gadgeturi Wikia',
 );
 
 /** Tarandíne (Tarandíne)

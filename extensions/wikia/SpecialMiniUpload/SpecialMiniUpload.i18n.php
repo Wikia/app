@@ -304,10 +304,20 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
+	'widgetdashboard' => 'Assistente de Widgets',
+	'mu_size_your_image' => 'Dimensione a sua imagem',
+	'almosttheretext' => 'Deslize o cursor para selecionar a dimensão da miniatura, introduza uma legenda e clique Inserir',
+	'insertfullsize' => 'Inserir imagem com as dimensões originais',
+	'insertthumbnail' => 'Inserir miniatura',
+	'thumbnailsize' => 'Tamanho da miniatura das imagens',
+	'captionoptional' => 'Legenda (opcional):',
 	'insertimage' => 'Inserir imagem',
+	'leftalign-tooltip' => 'Alinhar à esquerda',
+	'rightalign-tooltip' => 'Alinhar à direita',
 );
 
 /** Russian (Русский)

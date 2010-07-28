@@ -156,6 +156,13 @@ $messages['lb'] = array(
 	'force-subject-for-new-section-message' => 'Gitt w.e.g. eng Iwwerschrëft fir den neien Abschnitt an',
 );
 
+/** Latvian (Latviešu)
+ * @author Xil
+ */
+$messages['lv'] = array(
+	'force-subject-for-new-section-message' => 'Lūdzu, ievadi šīs sadaļas virsrakstu!',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -265,5 +272,12 @@ $messages['tl'] = array(
  */
 $messages['uk'] = array(
 	'force-subject-for-new-section-message' => 'Будь ласка, введіть заголовок для розділу',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Frankou
+ */
+$messages['zh-hant'] = array(
+	'force-subject-for-new-section-message' => '請為該章節輸入一個標題',
 );
 

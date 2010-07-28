@@ -239,7 +239,10 @@ $messages['ja'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp; vun alle Stëmmen',
+	'ajaxpoll-thankyou' => 'Merci fir Är Stëmm!',
 	'ajaxpoll-submit' => 'Ofstëmmen!',
+	'ajaxpoll-submitting' => 'Waart w.e.g., Är Stëmm gëtt elo geschéckt ...',
 );
 
 /** Macedonian (Македонски)

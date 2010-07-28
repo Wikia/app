@@ -141,6 +141,13 @@ $messages['ja'] = array(
 	'mostpopulararticles' => '人気のあるページ（データベースより）',
 );
 
+/** Georgian (ქართული)
+ * @author David1010
+ */
+$messages['ka'] = array(
+	'mostpopulararticles' => 'ყველაზე პოპულარული სტატიები (მონაცემთა ბაზიდან)',
+);
+
 /** Khmer (ភាសាខ្មែរ)
  * @author គីមស៊្រុន
  */
@@ -160,6 +167,13 @@ $messages['kn'] = array(
  */
 $messages['lb'] = array(
 	'mostpopulararticles' => 'Beléiwsten Artikelen (aus der Datebank)',
+);
+
+/** Latvian (Latviešu)
+ * @author Xil
+ */
+$messages['lv'] = array(
+	'mostpopulararticles' => 'Vispopulārākie raksti (no datubāzes)',
 );
 
 /** Macedonian (Македонски)
@@ -286,6 +300,13 @@ $messages['ta'] = array(
  */
 $messages['tl'] = array(
 	'mostpopulararticles' => 'Pinakasikat na mga artikulo (mula sa talaan ng dato)',
+);
+
+/** Turkish (Türkçe)
+ * @author Manco Capac
+ */
+$messages['tr'] = array(
+	'mostpopulararticles' => 'En popüler sayfalar (veri bankasındaki)',
 );
 
 /** Ukrainian (Українська)
