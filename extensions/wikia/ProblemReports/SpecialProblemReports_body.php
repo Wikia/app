@@ -507,7 +507,7 @@ class SpecialProblemReports extends SpecialPage {
 
 				'can_remove'		=> WikiaApiQueryProblemReports::userCanRemove(),
 				'isStaff'           	=> WikiaApiQueryProblemReports::isStaff(),
-				'userGroups'        	=> $wgUser->getGroups(),
+				'userGroups'        	=> $wgUser->getEffectiveGroups(),
 
 				'th'			=> $th,
 				'colors'		=> $this->problemColors,

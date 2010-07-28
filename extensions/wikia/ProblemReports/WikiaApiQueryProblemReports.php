@@ -789,7 +789,7 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
     // user is staff member
     static function isStaff() {
         global $wgUser;
-		return in_array( 'staff', $wgUser->getGroups() );
+		return in_array( 'staff', $wgUser->getEffectiveGroups() );
     }
 
     // user can do actions: fix, reopen, close problem reports (cross-wiki)
@@ -802,7 +802,7 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
     // use can remove problem reports
     static function userCanRemove() {
     	global $wgUser;
-		return in_array( 'staff', $wgUser->getGroups() );
+		return in_array( 'staff', $wgUser->getEffectiveGroups() );
     }
 
 	// formatting of log messages
