@@ -174,6 +174,9 @@ class AdEngine {
 				$skin_name = $wgUser->getSkin()->getSkinName();
 		}
 
+		// sometimes no skin set yet; hack copied from Interstitial::getCss
+		if (empty($skin_name)) $skin_name = substr(get_class($wgUser->getSkin()), 4);
+
 		if ($skin_name == 'awesome' || $skin_name == 'answers' ){
 			// Temporary hack while we transition to lean monaco
 			$skin_name = 'monaco';
@@ -257,6 +260,7 @@ class AdEngine {
 				$this->slots[$slotname]['provider_id'] = $provider_id;
 				$this->slots[$slotname]['provider'] = $GLOBALS[$name];
 				$this->slots[$slotname]['overridden_by'] = $name;
+				$this->slots[$slotname]['enabled'] = "Yes";
 			}
 		}
 	}

@@ -38,6 +38,7 @@
 	</div>
 </div>
 <div class="article-sidebar">
+	<?= AdEngine::getInstance()->getPlaceHolderIframe("ACHIEVEMENTS_BOXAD") ?>
 	<h2 class="achievements-title"><?= wfMsg('achievements-recent-earned-badges'); ?></h2>
 	<ul class="recent-badges">
 		<?php
