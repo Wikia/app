@@ -117,6 +117,7 @@ class SpecialSponsor extends SpecialPage {
 					$form.='<input type="hidden" name="'.$key.'" value="'.htmlentities($value).'" />';
 				}
 			}
+			// FIXME: buttons need i18n; keys already present ('sponsorpage-edit'/'sponsorpage-save')
 			$form .="\n".'<input type="submit" name="submit" value="edit" />
 				<input type="submit" name="submit" value="save" />';
 			$form .= Xml::closeElement( 'form' );
@@ -196,6 +197,7 @@ class SpecialSponsor extends SpecialPage {
 		$item_name = "Wikia Sponsorship for ". $ad->page_original_url;
 		$price = $ad->ad_price;
 		$duration = $ad->ad_months;
+		// FIXME: i18n for alt text needed.
 		$form = '<p>' . wfMsg('sponsor-form-thanks') . '</p>
 		<form name="paypalform" id="paypalform" action="https://www.paypal.com/cgi-bin/webscr" method="post">
 			<input type="image" src="https://www.paypal.com/en_US/i/btn/btn_subscribe_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
