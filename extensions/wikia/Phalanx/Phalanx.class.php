@@ -114,8 +114,8 @@ class Phalanx {
 			$blocksData['blocks'] = $blocks;
 			$blocksData['closestExpire'] = $closestTimestamp;
 			$wgMemc->set($key, $blocksData);
-			self::$moduleData[$moduleId] = $blocksData;
 		}
+		self::$moduleData[$moduleId] = $blocksData;
 
 		wfProfileOut( __METHOD__ );
 		return $blocksData['blocks'];
