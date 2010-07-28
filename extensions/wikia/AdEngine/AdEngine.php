@@ -21,6 +21,9 @@ function wfAdEngineSetupJSVars($vars) {
  * Before the page is rendered this gives us a chance to cram some Javascript in.
  */
 function adEngineAdditionalScripts( &$out, &$sk ){
+	global $wgEnableAdsLazyLoad;
+	if (!$wgEnableAdsLazyLoad) return true;
+
 	global $wgExtensionsPath,$wgStyleVersion;
 
 	$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/AdEngine/LazyLoadAds.js?$wgStyleVersion'></script>\n");
