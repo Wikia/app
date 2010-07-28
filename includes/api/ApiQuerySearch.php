@@ -122,6 +122,10 @@ class ApiQuerySearch extends ApiQueryGeneratorBase {
 		}
 	}
 
+	public function getCacheMode( $params ) {
+		return 'public';
+	}
+
 	public function getAllowedParams() {
 		return array (
 			'search' => null,
@@ -173,6 +177,6 @@ class ApiQuerySearch extends ApiQueryGeneratorBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQuerySearch.php 47865 2009-02-27 16:03:01Z catrope $';
+		return __CLASS__ . ': $Id: ApiQuerySearch.php 69986 2010-07-27 03:57:39Z tstarling $';
 	}
 }

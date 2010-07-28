@@ -43,6 +43,10 @@ class ApiQueryDuplicateFiles extends ApiQueryGeneratorBase {
 		$this->run();
 	}
 
+	public function getCacheMode( $params ) {
+		return 'public';
+	}
+
 	public function executeGenerator($resultPageSet) {
 		$this->run($resultPageSet);
 	}
@@ -153,6 +157,6 @@ class ApiQueryDuplicateFiles extends ApiQueryGeneratorBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryDuplicateFiles.php 48215 2009-03-09 10:44:34Z catrope $';
+		return __CLASS__ . ': $Id: ApiQueryDuplicateFiles.php 69986 2010-07-27 03:57:39Z tstarling $';
 	}
 }

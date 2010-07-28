@@ -97,6 +97,10 @@ class ApiQueryCategoryInfo extends ApiQueryBase {
 		$db->freeResult($res);
 	}
 
+	public function getCacheMode( $params ) {
+		return 'public';
+	}
+
 	public function getAllowedParams() {
 		return array (
 			'continue' => null,
@@ -118,6 +122,6 @@ class ApiQueryCategoryInfo extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryCategoryInfo.php 47865 2009-02-27 16:03:01Z catrope $';
+		return __CLASS__ . ': $Id: ApiQueryCategoryInfo.php 69986 2010-07-27 03:57:39Z tstarling $';
 	}
 }

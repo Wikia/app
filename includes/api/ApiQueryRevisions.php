@@ -411,6 +411,17 @@ class ApiQueryRevisions extends ApiQueryBase {
 		return $vals;
 	}
 
+	public function getCacheMode( $params ) {
+		if ( isset( $params['token'] ) ) {
+			return 'private';
+		}
+		if ( !is_null( $params['prop'] ) && in_array( 'parsedcomment', $params['prop'] ) ) {
+			// formatComment() calls wfMsg() among other things
+			return 'anon-public-user-private';
+		}		
+		return 'public';
+	}
+
 	public function getAllowedParams() {
 		return array (
 			'prop' => array (
@@ -519,6 +530,6 @@ class ApiQueryRevisions extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryRevisions.php 48642 2009-03-20 20:21:38Z midom $';
+		return __CLASS__ . ': $Id: ApiQueryRevisions.php 69986 2010-07-27 03:57:39Z tstarling $';
 	}
 }

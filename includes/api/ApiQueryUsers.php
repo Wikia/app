@@ -138,6 +138,10 @@ if (!defined('MEDIAWIKI')) {
 		return $this->getResult()->setIndexedTagName_internal(array('query', $this->getModuleName()), 'user');
 	}
 
+	public function getCacheMode( $params ) {
+		return 'public';
+	}
+
 	public function getAllowedParams() {
 		return array (
 			'prop' => array (
@@ -180,6 +184,6 @@ if (!defined('MEDIAWIKI')) {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryUsers.php 50094 2009-05-01 06:24:09Z tstarling $';
+		return __CLASS__ . ': $Id: ApiQueryUsers.php 69986 2010-07-27 03:57:39Z tstarling $';
 	}
 }

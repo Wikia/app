@@ -176,6 +176,6 @@ class ApiQueryWatchlistRaw extends ApiQueryGeneratorBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryWatchlistRaw.php 46845 2009-02-05 14:30:59Z catrope $';
+		return __CLASS__ . ': $Id: ApiQueryWatchlistRaw.php 69579 2010-07-20 02:49:55Z tstarling $';
 	}
 }

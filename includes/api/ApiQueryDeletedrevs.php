@@ -335,6 +335,6 @@ class ApiQueryDeletedrevs extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryDeletedrevs.php 50220 2009-05-05 14:07:59Z tstarling $';
+		return __CLASS__ . ': $Id: ApiQueryDeletedrevs.php 69579 2010-07-20 02:49:55Z tstarling $';
 	}
 }

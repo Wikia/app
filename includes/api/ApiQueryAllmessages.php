@@ -104,6 +104,16 @@ class ApiQueryAllmessages extends ApiQueryBase {
 		$result->setIndexedTagName_internal(array('query', $this->getModuleName()), 'message');
 	}
 
+	public function getCacheMode( $params ) {
+		if ( is_null( $params['lang'] ) ) {
+			// Language not specified, will be fetched from preferences
+			return 'anon-public-user-private';
+		} else {
+			// OK to cache
+			return 'public';
+		}
+	}
+
 	public function getAllowedParams() {
 		return array (
 			'messages' => array (
@@ -136,6 +146,6 @@ class ApiQueryAllmessages extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryAllmessages.php 47048 2009-02-09 19:24:28Z catrope $';
+		return __CLASS__ . ': $Id: ApiQueryAllmessages.php 69986 2010-07-27 03:57:39Z tstarling $';
 	}
 }

@@ -263,6 +263,6 @@ class ApiQueryBlocks extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryBlocks.php 48213 2009-03-09 10:01:00Z aaron $';
+		return __CLASS__ . ': $Id: ApiQueryBlocks.php 69579 2010-07-20 02:49:55Z tstarling $';
 	}
 }

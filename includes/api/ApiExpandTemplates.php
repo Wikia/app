@@ -42,6 +42,9 @@ class ApiExpandTemplates extends ApiBase {
 	}
 
 	public function execute() {
+		// Cache may vary on $wgUser because ParserOptions gets data from it
+		$this->getMain()->setCacheMode( 'anon-public-user-private' );
+
 		// Get parameters
 		$params = $this->extractRequestParams();
 
@@ -105,6 +108,6 @@ class ApiExpandTemplates extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiExpandTemplates.php 44719 2008-12-17 16:34:01Z catrope $';
+		return __CLASS__ . ': $Id: ApiExpandTemplates.php 69986 2010-07-27 03:57:39Z tstarling $';
 	}
 }

@@ -38,6 +38,9 @@ class ApiParse extends ApiBase {
 	}
 
 	public function execute() {
+		// The data is hot but user-dependent, like page views, so we set vary cookies
+		$this->getMain()->setCacheMode( 'anon-public-user-private' );
+
 		// Get parameters
 		$params = $this->extractRequestParams();
 		$text = $params['text'];
@@ -277,6 +280,6 @@ class ApiParse extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiParse.php 48544 2009-03-18 23:27:48Z aboostani $';
+		return __CLASS__ . ': $Id: ApiParse.php 69986 2010-07-27 03:57:39Z tstarling $';
 	}
 }

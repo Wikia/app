@@ -3,9 +3,9 @@
 Security reminder: MediaWiki does not require PHP's register_globals
 setting since version 1.2.0. If you have it on, turn it *off* if you can.
 
-== MediaWiki 1.15.4 ==
+== MediaWiki 1.15.5 ==
 
-2010-05-28
+2010-07-28
 
 This is a security and maintenance release.
 
@@ -19,6 +19,21 @@ will be made on the development trunk and appear in the next quarterly release.
 
 Those wishing to use the latest code instead of a branch release can obtain
 it from source control: http://www.mediawiki.org/wiki/Download_from_SVN
+
+== Changes since 1.15.4 ==
+
+* (bug 24565) Fixed Cache-Control headers sent from API modules, to protect
+  user privacy in the case where an attacker can access the wiki through the
+  same HTTP proxy as a logged-in user.
+* Fixed a minor cookie header parsing issue causing incorrect Cache-Control 
+  headers to be sent.
+* Fixed an XSS vulnerability in profileinfo.php for installations with 
+  $wgEnableProfileInfo = true (false by default)
+* For backwards compatibility with extensions from 1.14.x or before, restored 
+  the original function ApiMain::requestWriteMode(). 
+* In API login "need token" responses, added the cookieprefix and sessionid 
+  fields, as in MediaWiki 1.16.x. This is an improvement to the CSRF fix 
+  introduced in 1.15.3.
 
 == Changes since 1.15.3 ==
 

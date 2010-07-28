@@ -43,6 +43,10 @@ class ApiQueryCategories extends ApiQueryGeneratorBase {
 		$this->run();
 	}
 
+	public function getCacheMode( $params ) {
+		return 'public';
+	}
+
 	public function executeGenerator($resultPageSet) {
 		$this->run($resultPageSet);
 	}
@@ -237,6 +241,6 @@ class ApiQueryCategories extends ApiQueryGeneratorBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryCategories.php 50097 2009-05-01 06:35:57Z tstarling $';
+		return __CLASS__ . ': $Id: ApiQueryCategories.php 69986 2010-07-27 03:57:39Z tstarling $';
 	}
 }

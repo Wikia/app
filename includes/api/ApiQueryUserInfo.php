@@ -181,6 +181,6 @@ class ApiQueryUserInfo extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryUserInfo.php 47865 2009-02-27 16:03:01Z catrope $';
+		return __CLASS__ . ': $Id: ApiQueryUserInfo.php 69579 2010-07-20 02:49:55Z tstarling $';
 	}
 }

@@ -4,6 +4,7 @@
  * @ingroup Language
  * @file
  *
+ * @author Ezagren
  * @author Kurniasan
  */
 
@@ -233,7 +234,7 @@ $messages = array(
 'revdelete-hide-text'    => 'Tapoïki text revisië',
 'revdelete-hide-comment' => 'Tapo komentar mapadecéŋ',
 'revdelete-hide-user'    => 'Tapo aseŋ papakéna/IPna papadéceŋë',
-'revdelete-log'          => 'Komentarna logeë:',
+'revdelete-log'          => 'Saba:',
 'revdelete-content'      => 'lise',
 'revdelete-uname'        => 'aseŋ papaké',
 'revdelete-hid'          => 'tapo $1',
