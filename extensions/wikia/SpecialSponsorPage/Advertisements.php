@@ -123,6 +123,19 @@ class Advertisement
 		$wgMemc->set( $key, $adcache, 60*60*24 );
 		return $adcache;
 	}
+
+	/**
+	 * called on article purge via hook
+	 */
+	public static function onArticlePurge( $article ) {
+		global $wgDBname;
+
+		if ( is_object( $article ) ) {
+			self::FlushAdCache( $wgDBname, $article->getId() );
+		}
+
+		return true;
+	}
 	
 	/**
 	 * load from database, uses globals to load ads for current article
