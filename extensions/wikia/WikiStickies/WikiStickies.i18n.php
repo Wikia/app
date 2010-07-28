@@ -29,7 +29,7 @@ These are things that can only be done by administrators of the wiki to influenc
 	'wikistickies-custom-hd' => 'Create your own WikiStickies',
 	'wikistickies-custom-msg' => 'You can edit the [[MediaWiki:CommunityStickies|CommunityStickies page]] to add a new WikiStickies note!
 Add items to the list, and they will appear on My Home and on this page.',
-	'wikistickies-next' => 'Next ▒!',
+	'wikistickies-next' => 'Next →',
 	'wikistickies-hide' => 'hide',
 	'wikistickies-see-more' => 'See more pages that need help',
 );
