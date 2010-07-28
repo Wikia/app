@@ -9,6 +9,7 @@ if(!defined('MEDIAWIKI')) {
 
 
 // for now it's more a copy of VideoEmbedTool files
+// TODO: L10n-able description
 $wgExtensionCredits['other'][] = array(
         'name' => 'Video Embed Tool',
         'author' => 'Bartek Łapiński, Inez Korczyński',

@@ -66,10 +66,9 @@ class QuickVideoAddForm extends SpecialPage {
 				$video->setName( $this->mName );
 				$video->save();				
 			}
-			$wgOut->addHTML( "Video page added successfully." );
+			$wgOut->addHTML( "Video page added successfully." ); // FIXME: missing i18n
 		} else {
-			$wgOut->addHTML( "Error! Please supply parameters!" );
+			$wgOut->addHTML( "Error! Please supply parameters!" ); // FIXME: missing i18n
 		}
 	}
 }
-
