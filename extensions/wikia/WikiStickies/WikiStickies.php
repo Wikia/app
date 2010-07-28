@@ -7,10 +7,10 @@ if (!defined('MEDIAWIKI')) {
 $wgExtensionCredits['specialpage'][] = array(
         'name' => 'Wiki Stickies',
         'author' => 'Bartek Lapinski',
-        'url' => 'http://www.mediawiki.org/wiki/Extension:MyExtension',
+        //'url' => 'http://www.mediawiki.org/wiki/Extension:MyExtension',
         'description' => 'The big, sticky Wiki Stickies to capture your eye!',
-        'descriptionmsg' => 'The extension that will capture your attention!',
-        'version' => '0.1.5',
+        'descriptionmsg' => 'wikistickies-desc',
+        'version' => '0.1.6',
 );
 
 $dir = dirname(__FILE__) . '/';
