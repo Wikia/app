@@ -1,7 +1,10 @@
 <?php
+if ( !defined( 'MEDIAWIKI' ) ) die();
+
 $wgExtensionCredits['other'][] = array(
 	'name' => 'Recipes Tweaks',
-	'description' => 'Design and functionality tweaks for Recipes Wiki',
+	'author' => 'Wikia, Inc.',
+	'descriptionmsg' => 'recipestweaks-desc',
 );
 
 $dir = dirname(__FILE__) . '/';
