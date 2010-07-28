@@ -4,6 +4,12 @@
  * @ingroup SpecialPage
  */
 
+$wgExtensionCredits['specialpage'][] = array(
+	'name' => 'Withoutimages',
+	'author' => 'Emil Podlaszewski',
+	'descriptionmsg' => 'withoutimages-desc',
+);
+
 $dir = dirname(__FILE__) . '/';
 
 // autoloader
