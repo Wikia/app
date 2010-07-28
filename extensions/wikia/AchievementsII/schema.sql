@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `ach_user_badges` (
   `notified` tinyint(1) NOT NULL DEFAULT '0',
   KEY `id` (`wiki_id`, `user_id`),
   KEY `badge_count` (`wiki_id`, `badge_type_id`, `badge_lap`),
-  KEY `level_date` (`wiki_id`, `badge_level`, `date`)
+  KEY `level_date` (`wiki_id`, `badge_level`, `date`, `badge_lap`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
