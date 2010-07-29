@@ -4,12 +4,12 @@ $messages = array();
 
 $messages['en'] = array(
 	'rte-desc' => 'CKeditor integration for MediaWiki',
-	'rte-no-js-fallback' => 'The rich text editor does not work with JavaScript switched off. Please either enable it in your browser options, or visit your [[Special:Preferences]] to switch to the old MediaWiki editor',
+	'rte-no-js-fallback' => 'The rich text editor does not work with JavaScript switched off. Please either enable it in your browser options, or visit your [[Special:Preferences|preferences]] to switch to the old MediaWiki editor',
 	'rte-edgecase-info-title' => 'Source mode required',
 	'rte-edgecase-info' => 'Rich text editing has been disabled because the article contains complex code.',
 	'rte-edgecase-comment' => 'HTML comments',
 	'rte-edgecase-triplecurls' => 'template parameters',
-	'rte-edgecase-nowysiwyg' => 'the "no wysiwyg" command',
+	'rte-edgecase-nowysiwyg' => 'the "no WYSIWYG" command',
 	'rte-edgecase-complex-description' => 'an external URL or template within a link description',
 	'rte-edgecase-template-with-link' => 'a template with a link as a parameter',
 	'rte-edgecase-syntax' => 'not allowed syntax',
