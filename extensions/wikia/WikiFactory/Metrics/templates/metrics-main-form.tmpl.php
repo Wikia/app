@@ -70,7 +70,7 @@ div#sidebar { display: none !important; }
 					<select name="awc-metrics-category-hub" id="awc-metrics-category-hub"><option value=""> </option>
 			<? foreach ($aCategories as $id => $catName) : ?>
 <?php 				$selected = $obj->setDefaultOption($params, 'cat', '', $id); ?> 
-					<option <?= $selected ?> value="<?=$id?>"><?=$catName?></option>
+					<option <?= $selected ?> value="<?=$id?>"><?=$catName['name']?></option>
 			<? endforeach ?>
 					</select>
 				</span>
