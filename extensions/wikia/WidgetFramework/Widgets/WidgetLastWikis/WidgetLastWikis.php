@@ -49,8 +49,9 @@ function WidgetLastWikis($id, $params) {
 		if ( count($urls) == 5) {
 			array_pop ( $urls );
 		}
-
-		array_unshift ( $urls, array( 'url' => $server, 'name' => $wgSitename ) );		
+		if( is_array( $url ) ) {
+		  array_unshift ( $urls, array( 'url' => $server, 'name' => $wgSitename ) );		
+		}
 
 		$expire = time()+3600*24*7;
 		WebResponse::setcookie('recentlyvisited', serialize( $urls ), $expire);
