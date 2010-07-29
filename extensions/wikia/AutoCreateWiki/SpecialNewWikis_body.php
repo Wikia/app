@@ -171,8 +171,13 @@ class NewWikisPage extends AlphabeticPager {
 		$this->getLangs();
 
 		$hubs = WikiFactoryHub::getInstance();
-		$this->hubs = $hubs->getCategories();
-		$this->hubs = array_merge( array( 0 => 'All' ), $this->hubs );
+		$hubs = $hubs->getCategories();
+		$this->hubs = array( 0 => 'All' );
+		if ( !empty($hubs) ) {
+			foreach ($hubs as $id => $hub_options) {
+				$this->hubs[$id] = $hub_options['name'];
+			}
+		}
 
 		# Form tag
 		$out  = Xml::openElement( 'form', array( 'method' => 'get', 'action' => $wgScript ) ) .
