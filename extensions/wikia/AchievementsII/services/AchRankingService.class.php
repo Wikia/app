@@ -107,7 +107,7 @@ class AchRankingService {
 		
 		$res = $dbr->select('ach_user_badges', 'user_id, badge_type_id, badge_lap, date', $conds, __METHOD__, $rules);
 		
-		while($row = $dbr->fetchObject($res)) {
+		while($row = $dbr->fetchObject($res) && count($badges) <= $limit) {
 			if(AchConfig::getInstance()->isInRecents($row->badge_type_id)) {
 				$user = User::newFromId($row->user_id);
 				
