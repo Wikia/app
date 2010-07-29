@@ -18,6 +18,9 @@ $wgUpdates[ "mysql" ][] = array( "add_index", "archive", "page_revision", "wikia
 $wgUpdates[ "mysql" ][] = array( "do_page_vote_unique_update" );
 $wgUpdates[ "mysql" ][] = array( "do_drop_imagetags" );
 
+/**
+ * @todo drop send_stats
+ */
 
 function do_page_vote_unique_update() {
 	global $wgDatabase;
