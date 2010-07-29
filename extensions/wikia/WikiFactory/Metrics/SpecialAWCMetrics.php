@@ -599,7 +599,7 @@ class WikiMetrics {
 				'month' 	=> $sDate,
 				'monthTxt' 	=> $out,
 				'catId' 	=> $oRow->cat_id,
-				'catName' 	=> (isset($aCategories[$oRow->cat_id])) ? $aCategories[$oRow->cat_id] : "Undefined",
+				'catName' 	=> (isset($aCategories[$oRow->cat_id])) ? $aCategories[$oRow->cat_id]['name'] : "Undefined",
 				'count'		=> $oRow->cnt
 			);
 			$AWCCitiesCount += $oRow->cnt;
