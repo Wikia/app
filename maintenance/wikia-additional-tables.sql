@@ -16,23 +16,6 @@ CREATE TABLE IF NOT EXISTS `page_vote` (
   KEY `unique_vote` (`unique_id`, `article_id`)
 ) ENGINE=InnoDB;
 
-
-create table if not exists send_stats (
-    send_id int not null auto_increment primary key,
-    send_page_id int not null,
-    send_page_ns int not null,
-    send_page_re int not null,
-    send_unique int not null,
-    send_tm timestamp default now(),
-    send_ip varchar(16) not null,
-    send_to mediumtext not null,
-    send_from varchar(255) not null,
-    send_name varchar(255) not null,
-    send_user varchar(255) not null,
-    send_ajax int not null,
-    send_seen int not null default 0
-) ENGINE=InnoDB;
-
 CREATE TABLE `page_visited` (
 	`article_id` int(9) not null, 
 	`count` int(8) NOT NULL, 
