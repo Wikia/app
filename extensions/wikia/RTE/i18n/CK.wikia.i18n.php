@@ -8,6 +8,7 @@
  */
 
 $messages = array();
+
 $messages['en'] = array(
 	'rte-ck-bucket-textAppearance' => 'Text appearance',
 	'rte-ck-bucket-insert' => 'Insert',

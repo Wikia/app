@@ -1,5 +1,7 @@
 <?php
+
 $messages = array();
+
 $messages['en'] = array(
 	'rte-desc' => 'CKeditor integration for MediaWiki',
 	'rte-no-js-fallback' => 'The rich text editor does not work with JavaScript switched off. Please either enable it in your browser options, or visit your [[Special:Preferences]] to switch to the old MediaWiki editor',
@@ -19,6 +21,7 @@ $messages['en'] = array(
 	'rte-enablerichtexteditormessage' => 'Rich Text Editor enabled!',
 	'rte-first-run-notice' => 'We have made some improvements to the editor. To learn more, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news read the announcement].',
 );
+
 $messages['pl'] = array(
 	'rte-desc' => 'CKeditor dla MediaWiki',
 	'enablerichtexteditor' => 'Włącz edytor wizualny',
@@ -39,7 +42,6 @@ $messages['pl'] = array(
         'rte-first-edit-dont-show-me' => 'Nie pokazuj tego okna ponownie',
         'rte-first-edit-dismiss' => 'Zamknij',
 );
-
 
 $messages['de'] = array(
 	'rte-desc' => 'Integration des CKeditors in MediaWiki',
@@ -64,7 +66,6 @@ $messages['de'] = array(
 * Probiere den neuen Editor doch aus, indem du deine [{{fullurl:Special:MyPage|action=edit}} Benutzerseite bearbeitest].
 * Falls du zurück zum alten Editor wechseln möchtest, kannst du das im \'\'Bearbeiten\'\'-Reiter in deinen [[Special:Preferences#prefsection-4|Einstellungen]] tun.',
 );
-
 
 $messages['es'] = array(
 	'rte-desc' => 'Integración del editor CK en MediaWiki',
@@ -93,7 +94,6 @@ $messages['es'] = array(
 \'\'Ten en cuenta que el nuevo editor está disponible actualmente en la mayoría de los wikis, pero no en todos.\'\'',
 );
 
-
 $messages['zh'] = array(
 	'rte-edgecase-comment' => 'HTML 註解',
 	'rte-edgecase-triplecurls' => '模板變數',
@@ -107,12 +107,10 @@ $messages['zh'] = array(
 	'rte-first-edit-dont-show-me' => '不要在顯示這信息',
 );
 
-
 $messages['fa'] = array(
 	'rte-first-edit-title' => 'به ویرایشگر جدید ویکیا خوش‌آمدید',
 	'enablerichtexteditor' => 'فعال کردن ویرایشگر پیشرفته',
 );
-
 
 $messages['ja'] = array(
 	'rte-first-edit-title' => 'ウィキアの新しいエディタへようこそ',
@@ -120,7 +118,6 @@ $messages['ja'] = array(
 	'rte-first-edit-dont-show-me' => 'このメッセージを再度表示しないようにする',
 	'rte-first-edit-dismiss' => '閉じる',
 );
-
 
 $messages['fr'] = array(
 	'rte-tooltip' => '\'\'\'Nouveau !\'\'\' la boîte d\'édition. Voir [http://aide.wikia.com/wiki/Aide:Éditeur_de_Texte_Complet l\'aide] pour plus d\'informations.',
