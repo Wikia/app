@@ -74,8 +74,10 @@ ul#leaderboard #points-label {
 	margin-left: 20px;
 }
 #leaderboard .user-name{
-	width:62%; /* kinda hacky */
+	max-width: 185px;
 	overflow:hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 
 #leaderboard .user-avatar {
