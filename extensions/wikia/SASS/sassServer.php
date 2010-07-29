@@ -8,9 +8,9 @@
  * query-string into the .scss files, and for using memcache to speed up responses.
  */
 
+$RUBY_MODULE_SCRIPT = "wikia_sass.rb";
+ 
 $errorStr = "";
-
-// TODO: Read the values from the query-string
 
 // Get the path & file that the user is actually looking for.
 $inputFile = "";
@@ -19,31 +19,46 @@ if(isset($_GET['file'])){
 	unset($_GET['file']);
 }
 
+// Build a reasonable name for the tmp file.
+$nameOfFile = "";
+$nameOfFile = preg_replace("/^.*[\/](.*?)\.[a-zA-Z]{1,4}$/", "\\1", $inputFile);
+// Second-chance regex if the file isn't in a subdirectory.
+$nameOfFile = ($nameOfFile!=$inputFile?$nameOfFile:preg_replace("/^(.*?)\.[a-zA-Z]{1,4}$/", "\\1", $inputFile));
+$tmpFile = "/tmp/sass/$nameOfFile"."_";
+
 // Build a string of parameters to pass into sass.
-// TODO: EXPERIMENT TO FIGURE OUT HOW SASS WILL EXPECT TO GET THESE.
 $sassParams = "";
 foreach($_GET as $key => $value){
-	//$sassParams .= ($sassParams == ""?"": "
+	// Special-case: can't use # in URLs, so detect hex-colors and prepend a hash 
+	// TODO: PROBABLY REMOVE.  Just URL-encode the string first so that # becomes %23.
+	//if(0 < preg_match("/^[0-9a-f]{3,6}$/i", $value)){
+	//	$value = "#$value";
+	//}
+
+	$sassParams .= ($sassParams == ""?"":" ");
+	$sassParams .= "$key=$value";
+
+	$tmpFile .= preg_replace("/[^A-Za-z0-9]/", "", $value);
 }
+$tmpFile .= ".css";
 
+// NOTE: While SASS can output to standard out, that only happens if now output file
+// is specified.  Since we are using additional command line params, those params end up
+// being used as the output filename if we don't provide one, so for now we are stuck with
+// a tmp file.
+// An alternative would be to write a daemon in Ruby (instead of this PHP script) which would
+// use Sass as a module rather than via the command-line... but that comes with its own set
+// of problems (apparently Ruby is somewhat memory-leaky & Sass isn't designed to be used like
+// that so memory-management wouldn't be written in a way that would let a long-running process
+// survive without ballooning).
 
-
-
-// TODO: Pass the values from the query-string into the sass script (collect result in backticks)
-// $sassResult = `sass $inputFile --style compact --custom color1="#00ff00"`;
-// TODO: CREATE THE SASS FUNCTION WHICH READS THE PARAMS
-/*
-module Sass::Script::Functions
-	def my_func_name()
-	
-		Sass::Script::String.new(options[:custom][:myCommandLineParamName])
-	end
-end
-*/
-
-
+// Pass the values from the query-string into the sass script (results will go in a tmp file).
+$sassResult = `sass $inputFile $tmpFile --style compact -r $RUBY_MODULE_SCRIPT $sassParams`;
 
 // TODO: Print the generated CSS (with correct headers)
+header("Content-type: text/css");
+$cssContent = file_get_contents($tmpFile);
+print $cssContent;
 
 // TODO: Do a successful run of the code for Oasis.
 
@@ -55,3 +70,12 @@ end
 if($errorStr != ""){
 	print "\n/* sassServer error: $errorStr */\n";
 }
+
+// TODO: We should print which apache-server generated this file and how long it took.
+/*
+
+*/
+
+
+// TODO: Delete the temp-file (since the content has already been printed, it can already be pumping the buffer out to the client.
+unlink($tmpFile);
