@@ -69,7 +69,7 @@ If you'd like to see My Home, please visit '''[[Special:Preferences|your Prefere
 
 	'myhome-community-corner-header' => 'Community Corner',
 	'myhome-community-corner-edit' => 'edit message',
-	'community-corner' => "'''Welcome to My Home!'''
+	'community-messages' => "'''Welcome to My Home!'''
 
 This page helps you stay up to date with what's happening on the wiki.
 
@@ -194,7 +194,7 @@ $messages['ar'] = array(
 	'myhome-feed-move-details' => 'أعاد التسمية',
 	'myhome-community-corner-header' => 'ركن المجتمع',
 	'myhome-community-corner-edit' => 'عدل الرسالة',
-	'community-corner' => "'''مرحبا بك في صفحتي الرئيسية'''
+	'community-messages' => "'''مرحبا بك في صفحتي الرئيسية'''
 
 هذه الصفحة تساعدك على معرفة ما يحدث على الويكي.
 
@@ -295,7 +295,7 @@ Klaskit eta !",
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'Korn ar gumuniezh',
 	'myhome-community-corner-edit' => 'kemmañ ar gemennadenn',
-	'community-corner' => "'''Degemer mat war Ma Degemer !'''
+	'community-messages' => "'''Degemer mat war Ma Degemer !'''
 
 Gant ar bajenn-mañ e c'hallit bezañ kelaouet diwar-benn darvoudoù nevez ar wiki
 
@@ -391,7 +391,7 @@ Wenn du die Startseite sehen möchtest, gehe bitte zu '''[[Special:Preferences|d
 	'myhome-namespace-blog' => 'Benutzer-Blog',
 	'myhome-community-corner-header' => 'Community-Bereich',
 	'myhome-community-corner-edit' => 'Bearbeiten',
-	'community-corner' => "'''Willkommen auf deiner Startseite!'''
+	'community-messages' => "'''Willkommen auf deiner Startseite!'''
 
 Diese Seite hilft dir, den Überblick über alle wichtigen Vorgänge im Wiki zu behalten.
 
@@ -432,7 +432,7 @@ Probieren Sie es einfach aus!',
 	'myhome-log-in' => "<center>Die Startseiten-Funktion ist nur verfügbar wenn Sie eingeloggt sind.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Bitte melden Sie sich an um diese Seite zu sehen!]'''</big></center>",
 	'myhome-switch-to-monaco' => "Die Startseiten-Funktion ist nur für das Monaco-Design verfügbar.
 Wenn Sie die Startseite sehen möchten, gehen Sie bitte zu '''[[Special:Preferences|Ihren Einstellungen]]''' um Ihr Design zu wechseln.",
-	'community-corner' => "'''Willkommen auf Ihrer Startseite!'''
+	'community-messages' => "'''Willkommen auf Ihrer Startseite!'''
 
 Diese Seite hilft Ihnen, den Überblick über alle wichtigen Vorgänge im Wiki zu behalten.
 
@@ -495,7 +495,7 @@ $messages['el'] = array(
 	'myhome-hot-spots-number-of-editors' => 'συντάκτες',
 	'myhome-community-corner-header' => 'Στέκι της κοινώτητας',
 	'myhome-community-corner-edit' => 'επεξεργασία του μηνύματος',
-	'community-corner' => "'''Καλωσήρθατε στην Αρχική σας Σελίδα!'''
+	'community-messages' => "'''Καλωσήρθατε στην Αρχική σας Σελίδα!'''
 
 Αυτή η σελίδα σας βοηθάει να ξέρετε τί συμβαίνει στο wiki.
 
@@ -572,7 +572,7 @@ $messages['es'] = array(
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'Rincón de la comunidad',
 	'myhome-community-corner-edit' => '[editar mensaje]',
-	'community-corner' => "'''¡Bienvenido a Mi página de inicio!'''
+	'community-messages' => "'''¡Bienvenido a Mi página de inicio!'''
 
 Esta página te ayuda a mantenerte al día sobre lo que está ocurriendo en el wiki.
 
@@ -640,7 +640,7 @@ Aloita kirjoittaminen luomalla '''[[Special:CreatePage|uusi sivu]]'''.",
 	'myhome-namespace-blog' => 'Blogi',
 	'myhome-community-corner-header' => 'Yhteisönurkka',
 	'myhome-community-corner-edit' => 'muokkaa viestiä',
-	'community-corner' => "'''Tervetuloa kotisivulle!'''
+	'community-messages' => "'''Tervetuloa kotisivulle!'''
 
 Tämä sivu auttaa sinua pysymään ajan tasalla wikin tapahtumista.
 
@@ -721,7 +721,7 @@ Essayez donc !",
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'Le coin de la Communauté',
 	'myhome-community-corner-edit' => 'modifier le message',
-	'community-corner' => "'''Bienvenue sur Mon Accueil!'''
+	'community-messages' => "'''Bienvenue sur Mon Accueil!'''
 
 Cette page vous permet de rester informé sur les nouveaux évènements du wiki.
 
@@ -801,7 +801,7 @@ Anímese a intentalo!',
 	'myhome-namespace-blog' => 'Blogue',
 	'myhome-community-corner-header' => 'A taberna da comunidade',
 	'myhome-community-corner-edit' => 'editar a mensaxe',
-	'community-corner' => "'''Benvido á miña páxina de inicio!'''
+	'community-messages' => "'''Benvido á miña páxina de inicio!'''
 
 Esta páxina axuda a estar informado sobre o que está a suceder no wiki.
 
@@ -884,7 +884,7 @@ $messages['he'] = array(
 	'myhome-namespace-blog' => 'בלוג',
 	'myhome-community-corner-header' => 'שער הקהילה',
 	'myhome-community-corner-edit' => 'עריכת הודעה',
-	'community-corner' => "'''ברוכים הבאים לבית שלי!'''
+	'community-messages' => "'''ברוכים הבאים לבית שלי!'''
 
 דף זה יעזור לך להישאר מעודכן על כל מה שקורה בוויקי.
 
@@ -978,7 +978,7 @@ $messages['ia'] = array(
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'Taverna del communitate',
 	'myhome-community-corner-edit' => 'modificar message',
-	'community-corner' => "'''Benvenite a Mi pagina initial!'''
+	'community-messages' => "'''Benvenite a Mi pagina initial!'''
 
 Iste pagina te adjuta a sequer le evenimentos in le wiki.
 
@@ -1061,7 +1061,7 @@ Jika Anda ingin melihat Rumah Saya, gunakan '''[[Special:Preferences|Preferensi 
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'Pojok komunitas',
 	'myhome-community-corner-edit' => 'sunting pesan',
-	'community-corner' => "'''Selamat Datang di Rumah Saya!'''
+	'community-messages' => "'''Selamat Datang di Rumah Saya!'''
 
 Ini Halaman membantu Anda tetap up-to-date dengan apa yang terjadi pada wiki.
 
@@ -1133,7 +1133,7 @@ $messages['it'] = array(
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => "L'angolo della comunità",
 	'myhome-community-corner-edit' => 'modifica messaggio',
-	'community-corner' => "'''Benvenuto in My Home! '''
+	'community-messages' => "'''Benvenuto in My Home! '''
 
 Questa è una pagina che ti aiuta ad essere aggiornato con ciò che accade sul nostro wiki.
 
@@ -1208,7 +1208,7 @@ $messages['ja'] = array(
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'コミュニティコーナー',
 	'myhome-community-corner-edit' => 'メッセージを編集',
-	'community-corner' => "'''My Home にようこそ！'''
+	'community-messages' => "'''My Home にようこそ！'''
 
 このページは、ウィキで何が起きているのかをわかりやすく示し、あなたがこのウィキに居続ける手助けとするためのものです。
 
@@ -1297,7 +1297,7 @@ $messages['mk'] = array(
 	'myhome-namespace-blog' => 'Блог',
 	'myhome-community-corner-header' => 'Катче на заедницата',
 	'myhome-community-corner-edit' => 'уреди порака',
-	'community-corner' => "'''Добредојдовте на Вашата домашна страница!'''
+	'community-messages' => "'''Добредојдовте на Вашата домашна страница!'''
 
 Оваа страница ќе ви помогне да бидете во тек со случувањата на викито.
 
@@ -1382,7 +1382,7 @@ Als u \"Mijn startpagina\" wilt bekijken, wijzig in '''[[Special:Preferences|uw 
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'Community Hoek',
 	'myhome-community-corner-edit' => 'bewerk bericht',
-	'community-corner' => "'''Welkom bij Mijn startpagina!'''
+	'community-messages' => "'''Welkom bij Mijn startpagina!'''
 
 Deze pagina helpt u om op de hoogte te blijven van wat er gebeurt in de wiki.
 
@@ -1466,7 +1466,7 @@ Om du vil se Mitt hjem, gå til '''[[Special:Preferences|innstillingene dine]]''
 	'myhome-namespace-blog' => 'Blogg',
 	'myhome-community-corner-header' => 'Fellesskapshjørnet',
 	'myhome-community-corner-edit' => 'rediger melding',
-	'community-corner' => "'''Velkommen til Mitt hjem.'''
+	'community-messages' => "'''Velkommen til Mitt hjem.'''
 
 Denne siden hjelper deg med å holde deg oppdatert om hva som skjer på wikien.
 
@@ -1600,7 +1600,7 @@ La wiki a l'é fàita da la comunità, e na vira ch'a sgnaca ël boton ëd modì
 	'myhome-namespace-blog' => 'Scartari',
 	'myhome-community-corner-header' => 'Canton ëd la Comunità',
 	'myhome-community-corner-edit' => 'modìfica mëssagi',
-	'community-corner' => "'''Bin ëvnù a Mia Intrada!'''
+	'community-messages' => "'''Bin ëvnù a Mia Intrada!'''
 
 Sta pàgina-sì a lo giuta a sté agiornà con lòn ch'a-i càpita an sta wiki-sì.
 
@@ -1641,7 +1641,7 @@ $messages['ps'] = array(
 	'myhome-feed-new-article-comment-details' => 'تبصره',
 	'myhome-namespace-blog' => 'بلاګ',
 	'myhome-community-corner-edit' => 'پيغام سمول',
-	'community-corner' => "'''زما کور ته ښه راغلاست!'''
+	'community-messages' => "'''زما کور ته ښه راغلاست!'''
 
 دا مخ په همدې ويکي باندې د هغو پېښو په اړه چې تازه پېښې شوي، له تاسې سره مرسته کوي.
 
@@ -1721,7 +1721,7 @@ Se quer ver A Minha Casa, visite '''[[Special:Preferences|as suas Preferências]
 	'myhome-namespace-blog' => 'Blogue',
 	'myhome-community-corner-header' => 'Cantinho Comunitário',
 	'myhome-community-corner-edit' => 'editar mensagem',
-	'community-corner' => "'''Bem-vindo(a) à A Minha Casa!'''
+	'community-messages' => "'''Bem-vindo(a) à A Minha Casa!'''
 
 Esta página ajuda-o a saber o que está a acontecer na wiki.
 
@@ -1803,7 +1803,7 @@ Experimente!',
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'Portal comunitário',
 	'myhome-community-corner-edit' => 'editar mensagem',
-	'community-corner' => "'''Bem-vindo a sua página inicial!'''
+	'community-messages' => "'''Bem-vindo a sua página inicial!'''
 
 Esta página ajuda você a se manter atualizado sobre o que está acontecendo nesta wiki.
 
@@ -1892,7 +1892,7 @@ $messages['ru'] = array(
 	'myhome-namespace-blog' => 'Блог',
 	'myhome-community-corner-header' => 'Уголок сообщества',
 	'myhome-community-corner-edit' => 'править сообщение',
-	'community-corner' => "'''Добро пожаловать в свой личный кабинет!'''
+	'community-messages' => "'''Добро пожаловать в свой личный кабинет!'''
 
 Эта страница поможет вам быть в курсе самых последних событий происходящих на вики.
 
@@ -1990,7 +1990,7 @@ $messages['sr-ec'] = array(
 	'myhome-namespace-blog' => 'Блог',
 	'myhome-community-corner-header' => 'Заједнички кутак',
 	'myhome-community-corner-edit' => 'уреди поруку',
-	'community-corner' => "'''Добродошли у Моју Кућу!'''
+	'community-messages' => "'''Добродошли у Моју Кућу!'''
 
 Ова страница помаже Вам да знате шта се дешава на вашој Викији.
 
@@ -2052,7 +2052,7 @@ $messages['sv'] = array(
 	'myhome-namespace-blog' => 'Blogg',
 	'myhome-community-corner-header' => 'Community Hörn',
 	'myhome-community-corner-edit' => 'ändra meddelande',
-	'community-corner' => "'''Välkommen till My Home!'''
+	'community-messages' => "'''Välkommen till My Home!'''
 
 Den här sidan hjälper dig att hålla dig uppdaterad med vad som händer på wikin.
 
@@ -2144,7 +2144,7 @@ Kung nais mong makita ang Tahanan Ko, mangyaring dumalaw sa '''[[Special:Prefere
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'Sulok ng Pamayanan',
 	'myhome-community-corner-edit' => 'baguhin ang mensahe',
-	'community-corner' => "'''Maligayang Pagdating sa Tahanan Ko!'''
+	'community-messages' => "'''Maligayang Pagdating sa Tahanan Ko!'''
 
 Tumutulong ang pahinang ito na laging kang nasa panahon kung ano ang nangyayari sa wiki.
 

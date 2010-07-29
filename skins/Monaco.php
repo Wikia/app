@@ -1756,8 +1756,8 @@ if(empty($wgEnableRecipesTweaksExt) || !RecipesTweaks::isHeaderStripeShown()) {
 				<a name="top" id="top"></a>
 				<?php
 				wfRunHooks('MonacoAfterArticle', array($this)); // recipes: not needed?
-				global $wgSupressSiteNotice;
-				if( empty( $wgSupressSiteNotice ) && $this->data['sitenotice']) { ?><div id="siteNotice"><?php $this->html('sitenotice') ?></div><?php } ?>
+				global $wgSupressSiteNotice, $wgUseSiteNotice;
+				if( !empty($wgUseSiteNotice) && empty( $wgSupressSiteNotice ) && $this->data['sitenotice']) { ?><div id="siteNotice"><?php $this->html('sitenotice') ?></div><?php } ?>
 				<?php
 				global $wgSupressPageTitle;
 				if( empty( $wgSupressPageTitle ) ){
