@@ -19,7 +19,7 @@ $wgUpdates[ "mysql" ][] = array( "do_page_vote_unique_update" );
 $wgUpdates[ "mysql" ][] = array( "do_drop_imagetags" );
 
 /**
- * @todo drop send_stats
+ * @todo drop send_stats shared/send_queue
  */
 
 function do_page_vote_unique_update() {
