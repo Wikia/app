@@ -59,7 +59,13 @@ class Advertisement
 
 		$dbw->immediateCommit();
 
+		// purge ad cache (memcache)
 		self::FlushAdCache($this->wiki_db,$this->page_id);
+
+		// purge page cache (varnish)
+		if ( !empty( $this->page_original_url ) ) {
+			SquidUpdate::purge( array( $this->page_original_url ) );
+		}
 	}
 	
 	
