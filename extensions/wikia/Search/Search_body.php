@@ -173,7 +173,8 @@ class SolrSearchSet extends SearchResultSet {
 			'indent' => 1,
 			'fq' => '',
 			'spellcheck' => 'true',
-			'spellcheck.collate' => 'true'
+			'spellcheck.collate' => 'true',
+			'timeAllowed' => 2500
 		);
 
 		if( $crossWikiaSearch ) {
