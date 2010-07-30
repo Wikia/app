@@ -33,14 +33,17 @@ if (!empty($languages)) :
 	echo print_r($languages, true);
 	echo "Insert " . count($languages) . " records to city_lang \n";
 	foreach ( $languages as $id => $lang ) :
-		$db1->insert(
-			"city_lang",
-			array(
-			  'lang_id' => NULL,
-			  'lang_code' => $id,
-			  'lang_name' => $lang
-			)
-		);
+		$oRow = $db1->selectRow(array('city_lang'), array('lang_id'), array('lang_name' => $lang), "langNameToId"); 
+		if ( isset($oRow) && isset($oRow->lang_id) ) {
+			$db1->insert(
+				"city_lang",
+				array(
+				  'lang_id' => NULL,
+				  'lang_code' => $id,
+				  'lang_name' => $lang
+				)
+			);
+		}
 	endforeach;	
 endif;
 
