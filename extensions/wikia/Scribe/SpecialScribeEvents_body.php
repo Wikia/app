@@ -119,7 +119,7 @@ class ScribeeventsPage {
 					
 		$dbr = wfGetDB( DB_SLAVE, array(), $wgStatsDB ); 
 		$oRes = $dbr->select(
-			'events',
+			' events use key(articles_wikia) ',
 			array( 
 				'wiki_id', 
 				'page_id', 
@@ -145,7 +145,6 @@ class ScribeeventsPage {
 			$where,
 			__METHOD__, 
 			array(
-				'SQL_CALC_FOUND_ROWS',
 				'ORDER BY' => 'rev_timestamp DESC',
 				'LIMIT' => $this->limit,
 				'OFFSET' => $this->offset
@@ -153,10 +152,10 @@ class ScribeeventsPage {
 		);
 
 		# nbr all records 
-		$res = $dbr->query('SELECT FOUND_ROWS() as rowcount');
+		/*$res = $dbr->query('SELECT FOUND_ROWS() as rowcount');
 		$oRow = $dbr->fetchObject ( $res );
-		$num = $oRow->rowcount;
-
+		$num = $oRow->rowcount;*/
+		
 		$data = array( 'numrec' => 0, 'rows' => array() );
 		$loop = 0;
 		while ( $oRow = $dbr->fetchObject( $oRes ) ) {
@@ -217,8 +216,8 @@ class ScribeeventsPage {
 		);
 
 		$conditions = array( 
-			'ar_page_id'	=> $this->mPageId , 
-			'ar_rev_id'		=> $this->mRevId
+			'ar_page_id'	=> $page_id , 
+			'ar_rev_id'		=> $rev_id
 		);
 
 		$oRow = $dbr->selectRow( 
