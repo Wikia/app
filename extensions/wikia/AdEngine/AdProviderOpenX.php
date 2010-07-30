@@ -44,7 +44,7 @@ class AdProviderOpenX implements iAdProvider {
 <script type='text/javascript'>/*<![CDATA[*/
 
 	document.write('<scr'+'ipt type="text/javascript">');
-	document.write('var base_url = "http://spotlights.wikia.com/ajs.php";');
+	document.write('var base_url = "/__spotlights/ajs.php";');
 	document.write('base_url += "?loc=" + escape(window.location);');
 	document.write('if(typeof document.referrer != "undefined") base_url += "&referer=" + escape(document.referrer);');
 	document.write('if(typeof document.context != "undefined") base_url += "&context=" + escape(document.context);');
