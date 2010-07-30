@@ -521,6 +521,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$tmpSharedDB = $wgSharedDB;
 		$wgSharedDB = $this->mWikiData[ "dbname"];
 		$dbwTarget->selectDB( $this->mWikiData[ "dbname"] );
+		$this->log( "Creating tables in database" );
 
 		$sqlfiles = array(
 			"{$IP}/maintenance/tables.sql",
@@ -551,13 +552,13 @@ class AutoCreateWikiPage extends SpecialPage {
 
 		foreach( $sqlfiles as $file ) {
 			$error = $dbwTarget->sourceFile( $file );
+			$this->log("populating database with $file" );
 			if ( $error !== true ) {
 				$this->setInfoLog( 'ERROR', wfMsg('autocreatewiki-step6') );
 				$wgOut->addHTML(wfMsg('autocreatewiki-step6-error'));
 				return;
 			}
 		}
-		$this->log( "Creating tables in database" );
 		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step6') );
 
 		/**
@@ -613,7 +614,7 @@ class AutoCreateWikiPage extends SpecialPage {
 				$IP,
 				$wgWikiaLocalSettingsPath
 			);
-			$this->log($cmd);
+			$this->log( $cmd );
 			wfShellExec( $cmd );
 
 			$this->log( "Copying starter database" );
