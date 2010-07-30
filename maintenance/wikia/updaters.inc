@@ -16,7 +16,10 @@ $wgUpdates[ "mysql" ][] = array( "add_field", "watchlist", "wl_wikia_addedtimest
 $wgUpdates[ "mysql" ][] = array( "add_table", "blog_listing_relation",  "wikia/patch-create-blog_listing_relation.sql" );
 $wgUpdates[ "mysql" ][] = array( "add_index", "archive", "page_revision", "wikia/patch-index-archive-page_revision.sql" );
 $wgUpdates[ "mysql" ][] = array( "do_page_vote_unique_update" );
-$wgUpdates[ "mysql" ][] = array( "do_drop_imagetags" );
+$wgUpdates[ "mysql" ][] = array( "do_drop_table", "imagetags" );
+$wgUpdates[ "mysql" ][] = array( "do_drop_table", "send_queue" );
+$wgUpdates[ "mysql" ][] = array( "do_drop_table", "send_stats" );
+
 
 /**
  * @todo drop send_stats shared/send_queue
@@ -34,12 +37,15 @@ function do_page_vote_unique_update() {
 	}
 }
 
-function do_drop_imagetags() {
+/**
+ * there's no big logic in dropping tables so we don't use patches here
+ */
+function do_drop_table( $table ) {
 	global $wgDatabase;
-	wfOut( "Checking wikia imagetags table...\n" );
-	if( $wgDatabase->tableExists( "imagetags" ) ) {
-		wfOut( "...dropping imagetags table... " );
-		dbsource( archive("wikia/patch-drop-imagetags.sql"), $wgDatabase );
-		wfOut( "ok\n" );
+	wfOut( "Checking wikia $table table...\n" );
+	if( $wgDatabase->tableExists( $table ) ) {
+		wfOut( "...dropping $table table... " );
+		$wgDatabase->query( "DROP TABLE {$table}" );
+        wfOut( "ok\n" );
 	}
 }
