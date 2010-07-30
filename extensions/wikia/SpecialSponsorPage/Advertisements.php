@@ -63,11 +63,29 @@ class Advertisement
 		self::FlushAdCache($this->wiki_db,$this->page_id);
 
 		// purge page cache (varnish)
-		if ( !empty( $this->page_original_url ) ) {
-			SquidUpdate::purge( array( $this->page_original_url ) );
+		$dbr = wfGetDB( DB_SLAVE, array(), $this->wiki_db );
+		$title = $dbr->selectField(
+			'page',
+			'page_title',
+			array( 'page_id' => $this->page_id )
+		);
+		if ( $title == false ) {
+			// page was removed :(
+			return false;
+		}
+
+		$wiki = WikiFactory::getWikiByDB( $this->wiki_db );
+
+		if ( is_object( $wiki ) ) {
+			$remoteServer = unserialize( WikiFactory::getVarByName( 'wgServer', $wiki->city_id )->cv_value );
+			$remoteArticlePath = unserialize( WikiFactory::getVarByName( 'wgArticlePath', $wiki->city_id )->cv_value );
+
+			$url = $remoteServer . str_replace( '$1', $title, $remoteArticlePath );
+
+			SquidUpdate::purge( array( $url ) );
+
 		}
 	}
-	
 	
 	/**
 	 * load from database
