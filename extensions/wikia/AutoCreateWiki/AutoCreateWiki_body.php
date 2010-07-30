@@ -526,11 +526,12 @@ class AutoCreateWikiPage extends SpecialPage {
 			"{$IP}/maintenance/tables.sql",
 			"{$IP}/maintenance/interwiki.sql",
 			"{$IP}/maintenance/wikia/city_interwiki_links.sql",
-			"{$IP}/maintenance/wikia-additional-tables.sql",
 			"{$IP}/extensions/CheckUser/cu_changes.sql",
 			"{$IP}/extensions/CheckUser/cu_log.sql",
 			"{$IP}/maintenance/archives/wikia/patch-watchlist-improvements.sql",
 			"{$IP}/maintenance/archives/wikia/patch-create-blog_listing_relation.sql",
+			"{$IP}/maintenance/archives/wikia/patch-create-page_vote.sql",
+			"{$IP}/maintenance/archives/wikia/patch-create-page_visited.sql"
 		);
 
 		/**
