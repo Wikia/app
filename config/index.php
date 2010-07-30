@@ -1132,8 +1132,6 @@ if( $conf->posted && ( 0 == count( $errs ) ) ) {
 			if ($conf->DBtype == 'mysql') {
 				dbsource( "../maintenance/tables.sql", $wgDatabase );
 				dbsource( "../maintenance/interwiki.sql", $wgDatabase );
-				dbsource( "../maintenance/wikia-additional-tables-shared.sql", $wgDatabase );
-				dbsource( "../maintenance/wikia-additional-tables.sql", $wgDatabase );
 				dbsource( "../extensions/wikia/AdEngine/schema.sql", $wgDatabase );
 			} elseif (is_callable(array($wgDatabase, 'setup_database'))) {
 				$wgDatabase->setup_database();
