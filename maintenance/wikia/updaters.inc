@@ -12,6 +12,8 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 );
 }
 
+$wgUpdates[ "mysql" ][] = array( "add_table", "page_vote",  "wikia/patch-create-page_vote.sql" );
+$wgUpdates[ "mysql" ][] = array( "add_table", "page_visited",  "wikia/patch-create-page_visited.sql" );
 $wgUpdates[ "mysql" ][] = array( "add_field", "watchlist", "wl_wikia_addedtimestamp", "wikia/patch-watchlist-improvements.sql" );
 $wgUpdates[ "mysql" ][] = array( "add_table", "blog_listing_relation",  "wikia/patch-create-blog_listing_relation.sql" );
 $wgUpdates[ "mysql" ][] = array( "add_index", "archive", "page_revision", "wikia/patch-index-archive-page_revision.sql" );
