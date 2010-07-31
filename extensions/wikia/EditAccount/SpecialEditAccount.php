@@ -13,7 +13,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
-if( !defined( 'MEDIAWIKI' ) ) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "This is a MediaWiki extension named EditAccount.\n";
 	exit( 1 );
 }
@@ -23,7 +23,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'EditAccount',
 	'version' => '1.0',
 	'author' => "[http://www.wikia.com/wiki/User:TOR Łukasz 'TOR' Garczewski]",
-	'description' => 'Enables Wikia Staff members to manage user account information.'
+	'descriptionmsg' => 'editaccount-desc'
 );
 
 // New user right, required to use the extension.
@@ -42,9 +42,9 @@ $wgLogActions['editaccnt/closeaccnt'] = 'editaccount-log-entry-close';
 $wgLogRestrictions['editaccnt'] = 'staff';
 
 // Set up the new special page
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['EditAccount'] = $dir . 'SpecialEditAccount.i18n.php';
-$wgAutoloadClasses['EditAccount'] = $dir. 'SpecialEditAccount_body.php';
+$wgAutoloadClasses['EditAccount'] = $dir . 'SpecialEditAccount_body.php';
 $wgSpecialPages['EditAccount'] = 'EditAccount';
 // Special page group for MW 1.13+
 $wgSpecialPageGroups['EditAccount'] = 'users';
