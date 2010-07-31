@@ -13,7 +13,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
-if( !defined( 'MEDIAWIKI' ) ) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "This is a MediaWiki extension named HealthCheck.\n";
 	exit( 1 );
 }
@@ -22,10 +22,10 @@ if( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'HealthCheck',
 	'author' => "[http://www.wikia.com/wiki/User:TOR Łukasz 'TOR' Garczewski]",
-	'description' => 'A simple page for server state checking.'
+	'descriptionmsg' => 'healthcheck-desc'
 );
 
 // Set up the new special page
-$dir = dirname(__FILE__) . '/';
-$wgAutoloadClasses['HealthCheck'] = $dir. 'SpecialHealthcheck_body.php';
+$dir = dirname( __FILE__ ) . '/';
+$wgAutoloadClasses['HealthCheck'] = $dir . 'SpecialHealthcheck_body.php';
 $wgSpecialPages['HealthCheck'] = 'HealthCheck';

@@ -10,7 +10,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
-if( !defined( 'MEDIAWIKI' ) ) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "This is a MediaWiki extension named HealthCheck.\n";
 	exit( 1 );
 }
@@ -38,7 +38,7 @@ class HealthCheck extends UnlistedSpecialPage {
 		// for faster response
 		$wgOut->setArticleBodyOnly( true );
 
-		if ( file_exists("/usr/wikia/conf/current/host_disabled") ) {
+		if ( file_exists( "/usr/wikia/conf/current/host_disabled" ) ) {
 			# failure!
 			$wgOut->setStatusCode( 503 );
 			$wgOut->addHTML( 'Server status is: NOT OK' );
