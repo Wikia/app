@@ -1,5 +1,4 @@
 <?php
-
 /**
  * CommunityMessages
  *
@@ -18,9 +17,11 @@
  */
 
 class CommunityMessages {
-	static function SkinTemplatePageBeforeUserMsg(&$msg) {
-		wfLoadExtensionMessages('CommunityMessages');
-		$msg .= wfMsgExt('communitymessages-notice-msg', array('parseinline'));
+	static function SkinTemplatePageBeforeUserMsg( &$msg ) {
+		wfLoadExtensionMessages( 'CommunityMessages' );
+
+		$msg .= wfMsgExt( 'communitymessages-notice-msg', array( 'parseinline' ) );
+
 		return true;
 	}
 }
