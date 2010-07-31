@@ -7,6 +7,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'daemonloader' => 'Daemon loader',
+	'daemonloader-desc' => 'Runs [[Special:DaemonLoader|background daemons]] to create reports',
 	'daemonloader_pagetitle' => 'Daemon loader',
 	'daemonloader_createtask' => 'Create task',
 	'daemonloader_listtask' => 'List of tasks',
@@ -14,10 +15,10 @@ $messages['en'] = array(
 	'daemonloader_daemonname' => 'Daemon name',
 	'daemonloader_scriptname' => 'Script name',
 	'daemonloader_daemondesc' => 'Description',
-	'daemonloader_inputparams' => 'Input params',
-	'daemonloader_paramname' => 'Param name',
-	'daemonloader_paramdesc' => 'Param description',
-	'daemonloader_paramtype' => 'Param type',
+	'daemonloader_inputparams' => 'Input parameters',
+	'daemonloader_paramname' => 'Parameter name',
+	'daemonloader_paramdesc' => 'Parameter description',
+	'daemonloader_paramtype' => 'Parameter type',
 	'daemonloader_paramremove' => 'Remove?',
 	'daemonloader_removedaemon' => 'Remove daemon',
 	'daemonloader_paramdefvalue' => 'Default value',
@@ -49,18 +50,18 @@ $messages['en'] = array(
 	'daemonloader_files' => 'XLS files',
 	'daemonloader_period' => 'Reports period',
 	'daemonloader_dateformat' => 'Date format: YYYYMMDD',
-	'daemonloader_emails_info' => 'Comma separated list of emails, to which the result of the task will be sent',
+	'daemonloader_emails_info' => 'Comma separated list of e-mail addresses to which the result of the task will be sent',
 	'daemonloader_day' => 'every day',
 	'daemonloader_week' => 'every week',
 	'daemonloader_month' => 'every month',
 	'daemonloader_taskid' => 'Id',
 	'daemonloader_newtask' => 'New task',
-	'daemonloader_daemonparams' => 'Daemon params',
+	'daemonloader_daemonparams' => 'Daemon parameters',
 	'daemonloader_createdby' => 'Created by',
 	'daemonloader_created' => 'Created',
 	'daemonloader_options' => 'Options',
 	'daemonloader_nojobsfound' => 'No jobs found',
-	'daemonloader_removejobconfirm' => 'Are You sure?'
+	'daemonloader_removejobconfirm' => 'Are you sure?'
 );
 
 /** Message documentation (Message documentation)

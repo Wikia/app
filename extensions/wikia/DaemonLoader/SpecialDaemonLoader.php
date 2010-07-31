@@ -1,12 +1,12 @@
 <?php
-if (!defined('MEDIAWIKI')) die();
+if ( !defined( 'MEDIAWIKI' ) ) die();
 /**
- * A Special Page extension that run background scripts.
+ * A Special Page extension that runs background scripts.
  *
  * @addtogroup Extensions
  *
  * @author Piotr Molski <moli@wikia-inc.com>
- * @copyright Copyright © 2009, Piotr Molski 
+ * @copyright Copyright © 2009, Piotr Molski
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
@@ -40,15 +40,15 @@ CREATE TABLE dataware.daemon_tasks_jobs (
   PRIMARY KEY (dj_id),
   KEY `dj_dt_id` (dj_dt_id),
   KEY `visible` (dj_visible),
-  KEY `period` (dj_start, dj_end), 
-  KEY `frequency` (dj_frequency) 
+  KEY `period` (dj_start, dj_end),
+  KEY `frequency` (dj_frequency)
 );
-*/ 
+*/
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'DaemonLoader',
 	'author' => 'Piotr Molski',
-	'description' => 'Run background daemons to create needed reports',
+	'descriptionmsg' => 'daemonloader-desc',
 );
 
 global $wgAjaxExportList;
@@ -62,7 +62,7 @@ $wgAjaxExportList[] = "DaemonLoader::axGetJobInfo";
 $wgAvailableRights[] = 'daemonloader';
 $wgGroupPermissions['staff']['daemonloader'] = true;
 
-$wgDaemonLoaderAdmins = array("Eloy.wikia", "Moli.wikia");
+$wgDaemonLoaderAdmins = array( "Eloy.wikia", "Moli.wikia" );
 
 $dir =  dirname( __FILE__ );
 $wgAutoloadClasses['DaemonLoader'] = $dir . '/SpecialDaemonLoader_body.php';
