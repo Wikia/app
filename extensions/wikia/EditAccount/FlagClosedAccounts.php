@@ -13,16 +13,16 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
-if( !defined( 'MEDIAWIKI' ) ) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "Not a valid entry point.\n";
 	exit( 1 );
 }
 
-define('CLOSED_ACCOUNT_FLAG', 'Account Disabled');
+define( 'CLOSED_ACCOUNT_FLAG', 'Account Disabled' );
 
 $wgHooks['SpecialContributionsBeforeMainOutput'][] = 'efFlagClosedAccounts';
 
-$wgExtensionMessagesFiles['EditAccount'] = dirname(__FILE__) . '/SpecialEditAccount.i18n.php';
+$wgExtensionMessagesFiles['EditAccount'] = dirname( __FILE__ ) . '/SpecialEditAccount.i18n.php';
 
 function efFlagClosedAccounts( $id ) {
 	global $wgOut;

@@ -13,7 +13,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
-if( !defined( 'MEDIAWIKI' ) ) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "This is a MediaWiki extension named EditAccount.\n";
 	exit( 1 );
 }
@@ -43,7 +43,7 @@ class EditAccount extends SpecialPage {
 		$this->setHeaders();
 
 		# If the user isn't permitted to access this special page, display an error
-		if( !$wgUser->isAllowed( 'editaccount' ) ) {
+		if ( !$wgUser->isAllowed( 'editaccount' ) ) {
 			$wgOut->permissionRequired( 'editaccount' );
 			return;
 		}
@@ -65,9 +65,9 @@ class EditAccount extends SpecialPage {
 		$userName = ucfirst( $userName ); # user names begin with a capital letter
 
 		// check if user name is an existing user
-		if( User::isValidUserName( $userName ) ) {
+		if ( User::isValidUserName( $userName ) ) {
 			$this->mUser = User::newFromName( $userName );
-			if( $this->mUser->idFromName( $userName ) === 0 ) {
+			if ( $this->mUser->idFromName( $userName ) === 0 ) {
 				$this->mStatus = false;
 				$this->mStatusMsg = wfMsg( 'editaccount-nouser', $userName );
 				$action = '';
@@ -90,7 +90,7 @@ class EditAccount extends SpecialPage {
 			case 'setrealname':
 				$newRealName = $wgRequest->getVal( 'wpNewRealName' );
 				$this->mStatus = $this->setRealName( $newRealName );
-				$template = $this->mStatus ? 'selectuser' : 'displayuser';				
+				$template = $this->mStatus ? 'selectuser' : 'displayuser';
 				break;
 			case 'closeaccount':
 				$template = 'closeaccount';
@@ -104,21 +104,21 @@ class EditAccount extends SpecialPage {
 				break;
 			default:
 				$template = 'selectuser';
-		}	
+		}
 
 		$wgOut->setPageTitle( wfMsg( 'editaccount-title' ) );
 
-		$oTmpl = new EasyTemplate(dirname( __FILE__ ) . '/templates/');
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 		$oTmpl->set_Vars( array(
 				'status'	=> $this->mStatus,
 				'statusMsg' => $this->mStatusMsg,
 				'user'	  => $userName,
-				'userEmail' => is_object($this->mUser) ? $this->mUser->getEmail() : null,
-				'userRealName' => is_object($this->mUser) ? $this->mUser->getRealName() : null,
-				'userEncoded' => urlencode($userName),
-				'userId'  => is_object($this->mUser) ? $this->mUser->getID() : null,
-				'userReg' => is_object($this->mUser) ? date('r', strtotime($this->mUser->getRegistration())) : null,
-			));
+				'userEmail' => is_object( $this->mUser ) ? $this->mUser->getEmail() : null,
+				'userRealName' => is_object( $this->mUser ) ? $this->mUser->getRealName() : null,
+				'userEncoded' => urlencode( $userName ),
+				'userId'  => is_object( $this->mUser ) ? $this->mUser->getID() : null,
+				'userReg' => is_object( $this->mUser ) ? date( 'r', strtotime( $this->mUser->getRegistration() ) ) : null,
+			) );
 		// HTML output
 		$wgOut->addHTML( $oTmpl->execute( $template ) );
 	}
@@ -130,7 +130,7 @@ class EditAccount extends SpecialPage {
 	 */
 	function setEmail( $email ) {
 		$oldEmail = $this->mUser->getEmail();
-		if( $this->mUser->isValidEmailAddr( $email ) || $email == '' ) {
+		if ( $this->mUser->isValidEmailAddr( $email ) || $email == '' ) {
 			$this->mUser->setEmail( $email );
 			if ( $email != '' ) {
 				$this->mUser->confirmEmail();
@@ -140,13 +140,13 @@ class EditAccount extends SpecialPage {
 			$this->mUser->saveSettings();
 
 			// Check if everything went through OK, just in case
-			if( $this->mUser->getEmail() == $email ) {
+			if ( $this->mUser->getEmail() == $email ) {
 				global $wgUser, $wgTitle;
 
 				$log = new LogPage( 'editaccnt' );
 				$log->addEntry( 'mailchange', $wgTitle, '', array( $this->mUser->getUserPage() ) );
 
-				if( $email == '' ) {
+				if ( $email == '' ) {
 					$this->mStatusMsg = wfMsg( 'editaccount-success-email-blank', $this->mUser->mName );
 				} else {
 					$this->mStatusMsg = wfMsg( 'editaccount-success-email', $this->mUser->mName, $email );
@@ -168,7 +168,7 @@ class EditAccount extends SpecialPage {
 	 * @return Boolean: true on success, false on failure
 	 */
 	function setPassword( $pass ) {
-		if( $this->mUser->setPassword( $pass ) ) {
+		if ( $this->mUser->setPassword( $pass ) ) {
 			global $wgUser, $wgTitle;
 
 			// Save the new settings
@@ -196,8 +196,8 @@ class EditAccount extends SpecialPage {
 	function setRealName( $realname ) {
 		$this->mUser->setRealName( $realname );
 		$this->mUser->saveSettings();
-		
-		if( $this->mUser->getRealName() == $realname ) { // was saved ok? the setRealName function doesn't return bool...
+
+		if ( $this->mUser->getRealName() == $realname ) { // was saved ok? the setRealName function doesn't return bool...
 			global $wgUser, $wgTitle;
 
 			// Log what was done
@@ -223,7 +223,7 @@ class EditAccount extends SpecialPage {
 	function closeAccount() {
 		# Set flag for Special:Contributions
 		# NOTE: requires FlagClosedAccounts.php to be included separately
-		if( defined( 'CLOSED_ACCOUNT_FLAG' ) ) {
+		if ( defined( 'CLOSED_ACCOUNT_FLAG' ) ) {
 			$this->mUser->setRealName( CLOSED_ACCOUNT_FLAG );
 		}
 
@@ -243,7 +243,7 @@ class EditAccount extends SpecialPage {
 
 			// All clear!
 			$this->mStatusMsg = wfMsg( 'editaccount-success-close', $this->mUser->mName );
-			return true;	
+			return true;
 		} else {
 			// There were errors...inform the user about those
 			$this->mStatusMsg = wfMsg( 'editaccount-error-close', $this->mUser->mName );
