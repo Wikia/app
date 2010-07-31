@@ -6,43 +6,44 @@
 $messages = array();
 
 $messages['en'] = array(
-	'createpage-sp-title' => 'Create a new article',
-	'createpage_title' => 'Create a new article',
+	'createpage-desc' => 'Allows to create a new page using Wikia\'s WYSIWIG editor',
+	'createpage-sp-title' => 'Create a new page',
+	'createpage_title' => 'Create a new page',
 	'createpage_title_caption' => 'Title:',
 	'createpage_enter_text' => 'Text:',
 	'createpage_empty_title_error' => 'Title required',
-	'createpage_empty_article_body_error' => 'Article text required',
+	'createpage_empty_article_body_error' => 'Page text required',
 	'createpage_invalid_title_error' => 'Invalid title',
-	'createpage_article_already_exists' => 'Article with that name already exists.
+	'createpage_article_already_exists' => 'A page with that name already exists.
 Please select different name.',
 	'createpage_spam' => 'Sorry, your edit could not be saved',
 	'createpage_cant_edit' => 'Could not perform edit',
-	'createpage-dialog-title' => 'Create a New Article',
-	'createpage-dialog-message1' => 'Hooray, you\'re creating a new page!',
+	'createpage-dialog-title' => 'Create a new page',
+	'createpage-dialog-message1' => 'Hooray, you are creating a new page!',
 	'createpage-dialog-message2' => 'What do you want to call it?',
 	'createpage-dialog-choose' => 'Choose a page layout:',
 	'createpage-dialog-format' => 'Standard layout',
 	'createpage-dialog-blank' => 'Blank page',
-	'createpage-error-empty-title' => 'Please write a title for your article',
-	'createpage-error-invalid-title' => 'Sorry, the article title was invalid.
+	'createpage-error-empty-title' => 'Please write a title for your page',
+	'createpage-error-invalid-title' => 'Sorry, the page title was invalid.
 Please use a different title.',
-	'createpage-error-article-exists' => 'An article with that title already exists.
+	'createpage-error-article-exists' => 'A page with that title already exists.
 You can go to <a href="$1">$2</a>, or rename your page',
-	'createpage-error-article-spam' => 'Sorry, the article title was rejected by our spam filter.
+	'createpage-error-article-spam' => 'Sorry, the page title was rejected by our spam filter.
 Please use a different title.',
-	'createpage-error-article-blocked' => 'Sorry, you are unable to create that article at this time.',
+	'createpage-error-article-blocked' => 'Sorry, you are unable to create that page at this time.',
 	'tog-createpagedefaultblank' => 'Use blank page as default for creating a new page',
 	'tog-createpagepopupdisabled' => 'Disable Create Page pop-up',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
-Write the first paragraph of your article here.
+Write the first paragraph of your page here.
 
 ==Section heading==
 
-Write the first section of your article here.
+Write the first section of your page here.
 
 ==Section heading==
 
-Write the second section of your article here.',
+Write the second section of your page here.',
 );
 
 /** Afrikaans (Afrikaans)
@@ -337,7 +338,7 @@ Hemen zure artikuluaren lehen parrafoa idatz ezazu.
 
 ==Atal goiburua==
 
-Hemen zure artikuluaren lehen atala idatz ezazu.  
+Hemen zure artikuluaren lehen atala idatz ezazu.
 
 ==Atal goiburua==
 
@@ -547,7 +548,7 @@ Scribe hic le prime paragrapho de tu articulo.
 
 ==Titulo de section==
 
-Scribe hic le prime section de tu articulo.  
+Scribe hic le prime section de tu articulo.
 
 ==Titulo de section==
 
@@ -585,7 +586,7 @@ Seleziona un nome diverso.',
 	'createpage-error-empty-title' => 'Scrivi un titolo per il tuo articolo',
 	'createpage-error-invalid-title' => "Spiacente, il titolo dell'articolo non era valido.
 Utilizza un titolo diverso.",
-	'createpage-error-article-exists' => 'Un articolo con questo titolo esiste già. 
+	'createpage-error-article-exists' => 'Un articolo con questo titolo esiste già.
 Puoi andare a <a href="$1">$2</a> , o rinominare la tua pagina',
 	'createpage-error-article-spam' => "Spiacente, il titolo dell'articolo è stata respinto dal nostro filtro anti-spam.
 Usa un titolo diverso.",
@@ -716,7 +717,7 @@ $messages['mk'] = array(
 
 ==Наслов на заглавие==
 
-Тука напишете го првото заглавие од статијата.  
+Тука напишете го првото заглавие од статијата.
 
 ==Наслов на заглавие==
 
