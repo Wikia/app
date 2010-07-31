@@ -3,6 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'globalwatchlist-desc' => 'Sends weekly digest e-mails witch watchlisted pages on all wikis',
 	"tog-watchlistdigest" => "E-mail me a Weekly Watchlist Digest",
 	"tog-watchlistdigestclear" => "Mark all pages from my Weekly Watchlist Digest as visited",
 	"globalwatchlist-see-more" => "Please check your local watchlists for more changes",
@@ -529,7 +530,7 @@ $messages['ru'] = array(
 $2
 
 
-Это список страниц блогов вашего списка наблюдения Wikia, отредактированых с момента вашего последнего их посещения. 
+Это список страниц блогов вашего списка наблюдения Wikia, отредактированых с момента вашего последнего их посещения.
 
 $3
 
