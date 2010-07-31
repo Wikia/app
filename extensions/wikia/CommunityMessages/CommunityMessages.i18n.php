@@ -20,5 +20,5 @@ $messages = array();
 
 $messages['en'] = array(
 	'communitymessages-desc' => 'Helper extension for Community Messages.',
-	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Community Messages have been updated]].'
+	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Community Messages have been updated]]'
 );
