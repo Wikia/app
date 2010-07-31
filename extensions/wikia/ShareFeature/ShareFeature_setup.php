@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Share Feature extension
  *
@@ -15,58 +14,59 @@
  */
 
 if(!defined('MEDIAWIKI')) {
-        exit(1);
+	exit(1);
 }
 
 $wgExtensionCredits['other'][] = array(
-        'name' => 'Share Feature',
-        'author' => 'Bartek Łapiński',
-        'version' => '1.10',
+	'name' => 'Share Feature',
+	'author' => 'Bartek Łapiński',
+	'version' => '1.10',
+	'descriptionmsg' => 'sharefeature-desc',
 );
 
 $dir = dirname(__FILE__).'/';
 
 $wgShareFeatureSites = array(
-		array(
-			'name' 	=>	'Reddit',
-			'id' 	=>	0,
-			'url' 	=>	'http://www.reddit.com/submit?url=$1&title=$2'
-		),
-		array(
-			'name'	=>	'Facebook',
-			'id'	=>	1,
-			'url' 	=>	'http://www.facebook.com/sharer.php?u=$1?t=$2'
-		),
-		array(
-			'name'	=>	'Twitter',
-			'id'	=>	2,
-			'url'	=>	'http://twitter.com/home?status=$1' . htmlspecialchars(' ') . '$2'
-		), // message and url goes into the one parameter here for Twitter...
-		array(
-			'name'	=>	'Digg',
-			'id'	=>	3,
-			'url'	=>	'http://digg.com/submit?url=$1&title=$2'
-		),
-		array(
-			'name'	=>	'Stumbleupon',
-			'id'	=>	4,
-			'url'	=>	'http://www.stumbleupon.com/submit?url=$1&title=$2'
-		),
-		array(
-			'name'	=>	'Technorati',
-			'id'	=>	5,
-			'url'	=>	'http://www.technorati.com/faves/?add=$1'
-		),
-		array(
-			'name'	=>	'Slashdot',
-			'id'	=>	6,
-			'url'	=>	'http://slashdot.org/bookmark.pl?url=$1&title=$2'
-		),
-		array(
-			'name'	=>	'MySpace',
-			'id'	=>	7,
-			'url'	=>	'http://www.myspace.com/Modules/PostTo/Pages/?l=3&u=$1&t=$2'
-		),
+	array(
+		'name' 	=>	'Reddit',
+		'id' 	=>	0,
+		'url' 	=>	'http://www.reddit.com/submit?url=$1&title=$2'
+	),
+	array(
+		'name'	=>	'Facebook',
+		'id'	=>	1,
+		'url' 	=>	'http://www.facebook.com/sharer.php?u=$1?t=$2'
+	),
+	array(
+		'name'	=>	'Twitter',
+		'id'	=>	2,
+		'url'	=>	'http://twitter.com/home?status=$1' . htmlspecialchars(' ') . '$2'
+	), // message and url goes into the one parameter here for Twitter...
+	array(
+		'name'	=>	'Digg',
+		'id'	=>	3,
+		'url'	=>	'http://digg.com/submit?url=$1&title=$2'
+	),
+	array(
+		'name'	=>	'Stumbleupon',
+		'id'	=>	4,
+		'url'	=>	'http://www.stumbleupon.com/submit?url=$1&title=$2'
+	),
+	array(
+		'name'	=>	'Technorati',
+		'id'	=>	5,
+		'url'	=>	'http://www.technorati.com/faves/?add=$1'
+	),
+	array(
+		'name'	=>	'Slashdot',
+		'id'	=>	6,
+		'url'	=>	'http://slashdot.org/bookmark.pl?url=$1&title=$2'
+	),
+	array(
+		'name'	=>	'MySpace',
+		'id'	=>	7,
+		'url'	=>	'http://www.myspace.com/Modules/PostTo/Pages/?l=3&u=$1&t=$2'
+	),
 );
 
 $wgExtensionFunctions[] = 'wfShareFeatureInit';
@@ -89,12 +89,12 @@ function wfShareFeatureSortSites( $sites, $target, $title ) {
 	$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalStatsDB );
 
 	$res = $dbr->select(
-			'share_feature',
-			'sf_provider_id',
-			array( 'sf_user_id' => $wgUser->getId() ),
-			__METHOD__,
-			array( 'ORDER BY' => 'sf_clickcount DESC' )
-			);
+		'share_feature',
+		'sf_provider_id',
+		array( 'sf_user_id' => $wgUser->getId() ),
+		__METHOD__,
+		array( 'ORDER BY' => 'sf_clickcount DESC' )
+	);
 
 	$sites = array();
 	$found = array();
@@ -102,7 +102,7 @@ function wfShareFeatureSortSites( $sites, $target, $title ) {
 	$target = str_replace( " ", "_", $target );
 
 	// get all the sites we have data for
-        while($row = $dbr->fetchObject($res)) {
+	while($row = $dbr->fetchObject($res)) {
 		$site = $wgShareFeatureSites[$row->sf_provider_id];
 		$sites[] = array(
 			'name' 	=>	$site['name'],
@@ -110,7 +110,8 @@ function wfShareFeatureSortSites( $sites, $target, $title ) {
 			'url' 	=>	wfShareFeatureMakeUrl( $site['url'], $target, $title )
 		);
 		$found[] = $site['name'];
-        }
+	}
+
 	// and other ones, that weren't clicked for this user
 	foreach( $wgShareFeatureSites as $sf_site ) {
 		if( !in_array( $sf_site['name'], $found ) ) {
@@ -121,6 +122,7 @@ function wfShareFeatureSortSites( $sites, $target, $title ) {
 			);
 		}
 	}
+
 	return $sites;
 }
 
@@ -130,25 +132,27 @@ function wfShareFeatureSkinTemplateContentActions( &$content_actions ) {
 
 	// do not display for not existing pages,
 	// do not display for other skins than Monaco or Answers
-	if( ( $wgTitle->isContentPage() || 
+	if( ( $wgTitle->isContentPage() ||
 		( !empty( $wgEnableBlogArticles ) && $wgTitle->getNamespace() == NS_BLOG_ARTICLE && $wgTitle->isSubpage() ) )
 		&& $wgTitle->exists()
 		&& ( ( get_class($wgUser->getSkin()) == 'SkinMonaco' ) || ( get_class($wgUser->getSkin()) == 'SkinAnswers' ) ) ) {
 		$content_actions['share_feature'] = array(
-				'class' => 'disabled',
-				'text' => wfMsg('sf-link'),
-				'icon' => 'share',
-				'href' => '#' ,
-				);
+			'class' => 'disabled',
+			'text' => wfMsg('sf-link'),
+			'icon' => 'share',
+			'href' => '#',
+		);
 	}
+
 	return true;
 }
 
 // initialize the extension
 function wfShareFeatureInit() {
-        global $wgExtensionMessagesFiles, $wgAjaxExportList;
-        $wgExtensionMessagesFiles['ShareFeature'] = dirname(__FILE__).'/ShareFeature.i18n.php';
-        wfLoadExtensionMessages('ShareFeature');
+	global $wgExtensionMessagesFiles, $wgAjaxExportList;
+
+	$wgExtensionMessagesFiles['ShareFeature'] = dirname(__FILE__).'/ShareFeature.i18n.php';
+	wfLoadExtensionMessages('ShareFeature');
 
 	$wgAjaxExportList[] = 'wfShareFeatureAjaxGetDialog';
 	$wgAjaxExportList[] = 'wfShareFeatureAjaxUpdateStats';
@@ -206,5 +210,3 @@ function wfShareFeatureAjaxGetDialog() {
 
 	return $response;
 }
-
-

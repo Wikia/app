@@ -3,6 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'sharefeature-desc' => 'Allows users to link to pages from popular sites',
 	'sf-link' => 'Share this article',
 	'sf-link-popup' => 'Share this article',
 	'sf-link-tooltip' => 'Share this article with your friends',
