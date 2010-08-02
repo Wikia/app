@@ -22,7 +22,7 @@ div.hide {float:right; padding:0px 2px 1px 10px; width:8px;}
 .panel-top {text-align:center;padding:5px; border-top:1px inset #FFFFFF;font-weight: bold}
 .panel-bootom-big {text-align:left; padding:3px; font-size:13pt; border-bottom:1px solid black; font-weight: bold}
 .stats-subtitle {text-align:left; padding:3px; font-size:12pt; font-weight: bold}
-.small {padding:0px 2px 1px 2px; font-size:10px;}
+.small {padding:0px 2px 1px 1px; font-size:10px;}
 .medium {padding:1px 0px 1px 0px; font-size:11px;}
 .normal {padding:1px 0px 1px 0px; font-size:12px;}
 .big {padding:1px 0px 1px 0px; font-size:12pt;}
@@ -130,8 +130,6 @@ td.main2x { border:1px inset #FFF; text-align:left; font-size:8pt; margin:0px; p
 #ws-page-edits-table-stats {text-align:left; font-size:11px; width:100%; overflow:auto;}
 #ws-page-views-table-stats {text-align:left; font-size:11px; width:100%; overflow:auto;}
 #ws-edits-article {padding:10px; width:auto; overflow:auto; border-top: 0px inset #FFFFFF;display:none; margin:2px;}
-#ws-active-wikians {padding:10px; width:auto; overflow:auto; border-top: 1px inset #FFFFFF;display:none;margin:2px;}
-#ws-anon-wikians {padding:10px; width:auto; overflow:auto; border-top: 1px inset #FFFFFF;display:none; margin:2px;}
 #ws-article-size {padding:10px; width:auto; overflow:auto; border-top: 1px inset #FFFFFF;display:none; margin:2px;}
 #ws-pageviews-count {padding:10px; width:auto; overflow:auto; border-top: 1px inset #FFFFFF;display:none; margin:2px;}
 #ws-namespace-count {padding:10px; width:auto; overflow:auto; border-top: 1px inset #FFFFFF;display:none; margin:2px;}
@@ -183,3 +181,4 @@ legend {font-size: 8pt; font-family:Trebuchet MS,arial,verdana;padding:0px;}
 #wk-stats-legend-columns {padding: 10px 0px 10px 2px;}
 .legend-subtitle {text-align:left; padding:3px; font-size:10pt; font-weight: bold}
 .wk-column-group {font-weight: bold; padding: 10px 0px 2px 0px;}
+#ws-breakdown {  min-width:300px; overflow:auto; }

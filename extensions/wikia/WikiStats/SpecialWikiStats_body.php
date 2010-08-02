@@ -68,7 +68,7 @@ class WikiStatsPage extends IncludableSpecialPage
 		$this->mAction		= $wgRequest->getVal("action", "");
 		$this->mLang 		= $wgRequest->getVal("lang", "");
 		$this->mHub 		= $wgRequest->getVal("hub", "");
-		$this->mXLS 		= $wgRequest->getVal("css", false);
+		$this->mXLS 		= $wgRequest->getVal("csv", false);
 		$this->mCityId 		= ($this->TEST == 1 ) ? 177 : $wgCityId;
 		$this->mCityDBName 	= ($this->TEST == 1 ) ? WikiFactory::IDtoDB($this->mCityId) : $wgDBname;
 		$this->mAllWikis 	= 0;
@@ -191,7 +191,13 @@ class WikiStatsPage extends IncludableSpecialPage
 		asort($aLanguages);
 		#-
 		$hubs = WikiFactoryHub::getInstance();
-		$aCategories = $hubs->getCategories();
+		$_cats = $hubs->getCategories();
+		$aCategories = array();
+		if ( !empty($_cats) ) {
+			foreach ( $_cats as $id => $cat ) {
+				$aCategories[$id] = $cat['name'];
+			}
+		};
 
 		# main page
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
@@ -257,7 +263,75 @@ class WikiStatsPage extends IncludableSpecialPage
         #---
         return 1; 
 	}
-
+	
+	private function showBreakdown() {
+        global $wgUser, $wgContLang, $wgLang, $wgOut;
+		#---
+		if ( empty($this->mXLS) ) {
+			wfProfileIn( __METHOD__ );
+			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+			$oTmpl->set_vars( array(
+				"user"			=> $wgUser,
+				"cityId"		=> $this->mCityId,
+				"wgContLang" 	=> $wgContLang,
+				"wgLang"		=> $wgLang,
+			) );
+			$wgOut->addHTML( $oTmpl->execute("activity") ); 
+			wfProfileOut( __METHOD__ );
+		} else {
+/*			$data = $this->mStats->loadStatsFromDB();
+			$columns = $this->mStats->getRangeColumns();
+			$XLSObj = new WikiStatsXLS( $this->mStats, $data, wfMsg('wikistats_filename_mainstats', $this->mCityDBName));
+			$XLSObj->makeMainStats($columns);
+*/
+		}
+        #---
+        return 1; 
+	}
+	
+	private function showAnonbreakdown() {
+        global $wgUser, $wgContLang, $wgLang, $wgOut;
+		#---
+		if ( empty($this->mXLS) ) {
+			wfProfileIn( __METHOD__ );
+			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+			$oTmpl->set_vars( array(
+				"user"			=> $wgUser,
+				"cityId"		=> $this->mCityId,
+				"wgContLang" 	=> $wgContLang,
+				"wgLang"		=> $wgLang,
+				"anons"			=> 1,
+			) );
+			$wgOut->addHTML( $oTmpl->execute("activity") ); 
+			wfProfileOut( __METHOD__ );
+		} else {
+/*			$data = $this->mStats->loadStatsFromDB();
+			$columns = $this->mStats->getRangeColumns();
+			$XLSObj = new WikiStatsXLS( $this->mStats, $data, wfMsg('wikistats_filename_mainstats', $this->mCityDBName));
+			$XLSObj->makeMainStats($columns);
+*/
+		}
+        #---
+        return 1; 
+	}	
+	
+	private function showLatestview() {
+		global $wgUser, $wgContLang, $wgLang, $wgOut;
+		
+		wfProfileIn( __METHOD__ );
+		$rows = $this->mStats->latestViewPages();
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl->set_vars( array(
+			"user"			=> $wgUser,
+			"cityId"		=> $this->mCityId,
+			"wgContLang" 	=> $wgContLang,
+			"wgLang"		=> $wgLang,
+			"data"			=> $rows,
+		) );
+		$wgOut->addHTML( $oTmpl->execute("latestview") ); 
+		wfProfileOut( __METHOD__ );
+	}
+	
 	private function showMonth() {
         wfProfileIn( __METHOD__ );
         echo __METHOD__ ;
