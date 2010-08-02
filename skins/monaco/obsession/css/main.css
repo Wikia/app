@@ -99,9 +99,10 @@
 #navigation .navigation-hover>a {
 	background: #7D0B0D;
 }
-#link_box, #link_box_dynamic {
-	background: #1C0400;
+#link_box_table {
+	background-color: #1C0400;
 }
+#link_box_table,
 #link_box_table a {
 	color: #F36F1F;
 }
