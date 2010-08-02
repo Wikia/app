@@ -1,4 +1,5 @@
 == Changes since 201007.5 ==
+* rt#61367: We don't want searchindex tables (eloy)
 * rt#61174: Borked Achievement Leaderboards (federico)
 * rt#59932: WF tags arent part of ad call (Nef)
 * rt#60358: Create a new ad slot for Leaderboard Stats pages (Nef)
