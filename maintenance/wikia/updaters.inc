@@ -21,6 +21,7 @@ $wgUpdates[ "mysql" ][] = array( "do_page_vote_unique_update" );
 $wgUpdates[ "mysql" ][] = array( "do_drop_table", "imagetags" );
 $wgUpdates[ "mysql" ][] = array( "do_drop_table", "send_queue" );
 $wgUpdates[ "mysql" ][] = array( "do_drop_table", "send_stats" );
+$wgUpdates[ "mysql" ][] = array( "do_drop_table", "searchindex" );
 
 
 /**
