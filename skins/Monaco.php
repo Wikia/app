@@ -2320,6 +2320,7 @@ if ( in_array($wgRequest->getVal('action'), array('edit', 'submit')) ) {
 else {
 	echo AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
 	echo AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
+	echo AnalyticsEngine::track('Exelate', AnalyticsEngine::EVENT_PAGEVIEW);
 }
 
 $this->html('bottomscripts'); /* JS call to runBodyOnloadHook */

@@ -12,6 +12,7 @@ interface iAnalyticsProvider {
 require_once dirname(__FILE__) . '/AnalyticsProviderQuantServe.php';
 require_once dirname(__FILE__) . '/AnalyticsProviderGA_Urchin.php';
 require_once dirname(__FILE__) . '/AnalyticsProviderComscore.php';
+require_once dirname(__FILE__) . '/AnalyticsProviderExelate.php';
 
 class AnalyticsEngine {
 
@@ -38,6 +39,7 @@ class AnalyticsEngine {
 		  case 'QuantServe': $AP = new AnalyticsProviderQuantServe(); break;
 		  case 'Comscore': $AP = new AnalyticsProviderComscore(); break;
 	//	  case 'MessageQueue': $AP = new AnalyticsProviderMessageQueue(); break;
+		  case 'Exelate': $AP = new AnalyticsProviderExelate(); break;
 		  default: return '<!-- Invalid provider for AnalyticsEngine::getTrackCode -->';
 		}
 
