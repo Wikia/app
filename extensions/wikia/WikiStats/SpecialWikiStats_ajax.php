@@ -19,17 +19,20 @@ class WikiStatsAjax {
 	var $mCityId;
 	var $mAction; 
 	var $mResult;
-	function __construct($action, $cityId) {
+	var $mRequest;
+	function __construct($request, $action, $cityId) {
 		$this->mCityId 	= $cityId;
 		$this->mAction 	= $action;
+		$this->mRequest = $request;
 		$this->mResult 	= "";
 	}
 	
 	public static function fromRequest( ) {
 		global $wgRequest, $wgCityId;
+		$request = $wgRequest;
 		$action = $wgRequest->getVal('ws');
 		$cityId = $wgRequest->getVal('wikia', $wgCityId);
-		$obj = new WikiStatsAjax($action, $cityId);
+		$obj = new WikiStatsAjax($request, $action, $cityId);
 		return $obj;
 	}
 	
@@ -77,6 +80,19 @@ class WikiStatsAjax {
 		return $out;
 	}
 
+	private function __breakdown() {
+		global $wgOut;
+        wfProfileIn( __METHOD__ );
+		
+		$month = $this->mRequest->getVal('month', 0);
+		$limit = $this->mRequest->getVal('limit', WIKISTATS_WIKIANS_RANK_NBR);
+		$anons = $this->mRequest->getVal('anons', 0);
+		$wgOut->setArticleBodyOnly(true);
+		$out = $this->mStats->userBreakdown($month, $limit, $anons);
+
+        wfProfileOut( __METHOD__ );
+		return $out;		
+	}
 }
 
 function axWStats() {
