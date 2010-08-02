@@ -8,7 +8,6 @@
 $wgHooks[ "RevisionInsertComplete" ][]	= "ExternalStorageUpdate::addDeferredUpdate";
 $wgHooks[ "ArticleDeleteComplete" ][]	= "ExternalStorageUpdate::deleteArticleExternal";
 $wgHooks[ "NewRevisionFromEditComplete" ][] = "ExternalStorageUpdate::setRevisionFromEdit";
-#$wgHooks[ "RevisionHiddenComplete" ][]	= "ExternalStorageUpdate::hiddenArticleExternal";
 
 class ExternalStorageUpdate {
 
@@ -55,113 +54,80 @@ class ExternalStorageUpdate {
 				return false;
 			}
 
-			/**
-			 * blobs tables could be in different places
-			 */
-			$dbw = wfGetDBExt( DB_MASTER, $cluster );
-			$ip = ip2long(wfGetIP());
 
-			$ret = $dbw->update(
-				"blobs",
+			/**
+			 * ... but pages are always on dataware
+			 */
+			$dba = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
+
+			$Row = $dba->selectRow(
+				"pages",
+				array( "page_id", "page_title", "page_namespace", "page_status" ),
 				array(
-					"rev_id"        => $this->mRevision->getId(),
-					"rev_user"      => $this->mRevision->getUser(),
-					"rev_page_id"   => $this->mPageId,
-					"rev_wikia_id"  => $wgCityId,
-					"rev_namespace" => $Title->getNamespace(),
-					"rev_user_text" => $this->mRevision->getUserText(),
-					"rev_flags"     => $this->mFlags,
-					"rev_timestamp" => wfTimestamp( TS_DB, $this->mRevision->mTimestamp ),
-					"rev_ip" 		=> $ip
+					"page_id" => $this->mPageId,
+					"page_wikia_id" => $wgCityId
 				),
-				array( "blob_id" => $id ),
-				__METHOD__,
-				array( "IGNORE" )
+				__METHOD__
 			);
 
-			if( $dbw->getFlag( DBO_TRX ) ) {
-				$dbw->commit();
-			}
+			/**
+			 * @todo add more statuses to $page_status
+			 */
+			$page_title     = $Title->getDBkey();
+			$page_namespace = $Title->getNamespace();
+			$page_status    = $Title->isRedirect(GAID_FOR_UPDATE) ? 1 : 0;
+			$page_latest    = $Title->getLatestRevID();
 
-
-			if( $ret ) {
+			if( isset( $Row->page_id ) && !empty( $Row->page_id ) ) {
 				/**
-				 * ... but pages are always on dataware
+				 * update
 				 */
-				$dba = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
-
-				$Row = $dba->selectRow(
-					"pages",
-					array( "page_id", "page_title", "page_namespace", "page_status" ),
-					array(
-						"page_id" => $this->mPageId,
-						"page_wikia_id" => $wgCityId
-					),
-					__METHOD__
-				);
-
-				/**
-				 * @todo add more statuses to $page_status
-				 */
-				$page_title     = $Title->getDBkey();
-				$page_namespace = $Title->getNamespace();
-				$page_status    = $Title->isRedirect(GAID_FOR_UPDATE) ? 1 : 0;
-				$page_latest    = $Title->getLatestRevID();
-
-				if( isset( $Row->page_id ) && !empty( $Row->page_id ) ) {
-					/**
-					 * update
-					 */
-					if( $Row->page_title != $page_title || $Row->page_namespace != $page_namespace ) {
-						$dba->update(
-							"pages",
-							array(
-								"page_wikia_id"    => $wgCityId,
-								"page_namespace"   => $page_namespace,
-								"page_title"       => $page_title,
-								"page_title_lower" => mb_strtolower( $page_title ),
-								"page_latest"      => $page_latest,
-								"page_status"      => $page_status
-							),
-							array(
-								"page_id"        => $this->mPageId,
-								"page_wikia_id"  => $wgCityId
-							),
-							__METHOD__
-						);
-					}
-				}
-				else {
-					/**
-					 * insert
-					 */
-					$dba->insert(
+				if( $Row->page_title != $page_title || $Row->page_namespace != $page_namespace ) {
+					$dba->update(
 						"pages",
 						array(
 							"page_wikia_id"    => $wgCityId,
-							"page_id"          => $this->mPageId,
 							"page_namespace"   => $page_namespace,
 							"page_title"       => $page_title,
 							"page_title_lower" => mb_strtolower( $page_title ),
 							"page_latest"      => $page_latest,
-							"page_status"      => $page_status,
-							"page_counter"     => 0,
-							"page_edits"       => 0,
+							"page_status"      => $page_status
+						),
+						array(
+							"page_id"        => $this->mPageId,
+							"page_wikia_id"  => $wgCityId
 						),
 						__METHOD__
 					);
 				}
-
-				/**
-				 * be sure that data is written
-				 */
-				if( $dba->getFlag( DBO_TRX ) ) {
-					$dba->commit();
-				}
 			}
-		}
-		else {
-			Wikia::log( __METHOD__, "err", "revision object is not Revision instance" );
+			else {
+				/**
+				 * insert
+				 */
+				$dba->insert(
+					"pages",
+					array(
+						"page_wikia_id"    => $wgCityId,
+						"page_id"          => $this->mPageId,
+						"page_namespace"   => $page_namespace,
+						"page_title"       => $page_title,
+						"page_title_lower" => mb_strtolower( $page_title ),
+						"page_latest"      => $page_latest,
+						"page_status"      => $page_status,
+						"page_counter"     => 0,
+						"page_edits"       => 0,
+					),
+					__METHOD__
+				);
+			}
+
+			/**
+			 * be sure that data is written
+			 */
+			if( $dba->getFlag( DBO_TRX ) ) {
+				$dba->commit();
+			}
 		}
 		wfProfileOut( __METHOD__ );
 		return true;
@@ -233,53 +199,6 @@ class ExternalStorageUpdate {
 	}
 
 	/**
-	 * hiddenArticleExternal
-	 *
-	 * static method called as hook
-	 *
-	 * @static
-	 * @access public
-	 * @author Piotr Molski <moli@wikia.com>
-	 *
-	 * @param Revision	$oRevision revision object
-	 *
-	 * @return true means process other hooks
-	 */
-	static public function hiddenArticleExternal(&$oRevision) {
-		global $wgCityId, $wgExternalDatawareDB;
-
-		return true;
-
-		wfProfileIn( __METHOD__ );
-		if ($oRevision instanceof Revision) {
-
-			/**
-			 * we need here which archive contain blobs!
-			 */
-			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
-			$ret = $dbw->update(
-				"blobs",
-				array (
-					"rev_status"	=> self::REV_HIDDEN,
-				),
-				array (
-					"rev_id" 		=> $oRevision->getId(),
-					"rev_page_id"	=> $oRevision->getPage(),
-					"rev_wikia_id"	=> $wgCityId,
-				),
-				__METHOD__
-			);
-			if( $dbw->getFlag( DBO_TRX ) ) {
-				$dbw->commit();
-			}
-		}
-		wfProfileOut( __METHOD__ );
-		return true;
-	}
-
-
-
-	/**
 	 * setRevisionFromEdit
 	 *
 	 * static method called as hook
@@ -322,16 +241,18 @@ class ExternalStorageUpdate {
 
 		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 
-		$dbw->update( "pages",
-		array( /* SET */
-			'page_latest'	=> $oRevision->getId(),
-			'page_status' 	=> $page_status
-		),
-		array(
-			'page_id' 		=> $oArticle->getId(),
-			'page_wikia_id' => $wgCityId
-		),
-		__METHOD__ );
+		$dbw->update(
+			"pages",
+			array( /* SET */
+				'page_latest'	=> $oRevision->getId(),
+				'page_status' 	=> $page_status
+			),
+			array(
+				'page_id' 		=> $oArticle->getId(),
+				'page_wikia_id' => $wgCityId
+			),
+			__METHOD__
+		);
 
 		if( $dbw->getFlag( DBO_TRX ) ) {
 			$dbw->commit();
