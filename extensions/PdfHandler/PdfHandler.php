@@ -28,7 +28,7 @@ if (!defined('MEDIAWIKI')) {
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'PDF Handler',
-	'svn-date' => '$LastChangedDate: 2008-12-25 00:29:44 +0000 (Thu, 25 Dec 2008) $',
+	'svn-date' => '$LastChangedDate: 2008-12-25 01:29:44 +0100 (czw, 25 gru 2008) $',
 	'svn-revision' => '$LastChangedRevision: 45011 $',
 	'author' =>' Xarax',
 	'description' => 'Handler for viewing PDF files in image mode',

@@ -8,7 +8,7 @@
  
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'PreferencesExtension',
-	'svn-date' => '$LastChangedDate: 2008-10-11 16:39:40 +0000 (Sat, 11 Oct 2008) $',
+	'svn-date' => '$LastChangedDate: 2008-10-11 18:39:40 +0200 (sob, 11 paź 2008) $',
 	'svn-revision' => '$LastChangedRevision: 41971 $',
 	'author' => 'Austin Che',
 	'url' => 'http://openwetware.org/wiki/User:Austin/Extensions/PreferencesExtension',

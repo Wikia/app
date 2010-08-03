@@ -1,6 +1,9 @@
 <?php
 /** Lojban (Lojban)
  *
+ * See MessagesQqq.php for message documentation incl. usage of parameters
+ * To improve a translation please visit http://translatewiki.net
+ *
  * @ingroup Language
  * @file
  *
@@ -82,30 +85,47 @@ $messages = array(
 'printableversion' => 'plepri simsa',
 'permalink'        => "vitno terjo'e",
 'edit'             => 'stika',
+'create'           => 'ninzba',
 'delete'           => 'daspo',
 'protect'          => 'bandu',
+'protect_change'   => 'binxo',
 'talkpagelinktext' => 'casnu',
 'specialpage'      => 'steci ckupau',
+'personaltools'    => 'Sivni tyobuobulysy',
 'talk'             => 'casnu',
+'views'            => 'Catlu',
 'toolbox'          => 'tutci',
 'otherlanguages'   => 'drata bangu',
 'lastmodifiedat'   => "le vi ckupau rore'u se galfi de'i li $2 $1", # $1 date, $2 time
+'jumpto'           => 'plipe tyobu:',
+'jumptonavigation' => 'ckupau',
 'jumptosearch'     => 'sisku',
 
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
+'aboutsite'            => 'About {{SITENAME}}',
+'aboutpage'            => "Project:sera'a",
 'copyright'            => "lo selvau cu gubni ja'i la'o gy. $1 .gy.",
-'currentevents'        => 'nuzba ckupau',
-'currentevents-url'    => 'Project:nuzba ckupau',
-'disclaimers'          => "xusra lo za'i na fuzme",
-'mainpage'             => 'ralju ckupau',
+'copyrightpagename'    => "{{SITENAME}} fukyzifpo'e",
+'copyrightpage'        => "{{ns:project}}:fukyzifpo'e",
+'currentevents'        => "caca'a fasnu",
+'currentevents-url'    => "Project:caca'a fasnu",
+'disclaimers'          => "nunxusra lo za'i na fuzme",
+'disclaimerpage'       => "Project:kampu nunxusra be lo za'i na fuzme",
+'edithelp'             => 'stika nunsidju',
+'edithelppage'         => 'Help:Editing',
+'faq'                  => 'FAQ',
+'faqpage'              => 'Project:FAQ',
+'mainpage'             => 'Ralju Ckupau',
 'mainpage-description' => 'ralju ckupau',
 'portal'               => 'bende ckupau',
 'portal-url'           => 'Project:bende ckupau',
 'privacy'              => "javni be sera'a lo sivni",
+'privacypage'          => "Project:i'inai zukselpla",
 
+'retrievedfrom'        => 'cpacu fi la\'o .url. "$1" .url.',
 'editsection'          => 'stika ti',
 'editsection-brackets' => '[$1]',
-'editold'              => 'edit',
+'editold'              => 'stika',
 'viewsourceold'        => 'catlu le mifra',
 'editlink'             => 'stika ti',
 'viewsourcelink'       => 'casnu le mifra',
@@ -119,8 +139,15 @@ $messages = array(
 'feedlinks'            => 'Feed:',
 'feed-invalid'         => 'Invalid subscription feed type.',
 'feed-unavailable'     => 'Syndication feeds are not available',
+'site-rss-feed'        => '$1 RSS cidja',
+'site-atom-feed'       => '$1 Atom cidja',
+'red-link-title'       => '$1 (le vi kibypapri cu na zasti)',
 
 # Short words for each namespace, by default used in the namespace tab in monobook
+'nstab-main'      => 'kibypapri',
+'nstab-user'      => 'pilno kibypapri',
+'nstab-media'     => 'Media page',
+'nstab-special'   => 'steci kibypapri',
 'nstab-mediawiki' => 'notci',
 'nstab-category'  => 'klesi',
 
@@ -144,6 +171,8 @@ $messages = array(
 'showpreview'    => 'troci jarco',
 'showdiff'       => 'jarco lo te frica',
 'loginreqlink'   => "co'a se jaspu",
+'previewnote'    => "'''ko morji le du'u ti seljarco o'i'''
+.i lo do nunstika cu na pu vreji",
 'editing'        => "ca galfi la'e lu $1 li'u",
 'editingsection' => 'ca galfi le selcmene be zoi $1 (section)',
 'editingcomment' => 'ca galfi le selcmene be zoi $1 (comment)',
@@ -170,8 +199,11 @@ $messages = array(
 'search-mwsuggest-disabled' => 'no stidiiyobunysy',
 
 # Preferences page
+'preferences'       => 'zmaselnei',
+'mypreferences'     => 'zmaselnei liste',
 'textboxsize'       => 'ca galfi',
 'searchresultshead' => "tu'a le se sisku",
+'savedprefs'        => 'le do zmaselnei pu vreji',
 
 # Recent changes
 'recentchanges'     => 'puzi nunstika',
@@ -211,16 +243,28 @@ $messages = array(
 'categories' => 'klesi',
 
 # Watchlist
-'watch'         => 'zgana',
+'watchlist'     => 'selzgaste',
+'mywatchlist'   => 'selzgaste',
+'watch'         => 'jundi',
 'watchthispage' => 'zgana ti',
+
+# Displayed when you click the "watch" button and it is in the process of watching
+'watching'   => "co'a jundi",
+'unwatching' => "co'u jundi",
 
 # Delete
 'deletedarticle' => "pu daspo la'e lu [[$1]] li'u",
 'dellogpage'     => 'plivei fi loi nu daspo',
 'deletionlog'    => 'plivei fi loi nu daspo',
 
+# Rollback
+'rollbacklink' => 'lamxru',
+
 # Restrictions (nouns)
 'restriction-edit' => 'stika',
+
+# Namespace form on various pages
+'blanknamespace' => '(ralju)',
 
 # Contributions
 'contributions' => 'selstika le pilno',
@@ -232,20 +276,29 @@ $messages = array(
 'whatlinkshere' => 'ma jorne ti',
 
 # Block/unblock
-'blocklink'    => 'zunti',
-'contribslink' => 'selstika',
+'blocklink'        => 'zunti',
+'change-blocklink' => 'stika bliku',
+'contribslink'     => 'selstika',
 
 # Move page
-'movedto'   => 'te muvdu',
-'1movedto2' => "le pu se cmene lu [[$1]] li'u cu ca se cmene lu [[$2]] li'u",
+'movedto'    => 'te muvdu',
+'1movedto2'  => "le pu se cmene lu [[$1]] li'u cu ca se cmene lu [[$2]] li'u",
+'revertmove' => 'xruti',
 
 # Tooltip help for the actions
+'tooltip-pt-watchlist'          => 'le liste be lo kibypapri poi do zgana',
+'tooltip-pt-mycontris'          => 'le liste be le do selstika',
 'tooltip-pt-logout'             => "co'u se jaspu",
+'tooltip-ca-watch'              => 'jmive le vi kibypapri le do selzgaste',
+'tooltip-search'                => 'Sisku {{SITENAME}}',
+'tooltip-search-go'             => "Litru tyobu abu kibypapri kansa tyy'y.buibusy satci cmene ibufy zasti",
+'tooltip-search-fulltext'       => "sisku do'i lei ckupau",
 'tooltip-n-mainpage'            => 'vitke le ralju ckupau',
 'tooltip-n-randompage'          => 'jarco lo cunso ckupau',
 'tooltip-n-help'                => 'sidju kibypapri',
 'tooltip-t-whatlinkshere'       => "nu liste lo zifyga'ikibjudri poi ke'a kibjorne le vi ckupau",
 'tooltip-t-recentchangeslinked' => "lo puzi nunga'i pe lo kibypapri poi kibjorne le vi ckupau",
+'tooltip-undo'                  => "fatygau le nunstika gi'e jarco le stika tampapri tai lo nu troci jarco .i kakne jmina lo krinu le torvelski",
 
 # Special:FilePath
 'filepath-page' => 'se datnyvei zoi',

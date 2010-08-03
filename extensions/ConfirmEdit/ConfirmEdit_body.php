@@ -457,7 +457,7 @@ class SimpleCaptcha {
 	 * Backend function for confirmEdit() and confirmEditAPI()
 	 * @return bool false if the CAPTCHA is rejected, true otherwise
 	 */
-	private function doConfirmEdit( &$editPage, $newtext, $section, $merged = false ) {
+	private function doConfirmEdit( $editPage, $newtext, $section, $merged = false ) {
 		if( $this->shouldCheck( $editPage, $newtext, $section, $merged ) ) {
 			if( $this->passCaptcha() ) {
 				return true;
@@ -478,7 +478,7 @@ class SimpleCaptcha {
 	 * @param bool $merged
 	 * @return bool true to continue saving, false to abort and show a captcha form
 	 */
-	function confirmEdit( &$editPage, $newtext, $section, $merged = false ) {
+	function confirmEdit( $editPage, $newtext, $section, $merged = false ) {
 		if( defined('MW_API') ) {
 			# API mode
 			# The CAPTCHA was already checked and approved
@@ -500,7 +500,7 @@ class SimpleCaptcha {
 	 * @param EditPage $editPage
 	 * @param string $newtext
 	 */
-	function confirmEditMerged( &$editPage, $newtext ) {
+	function confirmEditMerged( $editPage, $newtext ) {
 		return $this->confirmEdit( $editPage, $newtext, false, true );
 	}
 

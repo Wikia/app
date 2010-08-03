@@ -19,7 +19,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'author' => 'Rob Church',
 	'description' => 'Special page used to wipe the OBJECTCACHE table',
 	'descriptionmsg' => 'purgecache-desc',
-	'svn-date' => '$LastChangedDate: 2008-08-15 19:50:04 +0000 (Fri, 15 Aug 2008) $',
+	'svn-date' => '$LastChangedDate: 2008-08-15 21:50:04 +0200 (ptk, 15 sie 2008) $',
 	'svn-revision' => '$LastChangedRevision: 39428 $',
 );
 

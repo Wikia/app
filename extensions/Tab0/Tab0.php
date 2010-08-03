@@ -8,7 +8,7 @@ $wgExtensionCredits['other'][] = array(
 	'author'         => 'Agbad',
 	'description'    => 'Adds "0" tab, linking to the edit page of the first section of the page',
 	'descriptionmsg' => 'tab0-desc',
-	'svn-date'       => '$LastChangedDate: 2008-06-02 14:59:10 +0000 (Mon, 02 Jun 2008) $',
+	'svn-date'       => '$LastChangedDate: 2008-06-02 16:59:10 +0200 (pon, 02 cze 2008) $',
 	'svn-revision'   => '$LastChangedRevision: 35722 $',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:Tab0',
 );

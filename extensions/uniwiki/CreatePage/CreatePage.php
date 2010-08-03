@@ -19,7 +19,7 @@ $wgExtensionCredits['other'][] = array(
 	'author'         => 'Travis Derouin, Merrick Schaefer, Mark Johnston, Evan Wheeler and Adam Mckaig (at UNICEF)',
 	'description'    => 'Adds a [[Special:CreatePage|special page]] for creating new pages',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:Uniwiki_Generic_Edit_Page',
-	'svn-date'       => '$LastChangedDate: 2008-12-07 05:49:59 +0000 (Sun, 07 Dec 2008) $',
+	'svn-date'       => '$LastChangedDate: 2008-12-07 06:49:59 +0100 (ndz, 07 gru 2008) $',
 	'svn-revision'   => '$LastChangedRevision: 44278 $',
 	'descriptionmsg' => 'createpage-desc',
 );

@@ -16,7 +16,7 @@ if ( ! defined( 'MEDIAWIKI' ) ) {
 $wgExtensionFunctions[] = 'efCommentSpammer';
 $wgExtensionCredits['other'][] = array(
 	'name' => 'CommentSpammer',
-	'svn-date' => '$LastChangedDate: 2009-01-25 12:24:02 +0000 (Sun, 25 Jan 2009) $',
+	'svn-date' => '$LastChangedDate: 2009-01-25 13:24:02 +0100 (ndz, 25 sty 2009) $',
 	'svn-revision' => '$LastChangedRevision: 46195 $',
 	'author' => 'Nick Jenkins',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:CommentSpammer',

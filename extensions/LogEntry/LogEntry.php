@@ -28,7 +28,7 @@ if( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['parserhook'][] = array(
 	'name'           => 'LogEntry',
 	'author'         => 'Trevor Parscal', 
-	'svn-date'       => '$LastChangedDate: 2008-10-29 18:24:14 +0000 (Wed, 29 Oct 2008) $',
+	'svn-date'       => '$LastChangedDate: 2008-10-29 19:24:14 +0100 (śro, 29 paź 2008) $',
 	'svn-revision'   => '$LastChangedRevision: 42777 $',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:LogEntry', 
 	'description'    => 'This tag extension provides a form for appending/prepending to log pages',

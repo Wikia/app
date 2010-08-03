@@ -2,7 +2,7 @@
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'AntiSpoof',
-	'svn-date' => '$LastChangedDate: 2009-02-02 15:06:12 +0000 (Mon, 02 Feb 2009) $',
+	'svn-date' => '$LastChangedDate: 2009-02-02 16:06:12 +0100 (pon, 02 lut 2009) $',
 	'svn-revision' => '$LastChangedRevision: 46709 $',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:AntiSpoof',
 	'author' => 'Brion Vibber',

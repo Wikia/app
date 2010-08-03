@@ -1824,7 +1824,7 @@ function do_postgres_updates() {
 			'mw_version' => $wgVersion,
 			'pg_version' => $version,
 			'sql_version' => '$LastChangedRevision: 60080 $',
-			'sql_date' => '$LastChangedDate: 2009-12-15 17:24:12 +0000 (Tue, 15 Dec 2009) $',
+			'sql_date' => '$LastChangedDate: 2009-12-15 18:24:12 +0100 (wto, 15 gru 2009) $',
 		) );
 	return;
 }

@@ -10,7 +10,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name'           => 'ExpandTemplates',
-	'svn-date' => '$LastChangedDate: 2008-08-11 18:19:14 +0000 (Mon, 11 Aug 2008) $',
+	'svn-date' => '$LastChangedDate: 2008-08-11 20:19:14 +0200 (pon, 11 sie 2008) $',
 	'svn-revision' => '$LastChangedRevision: 39164 $',
 	'author'         => 'Tim Starling',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:ExpandTemplates',

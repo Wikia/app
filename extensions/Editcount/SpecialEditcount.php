@@ -15,7 +15,7 @@ if (!defined('MEDIAWIKI')) die();
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Editcount',
-	'svn-date' => '$LastChangedDate: 2008-07-09 18:40:42 +0000 (Wed, 09 Jul 2008) $',
+	'svn-date' => '$LastChangedDate: 2008-07-09 20:40:42 +0200 (śro, 09 lip 2008) $',
 	'svn-revision' => '$LastChangedRevision: 37426 $',
 	'author' => 'Ævar Arnfjörð Bjarmason',
 	'description' => 'Displays [[Special:Editcount|edit count]] of a user',

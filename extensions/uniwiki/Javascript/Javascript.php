@@ -11,7 +11,7 @@ $wgExtensionCredits['other'][] = array(
 	'author'         => 'Merrick Schaefer, Mark Johnston, Evan Wheeler and Adam Mckaig (at UNICEF)',
 	'description'    => 'Adds uniwiki.js to each page containing Javascript code shared between Uniwiki extensions',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:Uniwiki_Javascript',
-	'svn-date'       => '$LastChangedDate: 2008-11-30 14:08:15 +0000 (Sun, 30 Nov 2008) $',
+	'svn-date'       => '$LastChangedDate: 2008-11-30 15:08:15 +0100 (ndz, 30 lis 2008) $',
 	'svn-revision'   => '$LastChangedRevision: 44070 $',
 	'descriptionmsg' => 'javascript-desc',
 );
