@@ -1,13 +1,13 @@
 <!-- s:<?= __FILE__ ?> -->
 <div id="article-comments-wrapper">
 	<h2 class="neutral" id="article-comment-header">
-		<span class="dark_text_1"><?php echo wfMsg('article-comments-comments', $countCommentsNested) ?></span>
+		<span class="dark_text_1" id="article-comments-counter"><?= wfMsg('article-comments-comments', $countCommentsNested) ?></span>
 	</h2>
 	<?php
 	if ( $countComments > 1 ) {
 	?>
 	<div class="article-helper-links">
-		<a href="<?= $title->getFullURL('showall=1') ?>#article-comment-header"><?php echo wfMsg('article-comments-show-all') ?></a>
+		<a href="<?= $title->getFullURL('showall=1') ?>#article-comment-header"><?= wfMsg('article-comments-show-all') ?></a>
 	</div>
 	<?php
 	}
@@ -30,7 +30,7 @@
 				<div class="article-comm-input-text">
 					<textarea name="wpArticleComment" id="article-comm"></textarea><br />
 					<? if (!$isReadOnly) { ?>
-					<input type="submit" name="wpArticleSubmit" id="article-comm-submit" value="<? echo wfMsg('article-comments-post') ?>" />
+					<input type="submit" name="wpArticleSubmit" id="article-comm-submit" value="<?= wfMsg('article-comments-post') ?>" />
 					<? } ?>
 					<img src="<?= $stylePath ?>/common/images/ajax.gif" class="throbber" />
 				</div>
@@ -49,7 +49,7 @@
 		</div>
 	<?php } else { ?>
 		<div id="article-comments-login">
-			<?php echo wfMsg('article-comments-login', SpecialPage::getTitleFor('UserLogin')->getLocalUrl() ); ?>
+			<?= wfMsg('article-comments-login', SpecialPage::getTitleFor('UserLogin')->getLocalUrl() ); ?>
 		</div>
 	<?php
 		}

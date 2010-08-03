@@ -176,7 +176,9 @@ class ArticleCommentsAjax {
 			$commentsHTML = ArticleCommentList::formatList($comments);
 			$pagination = ArticleCommentList::doPagination($countComments, count($comments), $page, $title);
 
-			$result = array('text' => $commentsHTML, 'pagination' => $pagination);
+			$counter = wfMsg('article-comments-comments', $listing->getCountAllNested());
+
+			$result = array('text' => $commentsHTML, 'pagination' => $pagination, 'counter' => $counter);
 		}
 
 		return $result;

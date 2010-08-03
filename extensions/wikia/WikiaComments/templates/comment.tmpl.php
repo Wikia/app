@@ -14,7 +14,7 @@
 		<?= $comment['text'] ?>
 		</div>
 		<?php
-		if (count($comment['buttons'])) {
+		if (count($comment['buttons']) || $comment['replyButton']) {
 		?>
 		<div class="buttons">
 			<?= $comment['replyButton'] ?>

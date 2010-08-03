@@ -93,9 +93,9 @@ div.article-comm-input-text {
 	height: 16px;
 	line-height: 16px;
 	margin: 0 1px;
+	min-width: 16px;
 	padding: 2px;
 	text-align: center;
-	width: 16px;
 }
 
 #article-comments-pagination-link-prev,
@@ -136,10 +136,14 @@ a.article-comm-reply {
 
 .tools {
 	visibility: hidden;
-}}
+}
 
 .tools .sprite {
 	margin-right: 3px;
+}
+
+.tools a {
+	margin-left: 2px;
 }
 
 #article-comments-wrapper .throbber {
