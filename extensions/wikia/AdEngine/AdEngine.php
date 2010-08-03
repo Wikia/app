@@ -198,15 +198,12 @@ class AdEngine {
 
 		$db = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 		$ad_slot_table = 'ad_slot';
-		$ad_slot_override_table = 'ad_slot_override';
 		$ad_provider_value_table = 'ad_provider_value';
 
 		$sql = "SELECT ad_slot.as_id, ad_slot.slot, ad_slot.size, ad_slot.load_priority,
-				COALESCE(adso.provider_id, ad_slot.default_provider_id) AS provider_id,
-				COALESCE(adso.enabled, ad_slot.default_enabled) AS enabled
+				default_provider_id AS provider_id,
+				default_enabled AS enabled
 				FROM $ad_slot_table
-				LEFT OUTER JOIN $ad_slot_override_table AS adso
-				  ON ad_slot.as_id = adso.as_id AND city_id=".intval($wgCityId)."
 				WHERE skin='".$db->strencode($skin_name)."'";
 
 		$res = $db->query($sql);
