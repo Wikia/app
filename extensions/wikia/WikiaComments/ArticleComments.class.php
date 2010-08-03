@@ -104,12 +104,14 @@ class ArticleCommentInit {
 	}
 
 	static public function ArticleCommentAddJS(&$out, &$sk) {
-		global $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
+		global $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgEnableWikiaCommentsExt;
 		wfProfileIn( __METHOD__ );
 
 		if (self::ArticleCommentCheck()) {
-			$out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/ArticleComments/js/ArticleComments.js?{$wgStyleVersion}\" ></script>\n");
-			$out->addExtensionStyle("$wgExtensionsPath/wikia/ArticleComments/css/ArticleComments.css?$wgStyleVersion");
+			//TODO: temporary change: 2 different paths
+			$folder = empty($wgEnableWikiaCommentsExt) ? 'ArticleComments' : 'WikiaComments';
+			$out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/$folder/js/ArticleComments.js?{$wgStyleVersion}\" ></script>\n");
+			$out->addExtensionStyle("$wgExtensionsPath/wikia/$folder/css/ArticleComments.css?$wgStyleVersion");
 		}
 		wfProfileOut( __METHOD__ );
 		return true;
