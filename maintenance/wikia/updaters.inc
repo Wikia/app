@@ -52,3 +52,18 @@ function do_drop_table( $table ) {
         wfOut( "ok\n" );
 	}
 }
+
+/**
+ * @author
+ * updaters for shared database ie.
+ * - WikiFactory tables
+ * - shared extensions tables
+ *
+ * look at examples
+ */
+global $wgDBname, $wgExternalSharedDB;
+
+if( $wgDBname === $wgExternalSharedDB ) {
+	$wgUpdates[ "mysql" ][] = array( "add_table", "city_list",  "wikia/wf/patch-create-city_list.sql" );
+	$wgUpdates[ "mysql" ][] = array( "add_table", "city_cats",  "wikia/wf/patch-create-city_cats.sql" );
+}
