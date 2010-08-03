@@ -1,4 +1,5 @@
 == Changes since 201007.5 ==
+* rt#61817: Create spotlight slot for Oasis (Nef)
 * rt#57186: get rid of ad_slot_override (Nef)
 * upgraded to MW 1.15.5 (Emil)
 * rt#61778: eXelate pixels for initial trial (Nef)
