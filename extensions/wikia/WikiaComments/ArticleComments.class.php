@@ -301,7 +301,7 @@ class ArticleComment {
 	/**
 	 * load -- set variables, load data from database
 	 */
-	public function load() {
+	public function load($master = false) {
 		wfProfileIn( __METHOD__ );
 
 		$result = true;
@@ -311,8 +311,8 @@ class ArticleComment {
 			 * if we lucky we got only one revision, we check slave first
 			 * then if no answer we check master
 			 */
-			$this->mFirstRevId = $this->getFirstRevID(DB_SLAVE);
-			if ( !$this->mFirstRevId ) {
+			$this->mFirstRevId = $this->getFirstRevID( $master ? DB_MASTER : DB_SLAVE );
+			if ( !$this->mFirstRevId && !$master ) {
 				 $this->mFirstRevId = $this->getFirstRevID( DB_MASTER );
 			}
 			if ( !$this->mLastRevId ) {
@@ -398,13 +398,13 @@ class ArticleComment {
 	 *
 	 * @return String -- generated HTML text
 	 */
-	public function render() {
+	public function render($master = false) {
 		global $wgLang, $wgContLang, $wgUser, $wgParser, $wgOut, $wgBlankImgUrl;
 
 		wfProfileIn( __METHOD__ );
 
 		$text = false;
-		if ( $this->load() ) {
+		if ( $this->load($master) ) {
 			$canDelete = $wgUser->isAllowed( 'delete' );
 
 			$text = $wgOut->parse( $this->mLastRevision->getText() );
@@ -560,7 +560,7 @@ class ArticleComment {
 		wfProfileIn( __METHOD__ );
 
 		$text = '';
-		$this->load();
+		$this->load(true);
 		if ( $this->canEdit() ) {
 			$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 			$template->set_vars(
@@ -593,7 +593,7 @@ class ArticleComment {
 		wfProfileIn( __METHOD__ );
 
 		$res = array();
-		$this->load();
+		$this->load(true);
 		if ( $this->canEdit() ) {
 
 			if ( wfReadOnly() ) {
@@ -742,7 +742,7 @@ class ArticleComment {
 			case EditPage::AS_SUCCESS_UPDATE:
 			case EditPage::AS_SUCCESS_NEW_ARTICLE:
 				$comment = ArticleComment::newFromArticle( $article );
-				$text = $comment->render();
+				$text = $comment->render(true);
 				if ( !is_null($comment->mTitle) ) {
 					$id = $comment->mTitle->getArticleID();
 				}
