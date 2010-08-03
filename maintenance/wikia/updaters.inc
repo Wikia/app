@@ -6,6 +6,7 @@
  * @ingroup Maintenance
  */
 
+/* not needed: wikicities.ad_slot_override */
 
 if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "This file is not a valid entry point\n";
