@@ -169,6 +169,7 @@ class RevisionReview extends UnlistedSpecialPage
 		$tags = FlaggedRevs::getDimensions();
 		// Make review interface object
 		$form = new RevisionReview();
+		$editToken = '';
 		// Each ajax url argument is of the form param|val.
 		// This means that there is no ugly order dependance.
 		foreach( $args as $x => $arg ) {
@@ -216,9 +217,7 @@ class RevisionReview extends UnlistedSpecialPage
 					$form->retrieveNotes( $val );
 					break;
 				case "wpEditToken":
-					if( !$wgUser->matchEditToken( $val ) ) {
-						return '<err#>';
-					}
+					$editToken = $val;
 					break;
 				default:
 					$p = preg_replace( '/^wp/', '', $par ); // kill any "wp" prefix
@@ -241,7 +240,11 @@ class RevisionReview extends UnlistedSpecialPage
 		}
 		if( $form->unapprovedTags && $form->unapprovedTags < count( FlaggedRevs::getDimensions() ) ) {
 			return '<err#>';
-		} 
+		}
+		// Session check
+		if( !$wgUser->matchEditToken( $editToken ) ) {
+			return '<err#>';
+		}
 		// Doesn't match up?
 		$k = self::validationKey( $form->templateParams, $form->imageParams, $form->fileVersion, $form->oldid );
 		if( $form->validatedParams !== $k ) {

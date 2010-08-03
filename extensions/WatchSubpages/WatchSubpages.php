@@ -18,7 +18,7 @@ EOT;
 $wgExtensionCredits['specialpage'][] = array(
 	'author'         => '[http://www.strategywiki.org/wiki/User:Prod User:Prod]',
 	'name'           => 'Watch Guide Subpages',
-	'svn-date'       => '$LastChangedDate: 2008-09-05 14:09:21 +0000 (Fri, 05 Sep 2008) $',
+	'svn-date'       => '$LastChangedDate: 2008-09-05 16:09:21 +0200 (ptk, 05 wrz 2008) $',
 	'svn-revision'   => '$LastChangedRevision: 40488 $',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:WatchSubpages',
 	'description'    => 'Quickly add all subpages of a guide to the users watchlist',

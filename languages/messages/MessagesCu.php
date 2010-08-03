@@ -1,6 +1,9 @@
 <?php
 /** Church Slavic (Словѣ́ньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ)
  *
+ * See MessagesQqq.php for message documentation incl. usage of parameters
+ * To improve a translation please visit http://translatewiki.net
+ *
  * @ingroup Language
  * @file
  *
@@ -156,6 +159,7 @@ $messages = array(
 'and'            => '&#32;и',
 
 'errorpagetitle'   => 'блаꙁна',
+'tagline'          => '{{grammar:genitive|{{SITENAME}}}} страни́ца',
 'help'             => 'по́мощь',
 'search'           => 'иска́ниѥ',
 'searchbutton'     => 'ищи́',
@@ -216,7 +220,7 @@ $messages = array(
 'showtoc'             => 'ви́ждь',
 'hidetoc'             => 'съкрꙑи',
 'viewdeleted'         => '$1 ви́дєти хо́щєши ;',
-'red-link-title'      => '$1 (ѥщє нє напь́сано ѥ́стъ)',
+'red-link-title'      => '$1 (си страни́цѧ нѣ́стъ)',
 
 # Short words for each namespace, by default used in the namespace tab in monobook
 'nstab-main'      => 'члѣ́нъ',
@@ -350,6 +354,9 @@ $messages = array(
 # User rights log
 'rightslog' => 'чинода́тєльства їсторі́ꙗ',
 
+# Associated actions - in the sentence "You do not have permission to X"
+'action-edit' => 'си страни́цѧ исправлє́ниѥ',
+
 # Recent changes
 'nchanges'        => '$1 {{PLURAL:$1|мѣ́на|мѣ́нꙑ|мѣ́нъ}}',
 'recentchanges'   => 'послѣ́дьнѩ мѣ́нꙑ',
@@ -396,7 +403,7 @@ $messages = array(
 'filehist-current'   => 'нꙑнѣщьн҄ь о́браꙁъ',
 'filehist-datetime'  => 'дьнь / врѣ́мѧ',
 'filehist-user'      => 'по́льꙃєватєл҄ь',
-'imagelinks'         => 'съвѧ́ꙁи',
+'imagelinks'         => 'дѣ́ла съвѧ́ꙁи',
 
 # File deletion
 'filedelete-submit' => 'поничьжє́ниѥ',
@@ -565,23 +572,24 @@ $messages = array(
 'allmessagesname' => 'и́мѧ',
 
 # Tooltip help for the actions
-'tooltip-pt-userpage'     => 'моꙗ́ по́льꙃєватєл҄ьска страни́ца',
-'tooltip-pt-mytalk'       => 'моꙗ́ бєсѣ́дꙑ страни́ца',
-'tooltip-pt-preferences'  => 'твоꙗ́ строи',
-'tooltip-pt-mycontris'    => 'твоꙗ́ добродѣꙗ́ниѩ ката́логъ',
-'tooltip-pt-logout'       => 'ис̾хо́дъ',
-'tooltip-ca-viewsource'   => 'си страни́ца ꙁабранєна́ ѥ́стъ ⁙
+'tooltip-pt-userpage'      => 'твоꙗ́ по́льꙃєватєл҄ьска страни́ца',
+'tooltip-pt-mytalk'        => 'твоꙗ́ бєсѣ́дꙑ страни́ца',
+'tooltip-pt-preferences'   => 'твоꙗ́ строи',
+'tooltip-pt-mycontris'     => 'твоꙗ́ добродѣꙗ́ниѩ ката́логъ',
+'tooltip-pt-logout'        => 'ис̾хо́дъ',
+'tooltip-ca-viewsource'    => 'си страни́ца ꙁабранєна́ ѥ́стъ ⁙
 ѥѩ исто́чьнъ о́браꙁъ ви́дєти мо́жєщи',
-'tooltip-ca-protect'      => 'си страни́цѧ ꙁабранє́ниѥ',
-'tooltip-ca-delete'       => 'си страни́цѧ поничьжє́ниѥ',
-'tooltip-ca-move'         => 'си страни́цѧ прѣимєнова́ниѥ',
-'tooltip-ca-watch'        => 'си страни́цѧ блюдє́ниѥ',
-'tooltip-p-logo'          => 'гла́вьна страни́ца',
-'tooltip-n-mainpage'      => 'ви́ждь гла́вьнѫ страни́цѫ',
-'tooltip-n-recentchanges' => 'послѣ́дьнъ мѣ́нъ ката́логъ',
-'tooltip-t-upload'        => 'положє́ниѥ дѣ́лъ',
-'tooltip-t-specialpages'  => 'вьсѣѩ наро́чьнъ страни́цѧ ката́логъ',
-'tooltip-watch'           => 'си страни́цѧ блюдє́ниѥ',
+'tooltip-ca-protect'       => 'си страни́цѧ ꙁабранє́ниѥ',
+'tooltip-ca-delete'        => 'си страни́цѧ поничьжє́ниѥ',
+'tooltip-ca-move'          => 'си страни́цѧ прѣимєнова́ниѥ',
+'tooltip-ca-watch'         => 'си страни́цѧ блюдє́ниѥ',
+'tooltip-p-logo'           => 'гла́вьна страни́ца',
+'tooltip-n-mainpage'       => 'ви́ждь гла́вьнѫ страни́цѫ',
+'tooltip-n-recentchanges'  => 'послѣ́дьнъ мѣ́нъ ката́логъ',
+'tooltip-t-upload'         => 'положє́ниѥ дѣ́лъ',
+'tooltip-t-specialpages'   => 'вьсѣѩ наро́чьнъ страни́цѧ ката́логъ',
+'tooltip-ca-nstab-special' => 'си наро́чьна страни́ца ѥ́стъ · ѥѩжє иꙁмѣнꙗ́ти нє можєши',
+'tooltip-watch'            => 'си страни́цѧ блюдє́ниѥ',
 
 # Media information
 'file-info-size' => '($1 × $2 п҃ѯ · дѣ́ла мѣ́ра : $3 · MIME тѵ́пъ : $4)',
@@ -608,7 +616,7 @@ $messages = array(
 'table_pager_limit_submit' => 'прѣиди́',
 
 # Auto-summaries
-'autosumm-new' => 'но́ва страни́ца : $1',
+'autosumm-new' => 'но́ва страни́ца сътворєна́  мѣ́роѭ $1 ѥ́стъ',
 
 # Size units
 'size-bytes' => '$1 Б҃',

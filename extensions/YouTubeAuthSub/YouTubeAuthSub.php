@@ -33,7 +33,7 @@ define ( 'NS_YOUTUBE_TALK' , 21);
 
 $wgExtensionCredits['other'][] = array(
 	'name'           => 'YouTubeAuthSub',
-	'svn-date' => '$LastChangedDate: 2008-05-06 11:59:58 +0000 (Tue, 06 May 2008) $',
+	'svn-date' => '$LastChangedDate: 2008-05-06 13:59:58 +0200 (wto, 06 maj 2008) $',
 	'svn-revision' => '$LastChangedRevision: 34306 $',
 	'author'         => 'Travis Derouin',
 	'description'    => 'Allows users to upload videos directly to YouTube through the wiki',

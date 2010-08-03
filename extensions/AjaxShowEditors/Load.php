@@ -4,7 +4,7 @@ $wgAjaxShowEditorsTimeout = 60;
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'Ajax Show Editors',
-	'svn-date' => '$LastChangedDate: 2008-05-06 11:59:58 +0000 (Tue, 06 May 2008) $',
+	'svn-date' => '$LastChangedDate: 2008-05-06 13:59:58 +0200 (wto, 06 maj 2008) $',
 	'svn-revision' => '$LastChangedRevision: 34306 $',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:AjaxShowEditors',
 	'author' => 'Ashar Voultoiz',

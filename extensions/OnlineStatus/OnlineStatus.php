@@ -13,7 +13,7 @@
 
 // Add credit :)
 $wgExtensionCredits['other'][] = array(
-	'svn-date'       => '$LastChangedDate: 2008-09-19 18:33:16 +0000 (Fri, 19 Sep 2008) $',
+	'svn-date'       => '$LastChangedDate: 2008-09-19 20:33:16 +0200 (ptk, 19 wrz 2008) $',
 	'svn-revision'   => '$LastChangedRevision: 41039 $',
 	'name'           => 'OnlineStatus',
 	'author'         => 'Alexandre Emsenhuber',

@@ -19,7 +19,7 @@ if ( ! defined( 'MEDIAWIKI' ) )
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'AssertEdit',
-	'svn-date' => '$LastChangedDate: 2008-07-23 19:33:28 +0000 (Wed, 23 Jul 2008) $',
+	'svn-date' => '$LastChangedDate: 2008-07-23 21:33:28 +0200 (śro, 23 lip 2008) $',
 	'svn-revision' => '$LastChangedRevision: 37971 $',
 	'author' => 'Steve Sanbeg',
 	'description' => 'Adds edit assertions for use by bots',

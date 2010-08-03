@@ -27,7 +27,7 @@ EOT;
 
 $wgExtensionCredits['other'][] = array(
 	'name'           => 'Category Intersection',
-	'svn-date' => '$LastChangedDate: 2008-08-10 19:29:02 +0000 (Sun, 10 Aug 2008) $',
+	'svn-date' => '$LastChangedDate: 2008-08-10 21:29:02 +0200 (ndz, 10 sie 2008) $',
 	'svn-revision' => '$LastChangedRevision: 39079 $',
 	'author'         => 'Magnus Manske',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:CategoryIntersection',

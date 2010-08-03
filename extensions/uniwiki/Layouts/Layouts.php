@@ -11,7 +11,7 @@ $wgExtensionCredits['other'][] = array(
 	'author'         => 'Merrick Schaefer, Mark Johnston, Evan Wheeler and Adam Mckaig (at UNICEF)',
 	'description'    => 'Populate newly-created pages with editable "layouts" to encourage a common structure for pages',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:Uniwiki_Layouts',
-	'svn-date'       => '$LastChangedDate: 2009-03-13 20:00:23 +0000 (Fri, 13 Mar 2009) $',
+	'svn-date'       => '$LastChangedDate: 2009-03-13 21:00:23 +0100 (ptk, 13 mar 2009) $',
 	'svn-revision'   => '$LastChangedRevision: 48387 $',
 	'descriptionmsg' => 'layouts-desc',
 );

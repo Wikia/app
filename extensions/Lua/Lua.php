@@ -12,7 +12,7 @@
 $wgExtensionCredits['parserhook'][] = array(
 	'name'           => 'Lua parser extensions',
 	'author'         => 'Fran Rogers',
-	'svn-date'       => '$LastChangedDate: 2008-08-13 07:27:17 +0000 (Wed, 13 Aug 2008) $',
+	'svn-date'       => '$LastChangedDate: 2008-08-13 09:27:17 +0200 (śro, 13 sie 2008) $',
 	'svn-revision'   => '$LastChangedRevision: 39277 $',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:Lua',
 	'description'    => 'Extends the parser with support for embedded blocks of Lua code',

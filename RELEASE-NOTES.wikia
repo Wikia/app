@@ -1,4 +1,5 @@
 == Changes since 201007.5 ==
+* upgraded to MW 1.15.5 (Emil)
 * rt#61778: eXelate pixels for initial trial (Nef)
 * rt#61747: User page should be created in content_lang, not user_lang (TOR)
 * rt#61367: We don't want searchindex tables (eloy)

@@ -15,7 +15,7 @@ $wgExtensionCredits['other'][] = array(
 	'author'         => 'Merrick Schaefer, Mark Johnston, Evan Wheeler and Adam Mckaig (at UNICEF)',
 	'description'    => 'Appends a list of contributors to articles',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:Uniwiki_Authors',
-	'svn-date'       => '$LastChangedDate: 2008-11-02 13:28:44 +0000 (Sun, 02 Nov 2008) $',
+	'svn-date'       => '$LastChangedDate: 2008-11-02 14:28:44 +0100 (ndz, 02 lis 2008) $',
 	'svn-revision'   => '$LastChangedRevision: 43076 $',
 	'descriptionmsg' => 'authors-desc',
 );

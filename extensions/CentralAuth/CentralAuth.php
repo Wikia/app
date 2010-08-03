@@ -6,7 +6,7 @@
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Central Auth',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:CentralAuth',
-	'svn-date' => '$LastChangedDate: 2009-03-04 05:12:35 +0000 (Wed, 04 Mar 2009) $',
+	'svn-date' => '$LastChangedDate: 2009-03-04 06:12:35 +0100 (śro, 04 mar 2009) $',
 	'svn-revision' => '$LastChangedRevision: 48012 $',
 	'author' => 'Brion Vibber',
 	'description'    => 'Merge accounts across a wiki farm',
@@ -17,7 +17,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name'           => 'MergeAccount',
 	'author'         => 'Brion Vibber',
 	'url'            => 'http://meta.wikimedia.org/wiki/Help:Unified_login',
-	'svn-date' => '$LastChangedDate: 2009-03-04 05:12:35 +0000 (Wed, 04 Mar 2009) $',
+	'svn-date' => '$LastChangedDate: 2009-03-04 06:12:35 +0100 (śro, 04 mar 2009) $',
 	'svn-revision' => '$LastChangedRevision: 48012 $',
 	'description'    => '[[Special:MergeAccount|Merge multiple accounts]] for Single User Login',
 	'descriptionmsg' => 'centralauth-mergeaccount-desc',

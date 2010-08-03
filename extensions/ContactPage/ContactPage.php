@@ -17,7 +17,7 @@ if( !defined( 'MEDIAWIKI' ) ) {
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'ContactPage',
-	'svn-date' => '$LastChangedDate: 2009-01-11 12:16:13 +0000 (Sun, 11 Jan 2009) $',
+	'svn-date' => '$LastChangedDate: 2009-01-11 13:16:13 +0100 (ndz, 11 sty 2009) $',
 	'svn-revision' => '$LastChangedRevision: 45666 $',
 	'author' => 'Daniel Kinzler',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:ContactPage',

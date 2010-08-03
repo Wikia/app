@@ -7,7 +7,7 @@
 
 $wgExtensionCredits['other'][] = array(
 	'name'           => 'CommentPages',
-	'svn-date' => '$LastChangedDate: 2008-09-21 15:01:30 +0000 (Sun, 21 Sep 2008) $',
+	'svn-date' => '$LastChangedDate: 2008-09-21 17:01:30 +0200 (ndz, 21 wrz 2008) $',
 	'svn-revision' => '$LastChangedRevision: 41115 $',
 	'author'         => '[http://en.wikinews.org/wiki/User:Zachary Zachary Hauri]',
 	'description'    => 'Comment pages for the main namespace',

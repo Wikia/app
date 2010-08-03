@@ -34,7 +34,7 @@ $wgAntiBotPayloads = array(
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'AntiBot',
-	'svn-date' => '$LastChangedDate: 2008-11-30 03:15:22 +0000 (Sun, 30 Nov 2008) $',
+	'svn-date' => '$LastChangedDate: 2008-11-30 04:15:22 +0100 (ndz, 30 lis 2008) $',
 	'svn-revision' => '$LastChangedRevision: 44056 $',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:AntiBot',
 	'author' => 'Tim Starling',

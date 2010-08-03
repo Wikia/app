@@ -36,7 +36,7 @@ if (!defined('MEDIAWIKI')) die();
 # Credentials.
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Special:Chemicalsources',
-	'svn-date' => '$LastChangedDate: 2008-09-04 14:56:36 +0000 (Thu, 04 Sep 2008) $',
+	'svn-date' => '$LastChangedDate: 2008-09-04 16:56:36 +0200 (czw, 04 wrz 2008) $',
 	'svn-revision' => '$LastChangedRevision: 40434 $',
 	'description' => '[[Special:Chemicalsources|Special page]] for Chemical sources',
 	'author' => 'Dirk Beetstra',

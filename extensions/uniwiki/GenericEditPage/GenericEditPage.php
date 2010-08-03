@@ -11,7 +11,7 @@ $wgExtensionCredits['other'][] = array(
 	'author'         => 'Merrick Schaefer, Mark Johnston, Evan Wheeler and Adam Mckaig (at UNICEF)',
 	'description'    => 'Supplements the edit page with something more usable',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:Uniwiki_Generic_Edit_Page',
-	'svn-date'       => '$LastChangedDate: 2009-03-06 21:14:41 +0000 (Fri, 06 Mar 2009) $',
+	'svn-date'       => '$LastChangedDate: 2009-03-06 22:14:41 +0100 (ptk, 06 mar 2009) $',
 	'svn-revision'   => '$LastChangedRevision: 48098 $',
 	'descriptionmsg' => 'gep-desc',
 );

@@ -12,7 +12,7 @@ if (!defined('MEDIAWIKI')) {
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name'           => 'SiteMatrix',
-	'svn-date' => '$LastChangedDate: 2008-12-18 08:28:22 +0000 (Thu, 18 Dec 2008) $',
+	'svn-date' => '$LastChangedDate: 2008-12-18 09:28:22 +0100 (czw, 18 gru 2008) $',
 	'svn-revision' => '$LastChangedRevision: 44757 $',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:SiteMatrix',
 	'description'    => 'Displays a list of Wikimedia wikis',

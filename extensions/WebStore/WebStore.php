@@ -69,7 +69,7 @@ $wgAutoloadClasses['WebStorePostFile'] = $dir . 'WebStorePostFile.php';
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'WebStore',
-	'svn-date' => '$LastChangedDate: 2008-12-18 05:56:43 +0000 (Thu, 18 Dec 2008) $',
+	'svn-date' => '$LastChangedDate: 2008-12-18 06:56:43 +0100 (czw, 18 gru 2008) $',
 	'svn-revision' => '$LastChangedRevision: 44752 $',
 	'author' => 'Tim Starling',
 	'description' => 'Web-only (non-NFS) file storage middleware',

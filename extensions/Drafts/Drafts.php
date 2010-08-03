@@ -30,7 +30,7 @@ $wgExtensionCredits['other'][] = array(
 	'author' => 'Trevor Parscal',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:Drafts',
 	'description' => 'Save and view draft versions of pages',
-	'svn-date' => '$LastChangedDate: 2009-02-03 00:36:59 +0000 (Tue, 03 Feb 2009) $',
+	'svn-date' => '$LastChangedDate: 2009-02-03 01:36:59 +0100 (wto, 03 lut 2009) $',
 	'svn-revision' => '$LastChangedRevision: 46751 $',
 	'description-msg' => 'drafts-desc',
 );

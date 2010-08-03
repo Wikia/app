@@ -16,7 +16,7 @@ $wgExtensionCredits['variable'][] = array(
 	'description' => 'a variable hook that adds an autoincrementing variable, <nowiki>{{AUTOINCREMENT}}</nowiki>',
 	'author' => 'Ævar Arnfjörð Bjarmason',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:Autoincrement',
-	'svn-date' => '$LastChangedDate: 2008-10-04 09:51:52 +0000 (Sat, 04 Oct 2008) $',
+	'svn-date' => '$LastChangedDate: 2008-10-04 11:51:52 +0200 (sob, 04 paź 2008) $',
 	'svn-revision' => '$LastChangedRevision: 41637 $',
 );
 

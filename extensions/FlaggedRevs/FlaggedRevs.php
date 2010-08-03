@@ -52,7 +52,7 @@ if( !defined('READER_FEEDBACK_SIZE') )
 $wgExtensionCredits['specialpage'][] = array(
 	'name'           => 'Flagged Revisions',
 	'author'         => array( 'Aaron Schulz', 'Joerg Baach' ),
-	'svn-date'       => '$LastChangedDate: 2010-01-08 21:54:02 +0000 (Fri, 08 Jan 2010) $',
+	'svn-date'       => '$LastChangedDate: 2010-01-08 22:54:02 +0100 (ptk, 08 sty 2010) $',
 	'svn-revision'   => '$LastChangedRevision: 60856 $',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:FlaggedRevs',
 	'descriptionmsg' => 'flaggedrevs-desc',

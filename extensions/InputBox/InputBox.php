@@ -32,7 +32,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['parserhook'][] = array(
 	'name'           => 'InputBox',
 	'author'         => array( 'Erik Moeller', 'Leonardo Pimenta', 'Rob Church', 'Trevor Parscal' ),
-	'svn-date'       => '$LastChangedDate: 2008-10-29 23:59:03 +0000 (Wed, 29 Oct 2008) $',
+	'svn-date'       => '$LastChangedDate: 2008-10-30 00:59:03 +0100 (czw, 30 paź 2008) $',
 	'svn-revision'   => '$LastChangedRevision: 42791 $',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:InputBox',
 	'description'    => 'Allow inclusion of predefined HTML forms.',
