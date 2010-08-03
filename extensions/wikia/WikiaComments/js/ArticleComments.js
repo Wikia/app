@@ -155,6 +155,8 @@ var ArticleComments = {
 				if (json.pagination != '') {
 					$('#article-comments-pagination').show().html('<div>' + json.pagination + '</div>');
 				}
+				//update counter
+				$('#article-comments-counter').text(json.counter);
 				//readd events
 				ArticleComments.addHover();
 				//clear error box
