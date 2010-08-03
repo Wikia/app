@@ -430,6 +430,7 @@ while( $request->Accept() >= 0 || $test ) {
 					#
 					$image = $image->[ 0 ] if $image->[ 0 ]->Get('magick') eq 'GIF';
 
+					my $cropped = 0;
 					if( is_int( $x1 ) && is_int( $x2 ) && is_int( $y1 ) && is_int( $y2 ) ) {
 						#
 						# cut rectangle from original, do some checkups first
@@ -441,6 +442,7 @@ while( $request->Accept() >= 0 || $test ) {
 							$image->Crop( $geometry );
 							$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
 							print STDERR "Cropping into $geometry, time: $t_elapsed\n" if $debug;
+							$cropped = 1;
 						}
 					}
 
@@ -450,7 +452,15 @@ while( $request->Accept() >= 0 || $test ) {
 					print STDERR "Original size $origw x $origh, time: $t_elapsed\n" if $debug;
 					if( $origw && $origh ) {
 						my $height = scaleHeight( $origw, $origh, $width, $test );
-						$image->Resize( "geometry" => "${width}x${height}!>", "blur" => 0.9 );
+						my $geometry = sprintf( "%dx%d!>", $width, $height );
+						if( $cropped ) {
+							#
+							# for cropped images thumbnail can be bigger than
+							# original
+							#
+							$geometry = sprintf( "%dx%d!", $width, $height );
+						}
+						$image->Resize( "geometry" => $geometry, "blur" => 0.9 );
 						$image->Set( quality => 95 );
 						$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
 						print STDERR "Resizing into $thumbnail, time: $t_elapsed\n" if $debug;
