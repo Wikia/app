@@ -18,7 +18,7 @@ class DumpsOnDemand {
 	 */
 	static public function customSpecialStatistics( &$specialpage, &$text ) {
 		global $wgOut, $wgDBname, $wgLang, $wgRequest, $wgTitle, $wgUser,
-			$wgCityId, $wgHTTPProxy;
+			$wgCityId;
 
 		wfLoadExtensionMessages( "DumpsOnDemand" );
 
@@ -29,17 +29,7 @@ class DumpsOnDemand {
 		$tmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$index = array();
 
-		/**
-		 * connection context,
-		 * @see http://pl2.php.net/manual/en/function.stream-context-create.php
-		 */
-		$context = stream_context_create( array(
-			"http" => array(
-				"method"  => "GET",
-				"timeout" => 1.0,
-				"proxy"   => "tcp://" . $wgHTTPProxy
-		) ) );
-		$json = @file_get_contents( self::getUrl( $wgDBname, "index.json" ), 0, $context );
+		$json = Http::get( self::getUrl( $wgDBname, "index.json" ), 5 );
 		if( $json ) {
 			$index = (array )Wikia::json_decode( $json );
 		}
