@@ -30,6 +30,8 @@ class AdProviderOpenX implements iAdProvider {
 		'SPECIAL_INTERSTITIAL_BOXAD_1' => 5,
 		'TOP_RIGHT_BOXAD' => 5,
 
+		'GLOBAL_NAV_SPOTLIGHT' => 6,
+
 		'default' => 0, // FIXME
 	);
 
