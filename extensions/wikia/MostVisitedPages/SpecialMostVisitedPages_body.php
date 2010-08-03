@@ -43,7 +43,6 @@ class MostvisitedpagesPage extends QueryPage {
 	var $mTitle = "";
 	var $mName = "Mostvisitedpages";
 	var $order_column = 'count';
-	var $latest = '3';
 
 	function __construct($page_id, $show) { 
 		global $wgRequest;
@@ -84,8 +83,6 @@ class MostvisitedpagesPage extends QueryPage {
 				"articleName"	=> $this->mArticle,
 			));
 			$res = $oTmpl->execute("main-form"); 
-		} else {
-			$res = wfMsgExt('mostvisitedpageslatest', array(), $this->latest);
 		}
 		wfProfileOut( __METHOD__ );
         return $res;
@@ -132,6 +129,8 @@ class MostvisitedpagesPage extends QueryPage {
 			$where,
 			__METHOD__	
 		);
+
+		error_log("sql = $sql \n");
 
 		return $sql;
 	}
