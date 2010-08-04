@@ -73,7 +73,7 @@ function devBoxPanelAdditionalScripts( &$out, &$sk ){
  * @return true to allow the WikiFactoryLoader to do its other necessary initalization.
  */
 function wfDevBoxForceWiki(&$wikiFactoryLoader){
-	global $wgDevelEnvironment, $wgWikiFactoryDB;
+	global $wgDevelEnvironment, $wgWikiFactoryDB, $wgCommandLineMode;
 	if($wgDevelEnvironment){
 		$forcedWikiDomain = getForcedWikiValue();
 		$cityId = WikiFactory::DomainToID($forcedWikiDomain);
@@ -82,6 +82,15 @@ function wfDevBoxForceWiki(&$wikiFactoryLoader){
 			$forcedWikiDomain = DEVBOX_DEFAULT_WIKI_DOMAIN;
 			$cityId = WikiFactory::DomainToID($forcedWikiDomain);
 		}
+		
+		if($wgCommandLineMode) {
+			$cityId = getenv( "SERVER_ID" );
+			
+			$wikiFactoryLoader->mCityId = $cityId;
+			$wikiFactoryLoader->mWikiId = $cityId;
+		}
+		
+		
 		if($cityId){
 			$wikiFactoryLoader->mServerName = $forcedWikiDomain;
 

@@ -12,4 +12,15 @@ $wgExtensionCredits['specialpage'][] = array(
 $dir = dirname(__FILE__) . '/';
 /*Auto loader setup */
 $wgAutoloadClasses['imageServing']  = $dir . 'imageServing.class.php';
+$wgAutoloadClasses['imageServingHelper']  = $dir . 'imageServingHelper.class.php';
 $wgAutoloadClasses['topImage']  = $dir . 'topImage.class.php';
+$wgHooks['LinksUpdateComplete'][] = 'imageServingHelper::buildIndexOnPageEdit';
+/* parser hook */
+
+$wgHooks['ImageBeforeProduceHTML'][] = 'imageServingHelper::replaceImages';
+
+if (isset($wgHooks['BeforeParserrenderImageGallery'])) {
+	$wgHooks['BeforeParserrenderImageGallery'] = array_merge(array( 'imageServingHelper::replaceGallery' ), $wgHooks['BeforeParserrenderImageGallery'] );	
+} else {
+	$wgHooks['BeforeParserrenderImageGallery'] = array( 'imageServingHelper::replaceGallery' );
+}

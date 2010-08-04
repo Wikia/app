@@ -9,6 +9,7 @@ class ImageServingTest extends SpecialPage {
 
 	function execute( $par ){
 		global $wgRequest, $wgOut, $wgUser;
-		$wgOut->addHtml( "SSS SSSAA" );
+		$test = new imageServing(array(6036));
+		$test->getImages(7);
 	}
 }
