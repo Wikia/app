@@ -22,7 +22,7 @@ if (isset($options['help'])) {
 	die( "indexer for blog listing pages" );
 }
 
-$db = wfGetDB(DB_MASTER, array());
+$db = wfGetDB(DB_SLAVE, array());
 
 /*
  * first time it run only count on pages and then it run this script with param -do and list 
@@ -34,7 +34,7 @@ if ((!empty($options['do'])) && $options['do'] == 1 ) {
 	foreach ($pages as $value) {
 		$qArticle = Article::newFromID(trim($value));
 		$wgTitle = $qArticle->getTitle(); //title for parser  
-		imageServingHelper::buildAndGetIndex( $qArticle );
+		imageServingHelper::buildAndGetIndex( $qArticle, true );
 		unset($qArticle);
 	}
 	exit;
@@ -44,6 +44,25 @@ if ((!empty($options['do'])) && $options['do'] == 1 ) {
 if (empty($options['do']) || $options['do'] != 1) {
 	$res = $db->select(
 	            array( 'imagelinks' ),
+	            array( 'il_from,il_to,count(*) as cnt'),
+	            "",
+	            __METHOD__,
+	            array(
+	            	"GROUP BY" => "il_from",
+	            	"HAVING" => "cnt = 1"
+	            )
+	);
+	
+	echo "Indexing one count pages\n";
+	
+	while ($row = $db->fetchRow($res)) {
+		imageServingHelper::bulidIndex($row['il_from'], array( $row['il_to'] ));
+	}            
+	
+	echo "Indexing more then one count pages\n";
+	
+	$res = $db->select(
+	            array( 'imagelinks' ),
 	            array( 'il_from,count(*) as cnt'),
 	            "",
 	            __METHOD__,
@@ -51,7 +70,7 @@ if (empty($options['do']) || $options['do'] != 1) {
 	            	"GROUP BY" => "il_from",
 	            	"HAVING" => "cnt > 1"
 	            )
-	            );
+	);
 	$totalNum = $res->numRows();	            
 	$out = array();
 	$count = 0;
