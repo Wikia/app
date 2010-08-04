@@ -24,8 +24,14 @@ $wgExtensionCredits['specialpage'][] = array(
     "author" => "Moli <moli at wikia.com>"
 );
 
+$dir = dirname(__FILE__) . '/';
+
 $wgHooks['wgQueryPages'][] = 'wfSetupMostPopularCategories';
 $wgExtensionFunctions[] = 'wfSetupMostPopularCategories';
+$wgAutoloadClasses['MostvisitedpagesPage']  = $dir . 'SpecialMostVisitedPages_body.php';
+
+
+
 #--- messages file
 $wgExtensionMessagesFiles["Mostvisitedpages"] = dirname(__FILE__) . '/SpecialMostVisitedPages.i18n.php';
 

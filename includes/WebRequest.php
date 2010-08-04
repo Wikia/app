@@ -408,7 +408,7 @@ class WebRequest {
 	 * @return bool
 	 */
 	function wasPosted() {
-		return $_SERVER['REQUEST_METHOD'] == 'POST';
+		return isset( $_SERVER['REQUEST_METHOD'] ) && $_SERVER['REQUEST_METHOD'] == 'POST';
 	}
 
 	/**

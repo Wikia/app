@@ -5,7 +5,7 @@
  */
 class imageServing{
 	private $maxCount = 20;
-	private $minSize = 100;
+	private $minSize = 75;
 	private $articles;
 	private $width;
 	private $proportion;
@@ -62,6 +62,11 @@ class imageServing{
 			}
 		}
 		
+		if (count($image_list) == 0) {
+			wfProfileOut(__METHOD__);
+			return array();
+		}
+		
 		$res = $db->select(
 	            array( 'imagelinks LEFT JOIN image on il_to = img_name ' ),
 	            array(	'count(*) cnt', 
@@ -87,15 +92,20 @@ class imageServing{
 				$db_out[$row['il_to']] = $row;
 		}
 		
+		if (count($db_out) == 0) {
+			wfProfileOut(__METHOD__);
+			return array();
+		}
+		
 		$out = array();
 
 		foreach( $image_list as $key => $value  ) {
 			if( isset($db_out[ $key ]) ) {
 				foreach($value as $key2 => $value2) {
-					if (count($out[$key2]) < $n) {
+					if (empty($out[$key2]) || count($out[$key2]) < $n) {
 						$out[$key2][] = array(
 							"name" => $key,
-							"url" => "http://blblbla");
+							"url" => $this->getUrl($key, $db_out[$key]['img_width'], $db_out[$key]['img_height']));
 					}
 				}
 			}
@@ -110,13 +120,43 @@ class imageServing{
 	 * @access public
 	 * 
 	 * @param $name \string dbkey of image  
-	 * @param $width \int dbkey of image   
-	 * @param $height \int dbkey of image  
+	 * @param $width \int 
+	 * @param $height \int  
 	 *  
 	 * @return  \string url for image
 	 */
 	
-	public private function getUrl($name, $width, $height) {
+	private function getUrl($name, $width = 0, $height = 0) {
+		$file_title = Title::newFromText($name ,NS_FILE );
+		$img = wfFindFile( $file_title  );
+		return wfReplaceImageServer($img->getThumbUrl( $this->getCut($width, $height)."-".$img->getName()));
+	}
+	
+	/**
+	 * getUrl - generate cut frame for  Thumb
+	 * 
+	 * @param $width \int 
+	 * @param $height \int
+	 * 
+	 * 
+	 * @return \string prefix for thumb image 
+	 */
+	
+	private function getCut($width, $height) {
+		$pHeight = round(($width)*($this->proportion['h']/$this->proportion['w']));
 		
+		if($pHeight >= $height) {
+			$pWidth =  round($height*($this->proportion['w']/$this->proportion['h']));
+			$top = 0; 
+			$left = round($width/2 - $pWidth/2);
+			$right = $left + $pWidth;
+			$bottom = $height;
+		} else {
+			$top = 0;
+			$left = 0;
+			$right = $width;
+			$bottom = $pHeight;
+		}
+		return "{$this->width}px-$left,$right,$top,$bottom";
 	}
 }

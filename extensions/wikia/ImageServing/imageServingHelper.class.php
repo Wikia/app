@@ -8,13 +8,20 @@ class imageServingHelper{
 	
 	public static function buildIndexOnPageEdit( $self ) {
 		wfProfileIn(__METHOD__);
+		
+		if(count($self->mImages) == 1) {
+			self::bulidIndex( $self->mId, $self->mImages);
+			wfProfileOut(__METHOD__);
+			return true;			
+		} 
+		
 		$article = Article::newFromID( $self->mId );
 		self::buildAndGetIndex( $article );
 		wfProfileOut(__METHOD__);
 		return true;
 	}
 	
-	public static function buildAndGetIndex(Article $article) {
+	public static function buildAndGetIndex(Article $article, $ignoreEmpty = false ) {
 		wfProfileIn(__METHOD__);
 		global $wgHooks;
 		$startTime = Time();
@@ -26,7 +33,8 @@ class imageServingHelper{
 		self::hookSwitch(false);
 		$out = array();
 		preg_match_all("/(?<=(image mw=')).*(?=')/U", $editInfo->output->getText(), $out ); 
-		self::bulidIndex($article->getID(), $out[0], true);
+
+		self::bulidIndex($article->getID(), $out[0], $ignoreEmpty);
 		wfProfileOut(__METHOD__);
 	}
 	
@@ -37,7 +45,9 @@ class imageServingHelper{
 		}
 		wfProfileIn(__METHOD__);
 		
-		$res = " <image mw='".$title->getDBKey()."' /> ";
+		if( $file instanceof File ||  $file instanceof LocalFile ) {
+			$res = " <image mw='".$file->getTitle()->getDBkey()."' /> ";			
+		}
 		
 		wfProfileOut(__METHOD__); 
 		return false;
@@ -49,14 +59,11 @@ class imageServingHelper{
 			return true;
 		}
 		wfProfileIn(__METHOD__);
+
 		$ig->parse();
 		$data = $ig->getData();
-		$res = "";
-		foreach ( $ig->mImages  as $title ) {
-			$res .= " <image mw='".$title[0]->getDBKey()."' /> "; 
-		}
 		
-		$ig = new fakeIGimageServing( $res );
+		$ig = new fakeIGimageServing( $ig->mImages );
 		wfProfileOut(__METHOD__);
 		return false;
 	}
@@ -65,11 +72,11 @@ class imageServingHelper{
 		self::$hookOnOff = $onOff;
 	}
 	
-	private static function bulidIndex($articleId, $images, $ignoreEmpty = false) {
+	public static function bulidIndex($articleId, $images, $ignoreEmpty = false) {
 		/* 0 and 1 image don't need to be indexed */
 		wfProfileIn(__METHOD__);
 		$db = wfGetDB(DB_MASTER, array());
-		if( (count($images) < 2) ) {
+		if( (count($images) < 1) ) {
 			if ($ignoreEmpty) {
 				return true;	
 				wfProfileOut(__METHOD__);
@@ -96,14 +103,35 @@ class imageServingHelper{
 }
 
 /* fake class for replace image gallery in hook*/
-class fakeIGimageServing {
-	private $out;
+class fakeIGimageServing extends ImageGallery {
+	private $in;
 
 	function __construct($in) {
-		$this->out = $in; 	
+		$this->in = $in; 	
 	}
 
 	function toHTML() {
-		return $this->out;
+		$res = "";
+		foreach ( $this->in as $key => $imageData ) {
+			$file =  $this->getImage($imageData[0]);
+
+			if($file) {
+				$res .= " <image mw='".$file->getTitle()->getDBkey()."' /> ";	
+			}
+		}
+		return $res;
 	}	
+	
+	private function getImage($nt) {
+		wfProfileIn(__METHOD__);
+
+		# Give extensions a chance to select the file revision for us
+		$time = $descQuery = false;
+		wfRunHooks( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time, &$descQuery ) );
+
+		# Render image thumbnail
+		$img = wfFindFile( $nt, $time );
+		wfProfileOut(__METHOD__);
+		return $img;
+	}
 }
