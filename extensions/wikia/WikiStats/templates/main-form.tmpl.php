@@ -42,7 +42,7 @@ $(function() {
 
 function refreshInfo() {
 	$("#ws-loader").show();	
-	$('#ws-addinfo').load(wgServer+wgScript+'?action=ajax&rs=axWStats&ws=addinfo', null, function() {
+	$('#ws-addinfo').load(wgServer+wgScript+'?action=ajax&rs=axWStats&ws=addinfo', function() {
 		$("#ws-loader").hide();		
 	});
 }
@@ -52,7 +52,7 @@ function breakdownInfo(month, limit, anons) {
 	var params = '&month=' + month;
 	params += '&limit=' + limit;
 	params += '&anons=' + anons;
-	$('#ws-breakdown-data' + anons).load(wgServer+wgScript+'?action=ajax&rs=axWStats&ws=breakdown' + params, null, function() {
+	$('#ws-breakdown-data' + anons).load(wgServer+wgScript+'?action=ajax&rs=axWStats&ws=breakdown' + params, function() {
 		$("#ws-loader").hide();
 	});
 }
@@ -90,7 +90,13 @@ function reloadTab(xls) {
 				'lang'		: ( lang ) ? lang : '',
 				'ws-domain'	: ( ws_domain != undefined ) ? ws_domain : ''
 			};
-			$('#' + tabsName[activeTab-1]).load(tabsUrl[activeTab-1], data, function() {
+			
+			var params = "";
+			for ( var key in data ) {
+				params += "&" + key + "=" + data[key];
+			}
+			
+			$('#' + tabsName[activeTab-1]).load(tabsUrl[activeTab-1] + params, function() {
 				$("#ws-loader").hide();
 				$('#ws-show-stats').click(function() {
 					reloadTab();
@@ -107,7 +113,7 @@ function reloadTab(xls) {
 		}
 	} 
 	else if ( activeTab == 2 ) { 
-		$('#' + tabsName[activeTab-1]).load(tabsUrl[activeTab-1], data, function() {
+		$('#' + tabsName[activeTab-1]).load(tabsUrl[activeTab-1], function() {
 			$('#ws-breakdown-btn').click(function() {
 				var month = $('#ws-breakdown-month').val();
 				var limit = $('#ws-breakdown-limit').val();
@@ -117,7 +123,7 @@ function reloadTab(xls) {
 		});
 	} 
 	else if ( activeTab == 3 ) {
-		$('#' + tabsName[activeTab-1]).load(tabsUrl[activeTab-1], data, function() {
+		$('#' + tabsName[activeTab-1]).load(tabsUrl[activeTab-1], function() {
 			$('#ws-breakdown-anons-btn').click(function() {
 				var month = $('#ws-breakdown-anons-month').val();
 				var limit = $('#ws-breakdown-anons-limit').val();
@@ -128,7 +134,7 @@ function reloadTab(xls) {
 	}
 	else if ( activeTab == 4 ) {
 		$("#ws-loader").show();
-		$('#' + tabsName[activeTab-1]).load(tabsUrl[activeTab-1], data, function() {
+		$('#' + tabsName[activeTab-1]).load(tabsUrl[activeTab-1], function() {
 			$("#ws-loader").hide();
 			$('#ws-latestview-btn').click(function() {
 				reloadTab();
