@@ -12,6 +12,7 @@
 * rt#59932: WF tags arent part of ad call (Nef)
 * rt#60358: Create a new ad slot for Leaderboard Stats pages (Nef)
 * rt#60332: Phalanx: fixed user account creation block (TOR)
+* ImageServing: add indexer
 
 == Changes since 201007.4 ==
 * rt#59924: synchronize hub names across ad providers (Nef)

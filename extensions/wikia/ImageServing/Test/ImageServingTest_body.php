@@ -5,12 +5,18 @@ class ImageServingTest extends SpecialPage {
     private $mpa = null;
 
 	function __construct() {
-		parent::__construct( 'ImageServingTest' );
+		parent::__construct( 'ImageServingTest', 'imageservingtest' );
 	}
 
 	function execute($article_id = null, $limit = "", $offset = "", $show = true) {
-		global $wgRequest, $wgOut, $wgTitle;
-		parent::__construct( 'ImageServingTest', 'imageservingtest' );
+		global $wgRequest, $wgOut, $wgTitle, $wgUser;
+		
+		if( !$wgUser->isAllowed( 'imageservingtest' ) ) {
+			$wgOut->permissionRequired( 'imageservingtest' );
+			return;
+		}
+		
+		
 		wfLoadExtensionMessages( 'ImageServingTest' );
 		
 		$wgOut->addHTML(Xml::element("a", array("href" => $wgTitle->getLocalURL("option=1")), "1. Oasis related pages: 200 2:1" )."<br>" );
@@ -89,26 +95,3 @@ class MostvisitedpagesPageIS extends MostvisitedpagesPage {
 		return $res;
 	}
 }
-
-/*
-	function execute( $par ){
-		global $wgRequest, $wgOut, $wgUser;
-		
-		$title = Title::newFromText($wgRequest->getVal("article"),NS_MAIN);
-
-		$test = new imageServing(array($title->getArticleId()), 270, array("w" => 3, "h" => 1) );
-		foreach ($test->getImages(20) as $key => $value){
-			$wgOut->addHTML( "<b>".$title->getText()."</b><br><br>");
-			foreach ($value as $value2) {
-				$wgOut->addHTML("<img src='{$value2['url']}' /> <br>");
-				$wgOut->addHTML($value2['name']."<br>");
-			}
-		};
-	}
-	
-		function __construct() {
-		global $wgRequest;
-		parent::__construct( 'ImageServingTest', 'imageservingtest' );
-		wfLoadExtensionMessages( 'ImageServingTest' );
-	}
-*/
