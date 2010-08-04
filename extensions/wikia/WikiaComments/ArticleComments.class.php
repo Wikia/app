@@ -428,7 +428,7 @@ class ArticleComment {
 				$img = '<img class="edit sprite" alt="" src="'. $wgBlankImgUrl .'" width="16" height="16" />';
 				$buttons[] = $img . '<a href="#comment' . $articleId . '" class="article-comm-edit" id="comment' . $articleId . '">' . wfMsg('article-comments-edit') . '</a>';
 			}
-			if ( !$this->mTitle->isNewPage() ) {
+			if ( !$this->mTitle->isNewPage(GAID_FOR_UPDATE) ) {
 				$img = '<img class="history sprite" alt="" src="'. $wgBlankImgUrl .'" width="16" height="16" />';
 				$buttons[] = $img . $wgUser->getSkin()->makeKnownLinkObj( $this->mTitle, wfMsgHtml('article-comments-history'), 'action=history', '', '', 'class="article-comm-history"' );
 			}
