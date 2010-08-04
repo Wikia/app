@@ -169,6 +169,7 @@ class Article {
 
 	/**
 	 * get the title object of the article
+	 * @return Title
 	 */
 	public function getTitle() {
 		return $this->mTitle;

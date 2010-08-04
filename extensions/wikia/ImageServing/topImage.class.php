@@ -31,14 +31,6 @@ class topImage{
 	public function getArticleId() {
 		
 	}
-
-	/**
-	 * @return \int 
-	 */
-	
-	public function getCityId() {
-		
-	}
 	
 	/**
 	 * 
