@@ -1,3 +1,6 @@
+== Changes since 201008.1 ==
+* rt#55176: Achievements: Display/Code problems with "show all" (TOR)
+
 == Changes since 201007.5 ==
 * rt#61817: Create spotlight slot for Oasis (Nef)
 * rt#57186: get rid of ad_slot_override (Nef)
