@@ -143,6 +143,10 @@ var ArticleComments = {
 			data.parentId = e.data.parentId;
 			data.page = $('.article-comments-pagination-link-active').eq(0).attr('page');
 		}
+		var showall = $.getUrlVar('showall');
+		if (showall) {
+			data.showall = 1;
+		}
 
 		var throbber = $(this).next('.throbber').css('visibility', 'visible');
 		$.postJSON(wgScript, data, function(json) {
