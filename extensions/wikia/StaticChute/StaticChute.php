@@ -696,7 +696,6 @@ class StaticChute {
 			return true;
 		}
 
-		$thirteen = gmdate( 'D, d M Y H:i:s', $latestMod ) . ' GMT';
 		if ($this->httpCache && !empty($_GET['maxmod']) && date_default_timezone_set('UTC')){
 			// Since we have a timestamp that will change with the url, set an Expires header
 			// far into the future. This will make it so that the browsers won't even check this
