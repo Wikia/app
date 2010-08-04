@@ -1,6 +1,6 @@
 <?php
 
-if( is_array( $messages ) ) {
+if( !is_array( $messages ) ) {
 	$messages = array();
 }
 $messages = array_merge( $messages, array(
