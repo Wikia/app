@@ -41,7 +41,7 @@ class AchRankingService {
 
 	public function getUserRankingPosition(User $user) {
 		if($user) {
-			$ranking = $this->getUsersRanking();
+			$ranking = $this->getUsersRanking( 20 );
 
 			foreach($ranking as $position => $rankedUser) {
 				if($rankedUser->getId() == $user->getId()) return ++$position;
