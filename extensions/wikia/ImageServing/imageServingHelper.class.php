@@ -10,7 +10,8 @@ class imageServingHelper{
 		wfProfileIn(__METHOD__);
 		
 		if(count($self->mImages) == 1) {
-			self::bulidIndex( $self->mId, $self->mImages);
+			$images = array_keys($self->mImages);
+			self::bulidIndex( $self->mId, $images);
 			wfProfileOut(__METHOD__);
 			return true;			
 		} 
