@@ -17,6 +17,8 @@ try {
 	if ( $params['test'] == 1 ) {
 		$wgScribeHost = "10.10.10.150";
 	}
+	# referer not used
+	$params['r'] = '';
 	$params['lv'] = date("Y-m-d H:i:s");
 	$json = new Services_JSON;
 	$data = $json->encode( $params );
