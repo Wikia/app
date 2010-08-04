@@ -144,6 +144,7 @@ class ArticleCommentsAjax {
 		$articleId = $wgRequest->getVal( 'article', false );
 		$parentId = $wgRequest->getVal( 'parentId' );
 		$page = $wgRequest->getVal( 'page', 1 );
+		$showall = $wgRequest->getText( 'showall', false );
 
 		$title = Title::newFromID( $articleId );
 		if ( !$title ) {
@@ -172,7 +173,9 @@ class ArticleCommentsAjax {
 			$comments = $listing->getCommentPages(true, false);
 			$countComments = count($comments);
 			$countPages = ceil($countComments / $wgArticleCommentsMaxPerPage);
-			$comments = array_slice($comments, ($page - 1) * $wgArticleCommentsMaxPerPage, $wgArticleCommentsMaxPerPage, true);
+			if ($showall != 1) {
+				$comments = array_slice($comments, ($page - 1) * $wgArticleCommentsMaxPerPage, $wgArticleCommentsMaxPerPage, true);
+			}
 			$commentsHTML = ArticleCommentList::formatList($comments);
 			$pagination = ArticleCommentList::doPagination($countComments, count($comments), $page, $title);
 

@@ -1077,7 +1077,7 @@ class ArticleCommentList {
 
 		wfProfileIn( __METHOD__ );
 
-		$showall = $wgRequest->getText( 'showall',  false );
+		$showall = $wgRequest->getText( 'showall', false );
 		$action = $wgRequest->getText( 'action', false );
 
 		/**
@@ -1232,7 +1232,7 @@ class ArticleCommentList {
 		$canEdit   = $wgUser->isAllowed( 'edit' );
 		$isBlocked = $wgUser->isBlocked();
 		$isReadOnly = wfReadOnly();
-		$showall = $wgRequest->getText( 'showall',  false );
+		$showall = $wgRequest->getText( 'showall', false );
 
 		//get first or last page to show newest comments in default view
 		//TODO: always master? use master only when new comment added
