@@ -20,7 +20,7 @@ function sf_focus(e) {
 					return v;
 				},
 				onSelect: function(v, d) {
-					window.location.href = wgArticlePath.replace(/\$1/, escape(v.replace(/ /g, '_')));
+					window.location.href = wgArticlePath.replace(/\$1/, encodeURIComponent(v.replace(/ /g, '_')));
 				},
 				selectedClass: 'navigation-hover',
 				deferRequestBy: 1000,
