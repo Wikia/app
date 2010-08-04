@@ -8,7 +8,7 @@ class imageServingHelper{
 	
 	public static function buildIndexOnPageEdit( $self ) {
 		wfProfileIn(__METHOD__);
-		
+			
 		if(count($self->mImages) == 1) {
 			$images = array_keys($self->mImages);
 			self::bulidIndex( $self->mId, $images);
