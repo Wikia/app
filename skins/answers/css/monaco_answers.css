@@ -600,6 +600,8 @@ div.article-comm-input-text textarea {
 #search_box {
 	background-image: none;
 	padding: 0px;
+	-moz-border-radius: 5px; 
+	-webkit-border-radius: 5px;
 }
 
 #searchform {
