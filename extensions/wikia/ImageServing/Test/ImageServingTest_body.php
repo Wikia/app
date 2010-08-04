@@ -5,6 +5,7 @@ class ImageServingTest extends SpecialPage {
     private $mpa = null;
 
 	function __construct() {
+		wfLoadExtensionMessages( 'ImageServingTest' );
 		parent::__construct( 'ImageServingTest', 'imageservingtest' );
 	}
 
@@ -17,8 +18,6 @@ class ImageServingTest extends SpecialPage {
 		}
 		
 		
-		wfLoadExtensionMessages( 'ImageServingTest' );
-		
 		$wgOut->addHTML(Xml::element("a", array("href" => $wgTitle->getLocalURL("option=1")), "1. Oasis related pages: 200 2:1" )."<br>" );
 		$wgOut->addHTML(Xml::element("a", array("href" => $wgTitle->getLocalURL("option=2")), "2. Spotlights: 270 3:1" )."<br>" );
 		$wgOut->addHTML(Xml::element("a", array("href" => $wgTitle->getLocalURL("option=3")), "3. Image OneBox for Search 100 1:1" )."<br>" );
@@ -29,7 +28,7 @@ class ImageServingTest extends SpecialPage {
         
         $this->mpp = new MostvisitedpagesPageIS($article_id, $show);
         
-        $this->mpp->doQuery($wgRequest->getVal("offset",1), 10, $show );
+        $this->mpp->doQuery($wgRequest->getVal("offset",1), 20, $show );
     }
     
     function getResult() { return $this->mpp->getResult(); }
@@ -82,7 +81,7 @@ class MostvisitedpagesPageIS extends MostvisitedpagesPage {
 				
 				$is = new imageServing(array($title->getArticleId()), $size, $prop );
 				$result->title .= "<div>";
-				foreach ($is->getImages(5) as $key => $value){
+				foreach ($is->getImages(1) as $key => $value){
 					foreach ($value as $value2) {
 						$result->title .= "<img src='{$value2['url']}' /> <br>";
 						$result->title .= $value2['name']."<br>";

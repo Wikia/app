@@ -2,5 +2,5 @@
 $messages = array();
  
 $messages['en'] = array( 
-	'ImageServingTest' => 'ImageServingTest'
+	'imageservingtest' => 'ImageServingTest'
 );
