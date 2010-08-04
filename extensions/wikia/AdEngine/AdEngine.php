@@ -220,17 +220,29 @@ class AdEngine {
 			);
 		}
 
-		$sql = "SELECT * FROM $ad_provider_value_table WHERE
-			 (city_id = ".intval($wgCityId)." OR city_id IS NULL) ORDER by city_id";
-		$res = $db->query($sql);
-		while($row = $db->fetchObject($res)) {
+		$this->applyWikiOverrides();
+
+		global $wgDartCustomKeyValues;
+		if (!empty($wgDartCustomKeyValues)) {
+			// warning, legacy overcomplication ahead
+			$dart_key_values = array();
+			foreach(explode(";", $wgDartCustomKeyValues) as $keyval) {
+				if (!empty($keyval)) {
+					list($key, $val) = explode("=", $keyval);
+					if (!empty($key) && !empty($val)) {
+						$dart_key_values[] = array("keyname" => $key, "keyvalue" => $val);
+					}
+				}
+			}
+			if (!empty($dart_key_values)) {
 			 foreach($this->slots as $slotname => $slot) {
-			 	if($slot['provider_id'] == $row->provider_id){
-					$this->slots[$slotname]['provider_values'][] = array('keyname' => $row->keyname, 'keyvalue' => $row->keyvalue);
+			 	if($slot['provider_id'] == /* dart */ 1){
+					$this->slots[$slotname]['provider_values'] = $dart_key_values;
 			 	}
 			 }
+			}
 		}
-		$this->applyWikiOverrides();
+
 		$wgMemc->set($cacheKey, $this->slots, self::cacheTimeout);
 
 		return true;
