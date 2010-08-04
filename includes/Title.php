@@ -3344,8 +3344,11 @@ class Title {
 	 *
 	 * @return bool
 	 */
-	public function isNewPage() {
-		$dbr = wfGetDB( DB_SLAVE );
+	/* Wikia change begin - @author: Marooned */
+	/* add possibility to use master - used in ArticleComments */
+	public function isNewPage( $flags=0 ) {
+		$dbr = ($flags & GAID_FOR_UPDATE) ? wfGetDB( DB_MASTER ) : wfGetDB( DB_SLAVE );
+		/* Wikia change end */
 		return (bool)$dbr->selectField( 'page', 'page_is_new', $this->pageCond(), __METHOD__ );
 	}
 
