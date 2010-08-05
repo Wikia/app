@@ -34,7 +34,23 @@ class imageServing{
 	 */
 		
 	public function getImages($n = 5, $article_lp = 0) {
+		global $wgMemc;
+		$articles = $this->articles;
 		wfProfileIn(__METHOD__);
+		$cache_return = array();
+		foreach($articles as $key => $value) {
+			$mcKey = wfMemcKey("imageserving", $value, $this->width, $n, $this->proportion["w"], $this->proportion["h"]);
+			$mcOut = $wgMemc->get($mcKey, null);
+			if($mcOut != null) {
+				unset($articles[$key]);
+				$cache_return[] = $mcOut;
+			}
+		}
+		
+		if(count($articles) < 1) {
+			return $cache_return;
+		}
+		
 		$db = wfGetDB(DB_MASTER, array());
 		$res = $db->select(
 	            array( 'page_wikia_props' ),
@@ -42,13 +58,14 @@ class imageServing{
 	            		'props'
 	            	 ),
 	            array(		
-					'page_id in('.implode(",", $this->articles).')',
+					'page_id in('.implode(",", $articles).')',
 					'propname' => "imageOrder"),
 	            __METHOD__
 		);
 				
 		$image_list = array();
 		$images_name = array();
+		
 		/* build list of images to get info about it */
 		while ($row =  $db->fetchRow( $res ) ) {
 			$props = unserialize( $row['props'] );
@@ -64,7 +81,7 @@ class imageServing{
 		
 		if (count($image_list) == 0) {
 			wfProfileOut(__METHOD__);
-			return array();
+			return $cache_return;
 		}
 		
 		$res = $db->select(
@@ -72,7 +89,8 @@ class imageServing{
 	            array(	'count(*) cnt', 
 	            		'il_to',
 	            		'img_width',
-	            		'img_height'
+	            		'img_height',
+	            		'img_minor_mime'
 	            	 ),
 				array(),
 	           	__METHOD__,	 
@@ -89,12 +107,14 @@ class imageServing{
 		
 		$db_out = array();
 		while ($row =  $db->fetchRow( $res ) ) {
-				$db_out[$row['il_to']] = $row;
+			if($row['img_minor_mime'] != "svg") {
+				$db_out[$row['il_to']] = $row;	
+			}
 		}
 		
 		if (count($db_out) == 0) {
 			wfProfileOut(__METHOD__);
-			return array();
+			return $cache_return;
 		}
 		
 		$out = array();
@@ -110,8 +130,14 @@ class imageServing{
 				}
 			}
 		}
+		
+		foreach ($out as $key => $value) {
+			$mcKey = wfMemcKey("imageserving", $key, $this->width, $n, $this->proportion["w"], $this->proportion["h"]);
+			$wgMemc->set($mcKey, $value, 60*60);	
+		}
+		
 		wfProfileOut(__METHOD__);		
-		return $out;
+		return array_merge($out,$cache_return);
 	}
 	
 	/**
