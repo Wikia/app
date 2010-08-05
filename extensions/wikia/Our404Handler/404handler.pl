@@ -179,18 +179,18 @@ my @done = ();
 #
 my $maxrequests = $ENV{ "REQUESTS" } || 1000;
 my $basepath    = $ENV{ "IMGPATH"  } || "/images";
-my $baseurl     = $ENV{ "BASEURL"  } || "http://file2";
+my $baseurl     = $ENV{ "BASEURL"  } || "http://file-s2";
 my $clients     = $ENV{ "CHILDREN" } || 4;
 my $listen      = $ENV{ "SOCKET"   } || "0.0.0.0:39393";
 my $debug       = $ENV{ "DEBUG"    } || 1;
 my $test        = $ENV{ "TEST"     } || 0;
 my $pidfile     = $ENV{ "PIDFILE"  } || "/var/run/thumbnailer/404handler.pid";
-my $usehttp     = 0;
+my $use_http    = 0;
 
 #
 # overwrite some settings with getopt
 #
-GetOptions( "http" => \$usehttp );
+GetOptions( "http" => \$use_http );
 
 #
 # fastcgi request
@@ -321,7 +321,7 @@ while( $request->Accept() >= 0 || $test ) {
 			# thumbnail request. mimetype will be used later in header
 			#
 			my $t_elapsed = tv_interval( $t_start, [ gettimeofday() ] ) ;
-			if( -f $original ) {
+			if( -f $original || $use_http ) {
 				$mimetype = $flm->checktype_filename( $original );
 				( $imgtype ) = $mimetype =~ m![^/+]/(\w+)!;
 				$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
@@ -434,9 +434,19 @@ while( $request->Accept() >= 0 || $test ) {
 					# for other else use Graphics::Magick
 					#
 					my $image = new Graphics::Magick;
+
+					#
+					# change to remote file if --http is used
+					#
+					if( $use_http ) {
+						substr( $original, 0, length( $basepath ), $baseurl );
+					}
+
 					$image->Read( $original );
 					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-					print STDERR "Reading $original for transforming, time: $t_elapsed\n" if $debug;
+					print STDERR "Reading " .
+						( $use_http ? "remote" : "local" ) .
+						" $original for transforming, time: $t_elapsed\n" if $debug;
 
 					#
 					# use only first frame in animated gifs
