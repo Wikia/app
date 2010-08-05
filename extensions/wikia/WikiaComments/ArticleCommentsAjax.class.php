@@ -40,7 +40,7 @@ class ArticleCommentsAjax {
 		}
 
 		$comment = ArticleComment::newFromId( $commentId );
-		if ( $comment ) {
+		if ( $comment && $comment->canEdit() ) {
 			$response = $comment->doSaveComment( $wgRequest, $wgUser, $title );
 			if ( $response !== false ) {
 				$status = $response[0];
@@ -80,12 +80,13 @@ class ArticleCommentsAjax {
 		 * edit comment
 		 */
 		$comment = ArticleComment::newFromId( $commentId );
-		if ( $comment ) {
+		if ( $comment && $comment->canEdit() ) {
 			$status  = true;
 			$text = $comment->editPage();
 		} else {
 			$status = false;
 			$text = '';
+			$error = 1;
 		}
 
 		$result = array(

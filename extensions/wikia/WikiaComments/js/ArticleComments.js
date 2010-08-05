@@ -12,6 +12,10 @@ var ArticleComments = {
 		$('#article-comments').delegate('.article-comments-li', 'mouseover',  function(){$(this).find('.tools').css('visibility', 'visible');});
 		$('#article-comments').delegate('.article-comments-li', 'mouseout',  function(){$(this).find('.tools').css('visibility', 'hidden');});
 		ArticleComments.addHover();
+		//hack to display 'edit' link when slave lag caused it to be hidden
+		if (wgUserName) {
+			$('#article-comments-ul').find('strong').find('a:contains("' + wgUserName + '")').closest('.article-comments').find('.edit-link').show();
+		}
 	},
 
 	log: function(msg) {

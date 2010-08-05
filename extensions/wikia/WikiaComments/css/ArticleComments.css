@@ -139,11 +139,7 @@ a.article-comm-reply {
 }
 
 .tools .sprite {
-	margin-right: 3px;
-}
-
-.tools a {
-	margin-left: 2px;
+	margin: 0 2px 0 4px;
 }
 
 #article-comments-wrapper .throbber {
