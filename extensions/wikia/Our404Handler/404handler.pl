@@ -3,7 +3,12 @@
 package main;
 
 #
-# Image::Magick version
+# Graphics::Magick version
+#
+
+#
+# available options:
+# --http -- will use http get insted of NFS local file read
 #
 
 use strict;
@@ -23,6 +28,7 @@ use Math::Round qw(round);
 use Getopt::Long;
 use Cwd;
 use Time::HiRes qw(gettimeofday tv_interval);
+use Getopt::Long;
 
 #
 # constant
@@ -173,11 +179,18 @@ my @done = ();
 #
 my $maxrequests = $ENV{ "REQUESTS" } || 1000;
 my $basepath    = $ENV{ "IMGPATH"  } || "/images";
+my $baseurl     = $ENV{ "BASEURL"  } || "http://file2";
 my $clients     = $ENV{ "CHILDREN" } || 4;
 my $listen      = $ENV{ "SOCKET"   } || "0.0.0.0:39393";
 my $debug       = $ENV{ "DEBUG"    } || 1;
 my $test        = $ENV{ "TEST"     } || 0;
 my $pidfile     = $ENV{ "PIDFILE"  } || "/var/run/thumbnailer/404handler.pid";
+my $usehttp     = 0;
+
+#
+# overwrite some settings with getopt
+#
+GetOptions( "http" => \$usehttp );
 
 #
 # fastcgi request
