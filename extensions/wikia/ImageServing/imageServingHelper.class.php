@@ -22,7 +22,10 @@ class imageServingHelper{
 		return true;
 	}
 	
-	public static function buildAndGetIndex(Article $article, $ignoreEmpty = false ) {
+	public static function buildAndGetIndex($article, $ignoreEmpty = false ) {
+		if(!($article instanceof Article)) {
+			return;
+		}
 		wfProfileIn(__METHOD__);
 		global $wgHooks;
 		$startTime = Time();
