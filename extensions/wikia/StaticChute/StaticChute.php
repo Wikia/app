@@ -708,6 +708,7 @@ class StaticChute {
 			header('X-Pass-Cache-Control: max-age=' . (13 * 365 * 24 * 60 * 60));
 		}
 
+		header('Vary: Accept-Encoding'); // always send this even when we don't compress the response
 		$this->setContentType();
 
 		$out = ''; $fileCount = 0;
