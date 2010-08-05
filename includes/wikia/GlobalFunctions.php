@@ -967,3 +967,16 @@ function wfMsgWithFallback( $key ) {
 
 	return $msg;
 }
+
+/**
+ * wfAutomaticReadOnly
+ *
+ * @authoer tor
+ *
+ * @returns boolean
+ */
+function wfAutomaticReadOnly() {
+	global $wgReadOnly;
+
+	return (bool) wfMsgNoDBForContent( 'readonly_lag' ) == $wgReadOnly;
+}
