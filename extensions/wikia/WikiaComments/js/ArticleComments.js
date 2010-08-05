@@ -227,7 +227,7 @@ var ArticleComments = {
 			ArticleComments.track('orderSwitch/newestLast');
 		}
 		ArticleComments.log('end: changeOrder');
-	},
+	}
 };
 
 //on content ready
