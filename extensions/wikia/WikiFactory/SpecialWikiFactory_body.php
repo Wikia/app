@@ -49,7 +49,7 @@ class WikiFactoryPage extends SpecialPage {
 			$wgOut->blockedPage();
 			return;
 		}
-		if( wfReadOnly() ) {
+		if( wfReadOnly() && !wfAutomaticReadOnly() ) {
 			$wgOut->readOnlyPage();
 			return;
 		}
