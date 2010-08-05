@@ -91,7 +91,7 @@ function reloadTab(xls) {
 				'ws-domain'	: ( ws_domain != undefined ) ? ws_domain : ''
 			};
 			
-			var params = "";
+			var params = "?show=1";
 			for ( var key in data ) {
 				params += "&" + key + "=" + data[key];
 			}
