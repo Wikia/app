@@ -420,14 +420,19 @@ class ArticleComment {
 			if ( count($parts['partsStripped']) == 1 ) {
 				$replyButton = '<a href="#" class="article-comm-reply wikia-button secondary">' . wfMsg('article-comments-reply') . '</a>';
 			}
+
 			if ( $canDelete ) {
 				$img = '<img class="delete sprite" alt="" src="'. $wgBlankImgUrl .'" width="16" height="16" />';
 				$buttons[] = $img . '<a href="' . $this->mTitle->getLocalUrl('redirect=no&action=delete') . '" class="article-comm-delete">' . wfMsg('article-comments-delete') . '</a>';
 			}
-			if ( $this->canEdit() ) {
-				$img = '<img class="edit sprite" alt="" src="'. $wgBlankImgUrl .'" width="16" height="16" />';
-				$buttons[] = $img . '<a href="#comment' . $articleId . '" class="article-comm-edit" id="comment' . $articleId . '">' . wfMsg('article-comments-edit') . '</a>';
+
+			//due to slave lag canEdit() can return false negative - we are hiding it by CSS and force showing by JS
+			if ( $wgUser->isLoggedIn() ) {
+				$display = $this->canEdit() ? '' : ' style="display:none"';
+				$img = '<img class="edit sprite" alt="" src="' . $wgBlankImgUrl . '" width="16" height="16" />';
+				$buttons[] = "<span class='edit-link'$display>" . $img . '<a href="#comment' . $articleId . '" class="article-comm-edit" id="comment' . $articleId . '">' . wfMsg('article-comments-edit') . '</a></span>';
 			}
+
 			if ( !$this->mTitle->isNewPage(GAID_FOR_UPDATE) ) {
 				$img = '<img class="history sprite" alt="" src="'. $wgBlankImgUrl .'" width="16" height="16" />';
 				$buttons[] = $img . $wgUser->getSkin()->makeKnownLinkObj( $this->mTitle, wfMsgHtml('article-comments-history'), 'action=history', '', '', 'class="article-comm-history"' );
