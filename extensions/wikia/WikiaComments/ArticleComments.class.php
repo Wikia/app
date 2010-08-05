@@ -398,7 +398,7 @@ class ArticleComment {
 	 *
 	 * @return String -- generated HTML text
 	 */
-	public function render($master = false) {
+	public function render($master = false, $omitCanEdit = false) {
 		global $wgLang, $wgContLang, $wgUser, $wgParser, $wgOut, $wgBlankImgUrl;
 
 		wfProfileIn( __METHOD__ );
@@ -424,7 +424,7 @@ class ArticleComment {
 				$img = '<img class="delete sprite" alt="" src="'. $wgBlankImgUrl .'" width="16" height="16" />';
 				$buttons[] = $img . '<a href="' . $this->mTitle->getLocalUrl('redirect=no&action=delete') . '" class="article-comm-delete">' . wfMsg('article-comments-delete') . '</a>';
 			}
-			if ( $this->canEdit() ) {
+			if ( $omitCanEdit || $this->canEdit() ) {
 				$img = '<img class="edit sprite" alt="" src="'. $wgBlankImgUrl .'" width="16" height="16" />';
 				$buttons[] = $img . '<a href="#comment' . $articleId . '" class="article-comm-edit" id="comment' . $articleId . '">' . wfMsg('article-comments-edit') . '</a>';
 			}
@@ -532,11 +532,10 @@ class ArticleComment {
 		$res = false;
 		if ( $this->mUser ) {
 			$isAuthor = ($this->mUser->getId() == $wgUser->getId()) && (!$wgUser->isAnon());
-			$canEdit = $wgUser->isAllowed( 'edit' ) && (
+			$canEdit =
 				//prevent infinite loop for blogs - userCan hooked up in BlogLockdown
 				defined('NS_BLOG_ARTICLE_TALK') && $this->mTitle->getNamespace() == NS_BLOG_ARTICLE_TALK ||
-				$this->mTitle->userCanEdit()
-			);
+				$this->mTitle->userCanEdit();
 
 			//TODO: create new permission and remove checking groups below
 			$groups = $wgUser->getGroups();
@@ -738,11 +737,11 @@ class ArticleComment {
 		global $wgDevelEnvironment;
 
 		$error = false; $id = 0;
-		switch( $status ) {
+		switch ( $status ) {
 			case EditPage::AS_SUCCESS_UPDATE:
 			case EditPage::AS_SUCCESS_NEW_ARTICLE:
 				$comment = ArticleComment::newFromArticle( $article );
-				$text = $comment->render(true);
+				$text = $comment->render(true, true);	//2nd true: omit slave lag - allow 'edit' if user was able to 'create'
 				if ( !is_null($comment->mTitle) ) {
 					$id = $comment->mTitle->getArticleID();
 				}
