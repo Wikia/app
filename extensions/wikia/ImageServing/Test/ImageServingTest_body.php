@@ -55,7 +55,7 @@ class ImageServingTest extends SpecialPage {
         
         $this->mpp = new MostvisitedpagesPageIS($article_id, $show, $this->size, $this->prop);
         
-        $this->mpp->doQuery($wgRequest->getVal("offset",1), 20, $show );
+        $this->mpp->doQuery($wgRequest->getVal("offset",0), 20, $show );
     }
     
     function getResult() { return $this->mpp->getResult(); }
