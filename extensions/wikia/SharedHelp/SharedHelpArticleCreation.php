@@ -31,6 +31,11 @@ function efSharedHelpArticleCreation( &$article, &$user, $text, $summary, $minor
 	}
 
 	$talkTitle = Title::newFromText( $article->mTitle->getText(), NS_HELP_TALK );
+
+	if ( $talkTitle->exists() ) {
+		return true;
+	}
+
 	$talkArticle = new Article( $talkTitle );
 
 	if ( $article->mTitle->isRedirect() ) {
