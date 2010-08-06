@@ -29,6 +29,12 @@ $wgHooks['RecentChange_beforeSave'][] = 'MyHome::storeInRecentChanges';
 $wgHooks['EditFilter'][] = 'MyHome::getSectionName';
 $wgHooks['LinksUpdateComplete'][] = 'MyHome::getInserts';
 
+if((!empty($wgEnableAchievementsInActivityFeed)) && (!empty($wgEnableAchievementsExt))){
+	$wgHooks['AchievementsNotification'][] = 'SpecialActivityFeed::attachAchievementToRc';
+	$wgHooks['RecentChange_beforeSave'][] = 'SpecialActivityFeed::savingAnRc';
+	$wgHooks['RecentChange_save'][] = 'SpecialActivityFeed::savedAnRc';
+}
+
 // i18n
 $wgExtensionMessagesFiles['MyHome'] = $dir . 'MyHome.i18n.php';
 
