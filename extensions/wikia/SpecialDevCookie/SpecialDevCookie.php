@@ -4,8 +4,10 @@
  * switch cookie used for development
  */
 
-
 $wgSpecialPages['DevCookie'] = 'SpecialDevCookie';
+$wgDevCookieName = "-wikia-development";
+$wgGroupPermissions['*']['devcookie'] = false;
+$wgGroupPermissions['staff']['devcookie'] = true;
 
 class SpecialDevCookie extends UnlistedSpecialPage {
 
@@ -15,8 +17,11 @@ class SpecialDevCookie extends UnlistedSpecialPage {
 		$mCookieName;
 
 	public function __construct() {
-		parent::__construct( 'DevCookie' );
-		$this->mCookieName = "-wikia-development";
+		global $wgDevCookieName;
+
+		parent::__construct( 'DevCookie', 'devcookie' );
+
+		$this->mCookieName = $wgDevCookieName;
 		$this->mCookie = null;
 	}
 
@@ -29,6 +34,11 @@ class SpecialDevCookie extends UnlistedSpecialPage {
 
 		$this->setHeaders();
 		$this->mTitle = SpecialPage::getTitleFor( 'DevCookie' );
+
+		if( $this->isRestricted() && !$this->userCanExecute( $wgUser ) ) {
+			$this->displayRestrictionError();
+			return;
+		}
 
 		/**
 		 * if posted change cookie value
