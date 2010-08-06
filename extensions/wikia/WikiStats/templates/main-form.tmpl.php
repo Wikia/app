@@ -3,14 +3,11 @@ $tabsUrl = array(
 	0 => sprintf("%s/%d/main", $mTitle->getLocalUrl(), $wgCityId),
 	1 => sprintf("%s/%d/breakdown", $mTitle->getLocalUrl(), $wgCityId),
 	2 => sprintf("%s/%d/anonbreakdown", $mTitle->getLocalUrl(), $wgCityId),
-	3 => sprintf("%s/%d/latestview", $mTitle->getLocalUrl(), $wgCityId)
-	#1 => sprintf("%s/%d/month", $mTitle->getLocalUrl(), $wgCityId),
-	#2 => sprintf("%s/%d/current", $mTitle->getLocalUrl(), $wgCityId),
-	#3 => sprintf("%s/%d/compare", $mTitle->getLocalUrl(), $wgCityId)
-	#1 => sprintf("%s/%d/pviews", $mTitle->getLocalUrl(), $wgCityId)
+	3 => sprintf("%s/%d/latestview", $mTitle->getLocalUrl(), $wgCityId),
+	4 => sprintf("%s/%d/userview", $mTitle->getLocalUrl(), $wgCityId),
 );
 #$tabsName = array( "ws-main", "ws-month", "ws-day", "ws-compare" );
-$tabsName = array( "ws-main", "ws-breakdown", "ws-anonbreakdown", "ws-latestview" );
+$tabsName = array( "ws-main", "ws-breakdown", "ws-anonbreakdown", "ws-latestview", "ws-userview" );
 ?>
 <script type="text/javascript">
 var tabsName = new Array( <?= "'" . implode("','", $tabsName) . "'" ?> );
@@ -133,13 +130,26 @@ function reloadTab(xls) {
 		});		
 	}
 	else if ( activeTab == 4 ) {
-		$("#ws-loader").show();
-		$('#' + tabsName[activeTab-1]).load(tabsUrl[activeTab-1], function() {
-			$("#ws-loader").hide();
-			$('#ws-latestview-btn').click(function() {
-				reloadTab();
-			});		
-		});	
+		var refreshId = setInterval(function() {
+			$("#ws-loader").show();
+			$('#' + tabsName[activeTab-1]).load(tabsUrl[activeTab-1], function() {
+				$("#ws-loader").hide();
+				$('#ws-latestview-btn').click(function() {
+					reloadTab();
+				});
+			});			
+		}, 10000);
+	}
+	else if ( activeTab == 5 ) {
+		//var refreshId = setInterval(function() {
+			$("#ws-loader").show();
+			$('#' + tabsName[activeTab-1]).load(tabsUrl[activeTab-1], function() {
+				$("#ws-loader").hide();
+				$('#ws-userview-btn').click(function() {
+					reloadTab();
+				});
+			});			
+		//}, 5000);
 	}	
 }
 
@@ -153,6 +163,7 @@ function reloadTab(xls) {
 		<li><a href="<?=$tabsUrl[1]?>#ws-breakdown"><span><?=wfMsg('wikistats_breakdown_editors')?></span></a></li>
 		<li><a href="<?=$tabsUrl[2]?>#ws-anonbreakdown"><span><?=wfMsg('wikistats_breakdown_anons')?></span></a></li>
 		<li><a href="<?=$tabsUrl[3]?>#ws-latestview"><span><?=wfMsg('wikistats_latest_pageviews')?></span></a></li>
+		<li><a href="<?=$tabsUrl[4]?>#ws-userview"><span><?=wfMsg('wikistats_latest_userviews')?></span></a></li>
 	</ul>
 <? foreach ( $tabsName as $id => $value ) : ?>	
 	<div id="<?=$tabsName[$id]?>"></div>

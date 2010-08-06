@@ -344,7 +344,7 @@ class WikiStats {
 		wfProfileIn( __METHOD__ );
 
    		$result = array();
-   		$memkey = __METHOD__;
+   		$memkey = __METHOD__ . 'v2';
    		$result = $wgMemc->get( $memkey );
     	if (empty($result)) {
 			$dbr = wfGetDB(DB_SLAVE, 'stats', $wgExternalSharedDB);
@@ -460,7 +460,7 @@ class WikiStats {
 		} 
 
 		$memkey = md5($this->mCityId . implode("-", array_values($this->mStatsDate)) . $this->mLocalStats . $this->mLang . $this->mHub );
-    	$memkey = __METHOD__ . "_" . $memkey;
+    	$memkey = __METHOD__ . "_" . $memkey . '_v2';
     	#---
 		$columns = array();
 		$this->mMainStats = ( self::USE_MEMC ) ? $wgMemc->get($memkey) : array();
@@ -590,7 +590,7 @@ class WikiStats {
 		global $wgMemc, $wgStatsDB; 
 		
 		wfProfileIn( __METHOD__ );
-    	$memkey = __METHOD__ . "_" . $this->mCityId;
+    	$memkey = __METHOD__ . "_" . $this->mCityId . '_v2';
     	#---
 		$this->mExcludedWikis = $wgMemc->get($memkey);
 		if ( empty($this->mExcludedWikis) ) {
@@ -1027,4 +1027,54 @@ class WikiStats {
 		#---
 		return $result;				
 	}
+	
+	/*
+	 * latest user activity
+	 * 
+	 * @access public
+	 * 
+	 * list of most visited pages
+	 */	
+	public function userViewPages($hours = 1) {
+		global $wgStatsDB;
+		wfProfileIn( __METHOD__ );
+
+		$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+
+		$ts = strftime("%F %T", strtotime("-$hours hour"));
+		
+		$where = array( 
+			"pv_city_id" => $this->mCityId,
+			"pv_ts >= '$ts' "
+		);
+
+		$res = $dbr->select(
+			array( 'page_views_user' ),
+			array( 'pv_user_id', 'count(*) as cnt'  ),
+			$where,
+			__METHOD__,
+			array(
+				'GROUP BY'	=> 'pv_user_id',
+				'ORDER BY'	=> 'pv_ts desc',
+				'LIMIT'		=> self::PV_LIMIT
+			)
+		);
+		
+		$result = array(); 
+		while ( $oRow = $dbr->fetchObject( $res ) ) {
+			$oUser = User::newFromId($oRow->pv_user_id);
+			if ( is_object($oUser) ) {
+				$oTitle = Title::newFromText($oUser->getName(), NS_USER);
+				if ( $oTitle ) {
+					$oRow->page_title = Xml::element("a", array("href" => $oTitle->getLocalURL()), $oTitle->getFullText()) ;
+				} 
+				$result[$oRow->pv_user_id] = wfSpecialList( $oRow->page_title, wfMsgExt("wikistats_latest_userviews_pages", 'parsemag', $oRow->cnt) );
+			}
+		}
+		$dbr->freeResult( $res );
+		
+		wfProfileOut( __METHOD__ );
+		#---
+		return $result;				
+	}	
 };

@@ -332,6 +332,23 @@ class WikiStatsPage extends IncludableSpecialPage
 		wfProfileOut( __METHOD__ );
 	}
 	
+	private function showUserview() {
+		global $wgUser, $wgContLang, $wgLang, $wgOut;
+		
+		wfProfileIn( __METHOD__ );
+		$rows = $this->mStats->userViewPages(1);
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl->set_vars( array(
+			"user"			=> $wgUser,
+			"cityId"		=> $this->mCityId,
+			"wgContLang" 	=> $wgContLang,
+			"wgLang"		=> $wgLang,
+			"data"			=> $rows,
+		) );
+		$wgOut->addHTML( $oTmpl->execute("user_activity") ); 
+		wfProfileOut( __METHOD__ );
+	}
+		
 	private function showMonth() {
         wfProfileIn( __METHOD__ );
         echo __METHOD__ ;

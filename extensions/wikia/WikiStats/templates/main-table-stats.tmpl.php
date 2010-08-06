@@ -59,8 +59,9 @@
 			}
 		}
 		$cols[] = $column;
+		$style = ""; if ( in_array( $column, array('E', 'I', 'K') ) ) $style = "background-color:#F5F5F5";		
 ?>
-	<<?=$row?> style="white-space:nowrap;" title="<?=$__number?>"><?= $out ?></<?=$row?>>
+	<<?=$row?> style="white-space:nowrap;<?=$style?>" title="<?=$__number?>"><?= $out ?></<?=$row?>>
 <?php		
 	}
 ?>
