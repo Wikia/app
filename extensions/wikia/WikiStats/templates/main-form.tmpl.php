@@ -130,7 +130,7 @@ function reloadTab(xls) {
 		});		
 	}
 	else if ( activeTab == 4 ) {
-		var refreshId = setInterval(function() {
+		//var refreshId = setInterval(function() {
 			$("#ws-loader").show();
 			$('#' + tabsName[activeTab-1]).load(tabsUrl[activeTab-1], function() {
 				$("#ws-loader").hide();
@@ -138,7 +138,7 @@ function reloadTab(xls) {
 					reloadTab();
 				});
 			});			
-		}, 10000);
+		//}, 10000);
 	}
 	else if ( activeTab == 5 ) {
 		//var refreshId = setInterval(function() {
