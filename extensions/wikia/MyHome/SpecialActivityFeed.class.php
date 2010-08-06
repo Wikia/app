@@ -25,6 +25,13 @@ class SpecialActivityFeed extends SpecialPage {
 		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/MyHome/MyHome.css?{$wgStyleVersion}");
 
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/MyHome/MyHome.js?{$wgStyleVersion}\"></script>\n");
+		
+		global $wgEnableAchievementsInActivityFeed, $wgEnableAchievementsExt;
+		if((!empty($wgEnableAchievementsInActivityFeed)) && (!empty($wgEnableAchievementsExt))){
+			$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AchievementsII/css/achievements_sidebar.css?{$wgStyleVersion}");
+			$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/AchievementsII/js/achievements.js?{$wgStyleVersion}\"></script>\n");
+			//self::debug_makeEdits(); // just to be used when testing (makes edits).
+		}
 
 		// hide page title
 		global $wgSupressPageTitle;
@@ -63,14 +70,14 @@ class SpecialActivityFeed extends SpecialPage {
 	 * and run this pair of queries (with the user's user_id filled in).
 	 * 		DELETE FROM ach_user_badges WHERE user_id='USER_ID_HERE';DELETE FROM ach_user_counters WHERE user_id='USER_ID_HERE';
 	 */
-	public static function debug_makeAnEdit(){
+	public static function debug_makeEdits(){
 		global $wgEnableAchievementsInActivityFeed, $wgEnableAchievementsExt;
-		$numEditsToMake = 0;
+		$NUM_EDITS_TO_MAKE = 1;
 		if((!empty($wgEnableAchievementsInActivityFeed)) && (!empty($wgEnableAchievementsExt))){
-			global $wgExternalSharedDB;
+			global $wgExternalSharedDB, $wgUser;
 			$flags = false;
-			for($i = 0; $i < $numEditsToMake; $i++){
-				$title = Title::newFromText('CArticle_'.$i);
+			for($i = 0; $i < $NUM_EDITS_TO_MAKE; $i++){
+				$title = Title::newFromText('CArticle_I'.$i);
 				$article = new Article($title);
 				$content = date("H:i:s");
 				$article->doEdit($content, 'test summary');
@@ -102,32 +109,8 @@ class SpecialActivityFeed extends SpecialPage {
 			// been saved already during this pageload or is still pending).
 			global $wgARecentChangeHasBeenSaved, $wgAchievementToAddToRc;
 			if(!empty($wgARecentChangeHasBeenSaved)){
-				// Find the RC that was saved (since there may be slave-lag, look for it by id rather than timestamp).
-				// Alternatively, we could just force a read from the master, but that would involve hacking RecentChanges::newFromId (which is core) to allow that.
-				$rc = RecentChange::newFromId($wgARecentChangeHasBeenSaved);
-				if(!$rc){
-					// Due to slave-lag, give this a little time to catch up.
-					$MAX_RETRIES = 4;
-					$sleepInMicros = 1000 * 500; // second number is milliseconds
-					$numRetries = 0;
-
-					// Does this help?
-					//$dbw = &wfGetDB(DB_MASTER);
-					//$dbw->commit(); // make sure the previous transaction was committed.
-
-					while((!$rc) && ($numRetries < $MAX_RETRIES)){
-						$numRetries++;
-						usleep($sleepInMicros);
-						$rc = RecentChange::newFromId($wgARecentChangeHasBeenSaved);
-					}
-					
-					// Fallback to most recent RC.
-					if(!$rc){
-						// For now, skip the fallback.  It's probably more confusing to use the wrong RecentChange than to not display the Achievement at all.
-						//$rc = RecentChange::newFromConds("rc_user = {$user->getId()} ORDER BY rc_timestamp DESC");
-					}
-				}
-
+				// Due to slave-lag, instead of storing the rc_id and looking it up (which didn't always work, even with a retry-loop), store entire RC.
+				$rc = $wgARecentChangeHasBeenSaved;
 				if($rc){
 					// Add the (serialized) badge into the rc_params field.
 					$additionalData = array('Badge' => serialize($badge));
@@ -177,7 +160,8 @@ class SpecialActivityFeed extends SpecialPage {
 		wfProfileIn( __METHOD__ );
 
 		// Mark the global indicating that an RC has been saved on this pageload (and which RC it was).
-		$wgARecentChangeHasBeenSaved = $rc->getAttribute('rc_id');
+		// Due to slave-lag, instead of storing the rc_id and looking it up (which didn't always work, even with a retry-loop), store entire RC.
+		$wgARecentChangeHasBeenSaved = $rc;
 
 		wfProfileOut( __METHOD__ );
 		return true;
