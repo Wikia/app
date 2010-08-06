@@ -9,6 +9,7 @@ class imageServing{
 	private $articles;
 	private $width;
 	private $proportion;
+	private $deltaY = 0;
 	
 	/**
 	 * @param $articles \type{\arrayof{\int}} List of articles ids to get images
@@ -20,6 +21,7 @@ class imageServing{
 		$this->articles = $articles;
 		$this->width = $width;
 		$this->proportion = $proportion;
+		$this->deltaY = (round($proportion['w']/$proportion['h']) - 1)*0.1;
 	}
 	
 	/**
@@ -39,8 +41,9 @@ class imageServing{
 		wfProfileIn(__METHOD__);
 		$cache_return = array();
 		foreach($articles as $key => $value) {
-			$mcKey = wfMemcKey("imageserving", $value, $this->width, $n, $this->proportion["w"], $this->proportion["h"]);
-			$mcOut = $wgMemc->get($mcKey, null);
+			$mcKey = wfMemcKey("imageserving", $this->width, $n, $this->proportion["w"], $this->proportion["h"], $value);
+			$mcOut = null;//$wgMemc->get($mcKey, null);
+			
 			if($mcOut != null) {
 				unset($articles[$key]);
 				$cache_return[] = $mcOut;
@@ -107,7 +110,7 @@ class imageServing{
 		
 		$db_out = array();
 		while ($row =  $db->fetchRow( $res ) ) {
-			if($row['img_minor_mime'] != "svg") {
+			if(!in_array($row['img_minor_mime'], array( "svg+xml","svg"))) {
 				$db_out[$row['il_to']] = $row;	
 			}
 		}
@@ -132,7 +135,7 @@ class imageServing{
 		}
 		
 		foreach ($out as $key => $value) {
-			$mcKey = wfMemcKey("imageserving", $key, $this->width, $n, $this->proportion["w"], $this->proportion["h"]);
+			$mcKey = wfMemcKey("imageserving", $this->width, $n, $this->proportion["w"], $this->proportion["h"], $key);
 			$wgMemc->set($mcKey, $value, 60*60);	
 		}
 		
@@ -178,10 +181,19 @@ class imageServing{
 			$right = $left + $pWidth;
 			$bottom = $height;
 		} else {
-			$top = 0;
-			$left = 0;
+			$deltaYpx = round($height*$this->deltaY);
+			
+			$bottom = $pHeight + $deltaYpx;
+			$top = $deltaYpx;
+			
+			if( $bottom > $height ) {
+				$bottom = $pHeight;
+				$top = 0;
+			}	
+			
+			$left = 0; 
 			$right = $width;
-			$bottom = $pHeight;
+			
 		}
 		return "{$this->width}px-$left,$right,$top,$bottom";
 	}
