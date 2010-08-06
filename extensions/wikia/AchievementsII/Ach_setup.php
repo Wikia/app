@@ -261,7 +261,7 @@ function AchTest() {
 	set_time_limit(5000);
 
 		// test 1
-		// Expect: badges for edits, categoris, pictues, at least one lucky edit and eventually welcome
+		// Expect: badges for edits, categories, pictures, at least one lucky edit and eventually welcome
 
 		// 2000 edits
 		for($i = 0; $i < 500; $i++) {

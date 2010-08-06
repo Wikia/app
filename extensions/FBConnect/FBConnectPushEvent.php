@@ -204,11 +204,11 @@ class FBConnectPushEvent {
 	
 	static public function pushEvent($message, $params, $class){
 		global $wgServer, $wgUser;
-                
-                $id = FBConnectDB::getFacebookIDs($wgUser);
+
+		$id = FBConnectDB::getFacebookIDs($wgUser);
 		if( count($id) < 1 ) {
-                    return 1001; //status for disconnected 
-                }
+			return 1001; //status for disconnected 
+		}
 		/* only one event par request */
 		if( self::$eventCounter > 0 ) {
 			return 1000; //status for out of limit  

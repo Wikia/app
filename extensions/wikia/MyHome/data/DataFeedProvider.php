@@ -203,6 +203,10 @@ class DataFeedProvider {
 				if(isset($res['rc_params']['CategorySelect'])) {
 					$item['CategorySelect'] = $res['rc_params']['CategorySelect'];
 				}
+
+				if(isset($res['rc_params']['Badge'])){
+					$item['Badge'] = $res['rc_params']['Badge'];
+				}
 			}
 
 			$item['ns'] = $res['ns'];
