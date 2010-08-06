@@ -396,12 +396,16 @@ while( $request->Accept() >= 0 || $test ) {
 						" $target for transforming, time: $t_elapsed\n" if $debug;
 
 					if( $transformed ) {
+						use bytes;
+						my $output = $rsvg->getImageBitmap();
 						print "HTTP/1.1 200 OK\r\n";
 						print "Cache-control: max-age=30\r\n";
+						print sprintf( "Content-Length: %d\r\n", length( $output ) );
 						print "Content-type: image/png\r\n\r\n";
-						print $rsvg->getImageBitmap() unless $test;
+						print $output unless $test;
 						$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
 						print STDERR "File $thumbnail served, time: $t_elapsed\n" if $debug;
+						no bytes;
 					}
 					else {
 						$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
@@ -506,12 +510,16 @@ while( $request->Accept() >= 0 || $test ) {
 							#
 							# serve file if is ready to serve
 							#
+							use bytes;
+							my $output = $image->ImageToBlob();
 							print "HTTP/1.1 200 OK\r\n";
 							print "Cache-control: max-age=30\r\n";
+							print sprintf( "Content-Length: %d\r\n", length( $output ) );
 							print "Content-type: $mimetype\r\n\r\n";
-							print $image->ImageToBlob() unless $test;
+							print $output unless $test;
 							$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
 							print STDERR "File $thumbnail served, time: $t_elapsed\n" if $debug;
+							no bytes;
 						}
 						else {
 							$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
