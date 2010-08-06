@@ -11,8 +11,24 @@
 			<span class="title"><?php print htmlspecialchars($row['title']) ?></span>
 <?php } ?>
 			<cite><?php print FeedRenderer::getActionLabel($row); ?><?php print ActivityFeedRenderer::formatTimestamp($row['timestamp']); ?><?php print FeedRenderer::getDiffLink($row); ?></cite>
-			<table><?php print FeedRenderer::getDetails($row) ?></table>
+			<table><?php print FeedRenderer::getDetails($row) ?></table><?php
+				global $wgEnableAchievementsInActivityFeed, $wgEnableAchievementsExt;
+				if((!empty($wgEnableAchievementsInActivityFeed)) && (!empty($wgEnableAchievementsExt))){
+					if(isset($row['Badge'])){
+						$badge = unserialize($row['Badge']);
+						$ownerBadge = array('badge' => $badge);
+						AchBadge::renderForActivityFeed($ownerBadge, true);
+					}
+				}
+			?>
 		</li>
 	<?php } // endforeach; ?>
 	</ul>
+	<script type='text/javascript'>
+		$(document).ready(function(){
+			$('a.badgeName').click(function(){
+				WET.byStr('activityFeed/achievement/link');
+			});
+		});
+	</script>
 <?php } // endif; ?>

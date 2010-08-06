@@ -78,6 +78,7 @@ When you join the wiki, your user profile displays the badges that you have earn
 	'leaderboard' => 'Achievements leaderboard',
 	'achievements-recent-earned-badges' => 'Recent Earned Badges',
 	'achievements-recent-info' => '<strong>$3</strong><br/>$4<br/>earned by <a href="$1">$2</a><br/>$5',
+	'achievements-activityfeed-info' => 'earned the <strong><a href="$3" class="badgeName">$1</a></strong> badge<br/>$2',
 	'achievements-leaderboard-disclaimer' => 'Leaderboard shows changes since yesterday',
 	'achievements-leaderboard-rank-label' => 'rank',
 	'achievements-leaderboard-member-label' => 'member',

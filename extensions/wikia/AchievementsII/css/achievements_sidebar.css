@@ -128,3 +128,25 @@ div.profile-hover p.to-get {
 	font-style: italic;
 	font-size: 11px;
 }
+
+/* Section for Achievements showing up in the ActivityFeed */
+.achievement-in-activity-feed{
+	min-width: 400px;
+	padding-top:10px !important;
+}
+.achievement-in-activity-feed .badge-text{
+	min-width: 400px;
+}
+.achievement-in-activity-feed a.achievement-image-link{
+	float:left;
+	padding-right:15px;
+}
+.achievement-in-activity-feed a.badgeName{
+	font-size: 14px !important;
+	font-weight: bold !important;
+	text-decoration:none !important;
+}
+.achievement-in-activity-feed .badge-text p{
+	font-size:12px;
+	line-height:20px;
+}

@@ -29,7 +29,11 @@ class SpecialActivityFeed extends SpecialPage {
 		global $wgEnableAchievementsInActivityFeed, $wgEnableAchievementsExt;
 		if((!empty($wgEnableAchievementsInActivityFeed)) && (!empty($wgEnableAchievementsExt))){
 			$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AchievementsII/css/achievements_sidebar.css?{$wgStyleVersion}");
-			$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/AchievementsII/js/achievements.js?{$wgStyleVersion}\"></script>\n");
+
+			// Could add this to the selector in JS: ", .achievement-in-activity-feed a.achievement-image-link" but the popup hides behind the menu.
+			// For now, just skipping the JS hovers.
+			//$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/AchievementsII/js/achievements.js?{$wgStyleVersion}\"></script>\n");
+
 			//self::debug_makeEdits(); // just to be used when testing (makes edits).
 		}
 
@@ -104,7 +108,12 @@ class SpecialActivityFeed extends SpecialPage {
 		global $wgEnableAchievementsInActivityFeed, $wgEnableAchievementsExt;
 		wfProfileIn( __METHOD__ );
 
-		if( $badge->getTypeId() != BADGE_WELCOME ) {
+		// If user has 'hidepersonalachievements' set, then they probably don't want to play.
+		// Also, other users may see that someone won, then click the username and look around for a way to see what achievements a user has...
+		// then when they can't find it (since users with this option won't have theirs displayed), they might assume that there is no way to see
+		// achievements.  It would be better to do this check at display-time rather than save-time, but we don't have access to the badge's user
+		// at that point.
+		if( ($badge->getTypeId() != BADGE_WELCOME) && (!$user->getOption('hidepersonalachievements')) ){
 			// Make sure this Achievement gets added to its corresponding RecentChange (whether that has
 			// been saved already during this pageload or is still pending).
 			global $wgARecentChangeHasBeenSaved, $wgAchievementToAddToRc;

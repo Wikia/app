@@ -136,4 +136,59 @@ class AchBadge {
 	public function getCategory() {
 		return AchConfig::getInstance()->getBadgeTrackCategory($this->mBadgeTypeId);
 	}
+
+	/**
+	 * Outputs the HTML for the the badge. If 'compact' is set to true, displays a version with less info
+	 * that is used on the ActivityFeed (since the user's name, etc. are already on the associated RecentChange).
+	 *
+	 * @param badgeWrapper - not an AchBadge, but rather an associative array which contains an AchBadge and some other info.
+	 */
+	public static function renderForActivityFeed($badgeWrapper, $compact=true){
+		wfProfileIn( __METHOD__ );
+
+		wfLoadExtensionMessages('AchievementsII');
+
+		$badge_name = htmlspecialchars($badgeWrapper['badge']->getName());
+		$badge_url = $badgeWrapper['badge']->getPictureUrl(82);
+		$badge_url_hover = $badgeWrapper['badge']->getPictureUrl(90);
+		$badge_details = $badgeWrapper['badge']->getDetails();
+		$linkToLeaderboard = Skin::makeSpecialUrl('Leaderboard');
+		if($compact){
+			$info = wfMsg('achievements-activityfeed-info',
+				$badge_name,
+				$badgeWrapper['badge']->getGiveFor(),
+				$linkToLeaderboard
+			);
+		} else {
+			// This was for the sidebar on the leaderboard page.  Not sure if it makes sense to keep it in this function as an option.
+			$info = wfMsg('achievements-recent-info',
+				$badgeWrapper['user']->getUserPage()->getLocalURL(),
+				$badgeWrapper['user']->getName(),
+				$badge_name,
+				$badgeWrapper['badge']->getGiveFor(),
+				wfTimeFormatAgo($badgeWrapper['date'])
+			);
+		}
+		
+		?>
+			<div class='achievement-in-activity-feed'>
+				<div class="profile-hover">
+					<img src="<?=$badge_url_hover;?>" height="90" width="90" />
+					<div class="profile-hover-text">
+						<h3><?=$badge_name;?></h3>
+						<p><?=$badge_details;?></p>
+					</div>
+				</div>
+				<a href="<?= $linkToLeaderboard; ?>" class='achievement-image-link' onclick="WET.byStr('activityFeed/achievement/icon');">
+					<img rel="leaderboard" src="<?= $badge_url ?>" alt="<?=$badge_name;?>" height="82" width="82" />
+				</a>
+				<div class="badge-text">
+					<p><?= $info ?></p>
+				</div>
+			</div>
+			<div class='clearfix'></div>
+		<?php
+
+		wfProfileOut( __METHOD__ );
+	}
 }
