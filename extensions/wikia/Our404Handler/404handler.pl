@@ -12,16 +12,19 @@ package main;
 #
 
 use strict;
+use feature "say";
+
 use URI;
 use FCGI;
 use FCGI::ProcManager;
 use Graphics::Magick;
 use Image::LibRSVG;
 use File::LibMagic;
-use IO::File;
 use File::Basename;
 use File::Path;
 use File::Copy;
+use File::Slurp;
+use IO::Scalar;
 use XML::Simple;
 use Data::Types qw(:all);
 use Math::Round qw(round);
@@ -29,6 +32,8 @@ use Getopt::Long;
 use Cwd;
 use Time::HiRes qw(gettimeofday tv_interval);
 use Getopt::Long;
+use LWP::UserAgent;
+
 
 #
 # constant
@@ -90,6 +95,14 @@ sub scaleHeight {
 #
 sub videoThumbnail {
 	my ( $original, $thumbnail, $seek ) = @_;
+
+	#
+	# create folder for thumbnail if doesn't exists
+	#
+	my $thumbdir = dirname( $thumbnail );
+	unless( -d $thumbdir ) {
+		eval { mkpath( $thumbdir, { mode => 0775 } ) };
+	}
 
 	my $useFfmpeg = 0;
 
@@ -166,7 +179,7 @@ my @tests = qw(
 	/h/half-life/en/images/thumb/d/d6/Black_Mesa_logo.svg/250px-Black_Mesa_logo.svg.png
 	/m/memoryalpha/en/images/thumb/8/88/2390s_Starfleet.svg/300px-2390s_Starfleet.svg.png
 	/h/half-life/en/images/thumb/d/d6/Black_Mesa_logo.svg/250px-Black_Mesa_logo.svg.png
-	/d//de/images/thumb/3/35/Information_icon.svg/120px-Information_icon.svg.png
+	/d/de/images/thumb/3/35/Information_icon.svg/120px-Information_icon.svg.png
 	/w/wowwiki/images/thumb/b/b0/Tauren_shaman.jpg/430px-0,100,0,300-Tauren_shaman.jpg
 );
 use warnings;
@@ -210,15 +223,14 @@ else {
 	$request    = FCGI::Request();
 }
 
-my $flm         = new File::LibMagic;
-my $maxwidth    = 3000;
-
-#
-# if thumbnail was really generated
-#
-my $transformed = 0;
-my $mimetype    = "text/plain";
-my $imgtype     = undef;
+my $flm            = new File::LibMagic;
+my $maxwidth       = 3000;
+my $transformed    = 0;
+my $mimetype       = "text/plain";
+my $imgtype        = undef;
+my $remote         = undef; # url to remote original when $use_http is true
+my $content        = undef; #
+my $content_length = 0;
 
 while( $request->Accept() >= 0 || $test ) {
 	my $t_start = [ gettimeofday() ];
@@ -316,31 +328,49 @@ while( $request->Accept() >= 0 || $test ) {
 			# merge with rest of path
 			#
 			$original = $basepath . '/' . join( "/", @parts ) . '/' . $original;
+
+			my $t_elapsed = tv_interval( $t_start, [ gettimeofday() ] ) ;
+
+			#
+			# read original data,
+			# use remote file if --http is used
+			# use local file otherwise
+			#
+			use bytes;
+			if( $use_http ) {
+				$remote = $original;
+				substr( $remote, 0, length( $basepath ), $baseurl );
+				my $ua = LWP::UserAgent->new();
+				$ua->timeout( 5 );
+				my $response = $ua->get( $remote );
+
+				if( $response->is_success ) {
+					$content = $response->content;
+					$content_length = length( $content );
+					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
+					print STDERR "Reading remote $remote, content-length: $content_length, time: $t_elapsed\n" if $debug;
+				}
+				else {
+					$content_length = 0;
+				}
+			}
+			else {
+				$content = read_file( $original, binmode => ":raw" ) ;
+				$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
+				$content_length = length( $content );
+				print STDERR "Reading local $original, content-length: $content_length, time: $t_elapsed\n" if $debug;
+			}
+			no bytes;
+
 			#
 			# then find proper thumbnailer for file, first check if this is svg
 			# thumbnail request. mimetype will be used later in header
 			#
-			my $t_elapsed = tv_interval( $t_start, [ gettimeofday() ] ) ;
-			if( -f $original || $use_http ) {
-				$mimetype = $flm->checktype_filename( $original );
+			if( $content_length ) {
+				$mimetype = $flm->checktype_contents( $content );
 				( $imgtype ) = $mimetype =~ m![^/+]/(\w+)!;
 				$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
 				print STDERR "$original $thumbnail $mimetype $imgtype $request_uri $referer, time: $t_elapsed\n" if $debug;
-
-				#
-				# create folder for thumbnail if doesn't exists
-				#
-				my $thumbdir = dirname( $thumbnail );
-				unless( -d $thumbdir ) {
-					eval { mkpath( $thumbdir, { mode => 0775 } ) };
-					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-					if( $@ ) {
-						print STDERR "Creating of $thumbdir folder failed, time: $t_elapsed\n" if $debug;
-					}
-					else {
-						print STDERR "Folder $thumbdir created, time: $t_elapsed\n" if $debug;
-					}
-				}
 
 				#
 				# read original file, thumbnail it, store on disc
@@ -356,7 +386,7 @@ while( $request->Accept() >= 0 || $test ) {
 					# read width & height of SVG file
 					#
 					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-					my $xmlp = XMLin( $original );
+					my $xmlp = XMLin( $content );
 					my $origw = $xmlp->{ 'width' };
 					my $origh = $xmlp->{ 'height' };
 					$origw = to_float( $origw ) unless is_float( $origw );
@@ -376,7 +406,7 @@ while( $request->Accept() >= 0 || $test ) {
 					#
 
 					my $args = { "dimension" => [$width, $height], "dimesion" => [$width, $height] };
-					$rsvg->loadImage( $original, 0, $args );
+					$rsvg->loadImageFromString( $content, 0, $args );
 					$transformed = 1;
 					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
 					print STDERR "reading svg as image file (for transforming), time: $t_elapsed\n" if $debug;
@@ -440,17 +470,13 @@ while( $request->Accept() >= 0 || $test ) {
 					my $image = new Graphics::Magick;
 
 					#
-					# change to remote file if --http is used
+					# put content in IO interface
 					#
-					if( $use_http ) {
-						substr( $original, 0, length( $basepath ), $baseurl );
-					}
+					my $SH = new IO::Scalar \$content;
+#					$image->Read( file => $SH );
+					$image->BlobToImage( $content );
 
-					$image->Read( $original );
 					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-					print STDERR "Reading " .
-						( $use_http ? "remote" : "local" ) .
-						" $original for transforming, time: $t_elapsed\n" if $debug;
 
 					#
 					# use only first frame in animated gifs
@@ -489,15 +515,16 @@ while( $request->Accept() >= 0 || $test ) {
 						}
 						$image->Resize( "geometry" => $geometry, "blur" => 0.9 );
 						$image->Set( quality => 95 );
+
 						$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
 						print STDERR "Resizing into $thumbnail, time: $t_elapsed\n" if $debug;
-						$transformed = 1;
-						if( $transformed ) { #-f $thumbnail
+
+						my $output = $image->ImageToBlob();
+						if( length( $output ) ) { #-f $thumbnail
 							#
 							# serve file if is ready to serve
 							#
 							use bytes;
-							my $output = $image->ImageToBlob();
 							print "HTTP/1.1 200 OK\r\n";
 							print "Cache-control: max-age=30\r\n";
 							print sprintf( "Content-Length: %d\r\n", length( $output ) );
@@ -506,6 +533,7 @@ while( $request->Accept() >= 0 || $test ) {
 							$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
 							print STDERR "File $thumbnail served, time: $t_elapsed\n" if $debug;
 							no bytes;
+							$transformed  = 1;
 						}
 						else {
 							$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
@@ -542,4 +570,4 @@ $manager->pm_remove_pid_file() unless $test;
 #
 # if test display results
 #
-testResults( $basepath, \@done ) if $test;
+#testResults( $basepath, \@done ) if $test;
