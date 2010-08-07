@@ -24,16 +24,15 @@ use File::Basename;
 use File::Path;
 use File::Copy;
 use File::Slurp;
-use IO::Scalar;
 use XML::Simple;
 use Data::Types qw(:all);
 use Math::Round qw(round);
 use Getopt::Long;
-use Cwd;
 use Time::HiRes qw(gettimeofday tv_interval);
 use Getopt::Long;
 use LWP::UserAgent;
-
+use DateTime;
+use Cwd;
 
 #
 # constant
@@ -227,6 +226,7 @@ my $flm            = new File::LibMagic;
 my $maxwidth       = 3000;
 my $transformed    = 0;
 my $mimetype       = "text/plain";
+my $datetime       = undef;
 my $imgtype        = undef;
 my $remote         = undef; # url to remote original when $use_http is true
 my $content        = undef; #
@@ -367,6 +367,7 @@ while( $request->Accept() >= 0 || $test ) {
 			# thumbnail request. mimetype will be used later in header
 			#
 			if( $content_length ) {
+				$datetime = DateTime->now();
 				$mimetype = $flm->checktype_contents( $content );
 				( $imgtype ) = $mimetype =~ m![^/+]/(\w+)!;
 				$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
@@ -411,22 +412,26 @@ while( $request->Accept() >= 0 || $test ) {
 					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
 					print STDERR "reading svg as image file (for transforming), time: $t_elapsed\n" if $debug;
 
-					if( $transformed ) {
-						use bytes;
-						my $output = $rsvg->getImageBitmap();
+					use bytes;
+					my $output = $rsvg->getImageBitmap();
+					my $output_length = length( $output );
+
+					if( $output_length ) {
 						print "HTTP/1.1 200 OK\r\n";
 						print "Cache-control: max-age=30\r\n";
-						print sprintf( "Content-Length: %d\r\n", length( $output ) );
+						print "Content-Length: $output_length\r\n";
+						printf "Last-Modified: %s GMT\r\n", $datetime->strftime( "%a, %d %b %Y %T" );
 						print "Content-type: image/png\r\n\r\n";
 						print $output unless $test;
 						$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
 						print STDERR "File $thumbnail served, time: $t_elapsed\n" if $debug;
-						no bytes;
+						$transformed = 1;
 					}
 					else {
 						$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
 						print STDERR "SVG conversion from $original to $thumbnail failed, time: $t_elapsed\n";
 					}
+					no bytes;
 					undef $rsvg;
 					undef $xmlp;
 				}
@@ -468,12 +473,6 @@ while( $request->Accept() >= 0 || $test ) {
 					# for other else use Graphics::Magick
 					#
 					my $image = new Graphics::Magick;
-
-					#
-					# put content in IO interface
-					#
-					my $SH = new IO::Scalar \$content;
-#					$image->Read( file => $SH );
 					$image->BlobToImage( $content );
 
 					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
@@ -520,33 +519,24 @@ while( $request->Accept() >= 0 || $test ) {
 						print STDERR "Resizing into $thumbnail, time: $t_elapsed\n" if $debug;
 
 						my $output = $image->ImageToBlob();
-						if( length( $output ) ) { #-f $thumbnail
+						use bytes;
+						my $output_length = length( $output );
+						if( $output_length ) {
 							#
 							# serve file if is ready to serve
 							#
-							use bytes;
 							print "HTTP/1.1 200 OK\r\n";
 							print "Cache-control: max-age=30\r\n";
-							print sprintf( "Content-Length: %d\r\n", length( $output ) );
+							print "Content-Length: $output_length\r\n";
+							printf "Last-Modified: %s GMT\r\n", $datetime->strftime( "%a, %d %b %Y %T" );
 							print "Content-type: $mimetype\r\n\r\n";
 							print $output unless $test;
+
 							$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
 							print STDERR "File $thumbnail served, time: $t_elapsed\n" if $debug;
-							no bytes;
 							$transformed  = 1;
 						}
-						else {
-							$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-							print STDERR "Thumbnailer from $original to $thumbnail failed, time: $t_elapsed\n" if $debug;
-
-							#
-							# serve original file
-							#
-							print "HTTP/1.1 200 OK\r\n";
-							print "X-LIGHTTPD-send-file: $original\r\n";
-							print "Cache-control: max-age=30\r\n";
-							print "Content-type: $mimetype\r\n\r\n";
-						}
+						no bytes;
 						undef $image;
 					}
 				}
