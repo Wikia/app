@@ -163,6 +163,11 @@ $messages['gl'] = array(
 	'tagsreportgenerated' => 'Xerado o $1',
 );
 
+/** Hausa (هَوُسَ) */
+$messages['ha'] = array(
+	'tagsreportgo' => 'Nuna',
+);
+
 /** Hungarian (Magyar)
  * @author Glanthor Reviol
  */

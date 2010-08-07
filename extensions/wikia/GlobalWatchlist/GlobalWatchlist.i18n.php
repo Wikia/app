@@ -30,6 +30,13 @@ Wikia
 	"globalwatchlist-no-blog-page-found" => "No blog page found.",
 );
 
+/** Message documentation (Message documentation)
+ * @author The Evil IP address
+ */
+$messages['qqq'] = array(
+	'globalwatchlist-desc' => '{{desc}}',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -73,8 +80,10 @@ Wikia
 
 /** German (Deutsch)
  * @author LWChris
+ * @author The Evil IP address
  */
 $messages['de'] = array(
+	'globalwatchlist-desc' => 'Versendet wöchentliche Zusammenfassungeen über beobachtete Seiten auf allen Wikis über E-Mail',
 	'tog-watchlistdigest' => 'Schicke mir wöchentlich eine Liste aller Seiten, die nach meinem letzten Besuch bearbeitet wurden',
 	'tog-watchlistdigestclear' => 'Markiere alle Seiten der wöchentlichen Zusammenfassung meiner Beobachtungsliste als besucht',
 	'globalwatchlist-see-more' => 'Weitere Änderungen findest du auf deiner lokalen Beobachtungsliste...',
@@ -95,7 +104,7 @@ Schau doch mal rein und bearbeite sie weiter...
 Wikia
 
 * Du kannst deine Einstellungen zur Benachrichtigung über deine Beobachtungsliste hier anpassen: http://www.wikia.com/wiki/Special:Preferences
-* Um alle Seiten dieses wöchentlichen Überblicks als besucht zu markieren, verwende die Option unter "Beobachtungsliste" in deinen Einstellungen',
+* Um alle Seiten dieses wöchentlichen Überblicks als besucht zu markieren, verwende die Option unter „Beobachtungsliste“ in deinen Einstellungen',
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|Kommentar|Kommentare}})',
 	'globalwatchlist-no-page-found' => 'Keine Seite gefunden.',
 	'globalwatchlist-no-blog-page-found' => 'Keine Blogseite gefunden.',
@@ -103,6 +112,7 @@ Wikia
 
 /** German (formal address) (Deutsch (Sie-Form))
  * @author LWChris
+ * @author The Evil IP address
  */
 $messages['de-formal'] = array(
 	'globalwatchlist-see-more' => 'Weitere Änderungen finden Sie auf Ihrer lokalen Beobachtungsliste...',
@@ -122,7 +132,7 @@ Schauen Sie doch mal rein und bearbeiten Sie sie weiter...
 Wikia
 
 * Sie können Ihre Einstellungen zur Benachrichtigung über Ihre Beobachtungsliste hier anpassen: http://www.wikia.com/wiki/Special:Preferences
-* Um alle Seiten dieses wöchentlichen Überblicks als besucht zu markieren, verwenden Sie die Option unter "Beobachtungsliste" in Ihren Einstellungen',
+* Um alle Seiten dieses wöchentlichen Überblicks als besucht zu markieren, verwenden Sie die Option unter „Beobachtungsliste“ in Ihren Einstellungen',
 );
 
 /** Spanish (Español)
@@ -186,9 +196,12 @@ Wikia
 );
 
 /** French (Français)
+ * @author IAlex
  * @author Peter17
+ * @author Urhixidur
  */
 $messages['fr'] = array(
+	'globalwatchlist-desc' => 'Envoie un sommaire hebdomadaire par courriel avec les pages suivies sur tous les wikis',
 	'tog-watchlistdigest' => "M'envoyer un résumé par e-mail une fois par semaine",
 	'tog-watchlistdigestclear' => 'Marquer toutes les pages de mon résumé hebdomadaire comme visitées',
 	'globalwatchlist-see-more' => 'Veuillez vérifier vos listes de suivi locales pour afficher davantage de modifications',
@@ -210,15 +223,16 @@ Wikia
 
 * Pour modifier vos préférences de notifications de liste de suivi, visitez : http://www.wikia.com/wiki/Special:Preferences
 * Pour marquer comme visitées toutes les pages de ce résumé hebdomadaire, référez-vous à l'option de l'onglet « Liste de suivi » de votre page de préférences",
-	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|commentaire|commentaires}})',
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 commentaire{{PLURAL:$2||s}})',
 	'globalwatchlist-no-page-found' => 'Aucune page trouvée.',
-	'globalwatchlist-no-blog-page-found' => 'Aucune page de blog trouvée.',
+	'globalwatchlist-no-blog-page-found' => 'Aucune page de blogue trouvée.',
 );
 
 /** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(
+	'globalwatchlist-desc' => 'Envía un resumo semanal por correo electrónico coas páxinas baixo vixilancia en todos os wikis',
 	'tog-watchlistdigest' => 'Enviádeme un correo electrónico á semana co boletín da miña lista de vixilancia',
 	'tog-watchlistdigestclear' => 'Marcar como visitadas todas as páxinas do meu boletín semanal da miña lista de vixilancia',
 	'globalwatchlist-see-more' => 'Por favor, comprobe as súas listas de vixilancia locais para ollar máis cambios',
@@ -337,6 +351,7 @@ $messages['lb'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'globalwatchlist-desc' => 'Испраќа неделен преглед на набљудувани страници од сите викија по е-пошта',
 	'tog-watchlistdigest' => 'Испраќај ми Неделен преглед на набљудувани страници',
 	'tog-watchlistdigestclear' => 'Означи ги сите страници од мојот Неделен преглед како посетени',
 	'globalwatchlist-see-more' => 'Проверете ги вашите локални списоци на набљудувања за повеќе промени',
@@ -367,6 +382,7 @@ $3
  * @author Siebrand
  */
 $messages['nl'] = array(
+	'globalwatchlist-desc' => "Stuurt wekelijks e-mails met pagina's op volglijsten van alle wiki's",
 	'tog-watchlistdigest' => 'Mij wekelijks een samenvatting van mijn volglijst e-mailen',
 	'tog-watchlistdigestclear' => "Alle pagina's op mijn wekelijkse samenvatting als bezocht markeren",
 	'globalwatchlist-see-more' => 'Controleer alstublieft uw lokale volglijst op meer wijzigingen',
@@ -428,6 +444,7 @@ Wikia
  * @author Dragonòt
  */
 $messages['pms'] = array(
+	'globalwatchlist-desc' => "A spediss un resumé për pòsta eletrònica minca sman-a con le pàgine ch'as ten-o sot-euj dzora tute le wiki",
 	'tog-watchlistdigest' => 'Spedissme na cujìa setimanal',
 	'tog-watchlistdigestclear' => "Marca tute le pàgine ëd mè Resumé dla sman-a ëd lòn ch'im ten-o sot euj com visità",
 	'globalwatchlist-see-more' => "Për piasì contròla toa lista local ëd lòn ch'it ten-e sot euj për pi cambi",
@@ -458,6 +475,7 @@ Wikia
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
+	'globalwatchlist-desc' => 'Envia mensagens mensais de resumo das páginas vigiadas em todas as wikis',
 	'tog-watchlistdigest' => 'Enviar-me, por correio electrónico, uma Compilação Semanal de Mudanças nas Páginas Vigiadas',
 	'tog-watchlistdigestclear' => 'Marcar como visitadas todas as páginas da Compilação Semanal de Mudanças nas Páginas Vigiadas',
 	'globalwatchlist-see-more' => 'Para ver mudanças adicionais, verifique as páginas vigiadas locais',
@@ -515,11 +533,13 @@ Wikia
 );
 
 /** Russian (Русский)
+ * @author Eleferen
  * @author Lockal
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
-	'tog-watchlistdigest' => 'Отправлять мне еженедельно дайжест списка наблюдения',
+	'globalwatchlist-desc' => 'Отправляет еженедельные дайджесты списка наблюдения из всех вики на электронную почту.',
+	'tog-watchlistdigest' => 'Отправлять мне еженедельно дайджест списка наблюдения',
 	'tog-watchlistdigestclear' => 'Отметить как посещённые все страницы из моего Еженедельного дайджеста списка наблюдения',
 	'globalwatchlist-see-more' => 'Пожалуйста, ищите дополнительные изменения в ваших локальных списках наблюдения',
 	'globalwatchlist-digest-email-subject' => 'Еженедельный дайджест',
@@ -530,7 +550,7 @@ $messages['ru'] = array(
 $2
 
 
-Это список страниц блогов вашего списка наблюдения Wikia, отредактированых с момента вашего последнего их посещения.
+Это список страниц блогов вашего списка наблюдения Wikia, отредактированых с момента вашего последнего их посещения. 
 
 $3
 

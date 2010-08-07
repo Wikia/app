@@ -369,6 +369,13 @@ $messages['tr'] = array(
 	'wikiaupload' => 'Wikia yükleme',
 );
 
+/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+ * @author Ильнар
+ */
+$messages['tt-cyrl'] = array(
+	'wikiaupload' => 'Wikia йөкләнмәләре',
+);
+
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Horacewai2
  */

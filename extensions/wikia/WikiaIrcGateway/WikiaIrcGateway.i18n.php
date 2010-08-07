@@ -43,6 +43,14 @@ $messages['ar'] = array(
 	'ircgate-channel' => 'لقناة :',
 );
 
+/** Bashkir (Башҡорт)
+ * @author Comp1089
+ */
+$messages['ba'] = array(
+	'ircgate-username' => 'Ҡулланыусы исеме:',
+	'ircgate-channel' => 'Канал:',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author Jim-by
  */
@@ -167,6 +175,14 @@ $messages['ia'] = array(
 $messages['id'] = array(
 	'ircgate-username' => 'Nama pengguna:',
 	'ircgate-channel' => 'Saluran:',
+);
+
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'ircgate-username' => "Áhà ọ'bànifé:",
+	'ircgate-channel' => 'Nchȯúzọr:',
 );
 
 /** Italian (Italiano)

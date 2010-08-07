@@ -280,6 +280,14 @@ $messages['tr'] = array(
 	'templatesused-toggle' => 'Gözter/gizle {{PLURAL:$1|$1 öğe|$1 öğe}}',
 );
 
+/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+ * @author Ильнар
+ */
+$messages['tt-cyrl'] = array(
+	'new-edit-page-preview-notice' => 'Алдан карау режимы. Үзгәрешләр әлегә сакланмаган!',
+	'templatesused-toggle' => 'Ачарга/ Ябарга$1 {{PLURAL:$1|язма|язмалар|язмалар юк}}',
+);
+
 /** Ukrainian (Українська)
  * @author NickK
  * @author Prima klasy4na

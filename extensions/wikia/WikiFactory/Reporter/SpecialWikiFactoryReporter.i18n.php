@@ -215,6 +215,13 @@ $messages['krc'] = array(
 	'wikifactoryreporter' => 'WikiFactory репортер',
 );
 
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'wikifactoryreporter' => 'WikiFactory-Reporter',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

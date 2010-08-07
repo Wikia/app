@@ -120,6 +120,15 @@ $messages['ia'] = array(
 	'taskmanager_tasklist' => 'Retornar al lista de processos',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Farras
+ */
+$messages['id'] = array(
+	'taskmanager' => 'Tampilkan dan kelola tugas latar belakang',
+	'taskmanager_title' => 'Tampilkan dan kelola tugas latar belakang',
+	'taskmanager_tasklist' => 'Kembali ke Daftar Tugas',
+);
+
 /** Italian (Italiano)
  * @author HalphaZ
  */

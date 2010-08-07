@@ -129,6 +129,7 @@ $messages['qqq'] = array(
 	'pr_what_problem_other_short' => '{{Identical|Other}}',
 	'pr_describe_problem' => '{{Identical|Message}}',
 	'pr_mailer_go_to_wiki' => '$1 is the URL to the wiki the problem was reported from',
+	'pr_table_page_link' => '{{Identical|Page}}',
 	'pr_table_description' => '{{Identical|Description}}',
 	'pr_table_comments' => '{{Identical|Comment}}',
 	'pr_table_status' => '{{Identical|Status}}',
@@ -263,10 +264,14 @@ $messages['be-tarask'] = array(
 	'pr_view_all' => 'Паказаць усе паведамленьні',
 	'pr_view_staff' => 'Паказаць паведамленьні, якія патрабуюць дапамогі супрацоўнікаў',
 	'pr_raports_from_this_wikia' => 'Прагляд паведамленьняў толькі з гэтай Wikia',
-	'pr_reports_from' => 'Паведамленьні толькі з: $1',
+	'pr_reports_from' => 'Паведамленьні толькі ад: $1',
 	'pr_no_reports' => 'Няма паведамленьняў адпаведных Вашаму крытэрыю',
 	'pr_sysops_notice' => 'Вы можаце <a href="$1">зьмяняць статус паведамленьняў пра праблему</a> з Вашай вікі…',
 	'pr_table_problem_id' => 'Ідэнтыфікатар праблемы',
+	'pr_table_wiki_name' => 'Назва вікі',
+	'pr_table_problem_type' => 'Тып праблемы',
+	'pr_table_page_link' => 'Старонка',
+	'pr_table_date_submitted' => 'Дата адпраўкі',
 	'pr_table_description' => 'Апісаньне',
 	'pr_table_comments' => 'Камэнтары',
 	'pr_table_status' => 'Статус',
@@ -474,6 +479,7 @@ Hier abgeschickte Berichte werden [[Special:ProblemReports|im Wiki anzeigt]].',
 );
 
 /** Spanish (Español)
+ * @author Crazymadlover
  * @author Locos epraix
  * @author Translationista
  */
@@ -786,6 +792,11 @@ Pode informar dos erros do software nos foros. Os informes feitos aquí [[Specia
 	'pr_msg_exchead' => 'A mensaxe é demasiado longa',
 	'right-problemreports_action' => 'Cambiar o estado e tipo de informe sobre un problema',
 	'right-problemreports_global' => 'Cambiar o estado e tipo de informe sobre un problema no resto de wikis',
+);
+
+/** Hausa (هَوُسَ) */
+$messages['ha'] = array(
+	'pr_table_page_link' => 'Shafi',
 );
 
 /** Hungarian (Magyar)
@@ -1301,6 +1312,7 @@ Skriv meldingen din på nytt.',
  * @author Xqt
  */
 $messages['pdc'] = array(
+	'pr_table_page_link' => 'Blatt',
 	'pr_table_comments' => 'Anmaerrickinge',
 );
 
@@ -1655,6 +1667,7 @@ Por favor, reescreva a sua mensagem.',
 );
 
 /** Russian (Русский)
+ * @author Eleferen
  * @author Lockal
  * @author Александр Сигачёв
  */
@@ -1708,7 +1721,7 @@ $messages['ru'] = array(
 	'pr_view_all' => 'Показать все сообщения',
 	'pr_view_staff' => 'Показать сообщения, требующие помощи сотрудников',
 	'pr_raports_from_this_wikia' => 'Просмотр сообщений только из этой Wikia',
-	'pr_reports_from' => 'Сообщения только из: $1',
+	'pr_reports_from' => 'Сообщения только от: $1',
 	'pr_no_reports' => 'Нет сообщений, соответствующих заданному критерию',
 	'pr_sysops_notice' => 'Вы можете <a href="$1">изменять статус сообщений о проблемах</a> в вашей вики…',
 	'pr_table_problem_id' => 'ID проблемы',

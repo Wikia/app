@@ -248,6 +248,13 @@ $messages['tr'] = array(
 	'tog-disablelinksuggest' => 'Bağlantı önermesini gösterme',
 );
 
+/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+ * @author Ильнар
+ */
+$messages['tt-cyrl'] = array(
+	'tog-disablelinksuggest' => 'Сылтамаларны күрсәтмәскә',
+);
+
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Frankou
  */

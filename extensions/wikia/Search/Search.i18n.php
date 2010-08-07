@@ -178,6 +178,7 @@ $messages['id'] = array(
  */
 $messages['ig'] = array(
 	'wikiasearch-titles-only' => 'Chöwá na ime ishi ihü nani',
+	'wikiasearch-system-error-msg' => 'Màkà nsigbú na orunotu, ihe nchowá gi enwéghìkì mecha',
 	'wikiasearch-search-this-wiki' => 'Chöwá na nánì Mpkurụ Wikia',
 	'wikiasearch-search-wikia' => 'Chöwá na imé Wikia',
 );
@@ -356,6 +357,16 @@ $messages['tl'] = array(
 	'wikiasearch-system-error-msg' => 'Dahila sa isang kamalian ng sistema, hindi makukumpleto ang paghahanap mo',
 	'wikiasearch-search-this-wiki' => 'Maghanap lamang sa Wikia Central',
 	'wikiasearch-search-wikia' => 'Maghanap sa Wikia',
+);
+
+/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+ * @author Ильнар
+ */
+$messages['tt-cyrl'] = array(
+	'wikiasearch-titles-only' => 'Битнең баш исемнәреннән генә эзләргә',
+	'wikiasearch-system-error-msg' => 'система хатасы аркасында эзләшү мөмкин түгел',
+	'wikiasearch-search-this-wiki' => 'Wikia Central да гына эзләү',
+	'wikiasearch-search-wikia' => 'Wikia дә табарга',
 );
 
 /** Ukrainian (Українська)

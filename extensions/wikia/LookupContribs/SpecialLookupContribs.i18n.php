@@ -868,6 +868,7 @@ $messages['ru'] = array(
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
@@ -880,12 +881,14 @@ $messages['sr-ec'] = array(
 	'lookupcontribswikititle' => 'Наслов',
 	'lookupcontribsdetails' => 'Погледајте детаље за:',
 	'lookupcontribscontribs' => 'прилози',
+	'lookupcontribsnbrresult' => 'Број резултата:',
 	'lookupcontribsnext' => 'следеће',
 	'lookupcontribsprevious' => 'Претходна',
 	'lookupcontribspageremoved' => 'уклоњено:',
-	'lookupcontribslog' => 'лог',
-	'lookupcontribshist' => 'ист',
-	'lookupcontribsdiff' => 'разл',
+	'lookupcontribsrestore' => 'поврати',
+	'lookupcontribslog' => 'извештај',
+	'lookupcontribshist' => 'истор.',
+	'lookupcontribsdiff' => 'разл.',
 	'lookupcontribscontent' => 'садржај',
 );
 

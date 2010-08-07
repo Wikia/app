@@ -104,11 +104,17 @@ $messages['ca'] = array(
 	'whereisextension-filter' => 'Filtre',
 );
 
+/** Sorani (کوردی) */
+$messages['ckb'] = array(
+	'whereisextension-submit' => 'گەڕان',
+);
+
 /** German (Deutsch)
  * @author LWChris
+ * @author Laximilian scoken
  */
 $messages['de'] = array(
-	'whereisextension' => 'Wo ist Erweiterung',
+	'whereisextension' => 'Wo ist die Erweiterung',
 	'whereisextension-submit' => 'Suchen',
 	'whereisextension-list' => 'Liste von Wikis mit zutreffenden Kriterien',
 	'whereisextension-isset' => 'ist eingestellt auf',
@@ -182,6 +188,11 @@ $messages['gl'] = array(
 	'whereisextension-filter' => 'Filtrar',
 	'whereisextension-all-groups' => 'Todos os grupos',
 	'whereisextension-name-contains' => 'o nome da variable contén',
+);
+
+/** Hausa (هَوُسَ) */
+$messages['ha'] = array(
+	'whereisextension-submit' => 'Nema',
 );
 
 /** Hungarian (Magyar)

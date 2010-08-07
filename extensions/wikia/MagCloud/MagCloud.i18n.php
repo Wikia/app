@@ -1059,6 +1059,7 @@ $messages['ru'] = array(
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
@@ -1066,12 +1067,15 @@ $messages['sr-ec'] = array(
 	'magcloud-intro-get-started' => 'Сакупи чланак',
 	'magcloud-intro-create-magazine' => 'Направи часопис од чланака на овој Викији!',
 	'magcloud-intro-view-my-magazines' => 'Погледај часопис',
+	'magcloud-load-magazine-title' => 'Учитај часопис',
+	'magcloud-load-magazine-load' => 'Учитај овај часопис',
 	'magcloud-add-article-already' => "'''$1''' је већ додано",
 	'magcloud-toolbar-step' => 'Корак $1: $2',
 	'magcloud-toolbar-article-in-collection' => "'''$1''' је већ у вашем часопису",
 	'magcloud-toolbar-article-add' => "Додајете '''$1''' у ваш часопис?",
 	'magcloud-toolbar-add' => 'Додај',
 	'magcloud-toolbar-go-to-magazine' => 'Идите на ваш часопис',
+	'magcloud-discard-magazine-title' => 'Сачувати Вашу колекцију?',
 	'magcloud-discard-magazine-save' => 'Сачувај и изађи',
 	'magcloud-special-collection-title' => 'Направите часопис!',
 	'magcloud-order-your-articles' => 'Поредај ваше чланке',
@@ -1079,6 +1083,17 @@ $messages['sr-ec'] = array(
 	'magcloud-design-default-subtitle' => 'Поднаслов',
 	'magcloud-design-preview' => 'Претпреглед',
 	'magcloud-design-image-selected' => '$1 је одабрано',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'magcloud-toolbar-article-in-collection' => "'''$1''' ఇప్పటికే మీ పత్రికలో ఉంది",
+	'magcloud-toolbar-article-add' => "'''$1'''ని మీ పత్రికలో చేర్చాలా?",
+	'magcloud-toolbar-add' => 'చేర్చు',
+	'magcloud-toolbar-articles-count' => '<big>$1</big> వికీ {{PLURAL:$1|పుట|పుటలు}}',
+	'magcloud-design-preview' => 'మునుజూపు',
 );
 
 /** Tagalog (Tagalog)

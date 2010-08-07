@@ -167,8 +167,15 @@ $messages['ar'] = array(
 	'myhome-activity-feed-empty' => "هذه الويكي في انتظار مشاركتك.
 أنقر على '''[[خاص:CreatePage|صفحة جديدة]]''' للبدء في التحرير!",
 	'myhome-watchlist-feed' => 'قائمة المراقبة',
+	'myhome-watchlist-feed-empty' => 'يمكنك إضافة صفحات إلى قائمة مراقبتك عن طريق النقر على وصلة "{{int:watch}}" في الشريط أعلى الصفحة.
+يمكنك إستخدام قائمة مراقبتك لتتابع أحدث التغييرات على الصفحات التي تهمك.',
 	'myhome-user-contributions-feed' => 'المساهمات',
 	'myhome-hot-spots-feed' => 'صفحات ساخنة',
+	'myhome-hot-spots-feed-empty' => "هذه الويكي تنتظر مشاركتك.
+أنقر على '''[[خاص:CreatePage|صفحة جديدة]]''' لبداية التعديل!",
+	'myhome-hot-spots-newest' => 'الصفحات الجديدة في الويكي',
+	'myhome-hot-spots-brandnew' => 'هذه الويكي مازالت جديدة. أنقر على [[خاص:CreatePage|صفحة جديدة]] لبدء الكتابة!',
+	'tog-myhomedisableredirect' => 'عدم توجيهي إلى "صفحتي الرئيسية" أوتوماتيكيا',
 	'myhome-feed-newpage' => 'صفحة جديدة',
 	'myhome-feed-edit' => 'عدل',
 	'myhome-feed-move' => 'نقلت الصفحة',
@@ -177,6 +184,7 @@ $messages['ar'] = array(
 	'myhome-feed-delete' => 'حذفت',
 	'myhome-feed-image' => 'الصور المضافة',
 	'myhome-feed-video' => 'الفيديو المضاف',
+	'myhome-feed-categorization' => 'تصنيف',
 	'myhome-feed-created-by' => 'أنشأت من قبل $1',
 	'myhome-feed-added-by' => 'أضيفت من قبل $1',
 	'myhome-feed-edited-by' => 'عدلت من قبل $1',
@@ -187,11 +195,24 @@ $messages['ar'] = array(
 	'myhome-feed-article-comment-created-by' => 'تعليق جديد من قبل $1',
 	'myhome-feed-article-comment-edited-by' => 'عدل التعليق من قبل $1',
 	'myhome-feed-by' => 'من قبل $1',
+	'myhome-feed-diff-alt' => 'بين لي التغييرات في هذه الصفحة',
 	'myhome-feed-new-page-details' => 'صفحة جديدة',
 	'myhome-feed-summary-details' => 'ملخص',
+	'myhome-feed-section-edit-details' => 'عدل القسم التالي',
 	'myhome-feed-new-blog-post-details' => 'مدونة جديدة',
 	'myhome-feed-new-blog-comment-details' => 'تعليق',
+	'myhome-feed-new-article-comment-details' => 'تعليق',
 	'myhome-feed-move-details' => 'أعاد التسمية',
+	'myhome-feed-redirect-details' => 'تحويلة',
+	'myhome-feed-inserted-image-details' => ' {{PLURAL:$1|أضاف صورة|أضاف صور}}',
+	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|أضاف مقطع فيديو|أضاف مقاطع فيديو}}',
+	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|أضاف تصنيفا|أضاف تصانيف}}',
+	'myhome-user-contributions-empty' => 'يمكنك المشاركة في هذه الويكي عبر النقر على "{{int:editthispage}}" في أي صفحة، و إضافة ما تعرفه.
+يمكن لأي شخص القيام بتعديلات و تغييرات، و إضافة معلومات أو تصحيح أخطاء.
+الويكي مبنية من قبل المجتمع، و بمجرد النقر على زر "عدل"، تصبح جزءا منه.
+جربه!',
+	'myhome-hot-spots-number-of-editors' => 'محرر',
+	'myhome-log-in' => "<center>خاصية \"صفحتي الرئيسية\" غير متوفرة إلا إذا سجلت الدخول. <br /><br /><big>'''[{{fullurl:خاص:Signup|\$1}} الرجاء التسجيل لرؤية هذه الصفحة.]''' </big></center>",
 	'myhome-community-corner-header' => 'ركن المجتمع',
 	'myhome-community-corner-edit' => 'عدل الرسالة',
 	'community-corner' => "'''مرحبا بك في صفحتي الرئيسية'''
@@ -211,6 +232,7 @@ $messages['ar'] = array(
 
 *أو اكتفي بوضع بعض كلمات التشجيع!",
 	'tooltip-pt-myhome' => 'اذهب الى صفحتي الرئيسية',
+	'activityfeed' => 'دليل النشاطات',
 );
 
 /** Assamese (অসমীয়া)
@@ -389,13 +411,13 @@ Probier es einfach aus!',
 	'myhome-switch-to-monaco' => "Die Startseiten-Funktion ist nur für das Monaco-Design verfügbar.
 Wenn du die Startseite sehen möchtest, gehe bitte zu '''[[Special:Preferences|deinen Einstellungen]]''' um dein Design zu wechseln.",
 	'myhome-namespace-blog' => 'Benutzer-Blog',
-	'myhome-community-corner-header' => 'Community-Bereich',
+	'myhome-community-corner-header' => 'Gemeinschafts-Bereich',
 	'myhome-community-corner-edit' => 'Bearbeiten',
 	'community-corner' => "'''Willkommen auf deiner Startseite!'''
 
 Diese Seite hilft dir, den Überblick über alle wichtigen Vorgänge im Wiki zu behalten.
 
-Wenn du der Gründer oder ein Admin dieses Wikis bist, kannst du diese Nachricht ändern um der Community wichtige Dinge mitzuteilen. Zum Beispiel:
+Wenn du der Gründer oder ein Admin dieses Wikis bist, kannst du diese Nachricht ändern um der Gemeinschaft wichtige Dinge mitzuteilen. Zum Beispiel:
 
 * Einige Seiten aufführen, die jeder sehen sollte.
 
@@ -436,7 +458,7 @@ Wenn Sie die Startseite sehen möchten, gehen Sie bitte zu '''[[Special:Preferen
 
 Diese Seite hilft Ihnen, den Überblick über alle wichtigen Vorgänge im Wiki zu behalten.
 
-Wenn Sie der Gründer oder ein Admin dieses Wikis sind, können Sie diese Nachricht ändern um der Community wichtige Dinge mitzuteilen. Zum Beispiel:
+Wenn Sie der Gründer oder ein Admin dieses Wikis sind, können Sie diese Nachricht ändern um der Gemeinschaft wichtige Dinge mitzuteilen. Zum Beispiel:
 
 * Einige Seiten aufführen, die jeder sehen sollte.
 
@@ -665,6 +687,7 @@ Jos olet tämän wikin perustaja tai olet ylläpitäjänä tässä wikissä, voi
  * @author Crochet.david
  * @author IAlex
  * @author Peter17
+ * @author Urhixidur
  */
 $messages['fr'] = array(
 	'myhome' => 'Mon Accueil',
@@ -684,7 +707,7 @@ Vous pouvez vous servir de votre liste de suivi pour garder une trace des dernie
 	'myhome-feed-edit' => 'modifier',
 	'myhome-feed-move' => 'page déplacée',
 	'myhome-feed-talkpage' => 'page de discussion',
-	'myhome-feed-blogcomment' => 'commentaire de blog',
+	'myhome-feed-blogcomment' => 'commentaire de blogue',
 	'myhome-feed-delete' => 'supprimé',
 	'myhome-feed-image' => 'image ajoutée',
 	'myhome-feed-video' => 'vidéo ajoutée',
@@ -703,7 +726,7 @@ Vous pouvez vous servir de votre liste de suivi pour garder une trace des dernie
 	'myhome-feed-new-page-details' => 'Nouvelle page',
 	'myhome-feed-summary-details' => 'Résumé',
 	'myhome-feed-section-edit-details' => 'Section éditée',
-	'myhome-feed-new-blog-post-details' => 'Nouveau blog',
+	'myhome-feed-new-blog-post-details' => 'Nouveau blogue',
 	'myhome-feed-new-blog-comment-details' => 'Commenter',
 	'myhome-feed-new-article-comment-details' => 'Commenter',
 	'myhome-feed-move-details' => 'Renommé',
@@ -718,7 +741,7 @@ Essayez donc !",
 	'myhome-hot-spots-number-of-editors' => 'contributeurs',
 	'myhome-log-in' => "<center>La fonction Mon Accueil n'est disponible que si vous êtes connecté(e).<br /><br /><big>'''<span class=\"plainlinks\">[{{fullurl:Special:Signup|\$1}} Veuillez vous connecter pour voir cette page !]</span>'''</big></center>",
 	'myhome-switch-to-monaco' => "La fonction Mon Accueil n'est disponible que si vous utilisez l'habillage Monaco. Si vous voulez accéder à Mon Accueil, veuillez modifier '''[[Special:Preferences|vos Préférences]]''' pour changer votre habillage.",
-	'myhome-namespace-blog' => 'Blog',
+	'myhome-namespace-blog' => 'Blogue',
 	'myhome-community-corner-header' => 'Le coin de la Communauté',
 	'myhome-community-corner-edit' => 'modifier le message',
 	'community-corner' => "'''Bienvenue sur Mon Accueil!'''
@@ -821,6 +844,12 @@ Se vostede é o fundador ou un administrador desde wiki, pode cambiar esta mensa
 	'myhome-default-view-success' => 'De acordo, así será de agora en diante',
 	'tooltip-pt-myhome' => 'Ir á miña páxina de inicio',
 	'activityfeed' => 'Fonte de novas da actividade',
+);
+
+/** Hausa (هَوُسَ) */
+$messages['ha'] = array(
+	'myhome-feed-new-blog-comment-details' => 'Bahasi',
+	'myhome-feed-new-article-comment-details' => 'Bahasi',
 );
 
 /** Hebrew (עברית)
@@ -1942,6 +1971,7 @@ $messages['si'] = array(
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
@@ -1963,6 +1993,7 @@ $messages['sr-ec'] = array(
 	'myhome-feed-delete' => 'обрисано',
 	'myhome-feed-image' => 'Додавање слике',
 	'myhome-feed-video' => 'видео додан',
+	'myhome-feed-categorization' => 'категоризација',
 	'myhome-feed-created-by' => 'Направио $1',
 	'myhome-feed-added-by' => 'Додао $1',
 	'myhome-feed-edited-by' => 'Уређивао $1',
@@ -2214,6 +2245,18 @@ $messages['tr'] = array(
 	'myhome-default-view-checkbox' => '$1 sayfasını varsayılan görünümüm yap',
 	'myhome-default-view-success' => 'Tamam, bu artık sizin varsayılanınız',
 	'tooltip-pt-myhome' => 'Evime git',
+);
+
+/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+ * @author Ильнар
+ */
+$messages['tt-cyrl'] = array(
+	'myhome' => 'Минем сәхифә',
+	'myhome-watchlist-feed' => 'Күзәтү исемлеге',
+	'myhome-user-contributions-feed' => 'Кертем',
+	'myhome-feed-newpage' => 'яңа бит',
+	'myhome-feed-edit' => 'үзгәртү',
+	'myhome-feed-delete' => 'бетерелде',
 );
 
 /** Ukrainian (Українська)

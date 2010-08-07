@@ -363,6 +363,12 @@ $messages['ca'] = array(
 	'vet-protected' => 'Aquest vídeo està protegit',
 );
 
+/** Sorani (کوردی) */
+$messages['ckb'] = array(
+	'vet-upload-btn' => 'بڕۆ',
+	'vet-find-btn' => 'گەڕان',
+);
+
 /** German (Deutsch)
  * @author LWChris
  */
@@ -739,6 +745,11 @@ $messages['gl'] = array(
 	'vet-right' => 'Dereita',
 	'vet-gallery' => 'Galería',
 	'vet-protected' => 'Este vídeo está protexido',
+);
+
+/** Hausa (هَوُسَ) */
+$messages['ha'] = array(
+	'vet-find-btn' => 'Nema',
 );
 
 /** Hungarian (Magyar)
@@ -1679,6 +1690,7 @@ $messages['ru'] = array(
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
@@ -1698,14 +1710,18 @@ $messages['sr-ec'] = array(
 	'vet-thumbnail' => 'Умањени приказ',
 	'vet-fullsize' => 'Пуни приказ ($1x$2px)',
 	'vet-width' => 'Ширина',
+	'vet-layout' => 'Изглед',
 	'vet-caption' => 'Назив',
+	'vet-optional' => '(необавезно)',
 	'vet-insert2' => 'Убаци видео',
 	'vet-update' => 'ажурирање видеа',
 	'vet-video-replace-link' => 'Да би заменили овај видео, идите на [[:$1]]',
 	'vet-prev' => 'Претходни',
 	'vet-next' => 'Следећи',
+	'vet-metacafe' => 'Metacafe снимци ($1 резултата)',
 	'vet-insert3' => 'Убаците овај видео',
 	'vet-recent-inf' => 'Скораши убачени видеи',
+	'vet-thiswiki2' => 'Снимци ове викије ($1 резултата)',
 	'vet-success' => '<h1>Успех</h1>',
 	'vet-return' => 'Повратак на уређивање',
 	'vet-back' => 'назад',

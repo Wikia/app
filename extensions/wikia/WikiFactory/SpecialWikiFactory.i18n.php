@@ -746,6 +746,12 @@ $messages['ce'] = array(
 	'closed-reason' => 'Бахьан:',
 );
 
+/** Sorani (کوردی) */
+$messages['ckb'] = array(
+	'wf_cc_name' => 'پۆل',
+	'closed-reason' => 'هۆکار:',
+);
+
 /** Czech (Česky)
  * @author Mr. Richard Bolla
  */
@@ -891,6 +897,7 @@ $messages['da'] = array(
 );
 
 /** German (Deutsch)
+ * @author Kghbln
  * @author LWChris
  * @author McDutchie
  * @author Mr. Richard Bolla
@@ -988,7 +995,7 @@ $messages['de'] = array(
 	'awc-metrics-close-listed' => 'Schließe alle aufgelisteten Wikis',
 	'awc-metrics-close-checked' => 'Schließe markierte',
 	'awc-metrics-exact-match' => 'genaue Übereinstimmung',
-	'closed-wiki' => 'Geschlossenes Wiki',
+	'closed-wiki' => 'geschlossenes Wiki',
 	'closed-wiki-info' => 'Dieses Wiki wurde geschlossen',
 	'disabled-wiki-info' => 'Dieses Wiki wurde deaktiviert',
 	'closed-wiki-dump-exists' => 'Bitte klicke [$1 hier], wenn du deine Inhalte abrufen möchtest',
@@ -1508,6 +1515,12 @@ $messages['gl'] = array(
 	'closed-reason' => 'Motivo:',
 );
 
+/** Hausa (هَوُسَ) */
+$messages['ha'] = array(
+	'wf_cc_name' => 'Rukuni',
+	'closed-reason' => 'Dalili:',
+);
+
 /** Hebrew (עברית)
  * @author 0ftal
  */
@@ -1872,7 +1885,7 @@ $messages['ig'] = array(
 	'wf_cc_name' => 'Ébéonọr',
 	'wikifactory-label-actions' => 'Mmèmé',
 	'wikifactory-label-close' => 'Mèchié',
-	'closewiki-unknown' => 'Nke námaghi',
+	'closewiki-unknown' => 'Nke námaghị',
 	'awc-metrics-category' => 'na ébéonọr:',
 	'awc-metrics-all' => 'Wiki níle',
 	'awc-metrics-all-languages' => 'asụsụ níle',
@@ -1881,7 +1894,7 @@ $messages['ig'] = array(
 	'awc-metrics-this-month' => 'önwa nke',
 	'awc-metrics-last-month' => '{{PLURAL:$1|önwa|$1 önwa}} gafere',
 	'closed-wiki' => 'Wiki mechịrị',
-	'closed-reason' => 'Mgbaghaputa:',
+	'closed-reason' => 'Mgbághapụtà:',
 );
 
 /** Italian (Italiano)

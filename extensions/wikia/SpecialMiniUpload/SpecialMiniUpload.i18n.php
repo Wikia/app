@@ -201,6 +201,8 @@ $messages['it'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'insertthumbnail' => 'Miniatur drasetzen',
+	'thumbnailsize' => 'Miniatur-Gréisst',
 	'insertimage' => 'Bild drasetzen',
 );
 

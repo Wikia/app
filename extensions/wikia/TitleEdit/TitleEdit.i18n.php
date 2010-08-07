@@ -582,6 +582,14 @@ $messages['ie'] = array(
 	'titleedit' => 'Modificar',
 );
 
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'titleedit-desc' => 'Nè tí mpkátá íshí orü nà élú ihü',
+	'titleedit' => 'rüwa',
+);
+
 /** Iloko (Ilokano) */
 $messages['ilo'] = array(
 	'titleedit' => 'baliwan',
@@ -671,8 +679,11 @@ $messages['kn'] = array(
 	'titleedit' => 'ಸಂಪಾದಿಸಿ (edit this page)',
 );
 
-/** Korean (한국어) */
+/** Korean (한국어)
+ * @author Klutzy
+ */
 $messages['ko'] = array(
+	'titleedit-desc' => '페이지 맨 윗 부분에 제목 편집 기능을 추가',
 	'titleedit' => '편집',
 );
 
@@ -716,9 +727,12 @@ $messages['la'] = array(
 	'titleedit' => 'recensere',
 );
 
-/** Ladino (Ladino) */
+/** Ladino (Ladino)
+ * @author Universal Life
+ */
 $messages['lad'] = array(
-	'titleedit' => 'Editar',
+	'titleedit-desc' => 'Ajusta el botón "Trocar títůlo" al empecijo de las hojas',
+	'titleedit' => 'troca',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

@@ -56,9 +56,11 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author The Evil IP address
  * @author Umherirrender
  */
 $messages['qqq'] = array(
+	'editaccount-desc' => '{{desc}}',
 	'right-editaccount' => '{{doc-right|editaccount}}',
 );
 
@@ -152,6 +154,7 @@ $messages['br'] = array(
  */
 $messages['de'] = array(
 	'editaccount' => 'Konto bearbeiten',
+	'editaccount-desc' => 'Benutzerkonten-Verwaltung durch Mitarbeiter',
 	'editaccount-title' => 'Special:EditAccount',
 	'editaccount-frame-manage' => 'Ein Benutzerkonto bearbeiten',
 	'editaccount-frame-usage' => 'Notiz',
@@ -316,6 +319,7 @@ $messages['fi'] = array(
  */
 $messages['fr'] = array(
 	'editaccount' => 'Modifier le compte',
+	'editaccount-desc' => "Permet aux membres du personnel de gérer les informations sur les comptes d'utilisateur",
 	'editaccount-title' => 'Special:EditAccount',
 	'editaccount-frame-manage' => 'Modifier un compte',
 	'editaccount-frame-usage' => 'Avis',
@@ -360,6 +364,7 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'editaccount' => 'Editar a conta',
+	'editaccount-desc' => 'Permite que os membros do persoal xestionen a información das contas de usuario',
 	'editaccount-title' => 'Special:EditAccount',
 	'editaccount-frame-manage' => 'Editar unha conta',
 	'editaccount-frame-usage' => 'Nota',
@@ -545,6 +550,7 @@ $messages['lb'] = array(
  */
 $messages['mk'] = array(
 	'editaccount' => 'Уреди сметка',
+	'editaccount-desc' => 'Им овозможува на членовите на персоналот да раководат со информациите за корисничките сметки',
 	'editaccount-title' => 'Специјални:УредиСметка',
 	'editaccount-frame-manage' => 'Уреди сметка',
 	'editaccount-frame-usage' => 'Напомена',
@@ -589,6 +595,7 @@ $messages['mk'] = array(
  */
 $messages['nl'] = array(
 	'editaccount' => 'Gebruiker bewerken',
+	'editaccount-desc' => 'Stelt stafleden in staat gebruikersinformatie te beheren',
 	'editaccount-title' => 'Gebruiker bewerken',
 	'editaccount-frame-manage' => 'Gebruiker bewerken',
 	'editaccount-frame-usage' => 'Let op',
@@ -689,6 +696,7 @@ $messages['no'] = array(
  */
 $messages['pms'] = array(
 	'editaccount' => 'Modìfica Cont',
+	'editaccount-desc' => "A përmet ai mèmber ëd l'echip ëd gestì j'anformassion dël cont ëd l'utent",
 	'editaccount-title' => 'Special:EditAccount',
 	'editaccount-frame-manage' => 'Modìfica un cont',
 	'editaccount-frame-usage' => 'Nòta',
@@ -746,6 +754,7 @@ $messages['ps'] = array(
  */
 $messages['pt'] = array(
 	'editaccount' => 'Editar Conta',
+	'editaccount-desc' => 'Permite que os membros da equipa administrem a informação das contas de utilizador',
 	'editaccount-title' => 'Special:EditAccount',
 	'editaccount-frame-manage' => 'Editar uma conta',
 	'editaccount-frame-usage' => 'Nota',
@@ -831,11 +840,13 @@ $messages['pt-br'] = array(
 );
 
 /** Russian (Русский)
+ * @author Eleferen
  * @author Lockal
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
 	'editaccount' => 'Изменение учётной записи',
+	'editaccount-desc' => 'Позволяет управлять учётными записями пользователей',
 	'editaccount-title' => 'Special:ИзменениеУчётнойЗаписи',
 	'editaccount-frame-manage' => 'Изменение учётной записи',
 	'editaccount-frame-usage' => 'Замечание',
@@ -875,12 +886,24 @@ $messages['ru'] = array(
 	'right-editaccount' => 'Редактировать настройки других участников',
 );
 
+/** Sinhala (සිංහල)
+ * @author බිඟුවා
+ */
+$messages['si'] = array(
+	'editaccount-frame-usage' => 'සටහන',
+	'editaccount-submit-pass' => 'මුර පදය සුරකින්න',
+);
+
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
 	'editaccount' => 'Измена налога',
 	'editaccount-frame-manage' => 'Уреди налог',
+	'editaccount-frame-usage' => 'Белешка',
+	'editaccount-label-select' => 'Изаберите кориснички налог',
+	'editaccount-frame-close' => 'Онемогући кориснички налог: $1',
 	'editaccount-label-email' => 'Постави нову адресу електронске поште (мејл)',
 	'editaccount-label-pass' => 'Постави нову лозинку',
 	'editaccount-label-realname' => 'Унеси ново право име',
@@ -888,12 +911,14 @@ $messages['sr-ec'] = array(
 	'editaccount-submit-pass' => 'Сачувај лозинку',
 	'editaccount-submit-realname' => 'Сачувај право име',
 	'editaccount-submit-close' => 'Затвори налог',
+	'editaccount-status' => 'Стање поруке',
 	'editaccount-success-email' => 'Успешно променио е-пошту од налога $1 на $2.',
 	'editaccount-success-pass' => 'Успешно променио лозинку за налог  $1.',
 	'editaccount-success-realname' => 'успешно променио право име за налог  $1.',
 	'editaccount-success-close' => 'Успешно затворио налог  $1.',
 	'editaccount-invalid-email' => '"$1" је неважећа адреса електронске поште',
 	'editaccount-nouser' => 'Не постоји налог "$1" !',
+	'editaccount-log' => 'Извештај корисничких налога',
 	'editaccount-log-entry-email' => ' промењена адреса е-поште за корисника $2',
 	'editaccount-log-entry-pass' => ' промењена лозинка за корисника $2',
 	'editaccount-log-entry-realname' => ' промењено право име за корисника $2',
@@ -933,6 +958,18 @@ $messages['ta'] = array(
 	'editaccount-log-entry-pass' => 'பயனர் $2 க்கான கடவுச்சொல் மாற்றப்பட்டது',
 	'editaccount-log-entry-realname' => 'பயனர் $2க்கான உண்மையான பெயர் மாற்றப்பட்டது',
 	'right-editaccount' => 'ஏனைய பயனர் விருப்பத்தேர்வுகளை தொகு',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'editaccount-frame-usage' => 'గమనిక',
+	'editaccount-status' => 'స్థితి సందేశం',
+	'editaccount-invalid-email' => '"$1" అనేది సరైన ఈ-మెయిలు చిరునామా కాదు!',
+	'editaccount-nouser' => '"$1" అనే ఖాతా లేనే లేదు!',
+	'editaccount-log' => 'వాడుకరి ఖాతాల చిట్టా',
+	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">ఈ ఖాతాని అచేతనం చేసారు.</div>',
 );
 
 /** Tagalog (Tagalog)

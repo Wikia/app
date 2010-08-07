@@ -656,9 +656,11 @@ $messages['ru'] = array(
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
+	'user-badge-small-wikia-logo-color' => 'Боја Викија логотипа:',
 	'user-badge-edits-txt' => 'Измене',
 );
 

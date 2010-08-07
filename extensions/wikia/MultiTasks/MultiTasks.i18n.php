@@ -401,6 +401,11 @@ $messages['br'] = array(
 	'multiwikirecords' => '$1 wiki bet kavet',
 );
 
+/** Sorani (کوردی) */
+$messages['ckb'] = array(
+	'multidelete_button' => 'سڕینەوە',
+);
+
 /** German (Deutsch)
  * @author LWChris
  */
@@ -918,6 +923,11 @@ $messages['gl'] = array(
 	'multiwikifindpagenames' => 'Atopar nomes de páxinas',
 	'multiwikienterpagename' => 'Insira un nome de páxina:',
 	'multiwikirecords' => 'Atopáronse $1 wikis',
+);
+
+/** Hausa (هَوُسَ) */
+$messages['ha'] = array(
+	'multidelete_button' => 'SOKE',
 );
 
 /** Hungarian (Magyar)
