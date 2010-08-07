@@ -29,8 +29,6 @@ use Getopt::Long;
 use Cwd;
 use Time::HiRes qw(gettimeofday tv_interval);
 use Getopt::Long;
-use LWP::Simple;
-use IO::Scalar;
 
 #
 # constant
@@ -168,6 +166,7 @@ my @tests = qw(
 	/h/half-life/en/images/thumb/d/d6/Black_Mesa_logo.svg/250px-Black_Mesa_logo.svg.png
 	/m/memoryalpha/en/images/thumb/8/88/2390s_Starfleet.svg/300px-2390s_Starfleet.svg.png
 	/h/half-life/en/images/thumb/d/d6/Black_Mesa_logo.svg/250px-Black_Mesa_logo.svg.png
+	/d//de/images/thumb/3/35/Information_icon.svg/120px-Information_icon.svg.png
 	/w/wowwiki/images/thumb/b/b0/Tauren_shaman.jpg/430px-0,100,0,300-Tauren_shaman.jpg
 );
 use warnings;
@@ -253,8 +252,14 @@ while( $request->Accept() >= 0 || $test ) {
 
 	my $thumbnail = $basepath . '/' . $path;
 
+	#
+	# remove varnish/apache marker
+	#
+	$thumbnail =~ s/__thumbnail_gen//;
+
 	my @parts = split( "/", $path );
 	my $last = pop @parts;
+
 
 	#
 	# if last part of $request_uri is \d+px-\. it is probably thumbnail
@@ -351,15 +356,6 @@ while( $request->Accept() >= 0 || $test ) {
 					# read width & height of SVG file
 					#
 					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-					#
-					# change to remote file if --http is used
-					#
-					my $target = $original;
-					if( $use_http ) {
-						substr( $target, 0, length( $basepath ), $baseurl );
-						$original = get( $target );
-					}
-
 					my $xmlp = XMLin( $original );
 					my $origw = $xmlp->{ 'width' };
 					my $origh = $xmlp->{ 'height' };
@@ -367,10 +363,7 @@ while( $request->Accept() >= 0 || $test ) {
 					$origh = to_float( $origh ) unless is_float( $origh );
 					my $height = scaleHeight( $origw, $origh, $width, $test );
 					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-					print STDERR "Reading " .
-						( $use_http ? "remote" : "local" ) .
-						" $target for checking size, time: $t_elapsed\n" if $debug;
-
+					print STDERR "reading svg as xml file (for size checking), time: $t_elapsed\n" if $debug;
 
 					#
 					# RSVG thumbnailer
@@ -383,17 +376,10 @@ while( $request->Accept() >= 0 || $test ) {
 					#
 
 					my $args = { "dimension" => [$width, $height], "dimesion" => [$width, $height] };
-					if( $use_http ) {
-						$rsvg->loadImageFromString( $original, 0, $args );
-					}
-					else {
-						$rsvg->loadImage( $original, 0, $args );
-					}
+					$rsvg->loadImage( $original, 0, $args );
 					$transformed = 1;
 					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-					print STDERR "Reading " .
-						( $use_http ? "remote" : "local" ) .
-						" $target for transforming, time: $t_elapsed\n" if $debug;
+					print STDERR "reading svg as image file (for transforming), time: $t_elapsed\n" if $debug;
 
 					if( $transformed ) {
 						use bytes;
