@@ -245,6 +245,11 @@ $messages['gl'] = array(
 	'protectsite-unprotect' => 'Desprotexer',
 );
 
+/** Hausa (هَوُسَ) */
+$messages['ha'] = array(
+	'protectsite-comment' => 'Bahasi:',
+);
+
 /** Hungarian (Magyar)
  * @author Glanthor Reviol
  */
@@ -584,6 +589,7 @@ $messages['ru'] = array(
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
@@ -596,6 +602,7 @@ $messages['sr-ec'] = array(
 	'protectsite-timeout' => 'Време истекло (тајмаут)',
 	'protectsite-maxtimeout' => 'Максимум:',
 	'protectsite-comment' => 'Коментар:',
+	'protectsite-ucomment' => 'Скини заштиту коментара:',
 	'protectsite-until' => 'Заштићена јединица',
 	'protectsite-protect' => 'Заштити',
 	'protectsite-unprotect' => 'Скини заштиту',

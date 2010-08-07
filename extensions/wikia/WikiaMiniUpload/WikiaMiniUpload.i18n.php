@@ -435,6 +435,9 @@ $messages['cy'] = array(
 	'wmu-bad-extension' => 'Rydych wedi ceisio uwchlwytho ffeil o fath na chaniateir. Ceisiwch eto os gwelwch yn dda.',
 	'wmu-filetype-missing' => "Mae'r estyniad ffeil yn eisiau ar y ffeil yr ydych am ei huwchlwytho",
 	'wmu-filetype-incorrect' => "Mae'r estyniad ffeil ar y ffeil yr ydych am ei huwchlwytho yn anghywir",
+	'wmu-uploadtext' => "'''Mae'r ffurflen hon yn eich galluogi i uwchlwytho ffeiliau'n gyflym a'u harddangos mewn tudalennau.''' 
+
+ ''Gweler hefyd y [[Special:Log/upload|lòg uwchlwytho]] a [[Special:ImageList|rhestr yr holl ffeiliau a uwchlwythwyd]].''",
 	'wmu-show-message' => 'dangos y neges',
 	'wmu-hide-message' => "cuddio'r neges",
 	'wmu-hide-license-msg' => 'cuddio testun y drwydded',
@@ -1186,17 +1189,23 @@ $messages['lb'] = array(
 	'wmu-find' => 'Fannen',
 	'wmu-thiswiki' => 'Dës Wiki',
 	'wmu-upload-btn' => 'Eroplueden',
+	'wmu-find-btn' => 'Fannen',
 	'wmu-rename' => 'Gitt Ärem Bild en aneren Numm',
 	'wmu-name' => 'Numm',
 	'wmu-license' => 'Lizenz',
 	'wmu-size' => 'Gréisst',
+	'wmu-thumbnail' => 'Miniaturbild',
+	'wmu-width' => 'Breet',
 	'wmu-link' => 'Link',
+	'wmu-prev' => 'Vireg 8',
 	'wmu-next' => 'Nächst 8',
 	'wmu-insert3' => 'Dëst Bild drasetzen',
 	'wmu-back' => 'zréck',
 	'wmu-close' => 'zoumaachen',
 	'wmu-imagelink' => '<b>Nei!</b> Biller derbäisetzenimages',
 	'wmu-imagebutton' => 'Biller derbäisetzen',
+	'wmu-show-message' => 'Message weisen',
+	'wmu-hide-message' => 'Message verstoppen',
 	'wmu-gallery' => 'Gallerie',
 );
 
@@ -1735,6 +1744,7 @@ $messages['ru'] = array(
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
@@ -1742,6 +1752,7 @@ $messages['sr-ec'] = array(
 	'wmu-notlogged' => 'Улогуј се или се регистрирај да би послао слике са свог компјутора',
 	'wmu-find' => 'Пронађи',
 	'wmu-thiswiki' => 'Ова вики',
+	'wmu-flickr' => 'Flickr',
 	'wmu-upload-btn' => 'Пошаљи фајл',
 	'wmu-find-btn' => 'Пронађи',
 	'wmu-flickr-inf' => 'Користите прописно лиценциране слике са Фликр и онда их убаците на вашу вики',
@@ -1758,14 +1769,17 @@ $messages['sr-ec'] = array(
 	'wmu-thumbnail' => 'Умањени приказ',
 	'wmu-fullsize' => 'Пуна величина ($1x$2px)',
 	'wmu-width' => 'Ширина',
+	'wmu-layout' => 'Изглед',
 	'wmu-caption' => 'Назив',
 	'wmu-link' => 'Веза',
 	'wmu-optional' => '(необавезно)',
 	'wmu-insert2' => 'Убаци фајл',
 	'wmu-prev' => 'Претходних 8',
 	'wmu-next' => 'Следећијх 8',
+	'wmu-flickr2' => 'Flickr слике ($1 {{PLURAL:$1|резултат|резултати}})',
 	'wmu-insert3' => 'Убаци слику',
 	'wmu-recent-inf' => 'Последње снимљене слике',
+	'wmu-thiswiki2' => 'Слике ове викије ($1 {{PLURAL:$1|резултат|резултати}})',
 	'wmu-success' => '<h1>Успех</h1>Ваша слика је додана.',
 	'wmu-success-placeholder' => '<h1>Успех</h1>',
 	'wmu-return' => 'Повратак на уређивање',
@@ -1923,6 +1937,7 @@ $messages['uk'] = array(
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Gaoxuewei
+ * @author Xiaomingyan
  */
 $messages['zh-hans'] = array(
 	'wmu-upload' => '上传',
@@ -1967,7 +1982,7 @@ $messages['zh-hans'] = array(
 	'wmu-warn3' => '您需要首先确定文件名！',
 	'wmu-imagelink' => '<b>新！</b>增加图片',
 	'wmu-imagebutton' => '增加图片',
-	'wmu-license-cc' => '根据Creative Commons Attribution-Share Alike 3.0进行授权',
+	'wmu-license-cc' => '采用知识共享署名-相同方式共享 3.0许可协议授权',
 	'wmu-bad-extension' => '您上传的文件类型不被支持。请再试一次。',
 	'wmu-filetype-missing' => '本次上传丢失了文件扩展信息',
 	'wmu-filetype-incorrect' => '本次上传遇到了不正确的文件扩展名',

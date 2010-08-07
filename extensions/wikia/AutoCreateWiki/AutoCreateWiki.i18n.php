@@ -560,9 +560,9 @@ Das von dir erstellte Wikia ist nun unter <$1> erreichbar. Hoffentlich sehen wir
 
 Wir haben auf deiner Diskussionsseite (<$5>) ein paar Informationen und Tipps für den Start hinterlassen.
 
-Falls du irgendwelche Probleme hast, kannst du auf <http://de.wikia.com/wiki/Forum:Übersicht> die Community um Hilfe bitten oder dich per E-Mail an community@wikia.com wenden. Du kannst auch unseren #wikia IRC-Channel besuchen <http://irc.wikia.com>.
+Falls du irgendwelche Probleme hast, kannst du unter <http://de.wikia.com/wiki/Forum:Übersicht> die Gemeinschaft um Hilfe bitten oder dich per E-Mail an community@wikia.com wenden. Du kannst auch unseren #wikia IRC-Channel besuchen <http://irc.wikia.com>.
 
-Falls du sonst weitere Fragen oder Probleme hast, kannst du dich auch direkt per Mail oder Diskussionsseite an mich wenden.
+Falls du noch weitere Fragen oder Probleme hast, kannst du dich auch direkt per Mail oder Diskussionsseite an mich wenden.
 
 Viel Erfolg mit deinem Projekt!
 
@@ -651,9 +651,9 @@ Das von Ihnen erstellte Wikia ist nun unter <$1> erreichbar. Hoffentlich sehen w
 
 Wir haben auf Ihrer Diskussionsseite (<$5>) ein paar Informationen und Tipps für den Start hinterlassen.
 
-Falls Sie irgendwelche Probleme haben, können Sie auf <http://de.wikia.com/wiki/Forum:Übersicht> die Community um Hilfe bitten oder sich per E-Mail an community@wikia.com wenden. Sie können auch unseren #wikia IRC-Channel besuchen <http://irc.wikia.com>.
+Falls Sie irgendwelche Probleme haben, können Sie unter <http://de.wikia.com/wiki/Forum:Übersicht> die Gemeinschaft um Hilfe bitten oder sich per E-Mail an community@wikia.com wenden. Sie können auch unseren #wikia IRC-Channel besuchen <http://irc.wikia.com>.
 
-Falls Sie sonst weitere Fragen oder Probleme haben, können Sie sich auch direkt per Mail oder Diskussionsseite an mich wenden.
+Falls Sie noch weitere Fragen oder Probleme haben, können Sie sich auch direkt per Mail oder Diskussionsseite an mich wenden.
 
 Viel Erfolg mit Ihrem Projekt!
 
@@ -1653,7 +1653,7 @@ $messages['ig'] = array(
 	'autocreatewiki-category-select' => 'Kpàtá otụ',
 	'autocreatewiki-category-label' => 'Ébéonọr:',
 	'newwikis' => 'Wiki ne ohụru',
-	'autocreatewiki-subname-answers' => 'Nza oku',
+	'autocreatewiki-subname-answers' => 'Nza okwu',
 );
 
 /** Italian (Italiano)
@@ -1670,7 +1670,7 @@ $messages['it'] = array(
 	'autocreatewiki-protect-reason' => "parte dell'interfaccia ufficiale",
 	'autocreatewiki-welcomebody' => 'Ciao $2,
 
-La wikia che hai creato è ora disponibile su <$1>. Speriamo di vedere i tuoi contributi al più presto! <br> Abbiamo aggiunto alcune informazione e suggerimenti alla tua pagina di discussione (<$5>) per aiutarti a mettere in moto la tua wiki. Per qualunque domanda, puoi rispondere a questa email o controllare sulle pagina di aiuto su <http://help.wikia.com>.
+La wikia che hai creato è ora disponibile su <$1>. Speriamo di vedere i tuoi contributi al più presto! <br /> Abbiamo aggiunto alcune informazione e suggerimenti alla tua pagina di discussione (<$5>) per aiutarti a mettere in moto la tua wiki. Per qualunque domanda, puoi rispondere a questa email o controllare sulle pagina di aiuto su <http://help.wikia.com>.
 
 Buona fortuna per il progetto,
 
@@ -2966,6 +2966,7 @@ $3
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
@@ -2973,16 +2974,18 @@ $messages['sr-ec'] = array(
 	'autocreatewiki-page-title-default' => 'Направите нову Викију',
 	'createwiki' => 'Направите нову вики',
 	'autocreatewiki-category-select' => 'Одабери једну',
-	'autocreatewiki-language-all' => ' Сви језици',
-	'autocreatewiki-birthdate' => ' Датум рођења:',
+	'autocreatewiki-language-top' => 'Топ $1 језика',
+	'autocreatewiki-language-all' => 'Сви језици',
+	'autocreatewiki-birthdate' => 'Датум рођења:',
+	'autocreatewiki-blurry-word' => 'Мутна реч:',
 	'autocreatewiki-remember' => 'Запамти ме',
 	'autocreatewiki-create-account' => 'Направите налог',
 	'autocreatewiki-done' => ' учињено',
 	'autocreatewiki-error' => ' грешка',
 	'autocreatewiki-haveaccount-question' => 'Имате ли већ Викија налог?',
 	'autocreatewiki-success-title-default' => ' Ваша викија је управо створена!',
-	'autocreatewiki-success-has-been-created' => ' је направљена!',
-	'autocreatewiki-success-get-started' => ' Започети',
+	'autocreatewiki-success-has-been-created' => 'је направљена!',
+	'autocreatewiki-success-get-started' => 'Увод',
 	'autocreatewiki-info-category-default' => 'Ово ће помоћи да посетиоци нађу вашу викију.',
 	'autocreatewiki-info-category-answers' => 'Ово ће помоћи посетиоцима да нађу ваш сајт са одговорима',
 	'autocreatewiki-info-language' => 'Ово ће бити стандардни радни језик за посетиоце ваше викије.',
@@ -2992,12 +2995,14 @@ $messages['sr-ec'] = array(
 	'autocreatewiki-invalid-username' => 'Ваше корисничко име не важи',
 	'autocreatewiki-busy-username' => 'Ваше корисничко име неко већ користи',
 	'autocreatewiki-blocked-username' => 'Не може да се направи налог',
+	'autocreatewiki-user-notloggedin' => 'Ваш налог је направљен, али се нисте пријавили!',
 	'autocreatewiki-empty-language' => 'Одаберите језик за ову вики',
 	'autocreatewiki-empty-category' => 'Одаберите једну од категорија',
 	'autocreatewiki-empty-wikiname' => 'Име викије не може да буде празно',
 	'autocreatewiki-empty-username' => 'Име корисника не може да буде празно.',
 	'autocreatewiki-empty-password' => 'Лозинка не сме бити празна',
 	'autocreatewiki-empty-retype-password' => 'Поново укуцајте лозинку, јер не може да буде празна.',
+	'autocreatewiki-category-label' => 'Категорија:',
 	'autocreatewiki-category-other' => 'Друго',
 	'autocreatewiki-set-username' => 'Унесите корисничко име',
 	'autocreatewiki-invalid-birthday' => 'Неважећи датум рођења',

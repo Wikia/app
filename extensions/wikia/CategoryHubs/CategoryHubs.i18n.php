@@ -622,6 +622,7 @@ $messages['ru'] = array(
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
@@ -631,10 +632,12 @@ $messages['sr-ec'] = array(
 	'cathub-progbar-all-done' => 'Одговорено је на сва питања!',
 	'cathub-question-asked-ago' => 'Питао  $1 $2',
 	'cathub-question-answered-ago' => 'одговорио  $1 $2',
+	'cathub-anon-username' => 'знатижељан корисник',
 	'cathub-answer-heading' => 'Одговор',
 	'cathub-button-answer' => 'Одговор',
 	'cathub-button-improve-answer' => 'Неправилан одговор',
 	'cathub-edit-success' => 'Ваш одговор је сачуван',
+	'cathub-tags' => 'Ознаке',
 );
 
 /** Tagalog (Tagalog)

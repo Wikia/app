@@ -60,6 +60,11 @@ $messages['br'] = array(
 Dalc'hit soñj n'eo ket dalc'het en ur roll an disoc'hoù ha n'int ket aes da derriñ hep sikour ar skipailh teknikel er mare-mañ (emeur o kemm an dra-se).",
 );
 
+/** Sorani (کوردی) */
+$messages['ckb'] = array(
+	'cntool-button-save' => 'پاشەکەوت',
+);
+
 /** German (Deutsch)
  * @author LWChris
  */
@@ -242,7 +247,7 @@ $messages['mk'] = array(
  * @author Siebrand
  */
 $messages['nl'] = array(
-	'cntool-page-title-editor' => 'ContestTool :: Editor',
+	'cntool-page-title-editor' => 'ContestTool :: Tekstverwerker',
 	'cntool-page-title-preview' => 'ContestTool :: Voorvertoning',
 	'cntool-page-title-select' => 'ContestTool',
 	'cntool-label-select' => 'Geef een geldige paginanaam in',
@@ -361,6 +366,7 @@ $messages['ru'] = array(
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
@@ -368,6 +374,7 @@ $messages['sr-ec'] = array(
 	'cntool-button-save' => 'Сачувај',
 	'cntool-label-content' => 'Измени садржину доњег садржаја:',
 	'cntool-label-preview' => 'Претпреглед',
+	'cntool-label-caveat' => 'Наредба за суспендовање',
 );
 
 /** Telugu (తెలుగు)

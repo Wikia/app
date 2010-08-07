@@ -9,6 +9,13 @@ $messages['en'] = array(
 	'sf-link-tooltip' => 'Share this article with your friends',
 );
 
+/** Message documentation (Message documentation)
+ * @author The Evil IP address
+ */
+$messages['qqq'] = array(
+	'sharefeature-desc' => '{{desc}}',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -58,8 +65,10 @@ $messages['ca'] = array(
 
 /** German (Deutsch)
  * @author LWChris
+ * @author The Evil IP address
  */
 $messages['de'] = array(
+	'sharefeature-desc' => 'Verlinken von Seiten auf beliebten Seiten',
 	'sf-link' => 'Artikel teilen',
 	'sf-link-popup' => 'Diesen Artikel teilen',
 	'sf-link-tooltip' => 'Teile diesen Artikel mit deinen Freunden',
@@ -72,8 +81,11 @@ $messages['de-formal'] = array(
 	'sf-link-tooltip' => 'Teilen Sie diesen Artikel mit Ihren Freunden',
 );
 
-/** Spanish (Español) */
+/** Spanish (Español)
+ * @author Crazymadlover
+ */
 $messages['es'] = array(
+	'sharefeature-desc' => 'Permite a los usuarios vincular a páginas desde sitios populares',
 	'sf-link' => 'Compartir este artículo',
 	'sf-link-popup' => 'Compartir este artículo',
 	'sf-link-tooltip' => 'Compartir este artículo con tus amigos',
@@ -89,9 +101,11 @@ $messages['fi'] = array(
 );
 
 /** French (Français)
+ * @author IAlex
  * @author Peter17
  */
 $messages['fr'] = array(
+	'sharefeature-desc' => 'Permet aux utilisateurs de faire des liens vers des pages de sites populaires',
 	'sf-link' => 'Partager cet article',
 	'sf-link-popup' => 'Partager cet article',
 	'sf-link-tooltip' => 'Partager cet article avec vos amis',
@@ -101,6 +115,7 @@ $messages['fr'] = array(
  * @author Toliño
  */
 $messages['gl'] = array(
+	'sharefeature-desc' => 'Permite que os usuarios inclúan ligazóns cara a páxinas de sitios populares',
 	'sf-link' => 'Compartir este artigo',
 	'sf-link-popup' => 'Compartir este artigo',
 	'sf-link-tooltip' => 'Compartir este artigo cos seus amigos',
@@ -110,6 +125,7 @@ $messages['gl'] = array(
  * @author Michawiki
  */
 $messages['hsb'] = array(
+	'sharefeature-desc' => 'Zmóžnja wužiwarjam wot woblubowanych sydłow do stronow wotkazać',
 	'sf-link' => 'Tutón nastawk dźělić',
 	'sf-link-popup' => 'Tutón nastawk dźělić',
 	'sf-link-tooltip' => 'Tutón nastawk z wašimi přećelemi dźělić',
@@ -134,9 +150,11 @@ $messages['ia'] = array(
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Farras
  * @author Irwangatot
  */
 $messages['id'] = array(
+	'sharefeature-desc' => 'Memungkinkan pengguna untuk terhubung ke halaman dari situs-situs populer',
 	'sf-link' => 'Berbagi artikel ini',
 	'sf-link-popup' => 'Berbagi artikel ini',
 	'sf-link-tooltip' => 'Berbagi artikel ini dengan teman anda',
@@ -153,6 +171,7 @@ $messages['ja'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'sharefeature-desc' => 'Им овозможува на корисниците да ставаат врски до страници од популарни мрежни места',
 	'sf-link' => 'Сподели ја статијава',
 	'sf-link-popup' => 'Сподели ја статијава',
 	'sf-link-tooltip' => 'Сподели ја статијава со пријателите',
@@ -162,6 +181,7 @@ $messages['mk'] = array(
  * @author Siebrand
  */
 $messages['nl'] = array(
+	'sharefeature-desc' => "Maakt het mogelijk te verwijzen naar pagina's vanuit populaire websites",
 	'sf-link' => 'Dit artikel delen',
 	'sf-link-popup' => 'Dit artikel delen',
 	'sf-link-tooltip' => 'Dit artikel met uw vrienden delen',
@@ -180,6 +200,7 @@ $messages['nn'] = array(
  * @author Nghtwlkr
  */
 $messages['no'] = array(
+	'sharefeature-desc' => 'Tillat brukere å lenke til sider fra populære nettsteder',
 	'sf-link' => 'Del denne artikkelen',
 	'sf-link-popup' => 'Del denne artikkelen',
 	'sf-link-tooltip' => 'Del denne artikkelen med vennene dine',
@@ -205,6 +226,7 @@ $messages['pl'] = array(
  * @author Borichèt
  */
 $messages['pms'] = array(
+	'sharefeature-desc' => "A përmët a j'utent ëd buté dj'anliure a dle pàgine ëd sit popolar",
 	'sf-link' => "Condivide st'artìcol-sì",
 	'sf-link-popup' => "Condivide st'artìcol-sì",
 	'sf-link-tooltip' => "Condivide st'artìcol-sì con ij sò amis",
@@ -223,6 +245,7 @@ $messages['ps'] = array(
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
+	'sharefeature-desc' => 'Permite a criação de links para páginas de sites populares',
 	'sf-link' => 'Partilhe este artigo',
 	'sf-link-popup' => 'Partilhe este artigo',
 	'sf-link-tooltip' => 'Partilhe este artigo com os amigos',
@@ -239,8 +262,10 @@ $messages['pt-br'] = array(
 
 /** Russian (Русский)
  * @author Lockal
+ * @author Александр Сигачёв
  */
 $messages['ru'] = array(
+	'sharefeature-desc' => 'Позволяет участникам ссылаться на страницы с популярных сайтов',
 	'sf-link' => 'Поделиться ссылкой на статью',
 	'sf-link-popup' => 'Поделиться ссылкой на статью',
 	'sf-link-tooltip' => 'Поделиться ссылкой на статью с друзьями',

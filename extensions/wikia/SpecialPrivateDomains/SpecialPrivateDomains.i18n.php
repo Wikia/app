@@ -84,6 +84,7 @@ Gallout a rit gwelet pajennoù ar wiki-mañ, met ne c'hallit ket kemmañ anezho.
 );
 
 /** German (Deutsch)
+ * @author Kghbln
  * @author LWChris
  * @author The Evil IP address
  */
@@ -97,7 +98,7 @@ Wenn du nicht eingeloggt bist, solltest du das wahrscheinlich [[Special:UserLogi
 	'privatedomains_invalidemail' => 'Tut uns leid, aber der Zugang zu diesem Wiki ist auf Mitglieder von $1 beschränkt. Wenn du eine E-Mail-Adresse von $1 besitzt, kannst du es betreten, oder bestätige deine E-Mail Adresse in deinen Konteneinstellungen [[Special:Preferences|hier]]. Du kannst weiterhin Seiten in diesem Wiki ansehen, wirst sie aber nicht bearbeiten können.',
 	'privatedomains_affiliatenamelabel' => 'Name der Organisation:',
 	'privatedomains_emailadminlabel' => 'Kontakt-Benutzername bei Zugangsproblemen oder Fragen:',
-	'privatedomainsinstructions' => 'Unten ist die Liste der erlaubten E-Mail-Domains für Editoren dieses Wikis. Jede Zeile bezeichnet einen E-Mail-Suffix, dem Bearbeitungen erlaubt werden. Dies sollte mit einem Suffix pro Zeile formatiert werden. Zum Beispiel:</p><p style="width: 20%; padding:5px; border: 1px solid grey;"> cs.stanford.edu<br /> stanfordalumni.org</p><p>Dies würde Bearbeitungen von jedem mit der E-Mail-Adresse whatever@cs.stanford.edu oder whatever@stanfordalumni.org erlauben.</p><p><b>Gib die erlaubten Domains in das Textfeld unterhalb ein und klicke auf „{{int:saveprefs}}“.</b>',
+	'privatedomainsinstructions' => 'Unten ist die Liste der erlaubten E-Mail-Domains für Autoren dieses Wikis. Jede Zeile bezeichnet einen E-Mail-Suffix, dem Bearbeitungen erlaubt werden. Dies sollte mit einem Suffix pro Zeile formatiert werden. Zum Beispiel:</p><p style="width: 20%; padding:5px; border: 1px solid grey;"> cs.stanford.edu<br /> stanfordalumni.org</p><p>Dies würde Bearbeitungen von jedem mit der E-Mail-Adresse whatever@cs.stanford.edu oder whatever@stanfordalumni.org erlauben.</p><p><b>Gib die erlaubten Domains in das Textfeld unterhalb ein und klicke auf „{{int:saveprefs}}“.</b>',
 );
 
 /** German (formal address) (Deutsch (Sie-Form))
@@ -113,7 +114,7 @@ Wenn Sie nicht eingeloggt sind, sollten Sie dies wahrscheinlich [[Special:UserLo
 	'privatedomains_invalidemail' => 'Tut uns leid, aber der Zugang zu diesem Wiki ist auf Mitglieder von $1 beschränkt.
 Wenn Sie eine E-Mail-Adresse von $1 besitzen, können Sie es betreten, oder bestätigen Sie Ihre E-Mail Adresse in Ihren Konteneinstellungen [[Special:Preferences|hier]].
 Sie können weiterhin Seiten in diesem Wiki ansehen, werden sie aber nicht bearbeiten können.',
-	'privatedomainsinstructions' => 'Unten ist die Liste der erlaubten E-Mail-Domains für Editoren dieses Wikis. Jede Zeile bezeichnet einen E-Mail-Suffix, dem Bearbeitungen erlaubt werden. Dies sollte mit einem Suffix pro Zeile formatiert werden. Zum Beispiel:</p><p style="width: 20%; padding:5px; border: 1px solid grey;"> cs.stanford.edu<br /> stanfordalumni.org</p><p>Dies würde Bearbeitungen von jedem mit der E-Mail-Adresse whatever@cs.stanford.edu oder whatever@stanfordalumni.org erlauben.</p><p><b>Geben Sie die erlaubten Domains in das Textfeld unterhalb ein und klicken Sie auf „{{int:saveprefs}}“.</b>',
+	'privatedomainsinstructions' => 'Unten ist die Liste der erlaubten E-Mail-Domains für Autoren dieses Wikis. Jede Zeile bezeichnet einen E-Mail-Suffix, dem Bearbeitungen erlaubt werden. Dies sollte mit einem Suffix pro Zeile formatiert werden. Zum Beispiel:</p><p style="width: 20%; padding:5px; border: 1px solid grey;"> cs.stanford.edu<br /> stanfordalumni.org</p><p>Dies würde Bearbeitungen von jedem mit der E-Mail-Adresse whatever@cs.stanford.edu oder whatever@stanfordalumni.org erlauben.</p><p><b>Geben Sie die erlaubten Domains in das Textfeld unterhalb ein und klicken Sie auf „{{int:saveprefs}}“.</b>',
 );
 
 /** Spanish (Español)

@@ -11,6 +11,13 @@ Would you like to go to the [[{{MediaWiki:Mainpage}}|Main page]] or perhaps a [[
 	'outbound-screen-you-are-leaving' => 'You are now leaving Wikia.',
 );
 
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'outbound-screen-you-are-leaving' => 'أنت الآن تغادر ويكيا',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */

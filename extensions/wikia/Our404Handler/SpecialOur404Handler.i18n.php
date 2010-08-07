@@ -554,6 +554,14 @@ Hindi matagpuan ang artikulong '''$1'''.
 * Upang makapunta sa pangunahing pahina ng sityong ito, pindutin ang kawing na: [{{SERVER}} {{SITENAME}}]",
 );
 
+/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+ * @author Ильнар
+ */
+$messages['tt-cyrl'] = array(
+	'our404handler' => '404 хата. Бу бит табылмады!',
+	'our404handler-oops' => 'Мондый бит юк.',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Vinhtantran
  */

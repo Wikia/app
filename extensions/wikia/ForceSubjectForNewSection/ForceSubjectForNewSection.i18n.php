@@ -30,6 +30,13 @@ $messages['af'] = array(
 	'force-subject-for-new-section-message' => "Verskaf asseblief 'n opskrif vir die afdeling",
 );
 
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'force-subject-for-new-section-message' => 'الرجاء إدخال عنوان لهذا القسم',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author Jim-by
  */
@@ -149,6 +156,13 @@ $messages['ja'] = array(
 	'force-subject-for-new-section-message' => 'セクションの見出しを入力してください',
 );
 
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'force-subject-for-new-section-message' => 'Jiff en Övverschreff för dä Afschned aan.',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -247,10 +261,11 @@ $messages['sl'] = array(
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'force-subject-for-new-section-message' => 'Молимо Вас унесите наслов за овај део',
+	'force-subject-for-new-section-message' => 'Унесите наслов за овај одељак',
 );
 
 /** Swedish (Svenska)

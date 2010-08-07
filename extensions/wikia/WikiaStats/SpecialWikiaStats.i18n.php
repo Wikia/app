@@ -1087,6 +1087,13 @@ $messages['ca'] = array(
 	'wikiastats_size' => 'Mida',
 );
 
+/** Sorani (کوردی) */
+$messages['ckb'] = array(
+	'wikiastats_wikicategory' => 'پۆل:',
+	'wikiastats_username' => 'بەکارهێنەر',
+	'wikiastats_search_text' => 'گەڕان',
+);
+
 /** Czech (Česky)
  * @author Mr. Richard Bolla
  */
@@ -1140,16 +1147,16 @@ $messages['de'] = array(
 	'wikiastats_daterange_to' => 'Bis:',
 	'wikiastats_nostats_found' => 'Keine Statistiken für das ausgewählte Wikia gefunden',
 	'wikiaststs_invalid_date' => 'Ungültiger Datumsbereich',
-	'wikiastats_distrib_article' => 'Editoren Aktivitätsverteilung',
-	'wikiastats_active_absent_wikians' => 'Aktivitätsaufschlüsselung registrierter Editoren',
-	'wikiastats_anon_wikians' => 'Aktivitätsaufschlüsselung anonymer Editoren',
+	'wikiastats_distrib_article' => 'Autoren-Aktivitätsverteilung',
+	'wikiastats_active_absent_wikians' => 'Aktivitätsaufschlüsselung registrierter Autoren',
+	'wikiastats_anon_wikians' => 'Aktivitätsaufschlüsselung anonymer Autoren',
 	'wikiastats_anon_wikians_count' => '$1 {{PLURAL:$1|anonymer|anonyme}} Benutzer gefunden',
 	'wikiastats_pageviews' => 'Seitenaufrufe pro Namensraum pro Monat',
 	'wikiastats_article_size' => 'Artikel, die mindestens einen internen Link enthalten, und .. Zeichen lesbaren Text, ohne Wiki- und HTML-Codes, versteckte Links, etc.;<br />Auch Header zählen nicht (außer Weiterleitungen)',
 	'wikiastats_article_one_link' => 'Artikel, die mindestens einen internen Link enthalten',
 	'wikiastats_article_size_subtitle' => 'Wähle eine oder mehrere Artikelgrößen und klicke den Button um Statistiken anzuzeigen',
-	'wikiastats_recently_active_wikians' => '$1 vor kurzem {{PLURAL:$1|aktiver registrierter Editor|aktive registrierte Editoren, nach Anzahl der Beiträge sortiert}}',
-	'wikiastats_recently_absent_wikians' => '$1 seit kurzem {{PLURAL:$1|abwesender registrierter Editor|abwesende registrierte Editoren, nach Anzahl der Beiträge sortiert}}',
+	'wikiastats_recently_active_wikians' => '$1 vor kurzem {{PLURAL:$1|aktiver registrierter Autor|aktive registrierte Autor, nach Anzahl der Beiträge sortiert}}',
+	'wikiastats_recently_absent_wikians' => '$1 seit kurzem {{PLURAL:$1|abwesender registrierter Autoren|abwesende registrierte Autoren, nach Anzahl der Beiträge sortiert}}',
 	'wikiastats_active_wikians_subtitle' => 'nur Bearbeitungen im Artikelnamensraum werden gezählt, abgesehen von der Spalte „{{int:wikiastats_other}}“',
 	'wikiastats_anon_wikians_subtitle' => 'nur Bearbeitungen im Artikelnamensraum werden gezählt',
 	'wikiastats_active_wikians_subtitle_info' => 'Δ = Veränderung in der Platzierung seit 30 Tagen',
@@ -1167,7 +1174,7 @@ $messages['de'] = array(
 	'wikiastats_active_month' => 'Monat',
 	'wikiastats_active_year' => 'Jahr',
 	'wikiastats_active_months' => 'Monate',
-	'wikiastats_wikians' => 'Registrierte Editoren',
+	'wikiastats_wikians' => 'Registrierte Autoren',
 	'wikiastats_articles' => 'Artikel (ohne Weiterleitungen)',
 	'wikiastats_articles_text' => 'Artikel',
 	'wikiastats_archived' => 'Archivierte',
@@ -1180,7 +1187,7 @@ $messages['de'] = array(
 	'wikiastats_with_links' => 'mit Links',
 	'wikiastats_connection_error' => 'Verbindungsfehler',
 	'wikiastats_distrib_edits' => 'Bearbeitungen >=',
-	'wikiastats_distrib_wikians' => 'Registrierte Editoren',
+	'wikiastats_distrib_wikians' => 'Registrierte Autoren',
 	'wikiastats_distrib_edits_total' => 'Bearbeitungen insgesamt',
 	'wikiastats_date' => 'Datum',
 	'wikiastats_namespace' => 'Namensraum',
@@ -1229,12 +1236,12 @@ $messages['de'] = array(
 	'wikiastats_wikicreated' => 'Erstellt:',
 	'wikiastats_wikilang' => 'Sprache:',
 	'wikiastats_note_mainstats' => 'Hinweis: Die Zahlen für die ersten Monate sind zu niedrig. Versionsgeschichte wurde anfangs nicht immer erhalten.',
-	'wikiastats_mainstats_column_A' => 'Anzahl der einmalig registrierten Editoren (registrierte Benutzer), die mindestens einen Inhaltsnamensraum-Artikel im aktuellen Monat bearbeitet haben',
-	'wikiastats_mainstats_column_B' => 'Registrierte Editoren, die 5 oder mehr Beiträge im aktuellen Monat haben',
-	'wikiastats_mainstats_column_C' => 'Registrierte Editoren, die 100 oder mehr Beiträge im aktuellen Monat haben',
-	'wikiastats_mainstats_column_D' => 'Anzahl der einmalig registrierten Editoren (registrierte Benutzer), die mindestens eine Benutzer-Namensraum Seite im aktuellen Monat bearbeitet haben',
-	'wikiastats_mainstats_column_E' => 'Anzahl der einmalig registrierten Editoren (registrierte Benutzer), die mindestens eine Bild-Namensraum Seite im aktuellen Monat bearbeitet haben',
-	'wikiastats_mainstats_column_F' => 'Gesamtanzahl registrierter Editoren, die mindestens einmal in irgendeinem Namensraum bearbeitet haben',
+	'wikiastats_mainstats_column_A' => 'Anzahl der einmalig registrierten Autoren (registrierte Benutzer), die mindestens einen Inhaltsnamensraum-Artikel im aktuellen Monat bearbeitet haben',
+	'wikiastats_mainstats_column_B' => 'Registrierte Autoren, die 5 oder mehr Beiträge im aktuellen Monat haben',
+	'wikiastats_mainstats_column_C' => 'Registrierte Autoren, die 100 oder mehr Beiträge im aktuellen Monat haben',
+	'wikiastats_mainstats_column_D' => 'Anzahl der einmalig registrierten Autoren (registrierte Benutzer), die mindestens eine Benutzer-Namensraum Seite im aktuellen Monat bearbeitet haben',
+	'wikiastats_mainstats_column_E' => 'Anzahl der einmalig registrierten Autoren (registrierte Benutzer), die mindestens eine Bild-Namensraum Seite im aktuellen Monat bearbeitet haben',
+	'wikiastats_mainstats_column_F' => 'Gesamtanzahl registrierter Autoren, die mindestens einmal in irgendeinem Namensraum bearbeitet haben',
 	'wikiastats_mainstats_column_G' => 'Artikel, die mindestens einen internen Link enthalten',
 	'wikiastats_mainstats_column_H' => 'Neue Artikel pro Tag im aktuellen Monat',
 	'wikiastats_mainstats_column_I' => 'Anteil von Artikeln mit mindestens 0,5 KB lesbarem Text (siehe J)',
@@ -1244,12 +1251,12 @@ $messages['de'] = array(
 	'wikiastats_mainstats_column_M' => 'Gesamtanzahl der gezeigten Bilder',
 	'wikiastats_mainstats_column_N' => 'Gesamtanzahl aller Links zu anderen Seiten',
 	'wikiastats_mainstats_column_O' => 'Gesamtanzahl der hochgeladenen Bilder',
-	'wikiastats_mainstats_short_column_A' => 'Einmalig registrierte Editoren (Artikelnamensräume)',
-	'wikiastats_mainstats_short_column_B' => 'Aktive registrierte Editoren',
-	'wikiastats_mainstats_short_column_C' => 'Sehr aktive registrierte Editoren',
-	'wikiastats_mainstats_short_column_D' => 'Einmalig registrierte Editoren (Benutzer-Namensraum)',
-	'wikiastats_mainstats_short_column_E' => 'Einmalig registrierte Editoren (Bild-Namensraum)',
-	'wikiastats_mainstats_short_column_F' => 'Gesamtanzahl registrierter Editoren, die mindestens einmal in irgendeinem Namensraum bearbeitet haben',
+	'wikiastats_mainstats_short_column_A' => 'Einmalig registrierte Autoren (Artikelnamensräume)',
+	'wikiastats_mainstats_short_column_B' => 'Aktive registrierte Autoren',
+	'wikiastats_mainstats_short_column_C' => 'Sehr aktive registrierte Autoren',
+	'wikiastats_mainstats_short_column_D' => 'Einmalig registrierte Autoren (Benutzer-Namensraum)',
+	'wikiastats_mainstats_short_column_E' => 'Einmalig registrierte Autoren (Bild-Namensraum)',
+	'wikiastats_mainstats_short_column_F' => 'Gesamtanzahl registrierter Autoren, die mindestens einmal in irgendeinem Namensraum bearbeitet haben',
 	'wikiastats_mainstats_short_column_G' => 'Artikelanzahl',
 	'wikiastats_mainstats_short_column_H' => 'Neue Artikel pro Tag',
 	'wikiastats_mainstats_short_column_I' => 'Artikel größer als 0,5 KB',
@@ -1264,12 +1271,12 @@ $messages['de'] = array(
 	'wikiastats_charts' => 'Charts',
 	'wikiastats_comparisons_table_1' => 'Überblick',
 	'wikiastats_comparisons_table_2' => 'Entstehungsgeschichte',
-	'wikiastats_comparisons_table_3' => 'Registrierter Editoren, die irgendeinen Inhaltsnamensraum-Artikel bearbeitet haben',
-	'wikiastats_comparisons_table_4' => 'Aktive registrierte Editoren (Artikelnamensräume)',
-	'wikiastats_comparisons_table_5' => 'Sehr aktive registrierte Editoren (Artikelnamensräume)',
-	'wikiastats_comparisons_table_6' => 'Einmalig registrierte Editoren (Benutzer-Namensraum)',
-	'wikiastats_comparisons_table_7' => 'Einmalig registrierte Editoren (Bild-Namensraum)',
-	'wikiastats_comparisons_table_8' => 'Gesamtanzahl registrierter Editoren, die mindestens einmal in irgendeinem Namensraum bearbeitet haben',
+	'wikiastats_comparisons_table_3' => 'Registrierter Autoren, die irgendeinen Inhaltsnamensraum-Artikel bearbeitet haben',
+	'wikiastats_comparisons_table_4' => 'Aktive registrierte Autoren (Artikelnamensräume)',
+	'wikiastats_comparisons_table_5' => 'Sehr aktive registrierte Autoren (Artikelnamensräume)',
+	'wikiastats_comparisons_table_6' => 'Einmalig registrierte Autoren (Benutzer-Namensraum)',
+	'wikiastats_comparisons_table_7' => 'Einmalig registrierte Autoren (Bild-Namensraum)',
+	'wikiastats_comparisons_table_8' => 'Gesamtanzahl registrierter Autoren, die mindestens einmal in irgendeinem Namensraum bearbeitet haben',
 	'wikiastats_comparisons_table_9' => 'Artikelanzahl',
 	'wikiastats_comparisons_table_10' => 'Neue Artikel pro Tag',
 	'wikiastats_comparisons_table_11' => 'Artikel größer als 0,5 KB',
@@ -1324,8 +1331,8 @@ $messages['de'] = array(
 	'wikiastats_see_old_statistics_page' => 'Siehe WikiaStats Hilfe-Seite',
 	'wikiastats_show_new_window' => 'zeige Ergebnis in neuem Browserfenster',
 	'wikiastats_show_nbr_wikis_check' => 'Max. Anzahl markierbarer Wikis: $1',
-	'wikiastats_lifetime_editors' => 'Editoren insgesamt',
-	'wikiastats_months_edits' => 'Editoren in diesem Monat',
+	'wikiastats_lifetime_editors' => 'Autoren insgesamt',
+	'wikiastats_months_edits' => 'Autoren in diesem Monat',
 	'wikiastats_main_namespace' => 'Artikel-<br />namensräume',
 	'wikiastats_content' => 'Inhalt',
 	'wikiastats_other_namespace' => 'andere<br />Namensräume',
@@ -2181,6 +2188,15 @@ Por favor, [[Special:UserLogin|acceda ao sistema ou cree unha conta]] se aínda 
 	'wikiastats_pageviews_month' => 'Estatísticas mensuais',
 );
 
+/** Hausa (هَوُسَ) */
+$messages['ha'] = array(
+	'wikiastats_namespace' => 'Sararin suna',
+	'wikiastats_show' => 'Nuna',
+	'wikiastats_wikicategory' => 'Rukuni:',
+	'wikiastats_xls_cancel' => 'Soke',
+	'wikiastats_search_text' => 'Nema:',
+);
+
 /** Hebrew (עברית)
  * @author 0ftal
  */
@@ -2692,15 +2708,15 @@ $messages['id'] = array(
  * @author Ukabia
  */
 $messages['ig'] = array(
-	'wikiastats_active_day' => 'ubochi',
+	'wikiastats_active_day' => 'chi',
 	'wikiastats_active_month' => 'önwa',
 	'wikiastats_active_year' => 'Afọ',
 	'wikiastats_show' => 'Zi',
 	'wikiastats_hide' => 'Zonari',
 	'wikiastats_wikiname' => 'Áhà:',
 	'wikiastats_wikicategory' => 'Ébéonọr:',
-	'wikiastats_size' => 'ívu',
-	'wikiastats_more_txt' => 'dikarírí',
+	'wikiastats_size' => 'ívụ',
+	'wikiastats_more_txt' => 'nà nké ozór',
 	'wikiastats_xls_cancel' => 'Emekwàlà',
 	'wikiastats_search_text' => 'Chöwá:',
 );
@@ -5214,14 +5230,20 @@ $messages['si'] = array(
 	'wikiastats_links' => 'සබැඳුම්',
 	'wikiastats_images' => 'පිංතූර',
 	'wikiastats_uploaded_images' => 'උඩුගත කරන ලද',
+	'wikiastats_distrib_edits_total' => 'මුළු සංස්කරණ ගණන',
 	'wikiastats_date' => 'දිනය',
 	'wikiastats_namespace' => 'නාම අවකාශය',
 	'wikiastats_show' => 'පෙන්වන්න',
 	'wikiastats_hide' => 'සඟවන්න',
+	'wikiastats_wikiname' => 'නම:',
+	'wikiastats_mean' => 'තේරුම',
+	'wikiastats_username' => 'පරිශීලක',
+	'wikiastats_usernames' => 'පරිශීලකයින්',
 	'wikiastats_total' => 'සියල්ල',
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
@@ -5232,6 +5254,8 @@ $messages['sr-ec'] = array(
 	'wikiastats_showstats_btn' => 'Покажи статистику',
 	'wikiastats_wikia_information' => 'Основне информације о викији',
 	'wikiastast_refresh_data' => 'освежи податке',
+	'wikiastats_showcharts' => 'Прикажи графиконе',
+	'wikiastats_export_xls' => 'Извези у XLS',
 	'wikiastats_panel_close_btn' => 'Затвори',
 	'wikiastats_daterange_from' => 'Од:',
 	'wikiastats_daterange_to' => 'До:',
@@ -5263,6 +5287,7 @@ $messages['sr-ec'] = array(
 	'wikiastats_distrib_edits_total' => 'Укупно уређивања',
 	'wikiastats_date' => 'датум',
 	'wikiastats_show' => 'Прикажи',
+	'wikiastats_stats' => 'Прикажи %s статистику',
 	'wikiastats_hide' => 'Сакриј',
 	'wikiastats_wikiname' => 'Име:',
 	'wikiastats_wikidbname' => 'Име базе података',
@@ -5277,7 +5302,9 @@ $messages['sr-ec'] = array(
 	'wikiastats_size' => 'Величина',
 	'wikiastats_words' => 'речи',
 	'wikiastats_internal' => 'унутрашње',
+	'wikiastats_interwiki' => 'међувики',
 	'wikiastats_image' => 'слика',
+	'wikiastats_external' => 'спољашње',
 	'wikiastats_redirects' => 'преусмерења',
 	'wikistats_main_namespace' => 'главни',
 	'wikistats_image_namespace' => 'слика',
@@ -5297,6 +5324,7 @@ $messages['sr-ec'] = array(
 	'wikiastats_unregister' => 'нерегистровани',
 	'wikiastats_more_txt' => 'још',
 	'wikiastats_now' => 'сад',
+	'wikiastats_wikicreated' => 'Направљено:',
 	'wikiastats_wikilang' => 'Језик',
 	'wikiastats_mainstats_column_B' => 'Регистровани уређивачи са 5 или више измена у овом месецу',
 	'wikiastats_mainstats_column_C' => 'Регистровани уређивачи са 100 или више измена у овом месецу',
@@ -5318,7 +5346,9 @@ $messages['sr-ec'] = array(
 	'wikiastats_mainstats_short_column_M' => 'слика',
 	'wikiastats_mainstats_short_column_N' => 'Спољашње везе',
 	'wikiastats_mainstats_short_column_O' => 'Посланих слика',
+	'wikiastats_website' => 'Веб-сајт',
 	'wikiastats_tables' => 'табеле',
+	'wikiastats_charts' => 'Графикони',
 	'wikiastats_comparisons_table_1' => 'Преглед',
 	'wikiastats_comparisons_table_2' => 'Историја стварања',
 	'wikiastats_comparisons_table_9' => 'Број чланака',

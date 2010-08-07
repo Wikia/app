@@ -75,6 +75,13 @@ $messages['id'] = array(
 	'sitemap-desc' => 'Hasilkan Petasitus untuk wiki dengan cepat',
 );
 
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'sitemap-desc' => 'Ké okịkẹ Ọtúzọámá màkà wiki nọr na ijí',
+);
+
 /** Japanese (日本語)
  * @author 青子守歌
  */

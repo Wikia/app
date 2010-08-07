@@ -179,6 +179,14 @@ $messages['ja'] = array(
 	'staffpowers-ipblock-aborted' => 'ウィキアのスタッフを投稿ブロックすることはできません。スタッフについて何か問題がある場合、[[Special:Contact]]からご報告ください。',
 );
 
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'staffpowers-ipblock-aborted' => 'Et Päsonaal vun Wikia kam_mer nit sperre.
+Wann De e Problem mem Päsonaal häs, don dat [[Special:Contact|das Kontakfommulaa]] nämme.',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

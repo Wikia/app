@@ -547,12 +547,14 @@ $messages['ru'] = array(
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
 	'multilookupnotspecify' => 'Нисте још специфицирали ИП',
 	'multilookupnext' => 'следеће',
 	'multilookupprevious' => 'Претходна',
+	'multilookupnbrresult' => 'Број резултата:',
 	'multilookupinvalidresults' => 'Неправилни резултати',
 	'multilookupnoresultfound' => 'Нема резултата претраге',
 	'multilookupwiki' => 'Вики',

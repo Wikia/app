@@ -206,6 +206,7 @@ $messages['br'] = array(
  */
 $messages['de'] = array(
 	'daemonloader' => 'Daemon Lader',
+	'daemonloader-desc' => 'Führt [[Special:DaemonLoader|Hintergrund Daemons]] zum Erstellen von Berichten aus',
 	'daemonloader_pagetitle' => 'Daemon Lader',
 	'daemonloader_createtask' => 'Aufgabe erstellen',
 	'daemonloader_listtask' => 'Liste der Aufgaben',
@@ -415,6 +416,7 @@ $messages['fi'] = array(
  */
 $messages['fr'] = array(
 	'daemonloader' => 'Chargeur de démon',
+	'daemonloader-desc' => 'Exécute des [[Special:DaemonLoader|démons en tache de fond]] pour créer des rapports',
 	'daemonloader_pagetitle' => 'Chargeur de démon',
 	'daemonloader_createtask' => 'Créer un tâche',
 	'daemonloader_listtask' => 'Liste des tâches',
@@ -476,6 +478,7 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'daemonloader' => 'Servizo de cargas',
+	'daemonloader-desc' => 'Executa [[Special:DaemonLoader|servizos en segundo plano]] para crear informes',
 	'daemonloader_pagetitle' => 'Servizo de cargas',
 	'daemonloader_createtask' => 'Crear unha tarefa',
 	'daemonloader_listtask' => 'Lista de tarefas',
@@ -665,6 +668,7 @@ $messages['lb'] = array(
  */
 $messages['mk'] = array(
 	'daemonloader' => 'Daemon-вчитувач',
+	'daemonloader-desc' => 'Пушта [[Special:DaemonLoader|позадинска постапка]] за создавање на извештаи',
 	'daemonloader_pagetitle' => 'Вчитувач на демони',
 	'daemonloader_createtask' => 'Создај задача',
 	'daemonloader_listtask' => 'Список на задачи',
@@ -726,6 +730,7 @@ $messages['mk'] = array(
  */
 $messages['nl'] = array(
 	'daemonloader' => 'Proceslader',
+	'daemonloader-desc' => 'Voert [[Special:DaemonLoader|achtergrondprocessen]] uit om rapportages te maken',
 	'daemonloader_pagetitle' => 'Proceslader',
 	'daemonloader_createtask' => 'Taak aanmaken',
 	'daemonloader_listtask' => 'Takenlijst',
@@ -850,6 +855,7 @@ $messages['no'] = array(
  */
 $messages['pms'] = array(
 	'daemonloader' => 'Carieur dël diavolèt',
+	'daemonloader-desc' => 'A fà giré [[Special:DaemonLoader|background daemons]] për creé ëd rapòrt',
 	'daemonloader_pagetitle' => 'Carieur dël diavolèt',
 	'daemonloader_createtask' => 'Crea atività',
 	'daemonloader_listtask' => "Lista dj'atività",
@@ -938,6 +944,7 @@ $messages['ps'] = array(
  */
 $messages['pt'] = array(
 	'daemonloader' => 'Preparador de deamons',
+	'daemonloader-desc' => 'Executa [[Special:DaemonLoader|daemons em segundo plano]] para criação de relatórios',
 	'daemonloader_pagetitle' => 'Preparador de deamons',
 	'daemonloader_createtask' => 'Criar tarefa',
 	'daemonloader_listtask' => 'Lista de tarefas',
@@ -1012,11 +1019,13 @@ $messages['pt-br'] = array(
 );
 
 /** Russian (Русский)
+ * @author Eleferen
  * @author Lockal
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
 	'daemonloader' => 'Загрузчик демона',
+	'daemonloader-desc' => 'Запускает [[Special:DaemonLoader|фоновый процесс]] для создания отчётов.',
 	'daemonloader_pagetitle' => 'Загрузчик демона',
 	'daemonloader_createtask' => 'Создать задачу',
 	'daemonloader_listtask' => 'Список задач',
@@ -1074,24 +1083,29 @@ $messages['ru'] = array(
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
 	'daemonloader_createtask' => 'Направите задатак',
 	'daemonloader_listtask' => 'Списак задатака',
+	'daemonloader_scriptname' => 'Назив скрипте',
 	'daemonloader_daemondesc' => 'Опис',
 	'daemonloader_inputparams' => 'Улазни параметри',
 	'daemonloader_paramname' => 'Име параметра',
 	'daemonloader_paramdesc' => 'Опис параметра',
 	'daemonloader_paramtype' => 'Тип параметра',
 	'daemonloader_paramremove' => 'Уклони',
+	'daemonloader_paramdefvalue' => 'Подразумевана вредност',
 	'daemonloader_selectlist' => 'Одабери са списка',
 	'daemonloader_search' => 'Претрага',
 	'daemonloader_daemonchanged' => 'Ваше измене су снимљене',
 	'daemonloader_daemonnotchanged' => 'Ваше измене нису сачуване',
+	'daemonloader_string' => 'ниска',
+	'daemonloader_number' => 'број',
 	'daemonloader_date_yyyymmdd' => 'датум (YYYYMMDD)',
-	'daemonloader_date_yyyymm' => ' месеци  (YYYYMM)',
-	'daemonloader_date_yyyy' => ' године (YYYY)',
+	'daemonloader_date_yyyymm' => 'месеци  (YYYYMM)',
+	'daemonloader_date_yyyy' => 'године (YYYY)',
 	'daemonloader_wikilist' => 'списак викија',
 	'daemonloader_gonextstep' => 'Иди на следећи корак',
 	'daemonloader_startdate' => 'Почетни датум',
@@ -1101,6 +1115,9 @@ $messages['sr-ec'] = array(
 	'daemonloader_week' => ' сваке седмице',
 	'daemonloader_month' => ' сваки месец',
 	'daemonloader_newtask' => 'нови задатак',
+	'daemonloader_createdby' => 'Направио/ла',
+	'daemonloader_created' => 'Направљено',
+	'daemonloader_options' => 'Опције',
 	'daemonloader_removejobconfirm' => 'Да ли сте сигурни?',
 );
 

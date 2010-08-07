@@ -116,7 +116,7 @@ $messages['de'] = array(
 Falls du irgendwelche Hilfe brauchen solltest, kannst du mir gerne eine Nachricht auf [[$2|meiner Diskussionsseite]] hinterlassen! $3',
 	'welcome-message-anon' => "Hi, Willkommen bei {{SITENAME}}! Danke für deine Bearbeitung auf der Seite [[:$1]].
 
-'''[[Special:Userlogin|Bitte lege dir ein Benutzerkonto an]]'''. So kannst du ganz einfach deine Beiträge im Überblick behalten und dich besser mit dem Rest der Community verständigen.
+'''[[Special:Userlogin|Bitte lege dir ein Benutzerkonto an]]'''. So kannst du ganz einfach deine Beiträge im Überblick behalten und dich besser mit dem Rest der Gemeinschaft verständigen.
 
 Falls du irgendwelche Hilfe brauchst, kannst du mir gerne eine Nachricht auf [[$2|meiner Diskussionsseite]] hinterlassen! $3",
 	'welcome-message-log' => 'Begrüßung eines neuen Autors',
@@ -130,7 +130,7 @@ die [[wikia:Forum:Community Central Forum|Foren des Community Zentralwikis]] bes
 
 Hi, Willkommen bei {{SITENAME}}! Danke für deine Bearbeitung auf der [[:$1]] Seite.
 
-'''[[Special:Userlogin|Bitte lege dir ein Benutzerkonto an]]'''. So kannst du ganz einfach deine Beiträge im Überblick behalten und dich besser mit dem Rest der Community verständigen.
+'''[[Special:UserLogin|Bitte lege dir ein Benutzerkonto an]]'''. So kannst du ganz einfach deine Beiträge im Überblick behalten und dich besser mit dem Rest der Gemeinschaft verständigen.
 
 Wenn du Hilfe brauchst, und kein Admin von hier in der Nähe ist, möchtest du vielleicht die [[wikia:Forum:Community Central Forum|Foren des Community Zentralwikis]] besuchen $3",
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|Hilfe]] | [[w:sblog|Blog]])</small>',
@@ -138,6 +138,7 @@ Wenn du Hilfe brauchst, und kein Admin von hier in der Nähe ist, möchtest du v
 
 /** German (formal address) (Deutsch (Sie-Form))
  * @author LWChris
+ * @author The Evil IP address
  */
 $messages['de-formal'] = array(
 	'welcome-user-page' => "== Über mich ==
@@ -158,7 +159,7 @@ $messages['de-formal'] = array(
 Falls Sie irgendwelche Hilfe brauchen sollten, können Sie mir gerne eine Nachricht auf [[$2|meiner Diskussionsseite]] hinterlassen! $3',
 	'welcome-message-anon' => "Guten Tag, Willkommen bei {{SITENAME}}! Danke für Ihre Bearbeitung auf der Seite [[:$1]].
 
-'''[[Special:Userlogin|Bitte legen Sie sich ein Benutzerkonto an]]'''. So können Sie ganz einfach Ihre Beiträge im Überblick behalten und sich besser mit dem Rest der Community verständigen.
+'''[[Special:Userlogin|Bitte legen Sie sich ein Benutzerkonto an]]'''. So können Sie ganz einfach Ihre Beiträge im Überblick behalten und sich besser mit dem Rest der Gemeinschaft verständigen.
 
 Falls Sie irgendwelche Hilfe brauchen, können Sie mir gerne eine Nachricht auf [[$2|meiner Diskussionsseite]] hinterlassen! $3",
 	'welcome-message-user-staff' => '==Willkommen==
@@ -171,7 +172,7 @@ die [[wikia:Forum:Community Central Forum|Foren des Community Zentralwikis]] bes
 
 Guten Tag, Willkommen bei {{SITENAME}}! Danke für Ihre Bearbeitung auf der [[:$1]] Seite.
 
-'''[[Special:Userlogin|Bitte legen Sie sich ein Benutzerkonto an]]'''. So können Sie ganz einfach Ihre Beiträge im Überblick behalten und sich besser mit dem Rest der Community verständigen.
+'''[[Special:UserLogin|Bitte legen Sie sich ein Benutzerkonto an]]'''. So können Sie ganz einfach Ihre Beiträge im Überblick behalten und sich besser mit dem Rest der Gemeinschaft verständigen.
 
 Wenn Sie Hilfe brauchen, und kein Admin von hier in der Nähe ist, möchten Sie vielleicht die [[wikia:Forum:Community Central Forum|Foren des Community Zentralwikis]] besuchen $3",
 );
@@ -281,6 +282,7 @@ Jos tarvitset apua ja täällä ei ole paikallisia ylläpitäjiä, tahdot ehkä 
 
 /** French (Français)
  * @author Peter17
+ * @author Urhixidur
  */
 $messages['fr'] = array(
 	'welcome-user-page' => 'Cette page est votre page personnelle. Vous pouvez y ajouter des informations vous concernant !
@@ -313,7 +315,7 @@ Bonjour et bienvenue sur {{SITENAME}}. Merci d'avoir modifié la page [[:$1]].
 '''[[Special:Userlogin|Merci de bien vouloir vous enregistrer et créer un nom d'utilisateur]]'''. C'est un moyen simple pour garder la trace de vos contributions et qui vous aidera à communiquer avec le reste de la communauté.
 
 Si vous avez besoin d'aide et qu'il n'y a pas d'administrateur ici, vous pouvez visiter les [[wikia:Forum:Community Central Forum|forums du Wiki Central de la Communauté]] $3",
-	'staffsig-text' => '$1<staff /> <small>([[w:forums|forum d’aide]] | [[w:sblog|blog]])</small>',
+	'staffsig-text' => '$1<staff /> <small>([[w:forums|forum d’aide]] | [[w:sblog|blogue]])</small>',
 );
 
 /** Galician (Galego)

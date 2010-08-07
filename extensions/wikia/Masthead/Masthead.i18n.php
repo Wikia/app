@@ -194,28 +194,29 @@ Muista, että avatarit ovat jaettuja – poistamalla käyttäjän avatarin poist
 
 /** French (Français)
  * @author Peter17
+ * @author Urhixidur
  * @author Y-M D
  */
 $messages['fr'] = array(
-	'blog-avatar-removeavatar' => "Supprimer l'avatar",
+	'blog-avatar-removeavatar' => 'Supprimer l’avatar',
 	'blog-avatar-goto-userpage' => 'Aller à la page utilisateur',
 	'blog-avatar-edit' => 'Changer',
 	'blog-avatar-delete' => 'Supprimer',
 	'masthead-blog-avatar-preferences-title' => 'Avatar',
 	'blog-avatar-choose-avatar' => 'Choisir un avatar',
 	'blog-avatar-upload-avatar' => 'Téléverser un nouvel avatar',
-	'blog-avatar-nouser' => "Impossible de trouver l'utilisateur !",
-	'blog-avatar-cannot-remove' => "Impossible de retirer l'avater à l'utilisateur sélectionné !",
-	'blog-avatar-remove-info' => "Cette page permet de retirer l'avatar d'un utilisateur. Entrez le nom d'utilisateur exact dans la boîte prévue et cliquez le bouton « Recherche ».
-Attention, les avatars sont globaux. Retirer l'avatar d'un utilisateur prend effet sur tout Wikia.",
+	'blog-avatar-nouser' => 'Impossible de trouver l’utilisateur !',
+	'blog-avatar-cannot-remove' => 'Impossible de retirer l’avatar à l’utilisateur sélectionné !',
+	'blog-avatar-remove-info' => 'Cette page permet de retirer l’avatar d’un utilisateur. Entrez le nom d’utilisateur exact dans la boîte prévue et cliquez le bouton « {{int:blog-avatar-getuser}} ».
+Attention, les avatars sont globaux. Retirer l’avatar d’un utilisateur prend effet sur tout Wikia.',
 	'blog-avatar-getuser' => 'Rechercher',
-	'blog-avatar-remove-confirm' => "Êtes-vous sûr de vouloir retirer l'avatar ?",
-	'blog-avatar-error-nofile' => 'Choisisez un fichier sur votre disque dur.',
-	'blog-avatar-error-size' => 'Le fichier téléversé est trop gros. La taille permise est $1 Ko maximum.',
-	'blog-avatar-error-cantwrite' => "Une erreur s'est produite; impossible d'enregistrer le fichier.",
-	'blog-avatar-changed-log' => 'a modifié son avatar',
-	'blog-avatar-removed-log' => 'a retiré l’avatar de $1',
-	'blog-avatar-save-info' => 'Pour enregistrer l\'avatar <a href="#prefcontrol">allez au bas de cette page</a> et cliquez sur le bouton « Enregistrer les préférences ».',
+	'blog-avatar-remove-confirm' => 'Êtes-vous sûr de vouloir retirer l’avatar ?',
+	'blog-avatar-error-nofile' => 'Choisissez un fichier sur votre disque dur.',
+	'blog-avatar-error-size' => 'Le fichier téléversé est trop gros. La taille permise est $1 Kio maximum.',
+	'blog-avatar-error-cantwrite' => 'Une erreur s’est produite ; impossible d’enregistrer le fichier.',
+	'blog-avatar-changed-log' => 'A créé ou modifié son avatar',
+	'blog-avatar-removed-log' => 'A retiré l’avatar de $1',
+	'blog-avatar-save-info' => 'Pour enregistrer l’avatar <a href="#prefcontrol">allez au bas de cette page</a> et cliquez sur le bouton « {{int:saveprefs}} ».',
 	'masthead-edits-since' => 'éditions depuis le',
 	'useravatar-log' => 'Journal des avatars des utilisateurs',
 	'blog-avatar-alt' => 'Journaux des ajouts et retraits d’avatars des utilisateurs',
@@ -589,9 +590,25 @@ $messages['ru'] = array(
 	'right-removeavatar' => 'удаление аватаров участников',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица)) */
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Rancher
+ */
 $messages['sr-ec'] = array(
+	'blog-avatar-removeavatar' => 'Уклони аватар',
+	'blog-avatar-goto-userpage' => 'Пређи на корисничку страницу',
+	'blog-avatar-edit' => 'Промени',
+	'blog-avatar-delete' => 'Избриши',
 	'masthead-blog-avatar-preferences-title' => 'аватар',
+	'blog-avatar-choose-avatar' => 'Изабери нови аватар',
+	'blog-avatar-upload-avatar' => 'Отпреми нови аватар',
+	'blog-avatar-nouser' => 'Овај корисник није пронађен!',
+	'blog-avatar-cannot-remove' => 'Аватари не могу да се уклоне с изабраног корисника!',
+	'blog-avatar-getuser' => 'Претражи',
+	'blog-avatar-remove-confirm' => 'Да ли сте сигурни да желите да уклоните аватар?',
+	'blog-avatar-error-nofile' => 'Изаберите датотеку са диска',
+	'masthead-edits-since' => 'измена од',
+	'removeuseravatar' => 'Брисање корисничких аватара',
+	'right-removeavatar' => 'Уклони аватаре корисника',
 );
 
 /** Swedish (Svenska) */

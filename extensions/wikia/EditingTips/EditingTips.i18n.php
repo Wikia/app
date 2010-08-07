@@ -442,6 +442,13 @@ $messages['ta'] = array(
 	'tog-disableeditingtips' => 'தொகுத்தல் உதவிகளைக் காட்ட வேண்டாம்!',
 );
 
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'editingTips' => 'మీ చిట్కాలను [[MediaWiki:EditingTips|ఇక్కడ]] చేర్చండి',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */

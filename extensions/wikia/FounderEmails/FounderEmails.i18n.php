@@ -280,10 +280,10 @@ Es sieht so aus als ob sich $USERNAME bei deinem Wiki registriert hat! Warum bes
 Es sieht so aus als ob sich $USERNAME bei deinem Wiki registriert hat! Warum besuchst du nicht seine <a href="$USERTALKPAGEURL">Diskussionsseite</a> um Hallo zu sagen?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Das Wikia Team</div>',
 	'founderemails-email-0-days-passed-subject' => 'Willkommen bei Wikia!',
-	'founderemails-email-0-days-passed-body' => 'Herzlichen Glückwunsch zum Erstellen von $WIKINAME - du bist nun Teil der Wikia-Community!
+	'founderemails-email-0-days-passed-body' => 'Herzlichen Glückwunsch zum Erstellen von $WIKINAME - du bist nun Teil der Wikia-Gemeinschaft!
 
 -- Das Wikia Team',
-	'founderemails-email-0-days-passed-body-HTML' => 'Herzlichen Glückwunsch zum Erstellen von <strong>$WIKINAME</strong> - du bist nun Teil der Wikia-Community!<br /><br />
+	'founderemails-email-0-days-passed-body-HTML' => 'Herzlichen Glückwunsch zum Erstellen von <strong>$WIKINAME</strong> - du bist nun Teil der Wikia-Gemeinschaft!<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Das Wikia Team</div>',
 	'founderemails-email-3-days-passed-subject' => 'Ausprobieren',
 	'founderemails-email-3-days-passed-body' => 'Hey $FOUNDERNAME,
@@ -340,10 +340,10 @@ Es sieht so aus als ob sich $USERNAME bei deinem Wiki registriert hat! Warum bes
 Es sieht so aus als ob sich $USERNAME bei deinem Wiki registriert hat! Warum besuchst du nicht seine <a href="$USERTALKPAGEURL">Diskussionsseite</a> um Hallo zu sagen?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Das Wikia Team</div>',
 	'founderemails-answers-email-0-days-passed-subject' => 'Willkommen bei QA Wikia!',
-	'founderemails-answers-email-0-days-passed-body' => 'Herzlichen Glückwunsch zum Erstellen von $WIKINAME - du bist nun Teil der Wikia-Community!
+	'founderemails-answers-email-0-days-passed-body' => 'Herzlichen Glückwunsch zum Erstellen von $WIKINAME - du bist nun Teil der Wikia-Gemeinschaft!
 
 -- Das Wikia Team',
-	'founderemails-answers-email-0-days-passed-body-HTML' => 'Herzlichen Glückwunsch zum Erstellen von <strong>$WIKINAME</strong> - du bist nun Teil der Wikia-Community!<br /><br />
+	'founderemails-answers-email-0-days-passed-body-HTML' => 'Herzlichen Glückwunsch zum Erstellen von <strong>$WIKINAME</strong> - du bist nun Teil der Wikia-Gemeinschaft!<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Das Wikia Team</div>',
 	'founderemails-answers-email-3-days-passed-subject' => 'Ausprobieren',
 	'founderemails-answers-email-3-days-passed-body' => 'Hey $FOUNDERNAME,
@@ -394,6 +394,8 @@ Es sieht so aus als ob jemand dein Wiki verändert hat! Warum <a href="$MYHOMEUR
 
 /** German (formal address) (Deutsch (Sie-Form))
  * @author LWChris
+ * @author The Evil IP address
+ * @author Umherirrender
  */
 $messages['de-formal'] = array(
 	'founderemails-email-user-registered-subject' => 'Jemand hat einen Account auf Ihrem Wiki registriert!',
@@ -405,10 +407,10 @@ Es sieht so aus als ob sich $USERNAME bei Ihrem Wiki registriert hat! Warum besu
 	'founderemails-email-user-registered-body-HTML' => 'Hallo $FOUNDERNAME,<br /><br />
 Es sieht so aus als ob sich $USERNAME bei Ihrem Wiki registriert hat! Warum besuchen Sie nicht seine <a href="$USERTALKPAGEURL">Diskussionsseite</a> um Hallo zu sagen?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Das Wikia Team</div>',
-	'founderemails-email-0-days-passed-body' => 'Herzlichen Glückwunsch zum Erstellen von $WIKINAME - Sie sind nun Teil der Wikia-Community!
+	'founderemails-email-0-days-passed-body' => 'Herzlichen Glückwunsch zum Erstellen von $WIKINAME - Sie sind nun Teil der Wikia-Gemeinschaft!
 
 -- Das Wikia Team',
-	'founderemails-email-0-days-passed-body-HTML' => 'Herzlichen Glückwunsch zum Erstellen von <strong>$WIKINAME</strong> - Sie sind nun Teil der Wikia-Community!<br /><br />
+	'founderemails-email-0-days-passed-body-HTML' => 'Herzlichen Glückwunsch zum Erstellen von <strong>$WIKINAME</strong> - Sie sind nun Teil der Wikia-Gemeinschaft!<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Das Wikia Team</div>',
 	'founderemails-email-3-days-passed-body' => 'Hallo $FOUNDERNAME,
 
@@ -463,10 +465,10 @@ Es sieht so aus als ob sich $USERNAME bei Ihrem Wiki registriert hat! Warum besu
 	'founderemails-answers-email-user-registered-body-HTML' => 'Hallo $FOUNDERNAME,<br /><br />
 Es sieht so aus als ob sich $USERNAME bei Ihrem Wiki registriert hat! Warum besuchen Sie nicht seine <a href="$USERTALKPAGEURL">Diskussionsseite</a> um Hallo zu sagen?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Das Wikia Team</div>',
-	'founderemails-answers-email-0-days-passed-body' => 'Herzlichen Glückwunsch zum Erstellen von $WIKINAME - Sie sind nun Teil der Wikia-Community!
+	'founderemails-answers-email-0-days-passed-body' => 'Herzlichen Glückwunsch zum Erstellen von $WIKINAME - Sie sind nun Teil der Wikia-Gemeinschaft!
 
 -- Das Wikia Team',
-	'founderemails-answers-email-0-days-passed-body-HTML' => 'Herzlichen Glückwunsch zum Erstellen von <strong>$WIKINAME</strong> - Sie sind nun Teil der Wikia-Community!<br /><br />
+	'founderemails-answers-email-0-days-passed-body-HTML' => 'Herzlichen Glückwunsch zum Erstellen von <strong>$WIKINAME</strong> - Sie sind nun Teil der Wikia-Gemeinschaft!<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Das Wikia Team</div>',
 	'founderemails-answers-email-3-days-passed-body' => 'Hallo $FOUNDERNAME,
 
@@ -485,7 +487,7 @@ Es ist nun eine Weile her seit Sie mit Ihrem Wiki auf Wikia angefangen haben - w
 	'founderemails-answers-email-10-days-passed-body-HTML' => 'Hallo $FOUNDERNAME,<br /><br />
 Es ist nun eine Weile her seit Sie mit Ihrem Wiki auf Wikia angefangen haben - wir hoffen es läuft gut! Wir möchten zum Abschluss ein paar kleine Leckerbissen mit Ihnen teilen, damit Sie sich in Ihrem Wiki noch mehr wie zu Hause fühlen können.<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Das Wikia Team</div>',
-	'founderemails-answers-email-page-edited-reg-user-first-edit-subject' => 'Registrierter Benutzer hat Ihr Wiki zum ersten Mal geändert!',
+	'founderemails-answers-email-page-edited-reg-user-first-edit-subject' => 'Registrierter Benutzer hat Ihre Seite zum ersten Mal geändert!',
 	'founderemails-answers-email-page-edited-reg-user-first-edit-body' => 'Hallo $FOUNDERNAME,
 
 Es sieht so aus als ob der registrierte Benutzer $USERNAME zum ersten Mal Ihr Wiki verändert hat! Warum besuchen Sie nicht seine Diskussionsseite $USERTALKPAGEURL um Hallo zu sagen?
@@ -494,12 +496,8 @@ Es sieht so aus als ob der registrierte Benutzer $USERNAME zum ersten Mal Ihr Wi
 	'founderemails-answers-email-page-edited-reg-user-first-edit-body-HTML' => 'Hallo $FOUNDERNAME,<br /><br />
 Es sieht so aus als ob der registrierte Benutzer $USERNAME zum ersten Mal Ihr Wiki verändert hat! Warum besuchen Sie nicht seine <a href="$USERTALKPAGEURL">Diskussionsseite</a> um Hallo zu sagen?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Das Wikia Team</div>',
-	'founderemails-answers-email-page-edited-reg-user-subject' => 'Hallo $FOUNDERNAME,
-
-Es sieht so aus als ob der registrierte Benutzer $USERNAME Ihr Wiki verändert hat! Warum besuchen Sie nicht seine Diskussionsseite $USERTALKPAGEURL um Hallo zu sagen?
-
--- Das Wikia Team',
-	'founderemails-answers-email-page-edited-anon-subject' => 'Jemand hat Ihr QA Wiki verändert!',
+	'founderemails-answers-email-page-edited-reg-user-subject' => 'Registrierter Benutzer hat Ihre Seite verändert!',
+	'founderemails-answers-email-page-edited-anon-subject' => 'Jemand hat Ihre Seite verändert!',
 	'founderemails-answers-email-page-edited-anon-body' => 'Hallo $FOUNDERNAME,
 
 Es sieht so aus als ob jemand Ihr Wiki verändert hat! Warum besuchen Sie nicht mal $MYHOMEURL um zu sehen was sich verändert hat?
@@ -1767,6 +1765,15 @@ $messages['ru'] = array(
 	'founderemails-answers-email-page-edited-anon-body-HTML' => 'Привет, $FOUNDERNAME.<br /><br />
 Похоже, что кто-то внёс изменения в вашу! Почему бы вам не посмотреть что было изменено ($MYHOMEURL)?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Команда Викиа</div>',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'founderemails-email-user-registered-subject' => 'మీ వికీలో ఒకరు ఖాతాని నమోదుచేసుకున్నారు!',
+	'founderemails-email-10-days-passed-subject' => 'మీ వికీలో ఏమి జరుగుతూంది?',
+	'founderemails-answers-email-10-days-passed-subject' => 'మీ వికీలో ఏమి జరుగుతూంది?',
 );
 
 /** Tagalog (Tagalog)

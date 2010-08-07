@@ -552,6 +552,7 @@ Por favor visita y edita frecuentemente...
 
 /** French (Français)
  * @author Peter17
+ * @author Urhixidur
  */
 $messages['fr'] = array(
 	'follow-desc' => 'Améliorations pour la liste de suivi',
@@ -584,7 +585,7 @@ Ajoutez des pages à cette liste en cliquant sur « Suivre » en haut d’une pa
 	'wikiafollowedpages-prefs-watchlist' => 'Liste de suivi uniquement',
 	'tog-hidefollowedpages' => 'Rendre privée ma liste de suivi',
 	'follow-categoryadd-summary' => 'Page ajoutée à la catégorie',
-	'follow-bloglisting-summary' => 'Blog posté sur une page de blog',
+	'follow-bloglisting-summary' => 'Blogue posté sur la page des blogues',
 	'wikiafollowedpages-userpage-heading' => 'Pages que je suis',
 	'wikiafollowedpages-userpage-hide-tooltip' => 'Cacher votre liste de suivi de la vue du public',
 	'wikiafollowedpages-userpage-more' => 'Plus',
@@ -895,6 +896,11 @@ $messages['id'] = array(
  */
 $messages['ig'] = array(
 	'wikiafollowedpages-special-heading-category' => 'Ébéanọr ($1)',
+	'wikiafollowedpages-special-heading-project' => 'Ihü cẹdolu ($1)',
+	'wikiafollowedpages-special-heading-user' => "Ihü ọ'bànifé ($1)",
+	'wikiafollowedpages-special-namespace' => '(ihü $1)',
+	'wikiafollowedpages-special-blog-by' => 'shí $1',
+	'wikiafollowedpages-userpage-more' => 'Nà nké ozór',
 	'wikiafollowedpages-userpage-hide' => 'zofù',
 );
 
@@ -1585,6 +1591,46 @@ ___________________________________________
 Пройдите в <a href="{{fullurl:{{ns:special}}:Preferences}}">настройки участника</a>.
 </ul>
 </p>',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'wikiafollowedpages-special-heading-category' => 'Категорије ($1)',
+	'wikiafollowedpages-special-heading-article' => 'Чланци ($1)',
+	'wikiafollowedpages-special-heading-blogs' => 'Блогови и поруке ($1)',
+	'wikiafollowedpages-special-heading-forum' => 'Теме форума ($1)',
+	'wikiafollowedpages-special-heading-project' => 'Странице пројекта ($1)',
+	'wikiafollowedpages-special-heading-user' => 'Корисничке странице ($1)',
+	'wikiafollowedpages-special-heading-templates' => 'Странице шаблона ($1)',
+	'wikiafollowedpages-special-heading-mediawiki' => 'Медијавики странице ($1)',
+	'wikiafollowedpages-special-heading-media' => 'Слике и видео записи ($1)',
+	'wikiafollowedpages-special-namespace' => '($1 страна)',
+	'wikiafollowedpages-special-showall' => 'Прикажи све',
+	'wikiafollowedpages-special-showmore' => 'Прикажи више',
+	'wikiafollowedpages-special-title' => 'Праћене странице',
+	'wikiafollowedpages-special-delete-tooltip' => 'Уклони ову страницу',
+	'wikiafollowedpages-special-blog-by' => 'од $1',
+	'wikiafollowedpages-prefs-advanced' => 'Напредне опције',
+	'wikiafollowedpages-userpage-more' => 'Више',
+	'wikiafollowedpages-userpage-hide' => 'сакриј',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'wikiafollowedpages-special-heading-category' => 'వర్గాలు ($1)',
+	'wikiafollowedpages-special-heading-article' => 'వ్యాసాలు ($1)',
+	'wikiafollowedpages-special-heading-blogs' => 'బ్లాగులు మరియు టపాలు ($1)',
+	'wikiafollowedpages-special-heading-project' => 'ప్రాజెక్టు పుటలు ($1)',
+	'wikiafollowedpages-special-heading-user' => 'వాడుకరి పుటలు ($1)',
+	'wikiafollowedpages-special-heading-mediawiki' => 'మీడియావికీ పుటలు ($1)',
+	'wikiafollowedpages-special-namespace' => '($1 పుట)',
+	'wikiafollowedpages-special-showall' => 'అన్నీ చూపించు',
+	'wikiafollowedpages-prefs-advanced' => 'ఉన్నత ఎంపికలు',
+	'wikiafollowedpages-userpage-hide' => 'దాచు',
 );
 
 /** Ukrainian (Українська)

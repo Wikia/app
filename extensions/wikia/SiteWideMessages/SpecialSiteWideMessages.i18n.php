@@ -722,6 +722,11 @@ $messages['gl'] = array(
 	'swm-lang-other' => 'todas as linguas restantes',
 );
 
+/** Hausa (هَوُسَ) */
+$messages['ha'] = array(
+	'swm-label-comment' => 'Bahasi',
+);
+
 /** Hungarian (Magyar)
  * @author Glanthor Reviol
  */
@@ -1199,6 +1204,7 @@ $messages['no'] = array(
 $messages['pdc'] = array(
 	'swm-label-comment' => 'Anmaerricking',
 	'swm-label-language' => 'Schprooch',
+	'swm-button-send' => '[ Naus schicke ]',
 	'swm-list-table-lang' => 'Schprooche',
 	'swm-yes' => 'Ya',
 	'swm-no' => 'Nee',
@@ -1481,6 +1487,7 @@ $messages['ru'] = array(
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
@@ -1506,11 +1513,13 @@ $messages['sr-ec'] = array(
 	'swm-button-preview' => '[ Предпреглед ]',
 	'swm-button-send' => 'Пошаљи',
 	'swm-button-save' => 'Сачувај',
+	'swm-button-new' => '[ Ново ]',
 	'swm-msg-sent-ok' => '<h3>Порука је послана.</h3>',
 	'swm-msg-sent-err' => '<h3>Порука НИЈЕ послана.</h3>Погледајте лог са грешкама.',
 	'swm-msg-remove' => 'Сигурни сте да желите да уклоните ту поруку! Порука се после не може вратити!',
 	'swm-days' => 'никад, сат, сати,дан, дани',
 	'swm-expire-info' => 'Порука ће истећи на $1.',
+	'swm-link-dismiss' => 'одбаци ову поруку',
 	'swm-dismiss-content' => '<p>Порука је поништена.</p><p>%s</p>',
 	'swm-list-no-messages' => 'Нема порука.',
 	'swm-list-table-id' => 'ИД',
@@ -1629,6 +1638,74 @@ $messages['tl'] = array(
 	'swm-error-empty-message' => 'Ipasok ang nilalaman ng mensahe.',
 	'swm-error-empty-group' => 'Ipasok ang pangalan ng pangkat.',
 	'swm-lang-other' => 'lahat ng natitirang mga wika',
+);
+
+/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+ * @author Ильнар
+ */
+$messages['tt-cyrl'] = array(
+	'sitewidemessages' => 'Сайтның хатлары',
+	'swm-page-title-editor' => 'Сайтның хатлары :: Үзгәртү',
+	'swm-page-title-preview' => 'Сайтның хатлары :: Алдан ачып карау',
+	'swm-page-title-send' => 'Сайтның хатлары :: Хатны җибәрү',
+	'swm-page-title-sent' => 'Сайтның хатлары :: Сезнең хат җибәрелде',
+	'swm-page-title-dismiss' => 'Сайтның хатлары :: Кире кагу',
+	'swm-page-title-list' => 'Сайтның хатлары :: Хатлар',
+	'swm-label-preview' => 'Алдан карау',
+	'swm-label-edit' => 'Үзгәртү',
+	'swm-label-remove' => 'Бетерү',
+	'swm-label-sent' => 'Сезнең хат җибәрелде',
+	'swm-label-list' => 'Тарих',
+	'swm-label-recipient' => 'Хатны кабул итүчеләр',
+	'swm-label-recipient-wikis' => 'Вики',
+	'swm-label-recipient-users' => 'Катнашучылар',
+	'swm-label-expiration' => 'Вакытның бетүе',
+	'swm-label-mode-wikis-all' => 'Барлык вики',
+	'swm-label-mode-wikis-hub' => 'Алынган хаб',
+	'swm-label-mode-wikis-wiki' => 'Кабул ителгән вики',
+	'swm-label-mode-users-all' => 'Барлык катнашучылар',
+	'swm-label-mode-users-active' => 'Актив катнашучылар',
+	'swm-label-mode-users-group' => 'Тәркемгә кергән катнашучылар',
+	'swm-label-mode-users-group-hint' => '<i>Ачылучы исемлектән тәркене сайлагыз яки язарга керешегез</i>',
+	'swm-label-mode-users-user' => 'Сайланган кулланучы',
+	'swm-label-mode-users-user-hint' => '<i>Бу  көйләнмә «Вики» төркемендә кире кагыла</i>',
+	'swm-label-content' => 'Эчтәлек',
+	'swm-label-comment' => 'Искәрмә',
+	'swm-label-dismissed' => 'Төшереп калдырырга',
+	'swm-label-language' => 'Тел',
+	'swm-button-lang-checkall' => '[ Барысын да кире кагырга ]',
+	'swm-button-lang-checknone' => '[ Тамгаларны алырга ]',
+	'swm-taskmanager-hint' => '<i>Истә тотыгыз, зур күләмле хатлар  TaskManager чиратында торачак.</i>',
+	'swm-button-preview' => '[ Алдан карау ]',
+	'swm-button-send' => '[ Җибәрергә ]',
+	'swm-button-save' => '[Сакларга ]',
+	'swm-button-new' => '[ Яңа ]',
+	'swm-msg-sent-ok' => '<h3>Хатыгыз җибәрелде</h3>',
+	'swm-msg-sent-err' => '<h3>Хатны җибәрергә мөмкин түгел</h3>Хаталар журналыннан карагыз',
+	'swm-msg-remove' => 'Сез чыннан да бу хатны бетерәсегез киләме? Ләкин бу адымны кире кагып булмый!',
+	'swm-days' => 'беркайчанда,сәгать,сәгатьләр,көн,көннәр',
+	'swm-expire-info' => 'Бу хат $1 кадәр дөрес дип санала.',
+	'swm-link-dismiss' => 'бу хатны төшереп калдырырга',
+	'swm-dismiss-content' => '<p>Бу хат кире кагылды</p><p>%s</p>',
+	'swm-list-no-messages' => 'Хатлар юк',
+	'swm-list-table-id' => 'ID исемлеге',
+	'swm-list-table-sender' => 'Җибәрүче',
+	'swm-list-table-wiki' => 'Вики',
+	'swm-list-table-recipient' => 'Хатны кабул итүче',
+	'swm-list-table-group' => 'Тәркем',
+	'swm-list-table-expire' => 'Бетә',
+	'swm-list-table-date' => 'Җибәрү вакыты',
+	'swm-list-table-removed' => 'Бетерелде',
+	'swm-list-table-content' => 'Эчтәлек',
+	'swm-list-table-tools' => 'Кораллар',
+	'swm-list-table-lang' => 'Телләр',
+	'swm-yes' => 'Әйе',
+	'swm-no' => 'Юк',
+	'swm-error-no-such-wiki' => 'Мондый вики юк!',
+	'swm-error-no-such-user' => 'Әлеге катнашучы теркәлмәгән',
+	'swm-error-empty-message' => 'Хатның эчтәлеген кертегез',
+	'swm-error-empty-group' => 'Төркемнең исемен кертегез',
+	'swm-lang-other' => 'башка телләр',
 );
 
 /** Volapük (Volapük)

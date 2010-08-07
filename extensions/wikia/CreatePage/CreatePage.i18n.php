@@ -46,6 +46,13 @@ Write the first section of your page here.
 Write the second section of your page here.',
 );
 
+/** Message documentation (Message documentation)
+ * @author The Evil IP address
+ */
+$messages['qqq'] = array(
+	'createpage-desc' => '{{desc}}',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -183,8 +190,10 @@ Skrivit amañ eil rannskrid ho pennad.',
 
 /** German (Deutsch)
  * @author LWChris
+ * @author The Evil IP address
  */
 $messages['de'] = array(
+	'createpage-desc' => "Erlaubt das Erstellen von neuen Seiten mit Wikia's WYSIWIG-Editor",
 	'createpage-sp-title' => 'Neue Seite anlegen',
 	'createpage_title' => 'Neue Seite anlegen',
 	'createpage_title_caption' => 'Titel:',
@@ -264,9 +273,11 @@ $messages['el'] = array(
 );
 
 /** Spanish (Español)
+ * @author Crazymadlover
  * @author Translationista
  */
 $messages['es'] = array(
+	'createpage-desc' => 'Permite crear una nueva página usando editor WYSIWIG de Wikia',
 	'createpage-sp-title' => 'Crea un nuevo artículo',
 	'createpage_title' => 'Crear un nuevo artículo',
 	'createpage_title_caption' => 'Título:',
@@ -372,9 +383,11 @@ Valitse eri nimi.',
 );
 
 /** French (Français)
+ * @author Crochet.david
  * @author IAlex
  */
 $messages['fr'] = array(
+	'createpage-desc' => 'Permet de créer une nouvelle page en utilisant l’éditeur WYSIWIG de Wikia',
 	'createpage-sp-title' => 'Créer un nouvel article',
 	'createpage_title' => 'Créer un nouvel article',
 	'createpage_title_caption' => 'Titre :',
@@ -414,6 +427,7 @@ $messages['fr'] = array(
  * @author Toliño
  */
 $messages['gl'] = array(
+	'createpage-desc' => 'Permite crear unha nova páxina usando o editor WYSIWIG de Wikia',
 	'createpage-sp-title' => 'Crear un novo artigo',
 	'createpage_title' => 'Crear un novo artigo',
 	'createpage_title_caption' => 'Título:',
@@ -689,6 +703,7 @@ Schreiwt déi zweet Sektioun vun Ärem Artikel hei.',
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'createpage-desc' => 'Овозможува создавање на нови страници со уредувачот со директен преглед',
 	'createpage-sp-title' => 'Создавање на нова статија',
 	'createpage_title' => 'Создај нова статија',
 	'createpage_title_caption' => 'Наслов:',
@@ -729,6 +744,7 @@ $messages['mk'] = array(
  * @author Siebrand
  */
 $messages['nl'] = array(
+	'createpage-desc' => "Maakt het mogelijk nieuwe pagina's aan te maken met Wikia's WYSIWIG-tekstverwerker",
 	'createpage-sp-title' => 'Nieuwe pagina aanmaken',
 	'createpage_title' => 'Nieuwe pagina aanmaken',
 	'createpage_title_caption' => 'Paginanaam:',
@@ -820,6 +836,7 @@ $messages['pl'] = array(
  * @author Dragonòt
  */
 $messages['pms'] = array(
+	'createpage-desc' => "A përmët ëd creé na pàgina neuva an dovrand l'editor WYSIWIG ëd Wikia",
 	'createpage-sp-title' => 'Creé un neuv artìcol',
 	'createpage_title' => 'Creé un neuv artìcol',
 	'createpage_title_caption' => 'Tìtol:',
@@ -876,6 +893,7 @@ $messages['ps'] = array(
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
+	'createpage-desc' => 'Permite criar uma página nova usando o editor WYSIWIG da Wikia',
 	'createpage-sp-title' => 'Criar uma página nova',
 	'createpage_title' => 'Criar uma página nova',
 	'createpage_title_caption' => 'Título:',
@@ -964,6 +982,7 @@ Escreva a segunda seção do seu artigo aqui.',
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
+	'createpage-desc' => 'Позволяет создавать новые страницы с помощью визуального редактора Викии',
 	'createpage-sp-title' => 'Создание новой статьи',
 	'createpage_title' => 'Создание новой статьи',
 	'createpage_title_caption' => 'Название:',
@@ -1004,6 +1023,7 @@ $messages['ru'] = array(
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
@@ -1011,7 +1031,7 @@ $messages['sr-ec'] = array(
 	'createpage_title' => 'Започни нови чланак',
 	'createpage_title_caption' => 'Наслов:',
 	'createpage_enter_text' => 'Текст:',
-	'createpage_empty_title_error' => ' Потребан је наслов',
+	'createpage_empty_title_error' => 'Потребан је наслов',
 	'createpage_empty_article_body_error' => 'Потребан је текст чланка',
 	'createpage_invalid_title_error' => 'Погрешан наслов',
 	'createpage_article_already_exists' => 'Постоји чланак са тим насловом.
@@ -1019,7 +1039,7 @@ $messages['sr-ec'] = array(
 	'createpage_spam' => 'Извините, али не може се сачувати ваша измена',
 	'createpage_cant_edit' => 'Не може се извести измена',
 	'createpage-dialog-title' => 'Напишите нови чланак',
-	'createpage-dialog-message1' => 'Ура, ви пишете нову страницу!',
+	'createpage-dialog-message1' => 'Ура! Пишете нову страницу!',
 	'createpage-dialog-message2' => 'Како желите да га назовете?',
 	'createpage-dialog-choose' => 'Одаберите изглед странице:',
 	'createpage-dialog-format' => 'Стандардан изглед',

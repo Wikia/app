@@ -124,6 +124,14 @@ $messages['id'] = array(
 	'theorytab-parent-title' => 'Induk artikel',
 );
 
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'theorytab-title' => 'Nchenché',
+	'theorytab-parent-title' => 'Nke mụrụ édémédé',
+);
+
 /** Italian (Italiano) */
 $messages['it'] = array(
 	'theorytab-title' => 'Teorie',

@@ -136,6 +136,11 @@ $messages['br'] = array(
 	'tog-disablecategoryselect' => 'Diweredekaat balizadur ar rummadoù',
 );
 
+/** Sorani (کوردی) */
+$messages['ckb'] = array(
+	'categoryselect-button-save' => 'پاشەکەوت',
+);
+
 /** German (Deutsch)
  * @author LWChris
  */
@@ -281,6 +286,11 @@ $messages['gl'] = array(
 	'categoryselect-desc' => 'Proporciona unha interface para xestionar as categorías dos artigos sen editar todo o artigo.',
 	'categoryselect-edit-abort' => 'O hook da extensión abortou a modificación que intentou realizar',
 	'tog-disablecategoryselect' => 'Desactivar a etiquetaxe de categorías',
+);
+
+/** Hausa (هَوُسَ) */
+$messages['ha'] = array(
+	'categoryselect-button-cancel' => 'Soke',
 );
 
 /** Hungarian (Magyar)
