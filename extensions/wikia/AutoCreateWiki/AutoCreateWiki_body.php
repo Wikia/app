@@ -191,6 +191,27 @@ class AutoCreateWikiPage extends SpecialPage {
 					break;
 			}
 			case "Processing" : {
+					// Locking mechanism to prevent two instances of processing (which would otherwise happen
+					// when the processing takes long enough that Varnish gives up on the first request and does
+					// a retry). RT#62651
+					$sInfo = "";
+					if ( !empty($_SESSION) && isset($_SESSION['awcName']) ) {
+						$sInfo = AutoCreateWiki::logMemcKey (
+							"get",
+							array(
+								'awcName'     => $_SESSION['awcName'],
+								'awcDomain'   => $_SESSION['awcDomain'],
+								'awcCategory' => $_SESSION['awcCategory'],
+								'awcLanguage' => $_SESSION['awcLanguage']
+							)
+						);
+						if($sInfo){
+							$this->log ("A varnish retry attempted to spawn another process for the same wiki creation (".$_SESSION['awcName'].").  Skipping.\n");
+							print "A process is already running to create this wiki. This is a retry - exiting.\n";
+							exit;
+						}
+					}
+
 					$this->log (" session: " . print_r($_SESSION, true). "\n");
 					#--- restriction
 					if ( $wgUser->isAnon() ) {
@@ -308,6 +329,7 @@ class AutoCreateWikiPage extends SpecialPage {
 									if ( $this->mLang != 'en' ) $query[ "uselang" ] = $this->mLang;
 									if ( !empty(  $this->mType ) ) $query[ "type" ] = $this->mType;
 									$wgOut->redirect( $this->mTitle->getLocalURL() . '/Wiki_create?' . wfArrayToCGI( $query ) );
+									return;
 								}
 							} else {
 								#--- some errors
