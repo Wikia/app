@@ -5,6 +5,8 @@ package main;
 #
 # Graphics::Magick version
 #
+# @todo -- thumbnails for movies are broken, move to ffmpegthumbnailer 2.0.4
+#
 
 #
 # available options:
@@ -421,6 +423,7 @@ while( $request->Accept() >= 0 || $test ) {
 						print "Cache-control: max-age=30\r\n";
 						print "Content-Length: $output_length\r\n";
 						printf "Last-Modified: %s GMT\r\n", $datetime->strftime( "%a, %d %b %Y %T" );
+						print "Connection: keep-alive\r\n";
 						print "Content-type: image/png\r\n\r\n";
 						print $output unless $test;
 						$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
@@ -513,7 +516,7 @@ while( $request->Accept() >= 0 || $test ) {
 							$geometry = sprintf( "%dx%d!", $width, $height );
 						}
 						$image->Resize( "geometry" => $geometry, "blur" => 0.9 );
-						$image->Set( quality => 95 );
+						$image->Set( quality => 90 );
 
 						$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
 						print STDERR "Resizing into $thumbnail, time: $t_elapsed\n" if $debug;
@@ -529,6 +532,7 @@ while( $request->Accept() >= 0 || $test ) {
 							print "Cache-control: max-age=30\r\n";
 							print "Content-Length: $output_length\r\n";
 							printf "Last-Modified: %s GMT\r\n", $datetime->strftime( "%a, %d %b %Y %T" );
+							print "Connection: keep-alive\r\n";
 							print "Content-type: $mimetype\r\n\r\n";
 							print $output unless $test;
 
