@@ -254,10 +254,12 @@ class Advertisement
 	/**
 	 * validate this advertisement
 	 *
+	 * @param boolean $local determines whether we're validating remotely or locally
+	 *
 	 * @return boolean true if valid, array of strings describing errors if not
 	 * @public
 	 */
-	public function validate(){
+	public function validate( $local = true ){
 		//some of these could be a lot more specific, but it's a start
 		$errs = array();
 		if($this->id != '' && !is_int($this->id)) $errs[]="Invalid ID";
@@ -271,7 +273,7 @@ class Advertisement
 		if(!is_int($this->ad_months)) $errs[]="Invalid months";
 
 		$title = Title::newFromID( $this->page_id );
-		if ( !is_object( $title ) || !$title->exists() || $title->getNamespace() != NS_MAIN ) {
+		if ( $local && !is_object( $title ) || !$title->exists() || $title->getNamespace() != NS_MAIN ) {
 			$errs[] = "Invalid page name (non-existant or not a regular page)";
 		}
 
