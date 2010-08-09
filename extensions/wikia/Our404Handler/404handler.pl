@@ -312,7 +312,7 @@ while( $request->Accept() >= 0 || $test ) {
 		#
 		my $origname = pop @{ [ split( "/" , $original ) ] };
 		if( index( $last, $original ) != -1 ) {
-			print STDERR "$origname not found in $last\n" if $debug;
+			say STDERR "$origname not found in $last" if $debug;
 		}
 		else {
 			#
@@ -355,7 +355,7 @@ while( $request->Accept() >= 0 || $test ) {
 					$content = $response->content;
 					$content_length = length( $content );
 					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-					print STDERR "Reading remote $remote, content-length: $content_length, time: $t_elapsed\n" if $debug;
+					say STDERR "Reading remote $remote, content-length: $content_length, time: $t_elapsed" if $debug;
 				}
 				else {
 					$content_length = 0;
@@ -379,7 +379,7 @@ while( $request->Accept() >= 0 || $test ) {
 				$mimetype = $flm->checktype_contents( $content );
 				( $imgtype ) = $mimetype =~ m![^/+]/(\w+)!;
 				$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-				print STDERR "$original $thumbnail $mimetype $imgtype $request_uri $referer, time: $t_elapsed\n" if $debug;
+				say STDERR "$original $thumbnail $mimetype $imgtype $request_uri $referer, time: $t_elapsed" if $debug > 1;
 
 				#
 				# read original file, thumbnail it, store on disc
@@ -402,7 +402,7 @@ while( $request->Accept() >= 0 || $test ) {
 					$origh = to_float( $origh ) unless is_float( $origh );
 					my $height = scaleHeight( $origw, $origh, $width, $test );
 					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-					print STDERR "reading svg as xml file (for size checking), time: $t_elapsed\n" if $debug;
+					say STDERR "reading svg as xml file (for size checking), time: $t_elapsed" if $debug > 1;
 
 					#
 					# RSVG thumbnailer
@@ -418,7 +418,7 @@ while( $request->Accept() >= 0 || $test ) {
 					$rsvg->loadImageFromString( $content, 0, $args );
 					$transformed = 1;
 					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-					print STDERR "reading svg as image file (for transforming), time: $t_elapsed\n" if $debug;
+					say STDERR "reading svg as image file (for transforming), time: $t_elapsed" if $debug > 1;
 
 					use bytes;
 					my $output = $rsvg->getImageBitmap();
@@ -433,7 +433,7 @@ while( $request->Accept() >= 0 || $test ) {
 						print "Content-type: image/png\r\n\r\n";
 						print $output unless $test;
 						$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-						print STDERR "File $thumbnail served, time: $t_elapsed\n" if $debug;
+						say STDERR "File $thumbnail served, time: $t_elapsed" if $debug;
 						$transformed = 1;
 					}
 					else {
@@ -502,7 +502,7 @@ while( $request->Accept() >= 0 || $test ) {
 							my $geometry = sprintf( "%dx%d+%d+%d", $w, $h, $x1, $y1 );
 							$image->Crop( $geometry );
 							$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-							print STDERR "Cropping into $geometry, time: $t_elapsed\n" if $debug;
+							say STDERR "Cropping into $geometry, time: $t_elapsed" if $debug > 1;
 							$cropped = 1;
 						}
 					}
@@ -510,7 +510,7 @@ while( $request->Accept() >= 0 || $test ) {
 					my $origw  = $image->Get( 'width' );
 					my $origh  = $image->Get( 'height' );
 					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-					print STDERR "Original size $origw x $origh, time: $t_elapsed\n" if $debug;
+					say STDERR "Original size $origw x $origh, time: $t_elapsed" if $debug > 1;
 					if( $origw && $origh ) {
 						my $height = scaleHeight( $origw, $origh, $width, $test );
 						my $geometry = sprintf( "%dx%d!>", $width, $height );
@@ -525,7 +525,7 @@ while( $request->Accept() >= 0 || $test ) {
 						$image->Set( quality => 90 );
 
 						$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-						print STDERR "Resizing into $thumbnail, time: $t_elapsed\n" if $debug;
+						say STDERR "Resizing into $thumbnail, time: $t_elapsed" if $debug > 1;
 
 						my $output = $image->ImageToBlob();
 						use bytes;
@@ -543,7 +543,7 @@ while( $request->Accept() >= 0 || $test ) {
 							print $output unless $test;
 
 							$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-							print STDERR "File $thumbnail served, time: $t_elapsed\n" if $debug;
+							say STDERR "File $thumbnail served, time: $t_elapsed" if $debug;
 							$transformed  = 1;
 						}
 						no bytes;
@@ -552,7 +552,7 @@ while( $request->Accept() >= 0 || $test ) {
 				}
 			}
 			else {
-				print STDERR "$thumbnail original file $original does not exists\n" if $debug > 1;
+				say STDERR "$thumbnail original file $original does not exists" if $debug > 1;
 			}
 		}
 	}
