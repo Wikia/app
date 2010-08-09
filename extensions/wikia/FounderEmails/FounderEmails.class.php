@@ -40,7 +40,9 @@ class FounderEmails {
 	 * send notification email to wiki founder
 	 */
 	public function notifyFounder( $mailSubject, $mailBody, $mailBodyHTML, $wikiId = 0 ) {
-		return $this->getWikiFounder( $wikiId )->sendMail( $mailSubject, $mailBody, null, null, 'FounderEmails', $mailBodyHTML );
+		global $wgPasswordSender;
+		$from = new MailAddress( $wgPasswordSender, 'Wikia' );
+		return $this->getWikiFounder( $wikiId )->sendMail( $mailSubject, $mailBody, $from, null, 'FounderEmails', $mailBodyHTML );
 	}
 
 	/**
