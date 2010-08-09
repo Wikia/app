@@ -233,6 +233,7 @@ my $imgtype        = undef;
 my $remote         = undef; # url to remote original when $use_http is true
 my $content        = undef; #
 my $content_length = 0;
+my $last_modified  = undef;
 
 while( $request->Accept() >= 0 || $test ) {
 	my $t_start = [ gettimeofday() ];
@@ -338,14 +339,18 @@ while( $request->Accept() >= 0 || $test ) {
 			# use remote file if --http is used
 			# use local file otherwise
 			#
+			$datetime = DateTime->now();
 			use bytes;
 			if( $use_http ) {
 				$remote = $original;
 				substr( $remote, 0, length( $basepath ), $baseurl );
+				substr( $thumbnail, 0, length( $basepath ), $baseurl );
 				my $ua = LWP::UserAgent->new();
 				$ua->timeout( 5 );
 				my $response = $ua->get( $remote );
-
+				$last_modified = $response->header("Last-Modified")
+					? $response->header("Last-Modified")
+					: $datetime->strftime( "%a, %d %b %Y %T GMT" );
 				if( $response->is_success ) {
 					$content = $response->content;
 					$content_length = length( $content );
@@ -354,12 +359,14 @@ while( $request->Accept() >= 0 || $test ) {
 				}
 				else {
 					$content_length = 0;
+					$last_modified = $datetime->strftime( "%a, %d %b %Y %T GMT" );
 				}
 			}
 			else {
 				$content = read_file( $original, binmode => ":raw" ) ;
 				$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
 				$content_length = length( $content );
+				$last_modified = $datetime->strftime( "%a, %d %b %Y %T GMT" );
 				print STDERR "Reading local $original, content-length: $content_length, time: $t_elapsed\n" if $debug;
 			}
 			no bytes;
@@ -369,7 +376,6 @@ while( $request->Accept() >= 0 || $test ) {
 			# thumbnail request. mimetype will be used later in header
 			#
 			if( $content_length ) {
-				$datetime = DateTime->now();
 				$mimetype = $flm->checktype_contents( $content );
 				( $imgtype ) = $mimetype =~ m![^/+]/(\w+)!;
 				$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
@@ -422,7 +428,7 @@ while( $request->Accept() >= 0 || $test ) {
 						print "HTTP/1.1 200 OK\r\n";
 						print "Cache-control: max-age=30\r\n";
 						print "Content-Length: $output_length\r\n";
-						printf "Last-Modified: %s GMT\r\n", $datetime->strftime( "%a, %d %b %Y %T" );
+						print "Last-Modified: $last_modified\r\n";
 						print "Connection: keep-alive\r\n";
 						print "Content-type: image/png\r\n\r\n";
 						print $output unless $test;
@@ -531,7 +537,7 @@ while( $request->Accept() >= 0 || $test ) {
 							print "HTTP/1.1 200 OK\r\n";
 							print "Cache-control: max-age=30\r\n";
 							print "Content-Length: $output_length\r\n";
-							printf "Last-Modified: %s GMT\r\n", $datetime->strftime( "%a, %d %b %Y %T" );
+							print "Last-Modified: $last_modified\r\n";
 							print "Connection: keep-alive\r\n";
 							print "Content-type: $mimetype\r\n\r\n";
 							print $output unless $test;
