@@ -130,8 +130,8 @@ class DataFeedProvider {
 					if($ut->isKnown()) {
 						$users[$res['user']] = Xml::element('a', array('href' => $ut->getLocalUrl(), 'rel' => 'nofollow'), $res['user']);
 					} else {
-						//$users[$res['user']] = Xml::element('a', array('href' => $ut->getLocalUrl(), 'rel' => 'nofollow', 'class' => 'new'), $res['user']);
-						$users[$res['user']] = Xml::element('a', array('href' => Skin::makeSpecialUrl('Contributions').'/'.$res['user'], 'rel' => 'nofollow'), $res['user']);
+						$users[$res['user']] = Xml::element('a', array('href' => $ut->getLocalUrl(), 'rel' => 'nofollow', 'class' => 'new'), $res['user']);
+						//$users[$res['user']] = Xml::element('a', array('href' => Skin::makeSpecialUrl('Contributions').'/'.$res['user'], 'rel' => 'nofollow'), $res['user']);
 					}
 				}
 			}
