@@ -98,6 +98,10 @@ class WikiStatsPage extends IncludableSpecialPage
 		}
 
 		$domain = $wgRequest->getVal( "ws-domain", "" );
+		if ( empty($domain) ) {
+			$domain = $wgRequest->getVal( "wiki", "" );
+		}
+		
 		if ( $domain == 'all' ) {
         	$this->mCityId = 0;
         	$this->mCityDBName = WIKISTATS_CENTRAL_ID;
