@@ -12,13 +12,9 @@ if(!defined('MEDIAWIKI')) {
 
 $wgHooks['ArticleSaveComplete'][] = 'efSharedHelpArticleCreation';
 
-function efSharedHelpArticleCreation( &$article, &$user, $text, $summary, $minoredit, &$watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId, &$redirect ) {
+function efSharedHelpArticleCreation( &$article, &$user, $text, $summary, $minoredit, &$watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
 	if ( wfReadOnly() ) {
 		// not likely if we got here, but... healthy paranoia ;)
-		return true;
-	}
-
-	if ( !$article->mTitle->isNewPage() ) {
 		return true;
 	}
 
@@ -26,9 +22,13 @@ function efSharedHelpArticleCreation( &$article, &$user, $text, $summary, $minor
 		return true;
 	}
 
-	if ( empty( $status ) ) { // @TODO check for correct status here
-		return true;
-	}
+        if ( !$status->isOK() ) {
+                return true;
+        }
+
+        if ( !$article->mTitle->isNewPage( GAID_FOR_UPDATE ) ) {
+                return true;
+        }
 
 	$talkTitle = Title::newFromText( $article->mTitle->getText(), NS_HELP_TALK );
 
@@ -38,9 +38,11 @@ function efSharedHelpArticleCreation( &$article, &$user, $text, $summary, $minor
 
 	$talkArticle = new Article( $talkTitle );
 
-	if ( $article->mTitle->isRedirect() ) {
-		// @TODO if a redirect was created, create a redirect to the talk page instead
-		// $talkArticle->doEdit( '{{talkheader}}', wfMsgForContent( 'sharedhelp-autotalkcreate-summary' ) );
+	$redir = $article->getRedirectTarget();
+
+	if ( $redir ) {
+		$target = $redir->getTalkNsText() . ':' . $redir->getText();
+		$talkArticle->doEdit( "#REDIRECT [[$target]]", wfMsgForContent( 'sharedhelp-autotalkcreate-summary' ) );
 	} else {
 		$talkArticle->doEdit( '{{talkheader}}', wfMsgForContent( 'sharedhelp-autotalkcreate-summary' ) );
 	}
