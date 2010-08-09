@@ -13,7 +13,6 @@ $dir = dirname(__FILE__) . '/';
 /*Auto loader setup */
 $wgAutoloadClasses['imageServing']  = $dir . 'imageServing.class.php';
 $wgAutoloadClasses['imageServingHelper']  = $dir . 'imageServingHelper.class.php';
-$wgAutoloadClasses['topImage']  = $dir . 'topImage.class.php';
 $wgHooks['LinksUpdateComplete'][] = 'imageServingHelper::buildIndexOnPageEdit';
 /* parser hook */
 
