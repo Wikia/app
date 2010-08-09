@@ -98,10 +98,7 @@ class SpecialAdBulkUpload extends UnlistedSpecialPage {
 						if(is_numeric($val)) $val=$val+0;
 						$ad->$fname = $val;
 					}
-					//remove this for now, so bulk upload will work on central wiki
-					//(validate verifies the page_id)
-					//$check = $ad->validate();
-					$check = true; //temporary
+					$check = $ad->validate( false );
 					if($check === true){
 						$ad->Save();
 						$wgOut->addHTML("<p>Added: ".print_r($ad,1)."</p>\n");
