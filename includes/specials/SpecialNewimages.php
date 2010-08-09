@@ -6,8 +6,11 @@
  */
 
 function wfSpecialNewimages( $par, $specialPage ) {
-	global $wgUser, $wgOut, $wgLang, $wgRequest, $wgMiserMode;
+	global $wgUser, $wgOut, $wgLang, $wgRequest, $wgMiserMode, $wgUseWikiaNewFiles;
 	global $wmu;
+
+	if ($wgUseWikiaNewFiles)
+		return wfSpecialWikiaNewFiles( $par, $specialPage );
 
 	$wpIlMatch = $wgRequest->getText( 'wpIlMatch' );
 	$dbr = wfGetDB( DB_SLAVE );

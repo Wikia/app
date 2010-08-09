@@ -1201,8 +1201,12 @@ class SpecialSearchOld {
 		$off = $this->offset + 1;
 		$out .= "<ul class='mw-search-results'>\n";
 
+		$num = 0;
 		while( $result = $matches->next() ) {
+			wfRunHooks( 'SpecialSearchShowHit', array( &$out, $result, $terms, $num ) );
 			$out .= $this->showHit( $result, $terms );
+
+			$num++;
 		}
 		$out .= "</ul>\n";
 
