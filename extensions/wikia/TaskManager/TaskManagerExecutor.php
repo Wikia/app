@@ -173,7 +173,10 @@ class TaskManagerExecutor {
 			$oRes = $dbr->select(
 			array( "wikia_tasks" ),
 				array( "*" ),
-				array( "task_status" => TASK_STARTED),
+				array( 
+					"task_status" => TASK_STARTED,
+					"task_type" => !empty($this->mTasksClasses) ? array_keys($this->mTasksClasses) : ''
+				),
 				__METHOD__
 			);
 
@@ -192,14 +195,7 @@ class TaskManagerExecutor {
 				$aCondition = null;
 			}
 			$aCondition["task_status"] = TASK_QUEUED;
-
-			/**
-			 * skip unknown tasks
-			 * @author Władek Bodzek
-			 */
-			if ( !empty($this->mTasksClasses) ) {
-				$aCondition["task_type"] = array_keys($this->mTasksClasses);
-			}
+			$aCondition["task_type"] = !empty($this->mTasksClasses) ? array_keys($this->mTasksClasses) : '';
 
 			/**
 			 * then get first from top sorted by priority and timestamp
@@ -253,7 +249,7 @@ class TaskManagerExecutor {
 		if( is_array( $ids ) ) {
 			foreach( $ids as $taskid ) {
 				$oTask = BatchTask::newFromID( $taskid );
-				if( ! empty( $oTask->getData()->task_started ) ) {
+				if( $oTask && ! empty( $oTask->getData()->task_started ) ) {
 					$ttl = $oTask->getTTL();
 					$run =  wfTimestamp(TS_UNIX, $oTask->getData()->task_started);
 					$now = wfTimestamp();
