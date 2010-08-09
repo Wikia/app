@@ -34,23 +34,30 @@ class ArticleCommentsAjax {
 		$articleId = $wgRequest->getVal( 'article', false );
 		$commentId = $wgRequest->getVal( 'id', false );
 
+		$result = array(
+			'error' => 1
+		);
+
 		$title = Title::newFromID( $articleId );
 		if ( !$title ) {
-			return array( 'error' => 1 );
+			return $result;
 		}
 
 		$comment = ArticleComment::newFromId( $commentId );
-		if ( $comment && $comment->canEdit() ) {
-			$response = $comment->doSaveComment( $wgRequest, $wgUser, $title );
-			if ( $response !== false ) {
-				$status = $response[0];
-				$article = $response[1];
-				wfLoadExtensionMessages('ArticleComments');
-				return ArticleComment::doAfterPost($status, $article, $commentId);
+		if ( $comment ) {
+			$comment->load();
+			if ( $comment->canEdit() ) {
+				$response = $comment->doSaveComment( $wgRequest, $wgUser, $title );
+				if ( $response !== false ) {
+					$status = $response[0];
+					$article = $response[1];
+					wfLoadExtensionMessages('ArticleComments');
+					return ArticleComment::doAfterPost($status, $article, $commentId);
+				}
 			}
-		} else {
-			return array( 'error' => 1 );
 		}
+
+		return $result;
 	}
 
 	/**
@@ -64,37 +71,36 @@ class ArticleCommentsAjax {
 	static public function axEdit() {
 		global $wgRequest;
 
-		$commentId = $wgRequest->getVal( 'id', false );
 		$articleId = $wgRequest->getVal( 'article', false );
-		$error = 0;
+		$commentId = $wgRequest->getVal( 'id', false );
+
+		$result = array(
+			'error'	=> 1,
+			'id'	=> $commentId,
+			'show'	=> false,
+			'text'	=> ''
+		);
 
 		/**
 		 * check owner of article
 		 */
 		$title = Title::newFromID( $articleId );
 		if ( !$title ) {
-			$error = 1;
+			return $result;
 		}
 
 		/**
 		 * edit comment
 		 */
 		$comment = ArticleComment::newFromId( $commentId );
-		if ( $comment && $comment->canEdit() ) {
-			$status  = true;
-			$text = $comment->editPage();
-		} else {
-			$status = false;
-			$text = '';
-			$error = 1;
+		if ( $comment ) {
+			$comment->load();
+			if ( $comment->canEdit() ) {
+				$result['error'] = 0;
+				$result['show'] = true;
+				$result['text'] = $comment->editPage();
+			}
 		}
-
-		$result = array(
-			'id'	=> $commentId,
-			'error'	=> $error,
-			'show'	=> $status,
-			'text'	=> $text
-		);
 
 		return $result;
 	}
