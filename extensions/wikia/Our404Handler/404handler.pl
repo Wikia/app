@@ -193,7 +193,7 @@ my @done = ();
 #
 my $maxrequests = $ENV{ "REQUESTS" } || 1000;
 my $basepath    = $ENV{ "IMGPATH"  } || "/images";
-my $baseurl     = $ENV{ "BASEURL"  } || "http://file-s2";
+my $baseurl     = $ENV{ "BASEURL"  } || "http://images.wikia.com";
 my $clients     = $ENV{ "CHILDREN" } || 4;
 my $listen      = $ENV{ "SOCKET"   } || "0.0.0.0:39393";
 my $debug       = $ENV{ "DEBUG"    } || 1;
@@ -347,6 +347,7 @@ while( $request->Accept() >= 0 || $test ) {
 				substr( $thumbnail, 0, length( $basepath ), $baseurl );
 				my $ua = LWP::UserAgent->new();
 				$ua->timeout( 5 );
+				$ua->proxy( "http", "http://127.0.0.1:6081/" );
 				my $response = $ua->get( $remote );
 				$last_modified = $response->header("Last-Modified")
 					? $response->header("Last-Modified")
