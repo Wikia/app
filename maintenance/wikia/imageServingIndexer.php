@@ -21,11 +21,10 @@ if (isset($options['help'])) {
 	die( "indexer for blog listing pages" );
 }
 
-
-if ( WikiFactory::getVarByName("wgImagesIndexed", $wgCityId ) ) {
+if ( WikiFactory::getVarValueByName("wgImagesIndexed", $wgCityId ) ) {
 	echo "This wiki is already indexed change wgImagesIndexed to false to reindex\n";
+	exit;
 }
-
 
 $db = wfGetDB(DB_SLAVE, array());
 
@@ -99,7 +98,7 @@ if (empty($options['do']) || $options['do'] != 1) {
 				"--conf {$wgWikiaLocalSettingsPath}"
 			);	
 			$out = array();
-			system( implode( " ", $cmd ), $status );
+			//system( implode( " ", $cmd ), $status );
 		}
 	}
 	Wikia::log( __METHOD__, 'imageServingIndexer', 'end for:'.$wgCityId. " total time:".(Time() - $startTime) );
