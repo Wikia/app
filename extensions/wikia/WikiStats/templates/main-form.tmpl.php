@@ -1,10 +1,10 @@
 <?php
 $tabsUrl = array(
-	0 => sprintf("%s/%d/main", $mTitle->getLocalUrl(), $wgCityId),
-	1 => sprintf("%s/%d/breakdown", $mTitle->getLocalUrl(), $wgCityId),
-	2 => sprintf("%s/%d/anonbreakdown", $mTitle->getLocalUrl(), $wgCityId),
-	3 => sprintf("%s/%d/latestview", $mTitle->getLocalUrl(), $wgCityId),
-	4 => sprintf("%s/%d/userview", $mTitle->getLocalUrl(), $wgCityId),
+	0 => sprintf("%s/%d/main?ajax=1", $mTitle->getLocalUrl(), $wgCityId),
+	1 => sprintf("%s/%d/breakdown?ajax=1", $mTitle->getLocalUrl(), $wgCityId),
+	2 => sprintf("%s/%d/anonbreakdown?ajax=1", $mTitle->getLocalUrl(), $wgCityId),
+	3 => sprintf("%s/%d/latestview?ajax=1", $mTitle->getLocalUrl(), $wgCityId),
+	4 => sprintf("%s/%d/userview?ajax=1", $mTitle->getLocalUrl(), $wgCityId),
 );
 #$tabsName = array( "ws-main", "ws-month", "ws-day", "ws-compare" );
 $tabsName = array( "ws-main", "ws-breakdown", "ws-anonbreakdown", "ws-latestview", "ws-userview" );
@@ -13,19 +13,26 @@ $tabsName = array( "ws-main", "ws-breakdown", "ws-anonbreakdown", "ws-latestview
 var tabsName = new Array( <?= "'" . implode("','", $tabsName) . "'" ?> );
 var tabsUrl = new Array( <?= "'" . implode("','", $tabsUrl ) . "'" ?> );
 var activeTab = 1;
+var activeTabName = 'ws-<?=$mAction?>' ;
 var loadedTabs = new Array();
-var clickTab = 0;
-$(function() {
-	$('#ws-tabs').tabs({
+/*$(function() {
+	for ( i = 0; i < tabsName.length; i++ )  {
+		if ( tabsName[i] == activeTabName ) {
+			activeTab = i+1;
+		}
+	}
+	if ( !activeTab ) {
+		activeTab = 1;
+	}
+	
+	$('#ws-tabs').tabs( {
 		fxFade: true,
 		fxSpeed: 'fast',
 		onClick: function() {
-			clickTab = $('#ws-tabs').activeTab();
-			//reloadTab();
 		},
 		onHide: function() {
 		},
-		onShow: function() {
+		onShow: function(e) {
 			activeTab = $('#ws-tabs').activeTab();
 			if ( !loadedTabs[activeTab] ) {
 				reloadTab();
@@ -33,8 +40,41 @@ $(function() {
 			}
 		}
 	});
-	refreshInfo();
-	reloadTab();
+});*/
+
+$(document).ready(function() {
+	for ( i = 0; i < tabsName.length; i++ )  {
+		if ( tabsName[i] == activeTabName ) {
+			activeTab = i+1;
+		}
+	}
+	if ( !activeTab ) {
+		activeTab = 1;
+	}
+	
+	$('#ws-tabs').tabs( {
+		fxFade: true,
+		fxSpeed: 'fast',
+		onClick: function(e) {
+		},
+		onHide: function() {
+		},
+		onShow: function(e) {
+			activeTab = $('#ws-tabs').activeTab();
+			if ( !loadedTabs[activeTab] ) {
+				reloadTab();
+				loadedTabs[activeTab] = 1;
+			}
+		}
+	});
+		
+	$('#ws-tabs').triggerTab(activeTab);
+
+	if ( activeTab == 1 ) {
+		//refreshInfo();
+		reloadTab();
+	}
+	
 });
 
 function refreshInfo() {
@@ -56,24 +96,24 @@ function breakdownInfo(month, limit, anons) {
 
 function reloadTab(xls) {
 	if ( activeTab == 1 ) {
-		var dateFrom = $('#ws-date-year-from').val();
-		var monthFrom = $('#ws-date-month-from').val();
+		var dateFrom = $('#ws-date-year-from').val() || '<?=intval($fromYear)?>';
+		var monthFrom = $('#ws-date-month-from').val() || '<?=intval($fromMonth)?>';
 		dateFrom += ( monthFrom < 10 ) ? '0' + monthFrom : monthFrom;
 
-		var dateTo = $('#ws-date-year-to').val();
-		var monthTo = $('#ws-date-month-to').val();
+		var dateTo = $('#ws-date-year-to').val() || '<?=intval($toYear)?>';
+		var monthTo = $('#ws-date-month-to').val() || '<?=intval($toMonth)?>';
 		dateTo += ( monthTo < 10 ) ? '0' + monthTo : monthTo;
 
-		var hub = $('#ws-category').val();
-		var lang = $('#ws-language').val();
+		var hub = $('#ws-category').val() || '<?=$mHub?>';
+		var lang = $('#ws-language').val() || '<?=$mLang?>';
 
-		var ws_domain = $('#ws-domain').val();
-		var allwikis = $('#ws-all-domain').is(':checked');
+		var ws_domain = $('#ws-domain').val() || '<?=$domain?>';
+		var allwikis = $('#ws-all-domain').is(':checked') || '<?= ( $domain == 'all' ) ?>';
 		if ( allwikis ) {
 			ws_domain = 'all';
 		}
 		if ( xls == true ) { 
-			dataString = '?from=' + dateFrom;
+			var dataString = '?from=' + dateFrom;
 			dataString += '&to=' + dateTo;
 			dataString += '&hub=' + hub;
 			dataString += '&lang=' + lang;
@@ -88,7 +128,7 @@ function reloadTab(xls) {
 				'ws-domain'	: ( ws_domain != undefined ) ? ws_domain : ''
 			};
 			
-			var params = "?show=1";
+			var params = "";
 			for ( var key in data ) {
 				params += "&" + key + "=" + data[key];
 			}
@@ -106,11 +146,13 @@ function reloadTab(xls) {
 					ws_focus('ws-domain','axWFactoryDomainQuery');
 					window.sf_initiated = false;
 				});
+				refreshInfo();
 			});
 		}
 	} 
 	else if ( activeTab == 2 ) { 
 		$('#' + tabsName[activeTab-1]).load(tabsUrl[activeTab-1], function() {
+			$("#ws-loader").hide();
 			$('#ws-breakdown-btn').click(function() {
 				var month = $('#ws-breakdown-month').val();
 				var limit = $('#ws-breakdown-limit').val();
@@ -121,6 +163,7 @@ function reloadTab(xls) {
 	} 
 	else if ( activeTab == 3 ) {
 		$('#' + tabsName[activeTab-1]).load(tabsUrl[activeTab-1], function() {
+			$("#ws-loader").hide();
 			$('#ws-breakdown-anons-btn').click(function() {
 				var month = $('#ws-breakdown-anons-month').val();
 				var limit = $('#ws-breakdown-anons-limit').val();

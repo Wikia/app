@@ -30,6 +30,7 @@ class WikiStatsPage extends IncludableSpecialPage
     var $mLang;
     var $mHub;
     var $mAction;
+    var $mActiveTab;
     var $mXLS;
     var $mAllWikis;
 	   
@@ -137,16 +138,19 @@ class WikiStatsPage extends IncludableSpecialPage
 				$this->mCityId = $path[0];
 			} 
 			$this->mAction = $path[1];
-		} 
+		}
 		
-		if ( $this->mAction ) {
+		$ajax = $wgRequest->getVal( "ajax", 0 );
+		if ( empty($ajax) ) {
+			$this->setHeaders();
+			$this->showForm();	
+		}
+		
+		if ( !empty($ajax) && $this->mAction ) {
 			$wgOut->setArticleBodyOnly(true);
 			$func = sprintf("show%s", ucfirst(strtolower($this->mAction)));
 			$this->$func();
-		} else {
-			$this->setHeaders();
-			$this->showForm();
-		}
+		} 
     }
     
 	function showForm ($error = "") {
@@ -174,7 +178,19 @@ class WikiStatsPage extends IncludableSpecialPage
         	"wgExtensionsPath" 	=> $wgExtensionsPath, 
         	"wgStylePath"		=> $wgStylePath,
         	"wgCityId"			=> $this->mCityId,
-        	"oUser"				=> $this->mUser
+        	"oUser"				=> $this->mUser,
+        	"mAction"			=> $this->mAction,
+
+        	"domain"			=> $this->mCityDomain,
+        	"dateRange"			=> $this->mStats->getRangeDate(),
+        	"updateDate"		=> $this->mStats->getUpdateDate(),
+        	"fromMonth"			=> $this->fromMonth,
+        	"fromYear"			=> $this->fromYear,
+        	"curMonth"			=> intval($this->toMonth),
+        	"curYear"			=> intval($this->toYear),
+			"mHub"				=> $this->mHub,
+			"mLang"				=> $this->mLang,
+			"mAllWikis"			=> $this->mAllWikis        	
         ));
         $wgOut->addHTML( $oTmpl->execute("main-form") );
         
