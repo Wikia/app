@@ -172,7 +172,8 @@ function wfLinksToRedirects(){
 									12 => "Help",
 									13 => "Help_talk",
 									14 => ":Category",
-									15 => "Category_talk"
+									15 => "Category_talk",
+									NS_GRACENOTE => "Gracenote"
 								);
 					$idToTitle = array();
 					$ids = array_unique($ids);
@@ -201,6 +202,7 @@ function wfLinksToRedirects(){
 					foreach($allListings as $pair){
 						$fromId = $pair[0];
 						$to = $pair[1];
+
 						if(isset($idToTitle[$fromId])){
 							$from = $idToTitle[$fromId];
 							
