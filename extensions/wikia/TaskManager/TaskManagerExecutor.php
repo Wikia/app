@@ -193,7 +193,17 @@ class TaskManagerExecutor {
 			}
 			$aCondition["task_status"] = TASK_QUEUED;
 
-			#--- then get first from top sorted by priority and timestamp
+			/**
+			 * skip unknown tasks
+			 * @author Władek Bodzek
+			 */
+			if ( !empty($this->mTasksClasses) ) {
+				$aCondition["task_type"] = array_keys($this->mTasksClasses);
+			}
+
+			/**
+			 * then get first from top sorted by priority and timestamp
+			 */
 			$oTask = $dbr->selectRow( "wikia_tasks", "*", $aCondition, __METHOD__, array( "ORDER BY" => "task_id") );
 		}
 		catch( DBConnectionError $e ) {
