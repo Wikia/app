@@ -17,10 +17,15 @@ define("package_size", 100);
 $optionsWithArgs = array( 'list' );
 
 require_once('../commandLine.inc');
-
 if (isset($options['help'])) {
 	die( "indexer for blog listing pages" );
 }
+
+
+if ( WikiFactory::getVarByName("wgImagesIndexed", $wgCityId ) ) {
+	echo "This wiki is already indexed change wgImagesIndexed to false to reindex\n";
+}
+
 
 $db = wfGetDB(DB_SLAVE, array());
 
@@ -68,7 +73,8 @@ if (empty($options['do']) || $options['do'] != 1) {
 	            __METHOD__,
 	            array(
 	            	"GROUP BY" => "il_from",
-	            	"HAVING" => "cnt > 1"
+	            	"HAVING" => "cnt > 1",
+	            	"LIMIT" => 1
 	            )
 	);
 	$totalNum = $res->numRows();	            
@@ -97,4 +103,5 @@ if (empty($options['do']) || $options['do'] != 1) {
 		}
 	}
 	Wikia::log( __METHOD__, 'imageServingIndexer', 'end for:'.$wgCityId. " total time:".(Time() - $startTime) );
+	WikiFactory::setVarByName("wgImagesIndexed", $wgCityId, true );
 }
