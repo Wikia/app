@@ -1,0 +1,20 @@
+.search-images-title {
+	font-family: Arial, sans-serif;
+	text-decoration: bold;
+	font-size: medium;
+	margin-bottom: 10px;
+}
+
+ul.search-images  {
+	display: inline;
+	font-size: 8pt;
+	list-style-type: none;
+}
+
+.search-images a { font-size: 8pt; }
+
+.search-images li {
+	float: left;
+	margin-right: 8px;
+	width: 100px;
+}

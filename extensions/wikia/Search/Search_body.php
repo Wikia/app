@@ -346,6 +346,22 @@ class SolrSearchSet extends SearchResultSet {
 
 		return $solrResult;
 	}
+
+	/**
+	 * Rewinds the result set back one or
+	 * @return Current index
+	 * @access public
+	 * @abstract
+	 */
+	function rewind ( $full = false ) {
+		if ($full || $this->mPos == 1) {
+			$this->mPos = 0;
+		} else {
+			$this->mPos--;
+		}
+		
+		return $this->mPos;
+	}
 }
 
 class SolrResult extends SearchResult {
