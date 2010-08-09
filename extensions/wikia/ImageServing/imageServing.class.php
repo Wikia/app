@@ -127,7 +127,7 @@ class imageServing{
 				foreach($value as $key2 => $value2) {
 					if (empty($out[$key2]) || count($out[$key2]) < $n) {
 						$out[$key2][] = array(
-							"name" => $key,
+							"name" => $key2,
 							"url" => $this->getUrl($key, $db_out[$key]['img_width'], $db_out[$key]['img_height']));
 					}
 				}
@@ -171,7 +171,7 @@ class imageServing{
 	 * @return \string prefix for thumb image 
 	 */
 	
-	private function getCut($width, $height) {
+	public function getCut($width, $height) {
 		$pHeight = round(($width)*($this->proportion['h']/$this->proportion['w']));
 		
 		if($pHeight >= $height) {
