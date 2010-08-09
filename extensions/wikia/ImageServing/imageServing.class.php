@@ -127,7 +127,7 @@ class imageServing{
 				foreach($value as $key2 => $value2) {
 					if (empty($out[$key2]) || count($out[$key2]) < $n) {
 						$out[$key2][] = array(
-							"name" => $key2,
+							"name" => $key,
 							"url" => $this->getUrl($key, $db_out[$key]['img_width'], $db_out[$key]['img_height']));
 					}
 				}
@@ -140,7 +140,7 @@ class imageServing{
 		}
 		
 		wfProfileOut(__METHOD__);		
-		return array_merge($out,$cache_return);
+		return $out + $cache_return;
 	}
 	
 	/**
