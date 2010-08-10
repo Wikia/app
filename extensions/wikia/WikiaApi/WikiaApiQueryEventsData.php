@@ -521,21 +521,25 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 			}
 			
 			if ( empty($result) ) { 
+				$mediaType = MEDIATYPE_UNKNOWN;
 				$oLocalFile = LocalFile::newFromTitle( $oTitle, RepoGroup::singleton()->getLocalRepo() );
 				if ( $oLocalFile instanceof LocalFile ) {
 					$mediaType = $oLocalFile->getMediaType();
-					switch ( $mediaType ) {
-						case MEDIATYPE_BITMAP		: $result = 1; break;
-						case MEDIATYPE_DRAWING		: $result = 2; break;
-						case MEDIATYPE_AUDIO		: $result = 3; break;
-						case MEDIATYPE_VIDEO		: $result = 4; break;
-						case MEDIATYPE_MULTIMEDIA	: $result = 5; break;
-						case MEDIATYPE_OFFICE		: $result = 6; break;
-						case MEDIATYPE_TEXT			: $result = 7; break;
-						case MEDIATYPE_EXECUTABLE	: $result = 8; break;
-						case MEDIATYPE_ARCHIVE		: $result = 9; break;
-						default 					: $result = 0; break;
-					}
+				}
+				if ( empty($mediaType) ) {
+					$mediaType = MEDIATYPE_UNKNOWN;
+				}
+				switch ( $mediaType ) {
+					case MEDIATYPE_BITMAP		: $result = 1; break;
+					case MEDIATYPE_DRAWING		: $result = 2; break;
+					case MEDIATYPE_AUDIO		: $result = 3; break;
+					case MEDIATYPE_VIDEO		: $result = 4; break;
+					case MEDIATYPE_MULTIMEDIA	: $result = 5; break;
+					case MEDIATYPE_OFFICE		: $result = 6; break;
+					case MEDIATYPE_TEXT			: $result = 7; break;
+					case MEDIATYPE_EXECUTABLE	: $result = 8; break;
+					case MEDIATYPE_ARCHIVE		: $result = 9; break;
+					default 					: $result = 1; break;
 				}
 			}
 		}
