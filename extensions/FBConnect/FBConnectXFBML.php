@@ -63,6 +63,13 @@ class FBConnectXFBML {
 					break;
 				}
 				// Careful - no "break;" if $fbAllowFacebookImages is true
+			case 'fb:like-box':
+				if($tag == 'fb:like-box'){ // double-check because of the cascading from above.
+					if(isset($args['profileid'])){
+						$args['profile_id'] = $args['profileid'];
+						unset($args['profileid']);
+					}
+				}
 			default:
 				// Allow other tags by default
 				$attrs = self::implodeAttrs( $args );
