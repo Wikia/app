@@ -44,7 +44,7 @@ class AdProviderNull implements iAdProvider {
 	}
 
 	// Note that $slotname and $slot may not always be available.
-	public function getAd($slotname, $slot) {
+	public function getAd($slotname, $slot, $params = null) {
 		$out = '<!-- Null Ad. Reason: ' . htmlspecialchars($this->reason) .
 		       ', slotname=' . $slotname . ' -->';
 		return $out;

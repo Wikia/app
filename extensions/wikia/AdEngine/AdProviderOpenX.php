@@ -46,13 +46,20 @@ class AdProviderOpenX implements iAdProvider {
         public function getSetupHtml(){ return false; }
         public function getBatchCallHtml(){ return false; }
 
-	public function getAd($slotname, $slot) {
+	public function getAd($slotname, $slot, $params = null) {
 		$cat=AdEngine::getCachedCategory();
 		$zoneId = $this->getZoneId($slotname);
 
 		if(empty($zoneId)){
 			$nullAd = new AdProviderNull("Invalid slotname, no zoneid for $slotname in " . __CLASS__);
 			return $nullAd->getAd($slotname, $slot);
+		}
+
+		$additional_params = "";
+		if (!empty($params) && is_array($params)) {
+			foreach ($params as $key => $val) {
+				$additional_params .= "&" . urlencode($key) . "=" . urlencode($val);
+			}
 		}
 
 		$adtag = <<<EOT
@@ -75,6 +82,7 @@ class AdProviderOpenX implements iAdProvider {
 	document.write('base_url += "&dbname=" + wgDB;');
 	document.write('base_url += "&slotname={$slotname}";');
 	document.write('base_url += "&tags=" + wgWikiFactoryTagNames.join(",");');
+	document.write('base_url += "{$additional_params}";');
 	document.write('base_url += "&block=1";');
 	document.write('</scr'+'ipt>');
 	document.write('<scr'+'ipt type="text/javascript" src="'+base_url+'"></scr'+'ipt>');

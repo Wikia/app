@@ -34,7 +34,7 @@ class AdProviderContextWeb implements iAdProvider {
         }
 
 
-        public function getAd($slotname, $slot){
+        public function getAd($slotname, $slot, $params = null){
 
 		$cwtagid = self::getCwtagid($slot);
 

@@ -30,7 +30,7 @@ class AdProviderGoogle implements iAdProvider {
 		return self::$instance;
 	}
 
-        public function getAd($slotname, $slot){
+        public function getAd($slotname, $slot, $params = null){
                 global $wgUser;
                 $dim=AdEngine::getHeightWidthFromSize($slot['size']);
 

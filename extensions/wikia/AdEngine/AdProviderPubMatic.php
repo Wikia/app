@@ -39,7 +39,7 @@ class AdProviderPubMatic implements iAdProvider {
 		return self::$instance;
 	}
 
-        public function getAd($slotname, $slot){
+        public function getAd($slotname, $slot, $params = null){
 
 		$kadid = $this->getKadid($slotname);
 		if (empty($kadid)){

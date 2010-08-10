@@ -94,7 +94,7 @@ class AdProviderAthena extends AdProviderIframeFiller implements iAdProvider {
 		return self::$instance;
 	}
 
-        public function getAd($slotname, $slot){
+        public function getAd($slotname, $slot, $params = null){
 		$out = $this->getSetupHtml();
 		$out .= '<script type="text/javascript">Athena.callAd("' . $slotname . '");</script>' . "\n";
 		return $out;

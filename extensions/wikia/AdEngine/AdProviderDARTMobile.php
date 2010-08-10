@@ -3,7 +3,7 @@ require_once dirname(__FILE__) . '/AdProviderDART.php';
 
 class AdProviderDARTMobile extends AdProviderDART {
 
-	public function getAd($slotname, $slot){
+	public function getAd($slotname, $slot, $params = null){
 		$slot['size']='5x5'; // Odd convention for mobile
 
 		$url = 'http://ad.mo.doubleclick.net/DARTProxy/mobile.handler?k=' .
