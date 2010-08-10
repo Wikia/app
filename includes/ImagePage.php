@@ -371,7 +371,7 @@ class ImagePage extends Article {
                                 }
                                 # "more" link
                                 if ($num_imagelinks > $limit) {
-                                    $links[] = '<a href="#'.self::FILE_LINKS_SECTION_ID.'">more&hellip;</a>';
+                                    $links[] = '<a href="#'.self::FILE_LINKS_SECTION_ID.'">' . wfMsg( 'imageseo-featured-more' ) . '</a>';
                                 }
 
                                 $anchorclose = "<br />";
@@ -380,7 +380,7 @@ class ImagePage extends Article {
 				} else {
                                         $imagelinks_str = '';
                                         if ($num_imagelinks) {
-                                            $imagelinks_str = 'Featured on: ';
+                                            $imagelinks_str = wfMsg( 'imageseo-featured-on' );
                                             $imagelinks_str .= implode(', ', $links);
                                         }
 					$anchorclose .=
