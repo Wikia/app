@@ -74,7 +74,7 @@ class AdProviderLiftium extends AdProviderIframeFiller implements iAdProvider {
 		return self::$instance;
 	}
 
-        public function getAd($slotname, $slot){
+        public function getAd($slotname, $slot, $params = null){
 		$out = $this->getSetupHtml();
 		$out .= '<script type="text/javascript">' . "\n" .
 			'LiftiumOptions.placement = "' . $slotname . '";' . "\n" . 

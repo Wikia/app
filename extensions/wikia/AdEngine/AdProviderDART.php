@@ -26,7 +26,7 @@ class AdProviderDART extends AdProviderIframeFiller implements iAdProvider {
         public function getSetupHtml(){ return false; }
         public function getBatchCallHtml(){ return false; }
 
-	public function getAd($slotname, $slot){
+	public function getAd($slotname, $slot, $params = null){
 		$url = $this->getUrl($slotname, $slot);
 		$out = "<!-- " . __CLASS__ . " slot: $slotname -->";
 		$out .= '<script type="text/javascript">/*<![CDATA[*/' . "\n";

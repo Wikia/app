@@ -34,7 +34,7 @@ $wgHooks["WikiFactoryChanged"][] = "AdEngine::clearSlotCache";
 
 interface iAdProvider {
 	public static function getInstance();
-	public function getAd($slotname, $slot);
+	public function getAd($slotname, $slot, $params = null);
 	public function batchCallAllowed();
 	public function addSlotToCall($slotname);
 	public function getSetupHtml();
@@ -317,9 +317,9 @@ class AdEngine {
 	}
 
 	// For the provided $slotname, get an ad tag.
-	public function getAd($slotname) {
+	public function getAd($slotname, $params = null) {
 		$AdProvider = $this->getAdProvider($slotname);
-		return $AdProvider->getAd($slotname, empty($this->slots[$slotname]) ? array() : $this->slots[$slotname]);
+		return $AdProvider->getAd($slotname, empty($this->slots[$slotname]) ? array() : $this->slots[$slotname], $params);
 	}
 
 	// Logic for hiding/displaying ads should be here, not in the skin.

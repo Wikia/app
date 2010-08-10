@@ -181,7 +181,7 @@ class AdProviderGAM implements iAdProvider {
 
 
 
-	public function getAd($slotname, $slot){
+	public function getAd($slotname, $slot, $params = null){
 		$out = "";
 		// First time the ad is called, call all the batch code, if it hasn't already been called.
 		if (! $this->setupHtmlCalled){
