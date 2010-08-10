@@ -40,12 +40,18 @@ $wgExtensionMessagesFiles['WikiaSearch'] = $dir . 'Search.i18n.php';
 $wgHooks['SearchShowHit'][] = 'SolrResult::showHit';
 $wgHooks['SpecialSearchBoxExtraRefinements'][] = 'SolrSearch::renderExtraRefinements';
 $wgHooks['SpecialSearchPagerParams'][] = 'SolrSearch::addPagerParams';
-$wgHooks['SpecialSearchResults'][] = 'ImageOneBox::examineSearchResults';
-$wgHooks['SpecialSearchShowHit'][] = 'ImageOneBox::showImageOneBox';
+
+if( !empty($wgEnableWikiaImageOneBoxInSearch) ) {
+	$wgHooks['SpecialSearchResults'][] = 'ImageOneBox::examineSearchResults';
+	$wgHooks['SpecialSearchShowHit'][] = 'ImageOneBox::showImageOneBox';
+}
 
 // classes
 $wgAutoloadClasses['SolrSearch'] = $dir . 'Search_body.php';
 $wgAutoloadClasses['SolrResult'] = $dir . 'Search_body.php';
 $wgAutoloadClasses['SolrSearchSet'] = $dir . 'Search_body.php';
 $wgAutoloadClasses['SpecialWikiaSearch'] = $dir . 'SpecialWikiaSearch.php';
-$wgAutoloadClasses['ImageOneBox'] = $dir . 'ImageOneBox.class.php';
+
+if( !empty($wgEnableWikiaImageOneBoxInSearch) ) {
+	$wgAutoloadClasses['ImageOneBox'] = $dir . 'ImageOneBox.class.php';
+}
