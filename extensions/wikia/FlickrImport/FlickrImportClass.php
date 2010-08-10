@@ -23,10 +23,15 @@ class FlickrImport{
 	
 	public function getPhotos( $page=1, $q ){
 		global $wgUser, $wgOut;
+                global $wgHTTPProxy;
 		
         	$f = new phpFlickr($this->flickr_api_key);
 		 
 		// TODO: get the right licenses
+
+                $proxyArr = explode(':', $wgHTTPProxy);
+                $f->setProxy($proxyArr[0], $proxyArr[1]);
+
         	$photos = $f->photos_search( array(
 				"{$this->flickr_searchBy}"=>"$q", "tag_mode"=>"any", 
 				"page" => $page, 
@@ -111,9 +116,13 @@ class FlickrImport{
 	
 	public function importPhoto( $id, $search_term, $title = "" ){
 		global $wgOut, $wgTmpDirectory, $wgRequest, $wgUser;
+                global $wgHTTPProxy;
 		
 		$f = new phpFlickr($this->flickr_api_key);
-		$photo = $f->photos_getInfo($id);
+		$proxyArr = explode(':', $wgHTTPProxy);
+                $f->setProxy($proxyArr[0], $proxyArr[1]);
+
+                $photo = $f->photos_getInfo($id);
 		$url = "http://farm{$photo['farm']}.static.flickr.com/{$photo['server']}/{$photo['id']}_{$photo['secret']}_t.jpg";
 		 
 		//make sure its a valid flickr URL

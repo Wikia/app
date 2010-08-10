@@ -22,7 +22,8 @@ class ImportFreeImages extends SpecialPage {
 		global $wgUser, $wgOut, $wgRequest, $wgIFI_FlickrAPIKey, $wgEnableUploads;
 		global $wgIFI_ResultsPerPage, $wgIFI_FlickrSort, $wgIFI_FlickrLicense, $wgIFI_ResultsPerRow;
 		global $wgIFI_PromptForFilename, $wgIFI_FlickrSearchBy, $wgIFI_ThumbType;
-
+                global $wgHTTPProxy;
+                
 		wfLoadExtensionMessages( 'ImportFreeImages' );
 
 		wfSetupSession();
@@ -37,7 +38,8 @@ class ImportFreeImages extends SpecialPage {
 		}
 
 		$f = new phpFlickr($wgIFI_FlickrAPIKey);
-
+                $proxyArr = explode(':', $wgHTTPProxy);
+                $f->setProxy($proxyArr[0], $proxyArr[1]);
 		# a lot of this code is duplicated from SpecialUpload, should be refactored
 		# Check uploading enabled
 		if( !$wgEnableUploads ) {
@@ -86,7 +88,10 @@ class ImportFreeImages extends SpecialPage {
 			$page = $wgRequest->getInt( 'p', 1 );
 			$q = $wgRequest->getVal( 'q' );
 			// TODO: get the right licenses
-			$photos = $f->photos_search(
+
+
+
+                        $photos = $f->photos_search(
 				array(
 					$wgIFI_FlickrSearchBy => $q,
 					'tag_mode' => 'any',
