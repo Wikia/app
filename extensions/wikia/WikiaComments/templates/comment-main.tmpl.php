@@ -1,7 +1,8 @@
 <!-- s:<?= __FILE__ ?> -->
+<?php global $wgLang; ?>
 <div id="article-comments-wrapper">
 	<h2 class="neutral" id="article-comment-header">
-		<span class="dark_text_1" id="article-comments-counter"><?= wfMsg('article-comments-comments', $countCommentsNested) ?></span>
+		<span class="dark_text_1" id="article-comments-counter"><?= wfMsg('article-comments-comments', $wgLang->formatNum($countCommentsNested)) ?></span>
 	</h2>
 	<?php
 	if ( $countComments > 1 ) {
