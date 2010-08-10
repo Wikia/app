@@ -932,7 +932,6 @@ class ArticleComment {
 			$article_id = $oRC->getAttribute('rc_cur_id');
 
 			if (MWNamespace::isTalk($namespace) &&
-				!MWNamespace::isTalk($wgTitle->getNamespace()) &&
 				strpos(end(explode('/', $title)), ARTICLECOMMENT_PREFIX) === 0 &&
 				!empty($article_id)) {
 
