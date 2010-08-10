@@ -997,4 +997,7 @@ Text should be placed on this page if you wish to explain usage, style and polic
 # Special: ConfirmEmail
 'enterconfirmcode' => 'Enter code',
 
+# Related to ImageSEO RT#55755
+'imageseo-featured-on' => 'Featured on:',
+'imageseo-featured-more' => 'more&hellip;',
 ));
