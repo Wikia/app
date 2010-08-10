@@ -28,7 +28,7 @@
 	text-align: left;
 }
 #AjaxLoginFBStart li, #AjaxLoginConnectMarketing li {
-	list-style-image: url("/skins/monobook/bullet.gif");  /* $wgCdnStylePath */
+	list-style-image: url(/skins/monobook/bullet.gif);  /* $wgCdnStylePath */
 }
 #AjaxLoginLoginForm {
 	overflow: hidden;
