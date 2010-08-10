@@ -55,6 +55,7 @@ $messages['en'] = array(
 	'recipes-template-toggle-recipe-label' => 'Recipe Page',
 	'recipes-template-yields-hint' => 'How many servings, or how many individual items?',
 	'recipes-template-yields-label' => 'Yields:',
+	'recipes-template-edit-categories' => 'Admin: Edit these categories',
 
 	'recipes-template-recipe-wikitext' => "[[<<wpPhoto>>|thumb|300px]]
 

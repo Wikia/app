@@ -98,6 +98,11 @@
 				<div class="recipes-template-error plainlinks"><?= $field['error_msg'] ?></div>
 <?php
 				}
+
+				// If this user is an admin, show the link to edit these options
+				if($isAdmin){
+					print "<a href='$editLink'>$editMsg</a>\n";
+				}
 ?>
 			</td>
 		</tr>
