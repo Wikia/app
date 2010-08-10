@@ -427,9 +427,9 @@ abstract class RecipesTemplate extends SpecialPage {
 		wfProfileIn(__METHOD__);
 
 		// load dependencies (CSS and JS)
-                $wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/RecipesTemplate/RecipesTemplate.css?{$wgStyleVersion}");
-                $wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/RecipesTemplate/RecipesTemplate.js?{$wgStyleVersion}\"></script>\n");
-	        $wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgStylePath}/common/jquery/jquery.autocomplete.js?{$wgStyleVersion}\"></script>\n");
+		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/RecipesTemplate/RecipesTemplate.css?{$wgStyleVersion}");
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/RecipesTemplate/RecipesTemplate.js?{$wgStyleVersion}\"></script>\n");
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgStylePath}/common/jquery/jquery.autocomplete.js?{$wgStyleVersion}\"></script>\n");
 
 		// create form type: recipe / ingredient
 		$formType = strtolower(substr($wgTitle->getText(), 6));
@@ -437,6 +437,10 @@ abstract class RecipesTemplate extends SpecialPage {
 		// is current user admin or staff?
 		$userGroups = $wgUser->getGroups();
 		$isAdmin = in_array('admin', $userGroups) || in_array('staff', $userGroups);
+
+		// where admins can go to edit the categories
+		$editTitle = Title::newFromDBkey('MediaWiki:Recipe-menus');
+		$editLink = $editTitle->getLinkUrl();
 
 		// render recipes form
 		$tpl = new EasyTemplate(dirname(__FILE__).'/templates');
@@ -455,8 +459,10 @@ abstract class RecipesTemplate extends SpecialPage {
 			'preview' => $this->mPreview,
 			'toggles' => $this->mToggles,
 			'type' => $this->mType,
+			'editLink' => $editLink,
+			'editMsg' => wfMsg('recipes-template-edit-categories')
 		));
-                $html = $tpl->render('renderForm');
+		$html = $tpl->render('renderForm');
 
 		$wgOut->addHtml($html);
 
