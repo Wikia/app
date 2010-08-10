@@ -204,10 +204,6 @@ var ArticleComments = {
 
 		$.getJSON(wgScript + '?action=ajax&rs=ArticleCommentsAjax&method=axGetComments&article=' + wgArticleId, {page: page, order: $('#article-comm-order').attr('value')}, function(json) {
 			if (!json.error) {
-				$('#article-comments-pagination-link-prev').attr('page', Math.max(page - 1, 1));
-				$('#article-comments-pagination-link-next').attr('page', Math.min(page + 1, $('#article-comments-pagination').find('a').length - 2));
-				$('.article-comments-pagination-link').removeClass('article-comments-pagination-link-active accent').unbind('mouseenter mouseleave');
-				$('#article-comments-pagination-link-' + page).addClass('article-comments-pagination-link-active accent');
 				$('#article-comments-ul').replaceWith(json.text);
 				$('#article-comments-pagination').find('div').html(json.pagination);
 				ArticleComments.addHover();

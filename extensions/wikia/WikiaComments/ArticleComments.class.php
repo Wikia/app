@@ -1317,7 +1317,7 @@ class ArticleCommentList {
 
 			//add last page - if not already visible
 			if ($numberOfPages - $lastVisiblePage > 0) {
-				$pagination .= '<a href="' . $title->getFullUrl("page=" . $numberOfPages) . '#article-comment-header" id="article-comments-pagination-link-' . $numberOfPages . '" class="article-comments-pagination-link dark_text_1' . ($numberOfPages == $activePage ? ' article-comments-pagination-link-active' : '') . '" page="' . $numberOfPages . '">' . $numberOfPages . '</a>';
+				$pagination .= '<a href="' . $title->getFullUrl("page=" . $numberOfPages) . '#article-comment-header" id="article-comments-pagination-link-' . $numberOfPages . '" class="article-comments-pagination-link dark_text_1' . ($numberOfPages == $activePage ? ' article-comments-pagination-link-active accent' : '') . '" page="' . $numberOfPages . '">' . $numberOfPages . '</a>';
 			}
 
 			//next

@@ -101,7 +101,7 @@ div.article-comm-input-text {
 #article-comments-pagination-link-prev,
 #article-comments-pagination-link-next {
 	border: none;
-	font-weight: normal;
+	font-weight: bold;
 	margin: 0 8px;
 	width: auto;
 }
