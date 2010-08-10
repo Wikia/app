@@ -73,7 +73,7 @@ if (empty($options['do']) || $options['do'] != 1) {
 	            array(
 	            	"GROUP BY" => "il_from",
 	            	"HAVING" => "cnt > 1",
-	            	"LIMIT" => 1
+	            //	"LIMIT" => 1
 	            )
 	);
 	$totalNum = $res->numRows();	            
@@ -98,7 +98,7 @@ if (empty($options['do']) || $options['do'] != 1) {
 				"--conf {$wgWikiaLocalSettingsPath}"
 			);	
 			$out = array();
-			//system( implode( " ", $cmd ), $status );
+			system( implode( " ", $cmd ), $status );
 		}
 	}
 	Wikia::log( __METHOD__, 'imageServingIndexer', 'end for:'.$wgCityId. " total time:".(Time() - $startTime) );
