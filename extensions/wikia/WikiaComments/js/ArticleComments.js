@@ -12,10 +12,7 @@ var ArticleComments = {
 		$('#article-comments').delegate('.article-comments-li', 'mouseover',  function(){$(this).find('.tools').css('visibility', 'visible');});
 		$('#article-comments').delegate('.article-comments-li', 'mouseout',  function(){$(this).find('.tools').css('visibility', 'hidden');});
 		ArticleComments.addHover();
-		//hack to display 'edit' link when slave lag caused it to be hidden
-		if (wgUserName) {
-			$('#article-comments-ul').find('strong').find('a:contains("' + wgUserName + '")').closest('.article-comments').find('.edit-link').show();
-		}
+		ArticleComments.showEditLink();
 	},
 
 	log: function(msg) {
@@ -28,6 +25,13 @@ var ArticleComments = {
 			WET.byStr('comment/blog/' + fakeUrl);
 		} else {
 			WET.byStr('comment/article/' + fakeUrl);
+		}
+	},
+
+	showEditLink: function() {
+		//hack to display 'edit' link when slave lag caused it to be hidden
+		if (wgUserName) {
+			$('#article-comments-ul').find('strong').find('a:contains("' + wgUserName + '")').closest('.article-comments').find('.edit-link').show();
 		}
 	},
 
@@ -167,6 +171,8 @@ var ArticleComments = {
 				$('#article-comments-counter').text(json.counter);
 				//readd events
 				ArticleComments.addHover();
+				//force to show 'edit' links for owners
+				ArticleComments.showEditLink();
 				//clear error box
 				$('#article-comm-info').html('');
 			} else {
