@@ -10,6 +10,7 @@ class imageServing{
 	private $width;
 	private $proportion;
 	private $deltaY = 0;
+	private $db;
 	
 	/**
 	 * @param $articles \type{\arrayof{\int}} List of articles ids to get images
@@ -17,11 +18,12 @@ class imageServing{
 	 * @param $width \int image width
 	 * @param $width \int 
 	 */ 
-	function __construct($articles, $width = 100, $proportion = array("w" => 1, "h" => 1)){
+	function __construct($articles, $width = 100, $proportion = array("w" => 1, "h" => 1), $db = null){
 		$this->articles = $articles;
 		$this->width = $width;
 		$this->proportion = $proportion;
 		$this->deltaY = (round($proportion['w']/$proportion['h']) - 1)*0.1;
+		$this->db = $db;
 	}
 	
 	/**
@@ -54,7 +56,14 @@ class imageServing{
 			return $cache_return;
 		}
 		
-		$db = wfGetDB(DB_MASTER, array());
+		
+		if($this->db == null) {
+			$db = wfGetDB(DB_MASTER, array());	
+		} else {
+			$db = $this->db;
+		}
+		
+		
 		$res = $db->select(
 	            array( 'page_wikia_props' ),
 	            array(	'page_id', 
@@ -65,7 +74,7 @@ class imageServing{
 					'propname' => "imageOrder"),
 	            __METHOD__
 		);
-				
+		
 		$image_list = array();
 		$images_name = array();
 		
@@ -158,6 +167,9 @@ class imageServing{
 	private function getUrl($name, $width = 0, $height = 0) {
 		$file_title = Title::newFromText($name ,NS_FILE );
 		$img = wfFindFile( $file_title  );
+		if($img == null) {
+			return "";
+		} 
 		return wfReplaceImageServer($img->getThumbUrl( $this->getCut($width, $height)."-".$img->getName()));
 	}
 	
