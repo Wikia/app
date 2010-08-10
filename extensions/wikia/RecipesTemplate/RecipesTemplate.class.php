@@ -440,7 +440,7 @@ abstract class RecipesTemplate extends SpecialPage {
 
 		// where admins can go to edit the categories
 		$editTitle = Title::newFromDBkey('MediaWiki:Recipe-menus');
-		$editLink = $editTitle->getLinkUrl();
+		$editCategoriesLink = $editTitle->getLinkUrl();
 
 		// render recipes form
 		$tpl = new EasyTemplate(dirname(__FILE__).'/templates');
@@ -459,7 +459,7 @@ abstract class RecipesTemplate extends SpecialPage {
 			'preview' => $this->mPreview,
 			'toggles' => $this->mToggles,
 			'type' => $this->mType,
-			'editLink' => $editLink,
+			'editCategoriesLink' => $editCategoriesLink,
 			'editMsg' => wfMsg('recipes-template-edit-categories')
 		));
 		$html = $tpl->render('renderForm');
