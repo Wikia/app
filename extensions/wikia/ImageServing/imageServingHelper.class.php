@@ -42,7 +42,12 @@ class imageServingHelper{
 		wfProfileOut(__METHOD__);
 	}
 	
-	/* hook replace images with some easy to parse tag :*/
+	/**
+	 *  replaceGallery - hook replace images with some easy to parse tag
+	 *  
+	 *  return boolean
+	 */
+	
 	public static function replaceImages( $skin, $title, $file, $frameParams, $handlerParams, $time, $res ) {
 		if (!self::$hookOnOff) {
 			return true;
@@ -57,7 +62,12 @@ class imageServingHelper{
 		return false;
 	}
 	
-	/* hook replace images with some easy to parse tag :*/
+	/**
+	 *  replaceGallery - hook replace images from image gallery with some easy to parse tag :
+	 *  
+	 *  return boolean
+	 */
+	
 	public static function replaceGallery( $parser, $ig) {
 		if (!self::$hookOnOff) {
 			return true;
@@ -75,7 +85,17 @@ class imageServingHelper{
 	private static function hookSwitch($onOff = true) {
 		self::$hookOnOff = $onOff;
 	}
-	
+
+	/**
+	 * bulidIndex - save image index in db
+	 * 
+	 * @param $width \int 
+	 * @param $images \type{\arrayof{\string}}
+	 * @param $ignoreEmpty boolean
+	 * 
+	 * @return boolean
+	 */
+
 	public static function bulidIndex($articleId, $images, $ignoreEmpty = false) {
 		/* 0 and 1 image don't need to be indexed */
 		wfProfileIn(__METHOD__);
