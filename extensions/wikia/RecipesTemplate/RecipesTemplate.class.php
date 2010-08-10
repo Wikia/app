@@ -460,7 +460,7 @@ abstract class RecipesTemplate extends SpecialPage {
 			'toggles' => $this->mToggles,
 			'type' => $this->mType,
 			'editCategoriesLink' => $editCategoriesLink,
-			'editMsg' => wfMsg('recipes-template-edit-categories')
+			'editCategoriesMsg' => wfMsg('recipes-template-edit-categories')
 		));
 		$html = $tpl->render('renderForm');
 
