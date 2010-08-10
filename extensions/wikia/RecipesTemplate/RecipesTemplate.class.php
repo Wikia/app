@@ -435,12 +435,8 @@ abstract class RecipesTemplate extends SpecialPage {
 		$formType = strtolower(substr($wgTitle->getText(), 6));
 
 		// is current user admin or staff?
-		$userGroups = $wgUser->getGroups();
+		$userGroups = $wgUser->getEffectiveGroups();
 		$isAdmin = in_array('admin', $userGroups) || in_array('staff', $userGroups);
-
-		// where admins can go to edit the categories
-//		$editTitle = Title::newFromDBkey('MediaWiki:Recipe-menus');
-//		$editCategoriesLink = $editTitle->getLinkUrl();
 
 		// render recipes form
 		$tpl = new EasyTemplate(dirname(__FILE__).'/templates');
@@ -459,8 +455,6 @@ abstract class RecipesTemplate extends SpecialPage {
 			'preview' => $this->mPreview,
 			'toggles' => $this->mToggles,
 			'type' => $this->mType,
-//			'editCategoriesLink' => $editCategoriesLink,
-//			'editCategoriesMsg' => wfMsg('recipes-template-edit-categories')
 		));
 		$html = $tpl->render('renderForm');
 
