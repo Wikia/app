@@ -102,21 +102,27 @@ class WikiaMiniUpload {
 
      function query() {
         global $wgRequest, $IP, $wgCityId, $wgExternalDatawareDB;
+        global $wgHTTPProxy;
 
         $query = $wgRequest->getText('query');
         $page = $wgRequest->getVal('page');
         $sourceId = $wgRequest->getVal('sourceId');
 
         if($sourceId == 1) {
+
             require_once($IP.'/extensions/3rdparty/ImportFreeImages/phpFlickr-2.2.0/phpFlickr.php');
             $flickrAPI = new phpFlickr('bac0bd138f5d0819982149f67c0ca734');
+            $proxyArr = explode(':', $wgHTTPProxy);
+            $flickrAPI->setProxy($proxyArr[0], $proxyArr[1]);
             $flickrResult = $flickrAPI->photos_search(array('tags' => $query, 'tag_mode' => 'all', 'page' => $page, 'per_page' => 8, 'license' => '4,5', 'sort' => 'interestingness-desc'));
             $tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
             $tmpl->set_vars(array('results' => $flickrResult, 'query' => addslashes($query)));
+           
             return $tmpl->execute('results_flickr');
+
         } else if($sourceId == 0) {
 			
-			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
+            $dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
 
             $query = mb_strtolower($dbr->escapeLike($query));
             $res = $dbr->select(
@@ -209,6 +215,7 @@ class WikiaMiniUpload {
 	// this function loads the image details page
 	function chooseImage() {
 		global $wgRequest, $wgUser, $IP;
+                global $wgHTTPProxy;
 		$itemId = $wgRequest->getVal('itemId');
 		$sourceId = $wgRequest->getInt('sourceId');
 
@@ -218,23 +225,25 @@ class WikiaMiniUpload {
 			$props['file'] = $file;
 			$props['mwname'] = $itemId;
 		} else if($sourceId == 1) {
-			require_once($IP.'/extensions/3rdparty/ImportFreeImages/phpFlickr-2.2.0/phpFlickr.php');
-			$flickrAPI = new phpFlickr('bac0bd138f5d0819982149f67c0ca734');
-			$flickrResult = $flickrAPI->photos_getInfo($itemId);
-			$url = "http://farm{$flickrResult['farm']}.static.flickr.com/{$flickrResult['server']}/{$flickrResult['id']}_{$flickrResult['secret']}.jpg";
-			$data = array('wpUpload' => 1, 'wpSourceType' => 'web', 'wpUploadFileURL' => $url);
-			$form = new UploadForm(new FauxRequest($data, true));
-			global $wgCityId;
-			$tempname = $this->tempFileName( $wgUser );
-			$file = new FakeLocalFile(Title::newFromText($tempname, 6), RepoGroup::singleton()->getLocalRepo());
-			$file->upload($form->mTempPath, '', '');
-			$tempid = $this->tempFileStoreInfo( $tempname );
-			$props = array();
-			$props['file'] = $file;
-			$props['name'] = preg_replace("/[^".Title::legalChars()."]|:/", '-', trim($flickrResult['title']).'.jpg');
-			$props['mwname'] = $tempname;
-			$props['extraId'] = $itemId;
-			$props['tempid'] = $tempid;
+                    require_once($IP.'/extensions/3rdparty/ImportFreeImages/phpFlickr-2.2.0/phpFlickr.php');
+                    $flickrAPI = new phpFlickr('bac0bd138f5d0819982149f67c0ca734');
+                    $proxyArr = explode(':', $wgHTTPProxy);
+                    $flickrAPI->setProxy($proxyArr[0], $proxyArr[1]);
+                    $flickrResult = $flickrAPI->photos_getInfo($itemId);
+                    $url = "http://farm{$flickrResult['farm']}.static.flickr.com/{$flickrResult['server']}/{$flickrResult['id']}_{$flickrResult['secret']}.jpg";
+                    $data = array('wpUpload' => 1, 'wpSourceType' => 'web', 'wpUploadFileURL' => $url);
+                    $form = new UploadForm(new FauxRequest($data, true));
+                    global $wgCityId;
+                    $tempname = $this->tempFileName( $wgUser );
+                    $file = new FakeLocalFile(Title::newFromText($tempname, 6), RepoGroup::singleton()->getLocalRepo());
+                    $file->upload($form->mTempPath, '', '');
+                    $tempid = $this->tempFileStoreInfo( $tempname );
+                    $props = array();
+                    $props['file'] = $file;
+                    $props['name'] = preg_replace("/[^".Title::legalChars()."]|:/", '-', trim($flickrResult['title']).'.jpg');
+                    $props['mwname'] = $tempname;
+                    $props['extraId'] = $itemId;
+                    $props['tempid'] = $tempid;
 		}
 		return $this->detailsPage($props);
 	}
@@ -440,6 +449,7 @@ class WikiaMiniUpload {
 	// this functions handle the third step of the WMU, image insertion
 	function insertImage() {
 		global $wgRequest, $wgUser, $wgContLang, $IP;
+                global $wgHTTPProxy;
 		$type = $wgRequest->getVal('type');
 		$name = $wgRequest->getVal('name');
 		$mwname = $wgRequest->getVal('mwname');
@@ -499,7 +509,10 @@ class WikiaMiniUpload {
 						if(!empty($extraId)) {
 							require_once($IP.'/extensions/3rdparty/ImportFreeImages/phpFlickr-2.2.0/phpFlickr.php');
 							$flickrAPI = new phpFlickr('bac0bd138f5d0819982149f67c0ca734');
-							$flickrResult = $flickrAPI->photos_getInfo($extraId);
+							$proxyArr = explode(':', $wgHTTPProxy);
+                                                        $flickrAPI->setProxy($proxyArr[0], $proxyArr[1]);
+
+                                                        $flickrResult = $flickrAPI->photos_getInfo($extraId);
 
 							$nsid = $flickrResult['owner']['nsid']; // e.g. 49127042@N00
 							$username = $flickrResult['owner']['username']; // e.g. bossa67
@@ -567,6 +580,9 @@ class WikiaMiniUpload {
 					if(!empty($extraId)) {
 						require_once($IP.'/extensions/3rdparty/ImportFreeImages/phpFlickr-2.2.0/phpFlickr.php');
 						$flickrAPI = new phpFlickr('bac0bd138f5d0819982149f67c0ca734');
+
+                                                $proxyArr = explode(':', $wgHTTPProxy);
+                                                $flickrAPI->setProxy($proxyArr[0], $proxyArr[1]);
 						$flickrResult = $flickrAPI->photos_getInfo($extraId);
 
 						$nsid = $flickrResult['owner']['nsid']; // e.g. 49127042@N00

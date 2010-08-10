@@ -152,7 +152,8 @@ function wfIFI_handleUpload( $f, $import ) {
 	$fileext = '.' . $matches[1];
 
 	// store the contents of the file
-	$pageContents = file_get_contents($import);
+
+        $pageContents = Http::get( $import );
 	$tempname = tempnam( $wgTmpDirectory, 'flickr' );
 	$r = fopen( $tempname, 'wb' );
 	if( $r === FALSE ) {
@@ -224,7 +225,8 @@ function wfSpecialImportFreeImages( $par )
 	global $wgUser, $wgOut, $wgRequest, $wgIFI_FlickrAPIKey, $wgEnableUploads;
 	global $wgIFI_ResultsPerPage, $wgIFI_FlickrSort, $wgIFI_FlickrLicense, $wgIFI_ResultsPerRow;
 	global $wgIFI_PromptForFilename, $wgIFI_FlickrSearchBy, $wgIFI_ThumbType;
-	wfSetupSession();
+	global $wgHTTPProxy;
+        wfSetupSession();
 	require_once("phpFlickr-2.2.0/phpFlickr.php");
 
 	$importPage = Title::makeTitle(NS_SPECIAL, "ImportFreeImages");
@@ -235,6 +237,8 @@ function wfSpecialImportFreeImages( $par )
 		return;
 	}
 	$f = new phpFlickr($wgIFI_FlickrAPIKey);
+        $proxyArr = explode(':', $wgHTTPProxy);
+        $f->setProxy($proxyArr[0], $proxyArr[1]);
 
 	# a lot of this code is duplicated from SpecialUpload, should be refactored
 	# Check uploading enabled
@@ -264,7 +268,8 @@ function wfSpecialImportFreeImages( $par )
 	}
 
 	$import = $wgRequest->getVal( 'url', '' );
-	if( $wgRequest->wasPosted() && $import != '' ) {
+
+        if( $wgRequest->wasPosted() && $import != '' ) {
 		if( wfIFI_handleUpload( $f, $import ) )
 			return;
 		$wgOut->addHTML('<hr/>');
@@ -272,7 +277,8 @@ function wfSpecialImportFreeImages( $par )
 
 	$q = $wgRequest->getText( 'q' );
 	$searchType = $wgRequest->getVal('searchtype');
-	if (!in_array($searchType, array('any', 'all'))) {
+
+        if (!in_array($searchType, array('any', 'all'))) {
 		$searchType = 'all';
 	}
 
@@ -295,6 +301,7 @@ function wfSpecialImportFreeImages( $par )
 		</form>');
 
 	if ($q != '') {
+
 		$page = $wgRequest->getInt( 'p', 1 );
 		// TODO: get the right licenses
 		$photos = $f->photos_search(array(
@@ -304,13 +311,19 @@ function wfSpecialImportFreeImages( $par )
 				"per_page" => $wgIFI_ResultsPerPage,
 				"license" => $wgIFI_FlickrLicense,
 				"sort" => $wgIFI_FlickrSort  ));
-
+                 
 		// $wgOut->addHTML('<pre>'.htmlspecialchars(print_r($photos, TRUE)).'</pre>');
-		if ($photos == null || !is_array($photos) || sizeof($photos) == 0 || !isset($photos['photo'])
-		|| !is_array($photos['photo']) || sizeof($photos['photo']) == 0 ) {
+		if ($photos == null 
+                        || !is_array($photos)
+                        || sizeof($photos) == 0
+                        || !isset($photos['photo'])
+                        || !is_array($photos['photo'])
+                        || sizeof($photos['photo']) == 0 )
+                {
 			$wgOut->addHTML( wfMsg( "importfreeimages_nophotosfound", htmlspecialchars( $q ) ) );
 			return;
 		}
+
 		$sk = $wgUser->getSkin();
 		$wgOut->addHTML("
 			<form method='post' name='uploadphotoform' action='" . $importPage->escapeFullURL() . "'>
@@ -346,6 +359,7 @@ function wfSpecialImportFreeImages( $par )
 		$importmsg = wfMsg('importfreeimages_importthis');
 		$i = 0;
 		foreach ($photos['photo'] as $photo) {
+
 			//patch from author sent by e-mail
 			if ($i % $wgIFI_ResultsPerRow == 0) $wgOut->addHTML("<tr>");
 			$owner = $f->people_getInfo($photo['owner']);
