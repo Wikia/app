@@ -500,3 +500,9 @@ $wgBlogsEnableStaffAutoFollow = false;
  * toggles COPPA birthyear check on user creation
  */
 $wgEnableCOPPA = true;
+
+/**
+ * @name wgPreWikiFactoryValues
+ * optionally stores variable values as they were before overridden by WikiFactory
+ */
+$wgPreWikiFactoryValues = array();
