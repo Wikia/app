@@ -67,7 +67,7 @@ function axWFactoryTagCheck() {
  * @return HTML code with variable data
  */
 function axWFactoryGetVariable() {
-	global $wgRequest, $wgUser, $wgOut;
+	global $wgRequest, $wgUser, $wgOut, $wgPreWikiFactoryValues;
 
 	if ( !$wgUser->isAllowed( 'wikifactory' ) ) {
 		$wgOut->readOnlyPage(); #--- FIXME: later change to something reasonable
@@ -98,7 +98,6 @@ function axWFactoryGetVariable() {
 			}
 		}
 	}
-
 	$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 	$oTmpl->set_vars( array(
 		"cityid"        => $city_id,
@@ -107,6 +106,7 @@ function axWFactoryGetVariable() {
 		"accesslevels"  => WikiFactory::$levels,
 		"related"       => $related,
 		"related_pages" => $r_pages,
+		"preWFValues" => $wgPreWikiFactoryValues,
 	));
 
 	return Wikia::json_encode( array(

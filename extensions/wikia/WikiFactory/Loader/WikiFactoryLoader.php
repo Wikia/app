@@ -44,6 +44,7 @@ class WikiFactoryLoader {
 	public $mNoRedirect, $mTimestamp, $mAdCategory, $mCommandLine;
 	public $mExpireDomainCacheTimeout = 86400; #--- 24 hours
 	public $mExpireValuesCacheTimeout = 86400; #--- 24 hours
+	public $mSaveDefaults = false;
 
 	private $mDBhandler, $mDBname;
 
@@ -369,6 +370,15 @@ class WikiFactoryLoader {
 			$this->mCityDB = isset( $this->mDomain[ "db" ] ) ? $this->mDomain[ "db" ] : false;
 		}
 
+
+		/**
+		 * save default var values for Special:WikiFactory
+		 * @todo this should be smarter...
+		 */
+		if ( $this->mWikiID == 177 ) {
+			$this->mSaveDefaults = true;
+		}
+
 		/**
 		 * @todo check if owikis.wikia.com should not be regex
 		 */
@@ -677,6 +687,9 @@ class WikiFactoryLoader {
 				}
 
 				try {
+					if ( $this->mSaveDefaults ) {
+						$GLOBALS['wgPreWikiFactoryValues'][$key] = $tValue;
+					}
 					$GLOBALS[$key] = $tValue;
 				}
 				catch( Exception $e ) {
