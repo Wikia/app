@@ -13,8 +13,15 @@ if(!defined('MEDIAWIKI')) {
 $wgHooks['ArticleSaveComplete'][] = 'efSharedHelpArticleCreation';
 
 function efSharedHelpArticleCreation( &$article, &$user, $text, $summary, $minoredit, &$watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
+	global $wgCityId, $wgHelpWikiId;
+
+	// only run on help wikis
+	if ( $wgCityId !== $wgHelpWikiId ) {
+		return true;
+	}
+
+	// not likely if we got here, but... healthy paranoia ;)
 	if ( wfReadOnly() ) {
-		// not likely if we got here, but... healthy paranoia ;)
 		return true;
 	}
 
