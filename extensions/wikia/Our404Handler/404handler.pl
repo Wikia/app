@@ -14,7 +14,7 @@ package main;
 #
 
 use strict;
-use feature "say";
+use feature ":5.10";
 
 use URI;
 use FCGI;
@@ -61,6 +61,16 @@ sub real404 {
 </body>
 </html>
 		};
+}
+
+sub real503 {
+	print "HTTP/1.1 503 Service Unavailable\r\n";
+	print "Cache-control: max-age=30\r\n";
+	print "Retry-After: 30\r\n";
+	print "Connection: close\r\n";
+	print "X-Thumbnailer-Error: backend not responding\r\n";
+	print "Content-Type: text/plain; charset=utf-8\r\n\r\n";
+	print "Backend for getting original file is not responding\n";
 }
 
 #
@@ -234,6 +244,7 @@ my $remote         = undef; # url to remote original when $use_http is true
 my $content        = undef; #
 my $content_length = 0;
 my $last_modified  = undef;
+my $last_status    = undef;
 
 while( $request->Accept() >= 0 || $test ) {
 	my $t_start = [ gettimeofday() ];
@@ -347,7 +358,7 @@ while( $request->Accept() >= 0 || $test ) {
 				substr( $thumbnail, 0, length( $basepath ), $baseurl );
 				my $ua = LWP::UserAgent->new();
 				$ua->timeout( 5 );
-				$ua->proxy( "http", "http://127.0.0.1:6081/" );
+				$ua->proxy( "http", "http://127.0.0.1:6081/" ) unless $test;
 				my $response = $ua->get( $remote );
 				$last_modified = $response->header("Last-Modified")
 					? $response->header("Last-Modified")
@@ -356,9 +367,10 @@ while( $request->Accept() >= 0 || $test ) {
 					$content = $response->content;
 					$content_length = length( $content );
 					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-					print STDERR "Reading remote $remote, content-length: $content_length, time: $t_elapsed\n" if $debug;
+					say STDERR "Reading remote $remote, content-length: $content_length, time: $t_elapsed" if $debug;
 				}
 				else {
+					$last_status = $response->code();
 					$content_length = 0;
 					$last_modified = $datetime->strftime( "%a, %d %b %Y %T GMT" );
 				}
@@ -544,7 +556,7 @@ while( $request->Accept() >= 0 || $test ) {
 							print $output unless $test;
 
 							$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-							print STDERR "File $thumbnail served, time: $t_elapsed\n" if $debug;
+							say "File $thumbnail served, time: $t_elapsed" if $debug;
 							$transformed  = 1;
 						}
 						no bytes;
@@ -553,13 +565,16 @@ while( $request->Accept() >= 0 || $test ) {
 				}
 			}
 			else {
-				print STDERR "$thumbnail original file $original does not exists\n" if $debug > 1;
+				say STDERR "$thumbnail original file $original does not exists" if $debug > 1;
 			}
 		}
 	}
 
 	if( ! $transformed ) {
-		real404( $request_uri )
+		given( $last_status ) {
+			when( 404 ) { real404( $request_uri ) }
+			default     { real503() }
+		};
 	}
 
 	$transformed = 0;
