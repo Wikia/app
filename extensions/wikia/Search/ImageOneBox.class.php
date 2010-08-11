@@ -172,8 +172,15 @@ class ImageOneBox {
 			$data = array('titles' => array());
 
 			$img = $info['image'];
-			$thumb = $img->transform(array(	'width'  => 100,
-											'height' => 100));
+
+			if( empty($info['url']) ) {
+				$thumb = $img->transform( array( 'width' => 100, 'height' => 100) );
+				$thumbUrl = $thumb->getUrl();
+			}
+			else {
+				$thumbUrl = $info['url'];
+			}
+
 			$fileUrl = $img->getTitle()->getLocalUrl();
 
 			if (count($info['pages']) > 0) {
@@ -201,7 +208,7 @@ class ImageOneBox {
 				$data['mainImageLink'] = $img->getLocalUrl();
 			}
 
-			$data['thumbUrl'] = $thumb->getUrl();
+			$data['thumbUrl'] = $thumbUrl;
 
 			$image_data[] = $data;
 
