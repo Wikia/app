@@ -1299,15 +1299,25 @@ class ArticleCommentList {
 			$numberOfPages = ceil($countAll / $wgArticleCommentsMaxPerPage);
 
 			//previous
-			$pagination .= '<a href="' . $title->getLinkUrl("page=". (max($activePage - 1, 1)) ) . '#article-comment-header" id="article-comments-pagination-link-prev" class="article-comments-pagination-link dark_text_1" page="' . (max($activePage - 1, 1)) . '">' . wfMsg('article-comments-prev-page') . '</a>';
+			if ($activePage > 1) {
+				$pagination .= '<a href="' . $title->getLinkUrl('page='. (max($activePage - 1, 1)) ) . '#article-comment-header" id="article-comments-pagination-link-prev" class="article-comments-pagination-link dark_text_1" page="' . (max($activePage - 1, 1)) . '">' . wfMsg('article-comments-prev-page') . '</a>';
+			}
 
-			//calculate the 1st and the last but one pages to display
-			$firstVisiblePage = max(1, min($numberOfPages - $maxDisplayedPages, $activePage - $maxDisplayedPages + 3));
-			$lastVisiblePage = min($numberOfPages, $maxDisplayedPages + $firstVisiblePage - 1);
+			//first page - always visible
+			$pagination .= '<a href="' . $title->getFullUrl('page=1') . '#article-comment-header" id="article-comments-pagination-link-1" class="article-comments-pagination-link dark_text_1' . ($activePage == 1 ? ' article-comments-pagination-link-active accent' : '') . '" page="1">1</a>';
+
+			//calculate the 2nd and the last but one pages to display
+			$firstVisiblePage = max(2, min($numberOfPages - $maxDisplayedPages + 1, $activePage - $maxDisplayedPages + 4));
+			$lastVisiblePage = min($numberOfPages - 1, $maxDisplayedPages + $firstVisiblePage - 2);
+
+			//add spacer when there is a gap between 1st and 2nd visible page
+			if ($firstVisiblePage > 2) {
+				$pagination .= wfMsg('article-comments-page-spacer');
+			}
 
 			//generate links
 			for ($i = $firstVisiblePage; $i <= $lastVisiblePage; $i++) {
-				$pagination .= '<a href="' . $title->getFullUrl("page=" . $i) . '#article-comment-header" id="article-comments-pagination-link-' . $i . '" class="article-comments-pagination-link dark_text_1' . ($i == $activePage ? ' article-comments-pagination-link-active accent' : '') . '" page="' . $i . '">' . $i . '</a>';
+				$pagination .= '<a href="' . $title->getFullUrl('page=' . $i) . '#article-comment-header" id="article-comments-pagination-link-' . $i . '" class="article-comments-pagination-link dark_text_1' . ($i == $activePage ? ' article-comments-pagination-link-active accent' : '') . '" page="' . $i . '">' . $i . '</a>';
 			}
 
 			//add spacer when there is a gap between 2 last links
@@ -1315,13 +1325,13 @@ class ArticleCommentList {
 				$pagination .= wfMsg('article-comments-page-spacer');
 			}
 
-			//add last page - if not already visible
-			if ($numberOfPages - $lastVisiblePage > 0) {
-				$pagination .= '<a href="' . $title->getFullUrl("page=" . $numberOfPages) . '#article-comment-header" id="article-comments-pagination-link-' . $numberOfPages . '" class="article-comments-pagination-link dark_text_1' . ($numberOfPages == $activePage ? ' article-comments-pagination-link-active accent' : '') . '" page="' . $numberOfPages . '">' . $numberOfPages . '</a>';
-			}
+			//add last page - always visible
+			$pagination .= '<a href="' . $title->getFullUrl('page=' . $numberOfPages) . '#article-comment-header" id="article-comments-pagination-link-' . $numberOfPages . '" class="article-comments-pagination-link dark_text_1' . ($numberOfPages == $activePage ? ' article-comments-pagination-link-active accent' : '') . '" page="' . $numberOfPages . '">' . $numberOfPages . '</a>';
 
 			//next
-			$pagination .= '<a href="' . $title->getFullUrl("page=" . (min($activePage + 1, $numberOfPages)) ) . '#article-comment-header" id="article-comments-pagination-link-next" class="article-comments-pagination-link dark_text_1" page="' . (min($activePage + 1, $numberOfPages)) . '">' . wfMsg('article-comments-next-page') . '</a>';
+			if ($activePage < $numberOfPages) {
+				$pagination .= '<a href="' . $title->getFullUrl('page=' . (min($activePage + 1, $numberOfPages)) ) . '#article-comment-header" id="article-comments-pagination-link-next" class="article-comments-pagination-link dark_text_1" page="' . (min($activePage + 1, $numberOfPages)) . '">' . wfMsg('article-comments-next-page') . '</a>';
+			}
 		}
 		return $pagination;
 	}

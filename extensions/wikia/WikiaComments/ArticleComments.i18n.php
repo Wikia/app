@@ -23,7 +23,7 @@ $messages['en'] = array(
 	'article-comments-show-all' => 'Show all comments',
 	'article-comments-prev-page' => 'Prev',
 	'article-comments-next-page' => 'Next',
-	'article-comments-page-spacer' => ' --- ',
+	'article-comments-page-spacer' => ' ... ',
 	'enotif_subject_article_comment' => '$PAGEEDITOR has commented on "$PAGETITLE" on {{SITENAME}}',
 	'enotif_body_article_comment' => 'Dear $WATCHINGUSERNAME,
 
