@@ -11,7 +11,7 @@ if (!count($comments)) {
 	foreach ($comments as $commentId => $commentArr) {
 		$rowClass = $odd ? 'odd' : 'even';
 		$odd = !$odd;
-		echo "<li id=\"comm-$commentId\" class=\"article-comments-li article-comments-row-{$rowClass}{$first} neutral clearfix\">\n";
+		echo "<li id=\"comm-$commentId\" class=\"article-comments-li article-comments-row-{$rowClass}{$first} clearfix\">\n";
 		echo $commentArr['level1']->render();
 		echo "\n</li>\n";
 		$first = '';
