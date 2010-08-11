@@ -37,13 +37,34 @@
         <!-- [<a id="wk-var-remove" title="Remove value" href="#">remove value</a>] -->
     </span>
 </h2>
+
+<div style="width: 45%; float: left">
 Current value:
 <?php if( !isset( $variable->cv_value ) || is_null( $variable->cv_value ) ): ?>
-    <strong><em>Value is not set</em></strong>
+    <strong>Value is not set</strong>
 <?php else: ?>
     <pre><?php echo var_export( unserialize( $variable->cv_value ) ) ?></pre>
 <?php endif ?>
-<div>
+</div>
+
+<div style="width: 45%; float: right">
+Default value:
+<?php
+$name = $variable->cv_name;
+global $$name;
+if( isset( $preWFValues[$name] ) ) {
+	// was modified, spit out saved default
+	echo "<pre>" . var_export( $preWFValues[$name], true ) . "</pre>";
+} elseif( isset( $$name ) ) {
+	// was not modified, spit out actual value
+	echo "<pre>" . var_export( $$name, true ) . "</pre>";
+} else {
+	// no value set
+	echo "<strong>No default value set.</strong>";
+} ?>
+</div>
+
+<div style="clear: both">
 <?php if( $variable->cv_access_level > 1 ): ?>
 <form id="wf-variable-form" name="wf-variable-form" class="wf-variable-form">
 	<input type="hidden" name="cityid" value="<?php echo $cityid ?>" />
