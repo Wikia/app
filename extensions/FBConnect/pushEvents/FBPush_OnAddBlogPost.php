@@ -40,7 +40,7 @@ class FBPush_OnAddBlogPost extends FBConnectPushEvent {
 		}
 		
 		// only push if it's a newly created article
-		if ( !$article->getTitle()->isNewPage() ) {
+		if ( !( $flags & EDIT_NEW ) ) {
 			return true;
 		}
 
