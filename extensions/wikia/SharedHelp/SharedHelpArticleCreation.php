@@ -26,7 +26,7 @@ function efSharedHelpArticleCreation( &$article, &$user, $text, $summary, $minor
                 return true;
         }
 
-        if ( !$article->mTitle->isNewPage( GAID_FOR_UPDATE ) ) {
+        if ( !( $flags & EDIT_NEW ) ) {
                 return true;
         }
 
