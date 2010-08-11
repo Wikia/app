@@ -19,6 +19,9 @@
 	border-color: #FFCB3B;
 	color: #000;
 }
+#article-comments-pagination .accent {
+	color: #000;
+}
 
 #user_masthead ul.nav_links li a {
 	background: transparent;
