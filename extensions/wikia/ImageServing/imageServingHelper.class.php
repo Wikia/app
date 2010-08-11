@@ -69,9 +69,12 @@ class imageServingHelper{
 	 */
 	
 	public static function replaceGallery( $parser, $ig) {
-		if (!self::$hookOnOff) {
+		global $wgEnableWikiaPhotoGalleryExt;
+		
+		if ((!self::$hookOnOff) || empty($wgEnableWikiaPhotoGalleryExt)) {
 			return true;
 		}
+		
 		wfProfileIn(__METHOD__);
 
 		$ig->parse();
