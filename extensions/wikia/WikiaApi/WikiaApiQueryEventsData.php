@@ -121,6 +121,68 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		wfProfileOut( __METHOD__ );
 		return $result;
 	}
+	
+	private function getRecentchangePage($oRC) {
+		wfProfileIn( __METHOD__ );
+		
+		if ( empty($this->mPageId) ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+		
+		if ( !is_object($oRC) ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+
+		$db = $this->getDB();
+
+		$fields = array(
+			'rc_namespace as page_namespace',
+			'rc_title as page_title',
+			'rc_comment as rev_comment',
+			'rc_user as rev_user',
+			'rc_user_text as rev_user_text',
+			'rc_timestamp as rev_timestamp',
+			'rc_minor as rev_minor_edit',
+			'rc_cur_id as rev_id',
+			'0 as rev_text_id',
+			'rc_new_len as rev_len',
+			$this->mPageId . ' as page_id'
+		);
+
+		$this->profileDBIn();
+		$oRow = $db->selectRow( 
+			'recentchanges', 
+			$fields, 
+			array( 
+				'rc_title'		=> $oRC->getAttribute('rc_title'),
+				'rc_namespace'	=> $oRC->getAttribute('rc_namespace'),
+				'rc_logid'		=> $oRC->getAttribute('rc_logid'),
+			),
+			__METHOD__, 
+			array( 
+				'ORDER BY' => 'rc_timestamp desc' 
+			)
+		);
+		$this->profileDBOut();
+
+		$result = false;
+		if ( is_object($oRow) && isset($oRow) && ( $oRow->page_id == $this->mPageId ) ) {
+			$rc_user_id = $oRC->getAttribute('rc_user');
+			$rc_user_text = $oRC->getAttribute('rc_user_text');
+			if ( isset($rc_user_id) ) {
+				$oRow->rev_user = $rc_user_id;
+			}
+			if ( isset($rc_user_text) ) {
+				$oRow->rev_user_text = $rc_user_text;
+			}
+			$result = $oRow;
+		} 
+		
+		wfProfileOut( __METHOD__ );
+		return $result;
+	}	
 
 	private function getRevisionFromArchive() {
 		wfProfileIn( __METHOD__ );
@@ -188,6 +250,10 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		$db->freeResult($res);
 		
 		$res = ( is_object($oRC) ) ? $this->getArchivePage($oRC) : false;
+		
+		if ( empty($res) && is_object($oRC) ) {
+			$res = $this->getRecentchangePage($oRC);
+		}
 		
 		wfProfileOut( __METHOD__ );
 		return $res;
