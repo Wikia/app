@@ -192,6 +192,8 @@ my @tests = qw(
 	/h/half-life/en/images/thumb/d/d6/Black_Mesa_logo.svg/250px-Black_Mesa_logo.svg.png
 	/d/de/images/thumb/3/35/Information_icon.svg/120px-Information_icon.svg.png
 	/w/wowwiki/images/thumb/b/b0/Tauren_shaman.jpg/430px-0,100,0,300-Tauren_shaman.jpg
+	/l/lyricwiki/images/thumb/7/74/Acid_Drinkers_-_Are_You_a_Rebel%3F.jpg/120px-Acid_Drinkers_-_Are_You_a_Rebel%3F.jpg
+	/l/lyricwiki/images/thumb/7/74/Acid_Drinkers_-_Are_You_a_Rebel?.jpg/120px-Acid_Drinkers_-_Are_You_a_Rebel?.jpg
 );
 use warnings;
 my @done = ();
