@@ -26,4 +26,16 @@ $wgSpecialPages['SystemGiftManagerLogo'] = 'SystemGiftManagerLogo';
 $wgSpecialPageGroups['SystemGiftManagerLogo'] = 'users';
 
 include_once( "{$wgSystemGiftsDirectory}/SpecialPopulateAwards.php" );
+
+$wgHooks['UserRename::Local'][] = "SystemGiftsUserRenameLocal";
+
+function SystemGiftsUserRenameLocal( $dbw, $uid, $oldusername, $newusername, $process, $cityId, &$tasks ) {
+	$tasks[] = array(
+		'table' => 'user_system_gift',
+		'userid_column' => 'sg_user_id',
+		'username_column' => 'sg_user_name',
+	);
+	return true;
+}
+
 ?>

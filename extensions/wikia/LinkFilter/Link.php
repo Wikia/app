@@ -204,4 +204,16 @@ function wfAddLinkFilterScripts(&$tpl){
 	}
 	return true;
 }
+
+$wgHooks['UserRename::Local'][] = "LinkFilterUserRenameLocal";
+
+function LinkFilterUserRenameLocal( $dbw, $uid, $oldusername, $newusername, $process, $cityId, &$tasks ) {
+	$tasks[] = array(
+		'table' => 'link',
+		'userid_column' => 'link_submitter_user_id',
+		'username_column' => 'link_submitter_user_name',
+	);
+	return true;
+}
+
 ?>

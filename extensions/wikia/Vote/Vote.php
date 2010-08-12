@@ -47,4 +47,17 @@ function wfVoteReadLang(){
 		$wgMessageCache->addMessages( $messages, $lang );
 	}
 }
+
+$wgHooks['UserRename::Local'][] = "VoteUserRenameLocal";
+
+function VoteUserRenameLocal( $dbw, $uid, $oldusername, $newusername, $process, $cityId, &$tasks ) {
+	$tasks[] = array(
+		'table' => 'Vote',
+		'userid_column' => 'vote_user_id',
+		'username_column' => 'username',
+	);
+	return true;
+}
+
+
 ?>

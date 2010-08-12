@@ -832,4 +832,22 @@ class UserEmailTrack{
 		}
 	}
 }
+
+$wgHooks['UserRename::Local'][] = "UserStatsUserRenameLocal";
+
+function UserStatsUserRenameLocal( $dbw, $uid, $oldusername, $newusername, $process, $cityId, &$tasks ) {
+	$tasks[] = array(
+		'table' => 'user_email_track',
+		'userid_column' => 'ue_user_id',
+		'username_column' => 'ue_user_name',
+	);
+	$tasks[] = array(
+		'table' => 'user_stats',
+		'userid_column' => 'stats_user_id',
+		'username_column' => 'stats_user_name',
+	);
+	return true;
+}
+
+
 ?>

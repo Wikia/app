@@ -213,5 +213,20 @@ function RenderEmbedPoll( $input, $args, &$parser ){
 	return "";
 }
 
+$wgHooks['UserRename::Local'][] = "PollNYUserRenameLocal";
+
+function PollNYUserRenameLocal( $dbw, $uid, $oldusername, $newusername, $process, $cityId, &$tasks ) {
+	$tasks[] = array(
+		'table' => 'poll_question',
+		'userid_column' => 'poll_user_id',
+		'username_column' => 'poll_user_name',
+	);
+	$tasks[] = array(
+		'table' => 'poll_user_vote',
+		'userid_column' => 'pv_user_id',
+		'username_column' => 'pv_user_name',
+	);
+	return true;
+}
 
 ?>

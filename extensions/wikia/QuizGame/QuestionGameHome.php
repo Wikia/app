@@ -1241,4 +1241,20 @@ function wfSpecialQuizGameHome(){
 	SpecialPage::addPage( new QuizGameHome );
 }
 
+$wgHooks['UserRename::Local'][] = "QuizGameUserRenameLocal";
+
+function QuizGameUserRenameLocal( $dbw, $uid, $oldusername, $newusername, $process, $cityId, &$tasks ) {
+	$tasks[] = array(
+		'table' => 'quizgame_questions',
+		'userid_column' => 'q_user_id',
+		'username_column' => 'q_user_name',
+	);
+	$tasks[] = array(
+		'table' => 'quizgame_answers',
+		'userid_column' => 'a_user_id',
+		'username_column' => 'a_user_name',
+	);
+	return true;
+}
+
 ?>

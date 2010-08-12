@@ -33,3 +33,24 @@ $wgDisableFoeing = true;
 
 $wgUserProfileDisplay['friends'] = true;
 $wgUserProfileDisplay['foes'] = true;
+
+$wgHooks['UserRename::Local'][] = "UserRelationshipUserRenameLocal";
+
+function UserRelationshipUserRenameLocal( $dbw, $uid, $oldusername, $newusername, $process, $cityId, &$tasks ) {
+	$tasks[] = array(
+		'table' => 'user_relationship',
+		'userid_column' => 'r_user_id',
+		'username_column' => 'r_user_name',
+	);
+	$tasks[] = array(
+		'table' => 'user_relationship_request',
+		'userid_column' => 'ur_user_id',
+		'username_column' => 'ur_user_name',
+	);
+	$tasks[] = array(
+		'table' => 'user_relationship_stats',
+		'userid_column' => 'rs_user_id',
+		'username_column' => 'rs_user_name',
+	);
+	return true;
+}

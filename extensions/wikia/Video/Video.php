@@ -164,5 +164,20 @@ function wfCategoryPageWithVideo(&$cat){
 	return false;
 }
 
+$wgHooks['UserRename::Local'][] = "VideoUserRenameLocal";
+
+function VideoUserRenameLocal( $dbw, $uid, $oldusername, $newusername, $process, $cityId, &$tasks ) {
+	$tasks[] = array(
+		'table' => 'video',
+		'userid_column' => 'video_user_id',
+		'username_column' => 'video_user_name',
+	);
+	$tasks[] = array(
+		'table' => 'oldvideo',
+		'userid_column' => 'ov_user_id',
+		'username_column' => 'ov_user_name',
+	);
+	return true;
+}
 
 ?>

@@ -24,4 +24,20 @@ require_once( "{$wgUserBoardDirectory}/UserBoard_AjaxFunctions.php" );
 	
 $wgAutoloadClasses["UserBoard"] = "{$wgUserBoardDirectory}/UserBoardClass.php";
 $wgUserProfileDisplay['board'] = true;
+
+$wgHooks['UserRename::Local'][] = "UserBoardUserRenameLocal";
+
+function UserBoardUserRenameLocal( $dbw, $uid, $oldusername, $newusername, $process, $cityId, &$tasks ) {
+	$tasks[] = array(
+		'table' => 'user_board',
+		'userid_column' => 'ub_user_id',
+		'username_column' => 'ub_user_name',
+	);
+	$tasks[] = array(
+		'table' => 'user_board',
+		'userid_column' => 'ub_user_id_from',
+		'username_column' => 'ub_user_name_from',
+	);
+	return true;
+}
 ?>
