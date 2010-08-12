@@ -24,7 +24,6 @@ class UserAjaxCreateTemplate extends QuickTemplate {
 	function execute() {
 
 		global $wgOut, $wgStylePath, $wgStyleVersion, $wgBlankImgUrl;
-
 		$wgOut->addScript('<link rel="stylesheet" type="text/css" href="'. $wgStylePath . '/wikia/common/NewUserRegister.css?' . $wgStyleVersion . "\" />\n");
 
 		if (!array_key_exists('message', $this->data)) {
@@ -81,76 +80,86 @@ if(( $this->data['messagetype'] == 'error' ) && (strlen($this->data['message'] )
 		</colgroup>
 		<tr>
 			<td class="wpAjaxLoginInput" id="wpNameTD">
-				<label for='wpName2'><?php $this->msg('yourname') ?></label><span>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span>
-				<input type='text'  name="wpName" id="wpName2"	value="<?php $this->text('name') ?>" size='20' />
+				<label tabindex="0" for='wpName2'><?php $this->msg('yourname') ?></label><span>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span>
+				<input type='text'  name="wpName" id="wpName2"	value="<?php $this->text('name') ?>" size='20' tabindex="1" />
 			</td>
 			<td class="wpAjaxLoginInput" id="wpPasswordTD">
-				<label for='wpPassword2'><?php $this->msg('yourpassword') ?></label><span>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span>
-				<input type='password'  name="wpPassword" id="wpPassword2" value="" size='20' />
+				<label tabindex="0" for='wpPassword2'><?php $this->msg('yourpassword') ?></label><span>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span>
+				<input type='password'  name="wpPassword" id="wpPassword2" value="" size='20' tabindex="3" />
 			</td>
 		</tr>
 		<tr class="wpAjaxLoginPreLine" >
 			<td class="wpAjaxLoginInput" id="wpEmailTD">
 				<?php if( $this->data['useemail'] ) { ?>
-					<label for='wpEmail'><?php $this->msg('signup-mail') ?></label>
+					<label tabindex="0" for='wpEmail'><?php $this->msg('signup-mail') ?></label>
 					<span><a id="wpEmailInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span>
-					<input type='text'  name="wpEmail" id="wpEmail" value="<?php $this->text('email') ?>" size='20' />
+					<input type='text'  name="wpEmail" id="wpEmail" value="<?php $this->text('email') ?>" size='20' tabindex="2"  />
 				<?php } ?>
 			</td>
 			<td class="wpAjaxLoginInput" id="wpRetypeTD">
-				<label for='wpRetype'><?php $this->msg('yourpasswordagain') ?></label><span>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span>
-				<input type='password' name="wpRetype" id="wpRetype" value="" size='20' />
+				<label for='wpRetype' tabindex="0"><?php $this->msg('yourpasswordagain') ?></label><span>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span>
+				<input type='password' name="wpRetype" id="wpRetype" tabindex="4" value="" size='20' />
 			</td>
 		</tr>
 
 		<tr class="wpAjaxLoginLine">
 			<td class="wpAjaxLoginInput">
 				<label for='uselang'><?php $this->msg('yourlanguage') ?></label><span>&nbsp;</span>
-	<select style="height:22px;" name="uselang" id="uselang">
+	<select style="height:22px;" name="uselang" id="uselang" tabindex="5" >
 <?php
 	global $wgLanguageCode;
 
-        $isSelected = false;
+	$isSelected = false;
 
 	$aTopLanguages = explode(',', wfMsg('wikia-language-top-list'));
 	$aLanguages = wfGetFixedLanguageNames();
 	asort( $aLanguages );
 
-        if (!empty($aTopLanguages) && is_array($aTopLanguages)) :
+	if (!empty($aTopLanguages) && is_array($aTopLanguages)) :
 ?>
-                                <optgroup label="<?= wfMsg('wikia-language-top', count($aTopLanguages)) ?>">
+				<optgroup label="<?= wfMsg('wikia-language-top', count($aTopLanguages)) ?>">
 <?php foreach ($aTopLanguages as $sLang) :
-                $selected = '';
-                if ( !$isSelected && ( $wgLanguageCode == $sLang ) ) :
-                        $isSelected = true;
-                        $selected = ' selected="selected"';
-                endif;
+		$selected = '';
+		if ( !$isSelected && ( $wgLanguageCode == $sLang ) ) :
+			$isSelected = true;
+			$selected = ' selected="selected"';
+		endif;
 ?>
-                                <option value="<?=$sLang?>" <?=$selected?>><?=$aLanguages[$sLang]?></option>
+				<option value="<?=$sLang?>" <?=$selected?>><?=$aLanguages[$sLang]?></option>
 <?php endforeach ?>
-                                </optgroup>
+				</optgroup>
 <?php endif ?>
-                                <optgroup label="<?= wfMsg('wikia-language-all') ?>">
+				<optgroup label="<?= wfMsg('wikia-language-all') ?>">
 <?php if (!empty($aLanguages) && is_array($aLanguages)) : ?>
 <?php
-        foreach ($aLanguages as $sLang => $sLangName) :
-                if ( empty($isSelected) && ( $wgLanguageCode == $sLang ) ) :
-                        $isSelected = true;
-                        $selected = ' selected="selected"';
-                endif;
+	foreach ($aLanguages as $sLang => $sLangName) :
+		if ( empty($isSelected) && ( $wgLanguageCode == $sLang ) ) :
+			$isSelected = true;
+			$selected = ' selected="selected"';
+		endif;
 ?>
-                                <option value="<?=$sLang?>" <?=$selected?>><?=$sLangName?></option>
+				<option value="<?=$sLang?>" <?=$selected?>><?=$sLangName?></option>
 <?php endforeach ?>
-                                </optgroup>
+				</optgroup>
 <?php endif ?>
-                                </select>
+				</select>
 			</td>
 			<td rowspan="2" class="wpAjaxLoginInput">
 				<?php if($this->haveData('captcha')) { ?> 
-							<label for='wpUserCaptchaInfo'><?php $this->msg( 'usercaptcha' ) ?></label>
-							<span><a id="wpUserCaptchaInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span>
-							<?php $this->html('captcha'); ?>
-				<?php } ?>
+					<label for='wpUserCaptchaInfo'><?php $this->msg( 'usercaptcha' ) ?></label>
+					<span><a id="wpUserCaptchaInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span>
+
+					<?php
+					   /**
+					    * small hack on captcha to add tabindex;
+					    * oldcode
+					    * $this->html('captcha');
+					    */
+
+					   $hackedCaptcha = str_replace('id="wpCaptchaWord"','id="wpCaptchaWord" tabindex="9"',$this->data['captcha']);
+					   echo $hackedCaptcha;
+
+					} ?>
 			</td>
 		</tr>
 		<tr class="wpAjaxLoginPreLine">
@@ -158,7 +167,7 @@ if(( $this->data['messagetype'] == 'error' ) && (strlen($this->data['message'] )
 			<td class="wpAjaxLoginInput wpAjaxLoginData" id="wpBirthDateTD">
 				<label for='wpBirthYear'><?php $this->msg('yourbirthdate') ?></label>
 				<span><a id="wpBirthDateInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span>
-				<select name="wpBirthYear" id="wpBirthYear">
+				<select name="wpBirthYear" id="wpBirthYear" tabindex="6">
 					<option value="-1"><?php $this->msg('userlogin-choose-year') ?></option>
 					<?php
 					$setYear = $this->data['birthyear'];
@@ -169,7 +178,7 @@ if(( $this->data['messagetype'] == 'error' ) && (strlen($this->data['message'] )
 					}
 					?>
 				</select>
-				<select name="wpBirthMonth" id="wpBirthMonth">
+				<select name="wpBirthMonth" id="wpBirthMonth" tabindex="7">
 					<option value="-1"><?php $this->msg('userlogin-choose-month') ?></option>
 					<?php
 					$setMonth = $this->data['birthmonth'];
@@ -179,7 +188,7 @@ if(( $this->data['messagetype'] == 'error' ) && (strlen($this->data['message'] )
 					}
 					?>
 				</select>
-				<select name="wpBirthDay" id="wpBirthDay">
+				<select name="wpBirthDay" id="wpBirthDay" tabindex="8">
 					<option value="-1"><?php $this->msg('userlogin-choose-day') ?></option>
 					<?php
 					$setDay = $this->data['birthday'];
@@ -195,7 +204,7 @@ if(( $this->data['messagetype'] == 'error' ) && (strlen($this->data['message'] )
 		<tr class="wpAjaxLoginLine" >
 	<?php if( $this->data['canremember'] ) { ?>
 			<td class="mw-input" style="vertical-align: top;" >
-				<input type='checkbox' name="wpRemember" value="1" id="wpRemember" <?php if( $this->data['remember'] ) { ?>checked="checked"<?php } ?>/>
+				<input type='checkbox' name="wpRemember" value="1" id="wpRemember" <?php if( $this->data['remember'] ) { ?>checked="checked"<?php } ?> tabindex="10"/>
 				<label for="wpRemember" class="plain"><?php $this->msg('remembermypassword') ?></label>
 			</td>
 	<?php }  ?>
@@ -209,7 +218,7 @@ if(( $this->data['messagetype'] == 'error' ) && (strlen($this->data['message'] )
 	<?php } ?>	
 		<tr>
 	<?php   
-		$tabIndex = 8;
+		$tabIndex = 12;
 		if ( isset( $this->data['extraInput'] ) && is_array( $this->data['extraInput'] ) ) {
 			foreach ( $this->data['extraInput'] as $inputItem ) { ?>
 		<tr>
@@ -258,14 +267,15 @@ if(( $this->data['messagetype'] == 'error' ) && (strlen($this->data['message'] )
 
 <div class="modalToolbar neutral">
 
-	<input name="wpCreateaccount" type="submit" id="wpCreateaccountXSteer" onclick="UserRegistration.submitForm2( 'normal' ); return false;" value="<?php print wfMsg("createaccount") ?>" />	
+	<input name="wpCreateaccount" type="submit" id="wpCreateaccountXSteer" onclick="UserRegistration.submitForm2( 'normal' ); return false;" value="<?php print wfMsg("createaccount") ?>" tabindex ="<?php echo $tabIndex; $tabIndex++; ?>" />
 <?php if($this->data['createemail']) { ?>
-	<input name="wpCreateaccountMail" type="submit" id="wpCreateaccountX" href="#" onclick="$('#wpCreateaccountXSteer').value = false; $('#wpCreateaccountYSteer').value = true; UserRegistration.submitForm2( 'mail' ); return false;" value="<?php print wfMsg("createaccountmail") ?>" />
+	<input name="wpCreateaccountMail" type="submit" id="wpCreateaccountX" href="#" onclick="$('#wpCreateaccountXSteer').value = false; $('#wpCreateaccountYSteer').value = true; UserRegistration.submitForm2( 'mail' ); return false;" value="<?php print wfMsg("createaccountmail") ?>"  tabindex ="<?php echo $tabIndex; $tabIndex++; ?>"  />
 <?php } ?>
-	<input type="submit" name="wpCreateaccountClose" id="wpCreateaccountClose" class="secondary" onclick="AjaxLogin.close(); return false;" value="<?php print wfMsg("Cancel") ?>" />
+	<input type="submit" name="wpCreateaccountClose" id="wpCreateaccountClose" class="secondary" onclick="AjaxLogin.close(); return false;" value="<?php print wfMsg("Cancel") ?>"  tabindex ="<?php echo $tabIndex; $tabIndex++; ?>"  />
 </div>
 </form>
 <?php
+
 	}
 
 }
