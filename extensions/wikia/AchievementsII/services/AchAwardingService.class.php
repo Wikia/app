@@ -124,7 +124,7 @@ class AchAwardingService {
 
 				if($badgeType == BADGE_TYPE_NOTINTRACKSTATIC) {
 
-					$score += AchConfig::getInstance()->getLevelScore($notInTrackStatic[$badge_type_id]['level']) * $badge_laps;
+					$score += AchConfig::getInstance()->getLevelScore($notInTrackStatic[$badge_type_id]['level']) * ($badge_laps + 1);
 
 				} else if($badgeType == BADGE_TYPE_NOTINTRACKCOMMUNITYPLATINUM) {
 
