@@ -629,22 +629,21 @@ class Wikia {
      *
      * @return string: encoded string
      */
-    static public function json_encode( $what )
-    {
+    static public function json_encode( $what ) {
         wfProfileIn( __METHOD__ );
 
-        $sResponse = "";
+        $response = "";
 
-        if (!function_exists('json_encode'))  { #--- php < 5.2
-            $oJson = new Services_JSON();
-            $sResponse = $oJson->encode( $what );
+        if( 1 ) { // currently json class included in MW looks better
+            $json = new Services_JSON();
+            $response = $json->encode( $what );
         }
         else {
-            $sResponse = json_encode( $what );
+            $response = json_encode( $what );
         }
         wfProfileOut( __METHOD__ );
 
-        return $sResponse;
+        return $response;
     }
 
     /**
