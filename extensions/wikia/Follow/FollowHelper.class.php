@@ -117,7 +117,7 @@ class FollowHelper {
 				0,
 				0,
 				$action,
-				array('childTitle' => $childTitle) );
+				array('notisnull' => 1, 'childTitle' => $childTitle) );
 		}
 		
 		wfProfileOut( __METHOD__ );
