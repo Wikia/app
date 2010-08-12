@@ -1521,4 +1521,20 @@ function wfSpecialPictureGameHome(){
 
 }
 
+$wgHooks['UserRename::Local'][] = "PictureGameUserRenameLocal";
+
+function PictureGameUserRenameLocal( $dbw, $uid, $oldusername, $newusername, $process, $cityId, &$tasks ) {
+	$tasks[] = array(
+		'table' => 'picturegame_images',
+		'userid_column' => 'userid',
+		'username_column' => 'username',
+	);
+	$tasks[] = array(
+		'table' => 'picturegame_votes',
+		'userid_column' => 'userid',
+		'username_column' => 'username',
+	);
+	return true;
+}
+
 ?>

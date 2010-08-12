@@ -113,3 +113,12 @@ function wfProblemReportsSetupVars($vars) {
         return true;
 }
 
+$wgHooks['UserRename::Global'][] = "ProblemReportsUserRenameGlobal";
+
+function ProblemReportsUserRenameGlobal( $dbw, $uid, $oldusername, $newusername, $process, &$tasks ) {
+	$tasks[] = array(
+		'table' => 'problem_reports',
+		'username_column' => 'pr_reporter',
+	);
+	return true;
+}

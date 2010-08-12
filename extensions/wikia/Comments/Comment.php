@@ -75,4 +75,32 @@ function DisplayComments( $input , $args, &$parser ){
 	return $output;
 }
 
+$wgHooks['UserRename::Local'][] = "CommentUserRenameLocal";
+
+function CommentUserRenameLocal( $dbw, $uid, $oldusername, $newusername, $process, $cityId, &$tasks ) {
+	$tasks[] = array(
+		'table' => 'Comments',
+		'userid_column' => 'Comment_user_id',
+		'username_column' => 'Comment_Username',
+	);
+	$tasks[] = array(
+		'table' => 'Comments_block',
+		'userid_column' => 'cb_user_id',
+		'username_column' => 'cb_user_name',
+	);
+	$tasks[] = array(
+		'table' => 'Comments_block',
+		'userid_column' => 'cb_user_id_blocked',
+		'username_column' => 'cb_user_name_blocked',
+	);
+	$tasks[] = array(
+		'table' => 'Comments_Vote',
+		'userid_column' => 'Comment_Vote_user_id',
+		'username_column' => 'Comment_Vote_Username',
+	);
+	return true;
+}
+
+
+
 ?>

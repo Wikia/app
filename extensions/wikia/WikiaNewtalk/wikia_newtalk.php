@@ -163,6 +163,15 @@ function wfClearWikiaNewtalk( &$user ) {
 	return true;
 }
 
+function WikiaNewtalkUserRenameGlobal( $dbw, $uid, $oldusername, $newusername, $process, &$tasks ) {
+	$tasks[] = array(
+		'table' => 'shared_newtalks',
+		'username_column' => 'sn_user_ip',
+		'userid_column' => 'sn_user_id',
+	);
+	return true;
+}
+
 /**
  * register Hooks
  */
@@ -171,4 +180,7 @@ if( !empty( $wgExternalSharedDB ) ) {
 	$wgHooks['UserRetrieveNewTalks'][] = 'wfGetWikiaNewtalk';
 	$wgHooks['ArticleEditUpdateNewTalk'][] = 'wfSetWikiaNewtalk';
 	$wgHooks['UserClearNewTalkNotification'][] = 'wfClearWikiaNewtalk';
+
+	$wgHooks['UserRename::Global'][] = "WikiaNewtalkUserRenameGlobal";
+
 }

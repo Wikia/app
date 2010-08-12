@@ -195,4 +195,31 @@ function wfUserProfileReadLang(){
 	}
 }
 
+$wgHooks['UserRename::Local'][] = "UserProfileUserRenameLocal";
+
+function UserProfileUserRenameLocal( $dbw, $uid, $oldusername, $newusername, $process, $cityId, &$tasks ) {
+	$tasks[] = array(
+		'table' => 'user_mailing_list',
+		'userid_column' => 'um_user_id',
+		'username_column' => 'um_user_name',
+	);
+	$tasks[] = array(
+		'table' => 'user_points_archive',
+		'userid_column' => 'up_user_id',
+		'username_column' => 'up_user_name',
+	);
+	$tasks[] = array(
+		'table' => 'user_points_monthly',
+		'userid_column' => 'up_user_id',
+		'username_column' => 'up_user_name',
+	);
+	$tasks[] = array(
+		'table' => 'user_points_weekly',
+		'userid_column' => 'up_user_id',
+		'username_column' => 'up_user_name',
+	);
+	return true;
+}
+
+
 ?>

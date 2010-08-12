@@ -198,4 +198,21 @@ function wfAddFanBoxScripts(&$tpl){
 	}
 	return true;
 }
+
+$wgHooks['UserRename::Local'][] = "FantagUserRenameLocal";
+
+function FantagUserRenameLocal( $dbw, $uid, $oldusername, $newusername, $process, $cityId, &$tasks ) {
+	$tasks[] = array(
+		'table' => 'fantag',
+		'userid_column' => 'fantag_user_id',
+		'username_column' => 'fantag_user_name',
+	);
+	$tasks[] = array(
+		'table' => 'user_fantag',
+		'userid_column' => 'userft_user_id',
+		'username_column' => 'userft_user_name',
+	);
+	return true;
+}
+
 ?>

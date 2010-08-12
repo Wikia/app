@@ -123,18 +123,19 @@ class StaffLoggerPager extends ReverseChronologicalPager {
 							  $linker->userLink($result->slog_userdst, $result->slog_user_namedst),
 							  $siteurl,
 							  strlen($result->slog_comment) > 0 ? $result->slog_comment:"-" ));			
-			break;
+				break;
 			case  'piggyback':
 				$msg = $result->slog_action == "login" ? "stafflog-piggybackloginmsg" : "stafflog-piggybacklogoutmsg";
 				$out = wfMsg( $msg,
 						array($time,
 							  $linker->userLink($result->slog_user, $result->slog_user_name),
 							  $linker->userLink($result->slog_userdst, $result->slog_user_namedst)));
-			break;								
+				break;
 			default:
 				$out = "";
+				wfRunHooks('StaffLog::formatRow',array($result->slog_type,$result,$time,$linker,&$out));
 			break;
-		}				
+		}
 
 /*		$title = Title::makeTitle( NS_CATEGORY, $result->cat_title );
 		$titleText = $this->getSkin()->makeLinkObj( $title, htmlspecialchars( $title->getText() ) );

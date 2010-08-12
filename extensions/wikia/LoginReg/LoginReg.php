@@ -147,4 +147,21 @@ function fnRedirectCreateForm( $template ){
 	$wgOut->redirect( $register->getFullURL(  ) );
 	return true;
 }
+
+$wgHooks['UserRename::Local'][] = "LoginRegUserRenameLocal";
+
+function LoginRegUserRenameLocal( $dbw, $uid, $oldusername, $newusername, $process, $cityId, &$tasks ) {
+	$tasks[] = array(
+		'table' => 'user_register_track',
+		'userid_column' => 'ur_user_id',
+		'username_column' => 'ur_user_name',
+	);
+	$tasks[] = array(
+		'table' => 'user_register_track',
+		'userid_column' => 'ur_user_id_referral',
+		'username_column' => 'ur_user_name_referral',
+	);
+	return true;
+}
+
 ?>

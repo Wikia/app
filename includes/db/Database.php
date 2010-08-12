@@ -1378,6 +1378,12 @@ class Database {
 		if ( $conds != '*' ) {
 			$sql .= " WHERE " . $this->makeList( $conds, LIST_AND );
 		}
+		/* Wikia change begin - @author: wladek */
+		/* Add support for LIMIT in update queries / copied from Database::selectSQLText() */
+		if (isset($options['LIMIT']))
+			$sql = $this->limitResult($sql, $options['LIMIT'],
+				isset($options['OFFSET']) ? $options['OFFSET'] : false);
+		/* Wikia change end */
 		return $this->query( $sql, $fname );
 	}
 

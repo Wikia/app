@@ -81,8 +81,7 @@ class PhalanxHelper {
 		);
 
 		if ( $dbw->affectedRows() ) {
-			$result = true ;
-			$data['id'] = $dbw->insertId();
+			$data['id'] = $result = $dbw->insertId();
 
 			$dbw->immediateCommit();
 

@@ -254,6 +254,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 			$this->mLocked = false;
 			$this->mTouched = false;
 			$this->mIsAttached = 0;
+			$this->mEmail = '';
 		}
 	}
 

@@ -33,3 +33,19 @@ $wgSpecialPageGroups['RemoveMasterGift'] = 'wiki';
 $wgAutoloadClasses['RemoveGift'] = "{$wgUserGiftsDirectory}/SpecialRemoveGift.php";
 $wgSpecialPages['RemoveGift'] = 'RemoveGift';
 $wgSpecialPageGroups['RemoveGift'] = 'users';
+
+$wgHooks['UserRename::Local'][] = "UserGiftsUserRenameLocal";
+
+function UserGiftsUserRenameLocal( $dbw, $uid, $oldusername, $newusername, $process, $cityId, &$tasks ) {
+	$tasks[] = array(
+		'table' => 'user_gift',
+		'userid_column' => 'ug_user_id_to',
+		'username_column' => 'ug_user_name_to',
+	);
+	$tasks[] = array(
+		'table' => 'user_gift',
+		'userid_column' => 'ug_user_id_from',
+		'username_column' => 'ug_user_name_from',
+	);
+	return true;
+}
