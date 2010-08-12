@@ -353,7 +353,8 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 					$('#wpGoLogin').removeClass('selected');
 					$('#AjaxLoginLoginForm').hide();
 			       		$('#AjaxLoginRegisterForm').show();
-
+					if ($('#wpName2').length > 0) $("#wpName2").focus();
+					
 			        	WET.byStr(AjaxLogin.WET_str + '/choosecreateaccount');
 				},
 				showLogin : function() {
@@ -362,6 +363,7 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 					$('#wpGoRegister').removeClass('selected');
 					$('#AjaxLoginRegisterForm').hide();
 					$('#AjaxLoginLoginForm').show();
+					if ($('#wpName2Ajax').length > 0) $("#wpName2Ajax").focus();
 
 					WET.byStr(AjaxLogin.WET_str + '/chooselogin');
 				},
