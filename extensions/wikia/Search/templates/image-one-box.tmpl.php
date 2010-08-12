@@ -1,26 +1,24 @@
 <div class="clearfix">
-	<ul class="search-images">
+	<ul class="search-images" id="image-one-box-search-results">
 		<div class="search-images-title">
 			<?php echo wfMsg( 'wikiasearch-image-results', array( $searchTerm ) ); ?>
 		</div>
+		<?php $count = 0; ?>
 		<?php foreach ($images as $info): ?>
-		<li>
-			<div>
-				<a<?= $info['lightBox'] ? ' class="lightbox"' : '' ?> href="<?= $info['mainImageLink'] ?>">
-					<img class="search-image" src="<?= $info['thumbUrl'] ?>" /></a><br />
-				<?php if (count($info['titles']) > 0): ?>
-					<div>
-					<p>Articles: <br/ >
-					<?php foreach ($info['titles'] as $t): ?>
-					<a href="<?= $t->getLocalUrl() ?>"><?= $t->getText() ?></a><br />
-					<?php endforeach; ?>
-					<?php if ($info['seeMore']): ?>
-					<a href="<?= $info['seeMore'] ?>">See more</a>
-					<?php endif; ?>
-					</p></div>
-				<?php endif; ?>
-			</div>
-		</li>
+			<?php $count++; ?>
+			<li class="search-images-result" id="image-one-box-search-result-<?= $count; ?>">
+				<div>
+					<a<?= $info['lightBox'] ? ' class="lightbox"' : '' ?> href="<?= $info['mainImageLink'] ?>">
+						<img class="search-image" src="<?= $info['thumbUrl'] ?>" /></a><br />
+				</div>
+			</li>
 		<?php endforeach; ?>
 	</ul>
 </div>
+<script type="text/javascript">
+//<![CDATA[
+$(".search-images-result").click(function() {
+	WET.byStr('search/imageResults/click/' + $(this).attr('id') );
+});
+//]]>
+</script>
