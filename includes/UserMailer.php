@@ -438,6 +438,13 @@ class EmailNotification {
 
 		// Build a list of users to notfiy
 		$watchers = array();
+		
+		
+		$isNull = 'wl_notificationtimestamp IS NULL';
+		if(!empty($otherParam['notisnull'])) {
+			$isNull = "1";
+		}
+		
 		if ($wgEnotifWatchlist || $wgShowUpdatedMarker) {
 			$dbw = wfGetDB( DB_MASTER );
 			$res = $dbw->select( array( 'watchlist' ),
@@ -446,7 +453,7 @@ class EmailNotification {
 					'wl_title' => $title->getDBkey(),
 					'wl_namespace' => $title->getNamespace(),
 					'wl_user != ' . intval( $editor->getID() ),
-					'wl_notificationtimestamp IS NULL',
+					$isNull,
 				), __METHOD__
 			);
 			while ($row = $dbw->fetchObject( $res ) ) {
