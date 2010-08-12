@@ -12,6 +12,9 @@
 	margin-top: 10px;
 	padding: 4px 10px;
 }
+#article-comments-wrapper a.wikia-button.secondary{
+	color: #333;
+}
 
 .article-helper-links {
 	float: right;
