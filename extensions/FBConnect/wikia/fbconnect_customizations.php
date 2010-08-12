@@ -116,22 +116,23 @@ function wikia_fbconnect_considerProfilePic( &$specialConnect ){
 	$fb_ids = FBConnectDB::getFacebookIDs($wgUser);
 	if(count($fb_ids) > 0){
 		$fb_id = array_shift($fb_ids);
+		if ( class_exists( 'Masthead' ) ){
+			// If the useralready has a masthead avatar, don't overwrite it, this function shouldn't alter anything in that case.
+			$masthead = Masthead::newFromUser($wgUser);
+			if( ! $masthead->hasAvatar() ){
+				// Attempt to store the facebook profile pic as the Wikia avatar.
+				$picUrl = FBConnectProfilePic::getImgUrlById($fb_id, FB_PIC_SQUARE);
+				if($picUrl != ""){
+					$errorNo = $masthead->uploadByUrl($picUrl);
 
-		// If the useralready has a masthead avatar, don't overwrite it, this function shouldn't alter anything in that case.
-		$masthead = Masthead::newFromUser($wgUser);
-		if( ! $masthead->hasAvatar() ){
-			// Attempt to store the facebook profile pic as the Wikia avatar.
-			$picUrl = FBConnectProfilePic::getImgUrlById($fb_id, FB_PIC_SQUARE);
-			if($picUrl != ""){
-				$errorNo = $masthead->uploadByUrl($picUrl);
-
-				// Apply this as the user's new avatar if the image-pull went okay.
-				if($errorNo == UPLOAD_ERR_OK){
-					$sUrl = $masthead->getLocalPath();
-					if ( !empty($sUrl) ) {
-						/* set user option */
-						$wgUser->setOption( AVATAR_USER_OPTION_NAME, $sUrl );
-						$wgUser->saveSettings();
+					// Apply this as the user's new avatar if the image-pull went okay.
+					if($errorNo == UPLOAD_ERR_OK){
+						$sUrl = $masthead->getLocalPath();
+						if ( !empty($sUrl) ) {
+							/* set user option */
+							$wgUser->setOption( AVATAR_USER_OPTION_NAME, $sUrl );
+							$wgUser->saveSettings();
+						}
 					}
 				}
 			}
