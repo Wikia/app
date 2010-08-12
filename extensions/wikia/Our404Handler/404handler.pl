@@ -64,13 +64,14 @@ sub real404 {
 }
 
 sub real503 {
+	my $request_uri  = shift;
 	print "HTTP/1.1 503 Service Unavailable\r\n";
 	print "Cache-control: max-age=30\r\n";
 	print "Retry-After: 30\r\n";
 	print "Connection: close\r\n";
 	print "X-Thumbnailer-Error: backend not responding\r\n";
 	print "Content-Type: text/plain; charset=utf-8\r\n\r\n";
-	print "Backend for getting original file is not responding\n";
+	print "Backend for getting original file $request_uri is not responding\n";
 }
 
 #
@@ -269,7 +270,7 @@ while( $request->Accept() >= 0 || $test ) {
 	my $uri = URI->new( $request_uri );
 	my $path  = $uri->path;
 	$path =~ s/^\///;
-	$path =~ s/%([0-9A-Fa-f]{2})/chr(hex($1))/eg;
+	$path =~ s/%([0-9A-Fa-f]{2})/chr(hex($1))/eg unless $use_http;
 
 	#
 	# if path has single letter on beginning it's already new directory layout
@@ -575,7 +576,7 @@ while( $request->Accept() >= 0 || $test ) {
 	if( ! $transformed ) {
 		given( $last_status ) {
 			when( 404 ) { real404( $request_uri ) }
-			default     { real503() }
+			default     { real503( $request_uri ) }
 		};
 	}
 
