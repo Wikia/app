@@ -205,7 +205,7 @@ class ArticleCommentInit {
 				}
 
 				//TODO: create new permission and remove checking groups below
-				$groups = $user->getGroups();
+				$groups = $user->getEffectiveGroups();
 				if (in_array('staff', $groups) || in_array('sysop', $groups)) {
 					return true;
 				}
