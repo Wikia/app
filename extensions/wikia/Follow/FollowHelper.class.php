@@ -75,6 +75,9 @@ class FollowHelper {
 			$notificationTimeoutSql = "($notificationTimeoutSql OR wl_notificationtimestamp < '$blockTimeout')"; 
 		} 
 		 
+		
+		echo $action;
+		exit;
 		$res = $dbw->select( array( 'watchlist' ),
 				array( 'wl_user, wl_title' ),
 				array(
