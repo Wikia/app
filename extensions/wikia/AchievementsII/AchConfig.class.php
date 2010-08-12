@@ -52,13 +52,13 @@ class AchConfig {
 		$this->reset();
 		
 		$this->mNotInTrackStatic = array(
-			BADGE_WELCOME => array('level' => BADGE_LEVEL_BRONZE, 'multiply' => false),
-			BADGE_INTRODUCTION => array('level' => BADGE_LEVEL_BRONZE, 'multiply' => false),
-			BADGE_SAYHI => array('level' => BADGE_LEVEL_BRONZE, 'multiply' => false),
-			BADGE_CREATOR => array('level' => BADGE_LEVEL_GOLD, 'multiply' => false),
-			BADGE_POUNCE => array('level' => BADGE_LEVEL_SILVER, 'multiply' => false),
-			BADGE_CAFFEINATED => array('level' => BADGE_LEVEL_SILVER, 'multiply' => false),
-			BADGE_LUCKYEDIT => array('level' => BADGE_LEVEL_GOLD, 'multiply' => true)
+			BADGE_WELCOME => array('level' => BADGE_LEVEL_BRONZE, 'infinite' => false),
+			BADGE_INTRODUCTION => array('level' => BADGE_LEVEL_BRONZE, 'infinite' => false),
+			BADGE_SAYHI => array('level' => BADGE_LEVEL_BRONZE, 'infinite' => false),
+			BADGE_CREATOR => array('level' => BADGE_LEVEL_GOLD, 'infinite' => false),
+			BADGE_POUNCE => array('level' => BADGE_LEVEL_SILVER, 'infinite' => false),
+			BADGE_CAFFEINATED => array('level' => BADGE_LEVEL_SILVER, 'infinite' => false),
+			BADGE_LUCKYEDIT => array('level' => BADGE_LEVEL_GOLD, 'infinite' => true)
 		);
 
 		$this->mInTrackStatic = array(
@@ -314,6 +314,29 @@ class AchConfig {
 		}
 	}
 
+	public function isInfinite($badgeTypeId) {
+		wfProfileIn(__METHOD__);
+
+		$badgeType = $this->getBadgeType($badgeTypeId);
+
+		if($badgeType == BADGE_TYPE_INTRACKEDITPLUSCATEGORY) {
+			$badgeTypeId = BADGE_EDIT;
+			$badgeType = BADGE_TYPE_INTRACKSTATIC;
+		}
+		
+		$ret = false;
+
+		if ($badgeType == BADGE_TYPE_NOTINTRACKSTATIC) {
+			$ret = (!empty($this->mNotInTrackStatic[$badgeTypeId]['infinite']));
+		} elseif ($badgeType == BADGE_TYPE_INTRACKSTATIC) {
+			$ret = (!empty($this->mInTrackStatic[$badgeTypeId]['infinite']));
+		}
+
+		wfProfileOut(__METHOD__);
+
+		return $ret;
+	}
+
 	public function isSpecial($badgeTypeId) {
 		return in_array($badgeTypeId, self::$mSpecialBadges);
 	}
@@ -449,7 +472,7 @@ class AchConfig {
 		}
 		elseif($badge_lap !== null) {
 
-			if(self::getBadgeType($badgeTypeId) == BADGE_TYPE_INTRACKEDITPLUSCATEGORY) {
+			if($this->getBadgeType($badgeTypeId) == BADGE_TYPE_INTRACKEDITPLUSCATEGORY) {
 				$badgeTypeId = BADGE_EDIT;
 			}
 
