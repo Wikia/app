@@ -506,3 +506,17 @@ $wgEnableCOPPA = true;
  * optionally stores variable values as they were before overridden by WikiFactory
  */
 $wgPreWikiFactoryValues = array();
+
+/**
+ * @name wgEnableWatchlistNotificationTimeout
+ * Toggles watchlist notification timeout hack
+ */
+$wgEnableWatchlistNotificationTimeout = false;
+
+/**
+ * @name wgWatchlistNotificationTimeout
+ * Watchlist notification block timeout (in seconds)
+ * Default is: 24 hours (but disabled above)
+ * @see rt#55604
+ */
+$wgWatchlistNotificationTimeout = 24 * 60 * 60;
