@@ -1420,6 +1420,10 @@ class BlogCommentList {
 			#---
 			if ( !empty($pagesToRecover) && is_array($pagesToRecover) ) {
 				#---
+				#rt#63213: hide Blog restores in IRC feed
+				global $wgRC2UDPEnabled;
+				$irc_backup = $wgRC2UDPEnabled;	//backup
+				$wgRC2UDPEnabled = false; //turn off
 				foreach ($pagesToRecover as $page_id => $page_value) {
 					#---
 					$oCommentTitle = Title::makeTitleSafe( $page_value['nspace'], $page_value['title'] );
@@ -1432,6 +1436,8 @@ class BlogCommentList {
 						}
 					}
 				}
+				$wgRC2UDPEnabled = $irc_backup; //restore to whatever it was
+				unset($irc_backup);	//cleanup
 			}
 		}
 
