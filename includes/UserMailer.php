@@ -37,6 +37,13 @@ class MailAddress {
 			$this->address = $address->getEmail();
 			$this->name = $address->getName();
 			$this->realName = $address->getRealName();
+		/* Wikia change begin - @author: wladek */
+		/* #57817: Email "from" field description change */
+		} else if( is_object( $address ) && $address instanceof MailAddress ) {
+			$this->address = strval( $address->address );
+			$this->name = $name ? $name : strval( $address->name );
+			$this->realName = $realName ? $realName : strval( $address->realName );
+		/* Wikia change end */
 		} else {
 			$this->address = strval( $address );
 			$this->name = strval( $name );
