@@ -58,7 +58,7 @@ class imageServing{
 		
 		
 		if($this->db == null) {
-			$db = wfGetDB(DB_MASTER, array());	
+			$db = wfGetDB(DB_SLAVE, array());	
 		} else {
 			$db = $this->db;
 		}
