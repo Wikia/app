@@ -5,21 +5,21 @@ CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_member_titles (
   memtitle_postcount int(11) NOT NULL DEFAULT '0',
   memtitle_css varchar(255) DEFAULT NULL,
   PRIMARY KEY (memtitle_id)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1 ;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1 ;
 
 CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_watchthreads (
   wtcht_thread_id int(11) NOT NULL DEFAULT '0',
   wtcht_mem_id int(11) NOT NULL DEFAULT '0',
   wtcht_todo varchar(255) DEFAULT NULL,
   wtcht_sent int(11) NOT NULL DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ;
 
 CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_watchforums (
   wtchf_forum_id int(11) NOT NULL DEFAULT '0',
   wtchf_mem_id int(11) NOT NULL DEFAULT '0',
   wtchf_todo varchar(255) DEFAULT NULL,
   wtchf_sent int(11) NOT NULL DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ;
 
 CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_threads (
   t_id int(11) NOT NULL AUTO_INCREMENT,
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_threads (
   t_wiki_pageid int(11) DEFAULT NULL,
   t_pollopen int(11) DEFAULT NULL,
   PRIMARY KEY (t_id)
-) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=latin1 ;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1 ;
 
 CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_theme_tplt_history (
   tplth_id int(11) NOT NULL AUTO_INCREMENT,
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_theme_tplt_history (
   tplth_replace mediumtext,
   tplth_thmn_id int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (tplth_id)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 ;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 ;
 
 CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_theme_tplt (
   tplt_id int(11) NOT NULL AUTO_INCREMENT,
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_theme_tplt (
   tplt_ver varchar(100) DEFAULT '1.0.0',
   tplt_forum_ver varchar(100) DEFAULT '2.5.x',
   PRIMARY KEY (tplt_id)
-) ENGINE=MyISAM AUTO_INCREMENT=88 DEFAULT CHARSET=latin1 ;
+) ENGINE=InnoDB AUTO_INCREMENT=88 DEFAULT CHARSET=latin1 ;
 
 CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_theme_names (
   thmn_id int(11) NOT NULL AUTO_INCREMENT,
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_theme_names (
   thmn_what varchar(255) DEFAULT NULL,
   thmn_item_count int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (thmn_id)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 ;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 ;
 
 CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_theme_css (
   css_id int(11) NOT NULL AUTO_INCREMENT,
@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_theme_css (
   css_forumver varchar(255) DEFAULT NULL,
   css_date datetime DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (css_id)
-) ENGINE=MyISAM AUTO_INCREMENT=139 DEFAULT CHARSET=latin1 ;
+) ENGINE=InnoDB AUTO_INCREMENT=139 DEFAULT CHARSET=latin1 ;
 
 CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_stats (
   stats_id int(11) NOT NULL AUTO_INCREMENT,
@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_stats (
   stat_posts int(11) NOT NULL DEFAULT '0',
   stat_maxusers int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (stats_id)
-) ENGINE=MyISAM AUTO_INCREMENT=94 DEFAULT CHARSET=latin1 ;
+) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=latin1 ;
 
 CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_sessions (
   ses_name varchar(255) NOT NULL DEFAULT '0',
@@ -116,7 +116,7 @@ CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_sessions (
   ses_type varchar(255) DEFAULT NULL,
   ses_perm varchar(255) DEFAULT NULL,
   PRIMARY KEY (ses_name)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ;
 
 CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_posts (
   p_id int(11) NOT NULL AUTO_INCREMENT,
@@ -136,7 +136,7 @@ CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_posts (
   p_wiki_ver_id int(11) DEFAULT NULL,
   p_wiki_hidden varbinary(14) NOT NULL DEFAULT '',
   PRIMARY KEY (p_id)
-) ENGINE=MyISAM AUTO_INCREMENT=103 DEFAULT CHARSET=latin1 ;
+) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=latin1 ;
 
 CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_post_edits (
   pe_id int(11) NOT NULL AUTO_INCREMENT,
@@ -147,7 +147,7 @@ CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_post_edits (
   pe_whoid int(11) DEFAULT NULL,
   pe_when datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (pe_id)
-) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=latin1 ;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1 ;
 
 CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_polls (
   poll_id int(11) NOT NULL AUTO_INCREMENT,
@@ -163,7 +163,7 @@ CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_polls (
   poll_close_date datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   poll_perm int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (poll_id)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ;
 
 CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_pms_info (
   pmi_id int(11) NOT NULL AUTO_INCREMENT,
@@ -177,14 +177,14 @@ CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_pms_info (
   pmi_read int(11) NOT NULL DEFAULT '0',
   pmi_folder_id int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (pmi_id)
-) ENGINE=MyISAM AUTO_INCREMENT=49 DEFAULT CHARSET=latin1 ;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=latin1 ;
 
 CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_pms (
   pm_id int(11) NOT NULL AUTO_INCREMENT,
   pm_title varchar(255) DEFAULT NULL,
   pm_text longtext,
   PRIMARY KEY (pm_id)
-) ENGINE=MyISAM AUTO_INCREMENT=48 DEFAULT CHARSET=latin1 ;
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=latin1 ;
 
 CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_mems (
   m_id int(11) NOT NULL DEFAULT '0',
@@ -217,7 +217,7 @@ CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_mems (
   m_customtitle varchar(255) DEFAULT NULL,
   m_title varchar(255) DEFAULT '',
   PRIMARY KEY (m_id)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ;
 
 CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_theme_css_history (
   cssh_id int(11) NOT NULL AUTO_INCREMENT,
@@ -227,7 +227,7 @@ CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_theme_css_history (
   cssh_forum_ver varchar(255) DEFAULT NULL,
   cssh_date datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (cssh_id)
-) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=latin1 ;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1 ;
 
 CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_langs (
   lang_id int(11) NOT NULL AUTO_INCREMENT,
@@ -254,7 +254,7 @@ CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_langs (
   lang_txt_redirects longtext,
   lang_txt_redirects_raw longtext,
   PRIMARY KEY (lang_id)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 ;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 ;
 
 CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_forums (
   f_id int(11) NOT NULL AUTO_INCREMENT,
@@ -277,14 +277,14 @@ CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_forums (
   f_passworded int(10) DEFAULT '0',
   f_password varbinary(255) DEFAULT NULL,
   PRIMARY KEY (f_id)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 ;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 ;
 
 CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_emotions (
   e_id int(11) NOT NULL AUTO_INCREMENT,
   e_code varchar(255) DEFAULT '',
   e_pic varchar(255) DEFAULT '',
   PRIMARY KEY (e_id)
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=latin1 ;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1 ;
 
 CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_config (
   id_configforum int(11) NOT NULL AUTO_INCREMENT,
@@ -293,11 +293,11 @@ CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_config (
   section varchar(255) NOT NULL DEFAULT '',
   typeis varchar(255) DEFAULT NULL,
   PRIMARY KEY (id_configforum)
-) ENGINE=MyISAM AUTO_INCREMENT=73 DEFAULT CHARSET=latin1 ;
+) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=latin1 ;
 
 CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_anns (
   ann_id int(11) NOT NULL DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ;
 
 CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_cats (
   cat_id int(11) NOT NULL AUTO_INCREMENT,
@@ -308,7 +308,7 @@ CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_cats (
   c_canread longtext,
   c_wiki_perm mediumtext,
   PRIMARY KEY (cat_id)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 ;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 ;
 
 CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_theme (
   thm_id int(11) NOT NULL AUTO_INCREMENT,
@@ -319,5 +319,5 @@ CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/awc_f_theme (
   thm_where varchar(255) DEFAULT NULL,
   thm_when datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (thm_id)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 ;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 ;
 
