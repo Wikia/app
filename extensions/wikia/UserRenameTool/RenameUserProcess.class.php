@@ -285,15 +285,13 @@ class RenameUserProcess {
 			return false;
 		}
 
+		// invalidate all user data in memcached
+		$this->invalidateUser($oldTitle->getText());
+		$this->invalidateUser($newTitle->getText());
+		
 		//validate new username and disable validation for old username
 		$olduser = User::newFromName($oldTitle->getText(), false);
 		$newuser = User::newFromName($newTitle->getText(), 'creatable');
-
-		// Invalidate cache
-		/*if(is_object($olduser) && $olduser->getId()){
-			$olduser->invalidateCache();
-			$olduser = User::newFromName($oldTitle->getText(), false);
-		}*/
 		
 		$this->addInternalLog("user: old={$olduser->getName()}:{$olduser->getId()} new={$newuser->getName()}:{$newuser->getId()}");
 		
@@ -590,7 +588,8 @@ class RenameUserProcess {
 			}
 		}
 		
-
+		$this->invalidateUser($this->mNewUsername);
+		
 		/*if not repeating the process
 		create a new account storing the old username and some extra information in the realname field
 		this avoids creating new accounts with the old name and let's resume/repeat the process in case is needed*/
@@ -612,6 +611,8 @@ class RenameUserProcess {
 			$fakeUser = User::newFromId($this->mFakeUserId);
 			$this->addLog("Fake user account already exists: {$this->mFakeUserId}");
 		}
+		
+		$this->invalidateUser($this->mOldUsername);
 
 		//Block the user from logging in before logging him out
 		$this->addLog("Creating a Phalanx block for the user.");
@@ -1017,6 +1018,18 @@ class RenameUserProcess {
 		}
 		
 		return $oldUser;
+	}
+	
+	public function invalidateUser( $user ) {
+		if (is_string($user)) {
+			$user = User::newFromName($user);
+		} else if (!is_object($user)) {
+			$this->addLog("invalidateUser() called with some strange argument type: ".gettype($user));
+			return;
+		}
+		if (is_object($user)) {
+			$user->invalidateCache();
+		}
 	}
 	
 	public function addInternalLog( $text ) {
