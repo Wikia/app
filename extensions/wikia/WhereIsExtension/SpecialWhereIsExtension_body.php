@@ -39,6 +39,9 @@ class WhereIsExtension extends SpecialPage {
 		global $wgOut, $wgUser, $wgRequest, $wgTitle;
 		$gVar = $wgRequest->getText('var');
 		$gVal = $wgRequest->getVal('val', 'true');
+		$gLikeVal = $wgRequest->getVal('likeValue', 'true');
+		$gTypeVal = $wgRequest->getVal('searchType', 'bool');
+		
 		wfLoadExtensionMessages('WhereIsExtension');
 		$wgOut->SetPageTitle(wfMsg('whereisextension'));
 		$wgOut->setRobotpolicy('noindex,nofollow');
@@ -67,12 +70,14 @@ class WhereIsExtension extends SpecialPage {
 		$formData['vars'] = $this->getListOfVars($gVar == '');
 		$formData['vals'] = $this->values;
 		$formData['selectedVal'] = $gVal;
+		$formData['likeValue'] = $gLikeVal;
+		$formData['searchType'] = $gTypeVal;
 		$formData['selectedGroup'] = $gVar == '' ? 27 : '';	//default group: extensions (or all groups when looking for variable, rt#16953)
 		$formData['groups'] = WikiFactory::getGroups();
 		$formData['actionURL'] = $wgTitle->getFullURL();
 		if (!empty($gVar)) {
 			$formData['selectedVar'] = $gVar;
-			$formData['wikis'] = $this->getListOfWikisWithVar($gVar, $gVal);
+			$formData['wikis'] = $this->getListOfWikisWithVar($gVar, $gTypeVal, $gVal, $gLikeVal);
 		}
 		$oTmpl = new EasyTemplate(dirname( __FILE__ ) . '/templates/');
 		$oTmpl->set_vars( array(
@@ -133,9 +138,10 @@ class WhereIsExtension extends SpecialPage {
 	}
 
 	//fetching wiki list with selected variable set to 'true'
-	private function getListOfWikisWithVar($varId, $val) {
+	private function getListOfWikisWithVar($varId, $type, $val, $likeVal) {
 		global $wgExternalSharedDB;
-
+		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+		
 		$aWikis = array();
 		if (!isset($this->values[$val][1])) {
 			return $aWikis;
@@ -149,10 +155,16 @@ class WhereIsExtension extends SpecialPage {
 		);
 		$varId = mysql_real_escape_string($varId);
 		$aWhere = array('city_id = cv_city_id');
-		$aWhere[] = "cv_value $selectedCond '$selectedVal'";
+		
+		if( $type == "full" ) {
+			$aWhere[] = "cv_value like '%".$dbr->escapeLike($likeVal)."%'";
+		} else {
+			$aWhere[] = "cv_value $selectedCond '$selectedVal'";	
+		}
+		
 		$aWhere[] = "cv_variable_id = '$varId'";
 
-		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+
 		$oRes = $dbr->select(
 			$aTables,
 			array('city_id', 'city_title', 'city_url', 'city_public'),
