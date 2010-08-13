@@ -316,6 +316,7 @@ class ScribeProducer {
 	 * @return true
 	 */
 	static public function moveComplete( &$oOldTitle, &$oNewTitle, &$oUser, $pageId, $redirId ) {
+		global $wgCityId;
 		wfProfileIn( __METHOD__ );
 
 		if ( $oNewTitle instanceof Title ) {
