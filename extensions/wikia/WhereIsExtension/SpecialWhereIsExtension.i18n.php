@@ -32,7 +32,6 @@ $messages['en'] = array(
 	'whereisextension-search-type' => 'Type:',
 	'whereisextension-search-type-bool' => "Boolean",
 	'whereisextension-search-type-full' => "Like",
-'' 
 );
 
 /** Message documentation (Message documentation)
