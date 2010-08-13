@@ -36,6 +36,8 @@ select {
 <div id="PaneList">
 	<form method="get" action="<?php print $formData['actionURL'] ?>">
 		<div style="float: left; margin-right: 6px">
+
+			
 			<select size="10" style="width: 22em;" id="variableSelect" name="var">
 			<?php
 			$gVar = empty($formData['selectedVar']) ? '' : $formData['selectedVar'];
@@ -47,8 +49,17 @@ select {
 			?>
 			</select>
 		</div>
-		<?php print wfMsg('whereisextension-isset') ?>
-		<select name="val">
+		<p>
+			<?php print wfMsg('whereisextension-search-type') ?>
+		</p>
+		<select style="width: 22em;" id="searchType" name="searchType" >
+			<option value="bool" <?php echo $formData['searchType'] != 'full' ? 'selected="selected" ':'' ?>  ><?php print wfMsg('whereisextension-search-type-bool') ?></option>
+			<option value="full" <?php echo $formData['searchType'] == 'full' ? 'selected="selected" ':'' ?> ><?php print wfMsg('whereisextension-search-type-full') ?></option>
+		</select>
+		<p class="boolValue"   >
+			<?php print wfMsg('whereisextension-isset') ?>
+		</p>
+		<select class="boolValue" name="val">
 			<?php
 			foreach($formData['vals'] as $valId => $valName) {
 				$selected = $gVal == $valId ? ' selected="selected"' : '';
@@ -56,6 +67,11 @@ select {
 			}
 			?>
 		</select>
+		<p class="likeValue"  style="display:none">
+			<?php print wfMsg('whereisextension-search-like-value') ?>
+		</p>
+		
+		<input value="<?php echo $formData['likeValue']; ?>" type="text" name="likeValue" class="likeValue"  style="display:none" />&nbsp;
 		<input type="submit" value="<?php print wfMsg('whereisextension-submit') ?>"/>
 	</form>
 
@@ -117,7 +133,7 @@ select {
 				element.checked = false;
 			});
 			return false;
-		});
+	});
 
 	$.getScript(stylepath+'/common/jquery/jquery.autocomplete.js', function() {
 		$('#wikiSelectTagName').autocomplete({
@@ -135,45 +151,64 @@ select {
 
 <script type="text/javascript">
 	var ajaxpath = "<?php print $GLOBALS['wgScriptPath'].'/index.php'; ?>";
-	var DOM = YAHOO.util.Dom;
+
+	function showHideLikeBool(e) {
+		if(e.val() == "bool") {
+			$('.likeValue').hide();
+			$('.boolValue').show();
+		}
+
+		if(e.val() == "full") {
+			$('.likeValue').show();
+			$('.boolValue').hide();
+		}
+	} 
+
+	$( function() {
+		var el = $('#searchType');
+		showHideLikeBool(el); 
+	});
+	
+	$('#searchType').change(
+		function(e) {
+			var el = $(e.target);
+			showHideLikeBool(el);
+		}
+	);
 
 	busy = function(state) {
 		if (state == 0) {
-			DOM.setStyle('busyDiv', 'display', 'none');
+			$('#busyDiv').val('display', 'none');
+			$('#variableSelect').attr("disabled", false);
 		} else {
-			DOM.setStyle('busyDiv', 'display', 'block');
+			$('#busyDiv').val('busyDiv', 'display', 'block');
+			$("#variableSelect").attr("disabled" ,true);
 		}
-	};
-
-	filterCallback = {
-		success: function( oResponse ) {
-			var aData = YAHOO.Tools.JSONParse(oResponse.responseText);
-			DOM.get('variableSelect').innerHTML = aData['selector'];
-			DOM.get('variableSelect').disabled = false;
-			busy(0);
-
-		},
-		failure: function( oResponse ) {
-			busy(0);
-			DOM.get('variableSelect').disabled = false;
-		},
-		timeout: 50000
 	};
 
 	filter = function (e) {
 		busy(1);
-
-		// disable variable selector
-		DOM.get("variableSelect").disabled = true;
-
 		// read data from form
 		var values = '';
-		values += '&group=' + DOM.get('groupSelect').value;
-		values += '&string=' + DOM.get('withString').value;
-		YAHOO.util.Connect.asyncRequest('POST', ajaxpath+'?action=ajax&rs=axWFactoryFilterVariables' + values, filterCallback);
+		values += '&group=' + $('#groupSelect').val();
+		values += '&string=' + $('#withString').val();
+
+		$.ajax({
+			type:"POST",
+			dataType: "json",
+			url: ajaxpath+'?action=ajax&rs=axWFactoryFilterVariables' + values,
+			success: function( aData ) {
+				$('#variableSelect').html(aData['selector']);
+				busy(0);
+			},
+			error: function( aData ) {
+				busy(0);
+			},
+			timeout: 50000
+		});
 	};
 
-	YAHOO.util.Event.addListener('withString', 'keypress', filter);
-	YAHOO.util.Event.addListener('groupSelect', 'change', filter);
+	$('#withString').keyup(filter);
+	$('#groupSelect').change(filter);
 </script>
 <!-- e:<?php print __FILE__ ?> -->

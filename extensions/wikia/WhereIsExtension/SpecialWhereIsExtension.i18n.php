@@ -28,6 +28,11 @@ $messages['en'] = array(
 	'whereisextension-filter'	=> 'Filter',
 	'whereisextension-all-groups'	=> 'All groups',
 	'whereisextension-name-contains'	=> 'variable name contains',
+	'whereisextension-search-like-value' => 'Like:',
+	'whereisextension-search-type' => 'Type:',
+	'whereisextension-search-type-bool' => "Boolean",
+	'whereisextension-search-type-full' => "Like",
+'' 
 );
 
 /** Message documentation (Message documentation)
