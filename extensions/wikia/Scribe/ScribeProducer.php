@@ -77,7 +77,8 @@ class ScribeProducer {
 					'revId'			=> $this->mRevId,
 					'logId'			=> $this->mLogId,
 					'serverName'	=> $this->mServerName,
-					'archive'		=> $this->mArchive
+					'archive'		=> $this->mArchive,
+					'hostname'		=> wfHostname()
 				) 
 			);
 			WScribeClient::singleton( $this->mKey )->send( $data );
@@ -101,18 +102,28 @@ class ScribeProducer {
 	 * @return true
 	 */
 	static public function saveComplete( &$oArticle, &$oUser, $text, $summary, $minor, $undef1, $undef2, &$flags, $oRevision, &$status, $baseRevId ) {
+		global $wgCityId;
 		wfProfileIn( __METHOD__ );
 		
 		if ( ( $oArticle instanceof Article ) && ( $oUser instanceof User ) ) {
 			$revid = ( $oRevision instanceof Revision ) ? $oRevision->getId() : 0;
 			$pageId = ( $oArticle instanceof Article ) ? $oArticle->getID() : 0;
+			if ( empty($revid) ) {
+				$revid = $oArticle->getTitle()->getLatestRevID(GAID_FOR_UPDATE);
+			}
 			if ( $revid > 0 && $pageId > 0 ) { 
 				$key = ( isset($status->value['new']) && $status->value['new'] == 1 ) ? 'create' : 'edit';
 				$oScribeProducer = new ScribeProducer( $key, $pageId, $revid, 0, (!empty($undef1)) ? 1 : 0 );
 				if ( is_object( $oScribeProducer ) ) {
 					$oScribeProducer->send_log();
 				}
+			} else {
+				Wikia::log( __METHOD__, "error", "Cannot send log via scribe ($wgCityId): revision not found for page: $pageId" );				
 			}
+		} else {
+			$isArticle = is_object($oArticle);
+			$isUser = is_object($oUser);
+			Wikia::log( __METHOD__, "error", "Cannot send log via scribe ($wgCityId): invalid user: $isUser, invalid article: $isArticle" );
 		}
 		
 		wfProfileOut( __METHOD__ );
@@ -134,6 +145,7 @@ class ScribeProducer {
 	 * @return true
 	 */
 	static public function deleteComplete( &$oArticle, &$oUser, $reason, $articleId ) {
+		global $wgCityId;
 		wfProfileIn( __METHOD__ );
 
 		$use_api = 0;
@@ -191,8 +203,18 @@ class ScribeProducer {
 					if ( is_object( $oScribeProducer ) ) {
 						$oScribeProducer->send_log();
 					}
+				} else {
+					$title = $oArticle->getTitle()->getText();
+					Wikia::log( __METHOD__, "error", "Cannot send log via scribe ($wgCityId): log id not found: $title" );
 				}
-			}
+			} else {
+				$title = $oArticle->getTitle()->getText();
+				Wikia::log( __METHOD__, "error", "Cannot send log via scribe ($wgCityId): page ID is empty: $title" );
+			}			
+		} else {
+			$isArticle = is_object($oArticle);
+			$isUser = is_object($oUser);
+			Wikia::log( __METHOD__, "error", "Cannot send log via scribe ($wgCityId): invalid user: $isUser, invalid article: $isArticle" );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -213,6 +235,7 @@ class ScribeProducer {
 	 * @return true
 	 */
 	static public function revisionUndeleted( &$oTitle, $oRevision, $archivePageId ) {
+		global $wgCityId;
 		wfProfileIn( __METHOD__ );
 		if ( ( $oTitle instanceof Title ) && ( $oRevision instanceof Revision ) ) {
 			$pageId = $oRevision->getPage();
@@ -222,8 +245,15 @@ class ScribeProducer {
 				if ( is_object( $oScribeProducer ) ) {
 					$oScribeProducer->send_log();
 				}
-			}
-		}
+			} else {
+				$title = $oTitle->getText();
+				Wikia::log( __METHOD__, "error", "Cannot send log via scribe ($wgCityId) for title: $title, page Id: $pageId, rev Id: $revId" );
+			}					
+		} else {
+			$isTitle = is_object($oTitle);
+			$isRevision = is_object($oRevision);
+			Wikia::log( __METHOD__, "error", "Cannot send log via scribe ($wgCityId): invalid title: $isTitle, invalid revision: $isRevision" );
+		}		
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
@@ -242,6 +272,7 @@ class ScribeProducer {
 	 * @return true
 	 */
 	static public function articleUndelete( &$oTitle, $is_new = false ) {
+		global $wgCityId;
 		wfProfileIn( __METHOD__ );
 		if ( $oTitle instanceof Title ) {
 			$oArticle = new Article( $oTitle, 0 );
@@ -253,9 +284,18 @@ class ScribeProducer {
 					if ( is_object( $oScribeProducer ) ) {
 						$oScribeProducer->send_log();
 					}
+				} else {
+					$title = $oArticle->getTitle()->getText();
+					Wikia::log( __METHOD__, "error", "Cannot send log via scribe ($wgCityId): invalid revision or page Id: $title, page Id: $pageId, rev Id: $revId" );
 				}
-			}
-		}
+			} else {
+				$isArticle = is_object($oArticle);
+				Wikia::log( __METHOD__, "error", "Cannot send log via scribe ($wgCityId): invalid article: $isArticle" );
+			}							
+		} else {
+			$isTitle = is_object($oTitle);
+			Wikia::log( __METHOD__, "error", "Cannot send log via scribe ($wgCityId): invalid title: $isTitle" );
+		}				
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
@@ -287,9 +327,16 @@ class ScribeProducer {
 					if ( is_object( $oScribeProducer ) ) {
 						$oScribeProducer->send_log();
 					}
+				} else {
+					Wikia::log( __METHOD__, "error", "Cannot send log via scribe ($wgCityId): empty revision or page id: $revId, $pageId" );
 				}
-			}
-		}
+			} else {
+				Wikia::log( __METHOD__, "error", "Cannot send log via scribe ($wgCityId): invalid revision for new title" );
+			}			
+		} else {
+			$isTitle = is_object($oNewTitle);
+			Wikia::log( __METHOD__, "error", "Cannot send log via scribe ($wgCityId): invalid new title: $isTitle" );
+		}					
 		
 		if ( $redirId > 0 ) {
 			# old title as a #Redirect 
@@ -303,8 +350,15 @@ class ScribeProducer {
 						if ( is_object( $oScribeProducer ) ) {
 							$oScribeProducer->send_log();
 						}
-					}
+					} else {
+						Wikia::log( __METHOD__, "error", "Cannot send log via scribe ($wgCityId): empty revision or new page id: $revId, $newPageId" );
+					}					
+				} else {
+					Wikia::log( __METHOD__, "error", "Cannot send log via scribe ($wgCityId): invalid revision for old title" );
 				}
+			} else {
+				$isTitle = is_object($oOldTitle);
+				Wikia::log( __METHOD__, "error", "Cannot send log via scribe ($wgCityId): invalid old title: $isTitle" );
 			}
 		}
 		wfProfileOut( __METHOD__ );
