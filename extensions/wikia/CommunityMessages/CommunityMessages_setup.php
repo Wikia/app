@@ -31,8 +31,7 @@ $wgExtensionCredits['other'][] = array(
 $wgExtensionFunctions[] = 'CommunityMessagesInit';
 $wgExtensionMessagesFiles['CommunityMessages'] = dirname( __FILE__ ) . '/CommunityMessages.i18n.php';
 $wgAutoloadClasses['CommunityMessages'] = "$IP/extensions/wikia/CommunityMessages/CommunityMessages.class.php";
-// FIXME: $dir not defined?
-$wgAutoloadClasses['CommunityMessagesAjax'] = "$dir/CommunityMessagesAjax.class.php";
+$wgAutoloadClasses['CommunityMessagesAjax'] = "$IP/extensions/wikia/CommunityMessages/CommunityMessagesAjax.class.php";
 
 /**
  * Initialize hooks
@@ -43,6 +42,8 @@ function CommunityMessagesInit() {
 	global $wgHooks;
 
 	$wgHooks['SkinTemplatePageBeforeUserMsg'][] = 'CommunityMessages::SkinTemplatePageBeforeUserMsg';
+	$wgHooks['ArticleSaveComplete'][] = 'CommunityMessages::ArticleSaveComplete';
+	$wgHooks['BeforePageDisplay'][] = 'CommunityMessages::BeforePageDisplay';
 }
 
 // Ajax dispatcher
