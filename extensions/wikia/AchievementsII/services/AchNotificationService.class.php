@@ -31,7 +31,12 @@ class AchNotificationService {
 		return ($aO < $bO) ? -1 : 1;
 	}
 
-	public function getBadgeToNotify($userId) {
+	/**
+	 * Gets the badge that the user should be notified of.  If 'markAsNotified' is set to false, then this
+	 * badge will be returned, but since it isn't set as being notified, then the badge will still be eligible
+	 * to be returned on the next call of this function.
+	 */
+	public function getBadgeToNotify($userId, $markAsNotified = true) {
 		wfProfileIn(__METHOD__);
 
 		global $wgCityId, $wgExternalSharedDB;
@@ -57,7 +62,9 @@ class AchNotificationService {
 			}
 
 			$badge = $badges[$maxLevel][0];
-			$dbw->update('ach_user_badges', array('notified' => 1), array('wiki_id' => $wgCityId, 'user_id' => $userId, 'notified' => 0));
+			if($markAsNotified){
+				$dbw->update('ach_user_badges', array('notified' => 1), array('wiki_id' => $wgCityId, 'user_id' => $userId, 'notified' => 0));
+			}
 		}
 
 		return $badge;
