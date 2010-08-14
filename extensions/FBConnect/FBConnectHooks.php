@@ -90,7 +90,7 @@ class FBConnectHooks {
 	 */
 	public static function BeforePageDisplay( &$out, &$sk ) {
 		global $wgVersion, $fbLogo, $fbScript, $fbExtensionScript, $fbIncludeJquery,
-				$fbScriptEnableLocales, $wgScriptPath, $wgJsMimeType, $wgStyleVersion;
+				$fbScriptEnableLocales, $wgJsMimeType, $wgStyleVersion;
 
 		// If the user's language is different from the default language, use the correctly localized facebook code.
 		// NOTE: Can't use wgLanguageCode here because the same FBConnect config can run for many wgLanguageCode's on one site (such as Wikia).
