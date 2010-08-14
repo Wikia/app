@@ -29,10 +29,13 @@ $wgHooks['RecentChange_beforeSave'][] = 'MyHome::storeInRecentChanges';
 $wgHooks['EditFilter'][] = 'MyHome::getSectionName';
 $wgHooks['LinksUpdateComplete'][] = 'MyHome::getInserts';
 
+global $wgWikiaForceAIAFdebug;
+$wgWikiaForceAIAFdebug = false;
 if((!empty($wgEnableAchievementsInActivityFeed)) && (!empty($wgEnableAchievementsExt))){
-	$wgHooks['AchievementsNotification'][] = 'SpecialActivityFeed::attachAchievementToRc';
+	$wgHooks['AchievementEarned'][] = 'SpecialActivityFeed::attachAchievementToRc';
 	$wgHooks['RecentChange_beforeSave'][] = 'SpecialActivityFeed::savingAnRc';
 	$wgHooks['RecentChange_save'][] = 'SpecialActivityFeed::savedAnRc';
+	//$wgWikiaForceAIAFdebug = true;
 }
 
 // i18n

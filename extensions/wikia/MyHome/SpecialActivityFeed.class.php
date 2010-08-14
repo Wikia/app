@@ -105,7 +105,7 @@ class SpecialActivityFeed extends SpecialPage {
 	 * and can be inserted later (when the RC actually does get saved).
 	 */
 	public static function attachAchievementToRc(&$user, &$badge ){
-		global $wgEnableAchievementsInActivityFeed, $wgEnableAchievementsExt;
+		global $wgEnableAchievementsInActivityFeed, $wgEnableAchievementsExt, $wgWikiaForceAIAFdebug;
 		wfProfileIn( __METHOD__ );
 
 		// If user has 'hidepersonalachievements' set, then they probably don't want to play.
@@ -113,20 +113,26 @@ class SpecialActivityFeed extends SpecialPage {
 		// then when they can't find it (since users with this option won't have theirs displayed), they might assume that there is no way to see
 		// achievements.  It would be better to do this check at display-time rather than save-time, but we don't have access to the badge's user
 		// at that point.
+		Wikia::log(__METHOD__, "", "Noticed an achievement", $wgWikiaForceAIAFdebug);
 		if( ($badge->getTypeId() != BADGE_WELCOME) && (!$user->getOption('hidepersonalachievements')) ){
+			Wikia::log(__METHOD__, "", "Attaching badge to recent change...", $wgWikiaForceAIAFdebug);
+
 			// Make sure this Achievement gets added to its corresponding RecentChange (whether that has
 			// been saved already during this pageload or is still pending).
 			global $wgARecentChangeHasBeenSaved, $wgAchievementToAddToRc;
+			Wikia::log(__METHOD__, "", "About to see if there is an existing RC. RC: ".print_r($wgARecentChangeHasBeenSaved, true), $wgWikiaForceAIAFdebug);
 			if(!empty($wgARecentChangeHasBeenSaved)){
 				// Due to slave-lag, instead of storing the rc_id and looking it up (which didn't always work, even with a retry-loop), store entire RC.
+				Wikia::log(__METHOD__, "", "Attaching badge to existing RecentChange from earlier in pageload.", $wgWikiaForceAIAFdebug);
 				$rc = $wgARecentChangeHasBeenSaved;
 				if($rc){
+					Wikia::log(__METHOD__, "", "Found recent change to attach to.", $wgWikiaForceAIAFdebug);
 					// Add the (serialized) badge into the rc_params field.
 					$additionalData = array('Badge' => serialize($badge));
 					MyHome::storeInRecentChanges($rc, $additionalData);
 					$originalRcId = $rc->getAttribute('rc_id');
 					$rc->save();
-					
+
 					// Since rc->save is actually only an insert (never an update), make sure to delete the original rc by originalRcId.
 					$dbw = &wfGetDB(DB_MASTER);
 					$dbw->delete("recentchanges", array("rc_id" => $originalRcId), __METHOD__ );
@@ -134,6 +140,7 @@ class SpecialActivityFeed extends SpecialPage {
 			} else {
 				// Spool this achievement for when its corresponding RecentChange shows up (later in this pageload).
 				$wgAchievementToAddToRc = serialize($badge);
+				Wikia::log(__METHOD__, "", "RecentChange hasn't been saved yet, storing the badge for later.", $wgWikiaForceAIAFdebug);
 			}
 		}
 
@@ -147,11 +154,13 @@ class SpecialActivityFeed extends SpecialPage {
 	 * page-load, but one isn't guaranteed to be before the other).
 	 */
 	public static function savingAnRc(&$rc){
-		global $wgAchievementToAddToRc;
+		global $wgAchievementToAddToRc, $wgWikiaForceAIAFdebug;
 		wfProfileIn( __METHOD__ );
 		
 		// If an achievement is spooled from earlier in the pageload, stuff it into this RecentChange.
+		Wikia::log(__METHOD__, "", "RecentChange has arrived.", $wgWikiaForceAIAFdebug);
 		if(!empty($wgAchievementToAddToRc)){
+			Wikia::log(__METHOD__, "", "RecentChange arrived. Storing achievement that we've already seen.", $wgWikiaForceAIAFdebug);
 			$additionalData = array('Badge' => $wgAchievementToAddToRc);
 			MyHome::storeInRecentChanges($rc, $additionalData);
 			unset($wgAchievementToAddToRc);
@@ -164,13 +173,14 @@ class SpecialActivityFeed extends SpecialPage {
 	/**
 	 * Called upon the successful save of a RecentChange.
 	 */
-	public static function savedAnRc($rc){
-		global $wgARecentChangeHasBeenSaved;
+	public static function savedAnRc(&$rc){
+		global $wgARecentChangeHasBeenSaved, $wgWikiaForceAIAFdebug;
 		wfProfileIn( __METHOD__ );
 
 		// Mark the global indicating that an RC has been saved on this pageload (and which RC it was).
 		// Due to slave-lag, instead of storing the rc_id and looking it up (which didn't always work, even with a retry-loop), store entire RC.
 		$wgARecentChangeHasBeenSaved = $rc;
+		Wikia::log(__METHOD__, "", "RecentChange has been saved (presumably no achievement yet). RC: ".print_r($wgARecentChangeHasBeenSaved, true), $wgWikiaForceAIAFdebug);
 
 		wfProfileOut( __METHOD__ );
 		return true;
