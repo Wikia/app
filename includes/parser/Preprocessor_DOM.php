@@ -86,7 +86,6 @@ class Preprocessor_DOM implements Preprocessor {
 
 		if ( $cacheable ) {
 			wfProfileIn( __METHOD__.'-cacheable' );
-			global $wgCategorySelectEnabled;
 
 			$cacheKey = wfMemcKey( 'preprocess-xml', md5($text), $flags );
 			$cacheValue = $wgMemc->get( $cacheKey );
