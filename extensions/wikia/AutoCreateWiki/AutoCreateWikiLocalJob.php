@@ -268,6 +268,7 @@ class AutoCreateWikiLocalJob extends Job {
 						$mwMainPageTitle = Title::newFromText( "Mainpage", NS_MEDIAWIKI );
 						$mwMainPageArticle = new Article( $mwMainPageTitle, 0 );
 						$mwMainPageArticle->doEdit( $targetTitle->getText(), "SEO", EDIT_SUPPRESS_RC | EDIT_MINOR | EDIT_FORCE_BOT );
+						$mwMainPageArticle->doPurge();
 
 						Wikia::log( __METHOD__, "move", "Page moved" );
 
