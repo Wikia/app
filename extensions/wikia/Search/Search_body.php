@@ -172,8 +172,10 @@ class SolrSearchSet extends SearchResultSet {
 			'f.html.hl.maxAlternateFieldLength' => 300,
 			'indent' => 1,
 			'fq' => '',
+			/* ADi: tmp disabled due to performance reasons (RT: #63941)
 			'spellcheck' => 'true',
 			'spellcheck.collate' => 'true',
+			*/
 			'timeAllowed' => 2500
 		);
 
@@ -359,7 +361,7 @@ class SolrSearchSet extends SearchResultSet {
 		} else {
 			$this->mPos--;
 		}
-		
+
 		return $this->mPos;
 	}
 }
