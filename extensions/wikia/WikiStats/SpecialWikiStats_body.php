@@ -33,9 +33,12 @@ class WikiStatsPage extends IncludableSpecialPage
     var $mActiveTab;
     var $mXLS;
     var $mAllWikis;
+    var $mMonth;
+    var $mLimit;
 	   
 	private $allowedGroups = array('staff', 'sysop', 'janitor', 'bureaucrat');
 	private $TEST = 1;
+	private $defaultAction = 'main';
     const USE_MEMC = 0;
 
     #--- constructor
@@ -61,19 +64,33 @@ class WikiStatsPage extends IncludableSpecialPage
             return;
         }
         
+        error_log ( print_r($wgRequest, true) );
+        
 		$this->mUser = $wgUser;
 		$this->mUserRights 	= $this->mUser->getGroups(); 
-		$this->mFromDate 	= intval($wgRequest->getVal( "from", sprintf("%d%d", WIKISTATS_MIN_STATS_YEAR, WIKISTATS_MIN_STATS_MONTH) ));
-		$this->mToDate 		= intval($wgRequest->getVal( "to", sprintf("%d%d", date("Y"), date("m") ) ));
+		$this->mFromDate 	= intval($wgRequest->getVal( "wsfrom", sprintf("%d%d", WIKISTATS_MIN_STATS_YEAR, WIKISTATS_MIN_STATS_MONTH) ));
+		$this->mToDate 		= intval($wgRequest->getVal( "wsto", sprintf("%d%d", date("Y"), date("m") ) ));
 		$this->mTitle 		= Title::makeTitle( NS_SPECIAL, "WikiStats" );
 		$this->mAction		= $wgRequest->getVal("action", "");
-		$this->mLang 		= $wgRequest->getVal("lang", "");
-		$this->mHub 		= $wgRequest->getVal("hub", "");
-		$this->mXLS 		= $wgRequest->getVal("csv", false);
+		$this->mLang 		= $wgRequest->getVal("wslang", "");
+		$this->mHub 		= $wgRequest->getVal("wshub", "");
+		$this->mXLS 		= $wgRequest->getVal("wsxls", false);
 		$this->mCityId 		= ($this->TEST == 1 ) ? 177 : $wgCityId;
 		$this->mCityDBName 	= ($this->TEST == 1 ) ? WikiFactory::IDtoDB($this->mCityId) : $wgDBname;
+		$this->mMonth 		= $wgRequest->getVal("wsmonth", 0);
+		$this->mLimit		= $wgRequest->getVal("wslimit", WIKISTATS_WIKIANS_RANK_NBR);		
 		$this->mAllWikis 	= 0;
 		
+		#---
+		if ( $subpage ) { 
+			$path = explode("/", $subpage) ;
+			$this->mAction = $path[0];
+		}
+
+		if ( empty($this->mAction) ) {
+			$wgOut->redirect( $this->mTitle->getFullURL("action={$this->defaultAction}") );
+		}
+				
 		$m = array();
 		$this->toYear = date('Y');
 		$this->toMonth = date('m');
@@ -97,12 +114,10 @@ class WikiStatsPage extends IncludableSpecialPage
 			}
 		}
 
-		$domain = $wgRequest->getVal( "ws-domain", "" );
-		if ( empty($domain) ) {
-			$domain = $wgRequest->getVal( "wiki", "" );
-		}
+		$domain = $wgRequest->getVal( "wiki", "" );
+		$all = $wgRequest->getVal( "wsall", 0 );
 		
-		if ( $domain == 'all' ) {
+		if ( $domain == 'all' || $all == 1 ) {
         	$this->mCityId = 0;
         	$this->mCityDBName = WIKISTATS_CENTRAL_ID;
         	$this->mCityDomain = 'all';
@@ -134,24 +149,13 @@ class WikiStatsPage extends IncludableSpecialPage
             $skinname = strtolower(str_replace("Skin","", $skinname));
             $this->mSkinName = $skinname;
         }
-		#---
-		if ( $subpage ) { 
-			$path = explode("/", $subpage) ;
-			$cnt = count($path);
-			if ( $cnt > 1 && $this->userIsSpecial && is_numeric($path[0]) ) {
-				$this->mCityId = $path[0];
-			} 
-			$this->mAction = $path[1];
-		}
-		
+
 		$ajax = $wgRequest->getVal( "ajax", 0 );
-		if ( empty($ajax) ) {
-			$this->setHeaders();
-			$this->showForm();	
-		}
+
+		$this->setHeaders();
+		$this->showForm();	
 		
-		if ( !empty($ajax) && $this->mAction ) {
-			$wgOut->setArticleBodyOnly(true);
+		if ( $this->mAction ) {
 			$func = sprintf("show%s", ucfirst(strtolower($this->mAction)));
 			$this->$func();
 		} 
@@ -162,13 +166,14 @@ class WikiStatsPage extends IncludableSpecialPage
         wfProfileIn( __METHOD__ );
 
 		# css
-		$wgOut->addScript("<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgExtensionsPath}/wikia/WikiStats/css/jquery.tabs.css?{$wgStyleVersion}\" />\n");
-		$wgOut->addScript("<!--[if lte IE 7]><link rel=\"stylesheet\" href=\"{$wgExtensionsPath}/wikia/WikiStats/css/jquery.tabs-ie.css?{$wgStyleVersion}\" type=\"text/css\"><![endif]-->");
-		$wgOut->addScript("<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgExtensionsPath}/wikia/WikiStats/css/wikistats.css?{$wgStyleVersion}\" />\n");
+		#$wgOut->addScript("<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgExtensionsPath}/wikia/WikiStats/css/jquery.tabs.css?{$wgStyleVersion}\" />\n");
+		#$wgOut->addScript("<!--[if lte IE 7]><link rel=\"stylesheet\" href=\"{$wgExtensionsPath}/wikia/WikiStats/css/jquery.tabs-ie.css?{$wgStyleVersion}\" type=\"text/css\"><![endif]-->");
+		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/WikiStats/css/wikistats.css?{$wgStyleVersion}");
+		$wgOut->addExtensionStyle("{$wgStylePath}/common/wikia_ui/tabs.css?{$wgStyleVersion}");
 
 		# script
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStats/js/visualize.jQuery.js?{$wgStyleVersion}\"></script>\n");
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStats/js/jquery.tabs.min.js?{$wgStyleVersion}\"></script>\n");
+		#$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStats/js/visualize.jQuery.js?{$wgStyleVersion}\"></script>\n");
+		#$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStats/js/jquery.tabs.min.js?{$wgStyleVersion}\"></script>\n");
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStats/js/wikistats.js?{$wgStyleVersion}\"></script>\n");
 
 		# main page
@@ -236,7 +241,8 @@ class WikiStatsPage extends IncludableSpecialPage
         	"curYear"			=> intval($this->toYear),
 			"mHub"				=> $this->mHub,
 			"mLang"				=> $this->mLang,
-			"mAllWikis"			=> $this->mAllWikis
+			"mAllWikis"			=> $this->mAllWikis,
+			"mAction"			=> $this->mAction
         ));
         $res = $oTmpl->execute("select");
 
@@ -285,42 +291,34 @@ class WikiStatsPage extends IncludableSpecialPage
 	}
 	
 	private function showBreakdown() {
-        global $wgUser, $wgContLang, $wgLang, $wgOut;
-		#---
-		if ( empty($this->mXLS) ) {
-			wfProfileIn( __METHOD__ );
-			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-			$oTmpl->set_vars( array(
-				"user"			=> $wgUser,
-				"cityId"		=> $this->mCityId,
-				"wgContLang" 	=> $wgContLang,
-				"wgLang"		=> $wgLang,
-			) );
-			$wgOut->addHTML( $oTmpl->execute("activity") ); 
-			wfProfileOut( __METHOD__ );
-		} else {
-/*			$data = $this->mStats->loadStatsFromDB();
-			$columns = $this->mStats->getRangeColumns();
-			$XLSObj = new WikiStatsXLS( $this->mStats, $data, wfMsg('wikistats_filename_mainstats', $this->mCityDBName));
-			$XLSObj->makeMainStats($columns);
-*/
-		}
-        #---
+		$this->__showBreakdown(0);
         return 1; 
 	}
 	
 	private function showAnonbreakdown() {
+		$this->__showBreakdown(1);
+        return 1; 
+	}	
+	
+	private function __showBreakdown($anons = 0) {
         global $wgUser, $wgContLang, $wgLang, $wgOut;
 		#---
+		$out = $this->mStats->userBreakdown($this->mMonth, $this->mLimit, $anons);
+					
 		if ( empty($this->mXLS) ) {
 			wfProfileIn( __METHOD__ );
 			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 			$oTmpl->set_vars( array(
+				"mTitle"		=> $this->mTitle,
+				"mMonth"		=> $this->mMonth,
+				"mLimit"		=> $this->mLimit,
 				"user"			=> $wgUser,
 				"cityId"		=> $this->mCityId,
 				"wgContLang" 	=> $wgContLang,
+				"mAction"		=> $this->mAction,
 				"wgLang"		=> $wgLang,
-				"anons"			=> 1,
+				"anons"			=> $anons,
+				"data"			=> $out
 			) );
 			$wgOut->addHTML( $oTmpl->execute("activity") ); 
 			wfProfileOut( __METHOD__ );
@@ -331,9 +329,9 @@ class WikiStatsPage extends IncludableSpecialPage
 			$XLSObj->makeMainStats($columns);
 */
 		}
-        #---
-        return 1; 
-	}	
+		#---
+		return 1; 
+	}
 	
 	private function showLatestview() {
 		global $wgUser, $wgContLang, $wgLang, $wgOut;
