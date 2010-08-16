@@ -96,6 +96,7 @@ class FileDeleteForm {
 	}
 
 	public static function doDelete( &$title, &$file, &$oldimage, $reason, $suppress ) {
+		global $wgUser;
 		$article = null;
 		if( $oldimage ) {
 			$status = $file->deleteOld( $oldimage, $reason, $suppress );
@@ -127,7 +128,7 @@ class FileDeleteForm {
 				}
 			}
 		}
-		if( $status->isGood() ) 
+		if( $status->isGood() )
 			wfRunHooks('FileDeleteComplete', array( &$file, &$oldimage, &$article, &$wgUser, &$reason));
 
 		return $status;
