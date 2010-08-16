@@ -1,7 +1,7 @@
 <!-- s:<?= __FILE__ ?> -->
 <!-- LATEST VIEWS -->
 <div id="ws-latestview-stats">
-<div><?= wfMsg('wikistats_latest_pageviews') ?> <input type="button" id="ws-latestview-btn" value="<?= wfMsg('wikiastast_refresh_data') ?>" /></div>
+<div><?= wfMsg('wikistats_latest_pageviews') ?> <!--<input type="button" id="ws-latestview-btn" value="<?= wfMsg('wikiastast_refresh_data') ?>" />--></div>
 <div>
 <?php if ( !empty($data) ) { ?>
 <ol class='special'>	

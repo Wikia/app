@@ -176,9 +176,11 @@ legend {font-size: 8pt; font-family:Trebuchet MS,arial,verdana;padding:0px;}
 .ws-main-table td { padding:1px 4px; text-align:right; }
 .ws-loader { font-size:8pt; height:16px; margin:-14px 5px 0px; position: absolute; display:block; }
 .wk-stats-legend-values {padding: 1px 7px 1px 7px;}
-#ws-main { min-width:300px; overflow:auto; }
+#ws-main { min-width:300px; overflow:auto; padding: 5px; }
 #wk-stats-legend {font-size: 8pt; font-family:Trebuchet MS,arial,verdana;padding:0px;}
 #wk-stats-legend-columns {padding: 10px 0px 10px 2px;}
 .legend-subtitle {text-align:left; padding:3px; font-size:10pt; font-weight: bold}
 .wk-column-group {font-weight: bold; padding: 10px 0px 2px 0px;}
-#ws-breakdown {  min-width:300px; overflow:auto; }
+#ws-breakdown { padding:5px; }
+#ws-latestview-stats { padding:6px 5px; }
+#ws-userview-stats { padding: 5px; }
