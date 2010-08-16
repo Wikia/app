@@ -100,6 +100,8 @@ class WikiaPhotoGallery extends ImageGallery {
 			'orientation' => array('none', 'square', 'portrait', 'landscape'),
 			'position' => array('left', 'center', 'right'),
 			'spacing' => array('medium', 'large', 'small'),
+			'buckets' => false,
+			'rowdivider' => false,
 		);
 	}
 
@@ -559,6 +561,8 @@ class WikiaPhotoGallery extends ImageGallery {
 			}
 		}
 
+		$useBuckets = $this->getParam('buckets');
+		$useRowDivider = $this->getParam('rowdivider');
 		$captionColor = $this->getParam('captiontextcolor');
 		$borderColor = $this->getParam('bordercolor');
 
@@ -625,15 +629,31 @@ class WikiaPhotoGallery extends ImageGallery {
 				break;
 		}
 
+		//adding more width for the padding
+		$outeritemWrapperWidth = $itemWrapperWidth + 20;
+
+		$rowDividerCSS = '';
+		if ($useRowDivider) {
+			$rowDividerCSS = "height: ".($thumbWrapperHeight+100)."px; padding: 30px 15px 20px 15px; margin: 0px; border-bottom: solid 1px #CCCCCC;";
+		}
+
+		if ($useBuckets) {
+			$itemSpanStyle = "width:{$outeritemWrapperWidth}px; ".($useRowDivider ? $rowDividerCSS : 'margin: 4px;');
+			$itemDivStyle = "background-color: #f9f9f9; height:{$thumbWrapperHeight}px; text-align: center; border: solid 1px #CCCCCC; padding: ".(($outeritemWrapperWidth-$thumbWrapperHeight)/2)."px 5px;";
+		} else {
+			$itemSpanStyle = "width:{$itemWrapperWidth}px; $rowDividerCSS";
+			$itemDivStyle = "height:{$thumbWrapperHeight}px;";
+		}
+
 		foreach($this->mImages as $index => $imageData) {
 
 			if($perRow != 'dynamic' && ($index % $perRow) == 0){
 				$html .= Xml::openElement('div', array('class' => 'wikia-gallery-row'));
 			}
 
-			$html .= Xml::openElement('span', array('class' => 'wikia-gallery-item', 'style' => "width:{$itemWrapperWidth}px;"));
+			$html .= Xml::openElement('span', array('class' => 'wikia-gallery-item', 'style' => $itemSpanStyle));
 
-			$html .= Xml::openElement('div', array('class' => 'thumb', 'style' => "height:{$thumbWrapperHeight}px;"));
+			$html .= Xml::openElement('div', array('class' => 'thumb', 'style' => $itemDivStyle));
 
 			$image = array();
 
@@ -671,6 +691,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				$image['link'] = $linkAttribs['href'];
 				$image['linkTitle'] = $linkAttribs['title'];
 				$image['classes'] = $linkAttribs['class'];
+				$image['bytes'] = $fileObject->getSize();
 
 
 				if($this->mParser && $fileObject->getHandler()) {
@@ -680,10 +701,10 @@ class WikiaPhotoGallery extends ImageGallery {
 
 			$html .= Xml::openElement('div', array(
 				'class' => 'gallery-image-wrapper'.
-					((!empty($borderColorClass)) ? $borderColorClass : null),
+					((!$useBuckets && !empty($borderColorClass)) ? $borderColorClass : null),
 				'style' => 'position: relative;'.
-					" height:{$image['height']}px;".
-					" width:{$image['width']}px;".
+					($useBuckets ? " width: {$itemWrapperWidth}px; border-style: none;"
+								 : " height:{$image['height']}px; width:{$image['width']}px;").
 					((!empty($image['heightCompensation'])) ? " top:{$image['heightCompensation']}px;" : null).
 					//Fix #59914, shared.css has auto-alignment rules
 					//((!empty($image['widthCompensation'])) ? " left:{$image['widthCompensation']}px;" : null).
@@ -697,9 +718,9 @@ class WikiaPhotoGallery extends ImageGallery {
 					'style' => (($image['thumbnail']) ? " background-image: url({$image['thumbnail']});" : null).
 						((!empty($image['titleText'])) ? " line-height:{$image['height']}px;" : null).
 						" height:{$image['height']}px;".
-						" width:{$image['width']}px;",
+						($useBuckets ? '' : " width:{$image['width']}px;"),
 					'href' => $image['link'],
-					'title' => $image['linkTitle']
+					'title' => $image['linkTitle'].' ('.$sk->formatSize($image['bytes']).')'
 				)
 			);
 
@@ -721,7 +742,8 @@ class WikiaPhotoGallery extends ImageGallery {
 							((!empty($borderColorClass)  && $captionsPosition == 'within') ? $borderColorClass : null),
 						'style' => (($captionsPosition == 'below') ? "width:{$thumbSize}px;" : null).
 							((!empty($captionsColor)) ? " color:{$captionsColor};" : null).
-							((!empty($captionsBackgroundColor)) ? " background-color:{$captionsBackgroundColor}" : null)
+							((!empty($captionsBackgroundColor)) ? " background-color:{$captionsBackgroundColor}" : null).
+							($useBuckets ? " margin-top: 0px;" : '')
 					)
 				);
 
@@ -761,300 +783,6 @@ class WikiaPhotoGallery extends ImageGallery {
 		wfProfileOut(__METHOD__);
 		return $html;
 	}
-
-	//old version of the function, remove when safe
-//	private function renderGallery() {
-//		global $wgLang, $wgBlankImgUrl;
-//
-//		wfProfileIn(__METHOD__);
-//
-//		$sk = $this->getSkin();
-//
-//		// set gallery images ratio ("orientation")
-//		$orientation = $this->getParam('orientation');
-//		$ratio = WikiaPhotoGalleryHelper::getRatioFromOption($orientation);
-//
-//		// calculate height based on gallery width
-//		$this->mHeights = round($this->mWidths / $ratio);
-//
-//		//calculate height of the biggest image
-//		$fname = __METHOD__ . '::maximumHeightCalculation';
-//		wfProfileIn($fname);
-//		$maxHeight = 0;
-//		$heights = array();
-//		$widths = array();
-//
-//		// loop throught the images and get height of the tallest one
-//		foreach ($this->mImages as $index => $pair) {
-//			$img = $this->getImage($pair[0]);
-//
-//			if(!$img) continue;
-//
-//			// get thumbnail limited only by given width
-//			if ($img->width > $this->mWidths) {
-//				$imageHeight = round( $img->height * ($this->mWidths / $img->width) );
-//				$imageWidth = $this->mWidths;
-//			}
-//			else {
-//				$imageHeight = $img->height;
-//				$imageWidth = $img->width;
-//			}
-//
-//			$heights[$index] = $imageHeight;
-//			$widths[$index] = $imageWidth;
-//
-//			if ($imageHeight > $maxHeight) {
-//				$maxHeight = $imageHeight;
-//			}
-//		}
-//
-//		wfProfileOut($fname);
-//
-//		// calculate height based on gallery width
-//		$this->mHeights = round($this->mHeights / $ratio);
-//
-//		if ($orientation == 'none') {
-//			$this->mCrop = false;
-//
-//			// use the biggest height found
-//			if ($maxHeight > 0) {
-//				$this->mHeights = $maxHeight;
-//			}
-//		}
-//
-//		wfDebug(__METHOD__ . ": gallery #{$this->mData['id']} / {$this->mWidths}x{$this->mHeights} / {$orientation}\n");
-//
-//		// gallery wrapper CSS classes
-//		$classes = array('wikia-gallery', 'clearfix');
-//
-//		$classes[] = 'wikia-gallery-border-' . $this->getParam('bordersize');
-//		$classes[] = 'wikia-gallery-caption-size-' . $this->getParam('captionsize');
-//		$classes[] = 'wikia-gallery-captions-' . $this->getParam('captionalign');
-//		$classes[] = 'wikia-gallery-position-' . $this->getParam('position');
-//		$classes[] = 'wikia-gallery-spacing-' . $this->getParam('spacing');
-//
-//		/*if ($this->getParam('bordercolor') == 'transparent') {
-//			$classes[] = 'wikia-gallery-border-transparent';
-//		}*/
-//
-//		// do not add button for galleries from templates
-//		if (isset($this->mData['params']['source']) && $this->mData['params']['source'] == "template\x7f") {
-//			$classes[] = ' template';
-//		}
-//
-//		// wrap image gallery inside div.gallery
-//		$attribs = Sanitizer::mergeAttributes(
-//			array(
-//				'class' => implode(' ', $classes),
-//				'hash' => $this->mData['hash'],
-//				'id' => 'gallery-' . $this->mData['id']
-//			),
-//			$this->mAttribs );
-//		$s = Xml::openElement('div', $attribs);
-//
-//		// render gallery caption
-//		if ($this->mCaption) {
-//			$s .= '<div class="wikia-gallery-caption">' . $this->mCaption . '</div>';
-//		}
-//
-//		// thumb border color
-//		$thumbBorderStyle = '';
-//		$imageClass = 'image';
-//
-//		$thumbBorderColor = $this->getParam('bordercolor');
-//		if (empty($thumbBorderColor) || $thumbBorderColor == 'accent') {
-//			$imageClass .= ' accent';$this->getImage($nt);
-//		}
-//		else {
-//			$thumbBorderStyle .= " border-color: {$thumbBorderColor};" ;
-//		}
-//
-//		// prepare captions parameters
-//		$captionInside = ($this->getParam('captionposition') == 'within');
-//		$captionClass = 'lightbox-caption';
-//		$captionStyle = '';
-//
-//		// handle background color (when captionposition=within)
-//		if ($captionInside) {
-//			if (!empty($thumbBorderColor) && $thumbBorderColor != 'accent') {
-//				$captionStyle .= "background-color:{$thumbBorderColor};";
-//			}
-//			else {
-//				$captionClass .= ' accent';
-//			}
-//		}
-//		else {
-//			$captionStyle .= " width:{$this->mWidths}px;";
-//		}
-//
-//		$captionTextColor = $this->getParam('captiontextcolor');
-//
-//		if (!empty($captionTextColor)) {
-//			$captionStyle .= "color:{$captionTextColor};";
-//		}
-//
-//		// perrow = columns
-//		$perRow = intval($this->mPerRow);
-//		$inRow = 0;
-//
-//		// open row wrapper when using "perrow" attribute
-//		if ($perRow) {
-//			$s .= Xml::openElement('div', array('class' => 'wikia-gallery-row'));
-//		}
-//
-//		// render each image
-//		$i = 0;
-//		foreach ($this->mImages as $index => $pair) {
-//			$nt = $pair[0];
-//			$text = $pair[1];
-//			$link = $pair[2];
-//
-//			// render caption and handle positioning / text size
-//			if ($text != '') {
-//				$caption = Xml::element('div', array(
-//					'class' => $captionClass,
-//					'style' => $captionStyle,
-//				),
-//				$text
-//				);
-//			}
-//			else {
-//				$caption = '';
-//			}
-//
-//			// get image
-//			$img = $this->getImage($nt);
-//
-//			// let's properly scale image (don't make it bigger than original size)
-//			if (is_object($img) && ($nt->getNamespace() == NS_FILE)) {
-//				// get proper image dimensions
-//				$thumbParams = WikiaPhotoGalleryHelper::getThumbnailDimensions($img, $this->mWidths, $this->mHeights, $this->mCrop);
-//
-//				// render thumbnail
-//				$thumb = $img->getThumbnail($thumbParams['width'], $thumbParams['height']);
-//
-//				$thumbInnerMargin = '';
-//
-//				$thumbAreaHeight = ($orientation == 'none') ? $heights[$index] : min($thumb->height, $this->mHeights) ;
-//				$imgHeightCompensation = ($this->mHeights - $thumbAreaHeight) / 2;
-//				if($imgHeightCompensation > 0) $thumbInnerMargin .= " top: {$imgHeightCompensation}px;";
-//
-//				$thumbAreaWidth = min($widths[$index], $this->mWidths);
-//				$imgWidthCompensation = ($this->mWidths - $thumbAreaWidth) / 2;
-//				if($imgWidthCompensation > 0) $thumbInnerMargin .= " left: {$imgWidthCompensation}px;";
-//
-//				// parse thumbnail link
-//				$linkAttribs = $this->parseLink($nt, $link);
-//
-//				// generate thumbnail
-//				$linkAttribs['style'] = "position:relative; background-image: url({$thumb->url});{$thumbBorderStyle}{$thumbInnerMargin} width:{$thumbAreaWidth}px; height:{$thumbAreaHeight}px;";
-//
-//				$thumbhtml = "\n\t\t\t".
-//					Xml::openElement('div', array(
-//						'class' => 'thumb',
-//						'style' => "height: {$thumbAreaHeight}px;",
-//					))
-//					# Add links for images (from |link= param) or link them to image page (and use JS lightbox)
-//					. Xml::openElement('a', $linkAttribs)
-//					. '</a>'
-//					. (!empty($captionInside) ? $caption : '')
-//					. '</div>';
-//
-//				// Call parser transform hook
-//				if ( $this->mParser && $img->getHandler() ) {
-//					$img->getHandler()->parserTransformHook( $this->mParser, $img );
-//				}
-//			}
-//			else {
-//				// create redlink to Special:Upload for broken image
-//				$specialUpload = SpecialPage::getTitleFor('Upload');
-//				$uploadLink = $sk->link($specialUpload, $nt->getText(), array('class' => 'new'),
-//						array('wpDestFile' => $nt->getText()));
-//
-//				// generate "thumbnail" of broken image
-//				$thumbhtml = "\n\t\t\t".
-//					Xml::openElement('div', array(
-//						'class' => 'thumb broken-image accent',
-//						'style' => "{$thumbBorderStyle}; height: {$this->mHeights}px",
-//					))
-//					. Xml::openElement('span', array('style' => "line-height: {$this->mHeights}px"))
-//					. $uploadLink
-//					. Xml::closeElement('span')
-//					. (!empty($captionInside) ? $caption : '')
-//					. Xml::closeElement('div');
-//			}
-//
-//			if( $this->mShowBytes ) {
-//				if( $img ) {
-//					$nb = wfMsgExt( 'nbytes', array( 'parsemag', 'escape'),
-//						$wgLang->formatNum( $img->getSize() ) );
-//				} else {
-//					$nb = wfMsgHtml( 'filemissing' );
-//				}
-//				$nb = "$nb<br />\n";
-//			} else {
-//				$nb = '';
-//			}
-//
-//			$textlink = $this->mShowFilename ?
-//				$sk->makeKnownLinkObj( $nt, htmlspecialchars( $wgLang->truncate( $nt->getText(), 20 ) ) ) . "<br />\n" :
-//				'' ;
-//
-//			// generate HTML for a single image from gallery
-//			$s .= Xml::openElement('span', array(
-//					'class' => 'wikia-gallery-item',
-//					'style' => "width: {$this->mWidths}px",
-//				))
-//				. $thumbhtml
-//				. $textlink
-//				. (empty($captionInside) ? $caption : '')
-//				. $nb
-//				. '</span>';
-//
-//			// handle "perrow" attribute
-//			if ($perRow) {
-//				$inRow++;
-//
-//				if ($i % $perRow == $perRow-1) {
-//					$s .= Xml::closeElement('div');
-//
-//					$inRow = 0;
-//
-//					// is next row needed?
-//					if ($i < count($this->mImages) - 1) {
-//						$s .= Xml::openElement('div', array('class' => 'wikia-gallery-row'));
-//					}
-//				}
-//			}
-//
-//			// increment gallery images counter
-//			$i++;
-//		}
-//
-//		// close gallery row when using "perrow" attribute
-//		if ($perRow && $inRow) {
-//			$s .= Xml::closeElement('div');
-//		}
-//
-//		// "Add image to this gallery" button (this button is shown by JS only in Monaco)
-//		if (!empty($this->mShowAddButton)) {
-//			wfLoadExtensionMessages('WikiaPhotoGallery');
-//
-//			if (!$perRow) {
-//				$s .= Xml::element('br');
-//			}
-//			$s .= Xml::openElement('div', array('class' => 'wikia-gallery-add noprint', 'style' => 'display: none'));
-//			$s .= Xml::element('img', array('src' => $wgBlankImgUrl, 'class' => 'sprite-small add'));
-//			$s .= Xml::element('a', array('href' => '#'), wfMsgForContent('wikiaPhotoGallery-viewmode-addphoto'));
-//			$s .= Xml::closeElement('div');
-//		}
-//
-//		// close gallery wrapper
-//		$s .= Xml::closeElement('div');
-//
-//		wfProfileOut(__METHOD__);
-//		return $s;
-//	}
 
 	/**
  	 * Return a HTML representation of the image slideshow
