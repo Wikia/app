@@ -69,7 +69,11 @@ if( !empty( $mType ) ) {
 		<ul>
 			<li class="label"><label class="required" id="wiki-name-label"><?=wfMsg('allmessagesname')?>:</label></li>
 			<li class="data1">
-				<input type="text" autocomplete="off" name="wiki-name" id="wiki-name" value="<?=@$params['wiki-name']?>"/> <span id="wiki-subTitle"><?php echo $subName ?></span><span class="error-status" id="wiki-name-error-status">&nbsp;</span>
+<?php
+			$input = '<input type="text" autocomplete="off" name="wiki-name" id="wiki-name" value="' . @$params['wiki-name'] . '"/> <span id="wiki-subTitle">';
+			echo str_replace( '$1', $input, wfMsgExt( 'autocreatewiki-title-template', array( 'language' => !empty($params['wiki-language']) ? $params['wiki-language'] : 'en' ) ) );
+?>
+		<span class="error-status" id="wiki-name-error-status">&nbsp;</span>
 				<div class="error" style="display: <?= (!empty($mPostedErrors['wiki-name'])) ? 'block' : 'none'?>;" id="wiki-name-error"><?=@$mPostedErrors['wiki-name']?></div>
 			</li>
 			<li class="data2"><span class="note"><?=wfMsg('autocreatewiki-info-topic')?></span></li>
