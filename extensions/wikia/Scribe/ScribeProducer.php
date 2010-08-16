@@ -105,12 +105,16 @@ class ScribeProducer {
 		global $wgCityId;
 		wfProfileIn( __METHOD__ );
 		
+		error_log("\n\n\n".print_r($oArticle, true));
+		error_log("\n\n\n".print_r($oUser, true));
+		
 		if ( ( is_object($oArticle) ) && ( $oUser instanceof User ) ) {
 			$revid = ( $oRevision instanceof Revision ) ? $oRevision->getId() : 0;
 			$pageId = ( is_object($oArticle) ) ? $oArticle->getID() : 0;
 			if ( empty($revid) ) {
 				$revid = $oArticle->getTitle()->getLatestRevID(GAID_FOR_UPDATE);
 			}
+			error_log("\n\n\n revid = $revid, pageId: $pageId \n\n");			
 			if ( $revid > 0 && $pageId > 0 ) { 
 				$key = ( isset($status->value['new']) && $status->value['new'] == 1 ) ? 'create' : 'edit';
 				$oScribeProducer = new ScribeProducer( $key, $pageId, $revid, 0, (!empty($undef1)) ? 1 : 0 );
@@ -154,7 +158,8 @@ class ScribeProducer {
 			$logid = 0;
 			if ( $pageId > 0 ) {
 				if ( $use_api == 1 ) {
-					$pageName = Title::makeName($oArticle->mTitle->getNamespace, $oArticle->mTitle->getDBkey());
+					$oTitle = $oArticle->getTitle();
+					$pageName = Title::makeName($oTitle->getNamespace(), $oTitle->getDBkey());
 					$oFauxRequest = new FauxRequest(array(
 						'action' 	=> 'query',
 						'list' 		=> 'logevents',
@@ -179,10 +184,11 @@ class ScribeProducer {
 					};
 				} else {
 					$table = 'recentchanges';
+					$oTitle = $oArticle->getTitle();
 					$what = array('rc_logid');
 					$cond = array(
-						'rc_title'		=> $oArticle->mTitle->getDBkey(),
-						'rc_namespace'	=> $oArticle->mTitle->getNamespace(),
+						'rc_title'		=> $oTitle->getDBkey(),
+						'rc_namespace'	=> $oTitle->getNamespace(),
 						'rc_log_action'	=> 'delete',
 						'rc_user' 		=> $oUser->getID()
 					);
