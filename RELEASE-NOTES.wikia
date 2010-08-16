@@ -1,4 +1,6 @@
 == Changes since 201008.2 ==
+* rt#59982: blogs: comments are accepted when no-comments is enabled (Marooned)
+* rt#54142: Staff is not able to remove "Comments" flag from blog posts (Marooned)
 * rt#63213: hide log restores in IRC feed (uberfuzzy)
 * rt#63016: WikiFactory now shows default values (TOR)
 * rt#62262: Extend getAd method for additional targeting (Nef)
