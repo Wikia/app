@@ -222,12 +222,13 @@ class PhalanxHelper {
 	 * @param $oldData mixed Old rule data or null if adding a rule
 	 * @param $newData mixed New rule data or null if removing a rule
 	 */
-	public function updateCache( $oldData, $newData ) {
+	static public function updateCache( $oldData, $newData ) {
 		global $wgMemc, $wgPhalanxSupportedLanguages;
 		
 		$allLanguages = array_keys( $wgPhalanxSupportedLanguages );
-		if (array_search("all",$allLanguages))
-			array_unshift($allLanguages, "all");
+		if (array_search('all',$allLanguages)) {
+			array_unshift($allLanguages, 'all');
+		}
 		
 		$list = array();
 		
@@ -236,10 +237,13 @@ class PhalanxHelper {
 			$lang = $oldData['lang'] ? $oldData['lang'] : null;
 			$langs = $lang ? array( $lang ) : $allLanguages;
 			$type = $oldData['type'];
-			for ($i=1;$type>0;$i<<=1,$type>>=1)
-				if ($type&1)
-					foreach ($langs as $l)
+			for ($i=1; $type>0; $i<<=1, $type>>=1) {
+				if ($type & 1) {
+					foreach ($langs as $l) {
 						$list[$i][$l]['remove'] = true;
+					}
+				}
+			}
 		}
 		
 		// Find where the rule will be added to?
@@ -247,18 +251,21 @@ class PhalanxHelper {
 			$lang = $newData['lang'] ? $newData['lang'] : null;
 			$langs = $lang ? array( $lang ) : $allLanguages;
 			$type = $newData['type'];
-			for ($i=1;$type>0;$i<<=1,$type>>=1)
-				if ($type&1)
-					foreach ($langs as $l)
+			for ($i=1; $type>0; $i<<=1, $type>>=1) {
+				if ($type & 1) {
+					foreach ($langs as $l) {
 						$list[$i][$l]['save'] = true;
+					}
+				}
+			}
 		}
 		
-		$id = intval($oldData ? $oldData['id'] : $newData['id']);
+		$id = intval( $oldData ? $oldData['id'] : $newData['id'] );
 
 		// Iterate through each affected cache case and update
 		foreach ($list as $moduleId => $list2) {
 			foreach ($list2 as $lang => $props) {
-				if (empty($lang) || $lang == "all") $lang = null;
+				if (empty($lang) || $lang == 'all') $lang = null;
 				
 				$remove = !empty($props['remove']);
 				$save = !empty($props['save']);
