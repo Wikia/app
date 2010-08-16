@@ -60,8 +60,9 @@ class Phalanx {
 
 		$timestampNow = wfTimestampNow();
 		$key = 'phalanx:' . $moduleId . ':' . ($lang ? $lang : 'all');
-		if (isset(self::$moduleData[$moduleId])) {
-			$blocksData = self::$moduleData[$moduleId];
+		$sLang = $lang ? $lang : 'all';
+		if (isset(self::$moduleData[$moduleId][$sLang])) {
+			$blocksData = self::$moduleData[$moduleId][$sLang];
 		} else {
 			$blocksData = $wgMemc->get($key);
 		}
@@ -115,7 +116,7 @@ class Phalanx {
 			$blocksData['closestExpire'] = $closestTimestamp;
 			$wgMemc->set($key, $blocksData);
 		}
-		self::$moduleData[$moduleId] = $blocksData;
+		self::$moduleData[$moduleId][$sLang] = $blocksData;
 
 		wfProfileOut( __METHOD__ );
 		return $blocksData['blocks'];
@@ -267,5 +268,10 @@ class Phalanx {
 		}
 		wfProfileOut( __METHOD__ );
 		return $result;
+	}
+	
+	static public function clearCache( $moduleId, $lang ) {
+		$sLang = $lang ? $lang : 'all';
+		unset(self::$moduleData[$moduleId][$sLang]);
 	}
 }

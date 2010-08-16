@@ -27,6 +27,9 @@ class PhalanxHelper {
 		$result = false;
 		wfProfileIn( __METHOD__ );
 
+		//get data before update - we need it for cache update
+		$oldData = Phalanx::getFromId($data['id']);
+
 		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 		$dbw->update(
 			'phalanx',
@@ -40,23 +43,7 @@ class PhalanxHelper {
 
 			$dbw->immediateCommit();
 
-			//update cache
-			$modulesId = $data['type'];
-			$lang = $data['lang'] ? $data['lang'] : null;
-
-			//iterate for each module for which block is saved
-			for ($bit = $modulesId&1, $moduleId=1; $modulesId; $modulesId>>=1, $bit = $modulesId&1, $moduleId<<=1) {
-				if (!$bit) continue;	//skip not used modules
-				$key = 'phalanx:' . $moduleId . ':' . ($lang ? $lang : 'all');
-				$blocksData = $wgMemc->get($key);
-				//cache miss, fill it from DB (getFromFilter() will update the cache)
-				if (empty($blocksData)) {
-					Phalanx::getFromFilter($moduleId, $lang, true /*use master to avoid lag - an insert was a moment ago*/);
-				} else {	//update cache
-					$blocksData['blocks'][$data['id']] = $data;
-					$wgMemc->set($key, $blocksData);
-				}
-			}
+			self::updateCache($oldData, $data);
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -85,23 +72,7 @@ class PhalanxHelper {
 
 			$dbw->immediateCommit();
 
-			//update cache
-			$modulesId = $data['type'];
-			$lang = $data['lang'] ? $data['lang'] : null;
-
-			//iterate for each module for which block is saved
-			for ($bit = $modulesId&1, $moduleId=1; $modulesId; $modulesId>>=1, $bit = $modulesId&1, $moduleId<<=1) {
-				if (!$bit) continue;	//skip not used modules
-				$key = 'phalanx:' . $moduleId . ':' . ($lang ? $lang : 'all');
-				$blocksData = $wgMemc->get($key);
-				//cache miss, fill it from DB (getFromFilter() will update the cache)
-				if (empty($blocksData)) {
-					Phalanx::getFromFilter($moduleId, $lang, true /*use master to avoid lag - an insert was a moment ago*/);
-				} else {	//update cache
-					$blocksData['blocks'][$data['id']] = $data;	//add new block
-					$wgMemc->set($key, $blocksData);
-				}
-			}
+			self::updateCache(null, $data);
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -234,24 +205,7 @@ class PhalanxHelper {
 
 		$dbw->immediateCommit();
 
-		//update cache
-		$modulesId = $data['type'];
-		$lang = $data['lang'] ? $data['lang'] : null;
-
-		//iterate for each module for which block is saved
-		for ($bit = $modulesId&1, $moduleId=1; $modulesId; $modulesId>>=1, $bit = $modulesId&1, $moduleId<<=1) {
-			if (!$bit) continue;	//skip not used modules
-			$key = 'phalanx:' . $moduleId . ':' . ($lang ? $lang : 'all');
-			$blocksData = $wgMemc->get($key);
-
-			//cache miss, fill it from DB (getFromFilter() will update the cache)
-			if (empty($blocksData)) {
-				Phalanx::getFromFilter($moduleId, $lang, true /*use master to avoid lag - deletion was a moment ago*/);
-			} else {	//update cache
-				unset($blocksData['blocks'][$data['id']]);	//remove block
-				$wgMemc->set($key, $blocksData);
-			}
-		}
+		self::updateCache($data, null);
 
 		$result = array(
 			'error' => false,
@@ -260,6 +214,72 @@ class PhalanxHelper {
 
 		wfProfileOut( __METHOD__ );
 		return $result;
+	}
+	
+	/**
+	 * Updates Phalanx rules cache after one changing one rule (add, modify or delete)  
+	 * 
+	 * @param $oldData mixed Old rule data or null if adding a rule
+	 * @param $newData mixed New rule data or null if removing a rule
+	 */
+	public function updateCache( $oldData, $newData ) {
+		global $wgMemc, $wgPhalanxSupportedLanguages;
+		
+		$allLanguages = array_keys( $wgPhalanxSupportedLanguages );
+		if (array_search("all",$allLanguages))
+			array_unshift($allLanguages, "all");
+		
+		$list = array();
+		
+		// Find where the rule was removed from?
+		if ($oldData) {
+			$lang = $oldData['lang'] ? $oldData['lang'] : null;
+			$langs = $lang ? array( $lang ) : $allLanguages;
+			$type = $oldData['type'];
+			for ($i=1;$type>0;$i<<=1,$type>>=1)
+				if ($type&1)
+					foreach ($langs as $l)
+						$list[$i][$l]['remove'] = true;
+		}
+		
+		// Find where the rule will be added to?
+		if ($newData) {
+			$lang = $newData['lang'] ? $newData['lang'] : null;
+			$langs = $lang ? array( $lang ) : $allLanguages;
+			$type = $newData['type'];
+			for ($i=1;$type>0;$i<<=1,$type>>=1)
+				if ($type&1)
+					foreach ($langs as $l)
+						$list[$i][$l]['save'] = true;
+		}
+		
+		$id = intval($oldData ? $oldData['id'] : $newData['id']);
+
+		// Iterate through each affected cache case and update
+		foreach ($list as $moduleId => $list2) {
+			foreach ($list2 as $lang => $props) {
+				if (empty($lang) || $lang == "all") $lang = null;
+				
+				$remove = !empty($props['remove']);
+				$save = !empty($props['save']);
+				
+				$sLang = $lang ? $lang : 'all';
+				$key = 'phalanx:' . $moduleId . ':' . $sLang;
+				Phalanx::clearCache($moduleId,$sLang); // clear local cache 
+				$blocksData = $wgMemc->get($key);
+				
+				if (empty($blocksData)) {
+					Phalanx::getFromFilter($moduleId, $lang, true /*use master to avoid lag - change was a moment ago*/);
+				} else {
+					if ($remove && !$save) {
+						unset($blocksData['blocks'][$id]); // remove block
+					} else if ($save) {
+						$blocksData['blocks'][$id] = $newData; // add or overwrite block
+					}
+					$wgMemc->set($key,$blocksData);
+				}
+			}
+		}
 	}
 
 	/**
