@@ -21,16 +21,6 @@ $dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['SliderTag'] = $dir . 'SliderTag.i18n.php';
 
 $wgHooks['ParserFirstCallInit'][] = 'wfSliderTag';
-$wgHooks['BeforePageDisplay'][] = 'wfSliderExtras';
-
-function wfSliderExtras( &$out ) {
-	global $wgScriptPath, $wgStyleVersion;
-
-	$out->addStyle( "$wgScriptPath/extensions/wikia/SliderTag/slidertag.css?$wgStyleVersion" );
-	$out->addScript( "<script type=\"text/javascript\" src=\"$wgScriptPath/extensions/wikia/SliderTag/slidertag.js?$wgStyleVersion\"></script>\n" );
-
-	return true;
-}
 
 function wfSliderTag( &$parser ) {
 	$parser->setHook( 'slider', 'wfSlider' );
@@ -39,6 +29,11 @@ function wfSliderTag( &$parser ) {
 }
 
 function wfSlider( $input, $args, $parser ) {
+	global $wgOut, $wgScriptPath, $wgStyleVersion;
+
+	$wgOut->addStyle( "$wgScriptPath/extensions/wikia/SliderTag/slidertag.css?$wgStyleVersion" );
+	$wgOut->addScript( "<script type=\"text/javascript\" src=\"$wgScriptPath/extensions/wikia/SliderTag/slidertag.js?$wgStyleVersion\"></script>\n" );
+
 	$article = $args['id'];
 	$data = CorporatePageHelper::parseMsgImg( $article, true );
 	$html = '';
