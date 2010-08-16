@@ -810,7 +810,8 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->mWikiData[ "type"       ] = $this->mType;
 		$this->mWikiData[ "hub"        ] = $this->awcCategory;
 		$this->mWikiData[ "name"       ] = strtolower( trim( $this->awcDomain ) );
-		$this->mWikiData[ "title"      ] = $fixedTitle . " Wiki";
+		// set Sitename according to target wiki's language, not local language (neither user nor content)
+		$this->mWikiData[ "title"      ] = wfMsgExt( 'autocreatewiki-title-template', array( 'language' => $this->awcLanguage ), $fixedTitle );
 
 		switch( $this->mType ) {
 			case "answers":
