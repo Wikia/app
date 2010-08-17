@@ -406,7 +406,7 @@ class AdEngine {
  	 *
  	 * Do the best you can to return a height/width
  	 */
-        public function getHeightWidthFromSize($size){
+        public static function getHeightWidthFromSize($size){
                 if (preg_match('/^([0-9]{2,4})x([0-9]{2,4})/', $size, $matches)){
                         return array('width'=>$matches[1], 'height'=>$matches[2]);
                 } else if (preg_match('/^([0-9]{2,4})x\*/', $size, $matches)){
