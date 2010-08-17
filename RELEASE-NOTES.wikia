@@ -4,6 +4,7 @@
 * rt#63919: Move hard coded "xxx Wiki" name on AutoCreateWiki to MW message (TOR)
 
 == Changes since 201008.2 ==
+* rt#63984: Comments bypasses ArticleDeleteComplete hook (Moli/Marooned)
 * rt#59982: blogs: comments are accepted when no-comments is enabled (Marooned)
 * rt#54142: Staff is not able to remove "Comments" flag from blog posts (Marooned)
 * rt#63213: hide log restores in IRC feed (uberfuzzy)
