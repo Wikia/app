@@ -1548,6 +1548,11 @@ class AutoCreateWikiPage extends SpecialPage {
 			'wgEnableSectionEdit'	    => true,
 		);
 
+		// rt#60223: colon allowed in sitename, breaks project namespace
+		if( mb_strpos($WFSettingsVars['wgSitename'], ':') !== false ) {
+			$WFSettingsVars['wgMetaNamespace'] = str_replace( array(':', ' '), array('', '_'), $WFSettingsVars['wgSitename']);
+		}
+
 		if( self::ACTIVE_CLUSTER ) {
 			$WFSettingsVars[ "wgDBcluster" ] = self::ACTIVE_CLUSTER;
 			wfGetLBFactory()->sectionsByDB[ $this->mWikiData[ "dbname" ] ] = self::ACTIVE_CLUSTER;
