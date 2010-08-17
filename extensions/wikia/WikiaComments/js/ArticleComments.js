@@ -122,6 +122,7 @@ var ArticleComments = {
 				$(e.target).closest('.buttons').hide();
 				$('#comm-text-' + json.id).after(json.html);
 				$('#article-comm-submit-' + json.id).bind('click', {source: '#article-comm-textfield-' + json.id, parentId: json.id}, ArticleComments.postComment);
+				$('#article-comm-textfield-' + json.id).focus();
 			} else {
 				//TODO: add caption
 				$.showModal('', json.msg);

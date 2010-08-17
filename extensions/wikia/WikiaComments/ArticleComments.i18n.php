@@ -24,6 +24,7 @@ $messages['en'] = array(
 	'article-comments-prev-page' => 'Prev',
 	'article-comments-next-page' => 'Next',
 	'article-comments-page-spacer' => ' ... ',
+	'article-comments-delete-reason' => 'The parent article / parent comment has been deleted.',
 	'enotif_subject_article_comment' => '$PAGEEDITOR has commented on "$PAGETITLE" on {{SITENAME}}',
 	'enotif_body_article_comment' => 'Dear $WATCHINGUSERNAME,
 
