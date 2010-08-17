@@ -45,6 +45,10 @@ $wgAjaxExportList[] = 'CategorySelectGetCategories';
 function CategorySelectInit($forceInit = false) {
 	global $wgRequest, $wgUser;
 
+	if($wgRequest->getVal('usecatsel','') == "no") {
+		return true;
+	}
+	
 	if( (!$forceInit) && (!$wgUser->isAllowed('edit')) ){
 		return true;
 	}
