@@ -6,6 +6,13 @@
  *
  */
 
+$wgExtensionCredits['specialpage'][] = array(
+	'path'           => __FILE__,
+	'name'           => 'WikiaNewFiles',
+	'author'         => 'Garth Webb',
+	'descriptionmsg' => 'wikianewfiles-desc',
+	'url'            => 'http://www.wikia.com',
+);
 
 $dir = dirname( __FILE__ );
 
@@ -15,7 +22,7 @@ $wgExtensionMessagesFiles["WikiaNewFiles"] =  $dir . '/SpecialNewFiles.i18n.php'
 // Autoloaded classes
 $wgAutoloadClasses['WikiaNewFiles'] = "$dir/WikiaNewFiles.class.php";
 
-require_once($dir . '/SpecialNewFiles.php');
+require_once( $dir . '/SpecialNewFiles.php' );
 
-//echo '<pre>'.print_r($wgSpecialPages, true).'</pre>';
+// echo '<pre>'.print_r($wgSpecialPages, true).'</pre>';
 $wgSpecialPages['NewFiles'] = array( 'WikiaNewFiles', 'NewFiles' );
