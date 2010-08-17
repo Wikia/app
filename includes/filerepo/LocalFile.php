@@ -595,7 +595,8 @@ class LocalFile extends File
 		$this->purgeThumbnails();
 
 		// Purge squid cache for this file
-		SquidUpdate::purge( array( $this->getURL() ) );
+		// Wikia purge the base thumbnail url
+		SquidUpdate::purge( array( $this->getURL(), $this->getThumbUrl() ) );
 	}
 
 	/**
