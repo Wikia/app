@@ -1003,112 +1003,9 @@ wfProfileIn( __METHOD__ . '-body'); ?>
 	$html = '';
 	wfRunHooks('GetHTMLAfterBody', array ($this, &$html));
 	echo $html;
+
+	// NOTE: Removed wikia_header and user links.
 ?>
-	<!-- HEADER -->
-<?php
-
-// curse like cobranding
-$this->printCustomHeader();
-
-
-wfProfileIn( __METHOD__ . '-header'); ?>
-		<div id="wikia_header" class="reset color2">
-			<div class="monaco_shrinkwrap">
-<?php
-			// NOTE: Removed wikia_header, Wikia logo, branding, etc. here.
-
-			wfRunHooks('MonacoAdLink');
-
-			// NOTE: Removed RequestWikiLink (which is the Create a Wiki button) here.
-?>
-			<div id="userData">
-<?php
-
-$custom_user_data = "";
-if( !wfRunHooks( 'CustomUserData', array( &$this, &$tpl, &$custom_user_data ) ) ){
-	wfDebug( __METHOD__ . ": CustomUserData messed up skin!\n" );
-}
-
-if( $custom_user_data ) {
-	echo $custom_user_data;
-} else {
-	global $wgUser, $wgStylePath;
-
-	// Output the facebook connect links that were added with PersonalUrls.
-	// @author Sean Colombo
-	foreach($this->data['userlinks'] as $linkName => $linkData){
-		// 
-		if( !empty($linkData['html']) ){
-			echo $linkData['html']; 
-		}
-	}
-
-	if ($wgUser->isLoggedIn()) {
-	?>
-				<span id="header_username"><a href="<?= htmlspecialchars($this->data['userlinks']['userpage']['href']) ?>"<?= $skin->tooltipAndAccesskey('pt-userpage') ?>><?= htmlspecialchars($this->data['userlinks']['userpage']['text']) ?></a></span>
-<?php
-		if (isset($this->data['userlinks']['myhome'])) {
-?>
-				<span id="header_myhome"><a href="<?= htmlspecialchars($this->data['userlinks']['myhome']['href']) ?>" rel="nofollow"<?= $skin->tooltipAndAccesskey('pt-myhome') ?>><?= htmlspecialchars($this->data['userlinks']['myhome']['text']) ?></a></span>
-<?php
-		}
-?>
-				<span id="header_mytalk"><a href="<?= htmlspecialchars($this->data['userlinks']['mytalk']['href']) ?>"<?= $skin->tooltipAndAccesskey('pt-mytalk') ?>><?= htmlspecialchars($this->data['userlinks']['mytalk']['text']) ?></a></span>
-				<?php global $wgEnableWikiaFollowedPages; ?>
-				<?php if( empty($wgEnableWikiaFollowedPages) || !$wgEnableWikiaFollowedPages ): ?>
-					<span id="header_watchlist"><a href="<?= htmlspecialchars($this->data['userlinks']['watchlist']['href']) ?>"<?= $skin->tooltipAndAccesskey('pt-watchlist') ?>><?= htmlspecialchars($this->data['userlinks']['watchlist']['text']) ?></a></span>
-				<?php endif; ?>
-				<span>
-					<button id="headerButtonUser" class="header-button color1"><?= trim(wfMsg('moredotdotdot'), ' .') ?><img src="<?php print $wgBlankImgUrl; ?>" /></button>
-				</span>
-				<span>
-					<a rel="nofollow" href="<?= htmlspecialchars($this->data['userlinks']['logout']['href']) ?>"<?= $skin->tooltipAndAccesskey('pt-logout') ?>><?= htmlspecialchars($this->data['userlinks']['logout']['text']) ?></a>
-				</span>
-	<?php
-	} else {
-?>
-				<span id="userLogin">
-					<a rel="nofollow" class="ajaxLogin" id="login" href="<?= htmlspecialchars($this->data['userlinks']['login']['href']) ?>"><?= htmlspecialchars($this->data['userlinks']['login']['text']) ?></a>
-				</span>
-
-					<a rel="nofollow" class="wikia-button ajaxRegister" id="register" href="<?= htmlspecialchars($this->data['userlinks']['register']['href']) ?>"><?= htmlspecialchars($this->data['userlinks']['register']['text']) ?></a>
-
-<?php
-	}
-}
-?>
-		</div>
-		</div>
-	</div>
-
-	<div class="monaco_shrinkwrap"><div id="background_accent1"></div></div>
-	<div style="position: relative;"><div id="background_accent2"></div></div>
-
-<?php if (wfRunHooks('AlternateNavLinks')):
-
-		// Rewrite the logo to have the last modified timestamp so that a the newer one will be used after an update.
-		// $wgLogo =
-		?>
-		<div id="background_strip" class="reset">
-			<div class="monaco_shrinkwrap">
-
-			<div id="accent_graphic1"></div>
-			<div id="accent_graphic2"></div>
-			<div id="wiki_logo" style="background-image: url(<?= $wgLogo ?>);"><a href="<?= htmlspecialchars($this->data['nav_urls']['mainpage']['href'])?>" accesskey="z"><?= $wgSitename ?></a></div>
-			<!--[if lt IE 7]>
-			<style type="text/css">
-				#wiki_logo {
-					background-image: none !important;
-					filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='<?= $wgLogo ?>', sizingMethod='image');
-				}
-			</style>
-			<![endif]-->
-			</div>
-		</div>
-<?php endif; ?>
-		<!-- /HEADER -->
-<?php		wfProfileOut( __METHOD__ . '-header'); ?>
-
 		<!-- PAGE -->
 <?php		wfProfileIn( __METHOD__ . '-page'); ?>
 
@@ -1121,8 +1018,10 @@ wfRunHooks('MonacoBeforeWikiaPage', array($this));
 wfRunHooks('MonacoBeforePageBar', array($this));
 if(empty($wgEnableRecipesTweaksExt) || !RecipesTweaks::isHeaderStripeShown()) {
 ?>
-			<?php $this->printPageBar(); ?>
-	        	<?php echo AdEngine::getInstance()->getSetupHtml(); ?>
+			<?php
+				// NOTE: Removed page-bar page_bar here.
+
+				echo AdEngine::getInstance()->getSetupHtml(); ?>
 					<!-- ARTICLE -->
 
 <?php }		wfProfileIn( __METHOD__ . '-article'); ?>
@@ -1520,51 +1419,7 @@ EOF;
 	function printAdditionalHead(){}
 
 	// Made a separate method so recipes, answers, etc can override. Notably, answers turns it off.
-	function printPageBar(){
-		// Allow for other skins to conditionally include it
-		$this->realPrintPageBar();
-	}
-	function realPrintPageBar(){
-		global $wgUser, $wgTitle, $wgStylePath;
-                $skin = $wgUser->getSkin();
-	 	?>
-		<div id="page_bar" class="reset color1 clearfix">
-				<ul id="page_controls">
-		  <?php
-			if(isset($this->data['articlelinks']['left'])) {
-				global $wgBlankImgUrl;
-				foreach($this->data['articlelinks']['left'] as $key => $val) {
-		  ?>
-							  <li id="control_<?= $key ?>" class="<?= $val['class'] ?>"><img src="<?php print $wgBlankImgUrl; ?>" class="sprite <?= (isset($val['icon'])) ? $val['icon'] : $key ?>" /><a rel="nofollow" id="ca-<?= $key ?>" href="<?= htmlspecialchars($val['href']) ?>" <?= $skin->tooltipAndAccesskey('ca-'.$key) ?>><?= htmlspecialchars(ucfirst($val['text'])) ?></a></li>
-		  <?php
-				}
-				wfRunHooks( 'MonacoAfterArticleLinks' );
-			}
-		  ?>
-						  </ul>
-						  <ul id="page_tabs">
-		  <?php
-		  $showright = true;
-		  $namespace = $wgTitle->getNamespace();
-		  if( defined( "NS_BLOG_ARTICLE" ) && $namespace == NS_BLOG_ARTICLE ) {
-			  $showright = false;
-		  }
-		  global $wgMastheadVisible;
-		  if (!empty($wgMastheadVisible)) {
-			  $showright = false;
-		  }
-		  if(isset($this->data['articlelinks']['right']) && $showright ) {
-			  foreach($this->data['articlelinks']['right'] as $key => $val) {
-		  ?>
-							  <li class="<?= $val['class'] ?>"><a href="<?= htmlspecialchars($val['href']) ?>" id="ca-<?= $key ?>" <?= $skin->tooltipAndAccesskey('ca-'.$key) ?> class="<?= $val['class'] ?>"><?= htmlspecialchars(ucfirst($val['text'])) ?></a></li>
-		  <?php
-			  }
-		  }
-		  ?>
-				</ul>
-			</div>
-	<?php
-	}
+	function printPageBar(){}
 
 	// Made a separate method so recipes, answers, etc can override. Notably, answers turns it off.
 	function printFirstHeading(){
