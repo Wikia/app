@@ -6,19 +6,65 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 CKEDITOR.dialog.add( 'link', function( editor )
 {
 	var plugin = CKEDITOR.plugins.link;
+	var linkTextDirty = false;
+	var existsTimeout;
+	var setMode = function( mode )
+	{
+		var linkDialog = CKEDITOR.dialog.getCurrent();
+
+		// two things must be set to switch between int/ext mode,
+		// the upper-right mode label and the radio button
+		if( mode == 'external' ){
+			var radios = linkDialog.getContentElement('internal','linktype');
+			if( radios.getValue() != 'ext' ){
+				radios.setValue('ext');
+			}
+			$(".link-type-note span").html(editor.lang.link.status.external);
+			$(".link-type-note img")[0].className = 'sprite external';
+			
+			// disable suggestions on the name box if external url
+		}else if( mode == 'internal' ){
+			var radios = linkDialog.getContentElement('internal','linktype');
+			if( radios.getValue() != 'wiki' ){
+				radios.setValue('wiki');
+			}
+			//$(".link-type-note span").html(editor.lang.link.status.notexists);
+			//$(".link-type-note span").html(editor.lang.link.status.exists);
+			//$(".link-type-note img")[0].className = 'link-icon link-yes';
+			checkStatus();
+
+			// setup MW suggest
+			linkDialog.enableSuggesionsOn(linkDialog.getContentElement('internal', 'name'));
+		}
+	};
+	var checkStatus = function()
+	{
+		var pageName = CKEDITOR.dialog.getCurrent().getContentElement('internal','name').getValue();
+		if( pageName ){
+			$(".link-type-note span").html(editor.lang.link.status.checking);
+			$(".link-type-note img")[0].className = 'sprite progress';
+			
+			// check our page name for validity
+			RTE.ajax('checkInternalLink', {title: pageName}, function(data){
+				if( data.exists ){
+					$(".link-type-note span").html(editor.lang.link.status.exists);
+					$(".link-type-note img")[0].className = 'link-icon link-yes';
+				}else{
+					$(".link-type-note span").html(editor.lang.link.status.notexists);
+					$(".link-type-note img")[0].className = 'link-icon link-no';
+				}
+			});
+		}
+		existsTimeout = null;
+	};
 	var setupDialog = function( editor, element )
 	{
-		var self = this;
-
 		// set value of link dialog fields
 		function setValues(tab, link, label) {
-			// when dialog is opened for the first time tab is not properly changed (RT #47454)
-			setTimeout(function() {
-				self.selectPage(tab);
-			}, 100);
-
-			self.setValueOf(tab, (tab == 'internal' ? 'name' : 'url'), link);
-			self.setValueOf(tab, 'label', label || '');
+			var dialog = CKEDITOR.dialog.getCurrent();
+			// only one tab, so tab is ignored but kept for future use
+			dialog.setValueOf('internal', 'name', link);
+			dialog.setValueOf('internal', 'label', label || '');
 		}
 
 		RTE.log('opening link dialog');
@@ -42,62 +88,70 @@ CKEDITOR.dialog.add( 'link', function( editor )
 						link: href,
 						text: element.getText()
 					};
+					setMode('external');
+				}
+			}else{
+				// select a mode for our two proper link types
+				if( data.type == 'internal' ){
+					setMode('internal');
+					setTimeout(checkStatus,200);
+				}else if( data.type == 'external' ){
+					setMode('external');
 				}
 			}
 
 			RTE.log(data);
 
-			// get "Link text" field
-			var linkTextField = this.getContentElement('external', 'label');
-
-			linkTextField.enable();
-
-			// select tab and fill editor
+			var linkTextField = this.getContentElement('internal', 'label');
 			switch (data.type) {
 				case 'external':
-					setValues('external', data.link);
+					setValues('internal', data.link);
 
 					// handle autonumbered external links
-					if (data.linktype == 'autonumber') {
-						this.setValueOf('external', 'autonumber', true);
-
-						// "Link text" field should be disabled
-						linkTextField.disable();
-					}
-					else {
-						this.setValueOf('external', 'label', data.text);
+					if( data.linktype != 'autonumber' ) {
+						this.setValueOf('internal', 'label', data.text);
+						linkTextDirty = true;
 					}
 					break;
 
-				case 'external-raw':
-					setValues('external', data.link);
-					break;
+				// case 'external-raw':
+				// 	setValues('external', data.link);
+				// 	break;
 
 				case 'internal':
 					setValues('internal', data.link, data.text);
+					linkTextDirty = true;
 					break;
 			}
 		}
 		else {
+			var linkTextField = this.getContentElement('internal', 'label');
+			//linkTextField.enable();
+			
 			// creating new link from selection
 			var selectionContent = RTE.tools.getSelectionContent();
+			setMode('internal');
 			var tab = 'internal';
 
-			// check for external link (RT #47454)
-			if (RTE.tools.isExternalLink(selectionContent)) {
-				var tab = 'external';
+			if( selectionContent ){
+				// check for external link (RT #47454)
+				if (RTE.tools.isExternalLink(selectionContent)) {
+					setMode('external');
+					tab = 'external';
+				}
+
+				setValues(tab, selectionContent);
+
+				RTE.log('link: using selected text "' + selectionContent + '" for new '+tab+' link');
+			}else{
+				
+				RTE.log('link: fresh link');
 			}
-
-			setValues(tab, selectionContent);
-
-			RTE.log('link: using selected text "' + selectionContent + '" for new ' + tab + ' link');
 		}
 
 		// Record down the selected element in the dialog.
 		this._.selectedElement = element;
 
-		// setup MW suggest
-		this.enableSuggesionsOn(this.getContentElement('internal', 'name'));
 	};
 
 	var createNewLink = function(editor) {
@@ -152,72 +206,84 @@ CKEDITOR.dialog.add( 'link', function( editor )
 				title : lang.internal.tab,
 				elements : [
 					{
+						'type': 'html',
+						'html': '<p class="link-type-note"><span>...</span><img alt="Link Status" class="" src="http://images1.wikia.nocookie.net/__cb21710/common/skins/common/blank.gif" /></p>',
+						'id': 'linkdisplay'
+					},
+					{
 						'type': 'text',
-						'label': lang.internal.pageName,
+						'label': editor.lang.link.label.target,
 						'id': 'name',
-
-						validate: function() {
-							var activeTab = this.getDialog().getActiveTab();
-							if (activeTab == 'external') {
-								return true;
+						onKeyUp: function() {
+							var linkTextField = this.getDialog().getContentElement('internal', 'label');
+							
+							// set mode to external if we detect a link
+							if( RTE.tools.isExternalLink(this.getValue()) ){
+								setMode('external');
 							}
+							
+							var linktype = this.getDialog().getContentElement('internal', 'linktype').getValue();
+							if( linktype == 'wiki' ){
+								// pretend we're checking for the page name,
+								// but don't really check until 1000ms after we stop typing
+								if( existsTimeout ){
+									clearTimeout(existsTimeout);
+								}
+								$(".link-type-note span").html(editor.lang.link.status.checking);
+								$(".link-type-note img")[0].className = 'sprite progress';
+								existsTimeout = setTimeout(checkStatus,1000);
+							}
+							
+							if( linkTextField.getValue() == '' ){
+								linkTextDirty = false;
+							}
+							// match link text field if we're typing an internal link
+							if( !linkTextDirty && linkTextField.isEnabled() ){
+								linkTextField.setValue(this.getValue());
+							}
+						},
+						validate: function() {
+							var linktype = this.getDialog().getContentElement('internal', 'linktype').getValue();
+							if( linktype == 'wiki' ){
+								// validate page name and anchors (RT #34047)
+								var re = new RegExp('^(#(.+))|[' + RTE.constants.validTitleChars + ']+$');
+								var validPageNameFunc = CKEDITOR.dialog.validate.regex(re, editor.lang.link.error.badPageTitle);
+								
+								return validPageNameFunc.apply(this);
+							}
+							else{
+								// validate URL
+								var re = new RegExp('^(' + RTE.constants.urlProtocols + ')');
+								var validUrlFunc = CKEDITOR.dialog.validate.regex(re, editor.lang.link.error.badUrl);
 
-							// validate page name and anchors (RT #34047)
-							var re = new RegExp('^(#(.+))|[' + RTE.constants.validTitleChars + ']+$');
-							var validPageNameFunc = CKEDITOR.dialog.validate.regex(re, editor.lang.link.error.badPageTitle);
-
-							return validPageNameFunc.apply(this);
+								return validUrlFunc.apply(this);
+							}
 						}
 					},
 					{
 						'type': 'text',
-						'label': lang.internal.linkText,
-						'id': 'label'
-					}
-				]
-			},
-			{
-				id : 'external',
-				label : lang.external.tab,
-				title : lang.external.tab,
-				elements : [
-					{
-						'type': 'text',
-						'label': lang.external.url,
-						'id': 'url',
-
-						validate: function() {
-							var activeTab = this.getDialog().getActiveTab();
-							if (activeTab == 'internal') {
-								return true;
-							}
-
-							// validate URL
-							var re = new RegExp('^(' + RTE.constants.urlProtocols + ')');
-							var validUrlFunc = CKEDITOR.dialog.validate.regex(re, editor.lang.link.error.badUrl);
-
-							return validUrlFunc.apply(this);
+						'label': editor.lang.link.label.display,
+						'id': 'label',
+						onFocus: function()
+						{
+							// no longer autofill when a user selects the link text
+							linkTextDirty = true;
 						}
 					},
 					{
-						'type': 'text',
-						'label': lang.external.linkText,
-						'id': 'label'
-					},
-					{
-						'type': 'checkbox',
-						'label': lang.external.numberedLink,
-						'id': 'autonumber',
-
-						onChange: function() {
-							var linkTextField = this.getDialog().getContentElement('external', 'label');
-
-							// disable link text field when autonumber is selected
-							if (this.getValue()) {
-								linkTextField.disable();
-							}
-							else {
-								linkTextField.enable();
+						'type': 'radio',
+						'items': [[editor.lang.link.label.internal,'wiki'],[editor.lang.link.label.external,'ext']],
+						'default': 'wiki',
+						'id': 'linktype',
+						'onChange': function( e )
+						{ // mode change should only happen when we're showing a dialog
+							if( CKEDITOR.dialog.getCurrent() ){
+								RTE.log("mode changed to "+e.data.value);
+								if( e.data && e.data.value == 'ext' ){
+									setMode('external');
+								}else{
+									setMode('internal');
+								}
 							}
 						}
 					}
@@ -250,15 +316,9 @@ CKEDITOR.dialog.add( 'link', function( editor )
 
 			// tracking
 			var self = this;
-
-			// tabs
-			var tabs = this._.tabs;
-			tabs.external[0].on('click', function(ev) {
-				RTE.track('link', 'dialog', 'tab', 'internal2external');
-			});
-			tabs.internal[0].on('click', function(ev) {
-				RTE.track('link', 'dialog', 'tab', 'external2internal');
-			});
+			
+			// reset our dirty tracking
+			linkTextDirty = false;
 
 			// setup dialog tracking code (close / cancel)
 			this.setupTracking('link');
@@ -275,10 +335,8 @@ CKEDITOR.dialog.add( 'link', function( editor )
 			// for tracking
 			var type = '';
 
-			// get selected tab
-			var currentTab = this.getActiveTab();
-
-			//RTE.log('link: selected tab "' + currentTab + '"');
+			// get selected type
+			var currentType = this.getContentElement('internal', 'linktype').getValue();
 
 			// create new link
 			if (!this._.selectedElement) {
@@ -302,7 +360,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 			var data = {};
 
 			// check for full link to local wiki article pasted into 'internal link' tab ((RT #47456)
-			if (currentTab == 'internal') {
+			if (currentType == 'wiki') {
 				var href = this.getValueOf('internal', 'name');
 
 				if (href.indexOf(window.wgServer) == 0) {
@@ -321,25 +379,23 @@ CKEDITOR.dialog.add( 'link', function( editor )
 						this.setValueOf('internal', 'name', pageName);
 						this.setValueOf('internal', 'label', this.getValueOf('external', 'label') );
 
-						currentTab = 'internal';
-
 						RTE.log('internal full URL detected: ' + href + ' > ' + pageName);
 					}
 				}
 			}
 
-			switch (currentTab) {
-				case 'external':
+			switch (currentType) {
+				case 'ext':
 					data = {
 						'type': 'external',
-						'link': this.getValueOf('external', 'url'),
-						'text': this.getValueOf('external', 'label'),
+						'link': this.getValueOf('internal', 'name'),
+						'text': this.getValueOf('internal', 'label'),
 						'wikitext': null
 					};
 
 					type = 'externalNamed';
 
-					if (this.getValueOf('external', 'autonumber')) {
+					if ( data.text == '' ) {
 						// autonumbered link
 						data.linktype = 'autonumber';
 						data.text = '[1]';
@@ -348,21 +404,15 @@ CKEDITOR.dialog.add( 'link', function( editor )
 
 						type = 'externalNumbered';
 					}
-
-					if (data.text == '') {
-						// no link text provided? generate external raw link
-						data.type = 'external-raw';
-
-						type = 'externalSimple';
-					}
+					
+					element.setAttribute('href',data.link);
 
 					// set content and class of link element
 					element.setText(data.text != '' ? data.text : data.link);
 					element.addClass('external');
 					element.removeClass('new');
 					break;
-
-				case 'internal':
+				case 'wiki':
 					data = {
 						'type': 'internal',
 						'link': this.getValueOf('internal', 'name'),

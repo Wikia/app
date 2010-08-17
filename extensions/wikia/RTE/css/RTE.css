@@ -243,6 +243,40 @@
 	width: 100%;
 }
 
+.cke_skin_wikia.linkEditorDialog .cke_dialog {
+	width: 500px;
+}
+.cke_skin_wikia.linkEditorDialog .cke_dialog_page_contents{
+	margin-top: -20px;
+}
+.cke_skin_wikia.linkEditorDialog .link-type-note {
+	float: right;
+	position: relative;
+	top: 26px;
+	width: 200px;
+}
+.cke_skin_wikia.linkEditorDialog .link-type-note .link-icon,
+.cke_skin_wikia.linkEditorDialog .link-type-note .sprite,
+.cke_skin_wikia.linkEditorDialog .link-type-note span {
+	float: right;
+}
+.cke_skin_wikia.linkEditorDialog .link-type-note .sprite{
+	width: 16px;
+	height: 16px;
+}
+.cke_skin_wikia.linkEditorDialog .link-type-note .link-icon {
+	background: url(../ckeditor/_source/skins/wikia/icons.png) left top no-repeat;
+	height: 16px;
+	margin-right: 3px;
+	width: 16px;
+}
+.cke_skin_wikia.linkEditorDialog .link-type-note .link-icon.link-yes {
+	background-position: left -527px;
+}
+.cke_skin_wikia.linkEditorDialog .link-type-note .link-icon.link-no {
+	background-position: left -542px;
+}
+
 /* dialog loading indicator */
 .wikiaEditorLoading .cke_dialog_body {
 	background: transparent url(http://images.wikia.com/common/skins/common/images/ajax.gif) no-repeat 50% 50%;
