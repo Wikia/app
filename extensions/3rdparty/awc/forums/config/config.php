@@ -19,13 +19,13 @@ define('awcs_forum_convert_latin', false);
 // Display the Forums Navagation menu automaticly in your Wiki's 'MediaWiki:Sidebar'
 //  place <awc_forum_menu_tag> in your 'MediaWiki:Sidebar' and the forums menu will appear there...
 // http://wiki.anotherwebcom.com/awc_forum_menu_tag
-define('awcs_forum_nav_bar', true);
+define('awcs_forum_nav_bar', false);
 
 
 // Place Forum Menu at the top of your current menu or at the bottom
 define('awcs_forum_nav_bar_top', true); // true = top, false = bottom
 
 
-define('show_whos_here_in_WIKI', true);
-define('awcs_forum_use_poll', true);
-define('show_whos_use_wiki_tag', true);
+define('show_whos_here_in_WIKI', false);
+define('awcs_forum_use_poll', false);
+define('show_whos_use_wiki_tag', false);
