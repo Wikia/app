@@ -7,6 +7,7 @@
 $wgSpecialPages['DevCookie'] = 'SpecialDevCookie';
 $wgDevCookieName = "-wikia-development";
 $wgGroupPermissions['*']['devcookie'] = false;
+$wgGroupPermissions['beta']['devcookie'] = true;
 $wgGroupPermissions['staff']['devcookie'] = true;
 
 class SpecialDevCookie extends UnlistedSpecialPage {
