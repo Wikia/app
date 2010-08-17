@@ -21,7 +21,7 @@ class SkinLyricsMinimal extends SkinTemplate {
 	 */
 	public function initPage(&$out) {
 
-		wfDebugLog('monaco', '##### SkinMonaco initPage #####');
+		wfDebugLog('monaco', '##### SkinLyricsMinimal initPage #####');
 
 		wfProfileIn(__METHOD__);
 		global $wgHooks, $wgCityId, $wgCat;
@@ -100,14 +100,6 @@ class SkinLyricsMinimal extends SkinTemplate {
 				$wgUser->mMonacoData = array();
 
 				wfProfileIn(__METHOD__ . ' - DATA ARRAY');
-				/*
-				$text = $this->getTransformedArticle('User:'.$wgUser->getName().'/Monaco-sidebar', true);
-				if(empty($text)) {
-					$wgUser->mMonacoData['sidebarmenu'] = false;
-				} else {
-					$wgUser->mMonacoData['sidebarmenu'] = $this->parseSidebarMenu($text);
-				}
-				*/
 
 				$text = $this->getTransformedArticle('User:'.$wgUser->getName().'/Monaco-toolbox', true);
 				if(empty($text)) {
@@ -119,13 +111,6 @@ class SkinLyricsMinimal extends SkinTemplate {
 
 				$wgUser->saveToCache();
 			}
-
-			/*
-			if($wgUser->mMonacoData['sidebarmenu'] !== false && is_array($wgUser->mMonacoData['sidebarmenu'])) {
-				wfDebugLog('monaco', 'There is user data for sidebarmenu');
-				$data_array['sidebarmenu'] = $wgUser->mMonacoData['sidebarmenu'];
-			}
-			*/
 
 			if($wgUser->mMonacoData['toolboxlinks'] !== false && is_array($wgUser->mMonacoData['toolboxlinks'])) {
 				wfDebugLog('monaco', 'There is user data for toolboxlinks');
@@ -156,43 +141,6 @@ EOS;
 				}
 			}
 		}
-
-		/*
-		foreach($data_array['sidebarmenu'] as $key => $val) {
-			if(isset($val['org']) && $val['org'] == 'editthispage') {
-				if(isset($tpl->data['content_actions']['edit'])) {
-					$data_array['sidebarmenu'][$key]['href'] = $tpl->data['content_actions']['edit']['href'];
-				} else {
-					unset($data_array['sidebarmenu'][$key]);
-					foreach($data_array['sidebarmenu'] as $key1 => $val1) {
-						if(isset($val1['children'])) {
-							foreach($val1['children'] as $key2 => $val2) {
-								if($key == $val2) {
-									unset($data_array['sidebarmenu'][$key1]['children'][$key2]);
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-
-		if( $wgUser->isAllowed( 'editinterface' ) ) {
-			if(isset($data_array['sidebarmenu'])) {
-				$monacoSidebarUrl = Title::makeTitle(NS_MEDIAWIKI, 'Monaco-sidebar')->getLocalUrl('action=edit');
-				foreach($data_array['sidebarmenu'] as $nodeKey => $nodeVal) {
-					if(empty($nodeVal['magic']) && isset($nodeVal['children']) && isset($nodeVal['depth']) && $nodeVal['depth'] === 1) {
-						$data_array['sidebarmenu'][$nodeKey]['children'][] = $this->lastExtraIndex;
-						$data_array['sidebarmenu'][$this->lastExtraIndex] = array(
-							'text' => wfMsg('monaco-edit-this-menu'),
-							'href' => $monacoSidebarUrl,
-							'class' => 'Monaco-sidebar_edit'
-						);
-					}
-				}
-			}
-		}
-		*/
 
 		// This is for WidgetRelatedCommunities
 		$this->relatedcommunities = $data_array['relatedcommunities'];
@@ -304,7 +252,8 @@ EOS;
 		// load them using WSL and remove from $wgOut->mScripts
 		//
 		// macbre: Perform only for Monaco skin! New Answers skin does not use WikiaScriptLoader
-		if ((get_class($this) == 'SkinMonaco') || (get_class($this) == 'SkinAnswers')) {
+		if ((get_class($this) == 'SkinMonaco') || (get_class($this) == 'SkinAnswers')
+			|| (get_class($this) == 'SkinLyricsMinimal')) {
 			global $wgJsMimeType;
 
 			$headScripts = $tpl->data['headscripts'];
@@ -547,135 +496,8 @@ EOF;
 		return $results;
 	}
 
-	var $lastExtraIndex = 1000;
-
-	/**
-	 * @author Inez Korczynski <inez@wikia.com>
-	 */
-	private function addExtraItemsToSidebarMenu(&$node, &$nodes) {
-		wfProfileIn( __METHOD__ );
-
-		$extraWords = array(
-					'#voted#' => array('highest_ratings', 'GetTopVotedArticles'),
-					'#popular#' => array('most_popular', 'GetMostPopularArticles'),
-					'#visited#' => array('most_visited', 'GetMostVisitedArticles'),
-					'#newlychanged#' => array('newly_changed', 'GetNewlyChangedArticles'),
-					'#topusers#' => array('community', 'GetTopFiveUsers'));
-
-		if(isset($extraWords[strtolower($node['org'])])) {
-			if(substr($node['org'],0,1) == '#') {
-				if(strtolower($node['org']) == strtolower($node['text'])) {
-					$node['text'] = wfMsg(trim(strtolower($node['org']), ' *'));
-				}
-				$node['magic'] = true;
-			}
-			$results = DataProvider::$extraWords[strtolower($node['org'])][1]();
-			$results[] = array('url' => Title::makeTitle(NS_SPECIAL, 'Top/'.$extraWords[strtolower($node['org'])][0])->getLocalURL(), 'text' => strtolower(wfMsg('moredotdotdot')), 'class' => 'Monaco-sidebar_more');
-			global $wgUser;
-			if( $wgUser->isAllowed( 'editinterface' ) ) {
-				if(strtolower($node['org']) == '#popular#') {
-					$results[] = array('url' => Title::makeTitle(NS_MEDIAWIKI, 'Most popular articles')->getLocalUrl(), 'text' => wfMsg('monaco-edit-this-menu'), 'class' => 'Monaco-sidebar_edit');
-				}
-			}
-			foreach($results as $key => $val) {
-				$node['children'][] = $this->lastExtraIndex;
-				$nodes[$this->lastExtraIndex]['text'] = $val['text'];
-				$nodes[$this->lastExtraIndex]['href'] = $val['url'];
-				if(!empty($val['class'])) {
-					$nodes[$this->lastExtraIndex]['class'] = $val['class'];
-				}
-				$this->lastExtraIndex++;
-			}
-		} else if(strpos(strtolower($node['org']), '#category') === 0) {
-			$param = trim(substr($node['org'], 9), '#');
-			if(is_numeric($param)) {
-				$cat = $this->getBiggestCategory($param);
-				$name = $cat['name'];
-			} else {
-				$name = substr($param, 1);
-			}
-			$articles = $this->getMostVisitedArticlesForCategory($name);
-			if(count($articles) == 0) {
-                                $node ['magic'] = true ;
-                                $node['href'] = Title::makeTitle(NS_CATEGORY, $name)->getLocalURL();
-                                $node ['text'] = $name ;
-                                $node['text'] = str_replace('_', ' ', $node['text']);
-			} else {
-				$node['magic'] = true;
-				$node['href'] = Title::makeTitle(NS_CATEGORY, $name)->getLocalURL();
-				if(strpos($node['text'], '#') === 0) {
-					$node['text'] = str_replace('_', ' ', $name);
-				}
-				foreach($articles as $key => $val) {
-					$title = Title::newFromId($val);
-					if(is_object($title)) {
-						$node['children'][] = $this->lastExtraIndex;
-						$nodes[$this->lastExtraIndex]['text'] = $title->getText();
-						$nodes[$this->lastExtraIndex]['href'] = $title->getLocalUrl();
-						$this->lastExtraIndex++;
-					}
-				}
-				$node['children'][] = $this->lastExtraIndex;
-				$nodes[$this->lastExtraIndex]['text'] = strtolower(wfMsg('moredotdotdot'));
-				$nodes[$this->lastExtraIndex]['href'] = $node['href'];
-				$nodes[$this->lastExtraIndex]['class'] = 'Monaco-sidebar_more';
-				$this->lastExtraIndex++;
-			}
-		}
-
-		wfProfileOut( __METHOD__ );
-	}
-
-	/**
-	 * @author Inez Korczynski <inez@wikia.com>
-	 */
-	private function parseSidebarMenu($lines) {
-		wfProfileIn(__METHOD__);
-		$nodes = array();
-		$nodes[] = array();
-		$lastDepth = 0;
-		$i = 0;
-		if(is_array($lines)) {
-			foreach($lines as $line) {
-				if (strlen($line) == 0) { # ignore empty lines
-					continue;
-				}
-				$node = parseItem($line);
-				$node['depth'] = strrpos($line, '*') + 1;
-				if($node['depth'] == $lastDepth) {
-					$node['parentIndex'] = $nodes[$i]['parentIndex'];
-				} else if ($node['depth'] == $lastDepth + 1) {
-					$node['parentIndex'] = $i;
-				} else {
-					for($x = $i; $x >= 0; $x--) {
-						if($x == 0) {
-							$node['parentIndex'] = 0;
-							break;
-						}
-						if($nodes[$x]['depth'] == $node['depth'] - 1) {
-							$node['parentIndex'] = $x;
-							break;
-						}
-					}
-				}
-				if(substr($node['org'],0,1) == '#') {
-					$this->addExtraItemsToSidebarMenu($node, $nodes);
-				}
-				$nodes[$i+1] = $node;
-				$nodes[$node['parentIndex']]['children'][] = $i+1;
-				$lastDepth = $node['depth'];
-				$i++;
-			}
-		}
-		wfProfileOut(__METHOD__);
-		return $nodes;
-	}
-
-	/**
-	 * @author Inez Korczynski <inez@wikia.com>
-	 */
 	private function getSidebarLinks() {
-		return $this->parseSidebarMenu($this->getLines('Monaco-sidebar'));
+		return "";
 	}
 
 	/**
@@ -698,92 +520,6 @@ EOF;
 		}
 		wfProfileOut(__METHOD__);
 		return null;
-	}
-
-	var $biggestCategories = array();
-
-	/**
-	 * @author Inez Korczynski <inez@wikia.com>
-	 * @author Piotr Molski
-	 * @return array
-	 */
-	private function getBiggestCategory($index) {
-		wfProfileIn( __METHOD__ );
-		global $wgMemc, $wgBiggestCategoriesBlacklist;
-
-		$limit = max($index, 15);
-
-		if($limit > count($this->biggestCategories)) {
-			$key = wfMemcKey('biggest', $limit);
-			$data = $wgMemc->get($key);
-			if(empty($data)) {
-				$filterWordsA = array();
-				foreach($wgBiggestCategoriesBlacklist as $word) {
-					$filterWordsA[] = '(cl_to not like "%'.$word.'%")';
-				}
-				$dbr =& wfGetDB( DB_SLAVE );
-				$tables = array("categorylinks");
-				$fields = array("cl_to, COUNT(*) AS cnt");
-				$where = count($filterWordsA) > 0 ? array(implode(' AND ', $filterWordsA)) : array();
-				$options = array(
-					"ORDER BY" => "cnt DESC",
-					"GROUP BY" => "cl_to",
-					"LIMIT" => $limit);
-				$res = $dbr->select($tables, $fields, $where, __METHOD__, $options);
-				$categories = array();
-				while ($row = $dbr->fetchObject($res)) {
-	       			$this->biggestCategories[] = array('name' => $row->cl_to, 'count' => $row->cnt);
-				}
-				$wgMemc->set($key, $this->biggestCategories, 60 * 60 * 24 * 7);
-			} else {
-				$this->biggestCategories = $data;
-			}
-		}
-		wfProfileOut( __METHOD__ );
-		return isset($this->biggestCategories[$index-1]) ? $this->biggestCategories[$index-1] : null;
-	}
-
-	/**
-	 * @author Piotr Molski
-	 * @author Inez Korczynski <inez@wikia.com>
-	 * @return array
-	 */
-	private function getMostVisitedArticlesForCategory($name, $limit = 7) {
-		wfProfileIn(__METHOD__);
-
-		global $wgMemc;
-		$key = wfMemcKey('popular-art');
-		$data = $wgMemc->get($key);
-
-		if(!empty($data) && isset($data[$name])) {
-			wfProfileOut(__METHOD__);
-			return $data[$name];
-		}
-
-		$name = str_replace(" ", "_", $name);
-
-		$dbr =& wfGetDB( DB_SLAVE );
-		$query = "SELECT cl_from FROM categorylinks USE INDEX (cl_from), page_visited USE INDEX (page_visited_cnt_inx) WHERE article_id = cl_from AND cl_to = '".addslashes($name)."' ORDER BY COUNT DESC LIMIT $limit";
-		$res = $dbr->query($query);
-		$result = array();
-		while($row = $dbr->fetchObject($res)) {
-			$result[] = $row->cl_from;
-		}
-		if(count($result) < $limit) {
-			$query = "SELECT cl_from FROM categorylinks WHERE cl_to = '".addslashes($name)."' ".(count($result) > 0 ? " AND cl_from NOT IN (".implode(',', $result).") " : "")." LIMIT ".($limit - count($result));
-			$res = $dbr->query($query);
-			while($row = $dbr->fetchObject($res)) {
-				$result[] = $row->cl_from;
-			}
-		}
-
-		if(empty($data) || !is_array($data)) {
-			$data = array($data);
-		}
-		$data[$name] = $result;
-		$wgMemc->set($key, $data, 60 * 60 * 3);
-		wfProfileOut( __METHOD__ );
-		return $result;
 	}
 
 	/**
@@ -927,7 +663,7 @@ EOF;
 	}
 
 	/**
-	 * This is helper function for getNavigationMenu and it's responsible for support special tags like #TOPVOTED
+	 * This is helper function for  and it's responsible for support special tags like #TOPVOTED
 	 *
 	 * @return array
 	 * @author Inez Korczynski <inez@wikia.com>
@@ -935,70 +671,7 @@ EOF;
 	private function addExtraItemsToNavigationMenu(&$node, &$nodes) {
 		wfProfileIn( __METHOD__ );
 
-		$extraWords = array(
-					'#voted#' => array('highest_ratings', 'GetTopVotedArticles'),
-					'#popular#' => array('most_popular', 'GetMostPopularArticles'),
-					'#visited#' => array('most_visited', 'GetMostVisitedArticles'),
-					'#newlychanged#' => array('newly_changed', 'GetNewlyChangedArticles'),
-					'#topusers#' => array('community', 'GetTopFiveUsers'));
-
-		if(isset($extraWords[strtolower($node['org'])])) {
-			if(substr($node['org'],0,1) == '#') {
-				if(strtolower($node['org']) == strtolower($node['text'])) {
-					$node['text'] = wfMsg(trim(strtolower($node['org']), ' *'));
-				}
-				$node['magic'] = true;
-			}
-			$results = DataProvider::$extraWords[strtolower($node['org'])][1]();
-			$results[] = array('url' => Title::makeTitle(NS_SPECIAL, 'Top/'.$extraWords[strtolower($node['org'])][0])->getLocalURL(), 'text' => strtolower(wfMsg('moredotdotdot')), 'class' => 'Monaco-sidebar_more');
-			global $wgUser;
-			if( $wgUser->isAllowed( 'editinterface' ) ) {
-				if(strtolower($node['org']) == '#popular#') {
-					$results[] = array('url' => Title::makeTitle(NS_MEDIAWIKI, 'Most popular articles')->getLocalUrl(), 'text' => wfMsg('monaco-edit-this-menu'), 'class' => 'Monaco-sidebar_edit');
-				}
-			}
-			foreach($results as $key => $val) {
-				$node['children'][] = $this->lastExtraIndex;
-				$nodes[$this->lastExtraIndex]['text'] = $val['text'];
-				$nodes[$this->lastExtraIndex]['href'] = $val['url'];
-				if(!empty($val['class'])) {
-					$nodes[$this->lastExtraIndex]['class'] = $val['class'];
-				}
-				$this->lastExtraIndex++;
-			}
-		} else if(strpos(strtolower($node['org']), '#category') === 0) {
-			$param = trim(substr($node['org'], 9), '#');
-			if(is_numeric($param)) {
-				$cat = $this->getBiggestCategory($param);
-				$name = $cat['name'];
-			} else {
-				$name = substr($param, 1);
-			}
-			$articles = $this->getMostVisitedArticlesForCategory($name);
-			if(count($articles) == 0) {
-				$node = null;
-			} else {
-				$node['magic'] = true;
-				$node['href'] = Title::makeTitle(NS_CATEGORY, $name)->getLocalURL();
-				if(strpos($node['text'], '#') === 0) {
-					$node['text'] = str_replace('_', ' ', $name);
-				}
-				foreach($articles as $key => $val) {
-					$title = Title::newFromId($val);
-					if(is_object($title)) {
-						$node['children'][] = $this->lastExtraIndex;
-						$nodes[$this->lastExtraIndex]['text'] = $title->getText();
-						$nodes[$this->lastExtraIndex]['href'] = $title->getLocalUrl();
-						$this->lastExtraIndex++;
-					}
-				}
-				$node['children'][] = $this->lastExtraIndex;
-				$nodes[$this->lastExtraIndex]['text'] = strtolower(wfMsg('moredotdotdot'));
-				$nodes[$this->lastExtraIndex]['href'] = $node['href'];
-				$nodes[$this->lastExtraIndex]['class'] = 'yuimenuitemmore';
-				$this->lastExtraIndex++;
-			}
-		}
+		// Don't actually use this in this skin.  TODO: Can we remove this?
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -1328,7 +1001,7 @@ if(isset($categorylist['nodes']) && count($categorylist['nodes']) > 0 ) {
 <?php
 			wfRunHooks('MonacoAdLink');
 
-			$this->printRequestWikiLink();
+			// NOTE: Removed RequestWikiLink (which is the Create a Wiki button) here.
 ?>
 			<div id="userData">
 <?php
@@ -1661,11 +1334,7 @@ if ($custom_article_footer !== '') {
 <?php } ?>
 							</ul>
 <?php
-			if(empty($wgEnableRecipesTweaksExt)) {
-				$this->printStarRating();
-			}
-?>
-<?php
+			// NOTE: Removed start ratings here.
 		}
 ?>
 						</td>
@@ -1753,11 +1422,7 @@ if ( $wgRequest->getVal('action') != 'edit' ) {
 <?php
 	}
 
-	$monacoSidebar = new MonacoSidebar();
-	if(isset($this->data['content_actions']['edit'])) {
-		$monacoSidebar->editUrl = $this->data['content_actions']['edit']['href'];
-	}
-	echo $monacoSidebar->getCode();
+	// NOTE: Removed MonacoSidebar here.
 
 	echo '<table cellspacing="0" id="link_box_table">';
 	//BEGIN: create dynamic box
@@ -2269,65 +1934,6 @@ EOF;
 		if($this->data['catlinks']) {
 			$this->html('catlinks');
 		}
-	}
-
-
-	function printStarRating(){
-		?>
-		<div class="clearfix" id="star-rating-row">
-		  <strong><?= wfMsgHtml('rate_it') ?></strong>
-		  <?php
-			$FauxRequest = new FauxRequest(array( "action" => "query", "list" => "wkvoteart", "wkpage" => $this->data['articleid'], "wkuservote" => true ));
-			$oApi = new ApiMain($FauxRequest);
-			try { $oApi->execute(); } catch (Exception $e) {};
-			$aResult =& $oApi->GetResultData();
-
-			if( !empty( $aResult['query']['wkvoteart'] ) ) {
-				if(!empty($aResult['query']['wkvoteart'][$this->data['articleid']]['uservote'])) {
-					$voted = true;
-				} else {
-					$voted = false;
-				}
-				if (!empty($aResult['query']['wkvoteart'][$this->data['articleid']]['votesavg'])) {
-					$rating = $aResult['query']['wkvoteart'][$this->data['articleid']]['votesavg'];
-				} else {
-					$rating = 0;
-				}
-			} else {
-				$voted = false;
-				$rating = 0;
-			}
-
-			$hidden_star = $voted ? ' style="display: none;"' : '';
-			$ratingPx = round($rating * STAR_RATINGS_WIDTH_MULTIPLIER);
-		  ?>
-		  <div id="star-rating-wrapper">
-		    <ul id="star-rating" class="star-rating" rel="<?=STAR_RATINGS_WIDTH_MULTIPLIER;?>">
-			<li style="width: <?= $ratingPx ?>px;" id="current-rating" class="current-rating"><span><?= $rating ?>/5</span></li>
-			<li><a rel="nofollow" class="one-star" id="star1" title="1/5"<?=$hidden_star?>><span>1</span></a></li>
-			<li><a rel="nofollow" class="two-stars" id="star2" title="2/5"<?=$hidden_star?>><span>2</span></a></li>
-			<li><a rel="nofollow" class="three-stars" id="star3" title="3/5"<?=$hidden_star?>><span>3</span></a></li>
-			<li><a rel="nofollow" class="four-stars" id="star4" title="4/5"<?=$hidden_star?>><span>4</span></a></li>
-			<li><a rel="nofollow" class="five-stars" id="star5" title="5/5"<?=$hidden_star?>><span>5</span></a></li>
-		    </ul>
-		    <span style="<?= ($voted ? '' : 'display: none;') ?>" id="unrateLink"><a rel="nofollow" id="unrate" href="#"><?= wfMsg( 'unrate_it' ) ?></a></span>
-		  </div>
-		</div>
-		<?php
-	}
-
-	/* Often times the request wiki is overridden by sub skins of monaco */
-	function printRequestWikiLink(){
-		global $wgUser, $wgLang;
-		//RT#53420
-		$userlang = $wgLang->getCode();
-		$userlang = $userlang == 'en' ? '' : "?uselang=$userlang";
-		echo '<div id="requestWikiData">';
-			echo '<a rel="nofollow" href="http://www.wikia.com/Special:CreateWiki' . $userlang . '" id="request_wiki" class="wikia-button">'. wfMsg('createwikipagetitle') .'</a>&nbsp;';
-			if (!$wgUser->isLoggedIn()) {
-				echo '<span id="request_wiki_ad">' . wfMsgExt('monaco-request-wiki-ad-text', array( "parseinline" )) . '</span>';
-			}
-		echo '</div>';
 	}
 
 	/* Allow logo to be different */
