@@ -1423,7 +1423,7 @@ EOF;
 		wfProfileOut( __METHOD__ );
 		return $data;
 	}
-}
+} // end SkinMonaco
 
 class MonacoTemplate extends QuickTemplate {
 
