@@ -125,8 +125,8 @@ $wgDefaultUserOptions['searchNs'. NS_AWC_FORUM] = 1;
 
 if(awcs_forum_nav_bar OR show_whos_here_in_WIKI OR awcs_forum_use_poll OR show_whos_use_wiki_tag){   
 global $wgCachePages, $wgParserCacheType;
-    $wgCachePages = false;
-    $wgParserCacheType = false;
+//    $wgCachePages = false;
+//    $wgParserCacheType = false;
 }
 
 
@@ -151,7 +151,7 @@ function AWCforum() {
          if(awcs_forum_nav_bar){   
             global $wgEnableSidebarCache;
             // Menu will not update corrertly if this is anabled...
-            $wgEnableSidebarCache = false;
+  //          $wgEnableSidebarCache = false;
          }
          
          
@@ -365,8 +365,8 @@ global $awcsf_menu_whoeshere_beforepagedisplay ;
               # $sitenotice = $wgMessageCache->mCache[awcs_forum_lang_default]['Sitenotice'];
               
               // http://wiki.anotherwebcom.com/Special:AWCforum/st/id1188
-              $wgMessageCache->disable();
-              $wgMessageCache->addMessages(array('sidebar' => $sidebar));
+//              $wgMessageCache->disable();
+//              $wgMessageCache->addMessages(array('sidebar' => $sidebar));
               //$wgMessageCache->enable();
     }
     
