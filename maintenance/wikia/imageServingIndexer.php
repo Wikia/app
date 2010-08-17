@@ -16,7 +16,9 @@
 define("package_size", 100);
 $optionsWithArgs = array( 'list' );
 
-require_once('../commandLine.inc');
+ini_set( "include_path", dirname(__FILE__)."/../" );
+require( "commandLine.inc" );
+
 if (isset($options['help'])) {
 	die( "indexer for blog listing pages" );
 }
