@@ -1922,7 +1922,6 @@ EOF;
 		return $topAdCode;
 	}
 
-
 	// Made a separate method so recipes, answers, etc can override.
 	function printContent(){
 		$this->html('bodytext');
