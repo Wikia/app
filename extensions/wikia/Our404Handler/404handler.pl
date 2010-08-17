@@ -213,11 +213,12 @@ my $debug       = $ENV{ "DEBUG"    } || 1;
 my $test        = $ENV{ "TEST"     } || 0;
 my $pidfile     = $ENV{ "PIDFILE"  } || "/var/run/thumbnailer/404handler.pid";
 my $use_http    = 0;
+my $use_devel   = 0;
 
 #
 # overwrite some settings with getopt
 #
-GetOptions( "http" => \$use_http );
+GetOptions( "http" => \$use_http, "devel" => $use_devel );
 
 #
 # fastcgi request
@@ -362,7 +363,7 @@ while( $request->Accept() >= 0 || $test ) {
 				substr( $thumbnail, 0, length( $basepath ), $baseurl );
 				my $ua = LWP::UserAgent->new();
 				$ua->timeout( 5 );
-				$ua->proxy( "http", "http://127.0.0.1:6081/" ) unless $test;
+				$ua->proxy( "http", "http://127.0.0.1:6081/" ) unless $use_devel;
 				my $response = $ua->get( $remote );
 				$last_modified = $response->header("Last-Modified")
 					? $response->header("Last-Modified")
@@ -531,18 +532,33 @@ while( $request->Accept() >= 0 || $test ) {
 					if( $origw && $origh ) {
 						my $height = scaleHeight( $origw, $origh, $width, $test );
 						my $geometry = sprintf( "%dx%d!>", $width, $height );
+						$image->Resize( "geometry" => $geometry, "blur" => 0.9 );
 						if( $cropped ) {
 							#
-							# for cropped images thumbnail can be bigger than
-							# original
+							# for cropped images thumbnail which is smaller
+							# than requested we add white border and put
+							# thumbnail into it
 							#
-							$geometry = sprintf( "%dx%d!", $width, $height );
+							my $crop_width = $image->Get( "width" );
+							my $crop_height = $image->Get( "height" );
+							say STDERR "Size after cropping: $crop_width x $crop_height, requested size: $width x $height" if $debug;
+							if( $crop_width < $width ) {
+								#
+								# create base image with white background
+								#
+								my $magick = $image->Get( "magick" );
+								my $crop = Graphics::Magick->new( size => sprintf("%dx%d", $width, $height ) );
+								say STDERR "Crop size $width x $height" if $debug;
+								$crop->ReadImage( "xc:white" );
+								$crop->Set( magick => $magick );
+								$crop->Composite( image => $image, gravity => "Center" );
+								$image = $crop;
+							}
 						}
-						$image->Resize( "geometry" => $geometry, "blur" => 0.9 );
 						$image->Set( quality => 90 );
 
 						$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-						print STDERR "Resizing into $thumbnail, time: $t_elapsed\n" if $debug;
+						say STDERR "Resizing into $thumbnail, time: $t_elapsed" if $debug;
 
 						my $output = $image->ImageToBlob();
 						use bytes;
