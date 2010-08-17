@@ -114,7 +114,7 @@ class WikiStatsPage extends IncludableSpecialPage
 			}
 		}
 
-		$domain = $wgRequest->getVal( "wiki", "" );
+		$domain = $wgRequest->getVal( "wswiki", "" );
 		$all = $wgRequest->getVal( "wsall", 0 );
 		
 		if ( $domain == 'all' || $all == 1 ) {

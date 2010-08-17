@@ -91,3 +91,9 @@ while ($minYear <= $maxYear) { $selected = ($curYear == $minYear) ? " selected=\
 		<?=wfMsg("wikistats_date_of_generate", ( !empty($updateDate) ) ? $updateDate : " - " );?>
 	</div>	
 </div>
+<script type="text/javascript">
+$(document).ready(function() {
+	ws_focus('wswiki','axWFactoryDomainQuery');
+	window.sf_initiated = false;
+});
+</script>
