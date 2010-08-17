@@ -4,7 +4,7 @@ if( !defined( 'MEDIAWIKI' ) )
 
 class SkinLyricsMinimal extends SkinTemplate {
 	/**
-	 * Overwrite few SkinTemplate methods which we don't need in Monaco
+	 * Overwrite few SkinTemplate methods which we don't need in lyricsminimal
 	 */
 	function buildSidebar() {}
 	function getCopyrightIcon() {}
@@ -21,26 +21,26 @@ class SkinLyricsMinimal extends SkinTemplate {
 	 */
 	public function initPage(&$out) {
 
-		wfDebugLog('monaco', '##### SkinLyricsMinimal initPage #####');
+		wfDebugLog('lyricsminimal', '##### SkinLyricsMinimal initPage #####');
 
 		wfProfileIn(__METHOD__);
 		global $wgHooks, $wgCityId, $wgCat;
 
 		SkinTemplate::initPage($out);
 
-		$this->skinname  = 'monaco';
-		$this->stylename = 'monaco';
-		$this->template  = 'MonacoTemplate';
+		$this->skinname  = 'lyricsminimal';
+		$this->stylename = 'lyricsminimal';
+		$this->template  = 'LyricsMinimalTemplate';
 
 		// Get category information (id, name, url)
 		$cats = wfGetBreadCrumb();
 		$idx = count($cats)-2;
 		if(isset($cats[$idx])) {
 			$wgCat = $cats[$idx];
-			wfDebugLog('monaco', 'There is category info');
+			wfDebugLog('lyricsminimal', 'There is category info');
 		} else {
 			$wgCat = array('id' => -1);
-			wfDebugLog('monaco', 'No category info');
+			wfDebugLog('lyricsminimal', 'No category info');
 		}
 
 		// Function addVariables will be called to populate all needed data to render skin
@@ -69,15 +69,16 @@ class SkinLyricsMinimal extends SkinTemplate {
 		// We want to cache populated data only if user language is same with wiki language
 		$cache = $wgLang->getCode() == $wgContLang->getCode();
 
-		wfDebugLog('monaco', sprintf('Cache: %s, wgLang: %s, wgContLang %s', (int) $cache, $wgLang->getCode(), $wgContLang->getCode()));
+		wfDebugLog('lyricsminimal', sprintf('Cache: %s, wgLang: %s, wgContLang %s', (int) $cache, $wgLang->getCode(), $wgContLang->getCode()));
 
 		if($cache) {
-			$key = wfMemcKey('MonacoDataOld');
+// TODO: SWC: What is this data-old thing?  Is it just normal memcaching?
+			$key = wfMemcKey('LyricsMinimalDataOld');
 			$data_array = $parserMemc->get($key);
 		}
 
 		if(empty($data_array)) {
-			wfDebugLog('monaco', 'There is no cached $data_array, let\'s populate');
+			wfDebugLog('lyricsminimal', 'There is no cached $data_array, let\'s populate');
 			wfProfileIn(__METHOD__ . ' - DATA ARRAY');
 			$data_array['footerlinks'] = $this->getFooterLinks();
 			$data_array['wikiafooterlinks'] = $this->getWikiaFooterLinks();
@@ -95,7 +96,7 @@ class SkinLyricsMinimal extends SkinTemplate {
 		if($wgUser->isLoggedIn()) {
 			if(empty($wgUser->mMonacoData) || ($wgTitle->getNamespace() == NS_USER && $wgRequest->getText('action') == 'delete')) {
 
-				wfDebugLog('monaco', 'mMonacoData for user is empty');
+				wfDebugLog('lyricsminimal', 'mMonacoData for user is empty');
 
 				$wgUser->mMonacoData = array();
 
@@ -113,7 +114,7 @@ class SkinLyricsMinimal extends SkinTemplate {
 			}
 
 			if($wgUser->mMonacoData['toolboxlinks'] !== false && is_array($wgUser->mMonacoData['toolboxlinks'])) {
-				wfDebugLog('monaco', 'There is user data for toolboxlinks');
+				wfDebugLog('lyricsminimal', 'There is user data for toolboxlinks');
 				$data_array['toolboxlinks'] = $wgUser->mMonacoData['toolboxlinks'];
 			}
 		}
@@ -327,9 +328,9 @@ EOF;
 		$nodes = array();
 
 		if(!isset($wgCat['id']) || null == ($lines = getMessageAsArray($message_key.'-'.$wgCat['id']))) {
-			wfDebugLog('monaco', $message_key.'-'.$wgCat['id'] . ' - seems to be empty');
+			wfDebugLog('lyricsminimal', $message_key.'-'.$wgCat['id'] . ' - seems to be empty');
 			if(null == ($lines = getMessageAsArray($message_key))) {
-				wfDebugLog('monaco', $message_key . ' - seems to be empty');
+				wfDebugLog('lyricsminimal', $message_key . ' - seems to be empty');
 				wfProfileOut( __METHOD__ );
 				return $nodes;
 			}
@@ -364,9 +365,9 @@ EOF;
 		$nodes = array();
 
 		if(!isset($wgCat['id']) || null == ($lines = getMessageAsArray($message_key.'-'.$wgCat['id']))) {
-			wfDebugLog('monaco', $message_key.'-'.$wgCat['id'] . ' - seems to be empty');
+			wfDebugLog('lyricsminimal', $message_key.'-'.$wgCat['id'] . ' - seems to be empty');
 			if(null == ($lines = getMessageAsArray($message_key))) {
-				wfDebugLog('monaco', $message_key . ' - seems to be empty');
+				wfDebugLog('lyricsminimal', $message_key . ' - seems to be empty');
 				wfProfileOut( __METHOD__ );
 				return $nodes;
 			}
@@ -417,7 +418,7 @@ EOF;
 			if(trim($revision->getText()) != '') {
 				$temp = getMessageAsArray($message_key);
 				if(count($temp) > 0) {
-					wfDebugLog('monaco', sprintf('Get LOCAL %s, which contains %s lines', $message_key, count($temp)));
+					wfDebugLog('lyricsminimal', sprintf('Get LOCAL %s, which contains %s lines', $message_key, count($temp)));
 					$lines = $temp;
 				}
 			}
@@ -427,7 +428,7 @@ EOF;
 			if(isset($wgCat['id'])) {
 				$temp = getMessageAsArray('shared-' . $message_key . '-' . $wgCat['id']);
 				if(count($temp) > 0) {
-					wfDebugLog('monaco', sprintf('Get %s, which contains %s lines', 'shared-' . $message_key . '-' . $wgCat['id'], count($temp)));
+					wfDebugLog('lyricsminimal', sprintf('Get %s, which contains %s lines', 'shared-' . $message_key . '-' . $wgCat['id'], count($temp)));
 					$lines = $temp;
 				}
 			}
@@ -435,7 +436,7 @@ EOF;
 
 		if(empty($lines)) {
 			$lines = getMessageAsArray($message_key);
-			wfDebugLog('monaco', sprintf('Get %s, which contains %s lines', $message_key, count($lines)));
+			wfDebugLog('lyricsminimal', sprintf('Get %s, which contains %s lines', $message_key, count($lines)));
 		}
 
 		return $lines;
