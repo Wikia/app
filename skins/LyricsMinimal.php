@@ -23,6 +23,8 @@
  * TODO: Add custom styling for currenT test.
  *			- Color changes
  *			- Remove edit button
+ * TODO: Should this just _EXTEND_ Monaco?  It would be fairly straightforward... anything that's left in this file after the deletions should still be in here.  This would have
+ *			the benefits of picking up any improvements to Monaco, but it would also pick up new page-elements, etc.  Monaco is probably fairly "done" with though, so this is probably a moot point.
  */
 
 if( !defined( 'MEDIAWIKI' ) )
@@ -107,13 +109,13 @@ class SkinLyricsMinimal extends SkinTemplate {
 		if(empty($data_array)) {
 			wfDebugLog('lyricsminimal', 'There is no cached $data_array, let\'s populate');
 			wfProfileIn(__METHOD__ . ' - DATA ARRAY');
-			$data_array['footerlinks'] = $this->getFooterLinks();
-			$data_array['wikiafooterlinks'] = $this->getWikiaFooterLinks();
+			//$data_array['footerlinks'] = $this->getFooterLinks(); // NOTE: Removed for LyricsMinimal
+			//$data_array['wikiafooterlinks'] = $this->getWikiaFooterLinks(); // NOTE: Removed for LyricsMinimal
 			$data_array['categorylist'] = DataProvider::getCategoryList();
 			$data_array['toolboxlinks'] = $this->getToolboxLinks();
 			//$data_array['sidebarmenu'] = $this->getSidebarLinks();
 			$data_array['relatedcommunities'] = $this->getRelatedCommunitiesLinks();
-			$data_array['magicfooterlinks'] = $this->getMagicFooterLinks();
+			//$data_array['magicfooterlinks'] = $this->getMagicFooterLinks();
 			wfProfileOut(__METHOD__ . ' - DATA ARRAY');
 			if($cache) {
 				$parserMemc->set($key, $data_array, 4 * 60 * 60 /* 4 hours */);
@@ -347,71 +349,6 @@ EOF;
 	/**
 	 * @author Inez Korczynski <inez@wikia.com>
 	 */
-	private function getFooterLinks() {
-		wfProfileIn( __METHOD__ );
-		global $wgCat;
-
-		$message_key = 'shared-Monaco-footer-links';
-		$nodes = array();
-
-		if(!isset($wgCat['id']) || null == ($lines = getMessageAsArray($message_key.'-'.$wgCat['id']))) {
-			wfDebugLog('lyricsminimal', $message_key.'-'.$wgCat['id'] . ' - seems to be empty');
-			if(null == ($lines = getMessageAsArray($message_key))) {
-				wfDebugLog('lyricsminimal', $message_key . ' - seems to be empty');
-				wfProfileOut( __METHOD__ );
-				return $nodes;
-			}
-		}
-
-		$i = $j = 0;
-		foreach($lines as $line) {
-			$node = parseItem($line);
-			$depth = strrpos($line, '*');
-			if($depth === 0) {
-				if($j != $i) {
-					$i++;
-				}
-				$nodes[$i] = $node;
-			} else if($depth === 1) {
-				$nodes[$i]['childs'][] = $node;
-			}
-			$j++;
-		}
-		wfProfileOut( __METHOD__ );
-		return $nodes;
-	}
-
-	/**
-	 * @author Inez Korczynski <inez@wikia.com>
-	 */
-	 private function getWikiaFooterLinks() {
-		wfProfileIn( __METHOD__ );
-		global $wgCat;
-
-		$message_key = 'shared-Monaco-footer-wikia-links';
-		$nodes = array();
-
-		if(!isset($wgCat['id']) || null == ($lines = getMessageAsArray($message_key.'-'.$wgCat['id']))) {
-			wfDebugLog('lyricsminimal', $message_key.'-'.$wgCat['id'] . ' - seems to be empty');
-			if(null == ($lines = getMessageAsArray($message_key))) {
-				wfDebugLog('lyricsminimal', $message_key . ' - seems to be empty');
-				wfProfileOut( __METHOD__ );
-				return $nodes;
-			}
-		}
-		foreach($lines as $line) {
-			$depth = strrpos($line, '*');
-			if($depth === 0) {
-				$nodes[] = parseItem($line);
-			}
-		}
-		wfProfileOut( __METHOD__ );
-		return $nodes;
-	}
-
-	/**
-	 * @author Inez Korczynski <inez@wikia.com>
-	 */
 	private function parseToolboxLinks($lines) {
 		$nodes = array();
 		if(is_array($lines)) {
@@ -491,37 +428,6 @@ EOF;
 			}
 		}
 		return $nodes;
-	}
-
-	/**
-	 * @author Inez Korczynski <inez@wikia.com>
-	 */
-	private function getMagicFooterLinks() {
-		global $wgDBname, $wgTitle, $wgExternalSharedDB;
-		$results = array();
-
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-		$res = $dbr->select('magic_footer_links', 'page, links', array('dbname' => $wgDBname));
-		while($row = $dbr->fetchObject($res)) {
-			$results[$row->page] = $row->links;
-		}
-		$dbr->freeResult($res);
-
-		wfRunHooks("getMagicFooterLinks", array(&$results));
-
-		if (!empty($results)) {
-			$tmpParser = new Parser();
-			$tmpParser->setOutputType(OT_HTML);
-			$tmpParserOptions = new ParserOptions();
-
-			$results2 = array();
-			foreach ($results as $page => $links) {
-				$results2[$page] = $tmpParser->parse($links, $wgTitle, $tmpParserOptions, false)->getText();
-			}
-			$results = $results2;
-		}
-
-		return $results;
 	}
 
 	private function getSidebarLinks() {
@@ -1065,7 +971,7 @@ if(empty($wgEnableRecipesTweaksExt) || !RecipesTweaks::isHeaderStripeShown()) {
 					// Display content
 					$this->printContent();
 
-		                        // Display additional ads before categories and footer on long pages
+					// Display additional ads before categories and footer on long pages
 					global $wgEnableAdsPrefooter, $wgDBname;
 					if ( !empty( $wgEnableAdsPrefooter ) &&
 					$wgOut->isArticle() &&
@@ -1300,22 +1206,7 @@ if (array_key_exists("TOP_RIGHT_BOXAD", AdEngine::getInstance()->getPlaceholders
 	echo '<script type="text/javascript">AdEngine.resetCssClear("right");</script>' . "\n";
 }
 
-?>
-<?php		wfProfileIn( __METHOD__ . '-monacofooter'); ?>
-		<div id="monaco_footer" class="reset">
-
-
-<?php
-if ( $wgRequest->getVal('action') != 'edit' ) {
-	$this->printFooterSpotlights();
-}
-
-?>
-		<?php $this->printFooter() ?>
-		<?php wfRunHooks('SpecialFooterAfterWikia'); ?>
-		</div>
-<?php
-		wfProfileOut( __METHOD__ . '-monacofooter');
+	// NOTE: Removed wikia_footer.
 
 	// NOTE: Removed WIDGETS (sidebar stuff) here.
 
@@ -1431,94 +1322,6 @@ EOF;
 		wfRunHooks( 'MonacoPrintFirstHeading' );
 		?></h1><?php
 	}
-
-
-	// Made a separate method so recipes, answers, etc can override.
-	function printFooter(){
-		global $wgTitle;
-	?>
-	  <table id="wikia_footer">
-	  <?php
-		$footerlinks = $this->data['data']['footerlinks'];
-		if((is_array($footerlinks)) && (!empty($footerlinks))) {
-		    foreach($footerlinks as $key => $val) {
-			$links = array();
-			if(isset($val['childs'])) {
-			    foreach($val['childs'] as $childKey => $childVal){
-				$links[] = '<a href="'.htmlspecialchars($childVal['href']).'">'.$childVal['text'].'</a>';
-			    }
-	  ?>
-			<tr>
-			    <th><?= $val['text'] ?></th>
-			    <td><?= implode(' | ', $links) ?></td>
-			</tr>
-	  <?php
-			}
-		    }
-		}
-		if(!empty($this->data['data']['magicfooterlinks']) && (isset($this->data['data']['magicfooterlinks'][$wgTitle->getPrefixedText()])
-																						|| isset($this->data['data']['magicfooterlinks']['*']))) {
-				$magicfooterlinks = isset($this->data['data']['magicfooterlinks'][$wgTitle->getPrefixedText()]) ?
-											$this->data['data']['magicfooterlinks'][$wgTitle->getPrefixedText()] : $this->data['data']['magicfooterlinks']['*'];
-	  ?>
-			<tr>
-			    <th><?= wfMsg('magicfooterlinks') ?></th>
-			    <td><?= $magicfooterlinks ?></td>
-			</tr>
-  	  <?php
-		}
-
-
-	  $wikiafooterlinks = $this->data['data']['wikiafooterlinks'];
-	  if(count($wikiafooterlinks) > 0) {
-		$wikiafooterlinksA = array();
-	  ?>
-			<tr>
-				<td colspan="2" id="wikia_corporate_footer">
-	  <?php
-			foreach($wikiafooterlinks as $key => $val) {
-				// Very primitive way to actually have copyright WF variable, not MediaWiki:msg constant.
-				// This is only shown when there is copyright data available. It is not shown on special pages for example.
-				if ( 'GFDL' == $val['text'] || '_LICENSE_' == $val['text']) {
-					if (!empty($this->data['copyright'])) {
-						$wikiafooterlinksA[] = str_replace("<a href", "<a rel=\"nofollow\" href", $this->data['copyright']);
-					}
-				} else {
-					$wikiafooterlinksA[] = '<a rel="nofollow" href="'.htmlspecialchars($val['href']).'">'.$val['text'].'</a>';
-				}
-			}
-			echo implode(' | ', $wikiafooterlinksA);
-	  ?>
-				</td>
-			</tr>
-	  <?php
-	  }
-	  ?>
-	  </table>
-	<?php
-	} //\ printFooter
-
-
-	function printFooterSpotlights(){
-	?>
-		<div id="spotlight_footer">
-		<table>
-		<tr>
-			<td>
-				<?php echo AdEngine::getInstance()->getAd('FOOTER_SPOTLIGHT_LEFT'); ?>
-			</td>
-			<td>
-				<?php echo AdEngine::getInstance()->getAd('FOOTER_SPOTLIGHT_MIDDLE'); ?>
-			</td>
-			<td>
-				<?php echo AdEngine::getInstance()->getAd('FOOTER_SPOTLIGHT_RIGHT'); ?>
-			</td>
-		</tr>
-		</table>
-		</div>
-	<?php
-	}
-
 
 	function getTopAdCode(){
 	        echo AdEngine::getInstance()->getSetupHtml();
