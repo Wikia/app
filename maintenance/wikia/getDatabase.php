@@ -14,6 +14,7 @@ $wgDBdevboxUser = 'devbox';
 $wgDBdevboxPass = 'devbox';
 $wgDBdevboxServer1 = 'dev-db-a1';
 $wgDBdevboxServer2 = 'dev-db-b1';
+$databaseDirectory = "database_C";
 
 $USAGE =
 	"Usage:\tphp getDatabase.php [-f [dbname] | -i [filename] | -?]\n" .
@@ -31,7 +32,7 @@ if (array_key_exists( 'f', $opts )) {
 	$dbname = $opts['f'];
 	echo "Fetching $dbname...\n";
 	// first check to make sure s3cmd is available
-	$response = shell_exec("s3cmd ls s3://database/fulldump* 2>&1");
+	$response = shell_exec("s3cmd ls s3://".$databaseDirectory."/fulldump* 2>&1");
 	if (preg_match('/ERROR/', $response) || preg_match ('/command not found/', $response)) {
 		// some kind of error, print and die
 		exit($response);
@@ -63,7 +64,7 @@ if (array_key_exists( 'f', $opts )) {
 		foreach ($day_of_year as $dirname) {
 			echo "Searching $dirname...\n";
 			$filename = null;
-			$response = shell_exec("s3cmd ls s3://database/$dirname/");
+			$response = shell_exec("s3cmd ls s3://".$databaseDirectory."/$dirname/");
 //			print_r($response);
 			$file_list = explode("\n", $response);
 			echo "Found " . count($file_list) . " items...\n";
@@ -73,8 +74,8 @@ if (array_key_exists( 'f', $opts )) {
 					$filename = $matches[1];
 					echo "Found a match: $filename\n";
 					echo "Saving to local filesystem...\n";
-					shell_exec ("s3cmd get --skip-existing s3://database/$dirname/$filename");
-				} 
+					shell_exec ("s3cmd get --skip-existing s3://".$databaseDirectory."/$dirname/$filename");
+				}
 			}
 			// check to see if we found something after scanning the whole directory, because we might have multipart files
 			if ($filename != null) exit();
