@@ -113,9 +113,9 @@ class SkinLyricsMinimal extends SkinTemplate {
 			//$data_array['wikiafooterlinks'] = $this->getWikiaFooterLinks(); // NOTE: Removed for LyricsMinimal
 			$data_array['categorylist'] = DataProvider::getCategoryList();
 			$data_array['toolboxlinks'] = $this->getToolboxLinks();
-			//$data_array['sidebarmenu'] = $this->getSidebarLinks();
+			//$data_array['sidebarmenu'] = $this->getSidebarLinks(); d// this was already removed in Monaco (prior to LyricsMinimal)
 			$data_array['relatedcommunities'] = $this->getRelatedCommunitiesLinks();
-			//$data_array['magicfooterlinks'] = $this->getMagicFooterLinks();
+			//$data_array['magicfooterlinks'] = $this->getMagicFooterLinks(); // NOTE: Removed for LyricsMinimal
 			wfProfileOut(__METHOD__ . ' - DATA ARRAY');
 			if($cache) {
 				$parserMemc->set($key, $data_array, 4 * 60 * 60 /* 4 hours */);
@@ -1007,174 +1007,10 @@ if(empty($wgEnableRecipesTweaksExt) || !RecipesTweaks::isHeaderStripeShown()) {
 			<!-- /ARTICLE -->
 			<?php
 
-		wfProfileOut( __METHOD__ . '-article'); ?>
+			// NOTE: Removed article footer.
 
-			<!-- ARTICLE FOOTER -->
-<?php		wfProfileIn( __METHOD__ . '-articlefooter'); ?>
-<?php
-global $wgTitle, $wgOut, $wgEnableRecipesTweaksExt, $wgEnableShareFeatureExt;
-$custom_article_footer = '';
-$namespaceType = '';
-wfRunHooks( 'CustomArticleFooter', array( &$this, &$tpl, &$custom_article_footer ));
-if ($custom_article_footer !== '') {
-	echo $custom_article_footer;
-} else {
-	//default footer
-	if ($wgTitle->exists() && $wgTitle->isContentPage() && !$wgTitle->isTalkPage()) {
-		$namespaceType = 'content';
-	}
-	//talk footer
-	elseif ($wgTitle->isTalkPage()) {
-		$namespaceType = 'talk';
-	}
-	//Blog, User_Blog namespaces
-	elseif (defined('NS_BLOG_ARTICLE') && defined('NS_BLOG_LISTING') && in_array($namespace, array(NS_BLOG_ARTICLE, NS_BLOG_LISTING))) {
-		$namespaceType = 'blog';
-	}
-	//disable footer on some namespaces
-	elseif ($namespace == NS_SPECIAL) {
-		$namespaceType = 'none';
-	}
-
-	$action = $wgRequest->getVal('action', 'view');
-	if ($namespaceType != 'none' && in_array($action, array('view', 'purge', 'edit', 'history', 'delete', 'protect'))) {
-		$nav_urls = $this->data['nav_urls'];
-
-		if(!empty($wgEnableRecipesTweaksExt)) {
-			unset($nav_urls['recentchangeslinked']);
-			unset($nav_urls['permalink']);
-		}
-
-		$actions = '';
-		if (!empty($this->data['content_actions']['history']) || !empty($nav_urls['recentchangeslinked'])) {
-
-			if(!empty($wgEnableRecipesTweaksExt)) {
-				$this->data['content_actions']['history']['text'] = wfMsg('recipes-history');
-			}
-
-			$actions =
-								'<ul id="articleFooterActions3" class="actions clearfix">' .
-								(!empty($this->data['content_actions']['history']) ? ('
-								<li id="fe_history"><a rel="nofollow" id="fe_history_icon" href="' . htmlspecialchars($this->data['content_actions']['history']['href']) . '"><img src="'.$wgBlankImgUrl.'" id="fe_history_img" class="sprite history" alt="' . wfMsg('history_short') . '" /></a> <div><a id="fe_history_link" rel="nofollow" href="' . htmlspecialchars($this->data['content_actions']['history']['href']) . '">' . $this->data['content_actions']['history']['text'] . '</a></div></li>') : '') .
-
-								(!empty($nav_urls['recentchangeslinked']) ? ('
-								<li id="fe_recent"><a rel="nofollow" id="fe_recent_icon" href="' . htmlspecialchars($nav_urls['recentchangeslinked']['href']) . '"><img src="'.$wgBlankImgUrl.'" id="fe_recent_img" class="sprite recent" alt="' . wfMsg('recentchangeslinked') . '" /></a> <div><a id="fe_recent_link" rel="nofollow" href="' . htmlspecialchars($nav_urls['recentchangeslinked']['href']) . '">' . wfMsg('recentchangeslinked') . '</a></div></li>') : '') .
-
-								((!empty($wgEnableShareFeatureExt) && !empty($wgEnableRecipesTweaksExt)) ?
-								('<li><img src="'.$wgBlankImgUrl.'" id="fe_sharefeature_img" class="sprite share" alt="'.wfMsg('sf-link').'" /> <div><a style="cursor:pointer" id="fe_sharefeature_link">'.wfMsg('sf-link').'</a></div></li>') : '').
-
-								'</ul>';
-
-		}
-		if (!empty($nav_urls['permalink']) || !empty($nav_urls['whatlinkshere'])) {
-			$actions .=
-								'<ul id="articleFooterActions4" class="actions clearfix">' .
-
-								(!empty($nav_urls['permalink']) ? ('
-								<li id="fe_permalink"><a rel="nofollow" id="fe_permalink_icon" href="' . htmlspecialchars($nav_urls['permalink']['href']) . '"><img src="'.$wgBlankImgUrl.'" id="fe_permalink_img" class="sprite move" alt="' . wfMsg('permalink') . '" /></a> <div><a id="fe_permalink_link" rel="nofollow" href="' . htmlspecialchars($nav_urls['permalink']['href']) . '">' . $nav_urls['permalink']['text'] . '</a></div></li>') : '') .
-
-								((!empty($nav_urls['whatlinkshere']) && empty($wgEnableRecipesTweaksExt)) ? ('
-								<li id="fe_whatlinkshere"><a rel="nofollow" id="fe_whatlinkshere_icon" href="' . htmlspecialchars($nav_urls['whatlinkshere']['href']) . '"><img src="'.$wgBlankImgUrl.'" id="fe_whatlinkshere_img" class="sprite pagelink" alt="' . wfMsg('whatlinkshere') . '" /></a> <div><a id="fe_whatlinkshere_link" rel="nofollow" href="' . htmlspecialchars($nav_urls['whatlinkshere']['href']) . '">' . wfMsg('whatlinkshere') . '</a></div></li>') : '') . '</ul>';
-
-
-
-		}
-
-		global $wgArticle, $wgLang, $wgSitename;
-?>
-			<div id="articleFooter" class="reset">
-				<table cellspacing="0">
-					<tr>
-						<td class="col1">
-							<ul class="actions" id="articleFooterActions">
-<?php
-		if ($namespaceType == 'talk') {
-			$custom_article_footer = '';
-			wfRunHooks('AddNewTalkSection', array( &$this, &$tpl, &$custom_article_footer ));
-			if ($custom_article_footer != '')
-				echo $custom_article_footer;
-		} elseif ($namespaceType == 'blog') {
-			$href = htmlspecialchars(Title::makeTitle(NS_SPECIAL, 'CreateBlogPage')->getLocalURL());
-?>
-								<li><a rel="nofollow" id="fe_createblog_icon" href="<?= $href ?>"><img src="<?php print $wgBlankImgUrl; ?>" id="fe_createblog_img" class="sprite edit" alt="<?= wfMsg('blog-create-next-label') ?>" /></a> <div><a id="fe_createblog_link" rel="nofollow" href="<?= $href ?>"><?= wfMsg('blog-create-next-label') ?></a></div></li>
-<?php
-		} else if(empty($wgEnableRecipesTweaksExt)) {
-?>
-								<li><a rel="nofollow" id="fe_edit_icon" href="<?= htmlspecialchars($wgTitle->getEditURL()) ?>"><img src="<?php print $wgBlankImgUrl; ?>" id="fe_edit_img" class="sprite edit" alt="<?= wfMsg('edit') ?>" /></a> <div><?= wfMsg('footer_1', $wgSitename) ?> <a id="fe_edit_link" rel="nofollow" href="<?= htmlspecialchars($wgTitle->getEditURL()) ?>"><?= wfMsg('footer_1.5') ?></a></div></li>
-<?php
-		}
-
-		if(is_object($wgArticle)) {
-			$timestamp = $wgArticle->getTimestamp();
-			$lastUpdate = $wgLang->date($timestamp);
-			$userId = $wgArticle->getUser();
-			if($userId > 0) {
-				$userText = $wgArticle->getUserText();
-				$userPageTitle = Title::makeTitle(NS_USER, $userText);
-				$userPageLink = $userPageTitle->getLocalUrl();
-				$userPageExists = $userPageTitle->exists();
-?>
-								<li><?= $userPageExists ? '<a id="fe_user_icon" rel="nofollow" href="'.$userPageLink.'">' : '' ?><img src="<?php print $wgBlankImgUrl; ?>" id="fe_user_img" class="sprite user" alt="<?= wfMsg('userpage') ?>" /><?= $userPageExists ? '</a>' : '' ?> <div><?= wfMsg('footer_5', '<a id="fe_user_link" rel="nofollow" '.($userPageExists ? '' : ' class="new" ').'href="'.$userPageLink.'">'.$userText.'</a>', $lastUpdate) ?></div></li>
-<?php
-			}
-		}
-?>
-							</ul>
-							<?= $namespaceType == 'content' || $namespaceType == 'blog' ? $actions : '' ?>
-						</td>
-						<td class="col2">
-<?php
-		if ($namespaceType != 'content' && $namespaceType != 'blog') {
-?>
-							<?= $actions ?>
-<?php
-		} else {
-?>
-							<ul class="actions" id="articleFooterActions2">
-								<li><a rel="nofollow" id="fe_random_icon" href="<?= Skin::makeSpecialUrl( 'Randompage' ) ?>"><img src="<?php print $wgBlankImgUrl; ?>" id="fe_random_img" class="sprite random" alt="<?= wfMsg('randompage') ?>" /></a> <div><a rel="nofollow" id="fe_random_link" href="<?= Skin::makeSpecialUrl( 'Randompage' ) ?>"><?= wfMsg('footer_6') ?></a></div></li>
-<?php
-			global $wgProblemReportsEnable;
-
-			if ( !empty($wgProblemReportsEnable) ) {
-?>
-								<li><img src="<?php print $wgBlankImgUrl; ?>" id="fe_report_img" class="sprite error" alt="<?= wfMsg('reportproblem') ?>" /> <div><a style="cursor:pointer" id="fe_report_link"><?= wfMsg('reportproblem'); ?></a></div></li>
-<?php
-			}
-
-			if(!empty($nav_urls['whatlinkshere']) && !empty($wgEnableRecipesTweaksExt)) {
-?>
-								<li id="fe_whatlinkshere"><a rel="nofollow" id="fe_whatlinkshere_icon" href="<?= htmlspecialchars($nav_urls['whatlinkshere']['href']) ?>"><img src="<?php print $wgBlankImgUrl; ?>" id="fe_whatlinkshere_img" class="sprite pagelink" alt="<?= wfMsg('whatlinkshere') ?>" /></a> <div><a id="fe_whatlinkshere_link" rel="nofollow" href="<?= htmlspecialchars($nav_urls['whatlinkshere']['href']) ?>"><?= wfMsg('whatlinkshere') ?></a></div></li>
-<?php
-			}
-
-
-			if(!empty($wgNotificationEnableSend)) {
-			/* TODO: Is this used? */
-?>
-								<li><img src="<?php print $wgBlankImgUrl; ?>" id="fe_email_img" class="sprite" alt="email" /> <div><a href="#" id="shareEmail_a"><?= wfMsg('footer_7') ?></a></div></li>
-<?php
-			}
-?>
-
-<?php if( !empty( $wgEnableShareFeatureExt ) && empty($wgEnableRecipesTweaksExt) ) { ?>
-								<li><img src="<?php print $wgBlankImgUrl; ?>" id="fe_sharefeature_img" class="sprite share" alt="<?= wfMsg('sf-link') ?>" /> <div><a style="cursor:pointer" id="fe_sharefeature_link"><?= wfMsg('sf-link'); ?></a></div></li>
-<?php } ?>
-							</ul>
-<?php
-			// NOTE: Removed start ratings here.
-		}
-?>
-						</td>
-					</tr>
-				</table>
-			</div>
-<?php
-	} //end $namespaceType != 'none'
-} //end else from CustomArticleFooter hook
-?>
-			<!-- /ARTICLE FOOTER -->
-<?php		wfProfileOut( __METHOD__ . '-articlefooter'); ?>
-
+			wfProfileOut( __METHOD__ . '-article');
+		?>
 		</div>
 		<!-- /PAGE -->
 <!-- Begin Analytics -->
