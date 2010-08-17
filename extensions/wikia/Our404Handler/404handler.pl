@@ -182,7 +182,6 @@ my @tests = qw(
 	/m/meerundmehr/images/thumb/1/17/Mr._Icognito.svg/150px-Mr._Icognito.svg.png
 	/c/central/images/thumb/e/e9/CP_c17i4°.svg/250px-CP_c17i4°.svg.png
 	/c/central/images/thumb/b/bf/Wiki_wide.png/155px-Wiki_wide.png
-	/c/central/images/thumb/8/8c/The_Smurfs_Animated_Gif.gif/200px-The_Smurfs_Animated_Gif.gif
 	/h/half-life/en/images/thumb/1/1d/Zombie_Assassin.jpg/100px-Zombie_Assassin.jpg
 	/h/half-life/en/images/thumb/a/a5/Gene_worm_model.jpg/260px-Gene_worm_model.jpg
 	/h/half-life/en/images/thumb/a/a5/Gene_worm_model.jpg/250px-Gene_worm_model.jpg
@@ -195,6 +194,8 @@ my @tests = qw(
 	/w/wowwiki/images/thumb/b/b0/Tauren_shaman.jpg/430px-0,100,0,300-Tauren_shaman.jpg
 	/l/lyricwiki/images/thumb/7/74/Acid_Drinkers_-_Are_You_a_Rebel%3F.jpg/120px-Acid_Drinkers_-_Are_You_a_Rebel%3F.jpg
 	/l/lyricwiki/images/thumb/7/74/Acid_Drinkers_-_Are_You_a_Rebel?.jpg/120px-Acid_Drinkers_-_Are_You_a_Rebel?.jpg
+	/r/runescape/images/thumb/4/41/Wardrobe.gif/180px-Wardrobe.gif
+	/d/desencyclopedie/images/thumb/5/51/Uri.svg/120px-Uri.svg.png
 );
 use warnings;
 my @done = ();
@@ -218,7 +219,7 @@ my $use_devel   = 0;
 #
 # overwrite some settings with getopt
 #
-GetOptions( "http" => \$use_http, "devel" => $use_devel );
+GetOptions( "http" => \$use_http, "devel" => \$use_devel );
 
 #
 # fastcgi request
@@ -418,9 +419,22 @@ while( $request->Accept() >= 0 || $test ) {
 					my $origh = $xmlp->{ 'height' };
 					$origw = to_float( $origw ) unless is_float( $origw );
 					$origh = to_float( $origh ) unless is_float( $origh );
+
+					unless( $origw && $origh ) {
+						#
+						# http://www.w3.org/TR/SVG/coords.html#ViewBoxAttribute
+						#
+						say STDERR "There's no width and height defined for SVG file, checking viewbox" if $debug > 2;
+						my $viewBox = $xmlp->{ "viewBox" };
+						if( $viewBox && $viewBox =~/\d+ \d+[\s|,](\d+)[\s|,](\d+)/ ) {
+							$origw = $1;
+							$origh = $2;
+						}
+					}
+
 					my $height = scaleHeight( $origw, $origh, $width, $test );
 					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-					print STDERR "reading svg as xml file (for size checking), time: $t_elapsed\n" if $debug;
+					say STDERR "reading svg as xml (for size checking) $origw x $origh, time: $t_elapsed" if $debug > 2;
 
 					#
 					# RSVG thumbnailer
@@ -436,7 +450,7 @@ while( $request->Accept() >= 0 || $test ) {
 					$rsvg->loadImageFromString( $content, 0, $args );
 					$transformed = 1;
 					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-					print STDERR "reading svg as image file (for transforming), time: $t_elapsed\n" if $debug;
+					say STDERR "reading svg as image (for transforming), time: $t_elapsed" if $debug > 2;
 
 					use bytes;
 					my $output = $rsvg->getImageBitmap();
@@ -451,7 +465,7 @@ while( $request->Accept() >= 0 || $test ) {
 						print "Content-type: image/png\r\n\r\n";
 						print $output unless $test;
 						$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-						print STDERR "File $thumbnail served, time: $t_elapsed\n" if $debug;
+						say STDERR "File $thumbnail served, time: $t_elapsed" if $debug;
 						$transformed = 1;
 					}
 					else {
@@ -501,14 +515,11 @@ while( $request->Accept() >= 0 || $test ) {
 					#
 					my $image = new Graphics::Magick;
 					$image->BlobToImage( $content );
-
 					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-
 					#
 					# use only first frame in animated gifs
 					#
 					$image = $image->[ 0 ] if $image->[ 0 ]->Get('magick') eq 'GIF';
-
 					my $cropped = 0;
 					if( is_int( $x1 ) && is_int( $x2 ) && is_int( $y1 ) && is_int( $y2 ) ) {
 						#
