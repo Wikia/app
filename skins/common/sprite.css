@@ -30,6 +30,8 @@
 .sprite-small.add { background-position:  -36px -94px; }
 .sprite-small.close { background-position:  -48px -94px; }
 
+.sprite.external { background-position: -67px 3px; }
+
 .sprite.edit { background-position: 0 -106px; }
 .sprite.new { background-position: -16px -106px; }
 .sprite.photo { background-position: -32px -106px; }
