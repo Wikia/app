@@ -543,7 +543,7 @@ class ArticleComment {
 				$this->mTitle->userCanEdit();
 
 			//TODO: create new permission and remove checking groups below
-			$groups = $wgUser->getGroups();
+			$groups = $wgUser->getEffectiveGroups();
 			$isAdmin = in_array( 'staff', $groups ) || in_array( 'sysop', $groups );
 
 			$res = ( $isAuthor || $isAdmin ) && $canEdit;
@@ -782,7 +782,7 @@ class ArticleComment {
 	}
 
 	static public function addArticlePageToWatchlist($comment, $commentId) {
-		global $wgUser, $wgEnableArticleWatchlist;
+		global $wgUser, $wgEnableArticleWatchlist, $wgBlogsEnableStaffAutoFollow;
 
 		$watchthis = false;
 		if ( empty($wgEnableArticleWatchlist) ) {
@@ -803,7 +803,8 @@ class ArticleComment {
 			$dbw->begin();
 			if ( !$comment->mTitle->userIsWatching() ) {
 				# comment
-				$dbw->insert( 'watchlist',
+				$dbw->insert(
+					'watchlist',
 					array(
 					'wl_user' => $wgUser->getId(),
 					'wl_namespace' => MWNamespace::getTalk($comment->mTitle->getNamespace()),
@@ -815,14 +816,36 @@ class ArticleComment {
 
 			if ( !$oArticlePage->userIsWatching() ) {
 				# and article page
-				$dbw->insert( 'watchlist',
+				$dbw->insert(
+					'watchlist',
 					array(
 					'wl_user' => $wgUser->getId(),
 					'wl_namespace' => $comment->mTitle->getNamespace(),
 					'wl_title' => $oArticlePage->getDBkey(),
 					'wl_notificationtimestamp' => NULL
-					), __METHOD__, 'IGNORE' );
+					), __METHOD__, 'IGNORE'
+				);
 			}
+
+			if ( !empty($wgBlogsEnableStaffAutoFollow) && defined('NS_BLOG_ARTICLE') && $comment->mTitle->getNamespace() == NS_BLOG_ARTICLE ) {
+				$owner = BlogArticle::getOwner($oArticlePage);
+				$oUser = User::newFromName($owner);
+				if ( $oUser instanceof User ) {
+					$groups = $oUser->getEffectiveGroups();
+					if ( is_array($groups) && in_array( 'staff', $groups ) ) {
+						$dbw->insert(
+							'watchlist',
+							array(
+							'wl_user' => $wgUser->getId(),
+							'wl_namespace' => NS_BLOG_ARTICLE,
+							'wl_title' => $oUser->getName(),
+							'wl_notificationtimestamp' => NULL
+							), __METHOD__, 'IGNORE'
+						);
+					}
+				}
+			}
+
 			$dbw->commit();
 		}
 
@@ -999,6 +1022,7 @@ class ArticleCommentList {
 	private $mCountAll = false;
 	private $mCountAllNested = false;
 	private static $mArticlesToDelete;
+	private static $mDeletionInProgress = false;
 
 	static public function newFromTitle( Title $title ) {
 		$comments = new ArticleCommentList();
@@ -1232,8 +1256,9 @@ class ArticleCommentList {
 			$avatar = new wAvatar($wgUser->getId(), "ml");
 		}
 
-		$isSysop   = ( in_array('sysop', $wgUser->getGroups()) || in_array('staff', $wgUser->getGroups() ) );
-		$canEdit   = $wgUser->isAllowed( 'edit' );
+		$groups = $wgUser->getEffectiveGroups();
+		$isSysop = in_array('sysop', $groups) || in_array('staff', $groups);
+		$canEdit = $wgUser->isAllowed( 'edit' );
 		$isBlocked = $wgUser->isBlocked();
 		$isReadOnly = wfReadOnly();
 		$showall = $wgRequest->getText( 'showall', false );
@@ -1434,6 +1459,9 @@ class ArticleCommentList {
 				if ($listing->getCountAll() && isset($aComments[$article->getID()]['level2'])) {
 					self::$mArticlesToDelete = $aComments[$article->getID()]['level2'];
 				}
+			} elseif (count($parts['partsOriginal']) == 2) {
+				//skip checking in articleDeleteComplete()
+				self::$mArticlesToDelete = array();
 			}
 		}
 
@@ -1457,15 +1485,25 @@ class ArticleCommentList {
 	static public function articleDeleteComplete( &$article, &$user, $reason, $id ) {
 		wfProfileIn( __METHOD__ );
 
-		$title = $article->getTitle();
+		//watch out for recursion
+		if (self::$mDeletionInProgress) {
+			wfProfileOut( __METHOD__ );
+			return true;
+		}
+		self::$mDeletionInProgress = true;
 
-		//we have comment 1st level - checked in articleDelete()
+		$title = $article->getTitle();
+		//do not use $reason as it contains content of parent article/comment - not current ones that we delete in a loop
+		wfLoadExtensionMessages('ArticleComments');
+		$deleteReason = wfMsgForContent('article-comments-delete-reason');
+
+		//we have comment 1st level - checked in articleDelete() (or 2nd - so do nothing)
 		if (is_array(self::$mArticlesToDelete)) {
 			foreach (self::$mArticlesToDelete as $page_id => $oComment) {
 				$oCommentTitle = $oComment->getTitle();
 				if ( $oCommentTitle instanceof Title ) {
 					$oArticle = new Article($oCommentTitle);
-					$oArticle->doDeleteArticle($reason);
+					$oArticle->doDelete($deleteReason);
 				}
 			}
 		//regular article - delete connected comments
@@ -1478,14 +1516,14 @@ class ArticleCommentList {
 					$oCommentTitle = $aCommentArr['level1']->getTitle();
 					if ( $oCommentTitle instanceof Title ) {
 						$oArticle = new Article($oCommentTitle);
-						$oArticle->doDeleteArticle($reason);
+						$oArticle->doDelete($deleteReason);
 					}
 					if (isset($aCommentArr['level2'])) {
 						foreach ($aCommentArr['level2'] as $page_id => $oComment) {
 							$oCommentTitle = $oComment->getTitle();
 							if ( $oCommentTitle instanceof Title ) {
 								$oArticle = new Article($oCommentTitle);
-								$oArticle->doDeleteArticle($reason);
+								$oArticle->doDelete($deleteReason);
 							}
 						}
 					}
