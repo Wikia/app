@@ -221,7 +221,7 @@ class MultiDeleteTask extends BatchTask {
 		
 		$dbr = wfGetDB (DB_SLAVE, 'blobs', $wgExternalDatawareDB);
 		$where = array(
-			"page_title_lower"	=> strtolower($this->title),
+			"page_title_lower"	=> mb_strtolower($this->title),
 			"page_namespace" 	=> $this->namespace,
 			"page_status" 		=> 0
 		);
