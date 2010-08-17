@@ -1,4 +1,5 @@
 == Changes since 201008.3 ==
+* rt#63911: ImageServing: small images should not be scaled up (eloy)
 * rt#63919: Move hard coded "xxx Wiki" name on AutoCreateWiki to MW message (TOR)
 
 == Changes since 201008.2 ==
