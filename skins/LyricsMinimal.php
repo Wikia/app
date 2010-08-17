@@ -1,4 +1,30 @@
 <?php
+/**
+ * @author Sean Colombo
+ *
+ * This skin is meant to be a minimal article view of LyricWiki to make it easier
+ * for mobile devices to see the lyrics content.
+ *
+ * It works well when used in conjunction with
+ * the API since the API can do a better job of matching what a user is looking for (based on
+ * title and artist) than the site's default search.  After using the API to find a match, mobile
+ * apps can then send the user to the webpage, using this mobile-friendly skin.
+ *
+ * TODO: Take off unneeded pieces
+ *			- Page-bar
+ *			- Hmmm.... (a bunch more, need to figure them out)
+ * TODO: Remove unneeded CSS
+ * TODO: Remove unneeded JS
+ * TODO: Verify that Google Analytics tracking (for licensing) is still working.
+ * TODO: Add LyricWiki logo
+ * TODO: Add top banner
+ * TODO: Verify that Google Analytics tracking (for licensing) is still working - again.
+ * TODO: Make sure GN pages still show the GN logo and link to EULA on the bottom.
+ * TODO: Add custom styling for currenT test.
+ *			- Color changes
+ *			- Remove edit button
+ */
+
 if( !defined( 'MEDIAWIKI' ) )
 	die( -1 );
 
@@ -50,13 +76,14 @@ class SkinLyricsMinimal extends SkinTemplate {
 	}
 
 	/**
-	 * Add specific styles for this skin
-	 *
+	 * Add specific styles for this user.
 	 * Don't add common/shared.css as it's kept in allinone.css
-	 *
 	 * @param $out OutputPage
 	 */
 	function setupSkinUserCss( OutputPage $out ){
+
+		// TODO: SWC: This might be a good place to load app-specific CSS in cases that we have that.
+
 	}
 
 	/**
@@ -987,19 +1014,9 @@ $this->printCustomHeader();
 wfProfileIn( __METHOD__ . '-header'); ?>
 		<div id="wikia_header" class="reset color2">
 			<div class="monaco_shrinkwrap">
-			<div id="wikiaBranding">
-			<?php $this->printWikiaLogo()?>
-		<?php
-$categorylist = $this->data['data']['categorylist'];
-if(isset($categorylist['nodes']) && count($categorylist['nodes']) > 0 ) {
-?>
-				<button id="headerButtonHub" class="header-button color1"><?= isset($categorylist['cat']['text']) ? $categorylist['cat']['text'] : '' ?><img src="<?php print $wgBlankImgUrl; ?>" /></button>
+<?php
+			// NOTE: Removed wikia_header, Wikia logo, branding, etc. here.
 
-<?php
-}
-?>
-			</div>
-<?php
 			wfRunHooks('MonacoAdLink');
 
 			// NOTE: Removed RequestWikiLink (which is the Create a Wiki button) here.
@@ -1394,252 +1411,10 @@ if ( $wgRequest->getVal('action') != 'edit' ) {
 		<?php $this->printFooter() ?>
 		<?php wfRunHooks('SpecialFooterAfterWikia'); ?>
 		</div>
-<?php		wfProfileOut( __METHOD__ . '-monacofooter'); ?>
-		<!-- WIDGETS -->
-<?php		wfProfileIn( __METHOD__ . '-navigation'); ?>
-		<div id="widget_sidebar" class="reset widget_sidebar">
-
-			<!-- SEARCH/NAVIGATION -->
-			<div class="widget" id="navigation_widget">
 <?php
-	if (empty($wgEnableRecipesTweaksExt)) {
-		global $wgSitename;
-		$msgSearchLabel = wfMsg('Tooltip-search');
-		$searchLabel = wfEmptyMsg('Tooltip-search', $msgSearchLabel) ? (wfMsg('ilsubmit').' '.$wgSitename.'...') : $msgSearchLabel;
-?>
-				<div id="search_box" class="color1">
-					<form action="<?php $this->text('searchaction') ?>" id="searchform">
-						<input id="search_field" name="search" type="text" value="<?= htmlspecialchars($searchLabel) ?>" maxlength="200" onfocus="sf_focus(event);" alt="<?= htmlspecialchars($searchLabel) ?>" autocomplete="off"<?= $skin->tooltipAndAccesskey('search'); ?> />
-						<input type="hidden" name="go" value="1" />
-						<input type="image" src="<?php print $wgBlankImgUrl; ?>" id="search-button" class="sprite search" />
-					</form>
-				</div>
-<?php
-	}
-	else {
-		wfLoadExtensionMessages('RecipesTweaks');
-?>
-				<div class="color1" id="navigation_header"><?= wfMsg('recipes-browse') ?></div>
-<?php
-	}
+		wfProfileOut( __METHOD__ . '-monacofooter');
 
-	// NOTE: Removed MonacoSidebar here.
-
-	echo '<table cellspacing="0" id="link_box_table">';
-	//BEGIN: create dynamic box
-	$showDynamicLinks = true;
-	$dynamicLinksArray = array();
-	$userIsAnon = $wgUser->isAnon();
-	if ($userIsAnon) {
-		//prepare object for further usage
-		$signupTitle = Title::makeTitle(NS_SPECIAL, 'Signup');
-	}
-
-	global $wgRequest, $wgEnableAnswers;
-	if ( $wgRequest->getText( 'action' ) == 'edit' || $wgRequest->getText( 'action' ) == 'submit' ) {
-		$showDynamicLinks = false;
-	}
-
-	//Blog, User_Blog namespaces
-	if ($showDynamicLinks && defined('NS_BLOG_ARTICLE') && defined('NS_BLOG_LISTING') && in_array($namespace, array(NS_BLOG_ARTICLE, NS_BLOG_LISTING))) {
-		$sp = Title::makeTitle(NS_SPECIAL, 'CreateBlogPage');
-		/* Redirect to login page instead of showing error, see Login friction project */
-		$url = $userIsAnon ? $signupTitle->getLocalURL(wfGetReturntoParam($sp->getPrefixedDBkey())) : $sp->getLocalURL();
-		$dynamicLinksArray[] = array(
-			'url' => $url,
-			'text' => wfMsg('dynamic-links-write-blog'),
-			'id' => 'dynamic-links-write-blog',
-			'icon' => 'blog',
-			'tracker' => 'CreateBlogPage'
-		);
-		$sp = Title::makeTitle(NS_SPECIAL, 'CreateBlogListingPage');
-		/* Redirect to login page instead of showing error, see Login friction project */
-		$url = $userIsAnon ? $signupTitle->getLocalURL(wfGetReturntoParam($sp->getPrefixedDBkey())) : $sp->getLocalURL();
-		$dynamicLinksArray[] = array(
-			'url' => $url,
-			'text' => wfMsg('dynamic-links-blog-listing'),
-			'id' => 'dynamic-links-blog-listing',
-			'icon' => 'bloglist',
-			'tracker' => 'CreateBlogListingPage'
-		);
-	}
-	//all other namespaces
-	elseif ( $showDynamicLinks && empty( $wgEnableAnswers ) ) {
-
-		global $wgMonacoDynamicCreateOverride;
-		if( !empty($wgMonacoDynamicCreateOverride) ) {
-			$sp = Title::newFromText($wgMonacoDynamicCreateOverride);
-		} else {
-			$sp = Title::makeTitle(NS_SPECIAL, 'CreatePage');
-		}
-		/* Redirect to login page instead of showing error, see Login friction project */
-		$url = !$wgUser->isAllowed('edit') ? Title::makeTitle(NS_SPECIAL, 'Signup')->getLocalURL(wfGetReturntoParam($sp->getPrefixedDBkey())) : $sp->getLocalURL();
-		$dynamicLinksArray[] = array(
-			'url' => $url,
-			'text' => wfMsg('dynamic-links-write-article'),
-			'id' => 'dynamic-links-write-article',
-			'icon' => 'edit',
-			'tracker' => 'CreatePage',
-		);
-		$sp = Title::makeTitle(NS_SPECIAL, 'Upload');
-		/* Redirect to login page instead of showing error, see Login friction project */
-		$url = $userIsAnon ? $signupTitle->getLocalURL(wfGetReturntoParam($sp->getPrefixedDBkey())) : $sp->getLocalURL();
-		$dynamicLinksArray[] = array(
-			'url' => $url,
-			'text' => wfMsg('dynamic-links-add-image'),
-			'id' => 'dynamic-links-add-image',
-			'icon' => 'photo',
-			'tracker' => 'Upload'
-		);
-	}
-
-	if (count($dynamicLinksArray) > 0) {
-?>
-		<tbody id="link_box_dynamic">
-			<tr>
-				<td colspan="2">
-					<ul>
-<?php
-			foreach ($dynamicLinksArray as $link) {
-				//print_r($link);
-				$tracker = " onclick=\"WET.byStr('toolbox/dynamic/{$link['tracker']}')\"";
-				echo '<li id="' . $link['id']  .'-row" class="link_box_dynamic_item"><a rel="nofollow" id="' . $link['id'] . '-icon" href="' . htmlspecialchars($link['url']) . '"' . $tracker . '><img src="'.$wgBlankImgUrl.'" id="' . $link['id'] . '-img" class="sprite '. $link['icon'] .'" alt="' . $link['text'] . '" /></a> <a id="' . $link['id'] . '-link" rel="nofollow" href="' . htmlspecialchars($link['url']) . '"' . $tracker . '>'. $link['text'] .'</a></li>';
-			}
-?>
-					</ul>
-				</td>
-			</tr>
-		</tbody>
-<?php
-	}
-	//END: create dynamic box
-
-	//BEGIN: create static box
-	$linksArrayL = $linksArrayR = array();
-	$linksArray = $this->data['data']['toolboxlinks'];
-
-	//add user specific links
-	if(!empty($nav_urls['contributions'])) {
-		$linksArray[] = array('href' => $nav_urls['contributions']['href'], 'text' => wfMsg('contributions'), 'tracker' => 'contributions');
-	}
-	if(!empty($nav_urls['blockip'])) {
-		$linksArray[] = array('href' => $nav_urls['blockip']['href'], 'text' => wfMsg('blockip'), 'tracker' => 'blockip');
-	}
-	if(!empty($nav_urls['emailuser'])) {
-		$linksArray[] = array('href' => $nav_urls['emailuser']['href'], 'text' => wfMsg('emailuser'), 'tracker' => 'emailuser');
-	}
-
-	if(is_array($linksArray) && count($linksArray) > 0) {
-		global $wgSpecialPagesRequiredLogin;
-		for ($i = 0, $max = max(array_keys($linksArray)); $i <= $max; $i++) {
-			$item = isset($linksArray[$i]) ? $linksArray[$i] : false;
-			//Redirect to login page instead of showing error, see Login friction project
-			if ($item !== false && $userIsAnon && isset($item['specialCanonicalName']) && in_array($item['specialCanonicalName'], $wgSpecialPagesRequiredLogin)) {
-				$returnto = Title::newFromText($item['specialCanonicalName'], NS_SPECIAL)->getPrefixedDBkey();
-				$item['href'] = Title::makeTitle(NS_SPECIAL, 'Signup')->getLocalURL(wfGetReturntoParam($returnto));
-			}
-			$i & 1 ? $linksArrayR[] = $item : $linksArrayL[] = $item;
-		}
-	}
-
-	if(count($linksArrayL) > 0 || count($linksArrayR) > 0) {
-?>
-		<tbody id="link_box" class="color2 linkbox_static">
-			<tr>
-				<td>
-					<ul>
-<?php
-		if(is_array($linksArrayL) && count($linksArrayL) > 0) {
-			foreach($linksArrayL as $key => $val) {
-				if ($val === false) {
-					echo '<li>&nbsp;</li>';
-				} else {
-					$tracker = !empty($val['tracker']) ? $val['tracker'] : 'unknown';
-?>
-						<li><a rel="nofollow" href="<?= htmlspecialchars($val['href']) ?>" onclick="WET.byStr('toolbox/<?= $tracker ?>')"><?= htmlspecialchars($val['text']) ?></a></li>
-<?php
-				}
-			}
-		}
-?>
-					</ul>
-				</td>
-				<td>
-					<ul>
-<?php
-		if(is_array($linksArrayR) && count($linksArrayR) > 0) {
-		    foreach($linksArrayR as $key => $val) {
-				if ($val === false) {
-					echo '<li>&nbsp;</li>';
-				} else {
-					$tracker = !empty($val['tracker']) ? $val['tracker'] : 'unknown';
-?>
-						<li><a rel="nofollow" href="<?= htmlspecialchars($val['href']) ?>" onclick="WET.byStr('toolbox/<?= $tracker ?>')"><?= htmlspecialchars($val['text']) ?></a></li>
-<?php
-				}
-			}
-		}
-?>
-						<li style="font-size: 1px; position: absolute; top: -10000px"><a href="<?= Title::newFromText('Special:Recentchanges')->getLocalURL() ?>" accesskey="r" rel="nofollow">Recent changes</a><a href="<?= Title::newFromText('Special:Random')->getLocalURL() ?>" accesskey="x" rel="nofollow">Random page</a></li>
-					</ul>
-				</td>
-			</tr>
-		</tbody>
-<?php
-	}
-	//END: create static box
-?>
-	</table>
-			</div>
-			<!-- /SEARCH/NAVIGATION -->
-<?php		wfProfileOut( __METHOD__ . '-navigation'); ?>
-
-			<?php
-				// Logic for skyscrapers defined here: http://staff.wikia-inc.com/wiki/DART_Implementation/Skyscrapers
-				global $wgOut;
-				echo AdEngine::getInstance()->getAd('LEFT_NAVBOX_1', false);
-				if ($wgOut->isArticle() ){
-					if (ArticleAdLogic::isMainPage()) { //main page
-						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderIframe('HOME_LEFT_SKYSCRAPER_1', true) .'</div>';
-					} else if ( ArticleAdLogic::isContentPage() &&
-							!ArticleAdLogic::isShortArticle($this->data['bodytext'])) { //valid article
-						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderIframe('LEFT_SKYSCRAPER_1', true) .'</div>';
-					}
-				}
-			?>
-
-<?php		wfProfileIn( __METHOD__ . '-widgets'); ?>
-
-			<div id="sidebar_1" class="sidebar">
-			<?php
-				// macbre: RT #25697 - hide widgets on edit pages
-				if ( in_array($wgRequest->getVal('action'), array('edit', 'submit')) ) {
-					echo '<!-- Widgets are hidden on edit page -->';
-				}
-				else {
-					echo WidgetFramework::getInstance()->Draw(1);
-				}
-			?>
-
-			<?php
-				echo AdEngine::getInstance()->getAd('LEFT_SLIMBOX_1', false);
-				echo AdEngine::getInstance()->getAd('LEFT_NAVBOX_2', false);
-				if ($wgOut->isArticle()){
-					if (ArticleAdLogic::isMainPage()) { //main page
-						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderIframe('HOME_LEFT_SKYSCRAPER_2', true) .'</div>';
-					} else if ( ArticleAdLogic::isContentPage() &&
-							!ArticleAdLogic::isShortArticle($this->data['bodytext'])) { //valid article
-						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderIframe('LEFT_SKYSCRAPER_2', true) .'</div>';
-					}
-				}
-			?>
-
-			</div>
-		</div>
-		<!-- /WIDGETS -->
-	<!--/div-->
-<?php
-wfProfileOut( __METHOD__ . '-widgets');
+	// NOTE: Removed WIDGETS (sidebar stuff) here.
 
 // curse like cobranding
 $this->printCustomFooter();
