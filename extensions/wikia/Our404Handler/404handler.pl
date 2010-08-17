@@ -288,6 +288,7 @@ while( $request->Accept() >= 0 || $test ) {
 
 	my @parts = split( "/", $path );
 	my $last = pop @parts;
+	$last =~ s/%([0-9A-Fa-f]{2})/chr(hex($1))/eg if $use_http; # (for cropping);
 
 
 	#
