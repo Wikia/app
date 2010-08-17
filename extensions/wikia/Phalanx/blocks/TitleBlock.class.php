@@ -40,6 +40,13 @@ class TitleBlock {
 			wfProfileOut( __METHOD__ );
 			return $retVal;
 		}
+		
+		// Hook is called for both page creations and edits. We should only check
+		// if the page is created = page does not exist (RT#61104)
+		if ($title->exists()) {
+			wfProfileOut(__METHOD__);
+			return $retVal;
+		}
 
 		$retVal = self::checkTitle($title);
 
