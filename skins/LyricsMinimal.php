@@ -10,8 +10,8 @@
  * title and artist) than the site's default search.  After using the API to find a match, mobile
  * apps can then send the user to the webpage, using this mobile-friendly skin.
  *
+ * TODO: Add custom CSS
  * TODO: Take off unneeded pieces
- *			- Page-bar
  *			- Hmmm.... (a bunch more, need to figure them out)
  * TODO: Remove unneeded CSS
  * TODO: Remove unneeded JS
@@ -589,6 +589,9 @@ EOF;
 		if ($wgContLang->isRTL()) {
 			$css[] = array('url' => $wgStylePath.'/monaco/rtl.css?'.$wgStyleVersion);
 		}
+		
+		// NOTE: Added custom LyricsMinimal CSS to override existing stuff in Monaco.
+		$css[] = array('url' => $wgStylePath.'/lyricsminimal/article.css?'.$wgStyleVersion);
 
 		// CSS - end
 
@@ -966,13 +969,14 @@ wfProfileIn( __METHOD__ . '-body'); ?>
 		$body_css_action = '';
 	}
 
+	
 	if(!isset($this->extraBodyClasses)){
 		// For extra classes to put on the body tag.  This allows overriding sub-skins to create selectors specific to their sub-skin (such as custom answers).
 		$this->extraBodyClasses = array();
 	}
 ?>
 	<body<?php if($this->data['body_onload'    ]) { ?> onload="<?php     $this->text('body_onload')     ?>"<?php } ?>
- class="mediawiki <?php $this->text('dir') ?> <?php $this->text('pageclass') ?><?php if(!empty($this->data['printable']) ) { ?> printable<?php } ?><?php if (!$wgUser->isLoggedIn()) { ?> loggedout<?php } ?> color2 wikiaSkinMonaco<?=$isMainpage?> <?= $body_css_action ?><?php print " ".implode($this->extraBodyClasses, " "); ?>" id="body">
+ class="mediawiki <?php $this->text('dir') ?> <?php $this->text('pageclass') ?><?php if(!empty($this->data['printable']) ) { ?> printable<?php } ?><?php if (!$wgUser->isLoggedIn()) { ?> loggedout<?php } ?> color2 wikiaSkinMonaco wikiaSkinLyricsMinimal<?=$isMainpage?> <?= $body_css_action ?><?php print " ".implode($this->extraBodyClasses, " "); ?>" id="body">
 	<?php
 	// Hardcoded Google Analytics tag... commented out because it isn't working yet.
 	// Allow URL override.
