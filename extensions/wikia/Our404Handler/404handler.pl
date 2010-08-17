@@ -531,7 +531,7 @@ while( $request->Accept() >= 0 || $test ) {
 							my $geometry = sprintf( "%dx%d+%d+%d", $w, $h, $x1, $y1 );
 							$image->Crop( $geometry );
 							$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-							print STDERR "Cropping into $geometry, time: $t_elapsed\n" if $debug;
+							say STDERR "Cropping into $geometry, time: $t_elapsed" if $debug > 2;
 							$cropped = 1;
 						}
 					}
@@ -539,7 +539,7 @@ while( $request->Accept() >= 0 || $test ) {
 					my $origw  = $image->Get( 'width' );
 					my $origh  = $image->Get( 'height' );
 					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-					print STDERR "Original size $origw x $origh, time: $t_elapsed\n" if $debug;
+					say STDERR "Original size $origw x $origh, time: $t_elapsed" if $debug > 2;
 					if( $origw && $origh ) {
 						my $height = scaleHeight( $origw, $origh, $width, $test );
 						my $geometry = sprintf( "%dx%d!>", $width, $height );
@@ -552,14 +552,14 @@ while( $request->Accept() >= 0 || $test ) {
 							#
 							my $crop_width = $image->Get( "width" );
 							my $crop_height = $image->Get( "height" );
-							say STDERR "Size after cropping: $crop_width x $crop_height, requested size: $width x $height" if $debug;
+							say STDERR "Size after cropping: $crop_width x $crop_height, requested size: $width x $height" if $debug > 2;
 							if( $crop_width < $width ) {
 								#
 								# create base image with white background
 								#
 								my $magick = $image->Get( "magick" );
 								my $crop = Graphics::Magick->new( size => sprintf("%dx%d", $width, $height ) );
-								say STDERR "Crop size $width x $height" if $debug;
+								say STDERR "Crop size $width x $height" if $debug > 2;
 								$crop->ReadImage( "xc:white" );
 								$crop->Set( magick => $magick );
 								$crop->Composite( image => $image, gravity => "Center" );
