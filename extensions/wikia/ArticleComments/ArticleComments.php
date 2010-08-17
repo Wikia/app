@@ -1441,11 +1441,13 @@ class ArticleCommentList {
 
 			$aComments = $listing->getCommentPages();
 			if ( !empty($aComments) ) {
+				global $wgOut;
+				$wgOut->disable();
 				foreach ($aComments as $page_id => $oComment) {
 					$oCommentTitle = $oComment->getTitle();
 					if ( $oCommentTitle instanceof Title ) {
 						$oArticle = new Article($oCommentTitle);
-						$oArticle->doDeleteArticle($reason);
+						$oArticle->doDelete($reason);
 					}
 				}
 			}

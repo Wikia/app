@@ -818,7 +818,7 @@ class BlogComment {
 	}
 
 	static public function addBlogPageToWatchlist($Comment, $commentId) {
-		global $wgUser, $wgEnableBlogWatchlist;
+		global $wgUser, $wgEnableBlogWatchlist, $wgBlogsEnableStaffAutoFollow;
 
 		$watchthis = false;
 		if ( empty($wgEnableBlogWatchlist) ) {
@@ -839,11 +839,12 @@ class BlogComment {
 			$dbw->begin();
 			if ( !$Comment->mTitle->userIsWatching() ) {
 				# comment
-				$dbw->insert( 'watchlist',
+				$dbw->insert( 
+					'watchlist',
 					array(
-					'wl_user' => $wgUser->getId(),
-					'wl_namespace' => NS_BLOG_ARTICLE_TALK,
-					'wl_title' => $Comment->mTitle->getDBkey(),
+					'wl_user'		=> $wgUser->getId(),
+					'wl_namespace'	=> NS_BLOG_ARTICLE_TALK,
+					'wl_title' 		=> $Comment->mTitle->getDBkey(),
 					'wl_notificationtimestamp' => wfTimestampNow()
 					), __METHOD__, 'IGNORE'
 				);
@@ -851,14 +852,36 @@ class BlogComment {
 
 			if ( !$oBlogPage->userIsWatching() ) {
 				# and blog page
-				$dbw->insert( 'watchlist',
+				$dbw->insert( 
+					'watchlist',
 					array(
-					'wl_user' => $wgUser->getId(),
-					'wl_namespace' => NS_BLOG_ARTICLE,
-					'wl_title' => $oBlogPage->getDBkey(),
+					'wl_user' 		=> $wgUser->getId(),
+					'wl_namespace'	=> NS_BLOG_ARTICLE,
+					'wl_title' 		=> $oBlogPage->getDBkey(),
 					'wl_notificationtimestamp' => NULL
-					), __METHOD__, 'IGNORE' );
+					), __METHOD__, 'IGNORE' 
+				);
 			}
+			
+			if ( !empty($wgBlogsEnableStaffAutoFollow) ) {
+				$owner = BlogArticle::getOwner($oBlogPage);
+				$oUser = User::newFromName($owner);
+				if ( $oUser instanceof User ) {
+					$groups = $oUser->getGroups();
+					if ( is_array($groups) && in_array( 'staff', $groups ) ) {
+						$dbw->insert( 
+							'watchlist',
+							array(
+							'wl_user'		=> $wgUser->getId(),
+							'wl_namespace' 	=> NS_BLOG_ARTICLE,
+							'wl_title' 		=> $oUser->getName(),
+							'wl_notificationtimestamp' => NULL
+							), __METHOD__, 'IGNORE' 
+						);
+					}
+				}					
+			} 
+			
 			$dbw->commit();
 		}
 
@@ -1367,14 +1390,15 @@ class BlogCommentList {
 
 			$aComments = $listing->getCommentPages();
 			if ( !empty($aComments) ) {
-				global $wgRC2UDPEnabled; 
+				global $wgRC2UDPEnabled, $wgOut; 
 				$irc_backup = $wgRC2UDPEnabled;	//backup
 				$wgRC2UDPEnabled = false; //turn off
+				$wgOut->disable();
 				foreach ($aComments as $page_id => $oComment) {
 					$oCommentTitle = $oComment->getTitle();
 					if ( $oCommentTitle instanceof Title ) {
 						$oArticle = new Article($oCommentTitle);
-						$oArticle->doDeleteArticle($reason);
+						$oArticle->doDelete($reason);
 					}
 				}
 				$wgRC2UDPEnabled = $irc_backup; //restore to whatever it was
