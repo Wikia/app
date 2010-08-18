@@ -113,3 +113,6 @@ $wgDefaultExternalStore = array( "DB://dev-archive");
 
 // So that SASS will be generated locally.
 $wgCdnRootUrl = "";
+
+// Life is easier if we have Special:WikiFactory
+$wgWikiaEnableWikiFactoryExt = true;
