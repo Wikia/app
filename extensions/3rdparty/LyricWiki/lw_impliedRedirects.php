@@ -58,9 +58,9 @@ function wfImpliedRedirects_articleFromTitle(&$title, &$article){
 			print (!$debug?"":"found:\n$page");
 			if($finalName != $artistTitle){
 				print (!$debug?"":"Artist redirect found to \"$finalName\". Applying to song \"$song\".\n");
-				$titleStr = utf8_decode(lw_getTitle($finalName, $song)); // decode is used to prevent double-encode calls that would otherwise happen.  I'm skeptical as to whether this would always work (assuming the special char was in the original title instead of the redirected artist as tested).
-				print (!$debug?"":"Title \"$titleStr\"\n");
 			}
+			$titleStr = utf8_decode(lw_getTitle($finalName, $song)); // decode is used to prevent double-encode calls that would otherwise happen.  I'm skeptical as to whether this would always work (assuming the special char was in the original title instead of the redirected artist as tested).
+			print (!$debug?"":"Title \"$titleStr\"\n");
 
 			// If the song was still not found... chop off any trailing parentheses and try again. - SWC 20070101
 			if(!lw_pageExists($titleStr)){
