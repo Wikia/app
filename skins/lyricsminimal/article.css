@@ -4,6 +4,11 @@
 	float:left;
 }
 
+.lyricsMinimalTop{
+	min-width:984px;
+	overflow:hidden;
+}
+
 #lyricsMinimalTop_leader{
 	float:left;
 	height:122px; /* the logo is 155px tall, and we're going to pad the box by 33px */
