@@ -47,6 +47,9 @@
 	color:#444;
 	display:none;
 }
+.usermessage{
+	display:none;
+}
 
 /* Hide everything in the main content... */
 #bodyContent  ul, #bodyContent .plainlinks, #bodyContent h2, .songfooter-fake-h2{
