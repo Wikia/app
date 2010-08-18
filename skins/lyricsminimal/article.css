@@ -44,4 +44,15 @@
 	background-color:inherit;
 	border-color:#444;
 	color:#444;
+	display:none;
+}
+
+/* Hide everything in the main content... */
+#bodyContent  ul, #bodyContent .plainlinks, #bodyContent h2, .songfooter-fake-h2{
+	display:none;
+}
+
+/* TARGETS THE "This album is by 'Whoever' on the album 'Whatever (1999)'" and the 'View GN lyrics' stuff. */
+#bodyContent p {
+	display:none;
 }
