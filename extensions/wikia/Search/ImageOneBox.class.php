@@ -205,7 +205,7 @@ class ImageOneBox {
 				$data['mainImageLink'] = $first_title->getLocalUrl();
 			} else {
 				$data['lightBox'] = true;
-				$data['mainImageLink'] = $img->getLocalUrl();
+				$data['mainImageLink'] = $img->getTitle()->getLocalUrl();
 			}
 
 			$data['thumbUrl'] = $thumbUrl;
