@@ -198,7 +198,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 	return {
 		title : editor.lang.link.title,
 		minWidth : 500,
-		minHeight : 175,
+		minHeight : 185,
 		contents : [
 			{
 				id : 'internal',

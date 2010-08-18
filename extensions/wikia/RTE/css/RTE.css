@@ -244,7 +244,7 @@
 }
 
 .cke_skin_wikia.linkEditorDialog .cke_dialog {
-	width: 500px;
+	xwidth: 500px;
 }
 .cke_skin_wikia.linkEditorDialog .cke_dialog_page_contents{
 	margin-top: -20px;
