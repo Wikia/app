@@ -11,6 +11,7 @@
  * apps can then send the user to the webpage, using this mobile-friendly skin.
  *
  * TODO: Add top leaderboard
+ * TODO: Hide the alert messages about "you have a message on X" (because this skin will most-often be viewed by anon IPs and this msg won't make any sense to them that they 'have messages' inside of their mobile app).
  * TODO: Remove unneeded CSS
  * TODO: Remove unneeded JS
  * TODO: Verify that Google Analytics tracking (for licensing) is still working.
@@ -926,7 +927,7 @@ wfRunHooks('MonacoBeforePageBar', array($this));
 if(empty($wgEnableRecipesTweaksExt) || !RecipesTweaks::isHeaderStripeShown()) {
 		echo AdEngine::getInstance()->getSetupHtml();
 ?>
-		<div class='lyricsMinimalTop'>
+		<div class='lyricsMinimalTop clearfix'>
 			<div id="wiki_logo" style="background-image: url(<?= $wgLogo ?>);"><a href="<?= htmlspecialchars($this->data['nav_urls']['mainpage']['href'])?>" accesskey="z"><?= $wgSitename ?></a></div>
 
 			<!-- // TODO: Place REAL leaderboard ad here. -->
