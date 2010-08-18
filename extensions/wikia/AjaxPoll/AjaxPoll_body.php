@@ -452,4 +452,12 @@ JS;
 	static function _log( $what ){
 		error_log( print_r( $what, true ) );
 	}
+
+	/**
+	 * create table with update.php
+	 */
+	static public function schemaUpdate() {
+		global $wgExtNewTables;
+		$wgExtNewTables[] = array( "{$wgDBprefix}poll_vote", dirname(__FILE__) . "/patch-create-poll_vote.sql" );
+	}
 }
