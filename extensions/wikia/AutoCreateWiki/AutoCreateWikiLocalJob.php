@@ -582,7 +582,7 @@ class AutoCreateWikiLocalJob extends Job {
 			# status - new or edit
 			$status = Status::newGood( array() );
 			# check is new
-			$status->value['new'] = isset($pages[$oRow->page_id]);
+			$status->value['new'] = ( isset($pages[$oRow->page_id]) ? false : true );
 			# call function
 			$archive = 0;
 			$res = ScribeProducer::saveComplete( $oArticle, $oUser, null, null, null, $archive, null, $flags, $oRevision, $status, 0 );
