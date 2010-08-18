@@ -497,7 +497,8 @@ class ArticleComment {
 			return false;
 		}
 
-		if (defined('NS_BLOG_ARTICLE') && $title->getNamespace() == NS_BLOG_ARTICLE) {
+		if (defined('NS_BLOG_ARTICLE') && $title->getNamespace() == NS_BLOG_ARTICLE ||
+			defined('NS_BLOG_ARTICLE_TALK') && $title->getNamespace() == NS_BLOG_ARTICLE_TALK) {
 			return true;
 		} else {
 			return strpos(end(explode('/', $title->getText())), ARTICLECOMMENT_PREFIX) === 0;

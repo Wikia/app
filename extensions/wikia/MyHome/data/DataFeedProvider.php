@@ -377,7 +377,7 @@ class DataFeedProvider {
 
 			$parts = ArticleComment::explode($res['title']);
 			$item['title'] = $parts['title'];
-			$item['url'] = Title::newFromText($title->getBaseText(), NS_BLOG_ARTICLE)->getLocalUrl();
+			$item['url'] = Title::newFromText($title->getBaseText(), NS_BLOG_ARTICLE_TALK)->getLocalUrl();
 
  		} else if ($res['ns'] == 400) {
 
