@@ -81,6 +81,13 @@ include("$IP/extensions/wikia/Development/SpecialDevBoxPanel/Special_DevBoxPanel
 $oWiki = new WikiFactoryLoader();
 $wgCityId = $oWiki->execute();
 
+##### MAKE ANY CHANGES HERE THAT YOU  WANT TO SHOW UP ON DEVBOXES BY DEFAULT BUT STILL BE OVERRIDABLE #####
+$wgCookieDomain = ".wikia-dev.com";
+
+// Life is easier if we have Special:WikiFactory
+$wgWikiaEnableWikiFactoryExt = true;
+##### MAKE ANY CHANGES HERE THAT YOU  WANT TO SHOW UP ON DEVBOXES BY DEFAULT BUT STILL BE OVERRIDABLE #####
+
 require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../DevBoxSettings.php' );
 
 ####
@@ -113,6 +120,3 @@ $wgDefaultExternalStore = array( "DB://dev-archive");
 
 // So that SASS will be generated locally.
 $wgCdnRootUrl = "";
-
-// Life is easier if we have Special:WikiFactory
-$wgWikiaEnableWikiFactoryExt = true;
