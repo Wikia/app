@@ -426,7 +426,7 @@ while( $request->Accept() >= 0 || $test ) {
 						#
 						say STDERR "There's no width and height defined for SVG file, checking viewbox" if $debug > 2;
 						my $viewBox = $xmlp->{ "viewBox" };
-						if( $viewBox && $viewBox =~/\d+ \d+[\s|,](\d+)[\s|,](\d+)/ ) {
+						if( $viewBox && $viewBox =~/\d+[\s|,]*\d+[\s|,]*(\d+)[\s|,]*(\d+)/ ) {
 							$origw = $1;
 							$origh = $2;
 						}
@@ -470,7 +470,7 @@ while( $request->Accept() >= 0 || $test ) {
 					}
 					else {
 						$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-						print STDERR "SVG conversion from $original to $thumbnail failed, time: $t_elapsed\n";
+						say STDERR "SVG conversion from $original to $thumbnail failed, time: $t_elapsed" if $debug;
 					}
 					no bytes;
 					undef $rsvg;
