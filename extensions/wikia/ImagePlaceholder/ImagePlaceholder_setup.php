@@ -251,7 +251,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 
 	$wrapperAttribs = array(
 		'id' => "WikiaImagePlaceholder{$wgWikiaImagePlaceholderId}",
-		'class' => 'gallerybox wikiaPlaceholder{$additionalClass}',
+		'class' => "gallerybox wikiaPlaceholder{$additionalClass}",
 		'style' => 'clear:both; vertical-align: bottom', // TODO: move to static CSS file
 	);
 
