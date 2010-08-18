@@ -34,8 +34,7 @@ require_once( dirname(__FILE__) . 'AjaxPoll_body.php' );
 /**
  * additional table
  */
-$wgExtNewTables[] = array( "{$wgDBprefix}poll_vote", $dir ."patch-create-poll_vote.sql" );
-
+$wgHooks['LoadExtensionSchemaUpdates'][] = "AjaxPollClass::schemaUpdate";
 
 /**
  * wfPollParserTag
