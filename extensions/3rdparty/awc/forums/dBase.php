@@ -86,7 +86,7 @@ drop function awc_f_test();';
 	 		}
 	 		
 	 		
-	 	$dbr = wfGetDB( DB_SLAVE );
+	 	$dbr = wfGetDB( DB_MASTER );
         $dbr->ignoreErrors(true);
         
         if($dbr->query($sql)){
