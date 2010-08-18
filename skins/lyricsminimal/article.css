@@ -27,12 +27,21 @@
 
 
 
-
 /* TODO: MOVE THIS OUT INTO AN APP-SPECIFIC CSS THEME-FILE */
-#body{
+#body, #wikia_page{
 	background-color:#000;
 	color:#fff;
 }
-.lyricbox{
-	background-color:#000;
+#bodyContent a{
+	color:#22f;
+}
+.wikiaSkinLyricsMinimal .lyricbox{
+	border: 0px;
+	background-color:#111;
+	color:#fff;
+}
+.wikiaSkinLyricsMinimal #catlinks{
+	background-color:inherit;
+	border-color:#444;
+	color:#444;
 }
