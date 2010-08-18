@@ -22,10 +22,19 @@ $wgExtensionCredits['parserhook'][] = array(
 	'url' => 'http://help.wikia.com/wiki/Help:Polls'
 );
 
+$dir = dirname(__FILE__) . '/';
 $wgHooks['ParserFirstCallInit'][] = "wfAjaxPollTag";
-$wgExtensionMessagesFiles["AjaxPoll"] = dirname(__FILE__) . '/AjaxPoll.i18n.php';
-#--- helper file
-require_once( dirname(__FILE__) . '/AjaxPoll_body.php' );
+$wgExtensionMessagesFiles["AjaxPoll"] = $dir . 'AjaxPoll.i18n.php';
+
+/**
+ * helper file
+ */
+require_once( dirname(__FILE__) . 'AjaxPoll_body.php' );
+
+/**
+ * additional table
+ */
+$wgUpdates[ "mysql" ][] = array( "add_table", "poll_vote",  $dir ."patch-create-poll_vote.sql", true );
 
 /**
  * wfPollParserTag
@@ -56,7 +65,7 @@ function wfAjaxPollTag( &$parser ) {
 function axAjaxPollSubmit() {
 	global $wgRequest;
 
-	$pool_id = $wgRequest->getVal( "wpPollId", null );	
+	$pool_id = $wgRequest->getVal( "wpPollId", null );
 	$poll = AjaxPollClass::newFromId( $pool_id );
 
 	return Wikia::json_encode( $poll->doSubmit( $wgRequest ) );
