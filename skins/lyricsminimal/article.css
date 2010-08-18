@@ -6,7 +6,7 @@
 
 #lyricsMinimalTop_leader{
 	float:left;
-	height:155px;
+	height:122px; /* the logo is 155px tall, and we're going to pad the box by 33px */
 	padding-top:33px; /* centers a 768x90 leaderboard vertically */
 }
 
