@@ -20,8 +20,8 @@ $USAGE =
 	"Usage:\tphp getDatabase.php [-f [dbname] | -i [filename] | -?]\n" .
 	"\toptions:\n" .
 	"\t\t--help      show this message\n" .
-	"\t\t--fetch     get a new database dump from s3\n" .
-	"\t\t--import    import a downloaded file to dev db\n";
+	"\t\t-f          Fetch a new database dump from s3\n" .
+	"\t\t-i          Import a downloaded file to dev db\n";
 
 $opts = getopt ("?::i:f:");
 
