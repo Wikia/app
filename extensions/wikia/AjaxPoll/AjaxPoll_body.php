@@ -459,5 +459,7 @@ JS;
 	static public function schemaUpdate() {
 		global $wgExtNewTables;
 		$wgExtNewTables[] = array( "{$wgDBprefix}poll_vote", dirname(__FILE__) . "/patch-create-poll_vote.sql" );
+
+		return true;
 	}
 }
