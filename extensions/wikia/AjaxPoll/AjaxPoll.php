@@ -29,7 +29,7 @@ $wgExtensionMessagesFiles["AjaxPoll"] = $dir . 'AjaxPoll.i18n.php';
 /**
  * helper file
  */
-require_once( dirname(__FILE__) . 'AjaxPoll_body.php' );
+require_once( $dir . 'AjaxPoll_body.php' );
 
 /**
  * additional table
