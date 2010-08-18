@@ -10,21 +10,18 @@
  * title and artist) than the site's default search.  After using the API to find a match, mobile
  * apps can then send the user to the webpage, using this mobile-friendly skin.
  *
- * TODO: Add custom CSS
- * TODO: Take off unneeded pieces
- *			- Hmmm.... (a bunch more, need to figure them out)
+ * TODO: Add top leaderboard
  * TODO: Remove unneeded CSS
  * TODO: Remove unneeded JS
  * TODO: Verify that Google Analytics tracking (for licensing) is still working.
- * TODO: Add LyricWiki logo
- * TODO: Add top banner
  * TODO: Verify that Google Analytics tracking (for licensing) is still working - again.
  * TODO: Make sure GN pages still show the GN logo and link to EULA on the bottom.
  * TODO: Add custom styling for currenT test.
  *			- Color changes
  *			- Remove edit button
  * TODO: Should this just _EXTEND_ Monaco?  It would be fairly straightforward... anything that's left in this file after the deletions should still be in here.  This would have
- *			the benefits of picking up any improvements to Monaco, but it would also pick up new page-elements, etc.  Monaco is probably fairly "done" with though, so this is probably a moot point.
+ *			the benefits of picking up any improvements to Monaco and running any monaco-specific extensions, but it would also pick up new page-elements, etc.  Monaco is probably fairly "done" with though, so this is probably a moot point.
+ * TODO: See if we need to strip ad tags in printContent() because only the top leaderboard belongs in the minimal skin.
  */
 
 if( !defined( 'MEDIAWIKI' ) )
@@ -927,11 +924,18 @@ wfRunHooks('MonacoBeforeWikiaPage', array($this));
 <?php
 wfRunHooks('MonacoBeforePageBar', array($this));
 if(empty($wgEnableRecipesTweaksExt) || !RecipesTweaks::isHeaderStripeShown()) {
+		echo AdEngine::getInstance()->getSetupHtml();
 ?>
+		<div class='lyricsMinimalTop'>
+			<div id="wiki_logo" style="background-image: url(<?= $wgLogo ?>);"><a href="<?= htmlspecialchars($this->data['nav_urls']['mainpage']['href'])?>" accesskey="z"><?= $wgSitename ?></a></div>
+
+			<!-- // TODO: Place REAL leaderboard ad here. -->
+			<div id="lyricsMinimalTop_leader"><img src="http://www.iab.net/media/image/728X90.gif"/></div>
+
+		</div>
 			<?php
 				// NOTE: Removed page-bar page_bar here.
-
-				echo AdEngine::getInstance()->getSetupHtml(); ?>
+			?>
 					<!-- ARTICLE -->
 
 <?php }		wfProfileIn( __METHOD__ . '-article'); ?>
@@ -1207,13 +1211,6 @@ EOF;
 		if($this->data['catlinks']) {
 			$this->html('catlinks');
 		}
-	}
-
-	/* Allow logo to be different */
-	function printWikiaLogo() {
-		global $wgLangToCentralMap, $wgContLang;
-		$central_url = Wikia::langToSomethingMap($wgLangToCentralMap, $wgContLang->getCode(), "http://www.wikia.com/Wikia");
-		echo '<div id="wikia_logo"><a rel="nofollow" href="' . $central_url . '">Wikia</a></div>';
 	}
 
 }
