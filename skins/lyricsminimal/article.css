@@ -27,10 +27,11 @@
 
 
 
-/* TODO: MOVE THIS OUT INTO AN APP-SPECIFIC CSS THEME-FILE */
+/* TODO: MOVE SOME OF THIS OUT INTO AN APP-SPECIFIC CSS THEME-FILE */
 #body, #wikia_page{
 	background-color:#000;
 	color:#fff;
+	border:0px;
 }
 #bodyContent a{
 	color:#22f;
@@ -48,6 +49,9 @@
 	display:none;
 }
 .usermessage{
+	display:none;
+}
+#fb-root{ /* not sure if the page will actually load faster with this displayed none */
 	display:none;
 }
 
