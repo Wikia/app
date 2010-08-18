@@ -100,6 +100,7 @@ class AutoCreateWikiLocalJob extends Job {
 		$this->populateCheckUserTables();
 		$this->protectKeyPages();
 		$this->queueReminderMail();
+		$this->sendRevisionToScribe();
 
 		if(class_exists(AchProcessor)) {
 			$ap = new AchProcessor();
@@ -549,4 +550,49 @@ class AutoCreateWikiLocalJob extends Job {
 		}
 		wfProfileOut( __METHOD__ );
 	}
+	
+	/**
+	 * send pages from starters to scribe
+	 *
+	 * @access private
+	 * @author Piotr Molski (eloy)
+	 *
+	 */
+	private function sendRevisionToScribe( ) {
+		wfProfileIn( __METHOD__ );
+
+		$dbr = wfGetDB( DB_SLAVE );
+		$pages = array();
+		$oRes = $dbr->select( 
+			array( 'revision' ), 
+			array( 'rev_page as page_id, rev_id, rev_user' ),
+			array( 'rev_page > 0' ),
+			__METHOD__,
+			array( 'ORDER BY' => 'rev_id' )
+		);
+		$loop = 0;
+		while ( $oRow = $dbr->fetchObject( $oRes ) ) {
+			$flags = "";
+			# article
+			$oArticle = Article::newFromID($oRow->page_id);
+			# user
+			$oUser = User::newFromId($oRow->rev_user);
+			# revision
+			$oRevision = Revision::newFromId($oRow->rev_id);
+			# status - new or edit
+			$status = Status::newGood( array() );
+			# check is new
+			$status->value['new'] = isset($pages[$oRow->page_id]);
+			# call function
+			$archive = 0;
+			$res = ScribeProducer::saveComplete( $oArticle, $oUser, null, null, null, $archive, null, $flags, $oRevision, $status, 0 );
+			
+			$pages[$oRow->page_id] = $oRow->rev_id;
+			$loop++;
+		}
+
+		Wikia::log( __METHOD__, "info", "send starter revisions to scribe: {$loop} rows" );
+
+		wfProfileOut( __METHOD__ );
+	}	
 }
