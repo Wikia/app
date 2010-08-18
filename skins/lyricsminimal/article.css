@@ -37,7 +37,7 @@
 }
 .wikiaSkinLyricsMinimal .lyricbox{
 	border: 0px;
-	background-color:#111;
+	/*background-color:#111;*/
 	color:#fff;
 }
 .wikiaSkinLyricsMinimal #catlinks{
