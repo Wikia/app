@@ -1,10 +1,12 @@
 
 #wiki_logo{
 	position:static;
+	float:left;
 }
 
 #lyricsMinimalTop_leader{
 	float:left;
+	height:155px;
 }
 
 #wikia_page{
