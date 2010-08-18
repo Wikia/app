@@ -7,6 +7,7 @@
 #lyricsMinimalTop_leader{
 	float:left;
 	height:155px;
+	padding-top:33px; /* centers a 768x90 leaderboard vertically */
 }
 
 #wikia_page{
