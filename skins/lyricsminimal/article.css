@@ -29,7 +29,7 @@
 
 
 /* TODO: MOVE THIS OUT INTO AN APP-SPECIFIC CSS THEME-FILE */
-body{
+#body{
 	background-color:#000;
 	color:#fff;
 }
