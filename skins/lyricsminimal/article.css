@@ -23,3 +23,16 @@
 .rtMatcher{
 	display:none;
 }
+
+
+
+
+
+/* TODO: MOVE THIS OUT INTO AN APP-SPECIFIC CSS THEME-FILE */
+body{
+	background-color:#000;
+	color:#fff;
+}
+.lyricbox{
+	background-color:#000;
+}
