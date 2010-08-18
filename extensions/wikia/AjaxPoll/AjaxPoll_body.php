@@ -457,8 +457,8 @@ JS;
 	 * create table with update.php
 	 */
 	static public function schemaUpdate() {
-	      global $wgDBtype, $wgExtNewFields, $wgExtPGNewFields, $wgExtNewIndexes, $wgExtNewTables;
-	      $wgExtNewTables[] = array( "poll_vote", dirname(__FILE__) . "/patch-create-poll_vote.sql" );
+		global $wgDBtype, $wgExtNewFields, $wgExtPGNewFields, $wgExtNewIndexes, $wgExtNewTables;
+		$wgExtNewTables[] = array( "poll_vote", dirname(__FILE__) . "/patch-create-poll_vote.sql" );
 
 		return true;
 	}
