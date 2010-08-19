@@ -242,6 +242,7 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 
 		this.on( 'cancel', function( evt )
 			{
+				if( this._.name == 'link' ) return false;
 				iterContents( function( item )
 					{
 						if ( item.isChanged() )

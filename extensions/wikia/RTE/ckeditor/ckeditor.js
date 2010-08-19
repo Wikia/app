@@ -5,7 +5,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 if(!window.CKEDITOR)
 {window.CKEDITOR=(function()
-{var CKEDITOR={timestamp:'',version:'20100819',revision:'r25571',_:{},status:'unloaded',basePath:(function()
+{var CKEDITOR={timestamp:'',version:'20100819',revision:'r25572',_:{},status:'unloaded',basePath:(function()
 {var path=window.CKEDITOR_BASEPATH||'';if(!path)
 {var scripts=document.getElementsByTagName('script');for(var i=0;i<scripts.length;i++)
 {var match=scripts[i].src.match(/(^|.*[\\\/])ckeditor(?:_basic)?(?:_source)?.js(?:\?.*)?$/i);if(match)
@@ -3339,7 +3339,7 @@ if(isValid===false)
 {var dialog=item.getDialog();dialog.fire('notvalid',{item:item});if(item.select)
 item.select();else
 item.focus();evt.data.hide=false;evt.stop();return true;}}});},this,null,0);this.on('cancel',function(evt)
-{iterContents(function(item)
+{if(this._.name=='link')return false;iterContents(function(item)
 {if(item.isChanged())
 {if(!confirm(editor.lang.common.confirmCancel))
 evt.data.hide=false;return true;}});},this,null,0);this.parts.close.on('click',function(evt)
