@@ -274,15 +274,17 @@ class WikiStatsPage extends IncludableSpecialPage
 				"wgStatsExcludedNonSpecialGroup" => $wgStatsExcludedNonSpecialGroup
 			) );
 			$wgOut->addHTML( $this->showMenu() );
-			$wgOut->addHTML( $this->mStats->getBasicInformation() );
-			$wgOut->addHTML( $oTmpl->execute("main-table-stats") ); 
-			
-			$oTmpl->set_vars( array(
-				"columns" 		=> $this->mStats->getRangeColumns(),
-				"userIsSpecial"	=> $this->userIsSpecial,
-				"wgStatsExcludedNonSpecialGroup" => $wgStatsExcludedNonSpecialGroup
-			));
-			$wgOut->addHTML( $oTmpl->execute("main-stats-definitions") );
+			if  ( $this->mFromDate <= $this->mToDate ) {
+				$wgOut->addHTML( $this->mStats->getBasicInformation() );
+				$wgOut->addHTML( $oTmpl->execute("main-table-stats") ); 
+				
+				$oTmpl->set_vars( array(
+					"columns" 		=> $this->mStats->getRangeColumns(),
+					"userIsSpecial"	=> $this->userIsSpecial,
+					"wgStatsExcludedNonSpecialGroup" => $wgStatsExcludedNonSpecialGroup
+				));
+				$wgOut->addHTML( $oTmpl->execute("main-stats-definitions") );
+			}
 			wfProfileOut( __METHOD__ );
 		} else {
 			$data = $this->mStats->loadStatsFromDB();
