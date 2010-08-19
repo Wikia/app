@@ -23,10 +23,12 @@ $messages['qqq'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Gwendal
  * @author Y-M D
  */
 $messages['br'] = array(
 	'sharedhelp-desc' => "Kemer a ra pajennoù [[w:c:Help|skoazell Wikia]] hag ensoc'hañ a ra anezho en esaouenn anv {{ns:help}} eus ar wiki-mañ",
+	'sharedhelp-autotalkcreate-summary' => 'Pajenn gaozeal krouet ent emgefreek',
 );
 
 /** German (Deutsch)
@@ -37,18 +39,29 @@ $messages['de'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'Diskussionsseite automatisch erstellt',
 );
 
+/** Lower Sorbian (Dolnoserbski)
+ * @author Michawiki
+ */
+$messages['dsb'] = array(
+	'sharedhelp-desc' => 'Bjerjo boki z [[w:c:Help|Pomoc Wikia]] a zasajźujo je do mjenjowego ruma {{ns:help}} w toś tom wikiju',
+	'sharedhelp-autotalkcreate-summary' => 'Awtomatiski napórany diskusijny bok',
+);
+
 /** Spanish (Español)
  * @author Crazymadlover
  */
 $messages['es'] = array(
 	'sharedhelp-desc' => 'Toma páginas de [[w:c:Help|Help Wikia]] y los inserta en el espacio de nombre {{ns:help}} en este wiki',
+	'sharedhelp-autotalkcreate-summary' => 'Página de discusión creada automáticamente',
 );
 
 /** French (Français)
  * @author Peter17
+ * @author Yumeki
  */
 $messages['fr'] = array(
 	'sharedhelp-desc' => 'Prend des pages de [[w:c:Help|l’aide de Wikia]] et les insère dans l’espace de nom {{ns:help}} de ce wiki',
+	'sharedhelp-autotalkcreate-summary' => 'Page de discussion créée automatiquement',
 );
 
 /** Galician (Galego)
@@ -56,6 +69,7 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'sharedhelp-desc' => 'Toma páxinas da [[w:c:Help|axuda de Wikia]] e insíreas no espazo de nomes "{{ns:help}}" deste wiki',
+	'sharedhelp-autotalkcreate-summary' => 'Páxina de conversa creada automaticamente',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -63,6 +77,15 @@ $messages['gl'] = array(
  */
 $messages['hsb'] = array(
 	'sharedhelp-desc' => 'Bjerje strony z [[w:c:Help|Help Wikia]] a zasuwa je do mjenoweho ruma {{ns:help}} w tutym wikiju',
+	'sharedhelp-autotalkcreate-summary' => 'Awtomatisce wutworjena diskusijna strona',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'sharedhelp-desc' => 'Prende paginas del [[w:c:Help|Adjuta de Wikia]] e los insere in le spatio de nomines {{ns:help}} in iste wiki',
+	'sharedhelp-autotalkcreate-summary' => 'Paginas de discussion create automaticamente',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -84,6 +107,7 @@ $messages['ksh'] = array(
  */
 $messages['mk'] = array(
 	'sharedhelp-desc' => 'Презема страници од [[w:c:Help|Помогнете ѝ на Викија]] и ги вметнува во именскиот простор {{ns:help}} на ова вики',
+	'sharedhelp-autotalkcreate-summary' => 'Страницата за разговор е автоматски создадена',
 );
 
 /** Dutch (Nederlands)
@@ -96,9 +120,11 @@ $messages['nl'] = array(
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
+ * @author Nghtwlkr
  */
 $messages['no'] = array(
 	'sharedhelp-desc' => 'Tar sider fra [[w:c:Help|Hjelpe-Wikia]] og setter dem inn i {{ns:help}}-navnerommet på denne wikien',
+	'sharedhelp-autotalkcreate-summary' => 'Diskusjonsside opprettet automatisk',
 );
 
 /** Piedmontese (Piemontèis)
@@ -115,13 +141,24 @@ $messages['pms'] = array(
  */
 $messages['pt'] = array(
 	'sharedhelp-desc' => 'Insere páginas da [[w:c:Help|Help Wikia]] no espaço nominal {{ns:help}} desta wiki',
+	'sharedhelp-autotalkcreate-summary' => 'Página de discussão criada automaticamente',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
+ */
+$messages['pt-br'] = array(
+	'sharedhelp-desc' => 'Insere páginas da [[w:c:Help|Ajuda da Wikia]] no espaço nominal {{ns:help}} desta wiki',
+	'sharedhelp-autotalkcreate-summary' => 'Página de discussão criada automaticamente',
 );
 
 /** Russian (Русский)
+ * @author Eleferen
  * @author Ytsukeng Fyvaprol
  */
 $messages['ru'] = array(
 	'sharedhelp-desc' => 'Берутся страницы из [[w:c:Help|Help Wikia]] и вставляются в пространство имён {{ns:help}} данной вики',
+	'sharedhelp-autotalkcreate-summary' => 'Страница обсуждения создана автоматически',
 );
 
 /** Ukrainian (Українська)

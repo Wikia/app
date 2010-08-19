@@ -530,6 +530,7 @@ $messages['hu'] = array(
  * @author McDutchie
  */
 $messages['ia'] = array(
+	'createpage-desc' => 'Permitte crear un nove pagina con le editor WYSIWYG de Wikia',
 	'createpage-sp-title' => 'Crear un nove articulo',
 	'createpage_title' => 'Crear un nove articulo',
 	'createpage_title_caption' => 'Titulo:',
@@ -623,6 +624,7 @@ Scrivi qui la seconda sezione del tuo articolo.',
  * @author Tommy6
  */
 $messages['ja'] = array(
+	'createpage-desc' => 'ウィキアのWYSIWIGエディターを使って、新しいページを作成できるようにする',
 	'createpage-sp-title' => '新規記事を作成',
 	'createpage_title' => '新規記事を作成',
 	'createpage_title_caption' => 'タイトル:',
@@ -697,6 +699,45 @@ Schreiwt déi éischt Sektioun vun Ärem Artikel hei.
 == Iwwerschrëft vun der Sektioun ==
 
 Schreiwt déi zweet Sektioun vun Ärem Artikel hei.',
+);
+
+/** Malagasy (Malagasy)
+ * @author Jagwar
+ */
+$messages['mg'] = array(
+	'createpage-desc' => "Avela mamorona pejy amin'ny alàlan'ny mpanova pejy WYSWIG an'i Wikia",
+	'createpage-sp-title' => 'Hamorona takelaka vaovzo',
+	'createpage_title' => 'Hamorona takelaka vaovao',
+	'createpage_title_caption' => 'Lohateny :',
+	'createpage_enter_text' => 'Soratra :',
+	'createpage_empty_title_error' => 'Ilaina ny lohateny',
+	'createpage_empty_article_body_error' => "Ilaina ny soratra ao amin'ny takelaka",
+	'createpage_invalid_title_error' => 'Lohateny tsy ekena',
+	'createpage_article_already_exists' => 'Efa misy ny takelaka mitondra io anarana io, misafidia anarana hafa',
+	'createpage_spam' => 'Miala tsiny, fa tsy afaka notahirizina ny fanovanao',
+	'createpage_cant_edit' => 'Tsy afaka manao ilay fanovana',
+	'createpage-dialog-title' => 'Hamorona takelaka vaovao',
+	'createpage-dialog-message1' => 'Hooray, am-pamoronana pejy vaovao ianao !',
+	'createpage-dialog-message2' => 'Inona ny anarana tianao antsoina azy ?',
+	'createpage-dialog-choose' => 'Safidio ny fametrahana am-pejy :',
+	'createpage-dialog-format' => 'Fanehoana tsotra',
+	'createpage-dialog-blank' => 'Pejy fotsy',
+	'createpage-error-empty-title' => "Soraty ny lohatenin'ny takelakao",
+	'createpage-error-invalid-title' => "Mala tsiny, tsy azo nekena ny lohatenin'ny lahatsoratra. Misafidia lohateny hafa.",
+	'createpage-error-article-exists' => 'Efa misy ny takelaka mitondra io lohateny io. Afaka mandeha any amin\'ny <a href="$1">$2</a> ianao, na manova ny pejinao',
+	'createpage-error-article-spam' => "Miala tsiny, fa ny lohatenin'ny pejinao dia nolavin'ny fitantavanana spam. Mampiasà anarana hafa.",
+	'createpage-error-article-blocked' => "Miala tsiny, tsy afaka mamorona takelana ianao amin'izao fotoana izao.",
+	'tog-createpagedefaultblank' => 'Mampiasa pejy fotsy tsipalotra mba hamorona pejy vaovao',
+	'newpagelayout' => "[[File:Placeholder|right|300px]]
+Soraty eto ny paragrafy voalohan'ny pejinao.
+
+== Lohafizarana ==
+
+Soraty eto ny fizarana voalohan'ny pejinao.
+
+==Section heading==
+
+Soraty eto ny fizarana faharoan'ny pejinao.",
 );
 
 /** Macedonian (Македонски)
@@ -825,7 +866,9 @@ Skriv den første seksjonen av artikkelen din her.
 Skriv den andre seksjonen av artikkelen din her.',
 );
 
-/** Polish (Polski) */
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
 $messages['pl'] = array(
 	'createpage_title' => 'Stwórz Stronę',
 	'createpage_title_caption' => 'Tytuł',
@@ -938,6 +981,7 @@ Escreva aqui a segunda secção da sua página.',
  * @author Jesielt
  */
 $messages['pt-br'] = array(
+	'createpage-desc' => 'Permite criar uma página nova usando o editor WYSIWIG da Wikia',
 	'createpage-sp-title' => 'Crie um novo artigo',
 	'createpage_title' => 'Crie um novo artigo',
 	'createpage_title_caption' => 'Título:',
@@ -1025,6 +1069,7 @@ $messages['ru'] = array(
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Rancher
  * @author Verlor
+ * @author Жељко Тодоровић
  */
 $messages['sr-ec'] = array(
 	'createpage-sp-title' => 'Започни нови чланак',
@@ -1043,7 +1088,7 @@ $messages['sr-ec'] = array(
 	'createpage-dialog-message2' => 'Како желите да га назовете?',
 	'createpage-dialog-choose' => 'Одаберите изглед странице:',
 	'createpage-dialog-format' => 'Стандардан изглед',
-	'createpage-dialog-blank' => 'празна страна',
+	'createpage-dialog-blank' => 'Празна страница',
 	'createpage-error-empty-title' => 'Молимо Вас да напишете наслов за ваш чланак',
 	'createpage-error-invalid-title' => 'Извините, али наслов вашег чланка није добар
 Молимо Вас да користите други наслов',

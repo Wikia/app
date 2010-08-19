@@ -27,6 +27,13 @@ $messages['de'] = array(
 	'healthcheck-desc' => '[[Special:HealthCheck|Spezialseite]] zur Prüfung des Serverstatus',
 );
 
+/** Lower Sorbian (Dolnoserbski)
+ * @author Michawiki
+ */
+$messages['dsb'] = array(
+	'healthcheck-desc' => '[[Special:HealthCheck|Specialny bok]] za kontrolěrowanje serwerowego statusa',
+);
+
 /** Spanish (Español)
  * @author Crazymadlover
  */
@@ -55,11 +62,32 @@ $messages['gl'] = array(
 	'healthcheck-desc' => 'Unha [[Special:HealthCheck|páxina especial]] para comprobar o estado do servidor',
 );
 
+/** Upper Sorbian (Hornjoserbsce)
+ * @author Michawiki
+ */
+$messages['hsb'] = array(
+	'healthcheck-desc' => '[[Special:HealthCheck|Specialna strona]] za kontrolowanje serweroweho statusa',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'healthcheck-desc' => 'Un [[Special:HealthCheck|pagina special]] pro verificar le stato de servitor',
+);
+
 /** Indonesian (Bahasa Indonesia)
  * @author Farras
  */
 $messages['id'] = array(
 	'healthcheck-desc' => 'Sebuah [[Special:HealthCheck|halaman khusus]] untuk mengecek kondisi server',
+);
+
+/** Japanese (日本語)
+ * @author 青子守歌
+ */
+$messages['ja'] = array(
+	'healthcheck-desc' => 'サーバーの状態確認のための[[Special:HealthCheck|特別ページ]]',
 );
 
 /** Colognian (Ripoarisch)
@@ -83,6 +111,13 @@ $messages['nl'] = array(
 	'healthcheck-desc' => 'Een [[Special:HealthCheck|speciale pagina]] voor de controle van de serverstatus',
 );
 
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'healthcheck-desc' => '[[Special:HealthCheck|Strona specjalna]] pozwalająca sprawdzić stan serwera',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  */
@@ -95,6 +130,20 @@ $messages['pms'] = array(
  */
 $messages['pt'] = array(
 	'healthcheck-desc' => 'Uma [[Special:HealthCheck|página especial]] para verificar o estado do servidor',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
+ */
+$messages['pt-br'] = array(
+	'healthcheck-desc' => 'Uma [[Special:HealthCheck|página especial]] para verificar o estado do servidor',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'healthcheck-desc' => "'Na [[Special:HealthCheck|pàgene speciale]] pe verifeche d'u state d'u server",
 );
 
 /** Russian (Русский)

@@ -42,6 +42,7 @@ $messages['qqq'] = array(
 	'whereisextension-submit' => '{{Identical|Search}}',
 	'whereisextension-filter' => 'Used as some kind of fieldset description.
 {{Identical|Filter}}',
+	'whereisextension-search-type' => '{{Identical|Type}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -83,6 +84,10 @@ $messages['be-tarask'] = array(
 	'whereisextension-filter' => 'Фільтар',
 	'whereisextension-all-groups' => 'Усе групы',
 	'whereisextension-name-contains' => 'назва зьменнай утрымлівае',
+	'whereisextension-search-like-value' => 'Падобна:',
+	'whereisextension-search-type' => 'Тып:',
+	'whereisextension-search-type-bool' => 'Лягічны',
+	'whereisextension-search-type-full' => 'Падобна',
 );
 
 /** Breton (Brezhoneg)
@@ -170,6 +175,7 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author IAlex
+ * @author Peter17
  */
 $messages['fr'] = array(
 	'whereisextension' => "Où se trouve l'extension",
@@ -179,6 +185,10 @@ $messages['fr'] = array(
 	'whereisextension-filter' => 'Filtrer',
 	'whereisextension-all-groups' => 'Tous les groupes',
 	'whereisextension-name-contains' => 'le nom de la variable contient',
+	'whereisextension-search-like-value' => 'Comme :',
+	'whereisextension-search-type' => 'Type :',
+	'whereisextension-search-type-bool' => 'Booléen',
+	'whereisextension-search-type-full' => 'Comme',
 );
 
 /** Galician (Galego)
@@ -192,6 +202,10 @@ $messages['gl'] = array(
 	'whereisextension-filter' => 'Filtrar',
 	'whereisextension-all-groups' => 'Todos os grupos',
 	'whereisextension-name-contains' => 'o nome da variable contén',
+	'whereisextension-search-like-value' => 'Semellante a:',
+	'whereisextension-search-type' => 'Tipo:',
+	'whereisextension-search-type-bool' => 'Booleano',
+	'whereisextension-search-type-full' => 'Semellante a',
 );
 
 /** Hausa (هَوُسَ) */
@@ -223,6 +237,10 @@ $messages['ia'] = array(
 	'whereisextension-filter' => 'Filtro',
 	'whereisextension-all-groups' => 'Tote le gruppos',
 	'whereisextension-name-contains' => 'nomine de variabile contine',
+	'whereisextension-search-like-value' => 'Como:',
+	'whereisextension-search-type' => 'Typo:',
+	'whereisextension-search-type-bool' => 'Boolean',
+	'whereisextension-search-type-full' => 'Como',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -284,6 +302,10 @@ $messages['mk'] = array(
 	'whereisextension-filter' => 'Филтрирање',
 	'whereisextension-all-groups' => 'Сите групи',
 	'whereisextension-name-contains' => 'името на променливата содржи',
+	'whereisextension-search-like-value' => 'Како:',
+	'whereisextension-search-type' => 'Тип:',
+	'whereisextension-search-type-bool' => 'Булов',
+	'whereisextension-search-type-full' => 'Како',
 );
 
 /** Dutch (Nederlands)
@@ -297,6 +319,10 @@ $messages['nl'] = array(
 	'whereisextension-filter' => 'Filteren',
 	'whereisextension-all-groups' => 'Alle groepen',
 	'whereisextension-name-contains' => 'variabelenaam bevat',
+	'whereisextension-search-like-value' => 'Zoals:',
+	'whereisextension-search-type' => 'Type:',
+	'whereisextension-search-type-bool' => 'Booleaanse operator',
+	'whereisextension-search-type-full' => 'Zoals',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -357,6 +383,10 @@ $messages['pms'] = array(
 	'whereisextension-filter' => 'Filtr',
 	'whereisextension-all-groups' => 'Tute le partìe',
 	'whereisextension-name-contains' => 'ël nòm ëd variàbil a conten',
+	'whereisextension-search-like-value' => 'Com:',
+	'whereisextension-search-type' => 'Sòrt:',
+	'whereisextension-search-type-bool' => 'Boolean',
+	'whereisextension-search-type-full' => 'Com',
 );
 
 /** Pashto (پښتو)
@@ -379,10 +409,15 @@ $messages['pt'] = array(
 	'whereisextension-filter' => 'Filtro',
 	'whereisextension-all-groups' => 'Todos os grupos',
 	'whereisextension-name-contains' => 'nome da variável contém',
+	'whereisextension-search-like-value' => 'Semelhante a:',
+	'whereisextension-search-type' => 'Tipo:',
+	'whereisextension-search-type-bool' => 'Booleano',
+	'whereisextension-search-type-full' => 'Semelhante a',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Daemorris
+ * @author Giro720
  * @author McDutchie
  */
 $messages['pt-br'] = array(
@@ -393,9 +428,14 @@ $messages['pt-br'] = array(
 	'whereisextension-filter' => 'Filtro',
 	'whereisextension-all-groups' => 'Todos os grupos',
 	'whereisextension-name-contains' => 'nome de variável contêm',
+	'whereisextension-search-like-value' => 'Semelhante a:',
+	'whereisextension-search-type' => 'Tipo:',
+	'whereisextension-search-type-bool' => 'Booleano',
+	'whereisextension-search-type-full' => 'Semelhante a',
 );
 
 /** Russian (Русский)
+ * @author Eleferen
  * @author Lockal
  * @author Александр Сигачёв
  */
@@ -407,6 +447,8 @@ $messages['ru'] = array(
 	'whereisextension-filter' => 'Фильтр',
 	'whereisextension-all-groups' => 'Все группы',
 	'whereisextension-name-contains' => 'имя переменной содержит',
+	'whereisextension-search-type' => 'Тип:',
+	'whereisextension-search-type-bool' => 'Логический',
 );
 
 /** Slovenian (Slovenščina)

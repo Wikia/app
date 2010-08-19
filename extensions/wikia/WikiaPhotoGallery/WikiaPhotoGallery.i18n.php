@@ -221,6 +221,17 @@ $messages['af'] = array(
 	'wikiaPhotoGallery-upload-page-next' => 'Volgende 8',
 	'wikiaPhotoGallery-upload-page-prev' => 'Vorige 8',
 	'wikiaPhotoGallery-upload-select-images' => 'Kies',
+	'wikiaPhotoGallery-preview-hover-delete' => 'skrap',
+);
+
+/** Aragonese (Aragonés)
+ * @author Juanpabl
+ */
+$messages['an'] = array(
+	'wikiaPhotoGallery-upload-error-conflict-insert' => 'Insertar',
+	'wikiaPhotoGallery-preview-spacing-small' => 'Chicot',
+	'wikiaPhotoGallery-preview-captionsize-small' => 'Chicot',
+	'wikiaPhotoGallery-preview-bordersize-small' => 'Chicot',
 );
 
 /** Arabic (العربية)
@@ -632,7 +643,7 @@ $messages['ckb'] = array(
  * @author The Evil IP address
  */
 $messages['de'] = array(
-	'wikiaphotogallery-desc' => 'Öberfläche für die Verwaltung von Galerien und Slideshows in Seiten',
+	'wikiaphotogallery-desc' => 'Oberfläche für die Verwaltung von Galerien und Slideshows in Seiten',
 	'wikiaPhotoGallery-back' => 'Zurück',
 	'wikiaPhotoGallery-finish' => 'Beenden',
 	'wikiaPhotoGallery-add-gallery' => 'Eine Foto-Galerie oder Slideshow einfügen',
@@ -2620,6 +2631,7 @@ $messages['pt'] = array(
 	'wikiaPhotoGallery-upload-filesinsert' => 'Inserir esta foto',
 	'wikiaPhotoGallery-upload-error-conflict-insert' => 'Inserir',
 	'wikiaPhotoGallery-upload-select-images' => 'Seleccionar',
+	'wikiaPhotoGallery-photooptions-done' => 'Terminado',
 	'wikiaPhotoGallery-preview-hover-modify' => 'modificar',
 	'wikiaPhotoGallery-preview-add-photo' => 'Adicionar uma foto',
 	'wikiaPhotoGallery-preview-add-caption' => 'Adicionar um título',

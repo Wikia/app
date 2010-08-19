@@ -591,14 +591,15 @@ $messages['ru'] = array(
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Rancher
  * @author Verlor
+ * @author Жељко Тодоровић
  */
 $messages['sr-ec'] = array(
 	'protectsite-allowall' => 'Сви корисници',
 	'protectsite-allowusersysop' => 'Регистровани корисници и Администратори',
 	'protectsite-allowsysop' => 'Само администратори',
-	'protectsite-createpage' => 'Дозволи стварање страна од',
-	'protectsite-edit' => 'Дозволи уређивање страна од стране',
-	'protectsite-move' => 'Дозволи преусмеравање страна од стране',
+	'protectsite-createpage' => 'Дозволи стварање страница од стране',
+	'protectsite-edit' => 'Дозволи уређивање страница од стране',
+	'protectsite-move' => 'Дозволи преусмеравање страница од стране',
 	'protectsite-timeout' => 'Време истекло (тајмаут)',
 	'protectsite-maxtimeout' => 'Максимум:',
 	'protectsite-comment' => 'Коментар:',

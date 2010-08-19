@@ -7,6 +7,14 @@ $messages['en'] = array(
 	'slidertag-featured-wikis' => 'Featured wikis',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'slidertag-desc' => "Pouchas a ra d'an implijerien un doare hollek da ouzhpennañ luc'hvannoù dibar",
+	'slidertag-featured-wikis' => 'Wikioù dibar',
+);
+
 /** German (Deutsch)
  * @author LWChris
  */
@@ -19,6 +27,7 @@ $messages['de'] = array(
  * @author Crazymadlover
  */
 $messages['es'] = array(
+	'slidertag-desc' => 'Provee una manera genérica para los usuarios para agregar diapositivas destacadas',
 	'slidertag-featured-wikis' => 'Wikis destacados',
 );
 
@@ -36,6 +45,14 @@ $messages['fr'] = array(
 $messages['gl'] = array(
 	'slidertag-desc' => 'Ofrece un modo xenérico de que os usuarios engadan cursores destacados',
 	'slidertag-featured-wikis' => 'Wikis destacados',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'slidertag-desc' => 'Forni un modo generic pro usatores de adder "sliders" de cosas in evidentia',
+	'slidertag-featured-wikis' => 'Wikis in evidentia',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -76,5 +93,28 @@ $messages['nl'] = array(
 $messages['pms'] = array(
 	'slidertag-desc' => "A dà na manera genérica a j'utent ëd gionté cursor ëd funsionalità",
 	'slidertag-featured-wikis' => 'Wiki an giojera',
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'slidertag-desc' => 'Fornece um modo genérico para os utilizadores adicionarem destaques corrediços',
+	'slidertag-featured-wikis' => 'Wikis destacadas',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
+ */
+$messages['pt-br'] = array(
+	'slidertag-featured-wikis' => 'Wikis destacadas',
+);
+
+/** Russian (Русский)
+ * @author Александр Сигачёв
+ */
+$messages['ru'] = array(
+	'slidertag-desc' => 'Предоставляет возможность участникам добавлять избранный слайдеры',
+	'slidertag-featured-wikis' => 'Избранные вики',
 );
 

@@ -35,6 +35,14 @@ $messages['af'] = array(
 	'ircgate-channel' => 'Kanaal:',
 );
 
+/** Old English (Ænglisc)
+ * @author Gott wisst
+ */
+$messages['ang'] = array(
+	'ircgate-username' => 'Brūcendnama:',
+	'ircgate-channel' => 'Ƿeȝ:',
+);
+
 /** Arabic (العربية)
  * @author Achraf94
  */

@@ -74,19 +74,59 @@ $messages['be-tarask'] = array(
 	'wikistickies-save-changes' => 'Захаваць зьмены',
 	'wikistickies-more' => 'глядзіце болей',
 	'wikistickies-admins-hd' => 'Толькі адміністратары',
+	'wikistickies-admins-msg' => 'Гэта не тыповыя вікі-стыкеры. 
+Гэтыя дзеяньні могуць выконваць толькі адміністратары, і гэта паўплывае на тое, як будзе выглядаць {{GRAMMAR:вінавальны|{{SITENAME}}}}.',
+	'wikistickies-logo-hd' => 'Загрузіць лягатып',
+	'wikistickies-theme-hd' => 'Выбраць тэму',
+	'wikistickies-custom-hd' => 'Стварыце Ваш уласны вікі-стыкер',
+	'wikistickies-custom-msg' => 'Вы можаце рэдагаваць [[MediaWiki:CommunityStickies|старонку стыкераў супольнасьці]] і дадаваць новыя вікі-стыкеры!
+Дадайце новыя элемэнты ў сьпіс, і яны зьявяцца на Вашай пачатковай старонцы і тут.',
+	'wikistickies-next' => 'Наступны →',
+	'wikistickies-hide' => 'схаваць',
+	'wikistickies-see-more' => 'Глядзіце яшчэ старонкі, якія патрабуюць дапамогі',
 );
 
 /** Breton (Brezhoneg)
+ * @author Gwendal
  * @author Y-M D
  */
 $messages['br'] = array(
+	'wikistickies-withoutimages-hd' => "Ha galloud a reoc'h ouzhpennañ ur skeudenn evit unan eus ar bajennoù-mañ?",
 	'wikistickies-newpages-st-short' => '<span>Ha gellout a rit ouzhpennañ titouroù diwar-benn</span> $1?',
 	'wikistickies-wantedpages-st-short' => '<span>Ha gellout a rit kregiñ gant ur bajenn nevez diwar-benn</span> $1?',
 	'wikistickies-withoutimages-st-short' => '<span>Ha gellout a rit ouzhpennañ ur skeudenn da</span> $1?',
 	'wikistickies-save-changes' => "Enrollañ ar c'hemmoù",
 	'wikistickies-more' => "gwelout muioc'h",
 	'wikistickies-admins-hd' => 'Merourien hepken',
+	'wikistickies-logo-hd' => 'Enporzhiañ ul logo',
+	'wikistickies-theme-hd' => 'Dibab un tem',
+	'wikistickies-next' => "War-lec'h →",
 	'wikistickies-hide' => 'kuzhat',
+);
+
+/** Danish (Dansk)
+ * @author Emilkris33
+ */
+$messages['da'] = array(
+	'wikistickies' => 'WikiStickies',
+	'wikistickies-desc' => 'Den store, klæbrige Wiki Stickies til at fange øjet!',
+	'wikistickies-newpages-hd' => 'Kan du tilføje oplysninger til en af disse nye sider?',
+	'wikistickies-withoutimages-hd' => 'Kan du tilføje et billede til en af disse sider?',
+	'wikistickies-wantedpages-hd' => 'Kan du starter en af de sider, vi har brug for?',
+	'wikistickies-newpages-st' => '<span class="fake_newpages">Kan du tilføje oplysninger til siden omkring</span> $1?',
+	'wikistickies-wantedpages-st' => '<span class="fake_wantedpages">Kan du starte en side omkring</span> $1?',
+	'wikistickies-withoutimages-st' => '<span class="fake_withoutimages">Kan du tilføje et billede til siden om</span> $1?',
+	'wikistickies-newpages-st-short' => '<span>Kan du tilføje oplysninger til</span> $1?',
+	'wikistickies-wantedpages-st-short' => '<span>Kan du starte en side om</span> $1?',
+	'wikistickies-withoutimages-st-short' => '<span>Kan du tilføje et billede til</span> $1?',
+	'wikistickies-save-changes' => 'Gem ændringer',
+	'wikistickies-more' => 'se mere',
+	'wikistickies-admins-hd' => 'Kun Admins',
+	'wikistickies-admins-msg' => "Disse er ikke din typiske WikiStickies. 
+ Disse er ting, der kun kan gøres af administratorer wiki'en, som påvirker hvordan alle ser wiki'en.",
+	'wikistickies-logo-hd' => 'Upload et logo',
+	'wikistickies-theme-hd' => 'Vælg et tema',
+	'wikistickies-custom-hd' => 'Opret din egen WikiStickies',
 );
 
 /** German (Deutsch)
@@ -122,9 +162,11 @@ Füge Elemente zur Liste hinzu, um sie auf deiner Startseite und auf dieser Seit
 
 /** Spanish (Español)
  * @author Crazymadlover
+ * @author Translationista
  */
 $messages['es'] = array(
 	'wikistickies' => 'WikiStickies',
+	'wikistickies-desc' => '¡Las grandes, pegajosas Wiki Stickies que llamarán tu atención!',
 	'wikistickies-newpages-hd' => 'Puedes agregar información a una de estas páginas nuevas?',
 	'wikistickies-withoutimages-hd' => 'Puedes agregar una imagen a una de estas páginas nuevas?',
 	'wikistickies-wantedpages-hd' => 'Puedes comenzar una de estas páginas que necesitamos?',
@@ -137,9 +179,13 @@ $messages['es'] = array(
 	'wikistickies-save-changes' => 'Grabar cambios',
 	'wikistickies-more' => 'ver más',
 	'wikistickies-admins-hd' => 'Sólo administradores',
+	'wikistickies-admins-msg' => 'Estos no son tus típicos WikiStickies.
+Estas son cosas que sólo pueden ser hechas por administradores del wiki para influenciar como todos ven el wiki.',
 	'wikistickies-logo-hd' => 'Subir un logo',
 	'wikistickies-theme-hd' => 'Escoger un tema',
 	'wikistickies-custom-hd' => 'Crear tus propios WikiStickies',
+	'wikistickies-custom-msg' => 'Puedes editar la [[MediaWiki:CommunityStickies|página CommunityStickies]] para agregar una nueva nota WikiStickies!
+Agregar items a la lista, y aparecerán en tu página inicial y en esta página',
 	'wikistickies-next' => 'Siguiente →',
 	'wikistickies-hide' => 'ocultar',
 	'wikistickies-see-more' => 'Ver más páginas que necesiten ayuda',
@@ -347,6 +393,37 @@ $messages['no'] = array(
 	'wikistickies-see-more' => 'Se flere sider som trenger hjelp',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'wikistickies' => 'Adesiv ëd la Wiki',
+	'wikistickies-desc' => "Ij grand e adesiv Wiki Stickies për ancoleje j'euj!",
+	'wikistickies-newpages-hd' => "Podrij-lo gionté dj'anformassion a un-a ëd coste pàgine neuve?",
+	'wikistickies-withoutimages-hd' => 'Peuss-to gionté na figura a un-a ëd coste pàgine?',
+	'wikistickies-wantedpages-hd' => "Peuss-to ancaminé un-a dle pàgine dont i l'oma dabzògn?",
+	'wikistickies-newpages-st' => '<span class="fake_newpages">Podrij-lo gionté dj\'anformassion a la pàgina ansima a</span> $1?',
+	'wikistickies-wantedpages-st' => '<span class="fake_wantedpages">Podrij-lo ancaminé na pàgina ansima a</span> $1?',
+	'wikistickies-withoutimages-st' => '<span class="fake_withoutimages">Podrij-lo gionté na figura a la pàgina ansima a</span> $1?',
+	'wikistickies-newpages-st-short' => "<span>Podrij-lo gionté dj'anformassion a</span> $1?",
+	'wikistickies-wantedpages-st-short' => '<span>Podrij-lo ancaminé na pàgina ansima a</span> $1?',
+	'wikistickies-withoutimages-st-short' => '<span>Peuss-to gionté na figura a</span> $1?',
+	'wikistickies-save-changes' => 'Salvé ij cangiament',
+	'wikistickies-more' => 'varda ëd pi',
+	'wikistickies-admins-hd' => 'Mach Aministrator',
+	'wikistickies-admins-msg' => "Costi-sì a son pa ij tò WikiStickies tìpich.
+Coste a son còse che a peulo esse fàite mach da j'aministrator ëd la wiki për anfluensé com mincadun a vëd la wiki.",
+	'wikistickies-logo-hd' => 'Carìa na marca',
+	'wikistickies-theme-hd' => 'Sern un tema',
+	'wikistickies-custom-hd' => 'Crea ij tò Adesiv Wiki',
+	'wikistickies-custom-msg' => "A peul modifiché la [[MediaWiki:CommunityStickies|pàgina ëd CommunityStickies]] për gionté na neuva nòta WikiStickies!
+Gionté dj'element a la lista, e a apariran ansima a Mia Intrada e su costa pàgina-sì.",
+	'wikistickies-next' => 'Dapress →',
+	'wikistickies-hide' => 'stërma',
+	'wikistickies-see-more' => "Vëdde pi 'd pàgine che a l'han dabzògn d'agiut",
+);
+
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
@@ -368,6 +445,7 @@ $messages['pt'] = array(
 /** Russian (Русский)
  * @author Eleferen
  * @author Ytsukeng Fyvaprol
+ * @author Александр Сигачёв
  */
 $messages['ru'] = array(
 	'wikistickies' => 'Вики-Стикеры',
@@ -376,12 +454,16 @@ $messages['ru'] = array(
 	'wikistickies-withoutimages-hd' => 'Вы можете добавить изображение, на одну из этих страниц?',
 	'wikistickies-wantedpages-hd' => 'Вы можете открыть одну из страниц, которая нам нужна?',
 	'wikistickies-newpages-st' => '<span class="fake_newpages">Вы можете дополнить информацией страницу о</span> $1?',
+	'wikistickies-wantedpages-st' => '<span class="fake_wantedpages">Вы можете создать страницу о </span> $1?',
 	'wikistickies-withoutimages-st' => '<span class="fake_withoutimages">Вы можете добавить иллюстрацию на страницу о</span> $1?',
 	'wikistickies-newpages-st-short' => '<span>Вы можете добавить информацию на</span> $1?',
+	'wikistickies-wantedpages-st-short' => '<span>Вы можете создать страницу о</span> $1?',
 	'wikistickies-withoutimages-st-short' => '<span>Вы можете добавить иллюстрацию на</span> $1?',
 	'wikistickies-save-changes' => 'Сохранить изменения',
 	'wikistickies-more' => 'подробнее',
 	'wikistickies-admins-hd' => 'Только администраторы',
+	'wikistickies-admins-msg' => 'Это необычные WikiStickies. 
+Эти действия могут выполнить только администраторы, и они повлияют на то, как эта вики будет выглядеть для всех посетителей.',
 	'wikistickies-logo-hd' => 'Загрузить логотип',
 	'wikistickies-theme-hd' => 'Выбрать тему',
 	'wikistickies-custom-hd' => 'Создайте ваш собственный Вики-Стикер',
@@ -389,6 +471,7 @@ $messages['ru'] = array(
 Добавьте новые пункты в список, и они появятся на вашей стартовой странице и здесь.',
 	'wikistickies-next' => 'Далее →',
 	'wikistickies-hide' => 'скрыть',
+	'wikistickies-see-more' => 'Ещё страницы, где требуется помощь',
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
@@ -403,6 +486,17 @@ $messages['sr-ec'] = array(
 	'wikistickies-custom-hd' => 'Направите своју вики белешку',
 	'wikistickies-next' => 'Следеће →',
 	'wikistickies-hide' => 'сакриј',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'wikistickies' => 'వికీస్టికీస్',
+	'wikistickies-save-changes' => 'మార్పులను భద్రపరచు',
+	'wikistickies-more' => 'మరిన్ని చూడండి',
+	'wikistickies-next' => 'తర్వాతి →',
+	'wikistickies-hide' => 'దాచు',
 );
 
 /** Ukrainian (Українська)

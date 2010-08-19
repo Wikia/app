@@ -26,6 +26,24 @@ $messages['en'] = array(
 	'sponsorpage-save' => 'Save',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'sponsorpage-desc' => 'Дазваляе ўдзельнікам набываць спонсарства старонак',
+	'sponsor-header' => '<h2>Вонкавыя спасылкі спонсара</h2>',
+	'sponsor-msg' => '<li><a href="$1" rel="nofollow">Спонсар гэтай старонкі</a></li>',
+	'sponsor-preview-prompt' => 'Так будзе выглядаць Вашае спонсарства. Націсьніце кнопку «Рэдагаваць», каб вярнуцца і ўнесьці зьмены, ці «Захаваць», каб захаваць і перайсьці да PayPal.',
+	'sponsor-preview-errors' => 'У Вашай форме ўтрымліваецца памылка:',
+	'sponsor-form-url' => 'URL-адрас спонсара (Ваш ўэб-сайт):',
+	'sponsor-form-linktext' => 'Тэкст, які будзе паказвацца ў спасылцы:',
+	'sponsor-form-additionaltext' => 'Тэкст, які будзе паказвацца пад Вашай-спасылкай:',
+	'sponsor-form-page' => 'Старонка, якую Вы жадаеце спансіраваць:',
+	'sponsor-form-price' => 'Сума спонсарскага ўнёску:',
+	'sponsor-form-email' => 'Ваш адрас электроннай пошты:',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
@@ -82,6 +100,16 @@ $messages['de-formal'] = array(
  * @author Crazymadlover
  */
 $messages['es'] = array(
+	'sponsorpage-desc' => 'Permite a los usuarios comprar patrocinios para las páginas',
+	'sponsor-header' => '<h2>Vínculos a patrocinador externo</h2>',
+	'sponsor-msg' => '<li><a href="$1" rel="nofollow">Patrocinar esta página</a></li>',
+	'sponsor-preview-prompt' => 'Aquí está como tu patrocinio se verá - haz click en "Editar" para regresar y hacer cambios, o "Grabar" para guardarlo e ir a PayPal.',
+	'sponsor-preview-errors' => 'Hay errores en tu envío:',
+	'sponsor-form-url' => 'URL del sitio wed del patrocinio (tu sitio web):',
+	'sponsor-form-linktext' => 'Texto que deseas mostrar en el enlace:',
+	'sponsor-form-additionaltext' => 'Texto que se muestra bajo tu enlace:',
+	'sponsor-form-page' => 'Página a patrocinador:',
+	'sponsor-form-price' => 'Cantidad de patrocinio:',
 	'sponsor-form-email' => 'Tu dirección de correo electrónico:',
 	'sponsor-form-thanks' => 'Gracias por tu patrocinio!',
 	'sponsor-price-45yr' => '$45 por año',
@@ -133,6 +161,28 @@ $messages['gl'] = array(
 	'sponsor-price-5mo' => '5 dólares ao mes',
 	'sponsorpage-edit' => 'Editar',
 	'sponsorpage-save' => 'Gardar',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'sponsorpage-desc' => 'Permitte que usatores acquire sponsoring pro paginas',
+	'sponsor-header' => '<h2>Ligamines externe de sponsores</h2>',
+	'sponsor-msg' => '<li><a href="$1" rel="nofollow">Sponsorisar iste pagina</a></li>',
+	'sponsor-preview-prompt' => 'Ecce le aspecto de tu sponsoring - clicca "Modificar" pro retornar e facer cambios, o "Salveguardar" pro salveguardar lo e continuar a PayPal.',
+	'sponsor-preview-errors' => 'Il ha errores in tu submission:',
+	'sponsor-form-url' => 'URL del sito del sponsor (tu sito web):',
+	'sponsor-form-linktext' => 'Le texto que tu vole monstrar in le ligamine:',
+	'sponsor-form-additionaltext' => 'Le texto a monstrar sub tu ligamine:',
+	'sponsor-form-page' => 'Pagina a sponsorisar:',
+	'sponsor-form-price' => 'Amonta de sponsoring:',
+	'sponsor-form-email' => 'Tu adresse de e-mail:',
+	'sponsor-form-thanks' => 'Gratias pro tu sponsoring!',
+	'sponsor-price-45yr' => '45$ per anno',
+	'sponsor-price-5mo' => '5$ per mense',
+	'sponsorpage-edit' => 'Modificar',
+	'sponsorpage-save' => 'Salveguardar',
 );
 
 /** Igbo (Igbo)
@@ -233,6 +283,29 @@ $messages['no'] = array(
 	'sponsorpage-save' => 'Lagre',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'sponsorpage-desc' => "A përmët a j'utent ëd caté un parinagi për le pàgine",
+	'sponsor-header' => '<h2>Colegament a Sponsor Extern</h2>',
+	'sponsor-msg' => '<li><a href="$1" rel="nofollow">Fé da parin a costa pàgina</a></li>',
+	'sponsor-preview-prompt' => 'Ambelessì a-i é lòn che sò parinagi a smijërà - sgnaché "Modifiché" për andé andré e fé ij cambi, o "Salvé" për salvé e andé a PayPal.',
+	'sponsor-preview-errors' => "A-i é d'eror an lòn ch'a l'ha mandà:",
+	'sponsor-form-url' => "Adrëssa dël dit parin an sl'aragnà (sò sit):",
+	'sponsor-form-linktext' => "Test ch'a veul mostré ant ël colegament:",
+	'sponsor-form-additionaltext' => 'Test da mostré sota soa anliura:',
+	'sponsor-form-page' => 'Pàgina da feje da parin:',
+	'sponsor-form-price' => 'Pressi dël parinagi:',
+	'sponsor-form-email' => 'Soa adrëssa ëd pòsta eletrònica:',
+	'sponsor-form-thanks' => 'Mersì për sò parinagi!',
+	'sponsor-price-45yr' => "$45 a l'ann",
+	'sponsor-price-5mo' => '$5 al mèis',
+	'sponsorpage-edit' => 'Modìfica',
+	'sponsorpage-save' => 'Salva',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  */
@@ -277,5 +350,15 @@ $messages['ru'] = array(
 	'sponsor-price-5mo' => '$5 в месяц',
 	'sponsorpage-edit' => 'Править',
 	'sponsorpage-save' => 'Сохранить',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'sponsor-form-email' => 'మీ ఈ-మెయిలు చిరునామా:',
+	'sponsor-price-45yr' => 'సంవత్సరానికి $45',
+	'sponsor-price-5mo' => 'నెలకి $5',
+	'sponsorpage-save' => 'భద్రపరచు',
 );
 

@@ -506,9 +506,36 @@ $messages['pl'] = array(
 	'blog-avatar-alt' => 'Avatar',
 );
 
-/** Piedmontese (Piemontèis) */
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
+ * @author Dragonòt
+ */
 $messages['pms'] = array(
+	'blog-avatar-removeavatar' => "Gavé l' avatar",
+	'blog-avatar-goto-userpage' => 'Và a la pàgina utent',
+	'blog-avatar-edit' => 'Cambia',
+	'blog-avatar-delete' => 'Scancela',
 	'masthead-blog-avatar-preferences-title' => 'Avatar',
+	'blog-avatar-choose-avatar' => "Sern n'avatar neuv",
+	'blog-avatar-upload-avatar' => "Caria n'avatar neuv",
+	'blog-avatar-nouser' => 'Cost utent as treuva nen!',
+	'blog-avatar-cannot-remove' => "As peul pa gavesse j'avatar për l'utent selessionà!",
+	'blog-avatar-remove-info' => "Sta pàgina-sì a-j përmët ëd gavé n'avatar ëd n'utent.
+Ch'a anserissa lë stranòm ëd l'utent giust ant la casela a pòsta, e ch'a sgnaca \"{{int:blog-avatar-getuser}}\".<br />
+Për piasì, ch'as visa che j'avatar a son globaj - an gavand n'avatar ëd n'utent a lo gava dzora a tuta Wikia.",
+	'blog-avatar-getuser' => 'Sërca',
+	'blog-avatar-remove-confirm' => "É-lo sigur ëd vorèj gavé l'avatar?",
+	'blog-avatar-error-nofile' => "Për piasì, ch'a serna n'archiv da sò disch",
+	'blog-avatar-error-size' => "L'archivi carià a l'é tròp gròss, la dimension përmëttùa a l'é fin a $1 KB.",
+	'blog-avatar-error-cantwrite' => "L'archivi as peul pa salvesse",
+	'blog-avatar-changed-log' => 'Avatar giontà o cangià',
+	'blog-avatar-removed-log' => 'Avatar ëd $1 gavà',
+	'blog-avatar-save-info' => 'S\'it veule salvé ij cambi <a href="#prefcontrol">va al fond</a> e sgnaca ël boton "{{int:saveprefs}}"',
+	'masthead-edits-since' => 'modìfica fin-a',
+	'useravatar-log' => "Registr dj'avatar ëd j'utent",
+	'blog-avatar-alt' => "Registr ëd le gionte o dle scancelassion ëd j'avatar ëd j'utent",
+	'removeuseravatar' => "Gavé l'avatar ëd l'utent",
+	'right-removeavatar' => "Gava j'avatar ëd l'utent",
 );
 
 /** Portuguese (Português)

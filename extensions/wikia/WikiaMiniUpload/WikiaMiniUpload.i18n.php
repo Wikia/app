@@ -182,6 +182,63 @@ U kan nie hier beelde byvoeg nie.',
 	'wmu-no-rights' => 'U mag nie beelde by hierdie bladsy byvoeg nie',
 );
 
+/** Aragonese (Aragonés)
+ * @author Juanpabl
+ */
+$messages['an'] = array(
+	'wmu-insert' => 'Insertar',
+);
+
+/** Old English (Ænglisc)
+ * @author Gott wisst
+ */
+$messages['ang'] = array(
+	'wmu-upload' => 'Forþsendan',
+	'wmu-notlogged' => 'Inmeldian oþþe macian ȝrīman tō forþsendenne biliþ fram þīnum spearctellere',
+	'wmu-find' => 'Findan',
+	'wmu-thiswiki' => 'Þis ƿiki',
+	'wmu-flickr' => 'Flickr',
+	'wmu-upload-btn' => 'Forþsendan',
+	'wmu-find-btn' => 'Findan',
+	'wmu-flickr-inf' => 'Sēcan þurh rihte forþlǣtnessȝifen uncēap biliþ fram Flickre and inlǣdan hīe in þīn ƿiki.',
+	'wmu-conflict-inf' => '<h1>Oops, ȝeƿithord berende þone naman nū ƿæs ǣr ȝemacod.</h1>Hƿæt ƿilt þū dōn mid <b>$1</b>?',
+	'wmu-rename' => 'Nemnan þīn biliþ eft',
+	'wmu-existing' => 'Notian ǣr ȝemacod biliþ',
+	'wmu-overwrite' => 'Settan þīn biliþ on stede þæs ǣr ȝemacodan',
+	'wmu-insert' => 'Ȝeþēodan',
+	'wmu-details-inf' => '<h1>Ȝeƿithordes amearcunȝa</h1>. Cēosan naman tō þissum ȝeƿithorde. Macian þone naman tōmearciende.',
+	'wmu-name' => 'Nama',
+	'wmu-license' => 'Forþlǣtness',
+	'wmu-details-inf2' => '<h1>Cēosunȝa mid ȝeƿrite</h1>Cēos hū þū ƿilt þæt þis biliþ ætīeƿie on þīnum tramete.',
+	'wmu-size' => 'Micelness',
+	'wmu-thumbnail' => 'Biliþincel',
+	'wmu-fullsize' => 'Ful grēat ($1x$1px)',
+	'wmu-width' => 'Brǣdo',
+	'wmu-layout' => 'Endebyrdness',
+	'wmu-caption' => 'Andefen cƿide',
+	'wmu-link' => 'Hlence',
+	'wmu-optional' => '(cēosendlic)',
+	'wmu-insert2' => 'Ȝeþēodan ȝeƿithord',
+	'wmu-prev' => 'Foreȝanȝende 8',
+	'wmu-next' => 'Nīehste 8',
+	'wmu-flickr2' => 'Flickres biliþ ($1 {{PLURAL:$1|afundenness|afundennessa}})',
+	'wmu-insert3' => 'Ȝeþēodan þisne tramet',
+	'wmu-recent-inf' => 'Nīƿan forþsended biliþ',
+	'wmu-thiswiki2' => 'Þisses ƿiki biliþ ($1 {{PLURAL:$1|afundenness|afundennessa}})',
+	'wmu-success' => '<h1>Spēd</h1>Þīn biliþ hafaþ ȝeƿorden ȝeþēoded.',
+	'wmu-success-placeholder' => '<h1>Spēd</h1>',
+	'wmu-return' => 'Gān eft tō ādihtunge',
+	'wmu-back' => 'eft',
+	'wmu-close' => 'betȳnan',
+	'wmu-warn1' => 'Þū þearft ǣr tōmearcian þīne ascunȝe!',
+	'wmu-warn2' => 'Þū þearft ǣr cēosan ȝeƿithord!',
+	'wmu-warn3' => 'Þū þearft ǣr tōmearcian ȝeƿithordes naman!',
+	'wmu-imagelink' => '<b>Nīƿe!</b> Ēacnian mid biliðum',
+	'wmu-imagebutton' => 'Ēacnian mid biliðum',
+	'wmu-license-cc' => 'Ȝifen forþlǣtnesse æfter Creative Commons Attribution-Share Alike 3.0',
+	'wmu-bad-extension' => 'Þū sōhtest tō forþsendenne unlagfæst ȝeƿithordcynd. Bidde þē tō underȝinnenne eft.',
+);
+
 /** Arabic (العربية)
  * @author OsamaK
  */
@@ -1456,6 +1513,7 @@ $messages['pdc'] = array(
 	'wmu-link' => 'Gleecher',
 	'wmu-next' => 'Neegscht 8',
 	'wmu-back' => 'zerrick',
+	'wmu-close' => 'zumache',
 );
 
 /** Polish (Polski) */

@@ -998,6 +998,7 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author IAlex
+ * @author Iluvalar
  * @author Jean-Frédéric
  * @author McDutchie
  * @author Peter17
@@ -1038,6 +1039,7 @@ $messages['fr'] = array(
 	'autocreatewiki-info-blurry-word' => 'Pour nous aider à nous protéger contre la création automatisée de compte, veuillez taper le mot floué que vous voyez dans ce champ.',
 	'autocreatewiki-info-terms-agree' => 'En créant un wiki et un compte utilisateur, vous acceptez les <a href="http://www.wikia.com/wiki/Terms_of_use">conditions d\'utilisation de Wiki</a>.',
 	'autocreatewiki-info-staff-username' => "<b>Staff seulement :</b> l'utilisateur spécifié sera considéré comme le fondateur du wiki.",
+	'autocreatewiki-title-template' => ' Wiki $1',
 	'autocreatewiki-limit-day' => "Wikia a dépassé la limite de création de nouveaux wikis pour aujourd'hui ($1).",
 	'autocreatewiki-limit-creation' => 'Vous avez dépassée la limite maximale de création de wiki en 24 heures ($1).',
 	'autocreatewiki-empty-field' => 'Complétez ce champ.',
@@ -1179,6 +1181,7 @@ $messages['gl'] = array(
 	'autocreatewiki-info-blurry-word' => 'Para axudarnos á protección contra a creación de contas automáticas, escriba a palabra borrosa que vexa neste campo.',
 	'autocreatewiki-info-terms-agree' => 'Ao crear un wiki e unha conta de usuario, vostede acepta os <a href="http://www.wikia.com/wiki/Terms_of_use">termos de uso de Wikia</a>',
 	'autocreatewiki-info-staff-username' => '<b>Persoal só:</b> o usuario especificado será considerado o fundador.',
+	'autocreatewiki-title-template' => 'Wiki $1',
 	'autocreatewiki-limit-day' => 'Wikia superou o número máximo de novos wikis para hoxe ($1).',
 	'autocreatewiki-limit-creation' => 'Superou o número máximo de novos wikis en 24 horas ($1).',
 	'autocreatewiki-empty-field' => 'Por favor, encha este campo.',
@@ -2048,6 +2051,7 @@ $messages['nl'] = array(
 	'autocreatewiki-info-blurry-word' => 'Om het automatisch aanmaken van gebruikers tegen te gaan moet u het wazige woord dat u in dit veld ziet invoeren.',
 	'autocreatewiki-info-terms-agree' => 'Door een wiki en een gebruiker aan te maken accepteert u de <a href="http://www.wikia.com/wiki/Terms_of_use">gebruikersvoorwaarden van Wikia</a>.',
 	'autocreatewiki-info-staff-username' => '<b>Alleen voor staf:</b> de aangegeven gebruiker wordt vermeld als de oprichter.',
+	'autocreatewiki-title-template' => '$1 wiki',
 	'autocreatewiki-limit-day' => "Wikia heeft het maximum aantal nieuwe wiki's voor vandaag ($1) overschreden.",
 	'autocreatewiki-limit-creation' => "U hebt het maximum aantal nieuwe wiki's in 24 uur ($1) overschreden.",
 	'autocreatewiki-empty-field' => 'Vul dit veld alstublieft in.',
@@ -2370,6 +2374,7 @@ $messages['pms'] = array(
 	'autocreatewiki-info-blurry-word' => "Për giuté a protege contra la creassion ëd cont automàtica, për piasì ch'a anserissa la paròla tërmolanta ch'a vëd an sto camp-sì.",
 	'autocreatewiki-info-terms-agree' => "An creand na wiki e un cont utent, a l'é d'acòrdi con le <a href=\"http://www.wikia.com/wiki/Terms_of_use\">Condission d'usagi ëd Wikia</a>",
 	'autocreatewiki-info-staff-username' => "<b>Mach Echip:</b> L'utent specificà a sarà listà com fondator.",
+	'autocreatewiki-title-template' => '$1 Wiki',
 	'autocreatewiki-limit-day' => "Wikia a l'ha passà ël màssim nùmer ëd creassion ëd wiki ancheuj ($1).",
 	'autocreatewiki-limit-creation' => "It l'has passà ël màssim nùmer ëd creassion ëd wiki an 24 ore ($1).",
 	'autocreatewiki-empty-field' => 'Për piasì completa sto camp-sì.',
@@ -2550,6 +2555,7 @@ $messages['pt'] = array(
 	'autocreatewiki-info-blurry-word' => 'Para ajudar a prevenir a criação de contas automatizada, escreva a palavra distorcida que vê neste campo.',
 	'autocreatewiki-info-terms-agree' => 'Ao criar uma wiki e um utilizador, concorda com as <a href="http://www.wikia.com/wiki/Terms_of_use">Condições de Uso da Wikia</a>',
 	'autocreatewiki-info-staff-username' => '<b>Só para a equipa:</b> O utilizador especificado será listado como o fundador.',
+	'autocreatewiki-title-template' => 'Wiki $1',
 	'autocreatewiki-limit-day' => 'A Wikia excedeu o número máximo de criações de wikis hoje ($1).',
 	'autocreatewiki-limit-creation' => 'Excedeu o número máximo de criações de wikis em 24 horas ($1).',
 	'autocreatewiki-empty-field' => 'Preencha este campo, por favor.',
@@ -2861,6 +2867,7 @@ $messages['ru'] = array(
 	'autocreatewiki-info-blurry-word' => 'Пожалуйста, введите размытые слова, которые вы видите в этой области. Это делается для защиты от автоматического создания учётных записей.',
 	'autocreatewiki-info-terms-agree' => 'Создавая вики и учётную запись, вы соглашаетесь с <a href="http://www.wikia.com/wiki/Terms_of_use">Условиями использования Wikia</a>',
 	'autocreatewiki-info-staff-username' => '<b>Только для персонала:</b> Указанный участник будет показан как учредитель.',
+	'autocreatewiki-title-template' => '$1 вики',
 	'autocreatewiki-limit-day' => 'Wikia превысила максимальное число вики, создаваемых за день ($1).',
 	'autocreatewiki-limit-creation' => 'Вы превысили максимальное количество вики, которое можно создать за 24 часа ($1).',
 	'autocreatewiki-empty-field' => 'Пожалуйста, заполните это поле.',
@@ -3011,11 +3018,14 @@ $messages['sr-ec'] = array(
 	'autocreatewiki-step0' => 'Почетак процеса .....',
 	'autocreatewiki-stepdefault' => 'Процес у току, молимо да сачекате .....',
 	'autocreatewiki-errordefault' => 'Процес није завршен ...',
-	'autocreatewiki-step11' => 'Слање мејла кориснику ...',
+	'autocreatewiki-step1' => 'Прављење фасцикле за слике...',
+	'autocreatewiki-step2' => 'Прављење базе података...',
+	'autocreatewiki-step11' => 'Слање е-поруке кориснику...',
+	'autocreatewiki-redirect' => 'Преусмеравање на нови вики: $1...',
 	'autocreatewiki-congratulation' => 'Честитамо!',
-	'autocreatewiki-welcometalk-log' => ' Порука добродошлице',
+	'autocreatewiki-welcometalk-log' => 'Порука добродошлице',
 	'autocreatewiki-step2-error' => 'Постоји база података!',
-	'autocreatewiki-protect-reason' => 'Део службеног интерфејса',
+	'autocreatewiki-protect-reason' => 'Део званичног сучеља',
 	'autocreatewiki-welcomesubject' => '$1 је створен!',
 	'autocreatewiki-reminder-body' => 'Драги $1:
 
@@ -3032,6 +3042,7 @@ $messages['sr-ec'] = array(
 <p>Ово је нов-новцат пројекат,  па Вас молимо да нам пишете уколико имате неких питања!</p>
 
 <p>-- Тим Викија заједнице</p>',
+	'autocreatewiki-subname-answers' => 'Одговори',
 );
 
 /** Telugu (తెలుగు)

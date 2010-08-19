@@ -290,9 +290,11 @@ $messages['el'] = array(
  * @author Locos epraix
  * @author Pertile
  * @author Tempestas
+ * @author Translationista
  */
 $messages['es'] = array(
 	'daemonloader' => 'Gestor Daemon',
+	'daemonloader-desc' => 'Ejecuta[[Special:DaemonLoader|background daemons]] para crear informes',
 	'daemonloader_pagetitle' => 'Gestor Daemon',
 	'daemonloader_createtask' => 'Crear tarea',
 	'daemonloader_listtask' => 'Lista de tareas',
@@ -571,6 +573,7 @@ $messages['hu'] = array(
  */
 $messages['ia'] = array(
 	'daemonloader' => 'Cargator de servicios',
+	'daemonloader-desc' => 'Executa [[Special:DaemonLoader|processos de fundo]] pro crear reportos',
 	'daemonloader_pagetitle' => 'Cargator de servicios',
 	'daemonloader_createtask' => 'Crear carga',
 	'daemonloader_listtask' => 'Lista de cargas',
@@ -766,7 +769,7 @@ $messages['nl'] = array(
 	'daemonloader_steps' => 'Uw huidige stap:',
 	'daemonloader_daemoninfo' => 'Procesbeschrijving',
 	'daemonloader_configtaskparams' => 'Taakparameters instellen:',
-	'daemonloader_startdate' => 'Startdatum',
+	'daemonloader_startdate' => 'Begindatum',
 	'daemonloader_enddate' => 'Einddatum',
 	'daemonloader_frequency' => 'Rapportagefrequentie',
 	'daemonloader_emails' => 'E-mails',

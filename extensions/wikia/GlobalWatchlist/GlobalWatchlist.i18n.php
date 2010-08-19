@@ -139,6 +139,7 @@ Wikia
  * @author Translationista
  */
 $messages['es'] = array(
+	'globalwatchlist-desc' => 'Envía correos electrónicos semanales con las páginas en seguimiento de todos los wikis',
 	'tog-watchlistdigest' => 'Envíame por correo electrónico un Boletín Semanal de mi lista de Seguimiento',
 	'tog-watchlistdigestclear' => 'Marcar todas las páginas desde mi Boletín Semanal de mi lista de Seguimiento como visitadas',
 	'globalwatchlist-see-more' => 'Por favor, comprueba tu lista de seguimiento local para más cambios',
@@ -272,6 +273,7 @@ $messages['hu'] = array(
  * @author McDutchie
  */
 $messages['ia'] = array(
+	'globalwatchlist-desc' => 'Invia un digesto septimanal in e-mail con paginas sub observation in tote le wikis',
 	'tog-watchlistdigest' => 'Inviar me per e-mail un digesto septimanal de mi observatorio',
 	'tog-watchlistdigestclear' => 'Marcar tote le paginas del digesto septimanal de mi observatorio como visitate',
 	'globalwatchlist-see-more' => 'Per favor consulta tu observatorios local pro plus modificationes',
@@ -311,6 +313,7 @@ $messages['it'] = array(
  * @author Tommy6
  */
 $messages['ja'] = array(
+	'globalwatchlist-desc' => '全ウィキのウォッチリストに入っているページの変更要約を一週間ごとにEメールで送る。',
 	'tog-watchlistdigest' => 'ウォッチリストの週間報告をメールで受け取る',
 	'tog-watchlistdigestclear' => 'ウォッチリスト週間報告に掲載された全てのページを訪問済みにする',
 	'globalwatchlist-see-more' => 'より詳しい変更を見るには各ウィキのウォッチリストをご覧ください。',
@@ -503,9 +506,11 @@ Wikia
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
  * @author Jesielt
  */
 $messages['pt-br'] = array(
+	'globalwatchlist-desc' => 'Envia mensagens mensais de resumo das páginas vigiadas em todas as wikis',
 	'tog-watchlistdigest' => 'Envie-me por email um resumo semanal das atividades nas minhas páginas vigiadas',
 	'tog-watchlistdigestclear' => 'Mascar todas as páginas do resumo semanal como visitadas',
 	'globalwatchlist-see-more' => 'Por favor, cheque sua página de artigos vigiados para mais mudanças',

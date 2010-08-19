@@ -21,6 +21,7 @@ $messages['af'] = array(
 );
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
  * @author Jim-by
  */
 $messages['be-tarask'] = array(
@@ -28,6 +29,7 @@ $messages['be-tarask'] = array(
 	'wikiasearch-system-error-msg' => 'У выніку сыстэмнай памылкі Ваш пошук ня можа быць выкананы',
 	'wikiasearch-search-this-wiki' => 'Пошук выключна ў Wikia Central',
 	'wikiasearch-search-wikia' => 'Знайсьці ў Wikia',
+	'wikiasearch-image-results' => 'Вынікі пошуку выяваў для «$1»',
 );
 
 /** Breton (Brezhoneg)
@@ -42,12 +44,14 @@ $messages['br'] = array(
 
 /** German (Deutsch)
  * @author LWChris
+ * @author Reinhard Kraasch
  */
 $messages['de'] = array(
 	'wikiasearch-titles-only' => 'Suche nur in Seitentiteln',
 	'wikiasearch-system-error-msg' => 'Aufgrund eines Systemfehlers konnte deine Suche nicht abgeschlossen werden',
 	'wikiasearch-search-this-wiki' => 'Nur Wikia Zentrale durchsuchen',
 	'wikiasearch-search-wikia' => 'Wikia durchsuchen',
+	'wikiasearch-image-results' => 'Bild-Ergebnisse für "$ 1"',
 );
 
 /** German (formal address) (Deutsch (Sie-Form))
@@ -102,6 +106,7 @@ $messages['fr'] = array(
 	'wikiasearch-system-error-msg' => "À cause d'une erreur du système, nous n'avons pas pu accomplir votre recherche",
 	'wikiasearch-search-this-wiki' => 'Ne chercher que dans Wikia Central',
 	'wikiasearch-search-wikia' => 'Chercher dans Wikia',
+	'wikiasearch-image-results' => 'Résultats d’images pour « $1 »',
 );
 
 /** Scottish Gaelic (Gàidhlig)
@@ -122,6 +127,7 @@ $messages['gl'] = array(
 	'wikiasearch-system-error-msg' => 'Debido a un erro do sistema, non se puido completar a súa procura',
 	'wikiasearch-search-this-wiki' => 'Procurar só en Wikia Central',
 	'wikiasearch-search-wikia' => 'Procurar en Wikia',
+	'wikiasearch-image-results' => 'Resultados de imaxes para "$1"',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -162,6 +168,7 @@ $messages['ia'] = array(
 	'wikiasearch-system-error-msg' => 'A causa de un error de systema, le recerca non poteva esser completate',
 	'wikiasearch-search-this-wiki' => 'Cercar solmente in Wikia Central',
 	'wikiasearch-search-wikia' => 'Cercar in Wikia',
+	'wikiasearch-image-results' => 'Resultatos de imagines pro "$1"',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -231,6 +238,7 @@ $messages['mk'] = array(
 	'wikiasearch-system-error-msg' => 'Се појави системска грешја и пребарувањето не можеше да се изврши',
 	'wikiasearch-search-this-wiki' => 'Пербарувај само по Викија Централата',
 	'wikiasearch-search-wikia' => 'Пребарајте ја Викија',
+	'wikiasearch-image-results' => 'Резултати за слики за „$1“',
 );
 
 /** Dutch (Nederlands)
@@ -241,6 +249,7 @@ $messages['nl'] = array(
 	'wikiasearch-system-error-msg' => 'Door een systeemfout was het niet mogelijk uw zoekopdracht uit te voeren',
 	'wikiasearch-search-this-wiki' => 'Alleen Wikia Central doorzoeken',
 	'wikiasearch-search-wikia' => 'Wikia doorzoeken',
+	'wikiasearch-image-results' => 'Afbeeldingsresultaten voor "$1"',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -272,6 +281,7 @@ $messages['pl'] = array(
 	'wikiasearch-system-error-msg' => 'Ze względu na błąd systemu, wyszukiwanie nie mogło zostać wykonane',
 	'wikiasearch-search-this-wiki' => 'Szukaj wyłącznie w Wikia Central',
 	'wikiasearch-search-wikia' => 'Szukaj w Wikii',
+	'wikiasearch-image-results' => 'Grafiki odnalezione dla „$1”',
 );
 
 /** Piedmontese (Piemontèis)
@@ -283,6 +293,7 @@ $messages['pms'] = array(
 	'wikiasearch-system-error-msg' => "Për n'eror dël sistema, soa arserca a peul pa esse completà",
 	'wikiasearch-search-this-wiki' => 'Serca Mach an Wikia Sentral',
 	'wikiasearch-search-wikia' => 'Serca an Wikia',
+	'wikiasearch-image-results' => 'Figura Arzultà për "$1"',
 );
 
 /** Pashto (پښتو)
@@ -303,19 +314,23 @@ $messages['pt'] = array(
 	'wikiasearch-system-error-msg' => 'Não foi possível concluir a sua pesquisa devido a um erro de sistema',
 	'wikiasearch-search-this-wiki' => 'Pesquisar apenas na Wikia Central',
 	'wikiasearch-search-wikia' => 'Pesquisar na Wikia',
+	'wikiasearch-image-results' => 'Resultados de Imagens para "$1"',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Daemorris
+ * @author Giro720
  */
 $messages['pt-br'] = array(
 	'wikiasearch-titles-only' => 'Pesquisar apenas nos títulos de páginas',
 	'wikiasearch-system-error-msg' => 'Devido a um erro de sistema, sua pesquisa não pôde ser efetuada',
 	'wikiasearch-search-this-wiki' => 'Pesquisar apenas na wikia Central',
 	'wikiasearch-search-wikia' => 'Pesquisar na wikia',
+	'wikiasearch-image-results' => 'Resultados de Imagens para "$1"',
 );
 
 /** Russian (Русский)
+ * @author Eleferen
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
@@ -323,6 +338,7 @@ $messages['ru'] = array(
 	'wikiasearch-system-error-msg' => 'Из-за системной ошибки, поиск не может быть выполнен',
 	'wikiasearch-search-this-wiki' => 'Поиск только по Wikia Central',
 	'wikiasearch-search-wikia' => 'Найти на Wikia',
+	'wikiasearch-image-results' => 'Результаты поиска изображения для «$1»',
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
@@ -368,6 +384,7 @@ $messages['tt-cyrl'] = array(
 	'wikiasearch-system-error-msg' => 'система хатасы аркасында эзләшү мөмкин түгел',
 	'wikiasearch-search-this-wiki' => 'Wikia Central да гына эзләү',
 	'wikiasearch-search-wikia' => 'Wikia дә табарга',
+	'wikiasearch-image-results' => '«$1» өчен рәсемнәр табу',
 );
 
 /** Ukrainian (Українська)

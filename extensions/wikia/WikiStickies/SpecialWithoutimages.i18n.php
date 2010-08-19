@@ -18,6 +18,13 @@ $messages['qqq'] = array(
 	'withoutimages-desc' => '{{desc}}',
 );
 
+/** Old English (Ænglisc)
+ * @author Gott wisst
+ */
+$messages['ang'] = array(
+	'withoutimages-desc' => 'Beseteþ [[special:withoutimages|synriȝne tramet]] tō ēoƿienne trametas lēas biliða.',
+);
+
 /** Arabic (العربية)
  * @author Achraf94
  */
@@ -36,10 +43,28 @@ $messages['be-tarask'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Gwendal
  * @author Y-M D
  */
 $messages['br'] = array(
+	'withoutimages-desc' => 'Ouzhpenn a ra ur [[Special:Withoutimages|bajenn ispisial]] a-benn diskwel ar bajennoù hep skeudenn',
 	'withoutimages' => 'Pajenn hep skeudenn',
+);
+
+/** Catalan (Català)
+ * @author Solde
+ */
+$messages['ca'] = array(
+	'withoutimages-desc' => 'Agrega una [[Special:Withoutimages|pàgina especial]] per mostrar pàgines sense imatges',
+	'withoutimages' => 'Pàgines sense imatges',
+);
+
+/** Danish (Dansk)
+ * @author Emilkris33
+ */
+$messages['da'] = array(
+	'withoutimages-desc' => 'Tilføjer en [[Special:Withoutimages|specialside]] til at vise sider uden billeder',
+	'withoutimages' => 'Sider uden billeder',
 );
 
 /** German (Deutsch)
@@ -170,12 +195,28 @@ $messages['pt'] = array(
 	'withoutimages' => 'Páginas sem imagens',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
+ */
+$messages['pt-br'] = array(
+	'withoutimages-desc' => 'Acrescenta uma [[Special:Withoutimages|página especial]] que lista as páginas sem imagens',
+	'withoutimages' => 'Páginas sem imagens',
+);
+
 /** Romanian (Română)
  * @author Minisarm
  */
 $messages['ro'] = array(
 	'withoutimages-desc' => 'Adaugă o [[Special:Withoutimages|pagină specială]] pentru listarea paginilor ce nu conțin imagini',
 	'withoutimages' => 'Pagini ce nu conțin imagini',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'withoutimages-desc' => "Aggiunge 'na [[Special:Withoutimages|pàgena speciale]] pe fà vedè le pàggene senze immaggine",
+	'withoutimages' => 'Pàggene senze immaggine',
 );
 
 /** Russian (Русский)
@@ -194,11 +235,27 @@ $messages['sl'] = array(
 	'withoutimages' => 'Strani brez slik',
 );
 
+/** Albanian (Shqip)
+ * @author Mikullovci11
+ */
+$messages['sq'] = array(
+	'withoutimages-desc' => '[[Special: Withoutimages faqe |Faqe special]] për të shfaqur faqet pa imazhe',
+	'withoutimages' => 'Faqet pa imazhe',
+);
+
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Rancher
  */
 $messages['sr-ec'] = array(
 	'withoutimages-desc' => 'Додаје [[Special:Withoutimages|посебну страницу]] за приказивање страница без слика',
 	'withoutimages' => 'Странице без слика',
+);
+
+/** Ukrainian (Українська)
+ * @author NickK
+ */
+$messages['uk'] = array(
+	'withoutimages-desc' => 'Додає [[Special:Withoutimages|спеціальну сторіку]], на якій зазначені сторінки без зображень',
+	'withoutimages' => 'Сторінки без зображень',
 );
 

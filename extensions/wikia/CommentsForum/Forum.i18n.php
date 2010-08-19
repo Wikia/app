@@ -56,6 +56,20 @@ $messages['de'] = array(
 	'forum_inthenews' => 'In den Nachrichten',
 );
 
+/** Spanish (Español)
+ * @author Crazymadlover
+ */
+$messages['es'] = array(
+	'commentsforum-desc' => 'Funcionalidad como de foro para comentarios',
+	'forum_by_user_category' => '$1 por usuario',
+	'forum_about_title' => 'Acerca del foro',
+	'forum_about_text' => 'Este es el foro',
+	'forum_comments_of_day' => 'Comentarios top',
+	'forum_new_articles' => 'Nuevos mensajes en el foro',
+	'forum_by' => 'Publicado por $1',
+	'forum_inthenews' => 'En las noticias',
+);
+
 /** French (Français)
  * @author Peter17
  */
@@ -82,6 +96,20 @@ $messages['gl'] = array(
 	'forum_new_articles' => 'Novas mensaxes no foro',
 	'forum_by' => 'Publicado por $1',
 	'forum_inthenews' => 'Actualidade',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'commentsforum-desc' => 'Functionalitate similar a un foro pro commentos',
+	'forum_by_user_category' => '$1 per usator',
+	'forum_about_title' => 'A proposito del foro',
+	'forum_about_text' => 'Isto es le foro.',
+	'forum_comments_of_day' => 'Prime commentos',
+	'forum_new_articles' => 'Nove messages de foro',
+	'forum_by' => 'Publicate per $1',
+	'forum_inthenews' => 'Actualitates',
 );
 
 /** Colognian (Ripoarisch)
@@ -193,5 +221,12 @@ $messages['ru'] = array(
  */
 $messages['sr-ec'] = array(
 	'forum_by' => 'Послао корисник $1',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'forum_inthenews' => 'వార్తల్లో',
 );
 

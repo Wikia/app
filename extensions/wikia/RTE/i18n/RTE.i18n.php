@@ -174,7 +174,23 @@ $messages['gl'] = array(
  * @author McDutchie
  */
 $messages['ia'] = array(
+	'rte-desc' => 'Integration de CKeditor in MediaWiki',
+	'rte-no-js-fallback' => 'Le editor de texto inricchite non functiona con JavaScript disactivate. Per favor activa lo in le optiones de tu navigator, o visita tu [[Special:Preferences|preferentias]] pro cambiar al ancian editor de MediaWiki.',
+	'rte-edgecase-info-title' => 'Modo codice-fonte requirite',
+	'rte-edgecase-info' => 'Le modification in texto inricchite ha essite disactivate proque le pagina contine codice complexe.',
+	'rte-edgecase-comment' => 'Commentos HTML',
+	'rte-edgecase-triplecurls' => 'parametros de patrono',
+	'rte-edgecase-nowysiwyg' => 'le commando "no WYSIWYG"',
+	'rte-edgecase-complex-description' => 'un URL externe o patrono intra un description de ligamine',
+	'rte-edgecase-template-with-link' => 'un patrono con un ligamine qua parametro',
+	'rte-edgecase-syntax' => 'syntaxe non permittite',
+	'rte-edgecase-image-with-link' => 'imagine con un ligamine in le description',
+	'rte-edgecase-redirect' => 'redirection',
+	'rte-edgecase-templateintable' => 'un tabella con un appello de patrono in su definition',
+	'rte-edgecase-unclosed-tags' => 'etiquetta HTML non claudite',
 	'enablerichtexteditor' => 'Activar le editor de texto inricchite',
+	'rte-enablerichtexteditormessage' => 'Le editor de texto inricchite es active!',
+	'rte-first-run-notice' => 'Nos ha facite qualque meliorationes al editor. Pro saper plus, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news lege le annuncio].',
 );
 
 /** Macedonian (Македонски)
@@ -257,9 +273,26 @@ $messages['pl'] = array(
 
 /** Piedmontese (Piemontèis)
  * @author Borichèt
+ * @author Dragonòt
  */
 $messages['pms'] = array(
+	'rte-desc' => 'Antegrassion ëd CKeditor për MediaWiki',
+	'rte-no-js-fallback' => "L'editor ëd test anrichì a travaja pa con JavaScript disabilità. Për piasì o a lo abìlita ant j'opsion ëd sò navigador, o a vìsita ij sò [[Special:Preferences|gust]] për passé al vej editor MediaWiki",
+	'rte-edgecase-info-title' => 'A-i é da manca dla manera sorgiss',
+	'rte-edgecase-info' => "L'edission ëd test anrichì a l'é stàita disabilità përchè la pàgina a conten ëd còdes complicà.",
+	'rte-edgecase-comment' => 'Coment HTML',
+	'rte-edgecase-triplecurls' => 'Paràmetr dlë stamp',
+	'rte-edgecase-nowysiwyg' => 'ël comand "no WYSIWYG"',
+	'rte-edgecase-complex-description' => "n'adrëssa dl'aragnà esterna o në stamp andrinta a na descrission d'anliura",
+	'rte-edgecase-template-with-link' => "në stamp con n'anliura com paràmetr",
+	'rte-edgecase-syntax' => 'sintassi pa përmëttùa',
+	'rte-edgecase-image-with-link' => "figura con n'anliura ant la descrission",
+	'rte-edgecase-redirect' => 'ridiressioné',
+	'rte-edgecase-templateintable' => 'na tàula con na ciamada dë stamp ant la definission',
+	'rte-edgecase-unclosed-tags' => 'tichëtta HTML pa sarà',
 	'enablerichtexteditor' => "Abìlité l'editor ëd test anrichì",
+	'rte-enablerichtexteditormessage' => 'Editor ëd test anrichì abilità!',
+	'rte-first-run-notice' => "I l'oma fàit chèich ameliorassion a l'editor. Për savejne ëd pi, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news ch'a lesa l'anonsi].",
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -276,15 +309,19 @@ $messages['pt-br'] = array(
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
+	'rte-desc' => 'Интеграция CKeditor в MediaWiki',
 	'rte-no-js-fallback' => 'Текстовый редактор не работает при выключенном JavaScript. Пожалуйста, либо включите его в настройках браузера, либо измените ваши [[Special:Preferences|настройки]], чтобы переключиться на старый редактор MediaWiki',
+	'rte-edgecase-info-title' => 'Требуется режим исходника',
 	'rte-edgecase-info' => 'Улучшенный редактор текста отключен, поскольку статья содержит сложный код.',
 	'rte-edgecase-comment' => 'HTML комментарии',
 	'rte-edgecase-triplecurls' => 'параметры шаблона',
+	'rte-edgecase-nowysiwyg' => 'команда «нет WYSIWYG»',
 	'rte-edgecase-complex-description' => 'внешний URL или шаблон в описании ссылки',
 	'rte-edgecase-template-with-link' => 'шаблон со ссылкой в качестве параметра',
 	'rte-edgecase-syntax' => 'недопустимый синтаксис',
 	'rte-edgecase-image-with-link' => 'изображение со ссылкой в описании',
 	'rte-edgecase-redirect' => 'перенаправление',
+	'rte-edgecase-templateintable' => 'таблица с вызовом шаблона в определении',
 	'rte-edgecase-unclosed-tags' => 'не закрытые HTML теги',
 	'enablerichtexteditor' => 'Включить улучшенный редактор текста',
 	'rte-enablerichtexteditormessage' => 'Улучшенный редактор текста включен!',

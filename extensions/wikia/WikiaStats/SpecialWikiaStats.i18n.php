@@ -1124,6 +1124,7 @@ $messages['cy'] = array(
 );
 
 /** German (Deutsch)
+ * @author Kghbln
  * @author LWChris
  * @author MF-Warburg
  * @author The Evil IP address
@@ -1150,7 +1151,7 @@ $messages['de'] = array(
 	'wikiastats_distrib_article' => 'Autoren-Aktivitätsverteilung',
 	'wikiastats_active_absent_wikians' => 'Aktivitätsaufschlüsselung registrierter Autoren',
 	'wikiastats_anon_wikians' => 'Aktivitätsaufschlüsselung anonymer Autoren',
-	'wikiastats_anon_wikians_count' => '$1 {{PLURAL:$1|anonymer|anonyme}} Benutzer gefunden',
+	'wikiastats_anon_wikians_count' => '$1 {{PLURAL:$1|unangemeldeter|unangemeldete}} Benutzer gefunden',
 	'wikiastats_pageviews' => 'Seitenaufrufe pro Namensraum pro Monat',
 	'wikiastats_article_size' => 'Artikel, die mindestens einen internen Link enthalten, und .. Zeichen lesbaren Text, ohne Wiki- und HTML-Codes, versteckte Links, etc.;<br />Auch Header zählen nicht (außer Weiterleitungen)',
 	'wikiastats_article_one_link' => 'Artikel, die mindestens einen internen Link enthalten',
@@ -4315,9 +4316,11 @@ $messages['oc'] = array(
  * @author Xqt
  */
 $messages['pdc'] = array(
+	'wikiastats_panel_close_btn' => 'Zumache',
 	'wikiastats_active_year' => 'Yaahr',
 	'wikiastats_namespace' => 'Blatznaame',
 	'wikiastats_wikicategory' => 'Abdeeling:',
+	'wikiastats_more_txt' => 'mehner',
 	'wikiastats_wikilang' => 'Schprooch:',
 	'wikiastats_mainstats_short_column_N' => 'Gewebbgleecher',
 	'wikiastats_comparisons_table_16' => 'Gewebbgleecher',
@@ -5434,12 +5437,14 @@ $messages['te'] = array(
 	'wikiastats_other' => 'ఇతర',
 	'wikiastats_links' => 'లంకెలు',
 	'wikiastats_date' => 'తేదీ',
+	'wikiastats_namespace' => 'పేరుబరి',
 	'wikiastats_show' => 'చూపించు',
 	'wikiastats_hide' => 'దాచు',
 	'wikiastats_wikiname' => 'పేరు:',
 	'wikiastats_wikicategory' => 'వర్గం:',
 	'wikiastats_username' => 'వాడుకరి',
 	'wikiastats_usernames' => 'వాడుకరులు',
+	'wikiastats_edits' => 'మార్పులు',
 	'wikiastats_words' => 'పదాలు',
 	'wikiastats_redirects' => 'దారిమార్పులు',
 	'wikiastats_visits' => 'సందర్శనలు',
@@ -5447,12 +5452,17 @@ $messages['te'] = array(
 	'wikiastats_total' => 'మొత్తం',
 	'wikiastats_more_txt' => 'మరిన్ని',
 	'wikiastats_days_ago' => 'రోజుల క్రితం',
+	'wikiastats_month_ago' => '$1 $2 క్రితం',
 	'wikiastats_wikilang' => 'భాష:',
 	'wikiastats_mainstats_short_column_L' => 'పదాలు',
+	'wikiastats_tables' => 'పట్టికలు',
 	'wikiastats_comparisons_table_14' => 'పదాలు',
+	'wikiastats_trend_value' => 'విలువ',
 	'wikiastats_trend_where_text' => 'ఎక్కడ:',
 	'wikiastats_trend_all_wikia_text' => 'అన్ని వికీలు',
 	'wikiastats_xls_cancel' => 'రద్దుచేయి',
+	'wikiastats_main_statistics_legend' => 'ప్రధాన గణాంకాలు',
+	'wikiastats_other_statistics_legend' => 'ఇతర గణాంకాలు',
 	'wikiastats_mediawiki_stats' => 'మీడియావికీ గణాంకాలు:',
 	'wikiastats_statistics_information' => 'గణాంక సమాచారం',
 );
@@ -5731,6 +5741,11 @@ $messages['uk'] = array(
 	'wikiastats_sort_list_alphabet' => 'Сортувати список за алфавітом',
 	'wikiastats_lifetime_editors' => 'Всього редакторів',
 	'wikiastats_nbr_format' => 'Формат чисел:',
+);
+
+/** Urdu (اردو) */
+$messages['ur'] = array(
+	'wikiastats_xls_cancel' => 'منسوخ',
 );
 
 /** Wu (吴语) */

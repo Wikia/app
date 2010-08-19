@@ -56,10 +56,11 @@ $messages['ce'] = array(
 );
 
 /** German (Deutsch)
+ * @author Kghbln
  * @author LWChris
  */
 $messages['de'] = array(
-	'quickcreate-desc' => 'Fügt einen Neue Seite Button hinzu mit der Möglichkeit für anonyme Benutzer sich anzumelden',
+	'quickcreate-desc' => 'Fügt einen „Neue Seite“-Button hinzu, mit der Möglichkeit für unangemeldete Benutzer, sich anzumelden',
 	'quickcreate' => 'Sende dein Rezept',
 );
 

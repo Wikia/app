@@ -128,7 +128,7 @@ Wenn du Hilfe brauchst, und kein Admin von hier in der Nähe ist, möchtest du v
 die [[wikia:Forum:Community Central Forum|Foren des Community Zentralwikis]] besuchen $3',
 	'welcome-message-anon-staff' => "==Willkommen==
 
-Hi, Willkommen bei {{SITENAME}}! Danke für deine Bearbeitung auf der [[:$1]] Seite.
+Hi, Willkommen bei {{SITENAME}}! Danke für deine Bearbeitung der Seite „[[:$1]]“.
 
 '''[[Special:UserLogin|Bitte lege dir ein Benutzerkonto an]]'''. So kannst du ganz einfach deine Beiträge im Überblick behalten und dich besser mit dem Rest der Gemeinschaft verständigen.
 
@@ -170,7 +170,7 @@ Wenn Sie Hilfe brauchen, und kein Admin von hier in der Nähe ist, möchten Sie 
 die [[wikia:Forum:Community Central Forum|Foren des Community Zentralwikis]] besuchen $3',
 	'welcome-message-anon-staff' => "==Willkommen==
 
-Guten Tag, Willkommen bei {{SITENAME}}! Danke für Ihre Bearbeitung auf der [[:$1]] Seite.
+Guten Tag, Willkommen bei {{SITENAME}}! Danke für Ihre Bearbeitung der Seite „[[:$1]]“.
 
 '''[[Special:UserLogin|Bitte legen Sie sich ein Benutzerkonto an]]'''. So können Sie ganz einfach Ihre Beiträge im Überblick behalten und sich besser mit dem Rest der Gemeinschaft verständigen.
 
@@ -955,6 +955,7 @@ $messages['ru'] = array(
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Charmed94
  * @author Verlor
+ * @author Жељко Тодоровић
  */
 $messages['sr-ec'] = array(
 	'welcome-user-page' => "==О мени==
@@ -983,7 +984,7 @@ $messages['sr-ec'] = array(
 
 Здраво и добро дошли у {{SITENAME}}! Хвала Вам на измени на [[:$1]] страници.
 
-Ако Вам буде затребала помоћ а не нађете локалног администратора, посетите [[wikia:Forum:Community Central Forum|форум на Централној вики заједници]] $3',
+Ако Вам буде затребала помоћ, а не нађете локалног администратора, посетите [[wikia:Forum:Community Central Forum|форум на Централној вики заједници]] $3',
 	'welcome-message-anon-staff' => "==Добродошлица==
 
 Здраво и добро дошли у {{SITENAME}}. Хвала Вам на измени на [[:$1]] страници.

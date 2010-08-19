@@ -79,9 +79,21 @@ $messages['de-formal'] = array(
  * @author Crazymadlover
  */
 $messages['es'] = array(
+	'recipestweaks-desc' => 'Diseño y ajustes de funcionalidad para recetas wiki',
+	'savedpages' => 'Páginas grabadas',
+	'recipes-add-new-recipe' => 'Agregar una receta',
+	'recipes-browse' => 'Explorar wiki recetas',
+	'recipes-contributed-by' => 'Contribuído por $1 $2',
+	'recipes-contributed-by-anon' => 'Un usuario de wiki recetas',
+	'recipes-mainpage-title' => 'Bienvenido a recetas wiki',
 	'recipes-more' => 'Más',
 	'recipes-my-saved-pages' => 'Mis páginas grabadas',
 	'recipes-my-saved-pages-empty' => 'Ninguna página grabada aún',
+	'recipes-rating' => 'Esta calificación de receta:',
+	'recipes-search-label' => 'Buscar una receta',
+	'recipes-savedpages-empty' => 'No tienes items en tu colección de páginas grabadas.',
+	'recipes-savedpages-by' => 'por $1',
+	'recipes-history' => 'Ver cambios a esta receta',
 );
 
 /** French (Français)
@@ -124,6 +136,27 @@ $messages['gl'] = array(
 	'recipes-savedpages-empty' => 'Non ten ningún elemento na colección de páxinas gardadas.',
 	'recipes-savedpages-by' => 'por $1',
 	'recipes-history' => 'Ollar os cambios feitos nesta receita',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'recipestweaks-desc' => 'Adaptation del designo e functionalitate pro Recipes Wiki',
+	'savedpages' => 'Paginas salveguardate',
+	'recipes-add-new-recipe' => 'Adder un recepta',
+	'recipes-browse' => 'Explorar Wiki Receptas',
+	'recipes-contributed-by' => 'Contribuite per $1 $2',
+	'recipes-contributed-by-anon' => 'Un usator de Wiki Receptas',
+	'recipes-mainpage-title' => 'Benvenite a Wiki Receptas',
+	'recipes-more' => 'Plus',
+	'recipes-my-saved-pages' => 'Mi paginas salveguardate',
+	'recipes-my-saved-pages-empty' => 'Nulle pagina salveguardate ancora',
+	'recipes-rating' => 'Evalutation de iste recepta:',
+	'recipes-search-label' => 'Cercar un recepta',
+	'recipes-savedpages-empty' => 'Tu non ha articulos in tu collection de paginas salveguardate.',
+	'recipes-savedpages-by' => 'per $1',
+	'recipes-history' => 'Vider le cambios a iste recepta',
 );
 
 /** Macedonian (Македонски)
@@ -190,20 +223,28 @@ $messages['no'] = array(
 	'recipes-history' => 'Se endringer i denne oppskriften',
 );
 
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'recipes-more' => 'Mehner',
+);
+
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
-	'recipestweaks-desc' => "Ritoch ëd disegn e ëd funsionalità për la Wiki dl'Arsete",
+	'recipestweaks-desc' => "Regolassion dlë stil e dle funsionalità për la Wiki dj'Arsete",
 	'savedpages' => 'Pàgine salvà',
 	'recipes-add-new-recipe' => "Gionta n'arseta",
-	'recipes-browse' => "Esplora la Wiki dl'Arsete",
+	'recipes-browse' => "Esploré la Wiki dj'Arsete",
 	'recipes-contributed-by' => 'Contribuì da $1 $2',
-	'recipes-contributed-by-anon' => "N'utent dla Wiki dl'Arsete",
-	'recipes-mainpage-title' => "Bin ëvnù ant la Wiki dl'Arsete",
+	'recipes-contributed-by-anon' => "N'utent dla Wiki dj'Arsete",
+	'recipes-mainpage-title' => "Bin ëvnù ant la Wiki dj'Arsete",
 	'recipes-more' => 'Pi',
 	'recipes-my-saved-pages' => 'Mie pàgine salvà',
-	'recipes-my-saved-pages-empty' => "Pàgine anco' pa salvà",
+	'recipes-my-saved-pages-empty' => 'Gnun-a pàgina salvà për adess',
 	'recipes-rating' => "Pontegi dë st'arseta-sì:",
 	'recipes-search-label' => "Serca n'arseta",
 	'recipes-savedpages-empty' => "It l'has pa gnun element an toa colession ëd pàgine salvà.",
@@ -237,15 +278,21 @@ $messages['pt'] = array(
  * @author Ytsukeng Fyvaprol
  */
 $messages['ru'] = array(
+	'recipestweaks-desc' => 'Дизайн и функциональные настройки для Вики-Рецепты',
 	'savedpages' => 'Сохраненные страницы',
 	'recipes-add-new-recipe' => 'Добавить рецепт',
-	'recipes-browse' => 'Explore Recipes Wiki',
+	'recipes-browse' => 'Изучайте Вики-Рецепты',
+	'recipes-contributed-by' => 'Внесённый вклад от $1 $2',
+	'recipes-contributed-by-anon' => 'Рецепты пользователей Wiki',
+	'recipes-mainpage-title' => 'Добро пожаловать на Вики-Рецепты',
 	'recipes-more' => 'Ещё',
 	'recipes-my-saved-pages' => 'Мои сохранённые страницы',
 	'recipes-my-saved-pages-empty' => 'Сохранённых страниц нет',
 	'recipes-rating' => 'Рейтинг этого рецепта:',
 	'recipes-search-label' => 'Искать рецепт',
 	'recipes-savedpages-empty' => 'Ваша подборка сохранённых страниц пуста',
+	'recipes-savedpages-by' => 'от $1',
+	'recipes-history' => 'См. изменения, этого рецепта',
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
@@ -255,5 +302,12 @@ $messages['sr-ec'] = array(
 	'recipes-more' => 'Више',
 	'recipes-my-saved-pages' => 'Моје сачуване странице',
 	'recipes-my-saved-pages-empty' => 'Још увек немате сачуване странице',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'recipes-more' => 'మరిన్ని',
 );
 

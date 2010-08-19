@@ -395,10 +395,13 @@ $messages['ru'] = array(
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
 	'action_panel_edit_title' => 'Одговор',
+	'action_panel_categorize_help' => 'Једна категорија по линији',
+	'action_panel_categories_summary' => 'Додај категорије',
 	'action_panel_save_success' => 'Ваш чланак је сачуван.',
 	'action_panel_rename_success' => 'Ваш чланак је преименован.',
 	'action_panel_categorize_success' => 'Додана је ваша категорија.',
