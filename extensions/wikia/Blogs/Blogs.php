@@ -15,7 +15,7 @@ $wgExtensionCredits['other'][] = array(
 	"url" => "http://help.wikia.com/wiki/Help:Blog_article",
 	"svn-date" => '$LastChangedDate$',
 	"svn-revision" => '$LastChangedRevision$',
-	"author" => "[http://www.wikia.com/wiki/User:Eloy.wikia Krzysztof Krzyżaniak (eloy)], Piotr Molski, Adrian Wieczorek, [http://www.wikia.com/wiki/User:Ppiotr Przemek Piotrowski (Nef)]"
+	"author" => array('[http://www.wikia.com/wiki/User:Eloy.wikia Krzysztof Krzyżaniak (eloy)]', 'Piotr Molski', 'Adrian Wieczorek', '[http://www.wikia.com/wiki/User:Ppiotr Przemek Piotrowski (Nef)]', '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]')
 );
 
 define( "NS_BLOG_ARTICLE", 500 );
@@ -23,9 +23,6 @@ define( "NS_BLOG_ARTICLE_TALK", 501 );
 define( "NS_BLOG_LISTING", 502 );
 define( "NS_BLOG_LISTING_TALK", 503 );
 define( "BLOGTPL_TAG", "bloglist" );
-
-define( "BLOGCOMMENTORDERCOOKIE_NAME", "blogcommentorder" );
-define( "BLOGCOMMENTORDERCOOKIE_EXPIRE", 60 * 60 * 24 * 365 );
 
 $wgExtraNamespaces[ NS_BLOG_ARTICLE ] = "User_blog";
 $wgExtraNamespaces[ NS_BLOG_ARTICLE_TALK ] = "User_blog_comment";
@@ -43,7 +40,7 @@ $wgNamespacesWithSubpages[ NS_BLOG_LISTING_TALK ] = true;
  * @see SMW includes/SMW_GlobalFunctions.php::smwfInitNamespaces
  * FIXME generalize
  */
-if (in_array($wgLanguageCode, array("de", "ru", 'es', 'no', 'nn'))) {
+if (in_array($wgLanguageCode, array('de', 'ru', 'es', 'no', 'nn'))) {
 	// make en ns point (alias) to "main ns" - at this point themselves
 	foreach (array(500, 501, 502, 503) as $ns) {
 		$wgNamespaceAliases[$wgExtraNamespaces[$ns]] = $ns;
@@ -109,7 +106,7 @@ $wgAvailableRights[] = 'blog-comments-delete';
 $wgAvailableRights[] = 'blog-articles-edit';
 $wgAvailableRights[] = 'blog-articles-move';
 $wgAvailableRights[] = 'blog-articles-protect';
-$wgAvailableRights[] = "blog-auto-follow";
+$wgAvailableRights[] = 'blog-auto-follow';
 
 $wgGroupPermissions['*'][ 'blog-comments-toggle' ] = false;
 $wgGroupPermissions['sysop'][ 'blog-comments-toggle' ] = true;
@@ -121,25 +118,25 @@ $wgGroupPermissions['sysop'][ 'blog-comments-delete' ] = true;
 $wgGroupPermissions['staff'][ 'blog-comments-delete' ] = true;
 $wgGroupPermissions['helper'][ 'blog-comments-delete' ] = true;
 
-$wgGroupPermissions['*'][ "blog-articles-edit" ] = false;
-$wgGroupPermissions['sysop'][ "blog-articles-edit" ] = true;
-$wgGroupPermissions['staff'][ "blog-articles-edit" ] = true;
-$wgGroupPermissions['helper'][ "blog-articles-edit" ] = true;
+$wgGroupPermissions['*'][ 'blog-articles-edit' ] = false;
+$wgGroupPermissions['sysop'][ 'blog-articles-edit' ] = true;
+$wgGroupPermissions['staff'][ 'blog-articles-edit' ] = true;
+$wgGroupPermissions['helper'][ 'blog-articles-edit' ] = true;
 
-$wgGroupPermissions['*'][ "blog-articles-move" ] = false;
-$wgGroupPermissions['sysop'][ "blog-articles-move" ] = true;
-$wgGroupPermissions['staff'][ "blog-articles-move" ] = true;
-$wgGroupPermissions['helper'][ "blog-articles-move" ] = true;
+$wgGroupPermissions['*'][ 'blog-articles-move' ] = false;
+$wgGroupPermissions['sysop'][ 'blog-articles-move' ] = true;
+$wgGroupPermissions['staff'][ 'blog-articles-move' ] = true;
+$wgGroupPermissions['helper'][ 'blog-articles-move' ] = true;
 
-$wgGroupPermissions['*'][ "blog-articles-protect" ] = false;
-$wgGroupPermissions['sysop'][ "blog-articles-protect" ] = true;
-$wgGroupPermissions['staff'][ "blog-articles-protect" ] = true;
-$wgGroupPermissions['helper'][ "blog-articles-protect" ] = true;
+$wgGroupPermissions['*'][ 'blog-articles-protect' ] = false;
+$wgGroupPermissions['sysop'][ 'blog-articles-protect' ] = true;
+$wgGroupPermissions['staff'][ 'blog-articles-protect' ] = true;
+$wgGroupPermissions['helper'][ 'blog-articles-protect' ] = true;
 
-$wgGroupPermissions['*'][ "blog-auto-follow" ] = false;
-$wgGroupPermissions['sysop'][ "blog-auto-follow" ] = false;
-$wgGroupPermissions['staff'][ "blog-auto-follow" ] = true;
-$wgGroupPermissions['helper'][ "blog-auto-follow" ] = false;
+$wgGroupPermissions['*'][ 'blog-auto-follow' ] = false;
+$wgGroupPermissions['sysop'][ 'blog-auto-follow' ] = false;
+$wgGroupPermissions['staff'][ 'blog-auto-follow' ] = true;
+$wgGroupPermissions['helper'][ 'blog-auto-follow' ] = false;
 
 /**
  * Special pages
@@ -166,7 +163,6 @@ $wgHooks['AlternateEdit'][] = 'SpecialBlogPage::alternateEditHook';
 include( dirname( __FILE__ ) . "/SpecialBlogPage.php");
 include( dirname( __FILE__ ) . "/BlogTemplate.php");
 include( dirname( __FILE__ ) . "/BlogArticle.php");
-include( dirname( __FILE__ ) . "/BlogComments.php");
 include( dirname( __FILE__ ) . "/BlogLockdown.php");
 
 /**

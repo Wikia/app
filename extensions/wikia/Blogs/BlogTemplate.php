@@ -805,8 +805,12 @@ class BlogTemplateClass {
 			self::__makeDBOrder()
 		);
 		while ( $oRow = self::$dbr->fetchObject( $res ) ) {
-			$oComments = BlogCommentList::newFromText( $oRow->page_title );
-			$iCount = $oComments->count();
+			if (class_exists('ArticleCommentList')) {
+				$oComments = ArticleCommentList::newFromText( $oRow->page_title, $oRow->page_namespace );
+				$iCount = $oComments ? $oComments->getCountAllNested() : 0;
+			} else {
+				$iCount = 0;
+			}
 
 			/* username */
 			$oTitle = Title::newFromText($oRow->page_title, $oRow->page_namespace);

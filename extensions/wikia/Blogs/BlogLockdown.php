@@ -35,10 +35,9 @@ class BlogLockdown {
 		}
 
 		$username = $user->getName();
-		if ( $namespace == NS_BLOG_ARTICLE_TALK ) {
-			$result = true;
-			$oComment = BlogComment::newFromTitle( $title );
-			$oComment->fetch();
+		if ( $namespace == NS_BLOG_ARTICLE_TALK && class_exists('ArticleComment')) {
+			$oComment = ArticleComment::newFromTitle( $title );
+//			$oComment->load();
 			$canEdit = $oComment->canEdit();
 			$isOwner = (bool) ( $canEdit && !in_array($action, array('watch', 'protect') ) );
 			$isArticle = (bool )( $namespace == NS_BLOG_ARTICLE_TALK && $isOwner );

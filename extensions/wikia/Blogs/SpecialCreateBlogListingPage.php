@@ -20,10 +20,10 @@ class CreateBlogListingPage extends SpecialBlogPage {
 
 	public function execute() {
 		global $wgOut, $wgUser, $wgRequest, $wgTitle;
-                
-                wfRunHooks( 'beforeBlogListingForm', array( &$this, $wgRequest->getVal('article') ) );
 
-                if( !$wgUser->isLoggedIn() ) {
+		wfRunHooks( 'beforeBlogListingForm', array( &$this, $wgRequest->getVal('article') ) );
+
+		if( !$wgUser->isLoggedIn() ) {
 			$wgOut->showErrorPage( 'create-blog-no-login', 'create-blog-login-required', array(wfGetReturntoParam()));
 			return;
 		}
@@ -196,7 +196,7 @@ class CreateBlogListingPage extends SpecialBlogPage {
 		$this->mTagBody.= "</bloglist>\n";
 	}
 
-        public function parseTag($sTitle) {
+	public function parseTag($sTitle) {
 		global $wgParser;
 		$oTitle = Title::newFromText($sTitle, NS_BLOG_LISTING);
 		$oArticle = new Article($oTitle, 0);
