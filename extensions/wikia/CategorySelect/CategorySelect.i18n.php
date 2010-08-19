@@ -669,6 +669,11 @@ $messages['uk'] = array(
 	'categoryselect-desc' => 'Забезпечує інтерфейс для управління категоріями у статті без редагування всієї статті.',
 );
 
+/** Urdu (اردو) */
+$messages['ur'] = array(
+	'categoryselect-button-cancel' => 'منسوخ',
+);
+
 /** Wu (吴语) */
 $messages['wuu'] = array(
 	'categoryselect-button-cancel' => '取消',

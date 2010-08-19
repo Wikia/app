@@ -184,6 +184,13 @@ U sal moontlik die videobladsy moet opruim (purge) om die verandering te sien.',
 	'vet-protected' => 'Hierdie video is beveilig',
 );
 
+/** Aragonese (Aragonés)
+ * @author Juanpabl
+ */
+$messages['an'] = array(
+	'vet-insert' => 'Insertar',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  * @author Jim-by
@@ -1370,6 +1377,7 @@ $messages['pdc'] = array(
 	'vet-find-btn' => 'Uffgucke',
 	'vet-next' => 'Neegscht 8',
 	'vet-back' => 'zerrick',
+	'vet-close' => 'zumache',
 );
 
 /** Polish (Polski) */

@@ -2610,12 +2610,14 @@ $messages['pdc'] = array(
 	'wf_city_title' => 'Titel',
 	'wf_city_lang' => 'Schprooch',
 	'wf_cc_name' => 'Abdeeling',
+	'wikifactory-label-close' => 'Zumache',
 	'closewiki-redirect-to' => 'Weiderleiding',
 	'awc-metrics-by-language' => 'nooch Schprooche:',
 	'awc-metrics-all-languages' => 'alle Schprooche',
 	'awc-metrics-articles' => 'Ardickele',
 	'awc-metrics-edits' => 'Enneringe',
 	'awc-metrics-db-size' => 'DB-Grees',
+	'awc-metrics-close' => 'Zumache',
 	'closed-reason' => 'Grund:',
 );
 
@@ -3431,6 +3433,7 @@ $messages['te'] = array(
 	'awc-metrics-nbr-result' => 'ఫలితాలు:',
 	'awc-metrics-articles' => 'వ్యాసాలు',
 	'awc-metrics-articles-per-day' => 'వ్యాసాలు<br />(రోజుకి సగటు)',
+	'awc-metrics-edits' => 'మార్పులు',
 	'awc-metrics-close' => 'మూసివేయి',
 	'awc-metrics-hubs' => 'కొత్త వికీలు (నెలసరి)',
 	'awc-metrics-news-day' => 'కొత్త వికీలు (దినసరి)',
@@ -3542,6 +3545,11 @@ $messages['uk'] = array(
 	'closed-delete-images' => 'Вилучити зображення',
 	'closed-confirm-btn' => 'Підтвердити закриття',
 	'closed-reason' => 'Причина:',
+);
+
+/** Urdu (اردو) */
+$messages['ur'] = array(
+	'closed-reason' => 'وجہ:',
 );
 
 /** Wu (吴语) */

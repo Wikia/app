@@ -219,11 +219,13 @@ $messages['el'] = array(
 );
 
 /** Spanish (Español)
+ * @author Crazymadlover
  * @author Pertile
  * @author Translationista
  */
 $messages['es'] = array(
 	'editaccount' => 'Editar Cuenta',
+	'editaccount-desc' => 'Permite a los miembros del staff gestionar información de cuenta de usuario',
 	'editaccount-title' => 'Especial:EditAccount',
 	'editaccount-frame-manage' => 'Editar una cuenta',
 	'editaccount-frame-usage' => 'Nota',
@@ -438,6 +440,7 @@ $messages['hu'] = array(
  */
 $messages['ia'] = array(
 	'editaccount' => 'Modificar conto',
+	'editaccount-desc' => 'Permitte que membros del personal modifica informationes de contos de usatores',
 	'editaccount-title' => 'Special:Modificar conto',
 	'editaccount-frame-manage' => 'Modificar un conto',
 	'editaccount-frame-usage' => 'Nota',
@@ -800,6 +803,7 @@ $messages['pt'] = array(
  */
 $messages['pt-br'] = array(
 	'editaccount' => 'Editar conta',
+	'editaccount-desc' => 'Permite que os membros da equipe administrem a informação das contas de usuário',
 	'editaccount-title' => 'Special:EditAccount',
 	'editaccount-frame-manage' => 'Editar uma conta',
 	'editaccount-frame-usage' => 'Nota',

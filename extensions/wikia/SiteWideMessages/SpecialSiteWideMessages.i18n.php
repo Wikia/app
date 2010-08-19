@@ -344,6 +344,13 @@ $messages['br'] = array(
 	'swm-lang-other' => 'an holl yezhoù a chom',
 );
 
+/** Church Slavic (Словѣ́ньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ)
+ * @author ОйЛ
+ */
+$messages['cu'] = array(
+	'swm-no' => 'нѣ́тъ',
+);
+
 /** Welsh (Cymraeg)
  * @author Lloffiwr
  */
@@ -1202,8 +1209,10 @@ $messages['no'] = array(
  * @author Xqt
  */
 $messages['pdc'] = array(
+	'swm-label-preview' => 'Aagucke',
 	'swm-label-comment' => 'Anmaerricking',
 	'swm-label-language' => 'Schprooch',
+	'swm-button-preview' => '[ Aagucke ]',
 	'swm-button-send' => '[ Naus schicke ]',
 	'swm-list-table-lang' => 'Schprooche',
 	'swm-yes' => 'Ya',

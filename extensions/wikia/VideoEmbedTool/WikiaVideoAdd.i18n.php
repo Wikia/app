@@ -165,6 +165,21 @@ $messages['eu'] = array(
 	'wva-add' => 'Gehitu',
 );
 
+/** Persian (فارسی)
+ * @author Ebraminio
+ */
+$messages['fa'] = array(
+	'wva-success' => 'فیلم صفحهٔ $1 موفقیت‌آمیز اضافه شد.',
+	'wva-success-replaced' => 'فیلم صفحهٔ $1 موفقیت‌آمیز جایگزین شد.',
+	'wva-failure' => 'لطفا ورودی‌های درستی وارد کنید.',
+	'wva-name' => 'نام را وارد کنید:',
+	'wva-url' => 'نشانی اینترنتی را وارد کنید:',
+	'wva-add' => 'اضافه کردن',
+	'wva-title' => 'به سرعت فیلم را از نشانی اینترنتی واردکردن',
+	'wva-notlogged' => 'برای وارد کردن فیلم، شما باید به سامانه وارد شوید یا ثبت نام کنید.',
+	'wva-notallowed' => 'شما نمی‌توانید در این ویکی فیلم وارد کنید.',
+);
+
 /** Finnish (Suomi)
  * @author Centerlink
  * @author Crt

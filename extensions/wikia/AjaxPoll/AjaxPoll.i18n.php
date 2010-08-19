@@ -377,9 +377,11 @@ $messages['ru'] = array(
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp;од свих гласова',
 	'ajaxpoll-thankyou' => 'Хвала Вам што сте гласали!',
 	'ajaxpoll-error' => 'Био је неки проблем са обрадом вашег гласа, молимо Вас да покушате поново да гласате!',
 	'ajaxpoll-submit' => 'Гласај!',

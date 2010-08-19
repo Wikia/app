@@ -1973,6 +1973,7 @@ $messages['si'] = array(
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Rancher
  * @author Verlor
+ * @author Жељко Тодоровић
  */
 $messages['sr-ec'] = array(
 	'myhome' => 'Моја Кућа',
@@ -2007,7 +2008,7 @@ $messages['sr-ec'] = array(
 	'myhome-feed-diff-alt' => 'Покажи промене на овој страници',
 	'myhome-feed-new-page-details' => 'Нова страница',
 	'myhome-feed-summary-details' => 'Опис',
-	'myhome-feed-section-edit-details' => 'уређивао секцију',
+	'myhome-feed-section-edit-details' => 'уређивао одељак',
 	'myhome-feed-new-blog-post-details' => 'Нови блог',
 	'myhome-feed-new-blog-comment-details' => 'Коментар',
 	'myhome-feed-new-article-comment-details' => 'Коментар',
@@ -2021,20 +2022,20 @@ $messages['sr-ec'] = array(
 	'myhome-namespace-blog' => 'Блог',
 	'myhome-community-corner-header' => 'Заједнички кутак',
 	'myhome-community-corner-edit' => 'уреди поруку',
-	'community-corner' => "'''Добродошли у Моју Кућу!'''
+	'community-corner' => "'''Добро дошли у Моју Кућу!'''
 
 Ова страница помаже Вам да знате шта се дешава на вашој Викији.
 
 Ако сте оснивач или администратор на овој Викији, можете да измените ову поруку да би разговарали са заједницом о значајним стварима, које се дешавају на вашем сајту.
 Например, Ви можете да:
 
-* Организујете пројект д би изградили једно подручје на викији
+* организујете пројект да би изградили једно подручје на викији
 
-* Покажете неке нове стране, које сви могу да виде
+* покажете неке нове стране, које сви могу да виде
 
-* омогућие људима да дискутују о дешавањима на сајту
+* омогућите људима да дискутују о дешавањима на сајту
 
-* Да се обратите уређивачу, који је додао нешто специјално на вашу вики
+* да се обратите уређивачу, који је додао нешто специјално на вашу вики
 
 * или само да пошаљете неколико речи охрабрења!",
 	'myhome-hot-spots-definition' => 'Странице са највише уређивача током задњих $1 дана',
@@ -2261,6 +2262,7 @@ $messages['tt-cyrl'] = array(
 
 /** Ukrainian (Українська)
  * @author Prima klasy4na
+ * @author Тест
  */
 $messages['uk'] = array(
 	'myhome' => 'Моя домашня сторінка',
@@ -2295,6 +2297,7 @@ $messages['uk'] = array(
 	'myhome-community-corner-edit' => 'редагувати повідомлення',
 	'myhome-hot-spots-definition' => 'Сторінки з найбільшою кількістю редакторів за {{PLURAL:$1|останній день|останні $1 дні|останніх $1 днів}}.',
 	'tooltip-pt-myhome' => 'На мою домашню сторінку',
+	'activityfeed' => 'Останні зміни',
 );
 
 /** Chinese (中文)

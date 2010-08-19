@@ -1221,6 +1221,7 @@ Cuando participes en un wiki, tu perfil de usuario mostrará los logros que has 
 	'leaderboard' => 'Tabla de líderes con más logros',
 	'achievements-recent-earned-badges' => 'Logros conseguidos recientemente',
 	'achievements-recent-info' => '<strong>$3</strong><br />$4<br />conseguido por <a href="$1">$2</a><br />$5',
+	'achievements-activityfeed-info' => ' Ganó la <strong><a href="$3" class="badgeName">$1</a></strong> insignia<br />$2',
 	'achievements-leaderboard-disclaimer' => 'La tabla de líderes muestra los cambios desde ayer',
 	'achievements-leaderboard-rank-label' => 'clasificación',
 	'achievements-leaderboard-member-label' => 'miembro',
@@ -1450,8 +1451,8 @@ Merci d'en essayer une autre !",
 	'achievements-track-name-edit' => 'Challenges d’édition',
 	'achievements-track-name-picture' => 'Challenges d’illustration',
 	'achievements-track-name-category' => 'Challenges de catégorie',
-	'achievements-track-name-blogpost' => 'Fil des billets de blogues',
-	'achievements-track-name-blogcomment' => 'Fil des commentaires de blogues',
+	'achievements-track-name-blogpost' => 'Challenges de publication sur un blog',
+	'achievements-track-name-blogcomment' => 'Challenges de commentaire d’un blog',
 	'achievements-track-name-love' => "Challenges ''wiki love''",
 	'achievements-notification-title' => 'Vous êtes sur le bon chemin, $1 !',
 	'achievements-notification-subtitle' => 'Vous venez de gagner le badge « $1 » $2',
@@ -1477,6 +1478,7 @@ Lorsque vous rejoignez le wiki, votre profil utilisateur affiche les badges que 
 	'leaderboard' => 'Tableau des challenges',
 	'achievements-recent-earned-badges' => 'Badges récemment gagnés',
 	'achievements-recent-info' => '<strong>$3</strong><br />$4<br />gagné par <a href="$1">$2</a><br />$5',
+	'achievements-activityfeed-info' => 'a gagné le badge <strong><a href="$3" class="badgeName">$1</a></strong><br />$2',
 	'achievements-leaderboard-disclaimer' => 'La table de leaders montre les changements depuis hier',
 	'achievements-leaderboard-rank-label' => 'rang',
 	'achievements-leaderboard-member-label' => 'membre',
@@ -1739,6 +1741,7 @@ Ao unirse ao wiki, o seu perfil de usuario mostra as insignias que gañou, así 
 	'leaderboard' => 'Taboleiro de logros',
 	'achievements-recent-earned-badges' => 'Insignias conseguidas recentemente',
 	'achievements-recent-info' => '<strong>$3</strong><br />$4<br />conseguida por <a href="$1">$2</a><br />$5',
+	'achievements-activityfeed-info' => 'conseguiu a insignia <strong><a href="$3" class="badgeName">$1</a></strong><br />$2',
 	'achievements-leaderboard-disclaimer' => 'O taboleiro mostra os cambios desde onte',
 	'achievements-leaderboard-rank-label' => 'clasificación',
 	'achievements-leaderboard-member-label' => 'membro',
@@ -2008,6 +2011,7 @@ Quando tu deveni membro del wiki, tu profilo de usator presenta le insignias que
 	'leaderboard' => 'Classamento de successos',
 	'achievements-recent-earned-badges' => 'Insignias recentemente ganiate',
 	'achievements-recent-info' => '<strong>$3</strong><br />$4<br />ganiate per <a href="$1">$2</a><br />$5',
+	'achievements-activityfeed-info' => 'ganiava le insignia <strong><a href="$3" class="badgeName">$1</a></strong><br />$2',
 	'achievements-leaderboard-disclaimer' => 'Le classamento monstra le cambios depost heri',
 	'achievements-leaderboard-rank-label' => 'rango',
 	'achievements-leaderboard-member-label' => 'membro',
@@ -2477,6 +2481,7 @@ $messages['mk'] = array(
 	'leaderboard' => 'Предводници',
 	'achievements-recent-earned-badges' => 'Скорешни заработени значки',
 	'achievements-recent-info' => '<strong>$3</strong><br />$4<br />заработена од <a href="$1">$2</a><br />$5',
+	'achievements-activityfeed-info' => 'заработена значката <strong><a href="$3" class="badgeName">$1</a></strong> <br />$2',
 	'achievements-leaderboard-disclaimer' => 'Табелата на водачи ги прикажува промените од вчера до денес',
 	'achievements-leaderboard-rank-label' => 'ранг',
 	'achievements-leaderboard-member-label' => 'член',
@@ -2945,6 +2950,7 @@ de overlegpagina van een andere gebruiker!',
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
+ * @author Nghtwlkr
  */
 $messages['no'] = array(
 	'achievementsii-desc' => 'Et utmerkelsessystem for wikibrukere',
@@ -2994,6 +3000,7 @@ Når du blir med i wikien, viser brukerprofilen din de utmerkelsene du har motta
 	'leaderboard' => 'Toppliste over utmerkelser',
 	'achievements-recent-earned-badges' => 'Nylig utdelte utmerkelser',
 	'achievements-recent-info' => '<strong>$3</strong><br />$4<br />ble tildelt <a href="$1">$2</a><br />$5',
+	'achievements-activityfeed-info' => 'fikk utmerkelsen <strong><a href="$3" class="badgeName">$1</a></strong><br />$2',
 	'achievements-leaderboard-disclaimer' => 'Topplisten viser endringer siden i går',
 	'achievements-leaderboard-rank-label' => 'rangering',
 	'achievements-leaderboard-member-label' => 'medlem',
@@ -3240,20 +3247,35 @@ Tente outra imagem, por favor!',
 	'achievements-leaderboard-rank-label' => 'posição',
 	'achievements-leaderboard-member-label' => 'membro',
 	'achievements-leaderboard-points-label' => 'pontos',
+	'achievements-community-platinum-enabled' => 'activado',
 	'achievements-community-platinum-edit' => 'editar',
 	'achievements-community-platinum-save' => 'gravar',
+	'achievements-badge-name-edit-0' => 'Fazendo a Diferença',
+	'achievements-badge-name-edit-1' => 'Apenas o Começo',
 	'achievements-badge-name-edit-4' => 'Colaborador',
 	'achievements-badge-name-picture-1' => 'Paparazzi',
 	'achievements-badge-name-picture-2' => 'Ilustrador',
 	'achievements-badge-name-picture-3' => 'Coleccionador',
 	'achievements-badge-name-picture-5' => 'Decorador',
+	'achievements-badge-name-picture-6' => 'Designer',
+	'achievements-badge-name-picture-7' => 'Curador',
+	'achievements-badge-name-category-0' => 'Fazer uma Ligação',
 	'achievements-badge-name-category-2' => 'Explorador',
+	'achievements-badge-name-category-4' => 'Navegador',
 	'achievements-badge-name-blogpost-0' => 'Algo a dizer',
-	'achievements-badge-name-blogpost-1' => 'Cinco coisas a dizer',
-	'achievements-badge-name-love-2' => 'Devotado',
+	'achievements-badge-name-blogpost-1' => 'Cinco Coisas a dizer',
+	'achievements-badge-name-love-2' => 'Devoto',
 	'achievements-badge-name-love-3' => 'Dedicado',
+	'achievements-badge-name-love-4' => 'Viciado',
+	'achievements-badge-name-welcome' => 'Bem-vindo(a) à Wiki',
 	'achievements-badge-name-introduction' => 'Introdução',
 	'achievements-badge-to-get-edit-plus-category' => 'fazer {{PLURAL:$1|uma edição de uma página|$1 edições de páginas}} $2',
+	'achievements-badge-to-get-introduction' => 'adicionar à sua página de utilizador',
+	'achievements-badge-to-get-sayhi' => 'deixar uma mensagem na página de discussão de alguém',
+	'achievements-badge-to-get-creator' => 'ser o criador desta wiki',
+	'achievements-badge-to-get-pounce' => 'ser rápido',
+	'achievements-badge-to-get-caffeinated' => 'fazer {{PLURAL:$1|uma edição|$1 edições}} num único dia',
+	'achievements-badge-to-get-luckyedit' => 'ter sorte',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -3277,9 +3299,31 @@ $messages['pt-br'] = array(
 	'achievements-community-platinum-save' => 'salvar',
 );
 
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'achievements-platinum' => 'Platine',
+	'achievements-gold' => 'Ore',
+	'achievements-silver' => 'Argende',
+	'achievements-bronze' => 'Bronze',
+	'achievements-you-must' => 'Tu è abbesogne de $1 pe pigghià stu badge.',
+	'achievements-viewall' => 'Vide tutte',
+	'achievements-viewless' => 'Achiude',
+	'achievements-leaderboard-rank-label' => 'posizione',
+	'achievements-leaderboard-member-label' => 'membre',
+	'achievements-leaderboard-points-label' => 'punde',
+	'achievements-enable-track' => 'abbilitate',
+	'platinum' => 'Platine',
+	'achievements-community-platinum-enabled' => 'abbilitate',
+	'achievements-community-platinum-edit' => 'cange',
+	'achievements-community-platinum-save' => 'reggistre',
+);
+
 /** Russian (Русский)
  * @author DCamer
  * @author Eleferen
+ * @author JenVan
  * @author Strizh
  * @author Александр Сигачёв
  */
@@ -3293,6 +3337,7 @@ $messages['ru'] = array(
 	'achievements-upload-not-allowed' => 'Администраторы могут изменять названия и изображения значков достижений на спецстранице «[[Special:AchievementsCustomize|Управление достижениями]]».',
 	'achievements-non-existing-category' => 'Указанной категории не существует.',
 	'achievements-edit-plus-category-track-exists' => 'Указанной категории уже <a href="#" onclick="$(window).scrollTo(\'#section$1\', 2500); return false;" title="Перейти к треку">назначен трек</a>.',
+	'achievements-no-stub-category' => 'Пожалуйста, не создавайте треки для заготовок.',
 	'achievements-platinum' => 'Платина',
 	'achievements-gold' => 'Золото',
 	'achievements-silver' => 'Серебро',
@@ -3300,11 +3345,18 @@ $messages['ru'] = array(
 	'achievements-you-must' => 'Вам необходимо $1, чтобы получить этот значок.',
 	'leaderboard-button' => 'Лидеры по наградам',
 	'achievements-masthead-points' => '$1 <small>{{PLURAL:$1|поинт|поинтов}}</small>',
+	'achievements-track-name-edit' => 'Изменить трек',
 	'achievements-track-name-picture' => 'Изображение трека',
 	'achievements-track-name-category' => 'Категория трека',
+	'achievements-track-name-blogpost' => 'Сообщение в блоге трека',
+	'achievements-notification-title' => 'Так держать, $1!',
+	'achievements-notification-subtitle' => 'Вы заработали значок «$1» $2',
 	'achievements-notification-link' => '<big><strong>[[Special:MyPage|Посмотрите, какие ещё значки вы можете заработать]]!</strong></big>',
 	'achievements-points' => '$1 {{PLURAL:$1|очко|очков}}',
 	'achievements-points-with-break' => '$1<br />{{PLURAL:$1|очко|очков}}',
+	'achievements-earned' => 'Этот значок был заработан {{PLURAL:$1|1 участником|$1 участниками}}.',
+	'achievements-profile-title' => 'Участник $1 заработал $2 {{PLURAL:$2|значок|значков}}',
+	'achievements-profile-title-no' => 'Значки участника $1',
 	'achievements-profile-title-challenges' => 'Можно заработать дополнительные значки!',
 	'achievements-profile-customize' => 'Настройка значков',
 	'achievements-ranked' => 'Ранг #$1 в этой вики',
@@ -3319,6 +3371,9 @@ $messages['ru'] = array(
 После регистрации в вики, в профиле пользователя отображаются значки, которые вы уже заработали, а так же представлен список задач, которые вам доступны.
 [[Special:MyPage|Перейти к профилю пользователя, чтобы проверить его]]!",
 	'leaderboard' => 'Лидеры по наградам',
+	'achievements-recent-earned-badges' => 'Последние заработанные значки',
+	'achievements-recent-info' => '<strong>$3</strong><br />$4<br />заработал <a href="$1">$2</a><br />$5',
+	'achievements-activityfeed-info' => 'заработал <a href="$3" class="badgeName"><strong>$1</strong></a> значок <br /> $2',
 	'achievements-leaderboard-rank-label' => 'место',
 	'achievements-leaderboard-member-label' => 'Участник',
 	'achievements-leaderboard-points-label' => 'очков',
@@ -3326,6 +3381,8 @@ $messages['ru'] = array(
 	'achievements-save' => 'Сохранить изменения',
 	'achievements-reverted' => 'Значок возвращён к исходной версии',
 	'achievements-customize' => 'Настроить изображение',
+	'achievements-customize-new-category-track' => 'Создать новый трек для категории:',
+	'achievements-enable-track' => 'включено',
 	'achievements-revert' => 'Восстановить по умолчанию',
 	'achievements-special-saved' => 'Изменения сохранены.',
 	'achievements-special' => 'Особые достижения',
@@ -3335,11 +3392,16 @@ $messages['ru'] = array(
 	'platinum' => 'Платина',
 	'achievements-community-platinum-awarded-email-subject' => 'Вы получили новый Платиновый значок!',
 	'achievements-community-platinum-awarded-for' => 'Награждён за:',
+	'achievements-community-platinum-how-to-earn' => 'Как заработать:',
+	'achievements-community-platinum-awarded-for-example' => 'например, «для этого…»',
+	'achievements-community-platinum-how-to-earn-example' => 'например, «сделать три правки…»',
 	'achievements-community-platinum-badge-image' => 'Изображение значка:',
 	'achievements-community-platinum-awarded-to' => 'Награждён:',
+	'achievements-community-platinum-current-badges' => 'Текущие платиновые значки',
 	'achievements-community-platinum-create-badge' => 'Создать значок',
 	'achievements-community-platinum-edit' => 'править',
 	'achievements-community-platinum-save' => 'сохранить',
+	'achievements-badge-name-edit-0' => 'Вносить изменения',
 	'achievements-badge-name-edit-1' => 'Это только начало',
 	'achievements-badge-name-edit-3' => 'Друг Wiki',
 	'achievements-badge-name-edit-4' => 'Сотрудник',
@@ -3354,12 +3416,19 @@ $messages['ru'] = array(
 	'achievements-badge-name-picture-5' => 'Декоратор',
 	'achievements-badge-name-picture-6' => 'Дизайнер',
 	'achievements-badge-name-picture-7' => 'Куратор',
+	'achievements-badge-name-category-3' => 'Экскурсовод',
 	'achievements-badge-name-love-1' => 'Две недели в вики',
+	'achievements-badge-name-love-2' => 'Приверженный',
 	'achievements-badge-name-love-6' => 'Вики-Герой!',
 	'achievements-badge-name-welcome' => 'Добро пожаловать в вики',
+	'achievements-badge-name-introduction' => 'Введение',
+	'achievements-badge-name-caffeinated' => 'С кофеином',
+	'achievements-badge-name-luckyedit' => 'Счастливая правка',
+	'achievements-badge-to-get-welcome' => 'присоединиться к вики',
 	'achievements-badge-to-get-introduction' => 'добавил(а) свою собственную страницу участника',
 	'achievements-badge-to-get-sayhi' => 'кто-то оставил сообщение на странице обсуждения',
 	'achievements-badge-to-get-creator' => 'является создателем этой вики',
+	'achievements-badge-to-get-pounce' => 'быть быстрым',
 	'achievements-badge-to-get-edit-details' => 'Чего-то не хватает? 
 Есть ошибки? 
 Не стесняйтесь. 
@@ -3396,6 +3465,35 @@ $messages['ru'] = array(
 	'achievements-badge-desc-pounce' => 'за правку 100 страниц в течении часа после создании страницы!',
 	'achievements-badge-desc-caffeinated' => 'за 100 правок страницы, за день!',
 	'achievements-badge-desc-luckyedit' => 'за $1 правку(ок) в вики!',
+);
+
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'achievements-platinum' => 'Платина',
+	'achievements-gold' => 'Злато',
+	'achievements-silver' => 'Сребро',
+	'achievements-bronze' => 'Бронза',
+	'achievements-you-must' => 'Потребно Вам је $1 да бисте добили овај беџ.',
+	'achievements-track-name-edit' => 'Уреди запис',
+	'achievements-track-name-picture' => 'Запис фотографија',
+	'achievements-track-name-category' => 'Запис категорија',
+	'achievements-notification-title' => 'Само напред,  $1!',
+	'achievements-viewall' => 'Види све',
+	'achievements-viewless' => 'Затвори',
+	'achievements-leaderboard-rank-label' => 'ранг',
+	'achievements-leaderboard-member-label' => 'члан',
+	'achievements-leaderboard-points-label' => 'поени',
+	'achievements-send' => 'Сачувај слику',
+	'achievements-save' => 'Сачувај измене',
+	'achievements-customize-new-category-track' => 'Направи нови запис за категорију:',
+	'achievements-enable-track' => 'омогућено',
+	'achievements-special-saved' => 'Измене су сачуване.',
+	'achievements-about-title' => 'О овој страници...',
+	'achievements-create-edit-plus-category' => 'Направи овај запис',
+	'platinum' => 'Платина',
+	'achievements-community-platinum-awarded-email-subject' => 'Награђени сте новим платинастим беџом!',
 );
 
 /** Telugu (తెలుగు)

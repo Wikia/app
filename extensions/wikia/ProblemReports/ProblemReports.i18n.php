@@ -272,14 +272,20 @@ $messages['be-tarask'] = array(
 	'pr_table_problem_type' => 'Тып праблемы',
 	'pr_table_page_link' => 'Старонка',
 	'pr_table_date_submitted' => 'Дата адпраўкі',
+	'pr_table_reporter_name' => 'Імя аўтара паведамленьня',
 	'pr_table_description' => 'Апісаньне',
 	'pr_table_comments' => 'Камэнтары',
 	'pr_table_status' => 'Статус',
 	'pr_table_actions' => 'Дзеяньні',
+	'pr_status_0' => 'чакае',
+	'pr_status_1' => 'выпраўлена',
+	'pr_status_2' => 'закрыта',
+	'pr_status_3' => 'неабходная дапамога супрацоўнікаў',
 );
 
 /** Breton (Brezhoneg)
  * @author Fulup
+ * @author Gwendal
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -1368,7 +1374,7 @@ Błędy w oprogramowaniu mogą być zgłaszane na forach. Problemy zgłaszane tu
 	'pr_view_all' => 'Przeglądaj wszystkie raporty',
 	'pr_view_staff' => 'Przejrzyj raporty wymagające pomocy administracji Wikii',
 	'pr_raports_from_this_wikia' => 'Przejrzyj raporty dotyczące tylko tej Wikii',
-	'pr_reports_from' => 'Raporty z: $1',
+	'pr_reports_from' => 'Raporty wyłącznie z $1',
 	'pr_no_reports' => 'Brak raportów',
 	'pr_sysops_notice' => 'Jeśli chcesz dokonać zmian w statusie raportów, proszę przejść <a href="$1">tutaj</a>...',
 	'pr_table_problem_id' => 'ID problemu',

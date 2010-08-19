@@ -40,6 +40,7 @@ $messages['ar'] = array(
  * @author Wizardist
  */
 $messages['be-tarask'] = array(
+	'sharefeature-desc' => 'Дазваляе ўдзельнікам спасылацца на старонкі з папулярных сайтаў',
 	'sf-link' => 'Падзяліцца гэтым артыкулам',
 	'sf-link-popup' => 'Падзяліцца артыкулам',
 	'sf-link-tooltip' => 'Падзяліцца спасылкай на артыкул са сваімі сябрамі',
@@ -144,6 +145,7 @@ $messages['hu'] = array(
  * @author McDutchie
  */
 $messages['ia'] = array(
+	'sharefeature-desc' => 'Permitte que usatores face ligamines a paginas ab sitos popular',
 	'sf-link' => 'Condivider iste articulo',
 	'sf-link-popup' => 'Condivider iste articulo',
 	'sf-link-tooltip' => 'Condivider iste articulo con tu amicos',
@@ -160,8 +162,11 @@ $messages['id'] = array(
 	'sf-link-tooltip' => 'Berbagi artikel ini dengan teman anda',
 );
 
-/** Japanese (日本語) */
+/** Japanese (日本語)
+ * @author Tommy6
+ */
 $messages['ja'] = array(
+	'sharefeature-desc' => '利用者が人気のあるサイトからページへリンクできるようにする',
 	'sf-link' => 'この記事を共有',
 	'sf-link-popup' => 'この記事を共有',
 	'sf-link-tooltip' => 'この記事を友人と共有',
@@ -215,8 +220,11 @@ $messages['oc'] = array(
 	'sf-link-tooltip' => 'Partejar aqueste article amb tos amics',
 );
 
-/** Polish (Polski) */
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
 $messages['pl'] = array(
+	'sharefeature-desc' => 'Umożliwia użytkownikom linkowanie do stron z popularnych witryn',
 	'sf-link' => 'Podziel się tym artykułem',
 	'sf-link-popup' => 'Podziel się tym artykułem',
 	'sf-link-tooltip' => 'Podziel się tym artykułem ze swymi przyjaciółmi',
@@ -252,9 +260,11 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
  * @author Jesielt
  */
 $messages['pt-br'] = array(
+	'sharefeature-desc' => 'Permite a criação de links para páginas de sites populares',
 	'sf-link' => 'Compartilhe este artigo',
 	'sf-link-popup' => 'Compartilhe este artigo',
 	'sf-link-tooltip' => 'Compartilhe este artigo com seus amigos',

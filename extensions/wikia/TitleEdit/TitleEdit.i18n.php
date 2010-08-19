@@ -185,8 +185,11 @@ $messages['bo'] = array(
 	'titleedit' => 'རྩོམ་སྒྲིག',
 );
 
-/** Bishnupria Manipuri (ইমার ঠার/বিষ্ণুপ্রিয়া মণিপুরী) */
+/** Bishnupria Manipuri (ইমার ঠার/বিষ্ণুপ্রিয়া মণিপুরী)
+ * @author Usingha
+ */
 $messages['bpy'] = array(
+	'titleedit-desc' => 'পাতাহানর গজে চিঙনাঙ পতানির গোথামগ বরেই',
 	'titleedit' => 'পতানি',
 );
 
@@ -1182,9 +1185,10 @@ $messages['shi'] = array(
 
 /** Sinhala (සිංහල)
  * @author Singhalawap
+ * @author තඹරු විජේසේකර
  */
 $messages['si'] = array(
-	'titleedit-desc' => 'මාතෘකව සංශෝධනය බොත්තම පිටුවේ ඉහලට එක්කරන්න',
+	'titleedit-desc' => 'මාතෘකා සංශෝධන බොත්තම පිටුවේ ඉහලට එක්කරන්න',
 	'titleedit' => 'සංස්කරණය කරන්න',
 );
 
@@ -1278,8 +1282,11 @@ $messages['szl'] = array(
 	'titleedit' => 'sprowjej',
 );
 
-/** Tamil (தமிழ்) */
+/** Tamil (தமிழ்)
+ * @author TRYPPN
+ */
 $messages['ta'] = array(
+	'titleedit-desc' => 'தொகுக்கும் பொத்தான் தலைப்பை, பக்கங்களின் மேல் பகுதியில் இணைக்கிறது',
 	'titleedit' => 'தொகு',
 );
 
@@ -1350,6 +1357,13 @@ $messages['tr'] = array(
 /** Tsonga (Xitsonga) */
 $messages['ts'] = array(
 	'titleedit' => 'Lulamisa',
+);
+
+/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+ * @author Ильнар
+ */
+$messages['tt-cyrl'] = array(
+	'titleedit' => 'үзгәртү',
 );
 
 /** Tahitian (Reo Mā`ohi) */

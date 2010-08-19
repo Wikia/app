@@ -1326,6 +1326,7 @@ Tu pote crear listas de blogs pro categorias como "Barack Obama", "libros", o me
 	'blogs-recent-url-text' => 'Recente articulos de blog',
 	'blog-desc' => 'Articulos de blog',
 	'blog-movepage-badtitle' => 'Invalide titulo de articulo de blog.',
+	'blog-comment-sending' => 'Invio in curso...',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -2470,6 +2471,7 @@ Crie uma lista de blogs para categorias como "Barack Obama", "Humor" ou, até me
 	'blogs-recent-url-text' => 'Posts de blog recentes',
 	'blog-desc' => 'Artigos de blog',
 	'blog-movepage-badtitle' => 'Título de post inválido.',
+	'blog-comment-sending' => 'Enviando...',
 );
 
 /** Russian (Русский)

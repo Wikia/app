@@ -2064,10 +2064,11 @@ $messages['ru'] = array(
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Sasa Stefanovic
  * @author Verlor
+ * @author Жељко Тодоровић
  */
 $messages['sr-ec'] = array(
 	'multitasks-link-back-label' => 'овде',
-	'multiwikiedit' => 'Уреди више страна',
+	'multiwikiedit' => 'Уреди више страница',
 	'multiwikiedit_button' => 'УРЕДИ',
 	'multiwikiedit_confirm' => 'ПОТВРДИ',
 	'multiwikiedit_caption' => 'списак страница',
@@ -2114,7 +2115,7 @@ $messages['sr-ec'] = array(
 	'multidelete_french_wikis' => 'све француске викије',
 	'multidelete_swedish_wikis' => 'све шведске викије',
 	'multidelete_german_wikis' => 'све немачке викије',
-	'multiwikifindpagenames' => 'Нађите имена страна',
+	'multiwikifindpagenames' => 'Нађите називе страница',
 	'multiwikienterpagename' => 'Унесите име стране',
 	'multiwikirecords' => 'нађена $1 викија',
 );
@@ -2141,6 +2142,8 @@ $messages['sv'] = array(
 $messages['te'] = array(
 	'multitasks-link-back-label' => 'ఇక్కడ',
 	'multiwikiedit_or' => '<b>లేదా</b>',
+	'multiwikiedit_all_wikis' => 'అన్ని వికీలు',
+	'multidelete_reason' => 'తొలగింపుకి కారణం',
 	'multidelete_english_wikis' => 'అన్ని ఆంగ్ల వికీలు',
 );
 

@@ -79,6 +79,14 @@ $messages['hsb'] = array(
 	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Powěsće zhromadźenstwa su so zaktualizowali]].',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'communitymessages-desc' => 'Extension auxiliar pro Messages de Communitate',
+	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Messages de Communitate ha essite actualisate]].',
+);
+
 /** Indonesian (Bahasa Indonesia)
  * @author Farras
  */
@@ -103,6 +111,14 @@ $messages['nl'] = array(
 	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Gemeenschapsberichten zijn bijgewerkt]]',
 );
 
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'communitymessages-desc' => 'Pomocnicze rozszerzenie dla komunikatów społecznościowych.',
+	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Komunikaty społecznościowe zostały zaktualizowane]].',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  */
@@ -117,6 +133,22 @@ $messages['pms'] = array(
 $messages['pt'] = array(
 	'communitymessages-desc' => 'Extensão de ajuda para as Mensagens da Comunidade',
 	'communitymessages-notice-msg' => 'As [[Special:ActivityFeed|Mensagens da Comunidade foram actualizadas]].',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
+ */
+$messages['pt-br'] = array(
+	'communitymessages-desc' => 'Extensão de ajuda para as Mensagens da Comunidade',
+	'communitymessages-notice-msg' => 'As [[Special:ActivityFeed|Mensagens da Comunidade foram atualizadas]].',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'communitymessages-desc' => "Estenziune de aiute pe le Messagge d'a Comunitate",
+	'communitymessages-notice-msg' => "[[Special:ActivityFeed|Le Messagge d'a Comunitate onne state aggiornate]].",
 );
 
 /** Russian (Русский)
