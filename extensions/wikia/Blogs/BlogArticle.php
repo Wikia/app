@@ -19,9 +19,6 @@ $wgHooks[ "EditPage::showEditForm:checkboxes" ][] = "BlogArticle::editPageCheckb
 $wgHooks[ "LinksUpdate" ][] = "BlogArticle::linksUpdate";
 $wgHooks[ "WikiFactoryChanged" ][] = "BlogArticle::WikiFactoryChanged";
 $wgHooks[ "UnwatchArticleComplete" ][] = "BlogArticle::UnwatchBlogComments";
-#---
-$wgHooks[ "SpecialMovepageBeforeMove" ][] = "BlogArticle::checkBeforeMove";
-$wgHooks[ "SpecialMovepageAfterMove" ][] = "BlogArticle::checkAfterMove";
 
 class BlogArticle extends Article {
 
@@ -44,10 +41,7 @@ class BlogArticle extends Article {
 			return true;
 		}
 
-		global $wgOut, $wgStyleVersion, $wgExtensionsPath, $wgJsMimeType;
-		// hack - addScript should be changed to addStyle (but not OutputPage::addStyle which is more like addStyleFile) but it wont work outside wgStylePath
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/Blogs/js/Blogs.js?{$wgStyleVersion}\" ></script>\n");
-		wfLoadExtensionMessages( "Blogs" );
+		wfLoadExtensionMessages( 'Blogs' );
 
 		return true;
 	}
@@ -76,17 +70,6 @@ class BlogArticle extends Article {
 			$this->mTitle->mPrefixedText = $oldPrefixedText;
 			$this->mProps = self::getProps( $this->mTitle->getArticleID() );
 			Article::view();
-
-			if( $this->exists() ) {
-				/**
-				 * check if something was posted, maybe comment with ajax switched
-				 * off so it wend to $wgRequest
-				 */
-				if( $wgRequest->wasPosted() ) {
-					BlogComment::doPost( $wgRequest, $wgUser, $wgTitle );
-				}
-				$this->showBlogComments();
-			}
 		}
 		else {
 			/**
@@ -95,23 +78,6 @@ class BlogArticle extends Article {
 			$wgOut->setHTMLTitle( $wgOut->getWikiaPageTitle( $this->mTitle->getPrefixedText() ) );
 			$this->showBlogListing();
 		}
-	}
-
-	/**
-	 * display comments connected with article
-	 *
-	 * @access private
-	 */
-	private function showBlogComments() {
-		global $wgOut;
-
-		wfProfileIn( __METHOD__ );
-
-		$page = BlogCommentList::newFromTitle( $this->mTitle );
-		$page->setProps( $this->mProps );
-		$wgOut->addHTML( $page->render( true ) );
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -249,31 +215,9 @@ class BlogArticle extends Article {
 	static public function ArticleFromTitle( &$Title, &$Article ) {
 		global $wgRequest;
 
-		if( $Title->getNamespace() === NS_BLOG_ARTICLE_TALK ) {
-			/**
-			 * redirect to proper comment in NS_BLOG_ARTICLE namespace
-			 */
-			global $wgRequest, $wgTitle, $wgOut;
-			$redirect = $wgRequest->getText( "redirect", false );
-			$diff = $wgRequest->getText( "diff", '' );
-			$action = $wgRequest->getText( "action", '' );
-			if ( ($redirect != 'no' ) && empty($diff) && ($action != 'history') ) {
-				$text = $wgTitle->getText();
-				list( $user, $title, $anchor ) = BlogComment::explode( $text );
-				$redirect = Title::newFromText( "{$user}/{$title}", NS_BLOG_ARTICLE );
-				if( $title ) {
-					$url = $redirect->getFullUrl();
-					$wgOut->redirect( "{$url}#{$anchor}" );
-				}
-			}
-			return true;
+		if( $Title->getNamespace() == NS_BLOG_ARTICLE ) {
+			$Article = new BlogArticle( $Title );
 		}
-
-		if( $Title->getNamespace() !== NS_BLOG_ARTICLE ) {
-			return true;
-		}
-
-		$Article = new BlogArticle( $Title );
 
 		return true;
 	}
@@ -777,103 +721,6 @@ class BlogArticle extends Article {
 				$oWItem->removeWatch();
 			}
 			$oUser->invalidateCache();
-		}
-
-		wfProfileOut( __METHOD__ );
-		return true;
-	}
-
-	/**
-	 * hook
-	 *
-	 * @access public
-	 * @static
-	 */
-	static public function checkBeforeMove( /*MovePageForm*/ &$form ) {
-		global $wgUser;
-		wfProfileIn( __METHOD__ );
-		$return = true;
-
-		$oOldTitle = $form->oldTitle;
-		$oNewTitle = $form->newTitle;
-
-		if ( ( $oOldTitle instanceof Title ) && ( NS_BLOG_ARTICLE == $oOldTitle->getNamespace() ) ) {
-			if ( ( $oNewTitle instanceof Title ) && ( NS_BLOG_ARTICLE == $oNewTitle->getNamespace() ) ) {
-				$oldTitleOwner = self::getOwner($oOldTitle);
-				$newTitleOwner = self::getOwner($oNewTitle);
-
-				$groups = $wgUser->getGroups();
-				$isAllowed = $wgUser->isAllowed( "blog-articles-move" ) || $oldTitleOwner == $wgUser->getName();
-
-				if ( !$isAllowed ) {
-					Wikia::log( __METHOD__, "movepage",
-						"invalid permissions: oldpage: ".$oOldTitle->getPrefixedText().", newPage: ".$oNewTitle->getPrefixedText()
-					);
-					$return = false;
-				}
-			} else {
-				Wikia::log( __METHOD__, "movepage",
-					"cannot move blog: oldpage: ".$oOldTitle->getPrefixedText().", newPage: ".$oNewTitle->getPrefixedText()
-				);
-				$return = false;
-			}
-
-			if ( $return == false ) {
-				$form->showForm( 'blog-movepage-badtitle' );
-			}
-		}
-
-		wfProfileOut( __METHOD__ );
-		return $return;
-	}
-
-	/**
-	 * hook
-	 *
-	 * @access public
-	 * @static
-	 */
-	static public function checkAfterMove ( /*MovePageForm*/ &$form , /*Title*/&$oOldTitle , /*Title*/ &$oNewTitle ) {
-		global $wgUser;
-		wfProfileIn( __METHOD__ );
-
-		if ( ( $oOldTitle instanceof Title ) && ( NS_BLOG_ARTICLE == $oOldTitle->getNamespace() ) ) {
-			if ( ( $oNewTitle instanceof Title ) && ( NS_BLOG_ARTICLE == $oNewTitle->getNamespace() ) ) {
-				$oldTitleOwner = self::getOwner($oOldTitle);
-				$newTitleOwner = self::getOwner($oNewTitle);
-
-				$groups = $wgUser->getGroups();
-				$isAllowed = $wgUser->isAllowed( "blog-articles-move" ) || $oldTitleOwner == $wgUser->getName();
-
-				if ( ( $isAllowed ) ) {
-					$clist = BlogCommentList::newFromTitle( $oOldTitle );
-					$comments = $clist->getCommentPages();
-					if ( count($comments) > 0 ) {
-						# maybe check number of comments?
-						list( $author, $newTitleText )  = explode('/', $oNewTitle->getPrefixedText(), 2);
-						foreach ($comments as $oComment) {
-							#---
-							if ( !$oComment->mTitle instanceof Title ) continue;
-							#---
-							list ( $user, $page_title, $comment ) = BlogComment::explode($oComment->mTitle->getDBkey());
-
-							$newCommentTitle = Title::newFromText(
-								sprintf( "%s/%s/%s", $newTitleOwner, $newTitleText, $comment ),
-								NS_BLOG_ARTICLE_TALK );
-
-							$error = $oComment->mTitle->moveTo( $newCommentTitle, false, $form->reason, false );
-							if ( $error !== true ) {
-								Wikia::log( __METHOD__, "movepage",
-									"cannot move blog comments: old comment: ".$oComment->mTitle->getPrefixedText().", ".
-									"new comment: ".$newCommentTitle->getPrefixedText().", error: " . @implode(", ", $error )
-								);
-							}
-						}
-					} else {
-						Wikia::log( __METHOD__, "movepage", "cannot move blog comments, because no comments: ". $oOldTitle->getPrefixedText() );
-					}
-				}
-			}
 		}
 
 		wfProfileOut( __METHOD__ );

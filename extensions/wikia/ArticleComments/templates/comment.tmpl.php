@@ -1,29 +1,30 @@
 <!-- s:<?= __FILE__ ?> -->
 <div class="article-comments">
-	<a name="<?php echo isset( $comment["anchor"][2] ) ? $comment["anchor"][2] : "" ?>"></a>
-	<div class="comment_avatar">
-		<?php echo $comment["avatar"] ?>
+	<div class="comment-avatar">
+		<?= $comment['avatar'] ?>
 	</div>
+
+	<div class="details">
+		<strong><?= $comment['sig'] ?></strong><br/>
+		<span class="timestamp"><?= $comment['timestamp'] ?></span>
+	</div>
+
 	<div class="comment">
-		<div class="details">
-			<strong><?php echo $comment["sig"] ?></strong>
-			<span class="timestamp"><?php echo $comment["timestamp"] ?></span>
-		<?php if ( $canDelete ) { ?>
-			<a href="<?php echo $comment[ "title" ]->getLocalUrl( "redirect=no&action=delete" ) ?>" class="article-comm-delete"><?=wfMsg('article-comments-delete')?></a>
-		<?php } ?>
-		<?php if ( $canEdit ) { ?>
-			<a name="<?php echo $comment[ "title" ]->getArticleId() ?>" href="#<?php echo $comment[ "title" ]->getArticleId() ?>" class="article-comm-edit" id="<?php echo $comment[ "title" ]->getArticleId() ?>"><?=wfMsg('article-comments-edit')?></a>
-			<?php if ( !empty($showHistory) && !$comment[ "title" ]->isNewPage() ) { ?>
-				<?= $sk->makeKnownLinkObj( $comment[ "title" ], wfMsgHtml('article-comments-history'), 'action=history', '', '', 'class="article-comm-history"' ) ?>
-			<?php } ?>
-		<?php } ?>
+		<div class="article-comm-text" id="comm-text-<?= $comment['articleId'] ?>">
+		<?= $comment['text'] ?>
 		</div>
-		<div class="article-comm-text" id="comm-text-<?php echo $comment[ "title" ]->getArticleId() ?>">
 		<?php
-			echo $comment["text"];
+		if (count($comment['buttons']) || $comment['replyButton']) {
 		?>
+		<div class="buttons">
+			<?= $comment['replyButton'] ?>
+			<span class="tools">
+				<?= implode(' ', $comment['buttons']) ?>
+			</span>
 		</div>
+		<?php
+		}
+		?>
 	</div>
 </div>
-<br style="clear: both;" />
 <!-- e:<?= __FILE__ ?> -->
