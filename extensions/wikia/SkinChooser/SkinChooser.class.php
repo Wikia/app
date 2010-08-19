@@ -275,24 +275,13 @@ class SkinChooser {
 			unset($validSkinNames[$skinKey]);
 		}
 
-		# Display radio button for monobook skin
-		if(isset($validSkinNames['monobook'])) {
-			$previewlink = '<a target="_blank" href="'.htmlspecialchars($previewLinkTemplate.'monobook').'">'.$previewtext.'</a>';
-			$wgOut->addHTML('<div '.($themeCount++%2!=1 ? 'class="prefSection"' : '').'>');
-			$wgOut->addHTML('<h5>'.wfMsg('wikipedia_skin').'</h5>');
-			$wgOut->addHTML('<table style="background: transparent none"><tr><td><input type="radio" value="monobook" id="wpSkinmonobook" name="wpSkin"'.($pref->mSkin == 'monobook' ? ' checked="checked"' : '').'/><label for="wpSkinmonobook">'.$validSkinNames['monobook'].'</label> '.$previewlink.('monobook' == $defaultSkinKey ? ' (' . wfMsg( 'default' ) . ')' : '').'</td></tr></table>');
-			$wgOut->addHTML('</div>');
-
-			unset($validSkinNames['monobook']);
-		}
-
-			$oldSkinNames = array();
-			foreach($validSkinNames as $skinKey => $skinVal) {
-				if (( in_array( $skinKey, $wgSkipSkins ) || in_array( $skinKey, $wgSkipOldSkins )) && !($skinKey == $pref->mSkin) ) {
-					continue;
-				}
-				$oldSkinNames[$skinKey] = $skinVal;
+		$oldSkinNames = array();
+		foreach($validSkinNames as $skinKey => $skinVal) {
+			if (( in_array( $skinKey, $wgSkipSkins ) || in_array( $skinKey, $wgSkipOldSkins )) && !($skinKey == $pref->mSkin) ) {
+				continue;
 			}
+			$oldSkinNames[$skinKey] = $skinVal;
+		}
 
 		# Display radio buttons for rest of skin
 		if(count($oldSkinNames) > 0) {
