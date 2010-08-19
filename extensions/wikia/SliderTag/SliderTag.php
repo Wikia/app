@@ -31,17 +31,15 @@ function wfSliderTag( &$parser ) {
 function wfSlider( $input, $args, $parser ) {
 	global $wgOut, $wgScriptPath, $wgStyleVersion;
 
-	$wgOut->addStyle( "$wgScriptPath/extensions/wikia/SliderTag/slidertag.css?$wgStyleVersion" );
-	$wgOut->addScript( "<script type=\"text/javascript\" src=\"$wgScriptPath/extensions/wikia/SliderTag/slidertag.js?$wgStyleVersion\"></script>\n" );
-
 	$article = $args['id'];
 	$data = CorporatePageHelper::parseMsgImg( $article, true );
 	$html = '';
 
 	if ( $data ) {
 		wfLoadExtensionMessages( 'SliderTag' );
-
-		$html = '<div id="spotlight-slider"><h1 id="featured-wikis-headline">' . wfMsg( 'slidertag-featured-wikis' ) . '</h1><ul>';
+    $html = "<script type=\"text/javascript\" src=\"{$wgScriptPath}/extensions/wikia/SliderTag/slidertag.js?{$wgStyleVersion}\"></script>";
+    
+		$html .= '<div id="spotlight-slider"><h1 id="featured-wikis-headline">' . wfMsg( 'slidertag-featured-wikis' ) . '</h1><ul>';
 
 		foreach ( $data as $key => $value ) {
 			$msg = wfMsg( 'corporatepage-go-to-wiki', $value['title'] );
