@@ -24,5 +24,4 @@ $wgAutoloadClasses['WikiaNewFiles'] = "$dir/WikiaNewFiles.class.php";
 
 require_once( $dir . '/SpecialNewFiles.php' );
 
-// echo '<pre>'.print_r($wgSpecialPages, true).'</pre>';
-$wgSpecialPages['NewFiles'] = array( 'WikiaNewFiles', 'NewFiles' );
+$wgSpecialPages['Newimages'] = array( 'WikiaNewFiles', 'Newimages' );
