@@ -140,7 +140,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 					tab = 'external';
 				}
 
-				setValues(tab, selectionContent);
+				setValues(tab, selectionContent, selectionContent);
 
 				RTE.log('link: using selected text "' + selectionContent + '" for new '+tab+' link');
 			}else{
