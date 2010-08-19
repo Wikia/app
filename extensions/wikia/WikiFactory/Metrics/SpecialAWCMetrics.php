@@ -363,7 +363,7 @@ class WikiMetrics {
 			}
 		}
 		if ( !empty($this->axHub) ) {
-			$where[] = 'city_id in (select city_id from city_cat_mapping where cat_id = '.intval($this->axHub).')';
+			$where[] = $city_id . ' in (select ccm1.city_id from city_cat_mapping ccm1 where cat_id = '.intval($this->axHub).')';
 		}
 		if ( !empty($this->axDbname) ) {
 			$where[] = 'city_dbname LIKE "%' . $dbr->escapeLike($this->axDbname) . '%"';
