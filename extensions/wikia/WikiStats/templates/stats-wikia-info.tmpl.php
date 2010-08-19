@@ -1,5 +1,5 @@
 <!-- WIKI's INFORMATION -->
-<fieldset style="margin: -50px 2px 0px 0px; padding: 0px 10px; width: 30%; position:absolute">
+<fieldset style="margin: -63px 2px 0px 0px; padding: 0px 10px; width: 30%; position:absolute">
 <legend><?=wfMsg("wikistats_wikia_information")?></legend>
 <div class="ws-wikia-main-info">
 	<ul>
