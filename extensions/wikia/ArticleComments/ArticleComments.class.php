@@ -1116,10 +1116,11 @@ class ArticleCommentList {
 
 		if ( !is_array( $this->mCommentsAll ) ) {
 			$pages = array();
-
 			$dbr = wfGetDB( $master ? DB_MASTER : DB_SLAVE );
+			$namespace = $this->getTitle()->getNamespace();
 
-			if (defined('NS_BLOG_ARTICLE') && $this->getTitle()->getNamespace() == NS_BLOG_ARTICLE) {
+			if (defined('NS_BLOG_ARTICLE') && $namespace == NS_BLOG_ARTICLE ||
+				defined('NS_BLOG_ARTICLE_TALK') && $namespace == NS_BLOG_ARTICLE_TALK) {
 				//comments for blog
 				$res = $dbr->select(
 					array( 'page' ),
