@@ -48,16 +48,18 @@ function wfSetupSoapFailures(){
 
 function wfSoapFailures(){
 	global $wgOut;
-	global $wgRequest, $wgUser;
+	global $wgRequest, $wgUser, $wgMemc;
 	
 	$MAX_RESULTS = 100;
+	$CACHE_KEY = "LW_SOAP_FAILURES";
 
+	wfLoadExtensionMessages('SpecialSoapFailures');
 	$wgOut->setPageTitle(wfMsg('soapfailures'));
 	
 	// This processes any requested for removal of an item from the list.
-	if(isset($_GET['artist']) && isset($_GET['song'])){
-		$artist = $_GET['artist'];
-		$song = $_GET['song'];
+	if(isset($_POST['artist']) && isset($_POST['song'])){
+		$artist = $_POST['artist'];
+		$song = $_POST['song'];
 		$songResult = array();
 		$failedLyrics = "Not found";
 
@@ -69,9 +71,11 @@ function wfSoapFailures(){
 		$songResult = getSong($artist, $song);*/
 		
 		// Pull in the NuSOAP code
-		require_once('nusoap.php');
+		global $IP;
+		require_once("$IP/extensions/3rdparty/LyricWiki/nusoap.php");
 		// Create the client instance
-		$client = new soapclient('http://lyrics.wikia.com/lyrics/Special:ServerWrapper?wsdl', true);
+		$wsdlUrl = 'http://'.$_SERVER['SERVER_NAME'].'/server.php?wsdl&1';
+		$client = new nusoapclient($wsdlUrl, true);
 		$err = $client->getError();
 		if ($err) {
 			echo '<h2>Constructor error</h2><pre>' . $err . '</pre>';
@@ -88,6 +92,7 @@ function wfSoapFailures(){
 
 		if(($songResult['lyrics'] == $failedLyrics) || ($songResult['lyrics'] == "")){
 			print "<div style='background-color:#fcc'>Sorry, but $artist:$song song still failed.</div>\n";
+			print_r($songResult);
 		} else {
 			$artist = str_replace("'", "\\'", $artist);
 			$song = str_replace("'", "\\'", $song);
@@ -101,30 +106,29 @@ function wfSoapFailures(){
 				print "Failed. ".mysql_error();
 			}
 			print "<br/>Clearing the cache... ";
-			$wgMemc->delete($cacheKey); // purge the entry from memcached
+			
+			$wgMemc->delete($CACHE_KEY); // purge the entry from memcached
 
 			print "<div style='background-color:#cfc'>The song was retrieved successfully and ";
 			print "was removed from the failed requests list.";
 			print "</div>\n";
 		}
-		print "<br/>Back to <a href='/Special:Soapfailures'>SOAP Failures</a>\n";
+		global $wgScriptPath;
+		print "<br/>Back to <a href='$wgScriptPath/Special:Soapfailures'>SOAP Failures</a>\n";
 		exit; // wiki system throws database-connection errors if the page is allowed to display itself.
 	} else {
 		$msg = "";
 
-		GLOBAL $wgMemc;
-		$cacheKey = "LW_SOAP_FAILURES";
-
 		// Allow the cache to be manually cleared.
 		if(isset($_GET['cache']) && $_GET['cache']=="clear"){
 			$msg.= "Forced clearing of the cache...\n";
-			$wgMemc->delete($cacheKey); // purge the entry from memcached
+			$wgMemc->delete($CACHE_KEY); // purge the entry from memcached
 			unset($_GET['cache']);
 			$_SERVER['REQUEST_URI'] = str_replace("?cache=clear", "", $_SERVER['REQUEST_URI']);
 			$_SERVER['REQUEST_URI'] = str_replace("&cache=clear", "", $_SERVER['REQUEST_URI']);
 		}
 
-		$content = $wgMemc->get($cacheKey);
+		$content = $wgMemc->get($CACHE_KEY);
 		if(!$content){
 			ob_start();
 
@@ -167,7 +171,6 @@ function wfSoapFailures(){
 								$REQUEST_URI = substr($REQUEST_URI, 1);
 							}
 						}
-						print "	- (report as [{{SERVER}}$prefix$REQUEST_URI$delim"."artist=".urlencode($artist)."&amp;song=".urlencode($song)." fixed])";
 						print "</td>";
 						print "<td>$lookedFor</td></tr>";
 					}
@@ -181,7 +184,7 @@ function wfSoapFailures(){
 			}
 
 			$content = ob_get_clean();
-			$wgMemc->set($cacheKey, $content, strtotime("+2 hour"));
+			$wgMemc->set($CACHE_KEY, $content, strtotime("+2 hour"));
 		}
 		$msg = ($msg==""?"":"<pre>$msg</pre>");
 		$wgOut->addHTML("<style type='text/css'>
@@ -196,6 +199,15 @@ function wfSoapFailures(){
 				vertical-align:top;
 				padding:5px;
 			}</style>\n");
+		
+		// Form for clearing a fixed song.
+		$wgOut->addHTML(wfMsg('soapfailures-mark-as-fixed') . "
+						<form method='post'>
+							".wfMsg('soapfailures-artist')." <input type='text' name='artist'/><br/>
+							".wfMsg('soapfailures-song')." <input type='text' name='song'/><br/>
+							<input type='submit' name='fixed' value='Fixed'/>
+						</form><br/>");
+
 		$wgOut->addWikiText("$msg$content");
 	}
 }
