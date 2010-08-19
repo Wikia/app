@@ -208,35 +208,29 @@
 </div>
 
 <script type="text/javascript">
-$.loadYUI( function() {
-	function $(id) {
-		return document.getElementById(id);
+function grayOut(e) {
+	switch (e.target.id) {
+		case 'mSendModeWikisH':
+		case 'mSendModeWikisW':
+			$('#mSendModeUsersA').attr('disabled',true);
+			if ($('#mSendModeUsersA').attr('checked'))
+				$('#mSendModeUsersC').attr('checked',true);
+			break;
+		case 'mSendModeUsersU':
+			$('#mSendModeWikisA').attr('disabled',true);
+			$('#mSendModeWikisH').attr('disabled',true);
+			$('#mSendModeWikisW').attr('disabled',true);
+			$('input.swm-lang-checkbox').attr('disabled',true);
+			break;
+		default:
+			if ($('#mSendModeWikisA').attr('checked'))
+				$('#mSendModeUsersA').attr('disabled',false);
+			$('#mSendModeWikisA').attr('disabled',false);
+			$('#mSendModeWikisH').attr('disabled',false);
+			$('#mSendModeWikisW').attr('disabled',false);
+			$('input.swm-lang-checkbox').attr('disabled',false);
 	}
-	function grayOut(e) {
-		var source = YAHOO.util.Event.getTarget(e);
-		switch (source.id) {
-			case 'mSendModeWikisH':
-			case 'mSendModeWikisW':
-				$('mSendModeUsersA').disabled = true;
-				if ($('mSendModeUsersA').checked)
-					$('mSendModeUsersC').checked = true;
-				break;
-			case 'mSendModeUsersU':
-				$('mSendModeWikisA').disabled = true;
-				$('mSendModeWikisH').disabled = true;
-				$('mSendModeWikisW').disabled = true;
-				$('input.swm-lang-checkbox').disabled = true;
-				break;
-			default:
-				if ($('mSendModeWikisA').checked)
-					$('mSendModeUsersA').disabled = false;
-				$('mSendModeWikisA').disabled = false;
-				$('mSendModeWikisH').disabled = false;
-				$('mSendModeWikisW').disabled = false;
-				$('input.swm-lang-checkbox').disabled = false;
-		}
-	}
-	YAHOO.util.Event.addListener( ['mSendModeWikisA', 'mSendModeWikisH', 'mSendModeWikisW', 'mSendModeUsersA', 'mSendModeUsersC', 'mSendModeUsersG', 'mSendModeUsersU'], 'click', grayOut );
-});
+}
+$('#mSendModeWikisA').add('#mSendModeWikisH').add('#mSendModeWikisW').add('#mSendModeUsersA').add('#mSendModeUsersC').add('#mSendModeUsersG').add('#mSendModeUsersU').bind('click', grayOut);
 </script>
 <!-- e:<?= __FILE__ ?> -->
