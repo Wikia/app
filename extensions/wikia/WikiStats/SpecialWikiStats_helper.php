@@ -493,13 +493,12 @@ class WikiStats {
 				$where['wiki_id'] = $this->mCityId;
 				$table = 'wikia_monthly_stats';
 			} else {
-				if ( !empty($this->mLang) ) {
-					$where['wiki_lang_id'] = WikiFactory::LangCodeToId($this->mLang);
-					$table = 'lang_monthly_stats';
-				}
 				if ( !empty($this->mHub) ) {
 					$where['wiki_cat_id'] = $this->mHub;
 					$table = 'cat_monthly_stats';
+				} elseif ( !empty($this->mLang) ) {
+					$where['wiki_lang_id'] = WikiFactory::LangCodeToId($this->mLang);
+					$table = 'lang_monthly_stats';
 				}
 			}
 
