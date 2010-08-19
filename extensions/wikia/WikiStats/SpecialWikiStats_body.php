@@ -37,7 +37,7 @@ class WikiStatsPage extends IncludableSpecialPage
     var $mLimit;
 	   
 	private $allowedGroups = array('staff', 'sysop', 'janitor', 'bureaucrat');
-	private $TEST = 1;
+	private $TEST = 0;
 	private $defaultAction = 'main';
     const USE_MEMC = 0;
 
@@ -64,26 +64,39 @@ class WikiStatsPage extends IncludableSpecialPage
             return;
         }
         
-        error_log ( print_r($wgRequest, true) );
-        
 		$this->mUser = $wgUser;
-		$this->mUserRights 	= $this->mUser->getGroups(); 
+		$this->mUserRights 	= $this->mUser->getGroups();         
+		$this->userIsSpecial = 0;
+		foreach ( $this->mUserRights as $id => $right ) {
+			if ( in_array( $right, $this->allowedGroups ) ) {
+				$this->userIsSpecial = 1; 
+				break;
+			}
+		}
+        
 		$this->mFromDate 	= intval($wgRequest->getVal( "wsfrom", sprintf("%d%d", WIKISTATS_MIN_STATS_YEAR, WIKISTATS_MIN_STATS_MONTH) ));
 		$this->mToDate 		= intval($wgRequest->getVal( "wsto", sprintf("%d%d", date("Y"), date("m") ) ));
 		$this->mTitle 		= Title::makeTitle( NS_SPECIAL, "WikiStats" );
 		$this->mAction		= $wgRequest->getVal("action", "");
-		$this->mLang 		= $wgRequest->getVal("wslang", "");
-		$this->mHub 		= $wgRequest->getVal("wshub", "");
 		$this->mXLS 		= $wgRequest->getVal("wsxls", false);
+		$this->mMonth 		= $wgRequest->getVal("wsmonth", 0);
+		$this->mLimit		= $wgRequest->getVal("wslimit", WIKISTATS_WIKIANS_RANK_NBR);					
+		$this->mAllWikis 	= 0;
+			
+		$domain = $all = "";
+		if ( $this->userIsSpecial ) {		
+			$this->mLang 		= $wgRequest->getVal("wslang", "");
+			$this->mHub 		= $wgRequest->getVal("wshub", "");
+			$domain = $wgRequest->getVal( "wswiki", "" );
+			$all = $wgRequest->getVal( "wsall", 0 );
+		}
+		
 		$this->mCityId 		= ($this->TEST == 1 ) ? 177 : $wgCityId;
 		$this->mCityDBName 	= ($this->TEST == 1 ) ? WikiFactory::IDtoDB($this->mCityId) : $wgDBname;
-		$this->mMonth 		= $wgRequest->getVal("wsmonth", 0);
-		$this->mLimit		= $wgRequest->getVal("wslimit", WIKISTATS_WIKIANS_RANK_NBR);		
-		$this->mAllWikis 	= 0;
 		
 		#---
 		if ( $subpage ) { 
-			$path = explode("/", $subpage) ;
+			$path = explode("/", $subpage);
 			$this->mAction = $path[0];
 		}
 
@@ -104,18 +117,6 @@ class WikiStatsPage extends IncludableSpecialPage
 		if ( preg_match("/^([0-9]{4})([0-9]{1,2})/", $this->mToDate, $m) ) {
 			list (, $this->toYear, $this->toMonth) = $m; 
 		}
-
-       	$t = intval( $wgRequest->getVal("table") );
-		$this->userIsSpecial = 0;
-		foreach ( $this->mUserRights as $id => $right ) {
-			if ( in_array( $right, $this->allowedGroups ) ) {
-				$this->userIsSpecial = 1; 
-				break;
-			}
-		}
-
-		$domain = $wgRequest->getVal( "wswiki", "" );
-		$all = $wgRequest->getVal( "wsall", 0 );
 		
 		if ( $domain == 'all' || $all == 1 ) {
         	$this->mCityId = 0;
@@ -149,8 +150,6 @@ class WikiStatsPage extends IncludableSpecialPage
             $skinname = strtolower(str_replace("Skin","", $skinname));
             $this->mSkinName = $skinname;
         }
-
-		$ajax = $wgRequest->getVal( "ajax", 0 );
 
 		$this->setHeaders();
 		$this->showForm();	
@@ -244,7 +243,12 @@ class WikiStatsPage extends IncludableSpecialPage
 			"mAllWikis"			=> $this->mAllWikis,
 			"mAction"			=> $this->mAction
         ));
-        $res = $oTmpl->execute("select");
+        
+        if ( $this->userIsSpecial == 1 ) {
+			$res = $oTmpl->execute("select");
+		} else {
+			$res = $oTmpl->execute("select_user");
+		}
 
         wfProfileOut( __METHOD__ );
         return $res;

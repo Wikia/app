@@ -1,5 +1,5 @@
 <div class="clear"></div>
-<div class="clear" style="font-size:7.7pt;height:15px;">
+<div class="clear" style="font-size:7.7pt;height:15px;margin:20px 0px 0px;">
 	<a href="#definitions"><?=wfMsg("wikistats_see_definitions")?></a>
 </div>
 <div id="ws-main-table-stats" class="ws-main-table">
