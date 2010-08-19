@@ -1,6 +1,6 @@
-$(window).load(function() {
-	spotlightSlider_setup();
-});
+wgAfterContentAndJS.push(function() {
+
+$("head").append("<link rel=\"stylesheet\" href=\""+wgScriptPath+"/extensions/wikia/SliderTag/slidertag.css?"+wgStyleVersion+"\" type=\"text/css\" />");
 
 function spotlightSlider_setup() {
 	//timer for automatic spotlight slideshow
@@ -52,3 +52,7 @@ function spotlightSlider_scroll(nav) {
 		$("#spotlight-slider-" + thumb_index).find(".description").fadeIn();
 	});
 }
+
+spotlightSlider_setup();
+
+});
