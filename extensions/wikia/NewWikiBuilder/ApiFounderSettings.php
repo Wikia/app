@@ -49,7 +49,7 @@ class ApiFounderSettings extends ApiBase {
                         $this->dieUsageMsg(array('Missing wgCityId'));
 		}
 
-		if ( WikiFactory::setVarByName( $params['changesetting'], $wgCityId, $params['value']) ){
+		if ( WikiFactory::setVarByName( $params['changesetting'], $wgCityId, $params['value'], 'NWB') ){
 			WikiFactory::clearCache($wgCityId);
 			return "success";
 		} else {
