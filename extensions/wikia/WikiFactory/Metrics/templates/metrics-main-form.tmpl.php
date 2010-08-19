@@ -613,7 +613,7 @@ __ShowCategories = function(e, args) {
 				// columns (categories)
 				if ( cats ) {
 					for (i in cats) {
-						oneRow += "<th>" + cats[i] + "</th>";
+						oneRow += "<th>" + cats[i]['name'] + "</th>";
 					}
 				}
 				
