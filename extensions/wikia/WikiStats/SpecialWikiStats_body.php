@@ -190,6 +190,7 @@ class WikiStatsPage extends IncludableSpecialPage
         	"wgCityId"			=> $this->mCityId,
         	"oUser"				=> $this->mUser,
         	"mAction"			=> $this->mAction,
+        	"userIsSpecial"		=> $this->userIsSpecial,
 
         	"domain"			=> $this->mCityDomain,
         	"dateRange"			=> $this->mStats->getRangeDate(),
@@ -221,7 +222,9 @@ class WikiStatsPage extends IncludableSpecialPage
 		$aCategories = array();
 		if ( !empty($_cats) ) {
 			foreach ( $_cats as $id => $cat ) {
-				$aCategories[$id] = $cat['name'];
+				if ( !isset($aCategories[$id]) ) {
+					$aCategories[$id] = $cat['name'];
+				}
 			}
 		};
 
