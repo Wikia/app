@@ -54,7 +54,6 @@ while ($minYear <= $maxYear) { $selected = ($curYear == $minYear) ? " selected=\
 <?php $selected = ($iCat == $mHub) ? " selected=\"selected\" " : ""; ?>
 				<option value="<?php echo $iCat ?>" <?= $selected ?>><?php echo $sCatName?></option>
 <?php endforeach ?>
-				<option value="9"><?=wfMsg('wikistats_other')?></option>
 <?php endif ?>
 				</select>
 			</li>

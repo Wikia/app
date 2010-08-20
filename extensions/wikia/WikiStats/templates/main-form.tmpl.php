@@ -1,11 +1,14 @@
 <?
 $tabs = array(
-	'main' 			=> array('url' => sprintf( "%s/main", $mTitle->getLocalUrl() ), 'text' => wfMsg('wikistats_main_statistics_legend') ),
-	'breakdown' 	=> array('url' => sprintf( "%s/breakdown", $mTitle->getLocalUrl() ), 'text' => wfMsg('wikistats_breakdown_editors') ),
-	'anonbreakdown' => array('url' => sprintf( "%s/anonbreakdown", $mTitle->getLocalUrl() ), 'text' => wfMsg('wikistats_breakdown_anons') ),
-	'latestview'	=> array('url' => sprintf( "%s/latestview", $mTitle->getLocalUrl() ), 'text' => wfMsg('wikistats_latest_pageviews') ),
-	'userview'		=> array('url' => sprintf( "%s/userview", $mTitle->getLocalUrl() ), 'text' => wfMsg('wikistats_latest_userviews') )
+	'main' 			=> array('url' => sprintf( "%s/main", $mTitle->getLocalUrl() ), 'text' => wfMsg('wikistats_main_statistics_legend') )
 );
+
+if ( $userIsSpecial ) {
+	$tabs['breakdown'] 		= array('url' => sprintf( "%s/breakdown", $mTitle->getLocalUrl() ), 'text' => wfMsg('wikistats_breakdown_editors') );
+	$tabs['anonbreakdown'] 	= array('url' => sprintf( "%s/anonbreakdown", $mTitle->getLocalUrl() ), 'text' => wfMsg('wikistats_breakdown_anons') );
+	$tabs['latestview']		= array('url' => sprintf( "%s/latestview", $mTitle->getLocalUrl() ), 'text' => wfMsg('wikistats_latest_pageviews') );
+	$tabs['userview'] 		= array('url' => sprintf( "%s/userview", $mTitle->getLocalUrl() ), 'text' => wfMsg('wikistats_latest_userviews') );
+}
 ?>
 <div id="ws-addinfo" class="ws-addinfo"></div>
 <div id="ws-tabs" class="wikia-tabs">
