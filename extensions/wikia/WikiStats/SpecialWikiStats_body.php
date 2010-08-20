@@ -156,7 +156,9 @@ class WikiStatsPage extends IncludableSpecialPage
 		
 		if ( $this->mAction ) {
 			$func = sprintf("show%s", ucfirst(strtolower($this->mAction)));
-			$this->$func();
+			if ( method_exists($this, $func) ) {
+				$this->$func();
+			}
 		} 
     }
     
