@@ -116,7 +116,12 @@ class imageServingHelper{
 			return true;
 			wfProfileOut(__METHOD__);
 		}
-		
+		$db->delete( 'page_wikia_props', 
+			array(		
+				'page_id' =>  $articleId,
+				'propname' => "imageOrder")
+		);
+			
 		$db->replace('page_wikia_props','',
 			array(
 				'page_id' =>  $articleId,
