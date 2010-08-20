@@ -59,7 +59,7 @@ function do_page_wikia_props_update() {
 				$wgDatabase->delete( "DELETE FROM page_wikia_props WHERE page_id = {$row->page_id} AND propname = 'imageOrder'" );
 				$dups++;
 			}
-			wfOut( $dups );
+			wfOut( "{$dups}\n" );
 			$wgDatabase->query( "ALTER TABLE page_wikia_props CHANGE  propname propname INT(10) NOT NULL", __METHOD__ );
 			wfOut( "... altered to integer.\n" );
 		}
