@@ -71,7 +71,7 @@ class imageServing{
 	            	 ),
 	            array(		
 					'page_id in('.implode(",", $articles).')',
-					'propname' => "imageOrder"),
+					"propname = 'imageOrder' or propname =  0"),
 	            __METHOD__
 		);
 		
