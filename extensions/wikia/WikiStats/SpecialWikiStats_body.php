@@ -86,7 +86,7 @@ class WikiStatsPage extends IncludableSpecialPage
 		$domain = $all = "";
 		if ( $this->userIsSpecial ) {		
 			$this->mLang 		= $wgRequest->getVal("wslang", "");
-			$this->mHub 		= $wgRequest->getVal("wshub", "");
+			$this->mHub 		= $wgRequest->getVal("wscat", "");
 			$domain = $wgRequest->getVal( "wswiki", "" );
 			$all = $wgRequest->getVal( "wsall", 0 );
 		}
