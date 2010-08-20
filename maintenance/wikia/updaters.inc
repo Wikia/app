@@ -20,6 +20,7 @@ $wgUpdates[ "mysql" ][] = array( "add_table", "blog_listing_relation",  "wikia/p
 $wgUpdates[ "mysql" ][] = array( "add_index", "archive", "page_revision", "wikia/patch-index-archive-page_revision.sql" );
 $wgUpdates[ "mysql" ][] = array( "add_table", "page_wikia_props",  "$IP/extensions/wikia/ImageServing/sql/table.sql", true );
 $wgUpdates[ "mysql" ][] = array( "do_page_vote_unique_update" );
+$wgUpdates[ "mysql" ][] = array( "do_page_wikia_props_update" );
 $wgUpdates[ "mysql" ][] = array( "do_drop_table", "imagetags" );
 $wgUpdates[ "mysql" ][] = array( "do_drop_table", "send_queue" );
 $wgUpdates[ "mysql" ][] = array( "do_drop_table", "send_stats" );
@@ -29,7 +30,6 @@ $wgUpdates[ "mysql" ][] = array( "do_drop_table", "searchindex" );
 /**
  * @todo drop send_stats shared/send_queue
  */
-
 function do_page_vote_unique_update() {
 	global $wgDatabase;
 	wfOut( "Checking wikia page_vote table...\n" );
@@ -39,6 +39,21 @@ function do_page_vote_unique_update() {
 		wfOut( "Making page_vote unique key... " );
 		dbsource( archive("wikia/patch-page_vote_unique_vote.sql"), $wgDatabase );
 		wfOut( "ok\n" );
+	}
+}
+
+function do_page_wikia_props_update() {
+	global $wgDatabase;
+	wfOut( "Checking wikia page_wikia_props table...\n" );
+	if( $wgDatabase->tableExists( "page_wikia_props" ) ) {
+		$tableInfo = $wgDatabase->fieldInfo( "page_wikia_props", "propname" );
+		if( $tableInfo->type() === "string" ) {
+			$wgDatabase->query( "ALTER TABLE page_wikia_props CHANGE  propname propname INT(10) NOT NULL", __METHOD__ );
+			wfOut( "... altered to integer.\n" );
+		}
+		else {
+			wfOut( "... already altered to integer.\n" );
+		}
 	}
 }
 
