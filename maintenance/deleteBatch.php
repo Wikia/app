@@ -83,6 +83,7 @@ for ( $linenum = 1; !feof( $file ); $linenum++ ) {
 	$success = $art->doDeleteArticle( $reason );
 	$dbw->immediateCommit();
 	if ( $success ) {
+		wfRunHooks('ArticleDeleteComplete', array(&$art, &$wgUser, $reason, $page_id));
 		print "\n";
 	} else {
 		print " FAILED to delete image page\n";
