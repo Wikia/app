@@ -1667,12 +1667,20 @@ class ArticleCommentList {
 					wfLoadExtensionMessages('ArticleComments');
 					$cntChanges = wfMsgExt( 'nchanges', array( 'parsemag', 'escape' ), $wgLang->formatNum( $cnt ) );
 					$title = Title::newFromText($parts['title']);
-					$title = Title::newFromText($title->getText(), MWNamespace::getSubject($title->getNamespace()));
+					$namespace = $title->getNamespace();
+					$title = Title::newFromText($title->getText(), MWNamespace::getSubject($namespace));
+
+					if ((defined('NS_BLOG_ARTICLE') && $namespace == NS_BLOG_ARTICLE) ||
+						defined('NS_BLOG_ARTICLE_TALK') && $namespace == NS_BLOG_ARTICLE_TALK ) {
+						$messageKey = 'article-comments-rc-blog-comments';
+					} else {
+						$messageKey = 'article-comments-rc-comments';
+					}
 
 					$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 					$template->set_vars(
 						array (
-							'hdrtitle' 		=> wfMsgExt('article-comments-rc-comments', array('parseinline'), $title->getPrefixedText()),
+							'hdrtitle' 		=> wfMsgExt($messageKey, array('parseinline'), $title->getPrefixedText()),
 							'inx'			=> $oChangeList->rcCacheIndex,
 							'cntChanges'	=> $cntChanges,
 							'users'			=> $users,
@@ -1771,9 +1779,16 @@ class ArticleCommentList {
 			$parts = ArticleComment::explode($rcTitle);
 
 			$title = Title::newFromText($parts['title'], $rcNamespace);
-			$title = Title::newFromText($title->getText(), MWNamespace::getSubject($title->getNamespace()));
+			$title = Title::newFromText($title->getText(), MWNamespace::getSubject($rcNamespace));
 
-			$articlelink = wfMsgExt('article-comments-rc-comment', array('parseinline'), str_replace('_', ' ', $title->getPrefixedText()));
+			if ((defined('NS_BLOG_ARTICLE') && $rcNamespace == NS_BLOG_ARTICLE) ||
+				defined('NS_BLOG_ARTICLE_TALK') && $rcNamespace == NS_BLOG_ARTICLE_TALK ) {
+				$messageKey = 'article-comments-rc-blog-comment';
+			} else {
+				$messageKey = 'article-comments-rc-comment';
+			}
+
+			$articlelink = wfMsgExt($messageKey, array('parseinline'), str_replace('_', ' ', $title->getPrefixedText()));
 		}
 		return true;
 	}
