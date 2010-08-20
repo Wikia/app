@@ -39,8 +39,6 @@ $wgSpecialPageGroups['UserRenameTool'] = 'users';
 $wgAvailableRights[] = 'renameuser';
 $wgGroupPermissions['*']['renameuser'] = false;
 $wgGroupPermissions['staff']['renameuser'] = true;
-$wgGroupPermissions['helper']['renameuser'] = true;
-$wgGroupPermissions['bureaucrat']['renameuser'] = true;
 
 
 //internationalization files
