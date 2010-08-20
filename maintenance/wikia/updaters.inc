@@ -48,6 +48,18 @@ function do_page_wikia_props_update() {
 	if( $wgDatabase->tableExists( "page_wikia_props" ) ) {
 		$tableInfo = $wgDatabase->fieldInfo( "page_wikia_props", "propname" );
 		if( $tableInfo->type() === "string" ) {
+			/**
+			 * remove duplicates
+			 */
+			//
+			$sth = $wgDatabase->query( "SELECT page_id FROM page_wikia_props GROUP BY page_id HAVING count(*) > 1", __METHOD__ );
+			wfOut( "... removing duplicates first: " );
+			$dups = 0;
+			while( $row = $wgDatabase->fetchObject( $sth ) ) {
+				$wgDatabase->delete( "DELETE FROM page_wikia_props WHERE page_id = {$row->page_id} AND propname = 'imageOrder'" );
+				$dups++;
+			}
+			wfOut( $dups );
 			$wgDatabase->query( "ALTER TABLE page_wikia_props CHANGE  propname propname INT(10) NOT NULL", __METHOD__ );
 			wfOut( "... altered to integer.\n" );
 		}
