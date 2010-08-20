@@ -1250,13 +1250,22 @@ class PreferencesForm {
 			$this->getToggles( $toggles ) .
 			Xml::closeElement( 'fieldset' )
 		);
-
-		/* Wikia change begin - @author: Tomasz Odrobny */
+		
+		/* Wikia change begin - @author: Tomasz Odrobny, Jakub Kurcek */
 		if (wfRunHooks( 'beforeRenderPrefsWatchlist', array( &$this, &$wgOut ) ) ) {
+		global $wgEnableWikiaWatchSubPages;
 		# Watchlist
 			$watchlistToggles = array( 'watchlisthideminor', 'watchlisthidebots', 'watchlisthideown',
 			'watchlisthideanons', 'watchlisthideliu' );
-			if( $wgUseRCPatrol ) $watchlistToggles[] = 'watchlisthidepatrolled';
+			if( $wgUseRCPatrol ) {
+				$watchlistToggles[] = 'watchlisthidepatrolled';
+			}
+			
+			// RT#47528: Watch subpages automatically
+			if( $wgEnableWikiaWatchSubPages ) {
+				$watchlistToggles[] = 'watchlistsubpages'; # Jakub
+			}
+		
 		/* Wikia change end */
 			$wgOut->addHTML(
 				Xml::fieldset( wfMsg( 'prefs-watchlist' ) ) .

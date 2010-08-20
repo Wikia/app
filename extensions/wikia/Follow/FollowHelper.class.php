@@ -357,10 +357,19 @@ class FollowHelper {
 		
 		$watchlistToggles = array( 'watchlisthideminor', 'watchlisthidebots', 'watchlisthideown',
 			'watchlisthideanons', 'watchlisthideliu' );
+
 		// RT#48350: Spec:Prefs - Move two watchlist/followed pages options from "misc" to "followed pages"
 		global $wgUseRCPatrol;
-		if( $wgUseRCPatrol ) $watchlistToggles[] = 'watchlisthidepatrolled';
-		
+		if( $wgUseRCPatrol ) {
+			$watchlistToggles[] = 'watchlisthidepatrolled';
+		}
+
+		// RT#47528: Watch subpages automatically
+		global $wgEnableWikiaWatchSubPages;
+		if( $wgEnableWikiaWatchSubPages ){
+			$watchlistToggles[] = 'watchlistsubpages'; 
+		}
+
 		$out->addHTML(
 			"<br><h2>".wfMsg('wikiafollowedpages-prefs-watchlist')."</h2>".
 			Xml::inputLabel( wfMsg( 'prefs-watchlist-days' ), 'wpWatchlistDays', 'wpWatchlistDays', 3, $self->mWatchlistDays ) . ' ' .

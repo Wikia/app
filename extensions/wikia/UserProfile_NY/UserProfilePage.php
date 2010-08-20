@@ -1168,14 +1168,18 @@ class UserProfilePage extends Article{
 		$user_safe = urlencode(   $user_name  );
 		$view_all_title = Title::makeTitle(NS_SPECIAL,"ViewRelationships");
 
-		if ($rel_type==1) {
-			$relationship_count = $stats_data["friend_count"];
-			$relationship_title = wfMsg("user-friends-title");
+		if (isset($stats_data["friend_count"])){
+                    if ($rel_type==1) {
+                            $relationship_count = $stats_data["friend_count"];
+                            $relationship_title = wfMsg("user-friends-title");
 
-		} else {
-			$relationship_count = $stats_data["foe_count"];
-			$relationship_title = wfMsg("user-foes-title");
-		}
+                    } else {
+                            $relationship_count = $stats_data["foe_count"];
+                            $relationship_title = wfMsg("user-foes-title");
+                    }
+                }else{
+                    $relationship_count = 0;
+                }
 
 		if (count($friends)>0) {
 			$x = 1;
@@ -1634,8 +1638,16 @@ class UserProfilePage extends Article{
 		$user_safe = str_replace("&","%26",$user_name);
 		$stats = new UserStats($user_id, $user_name);
 		$stats_data = $stats->getUserStats();
-		$total = $stats_data["user_board"];
-		if($wgUser->getName() == $user_name)$total=$total+$stats_data["user_board_priv"];
+
+		if ( isset( $stats_data["user_board"] ) ){
+                        $total = $stats_data["user_board"];
+                } else {
+                        $total = 0;
+                }
+
+                if ( isset( $stats_data["user_board_priv"] ) ){
+                    if( $wgUser->getName() == $user_name ) $total = $total + $stats_data["user_board_priv"];
+                }
 
 		$output .= "<div class=\"user-section-heading\">
 			<div class=\"user-section-title\">

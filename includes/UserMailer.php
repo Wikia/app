@@ -458,10 +458,10 @@ class EmailNotification {
 		}
 		/* Wikia change end */
 
-		// Build a list of users to notfiy
+// Build a list of users to notfiy
 		$watchers = array();
 		if ($wgEnotifWatchlist || $wgShowUpdatedMarker) {
-			$dbw = wfGetDB( DB_MASTER );
+			$dbw = wfGetDB( DB_MASTER );		
 			$res = $dbw->select( array( 'watchlist' ),
 				array( 'wl_user' ),
 				array(
@@ -492,6 +492,11 @@ class EmailNotification {
 				);
 				$dbw->commit();
 			}
+
+			/* Wikia change begin - @author: Jakub Kurcek */
+			wfRunHooks( 'NotifyOnSubPageChange', array ( $watchers, $title, $editor, $notificationTimeoutSql, __METHOD__, DB_MASTER ) );
+			/* Wikia change end */
+
 		}
 
 		if ($wgEnotifUseJobQ) {
@@ -556,7 +561,7 @@ class EmailNotification {
 
 		$userTalkId = false;
 
-		if ( !$minorEdit || ($wgEnotifMinorEdits && !$editor->isAllowed('nominornewtalk') ) ) {
+				if ( !$minorEdit || ($wgEnotifMinorEdits && !$editor->isAllowed('nominornewtalk') ) ) {
 			if ( $wgEnotifUserTalk && $isUserTalkPage ) {
 				$targetUser = User::newFromName( $title->getText() );
 				if ( !$targetUser || $targetUser->isAnon() ) {
