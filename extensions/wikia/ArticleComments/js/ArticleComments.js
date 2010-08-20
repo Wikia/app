@@ -208,6 +208,11 @@ var ArticleComments = {
 				$('#article-comments-ul').replaceWith(json.text);
 				$('#article-comments-pagination').find('div').html(json.pagination);
 				ArticleComments.addHover();
+				$('html, body').animate({
+						scrollTop: $('#article-comment-header').offset().top
+					},
+					400
+				);
 			}
 			ArticleComments.processing = false;
 		});
