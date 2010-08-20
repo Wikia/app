@@ -184,6 +184,65 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		return $result;
 	}	
 
+	private function getLoggingArchivePage() {
+		wfProfileIn( __METHOD__ );
+		
+		if ( empty($this->mPageId) ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+
+		if ( empty($this->mLogid) ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+
+		$db = $this->getDB();
+
+		$fields = array(
+			'log_namespace as page_namespace',
+			'log_title as page_title',
+			'log_comment as rev_comment',
+			'log_user as rev_user',
+			'\'\' as rev_user_text',
+			'log_timestamp as rev_timestamp',
+			'ar_minor_edit as rev_minor_edit',
+			'ar_minor_edit as rev_id',
+			'ar_text_id as rev_text_id',
+			'ar_len as rev_len',
+			$this->mPageId . ' as page_id'
+		);
+
+		$this->profileDBIn();
+		$oRow = $db->selectRow( 
+			array('archive', 'logging'), 
+			$fields, 
+			array( 
+				'log_title = ar_title',
+				'log_namespace = ar_namespace',
+				'ar_page_id' => $this->mPageId,
+				'log_id' => $this->mLogid
+			),
+			__METHOD__, 
+			array( 
+				'ORDER BY' => 'log_timestamp DESC, ar_timestamp DESC' 
+			)
+		);
+		$this->profileDBOut();
+
+		$result = false;
+		if ( is_object($oRow) ) {
+			$oUser = User::newFromId($oRow->rev_user);
+			if ( is_object($oUser) ) {
+				$oRow->rev_user_text = $oUser->getName();
+			}
+			$result = $oRow;
+		} 
+		
+		wfProfileOut( __METHOD__ );
+		return $result;
+	}
+
 	private function getRevisionFromArchive() {
 		wfProfileIn( __METHOD__ );
 
@@ -253,6 +312,10 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		
 		if ( empty($res) && is_object($oRC) ) {
 			$res = $this->getRecentchangePage($oRC);
+		}
+		
+		if ( empty($res) && !is_object($oRC) ) {
+			$res = $this->getLoggingArchivePage();
 		}
 		
 		wfProfileOut( __METHOD__ );
