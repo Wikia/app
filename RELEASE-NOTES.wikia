@@ -1,4 +1,5 @@
 == Changes since 201008.3 ==
+* rt#64032: Changing pages should scroll the page back up to the top of the comments section (Marooned)
 * rt#63882: database query syntax error in TaskManager/maintenance/archive.php (eloy)
 * rt#60223: colon allowed in sitename, breaks project namespace (uberfuzzy)
 * rt#63911: ImageServing: small images should not be scaled up (eloy)
