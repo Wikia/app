@@ -111,7 +111,7 @@ class imageServingHelper{
 			$db->delete( 'page_wikia_props', 
 				array(		
 					'page_id' =>  $articleId,
-					'propname' => "imageOrder")
+					'propname' => "0")
 			);
 			return true;
 			wfProfileOut(__METHOD__);
@@ -120,7 +120,7 @@ class imageServingHelper{
 		$db->replace('page_wikia_props','',
 			array(
 				'page_id' =>  $articleId,
-				'propname' => "imageOrder",
+				'propname' => "0",
 				'props' => serialize($images)
 			)
 		);
