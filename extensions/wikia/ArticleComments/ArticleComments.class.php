@@ -1639,8 +1639,7 @@ class ArticleCommentList {
 			$oTitle = $oRCCacheEntry->getTitle();
 			$namespace = $oTitle->getNamespace();
 
-			$allowed = !( $wgEnableBlogArticles && in_array($oTitle->getNamespace(), array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK)) );
-			if ( !is_null($oTitle) && MWNamespace::isTalk($oTitle->getNamespace()) && ArticleComment::isTitleComment($oTitle) && $allowed ) {
+			if ( !is_null($oTitle) && MWNamespace::isTalk($oTitle->getNamespace()) && ArticleComment::isTitleComment($oTitle)) {
 				$parts = ArticleComment::explode($oTitle->getFullText());
 
 				if ($parts['title'] != '') {
@@ -1667,10 +1666,13 @@ class ArticleCommentList {
 
 					wfLoadExtensionMessages('ArticleComments');
 					$cntChanges = wfMsgExt( 'nchanges', array( 'parsemag', 'escape' ), $wgLang->formatNum( $cnt ) );
+					$title = Title::newFromText($parts['title']);
+					$title = Title::newFromText($title->getText(), MWNamespace::getSubject($title->getNamespace()));
+
 					$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 					$template->set_vars(
 						array (
-							'hdrtitle' 		=> wfMsgExt('article-comments-rc-comments', array('parseinline'), $parts['title']),
+							'hdrtitle' 		=> wfMsgExt('article-comments-rc-comments', array('parseinline'), $title->getPrefixedText()),
 							'inx'			=> $oChangeList->rcCacheIndex,
 							'cntChanges'	=> $cntChanges,
 							'users'			=> $users,
@@ -1767,7 +1769,11 @@ class ArticleCommentList {
 		if (MWNamespace::isTalk($rcNamespace) && ArticleComment::isTitleComment($title)) {
 			wfLoadExtensionMessages('ArticleComments');
 			$parts = ArticleComment::explode($rcTitle);
-			$articlelink = wfMsgExt('article-comments-rc-comment', array('parseinline'), str_replace('_', ' ', $parts['title']));
+
+			$title = Title::newFromText($parts['title'], $rcNamespace);
+			$title = Title::newFromText($title->getText(), MWNamespace::getSubject($title->getNamespace()));
+
+			$articlelink = wfMsgExt('article-comments-rc-comment', array('parseinline'), str_replace('_', ' ', $title->getPrefixedText()));
 		}
 		return true;
 	}
