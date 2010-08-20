@@ -102,7 +102,7 @@ class StaticChute {
 			'common/tracker.js',
 			'../extensions/wikia/ProblemReports/js/ProblemReports-loader.js',
 			'common/contributed.js',
-
+			'../extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
 			//'../extensions/FBConnect/fbsdk_core.js',
 			'../extensions/FBConnect/fbconnect.js',
 		);
@@ -140,7 +140,7 @@ class StaticChute {
 			'../extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js',
 			'../extensions/wikia/ImageLightbox/ImageLightbox.js',
 			'../extensions/wikia/IE6PhaseOut/IE6PhaseOut.js',
-
+			'../extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
 			//'../extensions/FBConnect/fbsdk_core.js',
 			'../extensions/FBConnect/fbconnect.js',
 		);
