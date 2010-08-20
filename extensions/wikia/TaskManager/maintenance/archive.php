@@ -143,7 +143,8 @@ class TaskManagerArchive {
 			$dbw->insert(
 				"wikia_tasks",
 				$values,
-				__method__
+				__method__,
+				array( "IGNORE" )
 			);
 			Wikia::log( __METHOD__, "", sprintf("Task id=%d type=%s added=%s moved.", $task->task_id, $task->task_type, $task->task_added ) );
 			$this->mData[ $num ]->moved = true;
