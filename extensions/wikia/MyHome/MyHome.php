@@ -5,6 +5,7 @@ $dir = dirname(__FILE__) . '/';
 // register extension classes
 $wgAutoloadClasses['MyHome'] = $dir.'MyHome.class.php';
 $wgAutoloadClasses['MyHomeAjax'] = $dir.'MyHomeAjax.class.php';
+$wgAutoloadClasses['SpecialActivityFeed'] = $dir.'SpecialActivityFeed.class.php';
 
 /// data providers
 $wgAutoloadClasses['iAPIProxy'] = $dir . 'data/iAPIProxy.php';
