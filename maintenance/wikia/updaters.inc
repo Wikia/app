@@ -56,7 +56,7 @@ function do_page_wikia_props_update() {
 			wfOut( "... removing duplicates first: " );
 			$dups = 0;
 			while( $row = $wgDatabase->fetchObject( $sth ) ) {
-				$wgDatabase->delete( "DELETE FROM page_wikia_props WHERE page_id = {$row->page_id} AND propname = 'imageOrder'" );
+				$wgDatabase->delete( "page_wikia_props", array( "page_id" => $row->page_id, "propname" => 'imageOrder' ), __METHOD__  );
 				$dups++;
 			}
 			wfOut( "{$dups}\n" );
