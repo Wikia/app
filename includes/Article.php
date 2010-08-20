@@ -2903,6 +2903,7 @@ class Article {
 		}
 		# Update newtalk / watchlist notification status
 		$wgUser->clearNotification( $this->mTitle );
+		wfRunHooks( 'AfterViewUpdates', array( $this ) );
 	}
 
 	/**
