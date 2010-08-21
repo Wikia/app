@@ -5,7 +5,7 @@ if ( ! defined( 'MEDIAWIKI' ) )
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Watch subpages',
 	'author' => 'Jakub Kurcek',
-	'descriptionmsg' => 'watchsubpages-desc',
+	'descriptionmsg' => 'wikia-watchsubpages-desc',
 	'version' => '1.0.0',
 );
 
