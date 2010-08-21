@@ -15,6 +15,8 @@ $messages['en'] = array(
 	'article-comments-undeleted-comment' => 'Undeleted comment for blog page $1',
 	'article-comments-rc-comment' => 'Article comment ([[$1]])',
 	'article-comments-rc-comments' => 'Article comments ([[$1]])',
+	'article-comments-rc-blog-comment' => 'Blog comment ([[$1]])',
+	'article-comments-rc-blog-comments' => 'Blog comments ([[$1]])',
 	'article-comments-login' => 'Please <a href="$1">log in</a> to post a comment on this wiki.',
 	'article-comments-zero-comments' => 'No comments yet!',
 	'article-comments-toc-item' => 'Comments',
