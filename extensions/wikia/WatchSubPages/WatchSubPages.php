@@ -5,7 +5,7 @@ if ( ! defined( 'MEDIAWIKI' ) )
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Watch subpages',
 	'author' => 'Jakub Kurcek',
-	'descriptionmsg' => 'subpages-desc',
+	'descriptionmsg' => 'watchsubpages-desc',
 	'version' => '1.0.0',
 );
 
@@ -23,5 +23,3 @@ if ( !empty( $wgEnableWikiaWatchSubPages ) && $wgEnableWikiaWatchSubPages ) {
 	$wgHooks['NotifyOnSubPageChange'][] = 'WatchSubPagesHelper::NotifyOnSubPageChange';
 	$wgHooks['AfterViewUpdates'][] = 'WatchSubPagesHelper::ClearParentNotification';
 }
-
-?>

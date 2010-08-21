@@ -11,10 +11,10 @@ class WatchSubPagesHelper {
 	 *
 	 * @author Jakub Kurcek <jakub@wikia-inc.com>
 	 */
-	
+
 	public static function AddToUserMenu( &$extraToggles ) {
 		$extraToggles[] = 'watchlistsubpages';
-		wfLoadExtensionMessages('WatchSubPages');
+		wfLoadExtensionMessages( 'WatchSubPages' );
 		return true;
 	}
 
@@ -34,14 +34,14 @@ class WatchSubPagesHelper {
 	 * @author Jakub Kurcek <jakub@wikia-inc.com>
 	 */
 
-	static public function ClearParentNotification( $article ){
+	static public function ClearParentNotification( $article ) {
 		global $wgUser;
 
-		if ( $wgUser->getBoolOption( 'watchlistsubpages' ) ){
-			if ( ! $article->getTitle()->userIsWatching() ){
+		if ( $wgUser->getBoolOption( 'watchlistsubpages' ) ) {
+			if ( ! $article->getTitle()->userIsWatching() ) {
 				$tmpDBkey = $article->getTitle()->getDBkey();
 				$arrTitle = explode( '/', $tmpDBkey );
-				if ( count( $arrTitle > 1 ) ){
+				if ( count( $arrTitle > 1 ) ) {
 					$parentTitle = Title::newFromDBkey( $arrTitle[0] );
 					if ( $parentTitle->userIsWatching() ) {
 						$wgUser->clearNotification( $parentTitle );
@@ -67,9 +67,9 @@ class WatchSubPagesHelper {
 	 * @author Jakub Kurcek <jakub@wikia-inc.com>
 	 */
 
-	static public function NotifyOnSubPageChange( $watchers, $title, $editor, $notificationTimeoutSql, $method, $dbtype ){
+	static public function NotifyOnSubPageChange( $watchers, $title, $editor, $notificationTimeoutSql, $method, $dbtype ) {
 		$subpagesWatchers  = array();
-		
+
 		// Gets parent data
 		$arrTitle = explode( '/' , $title->getDBkey() );
 		$dbw = wfGetDB( $dbtype );
@@ -85,17 +85,17 @@ class WatchSubPagesHelper {
 		);
 
 		// Gets user settings
-		while ($row = $dbw->fetchObject( $res ) ) {
+		while ( $row = $dbw->fetchObject( $res ) ) {
 
 			$tmpUser = New User();
-			$tmpUser->setId(intval( $row->wl_user ));
+			$tmpUser->setId( intval( $row->wl_user ) );
 			$tmpUser->loadFromId();
 			$userToggles = $tmpUser->getToggles();
 			WatchSubPagesHelper::AddToUserMenu( &$userToggles );
-			if ( $tmpUser->getBoolOption( 'watchlistsubpages' ) ){
+			if ( $tmpUser->getBoolOption( 'watchlistsubpages' ) ) {
 				$parentpageWatchers[] = (integer)$row->wl_user;
 			}
-			unset($tmpUser);
+			unset( $tmpUser );
 		}
 
 		// Updates parent watchlist timestamp for $parentOnlyWatchers.
