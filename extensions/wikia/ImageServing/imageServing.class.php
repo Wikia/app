@@ -189,8 +189,8 @@ class imageServing{
 		if($pHeight >= $height) {
 			$pWidth =  round($height*($this->proportion['w']/$this->proportion['h']));
 			$top = 0; 
-			$left = round($width/2 - $pWidth/2);
-			$right = $left + $pWidth;
+			$left = round($width/2 - $pWidth/2) + 1;
+			$right = $left + $pWidth + 1;
 			$bottom = $height;
 		} else {
 			$deltaYpx = round($height*$this->deltaY);
