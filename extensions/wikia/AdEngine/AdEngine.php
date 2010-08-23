@@ -429,6 +429,11 @@ class AdEngine {
 			return "<!-- Null Ad from " . __METHOD__ . "-->" . $AdProvider->getAd($slotname, array()); 
 		}
 
+		// FIXME make it more general...
+		if ($AdProvider instanceof AdProviderGAM){
+			return "<!-- Fall back to getAd from " . __METHOD__ . "-->" . $this->getAd($slotname); 
+		}
+
 		$this->placeholders[$slotname]=$this->slots[$slotname]['load_priority'];
 
 		if ($reserveSpace) {
