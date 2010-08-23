@@ -16,10 +16,11 @@ class AchUserProfileService {
     	wfProfileIn(__METHOD__);
 
     	global $wgTitle, $wgUser, $wgWikiaBotLikeUsers;
-
+	
     	$this->mUserOwner = User::newFromName($wgTitle->getText());
 
     	if(
+		in_array( strtolower( $wgUser->getSkin()->getSkinName() ), array( 'monaco', 'oasis' ) ) &&
 		$this->mUserOwner &&
 		
 		//check for blocked users/bots
