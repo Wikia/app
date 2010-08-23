@@ -30,6 +30,17 @@ $wgExtensionMessagesFiles['Phalanx'] = $dir . 'Phalanx.i18n.php';
 
 $wgExtensionFunctions[] = 'efPhalanxInit';
 
+// log type
+global $wgLogTypes, $wgLogNames, $wgLogHeaders, $wgLogActions;
+$wgLogTypes[]                       = 'phalanx';
+$wgLogNames['phalanx']              = 'phalanx-rule-log-name';
+$wgLogHeaders['phalanx']            = 'phalanx-rule-log-header';
+$wgLogRestrictions['phalanx']       = 'phalanx';
+$wgLogActions['phalanx/add']        = 'phalanx-rule-log-add';
+$wgLogActions['phalanx/edit']       = 'phalanx-rule-log-edit';
+$wgLogActions['phalanx/delete']     = 'phalanx-rule-log-delete';
+
+
 function efPhalanxInit() {
 	global $wgUser, $wgHooks;
 
