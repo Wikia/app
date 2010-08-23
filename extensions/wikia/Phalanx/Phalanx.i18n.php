@@ -88,4 +88,11 @@ Please create an alternate user name or [[Special:Contact|contact Wikia]] about 
 
 	'phalanx-stats-row' => '<b>$4</b> filter type <b>$1</b> blocked user <b>$2</b> on <a href="$3">$3</a>', // TODO: Using wiki text is nicer.
 	'phalanx-stats-block-notfound' => 'block ID not found',
+
+	'phalanx-rule-log-name' => 'Phalanx rules log',
+	'phalanx-rule-log-header' => 'This is a log of changes to phalanx rules.',
+	'phalanx-rule-log-add' => 'Phalanx rule added: $1',
+	'phalanx-rule-log-edit' => 'Phalanx rule edited: $1',
+	'phalanx-rule-log-delete' => 'Phalanx rule deleted: $1',
+	'phalanx-rule-log-details' => 'Filter: "$1", type: "$2", reason: "$3"',
 );

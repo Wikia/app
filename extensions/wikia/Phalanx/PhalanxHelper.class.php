@@ -44,6 +44,7 @@ class PhalanxHelper {
 			$dbw->immediateCommit();
 
 			self::updateCache($oldData, $data);
+			self::logEdit($oldData,$data);
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -73,6 +74,7 @@ class PhalanxHelper {
 			$dbw->immediateCommit();
 
 			self::updateCache(null, $data);
+			self::logAdd($data);
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -206,6 +208,7 @@ class PhalanxHelper {
 		$dbw->immediateCommit();
 
 		self::updateCache($data, null);
+		self::logDelete($data);
 
 		$result = array(
 			'error' => false,
@@ -345,4 +348,28 @@ class PhalanxHelper {
 
 		return $output;
 	}
+	
+	static public function logAdd( $data ) {
+		self::logUniversal( 'add', $data );
+	}
+	
+	static public function logEdit( $old, $data ) {
+		self::logUniversal( 'edit', $data );
+	}
+	
+	static public function logDelete( $data ) {
+		self::logUniversal( 'delete', $data );
+	}
+	
+	static public function logUniversal( $action, $data ) {
+		$title = Title::newFromText('PhalanxStats/' . $data['id'],NS_SPECIAL);
+		$types = implode(',', Phalanx::getTypeNames($data['type']));
+		$log = new LogPage( 'phalanx' );
+		$log->addEntry( $action, $title, wfMsgExt( 'phalanx-rule-log-details', array( 'parsemag', 'content' ), 
+			$data['text'], $types, $data['reason'] ) );
+		// Workaround lack of automatic COMMIT in Ajax requests
+		$db = wfGetDB( DB_MASTER );
+		$db->immediateCommit();
+	}
+	
 }
