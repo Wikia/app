@@ -40,6 +40,14 @@ $wgAutoloadClasses['ArticleCommentsAjax'] = "$dir/ArticleCommentsAjax.class.php"
 
 $wgExtensionMessagesFiles['ArticleComments'] = dirname(__FILE__) . '/ArticleComments.i18n.php';
 
+$wgAvailableRights[] = 'commentmove';
+$wgAvailableRights[] = 'commentedit';
+$wgAvailableRights[] = 'commentdelete';
+
+$wgGroupPermissions['sysop']['commentmove'] = true;
+$wgGroupPermissions['sysop']['commentedit'] = true;
+$wgGroupPermissions['sysop']['commentdelete'] = true;
+
 $wgHooks['ArticleDelete'][] = 'ArticleCommentList::articleDelete';
 $wgHooks['ArticleDeleteComplete'][] = 'ArticleCommentList::articleDeleteComplete';
 $wgHooks['ArticleRevisionUndeleted'][] = 'ArticleCommentList::undeleteComments';
