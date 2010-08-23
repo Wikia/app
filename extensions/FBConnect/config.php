@@ -130,9 +130,12 @@ $fbLogo = 'http://static.ak.fbcdn.net/images/icons/favicon.gif';
  */
 //$fbScript = 'http://static.ak.fbcdn.net/connect/en_US/core.js';
 global $wgScriptPath, $wgStyleVersion;
-$fbScript = "$wgScriptPath/extensions/FBConnect/fbsdk_core.js?$wgStyleVersion"; // insulate from changes by hosting locally.  Also, one less dns lookup.
-//$fbScript = ''; // NOTE: This is in StaticChute now, so don't use any URL here. (NOTE: Didn't work in StaticChute.  The re-compression broke it and
-// also, we can't use StaticChute while fbScriptEnableLocales is true, that could lead to double-inclusion).
+//$fbScript = "$wgScriptPath/extensions/FBConnect/fbsdk_core.js?$wgStyleVersion"; // insulate from changes by hosting locally.  Also, one less dns lookup.
+
+// NOTE: Added it to StaticChute so everyone will have it.  This has the drawback that non-fbScriptLangCode (english) users will get the english
+// version from StaticChute, then need to undefine it and load their local version.  This has a slight overhead when fbScriptEnableLocales is true
+// (additional size to StaticChute) for non-english users but a fairly significant savings (removing an HTTP request for an un-gzipped file) for english users.
+$fbScript = ''; // NOTE: This is in StaticChute now, so don't use any URL here.
 
 /**
  * If this is set to true, and the user's language is anything other than fbScriptLangCode, then
