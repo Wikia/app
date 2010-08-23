@@ -99,6 +99,7 @@ class ArticleCommentsAjax {
 				$result['error'] = 0;
 				$result['show'] = true;
 				$result['text'] = $comment->editPage();
+				$result['emptyMsg'] = wfMsg('article-comments-empty-comment', $comment->getTitle()->getLocalUrl('redirect=no&action=delete'));
 			}
 		}
 
