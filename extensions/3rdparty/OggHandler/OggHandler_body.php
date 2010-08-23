@@ -499,7 +499,9 @@ class OggTransformOutput extends MediaTransformOutput {
 		$this->noIcon = $noIcon;
 
 		// Wikia: use fixed width (RT #46188)
-		$this->width = 150;
+		if (!$this->isVideo) {
+			$this->width = 150;
+		}
 	}
 
 	function toHtml( $options = array() ) {
@@ -609,13 +611,14 @@ class OggTransformOutput extends MediaTransformOutput {
 		$s = Xml::tags( 'div',
 			array(
 				'id' => $id,
-				'style' => "width: {$width}px; text-align: center" ),
+				'style' => "width: ".( $thumb ? '150' : $width )."px; text-align: center" 
+			),
 			( $thumb ? Xml::tags( 'div', array(), $thumb ) : '' ) .
 			Xml::tags( 'div', array(),
 				Xml::tags( 'button',
 					array(
 						'onclick' => "if (typeof(wgOggPlayer) != 'undefined') wgOggPlayer.init(false, $playerParams);",
-						'style' => "width: {$width}px; background-image: url('$wgStylePath/common/images/ogg-button.png'); height: 30px; -moz-box-shadow: none; border: none",
+						'style' => "width: 150px; background-image: url('$wgStylePath/common/images/ogg-button.png'); height: 30px; -moz-box-shadow: none; border: none",
 						'title' => $msgStartPlayer,
 					),
 					'&nbsp;'
