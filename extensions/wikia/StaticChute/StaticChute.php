@@ -25,6 +25,12 @@ class StaticChute {
 	// macbre: RT #18765
 	private $theme = false;
 
+	// Some JS files are already compressed and shouldn't be minified or they will break.
+	// This array is the suffixes that will not be minified.
+	private $compressionBlacklist = array(
+		'/extensions/FBConnect/fbsdk_core.js',
+	);
+
 	public function __construct($fileType){
 		// macbre: we will return HTTP 400 when file type is invalid (RT #18825)
 		if (! in_array($fileType, $this->supportedFileTypes)){
@@ -141,7 +147,7 @@ class StaticChute {
 			'../extensions/wikia/ImageLightbox/ImageLightbox.js',
 			'../extensions/wikia/IE6PhaseOut/IE6PhaseOut.js',
 			'../extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
-			//'../extensions/FBConnect/fbsdk_core.js',
+			'../extensions/FBConnect/fbsdk_core.js',
 			'../extensions/FBConnect/fbconnect.js',
 		);
 		$this->config['monaco_anon_article_js'] = array_merge($this->config['monaco_anon_article_js'], $widgetsAssets['js']);
@@ -175,7 +181,7 @@ class StaticChute {
 			'../extensions/wikia/ImageLightbox/ImageLightbox.js',
 			'../extensions/wikia/IE6PhaseOut/IE6PhaseOut.js',
 			'../extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
-			//'../extensions/FBConnect/fbsdk_core.js',
+			'../extensions/FBConnect/fbsdk_core.js',
 			'../extensions/FBConnect/fbconnect.js',
 		);
 		$this->config['monaco_loggedin_js'] = array_merge($this->config['yui'], $this->config['monaco_loggedin_js'], $widgetsAssets['js']);
@@ -208,7 +214,7 @@ class StaticChute {
 			'../extensions/wikia/Interstitial/Interstitial.js',
 			'../extensions/wikia/ImageLightbox/ImageLightbox.js',
 
-			//'../extensions/FBConnect/fbsdk_core.js',
+			'../extensions/FBConnect/fbsdk_core.js',
 			'../extensions/FBConnect/fbconnect.js',
 		);
 		$this->config['monaco_anon_everything_else_js'] = array_merge($this->config['yui'], $this->config['monaco_anon_everything_else_js'], $widgetsAssets['js']);
@@ -260,7 +266,7 @@ class StaticChute {
 			'common/ajax.js',
 			'common/ajaxwatch.js',
 			'common/mwsuggest.js',
-			//'../extensions/FBConnect/fbsdk_core.js',
+			'../extensions/FBConnect/fbsdk_core.js',
 			'../extensions/FBConnect/fbconnect.js',
 		);
 
@@ -276,7 +282,7 @@ class StaticChute {
 			'common/ajax.js',
 			'common/ajaxwatch.js',
 			'common/mwsuggest.js',
-			//'../extensions/FBConnect/fbsdk_core.js',
+			'../extensions/FBConnect/fbsdk_core.js',
 			'../extensions/FBConnect/fbconnect.js',
 		);
 		//CSS
@@ -725,11 +731,24 @@ class StaticChute {
 			$rawData = str_replace("\xEF\xBB\xBF", '', $rawData);
 
 			if ($this->minify){
-				switch ($this->fileType){
-				  case 'css': $data = $this->minifyCssData($rawData); break;
-				  case 'js': $data = $this->minifyJSFile($file); break;
-				  case 'html': $data = $this->minifyHtmlData($rawData); break;
-				  default: $data = $rawData;
+				// Check to see if this file is blacklisted from being compressed. - O(n^2) but don't see a better option at the moment.
+				$allowMinification = true;
+				foreach($this->compressionBlacklist as $blacklistedSuffix){
+					if((strlen($blacklistedSuffix) <= strlen($file)) && 
+						(substr($file, -1 * strlen($blacklistedSuffix)) == $blacklistedSuffix)){
+						$allowMinification = false;
+					}
+				}
+
+				if($allowMinification){
+					switch ($this->fileType){
+					  case 'css': $data = $this->minifyCssData($rawData); break;
+					  case 'js': $data = $this->minifyJSFile($file); break;
+					  case 'html': $data = $this->minifyHtmlData($rawData); break;
+					  default: $data = $rawData;
+					}
+				} else {
+					$data = $rawData;
 				}
 			} else {
 				$data = $rawData;
@@ -738,8 +757,8 @@ class StaticChute {
 			$this->bytesIn += strlen($rawData);
 			$this->bytesOut += strlen($data);
 
-      			$out .= $this->comment(basename($file)) . $data;
-          	}
+			$out .= $this->comment(basename($file)) . $data;
+		}
 
 		if (empty($out)){
 			return false;
