@@ -29,6 +29,7 @@ $messages['en'] = array(
 	'article-comments-next-page' => 'Next',
 	'article-comments-page-spacer' => ' ... ',
 	'article-comments-delete-reason' => 'The parent article / parent comment has been deleted.',
+	'article-comments-empty-comment' => "You can't post an empty comment. <a href='$1'>Delete it instead?</a>",
 	'enotif_subject_article_comment' => '$PAGEEDITOR has commented on "$PAGETITLE" on {{SITENAME}}',
 	'enotif_body_article_comment' => 'Dear $WATCHINGUSERNAME,
 

@@ -45,8 +45,14 @@ var ArticleComments = {
 
 		if ($('#article-comm-form-' + e.data.id)) {
 
-			var textfield = $('#article-comm-textfield-' + e.data.id).attr('readonly', 'readonly');
-			if ($.trim(textfield.val()) == '') return;
+			var textfield = $('#article-comm-textfield-' + e.data.id);
+			$('#article-comm-submit-' + e.data.id).parent().find('.info').remove();
+			if ($.trim(textfield.val()) == '') {
+				$('#article-comm-submit-' + e.data.id).after($('<span class="info">').html(e.data.emptyMsg));
+				return;
+			}
+			textfield.attr('readonly', 'readonly');
+
 			var data = {
 				action: 'ajax',
 				rs: 'ArticleCommentsAjax',
@@ -97,7 +103,7 @@ var ArticleComments = {
 			if (!json.error) {
 				$(e.target).closest('.buttons').hide();
 				$('#comm-text-' + json.id).html(json.text);
-				$('#article-comm-submit-' + json.id).bind('click', {id: json.id}, ArticleComments.save);
+				$('#article-comm-submit-' + json.id).bind('click', {id: json.id, emptyMsg: json.emptyMsg}, ArticleComments.save);
 			}
 			ArticleComments.processing = false;
 		});
