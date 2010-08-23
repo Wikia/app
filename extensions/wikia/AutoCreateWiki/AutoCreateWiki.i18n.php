@@ -40,7 +40,7 @@ $messages['en'] = array(
 	"autocreatewiki-info-category-answers" => "This will help visitors find your Answers site.",
 	"autocreatewiki-info-language" => "This will be the default language for visitors to your wiki.",
 	"autocreatewiki-info-email-address" => "Your email address is never shown to anyone on Wikia.",
-	"autocreatewiki-info-realname" => "If you choose to provide it this will be used for giving you attribution for your work.",
+	"autocreatewiki-info-realname" => "If you choose to provide it, this will be used for giving you attribution for your work.",
 	"autocreatewiki-info-birthdate" => "Wikia requires all users to provide their real date of birth as both a safety precaution and as a means of preserving the integrity of the site while complying with federal regulations.",
 	"autocreatewiki-info-blurry-word" => "To help protect against automated account creation, please type the blurry word that you see into this field.",
 	"autocreatewiki-info-terms-agree" => "By creating a wiki and a user account, you agree to the <a href=\"http://www.wikia.com/wiki/Terms_of_use\">Wikia's Terms of Use</a>",
@@ -271,7 +271,7 @@ $messages['ar'] = array(
 
 الآن لديك الموقع كله لملءه  بالمعلومات والصور وأشرطة الفيديو المفضلة لديك حول الموضوع الخاص بك. ولكن في الوقت الراهن ،  صفحات فارغة فقط تحدق فيك أنت... مخيف جدا ، أليس كذلك؟ فيما يلي بعض الطرق للبدء.
 
-* '''قدم موضوعك''' في الصفحة الرئيسية. هذه فرصتك لفسر للقراء ماهو الموضوع الذي ستكون حوله هذه الويكي. أكتب بقدر ما تستطيع! 
+* '''قدم موضوعك''' في الصفحة الرئيسية. هذه فرصتك لفسر للقراء ماهو الموضوع الذي ستكون حوله هذه الويكي. أكتب بقدر ما تستطيع!
 
 * '''إبدأ بعض الصفحات الجديدة''' -- فقط عبارة أو اثنتين هما كافيتان للبداية. لا تدع الصفحات الفارغة تحبطك! الويكي هي حول الإضافة و تغيير الأشياء كلما تتقدم. يمكنك أيضا إضافة الصور و مقاطع الفيديو، لملأ الصفحات و جعلها جالبة أكثر.
 
@@ -1116,7 +1116,7 @@ Maintenant vous avez un site web qu'il faudra remplir avec des informations, des
 
 Et ensuite continuez ! Les gens aiment aller sur des wikis où il y a beaucoup de choses à lire, donc continuez à ajouter du contenu pour attirer les lecteurs et les éditeurs. Il y a beaucoup à faire mais ne vos en faîtes pas -- aujourd'hui est le premier jour, et vous avez beaucoup de temps. Tous les wikis ont bien commencé un jour -- juste un peu de temps pour débuter quelques pages, jusqu'à ce qu'il devienne un grand site
 
-Si vous avez des questions, vous pouvez nous écrire par cette page [[Special:Contact]]. Nous vous souhaitons bien du plaisir ! 
+Si vous avez des questions, vous pouvez nous écrire par cette page [[Special:Contact]]. Nous vous souhaitons bien du plaisir !
 
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Nouveaux wikis',
@@ -1567,9 +1567,9 @@ $messages['id'] = array(
 	'autocreatewiki-category-label' => 'Kategori:',
 	'autocreatewiki-category-other' => 'Lainnya',
 	'autocreatewiki-set-username' => 'Atur nama pengguna lebih dulu.',
-	'autocreatewiki-invalid-category' => 'Nilai tidak sah dari kategori. 
+	'autocreatewiki-invalid-category' => 'Nilai tidak sah dari kategori.
 Silakan pilih yang benar dari daftar pilihan.',
-	'autocreatewiki-invalid-language' => 'Nilai tidak sah dari bahasa. 
+	'autocreatewiki-invalid-language' => 'Nilai tidak sah dari bahasa.
 Silakan pilih yang benar dari daftar pilihan.',
 	'autocreatewiki-invalid-retype-passwd' => 'Silahkan ketik kembali kata kunci yang sama seperti di atas',
 	'autocreatewiki-invalid-birthday' => 'Tanggal lahir tidak sah',
@@ -1599,35 +1599,35 @@ Silakan pilih yang benar dari daftar pilihan.',
 	'autocreatewiki-step7-error' => 'Tidak dapat menyalin basisdata pemulai untuk bahasa!',
 	'autocreatewiki-protect-reason' => 'Bagian dari antarmuka resmi',
 	'autocreatewiki-welcomesubject' => '$1 telah dibuat!',
-	'autocreatewiki-welcomebody' => 'Halo, $2, 
+	'autocreatewiki-welcomebody' => 'Halo, $2,
 
-Permintaan Wikia Anda sekarang tersedia di <$1> Kami berharap dapat melihat Anda meyunting disana segera! 
+Permintaan Wikia Anda sekarang tersedia di <$1> Kami berharap dapat melihat Anda meyunting disana segera!
 
-Kami telah menambahkan beberapa Informasi dan Tips pada halaman Pembicaraan Pengguna Anda (<$5>) untuk membantu Anda memulai. 
+Kami telah menambahkan beberapa Informasi dan Tips pada halaman Pembicaraan Pengguna Anda (<$5>) untuk membantu Anda memulai.
 
-Jika Anda memiliki masalah, Anda dapat meminta bantuan komunitas di wiki di <http://www.wikia.com/wiki/Forum:Help_desk> , Atau melalui surel ke community@wikia.com. Anda juga dapat mengunjungi kami ruang obrolan IRC #wikia <http://irc.wikia.com> . 
+Jika Anda memiliki masalah, Anda dapat meminta bantuan komunitas di wiki di <http://www.wikia.com/wiki/Forum:Help_desk> , Atau melalui surel ke community@wikia.com. Anda juga dapat mengunjungi kami ruang obrolan IRC #wikia <http://irc.wikia.com> .
 
-Saya dapat dihubungi langsung melalui email atau di halaman pembicaraan saya, jika Anda memiliki pertanyaan atau masalah. 
+Saya dapat dihubungi langsung melalui email atau di halaman pembicaraan saya, jika Anda memiliki pertanyaan atau masalah.
 
-Semoga berhasil dengan proyek ini! 
+Semoga berhasil dengan proyek ini!
 
-$3 
+$3
 
-Tim Komunitas Wikia 
+Tim Komunitas Wikia
 
 <http://www.wikia.com/wiki/User:$4>',
 	'autocreatewiki-welcometalk' => "== Selamat Datang! ==
-<div style=\"font-size:120%; line-height:1.2em;\">Hi \$1 -- kami sangat gembira untuk memiliki '''\$4''' sebagai bagian dari komunitas Wikia! 
+<div style=\"font-size:120%; line-height:1.2em;\">Hi \$1 -- kami sangat gembira untuk memiliki '''\$4''' sebagai bagian dari komunitas Wikia!
 
-Sekarang Anda punya website secara utuh untuk diisi dengan informasi, gambar dan video tentang topik kesukaan Anda. Tapi sekarang, itu hanya halaman kosong mengunggu anda ... Menyeramkan, bukan? Berikut adalah beberapa cara untuk memulai. 
+Sekarang Anda punya website secara utuh untuk diisi dengan informasi, gambar dan video tentang topik kesukaan Anda. Tapi sekarang, itu hanya halaman kosong mengunggu anda ... Menyeramkan, bukan? Berikut adalah beberapa cara untuk memulai.
 
-*'''Mengenalkan topik Anda''' di halaman depan. Ini adalah kesempatan Anda untuk menjelaskan kepada pembaca tentang topik Anda. Menulis sebanyak yang Anda inginkan! deskripsi Anda dapat menghubungkan ke semua halaman yang penting di situs Anda. 
+*'''Mengenalkan topik Anda''' di halaman depan. Ini adalah kesempatan Anda untuk menjelaskan kepada pembaca tentang topik Anda. Menulis sebanyak yang Anda inginkan! deskripsi Anda dapat menghubungkan ke semua halaman yang penting di situs Anda.
 
-*'''Mulai beberapa halaman baru''' - hanya satu atau dua kalimat baik untuk memulai. Jangan biarkan halaman kosong menunggu! Wiki adalah semua tentang menambah dan mengubah hal-hal selama Anda pergi. Anda juga dapat menambahkan gambar dan video, untuk mengisi halaman dan membuatnya lebih menarik. 
+*'''Mulai beberapa halaman baru''' - hanya satu atau dua kalimat baik untuk memulai. Jangan biarkan halaman kosong menunggu! Wiki adalah semua tentang menambah dan mengubah hal-hal selama Anda pergi. Anda juga dapat menambahkan gambar dan video, untuk mengisi halaman dan membuatnya lebih menarik.
 
-Dan kemudian teruskan! Orang-orang senang mengunjungi wiki ketika ada banyak hal untuk dibaca dan dilihat, sehingga terus menambahkan hal-hal lain, dan Anda akan menarik pembaca dan penyunting. Ada banyak yang harus dilakukan, tapi jangan khawatir - hari ini hari pertama Anda, dan Anda punya banyak waktu. Setiap wiki dimulai dengan cara yang sama - sedikit demi sedikit, dimulai dengan beberapa halaman pertama, sampai tumbuh menjadi situs yang besar dan sibuk. 
+Dan kemudian teruskan! Orang-orang senang mengunjungi wiki ketika ada banyak hal untuk dibaca dan dilihat, sehingga terus menambahkan hal-hal lain, dan Anda akan menarik pembaca dan penyunting. Ada banyak yang harus dilakukan, tapi jangan khawatir - hari ini hari pertama Anda, dan Anda punya banyak waktu. Setiap wiki dimulai dengan cara yang sama - sedikit demi sedikit, dimulai dengan beberapa halaman pertama, sampai tumbuh menjadi situs yang besar dan sibuk.
 
-Jika Anda punya pertanyaan, Anda dapat mengirim kami sur-el melalui [[Special:Contact|formulir]]. Selamat bersenang-senang! 
+Jika Anda punya pertanyaan, Anda dapat mengirim kami sur-el melalui [[Special:Contact|formulir]]. Selamat bersenang-senang!
 
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Wiki baru',
@@ -2273,16 +2273,16 @@ $3
 Wikia Community Team
 
 <http://www.wikia.com/wiki/User:$4>',
-	'autocreatewiki-welcometalk' => "== Velkommen! == 
-<div style=\"font-size:120%; line-height:1.2em;\">Hei \$1 -- vi er glade over å ha '''\$4''' som en del av Wikia Fellesskapet! 
+	'autocreatewiki-welcometalk' => "== Velkommen! ==
+<div style=\"font-size:120%; line-height:1.2em;\">Hei \$1 -- vi er glade over å ha '''\$4''' som en del av Wikia Fellesskapet!
 
 Nå har du en hel nettside å fylle opp med informasjon, bilder og video om yndlingstemaet ditt. Men akkurat nå er det bare tomme sider som stirrer på deg... Skremmende, eller hva? Her er noen måter å komme i gang på.
 
 * '''Introduser temaet ditt''' på forsiden. Dette er din mulighet til å forklare leserne mer om hva temaet handler om. Skriv så mye du vil! Beskrivelsen din kan lenke til alle slags viktige artikler på siden din.
 
-* '''Opprett noen nye sider''' -- bare en setning eller to er flott i begynnelsen. Ikke la de tomme sidene stirre deg i senk! En wiki handler om å legge til og endre ting som det faller seg. Du kan også legge til bilder og video for å fylle siden og gjøre den mer interessant. 
+* '''Opprett noen nye sider''' -- bare en setning eller to er flott i begynnelsen. Ikke la de tomme sidene stirre deg i senk! En wiki handler om å legge til og endre ting som det faller seg. Du kan også legge til bilder og video for å fylle siden og gjøre den mer interessant.
 
-Så er det bare å fortsette! Folk liker å besøke wikier med en masse å lese og se på, så fortsett å legge til ting, og du vil tiltrekke nye lesere og bidragsytere. Det er en masse å gjøre, men slapp av -- i dag er den første dagen, og du har masser av tid. Hver eneste wiki starter på samme måte -- litt om gangen, fra de første få sidene, til en stor og travel side. 
+Så er det bare å fortsette! Folk liker å besøke wikier med en masse å lese og se på, så fortsett å legge til ting, og du vil tiltrekke nye lesere og bidragsytere. Det er en masse å gjøre, men slapp av -- i dag er den første dagen, og du har masser av tid. Hver eneste wiki starter på samme måte -- litt om gangen, fra de første få sidene, til en stor og travel side.
 
 Hvis du har spørsmål, kan du sende oss en e-post gjennom vårt [[Special:Contact|kontaktskjema]]. Ha det gøy!
 
@@ -2290,19 +2290,19 @@ Hvis du har spørsmål, kan du sende oss en e-post gjennom vårt [[Special:Conta
 	'newwikis' => 'Nye wikier',
 	'newwikisstart' => 'Vis wikier fra og med:',
 	'autocreatewiki-reminder-body' => '
-Kjære $1: 
+Kjære $1:
 
-Gratulerer med oppstart av din nye wiki, {{SITENAME}}! Du kan komme tilbake og legge til mer på wikien ved å besøke $2. 
+Gratulerer med oppstart av din nye wiki, {{SITENAME}}! Du kan komme tilbake og legge til mer på wikien ved å besøke $2.
 
-Dette er et helt nytt prosjekt, så vennligst skriv til oss om du har noen spørsmål! 
+Dette er et helt nytt prosjekt, så vennligst skriv til oss om du har noen spørsmål!
 
 
 -- Wikia Community Teamet',
 	'autocreatewiki-reminder-body-HTML' => '
-<p>Kjære $1:</p> 
+<p>Kjære $1:</p>
 
-<p>Gratulerer med oppstart av din nye wiki, {{SITENAME}}! Du kan komme tilbake og legge til mer på wikien ved å besøke 
-<a href="$2">$2</a>.</p> 
+<p>Gratulerer med oppstart av din nye wiki, {{SITENAME}}! Du kan komme tilbake og legge til mer på wikien ved å besøke
+<a href="$2">$2</a>.</p>
 
 <p>Dette er et helt nytt prosjekt, så vennligst skriv til oss om du har spørsmål!</p>
 
@@ -2470,7 +2470,7 @@ Cost-sì a l'é un proget neuv, antlora për piasì ch'a na scriva s'a l'ha qual
 -- L'Echip dla Comunità Wikia",
 	'autocreatewiki-reminder-body-HTML' => '<p>Car $1:</p>
 
-<p>Congratulassion për la partensa ëd soa neuva wiki, {{SITENAME}}! A peul torné andré e gionté ròbe a soa wiki an visitand 
+<p>Congratulassion për la partensa ëd soa neuva wiki, {{SITENAME}}! A peul torné andré e gionté ròbe a soa wiki an visitand
 <a href="$2">$2</a>.</p>
 
 <p>Cost-sì a l\'é un proget neuv, antlora për piasì ch\'a na scriva s\'a l\'ha qualsëssìa chestion!</p>
@@ -3036,7 +3036,7 @@ $messages['sr-ec'] = array(
 -- Тим Викија заједнице',
 	'autocreatewiki-reminder-body-HTML' => '<p>Драги $1:</p>
 
-<p>Честитамо што сте покренули нову викију, {{SITENAME}}!  Можете да се вратите и да још тога додате у вашу викију посећујући 
+<p>Честитамо што сте покренули нову викију, {{SITENAME}}!  Можете да се вратите и да још тога додате у вашу викију посећујући
 <a href="$2">$2</a>.</p>
 
 <p>Ово је нов-новцат пројекат,  па Вас молимо да нам пишете уколико имате неких питања!</p>
