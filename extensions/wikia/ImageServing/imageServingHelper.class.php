@@ -100,9 +100,15 @@ class imageServingHelper{
 	 */
 
 	public static function bulidIndex($articleId, $images, $ignoreEmpty = false) {
+                global $IP;
 		/* 0 and 1 image don't need to be indexed */
 		wfProfileIn(__METHOD__);
 		$db = wfGetDB(DB_MASTER, array());
+
+                if ( !$db->tableExists( "page_wikia_props" ) ) {
+                    $db->sourceFile( "$IP/extensions/wikia/ImageServing/sql/table.sql" );
+                }
+
 		if( (count($images) < 1) ) {
 			if ($ignoreEmpty) {
 				return true;	
