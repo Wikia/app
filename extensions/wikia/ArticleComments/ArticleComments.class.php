@@ -179,6 +179,11 @@ class ArticleCommentInit {
 	public static function userCan( $title, $user, $action, &$result ) {
 		$namespace = $title->getNamespace();
 
+		// we only care if this is a talk namespace
+		if ( MWNamespace::getSubject( $namespace ) == $namespace ) {
+			return true;
+		}
+
 		//for blog comments BlogLockdown is checking rights
 		if ((defined('NS_BLOG_ARTICLE') && $namespace == NS_BLOG_ARTICLE) ||
 			defined('NS_BLOG_ARTICLE_TALK') && $namespace == NS_BLOG_ARTICLE_TALK ) {
@@ -191,34 +196,31 @@ class ArticleCommentInit {
 			return true;
 		}
 
+		$firstRev = $title->getFirstRevision();
+		if ($firstRev && $user->getName() == $firstRev->getUserText()) {
+			return true;
+		}
+
+		// Facebook connection needed
+		if ( ArticleComment::isFbConnectionNeeded() ){
+			return false;
+		}
+
 		switch ($action) {
 			case 'move':
 			case 'move-target':
+				return ( $user->isAllowed( 'commentmove' ) );
+				break;
 			case 'edit':
+				return ( $user->isAllowed( 'commentedit' ) );
+				break;
 			case 'delete':
-				
-				// Facebook connection needed
-				if ( ArticleComment::isFbConnectionNeeded() ){
-					return false;
-				}
-				
-				//allow action if user is the author of 1st revision (sysop could edit an inappropriate comment)
-				$firstRev = $title->getFirstRevision();
-				if ($firstRev && $user->getName() == $firstRev->getUserText()) {
-					return true;
-				}
-
-				//TODO: create new permission and remove checking groups below
-				$groups = $user->getEffectiveGroups();
-				if (in_array('staff', $groups) || in_array('sysop', $groups)) {
-					return true;
-				}
-
-				//fallback - not author nor sysop
-				return false;
+				return ( $user->isAllowed( 'commentdelete' ) );
+				break;
 		}
 		return true;
 	}
+
 }
 
 /**
