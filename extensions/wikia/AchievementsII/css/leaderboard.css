@@ -47,6 +47,7 @@ ul#leaderboard li.list-heading {
 	padding: 0;
 	height: 16px;
 	font-size: 11px;
+	overflow: hidden;
 }
 
 ul#leaderboard #rank-label {
