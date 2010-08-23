@@ -11,6 +11,8 @@ var ArticleComments = {
 		$('#article-comments').delegate('.article-comm-reply', 'click', ArticleComments.reply);
 		$('#article-comments').delegate('.article-comments-li', 'mouseover',  function(){$(this).find('.tools').css('visibility', 'visible');});
 		$('#article-comments').delegate('.article-comments-li', 'mouseout',  function(){$(this).find('.tools').css('visibility', 'hidden');});
+		$('#article-comm-fbMonit').mouseenter( function() {$('#fbCommentMessage').fadeIn( 'slow' )});
+		$('#article-comm-fbMonit').mouseleave( function() {$('#fbCommentMessage').fadeOut( 'slow' )});
 		ArticleComments.addHover();
 		ArticleComments.showEditLink();
 	},
