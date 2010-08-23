@@ -105,6 +105,7 @@ class StaticChute {
 			'../extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
 			//'../extensions/FBConnect/fbsdk_core.js',
 			'../extensions/FBConnect/fbconnect.js',
+			'../extensions/wikia/AdEngine/LazyLoadAds.js',
 		);
 	}
 
@@ -143,6 +144,7 @@ class StaticChute {
 			'../extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
 			//'../extensions/FBConnect/fbsdk_core.js',
 			'../extensions/FBConnect/fbconnect.js',
+			'../extensions/wikia/AdEngine/LazyLoadAds.js',
 		);
 		$this->config['monaco_anon_article_js'] = array_merge($this->config['monaco_anon_article_js'], $widgetsAssets['js']);
 
@@ -177,6 +179,7 @@ class StaticChute {
 			'../extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
 			//'../extensions/FBConnect/fbsdk_core.js',
 			'../extensions/FBConnect/fbconnect.js',
+			'../extensions/wikia/AdEngine/LazyLoadAds.js',
 		);
 		$this->config['monaco_loggedin_js'] = array_merge($this->config['yui'], $this->config['monaco_loggedin_js'], $widgetsAssets['js']);
 
@@ -210,6 +213,7 @@ class StaticChute {
 
 			//'../extensions/FBConnect/fbsdk_core.js',
 			'../extensions/FBConnect/fbconnect.js',
+			'../extensions/wikia/AdEngine/LazyLoadAds.js',
 		);
 		$this->config['monaco_anon_everything_else_js'] = array_merge($this->config['yui'], $this->config['monaco_anon_everything_else_js'], $widgetsAssets['js']);
 
@@ -262,6 +266,7 @@ class StaticChute {
 			'common/mwsuggest.js',
 			//'../extensions/FBConnect/fbsdk_core.js',
 			'../extensions/FBConnect/fbconnect.js',
+			'../extensions/wikia/AdEngine/LazyLoadAds.js',
 		);
 
 		$this->config['corporate_specialpage_js'] = array(
@@ -278,6 +283,7 @@ class StaticChute {
 			'common/mwsuggest.js',
 			//'../extensions/FBConnect/fbsdk_core.js',
 			'../extensions/FBConnect/fbconnect.js',
+			'../extensions/wikia/AdEngine/LazyLoadAds.js',
 		);
 		//CSS
 		$this->config['corporate_page_css'] = array(

@@ -26,7 +26,7 @@ function adEngineAdditionalScripts( &$out, &$sk ){
 
 	global $wgExtensionsPath,$wgStyleVersion;
 
-	$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/AdEngine/LazyLoadAds.js?$wgStyleVersion'></script>\n");
+	//$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/AdEngine/LazyLoadAds.js?$wgStyleVersion'></script>\n");	// moved to StaticChute.php
 	return true;
 } // end adEngineAdditionalScripts()
 
@@ -138,7 +138,8 @@ class AdEngine {
 			global $wgExtensionsPath, $wgEnableAdsLazyLoad, $wgAdslotsLazyLoad;
 			$out .= '<script type="text/javascript" src="' . $wgExtensionsPath . '/wikia/AdEngine/AdEngine.js?' . self::cacheKeyVersion . '"></script>'. "\n";
                         if ($wgEnableAdsLazyLoad && sizeof($wgAdslotsLazyLoad)) {
-                            $out .= '<script type="text/javascript" src="' . $wgExtensionsPath . '/wikia/AdEngine/LazyLoadAds.js?' . self::cacheKeyVersion . '"></script>'. "\n";
+				// LazyLoadAds.js moved to StaticChute.php
+                            //$out .= '<script type="text/javascript" src="' . $wgExtensionsPath . '/wikia/AdEngine/LazyLoadAds.js?' . self::cacheKeyVersion . '"></script>'. "\n";
                         }
 
 			foreach($this->slots as $slotname => $slot) {
