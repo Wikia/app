@@ -512,6 +512,7 @@ img.WikiaPhotoGalleryProgress {
 	background-position: 50% 50%;
 	background-repeat: no-repeat;
 	padding: 0;
+	margin: 1px !important;
 }
 
 #WikiaPhotoGallerySlideshowEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewRecentlyUploaded {
