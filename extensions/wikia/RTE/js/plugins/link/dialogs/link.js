@@ -28,9 +28,6 @@ CKEDITOR.dialog.add( 'link', function( editor )
 			if( radios.getValue() != 'wiki' ){
 				radios.setValue('wiki');
 			}
-			//$(".link-type-note span").html(editor.lang.link.status.notexists);
-			//$(".link-type-note span").html(editor.lang.link.status.exists);
-			//$(".link-type-note img")[0].className = 'link-icon link-yes';
 			checkStatus();
 
 			// setup MW suggest
@@ -141,6 +138,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 				}
 
 				setValues(tab, selectionContent, selectionContent);
+				setTimeout(checkStatus,200);
 
 				RTE.log('link: using selected text "' + selectionContent + '" for new '+tab+' link');
 			}else{
@@ -311,13 +309,17 @@ CKEDITOR.dialog.add( 'link', function( editor )
 			else
 				element = null;
 
+			// remove old page status info
+			$(".link-type-note span").html('...');
+			$(".link-type-note img")[0].className = 'sprite';
+
 			// setup editor fields
 			setupDialog.apply( this, [editor, element] );
 
 			// tracking
 			var self = this;
 			
-			// reset our dirty tracking
+			// reset our dirty value
 			linkTextDirty = false;
 
 			// setup dialog tracking code (close / cancel)
@@ -443,7 +445,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 			}
 
 			$(element.$).setData(data);
-
+			
 			// log updated meta data entry
 			RTE.log('updating link data');
 			RTE.log( [element, $(element.$).getData()] );
