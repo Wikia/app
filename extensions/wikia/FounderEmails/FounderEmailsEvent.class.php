@@ -94,7 +94,7 @@ abstract class FounderEmailsEvent {
 	protected function getLocalizedMsgBody( $sMsgKey, $sLangCode, $params = array() ) {
 		$sBody = null;
 
-		if ( ( $sLangCode != 'en' ) && !empty( $sLangCode ) ) {
+		if ( !empty( $sLangCode ) ) {
 			// custom lang translation
 			$sBody = wfMsgExt( $sMsgKey, array( 'language' => $sLangCode ) );
 		}
