@@ -71,7 +71,7 @@ class SpecialDevCookie extends UnlistedSpecialPage {
 			}
 		}
 		$wgOut->addHTML(
-			"Current value of cookie {$wgCookiePrefix}{$this->mCookieName}: <em>" .
+			"Current value of the dev cookie: <em>" .
 			( is_null($this->mCookie) ? 'not set' : ($this->mCookie ? 'true' : 'false') ) . '</em>'
 		);
 
