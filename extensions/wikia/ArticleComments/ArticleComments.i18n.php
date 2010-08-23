@@ -15,6 +15,8 @@ $messages['en'] = array(
 	'article-comments-undeleted-comment' => 'Undeleted comment for blog page $1',
 	'article-comments-rc-comment' => 'Article comment ([[$1]])',
 	'article-comments-rc-comments' => 'Article comments ([[$1]])',
+	'article-comments-fblogin' => 'Please <a href="$1">log in and connect with Facebook</a> to post a comment on this wiki!',
+	'article-comments-fbconnect' => 'Please <a href="$1">connect this account with Facebook</a> to comment!',
 	'article-comments-rc-blog-comment' => 'Blog comment ([[$1]])',
 	'article-comments-rc-blog-comments' => 'Blog comments ([[$1]])',
 	'article-comments-login' => 'Please <a href="$1">log in</a> to post a comment on this wiki.',

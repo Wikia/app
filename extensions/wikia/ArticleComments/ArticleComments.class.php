@@ -104,7 +104,7 @@ class ArticleCommentInit {
 	}
 
 	static public function ArticleCommentAddJS(&$out, &$sk) {
-		global $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
+		global $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgEnableWikiaCommentsExt;
 		wfProfileIn( __METHOD__ );
 
 		if (self::ArticleCommentCheck()) {
@@ -196,6 +196,12 @@ class ArticleCommentInit {
 			case 'move-target':
 			case 'edit':
 			case 'delete':
+				
+				// Facebook connection needed
+				if ( ArticleComment::isFbConnectionNeeded() ){
+					return false;
+				}
+				
 				//allow action if user is the author of 1st revision (sysop could edit an inappropriate comment)
 				$firstRev = $title->getFirstRevision();
 				if ($firstRev && $user->getName() == $firstRev->getUserText()) {
@@ -268,6 +274,34 @@ class ArticleComment {
 
 		$comment = new ArticleComment( $title );
 		return $comment;
+	}
+	
+	/**
+	 * isFbConnectionNeeded -- checkes is everything OK with Facebook connection
+	 *
+	 * @access private
+	 *
+	 * @return boolean
+	 */
+	static public function isFbConnectionNeeded() {
+		global $wgRequireFBConnectionToComment, $wgEnableFacebookConnectExt, $wgUser;
+
+		if ( ! empty ( $wgRequireFBConnectionToComment ) && 
+		     ! empty ( $wgEnableFacebookConnectExt ) )
+		{
+			$fb = new FBConnectAPI();
+			$tmpArrFaceBookId = FBConnectDB::getFacebookIDs($wgUser);
+			$isFBConnectionProblem = (
+				( $fb->user() == 0 ) ||					// fb id or 0 if none is found.
+				!isset( $tmpArrFaceBookId[0] ) ||
+				( (int)$fb->user() != (int)$tmpArrFaceBookId[0] )	// current fb id different from fb id of currenty logged user.
+			);
+			return $isFBConnectionProblem;
+		} else {
+			return false;
+		}
+
+		
 	}
 
 	/**
@@ -415,18 +449,18 @@ class ArticleComment {
 
 			$buttons = array();
 			$replyButton = '';
-			if ( count($parts['partsStripped']) == 1 ) {
+			if ( ( count( $parts['partsStripped'] ) == 1 ) && !ArticleComment::isFbConnectionNeeded() ) {
 				$replyButton = '<a href="#" class="article-comm-reply wikia-button secondary">' . wfMsg('article-comments-reply') . '</a>';
 			}
 
-			if ( $canDelete ) {
+			if ( $canDelete && !ArticleComment::isFbConnectionNeeded() ) {
 				$img = '<img class="delete sprite" alt="" src="'. $wgBlankImgUrl .'" width="16" height="16" />';
 				$buttons[] = $img . '<a href="' . $this->mTitle->getLocalUrl('redirect=no&action=delete') . '" class="article-comm-delete">' . wfMsg('article-comments-delete') . '</a>';
 			}
 
 			//due to slave lag canEdit() can return false negative - we are hiding it by CSS and force showing by JS
-			if ( $wgUser->isLoggedIn() ) {
-				$display = $this->canEdit() ? '' : ' style="display:none"';
+			if ( $wgUser->isLoggedIn() && !ArticleComment::isFbConnectionNeeded() ) {
+				$display = ( $this->canEdit() ) ? '' : ' style="display:none"';
 				$img = '<img class="edit sprite" alt="" src="' . $wgBlankImgUrl . '" width="16" height="16" />';
 				$buttons[] = "<span class='edit-link'$display>" . $img . '<a href="#comment' . $articleId . '" class="article-comm-edit" id="comment' . $articleId . '">' . wfMsg('article-comments-edit') . '</a></span>';
 			}
@@ -564,15 +598,15 @@ class ArticleComment {
 
 		$text = '';
 		$this->load(true);
-		if ( $this->canEdit() ) {
+		if ( $this->canEdit() && !ArticleComment::isFbConnectionNeeded()) {
 			$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 			$template->set_vars(
 				array(
-					'comment' => $this->mLastRevision->getText(),
-					'isReadOnly' => wfReadOnly(),
-					'canEdit' => $this->canEdit(),
-					'title' => $this->mTitle,
-					'stylePath' => $wgStylePath
+					'comment'		=> $this->mLastRevision->getText(),
+					'isReadOnly'		=> wfReadOnly(),
+					'canEdit'		=> $this->canEdit(),
+					'title'			=> $this->mTitle,
+					'stylePath'		=> $wgStylePath
 				)
 			);
 			wfLoadExtensionMessages('ArticleComments');
@@ -597,7 +631,7 @@ class ArticleComment {
 
 		$res = array();
 		$this->load(true);
-		if ( $this->canEdit() ) {
+		if ( $this->canEdit() && !ArticleComment::isFbConnectionNeeded() ) {
 
 			if ( wfReadOnly() ) {
 				wfProfileOut( __METHOD__ );
@@ -1285,17 +1319,19 @@ class ArticleCommentList {
 
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 		$template->set_vars( array(
-			'title'     => $wgTitle,
-			'avatar'    => $avatar,
-			'canEdit'   => $canEdit,
-			'isBlocked' => $isBlocked,
-			'reason'	=> $isBlocked ? $this->blockedPage() : '',
-			'commentListText' => $commentListText,
-			'isReadOnly' => $isReadOnly,
-			'pagination' => $pagination,
-			'countComments' => $countComments,
-			'countCommentsNested' => $countCommentsNested,
-			'stylePath' => $wgStylePath
+			'title'			=> $wgTitle,
+			'avatar'		=> $avatar,
+			'canEdit'		=> $canEdit,
+			'isBlocked'		=> $isBlocked,
+			'reason'		=> $isBlocked ? $this->blockedPage() : '',
+			'commentListText'	=> $commentListText,
+			'isReadOnly'		=> $isReadOnly,
+			'pagination'		=> $pagination,
+			'countComments'		=> $countComments,
+			'countCommentsNested'	=> $countCommentsNested,
+			'stylePath'		=> $wgStylePath,
+			'isFBConnectionProblem'	=> ArticleComment::isFbConnectionNeeded(),
+			'isAnon'		=> $wgUser->isAnon()
 		) );
 
 		$text = $template->execute( 'comment-main' );
@@ -1786,7 +1822,7 @@ class ArticleCommentList {
 				$messageKey = 'article-comments-rc-blog-comment';
 			} else {
 				$messageKey = 'article-comments-rc-comment';
-			}
+		}
 
 			$articlelink = wfMsgExt($messageKey, array('parseinline'), str_replace('_', ' ', $title->getPrefixedText()));
 		}

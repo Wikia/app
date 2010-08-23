@@ -152,3 +152,24 @@ a.article-comm-reply {
 #article-comments-wrapper .buttons {
 	line-height: 18px;
 }
+
+div#article-comm-fbMonit {
+	height:100px;
+	margin: 0px 0px 5px 185px;
+	width:450px;
+	padding:6px;
+	background-color: white;
+	border: 1px solid #999;
+}
+
+#fbCommentMessage {
+	background-color: #EEEEEE;
+	height: 100px;
+	text-align:center;
+	width:450px;
+	display:none;
+}
+
+#fbCommentText{
+	padding-top:38px;
+}

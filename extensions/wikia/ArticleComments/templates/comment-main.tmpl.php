@@ -15,7 +15,7 @@
 	?>
 	<div id="article-comments" class="clearfix">
 	<?php
-	if ( $canEdit && !$isBlocked ) {
+	if ( $canEdit && !$isBlocked && !$isFBConnectionProblem ) {
 	?>
 		<div class="article-comm-input reset clearfix">
 			<div id="article-comm-info">&nbsp;</div>
@@ -48,7 +48,39 @@
 				<p><?= $reason ?></p>
 			</div>
 		</div>
-	<?php } else { ?>
+	<?php 
+	} elseif( $isFBConnectionProblem ) { ?>
+
+	<div id="blog-comm-bottom-info">&nbsp;</div>
+	<input type="hidden" name="wpArticleId" value="<?= $title->getArticleId() ?>" />
+		<!-- avatar -->
+
+
+		<div class="article-comm-input reset clearfix">
+			<div id="article-comm-info">&nbsp;</div>
+				<input type="hidden" name="wpArticleId" value="<?= $title->getArticleId() ?>" />
+				<!-- avatar -->
+				<div class="article-comm-input-avatar">
+				<?php
+					echo $avatar->getImageTag( 50, 50 );
+				?>
+				</div>
+				<!-- textarea -->
+				<div name="wpArticleComment" id="article-comm-fbMonit">
+					<div>
+						<div id="fbCommentMessage"  >
+							<div id="fbCommentText"><?php if( $isAnon ) {
+									echo wfMsg('article-comments-fblogin', SpecialPage::getTitleFor('UserLogin')->getLocalUrl() );
+								} else {
+									echo wfMsg('article-comments-fbconnect', SpecialPage::getTitleFor('Connect', 'Convert')->getLocalUrl() );
+								} ?></div>
+						</div>
+						<img src="<?= $stylePath ?>/common/images/ajax.gif" class="throbber" />
+					</div>
+				</div>
+		</div>
+	<?php
+	} else { ?>
 		<div id="article-comments-login">
 			<?= wfMsg('article-comments-login', SpecialPage::getTitleFor('UserLogin')->getLocalUrl() ); ?>
 		</div>
