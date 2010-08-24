@@ -18,7 +18,7 @@ if($results['page'] < $results['pages']) {
 }
 ?>
 </div>
-<?= wfMsg('vet-metacafe', $results['total']) ?>
+<?= wfMsgExt('vet-metacafe', 'parsemag', $results['total']) ?>
 </div>
 
 <table cellspacing="0" id="VideoEmbedFindTable">
