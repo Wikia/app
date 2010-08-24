@@ -53,7 +53,7 @@ class WikiaStatsAutoHubsConsumer {
 					if ( $oRow->rev_timestamp > $this->mDate ) {
 						$this->mDate = $oRow->rev_timestamp;
 					}
-					$result[$oRow->wiki_id] = $oRow;
+					$result[$oRow->wiki_id][] = $oRow;
 					$loop++;
 				}
 				$dbr->freeResult( $oRes );			
@@ -63,68 +63,71 @@ class WikiaStatsAutoHubsConsumer {
 				if ( !empty($result) ) {
 					$producerDB = new WikiaStatsAutoHubsConsumerDB();
 					
-					foreach ( $result as $city_id => $oRow ) {
+					foreach ( $result as $city_id => $rows) {
 						$start = time();
-						if( is_object( $oRow ) ) {
-							Wikia::log( __METHOD__, 'events', 'Wikia ' . $city_id . ' processing' );
-							# wikia
-							$oWikia = WikiFactory::getWikiByID($city_id);
-							if ( !is_object($oWikia) ) {
-								continue;
-							}
-							# server
-							$server = WikiFactory::getVarValueByName( "wgServer", $city_id );
-							# language
-							$lang = $oWikia->city_lang;
-							# sitename
-							$sitename = $oWikia->city_title;
-							
-							# global title 
-							$oGTitle = GlobalTitle::newFromId( $oRow->page_id, $city_id );
-							if ( !is_object($oGTitle) ) {
-								continue;
-							}
-							
-							# tags
-							$oWFTags = new WikiFactoryTags($city_id);
-							$tags = $oWFTags->getAllTags();			
-							if( NS_BLOG_ARTICLE == $oRow->page_ns ) {
-								foreach( $tags as $id => $val ) {
-									$producerDB->insertBlogComment( 
-										$city_id, 
-										$oRow->page_id, 
-										$id, 
-										$oGTitle->mUrlform, 
-										$oGTitle->getFullURL(), 
-										$sitename, 
-										$server, 
-										$lang 
-									);
-								}
-							} else {
-								$oUser = User::newFromId( $oRow->user_id );
-								if ( !is_object($oUser) ) {
+						Wikia::log( __METHOD__, 'events', 'Wikia ' . $city_id . ' processing: ' . count($rows) . ' rows' );
+						
+						foreach ( $rows as $oRow ) {
+							if ( is_object( $oRow ) ) {
+								# wikia
+								$oWikia = WikiFactory::getWikiByID($city_id);
+								if ( !is_object($oWikia) ) {
 									continue;
 								}
-								$groups = $oUser->getGroups();	
-								$user_groups = implode(";", $groups);		
-			
-								foreach( $tags as $id => $val ) {
-									$producerDB->insertArticleEdit( 
-										$city_id, 
-										$oRow->pageId, 
-										$oRow->user_id, 
-										$id, 
-										$oGTitle->mUrlform, 
-										$oGTitle->getFullURL(), 
-										$sitename,
-										$server, 
-										$user_groups, 
-										$oUser->getName(), 
-										$lang
-									);
+								# server
+								$server = WikiFactory::getVarValueByName( "wgServer", $city_id );
+								# language
+								$lang = $oWikia->city_lang;
+								# sitename
+								$sitename = $oWikia->city_title;
+								
+								# global title 
+								$oGTitle = GlobalTitle::newFromId( $oRow->page_id, $city_id );
+								if ( !is_object($oGTitle) ) {
+									continue;
 								}
-							}	
+								
+								# tags
+								$oWFTags = new WikiFactoryTags($city_id);
+								$tags = $oWFTags->getAllTags();			
+								if( NS_BLOG_ARTICLE == $oRow->page_ns ) {
+									foreach( $tags as $id => $val ) {
+										$producerDB->insertBlogComment( 
+											$city_id, 
+											$oRow->page_id, 
+											$id, 
+											$oGTitle->mUrlform, 
+											$oGTitle->getFullURL(), 
+											$sitename, 
+											$server, 
+											$lang 
+										);
+									}
+								} else {
+									$oUser = User::newFromId( $oRow->user_id );
+									if ( !is_object($oUser) ) {
+										continue;
+									}
+									$groups = $oUser->getGroups();	
+									$user_groups = implode(";", $groups);		
+				
+									foreach( $tags as $id => $val ) {
+										$producerDB->insertArticleEdit( 
+											$city_id, 
+											$oRow->pageId, 
+											$oRow->user_id, 
+											$id, 
+											$oGTitle->mUrlform, 
+											$oGTitle->getFullURL(), 
+											$sitename,
+											$server, 
+											$user_groups, 
+											$oUser->getName(), 
+											$lang
+										);
+									}
+								}
+							}
 						}
 						$end = time();
 						$time = Wikia::time_duration($end - $start);
