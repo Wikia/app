@@ -165,6 +165,34 @@ class ActivityFeedHelper {
 		wfProfileOut(__METHOD__);
 		return $feedHTML;
 	}
+	
+	static function purgeCommunityWidgetInVarnish($title) {
+		global $wgScript, $wgContentNamespaces, $wgContLang, $wgMemc;
+		if (in_array($title->getNamespace(), $wgContentNamespaces)) {
+			$lang = $wgContLang->getCode();
+			$key = wfMemcKey('community_widget_v1', $lang);
+			$wgMemc->delete($key);
+			SquidUpdate::purge(array($wgScript . "?action=ajax&rs=CommunityWidgetAjax&uselang=$lang"));
+		}
+		return true;
+	}
+	
+	static function onArticleSaveComplete(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
+		self::purgeCommunityWidgetInVarnish($article->mTitle);
+		return true;
+	}
+	
+	static function onArticleDeleteComplete(&$article, &$user, $reason, $id) {
+		self::purgeCommunityWidgetInVarnish($article->mTitle);
+		return true;
+	}
+	
+	static function onTitleMoveComplete(&$title, &$newtitle, &$user, $oldid, $newid) {
+//		var_dump("onTitleMoveComplete",$title,$newtitle,$oldid,$newid);
+		self::purgeCommunityWidgetInVarnish($newtitle);
+		return true;
+	}	
+
 }
 
 $wgAjaxExportList[] = 'ActivityFeedAjax';
@@ -232,17 +260,6 @@ function CommunityWidgetAjax() {
 	return $response;
 }
 
-$wgHooks['ArticleSaveComplete'][] = 'CommunityWidgetPurgeVarnish';
-/**
- * @author Maciej Błaszkowski <marooned at wikia-inc.com>
- */
-function CommunityWidgetPurgeVarnish(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
-	global $wgScript, $wgContentNamespaces, $wgContLang, $wgMemc;
-	if (in_array($article->mTitle->getNamespace(), $wgContentNamespaces)) {
-		$lang = $wgContLang->getCode();
-		$key = wfMemcKey('community_widget_v1', $lang);
-		$wgMemc->delete($key);
-		SquidUpdate::purge(array($wgScript . "?action=ajax&rs=CommunityWidgetAjax&uselang=$lang"));
-	}
-	return true;
-}
+$wgHooks['ArticleSaveComplete'][] = 'ActivityFeedHelper::onArticleSaveComplete';
+$wgHooks['ArticleDeleteComplete'][] = 'ActivityFeedHelper::onArticleDeleteComplete';
+$wgHooks['TitleMoveComplete'][] = 'ActivityFeedHelper::onTitleMoveComplete';
