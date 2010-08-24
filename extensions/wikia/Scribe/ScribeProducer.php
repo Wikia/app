@@ -9,6 +9,7 @@
  */
 
 $wgHooks['ArticleSaveComplete'][] = "ScribeProducer::saveComplete";
+$wgHooks['NewRevisionFromEditComplete'][] = "ScribeProducer::saveRevisionComplete";
 $wgHooks['ArticleDeleteComplete'][] = "ScribeProducer::deleteComplete";
 #$wgHooks['ArticleRevisionUndeleted'][] = "ScribeProducer::revisionUndeleted";
 $wgHooks['ArticleUndelete'][] = "ScribeProducer::articleUndelete";
@@ -114,6 +115,49 @@ class ScribeProducer {
 			if ( $revid > 0 && $pageId > 0 ) { 
 				$key = ( isset($status->value['new']) && $status->value['new'] == 1 ) ? 'create' : 'edit';
 				$oScribeProducer = new ScribeProducer( $key, $pageId, $revid, 0, (!empty($undef1)) ? 1 : 0 );
+				if ( is_object( $oScribeProducer ) ) {
+					$oScribeProducer->send_log();
+				}
+			} else {
+				Wikia::log( __METHOD__, "error", "Cannot send log via scribe ($wgCityId): revision not found for page: $pageId" );				
+			}
+		} else {
+			$isArticle = is_object($oArticle);
+			$isUser = is_object($oUser);
+			Wikia::log( __METHOD__, "error", "Cannot send log via scribe ($wgCityId): invalid user: $isUser, invalid article: $isArticle" );
+		}
+		
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
+	/**
+	 * saveRevisionComplete -- hook 
+	 *
+	 * @static
+	 * @access public
+	 *
+	 * @param Article $Article,
+	 * @param Revision $oRevision, 
+	 * @param Integer $latestRevId
+	 * @param User $oUser
+	 *
+	 * @author Piotr Molski (MoLi)
+	 * @return true
+	 */
+	static public function saveRevisionComplete( $oArticle, $oRevision, $latestRevId, $oUser ) {
+		global $wgCityId;
+		wfProfileIn( __METHOD__ );
+		
+		if ( ( is_object($oArticle) ) && ( $oUser instanceof User ) ) {
+			$revid = ( $oRevision instanceof Revision ) ? $oRevision->getId() : 0;
+			if ( empty($revid) && !empty($latestRevId) ) {
+				$revid = $latestRevId;
+			}
+			$pageId = ( is_object($oArticle) ) ? $oArticle->getID() : 0;
+			if ( $revid > 0 && $pageId > 0 ) { 
+				$key = 'edit';
+				$oScribeProducer = new ScribeProducer( $key, $pageId, $revid, 0, 0 );
 				if ( is_object( $oScribeProducer ) ) {
 					$oScribeProducer->send_log();
 				}
