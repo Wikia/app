@@ -133,11 +133,11 @@ class WikiaStatsAutoHubsConsumer {
 						$end = time();
 						$time = Wikia::timeDuration($end - $start);
 						Wikia::log( __METHOD__, 'events', 'Wikia ' . $city_id . ' processed in: ' . $time );
-					}			
+					}
 				} else {
 					Wikia::log ( __METHOD__, "No data found in events table. Last timestamp: " . $this->mDate );
-					sleep(self::sleepTime);
 				}
+				sleep(self::sleepTime);				
 			}	
 		} catch( MWException $e ) {
 			$mesg = $e->getMessage();
