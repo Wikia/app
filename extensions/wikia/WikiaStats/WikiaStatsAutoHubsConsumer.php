@@ -137,6 +137,7 @@ class WikiaStatsAutoHubsConsumer {
 				} else {
 					Wikia::log ( __METHOD__, "No data found in events table. Last timestamp: " . $this->mDate );
 				}
+				Wikia::log ( __METHOD__, "Wait " . self::sleepTime . " sec. " );
 				sleep(self::sleepTime);				
 			}	
 		} catch( MWException $e ) {
