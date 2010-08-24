@@ -12,90 +12,134 @@
  * class that transfers data from Stomp queue into database
  */
 class WikiaStatsAutoHubsConsumer {
-        /**
-         * constructor
-         */
-        function __construct( ) {
-        }
+	const defaultTS = 3600;
+	var $mDate = null;
+	/**
+	 * constructor
+	 */
+	function __construct( $date = null) {
+		if ( is_null($date) ) {
+			$date = date('Y-m-d H:i:s', time() - self::defaultTS) ;
+		}
+		$this->mDate = $date;
+	}
 
 	/**
-	 * connect to Stomp, subscribe to queue, read frames, fire up functions
+	 * connect to statsdb and processing events table
 	 */
-	public function receiveFromStomp() {
-		global $wgStompServer, $wgStompUser, $wgStompPassword, $wgCityId;
+	public function receiveFromEvents() {
+		global $wgStatsDB, $wgCityId;
 		wfProfileIn( __METHOD__ );
 		
-		error_reporting( E_ERROR | E_WARNING | E_PARSE | E_NOTICE );
-		set_error_handler( "WikiaStatsAutoHubsConsumer::ErrorHandler" );
-		
-		try {
-			$stomp = new Stomp( $wgStompServer );
-			$stomp->connect( $wgStompUser, $wgStompPassword );
-			$stomp->setReadTimeout(120);		
-
-			$stomp->subscribe('wikia.article.#', array(
-					'exchange' => 'amq.topic',
-					'ack' => 'client',
-					'activemq.prefetchSize'	=> 1,
-					'routing_key' => "wikia.article.#"
-				)
-			);
-			Wikia::log( __METHOD__, 'Stomp_queue', 'Subscribed to queue successfully' );				
-	
+		try {	
 			while( 1 ) {
-				$frame = $stomp->readFrame();
-				Wikia::log( __METHOD__, 'Stomp_frame', 'Frame was read successfully' );
+				$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+				$where = array(
+					" rev_timestamp >= '" . $this->mDate . "' ",
+					" (event_type = 2 or event_type = 1 ) "
+				);
+				if ( !empty($wgStatsIgnoreWikis) ) {
+					$where[] = 'wiki_id not in ('.$dbr->makeList( $wgStatsIgnoreWikis ).')';
+				}
+				
+				$oRes = $dbr->select(
+					array( 'events' ),
+					array( 'wiki_id, page_id, page_ns, user_id, rev_timestamp' ),
+					$where,
+					__METHOD__
+				);
+				$result = array(); $loop = 0;
+				while ( $oRow = $dbr->fetchObject( $res ) ) {
+					if ( $oRow->rev_timestamp > $this->mDate ) {
+						$this->mDate = $oRow->rev_timestamp;
+					}
+					$result[$oRow->wiki_id] = $oRow;
+					$loop++;
+				}
+				$dbr->freeResult( $oRes );			
+
+				Wikia::log( __METHOD__, 'events', 'Read ' . $loop . ' events (for ' . count($result). ' Wikis) successfully. Next timestamp: ' . $this->mDate );				
 		
-				if ( is_object($frame) ) {
-					// check which frame we had, and act accordingly		
-					if (empty($frame->headers['destination'])) {
-						continue;
-					}
-					$dest = explode( '.', $frame->headers['destination'] );
-					
-					if ( (count($dest) < 2) || ($dest[0] != 'wikia') || ($dest[1] != 'article') ) {
-						Wikia::log( __METHOD__, 'Stomp_frame', 'Wrong destination' );
-						continue;
-					}
-					
+				if ( !empty($result) ) {
 					$producerDB = new WikiaStatsAutoHubsConsumerDB();
-					$body = Wikia::json_decode( $frame->body );					
-					if( is_object( $body ) ) {
-						Wikia::log( __METHOD__, 'Stomp_frame', 'Initiated frame processing' );				
-						switch( $dest[2] ) {
-							case 'edit':
-								// blog or normal edit?							
-								$tags = unserialize( $body->cityTag  );
-								if( NS_BLOG_ARTICLE == $body->pageNs ) {
-									foreach( $tags as $id => $val ) {
-										$producerDB->insertBlogComment( $body->cityId, $body->pageId, $id, $body->pageName, $body->pageURL, $body->wikiname, $body->wikiURL, $body->cityLang );						
-									}
-								} else {
-									foreach( $tags as $id => $val ) {
-										$producerDB->insertArticleEdit(  $body->cityId, $body->pageId, $body->editorId, $id, $body->pageName, $body->pageURL, $body->wikiname, $body->wikiURL, $body->userGroups, $body->username, $body->cityLang );
-									}
-								}	
-								break;
-							case 'delete':
-							case 'undelete':
-								// needs a function for ProducerDB class, leaving for now until more feedback
-								break;
-							default:
-								break;
-						}				
-					}
-					$stomp->ack( $frame->headers['message-id'] );
-					Wikia::log( __METHOD__, 'Stomp_frame', 'Acknowledgement was sent' );				
-				}	
+					
+					foreach ( $result as $city_id => $oRow ) {
+						$start = time();
+						if( is_object( $oRow ) ) {
+							Wikia::log( __METHOD__, 'events', 'Wikia ' . $city_id . ' processing' );
+							# wikia
+							$oWikia = WikiFactory::getWikiByID($city_id);
+							if ( !is_object($oWikia) ) {
+								continue;
+							}
+							# server
+							$server = WikiFactory::getVarValueByName( "wgServer", $city_id );
+							# language
+							$lang = $oWikia->city_lang;
+							# sitename
+							$sitename = $oWikia->city_title;
+							
+							# global title 
+							$oGTitle = GlobalTitle::newFromId( $oRow->page_id, $city_id );
+							if ( !is_object($oGTitle) ) {
+								continue;
+							}
+							
+							# tags
+							$oWFTags = new WikiFactoryTags($city_id);
+							$tags = $oWFTags->getAllTags();			
+							if( NS_BLOG_ARTICLE == $oRow->page_ns ) {
+								foreach( $tags as $id => $val ) {
+									$producerDB->insertBlogComment( 
+										$city_id, 
+										$oRow->page_id, 
+										$id, 
+										$oGTitle->mUrlform, 
+										$oGTitle->getFullURL(), 
+										$sitename, 
+										$server, 
+										$lang 
+									);
+								}
+							} else {
+								$oUser = User::newFromId( $oRow->user_id );
+								if ( !is_object($oUser) ) {
+									continue;
+								}
+								$groups = $oUser->getGroups();	
+								$user_groups = implode(";", $groups);		
+			
+								foreach( $tags as $id => $val ) {
+									$producerDB->insertArticleEdit( 
+										$city_id, 
+										$oRow->pageId, 
+										$oRow->user_id, 
+										$id, 
+										$oGTitle->mUrlform, 
+										$oGTitle->getFullURL(), 
+										$sitename,
+										$server, 
+										$user_groups, 
+										$oUser->getName(), 
+										$lang
+									);
+								}
+							}	
+						}
+						$end = time();
+						$time = Wikia::time_duration($end - $start);
+						Wikia::log( __METHOD__, 'events', 'Wikia ' . $city_id . ' processed in: ' . $time );
+					}			
+				} else {
+					throw new MWException( __CLASS__ . ": No data found in events table. Last timestamp: " . $this->mDate );					
+				}
 			}	
-		} catch( Exception $e ) {
+		} catch( MWException $e ) {
 			$mesg = $e->getMessage();
 			$class = get_class( $e ); 			
-			Wikia::log( __METHOD__, 'stomp_exception', $mesg );
-			die( 'Stomp connection failed. Data logged. Message was: ' . $mesg . '. Class was:' . $class );
+			Wikia::log( __METHOD__, 'events', $mesg );
+			die( 'Cannot proceed events data. Message was: ' . $mesg . '. Class was:' . $class );
 		}
-
-		unset($stomp);	
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -109,11 +153,12 @@ class WikiaStatsAutoHubsConsumer {
 
 		if ($errno  == E_STRICT){	
 			return true;	
-		}	
-	        $log = "php error: [$errno] $errstr; file: $errfile ; line: $errline \n";
+		}
+
+		$log = "php error: [$errno] $errstr; file: $errfile ; line: $errline \n";
 		Wikia::log( __METHOD__, 'php error', $log );
-	       	die( $log );
+		die( $log );
 		sleep(3);
-	       	return true; 
-    	}
+		return true; 
+	}
 }

@@ -12,4 +12,4 @@ require_once( $GLOBALS["IP"]."/extensions/wikia/WikiaStats/WikiaStatsAutoHubsCon
 
 
 $Maintenance = new WikiaStatsAutoHubsConsumer();
-$Maintenance->receiveFromStomp();
+$Maintenance->receiveFromEvents();
