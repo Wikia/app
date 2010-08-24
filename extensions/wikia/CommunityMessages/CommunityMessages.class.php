@@ -17,6 +17,12 @@
  */
 
 class CommunityMessages {
+	/**
+	 * hook handler
+	 * check conditions and display message
+	 *
+	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+	 */
 	static function onSkinTemplatePageBeforeUserMsg(&$msg) {
 		global $wgUser, $wgMemc, $wgCityId, $wgCookiePrefix;
 
