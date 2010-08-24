@@ -1,5 +1,5 @@
 <!-- s:<?= __FILE__ ?> -->
-<?php global $wgLang; ?>
+<?php global $wgLang, $wgTitle; ?>
 <div id="article-comments-wrapper">
 	<h2 class="neutral" id="article-comment-header">
 		<span class="dark_text_1" id="article-comments-counter"><?= wfMsg('article-comments-comments', $wgLang->formatNum($countCommentsNested)) ?></span>
@@ -82,7 +82,7 @@
 	<?php
 	} else { ?>
 		<div id="article-comments-login">
-			<?= wfMsg('article-comments-login', SpecialPage::getTitleFor('UserLogin')->getLocalUrl() ); ?>
+			<?= wfMsg('article-comments-login', SpecialPage::getTitleFor('UserLogin')->getLocalUrl('returnto=' . $wgTitle->getPrefixedUrl())); ?>
 		</div>
 	<?php
 		}

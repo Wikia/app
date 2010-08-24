@@ -115,7 +115,7 @@ class ArticleCommentsAjax {
 	 * @return String -- html -> textarea
 	 */
 	static public function axReply() {
-		global $wgRequest, $wgStylePath, $wgUser;
+		global $wgRequest, $wgStylePath, $wgUser, $wgTitle;
 
 		$commentId = $wgRequest->getVal( 'id', false );
 		$result = array('id' => $commentId);
@@ -126,7 +126,7 @@ class ArticleCommentsAjax {
 		} elseif (!$wgUser->isAllowed('edit')) {
 			wfLoadExtensionMessages('ArticleComments');
 			$result['error'] = 2;
-			$result['msg'] = wfMsg('article-comments-login', SpecialPage::getTitleFor('UserLogin')->getLocalUrl());
+			$result['msg'] = wfMsg('article-comments-login', SpecialPage::getTitleFor('UserLogin')->getLocalUrl('returnto=' . $wgTitle->getPrefixedUrl()));
 		} else {
 			$articleId = $wgRequest->getVal( 'article', false );
 
