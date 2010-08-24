@@ -50,7 +50,7 @@ class WikiaStatsAutoHubsConsumer {
 					__METHOD__
 				);
 				$result = array(); $loop = 0;
-				while ( $oRow = $dbr->fetchObject( $res ) ) {
+				while ( $oRow = $dbr->fetchObject( $oRes ) ) {
 					if ( $oRow->rev_timestamp > $this->mDate ) {
 						$this->mDate = $oRow->rev_timestamp;
 					}
