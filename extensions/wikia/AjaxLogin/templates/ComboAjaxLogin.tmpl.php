@@ -20,7 +20,11 @@ global $wgAuth, $wgUser, $wgEnableEmail,$wgStylePath,$wgBlankImgUrl;
 	<div class="wikia-tabs" id="AjaxLoginButtons">
 		<ul>
 			<li class="accent <?php echo ($showLogin ? 'selected':''); ?> " id="wpGoLogin" onclick="AjaxLogin.showLogin(this); return false;"><a href="<? echo $loginaction ?>" ><?php print wfMsg("login") ?></a></li>
-			<li class="accent <?php echo ($showRegister ? 'selected':''); ?> " style="<?php echo ($isReadOnly ? '':'style="display:none"'); ?>"  id="wpGoRegister" onclick="AjaxLogin.showRegister(this); return false;"><a href="<? echo $signupaction ?>"><?php print wfMsg("nologinlink") ?></a></li>
+			<?php
+				if($wgUser->isAllowed('createaccount')){
+					?><li class="accent <?php echo ($showRegister ? 'selected':''); ?> " style="<?php echo ($isReadOnly ? '':'style="display:none"'); ?>"  id="wpGoRegister" onclick="AjaxLogin.showRegister(this); return false;"><a href="<? echo $signupaction ?>"><?php print wfMsg("nologinlink") ?></a></li><?php
+				}
+			?>
 		</ul>
 	</div>
     <?php }
@@ -29,7 +33,11 @@ global $wgAuth, $wgUser, $wgEnableEmail,$wgStylePath,$wgBlankImgUrl;
     <div id="AjaxLoginLoginForm" <?php echo ($showLogin ? '':'style="display:none"'); ?> title="<?php print wfMsg('login') ?>">
 		<?php echo $ajaxLoginComponent; ?>
     </div>
-    <div id="AjaxLoginRegisterForm" <?php echo ($showRegister ? '':'style="display:none"'); ?> title="<?php print wfMsg('login') ?>">
-        <?php if (!$isReadOnly){ echo $registerAjax; } ?>
-    </div>
+	<?php
+		if($wgUser->isAllowed('createaccount')){
+			?><div id="AjaxLoginRegisterForm" <?php echo ($showRegister ? '':'style="display:none"'); ?> title="<?php print wfMsg('login') ?>">
+				<?php if (!$isReadOnly){ echo $registerAjax; } ?>
+			</div><?php
+		}
+	?>
 </div>
