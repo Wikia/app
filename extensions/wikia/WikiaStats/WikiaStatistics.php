@@ -430,7 +430,7 @@ class WikiaHubStats {
 			if ( empty($data) ) {
 				$dbr = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
 				$oRes = $dbr->select(
-					array( 'city_page_views' ),
+					array( 'page_views' ),
 					array( 'pv_city_id, sum(pv_views) as views' ),
 					array(
 						sprintf( ' pv_use_date >= last_day(now() - interval %d day) ', self::PV_MONTHS * 30 ),
@@ -515,7 +515,7 @@ class WikiaGlobalStats {
 	private static $defaultLimit 			= 200;
 
 	public static function getEditedArticles( $days = 7, $limit = 5, $onlyContent = true, $from_db = false ) {
-    	global $wgExternalDatawareDB, $wgMemc;
+    	global $wgStatsDB, $wgMemc;
 		wfProfileIn( __METHOD__ );
     	
 		$date_diff = date('Y-m-d', time() - $days * 60 * 60 * 24);
@@ -523,20 +523,20 @@ class WikiaGlobalStats {
 		$result = ( $from_db === true ) ? "" : $wgMemc->get( $memkey );
 		if ( empty($result) ) {
 			$data = array();
-			$dbr = wfGetDB( DB_SLAVE, 'blobs', $wgExternalDatawareDB );
+			$dbr = wfGetDB( DB_SLAVE, 'blobs', $wgStatsDB );
 			
-			$conditions = array("pe_date >= '$date_diff'");
+			$conditions = array("editdate >= $date_diff");
 			if ( $onlyContent === true ) {
-				$conditions['pe_is_content'] = 1;
+				$conditions['is_content'] = 'Y';
 			}
 			
 			$oRes = $dbr->select(
-				array( "page_edits" ),
-				array( "pe_is_content, pe_wikia_id, pe_page_id, sum(pe_all_count) as all_count" ),
+				array( "edits_daily_pages" ),
+				array( "wiki_id, page_id, sum(edits) as all_count" ),
 				$conditions,
 				__METHOD__,
 				array(
-					'GROUP BY' 	=> 'pe_wikia_id, pe_page_id',
+					'GROUP BY' 	=> 'wiki_id, page_id',
 					'ORDER BY' 	=> 'all_count desc',
 					'LIMIT'		=> self::$defaultLimit
 				)
@@ -544,8 +544,8 @@ class WikiaGlobalStats {
 			
 			while ( $oRow = $dbr->fetchObject( $oRes ) ) {
 				$data[] = array(
-					'wikia'		=> $oRow->pe_wikia_id,
-					'page'		=> $oRow->pe_page_id,
+					'wikia'		=> $oRow->wiki_id,
+					'page'		=> $oRow->page_id,
 					'count' 	=> $oRow->all_count
 				);
 			}
@@ -582,7 +582,7 @@ class WikiaGlobalStats {
 	}
 
 	public static function getPagesEditors( $days = 7, $limit = 5, $onlyContent = true, $recalculateLimit = false, $noHubDepe = false, $from_db = false ) {
-    	global $wgExternalDatawareDB, $wgTTCache;
+    	global $wgStatsDB, $wgTTCache;
 		wfProfileIn( __METHOD__ );
     	
 		$dbLimit = self::$defaultLimit;
@@ -594,20 +594,20 @@ class WikiaGlobalStats {
 		$result = ( $from_db === true ) ? "" : $wgTTCache->get( $memkey );
 		if ( empty($result) ) {
 			$data = array();
-			$dbr = wfGetDB( DB_SLAVE, 'blobs', $wgExternalDatawareDB );
+			$dbr = wfGetDB( DB_SLAVE, 'blobs', $wgStatsDB );
 			
-			$conditions = array("pc_date >= '$date_diff'");
+			$conditions = array("editdate >= '$date_diff'");
 			if ( $onlyContent === true ) {
-				$conditions['pc_is_content'] = 1;
+				$conditions['pc_is_content'] = 'Y';
 			}
 			
 			$oRes = $dbr->select(
-				array( "page_editors" ),
-				array( "pc_is_content, pc_wikia_id, pc_page_id, count(distinct(pc_user_id)) as all_count" ),
+				array( "edits_daily_users" ),
+				array( "wiki_id, page_id, count(user_id) as all_count" ),
 				$conditions,
 				__METHOD__,
 				array(
-					'GROUP BY' 	=> 'pc_wikia_id, pc_page_id',
+					'GROUP BY' 	=> 'wiki_id, page_id',
 					'ORDER BY' 	=> 'all_count desc',
 					'LIMIT'		=> $dbLimit
 				)
@@ -840,14 +840,14 @@ class WikiaGlobalStats {
 	}
 
 	public static function getCountEditedPages( $days = 7, $onlyContent = false ) {
-    	global $wgExternalDatawareDB, $wgTTCache;
+    	global $wgStatsDB, $wgTTCache;
 		wfProfileIn( __METHOD__ );
     	
 		$memkey = wfMemcKey( __METHOD__, $days, intval($onlyContent) );
 		$count = $wgTTCache->get( $memkey );
 		if ( empty($count) ) {
 			$count = 0;
-			$dbr = wfGetDB( DB_SLAVE, 'blobs', $wgExternalDatawareDB );
+			$dbr = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
 
 			$dates = array();
 			for ( $i = 1; $i <= $days; $i++ ) {
@@ -855,15 +855,17 @@ class WikiaGlobalStats {
 			}
 			$conditions = array();
 			if ( count($dates) == 1 ) {
-				$conditions = array('pe_date' => $dates[0] );
+				$conditions = array('editdate' => $dates[0] );
 			} else {
 				$conditions = array( "pe_date IN (".$dbr->makeList($dates).") " );
 			}
-			$field = ( $onlyContent === true ) ? 'pe_content_edits' : 'pe_edits';
+			if ( $onlyContent === true ) {
+				$conditions['is_content'] = 'Y';
+			}
 			
-			$oRes = $dbr->select(
-				array( "page_edits_month" ),
-				array( "$field as value" ),
+			$oRes = $dbr->select (
+				array( "edits_daily_pages" ),
+				array( "count(page_id)" ),
 				$conditions, 
 				__METHOD__
 			);
@@ -880,20 +882,20 @@ class WikiaGlobalStats {
 	}
 
 	public static function getCountAverageDayCreatePages( $month ) {
-		global $wgExternalStatsDB, $wgTTCache;
+		global $wgStatsDB, $wgTTCache;
 		wfProfileIn( __METHOD__ );
     	
     	$month = str_replace("-", "", $month);
 		$memkey = wfMemcKey( __METHOD__, $month );
 		$count = $wgTTCache->get( $memkey );
 		if ( empty($count) ) {
-			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalStatsDB );
+			$dbr = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
 			
-			$conditions = array( "cw_stats_date" => sprintf("%0d00000000", $month) );
+			$conditions = array( "stats_date" => $month );
 			
 			$oRow = $dbr->selectRow(
-				array( "city_stats_full" ),
-				array( "sum(cw_article_new_per_day) as all_count" ),
+				array( "summary_monthly_stats" ),
+				array( "articles_daily as all_count" ),
 				$conditions,
 				__METHOD__
 			);
@@ -908,20 +910,20 @@ class WikiaGlobalStats {
 	}
 
 	public static function getCountWordsInMonth( $month ) {
-		global $wgExternalStatsDB, $wgTTCache;
+		global $wgStatsDB, $wgTTCache;
 		wfProfileIn( __METHOD__ );
     	
     	$month = str_replace("-", "", $month);
 		$memkey = wfMemcKey( __METHOD__, $month );
 		$count = $wgTTCache->get( $memkey );
 		if ( empty($count) ) {
-			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalStatsDB );
+			$dbr = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
 			
-			$conditions = array( "cw_stats_date" => sprintf("%0d00000000", $month) );
+			$conditions = array( "editdate >= '{$month}01' and editdate <= '{$month}31'" );
 			
 			$oRow = $dbr->selectRow(
-				array( "city_stats_full" ),
-				array( "sum(cw_db_words) as all_count" ),
+				array( "edits_daily_pages" ),
+				array( "sum(total_words) as all_count" ),
 				$conditions,
 				__METHOD__
 			);
@@ -935,12 +937,12 @@ class WikiaGlobalStats {
 		return $count;
 	}
 	
-	public static function countWordsInLastDays( $days = 7, $from_db = 0 ) {
+	public static function countWordsInLastDaysFromPageEdits( $days = 7, $from_db = 0 ) {
 		global $wgExternalDatawareDB, $wgTTCache;
 		wfProfileIn( __METHOD__ );
 		
 		$result = 0;
-		$memkey = wfMemcKey( "WS:countWordsLastDays", $days );
+		$memkey = wfMemcKey( "WS:countWordsLastDaysPageEdits", $days );
 		if ( $from_db ) {
 			$queries = array();
 			for ( $i = 0; $i < $days; $i++ ) {
@@ -956,7 +958,7 @@ class WikiaGlobalStats {
 			}
 			
 			if ( $q ) {
-				$dbr = wfGetDB( DB_SLAVE, 'blobs', $wgExternalDatawareDB );	
+				$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );	
 				$res = $dbr->query($q, __METHOD__);
 				if ( $oRow = $dbr->fetchObject($res) ) {
 					$result = $oRow->cnt_words;
@@ -969,4 +971,32 @@ class WikiaGlobalStats {
 		
 		return $result;
 	}
+	
+	public static function countWordsInLastDays( $days = 7, $from_db = 0 ) {
+		global $wgStatsDB, $wgTTCache;
+		wfProfileIn( __METHOD__ );
+		
+		$result = 0;
+		$memkey = wfMemcKey( "WS:countWordsLastDays", $days );
+		if ( $from_db ) {
+
+			$date = date( 'Y-m-d', time() - $days * 24 * 60 * 60 );
+			$conditions = array( "editdate >= '{$date}" );
+			
+			$dbr = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
+			
+			$oRow = $dbr->selectRow(
+				array( "edits_daily_pages" ),
+				array( "sum(total_words) as cnt_words" ),
+				$conditions,
+				__METHOD__
+			);			
+			
+			$wgTTCache->set($memkey, $oRow->cnt_words);
+		} else {
+			$result = $wgTTCache->get($memkey);
+		}
+		
+		return $result;
+	}	
 }
