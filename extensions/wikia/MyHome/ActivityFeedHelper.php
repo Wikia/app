@@ -17,7 +17,7 @@ class ActivityFeedHelper {
 		$parameters['flags'] = array();
 		$parameters['includeNamespaces'] = null;
 
-		if ( is_array($parametersIn) && !empty($parametersIn) ) { 
+		if ( is_array($parametersIn) && !empty($parametersIn) ) {
 			foreach ($parametersIn as $parameter => $value) {
 				if (is_int($parameter)) {	//ajax
 					@list($var, $val) = explode('=', $value);
@@ -165,7 +165,10 @@ class ActivityFeedHelper {
 		wfProfileOut(__METHOD__);
 		return $feedHTML;
 	}
-	
+
+	/**
+	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+	 */
 	static function purgeCommunityWidgetInVarnish($title) {
 		global $wgScript, $wgContentNamespaces, $wgContLang, $wgMemc;
 		if (in_array($title->getNamespace(), $wgContentNamespaces)) {
@@ -176,22 +179,21 @@ class ActivityFeedHelper {
 		}
 		return true;
 	}
-	
+
 	static function onArticleSaveComplete(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 		self::purgeCommunityWidgetInVarnish($article->mTitle);
 		return true;
 	}
-	
+
 	static function onArticleDeleteComplete(&$article, &$user, $reason, $id) {
 		self::purgeCommunityWidgetInVarnish($article->mTitle);
 		return true;
 	}
-	
+
 	static function onTitleMoveComplete(&$title, &$newtitle, &$user, $oldid, $newid) {
-//		var_dump("onTitleMoveComplete",$title,$newtitle,$oldid,$newid);
 		self::purgeCommunityWidgetInVarnish($newtitle);
 		return true;
-	}	
+	}
 
 }
 
