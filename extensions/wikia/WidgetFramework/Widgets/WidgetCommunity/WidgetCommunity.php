@@ -34,6 +34,10 @@ function WidgetCommunity($id, $params) {
 
 	global $wgUser, $wgLang, $wgLanguageCode, $wgStylePath, $wgEnableMyHomeExt, $wgContentNamespaces;
 	$total = SiteStats::articles();
+	/* RT#64490: Strange Article Count in Latest Activity on some new wikis */
+	if ($total < 0 || $total > 1e18) {
+		$total = 0;
+	}
 	$total = $wgLang->formatNum($total);
 
 	$footerButton = array();
