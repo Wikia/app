@@ -119,10 +119,11 @@ var ArticleComments = {
 
 		var data = {
 			action: 'ajax',
-			rs: 'ArticleCommentsAjax',
-			method: 'axReply',
 			article: wgArticleId,
-			id: $(this).closest('li').attr('id').replace(/^comm-/, '')
+			id: $(this).closest('li').attr('id').replace(/^comm-/, ''),
+			method: 'axReply',
+			rs: 'ArticleCommentsAjax',
+			title: wgPageName
 		};
 
 		$.getJSON(wgScript, data, function(json) {
