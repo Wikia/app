@@ -41,9 +41,9 @@ $wgAutoloadClasses['CommunityMessagesAjax'] = "$IP/extensions/wikia/CommunityMes
 function CommunityMessagesInit() {
 	global $wgHooks;
 
-	$wgHooks['SkinTemplatePageBeforeUserMsg'][] = 'CommunityMessages::SkinTemplatePageBeforeUserMsg';
-	$wgHooks['ArticleSaveComplete'][] = 'CommunityMessages::ArticleSaveComplete';
-	$wgHooks['BeforePageDisplay'][] = 'CommunityMessages::BeforePageDisplay';
+	$wgHooks['SkinTemplatePageBeforeUserMsg'][] = 'CommunityMessages::onSkinTemplatePageBeforeUserMsg';
+	$wgHooks['ArticleSaveComplete'][] = 'CommunityMessages::onArticleSaveComplete';
+	$wgHooks['BeforePageDisplay'][] = 'CommunityMessages::onBeforePageDisplay';
 }
 
 // Ajax dispatcher

@@ -17,7 +17,7 @@
  */
 
 class CommunityMessages {
-	static function SkinTemplatePageBeforeUserMsg(&$msg) {
+	static function onSkinTemplatePageBeforeUserMsg(&$msg) {
 		global $wgUser, $wgMemc, $wgCityId, $wgCookiePrefix;
 
 		//get timestamp of message
@@ -77,7 +77,7 @@ class CommunityMessages {
 	 *
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
-	static function ArticleSaveComplete(&$article, &$user, $text, $summary, &$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
+	static function onArticleSaveComplete(&$article, &$user, $text, $summary, &$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 		global $wgMemc;
 		$title = $article->getTitle();
 //TODO: rename 'community-corner' to 'community-messages' here AND in /extensions/wikia/MyHome/templates/communityCorner.tmpl.php
@@ -97,7 +97,7 @@ class CommunityMessages {
 	 *
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
-	static function BeforePageDisplay(&$output, &$skin) {
+	static function onBeforePageDisplay(&$output, &$skin) {
 		global $wgTitle, $wgUser, $wgMemc, $wgCityId, $wgExternalDatawareDB;
 
 		if ($wgTitle->isSpecial('ActivityFeed') || $wgTitle->isSpecial('MyHome')) {
