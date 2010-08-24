@@ -126,12 +126,15 @@ var ArticleComments = {
 		};
 
 		$.getJSON(wgScript, data, function(json) {
+			$('#comm-' + json.id).find('.buttons').find('.info').remove();
 			if (!json.error) {
 				$(e.target).closest('.buttons').hide();
 				$('#comm-text-' + json.id).after(json.html);
 				$('#article-comm-submit-' + json.id).bind('click', {source: '#article-comm-textfield-' + json.id, parentId: json.id}, ArticleComments.postComment);
 				$('#article-comm-textfield-' + json.id).focus();
-			} else {
+			} else if (json.error == 2 /*login require*/) {
+				$('#comm-' + json.id).find('.tools').after($('<span class="info">').html(json.msg));
+			} else /*general error*/ {
 				//TODO: add caption
 				$.showModal('', json.msg);
 			}
