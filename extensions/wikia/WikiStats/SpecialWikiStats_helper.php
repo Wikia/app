@@ -40,6 +40,7 @@ class WikiStats {
     const USE_MEMC = 0;
     const EVENT_LOG_TYPE = 'stats';
     const PV_LIMIT = 100;
+    const PV_DELTA = 180;
 	
 	// show only local statistics for wikia
 	var $localStats = false;
@@ -998,11 +999,12 @@ class WikiStats {
 		
 		$where = array( 
 			"pv_city_id" => $this->mCityId,
+			"pv_ts >= '" . date('Y-m-d H-i-s', time() - self::PV_DELTA) . "'"
 		);		
 		
 		if ( $namespace > 0 ) {
 			$where['pv_namespace'] = $namespace;
-		}
+		} 
 
 		$res = $dbr->select(
 			array( 'page_views_articles' ),
@@ -1036,7 +1038,9 @@ class WikiStats {
 		
 		$result = array(); 
 		foreach ( $ids as $page_id => $position ) {
-			$result[] = wfSpecialList( $urls[$page_id], $count[$page_id]. "x" );
+			if ( isset( $urls[$page_id] ) ) {
+				$result[] = wfSpecialList( $urls[$page_id], $count[$page_id]. "x" );
+			}
 		}
 		
 		wfProfileOut( __METHOD__ );
