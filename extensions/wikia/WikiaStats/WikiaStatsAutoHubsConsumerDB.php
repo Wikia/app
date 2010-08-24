@@ -314,17 +314,21 @@ class WikiaStatsAutoHubsConsumerDB {
 		}
 
 		$tag_id = (int) $tag_id;
-		$conditions = array( "tag_id = $tag_id and city_lang = '$lang'" );
+		$lang_id = WikiFactory::LangCodeToId($lang);
+		$conditions = array( 
+			"tag_id" 	=> $tag_id,
+			"city_lang" => $lang_id 
+		);
 		$res = $this->dbs->select(
-				array( 'tags_pv' ),
+				array( ' page_views_tags use key(tag_lang_city) ' ),
 				array( 'tag_id as tag_id,
 						city_id as city_id,
-						sum(pviews) as count ' ),
+						sum(pv_views) as count ' ),
 				$conditions,
 				__METHOD__,
 				array(
 					'GROUP BY' 	=> ' tag_id,city_id ',
-					'ORDER BY' 	=> 'count desc',
+					'ORDER BY' 	=> 'count DESC',
 					'LIMIT'		=> 40
 				)
 		);		
