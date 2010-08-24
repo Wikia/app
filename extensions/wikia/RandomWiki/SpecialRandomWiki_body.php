@@ -1,4 +1,5 @@
 <?php
+
 /**
  * RandomWiki
  *
@@ -10,100 +11,131 @@
  * @copyright Copyright © 2008 Łukasz Garczewski, Wikia Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
-
-if( !defined( 'MEDIAWIKI' ) ) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "This is a MediaWiki extension named RandomWiki.\n";
 	exit( 1 );
 }
 
 class RandomWiki extends SpecialPage {
+	const COOKIE_NAME_TOKEN = 'RandomWiki';
+	const COOKIE_EXPIRY = 2; //hours
 
-	const limit = 500;
-	const cachekey = 'wikicities:RandomWiki:list';
-
-	/**
-	 * Constructor
-	 */
+	private $mCookie = null;
+	private $mData = null;
+	
 	public function __construct() {
+		global $wgCookiePrefix;
+
 		parent::__construct( 'RandomWiki' );
+		$this->mCookieName = $wgCookiePrefix . self::COOKIE_NAME_TOKEN;
 	}
 
-	/**
-	 * Redirect to a random wiki
-	 *
-	 * @param $par String: page name on target wiki
-	 */
-	public function execute( $par ) {
-		global $wgExternalSharedDB, $wgExternalStatsDB, $wgOut, $wgMemc;
+	public function execute( $wikiID ) {
+		global $wgOut, $wgRequest, $wgCityId;
 
-		$topWikis = $wgMemc->get( self::cachekey );
+		wfProfileIn( __METHOD__ );
+		$this->setHeaders();
+		$firstVisit = true;
+		$wikiID = ( !empty( $wikiID ) ) ? ( int )$wikiID : $wgCityId;
 
-		if ( empty( $topWikis ) ) {
+		if ( isset( $_COOKIE[ $this->mCookieName ] ) ) {
+			$this->mCookie = json_decode( $_COOKIE[ $this->mCookieName ] );
+			$firstVisit = false;
+		} else {
+			$this->mCookie = new stdClass();
+			$this->mCookie->origHub = null;
+			$this->mCookie->langCode = null;
+			$this->mCookie->history = array( );
 
-			$two_days_ago = time() - 2 * 24 * 3600; // allow a day or two in case stats generation will be disrupted (or yikes! month ends)
-			$conds = array(
-				'cw_stats_date' => date('Ym00000000', $two_days_ago), // pick wiki with recent stats present => more likely to be live (but no guarantee till the end of the month)
-			);
-			$options = array(
-				'ORDER BY' => 'cw_article_count_link DESC',
-				'LIMIT' => self::limit,
-			);
+			if ( !empty( $wikiID ) ) {
+				$hub = WikiFactory::getCategory( $wikiID );
+				$this->mCookie->origHub = $hub->cat_id;
+				$this->mCookie->langCode = WikiFactory::getWikiByID( $wikiID )->city_lang;
+				$this->mCookie->history[ ] = $wikiID;
+			}
+		}
 
+		$this->loadData();
+		$historyCount = count( $this->mCookie->history );
 
-			$dbs = wfGetDB( DB_SLAVE, array(), $wgExternalStatsDB );
+		//reset the history if the user visited all the possible targets
+		if ( $historyCount >= $this->mData[ 'total' ] ) {
+			$this->mCookie->history = array( $wikiID );
+		}
 
-			$res = $dbs->select( 'city_stats_full', array( 'cw_city_id' ), $conds, __METHOD__, $options );
+		//if language other than English and list of targets exhausted fall back to english
+		if (
+			(
+				( $historyCount >= $this->mData[ 'total' ] ) ||
+				(
+					( $this->mData[ 'total' ] == 0 ) &&
+					(
+						( count( $this->mData[ 'recommended' ] ) == 0 ) || !$firstVisit
+					)
+				)
+			) &&
+			$this->mCookie->langCode != 'en'
+		) {
+			$this->mCookie->langCode = 'en';
+			$this->loadData();
+		}
 
-			$topWikis = array();
-			while ( $row = $dbs->fetchObject( $res ) )
-				$topWikis[] = $row->cw_city_id;
+		$destinationID = null;
+		$from = null;
+		srand( time() );
+
+		//pick a recommended wiki the first time
+		if ( $firstVisit && !empty( $this->mData[ 'recommended' ] ) ) {
+			$destinationID = $this->mData[ 'recommended' ][ array_rand( $this->mData[ 'recommended' ] ) ];
+			$from = 'recommended';
+		} elseif ( !empty( $this->mCookie->origHub ) && !empty( $this->mData[ 'hubs' ][ $this->mCookie->origHub ] ) ) {
+			$currentHub = array_diff( $this->mData[ 'hubs' ][ $this->mCookie->origHub ], $this->mCookie->history );
+
+			if ( count( $currentHub ) && ( count( $this->mCookie->history ) < RandomWikiHelper::TRACK_LIMIT ) ) {
+				$destinationID = $currentHub[ array_rand( $currentHub ) ];
+				$from = 'origHub';
+			}
+		}
+
+		//in case no wiki has been selected in the previous block pick a wiki from a random hub
+		if ( empty( $destinationID ) ) {
+			$hubsCount = count( $this->mData[ 'hubs' ] );
+			$hub = array_rand( $this->mData[ 'hubs' ], $hubsCount );
+
+			if( !is_array( $hub ) ) {
+				$hub = array( $hub );
+			}
 			
-			if (count($topWikis)) {
-				$db2 = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+			foreach ( $hub as $key ) {
+				$tmpHub = array_diff( $this->mData[ 'hubs' ][ $key ], $this->mCookie->history );
 
-				// check if any wiki from that list above has been closed
-				// removing from list should be quicker than reproducing it,
-				// hence public=0 and array_diff
-				$conds2 = array(
-					'city_public' => 0,
-					'city_id IN (' . join(',', $topWikis) . ')',
-				);
-				$options2 = array(
-					'ORDER BY' => 'city_id',
-				);
-				$res2 = $db2->select('city_list', array('city_id'), $conds2, __METHOD__, $options2);
-				$closedWikis = array();
-				while ($row = $db2->fetchObject($res2)) {
-					$closedWikis[] = $row->city_id;
+				if ( !count( $tmpHub ) ) {
+					continue;
 				}
 
-				if (count($closedWikis)) {
-					$topWikis = array_diff($topWikis, $closedWikis);
-				}
+				$itemKey = array_rand( $tmpHub );
+				$destinationID = $tmpHub[ $itemKey ];
+				$from = "hub {$itemKey}";
 			}
-
-			$wgMemc->set( self::cachekey, $topWikis, 24 * 3600 ); // cache it for 24h only, wiki can be closed at any time
 		}
+		
+		$this->mCookie->history[ ] = $destinationID;
+		$cookieValue = json_encode( $this->mCookie );
+		
+		$wgRequest->response()->setcookie( self::COOKIE_NAME_TOKEN, $cookieValue, time() + ( 3600 * self::COOKIE_EXPIRY ) );
 
-		$rand = array_rand( $topWikis );
-		$targetWiki = $topWikis[$rand];
-
-		$wgServerRemote = WikiFactory::getVarByName( 'wgServer', $targetWiki );
+		$wgServerRemote = WikiFactory::getVarByName( 'wgServer', $destinationID );
 		$url = unserialize( $wgServerRemote->cv_value );
-
-		// When a param is given, add it to the URL as a wiki page
-		if ( !empty( $par ) ) {
-			$wgArticlePathRemote = unserialize( WikiFactory::getVarByName( 'wgArticlePath', $targetWiki )->cv_value );
-			// Check for funky $wgArticlePath
-			if ( strpos( $wgArticlePathRemote, '$wgScriptPath' ) !== false  ) {
-				$wgScriptPathRemote = unserialize( WikiFactory::getVarByName( 'wgScriptPath', $targetWiki )->cv_value );
-				$wgArticlePathRemote = str_replace( '$wgArticlePath', $wgScriptPathRemote, $wgArticlePathRemote );
-			}
-			$url .= str_replace( '$1', $par, $wgArticlePathRemote );
-		}
 
 		// Redirect the user to a randomly-chosen wiki
 		$wgOut->redirect( $url );
+
+		wfProfileOut( __METHOD__ );
 	}
 
+	private function loadData() {
+		global $wgRequest;
+
+		$this->mData = RandomWikiHelper::getData( ( $wgRequest->getText( 'action' ) == 'purge' ), $this->mCookie->langCode );
+	}
 }
