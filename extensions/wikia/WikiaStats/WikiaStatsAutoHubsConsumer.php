@@ -13,6 +13,7 @@
  */
 class WikiaStatsAutoHubsConsumer {
 	const defaultTS = 3600;
+	const sleepTime = 60;
 	var $mDate = null;
 	/**
 	 * constructor
@@ -134,7 +135,8 @@ class WikiaStatsAutoHubsConsumer {
 						Wikia::log( __METHOD__, 'events', 'Wikia ' . $city_id . ' processed in: ' . $time );
 					}			
 				} else {
-					throw new MWException( __CLASS__ . ": No data found in events table. Last timestamp: " . $this->mDate );					
+					Wikia::log ( __METHOD__, "No data found in events table. Last timestamp: " . $this->mDate );
+					sleep(self::sleepTime);
 				}
 			}	
 		} catch( MWException $e ) {
