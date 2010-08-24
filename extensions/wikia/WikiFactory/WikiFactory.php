@@ -71,12 +71,13 @@ class WikiFactory {
 		"struct",
 		"hash"
 	);
+
 	static public $levels = array(
 		1 => "read only",
 		2 => "editable by staff",
 		3 => "editable by user"
 	);
-
+	
 	static public $mIsUsed = false;
 
 	/**
@@ -2354,6 +2355,60 @@ class WikiFactory {
 		wfProfileOut( __METHOD__ );
 
 		return isset( $lang_id ) && $lang_id > 0 ? $lang_id : false;
+	}
+
+	/**
+	 * getCityIDsFromVarValue
+	 *
+	 * Gets a list of city ID's from a variable id/value
+	 *
+	 * @access public
+	 * @author nef@wikia-inc.com, federico@wikia-inc.com
+	 * @static
+	 *
+	 * @param int $varId the varjable ID as defined in the city_variables table
+	 * @param mixed $val the value to search for
+	 * @param bool $cond the SQL operator to use for matching the value, 'LIKE' and 'NOT LIKE' are accepted (% signs are added automatically), 'IS' and 'IS NOT' too
+	 * @return array an array containing the list of city ID's matching the variable's value, an empty array if none matches
+	 */
+	static function getCityIDsFromVarValue( $varID, $val, $cond ) {
+		
+		wfProfileIn(__METHOD__);
+
+		$varID = ( int ) $varID;
+		$cond = strtoupper( str_replace( "'", null, trim( $cond ) ) );
+		$aWhere = array(
+			'cv_variable_id' => $varID
+		);
+		
+		$dbr = self::db( DB_SLAVE );
+
+		if ( in_array($cond, array( 'LIKE', 'NOT LIKE' ) ) ) {
+			$aWhere[ ] = "cv_value {$cond} '%" . $dbr->escapeLike( serialize( $val ) ) . "%'";
+		} elseif ( $val === 'NULL' && in_array($cond, array( 'IS', 'IS NOT' ) ) ) {
+			$aWhere[ ] = "cv_value {$cond} NULL";
+		} else {
+			$aWhere[ ] = "cv_value {$cond} '" . serialize( $val ) . "'";
+		}
+
+		$oRes = $dbr->select(
+			'city_variables',
+			'cv_city_id',
+			$aWhere,
+			__METHOD__
+		);
+
+		$aWikis = array( );
+
+		while ( $oRow = $dbr->fetchObject( $oRes ) ) {
+			$aWikis[] = $oRow->cv_city_id;
+		}
+		
+		$dbr->freeResult( $oRes );
+		
+		wfProfileOut(__METHOD__);
+		
+		return $aWikis;
 	}
 };
 
