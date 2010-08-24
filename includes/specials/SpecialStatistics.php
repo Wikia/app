@@ -168,7 +168,7 @@ class SpecialStatistics extends SpecialPage {
 						$wgLang->formatNum( ceil( $wgRCMaxAge / ( 3600 * 24 ) ) ) );
 	}
 	private function getGroupStats() {
-		global $wgGroupPermissions, $wgImplicitGroups, $wgLang, $wgUser;
+		global $wgGroupPermissions, $wgImplicitGroups, $wgLang, $wgUser, $wgWikiaGlobalUserGroups;
 		$sk = $wgUser->getSkin();
 		$text = '';
 		foreach( $wgGroupPermissions as $group => $permissions ) {
@@ -199,6 +199,10 @@ class SpecialStatistics extends SpecialPage {
 			$classZero = '';
 			$countUsers = SiteStats::numberingroup( $groupname );
 			if( $countUsers == 0 ) {
+				if( is_array($wgWikiaGlobalUserGroups) && in_array( $groupname, $wgWikiaGlobalUserGroups) ) {
+					//rt#57322 hide our effective global groups
+					continue;
+				}
 				$classZero = ' statistics-group-zero';
 			}
 			$text .= $this->formatRow( $grouppage . ' ' . $grouplink,
