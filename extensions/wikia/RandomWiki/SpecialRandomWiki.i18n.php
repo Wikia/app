@@ -1,7 +1,8 @@
 <?php
+
 $messages = array();
 
 $messages['en'] = array(
-        'randomwiki' => 'Random Wiki',
-
+	'randomwiki-desc' => 'Lets users explore a random wiki',
+	'randomwiki' => 'Random Wiki',
 );
