@@ -131,7 +131,7 @@ class WikiaStatsAutoHubsConsumer {
 							}
 						}
 						$end = time();
-						$time = Wikia::time_duration($end - $start);
+						$time = Wikia::timeDuration($end - $start);
 						Wikia::log( __METHOD__, 'events', 'Wikia ' . $city_id . ' processed in: ' . $time );
 					}			
 				} else {
