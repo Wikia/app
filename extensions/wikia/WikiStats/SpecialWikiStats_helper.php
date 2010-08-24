@@ -39,7 +39,7 @@ class WikiStats {
     const MONTHLY_STATS = 7;
     const USE_MEMC = 0;
     const EVENT_LOG_TYPE = 'stats';
-    const PV_LIMIT = 1000;
+    const PV_LIMIT = 100;
 	
 	// show only local statistics for wikia
 	var $localStats = false;
@@ -247,7 +247,7 @@ class WikiStats {
 					__METHOD__
 				);
 			}
-			if ( isset($oRow) && $oRow->lastdate ) {
+			if ( isset($oRow) && isset($oRow->lastdate) ) {
 				$this->mUpdateDate = $oRow->lastdate ;
 			}
 							
@@ -493,7 +493,11 @@ class WikiStats {
 				$where['wiki_id'] = $this->mCityId;
 				$table = 'wikia_monthly_stats';
 			} else {
-				if ( !empty($this->mHub) ) {
+				if ( !empty($this->mHub) && !empty($this->mLang) ) {
+					$where['wiki_cat_id'] = $this->mHub;
+					$where['wiki_lang_id'] = WikiFactory::LangCodeToId($this->mLang);
+					$table = 'cat_lang_monthly_stats';
+				} elseif ( !empty($this->mHub) ) {
 					$where['wiki_cat_id'] = $this->mHub;
 					$table = 'cat_monthly_stats';
 				} elseif ( !empty($this->mLang) ) {
@@ -987,40 +991,53 @@ class WikiStats {
 	 * list of most visited pages
 	 */	
 	public function latestViewPages($namespace = -1) {
-		global $wgDBname;
+		global $wgStatsDB;
 		wfProfileIn( __METHOD__ );
 
-		$dbr = wfGetDB(DB_SLAVE, array(), $wgDBname);
+		$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 		
 		$where = array( 
-			" page_id = article_id ",
-			" prev_diff > 0 "
+			"pv_city_id" => $this->mCityId,
 		);		
 		
 		if ( $namespace > 0 ) {
-			$where['page_namespace'] = $namespace;
+			$where['pv_namespace'] = $namespace;
 		}
 
 		$res = $dbr->select(
-			array( 'page', 'page_visited' ),
-			array( 'page_namespace', 'page_title', 'prev_diff as value'  ),
+			array( 'page_views_articles' ),
+			array( 'pv_page_id', 'pv_views'  ),
 			$where,
 			__METHOD__,
 			array(
-				'ORDER BY'	=> 'prev_diff DESC',
+				'ORDER BY'	=> 'pv_ts DESC',
 				'LIMIT'		=> self::PV_LIMIT
 			)
 		);
 		
-		$result = array(); 
+		$ids = array();
+		$count = array(); $loop = 0;
 		while ( $oRow = $dbr->fetchObject( $res ) ) {
-			$oTitle = Title::newFromText($oRow->page_title, $oRow->page_namespace);
-			if ( $oTitle ) {
-				$oRow->page_title = Xml::element("a", array("href" => $oTitle->getLocalURL()), $oTitle->getFullText()) ;
-			} 
-			$result[] = wfSpecialList( $oRow->page_title, $oRow->value . "x" );
+			if ( !isset($ids[$oRow->pv_page_id]) ) { 
+				$ids[$oRow->pv_page_id] = $loop;
+				$loop++;
+			}
+			$count[$oRow->pv_page_id] += $oRow->pv_views;
 		}
 		$dbr->freeResult( $res );
+				
+		$titles = Title::newFromIDs( array_keys($ids) );
+		
+		$urls = array();
+		foreach ( $titles as $oTitle ) {
+			$page_id = $oTitle->getArticleID();
+			$urls[$page_id] = Xml::element("a", array("href" => $oTitle->getLocalURL()), $oTitle->getFullText());
+		}
+		
+		$result = array(); 
+		foreach ( $ids as $page_id => $position ) {
+			$result[] = wfSpecialList( $urls[$page_id], $count[$page_id]. "x" );
+		}
 		
 		wfProfileOut( __METHOD__ );
 		#---
