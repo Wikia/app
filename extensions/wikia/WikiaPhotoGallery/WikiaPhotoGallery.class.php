@@ -551,10 +551,14 @@ class WikiaPhotoGallery extends ImageGallery {
 			foreach($this->mImages as $index => $image) {
 				if(!empty($heights[$index]) && !empty($widths[$index])) {
 					//fix #59355, min() added to let borders wrap images with smaller width
-					$widths[$index] = min($widths[$index], round($widths[$index] * ($height / $heights[$index])));
-					$heights[$index] = min($height, $heights[$index]);
-				}
-				else {
+					//fix #63886, round ( $tmpFloat ) != floor ( $tmpFloat ) added to check if thumbnail will be generated from proper width
+					$tmpFloat = ( $widths[$index] * $height / $heights[$index] );
+					$widths[$index] = min( $widths[$index], floor( $tmpFloat ) );
+					$heights[$index] = min( $height, $heights[$index] );
+					if ( round ( $tmpFloat ) != floor ( $tmpFloat ) ){
+						$heights[$index] --;
+					}
+				} else {
 					$widths[$index] = $thumbSize;
 					$heights[$index] = $height;
 				}
@@ -651,7 +655,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				$html .= Xml::openElement('div', array('class' => 'wikia-gallery-row'));
 			}
 
-			$html .= Xml::openElement('span', array('class' => 'wikia-gallery-item', 'style' => $itemSpanStyle));
+			$html .= Xml::openElement('div', array('class' => 'wikia-gallery-item', 'style' => $itemSpanStyle));
 
 			$html .= Xml::openElement('div', array('class' => 'thumb', 'style' => $itemDivStyle));
 
@@ -711,24 +715,28 @@ class WikiaPhotoGallery extends ImageGallery {
 					((!empty($borderColorCSS)) ? $borderColorCSS : null)
 			));
 
+			# Fix 59913 - thumbnail goes as <img /> not as <a> background.
 			$html .= Xml::openElement(
 				'a',
 				array(
 					'class' => $image['classes'],
-					'style' => (($image['thumbnail']) ? " background-image: url({$image['thumbnail']});" : null).
-						((!empty($image['titleText'])) ? " line-height:{$image['height']}px;" : null).
-						" height:{$image['height']}px;".
-						($useBuckets ? '' : " width:{$image['width']}px;"),
 					'href' => $image['link'],
 					'title' => $image['linkTitle'].' ('.$sk->formatSize($image['bytes']).')'
 				)
 			);
+			$html .= Xml::openElement(
+				'img',
+				array(
+					'class' => $image['classes'],
+					'style' => ((!empty($image['titleText'])) ? " line-height:{$image['height']}px;" : null).
+						" height:{$image['height']}px;".
+						($useBuckets ? '' : " width:{$image['width']}px;"),
+					'src' => (($image['thumbnail']) ? $image['thumbnail'] : null),
+					'title' => $image['linkTitle'].' ('.$sk->formatSize($image['bytes']).')'
+				)
+			);
 
-			if(!empty($image['titleText']))
-				$html .= $image['titleText'];
-
-			$html .= Xml::closeElement('a');
-
+			$html .=Xml::closeElement('a');
 			if($captionsPosition == 'below') {
 				$html .= Xml::closeElement('div');
 				$html .= Xml::closeElement('div');
@@ -736,7 +744,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 			if(!empty($image['caption'])) {
 				$html .= Xml::openElement(
-					'span',
+					'div',
 					array(
 						'class' => 'lightbox-caption'.
 							((!empty($borderColorClass)  && $captionsPosition == 'within') ? $borderColorClass : null),
@@ -749,7 +757,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 				$html .= $image['caption'];
 
-				$html .= Xml::closeElement('span');
+				$html .= Xml::closeElement('div');
 			}
 
 			if($captionsPosition == 'within') {
@@ -757,7 +765,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				$html .= Xml::closeElement('div');
 			}
 
-			$html .= Xml::closeElement('span');
+			$html .= Xml::closeElement('div');
 
 			if($perRow != 'dynamic' && (($index % $perRow) == ($perRow - 1) || $index == (count($this->mImages) - 1))) {
 				$html .= Xml::closeElement('div');
