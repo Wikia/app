@@ -115,12 +115,19 @@ class ArticleCommentsAjax {
 	 * @return String -- html -> textarea
 	 */
 	static public function axReply() {
-		global $wgRequest, $wgStylePath;
+		global $wgRequest, $wgStylePath, $wgUser;
+
+		$commentId = $wgRequest->getVal( 'id', false );
+		$result = array('id' => $commentId);
 
 		if (wfReadOnly()) {
-			$result = array('error' => 1, 'msg' => wfMsg('readonlytext'));
+			$result['error'] = 1;
+			$result['msg'] = wfMsg('readonlytext');
+		} elseif (!$wgUser->isAllowed('edit')) {
+			wfLoadExtensionMessages('ArticleComments');
+			$result['error'] = 2;
+			$result['msg'] = wfMsg('article-comments-login', SpecialPage::getTitleFor('UserLogin')->getLocalUrl());
 		} else {
-			$commentId = $wgRequest->getVal( 'id', false );
 			$articleId = $wgRequest->getVal( 'article', false );
 
 			$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
@@ -132,7 +139,7 @@ class ArticleCommentsAjax {
 			);
 			wfLoadExtensionMessages('ArticleComments');
 			$text = $template->execute( 'comment-reply' );
-			$result = array('id' => $commentId, 'html' => $text);
+			$result['html'] = $text;
 		}
 
 		return $result;
