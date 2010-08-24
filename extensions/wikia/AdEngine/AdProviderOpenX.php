@@ -64,7 +64,7 @@ class AdProviderOpenX extends AdProviderIframeFiller implements iAdProvider {
 	document.write('<scr'+'ipt type="text/javascript">');
 	document.write('$adUrlScript');
 	document.write('</scr'+'ipt>');
-	document.write('<scr'+'ipt type="text/javascript" src="'+base_url+'"></scr'+'ipt>');
+	document.write('<scr'+'ipt type="text/javascript" src="'+base_url_{$slotname}+'"></scr'+'ipt>');
 
 /*]]>*/</script>
 EOT;
@@ -104,23 +104,23 @@ EOT;
 		}
 
 		$adUrlScript = <<<EOT
-	var base_url = "$base_url";
-	base_url += "?loc=" + escape(window.location);
-	if(typeof document.referrer != "undefined") base_url += "&referer=" + escape(document.referrer);
-	if(typeof document.context != "undefined") base_url += "&context=" + escape(document.context);
-	if(typeof document.mmm_fo != "undefined") base_url += "&mmm_fo=1";
-	base_url += "&zoneid=$zoneId";
-	base_url += "&cb=" + AdsCB;
-	if(typeof document.MAX_used != "undefined" && document.MAX_used != ",") base_url += "&exclude=" + document.MAX_used;
-	base_url += "&hub={$cat['short']}";
-	base_url += "&skin_name=" + skin;
-	base_url += "&cont_lang=" + wgContentLanguage;
-	base_url += "&user_lang=" + wgUserLanguage;
-	base_url += "&dbname=" + wgDB;
-	base_url += "&slotname={$slotname}";
-	base_url += "&tags=" + wgWikiFactoryTagNames.join(",");
-	base_url += "{$additional_params}";
-	base_url += "&block=1";
+	var base_url_{$slotname} = "$base_url";
+	base_url_{$slotname} += "?loc=" + escape(window.location);
+	if(typeof document.referrer != "undefined") base_url_{$slotname} += "&referer=" + escape(document.referrer);
+	if(typeof document.context != "undefined") base_url_{$slotname} += "&context=" + escape(document.context);
+	if(typeof document.mmm_fo != "undefined") base_url_{$slotname} += "&mmm_fo=1";
+	base_url_{$slotname} += "&zoneid=$zoneId";
+	base_url_{$slotname} += "&cb=" + AdsCB;
+	if(typeof document.MAX_used != "undefined" && document.MAX_used != ",") base_url_{$slotname} += "&exclude=" + document.MAX_used;
+	base_url_{$slotname} += "&hub={$cat['short']}";
+	base_url_{$slotname} += "&skin_name=" + skin;
+	base_url_{$slotname} += "&cont_lang=" + wgContentLanguage;
+	base_url_{$slotname} += "&user_lang=" + wgUserLanguage;
+	base_url_{$slotname} += "&dbname=" + wgDB;
+	base_url_{$slotname} += "&slotname={$slotname}";
+	base_url_{$slotname} += "&tags=" + wgWikiFactoryTagNames.join(",");
+	base_url_{$slotname} += "{$additional_params}";
+	base_url_{$slotname} += "&block=1";
 EOT;
 	
 		return $adUrlScript;
@@ -133,7 +133,7 @@ EOT;
                 $out = '<script type="text/javascript">' .
 			$adUrlScript .
                         $function_name . ' = function() { ' .
-			'document.getElementById("' . addslashes($slotname) .'_iframe").src = base_url; }</script>';
+			'document.getElementById("' . addslashes($slotname) ."_iframe\").src = base_url_{$slotname}; }</script>";
 
                 return $out;
         }
