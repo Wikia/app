@@ -14,9 +14,9 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
-if( !defined( 'MEDIAWIKI' ) ) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "This is a MediaWiki extension named RandomWiki.\n";
-	exit (1 );
+	exit ( 1 );
 }
 
 $wgExtensionCredits['specialpage'][] = array(
@@ -28,19 +28,19 @@ $wgExtensionCredits['specialpage'][] = array(
 		'Owen Davis',
 		'Federico "Lox" Lucignano'
 	),
-	'description' => 'Lets users explore a random wiki.'
+	'descriptionmsg' => 'randomwiki-desc'
 );
 
 // Set up the new special page
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
-//classes
-$wgAutoloadClasses['RandomWikiHelper'] = $dir. 'RandomWikiHelper.class.php';
-$wgAutoloadClasses['RandomWiki'] = $dir. 'SpecialRandomWiki_body.php';
+// classes
+$wgAutoloadClasses['RandomWikiHelper'] = $dir . 'RandomWikiHelper.class.php';
+$wgAutoloadClasses['RandomWiki'] = $dir . 'SpecialRandomWiki_body.php';
 
-//special oages
+// special oages
 $wgSpecialPages['RandomWiki'] = 'RandomWiki';
 $wgSpecialPageGroups['RandomWiki'] = 'redirects';
 
-//i18n
+// i18n
 $wgExtensionMessagesFiles['SpecialRandomWiki'] = $dir . '/SpecialRandomWiki.i18n.php';

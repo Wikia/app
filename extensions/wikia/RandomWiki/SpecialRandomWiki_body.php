@@ -18,11 +18,11 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 class RandomWiki extends SpecialPage {
 	const COOKIE_NAME_TOKEN = 'RandomWiki';
-	const COOKIE_EXPIRY = 2; //hours
+	const COOKIE_EXPIRY = 2; // hours
 
 	private $mCookie = null;
 	private $mData = null;
-	
+
 	public function __construct() {
 		global $wgCookiePrefix;
 
@@ -58,12 +58,12 @@ class RandomWiki extends SpecialPage {
 		$this->loadData();
 		$historyCount = count( $this->mCookie->history );
 
-		//reset the history if the user visited all the possible targets
+		// reset the history if the user visited all the possible targets
 		if ( $historyCount >= $this->mData[ 'total' ] ) {
 			$this->mCookie->history = array( $wikiID );
 		}
 
-		//if language other than English and list of targets exhausted fall back to english
+		// if language other than English and list of targets exhausted fall back to english
 		if (
 			(
 				( $historyCount >= $this->mData[ 'total' ] ) ||
@@ -84,7 +84,7 @@ class RandomWiki extends SpecialPage {
 		$from = null;
 		srand( time() );
 
-		//pick a recommended wiki the first time
+		// pick a recommended wiki the first time
 		if ( $firstVisit && !empty( $this->mData[ 'recommended' ] ) ) {
 			$destinationID = $this->mData[ 'recommended' ][ array_rand( $this->mData[ 'recommended' ] ) ];
 			$from = 'recommended';
@@ -97,15 +97,15 @@ class RandomWiki extends SpecialPage {
 			}
 		}
 
-		//in case no wiki has been selected in the previous block pick a wiki from a random hub
+		// in case no wiki has been selected in the previous block pick a wiki from a random hub
 		if ( empty( $destinationID ) ) {
 			$hubsCount = count( $this->mData[ 'hubs' ] );
 			$hub = array_rand( $this->mData[ 'hubs' ], $hubsCount );
 
-			if( !is_array( $hub ) ) {
+			if ( !is_array( $hub ) ) {
 				$hub = array( $hub );
 			}
-			
+
 			foreach ( $hub as $key ) {
 				$tmpHub = array_diff( $this->mData[ 'hubs' ][ $key ], $this->mCookie->history );
 
@@ -118,10 +118,10 @@ class RandomWiki extends SpecialPage {
 				$from = "hub {$itemKey}";
 			}
 		}
-		
+
 		$this->mCookie->history[ ] = $destinationID;
 		$cookieValue = json_encode( $this->mCookie );
-		
+
 		$wgRequest->response()->setcookie( self::COOKIE_NAME_TOKEN, $cookieValue, time() + ( 3600 * self::COOKIE_EXPIRY ) );
 
 		$wgServerRemote = WikiFactory::getVarByName( 'wgServer', $destinationID );
