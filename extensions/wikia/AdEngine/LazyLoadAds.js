@@ -7,6 +7,8 @@ var LazyLoadAds = {
 		threshhold : 200
 	},
 
+	lazyLoadAdTops : null,
+
 	init : function() {
 		$(function() {
 			LazyLoadAds.update();
@@ -17,15 +19,24 @@ var LazyLoadAds = {
 	update : function() {
 		var fold = $(window).height() + $(window).scrollTop();
 
-		$(".LazyLoadAd").each(function() {
-			if ($(this).offset().top < fold + LazyLoadAds.settings.threshhold && !$(this).attr("src")) {
+		if (LazyLoadAds.lazyLoadAdTops==null) {
+			LazyLoadAds.lazyLoadAdTops = {};
+			$(".LazyLoadAd").each(function() {
 				var iframeId = $(this).attr("id");
-                                //remove trailing "_iframe"
-                                var iframeLastIndex = iframeId.lastIndexOf("_iframe", iframeId.length-7);
-                                if (iframeLastIndex == iframeId.length-7) {
-                                    iframeId = iframeId.substr(0, iframeLastIndex);
-                                }
-                                window["fillIframe_" + iframeId]();
+				LazyLoadAds.lazyLoadAdTops[iframeId] = $(this).offset().top;
+			});
+		}
+
+		$.each(LazyLoadAds.lazyLoadAdTops, function(iframeId, topVal) {
+			if (!$("#"+iframeId).attr("src")) {
+				if (topVal < (fold + LazyLoadAds.settings.threshhold)) {
+                                	//remove trailing "_iframe"
+                                	var iframeLastIndex = iframeId.lastIndexOf("_iframe", iframeId.length-7);
+                                	if (iframeLastIndex == iframeId.length-7) {
+                                    		iframeId = iframeId.substr(0, iframeLastIndex);
+                                	}
+                                	window["fillIframe_" + iframeId]();
+				}
 			}
 		});
 	}
