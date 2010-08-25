@@ -5,7 +5,7 @@
 		<span class="dark_text_1" id="article-comments-counter"><?= wfMsg('article-comments-comments', $wgLang->formatNum($countCommentsNested)) ?></span>
 	</h2>
 	<?php
-	if ( $countComments > 1 ) {
+	if ( $countCommentsNested > 1 && $countCommentsNested <= 200 /*see RT#64641*/ ) {
 	?>
 	<div class="article-helper-links">
 		<a href="<?= $title->getFullURL('showall=1') ?>#article-comment-header"><?= wfMsg('article-comments-show-all') ?></a>
