@@ -102,8 +102,8 @@ if( isset( $preWFValues[$name] ) ) {
 	 <textarea name="varValue" id="varValue"><?php if( isset( $variable->cv_value ) ) echo var_export( unserialize( $variable->cv_value ), 1) ?></textarea><br />
 
 <?php endif ?>
-	<input type="button" id="wk-submit" name="submit" value="Parse &amp; Save changes" onclick="YAHOO.Wiki.Factory.Variable.tagCheck();" />
-	<input type="button" id="wk-submit-remove" name="remove-submit" value="Remove value" onclick="YAHOO.Wiki.Factory.Variable.tagCheck('remove');" />
+	<input type="button" id="wk-submit" name="submit" value="Parse &amp; Save changes" onclick="$Factory.Variable.tagCheck();" />
+	<input type="button" id="wk-submit-remove" name="remove-submit" value="Remove value" onclick="$Factory.Variable.tagCheck('remove');" />
 	&nbsp;<span id="wf-variable-parse">&nbsp;</span>
 	&nbsp;&nbsp;Apply change to all wikis by tag:
 	<input type="text" name="tagName" id="tagName" value="" style="width: 100px;" />
@@ -159,8 +159,8 @@ if( isset( $preWFValues[$name] ) ) {
 	 <textarea name="varValue" id="varValue"><?php if( isset( $rel_var->cv_value ) ) echo var_export( unserialize( $rel_var->cv_value ), 1) ?></textarea><br />
 
 <?php endif ?>
-	<input type="button" id="wk-submit" name="submit" value="Parse &amp; Save changes" onclick="YAHOO.Wiki.Factory.Variable.submit($(this).parent().attr('id'));" />
-	<input type="button" id="wk-submit-remove" name="remove-submit" value="Remove value" onclick="YAHOO.Wiki.Factory.Variable.remove_submit(true, $(this).parent().attr('id'));" />
+	<input type="button" id="wk-submit" name="submit" value="Parse &amp; Save changes" onclick="$Factory.Variable.submit($(this).parent().attr('id'));" />
+	<input type="button" id="wk-submit-remove" name="remove-submit" value="Remove value" onclick="$Factory.Factory.Variable.remove_submit(true, $(this).parent().attr('id'));" />
 	&nbsp;<span id="wf-variable-parse-<?= $form_id ?>">&nbsp;</span>
 </form>
 <?php else: ?>

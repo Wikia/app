@@ -44,7 +44,10 @@
 
 #wf-variable-form .perror {color: #fe0000; font-weight: bold; }
 #wf-variable-form .success {color: darkgreen; font-weight: bold; }
-.prompt { color: #fe0000 }
+.prompt { 
+	color: #fe0000;
+	display: block;
+}
 
 div.wf-info {
     border-left: 2px solid darkgreen; background: #CFC;
@@ -55,65 +58,42 @@ div.wf-info {
 </style>
 <script type="text/javascript">
 /*<![CDATA[*/
-YAHOO.namespace("Wiki.Factory");
-YAHOO.namespace("Wiki.Factory.Domain");
-YAHOO.namespace("Wiki.Factory.Variable");
 
-var $Connect = YAHOO.util.Connect;
-var $Dom = YAHOO.util.Dom;
-var $Event = YAHOO.util.Event;
-var $Factory = YAHOO.Wiki.Factory;
-var ajaxpath = "<?php echo $GLOBALS["wgScriptPath"]."/index.php"; ?>";
+var $Factory = {};
+$Factory.Domain = {};
+$Factory.Variable = {};
 
-// return 10digits random id
-$Factory.randid = function(){var a=""; for(var i=0; i<10; i++){var d=Math.floor(Math.random()*10);a += d+"";}return a;};
+var ajaxpath = wgServer + wgScript;
+$Factory.city_id = <?php echo $wiki->city_id ?>;
+
 
 $Factory.VariableCallback = {
-    success: function( oResponse ) {
-        var aData = YAHOO.Tools.JSONParse(oResponse.responseText);
-        var div = $Dom.get( aData["div-name"] );
-        div.innerHTML = aData["div-body"];
+    success: function( aData ) {
+    	$("#" + aData["div-name"]).html(aData["div-body"]);
         //--- now add listeners and events
-	$.getScript(stylepath+'/common/jquery/jquery.autocomplete.js', function() {
-		$('#tagName').autocomplete({
-			serviceUrl: wgServer+wgScript+'?action=ajax&rs=WikiFactoryTags::axQuery',
-			minChars:3,
-			deferRequestBy: 0
+		$.getScript(stylepath+'/common/jquery/jquery.autocomplete.js', function() {
+			$('#tagName').autocomplete({
+				serviceUrl: wgServer+wgScript+'?action=ajax&rs=WikiFactoryTags::axQuery',
+				minChars:3,
+				deferRequestBy: 0
+			});
 		});
-	});
         $Factory.Busy(0);
     },
-    failure: function( oResponse ) {
-        YAHOO.log( "simple replace failure " + oResponse.responseText );
+    failure: function( aData ) {
+        $().log( "simple replace failure" );
         $Factory.Busy(0);
-    },
-    timeout: 50000
-};
-
-$Factory.FilterCallback = {
-    success: function( oResponse ) {
-        var aData = YAHOO.Tools.JSONParse( oResponse.responseText );
-        $Dom.get( "wk-variable-select" ).innerHTML = aData["selector"];
-        $Dom.get( "wk-variable-select" ).disabled = false;
-        $Factory.Busy(0);
-
-    },
-    failure: function( oResponse ) {
-        $Factory.Busy(0);
-        $Dom.get("wk-variable-select").disabled = false;
-    },
-    timeout: 50000
+    }
 };
 
 $Factory.ReplaceCallback = {
-    success: function( oResponse ) {
-        var Data = YAHOO.Tools.JSONParse(oResponse.responseText);
-        $Dom.get( Data["div-name"] ).innerHTML = Data["div-body"];
+    success: function( Data ) {
+        $( "#" + Data["div-name"] ).html(Data["div-body"]);
 
         $Factory.Busy(0);
         // other conditions
         if ( Data["div-name"] == "wf-clear-cache") {
-            setTimeout("var alink = function(){$Dom.get('wf-clear-cache').innerHTML ='<?php echo wfMsg("wikifactory_removevariable") ?>';};alink();",2000);
+            setTimeout("var alink = function(){ $('#wf-clear-cache').html('<?php echo wfMsg("wikifactory_removevariable") ?>');};alink();",2000);
         }
     },
     failure: function( oResponse ) {
@@ -124,161 +104,175 @@ $Factory.ReplaceCallback = {
 
 $Factory.Busy = function (state) {
     if (state == 0) {
-        $Dom.setStyle("wk-busy-div", "display", "none");
+        $("#wk-busy-div" ).css( "display", "none");
     }
     else {
-        $Dom.setStyle("wk-busy-div", "display", "block");
+    	$("#wk-busy-div" ).css( "display", "block");
     }
 };
 
+
+$Factory.Domain.CRUD = function(mode, domain, addparams) {
+	$Factory.Busy(1);
+	var params = "&cityid=" + $Factory.city_id + "&domain=" + domain + addparams;
+	$.ajax({
+    	type:"POST",
+    	dataType: "json",
+    	url: ajaxpath+"?action=ajax&rs=axWFactoryDomainCRUD&rsargs[0]=" + mode + params,
+    	success: $Factory.Domain.Callback.success,
+    	error: $Factory.Domain.Callback.failure,
+    	timeout: 20000
+    });	
+}
+
 $Factory.Domain.Callback = {
-    success: function( oResponse ) {
-        var oReturn = YAHOO.Tools.JSONParse(oResponse.responseText);
+    success: function( oReturn ) {
         var aDomains = oReturn["domains"];
         var sInfo = oReturn["info"];
 
-        var sHTML = "";
-        document.getElementById( "wk-domain-ol" ).innerHTML = "";
+        $( "#wk-domain-ol" ).empty();
         for (var i=0;i<aDomains.length;i++) {
-            var id = $Factory.randid();
-            var li = $Dom.create("li", aDomains[i], {id: id},[
-                document.createTextNode( " [" ),
-                $Dom.create("a", "change", {id: id + "change", href: "#"}),
-                document.createTextNode("] ["),
-                $Dom.create("a", "remove", {id: id + "remove", href: "#"}),
-                document.createTextNode("] ["),
-                $Dom.create("a", "setmain", {id: id + "setmain", href: "#"}),
-                document.createTextNode("]")
-            ]);
-            $Event.addListener(id + "change", "click", $Factory.Domain.change, [id, 1, aDomains[i]]);
-            $Event.addListener(id + "remove", "click", $Factory.Domain.remove, [id, 1, aDomains[i]]);
-            $Event.addListener(id + "setmain", "click", $Factory.Domain.setmain, [id, 1, aDomains[i]]);
-            $Dom.get( "wk-domain-ol" ).appendChild(li);
+            var id = "wk-domain-li-" + i;
+			var li = $("<li></li>").attr("id", id).html(aDomains[i])
+				.append($("<a>[change]</a>").attr("id",  id + "change"))
+				.append($("<a>[remove]</a>").attr("id",  id + "remove"))
+				.append($("<a>[setmain]</a>").attr("id", id + "setmain"));
+			
+            $Factory.Domain.listEvents(aDomains[i], i);
+            $( "#wk-domain-ol" ).append(li);
         }
-        var info = $Dom.create("div", "", {});
-        info.innerHTML = sInfo;
-        $Dom.get( "wk-domain-ol" ).appendChild(info);
+        var info = $("<div></div>").html(sInfo); 
+        $( "#wk-domain-ol" ).append(info); 
         $Factory.Busy(0);
     },
     failure: function( oResponse ) {
         $Factory.Busy(0);
-    },
-    timeout: 20000
+    }
 };
+
+$Factory.Domain.listEvents = function(domain, key) {
+	setTimeout(function() {
+		var params = { key: key, domain:domain, element: "wk-domain-li-" + key };
+		$("#wk-domain-li-" + key + "remove").click( jQuery.proxy( $Factory.Domain.remove, params ) );
+		$("#wk-domain-li-" + key + "change").click( jQuery.proxy( $Factory.Domain.change, params ) );
+		$("#wk-domain-li-" + key + "setmain").click( jQuery.proxy( $Factory.Domain.setmain, params ) );
+	},500);
+}
 
 $Factory.Domain.add = function ( e ) {
     $Factory.Busy(1);
-    var input = document.getElementById( "wk-domain-add" );
-    var params = "&domain="+input.value+"&cityid="+<?php echo $wiki->city_id ?>;
-    $Connect.asyncRequest( "GET", ajaxpath+"?action=ajax&rs=axWFactoryDomainCRUD&rsargs[0]=add" + params, $Factory.Domain.Callback );
+    $Factory.Domain.CRUD("add", $( "#wk-domain-add" ).val(), "" );
+    return false;
 };
 
 // data[0] - div we change, data[1] - step, data[2] - domainname
 $Factory.Domain.change = function ( e, data ) {
-    $Event.preventDefault(e);
-    switch ( data[1] ) {
-        case 1:
-            var id = $Factory.randid();
-            $Dom.get( data[0] ).innerHTML = "";
-            var prompt = $Dom.create("span", "New domain name: ", {},[
-                $Dom.create("input", "", { id: "wk-change-input", name: "wk-change-input", type: "text", value: data[2], size: "20", maxlength: "255" }),
-                $Dom.create("input", "", { id: id+"change", name: id+"change", value: "Change", type: "button" }),
-                $Dom.create("input", "", { id: id+"cancel", name: id+"cancel", value: "Cancel", type: "button" })
-            ]);
-            $Dom.get( data[0] ).appendChild(prompt);
-            $Event.addListener(id+"cancel", "click", $Factory.Domain.change, [data[0], 2, data[2]]);
-            $Event.addListener(id+"change", "click", $Factory.Domain.change, [data[0], 3, data[2]]);
-            break;
-        case 2:
-            $Factory.Busy(1);
-            var params = "&cityid="+<?php echo $wiki->city_id ?>;
-            $Connect.asyncRequest( "GET", ajaxpath+"?action=ajax&rs=axWFactoryDomainCRUD&rsargs[0]=cancel" + params, $Factory.Domain.Callback );
-            break;
-        case 3:
-            $Factory.Busy(1);
-            var newdomain = document.getElementById( "wk-change-input" ).value;
-            var params = "&cityid="+<?php echo $wiki->city_id ?>+"&domain="+data[2]+"&newdomain="+newdomain;
-            $Connect.asyncRequest( "GET", ajaxpath+"?action=ajax&rs=axWFactoryDomainCRUD&rsargs[0]=change" + params, $Factory.Domain.Callback );
-            break;
-    }
-};
-// data[0] - div we change, data[1] - step, data[2] - domainname
-$Factory.Domain.remove = function ( e, data ) {
-    $Event.preventDefault(e);
-    switch ( data[1] ) {
-        case 1:
-            var id = $Factory.randid();
-            document.getElementById( data[0] ).innerHTML = "";
-            var prompt = $Dom.create("span", "Remove "+data[2]+"?", {className: "prompt"},[
-                document.createTextNode(" ["),
-                $Dom.create("a", "Yes", {id: id+"remove", href: "#"}),
-                document.createTextNode("] ["),
-                $Dom.create("a", "Cancel", {id: id+"cancel", href: "#"}),
-                document.createTextNode("]")
-            ]);
-            document.getElementById( data[0] ).appendChild(prompt);
-            $Event.addListener(id+"cancel", "click", $Factory.Domain.remove, [data[0], 2, data[2]]);
-            $Event.addListener(id+"remove", "click", $Factory.Domain.remove, [data[0], 3, data[2]]);
-            break;
-        case 2:
-            $Factory.Busy(1);
-            var params = "&cityid="+<?php echo $wiki->city_id ?>;
-            $Connect.asyncRequest( "GET", ajaxpath+"?action=ajax&rs=axWFactoryDomainCRUD&rsargs[0]=cancel" + params, $Factory.Domain.Callback );
-            break;
-        case 3:
-            $Factory.Busy(1);
-            var params = "&cityid="+<?php echo $wiki->city_id ?>+"&domain="+data[2];
-            $Connect.asyncRequest( "GET", ajaxpath+"?action=ajax&rs=axWFactoryDomainCRUD&rsargs[0]=remove" + params, $Factory.Domain.Callback );
-            break;
-    }
-};
-// data[0] - div we change, data[1] - step, data[2] - domainname
-$Factory.Domain.setmain = function ( e, data ) {
-    $Event.preventDefault(e);
-    switch ( data[1] ) {
-        case 1:
-            var id = $Factory.randid();
-            document.getElementById( data[0] ).innerHTML = "";
-            var prompt = $Dom.create("span", "Set "+data[2]+" as main?", {className: "prompt"},[
-                document.createTextNode(" ["),
-                $Dom.create("a", "Yes", {id: id+"setmain", href: "#"}),
-                document.createTextNode("] ["),
-                $Dom.create("a", "Cancel", {id: id+"cancel", href: "#"}),
-                document.createTextNode("]")
-            ]);
-            document.getElementById( data[0] ).appendChild(prompt);
-            $Event.addListener(id+"cancel", "click", $Factory.Domain.setmain, [data[0], 2, data[2]]);
-            $Event.addListener(id+"setmain", "click", $Factory.Domain.setmain, [data[0], 3, data[2]]);
-            break;
-        case 2:
-            $Factory.Busy(1);
-            var params = "&cityid="+<?php echo $wiki->city_id ?>;
-            $Connect.asyncRequest( "GET", ajaxpath+"?action=ajax&rs=axWFactoryDomainCRUD&rsargs[0]=cancel" + params, $Factory.Domain.Callback );
-            break;
-        case 3:
-            $Factory.Busy(1);
-            var params = "&cityid="+<?php echo $wiki->city_id ?>+"&domain="+data[2];
-            $Connect.asyncRequest( "GET", ajaxpath+"?action=ajax&rs=axWFactoryDomainCRUD&rsargs[0]=setmain" + params, $Factory.Domain.Callback );
-            break;
-    }
+	$('.prompt').remove();
+    var input = $("<input/>")
+    	.attr("id", "wk-change-input")
+    	.attr("name", "wk-change-input")
+    	.attr( "type", "text")
+    	.attr("value", this.domain)
+    	.attr("size", 20)
+    	.attr("maxlength", 255);
+    
+    
+    var change = $("<input/>")
+    	.attr('value', "Change")
+    	.attr('type', "button")
+    	.click(jQuery.proxy(function() {
+            var newdomain = $( "#wk-change-input" ).val();
+            var params = "&newdomain="+newdomain;
+            $Factory.Domain.CRUD("change", this.domain, params);
+			return false;			
+		}, this));
+
+    var cancel = $("<input/>")
+		.attr('value', "Cancel")
+		.attr('type', "button")
+		.click(function(e){
+			$(e.target).closest("span").remove();
+			return false;
+    	});
+        
+    $("<span>New domain name: <span/>")
+    	.attr("class","prompt")
+		.append(input)
+		.append(change)
+		.append(cancel)
+		.appendTo("#"+this.element);	
+	return false;
 };
 
-// data[0] - selector, data[1] - which one
-$Factory.Variable.select = function ( e, data ) {
+$Factory.Domain.confirm = function(question,element,callback) {
+	$('.prompt').remove();
+	var cancel = $("<a>[Cancel]<a/>").click(
+			function(e) {
+				$(e.target).closest("span").remove();
+				return false;
+			}	
+    );
+
+    var yes = $("<a>[Yes]<a/>").click(callback);
+    
+    $("<span><span/>")
+		.html(question)
+		.attr("class","prompt")
+		.append(yes)
+		.append(cancel)
+		.appendTo("#"+element);	
+}
+
+$Factory.Domain.remove = function ( e, data ) {
+	$Factory.Domain.confirm(
+		"Remove "+this.domain+"?",
+		this.element,
+		jQuery.proxy(
+			function(e) {
+			    $Factory.Domain.CRUD("remove", this.domain, "");
+				return false;
+		}, this)	
+	);
+    return false;
+};
+
+$Factory.Domain.setmain = function ( e, data ) {
+	$Factory.Domain.confirm(
+			"Set "+this.domain + " as main ?",
+			this.element,
+			jQuery.proxy(
+				function(e) {
+				    $Factory.Domain.CRUD("setmain", this.domain, "");
+					return false;
+			}, this)	
+	);
+	return false;
+};
+
+
+$Factory.Variable.selectChange = function ( e, data, type ) {
     $Factory.Busy(1);
     var values = "";
-    values += "&varid=" + $Dom.get( "wk-variable-select" ).value;
-    values += "&wiki=" + <?php echo $wiki->city_id ?>;
-    $Connect.asyncRequest( 'GET', ajaxpath+"?action=ajax&rsargs[0]="+data[1]+"&rs=axWFactoryGetVariable" + values, $Factory.VariableCallback );
+    values += "&varid=" + $( "#wk-variable-select" ).val();
+    values += "&wiki=" + $Factory.city_id;
+	$.ajax({
+    	type:"GET",
+    	dataType: "json",
+    	url: ajaxpath+"?action=ajax&rsargs[0]="+data[1]+"&rs=" + type + values,
+    	success: $Factory.VariableCallback.success,
+    	error: $Factory.VariableCallback.failure,
+    	timeout: 50000
+    });
+}
+
+$Factory.Variable.select = function ( e, data ) {
+	$Factory.Variable.selectChange( e, data, 'axWFactoryGetVariable' );
 };
+
 
 // For editing the variable itself (not its value).
 $Factory.Variable.change = function ( e, data ) {
-    $Factory.Busy(1);
-    var values = "";
-    values += "&varid=" + $Dom.get( "wk-variable-select" ).value;
-    values += "&wiki=" + <?php echo $wiki->city_id ?>;
-    $Connect.asyncRequest( 'GET', ajaxpath+"?action=ajax&rsargs[0]="+data[1]+"&rs=axWFactoryChangeVariable" + values, $Factory.VariableCallback );
+	$Factory.Variable.selectChange( e, data, 'axWFactoryChangeVariable' );
 };
 
 // For editing the variable itself (not its value).
@@ -288,67 +282,114 @@ $Factory.Variable.submitChangeVariable = function ( e, data ) {
     var values = "";
 
 	// TODO: FILL THE VALUES WITH EVERYTHING FROM THE FORM.
-	values += "&cv_variable_id=" + encodeURIComponent($Dom.get('wk-change-cv_variable_id').value);
-	values += "&cv_name=" + encodeURIComponent($Dom.get('wk-change-cv_name').value);
-	values += "&cv_variable_type=" + encodeURIComponent($Dom.get('wk-change-cv_variable_type').value);
-	values += "&cv_access_level=" + encodeURIComponent($Dom.get('wk-change-cv_access_level').value);
-	values += "&cv_variable_group=" + encodeURIComponent($Dom.get('wk-change-cv_variable_group').value);
-	values += "&cv_description=" + encodeURIComponent($Dom.get('wk-change-cv_description').value);
+	values += "&cv_variable_id=" + encodeURIComponent($('#wk-change-cv_variable_id').val());
+	values += "&cv_name=" + encodeURIComponent($('#wk-change-cv_name').val());
+	values += "&cv_variable_type=" + encodeURIComponent($('#wk-change-cv_variable_type').val());
+	values += "&cv_access_level=" + encodeURIComponent($('#wk-change-cv_access_level').val());
+	values += "&cv_variable_group=" + encodeURIComponent($('#wk-change-cv_variable_group').val());
+	values += "&cv_description=" + encodeURIComponent($('#wk-change-cv_description').val());
 
 	// For restoring to the original form afterwards.
-    values += "&wiki=" + <?php echo $wiki->city_id ?>;
-    $Connect.asyncRequest( 'POST', ajaxpath+"?action=ajax&rsargs[0]="+data[1]+"&rs=axWFactorySubmitChangeVariable" + values, $Factory.VariableCallback );
+    values += "&wiki=" + $Factory.city_id;
+
+	$.ajax({
+    	type:"POST",
+    	dataType: "json",
+    	url: ajaxpath+"?action=ajax&rsargs[0]="+data[1]+"&rs=axWFactorySubmitChangeVariable" + values,
+    	success: $Factory.VariableCallback.success,
+    	error: $Factory.VariableCallback.failure,
+    	timeout: 50000
+    });
 	return false;
 };
 
 // filter variable selector
 $Factory.Variable.filter = function ( e ) {
     $Factory.Busy(1);
-
+    
     // disable variable selector
-    $Dom.get("wk-variable-select").disabled = true;
+    $("#wk-variable-select").attr('disabled', true);
 
     // read data from form
     var values = "";
-    values += "&defined=" + $Dom.get("wf-only-defined").checked;
-    values += "&editable=" + $Dom.get("wf-only-editable").checked;
-    values += "&group=" + $Dom.get("wk-group-select").value;
-    values += "&wiki=" + <?php echo $wiki->city_id ?>;
-	values += "&string=" + $Dom.get( "wfOnlyWithString" ).value;
-    $Connect.asyncRequest( 'GET', ajaxpath+"?action=ajax&rs=axWFactoryFilterVariables" + values, $Factory.FilterCallback );
+    values += "&defined=" + $("#wf-only-defined").attr("checked");
+    values += "&editable=" + $("#wf-only-editable").attr("checked");
+    values += "&group=" + $("#wk-group-select").val();
+    values += "&wiki=" + $Factory.city_id;
+	values += "&string=" + $( "#wfOnlyWithString" ).val();
+	
+    $.ajax({
+    	type:"POST",
+    	dataType: "json",
+    	url: ajaxpath+"?action=ajax&rs=axWFactoryFilterVariables" + values,
+    	success: function( aData ) {
+    		$('#wk-variable-select').html(aData['selector']);
+    	    $( "#wk-variable-select" ).attr("disabled", false);
+            $Factory.Busy(0);
+    	},
+    	error: function( aData ) {
+    		 $Factory.Busy(0);
+             $("#wk-variable-select").attr("disabled", false);
+    	},
+    	timeout: 50000
+    });
 };
 
 // clear data in memcached
 $Factory.Variable.clear = function ( e ) {
-    $Event.preventDefault(e);
     $Factory.Busy(1);
-    var params = "&cityid=" + <?php echo $wiki->city_id ?>;
-    $Connect.asyncRequest( 'GET', ajaxpath+"?action=ajax&rs=axWFactoryClearCache" + params, $Factory.ReplaceCallback );
-};
-
-$Factory.Variable.remove = function ( e, step ) {
-    $Event.preventDefault(e);
-    switch ( step ) {
-        case 1:
-            break;
-        case 2:
-            break;
-    }
-    $Factory.Busy(1);
+    var params = "&cityid=" + $Factory.city_id;
+	$.ajax({
+    	type:"POST",
+    	dataType: "json",
+    	url: ajaxpath+"?action=ajax&rs=axWFactoryClearCache" + params,
+    	success: $Factory.ReplaceCallback.success,
+    	error:  $Factory.ReplaceCallback.failure,
+    	timeout: 50000
+    });
+    return false;
 };
 
 // submit form with new variable data
-$Factory.Variable.submit = function (form) {
-    if (form == null) form = "wf-variable-form";
-    $Factory.Busy(1);
-    var oForm = $Dom.get(form);
-    $Connect.setForm(oForm, false);
-    $Connect.asyncRequest( 'POST', ajaxpath+"?action=ajax&rs=axWFactorySaveVariable", $Factory.ReplaceCallback );
+
+$Factory.Variable.post = function (form, mode) {
+    if (form == null) {
+        form = "wf-variable-form";
+   }   
+
+   $Factory.Busy(1);
+   var params = $("#" + form).serialize();
+
+	$.ajax({
+		type:"POST",
+		dataType: "json",
+		url: ajaxpath,
+		data: "action=ajax&rs=" + mode + "&" + params,
+		success: $Factory.ReplaceCallback.success,
+		error:  $Factory.ReplaceCallback.failure,
+		timeout: 50000
+   });
+}
+
+
+$Factory.Variable.submit = function (form, mode) {
+	$Factory.Variable.post(form, 'axWFactorySaveVariable');
+	return false;
+};
+
+
+//submit form with new variable data
+$Factory.Variable.remove_submit = function ( confirm, form ) {
+	if ( ( confirm == true ) && !window.confirm('Are You sure?') ) {
+		return false;
+	}
+	$Factory.Variable.post(form, 'axWFactoryRemoveVariable');
+	return false;
 };
 
 $Factory.Variable.tagCheck = function ( submitType ) {
-	$Dom.get( 'wf-tag-parse' ).innerHTML = '';
-	var tagName = $Dom.get('tagName').value;
+	$( '#wf-tag-parse' ).empty();
+	var tagName = $('#tagName').val();
 	if ( tagName == '' ) {
 		if( submitType == 'remove' ) {
 			$Factory.Variable.remove_submit(true);
@@ -358,11 +399,15 @@ $Factory.Variable.tagCheck = function ( submitType ) {
 		}
 	}
 	else {
-		$Connect.asyncRequest( 'POST', ajaxpath+"?action=ajax&rs=axWFactoryTagCheck&tagName="+tagName, {
+		$.ajax({
+	 	  	type:"POST",
+	 	  	dataType: "json",
+	 	  	url: ajaxpath,
+	 	  	data: "action=ajax&rs=axWFactoryTagCheck&tagName="+tagName,
 			success: function( oResponse ) {
 				var data = YAHOO.Tools.JSONParse(oResponse.responseText);
 				if( data.wikiCount == 0 ) {
-					$Dom.get( 'wf-tag-parse' ).innerHTML = "<span style=\"color: red; font-weight: bold;\">tag doesn't exists</span>";
+					$( '#wf-tag-parse' ).get("<span style=\"color: red; font-weight: bold;\">tag doesn't exists</span>");
 				}
 				else {
 					if( !window.confirm('This change will apply to all "'+tagName+'" tagged wikis ('+data.wikiCount+' in total). Are you really, really sure?') ) {
@@ -376,44 +421,35 @@ $Factory.Variable.tagCheck = function ( submitType ) {
 					}
 				}
 			},
-			timeout: 50000
-		});
+	  	 	timeout: 50000
+	   });
 	}
-};
-
-// submit form with new variable data
-$Factory.Variable.remove_submit = function ( confirm, form ) {
-	if ( ( confirm == true ) && !window.confirm('Are You sure?') ) {
-		return false;
-	}
-
-	if (form == null) form = "wf-variable-form";
-	$Factory.Busy(1);
-	var oForm = $Dom.get(form);
-	$Connect.setForm(oForm, false);
-	$Connect.asyncRequest( 'POST', ajaxpath+"?action=ajax&rs=axWFactoryRemoveVariable", $Factory.ReplaceCallback );
 };
 
 $Factory.Variable.close_submit = function (opt) {
     $Factory.Busy(1);
-    var oForm = $Dom.get('wf-close-form');
+    var oForm = $('#wf-close-form');
 	submitField = document.createElement("input");
 	submitField.type = "hidden";
 	submitField.name = "submit" + opt;
 	submitField.value = opt;
-	oForm.appendChild(submitField);
+	
+	oForm.append(submitField);
 	oForm.submit();
 };
 
-YAHOO.util.Event.addListener("wf-only-defined", "click", $Factory.Variable.filter );
-YAHOO.util.Event.addListener("wf-only-editable", "click", $Factory.Variable.filter );
-YAHOO.util.Event.addListener("wfOnlyWithString", "keypress", $Factory.Variable.filter );
-YAHOO.util.Event.addListener("wk-group-select", "change", $Factory.Variable.filter );
+$(function() {
+	$('#wf-only-defined').click( $Factory.Variable.filter );
+	$('#wf-only-editable').click( $Factory.Variable.filter );
+	$('#wfOnlyWithString').keyup( $Factory.Variable.filter );
+	$('#wk-group-select').change( $Factory.Variable.filter );
+	$('#wk-domain-add-submit').click( $Factory.Domain.add );
+	$("#wf-clear-cache").click($Factory.Variable.clear);
 
-YAHOO.util.Event.addListener("wk-variable-select", "click", $Factory.Variable.select, [ "wk-variable-select", 1] );
-//YAHOO.util.Event.addListener("wk-variable-change", "click", $Factory.Variable.change, [ "wk-variable-select", 1] ); // only works for first load.
-YAHOO.util.Event.addListener("wk-domain-add-submit", "click", $Factory.Domain.add, "wk-domain-add");
-YAHOO.util.Event.addListener("wf-clear-cache", "click", $Factory.Variable.clear);
+	$("#wk-variable-select").click( function(e) {
+		return $Factory.Variable.select(e, [ "wk-variable-select", 1]);
+	});	
+});
 
 /*]]>*/
 </script>

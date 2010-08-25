@@ -55,14 +55,12 @@
                     <?php
 					foreach( $domains as $key => $domain): ?>
                     <li id="wk-domain-li-<?= $key ?>"><?= $domain ?>
-                        [<a id="wk-domain-li-<?= $key ?>change" href="#">change</a>]
-                        [<a id="wk-domain-li-<?= $key ?>remove" href="#">remove</a>]
-                        [<a id="wk-domain-li-<?= $key ?>setmain" href="#">set main</a>]
+                        <a id="wk-domain-li-<?= $key ?>change" href="#">[change]</a>
+                        <a id="wk-domain-li-<?= $key ?>remove" href="#">[remove]</a>
+                        <a id="wk-domain-li-<?= $key ?>setmain" href="#">[set main]</a>
                         <script type="text/javascript">
                         /*<![CDATA[*/
-                            $Event.addListener("wk-domain-li-<?= $key ?>remove", "click", $Factory.Domain.remove, ["wk-domain-li-<?= $key ?>", 1, "<?= $domain?>" ]);
-                            $Event.addListener("wk-domain-li-<?= $key ?>change", "click", $Factory.Domain.change, ["wk-domain-li-<?= $key ?>", 1, "<?= $domain?>" ]);
-                            $Event.addListener("wk-domain-li-<?= $key ?>setmain", "click", $Factory.Domain.setmain, ["wk-domain-li-<?= $key ?>", 1, "<?= $domain?>" ]);
+                        	$Factory.Domain.listEvents("<?= $domain?>", <?= $key ?>);
                         /*]]>*/
                         </script>
                     </li>

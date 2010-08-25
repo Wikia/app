@@ -42,22 +42,21 @@
 /*<![CDATA[*/
 $Factory.Variable.__filter = function ( e ) {
 	this.__checkIsLoaded = function () {
-		if ( $Dom.get( "wk-busy-div" ).style.display == 'block') {
+		if ( $( "#wk-busy-div" ).css('display') == 'block') {
 			setTimeout(this.__checkIsLoaded, 1000);
 		} else {
-			if ( $Dom.get( "wk-variable-select" ).length > 0 ) {
-				$Dom.get( "wk-variable-select" ).selectedIndex = 0;
+			if ($( "#wk-variable-select" ).attr('length') > 0 ) {
+				$( "#wk-variable-select" ).attr("selectedIndex", 0);
 				$Factory.Variable.select(e, [ "wk-variable-select", 1]);
 			}
 		}
 	}
 	
-	$Dom.get( "wfOnlyWithString" ).value = "<?=addslashes($variableName)?>";
+	$( "#wfOnlyWithString" ).val("<?=addslashes($variableName)?>");
 	$Factory.Variable.filter(e);
-	setTimeout(this.__checkIsLoaded,1000);
+	setTimeout(this.__checkIsLoaded, 1000);
 }
-
-$Event.on(window, "load", $Factory.Variable.__filter);
+$($Factory.Variable.__filter);
 /*]]>*/
 </script>
 <?php endif ?>

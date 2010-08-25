@@ -270,7 +270,7 @@ class WikiFactory {
 			array( "city_domain" => strtolower( $domain ) ),
 			__METHOD__
 		);
-		if( strtolower( $oRow->city_domain ) == strtolower( $domain ) ) {
+		if( strtolower( $oRow['city_domain'] ) == strtolower( $domain ) ) {
 			/**
 			 * ... yes it exists
 			 */
