@@ -225,7 +225,7 @@ function get_content($host)
 	$errorFile = escapeshellarg(NeueWebsiteHelper::getErrorFile($host));
 	$host = escapeshellarg("http://".$host);
 	$userAgent = escapeshellarg("Mozilla/5.0 (Windows; U; Windows NT 5.1; pl; rv:1.9.2.6) Gecko/20100625 Firefox/3.6.6");
-	$cmd = "/usr/bin/wget -t 5 -T 30 -U $userAgent -S -O $contentsFile -o $logFile $host |cat - $errorFile";
+	$cmd = "/usr/bin/wget -t 5 -T 30 -U $userAgent -S -O $contentsFile -o $logFile $host > $errorFile";
 
 	// Execute and check the result
 	$output = array();
