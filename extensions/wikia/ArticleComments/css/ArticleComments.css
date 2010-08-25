@@ -30,8 +30,7 @@
 
 #article-comments .article-comments-li {
 	background: transparent;
-	border-top-style: solid;
-	border-top-width: 1px;
+	border-top: 1px solid #AAA;
 	margin-bottom: 5px;
 	padding: 12px 0;
 }
