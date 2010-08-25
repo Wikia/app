@@ -96,5 +96,53 @@ Class WikiFactoryChangedHooks {
 
 		return $numErrors;
 	} // end setMessage()
+	
+	/*
+	 *@author Federico "Lox" Lucignano
+	 *
+	 * creates the needed tables for AbuseFilter extension when
+	 * the wgEnableAbuseFilterExtension value is set to true
+	 * via WikiFactory (as requested in #56866)
+	 */
+	static public function onAbuseFilterEnabled( $varName, $wikiId, $value ) {
+		wfProfileIn( __METHOD__ );
+		
+		if ( $varName == 'wgEnableAbuseFilterExtension' && $value == true ) {
+			global $wgDBtype;
+			$dir = dirname( __FILE__ ) . '/../../AbuseFilter';
+			$dbName = WikiFactory::IDtoDB($wikiId);
+			$dbw = wfGetDB(DB_MASTER, 'wikifactory', $dbName);
 
+			//not really interested in the Postgres variant, add the case if needed (take a look at onLoadExtensionSchemaUpdates)
+			if( $wgDBtype == 'mysql' ) {
+				$sqlSources = array(
+					"{$dir}/abusefilter.tables.sql",
+					"{$dir}/db_patches/patch-abuse_filter_history.sql",
+					"{$dir}/db_patches/patch-afh_changed_fields.sql",
+					"{$dir}/db_patches/patch-af_deleted.sql",
+					"{$dir}/db_patches/patch-af_actions.sql"
+				);
+
+				foreach( $sqlSources as $path ) {
+					Wikia::log(__METHOD__, null, "Running {$path} on {$dbName} database", true);
+
+					try {
+						$error = $dbw->sourceFile( $path );
+
+						if ( $error !== true ) {
+							Wikia::log(__METHOD__, null, "Error running {$path}: {$error}", true);
+						}
+
+						$dbw->commit();
+					} catch (Exception $e) {
+						Wikia::log(__METHOD__, null, "Error running {$path}: {$e->getMessage()}", true);
+					}
+				}
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return true;
+	}
 }

@@ -10,4 +10,5 @@ $wgAutoloadClasses['WikiFactoryChangedHooks'] = dirname(__FILE__)."/WikiFactoryC
 
 // Alphabetical
 $wgHooks['WikiFactoryChanged'][] = 'WikiFactoryChangedHooks::recipesTweaks';
+$wgHooks['WikiFactoryChanged'][] = 'WikiFactoryChangedHooks::onAbuseFilterEnabled';
 
