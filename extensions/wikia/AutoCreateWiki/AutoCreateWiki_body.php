@@ -798,6 +798,12 @@ class AutoCreateWikiPage extends SpecialPage {
 		#-- for other users -> for staff only
 		if ( $wgUser->isAllowed( 'createwikimakefounder' ) && !empty($this->awcStaff_username) ) {
 			$this->mFounder = User::newFromName($this->awcStaff_username);
+		} else {
+			$userId = $this->mFounder->getId();
+			$userName = $this->mFounder->getName();
+			if ( empty($userId) ) {
+				$this->mFounder = User::newFromName($userName);
+			}
 		}
 
 		$fixedTitle = trim( $this->awcName );
@@ -855,7 +861,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->mWikiData[ "dbname"        ] = $this->prepareDBName( $this->mWikiData[ "name"], $this->awcLanguage );
 		$this->mWikiData[ "founder-name"  ] = $this->mFounder->getName();
 		$this->mWikiData[ "founder-email" ] = $this->mFounder->getEmail();
-		$this->mWikiData[ "founder"       ] = User::idFromName($this->mWikiData["founder-name"]);
+		$this->mWikiData[ "founder"       ] = $this->mFounder->getId();
 		
 		$this->mWikiData[ "type"          ] = $this->mType;
 
