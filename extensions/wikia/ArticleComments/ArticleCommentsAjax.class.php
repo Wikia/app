@@ -188,7 +188,7 @@ class ArticleCommentsAjax {
 			$comments = $listing->getCommentPages(true, false);
 			$countComments = count($comments);
 			$countPages = ceil($countComments / $wgArticleCommentsMaxPerPage);
-			if ($showall != 1) {
+			if ($showall != 1 || $listing->getCountAllNested() > 200 /*see RT#64641*/) {
 				$comments = array_slice($comments, ($page - 1) * $wgArticleCommentsMaxPerPage, $wgArticleCommentsMaxPerPage, true);
 			}
 			$commentsHTML = ArticleCommentList::formatList($comments);

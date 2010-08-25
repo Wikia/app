@@ -1206,7 +1206,7 @@ class ArticleCommentList {
 		//1st level descending, 2nd level ascending
 		krsort($this->mCommentsAll, SORT_NUMERIC);
 		//pagination
-		if ($page !== false && $showall != 1) {
+		if ($page !== false && ($showall != 1 || $this->getCountAllNested() > 200 /*see RT#64641*/)) {
 			$this->mComments = array_slice($this->mCommentsAll, ($page - 1) * $wgArticleCommentsMaxPerPage, $wgArticleCommentsMaxPerPage, true);
 		} else {
 			$this->mComments = $this->mCommentsAll;
@@ -1312,7 +1312,7 @@ class ArticleCommentList {
 			$page = $pageRequest;
 		}
 
-		if ($showall != 1) {
+		if ($showall != 1 || $this->getCountAllNested() > 200 /*see RT#64641*/) {
 			$comments = array_slice($comments, ($page - 1) * $wgArticleCommentsMaxPerPage, $wgArticleCommentsMaxPerPage, true);
 		}
 		$pagination = self::doPagination($countComments, count($comments), $page);
@@ -1321,19 +1321,19 @@ class ArticleCommentList {
 
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 		$template->set_vars( array(
-			'title'			=> $wgTitle,
-			'avatar'		=> $avatar,
-			'canEdit'		=> $canEdit,
-			'isBlocked'		=> $isBlocked,
-			'reason'		=> $isBlocked ? $this->blockedPage() : '',
-			'commentListText'	=> $commentListText,
-			'isReadOnly'		=> $isReadOnly,
-			'pagination'		=> $pagination,
-			'countComments'		=> $countComments,
-			'countCommentsNested'	=> $countCommentsNested,
-			'stylePath'		=> $wgStylePath,
-			'isFBConnectionProblem'	=> ArticleCommentInit::isFbConnectionNeeded(),
-			'isAnon'		=> $wgUser->isAnon()
+			'title' => $wgTitle,
+			'avatar' => $avatar,
+			'canEdit' => $canEdit,
+			'isBlocked' => $isBlocked,
+			'reason' => $isBlocked ? $this->blockedPage() : '',
+			'commentListText' => $commentListText,
+			'isReadOnly' => $isReadOnly,
+			'pagination' => $pagination,
+			'countComments' => $countComments,
+			'countCommentsNested' => $countCommentsNested,
+			'stylePath' => $wgStylePath,
+			'isFBConnectionProblem' => ArticleCommentInit::isFbConnectionNeeded(),
+			'isAnon' => $wgUser->isAnon()
 		) );
 
 		$text = $template->execute( 'comment-main' );
