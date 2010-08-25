@@ -82,6 +82,10 @@ div.article-comm-input-text {
 	margin-left: 185px;
 }
 
+.custom_answers div.article-comm-input-text {
+	margin-left: 80px;
+}
+
 .article-comments span.info {
 	color: green;
 	margin-left: 8px;
