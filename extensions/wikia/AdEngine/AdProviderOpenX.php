@@ -132,8 +132,10 @@ EOT;
 		$adUrlScript = $this->getAdUrlScript($slotname, null, true);
                 $out = '<script type="text/javascript">' .
 			$adUrlScript .
+			// wlee: removing property 'display' is a hack to force FOOTER_SPOTLIGHT_LEFT to show up. not sure
+			// why this ad slot has "display: none" in the first place
                         $function_name . ' = function() { ' .
-			'document.getElementById("' . addslashes($slotname) ."_iframe\").src = base_url_{$slotname}; }</script>";
+			'document.getElementById("' . addslashes($slotname) ."_iframe\").src = base_url_{$slotname}; document.getElementById(\"".addslashes($slotname)."_iframe\").style.removeProperty(\"display\");}</script>";
 
                 return $out;
         }

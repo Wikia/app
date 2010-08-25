@@ -139,7 +139,7 @@ class AdEngine {
 			$out .= '<script type="text/javascript" src="' . $wgExtensionsPath . '/wikia/AdEngine/AdEngine.js?' . self::cacheKeyVersion . '"></script>'. "\n";
                         if ($wgEnableAdsLazyLoad && sizeof($wgAdslotsLazyLoad)) {
 				// LazyLoadAds.js moved to StaticChute.php
-                            //$out .= '<script type="text/javascript" src="' . $wgExtensionsPath . '/wikia/AdEngine/LazyLoadAds.js?' . self::cacheKeyVersion . '"></script>'. "\n";
+                        	//$out .= '<script type="text/javascript" src="' . $wgExtensionsPath . '/wikia/AdEngine/LazyLoadAds.js?' . self::cacheKeyVersion . '"></script>'. "\n";
                         }
 
 			foreach($this->slots as $slotname => $slot) {
