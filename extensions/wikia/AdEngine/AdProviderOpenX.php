@@ -135,7 +135,7 @@ EOT;
 			// wlee: removing property 'display' is a hack to force FOOTER_SPOTLIGHT_LEFT to show up. not sure
 			// why this ad slot has "display: none" in the first place
                         $function_name . ' = function() { ' .
-			'document.getElementById("' . addslashes($slotname) ."_iframe\").src = base_url_{$slotname}; document.getElementById(\"".addslashes($slotname)."_iframe\").style.removeProperty(\"display\");}</script>";
+			'var ad_iframe = document.getElementById("' . addslashes($slotname) ."_iframe\"); ad_iframe.src = base_url_".addslashes($slotname)."; if (ad_iframe.style.removeAttribute) {ad_iframe.style.removeAttribute(\"display\");} else {ad_iframe.style.removeProperty(\"display\");} }</script>";
 
                 return $out;
         }
