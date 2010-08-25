@@ -28,7 +28,7 @@ class DumpsOnDemand {
 		$tmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$index = array();
 
-		$json = Http::get( self::getUrl( $wgDBname, "index.json" ), 5, array ( CURLOPT_PROXY => ( $wgHTTPProxy ) ? $wgHTTPProxy : false ) );
+		$json = Http::get( self::getUrl( $wgDBname, "index.json" ), 5, array( CURLOPT_PROXY => ( $wgHTTPProxy ) ? $wgHTTPProxy : false ) );
 		if( $json ) {
 			$index = (array )Wikia::json_decode( $json );
 		}
