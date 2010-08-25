@@ -243,7 +243,8 @@ img.WikiaPhotoGalleryProgress {
 
 #WikiaPhotoGalleryLink,
 #WikiaPhotoSlideshowLink,
-#WikiaPhotoSlideshowLinkText {
+#WikiaPhotoSlideshowLinkText,
+#WikiaPhotoGalleryEditorCaption {
 	width: 99%;
 }
 
