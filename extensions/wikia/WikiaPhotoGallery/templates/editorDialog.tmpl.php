@@ -128,7 +128,7 @@
 		<p><?= wfMsg('wikiaPhotoGallery-photooptions-captionsub') ?></p>
 		<div class="WikiaPhotoGalleryEditorCaptionWrapper">
 			<div id="WikiaPhotoGalleryEditorCaptionToolbar"></div>
-			<textarea id="WikiaPhotoGalleryEditorCaption" rows="2"></textarea>
+			<input id="WikiaPhotoGalleryEditorCaption" type="text" />
 		</div>
 
 		<!-- Link editor for galleries -->
