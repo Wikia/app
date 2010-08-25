@@ -153,6 +153,10 @@ class WikiaCentralAuthHooks {
 		if ( empty($localId) ) {
 			$localId = $oCUser->idFromName();
 		}
+		
+		if ( empty($_SESSION['wsUserId']) && !empty($localId) ) {
+			$_SESSION['wsUserId'] = $localId;
+		}
 
 		if ( !$oCUser->isAttached() && $localId ) {
 			wfDebug( __METHOD__ .": exists, and not attached \n" );
@@ -312,9 +316,11 @@ class WikiaCentralAuthHooks {
 
 	static function onUserGetEmail( User $oUser, &$email ) {
 		wfProfileIn( __METHOD__ );
-		$ca = WikiaCentralAuthUser::getInstance( $oUser );
-		if ( $ca->isAttached() ) {
-			$email = $ca->getEmail();
+		if ( empty($email) ) {
+			$ca = WikiaCentralAuthUser::getInstance( $oUser );
+			if ( $ca->isAttached() ) {
+				$email = $ca->getEmail();
+			}
 		}
 		wfProfileOut( __METHOD__ );
 		return true;
