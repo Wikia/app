@@ -66,6 +66,12 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 		global $wgServerName, $wgExternalSharedDB;
 
  		$params  = $this->getInitialParams();
+		
+		//check for showcounts so we can hijack
+		if( !empty($params['showcounts'])  ) {
+			$this->executeShowcounts();
+			return;
+		}
 
 		// validate given token
 		$isTokenValid = ( !empty($params['token']) && WikiaApiQueryProblemReports::getToken($wgServerName) == $params['token'] );
@@ -185,6 +191,25 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 		wfProfileOut(__METHOD__);
 	}
 
+    private function executeShowcounts() {
+		wfProfileIn(__METHOD__);
+
+		//query the type counts
+		$data = array(
+			'spam'    => $this->countAllReports( array('showall'=>1, 'type'=>0) ),
+			'vandal'  => $this->countAllReports( array('showall'=>1, 'type'=>1) ),
+			'content' => $this->countAllReports( array('showall'=>1, 'type'=>2) ),
+			'bug'     => $this->countAllReports( array('showall'=>1, 'type'=>3) ),
+			'other'   => $this->countAllReports( array('showall'=>1, 'type'=>4) ),
+			);
+
+		//add it all up
+		$data['*'] = array_sum($data);
+
+		$this->getResult()->addValue('query', $this->getModuleName(), $data);
+
+		wfProfileOut(__METHOD__);
+	}
 
     private function executeInsert() {
 
@@ -512,6 +537,9 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 			'token' => array (
                 ApiBase :: PARAM_TYPE => 'string'
             ),
+			'showcounts' => array (
+                ApiBase :: PARAM_TYPE => 'boolean'
+            ),
         );
     }
 
@@ -526,7 +554,8 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 			'staff'    => 'Show only problems which need staff help',
 			'archived' => 'Show only archived problems',
 			'id'       => 'Shows just problem report with given ID',
-			'token'    => 'Used for internal communication'
+			'token'    => 'Used for internal communication',
+			'showcounts'    => 'Show just the per type counts'
         );
     }
 
@@ -536,7 +565,8 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
             'api.php?action=query&list=problemreports&wklimit=100&wktype=1',
 			'api.php?action=query&list=problemreports&wkstaff=1',
 			'api.php?action=query&list=problemreports&wkshowall=1',
-			'api.php?action=query&list=problemreports&wkshowall=1&wklang=pl'
+			'api.php?action=query&list=problemreports&wkshowall=1&wklang=pl',
+			'api.php?action=query&list=problemreports&wkshowcounts=1'
 		);
     }
 
