@@ -1198,6 +1198,9 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	 * check local user name from DB_MASTER 
 	 */
 	function idFromName() {
+		$what = array( 'user_id' );
+		$where = array( 'user_name' => $this->mName );
+
 		$dbr = self::getLocalDB();
 		$s = $dbr->selectRow( 'user', $what, $where, __METHOD__ );
 		if ( $s === false ) {
@@ -1205,6 +1208,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 		} else {
 			$id = $s->user_id;
 		}	
+			
 		return $id;
 	}
 
