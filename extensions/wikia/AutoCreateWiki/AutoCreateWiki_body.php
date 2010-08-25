@@ -379,7 +379,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		 */
 		$this->prepareValues();
 
-		if ( $this->mFounder->getId() == 0 ) {
+		if ( empty( $this->mWikiData[ "founder" ] ) ) {
 			$query = ( $this->mLang != 'en' ) ? 'uselang=' . $this->mLang : '';
 			$wgOut->redirect( $this->mTitle->getLocalURL($query) );
 		}
@@ -853,9 +853,10 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->mWikiData[ "domain"        ] = sprintf("%s.%s", $this->mWikiData[ "subdomain" ], $this->mDefSubdomain);
 		$this->mWikiData[ "url"           ] = sprintf( "http://%s.%s/", $this->mWikiData[ "subdomain" ], $this->mDefSubdomain );
 		$this->mWikiData[ "dbname"        ] = $this->prepareDBName( $this->mWikiData[ "name"], $this->awcLanguage );
-		$this->mWikiData[ "founder"       ] = $this->mFounder->getId();
 		$this->mWikiData[ "founder-name"  ] = $this->mFounder->getName();
 		$this->mWikiData[ "founder-email" ] = $this->mFounder->getEmail();
+		$this->mWikiData[ "founder"       ] = User::idFromName($this->mWikiData["founder-name"]);
+		
 		$this->mWikiData[ "type"          ] = $this->mType;
 
 		wfProfileOut( __METHOD__ );
