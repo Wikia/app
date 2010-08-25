@@ -1,4 +1,5 @@
 == Changes since 201008.4 ==
+* rt#64711: Input box on Answers skin misaligned (Marooned)
 * rt#64279: Recolour border between comments (Marooned)
 * rt#64149: Sign-in link on comments should return you to the same page (Marooned)
 * new RandomWiki special page (Federico)
