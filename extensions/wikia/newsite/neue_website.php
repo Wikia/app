@@ -10,15 +10,15 @@ class NeueWebsiteHelper {
 	const BASE_PATH = "/tmp/wsw-";
 
 	static public function getContentsFile( $domain ) {
-		return BASE_PATH . $domain . ".html";
+		return self::BASE_PATH . $domain . ".html";
 	}
 
 	static public function getLogFile( $domain ) {
-		return BASE_PATH . $domain . ".log";
+		return self::BASE_PATH . $domain . ".log";
 	}
 
 	static public function getErrorFile( $domain ) {
-		return BASE_PATH . $domain . ".err";
+		return self::BASE_PATH . $domain . ".err";
 	}
 
 }
@@ -220,13 +220,12 @@ function make_related($dbw, $dom, $domdom)
 function get_content($host)
 {
 	// Build the command to execute
-	$contentsFile = escapeshellarg(NeueWebsiteHelper::getContentsFile($site));
-	$logFile = escapeshellarg(NeueWebsiteHelper::getLogFile($site));
-	$errorFile = escapeshellarg(NeueWebsiteHelper::getErrorFile($site));
+	$contentsFile = escapeshellarg(NeueWebsiteHelper::getContentsFile($host));
+	$logFile = escapeshellarg(NeueWebsiteHelper::getLogFile($host));
+	$errorFile = escapeshellarg(NeueWebsiteHelper::getErrorFile($host));
 	$host = escapeshellarg("http://".$host);
-//	$userAgent = "Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1.3) Gecko/20070309 Firefox/2.0.0.3";
-	$userAgent = "Mozilla/5.0 (Windows; U; Windows NT 5.1; pl; rv:1.9.2.6) Gecko/20100625 Firefox/3.6.6";
-	$cmd = "/usr/bin/wget -t 5 -T 30 -U $userAgent -S -O $contentsFile -o $logFile $host >& $errorFile";
+	$userAgent = escapeshellarg("Mozilla/5.0 (Windows; U; Windows NT 5.1; pl; rv:1.9.2.6) Gecko/20100625 Firefox/3.6.6");
+	$cmd = "/usr/bin/wget -t 5 -T 30 -U $userAgent -S -O $contentsFile -o $logFile $host |cat - $errorFile";
 
 	// Execute and check the result
 	$output = array();
