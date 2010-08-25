@@ -1199,12 +1199,13 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	 */
 	function idFromName() {
 		$dbr = self::getLocalDB();
-		$s = $dbr->selectRow( 'user', array( 'user_id' ), array( 'user_name' => $this->mName ), __METHOD__ );
+		$s = $dbr->selectRow( 'user', $what, $where, __METHOD__ );
 		if ( $s === false ) {
-			return 0;
+			$id = 0;
 		} else {
-			return $s->user_id;
-		}
+			$id = $s->user_id;
+		}	
+		return $id;
 	}
 
 }
