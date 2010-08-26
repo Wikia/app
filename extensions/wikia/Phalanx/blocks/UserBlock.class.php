@@ -12,7 +12,12 @@
 
 class UserBlock {
 	public static function blockCheck(&$user) {
+		global $wgUser;
 		wfProfileIn( __METHOD__ );
+
+		// RT#42011: RegexBlock records strange results
+		// don't write stats for other user than viewing user
+		$writeStats = $user->getName() == $wgUser->getName();
 
 		$text = $user->getName();
 		$blocksData = Phalanx::getFromFilter( Phalanx::TYPE_USER );
@@ -20,12 +25,12 @@ class UserBlock {
 
 		if ( !empty($blocksData) && !empty($text) ) {
 			if ( $user->isAnon() ) {
-				$ret =  self::blockCheckInternal( $user, $blocksData, $text, true );
+				$ret =  self::blockCheckInternal( $user, $blocksData, $text, true, $writeStats );
 			} else {
-				$ret = self::blockCheckInternal( $user, $blocksData, $text, false );
+				$ret = self::blockCheckInternal( $user, $blocksData, $text, false, $writeStats );
 				if ( $ret ) {
 					// if the user name was not blocked, check for an IP block
-					$ret = self::blockCheckInternal( $user, $blocksData, wfGetIP(), true );	
+					$ret = self::blockCheckInternal( $user, $blocksData, wfGetIP(), true );
 				}
 			}
 		}
@@ -34,7 +39,7 @@ class UserBlock {
 		return $ret;
 	}
 
-	private static function blockCheckInternal( &$user, $blocksData, $text, $isBlockIP = false ) {
+	private static function blockCheckInternal( &$user, $blocksData, $text, $isBlockIP = false, $writeStats = true ) {
 		wfProfileIn( __METHOD__ );
 
 		foreach ($blocksData as $blockData) {
@@ -42,7 +47,7 @@ class UserBlock {
 				continue;
 			}
 
-			$result = Phalanx::isBlocked( $text, $blockData );
+			$result = Phalanx::isBlocked( $text, $blockData, $writeStats );
 
 			if ( $result['blocked'] ) {
 				Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$text'.");
