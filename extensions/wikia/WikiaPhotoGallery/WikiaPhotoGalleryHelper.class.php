@@ -537,25 +537,20 @@ class WikiaPhotoGalleryHelper {
 				}
 
 				$imageTitle = Title::newFromText($image['name'], NS_FILE);
-				if (empty($imageTitle)) {
-					$image = false;
-					continue;
-				}
-
 				$img = wfFindFile($imageTitle);
-				if (empty($img)) {
-					$image = false;
-					continue;
+
+				if ( is_object( $img ) && ( $imageTitle->getNamespace() == NS_FILE ) ) {
+					// render thumbnail
+					$dimensions = self::getThumbnailDimensions($img, $maxWidth, $maxHeight, $crop);
+					$image['thumbnailBg'] = self::getThumbnailUrl($imageTitle, $dimensions['width'], $dimensions['height']);
 				}
-
-				// render thumbnail
-				$dimensions = self::getThumbnailDimensions($img, $maxWidth, $maxHeight, $crop);
-
-				$image['thumbnailBg'] = self::getThumbnailUrl($imageTitle, $dimensions['width'], $dimensions['height']);
-
+				else {
+					$image[ 'pageTitle' ] = $imageTitle->getText();
+				}
+				
 				//need to use parse() - see RT#44270
 				$image['caption'] = $wgParser->parse($image['caption'], $wgTitle, $parserOptions)->getText();
-
+				
 				// remove <p> tags from parser caption
 				if (preg_match('/^<p>(.*)\n?<\/p>\n?$/sU', $image['caption'], $m)) {
 					$image['caption'] = $m[1];
@@ -563,7 +558,7 @@ class WikiaPhotoGalleryHelper {
 			}
 
 			// filter out skipped images
-			$slideshow['images'] = array_filter($slideshow['images']);
+			//$slideshow['images'] = array_filter($slideshow['images']);
 		}
 
 		wfDebug(__METHOD__.'::after' . "\n" . print_r($slideshow, true));
@@ -650,27 +645,25 @@ class WikiaPhotoGalleryHelper {
 		// render thumbnail, "big" image and parse caption for each image
 		foreach($slideshow['images'] as &$image) {
 			$imageTitle = Title::newFromText($image['name'], NS_FILE);
-
-			// "broken" image - skip
-			if (!$imageTitle->exists()) {
-				$image = false;
-				continue;
-			}
+			$broken = ( empty( $imageTitle ) || !$imageTitle->exists() );
 
 			// big image to be used for slideshow area
-			$image['big'] = self::getThumbnailUrl($imageTitle, $width, $height);
+			$image['big'] = ( !$broken ) ? self::getThumbnailUrl($imageTitle, $width, $height) : null;
 
+			if( $broken ) {
+				$image[ 'pageTitle' ] = $imageTitle->getText();
+			}
 			// carousel images in two sizes
 			$carousel[] = array(
-				'current' => self::getThumbnailUrl($imageTitle, 115, 87),
-				'small' => self::getThumbnailUrl($imageTitle, 91, 68),
+				'current' => ( !$broken ) ? self::getThumbnailUrl($imageTitle, 115, 87) : null,
+				'small' => ( !$broken ) ? self::getThumbnailUrl($imageTitle, 91, 68) : null,
 			);
 
 			//need to use parse() - see RT#44270
 			$image['caption'] = $wgParser->parse($image['caption'], $wgTitle, $parserOptions)->getText();
 
 			// link to image page (details)
-			$image['imagePage'] = $imageTitle->getLocalUrl();
+			$image['imagePage'] = ( !$broken ) ? $imageTitle->getLocalUrl() : Skin::makeSpecialUrl( "Upload", array( 'wpDestFile' => $imageTitle->getText() ) );;
 
 			// image with link
 			if ($image['link'] != '') {

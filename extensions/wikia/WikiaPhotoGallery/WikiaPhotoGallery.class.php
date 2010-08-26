@@ -877,92 +877,102 @@ class WikiaPhotoGallery extends ImageGallery {
 			wfRunHooks( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time, &$descQuery ) );
 
 			$img = wfFindFile( $nt, $time );
-
+			$thumb = null;
+			
 			// let's properly scale image (don't make it bigger than original size) and handle "crop" attribute
 			if (is_object($img) && ($nt->getNamespace() == NS_FILE)) {
 				$thumbParams = WikiaPhotoGalleryHelper::getThumbnailDimensions($img, $params['width'], $params['height'], $this->mCrop);
 			}
 
-			if( $nt->getNamespace() != NS_FILE || !$img ) {
-				# We're dealing with a non-image, spit out the name and be done with it.
-				$thumbhtml = "\n\t\t\t".'<div style="height: '.($this->mHeights*1.25+2).'px;">'
-					. htmlspecialchars( $nt->getText() ) . '</div>';
-			} elseif( $this->mHideBadImages && wfIsBadImage( $nt->getDBkey(), $this->getContextTitle() ) ) {
-				# The image is blacklisted, just show it as a text link.
-				$thumbhtml = "\n\t\t\t".'<div style="height: '.($this->mHeights*1.25+2).'px;">'
-					. $sk->makeKnownLinkObj( $nt, htmlspecialchars( $nt->getText() ) ) . '</div>';
-			} elseif( !( $thumb = $img->transform( $thumbParams ) ) ) {
-				# Error generating thumbnail.
-				$thumbhtml = "\n\t\t\t".'<div style="height: '.($this->mHeights*1.25+2).'px;">'
-					. htmlspecialchars( $img->getLastError() ) . '</div>';
-			} else {
-				$caption = $linkOverlay = '';
+			
+			$caption = $linkOverlay = '';
 
-				// render caption overlay
-				if ($text != '') {
-					$caption = Xml::openElement('span', array('class' => 'wikia-slideshow-image-caption'))
-						. Xml::openElement('span', array('class' => 'wikia-slideshow-image-caption-inner'))
-						. $text
-						. Xml::closeElement('span')
-						. Xml::closeElement('span');
-				}
+			// render caption overlay
+			if ($text != '') {
+				$caption = Xml::openElement('span', array('class' => 'wikia-slideshow-image-caption'))
+					. Xml::openElement('span', array('class' => 'wikia-slideshow-image-caption-inner'))
+					. $text
+					. Xml::closeElement('span')
+					. Xml::closeElement('span');
+			}
 
-				// parse link
-				$linkAttribs = $this->parseLink($nt, $link);
+			// parse link
+			$linkAttribs = $this->parseLink($nt, $link);
 
-				// extra link tag attributes
-				$linkAttribs['id'] = "{$id}-{$i}";
-				$linkAttribs['style'] = 'width: ' . ($params['width'] - 80) . 'px';
+			// extra link tag attributes
+			$linkAttribs['id'] = "{$id}-{$i}";
+			$linkAttribs['style'] = 'width: ' . ($params['width'] - 80) . 'px';
 
-				if ($link == '') {
-					// tooltip to be used for not-linked images
-					$linkAttribs['title'] = wfMsg('wikiaPhotoGallery-slideshow-view-popout-tooltip');
-					$linkAttribs['class'] = 'wikia-slideshow-image';
-					unset($linkAttribs['href']);
+			if ($link == '') {
+				// tooltip to be used for not-linked images
+				$linkAttribs['title'] = wfMsg('wikiaPhotoGallery-slideshow-view-popout-tooltip');
+				$linkAttribs['class'] = 'wikia-slideshow-image';
+				unset($linkAttribs['href']);
+			}
+			else {
+				// linked images
+				$linkAttribs['class'] .= ' wikia-slideshow-image';
+
+				// support |linktext= syntax
+				if ( $this->mData['images'][$p]['linktext'] != '' ) {
+					$linkText = $this->mData['images'][$p]['linktext'];
 				}
 				else {
-					// linked images
-					$linkAttribs['class'] .= ' wikia-slideshow-image';
-
-					// support |linktext= syntax
-					if ($this->mData['images'][$p]['linktext'] != '') {
-						$linkText = $this->mData['images'][$p]['linktext'];
-					}
-					else {
-						$linkText = $link;
-					}
-
-					// add link overlay
-					$linkOverlay = Xml::openElement('span', array('class' => 'wikia-slideshow-link-overlay'))
-						. wfMsg('wikiaPhotoGallery-slideshow-view-link-overlay', $linkText)
-						. Xml::closeElement('span');
+					$linkText = $link;
 				}
 
-				// generate HTML for a single slideshow image
-				$liAttribs = array(
-					'title' => $thumb->url,
-				);
+				// add link overlay
+				$linkOverlay = Xml::openElement('span', array('class' => 'wikia-slideshow-link-overlay'))
+					. wfMsg('wikiaPhotoGallery-slideshow-view-link-overlay', $linkText)
+					. Xml::closeElement('span');
+			}
 
-				// add CSS class so we can show first slideshow image before JS is loaded
-				if ($i == 0) {
-					$liAttribs['class'] = 'wikia-slideshow-first-image';
-				}
+			// generate HTML for a single slideshow image
+			$thumbHtml = null;
+			$liAttribs = array(
+				'title' => null
+			);
+			
+			if( $nt->getNamespace() != NS_FILE || !$img ) {
+				# We're dealing with a non-image, spit out the name and be done with it.
+				$thumbHtml = "\n\t\t\t".'<a class="image broken-image new" style="line-height: '.( $this->mHeights ).'px;">'
+					. $nt->getText() . '</a>';
+			} elseif( $this->mHideBadImages && wfIsBadImage( $nt->getDBkey(), $this->getContextTitle() ) ) {
+				# The image is blacklisted, just show it as a text link.
+				$thumbHtml = "\n\t\t\t".'<div style="height: '.($this->mHeights*1.25+2).'px;">'
+					. $sk->makeKnownLinkObj( $nt, $nt->getText() ) . '</div>';
+			} elseif( !( $thumb = $img->transform( $thumbParams ) ) ) {
+				# Error generating thumbnail.
+				$thumbHtml = "\n\t\t\t".'<div style="height: '.($this->mHeights*1.25+2).'px;">'
+					. htmlspecialchars( $img->getLastError() ) . '</div>';
+			}
+			else {
+				$liAttribs[ 'title' ] = $thumb->url;
+			}
 
-				$s .= Xml::openElement('li', $liAttribs)
-					. Xml::element('a', $linkAttribs, ' ')
-					. $caption
-					. $linkOverlay
-					. '</li>';
+			// add CSS class so we can show first slideshow image before JS is loaded
+			if ($i == 0) {
+				$liAttribs['class'] = 'wikia-slideshow-first-image';
+			}
 
-				$i++;
+			$s .= Xml::openElement('li', $liAttribs)
+				. Xml::element('a', $linkAttribs, ' ')
+				. $thumbHtml
+				. $caption
+				. $linkOverlay
+				. '</li>';
 
-				// Call parser transform hook
-				if ( $this->mParser && $img->getHandler() ) {
-					$img->getHandler()->parserTransformHook( $this->mParser, $img );
-				}
+			$i++;
 
+			// Call parser transform hook
+			if ( $this->mParser && is_object( $img ) && $img->getHandler() ) {
+				$img->getHandler()->parserTransformHook( $this->mParser, $img );
+			}
+
+			if (  is_object( $thumb ) ) {
 				wfDebug(__METHOD__ . ": image '" . $nt->getText() . "' {$thumb->width}x{$thumb->height}\n");
 			}
+			
 		}
 
 		$s .= Xml::closeElement('ul');
@@ -1022,7 +1032,10 @@ wgAfterContentAndJS.push(function() {
 		slideshow.find('li').each(function() {
 			var item = $(this);
 
-			item.css('backgroundImage', 'url(' + item.attr('title') + ')');
+			if(item.attr('title') != ''){
+				item.css('backgroundImage', 'url(' + item.attr('title') + ')');
+			}
+			
 			item.removeAttr('title');
 		});
 

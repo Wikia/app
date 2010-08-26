@@ -196,6 +196,7 @@
 	position: absolute;
 	top: 0;
 	width: 100%;
+	text-align: center;
 }
 
 .wikia-slideshow-images li.wikia-slideshow-first-image {
@@ -252,6 +253,7 @@ body.wikiaSkinMonaco .wikia-slideshow-images .wikia-slideshow-image {
 	font-size: 0.95em;
 	margin: 8px;
 	opacity: 1;
+	text-align: left;
 }
 
 .wikia-slideshow .wikia-slideshow-image-caption-inner a {
