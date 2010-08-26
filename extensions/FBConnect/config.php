@@ -129,8 +129,8 @@ $fbLogo = 'http://static.ak.fbcdn.net/images/icons/favicon.gif';
  * For more info, see <http://github.com/facebook/connect-js>.
  */
 //$fbScript = 'http://static.ak.fbcdn.net/connect/en_US/core.js';
-global $wgScriptPath, $wgStyleVersion;
-$fbScript = "$wgScriptPath/extensions/FBConnect/fbsdk_core.js?$wgStyleVersion"; // insulate from changes by hosting locally.  Also, one less dns lookup.
+global $wgCdnStylePath, $wgStyleVersion;
+$fbScript = "$wgCdnStylePath/extensions/FBConnect/fbsdk_core.js?$wgStyleVersion"; // insulate from changes by hosting locally.  Also, one less dns lookup.
 //$fbScript = ''; // NOTE: This is in StaticChute now, so don't use any URL here. (NOTE: Didn't work in StaticChute.  The re-compression broke it and
 // also, we can't use StaticChute while fbScriptEnableLocales is true, that could lead to double-inclusion).
 
@@ -166,9 +166,8 @@ $fbScriptByLocale = 'http://connect.facebook.net/'.FBCONNECT_LOCALE.'/all.js';
 /**
  * Path to the extension's client-side JavaScript
  */
-global $wgScriptPath;
-//$fbExtensionScript = "$wgScriptPath/extensions/FBConnect/fbconnect.js"; // only recommended if you are changing this extension.
-//$fbExtensionScript = "$wgScriptPath/extensions/FBConnect/fbconnect.min.js";
+//$fbExtensionScript = "$wgCdnStylePath/extensions/FBConnect/fbconnect.js"; // only recommended if you are changing this extension.
+//$fbExtensionScript = "$wgCdnStylePath/extensions/FBConnect/fbconnect.min.js";
 $fbExtensionScript = ''; // this file is in StaticChute
 
 /**
