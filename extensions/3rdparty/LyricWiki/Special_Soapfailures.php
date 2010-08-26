@@ -134,13 +134,7 @@ function wfSoapFailures(){
 
 			$db = &wfGetDB(DB_SLAVE)->getProperty('mConn');
 
-			print "<em>Once you have created a missing page, made a redirect for it, or otherwise fixed it so that it should ";
-			print "no longer be a failed request... click the \"fixed\" link next to the title and the SOAP webservice will test the song again. ";
-			print "If the song is then retrieved successfully, it will be removed from the failures list and the cache will be cleared ";
-			print "so that you can see the updated list right away.</em><br/>";
-			print "<br/>";
-			print "Discuss the [[LyricWiki_talk:SOAP|SOAP webservice]].\n";
-			print "<br/><br/>\n";
+			print wfGetMsg('soapfailures-intro');
 
 			print "This page is cached every 2 hours - \n";
 			print "last cached: <strong>".date('m/d/Y \a\t g:ia')."</strong>\n";
@@ -205,7 +199,7 @@ function wfSoapFailures(){
 						<form method='post'>
 							".wfMsg('soapfailures-artist')." <input type='text' name='artist'/><br/>
 							".wfMsg('soapfailures-song')." <input type='text' name='song'/><br/>
-							<input type='submit' name='fixed' value='Fixed'/>
+							<input type='submit' name='fixed' value='".wfMsg('soapfailures-fixed')."'/>
 						</form><br/>");
 
 		$wgOut->addWikiText("$msg$content");
