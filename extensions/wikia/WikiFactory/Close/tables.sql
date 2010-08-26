@@ -121,3 +121,8 @@ SET character_set_client = @saved_cs_client;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2009-05-05 10:26:54
+
+
+-- #64375: Ensure wgServer is unique
+alter table city_variables_pool add cv_is_unique int(1) default 0;
+update city_variables_pool set cv_is_unique = 1 where cv_name = 'wgServer';
