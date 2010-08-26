@@ -20,6 +20,13 @@ will be made on the development trunk and appear in the next quarterly release.
 Those wishing to use the latest code instead of a branch release can obtain
 it from source control: http://www.mediawiki.org/wiki/Download_from_SVN
 
+== Changes since 1.15.5 ==
+
+* (bug 24564) Fix fatal errors when using list=deletedrevs, prop=revisions or 
+  one of the backlinks generators with limit=max.
+* (bug 24740) limit=max still causing problems on 1.15.5 (backport r70078,
+  bug 24564)
+
 == Changes since 1.15.4 ==
 
 * (bug 24565) Fixed Cache-Control headers sent from API modules, to protect
