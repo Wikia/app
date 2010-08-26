@@ -213,7 +213,7 @@ class Phalanx {
 	 *
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
-	static function isBlocked($text, $blockData) {
+	static function isBlocked($text, $blockData, $writeStats = true) {
 		wfProfileIn( __METHOD__ );
 		$result = array('blocked' => false, 'msg' => '');
 		$blockText = $blockData['text'];
@@ -243,7 +243,9 @@ class Phalanx {
 			}
 			wfRestoreWarnings();
 			if ($matched) {
-				self::addStats($blockData['id'], $blockData['type']);
+				if ($writeStats) {
+					self::addStats($blockData['id'], $blockData['type']);
+				}
 				$result['blocked'] = true;
 				$result['msg'] = $matches[0];
 			}
@@ -254,13 +256,17 @@ class Phalanx {
 			}
 			if ($blockData['exact']) {
 				if ($text == $blockText) {
-					self::addStats($blockData['id'], $blockData['type']);
+					if ($writeStats) {
+						self::addStats($blockData['id'], $blockData['type']);
+					}
 					$result['blocked'] = true;
 					$result['msg'] = $blockData['text'];    //original case
 				}
 			} else {
 				if (strpos($text, $blockText) !== false) {
-					self::addStats($blockData['id'], $blockData['type']);
+					if ($writeStats) {
+						self::addStats($blockData['id'], $blockData['type']);
+					}
 					$result['blocked'] = true;
 					$result['msg'] = $blockData['text'];    //original case
 				}
@@ -269,7 +275,7 @@ class Phalanx {
 		wfProfileOut( __METHOD__ );
 		return $result;
 	}
-	
+
 	static public function clearCache( $moduleId, $lang ) {
 		$sLang = $lang ? $lang : 'all';
 		unset(self::$moduleData[$moduleId][$sLang]);
