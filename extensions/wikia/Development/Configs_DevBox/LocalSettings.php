@@ -117,6 +117,7 @@ ini_set('display_errors', '1');
 $wgShowExceptionDetails = true;
 $wgDebugLogFile = "/tmp/debug.log";
 $wgDefaultExternalStore = array( "DB://dev-archive");
+$wgUseImageResize   = false; // for thumbnails to work correctly
 
 // So that SASS will be generated locally.
 $wgCdnRootUrl = "";
