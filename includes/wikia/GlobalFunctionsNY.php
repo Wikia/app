@@ -57,11 +57,11 @@ function get_dates_from_elapsed_days($number_of_days){
 	return $dates;
 }
 
-function date_diff($dt1, $dt2) {
-	
+function date_diff_ny($dt1, $dt2) {
+
 	$date1 = $dt1; //(strtotime($dt1) != -1) ? strtotime($dt1) : $dt1;
 	$date2 = $dt2; //(strtotime($dt2) != -1) ? strtotime($dt2) : $dt2;
-	
+
 	$dtDiff = $date1 - $date2;
 
 	$totalDays = intval($dtDiff/(24*60*60));
@@ -71,7 +71,7 @@ function date_diff($dt1, $dt2) {
 	$dif['h'] = $h = intval($totalSecs/(60*60));
 	$dif['m'] = $m = intval(($totalSecs-($h*60*60))/60);
 	$dif['s'] = $totalSecs-($h*60*60)-($m*60);
-	
+
 	return $dif;
 }
 
@@ -86,7 +86,7 @@ function get_time_offset($time,$timeabrv,$timename){
 }
 
 function get_time_ago($time){
-	$timeArray =  date_diff(time(),$time  );
+	$timeArray =  date_diff_ny(time(),$time  );
 	$timeStr = "";
 	$timeStrD = get_time_offset($timeArray,"d","days");
 	$timeStrH = get_time_offset($timeArray,"h","hours");
@@ -112,7 +112,7 @@ function shorten_text( $text, $chars=25 ) {
 	if( strrpos( $text, ' ') || strrpos( $text, '/' ) ){
 	    $text = substr( $text, 0, max( strrpos( $text, ' '), strrpos( $text, '/' ) ) );
 	}
-	
+
 	$text = $text . "...";
 
 	return $text;
