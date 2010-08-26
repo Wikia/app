@@ -32,7 +32,7 @@ function wfRandomSelection() {
 	return true;
 }
 
-function renderChosen( $input, $argv, &$parser ) {
+function renderChosen( $input, $argv, $parser ) {
 	# Prevent caching
 	#$parser->disableCache();
 	global $wgParserCacheExpireTime;

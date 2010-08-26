@@ -88,7 +88,7 @@ function embedYouTube_url2ytid($url)
 	return $id;
 }
 
-function embedYouTube($input, $argv, &$parser)
+function embedYouTube($input, $argv, $parser )
 {
 	//$parser->disableCache();
 
