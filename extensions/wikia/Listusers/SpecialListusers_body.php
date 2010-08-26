@@ -76,7 +76,7 @@ class Listusers extends SpecialPage {
 	function showForm ($error = "") {
 		global $wgOut, $wgContLang;
 		global $wgExtensionsPath, $wgStylePath, $wgUser;
-        wfProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		$action = $this->mTitle->escapeLocalURL("");
 		$aGroups = $this->getAllGroups();
 		$groupList = $this->getGroupList($aGroups);
@@ -90,27 +90,27 @@ class Listusers extends SpecialPage {
 			100 => wfMsg('listusers-100contributions')
 		);
 
-        $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-        $oTmpl->set_vars( array(
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl->set_vars( array(
 			"error"				=> $error,
-            "action"			=> $action,
-            "groupList"			=> $groupList,
-            "aGroups"			=> $aGroups,
-            "mGroup"			=> $this->mGroup,
-            "contributed"		=> $contributed,
-            "wgContLang"		=> $wgContLang,
-            "wgExtensionsPath" 		=> $wgExtensionsPath, 
-	    "wgStylePath"		=> $wgStylePath,
-            "selContrib"		=> 5,
-            "wgUser"			=> $wgUser
-        ));
-        $wgOut->addHTML( $oTmpl->execute("main-form") );
-        wfProfileOut( __METHOD__ );
+			"action"			=> $action,
+			"groupList"			=> $groupList,
+			"aGroups"			=> $aGroups,
+			"mGroup"			=> $this->mGroup,
+			"contributed"		=> $contributed,
+			"wgContLang"		=> $wgContLang,
+			"wgExtensionsPath"	=> $wgExtensionsPath, 
+			"wgStylePath"		=> $wgStylePath,
+			"selContrib"		=> ($this->mGroup == array('sysop'))? 0 : 5,
+			"wgUser"			=> $wgUser
+		));
+		$wgOut->addHTML( $oTmpl->execute("main-form") );
+		wfProfileOut( __METHOD__ );
 	}
 	
 	function getResults() {
 		global $wgOut, $wgRequest ;
-        wfProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		/* no list when no user */
 		if (empty($this->mTag)) {
@@ -119,7 +119,7 @@ class Listusers extends SpecialPage {
 		}
 
 		/* before, we need that numResults */
-        wfProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 	
 	private function getGroupList( $aGroups ) {
