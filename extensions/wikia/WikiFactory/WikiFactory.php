@@ -1515,7 +1515,8 @@ class WikiFactory {
 				"cv_description",
 				"cv_variable_type",
 				"cv_variable_group",
-				"cv_access_level"
+				"cv_access_level",
+                                "cv_is_unique"
 			),
 			$condition,
 			__METHOD__
@@ -2181,7 +2182,7 @@ class WikiFactory {
 	 * @throws a DBQueryError if there is an error with any of the queries used.
 	 * @return boolean true on success, false on failure
 	 */
-	static public function createVariable($cv_name, $cv_variable_type, $cv_access_level, $cv_variable_group, $cv_description){
+	static public function createVariable($cv_name, $cv_variable_type, $cv_access_level, $cv_variable_group, $cv_description, $cv_is_unique = false){
 		$bStatus = false;
 		wfProfileIn( __METHOD__ );
 		$dbw = self::db( DB_MASTER );
@@ -2203,7 +2204,8 @@ class WikiFactory {
 					"cv_variable_type" => $cv_variable_type,
 					"cv_access_level" => $cv_access_level,
 					"cv_variable_group" => $cv_variable_group,
-					"cv_description" => $cv_description
+					"cv_description" => $cv_description,
+                                        "cv_is_unique" => $cv_is_unique
 				),
 				__METHOD__
 			);
