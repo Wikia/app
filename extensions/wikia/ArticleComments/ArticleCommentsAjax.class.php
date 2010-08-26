@@ -29,7 +29,7 @@ class ArticleCommentsAjax {
 	 * @return String -- json-ized array
 	 */
 	static public function axSave() {
-		global $wgRequest, $wgUser;
+		global $wgRequest, $wgUser, $wgTitle;
 
 		$articleId = $wgRequest->getVal( 'article', false );
 		$commentId = $wgRequest->getVal( 'id', false );
@@ -40,6 +40,15 @@ class ArticleCommentsAjax {
 
 		$title = Title::newFromID( $articleId );
 		if ( !$title ) {
+			return $result;
+		}
+
+		$commentingAllowed = true;
+		if (defined('NS_BLOG_ARTICLE') && $wgTitle->getNamespace() == NS_BLOG_ARTICLE) {
+			$props = BlogArticle::getProps($wgTitle->getArticleID());
+			$commentingAllowed = isset($props['commenting']) ? (bool)$props['commenting'] : true;
+		}
+		if (!$commentingAllowed) {
 			return $result;
 		}
 
@@ -154,7 +163,7 @@ class ArticleCommentsAjax {
 	 * @return String -- json-ized array`
 	 */
 	static public function axPost() {
-		global $wgRequest, $wgUser, $wgArticleCommentsMaxPerPage;
+		global $wgRequest, $wgUser, $wgTitle, $wgArticleCommentsMaxPerPage;
 
 		$articleId = $wgRequest->getVal( 'article', false );
 		$parentId = $wgRequest->getVal( 'parentId' );
@@ -164,6 +173,15 @@ class ArticleCommentsAjax {
 		$title = Title::newFromID( $articleId );
 		if ( !$title ) {
 			return array( 'error' => 1 );
+		}
+
+		$commentingAllowed = true;
+		if (defined('NS_BLOG_ARTICLE') && $wgTitle->getNamespace() == NS_BLOG_ARTICLE) {
+			$props = BlogArticle::getProps($wgTitle->getArticleID());
+			$commentingAllowed = isset($props['commenting']) ? (bool)$props['commenting'] : true;
+		}
+		if (!$commentingAllowed) {
+			return $result;
 		}
 
 		$response = ArticleComment::doPost( $wgRequest, $wgUser, $title, $parentId );
