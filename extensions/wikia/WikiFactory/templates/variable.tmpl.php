@@ -3,35 +3,39 @@
 /*<![CDATA[*/
 /*]]>*/
 </script>
-<style type="text/css">
-/*<![CDATA[*/
-.wf-variable-form textarea { width: 90%; height: 8em; }
-.wf-variable-form input.input-string { width: 90%; }
-/*]]>*/
-</style>
-<h2>Variable Data</h2>
-<?php echo $variable->cv_description ?>
+<h2>Variable Data  <small>[<a href='#' id="wk-variable-change" title="Click here to edit this variable" onclick='javascript:$Factory.Variable.change(this, [ "wk-variable-select", 1]);return false;'>edit</a>]</small></h2>
+<div style="margin:.5em 0;"><?php echo $variable->cv_description ?></div>
+<table border='1' cellpadding='2' cellspacing='0'>
+	<thead class="wf-tinyhead">
+		<tr>
+			<th>id</th>
+			<th>Type</th>
+			<th>Access</th>
+			<th>Group</th>
+			<th>Unique</th>
+		</tr>
+	</thead>
+
+	<tr>
+		<td><?php echo $variable->cv_id ?></td>
+		<td><?php echo $variable->cv_variable_type ?></td>
+		<td><abbr title="<?php echo $accesslevels[ $variable->cv_access_level ] ?>"><?php echo $variable->cv_access_level ?></abbr></td>
+		<td><abbr title="<?php echo $variable->cv_variable_group; ?>"><?php $groups = WikiFactory::getGroups(); echo $groups[$variable->cv_variable_group]; unset($groups); ?></abbr></td>
+		<td><?php echo ($variable->cv_is_unique == 1 ? "yes":"no"); ?></td>
+	</tr>
+</table>
 <ul>
+	<li><?php $WIEbase = "http://community.wikia.com/wiki/Special:WhereIsExtension?var=" . $variable->cv_id; ?>
+		Where is... <small><a href="<? echo $WIEbase ?>&val=2">Any value</a><?php
+		if( $variable->cv_variable_type == 'boolean' ) {
+			print " &middot; <a href='{$WIEbase}&val=0'>True</a>";
+			print " &middot; <a href='{$WIEbase}&val=1'>False</a>";
+		}
+		?></small></li>
 	<li>
-		Id: <strong><?php echo $variable->cv_id ?></strong> <sup><small><a href="http://community.wikia.com/wiki/Special:WhereIsExtension?var=<?php echo $variable->cv_id ?>&val=2">Where is...</a></small></sup>
-	</li>
-	<li>
-		Name: <strong><?php echo $variable->cv_name ?></strong> <sup><small>Manual:
+		Manual: <small>
 		&nbsp;<a href="http://www.mediawiki.org/wiki/Manual:$<?php echo $variable->cv_name ?>" title='link to manual page at mediawiki.org'>MediaWiki</a>
-		&nbsp;<a href="http://contractor.wikia-inc.com/wiki/Manual:$<?php echo $variable->cv_name ?>" title='link to manual page at contractor.wikia'>Wikia</a></small></sup>
-	</li>
-	<li>
-		Type: <strong><?php echo $variable->cv_variable_type ?></strong>
-	</li>
-	<li>
-		Access Level: <strong><?php echo $variable->cv_access_level ?></strong>
-		(<strong><?php echo $accesslevels[ $variable->cv_access_level ] ?></strong>)
-	</li>
-        <li>
-            Is unique: <? echo ($variable->cv_is_unique == 1 ? "yes":"no"); ?>
-        </li>
-	<li>
-		<a href='#' id="wk-variable-change" onclick='javascript:$Factory.Variable.change(this, [ "wk-variable-select", 1]);return false;'>Click here to edit this variable</a>
+		&nbsp;<a href="http://contractor.wikia-inc.com/wiki/Manual:$<?php echo $variable->cv_name ?>" title='link to manual page at contractor.wikia'>Wikia</a></small>
 	</li>
 </ul>
 <h2>
@@ -46,6 +50,7 @@ Current value:
 <?php if( !isset( $variable->cv_value ) || is_null( $variable->cv_value ) ): ?>
     <strong>Value is not set</strong>
 <?php else: ?>
+	<input type="button" id="wk-submit-remove" name="remove-submit" value="Remove value" onclick="$Factory.Variable.tagCheck('remove');" /><br/>
     <pre><?php echo var_export( unserialize( $variable->cv_value ) ) ?></pre>
 <?php endif ?>
 </div>
@@ -67,8 +72,9 @@ if( isset( $preWFValues[$name] ) ) {
 } ?>
 </div>
 
-<div style="clear: both">
+<div style="margin-top: 2em; clear: both;">
 <?php if( $variable->cv_access_level > 1 ): ?>
+New value:
 <form id="wf-variable-form" name="wf-variable-form" class="wf-variable-form">
 	<input type="hidden" name="cityid" value="<?php echo $cityid ?>" />
 	<input type="hidden" name="varCityid" value="<?php echo $variable->cv_city_id ?>" />
@@ -94,7 +100,7 @@ if( isset( $preWFValues[$name] ) ) {
 
 <?php elseif( $variable->cv_variable_type == "string"): ?>
 
-	<input type="text" name="varValue" id="varValue" value="<?php echo unserialize( $variable->cv_value ) ?>" size="160" class="input-string" /><br />
+	<input type="text" name="varValue" id="varValue" value="<?php echo unserialize( $variable->cv_value ) ?>" size="100" class="input-string" /><br />
 
 <?php elseif ($variable->cv_variable_type == "array" && !empty($wgDevelEnvironment)): ?>
 
@@ -105,13 +111,11 @@ if( isset( $preWFValues[$name] ) ) {
 	 <textarea name="varValue" id="varValue"><?php if( isset( $variable->cv_value ) ) echo var_export( unserialize( $variable->cv_value ), 1) ?></textarea><br />
 
 <?php endif ?>
-	<input type="button" id="wk-submit" name="submit" value="Parse &amp; Save changes" onclick="$Factory.Variable.tagCheck();" />
-	<input type="button" id="wk-submit-remove" name="remove-submit" value="Remove value" onclick="$Factory.Variable.tagCheck('remove');" />
 	&nbsp;<span id="wf-variable-parse">&nbsp;</span>
-	&nbsp;&nbsp;Apply change to all wikis by tag:
-	<input type="text" name="tagName" id="tagName" value="" style="width: 100px;" />
 	&nbsp;<span id="wf-tag-parse">&nbsp;</span>
-	<br/>Reason: <input type="text" id="wk-reason" name="reason" value="" /> (optional, reason text or ticket number)
+	<br/>By tag: <input type="text" name="tagName" id="tagName" value="" size="30" /> (Apply this value to wikis with this tag)
+	<br/>Reason: <input type="text" id="wk-reason" name="reason" value="" size="30" /> (optional, reason text or ticket number)
+	<br/><input type="button" id="wk-submit" name="submit" value="Parse &amp; Save changes" onclick="$Factory.Variable.tagCheck();" />
 </form>
 <?php else: ?>
 <em>read only</em>
@@ -163,7 +167,7 @@ if( isset( $preWFValues[$name] ) ) {
 
 <?php endif ?>
 	<input type="button" id="wk-submit" name="submit" value="Parse &amp; Save changes" onclick="$Factory.Variable.submit($(this).parent().attr('id'));" />
-	<input type="button" id="wk-submit-remove" name="remove-submit" value="Remove value" onclick="$Factory.Factory.Variable.remove_submit(true, $(this).parent().attr('id'));" />
+	<input type="button" id="wk-submit-remove" name="remove-submit" value="Remove value" onclick="$Factory.Variable.remove_submit(true, $(this).parent().attr('id'));" />
 	&nbsp;<span id="wf-variable-parse-<?= $form_id ?>">&nbsp;</span>
 </form>
 <?php else: ?>
