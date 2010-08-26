@@ -560,6 +560,10 @@ img.WikiaPhotoGalleryProgress {
 	font-style: italic;
 }
 
+#WikiaPhotoGallerySlideshowEditorPreview .WikiaPhotoGalleryPreviewItem {
+	text-align: center;
+}
+
 /* edit conflicts */
 #WikiaPhotoGalleryEditConflictIntro {
 	padding-left: 30px !important;
