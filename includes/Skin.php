@@ -1233,10 +1233,10 @@ END;
 		  . $this->escapeSearchLink() . "\">\n"
 		  . '<input type="text" id="searchInput'.$this->searchboxes.'" name="search" size="19" value="'
 		  . htmlspecialchars(substr($search,0,256)) . "\" />\n"
-		  . '<input type="submit" name="go" value="' . wfMsg ('searcharticle') . '" />';
+		  . '<input type="submit" name="fulltext" value="' . wfMsg ('searchbutton') . '" />';
 
 		if ($wgUseTwoButtonsSearchForm)
-			$s .= '&nbsp;<input type="submit" name="fulltext" value="' . wfMsg ('searchbutton') . "\" />\n";
+			$s .= '&nbsp;<input type="submit" name="go" value="' . wfMsg ('searcharticle') . '" />\n';
 		else
 			$s .= ' <a href="' . $this->escapeSearchLink() . '" rel="search">' . wfMsg ('powersearch-legend') . "</a>\n";
 

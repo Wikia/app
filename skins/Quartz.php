@@ -472,7 +472,7 @@ echo $html;
 				<div id="search">
 					<div id="searchSubmit">&nbsp;</div>
 					<input type="text" id="searchfield" name="search" class="gray" value="<?= wfMsg('ilsubmit') ?> <?= $wgSitename ?>" />
-					<input type="hidden" name="go" value="1" />
+					<input type="hidden" name="fulltext" value="1" />
 				</div>
 			</form>
 			<div id="searchSuggestContainer" class="yui-ac-container">
