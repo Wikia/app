@@ -312,7 +312,7 @@ class WikiaPhotoGalleryHelper {
 	 * @author Macbre, Lox
 	 */
 	static public function renderGalleryPreview($gallery) {
-		global $wgTitle, $wgParser, $wgExtensionsPath;
+		global $wgTitle, $wgParser, $wgCdnStylePath, $wgExtensionsPath;
 		wfProfileIn(__METHOD__);
 
 		//wfDebug(__METHOD__ . "\n" . print_r($gallery, true));
@@ -437,7 +437,7 @@ class WikiaPhotoGalleryHelper {
 				'placeholder' => true,
 				'height' => $height,
 				'width' => $thumbSize,
-				'thumbnail' => "{$wgExtensionsPath}/wikia/WikiaPhotoGallery/images/gallery_addimage.png",
+				'thumbnail' => "{$wgCdnStylePath}{$wgExtensionsPath}/wikia/WikiaPhotoGallery/images/gallery_addimage.png",
 				'caption' => wfMsg('wikiaPhotoGallery-preview-placeholder-caption'),
 				'heightCompensation' => false,
 			);
