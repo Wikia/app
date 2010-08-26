@@ -37,7 +37,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'description' => 'SOAP Failures Log special page',
 	'version' => '1.2',
 );
-$wgExtensionMessagesFiles['SpecialSoapFailures'] = dirname(__FILE__).'/Special_LinksToRedirects.i18n.php';
+$wgExtensionMessagesFiles['SpecialSoapFailures'] = dirname(__FILE__).'/Special_Soapfailures.i18n.php';
 
 function wfSetupSoapFailures(){
 	global $IP;
