@@ -61,12 +61,9 @@ class ArticleCommentInit {
 				self::$enable = false;
 			}
 
-			//commenting disabled? do not load extension
-			if (class_exists('BlogArticle') && $wgTitle->getNamespace() == NS_BLOG_ARTICLE) {
-				$props = BlogArticle::getProps($wgTitle->getArticleID());
-				if (isset($props['commenting']) && !$props['commenting']) {
-					self::$enable = false;
-				}
+			//blog listing? (eg: User:Name instead of User:Name/Blog_name) - do not show comments
+			if (defined('NS_BLOG_ARTICLE') && $wgTitle->getNamespace() == NS_BLOG_ARTICLE && strpos($wgTitle->getText(), '/') === false) {
+				self::$enable = false;
 			}
 		}
 		wfProfileOut( __METHOD__ );
@@ -214,13 +211,13 @@ class ArticleCommentInit {
 		switch ($action) {
 			case 'move':
 			case 'move-target':
-				return ( $user->isAllowed( 'commentmove' ) );
+				return $user->isAllowed( 'commentmove' );
 				break;
 			case 'edit':
-				return ( $user->isAllowed( 'commentedit' ) );
+				return $user->isAllowed( 'commentedit' );
 				break;
 			case 'delete':
-				return ( $user->isAllowed( 'commentdelete' ) );
+				return $user->isAllowed( 'commentdelete' );
 				break;
 		}
 		return true;
@@ -433,7 +430,7 @@ class ArticleComment {
 	 * @return String -- generated HTML text
 	 */
 	public function render($master = false) {
-		global $wgLang, $wgContLang, $wgUser, $wgParser, $wgOut, $wgBlankImgUrl;
+		global $wgLang, $wgContLang, $wgUser, $wgParser, $wgOut, $wgTitle, $wgBlankImgUrl;
 
 		wfProfileIn( __METHOD__ );
 
@@ -451,7 +448,14 @@ class ArticleComment {
 
 			$buttons = array();
 			$replyButton = '';
-			if ( ( count( $parts['partsStripped'] ) == 1 ) && !ArticleCommentInit::isFbConnectionNeeded() ) {
+
+			$commentingAllowed = true;
+			if (defined('NS_BLOG_ARTICLE') && $wgTitle->getNamespace() == NS_BLOG_ARTICLE) {
+				$props = BlogArticle::getProps($wgTitle->getArticleID());
+				$commentingAllowed = isset($props['commenting']) ? (bool)$props['commenting'] : true;
+			}
+
+			if ( ( count( $parts['partsStripped'] ) == 1 ) && $commentingAllowed && !ArticleCommentInit::isFbConnectionNeeded() ) {
 				$replyButton = '<a href="#" class="article-comm-reply wikia-button secondary">' . wfMsg('article-comments-reply') . '</a>';
 			}
 
@@ -461,7 +465,7 @@ class ArticleComment {
 			}
 
 			//due to slave lag canEdit() can return false negative - we are hiding it by CSS and force showing by JS
-			if ( $wgUser->isLoggedIn() && !ArticleCommentInit::isFbConnectionNeeded() ) {
+			if ( $wgUser->isLoggedIn() && $commentingAllowed && !ArticleCommentInit::isFbConnectionNeeded() ) {
 				$display = ( $this->canEdit() ) ? '' : ' style="display:none"';
 				$img = '<img class="edit sprite" alt="" src="' . $wgBlankImgUrl . '" width="16" height="16" />';
 				$buttons[] = "<span class='edit-link'$display>" . $img . '<a href="#comment' . $articleId . '" class="article-comm-edit" id="comment' . $articleId . '">' . wfMsg('article-comments-edit') . '</a></span>';
@@ -474,14 +478,14 @@ class ArticleComment {
 
 			$comment = array(
 				'articleId' => $articleId,
-				'sig' => $sig,
-				'text' => $text,
-				'title' => $this->mTitle,
 				'author' => $this->mUser,
 				'avatar' => $this->getAvatarImg($this->mUser),
-				'timestamp' => wfTimeFormatAgo($this->mFirstRevision->getTimestamp()),
 				'buttons' => $buttons,
-				'replyButton' => $replyButton
+				'replyButton' => $replyButton,
+				'sig' => $sig,
+				'text' => $text,
+				'timestamp' => wfTimeFormatAgo($this->mFirstRevision->getTimestamp()),
+				'title' => $this->mTitle
 			);
 
 			$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
@@ -604,11 +608,11 @@ class ArticleComment {
 			$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 			$template->set_vars(
 				array(
+					'canEdit'		=> $this->canEdit(),
 					'comment'		=> $this->mLastRevision->getText(),
 					'isReadOnly'		=> wfReadOnly(),
-					'canEdit'		=> $this->canEdit(),
-					'title'			=> $this->mTitle,
-					'stylePath'		=> $wgStylePath
+					'stylePath'		=> $wgStylePath,
+					'title'			=> $this->mTitle
 				)
 			);
 			wfLoadExtensionMessages('ArticleComments');
@@ -805,12 +809,12 @@ class ArticleComment {
 		}
 
 		$res = array(
-			'msg'    	=> $message,
-			'error'  	=> $error,
-			'text'   	=> $text,
-			'status' 	=> $status,
 			'commentId' => $commentId,
-			'id'		=> $id
+			'error'  	=> $error,
+			'id'		=> $id,
+			'msg'    	=> $message,
+			'status' 	=> $status,
+			'text'   	=> $text
 		);
 
 		return $res;
@@ -1276,11 +1280,6 @@ class ArticleCommentList {
 			}
 		}
 
-		$hiddenComments = isset($this->mProps['hiddencomm']) ? (bool)$this->mProps['hiddencomm'] : false;
-		if ($hiddenComments) {
-			return '';
-		}
-
 		wfLoadExtensionMessages('ArticleComments');
 		/**
 		 * $pages is array of comment articles
@@ -1289,7 +1288,7 @@ class ArticleCommentList {
 			$avatar = Masthead::newFromUser( $wgUser );
 		} else {
 			// Answers
-			$avatar = new wAvatar($wgUser->getId(), "ml");
+			$avatar = new wAvatar($wgUser->getId(), 'ml');
 		}
 
 		$groups = $wgUser->getEffectiveGroups();
@@ -1316,24 +1315,30 @@ class ArticleCommentList {
 			$comments = array_slice($comments, ($page - 1) * $wgArticleCommentsMaxPerPage, $wgArticleCommentsMaxPerPage, true);
 		}
 		$pagination = self::doPagination($countComments, count($comments), $page);
-
 		$commentListText = $this->formatList($comments);
+
+		$commentingAllowed = true;
+		if (defined('NS_BLOG_ARTICLE') && $wgTitle->getNamespace() == NS_BLOG_ARTICLE) {
+			$props = BlogArticle::getProps($wgTitle->getArticleID());
+			$commentingAllowed = isset($props['commenting']) ? (bool)$props['commenting'] : true;
+		}
 
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 		$template->set_vars( array(
-			'title' => $wgTitle,
 			'avatar' => $avatar,
 			'canEdit' => $canEdit,
-			'isBlocked' => $isBlocked,
-			'reason' => $isBlocked ? $this->blockedPage() : '',
 			'commentListText' => $commentListText,
-			'isReadOnly' => $isReadOnly,
-			'pagination' => $pagination,
+			'commentingAllowed' => $commentingAllowed,
 			'countComments' => $countComments,
 			'countCommentsNested' => $countCommentsNested,
-			'stylePath' => $wgStylePath,
+			'isAnon' => $wgUser->isAnon(),
+			'isBlocked' => $isBlocked,
 			'isFBConnectionProblem' => ArticleCommentInit::isFbConnectionNeeded(),
-			'isAnon' => $wgUser->isAnon()
+			'isReadOnly' => $isReadOnly,
+			'pagination' => $pagination,
+			'reason' => $isBlocked ? $this->blockedPage() : '',
+			'stylePath' => $wgStylePath,
+			'title' => $wgTitle
 		) );
 
 		$text = $template->execute( 'comment-main' );
@@ -1718,10 +1723,10 @@ class ArticleCommentList {
 					$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 					$template->set_vars(
 						array (
+							'cntChanges'	=> $cntChanges,
 							'hdrtitle' 		=> wfMsgExt($messageKey, array('parseinline'), $title->getPrefixedText()),
 							'inx'			=> $oChangeList->rcCacheIndex,
-							'cntChanges'	=> $cntChanges,
-							'users'			=> $users,
+							'users'			=> $users
 						)
 					);
 					$header = $template->execute( 'rcheaderblock' );

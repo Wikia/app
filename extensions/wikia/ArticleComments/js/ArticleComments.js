@@ -55,10 +55,11 @@ var ArticleComments = {
 
 			var data = {
 				action: 'ajax',
-				rs: 'ArticleCommentsAjax',
-				method: 'axSave',
 				article: wgArticleId,
 				id: e.data.id,
+				method: 'axSave',
+				rs: 'ArticleCommentsAjax',
+				title: wgPageName,
 				wpArticleComment: textfield.val()
 			};
 
@@ -93,10 +94,10 @@ var ArticleComments = {
 
 		var data = {
 			action: 'ajax',
-			rs: 'ArticleCommentsAjax',
-			method: 'axEdit',
 			article: wgArticleId,
-			id: e.target.id.replace(/^comment/, '')
+			id: e.target.id.replace(/^comment/, ''),
+			method: 'axEdit',
+			rs: 'ArticleCommentsAjax'
 		};
 
 		$.getJSON(wgScript, data, function(json) {
@@ -155,9 +156,10 @@ var ArticleComments = {
 
 		var data = {
 			action: 'ajax',
-			rs: 'ArticleCommentsAjax',
-			method: 'axPost',
 			article: wgArticleId,
+			method: 'axPost',
+			rs: 'ArticleCommentsAjax',
+			title: wgPageName,
 			wpArticleComment: $(e.data.source).val()
 		};
 		if (e.data.parentId) {

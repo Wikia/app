@@ -16,6 +16,7 @@
 	<div id="article-comments" class="clearfix">
 	<?php
 	if ( $canEdit && !$isBlocked && !$isFBConnectionProblem ) {
+		if ($commentingAllowed) {
 	?>
 		<div class="article-comm-input reset clearfix">
 			<div id="article-comm-info">&nbsp;</div>
@@ -38,6 +39,7 @@
 			</form>
 		</div>
 	<?php
+		}
 	} else {
 		if ( $isBlocked ) {
 	?>
