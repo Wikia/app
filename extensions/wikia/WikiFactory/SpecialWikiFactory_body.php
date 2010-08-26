@@ -683,6 +683,7 @@ class WikiFactoryPage extends SpecialPage {
 			$cv_access_level = $wgRequest->getVal("cv_access_level");
 			$cv_variable_group = $wgRequest->getVal("cv_variable_group");
 			$cv_description = $wgRequest->getval("cv_description");
+                        $cv_is_unique = $wgRequest->getval("cv_is_unique", "0");
 
 			// Verify that the form is filled out, then add the variable if it is (display an error if it isn't).
 			$err = "";
@@ -702,7 +703,7 @@ class WikiFactoryPage extends SpecialPage {
 				$err .= "<li>Please enter a description of what the variable is used for.</li>\n";
 			}
 			if($err == ""){
-				$success = WikiFactory::createVariable($cv_name, $cv_variable_type, $cv_access_level, $cv_variable_group, $cv_description);
+				$success = WikiFactory::createVariable($cv_name, $cv_variable_type, $cv_access_level, $cv_variable_group, $cv_description, $cv_is_unique);
 				if($success){
 					$html .= "<div style='border:1px #0f0 solid;background-color:#afa;padding:5px'><strong>$cv_name</strong> successfully added to WikiFactory.</div>";
 				} else {
@@ -721,6 +722,7 @@ class WikiFactoryPage extends SpecialPage {
 				$varOverrides['cv_access_level'] = $cv_access_level;
 				$varOverrides['cv_variable_group'] = $cv_variable_group;
 				$varOverrides['cv_description'] = $cv_description;
+                                $varOverrides['cv_is_unique'] = $cv_is_unique;
 			}
 		}
 		return $html;

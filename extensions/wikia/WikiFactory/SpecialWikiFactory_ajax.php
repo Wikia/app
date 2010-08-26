@@ -517,6 +517,20 @@ function axWFactorySaveVariable() {
 				ob_end_clean(); #--- puts parse error to /dev/null
 		}
 
+                
+                
+                if( empty( $error ) ) {
+                    $varInfo = WikiFactory::getVarById($cv_id, $city_id);
+                    if($varInfo->cv_is_unique) {
+                        $wikis = WikiFactory::getCityIDsFromVarValue( $cv_id, $cv_value, '=');
+                        $count = count($wikis);
+                        if( (($count == 1) && ($wikis[0] != $city_id)) || ($count > 1) ) {
+                            $return = Wikia::errormsg( "Value of this variable need to be unique." );
+                            $error++;
+                        }
+                    }
+                }
+                
 		# Save to DB, but only if no errors occurred
 		if ( empty( $error ) ) {
 			if( ! WikiFactory::setVarByID( $cv_id, $city_id, $cv_value, $reason ) ) {

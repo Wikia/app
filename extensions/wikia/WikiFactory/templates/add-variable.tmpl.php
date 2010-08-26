@@ -46,7 +46,7 @@
 			</option>
 			<?php endforeach ?>
 		</select><br/>
-
+                Is unique: <input value="1" <? if(!empty($cv_is_unique)) { ?> checked="checked" <? } ?> type="checkbox" id="cv_is_unique" name="cv_is_unique" /> <br/>
 		Description of what this variable does:<br/>
 		<textarea name="cv_description" value=""><?php print $cv_description; ?></textarea><br/>
 
