@@ -1,5 +1,5 @@
 == Changes since 201008.4 ==
-
+* rt#64712: Comments not shown when comments are not allowed (Marooned)
 * rt#64641: Hide the "show all comments" link if there are too many (Marooned)
 * rt#64711: Input box on Answers skin misaligned (Marooned)
 * rt#64279: Recolour border between comments (Marooned)
