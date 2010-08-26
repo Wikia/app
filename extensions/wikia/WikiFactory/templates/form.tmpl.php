@@ -44,6 +44,9 @@
 
 #wf-variable-form .perror {color: #fe0000; font-weight: bold; }
 #wf-variable-form .success {color: darkgreen; font-weight: bold; }
+.wf-variable-form textarea { width: 90%; height: 8em; }
+.wf-variable-form input.input-string { width: 90%; }
+
 .prompt { 
 	color: #fe0000;
 	display: block;
@@ -54,6 +57,10 @@ div.wf-info {
     font-style: italic;
     margin: 0.4em; padding: 0.4em;
 }
+
+
+.wf-tinyhead th { font-size: x-small; }
+
 /*]]>*/
 </style>
 <script type="text/javascript">
@@ -463,13 +470,16 @@ $(function() {
 	<div id="wk-wf-info">
 		<?php echo $wiki->city_description ?>
 		<table border="1" cellpadding="3" cellspacing="0">
-			<tr>
-				<th>id</th>
-				<th>database</th>
-				<th>cluster</th>
-				<th>language</th>
-				<th>hub</th>
-			</tr>
+			<thead class="wf-tinyhead">
+				<tr>
+					<th>id</th>
+					<th>database</th>
+					<th>cluster</th>
+					<th>language</th>
+					<th>hub</th>
+					<th>status</th>
+				</tr>
+			</thead>
 			<tr>
 				<td><?php echo $wiki->city_id ?></td>
 				<td><?php echo $wiki->city_dbname ?></td>
@@ -483,9 +493,15 @@ $(function() {
 						endforeach;
 					endif;
 				?></td>
+				<td><?php echo $statuses[ $wiki->city_public ] ?></td>
 			</tr>
 		</table>
 		<ul>
+			<?php  #hide tags in upper area when on tags tab, so people dont get confused by non-updating data
+				if( $tab !== "domains" ): ?><li>
+				Wiki domain: <strong><a href="<?php echo $wiki->city_url ?>"><?php echo $wiki->city_url ?></a></strong>
+				<sup><a href="<?php echo $GLOBALS[ "wgScript" ] ?>?title=Special:WikiFactory/<?php echo $wiki->city_id ?>/domains">edit</a></sup>
+			</li><?php endif; ?>
 			<li>
 				Wiki was created on <strong><?php echo $wiki->city_created ?></strong>
 			</li>
@@ -500,26 +516,19 @@ $(function() {
 				<strong><? echo $wiki->city_founding_email; ?></strong>
 				<sup><a href="/index.php?title=Special:WikiFactory/Metrics&email=<?php echo urlencode($wiki->city_founding_email); ?>">more by email</a></sup><? endif; ?>
 			</li>
-			<li>
-				This wiki is <strong><?php echo $statuses[ $wiki->city_public ] ?></strong>.
-<?php if(($statuses[$wiki->city_public] == 'disabled') && is_object($wikiRequest)): ?>
-				(<a href="/index.php?title=Special:CreateWiki&request=<?=$wikiRequest->request_id;?>&action=delete&doit=1">delete request for this wiki</a>)
-<?php elseif(($statuses[$wiki->city_public] == 'disabled') && ($wikiRequest != null)): ?>
-				(<i>no wiki request were found with name: <?=$wikiRequest;?></i>)
-<?php endif;
-	if ($statuses[$wiki->city_public] == 'disabled') : ?>
-			<div>
-			(<?=wfMsg('closed-reason')?> <?=$wiki->city_additional?>)
-			</div>
-<?php endif ?>
-			</li>
 			<?php  #hide tags in upper area when on tags tab, so people dont get confused by non-updating data
 				if( $tab !== "tags" ): ?><li>
 				Tags: <?php if( is_array( $tags ) ): echo "<strong>"; foreach( $tags as $id => $tag ): echo "{$tag} "; endforeach; echo "</strong>"; endif; ?>
 				<sup><a href="<?php echo $GLOBALS[ "wgScript" ] ?>?title=Special:WikiFactory/<?php echo $wiki->city_id ?>/tags">edit</a></sup>
 			</li><?php endif; ?>
+			<?php if ($statuses[$wiki->city_public] == 'disabled') : ?><li>
+				<div>Disabled reason: <?=wfMsg('closed-reason')?> (<?=$wiki->city_additional?>)</div>
+			<?php endif ?></li>
+		</ul>
+		<br/>
+		<ul>
 			<li>
-				<a href="#" id="wf-clear-cache"><?php echo wfMsg("wikifactory_removevariable") ?></a>
+				<button class="wikia-button" href="#" id="wf-clear-cache"><?php echo wfMsg("wikifactory_removevariable") ?></button>
 			</li>
 			<li>
 				<a href="<?php echo $GLOBALS[ "wgScript" ] ?>?title=Special:WikiFactory"><?php echo wfMsg( "wikifactory-label-return" ); ?></a>
@@ -606,9 +615,9 @@ $(function() {
 				include_once( "form-shared-upload.tmpl.php" );
 			break;
 
-			case "eznamespace":
-				print "coming soon!\n";
-			break;
+			#case "eznamespace":
+			#	print "coming soon!\n";
+			#break;
 
 		case "domains":
 			include_once( "form-domains.tmpl.php" );
