@@ -200,7 +200,7 @@ class SkinOfflineTemplate extends QuickTemplate {
 	          ?>accesskey="<?php $this->msg('accesskey-search') ?>"<?php }
 	        if( isset( $this->data['search'] ) ) {
 	          ?> value="<?php $this->text('search') ?>"<?php } ?> />
-	      <input type='submit' name="go" class="searchButton" id="searchGoButton"
+	      <input type='submit' name="fulltext" class="searchButton" id="searchGoButton"
 	        value="<?php $this->msg('go') ?>" />
 	    </div></form>
 	  </div>
