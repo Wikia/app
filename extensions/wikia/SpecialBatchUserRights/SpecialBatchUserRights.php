@@ -8,13 +8,20 @@
  */
 
 $wgAvailableRights[] = 'batchuserrights';
+$wgSpecialPages['BatchUserRights'] = 'SpecialBatchUserRights';
+//$wgAutoloadClasses['SpecialBatchUserRights'] = $dir . 'SpecialBatchUserRights.php';xe
 
 /**
  * A class to manage user levels rights.
  * @ingroup SpecialPage
  */
-class BatchUserRightsPage extends SpecialPage {
+class SpecialBatchUserRights extends SpecialPage {
 	protected $isself = false;
+	
+	// For added security, this array will be the only groups we'll allow to be batch-added to users.
+	private static $grantableUserGroups = array(
+		'beta',
+	);
 
 	public function __construct() {
 		parent::__construct( 'BatchUserRights' );
@@ -58,10 +65,6 @@ print "Extension not ready yet.  Do not enable.";
 exit;
 
 
-// TODO: SWC: SKIP THE STEP WHERE YOU HAVE TO ADD A NAME TO SEE THE CHECKBOXES... JUST USE A PRIVATE ARRAY FOR WHICH GROUPS TO SHOW (head to editUserGroupsForm() to change this). 
-// TODO: SWC: SKIP THE STEP WHERE YOU HAVE TO ADD A NAME TO SEE THE CHECKBOXES... JUST USE A PRIVATE ARRAY FOR WHICH GROUPS TO SHOW (head to editUserGroupsForm() to change this). 
-
-
 // TODO: SWC: MAKE THE FORM POST A TEXTAREA OF NAMES RATHER THAN ONE
 // TODO: SWC: MAKE THE FORM POST A TEXTAREA OF NAMES RATHER THAN ONE
 
@@ -94,14 +97,8 @@ exit;
 		$this->setHeaders();
 
 		if( $wgRequest->wasPosted() ) {
-// TODO: SWC: MAKE THE CODE READ A POSTED BUNCH OF NAMES RATHER THAN ONE NAME
-		$usernames = array();
-		/*if( $par ) {
-			$this->mTarget = $par;
-		} else {
-			$this->mTarget = $wgRequest->getVal( 'user' );
-		}*/
-// TODO: SWC: MAKE THE CODE READ A POSTED BUNCH OF NAMES RATHER THAN ONE NAME
+			// Get the array of posted usernames (line-break delimited).
+			$usernames = explode("\n", $wgRequest->getVal( 'usernames', '' ));
 
 			// save settings
 			if( $wgRequest->getCheck( 'saveusergroups' ) ) {
@@ -120,13 +117,13 @@ exit;
 			}
 		}
 
-		// Show the list of avialable rights (for the current user - not for targets since there are many targets).
-		$this->editUserGroupsForm( $wgUser->getName() );
+		// Show the list of avialable rights.
+		$this->showEditUserGroupsForm();
 	}
 
 	/**
 	 * Save user groups changes in the database.
-	 * Data comes from the editUserGroupsForm() form function
+	 * Data comes from the showEditUserGroupsForm() form function
 	 *
 	 * @param $username String: username to apply changes to.
 	 * @param $reason String: reason for group change
@@ -205,18 +202,6 @@ exit;
 				$this->makeGroupNameListForLog( $newGroups )
 			)
 		);
-	}
-
-	/**
-	 * Edit user groups membership
-	 * @param $username String: name of the user.
-	 */
-	function editUserGroupsForm( $username ) {
-		global $wgOut;
-
-		$groups = $user->getGroups();
-
-		$this->showEditUserGroupsForm( $user, $groups );
 	}
 
 	/**
@@ -320,12 +305,12 @@ exit;
 	}
 
 	/**
-	 * Show the form to edit group memberships.
-	 *
-	 * @param $groups    Array:  Array of groups the user is in
+	 * Show the form to add group memberships to one or more users at once.
 	 */
-	protected function showEditUserGroupsForm( $user, $groups ) {
+	protected function showEditUserGroupsForm() {
 		global $wgOut, $wgUser, $wgLang;
+
+		$groups = $this->grantableUserGroups;
 
 		$list = array();
 		foreach( $groups as $group )
@@ -338,11 +323,9 @@ exit;
 		}
 		$wgOut->addHTML(
 			Xml::openElement( 'form', array( 'method' => 'post', 'action' => $this->getTitle()->getLocalURL(), 'name' => 'editGroup', 'id' => 'mw-userrights-form2' ) ) .
-			Xml::hidden( 'user', $this->mTarget ) .
 			Xml::hidden( 'wpEditToken', $wgUser->editToken() ) .
 			Xml::openElement( 'fieldset' ) .
 			Xml::element( 'legend', array(), wfMsg( 'userrights-editusergroup' ) ) .
-			wfMsgExt( 'editinguser', array( 'parse' ), wfEscapeWikiText( $user->getName() ) ) .
 			wfMsgExt( 'userrights-groups-help', array( 'parse' ) ) .
 			$grouplist .
 			Xml::tags( 'p', null, $this->groupCheckboxes( $groups ) ) .
