@@ -1031,11 +1031,7 @@ wgAfterContentAndJS.push(function() {
 
 		slideshow.find('li').each(function() {
 			var item = $(this);
-
-			if(item.attr('title') != ''){
-				item.css('backgroundImage', 'url(' + item.attr('title') + ')');
-			}
-			
+			if(item.attr('title')!='')item.css('backgroundImage', 'url(' + item.attr('title') + ')');
 			item.removeAttr('title');
 		});
 
@@ -1043,7 +1039,7 @@ wgAfterContentAndJS.push(function() {
 			buttonsClass:	'wikia-button',
 			nextClass:	'wikia-slideshow-next',
 			prevClass:	'wikia-slideshow-prev',
-			slideWidth:	'$width',
+			slideWidth:	'{$width}',
 			slidesClass:	'wikia-slideshow-images'
 		});
 
