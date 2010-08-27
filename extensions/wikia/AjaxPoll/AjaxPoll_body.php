@@ -459,7 +459,7 @@ JS;
 	static public function schemaUpdate() {
 		global $wgDBtype, $wgExtNewFields, $wgExtPGNewFields, $wgExtNewIndexes, $wgExtNewTables;
 		$wgExtNewTables[] = array( "poll_vote", dirname(__FILE__) . "/patch-create-poll_vote.sql" );
-
+		$wgExtNewTables[] = array( "poll_info", dirname(__FILE__) . "/patch-create-poll_info.sql" );
 		return true;
 	}
 }
