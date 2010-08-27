@@ -7,10 +7,7 @@
  * @ingroup SpecialPage
  */
 
-// TODO: Move this to a SpecialBatchUserRights.setup.php file:
 $wgAvailableRights[] = 'batchuserrights';
-
-
 
 /**
  * A class to manage user levels rights.
@@ -59,19 +56,15 @@ class BatchUserRightsPage extends SpecialPage {
 // TODO: REMOVE
 print "Extension not ready yet.  Do not enable.";
 exit;
+
+
+// TODO: SWC: SKIP THE STEP WHERE YOU HAVE TO ADD A NAME TO SEE THE CHECKBOXES... JUST USE A PRIVATE ARRAY FOR WHICH GROUPS TO SHOW (head to editUserGroupsForm() to change this). 
+// TODO: SWC: SKIP THE STEP WHERE YOU HAVE TO ADD A NAME TO SEE THE CHECKBOXES... JUST USE A PRIVATE ARRAY FOR WHICH GROUPS TO SHOW (head to editUserGroupsForm() to change this). 
+
+
+// TODO: SWC: MAKE THE FORM POST A TEXTAREA OF NAMES RATHER THAN ONE
 // TODO: SWC: MAKE THE FORM POST A TEXTAREA OF NAMES RATHER THAN ONE
 
-// TODO: SWC: MAKE THE CODE READ A POSTED BUNCH OF NAMES RATHER THAN ONE NAME
-
-		if( $par ) {
-			$this->mTarget = $par;
-		} else {
-			$this->mTarget = $wgRequest->getVal( 'user' );
-		}
-
-// TODO: SWC: MAKE THE CODE LOOP THROUGH AND APPLY THE NEW USER GROUP TO EACH USER RATHER THAN JUST ONE
-
-// TODO: SWC: SKIP THE STEP WHERE YOU HAVE TO ADD A NAME TO SEE THE CHECKBOXES... JUST USE THE CURRENT USER FOR WHICH BOXES TO SHOW.
 
 		if( !$this->userCanChangeRights( $wgUser, true ) ) {
 			// fixme... there may be intermediate groups we can mention.
@@ -101,72 +94,34 @@ exit;
 		$this->setHeaders();
 
 		if( $wgRequest->wasPosted() ) {
+// TODO: SWC: MAKE THE CODE READ A POSTED BUNCH OF NAMES RATHER THAN ONE NAME
+		$usernames = array();
+		/*if( $par ) {
+			$this->mTarget = $par;
+		} else {
+			$this->mTarget = $wgRequest->getVal( 'user' );
+		}*/
+// TODO: SWC: MAKE THE CODE READ A POSTED BUNCH OF NAMES RATHER THAN ONE NAME
+
 			// save settings
 			if( $wgRequest->getCheck( 'saveusergroups' ) ) {
 				$reason = $wgRequest->getVal( 'user-reason' );
 				$tok = $wgRequest->getVal( 'wpEditToken' );
 				if( $wgUser->matchEditToken( $tok ) ) {
-				
-				
-				
-					$this->saveUserGroups(
-						$this->mTarget,
-						$reason
-					);
-					
 					global $wgOut;
-					
-					$url = $this->getSuccessURL();
-					$wgOut->redirect( $url );
-					return;
+
+					// Loop through each target user and apply the update.
+					foreach($usernames as $username){
+						$wgOut->addHTML("");
+						$this->saveUserGroups( $username, $reason );
+					}
+
 				}
 			}
 		}
 
 		// Show the list of avialable rights (for the current user - not for targets since there are many targets).
 		$this->editUserGroupsForm( $wgUser->getName() );
-	}
-	
-	function processSingleUser($username){
-		if (!$this->mTarget) {
-			/*
-			 * If the user specified no target, and they can only
-			 * edit their own groups, automatically set them as the
-			 * target.
-			 */
-			$available = $this->changeableGroups();
-			if (empty($available['add']) && empty($available['remove']))
-				$this->mTarget = $wgUser->getName();
-		}
-
-		if ($this->mTarget == $wgUser->getName())
-			$this->isself = true;
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			// TODO: IMPLEMENT!!
-			// TODO: IMPLEMENT!!
-			
-			
-			
-			
-			
-			
-			
-	}
-
-	function getSuccessURL() {
-		return $this->getTitle( $this->mTarget )->getFullURL();
 	}
 
 	/**
@@ -179,6 +134,10 @@ exit;
 	 */
 	function saveUserGroups( $username, $reason = '') {
 		global $wgRequest, $wgUser, $wgGroupsAddToSelf, $wgGroupsRemoveFromSelf;
+		
+		if ($username == $wgUser->getName()){
+			$this->isself = true;
+		}
 
 		$user = $this->fetchUser( $username );
 		if( !$user ) {
@@ -255,18 +214,9 @@ exit;
 	function editUserGroupsForm( $username ) {
 		global $wgOut;
 
-		$user = $this->fetchUser( $username );
-		if( !$user ) {
-			return;
-		}
-
 		$groups = $user->getGroups();
 
 		$this->showEditUserGroupsForm( $user, $groups );
-
-		// This isn't really ideal logging behavior, but let's not hide the
-		// interwiki logs if we're using them as is.
-		$this->showLogFragment( $user, $wgOut );
 	}
 
 	/**
@@ -372,17 +322,10 @@ exit;
 	/**
 	 * Show the form to edit group memberships.
 	 *
-	 * @param $user      User or UserRightsProxy you're editing
 	 * @param $groups    Array:  Array of groups the user is in
 	 */
 	protected function showEditUserGroupsForm( $user, $groups ) {
 		global $wgOut, $wgUser, $wgLang;
-
-		/* Wikia change begin - @author: Marooned */
-		/* This hook was invalid in this version of the code and in the current (2010-05-18) MW trunk it even doesn't exist */
-		/* We need it to alter displayed list without alter real groups */
-		wfRunHooks('UserRights::showEditUserGroupsForm', array( &$user, &$groups ));
-		/* Wikia change end */
 
 		$list = array();
 		foreach( $groups as $group )
@@ -651,16 +594,5 @@ exit;
 		}
 		
 		return $groups;
-	}
-
-	/**
-	 * Show a rights log fragment for the specified user
-	 *
-	 * @param $user User to show log for
-	 * @param $output OutputPage to use
-	 */
-	protected function showLogFragment( $user, $output ) {
-		$output->addHTML( Xml::element( 'h2', null, LogPage::logName( 'rights' ) . "\n" ) );
-		LogEventsList::showLogExtract( $output, 'rights', $user->getUserPage()->getPrefixedText() );
 	}
 }
