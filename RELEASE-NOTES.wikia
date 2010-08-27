@@ -12,6 +12,7 @@
 * rt#56866: create easier way for non-tech staff to setup AbuseFilter tables on wikis (Federico)
 * rt#61174: Borked Achievements Leaderboard (Federico)
 * rt#64160: Achievements sidebar shown on monobook (Federico)
+* rt#57113: Achievements user page display broken on mobile skin and Monobook (Federico)
 * rt#64954: Remove "go" functionality from search box (Federico)
 * rt#59224: Photo Gallery: improvements for missing images (Federico)
 * rt#59229: Photo Gallery: references cause issues in preview (Federico)
