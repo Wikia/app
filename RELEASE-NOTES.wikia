@@ -1,4 +1,5 @@
 == Changes since 201008.4 ==
+* rt#64720: Standarize name convention used in Phalanx. (Marooned)
 * rt#65037: Make comments no render when page content below diffs is disabled (Marooned)
 * rt#65179: dont show "show all" link if there are not enough comments to trigger pagination (Marooned)
 * rt#64712: Comments not shown when comments are not allowed (Marooned)
