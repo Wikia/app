@@ -22,6 +22,7 @@
 * rt#64973: need way to (re)enable Extension:SpamBlacklist on some wikis while keeping phalanx enabled (Federico)
 * rt#64375: Ensure wgServer is unique (Tomek)
 * rt#57157: Duplicate entries in User log for accounts created via FBConnect (Tomek)
+* rt#64969: user cannot add poll to page because of missing DB table (Tomek)
 
 == Changes since 201008.3 ==
 * rt#64384: Blog comments showing up as article comments in special:recentChanges (Marooned)
