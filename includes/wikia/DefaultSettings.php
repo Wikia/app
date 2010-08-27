@@ -528,4 +528,4 @@ $wgWatchlistNotificationTimeout = 24 * 60 * 60;
  * @name $wgExcludedWantedFiles
  * don't show those files on Special:WantedFiles 
  */
-$wgExcludedWantedFiles = array (0 => 'Placeholder');
+$wgExcludedWantedFiles = array (0 => 'Placeholder', '1' => 'Welcome-user-page');
