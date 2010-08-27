@@ -1101,4 +1101,26 @@ class WikiStats {
 		#---
 		return $result;				
 	}	
+	
+	public function getLatestStats() {
+		global $wgStatsDB;
+		$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+		#---
+		$oRow = $dbr->selectRow( 
+			'wikia_monthly_stats',
+			array( 'unix_timestamp(ts) as lastdate' ),
+			array( 
+				'wiki_id' => $this->mCityId,
+				'stats_date' => date('Ym')
+			), 
+			__METHOD__
+		);
+		if ( isset($oRow) && isset($oRow->lastdate) ) {
+			$date = $oRow->lastdate;
+		} else {
+			$date = time();
+		}
+		
+		return $date;
+	}
 };

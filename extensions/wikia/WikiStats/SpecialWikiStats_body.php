@@ -268,7 +268,7 @@ class WikiStatsPage extends IncludableSpecialPage
 			$oTmpl->set_vars( array(
 				"data"			=> $this->mStats->loadStatsFromDB(),
 				"today" 		=> date("Ym"),
-				"today_day"     => time(),
+				"today_day"     => $this->mStats->getLatestStats(),
 				"user"			=> $wgUser,
 				"diffData"		=> $this->mStats->loadMonthlyDiffs(),
 				"cityId"		=> $this->mCityId,
