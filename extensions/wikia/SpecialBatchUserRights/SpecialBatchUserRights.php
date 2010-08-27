@@ -60,14 +60,8 @@ class SpecialBatchUserRights extends SpecialPage {
 			return;
 		}
 
-// TODO: REMOVE
-print "Extension not ready yet.  Do not enable.";
-exit;
-
-
 // TODO: SWC: MAKE THE FORM POST A TEXTAREA OF NAMES RATHER THAN ONE
 // TODO: SWC: MAKE THE FORM POST A TEXTAREA OF NAMES RATHER THAN ONE
-
 
 		if( !$this->userCanChangeRights( $wgUser, true ) ) {
 			// fixme... there may be intermediate groups we can mention.
@@ -97,6 +91,10 @@ exit;
 		$this->setHeaders();
 
 		if( $wgRequest->wasPosted() ) {
+// TODO: REMOVE
+print "Extension not ready yet. Post discarded.";
+exit;
+
 			// Get the array of posted usernames (line-break delimited).
 			$usernames = explode("\n", $wgRequest->getVal( 'usernames', '' ));
 
