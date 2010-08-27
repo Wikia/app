@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright © 2008-2010 Garrett Brown <http://www.mediawiki.org/wiki/User:Gbruin>
+ * Copyright ï¿½ 2008-2010 Garrett Brown <http://www.mediawiki.org/wiki/User:Gbruin>
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -408,12 +408,11 @@ class SpecialConnect extends SpecialPage {
 					$wgMemc->set( $key, 0, 86400 );
 				}
 				if ( $value >= $wgAccountCreationThrottle ) {
-					$wgOut->showErrorPage(wfMsgExt( 'acct_creation_throttle_hit', array( 'parseinline' ), $wgAccountCreationThrottle ) );
+					$wgOut->showErrorPage(wfMsg( 'errorpagetitle' ), wfMsgExt( 'acct_creation_throttle_hit', array( 'parseinline' ), $wgAccountCreationThrottle ) );
 					return false;
 				}
 				$wgMemc->incr( $key );
-			}
-
+                        }
 
 			/// END OF TYPICAL VALIDATIONS AND RESTRICITONS ON ACCOUNT-CREATION. ///
 
@@ -483,13 +482,8 @@ class SpecialConnect extends SpecialPage {
 			// This hook should not fail on invalid input, instead check the input using the SpecialConnect::createUser::validateForm hook above.
 			wfRunHooks( 'SpecialConnect::createUser::postProcessForm', array( &$this ) );
 			
-			// TODO: Which MediaWiki versions can we call this function in?
 			$user->addNewUserLogEntryAutoCreate();
-			#$user->addNewUserLogEntry();
 
-			// TODO: Which MediaWiki versions can we call this function in?
-			$user->addNewUserLogEntryAutoCreate();
-			#$user->addNewUserLogEntry();
 			$this->isNewUser = true;
 			$this->sendPage('displaySuccessLogin');
 		}
