@@ -16,8 +16,8 @@ class UserBlock {
 		wfProfileIn( __METHOD__ );
 
 		// RT#42011: RegexBlock records strange results
-		// don't write stats for other user than viewing user
-		$writeStats = $user->getName() == $wgUser->getName();
+		// don't write stats for other user than visiting user
+		$isCurrentUser = $user->getName() == $wgUser->getName();
 
 		$text = $user->getName();
 		$blocksData = Phalanx::getFromFilter( Phalanx::TYPE_USER );
@@ -25,12 +25,13 @@ class UserBlock {
 
 		if ( !empty($blocksData) && !empty($text) ) {
 			if ( $user->isAnon() ) {
-				$ret =  self::blockCheckInternal( $user, $blocksData, $text, true, $writeStats );
+				$ret =  self::blockCheckInternal( $user, $blocksData, $text, true, $isCurrentUser );
 			} else {
-				$ret = self::blockCheckInternal( $user, $blocksData, $text, false, $writeStats );
-				if ( $ret ) {
+				$ret = self::blockCheckInternal( $user, $blocksData, $text, false, $isCurrentUser );
+				//do not check IP for current user when checking block status of different user
+				if ( $ret && $isCurrentUser ) {
 					// if the user name was not blocked, check for an IP block
-					$ret = self::blockCheckInternal( $user, $blocksData, wfGetIP(), true );
+					$ret = self::blockCheckInternal( $user, $blocksData, wfGetIP(), true, $isCurrentUser );
 				}
 			}
 		}
