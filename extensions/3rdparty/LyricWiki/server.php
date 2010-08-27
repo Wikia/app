@@ -657,7 +657,7 @@ function getSong($artist, $song="", $doHyphens=true){
 		// These are "artists" which are very commonly accuring non-artists.  IE: Baby Einstein is a collection of classical music, Apple Inc. is just apple's (video?) podcasts
 		$nonArtists = array(
 			"baby einstein", "apple inc.", "soundtrack", "various", "various artists", "the howard stern show", "frequence3.fr", "frequence3",
-			"http://www.radiofg.com"
+			"http://www.radiofg.com", "radio paradise", "webex", "brought to you by santrex.net"
 		);
 
 		// The vast majority of failures come from players passing clearly-invalid requests - skip those.
