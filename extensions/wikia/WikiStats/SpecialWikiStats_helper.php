@@ -541,7 +541,7 @@ class WikiStats {
 					$this->mMainStats[$oRow->date] = array();
 				}
 				
-				$new_per_day = 0;
+				/*$new_per_day = 0;
 				if ( !is_null($prevArticles) ) {
 					if ( $oRow->E > $prevArticles ) {
 						$year = substr($oRow->date, 0, 4);
@@ -550,14 +550,18 @@ class WikiStats {
 						$new_per_day = ($oRow->E - $prevArticles) / $nbr_days;
 					}
 				}
-				$prevArticles = $oRow->E;
+				$prevArticles = $oRow->E;*/
 				if ( $startDate <= $oRow->date && $oRow->date <= $endDate ) {
 					foreach ( $oRow as $field => $value ) {
 						if ( $field == 'F' ) {
-							$value = intval($new_per_day);
+							/*$value = intval($new_per_day);
 							if ( $value > 0 ) {
 								$value = sprintf("%0.1f", $new_per_day);
-							}
+							}*/
+							$year = substr($oRow->date, 0, 4);
+							$month = substr($oRow->date, 4, 2);							
+							$nbr_days = date("t", strtotime($year . "-" . $month . "-01"));
+							$value = sprintf("%0.2f", $value/$nbr_days);
 						}
 						/*$excludedValues = isset( $this->mExcludedWikis[$oRow->date][$field] ) 
 							? intval( $this->mExcludedWikis[$oRow->date][$field] ) 

@@ -210,7 +210,7 @@ class WikiStatsPage extends IncludableSpecialPage
 	}
 	
 	private function showMenu() {
-		global $wgOut;
+		global $wgOut, $wgDBname;
         wfProfileIn( __METHOD__ );
 
 		$aTopLanguages = explode(',', wfMsg('wikistats_language_toplist'));
@@ -249,7 +249,7 @@ class WikiStatsPage extends IncludableSpecialPage
 			"mAction"			=> $this->mAction
         ));
         
-        if ( $this->userIsSpecial == 1 ) {
+        if ( $this->userIsSpecial == 1 && $wgDBname == WIKISTATS_CENTRAL_ID ) {
 			$res = $oTmpl->execute("select");
 		} else {
 			$res = $oTmpl->execute("select_user");
