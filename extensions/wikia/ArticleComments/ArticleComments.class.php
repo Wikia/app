@@ -65,6 +65,13 @@ class ArticleCommentInit {
 			if (defined('NS_BLOG_ARTICLE') && $wgTitle->getNamespace() == NS_BLOG_ARTICLE && strpos($wgTitle->getText(), '/') === false) {
 				self::$enable = false;
 			}
+
+			//respect diffonly settings for user - see RT#65037
+			$diff = $wgRequest->getVal('diff');
+			$diffOnly = $wgRequest->getBool('diffonly', $wgUser->getOption('diffonly'));
+			if (isset($diff) && $diffOnly) {
+				self::$enable = false;
+			}
 		}
 		wfProfileOut( __METHOD__ );
 		return self::$enable;
