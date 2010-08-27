@@ -68,7 +68,7 @@ class SpecialBatchUserRights extends SpecialPage {
 		// any groups, it's a bit silly to give them the user search prompt.
 		global $wgUser, $wgRequest;
 
-		wfLoadExtensionMessages( 'SpecialBatchUserRights' );
+		wfLoadExtensionMessages( 'BatchUserRights' );
 
 		if ( !$wgUser->isAllowed( 'batchuserrights' ) ) {
 			$this->displayRestrictionError();
@@ -142,7 +142,7 @@ class SpecialBatchUserRights extends SpecialPage {
 							$wgOut->addHTML( wfMsgExt(
 								'batchuserrights-single-progress-update',
 								'parseinline',
-								$count( $addgroup ),
+								count( $addgroup ),
 								$username
 							) . "<br />\n" );
 							$this->saveUserGroups( $username, $addgroup, $reason );
@@ -176,7 +176,7 @@ class SpecialBatchUserRights extends SpecialPage {
 		if ( !$user ) {
 			global $wgOut;
 
-			$wgOut->addHTML( "<strong style='background-color:#faa'>" . wfMsgExt( 'batchuserrights-userload-error', 'parseinline', $username ) . "</strong>" );
+			$wgOut->addHTML( "<strong style='background-color:#faa'>" . wfMsgExt( 'batchuserrights-userload-error', 'parseinline', $username ) . "</strong><br />" );
 
 			return;
 		}
