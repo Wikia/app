@@ -7,9 +7,18 @@
  * @ingroup SpecialPage
  */
 
+set_time_limit(0);
 $wgAvailableRights[] = 'batchuserrights';
 $wgSpecialPages['BatchUserRights'] = 'SpecialBatchUserRights';
-//$wgAutoloadClasses['SpecialBatchUserRights'] = $dir . 'SpecialBatchUserRights.php';xe
+//$wgAutoloadClasses['SpecialBatchUserRights'] = $dir . 'SpecialBatchUserRights.php';
+$wgExtensionCredits['specialpage'][] = array(
+	'name' => 'BatchUserRights',
+	'url' => 'http://lyrics.wikia.com/User:Sean_Colombo',
+	'author' => '[http://www.seancolombo.com Sean Colombo]',
+	'description' => 'Allows adding one or more users to a group at once (to help speed up adding users to Beta testing).',
+	'version' => '1.0',
+);
+$wgExtensionMessagesFiles['SpecialBatchUserRights'] = dirname(__FILE__).'/SpecialBatchUserRights.i18n.php';
 
 /**
  * A class to manage user levels rights.
@@ -21,6 +30,7 @@ class SpecialBatchUserRights extends SpecialPage {
 	// For added security, this array will be the only groups we'll allow to be batch-added to users.
 	private static $grantableUserGroups = array(
 		'beta',
+		'rollback',
 	);
 
 	public function __construct() {
@@ -54,14 +64,13 @@ class SpecialBatchUserRights extends SpecialPage {
 		// If the visitor doesn't have permissions to assign or remove
 		// any groups, it's a bit silly to give them the user search prompt.
 		global $wgUser, $wgRequest;
+		
+		wfLoadExtensionMessages('SpecialBatchUserRights');
 
 		if ( !$wgUser->isAllowed( 'batchuserrights' ) ) {
 			$this->displayRestrictionError();
 			return;
 		}
-
-// TODO: SWC: MAKE THE FORM POST A TEXTAREA OF NAMES RATHER THAN ONE
-// TODO: SWC: MAKE THE FORM POST A TEXTAREA OF NAMES RATHER THAN ONE
 
 		if( !$this->userCanChangeRights( $wgUser, true ) ) {
 			// fixme... there may be intermediate groups we can mention.
@@ -91,12 +100,8 @@ class SpecialBatchUserRights extends SpecialPage {
 		$this->setHeaders();
 
 		if( $wgRequest->wasPosted() ) {
-// TODO: REMOVE
-print "Extension not ready yet. Post discarded.";
-exit;
-
 			// Get the array of posted usernames (line-break delimited).
-			$usernames = explode("\n", $wgRequest->getVal( 'usernames', '' ));
+			$usernames = explode("\n", $wgRequest->getVal( 'wpUsernames', '' ));
 
 			// save settings
 			if( $wgRequest->getCheck( 'saveusergroups' ) ) {
@@ -104,13 +109,23 @@ exit;
 				$tok = $wgRequest->getVal( 'wpEditToken' );
 				if( $wgUser->matchEditToken( $tok ) ) {
 					global $wgOut;
+					
+					$allgroups = self::$grantableUserGroups;
+					$addgroup = array();
+					foreach ($allgroups as $group) {
+						// This batch form is only for adding user groups, we don't remove any.
+						if ($wgRequest->getCheck( "wpGroup-$group" )) {
+							$addgroup[] = $group;
+						}
+					}
+					
+					$wgOut->addHTML(wfMsg('batchuserrights-add-groups', implode(",", $addgroup)) . "<br/><br/>\n");
 
 					// Loop through each target user and apply the update.
 					foreach($usernames as $username){
-						$wgOut->addHTML("");
-						$this->saveUserGroups( $username, $reason );
+						$wgOut->addHTML(wfMsg('batchuserrights-single-progress-update', $username) ."<br/>\n");
+						$this->saveUserGroups( $username, $addgroup, $reason );
 					}
-
 				}
 			}
 		}
@@ -124,10 +139,11 @@ exit;
 	 * Data comes from the showEditUserGroupsForm() form function
 	 *
 	 * @param $username String: username to apply changes to.
+	 * @param $addgroup Array: group names which the user should be added to.
 	 * @param $reason String: reason for group change
 	 * @return null
 	 */
-	function saveUserGroups( $username, $reason = '') {
+	function saveUserGroups( $username, $addgroup, $reason = '') {
 		global $wgRequest, $wgUser, $wgGroupsAddToSelf, $wgGroupsRemoveFromSelf;
 		
 		if ($username == $wgUser->getName()){
@@ -137,18 +153,6 @@ exit;
 		$user = $this->fetchUser( $username );
 		if( !$user ) {
 			return;
-		}
-
-		$allgroups = $this->getAllGroups();
-		$addgroup = array();
-
-		// This could possibly create a highly unlikely race condition if permissions are changed between
-		//  when the form is loaded and when the form is saved. Ignoring it for the moment.
-		foreach ($allgroups as $group) {
-			// This batch form is only for adding user groups, we don't remove any.
-			if ($wgRequest->getCheck( "wpGroup-$group" )) {
-				$addgroup[] = $group;
-			}
 		}
 
 		// Validate input set...
@@ -308,27 +312,23 @@ exit;
 	protected function showEditUserGroupsForm() {
 		global $wgOut, $wgUser, $wgLang;
 
-		$groups = $this->grantableUserGroups;
-
-		$list = array();
-		foreach( $groups as $group )
-			$list[] = self::buildGroupLink( $group );
-
-		$grouplist = '';
-		if( count( $list ) > 0 ) {
-			$grouplist = wfMsgHtml( 'userrights-groupsmember' );
-			$grouplist = '<p>' . $grouplist  . ' ' . $wgLang->listToText( $list ) . '</p>';
-		}
 		$wgOut->addHTML(
 			Xml::openElement( 'form', array( 'method' => 'post', 'action' => $this->getTitle()->getLocalURL(), 'name' => 'editGroup', 'id' => 'mw-userrights-form2' ) ) .
 			Xml::hidden( 'wpEditToken', $wgUser->editToken() ) .
 			Xml::openElement( 'fieldset' ) .
 			Xml::element( 'legend', array(), wfMsg( 'userrights-editusergroup' ) ) .
-			wfMsgExt( 'userrights-groups-help', array( 'parse' ) ) .
-			$grouplist .
-			Xml::tags( 'p', null, $this->groupCheckboxes( $groups ) ) .
+			wfMsgExt( 'batchuserrights-intro', array( 'parse' ) ) .
+			Xml::tags( 'p', null, $this->groupCheckboxes() ) .
 			Xml::openElement( 'table', array( 'border' => '0', 'id' => 'mw-userrights-table-outer' ) ) .
 				"<tr>
+					<td class='mw-label'>" .
+						Xml::label( wfMsg( 'batchuserrights-names' ), 'wpUsernames' ) .
+					"</td>
+					<td class='mw-input'>" .
+						Xml::textarea( 'wpUsernames', '' ) .
+					"</td>
+				</tr>
+				<tr>
 					<td class='mw-label'>" .
 						Xml::label( wfMsg( 'userrights-reason' ), 'wpReason' ) .
 					"</td>
@@ -349,34 +349,15 @@ exit;
 	}
 
 	/**
-	 * Format a link to a group description page
-	 *
-	 * @param $group string
-	 * @return string
-	 */
-	private static function buildGroupLink( $group ) {
-		static $cache = array();
-		if( !isset( $cache[$group] ) )
-			$cache[$group] = User::makeGroupLinkHtml( $group, User::getGroupName( $group ) );
-		return $cache[$group];
-	}
-	
-	/**
-	 * Returns an array of all groups that may be edited
-	 * @return array Array of groups that may be edited.
-	 */
-	 protected static function getAllGroups() {
-	 	return User::getAllGroups();
-	 }
-
-	/**
 	 * Adds a table with checkboxes where you can select what groups to add/remove
 	 *
-	 * @param $usergroups Array: groups the user belongs to
 	 * @return string XHTML table element with checkboxes
 	 */
-	private function groupCheckboxes( $usergroups ) {
-		$allgroups = $this->getAllGroups();
+	private function groupCheckboxes() {
+
+		$usergroups = array(); // kinda a hack... this array holds "selected" groups... of which there shouldn't be any for this SpecialPage
+
+		$allgroups = self::$grantableUserGroups;
 		$ret = '';
 
 		$column = 1;
@@ -384,11 +365,9 @@ exit;
 		$unsettable_col = '';
 
 		foreach ($allgroups as $group) {
-			$set = in_array( $group, $usergroups );
+			$set = false;
 			# Should the checkbox be disabled?
-			$disabled = !(
-				( $set && $this->canRemove( $group ) ) ||
-				( !$set && $this->canAdd( $group ) ) );
+			$disabled = !( !$set && $this->canAdd( $group ) );
 			# Do we need to point out that this action is irreversible?
 			$irreversible = !$disabled && (
 				($set && !$this->canAdd( $group )) ||
