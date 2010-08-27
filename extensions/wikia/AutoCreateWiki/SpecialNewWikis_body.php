@@ -148,6 +148,30 @@ class NewWikisPage extends AlphabeticPager {
 
 		return $query;
 	}
+        /* need to be overwrite because of not unique col name (city_id) */
+
+	function reallyDoQuery( $offset, $limit, $descending ) {
+		$fname = __METHOD__ . ' (' . get_class( $this ) . ')';
+		$info = $this->getQueryInfo();
+		$tables = $info['tables'];
+		$fields = $info['fields'];
+		$conds = isset( $info['conds'] ) ? $info['conds'] : array();
+		$options = isset( $info['options'] ) ? $info['options'] : array();
+		$join_conds = isset( $info['join_conds'] ) ? $info['join_conds'] : array();
+		if ( $descending ) {
+			$options['ORDER BY'] = "city_list." . $this->mIndexField;
+			$operator = '>';
+		} else {
+			$options['ORDER BY'] = "city_list." . $this->mIndexField . ' DESC';
+			$operator = '<';
+		}
+		if ( $offset != '' ) {
+			$conds[] = "city_list." . $this->mIndexField . $operator . $this->mDb->addQuotes( $offset );
+		}
+		$options['LIMIT'] = intval( $limit );
+		$res = $this->mDb->select( $tables, $fields, $conds, $fname, $options, $join_conds );
+		return new ResultWrapper( $this->mDb, $res );
+	}
 
 	function formatRow( $row ) {
 		global $wgLang;
