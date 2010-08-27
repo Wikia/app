@@ -111,6 +111,7 @@ $wgAutoloadClasses[ "WikiFactoryTags"              ] = "{$IP}/extensions/wikia/W
 $wgAutoloadClasses[ "WikiaApiQueryEventsData"      ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryEventsData.php";
 $wgAutoloadClasses[ "WikiaApiQueryEventInfo"       ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryEventInfo.php";
 $wgAutoloadClasses[ "WikiaApiQueryScribeEvents"    ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryScribeEvents.php";
+$wgAutoloadClasses[ "WikiaApiQueryAllUsers"        ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryAllUsers.php";
 
 /**
  * registered API methods
@@ -130,6 +131,7 @@ $wgAPIListModules[ "wkreferer"    ] = "WikiaApiQueryReferers";
  * registered API methods
  */
 $wgAPIMetaModules[ "siteinfo"     ] = "WikiaApiQuerySiteInfo";
+$wgAPIListModules[ "allusers"     ] = "WikiaApiQueryAllUsers";
 
 /**
  * registered Ajax methods
