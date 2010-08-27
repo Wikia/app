@@ -6,8 +6,8 @@ class Phalanx {
 	const TYPE_SUMMARY = 2;
 	const TYPE_TITLE = 4;
 	const TYPE_USER = 8;
-	const TYPE_ANSWERS_QUESTION = 16;
-	const TYPE_ANSWERS_WORDS = 32;
+	const TYPE_ANSWERS_QUESTION_TITLE = 16;
+	const TYPE_ANSWERS_RECENT_QUESTIONS = 32;
 	const TYPE_WIKI_CREATION = 64;
 
 	public static $typeNames = array(
@@ -15,8 +15,8 @@ class Phalanx {
 		2 => 'summary',
 		4 => 'title',
 		8 => 'user',
-		16 => 'answers-question',
-		32 => 'answers-words',
+		16 => 'answers-question-title',
+		32 => 'answers-recent-questions',
 		64 => 'wiki-creation'
 	);
 

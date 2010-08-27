@@ -1,7 +1,7 @@
 <?php
 
 /**
- * FilterWordsBlock
+ * RecentQuestionsBlock
  *
  * This filter blocks questions (articles) from being displayed
  * in a number of outputs (widgets, lists, tag-generated listings).
@@ -11,14 +11,14 @@
  * Note: works only on Answers-type wikis
  */
 
-class FilterWordsBlock {
+class RecentQuestionsBlock {
 	function filterWordsTest( $question ) {
 		wfProfileIn( __METHOD__ );
 
 		$text = preg_replace('/\pP+/', '', $question);
 		$text = preg_replace('/\s+/', ' ', $text);
 
-		$blocksData = Phalanx::getFromFilter( Phalanx::TYPE_ANSWERS_WORDS );
+		$blocksData = Phalanx::getFromFilter( Phalanx::TYPE_ANSWERS_RECENT_QUESTIONS );
 		if ( !empty($blocksData) && !empty($text) ) {
 			foreach ($blocksData as $blockData) {
 				$result = Phalanx::isBlocked( $text, $blockData );
