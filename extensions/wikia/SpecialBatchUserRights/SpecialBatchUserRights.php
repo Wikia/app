@@ -380,7 +380,6 @@ class SpecialBatchUserRights extends SpecialPage {
 	 * @return string XHTML table element with checkboxes
 	 */
 	private function groupCheckboxes() {
-
 		$usergroups = array(); // kinda a hack... this array holds "selected" groups... of which there shouldn't be any for this SpecialPage
 
 		$allgroups = self::$grantableUserGroups;
@@ -425,10 +424,10 @@ class SpecialBatchUserRights extends SpecialPage {
 				"<tr>
 ";
 			if ( $settable_col !== '' ) {
-				$ret .= xml::element( 'th', null, wfMsg( 'userrights-changeable-col' ) );
+				$ret .= Xml::element( 'th', null, wfMsg( 'userrights-changeable-col' ) );
 			}
 			if ( $unsettable_col !== '' ) {
-				$ret .= xml::element( 'th', null, wfMsg( 'userrights-unchangeable-col' ) );
+				$ret .= Xml::element( 'th', null, wfMsg( 'userrights-unchangeable-col' ) );
 			}
 			$ret .= "</tr>
 				<tr>
