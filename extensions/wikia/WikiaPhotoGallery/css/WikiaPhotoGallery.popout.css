@@ -14,6 +14,11 @@
 	line-height: 1.5em;
 }
 
+/* hide error from Cite extension when <ref> is used in image caption */
+.wikia-slideshow-popout-caption strong.error {
+	display: none;
+}
+
 .wikia-slideshow-popout-add-image {
 	float: right;
 	margin: 15px !important;
