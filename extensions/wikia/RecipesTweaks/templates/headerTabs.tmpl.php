@@ -4,6 +4,8 @@
 					<fieldset>
 						<legend><?= wfMsg('recipes-search-label') ?></legend>
 						<input id="search_field" name="search" type="text" value="<?= wfMsg('recipes-search-label') ?>" maxlength="200" onfocus="sf_focus(event);" alt="<?= wfMsg('recipes-search-label') ?>" autocomplete="off"<?= $skin->tooltipAndAccesskey('search'); ?> />
+						<? global $wgSearchDefaultFulltext; ?>
+						<input type="hidden" name="<?= ( $wgSearchDefaultFulltext ) ? 'fulltext' : 'go'; ?>" value="1" />
 						<input type="submit" id="recipes_search_button" value="" title="<?= wfMsgHtml('searchbutton') ?>" />
 					</fieldset>
 				</form>

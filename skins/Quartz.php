@@ -472,7 +472,8 @@ echo $html;
 				<div id="search">
 					<div id="searchSubmit">&nbsp;</div>
 					<input type="text" id="searchfield" name="search" class="gray" value="<?= wfMsg('ilsubmit') ?> <?= $wgSitename ?>" />
-					<input type="hidden" name="fulltext" value="1" />
+					<? global $wgSearchDefaultFulltext; ?>
+					<input type="hidden" name="<?= ( $wgSearchDefaultFulltext ) ? 'fulltext' : 'go'; ?>" value="1" />
 				</div>
 			</form>
 			<div id="searchSuggestContainer" class="yui-ac-container">

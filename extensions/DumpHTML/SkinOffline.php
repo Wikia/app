@@ -116,6 +116,7 @@ class SkinOfflineTemplate extends QuickTemplate {
 	 */
 	function execute() {
 		wfSuppressWarnings();
+		global $wgSearchDefaultFulltext;
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php $this->text('lang') ?>" lang="<?php $this->text('lang') ?>" dir="<?php $this->text('dir') ?>">
   <head>
@@ -200,7 +201,7 @@ class SkinOfflineTemplate extends QuickTemplate {
 	          ?>accesskey="<?php $this->msg('accesskey-search') ?>"<?php }
 	        if( isset( $this->data['search'] ) ) {
 	          ?> value="<?php $this->text('search') ?>"<?php } ?> />
-	      <input type='submit' name="fulltext" class="searchButton" id="searchGoButton"
+	      <input type='submit' name="<?= ( $wgSearchDefaultFulltext ) ? 'fulltext' : 'go'; ?>" class="searchButton" id="searchGoButton"
 	        value="<?php $this->msg('go') ?>" />
 	    </div></form>
 	  </div>
