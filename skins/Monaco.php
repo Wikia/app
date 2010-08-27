@@ -2057,7 +2057,8 @@ if ( $wgRequest->getVal('action') != 'edit' ) {
 				<div id="search_box" class="color1">
 					<form action="<?php $this->text('searchaction') ?>" id="searchform">
 						<input id="search_field" name="search" type="text" value="<?= htmlspecialchars($searchLabel) ?>" maxlength="200" onfocus="sf_focus(event);" alt="<?= htmlspecialchars($searchLabel) ?>" autocomplete="off"<?= $skin->tooltipAndAccesskey('search'); ?> />
-						<input type="hidden" name="fulltext" value="1" />
+						<? global $wgSearchDefaultFulltext; ?>
+						<input type="hidden" name="<?= ( $wgSearchDefaultFulltext ) ? 'fulltext' : 'go'; ?>" value="1" />
 						<input type="image" src="<?php print $wgBlankImgUrl; ?>" id="search-button" class="sprite search" />
 					</form>
 				</div>

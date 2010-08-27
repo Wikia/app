@@ -2099,7 +2099,8 @@ if(count($wikiafooterlinks) > 0) {
 				<div id="search_box" class="color1">
 					<form action="<?php $this->text('searchaction') ?>" id="searchform">
 						<input id="search_field" name="search" type="text" title="<?= htmlspecialchars($searchLabel) ?>" value="" maxlength="200"<?= $skin->tooltipAndAccesskey('search'); ?> />
-						<input type="hidden" name="fulltext" value="1" />
+						<? global $wgSearchDefaultFulltext; ?>
+						<input type="hidden" name="<?= ( $wgSearchDefaultFulltext ) ? 'fulltext' : 'go'; ?>" value="1" />
 						<input type="submit" id="search_button" value="" title="<?= wfMsgHtml('searchbutton') ?>" />
 					</form>
 					<div id="searchSuggestContainer" class="yui-ac-container"></div>
