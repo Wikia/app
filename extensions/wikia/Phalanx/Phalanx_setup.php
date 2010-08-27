@@ -22,7 +22,7 @@ $wgAutoloadClasses['Phalanx'] = $dir.'Phalanx.class.php';
 $wgAutoloadClasses['UserBlock'] = $dir.'blocks/UserBlock.class.php';
 $wgAutoloadClasses['ContentBlock'] = $dir.'blocks/ContentBlock.class.php';
 $wgAutoloadClasses['TitleBlock'] = $dir.'blocks/TitleBlock.class.php';
-$wgAutoloadClasses['QuestionTitleBlock'] = $dir.'blocks/QuestionTitleBlock.php';
+$wgAutoloadClasses['QuestionTitleBlock'] = $dir.'blocks/QuestionTitleBlock.class.php';
 $wgAutoloadClasses['RecentQuestionsBlock'] = $dir.'blocks/RecentQuestionsBlock.class.php';
 $wgAutoloadClasses['WikiCreationBlock'] = $dir.'blocks/WikiCreationBlock.class.php';
 
