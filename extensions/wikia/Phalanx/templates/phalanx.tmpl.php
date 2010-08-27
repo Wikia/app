@@ -67,10 +67,10 @@
 								</div>
 								<div>
 									<?= Xml::check( 'wpPhalanxType[]', !empty( $data['type'][16] ), array( 'id' => 'wpPhalanxTypeQuestion', 'value' => 16 ) ) ?>
-									<label for="wpPhalanxTypeQuestion"><?= wfMsg( 'phalanx-type-answers-question' ) ?></label>
+									<label for="wpPhalanxTypeQuestion"><?= wfMsg( 'phalanx-type-answers-question-title' ) ?></label>
 									
 									<?= Xml::check( 'wpPhalanxType[]', !empty( $data['type'][32] ), array( 'id' => 'wpPhalanxTypeFilterWords', 'value' => 32 ) ) ?>
-									<label for="wpPhalanxTypeFilterWords"><?= wfMsg( 'phalanx-type-answers-words' ) ?></label>
+									<label for="wpPhalanxTypeFilterWords"><?= wfMsg( 'phalanx-type-answers-recent-questions' ) ?></label>
 								</div>
 							</div>
 							<div id="phalanx-help">
@@ -79,8 +79,8 @@
 								<div id="phalanx-help-4" class="accent"><?= wfMsg( 'phalanx-help-type-title' ) ?></div>
 								<div id="phalanx-help-8" class="accent"><?= wfMsg( 'phalanx-help-type-user' ) ?></div>
 								<div id="phalanx-help-64" class="accent"><?= wfMsg( 'phalanx-help-type-wiki-creation' )  ?></div>
-								<div id="phalanx-help-16" class="accent"><?= wfMsg( 'phalanx-help-type-answers-question' ) ?></div>
-								<div id="phalanx-help-32" class="accent"><?= wfMsg( 'phalanx-help-type-answers-words' ) ?></div>
+								<div id="phalanx-help-16" class="accent"><?= wfMsg( 'phalanx-help-type-answers-question-title' ) ?></div>
+								<div id="phalanx-help-32" class="accent"><?= wfMsg( 'phalanx-help-type-answers-recent-questions' ) ?></div>
 							</div>
 						</div>
 						<!-- Reason -->
@@ -91,11 +91,11 @@
 							</div>
 							<div class="clearfix">
 								<label for="wpPhalanxLanguages" class="left"><?= wfMsg( 'phalanx-label-lang' ) ?></label>
-                                                                <select name="wpPhalanxLanguages" id="wpPhalanxLanguages" class="blue" >
-                                                                        <? foreach ($languages as $k => $v) { ?>
-                                                                                <option <?=($k == $data['lang']) ? "selected" : ""?> value="<?=$k?>"><?=$v?></option>
-                                                                        <? } ?>
-                                                                </select>
+								<select name="wpPhalanxLanguages" id="wpPhalanxLanguages" class="blue" >
+									<? foreach ($languages as $k => $v) { ?>
+										<option <?=($k == $data['lang']) ? "selected" : ""?> value="<?=$k?>"><?=$v?></option>
+									<? } ?>
+								</select>
 							</div>
 							<div class="clearfix">
 								<input type="submit" id="wpPhalanxSubmit" name="wpPhalanxSubmit" value="<?= wfMsg( 'phalanx-add-block' ) ?>" />
@@ -143,10 +143,10 @@
 							</div>
 							<div>
 								<?= Xml::check( 'wpPhalanxTypeFilter[]', !empty( $data['typeFilter'][16] ), array( 'id' => 'wpPhalanxTypeQuestionFilter', 'value' => 16 ) ) ?>
-								<label for="wpPhalanxTypeQuestionFilter"><?= wfMsg( 'phalanx-type-answers-question' ) ?></label>
+								<label for="wpPhalanxTypeQuestionFilter"><?= wfMsg( 'phalanx-type-answers-question-title' ) ?></label>
 								
 								<?= Xml::check( 'wpPhalanxTypeFilter[]', !empty( $data['typeFilter'][32] ), array( 'id' => 'wpPhalanxTypeFilterWordsFilter', 'value' => 32 ) ) ?>
-								<label for="wpPhalanxTypeFilterWordsFilter"><?= wfMsg( 'phalanx-type-answers-words' ) ?></label>
+								<label for="wpPhalanxTypeFilterWordsFilter"><?= wfMsg( 'phalanx-type-answers-recent-questions' ) ?></label>
 							</div>
 						</div>
 

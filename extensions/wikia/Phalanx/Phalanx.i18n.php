@@ -8,8 +8,8 @@ $messages['en'] = array(
 	'phalanx-type-summary' => 'page summary',
 	'phalanx-type-title' => 'page title',
 	'phalanx-type-user' => 'user',
-	'phalanx-type-answers-question' => 'question title',
-	'phalanx-type-answers-words' => 'recent questions',
+	'phalanx-type-answers-question-title' => 'question title',
+	'phalanx-type-answers-recent-questions' => 'recent questions',
 	'phalanx-type-wiki-creation' => 'wiki creation',
 	'phalanx-add-block' => 'Apply block',
 	'phalanx-edit-block' => 'Save block',
@@ -69,10 +69,10 @@ Clicking "{{int:phalanx-add-block}}" will save your changes!',
 	 It does not prevent a pre-existing page from being edited.',
 	'phalanx-help-type-user' => 'This filter blocks a user (exactly the same as a local MediaWiki block), if the name or IP address matches one of the blacklisted names or IP addresses.',
 	'phalanx-help-type-wiki-creation' => 'This filter prevents a wiki from being created, if its name or URL matches any blacklisted phrase.',
-	'phalanx-help-type-answers-question' => 'This filter blocks a question (page) from being created, if its title matches any of the blacklisted phrases.
+	'phalanx-help-type-answers-question-title' => 'This filter blocks a question (page) from being created, if its title matches any of the blacklisted phrases.
 
 	 Note: only works on Answers-type wikis',
-	'phalanx-help-type-answers-words' => 'This filter prevents questions (pages) from being displayed in a number of outputs (widgets, lists, tag-generated listings).
+	'phalanx-help-type-answers-recent-questions' => 'This filter prevents questions (pages) from being displayed in a number of outputs (widgets, lists, tag-generated listings).
 It does not prevent those pages from being created.
 
 Note: works only on Answers-type wiks',

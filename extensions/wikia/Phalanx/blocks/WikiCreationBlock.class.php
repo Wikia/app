@@ -7,7 +7,7 @@
  * @see extensions/wikia/AutoCreateWiki/
  */
 
-class AWCCreationBlock {
+class WikiCreationBlock {
 	public static function isAllowedText($text, $where, $split) {
 		wfProfileIn( __METHOD__ );
 

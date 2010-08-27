@@ -7,7 +7,7 @@
  * Note: only works on Answers-type wikis
  */
 
-class BadWordsBlock {
+class QuestionTitleBlock {
 	static public function badWordsTest( $title ) {
 		global $wgLanguageCode;
 		wfProfileIn(__METHOD__);
@@ -15,7 +15,7 @@ class BadWordsBlock {
 		$text = preg_replace('/[^\PP]+/', '', $title->getText());
 		$text = preg_replace('/\s+/', ' ', $text);
 
-		$blocksData = Phalanx::getFromFilter( Phalanx::TYPE_ANSWERS_QUESTION, $wgLanguageCode );
+		$blocksData = Phalanx::getFromFilter( Phalanx::TYPE_ANSWERS_QUESTION_TITLE, $wgLanguageCode );
 
 		foreach ( $blocksData as $blockData ) {
 			$result = Phalanx::isBlocked( $text, $blockData );

@@ -22,9 +22,9 @@ $wgAutoloadClasses['Phalanx'] = $dir.'Phalanx.class.php';
 $wgAutoloadClasses['UserBlock'] = $dir.'blocks/UserBlock.class.php';
 $wgAutoloadClasses['ContentBlock'] = $dir.'blocks/ContentBlock.class.php';
 $wgAutoloadClasses['TitleBlock'] = $dir.'blocks/TitleBlock.class.php';
-$wgAutoloadClasses['BadWordsBlock'] = $dir.'blocks/BadWordsBlock.class.php';
-$wgAutoloadClasses['FilterWordsBlock'] = $dir.'blocks/FilterWordsBlock.class.php';
-$wgAutoloadClasses['AWCCreationBlock'] = $dir.'blocks/AWCCreationBlock.class.php';
+$wgAutoloadClasses['QuestionTitleBlock'] = $dir.'blocks/QuestionTitleBlock.class.php';
+$wgAutoloadClasses['RecentQuestionsBlock'] = $dir.'blocks/RecentQuestionsBlock.class.php';
+$wgAutoloadClasses['WikiCreationBlock'] = $dir.'blocks/WikiCreationBlock.class.php';
 
 $wgExtensionMessagesFiles['Phalanx'] = $dir . 'Phalanx.i18n.php';
 
@@ -65,12 +65,12 @@ function efPhalanxInit() {
 	$wgHooks['CreateDefaultQuestionPageFilter'][] = 'TitleBlock::genericTitleCheck';
 	$wgHooks['CreatePageTitleCheck'][] = 'TitleBlock::genericTitleCheck';
 
-	// former BadWords list (TYPE_ANSWERS_QUESTION)
-	$wgHooks['CreateDefaultQuestionPageFilter'][] = 'BadWordsBlock::badWordsTest';
+	// former BadWords list (TYPE_ANSWERS_QUESTION_TITLE)
+	$wgHooks['CreateDefaultQuestionPageFilter'][] = 'QuestionTitleBlock::badWordsTest';
 
-	// former FilterWords list (TYPE_ANSWERS_WORDS)
-	$wgHooks['DefaultQuestion::filterWordsTest'][] = 'FilterWordsBlock::filterWordsTest';
+	// former FilterWords list (TYPE_ANSWERS_RECENT_QUESTIONS)
+	$wgHooks['DefaultQuestion::filterWordsTest'][] = 'RecentQuestionsBlock::filterWordsTest';
 
 	// former TextRegex (TYPE_WIKI_CREATION)
-	$wgHooks['AutoCreateWiki::checkBadWords'][] = 'AWCCreationBlock::isAllowedText';
+	$wgHooks['AutoCreateWiki::checkBadWords'][] = 'WikiCreationBlock::isAllowedText';
 }
