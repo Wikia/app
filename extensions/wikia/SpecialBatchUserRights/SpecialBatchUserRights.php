@@ -118,8 +118,12 @@ class SpecialBatchUserRights extends SpecialPage {
 							$addgroup[] = $group;
 						}
 					}
-					
-					$wgOut->addHTML(wfMsg('batchuserrights-add-groups', implode(",", $addgroup)) . "<br/><br/>\n");
+
+					if(count($addgroup) == 0){
+						$wgOut->addHTML("<strong style='background-color:#faa'>".wfMsg('batchuserrights-no-groups')."</strong><br/><br/>\n");
+					} else {
+						$wgOut->addHTML(wfMsg('batchuserrights-add-groups', implode(",", $addgroup)) . "<br/><br/>\n");
+					}
 
 					// Loop through each target user and apply the update.
 					foreach($usernames as $username){
@@ -152,6 +156,8 @@ class SpecialBatchUserRights extends SpecialPage {
 
 		$user = $this->fetchUser( $username );
 		if( !$user ) {
+			global $wgOut;
+			$wgOut->addHTML("<strong style='background-color:#faa'>".wfMsg('batchuserrights-userload-error', $username)."</strong>");
 			return;
 		}
 
