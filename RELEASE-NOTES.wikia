@@ -7,13 +7,14 @@
 * rt#64006: Behaviour for log-in-to-edit wikis (Marooned)
 * rt#64009: Error for posting an empty comment (Marooned)
 * new RandomWiki special page implementation (Federico)
-* rt#56866: create easier way for non-tech staff to setup AbuseFilter tables on wikis (Federico)
 * rt#58769: RandomWiki no longer working (Federico)
+* rt#56866: create easier way for non-tech staff to setup AbuseFilter tables on wikis (Federico)
 * rt#61174: Borked Achievements Leaderboard (Federico)
-* rt#59226: Photo Gallery: slideshow preview images move on rollover (Federico)
 * rt#64160: Achievements sidebar shown on monobook (Federico)
 * rt#64954: Remove "go" functionality from search box (Federico)
 * rt#59224: Photo Gallery: improvements for missing images (Federico)
+* rt#59229: Photo Gallery: references cause issues in preview (Federico)
+* rt#59226: Photo Gallery: slideshow preview images move on rollover (Federico)
 * rt#64375: Ensure wgServer is unique (Tomek)
 
 == Changes since 201008.3 ==
