@@ -41,7 +41,7 @@ class WikiaApiQueryAllUsers extends ApiQueryAllUsers {
 			
 			$data = array();
 			while ($row = $db->fetchObject($oRes)) {
-				$data[$row->user_id] = $row->lu_allgroups;
+				$data[$row->user_id] = $row->ug_groups;
 			}
 			$db->freeResult($oRes);
 			$wgMemc->set( $memkey , $data, 300 );			
