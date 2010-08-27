@@ -11,7 +11,7 @@ For security reasons, the list of addable groups is set in the extension configu
 Please ask a system administrator if you need to allow batch-adding of other groups.',
 	'batchuserrights-single-progress-update' => 'Added {{PLURAL:$1|group|groups}} to <strong>$2</strong>.',
 	'batchuserrights-add-groups' => 'Adding {{PLURAL:$1|one user|$1 users}} to the following {{PLURAL:$2|group|groups}}: <strong>$3</strong>.',
-	'batchuserrights-userload-error' => "Could not load the user '''\"$1\"'''",
+	'batchuserrights-userload-error' => "Could not load the user \"'''$1'''\".",
 	'batchuserrights-no-groups' => "You did not choose any groups.
 This will not accomplish anything.
 The rest of the page will be allowed to run just so that you can easily see if any of the usernames could not be loaded.",
