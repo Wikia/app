@@ -10,7 +10,7 @@ class SpecialLeaderboard extends SpecialPage {
 	function execute($user_id) {
 		wfProfileIn(__METHOD__);
 
-		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgSupressPageTitle, $wgUser, $wgWikiaBotLikeUsers, $wgJsMimeType, $wgRequest;
+		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgSupressPageTitle, $wgUser, $wgWikiaBotLikeUsers, $wgJsMimeType;
 
 		$wgSupressPageTitle = true;
 		$rankingService = new AchRankingService();
@@ -20,12 +20,13 @@ class SpecialLeaderboard extends SpecialPage {
 		$wgOut->addStyle( "common/article_sidebar.css" );
 		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AchievementsII/css/leaderboard.css?{$wgStyleVersion}");
 		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AchievementsII/css/achievements_sidebar.css?{$wgStyleVersion}");
-
-		$currentSkin =  strtolower( $wgUser->getSkin()->getSkinName() );
-
-		if( $currentSkin == 'monobook' ) {
+		
+		//need to use class name since skin is still not completely initialized at this time
+		$currentSkin = get_class( $wgUser->getSkin() );
+		
+		if( $currentSkin == 'SkinMonoBook' ) {
 			$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AchievementsII/css/leaderboard_monobook.css?{$wgStyleVersion}");
-		} elseif( $currentSkin == 'wikiaphone' ) {
+		} elseif( $currentSkin == 'SkinWikiaphone' ) {
 			$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AchievementsII/css/leaderboard_wikiaphone.css?{$wgStyleVersion}");
 		}
 
