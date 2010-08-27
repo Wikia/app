@@ -19,6 +19,7 @@
 * rt#59224: Photo Gallery: improvements for missing images (Federico)
 * rt#59229: Photo Gallery: references cause issues in preview (Federico)
 * rt#59226: Photo Gallery: slideshow preview images move on rollover (Federico)
+* rt#64973: need way to (re)enable Extension:SpamBlacklist on some wikis while keeping phalanx enabled (Federico)
 * rt#64375: Ensure wgServer is unique (Tomek)
 * rt#57157: Duplicate entries in User log for accounts created via FBConnect (Tomek)
 
