@@ -1329,6 +1329,7 @@ class ArticleCommentList {
 			'canEdit' => $canEdit,
 			'commentListText' => $commentListText,
 			'commentingAllowed' => $commentingAllowed,
+			'commentsPerPage' => $wgArticleCommentsMaxPerPage,
 			'countComments' => $countComments,
 			'countCommentsNested' => $countCommentsNested,
 			'isAnon' => $wgUser->isAnon(),
