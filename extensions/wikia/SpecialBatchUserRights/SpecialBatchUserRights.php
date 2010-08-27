@@ -138,7 +138,8 @@ class SpecialBatchUserRights extends SpecialPage {
 
 					// Loop through each target user and apply the update.
 					foreach ( $usernames as $username ) {
-						if(trim($username) !== ""){
+						$username = trim($username);
+						if($username !== ""){
 							$wgOut->addHTML( wfMsgExt(
 								'batchuserrights-single-progress-update',
 								'parseinline',
