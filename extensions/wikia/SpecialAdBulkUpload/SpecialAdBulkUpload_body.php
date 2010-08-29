@@ -31,7 +31,7 @@ class SpecialAdBulkUpload extends UnlistedSpecialPage {
 	 * Constructor
 	 */
 	public function __construct() {
-		parent::__construct( 'AdBulkUpload');
+		parent::__construct( 'AdBulkUpload', 'staff', false);
 		global $wgImportTargetNamespace;
 		$this->namespace = $wgImportTargetNamespace;
 	}
@@ -50,6 +50,13 @@ class SpecialAdBulkUpload extends UnlistedSpecialPage {
 			$wgOut->readOnlyPage();
 			return;
 		}
+
+		# If the user isn't permitted to access this special page, display an error
+		if ( !$wgUser->isAllowed( 'staff' ) ) {
+			$wgOut->permissionRequired( 'staff' );
+			return;
+		}
+
 		
 		if ( $wgRequest->wasPosted() && $wgRequest->getVal( 'action' ) == 'submit' ) {
 			$this->doImport();
