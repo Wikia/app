@@ -13,6 +13,7 @@
 	<?php
 	}
 	?>
+	<a rel="nofollow" name="comments" id="comments"></a>
 	<div id="article-comments" class="clearfix">
 	<?php
 	if ( $canEdit && !$isBlocked && !$isFBConnectionProblem ) {
