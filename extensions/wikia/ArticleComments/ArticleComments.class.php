@@ -977,12 +977,14 @@ class ArticleComment {
 	 * @static
 	 */
 	static public function moveComments( /*MovePageForm*/ &$form , /*Title*/ &$oOldTitle , /*Title*/ &$oNewTitle ) {
-		global $wgUser;
+		global $wgUser, $wgRC2UDPEnabled;
 		wfProfileIn( __METHOD__ );
 
 		$commentList = ArticleCommentList::newFromTitle( $oOldTitle );
 		$comments = $commentList->getCommentPages(true, false);
 		if (count($comments)) {
+			$irc_backup = $wgRC2UDPEnabled;	//backup
+			$wgRC2UDPEnabled = false; //turn off
 			foreach ($comments as $aCommentArr) {
 				$oCommentTitle = $aCommentArr['level1']->getTitle();
 				$parts = self::explode($oCommentTitle->getDBkey());
@@ -1020,6 +1022,7 @@ class ArticleComment {
 					}
 				}
 			}
+			$wgRC2UDPEnabled = $irc_backup; //restore to whatever it was
 		} else {
 			Wikia::log( __METHOD__, 'movepage', 'cannot move article comments, because no comments: ' . $oOldTitle->getPrefixedText());
 		}
@@ -1534,6 +1537,7 @@ class ArticleCommentList {
 	 * @return true -- because it's a hook
 	 */
 	static public function articleDeleteComplete( &$article, &$user, $reason, $id ) {
+		global $wgRC2UDPEnabled;
 		wfProfileIn( __METHOD__ );
 
 		//watch out for recursion
@@ -1550,6 +1554,8 @@ class ArticleCommentList {
 
 		//we have comment 1st level - checked in articleDelete() (or 2nd - so do nothing)
 		if (is_array(self::$mArticlesToDelete)) {
+			$irc_backup = $wgRC2UDPEnabled;	//backup
+			$wgRC2UDPEnabled = false; //turn off
 			foreach (self::$mArticlesToDelete as $page_id => $oComment) {
 				$oCommentTitle = $oComment->getTitle();
 				if ( $oCommentTitle instanceof Title ) {
@@ -1557,12 +1563,15 @@ class ArticleCommentList {
 					$oArticle->doDelete($deleteReason);
 				}
 			}
+			$wgRC2UDPEnabled = $irc_backup; //restore to whatever it was
 		//regular article - delete connected comments
 		} else {
 			$listing = ArticleCommentList::newFromTitle($title);
 
 			$aComments = $listing->getCommentPages(true, false);
 			if ($listing->getCountAll()) {
+				$irc_backup = $wgRC2UDPEnabled;	//backup
+				$wgRC2UDPEnabled = false; //turn off
 				foreach ($aComments as $page_id => $aCommentArr) {
 					$oCommentTitle = $aCommentArr['level1']->getTitle();
 					if ( $oCommentTitle instanceof Title ) {
@@ -1579,6 +1588,7 @@ class ArticleCommentList {
 						}
 					}
 				}
+				$wgRC2UDPEnabled = $irc_backup; //restore to whatever it was
 			}
 			$listing->purge();
 		}
@@ -1600,6 +1610,7 @@ class ArticleCommentList {
 	 * @return true -- because it's a hook
 	 */
 	static public function undeleteComments( &$oTitle, $revision, $old_page_id ) {
+		global $wgRC2UDPEnabled;
 		wfProfileIn( __METHOD__ );
 
 		if ( $oTitle instanceof Title ) {
@@ -1608,6 +1619,8 @@ class ArticleCommentList {
 			$pagesToRecover = $listing->getRemovedCommentPages($oTitle);
 			if ( !empty($pagesToRecover) && is_array($pagesToRecover) ) {
 				wfLoadExtensionMessages('ArticleComments');
+				$irc_backup = $wgRC2UDPEnabled;	//backup
+				$wgRC2UDPEnabled = false; //turn off
 				foreach ($pagesToRecover as $page_id => $page_value) {
 					$oCommentTitle = Title::makeTitleSafe( $page_value['nspace'], $page_value['title'] );
 					if ($oCommentTitle instanceof Title) {
@@ -1619,6 +1632,7 @@ class ArticleCommentList {
 						}
 					}
 				}
+				$wgRC2UDPEnabled = $irc_backup; //restore to whatever it was
 			}
 		}
 
