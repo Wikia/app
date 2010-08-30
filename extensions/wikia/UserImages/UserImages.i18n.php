@@ -1,8 +1,12 @@
 <?php
+/**
+ * @todo Adapt to use $messages to get this localised at transatewiki.net.
+ */
+
 function efWikiaUserImages() {
 
 	return array(
-	
+
 	'en' => array(
 		'ui_slideshow_title'=>'Photos from $1',
 		'ui_back_to_profile'=>'< Back to $1\'s Profile',
@@ -14,7 +18,5 @@ function efWikiaUserImages() {
 		'ui_error_message'=>'The user you are trying to view does not exist',
 		'ui_error_message_title'=>'Woops, you took a wrong turn!',
 	),
-	); 
+	);
 }
-
-?>

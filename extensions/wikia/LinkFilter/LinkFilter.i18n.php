@@ -1,8 +1,12 @@
 <?php
+/**
+ * @todo Adapt to use $messages to get this localised at transatewiki.net.
+ */
+
 function efWikiaLinkFilter() {
 
 	return array(
-	
+
 	'en' => array(
 			'linkfilter-submit-title'=>'Submit a Link',
 			'linkfilter-submit-no-title' => 'Please enter a title',
@@ -10,7 +14,7 @@ function efWikiaLinkFilter() {
 			'linkfilter-approve-links'=>'Approve Links',
 			'linkfilter-submit-another' => 'Submit another link',
 			'linkfilter-login-title'=>'Not logged in',
-			'linkfilter-login-text'=> 'You must be logged in to submit links.',	
+			'linkfilter-login-text'=> 'You must be logged in to submit links.',
 			'linkfilter-url'=>'URL',
 			'linkfilter-title'=> 'Title',
 			'linkfilter-type'=> 'Link Type',
@@ -26,7 +30,7 @@ function efWikiaLinkFilter() {
 			'linkfilter-submittedby' => 'Submitted by',
 			'linkfilter-submitted' => 'Submitted',
 			'linkfilter-admin-accept' => 'Accept',
-			'linkfilter-admin-reject' => 'Reject',	
+			'linkfilter-admin-reject' => 'Reject',
 			'linkfilter-admin-reject-success' => 'The link was rejected',
 			'linkfilter-admin-accept-success' => 'The link was accepted',
 			'linkfilter-in-the-news' => 'In the News',
@@ -43,7 +47,5 @@ function efWikiaLinkFilter() {
 			'linkfilter_inthenews'=>'In the News',
 			'linkfilter-new-links-title'=>'New Links'
 		),
-	); 
+	);
 }
-
-?>

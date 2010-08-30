@@ -1,6 +1,7 @@
 <?php
 /**
  * @addtogroup Extensions
+ * @todo Adapt to use $messages to get this localised at transatewiki.net.
  */
 
 $wgWikiEventsMessages = array();
@@ -35,6 +36,3 @@ $wgWikiEventsMessages['en'] = array(
 	'event_param_value' => 'Value',
 	'eventoption' => 'Options',
 );
-
-
-?>

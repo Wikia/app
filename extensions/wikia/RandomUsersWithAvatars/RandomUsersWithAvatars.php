@@ -1,4 +1,10 @@
 <?php
+/**
+ * @todo Has an updated fork in MediaWiki svn under the same name that is
+ *       supported by translatewiki.net. Might be able to retire this instance
+ *       with little effort.
+ */
+
 $wgExtensionFunctions[] = "wfRandomUsersWithAvatars";
 
 function wfRandomUsersWithAvatars() {
@@ -76,5 +82,3 @@ function GetRandomUsersWithAvatars( $input, $args, &$parser ){
 	
 	return $output;
 }
-
-?>

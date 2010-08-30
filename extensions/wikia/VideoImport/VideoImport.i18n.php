@@ -2,14 +2,15 @@
 /**
  * Internationalisation file for FlickrImport extension.
  *
+ * @todo Adapt to use $messages to get this localised at transatewiki.net.
  * @addtogroup Extensions
-*/
+ */
 
 $wgVideoImportMessages= array();
 
 $wgVideoImportMessages['en'] = array(
 					'importfreeimages' => 'Import Free Images',
-					'videoimport_description' => 'This page allows you to search videos from Youtube&#153; and import them into this wiki. Enter in your search terms below and then click the search button.',	
+					'videoimport_description' => 'This page allows you to search videos from Youtube&#153; and import them into this wiki. Enter in your search terms below and then click the search button.',
 					'video_noapikey' => 'You have not configured your Youtube&#153; API Key',
 					'videoimport_novideosfound' => 'No videos were found for your search criteria \'$1\', please try another keyword.',
 					'videoimport_owner' => 'Author',
@@ -37,6 +38,5 @@ $wgVideoImportMessages['en'] = array(
 					'videoimport_title' => 'Title',
 					'videoimport_rename' => 'Name Exists',
 					'videoimport-login-title'=>'Not logged in',
-					'videoimport-login-text'=> 'You must be logged in to import videos.',	
+					'videoimport-login-text'=> 'You must be logged in to import videos.',
 					);
-?>

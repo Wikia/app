@@ -3,15 +3,15 @@
 $messages = array();
 
 $messages['en'] = array(
-	'comment_comment' => 'Comment',	
+	'comment_comment' => 'Comment',
 	'comments_db_locked' => '<h3>Adding Comments</h3>The database is currently locked for routine database maintenance, after which it will be back to normal. Please check back later!',
 	'comment_voted_label' => 'Voted',
 	'comment_loading' => 'Loading...',
 	'comment_pause_auto_refresher' => 'Pause',
 	'comment_enable_auto_refresher' => 'Enable',
-	'comment_auto_refresher' => 'Comment Auto-Refresher',	
-	'comment_reply_to' => 'Reply to',	
-	'comment_cancel_reply' => 'Cancel',	
+	'comment_auto_refresher' => 'Comment Auto-Refresher',
+	'comment_reply_to' => 'Reply to',
+	'comment_cancel_reply' => 'Cancel',
 	'comment_block_warning' => 'Are you sure you want to permanently ignore all comments from',
 	'comment_block_anon' => 'this Anonymous user (via their IP address)',
 	'comment_block_user' => 'user',
@@ -35,6 +35,4 @@ $messages['en'] = array(
 	'comment_ignore_unblock'=>'Unblock',
 	'comment_ignore_cancel'=>'Cancel',
 	'comment_ignore_title'=>'Comment Ignore List',
-); 
-
-?>
+);

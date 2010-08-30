@@ -1,8 +1,12 @@
 <?php
+/**
+ * @todo Adapt to use $messages to get this localised at transatewiki.net.
+ */
+
 function efWikiaPictureGame() {
 
 	return array(
-	
+
 	'en' => array(
 	'picturegame_submittedby' => 'Submitted By',
 	'picturegame_reportimages' => 'Report Images',
@@ -22,7 +26,7 @@ function efWikiaPictureGame() {
         'picturegame_adminpanelbacktogame' => '&lt; Back to the Picture Game',
         'picturegame_creategametitle' => 'Create a Picture Game',
         'picturegame_creategamenotloggedin' => 'You must log-in to create a picture game.',
-        'picturegame_creategamewelcome' => 'Upload two pictures, add some captions, and then go crazy rating everyone\'s pictures.  Its that easy.',
+        'picturegame_creategamewelcome' => 'Upload two pictures, add some captions, and then go crazy rating everyone\'s pictures. It\'s that easy.',
         'picturegame_creategameplayinstead' => 'Play Game Instead',
         'picturegame_creategamegametitle' => 'Picture Game Title',
         'picturegame_creategamecaptiontext' => 'Caption',
@@ -39,7 +43,7 @@ function efWikiaPictureGame() {
 	'picturegame_buttonsubmit' => 'Submit',
 	'picturegame_buttoncancel' => 'Cancel',
 	'picturegame_buttonplaygame' => 'Play the Picture Game',
-	'picturegame_permalinkflagged' => 'These pictures have been flagged, because of inappropriate content or copyrighted material. To play the picture game, click the	button below.',
+	'picturegame_permalinkflagged' => 'These pictures have been flagged, because of inappropriate content or copyrighted material. To play the picture game, click the button below.',
 	'picturegame_sysmsg_unauthorized' => 'You aren\'t authorized to do that.',
 	'picturegame_sysmsg_blocked' => 'You are currently blocked and cannot add picture games.',
 	'picturegame_sysmsg_badkey' => 'Fatal Error: Your key is bad.',
@@ -61,7 +65,4 @@ function efWikiaPictureGame() {
 	'picturegame_create_threshold_reason' => 'Sorry, you cannot create a picture game until you have at least $1'
 	),
 	);
-
 }
-
-?>

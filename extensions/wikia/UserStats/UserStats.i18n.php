@@ -1,6 +1,6 @@
 <?php
 /**
- * @todo Convert to use $messages.
+ * @todo Update to use $messages.
  * @comment May already have a converted/updated version in MediaWiki svn:
  *          extensions/SocialProfile/UserStats
  */
