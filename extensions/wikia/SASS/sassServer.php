@@ -169,13 +169,25 @@ function runSass($inputFile, $tmpFile, $sassParams, &$errorStr){
 	// Do some post-processing so that @imports of .css files are included right in the content (SASS will pull-in .scss files, but leaves .css @imports alone).
 	// NOTE: This expects all .css references from inside of .scss files to be relative to the root of the project rather than to the .scss file whence they're being imported.
 	$matches = array();
-	if((0 < preg_match_all("/@import ['\"]([^\n]*\.css)['\"]([^\n]*)(\n|$)/is", $cssContent, $matches, PREG_SET_ORDER))
-		|| (0 < preg_match_all("/@import url[\( ]['\"]?([^\n]*\.css)['\"]?[ \)]([^\n]*)(\n|$)/is", $cssContent, $matches, PREG_SET_ORDER))){
+	$importRegexOne = "/@import ['\\\"]([^\\n]*\\.css)['\\\"]([^\\n]*)(\\n|$)/is"; // since this stored is in a string, remember to escape quotes, slashes, etc.
+	$importRegexTwo = "/@import url[\\( ]['\\\"]?([^\\n]*\\.css)['\\\"]?[ \\)]([^\\n]*)(\\n|$)/is";
+	if((0 < preg_match_all($importRegexOne, $cssContent, $matches, PREG_SET_ORDER))
+		|| (0 < preg_match_all($importRegexTwo, $cssContent, $matches, PREG_SET_ORDER))){
 		foreach($matches as $match){
 			$lineMatched = $match[0];
 			$fileName = trim($match[1]);
 			
 			$fileContents = file_get_contents($IP . $fileName);
+			
+			// Check for nested imports and generate a warning if they are found (.css shouldn't be using @imports).
+			if((0 < preg_match($importRegexOne, $fileContents)) || (0 < preg_match($importRegexTwo, $fileContents))){
+				$errorStr .= "Bad for performance: @import detected from inside of a .css file (this results in an extra HTTP request). The import is inside the file: \"$fileName\".";
+				$errorStr .= " - Please change that file to a .scss file if you need to import something into it.\n";
+			}
+
+			// Apply wgStylePath substitutions like in StaticChute.
+			$css = wfReplaceCdnStylePathInCss($css);
+
 			$cssContent = str_replace($lineMatched, $fileContents, $cssContent);
 		}
 	}
