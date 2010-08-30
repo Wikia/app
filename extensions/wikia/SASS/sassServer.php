@@ -186,7 +186,7 @@ function runSass($inputFile, $tmpFile, $sassParams, &$errorStr){
 			}
 
 			// Apply wgStylePath substitutions like in StaticChute.
-			$css = wfReplaceCdnStylePathInCss($css);
+			$fileContents = wfReplaceCdnStylePathInCss($fileContents);
 
 			$cssContent = str_replace($lineMatched, $fileContents, $cssContent);
 		}
