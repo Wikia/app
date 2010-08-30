@@ -584,14 +584,12 @@ class StaticChute {
 //		$css = preg_replace("/(http:\/\/images[0-9]*\.wikia\.nocookie\.net\/__cb)([0-9]*)\//i", '\\1'.time().'/', $css);
 //		$css = preg_replace("/(http:\/\/images[0-9]*\.wikia\.nocookie\.net\/)([^_])/i", '\\1'.'__cb'.time().'/\\2', $css); // cases where they've removed the __cb value entirely.
 
-		$css = wfReplaceCdnStylePathInCss($css, $this->cdnStylePath);
-
 		return Minify_CSS_Compressor::process($css);
 	}
 
 	public function minifyCssFile($file){
 		$css = file_get_contents($file);
-    		return $this->minifyCssData($css);
+    	return $this->minifyCssData($css);
 	}
 
 	/* Remove comments and superfluous white space from javascript.
@@ -723,6 +721,11 @@ class StaticChute {
 
 			// macbre: remove BOM
 			$rawData = str_replace("\xEF\xBB\xBF", '', $rawData);
+			
+			if($this->fileType == 'css'){
+				require_once dirname(__FILE__) . "/wfReplaceCdnStylePathInCss.php"; // this SHOULDN'T load the whole MediaWiki stack, but I didn't verify this.
+				$css = wfReplaceCdnStylePathInCss($css, $this->cdnStylePath);
+			}
 
 			if ($this->minify){
 				switch ($this->fileType){
