@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @author Owen Davis
+ * @author Owen Davis, Tomasz Odrobny
  *
  * This is an internal use only script for pulling a database backup from Amazon S3
  * It requires an external script called s3cmd which uses a config file only available to root
@@ -69,7 +69,7 @@ if (array_key_exists( 'f', $opts )) {
 		foreach ($day_of_year as $dirname) {
 			echo "Searching $dirname...\n";
 			$filename = null;
-			$response = shell_exec("s3cmd ls s3://".$databaseDirectory."/$dirname/");
+			$response = shell_exec("s3cmd ls s3://".$databaseDirectory."/$dirname/".$dbname."*");
 //			print_r($response);
 			$file_list = explode("\n", $response);
 			echo "Found " . count($file_list) . " items...\n";
@@ -77,10 +77,11 @@ if (array_key_exists( 'f', $opts )) {
 				$regs = array();
 				$file = preg_split('/\s+/' ,$file);
 				$file = $file[3];
-				if(strpos($file, $dbname.".sql.gz") > 0) {
-				        echo "Found a match: $file\n";
-			               	echo "Saving to local filesystem...\n";
-					shell_exec("s3cmd get --skip-existing ".$file);
+				if(strpos($file, $dbname.".sql.gz") > 0 || strpos($file, $dbname."_") > 0 ) {
+					$filename = $dbname.".sql.gz";	        
+					echo "Found a match: $file\n";
+			               	echo "Saving to local filesystem:".$filename."\n";
+					shell_exec("s3cmd get --skip-existing ".$file." ".$filename);
 					$filename = $dbname.".sql.gz";	
 					break;
 				}
@@ -102,11 +103,9 @@ if (array_key_exists( 'i', $opts )) {
 		$dbname = $matches[1];
 	}
 
-	// Figure out which cluster we need to load this into
-	$response =  `mysql -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxServer1 -s -N -e "SELECT city_cluster from wikicities.city_list where city_dbname = '$dbname';" 2>&1`;
+	// Figure out which cluster we need to load this into	$response =  `mysql -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxServer1 -s -N -e "SELECT city_cluster from wikicities.city_list where city_dbname = '$dbname';" 2>&1`;
 
-
-echo  "mysql -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxServer1 -s -N -e \"SELECT city_cluster from wikicities.city_list where city_dbname = '$dbname';\" 2>&1";
+	$response = `mysql -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxServer1 -s -N -e "SELECT city_cluster from wikicities.city_list where city_dbname = '$dbname';" 2>&1`;
 	if (trim($response) != "" && substr($response, 0, 5) != 'ERROR') {
 		$cluster_name = trim($response);
 	} else {
