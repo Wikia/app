@@ -94,7 +94,6 @@ $wgAutoloadClasses['ApiService']  =  $IP.'/includes/wikia/services/ApiService.cl
 $wgAutoloadClasses['NavigationService']  =  $IP.'/includes/wikia/services/NavigationService.class.php';
 $wgAutoloadClasses['PageStatsService']  =  $IP.'/includes/wikia/services/PageStatsService.class.php';
 $wgAutoloadClasses['AvatarService'] = $IP.'/includes/wikia/services/AvatarService.class.php';
-$wgAutoloadClasses['MyToolsService'] = $IP.'/includes/wikia/services/MyToolsService.class.php';
 $wgAutoloadClasses['UserStatsService'] = $IP.'/includes/wikia/services/UserStatsService.class.php';
 
 // modules
