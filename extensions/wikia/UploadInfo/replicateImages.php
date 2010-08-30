@@ -54,8 +54,8 @@ class WikiaReplicateImages {
 					"directory" => "/raid/images/by_id/",
 					"flag" => 1
 				),
-				"file3" => array(
-					"address" => "10.8.44.133",
+				"file-s2" => array(
+					"address" => "10.8.46.25",
 					"directory" => "/raid/images/by_id/",
 					"flag" => 2
 				)
