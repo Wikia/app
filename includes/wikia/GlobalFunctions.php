@@ -122,7 +122,8 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 		if (count (explode(".", $_SERVER['HTTP_HOST'])) == 4) {
 			list($override, $developer, $wikia_dev, $com) = explode(".", $_SERVER['HTTP_HOST']);
 		} else {
-			list($developer, $wikia_dev, $com) = explode(".", $_SERVER['HTTP_HOST']);
+			//hot fix: $_SERVER['HTTP_HOST'] == 'localhost' on ... localhost - @ to prevent notices - should be handled in better way
+			@list($developer, $wikia_dev, $com) = explode('.', $_SERVER['HTTP_HOST']);
 		}
 		return str_replace('http://images.wikia.com/', "http://images.$developer.wikia-dev.com/", $url);
 	}
