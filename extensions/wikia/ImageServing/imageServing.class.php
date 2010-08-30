@@ -44,7 +44,7 @@ class imageServing{
 		$cache_return = array();
 		foreach($articles as $key => $value) {
 			$mcKey = wfMemcKey("imageserving", $this->width, $n, $this->proportion["w"], $this->proportion["h"], $value);
-			$mcOut = null;//$wgMemc->get($mcKey, null);
+			$mcOut = $wgMemc->get($mcKey, null);
 			
 			if($mcOut != null) {
 				unset($articles[$key]);
