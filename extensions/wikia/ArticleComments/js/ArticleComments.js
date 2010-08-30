@@ -183,7 +183,7 @@ var ArticleComments = {
 					$('#article-comments-pagination').show().html('<div>' + json.pagination + '</div>');
 				}
 				//update counter
-				$('#article-comments-counter').text(json.counter);
+				$('#article-comments-counter').html(json.counter);
 				//readd events
 				ArticleComments.addHover();
 				//force to show 'edit' links for owners

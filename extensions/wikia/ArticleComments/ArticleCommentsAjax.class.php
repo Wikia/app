@@ -163,7 +163,7 @@ class ArticleCommentsAjax {
 	 * @return String -- json-ized array`
 	 */
 	static public function axPost() {
-		global $wgRequest, $wgUser, $wgTitle, $wgArticleCommentsMaxPerPage;
+		global $wgRequest, $wgUser, $wgTitle, $wgLang, $wgArticleCommentsMaxPerPage;
 
 		$articleId = $wgRequest->getVal( 'article', false );
 		$parentId = $wgRequest->getVal( 'parentId' );
@@ -212,7 +212,7 @@ class ArticleCommentsAjax {
 			$commentsHTML = ArticleCommentList::formatList($comments);
 			$pagination = ArticleCommentList::doPagination($countComments, count($comments), $page, $title);
 
-			$counter = wfMsg('article-comments-comments', $listing->getCountAllNested());
+			$counter = wfMsg('article-comments-comments', $wgLang->formatNum($listing->getCountAllNested()));
 
 			$result = array('text' => $commentsHTML, 'pagination' => $pagination, 'counter' => $counter);
 		}
