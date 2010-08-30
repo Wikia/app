@@ -5,6 +5,17 @@
  * @author Adrian 'ADi' Wieczorek <adi(at)wikia-inc.com>
  */
 
+/**
+ * Extension credits properties.
+ */
+$wgExtensionCredits['parserhook'][] = array(
+	'path'           => __FILE__,
+	'name'           => 'RelatedPages',
+	'author'         => 'Adrian \'ADi\' Wieczorek',
+	'descriptionmsg' => 'wikirelatedpages-desc',
+	'url'            => 'http://www.wikia.com',
+);
+
 $dir = dirname(__FILE__) . '/';
 
 // hooks
