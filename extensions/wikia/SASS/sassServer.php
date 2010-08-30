@@ -190,6 +190,7 @@ function runSass($inputFile, $tmpFile, $sassParams, &$errorStr){
 	}
 	
 	// Apply wgStylePath substitutions like in StaticChute.
+	require "$IP/extensions/wikia/StaticChute/wfReplaceCdnStylePathInCss.php";
 	$cssContent = wfReplaceCdnStylePathInCss($cssContent);
 
 	// If RTL is set as a sass-param, then pass the entire output through cssjanus to convert the CSS to right-to-left.
