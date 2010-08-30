@@ -1,7 +1,7 @@
 <!-- s:<?= __FILE__ ?> -->
 <div class="wk_blogs_panel" style="<?=(isset($aOptions['style']))?$aOptions['style']:''?>">
-<div class="wk_blogs_title color1"><div><?= ( !empty($aOptions['title']) ) ? $aOptions['title'] : "" ?></div>
-<div class="wk_blogs_title_refresh"><?=$skin->makeLinkObj($wgTitle, "<img src=\"{$wgStylePath}/common/blank.gif\" border=\"0\" class=\"sprite refresh\" />", "action=purge")?></div>
+	<div class="wk_blogs_title color1"><div><?= ( !empty($aOptions['title']) ) ? $aOptions['title'] : "" ?></div>
+	<div class="wk_blogs_title_refresh"><?=$skin->makeLinkObj($wgTitle, "<img src=\"".wfGetBlankImgUrl()."\" border=\"0\" class=\"sprite refresh\" />", "action=purge")?></div>
 </div>
 <div class="wk_blogs_body">
 <? if (!empty($aRows)) { ?>

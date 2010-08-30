@@ -1035,3 +1035,12 @@ function wfAutomaticReadOnly() {
 
 	return (bool) wfMsgNoDBForContent( 'readonly_lag' ) == $wgReadOnly;
 }
+
+/**
+ * Convenience-function to make it easier to get the wgBlankImgUrl from inside
+ * of template-code (ie: no ugly global $wgBlankImgUrl;print $wgBlankImgUrl;).
+ */
+function wfBlankImgUrl(){
+	global $wgBlankImgUrl;
+	return $wgBlankImgUrl;
+} // end wfBlankImgUrl()

@@ -86,7 +86,7 @@ class View {
 		}
 		// Image precedes message text
 		if ($img != null) {
-			$src = $img == 'blank.gif' ? $wgBlankImgUrl : "{$wgStylePath}/oasis/images/{$img}";
+			$src = $img == 'blank.gif' ? $wgBlankImgUrl : "{$wgStylePath}/common/{$img}";
 			$message = Xml::element('img', array('src' => $src)) . $message;
 		}
 
