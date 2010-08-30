@@ -1,17 +1,22 @@
 <?php
+/**
+ * @todo Update to use $messages.
+ * @comment May already have a converted/updated version in MediaWiki svn:
+ *          extensions/SocialProfile/UserActivity
+ */
 function efWikiaUserActivity() {
 
 	return array(
-	
+
 	'en' => array(
-	'useractivity_title' => 'Friends\' Activity',	
+	'useractivity_title' => 'Friends\' Activity',
 	'useractivity_filter' => 'Filter',
-	'useractivity_all' => 'View All',	
-	'useractivity_editedpage' => 'edited the page',	
-	'useractivity_edit' => '{{PLURAL:$1|edited the page|edited the following pages: }}',	
+	'useractivity_all' => 'View All',
+	'useractivity_editedpage' => 'edited the page',
+	'useractivity_edit' => '{{PLURAL:$1|edited the page|edited the following pages: }}',
 	'useractivity_comment' => '{{PLURAL:$1|commented on the page|commented on the following pages: }}',
 	'useractivity_user_message' => '{{PLURAL:$1|sent a message to|sent messages to}}',
-	'useractivity_votedpage' => 'voted for the page',	
+	'useractivity_votedpage' => 'voted for the page',
 	'useractivity_commentedpage' => 'commented on the page',
 	'useractivity_giftsent' => 'sent a gift to',
 	'useractivity_friend' => '{{PLURAL:$2|is now friends with|are now friends with}}',
@@ -26,7 +31,5 @@ function efWikiaUserActivity() {
 	'useractivity?' => 'Friend\'s Activity',
 	'site_activity_title' => 'Site Activity',
 	),
-	); 
+	);
 }
-
-?>

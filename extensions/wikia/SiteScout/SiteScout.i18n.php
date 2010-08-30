@@ -1,8 +1,12 @@
 <?php
+/**
+ * @todo Adapt to use $messages to get this localised at transatewiki.net.
+ */
+
 function efWikiaSiteScout() {
 
 	return array(
-	
+
 	'en' => array(
 	'sitescout_new' => 'new',
 	'sitescout_minor' => 'minor',
@@ -17,7 +21,5 @@ function efWikiaSiteScout() {
 	'sitescout_header_user' => 'User',
 	'sitescout_changefilter' => 'change filter'
 	),
-	); 
+	);
 }
-
-?>

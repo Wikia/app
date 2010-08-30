@@ -3,7 +3,10 @@
  * Internationalisation file for User Board pages
  *
  * @addtogroup Extensions
-*/
+ * @todo Update to use $messages.
+ * @comment May already have a converted/updated version in MediaWiki svn:
+ *          extensions/SocialProfile/UserBoard
+ */
 
 $wgUserBoardMessages = array();
 
@@ -54,11 +57,9 @@ $3
 
 ---
 
-Hey, want to stop getting emails from us?  
+Hey, want to stop getting emails from us?
 
 Click $4
 and change your settings to disable email notifications.',
 'userboard'=>'User Board'
 );
-
-?>

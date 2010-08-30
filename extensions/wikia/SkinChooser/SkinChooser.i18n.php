@@ -1,4 +1,8 @@
 <?php
+/**
+ * @todo Update to use extension specific key prefix to get this supported
+ *       at translatewiki.net. Also add L10n-able extension description.
+ */
 
 $messages = array();
 

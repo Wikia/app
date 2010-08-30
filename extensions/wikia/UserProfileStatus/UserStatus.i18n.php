@@ -1,4 +1,8 @@
 <?php
+/**
+ * @todo Adapt to use $messages to get this localised at transatewiki.net.
+ */
+
 function efWikiaUserStatus() {
 
 	return array(
@@ -15,5 +19,3 @@ function efWikiaUserStatus() {
 		),
 	); 
 }
-
-?>

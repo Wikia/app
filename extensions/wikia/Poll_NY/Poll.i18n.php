@@ -1,8 +1,12 @@
 <?php
+/**
+ * @todo Adapt to use $messages to get this localised at transatewiki.net.
+ */
+
 function efWikiaPoll() {
 
 	return array(
-	
+
 	'en' => array(
 	'poll_edit_desc' => 'new poll',
 	'poll_category' => 'Polls',
@@ -64,7 +68,7 @@ function efWikiaPoll() {
 	'poll_delete_poll' => 'Delete Poll',
 	'poll_open_poll' => 'Open Poll',
 	'poll_flag_poll' => 'Flag Poll',
-	'poll_unflag_poll' => 'Unflag Poll',	
+	'poll_unflag_poll' => 'Unflag Poll',
 	'poll_admin_status_nav' => 'Filter by Status',
 	'poll_admin_viewall' => 'View All',
 	'poll_admin_open' => 'Open',
@@ -74,7 +78,5 @@ function efWikiaPoll() {
 	'poll_admin_panel' => 'Admin',
 	'poll_unavailable' => 'This poll is unavailable'
 	),
-	); 
+	);
 }
-
-?>

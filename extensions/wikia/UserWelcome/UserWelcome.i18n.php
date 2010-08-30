@@ -1,4 +1,9 @@
 <?php
+/**
+ * @todo Update to use $messages.
+ * @comment May already have a converted/updated version in MediaWiki svn:
+ *          extensions/SocialProfile/UserWelcome
+ */
 function efWikiaUserWelcome() {
 
 	return array(
@@ -19,5 +24,3 @@ function efWikiaUserWelcome() {
 		),
 	); 
 }
-
-?>
