@@ -232,7 +232,7 @@
 	li {
 		border-top: 1px solid $color-page-border;
 		font-size: 12px;
-		padding: 0px 0px 0px 50px;
+		padding: 6px 3px 6px 50px;
 		position: relative;
 		&:first-child {
 			border: 0;
@@ -241,11 +241,11 @@
 			font-size: 16px;
 		}
 		blockquote p {
-		margin: 0px;
-		position: relative;
-		left: -50px;
-		width: 290px;
-		line-height: 20px;
+			margin: 0px;
+			position: relative;
+			left: -50px;
+			width: 290px;
+			line-height: 20px;
         }
 	}
 	.avatar {
@@ -272,7 +272,7 @@
 	.commentslikes {
 		position: absolute;
 		right: 10px;
-		bottom: 0px;
+		bottom: 6px;
 	}
 	.read-more {
 		a {

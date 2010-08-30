@@ -46,17 +46,16 @@ class BlogListingModule extends Module {
 	 * Output HTML just for Oasis which will be hidden by default
 	 */
 	static function renderBlogListing(&$html, $posts, $aOptions) {
-		global $wgTitle;
 		wfProfileIn(__METHOD__);
 
 		#print_pre(htmlspecialchars($html));	print_pre($posts);
 
 		if ($aOptions['type'] == 'box') {
 			$html .= '</p>';
-			$html .= wfRenderPartial('BlogListing', 'Index', array('posts' => $posts, 'blogListingClass' => 'WikiaBlogListingBox', 'wgTitle' => $wgTitle));
+			$html .= wfRenderPartial('BlogListing', 'Index', array('posts' => $posts, 'blogListingClass' => 'WikiaBlogListingBox', 'wgTitle' => $aOptions['title']));
 		} else {
 			$html .= '</p>';
-			$html .= wfRenderPartial('BlogListing', 'Index', array('posts' => $posts, 'blogListingClass' => 'WikiaBlogListing', 'wgTitle' => $wgTitle));
+			$html .= wfRenderPartial('BlogListing', 'Index', array('posts' => $posts, 'blogListingClass' => 'WikiaBlogListing', 'wgTitle' => $aOptions['title']));
 		}
 
 		wfProfileOut(__METHOD__);

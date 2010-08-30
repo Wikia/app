@@ -159,11 +159,11 @@ class BlogTemplateClass {
 		 * summarylength = /^\d*$/
 		 *
 		 * type: 	number,
-		 * default: 200
+		 * default: 100  (changed for oasis)
 		 */
 		'summarylength' 	=> array (
 			'type' 		=> 'number',
-			'default' 	=> array('box' => '200', 'plain' => '750'),
+			'default' 	=> array('box' => '100', 'plain' => '750'),
 			'pattern' 	=> '/^\d*$/'
 		),
 
