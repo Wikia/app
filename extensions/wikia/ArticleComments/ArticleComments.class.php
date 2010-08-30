@@ -1354,7 +1354,6 @@ class ArticleCommentList {
 		$retVal = array(
 			'avatar' => $avatar,
 			'canEdit' => $canEdit,
-			'commentListText' => $commentListText,
 			'commentListRaw' => $comments,
 			'commentListHTML' => $commentListHTML,
 			'commentingAllowed' => $commentingAllowed,
