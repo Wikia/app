@@ -724,7 +724,7 @@ class StaticChute {
 			
 			if($this->fileType == 'css'){
 				require_once dirname(__FILE__) . "/wfReplaceCdnStylePathInCss.php"; // this SHOULDN'T load the whole MediaWiki stack, but I didn't verify this.
-				$css = wfReplaceCdnStylePathInCss($css, $this->cdnStylePath);
+				$rawData = wfReplaceCdnStylePathInCss($rawData, $this->cdnStylePath);
 			}
 
 			if ($this->minify){
