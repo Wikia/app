@@ -44,6 +44,15 @@ CKEDITOR.themes.add( 'wikia', (function()
 				style += "width: " + width + ";";
 			}
 
+			// Wikia: add second column on Oasis skin
+			var contentColumns = 1,
+				extraContentColumnHtml = '';
+
+			if (window.skin == 'oasis') {
+				contentColumns = 2;
+				extraContentColumnHtml = '<td id="cke_contents_' + name + '_sidebar"></td>';
+			}
+
 			var container = CKEDITOR.dom.element.createFromHtml( [
 				'<span' +
 					' id="cke_', name, '"' +
@@ -58,9 +67,9 @@ CKEDITOR.themes.add( 'wikia', (function()
 					'<span class="' , CKEDITOR.env.cssClass, '">' +
 						'<span class="cke_wrapper cke_', editor.lang.dir, '">' +
 							'<table class="cke_editor" border="0" cellspacing="0" cellpadding="0"><tbody>' +
-								'<tr', topHtml		? '' : ' style="display:none"', '><td id="cke_top_', name, '" class="cke_top" style="background-color: ' + editor.config.baseBackgroundColor + '; color:' + editor.config.baseColor + '">'	, topHtml		, '</td></tr>' +
-								'<tr', contentsHtml	? '' : ' style="display:none"', '><td id="cke_contents_', name, '" class="cke_contents" style="height:', height, '">', contentsHtml, '</td></tr>' +
-								'<tr', bottomHtml	? '' : ' style="display:none"', '><td id="cke_bottom_'	, name, '" class="cke_bottom">'	, bottomHtml	, '</td></tr>' +
+								'<tr', topHtml		? '' : ' style="display:none"', '><td id="cke_top_', name, '" class="cke_top" colspan="', contentColumns, '" style="background-color: ' + editor.config.baseBackgroundColor + '; color:' + editor.config.baseColor + '">'	, topHtml		, '</td></tr>' +
+								'<tr', contentsHtml	? '' : ' style="display:none"', '><td id="cke_contents_', name, '" class="cke_contents" style="height:', height, '">', contentsHtml, '</td>', extraContentColumnHtml, '</tr>' +
+								'<tr', bottomHtml	? '' : ' style="display:none"', '><td id="cke_bottom_'	, name, '" class="cke_bottom" colspan="', contentColumns, '">', bottomHtml	, '</td></tr>' +
 							'</tbody></table>' +
 							//Hide the container when loading skins, later restored by skin css.
 							'<style>.', editor.skinClass, '{visibility:hidden;}</style>' +
@@ -103,12 +112,12 @@ CKEDITOR.themes.add( 'wikia', (function()
 						' lang="', editor.langCode, '"' +
 						'>' +
 
-						'<div class="cke_dialog', ' ' + CKEDITOR.env.cssClass,
+						'<div class="cke_dialog modalWrapper', ' ' + CKEDITOR.env.cssClass,
 							' cke_', editor.lang.dir, '" style="position:absolute">' +
 							'<div class="%body">' +
 								'<div id="%title#" class="%title"></div>' +
-								'<div id="%close_button#" class="%close_button"></div>' +
-								'<div id="%tabs#" class="%tabs accent"></div>' +
+								'<div id="%close_button#" class="%close_button"><img src="' + window.stylepath + '/common/blank.gif" /></div>' +
+								'<div id="%tabs#" class="%tabs accent tabs"></div>' +
 								'<div id="%contents#" class="%contents"></div>' +
 								'<div id="%footer#" class="%footer"></div>' +
 							'</div>' +

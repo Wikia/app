@@ -1,0 +1,87 @@
+@import "../../../skins/oasis/css/core/color";
+@import "../../../skins/oasis/css/mixins/rail-module";
+@import "../../../skins/oasis/css/mixins/clearfix";
+@import "../../../skins/oasis/css/mixins/border-radius";
+
+/* overwriting Monoco-styling */
+.activityfeed {
+	li {
+		padding-bottom: 7px;
+		margin-bottom: 10px;
+		
+		list-style: none;
+	}
+
+	em {
+		font-weight: bold;
+	}
+
+	img.sprite {
+		margin-left: -20px;
+	}
+
+	strong {
+		font-size: 14px;
+	}
+
+	cite {
+		font-size: 12px;
+	}
+	
+	table {
+		td {
+			vertical-align: top;
+			text-align: left;
+			padding: {
+				top: 2px;
+				bottom: 2px;
+				
+			}
+		}
+		
+		ul { 
+			margin-left: 0px;
+		}
+	}
+	
+	
+	td.activityfeed-details-label {
+		white-space: nowrap;
+	}
+
+	.activityfeed-inserted-media {
+		width: 665px;
+		padding: 0px !important;
+		
+		margin: {
+			margin: 0px !important;
+			left: 8px !important;
+		}
+		
+		li {
+			border: solid 1px $color-page-border;
+			float: left;
+			margin: 4px 4px 4px 0;
+			position: relative;
+			
+			a {
+				cursor: pointer;
+				display: table-cell;
+				height: 160px;
+				text-align: center;
+				vertical-align: middle;
+				width: 160px;
+			}
+		}
+	}
+	
+	.myhome-video-play {
+		background: transparent url(images/play.png?20091023) no-repeat 50% 50%;
+		top: 0;
+		left: 0;
+		height: 160px;
+		position: absolute;
+		width: 160px;
+	}
+
+}

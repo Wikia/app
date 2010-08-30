@@ -115,7 +115,7 @@ function wfAutoPageCreateViewPage( $article, $out, &$text, &$return404 ) {
 						$overlayMsgKey = "autopagecreate-newpage-notice-template";
 						break;
 
-					case 110 /* NS_FORUM */:
+					case NS_FORUM:
 						$overlayMsgKey = "autopagecreate-newpage-notice-forum";
 						break;
 

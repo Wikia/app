@@ -1,0 +1,39 @@
+@mixin linear-gradient($solidFill, $start: top, $color1: false, $color1pos: false, $color2: false, $color2pos: false, $color3: false, $color3pos: false, $color4: false, $color4pos: false) {
+
+	// output solid fill for browsers not supporting CSS gradients
+	@if $solidFill {
+		background-color: $solidFill;
+	}
+
+	$mozBackground : "";
+	$webkitBackground : "";
+
+	// add gradient start type
+	@if $start == top {
+		$webkitBackground : "0% 0%, 0% 100%";
+	} @else if $start == left {
+		$webkitBackground : "0% 0%, 100% 0%";
+	}
+	$mozBackground : $start;
+
+	// add colors and their positions
+	@if $color1 {
+		$mozBackground : $mozBackground + ", " + $color1 + " " + $color1pos;
+		$webkitBackground : $webkitBackground + ", color-stop(" + $color1pos + ", " + $color1 + ")";
+	}
+	@if $color2 {
+		$mozBackground : $mozBackground + ", " + $color2 + " " + $color2pos;
+		$webkitBackground : $webkitBackground + ", color-stop(" + $color2pos + ", " + $color2 + ")";
+	}
+	@if $color3 {
+		$mozBackground : $mozBackground + ", " + $color3 + " " + $color3pos;
+		$webkitBackground : $webkitBackground + ", color-stop(" + $color3pos + ", " + $color3 + ")";
+	}
+	@if $color4 {
+		$mozBackground : $mozBackground + ", " + $color4 + " " + $color4pos;
+		$webkitBackground : $webkitBackground + ", color-stop(" + $color4pos + ", " + $color4 + ")";
+	}
+
+	background-image: unquote("-moz-linear-gradient(" + unquote($mozBackground) + ")");
+	background-image: unquote("-webkit-gradient(linear, " + unquote($webkitBackground) + ")");
+}

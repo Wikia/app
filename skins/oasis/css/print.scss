@@ -1,0 +1,57 @@
+@import "/skins/common/commonPrint.css";
+
+// Oasis specific printable CSS
+html {
+	background: #fff;
+}
+
+#WikiaHeader,
+#WikiHeader,
+#WikiaRail,
+#WikiaFooter {
+	display: none;
+}
+
+#WikiaPage {
+	background: #fff;
+	border: none;
+	padding: 0;
+	margin: 0;
+	width: auto;
+}
+
+#WikiaMainContent {
+	float: none;
+	width: auto;
+}
+
+// article header: hide everything except page title
+#WikiaPageHeader {
+	.commentslikes,
+	details,
+	p,
+	h2,
+	a,
+	ul {
+		display: none;
+	}
+}
+
+#WikiaArticle {
+	min-height: 1px;
+	.thumbinner div {
+		background: #fff;
+		border: none;
+	}
+	p {
+		line-height: 1.8em;
+		margin: 0.4em 0 0.5em !important;
+	}
+	p + p {
+		margin: 1em 0 !important;
+	}
+}
+
+#WikiaArticleCategories {
+	background: #fff;
+}

@@ -14,17 +14,29 @@ CKEDITOR.plugins.add('rte-toolbar',
 
 				var output = [ '<table id="cke_toolbar"><tr>' ];
 
+				if (window.skin == 'oasis') {
+					var colorClass = '';
+				}
+				else {
+					var colorClass= ' color1';
+				}
+
 				for(var b = 0; b < config.length; b++)
 				{
 					var bucket = config[b];
-					output.push( '<td><span class="headline color1">' + messages[bucket.msg] + '</span>' );
-					output.push( '<div class="bucket_buttons color1"><div class="color1">' );
+					output.push( '<td><span class="headline' + colorClass + '">' + messages[bucket.msg] + '</span>' );
+					output.push( '<div class="bucket_buttons' + colorClass + '"><div class="' + colorClass + '">' );
 					for(var g = 0; g < bucket.groups.length; g++)
 					{
-						output.push( '<span class="cke_buttons_group">' );
-
 						var items = bucket.groups[g];
 						var itemsCount = items.length;
+
+						// don't render empty buttons group
+						if (items == false) {
+							continue;
+						}
+
+						output.push( '<span class="cke_buttons_group">' );
 
 						for(var i = 0; i < itemsCount; i++) {
 							var itemName = items[i];
@@ -50,7 +62,7 @@ CKEDITOR.plugins.add('rte-toolbar',
 
 						output.push( '</span>' );
 					}
-					output.push( '</div></div><span class="tagline color1"></span></td>' );
+					output.push( '</div></div><span class="tagline' + colorClass + '"></span></td>' );
 				}
 
 				output.push( '</tr></table>' );
@@ -73,10 +85,13 @@ CKEDITOR.plugins.add('rte-toolbar',
 			// setup toolbar
 			RTE.tools.getThemeColors();
 
-			toolbar.find('.color1').css({
-				backgroundColor: RTE.config.baseBackgroundColor,
-				color: RTE.config.baseColor
-			});
+			// apply theme to RTE toolbar (only for Monaco)
+			if (window.skin == 'monaco') {
+				toolbar.find('.color1').css({
+					backgroundColor: RTE.config.baseBackgroundColor,
+					color: RTE.config.baseColor
+				});
+			}
 
 			// mark row wrapping toolbar
 			toolbar.parent().parent().attr('id', 'cke_toolbar_row');
@@ -218,6 +233,11 @@ CKEDITOR.plugins.add('rte-toolbar',
 	updateToolbar: function() {
 		var self = this;
 		var lockTimeout = 250;
+
+		// toolbar has fixed width in Oasis skin - no need to run updateToolbar()
+		if (window.skin == 'oasis') {
+			return;
+		}
 
 		// check lock
 		if (this.updateToolbarLock) {

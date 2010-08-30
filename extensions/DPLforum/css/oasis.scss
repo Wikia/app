@@ -1,0 +1,27 @@
+@import "skins/oasis/css/core/color";
+
+.forumheader {
+	border: 1px solid $color-page-border;
+	margin-top: 1em;
+	padding: 12px;
+}
+.forumlist td.forum_edited a {
+	color: $color-text;
+	text-decoration: none;
+}
+.forumlist td.forum_title a {
+	padding-left: 20px;
+}
+.forumlist td.forum_title a.forum_new {
+	background: url(http://images3.wikia.nocookie.net/central/images/4/4e/Forum_new.gif) center left no-repeat;
+	font-weight: bold;
+	padding-left: 20px;
+}
+.forumlist td.forum_title a.forum_new:visited {
+	background: none;
+	font-weight: normal;
+	padding-left: 20px;
+}
+.forumlist th.forum_title {
+	padding-left: 20px;
+}

@@ -130,7 +130,7 @@ class RTE {
 		self::checkEditorConditions();
 
 		// i18n
-                wfLoadExtensionMessages('RTE');
+		wfLoadExtensionMessages('RTE');
 
 		// should CK editor be disabled?
 		if (self::$useWysiwyg === false) {
@@ -164,6 +164,9 @@ class RTE {
 
 		// add global JS variables
 		$wgHooks['MakeGlobalVariablesScript'][] = 'RTE::makeGlobalVariablesScript';
+
+		// add CSS class to <body> tag
+		$wgHooks['SkinGetPageClasses'][] = 'RTE::addBodyClass';
 
 		// add fake form used by MW suggest
 		$wgOut->addHTML( Xml::openElement('form', array('id' => 'RTEFakeForm')) . Xml::closeElement('form') );
@@ -300,6 +303,14 @@ class RTE {
 	}
 
 	/**
+	 * Add class to <body> tag
+	 */
+	public static function addBodyClass(&$classes) {
+		$classes .= ' rte';
+		return true;
+	}
+
+	/**
 	 * Adds fallback for non-JS users (RT #20324)
 	 */
 	private static function addNoScriptFallback() {
@@ -404,7 +415,7 @@ HTML
 
 		// check current skin - enable RTE only on Monaco
 		$skinName = get_class($wgUser->getSkin());
-		if($skinName != 'SkinMonaco') {
+		if($skinName != 'SkinMonaco' && $skinName != 'SkinOasis') {
 			RTE::log("editor is disabled because skin {$skinName} is unsupported");
 			self::disableEditor();
 		}

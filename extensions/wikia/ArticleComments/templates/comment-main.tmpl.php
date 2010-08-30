@@ -91,7 +91,7 @@
 		}
 	}
 
-	echo $commentListText;
+	echo $commentListHTML;
 	if ($countComments) {
 		echo '<div id="article-comments-pagination"><div>' . $pagination . '</div></div>';
 	}

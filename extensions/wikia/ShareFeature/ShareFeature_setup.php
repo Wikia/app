@@ -135,7 +135,7 @@ function wfShareFeatureSkinTemplateContentActions( &$content_actions ) {
 	if( ( $wgTitle->isContentPage() ||
 		( !empty( $wgEnableBlogArticles ) && $wgTitle->getNamespace() == NS_BLOG_ARTICLE && $wgTitle->isSubpage() ) )
 		&& $wgTitle->exists()
-		&& ( ( get_class($wgUser->getSkin()) == 'SkinMonaco' ) || ( get_class($wgUser->getSkin()) == 'SkinAnswers' ) ) ) {
+		&& ( ( get_class($wgUser->getSkin()) == 'SkinOasis' ) || ( get_class($wgUser->getSkin()) == 'SkinMonaco' ) || ( get_class($wgUser->getSkin()) == 'SkinAnswers' ) ) ) {
 		$content_actions['share_feature'] = array(
 			'class' => 'disabled',
 			'text' => wfMsg('sf-link'),

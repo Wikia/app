@@ -6,11 +6,6 @@
 // TODO: Is there a better, more fundamental place for this?
 var WIKIA = {};
 
-//macbre: moved here from onejstorule.js
-var $G = function(id) {
-	return document.getElementById(id);
-};
-
 // prevent JS errors when AJAX request for magic words is not sent
 var magicWords = {};
 
@@ -20,21 +15,6 @@ $(function() {
 	$("#headerButtonUser").bind("click.headerMenu", openUserMenu);
 	$(document).ajaxStart(startAjax).ajaxStop(stopAjax);
 	setupVoting();
-});
-
-// macbre: page loading times (onDOMready / window onLoad)
-$(function() {
-	if (typeof wgNow != 'undefined') {
-		var loadTime = (new Date()).getTime() - wgNow.getTime();
-		$().log('DOM ready after ' + loadTime + ' ms', 'Monaco');
-	}
-});
-
-$(window).bind('load', function() {
-	if (typeof wgNow != 'undefined') {
-		var loadTime = (new Date()).getTime() - wgNow.getTime();
-		$().log('window onload after ' + loadTime + ' ms', 'Monaco');
-	}
 });
 
 //Ajax Wait Indicator
@@ -307,7 +287,7 @@ function setupVoting() {
 }
 
 
-//watch unwatch combomodal 
+//watch unwatch combomodal
 $(function() {
 	 $("#ca-watch").click(function(e){
 		 	$.tracker.byStr( 'articleAction/watch' );

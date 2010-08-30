@@ -1,0 +1,115 @@
+// Main Color Variables //
+$color-body: get_command_line_param("color-body", #BACDD8);					// default: light blue
+$color-page: get_command_line_param("color-page", #FFF);						// default: white
+$color-buttons: get_command_line_param("color-buttons", #006CB0);		// default: blue
+$color-links: get_command_line_param("color-links", #006CB0);				// default: blue
+
+
+////////// DO NOT CHANGE PER THEME - BASED ON ABOVE VALUES //////////
+
+
+// Text color
+$color-text: #4E4E4E;
+@if lightness($color-page) < 50 {
+	$color-text: #B0B0B0;
+}
+
+// GlobalHeader
+$color-header: darken($color-body, 50%);
+$color-header-alt: darken($color-header, 50%);
+$color-header-text: white;
+@if lightness($color-header) > 75 {
+	$color-header-text: black;
+}
+$color-menu-highlight: mix($color-links, $color-page, 20%);
+
+// Modules
+$color-module-highlight: lighten($color-page, 2%);
+$color-module-shadow: darken($color-page, 5%);
+
+// Page Borders
+$color-page-border: darken(lighten($color-page, 100%), 15%);
+@if lightness($color-page) < 50 {
+	$color-page-border: lighten(darken($color-page, 100%), 25%);
+}
+
+// Buttons
+$color-button-highlight: desaturate(lighten($color-buttons, 15%), 25%);
+$color-button-text: white;
+@if lightness($color-buttons) > 75 {
+	$color-button-text: black;
+}
+$color-secondary-button-highlight: $color-page;
+$color-secondary-button: mix($color-page, #000, 95%);
+$color-secondary-button-text: white;
+@if lightness($color-secondary-button) > 50 {
+	$color-secondary-button-text: #333;
+}
+
+// Article Comments
+$color-comment-odd: mix($color-text, $color-page, 5%);
+$color-comment-even: mix($color-links, $color-page, 5%);
+
+// TOC
+$color-article-toc-background: transparent;
+$color-article-toc-border: darken(lighten($color-page, 100%), 15%);
+@if lightness($color-page) < 50 {
+	$color-article-toc-border: lighten(darken($color-page, 100%), 25%);
+}
+
+// Images
+$color-article-thumb-background: $color-page;
+$color-article-thumb-border: darken(lighten($color-page, 100%), 15%);
+@if lightness($color-page) < 50 {
+	$color-article-thumb-border: lighten(darken($color-page, 100%), 25%);
+}
+
+// Headline border
+$color-headline-border: $color-module-shadow;
+
+// User pages tabs
+$color-tab-background: $color-page-border;
+$color-tab-background-top: mix($color-tab-background, $color-page, 50%);
+$color-tab-background-bottom: mix($color-tab-background, $color-page, 80%);
+$color-active-tab-background-top: mix($color-buttons, $color-page, 50%);
+$color-active-tab-background-bottom: mix($color-buttons, $color-page, 80%);
+$color-active-tab-shadow: #4E4E4E;
+
+// Notifications
+$color-confirmation-background: #90e491;
+$color-confirmation-text: #002a39;
+$color-notification-background: $color-buttons;
+$color-notification-highlight: $color-button-highlight;
+$color-notification-text: $color-button-text;
+$color-notification-links: $color-button-text;
+$color-notification-details-background: darken($color-notification-background, 10%);
+$color-notification-details-text: $color-button-text;
+
+
+// for backward compatibility with Monaco
+.color1 {
+	background-color: $color-buttons;
+	color: $color-button-text;
+}
+.color1 a {
+	color: $color-button-text;
+}
+.color2 {
+	background-color: $color-page-border;
+}
+.dark_text_1 {
+	color: $color-links;
+}
+.dark_text_2 {
+	color: $color-links;
+}
+.accent	{
+	background-color: $color-menu-highlight;
+	border-color: $color-links;
+	color: $color-text;
+}
+.neutral {
+	background-color: $color-page-border;
+	border-color: $color-page;
+	color: $color-text;
+}

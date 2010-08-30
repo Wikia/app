@@ -12,6 +12,12 @@ $messages['en'] = array(
 <li>Share your activity on Wikia with your friends on Facebook</li>
 <li>Complete control of what is published</li>
 </ul>",
+	"comboajaxlogin-connectmarketing-oasis" => "<h1>Connect your Wikia account to Facebook</h1>
+<ul>
+<li>Keep your current username, history, edits... nothing changes except how you log in</li>
+<li>Share your activity on Wikia with your friends on Facebook</li>
+<li>Complete control of what is published</li>
+</ul>",
 	"comboajaxlogin-connectmarketing-back" => "&laquo; Back",
 	"comboajaxlogin-connectmarketing-forward" => "Get started &raquo;",
 	"comboajaxlogin-connectdirections" => "Enter your Wikia username and password here - we will magically connect your Wikia and Facebook accounts in the background.
@@ -19,6 +25,12 @@ $messages['en'] = array(
 Once you are done, you can log in easily using any Facebook Connect button.",
 	"comboajaxlogin-post-not-understood" => "There was an error in the way this form was constructed.
 Please try again or [[Special:Contact|report this]].",
+);
+
+// Documentation to make it easier to translate the messages.
+$messages['qqq'] = array(
+	"comboajaxlogin-connectmarketing" => "A message that appears on the login dialog which prompts the user to start the Facebook account connection process.",
+	"comboajaxlogin-connectmarketing-oasis" => "A message that appears on the login dialog which prompts the user to start the Facebook account connection process.  Similar to 'comboajaxlogin-connectmarketing' except that it explicitly calls out that the connection is for Facebook Connect.  This is necessary because the login dialog box does not have other mentions of Facebook Connect on it, so it wouldn't be clear otherwise.",
 );
 
 /** Arabic (العربية)

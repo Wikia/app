@@ -102,24 +102,58 @@ function WMU_loadDetails() {
 	WMU_asyncTransaction = YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=WMU&method=chooseImage&' + params.join('&'), callback);
 }
 
+// macbre: move back button inside dialog content and add before provided selector (Oasis changes)
+function WMU_moveBackButton(selector) {
+	if (window.skin != 'oasis') {
+		return;
+	}
+
+	// store back button
+	if (typeof window.WMUbackButton == 'undefined') {
+		var backButtonOriginal = $('#ImageUploadBack');
+		var backButton = backButtonOriginal.clone();
+
+		// keep the original one, but force it to be hidden
+		backButtonOriginal.css('visibility', 'hidden');
+
+		// remove an image and add button class
+		backButton.removeAttr('id').remove();
+
+		// keep reference to <a> tag
+		backButton = backButton.children('a').addClass('wikia-button yui-back');
+		window.WMUbackButton = backButton;
+	}
+
+	// remove previous instances of .yui-back
+	$('.yui-back').remove();
+
+	// move button
+	window.WMUbackButton.clone().
+		click(WMU_back).
+		insertBefore(selector);
+
+	$().log([window.WMUbackButton, selector], 'WMU');
+}
+
 /*
  * Functions/methods
  */
 if(mwCustomEditButtons) {
-        if ( !$G( 'siteSub' )) {
-	mwCustomEditButtons[mwCustomEditButtons.length] = {
-		"imageFile": stylepath + '/../extensions/wikia/WikiaMiniUpload/images/button_wmu.png',
-		"speedTip": wmu_imagebutton,
-		"tagOpen": "",
-		"tagClose": "",
-		"sampleText": "",
-		"imageId": "mw-editbutton-wmu"};
+	if ( !$G( 'siteSub' )) {
+		mwCustomEditButtons[mwCustomEditButtons.length] = {
+			"imageFile": stylepath + '/../extensions/wikia/WikiaMiniUpload/images/button_wmu.png',
+			"speedTip": wmu_imagebutton,
+			"tagOpen": "",
+			"tagClose": "",
+			"sampleText": "",
+			"imageId": "mw-editbutton-wmu"
+		};
 	}
 }
 
 $(function() {
 	$.loadYUI(function(){
-		if(skin == 'monaco') {
+		if(skin != 'monobook') {
 			addOnloadHook(function () {
 				if(document.forms.editform) {
 					WMU_addHandler();
@@ -135,7 +169,7 @@ function WMU_addHandler() {
 		setTimeout('WMU_addHandler()', 250);
 		return;
 	}
-	$.loadYUI(function(){ 	
+	$.loadYUI(function(){
 		YAHOO.util.Event.addListener(['wmuLink', 'wmuHelpLink', btn], 'click',  WMU_show);
 	});
 }
@@ -1122,6 +1156,23 @@ function WMU_switchScreen(to) {
 	}
 	if((WMU_prevScreen == 'Details' || WMU_prevScreen == 'Conflict') && WMU_curScreen == 'Main' && $G('ImageUploadName')) {
 		YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=WMU&method=clean&mwname=' + $G('ImageUploadMWname').value + '&tempid=' + $G( 'ImageUploadTempid' ).value );
+	}
+
+	// macbre: move back button on Oasis
+	if (window.skin == 'oasis') {
+		setTimeout(function() {
+			$().log(to, 'WMU_switchScreen');
+
+			switch(to) {
+				case 'Details':
+					WMU_moveBackButton($('.ImageUploadNoBorder').last().find('input'));
+					break;
+
+				case 'Conflict':
+					WMU_moveBackButton($('#ImageUploadConflict').children('h1'));
+					break;
+			}
+		}, 50);
 	}
 }
 

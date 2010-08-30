@@ -238,6 +238,9 @@
       this.enabled = false;
       this.selectedIndex = -1;
       this.container.hide();
+
+	  // Wikia: fire event when suggestios are shown
+	  this.el.trigger('suggestHide');
     },
 
     suggest: function() {
@@ -261,6 +264,9 @@
       }
       this.enabled = true;
       this.container.show();
+
+	  // Wikia: fire event when suggestios are shown
+	  this.el.trigger('suggestShow');
     },
 
     processResponse: function(text) {

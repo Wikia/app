@@ -187,12 +187,12 @@ function wfFanBoxEmbed($input, $argv, &$parser){
 		
 }
 
-function wfAddFanBoxScripts(&$tpl){
+function wfAddFanBoxScripts($tpl, &$html){
 	global $wgOut, $wgFanBoxScripts, $wgStyleVersion, $wgStylePath;
 
 	if( $tpl->data['fanbox-scripts-loaded'] != 1 ){
-		echo ("<link rel='stylesheet' type='text/css' href=\"{$wgFanBoxScripts}/FanBoxes.css?{$wgStyleVersion}\"/>\n");
-		echo ("<link rel='stylesheet' type='text/css' href=\"{$wgFanBoxScripts}/FanBoxes.js?{$wgStyleVersion}\"/>\n");
+		$html .= "<link rel='stylesheet' type='text/css' href=\"{$wgFanBoxScripts}/FanBoxes.css?{$wgStyleVersion}\"/>\n";
+		$html .= "<link rel='stylesheet' type='text/css' href=\"{$wgFanBoxScripts}/FanBoxes.js?{$wgStyleVersion}\"/>\n";
 		
 		$tpl->set( 'fanbox-scripts-loaded', 1 );
 	}

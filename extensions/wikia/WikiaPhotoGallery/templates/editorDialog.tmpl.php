@@ -160,10 +160,10 @@
 
 		<!-- options tabs -->
 		<div id="WikiaPhotoGalleryOptionsTabs">
-			<div class="wikia-tabs">
+			<div class="<?= Wikia::isOasis() ? 'tabs' : 'wikia-tabs' ?>">
 				<ul>
-					<li class="accent"><a href="#"><?= wfMsg('wikiaPhotoGallery-preview-tab-layout') ?></a></li>
-					<li class="accent"><a href="#"><?= wfMsg('wikiaPhotoGallery-preview-tab-theme') ?></a></li>
+					<li class="accent"><a href="#"><?= wfMsg('wikiaPhotoGallery-preview-tab-layout') ?></a><img class="chevron" src="<?= $wgStylePath ?>/oasis/images/blank.gif"></li>
+					<li class="accent"><a href="#"><?= wfMsg('wikiaPhotoGallery-preview-tab-theme') ?></a><img class="chevron" src="<?= $wgStylePath ?>/oasis/images/blank.gif"></li>
 				</ul>
 			</div>
 

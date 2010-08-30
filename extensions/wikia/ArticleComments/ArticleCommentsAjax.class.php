@@ -209,10 +209,16 @@ class ArticleCommentsAjax {
 			if ($showall != 1 || $listing->getCountAllNested() > 200 /*see RT#64641*/) {
 				$comments = array_slice($comments, ($page - 1) * $wgArticleCommentsMaxPerPage, $wgArticleCommentsMaxPerPage, true);
 			}
-			$commentsHTML = ArticleCommentList::formatList($comments);
+
 			$pagination = ArticleCommentList::doPagination($countComments, count($comments), $page, $title);
 
 			$counter = wfMsg('article-comments-comments', $wgLang->formatNum($listing->getCountAllNested()));
+
+			if (get_class($wgUser->getSkin()) == 'SkinOasis') {
+				$commentsHTML = wfRenderPartial('ArticleComments', 'CommentList', array('commentListRaw' => $comments));
+			} else {
+				$commentsHTML = ArticleCommentList::formatList($comments);
+			}
 
 			$result = array('text' => $commentsHTML, 'pagination' => $pagination, 'counter' => $counter);
 		}
@@ -229,7 +235,7 @@ class ArticleCommentsAjax {
 	 * @return String - HTML
 	 */
 	static function axGetComments() {
-		global $wgRequest;
+		global $wgRequest, $wgUser;
 
 		$page = $wgRequest->getVal('page', false);
 		$articleId = $wgRequest->getVal('article', false);
@@ -243,7 +249,11 @@ class ArticleCommentsAjax {
 			wfLoadExtensionMessages('ArticleComments');
 			$listing = ArticleCommentList::newFromTitle($title);
 			$comments = $listing->getCommentPages(false, $page);
-			$text = ArticleCommentList::formatList($comments);
+			if (get_class($wgUser->getSkin()) == 'SkinOasis') {
+				$text = wfRenderPartial('ArticleComments', 'CommentList', array('commentListRaw' => $comments));
+			} else {
+				$text = ArticleCommentList::formatList($comments);
+			}
 			$pagination = ArticleCommentList::doPagination($listing->getCountAll(), count($comments), $page === false ? 1 : $page, $title);
 		}
 

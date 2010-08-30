@@ -1,57 +1,62 @@
 <script type="text/javascript">
 
 EditEnhancements = function() {
-	var Dom = YAHOO.util.Dom;
-	var Event = YAHOO.util.Event;
 
 	this.calculate = function() {
 		// rescale textbox
 		if (document.getElementById('wpTextbox1___Frame')) {
 			// FCK
-			var textbox = 'wpTextbox1___Frame';
+			var textbox = $('#wpTextbox1___Frame');
 		}
 		else if (document.getElementById('cke_contents_wpTextbox1')) {
 			// CKeditor
-			var textbox = 'cke_contents_wpTextbox1';
+			var textbox = $('#cke_contents_wpTextbox1');
 		}
 		else {
 			// MW editor
-			var textbox = 'wpTextbox1';
+			var textbox = $('#wpTextbox1');
 		}
 
-		var viewport = Dom.getViewportHeight();
-		var textareaTop = $("#" + textbox).offset().top;
-		var toolbar = $("#edit_enhancements_toolbar").outerHeight(true);
+		var toolbar = $('#edit_enhancements_toolbar');
+
+		// resize edit box
+		var viewport = $.getViewportHeight();
+		var textareaTop = parseInt(textbox.offset().top);
+
 		//count height of elements between bottom of textarea and top of EditEnhancements box
-		var otherStuff = $("#edit_enhancements_toolbar").offset().top - (textareaTop + $("#" + textbox).height());
+		var otherStuff = parseInt(toolbar.offset().top) - (textareaTop + textbox.height());
 		//var heightDiff = $("#" + textbox).outerHeight(true) - $("#" + textbox).height();
 		//+4 is for extra margin
-		var targetHeight = viewport - textareaTop - toolbar - otherStuff + 4;
+		var targetHeight = viewport - textareaTop - toolbar.outerHeight(true) - otherStuff + 4;
 
-		targetHeight = Math.max(targetHeight, 300);
-		targetHeight = Math.min(targetHeight, 800);
-
-		Dom.setStyle(textbox, 'height', targetHeight + 'px');
+		// limit the height to be within <300, 800>
+		targetHeight = Math.min(Math.max(targetHeight, 300), 800);
+		textbox.height(targetHeight);
 
 		// rescale summary box
-		var items = Dom.get('edit_enhancements_toolbar').getElementsByTagName('li');
+		var items = toolbar.find('li');
 		var summaryBox = $('#wpSummaryEnhanced');
 		var itemsWidth = 0;
 
-		for (i=0; i<items.length; i++) {
-			itemsWidth += $(items[i]).innerWidth() + 5;
-		}
+		items.each(function() {
+			var item = $(this);
 
+			// on Oasis "minor edit" checkbox is below summary field
+			if (window.skin == 'oasis' && item.hasClass('minor')) {
+				return false;
+			}
+
+			itemsWidth += item.innerWidth() + 5;
+		});
 		itemsWidth -= summaryBox.innerWidth();
 
-		var newSummaryWidth =  ($("#edit_enhancements_toolbar").innerWidth() - 10) - itemsWidth - 10;
+		var newSummaryWidth =  (toolbar.innerWidth() - 10) - itemsWidth - 10;
 
-		newSummaryWidth = Math.max(newSummaryWidth, 200);
-		newSummaryWidth = Math.min(newSummaryWidth, 500);
+		// limit the width of summary box to be within <200, 500>
+		newSummaryWidth = Math.min(Math.max(newSummaryWidth, 200), 500);
+		summaryBox.width(newSummaryWidth);
 
-		Dom.setStyle('wpSummaryEnhanced', 'width', newSummaryWidth + 'px');
-
-		// RT#36994
+		// inform RTE that its editarea has been resized (RT#36994)
 		if (typeof window.RTE !='undefined' && typeof window.RTE.instance == 'object') {
 			RTE.instance.fire('resize');
 		}
@@ -61,7 +66,7 @@ EditEnhancements = function() {
 }
 
 EditEnhancementsLoad = function() {
-	this.EditEnhancementsLoop = function() {
+	var EditEnhancementsLoop = function() {
 		if (count == 3) {
 			clearInterval(interval);
 		} else {
@@ -74,10 +79,25 @@ EditEnhancementsLoad = function() {
 	// change the id of summary box, so changing its size works in IE
 	$('#wpSummary').attr('id', 'wpSummaryEnhanced');
 
-	var interval = setInterval("EditEnhancementsLoop()", 500);
+	var interval = setInterval(EditEnhancementsLoop, 500);
+
+	// modifications for Oasis
+	if (window.skin == 'oasis') {
+		var toolbar = $('#edit_enhancements_toolbar');
+		var toolbarItems = toolbar.children().children('li');
+
+		// fix left margin of "minor" checkbox
+		toolbarItems.filter('.minor').
+			css('marginLeft', $('#wpSummaryLabel').width() + 5);
+
+		// changes for "Show changes" button
+		$('#wpDiff').addClass('secondary');
+	}
 }
 
-$(window).bind( 'load', function() {$.loadYUI(window.EditEnhancementsLoad)} );
-$(window).bind( 'resize', EditEnhancements );
+$(window).bind({
+	'load': EditEnhancementsLoad,
+	'resize': EditEnhancements
+});
 
 </script>

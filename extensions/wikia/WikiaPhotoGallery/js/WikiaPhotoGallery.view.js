@@ -12,10 +12,12 @@ var WikiaPhotoGalleryView = {
 			(window.wgNamespaceNumber != -1);				// ignore special pages
 	},
 
-	// load editor JS (if not loaded yet) and fire callback
+	// load jQuery UI + editor JS (if not loaded yet) and fire callback
 	loadEditorJS: function(callback) {
 		if (typeof WikiaPhotoGallery == 'undefined') {
-			$.getScript(wgExtensionsPath + '/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.js?' + wgStyleVersion, callback);
+			$.getScript(wgExtensionsPath + '/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.js?' + wgStyleVersion, function() {
+				$.loadJQueryUI(callback);
+			});
 		} else {
 			callback();
 		}
@@ -39,22 +41,23 @@ var WikiaPhotoGalleryView = {
 		var self = this;
 
 		// find galleries in article content
-		var galleries = $('#bodyContent').find('.wikia-gallery').not('.template');
+		var galleries = $((window.skin == 'oasis') ? '#WikiaArticle' : '#bodyContent').find('.wikia-gallery').not('.template');
 		if (galleries.exists()) {
 			this.log('found ' + galleries.length + ' galleries');
 		}
 
+		var addButtonSelector = (window.skin == 'oasis') ? '.wikia-photogallery-add' : '.wikia-gallery-add';
+
 		galleries.
-			children('.wikia-gallery-add').
+			children(addButtonSelector).
 				// show "Add a picture to this gallery" button
 				show().
 
-				children('a').
 					// show editor after click on a link
 					click(function(ev) {
 						ev.preventDefault();
 
-						var gallery = $(this).parent().parent();
+						var gallery = $(this).closest('.wikia-gallery');
 						var hash = gallery.attr('hash');
 						var id = gallery.attr('id');
 						self.log(gallery);
@@ -86,7 +89,11 @@ var WikiaPhotoGalleryView = {
 					hover(
 						// onmousein - highlight the gallery
 						function(ev) {
-							$(this).parent().parent().
+							if (window.skin == 'oasis') return;
+
+							var gallery = $(this).closest('.wikia-gallery');
+
+							gallery.
 								css({
 									'border-style': 'solid',
 									'border-width': '1px',
@@ -97,7 +104,11 @@ var WikiaPhotoGalleryView = {
 
 						// onmouseout
 						function (ev) {
-							$(this).parent().parent().
+							if (window.skin == 'oasis') return;
+
+							var gallery = $(this).closest('.wikia-gallery');
+
+							gallery.
 								css({
 									'border': '',
 									'padding': '1px'

@@ -1189,4 +1189,45 @@ class Wikia {
 		}
 		return $data;
 	}
+
+	/**
+	 * Check if currently show page is mainpage
+	 */
+	public static function isMainPage() {
+		wfProfileIn(__METHOD__);
+
+		global $wgTitle, $wgArticle;
+		static $result = null;
+
+		if ($result === null) {
+			$result = $wgTitle->getArticleId() == Title::newMainPage()->getArticleId() && $wgTitle->getArticleId() != 0;
+
+			// handle redirects
+			if (!$result) {
+				if(!empty($wgArticle->mRedirectedFrom)) {
+					$result = wfMsgForContent('mainpage') == $wgArticle->mRedirectedFrom->getPrefixedText();
+				}
+			}
+		}
+
+		wfProfileOut(__METHOD__);
+		return $result;
+	}
+
+	/**
+	 * Returns true if the currently set skin is Oasis.  Do not call this before the skin
+	 * has been set on wgUser.
+	 */
+	public static function isOasis(){
+		wfProfileIn( __METHOD__ );
+		global $wgUser;
+		static $isOasis = null;
+		
+		if (is_null($isOasis)) {
+			$isOasis = (get_class($wgUser->getSkin()) == 'SkinOasis');
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $isOasis;
+	}
 }

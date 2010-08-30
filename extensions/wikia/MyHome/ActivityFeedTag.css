@@ -3,8 +3,9 @@
 }
 
 .activityfeed li {
-	margin-bottom: 15px;
 	height: 1%;
+	list-style: none;
+	margin-bottom: 15px;
 }
 
 .activityfeed.shortlist li {

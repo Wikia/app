@@ -253,8 +253,8 @@ class CorporatePageHelper{
 			case NS_HELP:
 			case NS_HELP_TALK:
 			case NS_CATEGORY_TALK:
-			case 110: //NS_FORUM
-			case 111: //NS_FORUM_TALK
+			case NS_FORUM:
+			case NS_FORUM_TALK:
 			case 150: //NS_HUB
 			case 151: //NS_HUB_TALK
 			case 400: //NS_VIDEO

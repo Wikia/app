@@ -1,0 +1,253 @@
+@import "color";
+@import "../mixins/clearfix";
+@import "../mixins/border-radius";
+
+// /** everything above the comment bubbles **/
+.WikiaArticleComments {
+	border-top: 1px solid $color-page-border;
+	margin: 10px;
+	padding-top: 10px;
+	h1 {
+		font-size: 22px;
+		margin-left: 5px;
+	}
+	.controls {
+		float: right;
+		font-size: 11px;
+		line-height: 25px;
+		list-style: none;
+		li {
+			float: left;
+			margin-left: 5px;
+			a {
+				border-left: 1px solid $color-page-border;
+				padding: 0 5px;
+			}
+			&:first-child {
+				a {
+					border: 0;
+				}
+			}
+		}
+		.selected {
+			color: $color-text;
+			cursor: default;
+		}
+	}
+	.session {
+		@include clearfix;
+		font-size: 12px;
+		line-height: 14px;
+		margin-top: 5px;
+		padding: 5px;
+		float: left;
+		width: 60px;
+		a:first-child {
+			float: right;
+		}
+		.avatar {
+			float: left;
+			margin-right: 4px;
+			vertical-align: middle;
+		}
+	}
+	#article-comm-info { // /** error message container **/
+		display: none;
+	}
+	#article-comments {
+		margin-top: 7px;
+		border-top: 1px solid $color-page-border;
+	}
+	form {
+		@include clearfix;
+		margin: {
+			top: 6px;
+			bottom: 10px;
+		}
+	}
+	textarea {
+		border: 1px solid $color-page-border;
+		height: 75px;
+		margin: 15px 5px;
+		margin: {
+			top: 7px;
+			left: 5px;
+			right: 5px;
+			bottom: 15px;	
+		}
+		
+		padding: 2px;
+		width: 574px;
+		font-size: 12px !important;
+		font {
+			family: "Dagny", "Helvetica", "Arial", sans-serif;
+		}
+	}
+	.wikia-button {
+		float: right;
+		margin-right: 5px;
+	}
+
+}
+
+
+// /** the comments bubbles **/
+.comments {
+	clear: both;
+	list-style: none;
+
+	textarea {
+		font-family: "Dagny", "Helvetica", "Arial", sans-serif;
+		font-size: 11px;
+		width: 528px !important;
+	}
+	ul {
+		margin-bottom: 20px;
+	}
+	li {
+		@include clearfix;
+		margin: 15px 0;
+		&.odd blockquote {
+			background: $color-comment-odd;
+			&:after {
+				border-color: transparent $color-comment-odd $color-comment-odd transparent;
+			}
+		}
+		&.even blockquote {
+			background: $color-comment-even;
+			&:after {
+				border-color: transparent $color-comment-even $color-comment-even transparent;
+			}
+		}
+	}
+	.avatar {
+		float: left;
+	}
+	blockquote {
+		@include border-radius(5px);
+		border: 1px solid $color-page-border;
+		margin: 0 5px 0 75px;
+		padding: 15px 10px 10px 15px;
+		position: relative;
+	}
+	blockquote:before {
+		border-color: transparent $color-page-border $color-page-border transparent;
+		border-style: solid;
+		border-width: 11px;
+		content: " ";
+		height: 0px;
+		position: absolute;
+		top: 14px;
+		left: -22px;
+		width: 0px;
+	}
+	blockquote:after {
+		border-style: solid;
+		border-width: 10px;
+		content: " ";
+		height: 0px;
+		position: absolute;
+		top: 15px;
+		left: -20px;
+		width: 0px;
+	}
+	p {
+		margin-bottom: 1em;
+	}
+	details {
+		font-size: 10px;
+		line-height: 18px;
+	}
+	/** @todo wait for spec from Tim **/
+	/*.article-comm-text {
+		padding-right: 57px;
+	}*/
+	
+	.wikia-button {
+		margin: 0;
+		padding: {
+			left: 15px;
+			right: 15px;
+		}
+	}
+	
+	.buttons {
+		float: right;
+		@include clearfix;
+	}
+	
+	.throbber {
+		display: none!important;
+	}
+	
+	.tools {
+		visibility: hidden;
+		float: right;
+		margin-right: 10px;
+		margin-top: 3px;
+		display: inline-block;
+		a {
+			margin-right: 3px;
+		}
+		img {
+			margin-right: 2px;
+		}
+	}
+	ul {
+		list-style: none;
+		margin-left: 85px;
+		
+		textarea {
+			width: 444px!important;
+		}
+	}
+}
+
+.upper-pagination {
+	padding-top: 15px;
+	margin-bottom: 10px;
+	border-top: 1px solid $color-page-border;
+}
+
+#article-comments-pagination, .article-comments-pagination {
+	margin: {
+		left: auto;
+		right: auto;	
+	}
+	text-align: center;
+	color: $color-links;
+	a {
+		color: $color-links;
+		
+		border-right: solid 1px $color-links;	
+
+		padding: {
+			left: 4px;
+			right: 5px;
+		}
+		margin: {
+			left: 2px;
+			right: 5px;
+		}
+
+		&.accent {
+			color: White;
+			background-color: $color-links;
+		}
+		
+		&#article-comments-pagination-link-prev {
+			border: none;
+			margin-right: 10px;
+			&:before {
+				// content: "< ";
+			}
+		}
+		&#article-comments-pagination-link-next {
+			border: none;
+			margin-left: 10px;
+			&:after {
+				// content: " >";
+			}
+		}
+	}
+}

@@ -4,35 +4,35 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 /**
  * fbconnect.js and fbconnect-min.js
- * 
+ *
  * FBConnect relies on several different libraries and frameworks for its JavaScript
  * code. Each framework has its own method to verify that the proper code won't be
  * called before it's ready. (Below, lambda represents a named or anonymous function.)
- * 
+ *
  * MediaWiki:             addOnloadHook(lambda);
  *     This function manages an array of window.onLoad event handlers to be called
  *     be called by a MediaWiki script when the window is fully loaded. Because the
  *     DOM may be ready before the window (due to large images to be downloaded) a
  *     faster alternative is JQuery's document-ready function.
- * 
+ *
  * FaceBook Connect SDK:  window.fbAsyncInit = lambda;
  *     This global variable is called when the Facebook Connect SDK is fully
  *     initialized asynchronously to the document's state. This might be long
  *     after the document is finished rendering the first time the script is
  *     downloaded. Subsequently, it may even be called before the DOM is ready.
- * 
+ *
  * jQuery:                $(document).ready(lambda);
  *     Self-explanatory -- to be called when the DOM is ready to be manipulated.
  *     Typically this should occur sooner than MediaWiki's addOnloadHook function
@@ -53,7 +53,7 @@ window.fbAsyncInit = function() {
 	});
 
 	// NOTE: Auth.login doesn't appear to work anymore.  The onlogin attribute of the fb:login-buttons is being used instead.
-	
+
 	// Register a function for when the user logs out of Facebook
 	FB.Event.subscribe('auth.logout', function(response) {
 		// TODO: Internationalize
@@ -74,7 +74,7 @@ window.fbAsyncInit = function() {
 $(document).ready(function() {
 	// Add a pretty logo to Facebook links
 	$('#pt-fbconnect,#pt-fblink,#pt-fbconvert').addClass('mw-fblink');
-	
+
 	// Add the logout behavior to the "Logout of Facebook" button
 	$('#pt-fblogout').click(function() {
 		// TODO: Where did the fancy DHTML window go? Maybe consider jQuery Alert Dialogs:
@@ -86,12 +86,12 @@ $(document).ready(function() {
 			});
 		}
 	});
-	
+
 	//window.fbAsyncInit ();
-	$("#fbconnect a").click( function(){
-		WET.byStr( 'FBconnect/userlinks/connect' ); 
+	$("#fbconnect a").click( function(ev){
+		WET.byStr( 'FBconnect/userlinks/connect' );
 		loginByFBConnect();
-		return false;
+		ev.preventDefault();
 	});
 
 	if( $.getUrlVal( "ref" ) == "fbfeed" ) {
@@ -129,10 +129,10 @@ function sendToConnectOnLoginForSpecificForm(formName){
 	        formName = "/"+formName;
 	    }
 		var destUrl = wgServer + wgScript + "?title=Special:Connect" + formName + "&returnto=" + wgPageName + "&returntoquery=" + wgPageQuery;
-		
+
 		if (formName == "/ConnectExisting") {
 			window.location.href = destUrl;
-			return 
+			return
 		}
 		$('#fbConnectModalWrapper').remove();
 		$.postJSON(window.wgScript + '?action=ajax&rs=SpecialConnect::checkCreateAccount&cb='+wgStyleVersion, function(data) {
@@ -145,11 +145,11 @@ function sendToConnectOnLoginForSpecificForm(formName){
 							WET.byStr( 'FBconnect/ChooseName/X' );
 						});
 					}
-				});    
+				});
 			} else {
 				window.location.href = destUrl;
-			}	
-		});	
+			}
+		});
 	});
 	return
 }
@@ -193,7 +193,7 @@ function loginAndConnectExistingUser(){
 }
 
 /*
- * expend ajax login to use slider login/merge switch 
+ * expend ajax login to use slider login/merge switch
  */
 
 window.wgAjaxLoginOnInit = function() {
@@ -201,8 +201,8 @@ window.wgAjaxLoginOnInit = function() {
 		$().log('AjaxLogin: slideToNormalLogin()');
 		var firstSliderCell = $("#AjaxLoginSliderNormal");
 		var slideto = 0;
-		
-		AjaxLogin.beforeDoSuccess = function() { 
+
+		AjaxLogin.beforeDoSuccess = function() {
 			return true;
 		};
 		$("#AjaxLoginConnectMarketing a.forward").show();
@@ -219,7 +219,7 @@ window.wgAjaxLoginOnInit = function() {
 		$("#AjaxLoginConnectMarketing a.forward").hide();
 		$("#AjaxLoginConnectMarketing a.back").show();
 
-		AjaxLogin.beforeDoSuccess = function() {			
+		AjaxLogin.beforeDoSuccess = function() {
 			FB.getLoginStatus(function(response) {
 				if (response.session) {
 					// already logged-in/connected via facebook
@@ -240,7 +240,7 @@ window.wgAjaxLoginOnInit = function() {
 			});
 			return false;
 		}
-		
+
 		firstSliderCell.animate({
 			marginLeft: slideto
 		});
@@ -253,7 +253,7 @@ window.wgAjaxLoginOnInit = function() {
 		if(typeof e != 'undefined'){
 			e.preventDefault();
 		}
-	
+
 		// Split into diff functions so that they can be called from elsewhere.
 		if ($(this).hasClass("forward")) {
 			AjaxLogin.slideToLoginAndConnect(this);
@@ -261,26 +261,26 @@ window.wgAjaxLoginOnInit = function() {
 			AjaxLogin.slideToNormalLogin(this);
 		}
 	};
-	
+
 	//setup slider
 	$("#AjaxLoginConnectMarketing a").click(AjaxLogin.slider);
-	
+
 	$('#fbAjaxLoginConnect').click(function() {
-		WET.byStr( 'FBconnect/login_dialog/connect' );	
+		WET.byStr( 'FBconnect/login_dialog/connect' );
 	});
-	
+
 	$("#AjaxLoginConnectMarketing .forward").click(function() {
-		WET.byStr( 'FBconnect/login_dialog/slider/forward' );	
+		WET.byStr( 'FBconnect/login_dialog/slider/forward' );
 	});
-	
+
 	$("#AjaxLoginConnectMarketing .back").click(function() {
-		WET.byStr( 'FBconnect/login_dialog/slider/back' );	
+		WET.byStr( 'FBconnect/login_dialog/slider/back' );
 	});
-	
+
 	$("#wpLoginAndConnectCombo").click(function() {
-		WET.byStr( 'FBconnect/login_dialog/login_and_connect' );	
+		WET.byStr( 'FBconnect/login_dialog/login_and_connect' );
 	});
-	
+
 	$().log('Fbconnect: AjaxLogin expend');
 }
 
@@ -296,7 +296,7 @@ function initFbWhenReady(){
 		// The fbsdk code hasn't been loaded yet. Give it more time.
 		setTimeout("initFbWhenReady()", 500);
 	} else if (!isFbApiInit()) {
-		// The fbsdk has loaded but didn't initialize. Force it to init. 
+		// The fbsdk has loaded but didn't initialize. Force it to init.
 		window.fbAsyncInit();
 	}
 }

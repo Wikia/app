@@ -908,6 +908,9 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 						' hidefocus="true"',
 						' role="tab">',
 							contents.label,
+							// Wikia - start
+							'<img class="chevron" src="' + window.wgBlankImgUrl + '" />',
+							// Wikia - end
 					'</a>'
 				].join( '' ) );
 
@@ -1310,7 +1313,8 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 		//buttons : [ CKEDITOR.dialog.okButton, CKEDITOR.dialog.cancelButton ]
 
 		// Wikia - start
-		buttons : [ CKEDITOR.dialog.cancelButton, CKEDITOR.dialog.okButton ]
+		// Oasis: don't show cancel button as there's close button
+		buttons : [ CKEDITOR.dialog.okButton ]
 		// Wikia - end
 	};
 
@@ -1799,12 +1803,12 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 		if ( !coverElement )
 		{
 			var html = [
-					'<div style="position: ', ( CKEDITOR.env.ie6Compat ? 'absolute' : 'fixed' ),
-					'; z-index: ', baseFloatZIndex,
-					'; top: 0px; left: 0px; ',
-					( !CKEDITOR.env.ie6Compat ? 'background-color: ' + backgroundColorStyle : '' ),
-					'" class="cke_dialog_background_cover">'
-				];
+				'<div style="position: ', ( CKEDITOR.env.ie6Compat ? 'absolute' : 'fixed' ),
+				'; z-index: ', baseFloatZIndex,
+				'; top: 0px; left: 0px; ',
+				( !CKEDITOR.env.ie6Compat ? 'background-color: ' + backgroundColorStyle : '' ),
+				'" class="cke_dialog_background_cover blackout">'
+			];
 
 			if ( CKEDITOR.env.ie6Compat )
 			{

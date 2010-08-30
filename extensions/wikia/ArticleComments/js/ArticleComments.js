@@ -131,7 +131,7 @@ var ArticleComments = {
 			$('#comm-' + json.id).find('.buttons').find('.info').remove();
 			if (!json.error) {
 				$(e.target).closest('.buttons').hide();
-				$('#comm-text-' + json.id).after(json.html);
+				$('#comm-text-' + json.id).parent().append(json.html);
 				$('#article-comm-submit-' + json.id).bind('click', {source: '#article-comm-textfield-' + json.id, parentId: json.id}, ArticleComments.postComment);
 				$('#article-comm-textfield-' + json.id).focus();
 			} else if (json.error == 2 /*login require*/) {
@@ -220,7 +220,11 @@ var ArticleComments = {
 		$.getJSON(wgScript + '?action=ajax&rs=ArticleCommentsAjax&method=axGetComments&article=' + wgArticleId, {page: page, order: $('#article-comm-order').attr('value')}, function(json) {
 			if (!json.error) {
 				$('#article-comments-ul').replaceWith(json.text);
-				$('#article-comments-pagination').find('div').html(json.pagination);
+				// not really happening?
+				if ($('.article-comments-pagination').exists()) {
+					$('.article-comments-pagination').find('div').html(json.pagination);
+					$('html, body').animate({ scrollTop: $(".article-comments-pagination:eq(0)").offset().top }, 1);
+				}
 				ArticleComments.addHover();
 				$('html, body').animate({
 						scrollTop: $('#article-comment-header').offset().top

@@ -1,0 +1,170 @@
+.WikiaPageHeader {
+	clear: both;
+	margin: 0 10px 10px 10px;
+	padding-right: 80px;
+	position: relative;
+	&.separator {
+		border-bottom: 1px solid $color-page-border;
+		padding: 0 80px 15px 0;
+		.commentslikes {
+			bottom: auto;
+			top: 3px;
+		}
+	}
+	&.editbox {
+		padding: 20px 90px 0 0;
+		p {
+			margin-top: 4px;
+		}
+	}
+	.ns-talk & {
+		padding-right: 10px;
+		.wikia-menu-button {
+			float: right;
+		}
+	}
+	.commentslikes {
+		bottom: 30px;
+		position: absolute;
+		right: 0;
+		top: 4px;
+	}
+	h1 {
+		display: inline;
+		font-size: 26px;
+		margin: 0 10px 0 0;
+		strong {
+			font-weight: bold;
+			margin-right: 5px;
+		}
+	}
+	.view-source {
+		font-size: 14px;
+		img {
+			padding: 0 3px;
+			vertical-align: baseline;
+		}
+	}
+	h2, p {
+		border: none;
+		font-size: 14px;
+		margin-top: 4px;
+	}
+	details {
+		@include linear-gradient($color-module-shadow, top, $color-page, 0%, $color-module-shadow, 100%);
+
+		border-top: 1px solid $color-page-border;
+		font-size: 12px;
+		height: 25px;
+		line-height: 25px;
+		margin: 5px 0 20px;
+		position: relative;
+		text-align: right;
+		width: 670px;
+	}
+	.history {
+		left: 0;
+		position: absolute;
+		text-align: left;
+		top: 0;
+		li {
+			display: none;
+			&:first-child {
+				display: block;
+			}
+			.no-avatar {
+				margin-left: 6px;
+			}
+		}
+		&.hover {
+			@include menu-regular;
+			display: block;
+			left: -2px;
+			top: -1px;
+			z-index: 100;
+			li {
+				border-bottom: 0;
+				padding-right: 5px;
+			}
+			a {
+				display: inline;
+				font-size: 12px;
+				padding: 0;
+				&:hover {
+					background: none;
+				}
+			}
+			.chevron {
+				display: none;
+			}
+		}
+		.view-all {
+			text-align: right;
+		}
+	}
+	.categories {
+		margin-right: 10px;
+	}
+	.avatar {
+		float: left;
+		margin: 1px 4px 2px 2px;
+	}
+	img {
+		vertical-align: middle;
+	}
+	.chevron {
+		border-top-color: $color-links;
+	}
+	.wikia-button,
+	.wikia-menu-button {
+		top: -6px;
+		&[data-id=edit] .icon,
+		a[data-id=edit] .icon {
+			background: url(/skins/oasis/images/sprite.png) -1568px -48px no-repeat;
+			vertical-align: text-bottom;
+		}
+		a[data-id=add] .icon {
+			background: url(/skins/oasis/images/sprite.png) -1568px -16px no-repeat;
+		}
+	}
+	.view-source .icon {
+		background: url(/skins/oasis/images/sprite.png) -1600px 0 no-repeat;
+	}
+}
+.oasis-one-column .WikiaPageHeader {
+	padding-right: 310px;
+	position: relative;
+	.commentslikes {
+		right: 330px;
+		top: 3px;
+	}
+	.WikiaSearch {
+		position: absolute;
+		right: 0;
+		top: 4px;
+	}
+	details {
+		width: 980px;
+	}
+}
+.oasis-one-column.ns-talk .WikiaPageHeader {
+	padding-right: 320px;
+}
+.mainpage .WikiaPageHeader .tally {
+	position: absolute;
+	right: 370px;
+	top: 8px;
+	span {
+		float: left;
+	}
+	.wikia-chiclet-button {
+		float: left;
+		margin: 0 10px;
+		img {
+			background: url(/skins/oasis/images/sprite.png) no-repeat -1568px -16px transparent;
+			height: 10px;
+			margin: 3px 0 0 3px;
+			width: 10px;
+		}
+	}
+}

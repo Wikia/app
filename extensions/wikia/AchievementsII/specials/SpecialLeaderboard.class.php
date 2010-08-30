@@ -10,31 +10,40 @@ class SpecialLeaderboard extends SpecialPage {
 	function execute($user_id) {
 		wfProfileIn(__METHOD__);
 
-		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgSupressPageTitle, $wgUser, $wgWikiaBotLikeUsers, $wgJsMimeType;
+		global $wgOut, $wgExtensionsPath, $wgStylePath, $wgStyleVersion, $wgSupressPageTitle, $wgUser, $wgWikiaBotLikeUsers, $wgJsMimeType;
 
 		$wgSupressPageTitle = true;
 		$rankingService = new AchRankingService();
 
 		$this->setHeaders();
+		
+		$skinName = get_class($wgUser->getSkin());
 
-		$wgOut->addStyle( "common/article_sidebar.css" );
 		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AchievementsII/css/leaderboard.css?{$wgStyleVersion}");
-		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AchievementsII/css/achievements_sidebar.css?{$wgStyleVersion}");
-		
-		//need to use class name since skin is still not completely initialized at this time
-		$currentSkin = get_class( $wgUser->getSkin() );
-		
-		if( $currentSkin == 'SkinMonoBook' ) {
+		if( $skinName == 'SkinMonoBook' ) {
 			$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AchievementsII/css/leaderboard_monobook.css?{$wgStyleVersion}");
-		} elseif( $currentSkin == 'SkinWikiaphone' ) {
+		} elseif( $skinName == 'SkinWikiaphone' ) {
 			$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AchievementsII/css/leaderboard_wikiaphone.css?{$wgStyleVersion}");
 		}
+		
+		/** don't show and use JavaScript and CSS from Monoaco on Oasis **/
+		if ($skinName != 'SkinOasis') {
+			$wgOut->addStyle( "common/article_sidebar.css" );
 
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/AchievementsII/js/achievements.js?{$wgStyleVersion}\"></script>\n");
+			$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AchievementsII/css/achievements_sidebar.css?{$wgStyleVersion}");
+			$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/AchievementsII/js/achievements.js?{$wgStyleVersion}\"></script>\n");
+		}
+
+		/** use Oasis JavaScript **/
+		if ($skinName == 'SkinOasis') {
+			$wgOut->addScript("<script src=\"{$wgStylePath}/oasis/js/Achievements.js?{$wgStyleVersion}\"></script>\n");
+		}
+		
 		// ranking
 		$ranking = $rankingService->getUsersRanking(20, true);
 
-		// recent
+		// recent  -- REMOVED BY OWEN FOR OASIS
+		/*
 		$levels = array(BADGE_LEVEL_PLATINUM, BADGE_LEVEL_GOLD, BADGE_LEVEL_SILVER, BADGE_LEVEL_BRONZE);
 		$recents = array();
 		$maxEntries = 9;
@@ -57,11 +66,12 @@ class SpecialLeaderboard extends SpecialPage {
 				$maxEntries -= $total;
 			}
 		}
+		 */
 
 		$template = new EasyTemplate(dirname(__FILE__).'/templates');
 		$template->set_vars(array(
 			'ranking' => $ranking,
-			'recents' => $recents,
+//			'recents' => $recents,
 			'username' => $wgUser->getName()
 		));
 

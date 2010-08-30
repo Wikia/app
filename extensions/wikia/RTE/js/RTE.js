@@ -8,6 +8,7 @@ window.RTE = {
 		'coreStyles_italic': {element: 'i', overrides: 'em'},
 		'customConfig': '',
 		'dialog_backgroundCoverColor': '#000',
+		'dialog_backgroundCoverOpacity': (window.skin == 'oasis' ? 0.8 : 0.5),
 		'disableObjectResizing': true,
 		'entities': false,
 		'format_tags': 'p;h2;h3;h4;h5;pre',
@@ -87,8 +88,9 @@ window.RTE = {
 
 		// TODO: use GA event tracking
 		// pageTracker._trackEvent.apply(window, args);
-
-		WET.byStr(args.join('/'));
+		if (typeof jQuery.tracker != 'undefined') {
+			jQuery.tracker.byStr(args.join('/'));
+		}
 	},
 
 	// start editor in mode provided
@@ -449,7 +451,7 @@ CKEDITOR.config.toolbar_Wikia =
 		msg: 'controls',
 		groups: [
 			['Undo','Redo'],
-			['Widescreen'],
+			(window.skin == 'oasis' ? false : ['Widescreen']), // temp hack
 			['Source']
 		]
 	}

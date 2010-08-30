@@ -635,7 +635,7 @@ XHTML id names.
 'qbspecialpages' => 'Special pages',
 'moredotdotdot'  => 'More…',
 'mypage'         => 'My page',
-'mytalk'         => 'My talk',
+'mytalk'         => 'Talk',
 'anontalk'       => 'Talk for this IP',
 'navigation'     => 'Navigation',
 'and'            => '&#32;and',
@@ -1540,7 +1540,7 @@ Note that their indexes of {{SITENAME}} content may be out of date.',
 # Preferences page
 'preferences'               => 'Preferences',
 'preferences-summary'       => '', # do not translate or duplicate this message to other languages
-'mypreferences'             => 'My preferences',
+'mypreferences'             => 'Preferences',
 'prefs-edits'               => 'Number of edits:',
 'prefsnologin'              => 'Not logged in',
 'prefsnologintext'          => 'You must be <span class="plainlinks">[{{fullurl:Special:Signup|$1}} logged in]</span> to set user preferences.',

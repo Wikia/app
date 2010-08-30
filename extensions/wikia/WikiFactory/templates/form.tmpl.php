@@ -1,6 +1,17 @@
+<?php
+	global $wgExtensionsPath, $wgStyleVersion;
+
+	$StaticChute = new StaticChute('js');
+	$StaticChute->useLocalChuteUrl();
+	$YUIPackageURL = $StaticChute->getChuteUrlForPackage('yui');
+?>
 <!-- s:<?= __FILE__ ?> -->
 <style type="text/css">
 /*<![CDATA[*/
+<?php
+	// use "build-in" styling for tabs on Oasis
+	if (!Wikia::isOasis()) {
+?>
 #wiki-factory ul.tabs {
 	width: 100%;
 	margin: 0;
@@ -25,7 +36,21 @@
 	border: 1px solid gray;
 	background-color: #f9f9f9;
 }
+<?php
+	}
+	else {
+?>
+#wiki-factory .tabs {
+	list-style: none;
+}
 
+#wiki-factory .active {
+	font-weight: bold;
+	padding: 12px 25px 0;
+}
+<?php
+	}
+?>
 #wiki-factory-panel {
 	border: 1px dotted lightgray;
 	background: #f9f9f9;

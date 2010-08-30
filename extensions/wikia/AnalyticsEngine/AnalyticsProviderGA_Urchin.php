@@ -33,7 +33,7 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 
 		  case 'pagetime':
 			return $this->pagetime($eventDetails[0]);
-		
+
                   default: return '<!-- Unsupported event for ' . __CLASS__ . ' -->';
 		}
 	}
@@ -57,9 +57,9 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 				var now = new Date();
 				var ms = (now.getTime() - window.wgNow.getTime()) / 1000;
      			        var pageTime = Math.floor(ms * 10) / 10; // Round to 1 decimal
-				var slashtime = "/' . $skin . '/" + pageTime.toString().replace(/\./, "/");	
+				var slashtime = "/' . $skin . '/" + pageTime.toString().replace(/\./, "/");
 				_uff=0;
-				_uacct="UA-288915-42";	
+				_uacct="UA-288915-42";
 				urchinTracker(slashtime);
 			}
 			</script>';
@@ -71,12 +71,12 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 
 		global $wgTitle;
 		if (!is_object($wgTitle) || !($wgTitle instanceof Title)) return "";
-	
+
 		$ns = $wgTitle->getNamespace();
 
 		$out  = "<script type=\"text/javascript\">_uff=0; _uacct=\"UA-12241505-1\"; urchinTracker(\"/GN2/{$ns}\");</script>\n";
 
-		if (in_array($ns, array(0, 220))) 
+		if (in_array($ns, array(0, 220)))
 		$out .= "<script type=\"text/javascript\">_uff=0; _uacct=\"UA-12241505-1\"; urchinTracker(\"/GN4/{$ns}/{$wgTitle->getArticleID()}\");</script>\n";
 
 		return $out;

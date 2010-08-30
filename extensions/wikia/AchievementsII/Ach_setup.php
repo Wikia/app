@@ -167,7 +167,7 @@ function Ach_GetHTMLAfterBody($skin, &$html) {
 			$awardingService->awardCustomNotInTrackBadge($wgUser, BADGE_WELCOME);
 		}
 
-		if((!empty($_SESSION['achievementsNewBadges']) || 5 == rand(1, 20)) && get_class($wgUser->getSkin()) == 'SkinMonaco') {
+		if((!empty($_SESSION['achievementsNewBadges']) || 5 == rand(1, 20)) && get_class($wgUser->getSkin()) != 'SkinMonobook') {
 			// this works only for Wikia and only in current varnish configuration
 			header('X-Pass-Cache-Control: no-store, private, no-cache, must-revalidate');
 			$notificationService = new AchNotificationService();
@@ -185,7 +185,7 @@ function Ach_AddToUserProfile(&$out) {
 
 	$userProfileService = new AchUserProfileService();
 	$html = $userProfileService->getHTML();
-
+	$html = null;
 	if($html) {
 		$out['achievementsII'] = $html;
 		$wgOut->addStyle('../..' . $wgScriptPath . '/extensions/wikia/AchievementsII/css/achievements_sidebar.css');

@@ -616,8 +616,11 @@ END;
 				'ctype' => 'text/css',
 				'smaxage' => $wgSquidMaxage
 			) + $siteargs );
+			# FIXME: disable Common.css for internal testing only, revert this for Oasis release
+			if( ( $val = $wgRequest->getVal( 'usecommon', '' ) ) == '1' ) {
+				$out->addStyle( self::makeNSUrl( 'Common.css', $query, NS_MEDIAWIKI ) );
+			}
 			# Site settings must override extension css! (bug 15025)
-			$out->addStyle( self::makeNSUrl( 'Common.css', $query, NS_MEDIAWIKI ) );
 			$out->addStyle( self::makeNSUrl( 'Print.css', $query, NS_MEDIAWIKI ), 'print' );
 			if( $wgHandheldStyle ) {
 				$out->addStyle( self::makeNSUrl( 'Handheld.css', $query, NS_MEDIAWIKI ), 'handheld' );
@@ -625,7 +628,12 @@ END;
 
 			// Wikia
 			if( empty($this->themename) || $this->themename == 'custom' ) {
-				$out->addStyle( self::makeNSUrl( $this->getSkinName() . '.css', $query, NS_MEDIAWIKI ) );
+				$skinname = $this->getSkinName();
+				if($skinname == 'oasis') {
+					$out->addStyle( self::makeNSUrl( 'Wikia.css', $query, NS_MEDIAWIKI ) );
+				} else {
+					$out->addStyle( self::makeNSUrl( $skinname . '.css', $query, NS_MEDIAWIKI ) );
+				}
 			}
 		}
 

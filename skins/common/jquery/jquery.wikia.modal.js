@@ -3,40 +3,56 @@ $.fn.extend({
 
 	getModalTopOffset: function() {
 		var top = Math.max((($(window).height() - this.outerHeight()) / 2), 20);
-		var opts = this.data('options');
+		var opts = this.data('settings');
 		if (opts && typeof opts.topMaximum == "number")
 			top = Math.min(top,opts.topMaximum);
 		return $(window).scrollTop() + top;
 	},
-	
+
 	makeModal: function(options) {
-		var settings = { width: 400 };
+		var settings = {
+			width: 400
+		};
 		if (options) {
 			$.extend(settings, options);
 		}
 
-		if (options.id) {
-			var id = options.id;
+		if (settings.id) {
+			var id = settings.id;
 		} else {
 			var id = $(this).attr('id') + 'Wrapper';
 		}
 
-		this.wrap('<div class="modalWrapper" id="'+id+'"></div>');
-
-		var wrapper = this.closest(".modalWrapper");
+		//wrap with modal chrome
+		if (skin == "oasis") {
+			/**
+			 * Generate modal content and add it to <body>
+			 * <section class="modalWrapper" id="'+id+'"><section class="modalContent">[modal content]</section></section>');
+			 * @see http://stackoverflow.com/questions/1191164/jquery-html5-append-appendto-and-ie
+			 */
+			var wrapper = $('<section>', {'class': 'modalWrapper', 'id': id}).
+				append(
+					$('<section>', {'class': 'modalContent'}).append(this)
+				).
+				appendTo('body');
+		}
+		else {
+			this.wrap('<div class="modalWrapper" id="'+id+'"></div>');
+			var wrapper = this.closest(".modalWrapper");
+		}
 
 		// macbre: addcustom CSS class to popup wrapper
-		if (options.className) {
-			wrapper.addClass(options.className);
+		if (settings.className) {
+			wrapper.addClass(settings.className);
 		}
 
 		// let's have it dynamically generated, so every newly created modal will be on top
-		if (options.zIndex) {
-			var zIndex = parseInt(options.zIndex);
+		if (settings.zIndex) {
+			var zIndex = parseInt(settings.zIndex);
 		}	else {
 			var zIndex = 0;
 
-			$('#positioned_elements').children('.blackout').each(function() {
+			$("body").children('.blackout').add('#positioned_elements').children('.blackout').each(function() {
 				zIndex = Math.max(zIndex, parseInt($(this).css('zIndex')));
 			});
 
@@ -52,20 +68,63 @@ $.fn.extend({
 			}
 		}
 		*/
-		wrapper
-			// needed here for getModalTopOffset()
-			.data('options', options);
-		wrapper
-			.prepend('<h1 class="modalTitle color1"><img src="'+wgBlankImgUrl+'" class="sprite close" />' + this.attr('title') + '</h1>')
-			.width(settings.width);
-		wrapper
-			.css({
-				marginLeft: -wrapper.outerWidth() / 2,
-				top: wrapper.getModalTopOffset(),
+
+		// needed here for getModalTopOffset()
+		wrapper.data('settings', settings);
+
+		if (skin == "oasis") {
+			//set up headline
+			var headline = wrapper.find("h1:first");
+
+			if (headline.exists()) {
+				headline.remove();
+			} else {
+				// no <h1> found - use title attribute (backward compatibility with Monaco)
+				headline = $('<h1>').html($(this).attr('title'));
+			}
+
+			// add headline
+			headline.prependTo(wrapper);
+
+			// find tabs with .modal-tabs class and move them outside modal content
+			var modalTabs = wrapper.find('.modal-tabs');
+			if (modalTabs.exists()) {
+				modalTabs.insertBefore(wrapper.find('.modalContent'));
+			}
+
+			//set up dimensions and position
+			var modalWidth = $("#WikiaMainContent").width();
+
+			// or use width provided
+			if (typeof options.width != 'undefined') {
+				modalWidth = options.width + 30 /* padding */;
+			}
+
+			wrapper.css({
+				left: "50%",
+				marginLeft: -modalWidth/2,
+				top: $(window).scrollTop() + 50,
+				width: modalWidth,
 				zIndex: zIndex + 1
-			})
-			.fadeIn("fast")
-			.log('makeModal: #' + id);
+			});
+
+			//add close button
+			wrapper.prepend('<button class="close wikia-chiclet-button"><img src="/skins/oasis/images/icon_close.png"></button>');
+
+		} else {
+			wrapper
+				.prepend('<h1 class="modalTitle color1"><img src="'+wgBlankImgUrl+'" class="sprite close" />' + this.attr('title') + '</h1>')
+				.width(settings.width);
+			wrapper
+				.css({
+					marginLeft: -wrapper.outerWidth() / 2,
+					top: wrapper.getModalTopOffset(),
+					zIndex: zIndex + 1
+				})
+				.fadeIn("fast")
+		}
+
+		wrapper.log('makeModal: #' + id);
 
 		$("[id$='TOP_LEADERBOARD']").add("[id$='TOP_RIGHT_BOXAD']").css("visibility", "hidden");
 
@@ -73,19 +132,19 @@ $.fn.extend({
 		this.removeAttr('title');
 
 		// add event handlers
-		var persistent = (typeof options.persistent == 'boolean') ? options.persistent : false;
+		var persistent = (typeof settings.persistent == 'boolean') ? settings.persistent : false;
 
 		// macbre: function called when modal is closed
-		var onClose = (typeof options.onClose == 'function') ? options.onClose : false;
+		var onClose = (typeof settings.onClose == 'function') ? settings.onClose : false;
 
-		wrapper.find('h1.modalTitle').children('.close').bind("click", function() {
+		wrapper.find('.close').bind("click", function() {
 			var wrapper = $(this).closest('.modalWrapper');
-			var options = wrapper.data('options');
+			var settings = wrapper.data('settings');
 
-			if (typeof options.onClose == 'function') {
+			if (typeof settings.onClose == 'function') {
 				// let extension decide what to do
 				// close can be prevented by onClose() returning false
-				if (options.onClose({click:1}) == false) {
+				if (settings.onClose({click:1}) == false) {
 					return;
 				}
 			}
@@ -124,7 +183,6 @@ $.fn.extend({
 		var blackout = $('<div>').addClass('blackout');
 
 		blackout
-			.appendTo('#positioned_elements')
 			.height($(document).height())
 			.css({zIndex: zIndex})
 			.fadeTo("fast", 0.65)
@@ -143,6 +201,12 @@ $.fn.extend({
 				wrapper.closeModal();
 			}
 		});
+
+		if (skin == "oasis") {
+			blackout.appendTo("body");
+		} else {
+			blackout.appendTo("#positioned_elements");
+		}
 
 		wrapper.data('blackout', blackout);
 	},

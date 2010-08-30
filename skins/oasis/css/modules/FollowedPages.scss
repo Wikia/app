@@ -1,0 +1,26 @@
+@import "../mixins/rail-module";
+@import "../mixins/border-radius";
+@import "../mixins/clearfix";
+@import "../core/color";
+
+.FollowedPagesModule {
+	@include rail-module;
+	li {
+		border-top: 1px solid $color-page-border;
+		margin: 0 2px 10px;
+		padding-top: 10px;		
+		&:first-child {
+			border-top: none;
+			padding-top: 0px;
+		}
+	}
+	
+	.commentslikes { 
+		margin-top: 5px; 
+	}
+	
+	img { 
+		padding-right: 3px; 
+		vertical-align: middle;
+	}
+}

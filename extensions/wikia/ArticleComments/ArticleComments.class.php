@@ -22,7 +22,7 @@
 class ArticleCommentInit {
 	private static $enable = null;
 
-	static private function ArticleCommentCheck() {
+	static public function ArticleCommentCheck() {
 		global $wgOut, $wgTitle, $wgUser, $wgRequest, $wgContentNamespaces, $wgArticleCommentsNamespaces, $wgEnableBlogArticles;
 		wfProfileIn( __METHOD__ );
 
@@ -93,7 +93,7 @@ class ArticleCommentInit {
 		global $wgTitle, $wgUser;
 
 		//use this hook only for skins other than Monaco
-		if (get_class($wgUser->getSkin()) == 'SkinMonaco' || get_class($wgUser->getSkin()) == 'SkinAnswers') {
+		if (get_class($wgUser->getSkin()) == 'SkinMonaco' || get_class($wgUser->getSkin()) == 'SkinAnswers' || get_class($wgUser->getSkin()) == 'SkinOasis') {
 			return true;
 		}
 		wfProfileIn( __METHOD__ );
@@ -113,7 +113,11 @@ class ArticleCommentInit {
 
 		if (self::ArticleCommentCheck()) {
 			$out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/ArticleComments/js/ArticleComments.js?{$wgStyleVersion}\" ></script>\n");
-			$out->addExtensionStyle("$wgExtensionsPath/wikia/ArticleComments/css/ArticleComments.css?$wgStyleVersion");
+			/** preventing Oasis from adding this CSS-file **/
+			global $wgUser;
+			if( get_class($wgUser->getSkin()) != 'SkinOasis' ) {
+				$out->addExtensionStyle("$wgExtensionsPath/wikia/ArticleComments/css/ArticleComments.css?$wgStyleVersion");
+			}
 		}
 		wfProfileOut( __METHOD__ );
 		return true;
@@ -431,17 +435,12 @@ class ArticleComment {
 		return $this->mTitle;
 	}
 
-	/**
-	 * render -- generate HTML for displaying comment
-	 *
-	 * @return String -- generated HTML text
-	 */
-	public function render($master = false) {
+	public function getData($master = false) {
 		global $wgLang, $wgContLang, $wgUser, $wgParser, $wgOut, $wgTitle, $wgBlankImgUrl;
 
 		wfProfileIn( __METHOD__ );
 
-		$text = false;
+		$comment = false;
 		if ( $this->load($master) ) {
 			$canDelete = $wgUser->isAllowed( 'delete' );
 
@@ -494,15 +493,29 @@ class ArticleComment {
 				'timestamp' => wfTimeFormatAgo($this->mFirstRevision->getTimestamp()),
 				'title' => $this->mTitle
 			);
-
-			$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
-			$template->set_vars(
-				array (
-					'comment' => $comment
-				)
-			);
-			$text = $template->render( 'comment' );
 		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $comment;
+	}
+
+	/**
+	 * render -- generate HTML for displaying comment
+	 *
+	 * @return String -- generated HTML text
+	 */
+	public function render($master = false) {
+
+		wfProfileIn( __METHOD__ );
+
+		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
+		$template->set_vars(
+			array (
+				'comment' => $this->getData($master)
+			)
+		);
+		$text = $template->render( 'comment' );
 
 		wfProfileOut( __METHOD__ );
 
@@ -792,7 +805,11 @@ class ArticleComment {
 			case EditPage::AS_SUCCESS_UPDATE:
 			case EditPage::AS_SUCCESS_NEW_ARTICLE:
 				$comment = ArticleComment::newFromArticle( $article );
-				$text = $comment->render(true);
+				if (get_class($wgUser->getSkin()) == 'SkinOasis') {
+					$text = wfRenderPartial('ArticleComments', 'Comment', array('comment' => $comment->getData(), 'commentId' => $commentId, 'rowClass' => ''));
+				} else {
+					$text = $comment->render(true);
+				}
 				if ( !is_null($comment->mTitle) ) {
 					$id = $comment->mTitle->getArticleID();
 				}
@@ -1262,13 +1279,14 @@ class ArticleCommentList {
 	}
 
 	/**
-	 * render -- return HTML code for displaying comments
+	 * getData -- return raw data for displaying commentList
 	 *
 	 * @access public
 	 *
-	 * @return String HTML text with rendered comments section
+	 * @return array data for comments list
 	 */
-	public function render() {
+
+	public function getData() {
 		global $wgUser, $wgTitle, $wgRequest, $wgOut, $wgArticleCommentsMaxPerPage, $wgStylePath;
 
 		if ($wgRequest->wasPosted()) {
@@ -1325,7 +1343,7 @@ class ArticleCommentList {
 			$comments = array_slice($comments, ($page - 1) * $wgArticleCommentsMaxPerPage, $wgArticleCommentsMaxPerPage, true);
 		}
 		$pagination = self::doPagination($countComments, count($comments), $page);
-		$commentListText = $this->formatList($comments);
+		$commentListHTML = $this->formatList($comments);
 
 		$commentingAllowed = true;
 		if (defined('NS_BLOG_ARTICLE') && $wgTitle->getNamespace() == NS_BLOG_ARTICLE) {
@@ -1333,11 +1351,12 @@ class ArticleCommentList {
 			$commentingAllowed = isset($props['commenting']) ? (bool)$props['commenting'] : true;
 		}
 
-		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
-		$template->set_vars( array(
+		$retVal = array(
 			'avatar' => $avatar,
 			'canEdit' => $canEdit,
 			'commentListText' => $commentListText,
+			'commentListRaw' => $comments,
+			'commentListHTML' => $commentListHTML,
 			'commentingAllowed' => $commentingAllowed,
 			'commentsPerPage' => $wgArticleCommentsMaxPerPage,
 			'countComments' => $countComments,
@@ -1350,7 +1369,21 @@ class ArticleCommentList {
 			'reason' => $isBlocked ? $this->blockedPage() : '',
 			'stylePath' => $wgStylePath,
 			'title' => $wgTitle
-		) );
+		);
+
+		return $retVal;
+	}
+	/**
+	 * render -- return HTML code for displaying comments
+	 *
+	 * @access public
+	 *
+	 * @return String HTML text with rendered comments section
+	 */
+	public function render() {
+
+		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
+		$template->set_vars( $this->getData() );
 
 		$text = $template->execute( 'comment-main' );
 
@@ -1524,6 +1557,32 @@ class ArticleCommentList {
 	}
 
 	/**
+	 * Given a title of a comment, this will return the title object of the top level article page for which this comment is made
+	 * @param <type> $commentTitle
+	 * @return <type> Title object
+	 */
+
+	static public function getSubjectPage($commentTitle) {
+
+		if (strpos ($commentTitle, ARTICLECOMMENT_PREFIX) === false)  // Blogs
+		{
+
+			$parts = explode( '/', $commentTitle->getText() );
+			// Don't discard the blog name
+			while( count( $parts ) > 2 ) unset( $parts[ count( $parts ) - 1 ] );
+			$subjectPageName = implode( '/', $parts );
+			
+		} else {  // Articles
+
+			$subjectPageName = 	substr($commentTitle->getText(), 0, strpos($commentTitle->getText(), ARTICLECOMMENT_PREFIX) -1);
+		}
+
+		$subjectTitle = Title::newFromText($subjectPageName, MWNamespace::getSubject($commentTitle->getNamespace()));
+		return $subjectTitle;
+
+	}
+
+	/**
 	 * Hook
 	 *
 	 * @param Article $article -- instance of Article class
@@ -1537,7 +1596,7 @@ class ArticleCommentList {
 	 * @return true -- because it's a hook
 	 */
 	static public function articleDeleteComplete( &$article, &$user, $reason, $id ) {
-		global $wgRC2UDPEnabled;
+		global $wgOut, $wgRC2UDPEnabled;
 		wfProfileIn( __METHOD__ );
 
 		//watch out for recursion
@@ -1547,7 +1606,11 @@ class ArticleCommentList {
 		}
 		self::$mDeletionInProgress = true;
 
+		// Redirect to blog post after deleting a comment
 		$title = $article->getTitle();
+		$subjectTitle=self::getSubjectPage($title);
+		$wgOut->redirect($subjectTitle->getFullUrl());
+
 		//do not use $reason as it contains content of parent article/comment - not current ones that we delete in a loop
 		wfLoadExtensionMessages('ArticleComments');
 		$deleteReason = wfMsgForContent('article-comments-delete-reason');

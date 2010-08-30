@@ -1,0 +1,171 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/rail-module";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+
+/* fix for Oasis */
+#leaderboard-body .list-heading {
+	overflow: hidden;
+	height: 20px;
+}
+
+.badges {
+	strong {
+		font {
+			weight: bold;
+			size: 13px;
+		}
+		font-weight: bold;
+		display: inline-block;
+		margin: {
+			top: 5px;
+			bottom: 3px;
+		}
+	}
+	.badge-text {
+		@include clearfix;
+		font-size: 12px;
+		padding: {
+			bottom: 8px;
+		}
+		p {
+			margin-left: 50px;
+		}
+	}
+	img {
+		position: static !important; // /** Moncaco uses position absolute **/
+	}
+	li {
+		border-bottom: 1px solid $color-page-border;
+		margin: 10px 2px 7px 0;
+		padding-bottom: 0px;
+		clear: both;
+		&:last-child {
+			border-bottom: none;
+		}
+	}
+	.badge-icon-earnable {
+		float: left;
+		margin: {
+			right: 8px;
+			top: 3px;
+		}
+	}
+	.profile-hover { // /** the popup when mouse stays over badge **/
+	    border: solid 1px $color-page-border;
+		@include border-radius(3px);
+		background-color: White;
+		@include linear-gradient(false, top, $color-module-highlight, 60%, $color-module-shadow, 100%);
+
+		display: none; /* for testing porpuse */
+		position: absolute;
+		left: -400px;
+		margin-bottom: 100px;
+
+		width: 270px;
+		padding: 5px 10px;
+
+		h3 {
+			@extend h2;
+			font-size: 12px;
+			font-weight: bold;
+		}
+		h3 {
+			padding-top: 10px !important;
+			font-size: 13px !important;
+		}
+		p, h3 {
+			font-size: 11px;
+			text-align: left !important;
+		}
+
+		.profile-hover-text {
+			width: 170px;
+			p {
+				font-size: 13px;
+			}
+			float: right;
+
+		}
+
+		img {
+			margin-top: 8px;
+		}
+	}
+
+}
+
+/* rail in the right side */
+.WikiaLatestEarnedBadgesModule {
+
+	@include rail-module;
+	.clearfix { /** @todo questionable **/
+		@include clearfix;
+	}
+	em {
+
+	}
+}
+
+
+.AchievementsModule {
+	/*background: #00F;*/
+	border-top: 10px;
+
+	@include rail-module;
+	.achievements-leaderboard-button {
+		clear: both;
+		margin: {
+			top: 10px;
+			bottom: 10px;
+		}
+	}
+	details {
+		margin: {
+			top: 10px;
+			bottom: 5px;
+		}
+		line-height: 10px;
+		text-transform: uppercase;
+		em {
+			float: left;
+			margin-right: 7px;
+			line-height: 18px;
+			font: {
+				weight: bold;
+				size: 24px;
+			}
+
+		}
+	}
+	.view-all {
+		cursor: pointer;
+		margin: {
+			top: 10px;
+			bottom: 5px;
+		}
+		@include clearfix;
+	}
+	ul.badges-icons {
+		list-style-type: none;
+		margin-top: 20px;
+		@include clearfix;
+		li {
+			display: inline-block;
+			margin: 7px 0;
+			padding: 0;
+			img {
+				float: left;
+			}
+		}
+
+	}
+	.badge-text {
+		padding {
+			margin-top: 13px;
+		}
+	}
+	.badges-more {
+		display: none;
+	}
+}

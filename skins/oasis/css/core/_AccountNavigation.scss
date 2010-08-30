@@ -1,0 +1,60 @@
+.AccountNavigation {
+	line-height: 20px;
+	list-style: none;
+	position: absolute;
+	top: 20px;
+	right: 0;
+	li {
+		border: 0;
+		height: 35px;
+		margin-top: -20px;
+		padding: 20px 0 0;
+		position: relative;
+		&:hover {
+			@include linear-gradient(false, top, rgba(#000, 0), 0, #000, 100%);
+		}
+		&.nohover:hover {
+			background: transparent;
+		}
+		&:last-child a {
+			border: 0;
+		}
+	}
+	a {
+		border-right: 1px solid mix($color-header-text, $color-header, 20%);
+		display: inline-block;
+		height: 20px;
+		line-height: 24px;
+		padding: 0 15px;
+		&:hover {
+			text-decoration: none;
+		}
+	}
+	#fbconnect {
+		a {
+			border: none;
+			line-height: 1em;
+			height: 18px;
+			padding: 0;
+		}
+	}
+	.avatar {
+		position: relative;
+		top: -1px;
+		vertical-align: middle;
+	}
+	.subnav {
+		@include menu-heavy;
+		top: 56px;
+		li {
+			float: none;
+			height: auto;
+			&:hover {
+				background-image: none;
+			}
+		}
+		a {
+			border-right: 0;
+		}
+	}
+}

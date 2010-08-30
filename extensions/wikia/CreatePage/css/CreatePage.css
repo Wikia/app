@@ -29,7 +29,7 @@
 #CreatePageContainer .chooser {
 	float: left;
 	width: 48%;
-	text-align: center;	
+	text-align: center;
 	margin-bottom: 12px;
 }
 
@@ -37,7 +37,7 @@
 	margin-top: 8px;
 }
 
-#CreatePageDialogWrapper {
+.wikiaSkinMonaco #CreatePageDialogWrapper {
 	margin-top: -62px;
 }
 
@@ -46,10 +46,9 @@
 	padding: 1em 1em 1em 1em;
 }
 
-.chosen {
-	background-color: #d6e0f5;
+#CreatePageDialogChoices .accent {
 	-moz-border-radius: 10px;
-        -webkit-border-radius: 10px;
+	-webkit-border-radius: 10px;
 }
 
 #CreatePageDialogButton {

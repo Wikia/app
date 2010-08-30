@@ -1,0 +1,39 @@
+#LEFT_SKYSCRAPER_2, #LEFT_SKYSCRAPER_3, #HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD {
+	text-align: center;
+}
+
+#TOP_LEADERBOARD {
+	padding: 20px 0 0;
+}
+
+#LEFT_SKYSCRAPER_2 {
+	@include rail-module;
+}
+
+//Mainpage styling
+/*
+On hold for now
+.WikiaMainPageBanner {
+	background: url(/skins/oasis/images/temp_main_page_banner.jpg) no-repeat;
+	height: 200px;
+	margin-bottom: -10px;
+	*margin-bottom: 10px; //IE7
+	margin-bottom: 10px\9; //IE8
+}
+#HOME_TOP_LEADERBOARD {
+	@include linear-gradient(transparent, top, rgba($color-page, .0001), 90%, $color-page, 100%);	
+	height: 200px;	
+}
+//Appropriate margins around different size ads
+#HOME_TOP_LEADERBOARD div[id*="728x90"] {
+	padding-top: 40px;
+}
+*/
+#HOME_TOP_LEADERBOARD {
+	padding: 20px 0 0;
+}
+
+//Invisible ads
+#HOME_INVISIBLE_TOP, #INVISIBLE_TOP, #INVISIBLE_1, #INVISIBLE_2 {
+	position: absolute;
+}

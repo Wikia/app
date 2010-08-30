@@ -1,0 +1,42 @@
+.tabs {
+	border-bottom: 1px solid $color-page-border;
+	overflow: hidden;
+	padding-left: 5px;
+	li {
+		float: left;
+		margin: 0 1px;
+		position: relative;
+		a {
+			@include border-radius-nw(5px);
+			@include border-radius-ne(5px);
+			@include linear-gradient($color-tab-background, top, $color-tab-background-top, 50%, $color-tab-background-bottom, 100%);
+			color: $color-text;
+			display: inline-block;
+			font-size: 12px;
+			margin-top: 7px;
+			padding: 6px 25px 3px;
+			&:hover {
+				text-decoration: none;
+			}
+		}
+	}
+	.selected {
+		@include box-shadow(-3px, 7px, 7px, $color-active-tab-shadow);
+		a {
+			@include linear-gradient($color-active-tab-background-top, top, $color-active-tab-background-top, 50%, $color-active-tab-background-bottom, 100%);
+			color: $color-button-text;
+			font-weight: bold;
+			margin-top: 0;
+			padding: 8px 25px;
+		}
+		.chevron {
+			border-color: transparent transparent $color-page;
+			bottom: 0;
+			left: 50%;
+			position: absolute;
+		}
+	}
+	.accent {
+		background-color: transparent;
+	}
+}

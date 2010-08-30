@@ -2,6 +2,11 @@
  * CSS in this file is used by *all* skins.
  */
 
+/* Hide picture attribution */
+.picture-attribution {
+	display: none;
+}
+
 /* WikiaImageGallery: CSS for modified <gallery> tag */
 .wikia-gallery {
 	list-style: none;
@@ -182,7 +187,7 @@
 
 .wikia-slideshow-images {
 	list-style: none;
-	margin: 0;
+	margin: 0 !important;
 	overflow: hidden;
 	position: relative;
 }
@@ -316,4 +321,73 @@ body.wikiaSkinMonaco .wikia-slideshow-images .wikia-slideshow-image {
 
 .wikia-slideshow-toolbar a {
 	margin: 0 3px !important;
+}
+
+/* Video gallery */
+div.tnone {
+	float: none;
+	clear: both;
+}
+
+div.videobox {
+	background-color: #f9f9f9;
+}
+
+.bigButtonContainer {
+	margin-top: -11px;
+	top: 50%;
+	position: absolute;
+}
+
+.gallerybox .thumbcaption {
+	position: absolute !important;
+	bottom: 0px !important;
+	padding: 5px !important;
+	font-size: 88%;
+}
+
+.gallerybox .thumbcaption hr {
+	color: #cccccc;
+}
+
+.videobox {
+	position: relative;
+}
+
+/* Macbre: RT #21087 - begin */
+.wikiaPlaceholder a.bigButton {
+	float: none;
+	display: inline;
+	margin: 0 auto;
+	padding: 0 0 0 4px;
+}
+
+.wikiaPlaceholder a.bigButton * {
+	float: none;
+}
+
+.wikiaPlaceholder a.bigButton big {
+	padding: 3px 3px 3px 9px;
+}
+
+.wikiaPlaceholder a.bigButton small {
+	background-position: -295px 0;
+	padding: 3px;
+	position: static;
+	width: 5px;
+}
+
+.wikiaPlaceholder .thumbcaption {
+	left: 0;
+}
+
+div.gallerybox {
+	margin: 2px;
+}
+
+div.gallerybox div.thumb {
+	background: #F9F9F9;
+	border: 1px solid #ccc;
+	margin: 2px;
+	text-align: center;
 }

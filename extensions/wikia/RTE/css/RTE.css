@@ -249,6 +249,10 @@
 .cke_skin_wikia.linkEditorDialog .cke_dialog_page_contents{
 	margin-top: -20px;
 }
+.cke_skin_wikia.linkEditorDialog .cke_dialog_ui_text label {
+	display: block;
+	margin-bottom: 5px;
+}
 .cke_skin_wikia.linkEditorDialog .link-type-note {
 	float: right;
 	position: relative;

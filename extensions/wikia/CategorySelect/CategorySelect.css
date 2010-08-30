@@ -174,4 +174,8 @@
 }
 
 /* rt#20523 */
-#csInfoboxCategory, #csInfoboxSortKey { width: 98%; }
+#csInfoboxCategory,
+#csInfoboxSortKey {
+	margin: 2px 0 10px 0;
+	width: 98%;
+}

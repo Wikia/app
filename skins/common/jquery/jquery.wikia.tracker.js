@@ -161,7 +161,114 @@ jQuery.tracker = function() {
 		$.tracker.byStr('editpage/toolbar/' + id);
 	});
 
-	initTracker();
+	// tracking for article content links (done by Nef)
+	if (wgIsArticle && wgArticleId > 0) {
+		var content = (window.skin == 'oasis') ? $('#WikiaArticle') : $('#bodyContent');
+
+		// catch all clicks inside article content, but track clicks on links only
+		content.click(function(e) {
+			var link = $(e.target);
+
+			if (link.is('img')) {
+				link = link.parent();
+			}
+
+			// not a link, leave here
+			if (!link.is('a')) {
+				return;
+			}
+
+			$.tracker.byStr("articleAction/contentLink-all");
+
+			var _href = link.attr("href") || "";
+
+			/* regular wiki link */
+			/* DON'T PUT IT AT THE END AND MAKE CATCH-ALL, BE BRAVE (-; */
+			if (link.attr("class") == "" && link.attr("title") != "" && !_href.match(/\/index\.php\?title=.*\&action=edit/)) {
+
+				/* catlinks */
+				/* nonexistent (red) categories will be traced below as regular red links */
+				if (link.parents("div").is("div#catlinks")) {
+					$.tracker.byStr("articleAction/contentLink/ignore/categories");
+					return;
+				}
+
+				/* smw factbox */
+				if (link.parents("div").is("div.smwfact")) {
+					$.tracker.byStr("articleAction/contentLink/ignore/smwfactbox");
+					return;
+				}
+
+				$.tracker.byStr("articleAction/contentLink/blueInternal");
+				return;
+			}
+
+			/* href="#" or href="javascript:..." */
+			if (_href == "#" || _href.match(/^javascript:/)) {
+				$.tracker.byStr("articleAction/contentLink/ignore/javascript");
+				return;
+			}
+			/* href="#anchor" */
+			if (_href.match(/^#/)) {
+				$.tracker.byStr("articleAction/contentLink/ignore/anchor");
+				return;
+			}
+
+			/* section edit link (already tracked as editSection) */
+			if (_href.match(/\/index\.php\?title=.*\&action=edit\&section=/)) {
+				$.tracker.byStr("articleAction/contentLink/ignore/editSection");
+				return;
+			}
+			/* regular red link */
+			/* including categories */
+			if (_href.match(/\/index\.php\?title=.*&action=edit&redlink=/) /* && link.hasClass("new") */ ) {
+				$.tracker.byStr("articleAction/contentLink/red");
+				return;
+			}
+			/* other edit link (eg. template "e" shortcut) */
+			if (_href.match(/\/index\.php\?title=.*\&action=edit/) /* && link.hasClass("new") */ ) {
+				$.tracker.byStr("articleAction/contentLink/ignore/edit");
+				return;
+			}
+
+			/* image */
+			if (link.hasClass("image")) {
+				$.tracker.byStr("articleAction/contentLink/image");
+				return;
+			}
+			/* bottom right of thumbnails... is this reliable? */
+			if (link.hasClass("internal")) {
+				$.tracker.byStr("articleAction/contentLink/imageIcon");
+				return;
+			}
+
+			/* external */
+			if (link.hasClass("external") || link.hasClass("extiw") /* && _href.match(/^https?:\/\//) */ ) {
+				$.tracker.byStr("articleAction/contentLink/blueExternal");
+				return;
+			}
+
+			/* picture attribution */
+			if (link.parent().hasClass('picture-attribution')) {
+				$.tracker.byStr("articleAction/contentLink/photoAttribution");
+				return;
+			}
+
+			$.tracker.byStr("articleAction/contentLink/unknown/" + wgCityId + "-" + wgArticleId + "/" + encodeURIComponent(_href));
+		});
+	}
+
+
+	if (typeof initTracker == 'function') {
+		// benchmark
+		var start = (new Date()).getTime();
+
+		initTracker();
+
+		// benchmark
+		var time = (new Date()).getTime() - start;
+		$().log('initTracker() executed in ' + time + ' ms', 'tracker');
+	}
 };
 
 jQuery.tracker.byStr = function(message) {
@@ -176,11 +283,25 @@ jQuery.tracker.track = function(fakeurl) {
 	fakeurlArray = fakeurl.split('/');
 
 	var username = wgUserName == null ? 'anon' : 'user';
-	var skinname = (skin == "answers" || skin == "SkinAnswers") ? "ansmco" : "monaco";
+
+	switch(skin) {
+		case 'answers':
+		case 'SkinAnswers':
+			var skinname = 'ansmco';
+			break;
+
+		case 'oasis':
+			var skinname = 'wikia';
+			break;
+
+		default:
+		case 'monaco':
+			var skinname = 'monaco';
+	}
 
 	// override bad skin recognition (RT#47483)
-	if( window.wgOldAnswerSkin && ( 'view' == fakeurl ) ) {			
-		return;						
+	if( window.wgOldAnswerSkin && ( 'view' == fakeurl ) ) {
+		return;
 	}
 
 	var fake = '/1_' + skinname + '/' + username + '/' + fakeurl;
@@ -206,6 +327,14 @@ var WET = {
 	       $.tracker.byStr(str)
 	},
 	byId: $.tracker.byId
+};
+
+// macbre: simple click tracking
+// usage: $('#foo').clickTrack('feature/foo');
+jQuery.fn.trackClick = function(fakeUrl) {
+	this.click(function(ev) {
+		jQuery.tracker.byStr(fakeUrl);
+	});
 };
 
 $(document).ready($.tracker);

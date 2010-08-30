@@ -620,6 +620,11 @@ class PreferencesForm {
 
 		$wgOut->disallowUserJs();  # Prevent hijacked user scripts from sniffing passwords etc.
 
+		/* Wikia change begin - @author: macbre */
+		/* Enable custom notifications handling */
+		wfRunHooks('PreferencesMainPrefsForm', array(&$this, &$status, $message));
+		/* Wikia change end */
+
 		if ( $this->mSuccess || 'success' == $status ) {
 			$wgOut->wrapWikiMsg( '<div class="successbox"><strong>$1</strong></div>', 'savedprefs' );
 		} else	if ( 'error' == $status ) {

@@ -1,0 +1,73 @@
+/** @todo remove includes and bind in main oasis.scss **/
+// Mixins
+@import "../mixins/gradient";
+
+// Oasis Page Modules //
+@import "../core/color";
+
+// any styling for searchresult block can go here
+.mw-searchresult {
+    // .mw-searchresults
+	ul {
+
+	}
+
+	li {
+
+	}
+}
+
+// turn off old search form
+#search {
+	display: none;
+}
+
+// override margin-top: -40px FIXME: where does this originally come from?
+.mw-headline {
+	div {
+		margin-top: 0px !important;
+	}
+}
+// increase search box width just on this page
+.WikiaSearch {
+	input[type="search"], input[type="text"] {
+		width: 620px;
+	}
+}
+
+// turn off hr tags at top of search results
+.WikiaArticle {
+
+	hr {
+		border-width: 0;
+	}
+
+	em {
+		font-weight: bold;
+	}
+
+	ul {
+		margin-left: 0px;
+	}
+}
+// turn hr tags back on at bottom of search results
+#powersearch {
+	hr {
+		border-width: 1px;
+    }
+
+	fieldset {
+		border: 1px solid $color-links;
+		margin: 1em 0 1em 0;
+		padding: 0 1em 1em;
+		line-height: 1.5em;
+	}
+	legend {
+		padding: .5em;
+	}
+
+	label {
+		font-size: 15px;
+		display: inline;
+    }
+}

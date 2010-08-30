@@ -165,11 +165,11 @@ class SFParserFunctions {
 		$ad = SpecialPage::getPage( 'FormEdit' );
 		$link_url = $ad->getTitle()->getLocalURL() . "/$inFormName";
 		$link_url = str_replace( ' ', '_', $link_url );
+		$hidden_inputs = "";
 		if ( $inQueryStr != '' ) {
 			// special handling for 'post button' - query string
 			// has to be turned into hidden inputs
 			if ( $inLinkType == 'post button' ) {
-				$hidden_inputs = "";
 				$query_components = explode( '&', $inQueryStr );
 				foreach ( $query_components as $query_component ) {
 					$query_component = urldecode( $query_component );
@@ -262,8 +262,8 @@ class SFParserFunctions {
 			}
 			$autocompletion_str = SFFormInputs::createAutocompleteValuesString( $inAutocompletionSource, $autocompletion_type );
 			$javascript_text = <<<END
-		<script type="text/javascript"> 
-/*<![CDATA[*/ 
+		<script type="text/javascript">
+/*<![CDATA[*/
 $autocompletion_javascript
 autocompletemappings[$input_num] = 'input_{$input_num}';
 autocompletestrings['input_{$input_num}'] = $autocompletion_str;
@@ -375,7 +375,7 @@ END;
 		# let '\n' represent newlines
 		$delimiter = str_replace( '\n', "\n", $delimiter );
 		$new_delimiter = str_replace( '\n', "\n", $new_delimiter );
-	
+
 		$values_array = explode( $delimiter, $value );
 		$results_array = array();
 		foreach ( $values_array as $old_value ) {

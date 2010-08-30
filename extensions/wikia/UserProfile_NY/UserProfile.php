@@ -139,9 +139,9 @@ function wfUserProfileFromTitle( &$title, &$article ){
 	return true;
 }
 
-function wfAddProfileCSS(&$tpl){
+function wfAddProfileCSS($skin, &$html){
 	global $wgOut, $wgUserProfileScripts, $wgStyleVersion, $wgStylePath;
-	echo ("<link rel='stylesheet' type='text/css' href=\"{$wgUserProfileScripts}/UserProfile.css?{$wgStyleVersion}\"/>\n");
+	$html .= "<link rel='stylesheet' type='text/css' href=\"{$wgUserProfileScripts}/UserProfile.css?{$wgStyleVersion}\"/>\n";
 
 	return true;
 }

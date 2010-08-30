@@ -1,0 +1,25 @@
+html {
+	background: $color-body url(/skins/oasis/images/checkers.png);
+}
+
+body {
+	@include linear-gradient(false, left, rgba($color-body, 0), 0, $color-body, 30%, $color-body, 70%, rgba($color-body, 0), 100%);
+
+	color: $color-text;
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 13px;
+	margin: 0;
+	padding: 20px 0;
+}
+
+a {
+	color: $color-links;
+	text-decoration: none;
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+.clearfix {
+	@include clearfix;
+}

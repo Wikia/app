@@ -4,8 +4,8 @@ EditEnhancementsPreview = {
 	timestamp: 0,
 
 	calculate: function() {
-		editBarHeight = $('#edit_enhancements_toolbar').outerHeight();
-		scrollBottomOffset = YAHOO.util.Dom.getDocumentScrollTop() + YAHOO.util.Dom.getViewportHeight();
+		var editBarHeight = $('#edit_enhancements_toolbar').outerHeight();
+		var scrollBottomOffset = $(document).scrollTop() + $.getViewportHeight();
 
 		if (typeof FCK == 'undefined') {
 			textAreaOffset = $('#wpTextbox1').offset().top + $('#wpTextbox1').outerHeight();
@@ -18,13 +18,13 @@ EditEnhancementsPreview = {
 			if ($('#cke_wpTextbox1').offset() == null) return;
 			textAreaOffset = $('#cke_wpTextbox1').offset().top + $('#cke_wpTextbox1').outerHeight();
 		}
-		
+
 		var positionFixed = false;
 
 		// choose positioning method
 		if ( scrollBottomOffset < (textAreaOffset + editBarHeight + 8) ) {
-			bodyContentLeft = $("#bodyContent").offset().left;
-			bodyContentWidth = $("#bodyContent").width();
+			bodyContentLeft = $( window.skin == 'oasis' ? '#WikiaArticle' : "#bodyContent" ).offset().left;
+			bodyContentWidth = $( window.skin == 'oasis' ? '#WikiaArticle' : "#bodyContent" ).width();
 			widthDiff = $("#edit_enhancements_toolbar").outerWidth(true) - $("#edit_enhancements_toolbar").width();
 
 			$("#edit_enhancements_toolbar").css({'left' : bodyContentLeft + 'px', 'width' : parseInt(bodyContentWidth) - parseInt(widthDiff) + 'px'}).removeClass('edit_enhancements_toolbar_static').addClass('edit_enhancements_toolbar_fixed');
@@ -54,37 +54,43 @@ EditEnhancementsPreview = {
 		}
 
 		// rescale summary box
-		var Dom = YAHOO.util.Dom;
-		var items = Dom.get('edit_enhancements_toolbar').getElementsByTagName('li');
+		var toolbar = $('#edit_enhancements_toolbar');
+		var items = toolbar.find('li');
 		var summaryBox = $('#wpSummaryEnhanced');
 		var itemsWidth = 0;
-		
-		for (i=0; i<items.length; i++) {
-			itemsWidth += $(items[i]).innerWidth() + 5;
-		}
 
+		items.each(function() {
+			var item = $(this);
+
+			// on Oasis "minor edit" checkbox is below summary field
+			if (window.skin == 'oasis' && item.hasClass('minor')) {
+				return false;
+			}
+
+			itemsWidth += item.innerWidth() + 5;
+		});
 		itemsWidth -= summaryBox.innerWidth();
 
-		var newSummaryWidth =  ($("#edit_enhancements_toolbar").innerWidth() - 10) - itemsWidth - 10;
+		var newSummaryWidth =  (toolbar.innerWidth() - 10) - itemsWidth - 10;
 
-		newSummaryWidth = Math.max(newSummaryWidth, 200);
-		newSummaryWidth = Math.min(newSummaryWidth, 500);
-
-		Dom.setStyle('wpSummaryEnhanced', 'width', newSummaryWidth + 'px');
-
+		// limit the width of summary box to be within <200, 500>
+		newSummaryWidth = Math.min(Math.max(newSummaryWidth, 200), 500);
+		summaryBox.width(newSummaryWidth);
 	},
 
 	onEvent: function() {
+		var self = EditEnhancementsPreview;
+
 		// update timestamp - do interval for next x miliseconds
-		this.timestamp = (new Date()).getTime() + 1*1000
+		self.timestamp = (new Date()).getTime() + 1*1000
 
 		// recalculate position
-		this.calculate();
+		self.calculate();
 
 		// start interval for smooth scrolling
 		if (!$.browser.msie) {
-			if (!this.interval) {
-				this.interval = setInterval(this.loop, 25);
+			if (!self.interval) {
+				self.interval = setInterval(self.loop, 25);
 			}
 		}
 	},
@@ -102,12 +108,15 @@ EditEnhancementsPreview = {
 	}
 };
 
-YAHOO.util.Event.on(window, 'load',   function() {
+$(function() {
 	// change the id of summary box, so changing its size works in IE
 	$('#wpSummary').attr('id', 'wpSummaryEnhanced');
 
 	EditEnhancementsPreview.onEvent();
+
+	$(window).bind({
+		'resize': EditEnhancementsPreview.onEvent,
+		'scroll': EditEnhancementsPreview.onEvent
+	});
 });
-YAHOO.util.Event.on(window, 'resize', function() {EditEnhancementsPreview.onEvent();});
-YAHOO.util.Event.on(window, 'scroll', function() {EditEnhancementsPreview.onEvent();});
 </script>

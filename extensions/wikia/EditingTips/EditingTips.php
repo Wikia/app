@@ -116,7 +116,8 @@ function wfEditingTipsAddBodyClass($classes) {
 $wgHooks['EditPage::showEditForm:initial2'][] = 'AddEditingToggles';
 function AddEditingToggles($o) {
 	global $wgUser, $wgOut, $wgHooks, $editingTips;
-	if(get_class($wgUser->getSkin()) == 'SkinMonaco' || get_class($wgUser->getSkin()) == 'SkinAnswers') {
+	if( (get_class($wgUser->getSkin()) == 'SkinMonaco' || get_class($wgUser->getSkin()) == 'SkinOasis' || get_class($wgUser->getSkin()) == 'SkinAnswers') && $wgUser->getOption('enablerichtext') == false) {
+
 		wfLoadExtensionMessages('EditingTips');
 		$wgHooks['EditPage::showEditForm:fields'][] = 'AddEditingTips';
 		$wgHooks['SkinGetPageClasses'][] = 'wfEditingTipsAddBodyClass';
@@ -130,10 +131,24 @@ function AddEditingToggles($o) {
 		}
 		$wgOut->addHtml('<div id="editingTipsToggleDiv" style="margin-top:20px; '. $marg . '">');
 
-		if(count(getEditingTips()) > 0) {
-			$wgOut->addHtml($sep . '<a href="" id="toggleEditingTips">'. (isEditingTipsEnabled() ? wfMsg ('editingtips_hide') : wfMsg ('editingtips_show') ).'</a> - ');
+
+		if (get_class($wgUser->getSkin()) == 'SkinOasis') {
+			$wgOut->addHtml($sep . '<a href="" id="toggleEditingTips">'. (isEditingTipsEnabled() ? wfMsg ('editingtips_hide') : wfMsg ('editingtips_show') ).'</a>');
 		}
-		$wgOut->addHtml('<a href="" id="toggleWideScreen">' . (isWidescreenEnabled() ? wfMsg('editingtips_exit_widescreen') : wfMsg ('editingtips_enter_widescreen')) .'</a></div>');
+		else {
+			if (count(getEditingTips()) > 0) {
+				$wgOut->addHtml($sep . '<a href="" id="toggleEditingTips">'. (isEditingTipsEnabled() ? wfMsg ('editingtips_hide') : wfMsg ('editingtips_show') ).'</a> - ');
+			}
+		}
+		
+		/** don't show widescreen tips for Oasis **/
+		if (get_class($wgUser->getSkin()) == 'SkinOasis') {
+			$wgOut->addHtml('</div>');
+		}
+		else {
+			$wgOut->addHtml('<a href="" id="toggleWideScreen">' . (isWidescreenEnabled() ? wfMsg('editingtips_exit_widescreen') : wfMsg ('editingtips_enter_widescreen')) .'</a></div>');
+		}
+		
 		$wgOut->addHtml('
 			<noscript>
 				<style type="text/css">
@@ -146,28 +161,77 @@ function AddEditingToggles($o) {
 }
 
 function AddEditingTips($o) {
-	global $wgOut, $wgStylePath, $wgStyleVersion, $wgExtensionsPath ;
-	$wgOut->addScript('<link rel="stylesheet" type="text/css" href="'.$wgExtensionsPath.'/wikia/EditingTips/accordion-menu-v2.css?'.$wgStyleVersion.'" />');
-	$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/EditingTips/accordion-menu-v2.js?'.$wgStyleVersion.'"></script>');
-	$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/EditingTips/EditingTips.js?'.$wgStyleVersion.'"></script>');
+	global $wgOut, $wgUser, $wgStylePath, $wgStyleVersion, $wgExtensionsPath ;
+	
+	/** Oasis skin detection **/
+	$oasis = (get_class($wgUser->getSkin()) == 'SkinOasis') ? true : false;	
+	if ($oasis == false) {
+		$wgOut->addScript('<link rel="stylesheet" type="text/css" href="'.$wgExtensionsPath.'/wikia/EditingTips/accordion-menu-v2.css?'.$wgStyleVersion.'" />');
+		$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/EditingTips/accordion-menu-v2.js?'.$wgStyleVersion.'"></script>');
+		$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/EditingTips/EditingTips.js?'.$wgStyleVersion.'"></script>');
+	}
+	
+	if ($oasis == true) {
+		$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/EditingTips/accordion-menu-oasis.js?'.$wgStyleVersion.'"></script>');	
+	}
+	
+	/** no YUI for Oasis, we use jQuery **/
+	$script = "";
+	if ($oasis == true) {
+		if ( count(getEditingTips()) > 0) {
+			
+			/** delecration of language for accordion-menu-oasis.js **/
+			$script = sprintf("
+				var editingtips_show = '%s';
+				var editingtips_hide = '%s';
+				", wfMsg('editingtips_show'),wfMsg('editingtips_hide') );
 
-	$script = '
-<script type="text/javascript">
-'.(((count(getEditingTips()) > 0) && isEditingTipsEnabled()) ? 'YAHOO.util.Dom.addClass(document.body, "editingTips");AccordionMenu.openDtById("firstTip");var showDone = true;' : 'var showDone = false;').'
-	var editingTipsShowMsg = "' . wfMsg ('editingtips_show')  . '" ;
-	var editingTipsHideMsg = "' . wfMsg ('editingtips_hide')  . '" ;
-	var editingTipsEnterMsg = "' . wfMsg ('editingtips_enter_widescreen')  . '" ;
-	var editingTipsExitMsg = "' . wfMsg ('editingtips_exit_widescreen')  . '" ;
+			/** preset for the textarea and the elements **/
+			if ( isEditingTipsEnabled() ) {
+				$style = '
+					<style type="text/css">
+		
+						#editform textarea {
+							width: 714px;
+							height: 350px !important;
+							margin-bottom: 20px;
+						}
+						
+						#toolbar, #editform textarea, #editingTipsToggleDiv  {
+							margin-left: 257px;
+						}
+					</style>
+				';
+				
+				$wgOut->addHtml($style);
+			
+			}
+		}
+	}
+	
+	if ($oasis == false) {	
+		$script = '
 
-</script>';
+				var showDone = false;
+	'.(((count(getEditingTips()) > 0) && isEditingTipsEnabled()) ? 'YAHOO.util.Dom.addClass(document.body, "editingTips");AccordionMenu.openDtById("firstTip");var showDone = true;' : 'var showDone = false;').'
+		var editingTipsShowMsg = "' . wfMsg ('editingtips_show')  . '" ;
+		var editingTipsHideMsg = "' . wfMsg ('editingtips_hide')  . '" ;
+		var editingTipsEnterMsg = "' . wfMsg ('editingtips_enter_widescreen')  . '" ;
+		var editingTipsExitMsg = "' . wfMsg ('editingtips_exit_widescreen')  . '" ;';
 
-	$html = '<dl id="editingTips" class="accordion-menu widget reset" style="display: none"><dt class="color1" style="cursor:text"><div class="widgetToolbox"><div class="close" id="editingTips_close"><span></span></div></div>Editing Tips</dt>';
+	}
+		
+	$editor_visibility = (isEditingTipsEnabled() ) ? 'block' : 'none';
+	
+	$html = sprintf('<dl id="editingTips" class="accordion-menu widget reset" style="display: %s"><dt class="color1" style="cursor:text"><div class="widgetToolbox"><div class="close" id="editingTips_close"><span></span></div></div>Editing Tips</dt>',$editor_visibility);
 	$first = true;
 	foreach(getEditingTips() as $tid => $tip) {
 		$html .= '<dt '.($first ? 'id="firstTip" ' : 'id="editingTip-'.$tid.'"').'class="a-m-t">'.$tip['title'].'</dt><dd class="a-m-d"><div class="bd">'.$tip['body'].'</div></dd>';
 		$first = false;
 	}
 	$html .= '</dl>';
+	
+	$script = sprintf('<script type="text/javascript">%s</script>', $script);
 	$wgOut->addHtml($html.$script);
 	return true;
 }

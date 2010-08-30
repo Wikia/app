@@ -7,7 +7,7 @@ CKEDITOR.plugins.add('rte-link',
 
 		// add toolbar buttons
 		editor.ui.addButton('Link',{
-			label : editor.lang.link.toolbar,
+			label : editor.lang.link.add,
 			command : 'link'
 		});
 		editor.ui.addButton('Unlink', {

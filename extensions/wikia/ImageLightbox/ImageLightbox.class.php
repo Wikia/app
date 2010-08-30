@@ -62,6 +62,7 @@ class ImageLightbox {
 
 		$res = array(
 			'html' => $html,
+			'title' => $wgTitle->getText(),
 			'width' => $width,
 		);
 

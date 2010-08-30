@@ -1,0 +1,178 @@
+@import "../mixins/rail-module";
+@import "../mixins/border-radius";
+@import "../mixins/clearfix";
+@import "../core/color";
+@import "../core/gradient";
+
+@mixin arrow-style {
+	border-style: solid;
+	border-width: 9px;
+	width: 0;
+	margin-top: 35px;
+}
+
+.LatestPhotosModule {
+	@include rail-module;	
+
+
+	.counter {
+		text-transform: uppercase;
+		margin: {
+			bottom: 10px;
+		}
+		em {
+			margin-right: 6px;
+			font: {
+				size: 24px;
+				weight: bold;
+			}
+			line-height:18px;
+		}
+	}
+	.empty-photos {
+		border: solid 1px $color-page-border;
+		margin: {
+			bottom: 10px;
+		}
+		.temp-image {
+			@include clearfix;
+			border: solid 10px White;
+			height: 96px;
+			padding: {
+				top: 24px;
+				left: 38px;
+				right: 38px;
+			}
+			background: {
+				color: White;
+				image: url(/skins/oasis/images/empty_gallery.png);
+				repeat: no-repeat;
+			}
+			a {
+				display: block;
+				padding: 8px 14px;
+				color: White;
+				font: {
+					weight: normal;
+					size: 13px;
+				}
+				border: solid 1px White;
+				@include border-radius(3px);
+				background-color: transparentize($color-links, 0.4%);
+				span {
+					display: block;
+					margin-top: 3px;
+				}
+			}
+		}
+	}
+	
+	.wikia-button {
+		@include clearfix;
+	}
+	
+	// /** Chifrons left and right **/
+	a {
+		&.previous {
+			height: 82px;
+			float: left;
+		}
+		&.next {
+			height: 82px;
+			float: right;
+		}
+	}
+	.latest-images-left {
+		@include arrow-style;
+		border-color: transparent $color-links transparent $color-links;
+		border-left-width: 0px;
+	}
+	.latest-images-right {
+		@include arrow-style;
+		border-color: transparent transparent transparent $color-links;
+		border-right-width: 0px;
+	}
+	// /** when there are less then 3 images **/
+	.hidden {
+		visibility: hidden;
+	}
+
+	ul {
+		position: relative;
+		left: 4px;
+		margin: {
+			left: auto;
+			right: auto;
+		}
+		display: block;
+		text-align: center;
+		list-style: none;
+		li {
+			width: 82px;
+			height: 82px;
+			margin-right: 2px;
+			float: left;
+			display: none;
+			border: solid 1px $color-page-border;	
+			a {
+				display: block;
+				height: 82px;
+				&:hover {
+					//@include linear-gradient(transparent, top, rgba($color-page, .0001), 90%, $color-page, 100%);
+				}
+			}
+			img {
+				width: 82px;
+				height: 82px;
+			}
+			&.see-all {
+				text-align: center;
+				background: {
+					image: url(/skins/oasis/images/empty_gallery.png);
+					position: -62px -17px;
+					color: White;
+				}
+				a {
+					width: 76px;
+					height: 55px;
+					padding-top: 21px;
+					border: solid 3px White;
+					font-weight: bold;
+					font-size: 14px;
+				}
+			}
+			&.add-more {
+				@extend  .see-all;	
+				a {
+					font-size: 11px;
+					padding-top: 15px;
+					height: 61px;
+				}
+				
+			}
+		}
+	}
+	
+	ul {
+		&.none-hidden li {
+			display: block!important;
+		}
+	}
+	.carousel {
+		li:nth-child(1),
+		li:nth-child(2),
+		li:nth-child(3) { display: block; }
+	}
+	.more {
+		margin-top: 8px;
+	}
+	p {
+		@include clearfix;
+		clear: both;
+		text-align: center;
+		padding: {
+			top: 5px;
+			bottom: 10px;
+		}
+	}
+}

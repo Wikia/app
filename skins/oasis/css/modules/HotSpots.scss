@@ -1,0 +1,112 @@
+@import "../core/color";
+@import "../mixins/rail-module";
+@import "../mixins/clearfix";
+@import "../mixins/border-radius";
+
+$color-hot_1: #CC0033;
+$color-hot_2: #FF9900;
+$color-hot_3: #FFCC00;
+$color-hot_4: #339900;
+$color-hot_5: #006699;
+
+.HotSpotsModule {
+	@include rail-module;
+	
+	p {
+		margin-bottom: 5px;
+	}
+	
+	h1 {
+		margin-bottom: 15px;
+	}
+	
+	li {
+		border-bottom: solid 1px $color-page-border;
+		&:last-child {
+			border-bottom: none;
+			margin-bottom: 0px;
+		}
+		
+		
+		@include clearfix;
+		margin: {
+			bottom: 6px;
+		}
+		
+		div div { /* the rounded-highlighted area */
+			@include border-radius(5px);
+			
+			color: White;
+			float: left;
+			text-align: center;
+			margin: {
+				right: 10px;
+				top: 5px;
+				bottom: 7px;
+			}
+			padding: {
+				top: 0px;
+				bottom: 3px;
+				left: 15px;
+				right: 15px;
+			}
+		}
+		
+		big {
+			font-size: 22px !important;
+			display: inline-block;
+			margin-right: 5px;
+		}
+		
+		span {
+			display: block;
+			padding: {
+			 top: 3px;
+			 bottom: 7px;
+			}
+
+		}
+		
+		.hot-spot-severity-1 {
+			background-color: $color-hot_1;
+		}
+		.hot-spot-severity-2 {
+			background-color: $color-hot_2;
+		}
+		.hot-spot-severity-3 {
+			background-color: $color-hot_3;
+		}
+		.hot-spot-severity-4 {
+			background-color: $color-hot_4;
+		}
+		.hot-spot-severity-5 {
+			background-color: $color-hot_5;
+		}
+	}
+	
+}
+
+
+.CommunityCornerModule {
+	@include rail-module;
+	@include clearfix;
+
+	a.more {
+		clear:both;
+	}
+	p {
+		margin-bottom: 7px;
+	 }
+	
+	ul {
+		list-style-type: disc;
+		margin: {
+			left: 20px;
+		}
+		
+		li {
+			margin-bottom: 5px;
+			
+		}
+	}
+}

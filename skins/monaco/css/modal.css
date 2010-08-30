@@ -57,93 +57,6 @@ h1.modalTitle img {
 	margin: 0 0 0 4px;
 }
 
-/* Fields in AjaxLogin modal */
-#wpName1Ajax, #wpPassword1Ajax {
-	width: 150px;
-}
-
-.wpAjaxRegisterTable .wpAjaxLoginInput
-{
-	padding-top:10px;
-	vertical-align: top;
-}
-
-.wpAjaxLoginLine
-{
-	border-top: solid;
-	border-width: 1px;
-	border-color:  black;
-}
-
-.wpAjaxLoginPreLine td
-{
-	padding-bottom:15px;
-}
-.wpAjaxLoginInput label
-{
-	display: block;
-	font-weight: bold;
-	font-family:arial,sans-serif;
-	font-size:10pt;
-	float:left;
-}
-.wpAjaxLoginInput input,.wpAjaxLoginInput select
-{
-	width:250px;
-}
-
-.wpAjaxRegisterTable
-{
-	width: 680px;
-	margin-left: 10px;
-}
-
-.wpAjaxLoginData select
-{
-	width:80px;
-}
-
-.wpAjaxLoginInput .captcha
-{
-	border: none;
-	padding: 0px;
-}
-
-.wpAjaxLoginInput .captcha img
-{
-	width: 112px;
-	height: 55px;
-	background-color:#EEEEEE;
-	padding:4px 4px 4px 4px;
-	border-style: solid;
-	border-width: 1px;
-	border-color: #AAAAAA;
-	margin-left:6px;
-}
-
-.wpAjaxLoginInput #wpCaptchaInfo
-{
-	width: 125px;
-	display: inline-block;
-}
-
-.wpAjaxLoginInput .captcha input
-{
-	width: 120px;
-}
-
-.wpAjaxLoginLine td
-{
-	border-top-style: solid;
-	border-top-color: #AAAAAA;
- 	border-width: 1px;
-}
-
-.wpAjaxLoginLine td
-{
-	padding-top: 15px;
-}
-
 /*** Switch button for combo ajax login ***/
 
 .ajaxregister_button {
@@ -166,48 +79,8 @@ h1.modalTitle img {
 
 
 #userloginErrorBox,#userloginErrorBox2,#userloginErrorBox3 {
-	background-color: #FFFFCC;
-	border: 1px solid #AAA;
 	color: #000;
-	display: none;
-	margin-left:10px;
-	margin-right:10px;
-	margin: 1em 3em 1em 0;
-	padding: 6px 6px 6px 6px;
 }
-
-.wpAjaxLoginInput .pseudolabel
-{
-	font-weight: bold;
-}
-
-.wpAjaxLoginInput #wpEmailInfo, .wpAjaxLoginInput #wpBirthDateInfo
-{
-	margin-left: 4px;
-}
-
-#wpBirthDateInfoModal div,
-#wpUserCaptchaInfoModal div,
-#wpEmailInfoModal div {
-	padding: 8px 8px 8px 8px;
-}
-
-#wpUserCaptchaInfoModal p {
-	line-height: 1.5em;
-	margin: 0.4em 0 0.5em;
-}
-
-#wpBirthDateInfoModal h1 div,
-#wpUserCaptchaInfoModal h1 div,
-#wpEmailInfoModal h1 div {
-	padding: 0 0 0 0;
-}
-
-#wpName2Ajax,#wpPassword2Ajax,#wpName1Ajax,#wpPassword1Ajax
-{
-	width: 150px;
-}
-
 
 #AjaxLoginButtons input{
 	background-color:#EEEEEE;
@@ -248,9 +121,4 @@ h1.modalTitle img {
 body.rtl h1.modalTitle img {
 	left: 5px;
 	right: auto;
-}
-
-.wpAjaxRegisterTable span{
-	display:block;
-	height:20px;
 }

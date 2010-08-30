@@ -147,6 +147,38 @@ function VET_doEditVideo() {
 	VET_close();
 }
 
+// macbre: move back button inside dialog content and add before provided selector (Oasis changes)
+function VET_moveBackButton(selector) {
+	if (window.skin != 'oasis') {
+		return;
+	}
+
+	// store back button
+	if (typeof window.VETbackButton == 'undefined') {
+		var backButtonOriginal = $('#VideoEmbedBack');
+		var backButton = backButtonOriginal.clone();
+
+		// keep the original one, but force it to be hidden
+		backButtonOriginal.css('visibility', 'hidden');
+
+		// remove an image and add button class
+		backButton.removeAttr('id').remove();
+
+		// keep reference to <a> tag
+		backButton = backButton.children('a').addClass('wikia-button yui-back');
+		window.VETbackButton = backButton;
+	}
+
+	// remove previous instances of .yui-back
+	$('.yui-back').remove();
+
+	// move button
+	window.VETbackButton.clone().
+		click(VET_back).
+		insertBefore(selector);
+
+	$().log([window.VETbackButton, selector], 'VET');
+}
 
 /*
  * Functions/methods
@@ -163,9 +195,9 @@ if(mwCustomEditButtons) {
 	}
 }
 
-$(function() { 
-	$.loadYUI(function(){ 	
-		if(skin == 'monaco' || skin == 'answers' ) {
+$(function() {
+	$.loadYUI(function(){
+		if(skin != 'monobook') {
 			addOnloadHook(function () {
 				if(document.forms.editform) {
 					VET_addHandler();
@@ -288,11 +320,11 @@ function VET_getCaret() {
 	if (typeof FCK == 'undefined') {
 		var control = document.getElementById('wpTextbox1');
 		RTE_source = $('#cke_contents_wpTextbox1 textarea');
-		
+
 		if( RTE_source.length > 0 ) {
 			control = $('#cke_contents_wpTextbox1 textarea')[0];
 		}
-		
+
 	} else {
 		var control = FCK.EditingArea.Textarea;
 	}
@@ -950,6 +982,23 @@ function VET_switchScreen(to) {
 	$G('VideoEmbed' + VET_curScreen).style.display = '';
 	if(VET_curScreen == 'Main') {
 		$G('VideoEmbedBack').style.display = 'none';
+	}
+
+	// macbre: move back button on Oasis
+	if (window.skin == 'oasis') {
+		setTimeout(function() {
+			$().log(to, 'VET_switchScreen');
+
+			switch(to) {
+				case 'Details':
+					VET_moveBackButton($('.VideoEmbedNoBorder').find('input'));
+					break;
+
+				case 'Conflict':
+					VET_moveBackButton($('#VideoEmbedConflict').children('h1'));
+					break;
+			}
+		}, 50);
 	}
 }
 

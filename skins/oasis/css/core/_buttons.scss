@@ -1,0 +1,173 @@
+/*****************************
+Primary & Secondary Wikia Buttons
+These buttons are used everywhere on our wikis.
+******************************/
+a.wikia-button,
+span.wikia-button a,
+.wikia-menu-button,
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button {
+	@include border-radius(4px);
+	@include linear-gradient($color-buttons, top, $color-button-highlight, 35%, $color-buttons, 65%);
+	border: 1px solid $color-buttons;
+	color: $color-button-text;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 12px;
+	height: 19px;
+	line-height: 19px;
+	margin: 0;
+	padding: 0 7px;
+	text-decoration: none;
+	white-space: nowrap;
+	&:hover {
+		@include linear-gradient(darken($color-buttons, 4%), top, darken($color-button-highlight, 4%), 35%, darken($color-buttons, 4%), 65%);
+		text-decoration: none;
+	}
+	&:active {
+		@include linear-gradient(false, top, darken($color-buttons, 4%), 35%, darken($color-button-highlight, 4%), 65%);
+		color: $color-button-text;
+	}
+	&:visited {
+		color: $color-button-text;
+	}
+	&[disabled] {
+		cursor: default;
+		opacity: .5;
+		&:active {
+			@include linear-gradient($color-buttons, top, $color-button-highlight, 35%, $color-buttons, 65%);	
+		}
+	}
+	img {
+		vertical-align: baseline;
+	}
+	&.secondary {
+		@include linear-gradient($color-secondary-button, top, $color-secondary-button-highlight, 35%, $color-secondary-button, 65%);
+		border: 1px solid $color-page-border;
+		color: $color-text;
+		&:hover {
+			@include linear-gradient(darken($color-secondary-button, 4%), top, darken($color-secondary-button-highlight, 4%), 35%, darken($color-secondary-button, 4%), 65%);	
+		}
+		&:active {
+			@include linear-gradient($color-secondary-button, top, darken($color-secondary-button, 4%), 35%, darken($color-secondary-button-highlight, 4%), 65%);			
+		}
+	}
+}
+
+
+// Border-box model: Inputs and buttons count border as part of height. Increase height. //
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button {
+	height: 21px;
+}
+
+
+// Fix Mozilla Button Sizing //
+input[type="submit"]::-moz-focus-inner,
+input[type="reset"]::-moz-focus-inner,
+input[type="button"]::-moz-focus-inner,
+button::-moz-focus-inner {
+	padding: 0;
+	border: 0;
+}
+
+
+/*****************************
+Wikia Menu Button
+This list-based button is used in the page header for edit/history/delete actions
+******************************/
+.wikia-menu-button {
+	*display: inline;
+	list-style: none;
+	margin: 0;
+	position: relative;
+	text-align: left;
+	a:hover {
+		text-decoration: none;
+	}
+	>li>a {
+		border-right: 1px solid mix($color-button-text, $color-buttons, 40%);
+		color: $color-button-text;
+		display: inline;
+		margin-right: 4px;
+		padding-right: 4px;
+		position: relative;
+	}
+	ul {
+		background: $color-page;
+		border: 2px solid $color-buttons;
+		display: none;
+		left: -1px;
+		list-style: none;
+		margin: 0;
+		padding: 5px;
+		position: absolute;
+		top: 19px;
+		z-index: 100;
+		a {
+			color: $color-text;
+			display: block;
+			padding: 4px 4px 2px;
+			&:hover {
+				background: $color-menu-highlight;
+			}
+		}
+		li {
+			border-top: 1px solid $color-page-border;
+			line-height: normal;
+			&:first-child {
+				border: 0;
+			}
+		}
+	}
+	.icon {
+		vertical-align: text-bottom;
+	}
+	.chevron {
+		border-top-color: $color-button-text;
+	}
+	&.active {
+		@include border-radius-se(0);
+		@include border-radius-sw(0);
+		ul {
+			display: block;
+		}
+	}
+}
+
+/*****************************
+Wikia Chiclet Button
+This list-based button is used in the page header for edit/history/delete actions
+******************************/
+.wikia-chiclet-button {
+	@include border-radius(3px);
+	@include linear-gradient($color-buttons, top, $color-button-highlight, 8%, $color-buttons, 13%);
+	border: 0;
+	cursor: pointer;
+	display: inline-block;
+	height: 19px;
+	padding: 0;
+	position: relative;
+	width: 19px;
+	img {
+		height: 15px;
+		left: 2px;
+		position: absolute;
+		top: 2px;
+		width: 15px;
+	}
+	&:hover {
+		@include linear-gradient($color-buttons, top, $color-button-highlight, 8%, $color-buttons, 13%);
+	}
+}
+button.wikia-chiclet-button {
+	line-height: 1px;
+	img {
+		position: static;
+		vertical-align: middle;
+	}
+}

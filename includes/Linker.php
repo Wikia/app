@@ -533,7 +533,7 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 
 		$attribs = array();
 		global $wgWikiaUseNoFollow, $wgWikiaEnableAutoPageCreateExt;
-		if( !empty( $wgWikiaUseNoFollow ) && 
+		if( !empty( $wgWikiaUseNoFollow ) &&
 				( ( empty( $wgWikiaEnableAutoPageCreateExt ) && !empty( $wgWikiaUseNoFollowForContent ) ) || ( !$title->isContentPage() ) ) ) {
 			$attribs['rel'] = 'nofollow';
 		}
@@ -954,6 +954,12 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 			}
 		}
 		$s .= '  <div class="thumbcaption">'.$zoomicon.$fp['caption']."</div></div></div>";
+
+		/* Wikia change begin - @author: macbre */
+		/* Give extensions ability to add HTML to thumbed / framed images */
+		wfRunHooks('MakeThumbLink2', array($this, $title, $file, $frameParams, $handlerParams, &$s));
+		/* Wikia change end */
+
 		return str_replace("\n", ' ', $s);
 	}
 

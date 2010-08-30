@@ -39,6 +39,34 @@ class AchRankingService {
 		return $ranking;
 	}
 
+	public function getUserRank($user_id) {
+		global $wgCityId, $wgExternalSharedDB;
+
+		if (! isset($user_id)) return 0;
+
+		$sql = "select count(*) as rank from ach_user_score where wiki_id = $wgCityId and score >= (select score as s from ach_user_score where user_id = $user_id and wiki_id = $wgCityId)";
+
+		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+		$res = $dbr->query( $sql, __METHOD__ );
+
+		while($row = $dbr->fetchObject($res)) {
+			$rank = $row->rank;
+		}
+		return $rank;
+	}
+
+	public function getUserScore($user_id) {
+		global $wgCityId, $wgExternalSharedDB;
+
+		if (! isset($user_id)) return 0;
+
+		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+		$score = $dbr->selectField('ach_user_score', 'score', array('wiki_id' => $wgCityId, 'user_id' => $user_id), __METHOD__);
+
+		// if no score found return zero
+		return $score ? $score : 0;
+	}
+
 	public function getUserRankingPosition(User $user) {
 		if($user) {
 			$ranking = $this->getUsersRanking( 20 );
@@ -86,16 +114,19 @@ class AchRankingService {
 	* @param $blackList a list of the badge type IDs to exclude from the result Array
 	* @return Array
 	*/
-	public function getRecentAwardedBadges($badgeLevel, $limit = null, $daySpan = null, $blackList = null) {
+	public function getRecentAwardedBadges($badgeLevel = null, $limit = null, $daySpan = null, $blackList = null) {
 		wfProfileIn(__METHOD__);
 
 		global $wgCityId, $wgWikiaBotLikeUsers, $wgExternalSharedDB;
 		$badges = array();
 
 		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
-		$conds = array('wiki_id' => $wgCityId, 'badge_level' => $badgeLevel);
+		$conds = array('wiki_id' => $wgCityId);
 		$rules = array('ORDER BY' => 'date DESC, badge_lap DESC');
-		
+
+		if($badgeLevel != null)
+			$conds['badge_level'] = $badgeLevel;
+
 		if($daySpan != null)
 			$conds[] = "date >= (CURDATE() - INTERVAL {$daySpan} DAY)";
 		
@@ -105,14 +136,14 @@ class AchRankingService {
 		if($limit != null)
 			$rules['LIMIT'] = $limit * 2; //bots and blocked users are filtered after the query hs been run, let's admit that ratio is 2:1
 		
-		$res = $dbr->select('ach_user_badges', 'user_id, badge_type_id, badge_lap, date', $conds, __METHOD__, $rules);
+		$res = $dbr->select('ach_user_badges', 'user_id, badge_type_id, badge_lap, badge_level, date', $conds, __METHOD__, $rules);
 		
 		while(($row = $dbr->fetchObject($res)) && (count($badges) <= $limit)) {
 			if(AchConfig::getInstance()->isInRecents($row->badge_type_id)) {
 				$user = User::newFromId($row->user_id);
 				
 				if($user && !$user->isBlocked() && !in_array( $user->getName(), $wgWikiaBotLikeUsers ) ) {
-					$badges[] = array('user' => $user, 'badge' => new AchBadge($row->badge_type_id, $row->badge_lap), 'date' => $row->date);
+					$badges[] = array('user' => $user, 'badge' => new AchBadge($row->badge_type_id, $row->badge_lap, $row->badge_level), 'date' => $row->date);
 				}
 			}
 		}

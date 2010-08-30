@@ -235,7 +235,7 @@ class FeedRenderer {
 			$msg = wfMsg("myhome-feed-{$type}-details");
 		}
 
-		$html = Xml::openElement('tr');
+		$html = Xml::openElement('tr', array('data-type' => $type));
 		$html .= Xml::openElement('td', array('class' => 'activityfeed-details-label'));
 		$html .= Xml::element('em', array('class' => 'dark_text_2'), $msg);
 		$html .= ': ';

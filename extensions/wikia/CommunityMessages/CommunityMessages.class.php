@@ -17,6 +17,8 @@
  */
 
 class CommunityMessages {
+	static $messageSeen = false;
+
 	/**
 	 * hook handler
 	 * check conditions and display message
@@ -25,6 +27,11 @@ class CommunityMessages {
 	 */
 	static function onSkinTemplatePageBeforeUserMsg(&$msg) {
 		global $wgUser, $wgMemc, $wgCityId, $wgCookiePrefix;
+
+		if (self::$messageSeen) {
+			//user is just seeing the message - hide notification for this session
+			return true;
+		}
 
 		//get timestamp of message
 		$communityMessagesTimestamp = $wgMemc->get(wfMemcKey('CommunityMessagesTimestamp'));
@@ -69,10 +76,18 @@ class CommunityMessages {
 
 		wfLoadExtensionMessages('CommunityMessages');
 
-		if ($msg != '') {
-			$msg .= '<br/>';
+		if ($msgs != '') {
+			$msgs .= '<br/>';
 		}
-		$msg .= wfMsgExt('communitymessages-notice-msg', array('parseinline'));
+
+		// render message
+		$msg = wfMsgExt('communitymessages-notice-msg', array('parseinline'));
+
+		// macbre: add an easy way for Oasis to show it's own notification for community messages
+		wfRunHooks('CommunityMessages::showMessage', array(&$msg));
+
+		// add to user messages
+		$msgs .= $msg;
 
 		return true;
 	}
@@ -104,36 +119,59 @@ class CommunityMessages {
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
 	static function onBeforePageDisplay(&$output, &$skin) {
-		global $wgTitle, $wgUser, $wgMemc, $wgCityId, $wgExternalDatawareDB;
+		global $wgTitle;
 
-		if ($wgTitle->isSpecial('ActivityFeed') || $wgTitle->isSpecial('MyHome')) {
-			$communityMessagesTimestamp = $wgMemc->get(wfMemcKey('CommunityMessagesTimestamp'));
-			if (!$communityMessagesTimestamp) {
-				//do not waste time on getting timestamp from 'community-messages' - `now` will be enough
-				$communityMessagesTimestamp = time();
-			}
-
-			if ($wgUser->isLoggedIn()) {
-				$userTimestamp = self::getUserTimestamp($wgUser);
-				//we have newer message - update user's timestamp
-				if ($userTimestamp === false || $communityMessagesTimestamp > $userTimestamp) {
-					$dbw = wfGetDB(DB_MASTER, array(), $wgExternalDatawareDB);
-					$dbw->replace('user_messages', null /*not used*/,
-						array(
-							'city_id' => $wgCityId,
-							'user_id' => $wgUser->getID(),
-							'timestamp' => wfTimestamp(TS_DB, $communityMessagesTimestamp)
-						),
-						__METHOD__
-					);
-				}
-			} else {
-				//anon
-				WebResponse::setcookie('CommunityMessages', $communityMessagesTimestamp, time() + 86400 /*24h*/);
-			}
+		if ($wgTitle->isSpecial('ActivityFeed') || $wgTitle->isSpecial('MyHome') || $wgTitle->isSpecial('WikiActivity')) {
+			self::dismissMessage();
 		}
 
 		return true;
+	}
+
+	/**
+	 * Dismisses notification about updated community message
+	 *
+	 * Moved from BeforePageDisplay into separate method by Macbre
+	 *
+	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+	 */
+	static function dismissMessage() {
+		wfProfileIn(__METHOD__);
+		global $wgUser, $wgMemc, $wgCityId, $wgExternalDatawareDB;
+
+		$communityMessagesTimestamp = $wgMemc->get(wfMemcKey('CommunityMessagesTimestamp'));
+		if (!$communityMessagesTimestamp) {
+			//do not waste time on getting timestamp from 'community-messages' - `now` will be enough
+			$communityMessagesTimestamp = time();
+		}
+
+		if ($wgUser->isLoggedIn()) {
+			$userTimestamp = self::getUserTimestamp($wgUser);
+			//we have newer message - update user's timestamp
+			if ($userTimestamp === false || $communityMessagesTimestamp > $userTimestamp) {
+				$dbw = wfGetDB(DB_MASTER, array(), $wgExternalDatawareDB);
+				$dbw->replace('user_messages', null /*not used*/,
+					array(
+						'city_id' => $wgCityId,
+						'user_id' => $wgUser->getID(),
+						'timestamp' => wfTimestamp(TS_DB, $communityMessagesTimestamp)
+					),
+					__METHOD__
+				);
+
+				// fix for AJAX calls
+				$dbw->commit();
+			}
+		} else {
+			//anon
+			WebResponse::setcookie('CommunityMessages', $communityMessagesTimestamp, time() + 86400 /*24h*/);
+		}
+
+		//hide notice in this session [omit need to send cookie back (anon) or slave lag (logged in)]
+		self::$messageSeen = true;
+		wfDebug(__METHOD__ . " - message dismissed\n");
+
+		wfProfileOut(__METHOD__);
 	}
 
 	/**
