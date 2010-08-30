@@ -6,7 +6,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'createpage-desc' => 'Allows to create a new page using Wikia\'s WYSIWIG editor',
+	'createpage-desc' => 'Allows to create a new page using Wikia\'s WYSIWYG editor',
 	'createpage-sp-title' => 'Create a new page',
 	'createpage_title' => 'Create a new page',
 	'createpage_title_caption' => 'Title:',
@@ -193,7 +193,7 @@ Skrivit amañ eil rannskrid ho pennad.',
  * @author The Evil IP address
  */
 $messages['de'] = array(
-	'createpage-desc' => "Erlaubt das Erstellen von neuen Seiten mit Wikia's WYSIWIG-Editor",
+	'createpage-desc' => "Erlaubt das Erstellen von neuen Seiten mit Wikia's WYSIWYG-Editor",
 	'createpage-sp-title' => 'Neue Seite anlegen',
 	'createpage_title' => 'Neue Seite anlegen',
 	'createpage_title_caption' => 'Titel:',
@@ -277,7 +277,7 @@ $messages['el'] = array(
  * @author Translationista
  */
 $messages['es'] = array(
-	'createpage-desc' => 'Permite crear una nueva página usando editor WYSIWIG de Wikia',
+	'createpage-desc' => 'Permite crear una nueva página usando editor WYSIWYG de Wikia',
 	'createpage-sp-title' => 'Crea un nuevo artículo',
 	'createpage_title' => 'Crear un nuevo artículo',
 	'createpage_title_caption' => 'Título:',
@@ -387,7 +387,7 @@ Valitse eri nimi.',
  * @author IAlex
  */
 $messages['fr'] = array(
-	'createpage-desc' => 'Permet de créer une nouvelle page en utilisant l’éditeur WYSIWIG de Wikia',
+	'createpage-desc' => 'Permet de créer une nouvelle page en utilisant l’éditeur WYSIWYG de Wikia',
 	'createpage-sp-title' => 'Créer un nouvel article',
 	'createpage_title' => 'Créer un nouvel article',
 	'createpage_title_caption' => 'Titre :',
@@ -427,7 +427,7 @@ $messages['fr'] = array(
  * @author Toliño
  */
 $messages['gl'] = array(
-	'createpage-desc' => 'Permite crear unha nova páxina usando o editor WYSIWIG de Wikia',
+	'createpage-desc' => 'Permite crear unha nova páxina usando o editor WYSIWYG de Wikia',
 	'createpage-sp-title' => 'Crear un novo artigo',
 	'createpage_title' => 'Crear un novo artigo',
 	'createpage_title_caption' => 'Título:',
@@ -624,7 +624,7 @@ Scrivi qui la seconda sezione del tuo articolo.',
  * @author Tommy6
  */
 $messages['ja'] = array(
-	'createpage-desc' => 'ウィキアのWYSIWIGエディターを使って、新しいページを作成できるようにする',
+	'createpage-desc' => 'ウィキアのWYSIWYGエディターを使って、新しいページを作成できるようにする',
 	'createpage-sp-title' => '新規記事を作成',
 	'createpage_title' => '新規記事を作成',
 	'createpage_title_caption' => 'タイトル:',
@@ -785,7 +785,7 @@ $messages['mk'] = array(
  * @author Siebrand
  */
 $messages['nl'] = array(
-	'createpage-desc' => "Maakt het mogelijk nieuwe pagina's aan te maken met Wikia's WYSIWIG-tekstverwerker",
+	'createpage-desc' => "Maakt het mogelijk nieuwe pagina's aan te maken met Wikia's WYSIWYG-tekstverwerker",
 	'createpage-sp-title' => 'Nieuwe pagina aanmaken',
 	'createpage_title' => 'Nieuwe pagina aanmaken',
 	'createpage_title_caption' => 'Paginanaam:',
@@ -879,7 +879,7 @@ $messages['pl'] = array(
  * @author Dragonòt
  */
 $messages['pms'] = array(
-	'createpage-desc' => "A përmët ëd creé na pàgina neuva an dovrand l'editor WYSIWIG ëd Wikia",
+	'createpage-desc' => "A përmët ëd creé na pàgina neuva an dovrand l'editor WYSIWYG ëd Wikia",
 	'createpage-sp-title' => 'Creé un neuv artìcol',
 	'createpage_title' => 'Creé un neuv artìcol',
 	'createpage_title_caption' => 'Tìtol:',
@@ -936,7 +936,7 @@ $messages['ps'] = array(
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
-	'createpage-desc' => 'Permite criar uma página nova usando o editor WYSIWIG da Wikia',
+	'createpage-desc' => 'Permite criar uma página nova usando o editor WYSIWYG da Wikia',
 	'createpage-sp-title' => 'Criar uma página nova',
 	'createpage_title' => 'Criar uma página nova',
 	'createpage_title_caption' => 'Título:',
@@ -981,7 +981,7 @@ Escreva aqui a segunda secção da sua página.',
  * @author Jesielt
  */
 $messages['pt-br'] = array(
-	'createpage-desc' => 'Permite criar uma página nova usando o editor WYSIWIG da Wikia',
+	'createpage-desc' => 'Permite criar uma página nova usando o editor WYSIWYG da Wikia',
 	'createpage-sp-title' => 'Crie um novo artigo',
 	'createpage_title' => 'Crie um novo artigo',
 	'createpage_title_caption' => 'Título:',
