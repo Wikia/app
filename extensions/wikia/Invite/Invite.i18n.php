@@ -5,6 +5,7 @@
  *
  * @addtogroup Extensions
  * @author Rob Church <robchur@gmail.com>
+ * @todo Adapt to use $messages and extension specific prefixes to get this localised at transatewiki.net.
  */
 
 function efSpecialInviteContacts() {

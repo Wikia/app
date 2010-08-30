@@ -1,4 +1,10 @@
 <?php
+/**
+ * @todo Convert to use $messages.
+ * @comment May already have a converted/updated version in MediaWiki svn:
+ *          extensions/SocialProfile/UserStats
+ */
+
 function efWikiaUserStats() {
 
 	return array(

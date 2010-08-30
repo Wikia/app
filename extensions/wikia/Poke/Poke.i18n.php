@@ -1,4 +1,9 @@
 <?php
+/**
+ * @todo Adapt to use $messages to get this localised at transatewiki.net.
+ */
+
+
 function efWikiaPoke() {
 
 	return array(
@@ -39,5 +44,3 @@ and change your settings to disable email notifications.',
 		),
 	); 
 }
-
-?>
