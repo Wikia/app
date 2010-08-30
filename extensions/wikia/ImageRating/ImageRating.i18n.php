@@ -3,7 +3,9 @@
  * Internationalisation file for Image Rating extension.
  *
  * @addtogroup Extensions
-*/
+ * @todo Use extension specific key prefixes and $messages to get this localised
+ *       at translatewiki.net.
+ */
 
 $wgImageRatingMessages = array();
 

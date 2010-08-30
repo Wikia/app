@@ -1,4 +1,8 @@
 <?php
+/**
+ * @todo Adapt to use $messages to get this localised at transatewiki.net.
+ */
+
 function efWikiaRandomFeaturedUser() {
 
 	return array(
@@ -12,5 +16,3 @@ function efWikiaRandomFeaturedUser() {
 		),
 	); 
 }
-
-?>

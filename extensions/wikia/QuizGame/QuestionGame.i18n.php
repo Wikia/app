@@ -1,8 +1,12 @@
 <?php
+/**
+ * @todo Adapt to use $messages to get this localised at transatewiki.net.
+ */
+
 function efWikiaQuizGame() {
 
 	return array(
-	
+
 	'en' => array(
 	'quiz_edit' => 'Edit',
 	'quiz_delete' => 'Delete',
@@ -10,12 +14,12 @@ function efWikiaQuizGame() {
 	'quiz_reinstate' => 'Re-instate',
 	'quiz_unprotect' => 'Unprotect',
 	'quiz_admin_panel_title' => 'Admin Panel',
-	'quiz_admin_back' => '< Back to Never Ending Quiz',	
+	'quiz_admin_back' => '< Back to Never Ending Quiz',
 	'quiz_admin_flagged' => 'Flagged Questions',
 	'quiz_admin_protected' => 'Protected Questions',
 	'quiz_admin_permission' => 'You dont have permission to edit',
-	'quiz_edit_title' => 'Editing',	
-	'quiz_edit_picture_link' => 'Edit Picture',	
+	'quiz_edit_title' => 'Editing',
+	'quiz_edit_picture_link' => 'Edit Picture',
 	'quiz_submitted_by' => 'Submitted By',
 	'quiz_question' => 'Question',
 	'quiz_answers' => 'Answers',
@@ -102,7 +106,5 @@ function efWikiaQuizGame() {
 	'quiz_create_threshold_title' => 'Create Quiz Question',
 	'quiz_create_threshold_reason' => 'Sorry, you cannot create a quiz question until you have at least $1'
 	),
-	); 
+	);
 }
-
-?>

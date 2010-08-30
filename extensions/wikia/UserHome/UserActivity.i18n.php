@@ -1,4 +1,11 @@
 <?php
+/**
+ * @todo Adapt to use $messages and change extension specific prefix to actually
+ *       match the extension name to get this localised at transatewiki.net.
+ *       May already contain an updated version in MediaWiki subversion repo:
+ *       extensions/SocialProfile/UserActivity
+ */
+
 function efWikiaUserActivity() {
 
 	return array(
@@ -29,4 +36,3 @@ function efWikiaUserActivity() {
 	); 
 }
 
-?>
