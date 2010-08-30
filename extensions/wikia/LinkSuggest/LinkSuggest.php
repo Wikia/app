@@ -51,10 +51,20 @@ function wfLinkSuggestToggle($toggles, $default_array = false) {
 $wgHooks['EditForm::MultiEdit:Form'][] = 'AddLinkSuggest';
 function AddLinkSuggest($a, $b, $c, $d) {
 	global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgUser;
+
 	if($wgUser->getOption('disablelinksuggest') != true) {
 		$wgOut->addHTML('<div id="LS_imagePreview" style="visibility: hidden; position: absolute; z-index: 1001; width: 180px;" class="yui-ac-content"></div>');
 		$wgOut->addHTML('<div id="wpTextbox1_container" class="link-suggest-container"></div>');
-		$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/LinkSuggest/LinkSuggest.js?'.$wgStyleVersion.'"></script>');
+
+		$js = "{$wgExtensionsPath}/wikia/LinkSuggest/LinkSuggest.js?{$wgStyleVersion}";
+
+		// load YUI for Oasis
+		if (Wikia::isOasis()) {
+			$wgOut->addHTML('<script type="text/javascript">$(function() {$.loadYUI(function() {$.getScript('.Xml::encodeJsVar($js).')})})</script>');
+		}
+		else {
+			$wgOut->addScript('<script type="text/javascript" src="'.$js.'"></script>');
+		}
 	}
 	return true;
 }

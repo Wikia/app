@@ -1,0 +1,77 @@
+@import "../core/layout";
+@import "clearfix";
+@import "gradient";
+
+@mixin rail-module {
+	@include clearfix;
+	@include linear-gradient(false, top, $color-module-highlight, 60%, $color-module-shadow, 100%);
+	border: 1px solid $color-page-border;
+	margin: 10px 0;
+	padding: 8px;
+	position: relative;
+	header {
+		/*@include header-footer;*/
+		left: -3px;
+		font-size: 15px;
+		padding: 8px;
+		position: absolute;
+		width: $width-rail - 12px;
+	}
+	details {
+		em {
+			float: left;
+			font-size: 18px;
+		}
+	}
+	.wikia-button {
+		float: right;
+	}
+	.more {
+		float: right;
+		font-size: 10px;
+	}
+	a {
+		font: {
+			size: 13px;
+			weight: bold;
+		}
+	}
+	.wikia-button {
+		font-weight: normal;
+	}
+
+	h1 { 
+		font: {
+			size: 17px;
+			weight: bold;
+		}
+		margin: {
+			top: 7px;
+			bottom: 25px;
+		}
+	}
+
+	h2 {
+		@extend h1;
+		clear: both;
+		
+		margin: {
+			top: 0;
+			bottom: 10px;
+		}
+		padding-top: 15px;
+		/*border-top: 1px solid $color-page-border;*/
+	}
+	
+	b {
+		font-weight: bold;
+	}
+
+	.line-top {
+		border-top: solid 1px $color-page-border;
+	}
+
+	.chevron {
+		border-top-color: $color-text;
+	}
+}

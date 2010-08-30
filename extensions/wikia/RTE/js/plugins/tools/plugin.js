@@ -4,7 +4,7 @@ CKEDITOR.plugins.add('rte-tools', {});
 window.RTE.tools = {
 	// show modal version of alert()
 	"alert": function(title, content) {
-		window.$.showModal(title, '<p>' + content + '</p>', {className: 'RTEModal'});
+		window.$.showModal(title, '<p>' + content + '</p>', {className: 'RTEModal', width: 500});
 	},
 
 	// call given function with special RTE event type and provide function with given element and extra data
@@ -62,6 +62,7 @@ window.RTE.tools = {
 		$.showModal(title, html, {
 			id: 'RTEConfirm',
 			className: 'RTEModal',
+			width: 500,
 			callbackBefore: function() {
 				$('#RTEConfirmOk').click(function() {
 					$('#RTEConfirm').closeModal();

@@ -4,6 +4,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'myhome' => 'My Home',
+	'wikiactivity' => 'Wiki Activity',
 	'myhome-activity-more' => 'see more recent activity',
 	'myhome-activity-feed' => 'Activity feed',
 	'myhome-activity-feed-empty' => "This wiki is waiting for you to get involved.
@@ -68,6 +69,7 @@ If you'd like to see My Home, please visit '''[[Special:Preferences|your Prefere
 	'myhome-namespace-blog' => 'Blog',
 
 	'myhome-community-corner-header' => 'Community Corner',
+	'oasis-myhome-community-corner-edit' => 'edit message &gt;',
 	'myhome-community-corner-edit' => 'edit message',
 	'community-corner' => "'''Welcome to My Home!'''
 

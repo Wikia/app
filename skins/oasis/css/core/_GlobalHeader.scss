@@ -1,0 +1,171 @@
+//Where to put these non-location specific classes?
+.avatar {
+	border: 1px solid $color-page;
+}
+.chevron {
+	border-color: #FFF transparent transparent;
+	border-style: solid;
+	border-width: 3px;
+	width: 0;
+}
+.banner-corner-left {
+	border-color: #000 #000 transparent transparent;
+	border-style: solid;
+	border-width: 2px;
+	bottom: -4px;
+	left: 0;
+	position: absolute;
+	width: 0;
+}
+.banner-corner-right {
+	border-color: $color-header transparent transparent $color-header;
+	border-style: solid;
+	border-width: 2px;
+	bottom: -4px;
+	position: absolute;
+	right: 0;
+	width: 0;
+}
+
+
+.WikiaHeader {
+	@include linear-gradient($color-header, left, $color-header-alt, 0, $color-header, 50%, $color-header-alt, 100%);
+	border-top: 5px solid #000;
+	color: $color-header-text;
+	left: 50%;
+	margin-left: -$width-outside/2 - 5;
+	position: absolute;
+	top: 31px;
+	width: $width-outside + 10px;
+	z-index: 1000;
+	a {
+		color: $color-header-text;
+	}
+	h1 {
+		display: none;
+	}
+	nav {
+		background-image: url(/skins/oasis/images/checkers.png);
+		border-top: 1px solid mix($color-header-text, $color-header, 20%);
+		border-bottom: 1px solid mix(#000, $color-header, 80%);
+		font-size: 20px;
+		height: 55px;
+		>ul>li:last-child {
+			padding: 0;
+		}
+	}
+	li {
+		border-left: 1px solid mix($color-header-text, $color-header, 20%);
+		float: left;
+		height: 20px;
+		margin-top: 20px;
+		padding: 0 15px;
+		&:first-child {
+			border: 0;
+		}
+	}
+	.wikia-button {
+		border: 1px solid mix($color-buttons, $color-page, 35%);
+		font-size: 14px;
+		font-weight: bold;
+		height: 21px;
+		line-height: 21px;
+		padding-left: 12px;
+		padding-right: 12px;
+		position: relative;
+		top: -5px;
+	}
+	.chevron {
+		border-top-color: mix($color-header-text, $color-header);
+		border-width: 4px;
+	}
+	.WikiaLogo {
+		a {
+			position: relative;
+			top: -6px;
+		}
+		img {
+			background: url(/skins/oasis/images/sprite.png) -1632px 0 no-repeat;
+			height: 26px;
+			width: 91px;
+		}
+	}
+}
+
+.GlobalNavigation {
+	//top level navigation list
+	//position: relative;
+	//top: -2px;
+	li {
+		border: 0;
+		height: 37px;
+		margin-top: -22px;
+		padding: 20px 0 0;
+		&:hover {
+			@include linear-gradient(false, top, rgba(#000, 0), 0, #000, 100%);
+		}
+	}
+	a {
+		border-right: 1px solid mix($color-header-text, $color-header, 20%);
+		display: inline-block;
+		height: 20px;
+		line-height: 20px;
+		padding: 0 15px;
+		&:hover {
+			text-decoration: none;
+		}
+	}
+
+	.subnav {
+		@include clearfix;
+		@include box-shadow(0, 5px, 10px, rgba(#000, .5));
+		background: $color-page;
+		border-width: 2px 4px 4px;
+		border-style: solid;
+		border-color: #000;
+		display: none;
+		left: 10px; //10px -238px
+		padding: 10px 0;
+		position: absolute;
+		top: 56px; //56px 38px
+		width: $width-outside - 20px;
+		li {
+			display: inline;
+			font-size: 15px;
+			height: auto;
+			margin: 0 0 0 10px;
+			padding: 0;
+			position: static;
+			width: 160px;
+			&:hover {
+				background: none;
+			}
+			a {
+				font-weight: bold;
+			}
+			li {
+				border-top: 1px solid $color-page-border;
+				font-size: 14px;
+				margin: 0;
+				a {
+					font-weight: normal;
+					padding-left: 5px;
+					&:hover {
+						background: $color-menu-highlight;
+					}
+				}
+			}
+		}
+		>li:first-child {
+			padding-top: 10px;
+			padding-right: 5px;
+			width: auto;
+		}
+		a {
+			border: 0;
+			color: $color-links;
+			padding: 4px 0;
+			display: block;
+		}
+	}
+}

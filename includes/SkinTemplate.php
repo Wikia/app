@@ -318,7 +318,9 @@ class SkinTemplate extends Skin {
 			$usertitle = $this->mUser->getUserPage();
 			$usertalktitle = $usertitle->getTalkPage();
 			if( !$usertalktitle->equals( $this->mTitle ) ) {
-				$ntl = wfMsg( 'youhavenewmessages',
+				/* Wikia change begin - @author: Macbre */
+				$ntl = wfMsg( Wikia::isOasis() ? 'oasis-notification-youhavenewmessages' : 'youhavenewmessages',
+				/* Wikia change end */
 					$this->makeKnownLinkObj(
 						$usertalktitle,
 						wfMsgHtml( 'newmessageslink' ),
@@ -346,9 +348,14 @@ class SkinTemplate extends Skin {
 		} else {
 			$ntl = '';
 		}
-		
-		wfRunHooks( 'SkinTemplatePageBeforeUserMsg', array( &$ntl ) ); 
-		
+
+		/* Wikia change begin - @author: Macbre */
+		/* Save content of notification about new messages and user's talk page(s) */
+		$tpl->set('usernewmessages', $ntl);
+		/* Wikia change end */
+
+		wfRunHooks( 'SkinTemplatePageBeforeUserMsg', array( &$ntl ) );
+
 		wfProfileOut( __METHOD__."-stuff2" );
 
 		wfProfileIn( __METHOD__."-stuff3" );

@@ -73,6 +73,7 @@ function modifyCategory(e) {
 		'<br/><input type="text" id="csInfoboxSortKey" />';
 	var dialogOptions = {
 		id: 'sortDialog',
+		width: 500,
 		callbackBefore: function() {
 			WET.byStr('articleAction/sortSave');
 			//fill up initial values
@@ -513,11 +514,14 @@ function csCancel() {
 
 wgAfterContentAndJS.push(function() {
 	if (csType == 'edit') {
-		initHandlers();
-		initAutoComplete();
-		initializeDragAndDrop();
-		initializeCategories();
-		//show switch after loading categories
-		$('#csSwitchViewContainer').css('display', 'block');
+		// ensure YUI is loaded
+		$.loadYUI(function() {
+			initHandlers();
+			initAutoComplete();
+			initializeDragAndDrop();
+			initializeCategories();
+			//show switch after loading categories
+			$('#csSwitchViewContainer').css('display', 'block');
+		});
 	}
 });

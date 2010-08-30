@@ -10,3 +10,9 @@
  * for using all slaves
  */
 define("DB_DPL", 3);
+
+/**
+ * Defines for Forum namespace
+ */
+define('NS_FORUM', 110);
+define('NS_FORUM_TALK', 111);

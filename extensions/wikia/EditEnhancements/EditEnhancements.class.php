@@ -21,7 +21,7 @@ class EditEnhancements {
 	public function summaryBox($summary) {
 		global $wgUser, $wgHooks;
 
-		$valid_skins = array('SkinMonaco', 'SkinAnswers');
+		$valid_skins = array('SkinMonaco', 'SkinAnswers', 'SkinOasis');
 		if(in_array(get_class($wgUser->getSkin()), $valid_skins)) {
 			$wgHooks['EditPage::showEditForm:checkboxes'][] = array(&$this, 'showCheckboxes');
 			if($this->action == 'edit' && !$this->undo) {
@@ -37,22 +37,18 @@ class EditEnhancements {
 		return true;
 	}
 
-	public function editPageJS() {
-
-		echo $this->tmpl->render('EditEnhancementsJS');
-
+	public function editPageJS($skin, &$html) {
+		$html .= $this->tmpl->render('EditEnhancementsJS');
 		return true;
 	}
 
-	public function previewJS() {
-
-		echo $this->tmpl->render('EditEnhancementsPreviewJS');
-
+	public function previewJS($skin, &$html) {
+		$html .= $this->tmpl->render('EditEnhancementsPreviewJS');
 		return true;
 	}
 
 	public function showToolbar($a, $b, $c, $d) {
-		global $wgOut;
+		global $wgOut, $wgUser;
 
 		$this->tmpl->set_vars(array(
 			'buttons'    => $this->buttons,
@@ -60,7 +56,8 @@ class EditEnhancements {
 			'summary'    => $this->summary,
 			'action'     => $this->action,
 			'undo'       => $this->undo,
-			'arrowTitle' => wfMsg('edit-enhancements-scroll-down-arrow')
+			'arrowTitle' => wfMsg('edit-enhancements-scroll-down-arrow'),
+			'skinname'   => get_class($wgUser->getSkin()),
 		));
 
 		$wgOut->addHTML($this->tmpl->render('EditEnhancementsToolbar'));

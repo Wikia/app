@@ -1,0 +1,14 @@
+@import "../../../skins/oasis/css/mixins/rail-module";
+@import "../../../skins/oasis/css/core/color";
+
+.RelatedPagesModule {
+	@include rail-module;
+	li {
+		float: left;
+		padding: 10px;
+	}
+	div.articleSnippet {
+		width: 190px;
+		padding-left: 10px;
+	}
+}

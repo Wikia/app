@@ -225,6 +225,15 @@ class SkinChooser {
 
 		# Used to display different background color every 2nd section
 		$themeCount = 0;
+		$skinKey = "";
+		# New look
+		$wgOut->addHTML('<div '.($themeCount++%2!=1 ? 'class="prefSection"' : '').'>');
+		$wgOut->addHTML('<h5>'.wfMsg('new-look').'</h5>');
+		$wgOut->addHTML('<table style="background: transparent none">');
+
+		$wgOut->addHTML('<tr><td><input type="radio" value="oasis" id="wpSkinoasis" name="wpSkin"'.($pref->mSkin == 'oasis' ? ' checked="checked"' : '').'/><label for="wpSkinoasis">'.wfMsg('new-look').'</label> '.($skinKey == $defaultSkinKey ? ' (' . wfMsg( 'default' ) . ')' : '').'</td></tr>');
+		$wgOut->addHTML('</table>');
+		$wgOut->addHTML('</div>');
 
 		# Foreach over skins which contains themes and display radioboxes for them
 		foreach($wgSkinTheme as $skinKey => $skinVal) {
@@ -277,7 +286,7 @@ class SkinChooser {
 
 		$oldSkinNames = array();
 		foreach($validSkinNames as $skinKey => $skinVal) {
-			if (( in_array( $skinKey, $wgSkipSkins ) || in_array( $skinKey, $wgSkipOldSkins )) && !($skinKey == $pref->mSkin) ) {
+			if ($skinKey=='oasis' || ( ( in_array( $skinKey, $wgSkipSkins ) || in_array( $skinKey, $wgSkipOldSkins )) && !($skinKey == $pref->mSkin) ) ) {
 				continue;
 			}
 			$oldSkinNames[$skinKey] = $skinVal;
@@ -424,6 +433,11 @@ class SkinChooser {
 			$user->mSkin = &Skin::newFromKey($userSkin);
 			$user->mSkin->themename = $userTheme;
 
+			// FIXME: add support for oasis themes
+			if ($userSkin == 'oasis') {
+				$user->mSkin->themename = $wgRequest->getVal('usetheme', $userTheme);
+			}
+
 			self::log(__METHOD__, "forced skin to be {$wgForceSkin}");
 
 			wfProfileOut(__METHOD__);
@@ -500,6 +514,10 @@ class SkinChooser {
 			$userSkin = 'monaco';
 		}
 
+		if( $userSkin == 'oasis' && !$user->isAllowed( 'devcookie' ) ) {
+			$userSkin = 'monaco';
+		}
+
 		$user->mSkin = &Skin::newFromKey($userSkin);
 
 		$normalizedSkinName = substr(strtolower(get_class($user->mSkin)),4);
@@ -521,6 +539,11 @@ class SkinChooser {
 
 			self::log(__METHOD__, "using theme {$userTheme}");
 			wfProfileOut(__METHOD__.'::NormalizeThemeName');
+		}
+
+		// FIXME: add support for oasis themes
+		if ($normalizedSkinName == 'oasis') {
+			$user->mSkin->themename = $wgRequest->getVal('usetheme');
 		}
 
 		wfProfileOut(__METHOD__);

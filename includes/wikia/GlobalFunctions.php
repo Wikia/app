@@ -117,6 +117,16 @@ function print_pre($param, $return = 0)
 function wfReplaceImageServer( $url, $timestamp = false ) {
 	global $wgImagesServers, $wgDevelEnvironment, $wgAkamaiLocalVersion,  $wgAkamaiGlobalVersion;
 
+	// Override image server location for Wikia development environment
+	if (!empty($wgDevelEnvironment) && !empty($_SERVER['HTTP_HOST'])) {
+		if (count (explode(".", $_SERVER['HTTP_HOST'])) == 4) {
+			list($override, $developer, $wikia_dev, $com) = explode(".", $_SERVER['HTTP_HOST']);
+		} else {
+			list($developer, $wikia_dev, $com) = explode(".", $_SERVER['HTTP_HOST']);
+		}
+		return str_replace('http://images.wikia.com/', "http://images.$developer.wikia-dev.com/", $url);
+	}
+
 	if(substr(strtolower($url), -4) != '.ogg' && isset($wgImagesServers) && is_int($wgImagesServers)) {
 		if(strlen($url) > 7 && substr($url,0,7) == 'http://') {
 			$hash = sha1($url);
@@ -968,10 +978,54 @@ function wfMsgWithFallback( $key ) {
 	return $msg;
 }
 
+function wfRenderPartial($name, $action = 'Index', $data = null) {
+	return View::partial($name, $action, $data)->render();
+}
+
+function wfRenderModule($name, $action = 'Index', $params = null) {
+	$module = Module::get($name, $action, $params);
+	if( is_object($module) ) {
+		return $module->render();
+	}
+	else {
+		return '';
+	}
+}
+
+/**
+ * Given the full path to a .scss file, returns the full URL which
+ * the HTML should include.  This sends the user's browser through the
+ * SASS server.
+ */
+function wfGetSassUrl($fileName){
+	global $wgCdnRootUrl, $wgStyleVersion;
+	wfProfileIn( __METHOD__ );
+
+	$url = $fileName;
+
+	// Make sure that the filename doesn't start with a slash.
+	while((strlen($fileName) > 0) && (substr(0, 1, $fileName) == "/")){
+		$fileName = substr(1, $fileName);
+	}
+
+	// Load the associative array of SASS parameters based on the user/theme.
+	$sassParams = SassUtil::getSassParams();
+
+	// Calculate the security-hash.
+	$securityHash = SassUtil::getSecurityHash($wgStyleVersion, $sassParams);
+
+	$sassParams = str_replace(" ", "/", $sassParams);
+	$wgCdnRootUrl = (isset($wgCdnRootUrl)?$wgCdnRootUrl:"");
+	$url = $wgCdnRootUrl."/__sass/$fileName/$wgStyleVersion/$securityHash/$sassParams";
+
+	wfProfileOut( __METHOD__ );
+	return $url;
+} // end wfGetSassUrl()
+
 /**
  * wfAutomaticReadOnly
  *
- * @authoer tor
+ * @author tor
  *
  * @returns boolean
  */

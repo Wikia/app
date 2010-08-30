@@ -5,7 +5,14 @@ global $wgAuth, $wgUser, $wgEnableEmail,$wgStylePath,$wgBlankImgUrl;
 	<?php
 		global $wgEnableFacebookConnectExt;
 		if(!empty($wgEnableFacebookConnectExt)){
-			?><h1><?php print wfMsg("fbconnect-wikia-login-w-facebook") ?></h1>
+			?><h1><?php
+				if(Wikia::isOasis()){
+					// Don't mention Facebook in the h1 on Oasis (doesn't look right).
+					print wfMsg("fbconnect-wikia-login-or-create");
+				} else {
+					print wfMsg("fbconnect-wikia-login-w-facebook");
+				}
+			?></h1>
 			<div id="AjaxLoginFBStart">
 				<?php print '<fb:login-button id="fbAjaxLoginConnect" size="large" length="short"'.FBConnect::getPermissionsAttribute().FBConnect::getOnLoginAttribute().'></fb:login-button>'; ?>
 			</div>
@@ -16,13 +23,13 @@ global $wgAuth, $wgUser, $wgEnableEmail,$wgStylePath,$wgBlankImgUrl;
 		}
 
 	if (!$isReadOnly ) { ?>
-	
-	<div class="wikia-tabs" id="AjaxLoginButtons">
+
+	<div class="<?= Wikia::isOasis() ? 'tabs modal-tabs' : 'wikia-tabs' ?>" id="AjaxLoginButtons">
 		<ul>
-			<li class="accent <?php echo ($showLogin ? 'selected':''); ?> " id="wpGoLogin" onclick="AjaxLogin.showLogin(this); return false;"><a href="<? echo $loginaction ?>" ><?php print wfMsg("login") ?></a></li>
+			<li class="accent <?php echo ($showLogin ? 'selected':''); ?> " id="wpGoLogin" onclick="AjaxLogin.showLogin(this); return false;"><a href="<? echo $loginaction ?>" ><?php print wfMsg("login") ?></a><img class="chevron" src="<?= $wgBlankImgUrl; ?>"></li>
 			<?php
 				if($wgUser->isAllowed('createaccount')){
-					?><li class="accent <?php echo ($showRegister ? 'selected':''); ?> " style="<?php echo ($isReadOnly ? '':'style="display:none"'); ?>"  id="wpGoRegister" onclick="AjaxLogin.showRegister(this); return false;"><a href="<? echo $signupaction ?>"><?php print wfMsg("nologinlink") ?></a></li><?php
+					?><li class="accent <?php echo ($showRegister ? 'selected':''); ?> " style="<?php echo ($isReadOnly ? '':'style="display:none"'); ?>"  id="wpGoRegister" onclick="AjaxLogin.showRegister(this); return false;"><a href="<? echo $signupaction ?>"><?php print wfMsg("nologinlink") ?></a><img class="chevron" src="<?= $wgBlankImgUrl; ?>"></li><?php
 				}
 			?>
 		</ul>

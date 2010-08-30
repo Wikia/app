@@ -1,0 +1,106 @@
+.WikiHeader {
+	@include clearfix;
+	background: url(/skins/oasis/images/sprite.png) left bottom no-repeat;
+	margin: 0 0 15px;
+	padding: 20px 10px 9px;
+	position: relative;
+	z-index: 999;
+	h1 {
+		width: 250px;
+	}
+	a:hover {
+		text-decoration: none;
+	}
+	nav {
+		bottom: 9px;
+		left: 260px;
+		position: absolute;
+		width: 510px;
+	}
+	li {
+		display: table-cell;
+		*float: left;
+		font-size: 14px;
+		padding: .4em 0;
+		position: relative;
+		vertical-align: bottom;
+		*width: 24%;
+		&:hover {
+			@include linear-gradient(mix($color-links, $color-page, 20%), top, $color-page, 0%, mix($color-links, $color-page, 20%), 100%);
+		}
+		&:first-child a {
+			border: 0;
+		}
+		a {
+			border-left: 1px solid mix($color-text, $color-page);
+			color: $color-text;
+			display: inline-block;
+			padding: 0 10px;
+			position: relative;
+		}
+	}
+	.subnav {
+		@include menu-regular;
+		*left: 0;
+		min-width: 150px;
+		padding: 5px;
+		li {
+			*float: none;		
+			*width: auto;
+			a {
+				border: 0;
+				white-space: nowrap;
+			}
+			&:first-child {
+				border-top: 0;
+			}
+		}
+		.edit-menu {
+			text-align: right;
+			a {
+				font-size: 0.7em;
+			}
+		}
+	}
+	.wordmark {
+		color: $color-links;
+		font-size: 32px;
+		font-weight: bold;
+	}
+	.buttons {
+		bottom: 15px;
+		right: 10px;
+		position: absolute;
+		text-align: right;
+		width: 220px;
+		a {
+			@include border-radius(3px);
+			font-size: 12px;
+			height: 17px;
+			line-height: 18px;
+			img {
+				left: -2px;
+				position: relative;
+				top: 1px;
+				height: 16px;
+				vertical-align: text-top;
+			}
+			&[data-id=randompage] img {
+				background: url("/skins/oasis/images/sprite.png") no-repeat scroll -1616px -16px transparent;
+				width: 13px;
+			}
+			&[data-id=wikiactivity] img {
+				background: url("/skins/oasis/images/sprite.png") no-repeat scroll -1600px -48px transparent;
+				width: 17px;
+			}
+		}
+		a:first-child {
+			margin-right: 5px;
+		}
+	}
+	.chevron {
+		border-top-color: $color-text;
+		bottom: .3em;
+		position: absolute;
+	}
+}

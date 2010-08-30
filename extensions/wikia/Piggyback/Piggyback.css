@@ -1,19 +1,19 @@
-div#userloginForm table
-{
+#userloginForm form {
+	float: left;
+}
+
+#userloginForm table {
 	width: 100%
 }
 
-td.mw-input 
-{
-	width:0;
+.mw-input {
+	width: 0;
 }
 
-#piggyback_userloginprompt
-{
-font-size:85%;
+#piggyback_userloginprompt {
+	font-size: 85%;
 }
 
-#userloginprompt
-{
+#userloginprompt {
 	display: none;
 }

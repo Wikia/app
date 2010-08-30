@@ -395,7 +395,7 @@ class AchAwardingService {
 				'ach_user_badges',
 				'max(badge_lap) as cnt',
 				array('badge_type_id' => BADGE_LUCKYEDIT, 'wiki_id' => $wgCityId),
-				_METHOD__);
+				__METHOD__);
 			$this->awardNotInTrackBadge(BADGE_LUCKYEDIT, $maxLap + 1);
 		}
 

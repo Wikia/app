@@ -68,5 +68,7 @@ function wfDPLmagic( &$magicWords, $langCode = 'en' ) {
 
 function parseForum( $input, $argv, &$parser ) {
 	$f = new DPLForum();
-	return $f->parse( $input, $parser );
+	$js = '<script>if (skin == "oasis") { document.write("<link rel=\"stylesheet\" href=\"" + wfGetSassUrl("extensions/DPLforum/css/oasis.scss") + "\">"); }</script>';
+	$css = '<link rel="stylesheet" href="'. wfGetSassUrl('extensions/DPLforum/css/oasis.scss') .'">';
+	return $js . $f->parse( $input, $parser );
 }

@@ -89,7 +89,7 @@ class AchNotificationService {
 
 			$out = $template->render('NotificationBox');
 			
-			wfRunHooks('AchievementsNotification', array($userObj, $badge));
+			wfRunHooks('AchievementsNotification', array($userObj, $badge, &$out));
 						
 		} else {
 			$out = '';

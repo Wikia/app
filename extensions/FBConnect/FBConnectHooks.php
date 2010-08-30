@@ -90,7 +90,7 @@ class FBConnectHooks {
 	 */
 	public static function BeforePageDisplay( &$out, &$sk ) {
 		global $wgVersion, $fbLogo, $fbScript, $fbExtensionScript, $fbIncludeJquery,
-				$fbScriptEnableLocales, $wgJsMimeType, $wgStyleVersion;
+				$fbScriptEnableLocales, $wgJsMimeType, $wgStyleVersion, $wgScriptPath;
 
 		// If the user's language is different from the default language, use the correctly localized facebook code.
 		// NOTE: Can't use wgLanguageCode here because the same FBConnect config can run for many wgLanguageCode's on one site (such as Wikia).
@@ -134,6 +134,12 @@ class FBConnectHooks {
 			padding-left: 17px !important;
 		}
 STYLE;
+
+		// If this is Oasis, then we're not using StaticChute at the moment, so add our fbconnect.js.
+		if(Wikia::isOasis()){
+			global $wgScriptPath;
+			$fbExtensionScript = "$wgScriptPath/extensions/FBConnect/fbconnect.js"; // only recommended if you are changing this extension.
+		}
 
 		// Things get a little simpler in 1.16...
 		if (version_compare($wgVersion, '1.16', '>=')) {
@@ -343,7 +349,7 @@ STYLE;
 			if (!$fbPersonalUrls['hide_connect_button']) {
 				// Add an option to connect via Facebook Connect
 				// RT#57141 - only show the connect link on monaco and answers.
-				if(( $skinName == "SkinMonaco" ) || ( $skinName == "SkinAnswers" )) { // answers skin might actually get caught under SkinMonaco below.  Regardless, all other skins shouldn't get this link.
+				if ( in_array($skinName, array('SkinMonaco', 'SkinAnswers', 'SkinOasis')) ) { // answers skin might actually get caught under SkinMonaco below.  Regardless, all other skins shouldn't get this link.
 					$personal_urls['fbconnect'] = array(
 						'text'   => wfMsg( 'fbconnect-connect' ),
 						'class' => 'fb_button fb_button_small',
@@ -351,8 +357,8 @@ STYLE;
 						'active' => $wgTitle->isSpecial('Connect')
 					);
 				}
-				
-				if( $skinName == "SkinMonaco" ) { 					
+
+				if ( in_array($skinName, array('SkinMonaco', 'SkinOasis')) ) {
 					$html = Xml::openElement("span",array("id" => 'fbconnect' ));
 						$html .= Xml::openElement("a",array("href" => '#', 'class' => 'fb_button fb_button_small' ));
 							$html .= Xml::openElement("span",array("class" => "fb_button_text" ));

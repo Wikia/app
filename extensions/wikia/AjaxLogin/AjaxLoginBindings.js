@@ -9,7 +9,7 @@ function openLogin(event) {
 		return true;
 	} else {
 		showComboAjaxForPlaceHolder(false, "");
-		return false;
+		event.preventDefault();
 	}
 }
 function openLoginAndConnect(event) {
@@ -24,7 +24,7 @@ function openLoginAndConnect(event) {
 		} else {
 			showComboAjaxForPlaceHolder(false, "", AjaxLogin.slideToLoginAndConnect);
 		}
-		return false;
+		event.preventDefault();
 	}
 }
 
@@ -36,7 +36,7 @@ function openRegister(event) {
 		return true;
 	} else {
 		showComboAjaxForPlaceHolder(false, "", "", true);
-		return false;
+		event.preventDefault();
 	}
 }
 

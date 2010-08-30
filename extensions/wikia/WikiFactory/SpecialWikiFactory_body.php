@@ -549,7 +549,7 @@ class WikiFactoryPage extends SpecialPage {
 			$attribs = array(
 				"href" => $title->getFullUrl()
 			);
-			return wfElement( "a", $attribs, $text );
+			return Xml::element( 'a', $attribs, $text );
 		}
 	}
 

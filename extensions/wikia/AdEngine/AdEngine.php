@@ -181,7 +181,7 @@ class AdEngine {
 		// sometimes no skin set yet; hack copied from Interstitial::getCss
 		if (empty($skin_name)) $skin_name = substr(get_class($wgUser->getSkin()), 4);
 
-		if ($skin_name == 'awesome' || $skin_name == 'answers' ){
+		if ($skin_name == 'awesome' || $skin_name == 'answers' || $skin_name == 'oasis'){
 			// Temporary hack while we transition to lean monaco
 			$skin_name = 'monaco';
 		} else if ($wgDBname == "wikiaglobal"){
@@ -338,7 +338,7 @@ class AdEngine {
 		// First handle error conditions
 		if (!empty($wgNoExternals)){
 			return new AdProviderNull('Externals (including ads) are not allowed right now.');
-		
+
 		} else if (empty($this->slots[$slotname])) {
 			return new AdProviderNull('Unrecognized slot', false);
 
@@ -419,7 +419,7 @@ class AdEngine {
 
 	public function getPlaceHolderIframe($slotname, $reserveSpace=true){
                 global $wgEnableAdsLazyLoad, $wgAdslotsLazyLoad;
-                
+
 		$html = null;
 		wfRunHooks("fillInAdPlaceholder", array("iframe", $slotname, &$this, &$html));
 		if (!empty($html)) return $html;
@@ -427,7 +427,7 @@ class AdEngine {
 		$AdProvider = $this->getAdProvider($slotname);
 		// If it's a Null Ad, just return an empty comment, and don't store in place holder array.
 		if ($AdProvider instanceof AdProviderNull){
-			return "<!-- Null Ad from " . __METHOD__ . "-->" . $AdProvider->getAd($slotname, array()); 
+			return "<!-- Null Ad from " . __METHOD__ . "-->" . $AdProvider->getAd($slotname, array());
 		}
 
 		// FIXME make it more general...
@@ -449,8 +449,8 @@ class AdEngine {
 		// Make the 300x250 on the home page a 300x600
 		global $wgEnableHome300x600;
 		if ($slotname == "HOME_TOP_RIGHT_BOXAD" && $wgEnableHome300x600){
-			$h = 300;	
-			$h = 600;	
+			$h = 300;
+			$h = 600;
 		}
 
 		// Make the 300x250 on the article pages a 300x600
@@ -463,9 +463,9 @@ class AdEngine {
 		static $adnum = 0;
 		$adnum++;
 		if ($AdProvider instanceof AdProviderLiftium){
-			$slotdiv = "Liftium_" . $this->slots[$slotname]['size'] . "_" . $adnum . "_php"; 
+			$slotdiv = "Liftium_" . $this->slots[$slotname]['size'] . "_" . $adnum . "_php";
 		} else {
-			$slotdiv = "Wikia_" . $this->slots[$slotname]['size'] . "_" . $adnum; 
+			$slotdiv = "Wikia_" . $this->slots[$slotname]['size'] . "_" . $adnum;
 		}
 
                 $slotiframe_class = '';
@@ -474,12 +474,12 @@ class AdEngine {
                         $slotiframe_class = self::lazyLoadAdClass;
                     }
                 }
-	
-		return '<div id="' . htmlspecialchars($slotname) . '" class="noprint">' . 
+
+		return '<div id="' . htmlspecialchars($slotname) . '" class="wikia-ad noprint">' .
 			'<div id="' . htmlspecialchars($slotdiv) . '">' .
-			'<iframe width="' . intval($w) . '" height="' . intval($h) . '" ' . 
+			'<iframe width="' . intval($w) . '" height="' . intval($h) . '" ' .
 			'id="' . htmlspecialchars($slotname) . '_iframe" class="' . $slotiframe_class . '" ' .
-                	'noresize="true" scrolling="no" frameborder="0" marginheight="0" ' . 
+                	'noresize="true" scrolling="no" frameborder="0" marginheight="0" ' .
 			'marginwidth="0" style="border:none" target="_blank"></iframe></div></div>';
 	}
 
@@ -600,7 +600,7 @@ class AdEngine {
 			// Currently only supported by GAM and Athena
 			if (method_exists($AdProvider, "getIframeFillHtml")){
                         	$out .= $AdProvider->getIframeFillHtml($slotname, $this->slots[$slotname]);
-			} 
+			}
 		}
 
 		$out .= "<!-- #### END " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";

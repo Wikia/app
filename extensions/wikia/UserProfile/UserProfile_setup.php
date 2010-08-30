@@ -5,10 +5,17 @@ $wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'UserProfile_handler';
 function UserProfile_handler(&$skin, &$tpl) {
 	wfProfileIn(__METHOD__);
 
-	global $wgTitle, $wgOut, $wgRequest, $wgScriptPath;
+	global $wgTitle, $wgOut, $wgRequest, $wgScriptPath, $wgUser;
+
+	// don't output on Oasis
+	if (get_class($wgUser->getSkin()) == 'SkinOasis') {
+		wfProfileOut(__METHOD__);
+		return true;
+	}
 
 	$action = $wgRequest->getVal('action', 'view');
 	if ($wgTitle->getNamespace() != NS_USER || ($action != 'view' && $action != 'purge')) {
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -17,6 +24,7 @@ function UserProfile_handler(&$skin, &$tpl) {
 
 	// sanity check
 	if ( !is_object( $user ) ) {
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -24,6 +32,7 @@ function UserProfile_handler(&$skin, &$tpl) {
 
 	// abort if user has been disabled
 	if ( defined( 'CLOSED_ACCOUNT_FLAG' ) && $user->mRealName == CLOSED_ACCOUNT_FLAG ) {
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 

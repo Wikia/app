@@ -1,0 +1,133 @@
+@import "../mixins/box-shadow";
+@import "../mixins/clearfix";
+
+.modalWrapper {
+	@include box-shadow(0, 10px, 60px, mix($color-page, #000));
+	background: $color-page;
+	border: 5px solid $color-body;
+	padding: 25px 15px;
+	position: absolute;
+	>h1 {
+		color: $color-links;
+		font-size: 22px;
+		margin-bottom: 10px;
+		margin-right: 30px;
+	}
+	.close {
+		position: absolute;
+		right: 15px;
+		top: 15px;
+	}
+	.modalToolbar,
+	.neutral {
+		background: transparent;
+	}
+	.modal-tabs {
+		border-bottom: none;
+	}
+}
+
+.modalContent {
+	@include clearfix;
+	/*background: url(/skins/oasis/images/shadow_narrow.png) center 1px no-repeat;*/
+	border: 1px solid $color-page-border;
+	padding: 10px;
+}
+
+.blackout {
+	background: $color-page;
+	left: 0;
+	opacity: .8;
+	position: absolute;
+	top: 0;
+	width: 100%;
+}
+
+// modify "YUI" extensions (VET / WMU)
+yui-overlay, .yui-panel-container {
+	position: absolute;
+	z-index: 2000 !important;
+}
+
+.yui-panel {
+	left: 0;
+	position: relative;
+	top: 0;
+}
+
+.mask {
+	background: $color-page;
+	margin-top: -20px;
+	opacity: .8;
+	position: fixed;
+	z-index: 1999 !important;
+}
+
+.skin-oasis {
+	#ImageUpload,
+	#VideoEmbed {
+		@include box-shadow(0, 10px, 60px, mix($color-page, #000));
+		background: $color-page;
+		border: 5px solid $color-body;
+		padding: 35px 5px 5px 5px !important;
+		position: absolute;
+		width: auto !important;
+		h1 {
+			color: $color-links;
+			font-size: 22px;
+		}
+		.close {
+			background-image: url(/skins/oasis/images/sprite.png);
+			background-position: -1568px -32px;
+			height: 15px;
+			position: static;
+			margin-top: 2px;
+			vertical-align: baseline;
+			width: 15px;
+		}
+	}
+	#ImageUploadClose,
+	#VideoEmbedClose {
+		@include border-radius(3px);
+		@include linear-gradient($color-buttons, top, $color-button-highlight, 8%, $color-buttons, 13%);
+		height: 19px;
+		padding: 0;
+		right: 5px;
+		text-align: center;
+		width: 19px;
+		a {
+			display: none;
+		}
+	}
+	#ImageUploadBorder,
+	#VideoEmbedBorder {
+		display: none;
+	}
+	#VideoEmbedBody,
+	#ImageUploadBody {
+		height: 480px;
+	}
+	#ImageUploadProgress1,
+	#VideoEmbedProgress1 {
+		visibility: hidden;
+	}
+	.yui-back {
+		display: inline-block;
+		font-size: 15px;
+		margin: 0 15px 0 0;
+	}
+	#VideoEmbedConflict .yui-back,
+	#ImageUploadConflict .yui-back {
+		bottom: 15px;
+		position: absolute;
+	}
+}
+
+// WikiaPhotoGallery fixes
+.skin-oasis #WikiaPhotoGalleryEditor {
+	margin-top: -30px;
+}
+
+.skin-oasis #WikiaPhotoGalleryEditor .WikiaPhotoGalleryOptionsColumn  {
+	margin-right: 25px;
+}

@@ -194,11 +194,11 @@ function wfLinkFilterRender( $input, $args, &$parser ){
 
 }
 
-function wfAddLinkFilterScripts(&$tpl){
+function wfAddLinkFilterScripts($tpl, &$html){
 	global $wgOut, $wgStyleVersion, $wgStylePath;
 	
 	if( $tpl->data['linkfilter-scripts-loaded'] != 1 ){
-		echo ("<link rel='stylesheet' type='text/css' href=\"/extensions/wikia/LinkFilter/LinkFilter.css?{$wgStyleVersion}\"/>\n");
+		$html .= "<link rel='stylesheet' type='text/css' href=\"/extensions/wikia/LinkFilter/LinkFilter.css?{$wgStyleVersion}\"/>\n";
 		
 		$tpl->set( 'linkfilter-scripts-loaded', 1 );
 	}

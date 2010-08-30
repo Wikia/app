@@ -1,7 +1,7 @@
 <!-- s:<?= __FILE__ ?> -->
 <!-- DISTRIBUTION TABLE -->
 <style>
-.lu_td { 
+.lu_td {
 	height:30px;
 	padding:2px 5px;
 	font-size:90%;
@@ -31,7 +31,7 @@
 }
 .lu_left {
 	font-size:85%;
-	border:1px solid black;	
+	border:1px solid black;
 }
 .lu_filter {
 	padding: 3px 2px 7px 2px;
@@ -163,7 +163,7 @@ function wfJSPager(total,link,page,limit,func,order,desc) {
 	return pager;
 }
 
-function wkLUshowDetails(limit, offset, ord, desc) 
+function wkLUshowDetails(limit, offset, ord, desc)
 {
 	limit = typeof(limit) != 'undefined' ?limit : 30;
 	offset = typeof(offset) != 'undefined' ? offset : 0;
@@ -192,7 +192,7 @@ function wkLUshowDetails(limit, offset, ord, desc)
 			var records = document.getElementById('lu-result');
 			if ( (!resData) || (resData['nbr_records'] == 0) ) {
 				records.innerHTML = "<br /><div style=\"clear:both;border:1px dashed #D5DDF2;margin:4px 5px 4px 15px;padding:5px;\"><?=wfMsg('listusersnodata')?></div><br />";
-			} else { 
+			} else {
 				page = resData['page'];
 				limit = resData['limit'];
 				order = resData['order'];
@@ -237,7 +237,7 @@ function wkLUshowDetails(limit, offset, ord, desc)
 							} else {
 								oneRow += " - ";
 							}
-							oneRow += "</td>";	
+							oneRow += "</td>";
 						//}
 						oneRow += "</tr>";
 						_tmp += oneRow;
@@ -282,7 +282,7 @@ __ShowUsers = function(e, args) {
 	var _order = "username";
 	if (_id.indexOf('TablePager_', 0) !== -1) {
 		_order = _id.replace('TablePager_', '');
-	} 
+	}
 	var select_pages = document.getElementById('wcLUselect');
 	var cnt = (select_pages) ? select_pages.value : 30;
 	wkLUshowDetails(cnt, 0, _order, _desc);
@@ -299,10 +299,12 @@ function _addEvents(f, desc) {
 //http://images.wikia.com/common/releases_200901.3/skins/common/images/Arr_u.png
 //http://images.wikia.com/common/releases_200901.3/skins/common/images/Arr_d.png
 
-YAHOO.util.Event.onDOMReady(function () {
-	wkLUshowDetails(30, 0, 'username', -1);
-	var desc = -1;
-	YAHOO.util.Event.addListener("lu-showusers", "click", __ShowUsers, [desc]);
+$.loadYUI(function() {
+	YAHOO.util.Event.onDOMReady(function () {
+		wkLUshowDetails(30, 0, 'username', -1);
+		var desc = -1;
+		YAHOO.util.Event.addListener("lu-showusers", "click", __ShowUsers, [desc]);
+	});
 });
 
 /*]]>*/
@@ -310,7 +312,7 @@ YAHOO.util.Event.onDOMReady(function () {
 <p class='error'><?=$error?></p>
 <div>
 <form method="post" action="<?=$action?>" id="lu-form">
-<? $found = 0; ?>	
+<? $found = 0; ?>
 <? if ( !empty($groupList) && (!empty($aGroups)) ) { ?>
 <fieldset class="lu_fieldset">
 <legend><?=wfMsg('listusers-groups')?></legend>
@@ -320,7 +322,7 @@ YAHOO.util.Event.onDOMReady(function () {
 	</tr><tr>
 		<? } ?>
 		<? $found += (in_array($groupName, $mGroup) && isset($groupList[$groupName])) ? $groupList[$groupName] : 0 ?>
-		<? 
+		<?
 			$groupLink = wfMsgExt("Grouppage-{$groupName}", array('parseinline') );
 			$link = "";
 			if ( !wfEmptyMsg("Grouppage-{$groupName}", $groupLink) ) {
@@ -338,7 +340,7 @@ YAHOO.util.Event.onDOMReady(function () {
 		<? $i++; ?>
 	<? } ?>
 	</tr></table>
-</fieldset>	
+</fieldset>
 <? } ?>
 <fieldset class="lu_fieldset">
 <legend><?=wfMsg('listusers-options')?></legend>

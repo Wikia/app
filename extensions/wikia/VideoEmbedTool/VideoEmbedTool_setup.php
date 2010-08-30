@@ -108,7 +108,7 @@ function VETWikiaVideoRedLink() {
 	$s = '<br/><a id="VideoEmbedCreate" href="' . $url . '">' . wfMsg( 'wikiavideo-create' ) . '</a><br/><br/>';
 	$wgOut->addHTML( $s );
 
-        if(get_class($wgUser->getSkin()) == 'SkinMonaco') {
+        if( in_array(get_class($wgUser->getSkin()), array('SkinMonaco', 'SkinOasis')) ) {
                 wfLoadExtensionMessages('VideoEmbedTool');
                 $wgHooks['MakeGlobalVariablesScript'][] = 'VETSetupVars';
                 $wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/js/VET.js?'.$wgStyleVersion.'"></script>');
@@ -126,7 +126,7 @@ function VETArticleSave( $article, $user, $text, $summary) {
 
 function VETSetup($editform) {
 	global $wgOut, $wgStylePath, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgUser;
-	if(get_class($wgUser->getSkin()) == 'SkinMonaco') {
+	if( in_array(get_class($wgUser->getSkin()), array('SkinMonaco', 'SkinOasis')) ) {
 		wfLoadExtensionMessages('VideoEmbedTool');
 		$wgHooks['MakeGlobalVariablesScript'][] = 'VETSetupVars';
 		$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/js/VET.js?'.$wgStyleVersion.'"></script>');

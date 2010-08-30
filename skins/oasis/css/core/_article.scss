@@ -1,0 +1,240 @@
+.WikiaArticle {
+	line-height: 1.8em;
+	padding: 0 10px;
+	position: relative;
+	min-height: 250px;
+	h1, h2, h3, h4, h5, h6 {
+		margin: .5em 0 .2em;
+	}
+	h1 {
+		font-size: 24px;
+	}
+	h2 {
+		border-bottom: solid 1px $color-headline-border;
+		font-size: 18px;
+		overflow: hidden;
+	}
+	h3 {
+		font-size: 16px;
+	}
+	h4 {
+		font-size: 14px;
+	}
+	h5 {
+		font-size: 12px;
+	}
+	h6 {
+		font-size: 11px;
+	}
+	.editsection {
+		float: none;
+		height: 15px;
+		margin: 0 10px;
+		width: 15px;
+		img {
+			background: url(/skins/oasis/images/sprite.png) no-repeat -1568px -48px;
+			left: 0;
+			top: 0;
+		}
+	}
+	h1, h4, h5, h6 {
+		.editsection {
+			display: none;
+		}
+	}
+	.noarticletext {
+		border: 1px solid $color-article-toc-border;
+		padding: 0 13px;
+	}
+
+	a:visited {
+		color: $color-links;
+	}
+
+	b, strong {
+		font-weight: bold;
+	}
+
+	i, em {
+		font-style: italic;
+	}
+
+	sup {
+		font-size: 11px;
+		vertical-align: super;
+	}
+
+	ul, ol {
+		margin: 0.4em 0 0.5em 2.5em;
+	}
+
+	ol {
+		list-style: decimal;
+	}
+
+	ul {
+		list-style: square;
+	}
+
+	dl {
+		margin: 1em 0;
+	}
+
+	dt {
+		font-weight: bold;
+		margin-bottom: 1px;
+	}
+
+	dd {
+		margin-bottom: 1px;
+		margin-left: 24px;
+	}
+
+	img {
+		vertical-align: middle;
+	}
+
+	.floatright {
+		clear: right;
+		float: right;
+		position: relative;
+		margin: 0 0 6px 6px;
+		border: 0;
+	}
+	.floatleft {
+		float: left;
+		clear: left;
+		position: relative;
+		margin: 0 6px 6px 0;
+		border: 0;
+	}
+	.thumbinner {
+		background-color: $color-article-thumb-background;
+		border: 1px solid $color-article-thumb-border;
+		overflow: hidden;
+		padding: 3px;
+		text-align: center;
+	}
+	.thumbcaption {
+		padding: 8px 3px 0 3px;
+		line-height: 18px;
+		text-align: left;
+	}
+	.tright {
+		clear: right;
+		float: right;
+		margin: 0 0 16px 16px;
+	}
+	.tleft {
+		float: left;
+		clear: left;
+		margin: 0 16px 16px 0;
+	}
+	.magnify {
+		float: right;
+	}
+
+	.picture-attribution {
+		display: block;
+		font-size: 11px;
+		text-align: left;
+		padding: 3px;
+	}
+	.picture-attribution .avatar {
+		margin-right: 3px;
+		vertical-align: middle;
+	}
+
+	.toc {
+		background-color: $color-article-toc-background;
+		border: 1px solid $color-article-toc-border;
+		border-collapse: separate;
+		margin: 1em 0;
+		padding: 5px;
+		ul {
+			margin: 0;
+			list-style: none;
+			ul {
+				margin-left: 2em;
+			}
+		}
+	}
+	#toctitle {
+		text-align: center;
+		h2 {
+			border: none;
+			display: inline;
+			font-size: 14px;
+		}
+		.toctoggle {
+			font-size: 12px;
+		}
+	}
+	p {
+		margin: 0.4em 0 0.5em;
+	}
+	p + p {
+		margin: 1em 0;
+	}
+	pre {
+		background-color: $color-module-shadow;
+		border: 1px solid $color-page-border;
+		line-height: 14px;
+		overflow: auto;
+		padding: 12px;
+	}
+	.printfooter {
+		display: none;
+	}
+	#filetoc {
+		text-align: center;
+		border: 1px solid $color-article-toc-border;
+		background-color: $color-article-toc-background;
+		padding: 5px;
+		font-size: 12px;
+		margin-bottom: 5px;
+		margin-left: 0;
+		margin-right: 0;
+		li {
+			display: inline;
+			list-style-type: none;
+			padding-right: 23px;
+		}
+	}
+	// highlight selected reference (ported from Vector skin)
+	.references > li:target {
+		background-color: mix($color-page, $color-links, 85%);
+	}
+
+	// video gallery
+	div.gallerybox div.thumb {
+		background: $color-article-thumb-background;
+		border: 1px solid $color-article-thumb-border;
+	}
+
+	// for special pages
+	fieldset {
+		border: solid 1px $color-links;
+		margin: 1em 0;
+		padding: 0 1em 1em;
+		legend {
+			padding: 7px;
+		}
+	}
+	.infobox {
+		border: 1px solid $color-page-border;
+		background-color: mix($color-page, #000, 95%);
+		color: black;
+		margin-bottom: 0.5em;
+		margin-left: 1em;
+		padding: 0.2em;
+		float: right;
+		clear: right;
+	}
+
+	// add button within the content
+	.add-icon {
+		background: url(/skins/oasis/images/sprite.png) -1568px -16px no-repeat;
+		vertical-align: middle;
+	}
+}

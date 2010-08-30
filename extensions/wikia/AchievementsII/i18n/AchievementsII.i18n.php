@@ -59,12 +59,16 @@ Please try another one!',
 	'achievements-profile-title' => '$1\'s $2 earned {{PLURAL:$2|badge|badges}}',
 	'achievements-profile-title-no' => '$1\'s badges',
 	'achievements-profile-title-challenges' => 'More badges you can earn!',
-	'achievements-profile-customize' => 'Customize badges',
+	'achievements-profile-customize' => 'Customize badges >',
 	'achievements-ranked' => 'Ranked #$1 on this wiki',
 	'achievements-no-badges' => 'Check out the list below to see the badges that you can earn on this wiki!',
 	'achievements-viewall' => 'View all',
 	'achievements-viewless' => 'Close',
 
+	'achievements-profile-title-oasis' => 'achievement <br/> points',
+	'achievements-ranked-oasis' => '$1 is [[Special:Leaderboard|Ranked #$2]] on this wiki',
+	'achievements-viewall-oasis' => 'See all',
+	//'achievements-viewall-oasis' => 'See all $1\'s badges',
 	/*
 	 * Leaderboard
 	 */

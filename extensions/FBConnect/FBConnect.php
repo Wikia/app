@@ -5,29 +5,29 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 /**
  * FBConnect plugin. Integrates Facebook Connect into MediaWiki.
- * 
+ *
  * Facebook Connect single sign on (SSO) experience and XFBML are currently available.
  * Please rename config.sample.php to config.php, follow the instructions inside and
  * customize variables as you like to set up your Facebook Connect extension.
  *
  * Info is available at http://www.mediawiki.org/wiki/Extension:FBConnect
  * and at http://wiki.developers.facebook.com/index.php/MediaWiki
- * 
+ *
  * Limited support is available at  http://www.mediawiki.org/wiki/Extension_talk:FBConnect
  * and at http://wiki.developers.facebook.com/index.php/Talk:MediaWiki
- * 
+ *
  * @author Garrett Bruin, Sean Colombo
  * @copyright Copyright © 2008 Garrett Brown, Sean Colombo
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
@@ -129,7 +129,7 @@ foreach( $fbHooksToAddImmediately as $hookName ) {
 
 /**
  * Class FBConnect
- * 
+ *
  * This class initializes the extension, and contains the core non-hook,
  * non-authentification code.
  */
@@ -140,21 +140,21 @@ class FBConnect {
 	 * Initializes and configures the extension.
 	 */
 	public static function init() {
-		global $wgXhtmlNamespaces, $wgAuth, $wgHooks, $wgSharedTables;
-		
+		global $wgXhtmlNamespaces, $wgAuth, $wgHooks, $wgSharedTables, $wgUser;
+
 		// The xmlns:fb attribute is required for proper rendering on IE
 		$wgXhtmlNamespaces['fb'] = 'http://www.facebook.com/2008/fbml';
-		
+
 		// Install all public static functions in class FBConnectHooks as MediaWiki hooks
 		$hooks = self::enumMethods('FBConnectHooks');
-		
+
 		global $fbHooksToAddImmediately;
 		foreach( $hooks as $hookName ) {
 			if(!in_array($hookName, $fbHooksToAddImmediately)){
 				$wgHooks[$hookName][] = "FBConnectHooks::$hookName";
 			}
 		}
-		
+
 		// Allow configurable over-riding of the onLogin handler.
 		global $fbOnLoginJsOverride;
 		if(!empty($fbOnLoginJsOverride)){
@@ -194,7 +194,7 @@ class FBConnect {
 		}
 		return $hooks;
 	}
-	
+
 	/**
 	 * Return the code for the permissions attribute (with leading space) to use on all fb:login-buttons.
 	 */
@@ -206,7 +206,7 @@ class FBConnect {
 		}
 		return $attr;
 	} // end getPermissionsAttribute()
-	
+
 	/**
 	 * Return the code for the onlogin attribute which should be appended to all fb:login-button's in this
 	 * extension.
@@ -220,41 +220,41 @@ class FBConnect {
 		}
 		return $attr;
 	} // end getOnLoginAttribute()
-	
-	
+
+
 	public static function getFBButton($onload = "", $id = "") {
 		global $fbExtendedPermissions;
-		return '<fb:login-button length="short" size="large" onlogin="'.$onload.'" perms="'.implode(",", $fbExtendedPermissions).'" id="'.$id.'"> 
+		return '<fb:login-button length="short" size="large" onlogin="'.$onload.'" perms="'.implode(",", $fbExtendedPermissions).'" id="'.$id.'">
                 </fb:login-button>';
-	}  
-	
+	}
+
 	/*
-	 * Ajax function to disconect from facebook   
+	 * Ajax function to disconect from facebook
 	 */
 	public static function disconnectFromFB($user = null){
 		$response = new AjaxResponse();
 		$response->addText(json_encode(self::coreDisconnectFromFB($user)));
 		return $response;
 	}
-	
+
 	/*
-	 * Fb disconect function and send mail with temp password 
+	 * Fb disconect function and send mail with temp password
 	 */
 	public static function coreDisconnectFromFB($user = null){
 		global $wgRequest, $wgUser, $wgAuth;
-		
+
 		wfLoadExtensionMessages('FBConnect');
-		
+
 		if($user == null) {
-			$user = $wgUser;	
+			$user = $wgUser;
 		}
-		
-		
+
+
 		$statusError = array('status' => "error", "msg" => wfMsg('fbconnect-unknown-error') );
 		if($user->getId() == 0) {
 			return $statusError;
 		}
-		
+
 		$dbw = wfGetDB( DB_MASTER, array(), FBConnectDB::sharedDB() );
 		$dbw->begin();
 		$rows = FBConnectDB::removeFacebookID($user);
@@ -262,25 +262,25 @@ class FBConnect {
 		$params = new FauxRequest(array (
 			'wpName' => $user->getName()
 		));
-		
+
 		if( !$wgAuth->allowPasswordChange() ) {
 			return $statusError;
 		}
-		
+
 		$result = array ();
 		$loginForm = new LoginForm($params);
-		
+
 		if ($wgUser->getOption("fbFromExist")) {
 			$res = $loginForm->mailPasswordInternal( $wgUser, true, 'fbconnect-passwordremindertitle-exist', 'fbconnect-passwordremindertext-exist' );
 		} else {
-			$res = $loginForm->mailPasswordInternal( $wgUser, true, 'fbconnect-passwordremindertitle', 'fbconnect-passwordremindertext' );	
+			$res = $loginForm->mailPasswordInternal( $wgUser, true, 'fbconnect-passwordremindertitle', 'fbconnect-passwordremindertext' );
 		}
 		if( WikiError::isError( $res ) ) {
 			return $statusError;
 		}
-				
+
 		return array('status' => "ok" );
 		$dbw->commit();
-		return $response;	
+		return $response;
 	}
 }

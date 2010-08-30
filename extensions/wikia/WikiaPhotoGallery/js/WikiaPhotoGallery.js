@@ -96,9 +96,9 @@ var WikiaPhotoGallery = {
 		$().log(msg, 'WikiaPhotoGallery');
 	},
 
-	// add MW toolbar button (only in Monaco)
+	// add MW toolbar button (don't add it when using Monobook)
 	addToolbarButton: function() {
-		if ( (skin == 'monaco') && (typeof mwCustomEditButtons != 'undefined') ) {
+		if ( (skin != 'monobook') && (typeof mwCustomEditButtons != 'undefined') ) {
 			mwCustomEditButtons.push({
 				'imageFile': window.wgExtensionsPath + '/wikia/WikiaPhotoGallery/images/gallery_add.png',
 				'speedTip': window.WikiaPhotoGalleryAddGallery,
@@ -1080,7 +1080,8 @@ var WikiaPhotoGallery = {
 		$('#WikiaPhotoGalleryImageUploadButton').attr('disabled', false);
 
 		// resize images list (RT #55203)
-		$('#WikiaPhotoGallerySearchResults').height(this.editor.height - 200);
+		var spacing = (skin == 'oasis' ? 155 : 200);
+		$('#WikiaPhotoGallerySearchResults').height(this.editor.height - spacing);
 	},
 
 	// setup upload conflict page
@@ -1612,6 +1613,7 @@ var WikiaPhotoGallery = {
 		jQuery.confirm({
 			title: messages['wikiaPhotoGallery-preview-delete-title'],
 			content: messages['wikiaPhotoGallery-preview-delete'],
+			width: 400,
 			onOk: function() {
 				self.log('removing photo #' + photoId);
 
@@ -1632,7 +1634,7 @@ var WikiaPhotoGallery = {
 
 	// setup tabbed section
 	setupTabs: function(tabsWrapper, switchCallback) {
-		var tabs = tabsWrapper.find('.wikia-tabs').find('a');
+		var tabs = tabsWrapper.find('.tabs,.wikia-tabs').find('a');
 		var tabsContent = tabsWrapper.find('.WikiaPhotoGalleryOptionsTab');
 
 		var selectTab = function(index, dontCallback) {
@@ -1907,7 +1909,7 @@ var WikiaPhotoGallery = {
 		}
 
 		var colorPickerPopup = $('#' + colorPicker.attr('id') + '_popup');
-		
+
 		if(colorPickerPopup.data('moved') !== true) {
 			//avoid z-index problems due to IE7 bad handling of stacks
 			colorPickerPopup.appendTo(colorPicker.closest('.WikiaPhotoGalleryEditorPageInner'));
@@ -2124,6 +2126,7 @@ var WikiaPhotoGallery = {
 			html,
 			{
 				id: 'WikiaPhotoGalleryShowSaveQuitDialog',
+				width: 400,
 				callback: function() {
 					// setup clicks
 					var buttons = $('#WikiaPhotoGalleryShowSaveQuitDialog').find('.modalToolbar').children();
@@ -2202,6 +2205,12 @@ var WikiaPhotoGallery = {
 
 		// get full height available (RT #55203)
 		var height = parseInt($.getViewportHeight() - 125);
+
+		if (skin == 'oasis') {
+			height -= 150;
+			width = 710;
+		}
+
 		height = Math.max(460, height);
 
 		self.log('showEditor() - ' + width + 'x' + height + 'px');
@@ -2234,9 +2243,14 @@ var WikiaPhotoGallery = {
 						// remove loading indicator
 						$('#WikiaPhotoGalleryEditorLoader').remove();
 
-						// add <span> wrapping editor title
-						$('#WikiaPhotoGalleryEditor').children('.modalTitle').
-							append('<span id="WikiaPhotoGalleryEditorTitle"></span>');
+						// mark editor dialog title node
+						if (skin == 'oasis') {
+							$('#WikiaPhotoGalleryEditor').children('h1').attr('id', 'WikiaPhotoGalleryEditorTitle');
+						}
+						else {
+							$('#WikiaPhotoGalleryEditor').children('.modalTitle').
+								append('<span id="WikiaPhotoGalleryEditorTitle"></span>');
+						}
 
 						self.setupEditor(params);
 					},
@@ -2305,7 +2319,7 @@ var WikiaPhotoGallery = {
 		var params = {
 			'hash': hash,
 			'maxwidth': $.getViewportWidth(),
-                        'maxheight': $.getViewportHeight(),
+			'maxheight': $.getViewportHeight(),
 			'title': wgPageName,
 			'revid': window.wgRevisionId
 		};

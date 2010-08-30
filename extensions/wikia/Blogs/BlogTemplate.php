@@ -834,6 +834,10 @@ class BlogTemplateClass {
 				"props"			=> BlogArticle::getProps($oRow->page_id),
 			);
 		}
+
+		// macbre: change for Oasis to add avatars and comments / likes data
+		wfRunHooks('BlogTemplateGetResults', array(&$aResult));
+
 		self::$dbr->freeResult( $res );
     	wfProfileOut( __METHOD__ );
     	return $aResult;
@@ -1094,6 +1098,8 @@ class BlogTemplateClass {
 							) );
 							$result = $oTmpl->execute("blog-article-page");
 						}
+						// macbre: let Oasis add HTML
+						wfRunHooks('BlogsRenderBlogArticlePage', array(&$result, $aResult, self::$aOptions));
 					} else {
 						unset($result);
 						$result = self::__makeRssOutput($aResult);

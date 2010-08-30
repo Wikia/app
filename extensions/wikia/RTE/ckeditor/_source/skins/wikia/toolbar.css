@@ -550,7 +550,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 }
 
 /* Source mode */
-.rte_source #cke_top_wpTextbox1 {
+.wikiaSkinMonaco.rte_source #cke_top_wpTextbox1 {
 	height: 45px !important;
 }
 
@@ -560,11 +560,14 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 .rte_source span.cke_button_source {
 	border: solid 1px #000;
+	visibility: visible;
+	z-index: 50;
+}
+
+.wikiaSkinMonaco.rte_source span.cke_button_source {
 	position: absolute;
 	right: 10px;
 	top: 10px;
-	visibility: visible;
-	z-index: 50;
 }
 
 /* MW toolbar */

@@ -2958,6 +2958,18 @@ $wgMessageStructure = array(
 		'dberr-outofdate',
 		'dberr-cachederror',
 	),
+	'button-labels' => array(
+		'button-createpage',
+	),
+	'oasis' => array(
+		'oasis-more',
+		'oasis-mytools',
+		'oasis-follow',
+		'oasis-share',
+		'oasis-like',
+		'oasis-activity-header',
+		'oasis-total-articles',
+	)
 );
 
 /** Comments for each block */
@@ -3157,6 +3169,8 @@ Variants for Chinese language",
 	'external_images'       => 'External image whitelist',
 	'special-tags'          => 'Special:Tags',
 	'db-error-messages'     => 'Database error messages',
+	'button-labels'         => 'User Interface Labels for Oasis skin',
+	'oasis'                 => 'Messages specific to Oasis skin'
 );
 
 /** Short comments for standalone messages */

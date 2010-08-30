@@ -19,6 +19,11 @@ $wgAutoloadClasses['SpecialActivityFeed'] = $dir.'SpecialActivityFeed.class.php'
 $wgSpecialPages['ActivityFeed'] = 'SpecialActivityFeed';
 $wgSpecialPageGroups['ActivityFeed'] = 'changes';
 
+// Special:WikiActivity
+$wgAutoloadClasses['SpecialWikiActivity'] = $dir.'SpecialWikiActivity.class.php';
+$wgSpecialPages['WikiActivity'] = 'SpecialWikiActivity';
+$wgSpecialPageGroups['WikiActivity'] = 'changes';
+
 // hooks
 $wgHooks['CustomUserData'][] = 'MyHome::addToUserMenu';
 $wgHooks['InitialQueriesMainPage'][] = 'MyHome::getInitialMainPage';

@@ -1,11 +1,10 @@
-
 var ShareFeature = {};
-var ShareFeatureEnabled = false;
+ShareFeature.enabled = false;
 
 ShareFeature.ajax = function( provider ) {
 	$.post(wgScript,
 			{
-		   		'action':'ajax', 
+		   		'action':'ajax',
 		   		'rs':'wfShareFeatureAjaxUpdateStats',
 		   		'provider': provider
 			},
@@ -17,18 +16,23 @@ ShareFeature.ajax = function( provider ) {
 
 
 // footer is a String to differentiate between clicking link on menu bar and article footer
-ShareFeature.openDialog = function( footer ) {
-	if( false == ShareFeatureEnabled ) {
-		ShareFeatureEnabled = true;
+ShareFeature.openDialog = function(event, footer) {
+	event.preventDefault();
+	
+	if( false == ShareFeature.enabled ) {
+		ShareFeature.enabled = true;
+
+		var width = (window.skin == 'oasis' ? 200 : 300);
+
 		$().getModal(
 			wgScript + '?action=ajax&rs=wfShareFeatureAjaxGetDialog&title=' + encodeURIComponent(wgPageName) + '&wiki=' + wgCityId + '&footer=' + encodeURIComponent(footer),
-				'#shareFeatureInside',
+			'#shareFeatureInside',
 			{
-					width: 300,
-					callback: function() {
-						ShareFeatureEnabled = false;
-						ShareFeature.track( footer + 'open' );
-					},
+				width: width,
+				callback: function() {
+					ShareFeature.enabled = false;
+					ShareFeature.track( footer + 'open' );
+				},
 				onClose: function() {
 					ShareFeature.track( footer + 'close');
 				}
@@ -64,11 +68,11 @@ $(function() {
 		if( $( '#control_share_feature' ).exists() && $( '#ca-share_feature' ).exists() ) {
 			$('#control_share_feature').removeClass( 'disabled' );
 			// open dialog on clicking
-			$('#ca-share_feature').click( function() {
-				ShareFeature.openDialog( '' );
+			$('#ca-share_feature').click(function(event) {
+				ShareFeature.openDialog(event, '');
 			});
-			$('#fe_sharefeature_link').click( function() {
-				ShareFeature.openDialog( 'articleFooter/' );
+			$('#fe_sharefeature_link').click( function(event) {
+				ShareFeature.openDialog(event, 'articleFooter/');
 			});
 		}
 });

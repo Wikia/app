@@ -220,13 +220,13 @@ body .cke_dialog
 /* button */
 .cke_dialog .wikia-button
 {
-	cursor: pointer !important;
-	height:17px  !important;
-	font-family:"Lucida Grande",sans-serif  !important;
-	font-size:12px  !important;
 	border:1px solid #BEDDBE  !important;
 	color:#FFFFFF  !important;
-	cursor:pointer  !important;
+	cursor: pointer !important;
+	font-family:"Lucida Grande",sans-serif  !important;
+	font-size:12px  !important;
+	height:17px  !important;
+	line-height: 17px !important;
 }
 
 .cke_dialog .wikia-button .cke_dialog_ui_button {

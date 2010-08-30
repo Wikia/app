@@ -66,15 +66,15 @@ CreatePage.setPageLayout = function( layout ) {
 	switch( layout ) {
 		case 'format':
 			$('#CreatePageDialogFormat').attr( 'checked', 'checked' );
-			$('#CreatePageDialogBlankContainer').removeClass( 'chosen' );
-			$('#CreatePageDialogFormatContainer').addClass( 'chosen' );
+			$('#CreatePageDialogBlankContainer').removeClass( 'accent' );
+			$('#CreatePageDialogFormatContainer').addClass( 'accent' );
 			CreatePage.track('standardlayout');
 			break;
 		case 'blank':
 		default:
 			$('#CreatePageDialogBlank').attr( 'checked', 'checked' );
-			$('#CreatePageDialogBlankContainer').addClass( 'chosen' );
-			$('#CreatePageDialogFormatContainer').removeClass( 'chosen' );
+			$('#CreatePageDialogBlankContainer').addClass( 'accent' );
+			$('#CreatePageDialogFormatContainer').removeClass( 'accent' );
 			CreatePage.track('blankpage');
 			break;
 	}

@@ -289,6 +289,9 @@ class BlogArticle extends Article {
 	 * static methods used in Hooks
 	 */
 	static public function getOtherSection( &$catView, &$output ) {
+		global $wgContLang;
+		wfProfileIn(__METHOD__);
+
 		if( !isset( $catView->blogs ) ) {
 			return true;
 		}
@@ -300,20 +303,29 @@ class BlogArticle extends Article {
 		$rescnt = count( $catView->blogs );
 		$countmsg = self::getCountMessage( $catView, $rescnt, $dbcnt, 'article' );
 
+		// order blog entries alphabetically
+		ksort($catView->blogs);
+
+		$catView->blogs_start_char = array();
+		foreach($catView->blogs as $key => $entry) {
+			$catView->blogs_start_char[] = $wgContLang->convert( $wgContLang->firstChar($key) );
+		}
+
 		if( $rescnt > 0 ) {
 			$r = "<div id=\"mw-pages\">\n";
 			$r .= '<h2>' . wfMsg( "blog-header", $ti ) . "</h2>\n";
 			$r .= $countmsg;
-			$r .= $catView->formatList( $catView->blogs, $catView->blogs_start_char );
+			$r .= $catView->formatList( array_values($catView->blogs), $catView->blogs_start_char );
 			$r .= "\n</div>";
 		}
 		$output = $r;
 
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
 	/*
-	 * static method to get number of pages in caetgory
+	 * static method to get number of pages in category
 	 */
 	static public function getCountMessage( &$catView, $rescnt, $dbcnt, $type ) {
 		global $wgLang;
@@ -353,12 +365,18 @@ class BlogArticle extends Article {
 				$catView->blogs_start_char = array();
 			}
 
-			$catView->blogs[] = $row->page_is_redirect
-				? '<span class="redirect-in-category">' . $catView->getSkin()->makeKnownLinkObj( $title ) . '</span>'
-				: $catView->getSkin()->makeSizeLinkObj( $row->page_len, $title );
+			// remove user blog:foo from displayed titles (requested by Angie)
+			// "User blog:Homersimpson89/Best Simpsons episode..." -> "Best Simpsons episode..."
+			$text = $title->getSubpageText();
+			$userName = $title->getBaseText();
+			$link = $catView->getSkin()->link($title, $text);
 
-			list( $namespace, $title ) = explode( ":", $row->cl_sortkey, 2 );
-			$catView->blogs_start_char[] = $wgContLang->convert( $wgContLang->firstChar( $title ) );
+			// blogs entries will be sorted using this key
+			$index = $wgContLang->uc("{$text}-{$userName}");
+
+			$catView->blogs[$index] = $row->page_is_redirect
+				? '<span class="redirect-in-category">' . $link . '</span>'
+				: $link;
 
 			/**
 			 * when we return false it won't be displayed as normal category but

@@ -43,6 +43,9 @@
 	padding: 10px;
 	width: 330px;
 }
+.skin-oasis #AjaxLoginSlider .ajax-login-slider-panel {
+	padding: 12px; /* since there are no borders, bump up by 2 pixels */
+}
 #AjaxLoginSlider p {
 	margin-bottom: .5em;
 }
@@ -54,6 +57,9 @@
 	border-style: solid;
 	border-width: 1px;
 	padding: 10px;
+}
+.skin-oasis #AjaxLoginConnectMarketing div {
+	border-width:0px;
 }
 #AjaxLoginConnectMarketing h1 {
 	font-size: 12pt;
@@ -78,6 +84,163 @@
 	border-color:#AAAAAA;
 	color:#000000;
 }
+.skin-oasis #AjaxLoginBox .neutral_ajaxLogin{
+	background-color:#fff;
+	border-color:#fff;
+}
 #AjaxLoginBox .neutral_ajaxLogin h1 {
 	padding:0px;
+}
+.skin-oasis #AjaxLoginFBStart{
+	display:none;
+}
+.skin-oasis #AjaxLoginBox .or-div{
+	display:none;
+}
+.skin-oasis #AjaxLoginConnectMarketing {
+	border-right:none;
+	margin-left:-10px; /* to make the bar fully hide after clicking 'get started' */
+}
+
+
+
+/* Changes below were extracted from modal.css */
+
+/* Fields in AjaxLogin modal */
+#wpName1Ajax, #wpPassword1Ajax {
+	width: 150px;
+}
+
+.wpAjaxRegisterTable .wpAjaxLoginInput
+{
+	padding-top:10px;
+	vertical-align: top;
+}
+
+.wpAjaxLoginLine
+{
+	border-top: solid;
+	border-width: 1px;
+	border-color:  black;
+}
+
+.wpAjaxLoginPreLine td
+{
+	padding-bottom:15px;
+}
+.wpAjaxLoginInput label
+{
+	display: block; 
+	font-weight: bold;
+	font-family:arial,sans-serif;
+	font-size:10pt;
+	float:left;
+}
+.wpAjaxLoginInput input,.wpAjaxLoginInput select
+{
+	width:250px;
+}
+
+.wpAjaxRegisterTable
+{
+	width: 680px;
+	margin-left: 10px;
+}
+
+.wpAjaxLoginData select
+{
+	width:80px;
+}
+
+.wpAjaxLoginInput .captcha
+{
+	border: none;
+	padding: 0px;
+}
+
+.wpAjaxLoginInput .captcha img
+{
+	width: 112px;
+	height: 55px;
+	background-color:#EEEEEE;
+	padding:4px 4px 4px 4px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #AAAAAA; 
+	margin-left:6px;
+}
+
+.wpAjaxLoginInput #wpCaptchaInfo
+{
+	width: 125px;
+	display: inline-block;
+}
+
+.wpAjaxLoginInput .captcha input
+{
+	width: 120px;
+}
+
+.wpAjaxLoginLine td
+{
+	border-top-style: solid;
+	border-top-color: #AAAAAA;
+ 	border-width: 1px; 
+}
+
+.wpAjaxLoginLine td
+{
+	padding-top: 15px;
+}
+
+#AjaxLoginButtons
+{
+	text-align:center;
+}
+
+.wpAjaxLoginInput .pseudolabel
+{
+	font-weight: bold;
+}
+
+.wpAjaxLoginInput #wpEmailInfo, .wpAjaxLoginInput #wpBirthDateInfo
+{
+	margin-left: 4px;
+}
+
+#wpBirthDateInfoModal div,
+#wpUserCaptchaInfoModal div,
+#wpEmailInfoModal div {
+	padding: 8px 8px 8px 8px;
+}
+
+#wpUserCaptchaInfoModal p {
+	line-height: 1.5em;
+	margin: 0.4em 0 0.5em;
+}
+
+#wpBirthDateInfoModal h1 div,
+#wpUserCaptchaInfoModal h1 div,
+#wpEmailInfoModal h1 div {
+	padding: 0 0 0 0;
+}
+
+#wpName2Ajax,#wpPassword2Ajax,#wpName1Ajax,#wpPassword1Ajax
+{
+	width: 150px;
+}
+
+.wpAjaxRegisterTable span{
+	display:block;
+	height:20px;
+}
+
+#userloginErrorBox,#userloginErrorBox2,#userloginErrorBox3 {
+	background-color: #FFFFCC;
+	border: 1px solid #AAA;
+	display: none;
+	margin-left:10px;
+	margin-right:10px;
+	margin: 1em 3em 1em 0;
+	padding: 6px 6px 6px 6px;
 }

@@ -371,12 +371,23 @@ YAHOO.lang.extend(YAHOO.example.AutoCompleteTextArea, YAHOO.widget.AutoComplete,
 		this.row = row;
 
 		var top = 19+(2+(YAHOO.Tools.getBrowserAgent().mac ? 13 : 16)*row)-control.scrollTop;
-		top += YAHOO.util.Dom.getY(this._elTextbox) - YAHOO.util.Dom.getY('article');
-		top = Math.min(top, YAHOO.util.Dom.getY(this._elTextbox) - YAHOO.util.Dom.getY('article') + this._elTextbox.scrollHeight);
-		top = Math.max(top, 0);
-
 		var left = 3+(8*(charInLine-this._sCurQuery.length))-control.scrollLeft;
-		left += YAHOO.util.Dom.getX(this._elTextbox) - YAHOO.util.Dom.getX('article');
+
+		switch (window.skin) {
+			case 'oasis':
+				var position = $(this._elTextbox).position();
+				top += parseInt(position.top);
+				left += parseInt(position.left);
+				break;
+
+			default:
+				top += YAHOO.util.Dom.getY(this._elTextbox) - YAHOO.util.Dom.getY('article');
+				top = Math.min(top, YAHOO.util.Dom.getY(this._elTextbox) - YAHOO.util.Dom.getY('article') + this._elTextbox.scrollHeight);
+
+				left += YAHOO.util.Dom.getX(this._elTextbox) - YAHOO.util.Dom.getX('article');
+		}
+
+		top = Math.max(top, 0);
 		left = Math.min(left, this._elTextbox.scrollWidth - 161);
 		left = Math.max(left, 0);
 
@@ -397,6 +408,8 @@ YAHOO.lang.extend(YAHOO.example.AutoCompleteTextArea, YAHOO.widget.AutoComplete,
 });
 
 function LS_PrepareTextarea (textarea, oDS) {
+	$().log('init for ' + textarea, 'LinkSuggest');
+
 	var oAutoComp = new YAHOO.example.AutoCompleteTextArea(textarea, 'wpTextbox1_container', oDS);
 	oAutoComp.highlightClassName = oAutoComp.prehighlightClassName = 'navigation-hover';
 	oAutoComp.typeAhead = oAutoComp.animHoriz = oAutoComp.animVert = oAutoComp.autoHighlight = oAutoComp.forceSelection = oAutoComp.useShadow = false;

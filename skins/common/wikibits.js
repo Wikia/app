@@ -491,6 +491,14 @@ function toggle_element_check(ida,idb) {
 */
 function getElementsByClassName(oElm, strTagName, oClassNames){
 	var arrReturnElements = new Array();
+
+	/* Wikia change begin - @author: macbre */
+	// check whether oElm is really DOM node
+	if (!oElm) {
+		return arrReturnElements;
+	}
+	/* Wikia change end */
+
 	if ( typeof( oElm.getElementsByClassName ) == "function" ) {
 		/* Use a native implementation where possible FF3, Saf3.2, Opera 9.5 */
 		var arrNativeReturn = oElm.getElementsByClassName( oClassNames );

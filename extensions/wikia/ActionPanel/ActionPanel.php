@@ -35,7 +35,7 @@ function fnAddActionPanelJSGlobalVariables(&$vars){
 }
 
 $wgHooks["GetHTMLAfterBody"][] = "wfAddActionPanel";
-function wfAddActionPanel(&$tpl){
+function wfAddActionPanel($tpl, &$html){
 	global $wgUser;
 	if (!$wgUser->isAllowed('actionpanel')) {
 		return true;
@@ -43,8 +43,8 @@ function wfAddActionPanel(&$tpl){
 
 	global $wgStyleVersion, $wgExtensionsPath;
 	
-	echo ('<link rel="stylesheet" type="text/css" href="'.$wgExtensionsPath.'/wikia/ActionPanel/ActionPanel.css?'.$wgStyleVersion.'"/>');
-	echo('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/ActionPanel/ActionPanel.js?'.$wgStyleVersion.'"></script>');
+	$html .= '<link rel="stylesheet" type="text/css" href="'.$wgExtensionsPath.'/wikia/ActionPanel/ActionPanel.css?'.$wgStyleVersion.'"/>\n';
+	$html .= '<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/ActionPanel/ActionPanel.js?'.$wgStyleVersion.'"></script>\n';
 	
 	return true;
 }

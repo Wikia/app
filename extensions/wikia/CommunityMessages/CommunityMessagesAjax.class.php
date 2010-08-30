@@ -17,4 +17,25 @@
  */
 
 class CommunityMessagesAjax {
+
+	/**
+	 * Dismisses notification
+	 *
+	 * @author Macbre
+	 */
+	public static function dismissMessage() {
+		wfProfileIn(__METHOD__);
+		global $wgRequest;
+
+		$result = false;
+
+		// this request should be posted
+		if ($wgRequest->wasPosted()) {
+			CommunityMessages::dismissMessage();
+			$result = true;
+		}
+
+		wfProfileOut(__METHOD__);
+		return array('result' => $result);
+	}
 }

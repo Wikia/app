@@ -780,10 +780,17 @@ class WikiaPhotoGallery extends ImageGallery {
 				$html .= Xml::element('br');
 			}
 
+			// add button for Monaco
 			$html .= Xml::openElement('span', array('class' => 'wikia-gallery-add noprint', 'style' => 'display: none'));
 			$html .= Xml::element('img', array('src' => $wgBlankImgUrl, 'class' => 'sprite-small add'));
 			$html .= Xml::element('a', array('href' => '#'), wfMsgForContent('wikiaPhotoGallery-viewmode-addphoto'));
 			$html .= Xml::closeElement('span');
+
+			// add button for Oasis
+			$html .= Xml::openElement('a', array('class' => 'wikia-photogallery-add wikia-button noprint', 'style' => 'display: none'));
+			$html .= Xml::element('img', array('src' => $wgBlankImgUrl, 'class' => 'add-icon', 'width' => 15, 'height' => 15));
+			$html .= wfMsgForContent('wikiaPhotoGallery-viewmode-addphoto');
+			$html .= Xml::closeElement('a');
 		}
 
 		$html .= Xml::closeElement('div');

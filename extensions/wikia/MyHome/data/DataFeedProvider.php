@@ -137,6 +137,7 @@ class DataFeedProvider {
 			}
 
 			$item['user'] = $users[$res['user']];
+			$item['username'] = $res['user'];
 
 			if (is_array($res['rc_params'])) {
 

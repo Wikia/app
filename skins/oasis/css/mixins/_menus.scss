@@ -1,0 +1,51 @@
+@mixin menu-heavy {
+	background: $color-page;
+	border-width: 2px 4px 4px;
+	border-style: solid;
+	border-color: #000;
+	display: none;
+	list-style: none;
+	padding: 5px;
+	position: absolute;
+	li {
+		border-top: 1px solid $color-page-border;
+		margin: 0;
+		padding: 0;
+		&:first-child {
+			border-top: none;
+		}
+	}
+	a {
+		color: $color-links;
+		display: block;
+		font-size: 12px;
+		padding: 5px;
+		white-space: nowrap;
+		&:hover {
+			background: $color-menu-highlight;
+			text-decoration: none;
+		}
+	}	
+}
+
+@mixin menu-regular {
+	background: $color-page;
+	border-color: $color-page-border;
+	border-style: solid;
+	border-width: 1px 2px 2px;
+	display: none;
+	position: absolute;
+	li {
+		border-top: 1px solid $color-page-border;
+		display: block;
+		padding: 0;
+	}
+	a {
+		display: block;
+		font-size: 14px;
+		padding: 4px 4px 2px;
+		&:hover {
+			background: $color-menu-highlight;
+		}
+	}
+}

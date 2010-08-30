@@ -60,12 +60,12 @@
 	});
 </script>
 
-<div class="accent clearfix" id="edit_enhancements_toolbar">
+<div class="<?= ($skinname == 'SkinMonaco' ? 'accent clearfix' : '') ?>" id="edit_enhancements_toolbar">
 	<ul>
 		<li><?=$summary ?></div></li>
 		<li><?=$buttons['save'] ?></li>
 		<li><?=$buttons['preview'] ?></li>
-		<li><?=$checkboxes['minor'] ?></li>
+		<li class="minor"><?=$checkboxes['minor'] ?></li>
 		<li><?=$checkboxes['watch'] ?></li>
 		<?php if ($action != 'edit' || $undo) { ?>
 		<li id="scroll_down_arrow"><span onclick="window.scrollTo(0,document.getElementById('editform').offsetTop);WET.byStr('EditEnhancements/scrollArrow');" title="<?= $arrowTitle ?>">&darr;</span></li>

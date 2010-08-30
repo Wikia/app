@@ -1,6 +1,12 @@
 <div class="ajax-login-slider-panel" id="AjaxLoginConnectMarketing">
 	<div class="neutral_ajaxLogin clearfix">
-		<? echo wfMsg("comboajaxlogin-connectmarketing") ?>
+		<?php
+			if(Wikia::isOasis()){
+				echo wfMsg("comboajaxlogin-connectmarketing-oasis");
+			} else {
+				echo wfMsg("comboajaxlogin-connectmarketing");
+			}
+		?>
 		<a href="#" class="back"><? echo wfMsg("comboajaxlogin-connectmarketing-back") ?></a>
 		<a href="#" class="forward"><? echo wfMsg("comboajaxlogin-connectmarketing-forward") ?></a>
 	</div>

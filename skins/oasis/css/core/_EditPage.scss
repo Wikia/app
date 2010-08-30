@@ -1,0 +1,270 @@
+@import "color";
+@import "../mixins/border-radius";
+@import "../mixins/box-shadow";
+@import "../mixins/clearfix";
+@import "../mixins/gradient";
+
+
+.skin-oasis {
+	#cke_top_wpTextbox1 {
+		@include linear-gradient($color-module-shadow, top, $color-page, 50%, $color-module-shadow, 100%);
+		border: 1px solid $color-page-border;
+		height: 65px;
+		#mw-toolbar {
+			top: 35px;
+		}
+	}
+	.cke_skin_wikia .cke_contents {
+		border-color: $color-page-border;
+		border-top: none;
+	}
+	#edit_enhancements_toolbar {
+		@include clearfix;
+		background-color: mix($color-buttons, $color-page, 5%);
+		margin: 0;
+		#wpSummaryLabel {
+			margin-right: 5px;
+		}
+		#wpSummary {
+			width: 350px !important;
+		}
+		.minor {
+			clear: both;
+			margin-left: 65px;
+			margin-right: 30px;
+		}
+		label, input {
+			vertical-align: middle;
+		}
+	}
+	#csMainContainer {
+		@include clearfix;
+		background-color: mix($color-buttons, $color-page, 5%);
+		border: none;
+		border-bottom: solid 1px $color-page;
+	}
+	textarea {
+		width: 99%;
+	}
+
+	&.rte {
+		#csMainContainer, #edit_enhancements_toolbar {
+			margin-right: 300px;
+		}
+		// on-hover menus
+		#RTEStuff {
+			margin-top: 15px;
+			.color1 {
+				background-color: mix($color-buttons, $color-page, 5%);
+				color: $color-text;
+			}
+		}
+		// modal tweaks
+		.cke_dialog {
+			border: 5px solid $color-body;
+			padding: 15px 15px 0 15px;
+		}
+		.blackout {
+			background-color: $color-page !important;
+		}
+		.cke_dialog_body {
+			background: transparent;
+			border: none;
+			border-bottom: 1px solid $color-page-border;
+			margin-bottom: 15px;
+			padding: 0;
+		}
+		.cke_dialog_title,
+		.cke_dialog_footer {
+			background: $color-page !important;
+			border: none;
+			padding: 5px 0;
+		}
+		.cke_dialog_title {
+			color: $color-buttons !important;
+			font-size: 19px;
+			margin-right: 50px;
+		}
+		.cke_dialog_contents {
+			border: 1px solid $color-page-border;
+			border-bottom: none;
+			padding: 10px;
+		}
+		.cke_dialog_footer {
+			text-align: left;
+			border: 1px solid $color-page-border;
+			border-bottom: none;
+			border-top: none;
+			padding-left: 10px;
+		}
+		.cke_dialog_footer_buttons {
+			width: auto !important;
+		}
+		.cke_dialog_close_button {
+			@include border-radius(3px);
+			@include linear-gradient($color-buttons, top, $color-button-highlight, 8%, $color-buttons, 13%);
+			height: 19px;
+			width: 19px;
+			img {
+				background: url(/skins/oasis/images/sprite.png) -1568px -32px no-repeat;
+				cursor: pointer;
+				height: 15px;
+				margin-top: 2px;
+				vertical-align: baseline;
+				width: 15px;
+			}
+		}
+		// tabs
+		.cke_dialog .tabs {
+			background: transparent;
+			border-bottom: none;
+			overflow: hidden;
+			.cke_dialog_tab {
+				@include border-radius-nw(5px);
+				@include border-radius-ne(5px);
+				@include linear-gradient($color-tab-background, top, $color-tab-background-top, 50%, $color-tab-background-bottom, 100%);
+				border: none;
+				color: $color-text;
+				display: inline-block;
+				font-size: 11px;
+				margin: 0;
+				padding: 6px 25px 3px;
+				position: relative;
+				top: 5px;
+				&:hover {
+					text-decoration: none;
+				}
+			}
+			.cke_dialog_tab_selected {
+				@include linear-gradient($color-active-tab-background-top, top, $color-active-tab-background-top, 50%, $color-active-tab-background-bottom, 100%);
+				@include box-shadow(-3px, 7px, 7px, $color-active-tab-shadow);
+				color: $color-button-text;
+				font-weight: bold;
+				margin-top: 0;
+				padding: 8px 25px;
+				top: 1px;
+				.chevron {
+					border-color: transparent transparent $color-page;
+					border-style: solid;
+					border-width: 3px;
+					bottom: 1px;
+					left: 50%;
+					height: 3px;
+					position: absolute;
+					width: 0;
+				}
+			}
+		}
+	}
+
+	// preview mode
+	#wikiPreview {
+		@include clearfix;
+		margin-right: 300px;
+		h2:first-child,
+		.previewnote {
+			display: none;
+		}
+	}
+}
+#cke_toolbar {
+	.headline {
+		color: $color-text;
+	}
+	.bucket_buttons {
+		border-left: 1px solid $color-page-border;
+	}
+	td:first-child .bucket_buttons {
+		border: none;
+	}
+	.skin-oasis & td + td {
+		border: none;
+	}
+}
+#cke_contents_wpTextbox1_sidebar {
+	width: 300px;
+}
+
+// editing tips
+#editingTips {
+	position: absolute;
+	width: 250px !important;
+	height: 363px;
+	float: left;
+	margin-top: -25px;
+	
+	$editing-tips-active: #CCCCCC;
+	$editing-tips-inactive: #DDDDDD;
+	
+	
+	dt {
+	
+		cursor: pointer;
+		border-bottom:1px solid #999999;
+		background-color: $editing-tips-inactive;
+		height: 20px;
+		
+		&.color1 {
+			background-color: $color-active-tab-background-bottom;
+		}
+		
+		padding: {
+			left: 2px;
+			top: 1px;
+			bottom: 1px;	
+		}
+		
+		&:hover {
+			background-color: #CCCCCC;
+		}
+		
+		&:last-child {
+			border-bottom: none;
+			padding-bottom: 2px;
+		}		
+		
+		.active {
+			background-color: $editing-tips-active;
+		}
+		.inactive {
+			background-color: $editing-tips-inactive;
+		}
+	}
+
+	dd {
+		display: none;
+		height: 220px;
+		overflow: auto;	
+	}
+
+	dd:nth-child(3) {
+		display: block ;		
+	}
+	
+	p {
+		margin: 0px;
+	}
+
+}
+.editingtips-shown {
+	margin-left: 257px;
+}
+
+.editingtips-hidden {
+	margin-left: 0px !important;
+	width: 100% !important;
+}
+
+.editingtips-textarea {
+	width: 714px !important;
+	height: 350px !important;
+	margin-bottom: 20px !important;
+}
+
+// LinkSuggest
+.link-suggest-container {
+	position: absolute;
+	.navigation-hover {
+		background: $color-menu-highlight;
+	}
+}

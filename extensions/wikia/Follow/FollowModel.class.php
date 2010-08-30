@@ -10,7 +10,7 @@ class FollowModel {
         static public $specialPageListLimit = 15;
 
     /**
-	 * getWatchList -- get data for followe pages include see all 
+	 * getWatchList -- get data for followe pages include see all
 	 *
 	 * @static
 	 * @access public
@@ -18,28 +18,28 @@ class FollowModel {
 	 *
 	 * @return bool
 	 */
-	
+
 	static function getWatchList($user_id, $from = 0, $limit = 15, $namespace_head = null) {
 		global $wgServer, $wgScript, $wgContentNamespaces, $wgEnableBlogArticles;
 		wfProfileIn( __METHOD__ );
 		$db = wfGetDB( DB_SLAVE );
 
 		$namespaces = array(
-			NS_CATEGORY => 'wikiafollowedpages-special-heading-category',	
+			NS_CATEGORY => 'wikiafollowedpages-special-heading-category',
 			NS_PROJECT => 'wikiafollowedpages-special-heading-project' ,
 			NS_TEMPLATE => 'wikiafollowedpages-special-heading-templates',
 			NS_USER => 'wikiafollowedpages-special-heading-user',
 			NS_MEDIAWIKI => 'wikiafollowedpages-special-heading-mediawiki',
-			110 => 'wikiafollowedpages-special-heading-forum', //NS_FORUM
+			NS_FORUM => 'wikiafollowedpages-special-heading-forum',
 			NS_FILE => 'wikiafollowedpages-special-heading-media',
 			NS_VIDEO => 'wikiafollowedpages-special-heading-media',
 		);
-		
-				
+
+
 		if ( !empty($wgEnableBlogArticles) ) {
 			$namespaces[NS_BLOG_ARTICLE] = 'wikiafollowedpages-special-heading-blogs';
 			$namespaces[NS_BLOG_LISTING] = 'wikiafollowedpages-special-heading-blogs';
-		} 
+		}
 
 		$order = array(
 			'wikiafollowedpages-special-heading-category',
@@ -52,11 +52,11 @@ class FollowModel {
 			'wikiafollowedpages-special-heading-mediawiki',
 			'wikiafollowedpages-special-heading-media',
 		);
-		
+
 		foreach ($wgContentNamespaces as $value) {
-			$namespaces[$value] = 'wikiafollowedpages-special-heading-article'; 
+			$namespaces[$value] = 'wikiafollowedpages-special-heading-article';
 		}
-		
+
 		if ($namespace_head != null) {
 			foreach ($namespaces as $key => $value) {
 				if ( $value != $namespace_head ) {
@@ -65,7 +65,7 @@ class FollowModel {
 			}
 		}
 		$namespaces_keys = array_keys($namespaces);
-		
+
 		$queryArray = array();
 		foreach ($namespaces_keys as $value) {
 			$queryArray[] = "(select wl_namespace, wl_title from watchlist where wl_user = ".intval($user_id)." and wl_namespace = ".intval($value)." ORDER BY wl_wikia_addedtimestamp desc limit ".intval($from).",".intval($limit).")";
@@ -78,23 +78,23 @@ class FollowModel {
 			$row['url'] = $title->getFullURL();
 			$row['hideurl'] = $wgServer.$wgScript."?action=ajax&rs=wfAjaxWatch&rsargs[]=".$title->getPrefixedURL()."&rsargs[]=u";
 			$row['wl_title'] = str_replace("_"," ",$row['wl_title'] );
-			if ($row['wl_namespace'] == NS_BLOG_ARTICLE) {
+			if (defined('NS_BLOG_ARTICLE') && $row['wl_namespace'] == NS_BLOG_ARTICLE) {
 				$explode = explode("/", $row['wl_title']);
 				if ( count($explode) > 1) {
 					$row['wl_title'] = $explode[1];
-					$row['by_user'] =  $explode[0];	
+					$row['by_user'] =  $explode[0];
 				}
 			}
-			
+
 			if ( in_array($row['wl_namespace'], $wgContentNamespaces) && (NS_MAIN != $row['wl_namespace']) ) {
 				$ttile = Title::makeTitle($row['wl_namespace'], "none");
 				$row['other_namespace'] = $ttile->getNsText();
 			}
-			
-			$out_data[$namespaces[ $row['wl_namespace'] ]][] = $row; 	
+
+			$out_data[$namespaces[ $row['wl_namespace'] ]][] = $row;
 		}
-		$con = " wl_user = ".intval($user_id)." and wl_namespace in (".implode(',', $namespaces_keys).")"; 
-		
+		$con = " wl_user = ".intval($user_id)." and wl_namespace in (".implode(',', $namespaces_keys).")";
+
 		$res = $db->select(
 				array( 'watchlist' ),
 				array( 'wl_namespace',
@@ -105,18 +105,18 @@ class FollowModel {
 					'ORDER BY' 	=> 'wl_wikia_addedtimestamp desc,wl_title',
 					'GROUP BY' => 'wl_namespace'
 				)
-		);	
-		
+		);
+
 		$out_count = array();
-		
+
 		while ($row =  $db->fetchRow( $res ) ) {
 			$ns = $namespaces[$row['wl_namespace']];
 			if ( !empty($out[$ns]) ) {
 				$out[$ns]['count'] += $row['cnt'];
 			} else {
-				$out[$ns] = array('ns' => $ns,'count' => $row['cnt'], 'data' => $out_data[$ns]); 	
+				$out[$ns] = array('ns' => $ns,'count' => $row['cnt'], 'data' => $out_data[$ns]);
 			}
-			
+
 			$out[$ns]['show_more'] = 0;
 			if ( $out[$ns]['count']  > $limit ) {
 				$out[$ns]['show_more'] = 1;
@@ -130,13 +130,13 @@ class FollowModel {
 				unset($order[$key]);
 			}
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return $order;
 	}
 
 	/**
-	 * getUserPageWatchList -- getdata for box on user page 
+	 * getUserPageWatchList -- getdata for box on user page
 	 *
 	 * @static
 	 * @access public
@@ -144,18 +144,18 @@ class FollowModel {
 	 *
 	 * @return bool
 	 */
-		
+
 	static function getUserPageWatchList($user_id) {
 		global $wgMemc, $wgContentNamespaces, $wgEnableBlogArticles;
-		
+
 		$NS = array();
-				
-		if ( !empty($wgEnableBlogArticles) ) {			 
+
+		if ( !empty($wgEnableBlogArticles) ) {
 			$NS[] = NS_BLOG_ARTICLE;
 		}
-		
+
 		$NS = array_merge($NS,$wgContentNamespaces);
-		
+
 		wfProfileIn( __METHOD__ );
 		$db = wfGetDB( DB_SLAVE );
 		$con = 'wl_user = '.intval($user_id).' and wl_namespace in ('.implode(',', $NS).')';
@@ -169,10 +169,10 @@ class FollowModel {
 					'ORDER BY' 	=> 'wl_wikia_addedtimestamp desc,wl_title',
 					'LIMIT'		=> 10
 				)
-		);	
+		);
 
 		$watchlist = array();
-	
+
 		while ($row = $db->fetchRow( $res ) ) {
 			$title = Title::makeTitle( $row['wl_namespace'], $row['wl_title'] );
 			$row['url'] = $title->getFullURL();
@@ -182,11 +182,11 @@ class FollowModel {
 					$explode = explode("/", $row['wl_title']);
 					if ( count($explode) > 1) {
 						$row['wl_title'] = $explode[1];
-						$row['by_user'] =  $explode[0];	
+						$row['by_user'] =  $explode[0];
 					}
 				}
-			}			
-			$watchlist[] = $row; 
+			}
+			$watchlist[] = $row;
 		}
 		wfProfileOut( __METHOD__ );
 		return $watchlist;

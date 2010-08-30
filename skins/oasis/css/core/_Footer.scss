@@ -1,0 +1,113 @@
+.WikiaFooter {
+	background: url(/skins/oasis/images/sprite.png) 0 -32px no-repeat;
+	clear: both;
+	padding-top: 23px;
+	position: relative;
+	.toolbar {
+		@include linear-gradient($color-header, left, $color-header-alt, 0, $color-header, 50%, $color-header-alt, 100%);	
+		border-top: 3px solid #000;
+		color: $color-header-text;
+		height: 20px;
+		left: 50%;
+		margin-left: -$width-outside/2 - 5;
+		position: absolute;
+		top: 0;
+		width: $width-outside + 10px;
+		z-index: 500;
+		&.float {
+			bottom: 0;
+			position: fixed;
+			top: auto;
+		}
+		img {
+			float: left;
+			margin-right: 5px;
+			vertical-align: middle;
+		}
+	}
+	.share {
+		@include clearfix;
+		background-image: url(/skins/oasis/images/checkers.png);			
+		display: block;
+		list-style: none;
+		padding-right: 30px;
+		>li {
+			border-right: 1px solid mix($color-header-text, $color-header, 20%);
+			float: right;
+			height: 16px;
+			line-height: 16px;
+			margin-top: 2px;
+			padding: 0 10px;
+			&:first-child {
+				border: 0;
+			}
+			img {
+				height: 15px;
+				margin: 0 6px 0 1px;
+				width: 15px;
+				&.mytools-icon {
+					background: url(/skins/oasis/images/sprite.png) -1584px -16px no-repeat;
+				}
+				&.follow-icon {
+					background: url(/skins/oasis/images/sprite.png) -1584px 0 no-repeat;
+				}
+				&.share-icon {
+					background: url(/skins/oasis/images/sprite.png) -1584px -48px no-repeat;
+				}
+			}
+		}
+		.my-tools-edit {
+			font-size: 10px;
+			text-align: right;
+		}
+		a {
+			color: $color-header-text;
+		}
+		img {
+			cursor: pointer;
+		}
+	}
+	.my-tools-menu {
+		@include menu-heavy;
+		border-width: 4px 4px 2px;
+		bottom: 22px;
+		min-width: 120px;
+		right: 0;
+		span {
+			color: mix($color-text, $color-page);
+			display: block;
+			padding: 5px;
+		}
+	}
+	h1 {
+		font-size: 22px;
+		left: 36px;
+		position: absolute;
+		top: 40px;
+	}
+	.wikia-button {
+		position: absolute;
+		right: 36px;	
+		top: 40px;
+	}
+	>ul {
+		@include clearfix;
+		@include linear-gradient(false, top, rgba($color-module-shadow, 0), 50%, $color-module-shadow, 100%);
+		border-bottom: 1px solid $color-page-border;
+		border-left: 1px solid $color-page-border;
+		border-right: 1px solid $color-page-border;
+		list-style: none;
+		margin: 0 15px 15px;
+		padding: 45px 20px 20px;
+		text-align: center;
+		.item-1 {
+			float: left;
+		}
+		.item-2 {
+			float: right;
+		}
+	}
+	.banner-corner-right {
+		right: -5px;
+	}
+}

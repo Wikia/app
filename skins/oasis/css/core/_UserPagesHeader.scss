@@ -1,0 +1,300 @@
+.WikiaUserPagesHeader {
+	@include clearfix;
+	margin-bottom: 10px;
+	padding: 0 10px 6px;
+	position: relative;
+	h1 {
+		display: inline;
+		font-size: 24px;
+		margin: 0 10px 0 0;
+		small {
+			font-size: 12px;
+		}
+	}
+	.commentslikes {
+		display: inline;
+		line-height: 26px;
+		vertical-align: top;
+	}
+	.wikia-avatar {
+		border: 2px solid $color-page;
+		float: left;
+		margin: 1px 7px 2px 2px;
+		position: relative;
+		ul {
+			background: $color-page;
+			border: 2px solid $color-links;
+			display: none;
+			left: -2px;
+			list-style: none;
+			margin: 0;
+			position: absolute;
+			top: 106px;
+			width: 102px;
+			z-index: 100;
+			a {
+				color: $color-text;
+				display: block;
+				padding: 4px 4px 2px;
+				text-decoration: none;
+				&:hover {
+					background: $color-menu-highlight;
+				}
+			}
+			li {
+				border-top: 1px solid $color-page-border;
+				line-height: normal;
+				&:first-child {
+					border: 0;
+				}
+			}
+		}
+	}
+	.wikia-avatar-menu:hover {
+		border-color: $color-links;
+		ul {
+			display: block;
+		}
+	}
+	.avatar-link {
+		border: 1px solid $color-page-border;
+		display: block;
+		.avatar {
+			border: none;
+		}
+	}
+	span {
+		display: block;
+	}
+	.member-since {
+		font-size: 12px;
+		line-height: 14px;
+	}
+	.member-edits {
+		font-size: 20px;
+		line-height: 30px;
+		sup {
+			font-size: 10px;
+			font-weight: bold;
+			position: relative;
+			text-transform: uppercase;
+			top: -7px;
+		}
+	}
+	.tabs-container {
+		background: url(/skins/oasis/images/sprite.png) -1030px bottom no-repeat;
+		bottom: 0;
+		left: 120px;
+		overflow: hidden;
+		position: absolute;
+		width: 550px;
+		.tabs {
+			border-bottom: none;
+			margin-bottom: 10px;
+		}
+	}
+	.wikia-button,
+	.wikia-menu-button {
+		position: absolute;
+		right: 10px;
+		top: 0;
+		a[data-id=editprofile] .icon,
+		&[data-id=editprofile] .icon,
+		&[data-id=createblogpost] .icon {
+			background: url(/skins/oasis/images/sprite.png) -1568px -48px no-repeat;
+		}
+		a[data-id=leavemessage] .icon {
+			background: url(/skins/oasis/images/sprite.png) -1568px -16px no-repeat;
+		}
+		a[data-id=addtopic] .icon {
+			background: url(/skins/oasis/images/sprite.png) -1568px -16px no-repeat;
+		}
+	}
+}
+
+.WikiaBlogPostHeader {
+	background: none;
+	border-bottom: 1px solid $color-page-border;
+	margin-left: 10px;
+	padding-left: 0;
+	padding-right: 90px;
+	.commentslikes {
+		bottom: 75px;
+		position: absolute;
+		right: 0;
+	}
+	.wikia-menu-button {
+		position: relative;
+		right: auto;
+	}
+	details {
+		@include clearfix;
+		padding: 8px 0;
+		.avatar {
+			margin-right: 5px;
+		}
+		.post-author {
+			font-weight: bold;
+		}
+		a {
+			color: $color-links;
+		}
+	}
+}
+
+.WikiaBlogListingHeader {
+	background: url(/skins/oasis/images/shadow_narrow.png) left bottom no-repeat;
+	padding-bottom: 25px;
+}
+
+// hide blog listing rendered for Monaco
+#wk_blogs_article {
+	display: none;
+}
+.wk_blogs_panel {
+	display: none;
+}
+
+// styling for Oasis blog listing
+.WikiaBlogListing {
+	// show this HTML on Oasis
+	.skin-oasis & {
+		display: block !important;
+	}
+	.WikiaArticle & > ul {
+		list-style: none;
+		margin: 0;
+		padding: 0 10px;
+	}
+	.WikiaArticle & h1 {
+		font-size: 22px;
+		margin-right: 90px;
+	}
+	.WikiaArticle & h3 {
+		display: none;
+    }
+	.WikiaBlogListingPost {
+		border-bottom: 1px solid $color-page-border;
+		padding-bottom: 20px;
+		margin-bottom: 20px;
+		position: relative;
+	}
+	.WikiaBlogListingPost:last-child {
+		border: none;
+	}
+	.commentslikes {
+		position: absolute;
+		right: 10px;
+		top: 0px;
+	}
+	details {
+		@include clearfix;
+		.avatar {
+			float: left;
+			padding-right: 5px;
+		}
+		span {
+			display: block;
+			a, a:visited {
+				font-weight: bold;
+			}
+		}
+	}
+	p .read-more {
+		margin: 0 20px;
+	}
+}
+
+// styling for Oasis blog listing
+
+.WikiaBlogListingBox {
+	width: 292px;
+
+	@include rail-module;
+
+	// show this HTML on Oasis
+	.skin-oasis & {
+		display: block !important;
+	}
+
+	.WikiaArticle & ul {
+		list-style: none;
+		margin: 0px;
+	}
+	ul > li > h1 {
+		margin: 0px;
+		line-height: 10px;
+		position: relative;
+		a {
+			font-size: 10px;
+		}
+	}
+	li {
+		border-top: 1px solid $color-page-border;
+		font-size: 12px;
+		padding: 0px 0px 0px 50px;
+		position: relative;
+		&:first-child {
+			border: 0;
+		}
+		em {
+			font-size: 16px;
+		}
+		blockquote p {
+		margin: 0px;
+		position: relative;
+		left: -50px;
+		width: 290px;
+		line-height: 20px;
+        }
+	}
+	.avatar {
+		position: absolute;
+		top: 3px;
+		left: 3px;
+		height: 20px;
+		width: 20px;
+	}
+	details {
+		line-height: 10px;
+		a {
+			color: $color-links;
+			font-size: 10px;
+		}
+		span {
+
+			font-size: 10px;
+			a, a:visited {
+				font-weight: bold;
+			}
+		}
+	}
+	.commentslikes {
+		position: absolute;
+		right: 10px;
+		bottom: 0px;
+	}
+	.read-more {
+		a {
+			color: $color-links;
+			font-size: 10px;
+		}
+		span {
+			a, a:visited {
+				font-weight: bold;
+			}
+		}
+	}
+	.wikia-button>img {
+		background: url(/skins/oasis/images/sprite.png) no-repeat -1568px -16px transparent;
+		height: 10px;
+		margin-right: 5px;
+		width: 10px;
+	}
+}
+
+#contentSub {
+	font-size: 11px;
+	line-height: 13px;
+	margin: 0 10px 15px 20px;
+}

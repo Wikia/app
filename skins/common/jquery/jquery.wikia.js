@@ -1,3 +1,5 @@
+$G = function(id) {return document.getElementById(id)};
+
 //see http://jamazon.co.uk/web/2008/07/21/jquerygetscript-does-not-cache
 $.ajaxSetup({cache: true});
 
@@ -27,9 +29,12 @@ jQuery.fn.getModal = function(url, id, options) {
 	$.loadModalJS(function() {
 		$().log('getModal: plugin loaded');
 
+		// where should modal be inserted?
+		var insertionPoint = (skin == "oasis") ? "body" : "#positioned_elements";
+
 		// get modal content via AJAX
 		$.get(url, function(html) {
-			$("#positioned_elements").append(html);
+			$(insertionPoint).append(html);
 
 			// fire callbackBefore if provided
 			if (typeof options == 'object' && typeof options.callbackBefore == 'function') {
@@ -57,9 +62,13 @@ jQuery.showModal = function(title, content, options) {
 	$.loadModalJS(function() {
 		$().log('showModal: plugin loaded');
 
-		var dialog = $('<div class="modalContent">').html(content).attr('title', title);
-
-		$("#positioned_elements").append(dialog);
+		if (skin == 'oasis') {
+			var header = $('<h1>').html(title);
+			var dialog = $('<div>').html(content).prepend(header).appendTo('body');
+		}
+		else {
+			var dialog = $('<div class="modalContent">').html(content).attr('title', title).appendTo('#positioned_elements');
+		}
 
 		// fire callbackBefore if provided
 		if (typeof options.callbackBefore == 'function') {
@@ -90,8 +99,10 @@ jQuery['confirm'] = function(options) {
 			'<a id="WikiaConfirmOk" class="wikia-button">' + (options.okMsg || 'Ok') + '</a>' +
 			'</div>';
 
+		var insertionPoint = (skin == "oasis") ? "body" : "#positioned_elements";
+
 		var dialog = $('<div>').
-			appendTo('#positioned_elements').
+			appendTo(insertionPoint).
 			html(html).
 			attr('title', options.title || '');
 
@@ -150,7 +161,8 @@ jQuery.showCustomModal = function(title, content, options) {
 
 		var dialog = $('<div>').html(content).attr('title', title).append(buttons);
 
-		$("#positioned_elements").append(dialog);
+		var insertionPoint = (skin == "oasis") ? "body" : "#positioned_elements";
+		$(insertionPoint).append(dialog);
 
 		// fire callbackBefore if provided
 		if (typeof options.callbackBefore == 'function') {
@@ -212,27 +224,20 @@ $.loadYUI = function(callback) {
 	}
 }
 
-// RT #19369: TabView
-$(function() {
-	if (typeof window.__FlyTabs == 'undefined') {
-		return;
+// load jQuery UI library if not yet loaded
+$.loadJQueryUI = function(callback) {
+	if (typeof jQuery.ui == 'undefined') {
+		$().log('loading', 'jQuery UI');
+
+		$.getScript(stylepath + '/common/jquery/jquery-ui-1.7.2.custom.js?' + wgStyleVersion, function() {
+			$().log('loaded', 'jQuery UI');
+			callback();
+		});
 	}
-
-	$.getScript(stylepath + '/common/jquery/jquery.flytabs.js?' + wgStyleVersion, function() {
-		$().log(window.__FlyTabs, 'TabView');
-
-		for(t=0; t<window.__FlyTabs.length; t++) {
-			var tab = window.__FlyTabs[t];
-
-			$('#flytabs_' + tab.id).flyTabs.config({align: 'none', effect: 'no'});
-
-			for (s=0; s<tab.options.length; s++) {
-				$('#flytabs_' + tab.id).flyTabs.addTab(tab.options[s]);
-			}
-		}
-	});
-});
-
+	else {
+		callback();
+	}
+}
 /*
 Copyright (c) 2008, Yahoo! Inc. All rights reserved.
 Code licensed under the BSD License:
@@ -349,9 +354,67 @@ jQuery.fn.reverse = function() {
 jQuery.fn.isChrome = function() {
 	if ( $.browser.webkit && !$.browser.opera && !$.browser.msie && !$.browser.mozilla ) {
 		var userAgent = navigator.userAgent.toLowerCase();
-		if ( userAgent.indexOf("chrome") >  -1 ) { 
+		if ( userAgent.indexOf("chrome") >  -1 ) {
 			return true;
 		}
 	}
 	return false;
 };
+
+/**
+ * Tests whether first element in current collection is a child of node matching selector provided
+ *
+ * @return boolean
+ * @param string a jQuery selector
+ *
+ * @author Macbre
+ */
+$.fn.hasParent = function(selector) {
+	// use just the first element from current collection
+	var node = this.first();
+
+	// go down the DOM tree
+	while (node.exists() && !node.is('body')) {
+		node = node.parent();
+		if (node.is(selector)) {
+			return true;
+		}
+	}
+	return false;
+}
+
+// RT #19369: TabView
+$(function() {
+	if (typeof window.__FlyTabs == 'undefined') {
+		return;
+	}
+
+	$.getScript(stylepath + '/common/jquery/jquery.flytabs.js?' + wgStyleVersion, function() {
+		$().log(window.__FlyTabs, 'TabView');
+
+		for(t=0; t<window.__FlyTabs.length; t++) {
+			var tab = window.__FlyTabs[t];
+
+			$('#flytabs_' + tab.id).flyTabs.config({align: 'none', effect: 'no'});
+
+			for (s=0; s<tab.options.length; s++) {
+				$('#flytabs_' + tab.id).flyTabs.addTab(tab.options[s]);
+			}
+		}
+	});
+});
+
+// macbre: page loading times (onDOMready / window onLoad)
+$(function() {
+	if (typeof wgNow != 'undefined') {
+		var loadTime = (new Date()).getTime() - wgNow.getTime();
+		$().log('DOM ready after ' + loadTime + ' ms', window.skin);
+	}
+});
+
+$(window).bind('load', function() {
+	if (typeof wgNow != 'undefined') {
+		var loadTime = (new Date()).getTime() - wgNow.getTime();
+		$().log('window onload after ' + loadTime + ' ms', window.skin);
+	}
+});

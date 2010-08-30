@@ -56,6 +56,13 @@ function tabbedprefs(prefform) {
 	}
 	prefform.parentNode.insertBefore(toc, prefform.parentNode.childNodes[0]);
 	document.getElementById('prefsubmit').id = 'prefcontrol';
+
+	/* Wikia change begin - @author: Macbre */
+	// proper styling for preferences tabs
+	if (window.skin == 'oasis') {
+		toc.className = 'tabs';
+	}
+	/* Wikia change end */
 }
 
 // added by Bartek for Wikia, 18.03.2008/29.07.2008

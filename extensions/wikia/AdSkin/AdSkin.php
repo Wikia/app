@@ -9,7 +9,7 @@ $wgHooks['GetHTMLAfterBody'][] = 'RenderAdSkin';
 $wgHooks['SpecialFooterAfterWikia'][] = 'RenderAdSkinJS';
 $wgHooks['MonacoAdLink'][] = 'RenderAdLink';
 
-function RenderAdSkin() {
+function RenderAdSkin($skin, &$html) {
 	global $wgAdSkin, $wgExtensionsPath, $wgUser, $wgWikiaLogo, $wgAdSkinVersion;
 
 	// Disable for logged in users
@@ -21,7 +21,7 @@ function RenderAdSkin() {
 	if (isset($wgAdSkin)) {
 		switch ($wgAdSkin) {
 		case "iphone_games":
-			echo '<link rel="stylesheet" type="text/css" href="'. $wgExtensionsPath .'/wikia/AdSkin/css/iphone_games.css?'. $wgAdSkinVersion .'" />';
+			$html .= '<link rel="stylesheet" type="text/css" href="'. $wgExtensionsPath .'/wikia/AdSkin/css/iphone_games.css?'. $wgAdSkinVersion .'" />\n';
 			break;
 		}
 	}
@@ -35,32 +35,32 @@ function RenderAdSkin() {
 	if (isset($wgAdSkin)) {
 		switch ($wgAdSkin) {
 		case "wow_lich_king":
-			echo '<link rel="stylesheet" type="text/css" href="'. $wgExtensionsPath .'/wikia/AdSkin/css/wow_lich_king.css?'. $wgAdSkinVersion .'" />';
+			$html .= '<link rel="stylesheet" type="text/css" href="'. $wgExtensionsPath .'/wikia/AdSkin/css/wow_lich_king.css?'. $wgAdSkinVersion .'" />\n';
 			break;
 		case "wow_lich_king_warhammer":
-			echo '<link rel="stylesheet" type="text/css" href="'. $wgExtensionsPath .'/wikia/AdSkin/css/wow_lich_king_warhammer.css?'. $wgAdSkinVersion .'" />';
+			$html .= '<link rel="stylesheet" type="text/css" href="'. $wgExtensionsPath .'/wikia/AdSkin/css/wow_lich_king_warhammer.css?'. $wgAdSkinVersion .'" />\n';
 			break;
 		case "dragonball_origins":
-			echo '<link rel="stylesheet" type="text/css" href="'. $wgExtensionsPath .'/wikia/AdSkin/css/dragonball_origins.css?'. $wgAdSkinVersion .'" />';
+			$html .= '<link rel="stylesheet" type="text/css" href="'. $wgExtensionsPath .'/wikia/AdSkin/css/dragonball_origins.css?'. $wgAdSkinVersion .'" />\n';
 			break;
 		case "dnd":
-			echo '<link rel="stylesheet" type="text/css" href="'. $wgExtensionsPath .'/wikia/AdSkin/css/dnd.css?'. $wgAdSkinVersion .'" />';
+			$html .= '<link rel="stylesheet" type="text/css" href="'. $wgExtensionsPath .'/wikia/AdSkin/css/dnd.css?'. $wgAdSkinVersion .'" />\n';
 			break;
 		case "underworld":
-			echo '<link rel="stylesheet" type="text/css" href="'. $wgExtensionsPath .'/wikia/AdSkin/css/underworld.css?'. $wgAdSkinVersion .'" />';
-			echo '<style type="text/css">';
-			echo 'body.mainpage #wikia_header {
+			$html .= '<link rel="stylesheet" type="text/css" href="'. $wgExtensionsPath .'/wikia/AdSkin/css/underworld.css?'. $wgAdSkinVersion .'" />\n';
+			$html .= '<style type="text/css">';
+			$html .= 'body.mainpage #wikia_header {
 				background: url('. $wgWikiaLogo .') 10px 2px no-repeat;
 			}';
-			echo '</style>';
+			$html .= '</style>';
 			break;
 		case "warhammer":
-			echo '<link rel="stylesheet" type="text/css" href="'. $wgExtensionsPath .'/wikia/AdSkin/css/warhammer.css?'. $wgAdSkinVersion .'" />';
-			echo '<style type="text/css">';
-			echo 'body.mainpage #wikia_header {
-				background: #252525 url('. $wgWikiaLogo .') 10px 2px no-repeat;
-			}';
-			echo '</style>';
+			$html .= '<link rel="stylesheet" type="text/css" href="'. $wgExtensionsPath .'/wikia/AdSkin/css/warhammer.css?'. $wgAdSkinVersion .'" />\n';
+			$html .= '<style type="text/css">\n';
+			$html .= 'body.mainpage #wikia_header {\n
+				background: #252525 url('. $wgWikiaLogo .') 10px 2px no-repeat;\n
+			}\n';
+			$html .= '</style>\n';
 			break;
 		case "superpages":
 			/*
@@ -72,7 +72,7 @@ function RenderAdSkin() {
 			<a href="http://ad.doubleclick.net/jump/npm.wikia/superpages;tile=1;sz=1x1;click=;ord=?" target="_blank"><img src="http://ad.doubleclick.net/ad/npm.wikia/superpages;tile=1;sz=1x1;ord=?" width="1" height=1" border="0" alt=""></a></noscript>';
 			echo '</div>';
 			*/
-			echo '<link rel="stylesheet" type="text/css" href="'. $wgExtensionsPath .'/wikia/AdSkin/css/superpages.css?'. $wgAdSkinVersion .'" />';
+			$html .= '<link rel="stylesheet" type="text/css" href="'. $wgExtensionsPath .'/wikia/AdSkin/css/superpages.css?'. $wgAdSkinVersion .'" />\n';
 			break;
 		}	
 	}

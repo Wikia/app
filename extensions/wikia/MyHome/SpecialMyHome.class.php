@@ -19,6 +19,13 @@ class SpecialMyHome extends SpecialPage {
 
 		// not available for skins different then monaco / answers
 		$skinName = get_class($wgUser->getSkin());
+
+		// For oasis, redirect to WikiActivity
+		if ($skinName == 'SkinOasis') {
+			$wgOut->redirect(SpecialPage::getTitleFor('WikiActivity')->getLinkUrl());
+			return;
+		}
+
 		if (!in_array($skinName, array('SkinMonaco', 'SkinAnswers'))) {
 			$wgOut->addWikiMsg( 'myhome-switch-to-monaco' );
 			wfProfileOut(__METHOD__);

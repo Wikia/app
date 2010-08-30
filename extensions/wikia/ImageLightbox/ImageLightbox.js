@@ -7,7 +7,7 @@ var ImageLightbox = {
 		window.jQuery.tracker.byStr('lightbox' + fakeUrl);
 	},
 
-	// setup clicks on links with .lightbox class
+	// setup click handler on article content
 	init: function() {
 		var self = this;
 
@@ -17,27 +17,39 @@ var ImageLightbox = {
 			return;
 		}
 
-		var images = $('#bodyContent').find('a.lightbox, a.image');
-		if (!images.exists()) {
-			return;
+		if (window.skin == 'oasis') {
+			var article = $('#WikiaArticle');
+		}
+		else {
+			var article = $('#bodyContent');
 		}
 
-		this.log('init for ' + images.length + ' images');
+		this.log('init');
 
-		images.
+		article.
 			unbind('.lightbox').
 			bind('click.lightbox', function(ev) {
 				self.onClick.call(self, ev);
 			});
 	},
 
-	// handle click on link
+	// handle clicks on article content and handle clicks on links only
 	onClick: function(ev) {
 		var target = $(ev.target);
 
-		// move to parent to an image - anchor
+		// move to parent of an image -> anchor
 		if (target.is('img')) {
 			target = target.parent();
+		}
+
+		// handle clicks on links only
+		if (!target.is('a')) {
+			return;
+		}
+
+		// handle clicks on "a.lightbox, a.image" only
+		if (!target.hasClass('lightbox') && !target.hasClass('image')) {
+			return;
 		}
 
 		// don't show thumbs for gallery images linking to a page
@@ -116,42 +128,50 @@ var ImageLightbox = {
 		// tracking
 		this.track('/init');
 
+		// calculate maximum dimensions for image
+		var maxWidth = $.getViewportWidth();
+		var maxHeight = $.getViewportHeight();
+
+		if (window.skin == 'oasis') {
+			maxHeight -= 75;
+			maxWidth = 950;
+		}
+
+		// get resized image from server
 		$.getJSON(wgScript + '?action=ajax&rs=ImageLightboxAjax', {
-			'title': imageName,
-			'maxwidth': $.getViewportWidth(),
-			'maxheight': $.getViewportHeight()
+			'maxheight': maxHeight,
+			'maxwidth': maxWidth,
+			'title': imageName
 		}, function(res) {
-			if (res.html) {
+			if (res && res.html) {
 				// open modal
-				$.loadModalJS(function() {
-					$("#positioned_elements").append(res.html);
+				$.showModal(res.title, res.html, {
+					'id': 'lightbox',
+					'width': res.width,
 
-					$('#lightbox-caption-content').html(caption);
+					// track when popup is closed
+					'onClose': function() {
+						self.track('/close');
+					},
 
-					$('#lightbox-image').makeModal({
-						'id': 'lightbox',
-						'width': res.width,
+					// setup tracking
+					'callback': function() {
+						$('#lightbox-link').click(function() {
+							self.track('/details');
+						});
 
-						// track when popup is closed
-						'onClose': function() {
-							self.track('/close');
-						}
-					});
+						$('#lightbox-caption-content').html(caption);
 
-					// tracking
-					$('#lightbox-link').click(function() {
-						self.track('/details');
-					});
+						// remove lock
+						delete self.lock;
+					}
 				});
-
-				// remove lock
-				delete self.lock;
 			}
 		});
 	}
 };
 
-if ( (typeof window.skin != 'undefined') && (window.skin == 'monaco') ) {
+if ( (typeof window.skin != 'undefined') && (window.skin == 'monaco' || window.skin == 'oasis') ) {
 	$(function() {
 		ImageLightbox.init.call(ImageLightbox);
 	});

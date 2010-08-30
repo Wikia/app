@@ -1,0 +1,34 @@
+/**
+ * @see http://perfectionorvanity.com/reset.html
+ */
+a, abbr, address, article, aside, audio, b, blockquote, body, canvas, 
+caption, cite, code, dd, del, details, dfn, div, dl, dt, em, embed, fieldset,
+figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup,
+html, i, iframe, img, ins, kbd, label, legend, li, mark, menu, nav, 
+object, ol, p, pre, q, samp, section, small, span, strong, sub, summary, 
+sup, time, ul, var, video {
+	border: 0;
+	font-size: 100%;
+	font-style: inherit;
+	font-weight: inherit;
+	margin: 0;
+	padding: 0;
+	vertical-align: baseline;
+}
+
+article, aside, canvas, details, figcaption, figure, footer, header, 
+hgroup, menu, nav, section, summary {
+	display: block;
+}
+
+a, ins, del {
+	text-decoration: none;
+}
+
+ul, ol {
+	list-style: none;
+}
+
+q:after, q:before {
+	content: "";
+}

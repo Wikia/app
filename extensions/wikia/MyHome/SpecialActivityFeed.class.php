@@ -14,17 +14,23 @@ class SpecialActivityFeed extends SpecialPage {
 
 		// not available for skins different then monaco / answers
 		$skinName = get_class($wgUser->getSkin());
+
+		// For oasis redirect to WikiActivity
+		if ($skinName == 'SkinOasis') {
+			$wgOut->redirect(SpecialPage::getTitleFor('WikiActivity')->getLinkUrl());
+			return;
+		}
+
 		if (!in_array($skinName, array('SkinMonaco', 'SkinAnswers'))) {
 			$wgOut->addWikiMsg( 'myhome-switch-to-monaco' );
 			wfProfileOut(__METHOD__);
 			return;
 		}
 
-		// load dependencies (CSS and JS)
-		global $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType;
-		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/MyHome/MyHome.css?{$wgStyleVersion}");
+		$feedProxy = new ActivityFeedAPIProxy();
+		$feedProvider = new DataFeedProvider($feedProxy);
 
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/MyHome/MyHome.js?{$wgStyleVersion}\"></script>\n");
+		$data = $feedProvider->get(60);
 		
 		global $wgEnableAchievementsInActivityFeed, $wgEnableAchievementsExt;
 		if((!empty($wgEnableAchievementsInActivityFeed)) && (!empty($wgEnableAchievementsExt))){
@@ -44,25 +50,24 @@ class SpecialActivityFeed extends SpecialPage {
 		// use message from MyHome as special page title
 		$wgOut->setPageTitle(wfMsg('myhome-activity-feed'));
 
+		// load dependencies (CSS and JS)
+		global $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType;
+		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/MyHome/MyHome.css?{$wgStyleVersion}");
+
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/MyHome/MyHome.js?{$wgStyleVersion}\"></script>\n");
+
 		######
 		### Prepare HTML for ActivityFeed
 		######
 
-		$feedProxy = new ActivityFeedAPIProxy();
-		$feedRenderer = new ActivityFeedForAnonsRenderer();
-
-		$feedProvider = new DataFeedProvider($feedProxy);
 		// render ActivityFeed
-		$feedHTML = $feedRenderer->render($feedProvider->get(60));
-
-		######
-		### Show HTML
-		######
-
+		$feedRenderer = new ActivityFeedForAnonsRenderer();
+		$feedHTML = $feedRenderer->render($data);
 		$template = new EasyTemplate(dirname(__FILE__).'/templates');
 		$template->set('feedHTML', $feedHTML);
 
 		$wgOut->addHTML($template->render('activityfeed'));
+
 		wfProfileOut(__METHOD__);
 	}
 
