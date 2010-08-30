@@ -106,15 +106,27 @@ class ScribeProducer {
 		global $wgCityId;
 		wfProfileIn( __METHOD__ );
 		
+		$revId = $pageId = 0;
 		if ( ( is_object($oArticle) ) && ( $oUser instanceof User ) ) {
-			$revid = ( $oRevision instanceof Revision ) ? $oRevision->getId() : 0;
-			$pageId = ( is_object($oArticle) ) ? $oArticle->getID() : 0;
-			if ( empty($revid) ) {
-				$revid = $oArticle->getTitle()->getLatestRevID(GAID_FOR_UPDATE);
+			
+			# revision 
+			if ( $oRevision instanceof Revision ) {
+				$revId = $oRevision->getId();
+				$pageId = $oRevision->getPage();
 			}
-			if ( $revid > 0 && $pageId > 0 ) { 
+			
+			if ( empty($revId) ) {
+				$revId = $oArticle->getTitle()->getLatestRevID(GAID_FOR_UPDATE);
+			}
+			
+			# article
+			if ( empty($pageId) || $pageId < 0 ) {
+				$pageId = $oArticle->getID();
+			} 
+			
+			if ( $revId > 0 && $pageId > 0 ) { 
 				$key = ( isset($status->value['new']) && $status->value['new'] == 1 ) ? 'create' : 'edit';
-				$oScribeProducer = new ScribeProducer( $key, $pageId, $revid, 0, (!empty($undef1)) ? 1 : 0 );
+				$oScribeProducer = new ScribeProducer( $key, $pageId, $revId, 0, (!empty($undef1)) ? 1 : 0 );
 				if ( is_object( $oScribeProducer ) ) {
 					$oScribeProducer->send_log();
 				}
@@ -150,14 +162,25 @@ class ScribeProducer {
 		wfProfileIn( __METHOD__ );
 		
 		if ( ( is_object($oArticle) ) && ( $oUser instanceof User ) ) {
-			$revid = ( $oRevision instanceof Revision ) ? $oRevision->getId() : 0;
-			if ( empty($revid) && !empty($latestRevId) ) {
-				$revid = $latestRevId;
+			$revId = $pageId = 0;			
+			# revision 
+			if ( $oRevision instanceof Revision ) {
+				$revId = $oRevision->getId();
+				$pageId = $oRevision->getPage();
 			}
-			$pageId = ( is_object($oArticle) ) ? $oArticle->getID() : 0;
-			if ( $revid > 0 && $pageId > 0 ) { 
+			
+			if ( empty($revId) && !empty($latestRevId) ) {
+				$revId = $latestRevId;
+			}
+			
+			# article
+			if ( empty($pageId) || $pageId < 0 ) {
+				$pageId = $oArticle->getID();
+			} 			
+			
+			if ( $revId > 0 && $pageId > 0 ) { 
 				$key = 'edit';
-				$oScribeProducer = new ScribeProducer( $key, $pageId, $revid, 0, 0 );
+				$oScribeProducer = new ScribeProducer( $key, $pageId, $revId, 0, 0 );
 				if ( is_object( $oScribeProducer ) ) {
 					$oScribeProducer->send_log();
 				}
@@ -397,7 +420,10 @@ class ScribeProducer {
 				
 				if ( $oRevision instanceof Revision ) {
 					$revId = $oRevision->getId();
-					$newPageId = $oOldTitle->getArticleId();
+					$newPageId = $oRevision->getPage();
+					if ( empty($newPageId) || $newPageId < 0 ) {
+						$newPageId = $oOldTitle->getArticleId();
+					}
 					if ( $revId > 0 && $newPageId > 0 ) {
 						$oScribeProducer = new ScribeProducer( 'edit', $newPageId, $revId );
 						if ( is_object( $oScribeProducer ) ) {
