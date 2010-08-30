@@ -1,5 +1,5 @@
 <section class="<?= $blogListingClass ?>" style="display: none">
- 	<h3> <?= $wgTitle ?> <?= View::specialPageLink('CreateBlogPage', 'blog-create-post-label', 'wikia-button', 'blank.gif') ?> </h3>
+ 	<h3> <?= View::specialPageLink('CreateBlogPage', 'blog-create-post-label', 'wikia-button', 'blank.gif') ?> <?= $wgTitle ?> </h3>
 	<ul>
 		<?php
 		foreach ($posts as $post) {
