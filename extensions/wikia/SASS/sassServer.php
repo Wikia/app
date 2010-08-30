@@ -185,12 +185,12 @@ function runSass($inputFile, $tmpFile, $sassParams, &$errorStr){
 				$errorStr .= " - Please change that file to a .scss file if you need to import something into it.\n";
 			}
 
-			// Apply wgStylePath substitutions like in StaticChute.
-			$fileContents = wfReplaceCdnStylePathInCss($fileContents);
-
 			$cssContent = str_replace($lineMatched, $fileContents, $cssContent);
 		}
 	}
+	
+	// Apply wgStylePath substitutions like in StaticChute.
+	$cssContent = wfReplaceCdnStylePathInCss($cssContent);
 
 	// If RTL is set as a sass-param, then pass the entire output through cssjanus to convert the CSS to right-to-left.
 	if($sassParams && (0 < preg_match("/(^| )rtl=/i", $sassParams)) && !(0 < preg_match("/(^| )rtl=(false|0)/i", $sassParams)) ){
