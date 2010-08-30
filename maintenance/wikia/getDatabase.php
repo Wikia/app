@@ -14,24 +14,29 @@ $wgDBdevboxUser = 'devbox';
 $wgDBdevboxPass = 'devbox';
 $wgDBdevboxServer1 = 'dev-db-a1';
 $wgDBdevboxServer2 = 'dev-db-b1';
-$databaseDirectory = "database_C";
+$databaseDirectory = "database_A";
 
 $USAGE =
-	"Usage:\tphp getDatabase.php [-f [dbname] | -i [filename] | -?]\n" .
+	"Usage:\tphp getDatabase.php -c [cluser A,B,C] [-f [dbname] | -i [filename] | -?]\n" .
 	"\toptions:\n" .
 	"\t\t--help      show this message\n" .
 	"\t\t-f          Fetch a new database dump from s3\n" .
 	"\t\t-i          Import a downloaded file to dev db\n";
 
-$opts = getopt ("?::i:f:");
+$opts = getopt ("?::i:f:c:");
 
 if( count($opts) == 0 || in_array( 'help', $opts )) die( $USAGE );
-
 // Grind through s3 for a bit and figure out what the most recent dump is
+
+if(array_key_exists( 'c', $opts )) {
+	$databaseDirectory = "database_".trim($opts['c']);
+};
+
 if (array_key_exists( 'f', $opts )) {
 	$dbname = $opts['f'];
 	echo "Fetching $dbname...\n";
 	// first check to make sure s3cmd is available
+	
 	$response = shell_exec("s3cmd ls s3://".$databaseDirectory."/fulldump* 2>&1");
 	if (preg_match('/ERROR/', $response) || preg_match ('/command not found/', $response)) {
 		// some kind of error, print and die
@@ -69,12 +74,15 @@ if (array_key_exists( 'f', $opts )) {
 			$file_list = explode("\n", $response);
 			echo "Found " . count($file_list) . " items...\n";
 			foreach ($file_list as $file) {
-				preg_match("/.*\/(".$dbname."_.*)/", $file, $matches);
-				if (count($matches) == 2) {
-					$filename = $matches[1];
-					echo "Found a match: $filename\n";
-					echo "Saving to local filesystem...\n";
-					shell_exec ("s3cmd get --skip-existing s3://".$databaseDirectory."/$dirname/$filename");
+				$regs = array();
+				$file = preg_split('/\s+/' ,$file);
+				$file = $file[3];
+				if(strpos($file, $dbname.".sql.gz") > 0) {
+				        echo "Found a match: $file\n";
+			               	echo "Saving to local filesystem...\n";
+					shell_exec("s3cmd get --skip-existing ".$file);
+					$filename = $dbname.".sql.gz";	
+					break;
 				}
 			}
 			// check to see if we found something after scanning the whole directory, because we might have multipart files
@@ -89,13 +97,16 @@ if (array_key_exists( 'i', $opts )) {
 	if (! file_exists($opts['i'])) { die ("file not found\n"); }
 	$fullpath = basename($opts['i']);
 	$filename = basename($opts['i']);
-	preg_match("/^(.*)_.*.sql.gz/", $filename, $matches);
+	preg_match("/^(.*).*.sql.gz/", $filename, $matches);
 	if (count($matches) == 2) {
 		$dbname = $matches[1];
 	}
 
 	// Figure out which cluster we need to load this into
 	$response =  `mysql -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxServer1 -s -N -e "SELECT city_cluster from wikicities.city_list where city_dbname = '$dbname';" 2>&1`;
+
+
+echo  "mysql -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxServer1 -s -N -e \"SELECT city_cluster from wikicities.city_list where city_dbname = '$dbname';\" 2>&1";
 	if (trim($response) != "" && substr($response, 0, 5) != 'ERROR') {
 		$cluster_name = trim($response);
 	} else {
