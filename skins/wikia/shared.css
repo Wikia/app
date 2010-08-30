@@ -267,7 +267,7 @@ body.wikiaSkinMonaco .wikia-slideshow-images .wikia-slideshow-image {
 
 /* Prev / next toolbar */
 .wikia-slideshow-sprite {
-	background-image: url(/extensions/wikia/WikiaPhotoGallery/images/slideshow-sprite.png); /* $wgStylePath */
+	background-image: url(/extensions/wikia/WikiaPhotoGallery/images/slideshow-sprite.png); /* $wgCdnStylePath */
 	background-repeat: no-repeat;
 }
 
