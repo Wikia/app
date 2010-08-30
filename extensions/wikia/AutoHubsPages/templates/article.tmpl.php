@@ -149,7 +149,7 @@
 					<p><?php echo $value['description']; ?></p>
 				</div>
 				<p class="blog-jump">
-					<a href="<?php echo $value['page_url'] ?>#blog-comments-ul"><img src="<?= $wgStylePath ?>/common/blank.gif" class="sprite talk" /> <span><?php echo wfMsg( 'hub-blog-comments', $value['all_count']) ?></span></a></p>
+					<a href="<?php echo $value['page_url'] ?>#blog-comments-ul"><img src="<?= wfBlankImgUrl() ?>" class="sprite talk" /> <span><?php echo wfMsg( 'hub-blog-comments', $value['all_count']) ?></span></a></p>
 					<?php if( $data['is_menager']): ?>
 						<?php if ($value['hide'] ): ?>
 							<a class="wikia-page-link head-hide-link" href="/index.php?action=ajax&rs=AutoHubsPagesHelper::hideFeed&type=blog&tag_id=<?php echo $data['tag_id'] ?>&city_id=<?php echo $value['city_id'] ?>&page_id=<?php echo $value['page_id'] ?>&dir=delete" ><?php echo wfMsg('hub-show-feed'); ?></a>

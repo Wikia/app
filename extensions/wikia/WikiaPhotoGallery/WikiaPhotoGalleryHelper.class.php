@@ -130,8 +130,9 @@ class WikiaPhotoGalleryHelper {
 			}
 		}
 
+		global $wgBlankImgUrl;
 		$attribs = array(
-			'src' => 'http://images.wikia.com/common/skins/monobook/blank.gif?1',
+			'src' => $wgBlankImgUrl,
 			'class' => $class,
 			'type' => 'image-gallery',
 			'height' => $height,
