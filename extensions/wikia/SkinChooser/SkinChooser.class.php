@@ -226,14 +226,17 @@ class SkinChooser {
 		# Used to display different background color every 2nd section
 		$themeCount = 0;
 		$skinKey = "";
-		# New look
-		$wgOut->addHTML('<div '.($themeCount++%2!=1 ? 'class="prefSection"' : '').'>');
-		$wgOut->addHTML('<h5>'.wfMsg('new-look').'</h5>');
-		$wgOut->addHTML('<table style="background: transparent none">');
 
-		$wgOut->addHTML('<tr><td><input type="radio" value="oasis" id="wpSkinoasis" name="wpSkin"'.($pref->mSkin == 'oasis' ? ' checked="checked"' : '').'/><label for="wpSkinoasis">'.wfMsg('new-look').'</label> '.($skinKey == $defaultSkinKey ? ' (' . wfMsg( 'default' ) . ')' : '').'</td></tr>');
-		$wgOut->addHTML('</table>');
-		$wgOut->addHTML('</div>');
+		if( $wgUser->isAllowed( 'devcookie' ) ) {
+			# New look
+			$wgOut->addHTML('<div '.($themeCount++%2!=1 ? 'class="prefSection"' : '').'>');
+			$wgOut->addHTML('<h5>'.wfMsg('new-look').'</h5>');
+			$wgOut->addHTML('<table style="background: transparent none">');
+
+			$wgOut->addHTML('<tr><td><input type="radio" value="oasis" id="wpSkinoasis" name="wpSkin"'.($pref->mSkin == 'oasis' ? ' checked="checked"' : '').'/><label for="wpSkinoasis">'.wfMsg('new-look').'</label> '.($skinKey == $defaultSkinKey ? ' (' . wfMsg( 'default' ) . ')' : '').'</td></tr>');
+			$wgOut->addHTML('</table>');
+			$wgOut->addHTML('</div>');
+		}
 
 		# Foreach over skins which contains themes and display radioboxes for them
 		foreach($wgSkinTheme as $skinKey => $skinVal) {
