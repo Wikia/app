@@ -153,7 +153,14 @@ var initTracker = function() {
 
 		// categories
 		if (node.is('a')) {
-			$.tracker.byStr('contentpage/categorylink');
+			// "Add category" button
+			if (node.parent().is('#csAddCategorySwitch')) {
+				$.tracker.byStr(fakeUrl + 'addcategory');
+			}
+			// links to categories
+			else {
+				$.tracker.byStr('contentpage/categorylink');
+			}
 		}
 	});
 
