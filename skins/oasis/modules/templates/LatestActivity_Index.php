@@ -1,6 +1,6 @@
 <section class="WikiaActivityModule">
 	<h1><?= wfMsg('oasis-activity-header') ?></h1>
-	<?= View::specialPageLink('CreatePage', 'button-createpage', 'wikia-button', 'blank.gif', 'oasis-create-page'); ?>
+	<?= View::specialPageLink('CreatePage', 'button-createpage', 'wikia-button', 'blank.gif', 'oasis-create-page', 'osprite icon-add'); ?>
 	<details class="tally">
 		<em><?= $total ?></em> <?= wfMsg('oasis-total-articles') ?>
 	</details>

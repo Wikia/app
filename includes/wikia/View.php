@@ -66,7 +66,7 @@ class View {
 	 * @param img String - [optional] the name of a message to be used as link tooltip
 	 */
 
-	static function specialPageLink($pageName, $message = '', $class = null, $img = null, $alt = null) {
+	static function specialPageLink($pageName, $message = '', $class = null, $img = null, $alt = null, $imgclass = null) {
 		global $wgStylePath, $wgBlankImgUrl;
 
 		$classes = array();
@@ -87,7 +87,11 @@ class View {
 		// Image precedes message text
 		if ($img != null) {
 			$src = $img == 'blank.gif' ? $wgBlankImgUrl : "{$wgStylePath}/common/{$img}";
-			$message = Xml::element('img', array('src' => $src)) . $message;
+			$attr = array('src' => $src);
+			if ($imgclass != '') {
+				$attr['class'] = $imgclass;
+			}
+			$message = Xml::element('img', $attr) . $message;
 		}
 
 		$linker = self::getLinker();
