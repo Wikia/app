@@ -221,6 +221,8 @@ jQuery(function() {
 
 	MyHome.setupThumbnails($('.activityfeed'));
 	$('#myhome-feed-switch-default-checkbox').removeAttr('disabled').click(MyHome.setDefaultView);
-	$('#myhome-wrapper').click(MyHome.trackClick);
-	MyHome.track('/view/' + MyHome.mode);
+
+	// Disable old tracking code  (TODO: remove)
+	//$('#myhome-wrapper').click(MyHome.trackClick);
+	//MyHome.track('/view/' + MyHome.mode);
 });

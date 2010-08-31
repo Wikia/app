@@ -20,14 +20,15 @@ class SpecialWikiActivity extends SpecialPage {
 			return;
 		}
 
-		// load tracking JS
+		// load tracking JS from WikiActivity.js and 'see more' ajax functions from MyHome.js
 		global $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/MyHome/WikiActivity.js?{$wgStyleVersion}\"></script>\n");
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/MyHome/MyHome.js?{$wgStyleVersion}\"></script>\n");
 
 		$feedProxy = new ActivityFeedAPIProxy();
 		$feedProvider = new DataFeedProvider($feedProxy);
 
-		$data = $feedProvider->get(60);
+		$data = $feedProvider->get(50);  // this breaks when set to 60...
 
 		global $wgEnableAchievementsInActivityFeed, $wgEnableAchievementsExt, $wgExtensionsPath, $wgStyleVersion;
 		if((!empty($wgEnableAchievementsInActivityFeed)) && (!empty($wgEnableAchievementsExt))){
@@ -41,12 +42,22 @@ class SpecialWikiActivity extends SpecialPage {
 		$template = new EasyTemplate(dirname(__FILE__).'/templates');
 		$template->set('data', $data['results']);
 		$template->set('tagid', 'myhome-activityfeed'); // FIXME: remove
+
 		global $wgBlankImgUrl;
+        $showMore = isset($data['query-continue']);
+		if ($showMore) {
+			$template->set('query_continue', $data['query-continue']);
+		}
+		if (empty($data['results'])) {
+			$template->set('emptyMessage', wfMsgExt("myhome-activity-feed-empty", array( 'parse' )));
+		}
+
 		$template->set_vars(array(
 			'assets' => array(
 				'blank' => $wgBlankImgUrl,
 			),
-			'type' => 'activity',
+            'showMore' => $showMore,
+			'type' => 'activity'
 		));  // FIXME: remove
 
 		$wgOut->addStyle(wfGetSassUrl("extensions/wikia/MyHome/oasis.scss"));
