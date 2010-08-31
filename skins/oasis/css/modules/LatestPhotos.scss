@@ -65,6 +65,12 @@
 	
 	// /** Chifrons left and right **/
 	a {
+		&:active {
+			outline: none;
+		}
+		&:-moz-any-link:focus {
+			outline: none;
+		}
 		&.previous {
 			height: 82px;
 			float: left;
@@ -128,6 +134,10 @@
 			img {
 				width: 82px;
 				height: 82px;
+				opacity: 0.9;
+				&:hover {
+					 opacity: 1;
+				}
 			}
 			&.see-all {
 				text-align: center;
