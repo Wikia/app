@@ -11,3 +11,8 @@ $wgAutoloadClasses['SpecialThemeDesigner'] = "$dir/SpecialThemeDesigner.class.ph
 $wgSpecialPages['ThemeDesigner'] = 'SpecialThemeDesigner';
 $wgExtensionMessagesFiles['ThemeDesigner'] = "$dir/ThemeDesigner.i18n.php";
 
+$wgAvailableRights[] = 'themedesigner';
+$wgGroupPermissions['*']['themedesigner'] = false;
+$wgGroupPermissions['helper']['themedesigner'] = true;
+$wgGroupPermissions['staff']['themedesigner'] = true;
+$wgGroupPermissions['sysop']['themedesigner'] = true;
