@@ -134,7 +134,7 @@ var ImageLightbox = {
 
 		if (window.skin == 'oasis') {
 			maxHeight -= 75;
-			maxWidth = 950;
+			maxWidth = 850;
 		}
 
 		// get resized image from server
