@@ -324,12 +324,12 @@ class SkinTemplate extends Skin {
 					$this->makeKnownLinkObj(
 						$usertalktitle,
 						wfMsgHtml( 'newmessageslink' ),
-						'redirect=no&action=purge'
+						'redirect=no'
 					),
 					$this->makeKnownLinkObj(
 						$usertalktitle,
 						wfMsgHtml( 'newmessagesdifflink' ),
-						'diff=cur&action=purge'
+						'diff=cur'
 					)
 				);
 				# Disable Cache
