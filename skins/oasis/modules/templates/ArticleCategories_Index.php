@@ -1,13 +1,8 @@
 <?php
-	if (!empty($categories)) {
+	if ($catlinks != '') {
 ?>
 <aside id="WikiaArticleCategories" class="WikiaArticleCategories">
-	<h1><?= $categoriesLink ?>:</h1>
-<?php
-		foreach($categories as $category) {
-			echo $category;
-		}
-?>
+	<?= $catlinks ?>
 </aside>
 <?php
 	}
