@@ -3,7 +3,7 @@ $count = 0;
 foreach ($badges as $item) {
 	
 	//if ($count > $maxBadges) {	break;	}
-	$badge_name = htmlspecialchars($item['badge']->getName());
+	$badge_name = htmlspecialchars($item['badge']->getName(), ENT_NOQUOTES);
 	$badge_url = $item['badge']->getPictureUrl(82);
 	$badge_url_hover = $item['badge']->getPictureUrl(90);
 	$badge_details = $item['badge']->getDetails();
