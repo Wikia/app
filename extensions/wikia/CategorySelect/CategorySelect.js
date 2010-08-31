@@ -255,22 +255,25 @@ function initializeCategories(cats) {
 }
 
 function initializeDragAndDrop() {
-	$('#csItemsContainer').sortable({
-		items: '.CSitem:not(.CSaddCategory)',
-		revert: 200,
-		start: function(event, ui) {
-			csDraggingEvent = true;
-		},
-		stop: function(event, ui) {
-			csDraggingEvent = false;
-		},
-		update: function(event, ui) {
-			var srcEl = ui.item;
-			var prevSibId = srcEl.prev('a').attr('catid');
-			if (typeof prevSibId == 'undefined') prevSibId = -1;
-			$().log('moving ' + srcEl.attr('catid') + ' before ' + prevSibId);
-			moveElement(srcEl.attr('catid'), prevSibId);
-		}
+	// sortable is a part of jQuery UI library - ensure it's loaded
+	$.loadJQueryUI(function() {
+		$('#csItemsContainer').sortable({
+			items: '.CSitem:not(.CSaddCategory)',
+			revert: 200,
+			start: function(event, ui) {
+				csDraggingEvent = true;
+			},
+			stop: function(event, ui) {
+				csDraggingEvent = false;
+			},
+			update: function(event, ui) {
+				var srcEl = ui.item;
+				var prevSibId = srcEl.prev('a').attr('catid');
+				if (typeof prevSibId == 'undefined') prevSibId = -1;
+				$().log('moving ' + srcEl.attr('catid') + ' before ' + prevSibId);
+				moveElement(srcEl.attr('catid'), prevSibId);
+			}
+		});
 	});
 }
 
@@ -445,9 +448,10 @@ function showCSpanel() {
 		csType = 'view';
 		$.post(ajaxUrl, {rs: 'CategorySelectGenerateHTMLforView'}, function(result){
 			//prevent multiple instances when user click very fast
-			if ($('#csMainContainer').length > 0) {
+			if ($('#csMainContainer').exists()) {
 				return;
 			}
+
 			var el = document.createElement('div');
 			el.innerHTML = result;
 			$('#catlinks').get(0).appendChild(el);
@@ -457,13 +461,8 @@ function showCSpanel() {
 			initializeCategories();
 
 			// Dynamically load & apply the CSS.
-			$("head").append("<link>");
-			css = $("head").children(":last");
-			css.attr({
-				rel:  "stylesheet",
-				type: "text/css",
-				href: wgExtensionsPath+'/wikia/CategorySelect/CategorySelect.css?'+wgStyleVersion
-			});
+			importStylesheetURI(wgExtensionsPath+'/wikia/CategorySelect/CategorySelect.css?'+wgStyleVersion);
+
 			setTimeout(replaceAddToInput, 60);
 			setTimeout(positionSuggestBox, 666); //sometimes it can take more time to parse downloaded CSS - be sure to position hint in proper place
 			$('#catlinks').removeClass('csLoading');
