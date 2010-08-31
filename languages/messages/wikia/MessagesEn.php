@@ -1011,7 +1011,6 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'oasis-button-random-wiki' => 'Random Wiki',
 'oasis-button-wiki-activity' => 'Wiki Activity',
 'oasis-activity-header' => 'Recent Wiki Activity',
-'oasis-total-articles' => 'total<br>pages',
 'oasis-total-articles-mainpage' => 'pages on<br>this wiki',
 'oasis-latest-photos-header' => 'photos on<br> this wiki',
 'oasis-latest-photos-more' => 'See All Photos in This Gallery &gt;',

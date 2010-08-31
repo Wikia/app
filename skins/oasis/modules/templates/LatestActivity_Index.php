@@ -2,7 +2,7 @@
 	<h1><?= wfMsg('oasis-activity-header') ?></h1>
 	<?= View::specialPageLink('CreatePage', 'button-createpage', 'wikia-button', 'blank.gif', 'oasis-create-page', 'osprite icon-add'); ?>
 	<details class="tally">
-		<em><?= $total ?></em> <?= wfMsg('oasis-total-articles') ?>
+		<em><?= $total ?></em> <?= wfMsg('oasis-total-articles-mainpage') ?>
 	</details>
 	<ul>
 <?php
