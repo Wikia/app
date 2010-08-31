@@ -433,7 +433,7 @@ class ScribeProducer {
 						Wikia::log( __METHOD__, "error", "Cannot send log via scribe ($wgCityId): empty revision or new page id: $revId, $newPageId" );
 					}					
 				} else {
-					Wikia::log( __METHOD__, "error", "Cannot send log via scribe ($wgCityId): invalid revision for old title" );
+					Wikia::log( __METHOD__, "error", "Cannot send log via scribe ($wgCityId): invalid revision for old title: $redirId" );
 				}
 			} else {
 				$isTitle = is_object($oOldTitle);
