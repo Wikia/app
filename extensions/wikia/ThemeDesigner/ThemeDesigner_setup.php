@@ -7,9 +7,12 @@ $wgExtensionCredits['specialpage'][] = array(
 $dir = dirname(__FILE__);
 
 $wgAutoloadClasses['ThemeDesignerModule'] = "$dir/ThemeDesignerModule.class.php";
+$wgAutoloadClasses['ThemeDesignerHelper'] = "$dir/ThemeDesignerHelper.class.php";
 $wgAutoloadClasses['SpecialThemeDesigner'] = "$dir/SpecialThemeDesigner.class.php";
 $wgSpecialPages['ThemeDesigner'] = 'SpecialThemeDesigner';
 $wgExtensionMessagesFiles['ThemeDesigner'] = "$dir/ThemeDesigner.i18n.php";
+
+$wgHooks['MyTools::getCustomTools'][] = 'ThemeDesignerHelper::addToMyTools';
 
 $wgAvailableRights[] = 'themedesigner';
 $wgGroupPermissions['*']['themedesigner'] = false;
