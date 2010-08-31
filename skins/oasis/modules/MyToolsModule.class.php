@@ -20,10 +20,13 @@ class MyToolsModule extends Module {
 	}
 
 	private function getCustomTools() {
+		wfProfileIn(__METHOD__);
 		global $wgUser;
 
 		$out = array();
 		$tools = json_decode($wgUser->getOption('myTools'), true);
+
+		wfRunHooks('MyTools::getCustomTools', array(&$tools));
 
 		if(is_array($tools)) {
 			foreach($tools as $tool) {
@@ -38,6 +41,7 @@ class MyToolsModule extends Module {
 			}
 		}
 
+		wfProfileOut(__METHOD__);
 		return $out;
 	}
 
@@ -118,6 +122,8 @@ class MyToolsModule extends Module {
 		$this->data = array();
 
 		$toolsNames = $this->getAllToolsNames();
+
+		wfRunHooks('MyTools::getAllToolsNames', array(&$toolsNames));
 
 		$tools = array();
 
