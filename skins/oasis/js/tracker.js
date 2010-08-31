@@ -334,6 +334,41 @@ var initTracker = function() {
 			$.tracker.byStr(fakeUrl + 'username');
 		}
 	});
+	
+	// Latest Photos module
+	$('.LatestPhotosModule').click(function(ev) {
+		var fakeUrl = 'module/latestphotos/';
+		var node = $(ev.target);
+
+		// fix for img within link
+		if (node.is('img')) {
+			node = node.parent();
+		}
+
+		if (!node.is('a')) {
+			return;
+		}
+
+		// "See more"
+		if (node.hasClass('more')) {
+			$.tracker.byStr(fakeUrl + 'more');
+		}
+		// arrows
+		else if (node.hasClass('previous')) {
+			$.tracker.byStr(fakeUrl + 'arrow');
+		}
+		else if (node.hasClass('next')) {
+			$.tracker.byStr(fakeUrl + 'arrow');
+		}
+		// "Add a photo"
+		else if (node.hasClass('wikia-button')) {
+			$.tracker.byStr(fakeUrl + 'addphoto');
+		}
+		// photos
+		else if (node.parent().is('li')) {
+			$.tracker.byStr(fakeUrl + 'photo');
+		}
+	});
 
 	// random wiki
 	$('#WikiaRandomWiki').trackClick('randomwiki');
