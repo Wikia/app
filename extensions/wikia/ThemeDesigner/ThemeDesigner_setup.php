@@ -1,6 +1,13 @@
 <?php
-$wgAutoloadClasses['ThemeDesignerModule'] = dirname(__FILE__).'/ThemeDesignerModule.class.php';
-$wgAutoloadClasses['SpecialThemeDesigner'] = dirname(__FILE__).'/SpecialThemeDesigner.class.php';
+$wgExtensionCredits['specialpage'][] = array(
+	'name' => 'Theme designer',
+	'author' => array('Christian Williams', 'Inez Korczyński', 'Maciej Brencz')
+);
+
+$dir = dirname(__FILE__);
+
+$wgAutoloadClasses['ThemeDesignerModule'] = "$dir/ThemeDesignerModule.class.php";
+$wgAutoloadClasses['SpecialThemeDesigner'] = "$dir/SpecialThemeDesigner.class.php";
 $wgSpecialPages['ThemeDesigner'] = 'SpecialThemeDesigner';
-$wgExtensionMessagesFiles['ThemeDesigner'] = dirname(__FILE__).'/ThemeDesigner.i18n.php';
+$wgExtensionMessagesFiles['ThemeDesigner'] = "$dir/ThemeDesigner.i18n.php";
 
