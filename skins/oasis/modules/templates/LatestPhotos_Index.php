@@ -1,6 +1,6 @@
 <section class="LatestPhotosModule">
 	<?= View::specialPageLink('Upload', 'oasis-add-photo', 'wikia-button', 'blank.gif', 'oasis-add-photo', 'osprite icon-add'); ?>
-	<details class="tally">
+	<details class="tally counter">
 		<em>9,173</em><?= wfMsg('oasis-latest-photos-header') ?>
 	</details>
 
@@ -8,7 +8,7 @@
 if ($enableEmptyGallery == true) { ?>
 	<details class="empty-photos">
 		<div class="temp-image">
-			<?= View::specialPageLink('Upload', 'oasis-add-photo', 'wikia-button', 'blank.gif', 'oasis-add-photo', 'osprite icon-add'); ?>
+			 <?= View::specialPageLink('Upload', 'oasis-latest-photos-empty'); ?>
 		</div>
 	</details>
 <?php }
