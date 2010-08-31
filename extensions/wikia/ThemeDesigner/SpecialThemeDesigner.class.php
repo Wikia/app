@@ -8,5 +8,7 @@ class SpecialThemeDesigner extends UnlistedSpecialPage {
 
 	public function execute() {
 		Wikia::setVar('OasisEntryModuleName', 'ThemeDesigner');
+		
+		wfLoadExtensionMessages('ThemeDesigner');
 	}
 }

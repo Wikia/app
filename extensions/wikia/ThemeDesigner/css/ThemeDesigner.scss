@@ -1,0 +1,88 @@
+$height-designer: 240px;
+$height-toolbar: 45px;
+
+$color-borders: #CECECE;
+
+@import "../../../../skins/oasis/css/core/reset";
+@import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/core/buttons";
+
+body {
+	background: #F5F5F5;
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 13px;
+	margin: 0;
+	overflow: hidden;
+}
+
+.Designer {
+	height: $height-designer;
+	position: relative;
+	>.tabs {
+		@include linear-gradient(transparent, left, #F5F5F5, 95%, #CCC, 100%);
+		height: $height-designer;
+		left: 50%;
+		margin-left: -500px;
+		position: absolute;
+		width: 100px;
+		li {
+			@include linear-gradient(transparent, left, #F5F5F5, 0%, #E1E1E1, 95%, #CCC, 100%);
+			border-bottom: 1px solid $color-borders;
+			&.selected {
+				background: #FFF;
+				a {
+					color: #2070AD;
+					&:hover {
+						text-decoration: none;
+					}
+				}
+			}
+		}
+		a {
+			color: #67a7d7;
+			display: block;
+			font-weight: bold;
+			padding: 12px 10px;
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
+}
+
+.Toolbar {
+	@include linear-gradient(#cfe1ed, top, #cfe1ed, 0%, #a6c4dc, 100%);
+	border-bottom: 1px solid #999;
+	bottom: 0;
+	height: 45px;
+	position: absolute;
+	width: 100%;
+}
+
+section {
+	background: #FFF;
+	border-right: 1px solid $color-borders;
+	height: $height-designer;
+	left: 50%;
+	margin-left: -400px;
+	position: absolute;
+	width: 900px;
+}
+
+.EventThief {
+	background: #000;
+	opacity: 0;
+  filter: alpha(opacity=0);
+	position: absolute;
+	top: $height-designer;
+	width: 100%;
+}
+
+.PreviewFrame {
+	height: 100px; /* initial settings - JS will change it */
+	width: 100%;
+}
+
+@import "../../../../extensions/wikia/ThemeDesigner/css/ThemeTab";

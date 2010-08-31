@@ -1,0 +1,13 @@
+.ThemeTab {
+	li {
+		float: left;
+		padding: 15px;
+	}
+	label {
+		display: block;
+	}
+	img {
+		border: 1px solid $color-borders;
+		display: block;
+	}
+}
