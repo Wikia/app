@@ -187,7 +187,11 @@ class UserPagesHeaderModule extends Module {
 		if ($namespace == NS_USER) {
 			// edit button
 			if (isset($this->content_actions['edit'])) {
-				$this->actionMenu['action'] = $this->content_actions['edit'];
+				$this->actionMenu['action'] = array(
+					'href' => $this->content_actions['edit']['href'],
+					'text' => wfMsg('oasis-page-header-edit-profile'),
+				);
+
 				$this->actionImage = MenuButtonModule::EDIT_ICON;
 				$this->actionName = 'editprofile';
 			}
