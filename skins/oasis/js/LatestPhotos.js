@@ -5,24 +5,17 @@ $(function() {
 var LatestPhotos = {
 	browsing: false,
 	transition_speed: 500,
-	modules: false,
-
 	init: function() {
 		this.attachListeners();
 	},
 
 	attachListeners: function() {
-		// find all "Latest Photos" modules
-		LatestPhotos.modules = $('.LatestPhotosModule');
-
 		LatestPhotos.attachBlindImages();
-
-		LatestPhotos.modules.children(".next").click(LatestPhotos.nextImage);
-		LatestPhotos.modules.children(".previous").click(LatestPhotos.previousImage);
+		$('.LatestPhotosModule .next').click(LatestPhotos.nextImage);
+		$('.LatestPhotosModule .previous').click(LatestPhotos.previousImage);
 	},
 
 	attachBlindImages: function() {
-		// TODO: improve jQuery selectors
 		if ($('.carousel li').length == 5) {
 			$('.carousel').append("<li class='blind'></li>");
 		}
@@ -35,9 +28,7 @@ var LatestPhotos = {
 		}
 	},
 
-	previousImage: function(ev) {
-		ev.preventDefault();
-
+	previousImage: function() {
 		var width = LatestPhotos.setCarouselWidth();
 
 		if (LatestPhotos.browsing == false) {
@@ -54,11 +45,10 @@ var LatestPhotos = {
 				LatestPhotos.browsing = false;
 			});
 		}
+		return false;
 	},
 
-	nextImage: function(ev) {
-		ev.preventDefault();
-
+	nextImage: function() {
 		var width = LatestPhotos.setCarouselWidth();
 
 		if (LatestPhotos.browsing == false) {
@@ -70,6 +60,7 @@ var LatestPhotos = {
 				LatestPhotos.browsing = false;
 			});
 		}
+		return false;
 	},
 
 	removeFirstPhotos: function() {
