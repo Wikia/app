@@ -109,7 +109,7 @@ class BodyModule extends Module {
 
 	public function getRailModuleList() {
 		wfProfileIn(__METHOD__);
-		global $wgTitle, $wgUser, $wgEnableAchievementsExt, $wgContentNamespaces, $wgEnableWikiaCommentsExt;
+		global $wgTitle, $wgUser, $wgEnableAchievementsExt, $wgContentNamespaces, $wgEnableWikiaCommentsExt, $wgExtraNamespaces;
 
 		$railModuleList = array();
 
@@ -151,7 +151,9 @@ class BodyModule extends Module {
 		}
 
 		// Content, category and forum namespaces
-		if(in_array($subjectNamespace, array (NS_CATEGORY, NS_CATEGORY_TALK, NS_FORUM)) || in_array($subjectNamespace, $wgContentNamespaces) ) {
+		if(	in_array($subjectNamespace, array (NS_CATEGORY, NS_CATEGORY_TALK, NS_FORUM)) ||
+			in_array($subjectNamespace, $wgContentNamespaces) ||
+			in_array($subjectNamespace, $wgExtraNamespaces)) {
 			// add any content page related rail modules here
 			$railModuleList[1300] = array('LatestActivity', 'Index', null);
 			$railModuleList[1250] = array('LatestPhotos', 'Index', null);
