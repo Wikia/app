@@ -999,7 +999,7 @@ function wfRenderModule($name, $action = 'Index', $params = null) {
  * SASS server.
  */
 function wfGetSassUrl($fileName){
-	global $wgCdnRootUrl, $wgStyleVersion;
+	global $wgCdnRootUrl, $wgStyleVersion, $wgDontRewriteSassUrl;
 	wfProfileIn( __METHOD__ );
 
 	$url = $fileName;
@@ -1017,7 +1017,11 @@ function wfGetSassUrl($fileName){
 
 	$sassParams = str_replace(" ", "/", $sassParams);
 	$wgCdnRootUrl = (isset($wgCdnRootUrl)?$wgCdnRootUrl:"");
-	$url = $wgCdnRootUrl."/__sass/$fileName/$wgStyleVersion/$securityHash/$sassParams";
+	if( !empty( $wgDontRewriteSassUrl ) ) {
+		$url = "$wgCdnRootUrl/sassServer.php?file=$fileName&styleVersion=$wgStyleVersion&hash=$securityHash&$sassParams";
+	} else {
+		$url = "$wgCdnRootUrl/__sass/$fileName/$wgStyleVersion/$securityHash/$sassParams";
+	}
 
 	wfProfileOut( __METHOD__ );
 	return $url;
