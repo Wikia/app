@@ -8,7 +8,12 @@
 
 	<link rel="stylesheet" href="<?= wfGetSassUrl($wgExtensionsPath."/wikia/ThemeDesigner/css/ThemeDesigner.scss") ?>">
 
+	<script>
+		var themeSettings = <?= Wikia::json_encode($themeSettings->getAll()) ?>;
+	</script>
+
 	<script src="<?= $wgStylePath ?>/common/jquery/jquery-1.4.2.js"></script>
+	<script src="<?= $wgStylePath ?>/common/jquery/jquery.wikia.js"></script>
 	<script src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/js/ThemeDesigner.js"></script>
 
 </head>
@@ -39,7 +44,7 @@
 	<div id="EventThief" class="EventThief"></div>
 	<iframe frameborder=0 id="PreviewFrame" class="PreviewFrame" src="<?= $wgServer ?>"></iframe>
 
-	
+
 <? /* DEMO STUFF FROM INEZ
 	<div style="width: 200px; height: 100px; border: solid 1px;">
 		<input type="text" id="color-body" />
@@ -53,6 +58,6 @@
 		</button>
 	</div>
 */ ?>
-	
+
 </body>
 </html>

@@ -10,8 +10,10 @@ class ThemeDesignerModule extends Module {
 	var $mimetype;
 	var $charset;
 
-	public function executeIndex() {
+	var $themeSettings;
 
+	public function executeIndex() {
+		$this->themeSettings = new ThemeSettings();
 	}
 
 	public function executeThemeTab() {
