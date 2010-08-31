@@ -86,6 +86,7 @@
 		@include arrow-style;
 		border-color: transparent $color-links transparent $color-links;
 		border-left-width: 0px;
+
 	}
 	.latest-images-right {
 		@include arrow-style;
@@ -97,23 +98,34 @@
 		visibility: hidden;
 	}
 
-	ul {
+	.carousel-container {
 		position: relative;
-		left: 4px;
-		margin: {
-			left: auto;
-			right: auto;
+		left: 5px;
+		width: 258px;
+		height: 90px;
+		overflow: hidden; // /** for testing **/
+		div {
+			position: relative;
 		}
+	}
+	
+	ul { // /** id class: .carousel **/
+		left: 4px;
 		display: block;
-		text-align: center;
 		list-style: none;
+		width: 500px;
 		li {
 			width: 82px;
 			height: 82px;
-			margin-right: 2px;
+			margin: {
+				right: 2px;
+				bottom: 40px;
+			}
 			float: left;
-			display: none;
-			border: solid 1px $color-page-border;	
+			border: solid 1px $color-page-border;
+			&.blind {
+				border-color: transparent;
+			}
 			a {
 				display: block;
 				height: 82px;
@@ -148,21 +160,10 @@
 					padding-top: 15px;
 					height: 61px;
 				}
-				
 			}
 		}
 	}
 	
-	ul {
-		&.none-hidden li {
-			display: block!important;
-		}
-	}
-	.carousel {
-		li:nth-child(1),
-		li:nth-child(2),
-		li:nth-child(3) { display: block; }
-	}
 	.more {
 		margin-top: 8px;
 	}
