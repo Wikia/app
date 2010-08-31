@@ -179,3 +179,8 @@
 	margin: 2px 0 10px 0;
 	width: 98%;
 }
+
+/* Oasis fixes */
+.skin-oasis .csViewMode #csButtonsContainer {
+	margin: 25px -15px -12px;
+}
