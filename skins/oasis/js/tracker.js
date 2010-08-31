@@ -400,6 +400,10 @@ var initTracker = function() {
 				}
 			}
 		}
+		// "Add a photo to this gallery"
+		else if (node.hasClass('wikia-photogallery-add')) {
+			$.tracker.byStr(fakeUrl + 'addtophotogallery');
+		}
 		// track clicks on the result of the links
 		else {
 			$.tracker.byStr(fakeUrl + 'contentlink');
