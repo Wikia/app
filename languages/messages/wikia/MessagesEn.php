@@ -1071,6 +1071,7 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'oasis-add-photo' => 'Add a Photo',
 'oasis-anon-user' => 'A Wikia user',
 'oasis-create-page' => 'Create a new page on this wiki',
+'oasis-section-edit' => 'Edit $1 Section',
 
 # Related to ImageSEO RT#55755
 'imageseo-featured-on' => 'Featured on:',
