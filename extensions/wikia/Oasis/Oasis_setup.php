@@ -36,6 +36,21 @@ function wfOasisSetup() {
 // Mapping of themename to an array of key/value pairs to send to SASS.
 // Sean says: Since SASS is used to generate the CSS files, this config is all that's needed for the themes.
 $wgOasisThemes = array(
+	'sapphire' => array(
+		'color-body' => '#BACDD8',
+		'color-page' => '#FFFFFF',
+		'color-buttons' => '#006CB0',
+		'color-links' => '#006CB0',
+	),
+	'carbon' => array(
+		'color-body' => '#273423',
+		'color-page' => '#474646',
+		'color-buttons' => '#5c8901',
+		'color-links' => '#70b8ff',
+	),
+
+	// TODO: rewrite themes below to use set of four colors
+	/*
 	'shadesofgray' => array(
 		'color-body' => '#808080',
 		'color-page' => '#eeeeee',
@@ -63,12 +78,6 @@ $wgOasisThemes = array(
 		'color-header' => '#ff9797',
 		'color-text' => '#970000',
 		'color-buttons-links' => '#ff0000',
-	),
-	'carbon' => array(
-		'color-body' => '#273423',
-		'color-page' => '#474646',
-		'color-buttons' => '#5c8901',
-		'color-links' => '#70b8ff',
 	),
 	'obsession' => array(
 		'color-body' => '#140000',
@@ -105,6 +114,7 @@ $wgOasisThemes = array(
 		'color-text' => '#4b501f',
 		'color-buttons-links' => '#d06803',
 	 ),
+	 */
 );
 
 // AJAX dispatcher
