@@ -694,7 +694,8 @@ class ArticleComment {
 			$editPage = new EditPage( $article );
 			$editPage->edittime = $article->getTimestamp();
 			$editPage->textbox1 = $text;
-			$retval = $editPage->internalAttemptSave( $result );
+			$bot = $user->isAllowed('bot');
+			$retval = $editPage->internalAttemptSave( $result, $bot );
 
 			/**
 			 * clear comments cache for this article
@@ -783,7 +784,8 @@ class ArticleComment {
 		$editPage = new EditPage( $article );
 		$editPage->edittime = $article->getTimestamp();
 		$editPage->textbox1 = $text;
-		$retval = $editPage->internalAttemptSave( $result );
+		$bot = $user->isAllowed('bot');
+		$retval = $editPage->internalAttemptSave( $result, $bot );
 
 		/**
 		 * clear comments cache for this article

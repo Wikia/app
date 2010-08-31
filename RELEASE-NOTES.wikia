@@ -1,4 +1,5 @@
 == Changes since 201009.1 ==
+* rt#65738: Blog comment editing does not respect bot flag (uberfuzzy)
 * rt#65271: dart not escaping js... (Nef) 
 
 == Changes since 201008.4 ==
