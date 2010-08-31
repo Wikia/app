@@ -19,7 +19,7 @@ foreach ($badges as $item) {
 			wfTimeFormatAgo($item['date'])
 		);
 	} else {
-		$info = $item['to_get'];
+		$info = "<strong>$badge_name</strong><br /> {$item['to_get']}";
 	}
 ?>
 	<li>
