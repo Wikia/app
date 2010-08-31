@@ -15,20 +15,12 @@
 	@include rail-module;	
 
 
-	.counter {
-		text-transform: uppercase;
+	.tally {
 		margin: {
 			bottom: 10px;
 		}
-		em {
-			margin-right: 6px;
-			font: {
-				size: 24px;
-				weight: bold;
-			}
-			line-height:18px;
-		}
 	}
+
 	.empty-photos {
 		border: solid 1px $color-page-border;
 		margin: {
