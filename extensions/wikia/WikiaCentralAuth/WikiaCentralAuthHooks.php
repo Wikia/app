@@ -509,7 +509,7 @@ class WikiaCentralAuthHooks {
 	}
 
 
-	static function onUserLoadFromDatabase ( User &$oUser, &$oRow ) {
+	static function onUserLoadFromDatabase ( User $oUser, &$oRow ) {
 
         if ( wfReadOnly() ) {
 			wfDebug( __METHOD__ . ": DB is running with the --read-only option " );
