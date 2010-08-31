@@ -206,6 +206,14 @@ class UserPagesHeaderModule extends Module {
 
 				$this->actionImage = MenuButtonModule::ADD_TOPIC_ICON;
 				$this->actionName = 'leavemessage';
+
+				// different handling for "My talk page"
+				if (self::isItMe($this->userName)) {
+					$this->actionMenu['action']['text'] = wfMsg('edit');
+
+					$this->actionImage = MenuButtonModule::EDIT_ICON;
+					$this->actionName = 'edit';
+				}
 			}
 		}
 		else if (defined('NS_BLOG_ARTICLE') && $namespace == NS_BLOG_ARTICLE) {
@@ -226,7 +234,8 @@ class UserPagesHeaderModule extends Module {
 		if (in_array($namespace, array(NS_USER, NS_USER_TALK))) {
 			$actions = array('move', 'protect', 'unprotect', 'delete', 'undelete');
 
-			if ($namespace == NS_USER_TALK) {
+			// add "edit" item to "Leave a message" button
+			if ($this->actionName == 'leavemessage') {
 				array_unshift($actions, 'edit');
 			}
 
