@@ -83,6 +83,7 @@ $wgCityId = $oWiki->execute();
 
 ##### MAKE ANY CHANGES HERE THAT YOU  WANT TO SHOW UP ON DEVBOXES BY DEFAULT BUT STILL BE OVERRIDABLE #####
 $wgCookieDomain = ".wikia-dev.com";
+$wgCheckSerialized = true;
 
 // Life is easier if we have Special:WikiFactory
 $wgWikiaEnableWikiFactoryExt = true;
