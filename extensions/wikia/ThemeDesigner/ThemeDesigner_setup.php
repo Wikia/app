@@ -8,6 +8,7 @@ $dir = dirname(__FILE__);
 
 $wgAutoloadClasses['ThemeDesignerModule'] = "$dir/ThemeDesignerModule.class.php";
 $wgAutoloadClasses['ThemeDesignerHelper'] = "$dir/ThemeDesignerHelper.class.php";
+$wgAutoloadClasses['ThemeSettings'] = "$dir/ThemeSettings.class.php";
 $wgAutoloadClasses['SpecialThemeDesigner'] = "$dir/SpecialThemeDesigner.class.php";
 $wgSpecialPages['ThemeDesigner'] = 'SpecialThemeDesigner';
 $wgExtensionMessagesFiles['ThemeDesigner'] = "$dir/ThemeDesigner.i18n.php";
