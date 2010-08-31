@@ -1,6 +1,6 @@
 <section class="LatestPhotosModule">
 		<?= View::specialPageLink('Upload', 'oasis-add-photo', 'wikia-button'); ?>
-	<details class="tally counter">
+	<details class="tally">
 		<em>9,173</em><?= wfMsg('oasis-latest-photos-header') ?>
 	</details>
 
