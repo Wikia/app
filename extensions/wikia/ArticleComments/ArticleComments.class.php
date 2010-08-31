@@ -450,6 +450,8 @@ class ArticleComment {
 				: Xml::element( 'a', array ( 'href' => $this->mUser->getUserPage()->getFullUrl() ), $this->mUser->getName() );
 			$articleId = $this->mTitle->getArticleId();
 
+			$isStaff = (int)in_array('staff', $this->mUser->getEffectiveGroups() );
+
 			$parts = self::explode($this->getTitle());
 
 			$buttons = array();
@@ -491,7 +493,8 @@ class ArticleComment {
 				'sig' => $sig,
 				'text' => $text,
 				'timestamp' => wfTimeFormatAgo($this->mFirstRevision->getTimestamp()),
-				'title' => $this->mTitle
+				'title' => $this->mTitle,
+				'isStaff' => $isStaff
 			);
 		}
 

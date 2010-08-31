@@ -7,6 +7,7 @@
 	<div class="details">
 		<strong><?= $comment['sig'] ?></strong><br/>
 		<span class="timestamp"><?= $comment['timestamp'] ?></span>
+		<?php if( !empty($comment['isStaff']) ) { print "<br/><span class=\"stafflogo\"><img src=\"http://images.wikia.com/wikia/images/e/e9/WikiaStaff.png\" title=\"This user is a member of Wikia staff\" alt=\"@wikia\" /></span>\n"; } ?>
 	</div>
 
 	<div class="comment">
