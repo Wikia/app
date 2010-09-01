@@ -320,7 +320,7 @@ class WikiaStatsAutoHubsConsumerDB {
 			"city_lang" => $lang_id 
 		);
 		$res = $this->dbs->select(
-				array( ' page_views_tags use key(tag_lang_city) ' ),
+				array( 'page_views_tags' ),
 				array( 'tag_id as tag_id,
 						city_id as city_id,
 						sum(pv_views) as count ' ),
