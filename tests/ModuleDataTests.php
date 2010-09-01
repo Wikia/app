@@ -89,17 +89,23 @@ class ModuleDataTests extends PHPUnit_Framework_TestCase {
 		);
 	}
 
-	function testPageStatsService() {
-		global $wgTitle;
-		$wgTitle = Title::newMainPage();
+	function testRandomWikiModule() {
+		global $wgEnableRandomWikiOasisButton;
 
-		$service = new PageStatsService($wgTitle->getArticleId());
+		// let's enable the module
+		$wgEnableRandomWikiOasisButton = true;
 
-		$this->assertType('array', $service->getMostLinkedCategories());
-		$this->assertType('int', $service->getCommentsCount());
-		$this->assertType('int', $service->getLikesCount());
-		$this->assertType('array', $service->getRecentRevisions());
-		$this->assertType('string', $service->getFirstRevisionTimestamp());
+		$moduleData = Module::get('RandomWiki')->getData();
+
+		$this->assertType('string', $moduleData['url']);
+
+		// now let's disable the module
+		$wgEnableRandomWikiOasisButton = false;
+
+		$moduleData = Module::get('RandomWiki')->getData();
+
+		$this->assertEquals(
+			null,
+			$moduleData['url']);
 	}
-
 }
