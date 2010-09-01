@@ -186,7 +186,7 @@ class AchBadge {
 					<p><?= $info ?></p>
 				</div>
 			</div>
-			<div class='clearfix'></div>
+			<div class="feed-clear"></div>
 		<?php
 
 		wfProfileOut( __METHOD__ );

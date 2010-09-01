@@ -150,3 +150,7 @@ div.profile-hover p.to-get {
 	font-size:12px;
 	line-height:20px;
 }
+.activity-type-new .feed-clear{
+	clear: left;
+	visibility: hidden;
+}
