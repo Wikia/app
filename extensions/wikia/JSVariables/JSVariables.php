@@ -10,7 +10,7 @@ function wfMakeGlobalVariablesScript($vars) {
 
 	global $wgMemc, $wgCurse, $wgCityId, $wgEnableAjaxLogin, $wgUser, $wgDBname, $wgPrivateTracker;
 	global $wgWikiaAdvertiserCategory, $wgExtensionsPath, $wgTitle, $wgArticle, $wgStyleVersion, $wgSitename;
-	global $wgWikiFactoryTags, $wgDisableAnonymousEditig, $wgGroupPermissions, $wgBlankImgUrl;
+	global $wgWikiFactoryTags, $wgDisableAnonymousEditig, $wgGroupPermissions, $wgBlankImgUrl, $wgDontRewriteSassUrl;
 
 	$cats = wfGetBreadCrumb();
 	$idx = count($cats)-2;
@@ -84,6 +84,11 @@ function wfMakeGlobalVariablesScript($vars) {
 		$vars['wgDisableAnonymousEditig'] = true;
 	} else {
 		$vars['wgDisableAnonymousEditig'] = false;
+	}
+
+	// make direct requests to sassServer?
+	if (!empty($wgDontRewriteSassUrl)) {
+		$vars['wgDontRewriteSassUrl'] = true;
 	}
 
 	wfProfileOut(__METHOD__);

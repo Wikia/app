@@ -7,8 +7,15 @@ function wfGetSassUrl(fileName){
 		fileName = fileName.substring(1);
 	}
 
-	wgCdnRootUrl = (wgCdnRootUrl?wgCdnRootUrl:"");
-	url = wgCdnRootUrl + "/__sass/" + fileName + "/" + wgStyleVersion + "/" + sassHash + "/" + sassParams;
+	wgCdnRootUrl = (typeof wgCdnRootUrl != 'undefined' ? wgCdnRootUrl : "");
+
+	if (window.wgDontRewriteSassUrl) {
+		var url = wgCdnRootUrl + '/sassServer.php?file=' + encodeURIComponent(fileName) +
+			'&styleVersion=' + wgStyleVersion + '&hash=' + sassHash + '&' + sassParams;
+	}
+	else {
+		var url = wgCdnRootUrl + "/__sass/" + fileName + "/" + wgStyleVersion + "/" + sassHash + "/" + sassParams;
+	}
 
 	return url;
 }
