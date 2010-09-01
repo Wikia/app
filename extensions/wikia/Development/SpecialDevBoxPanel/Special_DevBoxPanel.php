@@ -138,9 +138,9 @@ function wfDevBoxForceWiki(&$wikiFactoryLoader){
  */
 function getForcedWikiValue(){
 	if (!isset($_SERVER['HTTP_HOST'])) return "";
-	if (count (explode(".", $_SERVER['HTTP_HOST'])) == 4) {
-		list($override, $developer, $wikia_dev, $com) = explode(".", $_SERVER['HTTP_HOST']);
-		//$_SERVER['HTTP_HOST'] == "$developer.wikia-dev.com";
+	$hostCount = count (explode(".", $_SERVER['HTTP_HOST']));
+	if ( $hostCount == 4 || $hostCount == 5) {
+		$override = array_shift(explode(".", $_SERVER['HTTP_HOST']));
 		return "$override.wikia.com";
 	}
 	return "";
