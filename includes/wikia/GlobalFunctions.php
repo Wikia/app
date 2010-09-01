@@ -118,7 +118,7 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 	global $wgImagesServers, $wgDevelEnvironment, $wgAkamaiLocalVersion,  $wgAkamaiGlobalVersion;
 
 	// Override image server location for Wikia development environment
-	if (!empty($wgDevelEnvironment) && !empty($_SERVER['HTTP_HOST'])) {
+	if (!empty($wgDevelEnvironment) && !empty($_SERVER['HTTP_HOST']) && !empty($wgDevBoxImageServerOverride)) {
 		if (count (explode(".", $_SERVER['HTTP_HOST'])) == 4) {
 			list($override, $developer, $wikia_dev, $com) = explode(".", $_SERVER['HTTP_HOST']);
 		} else {
