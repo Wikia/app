@@ -59,7 +59,7 @@ class NavigationService {
 					$node['parentIndex'] = $parentIndex;
 					$node['depth'] = $depth;
 
-					$this->handleExtraWords(&$node, &$nodes);
+					$this->handleExtraWords($node, $nodes);
 
 					$nodes[$node['parentIndex']]['children'][] = $i+1;
 					$nodes[$i+1] = $node;
