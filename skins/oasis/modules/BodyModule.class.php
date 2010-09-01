@@ -2,6 +2,7 @@
 class BodyModule extends Module {
 
 	// global vars
+	var $wgBlankImgUrl;
 	var $wgSitename;
 	var $wgUser;
 	var $wgTitle;
