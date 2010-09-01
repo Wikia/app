@@ -61,13 +61,17 @@
 	@include clearfix;
 	font-size: 10px;
 	line-height: 1em;
+	padding-left: 4px;
 	text-transform: uppercase;
 	em {
 		float: left;
-		font-size: 22px;
-		font-weight: bold;
+		font-size: 23px;
+		font-style: normal;
+		letter-spacing: -0.5px;
 		line-height: 20px;
 		margin-right: 5px;
+		position: relative;
+		top: 1px;
 	}
 }
 
@@ -95,12 +99,21 @@
 	.avatar {
 		position: absolute;
 		left: 3px;
+		top: 8px;
 	}
 	details {
+		font-size: 11px;
 		a {
 			color: $color-links;
 			font-size: 11px;
 		}
+	}
+	a {
+		font-weight: normal;
+	}
+	.osprite.icon-add {
+		position: relative;
+		top: 1px;
 	}
 }
 
@@ -120,12 +133,14 @@
 
 .WikiaSpotlightsModule {
 	@include rail-module;
+	padding: 8px;
 	header {
 		@include linear-gradient($color-header, left, $color-header-alt, 0, $color-header, 50%, $color-header-alt, 100%);
 		border-top: 5px solid #000;
 		color: $color-header-text;
 		h1 {
 			font-size: 14px;
+			font-weight: normal;
 			margin: 0;
 		}
 		a {

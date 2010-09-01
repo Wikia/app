@@ -5,6 +5,7 @@
 
 .FollowedPagesModule {
 	@include rail-module;
+	line-height:20px;
 	li {
 		border-top: 1px solid $color-page-border;
 		margin: 0 2px 10px;

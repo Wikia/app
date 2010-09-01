@@ -20,7 +20,7 @@
 	li {
 		display: table-cell;
 		*float: left;
-		font-size: 14px;
+		font-size: 13px;
 		padding: .4em 0;
 		position: relative;
 		vertical-align: bottom;
@@ -64,7 +64,7 @@
 	}
 	.wordmark {
 		color: $color-links;
-		font-size: 32px;
+		font-size: 30px;
 		font-weight: bold;
 	}
 	.buttons {
@@ -75,13 +75,13 @@
 		width: 220px;
 		a {
 			@include border-radius(3px);
-			font-size: 12px;
+			font-size: 11px;
 			height: 17px;
 			line-height: 18px;
 			img {
 				left: -2px;
 				position: relative;
-				top: 1px;
+				top: -1px;
 				height: 16px;
 				vertical-align: text-top;
 			}

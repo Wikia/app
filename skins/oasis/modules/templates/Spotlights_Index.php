@@ -1,6 +1,6 @@
 <section class="WikiaSpotlightsModule">
 	<header>
-		<h1> Wikia Spotlights <img src="/skins/oasis/images/icon_module_rss.png"></h1>
+		<h1>Wikia Spotlights</h1>
 		<img src="<?= $wgBlankImgUrl; ?>" class="banner-corner-left">
 		<img src="<?= $wgBlankImgUrl; ?>" class="banner-corner-right">
 	</header>

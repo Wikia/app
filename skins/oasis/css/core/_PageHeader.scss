@@ -27,7 +27,7 @@
 		bottom: 30px;
 		position: absolute;
 		right: 0;
-		top: 4px;
+		top: 0;
 	}
 	h1 {
 		display: inline;
@@ -39,10 +39,17 @@
 		}
 	}
 	.view-source {
-		font-size: 14px;
+		font-size: 10px;
+		position: relative;
+		top: -2px;
 		img {
 			padding: 0 3px;
 			vertical-align: baseline;
+		}
+		.icon {
+			background: url(/skins/oasis/images/sprite.png) -1600px 0 no-repeat;
+			position:relative;
+			top: 1px;
 		}
 	}
 	h2, p {
@@ -63,6 +70,7 @@
 		width: 670px;
 	}
 	.history {
+		font-size: 10px;
 		left: 0;
 		position: absolute;
 		text-align: left;
@@ -88,7 +96,7 @@
 			}
 			a {
 				display: inline;
-				font-size: 12px;
+				font-size: 10px;
 				padding: 0;
 				&:hover {
 					background: none;
@@ -104,6 +112,7 @@
 	}
 	.categories {
 		margin-right: 10px;
+		font-size: 10px;
 	}
 	.avatar {
 		float: left;
@@ -126,9 +135,6 @@
 		a[data-id=add] .icon {
 			background: url(/skins/oasis/images/sprite.png) -1568px -16px no-repeat;
 		}
-	}
-	.view-source .icon {
-		background: url(/skins/oasis/images/sprite.png) -1600px 0 no-repeat;
 	}
 }
 .oasis-one-column .WikiaPageHeader {
