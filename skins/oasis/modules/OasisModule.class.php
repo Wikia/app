@@ -24,7 +24,7 @@ class OasisModule extends Module {
 	var $pageclass;
 	var $skinnameclass;
 
-	static $moduleClasses;
+	private static $moduleClasses;
 
 	/**
 	 * Add extra CSS classes to <body> tag
