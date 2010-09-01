@@ -241,7 +241,7 @@ class PageStatsService extends Service {
 				$commentList = ArticleCommentList::newFromTitle($title);
 
 				$data = $commentList->getData();
-				$ret = intval($data['countCommentsNested']);
+				$ret = $data['countCommentsNested'];
 			}
 			else {
 				// get number of revisions of talk page
@@ -250,7 +250,7 @@ class PageStatsService extends Service {
 				// check if talk page exists
 				if (!empty($talkPage) && $talkPage->exists()) {
 					$dbr = wfGetDB(DB_SLAVE);
-					$ret = intval($dbr->selectField('revision', 'count(*)', array('rev_page' => $talkPage->getArticleId()), __METHOD__));
+					$ret = $dbr->selectField('revision', 'count(*)', array('rev_page' => $talkPage->getArticleId()), __METHOD__);
 				}
 				else {
 					$ret = 0;
@@ -263,7 +263,7 @@ class PageStatsService extends Service {
 		}
 
 		wfProfileOut(__METHOD__);
-		return $ret;
+		return intval($ret);
 	}
 
 	/**
