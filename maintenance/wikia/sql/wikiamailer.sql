@@ -2,9 +2,9 @@
 CREATE DATABASE wikia_mailer;
 use wikia_mailer;
 
-CREATE TABLE mail  IF NOT EXISTS (
+CREATE TABLE IF NOT EXISTS mail (
        id INT PRIMARY KEY AUTO_INCREMENT,
-       created DATETIME NOT NULL DEFAULT NOW(), # when we sent it from apache
+       created DATETIME NOT NULL, # when we sent it from apache
        src VARCHAR(255) NOT NULL,            
        dst VARCHAR(255) NOT NULL,
        hdr TEXT NOT NULL,
