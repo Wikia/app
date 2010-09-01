@@ -91,7 +91,7 @@ function Ach_Setup() {
 	$wgHooks['AddToUserProfile'][] = 'Ach_AddToUserProfile';
 	$wgHooks['UploadVerification'][] = 'Ach_UploadVerification';
 	$wgHooks['Masthead::editCounter'][] = 'Ach_MastheadEditCounter';
-	
+
 	//hooks for user preferences
 	$wgHooks['UserToggles'][] = 'Ach_UserToggles';
 	$wgHooks['MonacoSidebarGetMenu'][] = 'Ach_GetMenu';
@@ -100,7 +100,7 @@ function Ach_Setup() {
 
 function Ach_GetMenu(&$nodes) {
 	global $wgScript;
-	
+
 	$nodes[0]['children'][] = count($nodes);
 	$nodes[] = array(
 		//'original' => 'achievementsleaderboard',
@@ -110,17 +110,17 @@ function Ach_GetMenu(&$nodes) {
   		//'depth' => 1,
 		//'parentIndex' => 0
 	);
-		
+
 	return true;
 }
 
 function Ach_MastheadEditCounter(&$editCounter, $user) {
 	if ($user instanceof User) {
 		global $wgUser;
-		
+
 		if(!($wgUser->getId() == $user->getId() && $wgUser->getOption('hidepersonalachievements'))) {
 			global $wgCityId, $wgExternalSharedDB;
-			
+
 			$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 			$editCounter = $dbr->selectField('ach_user_score', 'score', array('wiki_id' => $wgCityId, 'user_id' => $user->getId()), __METHOD__);
 			$editCounter = '<div id="masthead-achievements">' . wfMsg('achievements-masthead-points', number_format($editCounter)) . '</div>';
@@ -169,7 +169,10 @@ function Ach_GetHTMLAfterBody($skin, &$html) {
 
 		if((!empty($_SESSION['achievementsNewBadges']) || 5 == rand(1, 20)) && get_class($wgUser->getSkin()) != 'SkinMonobook') {
 			// this works only for Wikia and only in current varnish configuration
-			header('X-Pass-Cache-Control: no-store, private, no-cache, must-revalidate');
+			if (!headers_sent()) {
+				header('X-Pass-Cache-Control: no-store, private, no-cache, must-revalidate');
+			}
+
 			$notificationService = new AchNotificationService();
 			$wgOut->addHTML($notificationService->getNotifcationHTML($wgUser));
 			unset($_SESSION['achievementsNewBadges']);
@@ -208,7 +211,7 @@ function AchAjax() {
 		ob_start();
 		Ach_TakeRankingSnapshot($wgRequest->getVal('force'));
 		$result = ob_get_clean();
-		
+
 		$response = new AjaxResponse($result);
 		$response->setContentType('text/html; charset=utf-8');
 		return $response;
