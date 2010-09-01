@@ -1,3 +1,4 @@
+<a href="#WikiaArticle" id="skiplink"><img alt="Skip to main article" src="<?= $wgBlankImgUrl ?>"></a>
 <?= $afterBodyHtml ?>
 
 <?= wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_TOP')) ?>
