@@ -7,7 +7,7 @@
 	@include linear-gradient(false, top, $color-module-highlight, 60%, $color-module-shadow, 100%);
 	border: 1px solid $color-page-border;
 	margin: 10px 0;
-	padding: 8px;
+	padding: 16px 8px 8px;
 	position: relative;
 	header {
 		/*@include header-footer;*/
@@ -20,7 +20,6 @@
 	details {
 		em {
 			float: left;
-			font-size: 18px;
 		}
 	}
 	.wikia-button {
