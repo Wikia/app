@@ -127,16 +127,6 @@
 		}
 		line-height: 10px;
 		text-transform: uppercase;
-		em {
-			float: left;
-			margin-right: 7px;
-			line-height: 18px;
-			font: {
-				weight: bold;
-				size: 24px;
-			}
-
-		}
 	}
 	.view-all {
 		cursor: pointer;
@@ -167,5 +157,8 @@
 	}
 	.badges-more {
 		display: none;
+	}
+	.more {
+		font-weight: normal;
 	}
 }

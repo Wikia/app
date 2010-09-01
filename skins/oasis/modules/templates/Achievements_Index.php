@@ -6,7 +6,7 @@
 ?>
 	<h2><?= wfMsgExt('achievements-profile-title', array('parsemag'), $ownerName, count($ownerBadges)) ?></h2>
 	
-	<details>
+	<details class="tally">
 		<em><?= $ownerScore ?></em> <?= wfMsg('achievements-profile-title-oasis') ?>
 	</details>
 	
