@@ -108,4 +108,38 @@ class ModuleDataTests extends PHPUnit_Framework_TestCase {
 			null,
 			$moduleData['url']);
 	}
+
+	function testOasisModule() {
+		global $wgTitle, $wgUser;
+
+		// setup MW
+		$wgTitle = Title::newMainPage();
+		$wgUser = User::newFromName('WikiaBot');
+
+		// add custom CSS class to <body>
+		OasisModule::addBodyClass('testCssClass');
+
+		// turn of PHP warnings / don't emit skin's HTML
+		wfSuppressWarnings();
+		ob_start();
+
+		// initialize skin
+		$skin = $wgUser->getSkin();
+		$skin->outputPage(new OutputPage());
+
+		// render the skin
+		$moduleData = Module::get('Oasis')->getData();
+
+		wfClearOutputBuffers();
+		wfRestoreWarnings();
+
+		// assertions
+		$this->assertRegExp('/ testCssClass/', $moduleData['bodyClasses']);
+		$this->assertRegExp('/^<link href=/', $moduleData['printableCss']);
+		$this->assertType('string', $moduleData['body']);
+		$this->assertType('string', $moduleData['headscripts']);
+		$this->assertType('string', $moduleData['csslinks']);
+		$this->assertType('string', $moduleData['headlinks']);
+		$this->assertType('string', $moduleData['globalVariablesScript']);
+	}
 }
