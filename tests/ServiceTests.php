@@ -1,6 +1,17 @@
 <?php
 class ServiceTests extends PHPUnit_Framework_TestCase {
 
+	function testAvatarService() {
+		$anonName = '10.10.10.10';
+		$userName = 'WikiaBot';
+
+		$this->assertRegExp('/width="32"/', AvatarService::render($userName, 32));
+		$this->assertRegExp('/User:WikiaBot/', AvatarService::renderLink($userName));
+		$this->assertRegExp('/^<img src="http:\/\/images/', AvatarService::renderAvatar($userName));
+		$this->assertRegExp('/^http:\/\/images/', AvatarService::getAvatarUrl($userName));
+		$this->assertRegExp('/Special:Contributions\//', AvatarService::getUrl($anonName));
+	}
+
 	function testPageStatsService() {
 		global $wgTitle;
 		$wgTitle = Title::newMainPage();
