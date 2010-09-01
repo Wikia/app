@@ -22,7 +22,10 @@ CREATE TABLE IF NOT EXISTS mail (
        clicked DATETIME,
        INDEX(dst),
        INDEX(city_id),
-       INDEX(locked_by)
+       INDEX(locked_by),
+       INDEX(transmitted),
+       INDEX(locked),
+       
 );
 
 
