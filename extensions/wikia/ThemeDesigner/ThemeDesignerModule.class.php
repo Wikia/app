@@ -14,6 +14,9 @@ class ThemeDesignerModule extends Module {
 
 	public function executeIndex() {
 		$this->themeSettings = new ThemeSettings();
+
+		// for tests
+		#$this->themeSettings->save();
 	}
 
 	public function executeThemeTab() {
