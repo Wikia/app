@@ -27,12 +27,19 @@ class AvatarService extends Service {
 	 */
 	static private function getDefaultAvatar() {
 		wfProfileIn(__METHOD__);
+		global $wgStylePath;
 
 		static $avatarUrl;
 
 		if (!isset($avatarUrl)) {
-			$defaultAvatars = Masthead::newFromUserId(0)->getDefaultAvatars();
-			$avatarUrl = array_shift($defaultAvatars);
+			if (class_exists('Masthead')) {
+				$defaultAvatars = Masthead::newFromUserId(0)->getDefaultAvatars();
+				$avatarUrl = array_shift($defaultAvatars);
+			}
+			else {
+				$randomInt = rand(1, 3);
+				$avatarUrl = "{$wgStylePath}/oasis/images/generic_avatar{$randomInt}.png";
+			}
 		}
 
 		wfProfileOut(__METHOD__);
@@ -83,7 +90,7 @@ class AvatarService extends Service {
 			$user = self::getUser($userName);
 
 			// handle anon users - return default avatar
-			if (empty($user)) {
+			if (empty($user) || !class_exists('Masthead')) {
 				$avatarUrl = self::getDefaultAvatar();
 
 				wfProfileOut(__METHOD__);
