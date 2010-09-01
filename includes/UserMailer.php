@@ -191,12 +191,17 @@ class UserMailer {
 			$headers['X-Msg-Category'] = $category;
 			/* Wikia change end */
 
+			/* Wikia change begin - @author: Sean Colombo */
 			// Create the mail object using the Mail::factory method
-			if( is_array( $wgSchwartzMailer ) ) {
+			// Wikia: for now, if the email is to us, use the new system.
+			if(strpos($headers['To'], "@wikia-inc.com") !== false){
+				$mail_object =& Mail::factory('wikiadb', array());
+			} else if( is_array( $wgSchwartzMailer ) ) {
 				$mail_object =& Mail::factory('theschwartzhttp', $wgSchwartzMailer);
 			} else {
 				$mail_object =& Mail::factory('smtp', $wgSMTP);
 			}
+			/* Wikia change end */
 			if( PEAR::isError( $mail_object ) ) {
 				wfDebug( "PEAR::Mail factory failed: " . $mail_object->getMessage() . "\n" );
 				return new WikiError( $mail_object->getMessage() );
