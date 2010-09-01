@@ -427,6 +427,13 @@ class SkinChooser {
 				return false;
 			}
 		}
+
+		if( $wgRequest->getVal('useskin') == 'oasis' ) {
+			$wgRequest->setVal('useskin', 'monaco');
+		}
+		if( $wgRequest->getVal('useskin') == 'wikia' ) {
+			$wgRequest->setVal('useskin', 'oasis');
+		}
 		if(!empty($wgForceSkin)) {
 			$wgForceSkin = $wgRequest->getVal('useskin', $wgForceSkin);
 			$elems = explode('-', $wgForceSkin);
