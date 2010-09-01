@@ -25,9 +25,20 @@ a {
 	@include clearfix;
 }
 
-#skiplink {
-	display: block;
-	margin: 0 auto;
-	width: 100px;
+.skiplinkcontainer {
 	position: absolute;
+	top: 0;
+	right: 0;
+	.skiplink {
+		display: block;
+		margin: 0 auto;
+		right: 0;
+		width: 100px;
+		position: absolute;
+		top: -9999px;
+		&:active,
+		&:focus {
+			top: 0px;
+		}
+	}
 }
