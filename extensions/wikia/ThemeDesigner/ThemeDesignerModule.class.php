@@ -11,12 +11,31 @@ class ThemeDesignerModule extends Module {
 	var $charset;
 
 	var $themeSettings;
+	var $themeHistory;
 
 	public function executeIndex() {
-		$this->themeSettings = new ThemeSettings();
+		global $wgLang;
 
-		// for tests
-		#$this->themeSettings->save();
+		$settings = new ThemeSettings();
+		$settings->save(); // for tests
+
+		// current settings
+		$this->themeSettings = $settings->getAll();
+
+		// recent versions
+		$this->themeHistory = $settings->getHistory();
+
+		// format time (for edits older than 30 days - show timestamp)
+		foreach($this->themeHistory as &$entry) {
+			$diff = time() - strtotime($entry['timestamp']);
+
+			if ($diff < 30 * 86400) {
+				$entry['timeago'] = wfTimeFormatAgo($entry['timestamp']);
+			}
+			else {
+				$entry['timeago'] = $wgLang->date($entry['timestamp']);
+			}
+		}
 	}
 
 	public function executeThemeTab() {
