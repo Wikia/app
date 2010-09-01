@@ -11,6 +11,6 @@
 		<span id="wordmark"></span>
 	</fieldset>
 	<fieldset class="graphic">
-		<h1><?= wfMsg('themedesigner-text-wordmark') ?></h1>
+		<h1><?= wfMsg('themedesigner-graphic-wordmark') ?></h1>
 	</fieldset>
 </section>
