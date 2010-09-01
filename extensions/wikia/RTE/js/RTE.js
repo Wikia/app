@@ -1,8 +1,9 @@
 window.RTE = {
 	// configuration
+	// @see http://docs.cksource.com/ckeditor_api/symbols/CKEDITOR.config.html
 	config: {
 		'alignableElements':  ['p', 'div', 'td' ,'th'],
-		'baseFloatZIndex': 500,
+		'baseFloatZIndex': 1000,
 		'bodyId': 'bodyContent',
 		'coreStyles_bold': {element: 'b', overrides: 'strong'},
 		'coreStyles_italic': {element: 'i', overrides: 'em'},
