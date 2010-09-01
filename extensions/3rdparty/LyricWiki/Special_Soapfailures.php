@@ -134,7 +134,7 @@ function wfSoapFailures(){
 
 			$db = &wfGetDB(DB_SLAVE)->getProperty('mConn');
 
-			print wfGetMsg('soapfailures-intro');
+			print wfMsg('soapfailures-intro');
 
 			print "This page is cached every 2 hours - \n";
 			print "last cached: <strong>".date('m/d/Y \a\t g:ia')."</strong>\n";
