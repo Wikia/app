@@ -4,35 +4,45 @@ class ThemeSettings {
 	private $settings;
 
 	function __construct() {
-		global $wgOasisThemes, $wgSitename;
-
 		$this->load();
 
 		// use default settings
 		if (empty($this->settings)) {
-			$defaultThemeName = 'sapphire';
-
-			// get default oasis theme
-			$this->settings = $wgOasisThemes[$defaultThemeName];
-			$this->settings['theme'] = $defaultThemeName;
-
-			// wordmark
-			$this->settings['wordmark-text'] = $wgSitename;
-			$this->settings['wordmark-color'] = $this->get('color-links');
-			$this->settings['wordmark-font'] = '';
-			$this->settings['wordmark-image'] = false;
-
-			// main page banner
-			$this->settings['banner-image'] = false;
-
-			// background
-			$this->settings['background-color'] = $this->get('color-body');
-			$this->settings['background-image'] = false;
-			$this->settings['background-tiled'] = false;
-
-			wfDebug(__METHOD__ . ": using default settings\n");
-			wfDebug(__METHOD__ . print_r($this->settings, true));
+			$this->settings = self::getDefaultSettings();
+			wfDebug(__METHOD__ . ": using default settings - " . Wikia::json_encode($this->settings) . "\n");
 		}
+	}
+
+	/**
+	 * Get default settings if none saved found
+	 */
+	private static function getDefaultSettings() {
+		global $wgOasisThemes, $wgSitename;
+
+		$defaultThemeName = 'sapphire';
+
+		// get default oasis theme colors
+		$settings = $wgOasisThemes[$defaultThemeName];
+		$settings['theme'] = $defaultThemeName;
+
+		// wordmark
+		$settings['wordmark-text'] = $wgSitename;
+		$settings['wordmark-color'] = $settings['color-links'];
+		$settings['wordmark-font'] = '';
+		$settings['wordmark-font-size'] = '';
+		$settings['wordmark-image'] = false;
+		$settings['wordmark-image-revision'] = false;
+
+		// main page banner
+		$settings['banner-image'] = false;
+		$settings['banner-image-revision'] = false;
+
+		// background
+		$settings['background-image'] = false;
+		$settings['background-image-revision'] = false;
+		$settings['background-tiled'] = false;
+
+		return $settings;
 	}
 
 	public function get($name) {
