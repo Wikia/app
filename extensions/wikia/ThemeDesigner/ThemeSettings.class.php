@@ -1,16 +1,23 @@
 <?php
 
 class ThemeSettings {
+	const WikiFactorySettings = 'wgOasisThemeSettings';
+	const WikiFactoryHistory = 'wgOasisThemeSettingsHistory';
+
 	private $settings;
 
 	function __construct() {
+		wfProfileIn(__METHOD__);
+
 		$this->load();
 
 		// use default settings
 		if (empty($this->settings)) {
 			$this->settings = self::getDefaultSettings();
-			wfDebug(__METHOD__ . ": using default settings - " . Wikia::json_encode($this->settings) . "\n");
+			wfDebug(__METHOD__ . ": using default settings\n");
 		}
+
+		wfProfileOut(__METHOD__);
 	}
 
 	/**
@@ -57,11 +64,58 @@ class ThemeSettings {
 		$this->settings[$name] = $value;
 	}
 
+	/**
+	 * Try to load theme settings from WikiFactory variable
+	 */
 	private function load() {
-
+		if (!empty($GLOBALS[self::WikiFactorySettings])) {
+			$this->settings = $GLOBALS[self::WikiFactorySettings];
+			wfDebug(__METHOD__ . ": settings loaded from WF variable\n");
+		}
 	}
 
+	/**
+	 * Save current settings to WikiFactory variable and update history
+	 */
 	public function save() {
+		global $wgCityId, $wgUser;
 
+		$data = $this->getAll();
+		$reason = 'Theme Designer - save done by ' . $wgUser->getName();
+
+		// update WF variable with current theme settings
+		$result = WikiFactory::setVarByName(self::WikiFactorySettings, $wgCityId, $data, $reason);
+		if (!$result) {
+			wfDebug(__METHOD__ . ": save has failed!\n");
+			return false;
+		}
+
+		// update history
+		if (!empty($GLOBALS[self::WikiFactoryHistory])) {
+			$history = $GLOBALS[self::WikiFactoryHistory];
+		}
+		else {
+			$history = array();
+		}
+
+		// prepare history entry
+		$entry = array(
+			'settings' => $data,
+			'author' => $wgUser->getName(),
+			'timestamp' =>  wfTimestampNow(),
+		);
+
+		// add an entry and limit history size to last 10 changes
+		array_unshift($history, $entry);
+		$history = array_slice($history, 0, 10);
+
+		$result = WikiFactory::setVarByName(self::WikiFactoryHistory, $wgCityId, $history, $reason);
+		if (!$result) {
+			wfDebug(__METHOD__ . ": history save has failed!\n");
+			return false;
+		}
+
+		wfDebug(__METHOD__ . ": settings saved\n");
+		return true;
 	}
 }
