@@ -1,13 +1,65 @@
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+
+$color-chevron: #4175A7;
+$color-selected-thumbnail: #72ADD5;
+
 .ThemeTab {
+	.slider {
+		left: 35px;
+		overflow: hidden;
+		position: absolute;
+		top: 20px;
+		width: 760px;	
+	}
+	ul {
+		width: 2000px;
+	}
 	li {
 		float: left;
 		padding: 15px;
+		&.selected {
+			label {
+				font-weight: bold;
+			}
+			img {
+				@include box-shadow(0px, 0px, 5px, $color-selected-thumbnail);
+				border-color: $color-selected-thumbnail; 
+			}
+		}
 	}
 	label {
 		display: block;
+		padding: 5px;
 	}
 	img {
 		border: 1px solid $color-borders;
 		display: block;
+	}
+	.chevron {
+		border-style: solid;
+		border-width: 13px;
+		cursor: pointer;
+		height: 0;
+		position: absolute;
+		width: 0;
+		&.disabled {
+			cursor: default;	
+		}
+	}
+	.previous {
+		border-color: transparent $color-chevron transparent transparent;
+		left: 5px;
+		top: 98px;
+		&.disabled {
+			border-color: transparent #CCC transparent transparent;
+		}
+	}
+	.next {
+		border-color: transparent transparent transparent $color-chevron;
+		left: 799px;
+		top: 98px;
+		&.disabled {
+			border-color: transparent transparent transparent #CCC;
+		}
 	}
 }

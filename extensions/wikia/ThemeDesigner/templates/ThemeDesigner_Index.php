@@ -6,6 +6,11 @@
 
 	<title><?= wfMsg('themedesigner-title') ?></title>
 
+	<!-- Make IE recognize HTML5 tags. -->
+	<!--[if IE]>
+		<script>/*@cc_on'abbr article aside audio canvas details figcaption figure footer header hgroup mark menu meter nav output progress section summary time video'.replace(/\w+/g,function(n){document.createElement(n)})@*/</script>
+	<![endif]-->
+
 	<link rel="stylesheet" href="<?= wfGetSassUrl($wgExtensionsPath."/wikia/ThemeDesigner/css/ThemeDesigner.scss") ?>">
 
 	<script>
@@ -20,24 +25,31 @@
 <body>
 
 	<div id="Designer" class="Designer">
-		<ul class="tabs">
-			<li class="selected">
-				<a href="#">Theme</a>
-			</li>
-			<li>
-				<a href="#">Customize</a>
-			</li>
-			<li>
-				<a href="#">Wordmark</a>
-			</li>
-			<li>
-				<a href="#">Banner</a>
-			</li>
-		</ul>
-		<?= wfRenderModule('ThemeDesigner', 'ThemeTab') ?>
-		<div class="Toolbar">
-			<button>Save</button>
-		</div>
+		<nav id="Navigation" class="Navigation">
+			<ul>
+				<li>
+					<a href="#" rel="ThemeTab">Theme</a>
+				</li>
+				<li>
+					<a href="#" rel="CustomizeTab">Customize</a>
+				</li>
+				<li>
+					<a href="#" rel="WordmarkTab">Wordmark</a>
+				</li>
+				<li>
+					<a href="#" rel="BannerTab">Banner</a>
+				</li>
+			</ul>
+		</nav>
+		<form>
+			<?= wfRenderModule('ThemeDesigner', 'ThemeTab') ?>
+			<?= wfRenderModule('ThemeDesigner', 'CustomizeTab') ?>
+			<?= wfRenderModule('ThemeDesigner', 'WordmarkTab') ?>
+			<?= wfRenderModule('ThemeDesigner', 'BannerTab') ?>
+			<div id="Toolbar" class="Toolbar">
+				<button>Save</button>
+			</div>
+		</form>
 	</div>
 
 

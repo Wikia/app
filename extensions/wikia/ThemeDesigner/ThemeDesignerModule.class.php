@@ -24,4 +24,12 @@ class ThemeDesignerModule extends Module {
 
 	}
 
+	public function executeWordmarkTab() {
+
+	}
+
+	public function executeBannerTab() {
+
+	}
+
 }
