@@ -10,7 +10,7 @@ var ThemeDesigner = {
 		"color-buttons": "",
 		"color-links": "",
 		"theme": "",
-		"wordmark-text": "My Wiki Name Here",
+		"wordmark-text": "",
 		"wordmark-color": "",
 		"wordmark-font": "Orbitron",
 		"wordmark-font-size": "",
@@ -22,9 +22,9 @@ var ThemeDesigner = {
 	},
 
 	init: function() {
-		// store current settings
-		//ThemeDesigner.settings = window.themeSettings;
-		//$().log(ThemeDesigner.settings, 'ThemeDesigner');
+		// apply JS object settings
+		$.extend(ThemeDesigner.settings, themeSettings);
+		ThemeDesigner.applySettings();
 
 		// iframe resizing
 		$(window).resize(ThemeDesigner.resizeIframe).resize();
@@ -39,15 +39,7 @@ var ThemeDesigner = {
 		ThemeDesigner.WordmarkTabInit();
 		
 		// click first tab
-		$("#Navigation a:first").click();
-		
-		// apply JS object settings
-		$.extend(ThemeDesigner.settings, themeSettings);
-		/*** temp ***/
-			ThemeDesigner.settings["wordmark-font"] = "Orbitron";
-		/*** temp ***/
-		ThemeDesigner.applySettings();
-				
+		$("#Navigation a:first").click();				
 	},
 	
 	applySettings: function() {
@@ -107,6 +99,9 @@ var ThemeDesigner = {
 			options += '<option value="' + fonts[i] + '"' + selected +'>' + fonts[i] + '</option>';
 		}
 		$("#wordmark-font").html(options);
+		
+		// populate wordmark text
+		$("#wordmark").html(ThemeDesigner.settings["wordmark-text"]);
 	}
 	
 };
