@@ -25,7 +25,7 @@ class ModuleDataTests extends PHPUnit_Framework_TestCase {
 
 	function testRailModule() {
 		global $wgTitle;
-		$wgTitle = Title::newFromText('Dev_Box_Trick_Wiki');
+		$wgTitle = Title::newMainPage();
 
 		$moduleData = Module::get('Rail')->getData();
 
@@ -37,18 +37,21 @@ class ModuleDataTests extends PHPUnit_Framework_TestCase {
 
 	function testRailSubmoduleExists() {
 		global $wgTitle;
-		$wgTitle = Title::newFromText('Dev_Box_Trick_Wiki');
+		$wgTitle = Title::newFromText('FooBar');
 
-		$moduleData = Module::get('Rail')->getData();
+		$moduleData = Module::get('Body')->getData();
 
-		// search module lives at index 100
+		// search module lives at index 1500
 		$this->assertType("array",
-			$moduleData['railModuleList'][100]
+			$moduleData['railModuleList'][1500]
 		);
 
 	}
 
 	function testAdModule() {
+		global $wgTitle;
+		$wgTitle = Title::newMainPage();
+
 		$moduleData = Module::get('Ad', 'Index', array ('slot' => 'TOP_BOXAD'))->getData();
 
 		// boxad is 300 wide
