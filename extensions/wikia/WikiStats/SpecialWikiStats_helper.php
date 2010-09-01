@@ -554,14 +554,14 @@ class WikiStats {
 				if ( $startDate <= $oRow->date && $oRow->date <= $endDate ) {
 					foreach ( $oRow as $field => $value ) {
 						if ( $field == 'F' ) {
-							$value = intval($new_per_day);
+							/*$value = intval($new_per_day);
 							if ( $value > 0 ) {
 								$value = sprintf("%0.1f", $new_per_day);
-							}
-							/*$year = substr($oRow->date, 0, 4);
+							}*/
+							$year = substr($oRow->date, 0, 4);
 							$month = substr($oRow->date, 4, 2);							
 							$nbr_days = date("t", strtotime($year . "-" . $month . "-01"));
-							$value = sprintf("%0.2f", $value/$nbr_days);*/
+							$value = sprintf("%0.2f", $value/$nbr_days);
 						}
 						/*$excludedValues = isset( $this->mExcludedWikis[$oRow->date][$field] ) 
 							? intval( $this->mExcludedWikis[$oRow->date][$field] ) 
