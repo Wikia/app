@@ -26,6 +26,14 @@
 	right: 0;
 	width: 0;
 }
+.banner-shadow {
+	background:url("/skins/oasis/images/sprite.png") no-repeat scroll -1794px 0 transparent;
+	bottom:-10px;
+	height:11px;
+	left:29px;
+	position:absolute;
+	width:1000px;
+}
 
 
 .WikiaHeader {
@@ -129,6 +137,7 @@
 		position: absolute;
 		top: 56px; //56px 38px
 		width: $width-outside - 20px;
+		z-index: 1;
 		li {
 			display: inline;
 			font-size: 15px;

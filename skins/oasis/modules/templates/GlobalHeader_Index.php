@@ -49,6 +49,7 @@ if(is_array($menuNodes) && isset($menuNodes[0])) {
 		</ul>
 	</nav>
 	<?= wfRenderModule('AccountNavigation') ?>
-	<img src="<?= $wgBlankImgUrl; ?>" class="banner-corner-left">
-	<img src="<?= $wgBlankImgUrl; ?>" class="banner-corner-right">
+	<img src="<?= $wgBlankImgUrl ?>" class="banner-corner-left">
+	<img src="<?= $wgBlankImgUrl ?>" class="banner-corner-right">
+	<img src="<?= $wgBlankImgUrl ?>" class="banner-shadow">
 </header>
