@@ -142,4 +142,18 @@ class ModuleDataTests extends PHPUnit_Framework_TestCase {
 		$this->assertType('string', $moduleData['headlinks']);
 		$this->assertType('string', $moduleData['globalVariablesScript']);
 	}
+
+
+	function testCommentsLikesModule() {
+		global $wgTitle;
+		$wgTitle = Title::newMainPage();
+
+		$moduleData = Module::get('CommentsLikes', 'Index', array ('comments' => 123))->getData();
+
+		$this->assertRegExp('/^123$/', $moduleData['comments']);
+		$this->assertRegExp('/'.preg_quote($wgTitle->getDBkey()).'/', $moduleData['commentsLink']);
+		$this->assertRegExp('/^$/', $moduleData['commentsTooltip']);
+		$this->assertEquals(null, $moduleData['likes']);
+	}
+
 }
