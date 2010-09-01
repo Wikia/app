@@ -3,7 +3,7 @@
 /*<![CDATA[*/
 /*]]>*/
 </script>
-<h2>Variable Data  <small>[<a href='#' id="wk-variable-change" title="Click here to edit this variable" onclick='javascript:$Factory.Variable.change(this, [ "wk-variable-select", 1]);return false;'>edit</a>]</small></h2>
+<h2>Variable Data - <?php echo $variable->cv_name ?>  <small>[<a href='#' id="wk-variable-change" title="Click here to edit this variable" onclick='javascript:$Factory.Variable.change(this, [ "wk-variable-select", 1]);return false;'>edit</a>]</small></h2>
 <div style="margin:.5em 0;"><?php echo $variable->cv_description ?></div>
 <table border='1' cellpadding='2' cellspacing='0'>
 	<thead class="wf-tinyhead">
@@ -36,6 +36,9 @@
 		Manual: <small>
 		&nbsp;<a href="http://www.mediawiki.org/wiki/Manual:$<?php echo $variable->cv_name ?>" title='link to manual page at mediawiki.org'>MediaWiki</a>
 		&nbsp;<a href="http://contractor.wikia-inc.com/wiki/Manual:$<?php echo $variable->cv_name ?>" title='link to manual page at contractor.wikia'>Wikia</a></small>
+	</li>
+	<li>
+		<a href="<?php echo "{$GLOBALS[ "wgScript" ]}?title=Special:WikiFactory/{$variable->cv_city_id}/variables/{$variable->cv_name}"; ?>">permalink</a>
 	</li>
 </ul>
 <h2>
