@@ -1,8 +1,9 @@
 <script type="text/javascript">
 
 EditEnhancements = function() {
-
 	this.calculate = function() {
+		
+		
 		// rescale textbox
 		if (document.getElementById('wpTextbox1___Frame')) {
 			// FCK
@@ -27,10 +28,17 @@ EditEnhancements = function() {
 		var otherStuff = parseInt(toolbar.offset().top) - (textareaTop + textbox.height());
 		//var heightDiff = $("#" + textbox).outerHeight(true) - $("#" + textbox).height();
 		//+4 is for extra margin
+		
 		var targetHeight = viewport - textareaTop - toolbar.outerHeight(true) - otherStuff + 4;
 
+		// elements in Oasis need a different calculation for the height
+		if (window.skin == 'oasis') {
+			targetHeight = viewport - $('#WikiaPageHeader').outerHeight() - $('#cke_toolbar_row').outerHeight() - $('#csMainContainer ').outerHeight()  - $('#edit_enhancements_toolbar').outerHeight()  -45;
+		}
+	
 		// limit the height to be within <300, 800>
 		targetHeight = Math.min(Math.max(targetHeight, 300), 800);
+
 		textbox.height(targetHeight);
 
 		// rescale summary box
@@ -64,6 +72,7 @@ EditEnhancements = function() {
 
 	this.calculate();
 }
+
 
 EditEnhancementsLoad = function() {
 	var EditEnhancementsLoop = function() {
@@ -99,5 +108,6 @@ $(window).bind({
 	'load': EditEnhancementsLoad,
 	'resize': EditEnhancements
 });
+
 
 </script>
