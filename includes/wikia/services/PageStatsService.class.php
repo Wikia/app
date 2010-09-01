@@ -58,7 +58,7 @@ class PageStatsService extends Service {
 	/**
 	 * Regenerate / invalidate service cache for current page
 	 */
-	function regenerateData() {
+	public function regenerateData() {
 		global $wgMemc;
 
 		wfProfileIn(__METHOD__);
@@ -104,9 +104,9 @@ class PageStatsService extends Service {
 	/**
 	 * Invalidate cache for article comments count
 	 */
-	function regenerateCommentsCount() {
+	public function regenerateCommentsCount() {
 		global $wgMemc;
-		$wgMemc->delete($this->getKey('comments3'));
+		$wgMemc->delete($this->getKey('comments4'));
 	}
 
 	/**
@@ -142,7 +142,7 @@ class PageStatsService extends Service {
 	/**
 	 * Get list of two most linked categories current article is in
 	 */
-	function getMostLinkedCategories() {
+	public function getMostLinkedCategories() {
 		wfProfileIn(__METHOD__);
 
 		global $wgOut, $wgMemc;
@@ -209,7 +209,7 @@ class PageStatsService extends Service {
 	/**
 	 * Get number of article comments for current page (if enabled) or get number of revisions of talk page
 	 */
-	function getCommentsCount() {
+	public function getCommentsCount() {
 		wfProfileIn(__METHOD__);
 
 		global $wgMemc;
@@ -229,7 +229,7 @@ class PageStatsService extends Service {
 		}
 
 		// try to get cached data
-		$key = $this->getKey('comments3');
+		$key = $this->getKey('comments4');
 
 		$ret = $wgMemc->get($key);
 		if (!is_numeric($ret)) {
@@ -241,7 +241,7 @@ class PageStatsService extends Service {
 				$commentList = ArticleCommentList::newFromTitle($title);
 
 				$data = $commentList->getData();
-				$ret = $data['countCommentsNested'];
+				$ret = intval($data['countCommentsNested']);
 			}
 			else {
 				// get number of revisions of talk page
@@ -250,7 +250,7 @@ class PageStatsService extends Service {
 				// check if talk page exists
 				if (!empty($talkPage) && $talkPage->exists()) {
 					$dbr = wfGetDB(DB_SLAVE);
-					$ret = $dbr->selectField('revision', 'count(*)', array('rev_page' => $talkPage->getArticleId()), __METHOD__);
+					$ret = intval($dbr->selectField('revision', 'count(*)', array('rev_page' => $talkPage->getArticleId()), __METHOD__));
 				}
 				else {
 					$ret = 0;
@@ -271,7 +271,7 @@ class PageStatsService extends Service {
 	 *
 	 * TODO: to be implemented as a separate project
 	 */
-	function getLikesCount() {
+	public function getLikesCount() {
 		wfProfileIn(__METHOD__);
 
 		// handle not existing pages
@@ -326,7 +326,7 @@ class PageStatsService extends Service {
 	/**
 	 * Get current revision data and authors of five recent edits (filter out bots and blocked users)
 	 */
-	function getRecentRevisions() {
+	public function getRecentRevisions() {
 		wfProfileIn(__METHOD__);
 
 		global $wgMemc;
