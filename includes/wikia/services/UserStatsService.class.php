@@ -48,7 +48,7 @@ class UserStatsService extends Service {
 		wfDebug(__METHOD__ . ": user #{$this->userId}\n");
 
 		// update edit counts
-		$key = $this->getKey('stats');
+		$key = $this->getKey('stats3');
 		$stats = $wgMemc->get($key);
 
 		if (!empty($stats)) {
@@ -69,7 +69,7 @@ class UserStatsService extends Service {
 		global $wgMemc;
 
 		// try to get cached data
-		$key = $this->getKey('stats2');
+		$key = $this->getKey('stats3');
 
 		$stats = $wgMemc->get($key);
 		if (empty($stats)) {
@@ -88,7 +88,7 @@ class UserStatsService extends Service {
 
 			if (!empty($res)) {
 				$stats = array(
-					'edits' => $res->edits,
+					'edits' => intval($res->edits),
 					'date' => $res->date,
 				);
 			}
