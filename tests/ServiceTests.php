@@ -25,4 +25,15 @@ class ServiceTests extends PHPUnit_Framework_TestCase {
 		$this->assertType('string', $service->getFirstRevisionTimestamp());
 	}
 
+	function testUserStatsService() {
+		$user = User::newFromName('WikiaBot');
+
+		$service = new UserStatsService($user->getId());
+		$stats = $service->getStats();
+
+		$this->assertType('int', $stats['edits']);
+		$this->assertType('int', $stats['likes']);
+		$this->assertType('string', $stats['date']);
+	}
+
 }
