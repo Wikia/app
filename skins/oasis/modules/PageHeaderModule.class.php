@@ -150,7 +150,7 @@ class PageHeaderModule extends Module {
 	public function executeIndex($params) {
 		wfProfileIn(__METHOD__);
 
-		global $wgTitle, $wgContLang, $wgLang;
+		global $wgTitle, $wgContLang, $wgLang, $wgSupressPageTitle, $wgSupressPageSubtitle;
 
 		// page namespace
 		$ns = $wgTitle->getNamespace();
@@ -299,17 +299,22 @@ class PageHeaderModule extends Module {
 				break;
 		}
 
-		// if page is rendered using one column layout, show search box as a part of page header
-		$this->showSearchBox = isset($params['showSearchBox']) ? $params['showSearchBox'] : false ;
 		// don't render likes right now
 		$this->likes = false;
 
+		// if page is rendered using one column layout, show search box as a part of page header
+		$this->showSearchBox = isset($params['showSearchBox']) ? $params['showSearchBox'] : false ;
+
 		// This is a reminder that this feature should probably work. --O
-		global $wgSupressPageTitle;
-		if ($wgSupressPageTitle === true) {
+		if (!empty($wgSupressPageTitle)) {
 			$this->title = '';
 			$this->subtitle = '';
 		}
+
+		if (!empty($wgSupressPageSubtitle)) {
+			$this->subtitle = '';
+		}
+
 		wfProfileOut(__METHOD__);
 	}
 
