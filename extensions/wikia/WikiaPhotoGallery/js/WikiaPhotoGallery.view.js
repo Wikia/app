@@ -4,6 +4,10 @@ var WikiaPhotoGalleryView = {
 		$().log(msg, 'ImageGallery');
 	},
 
+	getArticle: function() {
+		return (window.skin == 'oasis') ? $('#WikiaArticle') : $('#bodyContent');
+	},
+
 	// check are we on view page
 	isViewPage: function() {
 		var urlVars = $.getUrlVars();
@@ -41,7 +45,7 @@ var WikiaPhotoGalleryView = {
 		var self = this;
 
 		// find galleries in article content
-		var galleries = $((window.skin == 'oasis') ? '#WikiaArticle' : '#bodyContent').find('.wikia-gallery').not('.template');
+		var galleries = this.getArticle().find('.wikia-gallery').not('.template');
 		if (galleries.exists()) {
 			this.log('found ' + galleries.length + ' galleries');
 		}
@@ -122,7 +126,7 @@ var WikiaPhotoGalleryView = {
 		var self = this;
 
 		// find slideshows in article content
-		var slideshows = $('#bodyContent').find('.wikia-slideshow');
+		var slideshows = this.getArticle().find('.wikia-slideshow');
 		if (slideshows.exists()) {
 			this.log('found ' + slideshows.length + ' slideshows');
 		}
