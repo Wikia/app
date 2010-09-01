@@ -4,6 +4,8 @@ class ThemeSettings {
 	const WikiFactorySettings = 'wgOasisThemeSettings';
 	const WikiFactoryHistory = 'wgOasisThemeSettingsHistory';
 
+	const HistoryItemsLimit = 10;
+
 	private $settings;
 
 	function __construct() {
@@ -65,6 +67,20 @@ class ThemeSettings {
 	}
 
 	/**
+	 * Return recent versions for theme settings
+	 */
+	public function getHistory() {
+		if (!empty($GLOBALS[self::WikiFactoryHistory])) {
+			$history = $GLOBALS[self::WikiFactoryHistory];
+		}
+		else {
+			$history = array();
+		}
+
+		return $history;
+	}
+
+	/**
 	 * Try to load theme settings from WikiFactory variable
 	 */
 	private function load() {
@@ -93,21 +109,25 @@ class ThemeSettings {
 		// update history
 		if (!empty($GLOBALS[self::WikiFactoryHistory])) {
 			$history = $GLOBALS[self::WikiFactoryHistory];
+
+			$lastItem = end($history);
+			$revisionId = intval($lastItem['revision']) + 1;
 		}
 		else {
 			$history = array();
+			$revisionId = 1;
 		}
 
-		// prepare history entry
-		$entry = array(
+		// add entry
+		$history[] = array(
 			'settings' => $data,
 			'author' => $wgUser->getName(),
 			'timestamp' =>  wfTimestampNow(),
+			'revision' => $revisionId,
 		);
 
-		// add an entry and limit history size to last 10 changes
-		array_unshift($history, $entry);
-		$history = array_slice($history, 0, 10);
+		// limit history size to last 10 changes
+		$history = array_slice($history, -self::HistoryItemsLimit);
 
 		$result = WikiFactory::setVarByName(self::WikiFactoryHistory, $wgCityId, $history, $reason);
 		if (!$result) {
@@ -115,7 +135,7 @@ class ThemeSettings {
 			return false;
 		}
 
-		wfDebug(__METHOD__ . ": settings saved\n");
+		wfDebug(__METHOD__ . ": settings saved as #{$revisionId}\n");
 		return true;
 	}
 }

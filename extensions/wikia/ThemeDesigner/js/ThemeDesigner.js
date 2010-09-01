@@ -4,6 +4,8 @@ $(function() {
 
 var ThemeDesigner = {
 
+	history: false,
+
 	settings: {
 		"color-body": "",
 		"color-page": "",
@@ -28,7 +30,10 @@ var ThemeDesigner = {
 		$.extend(ThemeDesigner.settings, themeSettings);
 		ThemeDesigner.applySettings();
 
-		$().log(ThemeDesigner.settings, 'ThemeDesigner');
+		// settings history
+		ThemeDesigner.history = themeHistory;
+
+		$().log(ThemeDesigner, 'ThemeDesigner');
 
 		// iframe resizing
 		$(window).resize(ThemeDesigner.resizeIframe).resize();
