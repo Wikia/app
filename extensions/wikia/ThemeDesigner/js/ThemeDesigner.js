@@ -14,8 +14,8 @@ var ThemeDesigner = {
 		"theme": "",
 		"wordmark-text": "",
 		"wordmark-color": "",
-		"wordmark-font": "Orbitron",
-		"wordmark-font-size": "",
+		"wordmark-font": "",
+		"wordmark-size": "",
 		"wordmark-image": false,
 		"wordmark-image-revision": false,
 		"banner-image": false,
@@ -52,10 +52,14 @@ var ThemeDesigner = {
 	},
 
 	applySettings: function() {
+		console.log("running applySettings");
 		$("#swatch-color-background").css("background-color", ThemeDesigner.settings["color-body"]);
 		$("#swatch-color-buttons").css("background-color", ThemeDesigner.settings["color-buttons"]);
 		$("#swatch-color-links").css("background-color", ThemeDesigner.settings["color-links"]);
 		$("#swatch-color-page").css("background-color", ThemeDesigner.settings["color-page"]);
+		
+		//wordmark font
+		$("#wordmark").removeClass().addClass(ThemeDesigner.settings["wordmark-font"]).addClass(ThemeDesigner.settings["wordmark-size"]);
 	},
 
 	navigationClick: function(event) {
@@ -96,7 +100,7 @@ var ThemeDesigner = {
 	},
 
 	WordmarkTabInit: function() {
-		var fonts = ["Helvetica", "Capralba", "Fontin", "IM Fell", "Josefin Sans", "Orbitron", "Prociono", "Reenie Beanie", "Tangerine", "Titillium", "Yanone Kaffeesatz"];
+		var fonts = ["fontin", "garton", "gondola", "idolwild", "imfell", "josefin", "orbitron", "prociono", "speakeasy", "tangerine", "titillium", "yanone"];
 
 		// populate font menu
 		var options = '';
@@ -107,7 +111,18 @@ var ThemeDesigner = {
 			}
 			options += '<option value="' + fonts[i] + '"' + selected +'>' + fonts[i] + '</option>';
 		}
-		$("#wordmark-font").html(options);
+		$("#wordmark-font").append(options)
+		
+		//handle font family and font size menu change
+		$("#wordmark-font").change(function() {
+			ThemeDesigner.settings["wordmark-font"] = $(this).val();
+			ThemeDesigner.applySettings();
+		});
+		$("#wordmark-size").change(function() {
+			ThemeDesigner.settings["wordmark-size"] = $(this).val();
+			ThemeDesigner.applySettings();
+		});
+		
 
 		// populate wordmark text
 		$("#wordmark").html(ThemeDesigner.settings["wordmark-text"]);
