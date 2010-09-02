@@ -14,6 +14,7 @@
 	<link rel="stylesheet" href="<?= wfGetSassUrl($wgExtensionsPath."/wikia/ThemeDesigner/css/ThemeDesigner.scss") ?>">
 
 	<script>
+		var wgScript = <?= Xml::encodeJSVar($wgScript) ?>;
 		var themeSettings = <?= Wikia::json_encode($themeSettings) ?>;
 		var themeHistory = <?= Wikia::json_encode($themeHistory) ?>;
 	</script>

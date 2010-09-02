@@ -42,6 +42,9 @@ var ThemeDesigner = {
 		// handle navigation clicks
 		$("#Navigation a").click(ThemeDesigner.navigationClick);
 
+		// handle "Save" button clicks
+		$('#Toolbar').children('button').click(ThemeDesigner.saveClick);
+
 		// init theme tab
 		ThemeDesigner.ThemeTabInit();
 
@@ -61,14 +64,14 @@ var ThemeDesigner = {
 		$("#swatch-color-buttons").css("background-color", ThemeDesigner.settings["color-buttons"]);
 		$("#swatch-color-links").css("background-color", ThemeDesigner.settings["color-links"]);
 		$("#swatch-color-page").css("background-color", ThemeDesigner.settings["color-page"]);
-		
+
 		/*** Wordmark Tab ***/
 		//style wordmark preview
 		$("#wordmark").removeClass().addClass(ThemeDesigner.settings["wordmark-font"]).addClass(ThemeDesigner.settings["wordmark-size"]).html(ThemeDesigner.settings["wordmark-text"]);
 		//populate wordmark editor
 		$("#wordmark-edit").find('input[type="text"]').val(ThemeDesigner.settings["wordmark-text"]);
 		//select current font
-		$("#wordmark-font").find('[value="' + ThemeDesigner.settings["wordmark-font"] + '"]').attr("selected", "selected");		
+		$("#wordmark-font").find('[value="' + ThemeDesigner.settings["wordmark-font"] + '"]').attr("selected", "selected");
 		//select current size
 		$("#wordmark-size").find('[value="' + ThemeDesigner.settings["wordmark-size"] + '"]').attr("selected", "selected");
 	},
@@ -120,7 +123,7 @@ var ThemeDesigner = {
 			ThemeDesigner.settings["wordmark-size"] = $(this).val();
 			ThemeDesigner.applySettings();
 		});
-		
+
 		//handle wordmark editing
 		$("#wordmark-edit-button").click(function(event) {
 			event.preventDefault();
@@ -131,7 +134,26 @@ var ThemeDesigner = {
 			ThemeDesigner.settings["wordmark-text"] = $("#wordmark-edit").find('input[type="text"]').val();
 			ThemeDesigner.applySettings();
 			$("#wordmark, #wordmark-edit").toggle();
-		});		
+		});
+	},
+
+	saveClick: function(ev) {
+		ev.preventDefault();
+		ThemeDesigner.save();
+	},
+
+	save: function() {
+		$().log(ThemeDesigner.settings, 'ThemeDesigner');
+
+		// send current settings to backend
+		$.post(wgScript, {
+			'action' :'ajax',
+			'rs': 'ThemeDesignerHelper::saveSettings',
+			'settings': ThemeDesigner.settings
+		}, function(data) {
+			// TODO: redirect to place from which ThemeDesigner was triggered
+			document.location = wgScript;
+		}, 'json');
 	}
 
 };
