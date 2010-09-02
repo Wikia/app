@@ -598,7 +598,7 @@ class WikiaGlobalStats {
 			
 			$conditions = array("editdate >= '$date_diff'");
 			if ( $onlyContent === true ) {
-				$conditions['pc_is_content'] = 'Y';
+				$conditions['is_content'] = 'Y';
 			}
 			
 			$oRes = $dbr->select(
