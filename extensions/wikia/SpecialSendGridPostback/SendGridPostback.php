@@ -35,14 +35,24 @@ class SendGridPostback extends SpecialPage {
 		$this->outputHeader();
 		$this->setHeaders();
 
+		// TODO: REMOVE THIS SECTION
 		// Just to see what they're sending us.
 		ob_start();
 		global $_POST;
 		print_r($_POST);
 		$data = ob_get_clean();
-
-		// Writes to syslog1:/var/log/httpd
+		
+		// Writes to syslog1:/var/log/httpd - just buying time until we implement the rest.
 		Wikia::log(__METHOD__, false, "<postback>" . $data . "</postback>\n", true);
+		
+		// TODO: VERIFY THE TOKEN
+		// TODO: VERIFY THE TOKEN
+		
+		// TODO: Update the wikia_mailer database with the info from the post
+		// TODO: Update the wikia_mailer database with the info from the post
+		
+		// TODO: Set "user preference" that says they were blocked (make sure to add code to clear this out any time a user verifies).
+		// TODO: Set "user preference" that says they were blocked (make sure to add code to clear this out any time a user verifies).
 
 		$wgOut->addHtml("Post-data logged to error log");
 	}
