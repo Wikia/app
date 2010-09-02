@@ -268,3 +268,22 @@
 		background: $color-menu-highlight;
 	}
 }
+
+#editpage-copywarn {
+	margin-top: 20px;
+}
+
+.editButtons {
+	#wpDiff {
+		border: none;
+		background-image: none;
+		background-color: White;
+		color: $color-links;
+		padding: 0px;
+		font-size: 13px;
+		font-family: Helvetica, Arial, sans-serif;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
