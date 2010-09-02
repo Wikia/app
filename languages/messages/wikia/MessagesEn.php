@@ -1035,7 +1035,7 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'oasis-page-header-editing-section' => '<strong>Editing:</strong> $1 (section)',
 'oasis-page-header-preview' => '<strong>Preview:</strong> $1',
 'oasis-page-header-changes' => '<strong>Changes:</strong> $1',
-'oasis-page-header-diff' => 'Diff:',
+'oasis-page-header-diff' => '<strong>Changes</strong>: $1',
 'oasis-anon-header' => 'Unregistered contributor <small>$1</small>',
 'oasis-preview-confirmation' => 'Preview mode: no changes saved yet! Scroll down to continue editing.',
 'oasis-badge-notification' => 'You just earned the "$2" badge $3',
