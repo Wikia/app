@@ -5,10 +5,10 @@ class LatestPhotosModule extends Module {
 	var $wgBlankImgUrl;
 	var $enableScroll;
 	var $enableEmptyGallery;
-	var $imageCount;
+	var $total;
 
 	public function executeIndex() {
-		global $wgUser, $wgTitle, $wgOut, $wgStylePath, $wgCityId, $wgExternalStatsDB;
+		global $wgUser, $wgTitle, $wgOut, $wgStylePath, $wgLang;
 		
 		$wgOut->addStyle(wfGetSassUrl("skins/oasis/css/modules/LatestPhotos.scss"));
 		$wgOut->addScript('<script src="'. $wgStylePath .'/oasis/js/LatestPhotos.js"></script>');
@@ -16,7 +16,7 @@ class LatestPhotosModule extends Module {
 		wfProfileIn(__METHOD__);
 
 		// get the count of images on this wiki
-		$this->imageCount = SiteStats::images();
+		$this->total = $wgLang->formatNum(SiteStats::images());
 
 		// api service
 
