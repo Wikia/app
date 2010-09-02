@@ -551,6 +551,8 @@ class FeedRenderer {
 	 * @author Maciej Brencz <macbre@wikia-inc.com>
 	 */
 	public static function getAddedMediaRow($row, $type) {
+		global $wgLang;
+
 		$key = "new_{$type}";
 
 		if (empty($row[$key])) {
@@ -560,6 +562,7 @@ class FeedRenderer {
 		wfProfileIn(__METHOD__);
 
 		$thumbs = array();
+		$namespace = $type == 'videos' ? NS_VIDEO : NS_FILE;
 
 		foreach($row[$key] as $item) {
 			// Empty span for styling IE. Ugly, but offers an image size independant
@@ -569,8 +572,7 @@ class FeedRenderer {
 			$thumb .= substr($item['html'], 0, -2) . '/>';
 
 			// localised title for popup
-			global $wgLang;
-			$popupTitle = $wgLang->getNsText( ($type == 'videos') ? NS_VIDEO : NS_FILE ) . ':' . $item['name'];
+			$popupTitle = $wgLang->getNsText($namespace) . ':' . $item['name'];
 
 			// wrapper for thumbnail
 			$attribs = array(
@@ -579,6 +581,12 @@ class FeedRenderer {
 				'ref' => ($type == 'videos' ? 'Video:' : 'File:') . $item['name'], /* TODO: check that name doesn't have NS prefix */
 				'title' => $popupTitle,
 			);
+
+			// get URL to file / video page
+			$title = Title::newFromText($item['name'], $namespace);
+			if (!empty($title)) {
+				$attribs['href'] = $title->getLocalUrl();
+			}
 
 			// add "play" overlay for videos
 			if ($type == 'videos') {
