@@ -47,12 +47,15 @@ class MyHomeAjax {
 		$width = intval($dimensions[0]);
 		$height = intval($dimensions[1]);
 
-		wfProfileOut(__METHOD__);
-		return array(
+		$ret = array(
 			'width' => $width,
 			'height' => $height,
 			'html' => $video->getEmbedCode($width, true),
+			'title' => $wgTitle->getText(),
 		);
+
+		wfProfileOut(__METHOD__);
+		return $ret;
 	}
 
 	/*
