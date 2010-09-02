@@ -525,7 +525,7 @@ class WikiaGlobalStats {
 			$data = array();
 			$dbr = wfGetDB( DB_SLAVE, 'blobs', $wgStatsDB );
 			
-			$conditions = array("editdate >= $date_diff");
+			$conditions = array("editdate >= '$date_diff'");
 			if ( $onlyContent === true ) {
 				$conditions['is_content'] = 'Y';
 			}
@@ -981,7 +981,7 @@ class WikiaGlobalStats {
 		if ( $from_db ) {
 
 			$date = date( 'Y-m-d', time() - $days * 24 * 60 * 60 );
-			$conditions = array( "editdate >= '{$date}" );
+			$conditions = array( "editdate >= '{$date}'" );
 			
 			$dbr = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
 			
