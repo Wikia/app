@@ -1,7 +1,7 @@
 <section class="LatestPhotosModule">
 	<?= View::specialPageLink('Upload', 'oasis-add-photo', 'wikia-button', 'blank.gif', 'oasis-add-photo', 'osprite icon-add'); ?>
 	<details class="tally counter">
-		<em><?= $imageCount ?></em><?= wfMsg('oasis-latest-photos-header') ?>
+		<em><?= $total ?></em><?= wfMsg('oasis-latest-photos-header') ?>
 	</details>
 
 <?php
