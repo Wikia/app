@@ -24,8 +24,5 @@ CREATE TABLE IF NOT EXISTS mail (
        INDEX(city_id),
        INDEX(locked_by),
        INDEX(transmitted),
-       INDEX(locked),
-       
+       INDEX(locked)
 );
-
-
