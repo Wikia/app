@@ -76,7 +76,9 @@
 	}
 
 	.myhome-video-play {
-		background: transparent url(images/play.png?20091023) no-repeat 50% 50%;
+		background-image: url(/extensions/wikia/MyHome/images/play.png); /* $wgCdnStylePath */
+		background-repeat: no-repeat;
+		background-position: 50% 50%;
 		top: 0;
 		left: 0;
 		height: 160px;
