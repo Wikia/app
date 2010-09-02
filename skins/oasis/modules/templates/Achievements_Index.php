@@ -16,14 +16,25 @@
 <?php
 		//$max_badges = 6;
 		for ($i=0; $i < count($ownerBadges); $i++) {
-			$ownerBadge = $ownerBadges[$i];
+			$ownerBadge = $ownerBadges[$i]['badge'];
+			$badge_name = htmlspecialchars($ownerBadge->getName(), ENT_NOQUOTES);
+			$badge_url = $ownerBadge->getPictureUrl(90);
+			$badge_details = $ownerBadge->getDetails();
+
 			$moreClass = '';
 			if ($i >= $max_badges) {
 				$moreClass = ' badges-more';
 			}
 ?>
 			<li class="badge-<?= $i?>">
-				<img class="badge-icon-<?= $i  . $moreClass ?>" width="90" height="90" src="<?= $ownerBadge['badge']->getPictureUrl(90) ?>" alt="<?= htmlspecialchars($ownerBadge['badge']->getName()) ?>" />
+				<div class="profile-hover">
+					<img src="<?=$badge_url;?>" height="90" width="90" />
+					<div class="profile-hover-text">
+						<h3><?=$badge_name;?></h3>
+						<p><?=$badge_details;?></p>
+					</div>
+				</div>
+				<img class="badge-icon-<?= $i  . $moreClass ?>" width="90" height="90" src="<?= $badge_url ?>" alt="<?=$badge_name;?>" />
 			</li>
 <?php
 			}
