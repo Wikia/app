@@ -205,7 +205,7 @@
 	}
 }
 
-// styling for Oasis blog listing
+// styling for Oasis blog listing box and rail module
 
 .WikiaBlogListingBox {
 	width: 292px;
@@ -215,6 +215,10 @@
 	// show this HTML on Oasis
 	.skin-oasis & {
 		display: block !important;
+	}
+
+	h3 {
+		font-size: 16px;
 	}
 
 	.WikiaArticle & ul {
