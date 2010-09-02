@@ -649,7 +649,7 @@ class BlogTemplateClass {
     	return $aPages;
 	}
 
-	private static function __truncateText( $sText, $iLength = BLOGS_DEFAULT_LENGTH, $sEnding ) {
+	private static function __truncateText( $sText, $iLength, $sEnding ) {
 		global $wgLang;
 
 		wfProfileIn( __METHOD__ );
@@ -661,8 +661,10 @@ class BlogTemplateClass {
 			} else {
 				if (self::$aOptions['type'] == 'box') {
 					$iLength = intval(self::$aBlogParams['summarylength']['default']['box']);
-				} else {
+				} else if (self::$aOptions['type'] == 'plain') {
 					$iLength = intval(self::$aBlogParams['summarylength']['default']['plain']);
+				} else {
+					$iLength = BLOGS_DEFAULT_LENGTH;
 				}
 			}
 		}
@@ -780,7 +782,7 @@ class BlogTemplateClass {
 				$sBlogText = strip_tags($sBlogText, self::$skipStrinAfterParse);
 				/* truncate text */
 				$cutSign = wfMsg( "blug-cut-sign" );
-				$sResult = self::__truncateText($sBlogText, isset(self::$aOptions['summarylength']) ? intval(self::$aOptions['summarylength']) : BLOGS_DEFAULT_LENGTH, $cutSign );
+				$sResult = self::__truncateText($sBlogText, null, $cutSign );
 			} else {
 				/* parse revision text */
 				$parserOutput = $localParser->parse($sBlogText, Title::newFromId($iPage), ParserOptions::newFromUser($wgUser));
