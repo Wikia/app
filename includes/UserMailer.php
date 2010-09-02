@@ -194,8 +194,9 @@ class UserMailer {
 			/* Wikia change begin - @author: Sean Colombo */
 			// Create the mail object using the Mail::factory method
 			// Wikia: for now, if the email is to us, use the new system.
-			if(strpos($headers['To'], "@wikia-inc.com") !== false){
-				$mail_object =& Mail::factory('wikiadb', array());
+			if((strpos($headers['To'], "@wikia-inc.com") !== false)
+				|| (strpos($headers['To'], "@wikia.com") !== false)){
+				$mail_object =& Mail::factory('wikiadb');
 			} else if( is_array( $wgSchwartzMailer ) ) {
 				$mail_object =& Mail::factory('theschwartzhttp', $wgSchwartzMailer);
 			} else {
