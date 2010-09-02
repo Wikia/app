@@ -151,8 +151,8 @@ var ThemeDesigner = {
 			'rs': 'ThemeDesignerHelper::saveSettings',
 			'settings': ThemeDesigner.settings
 		}, function(data) {
-			// TODO: redirect to place from which ThemeDesigner was triggered
-			document.location = wgScript;
+			// redirect to article from which ThemeDesigner was triggered
+			document.location = returnTo;
 		}, 'json');
 	}
 

@@ -13,12 +13,13 @@ class ThemeDesignerModule extends Module {
 
 	var $themeSettings;
 	var $themeHistory;
+	var $returnTo;
 
 	public function executeIndex() {
+		wfProfileIn(__METHOD__);
 		global $wgLang;
 
 		$settings = new ThemeSettings();
-		$settings->save(); // for tests
 
 		// current settings
 		$this->themeSettings = $settings->getAll();
@@ -37,6 +38,16 @@ class ThemeDesignerModule extends Module {
 				$entry['timeago'] = $wgLang->date($entry['timestamp']);
 			}
 		}
+
+		// URL user should be redirected to when settings are saved
+		if (isset($_SERVER['HTTP_REFERER'])) {
+			$this->returnTo = $_SERVER['HTTP_REFERER'];
+		}
+		else {
+			$this->returnTo = $this->wgScript;
+		}
+
+		wfProfileOut(__METHOD__);
 	}
 
 	public function executeThemeTab() {

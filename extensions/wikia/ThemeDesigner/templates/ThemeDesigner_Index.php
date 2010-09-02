@@ -14,9 +14,10 @@
 	<link rel="stylesheet" href="<?= wfGetSassUrl($wgExtensionsPath."/wikia/ThemeDesigner/css/ThemeDesigner.scss") ?>">
 
 	<script>
-		var wgScript = <?= Xml::encodeJSVar($wgScript) ?>;
-		var themeSettings = <?= Wikia::json_encode($themeSettings) ?>;
+		var returnTo = <?= Xml::encodeJSVar($returnTo) ?>;
 		var themeHistory = <?= Wikia::json_encode($themeHistory) ?>;
+		var themeSettings = <?= Wikia::json_encode($themeSettings) ?>;
+		var wgScript = <?= Xml::encodeJSVar($wgScript) ?>;
 	</script>
 
 	<script src="<?= $wgStylePath ?>/common/jquery/jquery-1.4.2.js"></script>
