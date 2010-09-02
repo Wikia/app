@@ -14,8 +14,8 @@ var ThemeDesigner = {
 		"theme": "",
 		"wordmark-text": "",
 		"wordmark-color": "",
-		"wordmark-font": "",
-		"wordmark-size": "",
+		"wordmark-font": "default",
+		"wordmark-size": "medium",
 		"wordmark-image": false,
 		"wordmark-image-revision": false,
 		"banner-image": false,
@@ -28,7 +28,8 @@ var ThemeDesigner = {
 	init: function() {
 		// apply JS object settings
 		$.extend(ThemeDesigner.settings, themeSettings);
-		ThemeDesigner.applySettings();
+		//TODO: temp
+		ThemeDesigner.settings["wordmark-font"] = 'orbitron';
 
 		// settings history
 		ThemeDesigner.history = themeHistory;
@@ -49,17 +50,27 @@ var ThemeDesigner = {
 
 		// click first tab
 		$("#Navigation a:first").click();
+
+		ThemeDesigner.applySettings();
 	},
 
 	applySettings: function() {
-		console.log("running applySettings");
+		/*** Customize Tab ***/
+		//color swatches
 		$("#swatch-color-background").css("background-color", ThemeDesigner.settings["color-body"]);
 		$("#swatch-color-buttons").css("background-color", ThemeDesigner.settings["color-buttons"]);
 		$("#swatch-color-links").css("background-color", ThemeDesigner.settings["color-links"]);
 		$("#swatch-color-page").css("background-color", ThemeDesigner.settings["color-page"]);
 		
-		//wordmark font
-		$("#wordmark").removeClass().addClass(ThemeDesigner.settings["wordmark-font"]).addClass(ThemeDesigner.settings["wordmark-size"]);
+		/*** Wordmark Tab ***/
+		//style wordmark preview
+		$("#wordmark").removeClass().addClass(ThemeDesigner.settings["wordmark-font"]).addClass(ThemeDesigner.settings["wordmark-size"]).html(ThemeDesigner.settings["wordmark-text"]);
+		//populate wordmark editor
+		$("#wordmark-edit").find('input[type="text"]').val(ThemeDesigner.settings["wordmark-text"]);
+		//select current font
+		$("#wordmark-font").find('[value="' + ThemeDesigner.settings["wordmark-font"] + '"]').attr("selected", "selected");		
+		//select current size
+		$("#wordmark-size").find('[value="' + ThemeDesigner.settings["wordmark-size"] + '"]').attr("selected", "selected");
 	},
 
 	navigationClick: function(event) {
@@ -100,19 +111,6 @@ var ThemeDesigner = {
 	},
 
 	WordmarkTabInit: function() {
-		var fonts = ["fontin", "garton", "gondola", "idolwild", "imfell", "josefin", "orbitron", "prociono", "speakeasy", "tangerine", "titillium", "yanone"];
-
-		// populate font menu
-		var options = '';
-		for(i=0; i<fonts.length; i++) {
-			var selected = '';
-			if (ThemeDesigner.settings["wordmark-font"] == fonts[i]) {
-				selected = ' selected="selected"';
-			}
-			options += '<option value="' + fonts[i] + '"' + selected +'>' + fonts[i] + '</option>';
-		}
-		$("#wordmark-font").append(options)
-		
 		//handle font family and font size menu change
 		$("#wordmark-font").change(function() {
 			ThemeDesigner.settings["wordmark-font"] = $(this).val();
@@ -123,9 +121,17 @@ var ThemeDesigner = {
 			ThemeDesigner.applySettings();
 		});
 		
-
-		// populate wordmark text
-		$("#wordmark").html(ThemeDesigner.settings["wordmark-text"]);
+		//handle wordmark editing
+		$("#wordmark-edit-button").click(function(event) {
+			event.preventDefault();
+			$("#wordmark, #wordmark-edit").toggle();
+		});
+		$("#wordmark-edit").find("button").click(function(event) {
+			event.preventDefault();
+			ThemeDesigner.settings["wordmark-text"] = $("#wordmark-edit").find('input[type="text"]').val();
+			ThemeDesigner.applySettings();
+			$("#wordmark, #wordmark-edit").toggle();
+		});		
 	}
 
 };
