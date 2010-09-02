@@ -175,6 +175,10 @@ $.fn.extend({
 				}
 			})
 			.bind("resize.modal", function() {
+				if (window.skin == 'oasis') {
+					return;
+				}
+
 				wrapper.css("top", wrapper.getModalTopOffset());
 				$(".blackout:last").height($(document).height());
 			});
