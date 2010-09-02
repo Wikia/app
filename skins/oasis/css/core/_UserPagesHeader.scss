@@ -130,6 +130,7 @@
 		@include clearfix;
 		padding: 8px 0;
 		.avatar {
+			float: left;
 			margin-right: 5px;
 		}
 		.post-author {
