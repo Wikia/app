@@ -45,7 +45,11 @@
 	}
 	.subnav {
 		@include menu-heavy;
-		top: 56px;
+		display: block;
+		top: -9999px;
+		&.show {
+			top: 56px;
+		}
 		li {
 			float: none;
 			height: auto;
