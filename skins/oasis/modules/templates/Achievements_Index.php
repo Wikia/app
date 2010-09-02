@@ -12,7 +12,7 @@
 	
 	<p><?= wfMsgExt ('achievements-ranked-oasis', array('parse') , $ownerName, $ownerRank) ?> </p>
 	<div style="height: <?= count($ownerBadges) > 3 ? '200' : '100' ?>px">
-		<ul class="badges-icons">
+		<ul class="badges-icons badges">
 <?php
 		//$max_badges = 6;
 		for ($i=0; $i < count($ownerBadges); $i++) {
