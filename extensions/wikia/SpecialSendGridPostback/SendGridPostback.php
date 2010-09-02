@@ -79,8 +79,11 @@ class SendGridPostback extends SpecialPage {
 				// TODO: Update the wikia_mailer database with the info from the post
 				// TODO: Update the wikia_mailer database with the info from the post
 				
-				// TODO: Set "user preference" that says they were blocked (make sure to add code to clear this out any time a user verifies).
-				// TODO: Set "user preference" that says they were blocked (make sure to add code to clear this out any time a user verifies).
+				// TODO: Get all users which use the email address provided.
+				// TODO: Get all users which use the email address provided.
+				
+				// TODO: Set "user preference" that says they were blocked (make sure to add code to clear this out any time a user verifies) for each user found.
+				// TODO: Set "user preference" that says they were blocked (make sure to add code to clear this out any time a user verifies) for each user found.
 			
 				break;
 			case 'spamreport':
