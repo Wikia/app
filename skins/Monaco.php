@@ -535,7 +535,7 @@ EOS;
 		// User actions links
 		$tpl->set('userlinks', $this->getUserLinks($tpl));
 
-		// marged JS files
+		// merged JS files
 		// get the right package from StaticChute
 		$StaticChute = new StaticChute('js');
 		$StaticChute->useLocalChuteUrl();

@@ -994,6 +994,16 @@ function wfRenderModule($name, $action = 'Index', $params = null) {
 }
 
 /**
+ * Given the email id (from 'mail' table in 'wikia_mailer' db), and the email address
+ * of the recipient, generate a token that will be given to SendGrid to send back to
+ * us with any bounce/spam/open/etc. reports.
+ */
+function wfGetEmailPostbackToken($emailId, $emailAddr){
+	global $wgEmailPostbackTokenKey;
+	return sha1("$emailId|$emailAddr|$wgEmailPostbackTokenKey");
+} // end wfGetEmailPostbackToken()
+
+/**
  * Given the full path to a .scss file, returns the full URL which
  * the HTML should include.  This sends the user's browser through the
  * SASS server.
