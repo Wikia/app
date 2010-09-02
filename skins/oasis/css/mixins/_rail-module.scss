@@ -34,19 +34,26 @@
 			size: 13px;
 			weight: bold;
 		}
+		margin: 0px !important;
+		padding: 0px !important;
 	}
+	p {
+		margin: 0px !important;
+		padding: 0px !important;
+	}
+	
 	.wikia-button {
 		font-weight: normal;
 	}
 
 	h1 { 
 		font: {
-			size: 17px;
+			size: 17px !important;
 			weight: bold;
 		}
 		margin: {
-			top: 7px;
-			bottom: 25px;
+			top: 7px !important;
+			bottom: 25px !important;
 		}
 	}
 
