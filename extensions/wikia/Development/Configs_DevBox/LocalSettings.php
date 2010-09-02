@@ -87,20 +87,14 @@ $wgCheckSerialized = true;
 
 // Life is easier if we have Special:WikiFactory
 $wgWikiaEnableWikiFactoryExt = true;
-##### MAKE ANY CHANGES HERE THAT YOU  WANT TO SHOW UP ON DEVBOXES BY DEFAULT BUT STILL BE OVERRIDABLE #####
 
-require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../DevBoxSettings.php' );
-
-####
-# To fake any Wiki Factory settings, put them here:
 $wgEnableUserChangesHistoryExt = false;
 
 $wgExtensionsPath = "{$wgScriptPath}/extensions";
 $wgAllInOne = false;
+##### MAKE ANY CHANGES HERE THAT YOU  WANT TO SHOW UP ON DEVBOXES BY DEFAULT BUT STILL BE OVERRIDABLE #####
 
-
-# End of fake Wiki Factory settings.
-####
+require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../DevBoxSettings.php' );
 
 # Overwrite some variables, load extensions, etc.
 # Former CustomSettings.php
