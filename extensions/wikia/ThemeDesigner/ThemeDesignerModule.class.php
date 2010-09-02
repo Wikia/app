@@ -3,9 +3,10 @@ class ThemeDesignerModule extends Module {
 
 	var $wgCdnRootUrl;
 	var $wgExtensionsPath;
+	var $wgScript;
+	var $wgServer;
 	var $wgStylePath;
 
-	var $wgServer;
 	var $dir;
 	var $mimetype;
 	var $charset;
