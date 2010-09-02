@@ -5,20 +5,18 @@ class LatestPhotosModule extends Module {
 	var $wgBlankImgUrl;
 	var $enableScroll;
 	var $enableEmptyGallery;
+	var $imageCount;
 
 	public function executeIndex() {
-		global $wgUser, $wgTitle, $wgOut, $wgStylePath;
+		global $wgUser, $wgTitle, $wgOut, $wgStylePath, $wgCityId, $wgExternalStatsDB;
 		
 		$wgOut->addStyle(wfGetSassUrl("skins/oasis/css/modules/LatestPhotos.scss"));
 		$wgOut->addScript('<script src="'. $wgStylePath .'/oasis/js/LatestPhotos.js"></script>');
 		
 		wfProfileIn(__METHOD__);
 
-		//
-		// http://owen.wikia-dev.com/api.php?action=query&list=allimages&aidir=ascending
-		//
-	
-		//$uploadedImages = WikiaPhotoGalleryHelper::getRecentlyUploaded($limit);
+		// get the count of images on this wiki
+		$this->imageCount = SiteStats::images();
 
 		// api service
 
@@ -41,14 +39,11 @@ class LatestPhotosModule extends Module {
 		$fileList = array_map(array($this, "getImageData"), $imageList);
 		$fileList = array_filter($fileList, array($this, "filterImages"));
 
-
 		$this->thumbUrls = array_map(array($this, 'getTemplateData'), $fileList);
 		// fixme: remove this after testing
 		$this->thumbUrls = array_reverse($this->thumbUrls);  // just for testing
 		
-
 		while (count($this->thumbUrls) > 10) array_pop ($this->thumbUrls);
-
 		
 		if (count($this->thumbUrls) < 3) {
 			$this->enableScroll = false;
