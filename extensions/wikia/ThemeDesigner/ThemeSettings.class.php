@@ -94,6 +94,7 @@ class ThemeSettings {
 	 * Save current settings to WikiFactory variable and update history
 	 */
 	public function save() {
+		wfProfileIn(__METHOD__);
 		global $wgCityId, $wgUser;
 
 		$data = $this->getAll();
@@ -136,6 +137,8 @@ class ThemeSettings {
 		}
 
 		wfDebug(__METHOD__ . ": settings saved as #{$revisionId}\n");
+
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 }
