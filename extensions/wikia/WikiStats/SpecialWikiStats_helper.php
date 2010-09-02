@@ -181,7 +181,7 @@ class WikiStats {
 	 * @param Array : months (1 ..12, minYear, maxYear );
 	 */
 	private function __loadMonths() {
-		global $wgStatsDB, $wgMemc;
+		global $wgStatsDB, $wgMemc, $wgLang;
 		#---
 		wfProfileIn( __METHOD__ );
     	#---
@@ -189,7 +189,7 @@ class WikiStats {
     		$monthsArray[] = wfMsg( strtolower( date( "F", mktime(23,59,59,$i+1,1,1970) ) ) );
 		}
     	#---
-    	$memkey = sprintf( "%s_%d", __METHOD__, intval(WIKISTATS_MIN_COUNT_STATS_YEAR) );
+    	$memkey = sprintf( "%s_%d_%s", __METHOD__, intval(WIKISTATS_MIN_COUNT_STATS_YEAR), $wgLang->getCode() );
 		$this->mDateRange = $wgMemc->get( $memkey );
 
 		if ( empty($this->mDateRange) ) {
@@ -224,7 +224,7 @@ class WikiStats {
 		#---
 		wfProfileIn( __METHOD__ );
     	#---
-    	$memkey = sprintf( "%s_%d", __METHOD__, intval($this->mCityId) );
+    	$memkey = sprintf( "%s_%d_%s", __METHOD__, intval($this->mCityId), $wgLang->getCode() );
 		$this->mUpdateDate = $wgMemc->get( $memkey );
 
 		#---
