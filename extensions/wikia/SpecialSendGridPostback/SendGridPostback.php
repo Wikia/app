@@ -41,7 +41,7 @@ class SendGridPostback extends SpecialPage {
 		print_r($_POST);
 		$data = ob_get_clean();
 
-		wfErrorLog("SendGridPostback: " . $data, "/tmp/sendgrid.txt");
+		wfErrorLog("<postback>" . $data . "</postback>\n", "/tmp/sendgrid.txt");
 
 		$wgOut->addHtml("Post-data logged to error log");
 	}
