@@ -40,7 +40,8 @@ class SendGridPostback extends SpecialPage {
 		global $_POST;
 		print_r($_POST);
 		$data = ob_get_clean();
-		Wikia::log(__METHOD__, false, "SendGridPostback: " . $data, true);
+
+		file_put_contents("/tmp/sendgrid.txt", "SendGridPostback: " . $data);
 
 		$wgOut->addHtml("Post-data logged to error log");
 	}
