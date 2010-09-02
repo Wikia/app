@@ -8,7 +8,7 @@
 	li {
 		padding-bottom: 7px;
 		margin-bottom: 10px;
-		
+
 		list-style: none;
 	}
 
@@ -27,7 +27,7 @@
 	cite {
 		font-size: 12px;
 	}
-	
+
 	table {
 		td {
 			vertical-align: top;
@@ -35,16 +35,16 @@
 			padding: {
 				top: 2px;
 				bottom: 2px;
-				
+
 			}
 		}
-		
-		ul { 
+
+		ul {
 			margin-left: 0px;
 		}
 	}
-	
-	
+
+
 	td.activityfeed-details-label {
 		white-space: nowrap;
 	}
@@ -52,18 +52,18 @@
 	.activityfeed-inserted-media {
 		width: 665px;
 		padding: 0px !important;
-		
+
 		margin: {
 			margin: 0px !important;
 			left: 8px !important;
 		}
-		
+
 		li {
 			border: solid 1px $color-page-border;
 			float: left;
 			margin: 4px 4px 4px 0;
 			position: relative;
-			
+
 			a {
 				cursor: pointer;
 				display: table-cell;
@@ -74,7 +74,7 @@
 			}
 		}
 	}
-	
+
 	.myhome-video-play {
 		background: transparent url(images/play.png?20091023) no-repeat 50% 50%;
 		top: 0;
