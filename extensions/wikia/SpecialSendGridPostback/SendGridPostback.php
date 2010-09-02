@@ -41,7 +41,8 @@ class SendGridPostback extends SpecialPage {
 		print_r($_POST);
 		$data = ob_get_clean();
 
-		wfErrorLog("<postback>" . $data . "</postback>\n", "/tmp/sendgrid.txt");
+		// Writes to syslog1:/var/log/httpd
+		Wikia::log(__METHOD__, false, "<postback>" . $data . "</postback>\n", true);
 
 		$wgOut->addHtml("Post-data logged to error log");
 	}
