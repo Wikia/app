@@ -44,6 +44,7 @@
 	</fieldset>
 	<fieldset class="graphic">
 		<h1><?= wfMsg('themedesigner-graphic-wordmark') ?></h1>
-		
+		<h2>upload a graphic</h2>
+		<button>Choose File</button> 300x60 pixels (only .png files)
 	</fieldset>
 </section>
