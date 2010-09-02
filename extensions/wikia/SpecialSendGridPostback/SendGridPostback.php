@@ -37,7 +37,7 @@ class SendGridPostback extends SpecialPage {
 		global $_POST;
 		print_r($_POST);
 		$data = ob_get_clean();
-		wfErrorLog($data);
+		wfErrorLog("SendGridPostback: " . $data);
 		
 		global $wgOut;
 		$wgOut->addHMTL("Post-data logged to error log");
