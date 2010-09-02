@@ -75,6 +75,7 @@ class StaticChute {
 
 		$this->generateConfigSkinMonobook();
 		$this->generateConfigSkinMonaco($widgetsAssets);
+		$this->generateConfigSkinOasis();
 		$this->generateConfigSkinCorporate();
 	}
 
@@ -249,6 +250,52 @@ class StaticChute {
 			'common/commonPrint.css',
 		);
 	}
+
+	/* Static JS for Oasis (which doesn't need StaticChute CSS because it uses SASS). */
+	private function generateConfigSkinOasis(){
+
+		// NOTE: Decided not to pre-load YUI in Oasis.
+
+		// The jquery files we need in every JS package of Oasis.
+		$this->config['oasis_jquery'] = array(
+			"common/jquery/jquery-1.4.2.js",
+			"common/jquery/jquery.json-1.3.js",
+			"common/jquery/jquery.wikia.js"
+		);
+
+		// JS served for anon on article view
+		$this->config['oasis_anon_article_js'] = array(
+			"common/wikibits.js",
+			"oasis/js/tracker.js",
+			"oasis/js/hoverMenu.js",
+			"oasis/js/PageHeader.js",
+			"oasis/js/Search.js",
+			"oasis/js/WikiaFooter.js",
+			"oasis/js/buttons.js",
+			"../extensions/wikia/ShareFeature/js/ShareFeature.js",
+			"oasis/js/WikiaNotifications.js",
+			//"oasis/js/modal.js",
+			"common/jquery/jquery.wikia.modal.js",
+			"common/jquery/jquery.wikia.tracker.js"
+		);
+		$this->config['oasis_anon_article_js'] = array_merge($this->config['oasis_anon_article_js'], $this->config['oasis_jquery']);
+
+		// JS served for logged-in
+		//$this->config['oasis_loggedin_js'] = array(
+		//);
+		//$this->config['oasis_loggedin_js'] = array_merge($this->config['oasis_loggedin_js'], $this->config['oasis_jquery']);
+		// UNTIL WE NEED TO CUSTOMIZE IT, JUST STARTING WITH THE SAME AS ANON_ARTICLE.
+		$this->config['oasis_loggedin_js'] = $this->config['oasis_anon_article_js'];
+		
+
+		// JS served for anon for everything that's not an article view
+		//$this->config['oasis_anon_everything_else_js'] = array(
+		//);
+		//$this->config['oasis_anon_everything_else_js'] = array_merge($this->config['oasis_anon_everything_else_js'], $this->config['oasis_jquery']);
+		// UNTIL WE NEED TO CUSTOMIZE IT, JUST STARTING WITH THE SAME AS ANON_ARTICLE.
+		$this->config['oasis_anon_everything_else_js'] = $this->config['oasis_anon_article_js'];
+
+	} // end generateConfigSkinOasis()
 
 	/* build st for corporate page */
 	private function generateConfigSkinCorporate(){
@@ -453,14 +500,14 @@ class StaticChute {
 			$u = htmlspecialchars($u);
 			if ($type == "css"){
 				if ($this->allinone) {
-					$html .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$prefix}{$u}{$cb}\"{$media} />";
+					$html .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$prefix}{$u}{$cb}\"{$media} />\n";
 				} else {
 					// IE has some strange limit of ~30 links per page
 					// output <style> + @import when not using merged CSS files
 					$html .= "\n\t\t\t@import url({$prefix}{$u}{$cb});";
 				}
 			} else if ($type == "js"){
-				$html .= "<script type=\"text/javascript\" src=\"{$prefix}{$u}{$cb}\"></script>";
+				$html .= "<script type=\"text/javascript\" src=\"{$prefix}{$u}{$cb}\"></script>\n";
 			}
 		}
 
