@@ -147,7 +147,7 @@
 	padding-bottom: 25px;
 }
 
-// hide blog listing rendered for Monaco
+// /** hide blog listing rendered for Monaco ***/
 #wk_blogs_article {
 	display: none;
 }
@@ -205,96 +205,57 @@
 	}
 }
 
-// styling for Oasis blog listing box and rail module
+// /** styling for Oasis blog listing box and rail module **/
 
 .WikiaBlogListingBox {
-	width: 292px;
-
 	@include rail-module;
+	width: 282px;
+	line-height: 16px !important;
+	display: block !important;
 
-	// show this HTML on Oasis
-	.skin-oasis & {
-		display: block !important;
+	.commentslikes {
+		float: right;
+		margin: {
+			top: 1px;
+			right: 2px;
+		}
 	}
-
-	h3 {
-		font-size: 16px;
+	ul {
+		margin: 0px !important;
+		li {
+			&:first-child {
+				border: none;
+			}
+			@include clearfix;
+			border-top: solid 1px $color-page-border;
+			list-style: none;
+		}
 	}
-
-	.WikiaArticle & ul {
-		list-style: none;
-		margin: 0px;
+	img { 
+		vertical-align: middle
 	}
-	ul > li > h1 {
-		margin: 0px;
-		line-height: 10px;
-		position: relative;
+	h1 {
+		margin-bottom: 0px !important;
+		padding-bottom: 7px !important;
 		a {
-			font-size: 13px;
-		}
-	}
-	li {
-		border-top: 1px solid $color-page-border;
-		font-size: 12px;
-		padding: 6px 3px 6px 50px;
-		position: relative;
-		&:first-child {
-			border: 0;
-		}
-		em {
 			font-size: 16px;
 		}
-		blockquote p {
-			margin: 0px;
-			position: relative;
-			left: -50px;
-			width: 290px;
-			line-height: 20px;
-        }
-	}
-	.avatar {
-		background-color: black;
-		position: absolute;
-		top: 10px;
-		left: 3px;
-		height: 20px;
-		width: 20px;
 	}
 	details {
-		line-height: 10px;
-		a {
-			color: $color-links;
-			font-size: 10px;
+		img {
+			float: left;
+			margin-right: 5px;
 		}
-		span {
-
-			font-size: 10px;
-			a, a:visited {
-				font-weight: bold;
-			}
+		span { // /** the date **/
+			font-size: 11px;
 		}
 	}
-	.commentslikes {
-		position: absolute;
-		right: 10px;
-		bottom: 6px;
-	}
-	.read-more {
-		a {
-			color: $color-links;
-			font-size: 10px;
-		}
-		span {
-			a, a:visited {
-				font-weight: bold;
-			}
-		}
-	}
-	.wikia-button>img {
-		background: url(/skins/oasis/images/sprite.png) no-repeat -1568px -16px transparent;
-		height: 10px;
-		margin-right: 5px;
-		width: 10px;
+	blockquote {
+		clear: both;
+		padding: {
+			top: 7px;
+			bottom: 5px;
+		}	
 	}
 }
 
