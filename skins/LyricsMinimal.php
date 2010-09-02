@@ -10,8 +10,9 @@
  * title and artist) than the site's default search.  After using the API to find a match, mobile
  * apps can then send the user to the webpage, using this mobile-friendly skin.
  *
- * TODO: Add top leaderboard
+ * TODO: Add an ACTUAL top leaderboard ad instead of the placeholder.
  * TODO: Hide the alert messages about "you have a message on X" (because this skin will most-often be viewed by anon IPs and this msg won't make any sense to them that they 'have messages' inside of their mobile app).
+ * TODO: Make a system that makes it easy to have some custom CSS files for certain API apps.  These should probably be thought of as 'themes' on top of this skin.
  * TODO: Remove unneeded CSS
  * TODO: Remove unneeded JS
  * TODO: Verify that Google Analytics tracking (for licensing) is still working.
