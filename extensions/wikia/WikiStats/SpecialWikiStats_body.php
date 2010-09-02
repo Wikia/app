@@ -65,7 +65,7 @@ class WikiStatsPage extends IncludableSpecialPage
         }
         
 		$this->mUser = $wgUser;
-		$this->mUserRights 	= $this->mUser->getGroups();         
+		$this->mUserRights 	= $this->mUser->getEffectiveGroups();         
 		$this->userIsSpecial = 0;
 		foreach ( $this->mUserRights as $id => $right ) {
 			if ( in_array( $right, $this->allowedGroups ) ) {
@@ -191,7 +191,6 @@ class WikiStatsPage extends IncludableSpecialPage
         	"oUser"				=> $this->mUser,
         	"mAction"			=> $this->mAction,
         	"userIsSpecial"		=> $this->userIsSpecial,
-
         	"domain"			=> $this->mCityDomain,
         	"dateRange"			=> $this->mStats->getRangeDate(),
         	"updateDate"		=> $this->mStats->getUpdateDate(),
