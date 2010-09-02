@@ -220,17 +220,15 @@ var ArticleComments = {
 		$.getJSON(wgScript + '?action=ajax&rs=ArticleCommentsAjax&method=axGetComments&article=' + wgArticleId, {page: page, order: $('#article-comm-order').attr('value')}, function(json) {
 			if (!json.error) {
 				$('#article-comments-ul').replaceWith(json.text);
-				// not really happening?
+				// oasis
 				if ($('.article-comments-pagination').exists()) {
 					$('.article-comments-pagination').find('div').html(json.pagination);
-					$('html, body').animate({ scrollTop: $(".article-comments-pagination:eq(0)").offset().top }, 1);
+					$('html, body').animate({ scrollTop: $('.article-comments-pagination').eq(0).offset().top }, 1);
+				} else {//monaco
+					$('#article-comments-pagination').find('div').html(json.pagination);
+					$('html, body').animate({scrollTop: $('#article-comment-header').offset().top}, 400);
 				}
 				ArticleComments.addHover();
-				$('html, body').animate({
-						scrollTop: $('#article-comment-header').offset().top
-					},
-					400
-				);
 			}
 			ArticleComments.processing = false;
 		});
