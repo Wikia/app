@@ -16,18 +16,32 @@ var WikiHeader = {
 		WikiHeader.subnav = WikiHeader.nav.find(".subnav");
 		WikiHeader.mouseoverTimerRunning = false;
 		WikiHeader.ads = $("#WikiaRail").find(".wikia-ad").first();
+		
+		WikiHeader.positionNav();
 
 		//Events
 		WikiHeader.nav.children("ul").children("li")
-			.one('mouseover', WikiHeader.positionNav)
-			.hover(WikiHeader.mouseover, WikiHeader.mouseout);
-
+			.hover(WikiHeader.mouseover, WikiHeader.mouseout)
+			.children("a").focus(function(){
+				WikiHeader.hideNav();
+				WikiHeader.showSubNav($(this).parent("li"));
+			});
+			
+		//Accessibility Events
+		//Show when any inner anchors are in focus
+		WikiHeader.subnav.find("a").focus(function(event) {
+			WikiHeader.hideNav();
+			WikiHeader.showSubNav($(event.currentTarget).closest(".subnav").parent("li"));
+		});
+		//Hide when focus out of first and last anchor
+		WikiHeader.nav.children("ul").find("li:first-child a").focusout(WikiHeader.hideNav);
+		WikiHeader.subnav.last().find("li:last-child a").focusout(WikiHeader.hideNav);
 	},
 
 	mouseover: function(event) {
 
 		//Hide all subnavs except for this one
-		WikiHeader.subnav.not($(this).find(".subnav")).hide();
+		WikiHeader.subnav.not($(this).find(".subnav")).css("left", "-9999px");
 
 		//Cancel mouseoutTimer
 		clearTimeout(WikiHeader.mouseoutTimer);
@@ -90,7 +104,7 @@ var WikiHeader = {
 		var subnav = $(parent).children('ul');
 
 		if (subnav.exists()) {
-			subnav.show();
+			subnav.css("left", "auto");
 			//WikiHeader.ads.css("visibility", "hidden");
 
 			$.tracker.byStr('wikiheader/wikinav/open');
@@ -99,7 +113,7 @@ var WikiHeader = {
 
 	hideNav: function() {
 		//Hide subnav
-		WikiHeader.subnav.hide();
+		WikiHeader.subnav.css("left", "-9999px");
 		//WikiHeader.ads.css("visibility", "visible");
 	},
 

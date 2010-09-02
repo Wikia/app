@@ -27,12 +27,12 @@
 	width: 0;
 }
 .banner-shadow {
-	background:url("/skins/oasis/images/sprite.png") no-repeat scroll -1794px 0 transparent;
-	bottom:-10px;
-	height:11px;
-	left:29px;
-	position:absolute;
-	width:1000px;
+	background: url("/skins/oasis/images/sprite.png") no-repeat scroll 0 -54px transparent;
+	bottom: -10px;
+	height: 11px;
+	left: 5px;
+	position: absolute;
+	width: 1000px;
 }
 
 
@@ -131,13 +131,16 @@
 		border-width: 2px 4px 4px;
 		border-style: solid;
 		border-color: #000;
-		display: none;
-		left: 10px; //10px -238px
+		display: block;
+		left: 10px;
 		padding: 10px 0;
 		position: absolute;
-		top: 56px; //56px 38px
+		top: -9999px;
 		width: $width-outside - 20px;
 		z-index: 1;
+		&.show {
+			top: 56px;
+		}
 		li {
 			display: inline;
 			font-size: 15px;

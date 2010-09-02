@@ -1,5 +1,7 @@
 <aside class="skiplinkcontainer">
 <a class="skiplink" rel="nofollow" href="#WikiaArticle">Skip to Content</a>
+<a class="skiplink wikinav" rel="nofollow" href="#WikiHeader">Skip to Wiki Navigation</a>
+<a class="skiplink sitenav" rel="nofollow" href="#GlobalNavigation">Skip to Site Navigation</a>
 </aside>
 <?= $afterBodyHtml ?>
 

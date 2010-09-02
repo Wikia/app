@@ -41,7 +41,8 @@
 	}
 	.subnav {
 		@include menu-regular;
-		*left: 0;
+		display: block;
+		left: -9999px;
 		min-width: 150px;
 		padding: 5px;
 		li {
