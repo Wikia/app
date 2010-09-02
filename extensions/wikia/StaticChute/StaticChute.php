@@ -276,7 +276,11 @@ class StaticChute {
 			"oasis/js/WikiaNotifications.js",
 			//"oasis/js/modal.js",
 			"common/jquery/jquery.wikia.modal.js",
-			"common/jquery/jquery.wikia.tracker.js"
+			"common/jquery/jquery.wikia.tracker.js",
+
+			'../extensions/wikia/CreatePage/js/CreatePage.js',
+			'../extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js',
+			'../extensions/wikia/ImageLightbox/ImageLightbox.js'
 		);
 		$this->config['oasis_anon_article_js'] = array_merge($this->config['oasis_anon_article_js'], $this->config['oasis_jquery']);
 
