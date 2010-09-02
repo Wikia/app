@@ -73,7 +73,7 @@ class WikiaStatsAutoHubsConsumerDB {
 	 */
 	
 	public function insertArticleEdit($city_id, $page_id, $user_id, $tag_id, $page_name, $page_url, $wikiname, $wikiurl, $groups, $username, $lang) {
-		global $wgTTCache, $wgMemc;
+		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 		$date = date ("Y-m-d");
 		
@@ -168,13 +168,13 @@ class WikiaStatsAutoHubsConsumerDB {
 	 */
 	
 	public function getTopBlogs($tag_id, $lang, $limit = 5, $per_wiki = 1, $show_hide = false, $force_reload = false) {
-		global $wgTTCache, $wgContLang;
+		global $wgMemc, $wgContLang;
 		
 		wfProfileIn( __METHOD__ );
 		$mcKey = wfSharedMemcKey( "auto_hubs", "blogs", $tag_id, $lang, $limit, $per_wiki );
 		
 		if( !$force_reload ) {
-			$out = $wgTTCache->get($mcKey,null);
+			$out = $wgMemc->get($mcKey);
 			if( !empty($out) ) {
 				wfProfileOut( __METHOD__ );
 				return $out;
@@ -222,7 +222,7 @@ class WikiaStatsAutoHubsConsumerDB {
 			}
 		}
 		$out = array("value" => $out, "age" => time());
-		$wgTTCache->set($mcKey, $out, 60*60);
+		$wgMemc->set($mcKey, $out, 60*60);
 		wfProfileOut( __METHOD__ );
 		return $out;
 	}
@@ -236,12 +236,12 @@ class WikiaStatsAutoHubsConsumerDB {
 	 */
 
 	public function getTopArticles($tag_id, $lang = "en", $limit = 5, $per_wiki = 1, $show_hide = false, $force_reload = false) {
-		global $wgTTCache;
+		global $wgMemc;
 		
 		wfProfileIn( __METHOD__ );
 		$mcKey = wfSharedMemcKey( "auto_hubs", "articles", $tag_id, $lang, $limit, $per_wiki );
 		if( !$force_reload ) {
-			$out = $wgTTCache->get($mcKey,null);
+			$out = $wgMemc->get($mcKey);
 			if( !empty($out) ) {
 				wfProfileOut( __METHOD__ );
 				return $out;
@@ -287,7 +287,7 @@ class WikiaStatsAutoHubsConsumerDB {
 		}
 		
 		$out = array("value" => $out, "age" => time());
-		$wgTTCache->set($mcKey, $out,60*60 );
+		$wgMemc->set($mcKey, $out,60*60 );
 		wfProfileOut( __METHOD__ );
 		return $out;
 	}
@@ -301,12 +301,12 @@ class WikiaStatsAutoHubsConsumerDB {
 	 */
 	
 	public function getTopWikis($tag_id, $lang, $limit, $show_hide = false, $force_reload = false) {
-		global $wgTTCache;
-		
+		global $wgMemc;
+
 		wfProfileIn( __METHOD__ );
 		$mcKey = wfSharedMemcKey( "auto_hubs", "wikis_top", $tag_id, $lang, $limit );
 		if( !$force_reload ) {
-			$out = $wgTTCache->get($mcKey,null);
+			$out = $wgMemc->get($mcKey);
 			if( !empty($out) ) {
 				wfProfileOut( __METHOD__ );
 				return $out;
@@ -397,19 +397,19 @@ class WikiaStatsAutoHubsConsumerDB {
 		$city_array[$numberOne]['logo']	= WikiFactory::getVarValueByName( "wgLogo", $city_array[$numberOne]['city_id'] );
 		$out = array("value" => $city_array, "age" => time(), "number_one" => $numberOne);
 
-		$wgTTCache->set($mcKey, $out, 60*60*12 );
+		$wgMemc->set($mcKey, $out, 60*60*12 );
 
 		wfProfileOut( __METHOD__ );
 		return $out;
 	}
 	
 	public function getTopUsers($tag_id, $lang, $limit = 5, $force_reload = false) {
-		global $wgTTCache;
+		global $wgMemc;
 		
 		wfProfileIn( __METHOD__ );
 		$mcKey = wfSharedMemcKey( "auto_hubs", "users", $tag_id, $lang, $limit );
 		if( !$force_reload ) {
-			$out = $wgTTCache->get($mcKey,null);
+			$out = $wgMemc->get($mcKey);
 			if( !empty($out) ) {
 				return $out;
 			}
@@ -459,7 +459,7 @@ class WikiaStatsAutoHubsConsumerDB {
 		}
 
 		$out = array("value" => $out, "age" => time());
-		$wgTTCache->set( $mcKey, $out,60*60 );
+		$wgMemc->set( $mcKey, $out,60*60 );
 		wfProfileOut( __METHOD__ );
 		return $out;
 	}
@@ -948,10 +948,10 @@ class WikiaStatsAutoHubsConsumerDB {
 	}
 	
 	private function loadHideLimits($type = 'blog', $force_reload = false) {
-		global $wgTTCache;
+		global $wgMemc;
 		$mcKey = wfSharedMemcKey( "auto_hubs", "limites_pages", $type);
 		if(!$force_reload) {	
-			$out = $wgTTCache->get($mcKey,null);
+			$out = $wgMemc->get($mcKey);
 			if( !empty($out) ) {
 				return $out;
 			}
@@ -974,7 +974,7 @@ class WikiaStatsAutoHubsConsumerDB {
 			$data[$tag_id][] = $row;
 		}
 		
-		$wgTTCache->set($mcKey,$data);
+		$wgMemc->set($mcKey,$data);
 		return $data;
 	}
 
