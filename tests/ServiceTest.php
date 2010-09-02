@@ -1,5 +1,5 @@
 <?php
-class ServiceTests extends PHPUnit_Framework_TestCase {
+class ServiceTest extends PHPUnit_Framework_TestCase {
 
 	function testAvatarService() {
 		$anonName = '10.10.10.10';

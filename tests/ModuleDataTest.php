@@ -1,5 +1,5 @@
 <?php
-class ModuleDataTests extends PHPUnit_Framework_TestCase {
+class ModuleDataTest extends PHPUnit_Framework_TestCase {
 
 	function testLatestActivityModule() {
 		global $wgSitename;
