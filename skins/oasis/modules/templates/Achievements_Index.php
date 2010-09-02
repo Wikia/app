@@ -19,7 +19,6 @@
 			$ownerBadge = $ownerBadges[$i]['badge'];
 			$badge_name = htmlspecialchars($ownerBadge->getName(), ENT_NOQUOTES);
 			$badge_url = $ownerBadge->getPictureUrl(90);
-			$badge_details = $ownerBadge->getDetails();
 
 			$moreClass = '';
 			if ($i >= $max_badges) {
@@ -30,8 +29,9 @@
 				<div class="profile-hover">
 					<img src="<?=$badge_url;?>" height="90" width="90" />
 					<div class="profile-hover-text">
-						<h3><?=$badge_name;?></h3>
-						<p><?=$badge_details;?></p>
+						<h3 class="badge-name"><?= $badge_name ?></h3>
+						<p><?= $ownerBadge->getGiveHoverFor() ?></p>
+						<p class="earned"><?= wfMsgExt('achievements-earned', array('parsemag'), $ownerBadge->getEarnedBy()) ?></p>
 					</div>
 				</div>
 				<img class="badge-icon-<?= $i  . $moreClass ?>" width="90" height="90" src="<?= $badge_url ?>" alt="<?=$badge_name;?>" />
