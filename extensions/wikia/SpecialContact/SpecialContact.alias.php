@@ -3,15 +3,15 @@ $aliases = array();
  
 /** English */
 $aliases['en'] = array(
-    'ContactForm' => array(  'Contact', 'ContactForm', 'ContactWikia',  ),
+    'Contact' => array(  'Contact', 'ContactForm', 'ContactWikia',  ),
 );
  
 /** German */
 $aliases['de'] = array(
-    'ContactForm' => array(  'Kontakt',  ),
+    'Contact' => array(  'Kontakt',  ),
 );
 
 /** Spanish */
 $aliases['es'] = array(
-    'ContactForm' => array(  'Contactar',  ),
+    'Contact' => array(  'Contactar',  ),
 );
