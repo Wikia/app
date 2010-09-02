@@ -71,7 +71,7 @@ class ContentFeeds {
 		$tagBody.= '<a href="http://search.twitter.com/search?q=' . $phrase . '" target="_blank">Loading ...</a>';
 		$tagBody.= '</ul>';
 
-		$jsBody .= <<<SCRIPT
+		$jsBody = <<<SCRIPT
 <script type="text/javascript">/*<![CDATA[*/
 	wgAfterContentAndJS.push(function() {
 		$.getScript('{$wgExtensionsPath}/wikia/ContentFeeds/js/ContentFeeds.js?{$wgStyleVersion}', function() {
