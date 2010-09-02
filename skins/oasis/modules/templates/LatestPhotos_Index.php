@@ -38,7 +38,7 @@ else {
 	<?php
 	}
 	else {?>
-		<li class="add-more"><?= View::specialPageLink('Upload', 'oasis-latest-photos-single') ?></li>
+		<li class="add-more single-photo"><?= View::specialPageLink('Upload', 'oasis-latest-photos-single') ?></li>
 		<?php
 
 	}?>

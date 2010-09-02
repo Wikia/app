@@ -1015,6 +1015,7 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'oasis-latest-photos-header' => 'photos on<br> this wiki',
 'oasis-latest-photos-more' => 'See All &gt;',
 'oasis-latest-photos-inner-message' => 'See All Photos',
+'oasis-latest-photos-single' => '+',
 'oasis-latest-photos-empty' => 'Anyone can help to make this Wiki look amazing<br/><span>Click here to add a photo.</span>',
 'oasis-global-nav-create-wiki' => 'Start a wiki',
 'oasis-page-header-no-comments-tooltip' => 'Be the first to discuss this page',

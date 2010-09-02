@@ -163,6 +163,17 @@
 					height: 61px;
 				}
 			}
+			&.single-photo {
+				a {
+					font-size: 45px !important;
+					padding-top: 9px;
+					height: 67px;
+			}
+				&:hover {
+					text-decoration: none;
+					
+				}
+			}
 		}
 	}
 	
