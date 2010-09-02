@@ -20,10 +20,9 @@ class SpecialWikiActivity extends SpecialPage {
 			return;
 		}
 
-		// load tracking JS from WikiActivity.js and 'see more' ajax functions from MyHome.js
+		// WikiActivity.js is MyHome.js modified for Oasis
 		global $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/MyHome/WikiActivity.js?{$wgStyleVersion}\"></script>\n");
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/MyHome/MyHome.js?{$wgStyleVersion}\"></script>\n");
 
 		$feedProxy = new ActivityFeedAPIProxy();
 		$feedProvider = new DataFeedProvider($feedProxy);

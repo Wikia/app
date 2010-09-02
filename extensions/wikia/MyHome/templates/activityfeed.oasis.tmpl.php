@@ -16,11 +16,10 @@
 		</li>
 	<?php } // endforeach; ?>
 	</ul>
-<?php 
+<?php
 	  if ($showMore) {
 		?>
-		<script type="text/javascript">MyHome.fetchSince.<?= $type ?> = '<?= $query_continue ?>';</script>
-		<div class="myhome-feed-more"><a id="myhome-<?= $type ?>-feed-more" onclick="MyHome.fetchMore(this)" rel="nofollow"><?= wfMsg('myhome-activity-more') ?></a></div>
+		<div class="activity-feed-more"><a href="#" data-since="<?= $query_continue ?>"><?= wfMsg('myhome-activity-more') ?></a></div>
 		<?
 	  }
 	} // endif; ?>
