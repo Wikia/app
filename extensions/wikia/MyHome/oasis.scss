@@ -87,3 +87,15 @@
 	}
 
 }
+
+.myhome-feed-more {
+	border-top: 1px solid $color-page-border;
+	border-bottom: 1px solid $color-page-border;
+	margin-bottom: 20px;
+	text-align: center;
+	a {
+		cursor: pointer;
+		display: block;
+		padding: 5px 0;
+	}
+}
