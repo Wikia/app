@@ -31,7 +31,10 @@ class SendGridPostback extends SpecialPage {
 	 * @param $par Mixed: string if any subpage provided, else null
 	 */
 	function execute( $par ) {
-		
+		global $wgOut;
+		$this->outputHeader();
+		$this->setHeaders();
+
 		// Just to see what they're sending us.
 		ob_start();
 		global $_POST;
@@ -39,9 +42,7 @@ class SendGridPostback extends SpecialPage {
 		$data = ob_get_clean();
 		wfErrorLog("SendGridPostback: " . $data, "/var/log/php");
 
-		global $wgOut;
-		$wgOut->addHMTL("Post-data logged to error log");
-		
+		$wgOut->addHtml("Post-data logged to error log");
 	}
 
 } // end class SendGridPostback
