@@ -36,6 +36,16 @@
 		label, input {
 			vertical-align: middle;
 		}
+		
+		// /** moving elements to the button, those elements will be gone anyway sone **/
+		li:last-child, .minor {
+			position: absolute;
+			margin-top: 35px;
+		}
+		.minor {
+			margin-left: 0px;
+			padding-left: 60px;
+		}		
 	}
 	#csMainContainer {
 		@include clearfix;
@@ -270,9 +280,9 @@
 }
 
 #editpage-copywarn {
-	margin-top: 20px;
+	margin-top: 30px;
 }
-
+// /** faking a text link **/
 .editButtons {
 	#wpDiff {
 		border: none;
