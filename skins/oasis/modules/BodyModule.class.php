@@ -158,6 +158,7 @@ class BodyModule extends Module {
 			// add any content page related rail modules here
 			$railModuleList[1300] = array('LatestActivity', 'Index', null);
 			$railModuleList[1250] = array('LatestPhotos', 'Index', null);
+			$railModuleList[1250] = array('PopularBlogPosts', 'Index', null);
 			$railModuleList[1150] = array('Spotlights', 'Index', null);
 		}
 
