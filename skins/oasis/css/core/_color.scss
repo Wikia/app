@@ -58,7 +58,7 @@ $color-article-toc-border: darken(lighten($color-page, 100%), 15%);
 }
 
 // Images
-$color-article-thumb-background: $color-page;
+$color-article-thumb-background: darken($color-page, 5%);
 $color-article-thumb-border: darken(lighten($color-page, 100%), 15%);
 @if lightness($color-page) < 50 {
 	$color-article-thumb-border: lighten(darken($color-page, 100%), 25%);
