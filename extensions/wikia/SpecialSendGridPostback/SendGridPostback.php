@@ -22,6 +22,8 @@ $wgSpecialPages['SendGridPostback'] = 'SendGridPostback';
  */
 class SendGridPostback extends SpecialPage {
 
+	public static $POSTBACK_LOG_TABLE_NAME = "postbackLog";
+
 	public function __construct() {
 		parent::__construct( 'SendGridPostback' );
 	}
@@ -35,6 +37,8 @@ class SendGridPostback extends SpecialPage {
 	 */
 	function execute( $par ) {
 		global $wgOut;
+		wfProfileIn(__METHOD__);
+		
 		$this->outputHeader();
 		$this->setHeaders();
 
@@ -57,6 +61,9 @@ class SendGridPostback extends SpecialPage {
 		$postedToken = $wgRequets->getVal('wikia-token');
 		$generatedToken = wfGetEmailPostbackToken($emailId, $emailAddr);
 		if($postedToken == $generatedToken){
+			// We don't take any actions yet, so log all token-validated postbacks to the database.
+			$this->logPostbackForLater();
+
 			// Take action on the eventType.
 			$eventType = $wgRequest->getVal('event');
 			switch($eventType){
@@ -76,6 +83,8 @@ class SendGridPostback extends SpecialPage {
 				// TODO: REMOVE THIS ONCE WE ACTUALLY PROCESS THE DATA.
 				Wikia::log(__METHOD__, false, "<postback>" . $postString . "</postback>\n", true);
 
+				global $IP;
+				require "$IP/lib/Mail/wikiadb.php";
 				// TODO: Update the wikia_mailer database with the info from the post
 				// TODO: Update the wikia_mailer database with the info from the post
 				
@@ -84,7 +93,7 @@ class SendGridPostback extends SpecialPage {
 				
 				// TODO: Set "user preference" that says they were blocked (make sure to add code to clear this out any time a user verifies) for each user found.
 				// TODO: Set "user preference" that says they were blocked (make sure to add code to clear this out any time a user verifies) for each user found.
-			
+
 				break;
 			case 'spamreport':
 				Wikia::log(__METHOD__, false, "<postback>" . $postString . "</postback>\n", true);
@@ -99,6 +108,47 @@ class SendGridPostback extends SpecialPage {
 			Wikia::log(__METHOD__, false, "INVALID TOKEN DURING THIS POSTBACK: <postback>" . $postString . "</postback>\n", true);
 			$wgOut->addHtml("Postback token did not match expected value.  Ignoring.");
 		}
+
+		wfProfileOut(__METHOD__);
 	}
+	
+	/**
+	 * We're not sure how we want to handle the postbacks in all cases, so for now just log them to the db and come back for them later.
+	 *
+	 * NOTE: This does not check (or store) the token, so check the token before calling this function.
+	 */
+	private function logPostbackForLater(){
+		global $wgRequest;
+		wfProfileIn(__METHOD__);
+		
+		$eventType = $wgRequest->getVal('event');
+		$emailId = $wgRequest->getVal('wikia-email-id');
+		$emailAddr = $wgRequest->getVal('email');
+		$cityId = $wgRequest->getVal('wikia-email-city-id'); // cityId of the wiki which sent the email
+		$senderDbName = $wgRequest->getVal('wikia-db');
+		$url = $wgRequest->getVal('url', '');
+		$status = $wgRequest->getVal('status', '');
+		$reason = $wgRequest->getVal('reason', '');
+		
+		global $IP;
+		require "$IP/lib/Mail/wikiadb.php";
+	
+		$dbw = wfGetDb(DB_MASTER, array(), Mail_wikiadb::MAIL_DB_NAME);
+		$dbw->insert(
+			self::$POSTBACK_LOG_TABLE_NAME,
+			array(
+				"mail_id" => $emailId,
+				"emailAddr" => $emailAddr,
+				"cityId" => $cityId,
+				"eventType" => $eventType,
+				"senderDbName" => $senderDbName,
+				"url" => $url,
+				"status" => $status,
+				"reason" => $reason
+			)
+		);
+
+		wfProfileOut(__METHOD__);
+	} // end logPostbackForLater()
 
 } // end class SendGridPostback
