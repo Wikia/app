@@ -1058,3 +1058,14 @@ function wfBlankImgUrl(){
 	global $wgBlankImgUrl;
 	return $wgBlankImgUrl;
 } // end wfBlankImgUrl()
+
+/**
+ * wfGenerateUnsubToken
+ * @author uberfuzzy
+ * @return string
+ */
+function wfGenerateUnsubToken( $email, $timestamp ) {
+	global $wgUnsubscribeSalt;
+	$token = sha1($timestamp . $email . $wgUnsubscribeSalt);
+	return $token;
+}
