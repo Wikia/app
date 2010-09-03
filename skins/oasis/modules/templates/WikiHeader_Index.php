@@ -54,4 +54,6 @@ if(is_array($menuNodes) && isset($menuNodes[0])) {
 		<?= View::specialPageLink('Watchlist', 'watchlist', array('accesskey' => 'l')) ?>
 		<?= View::specialPageLink('RecentChanges', 'recentchanges', array('accesskey' => 'r')) ?>
 	</div>
+	<img class="shade" src="<?= $wgBlankImgUrl ?>">
+	<img class="smask" src="<?= $wgBlankImgUrl ?>">
 </div>

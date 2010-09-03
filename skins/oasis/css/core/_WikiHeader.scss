@@ -1,10 +1,27 @@
 .WikiHeader {
 	@include clearfix;
-	background: url(/skins/oasis/images/sprite.png) left bottom no-repeat;
+	//background: url(/skins/oasis/images/sprite.png) left bottom no-repeat;
 	margin: 0 0 15px;
 	padding: 20px 10px 9px;
 	position: relative;
 	z-index: 999;
+	.shade, 
+	.smask {
+		bottom: 0;
+		height: 8px;
+		position: absolute;
+		right: 0;
+		width: 1000px;
+	}
+	.shade {
+		background: url(/skins/oasis/images/sprite.png) -1750px -2px no-repeat;
+		z-index: 0;
+	}
+	.smask {
+		background: $color-page;
+		z-index: 1;
+		@include opacity(90);
+	}
 	h1 {
 		width: 250px;
 	}
@@ -45,6 +62,7 @@
 		left: -9999px;
 		min-width: 150px;
 		padding: 5px;
+		z-index: 3;
 		li {
 			*float: none;		
 			*width: auto;
