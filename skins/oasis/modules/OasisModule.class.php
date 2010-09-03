@@ -34,7 +34,7 @@ class OasisModule extends Module {
 	}
 
 	public function executeIndex() {
-		global $wgOut, $wgUser, $wgTitle;
+		global $wgOut, $wgUser, $wgTitle, $wgRequest;
 
 		$this->body = wfRenderModule('Body');
 
