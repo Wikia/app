@@ -334,7 +334,7 @@ var initTracker = function() {
 			$.tracker.byStr(fakeUrl + 'username');
 		}
 	});
-	
+
 	// Latest Photos module
 	$('.LatestPhotosModule').click(function(ev) {
 		var fakeUrl = 'module/latestphotos/';
@@ -369,6 +369,37 @@ var initTracker = function() {
 			$.tracker.byStr(fakeUrl + 'photo');
 		}
 	});
+
+	// Popular Blog Posts module
+	$('.WikiaBlogListingBox').click(function(ev) {
+		var fakeUrl = 'module/latestblogposts/';
+		var node = $(ev.target);
+
+		if (!node.is('a')) {
+			return;
+		}
+
+		// Create blog post
+		if (node.hasClass('wikia-button')) {
+			$.tracker.byStr(fakeUrl + 'createblogpost');
+		}
+		// items
+		else if (node.hasParent('li')) {
+			// comments button
+			if (node.parent().hasClass('commentslikes')) {
+				$.tracker.byStr(fakeUrl + 'comments');
+			}
+			// author
+			else if (node.hasParent('details')) {
+				$.tracker.byStr(fakeUrl + 'author');
+			}
+			// blog posts title
+			else {
+				$.tracker.byStr(fakeUrl + 'title');
+			}
+		}
+	});
+
 
 	// random wiki
 	$('#WikiaRandomWiki').trackClick('randomwiki');
