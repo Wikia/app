@@ -1,0 +1,43 @@
+.ThemeDesignerPicker {
+	@include box-shadow(0, 0, 10px, #CCC);
+	background: #FFF;
+	border: 5px solid #accfe5;
+	display: none;
+	position: absolute;
+	width: 180px;
+	.color {
+		display: none;	
+	}
+	.image {
+		display: none;
+	}
+	&.color {
+		display: block;
+		.color {
+			display: block;
+		}
+	}
+	&.image {
+		display: block;
+		.image {
+			display: block;
+		}
+	}
+	h1 {
+		margin: 10px 20px;
+	}
+	.swatches {
+		@include clearfix;
+		padding: 0 20px 20px;
+		li {
+			border: 1px solid #FFF;
+			cursor: pointer;
+			display: block;
+			float: left;
+			height: 16px;
+			margin: 0 5px 10px 0;
+			outline: 1px solid #999;
+			width: 16px;
+		}
+	}
+}
