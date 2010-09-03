@@ -13,9 +13,7 @@ WikiaSearch = {
 
 	init : function() {
 		WikiaSearch.searchForm = $('#WikiaSearch');
-		WikiaSearch.searchField = WikiaSearch.searchForm.children('[placeholder]');
-
-		WikiaSearch.initTooltip();
+		WikiaSearch.searchField = WikiaSearch.searchForm.children('input[placeholder]');
 
 		// load autosuggest code on first focus
 		WikiaSearch.searchField.one('focus',WikiaSearch.initSuggest);
@@ -26,7 +24,7 @@ WikiaSearch = {
 		});
 
 		// get boxad following search box
-		WikiaSearch.adBoxAfter = WikiaSearch.searchForm.next('.wikia-ad');
+		//WikiaSearch.adBoxAfter = WikiaSearch.searchForm.next('.wikia-ad');
 	},
 
 	// download necessary dependencies (AutoComplete plugin) and initialize search suggest feature for #search_field
@@ -54,40 +52,5 @@ WikiaSearch = {
 					//WikiaSearch.adBoxAfter.css('visibility', 'visible');
 				});
 		});
-	},
-
-	// add support for placeholder attribute in browsers different than webkit
-	initTooltip: function() {
-		if (jQuery.browser.webkit) {
-			return;
-		}
-
-		var tooltip = WikiaSearch.searchField.attr('placeholder');
-
-		// remove tooltip if user just hits search button
-		WikiaSearch.searchForm.bind('submit', function(ev) {
-			if (WikiaSearch.searchField.val() == tooltip) {
-				WikiaSearch.searchField.val('').removeClass('tooltip');
-			}
-		});
-
-		WikiaSearch.searchField.
-			bind('focus', function(ev) {
-				// clear search field
-				if (WikiaSearch.searchField.val() == tooltip) {
-					WikiaSearch.searchField.val('').removeClass('tooltip');
-				}
-			}).
-			bind('blur', function(ev) {
-				// show tooltip if field is empty when leaving
-				if (WikiaSearch.searchField.val() == '') {
-					WikiaSearch.searchField.val(tooltip).addClass('tooltip');
-				}
-			});
-
-		// initial value
-		if (WikiaSearch.searchField.val() == '') {
-			WikiaSearch.searchField.val(tooltip).addClass('tooltip');
-		}
 	}
 };

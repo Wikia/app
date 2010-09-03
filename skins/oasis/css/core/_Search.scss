@@ -3,26 +3,7 @@
 	margin-bottom: 10px;
 	position: relative;
 	z-index: 2;
-	input[type="search"], input[type="text"] {
-		background-image: -moz-linear-gradient(top, rgba(#000, .05) 0%, rgba(#000, 0) 40%);
-		background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0, rgba(#000, .05)), color-stop(.4, rgba(#000, 0)));
-		border: 1px solid $color-page-border;
-		float: left;
-		font-size: 15px;
-		height: 19px;
-		outline: 0;
-		padding: 3px;
-		margin: 0;
-		width: 265px;
-		-webkit-box-sizing: content-box;
-		-webkit-appearance: textfield;
-		&::-webkit-input-placeholder {
-			color: $color-links;
-		}
-	}
-	.tooltip {
-		color: $color-links;
-	}
+	
 	.wikia-chiclet-button {
 		float: left;
 		height: 27px;
@@ -32,9 +13,15 @@
 			background: url(/skins/oasis/images/sprite.png) -1568px 0 no-repeat;
 		}
 	}
+
 	input[type="submit"] {
 		display: none;
 	}
+
+	input[type="text"] {
+		@include placeholder;
+	}
+	
 	.autocomplete {
 		@include menu-regular;
 		margin-top: 2px;

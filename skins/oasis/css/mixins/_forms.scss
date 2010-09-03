@@ -1,0 +1,21 @@
+@mixin placeholder {
+	background-image: -moz-linear-gradient(top, rgba(#000, .05) 0%, rgba(#000, 0) 40%);
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0, rgba(#000, .05)), color-stop(.4, rgba(#000, 0)));
+	border: 1px solid $color-page-border;
+	float: left;
+	font-size: 15px;
+	height: 19px;
+	outline: 0;
+	padding: 3px;
+	margin: 0;
+	width: 265px;
+	-webkit-box-sizing: content-box;
+	-webkit-appearance: textfield;
+	&::-webkit-input-placeholder {
+		color: $color-links;
+	}
+
+	&.placeholder {
+		color: $color-links;
+	}
+}
