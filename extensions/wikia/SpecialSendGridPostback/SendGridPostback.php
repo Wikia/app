@@ -58,7 +58,7 @@ class SendGridPostback extends SpecialPage {
 		$senderDbName = $wgRequest->getVal('wikia-db');
 		
 		// Verify the token so that we know this POST probably came from SendGrid.
-		$postedToken = $wgRequets->getVal('wikia-token');
+		$postedToken = $wgRequest->getVal('wikia-token');
 		$generatedToken = wfGetEmailPostbackToken($emailId, $emailAddr);
 		if($postedToken == $generatedToken){
 			// We don't take any actions yet, so log all token-validated postbacks to the database.
