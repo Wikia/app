@@ -98,22 +98,29 @@
 
 // /** styling for Oasis blog listing box and rail module **/
 
+
+
+
+
 .WikiaBlogListingBox {
 	@include rail-module;
 	width: 282px;
-	line-height: 16px !important;
+	line-height: 16px;
 	display: block !important;
 
+	.wikia-button {	 // /** adding padding to make the button look wider **/
+		padding: 0px 5px;
+	}
 	.commentslikes {
-		float: right;
-		margin: {
-			top: 1px;
-			right: 2px;
-		}
+		position: absolute;	
+		right: 0px;
+		bottom: 11px;
+
 	}
 	ul {
-		margin: 0px !important;
+		margin: 0px;
 		li {
+			position: relative;
 			&:first-child {
 				border: none;
 			}
@@ -126,26 +133,49 @@
 		vertical-align: middle
 	}
 	h1 {
-		margin-bottom: 0px !important;
-		padding-bottom: 7px !important;
+		padding-bottom: 0px;
+		margin: {
+			left: 28px;
+			bottom: 0px;
+		}
 		a {
-			font-size: 16px;
+			font-size: 12px;
 		}
 	}
+	h3 {
+		@extend h1;
+		margin-left: 0px;
+	}
+	
 	details {
-		img {
+		img { // /** the avatar **/
+			width: 22px;
+			height: 22px;
 			float: left;
-			margin-right: 5px;
+			margin: {
+				right: 5px;
+				top: -15px;
+			}
 		}
 		span { // /** the date **/
-			font-size: 11px;
+			font-size: 10px;
+			a {
+				font-size: 10px;
+			}
 		}
 	}
 	blockquote {
+		@include clearfix;
 		clear: both;
 		padding: {
 			top: 7px;
-			bottom: 5px;
+			bottom: 19px;
 		}
-	}
+		.read-more {
+			a {
+				font-size: 11px;
+		
+			}
+		}
+	}	
 }
