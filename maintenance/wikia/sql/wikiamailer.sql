@@ -26,3 +26,17 @@ CREATE TABLE IF NOT EXISTS mail (
        INDEX(transmitted),
        INDEX(locked)
 );
+
+####
+# Storing postbacks from SendGrid (only stored here if the token passed validation).
+####
+CREATE TABLE IF NOT EXISTS postbackLog (
+	mail_id INT(11) NOT NULL, # effectively a foreign-key to mail.id
+	emailAddr VARCHAR(255),
+	cityId INT(11),
+	eventType VARCHAR(255),
+	senderDbName VARCHAR(255),
+	url VARCHAR(255), # only comes with "click" event
+	status VARCHAR(255), # only comes with "bounce" event
+	reason VARCHAR(255) # only comes with "bounce" event
+);
