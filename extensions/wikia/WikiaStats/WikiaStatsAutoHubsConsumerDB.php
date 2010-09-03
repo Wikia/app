@@ -319,19 +319,44 @@ class WikiaStatsAutoHubsConsumerDB {
 			"tag_id" 	=> $tag_id,
 			"city_lang" => $lang_id 
 		);
-		$res = $this->dbs->select(
-				array( 'page_views_tags' ),
-				array( 'tag_id as tag_id,
-						city_id as city_id,
-						sum(pv_views) as count ' ),
-				$conditions,
-				__METHOD__,
-				array(
-					'GROUP BY' 	=> ' tag_id,city_id ',
-					'ORDER BY' 	=> 'count DESC',
-					'LIMIT'		=> 40
-				)
-		);		
+		
+		$oRow = $this->dbs->selectRow(
+				array( 'page_views_summary_tags' ),
+				array( 'count(0) as cnt' ),
+				array(),
+				__METHOD__
+		);
+		
+		if ( is_object($oRow) && !empty($oRow->cnt) ) {
+			$res = $this->dbs->select(
+					array( '`specials`.`page_views_summary_tags`' ),
+					array( 'tag_id as tag_id,
+							city_id as city_id,
+							pv_views as count ' ),
+					$conditions,
+					__METHOD__,
+					array(
+						'ORDER BY' 	=> 'count DESC',
+						'LIMIT'		=> 40
+					)
+			);					
+		} else {
+			$date = date('%Y%m%d', time() - 7 * 24 * 60 * 60);
+			$conditions[] = "use_date > $date";
+			$res = $this->dbs->select(
+					array( '`stats`.`page_views_tags`' ),
+					array( 'tag_id as tag_id,
+							city_id as city_id,
+							sum(pv_views) as count ' ),
+					$conditions,
+					__METHOD__,
+					array(
+						'GROUP BY' 	=> ' tag_id,city_id ',
+						'ORDER BY' 	=> 'count DESC',
+						'LIMIT'		=> 40
+					)
+			);		
+		}
 
 		$limits = $this->loadHideLimits("city");	
 		$limits_array = array();
