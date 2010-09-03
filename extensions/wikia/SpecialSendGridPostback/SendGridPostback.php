@@ -84,6 +84,7 @@ class SendGridPostback extends SpecialPage {
 				Wikia::log(__METHOD__, false, "<postback>" . $postString . "</postback>\n", true);
 
 				global $IP;
+				require "$IP/lib/Mail.php";
 				require "$IP/lib/Mail/wikiadb.php";
 				// TODO: Update the wikia_mailer database with the info from the post
 				// TODO: Update the wikia_mailer database with the info from the post
@@ -131,6 +132,7 @@ class SendGridPostback extends SpecialPage {
 		$reason = $wgRequest->getVal('reason', '');
 		
 		global $IP;
+		require "$IP/lib/Mail.php";
 		require "$IP/lib/Mail/wikiadb.php";
 	
 		$dbw = wfGetDb(DB_MASTER, array(), Mail_wikiadb::MAIL_DB_NAME);
