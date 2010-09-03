@@ -207,7 +207,7 @@ class BodyModule extends Module {
 
 
 	public function executeIndex() {
-		global $wgOut, $wgTitle, $wgSitename, $wgUser;
+		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog;
 
 		$this->isMainPage = ArticleAdLogic::isMainPage();
 
@@ -258,6 +258,11 @@ class BodyModule extends Module {
 			$wgOut->addStyle(wfGetSassUrl('skins/oasis/css/modules/SpecialPreferences.scss'));
 		}
 
-	}
+		// load CSS for blogs if enabled
+		if ($wgEnableBlog) {
+			echo "adding blog css";
+			$wgOut->addStyle(wfGetSassUrl('extensions/wikia/Blogs/css/oasis.scss'));
+		}
 
+	}
 }
