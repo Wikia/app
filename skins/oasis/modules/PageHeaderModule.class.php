@@ -1,4 +1,10 @@
 <?php
+/**
+ * Renders page header (title, subtitle, comments chicklet button, history dropdown, top categories)
+ *
+ * @author Maciej Brencz
+ */
+
 class PageHeaderModule extends Module {
 
 	var $wgStylePath;
@@ -58,7 +64,6 @@ class PageHeaderModule extends Module {
 			$this->actionName = 'edit';
 			// jumping to a-tag
 			$this->action["href"] .= "#EditPage";
-			
 		}
 		// view source
 		else if (isset($this->content_actions['viewsource'])) {

@@ -1,4 +1,10 @@
 <?php
+/**
+ * Renders comments chicklet button with given value for given title
+ *
+ * @author Maciej Brencz
+ */
+
 class CommentsLikesModule extends Module {
 
 	var $wgBlankImgUrl;

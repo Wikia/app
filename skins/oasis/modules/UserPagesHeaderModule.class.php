@@ -1,4 +1,10 @@
 <?php
+/**
+ * Renders header for user pages (profile / talk pages, Following, Contributions, blogs) with avatar and user's data
+ *
+ * @author Maciej Brencz
+ */
+
 class UserPagesHeaderModule extends Module {
 
 	var $wgBlankImgUrl;

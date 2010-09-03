@@ -1,4 +1,9 @@
 <?php
+/**
+ * Renders page content: adds picture attribution info and replaces section edit links with chicklet buttons
+ *
+ * @author Maciej Brencz
+ */
 
 class ContentDisplayModule extends Module {
 

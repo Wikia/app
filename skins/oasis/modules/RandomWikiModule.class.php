@@ -1,4 +1,10 @@
 <?php
+/**
+ * Renders "Random Wiki" button in page footer if RandomWiki extension is enabled on Oasis
+ *
+ * @author Maciej Brencz
+ */
+
 class RandomWikiModule extends Module {
 
 	var $url;

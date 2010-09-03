@@ -1,4 +1,10 @@
 <?php
+/**
+ * Renders anon / user menu at top right corner of the page
+ *
+ * @author Maciej Brencz
+ */
+
 class AccountNavigationModule extends Module {
 
 	var $personal_urls;

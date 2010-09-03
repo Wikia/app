@@ -1,4 +1,10 @@
 <?php
+/**
+ * Renders search box
+ *
+ * @author Maciej Brencz
+ */
+
 class SearchModule extends Module {
 
 	var $fulltext;
