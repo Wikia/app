@@ -148,6 +148,9 @@ var ThemeDesigner = {
 
 	saveClick: function(ev) {
 		ev.preventDefault();
+
+		$(ev.target).attr('disabled', true);
+
 		ThemeDesigner.save();
 	},
 
@@ -187,8 +190,9 @@ var ThemeDesigner = {
 
 			//handle swatch clicking
 			swatches.find("li").click(function() {
-				console.log("running");
-				ThemeDesigner.settings[swatch.attr("class")] = $(this).css("background-color");
+				$().log("running");
+				var color = ThemeDesigner.rgb2hex($(this).css("background-color"));
+				ThemeDesigner.settings[swatch.attr("class")] = color;
 				ThemeDesigner.hidePicker();
 			});
 		} else if (type == "image") {
@@ -218,6 +222,27 @@ var ThemeDesigner = {
 			.find(".user").remove();
 		$("#ThemeDesignerPicker").children(".color").find(".swatches").find("li").unbind("click");
 		ThemeDesigner.applySettings();
+	},
+
+	/**
+	 * Converts from rgb(255, 255, 255) to #fff
+	 *
+	 * Copied here from WikiaPhotoGallery.js
+	 */
+	rgb2hex: function(rgb) {
+		function hex(x) {
+			return ("0" + parseInt(x).toString(16)).slice(-2);
+		}
+
+		components = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+
+		if(components) {
+			return "#" + hex(components[1]) + hex(components[2]) + hex(components[3]);
+		}
+		//not an rgb color, probably an hex value has been passed, return it
+		else {
+			return rgb;
+		}
 	}
 
 };
