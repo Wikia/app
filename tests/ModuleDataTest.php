@@ -79,28 +79,116 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		);
 	}
 
+	// TODO: maybe move to separate test class
 	function testNotificationsModule() {
-		// add notification
-		NotificationsModule::addNotification('Notification about something very important', array('data' => 'bar'));
+		global $wgUser, $wgRequest;
+
+		// create set of fake objects
+		$fakeTitleA = Title::newFromText('Foo');
+		$fakeTitleB = Title::newFromText('Bar');
+		$fakeArticle = new Article($fakeTitleA);
+
+		/**
+		 * Test notifications
+		 */
+		NotificationsModule::clearNotifications();
+
+		$message = 'Notification about something very important';
+		NotificationsModule::addNotification($message, array('data' => 'bar'));
 
 		$moduleData = Module::get('Notifications')->getData();
 
-		$this->markTestSkipped();
+		$notification = array(
+			'message' => $message,
+			'data' => array('data' => 'bar'),
+			'type' => NotificationsModule::NOTIFICATION_MESSAGE,
+		);
 
-		// have to skip this test, WikiaBot has real notifications?!
-		/*
 		$this->assertEquals(
-			array(
-				array(
-					'message' => 'Notification about something very important',
-					'data' => array('data' => 'bar'),
-					'type' => 1,
-				)
-			),
+			array($notification),
 			$moduleData['notifications']
 		);
-		*/
-		// add confirmation
+
+		// badge notification
+		if (class_exists('AchBadge')) {
+			NotificationsModule::clearNotifications();
+
+			// create fake badge
+			$badge = new AchBadge(BADGE_WELCOME, 1, BADGE_LEVEL_BRONZE);
+			$html = '';
+
+			wfSuppressWarnings();
+			$data = array(
+				'name' => $badge->getName(),
+				'picture' => $badge->getPictureUrl(90),
+				'points' => wfMsg('achievements-points', AchConfig::getInstance()->getLevelScore($badge->getLevel())),
+				'reason' => $badge->getPersonalGivenFor(),
+				'userName' => $wgUser->getName(),
+				'userPage' => $wgUser->getUserPage()->getLocalUrl(),
+			);
+
+			$message = wfMsg('oasis-badge-notification', $data['userName'], $data['name'], $data['reason']);
+
+			NotificationsModule::addBadgeNotification($wgUser, $badge, $html);
+			wfRestoreWarnings();
+
+			$moduleData = Module::get('Notifications')->getData();
+
+			$notification = array(
+				'message' => $message,
+				'data' => $data,
+				'type' => NotificationsModule::NOTIFICATION_NEW_ACHIEVEMENTS_BADGE,
+			);
+
+			$this->assertEquals(
+				array($notification),
+				$moduleData['notifications']
+			);
+		}
+
+		// edit similar
+		NotificationsModule::clearNotifications();
+
+		$message = 'Edit similar message';
+		NotificationsModule::addEditSimilarNotification($message);
+
+		$moduleData = Module::get('Notifications')->getData();
+
+		$notification = array(
+			'message' => $message,
+			'data' => array(),
+			'type' => NotificationsModule::NOTIFICATION_EDIT_SIMILAR,
+		);
+
+		$this->assertEquals(
+			array($notification),
+			$moduleData['notifications']
+		);
+
+		// community messages
+		NotificationsModule::clearNotifications();
+
+		$message = 'Edit similar message';
+		NotificationsModule::addCommunityMessagesNotification($message);
+
+		$moduleData = Module::get('Notifications')->getData();
+
+		$notification = array(
+			'message' => $message,
+			'data' => array(),
+			'type' => NotificationsModule::NOTIFICATION_COMMUNITY_MESSAGE,
+		);
+
+		$this->assertEquals(
+			array($notification),
+			$moduleData['notifications']
+		);
+
+
+		/**
+		 * Test confirmations
+		 */
+		NotificationsModule::clearNotifications();
 		NotificationsModule::addConfirmation('Confirmation of something done');
 
 		$moduleData = Module::get('Notifications', 'Confirmation')->getData();
@@ -109,6 +197,98 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 			'Confirmation of something done',
 			$moduleData['confirmation']
 		);
+
+		// preferences saved
+		NotificationsModule::clearNotifications();
+
+		$prefs = (object) array('mSuccess' => true);
+		$status = 'success';
+		NotificationsModule::addPreferencesConfirmation($prefs, $status, '');
+
+		$moduleData = Module::get('Notifications', 'Confirmation')->getData();
+
+		$this->assertEquals(
+			wfMsg('savedprefs'),
+			$moduleData['confirmation']
+		);
+
+		// page moved
+		NotificationsModule::clearNotifications();
+
+		$form = false;
+		$oldUrl = $fakeTitleA->getFullUrl('redirect=no');
+		$newUrl = $fakeTitleB->getFullUrl();
+		$oldText = $fakeTitleA->getPrefixedText();
+		$newText = $fakeTitleB->getPrefixedText();
+
+		// don't render links
+		$oldLink = $oldText;
+		$newLink = $newText;
+
+		$message = wfMsgExt('movepage-moved', array('parseinline'), $oldLink, $newLink, $oldText, $newText);
+		NotificationsModule::addPageMovedConfirmation($form, $fakeTitleA, $fakeTitleB);
+
+		$moduleData = Module::get('Notifications', 'Confirmation')->getData();
+
+		$this->assertEquals(
+			$message,
+			$moduleData['confirmation']
+		);
+
+		// page removed
+		NotificationsModule::clearNotifications();
+
+		$reason = '';
+		$message = wfMsgExt('oasis-confirmation-page-deleted', array('parseinline'), $fakeTitleA->getPrefixedText());
+		NotificationsModule::addPageDeletedConfirmation($fakeArticle, $wgUser, $reason, $fakeArticle->getId());
+
+		$moduleData = Module::get('Notifications', 'Confirmation')->getData();
+
+		$this->assertEquals(
+			$message,
+			$moduleData['confirmation']
+		);
+
+		// page removed
+		NotificationsModule::clearNotifications();
+
+		$message = wfMsg('oasis-confirmation-page-undeleted');
+		NotificationsModule::addPageUndeletedConfirmation($fakeTitleA, false);
+
+		$moduleData = Module::get('Notifications', 'Confirmation')->getData();
+
+		$this->assertEquals(
+			$message,
+			$moduleData['confirmation']
+		);
+
+		// log out
+		NotificationsModule::clearNotifications();
+
+		$html = '';
+		$message = wfMsg('oasis-confirmation-user-logout');
+		NotificationsModule::addLogOutConfirmation($wgUser, $html, false);
+
+		$moduleData = Module::get('Notifications', 'Confirmation')->getData();
+
+		$this->assertEquals(
+			$message,
+			$moduleData['confirmation']
+		);
+
+		// facebook connect
+		NotificationsModule::clearNotifications();
+		$wgRequest->setVal('fbconnected', 2);
+
+		$html = '';
+		$preferencesUrl = SpecialPage::getTitleFor('Preferences')->getFullUrl();
+		$message = wfMsgExt('fbconnect-connect-error-msg', array('parseinline'), $preferencesUrl);
+		NotificationsModule::addFacebookConnectConfirmation($html);
+
+		$moduleData = Module::get('Notifications', 'Confirmation')->getData();
+
+		$this->assertEquals($message, $moduleData['confirmation']);
+		$this->assertEquals(' error', $moduleData['confirmationClass']);
 	}
 
 	function testRandomWikiModule() {
@@ -180,7 +360,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals ($moduleData['max_challenges'], count($moduleData['challengesBadges']));
 		$this->assertType ('array', $moduleData['challengesBadges'][0]);
 		$this->assertType ('object', $moduleData['challengesBadges'][0]['badge']);
-		
+
 		if (count($moduleData['ownerBadges']) > 0) {
 			// TODO: WikiaBot has no badges, but we could add some
 		}
