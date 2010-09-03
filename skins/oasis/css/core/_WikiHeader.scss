@@ -102,16 +102,18 @@
 			img {
 				left: -2px;
 				position: relative;
-				top: -1px;
 				height: 16px;
-				vertical-align: text-top;
+				top: 0;
+				vertical-align: text-bottom;
 			}
 			&[data-id=randompage] img {
 				background: url("/skins/oasis/images/sprite.png") no-repeat scroll -1616px -16px transparent;
+				height: 13px;
 				width: 13px;
 			}
 			&[data-id=wikiactivity] img {
 				background: url("/skins/oasis/images/sprite.png") no-repeat scroll -1600px -48px transparent;
+				height: 14px;
 				width: 17px;
 			}
 		}
