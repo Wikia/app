@@ -41,7 +41,7 @@ var WikiHeader = {
 	mouseover: function(event) {
 
 		//Hide all subnavs except for this one
-		WikiHeader.subnav.not($(this).find(".subnav")).css("left", "-9999px");
+		WikiHeader.subnav.not($(this).find(".subnav")).css("top", "-9999px");
 
 		//Cancel mouseoutTimer
 		clearTimeout(WikiHeader.mouseoutTimer);
@@ -104,7 +104,7 @@ var WikiHeader = {
 		var subnav = $(parent).children('ul');
 
 		if (subnav.exists()) {
-			subnav.css("left", "auto");
+			subnav.css("top", WikiHeader.navtop);
 			//WikiHeader.ads.css("visibility", "hidden");
 
 			$.tracker.byStr('wikiheader/wikinav/open');
@@ -113,13 +113,13 @@ var WikiHeader = {
 
 	hideNav: function() {
 		//Hide subnav
-		WikiHeader.subnav.css("left", "-9999px");
+		WikiHeader.subnav.css("top", "-9999px");
 		//WikiHeader.ads.css("visibility", "visible");
 	},
 
 	positionNav: function() {
 		//This runs once. Sets the proper top position of the subnav. Can't be calculated earlier because custom font loading can adjust wiki nav height.
-		WikiHeader.subnav.css("top", WikiHeader.nav.height());
+		WikiHeader.navtop = WikiHeader.nav.height();
 	}
 
 };
