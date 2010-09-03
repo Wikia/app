@@ -7,8 +7,13 @@ class PhalanxStats extends UnlistedSpecialPage {
 
 	function execute( $par ) {
 		global $wgOut, $wgLang, $wgUser, $wgRequest;
+		global $wgExtensionsPath, $wgStyleVersion, $wgStylePath;
 
 		wfLoadExtensionMessages( 'Phalanx' );
+
+		#set base title
+		$wgOut->setPageTitle( wfMsg('phalanx-stats-title') );
+		$wgOut->addStyle( "$wgExtensionsPath/wikia/Phalanx/css/Phalanx.css?$wgStyleVersion" );
 
 		// check restrictions
 		if ( !$this->userCanExecute( $wgUser ) ) {
@@ -24,6 +29,9 @@ class PhalanxStats extends UnlistedSpecialPage {
 		if ( empty( $par ) ) {
 			return true;
 		}
+
+		#we have a valid id, change title to use it
+		$wgOut->setPageTitle( wfMsg('phalanx-stats-title') . ' #' . $par);
 
 		$block = array();
 		$block = Phalanx::getFromId( intval($par) );
@@ -47,18 +55,22 @@ class PhalanxStats extends UnlistedSpecialPage {
 		$block['type'] = implode( ', ', Phalanx::getTypeNames( $block['type'] ) );
 		$block['lang'] = empty($block['lang']) ? '*' : $block['lang'];
 
+		#pull these out of the array, so they dont get used in the top rows
+		$block2['text'] = $block['text']; unset($block['text']);
+		$block2['reason'] = $block['reason']; unset($block['reason']);
+		
 		//TODO: add i18n
 		$headers = array(
 			'Block ID',
 			'Added by',
-			'Text',
+			#'Text',
 			'Type',
 			'Created on',
 			'Expires on',
 			'Exact',
 			'Regex',
 			'Case',
-			'Reason',
+			#'Reason',
 			'Language',
 		);
 
@@ -68,9 +80,21 @@ class PhalanxStats extends UnlistedSpecialPage {
 			'border' => 1,
 			'cellpadding' => 4,
 			'cellspacing' => 0,
+			'style' => "font-family:monospace;",
 		);
-		$html .=  Xml::buildTable( array( $block ), $tableAttribs, $headers );
-		$html .=  Xml::element( 'br', null, '', true );
+		$table = Xml::buildTable( array( $block ), $tableAttribs, $headers );
+		$table = str_replace("</table>", "", $table);
+		$table .= "<tr><th>Text</th><td colspan='8'>{$block2['text']}</td></tr>";
+		$table .= "<tr><th>Reason</th><td colspan='8'>{$block2['reason']}</td></tr>";
+		$table .= "</table>";
+
+		$html .=  $table . "\n";
+
+		$phalanxUrl = Title::newFromText( 'Phalanx', NS_SPECIAL )->getFullUrl( array( 'id' => $block['id'] ) );
+		$html .= " &bull; <a class='modify' href='{$phalanxUrl}'>" . wfMsg('phalanx-link-modify') . "</a><br/>\n";
+
+		$html .=  Xml::element( 'br', null, '', true ) . "\n";
+
 
 		$pager = new PhalanxStatsPager( $par );
 

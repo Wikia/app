@@ -95,4 +95,6 @@ Please create an alternate user name or [[Special:Contact|contact Wikia]] about 
 	'phalanx-rule-log-edit' => 'Phalanx rule edited: $1',
 	'phalanx-rule-log-delete' => 'Phalanx rule deleted: $1',
 	'phalanx-rule-log-details' => 'Filter: "$1", type: "$2", reason: "$3"',
+	
+	'phalanx-stats-title' => 'Phalanx Stats',
 );
