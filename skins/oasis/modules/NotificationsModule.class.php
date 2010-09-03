@@ -49,15 +49,17 @@ class NotificationsModule extends Module {
 	}
 
 	/**
+	 * Remove all notifications queued for display
+	 */
+	public static function clearNotifications() {
+		self::$notificationsStack = array();
+	}
+
+	/**
 	 * Show notifications
 	 */
 	public function executeIndex() {
 		wfProfileIn(__METHOD__);
-
-		// add talk pages notifications
-		if ($this->usernewmessages != '') {
-			self::addNotification($this->usernewmessages);
-		}
 
 		// add testing notification
 		/*
@@ -294,6 +296,24 @@ class NotificationsModule extends Module {
 						self::addConfirmation(wfMsgExt('fbconnect-connect-error-msg', array('parseinline'), $preferencesUrl), self::CONFIRMATION_ERROR);
 					}
 					break;
+			}
+		}
+
+		wfProfileOut(__METHOD__);
+		return true;
+	}
+
+	/**
+	 * Handle notifications about new message(s)
+	 */
+	public static function addMessageNotification(&$skin, &$tpl) {
+		wfProfileIn(__METHOD__);
+
+		if (Wikia::isOasis()) {
+			$msg = $tpl->data['usernewmessages'];
+
+			if ($msg != '') {
+				self::addNotification($msg);
 			}
 		}
 
