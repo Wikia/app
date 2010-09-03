@@ -39,6 +39,10 @@ class SendGridPostback extends SpecialPage {
 		global $wgOut;
 		wfProfileIn(__METHOD__);
 		
+		global $IP;
+		require "$IP/lib/Mail.php";
+		require "$IP/lib/Mail/wikiadb.php";
+		
 		$this->outputHeader();
 		$this->setHeaders();
 
@@ -83,9 +87,6 @@ class SendGridPostback extends SpecialPage {
 				// TODO: REMOVE THIS ONCE WE ACTUALLY PROCESS THE DATA.
 				Wikia::log(__METHOD__, false, "<postback>" . $postString . "</postback>\n", true);
 
-				global $IP;
-				require "$IP/lib/Mail.php";
-				require "$IP/lib/Mail/wikiadb.php";
 				// TODO: Update the wikia_mailer database with the info from the post
 				// TODO: Update the wikia_mailer database with the info from the post
 				
@@ -130,10 +131,6 @@ class SendGridPostback extends SpecialPage {
 		$url = $wgRequest->getVal('url', '');
 		$status = $wgRequest->getVal('status', '');
 		$reason = $wgRequest->getVal('reason', '');
-		
-		global $IP;
-		require "$IP/lib/Mail.php";
-		require "$IP/lib/Mail/wikiadb.php";
 	
 		$dbw = wfGetDb(DB_MASTER, array(), Mail_wikiadb::$MAIL_DB_NAME);
 		$dbw->insert(
