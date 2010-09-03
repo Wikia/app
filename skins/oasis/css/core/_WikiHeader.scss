@@ -48,9 +48,11 @@
 		li {
 			*float: none;		
 			*width: auto;
+			padding: 5px 0;
 			a {
 				border: 0;
 				white-space: nowrap;
+				font-size: 13px;
 			}
 			&:first-child {
 				border-top: 0;
