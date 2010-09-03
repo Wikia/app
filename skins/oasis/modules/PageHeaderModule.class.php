@@ -48,7 +48,7 @@ class PageHeaderModule extends Module {
 			$this->action = $this->content_actions['addsection'];
 			$this->action['text'] = wfMsg('oasis-page-header-add-topic');
 
-			$this->actionImage = MenuButtonModule::ADD_TOPIC_ICON;
+			$this->actionImage = MenuButtonModule::ADD_ICON;
 			$this->actionName = 'addtopic';
 		}
 		// "Edit with form" (SMW)

@@ -210,7 +210,7 @@ class UserPagesHeaderModule extends Module {
 					'text' => wfMsg('add_comment'),
 				);
 
-				$this->actionImage = MenuButtonModule::ADD_TOPIC_ICON;
+				$this->actionImage = MenuButtonModule::ADD_ICON;
 				$this->actionName = 'leavemessage';
 
 				// different handling for "My talk page"
