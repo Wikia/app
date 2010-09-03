@@ -117,7 +117,7 @@ var ThemeDesigner = {
 	},
 
 	CustomizeTabInit: function() {
-		$("#CustomizeTab").find("li").find("img[id*='color']").click(function() {
+		$("#CustomizeTab").find("li").find("img[id*='color']").click(function(event) {
 			ThemeDesigner.showPicker(event, "color");
 		});
 	},
@@ -164,14 +164,14 @@ var ThemeDesigner = {
 			document.location = returnTo;
 		}, 'json');
 	},
-	
+
 	showPicker: function(event, type) {
 		event.stopPropagation();
-		var swatch = $(event.currentTarget); 
+		var swatch = $(event.currentTarget);
 
 		//check the type (color or image)
 		if (type == "color") {
-			
+
 			//add user color if different than swatches
 			var swatches = $("#ThemeDesignerPicker").children(".color").find(".swatches");
 			var duplicate = false;
@@ -184,7 +184,7 @@ var ThemeDesigner = {
 			if (!duplicate) {
 				swatches.append('<li class="user" style="background-color: ' + swatch.css("background-color") + '"></li>');
 			}
-			
+
 			//handle swatch clicking
 			swatches.find("li").click(function() {
 				console.log("running");
@@ -192,7 +192,7 @@ var ThemeDesigner = {
 				ThemeDesigner.hidePicker();
 			});
 		} else if (type == "image") {
-		
+
 		}
 
 		//show picker
@@ -203,20 +203,20 @@ var ThemeDesigner = {
 			})
 			.removeClass("color image")
 			.addClass(type);
-			
+
 		//clicking away will close picker
 		$("body").bind("click.picker", ThemeDesigner.hidePicker);
 		$("#ThemeDesignerPicker").click(function() {
 			return false;
 		});
 	},
-	
+
 	hidePicker: function() {
 		$("body").unbind(".picker");
 		$("#ThemeDesignerPicker")
 			.removeClass("color image")
 			.find(".user").remove();
-		$("#ThemeDesignerPicker").children(".color").find(".swatches").find("li").unbind("click");		
+		$("#ThemeDesignerPicker").children(".color").find(".swatches").find("li").unbind("click");
 		ThemeDesigner.applySettings();
 	}
 
