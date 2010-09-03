@@ -1575,7 +1575,7 @@ class ArticleCommentList {
 			// Don't discard the blog name
 			while( count( $parts ) > 2 ) unset( $parts[ count( $parts ) - 1 ] );
 			$subjectPageName = implode( '/', $parts );
-			
+
 		} else {  // Articles
 
 			$subjectPageName = 	substr($commentTitle->getText(), 0, strpos($commentTitle->getText(), ARTICLECOMMENT_PREFIX) -1);
@@ -1838,7 +1838,7 @@ class ArticleCommentList {
 		$template->set_vars( array(
 			'comments'  => $comments
 		) );
-		return $template->execute( 'comment-list' );
+		return $template->render( 'comment-list' );
 	}
 
 	/**
