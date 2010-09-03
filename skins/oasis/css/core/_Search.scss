@@ -20,6 +20,7 @@
 
 	input[type="text"] {
 		@include placeholder;
+		float: left;
 	}
 	
 	.autocomplete {
