@@ -66,4 +66,8 @@ class ThemeDesignerModule extends Module {
 
 	}
 
+	public function executePicker() {
+
+	}
+
 }

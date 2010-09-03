@@ -5,12 +5,13 @@
 	li {
 		float: left;
 		margin-right: 30px;
-	}
-	.swatch {
-		border: 1px solid $color-borders;
-		display: block;
-		height: 50px;
-		margin: 3px 0;
-		width: 50px;
+		img {
+			border: 1px solid $color-borders;
+			cursor: pointer;
+			display: block;
+			height: 50px;
+			margin: 3px 0;
+			width: 50px;
+		}
 	}
 }
