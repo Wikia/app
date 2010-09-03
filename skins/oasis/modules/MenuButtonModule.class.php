@@ -7,7 +7,7 @@
 
 class MenuButtonModule extends Module {
 
-	const ADD_TOPIC_ICON = 1;
+	const ADD_ICON = 1;
 	const EDIT_ICON = 2;
 	const LOCK_ICON = 3;
 
@@ -38,11 +38,12 @@ class MenuButtonModule extends Module {
 
 		// default CSS class
 		$this->class = 'wikia-button';
-
+		$img_class = 'icon';
 		// render icon
 		if (isset($data['image'])) {
 			switch($data['image']) {
-				case self::ADD_TOPIC_ICON:
+				case self::ADD_ICON:
+					$img_class = 'osprite icon-add';
 					$height = 10;
 					$width = 10;
 					break;
@@ -62,7 +63,7 @@ class MenuButtonModule extends Module {
 
 			$image = Xml::element('img', array(
 				'alt' => '',
-				'class' => 'icon',
+				'class' => $img_class,
 				'height' => $height,
 				'src' => "{$this->wgBlankImgUrl}",
 				'width' => $width,
