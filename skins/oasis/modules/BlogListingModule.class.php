@@ -49,13 +49,16 @@ class BlogListingModule extends Module {
 		wfProfileIn(__METHOD__);
 
 		#print_pre(htmlspecialchars($html));	print_pre($posts);
-
+		$additionalClass = '';
+		if (!empty($aOptions['style'])) {
+			$additionalClass = $aOptions['style'];
+		}
 		if ($aOptions['type'] == 'box') {
 			$html .= '</p>';
-			$html .= wfRenderPartial('BlogListing', 'Index', array('posts' => $posts, 'blogListingClass' => 'WikiaBlogListingBox', 'wgTitle' => $aOptions['title']));
+			$html .= wfRenderPartial('BlogListing', 'Index', array('posts' => $posts, 'blogListingClass' => "WikiaBlogListingBox $additionalClass", 'wgTitle' => $aOptions['title']));
 		} else {
 			$html .= '</p>';
-			$html .= wfRenderPartial('BlogListing', 'Index', array('posts' => $posts, 'blogListingClass' => 'WikiaBlogListing', 'wgTitle' => $aOptions['title']));
+			$html .= wfRenderPartial('BlogListing', 'Index', array('posts' => $posts, 'blogListingClass' => "WikiaBlogListing $additionalClass", 'wgTitle' => $aOptions['title']));
 		}
 
 		wfProfileOut(__METHOD__);

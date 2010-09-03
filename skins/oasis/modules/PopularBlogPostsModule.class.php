@@ -15,6 +15,7 @@ class PopularBlogPostsModule extends Module {
 			    "summary" => true,
 				"timestamp" => true,
 				"count" => 4,
+//				"style" => "add additionalClass if necessary"
 		);
 
 		$this->body = BlogTemplateClass::parseTag($input, $params, $wgParser);
