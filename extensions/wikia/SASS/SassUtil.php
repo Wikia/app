@@ -27,19 +27,36 @@ class SassUtil{
 		$wgSassPrivateKey = (isset($wgSassPrivateKey)?$wgSassPrivateKey:"");
 		return sha1("$styleVersion|$sassParams|$wgSassPrivateKey");
 	} // end getSecurityHash()
-	
+
 	/**
 	 * Returns an associative array of the parameters to pass to SASS.  These are based on the theme
 	 * for the wiki and potentially user-specific overrides.
 	 */
 	public static function getSassParams(){
-		global $wgOasisThemes, $wgUser, $wgAdminSkin, $wgRequest, $wgContLang;
+		global $wgOasisThemes, $wgUser, $wgAdminSkin, $wgRequest, $wgContLang, $wgOasisThemeSettings;
 		wfProfileIn( __METHOD__ );
+
+		static $sassParams = null;
+
+		if (!is_null($sassParams)) {
+			wfProfileOut( __METHOD__ );
+			return $sassParams;
+		}
 
 		// Load the 5 deafult colors by theme here (eg: in case the wiki has an override but the user doesn't have overrides).
 		$oasisSettings = array();
 		$skin = $wgUser->getSkin();
-		if($skin->themename == 'custom'){
+
+		// try to load settings from ThemeDesigner
+		if (!empty($wgOasisThemeSettings)) {
+			$keys = array_keys($wgOasisThemes['sapphire']);
+
+			// get color settings
+			foreach($keys as $key) {
+				$oasisSettings[$key] = $wgOasisThemeSettings[$key];
+			}
+		}
+		else if($skin->themename == 'custom'){
 			// If this is a custom theme, we need to load it from a different spot if it's an admin custom theme than a user custom theme.
 			$overwriteUserSkin = (bool)$wgUser->getOption("skinoverwrite"); // allow Admin's theme to overwrite user skin.
 			if($overwriteUserSkin && !empty($wgAdminSkin)){
@@ -66,6 +83,8 @@ class SassUtil{
 			}
 		}
 
+		wfDebug(__METHOD__ . ": {$sassParams}\n");
+
 		wfProfileOut( __METHOD__ );
 		return $sassParams;
 	} // end getSassParams()
@@ -90,7 +109,7 @@ class SassUtil{
 		wfProfileOut( __METHOD__ );
 		return true;
 	} // end onMakeGlobalVariablesScript()
-	
+
 	/**
 	 * Makes sure that we include the Sass javascript. If we move back to using StaticChute, then this
 	 * could be moved there for Oasis files.
