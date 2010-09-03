@@ -3,6 +3,8 @@
  * Oasis
  *
  * Provides an easy way to add hooks for Oasis skin modules
+ *
+ * @author Maciej Brencz
  */
 
 $wgExtensionFunctions[] = 'wfOasisSetup';
