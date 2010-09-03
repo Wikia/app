@@ -20,7 +20,7 @@ $wgSpecialPages['SendGridPostback'] = 'SendGridPostback';
 /**
  * @ingroup SpecialPage
  */
-class SendGridPostback extends SpecialPage {
+class SendGridPostback extends UnlistedSpecialPage {
 
 	public static $POSTBACK_LOG_TABLE_NAME = "postbackLog";
 
