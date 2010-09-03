@@ -34,7 +34,7 @@ class OasisModule extends Module {
 	}
 
 	public function executeIndex() {
-		global $wgOut, $wgUser;
+		global $wgOut, $wgUser, $wgTitle;
 
 		$this->body = wfRenderModule('Body');
 
@@ -84,7 +84,7 @@ class OasisModule extends Module {
 			'rel' => 'stylesheet',
 			'type' => 'text/css',
 		));
-		
+
 		// Merged JS files via StaticChute
 		// get the right package from StaticChute
 		$StaticChute = new StaticChute('js');
@@ -120,10 +120,10 @@ class OasisModule extends Module {
 		// load WikiaScriptLoader
 		// macbre: this is minified version of /skins/monaco/js/WikiaScriptLoader.js using Google Closure
 		$this->wikiaScriptLoader = "\t\t" . '<script type="text/javascript">/*<![CDATA[*/var WikiaScriptLoader=function(){var b=navigator.userAgent.toLowerCase();this.useDOMInjection=b.indexOf("opera")!=-1||b.indexOf("firefox")!=-1;this.isIE=b.indexOf("opera")==-1&&b.indexOf("msie")!=-1;this.headNode=document.getElementsByTagName("HEAD")[0]}; WikiaScriptLoader.prototype={loadScript:function(b,c){this.useDOMInjection?this.loadScriptDOMInjection(b,c):this.loadScriptDocumentWrite(b,c)},loadScriptDOMInjection:function(b,c){var a=document.createElement("script");a.type="text/javascript";a.src=b;var d=function(){a.onloadDone=true;typeof c=="function"&&c()};a.onloadDone=false;a.onload=d;a.onreadystatechange=function(){a.readyState=="loaded"&&!a.onloadDone&&d()};this.headNode.appendChild(a)},loadScriptDocumentWrite:function(b,c){document.write(\'<script src="\'+ b+\'" type="text/javascript"><\/script>\');b=function(){typeof c=="function"&&c()};typeof c=="function"&&this.addHandler(window,"load",b)},loadScriptAjax:function(b,c){var a=this,d=this.getXHRObject();d.onreadystatechange=function(){if(d.readyState==4){var e=d.responseText;if(a.isIE)eval(e);else{var f=document.createElement("script");f.type="text/javascript";f.text=e;a.headNode.appendChild(f)}typeof c=="function"&&c()}};d.open("GET",b,true);d.send("")},loadCSS:function(b,c){var a=document.createElement("link"); a.rel="stylesheet";a.type="text/css";a.media=c||"";a.href=b;this.headNode.appendChild(a)},addHandler:function(b,c,a){if(window.addEventListener)window.addEventListener(c,a,false);else window.attachEvent&&window.attachEvent("on"+c,a)},getXHRObject:function(){var b=false;try{b=new XMLHttpRequest}catch(c){for(var a=["Msxml2.XMLHTTP.6.0","Msxml2.XMLHTTP.3.0","Msxml2.XMLHTTP","Microsoft.XMLHTTP"],d=a.length,e=0;e<d;e++){try{b=new ActiveXObject(a[e])}catch(f){continue}break}}return b}};window.wsl=new WikiaScriptLoader;/*]]>*/</script>';
-		
+
 		global $wgAllInOne, $wgRequest;
 		$allinone = $wgRequest->getBool('allinone', $wgAllInOne);
-	
+
 		wfProfileIn(__METHOD__ . '::JSloader');
 		$jsReferences = array();
 		if($allinone && $package == $packagePrefix.'anon_article_js') {
@@ -158,7 +158,7 @@ class OasisModule extends Module {
 				$jsReferences[] = str_replace('&amp;', '&', $script[1]);
 			}
 		}
-		
+
 		/*
 		// THIS AND THE FUNCTION IT CALLS (would need to port from Monaco) WOULD LET USER-JS BE LOADED. THAT CURRENTLY DOES NOT BELONG HERE IN OASIS.
 		// scripts from getReferencesLinks() method
