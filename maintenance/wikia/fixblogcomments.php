@@ -40,9 +40,26 @@ function fixAllBlogComments() {
 	if ( !empty($pages) ) {
 		foreach ( $pages as $row ) {
 			print "parse " . $row['page_title'] . "\n";
-
-			$elements = explode("/", $row['page_title']);
-			if ( count($elemets) == 3 ) {
+		
+			$parts = ArticleComment::explode($row['page_title']);
+			if ( $parts['blog'] == 1 && count($parts['partsOriginal']) > 0 ) {
+				$parts['parsed'] = array();
+				foreach ( $parts['partsOriginal'] as $id => $title ) {
+					list ($user, $date) = explode( '-', $title );
+					$parts['parsed'][$id] = sprintf('%s%s-%s', '@comment-', $user, $date); 
+				}
+				
+				$newTitle = sprintf('%s/%s', $parts['title'], implode("/", $parts['parsed']) ); 
+				
+				# we have a new Title - $newTitle - update it everywhere
+				
+				# update page
+				
+				# update job
+				
+				# update watchlist
+				
+				# update dataware
 			}
 		}
 	}
