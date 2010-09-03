@@ -1,4 +1,10 @@
 <?php
+/**
+ * Handles adding and rendering of confirmations (green stripe below global nav) and notifications (blue bubble boxes just above the fold)
+ *
+ * @author Maciej Brencz
+ */
+
 class NotificationsModule extends Module {
 
 	const SESSION_KEY = 'oasisConfirmation';

@@ -1,4 +1,10 @@
 <?php
+/**
+ * Renders edit buttons (with dropdown)
+ *
+ * @author Maciej Brencz
+ */
+
 class MenuButtonModule extends Module {
 
 	const ADD_TOPIC_ICON = 1;

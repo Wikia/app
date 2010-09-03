@@ -1,4 +1,10 @@
 <?php
+/**
+ * Renders history dropdown
+ *
+ * @author Maciej Brencz
+ */
+
 class HistoryDropdownModule extends Module {
 
 	var $wgBlankImgUrl;

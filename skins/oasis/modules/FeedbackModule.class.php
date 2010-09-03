@@ -1,4 +1,10 @@
 <?php
+/**
+ * Renders feedback button at top left corner of the page
+ *
+ * @author Maciej Brencz
+ */
+
 class FeedbackModule extends Module {
 
 	var $siteCode;
