@@ -213,7 +213,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 			// use default gallery width if "widths" attribute is not provided
 			if (!isset($params['widths'])) {
-				$this->setWidths(200);
+				$this->setWidths(190);
 			}
 
 			// "columns" - alias for perrow
@@ -449,8 +449,8 @@ class WikiaPhotoGallery extends ImageGallery {
 		// render as placeholder in RTE
 		if (!empty($wgRTEParserEnabled)) {
 			if ($this->mType == self::WIKIA_PHOTO_GALLERY) {
-				// gallery: 200x200px placeholder
-				$width = $height = 200;
+				// gallery: 190x190px placeholder
+				$width = $height = 190;
 			}
 			else {
 				// slideshow: use user specified size
