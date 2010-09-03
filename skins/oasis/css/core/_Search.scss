@@ -19,7 +19,7 @@
 	}
 
 	input[type="text"] {
-		@include placeholder;
+		@include input-field;
 		float: left;
 	}
 	

@@ -1,4 +1,4 @@
-@mixin placeholder {
+@mixin input-field {
 	background-image: -moz-linear-gradient(top, rgba(#000, .05) 0%, rgba(#000, 0) 40%);
 	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0, rgba(#000, .05)), color-stop(.4, rgba(#000, 0)));
 	border: 1px solid $color-page-border;
