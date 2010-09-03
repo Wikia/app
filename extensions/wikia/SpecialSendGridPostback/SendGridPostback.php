@@ -135,7 +135,7 @@ class SendGridPostback extends SpecialPage {
 		require "$IP/lib/Mail.php";
 		require "$IP/lib/Mail/wikiadb.php";
 	
-		$dbw = wfGetDb(DB_MASTER, array(), Mail_wikiadb::MAIL_DB_NAME);
+		$dbw = wfGetDb(DB_MASTER, array(), Mail_wikiadb::$MAIL_DB_NAME);
 		$dbw->insert(
 			self::$POSTBACK_LOG_TABLE_NAME,
 			array(
