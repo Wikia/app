@@ -110,7 +110,8 @@
 		border: 0;
 	}
 	.thumbinner {
-		background-color: $color-article-thumb-background;
+		//background-color: $color-article-thumb-background;
+		@include linear-gradient($color-article-thumb-background, top, $color-page, 0%, $color-article-thumb-background, 100%);
 		border: 1px solid $color-article-thumb-border;
 		overflow: hidden;
 		padding: 3px;
