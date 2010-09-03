@@ -111,3 +111,26 @@
 		right: -5px;
 	}
 }
+
+
+.CorporateFooter  {
+	left: 50%;
+	margin-left: -505px;
+	position: absolute;
+	width: 1010px;
+	
+	margin: {
+		top: 10px;
+	}
+	
+	ul {
+		list-style: none;
+		float: left;
+		margin-left: 10px;
+		li {
+			float: right;
+			margin-right: 20px;
+		}
+	}
+	padding-bottom: 10px;
+}

@@ -71,6 +71,7 @@
 
 </section><!--WikiaPage-->
 
+<?= wfRenderModule('CorporateFooter') ?>
 <?= wfRenderModule('Feedback') ?>
 <?= wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_1')) ?>
 <?= wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_2')) ?>

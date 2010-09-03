@@ -2,7 +2,7 @@
 class BlogListingModule extends Module {
 
 	var $wgTitle;
-
+	var $wgBlankImgUrl;
 	var $posts;
 	var $blogListingClass;
 
