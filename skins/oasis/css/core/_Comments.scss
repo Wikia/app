@@ -73,9 +73,9 @@
 			top: 7px;
 			left: 5px;
 			right: 5px;
-			bottom: 15px;	
+			bottom: 15px;
 		}
-		
+
 		padding: 2px;
 		width: 574px;
 		font-size: 12px !important;
@@ -152,6 +152,7 @@
 		width: 0px;
 	}
 	p {
+		line-height: 1.8em;
 		margin-bottom: 1em;
 	}
 	details {
@@ -162,7 +163,7 @@
 	/*.article-comm-text {
 		padding-right: 57px;
 	}*/
-	
+
 	.wikia-button {
 		margin: 0;
 		padding: {
@@ -170,16 +171,16 @@
 			right: 15px;
 		}
 	}
-	
+
 	.buttons {
 		float: right;
 		@include clearfix;
 	}
-	
+
 	.throbber {
 		display: none!important;
 	}
-	
+
 	.tools {
 		visibility: hidden;
 		float: right;
@@ -196,7 +197,7 @@
 	ul {
 		list-style: none;
 		margin-left: 85px;
-		
+
 		textarea {
 			width: 444px!important;
 		}
@@ -212,14 +213,14 @@
 #article-comments-pagination, .article-comments-pagination {
 	margin: {
 		left: auto;
-		right: auto;	
+		right: auto;
 	}
 	text-align: center;
 	color: $color-links;
 	a {
 		color: $color-links;
-		
-		border-right: solid 1px $color-links;	
+
+		border-right: solid 1px $color-links;
 
 		padding: {
 			left: 4px;
@@ -234,7 +235,7 @@
 			color: White;
 			background-color: $color-links;
 		}
-		
+
 		&#article-comments-pagination-link-prev {
 			border: none;
 			margin-right: 10px;
