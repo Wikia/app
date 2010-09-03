@@ -743,6 +743,8 @@ class BlogTemplateClass {
 		}
 
 		$sResult = preg_replace('/[\r\n]{2,}/siU', '<br />', trim($sResult));
+
+		wfProfileOut(__METHOD__);
 		return $sResult;
 	}
 
@@ -1124,6 +1126,8 @@ class BlogTemplateClass {
         }
 		catch (Exception $e) {
 			wfDebugLog( __METHOD__, "parse error: ".$e->getMessage()."\n" );
+
+		   	wfProfileOut( __METHOD__ );
 			return $e->getMessage();
 		}
 
