@@ -13,6 +13,8 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 class Listusers extends SpecialPage {
 	private $mTitle;
 	private $mGroup;
+	private $mFilterStart;
+	
 	/**
 	 * constructor
 	 */
@@ -45,6 +47,7 @@ class Listusers extends SpecialPage {
 			$target = $wgRequest->getVal('group');
 		}
 
+		$this->mFilterStart = 0; //assume they are listing a group (doubles as init)
 		if (!empty($target)) { 
 			if ( strpos($target, ",") !== false )  {
 				$this->mGroup = explode(",", $target);
@@ -63,6 +66,7 @@ class Listusers extends SpecialPage {
 
 		if (empty($this->mGroup)) {
 			$this->mGroup = array('all','bot','sysop','rollback','bureaucrat');
+			$this->mFilterStart = 5; //no group passed, so start at 5 (old format)
 		}
 
 		/**
@@ -101,7 +105,7 @@ class Listusers extends SpecialPage {
 			"wgContLang"		=> $wgContLang,
 			"wgExtensionsPath"	=> $wgExtensionsPath, 
 			"wgStylePath"		=> $wgStylePath,
-			"selContrib"		=> ($this->mGroup == array('sysop'))? 0 : 5,
+			"selContrib"		=> $this->mFilterStart,
 			"wgUser"			=> $wgUser
 		));
 		$wgOut->addHTML( $oTmpl->execute("main-form") );
