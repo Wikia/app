@@ -1,0 +1,7 @@
+// 100 based (e.g. 80 instead of .8)
+@mixin opacity($value) {
+	opacity: #{"." + $value};
+	filter: alpha(opacity=$value);
+	-khtml-opacity: #{"." + $value};
+	-moz-opacity: #{"." + $value};
+}
