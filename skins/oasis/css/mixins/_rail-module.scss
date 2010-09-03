@@ -6,7 +6,7 @@
 	@include clearfix;
 	@include linear-gradient(false, top, $color-module-highlight, 60%, $color-module-shadow, 100%);
 	border: 1px solid $color-page-border;
-	margin: 10px 0;
+	margin-bottom: 10px;
 	padding: 16px 8px 8px;
 	position: relative;
 	header {
