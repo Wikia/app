@@ -117,7 +117,7 @@
 		text-align: center;
 	}
 	.thumbcaption {
-		padding: 8px 3px 0 3px;
+		padding: 4px 1px 0 1px;
 		line-height: 18px;
 		text-align: left;
 	}
@@ -139,7 +139,8 @@
 		display: block;
 		font-size: 11px;
 		text-align: left;
-		padding: 3px;
+		position: relative;
+		top: -2px;
 	}
 	.picture-attribution .avatar {
 		margin-right: 3px;
