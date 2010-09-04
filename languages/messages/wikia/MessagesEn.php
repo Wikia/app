@@ -1055,7 +1055,7 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'oasis-confirmation-user-logout' => 'You have been logged out.',
 'oasis-notification-youhavenewmessages' => 'You have $1.',
 'oasis-member-since' => 'Member since $1',
-'oasis-edits-counter' => '<big>$1</big> <sup>{{PLURAL:$1|edit|edits}} made</sup>',
+'oasis-edits-counter' => '$1 <sup>{{PLURAL:$1|edit|edits}} made</sup>',
 'oasis-edit-my-tools-link' => 'Edit My Tools',
 'oasis-edit-my-tools-title' => 'Edit My Tools',
 'oasis-edit-my-tools-addtool' => 'Add tool',
