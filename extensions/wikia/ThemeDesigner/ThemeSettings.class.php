@@ -9,17 +9,17 @@ class ThemeSettings {
 	private $settings;
 
 	function __construct() {
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
 		$this->load();
 
 		// use default settings
-		if (empty($this->settings)) {
+		if ( empty( $this->settings ) ) {
 			$this->settings = self::getDefaultSettings();
-			wfDebug(__METHOD__ . ": using default settings\n");
+			wfDebug( __METHOD__ . ": using default settings\n" );
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -54,15 +54,15 @@ class ThemeSettings {
 		return $settings;
 	}
 
-	public function get($name) {
-		return isset($this->settings[$name]) ? $this->settings[$name] : null;
+	public function get( $name ) {
+		return isset( $this->settings[$name] ) ? $this->settings[$name] : null;
 	}
 
 	public function getAll() {
 		return $this->settings;
 	}
 
-	public function set($name, $value) {
+	public function set( $name, $value ) {
 		$this->settings[$name] = $value;
 	}
 
@@ -70,7 +70,7 @@ class ThemeSettings {
 	 * Return recent versions for theme settings
 	 */
 	public function getHistory() {
-		if (!empty($GLOBALS[self::WikiFactoryHistory])) {
+		if ( !empty( $GLOBALS[self::WikiFactoryHistory] ) ) {
 			$history = $GLOBALS[self::WikiFactoryHistory];
 		}
 		else {
@@ -84,9 +84,9 @@ class ThemeSettings {
 	 * Try to load theme settings from WikiFactory variable
 	 */
 	private function load() {
-		if (!empty($GLOBALS[self::WikiFactorySettings])) {
+		if ( !empty( $GLOBALS[self::WikiFactorySettings] ) ) {
 			$this->settings = $GLOBALS[self::WikiFactorySettings];
-			wfDebug(__METHOD__ . ": settings loaded from WF variable\n");
+			wfDebug( __METHOD__ . ": settings loaded from WF variable\n" );
 		}
 	}
 
@@ -94,25 +94,25 @@ class ThemeSettings {
 	 * Save current settings to WikiFactory variable and update history
 	 */
 	public function save() {
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 		global $wgCityId, $wgUser;
 
 		$data = $this->getAll();
 		$reason = 'Theme Designer - save done by ' . $wgUser->getName();
 
 		// update WF variable with current theme settings
-		$result = WikiFactory::setVarByName(self::WikiFactorySettings, $wgCityId, $data, $reason);
-		if (!$result) {
-			wfDebug(__METHOD__ . ": save has failed!\n");
+		$result = WikiFactory::setVarByName( self::WikiFactorySettings, $wgCityId, $data, $reason );
+		if ( !$result ) {
+			wfDebug( __METHOD__ . ": save has failed!\n" );
 			return false;
 		}
 
 		// update history
-		if (!empty($GLOBALS[self::WikiFactoryHistory])) {
+		if ( !empty( $GLOBALS[self::WikiFactoryHistory] ) ) {
 			$history = $GLOBALS[self::WikiFactoryHistory];
 
-			$lastItem = end($history);
-			$revisionId = intval($lastItem['revision']) + 1;
+			$lastItem = end( $history );
+			$revisionId = intval( $lastItem['revision'] ) + 1;
 		}
 		else {
 			$history = array();
@@ -128,17 +128,17 @@ class ThemeSettings {
 		);
 
 		// limit history size to last 10 changes
-		$history = array_slice($history, -self::HistoryItemsLimit);
+		$history = array_slice( $history, -self::HistoryItemsLimit );
 
-		$result = WikiFactory::setVarByName(self::WikiFactoryHistory, $wgCityId, $history, $reason);
-		if (!$result) {
-			wfDebug(__METHOD__ . ": history save has failed!\n");
+		$result = WikiFactory::setVarByName( self::WikiFactoryHistory, $wgCityId, $history, $reason );
+		if ( !$result ) {
+			wfDebug( __METHOD__ . ": history save has failed!\n" );
 			return false;
 		}
 
-		wfDebug(__METHOD__ . ": settings saved as #{$revisionId}\n");
+		wfDebug( __METHOD__ . ": settings saved as #{$revisionId}\n" );
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 }
