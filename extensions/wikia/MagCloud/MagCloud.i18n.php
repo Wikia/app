@@ -376,6 +376,7 @@ $messages['fi'] = array(
 /** French (Français)
  * @author IAlex
  * @author McDutchie
+ * @author Slamduck
  * @author The Evil IP address
  */
 $messages['fr'] = array(
@@ -421,17 +422,17 @@ Si vous êtes en manque d'inspiration, voyez les exemples ci-dessous !",
 	'magcloud-preview-back-to-cover' => 'Revenir à la conception de la couverture',
 	'magcloud-preview-save-magazine' => 'Sauvegarder votre magazine',
 	'magcloud-preview-publish' => 'Publier votre magazine',
-	'magcloud-preview-generating-pdf' => 'Création de votre magazine...',
+	'magcloud-preview-generating-pdf' => 'Création de votre magazine…',
 	'magcloud-publish-status-title' => 'Publication de votre magazine',
 	'magcloud-publish-status' => 'Bien ! Nous allons transmettre votre magazine.',
 	'magcloud-publish-error' => "Une erreur est survenue lors de l'envoi de votre magazine à MagCloud - l'erreur a été enregistrée pour nous permettre de diagnostiquer les causes du problème. Le mieux est d'essayer de nouveau - nous espérons avoir corrigé le problème. Veuillez accepter nos excuses !",
-	'magcloud-publish-done' => "...c'est terminé ! Redirection vers MagCloud...",
-	'magcloud-publish-ajax-initialize' => '...Connexion à MagCloud...',
+	'magcloud-publish-done' => "…c'est terminé ! Redirection vers MagCloud…",
+	'magcloud-publish-ajax-initialize' => '…Connexion à MagCloud…',
 	'magcloud-publish-ajax-login' => '...préparation de la publication...',
-	'magcloud-publish-ajax-publication' => '...préparation de la requête...',
-	'magcloud-publish-ajax-issue' => "...finalisation de l'import...",
-	'magcloud-publish-ajax-upload' => "...et un peu de rangement, comme vos parents vous l'ont dit...",
-	'magcloud-publish-ajax-processing' => '...maintenant où se trouve le grand bouton rouge PUBLIER...',
+	'magcloud-publish-ajax-publication' => '…préparation de la requête…',
+	'magcloud-publish-ajax-issue' => "…finalisation de l'import…",
+	'magcloud-publish-ajax-upload' => "…et un peu de rangement, comme vos parents vous l'ont dit…",
+	'magcloud-publish-ajax-processing' => '…maintenant où se trouve le grand bouton rouge PUBLIER…',
 );
 
 /** Galician (Galego)
@@ -652,6 +653,7 @@ $messages['ja'] = array(
 $messages['lb'] = array(
 	'wikiacollection' => 'Eng Zäitschrëft maachen!',
 	'magcloud-intro-get-started' => 'Artikele sammelen',
+	'magcloud-toolbar-step' => 'Etapp $1:$2',
 	'magcloud-toolbar-add' => 'Derbäisetzen',
 	'magcloud-design-default-subtitle' => 'Ënnertitel',
 );
@@ -922,6 +924,7 @@ $messages['pt'] = array(
 	'magcloud-load-magazine-load' => 'Carregar esta revista',
 	'magcloud-toolbar-add' => 'Adicionar',
 	'magcloud-toolbar-go-to-magazine' => 'Ir para a sua revista',
+	'magcloud-discard-magazine-save' => 'Gravar e sair',
 	'magcloud-design-default-subtitle' => 'Subtítulo',
 	'magcloud-design-preview' => 'Antever',
 	'magcloud-preview-done' => 'A sua revista foi gerada.',
@@ -971,7 +974,7 @@ Se você precisar de um pouco de inspiração, olhe os exemplos apresentados aba
 	'magcloud-design-default-title' => 'Minha revista $1',
 	'magcloud-design-default-subtitle' => 'Subtítulo',
 	'magcloud-design-review-list' => 'Voltar à lista de revisões',
-	'magcloud-design-preview' => 'Previsualizar',
+	'magcloud-design-preview' => 'Pré-visualizar',
 	'magcloud-design-license-policy' => 'Só carregue uma imagem que você tenha o direito de imprimir e que atenda as políticas desta wiki.',
 	'magcloud-design-image-selected' => '$1 selecionado',
 	'magcloud-preview-done' => 'A sua revista foi gerada.',

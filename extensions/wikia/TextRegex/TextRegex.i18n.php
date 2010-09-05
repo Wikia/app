@@ -520,6 +520,40 @@ Prøv igjen.',
 	'textregex-return-mainpage' => '[{{SERVER}}$1 gå tilbake til listen]',
 );
 
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'textregex' => 'Wyrażenia regularne dla tekstu',
+	'textregex-desc' => '[[Special:textregex/XXXX|Filtr]] usuwający niechciane frazy z edytowanych stron, oparty o wyrażenia regularne',
+	'textregex-page-title' => 'Lista niepożądanych wyrażeń',
+	'textregex-error-unblocking' => 'Błąd odblokowania ($1). 
+Spróbuj jeszcze raz.',
+	'textregex-currently-blocked' => "'''Obecnie zablokowane wyrażenia:'''",
+	'textregex_nocurrently-blocked' => 'Nie znaleziono zablokowanych wyrażeń',
+	'textregex-addedby-user' => 'dodane przez $1 o $2',
+	'textregex-remove-url' => '[{{SERVER}}$1&id=$2 usuń]',
+	'textregex-stats-url' => '[{{SERVER}}$1&id=$2 statystyki]',
+	'textregex-unblock-succ' => 'Odblokowano',
+	'textregex-block-succ' => 'Zablokowano',
+	'textregex-unblock-message' => "Z niepożądanych wyrażeń usunięto '''$1'''.",
+	'textregex-block-message' => "Do niepożądanych wyrażeń dodano '''$1'''.",
+	'textregex-regex-block' => 'Wyrażenie do zablokowania',
+	'textregex-submit-regex' => 'Dodaj wyrażenie',
+	'textregex-empty-regex' => 'Podaj wyrażenie do zablokowania.',
+	'textregex-invalid-regex' => 'Nieprawidłowe wyrażenie regularne.',
+	'textregex-already-added' => '„$1” jest już zablokowane',
+	'textregex-nodata-found' => 'Nie odnaleziono danych',
+	'textregex-stats-record' => "słowo ''$1'' zostało użyte przez $2 o $3 (''komentarz – $4'')",
+	'textregex-select-subpage' => 'Wybierz jedną z list wyrażeń',
+	'textregex-select-default' => '– wybierz –',
+	'textregex-create-subpage' => 'lub utwórz nową listę',
+	'textregex-select-regexlist' => 'przejdź do listy',
+	'textregex-invalid-regexid' => 'Nieprawidłowe wyrażenie.',
+	'textregex-phrase-statistics' => "Statystyki dla wyrażenia „'''$1'''” (liczba rekordów: $2)",
+	'textregex-return-mainpage' => '[{{SERVER}}$1 wróć do listy]',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt

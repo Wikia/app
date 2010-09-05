@@ -149,6 +149,7 @@ $messages['ba'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
+	'createpage-desc' => 'Talvezout a ra da grouiñ ur bajenn nevez en ur implijout aozer WYSIWYG Wikia',
 	'createpage-sp-title' => 'Krouiñ ur pennad nevez',
 	'createpage_title' => 'Krouiñ ur pennad nevez',
 	'createpage_title_caption' => 'Titl :',
@@ -581,6 +582,7 @@ $messages['id'] = array(
  * @author HalphaZ
  */
 $messages['it'] = array(
+	'createpage-desc' => "Permette di creare una nuova pagina utilizzando l'editor WYSIWYG di Wikia",
 	'createpage-sp-title' => 'Crea un nuovo articolo',
 	'createpage_title' => 'Crea un nuovo articolo',
 	'createpage_title_caption' => 'Titolo:',

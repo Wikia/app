@@ -13,6 +13,13 @@ $messages['qqq'] = array(
 	'healthcheck-desc' => '{{desc}}',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'healthcheck-desc' => '[[Special:HealthCheck|Спэцыяльная старонка]] для праверкі стану сэрвэра',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
@@ -83,6 +90,13 @@ $messages['id'] = array(
 	'healthcheck-desc' => 'Sebuah [[Special:HealthCheck|halaman khusus]] untuk mengecek kondisi server',
 );
 
+/** Italian (Italiano)
+ * @author Gianfranco
+ */
+$messages['it'] = array(
+	'healthcheck-desc' => 'Una [[Special:HealthCheck|pagina speciale]] per verificare lo stato del server',
+);
+
 /** Japanese (日本語)
  * @author 青子守歌
  */
@@ -95,6 +109,13 @@ $messages['ja'] = array(
  */
 $messages['ksh'] = array(
 	'healthcheck-desc' => 'En [[Special:HealthCheck|{{int:Specialpage}}]] för dem ẞöver singe Zohshtand ze prööfe.',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'healthcheck-desc' => "[[Special:HealthCheck|Spezialsäit]] fir d'Nokucke vum Statut vum Server",
 );
 
 /** Macedonian (Македонски)

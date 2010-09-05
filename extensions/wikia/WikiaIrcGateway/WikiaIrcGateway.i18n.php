@@ -130,6 +130,14 @@ $messages['eu'] = array(
 	'ircgate-channel' => 'Kanala:',
 );
 
+/** Persian (فارسی)
+ * @author Ebraminio
+ */
+$messages['fa'] = array(
+	'ircgate-username' => 'نام کاربری:',
+	'ircgate-channel' => 'کانال:',
+);
+
 /** Finnish (Suomi)
  * @author Silvonen
  */

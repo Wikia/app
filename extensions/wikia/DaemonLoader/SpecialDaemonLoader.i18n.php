@@ -124,6 +124,13 @@ $messages['af'] = array(
 	'daemonloader_removejobconfirm' => 'Is u seker?',
 );
 
+/** Aragonese (Aragonés)
+ * @author Juanpabl
+ */
+$messages['an'] = array(
+	'daemonloader_daemondesc' => 'Descripción',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  */
@@ -141,10 +148,12 @@ $messages['bg'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Y-M D
  */
 $messages['br'] = array(
 	'daemonloader' => 'Karger diaoul',
+	'daemonloader-desc' => 'Erounit a ra [[Special:DaemonLoader|background daemons]] evit krouiñ rentaoù-kont',
 	'daemonloader_pagetitle' => 'Karger diaoul',
 	'daemonloader_createtask' => 'Krouiñ un trevell',
 	'daemonloader_listtask' => 'Roll an trevelloù',

@@ -336,7 +336,7 @@ $messages['pt-br'] = array(
 	'cntool-page-title-preview' => 'Prever',
 	'cntool-page-title-select' => 'Ferramenta de Disputa',
 	'cntool-label-select' => 'Especifique um título de página válido',
-	'cntool-button-preview' => 'Previsualizar',
+	'cntool-button-preview' => 'Pré-visualizar',
 	'cntool-button-save' => 'Salvar',
 	'cntool-label-content' => 'Modificar conteúdo do artigo abaixo',
 	'cntool-label-preview' => 'Previsão:',
@@ -363,6 +363,13 @@ $messages['ru'] = array(
 	'cntool-caveat' => 'Это расширение не должно использоваться легкомысленно.
 
 Имейте в виду, что результаты не записываются в журнал и не могут быть в настоящее время легко отменены без обращения к технической службе (будем над этим работать).',
+);
+
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'cntool-button-save' => 'Shrani',
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))

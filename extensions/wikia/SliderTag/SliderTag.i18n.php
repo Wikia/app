@@ -7,6 +7,14 @@ $messages['en'] = array(
 	'slidertag-featured-wikis' => 'Featured wikis',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'slidertag-desc' => 'Дае магчымасьць удзельнікам дадаваць абраныя слайдары',
+	'slidertag-featured-wikis' => 'Абраныя вікі',
+);
+
 /** Breton (Brezhoneg)
  * @author Fulup
  */
@@ -86,6 +94,14 @@ $messages['nl'] = array(
 	'slidertag-featured-wikis' => "Aanbevolen wiki's",
 );
 
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'slidertag-desc' => 'Zapewnia użytkownikom podstawową możliwość dodawania suwaków prezentacyjnych',
+	'slidertag-featured-wikis' => 'Polecane wiki',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
@@ -107,6 +123,7 @@ $messages['pt'] = array(
  * @author Giro720
  */
 $messages['pt-br'] = array(
+	'slidertag-desc' => 'Fornece um modo genérico para os usuários adicionarem destaques corrediços',
 	'slidertag-featured-wikis' => 'Wikis destacadas',
 );
 

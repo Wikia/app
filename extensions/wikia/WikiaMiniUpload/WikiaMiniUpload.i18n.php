@@ -789,6 +789,7 @@ $messages['fi'] = array(
  * @author IAlex
  * @author McDutchie
  * @author Peter17
+ * @author Slamduck
  * @author Urhixidur
  */
 $messages['fr'] = array(
@@ -830,12 +831,12 @@ $messages['fr'] = array(
 	'wmu-back' => 'revenir',
 	'wmu-close' => 'fermer',
 	'wmu-warn1' => "Vous devez d'abord spécifier votre requête !",
-	'wmu-warn2' => "Vous devez d'abord sélectionner une fichier !",
-	'wmu-warn3' => "Vous devez d'abord spécifier un nom fichier !",
+	'wmu-warn2' => "Vous devez d'abord sélectionner un fichier !",
+	'wmu-warn3' => "Vous devez d'abord spécifier un nom de fichier !",
 	'wmu-imagelink' => '<b>Nouveau !</b> Ajouter des images',
 	'wmu-imagebutton' => "Incorporer l'image",
 	'wmu-license-cc' => "Licencié sous licence Creative Commons paternité-partage des conditions à l'identique 3.0",
-	'wmu-bad-extension' => "Vous avez essayé d'importer un type de fichier illégal. Veuillez essayer de nouveau.",
+	'wmu-bad-extension' => "Vous avez essayé d'importer un type de fichier illégal. Veuillez réessayer.",
 	'wmu-filetype-missing' => "L'extension du fichier est manquant dans cet import",
 	'wmu-filetype-incorrect' => 'Le fichier importé a une extension incorrecte',
 	'wmu-uploadtext' => "'''Ce formulaire vous permet un import rapide et inclure ce fichier dans l'article.'''
@@ -1347,6 +1348,13 @@ $messages['mk'] = array(
 	'wmu-no-rights' => 'Не ви е дозволено да додавате слики на оваа страница',
 );
 
+/** Maltese (Malti)
+ * @author Chrisportelli
+ */
+$messages['mt'] = array(
+	'wmu-close' => 'agħlaq',
+);
+
 /** Norwegian Bokmål (‪Norsk (bokmål)‬) */
 $messages['nb'] = array(
 	'wmu-added-from-plc' => 'Fil lagt til via bildeplassholderen',
@@ -1694,12 +1702,18 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
 	'wmu-upload' => 'Carregar',
+	'wmu-notlogged' => 'Autentique-se ou registre-se para importar imagens do seu computador',
+	'wmu-find' => 'Procurar',
+	'wmu-thiswiki' => 'Esta wiki',
 	'wmu-flickr' => 'Flickr',
 	'wmu-upload-btn' => 'Carregar',
+	'wmu-find-btn' => 'Procurar',
+	'wmu-flickr-inf' => 'Pesquise imagens grátis devidamente licenciadas no Flickr e importe-as para a sua wiki.',
 	'wmu-existing' => 'Usar imagem existente',
 	'wmu-insert' => 'Inserir',
 	'wmu-name' => 'Nome',
@@ -1799,6 +1813,13 @@ $messages['ru'] = array(
 	'wmu-no-preview' => 'Вы не можете добавить изображение из статьи в режиме предварительного просмотра',
 	'wmu-no-protect' => 'Эта страница защищена, вы не можете добавить в неё изображение',
 	'wmu-no-rights' => 'Вы не можете добавлять изображения на эту страницу',
+);
+
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'wmu-back' => 'nazaj',
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))

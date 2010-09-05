@@ -26,6 +26,14 @@ $messages['en'] = array(
 	'sponsorpage-save' => 'Save',
 );
 
+/** Message documentation (Message documentation)
+ * @author EugeneZelenko
+ */
+$messages['qqq'] = array(
+	'sponsorpage-edit' => '{{Identical|Edit}}',
+	'sponsorpage-save' => '{{Identical|Save}}',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  * @author Jim-by
@@ -42,6 +50,11 @@ $messages['be-tarask'] = array(
 	'sponsor-form-page' => 'Старонка, якую Вы жадаеце спансіраваць:',
 	'sponsor-form-price' => 'Сума спонсарскага ўнёску:',
 	'sponsor-form-email' => 'Ваш адрас электроннай пошты:',
+	'sponsor-form-thanks' => 'Дзякуй за Вашую спонсарскую падтрымку!',
+	'sponsor-price-45yr' => '$45 за год',
+	'sponsor-price-5mo' => '$5 за месяц',
+	'sponsorpage-edit' => 'Рэдагаваць',
+	'sponsorpage-save' => 'Захаваць',
 );
 
 /** Breton (Brezhoneg)
@@ -350,6 +363,13 @@ $messages['ru'] = array(
 	'sponsor-price-5mo' => '$5 в месяц',
 	'sponsorpage-edit' => 'Править',
 	'sponsorpage-save' => 'Сохранить',
+);
+
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'sponsorpage-save' => 'Shrani',
 );
 
 /** Telugu (తెలుగు)

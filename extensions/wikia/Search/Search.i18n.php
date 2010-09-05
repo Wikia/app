@@ -33,6 +33,7 @@ $messages['be-tarask'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -40,18 +41,20 @@ $messages['br'] = array(
 	'wikiasearch-system-error-msg' => "N'eus ket bet gellet ober ar c'hlask dre ma 'z eus bet ur fazi sistem",
 	'wikiasearch-search-this-wiki' => 'Klask er Wikia Kreiz hepken',
 	'wikiasearch-search-wikia' => 'Klask e Wikia',
+	'wikiasearch-image-results' => 'Disoc\'hoù skeudenn evit "$1"',
 );
 
 /** German (Deutsch)
  * @author LWChris
  * @author Reinhard Kraasch
+ * @author The Evil IP address
  */
 $messages['de'] = array(
 	'wikiasearch-titles-only' => 'Suche nur in Seitentiteln',
 	'wikiasearch-system-error-msg' => 'Aufgrund eines Systemfehlers konnte deine Suche nicht abgeschlossen werden',
 	'wikiasearch-search-this-wiki' => 'Nur Wikia Zentrale durchsuchen',
 	'wikiasearch-search-wikia' => 'Wikia durchsuchen',
-	'wikiasearch-image-results' => 'Bild-Ergebnisse für "$ 1"',
+	'wikiasearch-image-results' => 'Bild-Ergebnisse für „$1“',
 );
 
 /** German (formal address) (Deutsch (Sie-Form))
@@ -72,6 +75,7 @@ $messages['el'] = array(
 );
 
 /** Spanish (Español)
+ * @author Bola
  * @author Translationista
  */
 $messages['es'] = array(
@@ -79,6 +83,7 @@ $messages['es'] = array(
 	'wikiasearch-system-error-msg' => 'Debido a un error del sistema, su búsqueda no se pudo completar',
 	'wikiasearch-search-this-wiki' => 'Buscar sólo en Wikia Central',
 	'wikiasearch-search-wikia' => 'Buscar en Wikia',
+	'wikiasearch-image-results' => 'Resultados para la imagen "$1"',
 );
 
 /** Estonian (Eesti)
@@ -172,6 +177,7 @@ $messages['ia'] = array(
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Farras
  * @author Irwangatot
  */
 $messages['id'] = array(
@@ -179,6 +185,7 @@ $messages['id'] = array(
 	'wikiasearch-system-error-msg' => 'Karena kesalahan sistem, pencarian anda tidak dapat diselesaikan',
 	'wikiasearch-search-this-wiki' => 'Cari hanya Wikia Central',
 	'wikiasearch-search-wikia' => 'Pencarian Wikia',
+	'wikiasearch-image-results' => 'Hasil Pencarian Gambar untuk "$1"',
 );
 
 /** Igbo (Igbo)
@@ -193,12 +200,14 @@ $messages['ig'] = array(
 
 /** Italian (Italiano)
  * @author Beta16
+ * @author Gianfranco
  */
 $messages['it'] = array(
 	'wikiasearch-titles-only' => 'Cerca solo nei titoli delle pagine',
 	'wikiasearch-system-error-msg' => 'A causa di un errore di sistema, la tua ricerca non è stata completata',
 	'wikiasearch-search-this-wiki' => 'Cerca sono in Wikia Central',
 	'wikiasearch-search-wikia' => 'Cerca in Wikia',
+	'wikiasearch-image-results' => 'Risultati immagini per "$1"',
 );
 
 /** Japanese (日本語)
@@ -219,6 +228,7 @@ $messages['lb'] = array(
 	'wikiasearch-system-error-msg' => 'Duerch e Feeler am System konnt Är Sich net fäerdeg gemaach ginn',
 	'wikiasearch-search-this-wiki' => 'Nëmmen a Wikia Central sichen',
 	'wikiasearch-search-wikia' => 'A Wikia sichen',
+	'wikiasearch-image-results' => 'Resultater vun de Biller fir "$1"',
 );
 
 /** Ganda (Luganda)
@@ -261,6 +271,7 @@ $messages['no'] = array(
 	'wikiasearch-system-error-msg' => 'På grunn av en systemfeil kunne ikke søket ditt fullføres',
 	'wikiasearch-search-this-wiki' => 'Søk kun i Wikiasentralen',
 	'wikiasearch-search-wikia' => 'Søk i Wikia',
+	'wikiasearch-image-results' => 'Bilderesultat for «$1»',
 );
 
 /** Occitan (Occitan)
@@ -361,9 +372,14 @@ $messages['sv'] = array(
 
 /** Tamil (தமிழ்)
  * @author Mahir78
+ * @author TRYPPN
  */
 $messages['ta'] = array(
 	'wikiasearch-titles-only' => 'பக்க தலைப்புகளில் மட்டும் தேடுக',
+	'wikiasearch-system-error-msg' => 'கணினியில் ஏற்பட்ட பிழை காரணமாக, தங்களின் தேடுதல்களை முழுதும் செய்து முடிக்க முடியவில்லை',
+	'wikiasearch-search-this-wiki' => 'மத்திய விக்கியாவில் மட்டும் தேடுங்கள்',
+	'wikiasearch-search-wikia' => 'விக்கியாவில் தேடுங்கள்',
+	'wikiasearch-image-results' => '"$1"-ன் தோற்றத்தின் முடிவுகள்',
 );
 
 /** Tagalog (Tagalog)

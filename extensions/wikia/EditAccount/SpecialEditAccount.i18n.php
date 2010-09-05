@@ -104,11 +104,13 @@ $messages['bh'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
  */
 $messages['br'] = array(
 	'editaccount' => 'Kemmañ ar gont',
+	'editaccount-desc' => "Talvezout a ra d'ar skipailh merañ d'ober war-dro titouroù ar c'hontoù implijer",
 	'editaccount-title' => 'Special:EditAccount',
 	'editaccount-frame-manage' => 'Kemmañ ur gont',
 	'editaccount-frame-usage' => 'Notenn',
@@ -146,6 +148,17 @@ $messages['br'] = array(
 	'editaccount-log-entry-close' => 'en deus diweredekaet ar gont $2',
 	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Diweredekaet eo bet ar gont.</div>',
 	'right-editaccount' => 'Kemmañ penndibaboù implijerien all',
+);
+
+/** Catalan (Català)
+ * @author Davidpar
+ */
+$messages['ca'] = array(
+	'editaccount-log-entry-pass' => "contrasenya canviada de l'usuari $2",
+	'editaccount-log-entry-realname' => "canviat el nom real de l'usuari $2",
+	'editaccount-log-entry-close' => 'compte desactivat $2',
+	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Aquest compte ha estat desactivat.</div>',
+	'right-editaccount' => 'Edita les preferències dels altres usuaris',
 );
 
 /** German (Deutsch)
@@ -894,6 +907,8 @@ $messages['ru'] = array(
  * @author බිඟුවා
  */
 $messages['si'] = array(
+	'editaccount' => 'ගිණුම සංස්කරණය',
+	'editaccount-frame-manage' => 'ගිණුමක් සංස්කරණය',
 	'editaccount-frame-usage' => 'සටහන',
 	'editaccount-submit-pass' => 'මුර පදය සුරකින්න',
 );
@@ -931,8 +946,12 @@ $messages['sr-ec'] = array(
 
 /** Tamil (தமிழ்)
  * @author Mahir78
+ * @author TRYPPN
  */
 $messages['ta'] = array(
+	'editaccount' => 'கணக்கில் மாற்றங்கள் செய்',
+	'editaccount-desc' => 'பயனர் கணக்குகளை பற்றிய விவரங்களை எமது பணியாளர்கள் நிர்வகிக்க வசதி செய்யப்பட்டுள்ளது',
+	'editaccount-title' => 'சிறப்பு:கணக்கில் மாற்றங்கள் செய்தல்',
 	'editaccount-frame-manage' => 'ஒரு கணக்கை தொகு',
 	'editaccount-frame-usage' => 'குறிப்பு',
 	'editaccount-label-select' => 'ஒரு பயனர் கணக்கை தேர்ந்தெடு',
@@ -946,10 +965,12 @@ $messages['ta'] = array(
 	'editaccount-submit-pass' => 'கடவுச்சொல்லை சேமி',
 	'editaccount-submit-realname' => 'உண்மையான பெயரை சேமி',
 	'editaccount-submit-close' => 'கணக்கை முடுக',
+	'editaccount-status' => 'தற்போதைய நிலைமை பற்றிய செய்தி',
 	'editaccount-success-email' => 'கணக்கு $1 லிருந்து $2 க்கு மின்னஞ்சல் வெற்றிகரமாக மாற்றப்பட்டது.',
 	'editaccount-success-email-blank' => 'கணக்கு $1 க்கான மின்னஞ்சல் வெற்றிகரமாக நீக்கப்பட்டது',
 	'editaccount-success-pass' => 'கணக்கு $1க்கான கடவுச்சொல் வெற்றிகரமாக மாற்றப்பட்டது',
 	'editaccount-success-realname' => 'கணக்கு $1க்கான உண்மையான பெயர் வெற்றிகரமாக மாற்றப்பட்டது',
+	'editaccount-success-close' => '$1 இந்த கணக்கை வெற்றிகரமாக செயலிழக்கச் செய்யப்பட்டுள்ளது.',
 	'editaccount-error-email' => 'மின்னஞ்சல் மாற்றப்படவில்லை. மீண்டும் முயற்சிக்கவும் அல்லது தொழில்நுட்ப குழுவை அனுகவும்.',
 	'editaccount-error-pass' => 'கடவுச்சொல் மாற்றப்படவில்லை. மீண்டும் முயற்சிக்கவும் அல்லது தொழில்நுட்ப குழுவை அனுகவும்.',
 	'editaccount-error-realname' => 'உண்மையான பெயர் மாற்றப்படவில்லை. மீண்டும் முயற்சிக்கவும் அல்லது தொழில்நுட்ப குழுவை அனுகவும்.',
@@ -961,6 +982,7 @@ $messages['ta'] = array(
 	'editaccount-log-entry-email' => 'பயனர் $2 க்கான மின்னஞ்சல் மாற்றப்பட்டது',
 	'editaccount-log-entry-pass' => 'பயனர் $2 க்கான கடவுச்சொல் மாற்றப்பட்டது',
 	'editaccount-log-entry-realname' => 'பயனர் $2க்கான உண்மையான பெயர் மாற்றப்பட்டது',
+	'editaccount-log-entry-close' => 'செயலிழந்த கணக்கு $2',
 	'right-editaccount' => 'ஏனைய பயனர் விருப்பத்தேர்வுகளை தொகு',
 );
 

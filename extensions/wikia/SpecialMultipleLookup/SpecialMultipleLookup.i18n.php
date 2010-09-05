@@ -209,12 +209,13 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author IAlex
+ * @author Slamduck
  */
 $messages['fr'] = array(
 	'specialmultiplelookup-desc' => 'Donne des informations sur les utilisateurs sur plusieurs wikis',
 	'multilookup' => 'Lookup multiple',
 	'multilookupstitle' => 'Lookup multiple',
-	'multilookupselectuser' => 'Rechercher des compte qui ont la même adresse IP sur de multiples wikis',
+	'multilookupselectuser' => 'Rechercher des comptes qui ont la même adresse IP sur de multiples wikis',
 	'multilookupgo' => 'Aller',
 	'multilookupnotspecify' => "Vous n'avez spécifié aucune adresse IP",
 	'multilookupnext' => 'suivant',

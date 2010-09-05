@@ -185,7 +185,10 @@ $messages['cy'] = array(
 	'wikiavideo-replace' => 'Disodli Fideo',
 	'wikiavideo-category' => 'Fideos',
 	'wikiavideo-links' => 'Cysylltau',
+	'wikiavideo-placeholder' => 'Dalfan',
+	'wikiavideo-not-supported' => "Nid yw'r wedd hon yn gadael i chi osod fideo mewn oriel tra eich bod yn y modd gweld.",
 	'wikiavideo-pixel' => '  picsel',
+	'wikiavideo-deleted-old' => "Mae'r diwygiad o '''[$1 $2]''' a wnaethpwyd am $3, $4, wedi cael ei ddileu.",
 	'wikiavideo-intro-old' => "Rydych yn dileu hen fersiwn o'r ffeil '''[$1 $5]''' fel ag yr oedd ar [$4 $3, am $2].",
 );
 
@@ -666,6 +669,13 @@ $messages['si'] = array(
 	'wikiavideo-back' => 'ආපස්සට යන්න',
 );
 
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'wikiavideo-back' => 'nazaj',
+);
+
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Charmed94
  * @author Verlor
@@ -719,6 +729,8 @@ $messages['tl'] = array(
  * @author Prima klasy4na
  */
 $messages['uk'] = array(
+	'wikiavideo-back' => 'назад',
+	'wikiavideo-category' => 'Відео',
 	'wikiavideo-intro-old' => "Ви вилучаєте версію '''[$1 $5]''' від [$4 $3, $2].",
 );
 

@@ -695,16 +695,26 @@ $messages['br'] = array(
 $messages['bs'] = array(
 	'closewiki' => 'Zatvori wiki',
 	'wf_city_url' => 'Adresa',
+	'wf_city_title' => 'Naslov',
+	'wf_city_created' => 'Napravljeno',
+	'wf_city_founding_user' => 'Osnivač',
+	'wf_city_public' => 'Stanje',
+	'wf_city_lang' => 'Jezik',
 	'wf_cc_name' => 'Kategorija',
 	'wikifactory-label-variables' => 'Promjenjive',
+	'wikifactory-label-variables2' => 'Općenito',
+	'wikifactory-label-domains' => 'Domene',
 	'wikifactory-label-return' => 'Nazad na spisak',
+	'wikifactory-label-clog' => 'Zapisnik promjena',
 	'wikifactory-label-actions' => 'Akcije',
 	'wikifactory-label-close' => 'Zatvori',
+	'wikifactory-label-tags' => 'Oznake',
 	'closewiki-redirect-to' => 'Preusmjerenje na',
 	'closewiki-unknown' => 'Nepoznato',
 	'closewiki-return' => 'Natrag na $1',
 	'awc-metrics-by-language' => 'po jeziku:',
 	'awc-metrics-category' => 'i kategorija:',
+	'awc-metrics-all' => 'svi Wikiji',
 	'awc-metrics-all-languages' => 'svi jezici',
 	'awc-metrics-search' => 'Opcije pretrage:',
 	'awc-metrics-wikis-found' => 'Pronađeno $1 wiki',
@@ -860,6 +870,47 @@ $messages['cs'] = array(
 	'closed-confirm-btn' => 'Potvrdit zavření',
 	'closed-redirect-alert' => 'Prosím vložte nové URL přesměrování!',
 	'closed-reason' => 'Důvod:',
+);
+
+/** Kashubian (Kaszëbsczi) */
+$messages['csb'] = array(
+	'wf_city_title' => 'Titel',
+	'wf_city_lang' => 'Jãzëk',
+	'wf_cc_name' => 'Kategòrëjô',
+	'wikifactory-label-actions' => 'Dzéjania',
+);
+
+/** Welsh (Cymraeg)
+ * @author Lloffiwr
+ */
+$messages['cy'] = array(
+	'wf_city_url' => 'Cyfeiriad',
+	'wf_city_title' => 'Teitl',
+	'wf_city_founding_user' => 'Sefydlydd',
+	'wf_city_public' => 'Cyflwr',
+	'wf_city_lang' => 'Iaith',
+	'wf_cc_name' => 'Categori',
+	'wikifactory-label-variables' => 'Newidynnau',
+	'wikifactory-label-variables2' => 'Cyffredinol',
+	'wikifactory-label-return' => "Yn ôl i'r rhestr",
+	'wikifactory-label-actions' => 'Gweithrediadau',
+	'wikifactory-label-close' => 'Cau',
+	'wikifactory-label-tags' => 'Tagiau',
+	'closewiki-unknown' => 'Anhysbys',
+	'closewiki-return' => 'Yn ôl i $1',
+	'awc-metrics-wikis' => 'Arddangos wicïau',
+	'awc-metrics-select' => 'Dangos wicïau',
+	'awc-metrics-all-languages' => 'pob iaith',
+	'awc-metrics-wikis-found' => 'Cafwyd hyd i $1 wici',
+	'awc-metrics-not-found' => 'Dim wicïau ar gael',
+	'awc-metrics-nbr-result' => 'Canlyniadau:',
+	'awc-metrics-articles' => 'Erthyglau',
+	'awc-metrics-edits' => 'Golygiadau',
+	'closed-wiki' => 'Wici a gaewyd',
+	'closed-wiki-create-wiki' => 'Dechrau wici newydd',
+	'closed-delete-images' => "Dileu'r delweddau",
+	'closed-confirm-btn' => "Cadarnhau'r cau",
+	'closed-reason' => 'Rheswm',
 );
 
 /** Danish (Dansk)
@@ -1792,7 +1843,7 @@ $messages['id'] = array(
 	'wikifactory-label-clog' => 'Log perubahan',
 	'wikifactory-label-actions' => 'Tindakan',
 	'wikifactory-label-close' => 'Tutup',
-	'wikifactory-label-tags' => 'Tag',
+	'wikifactory-label-tags' => 'Tanda',
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
 	'right-wikifactory' => 'Ubah pengaturan internal untuk wiki',
 	'closewiki-check-and-confirm' => 'Periksa wiki dan memastikan operasi',
@@ -2165,23 +2216,32 @@ $messages['ksh'] = array(
 $messages['lb'] = array(
 	'closewiki' => 'Wiki zoumaachen',
 	'wf_city_url' => 'Adress',
+	'wf_city_id' => 'id',
 	'wf_city_title' => 'Titel',
+	'wf_city_created' => 'Gemaach',
 	'wf_city_founding_user' => 'Grënner',
 	'wf_city_public' => 'Statut',
 	'wf_city_lang' => 'Sprooch',
 	'wf_cc_name' => 'Kategorie',
+	'wikifactory-label-variables' => 'Variabelen',
 	'wikifactory-label-variables2' => 'Allgemeng',
+	'wikifactory-label-return' => "Zréck op d'Lëscht",
+	'wikifactory-label-clog' => 'Lëscht vun den Ännerungen',
 	'wikifactory-label-actions' => 'Aktiounen',
 	'wikifactory-label-close' => 'Zoumaachen',
+	'wikifactory-label-tags' => 'Markéierungen',
 	'closewiki-redirect-to' => 'Viruleeden op',
 	'closewiki-nbr-wiki' => '$1 Wikien',
+	'closewiki-dump-url' => 'Dumpe vun der Datebank: $1',
 	'closewiki-images-url' => 'Billerarchiv: $1',
 	'closewiki-unknown' => 'Onbekannt',
 	'closewiki-return' => 'Zréck op $1',
 	'awc-metrics-by-language' => 'no Sprooch:',
+	'awc-metrics-category' => "an d'Kategorie:",
 	'awc-metrics-all' => 'all Wikien',
 	'awc-metrics-all-languages' => 'all Sproochen',
 	'awc-metrics-search' => 'Sichoptiounen',
+	'awc-metrics-by-email' => 'oder (Benotzer-E-Mail):',
 	'awc-metrics-not-found' => 'Keng Wikie fonnt',
 	'awc-metrics-nbr-result' => 'Resultater:',
 	'awc-metrics-articles' => 'Artikelen',
@@ -2190,11 +2250,16 @@ $messages['lb'] = array(
 	'awc-metrics-images' => 'Biller',
 	'awc-metrics-close' => 'Zoumaachen',
 	'awc-metrics-active' => 'aktiv',
+	'awc-metrics-closed' => 'zougemaach',
 	'awc-metrics-this-month' => 'dëse Mount',
+	'closed-wiki' => 'Zougemaachte Wiki',
 	'closed-wiki-info' => 'Dës Wiki gouf zougemaach',
+	'disabled-wiki-info' => 'Dës Wiki gouf ausgechalt',
 	'closed-wiki-create-wiki' => 'Eng nei Wiki uleeën',
+	'closed-create-dump' => 'En Dump vun der Datebank maachen',
 	'closed-delete-images' => "D'Biller läschen",
 	'closed-redirect-url' => "D'URL viruleeden",
+	'closed-confirm-btn' => 'Zoumaache confirméieren',
 	'closed-reason' => 'Grond:',
 );
 
@@ -2310,6 +2375,23 @@ $messages['mk'] = array(
 	'closed-reason' => 'Причина:',
 );
 
+/** Malayalam (മലയാളം) */
+$messages['ml'] = array(
+	'wf_city_url' => 'വിലാസം',
+	'wf_city_title' => 'ശീർഷകം',
+	'wf_city_created' => 'സൃഷ്ടിച്ചിരിക്കുന്നു',
+	'wf_city_public' => 'സ്ഥിതി',
+	'wf_city_lang' => 'ഭാഷ',
+	'wf_cc_name' => 'വർഗ്ഗം',
+	'wikifactory-label-variables' => 'ചരങ്ങൾ',
+	'wikifactory-label-variables2' => 'സാർവത്രികം',
+	'wikifactory-label-clog' => 'മാറ്റങ്ങളുടെ പ്രവർത്തനരേഖ',
+	'wikifactory-label-actions' => 'നടപടികൾ',
+	'wikifactory-label-close' => 'അടയ്ക്കുക',
+	'wikifactory-label-tags' => 'അനുബന്ധങ്ങൾ',
+	'closewiki-unknown' => 'അജ്ഞാതം',
+);
+
 /** Maltese (Malti)
  * @author Chrisportelli
  */
@@ -2328,6 +2410,14 @@ $messages['mt'] = array(
 	'closewiki-wiki-closed' => "'''$1''' ġiet magħluqa ($2)",
 	'closewiki-wiki-closed_removed' => "'''$1''' tinsab magħluqa u skedata għat-tħassir ($2)",
 	'closewiki-wiki-closed_redirect' => "'''$1''' hi magħluqa ($2) u se tiġi ridirezzjonata lejn: $3",
+	'awc-metrics-close' => 'Agħlaq',
+);
+
+/** Mazanderani (مازِرونی) */
+$messages['mzn'] = array(
+	'wf_city_lang' => 'زوون',
+	'wf_cc_name' => 'رج',
+	'wikifactory-label-actions' => 'عملکاردون',
 );
 
 /** Dutch (Nederlands)
@@ -3131,6 +3221,19 @@ $messages['pt-br'] = array(
  * @author Minisarm
  */
 $messages['ro'] = array(
+	'wf_city_url' => 'Adresă',
+	'wf_city_title' => 'Titlu',
+	'wf_city_created' => 'Creat',
+	'wf_city_founding_user' => 'Fondator',
+	'wf_city_public' => 'Statut',
+	'wf_city_lang' => 'Limbă',
+	'wf_cc_name' => 'Categorie',
+	'wikifactory-label-variables' => 'Variabile',
+	'wikifactory-label-clog' => 'Jurnalul schimbărilor',
+	'wikifactory-label-actions' => 'Acțiuni',
+	'wikifactory-label-close' => 'Închide',
+	'wikifactory-label-tags' => 'Etichete',
+	'closewiki-unknown' => 'Necunoscut',
 	'awc-metrics-all-languages' => 'toate limbile',
 	'awc-metrics-search' => 'Opţiuni de căutare:',
 	'awc-metrics-by-email' => 'sau (e-mailul utilizatorului):',
@@ -3267,6 +3370,13 @@ $messages['si'] = array(
 	'wf_city_url' => 'ලිපිනය:',
 	'wikifactory-label-variables' => 'විචල්‍යයන්',
 	'wikifactory-label-close' => 'වසන්න',
+);
+
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'closed-reason' => 'Razlog:',
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
@@ -3415,6 +3525,30 @@ $messages['sv'] = array(
 	'awc-metrics-close' => 'Stäng',
 );
 
+/** Tamil (தமிழ்)
+ * @author TRYPPN
+ */
+$messages['ta'] = array(
+	'wf_city_url' => 'முகவரி',
+	'wf_city_id' => 'அடையாளம்',
+	'wf_city_title' => 'தலைப்பு',
+	'wf_city_created' => 'உருவாக்கப்பட்டுவிட்டது',
+	'wf_city_founding_user' => 'நிறுவனர்',
+	'wf_city_public' => 'நிலைமை',
+	'wf_cc_name' => 'பகுப்பு',
+	'wikifactory-label-variables' => 'மாறிகள்',
+	'wikifactory-label-variables2' => 'பொதுவான',
+	'wikifactory-label-return' => 'பட்டியலுக்குத் திரும்பவும்',
+	'wikifactory-label-clog' => 'மாற்றங்களின் குறிப்புக்கள்',
+	'wikifactory-label-actions' => 'செயல்கள்',
+	'wikifactory-label-close' => 'மூடுக',
+	'wikifactory-label-tags' => 'குறிப்புக்கள்',
+	'awc-metrics-not-found' => 'விக்கிகள் ஏதும் காணப்படவில்லை',
+	'awc-metrics-nbr-result' => 'முடிவுகள்:',
+	'awc-metrics-articles' => 'கட்டுரைகள்',
+	'awc-metrics-close' => 'மூடுக',
+);
+
 /** Telugu (తెలుగు)
  * @author Veeven
  */
@@ -3507,6 +3641,69 @@ $messages['tl'] = array(
 	'awc-metrics-nbr-result' => 'Mga resulta:',
 );
 
+/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+ * @author Ильнар
+ */
+$messages['tt-cyrl'] = array(
+	'wf_city_url' => 'Адрес',
+	'wf_city_id' => 'id',
+	'wf_city_title' => 'Исеме',
+	'wf_city_created' => 'Төзелгән',
+	'wf_city_founding_user' => 'Нигез салучы',
+	'wf_city_founding_email' => 'Нигез салучының эл. почтасы',
+	'wf_city_public' => 'Торыш',
+	'wf_city_lang' => 'Тел',
+	'wf_cc_name' => 'Төркем',
+	'wikifactory_removevariable' => 'Барлык вики-мәгълүматны кэштан бетерергә',
+	'wikifactory_removeconfirm' => 'Барлык вики-мәгълүмат кэштан бетерелде!',
+	'wikifactory-label-variables' => 'Үзгәрешлеләр',
+	'wikifactory-label-variables2' => 'Барлык',
+	'wikifactory-label-hubs' => 'Хаблар',
+	'wikifactory-label-domains' => 'Доменнар',
+	'wikifactory-label-return' => 'Исемлеккә кайту',
+	'wikifactory-label-clog' => 'Үзгәртүләр көндәлеге',
+	'wikifactory-label-actions' => 'Хәрәкәт',
+	'wikifactory-label-close' => 'Ябу',
+	'wikifactory-label-tags' => 'Теглар',
+	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
+	'right-wikifactory' => 'Викиның эчке көйләнмәләрен үзгәртергә',
+	'closewiki-check-and-confirm' => 'Викины карарга һәм башкарырга',
+	'closewiki-redirect-to' => 'Күчерелмәсе',
+	'closewiki-message' => '$1 доменлы исеме',
+	'closewiki-confirm-button' => "$2 дән $1' се расланган",
+	'closewiki-nbr-wiki' => '$1 викилар',
+	'closewiki-wiki-closed' => "'''$1''' ябык ($2)",
+	'closewiki-wiki-closed_removed' => "'''$1''' хәзергесе вакытта ябылган һәм бетерелүгә куелган ($2)",
+	'closewiki-wiki-closed_redirect' => "'''$1''' ябылган ($2) һәм хәзергесе вакытта $3 күчерелгән",
+	'closewiki-dump-url' => 'Хәтернең дампы: $1',
+	'closewiki-images-url' => 'Рәсемнәр архив: $1',
+	'closewiki-unknown' => 'Билгесез',
+	'closewiki-return' => '$1 битенә кайту',
+	'awc-metrics-wikis' => 'Викиларны күрсәтү',
+	'awc-metrics-select' => 'Викиларны күрсәтү:',
+	'awc-metrics-by-language' => 'телләр буенча:',
+	'awc-metrics-category' => 'һәм төркемнәр:',
+	'awc-metrics-all' => 'барлык вики',
+	'awc-metrics-all-languages' => 'барлык телләр',
+	'awc-metrics-search' => 'Эзләү көйләнмәләре',
+	'awc-metrics-one-week' => '< 1 атна элек ясалган',
+	'awc-metrics-two-weeks' => '< 2 атна элек ясалган',
+	'awc-metrics-three-weeks' => '< 3 атна элек ясалган',
+	'awc-metrics-one-months' => '< 1 ай элек ясалган',
+	'awc-metrics-two-months' => '< 2 ай элек ясалган',
+	'awc-metrics-three-months' => '< 3 ай элек ясалган',
+	'awc-metrics-half-year' => '< 6 ай элек ясалган',
+	'awc-metrics-wikis-found' => '$1 вики табалды',
+	'awc-metrics-by-email' => 'яисә (кулланучының эл. почтасы):',
+	'awc-metrics-by-user' => 'гомуми (кулланучының исеме):',
+	'awc-metrics-by-dbname' => 'МБ үз эченә:',
+	'awc-metrics-by-title' => 'һәм моңардан башланучы исемнәр:',
+	'awc-metrics-by-domains' => 'һәм домен үз эченә ала:',
+	'awc-metrics-not-found' => 'Викилар табылмады',
+	'awc-metrics-nbr-result' => 'Результатлар:',
+	'awc-metrics-edits' => 'Үзгәртүләр',
+);
+
 /** Ukrainian (Українська)
  * @author NickK
  * @author Prima klasy4na
@@ -3521,11 +3718,15 @@ $messages['uk'] = array(
 	'wf_city_lang' => 'Мова',
 	'wf_cc_name' => 'Категорія',
 	'wikifactory-label-variables' => 'Змінні',
+	'wikifactory-label-variables2' => 'Загальні',
 	'wikifactory-label-domains' => 'Домени',
+	'wikifactory-label-clog' => 'Хронологія',
 	'wikifactory-label-actions' => 'Дії',
 	'wikifactory-label-close' => 'Закрити',
 	'wikifactory-label-tags' => 'Теги',
 	'closewiki-message' => "доменне ім'я $1",
+	'closewiki-dump-url' => 'Дампи бази даних: $1',
+	'closewiki-unknown' => 'Невідомо',
 	'awc-metrics-by-language' => 'за мовою:',
 	'awc-metrics-all-languages' => 'всі мови',
 	'awc-metrics-search' => 'Параметри пошуку:',

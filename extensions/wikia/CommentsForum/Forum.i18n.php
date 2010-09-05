@@ -29,14 +29,17 @@ $messages['qqq'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Y-M D
  */
 $messages['br'] = array(
+	'commentsforum-desc' => "Arc'hwelioù a denn da re ar foromoù evit an evezhiadennoù",
 	'forum_by_user_category' => '$1 an implijer',
 	'forum_about_title' => 'Diwar-benn  ar forom',
 	'forum_about_text' => 'Ar forom eo.',
 	'forum_comments_of_day' => 'Evezhiadennoù gentañ',
 	'forum_new_articles' => 'Kemennadennoù nevez war ar forom',
+	'forum_by' => 'Postet gant $1',
 	'forum_inthenews' => "Er c'heleier",
 );
 
@@ -182,6 +185,16 @@ $messages['pms'] = array(
 	'forum_new_articles' => 'Mëssagi neuv an sla piassa',
 	'forum_by' => 'Spedì da $1',
 	'forum_inthenews' => 'Ant le neuve',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'forum_about_title' => 'د فورم په اړه',
+	'forum_about_text' => 'دا فورم دی.',
+	'forum_comments_of_day' => 'د سر تبصرې',
+	'forum_inthenews' => 'په خبرونو کې',
 );
 
 /** Portuguese (Português)

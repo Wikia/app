@@ -47,9 +47,11 @@ $messages['be-tarask'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Gwenn-Ael
  */
 $messages['br'] = array(
+	'sharefeature-desc' => "Talvezout a ra d'an implijerien da sevel liammoù war-du pajennoù lec'hiennoù a ra berzh",
 	'sf-link' => 'Rannañ ar pennad-mañ',
 	'sf-link-popup' => 'Rannañ ar pennad-mañ',
 	'sf-link-tooltip' => 'Rannañ ar pennad-mañ gant ho mignoned',

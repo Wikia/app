@@ -12,6 +12,13 @@ $messages['qqq'] = array(
 	'wikiaupload' => 'Special page name as displayed on Special:SpecialPages and page title of special page.',
 );
 
+/** Angika (अंगिका)
+ * @author Angpradesh
+ */
+$messages['anp'] = array(
+	'wikiaupload' => 'विकिया अपलोड',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -374,6 +381,13 @@ $messages['tr'] = array(
  */
 $messages['tt-cyrl'] = array(
 	'wikiaupload' => 'Wikia йөкләнмәләре',
+);
+
+/** Ukrainian (Українська)
+ * @author Hypers
+ */
+$messages['uk'] = array(
+	'wikiaupload' => 'Завантаження Wikia',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)

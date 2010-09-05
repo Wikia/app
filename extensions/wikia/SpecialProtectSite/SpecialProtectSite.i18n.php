@@ -193,13 +193,14 @@ $messages['fi'] = array(
 /** French (Français)
  * @author IAlex
  * @author Peter17
+ * @author Slamduck
  */
 $messages['fr'] = array(
-	'specialprotectsite-desc' => 'Permet à un administrateur de site de [[Special:ProtectSite|bloquer temporairement de nombreuses modifications du site]]',
+	'specialprotectsite-desc' => 'Permet à un administrateur du site de [[Special:ProtectSite|bloquer temporairement de nombreuses modifications du site]]',
 	'protectsite' => 'Protéger le site',
 	'protectsite-text-protect' => "<!-- Instructions / Commentaires / Règles d'utilisation -->",
 	'protectsite-text-unprotect' => '<!-- Instructions / Commentaires lorsque protégé -->',
-	'protectsite-title' => 'Paramètres de la protection du site',
+	'protectsite-title' => 'Paramètres de protection du site',
 	'protectsite-allowall' => 'Tous les utilisateurs',
 	'protectsite-allowusersysop' => 'Utilisateurs enregistrés et administrateurs',
 	'protectsite-allowsysop' => 'Administrateurs seulement',

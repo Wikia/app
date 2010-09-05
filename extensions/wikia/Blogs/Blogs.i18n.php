@@ -414,7 +414,7 @@ Gallout a reer krouiñ pajennadoù rollañ bloagoù evit rummadoù evel "Barack 
 	'blog-emptyparam' => "Ne c'hell ket bezañ goullo anv an arventenn",
 	'blog-defaulttitle' => 'Blogoù',
 	'blog-continuereading' => "Kenderc'hel da lenn &raquo;",
-	'blog-readfullpost' => 'Lenn ar pennad penn-da-benn',
+	'blog-readfullpost' => "Lenn hiroc'h",
 	'blog-olderposts' => "Pennadoù ar c'hoshañ",
 	'blog-newerposts' => 'Pennadoù an nevesañ',
 	'blog-nbrcomments' => '{{PLURAL:$1|Un evezhiadenn|$1 evezhiadenn}}',
@@ -535,7 +535,7 @@ $messages['de'] = array(
 	'blog-emptyparam' => 'Parameter-Name kann nicht leer sein',
 	'blog-defaulttitle' => 'Blogs',
 	'blog-continuereading' => 'Weiterlesen &raquo;',
-	'blog-readfullpost' => 'Ganzen Eintrag lesen',
+	'blog-readfullpost' => 'Mehr lesen',
 	'blog-olderposts' => 'Ältere Einträge',
 	'blog-newerposts' => 'Neuere Einträge',
 	'blog-nbrcomments' => '{{PLURAL:$1|Ein Kommentar|$1 Kommentare}}',
@@ -629,6 +629,7 @@ $messages['el'] = array(
 
 /** Spanish (Español)
  * @author Crazymadlover
+ * @author Danke7
  * @author Locos epraix
  * @author Peter17
  */
@@ -690,7 +691,7 @@ Crea páginas de listas de blogs para categorías como "Obama", "Humor", o varia
 	'blog-emptyparam' => 'El nombre del parámetro no puede estar vacío',
 	'blog-defaulttitle' => 'Blogs',
 	'blog-continuereading' => 'Continúa leyendo »',
-	'blog-readfullpost' => 'Leer entrada completa',
+	'blog-readfullpost' => 'Leer más',
 	'blog-olderposts' => 'Antiguas entradas',
 	'blog-newerposts' => 'Nuevas entradas',
 	'blog-nbrcomments' => '{{PLURAL:$1|un comentario|$1 comentarios}}',
@@ -899,7 +900,7 @@ Luo blogilistalle sivuja luokkiin, kuten "Barack Obama", "Fan Fiction" tai voit 
 	'blog-comment-error' => 'Kommenttia ei tallennettu',
 	'blog-comment-cannot-add' => 'Et voi lähettää kommentteja tähän blogiin.',
 	'blog-avatar-defaults' => 'Avatar.jpg',
-	'blug-cut-sign' => '(…)',
+	'blug-cut-sign' => '…',
 	'blog-avatar-preferences-title' => 'Avatar',
 	'blog-page-rate' => 'Arvostele artikkeli:',
 	'blog-create-post-label' => 'Luo blogiartikkeli',
@@ -985,7 +986,7 @@ Créez des pages de listes de blogues pour des catégories comme « Barack Obama
 	'blog-emptyparam' => 'Le nom du paramètre ne peut être vide',
 	'blog-defaulttitle' => 'Blogues',
 	'blog-continuereading' => 'Poursuivre la lecture &raquo;',
-	'blog-readfullpost' => 'Lire le billet au complet',
+	'blog-readfullpost' => 'Lire la suite',
 	'blog-olderposts' => 'Billets plus anciens',
 	'blog-newerposts' => 'Billets plus récents',
 	'blog-nbrcomments' => '$1 commentaire{{PLURAL:$1||s}}',
@@ -1102,7 +1103,7 @@ Cree páxinas de listas de blogues para categorías como "Barack Obama", "Galici
 	'blog-emptyparam' => 'O nome do parámetro non pode estar baleiro',
 	'blog-defaulttitle' => 'Blogues',
 	'blog-continuereading' => 'Seguir lendo &raquo;',
-	'blog-readfullpost' => 'Ler a entrada completa',
+	'blog-readfullpost' => 'Ler máis',
 	'blog-olderposts' => 'Entradas antigas',
 	'blog-newerposts' => 'Entradas recentes',
 	'blog-nbrcomments' => '{{PLURAL:$1|Un comentario|$1 comentarios}}',
@@ -1273,7 +1274,7 @@ Tu pote crear listas de blogs pro categorias como "Barack Obama", "libros", o me
 	'blog-emptyparam' => 'Le nomine del parametro non pote esser vacue',
 	'blog-defaulttitle' => 'Blogs',
 	'blog-continuereading' => 'Continuar a leger &raquo;',
-	'blog-readfullpost' => 'Leger articulo complete',
+	'blog-readfullpost' => 'Leger plus',
 	'blog-olderposts' => 'Articulos plus ancian',
 	'blog-newerposts' => 'Articulos plus recente',
 	'blog-nbrcomments' => '{{PLURAL:$1|Un commento|$1 commentos}}',
@@ -1723,7 +1724,7 @@ $messages['mk'] = array(
 	'blog-emptyparam' => 'Параметарот за име не може да стои празен',
 	'blog-defaulttitle' => 'Блогови',
 	'blog-continuereading' => 'Продолжете со читање &raquo;',
-	'blog-readfullpost' => 'Прочитајте го целиот запис',
+	'blog-readfullpost' => 'Прочитајте повеќе',
 	'blog-olderposts' => 'Постари записи',
 	'blog-newerposts' => 'Понови записи',
 	'blog-nbrcomments' => '{{PLURAL:$1|еден коментар|$1 коментари}}',
@@ -1841,7 +1842,7 @@ Gebruik alstublieft een van de beschikbare parameters: <code>$2</code>.',
 	'blog-emptyparam' => 'De naam van de parameter moet opgegeven worden',
 	'blog-defaulttitle' => 'Blogs',
 	'blog-continuereading' => 'Doorgaan met lezen &raquo;',
-	'blog-readfullpost' => 'Volledig bericht lezen',
+	'blog-readfullpost' => 'Meer lezen',
 	'blog-olderposts' => 'Oudere berichten',
 	'blog-newerposts' => 'Nieuwere berichten',
 	'blog-nbrcomments' => '$1 {{PLURAL:$1|opmerking|opmerkingen}}',
@@ -1958,7 +1959,7 @@ Opprett bloggoppføringssider for å kategorier som «Barack Obama», «Fan Fict
 	'blog-emptyparam' => 'Navn på parameter kan ikke være tom',
 	'blog-defaulttitle' => 'Blogger',
 	'blog-continuereading' => 'Fortsett lesing »',
-	'blog-readfullpost' => 'Les hele innlegget',
+	'blog-readfullpost' => 'Les mer',
 	'blog-olderposts' => 'Eldre innlegg',
 	'blog-newerposts' => 'Nyere innlegg',
 	'blog-nbrcomments' => '{{PLURAL:$1|Én kommentar|$1 kommentarer}}',
@@ -2037,22 +2038,56 @@ $messages['oc'] = array(
  * @author Xqt
  */
 $messages['pdc'] = array(
-	'blog-comments' => 'Anmaerrickinge',
+	'blog-comments' => 'Aamaerickinge',
 );
 
-/** Polish (Polski) */
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
 $messages['pl'] = array(
+	'createblogpage' => 'Utwórz pamiętnik',
+	'createbloglistingpage' => 'Utwórz listę wpisów w pamiętniku',
+	'create-blog-spam' => 'Wygląda jak spam',
+	'create-blog-cant-edit' => 'Nie można wykonać edycji',
+	'create-blog-post-category' => 'Zapiski w pamiętniku',
+	'create-blog-post-category-body' => 'Automatycznie wygenerowana lista wpisów w pamiętniku',
+	'create-blog-post-category-log' => 'Utworzono kategorię artykułów dla wpisów w pamiętnikach',
+	'create-blog-post-recent-listing' => 'Ostatnie wpisy',
+	'create-blog-post-recent-listing-title' => 'Ostatnie wpisy',
+	'create-blog-post-recent-listing-log' => 'Artykuły utworzone dla ostatnich wpisów w pamiętniku',
+	'create-blog-post-title' => 'Utwórz nowy wpis w pamiętniku',
+	'create-blog-form-title' => 'Co to jest wpis w pamiętniku?',
+	'create-blog-form-post-text' => 'Treść pamiętnika',
+	'create-blog-form-info' => 'Wpisy w pamiętniku to świetny sposób na opublikowanie wiadomości, opinii i pomysłów udostępnianych społeczności.',
+	'create-blog-form-post-title' => 'Tytuł wpisu w pamiętniku',
+	'create-blog-empty-title-error' => 'Tytuł jest wymagany',
+	'create-blog-empty-post-error' => 'Brak treści wpisu',
+	'create-blog-empty-article-log' => 'Artykuł z listą wpisów w pamiętniku',
+	'create-blog-invalid-title-error' => 'Nieprawidłowy tytuł',
+	'create-listing-confirm-info' => 'Skopiuj i wklej następujący kod:',
+	'create-blog-no-login' => 'Nie jesteś zalogowany',
+	'create-blog-login-required' => 'Musisz być [{{fullurl:Special:Signup|$1}} zalogowany] wpis w pamiętniku lub spis wpisów.',
+	'create-blog-categories-title' => 'Dodaj wpis w pamiętniku do kategorii (kliknij, aby wybrać)',
+	'create-blog-categories-textinput' => 'Dodaj nową kategorię',
+	'create-blog-categories-submit' => 'Zapisz',
+	'create-blog-save' => 'Zapisz stronę',
+	'create-blog-preview' => 'Pokaż podgląd',
+	'create-blog-updated' => 'Wpis w pamiętniku utworzony lub uaktualniony.',
+	'create-blog-permission-denied' => 'Błąd podczas zapisywania strony pamiętnika – brak dostępu',
+	'create-blog-article-already-exists' => 'Wpis w pamiętniku o tej nazwie już jest, wybierz inną nazwę',
+	'create-blog-listing-title' => 'Utwórz nową stronę z listą wpisów do pamiętnika',
+	'create-blog-listing-form-title' => 'Co to jest strona z listą wpisów do pamiętnika?',
 	'blog-header' => 'Wpisy na blogu w kategorii „$1”',
-	'blog-subheader' => 'Następujące wpisy w ilości $1 są w tej kategorii.',
-	'blog-subheader-all' => 'Następujące wpisy w ilości $1 spośród wszystkich $2 są w tej kategorii.',
+	'blog-subheader' => '{{PLURAL:$1|Jest tylko jeden wpis|Są $1 wpisy w tej kategorii|Jest $1 wpisów}} w tej kategorii.',
+	'blog-subheader-all' => '{{PLURAL:$1|Jest tylko jeden blogowy artykuł|Następujące $1 blogowe artykuły z ogólnej liczby $2 są|Następujących $1 blogowych artykułów z ogólnej liczby $2 jest}} w tej kategorii.',
 	'blog-invalidparam' => 'Nieznany parametr „$1” jest ignorowany. Użyj jednego z dostępnych parametrów: <code>$2</code>.',
 	'blog-emptyparam' => 'Nazwa parametru nie może być pusta',
 	'blog-defaulttitle' => 'Blogi',
 	'blog-continuereading' => 'Kontynuuj czytanie &raquo;',
-	'blog-readfullpost' => 'Czytaj całość',
+	'blog-readfullpost' => 'Więcej informacji',
 	'blog-olderposts' => 'Starsze posty',
 	'blog-newerposts' => 'Nowsze posty',
-	'blog-nbrcomments' => '$1 komentarzy',
+	'blog-nbrcomments' => '{{PLURAL:$1|Jeden komentarz|$1 komentarze|$1 komentarzy}}',
 	'blog-nopostfound' => 'Nie znaleziono żadnych postów.',
 	'blog-writeone' => 'Napisz!',
 	'blog-empty-user-blog' => 'Ten użytkownik nie napisał jeszcze niczego na swoim blogu!',
@@ -2152,7 +2187,7 @@ $messages['pms'] = array(
 	'blog-emptyparam' => 'Ël nòm dël paràmetr a peul pa esse veuid.',
 	'blog-defaulttitle' => 'Scartari',
 	'blog-continuereading' => 'Continua a lese &raquo;',
-	'blog-readfullpost' => 'Les tut ël mëssagi',
+	'blog-readfullpost' => "Les anco'",
 	'blog-olderposts' => 'Mëssagi pi vej',
 	'blog-newerposts' => 'Mëssagi pi neuv',
 	'blog-nbrcomments' => '{{PLURAL:$1|Un coment|$1 coment}}',
@@ -2300,7 +2335,7 @@ Crie páginas de listagem de blogues para categorias, tais como "Barack Obama" o
 	'blog-emptyparam' => 'O nome do parâmetro não pode estar em branco',
 	'blog-defaulttitle' => 'Blogues',
 	'blog-continuereading' => 'Continuar a ler &raquo;',
-	'blog-readfullpost' => 'Ler a entrada completa',
+	'blog-readfullpost' => 'Mais',
 	'blog-olderposts' => 'Entradas mais antigas',
 	'blog-newerposts' => 'Entradas mais recentes',
 	'blog-nbrcomments' => '{{PLURAL:$1|Um comentário|$1 comentários}}',
@@ -2397,7 +2432,7 @@ $messages['pt-br'] = array(
 	'create-blog-listing-form-info' => 'As listas de blogs são usadas para agregar blogs de diferentes autores em uma única página.
 Crie uma lista de blogs para categorias como "Barack Obama", "Humor" ou, até mesmo, combine várias categorias.',
 	'create-blog-listing-page-title' => 'Título da lista de blogs',
-	'create-blog-listing-preview' => 'Previsualizar',
+	'create-blog-listing-preview' => 'Pré-visualizar',
 	'create-blog-listing-authors' => 'Obter os posts de blog criados por estes autores (separados por vírgulas)',
 	'create-blog-listing-blog-post-categories-title' => 'Obter posts destas categorias',
 	'create-blog-listing-page-categories-title' => 'Adicionar esta lista de blogs a estas categorias',
@@ -2418,7 +2453,7 @@ Crie uma lista de blogs para categorias como "Barack Obama", "Humor" ou, até me
 	'blog-emptyparam' => 'O nome do parâmetro não pode estar vazio',
 	'blog-defaulttitle' => 'Blogs',
 	'blog-continuereading' => 'Continue lendo &raquo;',
-	'blog-readfullpost' => 'Leia o post inteiro',
+	'blog-readfullpost' => 'Leia mais',
 	'blog-olderposts' => 'Posts antigos',
 	'blog-newerposts' => 'Posts recentes',
 	'blog-nbrcomments' => '{{PLURAL:$1|Um comentário|$1 comentários}}',
@@ -2537,7 +2572,7 @@ $messages['ru'] = array(
 	'blog-emptyparam' => 'Название параметра не может быть пустым',
 	'blog-defaulttitle' => 'Блоги',
 	'blog-continuereading' => 'Читать дальше &raquo;',
-	'blog-readfullpost' => 'Читать полную запись',
+	'blog-readfullpost' => 'Читать подробнее',
 	'blog-olderposts' => 'Предыдущие записи',
 	'blog-newerposts' => 'Следующие записи',
 	'blog-nbrcomments' => '$1 {{PLURAL:$1|комментарий|комментария|комментариев}}',
@@ -2591,6 +2626,13 @@ $messages['ru'] = array(
 	'blog-desc' => 'Статьи блога',
 	'blog-movepage-badtitle' => 'Неверное название записи в блоге.',
 	'blog-comment-sending' => 'Отправка…',
+);
+
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'blog-comment-history' => 'zgodovina',
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
@@ -2914,5 +2956,13 @@ $messages['uk'] = array(
 	'create-blog-listing-sortby-author' => 'автором',
 	'blog-refresh-label' => 'Оновити',
 	'blogs-reportproblem' => 'Повідомити про проблему',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Wilsonmess
+ */
+$messages['zh-hans'] = array(
+	'createblogpage' => '创建博客',
+	'create-blog-cant-edit' => '无法执行编辑',
 );
 

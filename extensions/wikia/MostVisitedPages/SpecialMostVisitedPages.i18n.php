@@ -185,9 +185,16 @@ $messages['id'] = array(
 	'mostvisitedpagesalllink' => 'Lihat halaman yang tersering dikunjungi',
 );
 
-/** Italian (Italiano) */
+/** Italian (Italiano)
+ * @author Gianfranco
+ */
 $messages['it'] = array(
+	'mostvisitedpages' => 'Pagine più visitate',
+	'mostvisitedpagessearchtext' => 'Titolo della pagina:',
 	'mostvisitedpagessearchbtn' => 'ricerca',
+	'mostvisitedpageslatest' => 'negli ultimi $1 minuti',
+	'mostvisitedpageslatestlink' => 'Vedi le ultime pagine visitate',
+	'mostvisitedpagesalllink' => 'Vedi le pagine più visitate',
 );
 
 /** Japanese (日本語)
@@ -428,5 +435,12 @@ $messages['uk'] = array(
 	'mostvisitedpagessearchtext' => 'Назва статті:',
 	'mostvisitedpagessearchbtn' => 'пошук',
 	'mostvisitedpageslatest' => 'за останні $1 {{PLURAL:$1|хвилини|хвилин}}',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Farewell
+ */
+$messages['vi'] = array(
+	'mostvisitedpages' => 'Các trang được xem nhiều nhất',
 );
 

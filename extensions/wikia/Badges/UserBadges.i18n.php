@@ -716,3 +716,15 @@ $messages['tl'] = array(
 	'user-badge-save-info' => 'Kung nais mong sagipin ang mga pagbabago, umikid papunta sa wakas ng pahina at pindutin ang pindutang "Sagipin"',
 );
 
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Wilsonmess
+ */
+$messages['zh-hans'] = array(
+	'user-badge-invalid-color' => '输入了不合法的十六进制值',
+	'user-badge-show-color' => '显示色彩细节',
+	'user-badge-hide-color' => '隐藏色彩细节',
+	'user-badge-selected-color' => '目前选择的颜色 {rgb}',
+	'user-badge-web-color' => '临近的网络安全色：{rgb}。点击以选择！',
+	'user-badge-dialog-title' => '请选择一个颜色',
+);
+

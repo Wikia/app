@@ -75,6 +75,14 @@ $messages['de'] = array(
 	'withoutimages' => 'Seiten ohne Bilder',
 );
 
+/** Greek (Ελληνικά)
+ * @author Περίεργος
+ */
+$messages['el'] = array(
+	'withoutimages-desc' => 'Προσθέτει μια [[Special:Withoutimages|ειδική σελίδα]] για εμφάνιση σελίδων χωρίς εικόνες',
+	'withoutimages' => 'Σελίδες χωρίς εικόνες',
+);
+
 /** Spanish (Español)
  * @author Crazymadlover
  */
@@ -88,6 +96,14 @@ $messages['es'] = array(
  */
 $messages['eu'] = array(
 	'withoutimages' => 'Irudirik gabeko orrialdeak',
+);
+
+/** Persian (فارسی)
+ * @author Ebraminio
+ */
+$messages['fa'] = array(
+	'withoutimages-desc' => 'اضافه‌کردن یک [[Special:Withoutimages|صفحهٔ ویژه]] برای دیدن صفحه‌ها بدون تصاویر.',
+	'withoutimages' => 'صفحه‌های بدون تصاویر',
 );
 
 /** French (Français)
@@ -104,6 +120,14 @@ $messages['fr'] = array(
 $messages['gl'] = array(
 	'withoutimages-desc' => 'Engade unha [[Special:Withoutimages|páxina especial]] para mostrar as páxinas sen imaxes',
 	'withoutimages' => 'Páxinas sen imaxes',
+);
+
+/** Croatian (Hrvatski)
+ * @author SpeedyGonsales
+ */
+$messages['hr'] = array(
+	'withoutimages-desc' => 'Dodaje [[Special:Withoutimages|posebnu stranicu]] za prikaz stranica bez slika',
+	'withoutimages' => 'Stranice bez slika',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -138,6 +162,22 @@ $messages['ig'] = array(
 	'withoutimages' => 'Ihü nke éwéghị ònyìnyò',
 );
 
+/** Italian (Italiano)
+ * @author Beta16
+ */
+$messages['it'] = array(
+	'withoutimages-desc' => 'Aggiunge una [[Special:Withoutimages|pagina speciale]] per visualizzare le pagine senza immagini',
+	'withoutimages' => 'Pagine senza immagini',
+);
+
+/** Japanese (日本語)
+ * @author Tommy6
+ */
+$messages['ja'] = array(
+	'withoutimages-desc' => '画像の無いページを一覧表示する[[Special:Withoutimages|特別ページ]]を追加する',
+	'withoutimages' => '画像の無いページ',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -154,6 +194,13 @@ $messages['mk'] = array(
 	'withoutimages' => 'Страници без слики',
 );
 
+/** Maltese (Malti)
+ * @author Chrisportelli
+ */
+$messages['mt'] = array(
+	'withoutimages' => 'Paġni mingħajr stampi',
+);
+
 /** Dutch (Nederlands)
  * @author Tvdm
  */
@@ -168,6 +215,30 @@ $messages['nl'] = array(
 $messages['no'] = array(
 	'withoutimages-desc' => 'Legger til en [[Special:Withoutimages|spesialside]] for å vise sider uten bilder',
 	'withoutimages' => 'Sider uten bilder',
+);
+
+/** Occitan (Occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'withoutimages-desc' => 'Apond una [[Special:Withoutimages|pagina especiala]] per afichar las paginas sens imatge',
+	'withoutimages' => 'Paginas sens imatges',
+);
+
+/** Papiamento (Papiamentu)
+ * @author Sdm1985
+ */
+$messages['pap'] = array(
+	'withoutimages-desc' => 'Esaki ta agregá e [[Special:Withoutimages|special page]] pa por mustra páginanan sin potrèt',
+	'withoutimages' => 'Páginanan sin potrèt',
+);
+
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'withoutimages-desc' => 'Dodaje [[Special:Withoutimages|stronę specjalną]] z listą stron niezawierających obrazków',
+	'withoutimages' => 'Strony bez ilustracji',
 );
 
 /** Piedmontese (Piemontèis)

@@ -96,6 +96,13 @@ $messages['dsb'] = array(
 	'wikifactoryreporter' => 'WikiFactory Reporter',
 );
 
+/** Greek (Ελληνικά)
+ * @author Περίεργος
+ */
+$messages['el'] = array(
+	'wikifactoryreporter' => 'Ανταποκριτής Βικιεργοστασίου',
+);
+
 /** Esperanto (Esperanto)
  * @author Airon90
  */
@@ -264,6 +271,13 @@ $messages['oc'] = array(
 	'wikifactoryreporter' => 'Raportador de WikiFactory',
 );
 
+/** Papiamento (Papiamentu)
+ * @author Sdm1985
+ */
+$messages['pap'] = array(
+	'wikifactoryreporter' => 'Reporte di Wikifactory',
+);
+
 /** Polish (Polski)
  * @author Sp5uhe
  */
@@ -360,6 +374,13 @@ $messages['tl'] = array(
  */
 $messages['tr'] = array(
 	'wikifactoryreporter' => 'VikiFabrika Raporlayıcısı',
+);
+
+/** Ukrainian (Українська)
+ * @author Alex Khimich
+ */
+$messages['uk'] = array(
+	'wikifactoryreporter' => 'Звітник WikiFactory',
 );
 
 /** Vèneto (Vèneto)

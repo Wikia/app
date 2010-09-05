@@ -346,6 +346,8 @@ $messages['krc'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'wva-name' => 'Gitt w.e.g. den Numm un:',
+	'wva-url' => "Gitt w.e.g. d'URL an:",
 	'wva-add' => 'Derbäisetzen',
 );
 
@@ -400,6 +402,21 @@ $messages['no'] = array(
 $messages['oc'] = array(
 	'wva-add' => 'Apondre',
 	'wva-title' => 'Apondre una vidèo rapidament a partir de son URL',
+);
+
+/** Papiamento (Papiamentu)
+ * @author Sdm1985
+ */
+$messages['pap'] = array(
+	'wva-success' => 'Página di vidio $1 a wòrdu agregá eksitosamente',
+	'wva-success-replaced' => 'Página di video $1 a wòrdu reemplasá eksitosamente',
+	'wva-failure' => 'Por fabor provee parametonan balido',
+	'wva-name' => 'Hinka e nòmber',
+	'wva-url' => 'Hinka e adrès di URL:',
+	'wva-add' => 'Agregá',
+	'wva-title' => 'Agregá vidio via URL di forma rápido',
+	'wva-notlogged' => 'Bo mester login of inskribí bo mes pa por hinka vidionan.',
+	'wva-notallowed' => 'Bo no por hinka vidio den e wiki aki.',
 );
 
 /** Polish (Polski)

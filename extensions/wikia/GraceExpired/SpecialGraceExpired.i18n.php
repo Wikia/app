@@ -58,9 +58,10 @@ $messages['es'] = array(
 /** French (Français)
  * @author IAlex
  * @author Peter17
+ * @author Slamduck
  */
 $messages['fr'] = array(
-	'graceexpired' => 'La grace a expiré',
+	'graceexpired' => 'La grâce a expiré',
 	'graceexpired-row' => '$1 (dans $2, dernière modification le $3)',
 	'graceexpired-header' => "Cette page liste tous les essais qui ont été [[:Category:Abandoned|abandonnés]], [[:Category:Trash_builds|jetés]], désignés comme [[:Category:Build stubs|ébauches]] ou comme [[:Category:Trial Builds|essais]], et n'ont plus été modifiés depuis au moins deux semaines.
 

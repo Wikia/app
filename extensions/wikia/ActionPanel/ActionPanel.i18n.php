@@ -394,6 +394,18 @@ $messages['ru'] = array(
 	'actionpanel-desc' => 'удобное всплывающее окно, позволяющее категоризировать, переименовывать и править статьи',
 );
 
+/** Sinhala (සිංහල)
+ * @author Pasanbhathiya2
+ */
+$messages['si'] = array(
+	'action_panel_edit_title' => 'පිළිතුරු ලබාදෙන්න',
+	'action_panel_categorize' => 'ප්‍රවර්ගගත කරන්න',
+	'action_panel_categories_summary' => 'ප්‍රවර්ග එකතු කරන්න',
+	'action_panel_save_success' => 'ඔබේ ලිපිය සුරකින ලදී.',
+	'action_panel_rename_success' => 'ඔබේ ලිපිය ප්‍රතිනාමගතකරන ලදී',
+	'action_panel_categorize_success' => 'ඔබේ ප්‍රවර්ග එකතු කරන ලදී',
+);
+
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Rancher
  * @author Verlor

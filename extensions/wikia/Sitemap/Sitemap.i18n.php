@@ -12,6 +12,13 @@ $messages['en'] = array(
 	'sitemap-desc' => 'Generate Sitemaps for the wiki on the fly',
 );
 
+/** Message documentation (Message documentation)
+ * @author The Evil IP address
+ */
+$messages['qqq'] = array(
+	'sitemap-desc' => '{{desc}}',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -35,9 +42,10 @@ $messages['br'] = array(
 
 /** German (Deutsch)
  * @author LWChris
+ * @author The Evil IP address
  */
 $messages['de'] = array(
-	'sitemap-desc' => 'Generiere im Handumdrehen Sitemaps für das Wiki',
+	'sitemap-desc' => 'Generiert im Handumdrehen Sitemaps für das Wiki',
 );
 
 /** Spanish (Español)
@@ -80,6 +88,13 @@ $messages['id'] = array(
  */
 $messages['ig'] = array(
 	'sitemap-desc' => 'Ké okịkẹ Ọtúzọámá màkà wiki nọr na ijí',
+);
+
+/** Italian (Italiano)
+ * @author Gianfranco
+ */
+$messages['it'] = array(
+	'sitemap-desc' => 'Genera al volo la sitemap per il wiki',
 );
 
 /** Japanese (日本語)
@@ -178,5 +193,12 @@ $messages['roa-tara'] = array(
  */
 $messages['ru'] = array(
 	'sitemap-desc' => 'Создание файлов Sitemap для вики на лету',
+);
+
+/** Ukrainian (Українська)
+ * @author Alex Khimich
+ */
+$messages['uk'] = array(
+	'sitemap-desc' => 'Створює мапу сайту вікі на льоту',
 );
 

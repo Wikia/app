@@ -617,6 +617,18 @@ $messages['ru'] = array(
 	'right-removeavatar' => 'удаление аватаров участников',
 );
 
+/** Sinhala (සිංහල)
+ * @author බිඟුවා
+ */
+$messages['si'] = array(
+	'blog-avatar-edit' => 'වෙනස',
+	'blog-avatar-delete' => 'මකන්න',
+	'masthead-blog-avatar-preferences-title' => 'මූර්තිය',
+	'blog-avatar-choose-avatar' => 'නව මූර්තියක් තෝරන්න',
+	'blog-avatar-upload-avatar' => 'නව මූර්තියක් උඩුගත කරන්න',
+	'blog-avatar-nouser' => 'මෙම පරිශීලකයා සොයාගත නොහැකිය!',
+);
+
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Rancher
  */

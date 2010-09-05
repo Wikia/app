@@ -28,9 +28,11 @@ $messages['qqq'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Y-M D
  */
 $messages['br'] = array(
+	'recipestweaks-desc' => "Resisaat ar stil hag an arc'hwelioù evit Wiki Rekipeoù",
 	'savedpages' => 'Pajennoù enrollet',
 	'recipes-add-new-recipe' => 'Ouzhpennañ ur rekipe',
 	'recipes-browse' => 'Dizoloit Wiki Rekipeoù',
@@ -42,6 +44,7 @@ $messages['br'] = array(
 	'recipes-my-saved-pages-empty' => "N'eo bet enrollet pajenn ebet evit c'hoazh",
 	'recipes-rating' => 'Priziadenn ar rekipe',
 	'recipes-search-label' => 'Klask ur rekipe',
+	'recipes-savedpages-empty' => "N'eus mann ebet en da zastumad pajennoù enrollet.",
 	'recipes-savedpages-by' => 'gant $1',
 	'recipes-history' => "Gwelet ar c'hemmoù bet degaset d'ar rekipe-mañ",
 );

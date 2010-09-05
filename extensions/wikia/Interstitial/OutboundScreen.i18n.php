@@ -69,10 +69,11 @@ Desearías ir a la [[{{MediaWiki:Mainpage}}|Página principal]] o tal vez a una 
 /** French (Français)
  * @author IAlex
  * @author Peter17
+ * @author Slamduck
  */
 $messages['fr'] = array(
 	'outbound-screen-login-text' => "[[Special:UserLogin/signup|Créez un compte]] ou [[Special:UserLogin|identifiez-vous sur votre compte existant]] pour éviter cette page à l'avenir",
-	'outbound-screen-already-logged-in-no-link' => "Il n'ya pas de cible.
+	'outbound-screen-already-logged-in-no-link' => "Il n'y a pas de cible.
 Il n'y a rien à voir ici !
 
 Voudriez-vous aller à la [[{{MediaWiki:Mainpage}}|page d'accueil]] ou peut-être [[Special:Random|une page au hasard]] ?",

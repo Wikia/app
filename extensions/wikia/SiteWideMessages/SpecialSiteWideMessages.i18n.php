@@ -193,7 +193,10 @@ Dit kan nie ongedaan gemaak word nie!',
  * @author Juanpabl
  */
 $messages['an'] = array(
+	'swm-label-preview' => 'Previsualizar',
+	'swm-label-list' => 'Lista',
 	'swm-label-language' => 'Idioma',
+	'swm-button-preview' => '[ Previsualizar ]',
 	'swm-list-table-lang' => 'Idiomas',
 	'swm-yes' => 'Sí',
 	'swm-no' => 'No',
@@ -1210,7 +1213,7 @@ $messages['no'] = array(
  */
 $messages['pdc'] = array(
 	'swm-label-preview' => 'Aagucke',
-	'swm-label-comment' => 'Anmaerricking',
+	'swm-label-comment' => 'Aamaericking',
 	'swm-label-language' => 'Schprooch',
 	'swm-button-preview' => '[ Aagucke ]',
 	'swm-button-send' => '[ Naus schicke ]',
@@ -1394,7 +1397,7 @@ $messages['pt'] = array(
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
-	'swm-label-preview' => 'Previsualizar',
+	'swm-label-preview' => 'Pré-visualizar',
 	'swm-label-edit' => 'Editar',
 	'swm-label-remove' => 'Remover',
 	'swm-label-recipient-users' => 'Usuários',
@@ -1493,6 +1496,15 @@ $messages['ru'] = array(
 	'swm-error-empty-message' => 'Введите содержание сообщения.',
 	'swm-error-empty-group' => 'Введите название группы.',
 	'swm-lang-other' => 'все остальные языки',
+);
+
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'swm-button-save' => '[ Shrani ]',
+	'swm-yes' => 'Da',
+	'swm-no' => 'Ne',
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
@@ -1701,7 +1713,7 @@ $messages['tt-cyrl'] = array(
 	'swm-list-table-sender' => 'Җибәрүче',
 	'swm-list-table-wiki' => 'Вики',
 	'swm-list-table-recipient' => 'Хатны кабул итүче',
-	'swm-list-table-group' => 'Тәркем',
+	'swm-list-table-group' => 'Төркем',
 	'swm-list-table-expire' => 'Бетә',
 	'swm-list-table-date' => 'Җибәрү вакыты',
 	'swm-list-table-removed' => 'Бетерелде',

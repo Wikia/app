@@ -147,6 +147,7 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author IAlex
+ * @author Slamduck
  */
 $messages['fr'] = array(
 	'privatedomains_nomanageaccess' => "Désolé, vous n'avez les droits suffisants pour gérer les domaines privés de ce wiki. Seuls les bureaucrates et les membres du personnel y ont accès.
@@ -155,7 +156,7 @@ Si vous n'êtes pas connecté, vous devriez probablement [[Special:UserLogin|vou
 	'privatedomains' => 'Gérer les domaines privés',
 	'privatedomains_ifemailcontact' => 'Sinon, veuillez contacter [[Special:EmailUser/$1|$1]] si vous avec une question.',
 	'saveprivatedomains_success' => 'Modifications dans les domaines privés sauvegardés.',
-	'privatedomains_invalidemail' => "Désolé, l'accès à ce wiki est réservé aux membre de $1. Si vos avez une adresse de courriel affiliée avec $1, vous pouvez entrer ou reconfirmer votre adresse de courriel dans sur la page de préférences du compte [[Special:Preferences|ici]]. Vous pouvez toujours voir les pages de ce wiki, mais vous ne pouvez pas le modifier.",
+	'privatedomains_invalidemail' => "Désolé, l'accès à ce wiki est réservé aux membres de $1. Si vous avez une adresse de courriel affiliée à $1, vous pouvez entrer ou reconfirmer votre adresse de courriel dans la page de préférences de votre compte [[Special:Preferences|ici]]. Vous pouvez toujours voir les pages de ce wiki, mais vous ne pouvez pas le modifier.",
 	'privatedomains_affiliatenamelabel' => "Nom de l'organisation :",
 	'privatedomains_emailadminlabel' => "Nom d'utilisateur du contact pour des problèmes d'accès ou requêtes :",
 	'privatedomainsinstructions' => 'La liste des domaines des adresses de courriel autorisées pour les éditeurs de ce wiki est affichée ci-dessous. Chaque ligne désigne un suffixe d\'adresse de courriel qui donne accès aux éditeurs. La liste doit être formatée avec un suffixe par ligne. Par exemple :</p><p style="width: 20%; padding:5px; border: 1px solid grey;">cs.stanford.edu<br /> stanfordalumni.org</p><p>Ceci permettra à toutes les personnes ayant une adresse de courriel se terminant par « @cs.stanford.edu » et  « @stanfordalumni.org » de modifier le wiki.</p><p><b>Entrez la liste des domaines autorisés dans la boîte ci-dessous et cliquez sur « {{int:saveprefs}} ».</b>',

@@ -29,6 +29,19 @@ $messages['af'] = array(
 	'enablerichtexteditor' => 'Aktiveer uitgebreide teksverwerker',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'rte-desc' => 'Інтэграцыя CKeditor ў MediaWiki',
+	'rte-no-js-fallback' => 'Пашыраны тэкставы рэдактар не працуе, калі выключаны JavaScript. Калі ласка, уключыце яго ва ўстаноўках браўзэра, ці наведайце Вашыя [[Special:Preferences|ўстаноўкі]], каб пераключыцца на стары рэдактар MediaWiki',
+	'rte-edgecase-info-title' => 'Патрабуецца крынічны рэжым',
+	'rte-edgecase-info' => 'Пашыраны тэкставы рэдактар адключаны, таму што старонка ўтрымлівае складаны код.',
+	'rte-edgecase-comment' => 'HTML-камэнтары',
+	'rte-edgecase-triplecurls' => 'парамэтры шаблёну',
+);
+
 /** Bulgarian (Български)
  * @author Stanqo
  */
@@ -37,12 +50,15 @@ $messages['bg'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
  */
 $messages['br'] = array(
 	'rte-desc' => 'Enframmadur CKeditor evit MediaWiki',
+	'rte-no-js-fallback' => "Ne'z a ket an aozer testennoù araokaet en-dro pa vez lazhet gant JavaScript. Gweredekait Java e dibarzhioù ho merdeer pe kit da welet [[Special:Preferences|penndibaboù]] evit labourat gant aozer testennoù kozh MediaWiki",
 	'rte-edgecase-info-title' => 'Mod mammenn ret',
+	'rte-edgecase-info' => 'Diweredekaet eo bet an aozer testennoù araokaet peogwir e oa kodoù kemplezh er bajenn.',
 	'rte-edgecase-comment' => 'Evezhiadennoù HTML',
 	'rte-edgecase-triplecurls' => 'arventennoù ar patromoù',
 	'rte-edgecase-nowysiwyg' => 'ar gourc\'hemenn "WYSIWYG ebet"',
@@ -54,6 +70,7 @@ $messages['br'] = array(
 	'rte-edgecase-templateintable' => 'un daolenn gant ur galv patrom en e dermenadur',
 	'rte-edgecase-unclosed-tags' => 'balizenn HTML nann-serret',
 	'enablerichtexteditor' => 'Gweredekaat an embanner nevez',
+	'rte-enablerichtexteditormessage' => 'Gweredekaet eo bet an aozer testennoù araokaet (Rich Text Editor)',
 	'rte-first-run-notice' => "Degaset hon eus un nebeut gwelladennoù d'an embanner. Evit gouzout hiroc'h, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news lennit ar c'hemenn].",
 );
 
@@ -253,9 +270,14 @@ $messages['no'] = array(
 	'rte-edgecase-unclosed-tags' => 'ulukket HTML-element',
 );
 
-/** Polish (Polski) */
+/** Polish (Polski)
+ * @author Holek
+ * @author Sp5uhe
+ */
 $messages['pl'] = array(
 	'rte-desc' => 'CKeditor dla MediaWiki',
+	'rte-no-js-fallback' => 'Rozszerzony edytor tekstu działa tylko gdy włączona jest obsługa JavaScript. Włącz obsługę JavaScript w ustawieniach przeglądarki lub przywróć tradycyjny edytor MediaWiki w swoich [[Special:Preferences|preferencjach]].',
+	'rte-edgecase-info-title' => 'Wymagany tryb źródła',
 	'rte-edgecase-info' => 'Edycja w trybie wizualnym została wyłączona dla tej strony, ponieważ zawiera ona zbyt skomplikowany kod.',
 	'rte-edgecase-comment' => 'komentarze w kodzie HTML',
 	'rte-edgecase-triplecurls' => 'parametry szablonu',
@@ -269,6 +291,7 @@ $messages['pl'] = array(
 	'rte-edgecase-unclosed-tags' => 'niezamknięte tagi HTML',
 	'enablerichtexteditor' => 'Włącz edytor wizualny',
 	'rte-enablerichtexteditormessage' => 'Edytor wizualny został włączony!',
+	'rte-first-run-notice' => 'Wprowadziliśmy kilka usprawnień w edytorze. Aby dowiedzieć się więcej, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news przeczytaj ogłoszenie].',
 );
 
 /** Piedmontese (Piemontèis)
@@ -293,6 +316,30 @@ $messages['pms'] = array(
 	'enablerichtexteditor' => "Abìlité l'editor ëd test anrichì",
 	'rte-enablerichtexteditormessage' => 'Editor ëd test anrichì abilità!',
 	'rte-first-run-notice' => "I l'oma fàit chèich ameliorassion a l'editor. Për savejne ëd pi, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news ch'a lesa l'anonsi].",
+);
+
+/** Portuguese (Português)
+ * @author Giro720
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'rte-desc' => 'Integração do CKeditor no MediaWiki',
+	'rte-no-js-fallback' => 'O editor de texto enriquecido não funciona com o JavaScript desactivado. Active-o nas opções do browser, ou mude as suas [[Special:Preferences|preferências]] para o editor antigo do MediaWiki.',
+	'rte-edgecase-info-title' => 'É necessário o modo de código fonte',
+	'rte-edgecase-info' => 'A edição de texto enriquecido foi desactivada porque a página contém código complexo.',
+	'rte-edgecase-comment' => 'comentários HTML',
+	'rte-edgecase-triplecurls' => 'parâmetros de predefinições',
+	'rte-edgecase-nowysiwyg' => 'o comando "sem WYSIWYG"',
+	'rte-edgecase-complex-description' => 'uma URL externa ou uma predefinição na descrição de um link',
+	'rte-edgecase-template-with-link' => 'uma predefinição com um link como parâmetro',
+	'rte-edgecase-syntax' => 'sintaxe não permitida',
+	'rte-edgecase-image-with-link' => 'imagem com um link na descrição',
+	'rte-edgecase-redirect' => 'redireccionamento',
+	'rte-edgecase-templateintable' => 'uma tabela cuja definição chama uma predefinição',
+	'rte-edgecase-unclosed-tags' => 'elemento HTML não foi fechado',
+	'enablerichtexteditor' => 'Activar o Editor de Texto Enriquecido ("Rich Text Editor")',
+	'rte-enablerichtexteditormessage' => 'O Editor de Texto Enriquecido foi activado!',
+	'rte-first-run-notice' => 'Fizemos algumas melhorias no editor. Para saber mais, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news leia o anúncio].',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

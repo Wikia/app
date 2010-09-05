@@ -78,9 +78,11 @@ $messages['fi'] = array(
 	'theorytab-parent-title' => 'Ylimmän tason artikkeli',
 );
 
-/** French (Français) */
+/** French (Français)
+ * @author Slamduck
+ */
 $messages['fr'] = array(
-	'theorytab-title' => 'Theories',
+	'theorytab-title' => 'Théorie',
 	'theorytab-parent-title' => 'Article Principal',
 );
 
