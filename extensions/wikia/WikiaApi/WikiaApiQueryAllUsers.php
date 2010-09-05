@@ -169,20 +169,20 @@ class WikiaApiQueryAllUsers extends ApiQueryAllUsers {
 		if ( $this->fld_groups ) {
 			$user_groups = $this->getAllUserGroups();
 			
-			$this->addTables( 'user_groups', 'ug2' );
-			$tname = $this->getAliasedName('user_groups', 'ug2');
+			$this->addTables( 'user_groups' );
+			$tname = 'user_groups';//$this->getAliasedName('user_groups', 'ug2');
 			$this->addJoinConds(
 				array(
-					$tname => array('LEFT JOIN', 'ug2.ug_user=u1.user_id')
+					$tname => array('LEFT JOIN', 'ug_user=u1.user_id')
 				)
 			);
-			$this->addFields( 'ug2.ug_group ug_group2' );
+			$this->addFields( 'ug_group ug_group2' );
 		} 
 		
 		if ( $this->fld_blockinfo ) {
 			$this->addTables('ipblocks');
 			$this->addTables('user', 'u2');
-			$u2 = $this->getAliasedName('user', 'u2');
+			$u2 = sprintf("%s %s", 'user', 'u2');//$this->getAliasedName('user', 'u2');
 			$this->addJoinConds(
 				array(
 					'ipblocks' => array('LEFT JOIN', 'ipb_user=u1.user_id'),
