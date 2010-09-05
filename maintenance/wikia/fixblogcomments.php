@@ -51,15 +51,56 @@ function fixAllBlogComments() {
 				
 				$newTitle = sprintf('%s/%s', $parts['title'], implode("/", $parts['parsed']) ); 
 				
-				# we have a new Title - $newTitle - update it everywhere
-				
+				# we have a new Title - $newTitle - update it everywhere				
 				# update page
-				
+				$dbw = wfGetDB( DB_MASTER );
+				$dbext = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB);
+
+				if ( $dry ) {
+					 print "update page set page_title = '$newTitle' where page_title = '{$row['page_title]}' and page_namespace = '".NS_BLOG_ARTICLE_TALK."' \n";
+				} else {
+					$dbw->update(
+						'page',
+						array( 'page_title' => $newTitle ),
+						array( 'page_title' => $row['page_title'], 'page_namespace' => NS_BLOG_ARTICLE_TALK ),
+						$method
+					);
+				}
 				# update job
+				if ( $dry ) {
+					 print "update job set job_title = '$newTitle' where job_title = '{$row['page_title]}' and job_namespace = '".NS_BLOG_ARTICLE_TALK."' \n";
+				} else {
+					$dbw->update(
+						'job',
+						array( 'job_title' => $newTitle ),
+						array( 'job_title' => $row['page_title'], 'job_namespace' => NS_BLOG_ARTICLE_TALK ),
+						$method
+					);
+				}
 				
 				# update watchlist
+				if ( $dry ) {
+					 print "update watchlist set wl_title = '$newTitle' where wl_title = '{$row['page_title]}' and wl_namespace = '".NS_BLOG_ARTICLE_TALK."' \n";
+				} else {
+					$dbw->update(
+						'watchlist',
+						array( 'wl_title' => $newTitle ),
+						array( 'wl_title' => $row['page_title'], 'wl_namespace' => NS_BLOG_ARTICLE_TALK ),
+						$method
+					);
+				}
 				
 				# update dataware
+				if ( $dry ) {
+					 print "update pages set page_title = '$newTitle' where page_title = '{$row['page_title]}' and page_namespace = '".NS_BLOG_ARTICLE_TALK."' \n";
+				} else {
+					$dbext->update(
+						'pages',
+						array( 'page_title' => $newTitle ),
+						array( 'page_title' => $row['page_title'], 'page_namespace' => NS_BLOG_ARTICLE_TALK ),
+						$method
+					);
+				}
 			}
 		}
 	}
