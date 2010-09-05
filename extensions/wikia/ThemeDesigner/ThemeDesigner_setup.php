@@ -12,6 +12,7 @@ $wgAutoloadClasses['ThemeDesignerModule'] = "$dir/ThemeDesignerModule.class.php"
 $wgAutoloadClasses['ThemeDesignerHelper'] = "$dir/ThemeDesignerHelper.class.php";
 $wgAutoloadClasses['ThemeSettings'] = "$dir/ThemeSettings.class.php";
 $wgAutoloadClasses['SpecialThemeDesigner'] = "$dir/SpecialThemeDesigner.class.php";
+// @todo FIXME: add aliases file for localised special page names.
 $wgSpecialPages['ThemeDesigner'] = 'SpecialThemeDesigner';
 $wgExtensionMessagesFiles['ThemeDesigner'] = "$dir/ThemeDesigner.i18n.php";
 
