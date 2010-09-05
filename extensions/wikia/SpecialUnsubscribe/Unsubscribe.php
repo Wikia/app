@@ -6,11 +6,11 @@
  * @ingroup Extensions
  * @version 0.1
  * @author C. Uberfuzzy Stafford, Wikia Inc.
- * @copyright © 2010 
+ * @copyright © 2010
  * @licence GNU General Public Licence
  */
 
-if( !defined( 'MEDIAWIKI' ) ) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	echo( "This file is an extension to the MediaWiki software and cannot be used standalone.\n" );
 	die( 1 );
 }
@@ -20,13 +20,12 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Unsubscribe',
 	'version' => '0.1',
 	'author' => 'C. Uberfuzzy Stafford, Wikia Inc.',
-	'description' => 'Single email ubsubscribe',
-	#'url' => '',
-	'descriptionmsg' => 'Unsubscribe-desc',
+	# 'url' => '',
+	'descriptionmsg' => 'unsubscribe-desc',
 );
 
 // Set up the new special page
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['Unsubscribe'] = $dir . 'Unsubscribe.i18n.php';
 $wgExtensionAliasesFiles['Unsubscribe'] = $dir . 'Unsubscribe.alias.php';
 $wgAutoloadClasses['UnsubscribePage'] = $dir . 'Unsubscribe.body.php';

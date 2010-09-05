@@ -10,5 +10,5 @@ $aliases = array();
 
 /** English */
 $aliases['en'] = array(
-	'Unsubscribe' => array( 'Unsubscribe', 'unsub' ),
+	'Unsubscribe' => array( 'Unsubscribe', 'Unsub' ),
 );
