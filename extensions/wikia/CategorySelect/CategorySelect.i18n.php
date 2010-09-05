@@ -20,6 +20,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'categoryselect-desc' => 'Provides an interface for managing categories in article without editing whole article',
 	'categoryselect-code-view' => 'Code view',
 	'categoryselect-visual-view' => 'Visual view',
 	'categoryselect-infobox-caption' => 'Category options',
@@ -36,7 +37,6 @@ $messages['en'] = array(
 	'categoryselect-error-not-exist' => 'Article [id=$1] does not exist.',
 	'categoryselect-error-user-rights' => 'User rights error.',
 	'categoryselect-error-db-locked' => 'Database is locked.',
-	'categoryselect-desc' => 'Provides an interface for managing categories in article without editing whole article.',
 	'categoryselect-edit-abort' => 'The modification you tried to make was aborted by an extension hook',
 	'tog-disablecategoryselect' => 'Disable Category Tagging'
 );
