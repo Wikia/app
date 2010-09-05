@@ -202,6 +202,21 @@ $messages['he'] = array(
 * נסה את העמוד הראשי של הוויקי הזאת, לחץ על הקישור: [{{SERVER}} {{SITENAME}}]",
 );
 
+/** Croatian (Hrvatski)
+ * @author SpeedyGonsales
+ */
+$messages['hr'] = array(
+	'our404handler' => '404: Stranica nije pronađena!',
+	'our404handler-oops' => 'Ovo nije stranica koju tražite. Molim probajte negdje drugdje.',
+	'message404' => "'''Jako nam je žao, ali iz nekog razloga stranica koju ste tražili ne postoji.''' 
+
+Članak '''$1''' nije pronađen. 
+
+* Možete probati članak [[$2]] 
+* Možete koristiti okvir za pretraživanje na lijevoj strani stranice 
+* Da bi došli na glavnu stranicu ovog projekta, kliknite na poveznicu: [{{SERVER}} {{sitename}}]",
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
@@ -266,10 +281,19 @@ Artikel '''$1''' tidak dapat ditemukan.
 );
 
 /** Italian (Italiano)
+ * @author Gianfranco
  * @author HalphaZ
  */
 $messages['it'] = array(
 	'our404handler' => 'Errore 404: Pagina non trovata!',
+	'our404handler-oops' => 'Queste non sono le pagine che stavi cercando. Prosegui, per favore.',
+	'message404' => "'''Siamo davvero spiacenti, ma per qualche motivo la pagina che hai richiesto non esiste.''' 
+
+La pagina '''$1''' non è stata trovata. 
+
+ * Puoi provare la pagina [[$2]] 
+ * Puoi utilizzare la casella di ricerca sul lato sinistro della pagina 
+ * Per andare alla pagina principale di questo sito, clicca sul link: [{{SERVER}} {{SITENAME}}]",
 );
 
 /** Japanese (日本語)
@@ -492,6 +516,13 @@ $messages['ru'] = array(
 * Чтобы перейти на главную страницу этого сайта, нажмите на данную ссылку [{{SERVER}} {{SITENAME}}].",
 );
 
+/** Sinhala (සිංහල)
+ * @author බිඟුවා
+ */
+$messages['si'] = array(
+	'our404handler' => 'වැරැද්ද 404: පිටුව සොයා ගත නොහැකි විය!',
+);
+
 /** Slovenian (Slovenščina)
  * @author Dbc334
  */
@@ -583,5 +614,20 @@ Bài viết '''$1''' không tìm thấy.
 * Bạn có thể thử bài viết [[$2]]
 * Bạn có thể sử dụng ô tìm kiếm ở phía bên trái trang
 * Để tiếp tục đến trang chính của website này, nhấn vào liên kết: [{{SERVER}} {{SITENAME}}]",
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Wilsonmess
+ */
+$messages['zh-hans'] = array(
+	'our404handler' => '错误404：找不到该页面',
+	'our404handler-oops' => '找不到您要查看的页面。请继续当前操作。',
+	'message404' => "'''我们深感抱歉，但是由于某些原因您所请求的页面并不存在。'''
+
+找不到名为'''$1'''的页面。
+
+*或许这些页面会对您有所帮助：[[$2]]；
+*或许您可以使用左上方的搜索框进行搜索；
+*若您想访问本站主页，点击这个链接：[{{SERVER}} {{SITENAME}}]",
 );
 

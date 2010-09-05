@@ -1743,6 +1743,7 @@ $messages['fi'] = array(
  * @author IAlex
  * @author McDutchie
  * @author Peter17
+ * @author Urhixidur
  */
 $messages['fr'] = array(
 	'wikiastats' => 'Statistiques de Wikia',
@@ -1855,7 +1856,7 @@ $messages['fr'] = array(
 	'wikiastats_mainstats_column_B' => 'Éditeurs enregistrés qui ont contribué 5 fois ou plus dans le mois actuel',
 	'wikiastats_mainstats_column_C' => 'Éditeurs enregistrés qui ont contribué 100 fois ou plus dans le mois actuel',
 	'wikiastats_mainstats_column_D' => "Nombre d'éditeurs uniques (utilisateurs enregistrés) qui ont au moins une modifications dans l'espace de noms utilisateur dans le mois actuel",
-	'wikiastats_mainstats_column_E' => "Nombre d'éditeurs uniques (utilisateurs enregistrés) qui ont au moins une modifications dans l'espace de noms image dans le mois actuel",
+	'wikiastats_mainstats_column_E' => 'Nombre d’éditeurs uniques (utilisateurs enregistrés) qui ont au moins une modification dans l’espace de noms image pour le mois actuel',
 	'wikiastats_mainstats_column_F' => "Nombre total d'éditeurs enregistrés qui ont au moins une modification dans n'importe quel espace de noms",
 	'wikiastats_mainstats_column_G' => 'Articles qui contiennent au moins un lien interne',
 	'wikiastats_mainstats_column_H' => 'Nouveaux articles par jour dans le mois actuel',
@@ -1870,7 +1871,7 @@ $messages['fr'] = array(
 	'wikiastats_mainstats_short_column_B' => 'Édtieurs enregistrés actifs',
 	'wikiastats_mainstats_short_column_C' => 'Éditeurs enregistés très actifs',
 	'wikiastats_mainstats_short_column_D' => 'Édtieurs enregistrés uniques (espace de noms utilisateur)',
-	'wikiastats_mainstats_short_column_E' => 'Édtieurs enregistrés uniques (espace de noms image)',
+	'wikiastats_mainstats_short_column_E' => 'Éditeurs enregistrés uniques (espace de noms image)',
 	'wikiastats_mainstats_short_column_F' => "Nombre total d'éditeurs enregistrés qui ont modifié au moins une modification dans n'importe quel espace de noms",
 	'wikiastats_mainstats_short_column_G' => "Compte d'article",
 	'wikiastats_mainstats_short_column_H' => 'Nouveaux articles par jour',
@@ -2596,6 +2597,7 @@ $messages['id'] = array(
 	'wikiastats_active_month' => 'bulan',
 	'wikiastats_active_year' => 'tahun',
 	'wikiastats_active_months' => 'bulan',
+	'wikiastats_wikians' => 'Penyunting terdaftar',
 	'wikiastats_articles' => 'Artikel (kecuali halaman pengalihan)',
 	'wikiastats_articles_text' => 'Artikel',
 	'wikiastats_other' => 'Lain-lain',
@@ -2652,6 +2654,7 @@ $messages['id'] = array(
 	'wikiastats_wikiurl' => 'URL:',
 	'wikiastats_wikicreated' => 'Telah dibuat:',
 	'wikiastats_wikilang' => 'Bahasa:',
+	'wikiastats_mainstats_column_G' => 'Artikel yang berisi setidaknya satu pranala internal',
 	'wikiastats_mainstats_short_column_G' => 'Jumlah artikel',
 	'wikiastats_mainstats_short_column_H' => 'Artikel baru per hari',
 	'wikiastats_mainstats_short_column_I' => 'Artikel lebih dari 0.5 Kb',
@@ -2686,6 +2689,7 @@ $messages['id'] = array(
 	'wikiastats_full_dump_stats' => 'Penuh',
 	'wikiastats_current_dump_stats' => 'Terkini',
 	'wikiastats_database_name_stats' => 'Nama basis data',
+	'wikiastats_dbdumps_stats' => 'Limpahan basisdata',
 	'wikiastats_xls_cancel' => 'Batalkan',
 	'wikiastats_select_text' => 'Pilih Wikia:',
 	'wikiastats_select_btn' => 'Pilih',
@@ -2695,7 +2699,12 @@ $messages['id'] = array(
 	'wikiastats_see_wikia_wide_stats' => 'Lihat pula statistik Wikia-wide:',
 	'wikiastats_see_help_page' => 'Halaman bantuan WikiaStats:',
 	'wikiastats_see_definitions' => 'Lihat definisi',
+	'wikiastats_other_statistics_legend' => 'Statistik lainnya',
+	'wikiastats_date_of_generate' => 'Dihasilkan pada $1',
+	'wikiastats_search_text' => 'Cari:',
+	'wikiastats_sort_list_alphabet' => 'Urutkan secara alfabetis',
 	'wikiastats_see_old_statistics_page' => 'Lihat halaman bantuan statistik wikia',
+	'wikiastats_content' => 'konten',
 	'wikiastats_statistics_information' => 'Informasi Statistik',
 	'wikiastats_nbr_kilo' => 'K = x 1000',
 	'wikiastats_nbr_mega' => 'M = K x 1000',
@@ -3755,6 +3764,7 @@ $messages['mk'] = array(
  * @author Chrisportelli
  */
 $messages['mt'] = array(
+	'wikiastats_panel_close_btn' => 'Agħlaq',
 	'wikiastats_hide' => 'Aħbi',
 );
 
@@ -5245,6 +5255,14 @@ $messages['si'] = array(
 	'wikiastats_total' => 'සියල්ල',
 );
 
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'wikiastats_active_year' => 'leto',
+	'wikiastats_back_to_prevpage' => 'Nazaj',
+);
+
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Rancher
  * @author Verlor
@@ -5691,6 +5709,15 @@ Mangyaring [[Special:UserLogin|lumagda o lumikha ng isang akawnt]] kung wala ka 
 	'wikiastats_pageviews_month' => 'Buwanang estadistika',
 );
 
+/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+ * @author Ильнар
+ */
+$messages['tt-cyrl'] = array(
+	'wikiastats_panel_close_btn' => 'Ябу',
+	'wikiastats_daterange_from' => 'Кемнән:',
+	'wikiastats_daterange_to' => 'Кемгә:',
+);
+
 /** Ukrainian (Українська)
  * @author NickK
  * @author Prima klasy4na
@@ -5701,6 +5728,9 @@ $messages['uk'] = array(
 	'wikiastats_wikia' => 'Вікія',
 	'wikiastats_pagetitle' => 'Вікія Статистика',
 	'wikiastast_refresh_data' => 'Оновити дані',
+	'wikiastats_panel_close_btn' => 'Закрити',
+	'wikiastats_daterange_from' => 'Від:',
+	'wikiastats_daterange_to' => 'Кому:',
 	'wikiaststs_invalid_date' => 'Неправильний діапазон дат',
 	'wikiastats_active_wikians_date' => 'Показати зміни за останні',
 	'wikiastats_active_day' => 'день',
@@ -5709,10 +5739,15 @@ $messages['uk'] = array(
 	'wikiastats_active_months' => 'місяці',
 	'wikiastats_wikians' => 'Зареєстровані користувачі',
 	'wikiastats_articles_text' => 'Статті',
+	'wikiastats_other' => 'Інший',
+	'wikiastats_database' => 'База даних',
+	'wikiastats_links' => 'Посилання',
 	'wikiastats_images' => 'Зображення',
 	'wikiastats_distrib_edits_total' => 'Всього редагувань',
 	'wikiastats_date' => 'Дата',
 	'wikiastats_namespace' => 'Простір назв',
+	'wikiastats_show' => 'Показати',
+	'wikiastats_hide' => 'сховати',
 	'wikiastats_wikiname' => 'Назва:',
 	'wikiastats_wikicategory' => 'Категорія:',
 	'wikiastats_largerthan' => 'більше ніж',
@@ -5735,7 +5770,12 @@ $messages['uk'] = array(
 	'wikiastats_wikicreated' => 'Створено:',
 	'wikiastats_wikilang' => 'Мова:',
 	'wikiastats_mainstats_short_column_G' => 'Кількість статей',
+	'wikiastats_mainstats_short_column_M' => 'Зображення',
 	'wikiastats_comparisons_table_9' => 'Кількість статей',
+	'wikiastats_comparisons_table_15' => 'Зображення',
+	'wikiastats_comparisons_table_16' => 'Зовнішні посилання',
+	'wikiastats_back_to_prevpage' => 'Назад',
+	'wikiastats_trend_formula' => 'Формула',
 	'wikiastats_search_text' => 'Пошук:',
 	'wikiastats_sort_list_size' => 'Сортувати список за розміром',
 	'wikiastats_sort_list_alphabet' => 'Сортувати список за алфавітом',

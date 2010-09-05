@@ -111,6 +111,14 @@ $messages['nl'] = array(
 	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Gemeenschapsberichten zijn bijgewerkt]]',
 );
 
+/** Occitan (Occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'communitymessages-desc' => "Extension d'ajuda pels messatges a la comunautat",
+	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Los messatges a la comunautat son estats meses a jorn]].',
+);
+
 /** Polish (Polski)
  * @author Sp5uhe
  */

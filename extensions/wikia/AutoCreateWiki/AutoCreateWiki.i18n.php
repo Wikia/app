@@ -168,12 +168,14 @@ This is a brand-new project, so please write to us if you have any questions!
 /** Message documentation (Message documentation)
  * @author Prima klasy4na
  * @author Siebrand
+ * @author The Evil IP address
  * @author Umherirrender
  */
 $messages['qqq'] = array(
 	'autocreatewiki-desc' => '{{desc}}',
 	'autocreatewiki-create-account' => '{{Identical|Create an account}}',
 	'autocreatewiki-success-has-been-created' => 'Used as a subtitle to complete the page title, which displays the domain name of the created wiki.',
+	'autocreatewiki-info-realname' => '{{Identical|Real name attribution}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -271,7 +273,7 @@ $messages['ar'] = array(
 
 الآن لديك الموقع كله لملءه  بالمعلومات والصور وأشرطة الفيديو المفضلة لديك حول الموضوع الخاص بك. ولكن في الوقت الراهن ،  صفحات فارغة فقط تحدق فيك أنت... مخيف جدا ، أليس كذلك؟ فيما يلي بعض الطرق للبدء.
 
-* '''قدم موضوعك''' في الصفحة الرئيسية. هذه فرصتك لفسر للقراء ماهو الموضوع الذي ستكون حوله هذه الويكي. أكتب بقدر ما تستطيع!
+* '''قدم موضوعك''' في الصفحة الرئيسية. هذه فرصتك لفسر للقراء ماهو الموضوع الذي ستكون حوله هذه الويكي. أكتب بقدر ما تستطيع! 
 
 * '''إبدأ بعض الصفحات الجديدة''' -- فقط عبارة أو اثنتين هما كافيتان للبداية. لا تدع الصفحات الفارغة تحبطك! الويكي هي حول الإضافة و تغيير الأشياء كلما تتقدم. يمكنك أيضا إضافة الصور و مقاطع الفيديو، لملأ الصفحات و جعلها جالبة أكثر.
 
@@ -320,6 +322,7 @@ $messages['bg'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
  */
@@ -359,6 +362,7 @@ $messages['br'] = array(
 	'autocreatewiki-info-blurry-word' => "Evit sikour ac'hanomp d'en em wareziñ a-enep krouiñ emgefreek kontoù, biskrivit ar ger dispis a welit er vaezienn-mañ.",
 	'autocreatewiki-info-terms-agree' => 'Pa vez krouet ur wiki hag ur gont implijer ez asantit da <a href="http://www.wikia.com/wiki/Terms_of_use"> amplegadoù implijout Wiki</a>.',
 	'autocreatewiki-info-staff-username' => '<b>Skipailh hepken:</b> an implijer spisaet a dremeno da ziazezer ar wiki.',
+	'autocreatewiki-title-template' => 'Wiki $1',
 	'autocreatewiki-limit-day' => 'Aet eo Wikia dreist bevenn krouiñ ar wikioù nevez hiziv ($1).',
 	'autocreatewiki-limit-creation' => "Aet oc'h dreist bevenn uhelañ ar c'hrouiñ wiki dindan 24 eurvezh ($1).",
 	'autocreatewiki-empty-field' => 'Mar plij leunit an takad-mañ.',
@@ -467,7 +471,7 @@ Ur raktres nevez-flamm an hini eo. Skrivit dimp, mar plij, m'hoc'h eus tra goule
  */
 $messages['de'] = array(
 	'autocreatewiki' => 'Erstelle ein neues Wiki',
-	'autocreatewiki-desc' => 'Erzeuge Wiki in WikiFactory nach Benutzeranforderungen',
+	'autocreatewiki-desc' => 'Erzeugt ein Wiki in WikiFactory nach Benutzeranforderungen',
 	'autocreatewiki-page-title-default' => 'Erstelle ein neues Wiki',
 	'autocreatewiki-page-title-answers' => 'Eine neue Answers-Seite erstellen',
 	'createwiki' => 'Neues Wiki erstellen',
@@ -495,11 +499,12 @@ $messages['de'] = array(
 	'autocreatewiki-info-category-answers' => 'Besucher können so deine Answers Seite einfacher finden.',
 	'autocreatewiki-info-language' => 'Dies wird die Standard-Sprache für Besucher deines Wikis.',
 	'autocreatewiki-info-email-address' => 'Deine E-Mail-Adresse wird niemandem angezeigt.',
-	'autocreatewiki-info-realname' => 'Optional. Dein echter Name wird deinen Beiträgen zugeordnet.',
+	'autocreatewiki-info-realname' => 'Damit kann dein bürgerlicher Name deinen Beiträgen zugeordnet werden.',
 	'autocreatewiki-info-birthdate' => 'Wikia verlangt von allen Nutzern, ihr wahres Geburtsdatum anzugeben, sowohl als Sicherheitsmaßnahme, als auch als Mittel zur Wahrung der Integrität der Website unter Einhaltung der behördlichen Vorschriften.',
 	'autocreatewiki-info-blurry-word' => 'Um die automatische Erstellung von Benutzerkonten zu verhindern, tippe bitte das verschwommene Wort ein.',
 	'autocreatewiki-info-terms-agree' => 'Mit Erstellung eines Wikis und eines Benutzerkontos stimmst du Wikias <a href="http://www.wikia.com/wiki/Terms_of_use">Nutzungsbedingungen</a> zu.',
 	'autocreatewiki-info-staff-username' => '<b>Nur für Mitarbeiter:</b> Der angegebene Benutzer wird als Gründer aufgeführt.',
+	'autocreatewiki-title-template' => '$1 Wiki',
 	'autocreatewiki-limit-day' => 'Wikia hat die maximale Anzahl von Wiki-Erstellungen für heute überschritten ($1).',
 	'autocreatewiki-limit-creation' => 'Du hast die maximale Anzahl an Wikis überschritten, die in 24 Stunden erstellt werden können ($1).',
 	'autocreatewiki-empty-field' => 'Fülle bitte dieses Feld aus.',
@@ -624,7 +629,7 @@ $messages['de-formal'] = array(
 	'autocreatewiki-info-category-answers' => 'Besucher können so Ihre Answers Seite einfacher finden.',
 	'autocreatewiki-info-language' => 'Dies wird die Standard-Sprache für Besucher Ihres Wikis.',
 	'autocreatewiki-info-email-address' => 'Ihre E-Mail-Adresse wird niemandem angezeigt.',
-	'autocreatewiki-info-realname' => 'Optional. Ihr echter Name wird Ihren Beiträgen zugeordnet.',
+	'autocreatewiki-info-realname' => 'Damit kann Ihr bürgerlicher Name Ihren Beiträgen zugeordnet werden.',
 	'autocreatewiki-info-terms-agree' => 'Mit Erstellung eines Wikis und eines Benutzerkontos stimmen Sie Wikias <a href="http://www.wikia.com/wiki/Terms_of_use">Nutzungsbedingungen</a> zu.',
 	'autocreatewiki-limit-creation' => 'Sie haben die maximale Anzahl an Wikis überschritten, die in 24 Stunden erstellt werden können ($1).',
 	'autocreatewiki-empty-field' => 'Füllen Sie bitte dieses Feld aus.',
@@ -782,6 +787,7 @@ $messages['es'] = array(
 	'autocreatewiki-info-blurry-word' => 'Para ayudar protegernos contra la creación de cuentas automáticas, escribe la palabra borrosa que ves en el campo que hay, por favor.',
 	'autocreatewiki-info-terms-agree' => 'Con la creación de un wiki y una cuenta de usuario, aceptas los <a href="http://www.wikia.com/wiki/Terms_of_use">Términos de Uso de Wikia</a>',
 	'autocreatewiki-info-staff-username' => '<b>Solamente Staff:</b> El usuario especificado figurará como el fundador del wiki.',
+	'autocreatewiki-title-template' => 'Wiki $1',
 	'autocreatewiki-limit-day' => 'Wikia ha superado el número máximo de creaciones de wikis de hoy ($1).',
 	'autocreatewiki-limit-creation' => 'Has excedido el número máximo de creación de wikis en 24 horas ($1).',
 	'autocreatewiki-empty-field' => 'Por favor, completa este campo.',
@@ -1039,7 +1045,7 @@ $messages['fr'] = array(
 	'autocreatewiki-info-blurry-word' => 'Pour nous aider à nous protéger contre la création automatisée de compte, veuillez taper le mot floué que vous voyez dans ce champ.',
 	'autocreatewiki-info-terms-agree' => 'En créant un wiki et un compte utilisateur, vous acceptez les <a href="http://www.wikia.com/wiki/Terms_of_use">conditions d\'utilisation de Wiki</a>.',
 	'autocreatewiki-info-staff-username' => "<b>Staff seulement :</b> l'utilisateur spécifié sera considéré comme le fondateur du wiki.",
-	'autocreatewiki-title-template' => ' Wiki $1',
+	'autocreatewiki-title-template' => 'Wiki $1',
 	'autocreatewiki-limit-day' => "Wikia a dépassé la limite de création de nouveaux wikis pour aujourd'hui ($1).",
 	'autocreatewiki-limit-creation' => 'Vous avez dépassée la limite maximale de création de wiki en 24 heures ($1).',
 	'autocreatewiki-empty-field' => 'Complétez ce champ.',
@@ -1116,7 +1122,7 @@ Maintenant vous avez un site web qu'il faudra remplir avec des informations, des
 
 Et ensuite continuez ! Les gens aiment aller sur des wikis où il y a beaucoup de choses à lire, donc continuez à ajouter du contenu pour attirer les lecteurs et les éditeurs. Il y a beaucoup à faire mais ne vos en faîtes pas -- aujourd'hui est le premier jour, et vous avez beaucoup de temps. Tous les wikis ont bien commencé un jour -- juste un peu de temps pour débuter quelques pages, jusqu'à ce qu'il devienne un grand site
 
-Si vous avez des questions, vous pouvez nous écrire par cette page [[Special:Contact]]. Nous vous souhaitons bien du plaisir !
+Si vous avez des questions, vous pouvez nous écrire par cette page [[Special:Contact]]. Nous vous souhaitons bien du plaisir ! 
 
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Nouveaux wikis',
@@ -1401,6 +1407,7 @@ $messages['ia'] = array(
 	'autocreatewiki-info-blurry-word' => 'Pro adjutar a proteger le sito contra le creation automatic de contos, per favor entra in iste campo le parola brumose que tu vide.',
 	'autocreatewiki-info-terms-agree' => 'Per crear un wiki e un conto de usator, tu accepta le <a href="http://www.wikia.com/wiki/Terms_of_use">conditiones de uso de Wikia</a>.',
 	'autocreatewiki-info-staff-username' => '<b>Personal solmente:</b> Le usator specificate essera listate qua fundator.',
+	'autocreatewiki-title-template' => 'Wiki $1',
 	'autocreatewiki-limit-day' => 'Wikia ha excedite le limite de creation de nove wikis pro hodie ($1).',
 	'autocreatewiki-limit-creation' => 'Tu ha excedite le numero de wikis que tu pote crear durante 24 horas ($1).',
 	'autocreatewiki-empty-field' => 'Per favor completa iste campo.',
@@ -1507,6 +1514,7 @@ Isto es un projecto totalmente nove, dunque per favor scribe nos si tu ha alcun 
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Farras
  * @author Irwangatot
  */
 $messages['id'] = array(
@@ -1523,7 +1531,7 @@ $messages['id'] = array(
 	'autocreatewiki-language-all' => 'Semua bahasa',
 	'autocreatewiki-birthdate' => 'Tanggal lahir:',
 	'autocreatewiki-blurry-word' => 'Kata tersamar:',
-	'autocreatewiki-remember' => 'Ingatkan saya',
+	'autocreatewiki-remember' => 'Ingat saya',
 	'autocreatewiki-create-account' => 'Buat akun',
 	'autocreatewiki-done' => 'Selesai',
 	'autocreatewiki-error' => 'kesalahan',
@@ -1544,6 +1552,7 @@ $messages['id'] = array(
 	'autocreatewiki-info-blurry-word' => 'Untuk membantu melindungi terhadap pembuatan akun otomatis, silahkan ketik kata buram yang Anda lihat ke dalam bidang ini.',
 	'autocreatewiki-info-terms-agree' => 'Dengan membuat wiki dan akun pengguna,Anda setuju dengan <a href="http://www.wikia.com/wiki/Terms_of_use">Syarat Penggunaan Wikia</a>',
 	'autocreatewiki-info-staff-username' => '<b>Hanya staf:</b> Pengguna yang ditetapkan  akan terdaftar sebagai pendiri.',
+	'autocreatewiki-title-template' => '$1 Wiki',
 	'autocreatewiki-limit-day' => 'Wikia telah melampaui jumlah maksimum pembuatan wiki hari ini ($1).',
 	'autocreatewiki-limit-creation' => 'Anda telah melebihi jumlah maksimum pembuatan wiki dalam 24 jam ($1).',
 	'autocreatewiki-empty-field' => 'Silakan isi bagian ini.',
@@ -1567,9 +1576,9 @@ $messages['id'] = array(
 	'autocreatewiki-category-label' => 'Kategori:',
 	'autocreatewiki-category-other' => 'Lainnya',
 	'autocreatewiki-set-username' => 'Atur nama pengguna lebih dulu.',
-	'autocreatewiki-invalid-category' => 'Nilai tidak sah dari kategori.
+	'autocreatewiki-invalid-category' => 'Nilai tidak sah dari kategori. 
 Silakan pilih yang benar dari daftar pilihan.',
-	'autocreatewiki-invalid-language' => 'Nilai tidak sah dari bahasa.
+	'autocreatewiki-invalid-language' => 'Nilai tidak sah dari bahasa. 
 Silakan pilih yang benar dari daftar pilihan.',
 	'autocreatewiki-invalid-retype-passwd' => 'Silahkan ketik kembali kata kunci yang sama seperti di atas',
 	'autocreatewiki-invalid-birthday' => 'Tanggal lahir tidak sah',
@@ -1599,35 +1608,35 @@ Silakan pilih yang benar dari daftar pilihan.',
 	'autocreatewiki-step7-error' => 'Tidak dapat menyalin basisdata pemulai untuk bahasa!',
 	'autocreatewiki-protect-reason' => 'Bagian dari antarmuka resmi',
 	'autocreatewiki-welcomesubject' => '$1 telah dibuat!',
-	'autocreatewiki-welcomebody' => 'Halo, $2,
+	'autocreatewiki-welcomebody' => 'Halo, $2, 
 
-Permintaan Wikia Anda sekarang tersedia di <$1> Kami berharap dapat melihat Anda meyunting disana segera!
+Permintaan Wikia Anda sekarang tersedia di <$1> Kami berharap dapat melihat Anda meyunting disana segera! 
 
-Kami telah menambahkan beberapa Informasi dan Tips pada halaman Pembicaraan Pengguna Anda (<$5>) untuk membantu Anda memulai.
+Kami telah menambahkan beberapa Informasi dan Tips pada halaman Pembicaraan Pengguna Anda (<$5>) untuk membantu Anda memulai. 
 
-Jika Anda memiliki masalah, Anda dapat meminta bantuan komunitas di wiki di <http://www.wikia.com/wiki/Forum:Help_desk> , Atau melalui surel ke community@wikia.com. Anda juga dapat mengunjungi kami ruang obrolan IRC #wikia <http://irc.wikia.com> .
+Jika Anda memiliki masalah, Anda dapat meminta bantuan komunitas di wiki di <http://www.wikia.com/wiki/Forum:Help_desk> , Atau melalui surel ke community@wikia.com. Anda juga dapat mengunjungi kami ruang obrolan IRC #wikia <http://irc.wikia.com> . 
 
-Saya dapat dihubungi langsung melalui email atau di halaman pembicaraan saya, jika Anda memiliki pertanyaan atau masalah.
+Saya dapat dihubungi langsung melalui email atau di halaman pembicaraan saya, jika Anda memiliki pertanyaan atau masalah. 
 
-Semoga berhasil dengan proyek ini!
+Semoga berhasil dengan proyek ini! 
 
-$3
+$3 
 
-Tim Komunitas Wikia
+Tim Komunitas Wikia 
 
 <http://www.wikia.com/wiki/User:$4>',
 	'autocreatewiki-welcometalk' => "== Selamat Datang! ==
-<div style=\"font-size:120%; line-height:1.2em;\">Hi \$1 -- kami sangat gembira untuk memiliki '''\$4''' sebagai bagian dari komunitas Wikia!
+<div style=\"font-size:120%; line-height:1.2em;\">Hi \$1 -- kami sangat gembira untuk memiliki '''\$4''' sebagai bagian dari komunitas Wikia! 
 
-Sekarang Anda punya website secara utuh untuk diisi dengan informasi, gambar dan video tentang topik kesukaan Anda. Tapi sekarang, itu hanya halaman kosong mengunggu anda ... Menyeramkan, bukan? Berikut adalah beberapa cara untuk memulai.
+Sekarang Anda punya website secara utuh untuk diisi dengan informasi, gambar dan video tentang topik kesukaan Anda. Tapi sekarang, itu hanya halaman kosong mengunggu anda ... Menyeramkan, bukan? Berikut adalah beberapa cara untuk memulai. 
 
-*'''Mengenalkan topik Anda''' di halaman depan. Ini adalah kesempatan Anda untuk menjelaskan kepada pembaca tentang topik Anda. Menulis sebanyak yang Anda inginkan! deskripsi Anda dapat menghubungkan ke semua halaman yang penting di situs Anda.
+*'''Mengenalkan topik Anda''' di halaman depan. Ini adalah kesempatan Anda untuk menjelaskan kepada pembaca tentang topik Anda. Menulis sebanyak yang Anda inginkan! deskripsi Anda dapat menghubungkan ke semua halaman yang penting di situs Anda. 
 
-*'''Mulai beberapa halaman baru''' - hanya satu atau dua kalimat baik untuk memulai. Jangan biarkan halaman kosong menunggu! Wiki adalah semua tentang menambah dan mengubah hal-hal selama Anda pergi. Anda juga dapat menambahkan gambar dan video, untuk mengisi halaman dan membuatnya lebih menarik.
+*'''Mulai beberapa halaman baru''' - hanya satu atau dua kalimat baik untuk memulai. Jangan biarkan halaman kosong menunggu! Wiki adalah semua tentang menambah dan mengubah hal-hal selama Anda pergi. Anda juga dapat menambahkan gambar dan video, untuk mengisi halaman dan membuatnya lebih menarik. 
 
-Dan kemudian teruskan! Orang-orang senang mengunjungi wiki ketika ada banyak hal untuk dibaca dan dilihat, sehingga terus menambahkan hal-hal lain, dan Anda akan menarik pembaca dan penyunting. Ada banyak yang harus dilakukan, tapi jangan khawatir - hari ini hari pertama Anda, dan Anda punya banyak waktu. Setiap wiki dimulai dengan cara yang sama - sedikit demi sedikit, dimulai dengan beberapa halaman pertama, sampai tumbuh menjadi situs yang besar dan sibuk.
+Dan kemudian teruskan! Orang-orang senang mengunjungi wiki ketika ada banyak hal untuk dibaca dan dilihat, sehingga terus menambahkan hal-hal lain, dan Anda akan menarik pembaca dan penyunting. Ada banyak yang harus dilakukan, tapi jangan khawatir - hari ini hari pertama Anda, dan Anda punya banyak waktu. Setiap wiki dimulai dengan cara yang sama - sedikit demi sedikit, dimulai dengan beberapa halaman pertama, sampai tumbuh menjadi situs yang besar dan sibuk. 
 
-Jika Anda punya pertanyaan, Anda dapat mengirim kami sur-el melalui [[Special:Contact|formulir]]. Selamat bersenang-senang!
+Jika Anda punya pertanyaan, Anda dapat mengirim kami sur-el melalui [[Special:Contact|formulir]]. Selamat bersenang-senang! 
 
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Wiki baru',
@@ -1898,6 +1907,7 @@ $messages['mk'] = array(
 	'autocreatewiki-info-blurry-word' => 'За да ни помогнете да се заштитиме од автоматизирано создавање на сметки, внесете го заматениот збор прикажан во ова поле.',
 	'autocreatewiki-info-terms-agree' => 'Со тоа што го создавате ова вики и корисничка сметка, вие се согласувате со <a href="http://www.wikia.com/wiki/Terms_of_use">Условите на употреба на Викија</a>',
 	'autocreatewiki-info-staff-username' => '<b>Само за персонал:</b> Назначениот корисник ќе биде заведен како основач.',
+	'autocreatewiki-title-template' => '$1 вики',
 	'autocreatewiki-limit-day' => 'Викија го надмина максималниот дозволен број на создадени викија за денес ($1).',
 	'autocreatewiki-limit-creation' => 'Го надминавте максималниот број на создадени викија во рок од 24 часа ($1).',
 	'autocreatewiki-empty-field' => 'Пополнете го ова поле.',
@@ -2201,6 +2211,7 @@ $messages['no'] = array(
 	'autocreatewiki-info-blurry-word' => 'For å beskytte mot automatisk opprettede kontoer vennligst skriv inn det forvrengte ordet som du ser i dette feltet.',
 	'autocreatewiki-info-terms-agree' => 'Ved å opprette en wiki og en brukerkonto godtar du <a href="http://www.wikia.com/wiki/Terms_of_use">Wikias vilkår for bruk</a>',
 	'autocreatewiki-info-staff-username' => '<b>Kun stab:</b> Den angitte brukeren vil bli listet opp som grunnlegger.',
+	'autocreatewiki-title-template' => '$1 Wiki',
 	'autocreatewiki-limit-day' => 'Wikia har overskredet maks antall wikier den kan opprette idag ($1).',
 	'autocreatewiki-limit-creation' => 'Du har overskredet maks antall wikier du kan opprette innen 24 timer ($1).',
 	'autocreatewiki-empty-field' => 'Fyll ut dette feltet.',
@@ -2273,16 +2284,16 @@ $3
 Wikia Community Team
 
 <http://www.wikia.com/wiki/User:$4>',
-	'autocreatewiki-welcometalk' => "== Velkommen! ==
-<div style=\"font-size:120%; line-height:1.2em;\">Hei \$1 -- vi er glade over å ha '''\$4''' som en del av Wikia Fellesskapet!
+	'autocreatewiki-welcometalk' => "== Velkommen! == 
+<div style=\"font-size:120%; line-height:1.2em;\">Hei \$1 -- vi er glade over å ha '''\$4''' som en del av Wikia Fellesskapet! 
 
 Nå har du en hel nettside å fylle opp med informasjon, bilder og video om yndlingstemaet ditt. Men akkurat nå er det bare tomme sider som stirrer på deg... Skremmende, eller hva? Her er noen måter å komme i gang på.
 
 * '''Introduser temaet ditt''' på forsiden. Dette er din mulighet til å forklare leserne mer om hva temaet handler om. Skriv så mye du vil! Beskrivelsen din kan lenke til alle slags viktige artikler på siden din.
 
-* '''Opprett noen nye sider''' -- bare en setning eller to er flott i begynnelsen. Ikke la de tomme sidene stirre deg i senk! En wiki handler om å legge til og endre ting som det faller seg. Du kan også legge til bilder og video for å fylle siden og gjøre den mer interessant.
+* '''Opprett noen nye sider''' -- bare en setning eller to er flott i begynnelsen. Ikke la de tomme sidene stirre deg i senk! En wiki handler om å legge til og endre ting som det faller seg. Du kan også legge til bilder og video for å fylle siden og gjøre den mer interessant. 
 
-Så er det bare å fortsette! Folk liker å besøke wikier med en masse å lese og se på, så fortsett å legge til ting, og du vil tiltrekke nye lesere og bidragsytere. Det er en masse å gjøre, men slapp av -- i dag er den første dagen, og du har masser av tid. Hver eneste wiki starter på samme måte -- litt om gangen, fra de første få sidene, til en stor og travel side.
+Så er det bare å fortsette! Folk liker å besøke wikier med en masse å lese og se på, så fortsett å legge til ting, og du vil tiltrekke nye lesere og bidragsytere. Det er en masse å gjøre, men slapp av -- i dag er den første dagen, og du har masser av tid. Hver eneste wiki starter på samme måte -- litt om gangen, fra de første få sidene, til en stor og travel side. 
 
 Hvis du har spørsmål, kan du sende oss en e-post gjennom vårt [[Special:Contact|kontaktskjema]]. Ha det gøy!
 
@@ -2290,19 +2301,19 @@ Hvis du har spørsmål, kan du sende oss en e-post gjennom vårt [[Special:Conta
 	'newwikis' => 'Nye wikier',
 	'newwikisstart' => 'Vis wikier fra og med:',
 	'autocreatewiki-reminder-body' => '
-Kjære $1:
+Kjære $1: 
 
-Gratulerer med oppstart av din nye wiki, {{SITENAME}}! Du kan komme tilbake og legge til mer på wikien ved å besøke $2.
+Gratulerer med oppstart av din nye wiki, {{SITENAME}}! Du kan komme tilbake og legge til mer på wikien ved å besøke $2. 
 
-Dette er et helt nytt prosjekt, så vennligst skriv til oss om du har noen spørsmål!
+Dette er et helt nytt prosjekt, så vennligst skriv til oss om du har noen spørsmål! 
 
 
 -- Wikia Community Teamet',
 	'autocreatewiki-reminder-body-HTML' => '
-<p>Kjære $1:</p>
+<p>Kjære $1:</p> 
 
-<p>Gratulerer med oppstart av din nye wiki, {{SITENAME}}! Du kan komme tilbake og legge til mer på wikien ved å besøke
-<a href="$2">$2</a>.</p>
+<p>Gratulerer med oppstart av din nye wiki, {{SITENAME}}! Du kan komme tilbake og legge til mer på wikien ved å besøke 
+<a href="$2">$2</a>.</p> 
 
 <p>Dette er et helt nytt prosjekt, så vennligst skriv til oss om du har spørsmål!</p>
 
@@ -2314,24 +2325,144 @@ Dette er et helt nytt prosjekt, så vennligst skriv til oss om du har noen spør
  * @author Sp5uhe
  */
 $messages['pl'] = array(
+	'autocreatewiki' => 'Utwórz nową wiki',
+	'autocreatewiki-desc' => 'Tworzenie przez użytkownika nowej wiki w WikiFactory',
 	'autocreatewiki-page-title-default' => 'Utwórz nową wiki',
+	'autocreatewiki-page-title-answers' => 'Utwórz nowy serwis z odpowiedziami na pytania',
 	'createwiki' => 'Utwórz nową wiki',
-	'autocreatewiki-welcomebody' => 'Witaj, $2!
+	'autocreatewiki-chooseone' => 'Wybierz',
+	'autocreatewiki-required' => '$1 – wymagane',
+	'autocreatewiki-web-address' => 'Adres strony internetowej',
+	'autocreatewiki-category-select' => 'Wybierz',
+	'autocreatewiki-language-top' => '$1 {{PLURAL:$1|najważniejszy język|najważniejsze języki|najważniejszych języków}}',
+	'autocreatewiki-language-all' => 'Wszystkie języki',
+	'autocreatewiki-birthdate' => 'Data urodzenia',
+	'autocreatewiki-blurry-word' => 'Zamazane słowo',
+	'autocreatewiki-remember' => 'Pamiętaj mnie',
+	'autocreatewiki-create-account' => 'Zarejestruj się',
+	'autocreatewiki-done' => 'gotowe',
+	'autocreatewiki-error' => 'błąd',
+	'autocreatewiki-haveaccount-question' => 'Masz już konto w Wikii?',
+	'autocreatewiki-success-title-default' => 'Twoja wiki została utworzona!',
+	'autocreatewiki-success-title-answers' => 'Witryna z odpowiedziami na pytania została utworzona!',
+	'autocreatewiki-success-subtitle' => 'Możesz teraz rozpocząć pracę nad swoją wiki, odwiedzając stronę',
+	'autocreatewiki-success-has-been-created' => 'została utworzona!',
+	'autocreatewiki-success-get-started' => 'Wprowadzenie',
+	'autocreatewiki-info-domain' => 'Najlepiej jest użyć słowa najbliższego dla tematyki strony.',
+	'autocreatewiki-info-topic' => 'Dodaj krótki opis, taki jak „Gwiezdne Wojny” lub „Seriale TV”.',
+	'autocreatewiki-info-category-default' => 'Pomoże to odnaleźć odwiedzającym Twoją wiki.',
+	'autocreatewiki-info-category-answers' => 'Pomoże to odnaleźć odwiedzającym Twoją witrynę z odpowiedziami na pytania.',
+	'autocreatewiki-info-language' => 'Będzie to domyślny język dla odwiedzających Twoją wiki.',
+	'autocreatewiki-info-email-address' => 'Twój adres e‐mail nie zostanie nikomu wyświetlony w Wikii.',
+	'autocreatewiki-info-realname' => 'Jeśli zdecydujesz się je podać, zostaną użyte, by udokumentować Twoje autorstwo.',
+	'autocreatewiki-info-birthdate' => 'Wikia wymaga od wszystkich użytkowników podania przez nich rzeczywistej daty urodzenia zarówno ze względów bezpieczeństwa jak i ze względu na konieczność zapewnienia zgodności z przepisami federalnymi.',
+	'autocreatewiki-info-blurry-word' => 'Ze względu na ochronę przed automatycznym tworzeniem kont, przepisz rozmazane słowo, które widać w tym polu.',
+	'autocreatewiki-info-terms-agree' => 'Tworząc wiki i konto użytkownika, tym samym użytkownik wyraża zgodę <a href="http://www.wikia.com/wiki/Terms_of_use">na warunki korzystania z Wikii</a>',
+	'autocreatewiki-info-staff-username' => '<b>Wyłącznie personel –</b> określony użytkownik zostanie wyświetlony jako założyciel.',
+	'autocreatewiki-title-template' => 'Wiki $1',
+	'autocreatewiki-limit-day' => 'Utworzono dziś w Wikii maksymalną liczbę wiki ($1).',
+	'autocreatewiki-limit-creation' => 'Utworzyłeś w przeciągu ostatnich 24 godzin w Wikii maksymalną liczbę wiki ($1).',
+	'autocreatewiki-empty-field' => 'Należy wypełnić to pole.',
+	'autocreatewiki-bad-name' => 'Nazwa nie może zawierać znaków specjalnych (np. $ lub @) i musi być jednym słowem zapisanym małymi literami bez odstępów.',
+	'autocreatewiki-invalid-wikiname' => 'Nazwa nie może zawierać znaków specjalnych (np. $ lub @) i nie może być pusta',
+	'autocreatewiki-violate-policy' => 'Nazwa wiki zawiera słowo, które narusza naszą politykę nazewnictwa',
+	'autocreatewiki-name-taken' => 'Wiki o tej nazwie już istnieje. Zapraszamy do przyłączenia się do nas na <a href="http://$1.wikia.com">http://$1.wikia.com</a>',
+	'autocreatewiki-name-too-short' => 'Ta nazwa jest zbyt krótka. Należy wybrać nazwę o co najmniej 3 znakach.',
+	'autocreatewiki-name-too-long' => 'Ta nazwa jest zbyt długa. Należy wybrać nazwę o maksymalnie 50 znakach.',
+	'autocreatewiki-similar-wikis' => 'Poniżej znajdują się wiki dotyczące tego tematu. Proponujemy edycję jednej z nich.',
+	'autocreatewiki-invalid-username' => 'Ta nazwa użytkownika jest nieprawidłowa.',
+	'autocreatewiki-busy-username' => 'Ta nazwa użytkownika jest już wykorzystana.',
+	'autocreatewiki-blocked-username' => 'Nie można utworzyć konta.',
+	'autocreatewiki-user-notloggedin' => 'Twoje konto zostało utworzone, ale nie jesteś zalogowany!',
+	'autocreatewiki-empty-language' => 'Określ język dla tej wiki.',
+	'autocreatewiki-empty-category' => 'Wybierz kategorię.',
+	'autocreatewiki-empty-wikiname' => 'Nazwa wiki nie może być pusta.',
+	'autocreatewiki-empty-username' => 'Nazwa użytkownika nie może być pusta.',
+	'autocreatewiki-empty-password' => 'Hasło nie może być puste.',
+	'autocreatewiki-empty-retype-password' => 'Powtórzone hasło nie może być puste.',
+	'autocreatewiki-category-label' => 'Kategoria',
+	'autocreatewiki-category-other' => 'Inne',
+	'autocreatewiki-set-username' => 'Najpierw określ nazwę użytkownika.',
+	'autocreatewiki-invalid-category' => 'Nieprawidłowa kategoria. 
+Wybierz prawidłową z listy rozwijanej.',
+	'autocreatewiki-invalid-language' => 'Nieprawidłowy język. 
+Wybierz prawidłowy z listy rozwijanej.',
+	'autocreatewiki-invalid-retype-passwd' => 'Przepisz hasło tak aby było identyczne do powyższego',
+	'autocreatewiki-invalid-birthday' => 'Nieprawidłowa data urodzenia',
+	'autocreatewiki-limit-birthday' => 'Nie można przeprowadzić rejestracji.',
+	'autocreatewiki-log-title' => 'Twoja wiki jest właśnie tworzona',
+	'autocreatewiki-step0' => 'Proces inicjalizacji...',
+	'autocreatewiki-stepdefault' => 'Proces jest wykonywany, proszę czekać...',
+	'autocreatewiki-errordefault' => 'Proces nie został ukończony...',
+	'autocreatewiki-step1' => 'Tworzenie folderu ilustracji...',
+	'autocreatewiki-step2' => 'Tworzenie bazy danych...',
+	'autocreatewiki-step3' => 'Ustawianie domyślnych informacji w bazie danych...',
+	'autocreatewiki-step4' => 'Kopiowanie domyślnych ilustracji oraz logo...',
+	'autocreatewiki-step5' => 'Ustawianie w bazie danych domyślnych wartości zmiennych...',
+	'autocreatewiki-step6' => 'Ustawienie w bazie danych domyślnych tabel...',
+	'autocreatewiki-step7' => 'Ustawienie początkowych wartości dla języka...',
+	'autocreatewiki-step8' => 'Ustawianie grup użytkowników i kategorii...',
+	'autocreatewiki-step9' => 'Ustawianie zmiennych dla nowej wiki...',
+	'autocreatewiki-step10' => 'Ustawienie stron na centralnej wiki...',
+	'autocreatewiki-step11' => 'Wysyłanie e‐maila do użytkownika...',
+	'autocreatewiki-redirect' => 'Przekierowanie do nowej wiki – $1...',
+	'autocreatewiki-congratulation' => 'Gratulacje!',
+	'autocreatewiki-welcometalk-log' => 'Powitanie',
+	'autocreatewiki-regex-error-comment' => 'wykorzystane w wiki $1 (pełny tekst – $2)',
+	'autocreatewiki-step2-error' => 'Baza danych istnieje!',
+	'autocreatewiki-step3-error' => 'Nie można ustawić domyślnych informacji w bazie danych!',
+	'autocreatewiki-step6-error' => 'Nie można ustawić domyślnych tabel w bazie danych!',
+	'autocreatewiki-step7-error' => 'Nie można skopiować do bazy danych początkowych wartości dla języka!',
+	'autocreatewiki-protect-reason' => 'Część oficjalnego interfejsu',
+	'autocreatewiki-welcomesubject' => 'Wiki $1 została utworzona!',
+	'autocreatewiki-welcomebody' => 'Witaj $2,
 
-Wikia, którą utworzyłeś, jest aktualnie dostępna jako <$1>. Mamy nadzieję, że dzięki Tobie wkrótce powstanie kolejny dobry projekt.
+Wiki, którą utworzyłeś, jest aktualnie dostępna na stronie <$1>. Mamy nadzieję, że szybko rozpoczniesz jej edycję.
 
-Umieściliśmy na Twojej stronie dyskusji trochę informacji i porad, aby pomóc Ci wystartować. Jeśli masz jakieś pytania, odpisz na tego emaila lub zajrzyj na nasze strony pomocy na <http://help.wikia.com>.
+Umieściliśmy na Twojej stronie dyskusji (<$5>) trochę informacji i porad, aby pomóc Ci na początku.
 
-Życzymy powodzenia przy tworzeniu nowej Wikii.
+Jeśli napotkasz jakieś problemy, możesz poprosić o pomoc społeczność na stronie <http://www.wikia.com/wiki/Forum:Help_desk>, lub poprzez e‐mail wysłany na adres community@wikia.com. Możesz również odwiedzić na żywo kanał IRC #wikia na <http://irc.wikia.com>.
 
-$3 Wikia Community Team <http://www.wikia.com/wiki/User:$4>',
+Możesz się ze mną skontaktować bezpośrednio przez e-mail lub na mojej stronie dyskusji, jeśli masz jakiekolwiek pytania lub wątpliwości. 
+
+Życzymy powodzenia przy tworzeniu nowego projektu!
+
+$3
+
+Zespół Obsługi Społeczności Wikii
+
+<http://www.wikia.com/wiki/User:$4>',
+	'autocreatewiki-welcometalk' => "== Witaj! == 
+<div style=\"font-size:120%; line-height:1.2em;\"> Cześć \$1. Cieszymy się, że '''\$4''' jest częścią społeczności Wikia!
+
+Masz teraz własną witryną gotową do wypełnienia informacjami, zdjęciami oraz filmami na temat Twojej pasji. Jednak obecnie są tu tylko puste strony, które czekają na Ciebie... Przeraża Cię to? Oto kilka sposobów, aby rozpocząć.
+
+* '''Wprowadzenie w temat''' na stronie głównej. To jest Twoja szansa, aby wyjaśnić czytelnikom, o czym jest ta wiki. Napisz tyle ile uznasz za stosowne! Twój opis może zawierać linki do wszystkich ważnych stron w witrynie. 
+
+* '''Utwórz kilka nowych stron''' – wystarczy zdanie lub dwa, na dobry początek. Niech puste strony nie straszą czytelników! Wiki pozwala na dodawanie i wprowadzanie zmian bez ograniczeń. Możesz również dodawać zdjęcia i filmy, aby uzupełnić stronę i uczynić ją bardziej interesującą.
+
+Po prostu nie poddawaj się! Ludzie odwiedzający wiki, gdy znajdą dużo ciekawej treści i atrakcyjnych ilustracji pozostaną jako czytelnicy i redaktorzy. Jest wiele do zrobienia, ale nie martw się – dziś to Twój pierwszy dzień – masz dużo czasu. Każda wiki rozpoczyna w ten sam sposób – potrzebuje czasu, zaczyna od kilku stron, a następnie rośnie aż staje się ogromną popularną witryną. 
+
+Jeśli masz pytania, możesz zawsze napisać do nas e‐mail za pośrednictwem [[Special:Contact|formularza kontaktowego]]. Miłej zabawy! 
+
+-- [[User:\$2|\$3]] <staff /></div>",
+	'newwikis' => 'Nowe wiki',
+	'newwikisstart' => 'Wyświetl wiki rozpoczynając od',
 	'autocreatewiki-reminder-body' => 'Szanowny $1!
 
-Gratulujemy utworzenia nowego projektu wiki {{GRAMMAR:D.lp|{{SITENAME}}}}! Możesz wrócić i dodać więcej na swoją wiki odwiedzając $2.
+Gratulujemy utworzenia nowego projektu wiki „{{SITENAME}}”! Możesz teraz wejść na swoją wiki odwiedzając $2 i dodać informacje.
 
 Jest to zupełnie nowy projekt, więc napisz do nas, jeżeli masz jakiekolwiek pytania!
 
 -- Wikia Community Team',
+	'autocreatewiki-reminder-body-HTML' => '<p>Szanowny $1,</p>
+
+<p>Gratulujemy Ci utworzenia nowej wiki „{{SITENAME}}”! Możesz teraz wejść na swoją wiki odwiedzając <a href="$2">$2</a> i dodać nowe informacje..</p>
+
+<p>Jest to zupełnie nowy projekt, więc napisz do nas jeśli masz jakieś pytania!</p>
+
+<p>–– Zespół Społeczności Wikii</p>',
+	'autocreatewiki-subname-answers' => 'Odpowiedzi',
 );
 
 /** Piedmontese (Piemontèis)
@@ -2470,7 +2601,7 @@ Cost-sì a l'é un proget neuv, antlora për piasì ch'a na scriva s'a l'ha qual
 -- L'Echip dla Comunità Wikia",
 	'autocreatewiki-reminder-body-HTML' => '<p>Car $1:</p>
 
-<p>Congratulassion për la partensa ëd soa neuva wiki, {{SITENAME}}! A peul torné andré e gionté ròbe a soa wiki an visitand
+<p>Congratulassion për la partensa ëd soa neuva wiki, {{SITENAME}}! A peul torné andré e gionté ròbe a soa wiki an visitand 
 <a href="$2">$2</a>.</p>
 
 <p>Cost-sì a l\'é un proget neuv, antlora për piasì ch\'a na scriva s\'a l\'ha qualsëssìa chestion!</p>
@@ -2976,6 +3107,7 @@ $3
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Rancher
  * @author Verlor
+ * @author Жељко Тодоровић
  */
 $messages['sr-ec'] = array(
 	'autocreatewiki' => 'Направите нову вики',
@@ -3025,7 +3157,7 @@ $messages['sr-ec'] = array(
 	'autocreatewiki-congratulation' => 'Честитамо!',
 	'autocreatewiki-welcometalk-log' => 'Порука добродошлице',
 	'autocreatewiki-step2-error' => 'Постоји база података!',
-	'autocreatewiki-protect-reason' => 'Део званичног сучеља',
+	'autocreatewiki-protect-reason' => 'Део званичног интерфејса',
 	'autocreatewiki-welcomesubject' => '$1 је створен!',
 	'autocreatewiki-reminder-body' => 'Драги $1:
 
@@ -3036,7 +3168,7 @@ $messages['sr-ec'] = array(
 -- Тим Викија заједнице',
 	'autocreatewiki-reminder-body-HTML' => '<p>Драги $1:</p>
 
-<p>Честитамо што сте покренули нову викију, {{SITENAME}}!  Можете да се вратите и да још тога додате у вашу викију посећујући
+<p>Честитамо што сте покренули нову викију, {{SITENAME}}!  Можете да се вратите и да још тога додате у вашу викију посећујући 
 <a href="$2">$2</a>.</p>
 
 <p>Ово је нов-новцат пројекат,  па Вас молимо да нам пишете уколико имате неких питања!</p>

@@ -52,9 +52,10 @@ $messages['es'] = array(
 
 /** French (Français)
  * @author IAlex
+ * @author Slamduck
  */
 $messages['fr'] = array(
-	'widgetdashboard-wrong-skin' => '<p>Le tableau de bord des widgets marche mieux avec un habillage récent, comme <a href="./Special:WidgetDashboard?useskin=monaco">Monaco</a>.</p><p>Changez vos <a href="./Special:Preferences">préférences</a> pour utiliser cet outil.</p>',
+	'widgetdashboard-wrong-skin' => '<p>Le tableau de bord des widgets fonctionne mieux avec un habillage récent, comme <a href="./Special:WidgetDashboard?useskin=monaco">Monaco</a>.</p><p>Changez vos <a href="./Special:Preferences">préférences</a> pour utiliser cet outil.</p>',
 	'widgetdashboard-description' => 'Cette page sert de place pour tester vos widgets au travail. Pour voir la liste des widgets disponibles allez sur [[Special:Widgets]].',
 );
 

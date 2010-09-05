@@ -391,6 +391,7 @@ $messages['krc'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'dump-database' => 'Dumpe vun der Datebank',
 	'dump-database-curr-pages' => 'Aktuell Säiten',
 	'dump-database-request' => 'Eng Aktualisatioun ufroen',
 );
@@ -536,6 +537,11 @@ $messages['pt-br'] = array(
 	'dump-database-info-more' => 'Por favor <a href="http://community.wikia.com/wiki/Help:Database_download">veja isto</a> para mais informações',
 );
 
+/** Romanian (Română) */
+$messages['ro'] = array(
+	'dump-database-curr-pages' => 'Pagini curente',
+);
+
 /** Russian (Русский)
  * @author Lockal
  * @author Александр Сигачёв
@@ -580,6 +586,15 @@ $messages['sv'] = array(
 	'dump-database-request-submit' => 'Skicka begäran',
 );
 
+/** Tamil (தமிழ்)
+ * @author TRYPPN
+ */
+$messages['ta'] = array(
+	'dump-database-curr-pages' => 'தற்போதய பக்கங்கள்',
+	'dump-database-request' => 'நிகழ்வாக்கம் செய்ய கேட்கவும்',
+	'dump-database-request-submit' => 'வேண்டுகோளை அனுப்பவும்',
+);
+
 /** Telugu (తెలుగు)
  * @author Ravichandra
  */
@@ -607,10 +622,20 @@ $messages['tl'] = array(
 );
 
 /** Ukrainian (Українська)
+ * @author Alex Khimich
  * @author Prima klasy4na
  */
 $messages['uk'] = array(
+	'dump-database' => 'Дампи бази данних',
+	'dump-database-info' => 'Дампи бази данних можуть бути використані в якості особистої резервної копіі (Вікія створює окремі резервні копії  всіх Вікі автоматично), або для роботи з обслуговуючими ботами.',
 	'dump-database-curr-pages' => 'Поточні сторінки',
+	'dump-database-curr-pages-info' => '(Ця версія, як правило, найбільш зручна для ботів)',
+	'dump-database-full-pages' => 'Поточні сторінки та історія',
+	'dump-database-full-pages-info' => '(Увага: цей файл може бути дуже великий)',
+	'dump-database-request' => 'Запросити оновлення',
+	'dump-database-request-info' => '(Дампи зазвичай створюються щотижня)',
+	'dump-database-request-submit' => 'Надіслати запит',
+	'dump-database-request-requested' => 'Запит на створення дампа бази данних надіслано.',
 	'dump-database-info-more' => 'Будь ласка, ознайомтесь з детальнішою інформацією <a href="http://community.wikia.com/wiki/Help:Database_download">тут</a>',
 );
 

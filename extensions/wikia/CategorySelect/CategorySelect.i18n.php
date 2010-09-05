@@ -46,9 +46,9 @@ $messages['en'] = array(
  * @author Umherirrender
  */
 $messages['qqq'] = array(
+	'categoryselect-desc' => '{{desc}}',
 	'categoryselect-button-save' => '{{Identical|Save}}',
 	'categoryselect-button-cancel' => '{{Identical|Cancel}}',
-	'categoryselect-desc' => '{{desc}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -74,6 +74,7 @@ $messages['an'] = array(
  * @author Achraf94
  */
 $messages['ar'] = array(
+	'categoryselect-desc' => 'يوفر واجهة لإدارة التصنيفات في مقالة دون تعديل كامل المقالة',
 	'categoryselect-code-view' => 'عرض الرموز',
 	'categoryselect-visual-view' => 'عرض مرئي',
 	'categoryselect-infobox-caption' => 'خيارات التصنيف',
@@ -90,7 +91,6 @@ $messages['ar'] = array(
 	'categoryselect-error-not-exist' => 'المقالة [id=$1] لا وجود لها',
 	'categoryselect-error-user-rights' => 'خطأ في حقوق المستخدم',
 	'categoryselect-error-db-locked' => 'قاعدة البيانات مغلقة',
-	'categoryselect-desc' => 'يوفر واجهة لإدارة التصنيفات في مقالة دون تعديل كامل المقالة',
 	'categoryselect-edit-abort' => 'التعديل الذي تحاول أن تقوم به أجهض من قبل تمديد هوك',
 	'tog-disablecategoryselect' => 'تعطيل وسم التصنيفات',
 );
@@ -115,6 +115,7 @@ $messages['bg'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
+	'categoryselect-desc' => 'a bourchas un etrefas evit gallout merañ rummadoù ur pennad hep ma vefe ezhomm da voullañ ar pennad a-bezh.',
 	'categoryselect-code-view' => "Gwelet ar c'hod",
 	'categoryselect-visual-view' => 'Sell dre gwelet',
 	'categoryselect-infobox-caption' => 'Dibarzhioù ar rummad',
@@ -131,7 +132,6 @@ $messages['br'] = array(
 	'categoryselect-error-not-exist' => "N'eus ket eus ar pennad [id=$1].",
 	'categoryselect-error-user-rights' => 'Fazi en aotreoù implijerien.',
 	'categoryselect-error-db-locked' => 'Stanket eo ar bank roadennoù',
-	'categoryselect-desc' => 'a bourchas un etrefas evit gallout merañ rummadoù ur pennad hep ma vefe ezhomm da voullañ ar pennad a-bezh.',
 	'categoryselect-edit-abort' => "Ar c'hemm ho peus klask ober zo bet ehanet gant ur c'hrog astenn.",
 	'tog-disablecategoryselect' => 'Diweredekaat balizadur ar rummadoù',
 );
@@ -145,6 +145,7 @@ $messages['ckb'] = array(
  * @author LWChris
  */
 $messages['de'] = array(
+	'categoryselect-desc' => 'Stellt eine Oberfläche zur Verwaltung der Kategorien in einem Artikel ohne Bearbeitung des ganzen Artikels zur Verfügung.',
 	'categoryselect-code-view' => 'Quelltext',
 	'categoryselect-visual-view' => 'Grafische Ansicht',
 	'categoryselect-infobox-caption' => 'Kategorie-Optionen',
@@ -161,7 +162,6 @@ $messages['de'] = array(
 	'categoryselect-error-not-exist' => 'Der Artikel [id=$1] existiert nicht.',
 	'categoryselect-error-user-rights' => 'Keine ausreichenden Benutzerrechte.',
 	'categoryselect-error-db-locked' => 'Die Datenbank ist vorübergehend gesperrt.',
-	'categoryselect-desc' => 'Stellt eine Oberfläche zur Verwaltung der Kategorien in einem Artikel ohne Bearbeitung des ganzen Artikels zur Verfügung.',
 	'categoryselect-edit-abort' => 'Deine versuchte Änderung wurde durch ein Aufhängen einer Erweiterung abgebrochen',
 	'tog-disablecategoryselect' => 'Vereinfachtes Kategorisieren ausschalten',
 );
@@ -187,6 +187,7 @@ $messages['el'] = array(
  * @author Translationista
  */
 $messages['es'] = array(
+	'categoryselect-desc' => 'Proporciona una interfaz para gestionar las categorías de los artículos sin editar todo el artículo.',
 	'categoryselect-code-view' => 'Vista de código',
 	'categoryselect-visual-view' => 'Vista visual',
 	'categoryselect-infobox-caption' => 'Opciones de categoría',
@@ -203,7 +204,6 @@ $messages['es'] = array(
 	'categoryselect-error-not-exist' => 'El artículo [id=$1] no existe.',
 	'categoryselect-error-user-rights' => 'Error de derechos de usuario.',
 	'categoryselect-error-db-locked' => 'La base de datos está bloqueada.',
-	'categoryselect-desc' => 'Proporciona una interfaz para gestionar las categorías de los artículos sin editar todo el artículo.',
 	'categoryselect-edit-abort' => 'La modificación que ha intentado realizar fue abortada por un gancho de extensión',
 	'tog-disablecategoryselect' => 'Desactivar el Etiquetador de Categorías (Category Tagging)',
 );
@@ -242,6 +242,7 @@ $messages['fi'] = array(
  * @author Peter17
  */
 $messages['fr'] = array(
+	'categoryselect-desc' => "Fournit une interface permettant de gérer les catégories d'un article sans avoir à éditer tout l'article.",
 	'categoryselect-code-view' => 'Voir le code',
 	'categoryselect-visual-view' => 'Vue visuelle',
 	'categoryselect-infobox-caption' => 'Options de la catégorie',
@@ -258,7 +259,6 @@ $messages['fr'] = array(
 	'categoryselect-error-not-exist' => "L'article [id=$1] n'existe pas.",
 	'categoryselect-error-user-rights' => "Erreur de droits d'utilisateurs.",
 	'categoryselect-error-db-locked' => 'La base de données est verrouillée.',
-	'categoryselect-desc' => "Fournit une interface permettant de gérer les catégories d'un article sans avoir à éditer tout l'article.",
 	'categoryselect-edit-abort' => "La modification que vous avez essayé de faire a été arrêtée par un crochet d'une extension",
 	'tog-disablecategoryselect' => 'Désactiver le balisage des catégories',
 );
@@ -267,6 +267,7 @@ $messages['fr'] = array(
  * @author Toliño
  */
 $messages['gl'] = array(
+	'categoryselect-desc' => 'Proporciona unha interface para xestionar as categorías dos artigos sen editar todo o artigo.',
 	'categoryselect-code-view' => 'Vista do código',
 	'categoryselect-visual-view' => 'Vista visual',
 	'categoryselect-infobox-caption' => 'Opcións de categoría',
@@ -283,7 +284,6 @@ $messages['gl'] = array(
 	'categoryselect-error-not-exist' => 'O artigo [id=$1] non existe.',
 	'categoryselect-error-user-rights' => 'Erro de dereitos de usuario.',
 	'categoryselect-error-db-locked' => 'A base de datos está bloqueada.',
-	'categoryselect-desc' => 'Proporciona unha interface para xestionar as categorías dos artigos sen editar todo o artigo.',
 	'categoryselect-edit-abort' => 'O hook da extensión abortou a modificación que intentou realizar',
 	'tog-disablecategoryselect' => 'Desactivar a etiquetaxe de categorías',
 );
@@ -312,6 +312,7 @@ $messages['hu'] = array(
  * @author McDutchie
  */
 $messages['ia'] = array(
+	'categoryselect-desc' => 'Provide un interfacie pro gerer le categorias in un articulo sin modificar tote le articulo.',
 	'categoryselect-code-view' => 'Vista de codice',
 	'categoryselect-visual-view' => 'Vista graphic',
 	'categoryselect-infobox-caption' => 'Optiones de categoria',
@@ -328,7 +329,6 @@ $messages['ia'] = array(
 	'categoryselect-error-not-exist' => 'Le articulo [id=$1] non existe.',
 	'categoryselect-error-user-rights' => 'Error de derectos de usator.',
 	'categoryselect-error-db-locked' => 'Le base de datos es blocate.',
-	'categoryselect-desc' => 'Provide un interfacie pro gerer le categorias in un articulo sin modificar tote le articulo.',
 	'categoryselect-edit-abort' => 'Le modification que tu tentava facer ha essite abortate per un extension.',
 	'tog-disablecategoryselect' => 'Disactivar selection de categorias',
 );
@@ -337,6 +337,7 @@ $messages['ia'] = array(
  * @author Irwangatot
  */
 $messages['id'] = array(
+	'categoryselect-desc' => 'Menyediakan sebuah antarmuka untuk mengelola kategori dalam artikel tanpa mengedit seluruh artikel.',
 	'categoryselect-code-view' => 'Tampilan kode',
 	'categoryselect-visual-view' => 'Tampilan visual',
 	'categoryselect-infobox-caption' => 'Pilihan kategori',
@@ -353,7 +354,6 @@ $messages['id'] = array(
 	'categoryselect-error-not-exist' => 'Artikel [id=$1] tidak ada.',
 	'categoryselect-error-user-rights' => 'Kesalahan hak pengguna.',
 	'categoryselect-error-db-locked' => 'Basis data dikunci.',
-	'categoryselect-desc' => 'Menyediakan sebuah antarmuka untuk mengelola kategori dalam artikel tanpa mengedit seluruh artikel.',
 	'categoryselect-edit-abort' => 'Perubahan yang coba Anda lakukan dibatalkan oleh suatu ekstensi kaitan.',
 	'tog-disablecategoryselect' => 'Nonaktifkan Kategori Tagging',
 );
@@ -376,6 +376,7 @@ $messages['it'] = array(
  * @author Tommy6
  */
 $messages['ja'] = array(
+	'categoryselect-desc' => '記事を編集することなくカテゴリを操作するためのインターフェースを提供する',
 	'categoryselect-code-view' => 'ウィキコードを表示',
 	'categoryselect-visual-view' => 'ビジュアルモードで表示',
 	'categoryselect-infobox-caption' => 'カテゴリのオプション',
@@ -392,7 +393,6 @@ $messages['ja'] = array(
 	'categoryselect-error-not-exist' => '記事 [id=$1] が存在しません。',
 	'categoryselect-error-user-rights' => '利用者権限のエラーです。',
 	'categoryselect-error-db-locked' => 'データベースがロックされています',
-	'categoryselect-desc' => '記事を編集することなくカテゴリを操作するためのインターフェースを提供する',
 	'categoryselect-edit-abort' => 'システムにより変更が中断されました',
 	'tog-disablecategoryselect' => 'カテゴリタグ付け機能を無効にする',
 );
@@ -413,6 +413,7 @@ $messages['lb'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'categoryselect-desc' => 'Дава посредник за раководење со категориите во една статија без да треба да се уредува целата статија.',
 	'categoryselect-code-view' => 'Коден изглед',
 	'categoryselect-visual-view' => 'Визуелен изглед',
 	'categoryselect-infobox-caption' => 'Нагодувања за категории',
@@ -429,7 +430,6 @@ $messages['mk'] = array(
 	'categoryselect-error-not-exist' => 'Статијата [id=$1] не постои.',
 	'categoryselect-error-user-rights' => 'Грешка со корисничките права.',
 	'categoryselect-error-db-locked' => 'Базата на податоци е заклучена.',
-	'categoryselect-desc' => 'Дава посредник за раководење со категориите во една статија без да треба да се уредува целата статија.',
 	'categoryselect-edit-abort' => 'Измените кои се обидовте да ги направите се откажани од кука за додатоци',
 	'tog-disablecategoryselect' => 'Оневозможи означување на категории',
 );
@@ -439,6 +439,7 @@ $messages['mk'] = array(
  * @author Siebrand
  */
 $messages['nl'] = array(
+	'categoryselect-desc' => 'Biedt een interface voor het beheren van categorieën in een pagina zonder de hele pagina te bewerken',
 	'categoryselect-code-view' => 'Wikitekstweergave',
 	'categoryselect-visual-view' => 'Visuele weergave',
 	'categoryselect-infobox-caption' => 'Categoriemogelijkheden',
@@ -457,7 +458,6 @@ Terugschakelen naar visuele weergave is niet mogelijk.',
 	'categoryselect-error-not-exist' => 'De pagina [id=$1] bestaat niet.',
 	'categoryselect-error-user-rights' => 'Fout in de gebruikersrechten.',
 	'categoryselect-error-db-locked' => 'De database is geblokkeerd.',
-	'categoryselect-desc' => 'Biedt een interface voor het beheren van categorieën in een pagina zonder de hele pagina te bewerken.',
 	'categoryselect-edit-abort' => 'De wijziging die u probeerde te maken is afgebroken door een uitbreidingshook',
 	'tog-disablecategoryselect' => 'Categorielabels uitschakelen',
 );
@@ -467,6 +467,7 @@ Terugschakelen naar visuele weergave is niet mogelijk.',
  * @author Nghtwlkr
  */
 $messages['no'] = array(
+	'categoryselect-desc' => 'Tilbyr et grensesnitt for håndtering av kategorier i artikler uten å redigere hele artikkelen.',
 	'categoryselect-code-view' => 'Kodevisning',
 	'categoryselect-visual-view' => 'Visuell visning',
 	'categoryselect-infobox-caption' => 'Kategorivalg',
@@ -483,7 +484,6 @@ $messages['no'] = array(
 	'categoryselect-error-not-exist' => 'Artikkel [id=$1] finnes ikke.',
 	'categoryselect-error-user-rights' => 'Feil med brukerrettigheter.',
 	'categoryselect-error-db-locked' => 'Database er låst.',
-	'categoryselect-desc' => 'Tilbyr et grensesnitt for håndtering av kategorier i artikler uten å redigere hele artikkelen.',
 	'categoryselect-edit-abort' => 'Endringene du prøvde å utføre ble avbrutt av en utvidelseskrok',
 	'tog-disablecategoryselect' => 'Deaktiver kategorimerking',
 );
@@ -493,6 +493,7 @@ $messages['no'] = array(
  * @author Dragonòt
  */
 $messages['pms'] = array(
+	'categoryselect-desc' => "A dà n'antërfacia për gestì categorìe ant j'artìcoj sensa modifiché tut l'artìcol.",
 	'categoryselect-code-view' => 'Visualisé ël còdes',
 	'categoryselect-visual-view' => 'Visualisassion visual',
 	'categoryselect-infobox-caption' => 'Opsion ëd categorìa',
@@ -509,7 +510,6 @@ $messages['pms'] = array(
 	'categoryselect-error-not-exist' => "L'artìcol [id=$1] a esist pa.",
 	'categoryselect-error-user-rights' => "Eror dij drit dj'utent.",
 	'categoryselect-error-db-locked' => "La base ëd dàit a l'é blocà.",
-	'categoryselect-desc' => "A dà n'antërfacia për gestì categorìe ant j'artìcoj sensa modifiché tut l'artìcol.",
 	'categoryselect-edit-abort' => "La modìfica ch'it l'has provà a fé a l'é stàita abortìa da n'agancc ëd n'estension",
 	'tog-disablecategoryselect' => 'Disabìlita etichëtté categorìe',
 );
@@ -527,6 +527,7 @@ $messages['ps'] = array(
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
+	'categoryselect-desc' => 'Fornece uma interface para gerir as categorias de um artigo sem editar o artigo completo.',
 	'categoryselect-code-view' => 'Modo de código',
 	'categoryselect-visual-view' => 'Modo de visionamento',
 	'categoryselect-infobox-caption' => 'Opções de categoria',
@@ -543,7 +544,6 @@ $messages['pt'] = array(
 	'categoryselect-error-not-exist' => 'A página [id=$1] não existe.',
 	'categoryselect-error-user-rights' => 'Erro de permissões.',
 	'categoryselect-error-db-locked' => 'A base de dados está trancada.',
-	'categoryselect-desc' => 'Fornece uma interface para gerir as categorias de um artigo sem editar o artigo completo.',
 	'categoryselect-edit-abort' => 'A alteração que tentou fazer foi abortada pelo hook de uma extensão',
 	'tog-disablecategoryselect' => 'Desligar a Categorização',
 );
@@ -553,6 +553,7 @@ $messages['pt'] = array(
  * @author Jesielt
  */
 $messages['pt-br'] = array(
+	'categoryselect-desc' => 'Disponibiliza uma interface para a administração de categorias em um artigo sem necessitar editar o artigo todo.',
 	'categoryselect-code-view' => 'Ver em modo de código',
 	'categoryselect-visual-view' => 'Ver botões',
 	'categoryselect-infobox-caption' => 'Opções de categoria',
@@ -569,7 +570,6 @@ $messages['pt-br'] = array(
 	'categoryselect-error-not-exist' => 'O artigo [id=$1] não existe.',
 	'categoryselect-error-user-rights' => 'Erro nos direitos de usuário.',
 	'categoryselect-error-db-locked' => 'O banco de dados está bloqueado.',
-	'categoryselect-desc' => 'Disponibiliza uma interface para a administração de categorias em um artigo sem necessitar editar o artigo todo.',
 	'categoryselect-edit-abort' => "A alteração que você tentou fazer foi abortada pelo ''hook'' de uma extensão",
 	'tog-disablecategoryselect' => 'Desabilitar os botões de aplicação de categoria',
 );
@@ -579,6 +579,7 @@ $messages['pt-br'] = array(
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
+	'categoryselect-desc' => 'Предоставляет интерфейс для управления категориями в статье без редактирования всей статьи.',
 	'categoryselect-code-view' => 'Просмотр кода',
 	'categoryselect-visual-view' => 'Визуальный просмотр',
 	'categoryselect-infobox-caption' => 'Настройки категории',
@@ -595,9 +596,15 @@ $messages['ru'] = array(
 	'categoryselect-error-not-exist' => 'Статья [id=$1] не существует.',
 	'categoryselect-error-user-rights' => 'Ошибка прав участника.',
 	'categoryselect-error-db-locked' => 'База данных заблокирована.',
-	'categoryselect-desc' => 'Предоставляет интерфейс для управления категориями в статье без редактирования всей статьи.',
 	'categoryselect-edit-abort' => 'Изменение, которые вы пытались сделать, прервано обработчиком расширения',
 	'tog-disablecategoryselect' => 'Отключить Category Taging',
+);
+
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'categoryselect-button-save' => 'Shrani',
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
@@ -629,6 +636,7 @@ $messages['te'] = array(
  * @author AnakngAraw
  */
 $messages['tl'] = array(
+	'categoryselect-desc' => 'Nagbibigay ng isang hangganang-mukha para sa pamamahala ng mga kategorya sa loob ng artikulo na hindi binabago ang buong artikulo.',
 	'categoryselect-code-view' => 'Tingin sa kodigo',
 	'categoryselect-visual-view' => 'Tanawing nakikita',
 	'categoryselect-infobox-caption' => 'Mga mapagpipilian ng kategorya',
@@ -645,7 +653,6 @@ $messages['tl'] = array(
 	'categoryselect-error-not-exist' => 'Hindi umiiral ang artikulong [id=$1].',
 	'categoryselect-error-user-rights' => 'Kamalian sa mga karapatan ng tagagamit.',
 	'categoryselect-error-db-locked' => 'Nakakandado ang kalipunan ng dato',
-	'categoryselect-desc' => 'Nagbibigay ng isang hangganang-mukha para sa pamamahala ng mga kategorya sa loob ng artikulo na hindi binabago ang buong artikulo.',
 	'categoryselect-edit-abort' => 'Ang pagbabagong sinubok mong gawin ay pinigil ng isang kawil ng dugtong',
 	'tog-disablecategoryselect' => 'Huwag Paganahin ang Pagtatatak ng Kategorya',
 );
@@ -654,6 +661,7 @@ $messages['tl'] = array(
  * @author Prima klasy4na
  */
 $messages['uk'] = array(
+	'categoryselect-desc' => 'Забезпечує інтерфейс для управління категоріями у статті без редагування всієї статті.',
 	'categoryselect-code-view' => 'Перегляд коду',
 	'categoryselect-infobox-caption' => 'Параметри категорії',
 	'categoryselect-infobox-category' => 'Вкажіть назву категорії:',
@@ -666,7 +674,6 @@ $messages['uk'] = array(
 	'categoryselect-button-cancel' => 'Скасувати',
 	'categoryselect-error-not-exist' => 'Статті [id=$1] не існує.',
 	'categoryselect-error-user-rights' => 'Помилка прав користувача.',
-	'categoryselect-desc' => 'Забезпечує інтерфейс для управління категоріями у статті без редагування всієї статті.',
 );
 
 /** Urdu (اردو) */

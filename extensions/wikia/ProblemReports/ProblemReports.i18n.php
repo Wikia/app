@@ -197,6 +197,7 @@ $messages['af'] = array(
  */
 $messages['an'] = array(
 	'pr_describe_problem' => 'Mensache',
+	'pr_table_description' => 'Descripción',
 	'pr_table_actions' => 'Accions',
 );
 
@@ -281,6 +282,17 @@ $messages['be-tarask'] = array(
 	'pr_status_1' => 'выпраўлена',
 	'pr_status_2' => 'закрыта',
 	'pr_status_3' => 'неабходная дапамога супрацоўнікаў',
+	'pr_status_10' => 'выдаліць паведамленьне',
+	'pr_status_undo' => 'Адмяніць зьмену статусу паведамленьня',
+	'pr_status_ask' => 'Зьмяніць статус паведамленьня?',
+	'pr_remove_ask' => 'Выдаліць паведамленьне назаўсёды?',
+	'pr_status_wait' => 'пачакайце…',
+	'pr_read_only' => 'У цяперашні час новыя паведамленьні ня могуць быць запоўненыя. Калі ласка, паспрабуйце потым.',
+	'pr_msg_exceeded' => 'Максымальная колькасьць сымбаляў у полі паведамленьня складае 512.
+Калі ласка, перапішыце Вашае паведамленьне.',
+	'pr_msg_exchead' => 'Паведамленьне занадта вялікае',
+	'right-problemreports_action' => 'зьмена станаў і тыпаў паведамленьняў пра праблемы',
+	'right-problemreports_global' => 'зьмена станаў і тыпаў паведамленьняў пра праблемы паміж ўсімі вікі',
 );
 
 /** Breton (Brezhoneg)
@@ -639,6 +651,7 @@ Ohjelmistovirheistä voi ilmoittaa foorumeilla. Tämän lomakkeen kautta tehdyt 
 
 /** French (Français)
  * @author IAlex
+ * @author Slamduck
  * @author Zetud
  */
 $messages['fr'] = array(
@@ -651,7 +664,7 @@ $messages['fr'] = array(
 	'prlog_typeentry' => 'a modifié le type du problème $1 à « $2 »',
 	'prlog_removedentry' => 'a supprimé le problème $1',
 	'prlog_emailedentry' => 'a envoyé un courriel $ $2 ($3)',
-	'pr_introductory_text' => "La plupart des pages de ce wiki sont modifiables, et vous êtes invité à les modifier et corriger les erreurs vous-même ! Si vous avez besoin d'aide pendant cela, voyez [[help:editing|comment modifier]] et [[help:revert|comment révoquer le vandalisme]].
+	'pr_introductory_text' => "La plupart des pages de ce wiki sont modifiables, et vous êtes invité à les modifier et corriger les erreurs vous-même ! Si vous avez besoin d'aide pour cela, voyez [[help:editing|comment modifier]] et [[help:revert|comment révoquer le vandalisme]].
 
 Pour contacter le personnel ou rapporter des problèmes de droits d'auteur, utilisez [[w:contact us|la page « contactez nous » de Wikia]].
 
@@ -678,7 +691,7 @@ Les bogues du logiciel peuvent être rapportés sur les forums. Les rapports fai
 [[Special:ProblemReports/$1|Vous pouvez suivre de progrès de sa résolution]].",
 	'pr_thank_you_error' => "Une erreur est survenue lors de l'envoi du rapport de problème, veuillez réessayer plus tard...",
 	'pr_spam_found' => 'Du spam a été trouvé dans le résumé de votre rapport. Veuillez changer le contenu du résumé.',
-	'pr_empty_summary' => "Merci d'écrire un court déscripion du problème",
+	'pr_empty_summary' => 'Merci de fournir une courte description du problème',
 	'pr_empty_email' => 'Veuillez fournir votre adresse de courriel',
 	'pr_mailer_notice' => "L'adresse de courriel que vous avez entrée dans vos préférences utilisateur apparaîtra and le champ « De » du courriel, ce qui permettra aux destinataires de vous répondre.",
 	'pr_mailer_subject' => 'Problème rapporté sur',
@@ -713,7 +726,7 @@ Les bogues du logiciel peuvent être rapportés sur les forums. Les rapports fai
 	'pr_remove_ask' => 'Supprimer le rapport de manière permanente ?',
 	'pr_status_wait' => 'patientez...',
 	'pr_read_only' => 'Les nouveaux rapports ne peuvent pas êtres ajoutés actuellement, veuillez réessayer plus tard.',
-	'pr_msg_exceeded' => 'Le maximum des caractères dans ce box sont 512. Veulliez écrire ce message encore une fois.',
+	'pr_msg_exceeded' => 'Le nombre maximum de caractères du champs de saisie est de 512. Veuillez réécrire votre message.',
 	'pr_msg_exchead' => 'Le message est trop long',
 	'right-problemreports_action' => 'Modifier le statut et le type de rapports de problèmes',
 	'right-problemreports_global' => 'Modifier le statut et le type de rapports de problèmes au travers des wikis',
@@ -1319,7 +1332,7 @@ Skriv meldingen din på nytt.',
  */
 $messages['pdc'] = array(
 	'pr_table_page_link' => 'Blatt',
-	'pr_table_comments' => 'Anmaerrickinge',
+	'pr_table_comments' => 'Aamaerickinge',
 );
 
 /** Polish (Polski)
@@ -1642,7 +1655,7 @@ Por favor, mude o conteúdo do sumário.',
 	'pr_view_all' => 'Mostrar todas as reportagens',
 	'pr_view_staff' => 'Mostrar reportagens que precisam da ajuda da equipe de ajuda (staff)',
 	'pr_raports_from_this_wikia' => 'Ver reportagens somente desta wiki',
-	'pr_reports_from' => 'Apenas reportagens de: $1',
+	'pr_reports_from' => 'Só os problemas de: $1',
 	'pr_no_reports' => 'Não há reportagens com esse critério',
 	'pr_sysops_notice' => 'Você pode <a href="$1">mudar o status das reportagens de problemas</a> da sua wiki...',
 	'pr_table_problem_id' => 'ID do problema',
@@ -1755,6 +1768,13 @@ $messages['ru'] = array(
 	'pr_msg_exchead' => 'Слишком длинное сообщение',
 	'right-problemreports_action' => 'изменение состояний и типов сообщений об проблемах',
 	'right-problemreports_global' => 'изменение состояний и типов сообщений о проблемах во всех вики',
+);
+
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'pr_table_page_link' => 'Stran',
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
@@ -1940,6 +1960,14 @@ Mangyaring pakisulat uli ang mensahe mo.',
 	'pr_msg_exchead' => 'Napakahaba ng mensahe',
 	'right-problemreports_action' => 'Baguhin ang katayuan at uri ng Mga Ulat ng Suliranin',
 	'right-problemreports_global' => 'Baguhin ang katayuan at uri ng Mga Ulat ng Suliranin sa kahabaan ng mga wiki',
+);
+
+/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+ * @author Ильнар
+ */
+$messages['tt-cyrl'] = array(
+	'pr_what_problem_other_short' => 'башка',
+	'pr_table_page_link' => 'Бит',
 );
 
 /** Ukrainian (Українська)

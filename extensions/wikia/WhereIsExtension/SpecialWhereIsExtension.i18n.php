@@ -130,6 +130,10 @@ $messages['de'] = array(
 	'whereisextension-filter' => 'Filter',
 	'whereisextension-all-groups' => 'Alle Gruppen',
 	'whereisextension-name-contains' => 'Variablenname enthält',
+	'whereisextension-search-like-value' => 'Wie:',
+	'whereisextension-search-type' => 'Typ:',
+	'whereisextension-search-type-bool' => 'Boolean',
+	'whereisextension-search-type-full' => 'Wie',
 );
 
 /** Ewe (Eʋegbe) */
@@ -176,11 +180,12 @@ $messages['fi'] = array(
 /** French (Français)
  * @author IAlex
  * @author Peter17
+ * @author Slamduck
  */
 $messages['fr'] = array(
 	'whereisextension' => "Où se trouve l'extension",
 	'whereisextension-submit' => 'Rechercher',
-	'whereisextension-list' => 'Liste des wikis qui correspondent au critères',
+	'whereisextension-list' => 'Liste des wikis qui correspondent aux critères',
 	'whereisextension-isset' => 'est définie à',
 	'whereisextension-filter' => 'Filtrer',
 	'whereisextension-all-groups' => 'Tous les groupes',
@@ -244,6 +249,7 @@ $messages['ia'] = array(
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Farras
  * @author Irwangatot
  */
 $messages['id'] = array(
@@ -254,6 +260,10 @@ $messages['id'] = array(
 	'whereisextension-filter' => 'Penyaring',
 	'whereisextension-all-groups' => 'Semua kelompok',
 	'whereisextension-name-contains' => 'nama variabel berisi',
+	'whereisextension-search-like-value' => 'Seperti:',
+	'whereisextension-search-type' => 'Tipe:',
+	'whereisextension-search-type-bool' => 'Boolean',
+	'whereisextension-search-type-full' => 'Seperti',
 );
 
 /** Igbo (Igbo) */
@@ -336,6 +346,10 @@ $messages['no'] = array(
 	'whereisextension-filter' => 'Filter',
 	'whereisextension-all-groups' => 'Alle grupper',
 	'whereisextension-name-contains' => 'variabelnavn inneholder',
+	'whereisextension-search-like-value' => 'Lik:',
+	'whereisextension-search-type' => 'Type:',
+	'whereisextension-search-type-bool' => 'Boolsk',
+	'whereisextension-search-type-full' => 'Lik',
 );
 
 /** Occitan (Occitan)
@@ -442,13 +456,15 @@ $messages['pt-br'] = array(
 $messages['ru'] = array(
 	'whereisextension' => 'Где расширение',
 	'whereisextension-submit' => 'Искать',
-	'whereisextension-list' => 'Вывод список вики-сайтов, согласно условиям',
+	'whereisextension-list' => 'Вывод списка вики-сайтов, согласно условиям',
 	'whereisextension-isset' => 'установлен как',
 	'whereisextension-filter' => 'Фильтр',
 	'whereisextension-all-groups' => 'Все группы',
 	'whereisextension-name-contains' => 'имя переменной содержит',
+	'whereisextension-search-like-value' => 'Подобно:',
 	'whereisextension-search-type' => 'Тип:',
 	'whereisextension-search-type-bool' => 'Логический',
+	'whereisextension-search-type-full' => 'Подобно',
 );
 
 /** Slovenian (Slovenščina)

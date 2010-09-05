@@ -242,3 +242,11 @@ $messages['tl'] = array(
 	'quickcreate' => 'ipasa ang iyong reseta',
 );
 
+/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+ * @author Ильнар
+ */
+$messages['tt-cyrl'] = array(
+	'quickcreate-desc' => 'Аноним булган кулланучыларга мәкалә ясау төймәсен куя',
+	'quickcreate' => 'үземнең рецептны җибәрү',
+);
+

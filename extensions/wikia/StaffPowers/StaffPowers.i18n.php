@@ -52,10 +52,11 @@ $messages['br'] = array(
 );
 
 /** Bosnian (Bosanski)
+ * @author CERminator
  * @author Palapa
  */
 $messages['bs'] = array(
-	'staffpowers-ipblock-aborted' => 'Blokiranje Wikia osoblja nije moguće. Molim da koristite [[Specijalno:Kontakt]] da prijavite bilo koja pitanja ili probleme sa našim osobljem.',
+	'staffpowers-ipblock-aborted' => 'Blokiranje Wikia osoblja nije moguće. Molim da koristite  [[Special:Contact]] da prijavite bilo koja pitanja ili probleme sa našim osobljem.',
 );
 
 /** Catalan (Català)

@@ -235,6 +235,13 @@ $messages['oc'] = array(
 	'wikiawidget' => 'Widgets wikia',
 );
 
+/** Papiamento (Papiamentu)
+ * @author Sdm1985
+ */
+$messages['pap'] = array(
+	'wikiawidget' => 'Wikia widgetnan',
+);
+
 /** Deitsch (Deitsch)
  * @author Xqt
  */

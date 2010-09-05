@@ -679,3 +679,14 @@ $messages['uk'] = array(
 	'cathub-question-asked-by' => 'від $1',
 );
 
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Wilsonmess
+ */
+$messages['zh-hans'] = array(
+	'cathub-progbar-label-answered' => '已解决',
+	'cathub-progbar-label-unanswered' => '未解决',
+	'cathub-progbar-none-done' => '目前还没有问题被解决',
+	'cathub-progbar-all-done' => '所有问题都已解决。',
+	'cathub-progbar-allmost-done' => '还有 $1 个问题未解决。',
+);
+

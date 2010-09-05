@@ -969,8 +969,11 @@ $messages['nov'] = array(
 	'titleedit' => 'Immodifika',
 );
 
-/** Northern Sotho (Sesotho sa Leboa) */
+/** Northern Sotho (Sesotho sa Leboa)
+ * @author Mohau
+ */
 $messages['nso'] = array(
+	'titleedit-desc' => 'Lokeka konopo ya go fetola dihlogo matlakaleng',
 	'titleedit' => 'Fetola',
 );
 
@@ -1007,8 +1010,11 @@ $messages['pam'] = array(
 	'titleedit' => 'Alilan',
 );
 
-/** Papiamento (Papiamentu) */
+/** Papiamento (Papiamentu)
+ * @author Sdm1985
+ */
 $messages['pap'] = array(
+	'titleedit-desc' => 'Esaki ta añadí un boton na kabes di e página.',
 	'titleedit' => 'Editá',
 );
 
@@ -1363,6 +1369,7 @@ $messages['ts'] = array(
  * @author Ильнар
  */
 $messages['tt-cyrl'] = array(
+	'titleedit-desc' => 'Битнең өске өлешенә исемне алмаштыру төймәсен өсти',
 	'titleedit' => 'үзгәртү',
 );
 

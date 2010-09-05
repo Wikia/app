@@ -53,6 +53,7 @@ $messages['af'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
+	'globalwatchlist-desc' => 'Kas a ra un diverradenn sizhuniek dre bostel enni ar pajennoù heuliet war an holl wikioù',
 	'tog-watchlistdigest' => 'Kas din dre bostel un diverañ eus Ma Rollad evezhiañ bep sizhun',
 	'tog-watchlistdigestclear' => 'Merkañ evel lennet holl pajennoù ma rollad evezhiañ sizhuniek',
 	'globalwatchlist-see-more' => "Mar plij gwirit ho rolloù evezhiañ lec'hel evit diskouez muioc'h a gemmoù",
@@ -341,6 +342,7 @@ Wikia
  * @author Robby
  */
 $messages['lb'] = array(
+	'globalwatchlist-desc' => 'Schéckt all Woch per Mail e Resumé mat den iwwerwaachte Säiten op alle Wikien',
 	'tog-watchlistdigest' => 'Schéck mir all Woch eng Lëscht vun de Säiten vu menger Iwwerwaachungslëscht déi no mengem leschte Besuch geännert goufen',
 	'tog-watchlistdigestclear' => 'All Säiten déi op dem wëchentleche Resumé vu menger Iwwerwaachungslëscht stinn als besicht markéieren',
 	'globalwatchlist-see-more' => 'Kuckt w.e.g. Är lokal Iwwerwaachungslëscht fir méi Ännerungen',
@@ -472,6 +474,15 @@ Wikia
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|coment|coment}})',
 	'globalwatchlist-no-page-found' => 'Pa gnun-e pàgine trovà.',
 	'globalwatchlist-no-blog-page-found' => 'Gnun-a pàgine dë scartari trovà.',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|تبصره|تبصرې}})',
+	'globalwatchlist-no-page-found' => 'دا مخ و نه موندل شو.',
+	'globalwatchlist-no-blog-page-found' => 'د بلاګ دا مخ و نه موندل شو.',
 );
 
 /** Portuguese (Português)

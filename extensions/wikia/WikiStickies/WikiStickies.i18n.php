@@ -104,6 +104,25 @@ $messages['br'] = array(
 	'wikistickies-hide' => 'kuzhat',
 );
 
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'wikistickies-save-changes' => 'Spremi promjene',
+	'wikistickies-logo-hd' => 'Postavi logo',
+	'wikistickies-hide' => 'sakrij',
+);
+
+/** Kashubian (Kaszëbsczi) */
+$messages['csb'] = array(
+	'wikistickies-hide' => 'zatacë',
+);
+
+/** Welsh (Cymraeg) */
+$messages['cy'] = array(
+	'wikistickies-hide' => 'cuddio',
+);
+
 /** Danish (Dansk)
  * @author Emilkris33
  */
@@ -281,6 +300,13 @@ Adde elementos al lista, e illos apparera in "Mi pagina initial" e in iste pagin
 	'wikistickies-see-more' => 'Vide plus paginas que ha besonio de adjuta',
 );
 
+/** Indonesian (Bahasa Indonesia) */
+$messages['id'] = array(
+	'wikistickies-save-changes' => 'Simpan perubahan',
+	'wikistickies-next' => 'Berikutnya →',
+	'wikistickies-hide' => 'sembunyikan',
+);
+
 /** Igbo (Igbo)
  * @author Ukabia
  */
@@ -339,6 +365,17 @@ $messages['mk'] = array(
 	'wikistickies-see-more' => 'Повеќе страници што треба помош',
 );
 
+/** Malayalam (മലയാളം) */
+$messages['ml'] = array(
+	'wikistickies-save-changes' => 'മാറ്റങ്ങൾ സേവ് ചെയ്യുക',
+	'wikistickies-hide' => 'മറയ്ക്കുക',
+);
+
+/** Mazanderani (مازِرونی) */
+$messages['mzn'] = array(
+	'wikistickies-hide' => 'فه‌رو  بـور',
+);
+
 /** Dutch (Nederlands)
  * @author McDutchie
  * @author Siebrand
@@ -393,6 +430,13 @@ $messages['no'] = array(
 	'wikistickies-see-more' => 'Se flere sider som trenger hjelp',
 );
 
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'wikistickies-next' => 'Następna →',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
@@ -433,13 +477,70 @@ $messages['ps'] = array(
 
 /** Portuguese (Português)
  * @author Crazymadlover
+ * @author Hamilton Abreu
+ * @author Masked Rogue
  */
 $messages['pt'] = array(
+	'wikistickies' => 'WikiStickies',
+	'wikistickies-desc' => 'Os Wiki Stickies grandes e pegajosos, que dão nas vistas!',
+	'wikistickies-newpages-hd' => 'Pode acrescentar informação a uma destas páginas novas?',
+	'wikistickies-withoutimages-hd' => 'Pode acrescentar uma imagem a uma destas páginas?',
+	'wikistickies-wantedpages-hd' => 'Pode começar uma destas páginas desejadas?',
+	'wikistickies-newpages-st' => '<span class="fake_newpages">Pode acrescentar informação à página sobre</span> $1?',
+	'wikistickies-wantedpages-st' => '<span class="fake_wantedpages">Pode criar uma página sobre</span> $1?',
+	'wikistickies-withoutimages-st' => '<span class="fake_withoutimages">Pode acrescentar uma imagem à página sobre</span> $1?',
+	'wikistickies-newpages-st-short' => '<span>Pode acrescentar informações a</span> $1?',
+	'wikistickies-wantedpages-st-short' => '<span>Pode criar uma página sobre</span> $1?',
+	'wikistickies-withoutimages-st-short' => '<span>Pode acrescentar uma imagem a</span> $1?',
 	'wikistickies-save-changes' => 'Gravar alterações',
 	'wikistickies-more' => 'ver mais',
+	'wikistickies-admins-hd' => 'Só administradores',
+	'wikistickies-admins-msg' => 'Estes não são os WikiStickies habituais.
+São coisas que só podem ser feitas por administradores para influenciar a forma como todos vêem a wiki.',
+	'wikistickies-logo-hd' => 'Fazer upload de um logótipo',
+	'wikistickies-theme-hd' => 'Escolha um assunto',
+	'wikistickies-custom-hd' => 'Crie os seus próprios WikiStickies',
+	'wikistickies-custom-msg' => 'Pode editar a [[MediaWiki:CommunityStickies|página CommunityStickies]] para acrescentar uma nota WikiStickies!
+Acrescente elementos à lista e eles irão aparecer em A Minha Casa e nesta página.',
 	'wikistickies-next' => 'Seguinte →',
 	'wikistickies-hide' => 'esconder',
 	'wikistickies-see-more' => 'Veja mais páginas que precisam de ajuda',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
+ */
+$messages['pt-br'] = array(
+	'wikistickies' => 'WikiStickies',
+	'wikistickies-desc' => 'Os Wiki Stickies grandes e pegajosos, que dão nas vistas!',
+	'wikistickies-newpages-hd' => 'Você pode acrescentar informação a uma destas páginas novas?',
+	'wikistickies-withoutimages-hd' => 'Você pode acrescentar uma imagem a uma destas páginas?',
+	'wikistickies-wantedpages-hd' => 'Você pode começar uma destas páginas desejadas?',
+	'wikistickies-newpages-st' => '<span class="fake_newpages">Você pode acrescentar informação à página sobre</span> $1?',
+	'wikistickies-wantedpages-st' => '<span class="fake_wantedpages">Você pode criar uma página sobre</span> $1?',
+	'wikistickies-withoutimages-st' => '<span class="fake_withoutimages">Você pode acrescentar uma imagem à página sobre</span> $1?',
+	'wikistickies-newpages-st-short' => '<span>Você pode acrescentar informações a</span> $1?',
+	'wikistickies-wantedpages-st-short' => '<span>Você pode criar uma página sobre</span> $1?',
+	'wikistickies-withoutimages-st-short' => '<span>Você pode acrescentar uma imagem a</span> $1?',
+	'wikistickies-save-changes' => 'Salvar alterações',
+	'wikistickies-more' => 'ver mais',
+	'wikistickies-admins-hd' => 'Só administradores',
+	'wikistickies-admins-msg' => 'Estes não são os WikiStickies habituais.
+São coisas que só podem ser feitas por administradores para influenciar a forma como todos veem a wiki.',
+	'wikistickies-logo-hd' => 'Fazer carregamento de um logotipo',
+	'wikistickies-theme-hd' => 'Escolha um assunto',
+	'wikistickies-custom-hd' => 'Crie os seus próprios WikiStickies',
+	'wikistickies-custom-msg' => 'Você pode editar a [[MediaWiki:CommunityStickies|página CommunityStickies]] para acrescentar uma nota WikiStickies!
+Acrescente elementos à lista e eles irão aparecer em A Minha Casa e nesta página.',
+	'wikistickies-next' => 'Seguinte →',
+	'wikistickies-hide' => 'esconder',
+	'wikistickies-see-more' => 'Veja mais páginas que precisam de ajuda',
+);
+
+/** Romanian (Română) */
+$messages['ro'] = array(
+	'wikistickies-save-changes' => 'Salvează schimbările',
+	'wikistickies-hide' => 'ascunde',
 );
 
 /** Russian (Русский)
@@ -488,6 +589,18 @@ $messages['sr-ec'] = array(
 	'wikistickies-hide' => 'сакриј',
 );
 
+/** Tamil (தமிழ்)
+ * @author TRYPPN
+ */
+$messages['ta'] = array(
+	'wikistickies-save-changes' => 'மாற்றங்களைச் சேமி',
+	'wikistickies-more' => 'மேலும் பார்க்கவும்',
+	'wikistickies-admins-hd' => 'நிர்வாகிகள் மட்டும்',
+	'wikistickies-logo-hd' => 'ஒரு இலச்சினையை பதிவேற்றுக',
+	'wikistickies-next' => 'அடுத்தது →',
+	'wikistickies-hide' => 'மறை',
+);
+
 /** Telugu (తెలుగు)
  * @author Veeven
  */
@@ -499,10 +612,64 @@ $messages['te'] = array(
 	'wikistickies-hide' => 'దాచు',
 );
 
+/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+ * @author Ильнар
+ */
+$messages['tt-cyrl'] = array(
+	'wikistickies' => 'Вики-Өлгеләр',
+	'wikistickies-desc' => 'Игътибарны җәлеп итү өчен зу Вики-Өлгеләр!',
+	'wikistickies-newpages-hd' => 'Сез бирелгән битләргә мәгълүмат өсти аласыз?',
+	'wikistickies-withoutimages-hd' => 'Сез бирелгән битләргә рәсемнәр өсти аласыз?',
+	'wikistickies-wantedpages-hd' => 'Сез безгә кирәк булган битне ача аласыз?',
+	'wikistickies-newpages-st' => '<span class="fake_withoutimages">Сез $1 турында мәгълүматны тулыландыра аласыз</span>?',
+	'wikistickies-wantedpages-st' => '<span class="fake_wantedpages">Сез $1 турында яңа бит ясый аласыз </span>?',
+	'wikistickies-withoutimages-st' => '<span class="fake_withoutimages">Сез $1 турында рәсемнәр өсти аласыз</span>?',
+	'wikistickies-newpages-st-short' => '<span>Сездә бу биткә $1 мәгълүмат өсти аласыз</span>?',
+	'wikistickies-wantedpages-st-short' => '<span>Сез $1 бите ясый аласыз</span>?',
+	'wikistickies-withoutimages-st-short' => '<span>Сездә бу биткә $1 рәсемнәр өсти аласыз</span>?',
+	'wikistickies-save-changes' => 'Үзгәртүләрне саклау',
+	'wikistickies-more' => 'тулырак',
+	'wikistickies-admins-hd' => 'Бары тик идарәчеләр генә',
+	'wikistickies-admins-msg' => 'Бу гади WikiStickies түгел. 
+Бу эшне бары тик идарәчеләр генә башкара ала һәм алар гына бу викиның башка кулланучыларга ничек күрсәтүен билгели.',
+	'wikistickies-logo-hd' => 'Логотипны йөкләү',
+	'wikistickies-theme-hd' => 'Тема сайлагыз',
+	'wikistickies-custom-hd' => 'Үзегезнең Вики-өлгегезне ясагыз',
+	'wikistickies-custom-msg' => 'Сез [[MediaWiki:CommunityStickies|җәмгыять битләрен үзгәртә]] һәм яңа вики-өлгеләр ясый аласыз!
+Исемлеккә яңа үзгәрешләр кертсәгез, ул үзгәрешләрегез сезнең сәхифәдә һәм  бу биттә дә күрсәтеләчәк.',
+	'wikistickies-next' => 'Алга →',
+	'wikistickies-hide' => 'яшерү',
+	'wikistickies-see-more' => 'Тагын ярдәм кирәк битләр',
+);
+
 /** Ukrainian (Українська)
+ * @author Alex Khimich
  * @author Тест
  */
 $messages['uk'] = array(
+	'wikistickies' => 'ВікіСтікери',
+	'wikistickies-desc' => 'Великі, прилипаючі ВікіСтікери для привертання уваги!',
+	'wikistickies-newpages-hd' => 'Ви можете додати інформацію на одну з цих нових сторінок?',
+	'wikistickies-withoutimages-hd' => 'Ви можете додати зображення на одну з цих сторінок?',
+	'wikistickies-wantedpages-hd' => 'Чи зможете Ви розпочати потрібну нам сторінку?',
+	'wikistickies-newpages-st' => '<span class="fake_newpages">У вас є можливість додати інформацію на сторінку про</span> $1?',
+	'wikistickies-wantedpages-st' => '<span class="fake_wantedpages">Ви зможете розпочати сторінку про</span> $1?',
+	'wikistickies-withoutimages-st' => '<span class="fake_withoutimages">У Вас є можливість додати зображення на сторінку про</span> $1?',
+	'wikistickies-newpages-st-short' => '<span>Чи зможете ви додати інформацію до</span> $1?',
+	'wikistickies-wantedpages-st-short' => '<span>У Вас є можливість розпочати сторінку про</span> $1?',
+	'wikistickies-withoutimages-st-short' => '<span>Ви можете додати зображення до</span> $1?',
 	'wikistickies-save-changes' => 'Зберегти зміни',
+	'wikistickies-more' => 'детальніше',
+	'wikistickies-admins-hd' => 'Тільки адміністратори',
+	'wikistickies-admins-msg' => 'Це не типові WikiStickies.
+Ці дії можуть бути виконані адміністраторами, що вплине на зовнішній вигляд wiki для користувачів.',
+	'wikistickies-logo-hd' => 'Завантажити логотип',
+	'wikistickies-theme-hd' => 'Вибрати тему',
+	'wikistickies-custom-hd' => 'Створіть свій власний ВікіСтікер',
+	'wikistickies-custom-msg' => "Ви можете редагувати [[MediaWiki:CommunityStickies|Сторінку стікерів спільноти]] та додавати нові ВікіСтікери!
+Додавайте нові пункти в список, і вони з'являться тут і на вашій стартовій сторінці.",
+	'wikistickies-next' => 'Далі →',
+	'wikistickies-hide' => 'Сховати',
+	'wikistickies-see-more' => 'Переглянути інші сторінки де потрібна допомога',
 );
 

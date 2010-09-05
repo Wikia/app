@@ -402,3 +402,28 @@ $messages['tl'] = array(
 	'ajaxpoll-submitting' => 'Pakihintay, ipinapasa ang boto mo...',
 );
 
+/** Ukrainian (Українська)
+ * @author Alex Khimich
+ */
+$messages['uk'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp;всіх голосів',
+	'ajaxpoll-thankyou' => 'Дякуємо за ваш голос!',
+	'ajaxpoll-error' => 'Виникла проблема з обробкою вашого голосу, будь-ласка, спробуйте знову.',
+	'ajaxpoll-summary' => 'Голосування створено $1 на $2, на цей момент $3 людей проголосувало.',
+	'ajaxpoll-submit' => 'Проголосувати!',
+	'ajaxpoll-closed' => 'Голосування закрите! Насолоджуйтесь результатами!',
+	'ajaxpoll-submitting' => 'Будь ласка, почекайте, обробляється ваш голос ...',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Wilsonmess
+ */
+$messages['zh-hans'] = array(
+	'ajaxpoll-percentVotes' => '所有投票的 $1',
+	'ajaxpoll-thankyou' => '感谢您的投票！',
+	'ajaxpoll-error' => '在处理您的投票信息时出现了问题，请再试一次。',
+	'ajaxpoll-summary' => '该投票由 $1 于 $2 发起，目前为止有 $3 人参与了投票。',
+	'ajaxpoll-submit' => '投票！',
+	'ajaxpoll-submitting' => '请稍候，正在递交您的投票……',
+);
+

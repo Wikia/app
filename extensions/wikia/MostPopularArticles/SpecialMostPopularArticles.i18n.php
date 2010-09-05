@@ -260,6 +260,13 @@ $messages['ru'] = array(
 	'mostpopulararticles' => 'Самые популярные статьи (из базы данных)',
 );
 
+/** Sinhala (සිංහල)
+ * @author බිඟුවා
+ */
+$messages['si'] = array(
+	'mostpopulararticles' => 'වඩාත් ප්‍රචලිත ලිපි(දත්ත ගබඩාවෙන්)',
+);
+
 /** Slovenian (Slovenščina)
  * @author Dbc334
  */

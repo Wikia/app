@@ -22,6 +22,14 @@ $messages['qqq'] = array(
 	'sharedhelp-desc' => '{{desc}}',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'sharedhelp-desc' => 'Бярэ старонкі з [[w:c:Help|Help Wikia]] і ўстаўляе ў прастору назваў {{ns:help}} {{GRAMMAR:родны|{{SITENAME}}}}',
+	'sharedhelp-autotalkcreate-summary' => 'Старонка абмеркаваньня створаная аўтаматычна',
+);
+
 /** Breton (Brezhoneg)
  * @author Gwendal
  * @author Y-M D
@@ -93,6 +101,15 @@ $messages['ia'] = array(
  */
 $messages['id'] = array(
 	'sharedhelp-desc' => 'Mengambil halaman dari [[w:c:Help|Help Wikia]] dan memasukkannya ke ruang nama {{ns:help}} di wiki ini',
+	'sharedhelp-autotalkcreate-summary' => 'Halaman pembicaraan dibuat secara otomatis',
+);
+
+/** Japanese (日本語)
+ * @author Tommy6
+ */
+$messages['ja'] = array(
+	'sharedhelp-desc' => '[[w:c:Help|Help Wikia]] のページをこのウィキの {{ns:help}} 名前空間に挿入する。',
+	'sharedhelp-autotalkcreate-summary' => 'ノートページの自動作成',
 );
 
 /** Colognian (Ripoarisch)
@@ -125,6 +142,14 @@ $messages['nl'] = array(
 $messages['no'] = array(
 	'sharedhelp-desc' => 'Tar sider fra [[w:c:Help|Hjelpe-Wikia]] og setter dem inn i {{ns:help}}-navnerommet på denne wikien',
 	'sharedhelp-autotalkcreate-summary' => 'Diskusjonsside opprettet automatisk',
+);
+
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'sharedhelp-desc' => 'Dodaje [[w:c:Help|strony pomocy Wikii]] do tej wiki w przestrzeni {{ns:help}}',
+	'sharedhelp-autotalkcreate-summary' => 'Strona dyskusji utworzona automatycznie',
 );
 
 /** Piedmontese (Piemontèis)

@@ -1495,6 +1495,120 @@ $messages['pms'] = array(
 A smija che $USERNAME a sia registrasse su toa wiki! Përchè it fas pa un sàut su soa pàgina dle ciaciarade $USERTALKPAGEURL për salutelo?
 
 -- L\'Echip Wikia',
+	'founderemails-email-user-registered-body-HTML' => 'Cerea $FOUNDERNAME,<br /><br />
+A smija che $USERNAME a sia registrasse su soa wiki! Përchè a fas nen un sàut su soa <a href="$USERTALKPAGEURL">pàgine dle ciaciarade</a> për dije cerea? <br /><br />
+<div style="font-style: italic; font-size: 120%;">-- L\'Echip Wikia</div>',
+	'founderemails-email-0-days-passed-subject' => 'Bin ëvnù su Wikia!',
+	'founderemails-email-0-days-passed-body' => 'Congratulassion për la creassion ëd $WIKINAME - adess a fa part ëd la comunità Wikia!
+
+-- L\'Echip Wikia',
+	'founderemails-email-0-days-passed-body-HTML' => 'Congratulassion për la creassion ëd <strong>$WIKINAME</strong> - adess a fa part ëd la comunità Wikia! <br /><br />
+<div style="font-style: italic; font-size: 120%;">-- L\'Echip Wikia</div>',
+	'founderemails-email-3-days-passed-subject' => 'Controlé an',
+	'founderemails-email-3-days-passed-body' => "Cerea \$FOUNDERNAME,
+
+Adess ch'a l'ha passà chèich di su soa wiki, i l'oma pensà ch'a podrìa dé n'ociada a d'àutre còse ch'a peul fé.
+
+-- L'Echip Wikia",
+	'founderemails-email-3-days-passed-body-HTML' => "Cerea \$FOUNDERNAME,<br /><br />
+Adess ch'a l'ha passà chèich di su soa wiki, i l'oma pensà ch'a podrìa controlé d'àutre còse ch'a peul fé.<br /><br />
+<div style=\"font-style: italic; font-size: 120%;\">-- L'Echip Wikia</div>",
+	'founderemails-email-10-days-passed-subject' => 'Com va-la soa wiki?',
+	'founderemails-email-10-days-passed-body' => "Cerea \$FOUNDERNAME,
+
+A l'é passaje un pòch ëd temp da quand a l'ha ancaminà na wiki su Wikia - i speroma ch'a vada bin! I voroma condivide chèich curiosità finaj për giuté a felo sente su soa wiki pi com a soa ca.
+
+-- L'Echip Wikia",
+	'founderemails-email-10-days-passed-body-HTML' => "Cerea \$FOUNDERNAME,<br /><br />
+A l'é passaje un pòch ëd temp da quand a l'ha ancaminà na wiki su Wikia - i speroma ch'a vada bin! I voroma condivide chèich curiosità finaj për giuté a felo sente su soa wiki pi com a soa ca<br /><br />
+<div style=\"font-style: italic; font-size: 120%;\">-- L'Echip Wikia</div>",
+	'founderemails-email-page-edited-reg-user-first-edit-subject' => "N'utent registrà a l'ha modificà soa wiki për la prima vira!",
+	'founderemails-email-page-edited-reg-user-first-edit-body' => 'Cerea $FOUNDERNAME,
+
+A smija che l\'utent registrà $USERNAME a l\'abia modificà toa wiki për la prima vira! Përchè it fas pa un sàut su soa pàgina dle ciaciarade ($USERTALKPAGEURL) për salutelo?
+
+-- L\'Echip Wikia',
+	'founderemails-email-page-edited-reg-user-first-edit-body-HTML' => 'Cerea $FOUNDERNAME,<br /><br />
+A smija che l\'utent registrà $USERNAME a l\'abia modificà toa wiki për la prima vira! Përchè it fas pa un sàut su soa pàgina dle ciaciarade ($USERTALKPAGEURL) për salutelo?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- L\'Echip Wikia</div>',
+	'founderemails-email-page-edited-reg-user-subject' => "N'utent registrà a l'ha modificà soa wiki!",
+	'founderemails-email-page-edited-reg-user-body' => 'Cerea $FOUNDERNAME,
+
+A smija che l\'utent registrà $USERNAME a l\'abia modificà toa wiki! Përchè it fas pa un sàut su soa pàgina dle ciaciarade ($USERTALKPAGEURL) për salutelo?
+
+-- L\'Echip Wikia',
+	'founderemails-email-page-edited-reg-user-body-HTML' => 'Cerea $FOUNDERNAME,<br /><br />
+A smija che l\'utent registrà $USERNAME a l\'abia modificà soa wiki! Përchè a fas nen un sàut su soa <a href="$USERTALKPAGEURL">pàgina dle ciaciarade</a> për salutelo?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- L\'Echip Wikia</div>',
+	'founderemails-email-page-edited-anon-subject' => "Quaidun a l'ha modificà soa wiki!",
+	'founderemails-email-page-edited-anon-body' => "Cerea \$FOUNDERNAME,
+
+A smija che quaidun a l'abia modificà soa wiki! Përchè a controle nen \$MYHOMEURL për vëdde lòn ch'a l'é cangià?
+
+-- L'Echip Wikia",
+	'founderemails-email-page-edited-anon-body-HTML' => 'Cerea $FOUNDERNAME,<br /><br />
+A smija che quaidun a l\'abia modificà soa wiki! Përchè <a href="$MYHOMEURL">it controle nen</a> për vëdde lòn ch\'a l\'é cangià?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- L\'Echip Wikia</div>',
+	'founderemails-answers-email-user-registered-subject' => "Quaidun a l'ha registrà un cont dzora soa wiki D&R!",
+	'founderemails-answers-email-user-registered-body' => 'Cerea $FOUNDERNAME,
+
+A smija che $USERNAME a sia registrasse su toa wiki! Përchè it fas pa un sàut su soa pàgina dle ciaciarade $USERTALKPAGEURL për salutelo?
+
+-- L\'Echip Wikia',
+	'founderemails-answers-email-user-registered-body-HTML' => 'Cerea $FOUNDERNAME,<br /><br />
+A smija che $USERNAME a sia registrasse su soa wiki! Përchè a fa nen un sàut su soa <a href="$USERTALKPAGEURL">pàgine dle ciaciarade</a> për dije cerea? <br /><br />
+<div style="font-style: italic; font-size: 120%;">-- L\'Echip Wikia</div>',
+	'founderemails-answers-email-0-days-passed-subject' => 'Bin ëvnù su Wikia C&R!',
+	'founderemails-answers-email-0-days-passed-body' => 'Congratulassion për avèj creà $WIKINAME - adess a fa part ëd la comunità Wikia!
+
+-- L\'Echip Wikia',
+	'founderemails-answers-email-0-days-passed-body-HTML' => 'Congratulassion për avèj creà <strong>$WIKINAME</strong> - adess a fa part ëd la comunità Wikia! <br /><br />
+<div style="font-style: italic; font-size: 120%;">-- L\'Echip Wikia</div>',
+	'founderemails-answers-email-3-days-passed-subject' => 'Controlé an',
+	'founderemails-answers-email-3-days-passed-body' => "Cerea \$FOUNDERNAME,
+
+Adess ch'a l'ha passà chèich di su toa wiki, i l'oma pensà ch'a podrìa de n'ociada a d'àutre còse ch'a peul fé.
+
+-- L'Echip Wikia",
+	'founderemails-answers-email-3-days-passed-body-HTML' => "Cerea \$FOUNDERNAME,<br /><br />
+Adess ch'a l'ha passà chèich di su soa wiki, i l'oma pensà ch'a podrìa dé n'ociada a d'àutre còse ch'a peul fé.<br /><br />
+<div style=\"font-style: italic; font-size: 120%;\">-- L'Echip Wikia</div>",
+	'founderemails-answers-email-10-days-passed-subject' => "Com it pense d'andé con toa wiki?",
+	'founderemails-answers-email-10-days-passed-body' => "Cerea \$FOUNDERNAME,
+
+A l'é passaje un pòch da quand a l'ha ancaminà na wiki su Wikia - i speroma ch'a von-a bin! I voroma condivide chèich curiosità finaj për giuté a felo sente su soa wiki pi com a soa ca.
+
+-- L'Echip Wikia",
+	'founderemails-answers-email-10-days-passed-body-HTML' => "Cerea \$FOUNDERNAME,<br /><br />
+A l'é passaje un pòch ëd temp da quand a l'ha ancaminà na wiki su Wikia - i speroma ch'a von-a bin! I voroma condivide chèich curiosità finaj për giuté a felo sente su soa wiki pi com a soa ca<br /><br />
+<div style=\"font-style: italic; font-size: 120%;\">-- L'Echip Wikia</div>",
+	'founderemails-answers-email-page-edited-reg-user-first-edit-subject' => "N'utent registrà a l'ha modificà sò sit për la prima vira!",
+	'founderemails-answers-email-page-edited-reg-user-first-edit-body' => 'Cerea $FOUNDERNAME,
+
+A smija che l\'utent registrà $USERNAME a l\'abia modificà toa wiki për la prima vira! Përchè it fas pa un sàut su soa pàgina dle ciaciarade ($USERTALKPAGEURL) për salutelo?
+
+-- L\'Echip Wikia',
+	'founderemails-answers-email-page-edited-reg-user-first-edit-body-HTML' => 'Cerea $FOUNDERNAME,<br /><br />
+A smija che l\'utent registrà $USERNAME a l\'abia modificà toa wiki për la prima vira! Përchè it fas pa un sàut su soa <a href="$USERTALKPAGEURL">pàgina dle ciaciarade</a> për salutelo?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- L\'Echip Wikia</div>',
+	'founderemails-answers-email-page-edited-reg-user-subject' => "N'utent registrà a l'ha modificà sò sit!",
+	'founderemails-answers-email-page-edited-reg-user-body' => 'Cerea $FOUNDERNAME,
+
+A smija che l\'utent registrà $USERNAME a l\'abia modificà toa wiki! Përchè it fas pa un sàut su soa pàgina dle ciaciarade ($USERTALKPAGEURL) për salutelo?
+
+-- L\'Echip Wikia',
+	'founderemails-answers-email-page-edited-reg-user-body-HTML' => 'Cerea $FOUNDERNAME,<br /><br />
+A smija che l\'utent registrà $USERNAME a l\'abia modificà soa wiki! Përchè a fa nen un sàut su soa <a href="$USERTALKPAGEURL">pàgina dle ciaciarade</a> për salutelo?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- L\'Echip Wikia</div>',
+	'founderemails-answers-email-page-edited-anon-subject' => "Quaidun a l'ha modificà tò sit!",
+	'founderemails-answers-email-page-edited-anon-body' => "Cerea \$FOUNDERNAME,
+
+A smija che quaidun a l'abia modificà soa wiki! Përchè a controla nen \$MYHOMEURL për vëdde lòn ch'a l'é cangià?
+
+-- L'Echip Wikia",
+	'founderemails-answers-email-page-edited-anon-body-HTML' => 'Cerea $FOUNDERNAME,<br /><br />
+A smija che quaidun a l\'abia modificà soa wiki! Përchè <a href="$MYHOMEURL">a controla nen</a> për vëdde lòn ch\'a l\'é cangià?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- L\'Echip Wikia</div>',
 );
 
 /** Pashto (پښتو)

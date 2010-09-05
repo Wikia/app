@@ -241,7 +241,7 @@ $messages['br'] = array(
 	'wikiafollowedpages-special-heading-media' => 'Skeudennoù ha videoioù ($1)',
 	'wikiafollowedpages-special-namespace' => '(pajenn $1)',
 	'wikiafollowedpages-special-anon' => 'Mar plij [[Special:Signup|kevreit]] evit krouiñ pe sellout ouzh ho roll evezhiañ.',
-	'wikiafollowedpages-special-showall' => 'Diskouez pep tra',
+	'wikiafollowedpages-special-showall' => 'Diskouez pep tra >',
 	'wikiafollowedpages-special-showmore' => "Diskouez muioc'h",
 	'wikiafollowedpages-special-title' => 'Pajennoù heuliet',
 	'wikiafollowedpages-special-hidden' => "An {{GENDER:$1|implijer|implijerez|implijerien}}-mañ {{GENDER:$1|en|he|o}} deus dibabet kuzhat {{GENDER:$1|en|he|o}} roll evezhiañ d'an dud all.",
@@ -266,6 +266,7 @@ Ouzhpennit pajennoù d\'ar roll-se en ur klikañ war "{{int:watch}}" e talbenn a
 );
 
 /** German (Deutsch)
+ * @author Kjell
  * @author LWChris
  * @author The Evil IP address
  */
@@ -284,6 +285,8 @@ $messages['de'] = array(
 	'wikiafollowedpages-special-empty' => 'Die Liste der beobachteten Seiten dieses Benutzers ist leer.
 Du kannst durch Klicken des {{int:watch}}-Buttons Seiten dieser Liste hinzufügen.',
 	'wikiafollowedpages-special-anon' => 'Bitte [[Special:Signup|anmelden]] um deine Beobachtungsliste zu erstellen oder betrachten.',
+	'oasis-wikiafollowedpages-special-seeall' => 'Sehe alle >',
+	'wikiafollowedpages-special-seeall' => 'Sehe alle >',
 	'wikiafollowedpages-special-showall' => 'Alle anzeigen',
 	'wikiafollowedpages-special-showmore' => 'Zeige mehr',
 	'wikiafollowedpages-special-title' => 'Beobachtete Seiten',
@@ -448,6 +451,7 @@ Schauen Sie doch mal rein und bearbeiten Sie sie weiter...
 
 /** Spanish (Español)
  * @author Crazymadlover
+ * @author Danke7
  */
 $messages['es'] = array(
 	'follow-desc' => 'Mejoras para la funcionalidad de la lista de vigilancia',
@@ -464,6 +468,8 @@ $messages['es'] = array(
 	'wikiafollowedpages-special-empty' => 'La lista de páginas seguidas por este usuario está vacía.
 Agregar páginas a esta lista haciendo click en "{{int:watch}}" arriba de una página.',
 	'wikiafollowedpages-special-anon' => 'Por favor [[Special:Signup|inicia sesión]] para crear o ver tu lista de páginas seguidas.',
+	'oasis-wikiafollowedpages-special-seeall' => 'Ver todo >',
+	'wikiafollowedpages-special-seeall' => 'Ver todo >',
 	'wikiafollowedpages-special-showall' => 'Mostrar todo',
 	'wikiafollowedpages-special-showmore' => 'Mostrar más',
 	'wikiafollowedpages-special-title' => 'Páginas seguidas',
@@ -572,7 +578,9 @@ $messages['fr'] = array(
 	'wikiafollowedpages-special-empty' => 'La liste de suivi de cet utilisateur est vide.
 Ajoutez des pages à cette liste en cliquant sur « Suivre » en haut d’une page.',
 	'wikiafollowedpages-special-anon' => 'Veuillez [[Special:Signup|vous identifier]] pour créer ou voir votre liste de suivi.',
-	'wikiafollowedpages-special-showall' => 'Tout afficher',
+	'oasis-wikiafollowedpages-special-seeall' => 'Tout voir >',
+	'wikiafollowedpages-special-seeall' => 'Tout voir >',
+	'wikiafollowedpages-special-showall' => 'Tout afficher >',
 	'wikiafollowedpages-special-showmore' => 'Voir plus',
 	'wikiafollowedpages-special-title' => 'Pages suivies',
 	'wikiafollowedpages-special-delete-tooltip' => 'Supprimer cette page',
@@ -679,7 +687,9 @@ $messages['gl'] = array(
 	'wikiafollowedpages-special-empty' => 'A lista de vixilancia deste usuario está baleira.
 Engada páxinas a esta lista premendo no botón "{{int:watch}}" que aparecerá na parte superior das páxinas.',
 	'wikiafollowedpages-special-anon' => '[[Special:Signup|Acceda ao sistema]] para crear ou ollar a súa lista de vixilancia.',
-	'wikiafollowedpages-special-showall' => 'Mostrar todo',
+	'oasis-wikiafollowedpages-special-seeall' => 'Ollar todos >',
+	'wikiafollowedpages-special-seeall' => 'Ollar todos >',
+	'wikiafollowedpages-special-showall' => 'Mostrar todo >',
 	'wikiafollowedpages-special-showmore' => 'Mostrar máis',
 	'wikiafollowedpages-special-title' => 'Páxinas vixiadas',
 	'wikiafollowedpages-special-delete-tooltip' => 'Eliminar esta páxina',
@@ -786,7 +796,9 @@ $messages['ia'] = array(
 	'wikiafollowedpages-special-empty' => 'Le lista de paginas sub observation de iste usator es vacue.
 Adde paginas a iste lista cliccante super "Observar" in alto de un pagina.',
 	'wikiafollowedpages-special-anon' => 'Per favor [[Special:Signup|aperi un session]] pro crear e vider tu lista de paginas sub observation.',
-	'wikiafollowedpages-special-showall' => 'Monstrar toto',
+	'oasis-wikiafollowedpages-special-seeall' => 'Vider totes >',
+	'wikiafollowedpages-special-seeall' => 'Vider totes >',
+	'wikiafollowedpages-special-showall' => 'Monstrar totes >',
 	'wikiafollowedpages-special-showmore' => 'Monstrar plus',
 	'wikiafollowedpages-special-title' => 'Paginas sub observation',
 	'wikiafollowedpages-special-delete-tooltip' => 'Remover iste pagina',
@@ -1008,13 +1020,15 @@ $messages['lb'] = array(
 	'wikiafollowedpages-special-heading-mediawiki' => 'MediaWiki-Säiten ($1)',
 	'wikiafollowedpages-special-heading-media' => 'Biller a Videoen ($1)',
 	'wikiafollowedpages-special-namespace' => '($1-Säit)',
-	'wikiafollowedpages-special-showall' => 'All weisen',
+	'wikiafollowedpages-special-showall' => 'All weisen >',
+	'wikiafollowedpages-special-showmore' => 'Méi weisen',
 	'wikiafollowedpages-special-title' => 'Iwwerwaachte Säiten',
 	'wikiafollowedpages-special-delete-tooltip' => 'Dës Säit ewechhuelen',
 	'wikiafollowedpages-special-hidden-unhide' => 'Dës Lëscht net méi verstoppen.',
 	'wikiafollowedpages-masthead' => 'Iwwerwaachte Säiten',
 	'wikiafollowedpages-special-title-userbar' => 'Iwwerwaachte Säiten',
 	'wikiafollowedpages-prefs-advanced' => 'Erweidert Optiounen',
+	'wikiafollowedpages-prefs-watchlist' => 'Nëmmen Iwwerwaachungslëscht',
 	'follow-categoryadd-summary' => "Säit gouf bäi d'Kategorie derbäigesat",
 	'wikiafollowedpages-userpage-heading' => 'Säiten, déi ech iwwerwaachen',
 	'wikiafollowedpages-userpage-more' => 'Méi',
@@ -1039,7 +1053,9 @@ $messages['mk'] = array(
 	'wikiafollowedpages-special-empty' => 'Списокот на следени страници на овој корисник е празен.
 Додавајте страници на списокот со стискање на „Следи“ на врвот од страницата.',
 	'wikiafollowedpages-special-anon' => '[[Special:Signup|Најавете се]] за да создадете или прегледате ваш список на следени страници.',
-	'wikiafollowedpages-special-showall' => 'Прикажи сè',
+	'oasis-wikiafollowedpages-special-seeall' => 'Сите >',
+	'wikiafollowedpages-special-seeall' => 'Сите >',
+	'wikiafollowedpages-special-showall' => 'Сите >',
 	'wikiafollowedpages-special-showmore' => 'Повеќе',
 	'wikiafollowedpages-special-title' => 'Следени страници',
 	'wikiafollowedpages-special-delete-tooltip' => 'Отстранување на оваа страница',
@@ -1146,7 +1162,9 @@ $messages['nl'] = array(
 	'wikiafollowedpages-special-empty' => 'De volglijst van deze gebruiker is leeg.
 Voeg pagina\'s toe aan deze lijst door te klikken op "Volgen" bovenaan pagina\'s.',
 	'wikiafollowedpages-special-anon' => '[[Special:Signup|Meld u aan]] om uw volglijst te bewerken of te bekijken.',
-	'wikiafollowedpages-special-showall' => 'Allemaal weergeven',
+	'oasis-wikiafollowedpages-special-seeall' => 'Allemaal bekijken >',
+	'wikiafollowedpages-special-seeall' => 'Allemaal bekijken >',
+	'wikiafollowedpages-special-showall' => 'Allemaal weergeven >',
 	'wikiafollowedpages-special-showmore' => 'Meer weergeven',
 	'wikiafollowedpages-special-title' => "Pagina's op volglijst",
 	'wikiafollowedpages-special-delete-tooltip' => 'Deze pagina verwijderen',
@@ -1254,7 +1272,9 @@ $messages['no'] = array(
 	'wikiafollowedpages-special-empty' => 'Denne brukerens liste over fulgte sider er tom.
 Legg til sider i listen ved å trykke «Følg» øverst på siden.',
 	'wikiafollowedpages-special-anon' => 'Vennligst [[Special:Signup|logg inn]] for å opprette eller vise din liste over fulgte sider.',
-	'wikiafollowedpages-special-showall' => 'Vis alle',
+	'oasis-wikiafollowedpages-special-seeall' => 'Se alle >',
+	'wikiafollowedpages-special-seeall' => 'Se alle >',
+	'wikiafollowedpages-special-showall' => 'Vis alle >',
 	'wikiafollowedpages-special-showmore' => 'Vis mer',
 	'wikiafollowedpages-special-title' => 'Fulgte sider',
 	'wikiafollowedpages-special-delete-tooltip' => 'Fjern denne siden',
@@ -1343,6 +1363,116 @@ Vennligst kom på besøk og rediger ofte...
 </p>',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'follow-desc' => "Ameliorament për la funsionalità ëd lòn ch'as ten sot euj",
+	'wikiafollowedpages-special-heading-category' => 'Categorìe ($1)',
+	'wikiafollowedpages-special-heading-article' => 'Artìcoj ($1)',
+	'wikiafollowedpages-special-heading-blogs' => 'Scartari e artìcoj ($1)',
+	'wikiafollowedpages-special-heading-forum' => 'Soget da piassa ëd discussion ($1)',
+	'wikiafollowedpages-special-heading-project' => 'Pàgine ëd proget ($1)',
+	'wikiafollowedpages-special-heading-user' => 'Pàgine utent ($1)',
+	'wikiafollowedpages-special-heading-templates' => 'Pàgine dë stamp ($1)',
+	'wikiafollowedpages-special-heading-mediawiki' => 'Pàgine ëd MediaWiki ($1)',
+	'wikiafollowedpages-special-heading-media' => 'Figure e filmà ($1)',
+	'wikiafollowedpages-special-namespace' => '(Pàgina $1)',
+	'wikiafollowedpages-special-empty' => 'La lista dle pàgine tnùe sot euj ëd cost utent-sì a l\'é veuida.
+Ch\'a gionta dle pàgine a costa lista an sgnacand "{{int:watch}}" an cò dla pàgina.',
+	'wikiafollowedpages-special-anon' => "Për piasì ch'a [[Special:Signup|intra ant ël sistema]] për creé o vardé soa lista dle pàgine tnùe sot euj.",
+	'oasis-wikiafollowedpages-special-seeall' => 'Varda tut >',
+	'wikiafollowedpages-special-seeall' => 'Varda tut >',
+	'wikiafollowedpages-special-showall' => 'Smon-e tut >',
+	'wikiafollowedpages-special-showmore' => 'Smon-e ëd pì',
+	'wikiafollowedpages-special-title' => 'Pàgine tnùe sot euj',
+	'wikiafollowedpages-special-delete-tooltip' => 'Gava sta pàgina-sì',
+	'wikiafollowedpages-special-hidden' => "St'utent-sì a l'ha sernù dë stërmé {{GENDER:$1|soa|soa|soa}} lista dle pàgine ch'a ten sot euj da la vista pùblica.",
+	'wikiafollowedpages-special-hidden-unhide' => 'Dëscoata sta lista-sì.',
+	'wikiafollowedpages-special-blog-by' => 'da $1',
+	'wikiafollowedpages-masthead' => 'Pàgine tnùe sot euj',
+	'wikiafollowedpages-following' => 'Ròba tnùa sot euj',
+	'wikiafollowedpages-special-title-userbar' => 'Pàgine tnùe sot euj',
+	'tog-enotiffollowedpages' => "Mandeme un mëssagi an pòsta eletrònica quand che na pàgina ch'im ten-o sot euj a l'é modìficà",
+	'tog-enotiffollowedminoredits' => "Mandeme un mëssagi an pòsta eletrònica për dle modìfiche cite a le pàgine ch'im ten-o sot euj",
+	'wikiafollowedpages-prefs-advanced' => 'Opsion avansà',
+	'wikiafollowedpages-prefs-watchlist' => "Mach la lista ëd lòn ch'i ten-o sot euj",
+	'tog-hidefollowedpages' => "Rende privà le liste dle pàgine ch'im ten-o sot euj",
+	'follow-categoryadd-summary' => 'Pàgine giontà a la categorìa',
+	'follow-bloglisting-summary' => 'Scartari scrivù an sla pàgina djë scartari',
+	'wikiafollowedpages-userpage-heading' => "Pàgine ch'im ten-o sot euj",
+	'wikiafollowedpages-userpage-hide-tooltip' => 'Stërma toe liste dle pàgine tnùe sot euj da la vista pùblica',
+	'wikiafollowedpages-userpage-more' => 'Pi',
+	'wikiafollowedpages-userpage-hide' => 'stërma',
+	'wikiafollowedpages-userpage-empty' => 'La lista dle pàgine tnùe sot euj ëd cost utent-sì a l\'é veuida.
+Ch\'a gionta dle pàgine a costa lista an sgnacand "{{int:watch}}" an cò dla pàgina.',
+	'enotif_subject_categoryadd' => 'La pàgina $PAGETITLE ëd {{SITENAME}} a l\'é staita giontà a $CATEGORYNAME da $PAGEEDITOR',
+	'enotif_body_categoryadd' => "Car \$WATCHINGUSERNAME,
+
+Na pàgina a l'é stàita giontà a na categorìa ch'a ten sot euj su {{SITENAME}}.
+
+Ch'a vëdda \"\$PAGETITLE_URL\" për la pàgina neuva.
+
+Për piasì, ch'a vìsita e modìfica ëd soens...
+
+{{SITENAME}}
+
+___________________________________________
+* Ch'a contròla nòste bele wiki! http://www.wikia.com
+
+* Veul-lo controlé che mëssagi a arsèiv?
+Ch'a vada a: {{fullurl:{{ns:special}}:Preferences}}.",
+	'enotif_body_categoryadd-html' => '<p>
+Car $WATCHINGUSERNAME,
+<br /><br />
+Na pàgina a l\'é stàita giontà a na categorìa ch\'a ten sot euj su {{SITENAME}}.
+<br /><br />
+Ch\'a daga n\'ociada a <a href="$PAGETITLE_URL">$PAGETITLE</a> për la pàgina neuva.
+<br /><br />
+Për piasì, ch\'a vìsita e modìfica ëd soens...
+<br /><br />
+{{SITENAME}}
+<br /><hr />
+<ul>
+<li><a href="http://www.wikia.com">Contròla nòste bele wiki!</a></li>
+<li>Veul-lo controlé che mëssagi a arsèive? Ch\'a vada a <a href="{{fullurl:{{ns:special}}:Preferences}}">Gust ëd l\'utent</a></li>
+</ul>
+</p>',
+	'enotif_subject_blogpost' => 'La pàgina $PAGETITLE ëd {{SITENAME}} a l\'é stàita mandà a $BLOGLISTINGNAME da $PAGEEDITOR',
+	'enotif_body_blogpost' => "Car \$WATCHINGUSERNAME,
+
+A l'é staje na modìfica a na pàgina ëd na lista dë scartari ch'a ten-e sot euj su {{SITENAME}}.
+
+Ch'a bèica \"\$PAGETITLE_URL\" për la pàgina neuva.
+
+Për piasì, ch'a vìsita e a modìfica ëd soens...
+
+{{SITENAME}}
+
+___________________________________________
+* Ch'a contròla nòste bele wiki! http://www.wikia.com
+
+* Veul-lo controlé che mëssagi a arsèiv?
+Ch'a vada a: {{fullurl:{{ns:special}}:Preferences}}.",
+	'enotif_body_blogpost-HTML' => '<p>
+Car $WATCHINGUSERNAME,
+<br /><br />
+A l\'é staje na modìfica a na pàgina ëd na lista dë scartari ch\'a ten sot euj su {{SITENAME}}.
+<br /><br />
+Ch\'a bèica <a href="$PAGETITLE_URL">$PAGETITLE</a> për la pàgina neuva.
+<br /><br />
+Për piasì, ch\'a vìsita e a modìfica ëd soens...
+<br /><br />
+{{SITENAME}}
+<br /><hr />
+<ul>
+<li><a href="http://www.wikia.com">Ch\'a contròla nòste bele wiki!</a></li>
+<li>Veul-lo controlé che mëssagi a arsèiv? Ch\'a vada a <a href="{{fullurl:{{ns:special}}:Preferences}}">Gust ëd l\'utent</a></li>
+</ul>
+</p>',
+);
+
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
@@ -1386,7 +1516,9 @@ $messages['pt'] = array(
 	'wikiafollowedpages-special-empty' => 'A lista de páginas seguidas por este utilizador está vazia.
 Adicione páginas à lista clicando "{{int:watch}}" no topo de uma página.',
 	'wikiafollowedpages-special-anon' => '[[Special:Signup|Autentique-se]] para criar ou ver a sua lista de páginas seguidas, por favor.',
-	'wikiafollowedpages-special-showall' => 'Mostrar todas',
+	'oasis-wikiafollowedpages-special-seeall' => 'Ver todas >',
+	'wikiafollowedpages-special-seeall' => 'Ver todas >',
+	'wikiafollowedpages-special-showall' => 'Mostrar todas >',
 	'wikiafollowedpages-special-showmore' => 'Mostrar mais',
 	'wikiafollowedpages-special-title' => 'Páginas seguidas',
 	'wikiafollowedpages-special-delete-tooltip' => 'Remover esta página',
@@ -1508,7 +1640,9 @@ $messages['ru'] = array(
 	'wikiafollowedpages-special-empty' => 'Список отслеживаемых этим пользователем статей пуст.
 Для добавления страниц в этот список нажмите «{{int:watch}}» наверху этой страницы.',
 	'wikiafollowedpages-special-anon' => 'Пожалуйста, [[Special:Signup|представьтесь]] для создания или просмотра своего списка отслеживаемых страниц.',
-	'wikiafollowedpages-special-showall' => 'Показать всё',
+	'oasis-wikiafollowedpages-special-seeall' => 'Показать все >',
+	'wikiafollowedpages-special-seeall' => 'Показать все >',
+	'wikiafollowedpages-special-showall' => 'Показать всё >',
 	'wikiafollowedpages-special-showmore' => 'Показать ещё',
 	'wikiafollowedpages-special-title' => 'Отслеживаемые страницы',
 	'wikiafollowedpages-special-delete-tooltip' => 'Удалить эту страницу',
@@ -1631,7 +1765,7 @@ $messages['te'] = array(
 	'wikiafollowedpages-special-heading-user' => 'వాడుకరి పుటలు ($1)',
 	'wikiafollowedpages-special-heading-mediawiki' => 'మీడియావికీ పుటలు ($1)',
 	'wikiafollowedpages-special-namespace' => '($1 పుట)',
-	'wikiafollowedpages-special-showall' => 'అన్నీ చూపించు',
+	'wikiafollowedpages-special-showall' => 'అన్నిటినీ చూపించు >',
 	'wikiafollowedpages-prefs-advanced' => 'ఉన్నత ఎంపికలు',
 	'wikiafollowedpages-userpage-hide' => 'దాచు',
 );
@@ -1655,7 +1789,7 @@ $messages['uk'] = array(
 	'wikiafollowedpages-special-empty' => 'Список статей спостереження цього користувача порожній.
 Щоб додати сторінки в цей список, натисніть "{{int:watch}}" зверху цієї сторінки.',
 	'wikiafollowedpages-special-anon' => 'Будь ласка, [[Special:Signup|увійдіть до системи]] для створення або перегляду сторінок свого списку спостереження.',
-	'wikiafollowedpages-special-showall' => 'Показати все',
+	'wikiafollowedpages-special-showall' => 'Показати всі >',
 	'wikiafollowedpages-special-showmore' => 'Показати більше',
 	'wikiafollowedpages-special-title' => 'Сторінки спостереження',
 	'wikiafollowedpages-special-delete-tooltip' => 'Видалити цю сторінку',

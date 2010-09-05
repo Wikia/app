@@ -494,7 +494,9 @@ $messages['id'] = array(
 Silakan tinggalkan pesan di [[$2|Pembicaraan halaman saya]] jika saya dapat membantu! $3',
 );
 
-/** Italian (Italiano) */
+/** Italian (Italiano)
+ * @author Gianfranco
+ */
 $messages['it'] = array(
 	'welcome-user-page' => "==Qualcosa su di me==
 
@@ -509,10 +511,9 @@ $messages['it'] = array(
 * Aggiungi i collegamenti alle tue pagine preferite su questo wiki!
 * Pagina preferita n.2
 * Pagina preferita n.3",
-	'welcome-message-user' => '== Benvenuto ==
-Ciao $4, benvenuto su {{SITENAME}}! Grazie per la tua modifica sulla pagina [[:$1]].
+	'welcome-message-user' => 'Ciao, benvenuto su {{SITENAME}}! Grazie per la tua modifica alla pagina [[:$1]].
 
-Lascia un messaggio sulla [[$2|pagina delle mie discussioni]], se posso esserti utile per qualunque problema! $3',
+Lascia pure un messaggio sulla [[$2|mia pagina di discussione]], se posso esserti utile per qualsiasi cosa! $3',
 	'welcome-message-anon' => "== Benvenuto ==
 Ciao, benvenuto su {{SITENAME}}. Grazie per la tua modifica sulla pagina [[:$1]].
 
@@ -520,6 +521,22 @@ Ciao, benvenuto su {{SITENAME}}. Grazie per la tua modifica sulla pagina [[:$1]]
 
 Lascia un messaggio sulla [[$2|pagina delle mie discussioni]], se posso esserti utile per qualunque problema! $3",
 	'welcome-message-log' => 'Benvenuto a un nuovo collaboratore',
+	'welcome-message-user-staff' => '==Benvenuto==
+
+Ciao, benvenuto/a su {{SITENAME}}! Grazie per la tua modifica alla pagina [[:$1]].
+
+Se hai bisogno di aiuto e non ci sono amministratori disponibili, visita 
+[[wikia:Forum:Community Central Forum|i forum sul wiki centrale della Community]] $3',
+	'welcome-message-anon-staff' => "==Benvenuto==
+
+Ciao, benvenuto/a su {{SITENAME}}.
+Grazie per la tua modifica alla pagina [[:$1]].
+
+'''[[Special:UserLogin|Se vuoi, puoi registrarti ed usare un nome utente]]'''.
+E' un modo semplice per tenere traccia dei tuoi contributi e per aiutrti a comunicare con il resto della Community.
+
+Se hai bisogno di aiuto e non ci sono amministratori disponibili, visita i [[wikia:Forum:Community Central Forum|forum sul wiki centrale della Community]] $3",
+	'staffsig-text' => '$1<staff /> <small>([[w:forums|forum di supporto]] | [[w:sblog|blog]])</small>',
 );
 
 /** Japanese (日本語)
