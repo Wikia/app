@@ -5,11 +5,11 @@ class ThemeDesignerHelper {
 	/**
 	 * Add Special:ThemeDesigner to MyTools menu
 	 */
-	public static function addToMyTools(&$tools) {
+	public static function addToMyTools( &$tools ) {
 		global $wgUser;
 
-		if ($wgUser->isAllowed('themedesigner')) {
-			wfLoadExtensionMessages('ThemeDesigner');
+		if ( $wgUser->isAllowed( 'themedesigner' ) ) {
+			wfLoadExtensionMessages( 'ThemeDesigner' );
 			$tools[] = 'ThemeDesigner';
 		}
 
@@ -21,22 +21,22 @@ class ThemeDesignerHelper {
 	 */
 	public static function saveSettings() {
 		global $wgRequest;
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
 		$themeSettings = new ThemeSettings();
-		$data = $wgRequest->getArray('settings');
+		$data = $wgRequest->getArray( 'settings' );
 
-		foreach($data as $name => $value) {
-			$themeSettings->set($name, $value);
+		foreach ( $data as $name => $value ) {
+			$themeSettings->set( $name, $value );
 		}
 
 		$result = $themeSettings->save();
-		$ret = array('result' => $result);
+		$ret = array( 'result' => $result );
 
-		$response = new AjaxResponse(Wikia::json_encode($ret));
-		$response->setContentType('application/json; charset=utf-8');
+		$response = new AjaxResponse( Wikia::json_encode( $ret ) );
+		$response->setContentType( 'application/json; charset=utf-8' );
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return $response;
 	}
 }

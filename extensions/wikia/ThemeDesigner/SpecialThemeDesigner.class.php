@@ -7,20 +7,20 @@ class SpecialThemeDesigner extends UnlistedSpecialPage {
 	}
 
 	public function execute() {
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 		global $wgUser;
 
 		// check rights
-		if (!$wgUser->isAllowed('themedesigner')) {
+		if ( !$wgUser->isAllowed( 'themedesigner' ) ) {
 			$this->displayRestrictionError();
-			wfProfileOut(__METHOD__);
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 
-		Wikia::setVar('OasisEntryModuleName', 'ThemeDesigner');
-		
-		wfLoadExtensionMessages('ThemeDesigner');
+		Wikia::setVar( 'OasisEntryModuleName', 'ThemeDesigner' );
 
-		wfProfileOut(__METHOD__);
+		wfLoadExtensionMessages( 'ThemeDesigner' );
+
+		wfProfileOut( __METHOD__ );
 	}
 }

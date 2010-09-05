@@ -1,10 +1,12 @@
 <?php
+
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Theme designer',
-	'author' => array('Christian Williams', 'Inez Korczyński', 'Maciej Brencz')
+	'author' => array( 'Christian Williams', 'Inez Korczyński', 'Maciej Brencz' ),
+	'descriptionmsg' => 'themedesigner-desc',
 );
 
-$dir = dirname(__FILE__);
+$dir = dirname( __FILE__ );
 
 $wgAutoloadClasses['ThemeDesignerModule'] = "$dir/ThemeDesignerModule.class.php";
 $wgAutoloadClasses['ThemeDesignerHelper'] = "$dir/ThemeDesignerHelper.class.php";

@@ -16,7 +16,7 @@ class ThemeDesignerModule extends Module {
 	var $returnTo;
 
 	public function executeIndex() {
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 		global $wgLang;
 
 		$settings = new ThemeSettings();
@@ -28,26 +28,26 @@ class ThemeDesignerModule extends Module {
 		$this->themeHistory = $settings->getHistory();
 
 		// format time (for edits older than 30 days - show timestamp)
-		foreach($this->themeHistory as &$entry) {
-			$diff = time() - strtotime($entry['timestamp']);
+		foreach ( $this->themeHistory as &$entry ) {
+			$diff = time() - strtotime( $entry['timestamp'] );
 
-			if ($diff < 30 * 86400) {
-				$entry['timeago'] = wfTimeFormatAgo($entry['timestamp']);
+			if ( $diff < 30 * 86400 ) {
+				$entry['timeago'] = wfTimeFormatAgo( $entry['timestamp'] );
 			}
 			else {
-				$entry['timeago'] = $wgLang->date($entry['timestamp']);
+				$entry['timeago'] = $wgLang->date( $entry['timestamp'] );
 			}
 		}
 
 		// URL user should be redirected to when settings are saved
-		if (isset($_SERVER['HTTP_REFERER'])) {
+		if ( isset( $_SERVER['HTTP_REFERER'] ) ) {
 			$this->returnTo = $_SERVER['HTTP_REFERER'];
 		}
 		else {
 			$this->returnTo = $this->wgScript;
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 	}
 
 	public function executeThemeTab() {
