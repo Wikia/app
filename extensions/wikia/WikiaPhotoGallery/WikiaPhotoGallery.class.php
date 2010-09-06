@@ -213,7 +213,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 			// use default gallery width if "widths" attribute is not provided
 			if (!isset($params['widths'])) {
-				$this->setWidths(190);
+				$this->setWidths(200);
 			}
 
 			// "columns" - alias for perrow
@@ -449,8 +449,8 @@ class WikiaPhotoGallery extends ImageGallery {
 		// render as placeholder in RTE
 		if (!empty($wgRTEParserEnabled)) {
 			if ($this->mType == self::WIKIA_PHOTO_GALLERY) {
-				// gallery: 190x190px placeholder
-				$width = $height = 190;
+				// gallery: 200x200px placeholder
+				$width = $height = 200;
 			}
 			else {
 				// slideshow: use user specified size
@@ -702,8 +702,8 @@ class WikiaPhotoGallery extends ImageGallery {
 					$fileObject->getHandler()->parserTransformHook($this->mParser, $fileObject);
 				}
 			}
-
-			$html .= Xml::openElement('div', array(
+			$html .= Xml::openElement('div',
+				array(
 				'class' => 'gallery-image-wrapper'.
 					((!$useBuckets && !empty($borderColorClass)) ? $borderColorClass : null),
 				'style' => 'position: relative;'.
@@ -716,6 +716,43 @@ class WikiaPhotoGallery extends ImageGallery {
 			));
 
 			# Fix 59913 - thumbnail goes as <img /> not as <a> background.
+
+			if ( $orientation != 'none' ) {
+
+			# Fix 65861 - gallery fix, now images are put inside <p> tags for cropping.
+			# p not div for W3C validation
+
+				$html .= Xml::openElement(
+					'p',
+					array(
+						
+						'style' => "margin:0px; height:{$image['height']}px;".
+							($useBuckets ? '' : " width:{$image['width']}px;").
+							"overflow: hidden; display: block"
+					)
+				);
+					
+				# margin calculation for image positioning
+
+				if ( $thumbParams['height'] > $image['height'] ){
+					$tempTopMargin = -1 * ( $thumbParams['height'] - $image['height'] ) / 2;
+				}else{
+					unset ( $tempTopMargin );
+				}
+
+				if ( $thumbParams['width'] > $image['width'] ){
+					$tempLeftMargin = -1 * ( $thumbParams['width'] - $image['width'] ) / 2;
+				}else{
+					unset ( $tempLeftMargin );
+				}
+
+				$imgStyle = ( ( !empty( $tempTopMargin ) ) ? " margin-top:".$tempTopMargin."px;" : null ).
+					( ( !empty( $tempLeftMargin ) ) ? " margin-left:".$tempLeftMargin."px;" : null );
+			}else{
+				$imgStyle = "height:{$image['height']}px;".
+					($useBuckets ? '' : " width:{$image['width']}px;");
+
+			}
 			$html .= Xml::openElement(
 				'a',
 				array(
@@ -727,22 +764,25 @@ class WikiaPhotoGallery extends ImageGallery {
 			$html .= Xml::openElement(
 				'img',
 				array(
-					'class' => $image['classes'],
+					
 					'style' => ((!empty($image['titleText'])) ? " line-height:{$image['height']}px;" : null).
-						" height:{$image['height']}px;".
-						($useBuckets ? '' : " width:{$image['width']}px;"),
+						$imgStyle,
 					'src' => (($image['thumbnail']) ? $image['thumbnail'] : null),
 					'title' => $image['linkTitle'].' ('.$sk->formatSize($image['bytes']).')'
 				)
 			);
-
 			$html .=Xml::closeElement('a');
-			if($captionsPosition == 'below') {
+			if ( $orientation != 'none' ) {
+				$html .= Xml::closeElement('p');
+			}
+
+
+			if( $captionsPosition == 'below' ) {
 				$html .= Xml::closeElement('div');
 				$html .= Xml::closeElement('div');
 			}
-
-			if(!empty($image['caption'])) {
+			
+			if( !empty( $image['caption'] ) ) {
 				$html .= Xml::openElement(
 					'div',
 					array(
@@ -756,7 +796,6 @@ class WikiaPhotoGallery extends ImageGallery {
 				);
 
 				$html .= $image['caption'];
-
 				$html .= Xml::closeElement('div');
 			}
 
@@ -979,7 +1018,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			if (  is_object( $thumb ) ) {
 				wfDebug(__METHOD__ . ": image '" . $nt->getText() . "' {$thumb->width}x{$thumb->height}\n");
 			}
-			
+	
 		}
 
 		$s .= Xml::closeElement('ul');
