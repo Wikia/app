@@ -12,6 +12,7 @@ $messages['en'] = array(
 	'wva-title' => 'Quickly add video From URL',
 	'wva-notlogged' => 'You need to log in or register to insert videos.',
 	'wva-notallowed' => 'You cannot insert videos on this wiki.',
+	'wva-protected' => 'This video is protected.',
 );
 
 /** Message documentation (Message documentation)
