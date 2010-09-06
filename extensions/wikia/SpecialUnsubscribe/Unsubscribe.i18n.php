@@ -15,7 +15,7 @@ $messages['en'] = array(
 	'unsubscribe-desc' => 'Provides a [[Special:Unsubscribe|single e-mail unsubscribe]] point',
 	'unsubscribe' => 'Unsubscribe',
 
-	'unsubscribe-badaccess' => 'Sorry, this page cannot be used in this manor.
+	'unsubscribe-badaccess' => 'Sorry, this page cannot be used in this manner.
 Please follow the link from your e-mail.',
 	'unsubscribe-badtoken' => 'Sorry, there was a problem with the security token.
 Please try again.',
