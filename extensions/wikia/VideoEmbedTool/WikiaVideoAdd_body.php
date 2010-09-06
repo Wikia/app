@@ -85,6 +85,16 @@ class WikiaVideoAddForm extends SpecialPage {
 			$this->mName = ucfirst($this->mName);
 			$title = Title::makeTitleSafe( NS_VIDEO, $this->mName );
 			if ( $title instanceof Title ) {
+				$permErrors = $title->getUserPermissionsErrors( 'edit', $wgUser );
+				$permErrorsUpload = $title->getUserPermissionsErrors( 'upload', $wgUser );
+				$permErrorsCreate = ( $title->exists() ? array() : $title->getUserPermissionsErrors( 'create', $wgUser ) );
+
+				if( $permErrors || $permErrorsUpload || $permErrorsCreate ) {
+					header('X-screen-type: error');
+					$wgOut->addWikiMsg( 'wva-protected' );
+					return;
+				}
+
 				$video = new VideoPage( $title );
 				$video->parseUrl( $this->mUrl );
 				$video->setName( $this->mName );

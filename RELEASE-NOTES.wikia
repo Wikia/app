@@ -1,5 +1,6 @@
 == Changes since 201009.1 ==
-* rt#65992:  Gallery tag: Change default picture width to 190px (TOR)
+* rt#66327: video upload does not honor title create protection (uberfuzzy)
+* rt#65992: Gallery tag: Change default picture width to 190px (TOR)
 * rt#65836: Rich text editor message - please decide for one... (TOR)
 * rt#65738: Blog comment editing does not respect bot flag (uberfuzzy)
 * rt#65271: dart not escaping js... (Nef) 
