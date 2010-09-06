@@ -694,12 +694,6 @@ hu',
 'widget-founderbadge-notavailable' => "(Wiki founder's badge is not available)",
 'widget-shoutbox-disabled' => 'The Shoutbox widget is disabled on this wiki.',
 
-# MagCloud widget
-'magcloud-widget-title' => 'Magazine Creator',
-'magcloud-widget-desc' => 'Create a magazine from content on this wiki',
-'magcloudm-widget-title' => 'Check out these user-created Wikia magazines',
-'magcloudm-widget-desc' => 'Check out these user-created Wikia magazines',
-
 #Wikia Widgets tooltips
 'wt_help_startup'  => '|Not familiar with widgets?||Open user menu and click "Manage widgets"...',
 'wt_help_cockpit'  => '|Widgets cockpit||Drag widget thumbs and drop them on sidebar to add wiget...',

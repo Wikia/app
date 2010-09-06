@@ -242,10 +242,6 @@ var WidgetFramework = {
 						allow = true;
 					}
 
-					if(i == 'WidgetMagCloud' && typeof wgEnableMagCloudExt == 'undefined') {
-						allow = false;
-					}
-
 					if(allow) {
 						WidgetFramework.carouselLength++;
 
