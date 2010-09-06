@@ -30,7 +30,7 @@
 		<div id="wikia_page">
 			<div class='interstitial_fg_top color1' id="page_bar">
 				<?php print (empty($pageBarMsg)?"":"<div class='left'>$pageBarMsg</div>"); ?>
-				<a href = "<?php print $url; ?>" class='wikia-button' id='skip_ad'><?php print $skip; ?></a>
+				<a href = "<?php print htmlspecialchars( $url ); ?>" class='wikia-button' id='skip_ad'><?php print $skip; ?></a>
 			</div>
 			<div class='interstitial_fg_body'>
 				<?php print $adCode ?>
