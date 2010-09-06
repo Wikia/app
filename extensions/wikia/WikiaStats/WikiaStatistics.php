@@ -586,7 +586,7 @@ class WikiaGlobalStats {
 		wfProfileIn( __METHOD__ );
     	
 		$dbLimit = self::$defaultLimit;
-		$date_diff = date('Y-m-d', time() - $days * 60 * 60 * 24);
+		$date_diff = date('Ymd', time() - $days * 60 * 60 * 24);
 
 		// Keep in sync with the key generation in self::excludeArticle.
 		$memkey = wfMemcKey( "WS:getPagesEditors", $days, $limit, intval($onlyContent), intval($recalculateLimit), intval($noHubDepe) );
@@ -614,11 +614,12 @@ class WikiaGlobalStats {
 			);
 			while ( $oRow = $dbr->fetchObject( $oRes ) ) {
 				$data[] = array(
-					'wikia'		=> $oRow->pc_wikia_id,
-					'page'		=> $oRow->pc_page_id,
+					'wikia'		=> $oRow->wiki_id,
+					'page'		=> $oRow->page_id,
 					'count' 	=> $oRow->all_count
 				);
 			}
+
 			$dbr->freeResult( $oRes );
 
 			$result = $values = array();
@@ -645,6 +646,8 @@ class WikiaGlobalStats {
 					$res = self::allowResultsForEditedArticles( $row, $from_db );
 					if ( $res === false ) continue;
 					
+					$res['count'] = $row['count'];
+
 					list( $wikiaTitle, $db, $hub, $page_name, $wikia_url, $page_url, $count ) = array_values($res);
 					
 					if ( !$noHubDepe ) {
@@ -673,8 +676,10 @@ class WikiaGlobalStats {
 			unset($data);
 			unset($servers);
 			$wgTTCache->set( $memkey, $result );
-		}
+			
+	
 
+		}
 		wfProfileOut( __METHOD__ );
 		return $result;
 	}
