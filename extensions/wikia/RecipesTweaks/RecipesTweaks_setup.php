@@ -23,7 +23,7 @@ $wgHooks['SkinGetPageClasses'][] = 'RecipesTweaks::addBodyClass';
 $wgHooks['CustomUserData'][] = 'RecipesTweaks::replaceWatchlistUserLink';
 $wgHooks['MonacoBeforeWikiaPage'][] = 'RecipesTweaks::renderArticleHeaderTabs';
 $wgHooks['MonacoBeforePageBar'][] = 'RecipesTweaks::renderArticleHeaderStripe';
-if ( !empty( $wgEnableRecipiesTweaksSavedPages ) ) {
+if ( !empty( $wgEnableRecipesTweaksSavedPages ) ) {
 	// requested to be disabled on certain wikis, defaults to true (enabled) in CommonSettings
 	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'RecipesTweaks::renderUserSavedPagesBox';
 }
