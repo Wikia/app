@@ -125,7 +125,7 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 					// ... cached
 					$data = $cached;
 				}
-				
+
 			} catch (WikiaApiQueryError $e) {
 				// getText();
 			} catch (DBQueryError $e) {
@@ -432,7 +432,7 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 				}
 				elseif (!empty($browserId)) {
 					$data['unique_id'] = $browserId;
-					$this->addWhere("unique_id = ".$browserId);
+					$this->addWhere( "unique_id = '{$browserId}'" );
 				}
 
 
@@ -477,10 +477,10 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 			$this->setIndexTagName('fault');
 			$data = $e->getText();
 		}
-		
+
 		$this->getResult()->setIndexedTagName($data, $this->getIndexTagName());
 		$this->getResult()->addValue('item', $this->getModuleName(), $data);
-		
+
 		wfRunHooks( 'ArticleAfterVote', array( $user_id, &$page, $vote ) );
 	}
 
