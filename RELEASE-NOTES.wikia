@@ -1,5 +1,5 @@
 == Changes since 201009.2 ==
-* 
+* rt#56125: remove MagCloud code from svn (Nef) 
 
 == Changes since 201009.1 ==
 * rt#66327: video upload does not honor title create protection (uberfuzzy)

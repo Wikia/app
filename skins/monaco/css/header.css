@@ -416,9 +416,6 @@ a.greyButton big {
 .WidgetAnswersThumb div {
 	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_answers.png);
 }
-.WidgetMagCloudThumb div {
-	background-image: url(http://images.wikia.com/common/releases_trunk/skins/common/widgets/icons/widget_magcloud.png);
-}
 
 /* LeanMonaco code */
 body.ajax * {
