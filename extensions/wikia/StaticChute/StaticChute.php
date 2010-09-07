@@ -295,12 +295,12 @@ class StaticChute {
 			'../extensions/wikia/Geo/geo.js',
 			'../extensions/wikia/QuantcastSegments/qcs.js',
 		);
-		$this->config['oasis_anon_article_js'] = array_merge($this->config['oasis_anon_article_js'], $this->config['oasis_jquery']);
+		$this->config['oasis_anon_article_js'] = array_merge($this->config['oasis_jquery'], $this->config['oasis_anon_article_js']);
 
 		// JS served for logged-in
 		//$this->config['oasis_loggedin_js'] = array(
 		//);
-		//$this->config['oasis_loggedin_js'] = array_merge($this->config['oasis_loggedin_js'], $this->config['oasis_jquery']);
+		//$this->config['oasis_loggedin_js'] = array_merge($this->config['oasis_jquery'], $this->config['oasis_loggedin_js']);
 		// UNTIL WE NEED TO CUSTOMIZE IT, JUST STARTING WITH THE SAME AS ANON_ARTICLE.
 		$this->config['oasis_loggedin_js'] = $this->config['oasis_anon_article_js'];
 		
@@ -308,7 +308,7 @@ class StaticChute {
 		// JS served for anon for everything that's not an article view
 		//$this->config['oasis_anon_everything_else_js'] = array(
 		//);
-		//$this->config['oasis_anon_everything_else_js'] = array_merge($this->config['oasis_anon_everything_else_js'], $this->config['oasis_jquery']);
+		//$this->config['oasis_anon_everything_else_js'] = array_merge($this->config['oasis_jquery'], $this->config['oasis_anon_everything_else_js']);
 		// UNTIL WE NEED TO CUSTOMIZE IT, JUST STARTING WITH THE SAME AS ANON_ARTICLE.
 		$this->config['oasis_anon_everything_else_js'] = $this->config['oasis_anon_article_js'];
 
