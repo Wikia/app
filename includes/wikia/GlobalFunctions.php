@@ -115,17 +115,12 @@ function print_pre($param, $return = 0)
  * @return String -- new url
  */
 function wfReplaceImageServer( $url, $timestamp = false ) {
-	global $wgImagesServers, $wgDevelEnvironment, $wgAkamaiLocalVersion,  $wgAkamaiGlobalVersion;
+	global $wgImagesServers, $wgDevelEnvironment, $wgAkamaiLocalVersion,  $wgAkamaiGlobalVersion, $wgDevBoxImageServerOverride;
 
 	// Override image server location for Wikia development environment
-	if (!empty($wgDevelEnvironment) && !empty($_SERVER['HTTP_HOST']) && !empty($wgDevBoxImageServerOverride)) {
-		if (count (explode(".", $_SERVER['HTTP_HOST'])) == 4) {
-			list($override, $developer, $wikia_dev, $com) = explode(".", $_SERVER['HTTP_HOST']);
-		} else {
-			//hot fix: $_SERVER['HTTP_HOST'] == 'localhost' on ... localhost - @ to prevent notices - should be handled in better way
-			@list($developer, $wikia_dev, $com) = explode('.', $_SERVER['HTTP_HOST']);
-		}
-		return str_replace('http://images.wikia.com/', "http://images.$developer.wikia-dev.com/", $url);
+	// This setting should be images.developerName.wikia-dev.com or perhaps "localhost"
+	if (!empty($wgDevBoxImageServerOverride)) {
+		return str_replace('http://images.wikia.com/', "http://$wgDevBoxImageServerOverride/", $url);
 	}
 
 	if(substr(strtolower($url), -4) != '.ogg' && isset($wgImagesServers) && is_int($wgImagesServers)) {
