@@ -16,10 +16,11 @@
 	<!-- SASS-generated CSS file -->
 	<link rel="stylesheet" href="<?= wfGetSassUrl("skins/oasis/css/oasis.scss") ?>">
 
-	<!-- CSS files to be combined by server-side process -->
+	<!-- CSS files to be combined by server-side process (eg: a .scss file instead of StaticChute)-->
 	<link rel="stylesheet" href="/extensions/wikia/ShareFeature/css/ShareFeature.css">
 	<link rel="stylesheet" href="/extensions/wikia/CreatePage/css/CreatePage.css">
 
+	<!-- CSS injected by extensions -->
 	<?= $csslinks ?>
 
 	<!-- Used for page load time tracking -->
@@ -27,35 +28,33 @@
 		var wgNow = new Date();
 	/*]]>*/</script>
 
-	<script src="/skins/common/wikibits.js"></script>
-	<script src="/skins/common/jquery/jquery-1.4.2.js"></script>
-	<script src="/skins/common/jquery/jquery.json-1.3.js"></script>
-	<script src="/skins/common/jquery/jquery.wikia.js"></script>
+	<!-- Combined JS files (StaticChute) -->
+	<?= $staticChuteHtml ?>
 
+	<!-- Headscripts -->
 	<?= $headscripts ?>
-
-	<!-- JS files to be combined by server-side process -->
-	<script src="/skins/oasis/js/tracker.js"></script>
-	<script src="/skins/oasis/js/hoverMenu.js"></script>
-	<script src="/skins/oasis/js/PageHeader.js"></script>
-	<script src="/skins/oasis/js/Search.js"></script>
-	<script src="/skins/oasis/js/WikiaFooter.js"></script>
-	<script src="/skins/oasis/js/buttons.js"></script>
-	<script src="/extensions/wikia/ShareFeature/js/ShareFeature.js"></script>
-	<script src="/skins/oasis/js/WikiaNotifications.js"></script>
-	<!--<script src="/skins/oasis/js/modal.js"></script>-->
-	<script src="/skins/common/jquery/jquery.wikia.modal.js"></script>
-	<script src="/skins/common/jquery/jquery.wikia.tracker.js"></script>
-	<!-- Extensions -->
-	<script src="/extensions/wikia/ImageLightbox/ImageLightbox.js"></script>
-	<script src="/extensions/wikia/CreatePage/js/CreatePage.js"></script>
-	<script src="/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js"></script>
 </head>
 <body class="<?= $bodyClasses ?>"<?= $body_ondblclick ? ' ondblclick="' . htmlspecialchars($body_ondblclick) . '"' : '' ?>>
 <?= $body ?>
 <?= $printableCss ?>
 <?= AdEngine::getInstance()->getDelayedIframeLoadingCode() ?>
 <?= $analytics ?>
+<?php
+
+	// TODO: SWC: When we're ready to test JS after the content, move StaticChute and headscripts down here.
+/*
+	print $staticChuteHtml;
+	
+	// TODO: SWC: TO TEST ASYNC LOADING, REMOVE PRINT OF $staticChuteHtml ABOVE AND UNCOMMENT THESE TWO LINES:
+	//print $wikiaScriptLoader;
+	//print $jsLoader;
+	
+	print $headscripts;
+*/
+	
+	// TODO: SWC: Get bottomscripts working. I thought they were set by SkinTemplate automatically.
+	//print $bottomscripts;
+?>
 <?= $reporttime ?>
 </body>
 <?= wfRenderModule('Ad', 'Config') ?>
