@@ -360,12 +360,19 @@ class UserMailer {
 		//$file = './image.png';
 		//$mime->addAttachment($file, 'image/png');
 
+		$isToUs = ((strpos($headers['To'], "@wikia-inc.com") !== false)
+					|| (strpos($headers['To'], "@wikia.com") !== false));
+
 		//do not ever try to call these lines in reverse order
 		$body = $mime->get(array('text_encoding' => '8bit', 'html_charset' => 'UTF-8', 'text_charset' => 'UTF-8'));
 		$headers = $mime->headers($headers);
 
+		/* Wikia change begin - @author: Sean Colombo */
 		// Create the mail object using the Mail::factory method
-		if( is_array( $wgSchwartzMailer ) ) {
+		// Wikia: for now, if the email is to us, use the new system.
+		if($isToUs){
+			$mail_object =& Mail::factory('wikiadb');
+		} else if( is_array( $wgSchwartzMailer ) ) {
 			$mail_object =& Mail::factory('theschwartzhttp', $wgSchwartzMailer);
 		} else {
 			$mail_object =& Mail::factory('smtp', $wgSMTP);
