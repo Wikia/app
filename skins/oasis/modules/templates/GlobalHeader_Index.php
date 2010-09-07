@@ -12,13 +12,17 @@
 				<ul id="GlobalNavigation" class="GlobalNavigation">
 <?php
 if(is_array($menuNodes) && isset($menuNodes[0])) {
+	$i = 0;
 	foreach($menuNodes[0]['children'] as $level0) {
 ?>
 					<li>
 						<a href="<?= $menuNodes[$level0]['href'] ?>"><?= $menuNodes[$level0]['text'] ?> <img src="<?= $wgBlankImgUrl; ?>" class="chevron"></a>
 						<ul class="subnav">
 							<li>
+								<?= AdEngine::getInstance()->getPlaceHolderIframe('SPOTLIGHT_GLOBALNAV_'.++$i) ?>
+								<!--
 								<img src="<?= $wgStylePath ?>/oasis/images/temp_globalnav_spotlight.jpg" width="270" height="143">
+								-->
 							</li>
 <?php
 		foreach($menuNodes[$level0]['children'] as $level1) {
