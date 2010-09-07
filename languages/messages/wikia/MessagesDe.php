@@ -9,6 +9,7 @@ Auf dieser Spezialseite kannst Du die '''letzten Änderungen''' in diesem Wiki n
 '''Organisatorisches:''' [[Spezial:Newpages|Neue Seiten]] – [[Spezial:Newimages|Neue Dateien]] – [[Spezial:Log|Logbücher]] – [[Spezial:Activeusers|Aktive Benutzer]] – [[Spezial:Listusers/sysop|Admins]]
 </div>
 </div>",
+'fileexists' => "Eine Datei mit diesem Namen existiert bereits. Bitte prüfe '''$1''', wenn du dir nicht sicher bist, ob du sie ändern willst.",
 
 #Widgets
 'title' => 'Titel',
