@@ -122,10 +122,13 @@ TEXT;
 else {
      global $wgCityId;
 	# set wgDisableBlogComments
-#	$res = WikiFactory::setVarByName('wgDisableBlogComments', $wgCityId, 1);
-#	WikiFactory::clearCache( $wgCityId );
+	WikiFactory::setVarByName( "wgDisableBlogComments", $wgCityId, true ) ;
+	WikiFactory::clearCache( $wgCityId );
 
 	# find all blog comments;
 	#$wgUseNewBlogComments
 	fixAllBlogComments( $dry );
+
+	WikiFactory::removeVarByName( "wgDisableBlogComments", $wgCityId );
+	WikiFactory::setVarByName( "wgUseNewBlogComments", $wgCityId, true ) ;
 }
