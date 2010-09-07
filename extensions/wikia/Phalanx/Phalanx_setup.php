@@ -88,9 +88,10 @@ function efLoadPhalanxLink( $id, $nt, &$links ){
 	global $wgUser;
 	if( $wgUser->isAllowed( 'phalanx' ) ) {
 		$links[] = $wgUser->getSkin()->makeKnownLinkObj(
-					Title::newFromText('community:Special:Phalanx'),
-					'Phalanx',
-					'&type=8&target=' . urlencode( $nt->getText() ) );
+			Title::newFromText('community:Special:Phalanx'),
+			'Phalanx',
+			wfArrayToCGI( array('type'=>'8', 'target'=>$nt->getText() ) )
+			);
 	}
 	return true;
 }
