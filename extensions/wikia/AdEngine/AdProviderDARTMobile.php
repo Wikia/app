@@ -19,6 +19,7 @@ class AdProviderDARTMobile extends AdProviderDART {
 			$this->getDcoptKV($slotname) .
 			"sz=" . $slot['size'] . ';' .
 			$this->getTileKV($slotname) . 
+			self::getQuantcastSegmentKV() .
 			'&dw=1'; 
 
 		$out = "<!-- " . __CLASS__ . " slot: $slotname -->";
