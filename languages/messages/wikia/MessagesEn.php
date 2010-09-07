@@ -758,7 +758,7 @@ hu',
 'createwikilang' => 'Default language for this wiki',
 
 #Special:SharedHelp
-'shared_help_info' => 'This text is stored on the Help Wikia.  [[w:c:Help:Help_talk:$1|Suggest changes here]].',
+'shared_help_info' => 'This text is stored on Wikia Help. [$1 Suggest changes here].',
 'shared_help_edit_info' => 'The help text within the box is stored at [[w:c:help:Help:$1|Help:$1]] on Wikia Help. See [[Help:Shared Help]] for more info.
 
 Any changes that apply to \'\'all\'\' wikis should be made to the Wikia Help copy. [[w:c:help:Help_talk:$1|Suggest changes here]].
