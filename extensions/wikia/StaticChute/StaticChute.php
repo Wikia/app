@@ -548,7 +548,16 @@ class StaticChute {
 
 	public function getChuteUrlPath() {
 		global $wgExtensionsPath;
-		return !empty($this->path) ? $this->path : $wgExtensionsPath;
+		$extensionsPath = $wgExtensionsPath;
+
+		// Because of some varnish strangeness (that isn't worth debugging since we're about to change StaticChute), allow
+		// devboxes to override the path with a path directly to the box's hostname.
+		// eg: $wgForceStaticChutePath = "http://dev-sean.wikia-prod/extensions";
+		if(!empty($wgForceStaticChutePath)){
+			$extensionsPath = $wgForceStaticChutePath;
+		}
+
+		return !empty($this->path) ? $this->path : $extensionsPath;
 	}
 
 	public function useLocalChuteUrl() {
