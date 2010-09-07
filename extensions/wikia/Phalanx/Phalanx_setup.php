@@ -74,3 +74,23 @@ function efPhalanxInit() {
 	// former TextRegex (TYPE_WIKI_CREATION)
 	$wgHooks['AutoCreateWiki::checkBadWords'][] = 'WikiCreationBlock::isAllowedText';
 }
+
+
+// Hooked function
+$wgHooks['ContributionsToolLinks'][] = 'efLoadPhalanxLink';
+
+/**
+ * Add a link to central:Special:Phalanx from Special:Contributions/USERNAME
+ * if the user has 'phalanx' permission
+ * @return true
+ */
+function efLoadPhalanxLink( $id, $nt, &$links ){
+	global $wgUser;
+	if( $wgUser->isAllowed( 'phalanx' ) ) {
+		$links[] = $wgUser->getSkin()->makeKnownLinkObj(
+					Title::newFromText('community:Special:Phalanx'),
+					'Phalanx',
+					'&type=8&target=' . urlencode( $nt->getText() ) );
+	}
+	return true;
+}
