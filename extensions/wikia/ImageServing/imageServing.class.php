@@ -19,7 +19,10 @@ class imageServing{
 	 * @param $width \int
 	 */
 	function __construct($articles, $width = 100, $proportion = array("w" => 1, "h" => 1), $db = null){
-		$this->articles = $articles;
+
+		foreach($articles as $article){
+			$this->articles[] = (integer)$article;
+		}
 		$this->width = $width;
 		$this->proportion = $proportion;
 		$this->deltaY = (round($proportion['w']/$proportion['h']) - 1)*0.1;
@@ -62,8 +65,7 @@ class imageServing{
 		} else {
 			$db = $this->db;
 		}
-
-
+		
 		$res = $db->select(
 	            array( 'page_wikia_props' ),
 	            array(	'page_id',
