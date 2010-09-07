@@ -11,7 +11,7 @@
  */
 
 $wgHooks['MakeGlobalVariablesScript'][] = 'SassUtil::onMakeGlobalVariablesScript';
-$wgHooks['BeforePageDisplay'][] = 'SassUtil::BeforePageDisplay';
+//$wgHooks['BeforePageDisplay'][] = 'SassUtil::BeforePageDisplay'; // not needed right now - js is in StaticChute
 
 class SassUtil{
 
@@ -111,10 +111,11 @@ class SassUtil{
 	} // end onMakeGlobalVariablesScript()
 
 	/**
-	 * Makes sure that we include the Sass javascript. If we move back to using StaticChute, then this
-	 * could be moved there for Oasis files.
+	 * Makes sure that we include the Sass javascript.
+	 *
+	 * Not needed at the moment since the js file is now in StaticChute (only for Oasis at the time of this writing, but that may change).
 	 */
-	public static function BeforePageDisplay( &$out, &$sk ) {
+	/*public static function BeforePageDisplay( &$out, &$sk ) {
 		wfProfileIn( __METHOD__ );
 		if(Wikia::isOasis()){
 			global $wgScriptPath, $wgStyleVersion;
@@ -123,5 +124,6 @@ class SassUtil{
 		wfProfileOut( __METHOD__ );
 		return true;
 	} // end BeforePageDisplay()
+	*/
 
 } // end class SassUtil
