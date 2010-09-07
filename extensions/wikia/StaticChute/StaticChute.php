@@ -541,7 +541,6 @@ class StaticChute {
 	}
 
 	// macbre: RT #18410
-	// TODO: This appears not to be used anymore - verify, and delete if true.
 	public function setChuteUrlPath($path) {
 		$this->path = $path;
 	}
@@ -561,12 +560,17 @@ class StaticChute {
 	}
 
 	public function useLocalChuteUrl() {
-		global $wgServer, $wgScriptPath;
-		/**
-		 * do not use wgScriptPath, problem with dofus/memory-alpha
-		 * rt#18410
-		 */
-		$this->setChuteUrlPath($wgServer . '/extensions');
+		global $wgServer, $wgScriptPath, $wgForceStaticChutePath;
+		
+		if(!empty($wgForceStaticChutePath)){
+			$this->setChuteUrlPath($wgForceStaticChutePath);
+		} else {
+			/**
+			 * do not use wgScriptPath, problem with dofus/memory-alpha
+			 * rt#18410
+			 */
+			$this->setChuteUrlPath($wgServer . '/extensions');
+		}
 	}
 
 	// macbre: RT #18765
