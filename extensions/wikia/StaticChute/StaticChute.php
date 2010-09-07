@@ -288,7 +288,7 @@ class StaticChute {
 
 			'../extensions/wikia/CreatePage/js/CreatePage.js',
 			'../extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js',
-			'../extensions/wikia/ImageLightbox/ImageLightbox.js'
+			'../extensions/wikia/ImageLightbox/ImageLightbox.js',
 			'../extensions/FBConnect/fbconnect.js',
 			'../extensions/wikia/AdEngine/LazyLoadAds.js',
 			'../extensions/wikia/Geo/geo.js',
