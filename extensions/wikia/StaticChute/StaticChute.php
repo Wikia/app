@@ -274,6 +274,7 @@ class StaticChute {
 		// JS served for anon on article view
 		$this->config['oasis_anon_article_js'] = array(
 			"common/wikibits.js",
+			'../extensions/wikia/SASS/sassUtil.js', // other js files may depend on this, so load it early
 			"oasis/js/tracker.js",
 			"oasis/js/hoverMenu.js",
 			"oasis/js/PageHeader.js",
@@ -289,7 +290,6 @@ class StaticChute {
 			'../extensions/wikia/CreatePage/js/CreatePage.js',
 			'../extensions/wikia/ImageLightbox/ImageLightbox.js',
 			'../extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js',
-			'../extensions/wikia/SASS/sassUtil.js',
 			'../extensions/FBConnect/fbconnect.js',
 			'../extensions/wikia/AdEngine/LazyLoadAds.js',
 			'../extensions/wikia/Geo/geo.js',
