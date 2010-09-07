@@ -351,6 +351,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 
 	function testAchievementsModule() {
 		global $wgTitle;
+		$this->markTestSkipped();
 		$wgTitle = Title::newFromText('User:WikiaBot');
 
 		$moduleData = Module::get('Achievements')->getData();
