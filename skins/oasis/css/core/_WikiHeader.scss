@@ -5,7 +5,7 @@
 	position: relative;
 	z-index: 50;
 	h1:before, 
-	.smask {
+	.shadow-mask {
 		bottom: 0;
 		height: 8px;
 		position: absolute;
@@ -17,7 +17,7 @@
 		content: " ";
 		z-index: 1;
 	}
-	.smask {
+	.shadow-mask {
 		background: $color-page;
 		z-index: 2;
 		@include opacity(90);

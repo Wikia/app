@@ -126,7 +126,8 @@
 	}
 	.wikia-button,
 	.wikia-menu-button {
-		top: -6px;
+		//top: -6px;
+		vertical-align: text-bottom;
 		&[data-id=edit] .icon,
 		a[data-id=edit] .icon {
 			background: url(/skins/oasis/images/sprite.png) -1568px -48px no-repeat;
