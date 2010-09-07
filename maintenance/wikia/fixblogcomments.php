@@ -45,8 +45,8 @@ function fixAllBlogComments( $dry ) {
 			if ( $parts['blog'] == 1 && count($parts['partsOriginal']) > 0 ) {
 				$parts['parsed'] = array();
 				foreach ( $parts['partsOriginal'] as $id => $title ) {
-					list ($user, $date) = explode( '-', $title );
-					$parts['parsed'][$id] = sprintf('%s%s-%s', '@comment-', $user, $date);
+#					list ($user, $date) = explode( '-', $title );
+					$parts['parsed'][$id] = sprintf('%s-%s', '@comment', $title );
 				}
 
 				$newTitle = sprintf('%s/%s', $parts['title'], implode("/", $parts['parsed']) );
