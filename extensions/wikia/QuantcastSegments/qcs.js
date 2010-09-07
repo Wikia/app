@@ -24,7 +24,7 @@ var QuantcastSegments = {
 	apiUrl : 'http://pixel.quantserve.com/api/segments.json',
 	pId : 'p-8bG6eLqkH6Avk',
 	segCookieName : 'qcseg',
-	segCookieExpires : 1,
+	segCookieExpires : 1,	// in days
 	updatedCookieName : 'qcsegupdate'
 };
 
@@ -42,7 +42,7 @@ QuantcastSegments.setQuantcastData = function () {
 		if (QuantcastSegments.geoData[key] == 'US') {
 			var today = new Date();
 			if (today.getTime() - $.cookies.get(QuantcastSegments.updatedCookieName) > 86400000) {
-				document.write('<script type="text/javascript" src="' + QuantcastSegments.apiUrl + '?a=' + QuantcastSegments.pId + '&callback=QuantcastSegments.setQcseg&ttl=' + QuantcastSegments.segCookieExpires + '"></scr' + 'ipt>');
+				document.write('<script type="text/javascript" src="' + QuantcastSegments.apiUrl + '?a=' + QuantcastSegments.pId + '&callback=QuantcastSegments.setQcseg&ttl=' + 86400*QuantcastSegments.segCookieExpires + '"></scr' + 'ipt>');
 			}
 		}
 	}
