@@ -102,6 +102,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			'spacing' => array('medium', 'large', 'small'),
 			'buckets' => false,
 			'rowdivider' => false,
+			'hideoverflow' => false,
 		);
 	}
 
@@ -584,6 +585,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		$id = 'gallery-' . $this->mData['id'];
 		$caption = $this->mCaption;
 		$showAddButton = ($this->mShowAddButton == true);
+		$hideOverflow = $this->getParam('hideoverflow');
 
 		if(in_array($borderColor, array('accent', 'color1'))) {
 			$borderColorClass = " {$borderColor}";
@@ -791,7 +793,8 @@ class WikiaPhotoGallery extends ImageGallery {
 						'style' => (($captionsPosition == 'below') ? "width:{$thumbSize}px;" : null).
 							((!empty($captionsColor)) ? " color:{$captionsColor};" : null).
 							((!empty($captionsBackgroundColor)) ? " background-color:{$captionsBackgroundColor}" : null).
-							($useBuckets ? " margin-top: 0px;" : '')
+							($useBuckets ? " margin-top: 0px;" : '').
+							((!empty($hideOverflow)) ? " overflow: hidden" : null)
 					)
 				);
 

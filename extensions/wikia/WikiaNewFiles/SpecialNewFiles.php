@@ -120,7 +120,10 @@ function wfSpecialWikiaNewFiles ( $par, $specialPage ) {
 	$dbr->freeResult( $res );
 
 	$gallery = new WikiaPhotoGallery();
-	$gallery->parseParams( array( "rowdivider" => true ) );
+	$gallery->parseParams( array(
+		"rowdivider" => true,
+		"hideoverflow" => true,
+		) );
 	$firstTimestamp = null;
 	$lastTimestamp = null;
 	$shownImages = 0;
@@ -154,7 +157,7 @@ function wfSpecialWikiaNewFiles ( $par, $specialPage ) {
 				  "<i>$timeago</i><br />\n";
 
 		if ( count( $links ) ) {
-			$caption .= wfMsg( 'wikianewfiles-postedin' ) . "<br />\n" . $links[0];
+			$caption .= wfMsg( 'wikianewfiles-postedin' ) . "&nbsp;" . $links[0];
 		}
 
 		if ( $moreFiles ) {
