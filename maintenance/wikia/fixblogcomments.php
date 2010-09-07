@@ -16,7 +16,7 @@ $dry = isset($options['dry']) ? $options['dry'] : "";
 $method = 'fixBlogComments';
 
 function fixAllBlogComments( $dry ) {
-	global $method;
+	global $method, $wgExternalDatawareDB;
 
 	$dbw = wfGetDB( DB_MASTER );
 	$res = $dbw->select(
@@ -89,6 +89,7 @@ function fixAllBlogComments( $dry ) {
 				if ( $dry ) {
 					 print "update pages set page_title = '$newTitle' where page_title = '{$row['page_title']}' and page_namespace = '".NS_BLOG_ARTICLE_TALK."' \n";
 				} else {
+					$dbext = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 					$dbext->update(
 						'pages',
 						array( 'page_title' => $newTitle ),
