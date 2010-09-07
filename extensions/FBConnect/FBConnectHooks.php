@@ -135,12 +135,6 @@ class FBConnectHooks {
 		}
 STYLE;
 
-		// If this is Oasis, then we're not using StaticChute at the moment, so add our fbconnect.js.
-		if(Wikia::isOasis()){
-			global $wgScriptPath;
-			$fbExtensionScript = "$wgScriptPath/extensions/FBConnect/fbconnect.js"; // only recommended if you are changing this extension.
-		}
-
 		// Things get a little simpler in 1.16...
 		if (version_compare($wgVersion, '1.16', '>=')) {
 			// Add a pretty Facebook logo if $fbLogo is set
