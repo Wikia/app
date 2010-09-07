@@ -547,7 +547,7 @@ class StaticChute {
 	}
 
 	public function getChuteUrlPath() {
-		global $wgExtensionsPath;
+		global $wgExtensionsPath, $wgForceStaticChutePath;
 		$extensionsPath = $wgExtensionsPath;
 
 		// Because of some varnish strangeness (that isn't worth debugging since we're about to change StaticChute), allow
