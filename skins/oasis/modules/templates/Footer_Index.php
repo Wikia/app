@@ -41,16 +41,25 @@
 	<?= wfRenderModule('RandomWiki') ?>
 	<ul>
 		<li class="WikiaSpotlight item-1">
+			<?= AdEngine::getInstance()->getPlaceHolderIframe('SPOTLIGHT_FOOTER_1') ?>
+			<!--
 			<img src="/skins/oasis/images/temp_spotlight1.jpg" width="270" height="94">
 			<p>This is placeholder for Wikia Community Spotlights.</p>
+			-->
 		</li>
 		<li class="WikiaSpotlight item-2">
+			<?= AdEngine::getInstance()->getPlaceHolderIframe('SPOTLIGHT_FOOTER_2') ?>
+			<!--
 			<img src="/skins/oasis/images/temp_spotlight3.jpg" width="270" height="94">
 			<p>This is placeholder for Wikia Community Spotlights.</p>
+			-->
 		</li>
 		<li class="WikiaSpotlight item-3">
+			<?= AdEngine::getInstance()->getPlaceHolderIframe('SPOTLIGHT_FOOTER_3') ?>
+			<!--
 			<img src="/skins/oasis/images/temp_spotlight2.jpg" width="270" height="94">
 			<p>This is placeholder for Wikia Community Spotlights.</p>
+			-->
 		</li>
 	</ul>
 </footer>
