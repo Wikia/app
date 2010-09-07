@@ -15,10 +15,10 @@ $dry = isset($options['dry']) ? $options['dry'] : "";
 
 $method = 'fixBlogComments';
 
-function fixAllBlogComments() {
+function fixAllBlogComments( $dry ) {
 	global $method, $wgDBname;
 
-	$db = wfGetDB(DB_SLAVE, array(), $wgDBname);
+	$dbw = wfGetDB( DB_MASTER );
 	$res = $db->select(
 		array( 'page' ),
 		array( 'page_id, page_title, page_namespace'),
@@ -26,7 +26,7 @@ function fixAllBlogComments() {
 			'page_namespace' => NS_BLOG_ARTICLE_TALK
 		),
 		$method,
-		array('ORDER BY' => 'page_id')
+		array( 'ORDER BY' => 'page_id')
 	);
 
 	$pages = array();
@@ -37,7 +37,7 @@ function fixAllBlogComments() {
 
 	print sprintf("Found %0d pages \n", count($pages));
 
-	if ( !empty($pages) ) {
+	if( !empty($pages) ) {
 		foreach ( $pages as $row ) {
 			print "parse " . $row['page_title'] . "\n";
 
@@ -46,15 +46,10 @@ function fixAllBlogComments() {
 				$parts['parsed'] = array();
 				foreach ( $parts['partsOriginal'] as $id => $title ) {
 					list ($user, $date) = explode( '-', $title );
-					$parts['parsed'][$id] = sprintf('%s%s-%s', '@comment-', $user, $date); 
+					$parts['parsed'][$id] = sprintf('%s%s-%s', '@comment-', $user, $date);
 				}
 
 				$newTitle = sprintf('%s/%s', $parts['title'], implode("/", $parts['parsed']) );
-
-				# we have a new Title - $newTitle - update it everywhere
-				# update page
-				$dbw = wfGetDB( DB_MASTER );
-				$dbext = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB);
 
 				if ( $dry ) {
 					 print "update page set page_title = '$newTitle' where page_title = '{$row['page_title']}' and page_namespace = '".NS_BLOG_ARTICLE_TALK."' \n";
@@ -106,18 +101,6 @@ function fixAllBlogComments() {
 	}
 }
 
-function runUpdate($city_id, $dry, $user) {
-	global $IP, $wgWikiaLocalSettingsPath;
-
-	$script_path = $_SERVER['PHP_SELF'];
-	$path = "SERVER_ID={$city_id} php {$script_path} --conf {$wgWikiaLocalSettingsPath} --wikia={$city_id} --user={$user} ";
-	if ( $dry ) {
-		$path .= " --dry";
-	}
-	#echo $path . " \n";
-	$return = wfShellExec( $path );
-	echo $return;
-}
 
 if ( $help ) {
 	echo <<<TEXT
@@ -126,16 +109,16 @@ Usage:
     php fixblogcomments.php --parse=CITY_ID --dry
 
     --help         : This help message
-    --wikia=S      : Run script for Wikia (city_id)
     --dry		   : generate SQL commands (do not update in database)
 TEXT;
 	exit(0);
-} elseif ( !empty($wikia) ) {
+}
+else {
 	// update on Wikia
 	print "Processed Wikia: $wikia";
 
 	$city_id = $wikia;
-	$wgUser = User::newFromName( $userName );
+	$wgUser = User::newFromName( "Wikia" );
 	if ( !$wgUser ) {
 		print "Invalid username\n";
 		exit( 1 );
@@ -146,31 +129,6 @@ TEXT;
 	WikiFactory::clearCache( $city_id );
 
 	# find all blog comments;
-
-
-} else {
-
-	print "Fetch wikis with blog comments \n";
-
-	$db = wfGetDB(DB_MASTER, array(), $wgStatsDB);
-	$res = $db->select(
-		array( '`stats`.`events`' ),
-		array( 'distinct wiki_id'),
-		array(
-			'page_ns' => NS_BLOG_ARTICLE_TALK
-		),
-		$method
-	);
-
-	$wikis = array();
-	while ($row = $db->fetchRow($res)) {
-		$wikis[] = $row['wiki_id'];
-	}
-	$db->freeResult( $res );
-
-	print sprintf("Found %d wikis \n", count($wikis));
-
-	foreach ( $wikis as $wiki_id ) {
-		$res = runUpdate($wiki_id, $dry);
-	}
+	#$wgUseNewBlogComments
+	fixAllBlogComments( $dry );
 }
