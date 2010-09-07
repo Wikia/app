@@ -287,8 +287,9 @@ class StaticChute {
 			"common/jquery/jquery.wikia.tracker.js",
 
 			'../extensions/wikia/CreatePage/js/CreatePage.js',
-			'../extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js',
 			'../extensions/wikia/ImageLightbox/ImageLightbox.js',
+			'../extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js',
+			'../extensions/wikia/SASS/sassUtil.js',
 			'../extensions/FBConnect/fbconnect.js',
 			'../extensions/wikia/AdEngine/LazyLoadAds.js',
 			'../extensions/wikia/Geo/geo.js',
