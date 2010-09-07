@@ -289,6 +289,10 @@ class StaticChute {
 			'../extensions/wikia/CreatePage/js/CreatePage.js',
 			'../extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js',
 			'../extensions/wikia/ImageLightbox/ImageLightbox.js'
+			'../extensions/FBConnect/fbconnect.js',
+			'../extensions/wikia/AdEngine/LazyLoadAds.js',
+			'../extensions/wikia/Geo/geo.js',
+			'../extensions/wikia/QuantcastSegments/qcs.js',
 		);
 		$this->config['oasis_anon_article_js'] = array_merge($this->config['oasis_anon_article_js'], $this->config['oasis_jquery']);
 
