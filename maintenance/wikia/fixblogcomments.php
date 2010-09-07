@@ -16,10 +16,10 @@ $dry = isset($options['dry']) ? $options['dry'] : "";
 $method = 'fixBlogComments';
 
 function fixAllBlogComments( $dry ) {
-	global $method, $wgDBname;
+	global $method;
 
 	$dbw = wfGetDB( DB_MASTER );
-	$res = $db->select(
+	$res = $dbw->select(
 		array( 'page' ),
 		array( 'page_id, page_title, page_namespace'),
 		array(
@@ -30,10 +30,10 @@ function fixAllBlogComments( $dry ) {
 	);
 
 	$pages = array();
-	while ($row = $db->fetchRow($res)) {
+	while ($row = $dbw->fetchRow($res)) {
 		$pages[] = $row;
 	}
-	$db->freeResult( $res );
+	$dbw->freeResult( $res );
 
 	print sprintf("Found %0d pages \n", count($pages));
 
@@ -114,19 +114,10 @@ TEXT;
 	exit(0);
 }
 else {
-	// update on Wikia
-	print "Processed Wikia: $wikia";
-
-	$city_id = $wikia;
-	$wgUser = User::newFromName( "Wikia" );
-	if ( !$wgUser ) {
-		print "Invalid username\n";
-		exit( 1 );
-	}
-
+     global $wgCityId;
 	# set wgDisableBlogComments
-	$res = WikiFactory::setVarByName('wgDisableBlogComments', $city_id, 1);
-	WikiFactory::clearCache( $city_id );
+#	$res = WikiFactory::setVarByName('wgDisableBlogComments', $wgCityId, 1);
+#	WikiFactory::clearCache( $wgCityId );
 
 	# find all blog comments;
 	#$wgUseNewBlogComments
