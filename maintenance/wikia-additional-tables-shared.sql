@@ -215,7 +215,7 @@ CREATE TABLE IF NOT EXISTS `online` (
 ) TYPE=InnoDB;
 
 -- user wikicities aint got enough rights to do views! ops need to be asked to run this query
---CREATE OR REPLACE VIEW city_cats_view AS SELECT city_id AS cc_city_id, cat_name AS cc_name FROM city_cats, city_cat_mapping WHERE city_cats.cat_id = city_cat_mapping.cat_id;
+-- CREATE OR REPLACE VIEW city_cats_view AS SELECT city_id AS cc_city_id, cat_name AS cc_name FROM city_cats, city_cat_mapping WHERE city_cats.cat_id = city_cat_mapping.cat_id;
 
 CREATE TABLE IF NOT EXISTS `magic_footer_links` (
   `dbname` varchar(31) NOT NULL,
