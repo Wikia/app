@@ -616,11 +616,9 @@ END;
 				'ctype' => 'text/css',
 				'smaxage' => $wgSquidMaxage
 			) + $siteargs );
-			# FIXME: disable Common.css for internal testing only, revert this for Oasis release
-			if( ( $val = $wgRequest->getVal( 'usecommon', '' ) ) == '1' ) {
-				$out->addStyle( self::makeNSUrl( 'Common.css', $query, NS_MEDIAWIKI ) );
-			}
+
 			# Site settings must override extension css! (bug 15025)
+			$out->addStyle( self::makeNSUrl( 'Common.css', $query, NS_MEDIAWIKI ) );
 			$out->addStyle( self::makeNSUrl( 'Print.css', $query, NS_MEDIAWIKI ), 'print' );
 			if( $wgHandheldStyle ) {
 				$out->addStyle( self::makeNSUrl( 'Handheld.css', $query, NS_MEDIAWIKI ), 'handheld' );
