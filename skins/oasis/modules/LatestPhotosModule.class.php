@@ -63,7 +63,7 @@ class LatestPhotosModule extends Module {
 
 	private function getTemplateData($element) {
 
-		$thumb = $element['file']->getThumbnail(75, 75);
+		$thumb = $element['file']->getThumbnail(82, 82);
 		$retval = array ("file_url" => $element['url'], "thumb_url" => $thumb->getUrl());
 		return $retval;
 	}
