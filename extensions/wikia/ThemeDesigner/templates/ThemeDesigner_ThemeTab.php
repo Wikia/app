@@ -1,5 +1,5 @@
 <section id="ThemeTab" class="ThemeTab">
-	<img src="<?= $wgStylePath ?>/common/blank.gif" class="previous chevron">
+	<img src="<?= $wgStylePath ?>/common/blank.gif" class="previous chevron disabled">
 	<div class="slider">
 		<ul>
 			<li class="selected">
@@ -44,5 +44,5 @@
 			</li>
 		</ul>
 	</div>
-	<img src="<?= $wgStylePath ?>/common/blank.gif" class="next chevron disabled">
+	<img src="<?= $wgStylePath ?>/common/blank.gif" class="next chevron">
 </section>

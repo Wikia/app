@@ -39,16 +39,12 @@
 				<li>
 					<a href="#" rel="WordmarkTab">Wordmark</a>
 				</li>
-				<li>
-					<a href="#" rel="BannerTab">Banner</a>
-				</li>
 			</ul>
 		</nav>
 		<form>
 			<?= wfRenderModule('ThemeDesigner', 'ThemeTab') ?>
 			<?= wfRenderModule('ThemeDesigner', 'CustomizeTab') ?>
 			<?= wfRenderModule('ThemeDesigner', 'WordmarkTab') ?>
-			<?= wfRenderModule('ThemeDesigner', 'BannerTab') ?>
 			<div id="Toolbar" class="Toolbar">
 				<button>Save</button>
 			</div>
@@ -59,7 +55,7 @@
 
 
 	<div id="EventThief" class="EventThief"></div>
-	<iframe frameborder=0 id="PreviewFrame" class="PreviewFrame" src="<?= $wgServer ?>"></iframe>
+	<iframe frameborder=0 id="PreviewFrame" class="PreviewFrame" src=""></iframe>
 
 
 <? /* DEMO STUFF FROM INEZ

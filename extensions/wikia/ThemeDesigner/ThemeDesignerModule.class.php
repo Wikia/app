@@ -62,10 +62,6 @@ class ThemeDesignerModule extends Module {
 
 	}
 
-	public function executeBannerTab() {
-
-	}
-
 	public function executePicker() {
 
 	}
