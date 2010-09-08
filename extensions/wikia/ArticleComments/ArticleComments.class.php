@@ -1603,6 +1603,13 @@ class ArticleCommentList {
 		global $wgOut, $wgRC2UDPEnabled;
 		wfProfileIn( __METHOD__ );
 
+		$title = $article->getTitle();
+
+		if (!MWNamespace::isTalk($title->getNamespace()) || !ArticleComment::isTitleComment($title)) {
+			wfProfileOut( __METHOD__ );
+			return true;
+		}
+
 		//watch out for recursion
 		if (self::$mDeletionInProgress) {
 			wfProfileOut( __METHOD__ );
@@ -1611,7 +1618,6 @@ class ArticleCommentList {
 		self::$mDeletionInProgress = true;
 
 		// Redirect to blog post after deleting a comment
-		$title = $article->getTitle();
 		$subjectTitle=self::getSubjectPage($title);
 		$wgOut->redirect($subjectTitle->getFullUrl());
 
