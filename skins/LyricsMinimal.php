@@ -11,7 +11,8 @@
  * apps can then send the user to the webpage, using this mobile-friendly skin.
  *
  * TODO: Add an ACTUAL top leaderboard ad instead of the placeholder.
- * TODO: Hide the alert messages about "you have a message on X" (because this skin will most-often be viewed by anon IPs and this msg won't make any sense to them that they 'have messages' inside of their mobile app).
+ * TODO: Possibly use printContent to filter out the display of things other than .lyricbox from the main content.  Less stuff actually in the page is better for low-bandwidth mobiles (especially if CSS doesn't work on them).
+ * TODO: Consider making a logo that's only the same height as the banner (90px) to use less vertical space before the lyrics.
  * TODO: Make a system that makes it easy to have some custom CSS files for certain API apps.  These should probably be thought of as 'themes' on top of this skin.
  * TODO: Remove unneeded CSS
  * TODO: Remove unneeded JS
@@ -28,6 +29,8 @@
 
 if( !defined( 'MEDIAWIKI' ) )
 	die( -1 );
+
+define('LW_THEME_TOSHIBA', 'toshiba'); // Theme for Toshiba Europe's tablet app.  Add usetheme=toshiba to the URL to see this in action.
 
 class SkinLyricsMinimal extends SkinTemplate {
 	/**
@@ -83,8 +86,16 @@ class SkinLyricsMinimal extends SkinTemplate {
 	 */
 	function setupSkinUserCss( OutputPage $out ){
 
-		// TODO: SWC: This might be a good place to load app-specific CSS in cases that we have that.
+		if(!isset($this->themename)) {
+			global $wgRequest;
+			$this->themename = $wgRequest->getVal('usetheme', null);
+		}
 
+		// TODO: SWC: This might be a good place to load app-specific CSS in cases that we have that.
+		
+		
+		
+		
 	}
 
 	/**
