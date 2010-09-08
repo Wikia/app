@@ -309,13 +309,13 @@ class WikiaStatsAutoHubsConsumerDB {
 			$out = $wgMemc->get($mcKey);
 			if( !empty($out) ) {
 				wfProfileOut( __METHOD__ );
-				return $out;
+			//	return $out;
 			}
 		}
 
 		$tag_id = (int) $tag_id;
 		$lang_id = WikiFactory::LangCodeToId($lang);
-		$conditions = array( 
+		$conditions = array(
 			"tag_id" 	=> $tag_id,
 			"city_lang" => $lang_id 
 		);
@@ -341,7 +341,7 @@ class WikiaStatsAutoHubsConsumerDB {
 					)
 			);					
 		} else {
-			$date = date('%Y%m%d', time() - 7 * 24 * 60 * 60);
+			$date = date('Ymd', time() - 7 * 24 * 60 * 60);
 			$conditions[] = "use_date > $date";
 			$res = $this->dbs->select(
 					array( '`stats`.`page_views_tags`' ),
@@ -400,27 +400,25 @@ class WikiaStatsAutoHubsConsumerDB {
 
 		$res = $dbw->select(
 				array( "city_list"),
-				array( "city_id, 
+				array( "city_id,
 						city_description as city_description,
 						city_sitename, 
 						city_url, 
 						city_title" ),
-				array( "city_id "),
-				"city_id in city_id in (".array_keys($city_array).")",
+				array( 
+					"city_id" => array_keys($city_array)
+				),
 				__METHOD__
 		);
-
+		
 		while ( $value = $this->dbs->fetchRow($res) ) {
 			if( !empty($city_array[$value['city_id']]) ) {
 				$city_array[$value['city_id']] = array_merge( $value, $city_array[$value['city_id']]);	
 				$city_array[$value['city_id']]['city_description'] = trim( $city_array[$value['city_id']]['city_description'] );
-				//	$this->shortenText( $city_array[$value['city_id']]['city_description'],0 ,100 );
 			}
 		}
 
-		$city_array[$numberOne] = array_merge($city_array[$numberOne], $this->getWikiArticleCount($city_array[$numberOne]['city_url'])); 
-		$city_array[$numberOne]['logo']	= WikiFactory::getVarValueByName( "wgLogo", $city_array[$numberOne]['city_id'] );
-		$out = array("value" => $city_array, "age" => time(), "number_one" => $numberOne);
+		$out = array("value" => $city_array, "age" => time());
 
 		$wgMemc->set($mcKey, $out, 60*60*12 );
 
