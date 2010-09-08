@@ -10,11 +10,11 @@ var WikiActivity = {
 		// handle clicks on "more"
 		$('.activity-feed-more').children('a').click(WikiActivity.fetchMore);
 
-		$('#myhome-activityfeed').
-			// track clicks within activity feed
-			click(WikiActivity.trackClick).
-			// catch clicks on video thumbnails and load player
-			click(WikiActivity.loadVideoPlayer);
+		// use jquery 'live' function to make sure links work on second page too
+		// track clicks within activity feed
+		$('#myhome-activityfeed').live('click', WikiActivity.trackClick);
+		// catch clicks on video thumbnails and load player
+		$('.activityfeed-video-thumbnail').live('click', WikiActivity.loadVideoPlayer);
 
 		// track clicks on link to Special:RecentChanges (Oasis specific)
 		$('#WikiaPageHeader').find('a').trackClick('wikiactivity/recentchanges');
