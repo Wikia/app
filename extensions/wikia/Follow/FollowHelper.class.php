@@ -280,15 +280,17 @@ class FollowHelper {
 			return true;
 		}
 
-		wfLoadExtensionMessages('Follow');
-		$personal_urls['following'] = array(
-			'text' =>  wfMsg('wikiafollowedpages-special-title-userbar'),
-			'href' => Skin::makeSpecialUrl('following'),
-		);
+		// only for Oasis users
+		if (get_class($wgUser->getSkin()) == 'SkinOasis') {
+			wfLoadExtensionMessages('Follow');
+			$personal_urls['following'] = array(
+				'text' =>  wfMsg('wikiafollowedpages-special-title-userbar'),
+				'href' => Skin::makeSpecialUrl('following'),
+			);
 
-		// remove link to watchlist
-		unset($personal_urls['watchlist']);
-
+			// remove link to watchlist
+			unset($personal_urls['watchlist']);
+		}
 		wfProfileOut(__METHOD__);
 		return true;
 	}
