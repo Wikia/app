@@ -102,11 +102,13 @@ EOT;
 	public static function getQuantcastSegmentKV() {
 		$segs = '';
 
-		if (!empty($_COOKIE[QuantcastSegments::SEGMENTS_COOKIE_NAME])) {
-			$segments_cookie = json_decode($_COOKIE[QuantcastSegments::SEGMENTS_COOKIE_NAME]);
-			if (is_object($segments_cookie) && is_array($segments_cookie->segments)) {
-				foreach ($segments_cookie->segments as $segment) {
-					$segs .= 'qcseg='.$segment->id.';';
+		if (class_exists('QuantcastSegments', false)) {
+			if (!empty($_COOKIE[QuantcastSegments::SEGMENTS_COOKIE_NAME])) {
+				$segments_cookie = json_decode($_COOKIE[QuantcastSegments::SEGMENTS_COOKIE_NAME]);
+				if (is_object($segments_cookie) && is_array($segments_cookie->segments)) {
+					foreach ($segments_cookie->segments as $segment) {
+						$segs .= 'qcseg='.$segment->id.';';
+					}
 				}
 			}
 		}
