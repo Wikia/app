@@ -7,7 +7,8 @@
  * @author Sean Colombo
  */
 
-require_once('../commandLine.inc');
+$dir = dirname(__FILE__);
+require_once($dir . "/../commandLine.inc");
 
 $TABLE_NAME = "lw_soap_failures";
 if (isset($options['help'])) {
