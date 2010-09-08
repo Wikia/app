@@ -134,6 +134,13 @@ class BodyModule extends Module {
 				);
 			} else if ($wgTitle->isSpecial('Following') || $wgTitle->isSpecial('Contributions') ) {
 				// intentional nothing here
+			} else if ($wgTitle->isSpecial('ThemeDesignerPreview') ) {
+				$railModuleList = array (
+					1500 => array('Search', 'Index', null),
+					1300 => array('LatestActivity', 'Index', null),
+					1250 => array('LatestPhotos', 'Index', null),
+					1150 => array('Spotlights', 'Index', null),
+				);
 			}
 			else {
 				// don't show any module for MW core special pages
