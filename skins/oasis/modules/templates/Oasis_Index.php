@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" dir="<?= $dir ?>">
+<html lang="<?= $lang ?>" dir="<?= $dir ?>">
 <head>
 	<meta http-equiv="Content-Type" content="<?= $mimetype ?>; charset=<?= $charset ?>">
 	<meta name="viewport" content="width=1200">

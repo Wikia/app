@@ -30,6 +30,7 @@ class OasisModule extends Module {
 	var $reporttime;
 	var $body_ondblclick;
 	var $dir;
+	var $lang;
 	var $pageclass;
 	var $skinnameclass;
 
