@@ -29,7 +29,7 @@ WikiaSearch = {
 
 	// download necessary dependencies (AutoComplete plugin) and initialize search suggest feature for #search_field
 	initSuggest: function () {
-		$.getScript(stylepath + '/common/jquery/jquery.autocomplete.js', function() {
+		$.loadJQueryAutocomplete(function() {
 			WikiaSearch.searchField.autocomplete({
 				serviceUrl: wgServer + wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
 				onSelect: function(v, d) {
