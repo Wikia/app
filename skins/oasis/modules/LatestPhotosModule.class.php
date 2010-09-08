@@ -61,8 +61,17 @@ class LatestPhotosModule extends Module {
 
 	private function getTemplateData($element) {
 		$time = wfTimeFormatAgo($element["file"]->timestamp);
+		$userName = $element['file']->user_text;
 		$thumb = $element['file']->getThumbnail(82, 82);
-		$retval = array ("file_url" => $element['url'], "thumb_url" => $thumb->getUrl(), "date" => $time);
+		$links = $this->getLinkedFiles($element['file']->name);
+
+		$retval = array (
+			"file_url" => $element['url'],
+			"image_url" => $element['file']->getUrl(),
+			"thumb_url" => $thumb->getUrl(),
+			"user_href" => View::link(Title::newFromText($userName, NS_USER), $userName),
+			"links" => $links,
+			"date" => $time);
 		return $retval;
 	}
 
@@ -92,4 +101,38 @@ class LatestPhotosModule extends Module {
 		}
 		return true;
 	}
+
+	private function getLinkedFiles ( $name ) {
+	global $wgUser;
+
+	// The ORDER BY ensures we get NS_MAIN pages first
+	$dbr = wfGetDB( DB_SLAVE );
+	$res = $dbr->select(
+				array( 'imagelinks', 'page' ),
+				array( 'page_namespace', 'page_title' ),
+				array( 'il_to' => $name, 'il_from = page_id' ),
+				__METHOD__,
+				array( 'LIMIT' => 2, 'ORDER BY' => 'page_namespace ASC' )
+		   );
+
+	$sk = $wgUser->getSkin();
+	$links = array();
+
+	// link where this page is used...
+	if ( $s = $res->fetchObject() ) {
+		$name = Title::makeTitle( $s->page_namespace, $s->page_title );
+		$links[] = $sk->link( $name, null, array( 'class' => 'wikia-gallery-item-posted' ) );
+	}
+	// if used in more than one place, add "more" link
+	if ( $s = $res->fetchObject() ) {
+		$name = Title::makeTitle( $s->page_namespace, $s->page_title );
+
+		$links[] = '<a href="' . $name->getLocalUrl() .
+			'#filelinks" class="wikia-gallery-item-more">' .
+			wfMsgHtml( 'oasis-more' ) . '</a>';
+	}
+
+	return $links;
+}
+
 }
