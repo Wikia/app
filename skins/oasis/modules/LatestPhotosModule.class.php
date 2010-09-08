@@ -60,9 +60,9 @@ class LatestPhotosModule extends Module {
 	}
 
 	private function getTemplateData($element) {
-
+		$time = wfTimeFormatAgo($element["file"]->timestamp);
 		$thumb = $element['file']->getThumbnail(82, 82);
-		$retval = array ("file_url" => $element['url'], "thumb_url" => $thumb->getUrl());
+		$retval = array ("file_url" => $element['url'], "thumb_url" => $thumb->getUrl(), "date" => $time);
 		return $retval;
 	}
 
