@@ -54,16 +54,13 @@ var ThemeDesigner = {
 		// init wordmark tab
 		ThemeDesigner.WordmarkTabInit();
 
-		// init picker
-		ThemeDesigner.PickerInit();
-
 		// click first tab
 		$("#Navigation a:first").click();
 		
-		ThemeDesigner.applySettings();
+		ThemeDesigner.applySettings(true);
 	},
 
-	applySettings: function() {
+	applySettings: function(skipUpdate) {
 		/*** Customize Tab ***/
 		//color swatches
 		$("#swatch-color-background").css("background-color", ThemeDesigner.settings["color-body"]);
@@ -80,6 +77,11 @@ var ThemeDesigner = {
 		$("#wordmark-font").find('[value="' + ThemeDesigner.settings["wordmark-font"] + '"]').attr("selected", "selected");
 		//select current size
 		$("#wordmark-size").find('[value="' + ThemeDesigner.settings["wordmark-size"] + '"]').attr("selected", "selected");
+		
+		/*** Update Preview ***/
+		if (!skipUpdate) {
+			ThemeDesigner.updatePreview();
+		}
 	},
 
 	navigationClick: function(event) {
@@ -149,10 +151,23 @@ var ThemeDesigner = {
 		});
 	},
 
-	saveClick: function(ev) {
-		ev.preventDefault();
+	updatePreview: function() {
+		//CSS
+		var sass = "/__sass/skins/oasis/css/oasis.scss/1282612788/";
+		sass += "color-body=" + escape(ThemeDesigner.settings["color-body"]);
+		sass += "&color-page=" + escape(ThemeDesigner.settings["color-page"]);
+		sass += "&color-buttons=" + escape(ThemeDesigner.settings["color-buttons"]);
+		sass += "&color-links=" + escape(ThemeDesigner.settings["color-links"]);
+		document.getElementById('PreviewFrame').contentWindow.ThemeDesignerPreview.loadSASS(sass);
+		
+		//Wordmark text
+		$("#PreviewFrame").contents().find("#WikiHeader").find(".wordmark").find("a").text(ThemeDesigner.settings["wordmark-text"]);
+	},
 
-		$(ev.target).attr('disabled', true);
+	saveClick: function(event) {
+		event.preventDefault();
+
+		$(event.target).attr('disabled', true);
 
 		ThemeDesigner.save();
 	},
@@ -172,10 +187,6 @@ var ThemeDesigner = {
 	},
 
 
-	PickerInit: function() {
-
-	},
-	
 	showPicker: function(event, type) {
 		event.stopPropagation();
 		var swatch = $(event.currentTarget);
