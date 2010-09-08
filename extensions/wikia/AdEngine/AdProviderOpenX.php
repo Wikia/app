@@ -110,6 +110,7 @@ EOT;
 	if(typeof document.context != "undefined") base_url_{$slotname} += "&context=" + escape(document.context);
 	if(typeof document.mmm_fo != "undefined") base_url_{$slotname} += "&mmm_fo=1";
 	base_url_{$slotname} += "&zoneid=$zoneId";
+	base_url_{$slotname} += "&target=_top";
 	base_url_{$slotname} += "&cb=" + AdsCB;
 	if(typeof document.MAX_used != "undefined" && document.MAX_used != ",") base_url_{$slotname} += "&exclude=" + document.MAX_used;
 	base_url_{$slotname} += "&hub={$cat['short']}";
@@ -122,7 +123,7 @@ EOT;
 	base_url_{$slotname} += "{$additional_params}";
 	base_url_{$slotname} += "&block=1";
 EOT;
-	
+
 		return $adUrlScript;
 	}
 
