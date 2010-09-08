@@ -226,18 +226,34 @@ $.loadYUI = function(callback) {
 
 // load jQuery UI library if not yet loaded
 $.loadJQueryUI = function(callback) {
-	if (typeof jQuery.ui == 'undefined') {
+	if (typeof jQuery.ui === 'undefined') {
 		$().log('loading', 'jQuery UI');
 
 		$.getScript(stylepath + '/common/jquery/jquery-ui-1.7.2.custom.js?' + wgStyleVersion, function() {
 			$().log('loaded', 'jQuery UI');
-			callback();
+			if(typeof callback === 'function') callback();
 		});
 	}
 	else {
-		callback();
+		if(typeof callback === 'function') callback();
 	}
 }
+
+$.loadJQueryAutocomplete = function(callback) {
+	if (typeof $().autocomplete === 'undefined') {
+		$().log('loading', 'jQuery Autocomplete');
+
+		$.getScript(stylepath + '/common/jquery/jquery.autocomplete.js?' + wgStyleVersion, function() {
+			$().log('loaded', 'jQuery Autocomplete');
+			
+			if(typeof callback === 'function') callback();
+		});
+	}
+	else {
+		if(typeof callback === 'function') callback();
+	}
+}
+
 /*
 Copyright (c) 2008, Yahoo! Inc. All rights reserved.
 Code licensed under the BSD License:
