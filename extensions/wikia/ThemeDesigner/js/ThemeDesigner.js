@@ -29,7 +29,7 @@ var ThemeDesigner = {
 		// apply JS object settings
 		$.extend(ThemeDesigner.settings, themeSettings);
 		//TODO: temp
-		ThemeDesigner.settings["wordmark-font"] = 'orbitron';
+		//ThemeDesigner.settings["wordmark-font"] = 'orbitron';
 
 		// settings history
 		ThemeDesigner.history = themeHistory;
@@ -54,9 +54,12 @@ var ThemeDesigner = {
 		// init wordmark tab
 		ThemeDesigner.WordmarkTabInit();
 
+		// init picker
+		ThemeDesigner.PickerInit();
+
 		// click first tab
 		$("#Navigation a:first").click();
-
+		
 		ThemeDesigner.applySettings();
 	},
 
@@ -109,7 +112,7 @@ var ThemeDesigner = {
 			return;
 		}
 
-		var slideTo = (arrow.hasClass("previous")) ? -760 : 0;
+		var slideTo = (arrow.hasClass("previous")) ? 0 : -760;
 		list.animate({
 			marginLeft: slideTo
 		}, "slow");
@@ -168,6 +171,13 @@ var ThemeDesigner = {
 		}, 'json');
 	},
 
+
+	PickerInit: function() {
+		$("#ColorNameForm").submit(function() {
+			alert("this should work");
+		});			
+	},
+	
 	showPicker: function(event, type) {
 		event.stopPropagation();
 		var swatch = $(event.currentTarget);
@@ -190,7 +200,6 @@ var ThemeDesigner = {
 
 			//handle swatch clicking
 			swatches.find("li").click(function() {
-				$().log("running");
 				var color = ThemeDesigner.rgb2hex($(this).css("background-color"));
 				ThemeDesigner.settings[swatch.attr("class")] = color;
 				ThemeDesigner.hidePicker();

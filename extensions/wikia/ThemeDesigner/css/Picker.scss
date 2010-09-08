@@ -3,10 +3,14 @@
 	background: #FFF;
 	border: 5px solid #accfe5;
 	display: none;
+	padding-bottom: 10px;
 	position: absolute;
 	width: 180px;
 	.color {
-		display: none;	
+		display: none;
+		.swatches {
+			background: url(/extensions/wikia/ThemeDesigner/images/color_shadow.png) bottom center no-repeat;
+		}
 	}
 	.image {
 		display: none;
@@ -24,11 +28,11 @@
 		}
 	}
 	h1 {
-		margin: 10px 20px;
+		margin: 10px 20px 5px;
 	}
 	.swatches {
 		@include clearfix;
-		padding: 0 20px 20px;
+		padding: 0 20px 10px;
 		li {
 			border: 1px solid #FFF;
 			cursor: pointer;
@@ -39,5 +43,17 @@
 			outline: 1px solid #999;
 			width: 16px;
 		}
+	}
+}
+.ColorNameForm {
+	@include clearfix;
+	margin: 0 20px;
+	input[type="text"] {
+		font-size: 10px;
+		width: 134px;
+	}
+	input[type="submit"] {
+		float: right;
+		margin-top: 5px;
 	}
 }

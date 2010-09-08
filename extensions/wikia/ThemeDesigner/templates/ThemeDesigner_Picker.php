@@ -15,6 +15,11 @@
 			<li style="background-color: #ed7cb2"></li>
 			<li style="background-color: #eb6c27"></li>
 		</ul>
+		<h1>Enter Your Own</h1>
+		<form id="ColorNameForm" class="ColorNameForm" method="post" action="destination.html">
+			<input type="text" id="color-name" class="color-name">
+			<input type="submit" value="Ok">
+		</form>
 	</div>
 	<div class="image">
 		<h1>Pick an Image</h1>
