@@ -39,7 +39,12 @@ class RelatedPagesModule extends Module {
 		}
 
 		// check action
-		if($wgRequest->getVal('action', 'view') != 'view') {
+		if( $wgRequest->getVal('action', 'view') != 'view' ) {
+			$this->skipRendering = true;
+		}
+
+		// skip, if module was already rendered
+		if( $relatedPages->isRendered() ) {
 			$this->skipRendering = true;
 		}
 

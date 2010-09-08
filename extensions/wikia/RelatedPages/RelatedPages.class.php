@@ -7,6 +7,8 @@ class RelatedPages {
 	private $categoryCacheTTL = 3; // in hours
 	private $categoryRankCacheTTL = 24; // in hours
 	private $categoriesLimit = 6;
+	private $pageSectionNo = 4; // number of section before which module should be injected (for long articles)
+	private $isRendered = false;
 	static private $instance = null;
 
 	private function __construct( ) {
@@ -37,6 +39,18 @@ class RelatedPages {
 
 	public function reset() {
 		$this->pages = null;
+	}
+
+	public function isRendered() {
+		return $this->isRendered;
+	}
+
+	public function setRendered($value) {
+		$this->isRendered = $value;
+	}
+
+	public function getPageSectionNo() {
+		return $this->pageSectionNo;
 	}
 
 	/**
@@ -277,7 +291,8 @@ class RelatedPages {
 		$content = $article->getContent();
 
 		$tmpParser = new Parser();
-		$content = $tmpParser->parse( $content, $wgTitle, new ParserOptions )->getText();
+		$tmpParser->parse( $content, $wgTitle, new ParserOptions );
+		$content = $tmpParser->getOutput()->getText();
 
 		// remove [edit] section links
 		$content = preg_replace('#<span class="editsection">(.*)</a>]</span>#', '', $content);
@@ -299,4 +314,23 @@ class RelatedPages {
 		RelatedPages::getInstance()->setCategories( $categories );
 		return true;
 	}
+
+	public static function onOutputPageBeforeHTML( &$out, &$text ) {
+		if ( class_exists( 'ArticleAdLogic' ) && $out->isArticle() && ArticleAdLogic::isContentPage() && ArticleAdLogic::isLongArticle($text)) {
+			// long article, inject Related Pages module after x section
+			$relatedPages = RelatedPages::getInstance();
+
+			$sections = preg_split( '/<h2>/i', $text, -1, PREG_SPLIT_OFFSET_CAPTURE );
+			$sectionPos = $sections[$relatedPages->getPageSectionNo()][1];
+
+			$first = substr( $text, 0, $sectionPos - 4 );
+			$last = substr( $text, $sectionPos - 4);
+
+			$text = $first . wfRenderModule('RelatedPages') . $last;
+
+			$relatedPages->setRendered( true );
+		}
+		return true;
+	}
+
 }

@@ -20,6 +20,7 @@ $dir = dirname(__FILE__) . '/';
 
 // hooks
 $wgHooks['OutputPageMakeCategoryLinks'][] = 'RelatedPages::onOutputPageMakeCategoryLinks';
+$wgHooks['OutputPageBeforeHTML'][] = 'RelatedPages::onOutputPageBeforeHTML';
 
 // classes
 $wgAutoloadClasses['RelatedPages'] = $dir . 'RelatedPages.class.php';
