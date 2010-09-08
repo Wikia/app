@@ -281,15 +281,13 @@ class FollowHelper {
 		}
 
 		// only for Oasis users
+		// replace 'watchlist' with 'followed pages'
 		if (get_class($wgUser->getSkin()) == 'SkinOasis') {
 			wfLoadExtensionMessages('Follow');
-			$personal_urls['following'] = array(
+			$personal_urls['watchlist'] = array(
 				'text' =>  wfMsg('wikiafollowedpages-special-title-userbar'),
 				'href' => Skin::makeSpecialUrl('following'),
 			);
-
-			// remove link to watchlist
-			unset($personal_urls['watchlist']);
 		}
 		wfProfileOut(__METHOD__);
 		return true;
