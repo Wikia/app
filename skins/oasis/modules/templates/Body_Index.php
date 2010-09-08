@@ -1,8 +1,9 @@
-<aside class="skiplinkcontainer">
+<h1>Wikia</h1>
+<div class="skiplinkcontainer">
 <a class="skiplink" rel="nofollow" href="#WikiaArticle">Skip to Content</a>
 <a class="skiplink wikinav" rel="nofollow" href="#WikiHeader">Skip to Wiki Navigation</a>
 <a class="skiplink sitenav" rel="nofollow" href="#GlobalNavigation">Skip to Site Navigation</a>
-</aside>
+</div>
 <?= $afterBodyHtml ?>
 
 <?= wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_TOP')) ?>
@@ -10,7 +11,7 @@
 <?= wfRenderModule('GlobalHeader') ?>
 
 <section id="WikiaPage" class="WikiaPage">
-	<h1><?=$wgSitename?></h1>
+
 
 	<?= wfRenderModule('Notifications', 'Confirmation') ?>
 
@@ -31,18 +32,16 @@
 
 	<?= wfRenderModule('WikiHeader') ?>
 
-	<div id="WikiaMainContent" class="WikiaMainContent">
-
-<?php
-	// render UserPagesHeader or PageHeader or nothing...
-	if ($headerModuleName) {
-		echo wfRenderModule($headerModuleName, $headerModuleAction, $headerModuleParams);
-	}
-?>
-
-		<article id="WikiaArticle" class="WikiaArticle">
+	<article id="WikiaMainContent" class="WikiaMainContent">
+		<?php
+			// render UserPagesHeader or PageHeader or nothing...
+			if ($headerModuleName) {
+				echo wfRenderModule($headerModuleName, $headerModuleAction, $headerModuleParams);
+			}
+		?>
+		<div id="WikiaArticle" class="WikiaArticle">
 			<?= $bodytext ?>
-		</article>
+		</div>
 
 		<?= wfRenderModule('RelatedPages'); ?>
 
@@ -59,7 +58,7 @@
 	}
 ?>
 
-	</div><!-- WikiaMainContent -->
+	</article><!-- WikiaMainContent -->
 
 <?php
 	if (count($railModuleList) > 0) {

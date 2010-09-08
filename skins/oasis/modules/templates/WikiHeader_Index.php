@@ -1,8 +1,9 @@
-<div id="WikiHeader" class="WikiHeader">
+<header id="WikiHeader" class="WikiHeader">
 	<h1 class="wordmark">
 		<a accesskey="z" href="<?= htmlspecialchars($mainPageURL) ?>"><?= htmlspecialchars($wgSitename) ?></a>
 	</h1>
 	<nav>
+		<h1><?= htmlspecialchars($wgSitename) ?> Navigation</h1>
 		<ul>
 
 <?php
@@ -55,4 +56,4 @@ if(is_array($menuNodes) && isset($menuNodes[0])) {
 		<?= View::specialPageLink('RecentChanges', 'recentchanges', array('accesskey' => 'r')) ?>
 	</div>
 	<img class="shadow-mask" src="<?= $wgBlankImgUrl ?>">
-</div>
+</header>

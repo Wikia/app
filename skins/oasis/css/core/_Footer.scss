@@ -116,6 +116,9 @@
 .CorporateFooter  {
 	text-align: center;
 	
+	nav >h1{
+		display: none;
+	}
 	ul {
 		list-style: none outside none;
 		margin: 10px;

@@ -11,6 +11,9 @@ body {
 	margin: 0;
 	overflow-x: hidden;
 	padding: 20px 0;
+	>h1 {
+		display: none;
+	}
 }
 
 a {
@@ -29,6 +32,9 @@ a {
 	position: absolute;
 	top: 0;
 	right: 0;
+	h1 {
+		display: none;
+	}
 	.skiplink {
 		display: block;
 		margin: 0 auto;
