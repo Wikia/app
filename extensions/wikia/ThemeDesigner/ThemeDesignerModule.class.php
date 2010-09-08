@@ -6,6 +6,7 @@ class ThemeDesignerModule extends Module {
 	var $wgScript;
 	var $wgServer;
 	var $wgStylePath;
+	var $wgOut;
 
 	var $dir;
 	var $mimetype;
@@ -63,6 +64,10 @@ class ThemeDesignerModule extends Module {
 	}
 
 	public function executePicker() {
+
+	}
+
+	public function executePreview() {
 
 	}
 
