@@ -173,9 +173,7 @@ var ThemeDesigner = {
 
 
 	PickerInit: function() {
-		$("#ColorNameForm").submit(function() {
-			alert("this should work");
-		});			
+
 	},
 	
 	showPicker: function(event, type) {
@@ -204,6 +202,23 @@ var ThemeDesigner = {
 				ThemeDesigner.settings[swatch.attr("class")] = color;
 				ThemeDesigner.hidePicker();
 			});
+			
+			//handle custom colors
+			$("#ColorNameForm").submit(function(event) {
+				event.preventDefault();
+				
+				var color = $("#color-name").val()
+				
+				// if numbers only, add hash.  
+				if (ThemeDesigner.isNumeric(color) && (color.length == 3 || color.length == 6)) {
+					color = "#" + color;
+				}
+				
+				ThemeDesigner.settings[swatch.attr("class")] = color;
+				ThemeDesigner.hidePicker();
+			});
+			
+			
 		} else if (type == "image") {
 
 		}
@@ -219,16 +234,18 @@ var ThemeDesigner = {
 
 		//clicking away will close picker
 		$("body").bind("click.picker", ThemeDesigner.hidePicker);
-		$("#ThemeDesignerPicker").click(function() {
-			return false;
+		$("#ThemeDesignerPicker").click(function(event) {
+			event.stopPropagation();
 		});
 	},
 
 	hidePicker: function() {
 		$("body").unbind(".picker");
+		$("#ColorNameForm").unbind();
 		$("#ThemeDesignerPicker")
 			.removeClass("color image")
 			.find(".user").remove();
+		$("#color-name").val("").blur();
 		$("#ThemeDesignerPicker").children(".color").find(".swatches").find("li").unbind("click");
 		ThemeDesigner.applySettings();
 	},
@@ -252,6 +269,9 @@ var ThemeDesigner = {
 		else {
 			return rgb;
 		}
+	},
+	
+	isNumeric: function(input) {
+		return (input - 0) == input && input.length > 0;
 	}
-
 };
