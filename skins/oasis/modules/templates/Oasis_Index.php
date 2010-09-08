@@ -34,7 +34,7 @@
 	<!-- Headscripts -->
 	<?= $headscripts ?>
 </head>
-<body class="<?= $bodyClasses ?>"<?= $body_ondblclick ? ' ondblclick="' . htmlspecialchars($body_ondblclick) . '"' : '' ?>>
+<body class="<?= implode(' ', $bodyClasses) ?>"<?= $body_ondblclick ? ' ondblclick="' . htmlspecialchars($body_ondblclick) . '"' : '' ?>>
 <?= $body ?>
 <?= $printableCss ?>
 <?= AdEngine::getInstance()->getDelayedIframeLoadingCode() ?>
@@ -44,14 +44,14 @@
 	// TODO: SWC: When we're ready to test JS after the content, move StaticChute and headscripts down here.
 /*
 	print $staticChuteHtml;
-	
+
 	// TODO: SWC: TO TEST ASYNC LOADING, REMOVE PRINT OF $staticChuteHtml ABOVE AND UNCOMMENT THESE TWO LINES:
 	//print $wikiaScriptLoader;
 	//print $jsLoader;
-	
+
 	print $headscripts;
 */
-	
+
 	// TODO: SWC: Get bottomscripts working. I thought they were set by SkinTemplate automatically.
 	//print $bottomscripts;
 ?>
