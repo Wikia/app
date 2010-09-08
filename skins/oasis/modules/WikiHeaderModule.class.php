@@ -42,7 +42,8 @@ class WikiHeaderModule extends Module {
 	public function executeIndex() {
 
 		global $wgOut, $wgCityId, $wgUser;
-		$wgOut->addScript('<script src="/skins/oasis/js/WikiHeader.js"></script>');
+		// Moved to StaticChute.
+		//$wgOut->addScript('<script src="/skins/oasis/js/WikiHeader.js"></script>');
 
 		$this->mainPageURL = Title::newMainPage()->getLocalURL();
 		$service = new NavigationService();

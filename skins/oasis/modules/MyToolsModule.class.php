@@ -16,7 +16,8 @@ class MyToolsModule extends Module {
 		$this->defaultTools = $this->getDefaultTools();
 		$this->customTools = $this->getCustomTools();
 
-		$wgOut->addScript('<script src="'. $wgStylePath .'/oasis/js/MyTools.js"></script>');
+		// Moved to StaticChute.
+		//$wgOut->addScript('<script src="'. $wgStylePath .'/oasis/js/MyTools.js"></script>');
 	}
 
 	private function getCustomTools() {
