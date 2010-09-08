@@ -276,16 +276,18 @@ class StaticChute {
 			"common/wikibits.js",
 			'../extensions/wikia/SASS/sassUtil.js', // other js files may depend on this, so load it early
 			"oasis/js/tracker.js",
+			//"oasis/js/modal.js",
+			"common/jquery/jquery.wikia.modal.js",
+			"common/jquery/jquery.wikia.tracker.js",
 			"oasis/js/hoverMenu.js",
 			"oasis/js/PageHeader.js",
 			"oasis/js/Search.js",
 			"oasis/js/WikiaFooter.js",
 			"oasis/js/buttons.js",
+			"oasis/js/MyTools.js",
+			"oasis/js/WikiHeader.js",
 			"../extensions/wikia/ShareFeature/js/ShareFeature.js",
 			"oasis/js/WikiaNotifications.js",
-			//"oasis/js/modal.js",
-			"common/jquery/jquery.wikia.modal.js",
-			"common/jquery/jquery.wikia.tracker.js",
 
 			'../extensions/wikia/CreatePage/js/CreatePage.js',
 			'../extensions/wikia/ImageLightbox/ImageLightbox.js',
@@ -303,7 +305,6 @@ class StaticChute {
 		//$this->config['oasis_loggedin_js'] = array_merge($this->config['oasis_jquery'], $this->config['oasis_loggedin_js']);
 		// UNTIL WE NEED TO CUSTOMIZE IT, JUST STARTING WITH THE SAME AS ANON_ARTICLE.
 		$this->config['oasis_loggedin_js'] = $this->config['oasis_anon_article_js'];
-		
 
 		// JS served for anon for everything that's not an article view
 		//$this->config['oasis_anon_everything_else_js'] = array(
