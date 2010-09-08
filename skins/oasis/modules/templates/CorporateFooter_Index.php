@@ -1,5 +1,6 @@
 <footer class="CorporateFooter">
 	<nav>
+		<h1>Wikia Inc Navigation</h1>
 		<ul>
 <?php 
 foreach ($footer_links as $link) {

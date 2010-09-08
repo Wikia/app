@@ -1,4 +1,4 @@
-<div id="WikiaPageHeader" class="WikiaPageHeader<?= (empty($revisions) && empty($categories)) ? ' separator' : '' ?>">
+<header id="WikiaPageHeader" class="WikiaPageHeader<?= (empty($revisions) && empty($categories)) ? ' separator' : '' ?>">
 	<?= wfRenderModule('CommentsLikes', 'Index', array('comments' => $comments, 'likes' => $likes)); ?>
 	<? if ($isMainPage) { ?>
 		<div class="tally">
@@ -46,4 +46,4 @@
 		echo wfRenderModule('Search');
 	}
 ?>
-</div>
+</header>

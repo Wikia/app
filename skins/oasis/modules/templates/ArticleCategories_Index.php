@@ -1,9 +1,10 @@
 <?php
 	if ($catlinks != '') {
 ?>
-<aside id="WikiaArticleCategories" class="WikiaArticleCategories">
+<nav id="WikiaArticleCategories" class="WikiaArticleCategories">
+	<h1>Related Categories</h1>
 	<?= $catlinks ?>
-</aside>
+</nav>
 <?php
 	}
 ?>

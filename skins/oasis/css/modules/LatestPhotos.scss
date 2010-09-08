@@ -14,7 +14,10 @@
 .LatestPhotosModule {
 	@include rail-module;	
 
-
+	>h1 {
+		display: none;
+	}
+	
 	.tally {
 		margin: {
 			bottom: 10px;
