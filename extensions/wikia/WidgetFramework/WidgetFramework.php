@@ -10,10 +10,12 @@ if(!defined('MEDIAWIKI')) {
 $wgExtensionCredits['specialpage'][] = array(
     'name' => 'WidgetFramework',
     'author' => 'Inez Korczyński',
+    'descriptionmsg' => 'widgetframework-desc',
 );
 
 $wgAutoloadClasses["ReorderWidgets"] = "$IP/extensions/wikia/WidgetFramework/ReorderWidgets.php";
 $wgHooks["ReorderWidgets"][] = "ReorderWidgets::WF";
+$wgExtensionMessagesFiles['WidgetFramework'] = dirname(__FILE__) . '/WidgetFramework.i18n.php';
 
 /**
  * IMPORTANT: If you want to make any changes in this class or in any part of widget
