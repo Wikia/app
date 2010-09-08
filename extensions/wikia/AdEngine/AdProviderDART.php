@@ -91,8 +91,8 @@ EOT;
 		$url .= $this->getDcoptKV($slotname);
 		$url .= "sz=" . $slot['size'] . ';';
 		$url .= $this->getTileKV($slotname);
-		$url .= 'mtfIFPath=/extensions/wikia/AdEngine/;';  // http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=117857
 		$url .= self::getQuantcastSegmentKV();
+		$url .= 'mtfIFPath=/extensions/wikia/AdEngine/;';  // http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=117857
 		// special "end" delimiter, this is for when we redirect ads to other places. Per Michael
 		$url .= 'endtag=$;';
 		$url .= "ord=" . $rand . "?"; // See note above, ord MUST be last. Also note that DART told us to put the ? at the end
