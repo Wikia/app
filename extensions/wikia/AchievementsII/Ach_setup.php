@@ -189,7 +189,7 @@ function Ach_AddToUserProfile(&$out) {
 
 	$userProfileService = new AchUserProfileService();
 	$html = $userProfileService->getHTML();
-	$html = null;
+
 	if($html) {
 		$out['achievementsII'] = $html;
 		$wgOut->addStyle('../..' . $wgScriptPath . '/extensions/wikia/AchievementsII/css/achievements_sidebar.css');
