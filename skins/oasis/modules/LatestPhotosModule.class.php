@@ -41,8 +41,6 @@ class LatestPhotosModule extends Module {
 		$fileList = array_filter($fileList, array($this, "filterImages"));
 
 		$this->thumbUrls = array_map(array($this, 'getTemplateData'), $fileList);
-		// fixme: remove this after testing
-		$this->thumbUrls = array_reverse($this->thumbUrls);  // just for testing
 		
 		while (count($this->thumbUrls) > 10) array_pop ($this->thumbUrls);
 		
