@@ -111,11 +111,11 @@ class SkinChooser {
 				if($pref->mAdminSkin != $wgAdminSkin && !(empty($wgAdminSkin) && $pref->mAdminSkin == 'ds')) {
 					$log = new LogPage('var_log');
 					if($pref->mAdminSkin == 'ds') {
-						WikiFactory::SetVarById( 599, $wgCityId, null);
+						WikiFactory::SetVarById( 599, $wgCityId, null, 'via SkinChooser');
 						$wgAdminSkin = null;
 						$log->addEntry( 'var_set', $wgTitle, '', array(wfMsg('skin'), wfMsg('adminskin_ds')));
 					} else {
-						WikiFactory::SetVarById( 599, $wgCityId, $pref->mAdminSkin);
+						WikiFactory::SetVarById( 599, $wgCityId, $pref->mAdminSkin, 'via SkinChooser');
 						$wgAdminSkin = $pref->mAdminSkin;
 						$log->addEntry( 'var_set', $wgTitle, '', array(wfMsg('skin'), $pref->mAdminSkin));
 					}
