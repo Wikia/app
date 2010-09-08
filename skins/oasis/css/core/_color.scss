@@ -6,7 +6,11 @@ $color-links: get_command_line_param("color-links", #006CB0);				// default: blu
 
 
 ////////// DO NOT CHANGE PER THEME - BASED ON ABOVE VALUES //////////
-
+// Corporate footer
+$color-corporate-footer-links: #000;
+@if lightness($color-body) < 50 {
+ $color-corporate-footer-links: #FFF;
+}
 
 // Text color
 $color-text: #4E4E4E;

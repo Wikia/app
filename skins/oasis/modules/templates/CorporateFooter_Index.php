@@ -1,4 +1,4 @@
-<div class="CorporateFooter">
+<footer class="CorporateFooter">
 	<nav>
 		<ul>
 <?php 
@@ -12,4 +12,4 @@ foreach ($footer_links as $link) {
 		?>
 		</ul>
 	</nav>
-</div>
+</footer>

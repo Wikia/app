@@ -18,9 +18,9 @@ class CorporateFooterModule extends Module {
 		wfProfileIn( __METHOD__ );
 		global $wgCat;
 
-		$message_key = 'shared-Monaco-footer-wikia-links';
+		$message_key = 'shared-Oasis-footer-wikia-links';
 		$nodes = array();
-
+				
 		if(!isset($wgCat['id']) || null == ($lines = getMessageAsArray($message_key.'-'.$wgCat['id']))) {
 			wfDebugLog('monaco', $message_key.'-'.$wgCat['id'] . ' - seems to be empty');
 			if(null == ($lines = getMessageAsArray($message_key))) {
@@ -29,6 +29,7 @@ class CorporateFooterModule extends Module {
 				return $nodes;
 			}
 		}
+
 		foreach($lines as $line) {
 			$depth = strrpos($line, '*');
 			if($depth === 0) {

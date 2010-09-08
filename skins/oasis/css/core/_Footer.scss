@@ -114,23 +114,29 @@
 
 
 .CorporateFooter  {
-	left: 50%;
-	margin-left: -505px;
-	position: absolute;
-	width: 1010px;
-	
-	margin: {
-		top: 10px;
-	}
+	text-align: center;
 	
 	ul {
-		list-style: none;
-		float: left;
-		margin-left: 10px;
+		list-style: none outside none;
+		margin: 10px;
+		display: inline-block;
+		*width: 1000px; // /** IE 7  **/
+
 		li {
-			float: right;
-			margin-right: 20px;
+			display: table-cell;
+			*float: left;  // /** IE 7  **/
+			padding: {
+				right: 10px;
+				left: 10px;
+			}
+			border-right: solid 1px $color-corporate-footer-links;
+			&:last-child {
+				border: none;
+			}
+			
+			a {
+				color: $color-corporate-footer-links;
+			}
 		}
 	}
-	padding-bottom: 10px;
 }
