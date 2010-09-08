@@ -286,6 +286,7 @@ class StaticChute {
 			"oasis/js/buttons.js",
 			"oasis/js/MyTools.js",
 			"oasis/js/WikiHeader.js",
+			"oasis/js/LatestPhotos.js",
 			"../extensions/wikia/ShareFeature/js/ShareFeature.js",
 			"oasis/js/WikiaNotifications.js",
 
