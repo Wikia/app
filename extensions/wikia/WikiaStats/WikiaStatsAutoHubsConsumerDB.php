@@ -309,7 +309,7 @@ class WikiaStatsAutoHubsConsumerDB {
 			$out = $wgMemc->get($mcKey);
 			if( !empty($out) ) {
 				wfProfileOut( __METHOD__ );
-			//	return $out;
+				return $out;
 			}
 		}
 
