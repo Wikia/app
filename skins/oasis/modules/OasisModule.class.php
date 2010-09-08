@@ -2,6 +2,19 @@
 
 class OasisModule extends Module {
 
+	private static $extraBodyClasses = array();
+
+	/**
+	 * Add extra CSS classes to <body> tag
+	 * @author: Inez Korczyński
+	 */
+	public static function addBodyClass($className) {
+		self::$extraBodyClasses[] = $className;
+	}
+
+	// template vars
+	var $bodyClasses;
+
 	// skin vars
 	var $body;
 	var $body_ondblclick;
@@ -19,19 +32,9 @@ class OasisModule extends Module {
 	var $charset;
 
 	var $analytics;
-	var $bodyClasses;
 	var $dir;
 	var $pageclass;
 	var $skinnameclass;
-
-	private static $moduleClasses;
-
-	/**
-	 * Add extra CSS classes to <body> tag
-	 */
-	public static function addBodyClass($class) {
-		self::$moduleClasses .= " $class";
-	}
 
 	public function executeIndex() {
 		global $wgOut, $wgUser, $wgTitle, $wgRequest;
@@ -39,15 +42,18 @@ class OasisModule extends Module {
 		$this->body = wfRenderModule('Body');
 
 		// generate list of CSS classes for <body> tag
-		$this->bodyClasses = "mediawiki {$this->dir} {$this->pageclass}" . self::$moduleClasses . " {$this->skinnameclass}";
-		if (Wikia::isMainPage()) {
-			$this->bodyClasses .= ' mainpage';
+		$this->bodyClasses = array('mediawiki', $this->dir, $this->pageclass);
+		$this->bodyClasses += self::$extraBodyClasses;
+		$this->bodyClasses[] = $this->skinnameclass;
+
+		if(Wikia::isMainPage()) {
+			$this->bodyClasses[] = 'mainpage';
 		}
 
 		// add skin theme name
 		$skin = $wgUser->getSkin();
-		if ($skin->themename != '') {
-			$this->bodyClasses .= " oasis-{$skin->themename}";
+		if($skin->themename != '') {
+			$this->bodyClasses[] = "oasis-{$skin->themename}";
 		}
 
 		// add site JS
