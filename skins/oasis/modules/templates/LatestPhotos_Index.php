@@ -29,7 +29,11 @@ else {
 	<?php
 	$count = 1;
 	foreach ($thumbUrls as $url) {?>
-		<li><a href="<?= $url["file_url"] ?>"><img src="<?= $url["thumb_url"] ?>" /></a></li>
+		<li class="thumbs"><a class="image" sref="<?= $url["file_url"] ?>" title="here is the title" href="<?= $url["file_url"] ?>">
+			<img class="thumbimage" src="<?= $url["thumb_url"] ?>" />
+		</a>
+		<span class="thumbcaption"><a href=""></a><br/><?= $url["date"] ?>valuable information for the intelectual mind</span>
+		</li>
 	<?php
 	}
 	?>

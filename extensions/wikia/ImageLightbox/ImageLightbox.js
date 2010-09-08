@@ -18,7 +18,7 @@ var ImageLightbox = {
 		}
 
 		if (window.skin == 'oasis') {
-			var article = $('#WikiaArticle');
+			var article = $('#WikiaArticle, .LatestPhotosModule');
 		}
 		else {
 			var article = $('#bodyContent');
@@ -77,10 +77,12 @@ var ImageLightbox = {
 			if (matches) {
 				imageName = matches.pop();
 			}
-		}
 
+		}
+		//imageName = "File:acat.jpg";
 		if (imageName != false) {
 			// RT #44281
+	
 			imageName = decodeURIComponent(imageName);
 
 			// find caption node and use it in lightbox popup
@@ -101,9 +103,8 @@ var ImageLightbox = {
 
 				caption = captionNode.html();
 			}
-
 			this.show(imageName, caption);
-
+	
 			// don't follow href
 			ev.preventDefault();
 		}

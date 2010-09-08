@@ -171,11 +171,14 @@
 					font-size: 45px !important;
 					padding-top: 9px;
 					height: 67px;
-			}
+				}
 				&:hover {
 					text-decoration: none;
 					
 				}
+			}
+			.thumbcaption {
+				display: none;
 			}
 		}
 	}
