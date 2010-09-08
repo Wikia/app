@@ -268,7 +268,8 @@ class StaticChute {
 		$this->config['oasis_jquery'] = array(
 			"common/jquery/jquery-1.4.2.js",
 			"common/jquery/jquery.json-1.3.js",
-			"common/jquery/jquery.wikia.js"
+			"common/jquery/jquery.wikia.js",
+			"common/jquery/jquery.cookies.2.1.0.js", // needed by geo.js
 		);
 
 		// JS served for anon on article view
@@ -300,7 +301,7 @@ class StaticChute {
 			'../extensions/wikia/Geo/geo.js',
 			'../extensions/wikia/QuantcastSegments/qcs.js',
 		);
-		$this->config['oasis_anon_article_js'] = array_merge($this->config['oasis_jquery'], $this->config['oasis_anon_article_js']);
+		$this->config['oasis_anon_article_js'] = array_merge($this->config['oasis_jquery'], $this->config['oasis_anon_article_js']); // order matters here: load jQuery first.
 
 		// JS served for logged-in
 		$this->config['oasis_loggedin_js'] = array(
