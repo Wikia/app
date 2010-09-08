@@ -12,10 +12,18 @@ class AutoHubsPagesHelper{
 	* check if it is title for hubs pages
 	*/
 	static function isHubsPage(Title &$title){
-		global $wgHubsPages;
+		global $wgHubsPages, $wgContLanguageCode;
 		wfProfileIn( __METHOD__ ); 
 
-		foreach ($wgHubsPages as $key => $value){
+		if( empty($wgHubsPages[$wgContLanguageCode]) ) {
+			return false;
+		}
+
+		foreach( $wgHubsPages[$wgContLanguageCode] as $key => $value ){
+			if(is_array($key)) {
+				$key = $key['name'];
+			}
+
 			if (strtolower($title->getUserCaseDBKey()) == strtolower($key)){
 				wfProfileOut( __METHOD__ ); 
 				return true;
@@ -175,23 +183,53 @@ class AutoHubsPagesHelper{
 	*/
 	
 	static function getHubIdFromTitle($title){
-		global $wgHubsPages;
+		global $wgHubsPages, $wgContLanguageCode;
+
+		if( empty($wgHubsPages[$wgContLanguageCode]) ) {
+			return false;
+		}
+
 		if (self::isHubsPage($title)){
-			return WikiFactoryTags::idFromName($wgHubsPages[strtolower($title->getUserCaseDBKey())]);
+			if(is_array($wgHubsPages[$wgContLanguageCode][strtolower($title->getUserCaseDBKey())])){
+				return WikiFactoryTags::idFromName($wgHubsPages[$wgContLanguageCode][strtolower($title->getUserCaseDBKey())]['name']);
+			}
+			return WikiFactoryTags::idFromName($wgHubsPages[$wgContLanguageCode][strtolower($title->getUserCaseDBKey())]);
 		} else {
 			return false;
 		}
 	}
 
 	/*
+	* Author: Tomek Odrobny
+	* get lang for hub 
+	*/
+	
+	static function getLangForHub(Title &$title){
+		global $wgHubsPages, $wgContLanguageCode;
+		wfProfileIn( __METHOD__ );
+
+		if( is_array($wgHubsPages[$wgContLanguageCode][strtolower($title->getUserCaseDBKey())]) ) {
+			wfProfileOut( __METHOD__ );
+			return $wgHubsPages[$wgContLanguageCode][strtolower($title->getUserCaseDBKey())]['langcode'];
+		}
+
+		return $wgContLanguageCode;
+
+	}
+	
+	/*
 	* Author: Bartek Lapinskl
 	* get normalised hub tag name from title
 	*/
 
 	static function getHubNameFromTitle($title){
-		global $wgHubsPages;
+		global $wgHubsPages, $wgContLanguageCode;
+
 		if (self::isHubsPage($title)){
-			return $wgHubsPages[strtolower($title->getUserCaseDBKey())];
+			if(is_array($wgHubsPages[$wgContLanguageCode][strtolower($title->getUserCaseDBKey())])){
+				return $wgHubsPages[$wgContLanguageCode][strtolower($title->getUserCaseDBKey())]['name'];
+			}
+			return $wgHubsPages[$wgContLanguageCode][strtolower($title->getUserCaseDBKey())];
 		} else {
 			return false;
 		}
@@ -207,7 +245,11 @@ class AutoHubsPagesHelper{
 		$values = array_values( $wgHubsPages );
 		
 		foreach ( $values as $key =>  $value) {
-			$values[ $key ] = 'Hub-' . $value . '-slider';
+			if(is_array($value)) {
+				$values[ $key ] = 'Hub-' . $value['name'] . $name['lengcode'] .'-slider';
+			} else {
+				$values[ $key ] = 'Hub-' . $value . '-slider';
+			}
 		}
 		$list = array_merge( $list, $values ); 			
 		return true;

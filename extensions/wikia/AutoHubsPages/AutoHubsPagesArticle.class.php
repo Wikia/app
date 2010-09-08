@@ -11,73 +11,73 @@ class AutoHubsPagesArticle extends Article {
 
 
 	public function prepareData() {
-		global $wgTitle, $wgUser;
+		global $wgTitle, $wgUser, $wgCont;
 
 		$pars = array();
 		$pars['slider'] = array();
-		if ( class_exists("WikiaStatsAutoHubsConsumerDB") ){
 
-			$data = AutoHubsPagesData::newFromTagTitle($wgTitle);
-			$tagname = AutoHubsPagesHelper::getHubNameFromTitle($wgTitle);
-			$vars = AutoHubsPagesHelper::getHubsFeedsVariable( $tagname );
+		$lang = AutoHubsPagesHelper::getLangForHub($wgTitle);
 
-			$lang = "en";
-			$isMenager = $wgUser->isAllowed( 'corporatepagemanager' );
-			$datafeeds = new WikiaStatsAutoHubsConsumerDB(DB_SLAVE);
-			$tag_id = AutoHubsPagesHelper::getHubIdFromTitle($wgTitle);
-			$tag_name = AutoHubsPagesHelper::getHubNameFromTitle($wgTitle);
+		$data = AutoHubsPagesData::newFromTagTitle($wgTitle);
+		$tagname = AutoHubsPagesHelper::getHubNameFromTitle($wgTitle);
+		$vars = AutoHubsPagesHelper::getHubsFeedsVariable( $tagname );
 
-			$pars['tagname'] = $tag_name;
-			$pars['title'] = $wgTitle;
-			$pars['var_feeds'] = $vars[$tag_name];
-			$pars['is_menager'] = $isMenager;
-			$pars['tag_id'] = $tag_id;
-			if ($isMenager) {
-				$temp = $datafeeds->getTopWikis($tag_id, $lang, 30, true, true);
+		$isMenager = $wgUser->isAllowed( 'corporatepagemanager' );
+		$datafeeds = new WikiaStatsAutoHubsConsumerDB(DB_SLAVE);
 
-				$pars['topWikis1'] = $temp['value'];
-			} else {
-				$temp = $datafeeds->getTopWikis($tag_id, $lang, 20, false);
+		$tag_id = AutoHubsPagesHelper::getHubIdFromTitle($wgTitle);
 
-				$pars['topWikis1'] = array_slice($temp['value'],0,10);
-				$pars['topWikis2'] = array_slice($temp['value'],10,10);
-			}
+		$tag_name = AutoHubsPagesHelper::getHubNameFromTitle($wgTitle);
 
-			$pars['topWikisOne'] = $temp['value'][$temp['number_one']];
+		$pars['tagname'] = $tag_name;
+		$pars['title'] = $wgTitle;
+		$pars['var_feeds'] = $vars[$tag_name];
+		$pars['is_menager'] = $isMenager;
+		$pars['tag_id'] = $tag_id;
 
-			$temp = $datafeeds->getTopUsers($tag_id,'en',5);
-			$pars['topEditors'] = $temp['value'];
-
-			if ($isMenager) {
-				$temp = $datafeeds->getTopBlogs($tag_id, $lang, 9, 3, true, true);
-			} else {
-				$temp = $datafeeds->getTopBlogs($tag_id, "en", 3, 1);
-			}
-
-			$pars['topBlogs'] = $temp['value'];
-
-			if ($isMenager) {
-				$temp = $datafeeds->getTopArticles($tag_id, $lang, 15, 3, true, true);
-			} else {
-				$temp = $datafeeds->getTopArticles($tag_id, "en", 5, 1);
-			}
-
-			$pars['hotSpots'] = $temp['value'];
-			$pars['slider'] = CorporatePageHelper::parseMsgImg( 'hub-' . $tag_name . '-slider', true );
-
-			$pars['wikia_whats_up'] = wfMsgExt("corporatepage-wikia-whats-up",array("parsemag"));
-
+		if ($isMenager) {
+			$temp = $datafeeds->getTopWikis($tag_id, $lang, 30, true, true);
+			$pars['topWikis1'] = $temp['value'];
 		} else {
-			$dir = dirname(__FILE__) . '/';
-			$pars =  json_decode(file_get_contents($dir.'fakedata.json'),true );
+			$temp = $datafeeds->getTopWikis($tag_id, $lang, 10, false);
+			$pars['topWikis1'] = $temp['value'];
 		}
+
+		$temp = $datafeeds->getTopUsers($tag_id, $lang,5);
+		$pars['topEditors'] = $temp['value'];
+
+		if ($isMenager) {
+			$temp = $datafeeds->getTopBlogs($tag_id, $lang, 9, 3, true, true);
+		} else {
+			$temp = $datafeeds->getTopBlogs($tag_id, $lang, 3, 1);
+		}
+
+		$pars['topBlogs'] = $temp['value'];
+
+		if ($isMenager) {
+			$temp = $datafeeds->getTopArticles($tag_id, $lang, 15, 3, true, true);
+		} else {
+			$temp = $datafeeds->getTopArticles($tag_id, $lang, 5, 1);
+		}
+
+		$pars['hotSpots'] = $temp['value'];
+		$pars['slider'] = CorporatePageHelper::parseMsgImg( 'hub-' . $tag_name . '-slider', true );
+
+		$pars['wikia_whats_up'] = wfMsgExt("corporatepage-wikia-whats-up",array("parsemag"));
+
 		return $pars;
 	}
 
 	// overwrite view, display tag page
 	public function view() {
-		global $wgOut;
+		global $wgOut, $wgScriptPath, $wgSkin;
+
+		if( $wgSkin != 'corporate' ) {
+			$wgOut->addStyle( "$wgScriptPath/extensions/wikia/AutoHubsPages/css/hubs.css" );
+		}
+
 		wfLoadExtensionMessages('AutoHubsPages');
+		
 		$data = $this->prepareData();
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars(array(
