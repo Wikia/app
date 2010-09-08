@@ -8,15 +8,15 @@ class SpecialThemeDesignerPreview extends UnlistedSpecialPage {
 
 	public function execute() {
 		wfProfileIn( __METHOD__ );
-		global $wgOut;
+		global $wgOut, $wgExtensionsPath;
 
 		$this->setHeaders();
 
 		$wgOut->setPageTitle('Example Page Title');
+		
+		$wgOut->addScript('<script src="'. $wgExtensionsPath .'/wikia/ThemeDesigner/js/ThemeDesignerPreview.js"></script>');
 
-		$wgOut->addHtml("<b>Some</b> <i>html</i>");
-
-		$wgOut->addWikiText("''And some'' '''wikitext'''");
+		$wgOut->addHtml(wfRenderModule('ThemeDesigner', 'Preview'));
 
 		wfProfileOut( __METHOD__ );
 	}
