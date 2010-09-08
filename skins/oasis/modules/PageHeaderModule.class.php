@@ -295,6 +295,25 @@ class PageHeaderModule extends Module {
 				// special case for wiki activity page
 				if ($wgTitle->isSpecial('WikiActivity')) {
 					$this->subtitle = View::specialPageLink('RecentChanges', 'oasis-page-header-subtitle-special-wikiactivity');
+				} else if ($wgTitle->isSpecial('ThemeDesignerPreview')) {
+					// fake static data for ThemeDesignerPreview
+					$this->revisions = array('current' => array('user' => 'foo', 
+							'avatarUrl' => '/extensions/wikia/ThemeDesigner/images/td-avatar.jpg', 
+							'link' => '<a>FunnyBunny</a>', 
+							'timestamp' => ''), 
+						array('user' => 'foo', 
+							'avatarUrl' => '/extensions/wikia/ThemeDesigner/images/td-avatar.jpg', 
+							'link' => '<a>FunnyBunny</a>', 
+							'timestamp' => ''));
+					//$title = Title::newFromText("More Examples", NS_CATEGORY);
+					//$this->categories[] = View::link($title, $title->getText());
+					$this->categories = array("<a>More Sample</a>", "<a>Others</a>");
+					$this->comments = 23;
+					$this->subtitle = false;
+					$actions = array('move', 'protect', 'unprotect', 'delete', 'undelete');
+					$this->action = 'form_edit';
+					$this->actionImage = MenuButtonModule::EDIT_ICON;
+					$this->actionName = 'form-edit';
 				}
 				break;
 
