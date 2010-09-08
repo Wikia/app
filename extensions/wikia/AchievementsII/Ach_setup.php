@@ -175,7 +175,8 @@ function Ach_GetHTMLAfterBody($skin, &$html) {
 
 			$notificationService = new AchNotificationService();
 			$wgOut->addHTML($notificationService->getNotifcationHTML($wgUser));
-			unset($_SESSION['achievementsNewBadges']);
+			if( isset($_SESSION['achievementsNewBadges']) )
+				unset($_SESSION['achievementsNewBadges']);
 		}
 	}
 
