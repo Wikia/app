@@ -44,7 +44,7 @@
 			<?= $bodytext ?>
 		</article>
 
-		<?// turned off to avoid mess with live code = wfRenderModule('RelatedPages'); ?>
+		<?= wfRenderModule('RelatedPages'); ?>
 
 		<?= wfRenderModule('ArticleCategories') ?>
 
