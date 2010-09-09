@@ -55,7 +55,7 @@ var ThemeDesigner = {
 		$("#Navigation a").click(ThemeDesigner.navigationClick);
 
 		// handle "Save" button clicks
-		$('#Toolbar').children('button').click(ThemeDesigner.saveClick);
+		$('#Toolbar').find('button.save').click(ThemeDesigner.saveClick);
 
 		// init theme tab
 		ThemeDesigner.ThemeTabInit();

@@ -70,6 +70,29 @@ body {
 	height: 45px;
 	position: absolute;
 	width: 100%;
+	.inner {
+		margin: 0 auto;
+		position: relative;
+		width: 1000px;
+		button {
+			position: absolute;
+			top: 12px;
+			&.save {
+				right: 130px;
+			}
+			&.cancel {
+				right: 10px;
+				width: 100px;
+			}
+		}
+	}
+	.mode {
+		color:#2070AD;
+		font-size:21px;
+		left:5px;
+		position:relative;
+		top:12px;
+	}
 }
 
 section {
