@@ -50,11 +50,7 @@ $icon-drag-background: url(/skins/oasis/images/sprite.png) no-repeat -1618px -30
 	margin: 0;
 	padding: 0;
 
-	/*notifications*/
-	.error {
-		color: red;
-		font-size: larger;
-	}
+	/*Monaco notifications*/
 	.errorbox, .successbox {
 		@include border-radius();
 		font-size: larger;
@@ -82,8 +78,17 @@ $icon-drag-background: url(/skins/oasis/images/sprite.png) no-repeat -1618px -30
 		margin: 0 .5em 0 0;
 		border: none;
 	}
-	/*notifications end*/
-	
+	/*Monaco notifications end*/
+
+	small {
+		font-size: smaller;
+	}
+
+	span.error, p.error {
+		color: red;
+		font-size: smaller;
+	}
+
 	div.InputSet {
 		margin-bottom: 20px;
 	}
@@ -122,6 +127,10 @@ $icon-drag-background: url(/skins/oasis/images/sprite.png) no-repeat -1618px -30
 		width: 282px;
 		height: $input-height;
 		line-height: $input-height;
+
+		&.error {
+			border: 2px solid red;
+		}
 	}
 
 	.ImageBrowser {
