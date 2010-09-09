@@ -85,6 +85,7 @@ div.wf-info {
 
 
 .wf-tinyhead th { font-size: x-small; }
+#wk-domain-ol a { cursor: pointer; }
 
 /*]]>*/
 </style>

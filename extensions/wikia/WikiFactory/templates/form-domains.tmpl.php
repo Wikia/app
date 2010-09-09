@@ -55,8 +55,8 @@
                     <?php
 					foreach( $domains as $key => $domain): ?>
                     <li id="wk-domain-li-<?= $key ?>"><?= $domain ?>
-                        <a id="wk-domain-li-<?= $key ?>change" href="#">[change]</a>
-                        <a id="wk-domain-li-<?= $key ?>remove" href="#">[remove]</a>
+                        <a id="wk-domain-li-<?= $key ?>change" href="#">[change]</a>&nbsp;
+                        <a id="wk-domain-li-<?= $key ?>remove" href="#">[remove]</a>&nbsp;
                         <a id="wk-domain-li-<?= $key ?>setmain" href="#">[set main]</a>
                         <script type="text/javascript">
                         /*<![CDATA[*/
