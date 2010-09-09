@@ -288,7 +288,7 @@ class RelatedPages {
 	 * @param int $articleId Article ID
 	 * @param int $length snippet length (in characters)
 	 */
-	public function getArticleSnippet( $articleId, $length = 150 ) {
+	public function getArticleSnippet( $articleId, $length = 100 ) {
 		global $wgTitle, $wgParser;
 
 		$article = Article::newFromID( $articleId );
