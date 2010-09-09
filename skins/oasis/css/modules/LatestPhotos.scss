@@ -1,14 +1,14 @@
 @import "../mixins/rail-module";
 @import "../mixins/border-radius";
 @import "../mixins/clearfix";
+@import "../mixins/gradient";
 @import "../core/color";
-@import "../core/gradient";
 
 @mixin arrow-style {
 	border-style: solid;
 	border-width: 9px;
-	width: 0;
 	margin-top: 35px;
+	width: 0;
 }
 
 .LatestPhotosModule {
@@ -19,41 +19,37 @@
 	}
 	
 	.tally {
-		margin: {
-			bottom: 10px;
-		}
+		margin-bottom: 10px;
 	}
 
 	.empty-photos {
-		border: solid 1px $color-page-border;
-		margin: {
-			bottom: 10px;
-		}
+		border: 1px solid $color-page-border;
+		margin-bottom: 10px;
 		.temp-image {
 			@include clearfix;
-			border: solid 10px White;
+			border: 10px solid #FFF;
 			height: 96px;
 			padding: {
-				top: 24px;
 				left: 38px;
 				right: 38px;
+				top: 24px;
 			}
 			background: {
-				color: White;
+				color: #FFF;
 				image: url(/skins/oasis/images/empty_gallery.png);
 				repeat: no-repeat;
 			}
 			a {
-				display: block;
-				padding: 8px 14px;
-				color: White;
-				font: {
-					weight: normal;
-					size: 13px;
-				}
-				border: solid 1px White;
 				@include border-radius(3px);
 				background-color: transparentize($color-links, 0.4%);
+				border: 1px solid #FFF;
+				color: #FFF;
+				display: block;
+				font: {
+					size: 13px;
+					weight: normal;
+				}
+				padding: 8px 14px;
 				span {
 					display: block;
 					margin-top: 3px;
@@ -66,7 +62,7 @@
 		@include clearfix;
 	}
 	
-	// /** Chifrons left and right **/
+	// /** Chevrons left and right **/
 	a {
 		&:active {
 			outline: none;
@@ -100,30 +96,30 @@
 	}
 
 	.carousel-container {
-		position: relative;
-		left: 5px;
-		width: 258px;
 		height: 90px;
+		left: 5px;
 		overflow: hidden; // /** for testing **/
+		position: relative;
+		width: 258px;
 		div {
 			position: relative;
 		}
 	}
 	
 	ul { // /** id class: .carousel **/
-		left: 4px;
 		display: block;
+		left: 4px;
 		list-style: none;
 		width: 500px;
 		li {
-			width: 82px;
+			border: 1px solid $color-page-border;
+			float: left;
 			height: 82px;
 			margin: {
 				right: 2px;
 				bottom: 40px;
 			}
-			float: left;
-			border: solid 1px $color-page-border;
+			width: 82px;
 			&.blind {
 				border-color: transparent;
 			}
@@ -135,46 +131,45 @@
 				}
 			}
 			img {
-				width: 82px;
 				height: 82px;
 				opacity: 0.9;
+				width: 82px;
 				&:hover {
 					 opacity: 1;
 				}
 			}
 			&.see-all {
-				text-align: center;
 				background: {
 					image: url(/skins/oasis/images/empty_gallery.png);
 					position: -62px -17px;
-					color: White;
+					color: #FFF;
 				}
+				text-align: center;
 				a {
-					width: 76px;
+					border: 3px solid #FFF;
+					font-size: 14px;
+					font-weight: bold;
 					height: 55px;
 					padding-top: 21px;
-					border: solid 3px White;
-					font-weight: bold;
-					font-size: 14px;
+					width: 76px;
 				}
 			}
 			&.add-more {
-				@extend  .see-all;	
+				@extend .see-all;	
 				a {
 					font-size: 11px;
-					padding-top: 15px;
 					height: 61px;
+					padding-top: 15px;
 				}
 			}
 			&.single-photo {
 				a {
 					font-size: 45px !important;
-					padding-top: 9px;
 					height: 67px;
+					padding-top: 9px;
 				}
 				&:hover {
-					text-decoration: none;
-					
+					text-decoration: none;					
 				}
 			}
 			.thumbcaption {
@@ -189,11 +184,11 @@
 	p {
 		@include clearfix;
 		clear: both;
-		text-align: center;
 		padding: {
-			top: 5px;
 			bottom: 10px;
+			top: 5px;
 		}
+		text-align: center;
 	}
 	.wikia-button {
 		padding: 0 6px;
