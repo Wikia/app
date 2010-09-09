@@ -15,6 +15,12 @@ class SpecialThemeDesignerPreview extends UnlistedSpecialPage {
 		$wgOut->setPageTitle('Example Page Title');
 		
 		$wgOut->addScript('<script src="'. $wgExtensionsPath .'/wikia/ThemeDesigner/js/ThemeDesignerPreview.js"></script>');
+		$wgOut->addLink(array(
+				"type" => "text/css",
+				"rel" => "stylesheet",
+				"href" => wfGetSassUrl($wgExtensionsPath.'/wikia/ThemeDesigner/css/ThemeDesignerPreview.scss'),
+			)
+		);
 
 		$wgOut->addHtml(wfRenderModule('ThemeDesigner', 'Preview'));
 
