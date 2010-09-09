@@ -108,6 +108,7 @@
 
 	.wikia-button {	 // /** adding padding to make the button look wider **/
 		padding: 0px 5px;
+		margin-top: -7px;
 	}
 	.commentslikes {
 		position: absolute;	
@@ -117,6 +118,7 @@
 	}
 	ul {
 		margin: 0px;
+		margin-top: 15px;
 		li {
 			position: relative;
 			&:first-child {
@@ -133,7 +135,7 @@
 	h1 {
 		padding-bottom: 0px;
 		margin: {
-			left: 28px;
+			left: 32px;
 			bottom: 0px;
 		}
 		a {
@@ -147,8 +149,8 @@
 	
 	details {
 		img { // /** the avatar **/
-			width: 22px;
-			height: 22px;
+			width: 25px;
+			height: 25px;
 			float: left;
 			margin: {
 				right: 5px;
