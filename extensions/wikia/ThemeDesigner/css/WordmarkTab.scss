@@ -14,15 +14,7 @@
 		margin-top: 15px;
 	}
 	#wordmark {
-		&.small {
-			font-size: 24px;
-		}
-		&.medium {
-			font-size: 36px;
-		}
-		&.large {
-			font-size: 48px;
-		}
+		@include wordmark;
 	}
 	#wordmark-edit {
 		display: none;

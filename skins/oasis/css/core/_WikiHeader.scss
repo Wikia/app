@@ -4,6 +4,10 @@
 	padding: 20px 10px 9px;
 	position: relative;
 	z-index: 50;
+	.wordmark {
+		@include wordmark;
+		color: $color-links;
+	}
 	h1:before, 
 	.shadow-mask {
 		bottom: 0;
@@ -21,9 +25,6 @@
 		background: $color-page;
 		z-index: 2;
 		@include opacity(90);
-	}
-	h1 {
-		width: 250px;
 	}
 	a:hover {
 		text-decoration: none;
@@ -86,11 +87,6 @@
 				font-size: 0.7em;
 			}
 		}
-	}
-	.wordmark {
-		color: $color-links;
-		font-size: 30px;
-		font-weight: bold;
 	}
 	.buttons {
 		bottom: 15px;
