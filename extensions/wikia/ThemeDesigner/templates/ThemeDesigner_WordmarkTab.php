@@ -1,7 +1,7 @@
 <section id="WordmarkTab" class="WordmarkTab">
 	<fieldset class="text">
 		<h1><?= wfMsg('themedesigner-text-wordmark') ?></h1>
-		
+
 		<ul class="controls">
 			<li>
 				<button class="secondary" id="wordmark-edit-button"><img src="<?= $wgStylePath ?>/common/blank.gif"> Edit</button>
@@ -33,18 +33,23 @@
 				</select>
 			</li>
 		</ul>
-				
+
 		<div id="wordmark"></div>
-		
+
 		<div id="wordmark-edit">
 			<input type="text">
 			<button>Save</button>
 		</div>
-	
+
 	</fieldset>
 	<fieldset class="graphic">
 		<h1><?= wfMsg('themedesigner-graphic-wordmark') ?></h1>
 		<h2>upload a graphic</h2>
-		<button>Choose File</button> 300x60 pixels (only .png files)
+
+		<form onsubmit="return jQuery.AIM.submit(this, ThemeDesigner.wordmarkUploadCallback)" action="<?= $wgScriptPath ?>/index.php?action=ajax&rs=moduleProxy&moduleName=ThemeDesigner&actionName=WordmarkUpload&outputType=data" method="POST" enctype="multipart/form-data">
+			<input id="WordMarkUploadFile" name="wpUploadFile" type="file" />
+			<input type="submit" value="Upload" onclick="return ThemeDesigner.wordmarkUpload(event);"/> 300x60 pixels (only .png files)
+		</form>
+
 	</fieldset>
 </section>
