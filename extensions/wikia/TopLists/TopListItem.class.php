@@ -9,6 +9,45 @@ class TopListItem extends TopListBase {
 	/**
 	 * @author Federico "Lox" Lucignano
 	 *
+	 * Factory method
+	 *
+	 * @param string $name a string representation of the article title
+	 *
+	 * @return mixed a TopListItem instance, false in case $name represents a title not in the NS_TOPLIST namespace
+	 */
+	static public function newFromText( $name ) {
+		$title = Title::newFromText( $name, NS_TOPLIST );
+
+		if ( !( $title instanceof Title ) ) {
+			return false;
+		}
+
+		return self::newFromTitle( $title );
+	}
+
+	/**
+	 * @author Federico "Lox" Lucignano
+	 *
+	 * Factory method
+	 *
+	 * @param Title $title a Title class instance for the article
+	 *
+	 * @return mixed a TopListItem instance, false in case $title is not in the NS_TOPLIST namespace
+	 */
+	static public function newFromTitle( Title $title ) {
+		if ( $title->getNamespace() == NS_TOPLIST ) {
+			$list = new self();
+			$list->mTitle = $title;
+
+			return $list;
+		}
+
+		return false;
+	}
+	
+	/**
+	 * @author Federico "Lox" Lucignano
+	 *
 	 * Add a vote for the item
 	 */
 	public function vote() {
@@ -49,6 +88,30 @@ class TopListItem extends TopListBase {
 	/**
 	 * @author Federico "Lox" Lucignano
 	 *
+	 * overrides TopListBase::checkForProcessing
+	 */
+	public function checkForProcessing( $mode = TOPLISTS_SAVE_AUTODETECT, User $user = null ) {
+		$errors = parent::checkForProcessing( $mode, $user );
+
+		if( $errors === true ) {
+			$errors = array();
+		}
+		
+		$title = Title::newFromText( $this->mTitle->getBaseTest() );
+
+		if( !( ( $title instanceof Title ) && $title->exists() ) ) {
+			$errors [] = array(
+				'msg' => 'toplists-error-title-not-exists',
+				'params' => array( $name, $url )
+			);
+		}
+
+		return ( empty( $errors ) ) ? true : $errors;
+	}
+
+	/**
+	 * @author Federico "Lox" Lucignano
+	 *
 	 * overrides TopListBase::save
 	 */
 	public function save( $mode = TOPLISTS_SAVE_AUTODETECT ) {
@@ -81,7 +144,6 @@ class TopListItem extends TopListBase {
 					);
 				}
 			}
-
 		} else {
 			$errors = array_merge( $errors, $checkResult);
 		}

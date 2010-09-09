@@ -8,8 +8,47 @@
 class TopList extends TopListBase {
 	protected $mRelatedArticle = null;
 	protected $mPicture = null;
-	protected $mUnsavedItems = null;
+	protected $mItems = null;
 
+	/**
+	 * @author Federico "Lox" Lucignano
+	 *
+	 * Factory method
+	 *
+	 * @param string $name a string representation of the article title
+	 *
+	 * @return mixed a TopList instance, false in case $name represents a title not in the NS_TOPLIST namespace
+	 */
+	static public function newFromText( $name ) {
+		$title = Title::newFromText( $name, NS_TOPLIST );
+
+		if ( !( $title instanceof Title ) ) {
+			return false;
+		}
+
+		return self::newFromTitle( $title );
+	}
+
+	/**
+	 * @author Federico "Lox" Lucignano
+	 *
+	 * Factory method
+	 *
+	 * @param Title $title a Title class instance for the article
+	 *
+	 * @return mixed a TopList instance, false in case $title is not in the NS_TOPLIST namespace
+	 */
+	static public function newFromTitle( Title $title ) {
+		if ( $title->getNamespace() == NS_TOPLIST ) {
+			$list = new self();
+			$list->mTitle = $title;
+
+			return $list;
+		}
+
+		return false;
+	}
+	
 	/**
 	 * @author Federico "Lox" Lucignano
 	 *
@@ -20,6 +59,17 @@ class TopList extends TopListBase {
 		
 		if( !$this->mDataLoaded || $forceReload ) {
 			if( $this->exists() ) {
+				$this->mItems = array();
+				$subPages = $this->mTitle->getSubpages();
+
+				if( !empty ($subPages)  && $subPages->count() ) {
+					foreach( $subPages as $title ) {
+						$this->mItems[] = TopListItem::newFromTitle( $title );
+
+						//TODO: implement tweak order by votes
+					}
+				}
+				
 				TopListParser::parse( $this );
 
 				$relatedArticle = TopListParser::getAttribute( TOPLIST_ATTRIBUTE_RELATED );
@@ -42,46 +92,6 @@ class TopList extends TopListBase {
 			$this->mDataLoaded = true;
 		}
 	}
-	
-	/**
-	 * @author Federico "Lox" Lucignano
-	 *
-	 * overrides TopListBase::checkForProcessing
-	 */
-	public function checkForProcessing( $mode = TOPLISTS_SAVE_AUTODETECT, User $user = null ) {
-		$errors = parent::checkForProcessing( $mode, $user );
-
-		if( $errors === true ) {
-			$errors = array();
-		}
-		
-		if( !empty( $this->mRelatedArticle ) ) {
-			if( !$this->mRelatedArticle->exists() ) {
-				$errors[] = array(
-					'msg' => 'toplists-error-related-article-not-exists',
-					'params' => array(
-						$this->mRelatedArticle->getText(),
-						$this->mRelatedArticle->getEditURL()
-					)
-				);
-			}
-		}
-		
-		if( !empty( $this->mPicture ) ) {
-			if( !$this->mPicture->exists() || $this->mPicture->getNamespace() != NS_FILE ) {
-				$pictureName = $this->mPicture->getText();
-				$errors[] = array(
-					'msg' => 'toplists-error-selected-picture-not-exists',
-					'params' => array(
-						$pictureName,
-						Skin::makeSpecialUrl( "Upload", array( 'wpDestFile' => $pictureName ) )
-					)
-				);
-			}
-		}
-
-		return ( empty( $errors ) ) ? true : $errors;
-	}
 
 	/**
 	 * @author Federico "Lox" Lucignano
@@ -90,7 +100,7 @@ class TopList extends TopListBase {
 	 *
 	 * @param bool $forceReload if set to true the local cache will be refreshed
 	 *
-	 * @return a Title instance, null if none is set for this list
+	 * @return Title a Title instance, null if none is set for this list
 	 */
 	public function getRelatedArticle( $forceReload = false ) {
 		$this->_loadData( $forceReload );
@@ -104,9 +114,23 @@ class TopList extends TopListBase {
 	 *
 	 * @param Title $relatedArticle a Title instance for the article to reference
 	 *
-	 * @return true in case of success, false if the article doesn't exist
+	 * @return mixed true in case of success, otherwise a multidimensional array of error messages in this form: array( array( 'msg' => MESSAGE_KEY, 'params' => array() ) )
 	 */
 	public function setRelatedArticle( Title $relatedArticle = null ) {
+		if( !empty( $relatedArticle ) ) {
+			if( !$relatedArticle->exists() ) {
+				$errors[] = array(
+					'msg' => 'toplists-error-article-not-exists',
+					'params' => array(
+						$relatedArticle->getText(),
+						$relatedArticle->getEditURL()
+					)
+				);
+
+				return $errors;
+			}
+		}
+		
 		$this->mRelatedArticle = $relatedArticle;
 		return true;
 	}
@@ -118,7 +142,7 @@ class TopList extends TopListBase {
 	 *
 	 * @param bool $forceReload if set to true the local cache will be refreshed
 	 *
-	 * @return a Title instance, null if none is set for this list
+	 * @return boolean a Title instance, null if none is set for this list
 	 */
 	public function getPicture( $forceReload = false ) {
 		$this->_loadData( $forceReload );
@@ -132,9 +156,22 @@ class TopList extends TopListBase {
 	 *
 	 * @param Title $relatedArticle a Title instance for the article to reference
 	 *
-	 * @return true in case of success, false if the article doesn't exist
+	 * @return mixed true in case of success, otherwise a multidimensional array of error messages in this form: array( array( 'msg' => MESSAGE_KEY, 'params' => array() ) )
 	 */
 	public function setPicture( Title $picture = null ) {
+		if( !empty( $picture ) ) {
+			if( !$picture->exists() || $picture->getNamespace() != NS_FILE ) {
+				$pictureName = $picture->getText();
+				$errors[] = array(
+					'msg' => 'toplists-error-picture-not-exists',
+					'params' => array(
+						$pictureName,
+						Skin::makeSpecialUrl( "Upload", array( 'wpDestFile' => $pictureName ) )
+					)
+				);
+			}
+		}
+		
 		$this->mPicture = $picture;
 		return true;
 	}
@@ -142,23 +179,22 @@ class TopList extends TopListBase {
 	/**
 	 * @author Federico "Lox" Lucignano
 	 *
-	 * Adds an item to the TopList article in the form of a subpage
+	 * Creates and returns a new TopListItem for this list (saving the item is done per item, see TopListItem::save)
 	 *
-	 * @param Title $title a Title class instance for the list item subpage
+	 * @param string $itemName a string to use for building the list item subpage Title
+	 *
+	 * @return mixed an instance of the TopListItem class representing the new item, false in case of errors
 	 */
-	public function addItem( Title $title ) {
-		//TODO: refactoring in progress
-	}
+	public function createItem( $itemName ) {
+		if( !empty( $this->mTitle ) ) {
+			$item = TopListItem::newFromText( $this->mTitle->getText() . '/' . $itemName );
 
-	/**
-	 * @author Federico "Lox" Lucignano
-	 *
-	 * Removes an item/subpage from the TopList article
-	 *
-	 * @param string $itemName the subpage title
-	 */
-	public function removeItem( $itemName ) {
-		//TODO: refactoring in progress
+			if( !empty( $item ) ) {
+				return $item;
+			}
+		}
+
+		return false;
 	}
 
 	/**
@@ -166,12 +202,13 @@ class TopList extends TopListBase {
 	 *
 	 * Fetches lists's items
 	 *
-	 * @return array an array of TopListItem instances
+	 * @param bool $forceReload if set to true the local cache will be refreshed
+	 * 
+	 * @return Array an array of TopListItem instances
 	 */
-	public function getItems() {
-		$result = array();
-		//TODO: refactoring in progress
-		return $result;
+	public function getItems( $forceReload = false ) {
+		$this->_loadData( $forceReload );
+		return $this->mItems;
 	}
 
 	/**

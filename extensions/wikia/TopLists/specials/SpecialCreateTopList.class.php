@@ -25,8 +25,11 @@ class SpecialCreateTopList extends SpecialPage {
 		
 		//hide specialpage subtitle in Oasis
 		$wgSupressPageSubtitle = true;
+
+		//handles redirects form edit specialpage for non-existing lists
+		$listName = $wgRequest->getText( 'wpListName', null );
+		
 		$errors = array();
-		$listName = $wgRequest->getText( 'wpListName', null );//handles redirects form edit specialpage for non-existing lists
 		$relatedArticleName = null;
 		$selectedPictureName = null;
 		$items = null;
@@ -41,82 +44,107 @@ class SpecialCreateTopList extends SpecialPage {
 			$listUrl = null;
 
 			if ( !( $list ) ) {
-				$errors[] = wfMsg('toplists-error-invalid-title');
+				$errors[ 'list_name' ] = array( wfMsg( 'toplists-error-invalid-title' ) );
 			} else {
 				$title = $list->getTitle();
 				$listName = $title->getText();
 				$listUrl = $title->getFullUrl();
 
-				if( !empty( $relatedArticleName ) ) {
-					$list->setRelatedArticle( Title::newFromText( $relatedArticleName ) );
+				if ( !empty( $relatedArticleName ) ) {
+					$article = Title::newFromText( $relatedArticleName );
+
+					if ( empty( $article ) ) {
+						$errors[ 'related_article_name' ] = array( wfMsg( 'toplists-error-invalid-title' )  );
+					} else {
+						$setResult = $list->setRelatedArticle( $article );
+
+						if ( $setResult !== true ) {
+							$errors[ 'related_article_name' ] = array();
+
+							foreach ( $setResult as $errorTuple ) {
+								$errors[ 'related_article_name' ][] =  wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] );
+							}
+						}
+					}
 				}
 
-				if( !empty( $selectedPictureName ) ) {
-					$list->setPicture( Title::newFromText( $selectedPictureName ) );
+				if ( !empty( $selectedPictureName ) ) {
+					$article = Title::newFromText( $selectedPictureName );
+					
+					if ( empty( $article ) ) {
+						$errors[ 'selected_picture_name' ] = array( wfMsg( 'toplists-error-invalid-picture' ) );
+					} else {
+						$setResult = $list->setPicture( $article );
+
+						if ( empty( $article ) || $setResult !== true ) {
+							$errors[ 'selected_picture_name' ] = array();
+
+							foreach ( $setResult as $errorTuple ) {
+								$errors[ 'selected_picture_name' ][] =  wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] );
+							}
+						}
+					}
 				}
 
 				$checkResult = $list->checkForProcessing( TOPLISTS_SAVE_CREATE );
 
-				if( $checkResult !== true ) {
+				if ( $checkResult !== true ) {
+					$errors[ 'list_name' ] = array();
+					
 					foreach ( $checkResult as $errorTuple ) {
-						$errors[] =  wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] );
+						$errors[ 'list_name' ][] =  wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] );
 					}
 				} else {
 					//first check all the items and then save the list, saving items happens only after this
 
-					//TODO: refactor in progress
+					$alreadyProcessed = array();
 
-					$saveResult = $list->save();
+					foreach ( $itemsNames as $index => $itemName ) {
+						$lcName = strtolower( $itemName );
 
-					if( $saveResult !== true ) {
-						foreach ( $saveResult as $errorTuple ) {
-							$errors[] =  wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] );
-						}
-					} else {
-						//save items, in this case errors go in session and are displayed in the redirected edit specialpage
-
-						//TODO: refactor in progress
-						/*foreach( $itemsNames as $index => $itemName ) {
-							$itemErrors = array();
-							$itemTitle = Title::newFromText( "{$listName}/{$itemName}", NS_TOPLIST );
-							$itemName = $title->getText();
-
-							if ( !( $itemTitle instanceof Title ) ) {
-								$itemErrors[] = wfMsg('toplists-error-invalid-item-title', $index );
-							}
-							else {
-								if ( $itemTitle->exists() && ( empty( $editListName ) ) ) {
-									$itemErrors[] = wfMsg('toplists-error-item-title-exists', $index );
-								}
-								else {
-									if ( !wfRunHooks( 'TopLists::CreateListTitleCheck', array( $itemTitle ) ) ) {
-										$itemErrors[] = wfMsg('toplists-error-item-title-spam', $index );
-									}
-
-									if ( $title->getNamespace() == -1 ) {
-										$itemErrors[] = wfMsg('toplists-error-invalid-item-title', $index );
-									}
-
-									if ( $wgUser->isBlockedFrom( $itemTitle, false ) ) {
-										$itemErrors[] = wfMsg('toplists-error-article-item-blocked', $index );
-									}
-								}
-							}
-
-							if( empty( $itemErrors ) ) {
-								$itemsTitles[] = $itemTitle;
-							}
-							else {
-								$errors = array_merge($errors, $itemErrors);
-							}
-						}*/
-
-						if( empty( $errors ) ) {
-							$wgOut->redirect( $listUrl );
+						if ( in_array( $lcName, $alreadyProcessed) ) {
+							$errors[ "item_{$index}" ] = array( wfMsg( 'toplists-error-duplicated-entry' ) );
 						} else {
-							//redirect to edit form
+							$alreadyProcessed[] = $lcName;
+							
+							$listItem = $list->createItem( $itemName );
 
-							//TODO: implement
+							if ( empty( $listItem ) ) {
+								$errors[ "item_{$index}" ] = array( wfMsg( 'toplists-error-invalid-title' ) );
+							} else {
+								$checkResult = $listItem->checkForProcessing( TOPLISTS_SAVE_CREATE );
+
+								if ( $checkResult !== true ) {
+									$errors[ "item_{$index}" ] = array();
+
+									foreach ( $checkResult as $errorTuple ) {
+										$errors[ "item_{$index}" ][] =  wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] );
+									}
+								}
+							}
+						}
+					}
+
+					if ( empty( $errors ) ) {
+						$saveResult = $list->save();
+						
+						if ( $saveResult !== true ) {
+							foreach ( $saveResult as $errorTuple ) {
+								$errors[  'list_name'  ] = array( wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] ) );
+							}
+						} else {
+							//save items, in this case errors go in session and are displayed in the redirected edit specialpage
+
+							//TODO: refactor in progress
+
+							if( empty( $errors ) ) {
+								$wgOut->redirect( $listUrl );
+							} else {
+								$_SESSION[ 'toplist_errors' ] = $errors;
+								$specialPageTitle = Title::newFromText( 'CreateTopList', NS_SPECIAL );
+
+								$wgOut->redirect( $specialPageTitle->getFullUrl() . '/' . wfUrlencode( $listName ) );
+							}
 						}
 					}
 				}

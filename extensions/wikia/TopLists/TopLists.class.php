@@ -28,11 +28,15 @@ class TopLists {
 		global $wgOut;
 
 		$title = $editPage->getArticle()->getTitle();
-
-		//TODO: check if is a subpage (list item) and redirect to the list holder (parent article) edit form
+		
 		if( $title->getNamespace() == NS_TOPLIST ) {
-			$specialPageTitle = Title::newFromText( 'CreateTopLists', NS_SPECIAL );
-			$wgOut->redirect( $specialPageTitle->getFullUrl( array( 'edit' => $title->getText() ) ) );
+			//if this is a list item (subpage) then go to the list itself (parent article)
+			if( $title->isSubpage() ) {
+				$title = Title::newFromText( $title->getBaseText(), NS_TOPLIST );
+			}
+
+			$specialPageTitle = Title::newFromText( 'EditTopList', NS_SPECIAL );
+			$wgOut->redirect( $specialPageTitle->getFullUrl() . '/' . wfUrlencode( $title->getText() ) );
 		}
 		
 		return true;

@@ -17,16 +17,14 @@ $messages['en'] = array(
 	'edittoplist' => 'Edit list',
 
 	//errors
-	'toplists-error-invalid-title' => 'The supplied list name is not valid.',
-	'toplists-error-title-exists' => 'An article with the supplied list name already exists. You can go to <a href="$1" target="_blank">$2</a> or supply a different name for your list.',
-	'toplists-error-title-spam' => 'The supplied list name contains some text recognized as spam.',
-	'toplists-error-article-blocked' => 'You are not allowed to create a list with this name, sorry.',
-	'toplists-error-invalid-item-title' => 'The supplied name for item #$1 is not valid.',
-	'toplists-error-item-title-exists' => 'A list item with the supplied name for item #$1 already exists, supply a different name for your item.',
-	'toplists-error-item-title-spam' => 'The supplied name for item #$1 contains some text recognized as spam.',
-	'toplists-error-article-item-blocked' => 'You are not allowed to create the list item #$1, sorry.',
-	'toplists-error-related-article-not-exists' => 'The "$1" related article does not exist, do you want to <a href="$2" target="_blank">create it</a>?',
-	'toplists-error-selected-picture-not-exists' => 'The "$1" picture does not exist, do you want to <a href="$2" target="_blank">upload it</a>?',
+	'toplists-error-invalid-title' => 'The supplied text is not valid',
+	'toplists-error-invalid-picture' => 'The selected picture is not valid',
+	'toplists-error-title-exists' => 'This article already exists, you can go to <a href="$1" target="_blank">$2</a> or supply a different name',
+	'toplists-error-title-spam' => 'The supplied text contains some words recognized as spam',
+	'toplists-error-article-blocked' => 'You are not allowed to create an article with this name, sorry',
+	'toplists-error-article-not-exists' => '"$1" does not exist, do you want to <a href="$2" target="_blank">create it</a>?',
+	'toplists-error-picture-not-exists' => '"$1" does not exist, do you want to <a href="$2" target="_blank">upload it</a>?',
+	'toplists-error-duplicated-entry' => 'You can\'t use the same name more than once',
 
 	//editor
 	'toplists-editor-title-label' => 'List name',
