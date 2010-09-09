@@ -327,7 +327,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		wfRestoreWarnings();
 
 		// assertions
-		$this->assertRegExp('/ testCssClass/', $moduleData['bodyClasses']);
+		$this->assertTrue(in_array('testCssClass', $moduleData['bodyClasses']));
 		$this->assertRegExp('/^<link href=/', $moduleData['printableCss']);
 		$this->assertType('string', $moduleData['body']);
 		$this->assertType('string', $moduleData['headscripts']);
