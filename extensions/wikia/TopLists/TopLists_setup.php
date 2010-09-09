@@ -61,9 +61,11 @@ global $wgSpecialPages;
 
 $wgSpecialPages['CreateTopList'] = 'SpecialCreateTopList';
 $wgSpecialPages['EditTopList'] = 'SpecialEditTopList';
+//$wgSpecialPages['TopLists'] = 'SpecialTopLists';
 
 $wgSpecialPageGroups['CreateTopList'] = 'wikia';
 $wgSpecialPageGroups['EditTopList'] = 'wikia';
+//$wgSpecialPageGroups['TopLists'] = 'wikia';
 
 //aliases
 /*global $wgExtensionAliasesFiles;
@@ -81,6 +83,7 @@ $wgAutoloadClasses[ 'TopListItem' ] = "{$dir}/TopListItem.class.php";
 
 $wgAutoloadClasses[ 'SpecialCreateTopList' ] = "{$dir}/specials/SpecialCreateTopList.class.php";
 $wgAutoloadClasses[ 'SpecialEditTopList' ] = "{$dir}/specials/SpecialEditTopList.class.php";
+//$wgAutoloadClasses[ 'SpecialTopList' ] = "{$dir}/specials/SpecialTopLists.class.php";
 
 //ajax exports
 /*global $wgAjaxExportList;
