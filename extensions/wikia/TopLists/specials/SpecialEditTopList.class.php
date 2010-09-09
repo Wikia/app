@@ -39,7 +39,7 @@ class SpecialEditTopList extends SpecialPage {
 		$list = TopList::newFromText( $editListName );
 
 		if( empty( $list ) || !$list->exists() ) {
-			$specialPageTitle = Title::newFromText( 'CreateTopLists', NS_SPECIAL );
+			$specialPageTitle = Title::newFromText( 'CreateTopList', NS_SPECIAL );
 			$wgOut->redirect( $specialPageTitle->getFullUrl( array( 'wpListName' => $editListName ) ) );
 		} else {
 			$listName = $list->getTitle()->getText();
