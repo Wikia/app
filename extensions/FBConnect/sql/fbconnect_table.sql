@@ -17,3 +17,11 @@ CREATE TABLE fbconnect_event_stats (
   `status` int(10) unsigned NOT NULL,
   ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   event_type ENUM('OnAddBlogPost', 'OnAddImage', 'OnAddVideo','OnArticleComment','OnBlogComment','OnLargeEdit','OnRateArticle','OnWatchArticle'));
+
+
+CREATE TABLE `fbconnect_event_show` (
+  `ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `user_id` int(11) DEFAULT NULL,
+  `post_time` int(11) DEFAULT NULL,
+  `event_type` enum('OnAddBlogPost','OnAddImage','OnAddVideo','OnArticleComment','OnBlogComment','OnLargeEdit','OnRateArticle','OnWatchArticle','OnAchBadge') DEFAULT NULL
+) ENGINE=InnoDB ;

@@ -14,6 +14,8 @@ $wgExtensionFunctions[] = 'FBConnectPushEvent::initExtension';
 $wgHooks['GetPreferences'][] = 'FBConnectPushEvent::addPreferencesToggles';
 $wgHooks['initPreferencesExtensionForm'][] = 'FBConnectPushEvent::addPreferencesToggles';
 
+$wgAjaxExportList[] = "FBConnectPushEvent::showImage";
+
 class FBConnectPushEvent {
 	protected $isAllowedUserPreferenceName = ''; // implementing classes MUST override this with their own value.
 
@@ -220,7 +222,7 @@ class FBConnectPushEvent {
 		
 		$image = $params['$EVENTIMG'];
 		if( strpos( $params['$EVENTIMG'], 'http://' ) === false ) {
-			$image = $wgServer.'/skins/common/fbconnect/'.$params['$EVENTIMG'];	
+			$image = $wgServer.'/index.php?action=ajax&rs=FBConnectPushEvent::showImage&time='.time().'&fb_id='.$wgUser->getId()."&event=".$class.'&img='.$params['$EVENTIMG'];
 		}
 		
 		$href = $params['$ARTICLE_URL'];		
@@ -315,6 +317,41 @@ class FBConnectPushEvent {
 		$tmpParserOptions = new ParserOptions();
 		$html = $tmpParser->parse( $articleText, $title, $tmpParserOptions)->getText();
 		return $html;
+	}
+
+	/**
+	* put stats for facebook events display
+	* @author Tomasz Odrobny
+	*/
+
+	static public function addDisplayStat($fbuser_id, $time, $class){
+		global $wgStatsDB, $wgUser, $wgCityId;
+		$class = str_replace('FBPush_', '', $class);
+		$dbs = wfGetDB( DB_MASTER, array());//, $wgStatsDB);
+		$dbs->begin();
+		$dbs->insert('fbconnect_event_show',
+			array(
+  				'event_type' =>  $class,
+				'user_id' =>  (int) $fbuser_id,
+				'post_time' => (int) $time
+			),__METHOD__);
+		$dbs->commit();
+	}
+
+	/**
+	 * ajax function to count number of feed display in fbconnect
+	 *
+	 * @author Tomasz Odrobny
+	 * @access public
+	 *
+	 */
+
+	static public function showImage() {
+		global $wgServer, $wgRequest;
+		FBConnectPushEvent::addDisplayStat( $wgRequest->getVal('fb_id', '0'), $wgRequest->getVal('time', '0'), $wgRequest->getVal('class') );
+		$redirect = $wgServer.'/skins/common/fbconnect/'.$wgRequest->getVal('img', '0');
+		header("Location: $redirect");
+		exit;
 	}
 	
 } // end FBConnectPushEvent class
