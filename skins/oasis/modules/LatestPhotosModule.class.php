@@ -129,7 +129,7 @@ class LatestPhotosModule extends Module {
 
 		$links[] = '<a href="' . $name->getLocalUrl() .
 			'#filelinks" class="wikia-gallery-item-more">' .
-			wfMsgHtml( 'oasis-more' ) . '</a>';
+			wfMsg( 'oasis-more' ) . '</a>';
 	}
 
 	return $links;
