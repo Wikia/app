@@ -618,7 +618,6 @@ END;
 			) + $siteargs );
 
 			# Site settings must override extension css! (bug 15025)
-			$out->addStyle( self::makeNSUrl( 'Common.css', $query, NS_MEDIAWIKI ) );
 			$out->addStyle( self::makeNSUrl( 'Print.css', $query, NS_MEDIAWIKI ), 'print' );
 			if( $wgHandheldStyle ) {
 				$out->addStyle( self::makeNSUrl( 'Handheld.css', $query, NS_MEDIAWIKI ), 'handheld' );
@@ -630,6 +629,7 @@ END;
 				if($skinname == 'oasis') {
 					$out->addStyle( self::makeNSUrl( 'Wikia.css', $query, NS_MEDIAWIKI ) );
 				} else {
+					$out->addStyle( self::makeNSUrl( 'Common.css', $query, NS_MEDIAWIKI ) );
 					$out->addStyle( self::makeNSUrl( $skinname . '.css', $query, NS_MEDIAWIKI ) );
 				}
 			}
