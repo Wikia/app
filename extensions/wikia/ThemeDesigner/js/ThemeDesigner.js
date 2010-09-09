@@ -172,7 +172,12 @@ var ThemeDesigner = {
 		document.getElementById('PreviewFrame').contentWindow.ThemeDesignerPreview.loadSASS(sass);
 
 		//Wordmark text
-		$("#PreviewFrame").contents().find("#WikiHeader").find(".wordmark").find("a").text(ThemeDesigner.settings["wordmark-text"]);
+		$("#PreviewFrame").contents().find("#WikiHeader").find(".wordmark")
+				.removeClass()
+				.addClass("wordmark")
+				.addClass(ThemeDesigner.settings["wordmark-font"])
+				.addClass(ThemeDesigner.settings["wordmark-size"])
+				.find("a").text(ThemeDesigner.settings["wordmark-text"])
 	},
 
 	saveClick: function(event) {
