@@ -1,4 +1,5 @@
 == Changes since 201009.2 ==
+* rt#66735: Add anon avatars into Avatar system (Marooned)
 * rt#66622: unexpected change to page delete work flow (Marooned)
 * rt#65564: New Special:NewFiles - improve formatting with long page titles (TOR)
 * rt#65841: Remove Recipe Box (TOR)
