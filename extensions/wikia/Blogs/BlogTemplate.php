@@ -1151,7 +1151,9 @@ class BlogTemplateClass {
 							$result = $oTmpl->execute("blog-article-page");
 						}
 						// macbre: let Oasis add HTML
-						wfRunHooks('BlogsRenderBlogArticlePage', array(&$result, $aResult, self::$aOptions));
+						if (Wikia::isOasis()) {
+							wfRunHooks('BlogsRenderBlogArticlePage', array(&$result, $aResult, self::$aOptions));
+						}
 					} else {
 						unset($result);
 						$result = self::__makeRssOutput($aResult);
