@@ -574,7 +574,7 @@ class EmailNotification {
 
 		$userTalkId = false;
 
-				if ( !$minorEdit || ($wgEnotifMinorEdits && !$editor->isAllowed('nominornewtalk') ) ) {
+		if ( !$minorEdit || ($wgEnotifMinorEdits && !$editor->isAllowed('nominornewtalk') ) ) {
 			if ( $wgEnotifUserTalk && $isUserTalkPage ) {
 				$targetUser = User::newFromName( $title->getText() );
 				if ( !$targetUser || $targetUser->isAnon() ) {
