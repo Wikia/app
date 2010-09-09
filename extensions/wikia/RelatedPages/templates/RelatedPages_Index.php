@@ -10,7 +10,7 @@
 					<div class="articleSnippet">"<?= $page['text']; ?>"</div>
 				<?php } ?>
 				<p>
-					<a href="<?= $page['url']; ?>"><?= $page['title'] ?></a>
+					<a href="<?= $page['url']; ?>"><?= $page['wrappedTitle'] ?></a>
 				</p>
 			</li>
 		<?php } ?>

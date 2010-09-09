@@ -110,7 +110,7 @@ class RelatedPages {
 			foreach ( array_keys( $pageCounters ) as $pageId ) {
 				$title = Title::newFromId( $pageId );
 				if(!empty($title) && $title->exists() && $count < $limit) {
-					$this->pages[ $title->getArticleID() ] = array( 'url' => $title->getFullUrl(), 'title' => $title->getPrefixedText() );
+					$this->pages[ $title->getArticleID() ] = array( 'url' => $title->getFullUrl(), 'title' => $title->getPrefixedText(), 'wrappedTitle' => $this->getWrappedTitle( $title->getPrefixedText() ) );
 				}
 				$count++;
 			}
@@ -146,6 +146,10 @@ class RelatedPages {
 
 		wfProfileOut( __METHOD__ );
 		return $this->pages;
+	}
+
+	private function getWrappedTitle( $titleText ) {
+		return chunk_split( $titleText, 30, '<br />' );
 	}
 
 	/**
