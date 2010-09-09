@@ -73,6 +73,27 @@ class ThemeDesignerModule extends Module {
 	}
 
 	public function executeWordmarkUpload() {
+		global $wgRequest;
+
+		// check if there is a file send
+		if($wgRequest->getFileName('wpUploadFile')) {
+
+			// check if file is in correct size
+			$imageSize = getimagesize($_FILES['wpUploadFile']['tmp_name']);
+			if($imageSize[0] == 300 && $imageSize[1] == 60) {
+				$file = new FakeLocalFile(Title::newFromText('Temp_file_'.time(), 6), RepoGroup::singleton()->getLocalRepo());
+				$file->upload($wgRequest->getFileTempName('wpUploadFile'), '', '');
+
+
+print_pre($file->getURL());
+
+
+			}
+
+		}
+
+		exit();
+
 
 	}
 
