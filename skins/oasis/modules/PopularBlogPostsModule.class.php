@@ -11,10 +11,14 @@ class PopularBlogPostsModule extends Module {
 					<type>box</type>
 					<order>date</order>";
 
+		$time = date('Ymd', strtotime("-1 week")) . '000000'; // 7 days ago
+//		$time = '20091212000000';  // testing
 		$params = array (
 			    "summary" => true,
-				"timestamp" => true,
-				"count" => 4,
+				"timestamp" => $time,
+				"count" => 50,
+				"displaycount" => 4,
+				"order" => "comments"
 //				"style" => "add additionalClass if necessary"
 		);
 

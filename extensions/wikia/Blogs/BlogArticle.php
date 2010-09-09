@@ -112,7 +112,6 @@ class BlogArticle extends Article {
 				"summarylength" => 750,
 				"type" => "plain",
 				"title" => "Blogs",
-				"timestamp" => true,
 				"offset" => $offset
 			);
 			$listing = BlogTemplateClass::parseTag( "<author>$user</author>", $params, $wgParser );
@@ -164,7 +163,6 @@ class BlogArticle extends Article {
 				"summarylength" => 750,
 				"type" => "array",
 				"title" => "Blogs",
-				"timestamp" => true,
 				"offset" => $offset
 			);
 
@@ -585,7 +583,7 @@ class BlogArticle extends Article {
 				$oArticle = new Article( $oTitle, 0 );
 				if( !$oArticle->exists( ) ) {
 					$oArticle->doEdit(
-						'<bloglist summary="true" timestamp="true" count=50><title>'
+						'<bloglist summary="true" count=50><title>'
 						. wfMsg("create-blog-post-recent-listing-title")
 						.'</title><type>plain</type><order>date</order></bloglist>',
 						wfMsg("create-blog-post-recent-listing-log"),
