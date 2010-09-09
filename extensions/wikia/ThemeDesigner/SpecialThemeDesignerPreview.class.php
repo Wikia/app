@@ -13,7 +13,7 @@ class SpecialThemeDesignerPreview extends UnlistedSpecialPage {
 		$this->setHeaders();
 
 		$wgOut->setPageTitle('Example Page Title');
-		
+
 		$wgOut->addScript('<script src="'. $wgExtensionsPath .'/wikia/ThemeDesigner/js/ThemeDesignerPreview.js"></script>');
 		$wgOut->addLink(array(
 				"type" => "text/css",

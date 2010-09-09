@@ -7,6 +7,7 @@ class ThemeDesignerModule extends Module {
 	var $wgServer;
 	var $wgStylePath;
 	var $wgOut;
+	var $wgScriptPath;
 
 	var $dir;
 	var $mimetype;
@@ -68,6 +69,10 @@ class ThemeDesignerModule extends Module {
 	}
 
 	public function executePreview() {
+
+	}
+
+	public function executeWordmarkUpload() {
 
 	}
 

@@ -23,6 +23,7 @@
 	<script src="<?= $wgStylePath ?>/common/jquery/jquery-1.4.2.js"></script>
 	<script src="<?= $wgStylePath ?>/common/jquery/jquery.wikia.js"></script>
 	<script src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/js/ThemeDesigner.js"></script>
+	<script src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/js/jquery.aim.js"></script>
 
 </head>
 <body>
@@ -41,14 +42,12 @@
 				</li>
 			</ul>
 		</nav>
-		<form>
-			<?= wfRenderModule('ThemeDesigner', 'ThemeTab') ?>
-			<?= wfRenderModule('ThemeDesigner', 'CustomizeTab') ?>
-			<?= wfRenderModule('ThemeDesigner', 'WordmarkTab') ?>
-			<div id="Toolbar" class="Toolbar">
-				<button>Save</button>
-			</div>
-		</form>
+		<?= wfRenderModule('ThemeDesigner', 'ThemeTab') ?>
+		<?= wfRenderModule('ThemeDesigner', 'CustomizeTab') ?>
+		<?= wfRenderModule('ThemeDesigner', 'WordmarkTab') ?>
+		<div id="Toolbar" class="Toolbar">
+			<button>Save</button>
+		</div>
 	</div>
 
 	<?= wfRenderModule('ThemeDesigner', 'Picker') ?>

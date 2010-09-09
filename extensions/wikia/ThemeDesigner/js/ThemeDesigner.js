@@ -4,6 +4,18 @@ $(function() {
 
 var ThemeDesigner = {
 
+	wordmarkUpload: function(e) {
+		if($('#WordMarkUploadFile').val() == '') {
+			return false;
+		}
+	},
+
+	wordmarkUploadCallback : {
+		onComplete: function(response) {
+			alert(123);
+		}
+	},
+
 	history: false,
 
 	settings: {
@@ -56,7 +68,7 @@ var ThemeDesigner = {
 
 		// click first tab
 		$("#Navigation a:first").click();
-		
+
 		ThemeDesigner.applySettings(true);
 	},
 
@@ -77,7 +89,7 @@ var ThemeDesigner = {
 		$("#wordmark-font").find('[value="' + ThemeDesigner.settings["wordmark-font"] + '"]').attr("selected", "selected");
 		//select current size
 		$("#wordmark-size").find('[value="' + ThemeDesigner.settings["wordmark-size"] + '"]').attr("selected", "selected");
-		
+
 		/*** Update Preview ***/
 		if (!skipUpdate) {
 			ThemeDesigner.updatePreview();
@@ -158,7 +170,7 @@ var ThemeDesigner = {
 		sass += "&color-buttons=" + escape(ThemeDesigner.settings["color-buttons"]);
 		sass += "&color-links=" + escape(ThemeDesigner.settings["color-links"]);
 		document.getElementById('PreviewFrame').contentWindow.ThemeDesignerPreview.loadSASS(sass);
-		
+
 		//Wordmark text
 		$("#PreviewFrame").contents().find("#WikiHeader").find(".wordmark").find("a").text(ThemeDesigner.settings["wordmark-text"]);
 	},
@@ -212,23 +224,23 @@ var ThemeDesigner = {
 				ThemeDesigner.settings[swatch.attr("class")] = color;
 				ThemeDesigner.hidePicker();
 			});
-			
+
 			//handle custom colors
 			$("#ColorNameForm").submit(function(event) {
 				event.preventDefault();
-				
+
 				var color = $("#color-name").val()
-				
-				// if numbers only, add hash.  
+
+				// if numbers only, add hash.
 				if (ThemeDesigner.isNumeric(color) && (color.length == 3 || color.length == 6)) {
 					color = "#" + color;
 				}
-				
+
 				ThemeDesigner.settings[swatch.attr("class")] = color;
 				ThemeDesigner.hidePicker();
 			});
-			
-			
+
+
 		} else if (type == "image") {
 
 		}
@@ -280,7 +292,7 @@ var ThemeDesigner = {
 			return rgb;
 		}
 	},
-	
+
 	isNumeric: function(input) {
 		return (input - 0) == input && input.length > 0;
 	}
