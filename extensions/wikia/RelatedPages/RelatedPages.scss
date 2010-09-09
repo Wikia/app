@@ -3,12 +3,68 @@
 
 .RelatedPagesModule {
 	@include rail-module;
+	
+	margin: 0 10px;
+	
+	a {
+		padding-left: 5px;
+		font-size: 11px;
+	}
+	
+	p {
+		background-color: $color-body;
+		display: block;
+		padding: 3px;
+		height: 27px;
+		padding-top: 6px;
+	}
+	
+	h1, h2 {
+		margin-bottom: 10px;
+	}
+	
+	ul {
+		list-style:none outside none;
+	}
+	
 	li {
 		float: left;
-		padding: 10px;
+		padding-right: 17px;
 	}
-	div.articleSnippet {
-		width: 190px;
-		padding-left: 10px;
+	.articleSnippet {
+		width: 190px !important;
+		spadding: 0 60px;
+		
+		// /** adding quotes **/
+		&:before {
+			content: open-quote;
+			quotes: "\00AB"; // /** Firefox **/ 
+			squotes: '\201C' '\201D' '\2018' '\2019';  // /** Opera **/
+			content: '\201C';  // /** Webkit **/
+			font-size: 80px;
+			width: 25px;
+			float: left;
+			margin-top: -20px;
+		}
+		
+		p {
+			height: 73px;
+			overflow: hidden; // /**@todo would be better to cut off in PHP **/
+			font-size: 16px;
+			font-weight: bold;
+			padding: 0px;
+			margin: {
+				left: 35px;
+			}
+			background: none;
+			padding: {
+				top: 5px;
+				bottom: 5px;
+			}
+		}
+		
+	}
+	.content {
+		height: 100px;
 	}
 }
