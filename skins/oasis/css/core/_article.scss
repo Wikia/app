@@ -227,7 +227,7 @@
 	.infobox {
 		border: 1px solid $color-page-border;
 		background-color: mix($color-page, #000, 95%);
-		color: black;
+		color: $color-text;
 		margin-bottom: 0.5em;
 		margin-left: 1em;
 		padding: 0.2em;
@@ -240,4 +240,161 @@
 		background: url(/skins/oasis/images/sprite.png) -1568px -16px no-repeat;
 		vertical-align: middle;
 	}
+	
+
+	// /** old Common.css **/
+
+	/***** CSS placed here will be applied to all skins on the entire site. *****/
+
+	/* Mark redirects in Special:Allpages and Special:Watchlist */
+	.allpagesredirect {
+	   font-style: italic;
+	}
+	.allpagesredirect:after {
+	   color: $color-links; content: " (redirect)"
+	}
+	.watchlistredir {
+	   font-style: italic;
+	}
+
+	/* Giving headers and TOC a little extra space */
+	h2 {
+	   margin-top: 20px;
+	}
+	.toc {
+	   margin-top: 20px;
+	}
+
+	/* Infobox template style */
+	.infobox td,
+	.infobox th {
+	   vertical-align: top;
+	}
+	.infobox caption {
+	   font-size: larger;
+	   margin-left: inherit;
+	}
+	.infobox.bordered {
+	   border-collapse: collapse;
+	}
+	.infobox.bordered td,
+	.infobox.bordered th {
+	   border: 1px solid $color-page-border;
+	}
+	.infobox.bordered .borderless td,
+	.infobox.bordered .borderless th {
+	   border: 0;
+	}
+
+	/* Forum formatting (by -Algorithm & -Splaka) */
+	.forumheader {
+	   border: 1px solid $color-page-border;
+	   margin-top: 1em;
+	   padding: 12px;
+	}
+	.forumlist td.forum_edited a {
+	   color: $color-text;
+	   text-decoration: none;
+	}
+	.forumlist td.forum_title a {
+	   padding-left: 20px;
+	}
+	.forumlist td.forum_title a.forum_new {
+	   font-weight: bold;
+	   background: url(/images/4/4e/Forum_new.gif) center left no-repeat;
+	   padding-left: 20px;
+	}
+	.forumlist td.forum_title a.forum_new:visited {
+	   font-weight: normal;
+	   background: none;
+	   padding-left: 20px;
+	}
+	.forumlist th.forum_title {
+	   padding-left: 20px;
+	}
+
+	/* Recent changes byte indicators */
+	.mw-plusminus-pos {
+	   color: $color-links;
+	}
+	.mw-plusminus-neg {
+	   color: $color-links;
+	}
+
+	/* Image frame fix */
+	div.tright, div.tleft {
+	   border: 1px solid silver;
+	}
+
+	div.thumbinner {
+	   background: inherit;
+	   border: none;
+	   color: inherit;
+	}
+	#article div.thumb {
+	   color:inherit;
+	}
+
+	/* === Babel === */
+
+	div.babelbox {
+	   float: right;
+	   margin-left: 1em;
+	   margin-bottom: 0.5em;
+	   width: 246px;
+	   border: 1px solid $color-page-border;
+	   padding: 2px 0 2px 0;
+	}
+	.lang-blockN, .lang-block0, .lang-block1, .lang-block2, .lang-block3 {
+	   margin: 2px 4px 2px 4px; /* t, l, b, r */
+	   width:238px;
+	   border-collapse: collapse;
+	}
+	td.lang-codeN, td.lang-code0, td.lang-code1, td.lang-code2, td.lang-code3 {
+	   text-align:center;
+	   font-size:14pt;
+	   width:45px;
+	   height:45px;
+	}
+	td.lang-descriptionN, td.lang-description0, td.lang-description1,
+	td.lang-description2, td.lang-description3 {
+	  font-size:8pt;
+	  padding:4pt;
+	  line-height:1.25em;
+	}
+
+	.lang-block0 {
+	   border:1px solid $color-page-border;
+	}
+	td.lang-code0 {
+	  background-color: $color-page-border;
+	  color: $color-text;
+	}
+	td.lang-description0 {
+	  background-color: $color-page-border;
+	  color: $color-text;
+	}
+
+	.lang-block1,  .lang-block2, .lang-block3  {
+	   border:1px solid $color-page-border;
+	}
+	td.lang-code1, td.lang-code2, td.lang-code3 {
+	  background-color: $color-page-border;
+	  color: $color-text;
+	}
+	td.lang-description1,  td.lang-description2, td.lang-description3 {
+	  color: $color-text;
+	}
+
+	.lang-blockN {
+	   border:1px solid $color-page-border;
+	}
+	td.lang-codeN {
+	  color: $color-text;
+	}
+	td.lang-descriptionN {
+	  background-color: #C5FCDC;
+	}
+	// /** / Common.css **/
 }
+
