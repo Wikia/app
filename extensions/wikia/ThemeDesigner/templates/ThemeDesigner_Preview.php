@@ -31,3 +31,5 @@ Phasellus [[semper enim eu massa]] ornare convallis. Suspendisse quis elit sapie
 
 [[Category:Etiam condimentums]]
 ") ?>
+
+<div id="clickmask"></div>
