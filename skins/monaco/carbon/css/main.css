@@ -343,6 +343,7 @@ td.diff-addedline {
 div.thumb div {
 	background: #202020;
 	border-color: #606060;
+	color: inherit;
 }
 div.thumb div a img {
 	border-color: #444;
