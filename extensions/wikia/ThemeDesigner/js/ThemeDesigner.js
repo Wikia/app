@@ -95,8 +95,7 @@ var ThemeDesigner = {
 	},
 
 	resizeIframe: function() {
-		$("#PreviewFrame, #EventThief").css("height", $(window).height() - $("#Designer").height());
-		$("#EventThief").css("width", $(window).width() - 20);
+		$("#PreviewFrame").css("height", $(window).height() - $("#Designer").height());
 	},
 
 

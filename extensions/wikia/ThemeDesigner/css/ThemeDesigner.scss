@@ -96,16 +96,6 @@ h1 {
 	margin-bottom: 8px;
 }
 
-.EventThief {
-	background: #000;
-	display: none;
-	opacity: 0;
-  filter: alpha(opacity=0);
-	position: absolute;
-	top: $height-designer;
-	width: 100%;
-}
-
 .PreviewFrame {
 	height: 100px; /* initial settings - JS will change it */
 	width: 100%;

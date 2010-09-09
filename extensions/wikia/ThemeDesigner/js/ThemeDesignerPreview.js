@@ -14,12 +14,13 @@ var ThemeDesignerPreview = {
 			);	
 			
 		$("#WikiaArticle .thumbinner").append('<div class="picture-attribution"><img width="16" height="16" class="avatar" src="/extensions/wikia/ThemeDesigner/images/td-avatar.jpg">Added by <a>FunnyBunny</a></div>');
-		$("a.new").removeClass("new");
 	},
 
 	loadSASS: function(url) {
-		$("<style>").appendTo("head").load(url, function() {
-			$().log("callback");
+		$("#clickmask").animate({"opacity": .65}, "fast");
+		$('<style class="ThemeDesignerPreviewSASS">').appendTo("head").load(url, function() {
+			$(this).prev(".ThemeDesignerPreviewSASS").remove();
+			$("#clickmask").animate({"opacity": 0}, "fast");
 		});
 	}
 };
