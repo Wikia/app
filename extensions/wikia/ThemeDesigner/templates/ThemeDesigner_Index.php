@@ -53,7 +53,6 @@
 
 	<?= wfRenderModule('ThemeDesigner', 'Picker') ?>
 
-	<div id="EventThief" class="EventThief"></div>
 	<iframe frameborder=0 id="PreviewFrame" class="PreviewFrame" src="<?= $wgServer ?>/wiki/Special:ThemeDesignerPreview"></iframe>
 
 
