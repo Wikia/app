@@ -4,7 +4,7 @@ class RelatedPages {
 
 	private $pages = null;
 	private $categories = null;
-	private $categoryCacheTTL = 3; // in hours
+	private $categoryCacheTTL = 8; // in hours
 	private $categoryRankCacheTTL = 24; // in hours
 	private $categoriesLimit = 6;
 	private $pageSectionNo = 4; // number of section before which module should be injected (for long articles)
@@ -290,20 +290,38 @@ class RelatedPages {
 		$article = Article::newFromID( $articleId );
 		$content = $article->getContent();
 
-		$tmpParser = new Parser();
-		$tmpParser->parse( $content, $wgTitle, new ParserOptions );
-		$content = $tmpParser->getOutput()->getText();
+		// Perl magic will happen! Beware! Perl 5.10 required!
+		$re_magic = '#SSX(?<R>([^SE]++|S(?!S)|E(?!E)|SS(?&R))*EE)#i';
 
-		// remove [edit] section links
-		$content = preg_replace('#<span class="editsection">(.*)</a>]</span>#', '', $content);
+		// remove {{..}} tags
+		$re = strtr( $re_magic, array( 'S' => "\\{", 'E' => "\\}", 'X' => '' ));
+		$content = preg_replace($re, '', $content);
+
+		// remove [[Image:...]] and [[File:...]] tags
+		$re = strtr( $re_magic, array( 'S' => "\\[", 'E' => "\\]", 'X' => "(Image|File):" ));
+		$content = preg_replace($re, '', $content);
+
+		// skip "edit" section and TOC
+		$content .= "\n__NOEDITSECTION__\n__NOTOC__";
+
+		$tmpParser = new Parser();
+		$content = $tmpParser->parse( $content, $wgTitle, new ParserOptions )->getText();
 
 		// remove <script> tags (RT #46350)
 		$content = preg_replace('#<script[^>]+>(.*)<\/script>#', '', $content);
 
+		// experimental: remove <th> tags
+		$content = preg_replace('#<th[^>]*>(.*?)<\/th>#s', '', $content);
+
 		// remove HTML tags
 		$content = trim(strip_tags($content));
 
-		// store first 150 characters of parsed content
+		// compress white characters
+		$content = mb_substr($content, 0, $length + 200);
+		$content = strtr($content, array('&nbsp;' => ' ', '&amp;' => '&'));
+		$content = preg_replace('/\s+/',' ',$content);
+
+		// store first x characters of parsed content
 		$content = mb_substr($content, 0, $length);
 		$content = strtr($content, array('&nbsp;' => ' ', '&amp;' => '&'));
 
