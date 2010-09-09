@@ -78,17 +78,18 @@ class BlogTemplateClass {
 		),
 
         /*
-         * order = date (or title or author)
+         * order = date (or comments or author)
 		 *
-		 * type: 	element of predefined list (date, title, author)
-         * default: timestamp
+		 * type: 	element of predefined list (date, comments, author)
+         * default: date
          */
 		'order' 		=> array (
 			'type' 		=> 'list',
 			'default' 	=> 'date',
 			'pattern'	=> array(
 				'date' 	=> 'rev_timestamp',
-				'author'=> 'page_title'
+				'author'=> 'page_title',
+				'comments' => 'page_id'    // ordering by comments is done post-sql
 			)
 		),
 
@@ -105,7 +106,7 @@ class BlogTemplateClass {
 		),
 
 		/*
-		 * max of results to display.
+		 * max of results to query.
 		 * count = /^\d*$/
 		 *
 		 * type: 	number
@@ -114,6 +115,19 @@ class BlogTemplateClass {
 		'count' 		=> array (
 			'type' 		=> 'number',
 			'default' 	=> '5',
+			'pattern' 	=> '/^\d*$/',
+			'max'		=> 50
+		),
+
+		/*
+		 * max of results to display.
+		 * count = /^\d*$/
+		 *
+		 * type: 	number
+		 * default: 5
+		 */
+		'displaycount'	=> array (
+			'type' 		=> 'number',
 			'pattern' 	=> '/^\d*$/',
 			'max'		=> 50
 		),
@@ -131,15 +145,17 @@ class BlogTemplateClass {
 		),
 
 		/*
-		 * show date of blog creation
-		 * timestamp = false (or true)
+		 * limit for query date of blog creation
+		 * timestamp = integer date yyyymmddhhmmss
 		 *
-		 * type: 	boolean,
-		 * default: false
+		 * type: 	number,
+		 * default: 20081101000000
 		 */
 		'timestamp' => array (
-			'type' 		=> 'boolean',
-			'default' 	=> false
+			'type' 		=> 'number',
+			'default' 	=> '20081101000000',
+			'pattern' 	=> '/^\d*$/',
+			'min'		=> '20081101000000'
 		),
 
 		/*
@@ -484,6 +500,9 @@ class BlogTemplateClass {
 		if ( !isset(self::$aOptions['count']) ) {
 			self::__makeIntOption('count', self::$aBlogParams['count']['default']);
 		}
+
+		/* displaycount -- optional param deliberately has no default set */
+
 		/* offset */
 		if ( !isset(self::$aOptions['offset']) ) {
 			self::__makeIntOption('offset', self::$aBlogParams['offset']['default']);
@@ -491,6 +510,10 @@ class BlogTemplateClass {
 		/* type */
 		if ( !isset(self::$aOptions['type']) ) {
 			self::__makeListOption('type', self::$aBlogParams['type']['default']);
+		}
+		/* timestamp */
+		if ( !isset(self::$aOptions['timestamp']) ) {
+			self::__makeIntOption('timestamp', self::$aBlogParams['timestamp']['default']);
 		}
 		/* title */
 		if ( !isset(self::$aOptions['title']) ) {
@@ -546,13 +569,13 @@ class BlogTemplateClass {
     	wfDebugLog( __METHOD__, "__makeIntOption: ".$sParamName.",".$sParamValue."\n" );
 		$m = array();
 		if ( array_key_exists($sParamName, self::$aBlogParams) ) {
-			if (preg_match(self::$aBlogParams[$sParamName]['pattern'], $sParamValue, $m) !== FALSE) {
-				/* check max value of int param */
-				if ( isset(self::$aBlogParams[$sParamName]) &&
-					array_key_exists('max', self::$aBlogParams[$sParamName]) &&
-					($sParamValue > self::$aBlogParams[$sParamName]['max'])
-				) {
-					$sParamValue = self::$aBlogParams[$sParamName]['max'];
+			if (preg_match(self::$aBlogParams[$sParamName]['pattern'], $sParamValue, $m) != 0) {
+				/* check max/min value of int param */
+				if (array_key_exists('max', self::$aBlogParams[$sParamName])) {
+					$sParamValue = min($sParamValue, self::$aBlogParams[$sParamName]['max']);
+				}
+				if (array_key_exists('min', self::$aBlogParams[$sParamName])) {
+					$sParamValue = max($sParamValue, self::$aBlogParams[$sParamName]['min']);
 				}
 				self::$aOptions[$sParamName] = $sParamValue;
 			}
@@ -566,9 +589,12 @@ class BlogTemplateClass {
 		if ( !in_array($sRevisionTable, self::$aTables) ) {
 			self::$aWhere[] = "rev_page = page_id";
 			self::$aTables[] = $sRevisionTable;
-			if ( BLOGS_TIMESTAMP ) {
+			if ( !empty (self::$aOptions['timestamp'])) {
+				self::$aWhere[] = "rev_timestamp >= '".self::$aOptions['timestamp']."'";
+			} else {
 				self::$aWhere[] = "rev_timestamp >= '".BLOGS_TIMESTAMP."'";
 			}
+
 		}
     	wfProfileOut( __METHOD__ );
 	}
@@ -625,6 +651,11 @@ class BlogTemplateClass {
     				array($parser)
     			)
     		);
+			// set timestamp option, if set
+			$timestampLimit = BLOGS_TIMESTAMP;
+			if (!empty(self::$aOptions['timestamp'])) {
+				$timestampLimit = self::$aOptions['timestamp'];
+			}
 			/* set max length of group concat query */
 			self::$dbr->query( 'SET group_concat_max_len = '.GROUP_CONCAT, __METHOD__ );
 			/* run query */
@@ -635,7 +666,7 @@ class BlogTemplateClass {
 					"page_namespace" => NS_BLOG_ARTICLE,
 					"page_id = cl_from",
 					"cl_to in (".self::$dbr->makeList( $aParamValues ).")",
-					"page_touched >= ".self::$dbr->addQuotes(BLOGS_TIMESTAMP)
+					"page_touched >= ".self::$dbr->addQuotes($timestampLimit)
 				),
 				__METHOD__,
 				array( 'GROUP BY' => 'cl_to' )
@@ -795,6 +826,13 @@ class BlogTemplateClass {
 		return $sResult;
 	}
 
+	private static function  __sortByCommentCount($a, $b) {
+		if ($a['comments'] == $b['comments']) {
+			return 0;
+		}
+		return ($a['comments'] > $b['comments']) ? -1 : 1;
+	}
+
 	private static function __getResults() {
 		global $wgLang;
     	wfProfileIn( __METHOD__ );
@@ -837,6 +875,14 @@ class BlogTemplateClass {
 				"votes"			=> self::__getVoteCode($oRow->page_id),
 				"props"			=> BlogArticle::getProps($oRow->page_id),
 			);
+			// Sort by comment count for popular blog posts module
+			if (isset(self::$aOptions['order']) && self::$aOptions['order'] == 'page_id') {
+				uasort ($aResult, array("BlogTemplateClass", "__sortByCommentCount"));
+			}
+			// We may need to query for 50 results but display 5
+			if (isset(self::$aOptions['displaycount']) && (self::$aOptions['displaycount'] != self::$aOptions['count'])) {
+				$aResult = array_slice($aResult, 0, self::$aOptions['displaycount']);
+			}
 		}
 
 		// macbre: change for Oasis to add avatars and comments / likes data
@@ -986,14 +1032,15 @@ class BlogTemplateClass {
 						}
 						break;
 					case 'count'		:
+					case 'displaycount' :
 					case 'offset'		:
 					case 'summarylength':
+					case 'timestamp'	:
 						if ( !empty($aParamValues) && is_array($aParamValues) ) {
 							list ($sParamValue) = $aParamValues;
 							self::__makeIntOption($sParamName, $sParamValue);
 						}
 						break;
-					case 'timestamp':
 					case 'summary'	:
 						if ( !empty($aParamValues) && is_array($aParamValues) ) {
 							list ($sParamValue) = $aParamValues;
@@ -1039,11 +1086,12 @@ class BlogTemplateClass {
 						self::__makeListOption($sParamName, $sParamValue);
 						break;
 					case 'count'		:
+					case 'displaycount' :
 					case 'offset'		:
+					case 'timestamp'	:
 					case 'summarylength':
 						self::__makeIntOption($sParamName, $sParamValue);
 						break;
-					case 'timestamp'	:
 					case 'summary'		:
 						self::__makeBoolOption($sParamName, $sParamValue);
 						break;
