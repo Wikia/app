@@ -607,7 +607,8 @@ class LocalFile extends File
 		// Delete thumbnails
 		$files = $this->getThumbnails();
 		$dir = $this->getThumbPath();
-		$urls = array();
+		// get rid of the top one
+		$urls = array($this->getThumbUrl());
 		foreach ( $files as $file ) {
 			# Check that the base file name is part of the thumb name
 			# This is a basic sanity check to avoid erasing unrelated directories
