@@ -46,7 +46,11 @@
 		<?= wfRenderModule('ThemeDesigner', 'CustomizeTab') ?>
 		<?= wfRenderModule('ThemeDesigner', 'WordmarkTab') ?>
 		<div id="Toolbar" class="Toolbar">
-			<button>Save</button>
+			<div class="inner">
+				<span class="mode">Preview Mode...</span>
+				<button class="save">Save, I'm Done</button>
+				<button class="cancel secondary">Cancel</button>
+			</div>
 		</div>
 	</div>
 
