@@ -1980,7 +1980,9 @@ class SMWSQLStore2 extends SMWStore {
 				                    'SMW::updateRedirects');
 				while ($row = $db->fetchObject($res)) {
 					$t = Title::makeTitle($row->smw_namespace,$row->smw_title);
-					$jobs[] = new SMWUpdateJob($t);
+					if( $t->exists() ) {
+						$jobs[] = new SMWUpdateJob($t);
+					}
 				}
 				$db->freeResult($res);
 				if ( $subject_ns == SMW_NS_PROPERTY ) {
@@ -1992,7 +1994,9 @@ class SMWSQLStore2 extends SMWStore {
 						                    'SMW::updateRedirects');
 						while ($row = $db->fetchObject($res)) {
 							$t = Title::makeTitle($row->smw_namespace,$row->smw_title);
-							$jobs[] = new SMWUpdateJob($t);
+							if( $t->exists() ) {
+								$jobs[] = new SMWUpdateJob($t);
+							}
 						}
 					}
 					$res = $db->select( array('smw_subs2','smw_ids'),'DISTINCT smw_title,smw_namespace',
@@ -2000,7 +2004,9 @@ class SMWSQLStore2 extends SMWStore {
 					                    'SMW::updateRedirects');
 					while ($row = $db->fetchObject($res)) {
 						$t = Title::makeTitle($row->smw_namespace,$row->smw_title);
-						$jobs[] = new SMWUpdateJob($t);
+						if( $t->exists() ) {
+							$jobs[] = new SMWUpdateJob($t);
+						}
 					}
 				} elseif ( $subject_ns == NS_CATEGORY ) {
 					foreach (array('smw_subs2','smw_inst2') as $table) {
@@ -2009,7 +2015,9 @@ class SMWSQLStore2 extends SMWStore {
 						                    'SMW::updateRedirects');
 						while ($row = $db->fetchObject($res)) {
 							$t = Title::makeTitle($row->smw_namespace,$row->smw_title);
-							$jobs[] = new SMWUpdateJob($t);
+							if( $t->exists() ) {
+								$jobs[] = new SMWUpdateJob($t);
+							}
 						}
 					}
 				}
