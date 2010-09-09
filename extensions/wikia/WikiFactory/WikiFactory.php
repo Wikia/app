@@ -709,6 +709,7 @@ class WikiFactory {
 				self::log(self::LOG_VARIABLE, sprintf("Variable %s removed%s", self::getVarById($variable_id, $wiki)->cv_name, $reason2), $wiki);
 				$dbw->commit();
 				$bStatus = true;
+				self::clearCache( $wiki );
 			}
 		}
 		catch ( DBQueryError $e ) {
