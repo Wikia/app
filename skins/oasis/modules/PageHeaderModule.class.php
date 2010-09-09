@@ -310,10 +310,10 @@ class PageHeaderModule extends Module {
 					$this->categories = array("<a>More Sample</a>", "<a>Others</a>");
 					$this->comments = 23;
 					$this->subtitle = false;
-					$actions = array('move', 'protect', 'unprotect', 'delete', 'undelete');
-					$this->action = 'form_edit';
-					$this->actionImage = MenuButtonModule::EDIT_ICON;
-					$this->actionName = 'form-edit';
+					$this->action = array("text" => "Edit this page");
+					$this->actionImage = '';
+					$this->actionName = 'edit';
+					$this->dropdown = array('foo', 'bar');
 				}
 				break;
 
