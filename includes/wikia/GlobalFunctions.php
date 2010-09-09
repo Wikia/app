@@ -1052,7 +1052,52 @@ function wfAutomaticReadOnly() {
 function wfBlankImgUrl(){
 	global $wgBlankImgUrl;
 	return $wgBlankImgUrl;
+
 } // end wfBlankImgUrl()
+
+/**
+ * Load a namespace internationalization file for the specified extension,
+ * the full file path has to be defined in $wgExtensionNamespacesFiles[ $extensionName ]
+ *
+ * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
+ *
+ * @param string $extensionName Name of extension to load namespace internationalization from\for
+ * @param array $nsList List of namespaces definition constants to process
+ */
+function wfLoadExtensionNamespaces( $extensionName, $nsList ) {
+	wfProfileIn(__METHOD__);
+
+	global $wgExtensionNamespacesFiles, $wgLanguageCode, $wgNamespaceAliases, $wgExtraNamespaces;
+
+	if(
+		!empty( $extensionName ) &&
+		is_string( $extensionName ) &&
+		!empty( $wgExtensionNamespacesFiles[ $extensionName ] ) &&
+		!empty( $nsList ) &&
+		is_array( $nsList )
+	) {
+		//load the i18n file for the extension's namespaces
+		$namespaces = false;
+		require( $wgExtensionNamespacesFiles[ $extensionName ] );
+
+		//english is the required default, skip processing if not defined
+		if( !empty( $namespaces[ 'en' ] ) && is_array( $namespaces[ 'en' ] ) ) {
+			foreach ( $nsList as $ns ) {
+				if( !empty( $namespaces[ 'en' ][ $ns ] ) ) {
+					//define the namespace name for the current language
+					$wgExtraNamespaces[ $ns ] = $namespaces[ $wgLanguageCode ][ $ns ];
+
+					if( $wgLanguageCode != 'en' ) {
+						//make en ns alias point to localized ones for current language
+						$wgNamespaceAliases[ $namespaces[ 'en' ][ $ns ] ] = $ns;
+					}
+				}
+			}
+		}
+	}
+
+	wfProfileOut(__METHOD__);
+}
 
 /**
  * wfGenerateUnsubToken

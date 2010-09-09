@@ -1,0 +1,268 @@
+/**
+ * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
+ *
+ * Styles for the creation/editing UI of TopLists extension, Oasis skin
+ */
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/menus";
+@import "../../../../skins/oasis/css/mixins/forms";
+
+//variables
+$input-height: 40px;
+$big-square-button-side: 27px;
+$image-frame-width: 100px;
+$image-frame-height: 80px;
+$item-height: 40px;
+$item-number-width: 50px;
+$item-number-margin-right: 10px;
+$icon-remove-background: url(/skins/oasis/images/sprite.png) no-repeat -1599px -14px;
+$icon-drag-background: url(/skins/oasis/images/sprite.png) no-repeat -1618px -30px;
+
+@mixin centered($height, $hor: center, $ver: middle) {
+	height: $height;
+	line-height: $height;
+	text-align: $hor;
+	vertical-align: $ver;
+}
+
+@mixin tool($background-icon: transparent, $margin-left: 10px, $cursor: pointer) {
+	@include centered($item-height);
+	margin-left: $margin-left;
+
+	a {
+		cursor: $cursor;
+
+		img {
+			background: $background-icon;
+			vertical-align: middle;
+			position: static;
+			width: 16px;
+			height: 20px;
+		}
+	}
+}
+
+#toplist-editor {
+	width: 465px;
+	margin: 0;
+	padding: 0;
+
+	/*notifications*/
+	.error {
+		color: red;
+		font-size: larger;
+	}
+	.errorbox, .successbox {
+		@include border-radius();
+		font-size: larger;
+		border: 2px solid;
+		padding: .5em 1em;
+		//float: left;
+		margin-bottom: 2em;
+		color: #000;
+	}
+
+	.errorbox {
+		border-color: red;
+		background-color: #fff2f2;
+	}
+
+	.successbox {
+		border-color: green;
+		background-color: #dfd;
+	}
+
+	.errorbox h2, .successbox h2 {
+		font-size: 1em;
+		font-weight: bold;
+		display: inline;
+		margin: 0 .5em 0 0;
+		border: none;
+	}
+	/*notifications end*/
+	
+	div.InputSet {
+		margin-bottom: 20px;
+	}
+
+	div.AutoCompleteWrapper {
+		position: relative;
+
+		.autocomplete {
+			@include menu-regular;
+			margin-top: 2px;
+			position: relative;
+			width: 270px;
+			z-index: 10;
+			
+			div {
+				font-size: 14px;
+				padding: 4px 4px 2px;
+			}
+
+			.selected {
+				background: $color-menu-highlight;
+			}
+		}
+	}
+
+	label {
+		display: block;
+
+		span.small {
+			font-size: 9px;
+		}
+	}
+
+	input[type="text"] {
+		@include input-field;
+		width: 282px;
+		height: $input-height;
+		line-height: $input-height;
+	}
+
+	.ImageBrowser {
+		float: right;
+		position: relative;
+		top: 45px;
+		
+		.frame {
+			border: 1px solid $color-page-border;
+			width: $image-frame-width;
+			height: $image-frame-height;
+			padding: 5px;
+			background-color: $color-module-shadow;
+
+			.wrapper {
+				text-align: center;
+				vertical-align: middle;
+				line-height: $image-frame-height - 5px;
+				width: 100%;
+				height: 100%;
+			}
+		}
+
+		.wikia-chiclet-button {
+			@include centered($big-square-button-side);
+			position: absolute;
+			top: ($image-frame-height - $big-square-button-side + 10px) / 2;
+			left: - ($big-square-button-side) / 2;
+			width: $big-square-button-side;
+			margin: 0;
+			padding: 0;
+
+			img {
+				vertical-align: middle;
+				position: static;
+			}
+		}
+	}
+
+	#template-items-list {
+		dislay: none;
+	}
+	
+	.ItemsList {
+		list-style: none;
+		margin: 40px 0 0 0;
+		padding: 0;
+
+		li {
+			height: $item-height;
+			margin-bottom: 15px;
+			padding-bottom: 15px;
+			border-bottom: 1px dashed $color-page-border;
+
+			div {
+				float:left;
+			}
+
+			&.ItemTemplate {
+				display: none;
+			}
+			
+			.ItemNumber {
+				@include centered($item-height, left);
+				width: $item-number-width;
+				font: {
+					color: $color-module-shadow;
+					size: 20px;
+					weight: bold;
+				}
+				margin-right: $item-number-margin-right;
+			}
+
+			.ItemName {
+				@include centered($item-height);
+				@include border-radius(5px);
+				border: 1px solid $color-page-border;
+				background-color: $color-module-shadow;
+				display: inline;
+				padding: 2px 10px 0 10px;
+				
+				input[type="text"] {
+					@include input-field;
+					width: 290px;
+					height: 20px;
+					border: 1px solid $color-page-border;
+					line-height: 20px;
+				}
+			}
+
+			.ItemRemove {
+				@include tool($icon-remove-background, 15px);
+			}
+
+			.ItemDrag {
+				@include tool($icon-drag-background, 10px , move);
+			}
+		}
+
+		.DragPlaceholder {
+			background-color: $color-menu-highlight;
+		}
+	}
+
+	.AddControls {
+		margin: {
+			left: $item-number-width + $item-number-margin-right;
+			bottom: 80px;
+		}
+
+		a {
+			cursor: pointer;
+
+			&:hover {
+				text-decoration: none;
+			}
+
+			&.wikia-chiclet-button {
+				@include centered($big-square-button-side);
+				width: $big-square-button-side;
+
+				img {
+					background: url(/skins/oasis/images/sprite.png) no-repeat -1565px -14px;
+					vertical-align: middle;
+					position: static;
+				}
+			}
+		}
+		
+		label {
+			@include centered($big-square-button-side);
+			margin-left: 10px;
+			display: inline;
+		}
+	}
+
+	.FormButtons {
+		float: right;
+
+		a.secondary {
+			margin-right: 20px;
+		}
+	}
+}
