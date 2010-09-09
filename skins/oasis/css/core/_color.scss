@@ -3,6 +3,7 @@ $color-body: get_command_line_param("color-body", #BACDD8);					// default: ligh
 $color-page: get_command_line_param("color-page", #FFF);						// default: white
 $color-buttons: get_command_line_param("color-buttons", #006CB0);		// default: blue
 $color-links: get_command_line_param("color-links", #006CB0);				// default: blue
+$color-error: get_command_line_param("color-error", #ff3333);				// default: red
 
 
 ////////// DO NOT CHANGE PER THEME - BASED ON ABOVE VALUES //////////
