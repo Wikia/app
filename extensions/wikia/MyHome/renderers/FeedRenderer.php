@@ -469,6 +469,7 @@ class FeedRenderer {
 	 * @author Maciej Brencz <macbre@wikia-inc.com>
 	 */
 	public static function getDetails($row) {
+
 		wfProfileIn(__METHOD__);
 
 		if(strtotime($row['timestamp']) < 1253701200) {
@@ -490,19 +491,19 @@ class FeedRenderer {
 		if (isset($row['intro'])) {
 			// new blog post
 			if (defined('NS_BLOG_ARTICLE') && $row['ns'] == NS_BLOG_ARTICLE) {
-				$html .= self::formatDetailsRow('new-blog-post', self::formatIntro($row['intro']));
+				$html .= self::formatDetailsRow('new-blog-post', self::formatIntro($row['intro']),false);
 			}
 			// blog comment
 			else if (defined('NS_BLOG_ARTICLE_TALK') && $row['ns'] == NS_BLOG_ARTICLE_TALK) {
-				$html .= self::formatDetailsRow('new-blog-comment', self::formatIntro($row['intro']));
+				$html .= self::formatDetailsRow('new-blog-comment', self::formatIntro($row['intro']),false);
 			}
 			// article comment
 			else if (!empty($row['articleComment'])) {
-				$html .= self::formatDetailsRow('new-article-comment', self::formatIntro($row['intro']));
+				$html .= self::formatDetailsRow('new-article-comment', self::formatIntro($row['intro']),false);
 			}
 			// another new content
 			else {
-				$html .= self::formatDetailsRow('new-page', self::formatIntro($row['intro']));
+				$html .= self::formatDetailsRow('new-page', self::formatIntro($row['intro']), false);
 			}
 		}
 
