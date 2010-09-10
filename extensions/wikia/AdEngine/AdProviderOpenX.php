@@ -32,7 +32,15 @@ class AdProviderOpenX extends AdProviderIframeFiller implements iAdProvider {
 		'SPECIAL_INTERSTITIAL_BOXAD_1' => 5,
 		'TOP_RIGHT_BOXAD' => 5,
 
-		'GLOBAL_NAV_SPOTLIGHT' => 6,
+		'SPOTLIGHT_GLOBALNAV_1' => 6,
+		'SPOTLIGHT_GLOBALNAV_2' => 6,
+		'SPOTLIGHT_GLOBALNAV_3' => 6,
+		'SPOTLIGHT_RAIL_1' => 6,
+		'SPOTLIGHT_RAIL_2' => 6,
+		'SPOTLIGHT_RAIL_3' => 6,
+		'SPOTLIGHT_FOOTER_1' => 6,
+		'SPOTLIGHT_FOOTER_2' => 6,
+		'SPOTLIGHT_FOOTER_3' => 6,
 
 		'default' => 0, // FIXME
 	);
