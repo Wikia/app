@@ -19,8 +19,8 @@ $image-frame-height: 80px;
 $item-height: 40px;
 $item-number-width: 50px;
 $item-number-margin-right: 10px;
-$icon-remove-background: url(/skins/oasis/images/sprite.png) no-repeat -1599px -14px;
-$icon-drag-background: url(/skins/oasis/images/sprite.png) no-repeat -1618px -30px;
+$icon-remove-background: url(/skins/oasis/images/sprite.png) no-repeat -1128px -14px;
+$icon-drag-background: url(/skins/oasis/images/sprite.png) no-repeat -1147px -30px;
 
 @mixin centered($height, $hor: center, $ver: middle) {
 	height: $height;
@@ -40,7 +40,7 @@ $icon-drag-background: url(/skins/oasis/images/sprite.png) no-repeat -1618px -30
 			background: $background-icon;
 			vertical-align: middle;
 			position: static;
-			width: 16px;
+			width: 13px;
 			height: 20px;
 		}
 	}
@@ -259,7 +259,7 @@ $icon-drag-background: url(/skins/oasis/images/sprite.png) no-repeat -1618px -30
 				width: $big-square-button-side;
 
 				img {
-					background: url(/skins/oasis/images/sprite.png) no-repeat -1565px -14px;
+					background: url(/skins/oasis/images/sprite.png) no-repeat -1094px -14px;
 					vertical-align: middle;
 					position: static;
 				}
