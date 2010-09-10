@@ -146,13 +146,13 @@ class SpecialCreateTopList extends SpecialPage {
 								}
 							}
 
-							/*if( count( $listItems ) ) {
+							if( count( $listItems ) ) {
 								//update page's cache, items where added
 								$list->getTitle()->invalidateCache();
-							}*/
+							}
 
 							if( empty( $errors ) ) {
-								$wgOut->redirect( $listUrl );
+								$wgOut->redirect( "{$listUrl}" );
 							} else {
 								$_SESSION[ 'toplist_unsaved_items' ] = $unsavedItemNames;
 								$_SESSION[ 'toplist_errors' ] = $errors;
