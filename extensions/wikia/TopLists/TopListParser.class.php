@@ -41,7 +41,7 @@ class TopListParser {
 			$list = TopList::newFromTitle( $parser->mTitle );
 
 			if ( !empty( $list ) ) {
-				$template = new EasyTemplate( dirname( __FILE__ )."/templates/" );
+				$template = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 				$template->set_vars( array( 'list' => $list, 'attribs' => self::$mAttributes ) );
 
 				self::$mOutput = $template->execute( 'list' );

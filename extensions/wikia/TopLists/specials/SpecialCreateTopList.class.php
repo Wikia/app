@@ -26,6 +26,8 @@ class SpecialCreateTopList extends SpecialPage {
 		//hide specialpage subtitle in Oasis
 		$wgSupressPageSubtitle = true;
 
+		TopListHelper::clearSessionItemsErrors();
+		
 		//handles redirects form edit specialpage for non-existing lists
 		$listName = $wgRequest->getText( 'wpListName', null );
 		
@@ -103,11 +105,12 @@ class SpecialCreateTopList extends SpecialPage {
 						} else {
 							$alreadyProcessed[] = $lcName;
 							
-							$listItem = $list->createItem( $itemName );
+							$listItem = $list->createItem();
 							
 							if ( empty( $listItem ) ) {
 								$errors[ "item_{$index}" ] = array( wfMsg( 'toplists-error-invalid-title' ) );
 							} else {
+								$listItem->setNewContent( $itemName );
 								$checkResult = $listItem->checkForProcessing( TOPLISTS_SAVE_CREATE, null, TOPLISTS_SAVE_CREATE );
 
 								if ( $checkResult !== true ) {
@@ -131,16 +134,17 @@ class SpecialCreateTopList extends SpecialPage {
 						} else {
 							//save items, in this case errors go in session and are displayed in the redirected edit specialpage
 							$unsavedItemNames = array();
-							
+							$itemsErrors = array();
+
 							foreach( $listItems as $item ) {
 								$saveResult = $item->save();
 								
 								if ( $saveResult !== true ) {
-									$unsavedItemNames[] = $item->getTitle()->getSubpageText();
+									$unsavedItemNames[] = $item->getNewContent();
 									$counter = 0;
 									
 									foreach ( $saveResult as $errorTuple ) {
-										$errors[ "item_{$counter}" ] = array( wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] ) );
+										$itemsErrors[] = array( wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] ) );
 										$counter++;
 									}
 								}
@@ -151,14 +155,14 @@ class SpecialCreateTopList extends SpecialPage {
 								$list->getTitle()->invalidateCache();
 							}
 
-							if( empty( $errors ) ) {
+							if( empty( $itemsErrors ) ) {
 								$wgOut->redirect( $listUrl );
 							} else {
-								$_SESSION[ 'toplist_unsaved_items' ] = $unsavedItemNames;
-								$_SESSION[ 'toplist_errors' ] = $errors;
+								TopListHelper::setSessionItemsErrors( $listName, $unsavedItemNames, $itemsErrors );
+
 								$specialPageTitle = Title::newFromText( 'EditTopList', NS_SPECIAL );
 
-								$wgOut->redirect( $specialPageTitle->getFullUrl() . '/' . wfUrlencode( $listName ) );
+								$wgOut->redirect( $specialPageTitle->getFullUrl() . '/' . $list->getTitle()->getPrefixedURL() );
 							}
 						}
 					}

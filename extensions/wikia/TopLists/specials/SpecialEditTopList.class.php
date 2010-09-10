@@ -39,28 +39,49 @@ class SpecialEditTopList extends SpecialPage {
 		$listUrl = null;
 		$relatedArticleName = null;
 		$selectedPictureName = null;
-		$items = null;
+		$items = array();
+		$existingItems = array();
 
 		$list = TopList::newFromText( $editListName );
 
-		if( empty( $list ) || !$list->exists() ) {
+		if ( empty( $list ) || !$list->exists() ) {
 			$this->_redirectToCreateSP();
-		} else {
-			$listName = $list->getTitle()->getText();
-			$listUrl = $list->getTitle()->getLocalUrl();
-
-			foreach( $list->getItems() as $item ) {
-				$items[] = array(
-					'type' => 'existing',
-					'value' => $item->getTitle()->getSubpageText()
-				);
-			}
 		}
-		
-		//TODO: refactor in progress
 
-		if( $wgRequest->wasPosted() ) {
+		$listName = $list->getTitle()->getText();
+		$listUrl = $list->getTitle()->getLocalUrl();
+
+		foreach ( $list->getItems() as $item ) {
+			$existingItems[] = array(
+				'type' => 'existing',
+				'value' => $item->getArticle()->getContent()
+			);
+		}
+
+		if ( $wgRequest->wasPosted() ) {
+			TopListHelper::clearSessionItemsErrors();
 			//TODO: refactor in progress
+			
+		} else {
+			$items += $existingItems;
+
+			//TODO: read items form error session and append as 'new'
+			list( $sessionListName, $failedItemsNames, $sessionErrors ) = TopListHelper::getSessionItemsErrors();
+
+			if ( $listName == $sessionListName && !empty( $failedItemsNames ) ) {
+				$counter = count( $items );
+				
+				foreach ( $failedItemsNames as $index => $itemName ) {
+					$items[] = array(
+						'type' => 'new',
+						'value' => $itemName
+					);
+
+					$errors[ 'item_' . ++$counter ] = $sessionErrors[ $index ];
+				}
+			}
+
+			TopListHelper::clearSessionItemsErrors();
 		}
 
 		//show at least 3 items by default, if not enough fill in with empty ones

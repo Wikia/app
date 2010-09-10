@@ -52,6 +52,33 @@ class TopListHelper {
 		return true;
 	}
 
+	/**
+	 * @author Federico "Lox" Lucignano
+	 */
+	static public function clearSessionItemsErrors() {
+		if ( !empty( $_SESSION[ 'toplists_failed_data' ] ) ) {
+			unset( $_SESSION[ 'toplists_failed_data' ] );
+		}
+	}
+
+	/**
+	 * @author Federico "Lox" Lucignano
+	 */
+	static public function getSessionItemsErrors() {
+		return ( !empty( $_SESSION[ 'toplists_failed_data' ] ) ) ? $_SESSION[ 'toplists_failed_data' ] : array( null, null, null );
+	}
+
+	/**
+	 * @author Federico "Lox" Lucignano
+	 */
+	static public function setSessionItemsErrors( $listName, $itemNames, $errors ) {
+		$_SESSION[ 'toplists_failed_data' ] = array(
+			$listName,
+			$itemNames,
+			$errors
+		);
+	}
+
 	/*
 	static public function onUnwatchArticleComplete( &$oUser, &$oArticle ) {
 		wfProfileIn( __METHOD__ );
