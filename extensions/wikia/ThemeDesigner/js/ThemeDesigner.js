@@ -314,17 +314,20 @@ var ThemeDesigner = {
 		});
 		$("#Toolbar .history ul li").click(ThemeDesigner.revertToPreviousTheme);
 		
-		// temp code for testing, load ThemeDesigner.history here later
+		// temp code and mock data for testing and placeholder, load ThemeDesigner.history here later
 		var clonedSettings1 = $.extend(true, {}, ThemeDesigner.settings);
 		var clonedSettings2 = $.extend(true, {}, ThemeDesigner.settings);
+		var clonedDefault = $.extend(true, {}, ThemeDesigner.settings);
 		clonedSettings1["color-body"] = "red";
 		clonedSettings2["color-body"] = "blue";
 		$("#Toolbar .history ul li").first().data("settings", clonedSettings1);
-		$("#Toolbar .history ul li").last().data("settings", clonedSettings2);
+		$("#Toolbar .history ul li").next().data("settings", clonedSettings2);
+		$("#Toolbar .history ul li").last().data("settings", clonedDefault);
 		// end temp code
 	},
 	
 	revertToPreviousTheme: function(event) {
+		event.preventDefault();
 		if($(this).data("settings")) {
 			ThemeDesigner.settings = $(this).data("settings");
 			ThemeDesigner.applySettings();

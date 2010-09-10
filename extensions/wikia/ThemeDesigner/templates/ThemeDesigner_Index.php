@@ -53,11 +53,18 @@
 					Previous Versions
 					<img class="chevron" src="<?= $wgBlankImgUrl ?>">
 					<ul>
-						<li>what is going on here what is going on here</li>
-						<li>is</li>
-						<li>going</li>
-						<li>on</li>
-						<li>here</li>
+						<li>
+							<?= View::specialPageLink('#', null, 'wikia-chiclet-button', 'blank.gif', 'recycle'); ?>
+							what is going on here what is going on here
+						</li>
+						<li>
+							<?= View::specialPageLink('#', null, 'wikia-chiclet-button', 'blank.gif', 'recycle'); ?>
+							is
+						</li>
+						<li>
+							<?= View::specialPageLink('#', null, 'wikia-chiclet-button', 'blank.gif', 'recycle'); ?>
+							going
+						</li>
 					</ul>
 				</div>
 				<button class="save">Save, I'm Done</button>
