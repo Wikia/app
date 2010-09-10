@@ -172,15 +172,13 @@ class SpecialCreateTopList extends SpecialPage {
 				);
 			}
 		}
-
-		if ( empty( $items ) ) {
-			//show 3 empty items by default
-			for ( $x = 0; $x < 3; $x++ ) {
-				$items[] = array(
-					'type' => 'new',
-					'value' => null
-				);
-			}
+		
+		//show at least 3 items by default, if not enough fill in with empty ones
+		for ( $x = ( !empty( $items ) ) ? count( $items ) : 0; $x < 3; $x++ ) {
+			$items[] = array(
+				'type' => 'new',
+				'value' => null
+			);
 		}
 
 		// pass data to template
