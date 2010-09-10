@@ -80,12 +80,14 @@ var TopListsEditor = {
 		var item = $(this).closest('li');
 
 		if(!item.hasClass('NewItem')){
-			$('<input/>', {
+			var elm = $('<input/>', {
 				'type': 'hidden',
 				'name': 'removed_items[]'
 			}).
 				val(parseInt(item.find('input[type="hidden"]').val())).
 				appendTo($('#toplist-editor'));
+
+			$().log(elm);
 		}
 		
 		item.remove();
