@@ -116,6 +116,8 @@ class TopListItem extends TopListBase {
 	 * @author Federico "Lox" Lucignano
 	 *
 	 * overrides TopListBase::save
+	 * remember to invalidate the list (parent) article cache to update
+	 * the page's contents if you add items programmatically
 	 */
 	public function save( $mode = TOPLISTS_SAVE_AUTODETECT ) {
 		$errors = array();
@@ -146,10 +148,6 @@ class TopListItem extends TopListBase {
 						'params' => null
 					);
 				}
-			} else {
-				//purge parent article's cache
-				$listTitle = Title::newFromText( $this->mTitle->getBaseText() );
-				$listTitle->invalidateCache();
 			}
 		} else {
 			$errors = array_merge( $errors, $checkResult );
