@@ -10,7 +10,9 @@ class LatestPhotosModule extends Module {
 	public function executeIndex() {
 		global $wgUser, $wgTitle, $wgOut, $wgStylePath, $wgLang;
 
-		$wgOut->addStyle(wfGetSassUrl("skins/oasis/css/modules/LatestPhotos.scss"));
+		// Moved to oasis.scss (to be less requests)
+		//$wgOut->addStyle(wfGetSassUrl("skins/oasis/css/modules/LatestPhotos.scss"));
+		
 		// Moved to StaticChute.
 		//$wgOut->addScript('<script src="'. $wgStylePath .'/oasis/js/LatestPhotos.js"></script>');
 
