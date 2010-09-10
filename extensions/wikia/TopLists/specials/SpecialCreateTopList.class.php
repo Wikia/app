@@ -59,8 +59,6 @@ class SpecialCreateTopList extends SpecialPage {
 						$setResult = $list->setRelatedArticle( $article );
 
 						if ( $setResult !== true ) {
-							$errors[ 'related_article_name' ] = array();
-
 							foreach ( $setResult as $errorTuple ) {
 								$errors[ 'related_article_name' ][] =  wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] );
 							}
@@ -77,8 +75,6 @@ class SpecialCreateTopList extends SpecialPage {
 						$setResult = $list->setPicture( $article );
 
 						if ( empty( $article ) || $setResult !== true ) {
-							$errors[ 'selected_picture_name' ] = array();
-
 							foreach ( $setResult as $errorTuple ) {
 								$errors[ 'selected_picture_name' ][] =  wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] );
 							}
@@ -89,8 +85,6 @@ class SpecialCreateTopList extends SpecialPage {
 				$checkResult = $list->checkForProcessing( TOPLISTS_SAVE_CREATE );
 
 				if ( $checkResult !== true ) {
-					$errors[ 'list_name' ] = array();
-					
 					foreach ( $checkResult as $errorTuple ) {
 						$errors[ 'list_name' ][] =  wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] );
 					}
@@ -101,6 +95,7 @@ class SpecialCreateTopList extends SpecialPage {
 
 					foreach ( $itemsNames as $index => $itemName ) {
 						$lcName = strtolower( $itemName );
+						$index++;//index 0 refers to the empty template item in the form
 
 						if ( in_array( $lcName, $alreadyProcessed) ) {
 							$errors[ "item_{$index}" ] = array( wfMsg( 'toplists-error-duplicated-entry' ) );
@@ -115,10 +110,11 @@ class SpecialCreateTopList extends SpecialPage {
 								$checkResult = $listItem->checkForProcessing( TOPLISTS_SAVE_CREATE );
 
 								if ( $checkResult !== true ) {
-									$errors[ "item_{$index}" ] = array();
-
 									foreach ( $checkResult as $errorTuple ) {
-										$errors[ "item_{$index}" ][] =  wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] );
+										//skip "list does not exist" errors, the list is still to be created
+										if ( $errorTuple[ 'msg' ] != 'toplists-error-article-not-exists' ) {
+											$errors[ "item_{$index}" ][] =  wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] );
+										}
 									}
 								}
 							}

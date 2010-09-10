@@ -176,7 +176,7 @@ $icon-drag-background: url(/skins/oasis/images/sprite.png) no-repeat -1618px -30
 		padding: 0;
 
 		li {
-			height: $item-height;
+			min-height: $item-height;
 			margin-bottom: 15px;
 			padding-bottom: 15px;
 			border-bottom: 1px dashed $color-page-border;
@@ -223,6 +223,11 @@ $icon-drag-background: url(/skins/oasis/images/sprite.png) no-repeat -1618px -30
 
 			.ItemDrag {
 				@include tool($icon-drag-background, 10px , move);
+			}
+
+			p {
+				clear: both;
+				margin-left:70px;
 			}
 		}
 

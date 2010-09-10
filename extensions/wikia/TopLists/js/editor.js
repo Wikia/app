@@ -43,7 +43,7 @@ var TopListsEditor = {
 				update: TopListsEditor._fixLabels
 			});
 
-			TopListsEditor._mListContainer.find('li').disableSelection();
+			//TopListsEditor._mListContainer.disableSelection();
 		});
 
 		//events handlers
