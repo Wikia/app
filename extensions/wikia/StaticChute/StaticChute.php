@@ -275,6 +275,7 @@ class StaticChute {
 		// JS served for anon on article view
 		$this->config['oasis_anon_article_js'] = array(
 			"common/wikibits.js",
+			'common/mwsuggest.js',
 			'../extensions/wikia/SASS/sassUtil.js', // other js files may depend on this, so load it early
 			"oasis/js/tracker.js",
 			//"oasis/js/modal.js",
@@ -307,6 +308,7 @@ class StaticChute {
 		// JS served for logged-in
 		$this->config['oasis_loggedin_js'] = array(
 			"common/wikibits.js",
+			'common/mwsuggest.js',
 			'../extensions/wikia/SASS/sassUtil.js', // other js files may depend on this, so load it early
 			"oasis/js/tracker.js",
 			//"oasis/js/modal.js",
