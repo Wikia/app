@@ -74,4 +74,8 @@
 <div id="contentSub"><?= $subtitle ?></div>
 <?php
 	}
+	
+	
+
 ?>
+	<a name="EditPage"></a>
