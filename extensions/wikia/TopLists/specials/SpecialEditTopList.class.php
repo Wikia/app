@@ -70,14 +70,24 @@ class SpecialEditTopList extends SpecialPage {
 			$itemsNames = $wgRequest->getArray( 'items_names', array() );
 			$removedItems = $wgRequest->getArray( 'removed_items', array() );
 
+			foreach ( $listItems as $index => $item ) {
+				if ( !in_array( $index, $removedItems ) ) {
+					$items[] = array(
+						'type' => 'existing',
+						'value' => $itemsNames[ $index ],
+						'index' => $index
+					);
+				}
+			}
+
 			$splitAt = count( $listItems ) - count( $removedItems );
 			$newItems = array_slice( $itemsNames, $splitAt );
-			
-			foreach( $itemsNames as $index => $item ) {
+
+
+			foreach( $newItems as $index => $item ) {
 				$items[] = array(
-					'type' => ( $index < $splitAt ) ? 'existing' : 'new' ,
-					'value' => $item,
-					'index' => $index
+					'type' => 'new' ,
+					'value' => $item
 				);
 			}
 			
