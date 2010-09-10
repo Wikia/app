@@ -12,6 +12,7 @@
 
 //variables
 $input-height: 40px;
+$input-width: 282px;
 $big-square-button-side: 27px;
 $image-frame-width: 100px;
 $image-frame-height: 80px;
@@ -91,6 +92,10 @@ $icon-drag-background: url(/skins/oasis/images/sprite.png) no-repeat -1618px -30
 
 	div.InputSet {
 		margin-bottom: 20px;
+
+		.error {
+			width: $input-width;
+		}
 	}
 
 	div.AutoCompleteWrapper {
@@ -124,7 +129,7 @@ $icon-drag-background: url(/skins/oasis/images/sprite.png) no-repeat -1618px -30
 
 	input[type="text"] {
 		@include input-field;
-		width: 282px;
+		width: $input-width;
 		height: $input-height;
 		line-height: $input-height;
 	}

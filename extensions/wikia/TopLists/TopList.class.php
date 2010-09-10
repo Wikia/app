@@ -8,7 +8,7 @@
 class TopList extends TopListBase {
 	protected $mRelatedArticle = null;
 	protected $mPicture = null;
-	protected $mItems = null;
+	protected $mItems = array();
 
 	/**
 	 * @author Federico "Lox" Lucignano
@@ -59,17 +59,6 @@ class TopList extends TopListBase {
 		
 		if( !$this->mDataLoaded || $forceReload ) {
 			if( $this->exists() ) {
-				$this->mItems = array();
-				$subPages = $this->mTitle->getSubpages();
-
-				if( !empty ($subPages)  && $subPages->count() ) {
-					foreach( $subPages as $title ) {
-						$this->mItems[] = TopListItem::newFromTitle( $title );
-
-						//TODO: implement tweak order by votes
-					}
-				}
-				
 				TopListParser::parse( $this );
 
 				$relatedArticle = TopListParser::getAttribute( TOPLIST_ATTRIBUTE_RELATED );
@@ -207,7 +196,20 @@ class TopList extends TopListBase {
 	 * @return Array an array of TopListItem instances
 	 */
 	public function getItems( $forceReload = false ) {
-		$this->_loadData( $forceReload );
+		//not using _loadData since it invokes the parser
+		if( $this->exists() && ( empty( $this->mItems ) || $forceReload ) ) {
+			$this->mItems = array();
+			$subPages = $this->mTitle->getSubpages();
+
+			if( !empty ($subPages)  && $subPages->count() ) {
+				foreach( $subPages as $title ) {
+					$this->mItems[] = TopListItem::newFromTitle( $title );
+
+					//TODO: implement tweak order by votes
+				}
+			}
+		}
+		
 		return $this->mItems;
 	}
 

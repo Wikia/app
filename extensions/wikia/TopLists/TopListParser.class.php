@@ -7,6 +7,7 @@
 
 class TopListParser {
 	static private $mAttributes = array();
+	static private $mOutput = null;
 
 	/**
 	 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
@@ -26,35 +27,37 @@ class TopListParser {
 	 * Implementation of a parser function
 	 */
 	static public function parseTag( $input, $args, &$parser ) {
-		global $wgTitle;
-		
-		$output = '';
+		if( empty( self::$mOutput ) ) {
+			global $wgTitle;
 
-		if ( !empty( $args[ TOPLIST_ATTRIBUTE_RELATED ] ) ) {
-			self::$mAttributes[ TOPLIST_ATTRIBUTE_RELATED ] = $args[ TOPLIST_ATTRIBUTE_RELATED ];
-			$output .= '<li>' . TOPLIST_ATTRIBUTE_RELATED . " = {$args[ TOPLIST_ATTRIBUTE_RELATED ]}</li>";
-		}
+			$output = '';
 
-		if ( !empty( $args[ TOPLIST_ATTRIBUTE_PICTURE ] ) ) {
-			self::$mAttributes[ TOPLIST_ATTRIBUTE_PICTURE ] = $args[ TOPLIST_ATTRIBUTE_PICTURE ];
-			$output .= '<li>' . TOPLIST_ATTRIBUTE_PICTURE . " = {$args[ TOPLIST_ATTRIBUTE_PICTURE ]}</li>";
-		}
-
-		if ( empty( $output ) ) {
-			$output = '<li>no parameters</li>';
-		}
-
-		$list = TopList::newFromTitle( $wgTitle );
-		
-		if ( !empty( $list ) ) {
-			$items = $list->getItems();
-			
-			foreach($items as $index => $item ) {
-				$output .= '<li><strong>#' . ++$index . '</strong> ' . $item->getTitle()->getSubpageText() . '</li>';
+			if ( !empty( $args[ TOPLIST_ATTRIBUTE_RELATED ] ) ) {
+				self::$mAttributes[ TOPLIST_ATTRIBUTE_RELATED ] = $args[ TOPLIST_ATTRIBUTE_RELATED ];
+				$output .= '<li>' . TOPLIST_ATTRIBUTE_RELATED . " = {$args[ TOPLIST_ATTRIBUTE_RELATED ]}</li>";
 			}
+
+			if ( !empty( $args[ TOPLIST_ATTRIBUTE_PICTURE ] ) ) {
+				self::$mAttributes[ TOPLIST_ATTRIBUTE_PICTURE ] = $args[ TOPLIST_ATTRIBUTE_PICTURE ];
+				$output .= '<li>' . TOPLIST_ATTRIBUTE_PICTURE . " = {$args[ TOPLIST_ATTRIBUTE_PICTURE ]}</li>";
+			}
+
+			if ( empty( $output ) ) {
+				$output = '<li>no parameters</li>';
+			}
+
+			$list = TopList::newFromTitle( $wgTitle );
+
+			if ( !empty( $list ) ) {
+				foreach($list->getItems() as $index => $item ) {
+					$output .= '<li><strong>#' . ++$index . '</strong> ' . $item->getTitle()->getSubpageText() . '</li>';
+				}
+			}
+
+			self::$mOutput = "Parsed TopList tag (visualization logic still missing), tag data (if present):<ul>{$output}</ul>";
 		}
 
-		return "Parsed TopList tag (visualization logic still missing), tag data (if present):<ul>{$output}</ul>";
+		return self::$mOutput;
 	}
 
 	/**

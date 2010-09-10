@@ -90,7 +90,7 @@ class TopListItem extends TopListBase {
 	 *
 	 * overrides TopListBase::checkForProcessing
 	 */
-	public function checkForProcessing( $mode = TOPLISTS_SAVE_AUTODETECT, User $user = null ) {
+	public function checkForProcessing( $mode = TOPLISTS_SAVE_AUTODETECT, User $user = null, $listMode = TOPLISTS_SAVE_UPDATE ) {
 		$errors = parent::checkForProcessing( $mode, $user );
 
 		if( $errors === true ) {
@@ -99,7 +99,7 @@ class TopListItem extends TopListBase {
 		
 		$title = Title::newFromText( $this->mTitle->getBaseText(), NS_TOPLIST );
 
-		if( !( ( $title instanceof Title ) && $title->exists() ) ) {
+		if( !( ( $title instanceof Title ) && $title->exists() ) && $listMode == TOPLISTS_SAVE_UPDATE ) {
 			$errors [] = array(
 				'msg' => 'toplists-error-article-not-exists',
 				'params' => array(
@@ -122,7 +122,7 @@ class TopListItem extends TopListBase {
 		$mode = $this->_detectProcessingMode( $mode );
 		$checkResult = $this->checkForProcessing( $mode );
 
-		if( $checkResult === true ) {
+		if ( $checkResult === true ) {
 			$summaryMsg = null;
 			$editMode = null;
 
@@ -146,9 +146,13 @@ class TopListItem extends TopListBase {
 						'params' => null
 					);
 				}
+			} else {
+				//purge parent article's cache
+				$listTitle = Title::newFromText( $this->mTitle->getBaseText() );
+				$listTitle->invalidateCache();
 			}
 		} else {
-			$errors = array_merge( $errors, $checkResult);
+			$errors = array_merge( $errors, $checkResult );
 		}
 
 		return ( empty( $errors ) ) ? true : $errors;
