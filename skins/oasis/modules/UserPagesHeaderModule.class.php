@@ -194,7 +194,7 @@ class UserPagesHeaderModule extends Module {
 			// edit button
 			if (isset($this->content_actions['edit'])) {
 				$this->actionMenu['action'] = array(
-					'href' => $this->content_actions['edit']['href'],
+					'href' => $this->content_actions['edit']['href'] ."#EditPage",
 					'text' => wfMsg('oasis-page-header-edit-profile'),
 				);
 
@@ -206,10 +206,10 @@ class UserPagesHeaderModule extends Module {
 			// "Leave a message" button
 			if (isset($this->content_actions['addsection']['href'])) {
 				$this->actionMenu['action'] = array(
-					'href' => $this->content_actions['addsection']['href'],
+					'href' => $this->content_actions['addsection']['href'] ."#EditPage",
 					'text' => wfMsg('add_comment'),
 				);
-
+				
 				$this->actionImage = MenuButtonModule::ADD_ICON;
 				$this->actionName = 'leavemessage';
 

@@ -62,8 +62,7 @@ class PageHeaderModule extends Module {
 			$this->action = $this->content_actions['edit'];
 			$this->actionImage = MenuButtonModule::EDIT_ICON;
 			$this->actionName = 'edit';
-			// jumping to a-tag
-			$this->action["href"] .= "#EditPage";
+			$this->action["href"] .= "#EditPage"; // jumping to a-tag
 		}
 		// view source
 		else if (isset($this->content_actions['viewsource'])) {
