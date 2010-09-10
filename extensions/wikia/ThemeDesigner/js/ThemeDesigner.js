@@ -68,6 +68,9 @@ var ThemeDesigner = {
 
 		// click first tab
 		$("#Navigation a:first").click();
+		
+		// init Tool Bar
+		ThemeDesigner.ToolBarInit();
 
 		ThemeDesigner.applySettings(true);
 	},
@@ -300,5 +303,19 @@ var ThemeDesigner = {
 
 	isNumeric: function(input) {
 		return (input - 0) == input && input.length > 0;
+	},
+	
+	ToolBarInit: function() {
+		$("#Toolbar .history").click(function() {
+			$(this).find("ul").css("display", "block");
+		});
+		$("#Toolbar .history ul").mouseleave(function() {
+			$(this).css("display", "none");
+		});
+		$("#Toolbar .history ul li").click(ThemeDesigner.revertToPreviousColor);
+	},
+	
+	revertToPreviousColor: function(event) {
+		alert("please code me");
 	}
 };

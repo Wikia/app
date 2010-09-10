@@ -2,6 +2,7 @@
 class ThemeDesignerModule extends Module {
 
 	var $wgCdnRootUrl;
+	var $wgBlankImgUrl;
 	var $wgExtensionsPath;
 	var $wgScript;
 	var $wgServer;
