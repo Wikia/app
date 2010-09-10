@@ -7,14 +7,15 @@
 
 class TopListItem extends TopListBase {
 
-	private $votesCount = 0;
+	protected $votesCount = 0;
 	//TODO: implement
-	private $creatorUserName = 'Somebody';
+	protected $creatorUserName = 'Somebody';
+	protected $mContent = null;
 
 	/**
 	 * @author Federico "Lox" Lucignano
 	 *
-	 * Factory method
+	 * Factory method, usage of TopList::createItem is preferred
 	 *
 	 * @param string $name a string representation of the article title
 	 *
@@ -33,7 +34,7 @@ class TopListItem extends TopListBase {
 	/**
 	 * @author Federico "Lox" Lucignano
 	 *
-	 * Factory method
+	 * Factory method, usage of TopList::createItem is preferred
 	 *
 	 * @param Title $title a Title class instance for the article
 	 *
@@ -71,7 +72,7 @@ class TopListItem extends TopListBase {
 		return $this->votesCount;
 	}
 
-	/*
+	/**
 	 * Get the user name of item creator
 	 *
 	 * @author Adrian 'ADi' Wieczorek
@@ -80,6 +81,28 @@ class TopListItem extends TopListBase {
 	public function getCreatorUserName() {
 		//TODO: implement
 		return $this->creatorUserName;
+	}
+
+	/**
+	 * @author Federico "Lox" Lucignano
+	 *
+	 * Sets the new content for the item
+	 *
+	 * @param string $content the string containing the wikitext to store in the list item article
+	 */
+	public function setNewContent( $content ) {
+		$this->mContent = ( string ) $content;
+	}
+
+	/**
+	 * @author Federico "Lox" Lucignano
+	 *
+	 * Gets the new content for the item previosly set through setNewContent, for existing content use the Artilce instance accessible through getArticle()
+	 *
+	 * @return string the new content for the item
+	 */
+	public function getNewContent() {
+		return $this->mContent;
 	}
 
 	/**
@@ -156,7 +179,7 @@ class TopListItem extends TopListBase {
 			wfLoadExtensionMessages( 'TopLists' );
 			$article = $this->getArticle();
 
-			$status = $article->doEdit( '', wfMsgForContent( $summaryMsg, $this->mTitle ), $editMode );
+			$status = $article->doEdit( $this->mContent , wfMsgForContent( $summaryMsg, $this->mTitle ), $editMode );
 
 			if ( !$status->isOK() ) {
 				foreach ( $status->getErrorsArray() as $msg ) {

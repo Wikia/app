@@ -22,7 +22,7 @@ class TopList extends TopListBase {
 	static public function newFromText( $name ) {
 		$title = Title::newFromText( $name, NS_TOPLIST );
 
-		if ( !( $title instanceof Title ) ) {
+		if ( !( $title instanceof Title ) || ( !empty( $title ) && $title->isSubpage() ) ) {
 			return false;
 		}
 
@@ -39,7 +39,7 @@ class TopList extends TopListBase {
 	 * @return mixed a TopList instance, false in case $title is not in the NS_TOPLIST namespace
 	 */
 	static public function newFromTitle( Title $title ) {
-		if ( $title->getNamespace() == NS_TOPLIST ) {
+		if ( $title->getNamespace() == NS_TOPLIST && !$title->isSubpage() ) {
 			$list = new self();
 			$list->mTitle = $title;
 
@@ -170,13 +170,11 @@ class TopList extends TopListBase {
 	 *
 	 * Creates and returns a new TopListItem for this list (saving the item is done per item, see TopListItem::save)
 	 *
-	 * @param string $itemName a string to use for building the list item subpage Title
-	 *
 	 * @return mixed an instance of the TopListItem class representing the new item, false in case of errors
 	 */
-	public function createItem( $itemName ) {
+	public function createItem() {
 		if( !empty( $this->mTitle ) ) {
-			$item = TopListItem::newFromText( $this->mTitle->getText() . '/' . $itemName );
+			$item = TopListItem::newFromText( $this->mTitle->getText() . '/' . uniqid( 'item-' ) );
 
 			if( !empty( $item ) ) {
 				return $item;
