@@ -104,18 +104,15 @@ class SpecialCreateTopList extends SpecialPage {
 							$alreadyProcessed[] = $lcName;
 							
 							$listItem = $list->createItem( $itemName );
-
+							
 							if ( empty( $listItem ) ) {
 								$errors[ "item_{$index}" ] = array( wfMsg( 'toplists-error-invalid-title' ) );
 							} else {
-								$checkResult = $listItem->checkForProcessing( TOPLISTS_SAVE_CREATE );
+								$checkResult = $listItem->checkForProcessing( TOPLISTS_SAVE_CREATE, null, TOPLISTS_SAVE_CREATE );
 
 								if ( $checkResult !== true ) {
 									foreach ( $checkResult as $errorTuple ) {
-										//skip "list does not exist" errors, the list is still to be created
-										if ( $errorTuple[ 'msg' ] != 'toplists-error-article-not-exists' ) {
-											$errors[ "item_{$index}" ][] =  wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] );
-										}
+										$errors[ "item_{$index}" ][] =  wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] );
 									}
 								} else {
 									$listItems[] = $listItem;
@@ -148,6 +145,11 @@ class SpecialCreateTopList extends SpecialPage {
 									}
 								}
 							}
+
+							/*if( count( $listItems ) ) {
+								//update page's cache, items where added
+								$list->getTitle()->invalidateCache();
+							}*/
 
 							if( empty( $errors ) ) {
 								$wgOut->redirect( $listUrl );

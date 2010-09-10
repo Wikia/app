@@ -76,12 +76,18 @@ abstract class TopListBase {
 		if ( $this->mTitle->exists() && $mode == TOPLISTS_SAVE_CREATE ) {
 			$errors[] = array(
 				'msg' => 'toplists-error-title-exists',
-				'params' => array( $name, $url )
+				'params' => array(
+					$name,
+					$url
+				)
 			);
 		} elseif ( !$this->mTitle->exists() && $mode == TOPLISTS_SAVE_UPDATE ) {
 			$errors[] = array(
 				'msg' => 'toplists-error-title-not-exists',
-				'params' => array( $name, $url )
+				'params' => array(
+					$name,
+					$url
+				)
 			);
 		}
 
