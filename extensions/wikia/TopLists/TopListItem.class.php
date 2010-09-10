@@ -97,7 +97,7 @@ class TopListItem extends TopListBase {
 			$errors = array();
 		}
 		
-		$title = Title::newFromText( $this->mTitle->getBaseTest() );
+		$title = Title::newFromText( $this->mTitle->getBaseText() );
 
 		if( !( ( $title instanceof Title ) && $title->exists() ) ) {
 			$errors [] = array(
