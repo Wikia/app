@@ -26,29 +26,43 @@
 	<!-- Used for page load time tracking -->
 	<script>/*<![CDATA[*/
 		var wgNow = new Date();
-	/*]]>*/</script>
+	/*]]>*/</script><?php
+		// There were some problems moving JS to the bottom.  Allow us to control it via the URL for now.
+		global $wgRequest;
+		$JS_AT_BOTTOM = ($wgRequest->getVal('jsatbottom', '0') == "1");
+		if(!$JS_AT_BOTTOM){
+			print "<!-- Combined JS files (StaticChute) -->\n";
+			print $staticChuteHtml."\n";
+			// TODO: SWC: TO TEST ASYNC LOADING, REMOVE PRINT OF $staticChuteHtml ABOVE AND UNCOMMENT THESE TWO LINES:
+			//print $wikiaScriptLoader;
+			//print $jsLoader;
+			print "<!-- Headscripts -->\n";
+			print $headscripts."\n";
+		}
+	?>
 </head>
 <body class="<?= implode(' ', $bodyClasses) ?>"<?= $body_ondblclick ? ' ondblclick="' . htmlspecialchars($body_ondblclick) . '"' : '' ?>>
 <?= $body ?>
 <?= $printableCss ?>
-
 <?php
-        // Load Javacript right before the closing body tag.
-
-        print "<!-- Combined JS files (StaticChute) -->\n";
-        print $staticChuteHtml."\n";
+	if($JS_AT_BOTTOM){
+		print "<!-- Combined JS files (StaticChute) -->\n";
+		print $staticChuteHtml."\n";
+	}
 ?>
-
 <?= AdEngine::getInstance()->getDelayedIframeLoadingCode() ?>
 <?= $analytics ?>
 <?php
-	// TODO: SWC: TO TEST ASYNC LOADING, REMOVE PRINT OF $staticChuteHtml ABOVE AND UNCOMMENT THESE TWO LINES:
-	//print $wikiaScriptLoader;
-	//print $jsLoader;
+	// Load Javacript right before the closing body tag.
+	if($JS_AT_BOTTOM){
+		// TODO: SWC: TO TEST ASYNC LOADING, REMOVE PRINT OF $staticChuteHtml ABOVE AND UNCOMMENT THESE TWO LINES:
+		//print $wikiaScriptLoader;
+		//print $jsLoader;
 
-	print "<!-- Headscripts -->\n";
-	print $headscripts."\n";
+		print "<!-- Headscripts -->\n";
+		print $headscripts."\n";
 
+	}
 	print '<script type="text/javascript">/*<![CDATA[*/for(var i=0;i<wgAfterContentAndJS.length;i++){wgAfterContentAndJS[i]();}/*]]>*/</script>' . "\n";
 
 	// TODO: SWC: Get bottomscripts working. I thought they were set by SkinTemplate automatically.
