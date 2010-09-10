@@ -1054,6 +1054,9 @@ class Wikia {
 		// Using wgUsersNotifiedOnAllChanges is a hack to get the UserMailer to notify these users.  The use
 		// of wgUsersNotifiedOfRightsChanges is to prevent the same user from being notified multiple times if
 		// multiple actions occur on the same page.
+		if(!isset($wgUsersNotifiedOfRightsChanges)){
+			$wgUsersNotifiedOfRightsChanges = array();
+		}
 		$wgUsersNotifiedOnAllChanges = array_diff($wgUsersNotifiedOnAllChanges, $wgUsersNotifiedOfRightsChanges);
 
 		$userName = $user->getName();
