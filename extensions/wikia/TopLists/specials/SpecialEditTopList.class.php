@@ -76,7 +76,8 @@ class SpecialEditTopList extends SpecialPage {
 			foreach( $itemsNames as $index => $item ) {
 				$items[] = array(
 					'type' => ( $index < $splitAt ) ? 'existing' : 'new' ,
-					'value' => $item
+					'value' => $item,
+					'index' => $index
 				);
 			}
 			

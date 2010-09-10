@@ -56,7 +56,7 @@
 			<? $isDraggable = ( in_array( $item['type'], array( 'new', 'template' ) ) ) ;?>
 			<li class="ListItem<?= ( $isDraggable )  ? ' NewItem' : null ;?><?= ( $item['type'] == 'template' ) ? ' ItemTemplate' : null ;?>">
 				<? if ( $item['type'] == 'existing' ) :?>
-					<input type="hidden" value="<?= $position - 1 ;?>" />
+					<input type="hidden" value="<?= $item['index'] ;?>" />
 				<? endif ;?>
 				
 				<div class="ItemNumber">#<?= ( $item['type'] != 'template' ) ? $position : null ;?></div>
