@@ -4,6 +4,7 @@ $wgExtensionCredits['other'][] = array(
 	'author' => 'William Lee'
 );
 
+$wgHooks['MakeGlobalVariablesScript'][] = 'QuantcastSegments::onMakeGlobalVariablesScript';
 //$wgHooks['BeforePageDisplay'][] = 'quantcastSegmentsAdditionalScripts';
 
 /**
@@ -20,4 +21,18 @@ class QuantcastSegments {
 	const SEGMENTS_COOKIE_NAME = 'qcseg';
 	const UPDATE_COOKIE_NAME = 'qcsegupdate';
 
+	/**
+	 * Adds global JS variables. Switches for collecting Quantcast audience segments
+	 * and integrating them in DART URLs.
+	 */
+	public static function onMakeGlobalVariablesScript( &$vars ) {
+		global $wgCollectQuantcastSegments, $wgIntegrateQuantcastSegments;
+		wfProfileIn( __METHOD__ );
+
+		$vars['wgCollectQuantcastSegments'] = $wgCollectQuantcastSegments;
+		$vars['wgIntegrateQuantcastSegments'] = $wgIntegrateQuantcastSegments;
+
+		wfProfileOut( __METHOD__ );
+		return true;
+	} // end onMakeGlobalVariablesScript()
 }

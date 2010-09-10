@@ -24,4 +24,6 @@ QuantcastSegments.setQuantcastData = function () {
 	}
 };
 
-QuantcastSegments.setQuantcastData();
+if (typeof(wgCollectQuantcastSegments) !== 'undefined' && wgCollectQuantcastSegments) {
+	QuantcastSegments.setQuantcastData();
+}
