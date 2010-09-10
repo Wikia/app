@@ -54,6 +54,8 @@ class AvatarService extends Service {
 
 		static $linksCache;
 
+		$url = '';
+
 		if (isset($linksCache[$userName])) {
 			$url = $linksCache[$userName];
 		}
@@ -65,7 +67,9 @@ class AvatarService extends Service {
 			else {
 				// user: point to user page
 				$userPage = Title::newFromText($userName, NS_USER);
-				$url = $userPage->getLocalUrl();
+				if ( !is_null( $userPage ) ) {
+					$url = $userPage->getLocalUrl();
+				}
 			}
 
 			$linksCache[$userName] = $url;
