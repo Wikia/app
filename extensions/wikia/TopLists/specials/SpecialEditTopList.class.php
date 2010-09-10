@@ -46,7 +46,9 @@ class SpecialEditTopList extends SpecialPage {
 		$relatedArticleName = null;
 		$selectedPictureName = null;
 		$items = array();
+		$listItems = array();
 		$existingItems = array();
+		$removedItems = array();
 
 		$list = TopList::newFromText( $editListName );
 
@@ -56,13 +58,9 @@ class SpecialEditTopList extends SpecialPage {
 
 		$listName = $list->getTitle()->getText();
 		$listUrl = $list->getTitle()->getLocalUrl();
+		$listItems = $list->getItems();
 
-		foreach ( $list->getItems() as $item ) {
-			$existingItems[] = array(
-				'type' => 'existing',
-				'value' => $item->getArticle()->getContent()
-			);
-		}
+		
 
 		if ( $wgRequest->wasPosted() ) {
 			TopListHelper::clearSessionItemsErrors();
@@ -71,11 +69,25 @@ class SpecialEditTopList extends SpecialPage {
 			$selectedPictureName = $wgRequest->getText( 'selected_picture_name' );
 			$itemsNames = $wgRequest->getArray( 'items_names', array() );
 			$removedItems = $wgRequest->getArray( 'removed_items', array() );
-			$listItems = array();
 
-
+			$splitAt = count( $listItems ) - count( $removedItems );
+			$newItems = array_slice( $itemsNames, $splitAt );
+			
+			foreach( $itemsNames as $index => $item ) {
+				$items[] = array(
+					'type' => ( $index < $splitAt ) ? 'existing' : 'new' ,
+					'value' => $item
+				);
+			}
 			
 		} else {
+			foreach ( $listItems as $item ) {
+				$existingItems[] = array(
+					'type' => 'existing',
+					'value' => $item->getArticle()->getContent()
+				);
+			}
+
 			$items += $existingItems;
 			
 			list( $sessionListName, $failedItemsNames, $sessionErrors ) = TopListHelper::getSessionItemsErrors();
@@ -120,7 +132,8 @@ class SpecialEditTopList extends SpecialPage {
 					'value' => null
 				) ),
 				$items
-			)
+			),
+			'removedItems' => $removedItems
 		) );
 
 		// render template

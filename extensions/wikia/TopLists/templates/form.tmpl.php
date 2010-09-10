@@ -1,6 +1,4 @@
-<?php
-global $wgBlankImgUrl;
-?>
+<?php?>
 <form id="toplist-editor" name="toplist<?= $mode ;?>" method="POST" action="">
 	<div class="ImageBrowser">
 		<div class="frame">
@@ -107,4 +105,10 @@ global $wgBlankImgUrl;
 		
 		<input type="Submit" value="<?= wfMsg( "toplists-{$mode}-button" ) ;?>"/>
 	</div>
+
+	<? if ( $mode == 'update' && !empty( $removedItems ) ) :?>
+		<? foreach ( $removedItems as $item ) :?>
+			<input type="hidden" name="removed_items[]" value="<?= $item ;?>" />
+		<? endforeach ;?>
+	<? endif ;?>
 </form>
