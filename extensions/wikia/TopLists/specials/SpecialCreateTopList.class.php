@@ -39,6 +39,7 @@ class SpecialCreateTopList extends SpecialPage {
 			$relatedArticleName = $wgRequest->getText( 'related_article_name' );
 			$selectedPictureName = $wgRequest->getText( 'selected_picture_name' );
 			$itemsNames = array_filter( $wgRequest->getArray( 'items_names', array() ) );
+			$listItems = array();
 
 			$list = TopList::newFromText( $listName );
 			$listUrl = null;
@@ -116,6 +117,8 @@ class SpecialCreateTopList extends SpecialPage {
 											$errors[ "item_{$index}" ][] =  wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] );
 										}
 									}
+								} else {
+									$listItems[] = $listItem;
 								}
 							}
 						}
@@ -130,14 +133,28 @@ class SpecialCreateTopList extends SpecialPage {
 							}
 						} else {
 							//save items, in this case errors go in session and are displayed in the redirected edit specialpage
-
-							//TODO: refactor in progress
+							$unsavedItemNames = array();
+							
+							foreach( $listItems as $item ) {
+								$saveResult = $item->save();
+								
+								if ( $saveResult !== true ) {
+									$unsavedItemNames[] = $item->getTitle()->getSubpageText();
+									$counter = 0;
+									
+									foreach ( $saveResult as $errorTuple ) {
+										$errors[ "item_{$counter}" ] = array( wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] ) );
+										$counter++;
+									}
+								}
+							}
 
 							if( empty( $errors ) ) {
 								$wgOut->redirect( $listUrl );
 							} else {
+								$_SESSION[ 'toplist_unsaved_items' ] = $unsavedItemNames;
 								$_SESSION[ 'toplist_errors' ] = $errors;
-								$specialPageTitle = Title::newFromText( 'CreateTopList', NS_SPECIAL );
+								$specialPageTitle = Title::newFromText( 'EditTopList', NS_SPECIAL );
 
 								$wgOut->redirect( $specialPageTitle->getFullUrl() . '/' . wfUrlencode( $listName ) );
 							}

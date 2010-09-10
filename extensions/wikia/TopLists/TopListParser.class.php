@@ -26,6 +26,8 @@ class TopListParser {
 	 * Implementation of a parser function
 	 */
 	static public function parseTag( $input, $args, &$parser ) {
+		global $wgTitle;
+		
 		$output = '';
 
 		if ( !empty( $args[ TOPLIST_ATTRIBUTE_RELATED ] ) ) {
@@ -39,10 +41,20 @@ class TopListParser {
 		}
 
 		if ( empty( $output ) ) {
-			$output = '<li>none</li>';
+			$output = '<li>no parameters</li>';
 		}
 
-		return "Parsed TopList tag (visualization logic still missing), tag data (if present):<ul></ul>";
+		$list = TopList::newFromTitle( $wgTitle );
+		
+		if ( !empty( $list ) ) {
+			$items = $list->getItems();
+			
+			foreach($items as $index => $item ) {
+				$output .= '<li><strong>#' . ++$index . '</strong> ' . $item->getTitle()->getSubpageText() . '</li>';
+			}
+		}
+
+		return "Parsed TopList tag (visualization logic still missing), tag data (if present):<ul>{$output}</ul>";
 	}
 
 	/**

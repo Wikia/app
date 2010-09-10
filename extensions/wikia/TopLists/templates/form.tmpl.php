@@ -77,7 +77,7 @@ global $wgBlankImgUrl;
 	</div>
 	<div class="FormButtons">
 		<? if ( $mode == 'update' ) :?>
-			<a class="wikia-button secondary" href="<?= $listURL ;?>"><?= wfMsg( "toplists-cancel-button" ) ;?></a>
+			<a class="wikia-button secondary" href="<?= $listUrl ;?>"><?= wfMsg( "toplists-cancel-button" ) ;?></a>
 		<? endif ;?>
 		<input type="Submit" value="<?= wfMsg( "toplists-{$mode}-button" ) ;?>"/>
 	</div>

@@ -40,8 +40,10 @@ abstract class TopListBase {
 			$revData = $this->mTitle->getFirstRevision();
 			
 			if( !empty( $revData ) ) {
-				if( !empty( $revData['rev_user'] ) ) {
-					$this->mAuthor = User::newFromId( $revData['rev_user'] );
+				$userId = $revData->getUser();
+				
+				if( !empty( $userId ) ) {
+					$this->mAuthor = User::newFromId( $userId );
 				}
 			}
 
