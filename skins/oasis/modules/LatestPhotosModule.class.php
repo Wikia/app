@@ -28,7 +28,7 @@ class LatestPhotosModule extends Module {
 			'list' => 'logevents',
 			'letype' => 'upload',
 			'leprop' => 'title',
-			'lelimit' => 100,   // fixme: change this to 10 after testing
+			'lelimit' => 100,   // fixme: change this to 12 after testing
 		);
 
 		$apiData = ApiService::call($params);
@@ -44,7 +44,7 @@ class LatestPhotosModule extends Module {
 
 		$this->thumbUrls = array_map(array($this, 'getTemplateData'), $fileList);
 		
-		while (count($this->thumbUrls) > 10) array_pop ($this->thumbUrls);
+		while (count($this->thumbUrls) > 11) array_pop ($this->thumbUrls);
 		
 		if (count($this->thumbUrls) < 3) {
 			$this->enableScroll = false;
@@ -137,7 +137,7 @@ class LatestPhotosModule extends Module {
 
 		$links[] = '<a href="' . $name->getLocalUrl() .
 			'#filelinks" class="wikia-gallery-item-more">' .
-			wfMsg( 'oasis-more' ) . '</a>';
+			wfMsg( 'oasis-latest-photos-fileslinke-more' ) . '</a>';
 	}
 
 	return $links;

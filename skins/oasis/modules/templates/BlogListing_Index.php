@@ -2,7 +2,7 @@
 <section class="<?= $blogListingClass ?>" style="display: none">
 	<h3><?= View::specialPageLink('CreateBlogPage', 'blog-create-post-label', 'wikia-button', 'blank.gif', 'oasis-add-blog-listing', 'osprite icon-add') ?>
 		<?= $wgTitle ?>
-		<?= View::link(Title::newFromText($wgTitle), "<img src=\"$wgStylePath/oasis/images/reload_button.png\">", array(), array('action' => 'purge')); ?>
+		<span class="reload"><?= View::link(Title::newFromText($wgTitle), "<img src=\"$wgStylePath/oasis/images/reload_button.png\">", array(), array('action' => 'purge')); ?></span>
 	</h3>
 	<ul>
 		<?php
