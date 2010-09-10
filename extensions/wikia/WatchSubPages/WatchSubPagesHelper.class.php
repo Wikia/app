@@ -68,8 +68,6 @@ class WatchSubPagesHelper {
 	 */
 
 	static public function NotifyOnSubPageChange( $watchers, $title, $editor, $notificationTimeoutSql, $method, $dbtype ) {
-		$subpagesWatchers  = array();
-
 		// Gets parent data
 		$arrTitle = explode( '/' , $title->getDBkey() );
 		$dbw = wfGetDB( $dbtype );
