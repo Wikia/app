@@ -4,13 +4,13 @@
 		<ul>
 		<?php foreach($pages as $page) { ?>
 			<li>
-				<section class="content">
+				<div class="content">
 				<?php if( isset( $page['imgUrl'] ) ) { ?>
 					<img src="<?= $page['imgUrl']; ?>" />
 				<?php } else { ?>
 					<div class="articleSnippet"><p><?= $page['text']; ?></p></div>
 				<?php } ?>
-				</section>
+				</div>
 				<p>
 					<a href="<?= $page['url']; ?>"><?= $page['wrappedTitle'] ?></a>
 				</p>

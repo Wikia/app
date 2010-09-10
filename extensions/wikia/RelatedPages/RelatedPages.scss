@@ -8,15 +8,14 @@
 	
 	a {
 		padding-left: 5px;
-		font-size: 11px;
+		font-size: 12px;
 	}
 	
 	p {
-		background-color: $color-body;
 		display: block;
 		padding: 3px;
-		height: 27px;
-		padding-top: 6px;
+
+		padding-top: 3px;
 	}
 	
 	h1, h2 {
@@ -25,46 +24,50 @@
 	
 	ul {
 		list-style:none outside none;
+		margin: 0;
+
 	}
 	
 	li {
 		float: left;
-		padding-right: 17px;
+		padding-right: 10px;
 	}
 	.articleSnippet {
-		width: 190px !important;
-		spadding: 0 60px;
+		width: 190px;	
+		height: 100px;
 		
 		// /** adding quotes **/
 		&:before {
-			content: open-quote;
-			quotes: "\00AB"; // /** Firefox **/ 
-			squotes: '\201C' '\201D' '\2018' '\2019';  // /** Opera **/
 			content: '\201C';  // /** Webkit **/
 			font-size: 80px;
 			width: 25px;
 			float: left;
-			margin-top: -20px;
+			margin-top: 25px;
+			vertical-align: bottom;
+			line-height: 0px;
 		}
 		
 		p {
-			height: 73px;
-			overflow: hidden; // /**@todo would be better to cut off in PHP **/
+			height: 80px;
+			overflow: hidden;
 			font-size: 16px;
 			font-weight: bold;
+			line-height: 20px;
+			
 			padding: 0px;
 			margin: {
 				left: 35px;
 			}
-			background: none;
 			padding: {
 				top: 5px;
 				bottom: 5px;
 			}
+			
+			padding: 0;
 		}
 		
 	}
 	.content {
-		height: 100px;
+
 	}
 }

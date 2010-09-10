@@ -1,5 +1,4 @@
 <section class="LatestPhotosModule">
-	<h1>Latest Photos</h1>
 	<?= View::specialPageLink('Upload', 'oasis-add-photo', 'wikia-button', 'blank.gif', 'oasis-add-photo', 'osprite icon-add'); ?>
 	<details class="tally counter">
 		<em><?= $total ?></em><?= wfMsg('oasis-latest-photos-header') ?>
@@ -29,10 +28,23 @@ else {
 	<?php
 	$count = 1;
 	foreach ($thumbUrls as $url) {?>
-		<li class="thumbs"><a class="image" sref="<?= $url["file_url"] ?>" title="here is the title" href="<?= $url["file_url"] ?>">
+	<!--<?= $url["image_url"] ?>  File:KermLecTel.jpg-->
+		<li class="thumbs"><a class="image" ref="<?= $url["image_filename"] ?> " href="<?= $url["file_url"] ?>">
 			<img class="thumbimage" src="<?= $url["thumb_url"] ?>" />
 		</a>
-		<span class="thumbcaption"><a href=""></a><br/><?= $url["date"] ?>valuable information for the intelectual mind</span>
+		
+		<span class="thumbcaption">
+			<?= wfMsg('oasis-latest-photos-by'); ?> <?= $url["user_href"] ?><br/>
+			<?= $url["date"] ?><br/>
+			
+			<?php 
+		if (count($url["links"] >= 1)) {?>
+			<?= wfMsg('oasis-latest-photos-posted-in'); ?>
+			<?= implode(',&nbsp;', $url["links"] ); ?>
+		<?php
+		}
+			?>
+		</span>
 		</li>
 	<?php
 	}
