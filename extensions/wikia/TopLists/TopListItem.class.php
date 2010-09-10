@@ -97,12 +97,15 @@ class TopListItem extends TopListBase {
 			$errors = array();
 		}
 		
-		$title = Title::newFromText( $this->mTitle->getBaseText() );
+		$title = Title::newFromText( $this->mTitle->getBaseText(), NS_TOPLIST );
 
 		if( !( ( $title instanceof Title ) && $title->exists() ) ) {
 			$errors [] = array(
-				'msg' => 'toplists-error-title-not-exists',
-				'params' => array( $name, $url )
+				'msg' => 'toplists-error-article-not-exists',
+				'params' => array(
+					$title->getSubpageText(),
+					$title->getEditURL()
+				)
 			);
 		}
 

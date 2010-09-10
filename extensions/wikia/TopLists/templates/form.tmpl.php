@@ -20,7 +20,7 @@ global $wgBlankImgUrl;
 	<div class="InputSet">
 		<label for="list_name"><?= wfMsg( 'toplists-editor-title-label' ) ;?></label>
 		<? if ( $mode == 'create' ) :?>
-			<input type="text" name="list_name" placeholder="<?= wfMsg( 'toplists-editor-title-placeholder' ) ;?>" value="<?= $listName ;?>" />
+			<input type="text" name="list_name" placeholder="<?= wfMsg( 'toplists-editor-title-placeholder' ) ;?>" value="<?= $listName ;?>"<?= ( !empty( $errors[ 'list_name' ] ) ) ? ' class="error"' : null ;?> />
 			<? if ( !empty( $errors[ 'list_name' ] ) ) :?>
 				<? foreach( $errors[ 'list_name' ] as $errorMessage ) :?>
 					<p class="error"><?= $errorMessage ;?></p>
@@ -32,7 +32,7 @@ global $wgBlankImgUrl;
 	</div>
 	<div class="InputSet AutoCompleteWrapper">
 		<label for="related_article_name"><?= wfMsg( 'toplists-editor-related-article-label' ) ;?> <small>(<?= wfMsg( 'toplists-editor-related-article-optional-label' ) ;?>)</small></label>
-		<input type="text" name="related_article_name" placeholder="<?= wfMsg( 'toplists-editor-related-article-placeholder' ) ;?>" autocomplete="off" value="<?= $relatedArticleName ;?>" />
+		<input type="text" name="related_article_name" placeholder="<?= wfMsg( 'toplists-editor-related-article-placeholder' ) ;?>" autocomplete="off" value="<?= $relatedArticleName ;?>"<?= ( !empty( $errors[ 'related_article_name' ] ) ) ? ' class="error"' : null ;?> />
 		<? if ( !empty( $errors[ 'related_article_name' ] ) ) :?>
 			<? foreach( $errors[ 'related_article_name' ] as $errorMessage ) :?>
 				<p class="error"><?= $errorMessage ;?></p>
@@ -46,12 +46,7 @@ global $wgBlankImgUrl;
 			<li class="ListItem<?= ( $isDraggable )  ? ' NewItem' : null ;?><?= ( $item['type'] == 'template' ) ? ' ItemTemplate' : null ;?>">
 				<div class="ItemNumber">#<?= ( $item['type'] != 'template' ) ? $position : null ;?></div>
 				<div class="ItemName">
-					<input type="text" name="items_names[]" value="<?= $item['value'] ;?>"<?= ( $item['type'] == 'template' ) ? ' disabled' : null ;?> />
-					<? if ( !empty( $errors[ "item_{$position}" ] ) ) :?>
-						<? foreach( $errors[ "item_{$position}" ] as $errorMessage ) :?>
-							<p class="error"><?= $errorMessage ;?></p>
-						<? endforeach ;?>
-					<? endif ;?>
+					<input type="text" name="items_names[]" value="<?= $item['value'] ;?>"<?= ( $item['type'] == 'template' ) ? ' disabled' : null ;?><?= ( !empty( $errors[ "item_{$position}" ] ) ) ? ' class="error"' : null ;?> />
 				</div>
 				<div class="ItemRemove">
 					<a title="<?= wfMsg( 'toplists-editor-remove-item-tooltip' ) ;?>" rel="nofollow">
@@ -64,6 +59,11 @@ global $wgBlankImgUrl;
 							<img alt="<?= wfMsg( 'toplists-editor-drag-item-tooltip' ) ;?>" src="<?= wfBlankImgUrl() ;?>">
 						</a>
 					</div>
+				<? endif ;?>
+				<? if ( !empty( $errors[ "item_{$position}" ] ) ) :?>
+					<? foreach( $errors[ "item_{$position}" ] as $errorMessage ) :?>
+						<p class="error"><?=$errorMessage ;?></p>
+					<? endforeach ;?>
 				<? endif ;?>
 			</li>
 		<? endforeach ;?>
