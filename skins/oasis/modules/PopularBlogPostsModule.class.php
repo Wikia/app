@@ -7,7 +7,7 @@ class PopularBlogPostsModule extends Module {
 		wfProfileIn(__METHOD__);
 		global $wgParser;
 
-		$input = "	<title>Popular Blog Posts</title>
+		$input = "	<title>" .wfMsg('oasis-popular-blogs-title') ."</title>
 					<type>box</type>
 					<order>date</order>";
 
