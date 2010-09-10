@@ -85,13 +85,59 @@ body {
 				width: 100px;
 			}
 		}
+		.history {
+			cursor: pointer;
+			display: inline-block;
+			font-size: 10px;
+			left: 20px;
+			position: relative;
+			top: 10px;
+			.revisions {
+				background: #7392a7;
+				border: 1px solid #fff;
+				color: #fff;
+				display: inline-block;
+				font-size: 16px;
+				margin-right: 3px;
+				padding: 2px 5px 0;
+			}
+			.chevron {
+				border-color: #2070AD transparent transparent;
+				border-style: solid;
+				border-width: 3px;
+				width: 0;
+			}
+			ul {
+				@include box-shadow(0, 4px, 6px, #999);
+				background-color: #fff;
+				border: 3px solid #eee;
+				cursor: normal;
+				display: none;
+				left: -5px;
+				padding: 5px;
+				position: absolute;
+				top: -5px;
+				min-width: 150px;
+				li {
+					border-top: 1px solid #eee;
+					cursor: pointer;
+					padding: 5px;
+					&:first-child {
+						border-top: none;
+					}
+					&:hover {
+						background-color: #cce1ef;
+					}
+				}
+			}
+		}
 	}
 	.mode {
-		color:#2070AD;
-		font-size:21px;
-		left:5px;
-		position:relative;
-		top:12px;
+		color: #2070AD;
+		font-size: 21px;
+		left: 5px;
+		position: relative;
+		top: 12px;
 	}
 }
 
