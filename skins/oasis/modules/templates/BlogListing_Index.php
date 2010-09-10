@@ -1,9 +1,8 @@
+<?php global $wgStylePath; //FIXME ?>
 <section class="<?= $blogListingClass ?>" style="display: none">
-	<h3><?= View::specialPageLink('CreateBlogPage', 'blog-create-post-label', 'wikia-button', 'blank.gif', 'oasis-add-blog-listing', 'osprite icon-add') ?><?= $wgTitle ?>
-		<a href="">
-		 <img src="" class="osprite icon-article-like" /> 
-		</a>
-	
+	<h3><?= View::specialPageLink('CreateBlogPage', 'blog-create-post-label', 'wikia-button', 'blank.gif', 'oasis-add-blog-listing', 'osprite icon-add') ?>
+		<?= $wgTitle ?>
+		<?= View::link(Title::newFromText($wgTitle), "<img src=\"$wgStylePath/oasis/images/reload_button.png\">", array(), array('action' => 'purge')); ?>
 	</h3>
 	<ul>
 		<?php
