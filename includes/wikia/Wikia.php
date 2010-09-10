@@ -1049,11 +1049,19 @@ class Wikia {
 	 * @param       Array   $removegroup - disabled groups for user
 	 */
 	static public function notifyUserOnRightsChange ( &$user, $addgroup, $removegroup ) {
-		global $wgUsersNotifiedOnAllChanges;
+		global $wgUsersNotifiedOnAllChanges, $wgUsersNotifiedOfRightsChanges;
+		
+		// Using wgUsersNotifiedOnAllChanges is a hack to get the UserMailer to notify these users.  The use
+		// of wgUsersNotifiedOfRightsChanges is to prevent the same user from being notified multiple times if
+		// multiple actions occur on the same page.
+		$wgUsersNotifiedOnAllChanges = array_diff($wgUsersNotifiedOnAllChanges, $wgUsersNotifiedOfRightsChanges);
 
 		$userName = $user->getName();
 		if ( !in_array( $userName, $wgUsersNotifiedOnAllChanges) ) {
 			$wgUsersNotifiedOnAllChanges[] = $userName;
+			
+			// We only add them to this if THIS is the reason they're in wgUsersNotifiedOnAllChanges so that we don't accidentally over-remove.
+			$wgUsersNotifiedOfRightsChanges[] = $userName;
 		}
 
 		return true;
