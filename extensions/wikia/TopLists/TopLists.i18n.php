@@ -19,7 +19,7 @@ $messages['en'] = array(
 	//errors
 	'toplists-error-invalid-title' => 'The supplied text is not valid',
 	'toplists-error-invalid-picture' => 'The selected picture is not valid',
-	'toplists-error-title-exists' => 'This article already exists, you can go to <a href="$1" target="_blank">$2</a> or supply a different name',
+	'toplists-error-title-exists' => 'This article already exists, you can go to <a href="$2" target="_blank">$1</a> or supply a different name',
 	'toplists-error-title-spam' => 'The supplied text contains some words recognized as spam',
 	'toplists-error-article-blocked' => 'You are not allowed to create an article with this name, sorry',
 	'toplists-error-article-not-exists' => '"$1" does not exist, do you want to <a href="$2" target="_blank">create it</a>?',
