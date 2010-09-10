@@ -60,6 +60,9 @@
 	
 	.wikia-button {
 		@include clearfix;
+		a {
+			font-size: 12px;
+		}
 	}
 	
 	// /** Chevrons left and right **/
