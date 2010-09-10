@@ -1,5 +1,4 @@
 .WikiaFooter {
-	background: url(/skins/oasis/images/sprite.png) 0 -32px no-repeat;
 	clear: both;
 	padding-top: 23px;
 	position: relative;
@@ -14,6 +13,15 @@
 		top: 0;
 		width: $width-outside + 10px;
 		z-index: 500;
+		&:after {
+			background: url(/skins/oasis/images/sprite.png) no-repeat;
+			content: " ";
+			height: 12px;
+			left: 5px;
+			position: absolute;
+			top: 20px;
+			width: 1000px;
+		}
 		&.float {
 			bottom: 0;
 			position: fixed;
@@ -46,13 +54,13 @@
 				margin: 0 6px 0 1px;
 				width: 15px;
 				&.mytools-icon {
-					background: url(/skins/oasis/images/sprite.png) -1584px -16px no-repeat;
+					background: url(/skins/oasis/images/sprite.png) -1112px -16px no-repeat;
 				}
 				&.follow-icon {
-					background: url(/skins/oasis/images/sprite.png) -1584px 0 no-repeat;
+					background: url(/skins/oasis/images/sprite.png) -1112px 0 no-repeat;
 				}
 				&.share-icon {
-					background: url(/skins/oasis/images/sprite.png) -1584px -48px no-repeat;
+					background: url(/skins/oasis/images/sprite.png) -1112px -48px no-repeat;
 				}
 			}
 		}
