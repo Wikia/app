@@ -28,8 +28,6 @@ class TopListParser {
 	 */
 	static public function parseTag( $input, $args, &$parser ) {
 		if( empty( self::$mOutput ) ) {
-			global $wgTitle;
-
 			$output = '';
 
 			if ( !empty( $args[ TOPLIST_ATTRIBUTE_RELATED ] ) ) {
@@ -46,7 +44,7 @@ class TopListParser {
 				$output = '<li>no parameters</li>';
 			}
 
-			$list = TopList::newFromTitle( $wgTitle );
+			$list = TopList::newFromTitle( $parser->mTitle );
 
 			if ( !empty( $list ) ) {
 				foreach($list->getItems() as $index => $item ) {
@@ -72,7 +70,7 @@ class TopListParser {
 	static public function parse( TopList $list ) {
 		global $wgParser;
 		$parserOptions = new ParserOptions();
-		
+
 		return $wgParser->parse($list->getArticle()->getContent(), $list->getTitle(), $parserOptions)->getText();
 	}
 }
