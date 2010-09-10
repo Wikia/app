@@ -25,6 +25,7 @@ $messages['en'] = array(
 	'toplists-error-article-not-exists' => '"$1" does not exist, do you want to <a href="$2" target="_blank">create it</a>?',
 	'toplists-error-picture-not-exists' => '"$1" does not exist, do you want to <a href="$2" target="_blank">upload it</a>?',
 	'toplists-error-duplicated-entry' => 'You can\'t use the same name more than once',
+	'toplists-error-empty-item-name' => 'The name of an existing item can\'t be empty',
 
 	//editor
 	'toplists-editor-title-label' => 'List name',

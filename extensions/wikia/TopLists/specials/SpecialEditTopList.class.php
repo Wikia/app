@@ -5,9 +5,15 @@ class SpecialEditTopList extends SpecialPage {
 		parent::__construct( 'EditTopList', 'toplists-create-edit-list', true /* listed */ );
 	}
 
-	private function _redirectToCreateSP(){
+	private function _redirectToCreateSP( $listName = null ){
 		$specialPageTitle = Title::newFromText( 'CreateTopList', NS_SPECIAL );
-		$wgOut->redirect( $specialPageTitle->getFullUrl() );
+		$url = $specialPageTitle->getFullUrl();
+
+		if( !empty( $listName ) ) {
+			$url .= '/' . wfUrlencode( $listName );
+		}
+		
+		$wgOut->redirect( $url );
 	}
 
 	function execute( $editListName ) {
@@ -45,7 +51,7 @@ class SpecialEditTopList extends SpecialPage {
 		$list = TopList::newFromText( $editListName );
 
 		if ( empty( $list ) || !$list->exists() ) {
-			$this->_redirectToCreateSP();
+			$this->_redirectToCreateSP( $editListName );
 		}
 
 		$listName = $list->getTitle()->getText();
@@ -60,12 +66,18 @@ class SpecialEditTopList extends SpecialPage {
 
 		if ( $wgRequest->wasPosted() ) {
 			TopListHelper::clearSessionItemsErrors();
-			//TODO: refactor in progress
+
+			$relatedArticleName = $wgRequest->getText( 'related_article_name' );
+			$selectedPictureName = $wgRequest->getText( 'selected_picture_name' );
+			$itemsNames = $wgRequest->getArray( 'items_names', array() );
+			$removedItems = $wgRequest->getArray( 'removed_items', array() );
+			$listItems = array();
+
+
 			
 		} else {
 			$items += $existingItems;
-
-			//TODO: read items form error session and append as 'new'
+			
 			list( $sessionListName, $failedItemsNames, $sessionErrors ) = TopListHelper::getSessionItemsErrors();
 
 			if ( $listName == $sessionListName && !empty( $failedItemsNames ) ) {
@@ -77,7 +89,7 @@ class SpecialEditTopList extends SpecialPage {
 						'value' => $itemName
 					);
 
-					$errors[ 'item_' . ++$counter ] = $sessionErrors[ $index ];
+					$errors[ 'item_' . $counter++ ] = $sessionErrors[ $index ];
 				}
 			}
 

@@ -44,6 +44,10 @@ global $wgBlankImgUrl;
 		<? foreach( $items as $position => $item ): ?>
 			<? $isDraggable = ( in_array( $item['type'], array( 'new', 'template' ) ) ) ;?>
 			<li class="ListItem<?= ( $isDraggable )  ? ' NewItem' : null ;?><?= ( $item['type'] == 'template' ) ? ' ItemTemplate' : null ;?>">
+				<? if ( $item['type'] == 'existing' ) :?>
+					<input type="hidden" value="<?= $position - 1 ;?>" />
+				<? endif ;?>
+				
 				<div class="ItemNumber">#<?= ( $item['type'] != 'template' ) ? $position : null ;?></div>
 				<div class="ItemName">
 					<input type="text" name="items_names[]" value="<?= $item['value'] ;?>"<?= ( $item['type'] == 'template' ) ? ' disabled' : null ;?><?= ( !empty( $errors[ "item_{$position}" ] ) ) ? ' class="error"' : null ;?> />
@@ -68,7 +72,6 @@ global $wgBlankImgUrl;
 			</li>
 		<? endforeach ;?>
 	</ul>
-
 	<div class="AddControls">
 		<a id="toplist-add-item" class="wikia-chiclet-button" title="<?= wfMsg( 'toplists-editor-add-item-tooltip' ) ;?>" rel="nofollow">
 			<img alt="<?= wfMsg( 'toplists-editor-add-item-tooltip' ) ;?>" src="<?= wfBlankImgUrl() ;?>">
