@@ -60,7 +60,7 @@ abstract class AdProviderIframeFiller {
 
 class AdEngine {
 
-	const cacheKeyVersion = "2.01a";
+	const cacheKeyVersion = "2.02a";
 	const cacheTimeout = 1800;
         const lazyLoadAdClass = 'LazyLoadAd';
         const fillIframeFunctionPrefix = 'fillIframe_';

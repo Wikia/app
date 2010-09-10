@@ -31,14 +31,17 @@
 <body class="<?= implode(' ', $bodyClasses) ?>"<?= $body_ondblclick ? ' ondblclick="' . htmlspecialchars($body_ondblclick) . '"' : '' ?>>
 <?= $body ?>
 <?= $printableCss ?>
+
+<?php
+        // Load Javacript right before the closing body tag.
+
+        print "<!-- Combined JS files (StaticChute) -->\n";
+        print $staticChuteHtml."\n";
+?>
+
 <?= AdEngine::getInstance()->getDelayedIframeLoadingCode() ?>
 <?= $analytics ?>
 <?php
-	// Load Javacript right before the closing body tag.
-
-	print "<!-- Combined JS files (StaticChute) -->\n";
-	print $staticChuteHtml."\n";
-
 	// TODO: SWC: TO TEST ASYNC LOADING, REMOVE PRINT OF $staticChuteHtml ABOVE AND UNCOMMENT THESE TWO LINES:
 	//print $wikiaScriptLoader;
 	//print $jsLoader;
