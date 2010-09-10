@@ -300,6 +300,7 @@ class StaticChute {
 			'../extensions/wikia/AdEngine/LazyLoadAds.js',
 			'../extensions/wikia/Geo/geo.js',
 			'../extensions/wikia/QuantcastSegments/qcs.js',
+			'../extensions/wikia/AdEngine/AdEngine.js',
 		);
 		$this->config['oasis_anon_article_js'] = array_merge($this->config['oasis_jquery'], $this->config['oasis_anon_article_js']); // order matters here: load jQuery first.
 
@@ -332,6 +333,7 @@ class StaticChute {
 			'../extensions/wikia/AdEngine/LazyLoadAds.js',
 			'../extensions/wikia/Geo/geo.js',
 			'../extensions/wikia/QuantcastSegments/qcs.js',
+			'../extensions/wikia/AdEngine/AdEngine.js',
 		);
 		$this->config['oasis_loggedin_js'] = array_merge($this->config['oasis_jquery'], $this->config['oasis_loggedin_js']);
 
@@ -592,7 +594,7 @@ class StaticChute {
 
 	public function useLocalChuteUrl() {
 		global $wgServer, $wgScriptPath, $wgForceStaticChutePath;
-		
+
 		if(!empty($wgForceStaticChutePath)){
 			$this->setChuteUrlPath($wgForceStaticChutePath);
 		} else {
@@ -832,7 +834,7 @@ class StaticChute {
 
 			// macbre: remove BOM
 			$rawData = str_replace("\xEF\xBB\xBF", '', $rawData);
-			
+
 			if($this->fileType == 'css'){
 				require_once dirname(__FILE__) . "/wfReplaceCdnStylePathInCss.php"; // this SHOULDN'T load the whole MediaWiki stack, but I didn't verify this.
 				$rawData = wfReplaceCdnStylePathInCss($rawData, $this->cdnStylePath);
