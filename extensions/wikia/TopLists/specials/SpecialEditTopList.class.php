@@ -5,6 +5,11 @@ class SpecialEditTopList extends SpecialPage {
 		parent::__construct( 'EditTopList', 'toplists-create-edit-list', true /* listed */ );
 	}
 
+	private function _redirectToCreateSP(){
+		$specialPageTitle = Title::newFromText( 'CreateTopList', NS_SPECIAL );
+		$wgOut->redirect( $specialPageTitle->getFullUrl() );
+	}
+
 	function execute( $editListName ) {
 		wfProfileIn( __METHOD__ );
 
@@ -16,8 +21,7 @@ class SpecialEditTopList extends SpecialPage {
 		}
 
 		if( empty( $editListName ) ) {
-			$specialPageTitle = Title::newFromText( 'CreateTopList', NS_SPECIAL );
-			$wgOut->redirect( $specialPageTitle->getFullUrl() );
+			$this->_redirectToCreateSP();
 		}
 		
 		// set basic headers
@@ -40,11 +44,17 @@ class SpecialEditTopList extends SpecialPage {
 		$list = TopList::newFromText( $editListName );
 
 		if( empty( $list ) || !$list->exists() ) {
-			$specialPageTitle = Title::newFromText( 'CreateTopList', NS_SPECIAL );
-			$wgOut->redirect( $specialPageTitle->getFullUrl( array( 'wpListName' => $editListName ) ) );
+			$this->_redirectToCreateSP();
 		} else {
 			$listName = $list->getTitle()->getText();
 			$listUrl = $list->getTitle()->getLocalUrl();
+
+			foreach( $list->getItems() as $item ) {
+				$items[] = array(
+					'type' => 'existing',
+					'value' => $item->getTitle()->getSubpageText()
+				);
+			}
 		}
 		
 		//TODO: refactor in progress
@@ -53,14 +63,12 @@ class SpecialEditTopList extends SpecialPage {
 			//TODO: refactor in progress
 		}
 
-		if ( empty( $items ) ) {
-			//show 3 empty items by default
-			for ( $x = 0; $x < 3; $x++ ) {
-				$items[] = array(
-					'type' => 'new',
-					'value' => null
-				);
-			}
+		//show at least 3 items by default, if not enough fill in with empty ones
+		for ( $x = ( !empty( $items ) ) ? count( $items ) : 0; $x < 3; $x++ ) {
+			$items[] = array(
+				'type' => 'new',
+				'value' => null
+			);
 		}
 
 		// pass data to template

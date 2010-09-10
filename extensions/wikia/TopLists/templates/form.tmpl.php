@@ -27,7 +27,7 @@ global $wgBlankImgUrl;
 				<? endforeach ;?>
 			<? endif ;?>
 		<? else :?>
-			<p><big><strong><?= $listName ;?></strong></big></p>
+			<big><strong><?= $listName ;?></strong></big>
 		<? endif ;?>
 	</div>
 	<div class="InputSet AutoCompleteWrapper">
