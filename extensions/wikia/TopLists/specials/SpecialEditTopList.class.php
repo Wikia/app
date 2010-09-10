@@ -32,6 +32,7 @@ class SpecialEditTopList extends SpecialPage {
 		$wgSupressPageSubtitle = true;
 		$errors = array();
 		$listName = null;
+		$listUrl = null;
 		$relatedArticleName = null;
 		$selectedPictureName = null;
 		$items = null;
@@ -43,6 +44,7 @@ class SpecialEditTopList extends SpecialPage {
 			$wgOut->redirect( $specialPageTitle->getFullUrl( array( 'wpListName' => $editListName ) ) );
 		} else {
 			$listName = $list->getTitle()->getText();
+			$listUrl = $list->getTitle()->getLocalUrl();
 		}
 		
 		//TODO: refactor in progress
@@ -66,6 +68,7 @@ class SpecialEditTopList extends SpecialPage {
 		$template->set_vars( array(
 			'mode' => 'update',
 			'listName' => $listName,
+			'listUrl' => $listUrl,
 			'relatedArticleName' => $relatedArticleName,
 			'selectedPictureName' => $selectedPictureName,
 			'errors' => $errors,
