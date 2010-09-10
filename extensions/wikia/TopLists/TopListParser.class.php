@@ -28,33 +28,28 @@ class TopListParser {
 	 */
 	static public function parseTag( $input, $args, &$parser ) {
 		if( empty( self::$mOutput ) ) {
-			$output = '';
-
 			if ( !empty( $args[ TOPLIST_ATTRIBUTE_RELATED ] ) ) {
 				self::$mAttributes[ TOPLIST_ATTRIBUTE_RELATED ] = $args[ TOPLIST_ATTRIBUTE_RELATED ];
-				$output .= '<li>' . TOPLIST_ATTRIBUTE_RELATED . " = {$args[ TOPLIST_ATTRIBUTE_RELATED ]}</li>";
+				//$output .= '<li>' . TOPLIST_ATTRIBUTE_RELATED . " = {$args[ TOPLIST_ATTRIBUTE_RELATED ]}</li>";
 			}
 
 			if ( !empty( $args[ TOPLIST_ATTRIBUTE_PICTURE ] ) ) {
 				self::$mAttributes[ TOPLIST_ATTRIBUTE_PICTURE ] = $args[ TOPLIST_ATTRIBUTE_PICTURE ];
-				$output .= '<li>' . TOPLIST_ATTRIBUTE_PICTURE . " = {$args[ TOPLIST_ATTRIBUTE_PICTURE ]}</li>";
-			}
-
-			if ( empty( $output ) ) {
-				$output = '<li>no parameters</li>';
+				//$output .= '<li>' . TOPLIST_ATTRIBUTE_PICTURE . " = {$args[ TOPLIST_ATTRIBUTE_PICTURE ]}</li>";
 			}
 
 			$list = TopList::newFromTitle( $parser->mTitle );
 
 			if ( !empty( $list ) ) {
-				foreach($list->getItems() as $index => $item ) {
-					$output .= '<li><strong>#' . ++$index . '</strong> ' . $item->getTitle()->getSubpageText() . '</li>';
-				}
+				$template = new EasyTemplate( dirname( __FILE__ )."/templates/" );
+				$template->set_vars( array( 'list' => $list, 'attribs' => self::$mAttributes ) );
+
+				self::$mOutput = $template->execute( 'list' );
 			}
-
-			self::$mOutput = "Parsed TopList tag (visualization logic still missing), tag data (if present):<ul>{$output}</ul>";
+			else {
+				self::$mOutput = '';
+			}
 		}
-
 		return self::$mOutput;
 	}
 
