@@ -152,7 +152,7 @@ class SpecialCreateTopList extends SpecialPage {
 							}
 
 							if( empty( $errors ) ) {
-								$wgOut->redirect( "{$listUrl}" );
+								$wgOut->redirect( $listUrl );
 							} else {
 								$_SESSION[ 'toplist_unsaved_items' ] = $unsavedItemNames;
 								$_SESSION[ 'toplist_errors' ] = $errors;
