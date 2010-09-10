@@ -1,4 +1,4 @@
-<?php?>
+<?php ?>
 <form id="toplist-editor" name="toplist<?= $mode ;?>" method="POST" action="">
 	<div class="ImageBrowser">
 		<div class="frame">
