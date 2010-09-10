@@ -99,8 +99,18 @@ EOT;
 		return $url;
 	}
 
+	/**
+	 * Quantcast integration guide: multiple segments specified as "qcseg=A;qcseg=B;".
+	 * Segments should be located near end of DART URL.
+	 */
 	public static function getQuantcastSegmentKV() {
+		global $wgIntegrateQuantcastSegments;
+
 		$segs = '';
+
+		if (empty($wgIntegrateQuantcastSegments)) {
+			return $segs;
+		}
 
 		if (class_exists('QuantcastSegments', false)) {
 			if (!empty($_COOKIE[QuantcastSegments::SEGMENTS_COOKIE_NAME])) {
