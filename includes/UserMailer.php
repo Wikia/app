@@ -471,7 +471,7 @@ class EmailNotification {
 		}
 		/* Wikia change end */
 
-// Build a list of users to notfiy
+		// Build a list of users to notfiy
 		$watchers = array();
 		if ($wgEnotifWatchlist || $wgShowUpdatedMarker) {
 			$dbw = wfGetDB( DB_MASTER );		
