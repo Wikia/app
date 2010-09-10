@@ -16,7 +16,11 @@ module WikiaFunctions
                                 end
                         end
                 end
-                Sass::Script::Parser.parse(retVal, 0, 0)
+				begin
+					Sass::Script::Parser.parse(retVal, 0, 0)
+				rescue
+					Sass::Script::String.new(retVal)
+				end
         end
 end
 
