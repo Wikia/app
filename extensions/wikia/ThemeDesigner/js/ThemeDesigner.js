@@ -312,10 +312,22 @@ var ThemeDesigner = {
 		$("#Toolbar .history ul").mouseleave(function() {
 			$(this).css("display", "none");
 		});
-		$("#Toolbar .history ul li").click(ThemeDesigner.revertToPreviousColor);
+		$("#Toolbar .history ul li").click(ThemeDesigner.revertToPreviousTheme);
+		
+		// temp code for testing, load ThemeDesigner.history here later
+		var clonedSettings1 = $.extend(true, {}, ThemeDesigner.settings);
+		var clonedSettings2 = $.extend(true, {}, ThemeDesigner.settings);
+		clonedSettings1["color-body"] = "red";
+		clonedSettings2["color-body"] = "blue";
+		$("#Toolbar .history ul li").first().data("settings", clonedSettings1);
+		$("#Toolbar .history ul li").last().data("settings", clonedSettings2);
+		// end temp code
 	},
 	
-	revertToPreviousColor: function(event) {
-		alert("please code me");
+	revertToPreviousTheme: function(event) {
+		if($(this).data("settings")) {
+			ThemeDesigner.settings = $(this).data("settings");
+			ThemeDesigner.applySettings();
+		}
 	}
 };
