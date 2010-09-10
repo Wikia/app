@@ -55,7 +55,7 @@
 		<? foreach( $items as $position => $item ): ?>
 			<? $isDraggable = ( in_array( $item['type'], array( 'new', 'template' ) ) ) ;?>
 			<li class="ListItem<?= ( $isDraggable )  ? ' NewItem' : null ;?><?= ( $item['type'] == 'template' ) ? ' ItemTemplate' : null ;?>">
-				<? if ( $item['type'] == 'existing' ) :?>
+				<? if ( $item['type'] == 'existing' && isset( $item['index'] ) ) :?>
 					<input type="hidden" value="<?= $item['index'] ;?>" />
 				<? endif ;?>
 				
