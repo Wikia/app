@@ -45,10 +45,10 @@
 		display: none;
 	}
 	nav:before {
-		background: url("/skins/oasis/images/sprite.png") no-repeat scroll -1750px 0 transparent;
-		bottom: -10px;
+		background: url("/skins/oasis/images/sprite.png") no-repeat;
+		bottom: -12px;
 		content: " ";
-		height: 11px;
+		height: 12px;
 		left: 5px;
 		position: absolute;
 		width: 1000px;
@@ -94,7 +94,7 @@
 			top: -6px;
 		}
 		img {
-			background: url(/skins/oasis/images/sprite.png) -1632px 0 no-repeat;
+			background: url(/skins/oasis/images/sprite.png) -1000px 0 no-repeat;
 			height: 26px;
 			width: 91px;
 		}
