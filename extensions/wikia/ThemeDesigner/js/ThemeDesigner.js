@@ -160,6 +160,9 @@ var ThemeDesigner = {
 		} else {
 			$('#Navigation [rel="ThemeTab"]').click();
 		}
+		
+		// init Tool Bar
+		ThemeDesigner.ToolBarInit();
 
 		ThemeDesigner.applySettings(true);
 	},
@@ -424,5 +427,34 @@ var ThemeDesigner = {
 
 	isNumeric: function(input) {
 		return (input - 0) == input && input.length > 0;
+	},
+	
+	ToolBarInit: function() {
+		$("#Toolbar .history").click(function() {
+			$(this).find("ul").css("display", "block");
+		});
+		$("#Toolbar .history ul").mouseleave(function() {
+			$(this).css("display", "none");
+		});
+		$("#Toolbar .history ul li").click(ThemeDesigner.revertToPreviousTheme);
+		
+		// temp code and mock data for testing and placeholder, load ThemeDesigner.history here later
+		var clonedSettings1 = $.extend(true, {}, ThemeDesigner.settings);
+		var clonedSettings2 = $.extend(true, {}, ThemeDesigner.settings);
+		var clonedDefault = $.extend(true, {}, ThemeDesigner.settings);
+		clonedSettings1["color-body"] = "red";
+		clonedSettings2["color-body"] = "blue";
+		$("#Toolbar .history ul li").first().data("settings", clonedSettings1);
+		$("#Toolbar .history ul li").next().data("settings", clonedSettings2);
+		$("#Toolbar .history ul li").last().data("settings", clonedDefault);
+		// end temp code
+	},
+	
+	revertToPreviousTheme: function(event) {
+		event.preventDefault();
+		if($(this).data("settings")) {
+			ThemeDesigner.settings = $(this).data("settings");
+			ThemeDesigner.applySettings();
+		}
 	}
 };
