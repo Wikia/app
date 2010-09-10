@@ -12,7 +12,12 @@ var ThemeDesigner = {
 
 	wordmarkUploadCallback : {
 		onComplete: function(response) {
-			alert(123);
+			var response = $.evalJSON(response);
+			if(response.errors && response.errors.length > 0) {
+				alert(response.errors.join("\n"));
+			} else {
+				alert('This is a wordmark url: ' + response.wordmarkUrl);
+			}
 		}
 	},
 
@@ -36,7 +41,7 @@ var ThemeDesigner = {
 		"background-image-revision": false,
 		"background-tiled": false
 	},
-	
+
 	themes: {
 		oasis: {
 			"color-body": "#BACDD8",
@@ -209,12 +214,12 @@ var ThemeDesigner = {
 			event.preventDefault();
 			var list = $("#ThemeTab .slider ul");
 			var arrow = $(this);
-	
+
 			// prevent disabled clicks
 			if (arrow.hasClass("disabled")) {
 				return;
 			}
-	
+
 			var slideTo = (arrow.hasClass("previous")) ? 0 : -760;
 			list.animate({
 				marginLeft: slideTo
@@ -227,22 +232,22 @@ var ThemeDesigner = {
 			//set up vars
 			var theme = $(this).attr("data-theme");
 			var themeSettings = ThemeDesigner.themes[theme];
-			
+
 			//highlight selected theme
 			$(this).parent().find(".selected").removeClass("selected");
 			$(this).addClass("selected");
-			
+
 			//set settings
 			$.extend(ThemeDesigner.settings, themeSettings);
 			ThemeDesigner.settings["theme"] = theme;
-			
+
 			//apply settings
 			ThemeDesigner.applySettings();
 		});
-		
+
 		//select current theme
 		$("#ThemeTab").find('[data-theme=	' + ThemeDesigner.settings["theme"] + ']').addClass("selected");
-		
+
 	},
 
 

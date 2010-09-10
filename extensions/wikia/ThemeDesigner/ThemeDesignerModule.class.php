@@ -73,28 +73,38 @@ class ThemeDesignerModule extends Module {
 
 	}
 
+	var $wordmarkUrl;
+	var $errors;
+
 	public function executeWordmarkUpload() {
 		global $wgRequest;
 
+		$filename = $wgRequest->getFileName('wpUploadFile');
+
 		// check if there is a file send
-		if($wgRequest->getFileName('wpUploadFile')) {
+		if($filename) {
 
-			// check if file is in correct size
-			$imageSize = getimagesize($_FILES['wpUploadFile']['tmp_name']);
-			if($imageSize[0] == 300 && $imageSize[1] == 60) {
-				$file = new FakeLocalFile(Title::newFromText('Temp_file_'.time(), 6), RepoGroup::singleton()->getLocalRepo());
-				$file->upload($wgRequest->getFileTempName('wpUploadFile'), '', '');
+			// check if it's a PNG file
+			if(strtolower(end(explode(".", $filename))) == 'png') {
 
+				// check if file is in correct size
+				$imageSize = getimagesize($_FILES['wpUploadFile']['tmp_name']);
+				if($imageSize[0] == 300 && $imageSize[1] == 60) {
 
-print_pre($file->getURL());
+					$file = new FakeLocalFile(Title::newFromText('Temp_file_'.time().'_'.$filename, 6), RepoGroup::singleton()->getLocalRepo());
+					$file->upload($wgRequest->getFileTempName('wpUploadFile'), '', '');
+					$this->wordmarkUrl = $file->getUrl();
 
+				}
 
 			}
 
 		}
 
-		exit();
-
+		// if wordmark url is not set then it means there was some problem
+		if(empty($this->wordmarkUrl)) {
+			$this->errors = array('Incorrect file type or file dimension.');
+		}
 
 	}
 
