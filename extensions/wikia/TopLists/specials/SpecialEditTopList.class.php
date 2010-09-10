@@ -82,10 +82,11 @@ class SpecialEditTopList extends SpecialPage {
 			}
 			
 		} else {
-			foreach ( $listItems as $item ) {
+			foreach ( $listItems as $index => $item ) {
 				$existingItems[] = array(
 					'type' => 'existing',
-					'value' => $item->getArticle()->getContent()
+					'value' => $item->getArticle()->getContent(),
+					'index' => $index
 				);
 			}
 
