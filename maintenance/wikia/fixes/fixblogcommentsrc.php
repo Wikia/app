@@ -38,7 +38,7 @@ function fixAllBlogCommentsRC( $dry ) {
 
 	if( !empty($pages) ) {
 		foreach ( $pages as $row ) {
-			print "parse " . $row['page_title'] . "\n";
+			print "parse {$row['rc_title']}\n";
 
 			$parts = ArticleComment::explode( $row[ 'rc_title' ] );
 			if( $parts['blog'] == 1 && count( $parts['partsOriginal'] ) > 0 ) {
@@ -47,9 +47,9 @@ function fixAllBlogCommentsRC( $dry ) {
 					$parts['parsed'][$id] = sprintf('%s-%s', '@comment', $title );
 				}
 
-				$newTitle = sprintf('%s/%s', $parts['title'], implode("/", $parts['parsed']) );
+				$newTitle = sprintf('%s/%s', $parts['title'], implode( "/", $parts['parsed']) );
 
-				if( 1 ) {
+				if( $dry ) {
 					printf(
 						"update recentchanges set rc_title = '%s' where rc_id = %d and rc_namespace = %d\n",
 						$newTitle,
@@ -59,9 +59,9 @@ function fixAllBlogCommentsRC( $dry ) {
 				}
 				else {
 					$dbw->update(
-						'page',
-						array( 'page_title' => $newTitle ),
-						array( 'page_title' => $row['page_title'], 'page_namespace' => NS_BLOG_ARTICLE_TALK ),
+						'recentchanges',
+						array( 'rc_title' => $newTitle ),
+						array( 'rc_id' => $row['rc_id'], 'rc_namespace' => NS_BLOG_ARTICLE_TALK ),
 						$method
 					);
 				}
