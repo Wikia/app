@@ -46,7 +46,7 @@
 		<h1><?= wfMsg('themedesigner-graphic-wordmark') ?></h1>
 		<h2>upload a graphic</h2>
 
-		<form onsubmit="return jQuery.AIM.submit(this, ThemeDesigner.wordmarkUploadCallback)" action="<?= $wgScriptPath ?>/index.php?action=ajax&rs=moduleProxy&moduleName=ThemeDesigner&actionName=WordmarkUpload&outputType=data" method="POST" enctype="multipart/form-data">
+		<form onsubmit="return AIM.submit(this, ThemeDesigner.wordmarkUploadCallback)" action="<?= $wgScriptPath ?>/index.php?action=ajax&rs=moduleProxy&moduleName=ThemeDesigner&actionName=WordmarkUpload&outputType=html" method="POST" enctype="multipart/form-data">
 			<input id="WordMarkUploadFile" name="wpUploadFile" type="file" />
 			<input type="submit" value="Upload" onclick="return ThemeDesigner.wordmarkUpload(event);"/> 300x60 pixels (only .png files)
 		</form>
