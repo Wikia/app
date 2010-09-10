@@ -1,10 +1,5 @@
-html {
-	background: $color-body url(/skins/oasis/images/checkers.png);
-}
-
 body {
-	@include linear-gradient(false, left, rgba($color-body, 0), 0, $color-body, 30%, $color-body, 70%, rgba($color-body, 0), 100%);
-
+	background: $color-body url($background-image) top center repeat;
 	color: $color-text;
 	font-family: Helvetica, Arial, sans-serif;
 	font-size: 12px;
@@ -13,6 +8,11 @@ body {
 	padding: 20px 0;
 	>h1 {
 		display: none;
+	}
+}
+@if $background-tiled == false {
+	body {
+		background-repeat: no-repeat;
 	}
 }
 

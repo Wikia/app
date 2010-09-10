@@ -33,6 +33,7 @@ $color-selected-thumbnail: #72ADD5;
 	}
 	img {
 		border: 1px solid $color-borders;
+		cursor: pointer;
 		display: block;
 	}
 	.chevron {
