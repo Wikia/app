@@ -57,11 +57,6 @@ var TopListsEditor = {
 		});
 	},
 
-	_addTitleToRemove: function(){
-		//TODO: implement, used only in edit mode (move to separate js file perhaps?)
-		//if edit mode add an hidden input containing the title of the item to remove
-	},
-
 	addItem: function(){
 		TopListsEditor.length++;
 		
@@ -81,14 +76,21 @@ var TopListsEditor = {
 				.removeAttr('disabled');
 	},
 
-	removeItem: function(objItem){
-		$(this)
-			.closest('li')
-			.remove();
+	removeItem: function(){
+		var item = $(this).closest('li');
+
+		if(!item.hasClass('NewItem')){
+			$('<input/>', {
+				'type': 'hidden',
+				'name': 'removed_items[]'
+			}).
+				val(parseInt(item.find('input[type="hidden"]').val())).
+				appendTo($('#toplist-editor'));
+		}
+		
+		item.remove();
 		
 		TopListsEditor.length--;
 		TopListsEditor._fixLabels();
-
-		//TODO: detect edit mode and call _addTitleToRemove
 	}
 };
