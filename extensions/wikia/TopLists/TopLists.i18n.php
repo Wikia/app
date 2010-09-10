@@ -45,9 +45,15 @@ $messages['en'] = array(
 	'toplists-list-creation-summary' => 'Creating the "$1" top list',
 	'toplists-list-update-summary' => 'Updating the "$1" top list',
 	'toplists-item-creation-summary' => 'Creating the "$1" top list item',
-	'toplists-item-update-summary' => 'Updating the "$1" top list item'
+	'toplists-item-update-summary' => 'Updating the "$1" top list item',
+
+	//list view
+	'toplists-list-votes-num' => '$1 votes',
+	'toplists-list-created-by' => 'By $1',
+	'toplists-list-vote-up' => 'Vote Up'
+
 );
 
 $messages['qqq'] = array(
-	
+
 );

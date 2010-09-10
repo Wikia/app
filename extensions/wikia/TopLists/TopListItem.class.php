@@ -6,6 +6,11 @@
  */
 
 class TopListItem extends TopListBase {
+
+	private $votesCount = 0;
+	//TODO: implement
+	private $creatorUserName = 'Somebody';
+
 	/**
 	 * @author Federico "Lox" Lucignano
 	 *
@@ -44,7 +49,7 @@ class TopListItem extends TopListBase {
 
 		return false;
 	}
-	
+
 	/**
 	 * @author Federico "Lox" Lucignano
 	 *
@@ -63,6 +68,18 @@ class TopListItem extends TopListBase {
 	 */
 	public function getVotesCount() {
 		//TODO: implement
+		return $this->votesCount;
+	}
+
+	/*
+	 * Get the user name of item creator
+	 *
+	 * @author Adrian 'ADi' Wieczorek
+	 * @return string
+	 */
+	public function getCreatorUserName() {
+		//TODO: implement
+		return $this->creatorUserName;
 	}
 
 	/**
@@ -84,7 +101,7 @@ class TopListItem extends TopListBase {
 		//TODO: Implement
 		return true;
 	}
-	
+
 	/**
 	 * @author Federico "Lox" Lucignano
 	 *
@@ -96,7 +113,7 @@ class TopListItem extends TopListBase {
 		if( $errors === true ) {
 			$errors = array();
 		}
-		
+
 		$title = Title::newFromText( $this->mTitle->getBaseText(), NS_TOPLIST );
 
 		if( !( ( $title instanceof Title ) && $title->exists() ) && $listMode == TOPLISTS_SAVE_UPDATE ) {
