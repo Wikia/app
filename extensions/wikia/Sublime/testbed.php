@@ -49,7 +49,7 @@ require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
 </head>
 <body>
 	<h1>Testbed for Sublime</h1>
-	<div id='editform'>&nbsp;</div>
+	<div id='editform'><textarea id='wpTextbox1'></textarea></div>
 	<article id='sendMeToWikia'>
 		This is the content which should be sent to wikia.
 		
