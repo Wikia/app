@@ -85,7 +85,7 @@ class SpecialEditTopList extends SpecialPage {
 				if ( !empty( $relatedArticleName ) ) {
 					$title = Title::newFromText( $relatedArticleName );
 
-					if ( empty( $title3 ) ) {
+					if ( empty( $title ) ) {
 						$errors[ 'related_article_name' ] = array( wfMsg( 'toplists-error-invalid-title' )  );
 					} else {
 						$setResult = $list->setRelatedArticle( $title );
@@ -153,7 +153,7 @@ class SpecialEditTopList extends SpecialPage {
 					);
 
 					if ( empty( $itemsNames[ $index ] ) ) {
-						$errors[ 'item_' . ( $counter + 1 ) ] = wfMsg( 'toplists-error-empty-item-name' );
+						$errors[ 'item_' . ( $counter + 1 ) ][] = wfMsg( 'toplists-error-empty-item-name' );
 					} elseif ( $item->getArticle()->getContent() != $itemsNames[ $index ] ) {
 						$item->setNewContent( $itemsNames[ $index ] );
 						$items[ $counter ][ 'object' ] = $item;
@@ -183,7 +183,17 @@ class SpecialEditTopList extends SpecialPage {
 			}
 
 			//check items for processing
+			$usedNames = array();
+			
 			foreach ( $items as $index => $item ) {
+				$lcName = strtolower( $item[ 'value' ] );
+
+				if( in_array( $lcName, $usedNames) ) {
+					$errors[ 'item_' . ++$index ][] =  wfMsg( 'toplists-error-duplicated-entry' );
+				} else {
+					$usedNames[] = $lcName;
+				}
+
 				if ( $item[ 'changed' ] && !empty( $item[ 'object' ] ) ) {
 					$checkResult = $item[ 'object' ]->checkForProcessing();
 
