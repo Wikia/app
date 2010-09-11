@@ -322,9 +322,9 @@ Mediawiki.editArticle = function (article, callbackSuccess, callbackError){
 	return Mediawiki.apiCall(apiParams, callbackSuccess, callbackError, "POST");
 
       } catch (e) {
-	Mediawiki.error("Error editing article");
-	Mediawiki.d(Mediawiki.print_r(e));
-	return false;
+		Mediawiki.error("Error editing article");
+		Mediawiki.d(Mediawiki.print_r(e));
+		return false;
       }
 };
 
