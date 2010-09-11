@@ -55,8 +55,8 @@ while( false !== ( $file = readdir( $dir ) ) ) {
 		continue;
 	}
 
-        $title = Title::newFromText( substr( $file, 0, -5 ) );
-        $article = new Article( $title );
+	$title = Title::newFromText( substr( $file, 0, -5 ) );
+	$article = new Article( $title );
 
 	$importer = new $importerClass( $text );
 
