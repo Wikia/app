@@ -116,5 +116,6 @@ require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
 			}
 			Mediawiki.updateStatus("ERROR from API: " + msg, true);
 		}
+	</script>
 </body>
 </html>
