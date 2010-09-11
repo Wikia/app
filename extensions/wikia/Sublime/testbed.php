@@ -77,14 +77,7 @@ require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
 		function submitSublime(){
 			var sublimeTitle = $('title').html();
 			var sublimeContent = $('#sendMeToWikia').html();
-			var normalizedTitle = Mediawiki.getNormalizedTitle(sublimeTitle);
-
-			Mediawiki.editArticle({
-				"title": normalizedTitle,
-				//"createonly": true,
-				"summary": "Testing the JS client for the API",
-				"text": sublimeContent
-			}, function(){Mediawiki.updateStatus("Article saved.");}, apiFailed);
+			sendEditToWikia(sublimeTitle, sublimeContent);
 		}
 		function makeContentEditable(){
 			$('#sendMeToWikia').attr('contenteditable', true);
@@ -99,6 +92,18 @@ require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
 		
 		
 // PROBABLY TO BE PUT INTO EXTENSION (WITH MODIFICATIONS) //
+
+		function sendEditToWikia(articleTitle, articleContent, summary){
+			summary = (summary?summary:'Edited using Sublime plugin by Wikia');
+			var normalizedTitle = Mediawiki.getNormalizedTitle(articleTitle);
+			
+			Mediawiki.editArticle({
+				"title": normalizedTitle,
+				//"createonly": true,
+				"summary": summary,
+				"text": articleContent
+			}, function(){Mediawiki.updateStatus("Article saved.");}, apiFailed);
+		}
 
 		// Login the user.		
 		function sublimeLogin(wikiUsername, wikiPass){
