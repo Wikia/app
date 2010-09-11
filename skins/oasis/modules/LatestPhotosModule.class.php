@@ -128,14 +128,14 @@ class LatestPhotosModule extends Module {
 
 	// link where this page is used...
 	if ( $s = $res->fetchObject() ) {
-		$name = Title::makeTitle( $s->page_namespace, $s->page_title );
-		$links[] = $sk->link( $name, null, array( 'class' => 'wikia-gallery-item-posted' ) );
+		$page_title = Title::makeTitle( $s->page_namespace, $s->page_title );
+		$links[] = $sk->link( $page_title, null, array( 'class' => 'wikia-gallery-item-posted' ) );
 	}
 	// if used in more than one place, add "more" link
 	if ( $s = $res->fetchObject() ) {
-		$name = Title::makeTitle( $s->page_namespace, $s->page_title );
+		$file_title = Title::makeTitle( $s->page_namespace, $s->page_title );
 
-		$links[] = '<a href="' . $name->getLocalUrl() .
+		$links[] = '<a href="' . $file_title->getLocalUrl() .
 			'#filelinks" class="wikia-gallery-item-more">' .
 			wfMsg( 'oasis-latest-photos-fileslinke-more' ) . '</a>';
 	}
