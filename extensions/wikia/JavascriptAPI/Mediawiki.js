@@ -619,8 +619,8 @@ Mediawiki.login = function (username, password, callbackSuccess, callbackError, 
 	Mediawiki.loginCallbackError = callbackError;
 	
 	// Since newer MediaWikis will have a response of NeedToken, store the values for resubmission:
-	MediaWiki.loginUsername = username;
-	MediaWiki.loginPassword = password;
+	Mediawiki.loginUsername = username;
+	Mediawiki.loginPassword = password;
 
 	Mediawiki.waiting();
 	return Mediawiki.apiCall(apiParams, Mediawiki.loginCallback, callbackError, "POST");
@@ -637,7 +637,7 @@ Mediawiki.loginCallback = function(result) {
 	try {
 		if (result.login.result == "Success"){
 			// It seems safer for the user's password to clear it out of the JS variable now that it isn't needed for resubmission anymore.
-			MediaWiki.loginPassword = '';
+			Mediawiki.loginPassword = '';
 
 			Mediawiki.setLoginSession(result.login);
 			Mediawiki.runCallback(Mediawiki.loginCallbackSuccess);
@@ -651,7 +651,7 @@ Mediawiki.loginCallback = function(result) {
 		} else if (result.login.result == "NeedToken") {
 			var token = result.login.token;
 			Mediawiki.d("Got login token, resubmitting with token...");
-			Mediawiki.login(MediaWiki.loginUsername, MediaWiki.loginPassword, MediaWiki.loginCallbackSuccess, MediaWiki.loginCallbackError, token);
+			Mediawiki.login(Mediawiki.loginUsername, Mediawiki.loginPassword, Mediawiki.loginCallbackSuccess, Mediawiki.loginCallbackError, token);
 		} else {
 			Mediawiki.error("Unexpected response from api when logging in: " + result.login.result);
 			throw ("Unexpected response from api when logging in");
