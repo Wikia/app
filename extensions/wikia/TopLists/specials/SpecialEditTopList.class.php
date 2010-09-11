@@ -72,7 +72,13 @@ class SpecialEditTopList extends SpecialPage {
 			$removedItems = $wgRequest->getArray( 'removed_items', array() );
 
 			//handle related article
-			$curValue = ( !empty( $list->getRelatedArticle() ) ) ? $list->getRelatedArticle()->getText() : null;
+			$title = $list->getRelatedArticle();
+			$curValue = null;
+			
+			if ( !empty( $title ) ) {
+				$curValue = $title->getText();
+			}
+			
 			$relatedArticleChanged = ( $curValue != $relatedArticleName );
 
 			if ( $relatedArticleChanged ) {
@@ -96,7 +102,13 @@ class SpecialEditTopList extends SpecialPage {
 			}
 
 			//handle picture
-			$curValue = ( !empty( $list->getPicture() ) ) ? $list->getPicture()->getText() : null;
+			$title = $list->getPicture();
+			$curValue = null;
+
+			if ( !empty( $title ) ) {
+				$curValue = $title->getText();
+			}
+			
 			$selectedPictureChanged = ( $curValue != $selectedPictureName );
 
 			if ( $selectedPictureChanged ) {
