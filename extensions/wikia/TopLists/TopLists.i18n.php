@@ -26,6 +26,7 @@ $messages['en'] = array(
 	'toplists-error-picture-not-exists' => '"$1" does not exist, do you want to <a href="$2" target="_blank">upload it</a>?',
 	'toplists-error-duplicated-entry' => 'You can\'t use the same name more than once',
 	'toplists-error-empty-item-name' => 'The name of an existing item can\'t be empty',
+	'toplists-item-cannot-delete' => 'Deletion of this item failed',
 
 	//editor
 	'toplists-editor-title-label' => 'List name',
@@ -43,10 +44,11 @@ $messages['en'] = array(
 	'toplists-cancel-button' => 'Cancel',
 
 	//article edit summaries
-	'toplists-list-creation-summary' => 'Creating the "$1" top list',
-	'toplists-list-update-summary' => 'Updating the "$1" top list',
-	'toplists-item-creation-summary' => 'Creating the "$1" top list item',
-	'toplists-item-update-summary' => 'Updating the "$1" top list item',
+	'toplists-list-creation-summary' => 'Creating a list',
+	'toplists-list-update-summary' => 'Updating a list',
+	'toplists-item-creation-summary' => 'Creating a list item',
+	'toplists-item-update-summary' => 'Updating a list item',
+	'toplists-item-remove-summary' => 'Item removed from list',
 
 	//list view
 	'toplists-list-votes-num' => '$1 votes',

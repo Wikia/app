@@ -231,6 +231,27 @@ class SpecialEditTopList extends SpecialPage {
 						}
 					}
 
+					//purge items removed from the list
+					foreach ( $removedItems as $index ) {
+						$removeResult = $listItems[ $index ]->remove();
+
+						if ( $removeResult !== true ) {
+							$items[] = array(
+								'type' => 'existing',
+								'value' => $listItems[ $index ]->getArticle()->getContet(),
+								'index' => $counter,
+								'changed' => false,
+								'object' => $listItems[ $index ]
+							);
+
+							$counter++;
+							
+							foreach ( $removeResult as $errorTuple ) {
+								$errors[ 'item_' . $counter ][] =  wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] );
+							}
+						}
+					}
+
 					if ( empty( $errors ) ) {
 						//update the cache to sync contents and redirect to reader's view
 						$list->getTitle()->invalidateCache();
