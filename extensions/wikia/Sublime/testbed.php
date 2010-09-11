@@ -50,12 +50,13 @@ require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
 	<button id='makeContentEditable' onclick='makeContentEditable()'>Make editable</button> &nbsp;&nbsp;&nbsp;&nbsp;
 	<button id='submitContentToWikia' onclick='submitSublime()'>Send it!</button>
 
+	<br/><br/>
 	<div id='loginCredentials'>
 		<form id='loginForm'>
 			Login credentials:<br/>
 			<input type='text' id='loginName' value='Sean Colombo'/> Username<br/>
-			<input type='password' id='loginPass'/> Password</br>
-			<button onclick='sublimeLoginWrapper()'>Log in</button>
+			<input type='password' id='loginPass'/> Password<br/>
+			<button onclick='return sublimeLoginWrapper()'>Log in</button>
 		</form>
 	</div>
 
@@ -84,7 +85,8 @@ require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
 		function sublimeLoginWrapper(){
 			var wikiUsername = $('loginName').val();
 			var wikiPass = $('loginPass').val();
-			return sublimeLogin(wikiUsername, wikiPass);
+			sublimeLogin(wikiUsername, wikiPass);
+			return false;
 		}
 		
 		
