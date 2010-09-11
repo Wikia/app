@@ -35,6 +35,9 @@ require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
 			font-family: "Courier New", monospaced;
 			background-color:#abf;
 		}
+		#logoutForm{
+			display:none;
+		}
 	</style>
 </head>
 <body>
@@ -123,7 +126,7 @@ require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
 			try { 
 				if (Mediawiki.isLoggedIn()){
 					Mediawiki.updateStatus("Already logged in.");
-					logoutWorked();
+					loginWorked();
 				}
 				Mediawiki.updateStatus("Logging in...");
 				Mediawiki.login(wikiUsername, wikiPass, loginWorked, apiFailed);
@@ -152,7 +155,7 @@ require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
 
 		// On page-load if we're already logged in, then hide the login form.
 		if (Mediawiki.isLoggedIn()){
-			logoutWorked();
+			loginWorked();
 		}
 	</script>
 </body>
