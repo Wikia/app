@@ -10,19 +10,18 @@
  *
  * To get this to work, add a symlink like this:
  * ln -s /usr/wikia/source/wiki/extensions/wikia/Sublime/testbed.php /usr/wikia/docroot/wiki.factory/testbed.php
+ 
+ 
+ * The Javascript MediaWiki API needs:
+ * - inclusion of Mediawiki.js
+ * - setting of var wgScriptPath prior to including Mediawiki.js
+ * - to use it, call Mediawiki.login(), for example.
+
+ * CKeditor needs:
+ * -  
+ 
+ 
  */
-
-/*
-DO WE REALLY NEED THE MEDIAWIKI STACK?  WE PROBABLY SHOULDN'T SINCE THIS PAGE IS SUPPOSED TO BE ANALOGOUS TO THE BROWSER ON AN OFF-SITE PAGE.
-$IP = getenv( 'MW_INSTALL_PATH' );
-if ( $IP === false ) { 
-	$IP = dirname( __FILE__ ) .'/../../..';
-}
-///// CONFIGURATION /////
-
-// Load the MediaWiki stack.
-require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
-*/
 
 ?><!doctype html>
 <html lang="en" dir="ltr">
@@ -49,7 +48,6 @@ require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
 </head>
 <body>
 	<h1>Testbed for Sublime</h1>
-	<div id='editform'><textarea id='wpTextbox1'></textarea></div>
 	<article id='sendMeToWikia'>
 		This is the content which should be sent to wikia.
 		
@@ -89,14 +87,8 @@ require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
 	<script type='text/javascript'>
 		// Setup for Mediawiki.js
 		var wgScriptPath = "http://sean.wikia-dev.com"; // this should be the endpoint.
-
-		// Setup for ckeditor.js
-		var wgScript = "/index.php";
-		// NOTE: ALSO NEED 'editform' element or RTE won't initialize.
 	</script>
 	<script type='text/javascript' src='/extensions/wikia/JavascriptAPI/Mediawiki.js'></script>
-	<script type='text/javascript' src='/extensions/wikia/RTE/ckeditor/ckeditor.js'></script>
-
 	<script type='text/javascript'>
 
 // PROBABLY JUST CODE FOR THIS PAGE //
@@ -124,6 +116,18 @@ require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
 			return false;
 		}
 		
+		// Use RTE's ajax method for html to wikitext conversion (this is based on RTE.ajax() from RTE.js).
+		function html2wiki function(params, callback) {
+			if (typeof params != 'object') {
+				params = {};
+			}
+			params.method = 'html2wiki';
+			jQuery.post(window.wgScript + '?action=ajax&rs=RTEAjax', params, function(data) {
+				if (typeof callback == 'function') {
+					callback(data);
+				}
+			}, 'json');
+		}
 		
 		
 		
@@ -133,8 +137,17 @@ require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
 			summary = (summary?summary:'Edited using Sublime plugin by Wikia');
 			var normalizedTitle = Mediawiki.getNormalizedTitle(articleTitle);
 			
+			/*
+			VERSION WITHOUT ANY REVERSE-PARSING OF HTML.  CAN ONLY HANDLE PLAINTEXT/WIKITEXT.
+			Mediawiki.editArticle({
+				"title": normalizedTitle,
+				//"createonly": true,
+				"summary": summary,
+				"text": articleContent
+			}, function(){Mediawiki.updateStatus("Article saved.");}, apiFailed);
+			*/
 			Mediawiki.updateStatus("Converting HTML to wikitext...");
-			RTE.ajax('html2wiki', {html: articleContent, title: articleTitle}, function(data) {
+			html2wiki({html: articleContent, title: articleTitle}, function(data) {
 				Mediawiki.updateStatus("Submitting article...");
 				wikiText = data.wikitext;
 				Mediawiki.editArticle({
