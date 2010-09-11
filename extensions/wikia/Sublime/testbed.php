@@ -71,8 +71,6 @@ require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
 	<script type='text/javascript' src='/extensions/wikia/JavascriptAPI/Mediawiki.js'/>
 	
 	<script type='text/javascript'>
-// TODO: Put the parts that we'll actually use in the extention into object-oriented JS or just a closure instead of a bunch of random functions like this.
-// TODO: Put the parts that we'll actually use in the extention into object-oriented JS or just a closure instead of a bunch of random functions like this.
 
 // PROBABLY JUST CODE FOR THIS PAGE //
 
@@ -81,6 +79,7 @@ require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
 			alert(sublimeContent);
 		}
 		function makeContentEditable(){
+			$('#sendMeToWikia').attr('contenteditable', true);
 		}
 		function sublimeLoginWrapper(){
 			var wikiUsername = $('loginName').val();
