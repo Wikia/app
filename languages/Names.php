@@ -278,7 +278,7 @@
 	'sh' => 'Srpskohrvatski / Српскохрватски', # Serbocroatian
 	'shi' => 'Tašlḥiyt',    # Tachelhit
 	'si' => 'සිංහල',	# Sinhalese
-	'simple' => 'Simple English',	# Simple English
+#	'simple' => 'Simple English',	# Simple English
 	'sk' => 'Slovenčina',	# Slovak
 	'sl' => 'Slovenščina',	# Slovenian
 	'sm' => 'Gagana Samoa',	# Samoan
