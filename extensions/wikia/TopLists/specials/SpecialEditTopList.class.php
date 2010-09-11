@@ -56,8 +56,9 @@ class SpecialEditTopList extends SpecialPage {
 			$this->_redirectToCreateSP( $editListName );
 		}
 
-		$listName = $list->getTitle()->getText();
-		$listUrl = $list->getTitle()->getLocalUrl();
+		$title = $list->getTitle();
+		$listName = $title->getText();
+		$listUrl = $title->getLocalUrl();
 		$listItems = $list->getItems();
 
 		
@@ -69,28 +70,112 @@ class SpecialEditTopList extends SpecialPage {
 			$selectedPictureName = $wgRequest->getText( 'selected_picture_name' );
 			$itemsNames = $wgRequest->getArray( 'items_names', array() );
 			$removedItems = $wgRequest->getArray( 'removed_items', array() );
-
-			foreach ( $listItems as $index => $item ) {
+			$splitAt = count( $listItems ) - count( $removedItems );
+			
+			$counter = 0;
+			foreach ( $listItems as $index => &$item ) {
 				if ( !in_array( $index, $removedItems ) ) {
 					$items[] = array(
 						'type' => 'existing',
 						'value' => $itemsNames[ $index ],
 						'index' => $index
 					);
+
+					if ( empty( $itemsNames[ $index ] ) ) {
+						$errors[ 'item_' . ( $counter + 1 ) ] = wfMsg( 'toplists-error-empty-item-name' );
+					} elseif ( $item->getArticle()->getContent() != $itemsNames[ $index ] ) {
+						$item->setNewContent( $itemsNames[ $index ] );
+						$items[ $counter ][ 'object' ] = $item;
+					}
+					
+					$counter++;
 				}
 			}
 
-			$splitAt = count( $listItems ) - count( $removedItems );
-			$newItems = array_slice( $itemsNames, $splitAt );
+			
+			$newItemsNames = array_filter( array_slice( $itemsNames, $splitAt ) );
+			$itemsToSave = array();
 
-
-			foreach( $newItems as $index => $item ) {
+			foreach( $newItemsNames as $index => $item ) {
 				$items[] = array(
 					'type' => 'new' ,
-					'value' => $item
+					'value' => $item,
+					'index' => $index
 				);
+
+				$newItem = $list->createItem();
+				$newItem->setNewContent( $itemsNames[ $index ] );
+				$items[ $counter ][ 'object' ] = $newItem;
+
+				$counter++;
 			}
-			
+
+			//TODO: iterate through $items and check objects for processing
+
+			$relatedArticleChanged = false;
+
+			if ( !empty( $relatedArticleName ) ) {
+				$article = Title::newFromText( $relatedArticleName );
+
+				if ( empty( $article ) ) {
+					$errors[ 'related_article_name' ] = array( wfMsg( 'toplists-error-invalid-title' )  );
+				} else {
+					$setResult = $list->setRelatedArticle( $article );
+
+					if ( $setResult !== true ) {
+						foreach ( $setResult as $errorTuple ) {
+							$errors[ 'related_article_name' ][] =  wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] );
+						}
+					} else {
+						$relatedArticleChanged = true;
+					}
+				}
+			}
+
+			$selectedPictureChanged = false;
+
+			if ( !empty( $selectedPictureName ) ) {
+				$article = Title::newFromText( $selectedPictureName );
+
+				if ( empty( $article ) ) {
+					$errors[ 'selected_picture_name' ] = array( wfMsg( 'toplists-error-invalid-picture' ) );
+				} else {
+					$setResult = $list->setPicture( $article );
+
+					if ( empty( $article ) || $setResult !== true ) {
+						foreach ( $setResult as $errorTuple ) {
+							$errors[ 'selected_picture_name' ][] =  wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] );
+						}
+					} else {
+						$selectedPictureChanged = true;
+					}
+				}
+			}
+
+			$checkResult = $list->checkForProcessing( TOPLISTS_SAVE_UPDATE );
+
+			if ( $checkResult !== true ) {
+				foreach ( $checkResult as $errorTuple ) {
+					$errors[ 'list_name' ][] =  wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] );
+				}
+			}
+
+			if ( empty( $errors ) ) {
+				if ( $relatedArticleChanged || $selectedPictureChanged) {
+					$saveResult = $list->save();
+
+					if ( $saveResult !== true ) {
+						foreach ( $saveResult as $errorTuple ) {
+							$errors[  'list_name'  ] = array( wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] ) );
+						}
+					} else {
+						$wgOut->redirect( $listUrl );
+					}
+				}
+
+				//update page's cache
+				$list->getTitle()->invalidateCache();
+			}
 		} else {
 			foreach ( $listItems as $index => $item ) {
 				$existingItems[] = array(
