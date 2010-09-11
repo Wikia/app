@@ -75,8 +75,16 @@ require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
 // PROBABLY JUST CODE FOR THIS PAGE //
 
 		function submitSublime(){
+			var sublimeTitle = $('title').html();
 			var sublimeContent = $('#sendMeToWikia').html();
-			alert(sublimeContent);
+			var normalizedTitle = Mediawiki.getNormalizedTitle(sublimeTitle);
+
+			Mediawiki.editArticle({
+				"title": normalizedTitle,
+				//"createonly": true,
+				"summary": "Testing the JS client for the API",
+				"text": sublimeContent
+			}, function(){Mediawiki.updateStatus("Article saved.");}, apiFailed);
 		}
 		function makeContentEditable(){
 			$('#sendMeToWikia').attr('contenteditable', true);
