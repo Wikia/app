@@ -116,7 +116,7 @@ class SpecialEditTopList extends SpecialPage {
 					$title = Title::newFromText( $selectedPictureName );
 
 					if ( empty( $title ) ) {
-						$errors[ 'selected_picture_name' ] = array( wfMsg( 'toplists-error-invalid-picture' ) );
+						$errors[ 'selected_picture_name' ][] = wfMsg( 'toplists-error-invalid-picture' );
 					} else {
 						$setResult = $list->setPicture( $title );
 
@@ -185,7 +185,7 @@ class SpecialEditTopList extends SpecialPage {
 			//check items for processing
 			foreach ( $items as $index => $item ) {
 				if ( $item[ 'changed' ] && !empty( $item[ 'object' ] ) ) {
-					$checkResult = $item[ 'object' ]->checkForProcessing( TOPLISTS_SAVE_UPDATE );
+					$checkResult = $item[ 'object' ]->checkForProcessing();
 
 					if ( $checkResult !== true ) {
 						foreach ( $checkResult as $errorTuple ) {
