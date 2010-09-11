@@ -82,8 +82,8 @@ require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
 			$('#sendMeToWikia').attr('contenteditable', true);
 		}
 		function sublimeLoginWrapper(){
-			var wikiUsername = $('loginName').val();
-			var wikiPass = $('loginPass').val();
+			var wikiUsername = $('#loginName').val();
+			var wikiPass = $('#loginPass').val();
 			sublimeLogin(wikiUsername, wikiPass);
 			return false;
 		}
