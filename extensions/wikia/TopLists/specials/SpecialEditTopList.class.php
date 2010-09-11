@@ -40,6 +40,7 @@ class SpecialEditTopList extends SpecialPage {
 		
 		//hide specialpage subtitle in Oasis
 		$wgSupressPageSubtitle = true;
+
 		$errors = array();
 		$listName = null;
 		$listUrl = null;
@@ -47,7 +48,6 @@ class SpecialEditTopList extends SpecialPage {
 		$selectedPictureName = null;
 		$items = array();
 		$listItems = array();
-		$existingItems = array();
 		$removedItems = array();
 
 		$list = TopList::newFromText( $editListName );
@@ -70,88 +70,56 @@ class SpecialEditTopList extends SpecialPage {
 			$selectedPictureName = $wgRequest->getText( 'selected_picture_name' );
 			$itemsNames = $wgRequest->getArray( 'items_names', array() );
 			$removedItems = $wgRequest->getArray( 'removed_items', array() );
-			$splitAt = count( $listItems ) - count( $removedItems );
-			
-			$counter = 0;
-			foreach ( $listItems as $index => &$item ) {
-				if ( !in_array( $index, $removedItems ) ) {
-					$items[] = array(
-						'type' => 'existing',
-						'value' => $itemsNames[ $index ],
-						'index' => $index
-					);
 
-					if ( empty( $itemsNames[ $index ] ) ) {
-						$errors[ 'item_' . ( $counter + 1 ) ] = wfMsg( 'toplists-error-empty-item-name' );
-					} elseif ( $item->getArticle()->getContent() != $itemsNames[ $index ] ) {
-						$item->setNewContent( $itemsNames[ $index ] );
-						$items[ $counter ][ 'object' ] = $item;
-					}
-					
-					$counter++;
-				}
-			}
+			//handle related article
+			$curValue = ( !empty( $list->getRelatedArticle() ) ) ? $list->getRelatedArticle()->getText() : null;
+			$relatedArticleChanged = ( $curValue != $relatedArticleName );
 
-			
-			$newItemsNames = array_filter( array_slice( $itemsNames, $splitAt ) );
-			$itemsToSave = array();
+			if ( $relatedArticleChanged ) {
+				if ( !empty( $relatedArticleName ) ) {
+					$title = Title::newFromText( $relatedArticleName );
 
-			foreach( $newItemsNames as $index => $item ) {
-				$items[] = array(
-					'type' => 'new' ,
-					'value' => $item,
-					'index' => $index
-				);
-
-				$newItem = $list->createItem();
-				$newItem->setNewContent( $itemsNames[ $index ] );
-				$items[ $counter ][ 'object' ] = $newItem;
-
-				$counter++;
-			}
-
-			//TODO: iterate through $items and check objects for processing
-
-			$relatedArticleChanged = false;
-
-			if ( !empty( $relatedArticleName ) ) {
-				$article = Title::newFromText( $relatedArticleName );
-
-				if ( empty( $article ) ) {
-					$errors[ 'related_article_name' ] = array( wfMsg( 'toplists-error-invalid-title' )  );
-				} else {
-					$setResult = $list->setRelatedArticle( $article );
-
-					if ( $setResult !== true ) {
-						foreach ( $setResult as $errorTuple ) {
-							$errors[ 'related_article_name' ][] =  wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] );
-						}
+					if ( empty( $title3 ) ) {
+						$errors[ 'related_article_name' ] = array( wfMsg( 'toplists-error-invalid-title' )  );
 					} else {
-						$relatedArticleChanged = true;
-					}
-				}
-			}
+						$setResult = $list->setRelatedArticle( $title );
 
-			$selectedPictureChanged = false;
-
-			if ( !empty( $selectedPictureName ) ) {
-				$article = Title::newFromText( $selectedPictureName );
-
-				if ( empty( $article ) ) {
-					$errors[ 'selected_picture_name' ] = array( wfMsg( 'toplists-error-invalid-picture' ) );
-				} else {
-					$setResult = $list->setPicture( $article );
-
-					if ( empty( $article ) || $setResult !== true ) {
-						foreach ( $setResult as $errorTuple ) {
-							$errors[ 'selected_picture_name' ][] =  wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] );
+						if ( $setResult !== true ) {
+							foreach ( $setResult as $errorTuple ) {
+								$errors[ 'related_article_name' ][] =  wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] );
+							}
 						}
-					} else {
-						$selectedPictureChanged = true;
 					}
+				} else {
+					$list->setRelatedArticle( null );
 				}
 			}
 
+			//handle picture
+			$curValue = ( !empty( $list->getPicture() ) ) ? $list->getPicture()->getText() : null;
+			$selectedPictureChanged = ( $curValue != $selectedPictureName );
+
+			if ( $selectedPictureChanged ) {
+				if ( !empty( $selectedPictureName ) ) {
+					$title = Title::newFromText( $selectedPictureName );
+
+					if ( empty( $title ) ) {
+						$errors[ 'selected_picture_name' ] = array( wfMsg( 'toplists-error-invalid-picture' ) );
+					} else {
+						$setResult = $list->setPicture( $title );
+
+						if ( $setResult !== true ) {
+							foreach ( $setResult as $errorTuple ) {
+								$errors[ 'selected_picture_name' ][] =  wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] );
+							}
+						}
+					}
+				} else {
+					$list->setPicture( null );
+				}
+			}
+
+			//check the list for processability
 			$checkResult = $list->checkForProcessing( TOPLISTS_SAVE_UPDATE );
 
 			if ( $checkResult !== true ) {
@@ -160,6 +128,62 @@ class SpecialEditTopList extends SpecialPage {
 				}
 			}
 
+			//collect existing items and related updates, filter out the removed ones (processed separately)
+			$counter = 0;
+			foreach ( $listItems as $index => &$item ) {
+				if ( !in_array( $index, $removedItems ) ) {
+					$items[] = array(
+						'type' => 'existing',
+						'value' => $itemsNames[ $index ],
+						'index' => $index,
+						'changed' => false,
+						'object' => null
+					);
+
+					if ( empty( $itemsNames[ $index ] ) ) {
+						$errors[ 'item_' . ( $counter + 1 ) ] = wfMsg( 'toplists-error-empty-item-name' );
+					} elseif ( $item->getArticle()->getContent() != $itemsNames[ $index ] ) {
+						$item->setNewContent( $itemsNames[ $index ] );
+						$items[ $counter ][ 'object' ] = $item;
+						$items[ $counter ][ 'changed' ] = true;
+					}
+					
+					$counter++;
+				}
+			}
+
+			//collect new items, filter out the empty ones
+			$splitAt = count( $listItems ) - count( $removedItems );
+			$newItemsNames = array_filter( array_slice( $itemsNames, $splitAt ) );
+
+			foreach ( $newItemsNames as $index => $item ) {
+				$items[] = array(
+					'type' => 'new' ,
+					'value' => $item,
+					'changed' => true
+				);
+
+				$newItem = $list->createItem();
+				$newItem->setNewContent( $newItemsNames[ $index ] );
+
+				$items[ $counter ][ 'object' ] = $newItem;
+				$counter++;
+			}
+
+			//check items for processing
+			foreach ( $items as $index => $item ) {
+				if ( $item[ 'changed' ] && !empty( $item[ 'object' ] ) ) {
+					$checkResult = $item[ 'object' ]->checkForProcessing( TOPLISTS_SAVE_UPDATE );
+
+					if ( $checkResult !== true ) {
+						foreach ( $checkResult as $errorTuple ) {
+							$errors[ 'item_' . ++$index ][] =  wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] );
+						}
+					}
+				}
+			}
+
+			//if no errors proceed with saving, list comes first
 			if ( empty( $errors ) ) {
 				if ( $relatedArticleChanged || $selectedPictureChanged) {
 					$saveResult = $list->save();
@@ -168,24 +192,38 @@ class SpecialEditTopList extends SpecialPage {
 						foreach ( $saveResult as $errorTuple ) {
 							$errors[  'list_name'  ] = array( wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] ) );
 						}
-					} else {
-						$wgOut->redirect( $listUrl );
 					}
 				}
 
-				//update page's cache
-				$list->getTitle()->invalidateCache();
+				//list saved with no errors or no save required, proceed with items
+				if ( empty( $errors ) ) {
+					foreach ( $items as $index => $item ) {
+						if ( $item[ 'changed' ] && !empty( $item[ 'object' ] ) ) {
+							$saveResult = $item[ 'object' ]->save();
+
+							if ( $saveResult !== true ) {
+								foreach ( $saveResult as $errorTuple ) {
+									$errors[ 'item_' . ++$index ][] =  wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] );
+								}
+							}
+						}
+					}
+
+					if ( empty( $errors ) ) {
+						//update the cache to sync contents and redirect to reader's view
+						$list->getTitle()->invalidateCache();
+						$wgOut->redirect( $listUrl );
+					}
+				}
 			}
 		} else {
 			foreach ( $listItems as $index => $item ) {
-				$existingItems[] = array(
+				$items[] = array(
 					'type' => 'existing',
 					'value' => $item->getArticle()->getContent(),
 					'index' => $index
 				);
 			}
-
-			$items += $existingItems;
 			
 			list( $sessionListName, $failedItemsNames, $sessionErrors ) = TopListHelper::getSessionItemsErrors();
 
