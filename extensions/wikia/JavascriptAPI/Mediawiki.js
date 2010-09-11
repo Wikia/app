@@ -602,8 +602,10 @@ Mediawiki.pullLoginFromCookie = function(cookiePrefix){
 };
 
 
-/* Convenience wrapper for http://www.mediawiki.org/wiki/API:Login */
-Mediawiki.login = function (username, password, callbackSuccess, callbackError, token){
+/*Convenience wrapper for http://www.mediawiki.org/wiki/API:Login
+ * On the first call, just ignore the token, cookiePrefix, and sessionId.  Those will be filled in automatically.
+*/
+Mediawiki.login = function (username, password, callbackSuccess, callbackError, token, cookiePrefix, sessionId){
 	if (Mediawiki.isLoggedIn()){
 		Mediawiki.d("You are already logged in");
 		return null;
@@ -613,7 +615,9 @@ Mediawiki.login = function (username, password, callbackSuccess, callbackError, 
 		'action' : 'login',
 		'lgname' : username,
 		'lgpassword' : password,
-		'token' : (token?token:''),
+		'lgtoken' : (token?token:''),
+		'cookieprefix' : (cookiePrefix?cookiePrefix:''),
+		'sessionid' : (sessionId?sessionId:'')
 	};
 	Mediawiki.loginCallbackSuccess = callbackSuccess;
 	Mediawiki.loginCallbackError = callbackError;
@@ -650,8 +654,10 @@ Mediawiki.loginCallback = function(result) {
 			Mediawiki.runCallback(Mediawiki.loginCallbackError, "Invalid Username");
 		} else if (result.login.result == "NeedToken") {
 			var token = result.login.token;
+			var cookiePrefix = result.login.cookieprefix;
+			var sessionId = result.login.sessionid;
 			Mediawiki.d("Got login token, resubmitting with token...");
-			Mediawiki.login(Mediawiki.loginUsername, Mediawiki.loginPassword, Mediawiki.loginCallbackSuccess, Mediawiki.loginCallbackError, token);
+			Mediawiki.login(Mediawiki.loginUsername, Mediawiki.loginPassword, Mediawiki.loginCallbackSuccess, Mediawiki.loginCallbackError, token, cookiePrefix, sessionId);
 		} else {
 			Mediawiki.error("Unexpected response from api when logging in: " + result.login.result);
 			throw ("Unexpected response from api when logging in");
