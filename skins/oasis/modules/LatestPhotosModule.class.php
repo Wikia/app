@@ -133,7 +133,7 @@ class LatestPhotosModule extends Module {
 	}
 	// if used in more than one place, add "more" link
 	if ( $s = $res->fetchObject() ) {
-		$file_title = Title::makeTitle( $s->page_namespace, $name );
+		$file_title = Title::makeTitle( NS_FILE, $name );
 
 		$links[] = '<a href="' . $file_title->getLocalUrl() .
 			'#filelinks" class="wikia-gallery-item-more">' .
