@@ -152,7 +152,7 @@ class SpecialEditTopList extends SpecialPage {
 						'object' => null
 					);
 
-					if ( empty( $itemsNames[ $index ] ) ) {
+					if ( empty( $itemsNames[ $counter ] ) ) {
 						$errors[ 'item_' . ( $counter + 1 ) ][] = wfMsg( 'toplists-error-empty-item-name' );
 					} elseif ( $item->getArticle()->getContent() != $itemsNames[ $index ] ) {
 						$item->setNewContent( $itemsNames[ $index ] );
