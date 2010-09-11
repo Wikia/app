@@ -54,13 +54,15 @@ require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
 	<script type="text/javascript" src="/skins/common/jquery/jquery-1.4.2.js?1284232976"></script>
 	<script type="text/javascript" src="/skins/common/jquery/jquery.json-1.3.js?1284232976"></script>
 	<script type="text/javascript" src="/skins/common/jquery/jquery.wikia.js?1284232976"></script>
-	<script type='text/javascript' src='/extensions/wikia/JavascriptAPI/Mediawiki.js'/>
 	<script type='text/javascript'>
-		var wgScriptPath = "http://sean.wikia-dev.com"; // this should be the endpoint.
 		function submitSublime(){
 			var sublimeContent = $('#sendMeToWikia').html();
 			alert(sublimeContent);
 		}
+	
+		// Setup for Mediawiki.js
+		var wgScriptPath = "http://sean.wikia-dev.com"; // this should be the endpoint.
 	</script>
+	<script type='text/javascript' src='/extensions/wikia/JavascriptAPI/Mediawiki.js'/>
 </body>
 </html>
