@@ -58,6 +58,12 @@ require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
 			<input type='password' id='loginPass'/> Password<br/>
 			<button onclick='return sublimeLoginWrapper()'>Log in</button>
 		</form>
+		<form id='logoutForm'>
+			<div>
+				Logged in as: <div id='loggedInUsername'>&nbsp;</div>
+			</div>
+			<button onclick='return sublimeLogout()'>Log out</button>
+		</form>
 	</div>
 
 	<!-- Javascript at the bottom - don't anger Artur! -->
@@ -88,6 +94,13 @@ require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
 			sublimeLogin(wikiUsername, wikiPass);
 			return false;
 		}
+		function sublimeLogout(){
+			Mediawiki.logout(function(){
+				$('#logoutForm').hide();
+				$('#loginForm').fadeIn();
+			});
+			return false;
+		}
 		
 		
 		
@@ -108,6 +121,10 @@ require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
 		// Login the user.		
 		function sublimeLogin(wikiUsername, wikiPass){
 			try { 
+				if (Mediawiki.isLoggedIn()){
+					Mediawiki.updateStatus("Already logged in.");
+					logoutWorked();
+				}
 				Mediawiki.updateStatus("Logging in...");
 				Mediawiki.login(wikiUsername, wikiPass, loginWorked, apiFailed);
 			} catch (e) {
@@ -117,6 +134,9 @@ require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
 		function loginWorked (){
 			Mediawiki.updateStatus("Login successful");
 			$("#loginForm").fadeOut();
+
+			// Show your name and a button to logout.
+			$('#loggedInUsername').html(Mediawiki.UserName);
 			$("#logoutForm").fadeIn();
 		}
 
@@ -128,6 +148,11 @@ require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
 						msg = Mediawiki.print_r(msg);
 			}
 			Mediawiki.updateStatus("ERROR from API: " + msg, true);
+		}
+
+		// On page-load if we're already logged in, then hide the login form.
+		if (Mediawiki.isLoggedIn()){
+			logoutWorked();
 		}
 	</script>
 </body>
