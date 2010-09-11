@@ -9,9 +9,11 @@ Dependencies:
 
 TODO:
 	- Step 1: Store data
-		- Get a prototype page where I can put in some arbitrary text (plaintext or wikitext) and then submit it to be stored in a MediaWiki API successfully.
+		- Get a prototype page where I can put in some arbitrary text (plaintext or wikitext)
+		- Login via the JS API
+		- Submit the plaintext/wikitext to be stored in a MediaWiki API successfully (as the logged-in user).
 		- Change previous prototype to take HTML as input, then use the reverse-parser to turn it into wikitext before submitting to the MediaWiki API.
-	
+
 	- Step 2: Retrieve data
 		- Go to a page and have it check for a match for the article.
 		- Pull up the parsed article from MediaWiki using the Javascript API.
