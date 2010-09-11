@@ -17,8 +17,9 @@
  * - setting of var wgScriptPath prior to including Mediawiki.js
  * - to use it, call Mediawiki.login(), for example.
 
- * CKeditor needs:
- * -  
+ * html2wiki needs:
+ * - Set window.wgScript ("/index.php" is probably good).
+ * - the html2wiki() js function in this file.
  
  
  */
@@ -87,6 +88,9 @@
 	<script type='text/javascript'>
 		// Setup for Mediawiki.js
 		var wgScriptPath = "http://sean.wikia-dev.com"; // this should be the endpoint.
+		
+		// For html2wiki conversion.
+		var window.wgScript = "/index.php";
 	</script>
 	<script type='text/javascript' src='/extensions/wikia/JavascriptAPI/Mediawiki.js'></script>
 	<script type='text/javascript'>
