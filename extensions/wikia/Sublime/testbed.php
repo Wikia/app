@@ -117,7 +117,7 @@
 		}
 		
 		// Use RTE's ajax method for html to wikitext conversion (this is based on RTE.ajax() from RTE.js).
-		function html2wiki function(params, callback) {
+		function html2wiki(params, callback) {
 			if (typeof params != 'object') {
 				params = {};
 			}
