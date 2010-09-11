@@ -11,7 +11,7 @@ TODO:
 	- Step 1: Store data
 X		- Get a prototype page where I can put in some arbitrary text (plaintext or wikitext)
 X		- Login via the JS API
-		- Submit the plaintext/wikitext to be stored in a MediaWiki API successfully (as the logged-in user).
+X		- Submit the plaintext/wikitext to be stored in a MediaWiki API successfully (as the logged-in user).
 		- Change previous prototype to take HTML as input, then use the reverse-parser to turn it into wikitext before submitting to the MediaWiki API.
 
 	- Step 2: Retrieve data
