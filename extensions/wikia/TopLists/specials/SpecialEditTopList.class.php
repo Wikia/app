@@ -146,7 +146,7 @@ class SpecialEditTopList extends SpecialPage {
 				if ( !in_array( $index, $removedItems ) ) {
 					$items[] = array(
 						'type' => 'existing',
-						'value' => $itemsNames[ $index ],
+						'value' => $itemsNames[ $counter ],
 						'index' => $index,
 						'changed' => false,
 						'object' => null
