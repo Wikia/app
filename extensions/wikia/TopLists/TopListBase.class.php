@@ -83,7 +83,7 @@ abstract class TopListBase {
 			);
 		} elseif ( !$this->mTitle->exists() && $mode == TOPLISTS_SAVE_UPDATE ) {
 			$errors[] = array(
-				'msg' => 'toplists-error-title-not-exists',
+				'msg' => 'toplists-error-article-not-exists',
 				'params' => array(
 					$name,
 					$url
