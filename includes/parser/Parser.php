@@ -3616,7 +3616,9 @@ class Parser
 			}
 		}
 
-		if ( $name === 'html' || $name === 'nowiki' ) {
+		//FIXME: make this list a configurable parameter (this is just an emergency stop gap)
+		if ( $name === 'html' || $name === 'nowiki' || $name === 'bloglist' ) {
+//		if ( $name === 'html' || $name === 'nowiki' ) {
 			$this->mStripState->nowiki->setPair( $marker, $output );
 		} else {
 			$this->mStripState->general->setPair( $marker, $output );
