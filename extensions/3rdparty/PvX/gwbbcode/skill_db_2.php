@@ -269,7 +269,7 @@ array (
 'recharge'=>5,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'For 10 seconds, the next time target foe blocks, that foe takes 30..120 damage.',
+'desc'=>'For 5..20 seconds, the next time target foe blocks, that foe takes 30..120 damage.',
 'name_id'=>'defile defenses',
 ),
 1070=>
@@ -8165,7 +8165,7 @@ array (
 'recharge'=>8,
 'pve_only'=>0,
 'elite'=>1,
-'desc'=>'Target foe and all adjacent foes take 10..65 lightning damage. If you are within earshot of a spirit or holding a bundle item, you gain 10 Energy.',
+'desc'=>'Target foe and all nearby foes take 10..65 lightning damage. If you are within earshot of a spirit or holding a bundle item, you gain 10 Energy.',
 'name_id'=>'clamor of souls',
 ),
 1218=>
@@ -8480,7 +8480,7 @@ array (
 'recharge'=>15,
 'pve_only'=>0,
 'elite'=>0,
-'desc'=>'For 8 seconds, target foe suffers 2..10 damage each second. When this hex ends you gain 1..8 energy.',
+'desc'=>'For 8 seconds, target foe suffers 2..12 damage each second. When this hex ends you gain 1..8 energy.',
 'name_id'=>'renewing surge',
 ),
 1239=>
@@ -8989,7 +8989,7 @@ array (
 ),
 91249=>
 array (
-'name'=>'Displacement',
+'name'=>'Displacement (PvP)',
 'chapter'=>2,
 'profession'=>'Ritualist',
 'prof'=>'Rt',
@@ -9006,7 +9006,7 @@ array (
 'pve_only'=>0,
 'elite'=>0,
 'desc'=>'Create a level 1..10 Spirit. All non-Spirit allies within its range have a 75% chance to block incoming attacks. Every time an attack is blocked in this way, this Spirit takes 60 damage. This Spirit dies after 30..60 seconds.',
-'name_id'=>'displacement',
+'name_id'=>'displacement (pvp)',
 ),
 921=>
 array (
@@ -10750,7 +10750,7 @@ array (
 'recharge'=>30,
 'pve_only'=>0,
 'elite'=>1,
-'desc'=>'(12 seconds.) You have + 1..6 Energy regeneration. Initial effect: you gain 3..12 Energy if you are within earshot of a spirit.',
+'desc'=>'For 12 seconds, you have +1..6 Energy regeneration. When you cast this spell, you gain 3..12 Energy if you are within earshot of a spirit.',
 'name_id'=>'spirit channeling',
 ),
 918=>
@@ -11796,7 +11796,7 @@ array (
 'adrenaline'=>0,
 'eregen'=>0,
 'sacrifice'=>0,
-'casting'=>0,
+'casting'=>1,
 'recharge'=>30,
 'pve_only'=>0,
 'elite'=>0,
@@ -12052,7 +12052,7 @@ array (
 'recharge'=>20,
 'pve_only'=>0,
 'elite'=>1,
-'desc'=>'For 5..11 seconds, you move 25% faster and if you strike a moving foe in melee, that foe is knocked down. Bull\'s Charge ends if you use a skill.',
+'desc'=>'For 5..11 seconds, you move 33% faster and if you strike a moving foe in melee, that foe is knocked down. Bull\'s Charge ends if you use a skill.',
 'name_id'=>'bulls charge',
 ),
 332=>
@@ -12159,6 +12159,27 @@ array (
 'elite'=>1,
 'desc'=>'For 20 seconds you have an additional 90..300 Health, an additional 20 armor, and you take -1..10 less damage.',
 'name_id'=>'defy pain',
+),
+90318=>
+array (
+'name'=>'Defy Pain (PvP)',
+'chapter'=>1,
+'profession'=>'Warrior',
+'prof'=>'W',
+'attribute'=>'Strength',
+'attr'=>'str',
+'type'=>'Stance',
+'ty'=>'sk',
+'energy'=>0,
+'adrenaline'=>5,
+'eregen'=>0,
+'sacrifice'=>0,
+'casting'=>0,
+'recharge'=>0,
+'pve_only'=>0,
+'elite'=>1,
+'desc'=>'For 20 seconds you have an additional 90..300 Health and an additional 20 armor.',
+'name_id'=>'defy pain (pvp)',
 ),
 2066=>
 array (
@@ -14152,7 +14173,7 @@ array (
 'recharge'=>24,
 'pve_only'=>1,
 'elite'=>0,
-'desc'=>'For 6..16 seconds, you move 20..33% faster and your Spells take half as long to cast.',
+'desc'=>'For 6..16 seconds, you move 20..33% faster and your Spells take half 20% less time to cast.',
 'name_id'=>'mindbender',
 ),
 2418=>
@@ -15450,7 +15471,7 @@ array (
 'eregen'=>0,
 'sacrifice'=>0,
 'casting'=>3,
-'recharge'=>15,
+'recharge'=>25,
 'pve_only'=>1,
 'elite'=>0,
 'desc'=>'Target foe loses 5..8 Energy. For each point of Energy lost in this way, that foe and all foes in the area suffer -1 Health degeneration for 10 seconds.',
