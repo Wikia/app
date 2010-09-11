@@ -126,7 +126,7 @@ $.fn.extend({
 
 		wrapper.log('makeModal: #' + id);
 
-		$("[id$='TOP_LEADERBOARD']").add("[id$='TOP_RIGHT_BOXAD']").css("visibility", "hidden");
+		$("[id$='TOP_LEADERBOARD']").add("[id$='TOP_RIGHT_BOXAD']").add(".wikia-ad").css("visibility", "hidden");
 
 		// get rid of tooltip - remove title attr
 		this.removeAttr('title');
@@ -232,7 +232,7 @@ $.fn.extend({
 		});
 
 		//hide ads when a modal is present
-		$("[id$='TOP_LEADERBOARD']").add("[id$='TOP_RIGHT_BOXAD']").css("visibility", "visible");
+		$("[id$='TOP_LEADERBOARD']").add("[id$='TOP_RIGHT_BOXAD']").add(".wikia-ad").css("visibility", "visible");
 	},
 
 	// just hide the modal - don't remove DOM node
@@ -249,7 +249,7 @@ $.fn.extend({
 		});
 
 		//show ads again
-		$("[id$='TOP_LEADERBOARD']").add("[id$='TOP_RIGHT_BOXAD']").css("visibility", "visible");
+		$("[id$='TOP_LEADERBOARD']").add("[id$='TOP_RIGHT_BOXAD']").add(".wikia-ad").css("visibility", "visible");
 	},
 
 	// show previously hidden modal
@@ -279,7 +279,7 @@ $.fn.extend({
 			})
 			.log('showModal: #' + this.attr('id'));
 
-		$("[id$='TOP_LEADERBOARD']").add("[id$='TOP_RIGHT_BOXAD']").css("visibility", "hidden");
+		$("[id$='TOP_LEADERBOARD']").add("[id$='TOP_RIGHT_BOXAD']").add(".wikia-ad").css("visibility", "hidden");
 
 		/*
 		//Defined twice in different scopes. This is bad. Figure out how to define just once.
