@@ -246,11 +246,11 @@ class TopList extends TopListBase {
 			wfLoadExtensionMessages( 'TopLists' );
 			$article = $this->getArticle();
 
-			$status = $article->doEdit( '<' . TOPLIST_TAG . "{$contentText} />", wfMsgForContent( $summaryMsg, $this->mTitle ), $editMode );
+			$status = $article->doEdit( '<' . TOPLIST_TAG . "{$contentText} />", wfMsgForContent( $summaryMsg ), $editMode );
 
 			if ( !$status->isOK() ) {
 				foreach ( $status->getErrorsArray() as $msg ) {
-					$errors[] = $errors[] = array(
+					$errors[] = array(
 						'msg' => $msg,
 						'params' => null
 					);

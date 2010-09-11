@@ -179,11 +179,11 @@ class TopListItem extends TopListBase {
 			wfLoadExtensionMessages( 'TopLists' );
 			$article = $this->getArticle();
 
-			$status = $article->doEdit( $this->mContent , wfMsgForContent( $summaryMsg, $this->mTitle ), $editMode );
+			$status = $article->doEdit( $this->mContent , wfMsgForContent( $summaryMsg ), $editMode );
 
 			if ( !$status->isOK() ) {
 				foreach ( $status->getErrorsArray() as $msg ) {
-					$errors[] = $errors[] = array(
+					$errors[] = array(
 						'msg' => $msg,
 						'params' => null
 					);
@@ -191,6 +191,52 @@ class TopListItem extends TopListBase {
 			}
 		} else {
 			$errors = array_merge( $errors, $checkResult );
+		}
+
+		return ( empty( $errors ) ) ? true : $errors;
+	}
+
+	/**
+	 * @author Federico "Lox" Lucignano
+	 *
+	 * Removes an item article
+	 * remember to invalidate the list (parent) article cache to update
+	 * the page's contents if you add items programmatically
+	 */
+	public function remove() {
+		$errors = array();
+		
+		if ( $this->exists() ) {
+			$summaryMsg = null;
+			$editMode = null;
+
+			if ( $mode == TOPLISTS_SAVE_CREATE ) {
+				$summaryMsg = 'toplists-item-creation-summary';
+				$editMode = EDIT_NEW;
+			} else {
+				$summaryMsg = 'toplists-item-update-summary';
+				$editMode = EDIT_UPDATE;
+			}
+
+			wfLoadExtensionMessages( 'TopLists' );
+			$article = $this->getArticle();
+
+			$success = $article->doDeleteArticle( wfMsgForContent( 'toplists-item-remove-summary' ) );
+
+			if ( !$success ) {
+				$errors[] = array(
+						'msg' => 'toplists-item-cannot-delete',
+						'params' => null
+				);
+			}
+		} else {
+			$errors [] = array(
+				'msg' => 'toplists-error-article-not-exists',
+				'params' => array(
+					$this->mTitle->getSubpageText(),
+					$this->mTitle->getEditURL()
+				)
+			);
 		}
 
 		return ( empty( $errors ) ) ? true : $errors;
