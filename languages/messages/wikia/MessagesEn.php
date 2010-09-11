@@ -1013,7 +1013,7 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'oasis-latest-photos-empty' => 'Anyone can help to make this Wiki look amazing<br/><span>Click here to add a photo.</span>',
 'oasis-latest-photos-by' => 'by',
 'oasis-latest-photos-posted-in' => 'Posted in',
-'oasis-latest-photos-fileslinke-more' => 'more...',
+'oasis-latest-photos-more-dotdotdot' => 'more...',
 'oasis-global-nav-create-wiki' => 'Start a wiki',
 'oasis-page-header-no-comments-tooltip' => 'Be the first to discuss this page',
 'oasis-page-header-edited-by' => 'Edited $1 by $2',
