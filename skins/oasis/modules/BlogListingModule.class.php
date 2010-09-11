@@ -3,8 +3,11 @@ class BlogListingModule extends Module {
 
 	var $wgTitle;
 	var $wgBlankImgUrl;
+	var $wgStylePath;
+
 	var $posts;
 	var $blogListingClass;
+	var $title;
 
 	/**
 	 * Modify results from Blogs
@@ -47,16 +50,16 @@ class BlogListingModule extends Module {
 	 */
 	static function renderBlogListing(&$html, $posts, $aOptions) {
 		wfProfileIn(__METHOD__);
-
+		global $wgTitle, $wgStylePath;
 		#print_pre(htmlspecialchars($html));	print_pre($posts);
 		$additionalClass = '';
 		if (!empty($aOptions['style'])) {
 			$additionalClass = $aOptions['style'];
 		}
 		if ($aOptions['type'] == 'box') {
-			$html .= wfRenderPartial('BlogListing', 'Index', array('posts' => $posts, 'blogListingClass' => "WikiaBlogListingBox $additionalClass", 'wgTitle' => $aOptions['title']));
+			$html .= wfRenderPartial('BlogListing', 'Index', array('posts' => $posts, 'blogListingClass' => "WikiaBlogListingBox $additionalClass", 'wgTitle' => $wgTitle, 'wgStylePath' => $wgStylePath, 'title' => $aOptions['title']));
 		} else {
-			$html .= wfRenderPartial('BlogListing', 'Index', array('posts' => $posts, 'blogListingClass' => "WikiaBlogListing $additionalClass", 'wgTitle' => $aOptions['title']));
+			$html .= wfRenderPartial('BlogListing', 'Index', array('posts' => $posts, 'blogListingClass' => "WikiaBlogListing $additionalClass", 'wgTitle' => $wgTitle, 'wgStylePath' => $wgStylePath, 'title' => $aOptions['title']));
 		}
 
 		wfProfileOut(__METHOD__);
