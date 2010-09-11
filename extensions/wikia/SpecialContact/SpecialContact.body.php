@@ -18,11 +18,11 @@ class ContactForm extends SpecialPage {
 	function execute() {
 		global $wgLang, $wgAllowRealName, $wgRequest;
 
-		$this->mName = $wgRequest->getText( 'wpName' );
-		$this->mRealName = $wgRequest->getText( 'wpContactRealName' );
-		$this->mWhichWiki = $wgRequest->getText( 'wpContactWikiName' );
-		$this->mProblem = $wgRequest->getText( 'wpContactProblem' );
-		$this->mProblemDesc = $wgRequest->getText( 'wpContactProblemDesc' );
+		$this->mName = null;
+		$this->mRealName = null;
+		$this->mWhichWiki = null;
+		$this->mProblem = $wgRequest->getText( 'wpContactSubject' ); //subject
+		$this->mProblemDesc = null;
 		$this->mPosted = $wgRequest->wasPosted();
 		$this->mAction = $wgRequest->getVal( 'action' );
 		$this->mEmail = $wgRequest->getText( 'wpEmail' );
@@ -30,6 +30,13 @@ class ContactForm extends SpecialPage {
 		$this->mCCme = $wgRequest->getCheck( 'wgCC' );
 
 		if( $this->mPosted && ('submit' == $this->mAction ) ) {
+			#ubrfzy note: these were moved inside to (lazy) prevent some stupid bots
+			$this->mName = $wgRequest->getText( 'wpName' );
+			$this->mRealName = $wgRequest->getText( 'wpContactRealName' );
+			$this->mWhichWiki = $wgRequest->getText( 'wpContactWikiName' );
+			#sibject still handled outside of post check, because of existing hardcoded prefill links
+			$this->mProblemDesc = $wgRequest->getText( 'wpContactDesc' ); //body
+
 			#malformed email?
 			if (!User::isValidEmailAddr($this->mEmail)) {
 				$this->err .= "\n" . wfMsg('contactpage-email-failed');
@@ -251,7 +258,7 @@ class ContactForm extends SpecialPage {
 				<tr>
 					<td align='right'>". wfMsg( 'contactproblem' ) .":</td>
 					<td align='left'>".
-						"<input tabindex='" . ($tabindex++) . "' type='text' name=\"wpContactProblem\" value=\"{$encProblem}\" size='80' />".
+						"<input tabindex='" . ($tabindex++) . "' type='text' name=\"wpContactSubject\" value=\"{$encProblem}\" size='80' />".
 					"</td>
 				</tr>" );
 
@@ -259,7 +266,7 @@ class ContactForm extends SpecialPage {
 				<tr>
 					<td align='right' valign='top'>".  wfMsg( 'contactproblemdesc' ) . ":</td>
 					<td align='left'>".
-						"<textarea tabindex='" . ($tabindex++) . "' name=\"wpContactProblemDesc\" rows=\"10\" cols=\"60\">{$encProblemDesc}</textarea>".
+						"<textarea tabindex='" . ($tabindex++) . "' name=\"wpContactDesc\" rows=\"10\" cols=\"60\">{$encProblemDesc}</textarea>".
 					"</td>
 				</tr>" );
 				
