@@ -302,30 +302,29 @@ Mediawiki.deleteArticle = function (title, reason, callbackSuccess, callbackErro
  *	watch/unwatch
  */
 Mediawiki.editArticle = function (article, callbackSuccess, callbackError){
-     try {
-	var token = Mediawiki.getToken(article.title, "edit");
-	if (token === false){
-		Mediawiki.error("Error obtaining edit token, edit failed");
-		return false;
-	}
+	try {
+		var token = Mediawiki.getToken(article.title, "edit");
+		if (token === false){
+			Mediawiki.error("Error obtaining edit token, edit failed");
+			return false;
+		}
 
-	var apiParams = {
-		'token' : token,
-		'action' : 'edit'
-	};
+		var apiParams = {
+			'token' : token,
+			'action' : 'edit'
+		};
 
-	// Pass thru
-	for (var key in article){
-		apiParams[key] = article[key];
-	}
+		// Pass thru
+		for (var key in article){
+			apiParams[key] = article[key];
+		}
 
-	return Mediawiki.apiCall(apiParams, callbackSuccess, callbackError, "POST");
-
-      } catch (e) {
+		return Mediawiki.apiCall(apiParams, callbackSuccess, callbackError, "POST");
+	} catch (e) {
 		Mediawiki.error("Error editing article");
 		Mediawiki.d(Mediawiki.print_r(e));
 		return false;
-      }
+	}
 };
 
 
@@ -604,7 +603,7 @@ Mediawiki.pullLoginFromCookie = function(cookiePrefix){
 
 
 /* Convenience wrapper for http://www.mediawiki.org/wiki/API:Login */
-Mediawiki.login = function (username, password, callbackSuccess, callbackError){
+Mediawiki.login = function (username, password, callbackSuccess, callbackError, token){
 	if (Mediawiki.isLoggedIn()){
 		Mediawiki.d("You are already logged in");
 		return null;
@@ -613,10 +612,15 @@ Mediawiki.login = function (username, password, callbackSuccess, callbackError){
 	var apiParams = {
 		'action' : 'login',
 		'lgname' : username,
-		'lgpassword' : password
+		'lgpassword' : password,
+		'token' : (token?token:''),
 	};
 	Mediawiki.loginCallbackSuccess = callbackSuccess;
 	Mediawiki.loginCallbackError = callbackError;
+	
+	// Since newer MediaWikis will have a response of NeedToken, store the values for resubmission:
+	MediaWiki.loginUsername = username;
+	MediaWiki.loginPassword = password;
 
 	Mediawiki.waiting();
 	return Mediawiki.apiCall(apiParams, Mediawiki.loginCallback, callbackError, "POST");
@@ -632,6 +636,8 @@ Mediawiki.loginCallback = function(result) {
 	}
 	try {
 		if (result.login.result == "Success"){
+			// It seems safer for the user's password to clear it out of the JS variable now that it isn't needed for resubmission anymore.
+			MediaWiki.loginPassword = '';
 
 			Mediawiki.setLoginSession(result.login);
 			Mediawiki.runCallback(Mediawiki.loginCallbackSuccess);
@@ -642,7 +648,12 @@ Mediawiki.loginCallback = function(result) {
 		} else if (result.login.result == "NotExists" || result.login.result == "Illegal" ||
 			   result.login.result == "NoName"){
 			Mediawiki.runCallback(Mediawiki.loginCallbackError, "Invalid Username");
+		} else if (result.login.result == "NeedToken") {
+			var token = result.login.token;
+			Mediawiki.d("Got login token, resubmitting with token...");
+			Mediawiki.login(MediaWiki.loginUsername, MediaWiki.loginPassword, MediaWiki.loginCallbackSuccess, MediaWiki.loginCallbackError, token);
 		} else {
+			Mediawiki.error("Unexpected response from api when logging in: " + result.login.result);
 			throw ("Unexpected response from api when logging in");
 		}
 
