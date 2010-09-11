@@ -38,6 +38,10 @@ require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
 		#logoutForm{
 			display:none;
 		}
+		#loggedInUsername{
+			display:inline;
+			font-weight:bold;
+		}
 	</style>
 </head>
 <body>
@@ -68,6 +72,9 @@ require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
 			<button onclick='return sublimeLogout()'>Log out</button>
 		</form>
 	</div>
+	
+	<!-- Make the Mediawiki status bar appear lower -->
+	<br/><br/>
 
 	<!-- Javascript at the bottom - don't anger Artur! -->
 	<script type="text/javascript" src="/skins/common/jquery/jquery-1.4.2.js?1284232976"></script>
