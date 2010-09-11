@@ -83,6 +83,9 @@ require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
 	<script type='text/javascript'>
 		// Setup for Mediawiki.js
 		var wgScriptPath = "http://sean.wikia-dev.com"; // this should be the endpoint.
+
+		// Setup for ckeditor.js
+		var wgScript = "/index.php";
 	</script>
 	<script type='text/javascript' src='/extensions/wikia/JavascriptAPI/Mediawiki.js'></script>
 	<script type='text/javascript' src='/extensions/wikia/RTE/ckeditor/ckeditor.js'></script>
