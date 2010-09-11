@@ -239,6 +239,18 @@ class SpecialEditTopList extends SpecialPage {
 				}
 			}
 		} else {
+			$title = $list->getRelatedArticle();
+
+			if ( !empty( $title ) ) {
+				$relatedArticleName = $title->getText();
+			}
+
+			$title = $list->getPicture();
+
+			if ( !empty( $title ) ) {
+				$selectedPictureName = $title->getText();
+			}
+
 			foreach ( $listItems as $index => $item ) {
 				$items[] = array(
 					'type' => 'existing',
