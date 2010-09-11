@@ -85,7 +85,8 @@ require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
 		var wgScriptPath = "http://sean.wikia-dev.com"; // this should be the endpoint.
 	</script>
 	<script type='text/javascript' src='/extensions/wikia/JavascriptAPI/Mediawiki.js'></script>
-	
+	<script type='text/javascript' src='/extensions/wikia/RTE/js/RTE.js'></script>
+
 	<script type='text/javascript'>
 
 // PROBABLY JUST CODE FOR THIS PAGE //
@@ -106,11 +107,13 @@ require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
 		}
 		function sublimeLogout(){
 			Mediawiki.logout(function(){
+				Mediawiki.updateStatus("Logged out.");
 				$('#logoutForm').hide();
 				$('#loginForm').fadeIn();
 			});
 			return false;
 		}
+		
 		
 		
 		
@@ -120,12 +123,17 @@ require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
 			summary = (summary?summary:'Edited using Sublime plugin by Wikia');
 			var normalizedTitle = Mediawiki.getNormalizedTitle(articleTitle);
 			
-			Mediawiki.editArticle({
-				"title": normalizedTitle,
-				//"createonly": true,
-				"summary": summary,
-				"text": articleContent
-			}, function(){Mediawiki.updateStatus("Article saved.");}, apiFailed);
+			Mediawiki.updateStatus("Converting HTML to wikitext...");
+			RTE.ajax('html2wiki', {html: articleContent, title: articleTitle}, function(data) {
+				Mediawiki.updateStatus("Submitting article...");
+				wikiText = data.wikitext;
+				Mediawiki.editArticle({
+					"title": normalizedTitle,
+					//"createonly": true,
+					"summary": summary,
+					"text": wikiText
+				}, function(){Mediawiki.updateStatus("Article saved.");}, apiFailed);
+			});
 		}
 
 		// Login the user.		
