@@ -63,13 +63,14 @@ console.log('Sublime editing...');
 			var normalizedTitle = Mediawiki.getNormalizedTitle(articleTitle);
 			
 		//VERSION WITHOUT ANY REVERSE-PARSING OF HTML.  CAN ONLY HANDLE PLAINTEXT/WIKITEXT.
-			Mediawiki.editArticle({
+		/*	Mediawiki.editArticle({
 				"title": normalizedTitle,
 				//"createonly": true,
 				"summary": summary,
 				"text": articleContent
 			}, function(){Mediawiki.updateStatus("Article saved.");}, apiFailed);
-		/*
+		*/
+
 			Mediawiki.updateStatus("Converting HTML to wikitext...");
 			html2wiki({html: articleContent, title: articleTitle}, function(data) {
 				Mediawiki.updateStatus("Submitting article...");
@@ -81,7 +82,6 @@ console.log('Sublime editing...');
 					"text": wikiText
 				}, function(){Mediawiki.updateStatus("Article saved.");}, apiFailed);
 			});
-		*/
 		}
 		
 		function apiFailed(reqObj, msg, error){
