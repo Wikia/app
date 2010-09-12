@@ -1,5 +1,5 @@
 <?php
-global $wgAdminSkin, $wgSkinTheme, $wgCdnStylePath;
+global $wgAdminSkin, $wgSkinTheme, $wgSkipThemes, $wgCdnStylePath;
 $skinName = 'monaco';
 $numSteps = 5;
 require dirname(__FILE__) . '/header.php';
@@ -79,7 +79,7 @@ require dirname(__FILE__) . '/header.php';
 			<table>
 				<tr>
 					<?foreach($wgSkinTheme[$skinName] as $theme):?>
-						<?if($theme == 'custom') continue;?>
+						<?if( $theme == 'custom' || in_array( $theme, $wgSkipThemes[$skinName] ) ) continue;?>
 						<td>
 							<label for="theme_radio_<?= $theme ;?>">
 								<img id="theme_preview_image_<?= $theme ;?>" src="<?= $wgCdnStylePath ;?>/skins/<?= $skinName ;?>/<?= $theme ;?>/images/preview.png"/>
