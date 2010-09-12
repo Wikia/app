@@ -44,6 +44,8 @@ console.log('Sublime iframe got a message from the parent window');
 				var articleContent = json.content;
 console.log('Sublime editing...');				
 				sendEditToWikia(articleTitle, articleContent);
+			} else if(action == 'login'){
+				sublimeLogin(json.username, json.password);
 			} else {
 				console.log("Sublime action: \"" + action + "\" not implemented yet.");
 			}
@@ -61,6 +63,23 @@ console.log('Sublime editing...');
 				}
 			}, 'json');
 		}
+		
+		function sublimeLogin(wikiUsername, wikiPass){
+			try { 
+				if (Mediawiki.isLoggedIn()){
+					Mediawiki.updateStatus("Already logged in.");
+					loginWorked();
+				}
+				Mediawiki.updateStatus("Logging in...");
+				Mediawiki.login(wikiUsername, wikiPass, loginWorked, apiFailed);
+			} catch (e) {
+				Mediawiki.updateStatus( "Error logging in:" + Mediawiki.print_r(e));	
+			}
+		}
+		function loginWorked (){
+			Mediawiki.updateStatus("Login successful");
+		}
+
 		
 		function sendEditToWikia(articleTitle, articleContent, summary){
 			summary = (summary?summary:'Edited using Sublime plugin by Wikia');
