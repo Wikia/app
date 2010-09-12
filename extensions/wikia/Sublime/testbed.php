@@ -94,8 +94,9 @@ $wikiHost = "http://lyrics.wikia.com";
 	// TODO: REMOVE - MOVED TO IFRAME
 	//	var wgScriptPath = "<?= $wikiHost ?>"; // this should be the endpoint.
 		
-		// For html2wiki conversion.
-		window.wgScript = "<?= $wikiHost ?>/index.php";
+	// TODO: REMOVE - MOVED TO IFRAME
+	//	// For html2wiki conversion.
+	//	window.wgScript = "<?= $wikiHost ?>/index.php";
 	</script>
 	<!--
 	TODO: REMOVE - MOVED TO iFrame
@@ -128,13 +129,20 @@ $wikiHost = "http://lyrics.wikia.com";
 			return false;
 		}
 		
-		 function phonehome(data) {
+
+/* INTEGRATE THIS!!!!
+$(function() {
+	$('<iframe src="http://sean.wikia-dev.com/extensions/wikia/Sublime/sublime_iframe.php" id="sublimeFrame" style="display: none;"></iframe>').appendTo("body");
+});
+
+
+		function phonehome(data) {
 			var iframe = document.getElementById("sublimeFrame").contentWindow;
 
 			console.log("phonehome: postMessage to iframe");
 			iframe.postMessage(JSON.stringify(data), "*");  
 		 }
-		
+	*/	
 		
 		
 // PROBABLY TO BE PUT INTO EXTENSION (WITH MODIFICATIONS) //
