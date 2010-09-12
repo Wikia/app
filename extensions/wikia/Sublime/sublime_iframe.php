@@ -30,26 +30,26 @@ $wikiHost = ""; // the API target is the same server
 		//register event
 		window.addEventListener("message", receiveMessage, false);		
 		
-//console.log('Sublime iframe initialized.');
+console.log('Sublime iframe initialized.');
 		var json;
 		
 		//run when messages are received
 		function receiveMessage(e) {
 			// Get the JSON object that was sent in by the parent-page.
 			json = JSON.parse(e.data);
-//console.log('Sublime iframe got a message from the parent window'); 
-			
+console.log('Sublime iframe got a message from the parent window'); 
+		
 			var action = (json.action?json.action:'edit');
 			if(action == 'edit'){
 				var articleTitle = json.title;
 				var articleContent = json.content;
-//console.log('Sublime editing...');				
+console.log('Sublime editing...');				
 				sendEditToWikia(articleTitle, articleContent);
 			} else if(action == 'login'){
-//console.log("Sublime trying to login...");
+console.log("Sublime trying to login...");
 				sublimeLogin(json.username, json.password);
 			} else {
-//				console.log("Sublime action: \"" + action + "\" not implemented yet.");
+console.log("Sublime action: \"" + action + "\" not implemented yet.");
 			}
 		}
 		
@@ -73,19 +73,19 @@ $wikiHost = ""; // the API target is the same server
 					loginWorked();
 				}
 				Mediawiki.updateStatus("Logging in...");
-//console.log("Sublime trying to login user " + wikiUsername);
+console.log("Sublime trying to login user " + wikiUsername);
 				Mediawiki.login(wikiUsername, wikiPass, loginWorked, apiFailed);
 			} catch (e) {
 				Mediawiki.updateStatus( "Error logging in:" + Mediawiki.print_r(e));	
 			}
 		}
 		function loginWorked (){
-//console.log("Sublime logged in.");
+console.log("Sublime logged in.");
 
 				// The login worked, now do an edit.
 				var articleTitle = json.title;
 				var articleContent = json.content;
-//console.log('Sublime editing...');				
+console.log('Sublime editing...');				
 				sendEditToWikia(articleTitle, articleContent);
 			Mediawiki.updateStatus("Login successful");
 		}
