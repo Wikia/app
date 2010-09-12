@@ -18,10 +18,11 @@ $wikiHost = ""; // the API target is the same server
 	<?php // TODO: REVIEW WHICH OF THESE JQUERY FILES ARE NEEDED ?>
 	<script type="text/javascript" src="<?= $wikiHost ?>/skins/common/jquery/jquery.json-1.3.js?1284232976"></script>
 	<!-- <script type="text/javascript" src="<?= $wikiHost ?>/skins/common/jquery/jquery.wikia.js?1284232976"></script> -->
-	<script type='text/javascript' src='<?= $wikiHost ?>/extensions/wikia/JavascriptAPI/Mediawiki.js'></script>
 	<script>
 		var wgScriptPath = "<?= $wikiHost ?>"; // this should be the endpoint 
-
+	</script>
+	<script type='text/javascript' src='<?= $wikiHost ?>/extensions/wikia/JavascriptAPI/Mediawiki.js'></script>
+	<script>
 		//register event
 		window.addEventListener("message", receiveMessage, false);		
 		
