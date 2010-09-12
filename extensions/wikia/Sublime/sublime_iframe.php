@@ -31,11 +31,12 @@ $wikiHost = ""; // the API target is the same server
 		window.addEventListener("message", receiveMessage, false);		
 		
 console.log('Sublime iframe initialized.');
+		var json;
 		
 		//run when messages are received
 		function receiveMessage(e) {
 			// Get the JSON object that was sent in by the parent-page.
-			var json = JSON.parse(e.data);
+			json = JSON.parse(e.data);
 console.log('Sublime iframe got a message from the parent window'); 
 			
 			var action = (json.action?json.action:'edit');
@@ -72,13 +73,19 @@ console.log("Sublime trying to login...");
 					loginWorked();
 				}
 				Mediawiki.updateStatus("Logging in...");
-console.log("using username " + wikiUsername + " and pass " + wikiPass); // TODO: REMOVE THIS LINE!
+console.log("Sublime trying to login user " + wikiUsername);
 				Mediawiki.login(wikiUsername, wikiPass, loginWorked, apiFailed);
 			} catch (e) {
 				Mediawiki.updateStatus( "Error logging in:" + Mediawiki.print_r(e));	
 			}
 		}
 		function loginWorked (){
+console.log("Sublime logged in.");
+
+				var articleTitle = json.title;
+				var articleContent = json.content;
+console.log('Sublime editing...');				
+				sendEditToWikia(articleTitle, articleContent);
 			Mediawiki.updateStatus("Login successful");
 		}
 
