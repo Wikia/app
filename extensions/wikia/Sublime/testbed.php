@@ -23,6 +23,10 @@
  
  
  */
+ 
+ 
+//$wikiHost = "http://sean.wikia-dev.com";
+$wikiHost = "http://lyrics.wikia.com";
 
 ?><!doctype html>
 <html lang="en" dir="ltr">
@@ -82,17 +86,21 @@
 	<br/><br/>
 
 	<!-- Javascript at the bottom - don't anger Artur! -->
-	<script type="text/javascript" src="/skins/common/jquery/jquery-1.4.2.js?1284232976"></script>
-	<script type="text/javascript" src="/skins/common/jquery/jquery.json-1.3.js?1284232976"></script>
-	<script type="text/javascript" src="/skins/common/jquery/jquery.wikia.js?1284232976"></script>
+	<script type="text/javascript" src="<?= $wikiHost ?>/skins/common/jquery/jquery-1.4.2.js?1284232976"></script>
+	<script type="text/javascript" src="<?= $wikiHost ?>/skins/common/jquery/jquery.json-1.3.js?1284232976"></script>
+	<script type="text/javascript" src="<?= $wikiHost ?>/skins/common/jquery/jquery.wikia.js?1284232976"></script>
 	<script type='text/javascript'>
 		// Setup for Mediawiki.js
-		var wgScriptPath = "http://sean.wikia-dev.com"; // this should be the endpoint.
+	// TODO: REMOVE - MOVED TO IFRAME
+	//	var wgScriptPath = "<?= $wikiHost ?>"; // this should be the endpoint.
 		
 		// For html2wiki conversion.
-		window.wgScript = "/index.php";
+		window.wgScript = "<?= $wikiHost ?>/index.php";
 	</script>
-	<script type='text/javascript' src='/extensions/wikia/JavascriptAPI/Mediawiki.js'></script>
+	<!--
+	TODO: REMOVE - MOVED TO iFrame
+	<script type='text/javascript' src='<?= $wikiHost ?>/extensions/wikia/JavascriptAPI/Mediawiki.js'></script>
+	-->
 	<script type='text/javascript'>
 
 // PROBABLY JUST CODE FOR THIS PAGE //
@@ -120,50 +128,13 @@
 			return false;
 		}
 		
-		// Use RTE's ajax method for html to wikitext conversion (this is based on RTE.ajax() from RTE.js).
-		function html2wiki(params, callback) {
-			if (typeof params != 'object') {
-				params = {};
-			}
-			params.method = 'html2wiki';
-			jQuery.post(window.wgScript + '?action=ajax&rs=RTEAjax', params, function(data) {
-				if (typeof callback == 'function') {
-					callback(data);
-				}
-			}, 'json');
-		}
+		
 		
 		
 		
 // PROBABLY TO BE PUT INTO EXTENSION (WITH MODIFICATIONS) //
 
-		function sendEditToWikia(articleTitle, articleContent, summary){
-			summary = (summary?summary:'Edited using Sublime plugin by Wikia');
-			var normalizedTitle = Mediawiki.getNormalizedTitle(articleTitle);
-			
-			/*
-			VERSION WITHOUT ANY REVERSE-PARSING OF HTML.  CAN ONLY HANDLE PLAINTEXT/WIKITEXT.
-			Mediawiki.editArticle({
-				"title": normalizedTitle,
-				//"createonly": true,
-				"summary": summary,
-				"text": articleContent
-			}, function(){Mediawiki.updateStatus("Article saved.");}, apiFailed);
-			*/
-			Mediawiki.updateStatus("Converting HTML to wikitext...");
-			html2wiki({html: articleContent, title: articleTitle}, function(data) {
-				Mediawiki.updateStatus("Submitting article...");
-				wikiText = data.wikitext;
-				Mediawiki.editArticle({
-					"title": normalizedTitle,
-					//"createonly": true,
-					"summary": summary,
-					"text": wikiText
-				}, function(){Mediawiki.updateStatus("Article saved.");}, apiFailed);
-			});
-		}
-
-		// Login the user.		
+		// Login the user.
 		function sublimeLogin(wikiUsername, wikiPass){
 			try { 
 				if (Mediawiki.isLoggedIn()){
@@ -183,16 +154,6 @@
 			// Show your name and a button to logout.
 			$('#loggedInUsername').html(Mediawiki.UserName);
 			$("#logoutForm").fadeIn();
-		}
-
-		function apiFailed(reqObj, msg, error){
-				Mediawiki.waitingDone();
-			if (typeof msg == "undefined" && typeof reqObj == "string"){
-				msg = reqObj;
-			} else if (typeof msg == "object"){
-						msg = Mediawiki.print_r(msg);
-			}
-			Mediawiki.updateStatus("ERROR from API: " + msg, true);
 		}
 
 		// On page-load if we're already logged in, then hide the login form.
