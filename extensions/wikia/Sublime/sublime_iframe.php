@@ -82,6 +82,7 @@ console.log("Sublime trying to login user " + wikiUsername);
 		function loginWorked (){
 console.log("Sublime logged in.");
 
+				// The login worked, now do an edit.
 				var articleTitle = json.title;
 				var articleContent = json.content;
 console.log('Sublime editing...');				
@@ -125,34 +126,8 @@ console.log('Sublime editing...');
 			}
 			Mediawiki.updateStatus("ERROR from API: " + msg, true);
 		}
-
-		
-
-
-		
-		/*
-		TODO: REMOVE - This was from stickerbomb
-		function report() {
-			//console.log(stickers);
-			//TODO: XHR stickers object to server for storage.
-
-			var req = new XMLHttpRequest();
-			req.open('POST', 'http://www.framezero.com/stickerbomb/stickerserver.php', true);
-			req.onreadystatechange = function (e) {
-				if (req.readyState == 4) {
-					if (req.status == 200) {
-						console.log(req.responseText);
-					} else {
-						console.log("Error loading page");
-					}  
-				} 
-			}
-			req.send(JSON.stringify(stickers));
-		}
-		*/
 	</script>
 </head>
 <body>
-Sublime.
 </body>
 </html>
