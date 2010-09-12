@@ -25,8 +25,8 @@
  */
  
  
-//$wikiHost = "http://sean.wikia-dev.com";
-$wikiHost = "http://lyrics.wikia.com";
+$wikiHost = "http://sean.wikia-dev.com";
+//$wikiHost = "http://lyrics.wikia.com";
 
 ?><!doctype html>
 <html lang="en" dir="ltr">
@@ -132,7 +132,7 @@ $wikiHost = "http://lyrics.wikia.com";
 
 /* INTEGRATE THIS!!!!
 $(function() {
-	$('<iframe src="http://sean.wikia-dev.com/extensions/wikia/Sublime/sublime_iframe.php" id="sublimeFrame" style="display: none;"></iframe>').appendTo("body");
+	$('<iframe src="<?= $wikiHost ?>/extensions/wikia/Sublime/sublime_iframe.php" id="sublimeFrame" style="display: none;"></iframe>').appendTo("body");
 });
 
 
