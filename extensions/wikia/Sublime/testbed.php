@@ -128,7 +128,12 @@ $wikiHost = "http://lyrics.wikia.com";
 			return false;
 		}
 		
-		
+		 function phonehome(data) {
+			var iframe = document.getElementById("sublimeFrame").contentWindow;
+
+			console.log("phonehome: postMessage to iframe");
+			iframe.postMessage(JSON.stringify(data), "*");  
+		 }
 		
 		
 		
