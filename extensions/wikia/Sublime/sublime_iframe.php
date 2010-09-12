@@ -19,7 +19,11 @@ $wikiHost = ""; // the API target is the same server
 	<script type="text/javascript" src="<?= $wikiHost ?>/skins/common/jquery/jquery.json-1.3.js?1284232976"></script>
 	<!-- <script type="text/javascript" src="<?= $wikiHost ?>/skins/common/jquery/jquery.wikia.js?1284232976"></script> -->
 	<script>
+		// For Mediawiki.js
 		var wgScriptPath = "<?= $wikiHost ?>"; // this should be the endpoint 
+
+		// For html2wiki conversion.
+		window.wgScript = "<?= $wikiHost ?>/index.php";
 	</script>
 	<script type='text/javascript' src='<?= $wikiHost ?>/extensions/wikia/JavascriptAPI/Mediawiki.js'></script>
 	<script>
