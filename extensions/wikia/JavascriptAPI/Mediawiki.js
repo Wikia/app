@@ -173,7 +173,7 @@ Mediawiki.buildQueryString = function(nvpairs, sep){
  * Otherwise, return the error message
  */
 Mediawiki.checkResult = function (result){
-	if (typeof result != "object"){
+	if (typeof result != "object" || (!result)){
 		// This isn't going to work out
 		return "Error processing result";
 	} else if (result.error) {
