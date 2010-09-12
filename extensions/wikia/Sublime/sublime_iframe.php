@@ -25,16 +25,19 @@ $wikiHost = ""; // the API target is the same server
 		//register event
 		window.addEventListener("message", receiveMessage, false);		
 		
+console.log('Sublime iframe initialized.');
+		
 		//run when messages are received
 		function receiveMessage(e) {
 			// Get the JSON object that was sent in by the parent-page.
 			var json = JSON.parse(e.data);
+console.log('Sublime iframe got a message from the parent window'); 
 			
 			var action = (json.action?json.action:'edit');
 			if(action == 'edit'){
 				var articleTitle = json.title;
 				var articleContent = json.content;
-				
+console.log('Sublime editing...');				
 				sendEditToWikia(articleTitle, articleContent);
 			} else {
 				console.log("Sublime action: \"" + action + "\" not implemented yet.");
@@ -81,7 +84,7 @@ $wikiHost = ""; // the API target is the same server
 		}
 		
 		function apiFailed(reqObj, msg, error){
-				Mediawiki.waitingDone();
+			Mediawiki.waitingDone();
 			if (typeof msg == "undefined" && typeof reqObj == "string"){
 				msg = reqObj;
 			} else if (typeof msg == "object"){
@@ -117,5 +120,6 @@ $wikiHost = ""; // the API target is the same server
 	</script>
 </head>
 <body>
+Sublime.
 </body>
 </html>
