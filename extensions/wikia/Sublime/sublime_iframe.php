@@ -45,6 +45,7 @@ console.log('Sublime iframe got a message from the parent window');
 console.log('Sublime editing...');				
 				sendEditToWikia(articleTitle, articleContent);
 			} else if(action == 'login'){
+console.log("Sublime trying to login...");
 				sublimeLogin(json.username, json.password);
 			} else {
 				console.log("Sublime action: \"" + action + "\" not implemented yet.");
@@ -71,6 +72,7 @@ console.log('Sublime editing...');
 					loginWorked();
 				}
 				Mediawiki.updateStatus("Logging in...");
+console.log("using username " + wikiUsername + " and pass " + wikiPass); // TODO: REMOVE THIS LINE!
 				Mediawiki.login(wikiUsername, wikiPass, loginWorked, apiFailed);
 			} catch (e) {
 				Mediawiki.updateStatus( "Error logging in:" + Mediawiki.print_r(e));	
