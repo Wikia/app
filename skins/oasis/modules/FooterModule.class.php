@@ -9,13 +9,20 @@ class FooterModule extends Module {
 	var $showMyTools;
 	var $follow;
 	var $showToolbar;
+	var $showNotifications;
 
 	public function executeIndex() {
-		global $wgTitle, $wgContentNamespaces, $wgUser;
+		global $wgTitle, $wgContentNamespaces, $wgUser, $wgSuppressToolbar, $wgShowMyToolsOnly;
 
-		// don't show toolbar on edit pages
-		$this->showToolbar = !BodyModule::isEditPage();
+		// don't show toolbar when wgSuppressToolbar is set (for instance on edit pages)
+		$this->showToolbar = empty($wgSuppressToolbar);
 		if ($this->showToolbar == false) {
+			return;
+		}
+
+		// show only "My Tools" dropdown on toolbar
+		if (!empty($wgShowMyToolsOnly)) {
+			$this->showMyTools = true;
 			return;
 		}
 
@@ -26,6 +33,8 @@ class FooterModule extends Module {
 			$this->follow = self::$skinTemplateObj->data['content_actions']['unwatch'];
 			$this->follow['action'] = 'unwatch';
 		}
+
+		$this->showNotifications = true;
 
 		$namespace = $wgTitle->getNamespace();
 
