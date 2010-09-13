@@ -16,9 +16,10 @@
 	<!-- SASS-generated CSS file -->
 	<link rel="stylesheet" href="<?= wfGetSassUrl("skins/oasis/css/oasis.scss") ?>">
 
-	<!-- CSS files to be combined by server-side process (eg: a .scss file instead of StaticChute)-->
-	<link rel="stylesheet" href="/extensions/wikia/ShareFeature/css/ShareFeature.css">
-	<link rel="stylesheet" href="/extensions/wikia/CreatePage/css/CreatePage.css">
+	<?php
+		// NOTE: CSS files that are needed on every Oasis page should go into the bottom of /skins/oasis/css/oasis.scss
+		// It serves the function that StaticChute formerly served for CSS.
+	?>
 
 	<!-- CSS injected by extensions -->
 	<?= $csslinks ?>
@@ -27,9 +28,10 @@
 	<script>/*<![CDATA[*/
 		var wgNow = new Date();
 	/*]]>*/</script><?php
-		// There were some problems moving JS to the bottom.  Allow us to control it via the URL for now.
+		// JS is loaded at the bottom right now.  This URL param lets us force it back to the top for testing if we need to.
+		// TODO: Remove the ability to put the JS on top (it will be cleaner and less confusing code).
 		global $wgRequest;
-		$JS_AT_BOTTOM = ($wgRequest->getVal('jsatbottom', '1') == "1");
+		$JS_AT_BOTTOM = ($wgRequest->getVal('jsatbottom', '1') != "0");
 		if(!$JS_AT_BOTTOM){
 			print "<!-- Combined JS files (StaticChute) -->\n";
 			print $staticChuteHtml."\n";
