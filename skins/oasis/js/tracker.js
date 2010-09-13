@@ -400,9 +400,28 @@ var initTracker = function() {
 		}
 	});
 
-
 	// random wiki
 	$('#WikiaRandomWiki').trackClick('randomwiki');
+
+	// Corporate footer
+	$('.CorporateFooter').click(function(ev) {
+		var fakeUrl = 'corporatefooter/';
+		var node = $(ev.target);
+
+		// fix for "About us" link
+		if (node.is('span')) {
+			node = node.parent();
+		}
+
+		if (!node.is('a')) {
+			return;
+		}
+
+		// http://www.wikia.com/About_Us - about_us
+		var name = node.attr('href').match(/[:\/]([^:\/]+)$/).pop().toLowerCase();
+
+		$.tracker.byStr(fakeUrl + name);
+	});
 
 	// content links
 	$('#WikiaArticle').click(function(ev) {
