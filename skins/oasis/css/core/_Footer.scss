@@ -129,7 +129,10 @@
 	}
 	ul {
 		list-style: none outside none;
-		margin: 10px;
+		margin: {
+			top: 5px;
+			bottom: 10px;
+		}
 		display: inline-block;
 		*width: 1000px; // /** IE 7  **/
 
@@ -140,13 +143,13 @@
 				right: 10px;
 				left: 10px;
 			}
-			border-right: solid 1px $color-corporate-footer-links;
+			border-right: solid 1px $color-links;
 			&:last-child {
 				border: none;
 			}
 			
 			a {
-				color: $color-corporate-footer-links;
+				color: $color-links;
 			}
 		}
 	}

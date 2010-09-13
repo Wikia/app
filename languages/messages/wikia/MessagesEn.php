@@ -1070,7 +1070,7 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'oasis-anon-user' => 'A Wikia user',
 'oasis-create-page' => 'Create a new page on this wiki',
 'oasis-section-edit' => 'Edit $1 Section',
-'oasis-popular-blogs-title' => 'Popular Blogs',
+'oasis-popular-blogs-title' => 'Popular Blog <br/>  Posts',
 
 # Related to ImageSEO RT#55755
 'imageseo-featured-on' => 'Featured on:',

@@ -2,9 +2,7 @@
 
 <?php if($showToolbar) { ?>
 	<div class="toolbar">
-<?php if ($showNotifications) {
-	echo wfRenderModule('Notifications');
-} ?>
+		<?= wfRenderModule('Notifications') ?>
 		<ul class="share">
 
 <?php if($showMyTools) { ?>
@@ -64,4 +62,7 @@
 			-->
 		</li>
 	</ul>
+	
 </footer>
+
+<?= wfRenderModule('CorporateFooter') ?>
