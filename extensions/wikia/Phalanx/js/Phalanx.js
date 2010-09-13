@@ -169,7 +169,7 @@ Phalanx.postForm = function( e ) {
 			Phalanx.postFormCallback(response);
 
 			// reload the page when block is added
-			document.location.reload();
+			//document.location.reload(); // disable the submit reload by popular demand
 		});
 	}
 }
