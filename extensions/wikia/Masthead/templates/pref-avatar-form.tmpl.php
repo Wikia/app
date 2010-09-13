@@ -14,8 +14,8 @@
 		<input type="hidden" name="wkDefaultAvatar" id="wkDefaultAvatar" value="" >
 		<script type="text/javascript">
 		/*<![CDATA[*/
-		$.loadYUI( function() {
-			YAHOO.util.Event.onDOMReady(function () {
+		$.loadYUI(function() {
+			$(function() {
 				if (document.createTextNode) {
 					var defaultAvatar = YAHOO.util.Dom.get("wkDefaultAvatar");
 					var listDiv = YAHOO.util.Dom.get("wkDefaultAvatarList");
