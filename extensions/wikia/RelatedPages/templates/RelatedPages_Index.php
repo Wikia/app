@@ -1,5 +1,5 @@
 <?php if( !$skipRendering ) { ?>
-	<div class="RelatedPagesModule">
+	<nav class="RelatedPagesModule">
 		<h1><?= wfMsg('wikiarelatedpages-heading') ?></h1>
 		<ul>
 		<?php foreach($pages as $page) { ?>
@@ -17,5 +17,5 @@
 			</li>
 		<?php } ?>
 		</ul>
-	</div>
+	</nav>
 <?php } // !skipRendering ?>
