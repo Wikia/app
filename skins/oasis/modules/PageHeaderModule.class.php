@@ -361,10 +361,13 @@ class PageHeaderModule extends Module {
 		$isSectionEdit = is_numeric($wgRequest->getVal('section'));
 
 		// show proper message in the header
+		$action = $wgRequest->getVal('action', 'view');
+
 		$isPreview = $wgRequest->getCheck( 'wpPreview' ) || $wgRequest->getCheck( 'wpLivePreview' );
 		$isShowChanges = $wgRequest->getCheck( 'wpDiff' );
 		$isDiff = $wgRequest->getInt('diff');
-		$isEdit = in_array($wgRequest->getVal('action', 'view'), array('edit', 'submit'));
+		$isEdit = in_array($action, array('edit', 'submit'));
+		$isHistory = $action == 'history';
 
 		// hide floating toolbar when on edit page / in preview mode / show changes
 		if ($isEdit || $isPreview) {
@@ -384,6 +387,9 @@ class PageHeaderModule extends Module {
 		else if ($isSectionEdit) {
 			$titleMsg = 'oasis-page-header-editing-section';
 		}
+		else if ($isHistory) {
+			$titleMsg = 'oasis-page-header-history';
+		}
 		else {
 			$titleMsg = 'oasis-page-header-editing';
 		}
@@ -397,7 +403,7 @@ class PageHeaderModule extends Module {
 		}
 
 		// add edit button
-		if ($isDiff) {
+		if ($isDiff || $isHistory) {
 			$this->prepareActionButton();
 
 			// show search box as a part of the header
