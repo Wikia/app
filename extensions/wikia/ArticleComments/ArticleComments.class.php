@@ -55,13 +55,8 @@ class ArticleCommentInit {
 		global $wgContentNamespaces, $wgArticleCommentsNamespaces;
 		wfProfileIn(__METHOD__);
 
-		$enable = true;
-
 		//enable comments only on content namespaces (use $wgArticleCommentsNamespaces if defined)
-		// TODO: still needed?
-		if (!in_array($title->getNamespace(), empty($wgArticleCommentsNamespaces) ? $wgContentNamespaces : $wgArticleCommentsNamespaces)) {
-			$enable = false;
-		}
+		$enable = self::ArticleCommentCheckNamespace($title);
 
 		//non-existing articles
 		if (!$title->exists()) {
@@ -87,6 +82,20 @@ class ArticleCommentInit {
 		if (defined('NS_BLOG_ARTICLE') && $title->getNamespace() == NS_BLOG_ARTICLE && strpos($title->getText(), '/') === false) {
 			$enable = false;
 		}
+
+		wfProfileOut(__METHOD__);
+		return $enable;
+	}
+
+	/**
+	 * Check whether comments should be enabled for namespace of given title
+	 */
+	static public function ArticleCommentCheckNamespace($title) {
+		global $wgContentNamespaces, $wgArticleCommentsNamespaces;
+		wfProfileIn(__METHOD__);
+
+		//enable comments only on content namespaces (use $wgArticleCommentsNamespaces if defined)
+		$enable = in_array($title->getNamespace(), empty($wgArticleCommentsNamespaces) ? $wgContentNamespaces : $wgArticleCommentsNamespaces);
 
 		wfProfileOut(__METHOD__);
 		return $enable;
