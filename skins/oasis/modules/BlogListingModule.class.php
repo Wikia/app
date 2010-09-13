@@ -53,8 +53,8 @@ class BlogListingModule extends Module {
 		global $wgTitle, $wgStylePath;
 		#print_pre(htmlspecialchars($html));	print_pre($posts);
 		$additionalClass = '';
-		if (!empty($aOptions['style'])) {
-			$additionalClass = $aOptions['style'];
+		if (!empty($aOptions['class'])) {
+			$additionalClass = $aOptions['class'];
 		}
 		if ($aOptions['type'] == 'box') {
 			$html .= wfRenderPartial('BlogListing', 'Index', array('posts' => $posts, 'blogListingClass' => "WikiaBlogListingBox $additionalClass", 'wgTitle' => $wgTitle, 'wgStylePath' => $wgStylePath, 'title' => $aOptions['title']));
