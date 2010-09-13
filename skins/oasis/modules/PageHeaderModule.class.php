@@ -413,6 +413,12 @@ class PageHeaderModule extends Module {
 			$wgShowMyToolsOnly = true;
 		}
 
+		// render edit dropdown on history pages
+		if ($isHistory) {
+			// dropdown actions
+			$this->dropdown = $this->getDropdownActions();
+		}
+
 		wfProfileOut(__METHOD__);
 	}
 
