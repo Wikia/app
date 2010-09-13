@@ -38,8 +38,7 @@ $CSS_CACHE_DURATION = 60 * 60 * 12; // how long to cache the computed CSS in mem
 $CHECK_SECURITY_HASH = false;
 
 // Chose the output style - {nested, expanded, compact, compressed} see: http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#output_style
-// NOTE: 'compact' seems to have some bugs (eg: https://gist.github.com/015ca93d437676542c9b ).
-$OUTPUT_STYLE = "nested";
+$OUTPUT_STYLE = "compact";
 
 $IP = getenv( 'MW_INSTALL_PATH' );
 if ( $IP === false ) { 
