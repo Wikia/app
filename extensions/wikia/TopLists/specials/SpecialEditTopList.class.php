@@ -58,7 +58,7 @@ class SpecialEditTopList extends SpecialPage {
 
 		$title = $list->getTitle();
 		$listName = $title->getText();
-		$listUrl = $title->getLocalUrl();
+		$listUrl = $title->getFullURL();
 		$listItems = $list->getItems();
 
 
@@ -69,7 +69,7 @@ class SpecialEditTopList extends SpecialPage {
 			$selectedPictureName = $wgRequest->getText( 'selected_picture_name' );
 			$itemsNames = $wgRequest->getArray( 'items_names', array() );
 			$removedItems = $wgRequest->getArray( 'removed_items', array() );
-
+			
 			//handle related article
 			$title = $list->getRelatedArticle();
 			$curValue = null;
