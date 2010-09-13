@@ -79,20 +79,5 @@
 
 	<iframe frameborder=0 id="PreviewFrame" class="PreviewFrame" src="<?= $wgServer ?>/wiki/Special:ThemeDesignerPreview"></iframe>
 
-
-<? /* DEMO STUFF FROM INEZ
-	<div style="width: 200px; height: 100px; border: solid 1px;">
-		<input type="text" id="color-body" />
-
-		<button onclick="document.getElementById('testIframe').contentWindow.importStylesheetURI('<?= $wgCdnRootUrl ?>/__sass/skins/oasis/css/oasis.scss/1282612788/color-body='+escape(document.getElementById('color-body').value));">
-		Go!
-		</button>
-
-		<button onclick="document.getElementById('testIframe').contentWindow.importStylesheetURI('<?= $wgCdnRootUrl ?>/__sass/skins/oasis/css/oasis.scss/1282612788/color-body='+escape('#'+Math.floor(Math.random()*16777215).toString(16)));">
-		Random color!
-		</button>
-	</div>
-*/ ?>
-
 </body>
 </html>

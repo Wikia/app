@@ -84,7 +84,7 @@ class ThemeDesignerModule extends Module {
 		// check if there is a file send
 		if($filename) {
 
-			// check if it's a PNG file
+			// check if it's a PNG file (just by extension)
 			if(strtolower(end(explode(".", $filename))) == 'png') {
 
 				// check if file is in correct size
@@ -120,7 +120,7 @@ class ThemeDesignerModule extends Module {
 			$themeSettings->set( $name, $value );
 		}
 
-		$themeSettings->save();
+		wfProfileOut( __METHOD__ );
 	}
 
 }
