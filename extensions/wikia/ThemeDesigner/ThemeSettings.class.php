@@ -148,7 +148,9 @@ class ThemeSettings {
 		$history = array_slice($history, -self::HistoryItemsLimit);
 
 		if(count($history) > 1 && isset($oldUrl)) {
-			$history[count($history)-2]['settings']['wordmark-image'] = $oldUrl;
+			if(!empty($history[count($history)-2]['settings']['wordmark-image'])) {
+				$history[count($history)-2]['settings']['wordmark-image'] = $oldUrl;
+			}
 		}
 
 		$result = WikiFactory::setVarByName(self::WikiFactoryHistory, $wgCityId, $history, $reason);
