@@ -23,18 +23,16 @@ class ArticleCommentInit {
 	private static $enable = null;
 
 	static public function ArticleCommentCheck() {
-		global $wgOut, $wgTitle, $wgUser, $wgRequest, $wgContentNamespaces, $wgArticleCommentsNamespaces, $wgEnableBlogArticles;
+		global $wgTitle, $wgRequest, $wgUser;
 		wfProfileIn( __METHOD__ );
 
 		if (is_null(self::$enable)) {
-			self::$enable = true;
-			//enable comments only on content namespaces (use $wgArticleCommentsNamespaces if defined)
-			if (!in_array($wgTitle->getNamespace(), empty($wgArticleCommentsNamespaces) ? $wgContentNamespaces : $wgArticleCommentsNamespaces)) {
-				self::$enable = false;
-			}
+			self::$enable = self::ArticleCommentCheckTitle($wgTitle);
 
-			//non-existing articles
-			if (!$wgTitle->exists()) {
+			//respect diffonly settings for user - see RT#65037
+			$diff = $wgRequest->getVal('diff');
+			$diffOnly = $wgRequest->getBool('diffonly', $wgUser->getOption('diffonly'));
+			if (isset($diff) && $diffOnly) {
 				self::$enable = false;
 			}
 
@@ -45,36 +43,53 @@ class ArticleCommentInit {
 			if ($action != 'view' && $action != 'purge') {
 				self::$enable = false;
 			}
-
-			//disable on main page (RT#33703)
-			if (Title::newMainPage()->getText() == $wgTitle->getText()) {
-				self::$enable = false;
-			}
-
-			//disable on redirect pages (RT#44315)
-			if ($wgTitle->isRedirect()) {
-				self::$enable = false;
-			}
-
-			//disable on pages that cant be read (RT#49525)
-			if (!$wgTitle->userCan('read')) {
-				self::$enable = false;
-			}
-
-			//blog listing? (eg: User:Name instead of User:Name/Blog_name) - do not show comments
-			if (defined('NS_BLOG_ARTICLE') && $wgTitle->getNamespace() == NS_BLOG_ARTICLE && strpos($wgTitle->getText(), '/') === false) {
-				self::$enable = false;
-			}
-
-			//respect diffonly settings for user - see RT#65037
-			$diff = $wgRequest->getVal('diff');
-			$diffOnly = $wgRequest->getBool('diffonly', $wgUser->getOption('diffonly'));
-			if (isset($diff) && $diffOnly) {
-				self::$enable = false;
-			}
 		}
 		wfProfileOut( __METHOD__ );
 		return self::$enable;
+	}
+
+	/**
+	 * Check whether comments should be enabled for given title
+	 */
+	static public function ArticleCommentCheckTitle($title) {
+		global $wgContentNamespaces, $wgArticleCommentsNamespaces;
+		wfProfileIn(__METHOD__);
+
+		$enable = true;
+
+		//enable comments only on content namespaces (use $wgArticleCommentsNamespaces if defined)
+		// TODO: still needed?
+		if (!in_array($title->getNamespace(), empty($wgArticleCommentsNamespaces) ? $wgContentNamespaces : $wgArticleCommentsNamespaces)) {
+			$enable = false;
+		}
+
+		//non-existing articles
+		if (!$title->exists()) {
+			$enable = false;
+		}
+
+		//disable on main page (RT#33703)
+		if (Title::newMainPage()->getText() == $title->getText()) {
+			$enable = false;
+		}
+
+		//disable on redirect pages (RT#44315)
+		if ($title->isRedirect()) {
+			$enable = false;
+		}
+
+		//disable on pages that cant be read (RT#49525)
+		if (!$title->userCan('read')) {
+			$enable = false;
+		}
+
+		//blog listing? (eg: User:Name instead of User:Name/Blog_name) - do not show comments
+		if (defined('NS_BLOG_ARTICLE') && $title->getNamespace() == NS_BLOG_ARTICLE && strpos($title->getText(), '/') === false) {
+			$enable = false;
+		}
+
+		wfProfileOut(__METHOD__);
+		return $enable;
 	}
 
 	//hook used only in Monaco - we want to put comment box in slightly different position, just between article area and the footer
