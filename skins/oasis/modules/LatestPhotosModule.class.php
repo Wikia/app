@@ -51,7 +51,7 @@ class LatestPhotosModule extends Module {
 				$shaList[$sha] = true;
 				$uniqueList[] = $data;
 			}
-			if (count($uniqueList) > 11) break;
+			if (count($uniqueList) > 10) break;
 		}
 
 		$this->thumbUrls = array_map(array($this, 'getTemplateData'), $uniqueList);
