@@ -151,6 +151,7 @@ class TopListHelper {
 	 */
 	static public function renderImageBrowser() {
 		global $wgRequest;
+		wfLoadExtensionMessages( 'TopLists' );
 
 		$titleText = $wgRequest->getText( 'title' );
 		$images = array();

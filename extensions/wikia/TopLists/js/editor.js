@@ -47,6 +47,7 @@ var TopListsEditor = {
 		});
 
 		//events handlers
+		$('#toplist-editor a.wikia-chiclet-button').click(TopListsEditor.showImageBrowser);
 		TopListsEditor._mListContainer.find('li .ItemRemove a').click(TopListsEditor.removeItem);
 		$('#toplist-add-item').click(TopListsEditor.addItem);
 	},
@@ -92,5 +93,19 @@ var TopListsEditor = {
 		
 		TopListsEditor.length--;
 		TopListsEditor._fixLabels();
+	},
+
+	showImageBrowser: function(){
+		var relatedArticle = TopListsEditor._mAutocompleteField.val();
+		
+		$().getModal(
+			wgScript + '?action=ajax&rs=TopListHelper::renderImageBrowser&title=' + encodeURI(relatedArticle),
+			'#image-browser-dialog',
+			{
+				width: 290,
+				/*callback: function() {},
+				onClose: function() {}*/
+			}
+		);
 	}
 };
