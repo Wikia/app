@@ -72,7 +72,7 @@ class PageStatsService extends Service {
 		$wgMemc->delete($this->getKey('revisions3'));
 
 		// invalidate cached data from getCommentsCount()
-		$title = Title::newFromId($this->pageId);
+		$title = Title::newFromId($this->pageId, GAID_FOR_UPDATE /* fix for slave lag */);
 
 		if (!empty($title)) {
 			$pageName = $title->getPrefixedText();
@@ -80,9 +80,11 @@ class PageStatsService extends Service {
 
 			// invalidate cache with number of comments / talk page revisions
 			if ($title->isTalkPage()) {
-				if (self::isArticleCommentsEnabled()) {
+				if (self::isArticleCommentsEnabled($title->getSubjectPage())) {
 					// get subject page for this article comment
 					$title = ArticleCommentList::getSubjectPage($title);
+
+					wfDebug(__METHOD__ . ": article comment added\n");
 				}
 				else {
 					// get subject page for this talk page
@@ -106,14 +108,14 @@ class PageStatsService extends Service {
 	 */
 	public function regenerateCommentsCount() {
 		global $wgMemc;
-		$wgMemc->delete($this->getKey('comments4'));
+		$wgMemc->delete($this->getKey('comments5'));
 	}
 
 	/**
-	 * Checks whether ArticleComments extension is enabled
+	 * Checks whether ArticleComments extension is enabled for given title
 	 */
-	private static function isArticleCommentsEnabled() {
-		return class_exists('ArticleCommentInit');
+	private static function isArticleCommentsEnabled($title) {
+		return class_exists('ArticleCommentInit') && ArticleCommentInit::ArticleCommentCheckNamespace($title);
 	}
 
 	/**
@@ -229,14 +231,14 @@ class PageStatsService extends Service {
 		}
 
 		// try to get cached data
-		$key = $this->getKey('comments4');
+		$key = $this->getKey('comments5');
 
 		$ret = $wgMemc->get($key);
 		if (!is_numeric($ret)) {
 			wfProfileIn(__METHOD__ . '::miss');
 
 			// new comments extension
-			if (self::isArticleCommentsEnabled()) {
+			if (self::isArticleCommentsEnabled($title)) {
 				// get number of article comments
 				$commentList = ArticleCommentList::newFromTitle($title);
 
