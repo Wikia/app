@@ -86,7 +86,10 @@ $wgAutoloadClasses[ 'SpecialEditTopList' ] = "{$dir}/specials/SpecialEditTopList
 //$wgAutoloadClasses[ 'SpecialTopList' ] = "{$dir}/specials/SpecialTopLists.class.php";
 
 //ajax exports
-$wgAjaxExportList[] = 'TopListItem::vote';
+global $wgAjaxExportList;
+
+$wgAjaxExportList[] = 'TopListHelper::renderImageBrowser';
+$wgAjaxExportList[] = 'TopListHelper::voteItem';
 
 //hooks
 global $wgHooks;
