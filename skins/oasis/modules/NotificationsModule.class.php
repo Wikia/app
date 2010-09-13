@@ -307,10 +307,11 @@ class NotificationsModule extends Module {
 	 * Handle notifications about new message(s)
 	 */
 	public static function addMessageNotification(&$skin, &$tpl) {
+		global $wgUser;
 		wfProfileIn(__METHOD__);
 
 		if (Wikia::isOasis()) {
-			$msg = $tpl->data['usernewmessages'];
+			$msg = SiteWideMessages::getAllUserMessages($wgUser, false, false);
 
 			if ($msg != '') {
 				self::addNotification($msg);

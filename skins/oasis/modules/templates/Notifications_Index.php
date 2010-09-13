@@ -36,9 +36,13 @@
 
 				// render generic notification
 				default:
+
+				foreach ($notification['message'] as $msgId => $data) {
 ?>
-		<div data-type="<?= $notification['type'] ?>"><?= $notification['message'] ?></div>
+		<div data-type="<?= $notification['type'] ?>" id="msg_<?= $msgId ?>">
+			<a class="close"></a><?= $data['text'] ?></div>
 <?php
+				}
 			}
 ?>
 	</li>

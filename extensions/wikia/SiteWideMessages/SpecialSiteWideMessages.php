@@ -129,7 +129,7 @@ function SiteWideMessagesEmptyTalkPageWithMessages(&$out, &$text) {
 function SiteWideMessagesGetUserMessages(&$out, $parseroutput) {
 	global $wgUser;
 	//don't add messages when editing, previewing changes etc. AND don't even try for unlogged or bots
-	if (wfIsTalkPageForCurrentUserDisplayed() && !$wgUser->isAllowed('bot')) {
+	if (wfIsTalkPageForCurrentUserDisplayed() && !$wgUser->isAllowed('bot') && !Wikia::isOasis()) {
 		$out->addHTML( SiteWideMessagesGetUserMessagesContent() ); // #2321
 	}
 	return true;
@@ -152,7 +152,10 @@ function SiteWideMessagesUserNewTalks(&$user, &$talks) {
 
 	if(!is_array($messages) && $messages != 'deleted') {
 		$messages = array();
-		$messagesID = SiteWideMessages::getAllUserMessagesId($user);
+		
+		// For Oasis we want to set the filter_seen argument to false since we want the messages
+		// to stay visible until they actually dismiss them
+		$messagesID = SiteWideMessages::getAllUserMessagesId($user, Wikia::isOasis() ? false : true);
 		if(!empty($messagesID)) {
 			//selected wikis
 			$wikis = array_filter($messagesID['wiki']);

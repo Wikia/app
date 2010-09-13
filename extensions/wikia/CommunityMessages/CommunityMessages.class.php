@@ -25,7 +25,7 @@ class CommunityMessages {
 	 *
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
-	static function onSkinTemplatePageBeforeUserMsg(&$msg) {
+	static function onSkinTemplatePageBeforeUserMsg(&$msgs) {
 		global $wgUser, $wgMemc, $wgCityId, $wgCookiePrefix;
 
 		if (self::$messageSeen) {

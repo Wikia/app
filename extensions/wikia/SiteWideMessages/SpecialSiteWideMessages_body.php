@@ -570,7 +570,7 @@ class SiteWideMessages extends SpecialPage {
 	}
 
 	//Static functions (used in hooks)
-	static function getAllUserMessagesId($user) {
+	static function getAllUserMessagesId($user, $filter_seen = true) {
 		global $wgCityId, $wgLanguageCode;
 		global $wgExternalSharedDB ;
 		$localCityId = isset($wgCityId) ? $wgCityId : 0;
@@ -599,13 +599,17 @@ class SiteWideMessages extends SpecialPage {
 		}
 
 		if (count($tmpMsg)) {
+			// Exclude 'seen' messages based on $filter_seen
+			$status[] = MSG_STATUS_DISMISSED;
+			if ($filter_seen) $status[] = MSG_STATUS_SEEN;
+			
 			//step 2 of 3: remove dismissed and seen messages
 			$dbResult = $DB->Query (
 				  'SELECT msg_id AS id'
 				. ' FROM ' . MSG_STATUS_DB
 				. ' WHERE msg_id IN (' . implode(',', array_keys($tmpMsg)) . ')'
 				. ' AND msg_recipient_id = ' . $DB->AddQuotes($user->GetID())
-				. ' AND msg_status IN (' . MSG_STATUS_DISMISSED . ', ' . MSG_STATUS_SEEN . ')'
+				. ' AND msg_status IN (' . join(',', $status) . ')'
 				. ';'
 				, __METHOD__
 			);
@@ -618,6 +622,11 @@ class SiteWideMessages extends SpecialPage {
 				$DB->FreeResult($dbResult);
 			}
 		}
+		
+		unset($status);
+		$status[] = MSG_STATUS_UNSEEN;
+		if (! $filter_seen) $status[] = MSG_STATUS_SEEN;
+		
 		//step 3 of 3: add unseen messages sent to *this* user (on *all* wikis or *this* wiki)
 		$dbResult = $DB->Query (
 			  'SELECT msg_wiki_id, msg_id AS id, msg_lang as lang'
@@ -625,7 +634,7 @@ class SiteWideMessages extends SpecialPage {
 			. ' LEFT JOIN ' . MSG_STATUS_DB . ' USING (msg_id)'
 			. ' WHERE msg_mode = ' . MSG_MODE_SELECTED
 			. ' AND msg_recipient_id = ' . $DB->AddQuotes($user->GetID())
-			. ' AND msg_status = ' . MSG_STATUS_UNSEEN
+			. ' AND msg_status IN (' . join(',', $status) . ')'
 			. ' AND (msg_expire IS NULL OR msg_expire > ' . $DB->AddQuotes(date('Y-m-d H:i:s')) . ')'
 			. ' AND msg_removed = ' . MSG_REMOVED_NO
 			. ';'
@@ -655,7 +664,7 @@ class SiteWideMessages extends SpecialPage {
 		return $IDs;
 	}
 
-	static function getAllUserMessages($user, $dismissLink = true) {
+	static function getAllUserMessages($user, $dismissLink = true, $formatted = true) {
 		global $wgMemc, $wgCityId, $wgLanguageCode;
 		global $wgExternalSharedDB;
 		$localCityId = isset($wgCityId) ? $wgCityId : 0;
@@ -710,7 +719,7 @@ class SiteWideMessages extends SpecialPage {
 				$DB->FreeResult($dbResult);
 			}
 		}
-		//step 3 of 3: add not dismissed messages sent to *this* user (on *all* wikis or *this* wiki)
+		//step 3 of 3: add undismissed messages sent to *this* user (on *all* wikis or *this* wiki)
 		$dbResult = $DB->Query (
 			  'SELECT msg_wiki_id, msg_id AS id, msg_text AS text, msg_expire AS expire, msg_lang AS lang, msg_status AS status'
 			. ' FROM ' . MSG_TEXT_DB
@@ -759,6 +768,9 @@ class SiteWideMessages extends SpecialPage {
 		$countDisplayed = count($tmpMsg);
 		//do update only for not marked before
 
+		// Keep a copy of these around to return if necessary
+		$unformatted = $tmpMsg;
+
 		//isset - fix for RT#48187
 		$tmpMsg = array_filter($tmpMsg, create_function('$row', 'return !isset($row["status"]) || $row["status"] == 0;'));
 		if (count($tmpMsg) && !wfReadOnly()) {
@@ -802,7 +814,11 @@ class SiteWideMessages extends SpecialPage {
 			$wgMemc->set($key, 'deleted', 100);
 		}
 
-		return implode("\n", $messages);
+		if ($formatted) {
+			return implode("\n", $messages);
+		} else {
+			return $unformatted;
+		}
 	}
 
 	/*
