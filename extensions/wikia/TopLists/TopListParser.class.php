@@ -27,6 +27,8 @@ class TopListParser {
 	 * Implementation of a parser function
 	 */
 	static public function parseTag( $input, $args, &$parser ) {
+		global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
+
 		if( empty( self::$mOutput ) ) {
 			if ( !empty( $args[ TOPLIST_ATTRIBUTE_RELATED ] ) ) {
 				self::$mAttributes[ TOPLIST_ATTRIBUTE_RELATED ] = $args[ TOPLIST_ATTRIBUTE_RELATED ];
@@ -41,6 +43,8 @@ class TopListParser {
 			$list = TopList::newFromTitle( $parser->mTitle );
 
 			if ( !empty( $list ) ) {
+				$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/TopLists/js/list.js?{$wgStyleVersion}\"></script>\n" );
+
 				$template = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 				$template->set_vars( array( 'list' => $list, 'attribs' => self::$mAttributes ) );
 
