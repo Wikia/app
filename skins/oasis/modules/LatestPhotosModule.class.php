@@ -85,15 +85,11 @@ class LatestPhotosModule extends Module {
 			"file_url" => $element['url'],
 			"image_url" => $element['file']->getUrl(),
 			"thumb_url" => $thumb_url,
+			"image_filename" => $file->name,
 			"user_href" => View::link(Title::newFromText($userName, NS_USER), $userName),
 			"links" => $links,
 			"date" => $time);
-		
-		// getting plain file name
-		$shortened_filename = preg_split('/File:/', $retval["file_url"]);
-		if ($shortened_filename[1]) {
-			$retval["image_filename"] = $shortened_filename[1];
-		}
+
 		return $retval;
 	}
 
