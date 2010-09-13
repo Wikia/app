@@ -29,7 +29,7 @@
 	/*]]>*/</script><?php
 		// There were some problems moving JS to the bottom.  Allow us to control it via the URL for now.
 		global $wgRequest;
-		$JS_AT_BOTTOM = ($wgRequest->getVal('jsatbottom', '0') == "1");
+		$JS_AT_BOTTOM = ($wgRequest->getVal('jsatbottom', '1') == "1");
 		if(!$JS_AT_BOTTOM){
 			print "<!-- Combined JS files (StaticChute) -->\n";
 			print $staticChuteHtml."\n";
