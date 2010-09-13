@@ -39,7 +39,7 @@ function wfSlider( $input, $args, $parser ) {
 		wfLoadExtensionMessages( 'SliderTag' );
     $html = "<script type=\"text/javascript\" src=\"{$wgScriptPath}/extensions/wikia/SliderTag/slidertag.js?{$wgStyleVersion}\"></script>";
     
-		$html .= '<div id="spotlight-slider"><h1 id="featured-wikis-headline">' . wfMsg( 'slidertag-featured-wikis' ) . '</h1><ul>';
+		$html .= '<div id="spotlight-slider"><ul>';
 
 		foreach ( $data as $key => $value ) {
 			$msg = wfMsg( 'corporatepage-go-to-wiki', $value['title'] );
