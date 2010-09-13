@@ -28,7 +28,7 @@ class LatestPhotosModule extends Module {
 			'list' => 'logevents',
 			'letype' => 'upload',
 			'leprop' => 'title',
-			'lelimit' => 100,   // fixme: change this to 12 after testing
+			'lelimit' => 50,
 		);
 
 		$apiData = ApiService::call($params);
@@ -42,10 +42,20 @@ class LatestPhotosModule extends Module {
 		$fileList = array_map(array($this, "getImageData"), $imageList);
 		$fileList = array_filter($fileList, array($this, "filterImages"));
 
-		$this->thumbUrls = array_map(array($this, 'getTemplateData'), $fileList);
-		
-		while (count($this->thumbUrls) > 11) array_pop ($this->thumbUrls);
-		
+		// make sure the list of images is unique and limited to 11 images (12 including the see all image)
+		$shaList = array();
+		$uniqueList = array();
+		foreach ($fileList as $data) {
+			$sha = $data['file']->sha1;
+			if (! array_key_exists($sha, $shaList)) {
+				$shaList[$sha] = true;
+				$uniqueList[] = $data;
+			}
+			if (count($uniqueList) > 11) break;
+		}
+
+		$this->thumbUrls = array_map(array($this, 'getTemplateData'), $uniqueList);
+				
 		if (count($this->thumbUrls) < 3) {
 			$this->enableScroll = false;
 		}
@@ -63,14 +73,18 @@ class LatestPhotosModule extends Module {
 
 	private function getTemplateData($element) {
 		$time = wfTimeFormatAgo($element["file"]->timestamp);
-		$userName = $element['file']->user_text;
-		$thumb = $element['file']->getThumbnail(82, 82);
-		$links = $this->getLinkedFiles($element['file']->name);
+		$file = $element['file'];
+
+		// crop the images correctly using extension:imageservice
+		$is = new imageServing(array(), 82);
+		$thumb_url = wfReplaceImageServer($file->getThumbUrl( $is->getCut($file->width, $file->height)."-".$file->name));
+		$links = $this->getLinkedFiles($file->name);
+		$userName = $file->user_text;
 
 		$retval = array (
 			"file_url" => $element['url'],
 			"image_url" => $element['file']->getUrl(),
-			"thumb_url" => $thumb->getUrl(),
+			"thumb_url" => $thumb_url,
 			"user_href" => View::link(Title::newFromText($userName, NS_USER), $userName),
 			"links" => $links,
 			"date" => $time);
