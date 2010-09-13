@@ -54,6 +54,8 @@ class TopListHelper {
 
 	/**
 	 * @author Federico "Lox" Lucignano
+	 *
+	 * List editor utility function
 	 */
 	static public function clearSessionItemsErrors() {
 		if ( !empty( $_SESSION[ 'toplists_failed_data' ] ) ) {
@@ -63,6 +65,8 @@ class TopListHelper {
 
 	/**
 	 * @author Federico "Lox" Lucignano
+	 *
+	 * List editor utility function
 	 */
 	static public function getSessionItemsErrors() {
 		return ( !empty( $_SESSION[ 'toplists_failed_data' ] ) ) ? $_SESSION[ 'toplists_failed_data' ] : array( null, null, null );
@@ -70,6 +74,8 @@ class TopListHelper {
 
 	/**
 	 * @author Federico "Lox" Lucignano
+	 *
+	 * List editor utility function
 	 */
 	static public function setSessionItemsErrors( $listName, $itemNames, $errors ) {
 		$_SESSION[ 'toplists_failed_data' ] = array(
