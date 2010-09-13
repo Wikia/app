@@ -3670,6 +3670,11 @@ class Article {
 
 		global $wgSkipCountForCategories; # wikia change for answers
 
+		/* Wikia change begin - @author: wladek */
+		/* Used by CategoryService */
+		wfRunHooks( 'ArticleUpdateCategoryCounts', array( &$this, $added, $deleted ));
+		/* Wikia change end */
+
 		if( is_array( $wgSkipCountForCategories ) ) {
 			$added = array_diff( $added, $wgSkipCountForCategories );
 			$deleted = array_diff( $deleted, $wgSkipCountForCategories );
