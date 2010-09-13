@@ -4,30 +4,22 @@
 .RelatedPagesModule {
 	@include rail-module;
 
-
 	float: left;
 	margin: {
 		top: 0px;
 		bottom: 3px;
 		left: 10px;
 		right: 10px;
-	}
-	height: 167px;
-	
+	}	
 	position: static;
 	
 	a {
 		padding-left: 5px;
 		font-size: 12px;
+		display: inline-block;
+		width: 180px;
 	}
-	
-	p {
-		display: block;
-		padding: 3px;
 
-		padding-top: 3px;
-	}
-	
 	h1, h2 {
 		margin-bottom: 10px;
 	}
@@ -36,7 +28,6 @@
 		list-style: none outside none;
 		margin: 0;
 		position: relative;
-
 	}
 	
 	li {
@@ -44,9 +35,8 @@
 		padding-right: 10px;
 	}
 	.articleSnippet {
-		width: 190px;	
 		height: 100px;
-		
+		width: 190px;
 		// /** adding quotes **/
 		&:before {
 			content: '\201C';  // /** Webkit **/
@@ -77,8 +67,5 @@
 			padding: 0;
 		}
 		
-	}
-	.content {
-
 	}
 }
