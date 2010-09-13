@@ -91,9 +91,10 @@ class ThemeDesignerModule extends Module {
 				$imageSize = getimagesize($_FILES['wpUploadFile']['tmp_name']);
 				if($imageSize[0] == 300 && $imageSize[1] == 60) {
 
-					$file = new FakeLocalFile(Title::newFromText('Temp_file_'.time().'_'.$filename, 6), RepoGroup::singleton()->getLocalRepo());
+					$file = new FakeLocalFile(Title::newFromText('Temp_file_'.time(), 6), RepoGroup::singleton()->getLocalRepo());
 					$file->upload($wgRequest->getFileTempName('wpUploadFile'), '', '');
-					$this->wordmarkUrl = $file->getUrl();
+					$this->wordmarkImageUrl = $file->getUrl();
+					$this->wordmarkImageName = $file->getName();
 
 				}
 
@@ -102,7 +103,7 @@ class ThemeDesignerModule extends Module {
 		}
 
 		// if wordmark url is not set then it means there was some problem
-		if(empty($this->wordmarkUrl)) {
+		if(empty($this->wordmarkImageUrl) || empty($this->wordmarkImageName)) {
 			$this->errors = array('Incorrect file type or file dimension.');
 		}
 
