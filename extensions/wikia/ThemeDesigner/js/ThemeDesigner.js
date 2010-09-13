@@ -143,7 +143,7 @@ var ThemeDesigner = {
 		$("#Navigation a").click(ThemeDesigner.navigationClick);
 
 		// handle "Save" button clicks
-		$('#Toolbar').children('button').click(ThemeDesigner.saveClick);
+		$('#Toolbar').find('button').eq(0).click(ThemeDesigner.saveClick);
 
 		// init theme tab
 		ThemeDesigner.ThemeTabInit();
@@ -160,7 +160,7 @@ var ThemeDesigner = {
 		} else {
 			$('#Navigation [rel="ThemeTab"]').click();
 		}
-		
+
 		// init Tool Bar
 		ThemeDesigner.ToolBarInit();
 
@@ -316,14 +316,12 @@ var ThemeDesigner = {
 		$().log(ThemeDesigner.settings, 'ThemeDesigner');
 
 		// send current settings to backend
-		$.post(wgScript, {
-			'action' :'ajax',
-			'rs': 'ThemeDesignerHelper::saveSettings',
-			'settings': ThemeDesigner.settings
-		}, function(data) {
-			// redirect to article from which ThemeDesigner was triggered
-			document.location = returnTo;
-		}, 'json');
+		$.post(wgServer + wgScript + '?action=ajax&rs=moduleProxy&moduleName=ThemeDesigner&actionName=SaveSettings&outputType=data',
+			{'settings': ThemeDesigner.settings},
+			function(data) {
+				document.location = returnTo; // redirect to article from which ThemeDesigner was triggered
+			},
+			'json');
 	},
 
 
@@ -428,7 +426,7 @@ var ThemeDesigner = {
 	isNumeric: function(input) {
 		return (input - 0) == input && input.length > 0;
 	},
-	
+
 	ToolBarInit: function() {
 		$("#Toolbar .history").click(function() {
 			$(this).find("ul").css("display", "block");
@@ -437,7 +435,7 @@ var ThemeDesigner = {
 			$(this).css("display", "none");
 		});
 		$("#Toolbar .history ul li").click(ThemeDesigner.revertToPreviousTheme);
-		
+
 		// temp code and mock data for testing and placeholder, load ThemeDesigner.history here later
 		var clonedSettings1 = $.extend(true, {}, ThemeDesigner.settings);
 		var clonedSettings2 = $.extend(true, {}, ThemeDesigner.settings);
@@ -449,7 +447,7 @@ var ThemeDesigner = {
 		$("#Toolbar .history ul li").last().data("settings", clonedDefault);
 		// end temp code
 	},
-	
+
 	revertToPreviousTheme: function(event) {
 		event.preventDefault();
 		if($(this).data("settings")) {
