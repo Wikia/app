@@ -28,17 +28,10 @@ $messages['en'] = array(
 	'phalanx-format-regex' => 'regex',
 	'phalanx-format-case' => 'case sensitive',
 	'phalanx-format-exact' => 'exact',
-	'phalanx-or' => ' or ', // FIXME: remove hard coded spaces.
 	'phalanx-tab-main' => 'Manage Filters',
 	'phalanx-tab-secondary' => 'Test Filters',
-	'phalanx-reason-ip' => 'This IP address is prevented from editing due to vandalism or other disruption by you or by someone who shares your IP address.
-If you believe this is in error, please $1.', // FIXME: if this is a link, make it in the form of [$1 description (or $2)] for easier L10n
-	'phalanx-reason-name' => 'This username is prevented from editing due to vandalism or other disruption.
-If you believe this is in error, please $1.', // FIXME: if this is a link, make it in the form of [$1 description (or $2)] for easier L10n
-	'phalanx-reason-regex' => 'This username is prevented from editing due to vandalism or other disruption by a user with a similar name.
-Please create an alternate user name or $1 about the problem.', // FIXME: if this is a link, make it in the form of [$1 description (or $2)] for easier L10n
+
 	'phalanx-block-success' => 'The block was successfully added',
-	'phalanx-modify-success' => 'The block was successfully updated',
 	'phalanx-block-failure' => 'There was an error during adding the block',
 	'phalanx-modify-success' => 'The block was successfully modified',
 	'phalanx-modify-failure' => 'There was an error modifying the block',
@@ -46,13 +39,10 @@ Please create an alternate user name or $1 about the problem.', // FIXME: if thi
 Clicking "{{int:phalanx-add-block}}" will save your changes!',
 	'phalanx-test-description' => 'Test provided text against current blocks.',
 	'phalanx-test-submit' => 'Test',
-	'phalanx-content-spam-summary' => "The text was found in the page's summary.",
-	'phalanx-display-regex' => '(regex)',
-	'phalanx-display-text' => '(plain text)',
-	'phalanx-display-case' => '(case-sensitive)',
-	'phalanx-display-blocked' => ' blocked by: ', // FIXME: get rid of hard coded leading space. Use key 'word-separator' or multiple messages if at all possible.
-	'phalanx-display-reason' => ' reason: ', // FIXME: get rid of hard coded leading space. Use key 'word-separator' or multiple messages if at all possible.
-	'phalanx-display-on' => 'on ', // FIXME: get rid of hard coded spaces. Use key 'word-separator' or multiple messages if at all possible.
+	'phalanx-test-results-legend' => 'Test results',
+	'phalanx-display-row-blocks' => 'blocks: $1',
+	'phalanx-display-row-created' => "created by '''$1''' on $2",
+
 	'phalanx-link-unblock' => 'unblock',
 	'phalanx-link-modify' => 'modify',
 	'phalanx-link-stats' => 'stats',
@@ -85,9 +75,22 @@ If you believe this is in error, please [[Special:Contact|contact Wikia]].',
 Please create an alternate user name or [[Special:Contact|contact Wikia]] about the problem.',
 
 	'phalanx-title-move-summary' => 'The reason you entered contained a blocked phrase.',
+	'phalanx-content-spam-summary' => "The text was found in the page's summary.",
 
-	'phalanx-stats-row' => '<b>$4</b> filter type <b>$1</b> blocked user <b>$2</b> on <a href="$3">$3</a>', // TODO: Using wiki text is nicer.
+	'phalanx-stats-title' => 'Phalanx Stats',
 	'phalanx-stats-block-notfound' => 'block ID not found',
+	'phalanx-stats-table-id' => 'Block ID',
+	'phalanx-stats-table-user' => 'Added by',
+	'phalanx-stats-table-type' => 'Type',
+	'phalanx-stats-table-create' => 'Created',
+	'phalanx-stats-table-expire' => 'Expires',
+	'phalanx-stats-table-exact' => 'Exact',
+	'phalanx-stats-table-regex' => 'Regex',
+	'phalanx-stats-table-case' => 'Case',
+	'phalanx-stats-table-language' => 'Language',
+	'phalanx-stats-table-text' => 'Text',
+	'phalanx-stats-table-reason' => 'Reason',
+	'phalanx-stats-row' => "at $4, filter type '''$1''' blocked '''$2''' on $3",
 
 	'phalanx-rule-log-name' => 'Phalanx rules log',
 	'phalanx-rule-log-header' => 'This is a log of changes to phalanx rules.',
@@ -96,5 +99,4 @@ Please create an alternate user name or [[Special:Contact|contact Wikia]] about 
 	'phalanx-rule-log-delete' => 'Phalanx rule deleted: $1',
 	'phalanx-rule-log-details' => 'Filter: "$1", type: "$2", reason: "$3"',
 	
-	'phalanx-stats-title' => 'Phalanx Stats',
 );

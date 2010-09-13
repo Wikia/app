@@ -7,12 +7,13 @@ class PhalanxStats extends UnlistedSpecialPage {
 
 	function execute( $par ) {
 		global $wgOut, $wgLang, $wgUser, $wgRequest;
-		global $wgExtensionsPath, $wgStyleVersion, $wgStylePath;
 
 		wfLoadExtensionMessages( 'Phalanx' );
 
 		#set base title
 		$wgOut->setPageTitle( wfMsg('phalanx-stats-title') );
+
+		global $wgExtensionsPath, $wgStyleVersion;
 		$wgOut->addStyle( "$wgExtensionsPath/wikia/Phalanx/css/Phalanx.css?$wgStyleVersion" );
 
 		// check restrictions
@@ -61,17 +62,15 @@ class PhalanxStats extends UnlistedSpecialPage {
 		
 		//TODO: add i18n
 		$headers = array(
-			'Block ID',
-			'Added by',
-			#'Text',
-			'Type',
-			'Created on',
-			'Expires on',
-			'Exact',
-			'Regex',
-			'Case',
-			#'Reason',
-			'Language',
+			wfMsg('phalanx-stats-table-id'),
+			wfMsg('phalanx-stats-table-user'),
+			wfMsg('phalanx-stats-table-type'),
+			wfMsg('phalanx-stats-table-create'),
+			wfMsg('phalanx-stats-table-expire'),
+			wfMsg('phalanx-stats-table-exact'),
+			wfMsg('phalanx-stats-table-regex'),
+			wfMsg('phalanx-stats-table-case'),
+			wfMsg('phalanx-stats-table-language'),
 		);
 
 		$html = '';
@@ -82,10 +81,15 @@ class PhalanxStats extends UnlistedSpecialPage {
 			'cellspacing' => 0,
 			'style' => "font-family:monospace;",
 		);
+
+		#use magic to build it
 		$table = Xml::buildTable( array( $block ), $tableAttribs, $headers );
+		#rip off bottom
 		$table = str_replace("</table>", "", $table);
-		$table .= "<tr><th>Text</th><td colspan='8'>{$block2['text']}</td></tr>";
-		$table .= "<tr><th>Reason</th><td colspan='8'>{$block2['reason']}</td></tr>";
+		#add some stuff
+		$table .= "<tr><th>".wfMsg('phalanx-stats-table-text')."</th><td colspan='8'>" . htmlspecialchars($block2['text']) . "</td></tr>";
+		$table .= "<tr><th>".wfMsg('phalanx-stats-table-reason')."</th><td colspan='8'>{$block2['reason']}</td></tr>";
+		#seal it back up
 		$table .= "</table>";
 
 		$html .=  $table . "\n";
@@ -93,11 +97,12 @@ class PhalanxStats extends UnlistedSpecialPage {
 		$phalanxUrl = Title::newFromText( 'Phalanx', NS_SPECIAL )->getFullUrl( array( 'id' => $block['id'] ) );
 		$html .= " &bull; <a class='modify' href='{$phalanxUrl}'>" . wfMsg('phalanx-link-modify') . "</a><br/>\n";
 
-		$html .=  Xml::element( 'br', null, '', true ) . "\n";
-
+		$html .=  "<br/>\n";
+		$wgOut->addHTML( $html );
 
 		$pager = new PhalanxStatsPager( $par );
 
+		$html = '';
 		$html .= $pager->getNavigationBar();
 		$html .= $pager->getBody();
 		$html .= $pager->getNavigationBar();
@@ -168,7 +173,7 @@ class PhalanxStatsPager extends ReverseChronologicalPager {
 		$url = $oWiki->city_url;
 
 		$html = '<li>';
-		$html .= wfMsg( 'phalanx-stats-row', $type, $username, $url, $timestamp );
+		$html .= wfMsgExt( 'phalanx-stats-row', array('parseinline'), $type, $username, $url, $timestamp );
 		$html .= '</li>';
 
 		return $html;
