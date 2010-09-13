@@ -189,6 +189,11 @@ class UserPagesHeaderModule extends Module {
 			$this->likes = $this->stats['likes'];
 		}
 
+		$this->actionMenu = array(
+			'action' => array(),
+			'dropdown' => array(),
+		);
+
 		// page type specific stuff
 		if ($namespace == NS_USER) {
 			// edit button
@@ -209,7 +214,7 @@ class UserPagesHeaderModule extends Module {
 					'href' => $this->content_actions['addsection']['href'] ."#EditPage",
 					'text' => wfMsg('add_comment'),
 				);
-				
+
 				$this->actionImage = MenuButtonModule::ADD_ICON;
 				$this->actionName = 'leavemessage';
 
