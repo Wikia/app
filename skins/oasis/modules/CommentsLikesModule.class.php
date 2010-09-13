@@ -22,11 +22,13 @@ class CommentsLikesModule extends Module {
 	 */
 	private function getCommentsLink() {
 		wfProfileIn(__METHOD__);
-		global $wgTitle;
+		global $wgTitle, $wgRequest;
 
-		if (class_exists('ArticleComment') && ArticleCommentInit::ArticleCommentCheck()) {
+		$isHistory = $wgRequest->getVal('action') == 'history';
+
+		if (class_exists('ArticleComment') && ArticleCommentInit::ArticleCommentCheckNamespace($wgTitle)) {
 			// link to article comments section
-			if ($this->contextTitle != $wgTitle) {
+			if ($this->contextTitle != $wgTitle || $isHistory) {
 				$commentsLink = $this->contextTitle->getLocalUrl() . '#WikiaArticleComments';
 			}
 			else {
