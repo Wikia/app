@@ -11,16 +11,17 @@ var TopList = {
 
 	voteItem: function(e) {
 		$.getJSON(wgScript,
-				{
-					'action':'ajax',
-					'rs':'TopListItem::vote',
-					'title':this.id
-				},
-				function(response) {
-					console.log(response);
-					
-				}
-			);
+			{
+				'action':'ajax',
+				'rs':'TopListHelper::voteItem',
+				'title':this.id
+			},
+			function(response) {
+				console.log(response);
+
+			}
+		);
+			
 		return false;
 	}
 }

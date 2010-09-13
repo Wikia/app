@@ -52,36 +52,26 @@ class TopListItem extends TopListBase {
 	}
 
 	/**
-	 * Add a vote for the item
+	 * Registers a new vote for the item
 	 *
 	 * @author ADi
+	 * @author Federico "Lox" Lucignano
 	 *
+	 * @return boolean true if the vote has been processed correctly, false otherwise
 	 */
-	public static function vote() {
-		global $wgRequest;
 
-		$result = array( 'result' => 'ok' );
+	public function vote() {
+		if( $this->exists() ) {
+			$oFauxRequest = new FauxRequest(array( "action" => "insert", "list" => "wkvoteart", "wkpage" => $this->getArticle()->getId(), "wkvote" => 3 ));
+			$oApi = new ApiMain($oFauxRequest);
 
-		$titleText = $wgRequest->getVal ( 'title' );
-
-		if( !empty( $titleText ) ) {
-			$item = TopListItem::newFromText( $titleText );
-
-			if( $item instanceof TopListItem ) {
-				$oFauxRequest = new FauxRequest(array( "action" => "insert", "list" => "wkvoteart", "wkpage" => $item->getArticle()->getId(), "wkvote" => 3 ));
-				$oApi = new ApiMain($oFauxRequest);
-				$oApi->execute();
-				$aResult = $oApi->GetResultData();
-
-				$result['votesCount'] = $item->getVotesCount();
-			}
+			$oApi->execute();
+			
+			$this->votesCount = null;
+			$aResult = $oApi->GetResultData();
+			
+			return ( !empty( $aResult ) );
 		}
-
-		$json = Wikia::json_encode( $result );
-		$response = new AjaxResponse( $json );
-		$response->setContentType( 'application/json; charset=utf-8' );
-
-		return $response;
 	}
 
 	/**

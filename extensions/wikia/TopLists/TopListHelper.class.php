@@ -52,39 +52,6 @@ class TopListHelper {
 		return true;
 	}
 
-	/**
-	 * @author Federico "Lox" Lucignano
-	 *
-	 * List editor utility function
-	 */
-	static public function clearSessionItemsErrors() {
-		if ( !empty( $_SESSION[ 'toplists_failed_data' ] ) ) {
-			unset( $_SESSION[ 'toplists_failed_data' ] );
-		}
-	}
-
-	/**
-	 * @author Federico "Lox" Lucignano
-	 *
-	 * List editor utility function
-	 */
-	static public function getSessionItemsErrors() {
-		return ( !empty( $_SESSION[ 'toplists_failed_data' ] ) ) ? $_SESSION[ 'toplists_failed_data' ] : array( null, null, null );
-	}
-
-	/**
-	 * @author Federico "Lox" Lucignano
-	 *
-	 * List editor utility function
-	 */
-	static public function setSessionItemsErrors( $listName, $itemNames, $errors ) {
-		$_SESSION[ 'toplists_failed_data' ] = array(
-			$listName,
-			$itemNames,
-			$errors
-		);
-	}
-
 	/*
 	static public function onUnwatchArticleComplete( &$oUser, &$oArticle ) {
 		wfProfileIn( __METHOD__ );
@@ -143,5 +110,117 @@ class TopListHelper {
 		return true;
 	}
 	*/
+
+	/**
+	 * @author Federico "Lox" Lucignano
+	 *
+	 * List editor utility function
+	 */
+	static public function clearSessionItemsErrors() {
+		if ( !empty( $_SESSION[ 'toplists_failed_data' ] ) ) {
+			unset( $_SESSION[ 'toplists_failed_data' ] );
+		}
+	}
+
+	/**
+	 * @author Federico "Lox" Lucignano
+	 *
+	 * List editor utility function
+	 */
+	static public function getSessionItemsErrors() {
+		return ( !empty( $_SESSION[ 'toplists_failed_data' ] ) ) ? $_SESSION[ 'toplists_failed_data' ] : array( null, null, null );
+	}
+
+	/**
+	 * @author Federico "Lox" Lucignano
+	 *
+	 * List editor utility function
+	 */
+	static public function setSessionItemsErrors( $listName, $itemNames, $errors ) {
+		$_SESSION[ 'toplists_failed_data' ] = array(
+			$listName,
+			$itemNames,
+			$errors
+		);
+	}
+
+	/**
+	 * @author Federico "Lox" Lucignano
+	 *
+	 * List editor utility function
+	 */
+	static public function renderImageBrowser() {
+		global $wgRequest;
+
+		$titleText = $wgRequest->getText( 'title' );
+		$images = array();
+		
+		if( !empty( $titleText ) ) {
+			$title = Title::newFromText( $titleText );
+
+			if( !empty( $title ) ) {
+				$articleId = $title->getArticleId();
+				
+				$source = new imageServing(
+					array( $title->getArticleId( $articleId ) ),
+					120,
+					array(
+						"w" => 3,
+						"h" => 2
+					)
+				);
+
+				$result = $source->getImages( 7 );
+				
+				if( !empty( $result[ $articleId ] ) ) {
+					$images = $result[ $articleId ];
+				}
+			}
+		}
+		
+		$tpl = new EasyTemplate( dirname( __FILE__ )."/templates/" );
+		
+		$tpl->set_vars(
+			array(
+				'images' => $images
+			)
+		);
+
+		$text = $tpl->execute('image_browser');
+
+		$response = new AjaxResponse( $text );
+		$response->setContentType('text/plain; charset=utf-8');
+
+		return $response;
+	}
+
+	/**
+	 * Add a vote for the item
+	 *
+	 * @author ADi
+	 *
+	 */
+	public static function voteItem() {
+		global $wgRequest;
+
+		$result = array( 'result' => 'ok' );
+
+		$titleText = $wgRequest->getVal( 'title' );
+
+		if( !empty( $titleText ) ) {
+			$item = TopListItem::newFromText( $titleText );
+
+			if( $item instanceof TopListItem ) {
+				$result['voteResult'] = $item->vote();
+				$result['votesCount'] = $item->getVotesCount();
+			}
+		}
+
+		$json = Wikia::json_encode( $result );
+		$response = new AjaxResponse( $json );
+		$response->setContentType( 'application/json; charset=utf-8' );
+
+		return $response;
+	}
 }
 ?>
