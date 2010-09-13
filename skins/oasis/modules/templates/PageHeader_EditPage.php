@@ -4,7 +4,7 @@
 <?php
 	// edit button
 	if (!empty($action)) {
-		echo wfRenderModule('MenuButton', 'Index', array('action' => $action, 'image' => $actionImage, 'name' => $actionName));
+		echo wfRenderModule('MenuButton', 'Index', array('action' => $action, 'dropdown' => $dropdown, 'image' => $actionImage, 'name' => $actionName));
 	}
 ?>
 	<p><?= $subtitle ?></p>
