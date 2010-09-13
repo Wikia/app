@@ -46,7 +46,7 @@ class TopListHelper {
 			}
 
 			$specialPageTitle = Title::newFromText( 'EditTopList', NS_SPECIAL );
-			$wgOut->redirect( $specialPageTitle->getFullUrl() . '/' . $title->getPrefixedText() );
+			$wgOut->redirect( $specialPageTitle->getFullUrl() . '/' . $title->getDBkey() );
 		}
 
 		return true;
