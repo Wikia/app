@@ -23,9 +23,6 @@ var LatestPhotos = {
 			$('.carousel').append("<li class='blind'></li>");
 			$('.carousel').append("<li class='blind'></li>");
 		}
-		else {
-			$('.carousel').append("<li class='blind'></li>");
-		}
 	},
 
 	previousImage: function() {
