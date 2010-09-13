@@ -1,7 +1,6 @@
 <?= ThemeDesignerHelper::parseText("[[File:Aquarium.jpg|thumb|Quisque pellentesque vestibulum ullamcorper.]]
 Lorem ipsum dolor sit amet, [[consectetur]] adipiscing elit. Nunc molestie velit a ante [[fringilla vitae]] euismod velit gravida. [[Curabitur]] eu sem et justo sodales [[consequat quis]] vel justo. Vestibulum ante ipsum primis in faucibus orci [[luctus et ultrices]] posuere cubilia Curae. Quisque vitae lectus odio, quis porta orci. Etiam mattis volutpat enim, id posuere eros faucibus id. [[Integer vehicula libero]] vitae est ornare a pellentesque mauris pharetra. Nam eget lorem vestibulum nisi [[commodo suscipit]] non sit amet justo. Fusce imperdiet lacus sed [[turpis ornare]] pretium. ''Maecenas'' [[ante neque]], imperdiet sed accumsan id, gravida a sem. Morbi eu nisl quis nunc tincidunt condimentum euismod sit amet est.
 
-
 ==Donec dapibus==
 
 ''[[Sed porttitor ipsum]]'' quis nisi vehicula vel [[auctor magna]] aliquet. Sed eu quam eget arcu [[varius]] pulvinar. Vestibulum aliquam [[blandit turpis]] a porta. Sed feugiat tempor tristique. Duis iaculis arcu non ligula tincidunt dapibus. Vestibulum gravida [[volutpat purus]] sit amet laoreet. In tincidunt sapien sit amet metus ullamcorper sodales sed dignissim lacus. [[Fusce]] interdum tincidunt sodales. Nunc in metus et nisi scelerisque dapibus.
