@@ -12,7 +12,7 @@ class SpecialEditTopList extends SpecialPage {
 		if( !empty( $listName ) ) {
 			$url .= '/' . wfUrlencode( $listName );
 		}
-		
+
 		$wgOut->redirect( $url );
 	}
 
@@ -29,7 +29,7 @@ class SpecialEditTopList extends SpecialPage {
 		if( empty( $editListName ) ) {
 			$this->_redirectToCreateSP();
 		}
-		
+
 		// set basic headers
 		$this->setHeaders();
 
@@ -37,7 +37,7 @@ class SpecialEditTopList extends SpecialPage {
 		//$wgOut->addExtensionStyle( "{$wgExtensionsPath}/wikia/TopLists/css/editor.css?{$wgStyleVersion}\n" );
 		$wgOut->addStyle(wfGetSassUrl("$wgExtensionsPath/wikia/TopLists/css/editor.scss"));
 		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/TopLists/js/editor.js?{$wgStyleVersion}\"></script>\n" );
-		
+
 		//hide specialpage subtitle in Oasis
 		$wgSupressPageSubtitle = true;
 
@@ -61,7 +61,6 @@ class SpecialEditTopList extends SpecialPage {
 		$listUrl = $title->getLocalUrl();
 		$listItems = $list->getItems();
 
-		
 
 		if ( $wgRequest->wasPosted() ) {
 			TopListHelper::clearSessionItemsErrors();
@@ -74,11 +73,11 @@ class SpecialEditTopList extends SpecialPage {
 			//handle related article
 			$title = $list->getRelatedArticle();
 			$curValue = null;
-			
+
 			if ( !empty( $title ) ) {
 				$curValue = $title->getText();
 			}
-			
+
 			$relatedArticleChanged = ( $curValue != $relatedArticleName );
 
 			if ( $relatedArticleChanged ) {
@@ -108,7 +107,7 @@ class SpecialEditTopList extends SpecialPage {
 			if ( !empty( $title ) ) {
 				$curValue = $title->getText();
 			}
-			
+
 			$selectedPictureChanged = ( $curValue != $selectedPictureName );
 
 			if ( $selectedPictureChanged ) {
@@ -159,7 +158,7 @@ class SpecialEditTopList extends SpecialPage {
 						$items[ $counter ][ 'object' ] = $item;
 						$items[ $counter ][ 'changed' ] = true;
 					}
-					
+
 					$counter++;
 				}
 			}
@@ -184,7 +183,7 @@ class SpecialEditTopList extends SpecialPage {
 
 			//check items for processing
 			$usedNames = array();
-			
+
 			foreach ( $items as $index => $item ) {
 				$lcName = strtolower( $item[ 'value' ] );
 
@@ -245,7 +244,7 @@ class SpecialEditTopList extends SpecialPage {
 							);
 
 							$counter++;
-							
+
 							foreach ( $removeResult as $errorTuple ) {
 								$errors[ 'item_' . $counter ][] =  wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] );
 							}
@@ -260,7 +259,7 @@ class SpecialEditTopList extends SpecialPage {
 				}
 			}
 		} else {
-			$title = $list->getRelatedArticle();
+			$title = $list->getRelatedArticle( true );
 
 			if ( !empty( $title ) ) {
 				$relatedArticleName = $title->getText();
@@ -279,12 +278,12 @@ class SpecialEditTopList extends SpecialPage {
 					'index' => $index
 				);
 			}
-			
+
 			list( $sessionListName, $failedItemsNames, $sessionErrors ) = TopListHelper::getSessionItemsErrors();
 
 			if ( $listName == $sessionListName && !empty( $failedItemsNames ) ) {
 				$counter = count( $items );
-				
+
 				foreach ( $failedItemsNames as $index => $itemName ) {
 					$items[] = array(
 						'type' => 'new',

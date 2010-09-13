@@ -48,7 +48,7 @@ class TopList extends TopListBase {
 
 		return false;
 	}
-	
+
 	/**
 	 * @author Federico "Lox" Lucignano
 	 *
@@ -56,13 +56,12 @@ class TopList extends TopListBase {
 	 */
 	protected function _loadData( $forceReload = false ) {
 		parent::_loadData( $forceReload );
-		
+
 		if( !$this->mDataLoaded || $forceReload ) {
 			if( $this->exists() ) {
 				TopListParser::parse( $this );
 
 				$relatedArticle = TopListParser::getAttribute( TOPLIST_ATTRIBUTE_RELATED );
-				
 				if( !empty( $relatedArticle ) ) {
 					$relatedArticle =  Title::newFromText( $relatedArticle );
 				}
@@ -75,7 +74,7 @@ class TopList extends TopListBase {
 					$picture =  Title::newFromText( $picture );
 				}
 
-				$this->setRelatedArticle( $picture );
+				$this->setPicture( $picture );
 			}
 
 			$this->mDataLoaded = true;
@@ -119,7 +118,7 @@ class TopList extends TopListBase {
 				return $errors;
 			}
 		}
-		
+
 		$this->mRelatedArticle = $relatedArticle;
 		return true;
 	}
@@ -160,7 +159,7 @@ class TopList extends TopListBase {
 				);
 			}
 		}
-		
+
 		$this->mPicture = $picture;
 		return true;
 	}
@@ -190,7 +189,7 @@ class TopList extends TopListBase {
 	 * Fetches lists's items
 	 *
 	 * @param bool $forceReload if set to true the local cache will be refreshed
-	 * 
+	 *
 	 * @return Array an array of TopListItem instances
 	 */
 	public function getItems( $forceReload = false ) {
@@ -207,7 +206,7 @@ class TopList extends TopListBase {
 				}
 			}
 		}
-		
+
 		return $this->mItems;
 	}
 
