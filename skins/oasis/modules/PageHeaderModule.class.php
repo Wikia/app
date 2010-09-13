@@ -413,10 +413,16 @@ class PageHeaderModule extends Module {
 			$wgShowMyToolsOnly = true;
 		}
 
-		// render edit dropdown on history pages
+		// render edit dropdown / commments chicklet on history pages
 		if ($isHistory) {
 			// dropdown actions
 			$this->dropdown = $this->getDropdownActions();
+
+			// use service to get data
+			$service = new PageStatsService($wgTitle->getArticleId());
+
+			// comments
+			$this->comments = $service->getCommentsCount();
 		}
 
 		wfProfileOut(__METHOD__);
