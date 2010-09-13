@@ -33,7 +33,7 @@ class CategoryPage extends Article {
 			$this->closeShowCategory();
 		}
 	}
-	
+
 	/**
 	 * Don't return a 404 for categories in use.
 	 */
@@ -44,7 +44,7 @@ class CategoryPage extends Article {
 			$cat = Category::newFromTitle( $this->mTitle );
 			return $cat->getId() != 0;
 		}
-			
+
 	}
 
 	function openShowCategory() {
@@ -259,6 +259,12 @@ class CategoryViewer {
 
 	function getCategoryTop() {
 		$r = '';
+
+		/* Wikia change begin - @author: wladek */
+		/* Category Galleries hook */
+		wfRunHooks('CategoryPage::getCategoryTop',array($this,&$r));
+		/* Wikia change end */
+
 		if( $this->until != '' ) {
 			$r .= $this->pagingLinks( $this->title, $this->nextPage, $this->until, $this->limit );
 		} elseif( $this->nextPage != '' || $this->from != '' ) {
