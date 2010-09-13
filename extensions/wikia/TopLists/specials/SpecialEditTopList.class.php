@@ -259,7 +259,7 @@ class SpecialEditTopList extends SpecialPage {
 				}
 			}
 		} else {
-			$title = $list->getRelatedArticle( true );
+			$title = $list->getRelatedArticle();
 
 			if ( !empty( $title ) ) {
 				$relatedArticleName = $title->getText();
