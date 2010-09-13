@@ -32,6 +32,3 @@ $wgGroupPermissions['*']['themedesigner'] = false;
 $wgGroupPermissions['helper']['themedesigner'] = true;
 $wgGroupPermissions['staff']['themedesigner'] = true;
 $wgGroupPermissions['sysop']['themedesigner'] = true;
-
-// ajax
-$wgAjaxExportList[] = 'ThemeDesignerHelper::saveSettings';

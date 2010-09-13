@@ -17,6 +17,7 @@
 		var returnTo = <?= Xml::encodeJSVar($returnTo) ?>;
 		var themeHistory = <?= Wikia::json_encode($themeHistory) ?>;
 		var themeSettings = <?= Wikia::json_encode($themeSettings) ?>;
+		var wgServer = <?= Xml::encodeJSVar($wgServer) ?>;
 		var wgScript = <?= Xml::encodeJSVar($wgScript) ?>;
 	</script>
 

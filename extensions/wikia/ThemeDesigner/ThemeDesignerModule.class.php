@@ -108,4 +108,19 @@ class ThemeDesignerModule extends Module {
 
 	}
 
+	public function executeSaveSettings() {
+		global $wgRequest;
+
+		wfProfileIn( __METHOD__ );
+
+		$themeSettings = new ThemeSettings();
+		$data = $wgRequest->getArray( 'settings' );
+
+		foreach($data as $name => $value) {
+			$themeSettings->set( $name, $value );
+		}
+
+		$themeSettings->save();
+	}
+
 }
