@@ -16,7 +16,9 @@ var ThemeDesigner = {
 			if(response.errors && response.errors.length > 0) {
 				alert(response.errors.join("\n"));
 			} else {
-				alert('This is a wordmark url: ' + response.wordmarkUrl);
+				// use response.wordmarkImageUrl for display
+				ThemeDesigner.settings["wordmark-image"] = response.wordmarkImageName;
+				ThemeDesigner.applySettings();
 			}
 		}
 	},
@@ -34,7 +36,6 @@ var ThemeDesigner = {
 		"wordmark-font": "default",
 		"wordmark-size": "medium",
 		"wordmark-image": false,
-		"wordmark-image-revision": false,
 		"banner-image": false,
 		"banner-image-revision": false,
 		"background-image": false,
@@ -307,7 +308,7 @@ var ThemeDesigner = {
 	saveClick: function(event) {
 		event.preventDefault();
 
-		$(event.target).attr('disabled', true);
+		//$(event.target).attr('disabled', true);
 
 		ThemeDesigner.save();
 	},
@@ -319,7 +320,7 @@ var ThemeDesigner = {
 		$.post(wgServer + wgScript + '?action=ajax&rs=moduleProxy&moduleName=ThemeDesigner&actionName=SaveSettings&outputType=data',
 			{'settings': ThemeDesigner.settings},
 			function(data) {
-				document.location = returnTo; // redirect to article from which ThemeDesigner was triggered
+				//document.location = returnTo; // redirect to article from which ThemeDesigner was triggered
 			},
 			'json');
 	},

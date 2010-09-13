@@ -40,7 +40,6 @@ class ThemeSettings {
 		$settings['wordmark-font'] = '';
 		$settings['wordmark-font-size'] = '';
 		$settings['wordmark-image'] = false;
-		$settings['wordmark-image-revision'] = false;
 
 		// main page banner
 		$settings['banner-image'] = false;
@@ -98,23 +97,41 @@ class ThemeSettings {
 		global $wgCityId, $wgUser;
 
 		$data = $this->getAll();
+
+		if(strpos($data['wordmark-image'], 'Temp_file_') === 0) {
+
+			$temp_file = new LocalFile(Title::newFromText($data['wordmark-image'], 6), RepoGroup::singleton()->getLocalRepo());
+
+			$file = new LocalFile(Title::newFromText('Oasis-wordmark-A.png', 6), RepoGroup::singleton()->getLocalRepo());
+			$file->upload($temp_file->getPath(), '', '');
+			$data['wordmark-image'] = $file->getURL();
+
+			$temp_file->delete('');
+
+			$history = $file->getHistory(1);
+
+			if(count($history) == 1) {
+				$oldUrl = $history[0]->getURL();
+			}
+
+		}
+
 		$reason = 'Theme Designer - save done by ' . $wgUser->getName();
 
 		// update WF variable with current theme settings
-		$result = WikiFactory::setVarByName( self::WikiFactorySettings, $wgCityId, $data, $reason );
-		if ( !$result ) {
+		$result = WikiFactory::setVarByName(self::WikiFactorySettings, $wgCityId, $data, $reason);
+		if(!$result) {
 			wfDebug( __METHOD__ . ": save has failed!\n" );
 			return false;
 		}
 
 		// update history
-		if ( !empty( $GLOBALS[self::WikiFactoryHistory] ) ) {
+		if(!empty($GLOBALS[self::WikiFactoryHistory])) {
 			$history = $GLOBALS[self::WikiFactoryHistory];
 
-			$lastItem = end( $history );
-			$revisionId = intval( $lastItem['revision'] ) + 1;
-		}
-		else {
+			$lastItem = end($history);
+			$revisionId = intval($lastItem['revision']) + 1;
+		} else {
 			$history = array();
 			$revisionId = 1;
 		}
@@ -128,15 +145,19 @@ class ThemeSettings {
 		);
 
 		// limit history size to last 10 changes
-		$history = array_slice( $history, -self::HistoryItemsLimit );
+		$history = array_slice($history, -self::HistoryItemsLimit);
 
-		$result = WikiFactory::setVarByName( self::WikiFactoryHistory, $wgCityId, $history, $reason );
-		if ( !$result ) {
-			wfDebug( __METHOD__ . ": history save has failed!\n" );
+		if(count($history) > 1 && isset($oldUrl)) {
+			$history[count($history)-2]['settings']['wordmark-image'] = $oldUrl;
+		}
+
+		$result = WikiFactory::setVarByName(self::WikiFactoryHistory, $wgCityId, $history, $reason);
+		if(!$result) {
+			wfDebug(__METHOD__ . ": history save has failed!\n");
 			return false;
 		}
 
-		wfDebug( __METHOD__ . ": settings saved as #{$revisionId}\n" );
+		wfDebug(__METHOD__ . ": settings saved as #{$revisionId}\n");
 
 		wfProfileOut( __METHOD__ );
 		return true;
