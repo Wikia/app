@@ -153,6 +153,10 @@ class SpecialCreateTopList extends SpecialPage {
 							if( count( $listItems ) ) {
 								//update page's cache, items where added
 								$list->getTitle()->invalidateCache();
+
+								//TODO: for more stable behaviour create a memcache bool key and use it in the parser function
+								//to detect if the page is being viewed for the first time, if it is the force connection to master
+								//and set the key to false
 							}
 
 							if( empty( $itemsErrors ) ) {
