@@ -72,23 +72,24 @@ class LatestPhotosModule extends Module {
 	}
 
 	private function getTemplateData($element) {
-		$time = wfTimeFormatAgo($element["file"]->timestamp);
+
+		if (! isset($element['file'])) return array();
+
 		$file = $element['file'];
 
 		// crop the images correctly using extension:imageservice
 		$is = new imageServing(array(), 82);
 		$thumb_url = wfReplaceImageServer($file->getThumbUrl( $is->getCut($file->width, $file->height)."-".$file->name));
-		$links = $this->getLinkedFiles($file->name);
 		$userName = $file->user_text;
 
 		$retval = array (
 			"file_url" => $element['url'],
-			"image_url" => $element['file']->getUrl(),
+			"image_url" => $file->getUrl(),
 			"thumb_url" => $thumb_url,
-			"image_filename" => $file->name,
+			"image_filename" => $file->getTitle()->getFullText(),
 			"user_href" => View::link(Title::newFromText($userName, NS_USER), $userName),
-			"links" => $links,
-			"date" => $time);
+			"links" => $this->getLinkedFiles($file->name),
+			"date" => wfTimeFormatAgo($file->timestamp));
 
 		return $retval;
 	}
