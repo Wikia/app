@@ -296,13 +296,13 @@ class PageHeaderModule extends Module {
 					$this->subtitle = View::specialPageLink('RecentChanges', 'oasis-page-header-subtitle-special-wikiactivity');
 				} else if ($wgTitle->isSpecial('ThemeDesignerPreview')) {
 					// fake static data for ThemeDesignerPreview
-					$this->revisions = array('current' => array('user' => 'foo', 
-							'avatarUrl' => '/extensions/wikia/ThemeDesigner/images/td-avatar.jpg', 
-							'link' => '<a>FunnyBunny</a>', 
-							'timestamp' => ''), 
-						array('user' => 'foo', 
-							'avatarUrl' => '/extensions/wikia/ThemeDesigner/images/td-avatar.jpg', 
-							'link' => '<a>FunnyBunny</a>', 
+					$this->revisions = array('current' => array('user' => 'foo',
+							'avatarUrl' => '/extensions/wikia/ThemeDesigner/images/td-avatar.jpg',
+							'link' => '<a>FunnyBunny</a>',
+							'timestamp' => ''),
+						array('user' => 'foo',
+							'avatarUrl' => '/extensions/wikia/ThemeDesigner/images/td-avatar.jpg',
+							'link' => '<a>FunnyBunny</a>',
 							'timestamp' => ''));
 					//$title = Title::newFromText("More Examples", NS_CATEGORY);
 					//$this->categories[] = View::link($title, $title->getText());
@@ -349,7 +349,7 @@ class PageHeaderModule extends Module {
 	 */
 	public function executeEditPage() {
 		wfProfileIn(__METHOD__);
-		global $wgTitle, $wgRequest;
+		global $wgTitle, $wgRequest, $wgSuppressToolbar, $wgShowMyToolsOnly;
 
 		// special handling for special pages (CreateBlogPost, CreatePage)
 		if ($wgTitle->getNamespace() == NS_SPECIAL) {
@@ -364,7 +364,14 @@ class PageHeaderModule extends Module {
 		$isPreview = $wgRequest->getCheck( 'wpPreview' ) || $wgRequest->getCheck( 'wpLivePreview' );
 		$isShowChanges = $wgRequest->getCheck( 'wpDiff' );
 		$isDiff = $wgRequest->getInt('diff');
+		$isEdit = in_array($wgRequest->getVal('action', 'view'), array('edit', 'submit'));
 
+		// hide floating toolbar when on edit page / in preview mode / show changes
+		if ($isEdit || $isPreview) {
+			$wgSuppressToolbar = true;
+		}
+
+		// choose header message
 		if ($isPreview) {
 			$titleMsg = 'oasis-page-header-preview';
 		}
@@ -387,6 +394,14 @@ class PageHeaderModule extends Module {
 		// back to article link
 		if (!$isPreview && !$isShowChanges) {
 			$this->subtitle = View::link($wgTitle, wfMsg('oasis-page-header-back-to-article'), array('accesskey' => 'c'));
+		}
+
+		// add edit button
+		if ($isDiff) {
+			$this->prepareActionButton();
+
+			// show only "My Tools" dropdown on toolbar
+			$wgShowMyToolsOnly = true;
 		}
 
 		wfProfileOut(__METHOD__);

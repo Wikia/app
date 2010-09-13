@@ -2,7 +2,9 @@
 
 <?php if($showToolbar) { ?>
 	<div class="toolbar">
-		<?= wfRenderModule('Notifications') ?>
+<?php if ($showNotifications) {
+	echo wfRenderModule('Notifications');
+} ?>
 		<ul class="share">
 
 <?php if($showMyTools) { ?>
