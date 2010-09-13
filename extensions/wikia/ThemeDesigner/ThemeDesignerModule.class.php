@@ -120,6 +120,8 @@ class ThemeDesignerModule extends Module {
 			$themeSettings->set( $name, $value );
 		}
 
+		$themeSettings->save();
+
 		wfProfileOut( __METHOD__ );
 	}
 
