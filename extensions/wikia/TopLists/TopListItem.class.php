@@ -7,7 +7,7 @@
 
 class TopListItem extends TopListBase {
 
-	protected $votesCount = 0;
+	protected $votesCount = null;
 	//TODO: implement
 	protected $creatorUserName = 'Somebody';
 	protected $mNewContent = null;
@@ -52,24 +52,67 @@ class TopListItem extends TopListBase {
 	}
 
 	/**
-	 * @author Federico "Lox" Lucignano
-	 *
 	 * Add a vote for the item
+	 *
+	 * @author ADi
+	 *
 	 */
-	public function vote() {
-		//TODO: implement
+	public static function vote() {
+		global $wgRequest;
+
+		$result = array( 'result' => 'ok' );
+
+		$titleText = $wgRequest->getVal ( 'title' );
+
+		if( !empty( $titleText ) ) {
+			$item = TopListItem::newFromText( $titleText );
+
+			if( $item instanceof TopListItem ) {
+				$oFauxRequest = new FauxRequest(array( "action" => "insert", "list" => "wkvoteart", "wkpage" => $item->getArticle()->getId(), "wkvote" => 3 ));
+				$oApi = new ApiMain($oFauxRequest);
+				$oApi->execute();
+				$aResult = $oApi->GetResultData();
+
+				$result['votesCount'] = $item->getVotesCount();
+			}
+		}
+
+		$json = Wikia::json_encode( $result );
+		$response = new AjaxResponse( $json );
+		$response->setContentType( 'application/json; charset=utf-8' );
+
+		return $response;
 	}
 
 	/**
-	 * @author Federico "Lox" Lucignano
-	 *
 	 * Gets the total number of votes for the item
 	 *
+	 * @author ADi
+	 * @param bool $forceUpdate force update flag
 	 * @return integer a number representing the total amount of votes for this item
 	 */
-	public function getVotesCount() {
-		//TODO: implement
+	public function getVotesCount( $forceUpdate = false ) {
+
+		if( ( $this->votesCount == null ) || $forceUpdate ) {
+			$pageId = $this->getArticle()->getId();
+
+			$oFauxRequest = new FauxRequest(array( "action" => "query", "list" => "wkvoteart", "wkpage" => $pageId, "wkuservote" => true ));
+			$oApi = new ApiMain($oFauxRequest);
+			$oApi->execute();
+			$aResult = $oApi->GetResultData();
+
+			if( isset( $aResult['query']['wkvoteart'][$pageId]['uservote'] ) ) {
+				//echo "<pre>";
+				//var_dump( $aResult );
+				//echo "</pre>";
+				$this->votesCount = $aResult['query']['wkvoteart'][$pageId]['uservote'];
+			} else {
+				$this->votesCount = 0;
+			}
+
+		}
 		return $this->votesCount;
+
 	}
 
 	/**
@@ -81,6 +124,10 @@ class TopListItem extends TopListBase {
 	public function getCreatorUserName() {
 		//TODO: implement
 		return $this->creatorUserName;
+	}
+
+	public function getTitleText() {
+		return $this->getTitle()->getText();
 	}
 
 	/**
@@ -205,7 +252,7 @@ class TopListItem extends TopListBase {
 	 */
 	public function remove() {
 		$errors = array();
-		
+
 		if ( $this->exists() ) {
 			wfLoadExtensionMessages( 'TopLists' );
 			$article = $this->getArticle();
