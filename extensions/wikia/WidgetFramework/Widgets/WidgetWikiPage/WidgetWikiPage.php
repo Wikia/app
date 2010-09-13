@@ -42,6 +42,14 @@ function WidgetWikiPage($id, $params) {
 	$params['source'] = trim($params['source']);
 	$params['name'] = trim($params['name']);
 
+	//stopgap for 67038
+	$source = Title::newFromName( $params['source'] );
+	if( !$source->userCanRead() )
+	{
+		return array('body' => '', 'title' => $params['name'] );
+	}
+	unset($source);
+	
 	//
 	// parse message and clean it up
 	//
@@ -56,7 +64,7 @@ function WidgetWikiPage($id, $params) {
 	}
 	
 	$options = new ParserOptions();
-	$options->setMaxIncludeSize(1500);
+	$options->setMaxIncludeSize(2048);
 
 	if( empty($params['source']) ) {
 		// blank source pagename, use default message
