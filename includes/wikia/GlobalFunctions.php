@@ -1002,8 +1002,14 @@ function wfGetEmailPostbackToken($emailId, $emailAddr){
  * Given the full path to a .scss file, returns the full URL which
  * the HTML should include.  This sends the user's browser through the
  * SASS server.
+ *
+ * ForceSassParams is an optional parameter.  If it is non-null, then this
+ * will be used as the string of parameters that will be passed into sass via
+ * the command-line.  This string is expected to be key-value pairs where the
+ * key and value are separated by an equals sign and each pair is separated by
+ * a space (eg: "fruit=banana vegetable=broccoli pet=dog").
  */
-function wfGetSassUrl($fileName){
+function wfGetSassUrl($fileName, $forceSassParams=null){
 	global $wgCdnRootUrl, $wgStyleVersion, $wgDontRewriteSassUrl;
 	wfProfileIn( __METHOD__ );
 
@@ -1015,7 +1021,11 @@ function wfGetSassUrl($fileName){
 	}
 
 	// Load the associative array of SASS parameters based on the user/theme.
-	$sassParams = SassUtil::getSassParams();
+	if($forceSassParams !== null){
+		$sassParams = $forceSassParams;
+	} else {
+		$sassParams = SassUtil::getSassParams();
+	}
 
 	// Calculate the security-hash.
 	$securityHash = SassUtil::getSecurityHash($wgStyleVersion, $sassParams);
