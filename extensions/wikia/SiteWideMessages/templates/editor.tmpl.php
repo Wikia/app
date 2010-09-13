@@ -169,7 +169,7 @@
 #							}
 
 							echo "<input type='checkbox' name='mLang[]' id='swm-lang-$lang' class='swm-lang-checkbox' value='$lang'";
-							if ( in_array( $lang, $formData['mLang'] ) ) {
+							if (isset($formData['mLang']) && in_array( $lang, $formData['mLang'] ) ) {
 								echo " checked='checked'";
 							}
 #							if ( $selectedLang ) {
@@ -179,7 +179,7 @@
 							echo "<label for='swm-lang-$lang'>$lang</label>";
 						}
 						echo "<input type='checkbox' name='mLang[]' id='swm-lang-other' class='swm-lang-checkbox' value='other'";
-						if ( in_array( "other", $formData['mLang'] ) ) {
+						if (isset($formData['mLang']) && in_array( "other", $formData['mLang'] ) ) {
 							echo " checked='checked'";
 						}
 						echo " />";
