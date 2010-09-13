@@ -209,6 +209,17 @@ class BlogTemplateClass {
 		),
 
 		/*
+		 * Additional CSS class
+		 *
+		 * type: 	string,
+		 * default: ""
+		 */
+		'class' => array (
+			'type' 		=> 'string',
+			'default' 	=> '',
+		),
+
+		/*
 		 * Get Blog info
 		 *
 		 * type: 	number,
@@ -502,6 +513,8 @@ class BlogTemplateClass {
 		}
 
 		/* displaycount -- optional param deliberately has no default set */
+
+		/* class -- optional param delberately has no default set */
 
 		/* offset */
 		if ( !isset(self::$aOptions['offset']) ) {
@@ -1048,6 +1061,7 @@ class BlogTemplateClass {
 						}
 						break;
 					case 'title'	:
+					case 'class'	:
 					case 'style'	:
 						if ( !empty($aParamValues) && is_array($aParamValues) ) {
 							list ($sParamValue) = $aParamValues;
@@ -1096,6 +1110,7 @@ class BlogTemplateClass {
 						self::__makeBoolOption($sParamName, $sParamValue);
 						break;
 					case 'title' 		:
+					case 'class'		:
 					case 'style'		:
 						self::__makeStringOption($sParamName, $sParamValue);
 						break;
