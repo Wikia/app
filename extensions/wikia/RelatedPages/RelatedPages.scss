@@ -3,8 +3,18 @@
 
 .RelatedPagesModule {
 	@include rail-module;
+
+
+	float: left;
+	margin: {
+		top: 0px;
+		bottom: 3px;
+		left: 10px;
+		right: 10px;
+	}
+	height: 167px;
 	
-	margin: 0 10px;
+	position: static;
 	
 	a {
 		padding-left: 5px;
@@ -23,8 +33,9 @@
 	}
 	
 	ul {
-		list-style:none outside none;
+		list-style: none outside none;
 		margin: 0;
+		position: relative;
 
 	}
 	
@@ -40,11 +51,11 @@
 		&:before {
 			content: '\201C';  // /** Webkit **/
 			font-size: 80px;
-			width: 25px;
 			float: left;
-			margin-top: 25px;
-			vertical-align: bottom;
+			margin-top: 33px;
 			line-height: 0px;
+			vertical-align: bottom;
+			width: 25px;
 		}
 		
 		p {
