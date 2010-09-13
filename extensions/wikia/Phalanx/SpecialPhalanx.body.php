@@ -157,19 +157,25 @@ class PhalanxPager extends ReverseChronologicalPager {
 		$html = '<li id="phalanx-block-' . $row->p_id . '">';
 
 		$html .= '<b>' . htmlspecialchars( $row->p_text ) . '</b> (' ;
-		$html .= $row->p_regex ? 'regex' : 'plain text';
+		#TODO: these arent i18n'd, but do they really need to be?
+		$html .= $row->p_regex ? 'regex' : 'plain';
+		if( $row->p_case ) {
+			$html .= ',case';
+		}
+		if( $row->p_exact ) {
+			$html .= ',exact';
+		}
 		$html .= ') ';
 
 		// control links
 		$html .= " &bull; <a class='unblock' href='{$phalanxUrl}'>" . wfMsg('phalanx-link-unblock') . '</a>';
 		$html .= " &bull; <a class='modify' href='{$phalanxUrl}'>" . wfMsg('phalanx-link-modify') . '</a>';
-		$html .= " &bull; <a href='{$statsUrl}'>" . wfMsg('phalanx-link-stats') . '</a>';
+		$html .= " &bull; <a class='stats' href='{$statsUrl}'>" . wfMsg('phalanx-link-stats') . '</a>';
 
 		// types
-		$html .= '<br /> blocks: ' . implode( ', ', Phalanx::getTypeNames( $row->p_type ) );
+		$html .= '<br /> ' . wfMsg('phalanx-display-row-blocks', implode( ', ', Phalanx::getTypeNames( $row->p_type ) ) );
 
-		$html .= ' &bull; created by <a href="' . $authorUrl . '">' . $authorName . '</a>';
-		$html .= ' on ' . $wgLang->timeanddate( $row->p_timestamp );
+		$html .= ' &bull; ' . wfMsgExt('phalanx-display-row-created', array('parseinline'), $authorName, $wgLang->timeanddate( $row->p_timestamp ));
 
 		$html .= '</li>';
 

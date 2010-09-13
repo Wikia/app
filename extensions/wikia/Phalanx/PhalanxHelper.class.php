@@ -307,6 +307,9 @@ class PhalanxHelper {
 		$output = '';
 
 		$aModules = Phalanx::$typeNames;
+		$link_unblock = wfMsg('phalanx-link-unblock');
+		$link_modify = wfMsg('phalanx-link-modify');
+		$link_stats = wfMsg('phalanx-link-stats');
 
 		foreach ( $aModules as $module => $name ) {
 			$filters = Phalanx::getFromFilter( $module );
@@ -331,9 +334,9 @@ class PhalanxHelper {
 					$statsUrl = Title::newFromText( 'PhalanxStats', NS_SPECIAL )->getFullUrl() . '/' . $match['id'];
 
 					$line = htmlspecialchars( $match['text'] ) . ' &bull; ' .
-						Xml::element( 'a', array( 'href' => $phalanxUrl, 'class' => 'unblock' ), 'unblock' ) . ' &bull; ' .
-						Xml::element( 'a', array( 'href' => $phalanxUrl, 'class' => 'modify' ), 'modify' ) . ' &bull; ' .
-						Xml::element( 'a', array( 'href' => $statsUrl, 'class' => 'stats' ), 'stats' ) . ' &bull; ' .
+						Xml::element( 'a', array( 'href' => $phalanxUrl, 'class' => 'unblock' ), $link_unblock ) . ' &bull; ' .
+						Xml::element( 'a', array( 'href' => $phalanxUrl, 'class' => 'modify' ), $link_modify ) . ' &bull; ' .
+						Xml::element( 'a', array( 'href' => $statsUrl, 'class' => 'stats' ), $link_stats ) . ' &bull; ' .
 						'#' . $match['id'];
 					$output .= Xml::tags( 'li', null, $line );
 				}
