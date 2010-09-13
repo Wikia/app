@@ -61,7 +61,6 @@ class SpecialEditTopList extends SpecialPage {
 		$listUrl = $title->getFullURL();
 		$listItems = $list->getItems();
 
-
 		if ( $wgRequest->wasPosted() ) {
 			TopListHelper::clearSessionItemsErrors();
 
@@ -141,7 +140,7 @@ class SpecialEditTopList extends SpecialPage {
 
 			//collect existing items and related updates, filter out the removed ones (processed separately)
 			$counter = 0;
-			foreach ( $listItems as $index => &$item ) {
+			foreach ( $listItems as $index => $item ) {
 				if ( !in_array( $index, $removedItems ) ) {
 					$items[] = array(
 						'type' => 'existing',
@@ -153,9 +152,9 @@ class SpecialEditTopList extends SpecialPage {
 
 					if ( empty( $itemsNames[ $counter ] ) ) {
 						$errors[ 'item_' . ( $counter + 1 ) ][] = wfMsg( 'toplists-error-empty-item-name' );
-					} elseif ( $item->getArticle()->getContent() != $itemsNames[ $index ] ) {
-						$item->setNewContent( $itemsNames[ $index ] );
-						$items[ $counter ][ 'object' ] = $item;
+					} elseif ( $listItems[ $index ]->getArticle()->getContent() != $itemsNames[ $counter ] ) {
+						$listItems[ $index ]->setNewContent( $itemsNames[ $counter ] );
+						$items[ $counter ][ 'object' ] = $listItems[ $index ];
 						$items[ $counter ][ 'changed' ] = true;
 					}
 
@@ -232,15 +231,16 @@ class SpecialEditTopList extends SpecialPage {
 
 					//purge items removed from the list
 					foreach ( $removedItems as $index ) {
-						$removeResult = $listItems[ $index ]->remove();
+						$item = $listItems[ $index ];
+						$removeResult = $item->remove();
 
 						if ( $removeResult !== true ) {
 							$items[] = array(
 								'type' => 'existing',
-								'value' => $listItems[ $index ]->getArticle()->getContet(),
+								'value' => $item->getArticle()->getContent(),
 								'index' => $counter,
 								'changed' => false,
-								'object' => $listItems[ $index ]
+								'object' => $item
 							);
 
 							$counter++;

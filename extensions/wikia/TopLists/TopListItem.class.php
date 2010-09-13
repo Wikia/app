@@ -10,7 +10,7 @@ class TopListItem extends TopListBase {
 	protected $votesCount = 0;
 	//TODO: implement
 	protected $creatorUserName = 'Somebody';
-	protected $mContent = null;
+	protected $mNewContent = null;
 
 	/**
 	 * @author Federico "Lox" Lucignano
@@ -91,7 +91,7 @@ class TopListItem extends TopListBase {
 	 * @param string $content the string containing the wikitext to store in the list item article
 	 */
 	public function setNewContent( $content ) {
-		$this->mContent = ( string ) $content;
+		$this->mNewContent = ( string ) $content;
 	}
 
 	/**
@@ -102,7 +102,7 @@ class TopListItem extends TopListBase {
 	 * @return string the new content for the item
 	 */
 	public function getNewContent() {
-		return $this->mContent;
+		return $this->mNewContent;
 	}
 
 	/**
@@ -179,7 +179,7 @@ class TopListItem extends TopListBase {
 			wfLoadExtensionMessages( 'TopLists' );
 			$article = $this->getArticle();
 
-			$status = $article->doEdit( $this->mContent , wfMsgForContent( $summaryMsg ), $editMode );
+			$status = $article->doEdit( $this->mNewContent , wfMsgForContent( $summaryMsg ), $editMode );
 
 			if ( !$status->isOK() ) {
 				foreach ( $status->getErrorsArray() as $msg ) {
@@ -207,17 +207,6 @@ class TopListItem extends TopListBase {
 		$errors = array();
 		
 		if ( $this->exists() ) {
-			$summaryMsg = null;
-			$editMode = null;
-
-			if ( $mode == TOPLISTS_SAVE_CREATE ) {
-				$summaryMsg = 'toplists-item-creation-summary';
-				$editMode = EDIT_NEW;
-			} else {
-				$summaryMsg = 'toplists-item-update-summary';
-				$editMode = EDIT_UPDATE;
-			}
-
 			wfLoadExtensionMessages( 'TopLists' );
 			$article = $this->getArticle();
 
