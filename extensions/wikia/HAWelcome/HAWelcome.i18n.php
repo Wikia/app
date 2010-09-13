@@ -7,6 +7,7 @@ $messages = array();
 
 $messages['en'] = array(
 	"welcome-user" => "@latest",
+	"welcome-bot" => "@bot",
 	"welcome-enabled" => "page-user message-anon message-user",
 	"welcome-user-page" => "==About me==
 

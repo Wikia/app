@@ -1,3 +1,6 @@
+== Changes since 201009.3 ==
+* rt#52534: flag user:wikia as bot and allow admins to unflag it (uberfuzzy)
+
 == Changes since 201009.2 ==
 * rt#67155: Remove skins from NWB (TOR)
 * rt#66886: WikiFactory does not show error on domain fail (TOR)
