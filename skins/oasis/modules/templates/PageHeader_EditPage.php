@@ -8,4 +8,11 @@
 	}
 ?>
 	<p><?= $subtitle ?></p>
+
+<?php
+	// render search box
+	if ($showSearchBox) {
+		echo wfRenderModule('Search');
+	}
+?>
 </div>

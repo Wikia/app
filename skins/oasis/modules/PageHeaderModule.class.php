@@ -400,6 +400,9 @@ class PageHeaderModule extends Module {
 		if ($isDiff) {
 			$this->prepareActionButton();
 
+			// show search box as a part of the header
+			$this->showSearchBox = true;
+
 			// show only "My Tools" dropdown on toolbar
 			$wgShowMyToolsOnly = true;
 		}
