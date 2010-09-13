@@ -221,6 +221,7 @@ class UserPagesHeaderModule extends Module {
 				// different handling for "My talk page"
 				if (self::isItMe($this->userName)) {
 					$this->actionMenu['action']['text'] = wfMsg('edit');
+					$this->actionMenu['action']['href'] = $this->content_actions['edit']['href'] ."#EditPage";
 
 					$this->actionImage = MenuButtonModule::EDIT_ICON;
 					$this->actionName = 'edit';
