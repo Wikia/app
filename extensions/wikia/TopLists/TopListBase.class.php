@@ -38,10 +38,10 @@ abstract class TopListBase {
 			$this->mCreationTimestamp = $this->mTitle->getEarliestRevTime();
 
 			$revData = $this->mTitle->getFirstRevision();
-			
+
 			if( !empty( $revData ) ) {
 				$userId = $revData->getUser();
-				
+
 				if( !empty( $userId ) ) {
 					$this->mAuthor = User::newFromId( $userId );
 				}
@@ -180,7 +180,7 @@ abstract class TopListBase {
 	 */
 	public function userCanEdit( User $user = null ) {
 		global $wgUser;
-		
+
 		if( !empty( $user ) ) {
 			$user = $wgUser;
 		}
@@ -199,7 +199,7 @@ abstract class TopListBase {
 	public function exists() {
 		return ( !empty( $this->mTitle ) ) ? $this->mTitle->exists() : false;
 	}
-	
+
 	/**
 	 * @author Federico "Lox" Lucignano
 	 *
