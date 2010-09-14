@@ -3,7 +3,7 @@
 	padding-top: 23px;
 	position: relative;
 	.toolbar {
-		@include linear-gradient($color-header, left, $color-header-alt, 0, $color-header, 50%, $color-header-alt, 100%);	
+		@include linear-gradient($color-header, left, $color-header-alt, 0, $color-header, 50%, $color-header-alt, 100%);
 		border-top: 3px solid #000;
 		color: $color-header-text;
 		height: 20px;
@@ -35,7 +35,7 @@
 	}
 	.share {
 		@include clearfix;
-		background-image: url(/skins/oasis/images/checkers.png);			
+		background-image: url(/skins/oasis/images/checkers.png);
 		display: block;
 		list-style: none;
 		padding-right: 30px;
@@ -95,7 +95,7 @@
 	}
 	.wikia-button {
 		position: absolute;
-		right: 36px;	
+		right: 36px;
 		top: 40px;
 	}
 	>ul {
@@ -115,15 +115,22 @@
 			float: right;
 		}
 	}
+	.banner-corner-left {
+		border-color: transparent #000 #000 transparent;
+		left: 0;
+		top: -7px;
+	}
 	.banner-corner-right {
+		border-color: transparent transparent $color-header $color-header;
 		right: -5px;
+		top: -7px;
 	}
 }
 
 
 .CorporateFooter  {
 	text-align: center;
-	
+
 	nav >h1{
 		display: none;
 	}
@@ -147,7 +154,7 @@
 			&:last-child {
 				border: none;
 			}
-			
+
 			a {
 				color: $color-links;
 			}
