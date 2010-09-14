@@ -13,7 +13,7 @@
 		 * Overriden by: $wgCategoryGalleryImagesCount
 		 * @var int
 		 */
-		protected $confMaxArticles = 24;
+		protected $confMaxArticles = 8;
 
 		/**
 		 * The predefined width
@@ -101,7 +101,7 @@
 				$this->confMaxArticles = intval($wgCategoryGalleryImagesCount);
 			}
 			$this->configHash = md5(serialize(array(
-				$this->confEnabledByDefault,$this->confMaxArticles,$this->confThumbWidth,$this->confThumbProportion
+				$this->confMaxArticles,$this->confThumbWidth,$this->confThumbHeight
 			)));
 		}
 
@@ -216,7 +216,7 @@
 					'title' => $title->getText(),
 					'article_url' => $title->getLocalURL(),
 				);
-				if (!empty($images[$id]) && $n%4 != 0) {
+				if (!empty($images[$id])) {
 					$image = reset($images[$id]);
 					if (!empty($wgDevelEnvironment)) {
 						$image['url'] = str_replace('http://images.wladek.wikia-dev.com/', 'http://images.wikia.com/', $image['url']);
