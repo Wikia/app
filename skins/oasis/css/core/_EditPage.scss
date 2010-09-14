@@ -36,7 +36,7 @@
 		label, input {
 			vertical-align: middle;
 		}
-		
+
 		// /** moving elements to the button, those elements will be gone anyway sone **/
 		li:last-child, .minor {
 			position: absolute;
@@ -45,7 +45,7 @@
 		.minor {
 			margin-left: 0px;
 			padding-left: 60px;
-		}		
+		}
 	}
 	#csMainContainer {
 		@include clearfix;
@@ -57,10 +57,12 @@
 		width: 99%;
 	}
 
-	&.rte {
-		#csMainContainer, #edit_enhancements_toolbar {
+	&.editor-rail.rte #csMainContainer,
+	&.editor-rail.rte #edit_enhancements_toolbar {
 			margin-right: 300px;
-		}
+	}
+
+	&.rte {
 		// on-hover menus
 		#RTEStuff {
 			margin-top: 15px;
@@ -202,37 +204,37 @@
 	height: 363px;
 	float: left;
 	margin-top: -25px;
-	
+
 	$editing-tips-active: #CCCCCC;
 	$editing-tips-inactive: #DDDDDD;
-	
-	
+
+
 	dt {
-	
+
 		cursor: pointer;
 		border-bottom:1px solid #999999;
 		background-color: $editing-tips-inactive;
 		height: 20px;
-		
+
 		&.color1 {
 			background-color: $color-active-tab-background-bottom;
 		}
-		
+
 		padding: {
 			left: 2px;
 			top: 1px;
-			bottom: 1px;	
+			bottom: 1px;
 		}
-		
+
 		&:hover {
 			background-color: #CCCCCC;
 		}
-		
+
 		&:last-child {
 			border-bottom: none;
 			padding-bottom: 2px;
-		}		
-		
+		}
+
 		.active {
 			background-color: $editing-tips-active;
 		}
@@ -244,13 +246,13 @@
 	dd {
 		display: none;
 		height: 220px;
-		overflow: auto;	
+		overflow: auto;
 	}
 
 	dd:nth-child(3) {
-		display: block ;		
+		display: block ;
 	}
-	
+
 	p {
 		margin: 0px;
 	}

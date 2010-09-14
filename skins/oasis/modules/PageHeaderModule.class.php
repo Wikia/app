@@ -369,6 +369,11 @@ class PageHeaderModule extends Module {
 		$isEdit = in_array($action, array('edit', 'submit'));
 		$isHistory = $action == 'history';
 
+		// add editor's right rail when not editing main page
+		if (!Wikia::isMainPage()) {
+			OasisModule::addBodyClass('editor-rail');
+		}
+
 		// hide floating toolbar when on edit page / in preview mode / show changes
 		if ($isEdit || $isPreview) {
 			$wgSuppressToolbar = true;
