@@ -28,25 +28,23 @@ class ThemeDesignerModule extends Module {
 		$this->themeSettings = $settings->getAll();
 
 		// recent versions
-		$this->themeHistory = $settings->getHistory();
+		$this->themeHistory = array_reverse($settings->getHistory());
 
 		// format time (for edits older than 30 days - show timestamp)
-		foreach ( $this->themeHistory as &$entry ) {
+		foreach($this->themeHistory as &$entry) {
 			$diff = time() - strtotime( $entry['timestamp'] );
 
-			if ( $diff < 30 * 86400 ) {
-				$entry['timeago'] = wfTimeFormatAgo( $entry['timestamp'] );
-			}
-			else {
-				$entry['timeago'] = $wgLang->date( $entry['timestamp'] );
+			if($diff < 30 * 86400) {
+				$entry['timeago'] = wfTimeFormatAgo($entry['timestamp']);
+			} else {
+				$entry['timeago'] = $wgLang->date($entry['timestamp']);
 			}
 		}
 
 		// URL user should be redirected to when settings are saved
-		if ( isset( $_SERVER['HTTP_REFERER'] ) ) {
+		if(isset($_SERVER['HTTP_REFERER'])) {
 			$this->returnTo = $_SERVER['HTTP_REFERER'];
-		}
-		else {
+		} else {
 			$this->returnTo = $this->wgScript;
 		}
 

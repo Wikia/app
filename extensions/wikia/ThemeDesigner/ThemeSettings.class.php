@@ -39,7 +39,8 @@ class ThemeSettings {
 		$settings['wordmark-color'] = $settings['color-links'];
 		$settings['wordmark-font'] = '';
 		$settings['wordmark-font-size'] = '';
-		$settings['wordmark-image'] = false;
+		$settings['wordmark-image-url'] = '';
+		$settings['wordmark-image-name'] = '';
 
 		// main page banner
 		$settings['banner-image'] = false;
@@ -98,20 +99,24 @@ class ThemeSettings {
 
 		$data = $this->getAll();
 
-		if(strpos($data['wordmark-image'], 'Temp_file_') === 0) {
+		if(strpos($data['wordmark-image-name'], 'Temp_file_') === 0) {
 
-			$temp_file = new LocalFile(Title::newFromText($data['wordmark-image'], 6), RepoGroup::singleton()->getLocalRepo());
+			$temp_file = new LocalFile(Title::newFromText($data['wordmark-image-name'], 6), RepoGroup::singleton()->getLocalRepo());
 
-			$file = new LocalFile(Title::newFromText('Oasis-wordmark-A.png', 6), RepoGroup::singleton()->getLocalRepo());
+			$file = new LocalFile(Title::newFromText('Oasis-wordmark-B.png', 6), RepoGroup::singleton()->getLocalRepo());
 			$file->upload($temp_file->getPath(), '', '');
-			$data['wordmark-image'] = $file->getURL();
+
+			$temp_file->delete('');
+
+			$data['wordmark-image-url'] = $file->getURL();
+			$data['wordmark-image-name'] = $file->getName();
 
 			$temp_file->delete('');
 
 			$history = $file->getHistory(1);
 
 			if(count($history) == 1) {
-				$oldUrl = $history[0]->getURL();
+				$oldFile = array('url' => $history[0]->getURL(), 'name' => $history[0]->getName());
 			}
 
 		}
@@ -147,10 +152,15 @@ class ThemeSettings {
 		// limit history size to last 10 changes
 		$history = array_slice($history, -self::HistoryItemsLimit);
 
-		if(count($history) > 1 && isset($oldUrl)) {
-			if(!empty($history[count($history)-2]['settings']['wordmark-image'])) {
-				$history[count($history)-2]['settings']['wordmark-image'] = $oldUrl;
+		if(count($history) > 1 && isset($oldFile)) {
+
+			for($i = 0; $i < count($history) - 1; $i++) {
+				if($history[$i]['settings']['wordmark-image-name'] == 'Oasis-wordmark-B.png') {
+					$history[$i]['settings']['wordmark-image-name'] = $oldFile['name'];
+					$history[$i]['settings']['wordmark-image-url'] = $oldFile['url'];
+				}
 			}
+
 		}
 
 		$result = WikiFactory::setVarByName(self::WikiFactoryHistory, $wgCityId, $history, $reason);

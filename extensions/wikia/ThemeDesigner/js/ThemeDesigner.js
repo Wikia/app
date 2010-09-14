@@ -16,10 +16,8 @@ var ThemeDesigner = {
 			if(response.errors && response.errors.length > 0) {
 				alert(response.errors.join("\n"));
 			} else {
-				$().log("setting graphic");
-
-				ThemeDesigner.settings["wordmark-image"] = response.wordmarkImageName;
-				$("#WordmarkTab").find(".graphic").find(".preview").attr("src", response.wordmarkImageUrl);
+				ThemeDesigner.settings["wordmark-image-name"] = response.wordmarkImageName;
+				ThemeDesigner.settings["wordmark-image-url"] = response.wordmarkImageUrl;
 
 				ThemeDesigner.applySettings();
 			}
@@ -28,23 +26,7 @@ var ThemeDesigner = {
 
 	history: false,
 
-	settings: {
-		"color-body": "",
-		"color-page": "",
-		"color-buttons": "",
-		"color-links": "",
-		"theme": "oasis",
-		"wordmark-text": "",
-		"wordmark-color": "",
-		"wordmark-font": "default",
-		"wordmark-size": "medium",
-		"wordmark-image": false,
-		"banner-image": false,
-		"banner-image-revision": false,
-		"background-image": false,
-		"background-image-revision": false,
-		"background-tiled": false
-	},
+	settings: { },
 
 	themes: {
 		oasis: {
@@ -193,6 +175,8 @@ var ThemeDesigner = {
 		$("#wordmark-font").find('[value="' + ThemeDesigner.settings["wordmark-font"] + '"]').attr("selected", "selected");
 		//select current size
 		$("#wordmark-size").find('[value="' + ThemeDesigner.settings["wordmark-size"] + '"]').attr("selected", "selected");
+		//wordmark image
+		$("#WordmarkTab").find(".graphic").find(".preview").attr("src", ThemeDesigner.settings["wordmark-image-url"]);
 
 		// Update Preview
 		if (!skipUpdate) {
@@ -439,24 +423,12 @@ var ThemeDesigner = {
 			$(this).css("display", "none");
 		});
 		$("#Toolbar .history ul li").click(ThemeDesigner.revertToPreviousTheme);
-
-		// temp code and mock data for testing and placeholder, load ThemeDesigner.history here later
-		var clonedSettings1 = $.extend(true, {}, ThemeDesigner.settings);
-		var clonedSettings2 = $.extend(true, {}, ThemeDesigner.settings);
-		var clonedDefault = $.extend(true, {}, ThemeDesigner.settings);
-		clonedSettings1["color-body"] = "red";
-		clonedSettings2["color-body"] = "blue";
-		$("#Toolbar .history ul li").first().data("settings", clonedSettings1);
-		$("#Toolbar .history ul li").next().data("settings", clonedSettings2);
-		$("#Toolbar .history ul li").last().data("settings", clonedDefault);
-		// end temp code
 	},
 
 	revertToPreviousTheme: function(event) {
 		event.preventDefault();
-		if($(this).data("settings")) {
-			ThemeDesigner.settings = $(this).data("settings");
-			ThemeDesigner.applySettings();
-		}
+
+		ThemeDesigner.settings = ThemeDesigner.history[$(this).index()]['settings'];
+		ThemeDesigner.applySettings();
 	}
 };

@@ -51,22 +51,20 @@
 			<div class="inner">
 				<span class="mode">Preview Mode...</span>
 				<div class="history">
-					<div class="revisions">5</div>
+					<div class="revisions"><?= count($themeHistory) ?></div>
 					Previous Versions
 					<img class="chevron" src="<?= $wgBlankImgUrl ?>">
 					<ul>
+					<?php
+					foreach($themeHistory as $themeHistoryItem) {
+					?>
 						<li>
 							<?= View::specialPageLink('#', null, 'wikia-chiclet-button', 'blank.gif', 'recycle'); ?>
-							what is going on here what is going on here
+							<?= $themeHistoryItem['timeago'] ?>
 						</li>
-						<li>
-							<?= View::specialPageLink('#', null, 'wikia-chiclet-button', 'blank.gif', 'recycle'); ?>
-							is
-						</li>
-						<li>
-							<?= View::specialPageLink('#', null, 'wikia-chiclet-button', 'blank.gif', 'recycle'); ?>
-							going
-						</li>
+					<?php
+					}
+					?>
 					</ul>
 				</div>
 				<button class="save">Save, I'm Done</button>
