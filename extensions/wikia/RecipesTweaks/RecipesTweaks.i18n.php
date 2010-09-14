@@ -27,6 +27,28 @@ $messages['qqq'] = array(
 	'recipes-more' => '{{Identical|More}}',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'recipestweaks-desc' => 'Дызайн і функцыянальныя ўстаноўкі для вікі-рэцэптаў',
+	'savedpages' => 'Захаваныя старонкі',
+	'recipes-add-new-recipe' => 'Дадаць рэцэпт',
+	'recipes-browse' => 'Вывучайце вікі-рэцэпты',
+	'recipes-contributed-by' => 'Унесены $1 $2',
+	'recipes-contributed-by-anon' => 'Рэцэпты удзельніка {{GRAMMAR:родны|{{SITENAME}}}}',
+	'recipes-mainpage-title' => 'Запрашаем у вікі-рэцэпты',
+	'recipes-more' => 'Болей',
+	'recipes-my-saved-pages' => 'Мае захаваныя старонкі',
+	'recipes-my-saved-pages-empty' => 'Пакуль яшчэ няма захаваных старонак',
+	'recipes-rating' => 'Рэйтынг гэтага рэцэпту:',
+	'recipes-search-label' => 'Пошук рэцэпту',
+	'recipes-savedpages-empty' => 'Нічога няма у Вашай калекцыі захаваных старонак.',
+	'recipes-savedpages-by' => 'ад $1',
+	'recipes-history' => 'Глядзіце зьмены гэтага рэцэпту',
+);
+
 /** Breton (Brezhoneg)
  * @author Fulup
  * @author Y-M D

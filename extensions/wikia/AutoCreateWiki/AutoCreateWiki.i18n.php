@@ -1753,6 +1753,7 @@ $messages['ja'] = array(
 	'autocreatewiki-info-blurry-word' => 'ツールなどによる自動アカウント作成を防ぐため、画像で表示された文字を入力してください。',
 	'autocreatewiki-info-terms-agree' => 'ウィキ及びアカウントを作成すると、<a href="http://www.wikia.com/wiki/Terms_of_use">ウィキアの利用規約</a>（<a href="http://ja.wikia.com/wiki/%E5%88%A9%E7%94%A8%E8%A6%8F%E7%B4%84">非公式日本語訳</a>）に同意したことになります。',
 	'autocreatewiki-info-staff-username' => '<b>スタッフオンリー:</b> 指定されたユーザーが設立者としてリストされます。',
+	'autocreatewiki-title-template' => '$1 ウィキ',
 	'autocreatewiki-limit-day' => '一日にウィキアが作成可能なウィキの最大数を超えています。($1)',
 	'autocreatewiki-limit-creation' => '24時間であなたが作成できるウィキの最大数を超えています。($1)',
 	'autocreatewiki-empty-field' => 'この項目は空白にはできません。',
@@ -2797,6 +2798,7 @@ Este é um projecto acabado de estrear, por isso contacte-nos se tiver qualquer 
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
  * @author Jesielt
  * @author Luckas Blade
  */
@@ -2804,6 +2806,7 @@ $messages['pt-br'] = array(
 	'autocreatewiki' => 'Crie uma nova Wiki',
 	'autocreatewiki-desc' => 'Crie uma wiki no WikiFactory a partir de pedidos de usuários',
 	'autocreatewiki-page-title-default' => 'Crie uma nova Wiki',
+	'autocreatewiki-page-title-answers' => 'Criar um site novo de Respostas',
 	'createwiki' => 'Crie uma nova Wiki',
 	'autocreatewiki-chooseone' => 'Escolha uma',
 	'autocreatewiki-required' => '$1 = campos obrigatórios',
@@ -2819,11 +2822,14 @@ $messages['pt-br'] = array(
 	'autocreatewiki-error' => 'erro',
 	'autocreatewiki-haveaccount-question' => 'Você já tem uma conta Wikia?',
 	'autocreatewiki-success-title-default' => 'Sua wiki foi criada!',
+	'autocreatewiki-success-title-answers' => 'O seu site de Respostas foi criado!',
 	'autocreatewiki-success-subtitle' => 'Você pode agora começar a trabalhar na sua wiki visitando:',
 	'autocreatewiki-success-has-been-created' => 'foi criado!',
 	'autocreatewiki-success-get-started' => 'Comece',
 	'autocreatewiki-info-domain' => 'É melhor usar uma palavra com a qual as pessoas irão encontrar seu tópico através de buscas.',
 	'autocreatewiki-info-topic' => 'Coloque uma descrição curta como "Star Wars" ou "Programas de TV".',
+	'autocreatewiki-info-category-default' => 'Isto ajudará os visitantes a encontrar a sua wiki.',
+	'autocreatewiki-info-category-answers' => 'Isto ajudará os visitantes a encontrar o seu site de Respostas.',
 	'autocreatewiki-info-language' => 'Esse irá ser o idioma padrão para os visitantes da sua wiki.',
 	'autocreatewiki-info-email-address' => 'Seu e-mail nunca é mostrado para ninguém no Wikia.',
 	'autocreatewiki-info-realname' => 'Se você optar por preencher este valor, ele vai ser usado para lhe dar uma atribuição pelo seu trabalho.',
@@ -2831,6 +2837,7 @@ $messages['pt-br'] = array(
 	'autocreatewiki-info-blurry-word' => 'Para ajudar a proteger o site contra a criação automática de contas, por favor digite a palavra borrada que você vê dentro deste campo.',
 	'autocreatewiki-info-terms-agree' => 'Ao criar uma wiki e uma conta de usuário, você está concordando com os <a href="http://www.wikia.com/wiki/Terms_of_use">Termos de Uso do Wikia</a>',
 	'autocreatewiki-info-staff-username' => '<b>Só o staff:</b> O usuário especificado será listado com o fundador.',
+	'autocreatewiki-title-template' => 'Wiki $1',
 	'autocreatewiki-limit-day' => 'O Wikia excedeu o número máximo de criação de wiki hoje ($1).',
 	'autocreatewiki-limit-creation' => 'Você excedeu o máximo número de criação de wikis em 24 horas ($1).',
 	'autocreatewiki-empty-field' => 'Por favor, preencha esse campo.',
@@ -2851,12 +2858,25 @@ $messages['pt-br'] = array(
 	'autocreatewiki-empty-username' => 'O nome de usuário não pode estar vazio.',
 	'autocreatewiki-empty-password' => 'A senha não pode estar vazia.',
 	'autocreatewiki-empty-retype-password' => '"Redigite sua senha" não pode estar vazio.',
+	'autocreatewiki-category-label' => 'Categoria:',
 	'autocreatewiki-category-other' => 'Outro',
+	'autocreatewiki-set-username' => 'Primeiro defina o nome de usuário.',
+	'autocreatewiki-invalid-category' => 'Categoria inválida.
+Selecione uma apropriada da lista.',
+	'autocreatewiki-invalid-language' => 'Língua inválida.
+Selecione uma apropriada da lista.',
+	'autocreatewiki-invalid-retype-passwd' => 'Repita a mesma senha, por favor',
 	'autocreatewiki-invalid-birthday' => 'Data de nascimento inválida',
+	'autocreatewiki-limit-birthday' => 'Não foi possível criar o registro.',
 	'autocreatewiki-log-title' => 'A sua wiki está sendo criada',
 	'autocreatewiki-step0' => 'Iniciando processo ...',
 	'autocreatewiki-stepdefault' => 'O processo está sendo feito, por favor aguarde...',
 	'autocreatewiki-errordefault' => 'O processo não foi finalizado...',
+	'autocreatewiki-step1' => 'Criando o diretório de imagens ...',
+	'autocreatewiki-step2' => 'Criando a base de dados ...',
+	'autocreatewiki-step3' => 'Definindo os dados por padrão na base de dados ...',
+	'autocreatewiki-step4' => 'Copiando as imagens e logotipo padrões ...',
+	'autocreatewiki-step5' => 'Definindo as variáveis padrões na base de dados ...',
 	'autocreatewiki-welcomesubject' => '$1 foi criado!',
 	'autocreatewiki-welcomebody' => 'Olá, $2,
 
@@ -3175,6 +3195,14 @@ $messages['sr-ec'] = array(
 
 <p>-- Тим Викија заједнице</p>',
 	'autocreatewiki-subname-answers' => 'Одговори',
+);
+
+/** Swahili (Kiswahili) */
+$messages['sw'] = array(
+	'autocreatewiki-create-account' => 'Sajili akaunti',
+	'autocreatewiki-error' => 'hitilafu',
+	'autocreatewiki-category-label' => 'Jamii:',
+	'autocreatewiki-category-other' => 'Nyingine',
 );
 
 /** Telugu (తెలుగు)

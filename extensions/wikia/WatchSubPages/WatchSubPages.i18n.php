@@ -48,9 +48,11 @@ $messages['de'] = array(
 );
 
 /** Spanish (Español)
+ * @author Absay
  * @author Danke7
  */
 $messages['es'] = array(
+	'wikia-watchsubpages-desc' => 'Seguir subpáginas automáticamente',
 	'tog-watchlistsubpages' => 'Seguir subpáginas',
 );
 

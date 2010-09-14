@@ -903,6 +903,15 @@ $messages['sv'] = array(
 	'lookupcontribsrestore' => 'återställ',
 );
 
+/** Swahili (Kiswahili) */
+$messages['sw'] = array(
+	'lookupcontribswikititle' => 'Cheo',
+	'lookupcontribsnext' => 'linalofuata',
+	'lookupcontribsprevious' => 'iliyotangulia',
+	'lookupcontribshist' => 'hist',
+	'lookupcontribsdiff' => 'tofauti',
+);
+
 /** Telugu (తెలుగు)
  * @author Veeven
  */

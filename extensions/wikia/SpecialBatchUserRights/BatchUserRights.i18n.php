@@ -70,8 +70,10 @@ Der Rest der Seite wird nur geladen, sodass du einfach sehen kannst ob einer der
 
 /** Spanish (Español)
  * @author Bola
+ * @author Sanbec
  */
 $messages['es'] = array(
+	'batchuserrights' => 'Derechos de usuarios por lotes',
 	'batchuserrights-desc' => 'Permite añadir uno o más usuarios a un grupo en una sola acción',
 	'batchuserrights-names' => 'Nombres de usuario para añadir a este grupo (uno por línea):',
 	'batchuserrights-intro' => 'Esta página te permitirá añadir a un grupo múltiples usuarios a la vez.
@@ -210,6 +212,25 @@ Për piasì, ch'a ciama a n'aministrator ëd sistema s'a l'ha dabzògn ëd giont
 	'batchuserrights-no-groups' => "A l'ha sernù gnun-e partìe.
 A sarà fàit gnente.
 Ël rest ëd la pàgina a podrà giré mach an manera ch'a vëdda facilment se quaidun djë stranòm d'utent a peulo pa esse carià.",
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ * @author Waldir
+ */
+$messages['pt'] = array(
+	'batchuserrights' => 'Direitos de utilizador em lote',
+	'batchuserrights-desc' => 'Permite adicionar um ou mais utilizadores a um grupo de uma só vez',
+	'batchuserrights-names' => 'Nomes de utilizador a adicionar a este grupo (um por linha):',
+	'batchuserrights-intro' => 'Esta página permite atribuir um grupo a vários utilizadores ao mesmo tempo. 
+Por razões de segurança, a lista dos grupos assim atribuíveis é definida na configuração da extensão e não pode ser alterada dentro da wiki.
+Se precisa de acrescentar mais grupos atribuíveis, peça a um administrador.',
+	'batchuserrights-single-progress-update' => '{{PLURAL:$1|O grupo foi atribuído|Os grupos foram atribuídos}} a <strong>$2</strong>.',
+	'batchuserrights-add-groups' => 'A adicionar {{PLURAL:$1|um utilizador|$1 utilizadores}} {{PLURAL:$2|ao seguinte grupo|aos seguintes grupos}}: <strong>$3</strong>.',
+	'batchuserrights-userload-error' => "Não foi possível carregar o utilizador \"'''\$1'''\".",
+	'batchuserrights-no-groups' => 'Não escolheu nenhum grupo. 
+Isto não terá qualquer efeito.
+Será permitida a execução do resto da página apenas para que possa verificar se não foi possível carregar algum dos utilizadores.',
 );
 
 /** Russian (Русский)

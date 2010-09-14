@@ -104,6 +104,7 @@ Bitte versuche es erneut oder [[Special:Contact|melde es]].',
 );
 
 /** Spanish (Español)
+ * @author Absay
  * @author Crazymadlover
  */
 $messages['es'] = array(
@@ -115,6 +116,12 @@ $messages['es'] = array(
 <li>Mantén tu nombre de usuario actual, historial, ediciones... Nada cambia excepto como inicias sesión</li>
 <li>Comparte tu actividad en Wikia con tus amigos en Facebook</li>
 <li>Control completo de qué es publicado</li>
+</ul>',
+	'comboajaxlogin-connectmarketing-oasis' => '<h1>Enlaza tus cuentas</h1>
+<ul>
+<li>Conserva tus datos actuales: nombre de usuario, historial, ediciones, etc. Nada cambia salvo la forma de iniciar sesión</li>
+<li>Comparte con tus amigos en Facebook la actividad que realices en Wikia</li>
+<li>Controla completamente qué cosas publicas</li>
 </ul>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Regresar',
 	'comboajaxlogin-connectmarketing-forward' => 'Comenzar &raquo;',
@@ -229,6 +236,12 @@ $messages['ja'] = array(
 	'comboajaxlogin-createlog' => 'ログインもしくはアカウントの作成',
 	'comboajaxlogin-actionmsg' => 'この操作を行うには、ログインするかアカウントを作成する必要があります。',
 	'comboajaxlogin-connectmarketing' => '<h1>アカウントを接続する</h1>
+<ul>
+<li>現在の利用者名や履歴、編集機能などは維持され、ログイン方法以外に変更されるものはありません。</li>
+<li>ウィキア上でのあなたの活動を Facebook 上の友達と共有できます</li>
+<li>どの情報を表示させるかは設定により指定できます</li>
+</ul>',
+	'comboajaxlogin-connectmarketing-oasis' => '<h1>アカウントを接続する</h1>
 <ul>
 <li>現在の利用者名や履歴、編集機能などは維持され、ログイン方法以外に変更されるものはありません。</li>
 <li>ウィキア上でのあなたの活動を Facebook 上の友達と共有できます</li>

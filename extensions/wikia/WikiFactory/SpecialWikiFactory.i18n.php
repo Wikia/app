@@ -839,7 +839,7 @@ $messages['cs'] = array(
 	'awc-metrics-statistics' => 'Statistiky (průměr za všechny měsíce)',
 	'awc-metrics-close' => 'Zavřít',
 	'awc-metrics-active' => 'aktivní',
-	'awc-metrics-closed' => 'Zavřeno',
+	'awc-metrics-closed' => 'zavřeno',
 	'awc-metrics-redirected' => 'zavřeno a přesměrováno',
 	'awc-metrics-removed' => 'odstraněno',
 	'awc-metrics-hubs' => 'Nové wiki (měsíčně)',
@@ -2018,18 +2018,34 @@ $messages['it'] = array(
  * @author Aotake
  * @author Hosiryuhosi
  * @author Naohiro19
+ * @author Yanajin66
  */
 $messages['ja'] = array(
+	'closewiki' => 'ウィキを閉じる',
 	'wf_city_url' => 'アドレス',
+	'wf_city_id' => 'ID',
 	'wf_city_title' => 'タイトル',
 	'wf_city_founding_user' => '創設者',
 	'wf_city_founding_email' => '創設者メールアドレス',
 	'wf_city_public' => '状態',
 	'wf_city_lang' => '言語',
 	'wf_cc_name' => 'カテゴリ',
+	'wikifactory_removevariable' => 'キャッシュからウィキデータを削除する',
+	'wikifactory_removeconfirm' => 'キャッシュからウィキデータを削除しました！',
+	'wikifactory-label-variables' => '変数',
+	'wikifactory-label-variables2' => '一般的な',
+	'wikifactory-label-hubs' => 'ハブ',
 	'wikifactory-label-domains' => 'ドメイン',
+	'wikifactory-label-return' => '一覧へ戻る',
+	'wikifactory-label-clog' => '変更履歴',
 	'wikifactory-label-actions' => '操作',
+	'wikifactory-label-close' => '閉じる',
+	'wikifactory-label-tags' => 'タグ',
+	'right-wikifactory' => 'ウィキのための内部設定の変更',
+	'closewiki-check-and-confirm' => 'ウィキをチェックして操作を確認する',
+	'closewiki-redirect-to' => 'リダイレクトする',
 	'closewiki-message' => 'ドメイン名: $1',
+	'closewiki-confirm-button' => "$2の'$1'を確認する",
 	'closewiki-dump-url' => 'データベース タンプ: $1',
 	'closewiki-images-url' => 'イメージアーカイブ: $1',
 	'closewiki-unknown' => '不明',

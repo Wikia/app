@@ -251,8 +251,15 @@ $messages['as'] = array(
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
+ * @author Jim-by
  */
 $messages['be-tarask'] = array(
+	'myhome' => 'Мая хатняя старонка',
+	'wikiactivity' => 'Вікі-актыўнасьць',
+	'myhome-activity-more' => 'абнавіць сьпіс апошніх зьменаў',
+	'myhome-activity-feed' => 'Апошнія зьмены',
+	'myhome-activity-feed-empty' => "Гэтая вікі чакае Вашага ўдзелу.
+Націсьніце спасылку '''[[Special:CreatePage|Новая старонка]]''' каб пачаць пісаць!",
 	'myhome-feed-new-blog-comment-details' => 'Камэнтар',
 	'myhome-feed-new-article-comment-details' => 'Камэнтар',
 	'myhome-community-corner-edit' => 'рэдагаваць паведамленьне',
@@ -318,6 +325,7 @@ Klaskit eta !",
 	'myhome-switch-to-monaco' => "Ne c'haller kaout an Arc'hwel Ma Degemer nemet e vefe implijet ar fichadenn Monaco ganeoc'h. M'ho peus c'hoant da vont war Ma Degemer, gweladennit'''[[Special:Preferences|ho Tibaboù gwellañ]]''', mar plij, evit kemmañ ho fichadenn.",
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'Korn ar gumuniezh',
+	'oasis-myhome-community-corner-edit' => 'kemmañ ar gemennadenn &gt;',
 	'myhome-community-corner-edit' => 'kemmañ ar gemennadenn',
 	'community-corner' => "'''Degemer mat war Ma Degemer !'''
 
@@ -352,6 +360,7 @@ $messages['cy'] = array(
 );
 
 /** German (Deutsch)
+ * @author F.trott
  * @author Kghbln
  * @author Kjell
  * @author LWChris
@@ -416,6 +425,7 @@ Probier es einfach aus!',
 Wenn du die Startseite sehen möchtest, gehe bitte zu '''[[Special:Preferences|deinen Einstellungen]]''' um dein Design zu wechseln.",
 	'myhome-namespace-blog' => 'Benutzer-Blog',
 	'myhome-community-corner-header' => 'Gemeinschafts-Bereich',
+	'oasis-myhome-community-corner-edit' => 'Bearbeiten &gt;',
 	'myhome-community-corner-edit' => 'Bearbeiten',
 	'community-corner' => "'''Willkommen auf deiner Startseite!'''
 
@@ -557,6 +567,7 @@ $messages['el'] = array(
 );
 
 /** Spanish (Español)
+ * @author Absay
  * @author Crazymadlover
  * @author Danke7
  * @author Locos epraix
@@ -613,6 +624,7 @@ $messages['es'] = array(
 	'myhome-switch-to-monaco' => "\"Mi página de inicio\" solo está disponible si usas la apariencia Monaco. Si quieres ver \"Mi página de inicio\", por favor, entra en tus '''[[Special:Preferences|tus preferencias]]''' para cambiar la apariencia.",
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'Rincón de la comunidad',
+	'oasis-myhome-community-corner-edit' => 'editar mensaje &gt;',
 	'myhome-community-corner-edit' => '[editar mensaje]',
 	'community-corner' => "'''¡Bienvenido a Mi página de inicio!'''
 
@@ -2033,7 +2045,7 @@ $messages['ru'] = array(
 	'activityfeed' => 'Лента действий',
 );
 
-/** Rusyn (русиньскый язык)
+/** Rusyn (Русиньскый)
  * @author Gazeb
  */
 $messages['rue'] = array(
@@ -2192,6 +2204,11 @@ Om du är grundaren eller en administratör på denna wiki kan du ändra detta b
 	'myhome-hot-spots-definition' => 'Sidor med flest redigerare i sista $1 dagar.',
 	'myhome-default-view-checkbox' => 'Gör $1 min standardvy',
 	'myhome-default-view-success' => 'Okej, detta är din standard nu',
+);
+
+/** Swahili (Kiswahili) */
+$messages['sw'] = array(
+	'myhome-feed-summary-details' => 'Muhtasari',
 );
 
 /** Telugu (తెలుగు)

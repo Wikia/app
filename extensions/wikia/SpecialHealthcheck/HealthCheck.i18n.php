@@ -76,6 +76,13 @@ $messages['hsb'] = array(
 	'healthcheck-desc' => '[[Special:HealthCheck|Specialna strona]] za kontrolowanje serweroweho statusa',
 );
 
+/** Hungarian (Magyar)
+ * @author Misibacsi
+ */
+$messages['hu'] = array(
+	'healthcheck-desc' => '[[Special:HealthCheck|Speciális oldal]] a szerver állapotának ellenőrzéséhez',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */

@@ -79,6 +79,14 @@ $messages['hsb'] = array(
 	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Powěsće zhromadźenstwa su so zaktualizowali]].',
 );
 
+/** Hungarian (Magyar)
+ * @author Misibacsi
+ */
+$messages['hu'] = array(
+	'communitymessages-desc' => 'Helper kiterjesztés a közösségi üzenetekhez',
+	'communitymessages-notice-msg' => '[[Special:ActivityFeed| A közösségi üzenetek módosultak]].',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */

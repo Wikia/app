@@ -655,6 +655,12 @@ $messages['sv'] = array(
 	'masthead-edits-since' => 'redigeringar sedan',
 );
 
+/** Swahili (Kiswahili) */
+$messages['sw'] = array(
+	'blog-avatar-delete' => 'Futa',
+	'blog-avatar-getuser' => 'Tafuta',
+);
+
 /** Telugu (తెలుగు) */
 $messages['te'] = array(
 	'masthead-blog-avatar-preferences-title' => 'అవతారం',

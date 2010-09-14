@@ -66,6 +66,7 @@ $messages['be-tarask'] = array(
 	'wva-title' => 'Хуткае даданьне відэа па URL-адрасу',
 	'wva-notlogged' => 'Каб дадаць відэа, Вам неабходна ўвайсьці ў сыстэму альбо зарэгістравацца.',
 	'wva-notallowed' => 'Вы ня можаце устаўляць відэа ў {{GRAMMAR:месны|{{SITENAME}}}}.',
+	'wva-protected' => 'Гэтае відэа абароненае.',
 );
 
 /** Bahasa Banjar (Bahasa Banjar)
@@ -116,6 +117,7 @@ $messages['cs'] = array(
 
 /** German (Deutsch)
  * @author LWChris
+ * @author The Evil IP address
  */
 $messages['de'] = array(
 	'wva-success' => 'Videoseite für $1 wurde erfolgreich erstellt.',
@@ -127,6 +129,7 @@ $messages['de'] = array(
 	'wva-title' => 'Video von URL hinzufügen',
 	'wva-notlogged' => 'Du musst dich einloggen oder registrieren um Videos einzufügen.',
 	'wva-notallowed' => 'Du kannst in diesem Wiki keine Videos einfügen.',
+	'wva-protected' => 'Dieses Video ist geschützt',
 );
 
 /** German (formal address) (Deutsch (Sie-Form))
@@ -145,6 +148,7 @@ $messages['de-formal'] = array(
 );
 
 /** Spanish (Español)
+ * @author Danke7
  * @author Translationista
  */
 $messages['es'] = array(
@@ -157,6 +161,7 @@ $messages['es'] = array(
 	'wva-title' => 'Añadir vídeo de forma rápida desde una URL',
 	'wva-notlogged' => 'Necesitas acceder o registrarte para insertar videos.',
 	'wva-notallowed' => 'No puedes insertar videos en este wiki.',
+	'wva-protected' => 'Este video está protegido',
 );
 
 /** Basque (Euskara)
@@ -198,7 +203,9 @@ $messages['fi'] = array(
 	'wva-notallowed' => 'Et voi lisätä videoita tälle wikisivulle.',
 );
 
-/** French (Français) */
+/** French (Français)
+ * @author Iluvalar
+ */
 $messages['fr'] = array(
 	'wva-success' => 'La page de la vidéo $1 a été ajoutée avec succès.',
 	'wva-success-replaced' => 'La page de vidéo $1 a été remplacée avec succès',
@@ -209,6 +216,7 @@ $messages['fr'] = array(
 	'wva-title' => 'Ajouter une vidéo rapidement à partir de son URL',
 	'wva-notlogged' => 'Vous devez vous inscrire ou bien vous enregistrer pour ajouter des vidéos',
 	'wva-notallowed' => 'Vous ne pouvez pas ajouter de vidéos sur ce wiki',
+	'wva-protected' => 'Cette vidéo est protégée',
 );
 
 /** Galician (Galego)
@@ -224,6 +232,7 @@ $messages['gl'] = array(
 	'wva-title' => 'Engadir un vídeo de xeito rápido desde un URL',
 	'wva-notlogged' => 'Debe acceder ao sistema ou rexistrarse para inserir vídeos.',
 	'wva-notallowed' => 'Non pode inserir vídeos neste wiki.',
+	'wva-protected' => 'Este vídeo está protexido.',
 );
 
 /** Hebrew (עברית)
@@ -258,6 +267,7 @@ $messages['ia'] = array(
 	'wva-title' => 'Adder video rapidemente con URL',
 	'wva-notlogged' => 'Tu debe aperir un session o registrar te pro inserer videos.',
 	'wva-notallowed' => 'Non es possibile inserer videos in iste wiki.',
+	'wva-protected' => 'Iste video es protegite.',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -311,6 +321,7 @@ $messages['ja'] = array(
 	'wva-title' => '手軽にURLから動画を追加',
 	'wva-notlogged' => '動画を追加するにはログインするかアカウントを作成する必要があります。',
 	'wva-notallowed' => 'このウィキでは動画を追加できません。',
+	'wva-protected' => 'この動画は保護されています。',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -365,6 +376,7 @@ $messages['mk'] = array(
 	'wva-title' => 'Брзо додавање на видеоснимка од URL-адреса',
 	'wva-notlogged' => 'Треба да сте најавени или да се регистрирате за да можете да вметнувате видеоснимки.',
 	'wva-notallowed' => 'Не можете да вметнувате видеоснимки на ова вики.',
+	'wva-protected' => 'Оваа видеоснимка е заштитена.',
 );
 
 /** Dutch (Nederlands)
@@ -380,6 +392,7 @@ $messages['nl'] = array(
 	'wva-title' => 'Video vanuit URL toevoegen',
 	'wva-notlogged' => "U moet aanmelden of registreren om video's te kunnen toevoegen.",
 	'wva-notallowed' => "U kunt geen video's toevoegen in deze wiki.",
+	'wva-protected' => 'Deze video is beschermd.',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -434,6 +447,7 @@ $messages['pl'] = array(
 	'wva-title' => 'Dodaj szybko film, korzystając z jego adresu URL.',
 	'wva-notlogged' => 'Dodawanie filmów jest możliwe po zarejestrowaniu i zalogowaniu się.',
 	'wva-notallowed' => 'Nie możesz dodawać filmów do tej wiki.',
+	'wva-protected' => 'Ten film jest zabezpieczony.',
 );
 
 /** Piedmontese (Piemontèis)
@@ -450,6 +464,7 @@ $messages['pms'] = array(
 	'wva-title' => 'Gionta video an pressa da URL',
 	'wva-notlogged' => 'A deuv rintré ant ël sistema o argistresse për anserì ëd filmà',
 	'wva-notallowed' => 'It peule pa anserì video su sta wiki-sì.',
+	'wva-protected' => "Ës filmà-sì a l'é protegiù.",
 );
 
 /** Pashto (پښتو)
@@ -466,6 +481,7 @@ $messages['ps'] = array(
 
 /** Portuguese (Português)
  * @author Crazymadlover
+ * @author Giro720
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
@@ -478,10 +494,12 @@ $messages['pt'] = array(
 	'wva-title' => 'Adição Rápida de Vídeo a Partir da URL',
 	'wva-notlogged' => 'Precisa de se autenticar ou registar para inserir vídeos.',
 	'wva-notallowed' => 'Não pode inserir vídeos nesta wiki.',
+	'wva-protected' => 'Este vídeo está protegido.',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Daemorris
+ * @author Giro720
  */
 $messages['pt-br'] = array(
 	'wva-success' => 'Página de vídeo $1 foi adicionada com sucesso.',
@@ -493,6 +511,7 @@ $messages['pt-br'] = array(
 	'wva-title' => 'Adicionar Vídeo Rapidamente Via URL',
 	'wva-notlogged' => 'Você precisa se autenticar ou registrar para inserir vídeos.',
 	'wva-notallowed' => 'Você não pode inserir vídeos nesta wiki.',
+	'wva-protected' => 'Este vídeo está protegido.',
 );
 
 /** Romanian (Română)
@@ -508,6 +527,7 @@ $messages['ro'] = array(
 );
 
 /** Russian (Русский)
+ * @author Eleferen
  * @author Lockal
  * @author Александр Сигачёв
  */
@@ -521,6 +541,7 @@ $messages['ru'] = array(
 	'wva-title' => 'Быстрое добавление видео по URL',
 	'wva-notlogged' => 'Чтобы добавить видео вам необходимо представиться системе или зарегистрироваться.',
 	'wva-notallowed' => 'Вы не можете вставлять видео в этой вики.',
+	'wva-protected' => 'Это видео защищено.',
 );
 
 /** Serbian Cyrillic ekavian (Српски (ћирилица))

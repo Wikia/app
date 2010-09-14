@@ -384,6 +384,13 @@ $messages['sr-ec'] = array(
 	'cntool-label-caveat' => 'Наредба за суспендовање',
 );
 
+/** Swahili (Kiswahili) */
+$messages['sw'] = array(
+	'cntool-button-preview' => 'Hakiki',
+	'cntool-button-save' => 'Hifadhi',
+	'cntool-label-preview' => 'Hakiki',
+);
+
 /** Telugu (తెలుగు)
  * @author Veeven
  */

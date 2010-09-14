@@ -143,8 +143,11 @@ $messages['bcl'] = array(
 	'titleedit' => 'Liwatón',
 );
 
-/** Belarusian (Беларуская) */
+/** Belarusian (Беларуская)
+ * @author Хомелка
+ */
 $messages['be'] = array(
+	'titleedit-desc' => 'Дадае кнопку "Перанесці" ў верхняй частцы старонкі',
 	'titleedit' => 'Правіць',
 );
 
@@ -875,8 +878,11 @@ $messages['mr'] = array(
 	'titleedit' => 'संपादन',
 );
 
-/** Malay (Bahasa Melayu) */
+/** Malay (Bahasa Melayu)
+ * @author Aviator
+ */
 $messages['ms'] = array(
+	'titleedit-desc' => 'Menambah butang sunting tajuk di puncak laman',
 	'titleedit' => 'Sunting',
 );
 

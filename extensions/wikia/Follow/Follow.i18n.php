@@ -241,9 +241,12 @@ $messages['br'] = array(
 	'wikiafollowedpages-special-heading-media' => 'Skeudennoù ha videoioù ($1)',
 	'wikiafollowedpages-special-namespace' => '(pajenn $1)',
 	'wikiafollowedpages-special-anon' => 'Mar plij [[Special:Signup|kevreit]] evit krouiñ pe sellout ouzh ho roll evezhiañ.',
+	'oasis-wikiafollowedpages-special-seeall' => 'Gwelet pep tra >',
+	'wikiafollowedpages-special-seeall' => 'Gwelet pep tra >',
 	'wikiafollowedpages-special-showall' => 'Diskouez pep tra >',
 	'wikiafollowedpages-special-showmore' => "Diskouez muioc'h",
 	'wikiafollowedpages-special-title' => 'Pajennoù heuliet',
+	'wikiafollowedpages-special-delete-tooltip' => 'Dilemel ar skeudenn-mañ',
 	'wikiafollowedpages-special-hidden' => "An {{GENDER:$1|implijer|implijerez|implijerien}}-mañ {{GENDER:$1|en|he|o}} deus dibabet kuzhat {{GENDER:$1|en|he|o}} roll evezhiañ d'an dud all.",
 	'wikiafollowedpages-special-hidden-unhide' => 'Diguzhat ar roll-mañ.',
 	'wikiafollowedpages-special-blog-by' => 'gant $1',
@@ -268,6 +271,7 @@ Ouzhpennit pajennoù d\'ar roll-se en ur klikañ war "{{int:watch}}" e talbenn a
 /** German (Deutsch)
  * @author Kjell
  * @author LWChris
+ * @author Lyzzy
  * @author The Evil IP address
  */
 $messages['de'] = array(
@@ -452,6 +456,7 @@ Schauen Sie doch mal rein und bearbeiten Sie sie weiter...
 /** Spanish (Español)
  * @author Crazymadlover
  * @author Danke7
+ * @author Sanbec
  */
 $messages['es'] = array(
 	'follow-desc' => 'Mejoras para la funcionalidad de la lista de vigilancia',
@@ -470,7 +475,7 @@ Agregar páginas a esta lista haciendo click en "{{int:watch}}" arriba de una p�
 	'wikiafollowedpages-special-anon' => 'Por favor [[Special:Signup|inicia sesión]] para crear o ver tu lista de páginas seguidas.',
 	'oasis-wikiafollowedpages-special-seeall' => 'Ver todo >',
 	'wikiafollowedpages-special-seeall' => 'Ver todo >',
-	'wikiafollowedpages-special-showall' => 'Mostrar todo',
+	'wikiafollowedpages-special-showall' => 'Mostrar todo >',
 	'wikiafollowedpages-special-showmore' => 'Mostrar más',
 	'wikiafollowedpages-special-title' => 'Páginas seguidas',
 	'wikiafollowedpages-special-delete-tooltip' => 'remover esta página',
@@ -1752,6 +1757,11 @@ $messages['sr-ec'] = array(
 	'wikiafollowedpages-prefs-advanced' => 'Напредне опције',
 	'wikiafollowedpages-userpage-more' => 'Више',
 	'wikiafollowedpages-userpage-hide' => 'сакриј',
+);
+
+/** Swahili (Kiswahili) */
+$messages['sw'] = array(
+	'wikiafollowedpages-userpage-hide' => 'ficha',
 );
 
 /** Telugu (తెలుగు)

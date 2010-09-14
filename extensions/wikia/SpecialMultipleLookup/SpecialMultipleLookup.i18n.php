@@ -335,7 +335,7 @@ $messages['lb'] = array(
 	'multilookupprevious' => 'vireg',
 	'multilookupnoresultfound' => 'Kee Resultat fonnt!',
 	'multilookupwiki' => 'Wiki',
-	'multilookuplistwikiainfo' => 'Lëscht vu Wikien op däer Säite vu Benotzer mat der IP-Adress <b>$1</b> geännert goufen',
+	'multilookuplistwikiainfo' => 'Lëscht vu Wikien op där Säite vu Benotzer mat der IP-Adress <b>$1</b> geännert goufen',
 	'multilookuplastedit' => 'Lescht Ännerung vun dëser IP-Adress:',
 );
 

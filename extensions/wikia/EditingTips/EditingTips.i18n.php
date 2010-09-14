@@ -392,9 +392,9 @@ $messages['ps'] = array(
  */
 $messages['pt'] = array(
 	'tog-disableeditingtips' => 'Não mostrar dicas de edição',
-	'tog-widescreeneditingtips' => 'Editar em formato largo',
-	'editingtips_enter_widescreen' => 'Mudar para Formato Largo',
-	'editingtips_exit_widescreen' => 'Terminar Formato Largo',
+	'tog-widescreeneditingtips' => 'Editar em modo panorâmico',
+	'editingtips_enter_widescreen' => 'Iniciar Modo Panorâmico',
+	'editingtips_exit_widescreen' => 'Terminar Modo Panorâmico',
 	'editingtips_hide' => 'Ocultar Dicas de Edição',
 	'editingtips_show' => 'Mostrar Dicas de Edição',
 	'editingTips' => 'Adicione as suas dicas [[MediaWiki:EditingTips|aqui]]',

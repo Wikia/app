@@ -664,6 +664,7 @@ $messages['ja'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'createpage-desc' => 'Erlaabt et eng nei Säit mam Wikia WYSIWYG-Editeur unzeleeën',
 	'createpage-sp-title' => 'En neien Artikel uleeën',
 	'createpage_title' => 'En neien Artikel uleeën',
 	'createpage_title_caption' => 'Titel:',
@@ -1105,6 +1106,13 @@ $messages['sr-ec'] = array(
 $messages['sv'] = array(
 	'createpage_title' => 'Skapa en ny artikel',
 	'createpage_title_caption' => 'Artikeltitel',
+);
+
+/** Swahili (Kiswahili) */
+$messages['sw'] = array(
+	'createpage_title_caption' => 'Cheo:',
+	'createpage_invalid_title_error' => 'Jina batili',
+	'createpage-dialog-blank' => 'Ukurasa tupu',
 );
 
 /** Telugu (తెలుగు)

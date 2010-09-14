@@ -102,6 +102,9 @@ $messages['br'] = array(
 	'whereisextension-filter' => 'Sil',
 	'whereisextension-all-groups' => 'An holl strolladoù',
 	'whereisextension-name-contains' => 'Anv an argemmenn zo ennañ',
+	'whereisextension-search-like-value' => 'Evel :',
+	'whereisextension-search-type' => 'Seurt :',
+	'whereisextension-search-type-full' => 'Evel',
 );
 
 /** Catalan (Català)
@@ -142,6 +145,7 @@ $messages['ee'] = array(
 );
 
 /** Spanish (Español)
+ * @author Absay
  * @author Crazymadlover
  * @author Pertile
  * @author Peter17
@@ -154,6 +158,10 @@ $messages['es'] = array(
 	'whereisextension-filter' => 'Filtro',
 	'whereisextension-all-groups' => 'Todos los grupos',
 	'whereisextension-name-contains' => 'Nombre de variable contiene',
+	'whereisextension-search-like-value' => 'Semejante a:',
+	'whereisextension-search-type' => 'Tipo:',
+	'whereisextension-search-type-bool' => 'Expresión Booleana',
+	'whereisextension-search-type-full' => 'Semejante a',
 );
 
 /** Basque (Euskara)
@@ -279,10 +287,18 @@ $messages['it'] = array(
 
 /** Japanese (日本語)
  * @author Naohiro19
+ * @author Yanajin66
  */
 $messages['ja'] = array(
+	'whereisextension' => '拡張子の場所',
 	'whereisextension-submit' => '検索',
 	'whereisextension-list' => 'ウィキに一致した基準の一覧',
+	'whereisextension-filter' => 'フィルタ',
+	'whereisextension-all-groups' => 'すべてのグループ',
+	'whereisextension-search-like-value' => 'Like演算子:',
+	'whereisextension-search-type' => 'タイプ:',
+	'whereisextension-search-type-bool' => 'ブール値',
+	'whereisextension-search-type-full' => 'Like演算子:',
 );
 
 /** Kannada (ಕನ್ನಡ)
