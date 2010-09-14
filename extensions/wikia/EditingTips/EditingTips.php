@@ -132,23 +132,23 @@ function AddEditingToggles($o) {
 		$wgOut->addHtml('<div id="editingTipsToggleDiv" style="margin-top:20px; '. $marg . '">');
 
 
-		if (get_class($wgUser->getSkin()) == 'SkinOasis') {
-			$wgOut->addHtml($sep . '<a href="" id="toggleEditingTips">'. (isEditingTipsEnabled() ? wfMsg ('editingtips_hide') : wfMsg ('editingtips_show') ).'</a>');
+		if (Wikia::isOasis()) {
+			$wgOut->addHtml($sep . '<a href="#" id="toggleEditingTips">'. (isEditingTipsEnabled() ? wfMsg ('editingtips_hide') : wfMsg ('editingtips_show') ).'</a>');
 		}
 		else {
 			if (count(getEditingTips()) > 0) {
-				$wgOut->addHtml($sep . '<a href="" id="toggleEditingTips">'. (isEditingTipsEnabled() ? wfMsg ('editingtips_hide') : wfMsg ('editingtips_show') ).'</a> - ');
+				$wgOut->addHtml($sep . '<a href="#" id="toggleEditingTips">'. (isEditingTipsEnabled() ? wfMsg ('editingtips_hide') : wfMsg ('editingtips_show') ).'</a> - ');
 			}
 		}
-		
+
 		/** don't show widescreen tips for Oasis **/
-		if (get_class($wgUser->getSkin()) == 'SkinOasis') {
+		if (Wikia::isOasis()) {
 			$wgOut->addHtml('</div>');
 		}
 		else {
 			$wgOut->addHtml('<a href="" id="toggleWideScreen">' . (isWidescreenEnabled() ? wfMsg('editingtips_exit_widescreen') : wfMsg ('editingtips_enter_widescreen')) .'</a></div>');
 		}
-		
+
 		$wgOut->addHtml('
 			<noscript>
 				<style type="text/css">
@@ -162,54 +162,50 @@ function AddEditingToggles($o) {
 
 function AddEditingTips($o) {
 	global $wgOut, $wgUser, $wgStylePath, $wgStyleVersion, $wgExtensionsPath ;
-	
+
 	/** Oasis skin detection **/
-	$oasis = (get_class($wgUser->getSkin()) == 'SkinOasis') ? true : false;	
-	if ($oasis == false) {
+	if (!Wikia::isOasis()) {
 		$wgOut->addScript('<link rel="stylesheet" type="text/css" href="'.$wgExtensionsPath.'/wikia/EditingTips/accordion-menu-v2.css?'.$wgStyleVersion.'" />');
 		$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/EditingTips/accordion-menu-v2.js?'.$wgStyleVersion.'"></script>');
 		$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/EditingTips/EditingTips.js?'.$wgStyleVersion.'"></script>');
 	}
-	
-	if ($oasis == true) {
-		$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/EditingTips/accordion-menu-oasis.js?'.$wgStyleVersion.'"></script>');	
+	else {
+		$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/EditingTips/accordion-menu-oasis.js?'.$wgStyleVersion.'"></script>');
 	}
-	
+
 	/** no YUI for Oasis, we use jQuery **/
 	$script = "";
-	if ($oasis == true) {
+	if (Wikia::isOasis()) {
+		/** delecration of language for accordion-menu-oasis.js **/
+		$script = sprintf("
+			var editingtips_show = '%s';
+			var editingtips_hide = '%s';
+			", wfMsg('editingtips_show'),wfMsg('editingtips_hide') );
+
 		if ( count(getEditingTips()) > 0) {
-			
-			/** delecration of language for accordion-menu-oasis.js **/
-			$script = sprintf("
-				var editingtips_show = '%s';
-				var editingtips_hide = '%s';
-				", wfMsg('editingtips_show'),wfMsg('editingtips_hide') );
 
 			/** preset for the textarea and the elements **/
 			if ( isEditingTipsEnabled() ) {
 				$style = '
 					<style type="text/css">
-		
+
 						#editform textarea {
 							width: 714px;
 							height: 350px !important;
 							margin-bottom: 20px;
 						}
-						
+
 						#toolbar, #editform textarea, #editingTipsToggleDiv  {
 							margin-left: 257px;
 						}
 					</style>
 				';
-				
+
 				$wgOut->addHtml($style);
-			
 			}
 		}
 	}
-	
-	if ($oasis == false) {	
+	else {
 		$script = '
 
 				var showDone = false;
@@ -220,9 +216,9 @@ function AddEditingTips($o) {
 		var editingTipsExitMsg = "' . wfMsg ('editingtips_exit_widescreen')  . '" ;';
 
 	}
-		
+
 	$editor_visibility = (isEditingTipsEnabled() ) ? 'block' : 'none';
-	
+
 	$html = sprintf('<dl id="editingTips" class="accordion-menu widget reset" style="display: %s"><dt class="color1" style="cursor:text"><div class="widgetToolbox"><div class="close" id="editingTips_close"><span></span></div></div>Editing Tips</dt>',$editor_visibility);
 	$first = true;
 	foreach(getEditingTips() as $tid => $tip) {
@@ -230,7 +226,7 @@ function AddEditingTips($o) {
 		$first = false;
 	}
 	$html .= '</dl>';
-	
+
 	$script = sprintf('<script type="text/javascript">%s</script>', $script);
 	$wgOut->addHtml($html.$script);
 	return true;
