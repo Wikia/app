@@ -5,6 +5,9 @@ $(function() {
 var LatestPhotos = {
 	browsing: false,
 	transition_speed: 500,
+	enable_next: true,
+	enable_previous: false,
+	
 	init: function() {
 		this.attachListeners();
 	},
@@ -13,6 +16,8 @@ var LatestPhotos = {
 		LatestPhotos.attachBlindImages();
 		$('.LatestPhotosModule .next').click(LatestPhotos.nextImage);
 		$('.LatestPhotosModule .previous').click(LatestPhotos.previousImage);
+		
+		LatestPhotos.enableBrowsing();
 	},
 
 	attachBlindImages: function() {
@@ -23,12 +28,18 @@ var LatestPhotos = {
 			$('.carousel').append("<li class='blind'></li>");
 			$('.carousel').append("<li class='blind'></li>");
 		}
+		
+		$('.carousel li').first().addClass("first-image");
+		$('.carousel li').last().addClass("last-image");
+		
 	},
 
 	previousImage: function() {
 		var width = LatestPhotos.setCarouselWidth();
 
-		if (LatestPhotos.browsing == false) {
+		LatestPhotos.enableBrowsing();
+
+		if (LatestPhotos.browsing == false && LatestPhotos.enable_previous == true) {
 			LatestPhotos.browsing = true;
 			var images = $('.carousel li').length;
 			for (i=0; i < 3; i++) {
@@ -48,7 +59,9 @@ var LatestPhotos = {
 	nextImage: function() {
 		var width = LatestPhotos.setCarouselWidth();
 
-		if (LatestPhotos.browsing == false) {
+		LatestPhotos.enableBrowsing();
+
+		if (LatestPhotos.browsing == false && LatestPhotos.enable_next == true) {
 			LatestPhotos.browsing = true;
 			$(".carousel-container div").animate({
 				left: '-' + width
@@ -60,6 +73,26 @@ var LatestPhotos = {
 		return false;
 	},
 
+	enableBrowsing: function() {
+		var current = $('.carousel li').slice(0, 3).each(function (i) {
+			if ($(this).is('.last-image')) {
+				LatestPhotos.enable_next = false;
+				return false;
+			}
+			else {
+				LatestPhotos.enable_next = true;
+			}
+			
+			if ($(this).is('.first-image')) {
+				LatestPhotos.enable_previous = false;
+				return false;
+			}
+			else {
+				LatestPhotos.enable_previous = true;
+			}			
+		});
+	},
+	
 	removeFirstPhotos: function() {
 		var old = $('.carousel li').slice(0,3);
 		$('.carousel-container div').css('left', '0px');
