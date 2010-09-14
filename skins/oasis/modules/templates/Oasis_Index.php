@@ -28,11 +28,7 @@
 	<script>/*<![CDATA[*/
 		var wgNow = new Date();
 	/*]]>*/</script><?php
-		// JS is loaded at the bottom right now.  This URL param lets us force it back to the top for testing if we need to.
-		// TODO: Remove the ability to put the JS on top (it will be cleaner and less confusing code).
-		global $wgRequest;
-		$JS_AT_BOTTOM = ($wgRequest->getVal('jsatbottom', '1') != "0");
-		if(!$JS_AT_BOTTOM){
+		if(!$jsAtBottom) {
 			print "<!-- Combined JS files (StaticChute) -->\n";
 			print $staticChuteHtml."\n";
 			// TODO: SWC: TO TEST ASYNC LOADING, REMOVE PRINT OF $staticChuteHtml ABOVE AND UNCOMMENT THESE TWO LINES:
@@ -47,7 +43,7 @@
 <?= $body ?>
 <?= $printableCss ?>
 <?php
-	if($JS_AT_BOTTOM){
+	if($jsAtBottom) {
 		print "<!-- Combined JS files (StaticChute) -->\n";
 		print $staticChuteHtml."\n";
 	}
@@ -56,7 +52,7 @@
 <?= $analytics ?>
 <?php
 	// Load Javacript right before the closing body tag.
-	if($JS_AT_BOTTOM){
+	if($jsAtBottom){
 		// TODO: SWC: TO TEST ASYNC LOADING, REMOVE PRINT OF $staticChuteHtml ABOVE AND UNCOMMENT THESE TWO LINES:
 		//print $wikiaScriptLoader;
 		//print $jsLoader;
@@ -67,8 +63,8 @@
 	}
 	print '<script type="text/javascript">/*<![CDATA[*/for(var i=0;i<wgAfterContentAndJS.length;i++){wgAfterContentAndJS[i]();}/*]]>*/</script>' . "\n";
 
-	// TODO: SWC: Get bottomscripts working. I thought they were set by SkinTemplate automatically.
-	//print $bottomscripts;
+	// SWC: Get bottomscripts working.
+	print $bottomscripts;
 ?>
 <?= $reporttime."\n" ?>
 </body>
