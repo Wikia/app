@@ -47,7 +47,7 @@ var TopListsEditor = {
 		});
 
 		//events handlers
-		$('#toplist-editor a.wikia-chiclet-button').click(TopListsEditor.showImageBrowser);
+		$('#toplist-editor .ImageBrowser a.wikia-chiclet-button').click(TopListsEditor.showImageBrowser);
 		TopListsEditor._mListContainer.find('li .ItemRemove a').click(TopListsEditor.removeItem);
 		$('#toplist-add-item').click(TopListsEditor.addItem);
 	},

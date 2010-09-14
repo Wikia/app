@@ -6,6 +6,7 @@
  */
 
 class TopList extends TopListBase {
+	const ITEM_TITLE_PREFIX = 'toplist-item-';
 	protected $mRelatedArticle = null;
 	protected $mPicture = null;
 	protected $mItems = array();
@@ -173,7 +174,7 @@ class TopList extends TopListBase {
 	 */
 	public function createItem() {
 		if( !empty( $this->mTitle ) ) {
-			$item = TopListItem::newFromText( $this->mTitle->getText() . '/' . uniqid( 'item-' ) );
+			$item = TopListItem::newFromText( $this->mTitle->getText() . '/' . uniqid( self::ITEM_TITLE_PREFIX ) );
 
 			if( !empty( $item ) ) {
 				return $item;
@@ -200,8 +201,11 @@ class TopList extends TopListBase {
 
 			if( !empty ($subPages)  && $subPages->count() ) {
 				foreach( $subPages as $title ) {
-					$this->mItems[] = TopListItem::newFromTitle( $title );
-
+					//check for list item prefix, avoid listing comments as items
+					if( strpos( $title->getText(), self::ITEM_TITLE_PREFIX ) ) {
+						$this->mItems[] = TopListItem::newFromTitle( $title );
+					}
+					
 					//TODO: implement tweak order by votes
 				}
 			}

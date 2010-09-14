@@ -42,7 +42,7 @@ $messages['en'] = array(
 	'toplists-create-button' => 'Create list',
 	'toplists-update-button' => 'Save list',
 	'toplists-cancel-button' => 'Cancel',
-	'toplits-image-browser-no-picture' => 'No picture',
+	'toplits-image-browser-clear-picture' => 'Clear picture',
 
 	//article edit summaries
 	'toplists-list-creation-summary' => 'Creating a list',
