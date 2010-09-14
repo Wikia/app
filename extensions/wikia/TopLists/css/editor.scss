@@ -34,20 +34,12 @@ $icon-drag-background: url(/skins/oasis/images/sprite.png) no-repeat -1147px -30
 	vertical-align: $ver;
 }
 
-@mixin tool($background-icon: transparent, $margin-left: 10px, $cursor: pointer) {
+@mixin tool($margin-left: 10px, $cursor: pointer) {
 	@include centered($item-height);
 	margin-left: $margin-left;
 
 	a {
 		cursor: $cursor;
-
-		img {
-			background: $background-icon;
-			vertical-align: middle;
-			position: static;
-			width: 13px;
-			height: 20px;
-		}
 	}
 }
 
@@ -55,6 +47,11 @@ $icon-drag-background: url(/skins/oasis/images/sprite.png) no-repeat -1147px -30
 	width: 465px;
 	margin: 0;
 	padding: 0;
+
+	.osprite {
+		vertical-align: middle;
+		position: static;
+	}
 
 	small {
 		font-size: smaller;
@@ -113,20 +110,21 @@ $icon-drag-background: url(/skins/oasis/images/sprite.png) no-repeat -1147px -30
 		float: right;
 		position: relative;
 		top: 45px;
+		z-index: 1;
+		cursor: default;
 		
 		.frame {
 			border: 1px solid $color-page-border;
-			width: $image-frame-width;
-			height: $image-frame-height;
-			padding: 5px;
-			background-color: $color-module-shadow;
+			
+			.NoPicture, img {
+				@include centered($image-frame-height);
+				width: $image-frame-width;
+				height: $image-frame-height;
+				margin: 5px;
+			}
 
-			.wrapper {
-				text-align: center;
-				vertical-align: middle;
-				line-height: $image-frame-height - 5px;
-				width: 100%;
-				height: 100%;
+			.NoPicture {
+				background-color: $color-module-shadow;
 			}
 		}
 
@@ -138,12 +136,6 @@ $icon-drag-background: url(/skins/oasis/images/sprite.png) no-repeat -1147px -30
 			width: $big-square-button-side;
 			margin: 0;
 			padding: 0;
-			z-index: 1000;
-
-			img {
-				vertical-align: middle;
-				position: static;
-			}
 		}
 	}
 
@@ -199,11 +191,11 @@ $icon-drag-background: url(/skins/oasis/images/sprite.png) no-repeat -1147px -30
 			}
 
 			.ItemRemove {
-				@include tool($icon-remove-background, 15px);
+				@include tool(15px);
 			}
 
 			.ItemDrag {
-				@include tool($icon-drag-background, 10px , move);
+				@include tool(10px , move);
 			}
 
 			p {
@@ -234,10 +226,8 @@ $icon-drag-background: url(/skins/oasis/images/sprite.png) no-repeat -1147px -30
 				@include centered($big-square-button-side);
 				width: $big-square-button-side;
 
-				img {
-					background: url(/skins/oasis/images/sprite.png) no-repeat -1094px -14px;
-					vertical-align: middle;
-					position: static;
+				img.icon-add {
+					margin:0;
 				}
 			}
 		}
@@ -259,16 +249,33 @@ $icon-drag-background: url(/skins/oasis/images/sprite.png) no-repeat -1147px -30
 }
 
 #image-browser-dialog {
-	img.selected {
+	.selected {
+		@include centered($image-frame-height);
+		display: block;
 		border: 1px solid $color-page-border;
 		width: $image-frame-width;
 		height: $image-frame-height;
 		padding: 2px;
+		margin: 3px 3px 14px 3px;
+		cursor: default;
+	}
+
+	div.selected {
+		background-color: $color-module-shadow;
+	}
+
+	img.shadow-short{
+		background-position: -151px -20px;
+		width:290px;
+		margin: 5px 0 5px 0;
+		display:block;
 	}
 
 	ul {
+		@include clearfix;
+		display: block;
 		padding: 0;
-		margin: 0;
+		margin: 0 0 10px 0;
 		
 		li {
 			float: left;
@@ -286,6 +293,7 @@ $icon-drag-background: url(/skins/oasis/images/sprite.png) no-repeat -1147px -30
 
 			div.NoPicture {
 				background-color: $color-module-shadow;
+				cursor: pointer;
 			}
 		}
 	}
