@@ -624,6 +624,12 @@ $messages['sr-ec'] = array(
 	'categoryselect-error-db-locked' => 'База података је закључана',
 );
 
+/** Swahili (Kiswahili) */
+$messages['sw'] = array(
+	'categoryselect-button-save' => 'Hifadhi',
+	'categoryselect-button-cancel' => 'Batilisha',
+);
+
 /** Telugu (తెలుగు)
  * @author Veeven
  */

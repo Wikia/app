@@ -489,6 +489,7 @@ $messages['ee'] = array(
 /** Spanish (Español)
  * @author McDutchie
  * @author Peter17
+ * @author Sanbec
  * @author Translationista
  */
 $messages['es'] = array(
@@ -521,10 +522,10 @@ $messages['es'] = array(
 	'vet-video-replace-link' => 'Para sustituir este video, por favor ve a [[:$1]]',
 	'vet-prev' => '8 anteriores',
 	'vet-next' => '8 siguientes',
-	'vet-metacafe' => 'Videos Metacafe ($1 resultados)',
+	'vet-metacafe' => 'Vídeos de Metacafe ({{PLURAL:$1|un resultado|$1 resultados}})',
 	'vet-insert3' => 'Insertar este vídeo',
 	'vet-recent-inf' => 'Vídeos Recientemente Insertados',
-	'vet-thiswiki2' => 'Vídeos de este Wiki ($1 resultados)',
+	'vet-thiswiki2' => 'Vídeos de este Wiki ({{PLURAL:$1|un resultado|$1 resultados}})',
 	'vet-success' => '<h1>Éxito</h1>',
 	'vet-return' => 'Volver a la edición del artículo',
 	'vet-back' => 'volver',
@@ -1641,7 +1642,7 @@ $messages['pt'] = array(
 	'vet-left' => 'Esquerda',
 	'vet-right' => 'Direita',
 	'vet-gallery' => 'Galeria',
-	'vet-protected' => 'Este vídeo está protegido',
+	'vet-protected' => 'Este vídeo está protegido.',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -1654,6 +1655,7 @@ $messages['pt-br'] = array(
 	'vet-find' => 'Procure um vídeo',
 	'vet-thiswiki' => 'Esta wiki',
 	'vet-flickr' => 'Flickr',
+	'vet-upload-btn' => 'Inserir',
 	'vet-find-btn' => 'Pesquisar',
 	'vet-flickr-inf' => 'Procure fotografias devidamente licenciadas do Flickr e importe-as para a sua wiki.',
 	'vet-conflict-inf' => '<h1>Já existe um vídeo com esse nome. </h1> O que você quer fazer com <b>$1</b>?',
@@ -1719,7 +1721,7 @@ $messages['pt-br'] = array(
 	'vet-left' => 'Esquerda',
 	'vet-right' => 'Direita',
 	'vet-gallery' => 'Galeria',
-	'vet-protected' => 'Este vídeo está protegido',
+	'vet-protected' => 'Este vídeo está protegido.',
 );
 
 /** Russian (Русский)

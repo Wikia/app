@@ -91,7 +91,11 @@ $messages['be-tarask'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
+	'wikistickies' => 'WikiStickies',
 	'wikistickies-withoutimages-hd' => "Ha galloud a reoc'h ouzhpennañ ur skeudenn evit unan eus ar bajennoù-mañ?",
+	'wikistickies-newpages-st' => '<span class="fake_newpages">Ha gellout a rafec\'h ouzhpennañ titouroù d\'ar bajenn-se diwar-benn</span> $1?',
+	'wikistickies-wantedpages-st' => '<span class="fake_wantedpages">Ha gellout a rafec\'h kregiñ ur bajenn diwar-benn</span> $1?',
+	'wikistickies-withoutimages-st' => '<span class="fake_withoutimages">Ha gellout a rafec\'h ouzhpennañ ur skeudenn d\'ar bajenn diwar-benn</span> $1?',
 	'wikistickies-newpages-st-short' => '<span>Ha gellout a rit ouzhpennañ titouroù diwar-benn</span> $1?',
 	'wikistickies-wantedpages-st-short' => '<span>Ha gellout a rit kregiñ gant ur bajenn nevez diwar-benn</span> $1?',
 	'wikistickies-withoutimages-st-short' => '<span>Ha gellout a rit ouzhpennañ ur skeudenn da</span> $1?',
@@ -100,8 +104,10 @@ $messages['br'] = array(
 	'wikistickies-admins-hd' => 'Merourien hepken',
 	'wikistickies-logo-hd' => 'Enporzhiañ ul logo',
 	'wikistickies-theme-hd' => 'Dibab un tem',
+	'wikistickies-custom-hd' => "Krouiñ ho WikiStickies deoc'h",
 	'wikistickies-next' => "War-lec'h →",
 	'wikistickies-hide' => 'kuzhat',
+	'wikistickies-see-more' => "Gwelout muioc'h a bajennoù hag o deus ezhomm sikour",
 );
 
 /** Bosnian (Bosanski)

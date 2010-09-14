@@ -31,6 +31,14 @@ $messages['be-tarask'] = array(
 	'randomwiki' => 'Выпадковыя вікі',
 );
 
+/** Breton (Brezhoneg)
+ * @author Gwendal
+ */
+$messages['br'] = array(
+	'randomwiki-desc' => "A ro ar gwir d'an implijer da zizoleiñ ur wiki dre zegouezh",
+	'randomwiki' => 'Wiki dre zegouezh',
+);
+
 /** German (Deutsch)
  * @author The Evil IP address
  */
@@ -61,6 +69,14 @@ $messages['fr'] = array(
 $messages['gl'] = array(
 	'randomwiki-desc' => 'Permite aos usuarios explorar un wiki ao chou',
 	'randomwiki' => 'Wiki ao chou',
+);
+
+/** Hungarian (Magyar)
+ * @author Misibacsi
+ */
+$messages['hu'] = array(
+	'randomwiki-desc' => 'Lehetővé teszi, hogy a felhasználó véletlenszerűen válasszon ki egy wikit',
+	'randomwiki' => 'Wiki véletlenszerű kiválasztása',
 );
 
 /** Interlingua (Interlingua)

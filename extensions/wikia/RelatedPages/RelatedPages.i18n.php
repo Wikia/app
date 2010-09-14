@@ -7,12 +7,27 @@ $messages['en'] = array(
 	'wikiarelatedpages-heading' => 'Read more',
 );
 
+/** Message documentation (Message documentation)
+ * @author The Evil IP address
+ */
+$messages['qqq'] = array(
+	'wikiarelatedpages-desc' => '{{desc}}',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
 $messages['af'] = array(
 	'wikiarelatedpages-desc' => "Voeg 'n lys met verwante bladsye op bladsye",
 	'wikiarelatedpages-heading' => 'Lees meer',
+);
+
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'wikiarelatedpages-desc' => 'Дадае на старонкі сьпіс зьвязаных старонак',
+	'wikiarelatedpages-heading' => 'Даведацца болей',
 );
 
 /** Breton (Brezhoneg)
@@ -32,15 +47,19 @@ $messages['bs'] = array(
 
 /** German (Deutsch)
  * @author Kjell
+ * @author The Evil IP address
  */
 $messages['de'] = array(
+	'wikiarelatedpages-desc' => 'Liste mit ähnlichen Seiten',
 	'wikiarelatedpages-heading' => 'Lies mehr',
 );
 
 /** Spanish (Español)
+ * @author Absay
  * @author Danke7
  */
 $messages['es'] = array(
+	'wikiarelatedpages-desc' => 'Añadir una lista a páginas de páginas relacionadas',
 	'wikiarelatedpages-heading' => 'Leer más',
 );
 

@@ -212,6 +212,17 @@ $messages['oc'] = array(
 	'research_this' => 'Recercar aquò',
 );
 
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'search_wikipedia' => 'Szukaj w Wikipedii',
+	'previous' => 'poprzednie',
+	'research_no_results' => 'Nie odnaleziono żadnej strony. Spróbuj ponownie.',
+	'research_wikipedia_title' => 'Znajdź odpowiedź w Wikipedii',
+	'research_this' => 'Wyszukaj',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
@@ -283,6 +294,11 @@ $messages['ru'] = array(
 $messages['sr-ec'] = array(
 	'search_wikipedia' => 'Претражи Википедију',
 	'previous' => 'Претходно',
+);
+
+/** Swahili (Kiswahili) */
+$messages['sw'] = array(
+	'previous' => 'iliyotangulia',
 );
 
 /** Tagalog (Tagalog)

@@ -317,6 +317,7 @@ $messages['hu'] = array(
 	'cathub-edit-success' => 'A válaszod elmentve',
 	'cathub-prev' => '&larr; előző',
 	'cathub-next' => 'következő &rarr;',
+	'cathub-tags' => 'Címkék',
 );
 
 /** Interlingua (Interlingua)
@@ -586,6 +587,30 @@ $messages['pt'] = array(
  * @author Giro720
  */
 $messages['pt-br'] = array(
+	'cathub-desc' => 'Extensão para converter as páginas de categoria numa perspectiva da categoria como centro de atividade. Desenvolvida para a [http://answers.wikia.com answers.wikia.com]',
+	'cathub-progbar-mouseover-answered' => '$1% respondidas ($2 respostas)',
+	'cathub-progbar-mouseover-not-answered' => '$1% ainda não respondidas ($2 perguntas)',
+	'cathub-progbar-label-answered' => 'Respondidas',
+	'cathub-progbar-label-unanswered' => 'Por responder',
+	'cathub-progbar-none-done' => 'Ainda nenhuma pergunta foi respondida',
+	'cathub-progbar-all-done' => 'Todas as perguntas foram respondidas!',
+	'cathub-progbar-allmost-done' => 'Restam $1 {{PLURAL:$1|pergunta não respondida|perguntas não respondidas}}!',
+	'cathub-no-unanswered-questions' => 'Neste momento, não existem perguntas não respondidas para apresentar.',
+	'cathub-no-answered-questions' => 'Neste momento, não existem perguntas respondidas para apresentar.',
+	'cathub-top-contributors' => 'Maiores contribuidores para esta categoria',
+	'cathub-top-contribs-all-time' => 'Desde sempre',
+	'cathub-top-contribs-recent' => '{{PLURAL:$1|No último dia|Nos últimos $1 dias}}',
+	'cathub-question-asked-ago' => 'perguntada $1 $2',
+	'cathub-question-answered-ago' => 'respondida $1 $2',
+	'cathub-question-asked-by' => 'por $1',
+	'cathub-anon-username' => 'um usuário curioso',
+	'cathub-answer-heading' => 'Resposta',
+	'cathub-button-answer' => 'Responder',
+	'cathub-button-improve-answer' => 'Melhorar resposta',
+	'cathub-button-rephrase' => 'reformular texto',
+	'cathub-edit-success' => 'A sua resposta foi salva',
+	'cathub-prev' => '&larr; Anterior',
+	'cathub-next' => 'Seguinte &rarr;',
 	'cathub-tags' => 'Etiquetas',
 );
 

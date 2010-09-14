@@ -552,6 +552,7 @@ $messages['gl'] = array(
 $messages['hu'] = array(
 	'daemonloader_createtask' => 'Feladat létrehozása',
 	'daemonloader_listtask' => 'Feladatok listája',
+	'daemonloader_daemondesc' => 'Leírás',
 	'daemonloader_search' => 'Keresés:',
 	'daemonloader_string' => 'karakterlánc',
 	'daemonloader_number' => 'szám',
@@ -1014,19 +1015,65 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
+	'daemonloader' => 'Preparador de deamons',
+	'daemonloader-desc' => 'Executa [[Special:DaemonLoader|daemons em segundo plano]] para criação de relatórios',
+	'daemonloader_pagetitle' => 'Preparador de deamons',
+	'daemonloader_createtask' => 'Criar tarefa',
+	'daemonloader_listtask' => 'Lista de tarefas',
+	'daemonloader_configure' => 'Configurar o daemon',
+	'daemonloader_daemonname' => 'Nome do deamon',
+	'daemonloader_scriptname' => 'Nome do script',
 	'daemonloader_daemondesc' => 'Descrição',
+	'daemonloader_inputparams' => 'Parâmetros de entrada',
+	'daemonloader_paramname' => 'Nome do parâmetro',
+	'daemonloader_paramdesc' => 'Descrição do parâmetro',
+	'daemonloader_paramtype' => 'Tipo do parâmetro',
 	'daemonloader_paramremove' => 'Remover?',
+	'daemonloader_removedaemon' => 'Remover o daemon',
 	'daemonloader_paramdefvalue' => 'Valor padrão',
+	'daemonloader_alldaemons' => 'Todos os daemons',
+	'daemonloader_loaddaemon' => 'Selecione o daemon para editar ou crie um novo abaixo:',
+	'daemonloader_selectdaemon' => 'Selecione o daemon para obter informações e clique o botão para passar ao próximo passo',
+	'daemonloader_selectlist' => 'Selecione da lista',
+	'daemonloader_search' => 'Pesquisar:',
+	'daemonloader_daemonchanged' => 'As suas alterações foram salvas',
+	'daemonloader_daemonnotchanged' => 'As suas alterações não foram salvas',
+	'daemonloader_string' => 'texto',
 	'daemonloader_number' => 'número',
 	'daemonloader_date_yyyymmdd' => 'data (AAAAMMDD)',
 	'daemonloader_date_yyyymm' => 'meses (AAAAMM)',
 	'daemonloader_date_yyyy' => 'anos (AAAA)',
+	'daemonloader_wikilist' => 'Lista de wikis',
+	'daemonloader_gonextstep' => 'Ir ao próximo passo',
+	'daemonloader_setparams' => 'Definir valores para os parâmetros de entrada do daemon:',
+	'daemonloader_1step' => 'Primeiro passo (selecionar daemon)',
+	'daemonloader_2step' => 'Segundo passo (opções do deamon)',
+	'daemonloader_3step' => 'Terceiro passo (opções da tarefa)',
+	'daemonloader_steps' => 'Passo atual:',
+	'daemonloader_daemoninfo' => 'Descrição do daemon',
+	'daemonloader_configtaskparams' => 'Configurar os parâmetros da tarefa:',
+	'daemonloader_startdate' => 'Data de início',
+	'daemonloader_enddate' => 'Data de fim',
+	'daemonloader_frequency' => 'Frequência dos relatórios',
+	'daemonloader_emails' => 'Endereços de e-mail',
+	'daemonloader_files' => 'Arquivos XLS',
+	'daemonloader_period' => 'Período dos relatórios',
+	'daemonloader_dateformat' => 'Formato da data: AAAAMMDD',
+	'daemonloader_emails_info' => 'Lista de correios eletrônicos separados por vírgulas, aos quais será enviado o resultado da tarefa',
+	'daemonloader_day' => 'todos os dias',
 	'daemonloader_week' => 'toda semana',
 	'daemonloader_month' => 'todo mês',
+	'daemonloader_taskid' => 'Id',
+	'daemonloader_newtask' => 'Nova tarefa',
+	'daemonloader_daemonparams' => 'Parâmetros do daemon',
+	'daemonloader_createdby' => 'Criado por',
+	'daemonloader_created' => 'Criado',
 	'daemonloader_options' => 'Opções',
+	'daemonloader_nojobsfound' => 'Não foi encontrado nenhum processo',
 	'daemonloader_removejobconfirm' => 'Você tem certeza?',
 );
 
@@ -1131,6 +1178,13 @@ $messages['sr-ec'] = array(
 	'daemonloader_created' => 'Направљено',
 	'daemonloader_options' => 'Опције',
 	'daemonloader_removejobconfirm' => 'Да ли сте сигурни?',
+);
+
+/** Swahili (Kiswahili) */
+$messages['sw'] = array(
+	'daemonloader_paramremove' => 'Ondoa?',
+	'daemonloader_startdate' => 'Tarehe ya kuanza',
+	'daemonloader_enddate' => 'Tarehe ya kumaliza',
 );
 
 /** Telugu (తెలుగు)

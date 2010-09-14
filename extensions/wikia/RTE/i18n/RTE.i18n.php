@@ -40,6 +40,17 @@ $messages['be-tarask'] = array(
 	'rte-edgecase-info' => 'Пашыраны тэкставы рэдактар адключаны, таму што старонка ўтрымлівае складаны код.',
 	'rte-edgecase-comment' => 'HTML-камэнтары',
 	'rte-edgecase-triplecurls' => 'парамэтры шаблёну',
+	'rte-edgecase-nowysiwyg' => 'каманда «не візуальны рэжым (WYSIWYG)»',
+	'rte-edgecase-complex-description' => 'вонкавы URL-адрас альбо шаблён у апісаньні спасылкі',
+	'rte-edgecase-template-with-link' => 'шаблён са спасылкай у якасьці парамэтру',
+	'rte-edgecase-syntax' => 'няслушны сынтаксіс',
+	'rte-edgecase-image-with-link' => 'выява са спасылкай у апісаньні',
+	'rte-edgecase-redirect' => 'перанакіраваньне',
+	'rte-edgecase-templateintable' => 'табліца з выклікам шаблёну ў вызначэньні',
+	'rte-edgecase-unclosed-tags' => 'незакрытыя HTML-тэгі',
+	'enablerichtexteditor' => 'Уключыць палепшаны тэкставы рэдактар',
+	'rte-enablerichtexteditormessage' => 'Палепшаны тэкставы рэдактар уключаны!',
+	'rte-first-run-notice' => 'Мы зрабілі некаторыя паляпшэньні ў рэдактары. Каб даведацца болей, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news пачытайце апісаньне зьменаў].',
 );
 
 /** Bulgarian (Български)
@@ -383,6 +394,29 @@ $messages['sr-ec'] = array(
 	'rte-edgecase-comment' => 'HTML коментари',
 	'rte-edgecase-redirect' => 'преусмери',
 	'rte-edgecase-unclosed-tags' => 'незатворене HTML ознаке',
+);
+
+/** Turkish (Türkçe)
+ * @author Mert.subay
+ */
+$messages['tr'] = array(
+	'rte-desc' => 'MediaWiki için CKeditor birleştirmesi',
+	'rte-no-js-fallback' => 'Bu metin düzenleyicisi JavaScript kapalıyken çalışmamaktadır.Lütfen tarayıcınızın ayarlarını doğru yapın yada [[Special:Preferences|preferences]]dan  eski MediaWiki düzeleniyicisine geçiniz.',
+	'rte-edgecase-info-title' => 'Kaynak modu gerekli',
+	'rte-edgecase-info' => 'Sayfa karmaşık kodlar içerdiği için Zengin Metin Düzenleyicisi devre dışı bırakıldı.',
+	'rte-edgecase-comment' => 'HTML yorumları',
+	'rte-edgecase-triplecurls' => 'şablon parametreleri',
+	'rte-edgecase-nowysiwyg' => '"WYSIWYG" komutu yok',
+	'rte-edgecase-complex-description' => 'açıklamalı linkle bir harici bağlantı veya şablon',
+	'rte-edgecase-template-with-link' => 'parametre linkle bir şablon',
+	'rte-edgecase-syntax' => 'söz dizimi izin verilmiyor',
+	'rte-edgecase-image-with-link' => 'açıklamalı resim',
+	'rte-edgecase-redirect' => 'yönlendirme',
+	'rte-edgecase-templateintable' => 'şablon tanımlı tablo',
+	'rte-edgecase-unclosed-tags' => 'Kapatılmış HTML etiketi',
+	'enablerichtexteditor' => 'Zengin Metin Düzenleyicisi etkinleştir',
+	'rte-enablerichtexteditormessage' => 'Zengin Metin Düzenleyicisi etkin!',
+	'rte-first-run-notice' => 'Düzenleyicide birkaç geliştirme yaptık.Daha fazlasını öğrenmek için, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news read the announcement].',
 );
 
 /** Ukrainian (Українська)

@@ -211,6 +211,20 @@ $messages['pt'] = array(
 	'forum_inthenews' => 'Nas notícias',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
+ */
+$messages['pt-br'] = array(
+	'commentsforum-desc' => 'Funcionalidade semelhante à dos fóruns para comentários',
+	'forum_by_user_category' => '$1 por usuário',
+	'forum_about_title' => 'Sobre o fórum',
+	'forum_about_text' => 'Este é o fórum.',
+	'forum_comments_of_day' => 'Últimos comentários',
+	'forum_new_articles' => 'Mensagens novas no fórum',
+	'forum_by' => 'Publicado por $1',
+	'forum_inthenews' => 'Nas notícias',
+);
+
 /** Russian (Русский)
  * @author Eleferen
  * @author Lockal

@@ -33,6 +33,14 @@ $messages['ar'] = array(
 	'withoutimages' => 'صفحات من دون صور',
 );
 
+/** Bashkir (Башҡорт)
+ * @author Assele
+ */
+$messages['ba'] = array(
+	'withoutimages-desc' => 'Рәсемһеҙ биттәрҙе күрһәткән [[Special:Withoutimages|махсус бит]] өҫтәй',
+	'withoutimages' => 'Рәсемһеҙ биттәр',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  * @author Jim-by
