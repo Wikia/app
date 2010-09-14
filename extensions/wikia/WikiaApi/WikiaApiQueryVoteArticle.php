@@ -112,6 +112,7 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 								"id"			=> $page,
 								"title"			=> $oTitle->getText(),
 								"votesavg"		=> $this->getAvgPageVoteFromDB($db, $page),
+								"votescount" => $this->getTotalPageVoteCountFromDB($db, $page)
 							);
 							if (isset($row->uservote)) {
 								$data[$page]["uservote"] = $row->uservote;
@@ -702,6 +703,34 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 		}
 		$db->freeResult($res);
 		return (empty($row->votesavg)) ? 0 : $row->votesavg;
+	}
+
+	private function getTotalPageVoteCountFromDB($db, $page) {
+		global $wgDBname;
+		$clonedInstance = clone $this;
+		$clonedInstance->resetQueryParams();
+		$clonedInstance->initQueryParams();
+
+		if (!$db) {
+			$db =& $this->getDB();
+			$db->selectDB( (!defined(WIKIA_API_QUERY_DBNAME))?WIKIA_API_QUERY_DBNAME:$wgDBname );
+		}
+
+		$clonedInstance->addTables( "page_vote" );
+		$clonedInstance->addFields( array("COUNT(vote) as votecount") );
+		$clonedInstance->addWhere( "article_id > 0");
+
+		$clonedInstance->addWhere( "article_id = $page" );
+
+		$res = $clonedInstance->select(__METHOD__);
+
+		$row = $db->fetchObject($res);
+		if (empty($row))
+		{
+			return 0;
+		}
+		$db->freeResult($res);
+		return (empty($row->votecount)) ? 0 : $row->votecount;
 	}
 
 	/*

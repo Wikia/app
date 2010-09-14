@@ -25,7 +25,7 @@ class TopListHelper {
 		if ( $title->getNamespace() == NS_TOPLIST ) {
 			wfLoadExtensionMessages( 'TopLists' );
 		}
-		
+
 		return true;
 	}
 
@@ -155,13 +155,13 @@ class TopListHelper {
 
 		$titleText = $wgRequest->getText( 'title' );
 		$images = array();
-		
+
 		if( !empty( $titleText ) ) {
 			$title = Title::newFromText( $titleText );
 
 			if( !empty( $title ) ) {
 				$articleId = $title->getArticleId();
-				
+
 				$source = new imageServing(
 					array( $title->getArticleId( $articleId ) ),
 					120,
@@ -172,15 +172,15 @@ class TopListHelper {
 				);
 
 				$result = $source->getImages( 7 );
-				
+
 				if( !empty( $result[ $articleId ] ) ) {
 					$images = $result[ $articleId ];
 				}
 			}
 		}
-		
+
 		$tpl = new EasyTemplate( dirname( __FILE__ )."/templates/" );
-		
+
 		$tpl->set_vars(
 			array(
 				'images' => $images
@@ -204,7 +204,9 @@ class TopListHelper {
 	public static function voteItem() {
 		global $wgRequest;
 
-		$result = array( 'result' => 'ok' );
+		wfLoadExtensionMessages( 'TopLists' );
+
+		$result = array( 'result' => false );
 
 		$titleText = $wgRequest->getVal( 'title' );
 
@@ -212,8 +214,11 @@ class TopListHelper {
 			$item = TopListItem::newFromText( $titleText );
 
 			if( $item instanceof TopListItem ) {
-				$result['voteResult'] = $item->vote();
-				$result['votesCount'] = $item->getVotesCount();
+				$votesCount = $item->getVotesCount();
+				$result['result'] = $item->vote();
+				$result['msg'] = wfMsg( 'toplists-list-votes-num', array( $votesCount ));
+				$result['votesCount'] = intval( $votesCount );
+				$result['votesCountId'] = $item->getVotesCountId();
 			}
 		}
 

@@ -17,11 +17,12 @@ var TopList = {
 				'title':this.id
 			},
 			function(response) {
-				console.log(response);
-
+				if( response.result == true ) {
+					$('#'+response.votesCountId).html(response.msg);
+				}
 			}
 		);
-			
+
 		return false;
 	}
 }

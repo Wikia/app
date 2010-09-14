@@ -66,10 +66,10 @@ class TopListItem extends TopListBase {
 			$oApi = new ApiMain($oFauxRequest);
 
 			$oApi->execute();
-			
+
 			$this->votesCount = null;
 			$aResult = $oApi->GetResultData();
-			
+
 			return ( !empty( $aResult ) );
 		}
 	}
@@ -86,23 +86,26 @@ class TopListItem extends TopListBase {
 		if( ( $this->votesCount == null ) || $forceUpdate ) {
 			$pageId = $this->getArticle()->getId();
 
-			$oFauxRequest = new FauxRequest(array( "action" => "query", "list" => "wkvoteart", "wkpage" => $pageId, "wkuservote" => true ));
+			$oFauxRequest = new FauxRequest(array( "action" => "query", "list" => "wkvoteart", "wkpage" => $pageId, "wkuservote" => 0 ));
 			$oApi = new ApiMain($oFauxRequest);
 			$oApi->execute();
 			$aResult = $oApi->GetResultData();
 
-			if( isset( $aResult['query']['wkvoteart'][$pageId]['uservote'] ) ) {
+			if( isset( $aResult['query']['wkvoteart'][$pageId]['votescount'] ) ) {
 				//echo "<pre>";
 				//var_dump( $aResult );
 				//echo "</pre>";
-				$this->votesCount = $aResult['query']['wkvoteart'][$pageId]['uservote'];
+				$this->votesCount = $aResult['query']['wkvoteart'][$pageId]['votescount'];
 			} else {
 				$this->votesCount = 0;
 			}
 
 		}
 		return $this->votesCount;
+	}
 
+	public function getVotesCountId() {
+		return 'item-votes-' . $this->getArticle()->getId();
 	}
 
 	/**
