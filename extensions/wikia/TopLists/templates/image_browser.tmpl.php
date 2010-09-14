@@ -1,15 +1,36 @@
 <?php ?>
 <div id="image-browser-dialog">
-	<img src="http://www.multichannel.com/photo/253/253991-Glee.jpg" class="selected" />
-	<img class="shadow-mask" src="http://images1.wikia.nocookie.net/__cb21710/common/skins/common/blank.gif">
+	<? if ( !empty( $selectedImage ) ) :?>
+		<img src="<?= $selectedImage[ 'url' ] ;?>" class="selected"
+		     alt="<?= wfMsg( 'toplits-image-browser-selected-picture', $selectedImage[ 'name' ] ) ;?>"
+		     title="<?= wfMsg( 'toplits-image-browser-selected-picture', $selectedImage[ 'name' ] ) ;?>"/>
+	<? else :?>
+		<div class="selected"
+		     title="<?= wfMsg( 'toplits-image-browser-no-picture-selected' ) ;?>">
+			<?= wfMsg( 'toplits-image-browser-no-picture-selected' ) ;?>
+		</div>
+	<? endif ;?>
+
+	<img class="osprite shadow-short" src="<?= wfBlankImgUrl() ;?>">
+
 	<ul class="SuggestedPictures">
 		<? foreach( $images as $img ) :?>
 			<li>
-				<img src="<?= $img[ 'url' ] ;?>" alt="<?= $img[ 'name' ] ;?>" />
+				<a href="#" title="<?= $img[ 'name' ] ;?>">
+					<img src="<?= $img[ 'url' ] ;?>" alt="<?= $img[ 'name' ] ;?>" />
+				</a>
 			</li>
 		<? endforeach ;?>
 		<li>
-			<div class="NoPicture"><?= wfMsg( 'toplits-image-browser-clear-picture' ) ;?></div>
+			<div class="NoPicture"
+			     title="<?= wfMsg( 'toplits-image-browser-clear-picture' ) ;?>">
+				<?= wfMsg( 'toplits-image-browser-clear-picture' ) ;?>
+			</div>
 		</li>
 	</ul>
+
+	<img class="osprite shadow-short" src="<?= wfBlankImgUrl() ;?>">
+	<form id="toplist-image-upload" action="<?= $wgScriptPath ?>/index.php?action=ajax&amp;rs=AchAjax&amp;method=addPlatinumBadge" method="POST" enctype="multipart/form-data">
+		<input type="file" name="wpUploadFile" />
+	</form>
 </div>

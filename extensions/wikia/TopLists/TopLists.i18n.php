@@ -42,7 +42,9 @@ $messages['en'] = array(
 	'toplists-create-button' => 'Create list',
 	'toplists-update-button' => 'Save list',
 	'toplists-cancel-button' => 'Cancel',
+	'toplits-image-browser-no-picture-selected' => 'No picture selected',
 	'toplits-image-browser-clear-picture' => 'Clear picture',
+	'toplits-image-browser-selected-picture' => 'Currently selected: $1',
 
 	//article edit summaries
 	'toplists-list-creation-summary' => 'Creating a list',
@@ -59,5 +61,5 @@ $messages['en'] = array(
 );
 
 $messages['qqq'] = array(
-
+	'toplits-image-browser-selected-picture' => '$1 is the title of the image article'
 );

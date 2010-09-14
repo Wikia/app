@@ -154,16 +154,19 @@ class TopListHelper {
 		wfLoadExtensionMessages( 'TopLists' );
 
 		$titleText = $wgRequest->getText( 'title' );
+		$selectedImageTitle = $wgRequest->getText( 'selected' );
 		$images = array();
+		$selectedImage = null;
 
+		
 		if( !empty( $titleText ) ) {
 			$title = Title::newFromText( $titleText );
 
-			if( !empty( $title ) ) {
+			if( !empty( $title ) && $title->exists() ) {
 				$articleId = $title->getArticleId();
 
 				$source = new imageServing(
-					array( $title->getArticleId( $articleId ) ),
+					array( $articleId ),
 					120,
 					array(
 						"w" => 3,
@@ -179,10 +182,34 @@ class TopListHelper {
 			}
 		}
 
+		if( !empty( $selectedImageTitle ) ) {
+			$title = Title::newFromText( "File:{$selectedImageTitle}" );
+			
+			if( !empty( $title ) && $title->exists() ) {
+				$articleId = $title->getArticleId();
+				
+				$source = new imageServing(
+					array( $articleId ),
+					120,
+					array(
+						"w" => 3,
+						"h" => 2
+					)
+				);
+
+				$result = $source->getImages( 1 );
+				
+				if( !empty( $result[ $articleId ][0] ) ) {
+					$selectedImage = $result[ $articleId ][0];
+				}
+			}
+		}
+		
 		$tpl = new EasyTemplate( dirname( __FILE__ )."/templates/" );
 
 		$tpl->set_vars(
 			array(
+				'selectedImage' => $selectedImage,
 				'images' => $images
 			)
 		);

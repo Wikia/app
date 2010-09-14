@@ -225,6 +225,8 @@ class SpecialEditTopList extends SpecialPage {
 								foreach ( $saveResult as $errorTuple ) {
 									$errors[ 'item_' . ++$index ][] =  wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] );
 								}
+							} else {
+								$item[ 'object' ]->getTitle()->invalidateCache();
 							}
 						}
 					}
@@ -297,6 +299,31 @@ class SpecialEditTopList extends SpecialPage {
 			TopListHelper::clearSessionItemsErrors();
 		}
 
+		$selectedImage = null;
+		
+		if( !empty( $selectedPictureName ) ) {
+			$title = Title::newFromText( "File:{$selectedPictureName}" );
+
+			if( !empty( $title ) && $title->exists() ) {
+				$articleId = $title->getArticleId();
+
+				$source = new imageServing(
+					array( $articleId ),
+					120,
+					array(
+						"w" => 3,
+						"h" => 2
+					)
+				);
+
+				$result = $source->getImages( 1 );
+
+				if( !empty( $result[ $articleId ][0] ) ) {
+					$selectedImage = $result[ $articleId ][0];
+				}
+			}
+		}
+
 		//show at least 3 items by default, if not enough fill in with empty ones
 		for ( $x = ( !empty( $items ) ) ? count( $items ) : 0; $x < 3; $x++ ) {
 			$items[] = array(
@@ -312,7 +339,7 @@ class SpecialEditTopList extends SpecialPage {
 			'listName' => $listName,
 			'listUrl' => $listUrl,
 			'relatedArticleName' => $relatedArticleName,
-			'selectedPictureName' => $selectedPictureName,
+			'selectedImage' => $selectedImage,
 			'errors' => $errors,
 			//always add an empty item at the beginning to create the clonable template
 			'items' => array_merge(

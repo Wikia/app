@@ -2,14 +2,24 @@
 <form id="toplist-editor" name="toplist<?= $mode ;?>" method="POST" action="">
 	<div class="ImageBrowser">
 		<div class="frame">
-			<div class="wrapper"><?= wfMsg( 'toplists-editor-image-browser-tooltip' ) ;?></div>
+			<div class="NoPicture"
+			     <?= ( !empty( $selectedImage ) ) ? 'style="display: none;"' : null ;?>
+			     title="<?= wfMsg( 'toplits-image-browser-no-picture-selected' ) ;?>">
+				<?= wfMsg( 'toplists-editor-image-browser-tooltip' ) ;?>
+			</div>
+
+			<? if ( !empty( $selectedImage ) ) :?>
+				<img src="<?= $selectedImage[ 'url' ] ;?>"
+				     alt="<?= $selectedImage[ 'name' ] ;?>"
+				     title="<?= $selectedImage[ 'name' ] ;?>" />
+			<? endif ;?>
 		</div>
 
-		<a class="editsection wikia-chiclet-button" title="<?= wfMsg( 'toplists-editor-image-browser-tooltip' ); ?>" rel="nofollow">
-			<img alt="<?= wfMsg( 'toplists-editor-image-browser-tooltip' ); ?>" src="<?= wfBlankImgUrl() ;?>">
+		<a class="wikia-chiclet-button" title="<?= wfMsg( 'toplists-editor-image-browser-tooltip' ); ?>" rel="nofollow">
+			<img class="osprite icon-edit" alt="<?= wfMsg( 'toplists-editor-image-browser-tooltip' ); ?>" src="<?= wfBlankImgUrl() ;?>">
 		</a>
 
-		<input type="hidden" name="selected_picture_name" value="<?= $selectedPictureName ;?>" />
+		<input type="hidden" name="selected_picture_name" value="<?= ( !empty( $selectedImage ) ) ? $selectedImage[ 'name' ] : null ;?>" />
 
 		<? if ( !empty( $errors[ 'selected_picture_name' ] ) ) :?>
 			<? foreach( $errors[ 'selected_picture_name' ] as $errorMessage ) :?>
@@ -69,15 +79,18 @@
 
 				<div class="ItemRemove">
 					<a title="<?= wfMsg( 'toplists-editor-remove-item-tooltip' ) ;?>" rel="nofollow">
-						<img alt="<?= wfMsg( 'toplists-editor-remove-item-tooltip' ) ;?>" src="<?= wfBlankImgUrl() ;?>">
+						<img class="osprite icon-remove"
+						     alt="<?= wfMsg( 'toplists-editor-remove-item-tooltip' ) ;?>"
+						     src="<?= wfBlankImgUrl() ;?>" />
 					</a>
 				</div>
 
 				<? if ( $isDraggable ) :?>
 					<div class="ItemDrag">
 						<a title="<?= wfMsg( 'toplists-editor-drag-item-tooltip' ) ;?>" rel="nofollow">
-							<img alt="<?= wfMsg( 'toplists-editor-drag-item-tooltip' ) ;?>"
-							     src="<?= wfBlankImgUrl() ;?>">
+							<img class="osprite icon-drag"
+							     alt="<?= wfMsg( 'toplists-editor-drag-item-tooltip' ) ;?>"
+							     src="<?= wfBlankImgUrl() ;?>" />
 						</a>
 					</div>
 				<? endif ;?>
@@ -93,7 +106,7 @@
 
 	<div class="AddControls">
 		<a id="toplist-add-item" class="wikia-chiclet-button" title="<?= wfMsg( 'toplists-editor-add-item-tooltip' ) ;?>" rel="nofollow">
-			<img alt="<?= wfMsg( 'toplists-editor-add-item-tooltip' ) ;?>" src="<?= wfBlankImgUrl() ;?>">
+			<img class="osprite icon-add" alt="<?= wfMsg( 'toplists-editor-add-item-tooltip' ) ;?>" src="<?= wfBlankImgUrl() ;?>">
 		</a>
 		<label><?= wfMsg( 'toplists-editor-add-item-label' ) ;?></label>
 	</div>
