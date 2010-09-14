@@ -256,6 +256,21 @@ $.loadJQueryAutocomplete = function(callback) {
 	}
 }
 
+$.loadJQueryAIM = function(callback) {
+	if (typeof jQuery.AIM === 'undefined') {
+		$().log('loading', 'jQuery AIM');
+
+		$.getScript(stylepath + '/common/jquery/jquery.aim.js?' + wgStyleVersion, function() {
+			$().log('loaded', 'jQuery AIM');
+
+			if(typeof callback === 'function') callback();
+		});
+	}
+	else {
+		if(typeof callback === 'function') callback();
+	}
+}
+
 /*
 Copyright (c) 2008, Yahoo! Inc. All rights reserved.
 Code licensed under the BSD License:
