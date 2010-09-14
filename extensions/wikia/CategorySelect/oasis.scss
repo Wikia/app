@@ -1,0 +1,13 @@
+@import "../../../skins/oasis/css/core/color";
+@import url('/extensions/wikia/CategorySelect/CategorySelect.css');
+
+/* Oasis fixes */
+.csViewMode #csButtonsContainer {
+	background-color: mix($color-buttons, $color-page, 5%);
+	border-top: solid 1px $color-page;
+	margin: 25px -15px -12px;
+	text-align: right;
+	input {
+		padding: 0 12px;
+	}
+}
