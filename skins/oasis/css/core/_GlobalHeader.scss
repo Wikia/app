@@ -8,25 +8,14 @@
 	border-width: 3px;
 	width: 0;
 }
-.banner-corner-left {
-	border-color: #000 #000 transparent transparent;
-	border-style: solid;
-	border-width: 2px;
-	bottom: -4px;
-	left: 0;
-	position: absolute;
-	width: 0;
-}
-.banner-corner-right {
-	border-color: $color-header transparent transparent $color-header;
-	border-style: solid;
-	border-width: 2px;
-	bottom: -4px;
-	position: absolute;
-	right: 0;
-	width: 0;
-}
 
+.banner-corner-left,
+.banner-corner-right {
+	border-style: solid;
+	border-width: 2px;
+	position: absolute;
+	width: 0;
+}
 
 .WikiaHeader {
 	@include linear-gradient($color-header, left, $color-header-alt, 0, $color-header, 50%, $color-header-alt, 100%);
@@ -98,6 +87,16 @@
 			height: 26px;
 			width: 91px;
 		}
+	}
+	.banner-corner-left {
+		border-color: #000 #000 transparent transparent;
+		bottom: -4px;
+		left: 0;
+	}
+	.banner-corner-right {
+		border-color: $color-header transparent transparent $color-header;
+		bottom: -4px;
+		right: 0;
 	}
 }
 
