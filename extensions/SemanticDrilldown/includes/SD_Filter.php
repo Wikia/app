@@ -91,7 +91,7 @@ class SDFilter {
 			$smw_ids = $dbr->tableName( 'smw_ids' );
 			$sql =<<<END
 	SELECT $fields, count(*)
-	FROM semantic_drilldown_values sdv 
+	FROM semantic_drilldown_values sdv
 	JOIN $smw_attributes a ON sdv.id = a.s_id
 	JOIN $smw_ids p_ids ON a.p_id = p_ids.smw_id
 	WHERE p_ids.smw_title = '$property_value'
@@ -103,7 +103,7 @@ END;
 			$smw_attributes = $dbr->tableName( 'smw_attributes' );
 			$sql =<<<END
 	SELECT $fields, count(*)
-	FROM semantic_drilldown_values sdv 
+	FROM semantic_drilldown_values sdv
 	JOIN $smw_attributes a ON sdv.id = a.subject_id
 	WHERE a.attribute_title = '$property_value'
 	GROUP BY $fields
@@ -158,7 +158,7 @@ END;
 			$value_field = 'value_xsd';
 		}
 		$sql = "SELECT $value_field, count(*)
-			FROM semantic_drilldown_values sdv 
+			FROM semantic_drilldown_values sdv
 			JOIN $property_table_name $property_table_nickname
 			ON sdv.id = $property_table_nickname.subject_id
 			WHERE $property_table_nickname.$property_field = '$property_value'
@@ -191,7 +191,7 @@ END;
 		$prop_ns = SMW_NS_PROPERTY;
 		$sql =<<<END
 	SELECT $value_field, count(*)
-	FROM semantic_drilldown_values sdv 
+	FROM semantic_drilldown_values sdv
 	JOIN $property_table_name $property_table_nickname ON sdv.id = $property_table_nickname.s_id
 
 END;
@@ -251,7 +251,7 @@ END;
 		id INT NOT NULL,
 		value VARCHAR(200) NOT NULL,
 		INDEX sdfv_id_index(id)
-	) AS SELECT subject_id AS id, $value_field AS value
+	) ENGINE=MyIsam AS SELECT subject_id AS id, $value_field AS value
 	FROM $table_name
 	WHERE $property_field = '$query_property'
 END;
@@ -272,7 +272,7 @@ END;
 		}
 		$query_property = str_replace(' ', '_', $this->property);
 		$sql =<<<END
-	CREATE TEMPORARY TABLE semantic_drilldown_filter_values
+	CREATE TEMPORARY TABLE semantic_drilldown_filter_values ENGINE=MyIsam
 	AS SELECT s_id AS id, $value_field AS value
 	FROM $table_name
 	JOIN $smw_ids p_ids ON $table_name.p_id = p_ids.smw_id
