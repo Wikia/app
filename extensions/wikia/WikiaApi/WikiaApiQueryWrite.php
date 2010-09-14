@@ -5,7 +5,7 @@
  *
  * @author Piotr Molski (moli) <moli@wikia.com>
  *
- * @todo 
+ * @todo
  *
  */
 
@@ -15,7 +15,7 @@ if (!defined('MEDIAWIKI')) {
 }
 
 class WikiaApiQueryWrite extends ApiQuery {
-	
+
 	private $mMasterDB = null;
 	private $mAction;
 
@@ -41,7 +41,7 @@ class WikiaApiQueryWrite extends ApiQuery {
 							);
 		}
 	}
-	
+
 	public function getAllowedParams() {
 		return array (
 			'list' => array (
@@ -52,10 +52,13 @@ class WikiaApiQueryWrite extends ApiQuery {
 				ApiBase :: PARAM_ISMULTI => true,
 				ApiBase :: PARAM_TYPE => 'string'
 			),
-			'redirects' => false
+			'redirects' => false,
+			'indexpageids' => false,
+			'export' => false,
+			'exportnowrap' => false
 		);
 	}
-	
+
 	public function getParamDescription() {
 		return array (
 			'list' 		=> 'Which lists to get',
@@ -63,13 +66,13 @@ class WikiaApiQueryWrite extends ApiQuery {
 			'redirects' => 'Automatically resolve redirects'
 		);
 	}
-	
+
 	public function getExamples() {
 		return array (
 			'api.php?action='.$this->mAction.'&list=wkvoteart&wkpage=0'
 		);
 	}
-	
+
 	public function getDB() {
 		if (!isset ($this->mMasterDB)) {
 			$this->profileDBIn();
@@ -78,7 +81,7 @@ class WikiaApiQueryWrite extends ApiQuery {
 		}
 		return $this->mMasterDB;
 	}
-	
+
 	public function makeHelpMsg() {
 		global $wgAPIListModules;
 
@@ -88,14 +91,14 @@ class WikiaApiQueryWrite extends ApiQuery {
 
 		#---
 		$msg = $this->getDescription();
-		
+
 		if ($msg !== false) {
 			if (!is_array($msg)) {
 				$msg = array( $msg );
 			}
 			$msg = $lnPrfx . implode($lnPrfx, $msg) . "\n";
 		}
-		
+
 		#--- Examples
 		$paramsMsg = $this->makeHelpMsgParameters();
 		if ($paramsMsg !== false) {
@@ -133,7 +136,7 @@ class WikiaApiQueryWrite extends ApiQuery {
 			$module = new $moduleClass ($this, $moduleName, null);
 			$msg2 = $module->makeHelpMsg();
 			if ($msg2 === false) { // module not implemented
-				continue;				
+				continue;
 			}
 			$msg = "* $paramName=$moduleName *";
 			if ($msg2 !== false)
@@ -145,7 +148,7 @@ class WikiaApiQueryWrite extends ApiQuery {
 
 		return implode("\n", $moduleDscriptions);
 	}
-	
-	
+
+
 }
 ?>
