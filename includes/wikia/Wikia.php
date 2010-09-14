@@ -1050,7 +1050,7 @@ class Wikia {
 	 */
 	static public function notifyUserOnRightsChange ( &$user, $addgroup, $removegroup ) {
 		global $wgUsersNotifiedOnAllChanges, $wgUsersNotifiedOfRightsChanges;
-		
+
 		// Using wgUsersNotifiedOnAllChanges is a hack to get the UserMailer to notify these users.  The use
 		// of wgUsersNotifiedOfRightsChanges is to prevent the same user from being notified multiple times if
 		// multiple actions occur on the same page.
@@ -1062,7 +1062,7 @@ class Wikia {
 		$userName = $user->getName();
 		if ( !in_array( $userName, $wgUsersNotifiedOnAllChanges) ) {
 			$wgUsersNotifiedOnAllChanges[] = $userName;
-			
+
 			// We only add them to this if THIS is the reason they're in wgUsersNotifiedOnAllChanges so that we don't accidentally over-remove.
 			$wgUsersNotifiedOfRightsChanges[] = $userName;
 		}
@@ -1202,7 +1202,7 @@ class Wikia {
 	}
 
 	/**
-	 * Check if currently show page is mainpage
+	 * Check if currently shown page is mainpage
 	 */
 	public static function isMainPage() {
 		wfProfileIn(__METHOD__);
@@ -1210,7 +1210,7 @@ class Wikia {
 		global $wgTitle, $wgArticle;
 		static $result = null;
 
-		if ($result === null) {
+		if (is_null($result)) {
 			$result = $wgTitle->getArticleId() == Title::newMainPage()->getArticleId() && $wgTitle->getArticleId() != 0;
 
 			// handle redirects
@@ -1233,7 +1233,7 @@ class Wikia {
 		wfProfileIn( __METHOD__ );
 		global $wgUser;
 		static $isOasis = null;
-		
+
 		if (is_null($isOasis)) {
 			$isOasis = (get_class($wgUser->getSkin()) == 'SkinOasis');
 		}
