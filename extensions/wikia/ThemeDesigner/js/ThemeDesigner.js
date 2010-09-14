@@ -16,10 +16,11 @@ var ThemeDesigner = {
 			if(response.errors && response.errors.length > 0) {
 				alert(response.errors.join("\n"));
 			} else {
-				// use response.wordmarkImageUrl for display
-				ThemeDesigner.settings["wordmark-image"] = response.wordmarkImageName;
 				$().log("setting graphic");
-				$("#WordmarkTab").find(".graphic").find(".preview").attr("src", wgServer + "/wiki/File:" + ThemeDesigner.settings["wordmark-image"]);
+
+				ThemeDesigner.settings["wordmark-image"] = response.wordmarkImageName;
+				$("#WordmarkTab").find(".graphic").find(".preview").attr("src", response.wordmarkImageUrl);
+
 				ThemeDesigner.applySettings();
 			}
 		}
