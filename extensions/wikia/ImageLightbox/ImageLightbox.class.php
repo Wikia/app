@@ -14,12 +14,10 @@ class ImageLightbox {
 	 * Handle AJAX request and return bigger version of requested image
 	 */
 	static public function ajax() {
-		global $wgTitle, $wgBlankImgUrl;
-
+		global $wgTitle, $wgBlankImgUrl, $wgRequest;
 		wfProfileIn(__METHOD__);
 
-		// limit dimensions of returned image
-		global $wgRequest;
+		// limit dimensions of returned image to fit browser's viewport
 		$maxWidth = $wgRequest->getInt('maxwidth', 500) - 20;
 		$maxHeight = $wgRequest->getInt('maxheight', 300) - 150;
 
@@ -42,20 +40,27 @@ class ImageLightbox {
 
 		// generate thumbnail
 		$thumb = $image->getThumbnail($width, $height);
-		$height = max($thumb->getHeight(), 200);
-		$width = max($thumb->getWidth(), 200);
 
-		wfLoadExtensionMessages('ImageLightbox');
+		$thumbHeight = $thumb->getHeight();
+		$thumbWidth = $thumb->getWidth();
+
+		// lightbox should not be smaller then 200x200
+		$wrapperHeight = max($thumbHeight, 200);
+		$wrapperWidth = max($thumbWidth, 200);
 
 		// render HTML
+		wfLoadExtensionMessages('ImageLightbox');
+
 		$tmpl = new EasyTemplate(dirname(__FILE__));
 		$tmpl->set_vars(array(
-			'height' => $height,
 			'href' => $wgTitle->getLocalUrl(),
 			'name' => $wgTitle->getText(),
+			'thumbHeight' => $thumbHeight,
 			'thumbUrl' => $thumb->url,
+			'thumbWidth' => $thumbWidth,
 			'wgBlankImgUrl' => $wgBlankImgUrl,
-			'width' => $width,
+			'wrapperHeight' => $wrapperHeight,
+			'wrapperWidth' => $wrapperWidth,
 		));
 
 		$html = $tmpl->render('ImageLightbox');
@@ -63,11 +68,10 @@ class ImageLightbox {
 		$res = array(
 			'html' => $html,
 			'title' => $wgTitle->getText(),
-			'width' => $width,
+			'width' => $wrapperWidth,
 		);
 
 		wfProfileOut(__METHOD__);
-
 		return $res;
 	}
 }
