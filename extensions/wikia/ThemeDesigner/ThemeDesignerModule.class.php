@@ -73,7 +73,8 @@ class ThemeDesignerModule extends Module {
 
 	}
 
-	var $wordmarkUrl;
+	var $wordmarkImageUrl;
+	var $wordmarkImageName;
 	var $errors;
 
 	public function executeWordmarkUpload() {
