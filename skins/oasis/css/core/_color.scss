@@ -85,34 +85,5 @@ $color-notification-links: $color-button-text;
 $color-notification-details-background: darken($color-notification-background, 10%);
 $color-notification-details-text: $color-button-text;
 
-
-// for backward compatibility with Monaco
-.color1 {
-	background-color: $color-buttons;
-	color: $color-button-text;
-}
-.color1 a {
-	color: $color-button-text;
-}
-.color2 {
-	background-color: $color-page-border;
-}
-.dark_text_1 {
-	color: $color-links;
-}
-.dark_text_2 {
-	color: $color-links;
-}
-.accent	{
-	background-color: $color-menu-highlight;
-	border-color: $color-links;
-	color: $color-text;
-}
-.neutral {
-	background-color: $color-page-border;
-	border-color: $color-page;
-	color: $color-text;
-}
-
 //Error handling
 $color-error: #FF3333;
