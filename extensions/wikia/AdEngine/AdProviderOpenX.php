@@ -139,12 +139,17 @@ EOT;
 		$this->useIframe = true;
 
 		$adUrlScript = $this->getAdUrlScript($slotname, null, true);
+		// wlee: removing property 'display' is a hack to force FOOTER_SPOTLIGHT_LEFT to show up. not sure
+		// why this ad slot has "display: none" in the first place
+		// RT #65988: must clone iframe, set src then append to parentNode. Setting src on original iframe creates unnecessary entry in browser history
                 $out = '<script type="text/javascript">' .
 			$adUrlScript .
-			// wlee: removing property 'display' is a hack to force FOOTER_SPOTLIGHT_LEFT to show up. not sure
-			// why this ad slot has "display: none" in the first place
                         $function_name . ' = function() { ' .
-			'var ad_iframe = document.getElementById("' . addslashes($slotname) ."_iframe\"); ad_iframe.src = base_url_".addslashes($slotname)."; if (ad_iframe.style.removeAttribute) {ad_iframe.style.removeAttribute(\"display\");} else {ad_iframe.style.removeProperty(\"display\");} }</script>";
+			'var ad_iframeOld = document.getElementById("' . addslashes($slotname) ."_iframe\"); var parent_node = ad_iframeOld.parentNode; ad_iframe = ad_iframeOld.cloneNode(true); " .
+			"ad_iframe.src=base_url_".addslashes($slotname) .
+			"; parent_node.removeChild(ad_iframeOld); parent_node.appendChild(ad_iframe); " .
+			"if (ad_iframe.style.removeAttribute) {ad_iframe.style.removeAttribute(\"display\");} else {ad_iframe.style.removeProperty(\"display\");} }</script>";
+			//'var ad_iframe = document.getElementById("' . addslashes($slotname) ."_iframe\"); ad_iframe.src=base_url_".addslashes($slotname)."; if (ad_iframe.style.removeAttribute) {ad_iframe.style.removeAttribute(\"display\");} else {ad_iframe.style.removeProperty(\"display\");} }</script>";
 
                 return $out;
         }
