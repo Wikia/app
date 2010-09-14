@@ -30,9 +30,9 @@ var ThemeDesigner = {
 		$('#Toolbar').find(".cancel").click(ThemeDesigner.cancelClick);
 
 		// init tabs
-		ThemeDesigner.ThemeTabInit();
-		ThemeDesigner.CustomizeTabInit();
-		ThemeDesigner.WordmarkTabInit();
+		ThemeDesigner.themeTabInit();
+		ThemeDesigner.customizeTabInit();
+		ThemeDesigner.wordmarkTabInit();
 
 		// click appropriate tab based on the settings
 		if(ThemeDesigner.settings["theme"] == "custom") {
@@ -42,12 +42,12 @@ var ThemeDesigner = {
 		}
 
 		// init Tool Bar
-		ThemeDesigner.ToolBarInit();
+		ThemeDesigner.toolBarInit();
 
 		ThemeDesigner.applySettings(false, false);
 	},
 
-	ThemeTabInit: function() {
+	themeTabInit: function() {
 
 		// click handler for next and previous arrows in theme slider
 		$("#ThemeTab .previous, #ThemeTab .next").click(function(event) {
@@ -78,13 +78,13 @@ var ThemeDesigner = {
 		$("#ThemeTab").find('[data-theme=' + ThemeDesigner.settings["theme"] + ']').addClass("selected");
 	},
 
-	CustomizeTabInit: function() {
+	customizeTabInit: function() {
 		$("#CustomizeTab").find("li").find("img[id*='color']").click(function(event) {
 			ThemeDesigner.showPicker(event, "color");
 		});
 	},
 
-	WordmarkTabInit: function() {
+	wordmarkTabInit: function() {
 		// handle font family and font size menu change
 		$("#wordmark-font").change(function() { ThemeDesigner.set("wordmark-font", $(this).val()); });
 		$("#wordmark-size").change(function() { ThemeDesigner.set("wordmark-size", $(this).val()); });
@@ -102,7 +102,7 @@ var ThemeDesigner = {
 		});
 	},
 
-	ToolBarInit: function() {
+	toolBarInit: function() {
 		$("#Toolbar .history").click(function() { $(this).find("ul").css("display", "block"); });
 		$("#Toolbar .history ul").mouseleave(function() { $(this).css("display", "none"); });
 		$("#Toolbar .history ul li").click(ThemeDesigner.revertToPreviousTheme);
@@ -327,7 +327,7 @@ var ThemeDesigner = {
 		// select current size
 		$("#wordmark-size").find('[value="' + ThemeDesigner.settings["wordmark-size"] + '"]').attr("selected", "selected");
 
-		//wordmark image
+		// wordmark image
 		$("#WordmarkTab").find(".graphic").find(".preview").attr("src", ThemeDesigner.settings["wordmark-image-url"]);
 
 		if(reloadCSS) {
