@@ -10,6 +10,13 @@
 	@include rail-module;
 }
 
+#HOME_TOP_RIGHT_BOXAD {
+	float: right;
+	margin-bottom: 10px;
+	position: relative;
+	z-index: 1;
+}
+
 //Mainpage styling
 /*
 On hold for now
