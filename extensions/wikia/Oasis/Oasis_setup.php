@@ -39,85 +39,86 @@ function wfOasisSetup() {
 // Mapping of themename to an array of key/value pairs to send to SASS.
 // Sean says: Since SASS is used to generate the CSS files, this config is all that's needed for the themes.
 $wgOasisThemes = array(
+	'oasis' => array(
+		"color-body" => "#BACDD8",
+		"color-page" => "#FFFFFF",
+		"color-buttons" => "#006CB0",
+		"color-links" => "#006CB0",
+		"background-image" => "oasis.png",
+		"background-tiled" => true
+	),
 	'sapphire' => array(
-		'color-body' => '#BACDD8',
-		'color-page' => '#FFFFFF',
-		'color-buttons' => '#006CB0',
-		'color-links' => '#006CB0',
+		"color-body" => "#2B54B5",
+		"color-page" => "#FFFFFF",
+		"color-buttons" => "#0038D8",
+		"color-links" => "#0148C2",
+		"background-image" => "sapphire.png",
+		"background-tiled" => false
 	),
-	'carbon' => array(
-		'color-body' => '#273423',
-		'color-page' => '#474646',
-		'color-buttons' => '#5c8901',
-		'color-links' => '#70b8ff',
+	'jade' => array(
+		"color-body" => "#003816",
+		"color-page" => "#DFDBC3",
+		"color-buttons" => "#C5A801",
+		"color-links" => "#9C030E",
+		"background-image" => "jade.jpg",
+		"background-tiled" => false
 	),
-
-	// TODO: rewrite themes below to use set of four colors
-	/*
-	'shadesofgray' => array(
-		'color-body' => '#808080',
-		'color-page' => '#eeeeee',
-		'color-header' => '#aaaaaa',
-		'color-text' => '#000000',
-		'color-buttons-links' => '#808080',
+	'sky' => array(
+		"color-body" => "#BDEAFD",
+		"color-page" => "#DEF4FE",
+		"color-buttons" => "#F9CE3A",
+		"color-links" => "#285BAF",
+		"background-image" => "sky.png",
+		"background-tiled" => false
 	),
-	'blue' => array(
-		'color-body' => '#000080',
-		'color-page' => '#8080ff',
-		'color-header' => '#000080',
-		'color-text' => '#000000',
-		'color-buttons-links' => '#0000ff',
-	),
-	'harvest' => array(
-		'color-body' => '#FFA500',
-		'color-page' => '#F5F5DC',
-		'color-header' => '#FF6347',
-		'color-text' => '#800080',
-		'color-buttons-links' => '#008000',
-	),
-	'pink' => array(
-		'color-body' => '#ec6868',
-		'color-page' => '#ffcece',
-		'color-header' => '#ff9797',
-		'color-text' => '#970000',
-		'color-buttons-links' => '#ff0000',
+	'moonlight' => array(
+		"color-body" => "#000000",
+		"color-page" => "#CCD9F9",
+		"color-buttons" => "#6F027C",
+		"color-links" => "#6F027C",
+		"background-image" => "moonlight.jpg",
+		"background-tiled" => false
 	),
 	'obsession' => array(
-		'color-body' => '#140000',
-		'color-page' => '#1d1313',
-		'color-header' => '#3f0700',
-		'color-text' => '#c3c3c3',
-		'color-buttons-links' => '#e51818',
-	 ),
-	 'jade' => array(
-		 'color-body' => '#036056',
-		 'color-page' => '#ffffff',
-		 'color-header' => '#046242',
-		 'color-text' => '#101c4e',
-		 'color-buttons-links' => '#016445',
-	 ),
-	 'sky' => array(
-		'color-body' => '#a3b6de',
-		'color-page' => '#c6e2ec',
-		'color-header' => '#2155ab',
-		'color-text' => '#101c4e',
-		'color-buttons-links' => '#019ad3',
-	 ),
-	 'beach' => array(
-		'color-body' => '#fcf1c9',
-		'color-page' => '#e8e4d7',
-		'color-header' => '#2155ab',
-		'color-text' => '#3b2516',
-		'color-buttons-links' => '#019ad3',
-	 ),
-	 'forest' => array(
-		'color-body' => '#6a7641',
-		'color-page' => '#e8e4d7',
-		'color-header' => '#4b501f',
-		'color-text' => '#4b501f',
-		'color-buttons-links' => '#d06803',
-	 ),
-	 */
+		"color-body" => "#7A0146",
+		"color-page" => "#36001F",
+		"color-buttons" => "#DE1C4E",
+		"color-links" => "#F97EC4",
+		"background-image" => "obsession.jpg",
+		"background-tiled" => true
+	),
+	'carbon' => array(
+		"color-body" => "#1A1A1A",
+		"color-page" => "#474646",
+		"color-buttons" => "#012E59",
+		"color-links" => "#70B8FF",
+		"background-image" => "carbon.png",
+		"background-tiled" => false
+	),
+	'beach' => array(
+		"color-body" => "#97E4FE",
+		"color-page" => "#FFFFFF",
+		"color-buttons" => "#C2D04D",
+		"color-links" => "#FE7801",
+		"background-image" => "beach.png",
+		"background-tiled" => true
+	),
+	'dragstrip' => array(
+		"color-body" => "#353637",
+		"color-page" => "#0C0C0C",
+		"color-buttons" => "#30A900",
+		"color-links" => "#FFF000",
+		"background-image" => "dragstrip.jpg",
+		"background-tiled" => true
+	),
+	'aliencrate' => array(
+		"color-body" => "#484534",
+		"color-page" => "#C6C5C0",
+		"color-buttons" => "#653F03",
+		"color-links" => "#02899D",
+		"background-image" => "aliencrate.jpg",
+		"background-tiled" => false
+	),
 );
 
 // AJAX dispatcher

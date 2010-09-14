@@ -12,6 +12,9 @@ var ThemeDesigner = {
 		// settings history
 		ThemeDesigner.history = themeHistory;
 
+		// themes
+		ThemeDesigner.themes = themes;
+
 		$().log(ThemeDesigner, 'ThemeDesigner');
 
 		// iframe resizing
@@ -191,12 +194,13 @@ var ThemeDesigner = {
 			return;
 		}
 
-		if(setting == "theme" && newValue != "custom") {
-			$.extend(ThemeDesigner.settings, ThemeDesigner.themes[newValue]);
-		}
-
 		var reloadCSS = false;
 		var updateSkinPreview = false;
+
+		if(setting == "theme" && newValue != "custom") {
+			$.extend(ThemeDesigner.settings, ThemeDesigner.themes[newValue]);
+			reloadCSS = true;
+		}
 
 		if(setting == "color-body" || setting == "color-page" || setting == "color-buttons" || setting == "color-links" || setting == "background-image" || setting == "background-tiled") {
 			reloadCSS = true;
