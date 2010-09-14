@@ -44,11 +44,11 @@ CKEDITOR.themes.add( 'wikia', (function()
 				style += "width: " + width + ";";
 			}
 
-			// Wikia: add second column on Oasis skin
+			// Wikia: add second column on Oasis skin (except main pages)
 			var contentColumns = 1,
 				extraContentColumnHtml = '';
 
-			if (window.skin == 'oasis') {
+			if (window.skin == 'oasis' && !window.wgIsMainpage) {
 				contentColumns = 2;
 				extraContentColumnHtml = '<td id="cke_contents_' + name + '_sidebar"></td>';
 			}
