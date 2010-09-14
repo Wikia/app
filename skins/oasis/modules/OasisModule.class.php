@@ -21,6 +21,7 @@ class OasisModule extends Module {
 	var $globalVariablesScript;
 	var $analytics;
 	var $printableCss;
+	var $jsAtBottom;
 
 	// skin/template vars
 	var $pagetitle;
@@ -33,6 +34,7 @@ class OasisModule extends Module {
 	var $lang;
 	var $pageclass;
 	var $skinnameclass;
+	var $bottomscripts;
 
 	public function executeIndex() {
 		global $wgOut, $wgUser, $wgTitle, $wgRequest;
@@ -91,6 +93,14 @@ class OasisModule extends Module {
 
 		// track page load time
 		$this->analytics .= AnalyticsEngine::track('GA_Urchin', 'pagetime', array('oasis'));
+
+		// decide where JS should be placed (only add JS at the top for special and edit pages)
+		if ($wgTitle->getNamespace() == NS_SPECIAL || BodyModule::isEditPage()) {
+			$this->jsAtBottom = false;
+		}
+		else {
+			$this->jsAtBottom = true;
+		}
 
 		// Merged JS files via StaticChute
 		// get the right package from StaticChute
