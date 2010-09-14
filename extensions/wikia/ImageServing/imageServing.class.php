@@ -45,6 +45,8 @@ class imageServing{
 		$articles = $this->articles;
 		wfProfileIn(__METHOD__);
 		$cache_return = array();
+		$file_articles = array();
+		
 		foreach($articles as $key => $value) {
 			$mcKey = wfMemcKey("imageserving", $this->width, $n, $this->proportion["w"], $this->proportion["h"], $value);
 			$mcOut = $wgMemc->get($mcKey, null);
@@ -52,6 +54,12 @@ class imageServing{
 			if($mcOut != null) {
 				unset($articles[$key]);
 				$cache_return[$value] = $mcOut;
+			} else {
+				$title = Title::newFromID( $value );
+
+				if ( !empty( $title ) && $title->getNamespace() == NS_FILE ) {
+					$file_articles[ $value ] = $title;
+				}
 			}
 		}
 
@@ -93,6 +101,12 @@ class imageServing{
 			}
 		}
 
+		foreach ( $file_articles as $key => $value ) {
+			$dbKey = $value->getDBkey();
+			$image_list[$dbKey][$key] = 1;
+			$images_name[] = $db->addQuotes( $dbKey );
+		}
+		
 		if (count($image_list) == 0) {
 			wfProfileOut(__METHOD__);
 			return $cache_return;
@@ -120,6 +134,7 @@ class imageServing{
 		);
 
 		$db_out = array();
+
 		while ($row =  $db->fetchRow( $res ) ) {
 			if(!in_array($row['img_minor_mime'], array( "svg+xml","svg"))) {
 				$db_out[$row['il_to']] = $row;
