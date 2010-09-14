@@ -526,7 +526,7 @@ function CategorySelectGenerateHTMLforView() {
 		</div>
 		<div id="csButtonsContainer" class="color1">
 			<input type="button" id="csSave" onclick="WET.byStr(\'articleAction/saveCategory\');csSave()" value="' . wfMsg('categoryselect-button-save') . '" />
-			<input type="button" id="csCancel" onclick="WET.byStr(\'articleAction/cancelCategory\');csCancel()" value="' . wfMsg('categoryselect-button-cancel') . '" />
+			<input type="button" id="csCancel" onclick="WET.byStr(\'articleAction/cancelCategory\');csCancel()" value="' . wfMsg('categoryselect-button-cancel') . '" ' . (Wikia::isOasis() ? 'class="secondary" ' : '') . '/>
 		</div>
 	</div>
 	';

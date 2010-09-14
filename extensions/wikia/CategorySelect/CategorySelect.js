@@ -131,16 +131,16 @@ function modifyCategory(e) {
 }
 
 function replaceAddToInput(e) {
-	$('#csAddCategoryButton').css('display', 'none');
-	$('#csCategoryInput').css('display', 'block');
+	$('#csAddCategoryButton').hide();
+	$('#csCategoryInput').show();
 	positionSuggestBox();
-	$('#csHintContainer').css('display', 'block');
+	$('#csHintContainer').show();
 	$('#csCategoryInput').focus();
 }
 
 function addAddCategoryButton() {
 	if ($('#csAddCategoryButton').length > 0) {
-		$('#csAddCategoryButton').css('display', 'block');
+		$('#csAddCategoryButton').show();
 	} else {
 		elementA = document.createElement('a');
 		elementA.id = 'csAddCategoryButton';
@@ -164,8 +164,8 @@ function addAddCategoryButton() {
 
 function inputBlur() {
 	if ($('#csCategoryInput').attr('value') == '') {
-		$('#csCategoryInput').css('display', 'none');
-		$('#csHintContainer').css('display', 'none');
+		$('#csCategoryInput').hide();
+		$('#csHintContainer').hide();
 		addAddCategoryButton();
 	}
 }
@@ -216,7 +216,7 @@ function addCategory(category, params, index) {
 
 	$('#csItemsContainer').get(0).insertBefore(elementA, $('#csCategoryInput').get(0));
 	if ($('#csCategoryInput').css('display') != 'none') {
-		$('#csHintContainer').css('display', 'block');
+		$('#csHintContainer').show();
 	}
 	$('#csCategoryInput').attr('value', '');
 }
@@ -282,11 +282,11 @@ function toggleCodeView() {
 		WET.byStr('editpage/codeviewCategory');
 
 		$('#csWikitext').attr('value', generateWikitextForCategories());
-		$('#csItemsContainer').css('display', 'none');
-		$('#csHintContainer').css('display', 'none');
-		$('#csCategoryInput').css('display', 'none');
+		$('#csItemsContainer').hide();
+		$('#csHintContainer').hide();
+		$('#csCategoryInput').hide();
 		$('#csSwitchView').html(csVisualView);
-		$('#csWikitextContainer').css('display', 'block');
+		$('#csWikitextContainer').show();
 		$('#wpCategorySelectWikitext').attr('value', '');	//remove JSON - this will inform PHP to use wikitext instead
 		$('#wpCategorySelectSourceType').attr('value', 'wiki');	//inform PHP what source it should use
 	} else {	//switch to visual code
@@ -308,8 +308,8 @@ function toggleCodeView() {
 
 				initializeCategories(result['categories']);
 				$('#csSwitchView').html(csCodeView);
-				$('#csWikitextContainer').css('display', 'none');
-				$('#csItemsContainer').css('display', 'block');
+				$('#csWikitextContainer').hide();
+				$('#csItemsContainer').show();
 			}
 		}, "json");
 	}
@@ -379,12 +379,12 @@ function submitAutoComplete(comp, resultListItem) {
 
 function collapseAutoComplete() {
 	if ($('#csCategoryInput').css('display') != 'none' && $('#csWikitextContainer').css('display') != 'block') {
-		$('#csHintContainer').css('display', 'block');
+		$('#csHintContainer').show();
 	}
 }
 
 function expandAutoComplete(sQuery , aResults) {
-	$('#csHintContainer').css('display', 'none');
+	$('#csHintContainer').hide();
 }
 
 function regularEditorSubmit(e) {
@@ -461,14 +461,21 @@ function showCSpanel() {
 			initializeCategories();
 
 			// Dynamically load & apply the CSS.
-			importStylesheetURI(wgExtensionsPath+'/wikia/CategorySelect/CategorySelect.css?'+wgStyleVersion);
+			if (window.skin == 'oasis') {
+				var cssPath = wfGetSassUrl(wgExtensionsPath+'/wikia/CategorySelect/oasis.scss');
+			}
+			else {
+				var cssPath = wgExtensionsPath+'/wikia/CategorySelect/CategorySelect.scss?'+wgStyleVersion;
+			}
+
+			importStylesheetURI(cssPath);
 
 			setTimeout(replaceAddToInput, 60);
 			setTimeout(positionSuggestBox, 666); //sometimes it can take more time to parse downloaded CSS - be sure to position hint in proper place
 			$('#catlinks').removeClass('csLoading');
 		}, "html");
 
-		$('#csAddCategorySwitch').css('display', 'none');
+		$('#csAddCategorySwitch').hide();
 	});
 }
 
@@ -508,7 +515,7 @@ function csSave() {
 function csCancel() {
 	var csMainContainer = $('#csMainContainer').get(0);
 	csMainContainer.parentNode.removeChild(csMainContainer);
-	$('#csAddCategorySwitch').css('display', 'block');
+	$('#csAddCategorySwitch').show();
 }
 
 wgAfterContentAndJS.push(function() {
@@ -520,7 +527,7 @@ wgAfterContentAndJS.push(function() {
 			initializeDragAndDrop();
 			initializeCategories();
 			//show switch after loading categories
-			$('#csSwitchViewContainer').css('display', 'block');
+			$('#csSwitchViewContainer').show();
 		});
 	}
 });
