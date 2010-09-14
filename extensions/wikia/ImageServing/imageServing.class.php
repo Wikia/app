@@ -32,6 +32,9 @@ class imageServing{
 	/**
 	 * getImages - get array with list of top images for all article pass to construct
 	 *
+	 * @author Tomek Odrobny
+	 * @author Federico "Lox" Lucignano
+	 * 
 	 * @access public
 	 *
 	 * @param $n \type{\arrayof{\int}} number of images get of each of article
