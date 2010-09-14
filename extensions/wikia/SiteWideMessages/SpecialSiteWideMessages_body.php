@@ -300,6 +300,8 @@ class SiteWideMessages extends SpecialPage {
 			$result['errMsg'] = wfMsg('readonlytext', $reason);
 		} elseif ($mText == '') {
 			$result['errMsg'] = wfMsg('swm-error-empty-message');
+		} elseif (strlen($mText) > 500) {
+			$result['errMsg'] = wfMsg('swm-error-long-message');
 		} elseif ($mSendModeWikis == 'WIKI' && is_null($mWikiId)) {
 			//this wiki doesn't exist
 			$result['errMsg'] = wfMsg('swm-error-no-such-wiki');
