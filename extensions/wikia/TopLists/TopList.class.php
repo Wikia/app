@@ -202,7 +202,7 @@ class TopList extends TopListBase {
 			if( !empty ($subPages)  && $subPages->count() ) {
 				foreach( $subPages as $title ) {
 					//check for list item prefix, avoid listing comments as items
-					if( strpos( $title->getText(), self::ITEM_TITLE_PREFIX ) ) {
+					if( strpos( $title->getSubpageText(), self::ITEM_TITLE_PREFIX ) === 0 ) {
 						$this->mItems[] = TopListItem::newFromTitle( $title );
 					}
 					
