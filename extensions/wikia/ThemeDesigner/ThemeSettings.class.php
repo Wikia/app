@@ -116,7 +116,7 @@ class ThemeSettings {
 			$history = $file->getHistory(1);
 
 			if(count($history) == 1) {
-				$oldFile = array('url' => $history[0]->getURL(), 'name' => $history[0]->getName());
+				$oldFile = array('url' => $history[0]->getURL(), 'name' => $history[0]->getArchiveName());
 			}
 
 		}
