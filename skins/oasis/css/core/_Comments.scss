@@ -101,10 +101,16 @@
 		font-size: 11px;
 		width: 528px !important;
 	}
-	ul {
+	.sub-comments {
+		list-style: none;
 		margin-bottom: 20px;
+		margin-left: 85px;
+
+		textarea {
+			width: 444px!important;
+		}
 	}
-	li {
+	.article-comments-li {
 		@include clearfix;
 		margin: 15px 0;
 		&.odd blockquote {
@@ -129,6 +135,26 @@
 		margin: 0 5px 0 75px;
 		padding: 15px 10px 10px 15px;
 		position: relative;
+		p {
+			line-height: 1.8em;
+			margin-bottom: 1em;
+		}
+		ul, ol {
+			margin: 0.4em 0 0.5em 2.5em;
+		}
+		ol {
+			list-style: decimal;
+		}
+		ul {
+			list-style: square;
+		}
+		b, strong {
+			font-weight: bold;
+		}
+
+		i, em {
+			font-style: italic;
+		}
 	}
 	blockquote:before {
 		border-color: transparent $color-page-border $color-page-border transparent;
@@ -150,10 +176,6 @@
 		top: 15px;
 		left: -20px;
 		width: 0px;
-	}
-	p {
-		line-height: 1.8em;
-		margin-bottom: 1em;
 	}
 	details {
 		font-size: 10px;
@@ -192,14 +214,6 @@
 		}
 		img {
 			margin-right: 2px;
-		}
-	}
-	ul {
-		list-style: none;
-		margin-left: 85px;
-
-		textarea {
-			width: 444px!important;
 		}
 	}
 }
