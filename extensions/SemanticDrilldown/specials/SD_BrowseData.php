@@ -104,7 +104,7 @@ class BrowseDataPage extends QueryPage {
 	CREATE TEMPORARY TABLE semantic_drilldown_values (
 		id INT NOT NULL,
 		INDEX id_index (id)
-	) AS SELECT
+	) Engine=MEMORY AS SELECT
 END;
 		if ($smwgDefaultStore == 'SMWSQLStore2') {
 			$sql .= " ids.smw_id AS id ";
@@ -975,12 +975,12 @@ END;
 	 */
 	protected function outputResults( $out, $skin, $dbr, $res, $num, $offset ) {
 		global $wgContLang, $sdgNumResultsColumns;
-	
+
 		if( $num > 0 ) {
 			$html = array();
 			if( !$this->listoutput )
 				$html[] = $this->openList( $offset );
-			
+
 			$prev_first_char = "";
 			// default to 3 columns, like with categories
 			if ($sdgNumResultsColumns == null)
@@ -1013,7 +1013,7 @@ END;
 				if (($i + 1) % $rows_per_column == 0 || ($i + 1) == $num)
 					$html[] = "				</ul>\n			</div> <!-- end column -->";
 			}
-			
+
 			# Flush the final result
 			if( $this->tryLastResult() ) {
 				$row = null;
