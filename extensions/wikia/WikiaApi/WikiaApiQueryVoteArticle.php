@@ -618,9 +618,9 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 			'vote'			=> $row->vote,
 			'ip'			=> $ip,
 			'time'			=> $row->time,
-			'unique_id'		=> $row->unique_id
+			'unique_id'		=> ( isset($row->unique_id) ? $row->unique_id : 0 )
 			);
-		$db->freeResult($res);
+			$db->freeResult($res);
 
 		return $data;
 	}
