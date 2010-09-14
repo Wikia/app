@@ -300,6 +300,8 @@ var ThemeDesigner = {
 
 	applySettings: function(reloadCSS, updateSkinPreview) {
 
+		$().log('applySettings');
+
 		/*** Theme Tab ***/
 		if(ThemeDesigner.settings["theme"] == "custom") {
 			$("#ThemeTab").find(".slider").find(".selected").removeClass("selected");
@@ -329,6 +331,9 @@ var ThemeDesigner = {
 		$("#WordmarkTab").find(".graphic").find(".preview").attr("src", ThemeDesigner.settings["wordmark-image-url"]);
 
 		if(reloadCSS) {
+
+			$().log('applySettings, reloadCSS');
+
 			var sass = "/__sass/skins/oasis/css/oasis.scss/128263333333333333333127999/";
 			sass += "color-body=" + escape(ThemeDesigner.settings["color-body"]);
 			sass += "&color-page=" + escape(ThemeDesigner.settings["color-page"]);
@@ -340,6 +345,9 @@ var ThemeDesigner = {
 		}
 
 		if(updateSkinPreview) {
+
+			$().log('applySettings, updateSkinPreview');
+
 			$("#PreviewFrame").contents().find("#WikiHeader").find(".wordmark")
 				.removeClass()
 				.addClass("wordmark")
