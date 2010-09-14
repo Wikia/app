@@ -11,7 +11,7 @@
 		<script>/*@cc_on'abbr article aside audio canvas details figcaption figure footer header hgroup mark menu meter nav output progress section summary time video'.replace(/\w+/g,function(n){document.createElement(n)})@*/</script>
 	<![endif]-->
 
-	<link rel="stylesheet" href="<?= wfGetSassUrl($wgExtensionsPath."/wikia/ThemeDesigner/css/ThemeDesigner.scss") ?>">
+	<link rel="stylesheet" href="<?= wfGetSassUrl($wgExtensionsPath."/wikia/ThemeDesigner/css/ThemeDesigner.scss", '') ?>">
 
 	<script>
 		var returnTo = <?= Xml::encodeJSVar($returnTo) ?>;

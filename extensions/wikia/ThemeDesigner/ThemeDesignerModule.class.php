@@ -89,7 +89,7 @@ class ThemeDesignerModule extends Module {
 
 				// check if file is in correct size
 				$imageSize = getimagesize($_FILES['wpUploadFile']['tmp_name']);
-				if($imageSize[0] == 300 && $imageSize[1] == 60) {
+				if($imageSize[0] == 250 && $imageSize[1] == 65) {
 
 					$file = new FakeLocalFile(Title::newFromText('Temp_file_'.time(), 6), RepoGroup::singleton()->getLocalRepo());
 					$file->upload($wgRequest->getFileTempName('wpUploadFile'), '', '');

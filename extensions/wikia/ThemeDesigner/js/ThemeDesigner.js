@@ -18,6 +18,8 @@ var ThemeDesigner = {
 			} else {
 				// use response.wordmarkImageUrl for display
 				ThemeDesigner.settings["wordmark-image"] = response.wordmarkImageName;
+				$().log("setting graphic");
+				$("#WordmarkTab").find(".graphic").find(".preview").attr("src", wgServer + "/wiki/File:" + ThemeDesigner.settings["wordmark-image"]);
 				ThemeDesigner.applySettings();
 			}
 		}
@@ -144,7 +146,7 @@ var ThemeDesigner = {
 		$("#Navigation a").click(ThemeDesigner.navigationClick);
 
 		// handle "Save" button clicks
-		$('#Toolbar').find('button').eq(0).click(ThemeDesigner.saveClick);
+		$('#Toolbar').find(".save").click(ThemeDesigner.saveClick);
 
 		// init theme tab
 		ThemeDesigner.ThemeTabInit();

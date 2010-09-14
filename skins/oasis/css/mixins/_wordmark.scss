@@ -1,15 +1,13 @@
 @mixin wordmark {
-	$default-wordmark-size: 30px;
-	font-size: $default-wordmark-size;
 	font-weight: bold;
 	width: 250px;
 	&.small {
-		font-size: $default-wordmark-size - 10px;
+		font-size: 25px;
 	}
 	&.medium {
-		font-size: $default-wordmark-size;
+		font-size: 30px;
 	}
 	&.large {
-		font-size: $default-wordmark-size + 10px;
+		font-size: 40px;
 	}
 }
