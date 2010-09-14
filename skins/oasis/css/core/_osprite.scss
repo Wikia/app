@@ -2,13 +2,47 @@
 	background-color: transparent;
 	background-image: url(/skins/oasis/images/sprite.png);
 	background-repeat: no-repeat;
+
 	&.icon-add {
 		background-position: -1096px -16px;
 		height: 10px;
 		margin-right: 5px;
 		width: 10px;
 	}
+
 	&.icon-article-like {
 		background-position: -1128px -32px;
+	}
+
+	&.icon-remove {
+		background-position: -1128px -14px;
+		width: 13px;
+		height: 20px;
+	}
+
+	&.icon-drag {
+		background-position: -1147px -30px;
+		width: 13px;
+		height: 20px;
+	}
+
+	&.icon-edit {
+		background-position: -1098px -51px;
+		width: 10px;
+		height: 10px;
+	}
+
+	&.shadow {
+		background-position:  0 -2px;
+		width: 1000px;
+		height: 8px;
+		@include opacity(75);
+	}
+
+	&.shadow-short {
+		background-position: 0px -16px;
+		width: 600px;
+		height: 8px;
+		@include opacity(75);
 	}
 }
