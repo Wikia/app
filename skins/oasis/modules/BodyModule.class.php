@@ -200,8 +200,7 @@ class BodyModule extends Module {
 			return $railModuleList;
 		}
 
-		$railModuleList[1450] = array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD'));
-		$railModuleList[1440] = array('Ad', 'Index', array('slotname' => 'HOME_TOP_RIGHT_BOXAD'));
+		$railModuleList[1440] = array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD'));
 		$railModuleList[1430] = array('Ad', 'Index', array('slotname' => 'INCONTENT_BOXAD_1'));
 
 		$railModuleList[1100] = array('Ad', 'Index', array('slotname' => 'LEFT_SKYSCRAPER_2'));

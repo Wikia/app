@@ -5,7 +5,7 @@ class AdModule extends Module {
 	private static $config;
 
 	private function configure() {
-		global $wgOut, $wgTitle, $wgContentNamespaces, $wgEnableAdInvisibleHomeTop, $wgEnableAdInvisibleTop;
+		global $wgOut, $wgTitle, $wgContentNamespaces, $wgEnableAdInvisibleHomeTop, $wgEnableAdInvisibleTop, $wgEnableFAST_HOME2;
 
 		self::$config = array();
 
@@ -18,13 +18,15 @@ class AdModule extends Module {
 		if(ArticleAdLogic::isMainPage()) {
 			// main page
 			self::$config['HOME_TOP_LEADERBOARD'] = true;
-			self::$config['HOME_TOP_RIGHT_BOXAD'] = true;
 			self::$config['PREFOOTER_LEFT_BOXAD'] = true;
 			self::$config['PREFOOTER_RIGHT_BOXAD'] = true;
 			self::$config['INVISIBLE_1'] = true;
 			self::$config['INVISIBLE_2 '] = true;
 			if(!empty($wgEnableAdInvisibleHomeTop)) {
 				self::$config['HOME_INVISIBLE_TOP'] = true;
+			}
+			if($wgEnableFAST_HOME2) {
+				self::$config['HOME_TOP_RIGHT_BOXAD'] = true;
 			}
 		} else {
 			if(in_array($namespace, $wgContentNamespaces)) {

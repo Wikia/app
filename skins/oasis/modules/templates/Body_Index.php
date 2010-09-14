@@ -40,6 +40,7 @@
 			}
 		?>
 		<div id="WikiaArticle" class="WikiaArticle">
+			<?= wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_TOP_RIGHT_BOXAD')) ?>
 			<?= $bodytext ?>
 		</div>
 
