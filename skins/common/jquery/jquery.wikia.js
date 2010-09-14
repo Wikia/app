@@ -198,7 +198,7 @@ jQuery.postJSON = function(u, d, callback) {
 $.loadYUI = function(callback) {
 	if (typeof YAHOO == 'undefined') {
 		if ( (typeof isYUIloading != 'undefined') && isYUIloading ) {
-			$().log('YUI: is loading add call back to line');
+			$().log('is loading add call back to line', 'YUI');
 			loadYUICallBackFIFO.push(callback);
 			return true;
 		}
@@ -207,19 +207,21 @@ $.loadYUI = function(callback) {
 		loadYUICallBackFIFO = new Array();
 		loadYUICallBackFIFO.push(callback)
 
-		$().log('YUI: loading on-demand');
+		$().log('loading on-demand', 'YUI');
 
 		var YUIloadingCallBack = function(){
+			$().log('loaded', 'YUI');
+
 			for (var i = 0; i < loadYUICallBackFIFO.length; i++ ){
 				loadYUICallBackFIFO[i]();
 			}
 			loadYUICallBackFIFO = null;
 		};
-		$().log('YUI: rq start ');
+		$().log('rq start', 'YUI');
 
 		$.getScript(wgYUIPackageURL, YUIloadingCallBack);
 	} else {
-		$().log('YUI: already loaded');
+		$().log('already loaded', 'YUI');
 		callback();
 	}
 }
@@ -245,7 +247,7 @@ $.loadJQueryAutocomplete = function(callback) {
 
 		$.getScript(stylepath + '/common/jquery/jquery.autocomplete.js?' + wgStyleVersion, function() {
 			$().log('loaded', 'jQuery Autocomplete');
-			
+
 			if(typeof callback === 'function') callback();
 		});
 	}
