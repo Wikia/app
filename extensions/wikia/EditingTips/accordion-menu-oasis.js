@@ -1,16 +1,16 @@
 $("#editingTips dd").css("display", "none");
 //var showDone = true;
 $(function() {
-	
+
 	$("#toggleEditingTips").click( function() {
-		var editor_elements = $("#toolbar, #editform textarea, #editingTipsToggleDiv");
-	
+		var editor_elements = $("#toolbar, #editform textarea, #editingTipsToggleDiv, #editform > #wpSummaryLabel");
+
 		if ($("#editingTips").is(":visible")) {
 			$("#editingTips").hide();
 			$("#toggleEditingTips").text(editingtips_show);
-			
-			
-			$("#editform textarea").removeClass("editingtips-textarea");		
+
+
+			$("#editform textarea").removeClass("editingtips-textarea");
 			$.each(editor_elements, function () {
 				$(this).removeClass("editingtips-shown");
 				$(this).addClass("editingtips-hidden");
@@ -26,18 +26,18 @@ $(function() {
 			});
 		}
 		return false;
-	
+
 	});
-	
+
 	$("#editingTips dt").click( function() {
 		var parents = $(this).parent().find("dd");
 		$.each(parents, function() {
 			if ($(this).is(":visible")) {
-				
+
 				$(this).slideUp("fast");
 			}
 		});
-	
+
 		if ($(this).next().is(":hidden")) {
 			$(this).next().slideDown("fast");
 		}
