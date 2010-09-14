@@ -29,7 +29,7 @@
 		var wgNow = new Date();
 	/*]]>*/</script><?php
 		if(!$jsAtBottom) {
-			print "<!-- Combined JS files (StaticChute) -->\n";
+			print "\n<!-- Combined JS files (StaticChute) -->\n";
 			print $staticChuteHtml."\n";
 			// TODO: SWC: TO TEST ASYNC LOADING, REMOVE PRINT OF $staticChuteHtml ABOVE AND UNCOMMENT THESE TWO LINES:
 			//print $wikiaScriptLoader;
