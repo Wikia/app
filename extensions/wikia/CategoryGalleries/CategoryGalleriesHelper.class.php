@@ -52,8 +52,11 @@
 		}
 
 		static public function onInternalParseBeforeLinks(&$parser, &$text, &$strip_state) {
-			MagicWord::get('CATGALLERY_ENABLED')->matchAndRemove($text);
-			MagicWord::get('CATGALLERY_DISABLED')->matchAndRemove($text);
+			global $wgRTEParserEnabled;
+			if (empty($wgRTEParserEnabled)) {
+				MagicWord::get('CATGALLERY_ENABLED')->matchAndRemove($text);
+				MagicWord::get('CATGALLERY_DISABLED')->matchAndRemove($text);
+			}
 			return true;
 		}
 
