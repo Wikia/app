@@ -39,12 +39,12 @@
 
 		// /** moving elements to the button, those elements will be gone anyway sone **/
 		li:last-child, .minor {
-			position: absolute;
-			margin-top: 35px;
+			//position: absolute;
+			//margin-top: 35px;
 		}
 		.minor {
-			margin-left: 0px;
-			padding-left: 60px;
+			//margin-left: 0px;
+			//padding-left: 60px;
 		}
 	}
 	#csMainContainer {
@@ -289,7 +289,7 @@
 	#wpDiff {
 		border: none;
 		background-image: none;
-		background-color: White;
+		background-color: #fff;
 		color: $color-links;
 		padding: 0px;
 		font-size: 13px;
