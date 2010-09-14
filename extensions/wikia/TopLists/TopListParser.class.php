@@ -66,6 +66,13 @@ class TopListParser {
 		return ( !empty( self::$mAttributes[ $attributeName ] ) ) ? self::$mAttributes[ $attributeName ] : null;
 	}
 
+	/**
+	 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
+	 *
+	 * Helper method to trigger parsing of a list article comment manually
+	 *
+	 * @param TopList $list the list object representing the article to parse
+	 */
 	static public function parse( TopList $list ) {
 		global $wgParser;
 		$parserOptions = new ParserOptions();
