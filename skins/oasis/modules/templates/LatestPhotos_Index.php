@@ -28,7 +28,6 @@ else {
 	<?php
 	$count = 1;
 	foreach ($thumbUrls as $url) {?>
-	<!--<?= $url["image_url"] ?>  File:KermLecTel.jpg-->
 		<li class="thumbs"><a class="image" ref="<?= $url["image_filename"] ?> " href="<?= $url["file_url"] ?>">
 			<img class="thumbimage" src="<?= $url["thumb_url"] ?>" />
 		</a>

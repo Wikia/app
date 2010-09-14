@@ -90,11 +90,23 @@
 		border-left-width: 0px;
 
 	}
+	
+	.latest-images-left-inactive {
+		border-color: transparent $color-page-border transparent $color-page-border;
+	}
+	
 	.latest-images-right {
 		@include arrow-style;
 		border-color: transparent transparent transparent $color-links;
 		border-right-width: 0px;
 	}
+	
+	.latest-images-right-inactive {
+		border-color:  transparent transparent transparent $color-page-border;
+	}
+	
+	
+	
 	// /** when there are less then 3 images **/
 	.hidden {
 		visibility: hidden;
