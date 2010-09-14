@@ -26,7 +26,7 @@ class CommentsLikesModule extends Module {
 
 		$isHistory = $wgRequest->getVal('action') == 'history';
 
-		if (class_exists('ArticleComment') && ArticleCommentInit::ArticleCommentCheckNamespace($wgTitle)) {
+		if (class_exists('ArticleComment') && ArticleCommentInit::ArticleCommentCheckTitle($wgTitle)) {
 			// link to article comments section
 			if ($this->contextTitle != $wgTitle || $isHistory) {
 				$commentsLink = $this->contextTitle->getLocalUrl() . '#WikiaArticleComments';
