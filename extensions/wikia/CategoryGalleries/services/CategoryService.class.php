@@ -65,10 +65,10 @@
 		 * @return array|int
 		 */
 		static protected function fetchPageViewsStats( $pageIds ) {
-			global $wgDBstats, $wgCityId, $wgDevelEnvironment;;
+			global $wgStatsDB, $wgCityId, $wgDevelEnvironment;;
 
 			if (empty($wgDevelEnvironment)) {
-				$dbr = wfGetDB( DB_SLAVE, null, $wgDBstats );
+				$dbr = wfGetDB( DB_SLAVE, null, $wgStatsDB );
 				$res = $dbr->select(
 					array( 'specials.page_views_summary_articles' ),
 					array( 'page_id', 'pv_views' ),
