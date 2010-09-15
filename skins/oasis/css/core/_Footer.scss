@@ -14,7 +14,7 @@
 		width: $width-outside + 10px;
 		z-index: 500;
 		&:after {
-			background: url(/skins/oasis/images/sprite.png) no-repeat;
+			background: url(/skins/oasis/images/sprite.png) no-repeat; /* $wgCdnStylePath */
 			content: " ";
 			height: 12px;
 			left: 5px;
@@ -35,7 +35,7 @@
 	}
 	.share {
 		@include clearfix;
-		background-image: url(/skins/oasis/images/checkers.png);
+		background-image: url(/skins/oasis/images/checkers.png); /* $wgCdnStylePath */
 		display: block;
 		list-style: none;
 		padding-right: 30px;
@@ -54,13 +54,13 @@
 				margin: 0 6px 0 1px;
 				width: 15px;
 				&.mytools-icon {
-					background: url(/skins/oasis/images/sprite.png) -1112px -16px no-repeat;
+					background: url(/skins/oasis/images/sprite.png) -1112px -16px no-repeat; /* $wgCdnStylePath */
 				}
 				&.follow-icon {
-					background: url(/skins/oasis/images/sprite.png) -1112px 0 no-repeat;
+					background: url(/skins/oasis/images/sprite.png) -1112px 0 no-repeat; /* $wgCdnStylePath */
 				}
 				&.share-icon {
-					background: url(/skins/oasis/images/sprite.png) -1112px -48px no-repeat;
+					background: url(/skins/oasis/images/sprite.png) -1112px -48px no-repeat; /* $wgCdnStylePath */
 				}
 			}
 		}
