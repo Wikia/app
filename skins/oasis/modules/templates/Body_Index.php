@@ -73,7 +73,7 @@
 
 <?php
 	if(!$noexternals){
-		wfRenderModule('Feedback')
+		wfRenderModule('Feedback');
 	}
 ?>
 <?= wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_1')) ?>
