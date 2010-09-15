@@ -227,66 +227,11 @@ class SkinChooser {
 		$themeCount = 0;
 		$skinKey = "";
 
-		if( $wgUser->isAllowed( 'devcookie' ) ) {
-			# New look
-			$wgOut->addHTML('<div '.($themeCount++%2!=1 ? 'class="prefSection"' : '').'>');
-			$wgOut->addHTML('<h5>'.wfMsg('new-look').'</h5>');
-			$wgOut->addHTML('<table style="background: transparent none">');
+		$wgOut->addHTML('<div '.($themeCount++%2!=1 ? 'class="prefSection"' : '').'>');
+		$wgOut->addHTML('<h5>'.wfMsg('site-layout').'</h5>');
 
-			$wgOut->addHTML('<tr><td><input type="radio" value="oasis" id="wpSkinoasis" name="wpSkin"'.($pref->mSkin == 'oasis' ? ' checked="checked"' : '').'/><label for="wpSkinoasis">'.wfMsg('new-look').'</label> '.($skinKey == $defaultSkinKey ? ' (' . wfMsg( 'default' ) . ')' : '').'</td></tr>');
-			$wgOut->addHTML('</table>');
-			$wgOut->addHTML('</div>');
-		}
-
-		# Foreach over skins which contains themes and display radioboxes for them
-		foreach($wgSkinTheme as $skinKey => $skinVal) {
-
-			# Do not display skins which are defined in wgSkipSkins array
-			if(in_array($skinKey, $wgSkipSkins)) {
-				unset($validSkinNames[$skinKey]);
-				continue;
-			}
-
-			$wgOut->addHTML('<div '.($themeCount++%2!=1 ? 'class="prefSection"' : '').'>');
-			$wgOut->addHTML('<h5>'.wfMsg( $skinKey . '_skins').'</h5>');
-			$wgOut->addHTML('<table style="background: transparent none">');
-
-			# Iterate over themes for one skin
-			foreach($skinVal as $themeKey) {
-
-				# Do not display themes which are defined in wgSkipThemes array
-				if(isset($wgSkipThemes[$skinKey]) && in_array($themeKey, $wgSkipThemes[$skinKey])) {
-					continue;
-				}
-
-				# Ignore custom theme because it is only for admins
-				if($themeKey == 'custom') {
-					continue;
-				}
-
-				$skinkey = $skinKey.'-'.$themeKey;
-
-				# Create preview link
-				$previewlink = '<a target="_blank" href="'.htmlspecialchars($previewLinkTemplate.$skinKey.'&usetheme='.$themeKey).'">'.$previewtext.'</a>';
-
-				$wgOut->addHTML('<tr>');
-				$wgOut->addHTML('<td><input type="radio" value="'.$skinkey.'" id="wpSkin'.$skinkey.'" name="wpSkin"'.($skinkey == $pref->mSkin.'-'.$pref->mTheme ? ' checked="checked" ' : '').'/><label for="wpSkin'.$skinkey.'">'.wfMsg($skinkey).'</label> '.$previewlink.'</td>');
-				// show theme previews
-				if (in_array($skinKey, array('monaco', 'answers'))) {
-					$wgOut->addHTML('<td><label for="wpSkin'.$skinkey.'"><img src="'.$wgStylePath.'/'.$skinKey.'/'.$themeKey.'/images/preview.png" width="100" height="70" /></label>'.($skinkey == $defaultSkinKey ? ' (' . wfMsg( 'default' ) . ')' : '').'</td>');
-				}
-				$wgOut->addHTML('</tr>');
-			}
-			if( $skinKey == 'monaco' ) {
-				$wgOut->addHTML('<tr><td colspan=2>'.$pref->getToggle('showAds').'</td></tr>');
-			}
-
-			$wgOut->addHTML('</table>');
-			$wgOut->addHTML('</div>');
-
-			unset($validSkinNames[$skinKey]);
-		}
-
+		$wgOut->addHTML('<div><input type="radio" value="oasis" id="wpSkinoasis" name="wpSkin"'.($pref->mSkin == 'oasis' ? ' checked="checked"' : '').'/><label for="wpSkinoasis">'.wfMsg('new-look').'</label> '.($skinKey == $defaultSkinKey ? ' (' . wfMsg( 'default' ) . ')' : '').'</div>');
+		
 		$oldSkinNames = array();
 		foreach($validSkinNames as $skinKey => $skinVal) {
 			if ($skinKey=='oasis' || ( ( in_array( $skinKey, $wgSkipSkins ) || in_array( $skinKey, $wgSkipOldSkins )) && !($skinKey == $pref->mSkin) ) ) {
@@ -297,22 +242,15 @@ class SkinChooser {
 
 		# Display radio buttons for rest of skin
 		if(count($oldSkinNames) > 0) {
-			$wgOut->addHTML('<div '.($themeCount++%2!=1 ? 'class="prefSection"' : '').'>');
-			$wgOut->addHTML('<h5>'.wfMsg('old_skins').'</h5>');
-			$wgOut->addHTML('<table style="background: transparent none">');
-
 			foreach($oldSkinNames as $skinKey => $skinVal) {
 				$previewlink = '<a target="_blank" href="'.htmlspecialchars($previewLinkTemplate.$skinKey).'">'.$previewtext.'</a>';
-				$wgOut->addHTML('<tr><td><input type="radio" value="'.$skinKey.'" id="wpSkin'.$skinKey.'" name="wpSkin"'.($pref->mSkin == $skinKey ? ' checked="checked"' : '').'/><label for="wpSkin'.$skinKey.'">'.$skinVal.'</label> '.$previewlink.($skinKey == $defaultSkinKey ? ' (' . wfMsg( 'default' ) . ')' : '').'</td></tr>');
+				$wgOut->addHTML('<div><input type="radio" value="'.$skinKey.'" id="wpSkin'.$skinKey.'" name="wpSkin"'.($pref->mSkin == $skinKey ? ' checked="checked"' : '').'/><label for="wpSkin'.$skinKey.'">'.$skinVal.'</label> '.$previewlink.($skinKey == $defaultSkinKey ? ' (' . wfMsg( 'default' ) . ')' : '').'</div>');
 			}
-
-			$wgOut->addHTML('</table>');
-			$wgOut->addHTML('</div>');
 		}
+		
+		$wgOut->addHTML($pref->getToggle('showAds'));
 
-
-		# Display skin overwrite checkbox
-		$wgOut->addHTML('<br/>'.self::getToggle('skinoverwrite'));
+		$wgOut->addHTML('</div>');
 
 		# Display ComboBox for admins/staff only
 		if( $wgUser->isAllowed( 'setadminskin' ) ) {
@@ -394,6 +332,7 @@ class SkinChooser {
 		global $wgCookiePrefix, $wgCookieExpiration, $wgCookiePath, $wgCookieDomain, $wgCookieSecure, $wgDefaultSkin, $wgDefaultTheme;
 		global $wgVisitorSkin, $wgVisitorTheme, $wgOldDefaultSkin, $wgSkinTheme, $wgOut, $wgForceSkin, $wgRequest, $wgHomePageSkin, $wgTitle;
 		global $wgAdminSkin, $wgSkipSkins, $wgArticle, $wgRequest;
+		$isOasisPublicBeta = $wgDefaultSkin == 'oasis';
 
 		wfProfileIn(__METHOD__);
 
@@ -475,7 +414,7 @@ class SkinChooser {
 		wfProfileIn(__METHOD__.'::GetSkinLogic');
 
 		if(!$user->isLoggedIn()) { # If user is not logged in
-			if(!empty($wgAdminSkin)) {
+			if(!empty($wgAdminSkin) && !$isOasisPublicBeta) {
 				$adminSkinArray = explode('-', $wgAdminSkin);
 				$userSkin = isset($adminSkinArray[0]) ? $adminSkinArray[0] : null;
 				$userTheme = isset($adminSkinArray[1]) ? $adminSkinArray[1] : null;
@@ -486,13 +425,14 @@ class SkinChooser {
 		} else {
 			$userSkin = self::getUserOption('skin');
 			$userTheme = self::getUserOption('theme');
-
-			if(true == (bool) self::getUserOption('skinoverwrite')) { # Doest have overwrite enabled?
+			if(empty($userSkin)) {
 				if(!empty($wgAdminSkin)) {
 					$adminSkinArray = explode('-', $wgAdminSkin);
 					$userSkin = isset($adminSkinArray[0]) ? $adminSkinArray[0] : null;
 					$userTheme = isset($adminSkinArray[1]) ? $adminSkinArray[1] : null;
-				}
+				} else {
+					$userSkin = 'monaco';
+				}	
 			}
 		}
 		wfProfileOut(__METHOD__.'::GetSkinLogic');
@@ -524,7 +464,7 @@ class SkinChooser {
 			$userSkin = 'monaco';
 		}
 
-		if( $userSkin == 'oasis' && !$user->isAllowed( 'devcookie' ) ) {
+		if( !$isOasisPublicBeta && $userSkin == 'oasis' && !$user->isAllowed( 'devcookie' ) ) {
 			$userSkin = 'monaco';
 		}
 
@@ -546,6 +486,11 @@ class SkinChooser {
 			}
 
 			$user->mSkin->themename = $userTheme;
+			
+			# force default theme on monaco and oasis when there is no admin setting
+			if(($normalizedSkinName == 'monaco' || $normalizedSkinName == 'oasis') && (empty($wgAdminSkin) || $isOasisPublicBeta) ) {
+				$user->mSkin->themename = $wgDefaultTheme;
+			}
 
 			self::log(__METHOD__, "using theme {$userTheme}");
 			wfProfileOut(__METHOD__.'::NormalizeThemeName');
@@ -563,4 +508,5 @@ class SkinChooser {
 	private static function log($method, $msg) {
 		wfDebug("{$method}: {$msg}\n");
 	}
+	
 }

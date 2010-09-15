@@ -56,19 +56,21 @@ class SassUtil{
 				$oasisSettings[$key] = $wgOasisThemeSettings[$key];
 			}
 		}
-		else if($skin->themename == 'custom'){
-			// If this is a custom theme, we need to load it from a different spot if it's an admin custom theme than a user custom theme.
-			$overwriteUserSkin = (bool)$wgUser->getOption("skinoverwrite"); // allow Admin's theme to overwrite user skin.
-			if($overwriteUserSkin && !empty($wgAdminSkin)){
-				global $wgOasisSettings;
-				$oasisSettings = unserialize($wgOasisSettings);
-			} else {
-				// NOTE: THIS MIGHT NOT BE USED AT ALL (depending on how Product specs the theme chooser).
-				// ...users might not be allowed to make their own custom skins... currently only Admins do that (for sites... not for themselves).
-				$oasisSettings = unserialize($wgUser->getOption('oasis_settings'));
+		else if(isset($skin->themename)) {
+			if($skin->themename == 'custom'){
+				// If this is a custom theme, we need to load it from a different spot if it's an admin custom theme than a user custom theme.
+				$overwriteUserSkin = (bool)$wgUser->getOption("skinoverwrite"); // allow Admin's theme to overwrite user skin.
+				if($overwriteUserSkin && !empty($wgAdminSkin)){
+					global $wgOasisSettings;
+					$oasisSettings = unserialize($wgOasisSettings);
+				} else {
+					// NOTE: THIS MIGHT NOT BE USED AT ALL (depending on how Product specs the theme chooser).
+					// ...users might not be allowed to make their own custom skins... currently only Admins do that (for sites... not for themselves).
+					$oasisSettings = unserialize($wgUser->getOption('oasis_settings'));
+				}
+			} else if(isset($wgOasisThemes[$skin->themename])){
+				$oasisSettings = $wgOasisThemes[$skin->themename];
 			}
-		} else if(isset($wgOasisThemes[$skin->themename])){
-			$oasisSettings = $wgOasisThemes[$skin->themename];
 		}
 
 		// Get the SASS parameters (in the same format that sassServer::getSassParamsFromUrl() returns - "=" separating key/value and " " separating pairs).

@@ -134,7 +134,7 @@ function comboAjaxLoginVars($vars) {
 
 $wgAjaxExportList[] = 'createUserLogin';
 function createUserLogin(){
-	global $wgRequest,$wgUser,$wgExternalSharedDB,$wgWikiaEnableConfirmEditExt, $wgEnableCOPPA;
+	global $wgRequest,$wgUser,$wgExternalSharedDB,$wgWikiaEnableConfirmEditExt, $wgEnableCOPPA, $wgDefaultSkin;
 	// Init session if necessary
 	if ( session_id() == '' ) {
 		wfSetupSession();
@@ -201,6 +201,13 @@ function createUserLogin(){
 					'captcha' => $captchaIndex)));
 		return $response;
 	}
+
+	# temporary.  remove after oasis public beta
+	if(isset($wgDefaultSkin) && $wgDefaultSkin == 'oasis') {
+		$wgUser->setOption("skin", "oasis");
+		$wgUser->saveSettings();
+	}
+	# end temp
 
 	$response->addText(json_encode(array('status' => "OK")));
 	return $response;
