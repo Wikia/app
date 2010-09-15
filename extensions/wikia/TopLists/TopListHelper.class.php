@@ -222,6 +222,49 @@ class TopListHelper {
 		return $response;
 	}
 
+	static public function uploadImage() {
+		global $wgRequest;
+
+		if ( $wgRequest->wasPosted() ) {
+			 wfLoadExtensionMessages( 'TopLists' );
+			 wfLoadExtensionMessages( 'WikiaPhotoGallery' );
+			$ret = WikiaPhotoGalleryUpload::uploadImage();
+			
+			if ( !( empty ( $ret[ 'success' ] ) && empty( $ret[ 'name' ] ) ) ) {
+				sleep(10);
+				$title = Title::newFromText( $ret[ 'name' ], NS_FILE );
+				
+				if( !empty( $title ) && $title->exists() ) {
+					
+					$articleId = $title->getArticleId();
+					$ret['asd'] = $articleId;
+					$source = new imageServing(
+						array( $articleId ),
+						120,
+						array(
+							"w" => 3,
+							"h" => 2
+						),
+						wfGetDB( DB_MASTER, array() )
+					);
+
+					$result = $source->getImages( 1 );
+					$ret['asd2'] = var_export( $result, true );
+					if( !empty( $result[ $articleId ][0] ) ) {
+						$ret[ 'name' ] = $result[ $articleId ][0][ 'name' ];
+						$ret[ 'url' ] = $result[ $articleId ][0][ 'url' ];
+					}
+				}
+			} elseif ( !empty( $ret['conflict'] ) ) {
+				$ret['message'] = wfMsg( 'toplists-error-image-already-exists' );
+			}
+			//$response = new AjaxResponse('<script type="text/javascript">window.document.responseContent = '.json_encode($ret).';</script>');
+			$response = new AjaxResponse(var_export($ret, true));
+			$response->setContentType('text/html; charset=utf-8');
+			return $response;
+		}
+	}
+
 	/**
 	 * Add a vote for the item
 	 *
