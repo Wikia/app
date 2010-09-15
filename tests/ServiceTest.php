@@ -13,16 +13,52 @@ class ServiceTest extends PHPUnit_Framework_TestCase {
 	}
 
 	function testPageStatsService() {
-		global $wgTitle;
-		$wgTitle = Title::newMainPage();
+		global $wgTitle, $wgMemc;
 
-		$service = new PageStatsService($wgTitle->getArticleId());
+		$wgTitle = Title::newMainPage();
+		$articleId = $wgTitle->getArticleId();
+		$article = Article::newFromId($articleId);
+		$key = wfMemcKey('services', 'pageheader', 'revisions3', $articleId);
+
+		$service = new PageStatsService($articleId);
 
 		$this->assertType('array', $service->getMostLinkedCategories());
 		$this->assertType('int', $service->getCommentsCount());
 		$this->assertType('int', $service->getLikesCount());
 		$this->assertType('array', $service->getRecentRevisions());
 		$this->assertType('string', $service->getFirstRevisionTimestamp());
+
+		// comments counter regenerating
+		$comments = $service->getCommentsCount();
+
+		$service->regenerateCommentsCount();
+		$this->assertEquals($comments, $service->getCommentsCount());
+
+		// remove cached stats when article is edited
+		$user = $flags = $status = false;
+		PageStatsService::onArticleSaveComplete($article, $user, false, false, false, false, false, $flags, false, $status, false);
+
+		$data = $wgMemc->get($key);
+		$this->assertTrue(empty($data));
+
+		$service->getRecentRevisions();
+
+		$data = $wgMemc->get($key);
+		$this->assertFalse(empty($data));
+
+		// remove cached stats when article (comment) is deleted
+		PageStatsService::onArticleDeleteComplete($article, $user, false, $articleId);
+
+		$data = $wgMemc->get($key);
+		$this->assertTrue(empty($data));
+
+		$service->getRecentRevisions();
+
+		// regenerate data
+		$service->regenerateData();
+
+		$data = $wgMemc->get($key);
+		$this->assertTrue(empty($data));
 	}
 
 	function testUserStatsService() {
@@ -52,9 +88,7 @@ class ServiceTest extends PHPUnit_Framework_TestCase {
 		$service->increaseEditsCount();
 
 		$stats = $service->getStats();
-
 		$this->assertEquals($edits+1, $stats['edits']);
-
 	}
 
 }
