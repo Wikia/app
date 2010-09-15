@@ -42,12 +42,14 @@ interface iAdProvider {
 }
 
 abstract class AdProviderIframeFiller {
+	public $disable_lazyload = false;
+
         public function getIframeFillHtml($slotname, $slot) {
                 global $wgEnableAdsLazyLoad, $wgAdslotsLazyLoad;
 
                 $function_name = AdEngine::fillIframeFunctionPrefix . $slotname;
                 $out = $this->getIframeFillFunctionDefinition($function_name, $slotname, $slot);
-                if (!$wgEnableAdsLazyLoad || empty($wgAdslotsLazyLoad[$slotname])) {
+                if ($this->disable_lazyload || !$wgEnableAdsLazyLoad || empty($wgAdslotsLazyLoad[$slotname])) {
                     $out .= "\n".'<script type="text/javascript">' . "$function_name();" . '</script>';
                 }
 
@@ -471,7 +473,9 @@ class AdEngine {
                 $slotiframe_class = '';
                 if ($wgEnableAdsLazyLoad) {
                     if (!empty($wgAdslotsLazyLoad[$slotname])) {
-                        $slotiframe_class = self::lazyLoadAdClass;
+			if (empty($AdProvider->disable_lazyload)) {
+                        	$slotiframe_class = self::lazyLoadAdClass;
+			}
                     }
                 }
 
