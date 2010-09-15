@@ -34,7 +34,7 @@
 		display: none;
 	}
 	nav:before {
-		background: url("/skins/oasis/images/sprite.png") no-repeat;
+		background: url("/skins/oasis/images/sprite.png") no-repeat; /* $wgCdnStylePath */
 		bottom: -12px;
 		content: " ";
 		height: 12px;
@@ -43,7 +43,7 @@
 		width: 1000px;
 	}
 	nav {
-		background-image: url(/skins/oasis/images/checkers.png);
+		background-image: url(/skins/oasis/images/checkers.png); /* $wgCdnStylePath */
 		border-top: 1px solid mix($color-header-text, $color-header, 20%);
 		border-bottom: 1px solid mix(#000, $color-header, 80%);
 		font-size: 20px;
@@ -83,7 +83,7 @@
 			top: -6px;
 		}
 		img {
-			background: url(/skins/oasis/images/sprite.png) -1000px 0 no-repeat;
+			background: url(/skins/oasis/images/sprite.png) -1000px 0 no-repeat; /* $wgCdnStylePath */
 			height: 26px;
 			width: 91px;
 		}
