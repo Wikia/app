@@ -87,10 +87,10 @@ class RandomWikiHelper {
 			$dbr = wfGetDB( DB_SLAVE, array( ), $wgStatsDB );
 
 			$wikis = $dbr->select(
-					'tags_pv',
+					'page_views_tags',
 					array(
 						'city_id',
-						'sum(pviews) as pageviews'
+						'sum(pv_views) as pageviews'
 					),
 					array(
 						'city_id IN (' . implode( ',', $wikisIDs ) . ')',
