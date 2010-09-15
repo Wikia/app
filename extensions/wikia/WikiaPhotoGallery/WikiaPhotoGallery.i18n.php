@@ -38,6 +38,7 @@ Please rename the file and try again.',
 	'wikiaPhotoGallery-upload-error-readonly' => 'You cannot currently upload images, as the wiki is in read-only state.',
 	'wikiaPhotoGallery-upload-error-conflict-intro' => 'A file with this name already exists!
 What would you like to do?',
+	'wikiaPhotoGallery-upload-error-filetype-missing' => 'The uploaded file is missing a file extension.',
 	'wikiaPhotoGallery-upload-error-conflict-rename' => 'Rename your photo',
 	'wikiaPhotoGallery-upload-error-conflict-reuse' => 'Use the existing photo',
 	'wikiaPhotoGallery-upload-error-conflict-overwrite' => 'Overwrite the existing photo with yours',
