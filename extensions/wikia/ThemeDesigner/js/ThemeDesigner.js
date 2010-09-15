@@ -106,7 +106,7 @@ var ThemeDesigner = {
 	wordmarkTabInit: function() {
 		// handle font family and font size menu change
 		$("#wordmark-font").change(function() { ThemeDesigner.set("wordmark-font", $(this).val()); });
-		$("#wordmark-size").change(function() { ThemeDesigner.set("wordmark-size", $(this).val()); });
+		$("#wordmark-size").change(function() { ThemeDesigner.set("wordmark-font-size", $(this).val()); });
 
 		// handle wordmark editing
 		$("#wordmark-edit-button").click(function(event) {
@@ -249,7 +249,7 @@ var ThemeDesigner = {
 			reloadCSS = true;
 		}
 
-		if(setting == "wordmark-font" || setting == "wordmark-size" || setting == "wordmark-text" || setting == "wordmark-type") {
+		if(setting == "wordmark-font" || setting == "wordmark-font-size" || setting == "wordmark-text" || setting == "wordmark-type") {
 			updateSkinPreview = true;
 		}
 
@@ -366,7 +366,7 @@ var ThemeDesigner = {
 
 		/*** Wordmark Tab ***/
 		// style wordmark preview
-		$("#wordmark").removeClass().addClass(ThemeDesigner.settings["wordmark-font"]).addClass(ThemeDesigner.settings["wordmark-size"]).html(ThemeDesigner.settings["wordmark-text"]);
+		$("#wordmark").removeClass().addClass(ThemeDesigner.settings["wordmark-font"]).addClass(ThemeDesigner.settings["wordmark-font-size"]).html(ThemeDesigner.settings["wordmark-text"]);
 
 		// populate wordmark editor
 		$("#wordmark-edit").find('input[type="text"]').val(ThemeDesigner.settings["wordmark-text"]);
@@ -375,7 +375,7 @@ var ThemeDesigner = {
 		$("#wordmark-font").find('[value="' + ThemeDesigner.settings["wordmark-font"] + '"]').attr("selected", "selected");
 
 		// select current size
-		$("#wordmark-size").find('[value="' + ThemeDesigner.settings["wordmark-size"] + '"]').attr("selected", "selected");
+		$("#wordmark-size").find('[value="' + ThemeDesigner.settings["wordmark-font-size"] + '"]').attr("selected", "selected");
 
 		// wordmark image
 		$("#WordmarkTab").find(".graphic").find(".wordmark").attr("src", ThemeDesigner.settings["wordmark-image-url"]);
@@ -418,7 +418,7 @@ var ThemeDesigner = {
 					.removeClass()
 					.addClass("wordmark")
 					.addClass(ThemeDesigner.settings["wordmark-font"])
-					.addClass(ThemeDesigner.settings["wordmark-size"])
+					.addClass(ThemeDesigner.settings["wordmark-font-size"])
 					.find("a")
 						.text(ThemeDesigner.settings["wordmark-text"])
 						.css("display", "inline");
