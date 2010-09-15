@@ -66,12 +66,12 @@ var ThemeDesigner = {
 
 			// slide
 			if (arrow.hasClass("previous")) {
-				slideTo = parseInt(list.css("margin-left")) + slideBy;	
+				slideTo = parseInt(list.css("margin-left")) + slideBy;
 			} else {
 				slideTo = parseInt(list.css("margin-left")) - slideBy;
 			}
 			list.animate({marginLeft: slideTo}, "slow");
-			
+
 			// calculate which buttons should be enabled
 			if (slideTo == slideMax) {
 				$("#ThemeTab .next").addClass("disabled");
@@ -119,12 +119,12 @@ var ThemeDesigner = {
 			ThemeDesigner.set("wordmark-text", $("#wordmark-edit").find('input[type="text"]').val());
 			$("#wordmark, #wordmark-edit").toggle();
 		});
-		
+
 		//graphic wordmark clicking
 		$("#WordmarkTab").find(".graphic").find(".preview").find(".wordmark").click(function() {
 			ThemeDesigner.set("wordmark-type", "graphic");
 		});
-		
+
 		//grapic wordmark button
 		$("#WordmarkTab").find(".graphic").find(".preview").find("a").click(function(event) {
 			event.preventDefault();
@@ -141,7 +141,7 @@ var ThemeDesigner = {
 			})
 			.show();
 		} else {
-			$("#wordmark-shield").hide();		
+			$("#wordmark-shield").hide();
 		}
 	},
 
@@ -305,7 +305,7 @@ var ThemeDesigner = {
 
 	saveClick: function(event) {
 		event.preventDefault();
-		$(event.target).attr('disabled', true);
+		//$(event.target).attr('disabled', true);
 		ThemeDesigner.save();
 	},
 
@@ -316,7 +316,7 @@ var ThemeDesigner = {
 		$.post(wgServer + wgScript + '?action=ajax&rs=moduleProxy&moduleName=ThemeDesigner&actionName=SaveSettings&outputType=data',
 			{'settings': ThemeDesigner.settings},
 			function(data) {
-				document.location = returnTo; // redirect to article from which ThemeDesigner was triggered
+				//document.location = returnTo; // redirect to article from which ThemeDesigner was triggered
 			},
 			'json');
 	},
@@ -379,7 +379,7 @@ var ThemeDesigner = {
 
 		// wordmark image
 		$("#WordmarkTab").find(".graphic").find(".wordmark").attr("src", ThemeDesigner.settings["wordmark-image-url"]);
-		
+
 		if (ThemeDesigner.settings["wordmark-type"] == "graphic") {
 			$("#WordmarkTab").find(".graphic")
 				.find(".wordmark").addClass("selected").end()
@@ -389,7 +389,7 @@ var ThemeDesigner = {
 			$("#WordmarkTab").find(".graphic")
 				.find(".wordmark").removeClass("selected").end()
 				.find("a").hide();
-			ThemeDesigner.wordmarkShield();			
+			ThemeDesigner.wordmarkShield();
 		}
 
 		if(reloadCSS) {
