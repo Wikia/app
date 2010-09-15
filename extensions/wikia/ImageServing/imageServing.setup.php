@@ -23,3 +23,10 @@ if (isset($wgHooks['BeforeParserrenderImageGallery'])) {
 } else {
 	$wgHooks['BeforeParserrenderImageGallery'] = array( 'imageServingHelper::replaceGallery' );
 }
+
+/* Adds imageCrop api to lists */
+if ( !empty( $wgEnableWidgetBoxFeed ) ) {
+	global $wgAPIModules;
+	$wgAutoloadClasses[ "WikiaApiCroppedImage"         ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiCroppedImage.php";
+	$wgAPIModules[ "imagecrop" ] = "WikiaApiCroppedImage";
+}

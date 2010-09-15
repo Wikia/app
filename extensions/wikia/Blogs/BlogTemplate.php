@@ -318,7 +318,7 @@ class BlogTemplateClass {
 		return true;
 	}
 
-	public static function parseTag( $input, $params, &$parser ) {
+	public static function parseTag( $input, $params, &$parser, $returnPlainData = false) {
 		global $wgTitle;
 		wfProfileIn( __METHOD__ );
 		wfLoadExtensionMessages("Blogs");
@@ -330,7 +330,7 @@ class BlogTemplateClass {
 		$aParams = self::__parseXMLTag($input);
 		wfDebugLog( __METHOD__, "parse input parameters\n" );
 		/* parse all and return result */
-		$res = self::__parse($aParams, $params, $parser);
+		$res = self::__parse($aParams, $params, $parser, $returnPlainData);
 		wfProfileOut( __METHOD__ );
 		return $res;
 	}
@@ -971,7 +971,7 @@ class BlogTemplateClass {
 		return $aOutput;
 	}
 
-	private static function __parse( $aInput, $aParams, &$parser ) {
+	private static function __parse( $aInput, $aParams, &$parser, $returnPlainData = false ) {
 		global $wgLang, $wgUser, $wgCityId, $wgParser, $wgTitle;
 		global $wgExtensionsPath, $wgStylePath, $wgRequest;
 
@@ -1149,61 +1149,65 @@ class BlogTemplateClass {
 			self::__addRevisionTable();
 
 			/* build query */
-			if ( self::$aOptions['type'] == 'count' ) {
-				/* get results count */
-				$result = self::getResultsCount();
-			} else {
-				$aResult = self::__getResults();
-				/* set output */
-				if (!empty($aResult)) {
-					if ( self::$aOptions['type'] != 'array' ) {
-						$sPager = "";
-						if (self::$aOptions['type'] == 'plain') {
-							$iCount = self::getResultsCount();
-							$sPager = self::__getPager($iCount, intval(self::$aOptions['offset']));
-						}
-						/* run template */
-						$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-						$oTmpl->set_vars( array(
-							"wgUser"		=> $wgUser,
-							"cityId"		=> $wgCityId,
-							"wgLang"		=> $wgLang,
-							"aRows"			=> $aResult,
-							"aOptions"		=> self::$aOptions,
-							"wgParser"		=> $wgParser,
-							"skin"			=> $wgUser->getSkin(),
-							"wgExtensionsPath" 	=> $wgExtensionsPath,
-							"wgStylePath" 		=> $wgStylePath,
-							"sPager"		=> $sPager,
-							"wgTitle"		=> self::$oTitle,
-						) );
-						#---
-						if ( self::$aOptions['type'] == 'box' ) {
-							$result = $oTmpl->execute("blog-page");
-						} else {
-							$page = $oTmpl->execute("blog-post-page");
-							$oTmpl->set_vars( array(
-								"page" => $page
-							) );
-							$result = $oTmpl->execute("blog-article-page");
-						}
-						// macbre: let Oasis add HTML
-						wfRunHooks('BlogsRenderBlogArticlePage', array(&$result, $aResult, self::$aOptions, $sPager));
-					} else {
-						unset($result);
-						$result = self::__makeRssOutput($aResult);
-					}
+			if ( $returnPlainData ){
+				return self::__getResults();
+			}else{
+				if ( self::$aOptions['type'] == 'count' ) {
+					/* get results count */
+					$result = self::getResultsCount();
 				} else {
-					if( !empty( self::$oTitle ) && self::$oTitle->getNamespace() == NS_BLOG_ARTICLE) {
-						$result = wfMsgExt('blog-empty-user-blog', array('parse'));
-					}
-					else {
+					$aResult = self::__getResults();
+					/* set output */
+					if (!empty($aResult)) {
 						if ( self::$aOptions['type'] != 'array' ) {
-							$sk = $wgUser->getSkin();
-							$result = wfMsg('blog-nopostfound') . " " . $sk->makeLinkObj(Title::newFromText('CreateBlogPage', NS_SPECIAL), wfMsg('blog-writeone' ) );
+							$sPager = "";
+							if (self::$aOptions['type'] == 'plain') {
+								$iCount = self::getResultsCount();
+								$sPager = self::__getPager($iCount, intval(self::$aOptions['offset']));
+							}
+							/* run template */
+							$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+							$oTmpl->set_vars( array(
+								"wgUser"		=> $wgUser,
+								"cityId"		=> $wgCityId,
+								"wgLang"		=> $wgLang,
+								"aRows"			=> $aResult,
+								"aOptions"		=> self::$aOptions,
+								"wgParser"		=> $wgParser,
+								"skin"			=> $wgUser->getSkin(),
+								"wgExtensionsPath" 	=> $wgExtensionsPath,
+								"wgStylePath" 		=> $wgStylePath,
+								"sPager"		=> $sPager,
+								"wgTitle"		=> self::$oTitle,
+							) );
+							#---
+							if ( self::$aOptions['type'] == 'box' ) {
+								$result = $oTmpl->execute("blog-page");
+							} else {
+								$page = $oTmpl->execute("blog-post-page");
+								$oTmpl->set_vars( array(
+									"page" => $page
+								) );
+								$result = $oTmpl->execute("blog-article-page");
+							}
+							// macbre: let Oasis add HTML
+							wfRunHooks('BlogsRenderBlogArticlePage', array(&$result, $aResult, self::$aOptions, $sPager));
+						} else {
+							unset($result);
+							$result = self::__makeRssOutput($aResult);
+						}
+					} else {
+						if( !empty( self::$oTitle ) && self::$oTitle->getNamespace() == NS_BLOG_ARTICLE) {
+							$result = wfMsgExt('blog-empty-user-blog', array('parse'));
 						}
 						else {
-							$result = "";
+							if ( self::$aOptions['type'] != 'array' ) {
+								$sk = $wgUser->getSkin();
+								$result = wfMsg('blog-nopostfound') . " " . $sk->makeLinkObj(Title::newFromText('CreateBlogPage', NS_SPECIAL), wfMsg('blog-writeone' ) );
+							}
+							else {
+								$result = "";
+							}
 						}
 					}
 				}
