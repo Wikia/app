@@ -82,7 +82,8 @@ class PageStatsService extends Service {
 			if ($title->isTalkPage()) {
 				if (self::isArticleCommentsEnabled($title->getSubjectPage())) {
 					// get subject page for this article comment
-					$title = ArticleCommentList::getSubjectPage($title);
+					$parts = ArticleComment::explode($title->getText());
+					$title = Title::newFromText($parts['title'], MWNamespace::getSubject($title->getNamespace()));
 
 					wfDebug(__METHOD__ . ": article comment added\n");
 				}
