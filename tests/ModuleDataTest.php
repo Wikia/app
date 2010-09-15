@@ -1,7 +1,7 @@
 <?php
 // initialize skin only once
 
-global $wgTitle, $wgUser, $wgForceSkin;
+global $wgTitle, $wgUser, $wgForceSkin, $wgOut;
 
 $wgForceSkin = 'oasis';
 $wgTitle = Title::newMainPage();
@@ -9,6 +9,8 @@ $wgUser = User::newFromName('WikiaBot');
 
 wfSuppressWarnings();
 ob_start();
+
+$wgOut->setCategoryLinks(array('foo' => 1, 'bar' => 2));
 
 $skin = $wgUser->getSkin();
 $skin->outputPage(new OutputPage());
@@ -418,5 +420,13 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse($moduleData['isAnon']);
 		$this->assertEquals($userName, $moduleData['username']);
 		$this->assertEquals($moduleData['profileAvatar'], AvatarService::renderAvatar($userName, 16));
+	}
+
+	function testArticleCategoriesModule() {
+		$moduleData = Module::get('ArticleCategories')->getData();
+
+		$this->assertRegExp('/^<div id=\'catlinks\'/', $moduleData['catlinks']);
+		$this->assertRegExp('/Category:Foo/', $moduleData['catlinks']);
+		$this->assertRegExp('/Category:Bar/', $moduleData['catlinks']);
 	}
 }
