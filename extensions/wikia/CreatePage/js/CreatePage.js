@@ -120,6 +120,8 @@ CreatePage.redLinkClick = function(e, titleText) {
 
 $(function() {
 	if( window.WikiaEnableNewCreatepage ) {
+		$().log('init', 'CreatePage');
+
 		if( !window.WikiaDisableDynamicLinkCreatePagePopup ) {
 			if( $( '#dynamic-links-write-article-icon' ).exists() ) {
 				// open dialog on clicking
@@ -130,6 +132,9 @@ $(function() {
 				$( '#dynamic-links-write-article-link' ).click( function(e) { CreatePage.openDialog(e, null); });
 			}
 		}
+
+		// CreatePage chicklet (Oasis)
+		$('.createpage').click(CreatePage.openDialog);
 
 		// macbre: RT #38478
 		var addRecipeTab = $('#add_recipe_tab');
