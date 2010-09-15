@@ -9,6 +9,7 @@ class WikiHeaderModule extends Module {
 	var $menuNodes;
 	var $editURL;
 
+	var $wordmarkText;
 	var $wordmarkType;
 	var $wordmarkSize;
 	var $wordmarkStyle;
@@ -50,6 +51,7 @@ class WikiHeaderModule extends Module {
 		//$wgOut->addScript('<script src="/skins/oasis/js/WikiHeader.js"></script>');
 
 		$themeSettings = new ThemeSettings();
+		$this->wordmarkText = $themeSettings->get("wordmark-text");
 		$this->wordmarkType = $themeSettings->get("wordmark-type");
 		$this->wordmarkSize = $themeSettings->get("wordmark-size");
 		
