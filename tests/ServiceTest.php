@@ -26,6 +26,7 @@ class ServiceTest extends PHPUnit_Framework_TestCase {
 	}
 
 	function testUserStatsService() {
+		global $wgArticle;
 		$user = User::newFromName('WikiaBot');
 
 		$service = new UserStatsService($user->getId());
@@ -34,6 +35,26 @@ class ServiceTest extends PHPUnit_Framework_TestCase {
 		$this->assertType('int', $stats['edits']);
 		$this->assertType('int', $stats['likes']);
 		$this->assertType('string', $stats['date']);
+
+		// edits increase - perform fake edit
+		$edits = $stats['edits'];
+
+		$flags = $status = false;
+		UserStatsService::onArticleSaveComplete($wgArticle, $user, false, false, false, false, false, $flags, false, $status, false);
+
+		$stats = $service->getStats();
+
+		$this->assertEquals($edits+1, $stats['edits']);
+
+		// edits increase ("manual")
+		$edits = $stats['edits'];
+
+		$service->increaseEditsCount();
+
+		$stats = $service->getStats();
+
+		$this->assertEquals($edits+1, $stats['edits']);
+
 	}
 
 }
