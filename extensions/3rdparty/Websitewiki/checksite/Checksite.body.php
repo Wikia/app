@@ -102,9 +102,12 @@ class Checksite extends SpecialPage {
 
 		$output = wfMsg('checksite-screenshot-updating', $newpage);
 
-		//TODO: should this URL be like this? or had we imported this script too?
-		$url = fopen("http://thumbs.websitewiki.de/newthumb.php?name=$newdom", 'r');
-		fclose($url);
+		/**
+		 * @todo -- lines below do nothing, so why they are there?
+		 * 
+		 * $url = fopen("http://thumbs.websitewiki.de/newthumb.php?name=$newdom", 'r');
+		 * fclose($url);
+		 */
 
 		# Output
 		$wgOut->addHTML( $output);
