@@ -166,7 +166,7 @@
 
 				$pages = array();
 				while ($row = $res->fetchObject($res)) {
-					$pages[$row->page_id] = $row;
+					$pages[intval($row->page_id)] = $row;
 				}
 				$pageIds = array_keys($pages);
 
@@ -176,8 +176,8 @@
 					$page = $pages[$pageId];
 					$articles[$pageId] = array(
 						'page_id' => $pageId,
-						'page_title' => $row->page_title,
-						'page_namespace' => $row->page_namespace,
+						'page_title' => $page->page_title,
+						'page_namespace' => $page->page_namespace,
 						'views' => $views,
 					);
 				}
