@@ -2,6 +2,7 @@
 
 class AdProviderDART extends AdProviderIframeFiller implements iAdProvider {
 
+	public $enable_lazyload = true;
 	private $isMainPage, $useIframe = false;
 
 	protected static $instance = false;
