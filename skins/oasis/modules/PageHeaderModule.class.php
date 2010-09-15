@@ -404,7 +404,7 @@ class PageHeaderModule extends Module {
 
 		// back to article link
 		if (!$isPreview && !$isShowChanges) {
-			$this->subtitle = View::link($wgTitle, wfMsg('oasis-page-header-back-to-article'), array('accesskey' => 'c'));
+			$this->subtitle = View::link($wgTitle, wfMsg('oasis-page-header-back-to-article'), array('accesskey' => 'c'), array(), 'known');
 		}
 
 		// add edit button
@@ -455,7 +455,7 @@ class PageHeaderModule extends Module {
 		$this->title = wfMsg($msg, htmlspecialchars($wgTitle->getPrefixedText()));
 
 		// back to article link
-		$this->subtitle = View::link($wgTitle, wfMsg('oasis-page-header-back-to-article'), array('accesskey' => 'c'));
+		$this->subtitle = View::link($wgTitle, wfMsg('oasis-page-header-back-to-article'), array('accesskey' => 'c'), array(), 'known');
 
 		wfProfileOut(__METHOD__);
 	}
