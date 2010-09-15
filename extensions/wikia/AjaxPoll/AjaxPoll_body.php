@@ -235,6 +235,9 @@ wgAfterContentAndJS.push(function() {
 		importStylesheetURI('{$wgExtensionsPath}/wikia/AjaxPoll/AjaxPoll.css?{$wgStyleVersion}');
 		importScriptURI('{$wgExtensionsPath}/wikia/AjaxPoll/AjaxPoll.js?{$wgStyleVersion}');
 		window.AjaxPollLoaded = true;
+		if (skin == 'oasis') {
+			importStylesheetURI(wfGetSassUrl('extensions/wikia/AjaxPoll/oasis.scss'));
+		}
 	}
 });
 /*]]>*/</script>
