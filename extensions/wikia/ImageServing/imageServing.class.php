@@ -7,7 +7,6 @@ class imageServing{
 	private $maxCount = 20;
 	private $minSize = 75;
 	private $articles = array();
-	private $files = array();
 	private $width;
 	private $proportion;
 	private $deltaY = 0;
@@ -21,14 +20,10 @@ class imageServing{
 	 */
 	function __construct($articles, $width = 100, $proportion = array("w" => 1, "h" => 1), $db = null){
 
-		foreach($articles as $article){
-			$article_id = ( int ) $article;
-
-			$title = Title::newFromID( $article_id );
-
-			if ( ( $title instanceof Title ) && ( $title->getNamespace() == NS_FILE ) ) {
-				$this->files[ $article_id ] = $title->getDBKey();
-			} else {
+		if( is_array( $articles ) ) {
+			foreach($articles as $article){
+				$article_id = ( int ) $article;
+				$title = Title::newFromID( $article_id );
 				$this->articles[] = $article_id;
 			}
 		}
@@ -43,7 +38,6 @@ class imageServing{
 	 * getImages - get array with list of top images for all article pass to construct
 	 *
 	 * @author Tomek Odrobny
-	 * @author Federico "Lox" Lucignano
 	 * 
 	 * @access public
 	 *
@@ -56,7 +50,6 @@ class imageServing{
 	public function getImages( $n = 5, $article_lp = 0 ) {
 		global $wgMemc;
 		$articles = $this->articles;
-		$files = $this->files;
 		wfProfileIn( __METHOD__ );
 		$cache_return = array();
 		
@@ -70,20 +63,7 @@ class imageServing{
 			}
 		}
 
-		foreach ( $files as $article_id => $db_key ) {
-			$mcKey = wfMemcKey( "imageserving", $this->width, $n, $this->proportion["w"], $this->proportion["h"], $article_id );
-			$mcOut = $wgMemc->get( $mcKey, null );
-
-			if($mcOut != null) {
-				unset( $files[ $article_id ] );
-				$cache_return[ $article_id ] = $mcOut;
-			}
-		}
-
-		$articles_count = count( $articles );
-		$files_count = count( $files );
-
-		if( $articles_count && $files_count ) {
+		if( count( $articles ) < 1 ) {
 			return $cache_return;
 		}
 
@@ -96,39 +76,32 @@ class imageServing{
 		$image_list = array();
 		$images_name = array();
 		
-		if( $articles_count ) {
-			$res = $db->select(
-				array( 'page_wikia_props' ),
-				array(
-					'page_id',
-					'props'
-				),
-				array(
-					'page_id in(' . implode( ",", $articles ) . ')',
-					"propname = 'imageOrder' or propname =  0"
-				),
-				__METHOD__
-			);
+		$res = $db->select(
+			array( 'page_wikia_props' ),
+			array(
+				'page_id',
+				'props'
+			),
+			array(
+				'page_id in(' . implode( ",", $articles ) . ')',
+				"propname = 'imageOrder' or propname =  0"
+			),
+			__METHOD__
+		);
 
 
 
-			/* build list of images to get info about it */
-			while ($row =  $db->fetchRow( $res ) ) {
-				$props = unserialize( $row['props'] );
-				foreach( $props as $key => $value ) {
-					if( empty($image_list[$value][$row['page_id']]) ) {
-						if( empty($image_list[$value]) ) {
-							$images_name[] = $db->addQuotes( $value );
-						}
-						$image_list[$value][$row['page_id']] = $key;
+		/* build list of images to get info about it */
+		while ($row =  $db->fetchRow( $res ) ) {
+			$props = unserialize( $row['props'] );
+			foreach( $props as $key => $value ) {
+				if( empty($image_list[$value][$row['page_id']]) ) {
+					if( empty($image_list[$value]) ) {
+						$images_name[] = $db->addQuotes( $value );
 					}
+					$image_list[$value][$row['page_id']] = $key;
 				}
 			}
-		}
-
-		foreach ( $files as $article_id => $db_key ) {
-			$image_list[$db_key][$article_id] = 1;
-			$images_name[] = $db->addQuotes( $db_key );
 		}
 		
 		if ( count( $image_list ) == 0 ) {
@@ -193,6 +166,28 @@ class imageServing{
 		return $out + $cache_return;
 	}
 
+	/**
+	 * Supplies the URL to an image thumbnail of the desired size
+	 *
+	 * @author Federico "Lox" Lucignano
+	 *
+	 * @param string $fileName
+	 * @param int $width
+	 * @param int $height
+	 * @return Array an array containing the url to the thumbnail image and the title of the image article
+	 */
+	public function getThumbnail( $fileName, $width = 0, $height = 0) {
+		$title = Title::newFromText( $fileName, NS_FILE );
+		if ( $img = wfFindFile( $title ) ) {
+			return array(
+				'name' => $title->getText(),
+				'url' => wfReplaceImageServer( $img->getThumbUrl( $this->getCut( $width, $height ) . "-" . $img->getName() ) )
+			);
+		}
+
+		return null;
+	}
+	
 	/**
 	 * getUrl - generate url for cut images
 	 *
