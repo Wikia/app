@@ -8,6 +8,7 @@ span.wikia-button a,
 input[type="submit"],
 input[type="reset"],
 input[type="button"],
+.button,
 button {
 	@include border-radius(4px);
 	@include linear-gradient($color-buttons, top, $color-button-highlight, 35%, $color-buttons, 65%);
