@@ -2,6 +2,7 @@
 
 class AdProviderOpenX extends AdProviderIframeFiller implements iAdProvider {
 
+	public $enable_lazyload = true;
 	private $useIframe = false;
 
 	protected static $instance = false;

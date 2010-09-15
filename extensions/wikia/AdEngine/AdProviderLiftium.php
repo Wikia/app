@@ -4,8 +4,6 @@ class AdProviderLiftium extends AdProviderIframeFiller implements iAdProvider {
 
 	protected static $instance = false;
 
-	public $disable_lazyload = true;
-
         private $slotsToCall = array();
 
         public function addSlotToCall($slotname){
