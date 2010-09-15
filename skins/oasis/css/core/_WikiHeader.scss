@@ -7,6 +7,12 @@
 	.wordmark {
 		@include wordmark;
 		color: $color-links;
+		&.graphic {
+			height: 65px;
+			a {
+				display: none;
+			}
+		}
 	}
 	h1:before, 
 	.shadow-mask {

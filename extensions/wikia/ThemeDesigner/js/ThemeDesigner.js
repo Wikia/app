@@ -49,20 +49,39 @@ var ThemeDesigner = {
 
 	themeTabInit: function() {
 
+		var slideBy = 760;
+		var slideMax = -Math.floor($("#ThemeTab .slider ul li").length / 5) * 760;
+
 		// click handler for next and previous arrows in theme slider
 		$("#ThemeTab .previous, #ThemeTab .next").click(function(event) {
 			event.preventDefault();
 			var list = $("#ThemeTab .slider ul");
 			var arrow = $(this);
+			var slideTo = null;
 
 			// prevent disabled clicks
 			if(arrow.hasClass("disabled")) {
 				return;
 			}
 
-			var slideTo = (arrow.hasClass("previous")) ? 0 : -760;
+			// slide
+			if (arrow.hasClass("previous")) {
+				slideTo = parseInt(list.css("margin-left")) + slideBy;	
+			} else {
+				slideTo = parseInt(list.css("margin-left")) - slideBy;
+			}
 			list.animate({marginLeft: slideTo}, "slow");
-			$("#ThemeTab .next, #ThemeTab .previous").toggleClass("disabled");
+			
+			// calculate which buttons should be enabled
+			if (slideTo == slideMax) {
+				$("#ThemeTab .next").addClass("disabled");
+				$("#ThemeTab .previous").removeClass("disabled");
+			} else if (slideTo == 0) {
+				$("#ThemeTab .next").removeClass("disabled");
+				$("#ThemeTab .previous").addClass("disabled");
+			} else {
+				$("#ThemeTab .next, #ThemeTab .previous").removeClass("disabled");
+			}
 		});
 
 		// click handler for themes thumbnails
@@ -100,6 +119,30 @@ var ThemeDesigner = {
 			ThemeDesigner.set("wordmark-text", $("#wordmark-edit").find('input[type="text"]').val());
 			$("#wordmark, #wordmark-edit").toggle();
 		});
+		
+		//graphic wordmark clicking
+		$("#WordmarkTab").find(".graphic").find(".preview").find(".wordmark").click(function() {
+			ThemeDesigner.set("wordmark-type", "graphic");
+		});
+		
+		//grapic wordmark button
+		$("#WordmarkTab").find(".graphic").find(".preview").find("a").click(function(event) {
+			event.preventDefault();
+			ThemeDesigner.set("wordmark-type", "text");
+		});
+	},
+
+	wordmarkShield: function() {
+		if (ThemeDesigner.settings["wordmark-type"] == "graphic") {
+			$("#wordmark-shield")
+			.css({
+				height: $("#wordmark-shield").parent().outerHeight(true),
+				width: $("#wordmark-shield").parent().outerWidth(true)
+			})
+			.show();
+		} else {
+			$("#wordmark-shield").hide();		
+		}
 	},
 
 	toolBarInit: function() {
@@ -206,7 +249,7 @@ var ThemeDesigner = {
 			reloadCSS = true;
 		}
 
-		if(setting == "wordmark-font" || setting == "wordmark-size" || setting == "wordmark-text") {
+		if(setting == "wordmark-font" || setting == "wordmark-size" || setting == "wordmark-text" || setting == "wordmark-type") {
 			updateSkinPreview = true;
 		}
 
@@ -231,7 +274,7 @@ var ThemeDesigner = {
 
 				ThemeDesigner.set("wordmark-image-name", response.wordmarkImageName);
 				ThemeDesigner.set("wordmark-image-url", response.wordmarkImageUrl);
-
+				ThemeDesigner.set("wordmark-type", "graphic");
 			}
 		}
 	},
@@ -284,8 +327,15 @@ var ThemeDesigner = {
 		var clickedLink = $(this);
 		var command = clickedLink.attr("rel");
 
+		//select the correct tab
 		clickedLink.parent().addClass("selected").siblings().removeClass("selected");
+		//show the correct panel
 		$("#" + command).show().siblings("section").hide();
+
+		//hide wordmark text side if necessary
+		if (command == "WordmarkTab") {
+			ThemeDesigner.wordmarkShield();
+		}
 	},
 
 	resizeIframe: function() {
@@ -328,13 +378,25 @@ var ThemeDesigner = {
 		$("#wordmark-size").find('[value="' + ThemeDesigner.settings["wordmark-size"] + '"]').attr("selected", "selected");
 
 		// wordmark image
-		$("#WordmarkTab").find(".graphic").find(".preview").attr("src", ThemeDesigner.settings["wordmark-image-url"]);
+		$("#WordmarkTab").find(".graphic").find(".wordmark").attr("src", ThemeDesigner.settings["wordmark-image-url"]);
+		
+		if (ThemeDesigner.settings["wordmark-type"] == "graphic") {
+			$("#WordmarkTab").find(".graphic")
+				.find(".wordmark").addClass("selected").end()
+				.find("a").css("display", "inline-block");
+			ThemeDesigner.wordmarkShield();
+		} else {
+			$("#WordmarkTab").find(".graphic")
+				.find(".wordmark").removeClass("selected").end()
+				.find("a").hide();
+			ThemeDesigner.wordmarkShield();			
+		}
 
 		if(reloadCSS) {
 
 			$().log('applySettings, reloadCSS');
 
-			var sass = "/__sass/skins/oasis/css/oasis.scss/128263333333333333333127999/";
+			var sass = "/__sass/skins/oasis/css/oasis.scss/33333/";
 			sass += "color-body=" + escape(ThemeDesigner.settings["color-body"]);
 			sass += "&color-page=" + escape(ThemeDesigner.settings["color-page"]);
 			sass += "&color-buttons=" + escape(ThemeDesigner.settings["color-buttons"]);
@@ -348,12 +410,26 @@ var ThemeDesigner = {
 
 			$().log('applySettings, updateSkinPreview');
 
-			$("#PreviewFrame").contents().find("#WikiHeader").find(".wordmark")
-				.removeClass()
-				.addClass("wordmark")
-				.addClass(ThemeDesigner.settings["wordmark-font"])
-				.addClass(ThemeDesigner.settings["wordmark-size"])
-				.find("a").text(ThemeDesigner.settings["wordmark-text"])
+			if (ThemeDesigner.settings["wordmark-type"] == "text") {
+				$("#PreviewFrame").contents().find("#WikiHeader").find(".wordmark")
+					.css({
+						"background-image": "none",
+					})
+					.removeClass()
+					.addClass("wordmark")
+					.addClass(ThemeDesigner.settings["wordmark-font"])
+					.addClass(ThemeDesigner.settings["wordmark-size"])
+					.find("a")
+						.text(ThemeDesigner.settings["wordmark-text"])
+						.css("display", "inline");
+			} else if (ThemeDesigner.settings["wordmark-type"] == "graphic") {
+				$("#PreviewFrame").contents().find("#WikiHeader").find(".wordmark")
+					.addClass("graphic")
+					.css({
+						"background-image": "url(" + ThemeDesigner.settings["wordmark-image-url"] + ")",
+					})
+					.find("a").hide()
+			}
 		}
 	},
 

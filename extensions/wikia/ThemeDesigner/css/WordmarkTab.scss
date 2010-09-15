@@ -1,6 +1,33 @@
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/opacity";
+
 .WordmarkTab {
 	.graphic {
 		padding-left: 40px;
+		.preview {
+			margin-top: 10px;
+			.wordmark {
+				cursor: pointer;
+				&.selected {
+					@include box-shadow(0px, 0px, 5px, #72ADD5);
+					border-color: #72ADD5;
+					cursor: default;
+				}
+			}
+			a {
+				background: #EEE url(/extensions/wikia/ThemeDesigner/images/void_button.png) 50% 40px no-repeat;
+				border: 1px solid #CCC;
+				color: #666;
+				display: none;
+				font-size: 11px;
+				height: 55px;
+				margin-left: 5px;
+				padding: 5px;
+				text-align: center;
+				vertical-align: top;
+				width: 55px;
+			}
+		}
 	}
 	.controls {
 		@include clearfix;
@@ -18,5 +45,13 @@
 	}
 	#wordmark-edit {
 		display: none;
+	}
+	#wordmark-shield {
+		@include opacity(75);
+		background: #FFF;
+		display: none;
+		left: 0;
+		position: absolute;
+		top: 0;
 	}
 }

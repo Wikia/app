@@ -38,10 +38,11 @@ class ThemeSettings {
 		$settings['wordmark-text'] = $wgSitename;
 		$settings['wordmark-color'] = $settings['color-links'];
 		$settings['wordmark-font'] = '';
-		$settings['wordmark-font-size'] = '';
+		$settings['wordmark-font-size'] = 'medium';
 		$settings['wordmark-image-url'] = '';
 		$settings['wordmark-image-name'] = '';
-
+		$settings['wordmark-type'] = "text";
+		
 		// main page banner
 		$settings['banner-image'] = false;
 		$settings['banner-image-revision'] = false;

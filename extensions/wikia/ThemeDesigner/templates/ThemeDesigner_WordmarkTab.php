@@ -4,7 +4,7 @@
 
 		<ul class="controls">
 			<li>
-				<button class="secondary" id="wordmark-edit-button"><img src="<?= $wgStylePath ?>/common/blank.gif"> Edit</button>
+				<button class="secondary" id="wordmark-edit-button"><img src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/images/secondary_edit.png"> Edit</button>
 			</li>
 			<li>
 				<h2>font</h2>
@@ -39,6 +39,8 @@
 			<button>Save</button>
 		</div>
 
+		<div id="wordmark-shield"></div>
+
 	</fieldset>
 	<fieldset class="graphic">
 		<h1><?= wfMsg('themedesigner-graphic-wordmark') ?></h1>
@@ -48,8 +50,11 @@
 			<input id="WordMarkUploadFile" name="wpUploadFile" type="file" />
 			<input type="submit" value="Upload" onclick="return ThemeDesigner.wordmarkUpload(event);"/> 250x65 pixels (only .png files)
 		</form>
-		
-		<img src="<?= $wgStylePath ?>/common/blank.gif" class="preview">
+
+		<div class="preview">
+			<img src="<?= $wgStylePath ?>/common/blank.gif" class="wordmark">
+			<a href="#">Don't use a graphic</a>
+		</div>
 
 	</fieldset>
 </section>
