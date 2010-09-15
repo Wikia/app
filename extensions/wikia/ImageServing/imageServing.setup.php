@@ -25,7 +25,7 @@ if (isset($wgHooks['BeforeParserrenderImageGallery'])) {
 }
 
 /* Adds imageCrop api to lists */
-if ( !empty( $wgEnableWidgetBoxFeed ) ) {
+if ( !empty( $wgEnableWidgetBoxFeedExt ) ) {
 	global $wgAPIModules;
 	$wgAutoloadClasses[ "WikiaApiCroppedImage"         ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiCroppedImage.php";
 	$wgAPIModules[ "imagecrop" ] = "WikiaApiCroppedImage";
