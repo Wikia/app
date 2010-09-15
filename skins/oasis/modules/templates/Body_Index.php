@@ -71,6 +71,10 @@
 
 </section><!--WikiaPage-->
 
-<?= wfRenderModule('Feedback') ?>
+<?php
+	if(!$noexternals){
+		wfRenderModule('Feedback')
+	}
+?>
 <?= wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_1')) ?>
 <?= wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_2')) ?>
