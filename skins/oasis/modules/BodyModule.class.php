@@ -215,8 +215,6 @@ class BodyModule extends Module {
 		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog;
 
 		$this->isMainPage = ArticleAdLogic::isMainPage();
-
-		$this->bodytext = Module::get('ContentDisplay')->getData('bodytext');
 		
 		global $wgNoExternals, $wgRequest;
 		$noExt = $wgRequest->getVal('noexternals');
@@ -224,6 +222,8 @@ class BodyModule extends Module {
 			$wgNoExternals = true;
 		}
 		$this->noexternals = (!empty($wgNoExternals));
+
+		$this->bodytext = Module::get('ContentDisplay')->getData('bodytext');
 
 		$this->railModuleList = $this->getRailModuleList();
 		// this hook allows adding extra HTML just after <body> opening tag
