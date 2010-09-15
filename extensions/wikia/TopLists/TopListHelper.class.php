@@ -183,7 +183,7 @@ class TopListHelper {
 		}
 
 		if( !empty( $selectedImageTitle ) ) {
-			$title = Title::newFromText( "File:{$selectedImageTitle}" );
+			$title = Title::newFromText( $selectedImageTitle, NS_FILE );
 			
 			if( !empty( $title ) && $title->exists() ) {
 				$articleId = $title->getArticleId();
