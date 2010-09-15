@@ -398,4 +398,25 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($railList[1150][0], 'Spotlights');
 	}
 
+	function testAccountNavigationModule() {
+		global $wgUser;
+		$userName = $wgUser->getName();
+
+		$moduleData = Module::get('AccountNavigation')->getData();
+
+		// user urls
+		$this->assertEquals(6, count($moduleData['personal_urls']));
+		$this->assertRegExp("/User:{$userName}$/", $moduleData['personal_urls']['userpage']['href']);
+
+		// dropdown
+		$this->assertRegExp("/User_talk:{$userName}/", $moduleData['dropdown'][0]);
+
+		// logout link
+		$this->assertRegExp('/Log out<\/a>$/', $moduleData['links'][0]);
+
+		// user data
+		$this->assertFalse($moduleData['isAnon']);
+		$this->assertEquals($userName, $moduleData['username']);
+		$this->assertEquals($moduleData['profileAvatar'], AvatarService::renderAvatar($userName, 16));
+	}
 }
