@@ -9,6 +9,10 @@ class WikiHeaderModule extends Module {
 	var $menuNodes;
 	var $editURL;
 
+	var $wordmarkType;
+	var $wordmarkSize;
+	var $wordmarkStyle;
+
 	var $canEdit;
 
 	private function parseMonacoSidebarToOasisNavigation($text) {
@@ -44,6 +48,14 @@ class WikiHeaderModule extends Module {
 		global $wgOut, $wgCityId, $wgUser;
 		// Moved to StaticChute.
 		//$wgOut->addScript('<script src="/skins/oasis/js/WikiHeader.js"></script>');
+
+		$themeSettings = new ThemeSettings();
+		$this->wordmarkType = $themeSettings->get("wordmark-type");
+		$this->wordmarkSize = $themeSettings->get("wordmark-size");
+		
+		if ($this->wordmarkType == "graphic") {
+			$this->wordmarkStyle = 'style="background: url('. $themeSettings->get("wordmark-image-url") .') no-repeat"';
+		}
 
 		$this->mainPageURL = Title::newMainPage()->getLocalURL();
 		$service = new NavigationService();

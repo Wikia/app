@@ -35,6 +35,8 @@ $color-selected-thumbnail: #72ADD5;
 		border: 1px solid $color-borders;
 		cursor: pointer;
 		display: block;
+		height: 100px;
+		width: 120px;
 	}
 	.chevron {
 		border-style: solid;

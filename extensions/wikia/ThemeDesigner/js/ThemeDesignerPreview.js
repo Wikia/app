@@ -15,6 +15,10 @@ var ThemeDesignerPreview = {
 			
 		$("#WikiaArticle .thumbinner").append('<div class="picture-attribution"><img width="16" height="16" class="avatar" src="/extensions/wikia/ThemeDesigner/images/td-avatar.jpg">Added by <a>FunnyBunny</a></div>');
 		$("a.new").removeClass("new");
+		
+		//no floating footer on preview
+		$("#WikiaFooter").children(".toolbar").removeClass("float");
+		$(window).unbind("scroll");
 	},
 
 	loadSASS: function(url) {

@@ -59,8 +59,8 @@ $wgOasisThemes = array(
 		"color-body" => "#003816",
 		"color-page" => "#DFDBC3",
 		"color-buttons" => "#C5A801",
-		"color-links" => "#9C030E",
-		"background-image" => "jade.jpg",
+		"color-links" => "#BE6202",
+		"background-image" => "",
 		"background-tiled" => false
 	),
 	'sky' => array(
@@ -79,12 +79,20 @@ $wgOasisThemes = array(
 		"background-image" => "moonlight.jpg",
 		"background-tiled" => false
 	),
-	'obsession' => array(
+	'opulence' => array(
 		"color-body" => "#7A0146",
 		"color-page" => "#36001F",
 		"color-buttons" => "#DE1C4E",
 		"color-links" => "#F97EC4",
-		"background-image" => "obsession.jpg",
+		"background-image" => "opulence.png",
+		"background-tiled" => true
+	),
+	'obsession' => array(
+		"color-body" => "#191919",
+		"color-page" => "#1C0400",
+		"color-buttons" => "#891100",
+		"color-links" => "#FF6F1E",
+		"background-image" => "",
 		"background-tiled" => true
 	),
 	'carbon' => array(
