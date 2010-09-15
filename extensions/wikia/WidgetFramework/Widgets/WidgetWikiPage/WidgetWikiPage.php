@@ -44,11 +44,9 @@ function WidgetWikiPage($id, $params) {
 
 	//stopgap for 67038
 	$source = Title::newFromText( $params['source'] );
-	if( !$source->userCanRead() )
-	{
+	if( is_object( $source ) && !$source->userCanRead() ) {
 		return array('body' => '', 'title' => $params['name'] );
 	}
-	unset($source);
 	
 	//
 	// parse message and clean it up
