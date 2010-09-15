@@ -74,6 +74,12 @@ function devBoxPanelAdditionalScripts( &$out, &$sk ){
  */
 function wfDevBoxForceWiki(&$wikiFactoryLoader){
 	global $wgDevelEnvironment, $wgWikiFactoryDB, $wgCommandLineMode;
+
+	// macbre: don't run code below when running in command line mode (memcache starts to act strange)
+	if (!empty($wgCommandLineMode)) {
+		return true;
+	}
+
 	if($wgDevelEnvironment){
 		$forcedWikiDomain = getForcedWikiValue();
 		$cityId = WikiFactory::DomainToID($forcedWikiDomain);
@@ -82,15 +88,15 @@ function wfDevBoxForceWiki(&$wikiFactoryLoader){
 			$forcedWikiDomain = DEVBOX_DEFAULT_WIKI_DOMAIN;
 			$cityId = WikiFactory::DomainToID($forcedWikiDomain);
 		}
-		
+
 		if($wgCommandLineMode) {
 			$cityId = getenv( "SERVER_ID" );
-			
+
 			$wikiFactoryLoader->mCityId = $cityId;
 			$wikiFactoryLoader->mWikiId = $cityId;
 		}
-		
-		
+
+
 		if($cityId){
 			$wikiFactoryLoader->mServerName = $forcedWikiDomain;
 
@@ -182,7 +188,7 @@ function getDevBoxOverrideDatabases($db){
 
 /**
  * The main function of the SpecialPage.  Adds the content for the page
- * to the wgOut global. 
+ * to the wgOut global.
  */
 function wfDevBoxPanel() {
 	global $wgOut,$wgHooks,$wgDevelEnvironment;
@@ -192,11 +198,11 @@ function wfDevBoxPanel() {
 	$wgOut->setPageTitle(wfMsg("devbox-title"));
 	$wgOut->setRobotpolicy( 'noindex,nofollow' );
 	$wgOut->setArticleRelated( false );
-	
+
 	if($wgDevelEnvironment){
-		if (isset($_REQUEST['switch'])) svnHandleSwitch();	
+		if (isset($_REQUEST['switch'])) svnHandleSwitch();
 		if (isset($_REQUEST['update'])) svnHandleUpdate();
-		
+
 		$tmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$tmpl->set_vars(array(
 							"svnToolHtml"      => getHtmlForSvnTool(),
@@ -224,7 +230,7 @@ function svnHandleSwitch() {
 	} else {
 		$url .= "branches/$branch";
 	}
-	
+
 	$base_path = dirname(dirname(dirname(dirname(dirname( __FILE__ )))));
 	shell_exec("cd $base_path; svn switch $url");
 }
@@ -236,31 +242,31 @@ function svnHandleSwitch() {
 function getHtmlForSvnTool() {
 	global $wgTitle;
 	$errors = array();
-	
+
 	$base_path = dirname(dirname(dirname(dirname(dirname( __FILE__ )))));
 	$stat = stat($base_path);
 	if ($stat['gid'] != posix_getegid()) {
 		$group = posix_getgrgid(posix_getegid());
 		$errors[] = "Incorrect file ownership.  To fix, run:<br><code>sudo chgrp -R ".$group['name']." $base_path</code>";
 	}
-	
+
 	$perms = fileperms($base_path);
 	if (!($perms & 0x0010)) {
 		$errors[] = "Incorrect file permissions. To fix, run:<br><code>sudo chmod -R g+w $base_path</code>";
 	}
-	
+
 	$tmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 	$data = shell_exec("svn info ".dirname(dirname(dirname(dirname(dirname( __FILE__ ))))));
-	
+
 	foreach (split("\n", $data) as $line) {
 		if (empty($line)) continue;
 		list($k, $v) = split(": ", $line);
 		$info{$k} = $v;
 	}
-	
+
 	$data = shell_exec("svn list https://svn.wikia-code.com/wikia/branches/");
 	$branches = array_map(create_function('$v', 'return rtrim($v, "/");'), split("\n", $data));
-	
+
 	$tmpl->set_vars(array(
 						"svnUrl"     => $info{'URL'},
 						"svnUpdated" => $info{'Last Changed Date'},
@@ -283,7 +289,7 @@ function getHtmlForSvnTool() {
  */
 function getHtmlForDatabaseComparisonTool(){
 	$html = "";
-	
+
 	// Determine what databases are on this dev-box.
 
 	global $wgDBname,$wgExternalSharedDB, $wgWikiFactoryDB;
@@ -336,7 +342,7 @@ function getHtmlForInfo(){
 
 	global $IP,$wgScriptPath,$wgExtensionsPath,$wgCityId;
 	global $wgDBname,$wgExternalSharedDB;
-	
+
 	$settings = array(
 		"error_log"            => ini_get('error_log'),
 		"\$IP"                 => $IP,
