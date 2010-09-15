@@ -99,6 +99,14 @@
 		font-size: .78em;
 	}
 
+	.center {
+		text-align: center;
+		width: 100%;
+		* {
+			margin-left: auto;
+			margin-right: auto;
+		}
+	}
 	.floatright {
 		clear: right;
 		float: right;
