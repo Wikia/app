@@ -631,6 +631,7 @@ class AdEngine {
 		switch ($this->slots[$slotname]['size']){
 			case '200x75': return 'spotlight';
 			case '125x125': return 'spotlight';
+			case '269x143': return 'spotlight';
 			case '728x90': return 'leaderboard';
 			case '300x250': return 'boxad';
 			case '160x600': return 'skyscraper';
