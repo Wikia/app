@@ -302,7 +302,7 @@ class SpecialEditTopList extends SpecialPage {
 		$selectedImage = null;
 		
 		if( !empty( $selectedPictureName ) ) {
-			$title = Title::newFromText( "File:{$selectedPictureName}" );
+			$title = Title::newFromText( $selectedPictureName, NS_FILE );
 
 			if( !empty( $title ) && $title->exists() ) {
 				$articleId = $title->getArticleId();
