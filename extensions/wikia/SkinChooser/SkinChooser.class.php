@@ -433,6 +433,10 @@ class SkinChooser {
 				} else {
 					$userSkin = 'monaco';
 				}	
+			} else if(!empty($wgAdminSkin) && $userSkin != 'oasis') {
+				$adminSkinArray = explode('-', $wgAdminSkin);
+				$userSkin = isset($adminSkinArray[0]) ? $adminSkinArray[0] : null;
+				$userTheme = isset($adminSkinArray[1]) ? $adminSkinArray[1] : null;
 			}
 		}
 		wfProfileOut(__METHOD__.'::GetSkinLogic');
