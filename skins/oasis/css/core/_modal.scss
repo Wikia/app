@@ -29,7 +29,6 @@
 
 .modalContent {
 	@include clearfix;
-	/*background: url(/skins/oasis/images/shadow_narrow.png) center 1px no-repeat;*/
 	border: 1px solid $color-page-border;
 	padding: 10px;
 }
@@ -77,7 +76,7 @@ yui-overlay, .yui-panel-container {
 			font-size: 22px;
 		}
 		.close {
-			background-image: url(/skins/oasis/images/sprite.png);
+			background-image: url(/skins/oasis/images/sprite.png); /* $wgCdnStylePath */
 			background-position: -1096px -32px;
 			height: 15px;
 			position: static;
