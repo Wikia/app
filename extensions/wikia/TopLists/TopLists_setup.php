@@ -80,7 +80,7 @@ $wgAutoloadClasses[ 'TopListParser' ] = "{$dir}/TopListParser.class.php";
 $wgAutoloadClasses[ 'TopListBase' ] = "{$dir}/TopListBase.class.php";
 $wgAutoloadClasses[ 'TopList' ] = "{$dir}/TopList.class.php";
 $wgAutoloadClasses[ 'TopListItem' ] = "{$dir}/TopListItem.class.php";
-$wgAutoloadClasses[ 'WikiaPhotoGalleryUpload' ] = "{$dir}../WikiaPhotoGallery/WikiaPhotoGalleryUpload.class.php";
+$wgAutoloadClasses[ 'WikiaPhotoGalleryUpload' ] = "{$dir}/../WikiaPhotoGallery/WikiaPhotoGalleryUpload.class.php";
 
 $wgAutoloadClasses[ 'SpecialCreateTopList' ] = "{$dir}/specials/SpecialCreateTopList.class.php";
 $wgAutoloadClasses[ 'SpecialEditTopList' ] = "{$dir}/specials/SpecialEditTopList.class.php";
