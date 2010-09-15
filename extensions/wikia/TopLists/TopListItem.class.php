@@ -8,8 +8,6 @@
 class TopListItem extends TopListBase {
 
 	protected $votesCount = null;
-	//TODO: implement
-	protected $creatorUserName = 'Somebody';
 	protected $mNewContent = null;
 
 	/**
@@ -115,8 +113,7 @@ class TopListItem extends TopListBase {
 	 * @return string
 	 */
 	public function getCreatorUserName() {
-		//TODO: implement
-		return $this->creatorUserName;
+		return $this->mTitle->getFirstRevision()->getUserText();
 	}
 
 	public function getTitleText() {
