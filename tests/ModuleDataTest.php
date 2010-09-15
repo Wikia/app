@@ -464,5 +464,14 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($revisions, $moduleData['revisions']);
 	}
 
+	function testHotSpotsModule() {
+		$moduleData = Module::get('HotSpots', 'Index')->getData(); 
+
+		$this->assertType('array', $moduleData['data']['results']);
+		$this->assertEquals(count($moduleData['data']['results']), 5);
+		$this->assertTrue(array_key_exists('title', $moduleData['data']['results'][0]));
+		$this->assertTrue(array_key_exists('url', $moduleData['data']['results'][0]));
+		$this->assertTrue(array_key_exists('count', $moduleData['data']['results'][0]));
+	}
 
 }
