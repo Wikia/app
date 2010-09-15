@@ -117,7 +117,8 @@ class ArticleCommentInit {
 		global $wgTitle, $wgUser;
 
 		//use this hook only for skins other than Monaco
-		if (get_class($wgUser->getSkin()) == 'SkinMonaco' || get_class($wgUser->getSkin()) == 'SkinAnswers' || get_class($wgUser->getSkin()) == 'SkinOasis') {
+		$skinName = get_class($wgUser->getSkin());
+		if ($skinName == 'SkinMonaco' || $skinName == 'SkinAnswers' || $skinName == 'SkinOasis') {
 			return true;
 		}
 		wfProfileIn( __METHOD__ );
@@ -223,11 +224,6 @@ class ArticleCommentInit {
 		}
 
 		$parts = ArticleComment::explode($title->getText());
-		//skip false-positive
-		if ($parts['blog'] == 1) {
-			return true;
-		}
-
 		//not article comment
 		if (count($parts['partsStripped']) == 0) {
 			return true;
@@ -596,17 +592,16 @@ class ArticleComment {
 		$partsOriginal = explode('/', $titleText);
 		$partsStripped = explode('/', $titleTextStripped);
 
-		//count != 0 for article and == 0 for blog
 		if ($count) {
 			$title = implode('/', array_splice($partsOriginal, 0, -$count));
 			array_splice($partsStripped, 0, -$count);
 		} else {
-			$title = implode('/', array_splice($partsOriginal, 0, 2));
-			array_splice($partsStripped, 0, 2);
+			//not a comment - fallback
+			$title = $titleText;
+			$partsOriginal = $partsStripped = array();
 		}
 
 		$result = array(
-			'blog' => $count == 0,
 			'title' => $title,
 			'partsOriginal' => $partsOriginal,
 			'partsStripped' => $partsStripped
@@ -774,24 +769,12 @@ class ArticleComment {
 		 */
 		if ($parentId == false) {
 			//1st level comment
-			if (defined('NS_BLOG_ARTICLE') && $title->getNamespace() == NS_BLOG_ARTICLE) {
-				//blogs
-				$commentTitle = sprintf('%s/%s-%s', $title->getText(), $user->getName(), wfTimestampNow());
-			} else {
-				//article
-				$commentTitle = sprintf('%s/%s%s-%s', $title->getText(), ARTICLECOMMENT_PREFIX, $user->getName(), wfTimestampNow());
-			}
+			$commentTitle = sprintf('%s/%s%s-%s', $title->getText(), ARTICLECOMMENT_PREFIX, $user->getName(), wfTimestampNow());
 		} else {
 			$parentArticle = Article::newFromID($parentId);
 			$parentTitle = $parentArticle->getTitle();
 			//nested comment
-			if (defined('NS_BLOG_ARTICLE') && $title->getNamespace() == NS_BLOG_ARTICLE) {
-				//blogs
-				$commentTitle = sprintf('%s/%s-%s', $parentTitle->getText(), $user->getName(), wfTimestampNow());
-			} else {
-				//article
-				$commentTitle = sprintf('%s/%s%s-%s', $parentTitle->getText(), ARTICLECOMMENT_PREFIX, $user->getName(), wfTimestampNow());
-			}
+			$commentTitle = sprintf('%s/%s%s-%s', $parentTitle->getText(), ARTICLECOMMENT_PREFIX, $user->getName(), wfTimestampNow());
 		}
 
 		$commentTitle = Title::newFromText($commentTitle, MWNamespace::getTalk($title->getNamespace()));
@@ -1215,32 +1198,16 @@ class ArticleCommentList {
 			$dbr = wfGetDB( $master ? DB_MASTER : DB_SLAVE );
 			$namespace = $this->getTitle()->getNamespace();
 
-			if (defined('NS_BLOG_ARTICLE') && $namespace == NS_BLOG_ARTICLE ||
-				defined('NS_BLOG_ARTICLE_TALK') && $namespace == NS_BLOG_ARTICLE_TALK) {
-				//comments for blog
-				$res = $dbr->select(
-					array( 'page' ),
-					array( 'page_id', 'page_title' ),
-					array(
-						'page_namespace' => NS_BLOG_ARTICLE_TALK,
-						"page_title LIKE '" . $dbr->escapeLike( $this->mText ) . "/%'"
-					),
-					__METHOD__,
-					array( 'ORDER BY' => "page_id ASC" )
-				);
-			} else {
-				//comments for article
-				$res = $dbr->select(
-					array( 'page' ),
-					array( 'page_id', 'page_title' ),
-					array(
-						'page_namespace' => MWNamespace::getTalk($this->getTitle()->getNamespace()),
-						"page_title LIKE '" . $dbr->escapeLike( $this->mText ) . "/" . ARTICLECOMMENT_PREFIX . "%'"
-					),
-					__METHOD__,
-					array( 'ORDER BY' => 'page_id ASC' )
-				);
-			}
+			$res = $dbr->select(
+				array( 'page' ),
+				array( 'page_id', 'page_title' ),
+				array(
+					'page_namespace' => MWNamespace::getTalk($this->getTitle()->getNamespace()),
+					"page_title LIKE '" . $dbr->escapeLike( $this->mText ) . '/' . ARTICLECOMMENT_PREFIX . "%'"
+				),
+				__METHOD__,
+				array( 'ORDER BY' => 'page_id ASC' )
+			);
 
 			$helperArray = array();
 			while ( $row = $dbr->fetchObject( $res ) ) {
@@ -1585,32 +1552,6 @@ class ArticleCommentList {
 	}
 
 	/**
-	 * Given a title of a comment, this will return the title object of the top level article page for which this comment is made
-	 * @param <type> $commentTitle
-	 * @return <type> Title object
-	 */
-
-	static public function getSubjectPage($commentTitle) {
-
-		if (strpos ($commentTitle, ARTICLECOMMENT_PREFIX) === false)  // Blogs
-		{
-
-			$parts = explode( '/', $commentTitle->getText() );
-			// Don't discard the blog name
-			while( count( $parts ) > 2 ) unset( $parts[ count( $parts ) - 1 ] );
-			$subjectPageName = implode( '/', $parts );
-
-		} else {  // Articles
-
-			$subjectPageName = 	substr($commentTitle->getText(), 0, strpos($commentTitle->getText(), ARTICLECOMMENT_PREFIX) -1);
-		}
-
-		$subjectTitle = Title::newFromText($subjectPageName, MWNamespace::getSubject($commentTitle->getNamespace()));
-		return $subjectTitle;
-
-	}
-
-	/**
 	 * Hook
 	 *
 	 * @param Article $article -- instance of Article class
@@ -1641,9 +1582,10 @@ class ArticleCommentList {
 		}
 		self::$mDeletionInProgress = true;
 
-		// Redirect to blog post after deleting a comment
-		$subjectTitle=self::getSubjectPage($title);
-		$wgOut->redirect($subjectTitle->getFullUrl());
+		//redirect to article/blog after deleting a comment (or whole article/blog)
+		$parts = ArticleComment::explode($title->getText());
+		$parentTitle = Title::newFromText($parts['title'], MWNamespace::getSubject($title->getNamespace()));
+		$wgOut->redirect($parentTitle->getFullUrl());
 
 		//do not use $reason as it contains content of parent article/comment - not current ones that we delete in a loop
 		wfLoadExtensionMessages('ArticleComments');
