@@ -8,6 +8,7 @@ class BlogListingModule extends Module {
 	var $posts;
 	var $blogListingClass;
 	var $title;
+	var $pager;
 
 	/**
 	 * Modify results from Blogs
@@ -48,18 +49,18 @@ class BlogListingModule extends Module {
 	 *
 	 * Output HTML just for Oasis which will be hidden by default
 	 */
-	static function renderBlogListing(&$html, $posts, $aOptions) {
+	static function renderBlogListing(&$html, $posts, $aOptions, $sPager = null) {
 		wfProfileIn(__METHOD__);
 		global $wgTitle, $wgStylePath;
-		#print_pre(htmlspecialchars($html));	print_pre($posts);
+
 		$additionalClass = '';
 		if (!empty($aOptions['class'])) {
-			$additionalClass = $aOptions['class'];
+			$additionalClass = ' '.$aOptions['class'];
 		}
 		if ($aOptions['type'] == 'box') {
-			$html .= wfRenderPartial('BlogListing', 'Index', array('posts' => $posts, 'blogListingClass' => "WikiaBlogListingBox $additionalClass", 'wgTitle' => $wgTitle, 'wgStylePath' => $wgStylePath, 'title' => $aOptions['title']));
+			$html .= wfRenderPartial('BlogListing', 'Index', array('posts' => $posts, 'blogListingClass' => "WikiaBlogListingBox$additionalClass", 'wgTitle' => $wgTitle, 'wgStylePath' => $wgStylePath, 'title' => $aOptions['title']));
 		} else {
-			$html .= wfRenderPartial('BlogListing', 'Index', array('posts' => $posts, 'blogListingClass' => "WikiaBlogListing $additionalClass", 'wgTitle' => $wgTitle, 'wgStylePath' => $wgStylePath, 'title' => $aOptions['title']));
+			$html .= wfRenderPartial('BlogListing', 'Index', array('posts' => $posts, 'blogListingClass' => "WikiaBlogListing$additionalClass", 'wgTitle' => $wgTitle, 'wgStylePath' => $wgStylePath, 'title' => $aOptions['title'], 'pager' => $sPager));
 		}
 
 		wfProfileOut(__METHOD__);

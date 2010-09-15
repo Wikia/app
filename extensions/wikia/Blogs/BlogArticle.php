@@ -11,15 +11,6 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 ) ;
 }
 
-$wgHooks[ "ArticleFromTitle" ][] = "BlogArticle::ArticleFromTitle";
-$wgHooks[ "CategoryViewer::getOtherSection" ][] = "BlogArticle::getOtherSection";
-$wgHooks[ "CategoryViewer::addPage" ][] = "BlogArticle::addCategoryPage";
-$wgHooks[ "SkinTemplateTabs" ][] = "BlogArticle::skinTemplateTabs";
-$wgHooks[ "EditPage::showEditForm:checkboxes" ][] = "BlogArticle::editPageCheckboxes";
-$wgHooks[ "LinksUpdate" ][] = "BlogArticle::linksUpdate";
-$wgHooks[ "WikiFactoryChanged" ][] = "BlogArticle::WikiFactoryChanged";
-$wgHooks[ "UnwatchArticleComplete" ][] = "BlogArticle::UnwatchBlogComments";
-
 class BlogArticle extends Article {
 
 	public $mProps;
@@ -30,18 +21,13 @@ class BlogArticle extends Article {
 	private $mCount = 5;
 
 	/**
-	 * setup -- called on initialization
+	 * setup -- called on initialization (unused)
+	 * moved setup code to ::ArticleFromTitle instead of hooking that twice [owen]
 	 *
 	 * @access public
 	 * @static
 	 */
-	public static function setup($title, $article) {
-		// macbre: check namespace (RT #16832)
-		if ( !in_array($title->getNamespace(), array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK, NS_BLOG_LISTING, NS_BLOG_LISTING_TALK)) ) {
-			return true;
-		}
-
-		wfLoadExtensionMessages( 'Blogs' );
+	public static function setup() {
 
 		return true;
 	}
@@ -211,7 +197,13 @@ class BlogArticle extends Article {
 	 * @access public
 	 */
 	static public function ArticleFromTitle( &$Title, &$Article ) {
-		global $wgRequest;
+		global $wgOut;
+		// macbre: check namespace (RT #16832)
+		if ( !in_array($Title->getNamespace(), array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK, NS_BLOG_LISTING, NS_BLOG_LISTING_TALK)) ) {
+			return true;
+		}
+
+		wfLoadExtensionMessages( 'Blogs' );
 
 		if( $Title->getNamespace() == NS_BLOG_ARTICLE ) {
 			$Article = new BlogArticle( $Title );

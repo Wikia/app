@@ -45,4 +45,11 @@
 		}
 ?>
 	</ul>
+	<?php
+		if (strpos($blogListingClass, 'WikiaBlogListingBox') !== false) {
+			echo View::link(Title::newFromText(wfMsg('blogs-recent-url')), wfMsg('oasis-more'), array('class' => 'more'));
+		}
+		if (isset($pager)) {
+			echo $pager;
+	} ?>
 </section>

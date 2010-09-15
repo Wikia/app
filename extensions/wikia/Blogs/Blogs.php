@@ -49,8 +49,6 @@ global $wgAPIModules;
 $wgAPIModules[ "blogs" ] = "WikiaApiBlogs";
 
 
-$wgHooks['ArticleFromTitle'][] = "BlogArticle::setup";
-
 /**
  * messages file
  */
@@ -114,7 +112,15 @@ $wgAjaxExportList[] = "CreateBlogListingPage::axBlogListingCheckMatches";
 /**
  * hooks
  */
-$wgHooks['AlternateEdit'][] = 'SpecialBlogPage::alternateEditHook';
+$wgHooks[ 'AlternateEdit' ][] = 'SpecialBlogPage::alternateEditHook';
+$wgHooks[ 'ArticleFromTitle' ][] = 'BlogArticle::ArticleFromTitle';
+$wgHooks[ 'CategoryViewer::getOtherSection' ][] = 'BlogArticle::getOtherSection';
+$wgHooks[ 'CategoryViewer::addPage' ][] = 'BlogArticle::addCategoryPage';
+$wgHooks[ 'SkinTemplateTabs' ][] = 'BlogArticle::skinTemplateTabs';
+$wgHooks[ 'EditPage::showEditForm:checkboxes' ][] = 'BlogArticle::editPageCheckboxes';
+$wgHooks[ 'LinksUpdate' ][] = 'BlogArticle::linksUpdate';
+$wgHooks[ 'WikiFactoryChanged' ][] = 'BlogArticle::WikiFactoryChanged';
+$wgHooks[ 'UnwatchArticleComplete' ][] = 'BlogArticle::UnwatchBlogComments';
 
 /**
  * load other parts
