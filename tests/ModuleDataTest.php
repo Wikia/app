@@ -447,4 +447,13 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$this->assertRegExp('/User:' . $addedBy . '/', $html);
 	}
 
+	function testGlobalHeaderModule() {
+		$moduleData = Module::get('GlobalHeader')->getData();
+
+		$this->assertRegExp('/^http:\/\/www.wikia.com\/Special:CreateWiki/', $moduleData['createWikiUrl']);
+		$this->assertRegExp('/wikia.com\//', $moduleData['centralUrl']);
+		$this->assertType('array', $moduleData['menuNodes']);
+		$this->assertType('array', $moduleData['menuNodes'][0]);
+	}
+
 }
