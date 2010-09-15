@@ -4,7 +4,7 @@
 		<div class="tally">
 			<em><?= $total ?></em>
 			<span><?= wfMsg('oasis-total-articles-mainpage') ?></span>
-			<?= View::specialPageLink('CreatePage', null, 'wikia-chiclet-button', 'blank.gif', 'oasis-create-page'); ?>
+			<?= View::specialPageLink('CreatePage', null, 'wikia-chiclet-button createpage', 'blank.gif', 'oasis-create-page'); ?>
 		</div>
 	<? } ?>
 	<h1><?= $displaytitle != "" ? $title : htmlspecialchars($title) ?></h1>
