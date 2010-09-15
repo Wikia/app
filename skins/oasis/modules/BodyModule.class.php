@@ -17,6 +17,7 @@ class BodyModule extends Module {
 	var $leaderboardToShow;
 	var $railModuleList;
 	var $displayComments;
+	var $noexternals;
 
 	var $isMainPage;
 
