@@ -429,4 +429,22 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$this->assertRegExp('/Category:Foo/', $moduleData['catlinks']);
 		$this->assertRegExp('/Category:Bar/', $moduleData['catlinks']);
 	}
+
+	function testContentDisplayModule() {
+		$moduleData = Module::get('ContentDisplay')->getData();
+
+		// content display
+		$this->assertType ('string', $moduleData['bodytext']);
+
+		// picture attribution
+		$html = 'TESTTESTTESTTEST';
+		$file = wfFindFile('Wiki.png');
+		$addedBy = $file->getUser();
+
+		ContentDisplayModule::renderPictureAttribution(false, false, $file, false, false, $html);
+
+		$this->assertRegExp('/^TEST<div class="picture-attribution"><img src/', $html);
+		$this->assertRegExp('/User:' . $addedBy . '/', $html);
+	}
+
 }
