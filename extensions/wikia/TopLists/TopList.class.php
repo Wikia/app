@@ -200,13 +200,20 @@ class TopList extends TopListBase {
 			$subPages = $this->mTitle->getSubpages();
 
 			if( !empty ($subPages)  && $subPages->count() ) {
+				$items = array();
+				$itemVotes = array();
 				foreach( $subPages as $title ) {
 					//check for list item prefix, avoid listing comments as items
 					if( strpos( $title->getSubpageText(), self::ITEM_TITLE_PREFIX ) === 0 ) {
-						$this->mItems[] = TopListItem::newFromTitle( $title );
+						$item = TopListItem::newFromTitle( $title );
+						$items[$item->getArticle()->getId()] = $item;
+						$itemVotes[$item->getArticle()->getId()] = $item->getVotesCount();
 					}
-					
-					//TODO: implement tweak order by votes
+				}
+				$itemVotes = array_reverse( $itemVotes, true);
+				arsort( $itemVotes, SORT_NUMERIC );
+				foreach( $itemVotes as $id => $value ) {
+					$this->mItems[] = $items[$id];
 				}
 			}
 		}
