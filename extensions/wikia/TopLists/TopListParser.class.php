@@ -30,14 +30,41 @@ class TopListParser {
 		global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
 
 		if( empty( self::$mOutput ) ) {
+			$relatedTitle = null;
+			$relatedImage = null;
+			$relatedUrl = null;
+
 			if ( !empty( $args[ TOPLIST_ATTRIBUTE_RELATED ] ) ) {
 				self::$mAttributes[ TOPLIST_ATTRIBUTE_RELATED ] = $args[ TOPLIST_ATTRIBUTE_RELATED ];
-				//$output .= '<li>' . TOPLIST_ATTRIBUTE_RELATED . " = {$args[ TOPLIST_ATTRIBUTE_RELATED ]}</li>";
+				$relatedTitle = Title::newFromText( $args[ TOPLIST_ATTRIBUTE_RELATED ] );
+				$relatedUrl = $relatedTitle->getLocalUrl();
 			}
 
 			if ( !empty( $args[ TOPLIST_ATTRIBUTE_PICTURE ] ) ) {
 				self::$mAttributes[ TOPLIST_ATTRIBUTE_PICTURE ] = $args[ TOPLIST_ATTRIBUTE_PICTURE ];
-				//$output .= '<li>' . TOPLIST_ATTRIBUTE_PICTURE . " = {$args[ TOPLIST_ATTRIBUTE_PICTURE ]}</li>";
+				$title = Title::newFromText(  $args[ TOPLIST_ATTRIBUTE_PICTURE ], NS_FILE );
+
+				if( !empty( $title ) && $title->exists() ) {
+					$articleId = $title->getArticleId();
+
+					$source = new imageServing(
+						array( $articleId ),
+						120,
+						array(
+							"w" => 3,
+							"h" => 2
+						)
+					);
+
+					$result = $source->getImages( 1 );
+
+					if( !empty( $result[ $articleId ][0] ) ) {
+						$relatedImage = $result[ $articleId ][0];
+						if( $relatedUrl == null ) {
+							$relatedImage = $title->getLocalURL();
+						}
+					}
+				}
 			}
 
 			$list = TopList::newFromTitle( $parser->mTitle );
@@ -46,9 +73,12 @@ class TopListParser {
 				$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/TopLists/js/list.js?{$wgStyleVersion}\"></script>\n" );
 
 				$template = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-				$template->set_vars( array( 'list' => $list, 'attribs' => self::$mAttributes ) );
+				$template->set_vars( array( 'list' => $list, 'attribs' => self::$mAttributes, 'relatedTitle' => $relatedTitle, 'relatedImage' => $relatedImage, 'relatedUrl' => $relatedUrl ) );
 
 				self::$mOutput = $template->execute( 'list' );
+
+				// remove whitespaces to avoid extra <p> tags
+				self::$mOutput = preg_replace("#[\n\t]+#", '', self::$mOutput);
 			}
 			else {
 				self::$mOutput = '';
