@@ -45,8 +45,6 @@ class UserStatsService extends Service {
 
 		wfProfileIn(__METHOD__);
 
-		wfDebug(__METHOD__ . ": user #{$this->userId}\n");
-
 		// update edit counts
 		$key = $this->getKey('stats3');
 		$stats = $wgMemc->get($key);
@@ -54,6 +52,8 @@ class UserStatsService extends Service {
 		if (!empty($stats)) {
 			$stats['edits']++;
 			$wgMemc->set($key, $stats, self::CACHE_TTL);
+
+			wfDebug(__METHOD__ . ": user #{$this->userId}\n");
 		}
 
 		wfProfileOut(__METHOD__);
@@ -74,6 +74,7 @@ class UserStatsService extends Service {
 		$stats = $wgMemc->get($key);
 		if (empty($stats)) {
 			wfProfileIn(__METHOD__ . '::miss');
+			wfDebug(__METHOD__ . ": cache miss\n");
 
 			$stats = array();
 
