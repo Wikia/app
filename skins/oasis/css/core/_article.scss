@@ -33,7 +33,7 @@
 		margin: 0 10px;
 		width: 15px;
 		img {
-			background: url(/skins/oasis/images/sprite.png) no-repeat -1096px -48px;
+			background: url(/skins/oasis/images/sprite.png) no-repeat -1096px -48px; /* $wgCdnStylePath */
 			left: 0;
 			top: 0;
 		}
@@ -249,7 +249,7 @@
 
 	// add button within the content
 	.add-icon {
-		background: url(/skins/oasis/images/sprite.png) -1096px -16px no-repeat;
+		background: url(/skins/oasis/images/sprite.png) -1096px -16px no-repeat; /* $wgCdnStylePath */
 		vertical-align: middle;
 	}
 
@@ -313,7 +313,8 @@
 	}
 	.forumlist td.forum_title a.forum_new {
 	   font-weight: bold;
-	   background: url(/images/4/4e/Forum_new.gif) center left no-repeat;
+	   /* TODO: FIXME: I'm pretty sure this image doesn't exist at this URL.  Perhaps an outdated URL? */
+	   background: url(/images/4/4e/Forum_new.gif) center left no-repeat; /* $wgCdnStylePath */
 	   padding-left: 20px;
 	}
 	.forumlist td.forum_title a.forum_new:visited {

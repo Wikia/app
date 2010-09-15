@@ -38,7 +38,7 @@
 			}
 			background: {
 				color: #FFF;
-				image: url(/skins/oasis/images/empty_gallery.png);
+				image: url(/skins/oasis/images/empty_gallery.png); /* $wgCdnStylePath */
 				repeat: no-repeat;
 			}
 			a {
@@ -157,7 +157,7 @@
 			}
 			&.see-all {
 				background: {
-					image: url(/skins/oasis/images/empty_gallery.png);
+					image: url(/skins/oasis/images/empty_gallery.png); /* $wgCdnStylePath */
 					position: -62px -17px;
 					color: #FFF;
 				}

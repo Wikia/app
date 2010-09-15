@@ -1,8 +1,8 @@
 .oasis-beach {
-	background-image: url(/skins/oasis/images/themes/beach/background.gif);
+	background-image: url(/skins/oasis/images/themes/beach/background.gif); /* $wgCdnStylePath */
 }
 
 .oasis-carbon {
 	background-color: $color-body;
-	background-image: url(/skins/oasis/images/themes/carbon/background.png);
+	background-image: url(/skins/oasis/images/themes/carbon/background.png); /* $wgCdnStylePath */
 }
