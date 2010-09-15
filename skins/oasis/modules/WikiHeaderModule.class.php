@@ -13,6 +13,7 @@ class WikiHeaderModule extends Module {
 	var $wordmarkType;
 	var $wordmarkSize;
 	var $wordmarkStyle;
+	var $wordmarkFont;
 
 	var $canEdit;
 
@@ -56,6 +57,7 @@ class WikiHeaderModule extends Module {
 		$this->wordmarkText = $settings["wordmark-text"];
 		$this->wordmarkType = $settings["wordmark-type"];
 		$this->wordmarkSize = $settings["wordmark-font-size"];
+		$this->wordmarkFont = $settings["wordmark-font"];
 
 		if ($this->wordmarkType == "graphic") {
 			$this->wordmarkStyle = 'style="background: url('. $settings["wordmark-image-url"] .') no-repeat"';

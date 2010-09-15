@@ -1,5 +1,5 @@
 <header id="WikiHeader" class="WikiHeader">
-	<h1 class="wordmark <?= $wordmarkSize ?> <?= $wordmarkType ?>" <?= $wordmarkStyle ?>>
+	<h1 class="wordmark <?= $wordmarkSize ?> <?= $wordmarkType ?> <?= $wordmarkFont ?>" <?= $wordmarkStyle ?>>
 		<a accesskey="z" href="<?= htmlspecialchars($mainPageURL) ?>"><?= htmlspecialchars($wordmarkText) ?></a>
 	</h1>
 	<nav>
