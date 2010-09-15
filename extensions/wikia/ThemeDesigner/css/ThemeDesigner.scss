@@ -114,14 +114,15 @@ body {
 				cursor: normal;
 				display: none;
 				left: -5px;
+				min-width: 150px;
 				padding: 5px;
 				position: absolute;
 				top: -5px;
-				min-width: 150px;
 				li {
 					border-top: 1px solid #eee;
 					cursor: pointer;
 					padding: 5px;
+					white-space: nowrap;
 					&:first-child {
 						border-top: none;
 					}
