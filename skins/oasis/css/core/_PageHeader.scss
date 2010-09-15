@@ -47,7 +47,7 @@
 			vertical-align: baseline;
 		}
 		.icon {
-			background: url(/skins/oasis/images/sprite.png) -1128px 0 no-repeat; /* $wgCdnStylePath */
+			background: url(/skins/oasis/images/sprite.png) -1128px 0 no-repeat;
 			position:relative;
 			top: 1px;
 		}
@@ -130,11 +130,11 @@
 		vertical-align: text-bottom;
 		&[data-id=edit] .icon,
 		a[data-id=edit] .icon {
-			background: url(/skins/oasis/images/sprite.png) -1096px -48px no-repeat; /* $wgCdnStylePath */
+			background: url(/skins/oasis/images/sprite.png) -1096px -48px no-repeat;
 			vertical-align: text-bottom;
 		}
 		a[data-id=add] .icon {
-			background: url(/skins/oasis/images/sprite.png) -1096px -16px no-repeat; /* $wgCdnStylePath */
+			background: url(/skins/oasis/images/sprite.png) -1096px -16px no-repeat;
 		}
 	}
 }
@@ -168,7 +168,7 @@
 		float: left;
 		margin: 0 10px;
 		img {
-			background: url(/skins/oasis/images/sprite.png) no-repeat -1096px -16px transparent; /* $wgCdnStylePath */
+			background: url(/skins/oasis/images/sprite.png) no-repeat -1096px -16px transparent;
 			height: 10px;
 			margin: 3px 0 0 3px;
 			width: 10px;

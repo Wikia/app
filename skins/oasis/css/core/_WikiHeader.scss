@@ -23,7 +23,7 @@
 		width: 1000px;
 	}
 	h1:before {
-		background: url(/skins/oasis/images/sprite.png) 0 -2px no-repeat; /* $wgCdnStylePath */
+		background: url(/skins/oasis/images/sprite.png) 0 -2px no-repeat;
 		content: " ";
 		z-index: 1;
 	}
@@ -113,12 +113,12 @@
 				vertical-align: text-bottom;
 			}
 			&[data-id=randompage] img {
-				background: url("/skins/oasis/images/sprite.png") no-repeat scroll -1144px -16px transparent; /* $wgCdnStylePath */
+				background: url("/skins/oasis/images/sprite.png") no-repeat scroll -1144px -16px transparent;
 				height: 13px;
 				width: 13px;
 			}
 			&[data-id=wikiactivity] img {
-				background: url("/skins/oasis/images/sprite.png") no-repeat scroll -1128px -48px transparent; /* $wgCdnStylePath */
+				background: url("/skins/oasis/images/sprite.png") no-repeat scroll -1128px -48px transparent;
 				height: 14px;
 				width: 17px;
 			}
