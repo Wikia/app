@@ -51,6 +51,9 @@
 		<div id="Toolbar" class="Toolbar">
 			<div class="inner">
 				<span class="mode">Preview Mode...</span>
+<?php
+	if(count($themeHistory) > 0) {
+?>
 				<div class="history">
 					<div class="revisions"><?= count($themeHistory) ?></div>
 					Previous Versions
@@ -61,13 +64,16 @@
 					?>
 						<li>
 							<?= View::specialPageLink('#', null, 'wikia-chiclet-button', 'blank.gif', 'recycle'); ?>
-							<?= $themeHistoryItem['timeago'] ?>
+							<?= $themeHistoryItem['timeago'] ?> by <?= $themeHistoryItem['author'] ?>
 						</li>
 					<?php
 					}
 					?>
 					</ul>
 				</div>
+<?php
+	} //end if
+?>
 				<button class="save">Save, I'm Done</button>
 				<button class="cancel secondary">Cancel</button>
 			</div>
