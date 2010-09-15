@@ -194,43 +194,82 @@ function wfDevBoxPanel() {
 	$wgOut->setArticleRelated( false );
 	
 	if($wgDevelEnvironment){
-		$wgOut->addHTML("<div class='skinKiller'>");
+		if (isset($_REQUEST['switch'])) svnHandleSwitch();	
+		if (isset($_REQUEST['update'])) svnHandleUpdate();
 		
-		// Intro
-		$wgOut->addHTML("<em>");
-		$wgOut->addHTML(wfMsg('devbox-intro'));
-		$wgOut->addHTML("</em><br/><br/>");
-
-		// Do any processing of actions here (and display success/error messages).
-		if (getForcedWikiValue() == "") {
-			$wgOut->addHTML(wfMsg("devbox-change-wiki-intro", $_SERVER['SERVER_NAME']));
-		} else {
-			$wgOut->addHTML(wfMsg("devbox-change-wiki-success", $_SERVER['SERVER_NAME']));
-		}
-
-		//// DISPLAY OF THE MAIN CONTENT OF THE PANEL IS BELOW ////
-
-		// TODO: Divide these sections into tabs (possibly using jQuery UI).
-		// TODO: Divide these sections into tabs (possibly using jQuery UI).
-
-		// Display section which lets the developer force which wiki to act as.
-		//$wgOut->addHTML(getHtmlForChangingCurrentWiki());
-
-		// Display section listing available databases
-		$wgOut->addHTML(getHtmlForDatabaseComparisonTool());
-
-		// Display section with vital stats on the server (where the LocalSettings are, the error logs, databases, etc.) with a link to phpinfo.
-		$wgOut->addHTML(getHtmlForInfo());
-
-		// Footer to attract changes...
-		$wgOut->addHTML(wfMsg("devbox-footer", __FILE__));
-		
-		$wgOut->addHTML("</div>"); // end of skinKiller div
+		$tmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$tmpl->set_vars(array(
+							"svnToolHtml"      => getHtmlForSvnTool(),
+							"dbComparisonHtml" => getHtmlForDatabaseComparisonTool(),
+							"infoHtml"         => getHtmlForInfo(),
+							"footer"           => wfMsg("devbox-footer", __FILE__),
+							));
+		$wgOut->addHTML($tmpl->execute('special-devboxpanel'));
 	} else {
 		$wgOut->addHTML(wfMsg('devbox-panel-not-enabled'));
 	}
 
 } // end wfDevBoxPanel()
+
+function svnHandleUpdate() {
+	$base_path = dirname(dirname(dirname(dirname(dirname( __FILE__ )))));
+	shell_exec("svn update $base_path 2>&1");
+}
+
+function svnHandleSwitch() {
+	$url = 'https://svn.wikia-code.com/wikia/';
+	$branch = $_REQUEST['branch'];
+	if ($branch == 'trunk') {
+		$url .= $branch;
+	} else {
+		$url .= "branches/$branch";
+	}
+	
+	$base_path = dirname(dirname(dirname(dirname(dirname( __FILE__ )))));
+	shell_exec("cd $base_path; svn switch $url");
+}
+
+/**
+ * A tool for showing the current status of SVN and for updating the working copy to a new branch
+ */
+
+function getHtmlForSvnTool() {
+	global $wgTitle;
+	$errors = array();
+	
+	$base_path = dirname(dirname(dirname(dirname(dirname( __FILE__ )))));
+	$stat = stat($base_path);
+	if ($stat['gid'] != posix_getegid()) {
+		$group = posix_getgrgid(posix_getegid());
+		$errors[] = "Incorrect file ownership.  To fix, run:<br><code>sudo chgrp -R ".$group['name']." $base_path</code>";
+	}
+	
+	$perms = fileperms($base_path);
+	if (!($perms & 0x0010)) {
+		$errors[] = "Incorrect file permissions. To fix, run:<br><code>sudo chmod -R g+w $base_path</code>";
+	}
+	
+	$tmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+	$data = shell_exec("svn info ".dirname(dirname(dirname(dirname(dirname( __FILE__ ))))));
+	
+	foreach (split("\n", $data) as $line) {
+		if (empty($line)) continue;
+		list($k, $v) = split(": ", $line);
+		$info{$k} = $v;
+	}
+	
+	$data = shell_exec("svn list https://svn.wikia-code.com/wikia/branches/");
+	$branches = array_map(create_function('$v', 'return rtrim($v, "/");'), split("\n", $data));
+	
+	$tmpl->set_vars(array(
+						"svnUrl"     => $info{'URL'},
+						"svnUpdated" => $info{'Last Changed Date'},
+						"branches"   => array_merge(array('trunk'), $branches),
+						"action"     => $wgTitle->getLocalUrl(),
+						"errors"     => $errors,
+						));
+	return $tmpl->execute('svn-tool');
+}
 
 /**
  * A tool which shows what databases are installed
@@ -244,8 +283,6 @@ function wfDevBoxPanel() {
  */
 function getHtmlForDatabaseComparisonTool(){
 	$html = "";
-	
-	$html .= "<h2>".wfMsg("devbox-heading-change-wiki")."</h2>";
 	
 	// Determine what databases are on this dev-box.
 
@@ -296,8 +333,6 @@ function getHtmlForDatabaseComparisonTool(){
  */
 function getHtmlForInfo(){
 	$html = "";
-
-	$html .= "<h2>".wfMsg("devbox-heading-vital")."</h2>";
 
 	global $IP,$wgScriptPath,$wgExtensionsPath,$wgCityId;
 	global $wgDBname,$wgExternalSharedDB;
