@@ -29,7 +29,7 @@
 
 .modalContent {
 	@include clearfix;
-	/*background: url(/skins/oasis/images/shadow_narrow.png) center 1px no-repeat;*/
+	/*background: url(/skins/oasis/images/shadow_narrow.png) center 1px no-repeat; */ /* $wgCdnStylePath */
 	border: 1px solid $color-page-border;
 	padding: 10px;
 }

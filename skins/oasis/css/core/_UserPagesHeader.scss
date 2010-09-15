@@ -83,7 +83,7 @@
 	}
 	.tabs-container {
 		&:before {
-			background: url("/skins/oasis/images/sprite.png") 0 -16px no-repeat;
+			background: url(/skins/oasis/images/sprite.png) 0 -16px no-repeat; /* $wgCdnStylePath */
 			bottom: 0;
 			content: " ";
 			height: 8px;
@@ -109,13 +109,13 @@
 		a[data-id=editprofile] .icon,
 		&[data-id=editprofile] .icon,
 		&[data-id=createblogpost] .icon {
-			background: url(/skins/oasis/images/sprite.png) -1096px -48px no-repeat;
+			background: url(/skins/oasis/images/sprite.png) -1096px -48px no-repeat; /* $wgCdnStylePath */
 		}
 		a[data-id=leavemessage] .icon {
-			background: url(/skins/oasis/images/sprite.png) -1096px -16px no-repeat;
+			background: url(/skins/oasis/images/sprite.png) -1096px -16px no-repeat; /* $wgCdnStylePath */
 		}
 		a[data-id=addtopic] .icon {
-			background: url(/skins/oasis/images/sprite.png) -1096px -16px no-repeat;
+			background: url(/skins/oasis/images/sprite.png) -1096px -16px no-repeat; /* $wgCdnStylePath */
 		}
 	}
 }
