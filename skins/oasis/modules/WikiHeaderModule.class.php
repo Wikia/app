@@ -55,10 +55,12 @@ class WikiHeaderModule extends Module {
 
 		$this->wordmarkText = $settings["wordmark-text"];
 		$this->wordmarkType = $settings["wordmark-type"];
-		$this->wordmarkSize = $settings["wordmark-size"];
+		$this->wordmarkSize = $settings["wordmark-font-size"];
 
 		if ($this->wordmarkType == "graphic") {
 			$this->wordmarkStyle = 'style="background: url('. $settings["wordmark-image-url"] .') no-repeat"';
+		} else {
+			$this->wordmarkStyle = '';
 		}
 
 		$this->mainPageURL = Title::newMainPage()->getLocalURL();
