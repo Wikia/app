@@ -6,7 +6,8 @@
 class imageServing{
 	private $maxCount = 20;
 	private $minSize = 75;
-	private $articles;
+	private $articles = array();
+	private $files = array();
 	private $width;
 	private $proportion;
 	private $deltaY = 0;
@@ -21,8 +22,17 @@ class imageServing{
 	function __construct($articles, $width = 100, $proportion = array("w" => 1, "h" => 1), $db = null){
 
 		foreach($articles as $article){
-			$this->articles[] = (integer)$article;
+			$article_id = ( int ) $article;
+
+			$title = Title::newFromID( $article_id );
+
+			if ( ( $title instanceof Title ) && ( $title->getNamespace() == NS_FILE ) ) {
+				$this->files[ $article_id ] = $title->getDBKey();
+			} else {
+				$this->articles[] = $article_id;
+			}
 		}
+		
 		$this->width = $width;
 		$this->proportion = $proportion;
 		$this->deltaY = (round($proportion['w']/$proportion['h']) - 1)*0.1;
@@ -43,75 +53,86 @@ class imageServing{
 	 * @return  \type{\arrayof{\topImage}}
 	 */
 
-	public function getImages($n = 5, $article_lp = 0) {
+	public function getImages( $n = 5, $article_lp = 0 ) {
 		global $wgMemc;
 		$articles = $this->articles;
-		wfProfileIn(__METHOD__);
+		$files = $this->files;
+		wfProfileIn( __METHOD__ );
 		$cache_return = array();
-		$file_articles = array();
 		
-		foreach($articles as $key => $value) {
-			$mcKey = wfMemcKey("imageserving", $this->width, $n, $this->proportion["w"], $this->proportion["h"], $value);
-			$mcOut = $wgMemc->get($mcKey, null);
+		foreach ( $articles as $key => $value ) {
+			$mcKey = wfMemcKey( "imageserving", $this->width, $n, $this->proportion["w"], $this->proportion["h"], $value );
+			$mcOut = $wgMemc->get( $mcKey, null );
 
 			if($mcOut != null) {
-				unset($articles[$key]);
-				$cache_return[$value] = $mcOut;
-			} else {
-				$title = Title::newFromID( $value );
-
-				if ( !empty( $title ) && $title->getNamespace() == NS_FILE ) {
-					$file_articles[ $value ] = $title;
-				}
+				unset( $articles[ $key ] );
+				$cache_return[ $value ] = $mcOut;
 			}
 		}
 
-		if(count($articles) < 1) {
+		foreach ( $files as $article_id => $db_key ) {
+			$mcKey = wfMemcKey( "imageserving", $this->width, $n, $this->proportion["w"], $this->proportion["h"], $article_id );
+			$mcOut = $wgMemc->get( $mcKey, null );
+
+			if($mcOut != null) {
+				unset( $files[ $article_id ] );
+				$cache_return[ $article_id ] = $mcOut;
+			}
+		}
+
+		$articles_count = count( $articles );
+		$files_count = count( $files );
+
+		if( $articles_count && $files_count ) {
 			return $cache_return;
 		}
 
-
-		if($this->db == null) {
-			$db = wfGetDB(DB_SLAVE, array());
+		if( $this->db == null ) {
+			$db = wfGetDB( DB_SLAVE, array() );
 		} else {
 			$db = $this->db;
 		}
-		
-		$res = $db->select(
-	            array( 'page_wikia_props' ),
-	            array(	'page_id',
-	            		'props'
-	            	 ),
-	            array(
-					'page_id in('.implode(",", $articles).')',
-					"propname = 'imageOrder' or propname =  0"),
-	            __METHOD__
-		);
 
 		$image_list = array();
 		$images_name = array();
+		
+		if( $articles_count ) {
+			$res = $db->select(
+				array( 'page_wikia_props' ),
+				array(
+					'page_id',
+					'props'
+				),
+				array(
+					'page_id in(' . implode( ",", $articles ) . ')',
+					"propname = 'imageOrder' or propname =  0"
+				),
+				__METHOD__
+			);
 
-		/* build list of images to get info about it */
-		while ($row =  $db->fetchRow( $res ) ) {
-			$props = unserialize( $row['props'] );
-			foreach( $props as $key => $value ) {
-				if( empty($image_list[$value][$row['page_id']]) ) {
-					if( empty($image_list[$value]) ) {
-						$images_name[] = $db->addQuotes( $value );
+
+
+			/* build list of images to get info about it */
+			while ($row =  $db->fetchRow( $res ) ) {
+				$props = unserialize( $row['props'] );
+				foreach( $props as $key => $value ) {
+					if( empty($image_list[$value][$row['page_id']]) ) {
+						if( empty($image_list[$value]) ) {
+							$images_name[] = $db->addQuotes( $value );
+						}
+						$image_list[$value][$row['page_id']] = $key;
 					}
-					$image_list[$value][$row['page_id']] = $key;
 				}
 			}
 		}
 
-		foreach ( $file_articles as $key => $value ) {
-			$dbKey = $value->getDBkey();
-			$image_list[$dbKey][$key] = 1;
-			$images_name[] = $db->addQuotes( $dbKey );
+		foreach ( $files as $article_id => $db_key ) {
+			$image_list[$db_key][$article_id] = 1;
+			$images_name[] = $db->addQuotes( $db_key );
 		}
 		
-		if (count($image_list) == 0) {
-			wfProfileOut(__METHOD__);
+		if ( count( $image_list ) == 0 ) {
+			wfProfileOut( __METHOD__ );
 			return $cache_return;
 		}
 
