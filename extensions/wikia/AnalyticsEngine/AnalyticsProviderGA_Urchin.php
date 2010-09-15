@@ -33,7 +33,9 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 
 		  case 'pagetime':
 			return $this->pagetime($eventDetails[0]);
-
+                  case 'noads':
+		        return $this->noads();
+   		  
                   default: return '<!-- Unsupported event for ' . __CLASS__ . ' -->';
 		}
 	}
@@ -63,6 +65,20 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 				urchinTracker(slashtime);
 			}
 			</script>';
+	}
+
+	private function noads() {
+		return '<script type="text/javascript">
+if(document.cookie.match(/wikia-test=selected/)) {
+_uff=0;
+_uacct="UA-288915-45";
+urchinTracker();
+} else if(document.cookie.match(/wikia-test=control/)) {
+_uff=0;
+_uacct="UA-288915-46";
+urchinTracker();
+}
+</script>';
 	}
 
 	private function lyrics() {
