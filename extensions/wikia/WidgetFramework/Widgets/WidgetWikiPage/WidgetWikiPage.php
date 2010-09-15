@@ -43,7 +43,7 @@ function WidgetWikiPage($id, $params) {
 	$params['name'] = trim($params['name']);
 
 	//stopgap for 67038
-	$source = Title::newFromName( $params['source'] );
+	$source = Title::newFromText( $params['source'] );
 	if( !$source->userCanRead() )
 	{
 		return array('body' => '', 'title' => $params['name'] );
