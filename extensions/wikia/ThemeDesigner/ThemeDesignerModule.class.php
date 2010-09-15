@@ -23,13 +23,13 @@ class ThemeDesignerModule extends Module {
 		wfProfileIn( __METHOD__ );
 		global $wgLang;
 
-		$settings = new ThemeSettings();
+		$themeSettings = new ThemeSettings();
 
 		// current settings
-		$this->themeSettings = $settings->getAll();
+		$this->themeSettings = $themeSettings->getSettings();
 
 		// recent versions
-		$this->themeHistory = array_reverse($settings->getHistory());
+		$this->themeHistory = array_reverse($themeSettings->getHistory());
 
 		// format time (for edits older than 30 days - show timestamp)
 		foreach($this->themeHistory as &$entry) {
@@ -114,14 +114,10 @@ class ThemeDesignerModule extends Module {
 
 		wfProfileIn( __METHOD__ );
 
-		$themeSettings = new ThemeSettings();
 		$data = $wgRequest->getArray( 'settings' );
 
-		foreach($data as $name => $value) {
-			$themeSettings->set( $name, $value );
-		}
-
-		$themeSettings->save();
+		$themeSettings = new ThemeSettings();
+		$themeSettings->saveSettings($data);
 
 		wfProfileOut( __METHOD__ );
 	}

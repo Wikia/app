@@ -51,25 +51,27 @@ class WikiHeaderModule extends Module {
 		//$wgOut->addScript('<script src="/skins/oasis/js/WikiHeader.js"></script>');
 
 		$themeSettings = new ThemeSettings();
-		$this->wordmarkText = $themeSettings->get("wordmark-text");
-		$this->wordmarkType = $themeSettings->get("wordmark-type");
-		$this->wordmarkSize = $themeSettings->get("wordmark-size");
-		
+		$settings = $themeSettings->getSettings();
+
+		$this->wordmarkText = $settings["wordmark-text"];
+		$this->wordmarkType = $settings["wordmark-type"];
+		$this->wordmarkSize = $settings["wordmark-size"];
+
 		if ($this->wordmarkType == "graphic") {
-			$this->wordmarkStyle = 'style="background: url('. $themeSettings->get("wordmark-image-url") .') no-repeat"';
+			$this->wordmarkStyle = 'style="background: url('. $settings["wordmark-image-url"] .') no-repeat"';
 		}
 
 		$this->mainPageURL = Title::newMainPage()->getLocalURL();
 		$service = new NavigationService();
 
 		$oasis_navigation_title = Title::newFromText('Wiki-navigation', NS_MEDIAWIKI);
-		
+
 		$this->canEdit = $wgUser->isAllowed('editinterface');
 		if($this->canEdit) {
 			$this->editURL['href'] = $oasis_navigation_title->getFullURL();
 			$this->editURL['text'] = wfMsg('monaco-edit-this-menu');
 		}
-		
+
 		if(!$oasis_navigation_title->exists()) {
 			// There is no local version of Oasis-navigation
 

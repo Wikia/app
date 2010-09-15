@@ -130,6 +130,8 @@ $wgAutoloadClasses['PopularBlogPostsModule'] = $IP.'/skins/oasis/modules/Popular
 $wgAutoloadClasses['FeedbackModule'] = $IP.'/skins/oasis/modules/FeedbackModule.class.php';
 $wgAutoloadClasses['RandomWikiModule'] = $IP.'/skins/oasis/modules/RandomWikiModule.class.php';
 
+$wgAutoloadClasses['ThemeSettings'] = $IP.'/extensions/wikia/ThemeDesigner/ThemeSettings.class.php';
+
 // TODO:move this inclusion to CommonExtensions?
 require_once( $IP.'/extensions/wikia/Oasis/Oasis_setup.php' );
 
@@ -586,7 +588,7 @@ $wgWatchlistNotificationTimeout = 24 * 60 * 60;
 
 /**
  * @name $wgExcludedWantedFiles
- * don't show those files on Special:WantedFiles 
+ * don't show those files on Special:WantedFiles
  */
 $wgExcludedWantedFiles = array (0 => 'Placeholder', 1 => 'Welcome-user-page');
 

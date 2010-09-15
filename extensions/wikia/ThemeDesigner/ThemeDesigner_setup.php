@@ -11,7 +11,6 @@ $dir = dirname( __FILE__ );
 // autoloads
 $wgAutoloadClasses['ThemeDesignerModule'] = "$dir/ThemeDesignerModule.class.php";
 $wgAutoloadClasses['ThemeDesignerHelper'] = "$dir/ThemeDesignerHelper.class.php";
-$wgAutoloadClasses['ThemeSettings'] = "$dir/ThemeSettings.class.php";
 $wgAutoloadClasses['SpecialThemeDesigner'] = "$dir/SpecialThemeDesigner.class.php";
 $wgAutoloadClasses['SpecialThemeDesignerPreview'] = "$dir/SpecialThemeDesignerPreview.class.php";
 
