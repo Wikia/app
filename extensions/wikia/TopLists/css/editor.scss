@@ -9,6 +9,7 @@
 @import "../../../../skins/oasis/css/mixins/gradient";
 @import "../../../../skins/oasis/css/mixins/menus";
 @import "../../../../skins/oasis/css/mixins/forms";
+@import "../../../../skins/oasis/css/mixins/opacity";
 
 //variables
 $input-height: 40px;
@@ -43,7 +44,15 @@ $icon-drag-background: url(/skins/oasis/images/sprite.png) no-repeat -1147px -30
 	}
 }
 
+@mixin error {
+	span.error, p.error {
+		color: $color-error;
+		font-size: smaller;
+	}
+}
+
 #toplist-editor {
+	@include error;
 	width: 465px;
 	margin: 0;
 	padding: 0;
@@ -54,11 +63,6 @@ $icon-drag-background: url(/skins/oasis/images/sprite.png) no-repeat -1147px -30
 	}
 
 	small {
-		font-size: smaller;
-	}
-
-	span.error, p.error {
-		color: $color-error;
 		font-size: smaller;
 	}
 
@@ -295,6 +299,38 @@ $icon-drag-background: url(/skins/oasis/images/sprite.png) no-repeat -1147px -30
 				background-color: $color-module-shadow;
 				cursor: pointer;
 			}
+		}
+	}
+
+	form {
+		@include error;
+		
+		label {
+			display: block;
+		}
+
+		div {
+			text-align: center;
+
+			div.button {
+				margin: 10px 0 10px 0;
+				position: relative;
+				overflow: hidden;
+				
+				input {
+					@include opacity(0);
+					position: absolute;
+					top: 0;
+					left: 0;
+					height: 100%;
+					width: 100%;
+					cursor: pointer;
+				}
+			}
+		}
+
+		p.error{
+			text-align: center;
 		}
 	}
 }

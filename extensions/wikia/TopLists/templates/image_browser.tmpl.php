@@ -1,4 +1,6 @@
-<?php ?>
+<?php
+global $wgScriptPath;
+?>
 <div id="image-browser-dialog">
 	<? if ( !empty( $selectedImage ) ) :?>
 		<img src="<?= $selectedImage[ 'url' ] ;?>" class="selected"
@@ -30,7 +32,11 @@
 	</ul>
 
 	<img class="osprite shadow-short" src="<?= wfBlankImgUrl() ;?>">
-	<form id="toplist-image-upload" action="<?= $wgScriptPath ?>/index.php?action=ajax&amp;rs=AchAjax&amp;method=addPlatinumBadge" method="POST" enctype="multipart/form-data">
-		<input type="file" name="wpUploadFile" />
+	<form id="toplist-image-upload" action="<?= $wgScriptPath ?>/index.php?action=ajax&rs=TopListHelper::uploadImage" method="POST" enctype="multipart/form-data">
+		<label for="wpUploadFile"><?= wfMsg( 'toplists-image-browser-upload-label' ) ;?></label>
+		<div>
+			<div class="button"><?= wfMsg( 'toplists-image-browser-upload-btn' ) ;?><input type="file" name="wpUploadFile" /></div>
+		</div>
+		<p class="error"></p>
 	</form>
 </div>

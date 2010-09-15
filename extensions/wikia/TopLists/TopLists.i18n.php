@@ -27,6 +27,7 @@ $messages['en'] = array(
 	'toplists-error-duplicated-entry' => 'You can\'t use the same name more than once',
 	'toplists-error-empty-item-name' => 'The name of an existing item can\'t be empty',
 	'toplists-item-cannot-delete' => 'Deletion of this item failed',
+	'toplists-error-image-already-exists' => 'An image with the same name already exists',
 
 	//editor
 	'toplists-editor-title-label' => 'List name',
@@ -42,9 +43,13 @@ $messages['en'] = array(
 	'toplists-create-button' => 'Create list',
 	'toplists-update-button' => 'Save list',
 	'toplists-cancel-button' => 'Cancel',
+
+	//image browser/selector
 	'toplits-image-browser-no-picture-selected' => 'No picture selected',
 	'toplits-image-browser-clear-picture' => 'Clear picture',
 	'toplits-image-browser-selected-picture' => 'Currently selected: $1',
+	'toplists-image-browser-upload-btn' => 'Choose',
+	'toplists-image-browser-upload-label' => 'Upload your own',
 
 	//article edit summaries
 	'toplists-list-creation-summary' => 'Creating a list',

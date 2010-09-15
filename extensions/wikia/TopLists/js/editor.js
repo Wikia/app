@@ -137,7 +137,9 @@ var TopListsImageBrowser = {
 		TopListsImageBrowser._uploadForm = TopListsImageBrowser._mContext.find('form');
 		
 		$.loadJQueryAIM(function(){
-			TopListsImageBrowser._uploadForm.find('input[type="file"]').change(TopListsImageBrowser._onImageFileSelected)
+
+			TopListsImageBrowser._uploadForm.find('input[type="file"]').change(TopListsImageBrowser._onImageFileSelected);
+			TopListsImageBrowser._uploadForm.submit(TopListsImageBrowser._onImageUpload);
 		});
 
 		//handle events
@@ -146,7 +148,7 @@ var TopListsImageBrowser = {
 	},
 
 	_destroy: function(){
-
+		TopListsImageBrowser._mDialog.closeModal();
 	},
 
 	_onSelect: function(){
@@ -161,12 +163,32 @@ var TopListsImageBrowser = {
 		}
 		
 		if(typeof TopListsImageBrowser._mOnSelectCallback === 'function') TopListsImageBrowser._mOnSelectCallback(selectedPicture);
-		TopListsImageBrowser._mDialog.closeModal();
+		TopListsImageBrowser._destroy();
 	},
 
 	_onImageFileSelected: function(){
 		$().log($(this));
 		TopListsImageBrowser._uploadForm.submit();
+	},
+
+	_onImageUpload: function(){
+		$.AIM.submit(
+			this,
+			{
+				onComplete: TopListsImageBrowser._onImageUploadComplete
+			}
+		);
+	},
+
+	_onImageUploadComplete: function(response){
+		$().log(response, 'TopListsImageBrowser::upload');
+
+		if(response.success === true){
+			if(typeof TopListsImageBrowser._mOnSelectCallback === 'function') TopListsImageBrowser._mOnSelectCallback(response);
+			TopListsImageBrowser._destroy();
+		} else if (response.error === true || response.conflict === true){
+			TopListsImageBrowser._uploadForm.find('p.error').html(response.message);
+		}
 	},
 	
 	show: function(relatedArticle, selectedPicture, onSelectCallback){
