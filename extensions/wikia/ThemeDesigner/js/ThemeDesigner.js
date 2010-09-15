@@ -305,7 +305,7 @@ var ThemeDesigner = {
 
 	saveClick: function(event) {
 		event.preventDefault();
-		//$(event.target).attr('disabled', true);
+		$(event.target).attr('disabled', true);
 		ThemeDesigner.save();
 	},
 
@@ -316,7 +316,7 @@ var ThemeDesigner = {
 		$.post(wgServer + wgScript + '?action=ajax&rs=moduleProxy&moduleName=ThemeDesigner&actionName=SaveSettings&outputType=data',
 			{'settings': ThemeDesigner.settings},
 			function(data) {
-				//document.location = returnTo; // redirect to article from which ThemeDesigner was triggered
+				document.location = returnTo; // redirect to article from which ThemeDesigner was triggered
 			},
 			'json');
 	},
