@@ -54,6 +54,7 @@ $messages['en'] = array(
 	'toplists-item-remove-summary' => 'Item removed from list',
 
 	//list view
+	'toplists-list-related-to' => 'Related to:',
 	'toplists-list-votes-num' => '$1 votes',
 	'toplists-list-created-by' => 'By $1',
 	'toplists-list-vote-up' => 'Vote Up'
