@@ -65,7 +65,7 @@ jQuery.AIM = {
 			else {
 				//in Chrome/safari an empty div is appended to the JSON data in case of upload issues (e.g. already existing image)
 				//the solution was to append a new line at the end of the JSON string and split it here.
-				response = d.body.innerHtml.split("\n")[0];
+				response = d.body.innerHTML.split("\n")[0];
 			}
 			
 			i.onComplete(response);
