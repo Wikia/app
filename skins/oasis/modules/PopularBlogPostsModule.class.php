@@ -15,6 +15,7 @@ class PopularBlogPostsModule extends Module {
 //		$time = '20091212000000';  // testing
 		$params = array (
 			    "summary" => true,
+				"paging" => false,
 				"timestamp" => $time,
 				"count" => 50,
 				"displaycount" => 4,

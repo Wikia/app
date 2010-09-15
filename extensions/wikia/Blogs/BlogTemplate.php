@@ -171,6 +171,18 @@ class BlogTemplateClass {
 		),
 
 		/*
+		 * perform paging of results based on request params
+		 * paging = false (or true)
+		 *
+		 * type: 	boolean,
+		 * default: true
+		 */
+		'paging' 	=> array (
+			'type' 		=> 'boolean',
+			'default' 	=> true
+		),
+
+		/*
 		 * number of characters in summary
 		 * summarylength = /^\d*$/
 		 *
@@ -515,6 +527,11 @@ class BlogTemplateClass {
 		/* displaycount -- optional param deliberately has no default set */
 
 		/* class -- optional param delberately has no default set */
+
+		/* paging */
+		if ( !isset(self::$aOptions['paging']) ) {
+			self::__makeBoolOption('paging', self::$aBlogParams['paging']['default']);
+		}
 
 		/* offset */
 		if ( !isset(self::$aOptions['offset']) ) {
@@ -1055,6 +1072,7 @@ class BlogTemplateClass {
 						}
 						break;
 					case 'summary'	:
+					case 'paging'	:
 						if ( !empty($aParamValues) && is_array($aParamValues) ) {
 							list ($sParamValue) = $aParamValues;
 							self::__makeBoolOption($sParamName, $sParamValue);
@@ -1081,7 +1099,7 @@ class BlogTemplateClass {
 			/* parse parameters */
 			foreach ($aParams as $sParamName => $sParamValue) {
 				/* ignore empty lines */
-				if ( empty($sParamValue) ) {
+				if ( !isset($sParamValue) ) {
 					wfDebugLog( __METHOD__, "ignore empty param: ".$sParamName." \n" );
 					continue;
 				}
@@ -1107,6 +1125,7 @@ class BlogTemplateClass {
 						self::__makeIntOption($sParamName, $sParamValue);
 						break;
 					case 'summary'		:
+					case 'paging'		:
 						self::__makeBoolOption($sParamName, $sParamValue);
 						break;
 					case 'title' 		:
@@ -1117,10 +1136,13 @@ class BlogTemplateClass {
 				}
 			}
 
-			$__pageVal = $wgRequest->getVal('page');
-			if ( isset($__pageVal) && (!empty($__pageVal)) ) {
-				$count = intval(self::$aOptions['count']);
-				self::__makeIntOption('offset', $count * $__pageVal);
+			// Allows caller to turn off paging of results
+			if (self::$aOptions['paging'] == true) {
+				$__pageVal = $wgRequest->getVal('page');
+				if ( isset($__pageVal) && (!empty($__pageVal)) ) {
+					$count = intval(self::$aOptions['count']);
+					self::__makeIntOption('offset', $count * $__pageVal);
+				}
 			}
 
 			# use revision table to get results
@@ -1138,7 +1160,7 @@ class BlogTemplateClass {
 						$sPager = "";
 						if (self::$aOptions['type'] == 'plain') {
 							$iCount = self::getResultsCount();
-							$sPager = self::__setPager($iCount, intval(self::$aOptions['offset']));
+							$sPager = self::__getPager($iCount, intval(self::$aOptions['offset']));
 						}
 						/* run template */
 						$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
@@ -1166,9 +1188,7 @@ class BlogTemplateClass {
 							$result = $oTmpl->execute("blog-article-page");
 						}
 						// macbre: let Oasis add HTML
-						if (Wikia::isOasis()) {
-							wfRunHooks('BlogsRenderBlogArticlePage', array(&$result, $aResult, self::$aOptions));
-						}
+						wfRunHooks('BlogsRenderBlogArticlePage', array(&$result, $aResult, self::$aOptions, $sPager));
 					} else {
 						unset($result);
 						$result = self::__makeRssOutput($aResult);
@@ -1200,7 +1220,7 @@ class BlogTemplateClass {
     	return $result;
 	}
 
-	private static function __setPager($iTotal, $iPage) {
+	private static function __getPager($iTotal, $iPage) {
 		global $wgUser;
 		global $wgExtensionsPath, $wgStyleVersion;
 		wfProfileIn( __METHOD__ );
@@ -1223,8 +1243,12 @@ class BlogTemplateClass {
 				"wgStyleVersion"	=> $wgStyleVersion,
 			) );
 			#---
-			$sPager = ( NS_BLOG_LISTING == self::$oTitle->getNamespace() ) ? $oTmpl->execute("blog-pager-ajax") :
+			if (Wikia::isOasis()) {
+				$sPager = $oTmpl->execute("blog-pager");
+			} else {
+				$sPager = ( NS_BLOG_LISTING == self::$oTitle->getNamespace() ) ? $oTmpl->execute("blog-pager-ajax") :
 						( ( NS_BLOG_ARTICLE == self::$oTitle->getNamespace() ) ? $oTmpl->execute("blog-pager") : "" );
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
