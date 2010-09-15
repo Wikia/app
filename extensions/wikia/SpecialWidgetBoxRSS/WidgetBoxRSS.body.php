@@ -239,7 +239,6 @@ class WidgetBoxRSS extends SpecialPage {
 					)
 			);
 		}
-		Wikia::log('::::::::::::::::::::::::::!!!!');
 		$this->showFeed( $format , wfMsg('feed-title-recent-images'),  $feedArray);
 	}
 
@@ -279,7 +278,7 @@ class WidgetBoxRSS extends SpecialPage {
 		$lang = "en";
 		$thumbSize = 75;
 		$resultsNumber = 10;
-		$isDevBox = true; // switch to false after tests
+		$isDevBox = false; // switch to false after tests
 
 		if ( $forceRefresh ) $this->clearCache( $hubId );
 		$memcFeedArray = $this->getFromCache( $hubId );
@@ -453,14 +452,10 @@ class WidgetBoxRSS extends SpecialPage {
 	private function showFeed( $format, $subtitle, $feedData ) {
 		global $wgOut, $wgRequest, $wgParser, $wgMemc, $wgTitle;
 		global $wgSitename;
-		Wikia::log('::::::::::::::::::::::::::-1');
 		wfProfileIn( __METHOD__ );
-		Wikia::log('::::::::::::::::::::::::::0');
 		$sFeedName = self::getFeedClass( $format );
 		$feed = new $sFeedName( wfMsg('feed-main-title'),  $subtitle, $wgTitle->getFullUrl() );
-		Wikia::log('::::::::::::::::::::::::::1');
 		$feed->outHeader();
-		Wikia::log('::::::::::::::::::::::::::2');
 		foreach ( $feedData as $val ){
 			$item = new ExtendedFeedItem(
 				$val['title'],
@@ -474,9 +469,7 @@ class WidgetBoxRSS extends SpecialPage {
 			);
 			$feed->outItem( $item );
 		}
-		Wikia::log('::::::::::::::::::::::::::3');
 		$feed->outFooter();
-		Wikia::log('::::::::::::::::::::::::::4');
 		wfProfileOut( __METHOD__ );
 	}
 
