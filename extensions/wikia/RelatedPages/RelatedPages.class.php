@@ -343,14 +343,18 @@ class RelatedPages {
 			$relatedPages = RelatedPages::getInstance();
 
 			$sections = preg_split( '/<h2>/i', $text, -1, PREG_SPLIT_OFFSET_CAPTURE );
-			$sectionPos = $sections[$relatedPages->getPageSectionNo()][1];
 
-			$first = substr( $text, 0, $sectionPos - 4 );
-			$last = substr( $text, $sectionPos - 4);
+			if( !empty( $sections[$relatedPages->getPageSectionNo()] ) ) {
+				// we have enough sections, proceed
+				$sectionPos = $sections[$relatedPages->getPageSectionNo()][1];
 
-			$text = $first . wfRenderModule('RelatedPages') . $last;
+				$first = substr( $text, 0, $sectionPos - 4 );
+				$last = substr( $text, $sectionPos - 4);
 
-			$relatedPages->setRendered( true );
+				$text = $first . wfRenderModule('RelatedPages') . $last;
+
+				$relatedPages->setRendered( true );
+			}
 		}
 		return true;
 	}
