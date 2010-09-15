@@ -18,8 +18,9 @@ $messages["en"] = Array(
 	"devbox-change-wiki-intro"    => "Allows you to set the active wiki instead of modifying hosts files. <br/> To switch to a new wiki use the URL wikiname.$1 or click on the links below.",
 	"devbox-change-wiki-success"  => "This MediaWiki will now run as <strong><code>\$1</code></strong><br/>",
 
+	"devbox-heading-svn-tool"     => "Code Mangement",
 
-	"devbox-footer"               => "<br/><br/><small>Want to change something?<br/>The code for this extension is located in <code>\$1</code></small>",
+	"devbox-footer"               => "Want to change something?<br/>The code for this extension is located in <code>\$1</code>",
 );
 
 ?>
