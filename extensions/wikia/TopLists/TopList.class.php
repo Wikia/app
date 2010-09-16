@@ -273,4 +273,14 @@ class TopList extends TopListBase {
 
 		return ( empty( $errors ) ) ? true : $errors;
 	}
+
+	/**
+	 * invalidates list cache
+	 *
+	 * @author ADi
+	 */
+	public function invalidateCache() {
+		$this->getTitle()->invalidateCache();
+	}
+
 }

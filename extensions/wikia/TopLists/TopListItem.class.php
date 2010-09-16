@@ -68,7 +68,13 @@ class TopListItem extends TopListBase {
 			$this->votesCount = null;
 			$aResult = $oApi->GetResultData();
 
-			return ( !empty( $aResult ) );
+			$success = !empty( $aResult );
+
+			if( $success ) {
+				// invalidate
+			}
+
+			return $success;
 		}
 	}
 
@@ -102,10 +108,6 @@ class TopListItem extends TopListBase {
 		return $this->votesCount;
 	}
 
-	public function getVotesCountId() {
-		return 'item-votes-' . $this->getArticle()->getId();
-	}
-
 	/**
 	 * Get the user name of item creator
 	 *
@@ -118,6 +120,27 @@ class TopListItem extends TopListBase {
 
 	public function getTitleText() {
 		return $this->getTitle()->getText();
+	}
+
+	/**
+	 * get list title text for current item
+	 *
+	 * @author ADi
+	 * @return string
+	 */
+	public function getListTitleText() {
+		$titleParts = explode('/', $this->getTitle()->getText());
+		return ( isset( $titleParts[count($titleParts) - 2] ) ? $titleParts[count($titleParts) - 2] : '' );
+	}
+
+	/**
+	 * get list object for current item
+	 *
+	 * @author ADi
+	 * @return TopList
+	 */
+	public function getList() {
+		return TopList::newFromText( $this->getListTitleText() );
 	}
 
 	/**

@@ -14,7 +14,7 @@ class SpecialCreateTopList extends SpecialPage {
 			$this->displayRestrictionError();
 			return;
 		}
-		
+
 		// set basic headers
 		$this->setHeaders();
 
@@ -22,20 +22,20 @@ class SpecialCreateTopList extends SpecialPage {
 		//$wgOut->addExtensionStyle( "{$wgExtensionsPath}/wikia/TopLists/css/editor.css?{$wgStyleVersion}\n" );
 		$wgOut->addStyle(wfGetSassUrl("$wgExtensionsPath/wikia/TopLists/css/editor.scss"));
 		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/TopLists/js/editor.js?{$wgStyleVersion}\"></script>\n" );
-		
+
 		//hide specialpage subtitle in Oasis
 		$wgSupressPageSubtitle = true;
 
 		TopListHelper::clearSessionItemsErrors();
-		
+
 		//handles redirects form edit specialpage for non-existing lists
 		$listName = $wgRequest->getText( 'wpListName', null );
-		
+
 		$errors = array();
 		$relatedArticleName = null;
 		$selectedPictureName = null;
 		$items = null;
-		
+
 		if( $wgRequest->wasPosted() ) {
 			$listName = $wgRequest->getText( 'list_name' );
 			$relatedArticleName = $wgRequest->getText( 'related_article_name' );
@@ -71,7 +71,7 @@ class SpecialCreateTopList extends SpecialPage {
 
 				if ( !empty( $selectedPictureName ) ) {
 					$article = Title::newFromText( $selectedPictureName );
-					
+
 					if ( empty( $article ) ) {
 						$errors[ 'selected_picture_name' ] = array( wfMsg( 'toplists-error-invalid-picture' ) );
 					} else {
@@ -104,9 +104,9 @@ class SpecialCreateTopList extends SpecialPage {
 							$errors[ "item_{$index}" ] = array( wfMsg( 'toplists-error-duplicated-entry' ) );
 						} else {
 							$alreadyProcessed[] = $lcName;
-							
+
 							$listItem = $list->createItem();
-							
+
 							if ( empty( $listItem ) ) {
 								$errors[ "item_{$index}" ] = array( wfMsg( 'toplists-error-invalid-title' ) );
 							} else {
@@ -126,7 +126,7 @@ class SpecialCreateTopList extends SpecialPage {
 
 					if ( empty( $errors ) ) {
 						$saveResult = $list->save();
-						
+
 						if ( $saveResult !== true ) {
 							foreach ( $saveResult as $errorTuple ) {
 								$errors[  'list_name'  ] = array( wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] ) );
@@ -138,11 +138,11 @@ class SpecialCreateTopList extends SpecialPage {
 
 							foreach( $listItems as $item ) {
 								$saveResult = $item->save();
-								
+
 								if ( $saveResult !== true ) {
 									$unsavedItemNames[] = $item->getNewContent();
 									$counter = 0;
-									
+
 									foreach ( $saveResult as $errorTuple ) {
 										$itemsErrors[] = array( wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] ) );
 										$counter++;
@@ -152,7 +152,7 @@ class SpecialCreateTopList extends SpecialPage {
 
 							if( count( $listItems ) ) {
 								//update page's cache, items where added
-								$list->getTitle()->invalidateCache();
+								$list->invalidateCache();
 
 								//TODO: for more stable behaviour create a memcache bool key and use it in the parser function
 								//to detect if the page is being viewed for the first time, if it is the force connection to master
@@ -180,7 +180,7 @@ class SpecialCreateTopList extends SpecialPage {
 				);
 			}
 		}
-		
+
 		//show at least 3 items by default, if not enough fill in with empty ones
 		for ( $x = ( !empty( $items ) ) ? count( $items ) : 0; $x < 3; $x++ ) {
 			$items[] = array(

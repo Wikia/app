@@ -68,7 +68,7 @@ class SpecialEditTopList extends SpecialPage {
 			$selectedPictureName = $wgRequest->getText( 'selected_picture_name' );
 			$itemsNames = $wgRequest->getArray( 'items_names', array() );
 			$removedItems = $wgRequest->getArray( 'removed_items', array() );
-			
+
 			//handle related article
 			$title = $list->getRelatedArticle();
 			$curValue = null;
@@ -255,7 +255,7 @@ class SpecialEditTopList extends SpecialPage {
 
 					if ( empty( $errors ) ) {
 						//update the cache to sync contents and redirect to reader's view
-						$list->getTitle()->invalidateCache();
+						$list->invalidateCache();
 						$wgOut->redirect( $listUrl );
 					}
 				}
@@ -300,7 +300,7 @@ class SpecialEditTopList extends SpecialPage {
 		}
 
 		$selectedImage = null;
-		
+
 		if( !empty( $selectedPictureName ) ) {
 			$title = Title::newFromText( $selectedPictureName, NS_FILE );
 
