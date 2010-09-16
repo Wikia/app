@@ -5,6 +5,7 @@ global $wgTitle, $wgUser, $wgForceSkin, $wgOut;
 
 $wgForceSkin = 'oasis';
 $wgTitle = Title::newMainPage();
+$wgUser = User::newFromId(0);
 
 wfSuppressWarnings();
 ob_start();
@@ -29,9 +30,9 @@ class ModuleDataAnonTest extends PHPUnit_Framework_TestCase {
 		$moduleData = Module::get('AccountNavigation')->getData();
 
 		// there should be no avatar or profile link
-		$this->assertTrue(is_null($moduleData['profileLink']));
-		$this->assertTrue(is_null($moduleData['profileAvatar']));
-		$this->assertTrue(is_null($moduleData['dropdown']));
+		$this->assertNull($moduleData['profileLink']);
+		$this->assertNull($moduleData['profileAvatar']);
+		$this->assertNull($moduleData['dropdown']);
 
 		// log in / register links
 		$this->assertRegExp('/Special:Signup(.*)type=login/', $moduleData['links'][0]);
