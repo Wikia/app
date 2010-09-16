@@ -168,6 +168,8 @@ $wgAutoloadClasses[ "WikiaApiQueryEventsData"      ] = "{$IP}/extensions/wikia/W
 $wgAutoloadClasses[ "WikiaApiQueryEventInfo"       ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryEventInfo.php";
 $wgAutoloadClasses[ "WikiaApiQueryScribeEvents"    ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryScribeEvents.php";
 $wgAutoloadClasses[ "WikiaApiQueryAllUsers"        ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryAllUsers.php";
+$wgAutoloadClasses[ "ApiRunJob"                    ] = "{$IP}/extensions/wikia/WikiaApi/ApiRunJob.php";
+
 
 /**
  * registered API methods
@@ -182,6 +184,7 @@ $wgAPIListModules[ "wkeditpage"   ] = "WikiaApiQueryLastEditPages";
 $wgAPIListModules[ "wkedituser"   ] = "WikiaApiQueryTopEditUsers";
 $wgAPIListModules[ "wkmostvisit"  ] = "WikiaApiQueryMostVisitedPages";
 $wgAPIListModules[ "wkreferer"    ] = "WikiaApiQueryReferers";
+
 
 /**
  * registered API methods
@@ -223,6 +226,7 @@ $wgAPIModules[ "ajaxlogin"         ] = "WikiaApiAjaxLogin";
 $wgAPIModules[ "imagethumb"        ] = "ApiImageThumb";
 $wgAPIModules[ "theschwartz"       ] = "WikiaApiReportEmail";
 $wgAPIModules[ "awcreminder"       ] = "WikiaApiCreatorReminderEmail";
+$wgAPIModules[ "runjob"            ] = "ApiRunJob";
 
 
 /*

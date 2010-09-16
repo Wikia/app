@@ -33,6 +33,8 @@ if (!defined('MEDIAWIKI')) {
  */
 class ApiRunJob extends ApiBase {
 
+	private $maxJobs = 5;
+
 	/**
 	 * @access public
 	 */
@@ -50,11 +52,56 @@ class ApiRunJob extends ApiBase {
 		global $wgUser;
 
 		$params = $this->extractRequestParams();
-		if( !$wgUser->isAllowed( 'runjob' ) ) {
+		if( !$wgUser->isAllowed( "wikifactory" ) ) { // change to 'runjob' later
 			$this->dieUsageMsg( array( 'cantrunjobs' ) );
 		}
 
+		if( isset($params[ "max" ] ) ) {
+			$max = $params[ "max" ];
+			if( is_numeric( $max ) && $max > 0 && $max <= 100 )  {
+				$this->maxJobs = $max;
+			}
+		}
+
+		foreach( range( 0, $this->maxJobs ) as $counter ) {
+
+		}
+
+		$this->getResult()->setIndexedTagName( $result, 'job' );
+		$this->getResult()->addValue( null, $this->getModuleName(), $result );
+
 		$result = array();
+	}
+
+	/**
+	 * check how many different jobs still exists in queue
+	 *
+	 * @access private
+	 *
+	 * @return Array
+	 */
+	private function checkQueue() {
+
+		// select job_cmd, count(*) as howmany from job group by job_cmd;
+		$dbr = wfGetDB( DB_SLAVE );
+		$sth = $dbr->select(
+			"job",
+			array( "job_cmd", "count(*) as howmany" ),
+			array(),
+			__METHOD__,
+			array( "GROUP BY" => "job_cmd" )
+		);
+
+		$result = array();
+		$total = 0;
+		while( $row = $dbr->fetchObject( $sth) ) {
+			$total += $row->howmany;
+			$result[ $row->job_cmd ] = $row->howmany;
+		}
+
+		$result[ "total" ] = $total;
+
+		return $result;
 	}
 
 	/**
@@ -63,7 +110,7 @@ class ApiRunJob extends ApiBase {
 	 * @access public
 	 */
 	public function mustBePosted() {
-		return true;
+		return false; // should be true; later
 	}
 
 	/**
@@ -78,14 +125,14 @@ class ApiRunJob extends ApiBase {
 	public function getAllowedParams() {
 		return array (
 			'max' => array(
-				ApiBase :: PARAM_INTEGER => true
+				ApiBase :: PARAM_TYPE => "integer"
 			)
 		);
 	}
 
 	public function getParamDescription() {
 		return array (
-			'max' => 'Max jobs done in request, not more than 100',
+			'max' => 'Max jobs done in request, not more than 100, default 1',
 		);
 	}
 
