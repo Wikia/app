@@ -452,7 +452,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		// picture attribution
 		$html = 'TESTTESTTESTTEST';
 		$file = wfFindFile('Wiki.png');
-		$addedBy = $file->getUser();
+		$addedBy = str_replace(' ', '_', $file->getUser());
 
 		ContentDisplayModule::renderPictureAttribution(false, false, $file, false, false, $html);
 
