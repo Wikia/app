@@ -66,7 +66,7 @@
 	// SWC: Get bottomscripts working.
 	print $bottomscripts;
 ?>
-<?= $reporttime."\n" ?>
+<?= wfReportTime()."\n" ?>
 </body>
 <?= wfRenderModule('Ad', 'Config') ?>
 </html>
