@@ -1,8 +1,8 @@
 <section class="WikiaSpotlightsModule">
 	<header>
 		<h1>Wikia Spotlights</h1>
-		<img src="<?= $wgBlankImgUrl; ?>" class="banner-corner-left">
-		<img src="<?= $wgBlankImgUrl; ?>" class="banner-corner-right">
+		<img src="<?= $wgBlankImgUrl; ?>" class="banner-corner-left" height="0" width="0">
+		<img src="<?= $wgBlankImgUrl; ?>" class="banner-corner-right" height="0" width="0">
 	</header>
 	<ul>
 		<li class="WikiaSpotlight item-1">

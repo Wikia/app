@@ -88,6 +88,10 @@ class View {
 		if ($img != null) {
 			$src = $img == 'blank.gif' ? $wgBlankImgUrl : "{$wgStylePath}/common/{$img}";
 			$attr = array('src' => $src);
+			if ($img == 'blank.gif') {
+				$attr['height'] = '0';
+				$attr['width'] = '0';
+			}
 			if ($imgclass != '') {
 				$attr['class'] = $imgclass;
 			}

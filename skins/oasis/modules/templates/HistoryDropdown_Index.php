@@ -16,7 +16,7 @@
 		echo '<span class="no-avatar">' . wfMsg('oasis-page-header-edited', $revisions['current']['timestamp']) . '</span>';
 	}
 ?>
-				<img src="<?= $wgBlankImgUrl ?>" class="chevron">
+				<img src="<?= $wgBlankImgUrl ?>" class="chevron" height="0" width="0">
 			</li>
 <?php
 	// remove current revision

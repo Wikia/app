@@ -12,7 +12,7 @@ if(is_array($menuNodes) && isset($menuNodes[0])) {
 ?>
 			<li>
 				<a href="<?= $menuNodes[$level0]['href'] ?>">
-					<?= $menuNodes[$level0]['text'] ?><?php /*cannot be space between text and &nbsp;*/ if(isset($menuNodes[$level0]['children'])) { ?>&nbsp;<img src="<?= $wgBlankImgUrl; ?>" class="chevron"><?php } ?>
+					<?= $menuNodes[$level0]['text'] ?><?php /*cannot be space between text and &nbsp;*/ if(isset($menuNodes[$level0]['children'])) { ?>&nbsp;<img src="<?= $wgBlankImgUrl; ?>" class="chevron" width="0" height="0"><?php } ?>
 				</a>
 <?php
 		if(isset($menuNodes[$level0]['children'])) {
@@ -55,5 +55,5 @@ if(is_array($menuNodes) && isset($menuNodes[0])) {
 		<?= View::specialPageLink('Watchlist', 'watchlist', array('accesskey' => 'l')) ?>
 		<?= View::specialPageLink('RecentChanges', 'recentchanges', array('accesskey' => 'r')) ?>
 	</div>
-	<img class="shadow-mask" src="<?= $wgBlankImgUrl ?>">
+	<img class="shadow-mask" src="<?= $wgBlankImgUrl ?>" width="0" height="0">
 </header>

@@ -6,7 +6,7 @@
 		// render comments button
 		if (is_numeric($comments)) {
 ?>
-	<a href="<?= htmlspecialchars($commentsLink) ?>" class="wikia-chiclet-button"data-id="comment" title="<?= htmlspecialchars($commentsTooltip) ?>"<?= $commentsAccesskey ?>><img class="osprite icon-article-like" src="<?= $wgBlankImgUrl ?>"></a> <?= $comments ?>
+	<a href="<?= htmlspecialchars($commentsLink) ?>" class="wikia-chiclet-button"data-id="comment" title="<?= htmlspecialchars($commentsTooltip) ?>"<?= $commentsAccesskey ?>><img class="osprite icon-article-like" src="<?= $wgBlankImgUrl ?>" height="10" width="10"></a> <?= $comments ?>
 <?php
 		}
 

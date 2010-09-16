@@ -16,7 +16,7 @@ if(is_array($menuNodes) && isset($menuNodes[0])) {
 	foreach($menuNodes[0]['children'] as $level0) {
 ?>
 					<li>
-						<a href="<?= $menuNodes[$level0]['href'] ?>"><?= $menuNodes[$level0]['text'] ?> <img src="<?= $wgBlankImgUrl; ?>" class="chevron"></a>
+						<a href="<?= $menuNodes[$level0]['href'] ?>"><?= $menuNodes[$level0]['text'] ?> <img src="<?= $wgBlankImgUrl; ?>" class="chevron" height="0" width="0"></a>
 						<ul class="subnav">
 							<li>
 								<?= AdEngine::getInstance()->getPlaceHolderIframe('SPOTLIGHT_GLOBALNAV_'.++$i) ?>
@@ -53,6 +53,6 @@ if(is_array($menuNodes) && isset($menuNodes[0])) {
 		</ul>
 	</nav>
 	<?= wfRenderModule('AccountNavigation') ?>
-	<img src="<?= $wgBlankImgUrl ?>" class="banner-corner-left">
-	<img src="<?= $wgBlankImgUrl ?>" class="banner-corner-right">
+	<img src="<?= $wgBlankImgUrl ?>" class="banner-corner-left" width="0" height="0">
+	<img src="<?= $wgBlankImgUrl ?>" class="banner-corner-right" width="0" height="0">
 </header>

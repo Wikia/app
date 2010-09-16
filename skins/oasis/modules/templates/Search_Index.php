@@ -2,7 +2,7 @@
 	<input type="text" name="search" placeholder="<?= $placeholder ?>" autocomplete="off" accesskey="f">
 	<input type="hidden" name="fulltext" value="<?= $fulltext ?>">
 	<input type="submit">
-	<button class="wikia-chiclet-button"><img src="<?= $wgBlankImgUrl ?>"></button>
+	<button class="wikia-chiclet-button"><img src="<?= $wgBlankImgUrl ?>" height="15" width="15"></button>
 </form>
 <?php
 if ($wgTitle->isSpecial('Search')) {
