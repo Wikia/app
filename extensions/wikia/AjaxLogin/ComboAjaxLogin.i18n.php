@@ -303,6 +303,7 @@ $messages['nl'] = array(
 	'comboajaxlogin-desc' => 'Dynamisch venster dat gebruikers laat aanmelden, een nieuw wachtwoord opvragen en registreren',
 	'comboajaxlogin-createlog' => 'Aanmelden of een nieuwe gebruiker aanmaken',
 	'comboajaxlogin-actionmsg' => 'Om deze handeling uit te kunnen voeren moet u eerst aanmelden of een gebruiker registreren',
+	'comboajaxlogin-actionmsg-protected' => 'U moet eerst aanmelden of een gebruiker aanmaken om deze beveiligde pagina te kunnen bewerken.',
 	'comboajaxlogin-connectmarketing' => '<h1>Met andere websites verbinden</h1>
 <ul>
 <li>Behoud uw huidige gebruikersnaam, geschiedenis, bewerkingen, enzovoort. Niets wijzigt, behalve de manier waarop u aanmeldt</li>
@@ -334,6 +335,12 @@ $messages['no'] = array(
 	'comboajaxlogin-connectmarketing' => '<h1>Koble sammen kontoene dine</h1>
 <ul>
 <li>Behold ditt nåværende brukernavn, din historie, dine redigeringer... Ingenting endres bortsett fra hvordan du logger inn</li>
+<li>Del aktiviteten din på Wikia med vennene dine på Facebook</li>
+<li>Full kontroll over hva som publiseres</li>
+</ul>',
+	'comboajaxlogin-connectmarketing-oasis' => '<h1>Koble Wikia-kontoen din til Facebook</h1>
+<ul>
+<li>Behold ditt nåværende brukernavn, historie, endringer... Ingenting forandres bortsett fra hvordan du logger inn</li>
 <li>Del aktiviteten din på Wikia med vennene dine på Facebook</li>
 <li>Full kontroll over hva som publiseres</li>
 </ul>',

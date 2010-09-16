@@ -104,16 +104,21 @@ $messages['bs'] = array(
 );
 
 /** German (Deutsch)
+ * @author LWChris
  * @author The Evil IP address
  */
 $messages['de'] = array(
 	'themedesigner-desc' => 'Erlaubt Wiki-Administratoren die Erstellung eines Themes für ein Wiki',
+	'themedesigner' => 'Theme Designer',
+	'themedesigner-title' => 'Wikia Theme Designer',
 	'themedesigner-background' => 'Hintergrund',
 	'themedesigner-page' => 'Seite',
 	'themedesigner-color' => 'Farbe',
 	'themedesigner-graphic' => 'Grafik',
 	'themedesigner-buttons' => 'Buttons',
 	'themedesigner-links' => 'Links',
+	'themedesigner-text-wordmark' => 'Textbasiertes Logo',
+	'themedesigner-graphic-wordmark' => 'Grafisches Logo',
 	'themedesigner-small' => 'Klein',
 	'themedesigner-medium' => 'Mittel',
 	'themedesigner-large' => 'Groß',
@@ -242,6 +247,26 @@ $messages['nl'] = array(
 	'themedesigner-large' => 'Groot',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['no'] = array(
+	'themedesigner-desc' => 'Lar wiki-administratorer utforme et tema for en wiki',
+	'themedesigner' => 'Temautformer',
+	'themedesigner-title' => 'Wikia-temautfordring',
+	'themedesigner-background' => 'Bakgrunn',
+	'themedesigner-page' => 'Side',
+	'themedesigner-color' => 'farge',
+	'themedesigner-graphic' => 'grafikk',
+	'themedesigner-buttons' => 'knapper',
+	'themedesigner-links' => 'lenker',
+	'themedesigner-text-wordmark' => 'Tekstlig typografi',
+	'themedesigner-graphic-wordmark' => 'Grafisk typografi',
+	'themedesigner-small' => 'Liten',
+	'themedesigner-medium' => 'Medium',
+	'themedesigner-large' => 'Stor',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
@@ -268,6 +293,26 @@ $messages['pms'] = array(
  * @author Waldir
  */
 $messages['pt'] = array(
+	'themedesigner-desc' => 'Permite aos administradores compor um tema visual para a wiki',
+	'themedesigner' => 'Compositor de Temas Visuais',
+	'themedesigner-title' => 'Compositor de Temas Visuais da Wikia',
+	'themedesigner-background' => 'Fundo',
+	'themedesigner-page' => 'Página',
+	'themedesigner-color' => 'cor',
+	'themedesigner-graphic' => 'imagem',
+	'themedesigner-buttons' => 'botões',
+	'themedesigner-links' => 'links',
+	'themedesigner-text-wordmark' => 'Símbolo textual',
+	'themedesigner-graphic-wordmark' => 'Símbolo gráfico',
+	'themedesigner-small' => 'Pequeno',
+	'themedesigner-medium' => 'Médio',
+	'themedesigner-large' => 'Grande',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
+ */
+$messages['pt-br'] = array(
 	'themedesigner-desc' => 'Permite aos administradores compor um tema visual para a wiki',
 	'themedesigner' => 'Compositor de Temas Visuais',
 	'themedesigner-title' => 'Compositor de Temas Visuais da Wikia',

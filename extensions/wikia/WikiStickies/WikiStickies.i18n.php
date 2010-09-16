@@ -329,6 +329,20 @@ $messages['ig'] = array(
 	'wikistickies-see-more' => 'Lé ihü nke ozor gí jí nkwádo',
 );
 
+/** Khmer (ភាសាខ្មែរ)
+ * @author គីមស៊្រុន
+ */
+$messages['km'] = array(
+	'wikistickies-save-changes' => 'រក្សាទុកបំលាស់ប្ដូរ',
+	'wikistickies-more' => 'មើលថែមទៀត',
+	'wikistickies-admins-hd' => 'សំរាប់តែអ្នកអភិបាលប៉ុណ្ណោះ',
+	'wikistickies-logo-hd' => 'ផ្ទុកឡើងឡូហ្គោ',
+	'wikistickies-custom-hd' => 'បង្កើត WikiStickies របស់ខ្លួនអ្នកផ្ទាល់',
+	'wikistickies-next' => 'បន្ទាប់ →',
+	'wikistickies-hide' => 'លាក់',
+	'wikistickies-see-more' => 'មើលទំព័របន្ថែមទៀតដែលត្រូវការជំនួយ',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -417,6 +431,8 @@ Voeg regels toe aan de lijst en die verschijnen dan op Mijn Startpagina en op de
  * @author Audun
  */
 $messages['no'] = array(
+	'wikistickies' => 'WikiStickier',
+	'wikistickies-desc' => 'Den store og klebrige Wiki-Stickien som fanger oppmerksomheten din!',
 	'wikistickies-newpages-hd' => 'Kan du legge informasjon til en av disse sidene?',
 	'wikistickies-withoutimages-hd' => 'Kan du legge et bilde til en av disse sidene?',
 	'wikistickies-wantedpages-hd' => 'Kan du starte en ny side som vi trenger?',
@@ -429,8 +445,13 @@ $messages['no'] = array(
 	'wikistickies-save-changes' => 'Lagre endringer',
 	'wikistickies-more' => 'se mer',
 	'wikistickies-admins-hd' => 'Kun administratorer',
+	'wikistickies-admins-msg' => 'Dette er ikke typiske WikiStickier.
+Dette er ting som bare kan gjøres av administratorer på wikien for å påvirke hvordan alle ser wikien.',
 	'wikistickies-logo-hd' => 'Last opp en logo',
 	'wikistickies-theme-hd' => 'Velg et tema',
+	'wikistickies-custom-hd' => 'Lag dine egne WikiStickier',
+	'wikistickies-custom-msg' => 'Du kan endre [[MediaWiki:CommunityStickies|FellesskapsStickiy-siden]] for å legge til en ny WikiSticky-notis!
+Legg gjenstander til listen, og de vil vises på Mitt hjem og på denne siden.',
 	'wikistickies-next' => 'Neste →',
 	'wikistickies-hide' => 'skjul',
 	'wikistickies-see-more' => 'Se flere sider som trenger hjelp',

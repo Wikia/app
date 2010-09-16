@@ -806,6 +806,7 @@ $messages['nl'] = array(
  */
 $messages['no'] = array(
 	'daemonloader' => 'Nisselaster',
+	'daemonloader-desc' => 'Kjører [[Special:DaemonLoader|bakgrunnsdaemoner]] for å lage rapporter',
 	'daemonloader_pagetitle' => 'Nisselaster',
 	'daemonloader_createtask' => 'Opprett oppgave',
 	'daemonloader_listtask' => 'Liste over oppgaver',

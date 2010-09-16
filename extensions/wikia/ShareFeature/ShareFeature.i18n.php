@@ -66,6 +66,16 @@ $messages['ca'] = array(
 	'sf-link-tooltip' => 'Comparteix aquest article amb els teus amics',
 );
 
+/** Czech (Česky)
+ * @author Mormegil
+ */
+$messages['cs'] = array(
+	'sharefeature-desc' => 'Umožňuje uživatelům odkazovat na stránky z populárních webů',
+	'sf-link' => 'Sdílet tento článek',
+	'sf-link-popup' => 'Sdílet tento článek',
+	'sf-link-tooltip' => 'Sdílet tento článek s přáteli',
+);
+
 /** German (Deutsch)
  * @author LWChris
  * @author The Evil IP address
@@ -312,8 +322,10 @@ $messages['tl'] = array(
 
 /** Turkish (Türkçe)
  * @author Joseph
+ * @author Mert.subay
  */
 $messages['tr'] = array(
+	'sharefeature-desc' => 'Kullanıcılara popüler sitelerden bağlantı vermelerine izin ver',
 	'sf-link' => 'Bu maddeyi paylaş',
 	'sf-link-popup' => 'Bu maddeyi paylaş',
 	'sf-link-tooltip' => 'Bu maddeyi arkadaşlarınızla paylaşın',

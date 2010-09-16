@@ -2350,6 +2350,7 @@ Geef het bestand een andere naam, en probeer het dan opnieuw te uploaden.',
 Deze wiki is alleen-lezen.',
 	'wikiaPhotoGallery-upload-error-conflict-intro' => 'Er bestaat al een bestand met deze naam.
 Wat wilt u doen?',
+	'wikiaPhotoGallery-upload-error-filetype-missing' => 'Het te uploaden bestand heeft geen bestandsextensie.',
 	'wikiaPhotoGallery-upload-error-conflict-rename' => 'Uw bestand hernoemen',
 	'wikiaPhotoGallery-upload-error-conflict-reuse' => 'Het bestaande bestand gebruiken',
 	'wikiaPhotoGallery-upload-error-conflict-overwrite' => 'Het bestaande bestand met uw bestand overschrijven',

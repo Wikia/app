@@ -857,11 +857,13 @@ Bitte versuche es mit einem anderen!',
 	'achievements-profile-title' => '$1 hat $2 {{PLURAL:$2|Auszeichnung|Auszeichnungen}} erhalten',
 	'achievements-profile-title-no' => 'Abzeichen von $1',
 	'achievements-profile-title-challenges' => 'Mehr von dir verdienbare Abzeichen!',
-	'achievements-profile-customize' => 'Abzeichen anpassen',
+	'achievements-profile-customize' => 'Abzeichen anpassen >',
 	'achievements-ranked' => 'Platz #$1 in diesem Wiki',
 	'achievements-no-badges' => 'Schau dir die Liste unten an, um die Abzeichen anzusehen, die du dir in diesem Wiki verdienen kannst!',
 	'achievements-viewall' => 'Alle anzeigen',
 	'achievements-viewless' => 'Schließen',
+	'achievements-profile-title-oasis' => 'Leistungs- <br /> punkte',
+	'achievements-ranked-oasis' => '$1 belegt [[Special:Leaderboard|Rang #$2]] in diesem Wiki',
 	'achievements-viewall-oasis' => 'Sehe alle',
 	'leaderboard-intro' => "'''&ldquo;Was sind Herausforderungen?&rdquo;'''
 Du kannst spezielle Abzeichen durch die Teilnahme in diesem Wiki verdienen!
@@ -3035,6 +3037,8 @@ Vennligst prøv et annet!',
 	'achievements-no-badges' => 'Sjekk ut listen under for å se utmerkelsene du kan oppnå på denne wikien!',
 	'achievements-viewall' => 'Vis alle',
 	'achievements-viewless' => 'Lukk',
+	'achievements-profile-title-oasis' => 'utmerkelses- <br/> poeng',
+	'achievements-ranked-oasis' => '$1 er [[Special:Leaderboard|Rangert #$2]] på denne wikien',
 	'achievements-viewall-oasis' => 'Se alle',
 	'leaderboard-intro' => "'''&laquo;Hva er utmerkelser?&rdquo;'''
 Du kan motta spesielle utmerkelser ved å delta på denne wikien! 
@@ -3257,201 +3261,201 @@ på noen andres diskusjonsside!',
  */
 $messages['pms'] = array(
 	'achievementsii-desc' => "Un sistema ëd distintiv dle realisassion për j'utent ëd la wiki",
-	'achievements-upload-error' => "Spiasent!
-Sta figura a travaja pa.
-Sigurte ch'a sia un file .jpg o .png.
-Se a travaja anco' pa, antlora la figura a peul esse tròp gròssa.
-Për piasì preuva con n'àutra!",
-	'achievements-upload-not-allowed' => "J'aministrador a peulo cangé ij nòm e le figure dij distintiv ëd Ragiungiment an visitand la pàgina [[Special:AchievementsCustomize|Përsonalisa Ragiungiment]].",
+	'achievements-upload-error' => "Darmagi!
+Sta figura a marcia pa.
+Ch'as sigura ch'a sia n'archivi .jpg o .png.
+Se a marcia anco' pa, antlora la figura a peul esse tròp gròssa.
+Për piasì, ch'a preuva con n'àutra!",
+	'achievements-upload-not-allowed' => "J'aministrator a peulo cangé ij nòm e le figure dij distintiv dij Sucess an visitand la pàgina [[Special:AchievementsCustomize|ëd Përsonalisassion dij sucess]].",
 	'achievements-non-existing-category' => 'La categorìa specificà a esist pa.',
-	'achievements-edit-plus-category-track-exists' => 'La categorìa specificà a l\'ha già na <a href="#" onclick="$(window).scrollTo(\'#section$1\', 2500); return false;" title="Go to the track">trassa associà</a>.',
-	'achievements-no-stub-category' => 'Për piasì crea pa trasse për jë sbòss.',
+	'achievements-edit-plus-category-track-exists' => 'La categorìa specificà a l\'ha già na <a href="#" onclick="$(window).scrollTo(\'#section$1\', 2500); return false;" title="Andé a la dësfida">dësfida associà</a>.',
+	'achievements-no-stub-category' => "Për piasì, ch'a crea pa ëd dësfide për jë sbòss.",
 	'achievements-platinum' => 'Plàtin',
 	'achievements-gold' => 'Òr',
 	'achievements-silver' => 'Argent',
 	'achievements-bronze' => 'Bronz',
-	'achievements-you-must' => 'It deuve rivé a $1 për vagné sto distintiv.',
-	'leaderboard-button' => 'Leaderbord dij Ragiungiment',
+	'achievements-you-must' => 'A dev $1 për vagné sto distintiv.',
+	'leaderboard-button' => 'Tàula dij sucess',
 	'achievements-masthead-points' => '$1 <small>{{PLURAL:$1|pont|pont}}</small>',
-	'achievements-track-name-edit' => 'Trassa dle modìfiche',
-	'achievements-track-name-picture' => 'Trassa dle figure',
-	'achievements-track-name-category' => 'Trassa dle categorìe',
-	'achievements-track-name-blogpost' => 'Trassa dij Blog Post',
-	'achievements-track-name-blogcomment' => 'Trassa dij Coment ëd Blog',
-	'achievements-track-name-love' => 'Trassa ëd Wiki Love',
-	'achievements-notification-title' => "Manera d'andé, $1!",
+	'achievements-track-name-edit' => 'Dësfida ëd modìfica',
+	'achievements-track-name-picture' => 'Dësfida ëd figure',
+	'achievements-track-name-category' => 'Dësfida ëd categorìa',
+	'achievements-track-name-blogpost' => 'Dësfida ëd Publicassion an snë scartari',
+	'achievements-track-name-blogcomment' => 'Dësfida ëd Coment ëd në scartari',
+	'achievements-track-name-love' => 'Dësfida Wiki Love',
+	'achievements-notification-title' => "A l'é an sla bon-a stra, $1!",
 	'achievements-notification-subtitle' => 'It l\'has mach vagnà ël distintiv "$1" $2',
 	'achievements-notification-link' => "<strong><big>[[Special:MyPage|Varda ij distintiv ch'it peule anco' vagné]]!</big></strong>",
 	'achievements-points' => '$1 {{PLURAL:$1|pont|pont}}',
 	'achievements-points-with-break' => '$1<br />{{PLURAL:$1|pont|pont}}',
-	'achievements-earned' => "Sto distintiv a l'é stàit vagnà da {{PLURAL:$1|1 utent|$1 utent}}.",
+	'achievements-earned' => "Cost distintiv a l'é stàit vagnà da {{PLURAL:$1|1 utent|$1 utent}}.",
 	'achievements-profile-title' => '$2 {{PLURAL:$2|distintiv|distintiv}} vagnà da $1',
 	'achievements-profile-title-no' => 'distintiv ëd $1',
 	'achievements-profile-title-challenges' => "Distintiv ch'it peule anco' vagné!",
-	'achievements-profile-customize' => 'Përsonalisa distintiv >',
-	'achievements-ranked' => 'Classìfica $1 su sta wiki',
+	'achievements-profile-customize' => 'Përsonalisé ij distintiv >',
+	'achievements-ranked' => 'Classificà al pòst $1 su sta wiki',
 	'achievements-no-badges' => "Contròla la lista sota për vëdde ij distintiv ch'it peule anco' vagné su sta wiki!",
 	'achievements-viewall' => 'Varda tut',
 	'achievements-viewless' => 'Sara',
-	'achievements-profile-title-oasis' => 'ragiungiment <br /> pont',
-	'achievements-ranked-oasis' => "$1 a l'é [[Special:Leaderboard|Ranked #$2]] su sta wiki",
+	'achievements-profile-title-oasis' => 'realisassion <br /> pont',
+	'achievements-ranked-oasis' => "$1 a l'é [[Special:Leaderboard|Classificà al pòst $2]] su sta wiki",
 	'achievements-viewall-oasis' => 'Varda tut',
-	'leaderboard-intro' => "'''&ldquo;Lòn ch'a son ij Ragiungiment?&rdquo;'''
-It peule vagné dij distintiv speciaj an partessipand a sta wiki!
-Minca distintiv ch'it vagne a gionta dij pont a tò pontegi total:
-Distintiv ëd Brons a valo 10 pont, distintiv d'Argent a valo 50 pont, e distintiv d'Òr a valo 100 pont.
+	'leaderboard-intro' => "'''&ldquo;Lòn ch'a son le Realisassion?&rdquo;'''
+A peul vagné dij distintiv speciaj an partessipand a costa wiki!
+Minca distintiv ch'a vagna a gionta dij pont a sò pontegi total:
+Ij distintiv ëd Bronz a valo 10 pont, ij distintiv d'Argent a valo 50 pont, e ij distintiv d'Òr a valo 100 pont.
 
-Quand it intre ant la wiki, tò profil utent a visualisa ij distintiv ch'it l'has vagnà, e at mosta na lista dle sfide ch'a son disponìbij për ti.
-[[Special:MyPage|va a tò profil utent për controlelo]]!",
-	'leaderboard' => 'Leaderbord dij Ragiungiment',
-	'achievements-recent-earned-badges' => 'Distintiv vagnà recentemenmt',
+Quand ch'a riva an sla wiki, sò profil utent a visualisa ij distintiv ch'a l'ha vagnà, e a jë smon na lista dle sfide ch'a son disponìbij për chiel.
+[[Special:MyPage|Ch'a vada a sò profil utent për dé n'ociada]]!",
+	'leaderboard' => 'Tàula dle realisassion',
+	'achievements-recent-earned-badges' => 'Distintiv vagnà ëd recent',
 	'achievements-recent-info' => '<strong>$3</strong><br />$4<br />vagnà da <a href="$1">$2</a><br />$5',
 	'achievements-activityfeed-info' => 'vagnà ël <strong><a href="$3" class="badgeName">$1</a></strong> distintiv<br />$2',
-	'achievements-leaderboard-disclaimer' => 'Leaderboard a mosta ij cambi da ier',
-	'achievements-leaderboard-rank-label' => 'antërval',
+	'achievements-leaderboard-disclaimer' => 'La tàula a smon ij cambi da jer',
+	'achievements-leaderboard-rank-label' => 'classìfica',
 	'achievements-leaderboard-member-label' => 'mèmber',
 	'achievements-leaderboard-points-label' => 'pont',
-	'achievements-send' => 'Salva figura',
+	'achievements-send' => 'Salvé la figura',
 	'achievements-save' => 'Salvé ij cangiament',
-	'achievements-reverted' => "Distintiv tornà a l'original",
-	'achievements-customize' => 'Përsonalisa figura',
-	'achievements-customize-new-category-track' => 'Crea na trassa neuva për la categorìa:',
+	'achievements-reverted' => "Distintiv butà torna a l'original.",
+	'achievements-customize' => 'Përsonalisé la figura',
+	'achievements-customize-new-category-track' => 'Creé na dësfida neuva për la categorìa:',
 	'achievements-enable-track' => 'abilità',
-	'achievements-revert' => 'Torna al default',
+	'achievements-revert' => 'Torné a lë stàndard',
 	'achievements-special-saved' => 'Cambi salvà.',
-	'achievements-special' => 'Ragiungiment speciaj',
-	'achievements-secret' => 'Ragiungiment segret',
-	'achievementscustomize' => 'Përsonalisa distintiv',
+	'achievements-special' => 'Realisassion speciaj',
+	'achievements-secret' => 'Realisassion segrete',
+	'achievementscustomize' => 'Përsonalisé ij distintiv',
 	'achievements-about-title' => 'A propòsit dë sta pàgina...',
-	'achievements-about-content' => "J'aministrador su sta wiki a peulo përsonalisé ij nòm e le figure dij distintiv dij ragiungiment.
+	'achievements-about-content' => "J'aministrator ëd sa wiki a peulo përsonalisé ij nòm e le figure dij distintiv dle realisassion.
 
-It peule carié minca figura .jpg o .png, e toa figura a intrerà automaticament an drinta a la fnesta.
-A travaja mej quand che toa figura a l'é quadra, e quand che la part pi amportanta dla figura a l'é pròpi ant ël mes.
+A peul carié qualsëssìa figura .jpg o .png, e soa figura as rangërà automaticament andrinta al quàder.
+A marcia mej quand che soa figura a l'é quadra, e quand che la part pi amportanta dla figura a l'é pròpi ant ël mes.
 
-It peule dovré figure retangolar, ma it podrìe trové che un pòch a ven tajà fòra dla fnesta.
-S'it l'has un program gràfich, it peule ritajé toa figura për buté la part pi amportanta dla figura ant ël mes.
-S'it l'has pa un program gràfich, antlora preuva pura con figure diferente fin che it treuve cola ch'a va për ti!
-S'at pias pa la figura ch'it l'has sërnù, sgnaca \"{{int:achievements-revert}}\" për andé andré al gràfich original.
+A peul dovré ëd figure retangolar, ma a podrìa trové che cheicòs a resta tajà fòra dal quàder.
+S'a l'ha un programa gràfich, a peul ritajé soa figura për buté la part pi amportanta dla figura ant ël mes.
+S'a l'ha pa un programa gràfich, antlora ch'a preuva pura con figure diferente fin ch'a treuva cola che për chiel a marcia!
+S'a-j pias pa la figura ch'a l'has sërnù, ch'a sgnaca \"{{int:achievements-revert}}\" për andé andré al gràfich original.
 
-It peule ëdcò deje ai distintiv dij nòm neuv che a arfleto l'argoment ëd la wiki.
-Quand it l'has cangià ij nòm dij distintiv, sgnaca \"{{int:achievements-save}}\" për salvé ij tò cambi.
-Bon divertiment!",
-	'achievements-edit-plus-category-track-name' => '$1 trassa ëd modìfiche',
-	'achievements-create-edit-plus-category-title' => 'Crea na trassa ëd modìfica neuva',
-	'achievements-create-edit-plus-category-content' => "It peule trové un neuv ansema ëd distintiv che a premio j'utent ch'a modìfico pàgine ant na particolar categorìa, për a anluminé n'aira particolar dël sit dont a j'utent a podrìa piasije travajé an dzora.
-It peule amposté pi che na trassa ëd categorìa, parèj preuva a serne doe categorìe ch'a podrìo gioté j'utent a mosté soe specialisassion!
-Anvisca na rivalità tra j'utent ch'a modìfico le pàgine dij Vàmpir e j'utent ch'a modìfico le pàgine dij Werewolves, o Magh e Muggles, o Autobot e Decepticon.
+A peul ëdcò deje ai distintiv dij nòm neuv che a arfleto l'argoment ëd la wiki.
+Quand ch'a l'ha cangià ij nòm dij distintiv, ch'a sgnaca \"{{int:achievements-save}}\" për salvé ij sò cambi.
+Ch'as amusa bin!",
+	'achievements-edit-plus-category-track-name' => '$1 dësfida ëd modìfica',
+	'achievements-create-edit-plus-category-title' => 'Creé na neuva dësfida ëd modìfica',
+	'achievements-create-edit-plus-category-content' => "A peul creé un neuv ansema ëd distintiv che a premio j'utent ch'a modìfico dle pàgine ant na categorìa particolar, për valorisé na zòna particolar dël sit anté che a j'utent a podrìa piasèj-je travajeje ansima.
+A peul amposté pi che na dësfida ëd categorìa, parèj ch'a preuva a serne doe categorìe ch'a podrìo giuté j'utent a mostré soe specialisassion!
+Ch'a anvisca na rivalità tra j'utent ch'a modìfico le pàgine dij Vàmpir e j'utent ch'a modìfico le pàgine dij Luv mostro, o Mago e Muggles, o Autobot e Decepticon.
 
-Për creé na neuva trassa \"Modìfica ant la categorìa\", ansëriss ël nòm dla categorìa ant ël camp sota.
-La trassa ëd Modìfica regolar a esisterà anco';
-sossì a creerà na trassa separà ch'it peule përsonalisé separatament.
+Për creé na neuva dësfida \"Modìfica ant la categorìa\", ch'a anserissa ël nòm dla categorìa ant ël camp sì-sota.
+La dësfida ëd Modìfica regolar a esisterà anco';
+sossì a creerà na dësfida separà ch'a peule përsonalisé separatament.
 
-Quand la trassa a l'é creà, ij distintiv neuv a apariran ant la lista an sla snista, sota la trassa regolar ëd Modìfica.
-Përsonalisa nòm e figure për la trassa neuva, an manera che j'utet a peusso vëdde la diferensa!
+Quand la dësfida a l'é creà, ij distintiv neuv a compariran ant la lista an sla snista, sota la dësfida regolar ëd Modìfica.
+Ch'a përsonalisa ij nòm e le figure për la neuva dësfida, an manera che j'utent a peulo vëdde la diferensa!
 
-Na vira ch'it l'has fàit la përsonalisassion, sgnaca la checkbox \"{{int:achievements-enable-track}}\" për rende ativa la trassa neuva, e peui sgnaca \"{{int:achievements-save}}\".
-J'utent a vëddran che la trassa neuva a apariss an sò profil utent, e a ancamineran a vagné dij distintiv quand che a modìfico dle pàgine an cola categorìa.
-It peule ëdcò disabilité la trassa pi tard, s'it decide ch'it veule pa anluminé cola categorìa an gnun cas.
-J'utent ch'a l'han vagnà dij distintiv ant la trassa a manteniran sempe ij sò distintiv, ëdcò se la trassa a l'é disabilità.
+Na vira ch'a l'ha fàit la përsonalisassion, ch'a sgnaca la casela \"{{int:achievements-enable-track}}\" për rende ativa la neuva dësfida, e peui ch'a sgnaca \"{{int:achievements-save}}\".
+J'utent a vëddran che la neuva dësfida a compariss an sò profil utent, e a ancamineran a vagné dij distintiv quand che a modìfico dle pàgine an cola categorìa.
+A peule ëdcò disabilité la dësfida pi tard, s'a decid che comsëssìa a veul pa valorisé cola categorìa.
+J'utent ch'a l'han vagnà dij distintiv ant la dësfida a mantniran sempe ij sò distintiv, ëdcò se la dësfida a l'é disabilità.
 
-Sossì a peul gioté a rivé a n'àutr livel ëd divertiment për ij ragiungiment.
-Preuvlo!",
-	'achievements-create-edit-plus-category' => 'Crea sta trassa',
+Sòn a peul giuté a buté n'àutr livel d'amusament për le realisassion.
+Ch'a lo preuva!",
+	'achievements-create-edit-plus-category' => 'Creé costa dësfida',
 	'platinum' => 'Plàtin',
-	'achievements-community-platinum-awarded-email-subject' => 'It ses stàit premià con un distintiv Plàtin neuv!',
-	'achievements-community-platinum-awarded-email-body-text' => "Congratulassin $1!
+	'achievements-community-platinum-awarded-email-subject' => "A l'é stàit premià con un neuv distintiv ëd Plàtin!",
+	'achievements-community-platinum-awarded-email-body-text' => "Congratulassion $1!
 
-It ses pen-e stàit premià con ël distintiv Plàtin '$2' su $4 ($3).
-Sossì a gionta 250 pont a tò pontegi!
+A l'é pen-a stàit premià con ël distintiv ëd Plàtin '$2' su $4 ($3).
+Sòn a gionta 250 pont a sò pontegi!
 
-Contròla tò fantàstich distintiv neuv an sla pàgina ëd tò profil utent:
+Ch'a daga n'ociada a sò distintiv neuv fiamengh an sla pàgina ëd sò profil utent:
 
 $5",
 	'achievements-community-platinum-awarded-email-body-html' => '<strong>Congratulassion $1!</strong><br /><br />
-It ses pen-e stàit premià con ël \'<strong>$2</strong>\' distintiv ëd Plàtin su <a href="$3">$4</a>.
-Sossì a gionta 250 pont a tò pontegi!<br /><br />
-Contròla tò fantàstich distintiv neuv ans toa <a href="$5">pàgina dël profil utent</a>.',
+A l\'é pen-a stàit premià con ël distintiv ëd Plàtin \'<strong>$2</strong>\' su <a href="$3">$4</a>.
+Sòn a gionta 250 pont a sò pontegi!<br /><br />
+Ch\'a daga n\'ociada a sò fiamengh distintiv neuv an soa <a href="$5">pàgina d\'utent</a>.',
 	'achievements-community-platinum-awarded-for' => 'Premià për:',
 	'achievements-community-platinum-how-to-earn' => 'Com vagné:',
-	'achievements-community-platinum-awarded-for-example' => 'p.e. "për fé..."',
-	'achievements-community-platinum-how-to-earn-example' => 'p.e. "fà 3 modìfiche..."',
+	'achievements-community-platinum-awarded-for-example' => 'pr\'esempi "për fé..."',
+	'achievements-community-platinum-how-to-earn-example' => 'pr\'esempi "fé 3 modìfiche..."',
 	'achievements-community-platinum-badge-image' => 'Figura dël distintiv:',
-	'achievements-community-platinum-awarded-to' => 'Premià a:',
+	'achievements-community-platinum-awarded-to' => 'Dàit a:',
 	'achievements-community-platinum-current-badges' => 'Distintiv corent ëd plàtin',
-	'achievements-community-platinum-create-badge' => 'Crea distintiv',
+	'achievements-community-platinum-create-badge' => 'Creé un distintiv',
 	'achievements-community-platinum-enabled' => 'abilità',
-	'achievements-community-platinum-show-recents' => 'mosta ant ij distintiv recent',
+	'achievements-community-platinum-show-recents' => 'mostré ant ij distintiv recent',
 	'achievements-community-platinum-edit' => 'modìfica',
 	'achievements-community-platinum-save' => 'salva',
-	'achievements-badge-name-edit-0' => 'Fé na diferensa',
+	'achievements-badge-name-edit-0' => 'Fé la diferensa',
 	'achievements-badge-name-edit-1' => "Mach l'Inissi",
-	'achievements-badge-name-edit-2' => 'Fà Toa Marca',
+	'achievements-badge-name-edit-2' => 'Fesse armarché',
 	'achievements-badge-name-edit-3' => 'Amis ëd la Wiki',
 	'achievements-badge-name-edit-4' => 'Colaborador',
-	'achievements-badge-name-edit-5' => 'Costrudor ëd Wiki',
-	'achievements-badge-name-edit-6' => 'Leader ëd Wiki',
+	'achievements-badge-name-edit-5' => 'Costrutor ëd Wiki',
+	'achievements-badge-name-edit-6' => 'Cap ëd Wiki',
 	'achievements-badge-name-edit-7' => 'Espert ëd Wiki',
-	'achievements-badge-name-picture-0' => 'Fotografìa',
+	'achievements-badge-name-picture-0' => 'Istantania',
 	'achievements-badge-name-picture-1' => 'Paparass',
 	'achievements-badge-name-picture-2' => 'Ilustrador',
-	'achievements-badge-name-picture-3' => 'Coletor',
+	'achievements-badge-name-picture-3' => 'Colessionista',
 	'achievements-badge-name-picture-4' => "Amant ëd l'Art",
 	'achievements-badge-name-picture-5' => 'Decorador',
-	'achievements-badge-name-picture-6' => 'Disegnador',
-	'achievements-badge-name-picture-7' => 'Curador',
+	'achievements-badge-name-picture-6' => 'Progetista',
+	'achievements-badge-name-picture-7' => 'Conservador',
 	'achievements-badge-name-category-0' => 'Fà na Conession',
-	'achievements-badge-name-category-1' => 'Scopridor dël Senté',
+	'achievements-badge-name-category-1' => 'Marcador ëd senté',
 	'achievements-badge-name-category-2' => 'Esplorador',
-	'achievements-badge-name-category-3' => 'Guida dël Gir',
+	'achievements-badge-name-category-3' => 'Guida torìstica',
 	'achievements-badge-name-category-4' => 'Navigador',
 	'achievements-badge-name-category-5' => 'Costrutor ëd Pont',
 	'achievements-badge-name-category-6' => 'Pianificador ëd Wiki',
 	'achievements-badge-name-blogpost-0' => 'Quaicòs da dì',
 	'achievements-badge-name-blogpost-1' => 'Sinch Ròbe da dì',
-	'achievements-badge-name-blogpost-2' => 'Talk Show',
+	'achievements-badge-name-blogpost-2' => 'Fera ëd discussion',
 	'achievements-badge-name-blogpost-3' => 'Vita dël partì',
-	'achievements-badge-name-blogpost-4' => 'Parlador Pùblich',
+	'achievements-badge-name-blogpost-4' => 'Conferensié',
 	'achievements-badge-name-blogcomment-0' => 'Opinionista',
-	'achievements-badge-name-blogcomment-1' => "E na ròba anco'",
+	'achievements-badge-name-blogcomment-1' => 'E ancor na ròba',
 	'achievements-badge-name-love-0' => 'Ciav për la Wiki!',
 	'achievements-badge-name-love-1' => 'Doe sman-e an sla wiki',
-	'achievements-badge-name-love-2' => 'Dëvòt',
-	'achievements-badge-name-love-3' => 'Dicà',
-	'achievements-badge-name-love-4' => 'Giontà',
+	'achievements-badge-name-love-2' => 'Dedicà',
+	'achievements-badge-name-love-3' => 'Angagià',
+	'achievements-badge-name-love-4' => 'Dipendent',
 	'achievements-badge-name-love-5' => 'Na vita ëd Wiki',
 	'achievements-badge-name-love-6' => 'Eròe dla Wiki',
-	'achievements-badge-name-welcome' => 'Bin ëvnù a la Wiki',
+	'achievements-badge-name-welcome' => 'Bin ëvnù an sla Wiki',
 	'achievements-badge-name-introduction' => 'Antrodussion',
-	'achievements-badge-name-sayhi' => 'Finì ëd dì cerea',
+	'achievements-badge-name-sayhi' => 'Passà a dì cerea',
 	'achievements-badge-name-creator' => 'Ël Creador',
-	'achievements-badge-name-pounce' => 'Brinca!',
-	'achievements-badge-name-caffeinated' => 'Cafeinà',
+	'achievements-badge-name-pounce' => 'Partensa!',
+	'achievements-badge-name-caffeinated' => 'Pien ëd cafein-a',
 	'achievements-badge-name-luckyedit' => 'Modìfica fortunà',
 	'achievements-badge-to-get-edit' => 'fà $1 {{PLURAL:$1|modìfica|modìfiche}} su {{PLURAL:$1|na pàgina|pàgine}}',
 	'achievements-badge-to-get-edit-plus-category' => 'fà $1 {{PLURAL:$1|na modìfica|$1 modìfiche}} su {{PLURAL:$1|na $2 pàgina|$2 pàgine}}',
-	'achievements-badge-to-get-picture' => 'gionta $1 {{PLURAL:$1|figuraa|figuree}} a {{PLURAL:$1|na pàgina|pàgine}}',
+	'achievements-badge-to-get-picture' => 'gionté $1 {{PLURAL:$1|plancia|plance}} a {{PLURAL:$1|na pàgina|pàgine}}',
 	'achievements-badge-to-get-category' => 'gionta $1 {{PLURAL:$1|pàgina|pàgine}} a {{PLURAL:$1|na categorìa|categorìe}}',
-	'achievements-badge-to-get-blogpost' => 'scriv $1 {{PLURAL:$1|mëssagi ëd blog|mëssagi ëd blog}}',
-	'achievements-badge-to-get-blogcomment' => 'scriv un coment su {{PLURAL:$1|un mëssagi ëd blog|$1 diferent mëssagi ëd blog}}',
-	'achievements-badge-to-get-love' => 'contribuiss a la wiki minca di për {{PLURAL:$1|un di|$1 di}}',
+	'achievements-badge-to-get-blogpost' => 'scrive $1 {{PLURAL:$1|mëssagi dë scartari|mëssagi dë scartari}}',
+	'achievements-badge-to-get-blogcomment' => 'scrive un coment su {{PLURAL:$1|un mëssagi dë scartari|$1 mëssagi diferent dë scartari}}',
+	'achievements-badge-to-get-love' => 'contribuì a la wiki tuti ij di për {{PLURAL:$1|un di|$1 di}}',
 	'achievements-badge-to-get-welcome' => 'unisste a la wiki',
 	'achievements-badge-to-get-introduction' => 'gionta a toa pàgina utent',
 	'achievements-badge-to-get-sayhi' => 'lassa a quaidun un mëssagi su soa pàgina ëd discussion',
 	'achievements-badge-to-get-creator' => 'esse ël creador dë sta wiki',
 	'achievements-badge-to-get-pounce' => 'esse lest',
-	'achievements-badge-to-get-caffeinated' => 'fé {{PLURAL:$1|na modìfica|$1 modìfiche}} su pàgine ant un ùnich di',
+	'achievements-badge-to-get-caffeinated' => 'fé {{PLURAL:$1|na modìfica|$1 modìfiche}} an sle pàgine ant di sol',
 	'achievements-badge-to-get-luckyedit' => 'esse fortunà',
-	'achievements-badge-to-get-edit-details' => 'A-i manca quaicòs?
-A-i é n\'eror?
-Esse pa tìmid.
-Sgnaca ël boton "{{int:edit}}" e it peulo gionté a minca pàgina!',
-	'achievements-badge-to-get-edit-plus-category-details' => 'La pàgina <strong>$1</strong> a l\'ha dabzògn ëd tò agiut!
-Sgnaca ël boton "{{int:edit}}" su minca pàgina an cola categorìa për giuté.
-Mosta tò supòrt për la pàgina $1!',
-	'achievements-badge-to-get-picture-details' => 'Sgnaca ël boton "{{int:edit}}", e antlora ël boton "{{int:rte-ck-image-add}}".
-It peule gionté na fòto da tò computer, o da n\'àutra pàgina an sla wiki.',
-	'achievements-badge-to-get-category-details' => 'Le categorìe a son tichëtte che a giuto ij letor a trové pàgine smijante.
-Sgnaca ël boton "{{int:categoryselect-addcategory-button}}" a la sima dla pàgina për listé cola pàgina ant na categorìa.',
+	'achievements-badge-to-get-edit-details' => "A-i manca quaicòs?
+A-i é n'eror?
+Ch'a sia pa tìmid.
+Ch'a sgnaca ël boton \"{{int:edit}}\" e a peul amelioré qualsëssìa pàgina!",
+	'achievements-badge-to-get-edit-plus-category-details' => 'La pàgina <strong>$1</strong> a l\'ha dabzògn ëd sò agiut!
+Ch\'a sgnaca ël boton "{{int:edit}}" su qualsëssìa pàgina an cola categorìa për giuté.
+Ch\'a mostra sò sostegn a le pàgina $1!',
+	'achievements-badge-to-get-picture-details' => 'Ch\'a sgnaca ël boton "{{int:edit}}", e peui ël boton "{{int:rte-ck-image-add}}".
+A peul gionté na fòto da tò ordinator, o da n\'àutra pàgina ëd la wiki.',
+	'achievements-badge-to-get-category-details' => 'Le categorìe a son dle tichëtte che a giuto ij letor a trové dle pàgine ch\'a së smijo.
+Ch\'a sgnaca ël boton "{{int:categoryselect-addcategory-button}}" an cò dla pàgina për listé cola pàgina ant na categorìa.',
 	'achievements-badge-to-get-blogpost-details' => 'Scriv toe opinion e custion!
 Sgnaca su "{{int:blogs-recent-url-text}}" ant la bara lateral, e peui ël colegament an sla snista për "{{int:create-blog-post-title}}".',
 	'achievements-badge-to-get-blogcomment-details' => 'Gionta i toi doi cent!
@@ -3551,6 +3555,7 @@ $messages['ps'] = array(
  * @author Crazymadlover
  * @author Giro720
  * @author Hamilton Abreu
+ * @author Waldir
  */
 $messages['pt'] = array(
 	'achievementsii-desc' => 'Um sistema de medalhas para os utilizadores',
@@ -3559,11 +3564,17 @@ Essa imagem não funciona.
 Assegure-se de que se trata de um ficheiro .jpg ou .png.
 Se ainda assim a imagem não funcionar, poderá ser demasiado grande.
 Tente outra imagem, por favor!',
+	'achievements-non-existing-category' => 'A categoria especificada não existe.',
 	'achievements-platinum' => 'Platina',
 	'achievements-gold' => 'Ouro',
 	'achievements-silver' => 'Prata',
 	'achievements-bronze' => 'Bronze',
+	'achievements-masthead-points' => '$1 <small>{{PLURAL:$1|ponto|pontos}}</small>',
+	'achievements-points' => '$1 {{PLURAL:$1|ponto|pontos}}',
+	'achievements-points-with-break' => '$1<br />{{PLURAL:$1|ponto|pontos}}',
+	'achievements-viewall' => 'Ver tudo',
 	'achievements-viewless' => 'Fechar',
+	'achievements-viewall-oasis' => 'Ver tudo',
 	'achievements-leaderboard-rank-label' => 'posição',
 	'achievements-leaderboard-member-label' => 'membro',
 	'achievements-leaderboard-points-label' => 'pontos',
@@ -3647,6 +3658,7 @@ $messages['roa-tara'] = array(
  * @author Lockal
  * @author Strizh
  * @author Александр Сигачёв
+ * @author Сrower
  */
 $messages['ru'] = array(
 	'achievementsii-desc' => 'Система достижений пользователей вики-сайта',
@@ -3679,7 +3691,7 @@ $messages['ru'] = array(
 	'achievements-profile-title' => 'Участник $1 заработал $2 {{PLURAL:$2|значок|значков}}',
 	'achievements-profile-title-no' => 'Значки участника $1',
 	'achievements-profile-title-challenges' => 'Можно заработать дополнительные значки!',
-	'achievements-profile-customize' => 'Настройка значков',
+	'achievements-profile-customize' => 'Настройка значков >',
 	'achievements-ranked' => 'Ранг #$1 в этой вики',
 	'achievements-no-badges' => 'Просмотрите список, чтобы увидеть значки, которые можно заработать в этой вики!',
 	'achievements-viewall' => 'Посмотреть всё',

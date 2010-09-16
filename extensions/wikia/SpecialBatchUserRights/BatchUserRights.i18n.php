@@ -51,15 +51,16 @@ $messages['bs'] = array(
 );
 
 /** German (Deutsch)
+ * @author LWChris
  * @author The Evil IP address
  */
 $messages['de'] = array(
 	'batchuserrights' => 'Massen-Benutzerrechte',
 	'batchuserrights-desc' => 'Einen oder mehrere Benutzer in einer Aktion einer Gruppe hinzufügen',
 	'batchuserrights-names' => 'Folgende Benutzer dieser Gruppe hinzufügen (einer pro Zeile):',
-	'batchuserrights-intro' => 'Über diese Seite kannst du eine Gruppe mehreren Benutzern auf einmal hinzufügen.
+	'batchuserrights-intro' => 'Auf dieser Seite kannst du mehrere Benutzern gleichzeitig einer Gruppe hinzufügen.
 Aus Sicherheitsgründen ist die Liste der hinzufügbaren Gruppen in der Erweiterungs-Konfiguration festgelegt und kann im Wiki nicht verändert werden.
-Bitte wende dich an einen Systemadministrator, falls du andere Gruppen über diese Oberfläche hinzufügen möchtest.',
+Bitte wende dich an einen Systemadministrator, falls du andere Gruppen für das Hinzufügen benötigst.',
 	'batchuserrights-single-progress-update' => '{{PLURAL:$1|Gruppe|Gruppen}} <strong>$2</strong> hinzugefügt.',
 	'batchuserrights-add-groups' => '{{PLURAL:$1|Ein Benutzer|$1 Benutzer}} wird {{PLURAL:$2|der folgenden Gruppe|den folgenden Gruppen}} hinzugefügt: <strong>$3</strong>',
 	'batchuserrights-userload-error' => "Konnte den Benutzer „'''$1''“ nicht laden.",
@@ -189,10 +190,22 @@ De rest van de pagina kan uitgevoerd worden zodat u eenvoudig kunt zien of een v
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
  * @author Nghtwlkr
  */
 $messages['no'] = array(
+	'batchuserrights' => 'Puljeoppdater brukerrettigheter',
+	'batchuserrights-desc' => 'Tillater å legge én eller flere brukere til en gruppe i én handling',
+	'batchuserrights-names' => 'Brukernavn som skal legges til denne gruppen (ett per linje):',
+	'batchuserrights-intro' => 'Denne siden lar deg legge flere brukere til en gruppe samtidig.
+Av sikkerhetsmessige årsaker, er listen over mulige grupper satt i utvidelseskonfigurasjonen og kan ikke endres fra wikien.
+Vennligst spør en systemadministrator hvis du har behov for å tillate puljetillegging av andre grupper.',
+	'batchuserrights-single-progress-update' => 'Lagt {{PLURAL:$1|gruppe|grupper}} til <strong>$2</strong>.',
+	'batchuserrights-add-groups' => 'Legger {{PLURAL:$1|én bruker|$1 brukere}} til {{PLURAL:$2|den|de}} følgende {{PLURAL:$2|gruppen|gruppene}}: <strong>$3</strong>.',
 	'batchuserrights-userload-error' => "Kunne ikke laste brukeren «'''$1'''».",
+	'batchuserrights-no-groups' => 'Du valgte ingen grupper.
+Dette vil ikke oppnå noe.
+Resten av siden vil få lov til å kjøre slik at du enkelt kan se om noen av brukernavnene ikke kunnes lastes.',
 );
 
 /** Piedmontese (Piemontèis)
@@ -231,6 +244,24 @@ Se precisa de acrescentar mais grupos atribuíveis, peça a um administrador.',
 	'batchuserrights-no-groups' => 'Não escolheu nenhum grupo. 
 Isto não terá qualquer efeito.
 Será permitida a execução do resto da página apenas para que possa verificar se não foi possível carregar algum dos utilizadores.',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
+ */
+$messages['pt-br'] = array(
+	'batchuserrights' => 'Direitos de usuários em lote',
+	'batchuserrights-desc' => 'Permite adicionar um ou mais usuários a um grupo de uma só vez',
+	'batchuserrights-names' => 'Nomes de usuários a adicionar a este grupo (um por linha):',
+	'batchuserrights-intro' => 'Esta página permite atribuir um grupo a vários usuários ao mesmo tempo. 
+Por razões de segurança, a lista dos grupos assim atribuíveis é definida na configuração da extensão e não pode ser alterada dentro da wiki.
+Se você precisar acrescentar mais grupos atribuíveis, peça a um administrador.',
+	'batchuserrights-single-progress-update' => '{{PLURAL:$1|O grupo foi atribuído|Os grupos foram atribuídos}} a <strong>$2</strong>.',
+	'batchuserrights-add-groups' => 'A adicionar {{PLURAL:$1|um usuário|$1 usuários}} {{PLURAL:$2|ao seguinte grupo|aos seguintes grupos}}: <strong>$3</strong>.',
+	'batchuserrights-userload-error' => "Não foi possível carregar o usuário \"'''\$1'''\".",
+	'batchuserrights-no-groups' => 'Você não escolheu nenhum grupo. 
+Isto não terá qualquer efeito.
+Será permitida a execução do resto da página apenas para que você possa verificar se não foi possível carregar algum dos usuários.',
 );
 
 /** Russian (Русский)

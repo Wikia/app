@@ -2877,6 +2877,21 @@ Selecione uma apropriada da lista.',
 	'autocreatewiki-step3' => 'Definindo os dados por padrão na base de dados ...',
 	'autocreatewiki-step4' => 'Copiando as imagens e logotipo padrões ...',
 	'autocreatewiki-step5' => 'Definindo as variáveis padrões na base de dados ...',
+	'autocreatewiki-step6' => 'Definindo as tabelas padrões na base de dados ...',
+	'autocreatewiki-step7' => 'Definindo base de dados inicial da língua ...',
+	'autocreatewiki-step8' => 'Definindo grupos de usuários e categorias ...',
+	'autocreatewiki-step9' => 'Definindo variáveis da nova wiki ...',
+	'autocreatewiki-step10' => 'Definindo páginas na wiki central ...',
+	'autocreatewiki-step11' => 'A enviar correio eletrônico para o usuário ...',
+	'autocreatewiki-redirect' => 'Redirecionando para a nova wiki: $1 ...',
+	'autocreatewiki-congratulation' => 'Parabéns!',
+	'autocreatewiki-welcometalk-log' => 'Mensagem de Boas-vindas',
+	'autocreatewiki-regex-error-comment' => 'usada na wiki $1 (texto completo: $2)',
+	'autocreatewiki-step2-error' => 'A base de dados existe!',
+	'autocreatewiki-step3-error' => 'Não foi possível definir os dados padrões na base de dados!',
+	'autocreatewiki-step6-error' => 'Não foi possível definir as tabelas padrões na base de dados!',
+	'autocreatewiki-step7-error' => 'Não foi possível copiar a base de dados inicial para a língua!',
+	'autocreatewiki-protect-reason' => 'Parte da interface oficial',
 	'autocreatewiki-welcomesubject' => '$1 foi criado!',
 	'autocreatewiki-welcomebody' => 'Olá, $2,
 
@@ -2928,6 +2943,7 @@ Esse é um projeto novo, então, por favor, nos escreva caso você tenha alguma 
 <p>Este é um projeto novo, então, por favor, nos escreva se você tiver alguma dúvida!</p>
 
 <p>-- Equipe da comunidade do Wikia (Wikia Community Team)</p>',
+	'autocreatewiki-subname-answers' => 'Respostas',
 );
 
 /** Romanian (Română)

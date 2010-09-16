@@ -59,12 +59,28 @@ $messages['br'] = array(
 	'withoutimages' => 'Pajenn hep skeudenn',
 );
 
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'withoutimages-desc' => 'Dodaje [[Special:Withoutimages|posebnu stranicu]] za prikaz stranica bez slika',
+	'withoutimages' => 'Stranice bez slika',
+);
+
 /** Catalan (Català)
  * @author Solde
  */
 $messages['ca'] = array(
 	'withoutimages-desc' => 'Agrega una [[Special:Withoutimages|pàgina especial]] per mostrar pàgines sense imatges',
 	'withoutimages' => 'Pàgines sense imatges',
+);
+
+/** Czech (Česky)
+ * @author Mormegil
+ */
+$messages['cs'] = array(
+	'withoutimages-desc' => 'Přidává [[Special:Withoutimages|speciální stránku]] zobrazující stránky bez obrázků',
+	'withoutimages' => 'Stránky bez obrázků',
 );
 
 /** Danish (Dansk)
@@ -186,6 +202,14 @@ $messages['ja'] = array(
 	'withoutimages' => '画像の無いページ',
 );
 
+/** Khmer (ភាសាខ្មែរ)
+ * @author គីមស៊្រុន
+ */
+$messages['km'] = array(
+	'withoutimages-desc' => 'បន្ថែម[[Special:Withoutimages|ទំព័រពិសេស]]មួយដើម្បីបង្ហាញទំព័រដែលគ្មានរូបភាព។',
+	'withoutimages' => 'ទំព័រដែលគ្មានរូបភាព',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -200,6 +224,14 @@ $messages['lb'] = array(
 $messages['mk'] = array(
 	'withoutimages-desc' => 'Додава [[Special:Withoutimages|специјална страница]] за приказ на страници без слики',
 	'withoutimages' => 'Страници без слики',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author CoolCityCat
+ */
+$messages['ms'] = array(
+	'withoutimages-desc' => 'Menambah satu [[Special:Withoutimages|laman istimewa]] untuk memaparkan laman tanpa imej',
+	'withoutimages' => 'Laman tanpa imej',
 );
 
 /** Maltese (Malti)

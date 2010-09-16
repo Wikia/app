@@ -71,6 +71,13 @@ N'eo ket bet kavet ar pennad '''$1'''.
 * Evit distreiñ da bajenn degemer al lec'hienn, klikit amañ : [{{SERVER}} {{SITENAME}}]",
 );
 
+/** Czech (Česky)
+ * @author Mormegil
+ */
+$messages['cs'] = array(
+	'our404handler' => 'Chyba 404: Stránka nenalezena!',
+);
+
 /** German (Deutsch)
  * @author LWChris
  * @author McDutchie

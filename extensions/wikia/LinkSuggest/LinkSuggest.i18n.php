@@ -34,6 +34,13 @@ $messages['ca'] = array(
 	'tog-disablelinksuggest' => "No mostris suggeriments d'enllaços",
 );
 
+/** Czech (Česky)
+ * @author Mormegil
+ */
+$messages['cs'] = array(
+	'tog-disablelinksuggest' => 'Nezobrazovat návrhy odkazů',
+);
+
 /** German (Deutsch) */
 $messages['de'] = array(
 	'tog-disablelinksuggest' => 'Keine Link-Vorschläge anzeigen',

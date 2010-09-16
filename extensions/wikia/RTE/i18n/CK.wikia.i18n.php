@@ -94,6 +94,7 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
+ * @author NavaRose
  * @author Siebrand
  */
 $messages['qqq'] = array(
@@ -103,7 +104,8 @@ $messages['qqq'] = array(
 	'rte-ck-hoverPreview-delete' => '{{Identical|Delete}}',
 	'rte-ck-hoverPreview-edit' => '{{Identical|Edit}}',
 	'rte-ck-link-error-title' => '{{Identical|Error}}',
-	'rte-ck-link-external-tab' => '{{Identical|External link}}',
+	'rte-ck-link-external-tab' => '{{Identical|Liên kết ngoài}}',
+	'rte-ck-link-internal-pageName' => 'Tên trang',
 	'rte-ck-link-internal-tab' => '{{Identical|Internal link}}',
 	'rte-ck-link-status-external' => '{{Identical|External link}}',
 	'rte-ck-media-delete' => '{{Identical|Remove}}',
@@ -933,7 +935,13 @@ $messages['nl'] = array(
 $messages['no'] = array(
 	'rte-ck-bucket-textAppearance' => 'Tekstutseende',
 	'rte-ck-bucket-insert' => 'Sett inn',
+	'rte-ck-bucket-controls' => 'Alternativer',
+	'rte-ck-commentEditor-title' => 'Rediger kommentarer',
 	'rte-ck-errorPopupTitle' => 'Feil!',
+	'rte-ck-hoverPreview-codedElement-intro' => 'Vennligst bytt til kildemodus for å redigere!',
+	'rte-ck-hoverPreview-codedElement-title' => 'Kodet element',
+	'rte-ck-hoverPreview-comment-intro' => 'Dette kan bare sees under redigering.',
+	'rte-ck-hoverPreview-comment-title' => 'Kommentar',
 	'rte-ck-hoverPreview-confirmDelete' => 'Er du sikker på at du vil fjerne dette fra denne siden?',
 	'rte-ck-hoverPreview-delete' => 'slett',
 	'rte-ck-hoverPreview-edit' => 'rediger',
@@ -959,20 +967,35 @@ $messages['no'] = array(
 	'rte-ck-link-internal-pageName' => 'Sidenavn',
 	'rte-ck-link-internal-tab' => 'Intern lenke',
 	'rte-ck-link-title' => 'Opprett eller rediger en lenke',
+	'rte-ck-link-label-target' => 'Målside eller URL',
+	'rte-ck-link-label-display' => 'Tekst som skal vises',
+	'rte-ck-link-label-internal' => 'Til en wikiside',
+	'rte-ck-link-label-external' => 'Til en ekstern lenke',
+	'rte-ck-link-status-checking' => 'Sjekker status',
+	'rte-ck-link-status-exists' => 'Side eksisterer',
+	'rte-ck-link-status-notexists' => 'Side eksisterer ikke',
+	'rte-ck-link-status-external' => 'Ekstern lenke',
 	'rte-ck-media-delete' => 'fjern',
 	'rte-ck-media-edit' => 'endre',
+	'rte-ck-modeSwitch-toSource' => 'Bytt til kildemodus',
 	'rte-ck-modeSwitch-toWysiwyg' => 'Bytt til WYSIWYG-modus',
+	'rte-ck-photoGallery-add' => 'Sett inn et billedgalleri eller en lysbildeserie',
+	'rte-ck-photoGallery-confirmDelete' => 'Er du sikker på at du vil fjerne galleriet fra denne siden?',
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Fjern dette galleriet?',
 	'rte-ck-photoGallery-tooltip' => 'Dette er et galleri.',
+	'rte-ck-photoGallery-tooltipSlideshow' => 'Dette er en lysbildefremvisning',
 	'rte-ck-signature-add' => 'Legg til signaturen din',
 	'rte-ck-signature-label' => 'Signatur',
 	'rte-ck-table-alignNotSet' => 'Ikke satt',
 	'rte-ck-table-invalidCols' => 'Antallet kolonner må være et tall større enn 0.',
 	'rte-ck-table-invalidRows' => 'Antallet rader må være et tall større en 0.',
+	'rte-ck-templateDropDown-chooseAnotherTpl' => 'Andre maler / magiske ord',
 	'rte-ck-templateDropDown-label' => 'Mal',
 	'rte-ck-templateDropDown-title' => 'Velg en mal',
 	'rte-ck-templateEditor-dialog-browse' => 'Bla etter en mal',
 	'rte-ck-templateEditor-dialog-insert' => 'Sett inn',
+	'rte-ck-templateEditor-dialog-magicWords' => 'Magiske ord',
+	'rte-ck-templateEditor-dialog-magicWordsLink' => 'Help:Magiske ord',
 	'rte-ck-templateEditor-dialog-mostFrequentlyUsed' => 'Mest brukte',
 	'rte-ck-templateEditor-dialog-search' => 'Søk etter en mal',
 	'rte-ck-templateEditor-editor-chooseAnotherTpl' => 'Velg en annen mal',
@@ -981,6 +1004,7 @@ $messages['no'] = array(
 	'rte-ck-templateEditor-editor-previewButton' => 'Forhåndsvisning',
 	'rte-ck-templateEditor-editor-previewTitle' => 'Forhåndsvisning',
 	'rte-ck-templateEditor-editor-viewTemplate' => '(vis malside - åpnes i et nytt vindu)',
+	'rte-ck-templateEditor-title' => 'Malredaktør',
 	'rte-ck-unlink' => 'Fjern lenke',
 	'rte-ck-video-add' => 'Legg til en video',
 	'rte-ck-video-confirmDelete' => 'Er du sikker på at du vil fjerne videoen fra denne siden?',
@@ -988,6 +1012,7 @@ $messages['no'] = array(
 	'rte-ck-videoPlaceholder-confirmDelete' => 'Er du sikker på at du vil fjerne denne videoplassholderen fra denne siden?',
 	'rte-ck-videoPlaceholder-confirmDeleteTitle' => 'Fjern denne videoplassholderen?',
 	'rte-ck-videoPlaceholder-tooltip' => 'Dette er en videoplassholder.',
+	'rte-ck-widescreen-toggle' => 'Skru på fullskjermsmodus',
 );
 
 /** Deitsch (Deitsch)
@@ -1591,5 +1616,13 @@ $messages['uk'] = array(
 	'rte-ck-link-internal-tab' => 'Внутрішнє посилання',
 	'rte-ck-templateEditor-editor-chooseAnotherTpl' => 'Вибрати інший шаблон',
 	'rte-ck-templateEditor-editor-parameters' => 'Параметри',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author NavaRose
+ */
+$messages['vi'] = array(
+	'rte-ck-image-add' => 'Chèn hình ảnh',
+	'rte-ck-modeSwitch-toWysiwyg' => 'Chuyển sang chế độ WYSIWYG',
 );
 

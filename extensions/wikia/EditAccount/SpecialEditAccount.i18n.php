@@ -667,6 +667,7 @@ Probeer het opnieuw of neem contact op met het Tech Team.',
  */
 $messages['no'] = array(
 	'editaccount' => 'Rediger konto',
+	'editaccount-desc' => 'Lar ledelsesmedlemmer administrere brukerkontoinformasjon',
 	'editaccount-title' => 'Special:EditAccount',
 	'editaccount-frame-manage' => 'Rediger en konto',
 	'editaccount-frame-usage' => 'Merk',

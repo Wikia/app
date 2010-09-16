@@ -39,6 +39,14 @@ $messages['br'] = array(
 	'randomwiki' => 'Wiki dre zegouezh',
 );
 
+/** Czech (Česky)
+ * @author Mormegil
+ */
+$messages['cs'] = array(
+	'randomwiki-desc' => 'Umožňuje uživatelům přejít na náhodnou wiki',
+	'randomwiki' => 'Náhodná wiki',
+);
+
 /** German (Deutsch)
  * @author The Evil IP address
  */
@@ -103,6 +111,14 @@ $messages['it'] = array(
 	'randomwiki' => 'Wiki a caso',
 );
 
+/** Japanese (日本語)
+ * @author Tommy6
+ */
+$messages['ja'] = array(
+	'randomwiki-desc' => 'ランダムに選択したウィキに利用者を飛ばす',
+	'randomwiki' => 'おまかせウィキ',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -125,6 +141,14 @@ $messages['mk'] = array(
 $messages['nl'] = array(
 	'randomwiki-desc' => 'Laat gebruikers een willekeurige wiki ontdekken',
 	'randomwiki' => 'Willekeurige wiki',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['no'] = array(
+	'randomwiki-desc' => 'Lar brukere utforske en tilfeldig wiki',
+	'randomwiki' => 'Tilfeldig wiki',
 );
 
 /** Deitsch (Deitsch)

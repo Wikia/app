@@ -1355,6 +1355,15 @@ Het lijkt erop dat iemand uw wiki heeft bewerkt! Waarom gaat u niet even kijken 
 	'founderemails-answers-email-page-edited-anon-body-HTML' => 'Hallo $FOUNDERNAME,<br /><br />
 Het lijkt erop dat iemand uw wiki heeft bewerkt! Waarom gaat u niet even kijken <a href="$MYHOMEURL">wat er is veranderd</a>?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Het Wikia-team</div>',
+	'founderemails-lot-happening-subject' => 'Er gebeurt veel op uw site vandaag!',
+	'founderemails-lot-happening-body' => 'Hallo $FOUNDERNAME.
+
+Er gebeurt veel op uw wiki vandaag. Kom naar $MYHOMEURL om te kijken wat er allemaal gebeurt.
+
+-- Het Wikia-team',
+	'founderemails-lot-happening-body-HTML' => 'Hallo $FOUNDERNAME,<br /><br />
+Er gebeurt veel op uw wiki vandaag! Kom naar $MYHOMEURL om te kijken wat er allemaal gebeurt.<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Het Wikia-team</div>',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
