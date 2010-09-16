@@ -125,6 +125,15 @@ It looks like someone has edited your wiki! Why don\'t you check it out $MYHOMEU
 	'founderemails-answers-email-page-edited-anon-body-HTML' => 'Hey $FOUNDERNAME,<br /><br />
 It looks like someone has edited your wiki! Why don\'t you <a href="$MYHOMEURL">check it out</a> to see what changed?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
+	'founderemails-lot-happening-subject' => 'A lot happening on your site today!',
+	'founderemails-lot-happening-body' => 'Hey $FOUNDERNAME,
+
+There\'s a lot happening on your wiki today! Drop by $MYHOMEURL to see what\'s been going on.
+
+-- The Wikia Team',
+	'founderemails-lot-happening-body-HTML' => 'Hey $FOUNDERNAME,<br /><br />
+There\'s a lot happening on your wiki today! Drop by $MYHOMEURL to see what\'s been going on.<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
 );
 
 /** Message documentation (Message documentation)

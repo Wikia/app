@@ -7,7 +7,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 	}
 
 	public function process( Array $events ) {
-		global $wgEnableAnswers;
+		global $wgCityId, $wgEnableAnswers;
 		wfProfileIn( __METHOD__ );
 
 		if ( $this->isThresholdMet( count( $events ) ) ) {
@@ -25,8 +25,35 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			);
 
 			$msgKeys = array();
+			$today = date( 'Y-m-d' );
 			$wikiType = !empty( $wgEnableAnswers ) ? '-answers' : '';
-			if ( $eventData['data']['registeredUserFirstEdit'] ) {
+
+			$oFounder = $founderEmails->getWikiFounder();
+
+			$aAllCounter = unserialize( $oFounder->getOption( 'founderemails-counter' ) );
+			if ( empty( $aAllCounter ) ) {
+				$aAllCounter = array();
+			}
+
+			$aWikiCounter = empty( $aAllCounter[$wgCityId] ) ? array() : $aAllCounter[$wgCityId];
+
+			// quit if the Founder has recieved enough emails today			
+			if ( !empty( $aWikiCounter[0] ) && $aWikiCounter[0] == $today && $aWikiCounter[1] == 'full' ) {
+				return true;
+			}
+
+			// initialize or reset counter for today
+			if ( empty( $aWikiCounter[0] ) || $aWikiCounter[0] !== $today ) {
+				$aWikiCounter[0] = $today;
+				$aWikiCounter[1] = 0;
+			}
+
+			// @FIXME magic number, move to config
+			if ( $aWikiCounter[1] == 9 ) {
+				$msgKeys['subject'] = 'founderemails-lot-happening-subject';
+				$msgKeys['body'] = 'founderemails-lot-happening-body';
+				$msgKeys['body-html'] = 'founderemails-lot-happening-body-HTML';
+			} elseif ( $eventData['data']['registeredUserFirstEdit'] ) {
 				$msgKeys['subject'] = 'founderemails' . $wikiType . '-email-page-edited-reg-user-first-edit-subject';
 				$msgKeys['body'] = 'founderemails' . $wikiType . '-email-page-edited-reg-user-first-edit-body';
 				$msgKeys['body-html'] = 'founderemails' . $wikiType . '-email-page-edited-reg-user-first-edit-body-HTML';
@@ -40,13 +67,21 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 				$msgKeys['body-html'] = 'founderemails' . $wikiType . '-email-page-edited-anon-body-HTML';
 			}
 
-			$langCode = $founderEmails->getWikiFounder()->getOption( 'language' );
+			$aWikiCounter[1] = ( $aWikiCounter[1] == 9 ) ? 'full' : $aWikiCounter[1]++;
+
+			$aAllCounter[$wgCityId] = $aWikiCounter;
+
+			$oFounder->setOption( 'founderemails-counter', serialize( $aAllCounter ) );
+
+			$langCode = $oFounder->getOption( 'language' );
+
 			$mailSubject = $this->getLocalizedMsgBody( $msgKeys['subject'], $langCode, array() );
 			$mailBody = $this->getLocalizedMsgBody( $msgKeys['body'], $langCode, $emailParams );
 			$mailBodyHTML = $this->getLocalizedMsgBody( $msgKeys['body-html'], $langCode, $emailParams );
 
 			wfProfileOut( __METHOD__ );
 			return $founderEmails->notifyFounder( $mailSubject, $mailBody, $mailBodyHTML );
+			
 		}
 
 		wfProfileOut( __METHOD__ );
