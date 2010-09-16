@@ -1,10 +1,10 @@
 <?php
-	if (is_array($action) && !empty($action)) {
+	if (is_array($action)) {
 		if (empty($dropdown)) {
 			// render [icon] + [link] ("View source")
 			if (!empty($iconBefore)) {
 ?>
-<span class="<?= $class ?>"><?= $iconBefore ?><a accesskey="e" href="<?= htmlspecialchars($action['href']) ?>" data-id="<?= $actionName ?>"><?= htmlspecialchars($action['text']) ?></a></span>
+<span class="wikia-button <?= $class ?>"><?= $iconBefore ?><a class="loginToEditProtectedPage" accesskey="e" href="<?= htmlspecialchars($action['href']) ?>" data-id="<?= $actionName ?>"><?= wfMsg('oasis-edit-protected-article'); ?></a></span>
 <?php
 			}
 			// render simple edit button
