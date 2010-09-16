@@ -109,14 +109,14 @@ class PageStatsService extends Service {
 	 */
 	public function regenerateCommentsCount() {
 		global $wgMemc;
-		$wgMemc->delete($this->getKey('comments5'));
+		$wgMemc->delete($this->getKey('comments6'));
 	}
 
 	/**
 	 * Checks whether ArticleComments extension is enabled for given title
 	 */
 	private static function isArticleCommentsEnabled($title) {
-		return class_exists('ArticleCommentInit') && ArticleCommentInit::ArticleCommentCheckNamespace($title);
+		return class_exists('ArticleCommentInit') && ArticleCommentInit::ArticleCommentCheckTitle($title);
 	}
 
 	/**
@@ -232,7 +232,7 @@ class PageStatsService extends Service {
 		}
 
 		// try to get cached data
-		$key = $this->getKey('comments5');
+		$key = $this->getKey('comments6');
 
 		$ret = $wgMemc->get($key);
 		if (!is_numeric($ret)) {
@@ -245,6 +245,8 @@ class PageStatsService extends Service {
 
 				$data = $commentList->getData();
 				$ret = $data['countCommentsNested'];
+
+				wfDebug(__METHOD__ . "::miss - using comments count\n");
 			}
 			else {
 				// get number of revisions of talk page
@@ -258,6 +260,8 @@ class PageStatsService extends Service {
 				else {
 					$ret = 0;
 				}
+
+				wfDebug(__METHOD__ . "::miss - using talk page revisions count\n");
 			}
 
 			$wgMemc->set($key, $ret, self::CACHE_TTL);
