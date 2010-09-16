@@ -6,7 +6,7 @@ class RelatedPagesModule extends Module {
 	public $skipRendering = false;
 
 	public function executeIndex() {
-		global $wgOut, $wgTitle, $wgArticle, $wgContentNamespaces, $wgRequest;
+		global $wgOut, $wgTitle, $wgArticle, $wgContentNamespaces, $wgRequest, $wgMemc;
 
 		$relatedPages = RelatedPages::getInstance();
 
@@ -52,7 +52,12 @@ class RelatedPagesModule extends Module {
 		if( !$this->skipRendering ) {
 			wfLoadExtensionMessages( 'RelatedPages' );
 
-			$this->pages = $relatedPages->get( $wgTitle->getArticleId() );
+			$mKey = wfMemcKey('mOasisRelatedPages', $wgTitle->getArticleId());
+			$this->pages = $wgMemc->get($mKey);
+			if (empty($this->pages)) {
+				$this->pages = $relatedPages->get( $wgTitle->getArticleId() );
+				$wgMemc->set($mKey, $this->pages);
+			}
 		}
 		else {
 			$this->pages = array();
@@ -60,4 +65,11 @@ class RelatedPagesModule extends Module {
 
 	}
 
+	static function onArticleSaveComplete(&$article, &$user, $text, $summary,
+		$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
+		global $wgMemc;
+		$mKey = wfMemcKey('mOasisRelatedPages', $article->mTitle->getArticleId());
+		$wgMemc->delete($mKey);
+		return true;
+	}
 }
