@@ -352,6 +352,16 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$this->assertRegExp('/'.preg_quote($wgTitle->getDBkey()).'/', $moduleData['commentsLink']);
 		$this->assertRegExp('/^$/', $moduleData['commentsTooltip']);
 		$this->assertEquals(null, $moduleData['likes']);
+
+		// not-existing page
+		$title = Title::newFromText('NotExistingPage');
+
+		$moduleData = Module::get('CommentsLikes', 'Index', array ('comments' => 0, 'likes' => 20, 'title' => $title))->getData();
+
+		$this->assertEquals('0', $moduleData['comments']);
+		$this->assertRegExp('/Talk:NotExistingPage/', $moduleData['commentsLink']);
+		$this->assertTrue($moduleData['commentsTooltip'] != '');
+		$this->assertEquals(20, $moduleData['likes']);
 	}
 
 	function testAchievementsModule() {
