@@ -585,4 +585,14 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$this->assertRegExp('/Editing:/', $editPage->editFormTextTop);
 	}
 
+	function testUserPagesHeaderModule() {
+		global $wgUser;
+		$userName =  $wgUser->getName();
+
+		$this->assertTrue(UserPagesHeaderModule::isItMe($userName));
+
+		$moduleData = Module::get('UserPagesHeader')->getData(); var_dump($moduleData);
+		$this->assertEquals($userName, $moduleData['userName']);
+	}
+
 }
