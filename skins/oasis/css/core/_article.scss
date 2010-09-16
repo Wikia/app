@@ -52,6 +52,11 @@
 		color: $color-links;
 	}
 
+	a.new,
+	a.new:visited {
+		color: #cc2200;
+	}
+
 	b, strong {
 		font-weight: bold;
 	}
