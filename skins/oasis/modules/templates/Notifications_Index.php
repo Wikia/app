@@ -34,15 +34,21 @@
 <?php
 					break;
 
-				// render generic notification
-				default:
-
-				foreach ($notification['message'] as $msgId => $data) {
+				case NotificationsModule::NOTIFICATION_SITEWIDE:
+					foreach ($notification['message'] as $msgId => $data) {
 ?>
 		<div data-type="<?= $notification['type'] ?>" id="msg_<?= $msgId ?>">
-			<a class="close"></a><?= $data['text'] ?></div>
+			<a class="close"></a><?= $data['text'] ?>
+		</div>
 <?php
-				}
+					}
+					break;
+				
+				// render generic notification
+				default:
+?>
+		<div data-type="<?= $notification['type'] ?>"><?= $notification['message'] ?></div>
+<?php
 			}
 ?>
 	</li>

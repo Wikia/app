@@ -19,6 +19,7 @@ class NotificationsModule extends Module {
 	const NOTIFICATION_COMMUNITY_MESSAGE = 2;
 	const NOTIFICATION_NEW_ACHIEVEMENTS_BADGE = 3;
 	const NOTIFICATION_EDIT_SIMILAR = 4;
+	const NOTIFICATION_SITEWIDE = 5;
 
 	// stack for notifications
 	static private $notificationsStack;
@@ -311,14 +312,20 @@ class NotificationsModule extends Module {
 		wfProfileIn(__METHOD__);
 
 		if (Wikia::isOasis()) {
+			// Add talk page notificaations
+			$msg = $tpl->data['usernewmessages'];
+			if ($msg != '') {
+				self::addNotification($msg);
+			}
+			
+			// Add site wide notifications
 			$msg = SiteWideMessages::getAllUserMessages($wgUser, false, false);
-
 			if ($msg != '') {
 				foreach ($msg as $msgId => &$data) {
 					$data['text'] = $wgOut->parse($data['text']);
 				}
 				
-				self::addNotification($msg);
+				self::addNotification($msg, null, self::NOTIFICATION_SITEWIDE);
 			}
 		}
 
