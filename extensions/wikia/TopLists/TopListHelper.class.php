@@ -193,7 +193,7 @@ class TopListHelper {
 			);
 
 			$thumbs = $source->getThumbnails( array( $selectedImageTitle ) );
-			
+
 			if( !empty( $thumbs[ $selectedImageTitle ] ) ) {
 				$selectedImage = $thumbs[ $selectedImageTitle ];
 			}
@@ -273,10 +273,7 @@ class TopListHelper {
 
 			if( $item instanceof TopListItem ) {
 
-				$votesCount = $item->getVotesCount();
 				$result['result'] = $item->vote();
-				$result['msg'] = wfMsg( 'toplists-list-votes-num', array( $votesCount ));
-				$result['votesCount'] = intval( $votesCount );
 
 				$list = $item->getList();
 				$list ->invalidateCache();
