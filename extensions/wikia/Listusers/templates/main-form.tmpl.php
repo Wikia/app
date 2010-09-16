@@ -299,8 +299,8 @@ function _addEvents(f, desc) {
 //http://images.wikia.com/common/releases_200901.3/skins/common/images/Arr_u.png
 //http://images.wikia.com/common/releases_200901.3/skins/common/images/Arr_d.png
 
-$.loadYUI(function() {
-	YAHOO.util.Event.onDOMReady(function () {
+$(function() {
+	$.loadYUI(function() {
 		wkLUshowDetails(30, 0, 'username', -1);
 		var desc = -1;
 		YAHOO.util.Event.addListener("lu-showusers", "click", __ShowUsers, [desc]);
