@@ -72,8 +72,8 @@
 </section><!--WikiaPage-->
 
 <?php
-	if(!$noexternals){
-		print wfRenderModule('Feedback');
+	if (empty($wgNoExternals)) {
+		echo wfRenderModule('Feedback');
 	}
 ?>
 <?= wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_1')) ?>

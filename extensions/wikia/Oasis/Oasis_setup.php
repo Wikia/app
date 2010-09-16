@@ -34,6 +34,10 @@ function wfOasisSetup() {
 	$wgHooks['AchievementsNotification'][] = 'NotificationsModule::addBadgeNotification';
 	$wgHooks['EditSimilar::showMessage'][] = 'NotificationsModule::addEditSimilarNotification';
 	$wgHooks['CommunityMessages::showMessage'][] = 'NotificationsModule::addCommunityMessagesNotification';
+
+	// support "noexternals" URL param
+	global $wgNoExternals, $wgRequest;
+	$wgNoExternals = $wgRequest->getBool('noexternals');
 }
 
 // Mapping of themename to an array of key/value pairs to send to SASS.
