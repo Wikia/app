@@ -474,4 +474,12 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue(array_key_exists('count', $moduleData['data']['results'][0]));
 	}
 
+	function testFollowedPagesModule () {
+		// User page check
+		$wgTitle = Title::newFromText('User:WikiaBot');
+		$moduleData = Module::get('FollowedPages')->getData();
+		print_r($moduleData);
+		$this->assertType('array', $moduleData['data']);
+		$this->assertTrue(count($moduleData['data']) >= $moduleData['max_followed_pages']);
+	}
 }
