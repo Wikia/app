@@ -101,6 +101,9 @@ var ThemeDesigner = {
 		$("#CustomizeTab").find("li").find("img[id*='color']").click(function(event) {
 			ThemeDesigner.showPicker(event, "color");
 		});
+		$("#swatch-image-background").click(function(event) {
+			ThemeDesigner.showPicker(event, "image");
+		});
 	},
 
 	wordmarkTabInit: function() {
@@ -152,6 +155,7 @@ var ThemeDesigner = {
 	},
 
 	showPicker: function(event, type) {
+		$().log("running showPicker");
 		event.stopPropagation();
 		var swatch = $(event.currentTarget);
 
@@ -196,7 +200,7 @@ var ThemeDesigner = {
 			});
 
 		} else if (type == "image") {
-			///
+			
 		}
 
 		// show picker
@@ -291,6 +295,47 @@ var ThemeDesigner = {
 		}
 
 	},
+
+
+	/**
+	 * Async callback for uploading background image
+	 *
+	 * @author: Inez Korczynski
+	 */
+	backgroundImageUploadCallback : {
+		onComplete: function(response) {
+
+			var response = $.evalJSON(response);
+
+			if(response.errors && response.errors.length > 0) {
+
+				alert(response.errors.join("\n"));
+
+			} else {
+
+				$().log(response.backgroundImageUrl);
+				/*
+				ThemeDesigner.set("wordmark-image-name", response.wordmarkImageName);
+				ThemeDesigner.set("wordmark-image-url", response.wordmarkImageUrl);
+				ThemeDesigner.set("wordmark-type", "graphic");
+				*/
+			}
+		}
+	},
+
+	/**
+	 * Background image upload button handler which cancel async request when image is not selected
+	 *
+	 * @author: Inez Korczynski
+	 */
+	backgroundImageUpload: function(e) {
+
+		if($("#BackgroundImageForm").find("input[type='file']").val() == "") {
+			return false;
+		}
+
+	},
+
 
 	revertToPreviousTheme: function(event) {
 		event.preventDefault();

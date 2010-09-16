@@ -1,0 +1,1 @@
+<?= json_encode(array('backgroundImageUrl' => $backgroundImageUrl, 'errors' => $errors)) ?>

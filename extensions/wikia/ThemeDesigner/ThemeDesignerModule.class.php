@@ -109,6 +109,23 @@ class ThemeDesignerModule extends Module {
 
 	}
 
+	public function executeBackgroundImageUpload() {
+		global $wgRequest;
+
+		$filename = $wgRequest->getFileName('wpUploadFile');
+
+		// check if there is a file send
+		if($filename) {
+				
+				/*** 
+				 * TODO: save image
+				***/
+				$this->backgroundImageUrl = "http://some.fake.image.url";
+				
+		}
+
+	}
+
 	public function executeSaveSettings() {
 		global $wgRequest;
 
