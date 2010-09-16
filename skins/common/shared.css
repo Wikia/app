@@ -174,7 +174,8 @@ div.searchresults {
 	color: #888;
 }
 
-table.mw-userrights-groups * td,table.mw-userrights-groups * th {
+.mw-userrights-groups td,
+.mw-userrights-groups th {
 	padding-right: 1.5em;
 }
 
@@ -323,12 +324,12 @@ td#mw-prefixindex-nav-form  {
  * Page protection warning
  * incl. log entries for these warnings
  */
-div.mw-warning-with-logexcerpt {
+.mw-warning-with-logexcerpt {
 	padding: 3px;
 	margin-bottom: 3px;
 	border: 2px solid #2F6FAB;
 }
-div.mw-warning-with-logexcerpt ul li {
+.mw-warning-with-logexcerpt ul li {
 	font-size: 90%;
 }
 

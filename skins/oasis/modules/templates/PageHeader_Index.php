@@ -1,7 +1,7 @@
 <header id="WikiaPageHeader" class="WikiaPageHeader<?= (empty($revisions) && empty($categories)) ? ' separator' : '' ?>">
 	<?= wfRenderModule('CommentsLikes', 'Index', array('comments' => $comments, 'likes' => $likes)); ?>
 	<? if ($isMainPage) { ?>
-		<div class="tally">
+		<div class="tally mainpage-tally">
 			<em><?= $total ?></em>
 			<span><?= wfMsg('oasis-total-articles-mainpage') ?></span>
 			<?= View::specialPageLink('CreatePage', null, 'wikia-chiclet-button createpage', 'blank.gif', 'oasis-create-page'); ?>

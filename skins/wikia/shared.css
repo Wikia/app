@@ -354,22 +354,22 @@ div.videobox {
 }
 
 /* Macbre: RT #21087 - begin */
-.wikiaPlaceholder a.bigButton {
+.wikiaPlaceholder .bigButton {
 	float: none;
 	display: inline;
 	margin: 0 auto;
 	padding: 0 0 0 4px;
 }
 
-.wikiaPlaceholder a.bigButton * {
+.wikiaPlaceholder .bigButton {
 	float: none;
 }
 
-.wikiaPlaceholder a.bigButton big {
+.wikiaPlaceholder .bigButton big {
 	padding: 3px 3px 3px 9px;
 }
 
-.wikiaPlaceholder a.bigButton small {
+.wikiaPlaceholder .bigButton small {
 	background-position: -295px 0;
 	padding: 3px;
 	position: static;

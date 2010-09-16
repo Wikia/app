@@ -67,7 +67,7 @@ class NotificationsModule extends Module {
 		/*
 		self::addNotification('test test test test test test test test test test test test test test test test test test test test');
 		self::addNotification('test test <a href="#">test</a> test', array(), self::NOTIFICATION_COMMUNITY_MESSAGE);
-		self::addNotification('test test test test test <details>test <a href="#">test</a> test</details>');
+		self::addNotification('test test test test test <details>test <a href="#">test</a> test</details>', array('points' => 10, 'picture' => '', 'name' => 'awesome'), self::NOTIFICATION_NEW_ACHIEVEMENTS_BADGE);
 		*/
 
 		// Allow code to inject notifications here

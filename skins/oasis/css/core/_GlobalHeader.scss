@@ -153,23 +153,26 @@
 			a {
 				font-weight: bold;
 			}
-			li {
-				border-top: 1px solid $color-page-border;
-				font-size: 14px;
-				margin: 0;
-				a {
-					font-weight: normal;
-					padding-left: 5px;
-					&:hover {
-						background: $color-menu-highlight;
-					}
-				}
-			}
+			
 		}
 		>li:first-child {
 			padding-top: 10px;
 			padding-right: 5px;
 			width: auto;
+		}
+		.catnav {
+			li {
+				border-top: 1px solid $color-page-border;
+				font-size: 14px;
+				margin: 0;
+			}
+			a {
+				font-weight: normal;
+				padding-left: 5px;
+				&:hover {
+					background: $color-menu-highlight;
+				}
+			}
 		}
 		a {
 			border: 0;
