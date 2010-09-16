@@ -59,13 +59,14 @@ require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
 	$nameOfFile = getFileAlphanumeric($inputFile); // Build a reasonable name for the tmp file.
 	
 	$idString = ""; // will be filled with a filename-safe string unique to this set of sass parameters.
-	$sassParams = getSassParamsFromUrl($idString); // Build a string of parameters to pass into sass.
+	$sassParamsForHashChecking = "";
+	$sassParams = getSassParamsFromUrl($idString, $sassParamsForHashChecking); // Build a string of parameters to pass into sass.
 
 	// The filename gets impractically long... so we'll hash the idString in the filename.
 	$tmpFile = "$TMP_DIR/$nameOfFile"."_$requestedStyleVersion"."_".md5($idString).".css";
 
 	$cssContent = "";
-	if(!securityHashIsOkay($requestedStyleVersion, urlencode($sassParams), $hashFromUrl)){
+	if(!securityHashIsOkay($requestedStyleVersion, $sassParamsForHashChecking, $hashFromUrl)){
 		$errorStr .= "Invalid request: signature was invalid.\n";
 		Wikia::log( __METHOD__, "", "There was an attempt to access a SASS sheet with an invalid cryptographic signature. If there are many of these, then there is either a bug (most likely) or a failed attack.");
 	} else {
@@ -305,14 +306,19 @@ function getFileAlphanumeric($inputFile){
  * Since the output is designed for the command-line, the key and value are separated by an equals sign
  * and the pairs are separated from each other by spaces.
  *
+ * The sassParamsForHashChecking string will be similar to sassParams except that the values will be
+ * urlencoded just like in the normal generation by SassUtil.
+ *
  * Modifies the 'idString' param to have a short, filename-safe version of the parameters.  This can
  * be used as the suffix for the tmpFile or as part of a memcached key.
  */
-function getSassParamsFromUrl(&$idString=''){
+function getSassParamsFromUrl(&$idString='', &$sassParamsForHashChecking=''){
 	$sassParams = "";
 	foreach($_GET as $key => $value){
 		$sassParams .= ($sassParams == ""?"":" ");
 		$sassParams .= "$key=$value";
+		$sassParamsForHashChecking .= ($sassParamsForHashChecking == ""?"":" ");
+		$sassParamsForHashChecking .= "$key=".urlencode($value);
 
 		$keyId = preg_replace("/[^A-Za-z0-9]/", "", $key);
 		$valueId = preg_replace("/[^A-Za-z0-9]/", "", $value);
