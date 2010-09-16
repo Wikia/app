@@ -51,6 +51,10 @@ class ApiRunJob extends ApiBase {
 	public function execute() {
 		global $wgUser;
 
+
+		ini_set( "memory_limit", -1 );
+		ini_set( "max_execution_time", 0 );
+
 		$params = $this->extractRequestParams();
 		if( !$wgUser->isAllowed( "wikifactory" ) ) { // change to 'runjob' later
 			$this->dieUsageMsg( array( 'cantrunjobs' ) );
@@ -64,8 +68,14 @@ class ApiRunJob extends ApiBase {
 		}
 
 		foreach( range( 0, $this->maxJobs ) as $counter ) {
-
+			$job = Job::pop();
+			if( $job ) {
+				$status = $job->run();
+				$result[ "job" ][] = array( "type" => $job->toString(), "status" => $job->error );
+			}
 		}
+
+		$result[ "left" ]  = $this->checkQueue();
 
 		$this->getResult()->setIndexedTagName( $result, 'job' );
 		$this->getResult()->addValue( null, $this->getModuleName(), $result );
