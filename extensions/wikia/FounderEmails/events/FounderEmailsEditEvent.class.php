@@ -38,7 +38,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			$aWikiCounter = empty( $aAllCounter[$wgCityId] ) ? array() : $aAllCounter[$wgCityId];
 
 			// quit if the Founder has recieved enough emails today			
-			if ( !empty( $aWikiCounter[0] ) && $aWikiCounter[0] == $today && $aWikiCounter[1] == 'full' ) {
+			if ( !empty( $aWikiCounter[0] ) && $aWikiCounter[0] == $today && $aWikiCounter[1] === 'full' ) {
 				return true;
 			}
 
@@ -49,7 +49,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			}
 
 			// @FIXME magic number, move to config
-			if ( $aWikiCounter[1] == 9 ) {
+			if ( $aWikiCounter[1] === 9 ) {
 				$msgKeys['subject'] = 'founderemails-lot-happening-subject';
 				$msgKeys['body'] = 'founderemails-lot-happening-body';
 				$msgKeys['body-html'] = 'founderemails-lot-happening-body-HTML';
@@ -67,11 +67,11 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 				$msgKeys['body-html'] = 'founderemails' . $wikiType . '-email-page-edited-anon-body-HTML';
 			}
 
-			$aWikiCounter[1] = ( $aWikiCounter[1] == 9 ) ? 'full' : $aWikiCounter[1]++;
-
+			$aWikiCounter[1] = ( $aWikiCounter[1] === 9 ) ? 'full' : $aWikiCounter[1] + 1;
 			$aAllCounter[$wgCityId] = $aWikiCounter;
 
 			$oFounder->setOption( 'founderemails-counter', serialize( $aAllCounter ) );
+			$oFounder->saveSettings();
 
 			$langCode = $oFounder->getOption( 'language' );
 
