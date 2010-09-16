@@ -21,6 +21,7 @@ WikiaNotifications = {
 
 			switch (notificationType) {
 				// dismiss talk page message notification
+				// TODO: refactor - send only single AJAX request dismissing all messages at once
 				case 1:
 					// get links to talk pages
 					var links = notification.find('a').not('.close');
