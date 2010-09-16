@@ -102,7 +102,12 @@ function showComboAjaxForPlaceHolder(element, isPlaceholder, callback, showRegis
 						}
 
 						if((typeof showLoginRequiredMessage != 'undefined') && (showLoginRequiredMessage)){
-							$('#comboajaxlogin-actionmsg').show();
+							if (showLoginRequiredMessage == true) {
+								$('#comboajaxlogin-actionmsg').show();
+							}
+							else if (showLoginRequiredMessage == 'protected') {
+								$('#comboajaxlogin-actionmsg-protected').show();
+							}
 						}
 
 						if (typeof callback == 'function'){
@@ -145,7 +150,7 @@ $(function() {
 			return false;
 		});
 
-		var editpromptable = $("#ca-viewsource").add("#te-editanon").add('.promptLoginBeforeAction');
+		var editpromptable = $("#ca-viewsource").add("#te-editanon").add('.loginToEditProtectedPage');
 
 		// add .editsection on wikis with anon editing disabled
 		if ( (typeof wgDisableAnonymousEditig !== 'undefined') && (wgDisableAnonymousEditig) ) {
@@ -153,6 +158,12 @@ $(function() {
 		}
 
 		editpromptable.click(function(e){
+			// message handeling
+			var message = true; // base 'login requiref for this action'
+			if ($(e.target).is(".loginToEditProtectedPage")) {
+				var message = 'protected';
+			}
+
 			showComboAjaxForPlaceHolder(false, "", function(){
 				AjaxLogin.doSuccess = function() {
 					var target = $(e.target);
@@ -162,7 +173,7 @@ $(function() {
 						window.location.href = target.parent().attr('href');
 					}
 				}
-			}, false, true); // show the 'login required for this action' message.
+			}, false, message); // show the 'login required for this action' message.
 			return false;
 		});
 

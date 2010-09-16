@@ -9,7 +9,6 @@ var WikiaButtons = {
 	},
 	
 	init: function() {
-	
 		//Variables
 		WikiaButtons.menuButtons = $(".wikia-menu-button");
 		WikiaButtons.timer = null;

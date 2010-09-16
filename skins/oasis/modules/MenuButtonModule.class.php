@@ -20,6 +20,9 @@ class MenuButtonModule extends Module {
 	var $dropdown;
 	var $icon;
 	var $iconBefore;
+	
+	var $wgOut;
+	
 
 	public function executeIndex($data) {
 		wfProfileIn(__METHOD__);

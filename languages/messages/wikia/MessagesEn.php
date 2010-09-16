@@ -1001,6 +1001,7 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'oasis-follow' => 'Follow',
 'oasis-share' => 'Share',
 'oasis-like' => 'Like',
+'oasis-edit-protected-article' => 'Login to Edit',
 'oasis-button-random-page' => 'Random Page',
 'oasis-button-random-wiki' => 'Random Wiki',
 'oasis-button-wiki-activity' => 'Wiki Activity',
