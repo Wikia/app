@@ -2560,6 +2560,8 @@ class Title {
 			);
 			if( $this->getText() == 'Common.css' ) {
 				$urls[] = $this->getInternalURL( $query );
+			elseif( $this->getText() == 'Wikia.css' ) {
+				$urls[] = $this->getInternalURL( $query );
 			} else {
 				foreach( Skin::getSkinNames() as $skinkey => $skinname ) {
 					if( $this->getText() == ucfirst($skinkey).'.css' ) {

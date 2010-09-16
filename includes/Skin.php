@@ -627,12 +627,6 @@ END;
 			if( empty($this->themename) || $this->themename == 'custom' ) {
 				$skinname = $this->getSkinName();
 				if($skinname == 'oasis') {
-					// FIXME: Purging appears to be broken for Wikia.css.  To get this fixed quickly, we're just hacking down the smaxage.
-					$query = wfArrayToCGI( array(
-						'usemsgcache' => 'yes',
-						'ctype' => 'text/css',
-						'smaxage' => 0
-					) + $siteargs );		
 					$out->addStyle( self::makeNSUrl( 'Wikia.css', $query, NS_MEDIAWIKI ) );
 				} else {
 					$out->addStyle( self::makeNSUrl( 'Common.css', $query, NS_MEDIAWIKI ) );
