@@ -50,7 +50,7 @@ $wgOasisThemes = array(
 		"color-links" => "#006CB0",
 		"background-image" => "/skins/oasis/images/themes/oasis.png",
 		"background-align" => "center",
-		"background-tiled" => true
+		"background-tiled" => "true"
 	),
 	'sapphire' => array(
 		"color-body" => "#2B54B5",
@@ -59,7 +59,7 @@ $wgOasisThemes = array(
 		"color-links" => "#0148C2",
 		"background-image" => "/skins/oasis/images/themes/sapphire.png",
 		"background-align" => "center",
-		"background-tiled" => false
+		"background-tiled" => "false"
 	),
 	'jade' => array(
 		"color-body" => "#003816",
@@ -68,7 +68,7 @@ $wgOasisThemes = array(
 		"color-links" => "#BE6202",
 		"background-image" => "",
 		"background-align" => "center",
-		"background-tiled" => false
+		"background-tiled" => "false"
 	),
 	'sky' => array(
 		"color-body" => "#BDEAFD",
@@ -77,7 +77,7 @@ $wgOasisThemes = array(
 		"color-links" => "#285BAF",
 		"background-image" => "/skins/oasis/images/themes/sky.png",
 		"background-align" => "center",
-		"background-tiled" => false
+		"background-tiled" => "false"
 	),
 	'moonlight' => array(
 		"color-body" => "#000000",
@@ -86,7 +86,7 @@ $wgOasisThemes = array(
 		"color-links" => "#6F027C",
 		"background-image" => "/skins/oasis/images/themes/moonlight.jpg",
 		"background-align" => "center",
-		"background-tiled" => false
+		"background-tiled" => "false"
 	),
 	'opulence' => array(
 		"color-body" => "#7A0146",
@@ -95,7 +95,7 @@ $wgOasisThemes = array(
 		"color-links" => "#F97EC4",
 		"background-image" => "/skins/oasis/images/themes/opulence.png",
 		"background-align" => "center",
-		"background-tiled" => true
+		"background-tiled" => "true"
 	),
 	'obsession' => array(
 		"color-body" => "#191919",
@@ -104,7 +104,7 @@ $wgOasisThemes = array(
 		"color-links" => "#FF6F1E",
 		"background-image" => "",
 		"background-align" => "center",
-		"background-tiled" => true
+		"background-tiled" => "true"
 	),
 	'carbon' => array(
 		"color-body" => "#1A1A1A",
@@ -113,7 +113,7 @@ $wgOasisThemes = array(
 		"color-links" => "#70B8FF",
 		"background-image" => "/skins/oasis/images/themes/carbon.png",
 		"background-align" => "center",
-		"background-tiled" => false
+		"background-tiled" => "false"
 	),
 	'beach' => array(
 		"color-body" => "#97E4FE",
@@ -122,7 +122,7 @@ $wgOasisThemes = array(
 		"color-links" => "#FE7801",
 		"background-image" => "/skins/oasis/images/themes/beach.png",
 		"background-align" => "center",
-		"background-tiled" => true
+		"background-tiled" => "true"
 	),
 	'dragstrip' => array(
 		"color-body" => "#353637",
@@ -131,7 +131,7 @@ $wgOasisThemes = array(
 		"color-links" => "#FFF000",
 		"background-image" => "/skins/oasis/images/themes/dragstrip.jpg",
 		"background-align" => "center",
-		"background-tiled" => true
+		"background-tiled" => "true"
 	),
 	'aliencrate' => array(
 		"color-body" => "#484534",
@@ -140,7 +140,7 @@ $wgOasisThemes = array(
 		"color-links" => "#02899D",
 		"background-image" => "/skins/oasis/images/themes/aliencrate.jpg",
 		"background-align" => "center",
-		"background-tiled" => false
+		"background-tiled" => "false"
 	),
 );
 

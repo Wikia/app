@@ -14,6 +14,13 @@
 	}
 	.image {
 		display: none;
+		.swatches {
+			background: url(/extensions/wikia/ThemeDesigner/images/image_shadow.png) bottom center no-repeat;		
+			li, img {
+				height: 50px;
+				width: 60px;
+			}
+		}		
 	}
 	&.color {
 		display: block;
@@ -23,6 +30,7 @@
 	}
 	&.image {
 		display: block;
+		width: 311px;
 		.image {
 			display: block;
 		}
