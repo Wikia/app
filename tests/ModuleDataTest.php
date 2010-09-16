@@ -20,6 +20,9 @@ wfRestoreWarnings();
 
 class ModuleDataTest extends PHPUnit_Framework_TestCase {
 
+	// TODO: use it when we will update phpunit to v3.4+
+	public static function setUpBeforeClass() {}
+
 	function testLatestActivityModule() {
 		global $wgSitename;
 
@@ -465,7 +468,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 	}
 
 	function testHotSpotsModule() {
-		$moduleData = Module::get('HotSpots', 'Index')->getData(); 
+		$moduleData = Module::get('HotSpots', 'Index')->getData();
 
 		$this->assertType('array', $moduleData['data']['results']);
 		$this->assertEquals(count($moduleData['data']['results']), 5);
@@ -478,7 +481,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		// User page check
 		$wgTitle = Title::newFromText('User:WikiaBot');
 		$moduleData = Module::get('FollowedPages')->getData();
-		print_r($moduleData);
+		#print_r($moduleData);
 		$this->assertType('array', $moduleData['data']);
 		$this->assertTrue(count($moduleData['data']) >= $moduleData['max_followed_pages']);
 	}
