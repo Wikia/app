@@ -1033,9 +1033,11 @@ function wfGetSassUrl($fileName, $forceSassParams=null){
 	$sassParams = str_replace(" ", "/", $sassParams);
 	$wgCdnRootUrl = (isset($wgCdnRootUrl)?$wgCdnRootUrl:"");
 	if( !empty( $wgDontRewriteSassUrl ) ) {
-		$url = "/sassServer.php?file=$fileName&styleVersion=$wgStyleVersion&hash=$securityHash&$sassParams";
+		global $wgScriptPath;
+		$url = "$wgScriptPath/sassServer.php?file=$fileName&styleVersion=$wgStyleVersion&hash=$securityHash&$sassParams";
 	} else {
-		$url = "/__sass/$fileName/$wgStyleVersion/$securityHash/$sassParams";
+		global $wgCdnStylePath;
+		$url = "$wgCdnStylePath/__sass/$fileName/$wgStyleVersion/$securityHash/$sassParams";
 	}
 
 	wfProfileOut( __METHOD__ );
