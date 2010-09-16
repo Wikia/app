@@ -495,4 +495,27 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$this->assertType('array', $moduleData['data']);
 		$this->assertTrue(count($moduleData['data']) >= $moduleData['max_followed_pages']);
 	}
+
+	function testMenuButtonModule() {
+		$data = array(
+			'action' => 'url',
+			'name' => 'edit',
+			'image' => MenuButtonModule::EDIT_ICON,
+			'dropdown' => array(
+				'move' => array(),
+				'protect' => array(),
+				'delete' => array(),
+				'foo' => array(),
+			),
+		);
+
+		$moduleData = Module::get('MenuButton', 'Index', $data)->getData();
+
+		$this->assertEquals($data['action'], $moduleData['action']);
+		$this->assertEquals($data['name'], $moduleData['actionName']);
+		$this->assertRegExp('/^<img /', $moduleData['icon']);
+		$this->assertEquals(array_keys($data['dropdown']), array_keys($moduleData['dropdown']));
+		$this->assertEquals('m', $moduleData['dropdown']['move']['accesskey']);
+	}
+
 }
