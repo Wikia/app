@@ -19,6 +19,7 @@ abstract class Module {
 		if( !class_exists( $moduleClassName ) ) {
 			return null;
 		}
+		wfProfileIn(__METHOD__ . " (" . $name.'_'.$action .")");
 
 		$moduleObject = new $moduleClassName();
 		$moduleObject->templatePath = dirname($wgAutoloadClasses[$moduleClassName]).'/templates/'.$name.'_'.$action.'.php';
@@ -44,6 +45,7 @@ abstract class Module {
 		}
 		wfRunHooks($name.$action.'AfterExecute', array(&$moduleObject, &$params));
 
+		wfProfileOut(__METHOD__ . " (" . $name.'_'.$action .")");
 		return $moduleObject;
 	}
 
