@@ -1036,8 +1036,7 @@ function wfGetSassUrl($fileName, $forceSassParams=null){
 		global $wgScriptPath;
 		$url = "$wgScriptPath/sassServer.php?file=$fileName&styleVersion=$wgStyleVersion&hash=$securityHash&$sassParams";
 	} else {
-		global $wgCdnStylePath;
-		$url = "$wgCdnStylePath/__sass/$fileName/$wgStyleVersion/$securityHash/$sassParams";
+		$url = "$wgCdnRootUrl/__sass/$fileName/$wgStyleVersion/$securityHash/$sassParams";
 	}
 
 	wfProfileOut( __METHOD__ );
