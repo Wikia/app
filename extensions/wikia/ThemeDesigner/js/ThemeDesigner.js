@@ -207,11 +207,15 @@ var ThemeDesigner = {
 			});
 
 		} else if (type == "image") {
-			$("#ThemeDesignerPicker").children(".image").find(".swatches").find("img").click(function() {
+			$("#ThemeDesignerPicker").children(".image").find(".swatches").find("li").click(function() {
 				ThemeDesigner.set("background-align", "center");
-				ThemeDesigner.set("background-image", $(this).attr("data-image"));
+				
+				if ($(this).attr("class") == "no-image") {
+					ThemeDesigner.set("background-image", "");
+				} else {
+					ThemeDesigner.set("background-image", $(this).children("img").attr("data-image"));
+				}
 				ThemeDesigner.hidePicker();
-				$(this).unbind();
 			})
 		}
 
@@ -238,7 +242,7 @@ var ThemeDesigner = {
 			.removeClass("color image")
 			.find(".user").remove();
 		$("#color-name").val("").blur();
-		$("#ThemeDesignerPicker").children(".color").find(".swatches").find("li").unbind("click");
+		$("#ThemeDesignerPicker").find(".swatches").find("li").unbind("click");
 	},
 
 	/**
@@ -422,7 +426,18 @@ var ThemeDesigner = {
 		$("#swatch-color-links").css("background-color", ThemeDesigner.settings["color-links"]);
 		$("#swatch-color-page").css("background-color", ThemeDesigner.settings["color-page"]);
 		
-		$("#swatch-image-background").attr("src", ThemeDesigner.settings["background-image"]);
+		if (ThemeDesigner.settings["background-image"] == "") {
+			//no background image
+			$("#swatch-image-background").attr("src", "/skins/common/blank.gif");
+		} else if (ThemeDesigner.settings["background-image"].indexOf("images/themes") > 0) {
+			//wikia background image
+			var file = ThemeDesigner.settings["background-image"].substring(ThemeDesigner.settings["background-image"].lastIndexOf("/") + 1);
+			var theme = file.substr(0, file.length - 4);
+			$("#swatch-image-background").attr("src", "/extensions/wikia/ThemeDesigner/images/" + theme + "_swatch.jpg");
+		} else {
+			//admin background image
+			$("#swatch-image-background").attr("src", ThemeDesigner.settings["background-image"]);
+		}
 		
 		if (ThemeDesigner.settings["background-tiled"] == "true") {
 			$("#tile-background").attr("checked", true);
