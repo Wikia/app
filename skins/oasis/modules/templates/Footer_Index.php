@@ -9,20 +9,20 @@
 
 <?php if($showMyTools) { ?>
 			<li class="mytools">
-				<img src="<?= $wgBlankImgUrl; ?>" class="mytools-icon">
+				<img src="<?= $wgBlankImgUrl; ?>" class="mytools-icon" height="15" width="15">
 				<a href="#"><?= wfMsg('oasis-mytools') ?></a>
 				<?= wfRenderModule('MyTools') ?>
 			</li>
 <?php } ?>
 <?php if($showFollow && $follow) { ?>
 			<li>
-				<a href="<?= $follow['href'] ?>"><img src="<?= $wgBlankImgUrl; ?>" class="follow-icon"></a>
+				<a href="<?= $follow['href'] ?>"><img src="<?= $wgBlankImgUrl; ?>" class="follow-icon" height="15" width="15"></a>
 				<a accesskey= "w" href="<?= $follow['href'] ?>" id="ca-<?= $follow['action'] ?>"><?= $follow['text'] ?></a>
 			</li>
 <?php } ?>
 <?php if($showShare) { ?>
 			<li id="ca-share_feature">
-				<img src="<?= $wgBlankImgUrl; ?>" class="share-icon">
+				<img src="<?= $wgBlankImgUrl; ?>" class="share-icon" height="15" width="15">
 				<a href="#" id="control_share_feature"><?= wfMsg('oasis-share') ?></a>
 			</li>
 <?php } ?>
@@ -34,8 +34,8 @@
 <?php } ?>
 
 		</ul>
-		<img src="<?= $wgBlankImgUrl; ?>" class="banner-corner-left">
-		<img src="<?= $wgBlankImgUrl; ?>" class="banner-corner-right">
+		<img src="<?= $wgBlankImgUrl; ?>" class="banner-corner-left" height="0" width="0">
+		<img src="<?= $wgBlankImgUrl; ?>" class="banner-corner-right" height="0" width="0">
 	</div>
 <?php } ?>
 

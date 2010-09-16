@@ -6,7 +6,7 @@
 			<li>
 				<div class="content">
 				<?php if( isset( $page['imgUrl'] ) ) { ?>
-					<img src="<?= $page['imgUrl']; ?>" />
+					<img src="<?= $page['imgUrl']; ?>" width="200" height="100">
 				<?php } else { ?>
 					<div class="articleSnippet"><p><?= $page['text']; ?></p></div>
 				<?php } ?>
