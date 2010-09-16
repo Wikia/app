@@ -35,7 +35,7 @@ $CHECK_BACK_IN_MICROSECONDS = 200000; // 1,000,000 per second.
 $CHECK_BACK_MAX_RETRIES = (1000000 / $CHECK_BACK_IN_MICROSECONDS) * ($CHECK_BACK_CACHE_DURATION + 1); // if we don't get a response in this time, we'll stop waiting.
 $CSS_CACHE_DURATION = 60 * 60 * 12; // how long to cache the computed CSS in memcache
 
-$CHECK_SECURITY_HASH = true;
+$CHECK_SECURITY_HASH = false;
 
 // Chose the output style - {nested, expanded, compact, compressed} see: http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#output_style
 $OUTPUT_STYLE = "compact";
