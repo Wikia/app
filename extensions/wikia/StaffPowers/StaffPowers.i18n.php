@@ -73,6 +73,13 @@ $messages['ce'] = array(
 	'staffpowers-ipblock-aborted' => 'Саца цавало Wikia декъашхо. Дехар до, лелайе [[Special:Contact]], тхан декъашхох хьакхалуш долу гlалатах хаам ба.',
 );
 
+/** Czech (Česky)
+ * @author Mormegil
+ */
+$messages['cs'] = array(
+	'staffpowers-ipblock-aborted' => 'Personál Wikie nelze blokovat. Problémy s naším personálem hlaste pomocí [[Special:Contact|kontaktního formuláře]].',
+);
+
 /** Welsh (Cymraeg)
  * @author Lloffiwr
  * @author Xxglennxx

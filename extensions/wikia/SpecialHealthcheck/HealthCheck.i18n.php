@@ -27,6 +27,13 @@ $messages['br'] = array(
 	'healthcheck-desc' => 'Ur [[Special:HealthCheck|bajenn dibar]] evit gwiriañ stad ar servijerien',
 );
 
+/** Czech (Česky)
+ * @author Mormegil
+ */
+$messages['cs'] = array(
+	'healthcheck-desc' => '[[Special:HealthCheck|Speciální stránka]] pro kontrolu stavu serveru',
+);
+
 /** German (Deutsch)
  * @author Purodha
  */
@@ -137,6 +144,13 @@ $messages['mk'] = array(
  */
 $messages['nl'] = array(
 	'healthcheck-desc' => 'Een [[Special:HealthCheck|speciale pagina]] voor de controle van de serverstatus',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['no'] = array(
+	'healthcheck-desc' => 'En [[Special:HealthCheck|spesialside]] for sjekk av serverstatus',
 );
 
 /** Polish (Polski)

@@ -1136,6 +1136,7 @@ Dit kan niet ongedaan gemaakt worden.',
 	'swm-error-no-such-wiki' => 'Die wiki bestaat niet!',
 	'swm-error-no-such-user' => 'De aangegeven gebruiker bestaat niet.',
 	'swm-error-empty-message' => 'Voer de inhoud van het bericht in.',
+	'swm-error-long-message' => 'Berichten hebben een limiet van vijfhonderd tekens.',
 	'swm-error-empty-group' => 'Voer de naam van de groep in.',
 	'swm-lang-other' => 'alle overgebleven talen',
 );

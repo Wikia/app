@@ -111,6 +111,14 @@ $messages['nl'] = array(
 	'wikiarelatedpages-heading' => 'Meer lezen',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['no'] = array(
+	'wikiarelatedpages-desc' => 'Legger til en liste med relaterte sider til sider',
+	'wikiarelatedpages-heading' => 'Les mer',
+);
+
 /** Polish (Polski)
  * @author Sp5uhe
  */

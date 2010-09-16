@@ -39,6 +39,14 @@ $messages['br'] = array(
 	'tog-watchlistsubpages' => 'Heuliañ ispajennoù',
 );
 
+/** Czech (Česky)
+ * @author Mormegil
+ */
+$messages['cs'] = array(
+	'wikia-watchsubpages-desc' => 'Automatické sledování podstránek',
+	'tog-watchlistsubpages' => 'Sledovat podstránky',
+);
+
 /** German (Deutsch)
  * @author The Evil IP address
  */
@@ -96,6 +104,14 @@ $messages['it'] = array(
 	'tog-watchlistsubpages' => 'Segui le sottopagine',
 );
 
+/** Japanese (日本語)
+ * @author Tommy6
+ */
+$messages['ja'] = array(
+	'wikia-watchsubpages-desc' => 'サブページを自動的にフォローする',
+	'tog-watchlistsubpages' => 'サブページをフォローする',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
@@ -126,6 +142,14 @@ $messages['mk'] = array(
 $messages['nl'] = array(
 	'wikia-watchsubpages-desc' => "Subpagina's automatisch volgen",
 	'tog-watchlistsubpages' => "Subpagina's volgen",
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['no'] = array(
+	'wikia-watchsubpages-desc' => 'Autofølging for undersider',
+	'tog-watchlistsubpages' => 'Følg undersider',
 );
 
 /** Polish (Polski)

@@ -40,6 +40,13 @@ $messages['br'] = array(
 	'sitemap-desc' => 'Genel steuñvennoù eus ar wiki war ar prim.',
 );
 
+/** Czech (Česky)
+ * @author Mormegil
+ */
+$messages['cs'] = array(
+	'sitemap-desc' => 'Průběžné vytváření sitemap pro wiki',
+);
+
 /** German (Deutsch)
  * @author LWChris
  * @author The Evil IP address

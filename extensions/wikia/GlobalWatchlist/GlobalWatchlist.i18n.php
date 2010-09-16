@@ -418,6 +418,7 @@ Groet, Wikia
  * @author Nghtwlkr
  */
 $messages['no'] = array(
+	'globalwatchlist-desc' => 'Sender ukentlig en sammensatt e-post med overvåkede sider på alle wikier',
 	'tog-watchlistdigest' => 'Send meg en e-post med et ukentlig sammendrag av overvåkningslisten min',
 	'tog-watchlistdigestclear' => 'Marker alle sider fra dette ukentlige sammendraget som besøkt',
 	'globalwatchlist-see-more' => 'Sjekk din lokale overvåkningsliste for flere endringer',

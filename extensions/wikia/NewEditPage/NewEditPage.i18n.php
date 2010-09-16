@@ -40,6 +40,14 @@ $messages['br'] = array(
 	'templatesused-toggle' => 'Diskouez/kuzhat $1 elfenn{{PLURAL:$1||}}',
 );
 
+/** Czech (Česky)
+ * @author Mormegil
+ */
+$messages['cs'] = array(
+	'new-edit-page-preview-notice' => 'Náhled: změny dosud nebyly uloženy! Pokračovat v editaci můžete níže.',
+	'templatesused-toggle' => 'Zobrazit/skrýt {{PLURAL:$1|$1 položku|$1 položky|$1 položek}}',
+);
+
 /** German (Deutsch)
  * @author LWChris
  */

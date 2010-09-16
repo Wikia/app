@@ -298,6 +298,27 @@ $messages['pt'] = array(
 	'recipes-history' => 'Ver as alterações a esta receita',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
+ */
+$messages['pt-br'] = array(
+	'recipestweaks-desc' => 'Melhoramentos do design e da funcionalidade da Recipes Wiki',
+	'savedpages' => 'Páginas memorizadas',
+	'recipes-add-new-recipe' => 'Acrescentar uma receita',
+	'recipes-browse' => 'Explorar a Recipes Wiki',
+	'recipes-contributed-by' => 'Contribuição de $1 $2',
+	'recipes-contributed-by-anon' => 'Um usuário da Recipes Wiki',
+	'recipes-mainpage-title' => 'Bem-vindo(a) à Recipes Wiki',
+	'recipes-more' => 'Mais',
+	'recipes-my-saved-pages' => 'Páginas memorizadas',
+	'recipes-my-saved-pages-empty' => 'Ainda não há páginas memorizadas',
+	'recipes-rating' => 'Classificação desta receita:',
+	'recipes-search-label' => 'Pesquisar receitas',
+	'recipes-savedpages-empty' => 'Você não tem nenhuma página memorizada.',
+	'recipes-savedpages-by' => 'por $1',
+	'recipes-history' => 'Ver as alterações desta receita',
+);
+
 /** Russian (Русский)
  * @author Eleferen
  * @author Ytsukeng Fyvaprol

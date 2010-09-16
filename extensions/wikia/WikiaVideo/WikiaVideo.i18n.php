@@ -725,6 +725,20 @@ $messages['tl'] = array(
 	'wikiavideo-intro-old' => "Binubura mo ang bersyong '''[$1 $5]''' noon pang [$4 $3, $2].",
 );
 
+/** Turkish (Türkçe)
+ * @author Mert.subay
+ */
+$messages['tr'] = array(
+	'wikiavideo-reverted' => '$1 adlı video başarıyla eski haline döndürüldü.$2 adlı videoya geri dön.',
+	'wikiavideo-unreverted' => '$1 adlı videoyu eski haline döndürmeye iznin yok.',
+	'wikiavideo-added' => 'Video $1 eklendi',
+	'wikiavideo-back' => 'geri',
+	'wikiavideo-create' => 'Video Ekle',
+	'wikiavideo-replace' => "Video'yu üstüne yaz",
+	'wikiavideo-category' => 'Videolar',
+	'wikiavideo-links' => 'Bağlantılar',
+);
+
 /** Ukrainian (Українська)
  * @author Prima klasy4na
  */

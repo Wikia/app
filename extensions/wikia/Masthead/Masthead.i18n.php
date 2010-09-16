@@ -581,7 +581,25 @@ $messages['pt-br'] = array(
 	'blog-avatar-delete' => 'Apagar',
 	'masthead-blog-avatar-preferences-title' => 'Avatar',
 	'blog-avatar-choose-avatar' => 'Escolher um novo avatar',
+	'blog-avatar-upload-avatar' => 'Carregar um novo avatar',
+	'blog-avatar-nouser' => 'Não é possível encontrar este usuário!',
+	'blog-avatar-cannot-remove' => 'Não é possível remover avatares do usuário selecionado!',
+	'blog-avatar-remove-info' => 'Esta página permite-lhe remover o avatar de um usuário.
+Escreva o nome exato do usuário e clique "{{int:blog-avatar-getuser}}".<br />
+Lembre-se, por favor, que os avatares são globais - removendo-o aqui remove-o de toda a Wikia.',
+	'blog-avatar-getuser' => 'Pesquisar',
+	'blog-avatar-remove-confirm' => 'Você tem certeza de que pretende remover o avatar?',
+	'blog-avatar-error-nofile' => 'Escolha um arquivo do disco, por favor',
+	'blog-avatar-error-size' => 'O arquivo é demasiado grande; o tamanho máximo é $1 KB.',
+	'blog-avatar-error-cantwrite' => 'Não foi possível salvar o arquivo',
+	'blog-avatar-changed-log' => 'Adicionou ou alterou avatar',
+	'blog-avatar-removed-log' => 'Removeu os avatares de $1',
+	'blog-avatar-save-info' => 'Para salvar as alterações <a href="#prefcontrol">vá ao final da página</a> e clique no botão "{{int:saveprefs}}"',
 	'masthead-edits-since' => 'edições desde',
+	'useravatar-log' => 'Registro de avatares dos usuários',
+	'blog-avatar-alt' => 'Registros de adições e remoções de avatares',
+	'removeuseravatar' => 'Remover avatar do usuário',
+	'right-removeavatar' => 'Remover avatares do usuário',
 );
 
 /** Russian (Русский)

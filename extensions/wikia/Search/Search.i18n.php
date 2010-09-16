@@ -218,6 +218,7 @@ $messages['ja'] = array(
 	'wikiasearch-system-error-msg' => 'システムエラーにより検索を完了できませんでした。',
 	'wikiasearch-search-this-wiki' => 'セントラルウィキアのみを検索する',
 	'wikiasearch-search-wikia' => 'ウィキア全体を検索',
+	'wikiasearch-image-results' => '"$1" の画像検索結果',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

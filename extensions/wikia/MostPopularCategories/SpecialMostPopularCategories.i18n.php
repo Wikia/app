@@ -54,6 +54,13 @@ $messages['ce'] = array(
 	'mostpopularcategories' => 'Массарел гlарайаьлла кадегарш',
 );
 
+/** Czech (Česky)
+ * @author Mormegil
+ */
+$messages['cs'] = array(
+	'mostpopularcategories' => 'Nejpopulárnější kategorie',
+);
+
 /** German (Deutsch) */
 $messages['de'] = array(
 	'mostpopularcategories' => 'Beliebteste Kategorien',

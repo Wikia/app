@@ -47,6 +47,13 @@ $messages['ce'] = array(
 	'mostpopulararticles' => 'Массарел гlарайойла яззамаш (хlокху чохь йолучарел)',
 );
 
+/** Czech (Česky)
+ * @author Mormegil
+ */
+$messages['cs'] = array(
+	'mostpopulararticles' => 'Nejpopulárnější články (z databáze)',
+);
+
 /** German (Deutsch) */
 $messages['de'] = array(
 	'mostpopulararticles' => 'Häufig geänderte Artikel',

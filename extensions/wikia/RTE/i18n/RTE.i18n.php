@@ -269,16 +269,27 @@ $messages['nl'] = array(
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
  * @author Nghtwlkr
  */
 $messages['no'] = array(
+	'rte-desc' => 'CKeditor-integrering for MediaWiki',
+	'rte-no-js-fallback' => 'Den rike tekstredaktøren virker ikke når JavaScript er slått av. Vennligst enten slå det på i nettleseralternativene dine, eller besøk [[Special:Preferences|instillinger]] for å bytte til den gamle MediaWiki-redaktøren.',
+	'rte-edgecase-info-title' => 'Kildemodus påkrevd',
+	'rte-edgecase-info' => 'Rik tekstredigering har blitt deaktivert fordi siden inneholder kompleks kode.',
 	'rte-edgecase-comment' => 'HTML-kommentarer',
 	'rte-edgecase-triplecurls' => 'malparametre',
+	'rte-edgecase-nowysiwyg' => '«ingen WYSIWYG»-kommandoen',
+	'rte-edgecase-complex-description' => 'en ekstern URL eller mal inne i en lenkebeskrivelse',
 	'rte-edgecase-template-with-link' => 'en mal med en lenke som en parameter',
 	'rte-edgecase-syntax' => 'ikke tillatt syntaks',
 	'rte-edgecase-image-with-link' => 'bilde med en lenke i beskrivelsen',
 	'rte-edgecase-redirect' => 'omdiriger',
+	'rte-edgecase-templateintable' => 'en tabell med malpåkallelse i definisjonen',
 	'rte-edgecase-unclosed-tags' => 'ulukket HTML-element',
+	'enablerichtexteditor' => 'Aktiver Rik tekstredaktør',
+	'rte-enablerichtexteditormessage' => 'Rik tekstredaktør aktivert!',
+	'rte-first-run-notice' => 'Vi har gjort noen forbedringer på redaktøren. For å lære mer kan du [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news lese annonseringen].',
 );
 
 /** Polish (Polski)

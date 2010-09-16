@@ -828,9 +828,11 @@ Schrijf hier de tweede paragraaf van uw pagina.',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
  * @author Nghtwlkr
  */
 $messages['no'] = array(
+	'createpage-desc' => 'Tillater å opprette en ny side med Wikias WYSIWYG-redaktør',
 	'createpage-sp-title' => 'Skriv en ny artikkel',
 	'createpage_title' => 'Skriv en ny artikkel',
 	'createpage_title_caption' => 'Tittel:',

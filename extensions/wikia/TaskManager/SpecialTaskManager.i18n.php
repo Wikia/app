@@ -147,6 +147,13 @@ $messages['ja'] = array(
 	'taskmanager_tasklist' => 'タスク一覧へ戻る',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'taskmanager_tasklist' => "Zréck op d'Lëscht vun den Aufgaben",
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */

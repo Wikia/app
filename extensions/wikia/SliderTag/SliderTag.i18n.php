@@ -94,6 +94,14 @@ $messages['nl'] = array(
 	'slidertag-featured-wikis' => "Aanbevolen wiki's",
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['no'] = array(
+	'slidertag-desc' => 'Gir en generisk måte for brukere å legge til utvalgte glidere',
+	'slidertag-featured-wikis' => 'Utvalgte wikier',
+);
+
 /** Polish (Polski)
  * @author Sp5uhe
  */

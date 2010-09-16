@@ -39,6 +39,14 @@ $messages['br'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'Pajenn gaozeal krouet ent emgefreek',
 );
 
+/** Czech (Česky)
+ * @author Mormegil
+ */
+$messages['cs'] = array(
+	'sharedhelp-desc' => 'Přebírá stránky z [[w:c:Help|Nápovědy Wikia]] a vkládá je do jmenného prostoru {{ns:help}} na této wiki',
+	'sharedhelp-autotalkcreate-summary' => 'Diskusní stránka založena automaticky',
+);
+
 /** German (Deutsch)
  * @author The Evil IP address
  */

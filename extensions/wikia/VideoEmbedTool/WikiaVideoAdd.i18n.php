@@ -101,6 +101,7 @@ $messages['ca'] = array(
 );
 
 /** Czech (Česky)
+ * @author Mormegil
  * @author Mr. Richard Bolla
  */
 $messages['cs'] = array(
@@ -113,6 +114,7 @@ $messages['cs'] = array(
 	'wva-title' => 'Přidat rychle video z URL',
 	'wva-notlogged' => 'Pro vkládání videí se musíte přihlásit nebo zaregistrovat.',
 	'wva-notallowed' => 'Na této wiki nemůžete vkládat videa.',
+	'wva-protected' => 'Toto video je zamčeno.',
 );
 
 /** German (Deutsch)
@@ -396,6 +398,7 @@ $messages['nl'] = array(
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
  * @author Nghtwlkr
  */
 $messages['no'] = array(
@@ -408,6 +411,7 @@ $messages['no'] = array(
 	'wva-title' => 'Legg til video raskt fra internettadresse',
 	'wva-notlogged' => 'Du må logge inn eller registrere deg for å legge til videoer.',
 	'wva-notallowed' => 'Du kan ikke legge til videoer på denne wikien.',
+	'wva-protected' => 'Denne videoen er beskyttet',
 );
 
 /** Occitan (Occitan)

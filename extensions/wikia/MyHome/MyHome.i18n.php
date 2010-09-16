@@ -104,6 +104,8 @@ For example, you could:
  */
 $messages['qqq'] = array(
 	'myhome-activity-feed' => 'This the title of the list/summary of recent activity in "My home page" in Wikia. "Feed" here does not refer to an RSS/Atom-type feed.',
+	'myhome-feed-edit' => '{{Identical|Edit}}',
+	'myhome-feed-delete' => '{{Identical|Deleted}}',
 	'myhome-feed-new-blog-comment-details' => '{{Identical|Comment}}',
 	'myhome-feed-new-article-comment-details' => '{{Identical|Comment}}',
 );
@@ -255,11 +257,29 @@ $messages['as'] = array(
  */
 $messages['be-tarask'] = array(
 	'myhome' => 'Мая хатняя старонка',
-	'wikiactivity' => 'Вікі-актыўнасьць',
-	'myhome-activity-more' => 'абнавіць сьпіс апошніх зьменаў',
-	'myhome-activity-feed' => 'Апошнія зьмены',
-	'myhome-activity-feed-empty' => "Гэтая вікі чакае Вашага ўдзелу.
-Націсьніце спасылку '''[[Special:CreatePage|Новая старонка]]''' каб пачаць пісаць!",
+	'wikiactivity' => 'Актыўнасьць у {{GRAMMAR:месны|{{SITENAME}}}}',
+	'myhome-activity-more' => 'паказаць апошнюю актыўнасьць',
+	'myhome-activity-feed' => 'Актыўнасьсь',
+	'myhome-activity-feed-empty' => "{{SITENAME}} чакае Вашага ўдзелу.
+Націсьніце спасылку '''[[Special:CreatePage|Новая старонка]]''', каб пачаць пісаць!",
+	'myhome-watchlist-feed' => 'Сьпіс назіраньня',
+	'myhome-watchlist-feed-empty' => 'Вы можаце дадаць старонкі ў Ваш сьпіс назіраньня, націснуўшы спасылку «{{int:watch}}» уверсе старонкі.
+Вы можаце выкарыстоўваць Ваш сьпіс назіраньня, для сачэньня за зьменамі ў цікавых для Вас старонках.',
+	'myhome-user-contributions-feed' => 'Унёсак',
+	'myhome-hot-spots-feed' => 'Гарачыя пункты',
+	'myhome-hot-spots-feed-empty' => "{{SITENAME}} чакае Вашага ўдзелу.
+Націсьніце спасылку '''[[Special:CreatePage|Новая старонка]]''', каб пачаць пісаць!",
+	'myhome-hot-spots-newest' => 'Новыя старонкі ў {{GRAMMAR:месны|{{SITENAME}}}}',
+	'myhome-hot-spots-brandnew' => 'Гэта зусім новая вікі. Націсьніце спасылку [[Special:CreatePage|Новая старонка]], каб пачаць пісаць!',
+	'tog-myhomedisableredirect' => 'Адключыць перанакіраваньне на маю хатнюю старонку',
+	'myhome-feed-newpage' => 'новая старонка',
+	'myhome-feed-edit' => 'рэдагаваць',
+	'myhome-feed-move' => 'старонка перанесеная',
+	'myhome-feed-talkpage' => 'старонка абмеркаваньня',
+	'myhome-feed-blogcomment' => 'камэнтар блёгу',
+	'myhome-feed-delete' => 'выдалена',
+	'myhome-feed-image' => 'дададзеная выява',
+	'myhome-feed-video' => 'дададзенае відэа',
 	'myhome-feed-new-blog-comment-details' => 'Камэнтар',
 	'myhome-feed-new-article-comment-details' => 'Камэнтар',
 	'myhome-community-corner-edit' => 'рэдагаваць паведамленьне',
@@ -1227,6 +1247,7 @@ Se sei il fondatore o un admin di questo wiki, puoi modificare questo messaggio 
  */
 $messages['ja'] = array(
 	'myhome' => 'My Home',
+	'wikiactivity' => 'ウィキアクティビティ',
 	'myhome-activity-more' => 'もっと詳しく',
 	'myhome-activity-feed' => 'アクティビティフィード',
 	'myhome-activity-feed-empty' => "このウィキには編集者が必要です。あなたも'''[[Special:CreatePage|編集に参加]]'''してみませんか？",
@@ -1275,6 +1296,7 @@ $messages['ja'] = array(
 	'myhome-switch-to-monaco' => 'My Home は Monaco スキンでのみ利用できます。もし My Home を閲覧したいのであれば、[[Special:Preferences|スキンの設定を変更]]してください。',
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'コミュニティコーナー',
+	'oasis-myhome-community-corner-edit' => 'メッセージを編集 &gt;',
 	'myhome-community-corner-edit' => 'メッセージを編集',
 	'community-corner' => "'''My Home にようこそ！'''
 
@@ -1482,6 +1504,7 @@ Als u de oprichter of een beheerder van deze wiki bent, kunt u dit bericht gebru
  */
 $messages['no'] = array(
 	'myhome' => 'Mitt hjem',
+	'wikiactivity' => 'Wiki-aktivitet',
 	'myhome-activity-more' => 'se mer nylig aktivitet',
 	'myhome-activity-feed' => 'Aktivitetsfeed',
 	'myhome-activity-feed-empty' => "Denne wikien venter på at du skal bli involvert.

@@ -119,6 +119,14 @@ $messages['nl'] = array(
 	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Gemeenschapsberichten zijn bijgewerkt]]',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['no'] = array(
+	'communitymessages-desc' => 'Hjelpeutvidelse for Fellesskapsmeldinger',
+	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Fellesskapsmeldinger har blitt oppdatert]].',
+);
+
 /** Occitan (Occitan)
  * @author Cedric31
  */

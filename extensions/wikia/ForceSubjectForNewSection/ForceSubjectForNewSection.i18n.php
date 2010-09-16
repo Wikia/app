@@ -65,6 +65,13 @@ $messages['ca'] = array(
 	'force-subject-for-new-section-message' => 'Si us plau, introduïu un títol per a la secció',
 );
 
+/** Czech (Česky)
+ * @author Mormegil
+ */
+$messages['cs'] = array(
+	'force-subject-for-new-section-message' => 'Prosím, zadejte nadpis sekce.',
+);
+
 /** German (Deutsch)
  * @author LWChris
  */
