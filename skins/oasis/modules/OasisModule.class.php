@@ -28,7 +28,6 @@ class OasisModule extends Module {
 	var $displaytitle;
 	var $mimetype;
 	var $charset;
-	var $reporttime;
 	var $body_ondblclick;
 	var $dir;
 	var $lang;
