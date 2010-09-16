@@ -64,16 +64,6 @@
 				top: 3px;
 				width: 5px;
 			}
-			details {
-				@include border-radius-sw(4px);
-				@include border-radius-se(4px);
-				background-color: $color-notification-details-background;
-				padding: 5px 10px;
-				a {
-					color: $color-notification-links;
-					text-decoration: underline;
-				}
-			}
 		}
 		// IE7 fixes - start
 		*float: left;
@@ -87,22 +77,32 @@
 			*width: 175px !important;
 		}
 		// IE7 fixes - end
-		.WikiaBadgeNotification {
-			max-width: 250px;
-			padding: 0;
-			width: 250px;
-			img {
-				left: -25px;
-				position: absolute;
-				top: -10px;
+	}
+	.WikiaBadgeNotification {
+		max-width: 250px;
+		padding: 0;
+		width: 250px;
+		img {
+			left: -25px;
+			position: absolute;
+			top: -10px;
+		}
+		p {
+			margin-left: 60px;
+			padding: 10px;
+			big {
+				display: block;
+				font-weight: bold;
 			}
-			p {
-				margin-left: 60px;
-				padding: 10px;
-				big {
-					display: block;
-					font-weight: bold;
-				}
+		}
+		details {
+			@include border-radius-sw(4px);
+			@include border-radius-se(4px);
+			background-color: $color-notification-details-background;
+			padding: 5px 10px;
+			a {
+				color: $color-notification-links;
+				text-decoration: underline;
 			}
 		}
 	}

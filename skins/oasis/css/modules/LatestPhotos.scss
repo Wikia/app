@@ -41,21 +41,21 @@
 				image: url(/skins/oasis/images/empty_gallery.png); /* $wgCdnStylePath */
 				repeat: no-repeat;
 			}
-			a {
-				@include border-radius(3px);
-				background-color: transparentize($color-links, 0.4%);
-				border: 1px solid #FFF;
-				color: #FFF;
+		}
+		a {
+			@include border-radius(3px);
+			background-color: transparentize($color-links, 0.4%);
+			border: 1px solid #FFF;
+			color: #FFF;
+			display: block;
+			font: {
+				size: 13px;
+				weight: normal;
+			}
+			padding: 8px 14px;
+			span {
 				display: block;
-				font: {
-					size: 13px;
-					weight: normal;
-				}
-				padding: 8px 14px;
-				span {
-					display: block;
-					margin-top: 3px;
-				}
+				margin-top: 3px;
 			}
 		}
 	}
@@ -155,42 +155,42 @@
 					 opacity: 1;
 				}
 			}
-			&.see-all {
-				background: {
-					image: url(/skins/oasis/images/empty_gallery.png); /* $wgCdnStylePath */
-					position: -62px -17px;
-					color: #FFF;
-				}
-				text-align: center;
-				a {
-					border: 3px solid #FFF;
-					font-size: 14px;
-					font-weight: bold;
-					height: 55px;
-					padding-top: 21px;
-					width: 76px;
-				}
-			}
-			&.add-more {
-				@extend .see-all;	
-				a {
-					font-size: 11px;
-					height: 61px;
-					padding-top: 15px;
-				}
-			}
-			&.single-photo {
-				a {
-					font-size: 45px !important;
-					height: 67px;
-					padding-top: 9px;
-				}
-				&:hover {
-					text-decoration: none;					
-				}
-			}
 			.thumbcaption {
 				display: none;
+			}
+		}
+		.see-all {
+			background: {
+				image: url(/skins/oasis/images/empty_gallery.png); /* $wgCdnStylePath */
+				position: -62px -17px;
+				color: #FFF;
+			}
+			text-align: center;
+			a {
+				border: 3px solid #FFF;
+				font-size: 14px;
+				font-weight: bold;
+				height: 55px;
+				padding-top: 21px;
+				width: 76px;
+			}
+		}
+		.add-more {
+			@extend .see-all;	
+			a {
+				font-size: 11px;
+				height: 61px;
+				padding-top: 15px;
+			}
+		}
+		.single-photo {
+			a {
+				font-size: 45px !important;
+				height: 67px;
+				padding-top: 9px;
+			}
+			&:hover {
+				text-decoration: none;					
 			}
 		}
 	}
