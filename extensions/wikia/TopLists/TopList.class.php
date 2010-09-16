@@ -10,6 +10,7 @@ class TopList extends TopListBase {
 	protected $mRelatedArticle = null;
 	protected $mPicture = null;
 	protected $mItems = array();
+	protected $mUserCanVote = null;
 
 	/**
 	 * @author Federico "Lox" Lucignano
@@ -202,10 +203,16 @@ class TopList extends TopListBase {
 			if( !empty ($subPages)  && $subPages->count() ) {
 				$items = array();
 				$itemVotes = array();
+				$this->mUserCanVote = true;
+
 				foreach( $subPages as $title ) {
 					//check for list item prefix, avoid listing comments as items
 					if( strpos( $title->getSubpageText(), self::ITEM_TITLE_PREFIX ) === 0 ) {
 						$item = TopListItem::newFromTitle( $title );
+						if( !$item->userCanVote() ) {
+							$this->mUserCanVote = false;
+						}
+
 						$items[$item->getArticle()->getId()] = $item;
 						$itemVotes[$item->getArticle()->getId()] = $item->getVotesCount();
 					}
@@ -283,4 +290,17 @@ class TopList extends TopListBase {
 		$this->getTitle()->invalidateCache();
 	}
 
+	/**
+	 * check whether the $wgUser can still vote on list items
+	 *
+	 * @author ADi
+	 * @return bool
+	 */
+	public function userCanVote() {
+		if( $this->mUserCanVote == null ) {
+			$this->getItems();
+		}
+
+		return $this->mUserCanVote;
+	}
 }
