@@ -19,18 +19,18 @@ WikiaNotifications = {
 				case 1:
 					$.get("/index.php?title=Special:SiteWideMessages&action=dismiss&mID=" + parseInt(notification.attr('id').substr(4)), {},
 							function() { $.post(wgScript, {action: 'purge', title: wgPageName}); });
-					
+
 					// remove wrapping <li>
 					notification.remove();
 					break;
-				
+
 				// dismiss community message notification
 				case 2:
 					$.post(wgScript, {action: 'ajax', rs: 'CommunityMessagesAjax', method: 'dismissMessage'}, function() {
 						// and then purge the current page
 						$.post(wgScript, {action: 'purge', title: wgPageName});
 					});
-					
+
 				default:
 					// remove wrapping <li>
 					notification.parent().remove();
@@ -71,6 +71,8 @@ WikiaNotifications = {
 				return 'achievement';
 			case 4:
 				return 'editsimilar';
+			case 5:
+				return 'sidewidemessages';
 		}
 
 		return false;
