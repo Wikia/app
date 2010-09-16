@@ -11,7 +11,7 @@ class View {
 	}
 
 	public function render() {
-		wfProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__ . " (" . substr(strrchr($this->templatePath, "/"), 1, -4) .")");
 
 		if(!empty($this->data)) {
 			extract ($this->data);
@@ -21,7 +21,7 @@ class View {
 		require $this->templatePath;
 		$out = ob_get_clean();
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__ . " (" . substr(strrchr($this->templatePath, "/"), 1, -4) .")");
 		return $out;
 	}
 
@@ -43,30 +43,20 @@ class View {
 		return self::$cachedLinker;
 	}
 
-	/* create a link to a SpecialPage.
-	 *
-	 * Depending on params, this will create a text link, a css button, or a "secondary" button with an embedded image
-	 * avoiding this hardcoded stuff
-	 * <a href=" Title::makeTitle(NS_SPECIAL, 'CreatePage')->getLocalURL()" class="wikia-button"> <?= wfMsg('button-createpage') </a>
-	 *
-	 * You can also use the link function directly if you want to, but it's a bit messy and doesn't handle the image case
-	 * View::link(SpecialPage::getTitleFor('Following'), wfMsg('wikiafollowedpages-special-seeall'), array("class" => "more"))
-	 *
-	 * Params:
-	 * View::specialPageLink('PageName', 'messagename', 'css-class', 'image-name');
+	/*  Create a link to any page with Oasis style buttons
 	 *
 	 * Sample Usages:
-	 * View::specialPageLink('CreatePage', 'button-createpage', 'wikia-button');
-	 * View::specialPageLink('Random', 'oasis-button-random-page', 'wikia-button secondary', 'icon_button_random.png') ?>
+	 * View::normalPageLink('Somewhere', 'button-createpage', 'wikia-button');
+	 * View::normalPageLink('Somewhere', 'oasis-button-random-page', 'wikia-button secondary', 'icon_button_random.png') ?>
 	 *
-	 * @param pageName String - the name of the special page to link to
+ 	 * @param pageName String - the name of the page to link to
 	 * @param msg String - the name of a message to use as the link text
 	 * @param class String - [optional] the name of a css class for button styling or array of HTML attributes for button
 	 * @param img String - [optional] the name of an image to pre-pend to the text (for secondary buttons)
 	 * @param img String - [optional] the name of a message to be used as link tooltip
 	 */
 
-	static function specialPageLink($pageName, $message = '', $class = null, $img = null, $alt = null, $imgclass = null) {
+	static function normalPageLink($title, $message = '', $class = null, $img = null, $alt = null, $imgclass = null) {
 		global $wgStylePath, $wgBlankImgUrl;
 
 		$classes = array();
@@ -100,12 +90,41 @@ class View {
 
 		$linker = self::getLinker();
 		return $linker->link(
-				SpecialPage::getTitleFor( $pageName ),
+				$title,
 				$message,  // link text
 				$classes,
 				null,  // query
 				array ("known", "noclasses")
 			);
+	}
+
+	/* create a link to a SpecialPage.
+	 *
+	 * Depending on params, this will create a text link, a css button, or a "secondary" button with an embedded image
+	 * avoiding this hardcoded stuff
+	 * <a href=" Title::makeTitle(NS_SPECIAL, 'CreatePage')->getLocalURL()" class="wikia-button"> <?= wfMsg('button-createpage') </a>
+	 *
+	 * You can also use the link function directly if you want to, but it's a bit messy and doesn't handle the image case
+	 * View::link(SpecialPage::getTitleFor('Following'), wfMsg('wikiafollowedpages-special-seeall'), array("class" => "more"))
+	 *
+	 * Params:
+	 * View::specialPageLink('PageName', 'messagename', 'css-class', 'image-name');
+	 *
+	 * Sample Usages:
+	 * View::specialPageLink('CreatePage', 'button-createpage', 'wikia-button');
+	 * View::specialPageLink('Random', 'oasis-button-random-page', 'wikia-button secondary', 'icon_button_random.png') ?>
+	 *
+	 * @param pageName String - the name of the special page to link to
+	 * @param msg String - the name of a message to use as the link text
+	 * @param class String - [optional] the name of a css class for button styling or array of HTML attributes for button
+	 * @param img String - [optional] the name of an image to pre-pend to the text (for secondary buttons)
+	 * @param img String - [optional] the name of a message to be used as link tooltip
+	 */
+
+	static function specialPageLink($pageName, $message = '', $class = null, $img = null, $alt = null, $imgclass = null)
+	{
+		$title = SpecialPage::getTitleFor( $pageName );
+		return self::normalPageLink($title, $message, $class, $img, $alt, $imgclass);
 	}
 
 	/**
