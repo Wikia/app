@@ -65,22 +65,33 @@
 	<div class="image">
 		<h1>Pick an Image</h1>
 		<ul class="swatches">
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-
-			<li></li>
+			<li>
+				<img src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/images/oasis_swatch.jpg" data-image="/skins/oasis/images/themes/oasis.png">
+			</li>
+			<li>
+				<img src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/images/sapphire_swatch.jpg" data-image="/skins/oasis/images/themes/sapphire.png">
+			</li>
+			<li>
+				<img src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/images/sky_swatch.jpg" data-image="/skins/oasis/images/themes/sky.png">
+			</li>
+			<li>
+				<img src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/images/moonlight_swatch.jpg" data-image="/skins/oasis/images/themes/moonlight.jpg">
+			</li>
+			<li>
+				<img src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/images/opulence_swatch.jpg" data-image="/skins/oasis/images/themes/opulence.png">
+			</li>
+			<li>
+				<img src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/images/carbon_swatch.jpg" data-image="/skins/oasis/images/themes/carbon.png">
+			</li>
+			<li>
+				<img src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/images/beach_swatch.jpg" data-image="/skins/oasis/images/themes/beach.png">
+			</li>
+			<li>
+				<img src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/images/dragstrip_swatch.jpg" data-image="/skins/oasis/images/themes/dragstrip.jpg">
+			</li>
+			<li>
+				<img src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/images/aliencrate_swatch.jpg" data-image="/skins/oasis/images/themes/aliencrate.jpg">
+			</li>
 		</ul>
 		<h1>Upload Your Own</h1>
 

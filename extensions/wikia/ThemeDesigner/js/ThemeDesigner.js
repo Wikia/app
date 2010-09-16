@@ -105,7 +105,11 @@ var ThemeDesigner = {
 			ThemeDesigner.showPicker(event, "image");
 		});
 		$("#tile-background").change(function() {
-			ThemeDesigner.set("background-tiled", $(this).attr("checked"));
+			if ($(this).attr("checked")) {
+				ThemeDesigner.set("background-tiled", "true");
+			} else {
+				ThemeDesigner.set("background-tiled", "false");
+			}
 		});
 	},
 
@@ -203,7 +207,12 @@ var ThemeDesigner = {
 			});
 
 		} else if (type == "image") {
-			
+			$("#ThemeDesignerPicker").children(".image").find(".swatches").find("img").click(function() {
+				ThemeDesigner.set("background-align", "center");
+				ThemeDesigner.set("background-image", $(this).attr("data-image"));
+				ThemeDesigner.hidePicker();
+				$(this).unbind();
+			})
 		}
 
 		// show picker
@@ -415,7 +424,7 @@ var ThemeDesigner = {
 		
 		$("#swatch-image-background").attr("src", ThemeDesigner.settings["background-image"]);
 		
-		if (ThemeDesigner.settings["background-tiled"]) {
+		if (ThemeDesigner.settings["background-tiled"] == "true") {
 			$("#tile-background").attr("checked", true);
 		} else {
 			$("#tile-background").attr("checked", false);
