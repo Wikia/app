@@ -4,7 +4,7 @@
 			// render [icon] + [link] ("View source")
 			if (!empty($iconBefore)) {
 ?>
-<span class="wikia-single-button <?= $class ?>"><?= $iconBefore ?><a class="loginToEditProtectedPage" accesskey="e" href="<?= htmlspecialchars($action['href']) ?>" data-id="<?= $actionName ?>"><?= wfMsg('oasis-edit-protected-article'); ?></a></span>
+			<span><?= View::normalPageLink($loginTitle, 'oasis-edit-protected-article', 'wikia-button loginToEditProtectedPage', 'blank.gif', 'oasis-edit', 'osprite icon-edit', $loginURL); ?></span
 <?php
 			}
 			// render simple edit button

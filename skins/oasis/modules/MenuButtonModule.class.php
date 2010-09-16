@@ -20,12 +20,16 @@ class MenuButtonModule extends Module {
 	var $dropdown;
 	var $icon;
 	var $iconBefore;
+	var $loginURL;
+	var $loginTitle;
 	
 	var $wgOut;
-	
+	var $wgUser;
 
 	public function executeIndex($data) {
 		wfProfileIn(__METHOD__);
+	
+		$this->loginURL = $this->createLoginURL();
 
 		if (isset($data['action'])) {
 			$this->action = $data['action'];
@@ -116,6 +120,22 @@ class MenuButtonModule extends Module {
 
 		#print_pre($this);
 		wfProfileOut(__METHOD__);
+	}
+	
+	public function createLoginURL() {
+		global $wgUser;
+		
+		/** create login URL **/
+		$skin = $wgUser->getSkin();
+		$returnto = "returnto={$skin->thisurl}";
+		if( $skin->thisquery != '' ) {
+			$returnto .= "&returntoquery={$skin->thisquery}";
+		}
+		
+		$signUpHref = Skin::makeSpecialUrl('Signup', $returnto);
+		$signUpHref .= "&type=login";
+		$this->loginTitle =  Title::newFromText("&nbsp;Login to Edit");
+		return $signUpHref;	
 	}
 
 }
