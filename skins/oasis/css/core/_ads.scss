@@ -10,11 +10,15 @@
 	@include rail-module;
 }
 
-#HOME_TOP_RIGHT_BOXAD, #TOP_RIGHT_BOXAD {
+#HOME_TOP_RIGHT_BOXAD {
 	float: right;
 	margin-bottom: 10px;
 	position: relative;
 	z-index: 1;
+}
+
+#TOP_RIGHT_BOXAD {
+	margin-bottom: 10px;
 }
 
 //Mainpage styling
