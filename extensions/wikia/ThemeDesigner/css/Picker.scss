@@ -55,3 +55,7 @@
 		float: right;
 	}
 }
+.BackgroundImageForm {
+	@include clearfix;
+	margin: 0 20px;
+}

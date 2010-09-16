@@ -64,6 +64,30 @@
 	</div>
 	<div class="image">
 		<h1>Pick an Image</h1>
-		images here
+		<ul class="swatches">
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+
+			<li></li>
+		</ul>
+		<h1>Upload Your Own</h1>
+
+		<form id="BackgroundImageForm" class="BackgroundImageForm" onsubmit="return AIM.submit(this, ThemeDesigner.backgroundImageUploadCallback)" action="<?= $wgScriptPath ?>/index.php?action=ajax&rs=moduleProxy&moduleName=ThemeDesigner&actionName=BackgroundImageUpload&outputType=html" method="POST" enctype="multipart/form-data">
+			<input id="backgroundImageUploadFile" name="wpUploadFile" type="file">
+			<input type="submit" value="Upload" onclick="return ThemeDesigner.backgroundImageUpload(event);">
+		</form>
+
 	</div>
 </aside>
