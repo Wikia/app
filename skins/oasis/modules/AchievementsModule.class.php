@@ -21,7 +21,7 @@ class AchievementsModule extends Module {
 
 		// add CSS for this module
 		//$wgOut->addStyle(wfGetSassUrl("skins/oasis/css/modules/Achievements.scss"));
-		$wgOut->addStyle(wfGetSassUrl("$wgExtensionsPath/wikia/AchievementsII/css/oasis.scss"));
+		$wgOut->addStyle(wfGetSassUrl("extensions/wikia/AchievementsII/css/oasis.scss"));
 		// add JS for this module
 		//$wgOut->addScript("<script src=\"{$wgExtensionsPath}/wikia/AchievementsII/js/achievements.js?{$wgStyleVersion}\"></script>\n");
 		$wgOut->addScript("<script src=\"{$wgStylePath}/oasis/js/Achievements.js?{$wgStyleVersion}\"></script>\n");
