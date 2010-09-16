@@ -10,6 +10,7 @@
 @import "../../../../skins/oasis/css/mixins/menus";
 @import "../../../../skins/oasis/css/mixins/forms";
 @import "../../../../skins/oasis/css/mixins/opacity";
+@import "mixins.scss";
 
 //variables
 $input-height: 40px;
@@ -27,29 +28,6 @@ $item-number-width: 50px;
 $item-number-margin-right: 10px;
 $icon-remove-background: url(/skins/oasis/images/sprite.png) no-repeat -1128px -14px;
 $icon-drag-background: url(/skins/oasis/images/sprite.png) no-repeat -1147px -30px;
-
-@mixin centered($height, $hor: center, $ver: middle) {
-	height: $height;
-	line-height: $height;
-	text-align: $hor;
-	vertical-align: $ver;
-}
-
-@mixin tool($margin-left: 10px, $cursor: pointer) {
-	@include centered($item-height);
-	margin-left: $margin-left;
-
-	a {
-		cursor: $cursor;
-	}
-}
-
-@mixin error {
-	span.error, p.error {
-		color: $color-error;
-		font-size: smaller;
-	}
-}
 
 #toplist-editor {
 	@include error;
