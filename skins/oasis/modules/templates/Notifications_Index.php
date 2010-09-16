@@ -23,7 +23,8 @@
 <?php
 					break;
 
-				// render edit similar / community message notification
+				// render talk page / edit similar / community message notification
+				case NotificationsModule::NOTIFICATION_TALK_PAGE_MESSAGE:
 				case NotificationsModule::NOTIFICATION_EDIT_SIMILAR:
 				case NotificationsModule::NOTIFICATION_COMMUNITY_MESSAGE:
 ?>

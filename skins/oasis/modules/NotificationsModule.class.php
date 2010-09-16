@@ -15,7 +15,8 @@ class NotificationsModule extends Module {
 	const CONFIRMATION_ERROR = 3;
 
 	// notification types
-	const NOTIFICATION_MESSAGE = 1;
+	const NOTIFICATION_GENERIC_MESSAGE = 0;
+	const NOTIFICATION_TALK_PAGE_MESSAGE = 1;
 	const NOTIFICATION_COMMUNITY_MESSAGE = 2;
 	const NOTIFICATION_NEW_ACHIEVEMENTS_BADGE = 3;
 	const NOTIFICATION_EDIT_SIMILAR = 4;
@@ -36,7 +37,7 @@ class NotificationsModule extends Module {
 	/**
 	 * Add notification message to the stack
 	 */
-	public static function addNotification($message, $data = array(), $type = 1) {
+	public static function addNotification($message, $data = array(), $type = 0) {
 		wfProfileIn(__METHOD__);
 
 		self::$notificationsStack[] = array(
@@ -315,16 +316,16 @@ class NotificationsModule extends Module {
 			// Add talk page notificaations
 			$msg = $tpl->data['usernewmessages'];
 			if ($msg != '') {
-				self::addNotification($msg);
+				self::addNotification($msg, null, self::NOTIFICATION_TALK_PAGE_MESSAGE);
 			}
-			
+
 			// Add site wide notifications
 			$msg = SiteWideMessages::getAllUserMessages($wgUser, false, false);
 			if ($msg != '') {
 				foreach ($msg as $msgId => &$data) {
 					$data['text'] = $wgOut->parse($data['text']);
 				}
-				
+
 				self::addNotification($msg, null, self::NOTIFICATION_SITEWIDE);
 			}
 		}
