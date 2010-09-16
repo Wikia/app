@@ -96,9 +96,6 @@ class TopListItem extends TopListBase {
 			$aResult = $oApi->GetResultData();
 
 			if( isset( $aResult['query']['wkvoteart'][$pageId]['votescount'] ) ) {
-				//echo "<pre>";
-				//var_dump( $aResult );
-				//echo "</pre>";
 				$this->votesCount = $aResult['query']['wkvoteart'][$pageId]['votescount'];
 			} else {
 				$this->votesCount = 0;
@@ -166,23 +163,27 @@ class TopListItem extends TopListBase {
 	}
 
 	/**
-	 * @author Federico "Lox" Lucignano
-	 *
 	 * Checks if the user has already casted a vote
 	 *
-	 * @param User $user a User instance, it will default to $wgUser if none is given
-	 *
+	 * @author ADi
 	 * @return boolean true if no vote has been recorded for the user, false otherwise
 	 */
-	public function userCanVote( User $user = null ) {
-		global $wgUser;
+	public function userCanVote() {
+		$pageId = $this->getArticle()->getId();
+		$result = true;
 
-		if( !empty( $user ) ) {
-			$user = $wgUser;
+		$oFauxRequest = new FauxRequest(array( "action" => "query", "list" => "wkvoteart", "wkpage" => $pageId, "wkuservote" => 1 ));
+		$oApi = new ApiMain($oFauxRequest);
+		$oApi->execute();
+		$aResult = $oApi->GetResultData();
+
+		if( isset( $aResult['query']['wkvoteart'][$pageId]['uservote'] ) ) {
+			$result = false;
+		} else {
+			$result = true;
 		}
 
-		//TODO: Implement
-		return true;
+		return $result;
 	}
 
 	/**
