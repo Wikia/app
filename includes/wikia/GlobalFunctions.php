@@ -1028,7 +1028,7 @@ function wfGetSassUrl($fileName, $forceSassParams=null){
 	}
 
 	// Calculate the security-hash.
-	$securityHash = SassUtil::getSecurityHash($wgStyleVersion, $sassParams);
+	$securityHash = SassUtil::getSecurityHash($wgStyleVersion, urldecode($sassParams));
 
 	$sassParams = str_replace(" ", "/", $sassParams);
 	$wgCdnRootUrl = (isset($wgCdnRootUrl)?$wgCdnRootUrl:"");
