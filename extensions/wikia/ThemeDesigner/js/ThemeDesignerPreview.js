@@ -23,8 +23,9 @@ var ThemeDesignerPreview = {
 
 	loadSASS: function(url) {
 		$("#clickmask").animate({"opacity": .65}, "fast");
+		$(".ThemeDesignerPreviewSASS").addClass("remove");
 		$('<style class="ThemeDesignerPreviewSASS">').appendTo("head").load(url, function() {
-			$(this).prev(".ThemeDesignerPreviewSASS").remove();
+			$(".ThemeDesignerPreviewSASS.remove").remove();
 			$("#clickmask").animate({"opacity": 0}, "fast");
 		});
 	}
