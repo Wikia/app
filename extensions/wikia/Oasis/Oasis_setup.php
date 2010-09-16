@@ -38,6 +38,11 @@ function wfOasisSetup() {
 	// support "noexternals" URL param
 	global $wgNoExternals, $wgRequest;
 	$wgNoExternals = $wgRequest->getBool('noexternals');
+
+	if ($wgNoExternals) {
+		global $wgDisableGlobalCSS, $wgDisableGlobalJS;
+		$wgDisableGlobalCSS = $wgDisableGlobalJS = true;
+	}
 }
 
 // Mapping of themename to an array of key/value pairs to send to SASS.
