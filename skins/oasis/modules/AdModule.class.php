@@ -32,7 +32,7 @@ class AdModule extends Module {
 			if(in_array($namespace, $wgContentNamespaces)) {
 				// content page
 				self::$config['TOP_LEADERBOARD'] = true;
-				self::$config['INCONTENT_BOXAD_1'] = true;
+				self::$config['TOP_RIGHT_BOXAD'] = true;
 				self::$config['PREFOOTER_LEFT_BOXAD'] = true;
 				self::$config['PREFOOTER_RIGHT_BOXAD'] = true;
 				self::$config['INVISIBLE_1'] = true;
