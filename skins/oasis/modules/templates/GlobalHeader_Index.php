@@ -21,7 +21,7 @@ if(is_array($menuNodes) && isset($menuNodes[0])) {
 							<li>
 								<?= AdEngine::getInstance()->getPlaceHolderIframe('SPOTLIGHT_GLOBALNAV_'.++$i) ?>
 								<!--
-								<img src="<?= $wgStylePath ?>/oasis/images/temp_globalnav_spotlight.jpg" width="270" height="143">
+								<img src="<?= $wgCdnStylePath ?>/oasis/images/temp_globalnav_spotlight.jpg" width="270" height="143">
 								-->
 							</li>
 <?php
