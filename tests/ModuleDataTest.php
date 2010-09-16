@@ -521,7 +521,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 	}
 
 	function testPageHeaderModule() {
-		global $wgTitle, $wgSupressPageTitle;
+		global $wgTitle, $wgSupressPageTitle, $wgRequest;
 
 		// main page
 		$wgTitle = Title::newMainPage();
@@ -550,7 +550,18 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals('Foo', $moduleData['title']);
 		$this->assertEquals('', $moduleData['subtitle']);
 
-		// edit page header
+		// history page header
+		$wgRequest->setVal('action', 'history');
+
+		$wgTitle = Title::newFromText('Foo');
+		$moduleData = Module::get('PageHeader', 'EditPage')->getData();
+		$this->assertRegExp('/History/', $moduleData['title']);
+		$this->assertTrue($moduleData['showSearchBox']);
+		$this->assertType('int', $moduleData['comments']);
+
+		$wgRequest->setVal('action', '');
+
+		// edit page
 		$wgTitle = Title::newFromText('Foo', NS_TALK);
 		$moduleData = Module::get('PageHeader', 'EditPage')->getData();
 		$this->assertRegExp('/Editing:/', $moduleData['title']);
