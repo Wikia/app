@@ -36,12 +36,14 @@
 					break;
 
 				case NotificationsModule::NOTIFICATION_SITEWIDE:
+					$first = 1;
 					foreach ($notification['message'] as $msgId => $data) {
 ?>
-		<div data-type="<?= $notification['type'] ?>" id="msg_<?= $msgId ?>">
+		<div data-type="<?= $notification['type'] ?>" id="msg_<?= $msgId ?>" style="display: <?= $first ? 'block' : 'none' ?>">
 			<a class="close"></a><?= $data['text'] ?>
 		</div>
 <?php
+						$first = 0;
 					}
 					break;
 				
