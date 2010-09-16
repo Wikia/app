@@ -8,6 +8,7 @@ var QuantcastSegments = {
 };
 
 QuantcastSegments.setQcseg = function (qcResult) {
+	WET.byStr("QCSeg/resp");
 	$.cookies.set(QuantcastSegments.segCookieName, JSON.stringify(qcResult), { hoursToLive: 24*QuantcastSegments.segCookieExpires, path: wgCookiePath, domain: wgCookieDomain})
 	if (typeof(window.wgNow) == 'object') {
 		var now = window.wgNow;
@@ -28,6 +29,7 @@ QuantcastSegments.setQuantcastData = function () {
 				var now = new Date();
 			}
 			if (now.getTime() - $.cookies.get(QuantcastSegments.updatedCookieName) > 86400000) {
+				WET.byStr("QCSeg/req");
 				$.getScript(QuantcastSegments.apiUrl+'?a='+QuantcastSegments.pId+'&callback=QuantcastSegments.setQcseg&ttl='+86400);
 			}
 		}
