@@ -4,13 +4,16 @@ class GlobalHeaderModule extends Module {
 
 	var $wgBlankImgUrl;
 	var $wgStylePath;
+	var $wgCdnStylePath;
 
 	var $centralUrl;
 	var $createWikiUrl;
 	var $menuNodes;
 
 	public function executeIndex() {
-		global $wgLangToCentralMap, $wgContLang, $wgCityId, $wgUser, $wgLang;
+		global $wgLangToCentralMap, $wgContLang, $wgCityId, $wgUser, $wgLang, $wgCdnStylePath;
+		
+		$this->wgCdnStylePath = $wgCdnStylePath;
 
 		// generate link to central wiki for language of this wiki
 		$this->centralUrl = Wikia::langToSomethingMap($wgLangToCentralMap, $wgContLang->getCode(), 'http://www.wikia.com/Wikia');
