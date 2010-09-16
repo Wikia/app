@@ -538,7 +538,20 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$this->assertRegExp('/Talk:/', $moduleData['title']);
 		$this->assertRegExp('/Foo" title="Foo"/', $moduleData['subtitle']);
 
+		// forum page
+		$wgTitle = Title::newFromText('Foo', NS_FORUM);
+		$moduleData = Module::get('PageHeader')->getData();
+		$this->assertEquals('Foo', $moduleData['title']);
+		$this->assertFalse($moduleData['comments']);
+
+		// file page
+		$wgTitle = Title::newFromText('Foo', NS_FILE);
+		$moduleData = Module::get('PageHeader')->getData();
+		$this->assertEquals('Foo', $moduleData['title']);
+		$this->assertEquals('', $moduleData['subtitle']);
+
 		// edit page header
+		$wgTitle = Title::newFromText('Foo', NS_TALK);
 		$moduleData = Module::get('PageHeader', 'EditPage')->getData();
 		$this->assertRegExp('/Editing:/', $moduleData['title']);
 		$this->assertRegExp('/Talk:Foo" title="Talk:Foo"/', $moduleData['subtitle']);
