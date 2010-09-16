@@ -183,13 +183,21 @@ class TopListHelper {
 		}
 
 		if( !empty( $selectedImageTitle ) ) {
-			$source = new imageServing( null, 120,
-					array(
-						"w" => 3,
-						"h" => 2
-					) );
+			$source = new imageServing(
+				null,
+				120,
+				array(
+					"w" => 3,
+					"h" => 2
+				)
+			);
 
-			$selectedImage = $source->getThumbnail( $selectedImageTitle, 120, 80 );
+			$thumbs = $source->getThumbnails( array( $selectedImageTitle ) );
+			
+			if( !empty( $thumbs[ $selectedImageTitle ] ) ) {
+				$selectedImage = $thumbs[ $selectedImageTitle ];
+			}
+
 		}
 
 		$tpl = new EasyTemplate( dirname( __FILE__ )."/templates/" );
@@ -217,21 +225,26 @@ class TopListHelper {
 			wfLoadExtensionMessages( 'WikiaPhotoGallery' );
 			$ret = WikiaPhotoGalleryUpload::uploadImage();
 
-			if ( !( empty ( $ret[ 'success' ] ) && empty( $ret[ 'name' ] ) ) ) {
-				$source = new imageServing( null, 120,
+			if ( !empty( $ret[ 'conflict' ] ) ) {
+				$ret['message'] = wfMsg( 'toplists-error-image-already-exists' );
+			} elseif ( !empty ( $ret[ 'success' ] ) && !empty( $ret[ 'name' ] ) ) {
+				$source = new imageServing(
+					null,
+					120,
 					array(
 						"w" => 3,
 						"h" => 2
-					) );
+					)
+				);
 
-				$result = $source->getThumbnail( $ret[ 'name' ], 120, 80 );
+				$thumbs = $source->getThumbnails( array( $ret[ 'name' ] ) );
 
-				if( !empty( $result ) ) {
-					$ret[ 'name' ] = $result[ 'name' ];
-					$ret[ 'url' ] = $result[ 'url' ];
+				$pictureName = $ret[ 'name' ];
+
+				if( !empty( $thumbs[ $ret[ 'name' ] ] ) ) {
+					$ret[ 'name' ] = $thumbs[ $pictureName ][ 'name' ];
+					$ret[ 'url' ] = $thumbs[ $pictureName ][ 'url' ];
 				}
-			} elseif ( !empty( $ret['conflict'] ) ) {
-				$ret['message'] = wfMsg( 'toplists-error-image-already-exists' );
 			}
 
 			$response = new AjaxResponse('<script type="text/javascript">window.document.responseContent = ' . json_encode( $ret ) . ';</script>');

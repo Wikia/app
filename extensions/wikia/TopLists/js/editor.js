@@ -130,6 +130,7 @@ var TopListsImageBrowser = {
 	_mDialog: null,
 	_mOnSelectCallback: null,
 	_uploadForm: null,
+	_uploadInProgress: false,
 
 	_init: function(){
 		TopListsImageBrowser._mDialog = $('.modalWrapper');
@@ -148,30 +149,39 @@ var TopListsImageBrowser = {
 	},
 
 	_destroy: function(){
-		TopListsImageBrowser._mDialog.closeModal();
+		if( !TopListsImageBrowser._uploadInProgress )
+			TopListsImageBrowser._mDialog.closeModal();
+
+		return !TopListsImageBrowser._uploadInProgress;
 	},
 
 	_onSelect: function(){
-		elm = $(this);
-		selectedPicture = null;
-		
-		if(!elm.hasClass('NoPicture')){
-			selectedPicture = {
-				name: elm.attr('title'),
-				url: elm.children().first().attr('src')
+		if( !TopListsImageBrowser._uploadInProgress ){
+			elm = $(this);
+			selectedPicture = null;
+
+			if(!elm.hasClass('NoPicture')){
+				selectedPicture = {
+					name: elm.attr('title'),
+					url: elm.children().first().attr('src')
+				}
 			}
+
+			if(typeof TopListsImageBrowser._mOnSelectCallback === 'function') TopListsImageBrowser._mOnSelectCallback(selectedPicture);
+			TopListsImageBrowser._destroy();
 		}
-		
-		if(typeof TopListsImageBrowser._mOnSelectCallback === 'function') TopListsImageBrowser._mOnSelectCallback(selectedPicture);
-		TopListsImageBrowser._destroy();
 	},
 
 	_onImageFileSelected: function(){
-		$().log($(this));
-		TopListsImageBrowser._uploadForm.submit();
+		if( !TopListsImageBrowser._uploadInProgress )
+			TopListsImageBrowser._uploadForm.submit();
 	},
 
 	_onImageUpload: function(){
+		TopListsImageBrowser._uploadInProgress = true;
+		TopListsImageBrowser._uploadForm.find('.BlockInput').show();
+		$('html').css('cursor', 'wait');
+		
 		$.AIM.submit(
 			this,
 			{
@@ -181,7 +191,9 @@ var TopListsImageBrowser = {
 	},
 
 	_onImageUploadComplete: function(response){
-		$().log(response, 'TopListsImageBrowser::upload');
+		TopListsImageBrowser._uploadInProgress = false;
+		TopListsImageBrowser._uploadForm.find('.BlockInput').hide();
+		$('html').css('cursor', 'auto');
 
 		if(response.success === true){
 			if(typeof TopListsImageBrowser._mOnSelectCallback === 'function') TopListsImageBrowser._mOnSelectCallback(response);

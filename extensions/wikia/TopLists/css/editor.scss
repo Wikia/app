@@ -304,7 +304,18 @@ $icon-drag-background: url(/skins/oasis/images/sprite.png) no-repeat -1147px -30
 
 	form {
 		@include error;
-		
+		position: relative;
+
+		.BlockInput{
+			@include opacity(75);
+			display: none;
+			background-color: $color-page;
+			position:absolute;
+			top: 0;
+			width: 100%;
+			height: 100%;
+		}
+
 		label {
 			display: block;
 		}

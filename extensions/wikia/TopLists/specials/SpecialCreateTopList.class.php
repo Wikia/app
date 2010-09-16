@@ -70,7 +70,7 @@ class SpecialCreateTopList extends SpecialPage {
 				}
 
 				if ( !empty( $selectedPictureName ) ) {
-					$article = Title::newFromText( $selectedPictureName );
+					$article = Title::newFromText( $selectedPictureName, NS_FILE );
 
 					if ( empty( $article ) ) {
 						$errors[ 'selected_picture_name' ] = array( wfMsg( 'toplists-error-invalid-picture' ) );
