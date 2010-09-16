@@ -1,5 +1,5 @@
 <?php
-	if (is_array($action)) {
+	if (is_array($action) && !empty($action)) {
 		if (empty($dropdown)) {
 			// render [icon] + [link] ("View source")
 			if (!empty($iconBefore)) {
