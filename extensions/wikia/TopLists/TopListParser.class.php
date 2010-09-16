@@ -69,6 +69,7 @@ class TopListParser {
 			$list = TopList::newFromTitle( $parser->mTitle );
 
 			if ( !empty( $list ) ) {
+				$wgOut->addStyle( wfGetSassUrl( "$wgExtensionsPath/wikia/TopLists/css/list.scss" ) );
 				$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/TopLists/js/list.js?{$wgStyleVersion}\"></script>\n" );
 
 				$template = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
