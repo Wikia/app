@@ -6,6 +6,7 @@ class BodyModule extends Module {
 	var $wgSitename;
 	var $wgUser;
 	var $wgTitle;
+	var $wgNoExternals;
 
 	// skin vars
 	var $content;
@@ -214,13 +215,6 @@ class BodyModule extends Module {
 		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog;
 
 		$this->isMainPage = ArticleAdLogic::isMainPage();
-		
-		global $wgNoExternals, $wgRequest;
-		$noExt = $wgRequest->getVal('noexternals');
-		if(!empty($noExt)){
-			$wgNoExternals = true;
-		}
-		$this->noexternals = (!empty($wgNoExternals));
 
 		$this->bodytext = Module::get('ContentDisplay')->getData('bodytext');
 
@@ -273,6 +267,5 @@ class BodyModule extends Module {
 		if ($wgEnableBlog) {
 			$wgOut->addStyle(wfGetSassUrl('extensions/wikia/Blogs/css/oasis.scss'));
 		}
-
 	}
 }
