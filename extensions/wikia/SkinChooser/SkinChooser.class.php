@@ -468,7 +468,7 @@ class SkinChooser {
 			$userSkin = 'monaco';
 		}
 
-		if( !$isOasisPublicBeta && $userSkin == 'oasis' && !$user->isAllowed( 'devcookie' ) && !$wgRequest->getBool('AnonOasis', false)) {
+		if( !$isOasisPublicBeta && $userSkin == 'oasis' && !$user->isAllowed( 'devcookie' )) {
 			$userSkin = 'monaco';
 		}
 
