@@ -3,6 +3,11 @@ $(function() {
 });
 
 WikiaNotifications = {
+
+	purgeCurrentPage: function() {
+			$.post(wgScript, {action: 'purge', title: wgPageName});
+	},
+
 	init: function() {
 		var notifications = $('#WikiaNotifications');
 
@@ -15,21 +20,43 @@ WikiaNotifications = {
 			var notificationType = parseInt(notification.attr('data-type'));
 
 			switch (notificationType) {
-				// dismiss sitewide messages
+				// dismiss talk page message notification
 				case 1:
-					$.get("/index.php?title=Special:SiteWideMessages&action=dismiss&mID=" + parseInt(notification.attr('id').substr(4)), {},
-							function() { $.post(wgScript, {action: 'purge', title: wgPageName}); });
+					// get links to talk pages
+					var links = notification.find('a').not('.close');
+
+					links.each(function() {
+						var href = $(this).attr('href');
+						//href += (href.indexOf('?') > -1 ? '&' : '?') + 'action=render'; // this one will cached by varnish
+
+						// request each link, so talk page message will be removed
+						$('<iframe>', {'src': href}).
+							hide().
+							appendTo('body');
+					});
+
+					WikiaNotifications.purgeCurrentPage();
 
 					// remove wrapping <li>
-					notification.remove();
+					notification.parent().remove();
 					break;
 
 				// dismiss community message notification
 				case 2:
-					$.post(wgScript, {action: 'ajax', rs: 'CommunityMessagesAjax', method: 'dismissMessage'}, function() {
-						// and then purge the current page
-						$.post(wgScript, {action: 'purge', title: wgPageName});
-					});
+					$.post(wgScript, {action: 'ajax', rs: 'CommunityMessagesAjax', method: 'dismissMessage'}, WikiaNotifications.purgeCurrentPage);
+
+					// remove wrapping <li>
+					notification.parent().remove();
+					break;
+
+				// dismiss sitewide messages
+				case 5:
+					var messageId = parseInt(notification.attr('id').substr(4));
+					$.post(wgScript, {title: 'Special:SiteWideMessages', action: 'dismiss', mID: messageId}, WikiaNotifications.purgeCurrentPage);
+
+					// remove wrapping <li>
+					notification.remove();
+					break;
 
 				default:
 					// remove wrapping <li>

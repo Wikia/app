@@ -45,7 +45,7 @@
 			@include box-shadow(0, 0, 5px, mix($color-page, #000));
 			@include linear-gradient($color-notification-background, top, $color-notification-highlight, 35%, $color-notification-background, 65%);
 			color: $color-notification-text;
-			margin: 0 4px;
+			margin: 4px 4px 0;
 			max-width: 175px;
 			overflow: hidden;
 			padding: 10px 15px;
