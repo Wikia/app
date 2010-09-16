@@ -65,7 +65,7 @@ require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
 	$tmpFile = "$TMP_DIR/$nameOfFile"."_$requestedStyleVersion"."_".md5($idString).".css";
 
 	$cssContent = "";
-	if(!securityHashIsOkay($requestedStyleVersion, $sassParams, $hashFromUrl)){
+	if(!securityHashIsOkay($requestedStyleVersion, urlencode($sassParams), $hashFromUrl)){
 		$errorStr .= "Invalid request: signature was invalid.\n";
 		Wikia::log( __METHOD__, "", "There was an attempt to access a SASS sheet with an invalid cryptographic signature. If there are many of these, then there is either a bug (most likely) or a failed attack.");
 	} else {
@@ -119,6 +119,9 @@ require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
  *
  * The purpose of this is to let us sign URLs so that users can't just create
  * as many URLs as they want and DoS us by stressing our CPUs with Sass processing.
+ *
+ * This expects the sassParams in the format that SassUtil::getSassParams() delivers them,
+ * that is: urlencoded.  This is usually the format that you'll have the sassParams in already.
  */
 function securityHashIsOkay($styleVersion, $sassParams, $hashFromUrl){
 	global $CHECK_SECURITY_HASH;
