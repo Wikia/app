@@ -143,7 +143,7 @@ function SiteWideMessagesGetUserMessages(&$out, $parseroutput) {
 function SiteWideMessagesUserNewTalks(&$user, &$talks) {
 	global $wgExternalSharedDB, $wgMemc, $wgUser;
 
-	if ($user->isAnon() || $wgUser->isAllowed('bot')) {	//don't show information for anons and bots
+	if (Wikia::isOasis() || $user->isAnon() || $wgUser->isAllowed('bot')) {	//don't show information for anons and bots
 		return true;
 	}
 
@@ -156,7 +156,7 @@ function SiteWideMessagesUserNewTalks(&$user, &$talks) {
 		
 		// For Oasis we want to set the filter_seen argument to false since we want the messages
 		// to stay visible until they actually dismiss them
-		$messagesID = SiteWideMessages::getAllUserMessagesId($user, Wikia::isOasis() ? false : true);
+		$messagesID = SiteWideMessages::getAllUserMessagesId($user);
 		if(!empty($messagesID)) {
 			//selected wikis
 			$wikis = array_filter($messagesID['wiki']);
