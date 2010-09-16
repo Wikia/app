@@ -1,1 +1,1 @@
-<?= json_encode(array('backgroundImageUrl' => $backgroundImageUrl, 'errors' => $errors)) ?>
+<?= json_encode(array('backgroundImageUrl' => $backgroundImageUrl, 'backgroundImageName' => $backgroundImageName, 'backgroundImageAlign' => $backgroundImageAlign, 'errors' => $errors)) ?>

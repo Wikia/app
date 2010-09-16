@@ -116,12 +116,38 @@ class ThemeDesignerModule extends Module {
 
 		// check if there is a file send
 		if($filename) {
+
+			// check file type (just by extension)
+			$filetype = strtolower(end(explode(".", $filename)));
+			if($filetype == 'png' || $filetype == 'jpg' || $filetype == 'gif') {
+
+				// check if file is correct file size
+				$imageFileSize = filesize($_FILES['wpUploadFile']['tmp_name']);
+				if ($imageFileSize < 102400) {
+
+					// center image if wider than 1050, otherwise left align
+					$imageSize = getimagesize($_FILES['wpUploadFile']['tmp_name']);
+					if($imageSize[0] > 1050) {
+						$this->backgroundImageAlign = "center";
+					} else {
+						$this->backgroundImageAlign = "left";
+					}
+
+					//save temp file				
+					$file = new FakeLocalFile(Title::newFromText('Temp_file_'.time(), 6), RepoGroup::singleton()->getLocalRepo());
+					$file->upload($wgRequest->getFileTempName('wpUploadFile'), '', '');
+					$this->backgroundImageUrl = $file->getUrl();
+					$this->backgroundImageName = $file->getName();
+	
+				}
+
+			}
 				
-				/*** 
-				 * TODO: save image
-				***/
-				$this->backgroundImageUrl = "http://some.fake.image.url";
-				
+		}
+
+		// if background image url is not set then it means there was some problem
+		if(empty($this->backgroundImageUrl)) {
+			$this->errors = array('Incorrect file type or file size.');
 		}
 
 	}

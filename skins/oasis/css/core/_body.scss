@@ -1,5 +1,5 @@
 body {
-	background: $color-body url($background-image) top center repeat; /* $wgCdnStylePath */
+	background: $color-body url($background-image) top $background-align repeat;
 	color: $color-text;
 	font-family: Helvetica, Arial, sans-serif;
 	font-size: 12px;

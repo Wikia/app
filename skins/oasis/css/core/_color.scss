@@ -3,7 +3,8 @@ $color-body: get_command_line_param("color-body", #BACDD8);					// default: ligh
 $color-page: get_command_line_param("color-page", #FFF);						// default: white
 $color-buttons: get_command_line_param("color-buttons", #006CB0);		// default: blue
 $color-links: get_command_line_param("color-links", #006CB0);				// default: blue
-$background-image: "/skins/oasis/images/themes/" + get_command_line_param("background-image", "oasis.png");
+$background-image: get_command_line_param("background-image", "/skins/oasis/images/themes/oasis.png");
+$background-align: get_command_line_param("background-align", center);
 $background-tiled: get_command_line_param("background-tiled", true);
 
 ////////// DO NOT CHANGE PER THEME - BASED ON ABOVE VALUES //////////
