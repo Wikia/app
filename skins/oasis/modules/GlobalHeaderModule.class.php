@@ -11,7 +11,7 @@ class GlobalHeaderModule extends Module {
 	var $menuNodes;
 
 	public function executeIndex() {
-		global $wgLangToCentralMap, $wgContLang, $wgCityId, $wgUser, $wgLang, $wgCdnStylePath;
+		global $wgLangToCentralMap, $wgContLang, $wgCityId, $wgUser, $wgLang, $wgCdnStylePath, $wgMemc;
 		
 		$this->wgCdnStylePath = $wgCdnStylePath;
 
@@ -24,13 +24,18 @@ class GlobalHeaderModule extends Module {
 
 		$this->createWikiUrl = "http://www.wikia.com/Special:CreateWiki{$userlang}";
 
-		// global menu
-		$cat = WikiFactory::getCategory($wgCityId);
-		if($cat === false || wfEmptyMsg('shared-Globalnavigation-'.$cat->cat_id, $text = wfMsg('shared-Globalnavigation-'.$cat->cat_id))) {
-			$text = wfMsg('shared-Globalnavigation');
+		$mKey = wfMemcKey('mOasisGlobalHeaderNodes');
+		$this->menuNodes = $wgMemc->get($mKey);
+		if (empty($this->menuNodes)) {
+			// global menu
+			$cat = WikiFactory::getCategory($wgCityId);
+			if($cat === false || wfEmptyMsg('shared-Globalnavigation-'.$cat->cat_id, $text = wfMsg('shared-Globalnavigation-'.$cat->cat_id))) {
+				$text = wfMsg('shared-Globalnavigation');
+			}
+			$service = new NavigationService();
+			$this->menuNodes = $service->parseLines(explode("\n", $text), array(3, 4, 5));
+			$wgMemc->set($mKey, $this->menuNodes, 86400);
+			// TODO: is there an event we can hook for invalidation?
 		}
-		$service = new NavigationService();
-		$this->menuNodes = $service->parseLines(explode("\n", $text), array(3, 4, 5));
 	}
-
 }
