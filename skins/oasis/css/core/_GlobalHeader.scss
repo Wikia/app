@@ -65,11 +65,9 @@
 	.wikia-button {
 		border: 1px solid mix($color-buttons, $color-page, 35%);
 		font-size: 14px;
-		font-weight: bold;
-		height: 21px;
+		height: 20px;
 		line-height: 21px;
-		padding-left: 12px;
-		padding-right: 12px;
+		padding: 1px 12px 0px;
 		position: relative;
 		top: -5px;
 	}
