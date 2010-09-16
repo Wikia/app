@@ -488,6 +488,8 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 	}
 
 	function testFollowedPagesModule () {
+		global $wgTitle;
+
 		// User page check
 		$wgTitle = Title::newFromText('User:WikiaBot');
 		$moduleData = Module::get('FollowedPages')->getData();
@@ -516,6 +518,47 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$this->assertRegExp('/^<img /', $moduleData['icon']);
 		$this->assertEquals(array_keys($data['dropdown']), array_keys($moduleData['dropdown']));
 		$this->assertEquals('m', $moduleData['dropdown']['move']['accesskey']);
+	}
+
+	function testPageHeaderModule() {
+		global $wgTitle, $wgSupressPageTitle;
+
+		// main page
+		$wgTitle = Title::newMainPage();
+		$wgSupressPageTitle = true;
+		$moduleData = Module::get('PageHeader')->getData();
+		$this->assertTrue($moduleData['isMainPage']);
+		$this->assertEquals('', $moduleData['title']);
+		$this->assertEquals('', $moduleData['subtitle']);
+		$wgSupressPageTitle = false;
+
+		// talk page
+		$wgTitle = Title::newFromText('Foo', NS_TALK);
+		$moduleData = Module::get('PageHeader')->getData();
+		$this->assertRegExp('/Talk:/', $moduleData['title']);
+		$this->assertRegExp('/Foo" title="Foo"/', $moduleData['subtitle']);
+
+		// edit page header
+		$moduleData = Module::get('PageHeader', 'EditPage')->getData();
+		$this->assertRegExp('/Editing:/', $moduleData['title']);
+		$this->assertRegExp('/Talk:Foo" title="Talk:Foo"/', $moduleData['subtitle']);
+
+		// edit box header
+		$moduleData = Module::get('PageHeader', 'EditBox')->getData();
+		$this->assertRegExp('/Editing:/', $moduleData['title']);
+		$this->assertRegExp('/Talk:Foo" title="Talk:Foo"/', $moduleData['subtitle']);
+
+		// add edit box header
+		$editPage = (object) array(
+			'preview' => true,
+			'diff' => false,
+			'editFormTextTop' => '',
+		);
+
+		PageHeaderModule::modifyEditPage($editPage);
+
+		$this->assertRegExp('/<div id="WikiaEditBoxHeader"/', $editPage->editFormTextTop);
+		$this->assertRegExp('/Editing:/', $editPage->editFormTextTop);
 	}
 
 }
