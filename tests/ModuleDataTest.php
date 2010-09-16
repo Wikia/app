@@ -526,27 +526,36 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		// main page
 		$wgTitle = Title::newMainPage();
 		$wgSupressPageTitle = true;
+
 		$moduleData = Module::get('PageHeader')->getData();
+
 		$this->assertTrue($moduleData['isMainPage']);
 		$this->assertEquals('', $moduleData['title']);
 		$this->assertEquals('', $moduleData['subtitle']);
+
 		$wgSupressPageTitle = false;
 
 		// talk page
 		$wgTitle = Title::newFromText('Foo', NS_TALK);
+
 		$moduleData = Module::get('PageHeader')->getData();
+
 		$this->assertRegExp('/Talk:/', $moduleData['title']);
 		$this->assertRegExp('/Foo" title="Foo"/', $moduleData['subtitle']);
 
 		// forum page
 		$wgTitle = Title::newFromText('Foo', NS_FORUM);
+
 		$moduleData = Module::get('PageHeader')->getData();
+
 		$this->assertEquals('Foo', $moduleData['title']);
 		$this->assertFalse($moduleData['comments']);
 
 		// file page
 		$wgTitle = Title::newFromText('Foo', NS_FILE);
+
 		$moduleData = Module::get('PageHeader')->getData();
+
 		$this->assertEquals('Foo', $moduleData['title']);
 		$this->assertEquals('', $moduleData['subtitle']);
 
@@ -554,7 +563,9 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$wgRequest->setVal('action', 'history');
 
 		$wgTitle = Title::newFromText('Foo');
+
 		$moduleData = Module::get('PageHeader', 'EditPage')->getData();
+
 		$this->assertRegExp('/History/', $moduleData['title']);
 		$this->assertTrue($moduleData['showSearchBox']);
 		$this->assertType('int', $moduleData['comments']);
@@ -563,12 +574,15 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 
 		// edit page
 		$wgTitle = Title::newFromText('Foo', NS_TALK);
+
 		$moduleData = Module::get('PageHeader', 'EditPage')->getData();
+
 		$this->assertRegExp('/Editing:/', $moduleData['title']);
 		$this->assertRegExp('/Talk:Foo" title="Talk:Foo"/', $moduleData['subtitle']);
 
 		// edit box header
 		$moduleData = Module::get('PageHeader', 'EditBox')->getData();
+
 		$this->assertRegExp('/Editing:/', $moduleData['title']);
 		$this->assertRegExp('/Talk:Foo" title="Talk:Foo"/', $moduleData['subtitle']);
 
@@ -586,13 +600,36 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 	}
 
 	function testUserPagesHeaderModule() {
-		global $wgUser;
+		global $wgUser, $wgTitle;
+		$wgTitle = $wgUser->getTalkPage();
 		$userName =  $wgUser->getName();
 
 		$this->assertTrue(UserPagesHeaderModule::isItMe($userName));
 
-		$moduleData = Module::get('UserPagesHeader')->getData(); var_dump($moduleData);
+		// user pages
+		$moduleData = Module::get('UserPagesHeader')->getData();
+
+		$this->assertRegExp('/Special:Preferences/', $moduleData['avatarMenu'][0]);
 		$this->assertEquals($userName, $moduleData['userName']);
+		$this->assertEquals($userName, $moduleData['title']);
+		$this->assertType('array', $moduleData['stats']);
+		$this->assertNull($moduleData['comments']);
+
+		// blog posts
+		$wgTitle = Title::newFromText('User_Blog:WikiaBotBlogger/BlogPost/foo');
+
+		$moduleData = Module::get('UserPagesHeader', 'BlogPost')->getData();
+
+		$this->assertRegExp('/WikiaBotBlogger/', $moduleData['avatar']);
+		$this->assertNull($moduleData['avatarMenu']);
+		$this->assertEquals('BlogPost/foo', $moduleData['title']);
+		$this->assertEquals('WikiaBotBlogger', $moduleData['userName']);
+
+		// blog listing
+		$moduleData = Module::get('UserPagesHeader', 'BlogListing')->getData(); var_dump($moduleData);
+
+		$this->assertRegExp('/Special:CreateBlogPage/', $moduleData['actionButton']['href']);
+		$this->assertNull($moduleData['userName']);
 	}
 
 }
