@@ -1008,6 +1008,8 @@ function wfGetEmailPostbackToken($emailId, $emailAddr){
  * the command-line.  This string is expected to be key-value pairs where the
  * key and value are separated by an equals sign and each pair is separated by
  * a space (eg: "fruit=banana vegetable=broccoli pet=dog").
+ *
+ * WARNING: The forceSassParams parameter is expected to ALREADY BE urlencode()ed.
  */
 function wfGetSassUrl($fileName, $forceSassParams=null){
 	global $wgCdnRootUrl, $wgStyleVersion, $wgDontRewriteSassUrl;
@@ -1028,7 +1030,7 @@ function wfGetSassUrl($fileName, $forceSassParams=null){
 	}
 
 	// Calculate the security-hash.
-	$securityHash = SassUtil::getSecurityHash($wgStyleVersion, urldecode($sassParams));
+	$securityHash = SassUtil::getSecurityHash($wgStyleVersion, $sassParams);
 
 	$sassParams = str_replace(" ", "/", $sassParams);
 	$wgCdnRootUrl = (isset($wgCdnRootUrl)?$wgCdnRootUrl:"");
