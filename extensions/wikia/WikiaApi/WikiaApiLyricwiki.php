@@ -6,7 +6,7 @@
  * @author Lucas Garczewski <tor@wikia-inc.com>
  * @author Sean Colombo <sean@wikia-inc.com>
  *
-  * $Id: WikiaApiQueryDomains.php 12417 2008-05-07 09:33:11Z eloy $
+ * $Id: WikiaApiQueryDomains.php 12417 2008-05-07 09:33:11Z eloy $
   
   Problems:
    - The headers aren't being set (which is important for caching).  Find out where this page is called from.
