@@ -62,6 +62,7 @@ function SiteWideMessagesInit() {
 		$wgHooks['EditPage::showEditForm:initial'][] = 'SiteWideMessagesArticleEditor';
 		$wgHooks['AbortDiffCache'][] = 'SiteWideMessagesAbortDiffCache';
 		$wgHooks['WikiFactoryPublicStatusChange'][] = 'SiteWideMessagesPublicStatusChange';
+		$wgHooks['SkinNotificationsBeforeExecute'][] = 'SiteWideMessagesUndismissedNotifications';
 	}
 }
 
@@ -240,6 +241,16 @@ function SiteWideMessagesPublicStatusChange($city_public, $city_id) {
 	if ($city_public == 0 || $city_public == 2) {
 		SiteWideMessages::deleteMessagesOnWiki($city_id);
 	}
+	return true;
+}
+
+function SiteWideMessagesUndismissedNotifications(&$skin) {
+	global $wgUser;
+
+	// Add site wide notifications that haven't been dismissed
+	$msg = SiteWideMessages::getAllUserMessages($wgUser, false, false);
+	$skin->addSiteWideNotification($msg);
+	
 	return true;
 }
 

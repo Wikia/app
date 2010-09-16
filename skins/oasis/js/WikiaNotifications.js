@@ -53,10 +53,13 @@ WikiaNotifications = {
 				// dismiss sitewide messages
 				case 5:
 					var messageId = parseInt(notification.attr('id').substr(4));
+					var nextNotification = notification.next();
+
 					$.post(wgScript, {title: 'Special:SiteWideMessages', action: 'dismiss', mID: messageId}, WikiaNotifications.purgeCurrentPage);
 
-					// remove wrapping <li>
+					// remove <div>
 					notification.remove();
+					nextNotification.css("display", "block");
 					break;
 
 				default:

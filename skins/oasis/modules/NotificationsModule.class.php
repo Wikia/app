@@ -70,6 +70,9 @@ class NotificationsModule extends Module {
 		self::addNotification('test test test test test <details>test <a href="#">test</a> test</details>');
 		*/
 
+		// Allow code to inject notifications here
+		wfRunHooks( 'SkinNotificationsBeforeExecute', array( &$this ) );
+
 		// render notifications
 		$this->notifications = self::$notificationsStack;
 
@@ -318,18 +321,35 @@ class NotificationsModule extends Module {
 			if ($msg != '') {
 				self::addNotification($msg, null, self::NOTIFICATION_TALK_PAGE_MESSAGE);
 			}
-
-			// Add site wide notifications
-			$msg = SiteWideMessages::getAllUserMessages($wgUser, false, false);
-			if ($msg != '') {
-				foreach ($msg as $msgId => &$data) {
-					$data['text'] = $wgOut->parse($data['text']);
-				}
-
-				self::addNotification($msg, null, self::NOTIFICATION_SITEWIDE);
-			}
 		}
 
+		wfProfileOut(__METHOD__);
+		return true;
+	}
+
+	/**
+	 * Handle notifications from the SiteWide messaging tool.  Format for
+	 * $msgs is the same as what SiteWideMessages::getAllUserMessages returns
+	 * e.g.:
+	 *   { $msgId => { "text"    => $messageText,
+	 *                 "wiki_id" => $wikiId,
+	 *                 "expire"  => $msgExpireTime,
+	 *                 "status"  => $msgSeenUnseenStatus,
+	*                }}
+	*/
+	public static function addSiteWideNotification(&$msgs) {
+		global $wgOut;
+		
+		wfProfileIn(__METHOD__);
+
+		if (Wikia::isOasis() && !empty($msgs)) {
+			foreach ($msgs as $msgId => &$data) {
+				$data['text'] = $wgOut->parse($data['text']);
+			}
+
+			self::addNotification($msgs, null, self::NOTIFICATION_SITEWIDE);
+		}
+		
 		wfProfileOut(__METHOD__);
 		return true;
 	}
