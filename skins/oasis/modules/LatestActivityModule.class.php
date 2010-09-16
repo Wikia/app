@@ -49,7 +49,7 @@ class LatestActivityModule extends Module {
 				$item['page_title'] = $change['title'];
 				$title = Title::newFromText( $change['title'], $change['ns'] );
 				if ( is_object($title) ) {
-					$item['page_href'] = Xml::element('a', array('href' => $title->getLocalUrl(), 'rel' => 'nofollow'), $item['page_title']);
+					$item['page_href'] = Xml::element('a', array('href' => $title->getLocalUrl()), $item['page_title']);
 				}
 				$this->changeList[] = $item;
 
