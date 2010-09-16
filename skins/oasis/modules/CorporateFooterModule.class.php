@@ -5,8 +5,13 @@ class CorporateFooterModule extends Module {
 	var $copyright;
 
 	public function executeIndex() {
-		global $wgLangToCentralMap, $wgContLang, $wgCityId, $wgUser, $wgLang;
-		$this->footer_links = $this->getWikiaFooterLinks();
+		global $wgLangToCentralMap, $wgContLang, $wgCityId, $wgUser, $wgLang, $wgMemc;
+		$mKey = wfMemcKey('mOasisFooterLinks');
+		$this->footer_links = $wgMemc->get($mKey);
+		if (empty($this->footer_links)) {
+			$this->footer_links = $this->getWikiaFooterLinks();
+			$wgMemc->set($mKey, $this->footer_links, 86400);
+		}
 		$this->replaceLicense();
 	}
 	
