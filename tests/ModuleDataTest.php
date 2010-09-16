@@ -103,7 +103,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$notification = array(
 			'message' => $message,
 			'data' => array('data' => 'bar'),
-			'type' => NotificationsModule::NOTIFICATION_MESSAGE,
+			'type' => NotificationsModule::NOTIFICATION_GENERIC_MESSAGE,
 		);
 
 		$this->assertEquals(
