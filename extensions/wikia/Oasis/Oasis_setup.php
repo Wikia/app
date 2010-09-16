@@ -20,6 +20,7 @@ function wfOasisSetup() {
 	$wgHooks['EditPage::showEditForm:initial'][] = 'BodyModule::onEditPageRender';
 	$wgHooks['EditPage::showEditForm:initial'][] = 'PageHeaderModule::modifyEditPage';
 	$wgHooks['MakeThumbLink2'][] = 'ContentDisplayModule::renderPictureAttribution';
+	$wgHooks['UploadComplete'][] = 'LatestPhotosModule::onImageUpload';
 
 	// confirmations
 	$wgHooks['PreferencesMainPrefsForm'][] = 'NotificationsModule::addPreferencesConfirmation';
