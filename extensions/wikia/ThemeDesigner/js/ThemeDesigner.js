@@ -104,6 +104,9 @@ var ThemeDesigner = {
 		$("#swatch-image-background").click(function(event) {
 			ThemeDesigner.showPicker(event, "image");
 		});
+		$("#tile-background").change(function() {
+			ThemeDesigner.set("background-tiled", $(this).attr("checked"));
+		});
 	},
 
 	wordmarkTabInit: function() {
@@ -237,7 +240,7 @@ var ThemeDesigner = {
 
 		ThemeDesigner.settings[setting] = newValue;
 
-		if(setting == "wordmark-image-name") {
+		if(setting == "wordmark-image-name" || setting == "background-image-name") {
 			return;
 		}
 
@@ -253,7 +256,7 @@ var ThemeDesigner = {
 			reloadCSS = true;
 		}
 
-		if(setting == "wordmark-font" || setting == "wordmark-font-size" || setting == "wordmark-text" || setting == "wordmark-type") {
+		if(setting == "wordmark-font" || setting == "wordmark-font-size" || setting == "wordmark-text" || setting == "wordmark-type" || setting == "background-align") {
 			updateSkinPreview = true;
 		}
 
@@ -312,13 +315,14 @@ var ThemeDesigner = {
 				alert(response.errors.join("\n"));
 
 			} else {
-
-				$().log(response.backgroundImageUrl);
-				/*
-				ThemeDesigner.set("wordmark-image-name", response.wordmarkImageName);
-				ThemeDesigner.set("wordmark-image-url", response.wordmarkImageUrl);
-				ThemeDesigner.set("wordmark-type", "graphic");
-				*/
+				
+				$("#backgroundImageUploadFile").val("");
+				ThemeDesigner.hidePicker();
+				ThemeDesigner.set("theme", "custom");
+				ThemeDesigner.set("background-align", response.backgroundImageAlign);
+				ThemeDesigner.set("background-image-name", response.backgroundImageName);
+				ThemeDesigner.set("background-image", response.backgroundImageUrl);
+				
 			}
 		}
 	},
@@ -408,6 +412,14 @@ var ThemeDesigner = {
 		$("#swatch-color-buttons").css("background-color", ThemeDesigner.settings["color-buttons"]);
 		$("#swatch-color-links").css("background-color", ThemeDesigner.settings["color-links"]);
 		$("#swatch-color-page").css("background-color", ThemeDesigner.settings["color-page"]);
+		
+		$("#swatch-image-background").attr("src", ThemeDesigner.settings["background-image"]);
+		
+		if (ThemeDesigner.settings["background-tiled"]) {
+			$("#tile-background").attr("checked", true);
+		} else {
+			$("#tile-background").attr("checked", false);
+		}
 
 		/*** Wordmark Tab ***/
 		// style wordmark preview
@@ -446,7 +458,8 @@ var ThemeDesigner = {
 			sass += "&color-page=" + escape(ThemeDesigner.settings["color-page"]);
 			sass += "&color-buttons=" + escape(ThemeDesigner.settings["color-buttons"]);
 			sass += "&color-links=" + escape(ThemeDesigner.settings["color-links"]);
-			sass += "&background-image=" + escape(ThemeDesigner.settings["background-image"]);
+			sass += "&background-image=" + encodeURIComponent(ThemeDesigner.settings["background-image"]);
+			sass += "&background-align=" + escape(ThemeDesigner.settings["background-align"]);
 			sass += "&background-tiled=" + escape(ThemeDesigner.settings["background-tiled"]);
 			document.getElementById('PreviewFrame').contentWindow.ThemeDesignerPreview.loadSASS(sass);
 		}
@@ -475,6 +488,7 @@ var ThemeDesigner = {
 					})
 					.find("a").hide()
 			}
+			
 		}
 	},
 

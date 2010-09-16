@@ -9,6 +9,7 @@ class ThemeSettings {
 	const HistoryItemsLimit = 10;
 
 	const WordmarkImageName = 'Oasis-wordmark.png';
+	const BackgroundImageName = 'Oasis-background';
 
 	private $defaultSettings;
 
@@ -36,8 +37,10 @@ class ThemeSettings {
 
 		// background
 		$this->defaultSettings['background-image'] = false;
-		$this->defaultSettings['background-image-revision'] = false;
+		$this->defaultSettings['background-image-name'] = '';
+		$this->defaultSettings['background-image-revision'] = false; //what is this?
 		$this->defaultSettings['background-tiled'] = false;
+		$this->defaultSettings['background-align'] = "center";
 	}
 
 	public function getSettings() {
@@ -78,6 +81,22 @@ class ThemeSettings {
 				$oldFile = array('url' => $history[0]->getURL(), 'name' => $history[0]->getArchiveName());
 			}
 		}
+
+		if(strpos($settings['background-image-name'], 'Temp_file_') === 0) {
+			$temp_file = new LocalFile(Title::newFromText($settings['background-image-name'], 6), RepoGroup::singleton()->getLocalRepo());
+			$file = new LocalFile(Title::newFromText(self::BackgroundImageName, 6), RepoGroup::singleton()->getLocalRepo());
+			$file->upload($temp_file->getPath(), '', '');
+			$temp_file->delete('');
+
+			$settings['background-image'] = $file->getURL();
+			$settings['background-image-name'] = $file->getName();
+
+			$history = $file->getHistory(1);
+			if(count($history) == 1) {
+				$oldFile = array('url' => $history[0]->getURL(), 'name' => $history[0]->getArchiveName());
+			}
+		}
+
 
 		$reason = 'Theme Designer - save done by ' . $wgUser->getName();
 
