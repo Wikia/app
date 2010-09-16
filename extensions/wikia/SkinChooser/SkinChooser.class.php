@@ -231,7 +231,7 @@ class SkinChooser {
 		$wgOut->addHTML('<h5>'.wfMsg('site-layout').'</h5>');
 
 		$wgOut->addHTML('<div><input type="radio" value="oasis" id="wpSkinoasis" name="wpSkin"'.($pref->mSkin == 'oasis' ? ' checked="checked"' : '').'/><label for="wpSkinoasis">'.wfMsg('new-look').'</label> '.($skinKey == $defaultSkinKey ? ' (' . wfMsg( 'default' ) . ')' : '').'</div>');
-		
+
 		$oldSkinNames = array();
 		foreach($validSkinNames as $skinKey => $skinVal) {
 			if ($skinKey=='oasis' || ( ( in_array( $skinKey, $wgSkipSkins ) || in_array( $skinKey, $wgSkipOldSkins )) && !($skinKey == $pref->mSkin) ) ) {
@@ -247,7 +247,7 @@ class SkinChooser {
 				$wgOut->addHTML('<div><input type="radio" value="'.$skinKey.'" id="wpSkin'.$skinKey.'" name="wpSkin"'.($pref->mSkin == $skinKey ? ' checked="checked"' : '').'/><label for="wpSkin'.$skinKey.'">'.$skinVal.'</label> '.$previewlink.($skinKey == $defaultSkinKey ? ' (' . wfMsg( 'default' ) . ')' : '').'</div>');
 			}
 		}
-		
+
 		$wgOut->addHTML($pref->getToggle('showAds'));
 
 		$wgOut->addHTML('</div>');
@@ -432,7 +432,7 @@ class SkinChooser {
 					$userTheme = isset($adminSkinArray[1]) ? $adminSkinArray[1] : null;
 				} else {
 					$userSkin = 'monaco';
-				}	
+				}
 			} else if(!empty($wgAdminSkin) && $userSkin != 'oasis') {
 				$adminSkinArray = explode('-', $wgAdminSkin);
 				$userSkin = isset($adminSkinArray[0]) ? $adminSkinArray[0] : null;
@@ -468,7 +468,7 @@ class SkinChooser {
 			$userSkin = 'monaco';
 		}
 
-		if( !$isOasisPublicBeta && $userSkin == 'oasis' && !$user->isAllowed( 'devcookie' ) ) {
+		if( !$isOasisPublicBeta && $userSkin == 'oasis' && !$user->isAllowed( 'devcookie' ) && !$wgRequest->getBool('AnonOasis', false)) {
 			$userSkin = 'monaco';
 		}
 
@@ -490,7 +490,7 @@ class SkinChooser {
 			}
 
 			$user->mSkin->themename = $userTheme;
-			
+
 			# force default theme on monaco and oasis when there is no admin setting
 			if(($normalizedSkinName == 'monaco' || $normalizedSkinName == 'oasis') && (empty($wgAdminSkin) || $isOasisPublicBeta) ) {
 				$user->mSkin->themename = $wgDefaultTheme;
@@ -512,5 +512,5 @@ class SkinChooser {
 	private static function log($method, $msg) {
 		wfDebug("{$method}: {$msg}\n");
 	}
-	
+
 }
