@@ -158,7 +158,7 @@ class TopListHelper {
 		$images = array();
 		$selectedImage = null;
 
-		
+
 		if( !empty( $titleText ) ) {
 			$title = Title::newFromText( $titleText );
 
@@ -191,7 +191,7 @@ class TopListHelper {
 
 			$selectedImage = $source->getThumbnail( $selectedImageTitle, 120, 80 );
 		}
-		
+
 		$tpl = new EasyTemplate( dirname( __FILE__ )."/templates/" );
 
 		$tpl->set_vars(
@@ -225,7 +225,7 @@ class TopListHelper {
 					) );
 
 				$result = $source->getThumbnail( $ret[ 'name' ], 120, 80 );
-				
+
 				if( !empty( $result ) ) {
 					$ret[ 'name' ] = $result[ 'name' ];
 					$ret[ 'url' ] = $result[ 'url' ];
@@ -233,7 +233,7 @@ class TopListHelper {
 			} elseif ( !empty( $ret['conflict'] ) ) {
 				$ret['message'] = wfMsg( 'toplists-error-image-already-exists' );
 			}
-			
+
 			$response = new AjaxResponse('<script type="text/javascript">window.document.responseContent = ' . json_encode( $ret ) . ';</script>');
 			$response->setContentType('text/html; charset=utf-8');
 			return $response;
@@ -259,11 +259,16 @@ class TopListHelper {
 			$item = TopListItem::newFromText( $titleText );
 
 			if( $item instanceof TopListItem ) {
+
 				$votesCount = $item->getVotesCount();
 				$result['result'] = $item->vote();
 				$result['msg'] = wfMsg( 'toplists-list-votes-num', array( $votesCount ));
 				$result['votesCount'] = intval( $votesCount );
-				$result['votesCountId'] = $item->getVotesCountId();
+
+				$list = $item->getList();
+				$list ->invalidateCache();
+
+				$result['listBody'] = TopListParser::parse( $list );
 			}
 		}
 
