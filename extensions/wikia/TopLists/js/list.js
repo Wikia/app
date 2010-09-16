@@ -17,10 +17,9 @@ var TopList = {
 				'title':this.id
 			},
 			function(response) {
-				console.log(response);
 				if( response.result == true ) {
+					console.log(response.listBody);
 					$('#toplists-list-body').html(response.listBody);
-					TopList.attachEvents();
 				}
 			}
 		);
@@ -29,6 +28,6 @@ var TopList = {
 	},
 
 	attachEvents: function() {
-		$('#toplists-list-body').delegate('.item-vote-button', 'click', TopList.voteItem);
+		$('.item-vote-button').bind('click', TopList.voteItem);
 	}
 }
