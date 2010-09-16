@@ -42,13 +42,10 @@ class TopListParser {
 
 			if ( !empty( $args[ TOPLIST_ATTRIBUTE_PICTURE ] ) ) {
 				self::$mAttributes[ TOPLIST_ATTRIBUTE_PICTURE ] = $args[ TOPLIST_ATTRIBUTE_PICTURE ];
-				$title = Title::newFromText(  $args[ TOPLIST_ATTRIBUTE_PICTURE ], NS_FILE );
-
-				if( !empty( $title ) && $title->exists() ) {
-					$articleId = $title->getArticleId();
-
+				
+				if( !empty( self::$mAttributes[ TOPLIST_ATTRIBUTE_PICTURE ] ) ) {
 					$source = new imageServing(
-						array( $articleId ),
+						null,
 						120,
 						array(
 							"w" => 3,
@@ -56,12 +53,14 @@ class TopListParser {
 						)
 					);
 
-					$result = $source->getImages( 1 );
+					$result = $source->getThumbnails( array( self::$mAttributes[ TOPLIST_ATTRIBUTE_PICTURE ] ) );
 
-					if( !empty( $result[ $articleId ][0] ) ) {
-						$relatedImage = $result[ $articleId ][0];
-						if( $relatedUrl == null ) {
-							$relatedImage = $title->getLocalURL();
+					if( !empty( $result[ self::$mAttributes[ TOPLIST_ATTRIBUTE_PICTURE ] ] ) ) {
+						$relatedImage = $result[ self::$mAttributes[ TOPLIST_ATTRIBUTE_PICTURE ] ];
+						
+						if( empty( $relatedUrl ) ) {
+							$title = Title::newFromText( $relatedImage[ 'name' ], NS_FILE );
+							$relatedUrl = $title->getLocalURL();
 						}
 					}
 				}

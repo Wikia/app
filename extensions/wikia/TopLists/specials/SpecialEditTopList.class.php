@@ -6,6 +6,8 @@ class SpecialEditTopList extends SpecialPage {
 	}
 
 	private function _redirectToCreateSP( $listName = null ){
+		global $wgOut;
+		
 		$specialPageTitle = Title::newFromText( 'CreateTopList', NS_SPECIAL );
 		$url = $specialPageTitle->getFullUrl();
 
@@ -111,7 +113,7 @@ class SpecialEditTopList extends SpecialPage {
 
 			if ( $selectedPictureChanged ) {
 				if ( !empty( $selectedPictureName ) ) {
-					$title = Title::newFromText( $selectedPictureName );
+					$title = Title::newFromText( $selectedPictureName, NS_FILE );
 
 					if ( empty( $title ) ) {
 						$errors[ 'selected_picture_name' ][] = wfMsg( 'toplists-error-invalid-picture' );
@@ -302,13 +304,8 @@ class SpecialEditTopList extends SpecialPage {
 		$selectedImage = null;
 
 		if( !empty( $selectedPictureName ) ) {
-			$title = Title::newFromText( $selectedPictureName, NS_FILE );
-
-			if( !empty( $title ) && $title->exists() ) {
-				$articleId = $title->getArticleId();
-
-				$source = new imageServing(
-					array( $articleId ),
+			$source = new imageServing(
+					null,
 					120,
 					array(
 						"w" => 3,
@@ -316,11 +313,10 @@ class SpecialEditTopList extends SpecialPage {
 					)
 				);
 
-				$result = $source->getImages( 1 );
+			$result = $source->getThumbnails( array( $selectedPictureName ) );
 
-				if( !empty( $result[ $articleId ][0] ) ) {
-					$selectedImage = $result[ $articleId ][0];
-				}
+			if( !empty( $result[ $selectedPictureName ] ) ) {
+				$selectedImage = $result[ $selectedPictureName ];
 			}
 		}
 

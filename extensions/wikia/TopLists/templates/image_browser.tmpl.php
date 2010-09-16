@@ -38,5 +38,6 @@ global $wgScriptPath;
 			<div class="button"><?= wfMsg( 'toplists-image-browser-upload-btn' ) ;?><input type="file" name="wpUploadFile" /></div>
 		</div>
 		<p class="error"></p>
+		<div class="BlockInput"></div>
 	</form>
 </div>
