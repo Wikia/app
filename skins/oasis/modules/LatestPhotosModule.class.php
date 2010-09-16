@@ -8,7 +8,7 @@ class LatestPhotosModule extends Module {
 	var $total;
 
 	public function executeIndex() {
-		global $wgUser, $wgTitle, $wgOut, $wgStylePath, $wgLang;
+		global $wgUser, $wgTitle, $wgOut, $wgStylePath, $wgLang, $wgMemc;
 
 		// Moved to oasis.scss (to be less requests)
 		//$wgOut->addStyle(wfGetSassUrl("skins/oasis/css/modules/LatestPhotos.scss"));
@@ -16,45 +16,50 @@ class LatestPhotosModule extends Module {
 		// Moved to StaticChute.
 		//$wgOut->addScript('<script src="'. $wgStylePath .'/oasis/js/LatestPhotos.js"></script>');
 
-		wfProfileIn(__METHOD__);
-
 		// get the count of images on this wiki
 		$this->total = $wgLang->formatNum(SiteStats::images());
 
-		// api service
+		// Pull the list of images from memcache first
+		$mKey = wfMemcKey('mOasisLatestPhotos');
+		$this->thumbUrls = $wgMemc->get($mKey);
+		if (empty($this->thumbUrls)) {
 
-		$params = array(
-			'action' => 'query',
-			'list' => 'logevents',
-			'letype' => 'upload',
-			'leprop' => 'title',
-			'lelimit' => 50,
-		);
+			// api service
 
-		$apiData = ApiService::call($params);
+			$params = array(
+				'action' => 'query',
+				'list' => 'logevents',
+				'letype' => 'upload',
+				'leprop' => 'title',
+				'lelimit' => 50,
+			);
 
-		if (empty($apiData)) {
-			wfProfileOut(__METHOD__);
-			return false;
-		}
-		$imageList = $apiData['query']['logevents'];
+			$apiData = ApiService::call($params);
 
-		$fileList = array_map(array($this, "getImageData"), $imageList);
-		$fileList = array_filter($fileList, array($this, "filterImages"));
-
-		// make sure the list of images is unique and limited to 11 images (12 including the see all image)
-		$shaList = array();
-		$uniqueList = array();
-		foreach ($fileList as $data) {
-			$sha = $data['file']->sha1;
-			if (! array_key_exists($sha, $shaList)) {
-				$shaList[$sha] = true;
-				$uniqueList[] = $data;
+			if (empty($apiData)) {
+				wfProfileOut(__METHOD__);
+				return false;
 			}
-			if (count($uniqueList) > 10) break;
-		}
+			$imageList = $apiData['query']['logevents'];
 
-		$this->thumbUrls = array_map(array($this, 'getTemplateData'), $uniqueList);
+			$fileList = array_map(array($this, "getImageData"), $imageList);
+			$fileList = array_filter($fileList, array($this, "filterImages"));
+
+			// make sure the list of images is unique and limited to 11 images (12 including the see all image)
+			$shaList = array();
+			$uniqueList = array();
+			foreach ($fileList as $data) {
+				$sha = $data['file']->sha1;
+				if (! array_key_exists($sha, $shaList)) {
+					$shaList[$sha] = true;
+					$uniqueList[] = $data;
+				}
+				if (count($uniqueList) > 10) break;
+			}
+
+			$this->thumbUrls = array_map(array($this, 'getTemplateData'), $uniqueList);
+			$wgMemc->set($mKey, $this->thumbUrls);
+		}
 				
 		if (count($this->thumbUrls) < 3) {
 			$this->enableScroll = false;
@@ -64,11 +69,8 @@ class LatestPhotosModule extends Module {
 		}
 		
 		if (count($this->thumbUrls)  <= 0) {
-			$this->enableEmptyGallery = true;
-			
+			$this->enableEmptyGallery = true;		
 		}
-
-		wfProfileOut(__METHOD__);
 	}
 
 	private function getTemplateData($element) {
@@ -121,36 +123,41 @@ class LatestPhotosModule extends Module {
 	}
 
 	private function getLinkedFiles ( $name ) {
-	global $wgUser;
+		global $wgUser;
 
-	// The ORDER BY ensures we get NS_MAIN pages first
-	$dbr = wfGetDB( DB_SLAVE );
-	$res = $dbr->select(
-				array( 'imagelinks', 'page' ),
-				array( 'page_namespace', 'page_title' ),
-				array( 'il_to' => $name, 'il_from = page_id' ),
-				__METHOD__,
-				array( 'LIMIT' => 2, 'ORDER BY' => 'page_namespace ASC' )
-		   );
+		// The ORDER BY ensures we get NS_MAIN pages first
+		$dbr = wfGetDB( DB_SLAVE );
+		$res = $dbr->select(
+					array( 'imagelinks', 'page' ),
+					array( 'page_namespace', 'page_title' ),
+					array( 'il_to' => $name, 'il_from = page_id' ),
+					__METHOD__,
+					array( 'LIMIT' => 2, 'ORDER BY' => 'page_namespace ASC' )
+			   );
 
-	$sk = $wgUser->getSkin();
-	$links = array();
+		$sk = $wgUser->getSkin();
+		$links = array();
 
-	// link where this page is used...
-	if ( $s = $res->fetchObject() ) {
-		$page_title = Title::makeTitle( $s->page_namespace, $s->page_title );
-		$links[] = $sk->link( $page_title, null, array( 'class' => 'wikia-gallery-item-posted' ) );
+		// link where this page is used...
+		if ( $s = $res->fetchObject() ) {
+			$page_title = Title::makeTitle( $s->page_namespace, $s->page_title );
+			$links[] = $sk->link( $page_title, null, array( 'class' => 'wikia-gallery-item-posted' ) );
+		}
+		// if used in more than one place, add "more" link
+		if ( $s = $res->fetchObject() ) {
+			$file_title = Title::makeTitle( NS_FILE, $name );
+
+			$links[] = '<a href="' . $file_title->getLocalUrl() .
+				'#filelinks" class="wikia-gallery-item-more">' .
+				wfMsg( 'oasis-latest-photos-more-dotdotdot' ) . '</a>';
+		}
+
+		return $links;
 	}
-	// if used in more than one place, add "more" link
-	if ( $s = $res->fetchObject() ) {
-		$file_title = Title::makeTitle( NS_FILE, $name );
 
-		$links[] = '<a href="' . $file_title->getLocalUrl() .
-			'#filelinks" class="wikia-gallery-item-more">' .
-			wfMsg( 'oasis-latest-photos-more-dotdotdot' ) . '</a>';
-	}
-
-	return $links;
-}
-
+    public static function onImageUpload(&$image) {
+		global $wgMemc;
+		$wgMemc->delete(wfMemcKey('mOasisLatestPhotos'));
+		return true;
+    }
 }
