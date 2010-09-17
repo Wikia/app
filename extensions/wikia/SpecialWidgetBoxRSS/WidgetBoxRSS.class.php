@@ -1,6 +1,6 @@
 <?php
 /**
- *
+ * @author Jakub Kurcek
  * @package MediaWiki
  * @subpackage SpecialPage
  */
@@ -42,46 +42,30 @@ class ExtendedFeedItem extends FeedItem {
 class WidgetBoxRSSFeed extends RSSFeed {
 
 	function outItem( $item ) {
-		echo "		<item> \n";
-		echo "			<title><![CDATA[{$item->getTitle()}]]></title> \n";
-		echo "			<link><![CDATA[{$item->getUrl()}]]></link> \n";
-		echo "			<description><![CDATA[{$item->getDescription()}]]></description> \n";
-		if( $item->getDate() ) {
-			echo "			<pubDate><![CDATA[{$this->formatTime( $item->getDate() )}]]></pubDate> \n";
-		}
-		if( $item->getAuthor() ) {
-			echo "			<dc:creator><![CDATA[{$item->getAuthor()}]]></dc:creator> \n";
-		}
-		if( $item->getComments() ) {
-			echo "			<comments><![CDATA[{$item->getComments()}]]></comments> \n";
-		}
-		foreach( $item->OtherTags as $key => $val ) {
-			echo "			<{$key}><![CDATA[{$item->getOtherTag($key)}]]></{$key}> \n";
-		}
-		echo "		</item> \n";
+
+		global $wgOut;
+
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl->set_vars( array(
+			"item"		=> $item
+		));
+		
+		echo $oTmpl->execute( "rss-item" );
 	}
 }
 
 class WidgetBoxAtomFeed extends AtomFeed {
 
 	function outItem( $item ) {
+		
 		global $wgMimeType;
 
-		echo "		<entry> \n";
-		echo "			<id><![CDATA[{$item->getUrl()}]]></id> \n";
-		echo "			<title><![CDATA[{$item->getTitle()}]]></title> \n";
-		echo "			<link rel='alternate' type='".$wgMimeType."' href='".$item->getUrl()."'/> \n";
-		echo "			<summary><![CDATA[{$item->getDescription()}]]></summary> \n";
-		if( $item->getDate() ) {
-			echo "			<updated><![CDATA[{$this->formatTime( $item->getDate() )}]]></updated> \n";
-		}
-		if( $item->getAuthor() ) {
-			echo "			<author><![CDATA[{$item->getAuthor()}]]></author> \n";
-		}
-		foreach( $item->OtherTags as $key => $val ) {
-			echo "			<{$key}><![CDATA[<{$item->getOtherTag($key)}>]]></{$key}> \n";
-		}
-		echo "		</entry> \n";
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl->set_vars( array(
+			"item"		=> $item
+		));
+
+		echo $oTmpl->execute( "atom-item" );
 	}
 }
 ?>
