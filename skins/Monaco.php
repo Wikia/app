@@ -2415,7 +2415,7 @@ EOF;
 				global $wgBlankImgUrl;
 				foreach($this->data['articlelinks']['left'] as $key => $val) {
 		  ?>
-							  <li id="control_<?= $key ?>" class="<?= $val['class'] ?>"><img src="<?php print $wgBlankImgUrl; ?>" class="sprite <?= (isset($val['icon'])) ? $val['icon'] : $key ?>" /><a rel="nofollow" id="ca-<?= $key ?>" href="<?= htmlspecialchars($val['href']) ?>" <?= $skin->tooltipAndAccesskey('ca-'.$key) ?>><?= htmlspecialchars(ucfirst($val['text'])) ?></a></li>
+							  <li id="control_<?= $key ?>" class="<?= $val['class'] ?>"><img src="<?php print $wgBlankImgUrl; ?>" class="sprite <?= (isset($val['icon'])) ? $val['icon'] : $key ?>" alt="<?= $key ?>" /><a rel="nofollow" id="ca-<?= $key ?>" href="<?= htmlspecialchars($val['href']) ?>" <?= $skin->tooltipAndAccesskey('ca-'.$key) ?>><?= htmlspecialchars(ucfirst($val['text'])) ?></a></li>
 		  <?php
 				}
 				wfRunHooks( 'MonacoAfterArticleLinks' );
