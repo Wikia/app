@@ -291,7 +291,7 @@ class Masthead {
 	 * @return string -- url to Avatar
 	 */
 	public function getThumbnail( $width ) {
-		$url = $this->getUrl( "/thumbs" );
+		$url = $this->getUrl( "/thumb" );
 
 		/**
 		 * returned url is virtual base for thumbnail, so
