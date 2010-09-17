@@ -169,6 +169,13 @@ var ThemeDesigner = {
 		// check the type (color or image)
 		if(type == "color") {
 
+			//add swatches from array
+			var swatchNodes = "";
+			for (var i=0; i<ThemeDesigner.swatches.all.length; i++) {
+				swatchNodes += '<li style="background-color: #' + ThemeDesigner.swatches.all[i] + ';"></li>';
+			}
+			$("#ThemeDesignerPicker").children(".color").find(".swatches").append(swatchNodes);
+
 			//add user color if different than swatches
 			var swatches = $("#ThemeDesignerPicker").children(".color").find(".swatches");
 			var duplicate = false;
@@ -242,7 +249,8 @@ var ThemeDesigner = {
 			.removeClass("color image")
 			.find(".user").remove();
 		$("#color-name").val("").blur();
-		$("#ThemeDesignerPicker").find(".swatches").find("li").unbind("click");
+		$("#ThemeDesignerPicker").find(".color").find(".swatches").find("li").remove();
+		$("#ThemeDesignerPicker").find(".image").find(".swatches").find("li").unbind("click");
 	},
 
 	/**
@@ -539,6 +547,59 @@ var ThemeDesigner = {
 
 	isNumeric: function(input) {
 		return (input - 0) == input && input.length > 0;
+	},
+	
+	swatches: {
+		all: Array(
+			"611e03",
+			"7b3b0a",
+			"337800",
+			"54845e",
+			"6699ff",
+			"2b3855",
+			"5f5964",
+			"4f4341",
+			"721410",
+			"843008",
+			"809f00",
+			"988f34",
+			"6c93b1",
+			"806f9f",
+			"575961",
+			"723c3b",
+			"f31d00",
+			"a34112",
+			"fce300",
+			"786c42",
+			"a5b5c6",
+			"6f027c",
+			"4f4341",
+			"f5ebf5",
+			"dd360a",
+			"a47719",
+			"f1ca2f",
+			"846d35",
+			"d4e6f7",
+			"dfbddd",
+			"8a9c92",
+			"ebebeb",
+			"f14800",
+			"cebe8a",
+			"fec356",
+			"c4d167",
+			"dde9ef",
+			"ffbf99",
+			"2d2c18",
+			"fcfffc",
+			"ce8663",
+			"d6a694",
+			"f9ecc3",
+			"e7f4d2",
+			"ebf2f5",
+			"f7e1d4",
+			"000000",
+			"ffffff"			
+		)
 	}
 
 };
