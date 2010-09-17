@@ -13,6 +13,8 @@
 $wgHooks['MakeGlobalVariablesScript'][] = 'SassUtil::onMakeGlobalVariablesScript';
 //$wgHooks['BeforePageDisplay'][] = 'SassUtil::BeforePageDisplay'; // not needed right now - js is in StaticChute
 
+define('DEFAULT_OASIS_THEME', 'oasis');
+
 class SassUtil{
 
 	/**
@@ -49,15 +51,14 @@ class SassUtil{
 
 		// try to load settings from ThemeDesigner
 		if (!empty($wgOasisThemeSettings)) {
-			// TODO: DEFINE THE DEFAULT THEME SOMEWHERE INSTEAD OF HARDCODING IT TO SAPPHIRE HERE AND BELOW.
-			$keys = array_keys($wgOasisThemes['sapphire']);
+			$keys = array_keys($wgOasisThemes[DEFAULT_OASIS_THEME]);
 
 			// get color settings
 			foreach($keys as $key) {
 				if(isset($wgOasisThemeSettings[$key])){
 					$oasisSettings[$key] = $wgOasisThemeSettings[$key];
 				} else {
-					$oasisSettings[$key] = $wgOasisThemes['sapphire'][$key];
+					$oasisSettings[$key] = $wgOasisThemes[DEFAULT_OASIS_THEME][$key];
 				}
 			}
 		}
