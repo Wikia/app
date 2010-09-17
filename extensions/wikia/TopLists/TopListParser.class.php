@@ -29,6 +29,8 @@ class TopListParser {
 	static public function parseTag( $input, $args, &$parser ) {
 		global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
 
+		wfLoadExtensionMessages( 'TopLists' );
+
 		if( empty( self::$mOutput ) ) {
 			$relatedTitle = null;
 			$relatedImage = null;
@@ -42,7 +44,7 @@ class TopListParser {
 
 			if ( !empty( $args[ TOPLIST_ATTRIBUTE_PICTURE ] ) ) {
 				self::$mAttributes[ TOPLIST_ATTRIBUTE_PICTURE ] = $args[ TOPLIST_ATTRIBUTE_PICTURE ];
-				
+
 				if( !empty( self::$mAttributes[ TOPLIST_ATTRIBUTE_PICTURE ] ) ) {
 					$source = new imageServing(
 						null,
@@ -57,7 +59,7 @@ class TopListParser {
 
 					if( !empty( $result[ self::$mAttributes[ TOPLIST_ATTRIBUTE_PICTURE ] ] ) ) {
 						$relatedImage = $result[ self::$mAttributes[ TOPLIST_ATTRIBUTE_PICTURE ] ];
-						
+
 						if( empty( $relatedUrl ) ) {
 							$title = Title::newFromText( $relatedImage[ 'name' ], NS_FILE );
 							$relatedUrl = $title->getLocalURL();

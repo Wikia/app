@@ -7,8 +7,10 @@
 
 class TopListItem extends TopListBase {
 
-	protected $votesCount = null;
+	protected $mVotesCount = null;
 	protected $mNewContent = null;
+	protected $mVotesCountCacheTTL = 6; // in hours
+	private $mList = null;
 
 	/**
 	 * @author Federico "Lox" Lucignano
@@ -65,13 +67,20 @@ class TopListItem extends TopListBase {
 
 			$oApi->execute();
 
-			$this->votesCount = null;
+			$this->mVotesCount = null;
 			$aResult = $oApi->GetResultData();
 
 			$success = !empty( $aResult );
 
 			if( $success ) {
-				// invalidate
+				// increment votes counter cache
+				$this->incrCachedVotesCount();
+
+				// invalidate cache
+				$this->getList()->invalidateCache();
+
+				// mark user as voted, to avoid api caching issues
+				$this->getList()->setUserVoted();
 			}
 
 			return $success;
@@ -86,8 +95,18 @@ class TopListItem extends TopListBase {
 	 * @return integer a number representing the total amount of votes for this item
 	 */
 	public function getVotesCount( $forceUpdate = false ) {
+		global $wgMemc;
+		wfProfileIn( __METHOD__ );
 
-		if( ( $this->votesCount == null ) || $forceUpdate ) {
+		if( ( $this->mVotesCount == null ) || $forceUpdate ) {
+
+			$cacheKey = $this->getVotesCountCacheKey();
+			$cachedValue = $wgMemc->get( $cacheKey );
+			if( !empty( $cachedValue ) ) {
+				wfProfileOut( __METHOD__ );
+				return $cachedValue;
+			}
+
 			$pageId = $this->getArticle()->getId();
 
 			$oFauxRequest = new FauxRequest(array( "action" => "query", "list" => "wkvoteart", "wkpage" => $pageId, "wkuservote" => 0 ));
@@ -96,13 +115,29 @@ class TopListItem extends TopListBase {
 			$aResult = $oApi->GetResultData();
 
 			if( isset( $aResult['query']['wkvoteart'][$pageId]['votescount'] ) ) {
-				$this->votesCount = $aResult['query']['wkvoteart'][$pageId]['votescount'];
+				$this->mVotesCount = $aResult['query']['wkvoteart'][$pageId]['votescount'];
 			} else {
-				$this->votesCount = 0;
+				$this->mVotesCount = 0;
 			}
-
+			$wgMemc->set( $cacheKey, intval( $this->mVotesCount ), ( $this->mVotesCountCacheTTL * 3600 ) );
 		}
-		return $this->votesCount;
+
+		wfProfileOut( __METHOD__ );
+		return $this->mVotesCount;
+	}
+
+	/**
+	 * increment cached value of votes no. (if exists)
+	 *
+	 * @author ADi
+	 */
+	private function incrCachedVotesCount() {
+		global $wgMemc;
+		$wgMemc->incr( $this->getVotesCountCacheKey() );
+	}
+
+	private function getVotesCountCacheKey() {
+		return wfMemcKey( $this->getTitleText(), 'votesCount' );
 	}
 
 	/**
@@ -137,7 +172,10 @@ class TopListItem extends TopListBase {
 	 * @return TopList
 	 */
 	public function getList() {
-		return TopList::newFromText( $this->getListTitleText() );
+		if( $this->mList == null ) {
+			$this->mList = TopList::newFromText( $this->getListTitleText() );
+		}
+		return $this->mList;
 	}
 
 	/**
