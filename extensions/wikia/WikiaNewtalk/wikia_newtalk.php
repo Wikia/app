@@ -81,9 +81,9 @@ function wfGetWikiaNewtalk( &$user, &$talks ) {
 	if( !is_array( $wikia_talks ) ) {
 		$wikia_talks = array();
 
-		// Get the data from master. Otherwise we may get the data 
-		// from a lagged slave. The effect for the user would be 
-		// that he can't clear his user talk notice (the data are 
+		// Get the data from master. Otherwise we may get the data
+		// from a lagged slave. The effect for the user would be
+		// that he can't clear his user talk notice (the data are
 		// removed on master but not replicated to the slave yet).
 		$dbr = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 
@@ -170,6 +170,44 @@ function WikiaNewtalkUserRenameGlobal( $dbw, $uid, $oldusername, $newusername, $
 		'userid_column' => 'sn_user_id',
 	);
 	return true;
+}
+
+/**
+ * AJAX method to dismiss all shared messages for current user
+ *
+ * @author macbre
+ */
+$wgAjaxExportList[] = 'wfDismissWikiaNewtalks';
+function wfDismissWikiaNewtalks() {
+	global $wgRequest, $wgUser, $wgMemc, $wgExternalSharedDB;
+
+	$result = false;
+
+	// this request should be posted
+	if ($wgRequest->wasPosted()) {
+		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+		$dbw->delete(
+			'shared_newtalks',
+			array(
+				'sn_user_id' => $wgUser->getID(),
+			),
+			__METHOD__
+		);
+
+		// commit, because it's an AJAX request
+		$dbw->commit();
+
+		$key = 'wikia:shared_newtalk:'.$wgUser->getID().':'.str_replace( ' ', '_', $wgUser->getName() );
+		$wgMemc->delete( $key );
+
+		$result = true;
+	}
+
+	$json = Wikia::json_encode(array('result' => $result));
+
+	$response = new AjaxResponse($json);
+	$response->setContentType('application/json; charset=utf-8');
+	return $response;
 }
 
 /**
