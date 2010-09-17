@@ -81,6 +81,10 @@ class TopListParser {
 
 				// remove whitespaces to avoid extra <p> tags
 				self::$mOutput = preg_replace("#[\n\t]+#", '', self::$mOutput);
+
+				$parserOptions = new ParserOptions();
+
+				self::$mOutput =  $parser->parse(self::$mOutput, $list->getTitle(), $parserOptions)->getText();
 			}
 			else {
 				self::$mOutput = '';
