@@ -16,22 +16,22 @@ require_once( 'commandLine.inc' );
 
 echo( "Starting cache... \n\n" );
 
-require_once( $GLOBALS["IP"]."/extensions/wikia/SpecialWidgetBoxRSS/WidgetBoxRSS.body.php" );
-require_once( $GLOBALS["IP"]."/extensions/wikia/SpecialWidgetBoxRSS/WidgetBoxRSS.class.php" );
-require_once( $GLOBALS["IP"]."/extensions/wikia/AutoHubsPages/AutoHubsPagesHelper.class.php" );
-require_once( $GLOBALS["IP"]."/extensions/wikia/WikiaStats/WikiaStatsAutoHubsConsumerDB.php" );
-
 $WidgetBoxFeedGenerator = new WidgetBoxRSS;
 
 foreach ( $WidgetBoxFeedGenerator->allowedHubs() as $key => $val ){
 
 	try {
-		$WidgetBoxFeedGenerator->ReloadHotContentFeed( $val );
-		echo " {$val} | {$key} - ok \n";
+		if ( !is_array($val) ){
+			$oTitle = Title::newFromText( $key, 150 );
+			$hubId = AutoHubsPagesHelper::getHubIdFromTitle( $oTitle );
+			$WidgetBoxFeedGenerator->ReloadHotContentFeed( $hubId );
+			echo " {$key} | {$hubId} | {$oTitle->getText()} - ok \n";
+		}
+		
 	} catch ( Exception $e ) {
 		echo " {$val} | {$key} - Caught exception: $e->getMessage() \n";
 	}
 }
-echo( "\n Job done" );
+echo( "\n My job is done here \n" );
 
 ?>
