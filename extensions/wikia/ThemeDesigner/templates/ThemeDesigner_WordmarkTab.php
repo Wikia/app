@@ -10,15 +10,19 @@
 				<h2>font</h2>
 				<select id="wordmark-font">
 					<option value="default">Default</option>
+					<option value="cpmono">CP Mono</option>
 					<option value="fontin">Fontin</option>
 					<option value="garton">Garton</option>
 					<option value="idolwild">Idolwild</option>
 					<option value="imfell">IM Fell</option>
 					<option value="josefin">Josefin</option>
+					<option value="megalopolis">Megalopolis</option>
 					<option value="orbitron">Orbitron</option>
+					<option value="pixiefont">Pixiefont</option>
 					<option value="prociono">Prociono</option>
 					<option value="tangerine">Tangerine</option>
 					<option value="titillium">Titillium</option>
+					<option value="veggieburger">Veggieburger</option>
 					<option value="yanone">Yanone</option>
 				</select>
 			</li>
