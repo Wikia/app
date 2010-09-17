@@ -288,6 +288,7 @@ class TopList extends TopListBase {
 	 */
 	public function invalidateCache() {
 		$this->getTitle()->invalidateCache();
+		SquidUpdate::purge( array( $this->mTitle->getFullUrl() ) );
 	}
 
 	/**
