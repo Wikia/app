@@ -29,7 +29,7 @@ var LazyLoadAds = {
 
 		$.each(LazyLoadAds.lazyLoadAdTops, function(iframeId, topVal) {
 			if (!$("#"+iframeId).attr("src")) {
-				if (topVal < (fold + LazyLoadAds.settings.threshhold)) {
+				if (topVal > 0 && topVal < (fold + LazyLoadAds.settings.threshhold)) {
                                 	//remove trailing "_iframe"
                                 	var iframeLastIndex = iframeId.lastIndexOf("_iframe", iframeId.length-7);
                                 	if (iframeLastIndex == iframeId.length-7) {

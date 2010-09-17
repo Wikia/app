@@ -23,7 +23,7 @@ HoverMenu = function(selector) {
 
 	//Events
 	$(selector).children("li").hover($.proxy(this.mouseover, this), $.proxy(this.mouseout, this));
-	
+
 	//Accessibility
 	//Show when any inner anchors are in focus
 	$(selector).children("li").children("a").focus($.proxy(function(event) {
@@ -125,6 +125,14 @@ HoverMenu.prototype.showNav = function(parent) {
 		switch(this.selector) {
 			case '#GlobalNavigation':
 				$.tracker.byStr('wikiheader/wikinav/open');
+
+				// spotlights displaying
+				var i = $(parent).index() + 1;
+				if(typeof window["fillIframe_SPOTLIGHT_GLOBALNAV_"+i] == "function") {
+					window["fillIframe_SPOTLIGHT_GLOBALNAV_"+i]();
+					window["fillIframe_SPOTLIGHT_GLOBALNAV_"+i] = null;
+				}
+
 				break;
 
 			case '#AccountNavigation':
