@@ -41,12 +41,12 @@
 		margin: 0;
 		padding: 0;
 	}
-	
+
 	.wikia-button {
 		font-weight: normal;
 	}
 
-	h1 { 
+	h1 {
 		font: {
 			size: 17px;
 			weight: bold;
@@ -60,7 +60,7 @@
 	h2 {
 		@extend h1;
 		clear: both;
-		
+
 		margin: {
 			top: 0;
 			bottom: 10px;
@@ -68,7 +68,7 @@
 		padding-top: 15px;
 		/*border-top: 1px solid $color-page-border;*/
 	}
-	
+
 	b {
 		font-weight: bold;
 	}
