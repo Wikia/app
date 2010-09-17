@@ -153,15 +153,20 @@ class Masthead {
 	 * getDefaultAvatars -- get avatars stored in mediawiki message and return as
 	 * 	array
 	 *
+	 * @param $thumb String  -- if defined will be added as part of base path
+	 *      default empty string ""
+	 *
 	 * @author Piotr Molski <moli@wikia-inc.com>
 	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
+	 *
+	 * @return array -- array with default avatars defined on messaging.wikia.com
 	 */
-	public function getDefaultAvatars() {
+	public function getDefaultAvatars( $thumb = "" ) {
 
 		/**
 		 * parse message only once per request
 		 */
-		if( is_array( $this->mDefaultAvatars ) && count( $this->mDefaultAvatars )> 0) {
+		if( $thumb == "" && is_array( $this->mDefaultAvatars ) && count( $this->mDefaultAvatars )> 0) {
 			return $this->mDefaultAvatars;
 		}
 
@@ -173,7 +178,7 @@ class Masthead {
 		if(is_array($images)) {
 			foreach( $images as $image ) {
 				$hash = FileRepo::getHashPathForLevel( $image, 2 );
-				$this->mDefaultAvatars[] = $this->mDefaultPath . $hash . $image;
+				$this->mDefaultAvatars[] = $this->mDefaultPath . $thumb . $hash . $image;
 			}
 		}
 
@@ -265,7 +270,7 @@ class Masthead {
 				}
 			}
 			else {
-				$defaults = $this->getDefaultAvatars();
+				$defaults = $this->getDefaultAvatars( ltrim( $thumb,  "/" ) . "/" );
 				$url = array_shift( $defaults );
 			}
 			return wfReplaceImageServer( $url, $this->mUser->getTouched() );
