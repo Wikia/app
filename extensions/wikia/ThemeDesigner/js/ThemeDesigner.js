@@ -214,6 +214,14 @@ var ThemeDesigner = {
 			});
 
 		} else if (type == "image") {
+		
+			var swatches = $("#ThemeDesignerPicker").children(".image").find(".swatches");
+			// add admin background
+			if (ThemeDesigner.settings["user-background-image"]) {
+				$('<li class="user"><img src="' + ThemeDesigner.settings["user-background-image-thumb"] + '" data-image="' + ThemeDesigner.settings["user-background-image"] + '"></li>').insertBefore(swatches.find(".no-image"));
+			}
+		
+			// click handling
 			$("#ThemeDesignerPicker").children(".image").find(".swatches").find("li").click(function() {
 				ThemeDesigner.set("background-align", "center");
 				
@@ -330,20 +338,23 @@ var ThemeDesigner = {
 		onComplete: function(response) {
 
 			var response = $.evalJSON(response);
-
+			$().log(response);
 			if(response.errors && response.errors.length > 0) {
 
 				alert(response.errors.join("\n"));
 
 			} else {
-				
 				$("#backgroundImageUploadFile").val("");
 				ThemeDesigner.hidePicker();
+								
+				ThemeDesigner.set("user-background-image", response.backgroundImageUrl);
+				ThemeDesigner.set("user-background-image-thumb", response.backgroundImageThumb);				
+				
 				ThemeDesigner.set("theme", "custom");
 				ThemeDesigner.set("background-align", response.backgroundImageAlign);
+				//ThemeDesigner.set("background-image-thumb", response.backgroundImageThumb);				
 				ThemeDesigner.set("background-image-name", response.backgroundImageName);
 				ThemeDesigner.set("background-image", response.backgroundImageUrl);
-				
 			}
 		}
 	},
@@ -444,7 +455,7 @@ var ThemeDesigner = {
 			$("#swatch-image-background").attr("src", "/extensions/wikia/ThemeDesigner/images/" + theme + "_swatch.jpg");
 		} else {
 			//admin background image
-			$("#swatch-image-background").attr("src", ThemeDesigner.settings["background-image"]);
+			$("#swatch-image-background").attr("src", ThemeDesigner.settings["user-background-image-thumb"]);
 		}
 		
 		if (ThemeDesigner.settings["background-tiled"] == "true") {

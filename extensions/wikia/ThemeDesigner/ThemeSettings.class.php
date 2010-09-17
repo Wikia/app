@@ -91,6 +91,10 @@ class ThemeSettings {
 			$settings['background-image'] = $file->getURL();
 			$settings['background-image-name'] = $file->getName();
 
+			$is = new imageServing(null, 120, array("w"=>"120", "h"=>"100"));
+			$settings['user-background-image'] = $file->getURL();
+			$settings['user-background-image-thumb'] = wfReplaceImageServer($file->getThumbUrl( $is->getCut($file->width, $file->height)."-".$file->name));
+
 			$history = $file->getHistory(1);
 			if(count($history) == 1) {
 				$oldFile = array('url' => $history[0]->getURL(), 'name' => $history[0]->getArchiveName());
