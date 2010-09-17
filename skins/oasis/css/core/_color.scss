@@ -37,7 +37,7 @@ $color-page-border: darken(lighten($color-page, 100%), 15%);
 // Buttons
 $color-button-highlight: desaturate(lighten($color-buttons, 15%), 25%);
 $color-button-text: white;
-@if lightness($color-buttons) > 75 {
+@if lightness($color-buttons) > 50 {
 	$color-button-text: black;
 }
 $color-secondary-button-highlight: $color-page;
