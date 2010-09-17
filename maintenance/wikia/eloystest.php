@@ -100,6 +100,22 @@ function testInterwikiLink() {
 	echo "external: " . (int)$t->isExternal() . "\n";
 
 }
+
+function testAvatars() {
+	$avatar = $avatarUrl = Masthead::newFromUserName( "Eloy.wikia" );
+	echo $avatar->getUrl() . "\n";
+	echo $avatar->getThumbnail( 50 ) . "\n";
+
+	$avatar = $avatarUrl = Masthead::newFromUserName( "Wikia" );
+	echo $avatar->getUrl() . "\n";
+	echo $avatar->getThumbnail( 50 ) . "\n";
+
+	$avatar = $avatarUrl = Masthead::newFromUserId( 0 );
+	echo $avatar->getUrl() . "\n";
+	echo $avatar->getThumbnail( 50 ) . "\n";
+
+}
+
 #
 # main
 #
@@ -107,4 +123,5 @@ function testInterwikiLink() {
 #testStomp();
 #testWF();
 #curlSolrUpdate();
-testInterwikiLink();
+#testInterwikiLink();
+testAvatars();
