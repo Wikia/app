@@ -33,7 +33,7 @@
 		@include rail-module;
 		float: right;
 		padding-top: 35px;
-		width: 445px;
+		width: 450px;
 		h1 {
 			@include linear-gradient($color-buttons, top, $color-button-highlight, 35%, $color-buttons, 65%);
 			color: $color-button-text;
@@ -58,6 +58,7 @@
 				margin: 5px 10px;
 			}
 			a {
+				font-size: 12px;
 				font-weight: normal;
 			}
 			img {
@@ -78,6 +79,7 @@
 			text-align: center;
 			li {
 				@include rail-module;
+				background-color: $color-module-highlight;
 				border: none;
 				display: inline-block;
 				font-size: 20px;
