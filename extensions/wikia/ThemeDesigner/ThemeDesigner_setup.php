@@ -28,6 +28,6 @@ $wgHooks['MyTools::getCustomTools'][] = 'ThemeDesignerHelper::addToMyTools';
 // rights & permisions
 $wgAvailableRights[] = 'themedesigner';
 $wgGroupPermissions['*']['themedesigner'] = false;
-$wgGroupPermissions['helper']['themedesigner'] = true;
+//$wgGroupPermissions['helper']['themedesigner'] = true;
 $wgGroupPermissions['staff']['themedesigner'] = true;
-$wgGroupPermissions['sysop']['themedesigner'] = true;
+//$wgGroupPermissions['sysop']['themedesigner'] = true;
