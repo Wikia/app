@@ -1,0 +1,22 @@
+@mixin centered($height, $hor: center, $ver: middle) {
+	height: $height;
+	line-height: $height;
+	text-align: $hor;
+	vertical-align: $ver;
+}
+
+@mixin tool($margin-left: 10px, $cursor: pointer) {
+	@include centered($item-height);
+	margin-left: $margin-left;
+
+	a {
+		cursor: $cursor;
+	}
+}
+
+@mixin error {
+	span.error, p.error {
+		color: $color-error;
+		font-size: smaller;
+	}
+}
