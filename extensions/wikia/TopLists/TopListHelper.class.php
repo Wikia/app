@@ -262,8 +262,6 @@ class TopListHelper {
 	public static function voteItem() {
 		global $wgRequest;
 
-		wfLoadExtensionMessages( 'TopLists' );
-
 		$result = array( 'result' => false );
 
 		$titleText = $wgRequest->getVal( 'title' );
@@ -274,11 +272,7 @@ class TopListHelper {
 			if( $item instanceof TopListItem ) {
 
 				$result['result'] = $item->vote();
-
-				$list = $item->getList();
-				$list ->invalidateCache();
-
-				$result['listBody'] = TopListParser::parse( $list );
+				$result['listBody'] = TopListParser::parse( $item->getList() );
 			}
 		}
 

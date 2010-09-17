@@ -303,4 +303,8 @@ class TopList extends TopListBase {
 
 		return $this->mUserCanVote;
 	}
+
+	public function setUserVoted() {
+		$this->mUserCanVote = false;
+	}
 }
