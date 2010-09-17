@@ -1,4 +1,16 @@
 @font-face {
+	font-family: 'CPMono_v07Bold';
+	src: url('/skins/oasis/fonts/cpmono/CPMono_v07_Bold-webfont.eot');
+	src: local('☺'), url('/skins/oasis/fonts/cpmono/CPMono_v07_Bold-webfont.woff') format('woff'), url('/skins/oasis/fonts/cpmono/CPMono_v07_Bold-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/cpmono/CPMono_v07_Bold-webfont.svg#webfont8SZ0NIeo') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+.cpmono {
+	font-family: "CPMono_v07Bold";
+}
+
+
+@font-face {
 	font-family: 'FontinSansBold';
 	src: url('/skins/oasis/fonts/fontin/fontin_sans_b_45b-webfont.eot');
 	src: local('☺'), url('/skins/oasis/fonts/fontin/fontin_sans_b_45b-webfont.woff') format('woff'), url('/skins/oasis/fonts/fontin/fontin_sans_b_45b-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/fontin/fontin_sans_b_45b-webfont.svg#webfontaOEEV2k6') format('svg');
@@ -59,6 +71,18 @@
 
 
 @font-face {
+	font-family: 'MEgalopolisExtraRegular';
+	src: url('/skins/oasis/fonts/megalopolis/megalopolisextra-webfont.eot');
+	src: local('☺'), url('/skins/oasis/fonts/megalopolis/megalopolisextra-webfont.woff') format('woff'), url('/skins/oasis/fonts/megalopolis/megalopolisextra-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/megalopolis/megalopolisextra-webfont.svg#webfont0XV5Gd7h') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+.megalopolis {
+	font-family: "MEgalopolisExtraRegular";
+}
+
+
+@font-face {
 	font-family: 'OrbitronMedium';
 	src: url('/skins/oasis/fonts/orbitron/orbitron-medium-webfont.eot');
 	src: local('☺'), url('/skins/oasis/fonts/orbitron/orbitron-medium-webfont.woff') format('woff'), url('/skins/oasis/fonts/orbitron/orbitron-medium-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/orbitron/orbitron-medium-webfont.svg#webfont5FiGFJOa') format('svg');
@@ -67,6 +91,18 @@
 }
 .orbitron {
 	font-family: "OrbitronMedium";
+}
+
+
+@font-face {
+	font-family: 'PixieFontRegular';
+	src: url('/skins/oasis/fonts/pixiefont/PixieFont-webfont.eot');
+	src: local('☺'), url('/skins/oasis/fonts/pixiefont/PixieFont-webfont.woff') format('woff'), url('/skins/oasis/fonts/pixiefont/PixieFont-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/pixiefont/PixieFont-webfont.svg#webfont78rOR6Do') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+.pixiefont {
+	font-family: "PixieFontRegular";
 }
 
 
@@ -103,6 +139,18 @@
 }
 .titillium {
 	font-family: "TitilliumText22LRegular";
+}
+
+
+@font-face {
+	font-family: 'VeggieburgerBold';
+	src: url('VeggiBol-webfont.eot');
+	src: local('☺'), url('/skins/oasis/fonts/veggieburger/VeggiBol-webfont.woff') format('woff'), url('/skins/oasis/fonts/veggieburger/VeggiBol-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/veggieburger/VeggiBol-webfont.svg#webfont2sUWj2TL') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+.veggieburger {
+	font-family: "VeggieburgerBold";
 }
 
 
