@@ -581,17 +581,17 @@ class StaticChute {
 	}
 
 	public function getChuteUrlPath() {
-		global $wgScriptPath, $wgForceStaticChutePath;
-		$scriptPath = $wgScriptPath;
+		global $wgExtensionsPath, $wgForceStaticChutePath;
+		$extensionsPath = $wgExtensionsPath;
 
 		// Because of some varnish strangeness (that isn't worth debugging since we're about to change StaticChute), allow
 		// devboxes to override the path with a path directly to the box's hostname.
-		// eg: $wgForceStaticChutePath = "http://dev-sean.wikia-prod";
+		// eg: $wgForceStaticChutePath = "http://dev-sean.wikia-prod/extensions";
 		if(!empty($wgForceStaticChutePath)){
-			$scriptPath = $wgForceStaticChutePath;
+			$extensionsPath = $wgForceStaticChutePath;
 		}
 
-		return !empty($this->path) ? $this->path : $scriptPath;
+		return !empty($this->path) ? $this->path : $extensionsPath;
 	}
 
 	public function useLocalChuteUrl() {
@@ -604,7 +604,7 @@ class StaticChute {
 			 * do not use wgScriptPath, problem with dofus/memory-alpha
 			 * rt#18410
 			 */
-			$this->setChuteUrlPath($wgServer);
+			$this->setChuteUrlPath($wgServer . '/extensions');
 		}
 	}
 
@@ -613,20 +613,27 @@ class StaticChute {
 		$this->theme = $theme;
 	}
 
-	public function getChuteUrlForPackage($packages, $type = null){
+	public function getChuteUrlForPackage($package, $type = null){
 		if ($type === null){
 			$type = $this->fileType;
 		}
-		$files = $this->getFileList(array('packages'=>$packages));
+		$files = $this->getFileList(array('packages'=>$package));
 
 		if (empty($files)){
-			trigger_error("Invalid package(s) for " . __METHOD__, E_USER_WARNING);
+			trigger_error("Invalid package for " . __METHOD__, E_USER_WARNING);
 			return false;
 		}
 
 		$checksum = $this->getChecksum($files);
 
-		return $this->getChuteUrlPath() . "/static/$type/$packages/$checksum.$type";
+		$params = array('type'=> $type, 'packages'=> $package, 'checksum'=> $checksum);
+
+		// macbre: RT #18765
+		if (!empty($this->theme)) {
+			$params['usetheme'] = $this->theme;
+		}
+
+		return $this->getChuteUrlPath() . '/wikia/StaticChute/?' . http_build_query($params);
 	}
 
 	private function getWidgetsAssets() {
