@@ -6,7 +6,7 @@ $messages['en'] = array(
 	'comboajaxlogin-desc' => 'Dynamic box which allow users to login, remind password and register users',
 	"comboajaxlogin-createlog" => "Log in or create an account",
 	"comboajaxlogin-actionmsg" => "To perform this action you first need to log in or create an account",
-	"comboajaxlogin-actionmsg-protected" => "To edit this protected page, you first need to log in or create an account.",	
+	"comboajaxlogin-actionmsg-protected" => "To perform this action you first need to log in or create an account.",	
 	"comboajaxlogin-connectmarketing" => "<h1>Connect your accounts</h1>
 <ul>
 <li>Keep your current username, history, edits... nothing changes except how you log in</li>
