@@ -20,7 +20,7 @@ class WidgetBoxRSS extends SpecialPage {
 	}
 
 	function execute() {
-		global $wgLang, $wgAllowRealName, $wgRequest, $wgOut;
+		global $wgLang, $wgAllowRealName, $wgRequest, $wgOut, $wgHubsPages;
 
 		$this->mName = $wgRequest->getText( 'wpName' );
 		$this->mRealName = $wgRequest->getText( 'wpContactRealName' );
@@ -74,48 +74,55 @@ class WidgetBoxRSS extends SpecialPage {
  */
 	private function FeedRecentBlogPosts ( $format ){
 		
-		global $wgParser, $wgUser, $wgOut, $wgExtensionsPath, $wgRequest;
+		global $wgParser, $wgUser, $wgServer, $wgOut, $wgExtensionsPath, $wgRequest;
 
 		// local settings
 		$maxNumberOfBlogPosts = 10;
 
-		$sArticle = $wgRequest->getVal( 'article' );
-		if ( !empty( $sArticle ) ){
-			$oBlogListing = new CreateBlogListingPage;
-			$oBlogListing->setFormData('listingAuthors', '');
-			$oBlogListing->setFormData('tagContent', '');
-			$oBlogListing->parseTag( urldecode( $sArticle ) );
+		// If blog listing does not exit treats parameter as empty;
+		$sListing = $wgRequest->getVal( 'listing' );
+		if ( !empty( $sListing ) && !Title::newFromText( $sListing, 502 )->exists() ){
+			unset($sListing);
+		};
 
-			$input = $oBlogListing->buildTagContent();
-
-			$db = wfGetDB( DB_SLAVE, 'dpl' );
-
-			$params = array (
-				"summary" => true,
-				"timestamp" => true,
-				"count" => $maxNumberOfBlogPosts,
-			);
-
-			$result = BlogTemplateClass::parseTag( $input, $params, $wgParser, true );
-			$feedArray = array();
-			foreach( $result as $val ){
-				$aValue = explode('/' , $val['title']);
-
-				$feedArray[] = array(
-					'title' =>  str_replace( '&nbsp;', ' ', strip_tags( $aValue[1] ) ),
-					'description' => str_replace( '&nbsp;', ' ', strip_tags( $val['text'] ) ),
-					'url' => 'http://'.$_SERVER['HTTP_HOST'].$val['userpage'],
-					'date' => $val['date'],
-					'author' => $val['username'],
-					'otherTags' => array(
-						'image' => $val['avatar'],
-					)
-				);
-			}
-			$this->showFeed( $format , wfMsg('feed-title-blogposts'),  $feedArray);
+		$oBlogListing = new CreateBlogListingPage;
+		$oBlogListing->setFormData('listingAuthors', '');
+		$oBlogListing->setFormData('tagContent', '');
+		if ( !empty( $sListing ) ){
+			$oBlogListing->parseTag( urldecode( $sListing ) );
+			$subTitleName = wfMsg('blog-posts-from-listening', $sListing);
 		} else {
-			Wikia::log( __METHOD__, false, wfMsg('error-no-article') );
+			$oBlogListing->setFormData('listingCategories', '');
+			$subTitleName = wfMsg('all-blog-posts');
 		}
+
+		$input = $oBlogListing->buildTagContent();
+
+		$db = wfGetDB( DB_SLAVE, 'dpl' );
+
+		$params = array (
+			"summary" => true,
+			"timestamp" => true,
+			"count" => $maxNumberOfBlogPosts,
+		);
+
+		$result = BlogTemplateClass::parseTag( $input, $params, $wgParser, true );
+		$feedArray = array();
+		foreach( $result as $val ){
+			$aValue = explode('/' , $val['title']);
+
+			$feedArray[] = array(
+				'title' =>  str_replace( '&nbsp;', ' ', strip_tags( $aValue[1] ) ),
+				'description' => str_replace( '&nbsp;', ' ', strip_tags( $val['text'] ) ),
+				'url' => $wgServer.$val['userpage'],
+				'date' => $val['date'],
+				'author' => $val['username'],
+				'otherTags' => array(
+					'image' => preg_replace('/<img.*src="(.*?)".*\/?>/', '$1', $val['avatar']),
+				)
+			);
+		}
+		$this->showFeed( $format , wfMsg('feed-title-blogposts').' - '.$subTitleName,  $feedArray);
 	}
 
 /**
@@ -124,7 +131,7 @@ class WidgetBoxRSS extends SpecialPage {
  */
 	private function FeedRecentBadges ( $format ){
 
-		global $wgUser, $wgOut, $wgExtensionsPath;
+		global $wgUser, $wgOut, $wgExtensionsPath, $wgServer;
 		wfLoadExtensionMessages( 'AchievementsII' );
 
 		// local settings
@@ -154,14 +161,16 @@ class WidgetBoxRSS extends SpecialPage {
 				$badgeData['badge']->getGiveFor(),
 				wfTimeFormatAgo($badgeData['date'])
 			);
+			$descriptionText = preg_replace('/<br\s*\/*>/i',"$1 $2",$descriptionText);
+			$descriptionText = strip_tags($descriptionText);
 			$feedArray[] = array (
 				'title' => $badgeData['user']->mName ,
-				'description' => strip_tags( str_replace( "<br />" , " ", $descriptionText ) ),
-				'url' => 'http://'.$_SERVER['HTTP_HOST'].$badgeData['user']->getUserPage()->getLocalURL(),
+				'description' => $descriptionText,
+				'url' => $badgeData['user']->getUserPage()->getFullURL(),
 				'date' => $badgeData['date'],
 				'author' => '',
 				'otherTags' => array(
-				    'image' => 'http://'.$_SERVER['HTTP_HOST'].$badgeData['badge']->getPictureUrl($badgeImageSize),
+				    'image' => $wgServer.$badgeData['badge']->getPictureUrl($badgeImageSize),
 				)
 			);
 
@@ -181,14 +190,17 @@ class WidgetBoxRSS extends SpecialPage {
 	private function FeedRecentImages ( $format ){
 		
 		global $wgTitle, $wgLang, $wgRequest;
-		
+
 		// local settings
 		$maxImagesNumber = 20;
-		$defaultThumbSize = 150;
+		$defaultWidth = 150;
+		$defaultHeight = 75;
 
+		$imageServing = new imageServing( array(), $defaultWidth,array("w" => 2, "h" => 1) );
 		$dbw = wfGetDB( DB_SLAVE );
-		$res = $dbw->select( array( 'image' ),
-				array( "img_name", "img_user_text", "img_size", "img_width", "img_height"  ),
+
+		$res = $dbw->select( 'image',
+				array( "img_name", "img_user_text", "img_size", "img_width", "img_height" ),
 				array(
 					"img_media_type != 'VIDEO'",
 					"img_width > 32",
@@ -201,44 +213,41 @@ class WidgetBoxRSS extends SpecialPage {
 				)
 		);
 
-		$feedArray = array();
-		
 		$thumbSize = $wgRequest->getText ( "size", false );
 		
-		if ( $thumbSize ){
+		if ( $defaultWidth ){
 			$thumbSize = ( integer )$thumbSize;
 		} else {
 			$thumbSize = $defaultThumbSize;
 		}
+
+		$feedArray = array();
 		
 		while ( $row = $dbw->fetchObject( $res ) ) {
 			
-			$tmp = Title::newFromText( $row->img_name, NS_FILE );
-			$image = wfFindFile( $tmp );
-			if( !$image ) continue;
+			$tmpTitle = Title::newFromText( $row->img_name, NS_FILE );
+			$image = wfFindFile( $tmpTitle );
 
-			// get thumbnail limited only by given width
-			if ( $image->width > $thumbSize ) {
-				$imageHeight = round( $image->height * ($thumbSize / $image->width) );
-				$imageWidth = $thumbSize;
-			} else {
-				$imageHeight = $image->height;
-				$imageWidth = $image->width;
-			}
+			if ( !$image ) continue;
 
-			$thumb = $image->getThumbnail($imageWidth, $imageHeight);
-			//$HTMLimage = "<img src='".$thumb->url."' />";
+			$testImage = wfReplaceImageServer(
+				$image->getThumbUrl(
+					$imageServing->getCut($row->img_width, $row->img_height)."-".$image->getName()
+				)
+			);
+
 			$feedArray[] = array (
 				'title' => '',
 				'description' => '',
-				'url' => $thumb->url,
+				'url' => '',
 				'date' => $image->getTimestamp(),
-				'author' => $image->author,
+				'author' => $row->img_user_text,
 				'otherTags' => array(
-						'image' => $thumb->url
+						'image' => $testImage
 					)
 			);
 		}
+
 		$this->showFeed( $format , wfMsg('feed-title-recent-images'),  $feedArray);
 	}
 
@@ -250,17 +259,19 @@ class WidgetBoxRSS extends SpecialPage {
 
 		global $wgRequest;
 
+		$defaultHubTitle ='tv';
+
 		$hubTitle = $wgRequest->getVal( 'hub' );
 		$allowedHubs = $this->allowedHubs();
-		if ( isset( $allowedHubs[ $hubTitle ] ) ){
-			$hubId = $allowedHubs[ $hubTitle ];
-		} else {
-			$hubId = reset( $allowedHubs );
-			$hubTitle = key( $allowedHubs );
-		}
 		
+		if ( isset( $allowedHubs[ $hubTitle ] ) && !is_array( $allowedHubs[ $hubTitle ] ) ){
+			$oTitle = Title::newFromText( $hubTitle, 150 );
+		} else {
+			$oTitle = Title::newFromText( $defaultHubTitle, 150 );
+		}
+		$hubId = AutoHubsPagesHelper::getHubIdFromTitle( $oTitle );
 		$feedArray = $this->PrepareHotContentFeed( $hubId );
-		$this->showFeed( $format, 'Achivements leaderboard - '. $hubTitle,  $feedArray );
+		$this->showFeed( $format, 'Achivements leaderboard - '. $oTitle->getText(),  $feedArray );
 	}
 	
 /**
@@ -268,7 +279,7 @@ class WidgetBoxRSS extends SpecialPage {
  * @param hubId integer
  * @param forceRefresh boolean - if true clears the cache and creates new one.
  *
- * Returns data for feed creatinon. If no cache - creates one.
+ * Returns data for feed creation. If no cache - creates one.
  */
 	private function PrepareHotContentFeed ( $hubId, $forceRefresh = false ){
 
@@ -279,10 +290,11 @@ class WidgetBoxRSS extends SpecialPage {
 		$thumbSize = 75;
 		$resultsNumber = 10;
 		$isDevBox = false; // switch to false after tests
+		$stopCache = false;  // switch to false after tests
 
 		if ( $forceRefresh ) $this->clearCache( $hubId );
 		$memcFeedArray = $this->getFromCache( $hubId );
-		if ( $memcFeedArray == null ){
+		if ( $memcFeedArray == null  || $stopCache ){
 		
 			$datafeeds = new WikiaStatsAutoHubsConsumerDB( DB_SLAVE );
 			$out = $datafeeds->getTopArticles($hubId, $lang, $resultsNumber);
@@ -323,8 +335,9 @@ class WidgetBoxRSS extends SpecialPage {
  */
 
 	public function ReloadHotContentFeed ( $hubId ){
+
+		$this->PrepareHotContentFeed( (integer) $hubId , true);
 		
-		$this->PrepareHotContentFeed( (integer)$hubId , true);
 	}
 
 /**
@@ -336,10 +349,12 @@ class WidgetBoxRSS extends SpecialPage {
  */
 
 	private function getKey( $hubId ) {
+		
 		return wfSharedMemcKey( 'widgetbox_hub_hotcontent', $hubId );
 	}
 
 	private function saveToCache( $hubId, $content ) {
+
 		global $wgMemc;
 		$memcData = $this->getFromCache( $hubId );
 		if ( $memcData == null ){
@@ -350,11 +365,13 @@ class WidgetBoxRSS extends SpecialPage {
 	}
 
 	private function getFromCache ( $hubId ){
+
 		global $wgMemc;
 		return $wgMemc->get( $this->getKey( $hubId ) );
 	}
 
 	private function clearCache ( $hubId ){
+
 		global $wgMemc;
 		return $wgMemc->delete( $this->getKey( $hubId ) );
 	}
@@ -362,33 +379,22 @@ class WidgetBoxRSS extends SpecialPage {
 /**
  * @author Jakub Kurcek
  *
- * Returns array of accepted hubs. key is Id and val is title.
+ * Returns array of accepted hubs. 
  */
 
 	public function allowedHubs (){
-		return 	array(	"PC Games" => 1,
-				"Wii Games" => 3,
-				"Handheld" => 4,
-				"Television" => 6,
-				"Anime" => 9,
-				"PS3 Games" => 16,
-				"Horror" => 26,
-				"Music" => 29,
-				"Lifestyle" => 127,
-				"Entertainment" => 129,
-				"Gaming" => 131	,
-				"Xbox 360 Games" => 143,
-				"Sci-Fi" => 144,
-				"Movies" => 147
-			);
+
+		global $wgHubsPages;
+		return $wgHubsPages['en'];
 	}
+	
 /**
  * @author Jakub Kurcek
  * @param format string 'rss' or 'atom'
  */
 	private function FeedAchivementsLeaderboard ( $format ) {
 
-		global $wgLang, $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgSupressPageTitle, $wgUser, $wgWikiaBotLikeUsers, $wgJsMimeType;
+		global $wgLang, $wgServer, $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgSupressPageTitle, $wgUser, $wgWikiaBotLikeUsers, $wgJsMimeType;
 		wfLoadExtensionMessages('AchievementsII');
 
 		// local settings
@@ -397,7 +403,7 @@ class WidgetBoxRSS extends SpecialPage {
 		
 		$rankingService = new AchRankingService();
 		$ranking = $rankingService->getUsersRanking(20, true);
-		//var_dump($ranking); exit;
+
 		// recent
 		$levels = array(BADGE_LEVEL_PLATINUM, BADGE_LEVEL_GOLD, BADGE_LEVEL_SILVER, BADGE_LEVEL_BRONZE);
 		$recents = array();
@@ -423,17 +429,16 @@ class WidgetBoxRSS extends SpecialPage {
 		foreach($ranking as $rank => $rankedUser){
 			++$rank;
 			$name = htmlspecialchars( $rankedUser->getName() );
-			
 			$feedArray[] = array(
 				'title' =>  $rank,
 				'description' => $name,
-				'url' => 'http://'.$_SERVER['HTTP_HOST'].$rankedUser->getUserPageUrl(),
+				'url' => $wgServer.$rankedUser->getUserPageUrl(),
 				'date' => time(),
 				'author' => 'Wikia',
 				'',
 				'otherTags' => array(
 					'image' => $rankedUser->getAvatarUrl(),
-					'score' => $wgLang->formatNum($rankedUser->getScore())
+					'score' => $wgLang->formatNum( $rankedUser->getScore() )
 				)
 			);			
   		}
@@ -450,13 +455,14 @@ class WidgetBoxRSS extends SpecialPage {
  * returns RSS/Atom feed
  */
 	private function showFeed( $format, $subtitle, $feedData ) {
+		
 		global $wgOut, $wgRequest, $wgParser, $wgMemc, $wgTitle;
 		global $wgSitename;
 		wfProfileIn( __METHOD__ );
 		$sFeedName = self::getFeedClass( $format );
 		$feed = new $sFeedName( wfMsg('feed-main-title'),  $subtitle, $wgTitle->getFullUrl() );
 		$feed->outHeader();
-		foreach ( $feedData as $val ){
+		foreach ( $feedData as $val ) {
 			$item = new ExtendedFeedItem(
 				$val['title'],
 				$val['description'],
@@ -474,8 +480,12 @@ class WidgetBoxRSS extends SpecialPage {
 	}
 
 	private static function getFeedClass ( $format ){
-		global $wgFeedClasses;
-		return 'WidgetBox'.$wgFeedClasses[ $format ];
+		
+		if ( $format == 'atom' ){
+			return 'WidgetBoxAtomFeed';
+		} else {
+			return 'WidgetBoxRSSFeed';
+		}
 	}
 }
 

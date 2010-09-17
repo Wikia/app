@@ -1,32 +1,32 @@
 <!-- s:<?= __FILE__ ?> -->
-<!-- MAIN-FORM -->
+<!-- MAIN-PAGE -->
 <ul>
 	<li>
 		<a href="?feed=rss&type=RecentBadges">
-			recent earned badges for a specific Wiki
-		</a> ( unfinished )
+			Recent earned badges for a specific Wiki
+		</a>
 	</li>
 	<li>
-		<a href="http://simpsons.jakub.wikia-dev.com/wiki/Special:WidgetBoxRSS?feed=rss&type=RecentBlogPosts&article=Recent posts">
-			recent blog posts related to a promotion
-		</a> ( unfinished )
+		<a href="?feed=rss&type=RecentBlogPosts&listing=Recent posts">
+			Recent blog posts related to a promotion
+		</a>
 	</li>
 	<li>
 		<a href="?feed=rss&type=AchivementsLeaderboard">
 			Wikis achievements leaderboard
-		</a> ( unfinished )
+		</a>
 	</li>
 	<li>
 		<a href="?feed=rss&type=RecentImages">
 			Gallery of the latest images that have been uploaded
-		</a> ( unfinished )
+		</a>
 	</li>
 	<li>
-		<a href="?feed=rss&type=HotContent">
-			hub/verticals "Hot Content" as ranked by # of editors
-		</a> ( unfinished )
+		<a href="?feed=rss&type=HotContent&hub=tv">
+			Hub / verticals "Hot Content" as ranked by # of editors
+		</a>
 	</li>
 </ul>
 
-<!-- END OF MAIN-FORM -->
+<!-- END OF MAIN-PAGE -->
 <!-- e:<?= __FILE__ ?> -->
