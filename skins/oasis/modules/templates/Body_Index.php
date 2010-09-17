@@ -30,12 +30,16 @@
 	}
 	?>
 
-	<?= wfRenderModule('WikiHeader') ?>
+	<?php
+		if (empty($wgSuppressWikiHeader)) {
+			echo wfRenderModule('WikiHeader');
+		}
+	?>
 
 	<article id="WikiaMainContent" class="WikiaMainContent">
 		<?php
 			// render UserPagesHeader or PageHeader or nothing...
-			if ($headerModuleName) {
+			if (empty($wgSuppressPageHeader) && $headerModuleName) {
 				echo wfRenderModule($headerModuleName, $headerModuleAction, $headerModuleParams);
 			}
 		?>
