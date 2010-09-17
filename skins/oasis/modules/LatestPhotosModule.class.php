@@ -20,7 +20,12 @@ class LatestPhotosModule extends Module {
 		$this->total = $wgLang->formatNum(SiteStats::images());
 
 		// Pull the list of images from memcache first
-		$mKey = wfMemcKey('mOasisLatestPhotos');
+		global $wgDevelEnvironment;
+		if(!empty($wgDevelEnvironment)){
+			$mKey = wfMemcKey('mOasisLatestPhotos', $_SERVER['SERVER_NAME']);
+		} else {
+			$mKey = wfMemcKey('mOasisLatestPhotos');
+		}
 		$this->thumbUrls = $wgMemc->get($mKey);
 		if (empty($this->thumbUrls)) {
 
