@@ -7,16 +7,31 @@ var LatestPhotos = {
 	transition_speed: 500,
 	enable_next: true,
 	enable_previous: false,
-	
+	carousel: false,
+
 	init: function() {
+		this.carousel = $('.LatestPhotosModule').find('.carousel');
 		this.attachListeners();
+		this.lazyLoadImages();
+	},
+
+	lazyLoadImages: function() {
+		var images = this.carousel.find('img').filter('[data-src]');
+		$().log('lazy loading images', 'LatestPhotos');
+
+		images.each(function() {
+			var image = $(this);
+			image.
+				attr('src', image.attr('data-src')).
+				removeAttr('data-src');
+		});
 	},
 
 	attachListeners: function() {
 		LatestPhotos.attachBlindImages();
 		$('.LatestPhotosModule .next').click(LatestPhotos.nextImage);
 		$('.LatestPhotosModule .previous').click(LatestPhotos.previousImage);
-		
+
 		LatestPhotos.enableBrowsing();
 	},
 
@@ -28,10 +43,10 @@ var LatestPhotos = {
 			$('.carousel').append("<li class='blind'></li>");
 			$('.carousel').append("<li class='blind'></li>");
 		}
-		
+
 		$('.carousel li').first().addClass("first-image");
 		$('.carousel li').last().addClass("last-image");
-		
+
 	},
 
 	previousImage: function() {
@@ -82,17 +97,17 @@ var LatestPhotos = {
 			else {
 				LatestPhotos.enable_next = true;
 			}
-			
+
 			if ($(this).is('.first-image')) {
 				LatestPhotos.enable_previous = false;
 				return false;
 			}
 			else {
 				LatestPhotos.enable_previous = true;
-			}			
+			}
 		});
 	},
-	
+
 	removeFirstPhotos: function() {
 		var old = $('.carousel li').slice(0,3);
 		$('.carousel-container div').css('left', '0px');

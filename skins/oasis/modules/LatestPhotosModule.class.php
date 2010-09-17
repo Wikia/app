@@ -12,7 +12,7 @@ class LatestPhotosModule extends Module {
 
 		// Moved to oasis.scss (to be less requests)
 		//$wgOut->addStyle(wfGetSassUrl("skins/oasis/css/modules/LatestPhotos.scss"));
-		
+
 		// Moved to StaticChute.
 		//$wgOut->addScript('<script src="'. $wgStylePath .'/oasis/js/LatestPhotos.js"></script>');
 
@@ -60,16 +60,16 @@ class LatestPhotosModule extends Module {
 			$this->thumbUrls = array_map(array($this, 'getTemplateData'), $uniqueList);
 			$wgMemc->set($mKey, $this->thumbUrls);
 		}
-				
+
 		if (count($this->thumbUrls) < 3) {
 			$this->enableScroll = false;
 		}
 		else {
 			$this->enableScroll = true;
 		}
-		
+
 		if (count($this->thumbUrls)  <= 0) {
-			$this->enableEmptyGallery = true;		
+			$this->enableEmptyGallery = true;
 		}
 	}
 
@@ -91,7 +91,7 @@ class LatestPhotosModule extends Module {
 			"image_filename" => $file->getTitle()->getFullText(),
 			"user_href" => View::link(Title::newFromText($userName, NS_USER), $userName),
 			"links" => $this->getLinkedFiles($file->name),
-			"date" => wfTimeFormatAgo($file->timestamp));		
+			"date" => wfTimeFormatAgo($file->timestamp));
 		return $retval;
 	}
 
