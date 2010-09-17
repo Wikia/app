@@ -269,7 +269,7 @@ class UserPagesHeaderModule extends Module {
 		global $wgTitle, $wgLang;
 
 		// remove User_blog:xxx from title
-		$titleParts = explode('/', $this->title);
+		$titleParts = explode('/', $wgTitle->getText());
 		array_shift($titleParts);
 		$this->title = implode('/', $titleParts);
 
