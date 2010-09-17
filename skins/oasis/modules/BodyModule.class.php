@@ -119,7 +119,7 @@ class BodyModule extends Module {
 
 		$namespace = $wgTitle->getNamespace();
 		$subjectNamespace = MWNamespace::getSubject($namespace);
-
+		
 		if($namespace == NS_SPECIAL) {
 			if ($wgTitle->isSpecial('Search')) {
 				$railModuleList = array();
@@ -160,11 +160,11 @@ class BodyModule extends Module {
 			);
 
 		}
-
+		
 		// Content, category and forum namespaces
 		if(	in_array($subjectNamespace, array (NS_CATEGORY, NS_CATEGORY_TALK, NS_FORUM)) ||
 			in_array($subjectNamespace, $wgContentNamespaces) ||
-			in_array($subjectNamespace, $wgExtraNamespaces)) {
+			array_key_exists( $subjectNamespace, $wgExtraNamespaces ) ) {
 			// add any content page related rail modules here
 			$railModuleList[1300] = array('LatestActivity', 'Index', null);
 			$railModuleList[1250] = array('LatestPhotos', 'Index', null);
