@@ -2,7 +2,7 @@
 
 <li id="comm-<?=$commentId?>" class="article-comments-li <?=$rowClass?>">
 	<div class="comment-avatar">
-		<?= $comment['avatar'] ?>
+		<?= AvatarService::renderAvatar($comment['author']->getName(), 50) ?>
 	</div>
 	<blockquote>
 		<div class="article-comm-text" id="comm-text-<?= $comment['articleId'] ?>">

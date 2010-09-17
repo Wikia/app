@@ -14,8 +14,9 @@
 
 		<div class="session">
 			<?php
-				echo $avatar->getImageTag( 50, 50 );
-				if ($avatar->mUser->mId != 0) {
+				echo AvatarService::renderAvatar($avatar->getUserName(), 50);
+
+				if ($avatar->mUser->isLoggedIn()) {
 				// FIXME: wfMsg this
 					// echo "You are Logged in as " . $avatar->mUser->getName(); /** out for now until designer tells gives updates on specs **/
 				} else {
@@ -49,7 +50,7 @@
 	if ($countComments) {
 		echo '<div class="article-comments-pagination upper-pagination"><div>' . $pagination . '</div></div>';
 	}
-	
+
 	echo wfRenderPartial('ArticleComments', 'CommentList', array('commentListRaw' => $commentListRaw));
 
 	?>
