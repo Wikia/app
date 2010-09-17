@@ -1,0 +1,31 @@
+/**
+ * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
+ *
+ * Styles for the creation/editing UI of TopLists extension, Oasis skin
+ */
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/gradient";
+@import "mixins.scss";
+
+$item-height: 60px;
+$item-width: 400px;
+
+#toplists-list-body {
+	ul {
+		list-style-type: none;
+		padding: 0;
+		margin: 0;
+		
+		li {
+			@include centered($item-height, left);
+			@include border-radius(5px);
+			height: $item-height;
+			width: $item-width;
+			border: 1px solid $color-page-border;
+			background-color: $color-module-shadow;
+			padding: 0;
+			margin: 20px 0 20px 0;
+		}
+	}
+}
