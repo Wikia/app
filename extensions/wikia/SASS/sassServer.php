@@ -72,7 +72,7 @@ require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
 		Wikia::log( __METHOD__, "", "There was an attempt to access a SASS sheet with an invalid cryptographic signature. If there are many of these, then there is either a bug (most likely) or a failed attack.");
 	} else {
 		// Use memcache to see if we should process now, used stored value, or wait and check back (because another process is already working on it).
-		$memcKey = wfMemcKey($MEMC_KEY_PREFIX, $nameOfFile, $requestedStyleVersion, $idString);
+		$memcKey = wfMemcKey($MEMC_KEY_PREFIX, $nameOfFile, $requestedStyleVersion, md5($idString));
 		$cachedResult = $wgMemc->get($memcKey);
 		if(empty($cachedResult)){
 			// Add a placeholder to memcached so that other processes with the same parameters just wait for this result instead of generating their own.
