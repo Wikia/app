@@ -48,11 +48,7 @@ class TopListParser {
 				if( !empty( self::$mAttributes[ TOPLIST_ATTRIBUTE_PICTURE ] ) ) {
 					$source = new imageServing(
 						null,
-						120,
-						array(
-							"w" => 3,
-							"h" => 2
-						)
+						200
 					);
 
 					$result = $source->getThumbnails( array( self::$mAttributes[ TOPLIST_ATTRIBUTE_PICTURE ] ) );
@@ -75,16 +71,20 @@ class TopListParser {
 				$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/TopLists/js/list.js?{$wgStyleVersion}\"></script>\n" );
 
 				$template = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-				$template->set_vars( array( 'list' => $list, 'attribs' => self::$mAttributes, 'relatedTitle' => $relatedTitle, 'relatedImage' => $relatedImage, 'relatedUrl' => $relatedUrl ) );
+				$template->set_vars(
+					array(
+						'list' => $list,
+						'attribs' => self::$mAttributes,
+						'relatedTitle' => $relatedTitle,
+						'relatedImage' => $relatedImage,
+						'relatedUrl' => $relatedUrl
+					)
+				);
 
 				self::$mOutput = $template->execute( 'list' );
 
 				// remove whitespaces to avoid extra <p> tags
 				self::$mOutput = preg_replace("#[\n\t]+#", '', self::$mOutput);
-
-				$parserOptions = new ParserOptions();
-
-				self::$mOutput =  $parser->parse(self::$mOutput, $list->getTitle(), $parserOptions)->getText();
 			}
 			else {
 				self::$mOutput = '';

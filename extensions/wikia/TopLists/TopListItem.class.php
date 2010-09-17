@@ -205,6 +205,22 @@ class TopListItem extends TopListBase {
 	}
 
 	/**
+	 * @author Federico "Lox" Lucignano
+	 *
+	 * @return string The parsed content of the article referenced by this item
+	 */
+	public function getParsedContent() {
+		global $wgParser;
+		
+		if( $this->exists() ) {
+			$parserOptions = new ParserOptions();
+			return $wgParser->parse($this->getArticle()->getContent(), $this->getTitle(), $parserOptions)->getText();
+		}
+
+		return null;
+	}
+
+	/**
 	 * Checks if the user has already casted a vote
 	 *
 	 * @author ADi

@@ -12,6 +12,12 @@ $item-height: 60px;
 $item-width: 400px;
 
 #toplists-list-body {
+	padding-top: 20px;
+	
+	.picture-attribution {
+		display: none;
+	}
+	
 	ul {
 		list-style-type: none;
 		padding: 0;
@@ -23,8 +29,36 @@ $item-width: 400px;
 			width: $item-width;
 			border: 1px solid $color-page-border;
 			background-color: $color-module-shadow;
-			padding: 0;
-			margin: 20px 0 20px 0;
+			padding: 8px;
+			margin-bottom: 25px;
+
+			.ItemNumber {
+				span {
+					display: block;
+				}
+				
+				float: left;
+				font: {
+					color: $color-module-shadow;
+					size: 20px;
+					weight: bold;
+				}
+				
+				margin-right: 15px;
+			}
+
+			.ItemContent {
+				font-size: 15px;
+
+				.author {
+					display: block;
+					font-size: 10px;
+				}
+			}
+
+			.ItemVotes {
+				float: right;
+			}
 		}
 	}
 }
