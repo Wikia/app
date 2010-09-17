@@ -18,9 +18,8 @@ $item-width: 400px;
 		margin: 0;
 		
 		li {
-			@include centered($item-height, left);
 			@include border-radius(5px);
-			height: $item-height;
+			min-height: $item-height;
 			width: $item-width;
 			border: 1px solid $color-page-border;
 			background-color: $color-module-shadow;
