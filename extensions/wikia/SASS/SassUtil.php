@@ -49,11 +49,16 @@ class SassUtil{
 
 		// try to load settings from ThemeDesigner
 		if (!empty($wgOasisThemeSettings)) {
+			// TODO: DEFINE THE DEFAULT THEME SOMEWHERE INSTEAD OF HARDCODING IT TO SAPPHIRE HERE AND BELOW.
 			$keys = array_keys($wgOasisThemes['sapphire']);
 
 			// get color settings
 			foreach($keys as $key) {
-				$oasisSettings[$key] = $wgOasisThemeSettings[$key];
+				if(isset($wgOasisThemeSettings[$key])){
+					$oasisSettings[$key] = $wgOasisThemeSettings[$key];
+				} else {
+					$oasisSettings[$key] = $wgOasisThemes['sapphire'][$key];
+				}
 			}
 		}
 		else if(isset($skin->themename)) {
