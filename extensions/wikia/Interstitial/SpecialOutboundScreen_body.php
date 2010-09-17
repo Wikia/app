@@ -111,7 +111,7 @@ class Outbound extends UnlistedSpecialPage {
 					'pageType' => 'exitPage',
 					'redirectDelay' => ( $noAutoRedirect ? 0 : $this->redirectDelay ),
 					'skip' => wfMsg('interstitial-skip-ad'),
-					'url' => $url,
+					'url' => htmlspecialchars_decode($url),
 				)
 			);
 
