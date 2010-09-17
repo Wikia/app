@@ -234,9 +234,12 @@ class Masthead {
 	 *
 	 * @access public
 	 *
+	 * @param $thumb String  -- if defined will be added as part of base path
+	 *      default empty string ""
+	 *
 	 * @return String
 	 */
-	public function getUrl() {
+	public function getUrl( $thumb = "" ) {
 		if (!empty($this->avatarUrl)) {
 			return $this->avatarUrl;
 		} else {
@@ -251,14 +254,14 @@ class Masthead {
 					/**
 					 * uploaded file, we are adding common/avatars path
 					 */
-					$url = $wgBlogAvatarPath . $url . '?' . $this->mUser->mTouched;
+					$url = $wgBlogAvatarPath . $thumb . $url;
 				}
 				else {
 					/**
 					 * default avatar, path from messaging.wikia.com
 					 */
 					$hash = FileRepo::getHashPathForLevel( $url, 2 );
-					$url = $this->mDefaultPath . $hash . $url;
+					$url = $this->mDefaultPath . $thumb . $hash . $url;
 				}
 			}
 			else {
@@ -268,7 +271,33 @@ class Masthead {
 			return wfReplaceImageServer( $url, $this->mUser->getTouched() );
 		}
 	}
-	
+
+	/**
+	 * method for taking scaled avatars
+	 * - avatar will be scaled by external image thumbnailer
+	 * - external image thumbnailer use only width and scale it with the same
+	 *   proportion as original
+	 * - currently there's no thumbnail file, it's only cached on varnish and
+	 *   generated on fly as needed
+	 *
+	 * @access public
+	 * @author Krzysztof Krzyżaniak (eloy)
+	 *
+	 * @return string -- url to Avatar
+	 */
+	public function getThumbnail( $width ) {
+		$url = $this->getUrl( "/thumbs/" );
+
+		/**
+		 * returned url is virtual base for thumbnail, so
+		 *
+		 * - get last part of path
+		 * - add it as thumbnail file prefixed with widthpx
+		 */
+		$file = array_pop( explode( "/", $url ) );
+		return sprintf( "%s/%dpx-%s", $url, $width, $file );
+	}
+
 	/**
 	 * Returns true if the user whose masthead this is, has an avatar set.
 	 * Returns false if they do not (and would end up using the default avatar).
@@ -461,7 +490,7 @@ class Masthead {
 		}
 		wfProfileOut(__METHOD__);
 	}
-	
+
 	/**
 	 * While this is technically downloading the URL, the function's purpose is to be similar
 	 * to uploadFile, but instead of having the file come from the user's computer, it comes
@@ -474,7 +503,7 @@ class Masthead {
 	public function uploadByUrl($url){
 		global $wgTmpDirectory;
 		wfProfileIn(__METHOD__);
-		
+
 		$errorNo = UPLOAD_ERR_OK; // start by presuming there is no error.
 
 		if( !isset( $wgTmpDirectory ) || !is_dir( $wgTmpDirectory ) ) {
@@ -546,7 +575,7 @@ class Masthead {
 		wfProfileOut(__METHOD__);
 		return $errorNo;
 	}
-	
+
 	/**
 	 * Given the filename of the temporary image, post-process the image to be the right size, format, etc.
 	 *
@@ -675,13 +704,13 @@ class Masthead {
 			# if user is blocked - don't show avatar form
 			return true;
 		}
-		
-		// List of conditions taken from 
+
+		// List of conditions taken from
 		// extensions/wikia/UserProfile_NY/SpecialUploadAvatar.php */
 		// RT#53727: Avatar uploads not disabled
 		$bUploadsPossible = $wgEnableUploads && $wgUser->isAllowed( 'upload' ) && is_writeable( $wgUploadDirectory );
 //		var_dump($wgEnableUploads,$wgUser->isAllowed( 'upload' ),is_writeable( $wgUploadDirectory ));
-		
+
 		/**
 		 * run template
 		 */
@@ -829,7 +858,7 @@ class Masthead {
 		$namespace = $wgTitle->getNamespace();
 		$dbKey = SpecialPage::resolveAlias( $wgTitle->getDBkey() );
 		$isAnon = $wgUser->isAnon();
-		
+
 		$allowedNamespaces = array( NS_USER, NS_USER_TALK );
 		if ( defined('NS_BLOG_ARTICLE') ) {
 			$allowedNamespaces[] = NS_BLOG_ARTICLE;
@@ -916,12 +945,12 @@ class Masthead {
 						$out['nav_links'][] = array('text' => wfMsg('blog-page'), 'href' => $oTitle->getLocalUrl(), 'dbkey' => NS_BLOG_ARTICLE, 'tracker' => 'userblog');
 					}
 				}
-				
+
 				global $wgEnableWikiaFollowedPages;
 				if ( !empty($wgEnableWikiaFollowedPages) && $wgEnableWikiaFollowedPages) {
 					$follow = FollowHelper::getMasthead($userspace);
 					if (!empty($follow)) {
-						$out['nav_links'][] = $follow;	
+						$out['nav_links'][] = $follow;
 					}
 				}
 
