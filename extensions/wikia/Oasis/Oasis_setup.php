@@ -15,7 +15,6 @@ function wfOasisSetup() {
 	$wgHooks['ArticleDeleteComplete'][] = 'PageStatsService::onArticleDeleteComplete';
 	$wgHooks['ArticleSaveComplete'][] = 'PageStatsService::onArticleSaveComplete';
 	$wgHooks['ArticleSaveComplete'][] = 'UserStatsService::onArticleSaveComplete';
-	$wgHooks['ArticleSaveComplete'][] = 'RelatedPagesModule::onArticleSaveComplete';
 	$wgHooks['ArticleSaveComplete'][] = 'LatestActivityModule::onArticleSaveComplete';
 	$wgHooks['BlogTemplateGetResults'][] = 'BlogListingModule::getResults';
 	$wgHooks['BlogsRenderBlogArticlePage'][] = 'BlogListingModule::renderBlogListing';

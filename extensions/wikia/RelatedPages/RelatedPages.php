@@ -21,6 +21,7 @@ $dir = dirname(__FILE__) . '/';
 // hooks
 $wgHooks['OutputPageMakeCategoryLinks'][] = 'RelatedPages::onOutputPageMakeCategoryLinks';
 $wgHooks['OutputPageBeforeHTML'][] = 'RelatedPages::onOutputPageBeforeHTML';
+$wgHooks['ArticleSaveComplete'][] = 'RelatedPagesModule::onArticleSaveComplete';
 
 // classes
 $wgAutoloadClasses['RelatedPages'] = $dir . 'RelatedPages.class.php';
