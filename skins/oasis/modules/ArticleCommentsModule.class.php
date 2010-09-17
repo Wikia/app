@@ -32,7 +32,9 @@ class ArticleCommentsModule extends Module {
 			}
 
 			// Hm.
+			// TODO: don't pass whole instance of Masthead object for author of current comment
 			$this->avatar = $data['avatar'];
+
 			$this->canEdit = $data['canEdit'];
 			$this->isBlocked = $data['isBlocked'];
 			$this->reason = $data['reason'];
@@ -52,7 +54,7 @@ class ArticleCommentsModule extends Module {
 	// Call via ajax like this:
 	// http://owen.wikia-dev.com/index.php?action=ajax&rs=moduleProxy&moduleName=ArticleComments&actionName=AJAX&outputType=html
 	// &moduleParams=json_encoded_array()
-	// 
+	//
     // $this->param = $wgRequest->getText('param');
 
 	public function executeAJAX() {

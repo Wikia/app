@@ -43,6 +43,7 @@ class LatestActivityModule extends Module {
 				$item['time_ago'] = wfTimeFormatAgoOnlyRecent($change['timestamp']);
 				$item['user_name'] = $change['username'];
 
+/*
 				$oUser = User::newFromName( $change['username'] );
 				if ( ( $oUser instanceof User ) ) {
 					$item['avatar_url'] = Masthead::newFromUser($oUser)->getUrl();
@@ -51,6 +52,9 @@ class LatestActivityModule extends Module {
 					$randomInt = rand(1, 3);
 					$item['avatar_url'] = "{$wgStylePath}/oasis/images/generic_avatar{$randomInt}.png";
 				}
+*/
+
+				$item['avatar_url'] = AvatarService::getAvatarUrl($item['user_name'], 20);
 				$item['user_href'] = $change['user'];
 				$item['page_title'] = $change['title'];
 				$title = Title::newFromText( $change['title'], $change['ns'] );
