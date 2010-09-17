@@ -66,7 +66,7 @@ class RelatedPagesModule extends Module {
 	}
 
 	static function onArticleSaveComplete(&$article, &$user, $text, $summary,
-		$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
+		$minoredit, &$watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 		global $wgMemc;
 		$mKey = wfMemcKey('mOasisRelatedPages', $article->mTitle->getArticleId());
 		$wgMemc->delete($mKey);
