@@ -472,6 +472,11 @@ class SkinChooser {
 			$userSkin = 'monaco';
 		}
 
+		global $wgGiveMeOasis;
+		if(!empty($wgGiveMeOasis) && $wgRequest->getBool($wgGiveMeOasis, false)) {
+			$userSkin = 'oasis';
+		}
+
 		$user->mSkin = &Skin::newFromKey($userSkin);
 
 		$normalizedSkinName = substr(strtolower(get_class($user->mSkin)),4);
