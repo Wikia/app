@@ -103,6 +103,8 @@ class TopListItem extends TopListBase {
 			$cacheKey = $this->getVotesCountCacheKey();
 			$cachedValue = $wgMemc->get( $cacheKey );
 			if( !empty( $cachedValue ) ) {
+				$this->mVotesCount = $cachedValue;
+
 				wfProfileOut( __METHOD__ );
 				return $cachedValue;
 			}
@@ -133,6 +135,8 @@ class TopListItem extends TopListBase {
 	 */
 	private function incrCachedVotesCount() {
 		global $wgMemc;
+
+		$this->mVotesCount = null;
 		$wgMemc->incr( $this->getVotesCountCacheKey() );
 	}
 
