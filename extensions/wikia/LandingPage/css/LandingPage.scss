@@ -1,0 +1,134 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/rail-module";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+
+.WikiaArticle {
+	padding: 0;
+}
+
+.LandingPage {
+	margin: 30px 0;
+	.LandingPageRow {
+		@include clearfix;
+		margin: 25px 0;
+		padding: 10px 50px;
+	}
+
+	.LandingPageWelcome {
+		float: left;
+		width: 400px;
+		h1 {
+			color: $color-links;
+			font-size: 28px;
+			font-weight: bold;
+			margin: 0 0 0.5em 0;
+		}
+		p {
+			font-size: 17px;
+			margin: 0.4em 0;
+		}
+	}
+
+	.LandingPageScreenshots {
+		@include rail-module;
+		float: right;
+		padding-top: 35px;
+		width: 445px;
+		h1 {
+			@include linear-gradient($color-buttons, top, $color-button-highlight, 35%, $color-buttons, 65%);
+			color: $color-button-text;
+			display: inline;
+			left: -5px;
+			padding: 5px 15px 5px 25px;
+			position: absolute;
+			top: -12px;
+			.banner-corner-left {
+				border-color: #000000 #000000 transparent transparent;
+				bottom: -4px;
+				left: 0;
+			}
+		}
+		ul {
+			margin: 0;
+			list-style: none;
+			text-align: center;
+			li {
+				display: inline-block;
+				line-height: 2.5em;
+				margin: 5px 10px;
+			}
+			a {
+				font-weight: normal;
+			}
+			img {
+				border: solid 1px mix($color-text, $color-page, 20);
+				display: block;
+			}
+		}
+	}
+
+	.LandingPageButtons {
+		background-color: mix($color-text, $color-page, 10);
+		border-top: solid 1px mix($color-text, $color-page, 20);
+		border-bottom: solid 1px mix($color-text, $color-page, 20);
+		ul {
+			@include clearfix;
+			list-style: none;
+			margin: 50px 0;
+			text-align: center;
+			li {
+				@include rail-module;
+				border: none;
+				display: inline-block;
+				font-size: 20px;
+				font-weight: bold;
+				line-height: 1.4em;
+				margin: 0;
+				padding: 15px;
+				text-align: left;
+				width: 220px;
+				-moz-box-shadow: 0 0 10px mix($color-text, $color-page, 50);
+				a {
+					color: #a6d046; /* probably should be blue */
+					font-size: 20px;
+					font-weight: normal;
+				}
+				&.item-1 {
+					float: left;
+				}
+				&.item-3 {
+					float: right;
+				}
+			}
+		}
+	}
+
+	.LandingPageQuote {
+		border-right: solid 1px mix($color-text, $color-page, 30);
+		color: mix($color-text, $color-page, 80);
+		float: left;
+		font-size: 20px;
+		font-weight: bold;
+		line-height: 1.3em;
+		padding: 10px 20px 10px 40px;
+		position: relative;
+		width: 550px;
+		big {
+			font-size: 60px;
+			left: 0;
+			position: absolute;
+		}
+	}
+	.LandingPageLinks {
+		float: right;
+		list-style: none;
+		margin: 5px 0;
+		li {
+			float: left;
+			margin-left: 40px;
+		}
+		li:first-child {
+			margin-left: 0;
+		}
+	}
+}
