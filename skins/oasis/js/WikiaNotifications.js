@@ -21,22 +21,8 @@ WikiaNotifications = {
 
 			switch (notificationType) {
 				// dismiss talk page message notification
-				// TODO: refactor - send only single AJAX request dismissing all messages at once
 				case 1:
-					// get links to talk pages
-					var links = notification.find('a').not('.close');
-
-					links.each(function() {
-						var href = $(this).attr('href');
-						//href += (href.indexOf('?') > -1 ? '&' : '?') + 'action=render'; // this one will cached by varnish
-
-						// request each link, so talk page message will be removed
-						$('<iframe>', {'src': href}).
-							hide().
-							appendTo('body');
-					});
-
-					WikiaNotifications.purgeCurrentPage();
+					$.post(wgScript, {action: 'ajax', rs: 'wfDismissWikiaNewtalks'}, WikiaNotifications.purgeCurrentPage);
 
 					// remove wrapping <li>
 					notification.parent().remove();
