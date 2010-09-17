@@ -26,17 +26,18 @@ else {
 		<div>
 			<ul class="carousel">
 	<?php
-	$count = 1;
-	foreach ($thumbUrls as $url) {?>
+	// macbre: how many images to show at the page load, next images will be lazy loaded
+	$load = 3;
+	foreach ($thumbUrls as $i => $url) {?>
 		<li class="thumbs"><a class="image" ref="<?= $url["image_filename"] ?> " href="<?= $url["file_url"] ?>">
-			<img class="thumbimage" src="<?= $url["thumb_url"] ?>" />
+			<img class="thumbimage" <?= $i < $load ? 'src' : 'data-src' ?>="<?= $url["thumb_url"] ?>" />
 		</a>
-		
+
 		<span class="thumbcaption">
 			<?= wfMsg('oasis-latest-photos-by'); ?> <?= $url["user_href"] ?><br/>
 			<?= $url["date"] ?><br/>
-			
-			<?php 
+
+			<?php
 		if (count($url["links"] >= 1)) {?>
 			<?= wfMsg('oasis-latest-photos-posted-in'); ?>
 			<?= implode(',&nbsp;', $url["links"] ); ?>
