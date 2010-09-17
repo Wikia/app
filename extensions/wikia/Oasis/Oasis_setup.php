@@ -12,10 +12,11 @@ $wgExtensionFunctions[] = 'wfOasisSetup';
 function wfOasisSetup() {
 	global $wgHooks;
 
-	$wgHooks['ArticleSaveComplete'][] = 'PageStatsService::onArticleSaveComplete';
 	$wgHooks['ArticleDeleteComplete'][] = 'PageStatsService::onArticleDeleteComplete';
+	$wgHooks['ArticleSaveComplete'][] = 'PageStatsService::onArticleSaveComplete';
 	$wgHooks['ArticleSaveComplete'][] = 'UserStatsService::onArticleSaveComplete';
 	$wgHooks['ArticleSaveComplete'][] = 'RelatedPagesModule::onArticleSaveComplete';
+	$wgHooks['ArticleSaveComplete'][] = 'LatestActivityModule::onArticleSaveComplete';
 	$wgHooks['BlogTemplateGetResults'][] = 'BlogListingModule::getResults';
 	$wgHooks['BlogsRenderBlogArticlePage'][] = 'BlogListingModule::renderBlogListing';
 	$wgHooks['EditPage::showEditForm:initial'][] = 'BodyModule::onEditPageRender';

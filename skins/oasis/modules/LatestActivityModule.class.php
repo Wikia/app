@@ -9,25 +9,31 @@ class LatestActivityModule extends Module {
 
 		$maxElements = 3;
 
-		global $wgLang, $wgContentNamespaces, $wgStylePath;
+		global $wgLang, $wgContentNamespaces, $wgStylePath, $wgMemc;
 		$this->total = $wgLang->formatNum(SiteStats::articles());
-
-		// data provider
-		$includeNamespaces = implode('|', $wgContentNamespaces);
-		$parameters = array(
-			'type' => 'widget',
-//			'tagid' => $id,
-			'maxElements' => $maxElements,
-			'flags' => array('shortlist'),
-			'uselang' => $wgLang->getCode(),
-			'includeNamespaces' => $includeNamespaces
-		);
 
 		wfLoadExtensionMessages('MyHome');
 
-		$feedProxy = new ActivityFeedAPIProxy($includeNamespaces);
-		$feedProvider = new DataFeedProvider($feedProxy, 1, $parameters);
-		$feedData = $feedProvider->get($maxElements);
+		$mKey = wfMemcKey('mOasisLatestActivity');
+		$feedData = $wgMemc->get($mKey);
+		if (empty($feedData)) {
+
+			// data provider
+			$includeNamespaces = implode('|', $wgContentNamespaces);
+			$parameters = array(
+				'type' => 'widget',
+	//			'tagid' => $id,
+				'maxElements' => $maxElements,
+				'flags' => array('shortlist'),
+				'uselang' => $wgLang->getCode(),
+				'includeNamespaces' => $includeNamespaces
+			);
+
+			$feedProxy = new ActivityFeedAPIProxy($includeNamespaces);
+			$feedProvider = new DataFeedProvider($feedProxy, 1, $parameters);
+			$feedData = $feedProvider->get($maxElements);
+			$wgMemc->set($mKey, $feedData);
+		}
 
 		$this->changeList = array();
 
@@ -57,4 +63,13 @@ class LatestActivityModule extends Module {
 		}
 		wfProfileOut( __METHOD__ );
 	}
+
+	static function onArticleSaveComplete(&$article, &$user, $text, $summary,
+		$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
+		global $wgMemc;
+		$mKey = wfMemcKey('mOasisLatestActivity');
+		$wgMemc->delete($mKey);
+		return true;
+	}
+
 }
