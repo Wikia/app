@@ -25,21 +25,16 @@ class AvatarService extends Service {
 	/**
 	 * Get URL to default avatar
 	 */
-	static private function getDefaultAvatar() {
+	static private function getDefaultAvatar($avatarSize) {
 		wfProfileIn(__METHOD__);
 		global $wgStylePath;
 
-		static $avatarUrl;
-
-		if (!isset($avatarUrl)) {
-			if (class_exists('Masthead')) {
-				$defaultAvatars = Masthead::newFromUserId(0)->getDefaultAvatars();
-				$avatarUrl = array_shift($defaultAvatars);
-			}
-			else {
-				$randomInt = rand(1, 3);
-				$avatarUrl = "{$wgStylePath}/oasis/images/generic_avatar{$randomInt}.png";
-			}
+		if (class_exists('Masthead')) {
+			$avatarUrl = Masthead::newFromUserId(0)->getThumbnail($avatarSize);
+		}
+		else {
+			$randomInt = rand(1, 3);
+			$avatarUrl = "{$wgStylePath}/oasis/images/generic_avatar{$randomInt}.png";
 		}
 
 		wfProfileOut(__METHOD__);
@@ -82,28 +77,29 @@ class AvatarService extends Service {
 	/**
 	 * Get URL for avatar
 	 */
-	static function getAvatarUrl($userName) {
+	static function getAvatarUrl($userName, $avatarSize = 20) {
 		wfProfileIn(__METHOD__);
 
 		static $avatarsCache;
+		$key = "{$userName}::{$avatarSize}";
 
-		if (isset($avatarsCache[$userName])) {
-			$avatarUrl = $avatarsCache[$userName];
+		if (isset($avatarsCache[$key])) {
+			$avatarUrl = $avatarsCache[$key];
 		}
 		else {
 			$user = self::getUser($userName);
 
 			// handle anon users - return default avatar
 			if (empty($user) || !class_exists('Masthead')) {
-				$avatarUrl = self::getDefaultAvatar();
+				$avatarUrl = self::getDefaultAvatar($avatarSize);
 
 				wfProfileOut(__METHOD__);
 				return $avatarUrl;
 			}
 
-			$avatarUrl = Masthead::newFromUser($user)->getUrl();
+			$avatarUrl = Masthead::newFromUser($user)->getThumbnail($avatarSize);
 
-			$avatarsCache[$userName] = $avatarUrl;
+			$avatarsCache[$key] = $avatarUrl;
 		}
 
 		wfProfileOut(__METHOD__);
@@ -116,7 +112,7 @@ class AvatarService extends Service {
 	static function renderAvatar($userName, $avatarSize = 20) {
 		wfProfileIn(__METHOD__);
 
-		$avatarUrl = self::getAvatarUrl($userName);
+		$avatarUrl = self::getAvatarUrl($userName, $avatarSize);
 
 		$ret = Xml::element('img', array(
 			'src' => $avatarUrl,
