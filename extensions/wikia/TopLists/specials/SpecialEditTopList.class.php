@@ -254,12 +254,13 @@ class SpecialEditTopList extends SpecialPage {
 							}
 						}
 					}
+				}
 
-					if ( empty( $errors ) ) {
-						//update the cache to sync contents and redirect to reader's view
-						$list->invalidateCache();
-						$wgOut->redirect( $listUrl );
-					}
+				//invalidate caches
+				$list->invalidateCache();
+
+				if ( empty( $errors ) ) {
+					$wgOut->redirect( $listUrl );
 				}
 			}
 		} else {
