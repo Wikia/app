@@ -1,8 +1,4 @@
 <!-- s:<?= __FILE__ ?> -->
-<script type="text/javascript">
-/*<![CDATA[*/
-/*]]>*/
-</script>
 <h2>Variable Data - <?php echo $variable->cv_name ?>  <small>[<a href='#' id="wk-variable-change" title="Click here to edit this variable" onclick='javascript:$Factory.Variable.change(this, [ "wk-variable-select", 1]);return false;'>edit</a>]</small></h2>
 <div style="margin:.5em 0;"><?php echo $variable->cv_description ?></div>
 <table border='1' cellpadding='2' cellspacing='0'>
@@ -20,7 +16,7 @@
 		<td><?php echo $variable->cv_id ?></td>
 		<td><?php echo $variable->cv_variable_type ?></td>
 		<td><abbr title="<?php echo $accesslevels[ $variable->cv_access_level ] ?>"><?php echo $variable->cv_access_level ?></abbr></td>
-		<td><abbr title="<?php echo $variable->cv_variable_group; ?>"><?php $groups = WikiFactory::getGroups(); echo $groups[$variable->cv_variable_group]; unset($groups); ?></abbr></td>
+		<td><abbr title="<?php echo $variable->cv_variable_group; ?>"><?php echo $groups[$variable->cv_variable_group]; ?></abbr></td>
 		<td><?php echo ($variable->cv_is_unique == 1 ? "yes":"no"); ?></td>
 	</tr>
 </table>
@@ -53,7 +49,7 @@ Current value:
 <?php if( !isset( $variable->cv_value ) || is_null( $variable->cv_value ) ): ?>
     <strong>Value is not set</strong>
 <?php else: ?>
-	<input type="button" id="wk-submit-remove" name="remove-submit" value="Remove value" onclick="$Factory.Variable.tagCheck('remove');" /><br/>
+	<input type="button" class="wikia-button red" id="wk-submit-remove" name="remove-submit" value="Remove value" onclick="$Factory.Variable.tagCheck('remove');" /><br/>
     <pre><?php echo var_export( unserialize( $variable->cv_value ) ) ?></pre>
 <?php endif ?>
 </div>
