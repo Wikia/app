@@ -137,7 +137,7 @@ class WikiFactoryPage extends SpecialPage {
 					if ( ( $tab === "variables" ) && ( isset($parts[2]) ) ) {
 						$this->mVariableName = trim($parts[2]);
 					}
-					if ( ( $tab === "tags" ) && ( isset($parts[2]) ) ) {
+					if ( ( $tab === "tags" || $tab === "findtags"  ) && ( isset($parts[2]) ) ) {
 						$this->mSearchTag = trim($parts[2]);
 					}
 				}
@@ -250,24 +250,50 @@ class WikiFactoryPage extends SpecialPage {
 			switch( $this->mTab ) {
 				case "hubs":
 					$info = $this->doUpdateHubs( $wgRequest );
-				break;
+					break;
 				case "domains":
 					$info = $this->doUpdateDomains( $wgRequest );
-				break;
+					break;
 				case "tags":
-					if($wgRequest->getVal('wpSearchTagSubmit') == null) {
-						$info = $this->doUpdateTags( $wgRequest );
-					}
-					else {
+					$info = $this->doUpdateTags( $wgRequest );
+					break;
+				case "findtags":
+					#we have 2 things that post from this page :(
+					if( $wgRequest->getVal('wpSearchTag') != null ) {
 						$this->mSearchTag = $wgRequest->getVal('wpSearchTag');
 						$info = $this->doSearchTags( $this->mSearchTag );
 					}
-				break;
+					if( $wgRequest->getVal('remove_tag') != null &&
+						$wgRequest->getVal('remove_tag_id') != null ) {
+						$this->mRemoveTag = $wgRequest->getVal('remove_tag');
+						$this->mRemoveTags = $wgRequest->getIntArray('remove_tag_id');
+						$info = $this->doMultiRemoveTags( $this->mRemoveTag, $this->mRemoveTags );
+					}
+					break;
+				case "masstags":
+						$this->mMassTag = $wgRequest->getVal('wpMassTag');
+						$this->mMassTagWikis = $wgRequest->getVal('wfMassTagWikis');
+						
+					if( $this->mMassTag != null && $this->mMassTagWikis != null ) {
+						$info = $this->doMassTag();
+					}
+					else
+					{
+						if( $this->mMassTag == null )
+						{
+							$info = Wikia::errorbox('missing tag to apply to wikis');
+						}
+						if( $this->mMassTagWikis == null )
+						{
+							$info = Wikia::errorbox('missing wikis to apply tag to');
+						}
+					}
+					break;
 				case "ezsharedupload":
 					if($wgRequest->getVal('ezsuSave') != null) {
 						$info = $this->doSharedUploadEnable( $wgRequest );
 					}
-				break;
+					break;
 			}
 		}
 		else {
@@ -280,6 +306,8 @@ class WikiFactoryPage extends SpecialPage {
 					if( $tag_id ) {
 						$info = $this->doUpdateTags( $wgRequest, $tag_id );
 					}
+					break;
+				case "findtags":
 					if ( !empty( $this->mSearchTag ) ) {
 						$info = $this->doSearchTags( $this->mSearchTag );
 					}
@@ -318,12 +346,12 @@ class WikiFactoryPage extends SpecialPage {
 			"wikiRequest" => $oWikiRequest,
 			"variableName"=> $this->mVariableName,
 			"user_name"   => $user_name,
-			"isDevel"     => $wgDevelEnvironment
+			"isDevel"     => $wgDevelEnvironment,
+			'wikiFactoryUrl' => Title::makeTitle( NS_SPECIAL, 'WikiFactory' )->getFullUrl()
 		);
-		if( $this->mTab === "tags" ) {
+		if( $this->mTab === "tags" ||  $this->mTab === "findtags" ) {
 			$vars[ 'searchTag' ] = $this->mSearchTag;
 			$vars[ 'searchTagWikiIds' ] = $this->mTagWikiIds;
-			$vars[ 'wikiFactoryUrl' ] = Title::makeTitle( NS_SPECIAL, 'WikiFactory' )->getFullUrl();
 		}
 		if( $this->mTab === "clog" ) {
 			$pager = new ChangeLogPager( $this->mWiki->city_id );
@@ -493,6 +521,54 @@ class WikiFactoryPage extends SpecialPage {
 	}
 
 	/**
+	 * doMassTag
+	 *
+	 * data is stored in:
+	 *  $this->mMassTag
+	 *  $this->mMassTagWikis
+	 *
+	 * @access private
+	 * @author uberfuzzy@wikia-inc.com
+	 * @note yes, i know this is HORRIBLY ineffecient, but I was going for RAD, not clean.
+	 */
+	private function doMassTag() {
+		#return Wikia::errorbox( "code not written" );
+
+		wfProfileIn( __METHOD__ );
+
+		$this->mMassTagWikis = explode("\n", $this->mMassTagWikis);
+		global $wgOut;
+		
+		$msg  = false;
+		$added=0;
+
+		foreach($this->mMassTagWikis as $dart_string)
+		{
+			if( empty($dart_string) ) { continue; }
+			$dart_parts = explode("/", $dart_string);
+			if( count($dart_parts) < 2 ) {
+				continue;
+			}
+			$db = ltrim($dart_parts[1], '_');
+
+			$wkid = WikiFactory::DBtoID( $db );
+			$wgOut->addHTML("id={$wkid}<br/>");
+
+			$added++;
+			$oTag = new WikiFactoryTags( $wkid );
+			$oTag->addTagsByName( $this->mMassTag );
+			$oTag->clearCache();
+		}
+
+		$msg = "Added '{$this->mMassTag}' to {$added} wikis";
+		$msg .= " (maybe)";
+		wfProfileOut( __METHOD__ );
+
+		return Wikia::errorbox( $msg );
+		return Wikia::successbox( $msg );
+	}
+	
+	/**
 	 * doSearchTags
 	 *
 	 * @access private
@@ -510,9 +586,48 @@ class WikiFactoryPage extends SpecialPage {
 			}
 			else {
 				$result = Wikia::successbox( count( $this->mTagWikiIds ) . " wiki(s) found with \"" . $searchTag . "\" tag assigned" );
+				$result ='';
 			}
 		}
 		return $result;
+	}
+
+	/**
+	 * doMultiRemoveTags
+	 *
+	 * @access private
+	 * @author uberfuzzy@wikia-inc.com
+	 */
+	private function doMultiRemoveTags( $removeTag, $fromIds ) {
+			return Wikia::errorbox( "multiremove not finished" );
+
+		if( empty( $removeTag ) ) {
+			return Wikia::errorbox( "no tag to remove?" );
+		}
+		if( empty( $fromIds ) ) {
+			return Wikia::errorbox( "no items to remove?" );
+		}
+
+		$tagId = WikiFactoryTags::idFromName( $removeTag );
+		if( $tagID === false ) {
+			return Wikia::errorbox( "tag [{$removeTag}] doesnt exist" );
+		}
+
+		$tagsQuery = new WikiFactoryTagsQuery( $removeTag );
+		$system = $tagsQuery->doQuery();
+
+		if( count( $system ) == 0 ) {
+			return Wikia::errorbox( "No wikis with \"" . $removeTag . "\" tag assigned" );
+		}
+
+		$intersect = array_intersect($system, $fromIds);
+		
+		return "we were asked to remove stuff from {$removeTag}<br/>".
+		"and system says [" . count($system) . "] items have this tag<br/>".
+		"and we were asked to remove [". count($fromIds)."]<br/>".
+		"there are [". count($fromIds)."] intersecting.<br/>".
+		print_r($intersect,1);
+
 	}
 
 	/**
@@ -543,7 +658,11 @@ class WikiFactoryPage extends SpecialPage {
 		}
 
 		if( $tab === $active ) {
-			return $text;
+			#return $text;
+			$attribs = array(
+				"href" => $title->getFullUrl()
+			);
+			return Xml::element( 'a', $attribs, $text );
 		}
 		else {
 			$attribs = array(
