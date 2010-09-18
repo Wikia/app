@@ -549,7 +549,7 @@ $(function() {
 			</li><?php endif; ?>
 			<?php if ($statuses[$wiki->city_public] == 'disabled') : ?><li>
 				<div>Disabled reason: <?=wfMsg('closed-reason')?> (<?=$wiki->city_additional?>)</div>
-			<?php endif ?></li>
+			</li><?php endif ?>
 		</ul>
 		<br/>
 		<ul>
