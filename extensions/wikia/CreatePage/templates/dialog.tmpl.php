@@ -1,5 +1,5 @@
 <div id="CreatePageDialog" title="<?= wfMsg( 'createpage-dialog-title' ) ?>" >
-	<form name="CreatePageForm" id="CreatePageForm" onsubmit="CreatePage.submitDialog(true); return false">
+	<form name="CreatePageForm" id="CreatePageForm" onsubmit="CreatePage.submitDialog(true); return false;">
 		<div id="CreatePageContainer">
 			<div id="CreatePageDialogHeader">
 				<?= wfMsg( 'createpage-dialog-message1' ) ?>
@@ -13,22 +13,20 @@
 				<div id="CreatePageDialogChoose">
 					<?= wfMsg( 'createpage-dialog-choose' ) ?>
 				</div>
-				<div id="CreatePageDialogChoices">
-					<div id="CreatePageDialogFormatContainer" class="chooser">
-						<div>
-							<input type="radio" name="wpCreatePageChoices" id="CreatePageDialogFormat" value="format" />
-							<label for="CreatePageDialogFormat"><?= wfMsg( 'createpage-dialog-format' ) ?>
-							<img src="/extensions/wikia/CreatePage/images/thumbnail_format.png" /></label>
-						</div>
-					</div>
-					<div id="CreatePageDialogBlankContainer" class="chooser">
-						<div>
-							<input type="radio" name="wpCreatePageChoices" id="CreatePageDialogBlank" value="blank" />
-							<label for="CreatePageDialogBlank"><?= wfMsg( 'createpage-dialog-blank' ) ?>
-							<img src="/extensions/wikia/CreatePage/images/thumbnail_blank.png" /></label>
-						</div>
-					</div>
-				</div>
+				<ul id="CreatePageDialogChoices">
+					<? foreach( $options as $name => $params ) :?>
+						<li id="CreatePageDialog<?= ucfirst( $name ) ;?>Container" class="chooser">
+							<div>
+								<input type="radio" name="wpCreatePageChoices" id="CreatePageDialog<?= ucfirst( $name ) ;?>" value="<?= $name ;?>" />
+								<label for="CreatePageDialog<?= ucfirst( $name ) ;?>">
+									<?= $params[ 'label' ] ;?>
+									<img src="<?= $params[ 'icon' ] ;?>" />
+								</label>
+							</div>
+						</li>
+						<script type="text/javascript">CreatePage.options['<?= $name ;?>'] = <?= json_encode( $params ) ;?>;</script>
+					<? endforeach ;?>
+				</ul>
 		</div>
 		<?php else: ?>
 			<br />
@@ -41,7 +39,5 @@
 	</form>
 </div>
 <script type="text/javascript">/*<![CDATA[*/
-	$( '#CreatePageDialogFormatContainer' ).click( function() { CreatePage.setPageLayout('format'); });
-	$( '#CreatePageDialogBlankContainer' ).click( function() { CreatePage.setPageLayout('blank'); });
 	CreatePage.setPageLayout( '<?php echo $defaultPageLayout; ?>' );
 /*]]>*/</script>
