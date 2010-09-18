@@ -93,15 +93,37 @@ function wfCreatePageToggleUserPreference( $toggles, $default_array = false ) {
 }
 
 function wfCreatePageAjaxGetDialog() {
-	global $wgWikiaCreatePageUseFormatOnly, $wgUser;
+	global $wgWikiaCreatePageUseFormatOnly, $wgUser, $wgCdnStylePath, $wgExtensionsPath, $wgScript;
 
 	$template = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+
+	$options = array(
+		'format'=>array(
+			'namespace' => NS_MAIN,
+			'label' => wfMsg( 'createpage-dialog-format' ),
+			'icon' => "{$wgCdnStylePath}{$wgExtensionsPath}/wikia/CreatePage/images/thumbnail_format.png",
+			'trackingId' => 'standardlayout',
+			'submitUrl' => "{$wgScript}?title=$1&action=edit&useFormat=1"
+		),
+		'blank'=> array(
+			'namespace' => NS_MAIN,
+			'label' => wfMsg( 'createpage-dialog-blank' ),
+			'icon' => "{$wgCdnStylePath}{$wgExtensionsPath}/wikia/CreatePage/images/thumbnail_blank.png",
+			'trackingId' => 'blankpage',
+			'submitUrl' => "{$wgScript}?title=$1&action=edit"
+		)
+	);
+
+	if ( empty( $wgWikiaCreatePageUseFormatOnly ) ) {
+		wfRunHooks( 'CreatePage::FetchOptions', array( &$options ) );
+	}
 
 	$defaultLayout = $wgUser->getOption( 'createpagedefaultblank', false ) ?  'blank' : 'format';
 
 	$template->set_vars( array(
 			'useFormatOnly' => !empty( $wgWikiaCreatePageUseFormatOnly ) ? true : false,
-			'defaultPageLayout' => $defaultLayout
+			'defaultPageLayout' => $defaultLayout,
+			'options' => $options
 		)
 	);
 
@@ -118,7 +140,8 @@ function wfCreatePageAjaxCheckTitle() {
 	global $wgRequest, $wgUser;
 
 	$result = array( 'result' => 'ok' );
-	$sTitle = $wgRequest->getVal ( 'title' ) ;
+	$sTitle = $wgRequest->getVal( 'title' ) ;
+	$nameSpace = $wgRequest->getInt( 'namespace' ) ;
 
 	// perform title validation
 	if ( empty( $sTitle ) ) {
@@ -126,7 +149,7 @@ function wfCreatePageAjaxCheckTitle() {
 		$result['msg'] = wfMsg( 'createpage-error-empty-title' );
 	}
 	else {
-		$oTitle = Title::newFromText( $sTitle );
+		$oTitle = Title::newFromText( $sTitle, $nameSpace );
 
 		if ( !( $oTitle instanceof Title ) ) {
 			$result['result'] = 'error';

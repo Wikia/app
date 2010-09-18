@@ -21,6 +21,8 @@
 
 #CreatePageDialogChoices {
 	margin-bottom: 8px;
+	list-style-type: none;
+	margin: 0;
 }
 
 #wpCreatePageDialogTitle {

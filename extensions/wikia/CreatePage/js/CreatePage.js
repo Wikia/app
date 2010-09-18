@@ -2,6 +2,7 @@ var CreatePage = {};
 var CreatePageEnabled = false;
 
 CreatePage.pageLayout = null;
+CreatePage.options = {};
 
 CreatePage.checkTitle = function( title, enterWasHit ) {
 	$.getJSON(wgScript,
@@ -12,13 +13,10 @@ CreatePage.checkTitle = function( title, enterWasHit ) {
 			},
 			function(response) {
 				if(response.result == 'ok') {
-					if( enterWasHit ) {
-						CreatePage.track('enter/' + ( CreatePage.pageLayout == 'format' ? 'standardlayout' : 'blankpage'));
-					}
-					else {
-						CreatePage.track('create/' + ( CreatePage.pageLayout == 'format' ? 'standardlayout' : 'blankpage'));
-					}
-					location.href = wgScript + '?title=' + encodeURIComponent( title ) + '&action=edit' + ( CreatePage.pageLayout == 'format' ? '&useFormat=1' : '');
+					var action = (enterWasHit) ? 'enter' : 'create';
+
+					CreatePage.track(action + '/' + CreatePage.options[CreatePage.pageLayout]['trackingId']);					
+					location.href = CreatePage.options[CreatePage.pageLayout]['submitUrl'].replace('$1', encodeURIComponent( title ));
 				}
 				else {
 					CreatePage.displayError(response.msg);
@@ -38,9 +36,19 @@ CreatePage.openDialog = function(e, titleText) {
 					callback: function() {
 						CreatePageEnabled = false;
 						CreatePage.track( 'open' );
+
+						for(var name in CreatePage.options){
+							var idToken = name.charAt(0).toUpperCase() + name.substring(1);
+							var elm = $( '#CreatePageDialog' + idToken + 'Container' );
+							
+							elm.data('optionName', name);
+							elm.click( function() {CreatePage.setPageLayout($(this).data('optionName'));});
+						}
+
 						if(titleText != null) {
 							$('#wpCreatePageDialogTitle').val( decodeURIComponent( titleText ) );
 						}
+
 						$('#wpCreatePageDialogTitle').focus();
 					},
 				onClose: function() {
@@ -59,25 +67,16 @@ CreatePage.displayError = function( errorMsg ) {
 	var box = $( '#CreatePageDialogTitleErrorMsg' );
 	box.html( '<span id="createPageErrorMsg">' + errorMsg + '</span>' );
 	box.removeClass('hiddenStructure');
-};
+};alert
 
 CreatePage.setPageLayout = function( layout ) {
 	CreatePage.pageLayout = layout;
-	switch( layout ) {
-		case 'format':
-			$('#CreatePageDialogFormat').attr( 'checked', 'checked' );
-			$('#CreatePageDialogBlankContainer').removeClass( 'accent' );
-			$('#CreatePageDialogFormatContainer').addClass( 'accent' );
-			CreatePage.track('standardlayout');
-			break;
-		case 'blank':
-		default:
-			$('#CreatePageDialogBlank').attr( 'checked', 'checked' );
-			$('#CreatePageDialogBlankContainer').addClass( 'accent' );
-			$('#CreatePageDialogFormatContainer').removeClass( 'accent' );
-			CreatePage.track('blankpage');
-			break;
-	}
+	var idToken = layout.charAt(0).toUpperCase() + layout.substring(1);
+
+	$('#CreatePageDialog' + idToken).attr( 'checked', 'checked' );
+	$('#CreatePageDialogChoices').children('li').removeClass( 'accent' );
+	$('#CreatePageDialog' + idToken + 'Container').addClass( 'accent' );
+	CreatePage.track(CreatePage.options[layout]['trackingId']);
 };
 
 CreatePage.track = function( str ) {
@@ -125,11 +124,11 @@ $(function() {
 		if( !window.WikiaDisableDynamicLinkCreatePagePopup ) {
 			if( $( '#dynamic-links-write-article-icon' ).exists() ) {
 				// open dialog on clicking
-				$( '#dynamic-links-write-article-icon' ).click( function(e) { CreatePage.openDialog(e, null); });
+				$( '#dynamic-links-write-article-icon' ).click( function(e) {CreatePage.openDialog(e, null);});
 			}
 			if( $( '#dynamic-links-write-article-link' ).exists() ) {
 				// open dialog on clicking
-				$( '#dynamic-links-write-article-link' ).click( function(e) { CreatePage.openDialog(e, null); });
+				$( '#dynamic-links-write-article-link' ).click( function(e) {CreatePage.openDialog(e, null);});
 			}
 		}
 
@@ -147,7 +146,7 @@ $(function() {
 			}
 		}
 
-		$("a.new").bind('click', function(e) { CreatePage.redLinkClick(e, CreatePage.getTitleFromUrl(this.href)) } );
+		$("a.new").bind('click', function(e) {CreatePage.redLinkClick(e, CreatePage.getTitleFromUrl(this.href))} );
 		$(".createboxButton").bind('click', function(e) {
 			var form = $(e.target).parent();
 
