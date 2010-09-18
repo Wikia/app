@@ -114,6 +114,31 @@ class TopListHelper {
 	/**
 	 * @author Federico "Lox" Lucignano
 	 *
+	 * Callback for the CreatePage::FetchOptions hook
+	 */
+	static public function onCreatePageFetchOptions( &$options ) {
+		global $wgCdnStylePath, $wgExtensionsPath, $wgScript;
+		
+		wfLoadExtensionMessages( 'TopLists' );
+		
+		$specialPageTitle = Title::newFromText( 'CreateTopList', NS_SPECIAL );
+		$url = $specialPageTitle->getFullUrl();
+
+		$options[ 'toplist' ] = array(
+			'namespace' => NS_TOPLIST,
+			'label' => wfMsg( 'toplists-createpage-dialog-label' ),
+			//'icon' => "{$wgCdnStylePath}{$wgExtensionsPath}/wikia/TopLists/images/thumbnail_toplist.png"
+			'icon' => "{$wgExtensionsPath}/wikia/TopLists/images/thumbnail_toplist.png",
+			'trackingId' => 'toplist',
+			'submitUrl' => "{$url}/$1"
+		);
+
+		return true;
+	}
+
+	/**
+	 * @author Federico "Lox" Lucignano
+	 *
 	 * List editor utility function
 	 */
 	static public function clearSessionItemsErrors() {

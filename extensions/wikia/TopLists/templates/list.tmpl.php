@@ -32,13 +32,16 @@
 			<li>
 				<div class="ItemNumber">
 					<span>#<?= ( ++$index ) ;?></span>
-					<div class="button item-vote-button" id="<?= $item->getTitleText() ;?>"><?= wfMsgForContent( 'toplists-list-vote-up' ) ;?></div>
+					<div class="button item-vote-button" id="<?= $item->getTitleText() ;?>">
+						<img src="<?= wfBlankImgUrl() ;?>" class="chevron"/>
+						<?= wfMsgForContent( 'toplists-list-vote-up' ) ;?>
+					</div>
 				</div>
 				<div class="ItemContent">
 					<?= $item->getParsedContent() ;?>
-					<span class="author"><?= wfMsgForContent( 'toplists-list-created-by', array( $item->getCreatorUserName() )) ;?></span>
+					<span class="author"><?= wfMsgExt( 'toplists-list-created-by', array( 'parse', 'content' ), array( $item->getCreatorUserName() ) ) ;?></span>
 				</div>
-				<div class="ItemVotes"><?= wfMsgForContent( 'toplists-list-votes-num', array( $item->getVotesCount() ) ) ;?></div>
+				<div class="ItemVotes"><?= wfMsgExt( 'toplists-list-votes-num', array( 'parsemag', 'content' ), array( $item->getVotesCount() ) ) ;?></div>
 			</li>
 		<? endforeach; ?>
 	</ul>

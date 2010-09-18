@@ -96,9 +96,10 @@ $wgAjaxExportList[] = 'TopListHelper::voteItem';
 //hooks
 global $wgHooks;
 
-$wgHooks['ArticleFromTitle'][] = 'TopListHelper::onArticleFromTitle';
-$wgHooks['AlternateEdit'][] = 'TopListHelper::onAlternateEdit';
+$wgHooks[ 'ArticleFromTitle' ][] = 'TopListHelper::onArticleFromTitle';
+$wgHooks[ 'AlternateEdit' ][] = 'TopListHelper::onAlternateEdit';
 //$wgHooks['UnwatchArticleComplete'][] = 'TopListHelper::onUnwatchArticleComplete';
+$wgHooks[ 'CreatePage::FetchOptions' ][] = 'TopListHelper::onCreatePageFetchOptions';
 
 //parser functions, tags and attributes
 define( 'TOPLIST_TAG', 'toplist' );

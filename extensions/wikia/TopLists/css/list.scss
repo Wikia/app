@@ -9,15 +9,9 @@
 @import "mixins.scss";
 
 $item-height: 60px;
-$item-width: 400px;
+$item-width: 415px;
 
-#toplists-list-body {
-	padding-top: 20px;
-	
-	.picture-attribution {
-		display: none;
-	}
-	
+#toplists-list-body {	
 	ul {
 		list-style-type: none;
 		padding: 0;
@@ -25,30 +19,51 @@ $item-width: 400px;
 		
 		li {
 			@include border-radius(5px);
-			min-height: $item-height;
 			width: $item-width;
 			border: 1px solid $color-page-border;
 			background-color: $color-module-shadow;
 			padding: 8px;
 			margin-bottom: 25px;
+			position: relative;
 
 			.ItemNumber {
+				text-align: center;
+				
 				span {
 					display: block;
 				}
 				
 				float: left;
+				margin-right: 15px;
 				font: {
 					color: $color-module-shadow;
-					size: 20px;
+					size: 16px;
 					weight: bold;
 				}
-				
-				margin-right: 15px;
+
+				.button{
+					position: relative;
+					padding-left: 14px;
+					
+					.chevron {
+						border: {
+							color: transparent transparent $color-page transparent;
+							width: 8px 4px;
+						}
+						position: absolute;
+						top: -2px;
+						left: 4px;
+					}
+				}
 			}
 
 			.ItemContent {
-				font-size: 15px;
+				font-size: 17px;
+				width: 345px;
+
+				p {
+					margin: 0;
+				}
 
 				.author {
 					display: block;
@@ -57,7 +72,11 @@ $item-width: 400px;
 			}
 
 			.ItemVotes {
-				float: right;
+				position: absolute;
+				top: 10px;
+				right: 10px;
+				line-height: 11px;
+				text-align: right;
 			}
 		}
 	}
