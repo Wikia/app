@@ -12,16 +12,10 @@ $.getScript(stylepath+'/common/jquery/jquery.autocomplete.js', function() {
 		minChars:3,
 		deferRequestBy: 0
 	});
-	$('#wftagsearchinput').autocomplete({
-		serviceUrl: wgServer+wgScript+'?action=ajax&rs=WikiFactoryTags::axQuery',
-		minChars:3,
-		deferRequestBy: 0
-	});
 });
 
 /*]]>*/
 </script>
-<h2>Tags</h2>
 <div>
 <?php
 	if( !empty( $info ) ):
@@ -30,7 +24,7 @@ $.getScript(stylepath+'/common/jquery/jquery.autocomplete.js', function() {
 ?>
 <form action="<?php echo $title->getFullUrl() ?>" method="post">
 <fieldset>
-	<legend>Tags management  </legend>
+	<legend><strong><big>Tags management</big></strong></legend>
 	<table>
 	<tr>
 	<td class="mw-label" style="width: 150px;">
@@ -40,10 +34,27 @@ $.getScript(stylepath+'/common/jquery/jquery.autocomplete.js', function() {
 		&nbsp;
 <?php
 	if( is_array( $tags ) ):
+		$remove_icon = '<img src="http://images1.wikia.nocookie.net/__cb21710/common/skins/common/blank.gif" class="sprite delete" alt="remove" />';
 		foreach( $tags as $id => $tag ):
-			echo " <a href=\"" . $title->getFullUrl().  "/{$tag}\"><strong>{$tag}</strong></a><sup><a href=\"";
-			echo $title->getFullUrl( array( "wpTagId" => $id, "wpTagName" => $tag ) );
-			echo "\" class=\"wfTagRemove\" onclick=\"return deletechecked()\" >remove</a></sup> ";
+			echo ' ' . Xml::tags('a',
+				array(
+					'href' => $wikiFactoryUrl . '/' .
+								$wiki->city_id .  '/' .
+								'findtags' . '/' .
+								$tag,
+					),
+				"<strong>{$tag}</strong>"
+				);
+
+			echo '&nbsp;' . Xml::tags('a',
+				array(
+					'href' => $title->getFullUrl( array( "wpTagId" => $id, "wpTagName" => $tag ) ),
+					'class' => 'wfTagRemove',
+					'onclick' => 'return deletechecked()',
+					'title' => 'remove tag from this wiki',
+					),
+				$remove_icon
+				);
 		endforeach;
 	endif;
 ?>
@@ -61,31 +72,6 @@ $.getScript(stylepath+'/common/jquery/jquery.autocomplete.js', function() {
 	</tr>
 	</table>
 </fieldset>
-<fieldset>
-	<legend>Search for wikis</legend>
-	<table>
-	<tr>
-		<td class="mw-label" style="width: 150px;">
-			Tag name
-		</td>
-		<td class="mw-input">
-			&nbsp;
-			<input type="text" name="wpSearchTag" id="wftagsearchinput" value="<?php echo $searchTag; ?>" />
-			<input type="submit" name="wpSearchTagSubmit" value="Search" />
-		</td>
-	</tr>
-	<?php if( count( $searchTagWikiIds ) > 0 ): ?>
-		<tr>
-			<td class="mw-label">Tagged wikis</td>
-			<td class="mw-input">
-				<?php foreach( $searchTagWikiIds as $wikiId ): ?>
-					<a href="<?php echo $wikiFactoryUrl . "/".$wikiId; ?>"><?php echo "<strong>" . $wikiId . "</strong> - " . WikiFactory::getVarValueByName('wgServer', $wikiId); ?></a><br />
-				<?php endforeach; ?>
-			</td>
-		</tr>
-	<?php endif; ?>
-	</table>
-</fieldset>
-</form
+</form>
 </div>
 <!-- e:<?= __FILE__ ?> -->

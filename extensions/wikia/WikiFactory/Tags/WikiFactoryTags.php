@@ -181,8 +181,8 @@ class WikiFactoryTags {
 	/**
 	 * use provided string to add new tags into database. Tags will be:
 	 *
-	 * 1) splitted by space
-	 * 2) lowercased
+	 * 1) lowercased
+	 * 2) splitted by space
 	 * 3) added to city_tag table if they are not exist already
 	 * 4) added to city_tag_map
 	 *
@@ -375,6 +375,9 @@ class WikiFactoryTags {
 			array( "city_id" => $this->mCityId ),
 			__METHOD__
 		);
+
+		#did changes, clear old values
+		$this->clearCache();
 
 		wfProfileOut( __METHOD__ );
 

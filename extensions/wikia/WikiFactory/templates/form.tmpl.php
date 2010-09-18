@@ -579,8 +579,9 @@ $(function() {
 			<li>
 				&nbsp;
 			</li>
-			<li <?php echo ( $tab === "tags" ) ? 'class="active"' : 'class="inactive"' ?> >
-				<?php echo WikiFactoryPage::showTab( "tags", $tab, $wiki->city_id ); ?>
+			<li <?php $subTags = in_array($tab, array('tags', 'masstags', 'findtags') );
+					  echo ( $subTags ) ? 'class="active"' : 'class="inactive"' ?> >
+				<?php echo WikiFactoryPage::showTab( "tags", ( ($subTags)?'tags':$tab ), $wiki->city_id ); ?>
 			</li>
 			<li>
 				&nbsp;
@@ -622,9 +623,36 @@ $(function() {
 			</li>
 			<li>
 				&nbsp;
-			</li>
+			</li><?php /* hiding this for now
 			<li <?php echo ( $tab === "eznamespace" ) ? 'class="active"' : 'class="inactive"' ?> >
 				<?php echo WikiFactoryPage::showTab( "eznamespace", $tab, $wiki->city_id ); ?>
+			</li>
+			<li>
+				&nbsp;
+			</li> */?>
+		</ul>
+<?php
+	}
+	if( $subTags ) {
+?>
+		<ul class="tabs second-row" id="wiki-factory-tabs-second">
+			<li>
+				&nbsp;
+			</li>
+			<li <?php echo ( $tab === "tags" ) ? 'class="active"' : 'class="inactive"' ?> >
+				<?php echo WikiFactoryPage::showTab( "tags", $tab, $wiki->city_id, 'tags2' ); ?>
+			</li>
+			<li>
+				&nbsp;
+			</li>
+			<li <?php echo ( $tab === "masstags" ) ? 'class="active"' : 'class="inactive"' ?> >
+				<?php echo WikiFactoryPage::showTab( "masstags", $tab, $wiki->city_id ); ?>
+			</li>
+			<li>
+				&nbsp;
+			</li>
+			<li <?php echo ( $tab === "findtags" ) ? 'class="active"' : 'class="inactive"' ?> >
+				<?php echo WikiFactoryPage::showTab( "findtags", $tab, $wiki->city_id ); ?>
 			</li>
 			<li>
 				&nbsp;
@@ -660,6 +688,14 @@ $(function() {
 		case "tags":
 			include_once( "form-tags.tmpl.php" );
 		break;
+
+			case "masstags":
+				include_once( "form-tags-mass.tmpl.php" );
+			break;
+
+			case "findtags":
+				include_once( "form-tags-find.tmpl.php" );
+			break;
 
 		case "close":
 			include_once( "form-close.tmpl.php" );
