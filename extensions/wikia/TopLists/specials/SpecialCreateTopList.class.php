@@ -28,12 +28,11 @@ class SpecialCreateTopList extends SpecialPage {
 
 		TopListHelper::clearSessionItemsErrors();
 
-		//handles redirects form edit specialpage for non-existing lists
-		$listName = $wgRequest->getText( 'wpListName', null );
-
 		$errors = array();
+		$listName = null;
 		$relatedArticleName = null;
 		$selectedPictureName = null;
+		$selectedImage = null;
 		$items = null;
 
 		if( $wgRequest->wasPosted() ) {
@@ -54,12 +53,12 @@ class SpecialCreateTopList extends SpecialPage {
 				$listUrl = $title->getFullUrl();
 
 				if ( !empty( $relatedArticleName ) ) {
-					$article = Title::newFromText( $relatedArticleName );
+					$title = Title::newFromText( $relatedArticleName );
 
-					if ( empty( $article ) ) {
+					if ( empty( $title ) ) {
 						$errors[ 'related_article_name' ] = array( wfMsg( 'toplists-error-invalid-title' )  );
 					} else {
-						$setResult = $list->setRelatedArticle( $article );
+						$setResult = $list->setRelatedArticle( $title );
 
 						if ( $setResult !== true ) {
 							foreach ( $setResult as $errorTuple ) {
@@ -70,16 +69,31 @@ class SpecialCreateTopList extends SpecialPage {
 				}
 
 				if ( !empty( $selectedPictureName ) ) {
-					$article = Title::newFromText( $selectedPictureName, NS_FILE );
+					$title = Title::newFromText( $selectedPictureName, NS_FILE );
 
-					if ( empty( $article ) ) {
+					if ( empty( $title ) ) {
 						$errors[ 'selected_picture_name' ] = array( wfMsg( 'toplists-error-invalid-picture' ) );
 					} else {
-						$setResult = $list->setPicture( $article );
+						$setResult = $list->setPicture( $title );
 
-						if ( empty( $article ) || $setResult !== true ) {
+						if ( $setResult !== true ) {
 							foreach ( $setResult as $errorTuple ) {
 								$errors[ 'selected_picture_name' ][] =  wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] );
+							}
+						} else {
+							$source = new imageServing(
+								null,
+								120,
+								array(
+									"w" => 3,
+									"h" => 2
+								)
+							);
+
+							$result = $source->getThumbnails( array( $title->getText() ) );
+
+							if( !empty( $result[ $selectedPictureName ] ) ) {
+								$selectedImage = $result[ $selectedPictureName ];
 							}
 						}
 					}
@@ -174,6 +188,12 @@ class SpecialCreateTopList extends SpecialPage {
 					'value' => $item
 				);
 			}
+		} elseif ( !empty( $par ) ) {
+			$title = Title::newFromText( $par );
+
+			if ( !empty( $title ) ) {
+				$listName = $title->getText();
+			}
 		}
 
 		//show at least 3 items by default, if not enough fill in with empty ones
@@ -190,7 +210,7 @@ class SpecialCreateTopList extends SpecialPage {
 			'mode' => 'create',
 			'listName' => $listName,
 			'relatedArticleName' => $relatedArticleName,
-			'selectedPictureName' => $selectedPictureName,
+			'selectedImage' => $selectedImage,
 			'errors' => $errors,
 			//always add an empty item at the beginning to create the clonable template
 			'items' => array_merge(

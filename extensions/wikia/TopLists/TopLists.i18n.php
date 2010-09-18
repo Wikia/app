@@ -60,9 +60,12 @@ $messages['en'] = array(
 
 	//list view
 	'toplists-list-related-to' => 'Related to:',
-	'toplists-list-votes-num' => '$1 votes',
-	'toplists-list-created-by' => 'By $1',
-	'toplists-list-vote-up' => 'Vote Up'
+	'toplists-list-votes-num' => '{{PLURAL:$1|1<br/>vote|$1<br/>votes}}',
+	'toplists-list-created-by' => 'by [[User:$1|$1]]',
+	'toplists-list-vote-up' => 'Vote Up',
+
+	//createpage dialog
+	'toplists-createpage-dialog-label' => 'Top list'
 
 );
 
