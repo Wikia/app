@@ -560,6 +560,9 @@ class WikiFactoryPage extends SpecialPage {
 			$oTag->clearCache();
 		}
 
+		$oTQ = new WikiFactoryTagsQuery(''); // no tag, because we're just using it to uncache
+		$oTQ->clearCache();
+
 		$msg = "Added '{$this->mMassTag}' to {$added} wikis";
 		$msg .= " (maybe)";
 		wfProfileOut( __METHOD__ );

@@ -105,7 +105,7 @@ class WikiFactoryTagsQuery {
 		/**
 		 * first from cache, cache is set for 1h
 		 */
-		$this->mCachedTags = $wgMemc->get( "wikifactory:tags:map" );
+		$this->mCachedTags = $wgMemc->get( $this->cacheKey() );
 		if( !isset( $this->mCachedTags ) || !is_array( $this->mCachedTags ) ) {
 			/**
 			 * if not success then from database
@@ -123,11 +123,39 @@ class WikiFactoryTagsQuery {
 			/**
 			 * store for hour
 			 */
-			$wgMemc->set( "wikifactory:tags:map", $this->mCachedTags, 3600 );
+			$wgMemc->set( $this->cacheKey(), $this->mCachedTags, 3600 );
 		}
 
 		wfProfileOut( __METHOD__ );
 
 		return $this->mCachedTags;
 	}
+
+	/**
+	 *
+	 * @access private
+	 *
+	 * @return string  key used for caching
+	 */
+	private function cacheKey( ) {
+		return "wikifactory:tags:map";
+	}
+
+	/**
+	 *
+	 * clear Tags cache
+	 *
+	 * @access public
+	 */
+	public function clearCache() {
+		global $wgMemc;
+
+		wfProfileIn( __METHOD__ );
+
+		$wgMemc->delete( $this->cacheKey() );
+
+		wfProfileOut( __METHOD__ );
+	}
+
+
 }
