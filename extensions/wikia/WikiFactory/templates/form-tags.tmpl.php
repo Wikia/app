@@ -34,7 +34,8 @@ $.getScript(stylepath+'/common/jquery/jquery.autocomplete.js', function() {
 		&nbsp;
 <?php
 	if( is_array( $tags ) ):
-		$remove_icon = '<img src="http://images1.wikia.nocookie.net/__cb21710/common/skins/common/blank.gif" class="sprite delete" alt="remove" />';
+		global $wgBlankImgUrl;
+		$remove_icon = '<img src="'.$wgBlankImgUrl.'" class="sprite delete" alt="remove" />';
 		foreach( $tags as $id => $tag ):
 			echo ' ' . Xml::tags('a',
 				array(
@@ -51,7 +52,7 @@ $.getScript(stylepath+'/common/jquery/jquery.autocomplete.js', function() {
 					'href' => $title->getFullUrl( array( "wpTagId" => $id, "wpTagName" => $tag ) ),
 					'class' => 'wfTagRemove',
 					'onclick' => 'return deletechecked()',
-					'title' => 'remove tag from this wiki',
+					'title' => 'remove ['.$tag.'] from this wiki',
 					),
 				$remove_icon
 				);
