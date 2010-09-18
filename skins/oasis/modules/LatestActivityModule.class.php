@@ -35,25 +35,15 @@ class LatestActivityModule extends Module {
 			$wgMemc->set($mKey, $feedData);
 		}
 
-		$this->changeList = array();
+		// Time strings are slow to calculate, but we still want them to update frequently (60 seconds)
+		$mKeyTimes = wfMemcKey('mOasisLatestActivity_times');
+		$this->changeList = $wgMemc->get($mKeyTimes);
 
-		if(!empty($feedData) && is_array($feedData['results'])) {
+		if(empty($this->changeList) && !empty($feedData) && is_array($feedData['results'])) {
 			foreach ( $feedData['results'] as $change ) {
 				$item = array();
 				$item['time_ago'] = wfTimeFormatAgoOnlyRecent($change['timestamp']);
 				$item['user_name'] = $change['username'];
-
-/*
-				$oUser = User::newFromName( $change['username'] );
-				if ( ( $oUser instanceof User ) ) {
-					$item['avatar_url'] = Masthead::newFromUser($oUser)->getUrl();
-					//$item['image_src'] = Masthead::newFromUser($oUser)->getImageTag('20', '20');  // TODO: FIXME
-				} else {
-					$randomInt = rand(1, 3);
-					$item['avatar_url'] = "{$wgStylePath}/oasis/images/generic_avatar{$randomInt}.png";
-				}
-*/
-
 				$item['avatar_url'] = AvatarService::getAvatarUrl($item['user_name'], 20);
 				$item['user_href'] = $change['user'];
 				$item['page_title'] = $change['title'];
@@ -64,6 +54,7 @@ class LatestActivityModule extends Module {
 				$this->changeList[] = $item;
 
 			}
+			$wgMemc->set($mKeyTimes, $this->changeList, 60);
 		}
 		wfProfileOut( __METHOD__ );
 	}
@@ -71,8 +62,8 @@ class LatestActivityModule extends Module {
 	static function onArticleSaveComplete(&$article, &$user, $text, $summary,
 		$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 		global $wgMemc;
-		$mKey = wfMemcKey('mOasisLatestActivity');
-		$wgMemc->delete($mKey);
+		$wgMemc->delete(wfMemcKey('mOasisLatestActivity'));
+		$wgMemc->delete(wfMemcKey('mOasisLatestActivity_times'));
 		return true;
 	}
 
